@@ -1,6 +1,6 @@
---- InterfaceS.i	Fri Jan 12 22:31:13 2001
-+++ ..\InterfaceS.i	Wed Jan 10 20:36:35 2001
-@@ -1,119 +1,108 @@
+--- orig/InterfaceS.i	Fri Mar 09 00:47:29 2001
++++ ../../orbsvcs/IFR_Service/InterfaceS.i	Tue Jan 23 17:12:52 2001
+@@ -1,20 +1,9 @@
 -// -*- C++ -*-
 -//
 -// $Id$
@@ -25,10 +25,8 @@
 +// Distributed Object Computing at Washington University, St. Louis.
  //
  // Information about TAO is available at:
--//     http://www.cs.wustl.edu/~schmidt/TAO.html
-+//                 http://www.cs.wustl.edu/~schmidt/TAO.html
- 
- ACE_INLINE void POA_IR::Contained::_get_def_kind_skel (
+ //     http://www.cs.wustl.edu/~schmidt/TAO.html
+@@ -23,97 +12,97 @@
      TAO_ServerRequest &req,
      void *obj,
      void *context,

@@ -1,5 +1,5 @@
---- InterfaceC.i	Fri Jan 12 21:21:45 2001
-+++ ..\InterfaceC.i	Thu Jan 11 16:37:38 2001
+--- orig/InterfaceC.i	Fri Mar 09 00:47:29 2001
++++ InterfaceC.i	Thu Mar 01 15:34:00 2001
 @@ -1,6 +1,6 @@
  // -*- C++ -*-
  //
@@ -23,7 +23,7 @@
      CORBA::Boolean _tao_collocated,
      TAO_Abstract_ServantBase *servant
 @@ -34,184 +30,164 @@
-   this->_tao_setup_collocation (_tao_collocated);
+   this->CORBA_IRObject_setup_collocation (_tao_collocated);
  }
  
 -#endif /* end #if !defined */
@@ -257,7 +257,7 @@
      CORBA::Boolean _tao_collocated,
      TAO_Abstract_ServantBase *servant
 @@ -221,185 +197,164 @@
-   this->_tao_setup_collocation (_tao_collocated);
+   this->IR_Contained_setup_collocation (_tao_collocated);
  }
  
 -
@@ -492,7 +492,7 @@
      CORBA::Boolean _tao_collocated,
      TAO_Abstract_ServantBase *servant
 @@ -409,185 +364,164 @@
-   this->_tao_setup_collocation (_tao_collocated);
+   this->IR_Repository_setup_collocation (_tao_collocated);
  }
  
 -
@@ -726,8 +726,8 @@
      TAO_Stub *objref,
      CORBA::Boolean _tao_collocated,
      TAO_Abstract_ServantBase *servant
-@@ -597,312 +531,295 @@
-   this->_tao_setup_collocation (_tao_collocated);
+@@ -597,218 +531,201 @@
+   this->IR_Container_setup_collocation (_tao_collocated);
  }
  
 -
@@ -1002,11 +1002,24 @@
 +IR_Contained::Description_var::operator= (const ::IR_Contained::Description_var &p)
  {
    if (this != &p)
-   {
-     delete this->ptr_;
--    ACE_NEW_RETURN (this->ptr_, ::IR::Contained::Description (*p.ptr_), *this);
-+    ACE_NEW_RETURN (this->ptr_, ::IR_Contained::Description (*p.ptr_), *this);
-   }
+     {
+@@ -819,12 +736,12 @@
+         }
+       else
+         {
+-          Description *deep_copy =
+-            new Description (*p.ptr_);
++          IR_Contained::Description *deep_copy = 
++            new IR_Contained::Description (*p.ptr_);
+           
+           if (deep_copy != 0)
+             {
+-              Description *tmp = deep_copy;
++              IR_Contained::Description *tmp = deep_copy;
+               deep_copy = this->ptr_;
+               this->ptr_ = tmp;
+               delete deep_copy;
+@@ -835,91 +752,91 @@
    return *this;
  }
  
@@ -1120,7 +1133,7 @@
    : ptr_ (p.out ())
  {
    delete this->ptr_;
-@@ -910,48 +827,44 @@
+@@ -927,48 +844,44 @@
  }
  
  ACE_INLINE
@@ -1180,8 +1193,8 @@
      TAO_Stub *objref,
      CORBA::Boolean _tao_collocated,
      TAO_Abstract_ServantBase *servant
-@@ -961,185 +874,164 @@
-   this->_tao_setup_collocation (_tao_collocated);
+@@ -978,185 +891,164 @@
+   this->IR_ModuleDef_setup_collocation (_tao_collocated);
  }
  
 -
@@ -1415,8 +1428,8 @@
      TAO_Stub *objref,
      CORBA::Boolean _tao_collocated,
      TAO_Abstract_ServantBase *servant
-@@ -1149,185 +1041,164 @@
-   this->_tao_setup_collocation (_tao_collocated);
+@@ -1166,185 +1058,164 @@
+   this->IR_ConstantDef_setup_collocation (_tao_collocated);
  }
  
 -
@@ -1650,8 +1663,8 @@
      TAO_Stub *objref,
      CORBA::Boolean _tao_collocated,
      TAO_Abstract_ServantBase *servant
-@@ -1337,185 +1208,164 @@
-   this->_tao_setup_collocation (_tao_collocated);
+@@ -1354,185 +1225,164 @@
+   this->IR_IDLType_setup_collocation (_tao_collocated);
  }
  
 -
@@ -1885,8 +1898,8 @@
      TAO_Stub *objref,
      CORBA::Boolean _tao_collocated,
      TAO_Abstract_ServantBase *servant
-@@ -1525,185 +1375,164 @@
-   this->_tao_setup_collocation (_tao_collocated);
+@@ -1542,185 +1392,164 @@
+   this->IR_StructDef_setup_collocation (_tao_collocated);
  }
  
 -
@@ -2120,8 +2133,8 @@
      TAO_Stub *objref,
      CORBA::Boolean _tao_collocated,
      TAO_Abstract_ServantBase *servant
-@@ -1713,185 +1542,164 @@
-   this->_tao_setup_collocation (_tao_collocated);
+@@ -1730,185 +1559,164 @@
+   this->IR_UnionDef_setup_collocation (_tao_collocated);
  }
  
 -
@@ -2355,8 +2368,8 @@
      TAO_Stub *objref,
      CORBA::Boolean _tao_collocated,
      TAO_Abstract_ServantBase *servant
-@@ -1901,185 +1709,164 @@
-   this->_tao_setup_collocation (_tao_collocated);
+@@ -1918,185 +1726,164 @@
+   this->IR_EnumDef_setup_collocation (_tao_collocated);
  }
  
 -
@@ -2590,8 +2603,8 @@
      TAO_Stub *objref,
      CORBA::Boolean _tao_collocated,
      TAO_Abstract_ServantBase *servant
-@@ -2089,185 +1876,164 @@
-   this->_tao_setup_collocation (_tao_collocated);
+@@ -2106,185 +1893,164 @@
+   this->IR_AliasDef_setup_collocation (_tao_collocated);
  }
  
 -
@@ -2825,8 +2838,8 @@
      TAO_Stub *objref,
      CORBA::Boolean _tao_collocated,
      TAO_Abstract_ServantBase *servant
-@@ -2277,185 +2043,164 @@
-   this->_tao_setup_collocation (_tao_collocated);
+@@ -2294,185 +2060,164 @@
+   this->IR_InterfaceDef_setup_collocation (_tao_collocated);
  }
  
 -
@@ -3060,8 +3073,8 @@
      TAO_Stub *objref,
      CORBA::Boolean _tao_collocated,
      TAO_Abstract_ServantBase *servant
-@@ -2465,185 +2210,164 @@
-   this->_tao_setup_collocation (_tao_collocated);
+@@ -2482,185 +2227,164 @@
+   this->IR_ExceptionDef_setup_collocation (_tao_collocated);
  }
  
 -
@@ -3295,8 +3308,8 @@
      TAO_Stub *objref,
      CORBA::Boolean _tao_collocated,
      TAO_Abstract_ServantBase *servant
-@@ -2653,200 +2377,179 @@
-   this->_tao_setup_collocation (_tao_collocated);
+@@ -2670,200 +2394,179 @@
+   this->IR_NativeDef_setup_collocation (_tao_collocated);
  }
  
 -
@@ -3550,7 +3563,7 @@
    {
      if (buffer == 0)
        return;
-@@ -2854,36 +2557,36 @@
+@@ -2871,36 +2574,36 @@
    }
    
    ACE_INLINE
@@ -3595,7 +3608,7 @@
        
        this->buffer_ = tmp1;
      }
-@@ -2893,20 +2596,20 @@
+@@ -2910,20 +2613,20 @@
      }
    }
    
@@ -3620,7 +3633,7 @@
        }
        if (this->maximum_ < rhs.maximum_)
        {
-@@ -2919,28 +2622,28 @@
+@@ -2936,28 +2639,28 @@
      
      TAO_Unbounded_Base_Sequence::operator= (rhs);
      
@@ -3659,7 +3672,7 @@
      if (orphan == 0)
      {
        // We retain ownership.
-@@ -2952,7 +2655,7 @@
+@@ -2969,7 +2672,7 @@
        }
        else
        {
@@ -3668,7 +3681,7 @@
        }
      }
      else // if (orphan == 1)
-@@ -2961,7 +2664,7 @@
+@@ -2978,7 +2681,7 @@
        {
          // We set the state back to default and relinquish
          // ownership.
@@ -3677,7 +3690,7 @@
          this->maximum_ = 0;
          this->length_ = 0;
          this->buffer_ = 0;
-@@ -2971,160 +2674,153 @@
+@@ -2988,60 +2691,53 @@
      return result;
    }
    
@@ -3744,17 +3757,30 @@
    return *this;
  }
  
--ACE_INLINE IR::InterfaceDefSeq_var &
--IR::InterfaceDefSeq_var::operator= (const ::IR::InterfaceDefSeq_var &p) // deep copy
+-ACE_INLINE ::IR::InterfaceDefSeq_var &
+-IR::InterfaceDefSeq_var::operator= (const ::IR::InterfaceDefSeq_var &p)
 +ACE_INLINE IR_InterfaceDefSeq_var &
 +IR_InterfaceDefSeq_var::operator= (const ::IR_InterfaceDefSeq_var &p) // deep copy
  {
    if (this != &p)
-   {
-     delete this->ptr_;
--    ACE_NEW_RETURN (this->ptr_, ::IR::InterfaceDefSeq (*p.ptr_), *this);
-+    ACE_NEW_RETURN (this->ptr_, ::IR_InterfaceDefSeq (*p.ptr_), *this);
-   }
+     {
+@@ -3052,12 +2748,12 @@
+         }
+       else
+         {
+-          InterfaceDefSeq *deep_copy =
+-            new InterfaceDefSeq (*p.ptr_);
++          IR_InterfaceDefSeq *deep_copy = 
++            new IR_InterfaceDefSeq (*p.ptr_);
+           
+           if (deep_copy != 0)
+             {
+-              InterfaceDefSeq *tmp = deep_copy;
++              IR_InterfaceDefSeq *tmp = deep_copy;
+               deep_copy = this->ptr_;
+               this->ptr_ = tmp;
+               delete deep_copy;
+@@ -3068,97 +2764,97 @@
    return *this;
  }
  
@@ -3876,7 +3902,7 @@
    : ptr_ (p.out ())
  {
    delete this->ptr_;
-@@ -3132,57 +2828,50 @@
+@@ -3166,57 +2862,50 @@
  }
  
  ACE_INLINE
@@ -3949,8 +3975,8 @@
      TAO_Stub *objref,
      CORBA::Boolean _tao_collocated,
      TAO_Abstract_ServantBase *servant
-@@ -3192,200 +2881,179 @@
-   this->_tao_setup_collocation (_tao_collocated);
+@@ -3226,200 +2915,179 @@
+   this->IR_ValueDef_setup_collocation (_tao_collocated);
  }
  
 -
@@ -4204,7 +4230,7 @@
    {
      if (buffer == 0)
        return;
-@@ -3393,36 +3061,36 @@
+@@ -3427,36 +3095,36 @@
    }
    
    ACE_INLINE
@@ -4249,7 +4275,7 @@
        
        this->buffer_ = tmp1;
      }
-@@ -3432,20 +3100,20 @@
+@@ -3466,20 +3134,20 @@
      }
    }
    
@@ -4274,7 +4300,7 @@
        }
        if (this->maximum_ < rhs.maximum_)
        {
-@@ -3458,28 +3126,28 @@
+@@ -3492,28 +3160,28 @@
      
      TAO_Unbounded_Base_Sequence::operator= (rhs);
      
@@ -4313,7 +4339,7 @@
      if (orphan == 0)
      {
        // We retain ownership.
-@@ -3491,7 +3159,7 @@
+@@ -3525,7 +3193,7 @@
        }
        else
        {
@@ -4322,7 +4348,7 @@
        }
      }
      else // if (orphan == 1)
-@@ -3500,7 +3168,7 @@
+@@ -3534,7 +3202,7 @@
        {
          // We set the state back to default and relinquish
          // ownership.
@@ -4331,7 +4357,7 @@
          this->maximum_ = 0;
          this->length_ = 0;
          this->buffer_ = 0;
-@@ -3510,160 +3178,153 @@
+@@ -3544,60 +3212,53 @@
      return result;
    }
    
@@ -4398,17 +4424,30 @@
    return *this;
  }
  
--ACE_INLINE IR::ValueDefSeq_var &
--IR::ValueDefSeq_var::operator= (const ::IR::ValueDefSeq_var &p) // deep copy
+-ACE_INLINE ::IR::ValueDefSeq_var &
+-IR::ValueDefSeq_var::operator= (const ::IR::ValueDefSeq_var &p)
 +ACE_INLINE IR_ValueDefSeq_var &
 +IR_ValueDefSeq_var::operator= (const ::IR_ValueDefSeq_var &p) // deep copy
  {
    if (this != &p)
-   {
-     delete this->ptr_;
--    ACE_NEW_RETURN (this->ptr_, ::IR::ValueDefSeq (*p.ptr_), *this);
-+    ACE_NEW_RETURN (this->ptr_, ::IR_ValueDefSeq (*p.ptr_), *this);
-   }
+     {
+@@ -3608,12 +3269,12 @@
+         }
+       else
+         {
+-          ValueDefSeq *deep_copy =
+-            new ValueDefSeq (*p.ptr_);
++          IR_ValueDefSeq *deep_copy = 
++            new IR_ValueDefSeq (*p.ptr_);
+           
+           if (deep_copy != 0)
+             {
+-              ValueDefSeq *tmp = deep_copy;
++              IR_ValueDefSeq *tmp = deep_copy;
+               deep_copy = this->ptr_;
+               this->ptr_ = tmp;
+               delete deep_copy;
+@@ -3624,97 +3285,97 @@
    return *this;
  }
  
@@ -4530,7 +4569,7 @@
    : ptr_ (p.out ())
  {
    delete this->ptr_;
-@@ -3671,57 +3332,50 @@
+@@ -3722,57 +3383,50 @@
  }
  
  ACE_INLINE
@@ -4603,8 +4642,8 @@
      TAO_Stub *objref,
      CORBA::Boolean _tao_collocated,
      TAO_Abstract_ServantBase *servant
-@@ -3731,185 +3385,164 @@
-   this->_tao_setup_collocation (_tao_collocated);
+@@ -3782,185 +3436,164 @@
+   this->IR_ValueBoxDef_setup_collocation (_tao_collocated);
  }
  
 -
@@ -4838,8 +4877,8 @@
      TAO_Stub *objref,
      CORBA::Boolean _tao_collocated,
      TAO_Abstract_ServantBase *servant
-@@ -3919,200 +3552,179 @@
-   this->_tao_setup_collocation (_tao_collocated);
+@@ -3970,200 +3603,179 @@
+   this->IR_ComponentDef_setup_collocation (_tao_collocated);
  }
  
 -
@@ -5093,7 +5132,7 @@
    {
      if (buffer == 0)
        return;
-@@ -4120,36 +3732,36 @@
+@@ -4171,36 +3783,36 @@
    }
    
    ACE_INLINE
@@ -5138,7 +5177,7 @@
        
        this->buffer_ = tmp1;
      }
-@@ -4159,20 +3771,20 @@
+@@ -4210,20 +3822,20 @@
      }
    }
    
@@ -5163,7 +5202,7 @@
        }
        if (this->maximum_ < rhs.maximum_)
        {
-@@ -4185,28 +3797,28 @@
+@@ -4236,28 +3848,28 @@
      
      TAO_Unbounded_Base_Sequence::operator= (rhs);
      
@@ -5202,7 +5241,7 @@
      if (orphan == 0)
      {
        // We retain ownership.
-@@ -4218,7 +3830,7 @@
+@@ -4269,7 +3881,7 @@
        }
        else
        {
@@ -5211,7 +5250,7 @@
        }
      }
      else // if (orphan == 1)
-@@ -4227,7 +3839,7 @@
+@@ -4278,7 +3890,7 @@
        {
          // We set the state back to default and relinquish
          // ownership.
@@ -5220,7 +5259,7 @@
          this->maximum_ = 0;
          this->length_ = 0;
          this->buffer_ = 0;
-@@ -4237,160 +3849,153 @@
+@@ -4288,60 +3900,53 @@
      return result;
    }
    
@@ -5287,17 +5326,30 @@
    return *this;
  }
  
--ACE_INLINE IR::ComponentDefSeq_var &
--IR::ComponentDefSeq_var::operator= (const ::IR::ComponentDefSeq_var &p) // deep copy
+-ACE_INLINE ::IR::ComponentDefSeq_var &
+-IR::ComponentDefSeq_var::operator= (const ::IR::ComponentDefSeq_var &p)
 +ACE_INLINE IR_ComponentDefSeq_var &
 +IR_ComponentDefSeq_var::operator= (const ::IR_ComponentDefSeq_var &p) // deep copy
  {
    if (this != &p)
-   {
-     delete this->ptr_;
--    ACE_NEW_RETURN (this->ptr_, ::IR::ComponentDefSeq (*p.ptr_), *this);
-+    ACE_NEW_RETURN (this->ptr_, ::IR_ComponentDefSeq (*p.ptr_), *this);
-   }
+     {
+@@ -4352,12 +3957,12 @@
+         }
+       else
+         {
+-          ComponentDefSeq *deep_copy =
+-            new ComponentDefSeq (*p.ptr_);
++          IR_ComponentDefSeq *deep_copy = 
++            new IR_ComponentDefSeq (*p.ptr_);
+           
+           if (deep_copy != 0)
+             {
+-              ComponentDefSeq *tmp = deep_copy;
++              IR_ComponentDefSeq *tmp = deep_copy;
+               deep_copy = this->ptr_;
+               this->ptr_ = tmp;
+               delete deep_copy;
+@@ -4368,97 +3973,97 @@
    return *this;
  }
  
@@ -5419,7 +5471,7 @@
    : ptr_ (p.out ())
  {
    delete this->ptr_;
-@@ -4398,57 +4003,50 @@
+@@ -4466,57 +4071,50 @@
  }
  
  ACE_INLINE
@@ -5492,8 +5544,8 @@
      TAO_Stub *objref,
      CORBA::Boolean _tao_collocated,
      TAO_Abstract_ServantBase *servant
-@@ -4458,200 +4056,179 @@
-   this->_tao_setup_collocation (_tao_collocated);
+@@ -4526,200 +4124,179 @@
+   this->IR_ProvidesDef_setup_collocation (_tao_collocated);
  }
  
 -
@@ -5747,7 +5799,7 @@
    {
      if (buffer == 0)
        return;
-@@ -4659,36 +4236,36 @@
+@@ -4727,36 +4304,36 @@
    }
    
    ACE_INLINE
@@ -5792,7 +5844,7 @@
        
        this->buffer_ = tmp1;
      }
-@@ -4698,20 +4275,20 @@
+@@ -4766,20 +4343,20 @@
      }
    }
    
@@ -5817,7 +5869,7 @@
        }
        if (this->maximum_ < rhs.maximum_)
        {
-@@ -4724,28 +4301,28 @@
+@@ -4792,28 +4369,28 @@
      
      TAO_Unbounded_Base_Sequence::operator= (rhs);
      
@@ -5856,7 +5908,7 @@
      if (orphan == 0)
      {
        // We retain ownership.
-@@ -4757,7 +4334,7 @@
+@@ -4825,7 +4402,7 @@
        }
        else
        {
@@ -5865,7 +5917,7 @@
        }
      }
      else // if (orphan == 1)
-@@ -4766,7 +4343,7 @@
+@@ -4834,7 +4411,7 @@
        {
          // We set the state back to default and relinquish
          // ownership.
@@ -5874,7 +5926,7 @@
          this->maximum_ = 0;
          this->length_ = 0;
          this->buffer_ = 0;
-@@ -4776,160 +4353,153 @@
+@@ -4844,60 +4421,53 @@
      return result;
    }
    
@@ -5941,17 +5993,30 @@
    return *this;
  }
  
--ACE_INLINE IR::ProvidesDefSeq_var &
--IR::ProvidesDefSeq_var::operator= (const ::IR::ProvidesDefSeq_var &p) // deep copy
+-ACE_INLINE ::IR::ProvidesDefSeq_var &
+-IR::ProvidesDefSeq_var::operator= (const ::IR::ProvidesDefSeq_var &p)
 +ACE_INLINE IR_ProvidesDefSeq_var &
 +IR_ProvidesDefSeq_var::operator= (const ::IR_ProvidesDefSeq_var &p) // deep copy
  {
    if (this != &p)
-   {
-     delete this->ptr_;
--    ACE_NEW_RETURN (this->ptr_, ::IR::ProvidesDefSeq (*p.ptr_), *this);
-+    ACE_NEW_RETURN (this->ptr_, ::IR_ProvidesDefSeq (*p.ptr_), *this);
-   }
+     {
+@@ -4908,12 +4478,12 @@
+         }
+       else
+         {
+-          ProvidesDefSeq *deep_copy =
+-            new ProvidesDefSeq (*p.ptr_);
++          IR_ProvidesDefSeq *deep_copy = 
++            new IR_ProvidesDefSeq (*p.ptr_);
+           
+           if (deep_copy != 0)
+             {
+-              ProvidesDefSeq *tmp = deep_copy;
++              IR_ProvidesDefSeq *tmp = deep_copy;
+               deep_copy = this->ptr_;
+               this->ptr_ = tmp;
+               delete deep_copy;
+@@ -4924,97 +4494,97 @@
    return *this;
  }
  
@@ -6073,7 +6138,7 @@
    : ptr_ (p.out ())
  {
    delete this->ptr_;
-@@ -4937,57 +4507,50 @@
+@@ -5022,57 +4592,50 @@
  }
  
  ACE_INLINE
@@ -6146,8 +6211,8 @@
      TAO_Stub *objref,
      CORBA::Boolean _tao_collocated,
      TAO_Abstract_ServantBase *servant
-@@ -4997,200 +4560,179 @@
-   this->_tao_setup_collocation (_tao_collocated);
+@@ -5082,200 +4645,179 @@
+   this->IR_UsesDef_setup_collocation (_tao_collocated);
  }
  
 -
@@ -6403,7 +6468,7 @@
    {
      if (buffer == 0)
        return;
-@@ -5198,36 +4740,36 @@
+@@ -5283,36 +4825,36 @@
    }
    
    ACE_INLINE
@@ -6448,7 +6513,7 @@
        
        this->buffer_ = tmp1;
      }
-@@ -5237,20 +4779,20 @@
+@@ -5322,20 +4864,20 @@
      }
    }
    
@@ -6473,7 +6538,7 @@
        }
        if (this->maximum_ < rhs.maximum_)
        {
-@@ -5263,28 +4805,28 @@
+@@ -5348,28 +4890,28 @@
      
      TAO_Unbounded_Base_Sequence::operator= (rhs);
      
@@ -6512,7 +6577,7 @@
      if (orphan == 0)
      {
        // We retain ownership.
-@@ -5296,7 +4838,7 @@
+@@ -5381,7 +4923,7 @@
        }
        else
        {
@@ -6521,7 +6586,7 @@
        }
      }
      else // if (orphan == 1)
-@@ -5305,7 +4847,7 @@
+@@ -5390,7 +4932,7 @@
        {
          // We set the state back to default and relinquish
          // ownership.
@@ -6530,7 +6595,7 @@
          this->maximum_ = 0;
          this->length_ = 0;
          this->buffer_ = 0;
-@@ -5315,160 +4857,153 @@
+@@ -5400,60 +4942,53 @@
      return result;
    }
    
@@ -6597,17 +6662,30 @@
    return *this;
  }
  
--ACE_INLINE IR::UsesDefSeq_var &
--IR::UsesDefSeq_var::operator= (const ::IR::UsesDefSeq_var &p) // deep copy
+-ACE_INLINE ::IR::UsesDefSeq_var &
+-IR::UsesDefSeq_var::operator= (const ::IR::UsesDefSeq_var &p)
 +ACE_INLINE IR_UsesDefSeq_var &
 +IR_UsesDefSeq_var::operator= (const ::IR_UsesDefSeq_var &p) // deep copy
  {
    if (this != &p)
-   {
-     delete this->ptr_;
--    ACE_NEW_RETURN (this->ptr_, ::IR::UsesDefSeq (*p.ptr_), *this);
-+    ACE_NEW_RETURN (this->ptr_, ::IR_UsesDefSeq (*p.ptr_), *this);
-   }
+     {
+@@ -5464,12 +4999,12 @@
+         }
+       else
+         {
+-          UsesDefSeq *deep_copy =
+-            new UsesDefSeq (*p.ptr_);
++          IR_UsesDefSeq *deep_copy = 
++            new IR_UsesDefSeq (*p.ptr_);
+           
+           if (deep_copy != 0)
+             {
+-              UsesDefSeq *tmp = deep_copy;
++              IR_UsesDefSeq *tmp = deep_copy;
+               deep_copy = this->ptr_;
+               this->ptr_ = tmp;
+               delete deep_copy;
+@@ -5480,97 +5015,97 @@
    return *this;
  }
  
@@ -6729,7 +6807,7 @@
    : ptr_ (p.out ())
  {
    delete this->ptr_;
-@@ -5476,57 +5011,50 @@
+@@ -5578,57 +5113,50 @@
  }
  
  ACE_INLINE
@@ -6802,8 +6880,8 @@
      TAO_Stub *objref,
      CORBA::Boolean _tao_collocated,
      TAO_Abstract_ServantBase *servant
-@@ -5536,200 +5064,179 @@
-   this->_tao_setup_collocation (_tao_collocated);
+@@ -5638,200 +5166,179 @@
+   this->IR_HomeDef_setup_collocation (_tao_collocated);
  }
  
 -
@@ -7057,7 +7135,7 @@
    {
      if (buffer == 0)
        return;
-@@ -5737,36 +5244,36 @@
+@@ -5839,36 +5346,36 @@
    }
    
    ACE_INLINE
@@ -7102,7 +7180,7 @@
        
        this->buffer_ = tmp1;
      }
-@@ -5776,20 +5283,20 @@
+@@ -5878,20 +5385,20 @@
      }
    }
    
@@ -7127,7 +7205,7 @@
        }
        if (this->maximum_ < rhs.maximum_)
        {
-@@ -5802,28 +5309,28 @@
+@@ -5904,28 +5411,28 @@
      
      TAO_Unbounded_Base_Sequence::operator= (rhs);
      
@@ -7166,7 +7244,7 @@
      if (orphan == 0)
      {
        // We retain ownership.
-@@ -5835,7 +5342,7 @@
+@@ -5937,7 +5444,7 @@
        }
        else
        {
@@ -7175,7 +7253,7 @@
        }
      }
      else // if (orphan == 1)
-@@ -5844,7 +5351,7 @@
+@@ -5946,7 +5453,7 @@
        {
          // We set the state back to default and relinquish
          // ownership.
@@ -7184,7 +7262,7 @@
          this->maximum_ = 0;
          this->length_ = 0;
          this->buffer_ = 0;
-@@ -5854,160 +5361,153 @@
+@@ -5956,60 +5463,53 @@
      return result;
    }
    
@@ -7251,17 +7329,30 @@
    return *this;
  }
  
--ACE_INLINE IR::HomeDefSeq_var &
--IR::HomeDefSeq_var::operator= (const ::IR::HomeDefSeq_var &p) // deep copy
+-ACE_INLINE ::IR::HomeDefSeq_var &
+-IR::HomeDefSeq_var::operator= (const ::IR::HomeDefSeq_var &p)
 +ACE_INLINE IR_HomeDefSeq_var &
 +IR_HomeDefSeq_var::operator= (const ::IR_HomeDefSeq_var &p) // deep copy
  {
    if (this != &p)
-   {
-     delete this->ptr_;
--    ACE_NEW_RETURN (this->ptr_, ::IR::HomeDefSeq (*p.ptr_), *this);
-+    ACE_NEW_RETURN (this->ptr_, ::IR_HomeDefSeq (*p.ptr_), *this);
-   }
+     {
+@@ -6020,12 +5520,12 @@
+         }
+       else
+         {
+-          HomeDefSeq *deep_copy =
+-            new HomeDefSeq (*p.ptr_);
++          IR_HomeDefSeq *deep_copy = 
++            new IR_HomeDefSeq (*p.ptr_);
+           
+           if (deep_copy != 0)
+             {
+-              HomeDefSeq *tmp = deep_copy;
++              IR_HomeDefSeq *tmp = deep_copy;
+               deep_copy = this->ptr_;
+               this->ptr_ = tmp;
+               delete deep_copy;
+@@ -6036,97 +5536,97 @@
    return *this;
  }
  
@@ -7383,7 +7474,7 @@
    : ptr_ (p.out ())
  {
    delete this->ptr_;
-@@ -6015,57 +5515,50 @@
+@@ -6134,57 +5634,50 @@
  }
  
  ACE_INLINE
@@ -7456,8 +7547,8 @@
      TAO_Stub *objref,
      CORBA::Boolean _tao_collocated,
      TAO_Abstract_ServantBase *servant
-@@ -6075,185 +5568,164 @@
-   this->_tao_setup_collocation (_tao_collocated);
+@@ -6194,185 +5687,164 @@
+   this->IR_EventDef_setup_collocation (_tao_collocated);
  }
  
 -
@@ -7691,8 +7782,8 @@
      TAO_Stub *objref,
      CORBA::Boolean _tao_collocated,
      TAO_Abstract_ServantBase *servant
-@@ -6263,200 +5735,179 @@
-   this->_tao_setup_collocation (_tao_collocated);
+@@ -6382,200 +5854,179 @@
+   this->IR_EmitsDef_setup_collocation (_tao_collocated);
  }
  
 -
@@ -7946,7 +8037,7 @@
    {
      if (buffer == 0)
        return;
-@@ -6464,36 +5915,36 @@
+@@ -6583,36 +6034,36 @@
    }
    
    ACE_INLINE
@@ -7991,7 +8082,7 @@
        
        this->buffer_ = tmp1;
      }
-@@ -6503,20 +5954,20 @@
+@@ -6622,20 +6073,20 @@
      }
    }
    
@@ -8016,7 +8107,7 @@
        }
        if (this->maximum_ < rhs.maximum_)
        {
-@@ -6529,28 +5980,28 @@
+@@ -6648,28 +6099,28 @@
      
      TAO_Unbounded_Base_Sequence::operator= (rhs);
      
@@ -8055,7 +8146,7 @@
      if (orphan == 0)
      {
        // We retain ownership.
-@@ -6562,7 +6013,7 @@
+@@ -6681,7 +6132,7 @@
        }
        else
        {
@@ -8064,7 +8155,7 @@
        }
      }
      else // if (orphan == 1)
-@@ -6571,7 +6022,7 @@
+@@ -6690,7 +6141,7 @@
        {
          // We set the state back to default and relinquish
          // ownership.
@@ -8073,7 +8164,7 @@
          this->maximum_ = 0;
          this->length_ = 0;
          this->buffer_ = 0;
-@@ -6581,160 +6032,153 @@
+@@ -6700,60 +6151,53 @@
      return result;
    }
    
@@ -8140,17 +8231,30 @@
    return *this;
  }
  
--ACE_INLINE IR::EmitsDefSeq_var &
--IR::EmitsDefSeq_var::operator= (const ::IR::EmitsDefSeq_var &p) // deep copy
+-ACE_INLINE ::IR::EmitsDefSeq_var &
+-IR::EmitsDefSeq_var::operator= (const ::IR::EmitsDefSeq_var &p)
 +ACE_INLINE IR_EmitsDefSeq_var &
 +IR_EmitsDefSeq_var::operator= (const ::IR_EmitsDefSeq_var &p) // deep copy
  {
    if (this != &p)
-   {
-     delete this->ptr_;
--    ACE_NEW_RETURN (this->ptr_, ::IR::EmitsDefSeq (*p.ptr_), *this);
-+    ACE_NEW_RETURN (this->ptr_, ::IR_EmitsDefSeq (*p.ptr_), *this);
-   }
+     {
+@@ -6764,12 +6208,12 @@
+         }
+       else
+         {
+-          EmitsDefSeq *deep_copy =
+-            new EmitsDefSeq (*p.ptr_);
++          IR_EmitsDefSeq *deep_copy = 
++            new IR_EmitsDefSeq (*p.ptr_);
+           
+           if (deep_copy != 0)
+             {
+-              EmitsDefSeq *tmp = deep_copy;
++              IR_EmitsDefSeq *tmp = deep_copy;
+               deep_copy = this->ptr_;
+               this->ptr_ = tmp;
+               delete deep_copy;
+@@ -6780,97 +6224,97 @@
    return *this;
  }
  
@@ -8272,7 +8376,7 @@
    : ptr_ (p.out ())
  {
    delete this->ptr_;
-@@ -6742,57 +6186,50 @@
+@@ -6878,57 +6322,50 @@
  }
  
  ACE_INLINE
@@ -8345,8 +8449,8 @@
      TAO_Stub *objref,
      CORBA::Boolean _tao_collocated,
      TAO_Abstract_ServantBase *servant
-@@ -6802,200 +6239,179 @@
-   this->_tao_setup_collocation (_tao_collocated);
+@@ -6938,200 +6375,179 @@
+   this->IR_PublishesDef_setup_collocation (_tao_collocated);
  }
  
 -
@@ -8600,7 +8704,7 @@
    {
      if (buffer == 0)
        return;
-@@ -7003,36 +6419,36 @@
+@@ -7139,36 +6555,36 @@
    }
    
    ACE_INLINE
@@ -8645,7 +8749,7 @@
        
        this->buffer_ = tmp1;
      }
-@@ -7042,20 +6458,20 @@
+@@ -7178,20 +6594,20 @@
      }
    }
    
@@ -8670,7 +8774,7 @@
        }
        if (this->maximum_ < rhs.maximum_)
        {
-@@ -7068,28 +6484,28 @@
+@@ -7204,28 +6620,28 @@
      
      TAO_Unbounded_Base_Sequence::operator= (rhs);
      
@@ -8709,7 +8813,7 @@
      if (orphan == 0)
      {
        // We retain ownership.
-@@ -7101,7 +6517,7 @@
+@@ -7237,7 +6653,7 @@
        }
        else
        {
@@ -8718,7 +8822,7 @@
        }
      }
      else // if (orphan == 1)
-@@ -7110,7 +6526,7 @@
+@@ -7246,7 +6662,7 @@
        {
          // We set the state back to default and relinquish
          // ownership.
@@ -8727,7 +8831,7 @@
          this->maximum_ = 0;
          this->length_ = 0;
          this->buffer_ = 0;
-@@ -7120,160 +6536,153 @@
+@@ -7256,60 +6672,53 @@
      return result;
    }
    
@@ -8794,17 +8898,30 @@
    return *this;
  }
  
--ACE_INLINE IR::PublishesDefSeq_var &
--IR::PublishesDefSeq_var::operator= (const ::IR::PublishesDefSeq_var &p) // deep copy
+-ACE_INLINE ::IR::PublishesDefSeq_var &
+-IR::PublishesDefSeq_var::operator= (const ::IR::PublishesDefSeq_var &p)
 +ACE_INLINE IR_PublishesDefSeq_var &
 +IR_PublishesDefSeq_var::operator= (const ::IR_PublishesDefSeq_var &p) // deep copy
  {
    if (this != &p)
-   {
-     delete this->ptr_;
--    ACE_NEW_RETURN (this->ptr_, ::IR::PublishesDefSeq (*p.ptr_), *this);
-+    ACE_NEW_RETURN (this->ptr_, ::IR_PublishesDefSeq (*p.ptr_), *this);
-   }
+     {
+@@ -7320,12 +6729,12 @@
+         }
+       else
+         {
+-          PublishesDefSeq *deep_copy =
+-            new PublishesDefSeq (*p.ptr_);
++          IR_PublishesDefSeq *deep_copy = 
++            new IR_PublishesDefSeq (*p.ptr_);
+           
+           if (deep_copy != 0)
+             {
+-              PublishesDefSeq *tmp = deep_copy;
++              IR_PublishesDefSeq *tmp = deep_copy;
+               deep_copy = this->ptr_;
+               this->ptr_ = tmp;
+               delete deep_copy;
+@@ -7336,97 +6745,97 @@
    return *this;
  }
  
@@ -8926,7 +9043,7 @@
    : ptr_ (p.out ())
  {
    delete this->ptr_;
-@@ -7281,57 +6690,50 @@
+@@ -7434,57 +6843,50 @@
  }
  
  ACE_INLINE
@@ -8999,8 +9116,8 @@
      TAO_Stub *objref,
      CORBA::Boolean _tao_collocated,
      TAO_Abstract_ServantBase *servant
-@@ -7341,200 +6743,179 @@
-   this->_tao_setup_collocation (_tao_collocated);
+@@ -7494,200 +6896,179 @@
+   this->IR_ConsumesDef_setup_collocation (_tao_collocated);
  }
  
 -
@@ -9254,7 +9371,7 @@
    {
      if (buffer == 0)
        return;
-@@ -7542,36 +6923,36 @@
+@@ -7695,36 +7076,36 @@
    }
    
    ACE_INLINE
@@ -9299,7 +9416,7 @@
        
        this->buffer_ = tmp1;
      }
-@@ -7581,20 +6962,20 @@
+@@ -7734,20 +7115,20 @@
      }
    }
    
@@ -9324,7 +9441,7 @@
        }
        if (this->maximum_ < rhs.maximum_)
        {
-@@ -7607,28 +6988,28 @@
+@@ -7760,28 +7141,28 @@
      
      TAO_Unbounded_Base_Sequence::operator= (rhs);
      
@@ -9363,7 +9480,7 @@
      if (orphan == 0)
      {
        // We retain ownership.
-@@ -7640,7 +7021,7 @@
+@@ -7793,7 +7174,7 @@
        }
        else
        {
@@ -9372,7 +9489,7 @@
        }
      }
      else // if (orphan == 1)
-@@ -7649,7 +7030,7 @@
+@@ -7802,7 +7183,7 @@
        {
          // We set the state back to default and relinquish
          // ownership.
@@ -9381,7 +9498,7 @@
          this->maximum_ = 0;
          this->length_ = 0;
          this->buffer_ = 0;
-@@ -7659,160 +7040,153 @@
+@@ -7812,60 +7193,53 @@
      return result;
    }
    
@@ -9448,17 +9565,30 @@
    return *this;
  }
  
--ACE_INLINE IR::ConsumesDefSeq_var &
--IR::ConsumesDefSeq_var::operator= (const ::IR::ConsumesDefSeq_var &p) // deep copy
+-ACE_INLINE ::IR::ConsumesDefSeq_var &
+-IR::ConsumesDefSeq_var::operator= (const ::IR::ConsumesDefSeq_var &p)
 +ACE_INLINE IR_ConsumesDefSeq_var &
 +IR_ConsumesDefSeq_var::operator= (const ::IR_ConsumesDefSeq_var &p) // deep copy
  {
    if (this != &p)
-   {
-     delete this->ptr_;
--    ACE_NEW_RETURN (this->ptr_, ::IR::ConsumesDefSeq (*p.ptr_), *this);
-+    ACE_NEW_RETURN (this->ptr_, ::IR_ConsumesDefSeq (*p.ptr_), *this);
-   }
+     {
+@@ -7876,12 +7250,12 @@
+         }
+       else
+         {
+-          ConsumesDefSeq *deep_copy =
+-            new ConsumesDefSeq (*p.ptr_);
++          IR_ConsumesDefSeq *deep_copy = 
++            new IR_ConsumesDefSeq (*p.ptr_);
+           
+           if (deep_copy != 0)
+             {
+-              ConsumesDefSeq *tmp = deep_copy;
++              IR_ConsumesDefSeq *tmp = deep_copy;
+               deep_copy = this->ptr_;
+               this->ptr_ = tmp;
+               delete deep_copy;
+@@ -7892,97 +7266,97 @@
    return *this;
  }
  
@@ -9580,7 +9710,7 @@
    : ptr_ (p.out ())
  {
    delete this->ptr_;
-@@ -7820,57 +7194,50 @@
+@@ -7990,57 +7364,50 @@
  }
  
  ACE_INLINE
@@ -9653,8 +9783,8 @@
      TAO_Stub *objref,
      CORBA::Boolean _tao_collocated,
      TAO_Abstract_ServantBase *servant
-@@ -7880,200 +7247,179 @@
-   this->_tao_setup_collocation (_tao_collocated);
+@@ -8050,200 +7417,179 @@
+   this->IR_FactoryDef_setup_collocation (_tao_collocated);
  }
  
 -
@@ -9908,7 +10038,7 @@
    {
      if (buffer == 0)
        return;
-@@ -8081,36 +7427,36 @@
+@@ -8251,36 +7597,36 @@
    }
    
    ACE_INLINE
@@ -9953,7 +10083,7 @@
        
        this->buffer_ = tmp1;
      }
-@@ -8120,20 +7466,20 @@
+@@ -8290,20 +7636,20 @@
      }
    }
    
@@ -9978,7 +10108,7 @@
        }
        if (this->maximum_ < rhs.maximum_)
        {
-@@ -8146,28 +7492,28 @@
+@@ -8316,28 +7662,28 @@
      
      TAO_Unbounded_Base_Sequence::operator= (rhs);
      
@@ -10017,7 +10147,7 @@
      if (orphan == 0)
      {
        // We retain ownership.
-@@ -8179,7 +7525,7 @@
+@@ -8349,7 +7695,7 @@
        }
        else
        {
@@ -10026,7 +10156,7 @@
        }
      }
      else // if (orphan == 1)
-@@ -8188,7 +7534,7 @@
+@@ -8358,7 +7704,7 @@
        {
          // We set the state back to default and relinquish
          // ownership.
@@ -10035,7 +10165,7 @@
          this->maximum_ = 0;
          this->length_ = 0;
          this->buffer_ = 0;
-@@ -8198,160 +7544,153 @@
+@@ -8368,60 +7714,53 @@
      return result;
    }
    
@@ -10102,17 +10232,30 @@
    return *this;
  }
  
--ACE_INLINE IR::FactoryDefSeq_var &
--IR::FactoryDefSeq_var::operator= (const ::IR::FactoryDefSeq_var &p) // deep copy
+-ACE_INLINE ::IR::FactoryDefSeq_var &
+-IR::FactoryDefSeq_var::operator= (const ::IR::FactoryDefSeq_var &p)
 +ACE_INLINE IR_FactoryDefSeq_var &
 +IR_FactoryDefSeq_var::operator= (const ::IR_FactoryDefSeq_var &p) // deep copy
  {
    if (this != &p)
-   {
-     delete this->ptr_;
--    ACE_NEW_RETURN (this->ptr_, ::IR::FactoryDefSeq (*p.ptr_), *this);
-+    ACE_NEW_RETURN (this->ptr_, ::IR_FactoryDefSeq (*p.ptr_), *this);
-   }
+     {
+@@ -8432,12 +7771,12 @@
+         }
+       else
+         {
+-          FactoryDefSeq *deep_copy =
+-            new FactoryDefSeq (*p.ptr_);
++          IR_FactoryDefSeq *deep_copy = 
++            new IR_FactoryDefSeq (*p.ptr_);
+           
+           if (deep_copy != 0)
+             {
+-              FactoryDefSeq *tmp = deep_copy;
++              IR_FactoryDefSeq *tmp = deep_copy;
+               deep_copy = this->ptr_;
+               this->ptr_ = tmp;
+               delete deep_copy;
+@@ -8448,97 +7787,97 @@
    return *this;
  }
  
@@ -10234,7 +10377,7 @@
    : ptr_ (p.out ())
  {
    delete this->ptr_;
-@@ -8359,57 +7698,50 @@
+@@ -8546,57 +7885,50 @@
  }
  
  ACE_INLINE
@@ -10307,8 +10450,8 @@
      TAO_Stub *objref,
      CORBA::Boolean _tao_collocated,
      TAO_Abstract_ServantBase *servant
-@@ -8419,200 +7751,179 @@
-   this->_tao_setup_collocation (_tao_collocated);
+@@ -8606,200 +7938,179 @@
+   this->IR_FinderDef_setup_collocation (_tao_collocated);
  }
  
 -
@@ -10562,7 +10705,7 @@
    {
      if (buffer == 0)
        return;
-@@ -8620,36 +7931,36 @@
+@@ -8807,36 +8118,36 @@
    }
    
    ACE_INLINE
@@ -10607,7 +10750,7 @@
        
        this->buffer_ = tmp1;
      }
-@@ -8659,20 +7970,20 @@
+@@ -8846,20 +8157,20 @@
      }
    }
    
@@ -10632,7 +10775,7 @@
        }
        if (this->maximum_ < rhs.maximum_)
        {
-@@ -8685,28 +7996,28 @@
+@@ -8872,28 +8183,28 @@
      
      TAO_Unbounded_Base_Sequence::operator= (rhs);
      
@@ -10671,7 +10814,7 @@
      if (orphan == 0)
      {
        // We retain ownership.
-@@ -8718,7 +8029,7 @@
+@@ -8905,7 +8216,7 @@
        }
        else
        {
@@ -10680,7 +10823,7 @@
        }
      }
      else // if (orphan == 1)
-@@ -8727,7 +8038,7 @@
+@@ -8914,7 +8225,7 @@
        {
          // We set the state back to default and relinquish
          // ownership.
@@ -10689,7 +10832,7 @@
          this->maximum_ = 0;
          this->length_ = 0;
          this->buffer_ = 0;
-@@ -8737,160 +8048,153 @@
+@@ -8924,60 +8235,53 @@
      return result;
    }
    
@@ -10756,17 +10899,30 @@
    return *this;
  }
  
--ACE_INLINE IR::FinderDefSeq_var &
--IR::FinderDefSeq_var::operator= (const ::IR::FinderDefSeq_var &p) // deep copy
+-ACE_INLINE ::IR::FinderDefSeq_var &
+-IR::FinderDefSeq_var::operator= (const ::IR::FinderDefSeq_var &p)
 +ACE_INLINE IR_FinderDefSeq_var &
 +IR_FinderDefSeq_var::operator= (const ::IR_FinderDefSeq_var &p) // deep copy
  {
    if (this != &p)
-   {
-     delete this->ptr_;
--    ACE_NEW_RETURN (this->ptr_, ::IR::FinderDefSeq (*p.ptr_), *this);
-+    ACE_NEW_RETURN (this->ptr_, ::IR_FinderDefSeq (*p.ptr_), *this);
-   }
+     {
+@@ -8988,12 +8292,12 @@
+         }
+       else
+         {
+-          FinderDefSeq *deep_copy =
+-            new FinderDefSeq (*p.ptr_);
++          IR_FinderDefSeq *deep_copy = 
++            new IR_FinderDefSeq (*p.ptr_);
+           
+           if (deep_copy != 0)
+             {
+-              FinderDefSeq *tmp = deep_copy;
++              IR_FinderDefSeq *tmp = deep_copy;
+               deep_copy = this->ptr_;
+               this->ptr_ = tmp;
+               delete deep_copy;
+@@ -9004,97 +8308,97 @@
    return *this;
  }
  
@@ -10888,7 +11044,7 @@
    : ptr_ (p.out ())
  {
    delete this->ptr_;
-@@ -8898,57 +8202,50 @@
+@@ -9102,57 +8406,50 @@
  }
  
  ACE_INLINE
@@ -10961,8 +11117,8 @@
      TAO_Stub *objref,
      CORBA::Boolean _tao_collocated,
      TAO_Abstract_ServantBase *servant
-@@ -8958,200 +8255,179 @@
-   this->_tao_setup_collocation (_tao_collocated);
+@@ -9162,200 +8459,179 @@
+   this->IR_PrimaryKeyDef_setup_collocation (_tao_collocated);
  }
  
 -
@@ -11216,7 +11372,7 @@
    {
      if (buffer == 0)
        return;
-@@ -9159,36 +8435,36 @@
+@@ -9363,36 +8639,36 @@
    }
    
    ACE_INLINE
@@ -11261,7 +11417,7 @@
        
        this->buffer_ = tmp1;
      }
-@@ -9198,20 +8474,20 @@
+@@ -9402,20 +8678,20 @@
      }
    }
    
@@ -11286,7 +11442,7 @@
        }
        if (this->maximum_ < rhs.maximum_)
        {
-@@ -9224,28 +8500,28 @@
+@@ -9428,28 +8704,28 @@
      
      TAO_Unbounded_Base_Sequence::operator= (rhs);
      
@@ -11325,7 +11481,7 @@
      if (orphan == 0)
      {
        // We retain ownership.
-@@ -9257,7 +8533,7 @@
+@@ -9461,7 +8737,7 @@
        }
        else
        {
@@ -11334,7 +11490,7 @@
        }
      }
      else // if (orphan == 1)
-@@ -9266,7 +8542,7 @@
+@@ -9470,7 +8746,7 @@
        {
          // We set the state back to default and relinquish
          // ownership.
@@ -11343,7 +11499,7 @@
          this->maximum_ = 0;
          this->length_ = 0;
          this->buffer_ = 0;
-@@ -9276,160 +8552,153 @@
+@@ -9480,60 +8756,53 @@
      return result;
    }
    
@@ -11410,17 +11566,30 @@
    return *this;
  }
  
--ACE_INLINE IR::ContainedSeq_var &
--IR::ContainedSeq_var::operator= (const ::IR::ContainedSeq_var &p) // deep copy
+-ACE_INLINE ::IR::ContainedSeq_var &
+-IR::ContainedSeq_var::operator= (const ::IR::ContainedSeq_var &p)
 +ACE_INLINE IR_ContainedSeq_var &
 +IR_ContainedSeq_var::operator= (const ::IR_ContainedSeq_var &p) // deep copy
  {
    if (this != &p)
-   {
-     delete this->ptr_;
--    ACE_NEW_RETURN (this->ptr_, ::IR::ContainedSeq (*p.ptr_), *this);
-+    ACE_NEW_RETURN (this->ptr_, ::IR_ContainedSeq (*p.ptr_), *this);
-   }
+     {
+@@ -9544,12 +8813,12 @@
+         }
+       else
+         {
+-          ContainedSeq *deep_copy =
+-            new ContainedSeq (*p.ptr_);
++          IR_ContainedSeq *deep_copy = 
++            new IR_ContainedSeq (*p.ptr_);
+           
+           if (deep_copy != 0)
+             {
+-              ContainedSeq *tmp = deep_copy;
++              IR_ContainedSeq *tmp = deep_copy;
+               deep_copy = this->ptr_;
+               this->ptr_ = tmp;
+               delete deep_copy;
+@@ -9560,97 +8829,97 @@
    return *this;
  }
  
@@ -11542,7 +11711,7 @@
    : ptr_ (p.out ())
  {
    delete this->ptr_;
-@@ -9437,184 +8706,181 @@
+@@ -9658,90 +8927,87 @@
  }
  
  ACE_INLINE
@@ -11656,11 +11825,24 @@
 +IR_StructMember_var::operator= (const ::IR_StructMember_var &p)
  {
    if (this != &p)
-   {
-     delete this->ptr_;
--    ACE_NEW_RETURN (this->ptr_, ::IR::StructMember (*p.ptr_), *this);
-+    ACE_NEW_RETURN (this->ptr_, ::IR_StructMember (*p.ptr_), *this);
-   }
+     {
+@@ -9752,12 +9018,12 @@
+         }
+       else
+         {
+-          StructMember *deep_copy =
+-            new StructMember (*p.ptr_);
++          IR_StructMember *deep_copy = 
++            new IR_StructMember (*p.ptr_);
+           
+           if (deep_copy != 0)
+             {
+-              StructMember *tmp = deep_copy;
++              IR_StructMember *tmp = deep_copy;
+               deep_copy = this->ptr_;
+               this->ptr_ = tmp;
+               delete deep_copy;
+@@ -9768,91 +9034,91 @@
    return *this;
  }
  
@@ -11774,7 +11956,7 @@
    : ptr_ (p.out ())
  {
    delete this->ptr_;
-@@ -9622,38 +8888,38 @@
+@@ -9860,38 +9126,38 @@
  }
  
  ACE_INLINE
@@ -11825,7 +12007,7 @@
  {
    return this->ptr_;
  }
-@@ -9661,54 +8927,51 @@
+@@ -9899,54 +9165,51 @@
  
  #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
    
@@ -11892,7 +12074,7 @@
        
        for (CORBA::ULong i = 0; i < this->length_; ++i)
          tmp1[i] = tmp2[i];
-@@ -9721,8 +8984,8 @@
+@@ -9959,8 +9222,8 @@
      }
    }
    
@@ -11903,7 +12085,7 @@
    // Assignment operator.
    {
      if (this == &rhs)
-@@ -9733,7 +8996,7 @@
+@@ -9971,7 +9234,7 @@
        if (this->maximum_ < rhs.maximum_)
        {
          // free the old buffer
@@ -11912,7 +12094,7 @@
          _TAO_Unbounded_Sequence_IR_StructMemberSeq::freebuf (tmp);
          this->buffer_ = _TAO_Unbounded_Sequence_IR_StructMemberSeq::allocbuf (rhs.maximum_);
        }
-@@ -9743,8 +9006,8 @@
+@@ -9981,8 +9244,8 @@
      
      TAO_Unbounded_Base_Sequence::operator= (rhs);
      
@@ -11923,7 +12105,7 @@
      
      for (CORBA::ULong i = 0; i < this->length_; ++i)
        tmp1[i] = tmp2[i];
-@@ -9753,30 +9016,30 @@
+@@ -9991,30 +9254,30 @@
    }
    
    // = Accessors.
@@ -11963,7 +12145,7 @@
      if (orphan == 0)
      {
        // We retain ownership.
-@@ -9788,7 +9051,7 @@
+@@ -10026,7 +9289,7 @@
        }
        else
        {
@@ -11972,7 +12154,7 @@
        }
      }
      else // if (orphan == 1)
-@@ -9797,7 +9060,7 @@
+@@ -10035,7 +9298,7 @@
        {
          // We set the state back to default and relinquish
          // ownership.
@@ -11981,7 +12163,7 @@
          this->maximum_ = 0;
          this->length_ = 0;
          this->buffer_ = 0;
-@@ -9807,182 +9070,176 @@
+@@ -10045,76 +9308,70 @@
      return result;
    }
    
@@ -12067,17 +12249,30 @@
    return *this;
  }
  
--ACE_INLINE IR::StructMemberSeq_var &
--IR::StructMemberSeq_var::operator= (const ::IR::StructMemberSeq_var &p) // deep copy
+-ACE_INLINE ::IR::StructMemberSeq_var &
+-IR::StructMemberSeq_var::operator= (const ::IR::StructMemberSeq_var &p)
 +ACE_INLINE IR_StructMemberSeq_var &
 +IR_StructMemberSeq_var::operator= (const ::IR_StructMemberSeq_var &p) // deep copy
  {
    if (this != &p)
-   {
-     delete this->ptr_;
--    ACE_NEW_RETURN (this->ptr_, ::IR::StructMemberSeq (*p.ptr_), *this);
-+    ACE_NEW_RETURN (this->ptr_, ::IR_StructMemberSeq (*p.ptr_), *this);
-   }
+     {
+@@ -10125,12 +9382,12 @@
+         }
+       else
+         {
+-          StructMemberSeq *deep_copy =
+-            new StructMemberSeq (*p.ptr_);
++          IR_StructMemberSeq *deep_copy = 
++            new IR_StructMemberSeq (*p.ptr_);
+           
+           if (deep_copy != 0)
+             {
+-              StructMemberSeq *tmp = deep_copy;
++              IR_StructMemberSeq *tmp = deep_copy;
+               deep_copy = this->ptr_;
+               this->ptr_ = tmp;
+               delete deep_copy;
+@@ -10141,103 +9398,103 @@
    return *this;
  }
  
@@ -12208,7 +12403,7 @@
    : ptr_ (p.out ())
  {
    delete this->ptr_;
-@@ -9990,184 +9247,181 @@
+@@ -10245,90 +9502,87 @@
  }
  
  ACE_INLINE
@@ -12322,11 +12517,24 @@
 +IR_Initializer_var::operator= (const ::IR_Initializer_var &p)
  {
    if (this != &p)
-   {
-     delete this->ptr_;
--    ACE_NEW_RETURN (this->ptr_, ::IR::Initializer (*p.ptr_), *this);
-+    ACE_NEW_RETURN (this->ptr_, ::IR_Initializer (*p.ptr_), *this);
-   }
+     {
+@@ -10339,12 +9593,12 @@
+         }
+       else
+         {
+-          Initializer *deep_copy =
+-            new Initializer (*p.ptr_);
++          IR_Initializer *deep_copy = 
++            new IR_Initializer (*p.ptr_);
+           
+           if (deep_copy != 0)
+             {
+-              Initializer *tmp = deep_copy;
++              IR_Initializer *tmp = deep_copy;
+               deep_copy = this->ptr_;
+               this->ptr_ = tmp;
+               delete deep_copy;
+@@ -10355,91 +9609,91 @@
    return *this;
  }
  
@@ -12440,7 +12648,7 @@
    : ptr_ (p.out ())
  {
    delete this->ptr_;
-@@ -10175,93 +9429,89 @@
+@@ -10447,93 +9701,89 @@
  }
  
  ACE_INLINE
@@ -12558,7 +12766,7 @@
        
        for (CORBA::ULong i = 0; i < this->length_; ++i)
          tmp1[i] = tmp2[i];
-@@ -10274,8 +9524,8 @@
+@@ -10546,8 +9796,8 @@
      }
    }
    
@@ -12569,7 +12777,7 @@
    // Assignment operator.
    {
      if (this == &rhs)
-@@ -10286,7 +9536,7 @@
+@@ -10558,7 +9808,7 @@
        if (this->maximum_ < rhs.maximum_)
        {
          // free the old buffer
@@ -12578,7 +12786,7 @@
          _TAO_Unbounded_Sequence_IR_InitializerSeq::freebuf (tmp);
          this->buffer_ = _TAO_Unbounded_Sequence_IR_InitializerSeq::allocbuf (rhs.maximum_);
        }
-@@ -10296,8 +9546,8 @@
+@@ -10568,8 +9818,8 @@
      
      TAO_Unbounded_Base_Sequence::operator= (rhs);
      
@@ -12589,7 +12797,7 @@
      
      for (CORBA::ULong i = 0; i < this->length_; ++i)
        tmp1[i] = tmp2[i];
-@@ -10306,30 +9556,30 @@
+@@ -10578,30 +9828,30 @@
    }
    
    // = Accessors.
@@ -12629,7 +12837,7 @@
      if (orphan == 0)
      {
        // We retain ownership.
-@@ -10341,7 +9591,7 @@
+@@ -10613,7 +9863,7 @@
        }
        else
        {
@@ -12638,7 +12846,7 @@
        }
      }
      else // if (orphan == 1)
-@@ -10350,7 +9600,7 @@
+@@ -10622,7 +9872,7 @@
        {
          // We set the state back to default and relinquish
          // ownership.
@@ -12647,7 +12855,7 @@
          this->maximum_ = 0;
          this->length_ = 0;
          this->buffer_ = 0;
-@@ -10360,182 +9610,176 @@
+@@ -10632,76 +9882,70 @@
      return result;
    }
    
@@ -12733,17 +12941,30 @@
    return *this;
  }
  
--ACE_INLINE IR::InitializerSeq_var &
--IR::InitializerSeq_var::operator= (const ::IR::InitializerSeq_var &p) // deep copy
+-ACE_INLINE ::IR::InitializerSeq_var &
+-IR::InitializerSeq_var::operator= (const ::IR::InitializerSeq_var &p)
 +ACE_INLINE IR_InitializerSeq_var &
 +IR_InitializerSeq_var::operator= (const ::IR_InitializerSeq_var &p) // deep copy
  {
    if (this != &p)
-   {
-     delete this->ptr_;
--    ACE_NEW_RETURN (this->ptr_, ::IR::InitializerSeq (*p.ptr_), *this);
-+    ACE_NEW_RETURN (this->ptr_, ::IR_InitializerSeq (*p.ptr_), *this);
-   }
+     {
+@@ -10712,12 +9956,12 @@
+         }
+       else
+         {
+-          InitializerSeq *deep_copy =
+-            new InitializerSeq (*p.ptr_);
++          IR_InitializerSeq *deep_copy = 
++            new IR_InitializerSeq (*p.ptr_);
+           
+           if (deep_copy != 0)
+             {
+-              InitializerSeq *tmp = deep_copy;
++              IR_InitializerSeq *tmp = deep_copy;
+               deep_copy = this->ptr_;
+               this->ptr_ = tmp;
+               delete deep_copy;
+@@ -10728,103 +9972,103 @@
    return *this;
  }
  
@@ -12874,7 +13095,7 @@
    : ptr_ (p.out ())
  {
    delete this->ptr_;
-@@ -10543,184 +9787,181 @@
+@@ -10832,90 +10076,87 @@
  }
  
  ACE_INLINE
@@ -12988,11 +13209,24 @@
 +IR_UnionMember_var::operator= (const ::IR_UnionMember_var &p)
  {
    if (this != &p)
-   {
-     delete this->ptr_;
--    ACE_NEW_RETURN (this->ptr_, ::IR::UnionMember (*p.ptr_), *this);
-+    ACE_NEW_RETURN (this->ptr_, ::IR_UnionMember (*p.ptr_), *this);
-   }
+     {
+@@ -10926,12 +10167,12 @@
+         }
+       else
+         {
+-          UnionMember *deep_copy =
+-            new UnionMember (*p.ptr_);
++          IR_UnionMember *deep_copy = 
++            new IR_UnionMember (*p.ptr_);
+           
+           if (deep_copy != 0)
+             {
+-              UnionMember *tmp = deep_copy;
++              IR_UnionMember *tmp = deep_copy;
+               deep_copy = this->ptr_;
+               this->ptr_ = tmp;
+               delete deep_copy;
+@@ -10942,91 +10183,91 @@
    return *this;
  }
  
@@ -13106,7 +13340,7 @@
    : ptr_ (p.out ())
  {
    delete this->ptr_;
-@@ -10728,93 +9969,89 @@
+@@ -11034,93 +10275,89 @@
  }
  
  ACE_INLINE
@@ -13224,7 +13458,7 @@
        
        for (CORBA::ULong i = 0; i < this->length_; ++i)
          tmp1[i] = tmp2[i];
-@@ -10827,8 +10064,8 @@
+@@ -11133,8 +10370,8 @@
      }
    }
    
@@ -13235,7 +13469,7 @@
    // Assignment operator.
    {
      if (this == &rhs)
-@@ -10839,7 +10076,7 @@
+@@ -11145,7 +10382,7 @@
        if (this->maximum_ < rhs.maximum_)
        {
          // free the old buffer
@@ -13244,7 +13478,7 @@
          _TAO_Unbounded_Sequence_IR_UnionMemberSeq::freebuf (tmp);
          this->buffer_ = _TAO_Unbounded_Sequence_IR_UnionMemberSeq::allocbuf (rhs.maximum_);
        }
-@@ -10849,8 +10086,8 @@
+@@ -11155,8 +10392,8 @@
      
      TAO_Unbounded_Base_Sequence::operator= (rhs);
      
@@ -13255,7 +13489,7 @@
      
      for (CORBA::ULong i = 0; i < this->length_; ++i)
        tmp1[i] = tmp2[i];
-@@ -10859,30 +10096,30 @@
+@@ -11165,30 +10402,30 @@
    }
    
    // = Accessors.
@@ -13295,7 +13529,7 @@
      if (orphan == 0)
      {
        // We retain ownership.
-@@ -10894,7 +10131,7 @@
+@@ -11200,7 +10437,7 @@
        }
        else
        {
@@ -13304,7 +13538,7 @@
        }
      }
      else // if (orphan == 1)
-@@ -10903,7 +10140,7 @@
+@@ -11209,7 +10446,7 @@
        {
          // We set the state back to default and relinquish
          // ownership.
@@ -13313,7 +13547,7 @@
          this->maximum_ = 0;
          this->length_ = 0;
          this->buffer_ = 0;
-@@ -10913,182 +10150,176 @@
+@@ -11219,76 +10456,70 @@
      return result;
    }
    
@@ -13399,17 +13633,30 @@
    return *this;
  }
  
--ACE_INLINE IR::UnionMemberSeq_var &
--IR::UnionMemberSeq_var::operator= (const ::IR::UnionMemberSeq_var &p) // deep copy
+-ACE_INLINE ::IR::UnionMemberSeq_var &
+-IR::UnionMemberSeq_var::operator= (const ::IR::UnionMemberSeq_var &p)
 +ACE_INLINE IR_UnionMemberSeq_var &
 +IR_UnionMemberSeq_var::operator= (const ::IR_UnionMemberSeq_var &p) // deep copy
  {
    if (this != &p)
-   {
-     delete this->ptr_;
--    ACE_NEW_RETURN (this->ptr_, ::IR::UnionMemberSeq (*p.ptr_), *this);
-+    ACE_NEW_RETURN (this->ptr_, ::IR_UnionMemberSeq (*p.ptr_), *this);
-   }
+     {
+@@ -11299,12 +10530,12 @@
+         }
+       else
+         {
+-          UnionMemberSeq *deep_copy =
+-            new UnionMemberSeq (*p.ptr_);
++          IR_UnionMemberSeq *deep_copy = 
++            new IR_UnionMemberSeq (*p.ptr_);
+           
+           if (deep_copy != 0)
+             {
+-              UnionMemberSeq *tmp = deep_copy;
++              IR_UnionMemberSeq *tmp = deep_copy;
+               deep_copy = this->ptr_;
+               this->ptr_ = tmp;
+               delete deep_copy;
+@@ -11315,103 +10546,103 @@
    return *this;
  }
  
@@ -13540,7 +13787,7 @@
    : ptr_ (p.out ())
  {
    delete this->ptr_;
-@@ -11096,194 +10327,187 @@
+@@ -11419,94 +10650,87 @@
  }
  
  ACE_INLINE
@@ -13652,17 +13899,30 @@
    return *this;
  }
  
--ACE_INLINE IR::EnumMemberSeq_var &
--IR::EnumMemberSeq_var::operator= (const ::IR::EnumMemberSeq_var &p) // deep copy
+-ACE_INLINE ::IR::EnumMemberSeq_var &
+-IR::EnumMemberSeq_var::operator= (const ::IR::EnumMemberSeq_var &p)
 +ACE_INLINE IR_EnumMemberSeq_var &
 +IR_EnumMemberSeq_var::operator= (const ::IR_EnumMemberSeq_var &p) // deep copy
  {
    if (this != &p)
-   {
-     delete this->ptr_;
--    ACE_NEW_RETURN (this->ptr_, ::IR::EnumMemberSeq (*p.ptr_), *this);
-+    ACE_NEW_RETURN (this->ptr_, ::IR_EnumMemberSeq (*p.ptr_), *this);
-   }
+     {
+@@ -11517,12 +10741,12 @@
+         }
+       else
+         {
+-          EnumMemberSeq *deep_copy =
+-            new EnumMemberSeq (*p.ptr_);
++          IR_EnumMemberSeq *deep_copy = 
++            new IR_EnumMemberSeq (*p.ptr_);
+           
+           if (deep_copy != 0)
+             {
+-              EnumMemberSeq *tmp = deep_copy;
++              IR_EnumMemberSeq *tmp = deep_copy;
+               deep_copy = this->ptr_;
+               this->ptr_ = tmp;
+               delete deep_copy;
+@@ -11533,97 +10757,97 @@
    return *this;
  }
  
@@ -13783,7 +14043,7 @@
    : ptr_ (p.out ())
  {
    delete this->ptr_;
-@@ -11291,184 +10515,181 @@
+@@ -11631,90 +10855,87 @@
  }
  
  ACE_INLINE
@@ -13896,11 +14156,24 @@
 +IR_Container::Description_var::operator= (const ::IR_Container::Description_var &p)
  {
    if (this != &p)
-   {
-     delete this->ptr_;
--    ACE_NEW_RETURN (this->ptr_, ::IR::Container::Description (*p.ptr_), *this);
-+    ACE_NEW_RETURN (this->ptr_, ::IR_Container::Description (*p.ptr_), *this);
-   }
+     {
+@@ -11725,12 +10946,12 @@
+         }
+       else
+         {
+-          Description *deep_copy =
+-            new Description (*p.ptr_);
++          IR_Container::Description *deep_copy = 
++            new IR_Container::Description (*p.ptr_);
+           
+           if (deep_copy != 0)
+             {
+-              Description *tmp = deep_copy;
++              IR_Container::Description *tmp = deep_copy;
+               deep_copy = this->ptr_;
+               this->ptr_ = tmp;
+               delete deep_copy;
+@@ -11741,91 +10962,91 @@
    return *this;
  }
  
@@ -14014,7 +14287,7 @@
    : ptr_ (p.out ())
  {
    delete this->ptr_;
-@@ -11476,93 +10697,89 @@
+@@ -11833,93 +11054,89 @@
  }
  
  ACE_INLINE
@@ -14130,7 +14403,7 @@
        
        for (CORBA::ULong i = 0; i < this->length_; ++i)
          tmp1[i] = tmp2[i];
-@@ -11575,8 +10792,8 @@
+@@ -11932,8 +11149,8 @@
      }
    }
    
@@ -14141,7 +14414,7 @@
    // Assignment operator.
    {
      if (this == &rhs)
-@@ -11587,7 +10804,7 @@
+@@ -11944,7 +11161,7 @@
        if (this->maximum_ < rhs.maximum_)
        {
          // free the old buffer
@@ -14150,7 +14423,7 @@
          _TAO_Unbounded_Sequence_IR_Container_DescriptionSeq::freebuf (tmp);
          this->buffer_ = _TAO_Unbounded_Sequence_IR_Container_DescriptionSeq::allocbuf (rhs.maximum_);
        }
-@@ -11597,8 +10814,8 @@
+@@ -11954,8 +11171,8 @@
      
      TAO_Unbounded_Base_Sequence::operator= (rhs);
      
@@ -14161,7 +14434,7 @@
      
      for (CORBA::ULong i = 0; i < this->length_; ++i)
        tmp1[i] = tmp2[i];
-@@ -11607,30 +10824,30 @@
+@@ -11964,30 +11181,30 @@
    }
    
    // = Accessors.
@@ -14201,7 +14474,7 @@
      if (orphan == 0)
      {
        // We retain ownership.
-@@ -11642,7 +10859,7 @@
+@@ -11999,7 +11216,7 @@
        }
        else
        {
@@ -14210,7 +14483,7 @@
        }
      }
      else // if (orphan == 1)
-@@ -11651,7 +10868,7 @@
+@@ -12008,7 +11225,7 @@
        {
          // We set the state back to default and relinquish
          // ownership.
@@ -14219,7 +14492,7 @@
          this->maximum_ = 0;
          this->length_ = 0;
          this->buffer_ = 0;
-@@ -11661,182 +10878,176 @@
+@@ -12018,76 +11235,70 @@
      return result;
    }
    
@@ -14305,17 +14578,30 @@
    return *this;
  }
  
--ACE_INLINE IR::Container::DescriptionSeq_var &
--IR::Container::DescriptionSeq_var::operator= (const ::IR::Container::DescriptionSeq_var &p) // deep copy
+-ACE_INLINE ::IR::Container::DescriptionSeq_var &
+-IR::Container::DescriptionSeq_var::operator= (const ::IR::Container::DescriptionSeq_var &p)
 +ACE_INLINE IR_Container::DescriptionSeq_var &
 +IR_Container::DescriptionSeq_var::operator= (const ::IR_Container::DescriptionSeq_var &p) // deep copy
  {
    if (this != &p)
-   {
-     delete this->ptr_;
--    ACE_NEW_RETURN (this->ptr_, ::IR::Container::DescriptionSeq (*p.ptr_), *this);
-+    ACE_NEW_RETURN (this->ptr_, ::IR_Container::DescriptionSeq (*p.ptr_), *this);
-   }
+     {
+@@ -12098,12 +11309,12 @@
+         }
+       else
+         {
+-          DescriptionSeq *deep_copy =
+-            new DescriptionSeq (*p.ptr_);
++          IR_Container::DescriptionSeq *deep_copy = 
++            new IR_Container::DescriptionSeq (*p.ptr_);
+           
+           if (deep_copy != 0)
+             {
+-              DescriptionSeq *tmp = deep_copy;
++              IR_Container::DescriptionSeq *tmp = deep_copy;
+               deep_copy = this->ptr_;
+               this->ptr_ = tmp;
+               delete deep_copy;
+@@ -12114,103 +11325,103 @@
    return *this;
  }
  
@@ -14446,7 +14732,7 @@
    : ptr_ (p.out ())
  {
    delete this->ptr_;
-@@ -11844,57 +11055,50 @@
+@@ -12218,57 +11429,50 @@
  }
  
  ACE_INLINE
@@ -14517,8 +14803,8 @@
      TAO_Stub *objref,
      CORBA::Boolean _tao_collocated,
      TAO_Abstract_ServantBase *servant
-@@ -11904,185 +11108,164 @@
-   this->_tao_setup_collocation (_tao_collocated);
+@@ -12278,185 +11482,164 @@
+   this->IR_PrimitiveDef_setup_collocation (_tao_collocated);
  }
  
 -
@@ -14752,8 +15038,8 @@
      TAO_Stub *objref,
      CORBA::Boolean _tao_collocated,
      TAO_Abstract_ServantBase *servant
-@@ -12092,185 +11275,164 @@
-   this->_tao_setup_collocation (_tao_collocated);
+@@ -12466,185 +11649,164 @@
+   this->IR_StringDef_setup_collocation (_tao_collocated);
  }
  
 -
@@ -14987,8 +15273,8 @@
      TAO_Stub *objref,
      CORBA::Boolean _tao_collocated,
      TAO_Abstract_ServantBase *servant
-@@ -12280,185 +11442,164 @@
-   this->_tao_setup_collocation (_tao_collocated);
+@@ -12654,185 +11816,164 @@
+   this->IR_SequenceDef_setup_collocation (_tao_collocated);
  }
  
 -
@@ -15222,8 +15508,8 @@
      TAO_Stub *objref,
      CORBA::Boolean _tao_collocated,
      TAO_Abstract_ServantBase *servant
-@@ -12468,185 +11609,164 @@
-   this->_tao_setup_collocation (_tao_collocated);
+@@ -12842,185 +11983,164 @@
+   this->IR_ArrayDef_setup_collocation (_tao_collocated);
  }
  
 -
@@ -15457,8 +15743,8 @@
      TAO_Stub *objref,
      CORBA::Boolean _tao_collocated,
      TAO_Abstract_ServantBase *servant
-@@ -12656,185 +11776,164 @@
-   this->_tao_setup_collocation (_tao_collocated);
+@@ -13030,185 +12150,164 @@
+   this->IR_WstringDef_setup_collocation (_tao_collocated);
  }
  
 -
@@ -15692,8 +15978,8 @@
      TAO_Stub *objref,
      CORBA::Boolean _tao_collocated,
      TAO_Abstract_ServantBase *servant
-@@ -12844,185 +11943,164 @@
-   this->_tao_setup_collocation (_tao_collocated);
+@@ -13218,185 +12317,164 @@
+   this->IR_FixedDef_setup_collocation (_tao_collocated);
  }
  
 -
@@ -15927,8 +16213,8 @@
      TAO_Stub *objref,
      CORBA::Boolean _tao_collocated,
      TAO_Abstract_ServantBase *servant
-@@ -13032,311 +12110,295 @@
-   this->_tao_setup_collocation (_tao_collocated);
+@@ -13406,217 +12484,201 @@
+   this->IR_ComponentRepository_setup_collocation (_tao_collocated);
  }
  
 -#endif /* end #if !defined */
@@ -16202,11 +16488,24 @@
 +IR_ModuleDescription_var::operator= (const ::IR_ModuleDescription_var &p)
  {
    if (this != &p)
-   {
-     delete this->ptr_;
--    ACE_NEW_RETURN (this->ptr_, ::IR::ModuleDescription (*p.ptr_), *this);
-+    ACE_NEW_RETURN (this->ptr_, ::IR_ModuleDescription (*p.ptr_), *this);
-   }
+     {
+@@ -13627,12 +12689,12 @@
+         }
+       else
+         {
+-          ModuleDescription *deep_copy =
+-            new ModuleDescription (*p.ptr_);
++          IR_ModuleDescription *deep_copy = 
++            new IR_ModuleDescription (*p.ptr_);
+           
+           if (deep_copy != 0)
+             {
+-              ModuleDescription *tmp = deep_copy;
++              IR_ModuleDescription *tmp = deep_copy;
+               deep_copy = this->ptr_;
+               this->ptr_ = tmp;
+               delete deep_copy;
+@@ -13643,91 +12705,91 @@
    return *this;
  }
  
@@ -16320,7 +16619,7 @@
    : ptr_ (p.out ())
  {
    delete this->ptr_;
-@@ -13344,175 +12406,175 @@
+@@ -13735,81 +12797,81 @@
  }
  
  ACE_INLINE
@@ -16423,11 +16722,24 @@
 +IR_ConstantDescription_var::operator= (const ::IR_ConstantDescription_var &p)
  {
    if (this != &p)
-   {
-     delete this->ptr_;
--    ACE_NEW_RETURN (this->ptr_, ::IR::ConstantDescription (*p.ptr_), *this);
-+    ACE_NEW_RETURN (this->ptr_, ::IR_ConstantDescription (*p.ptr_), *this);
-   }
+     {
+@@ -13820,12 +12882,12 @@
+         }
+       else
+         {
+-          ConstantDescription *deep_copy =
+-            new ConstantDescription (*p.ptr_);
++          IR_ConstantDescription *deep_copy = 
++            new IR_ConstantDescription (*p.ptr_);
+           
+           if (deep_copy != 0)
+             {
+-              ConstantDescription *tmp = deep_copy;
++              IR_ConstantDescription *tmp = deep_copy;
+               deep_copy = this->ptr_;
+               this->ptr_ = tmp;
+               delete deep_copy;
+@@ -13836,91 +12898,91 @@
    return *this;
  }
  
@@ -16541,7 +16853,7 @@
    : ptr_ (p.out ())
  {
    delete this->ptr_;
-@@ -13520,48 +12582,44 @@
+@@ -13928,48 +12990,44 @@
  }
  
  ACE_INLINE
@@ -16603,8 +16915,8 @@
      TAO_Stub *objref,
      CORBA::Boolean _tao_collocated,
      TAO_Abstract_ServantBase *servant
-@@ -13571,311 +12629,295 @@
-   this->_tao_setup_collocation (_tao_collocated);
+@@ -13979,217 +13037,201 @@
+   this->IR_TypedefDef_setup_collocation (_tao_collocated);
  }
  
 -#endif /* end #if !defined */
@@ -16878,11 +17190,24 @@
 +IR_TypeDescription_var::operator= (const ::IR_TypeDescription_var &p)
  {
    if (this != &p)
-   {
-     delete this->ptr_;
--    ACE_NEW_RETURN (this->ptr_, ::IR::TypeDescription (*p.ptr_), *this);
-+    ACE_NEW_RETURN (this->ptr_, ::IR_TypeDescription (*p.ptr_), *this);
-   }
+     {
+@@ -14200,12 +13242,12 @@
+         }
+       else
+         {
+-          TypeDescription *deep_copy =
+-            new TypeDescription (*p.ptr_);
++          IR_TypeDescription *deep_copy = 
++            new IR_TypeDescription (*p.ptr_);
+           
+           if (deep_copy != 0)
+             {
+-              TypeDescription *tmp = deep_copy;
++              IR_TypeDescription *tmp = deep_copy;
+               deep_copy = this->ptr_;
+               this->ptr_ = tmp;
+               delete deep_copy;
+@@ -14216,91 +13258,91 @@
    return *this;
  }
  
@@ -16996,7 +17321,7 @@
    : ptr_ (p.out ())
  {
    delete this->ptr_;
-@@ -13883,175 +12925,175 @@
+@@ -14308,81 +13350,81 @@
  }
  
  ACE_INLINE
@@ -17099,11 +17424,24 @@
 +IR_ExceptionDescription_var::operator= (const ::IR_ExceptionDescription_var &p)
  {
    if (this != &p)
-   {
-     delete this->ptr_;
--    ACE_NEW_RETURN (this->ptr_, ::IR::ExceptionDescription (*p.ptr_), *this);
-+    ACE_NEW_RETURN (this->ptr_, ::IR_ExceptionDescription (*p.ptr_), *this);
-   }
+     {
+@@ -14393,12 +13435,12 @@
+         }
+       else
+         {
+-          ExceptionDescription *deep_copy =
+-            new ExceptionDescription (*p.ptr_);
++          IR_ExceptionDescription *deep_copy = 
++            new IR_ExceptionDescription (*p.ptr_);
+           
+           if (deep_copy != 0)
+             {
+-              ExceptionDescription *tmp = deep_copy;
++              IR_ExceptionDescription *tmp = deep_copy;
+               deep_copy = this->ptr_;
+               this->ptr_ = tmp;
+               delete deep_copy;
+@@ -14409,91 +13451,91 @@
    return *this;
  }
  
@@ -17217,7 +17555,7 @@
    : ptr_ (p.out ())
  {
    delete this->ptr_;
-@@ -14059,63 +13101,59 @@
+@@ -14501,63 +13543,59 @@
  }
  
  ACE_INLINE
@@ -17299,7 +17637,7 @@
    {
      if (buffer == 0)
        return;
-@@ -14123,36 +13161,36 @@
+@@ -14565,36 +13603,36 @@
    }
    
    ACE_INLINE
@@ -17344,7 +17682,7 @@
        
        this->buffer_ = tmp1;
      }
-@@ -14162,20 +13200,20 @@
+@@ -14604,20 +13642,20 @@
      }
    }
    
@@ -17369,7 +17707,7 @@
        }
        if (this->maximum_ < rhs.maximum_)
        {
-@@ -14188,28 +13226,28 @@
+@@ -14630,28 +13668,28 @@
      
      TAO_Unbounded_Base_Sequence::operator= (rhs);
      
@@ -17408,7 +17746,7 @@
      if (orphan == 0)
      {
        // We retain ownership.
-@@ -14221,7 +13259,7 @@
+@@ -14663,7 +13701,7 @@
        }
        else
        {
@@ -17417,7 +17755,7 @@
        }
      }
      else // if (orphan == 1)
-@@ -14230,7 +13268,7 @@
+@@ -14672,7 +13710,7 @@
        {
          // We set the state back to default and relinquish
          // ownership.
@@ -17426,7 +17764,7 @@
          this->maximum_ = 0;
          this->length_ = 0;
          this->buffer_ = 0;
-@@ -14240,160 +13278,153 @@
+@@ -14682,60 +13720,53 @@
      return result;
    }
    
@@ -17493,17 +17831,30 @@
    return *this;
  }
  
--ACE_INLINE IR::ExceptionDefSeq_var &
--IR::ExceptionDefSeq_var::operator= (const ::IR::ExceptionDefSeq_var &p) // deep copy
+-ACE_INLINE ::IR::ExceptionDefSeq_var &
+-IR::ExceptionDefSeq_var::operator= (const ::IR::ExceptionDefSeq_var &p)
 +ACE_INLINE IR_ExceptionDefSeq_var &
 +IR_ExceptionDefSeq_var::operator= (const ::IR_ExceptionDefSeq_var &p) // deep copy
  {
    if (this != &p)
-   {
-     delete this->ptr_;
--    ACE_NEW_RETURN (this->ptr_, ::IR::ExceptionDefSeq (*p.ptr_), *this);
-+    ACE_NEW_RETURN (this->ptr_, ::IR_ExceptionDefSeq (*p.ptr_), *this);
-   }
+     {
+@@ -14746,12 +13777,12 @@
+         }
+       else
+         {
+-          ExceptionDefSeq *deep_copy =
+-            new ExceptionDefSeq (*p.ptr_);
++          IR_ExceptionDefSeq *deep_copy = 
++            new IR_ExceptionDefSeq (*p.ptr_);
+           
+           if (deep_copy != 0)
+             {
+-              ExceptionDefSeq *tmp = deep_copy;
++              IR_ExceptionDefSeq *tmp = deep_copy;
+               deep_copy = this->ptr_;
+               this->ptr_ = tmp;
+               delete deep_copy;
+@@ -14762,97 +13793,97 @@
    return *this;
  }
  
@@ -17625,7 +17976,7 @@
    : ptr_ (p.out ())
  {
    delete this->ptr_;
-@@ -14401,102 +13432,95 @@
+@@ -14860,102 +13891,95 @@
  }
  
  ACE_INLINE
@@ -17754,7 +18105,7 @@
        
        for (CORBA::ULong i = 0; i < this->length_; ++i)
          tmp1[i] = tmp2[i];
-@@ -14509,8 +13533,8 @@
+@@ -14968,8 +13992,8 @@
      }
    }
    
@@ -17765,7 +18116,7 @@
    // Assignment operator.
    {
      if (this == &rhs)
-@@ -14521,7 +13545,7 @@
+@@ -14980,7 +14004,7 @@
        if (this->maximum_ < rhs.maximum_)
        {
          // free the old buffer
@@ -17774,7 +18125,7 @@
          _TAO_Unbounded_Sequence_IR_ExcDescriptionSeq::freebuf (tmp);
          this->buffer_ = _TAO_Unbounded_Sequence_IR_ExcDescriptionSeq::allocbuf (rhs.maximum_);
        }
-@@ -14531,8 +13555,8 @@
+@@ -14990,8 +14014,8 @@
      
      TAO_Unbounded_Base_Sequence::operator= (rhs);
      
@@ -17785,7 +18136,7 @@
      
      for (CORBA::ULong i = 0; i < this->length_; ++i)
        tmp1[i] = tmp2[i];
-@@ -14541,30 +13565,30 @@
+@@ -15000,30 +14024,30 @@
    }
    
    // = Accessors.
@@ -17825,7 +18176,7 @@
      if (orphan == 0)
      {
        // We retain ownership.
-@@ -14576,7 +13600,7 @@
+@@ -15035,7 +14059,7 @@
        }
        else
        {
@@ -17834,7 +18185,7 @@
        }
      }
      else // if (orphan == 1)
-@@ -14585,7 +13609,7 @@
+@@ -15044,7 +14068,7 @@
        {
          // We set the state back to default and relinquish
          // ownership.
@@ -17843,7 +18194,7 @@
          this->maximum_ = 0;
          this->length_ = 0;
          this->buffer_ = 0;
-@@ -14595,182 +13619,176 @@
+@@ -15054,76 +14078,70 @@
      return result;
    }
    
@@ -17929,17 +18280,30 @@
    return *this;
  }
  
--ACE_INLINE IR::ExcDescriptionSeq_var &
--IR::ExcDescriptionSeq_var::operator= (const ::IR::ExcDescriptionSeq_var &p) // deep copy
+-ACE_INLINE ::IR::ExcDescriptionSeq_var &
+-IR::ExcDescriptionSeq_var::operator= (const ::IR::ExcDescriptionSeq_var &p)
 +ACE_INLINE IR_ExcDescriptionSeq_var &
 +IR_ExcDescriptionSeq_var::operator= (const ::IR_ExcDescriptionSeq_var &p) // deep copy
  {
    if (this != &p)
-   {
-     delete this->ptr_;
--    ACE_NEW_RETURN (this->ptr_, ::IR::ExcDescriptionSeq (*p.ptr_), *this);
-+    ACE_NEW_RETURN (this->ptr_, ::IR_ExcDescriptionSeq (*p.ptr_), *this);
-   }
+     {
+@@ -15134,12 +14152,12 @@
+         }
+       else
+         {
+-          ExcDescriptionSeq *deep_copy =
+-            new ExcDescriptionSeq (*p.ptr_);
++          IR_ExcDescriptionSeq *deep_copy = 
++            new IR_ExcDescriptionSeq (*p.ptr_);
+           
+           if (deep_copy != 0)
+             {
+-              ExcDescriptionSeq *tmp = deep_copy;
++              IR_ExcDescriptionSeq *tmp = deep_copy;
+               deep_copy = this->ptr_;
+               this->ptr_ = tmp;
+               delete deep_copy;
+@@ -15150,103 +14168,103 @@
    return *this;
  }
  
@@ -18070,7 +18434,7 @@
    : ptr_ (p.out ())
  {
    delete this->ptr_;
-@@ -14778,57 +13796,50 @@
+@@ -15254,57 +14272,50 @@
  }
  
  ACE_INLINE
@@ -18143,8 +18507,8 @@
      TAO_Stub *objref,
      CORBA::Boolean _tao_collocated,
      TAO_Abstract_ServantBase *servant
-@@ -14838,311 +13849,295 @@
-   this->_tao_setup_collocation (_tao_collocated);
+@@ -15314,217 +14325,201 @@
+   this->IR_AttributeDef_setup_collocation (_tao_collocated);
  }
  
 -#endif /* end #if !defined */
@@ -18418,11 +18782,24 @@
 +IR_AttributeDescription_var::operator= (const ::IR_AttributeDescription_var &p)
  {
    if (this != &p)
-   {
-     delete this->ptr_;
--    ACE_NEW_RETURN (this->ptr_, ::IR::AttributeDescription (*p.ptr_), *this);
-+    ACE_NEW_RETURN (this->ptr_, ::IR_AttributeDescription (*p.ptr_), *this);
-   }
+     {
+@@ -15535,12 +14530,12 @@
+         }
+       else
+         {
+-          AttributeDescription *deep_copy =
+-            new AttributeDescription (*p.ptr_);
++          IR_AttributeDescription *deep_copy = 
++            new IR_AttributeDescription (*p.ptr_);
+           
+           if (deep_copy != 0)
+             {
+-              AttributeDescription *tmp = deep_copy;
++              IR_AttributeDescription *tmp = deep_copy;
+               deep_copy = this->ptr_;
+               this->ptr_ = tmp;
+               delete deep_copy;
+@@ -15551,91 +14546,91 @@
    return *this;
  }
  
@@ -18536,7 +18913,7 @@
    : ptr_ (p.out ())
  {
    delete this->ptr_;
-@@ -15150,175 +14145,175 @@
+@@ -15643,81 +14638,81 @@
  }
  
  ACE_INLINE
@@ -18639,11 +19016,24 @@
 +IR_ParameterDescription_var::operator= (const ::IR_ParameterDescription_var &p)
  {
    if (this != &p)
-   {
-     delete this->ptr_;
--    ACE_NEW_RETURN (this->ptr_, ::IR::ParameterDescription (*p.ptr_), *this);
-+    ACE_NEW_RETURN (this->ptr_, ::IR_ParameterDescription (*p.ptr_), *this);
-   }
+     {
+@@ -15728,12 +14723,12 @@
+         }
+       else
+         {
+-          ParameterDescription *deep_copy =
+-            new ParameterDescription (*p.ptr_);
++          IR_ParameterDescription *deep_copy = 
++            new IR_ParameterDescription (*p.ptr_);
+           
+           if (deep_copy != 0)
+             {
+-              ParameterDescription *tmp = deep_copy;
++              IR_ParameterDescription *tmp = deep_copy;
+               deep_copy = this->ptr_;
+               this->ptr_ = tmp;
+               delete deep_copy;
+@@ -15744,91 +14739,91 @@
    return *this;
  }
  
@@ -18757,7 +19147,7 @@
    : ptr_ (p.out ())
  {
    delete this->ptr_;
-@@ -15326,93 +14321,89 @@
+@@ -15836,93 +14831,89 @@
  }
  
  ACE_INLINE
@@ -18875,7 +19265,7 @@
        
        for (CORBA::ULong i = 0; i < this->length_; ++i)
          tmp1[i] = tmp2[i];
-@@ -15425,8 +14416,8 @@
+@@ -15935,8 +14926,8 @@
      }
    }
    
@@ -18886,7 +19276,7 @@
    // Assignment operator.
    {
      if (this == &rhs)
-@@ -15437,7 +14428,7 @@
+@@ -15947,7 +14938,7 @@
        if (this->maximum_ < rhs.maximum_)
        {
          // free the old buffer
@@ -18895,7 +19285,7 @@
          _TAO_Unbounded_Sequence_IR_ParDescriptionSeq::freebuf (tmp);
          this->buffer_ = _TAO_Unbounded_Sequence_IR_ParDescriptionSeq::allocbuf (rhs.maximum_);
        }
-@@ -15447,8 +14438,8 @@
+@@ -15957,8 +14948,8 @@
      
      TAO_Unbounded_Base_Sequence::operator= (rhs);
      
@@ -18906,7 +19296,7 @@
      
      for (CORBA::ULong i = 0; i < this->length_; ++i)
        tmp1[i] = tmp2[i];
-@@ -15457,30 +14448,30 @@
+@@ -15967,30 +14958,30 @@
    }
    
    // = Accessors.
@@ -18946,7 +19336,7 @@
      if (orphan == 0)
      {
        // We retain ownership.
-@@ -15492,7 +14483,7 @@
+@@ -16002,7 +14993,7 @@
        }
        else
        {
@@ -18955,7 +19345,7 @@
        }
      }
      else // if (orphan == 1)
-@@ -15501,7 +14492,7 @@
+@@ -16011,7 +15002,7 @@
        {
          // We set the state back to default and relinquish
          // ownership.
@@ -18964,7 +19354,7 @@
          this->maximum_ = 0;
          this->length_ = 0;
          this->buffer_ = 0;
-@@ -15511,182 +14502,176 @@
+@@ -16021,76 +15012,70 @@
      return result;
    }
    
@@ -19050,17 +19440,30 @@
    return *this;
  }
  
--ACE_INLINE IR::ParDescriptionSeq_var &
--IR::ParDescriptionSeq_var::operator= (const ::IR::ParDescriptionSeq_var &p) // deep copy
+-ACE_INLINE ::IR::ParDescriptionSeq_var &
+-IR::ParDescriptionSeq_var::operator= (const ::IR::ParDescriptionSeq_var &p)
 +ACE_INLINE IR_ParDescriptionSeq_var &
 +IR_ParDescriptionSeq_var::operator= (const ::IR_ParDescriptionSeq_var &p) // deep copy
  {
    if (this != &p)
-   {
-     delete this->ptr_;
--    ACE_NEW_RETURN (this->ptr_, ::IR::ParDescriptionSeq (*p.ptr_), *this);
-+    ACE_NEW_RETURN (this->ptr_, ::IR_ParDescriptionSeq (*p.ptr_), *this);
-   }
+     {
+@@ -16101,12 +15086,12 @@
+         }
+       else
+         {
+-          ParDescriptionSeq *deep_copy =
+-            new ParDescriptionSeq (*p.ptr_);
++          IR_ParDescriptionSeq *deep_copy = 
++            new IR_ParDescriptionSeq (*p.ptr_);
+           
+           if (deep_copy != 0)
+             {
+-              ParDescriptionSeq *tmp = deep_copy;
++              IR_ParDescriptionSeq *tmp = deep_copy;
+               deep_copy = this->ptr_;
+               this->ptr_ = tmp;
+               delete deep_copy;
+@@ -16117,103 +15102,103 @@
    return *this;
  }
  
@@ -19191,7 +19594,7 @@
    : ptr_ (p.out ())
  {
    delete this->ptr_;
-@@ -15694,194 +14679,187 @@
+@@ -16221,94 +15206,87 @@
  }
  
  ACE_INLINE
@@ -19303,17 +19706,30 @@
    return *this;
  }
  
--ACE_INLINE IR::ContextIdSeq_var &
--IR::ContextIdSeq_var::operator= (const ::IR::ContextIdSeq_var &p) // deep copy
+-ACE_INLINE ::IR::ContextIdSeq_var &
+-IR::ContextIdSeq_var::operator= (const ::IR::ContextIdSeq_var &p)
 +ACE_INLINE IR_ContextIdSeq_var &
 +IR_ContextIdSeq_var::operator= (const ::IR_ContextIdSeq_var &p) // deep copy
  {
    if (this != &p)
-   {
-     delete this->ptr_;
--    ACE_NEW_RETURN (this->ptr_, ::IR::ContextIdSeq (*p.ptr_), *this);
-+    ACE_NEW_RETURN (this->ptr_, ::IR_ContextIdSeq (*p.ptr_), *this);
-   }
+     {
+@@ -16319,12 +15297,12 @@
+         }
+       else
+         {
+-          ContextIdSeq *deep_copy =
+-            new ContextIdSeq (*p.ptr_);
++          IR_ContextIdSeq *deep_copy = 
++            new IR_ContextIdSeq (*p.ptr_);
+           
+           if (deep_copy != 0)
+             {
+-              ContextIdSeq *tmp = deep_copy;
++              IR_ContextIdSeq *tmp = deep_copy;
+               deep_copy = this->ptr_;
+               this->ptr_ = tmp;
+               delete deep_copy;
+@@ -16335,97 +15313,97 @@
    return *this;
  }
  
@@ -19434,7 +19850,7 @@
    : ptr_ (p.out ())
  {
    delete this->ptr_;
-@@ -15889,57 +14867,50 @@
+@@ -16433,57 +15411,50 @@
  }
  
  ACE_INLINE
@@ -19506,8 +19922,8 @@
      TAO_Stub *objref,
      CORBA::Boolean _tao_collocated,
      TAO_Abstract_ServantBase *servant
-@@ -15949,311 +14920,295 @@
-   this->_tao_setup_collocation (_tao_collocated);
+@@ -16493,217 +15464,201 @@
+   this->IR_OperationDef_setup_collocation (_tao_collocated);
  }
  
 -#endif /* end #if !defined */
@@ -19781,11 +20197,24 @@
 +IR_OperationDescription_var::operator= (const ::IR_OperationDescription_var &p)
  {
    if (this != &p)
-   {
-     delete this->ptr_;
--    ACE_NEW_RETURN (this->ptr_, ::IR::OperationDescription (*p.ptr_), *this);
-+    ACE_NEW_RETURN (this->ptr_, ::IR_OperationDescription (*p.ptr_), *this);
-   }
+     {
+@@ -16714,12 +15669,12 @@
+         }
+       else
+         {
+-          OperationDescription *deep_copy =
+-            new OperationDescription (*p.ptr_);
++          IR_OperationDescription *deep_copy = 
++            new IR_OperationDescription (*p.ptr_);
+           
+           if (deep_copy != 0)
+             {
+-              OperationDescription *tmp = deep_copy;
++              IR_OperationDescription *tmp = deep_copy;
+               deep_copy = this->ptr_;
+               this->ptr_ = tmp;
+               delete deep_copy;
+@@ -16730,91 +15685,91 @@
    return *this;
  }
  
@@ -19899,7 +20328,7 @@
    : ptr_ (p.out ())
  {
    delete this->ptr_;
-@@ -16261,185 +15216,181 @@
+@@ -16822,85 +15777,81 @@
  }
  
  ACE_INLINE
@@ -20000,17 +20429,30 @@
    return *this;
  }
  
--ACE_INLINE IR::RepositoryIdSeq_var &
--IR::RepositoryIdSeq_var::operator= (const ::IR::RepositoryIdSeq_var &p) // deep copy
+-ACE_INLINE ::IR::RepositoryIdSeq_var &
+-IR::RepositoryIdSeq_var::operator= (const ::IR::RepositoryIdSeq_var &p)
 +ACE_INLINE IR_RepositoryIdSeq_var &
 +IR_RepositoryIdSeq_var::operator= (const ::IR_RepositoryIdSeq_var &p) // deep copy
  {
    if (this != &p)
-   {
-     delete this->ptr_;
--    ACE_NEW_RETURN (this->ptr_, ::IR::RepositoryIdSeq (*p.ptr_), *this);
-+    ACE_NEW_RETURN (this->ptr_, ::IR_RepositoryIdSeq (*p.ptr_), *this);
-   }
+     {
+@@ -16911,12 +15862,12 @@
+         }
+       else
+         {
+-          RepositoryIdSeq *deep_copy =
+-            new RepositoryIdSeq (*p.ptr_);
++          IR_RepositoryIdSeq *deep_copy = 
++            new IR_RepositoryIdSeq (*p.ptr_);
+           
+           if (deep_copy != 0)
+             {
+-              RepositoryIdSeq *tmp = deep_copy;
++              IR_RepositoryIdSeq *tmp = deep_copy;
+               deep_copy = this->ptr_;
+               this->ptr_ = tmp;
+               delete deep_copy;
+@@ -16927,97 +15878,97 @@
    return *this;
  }
  
@@ -20131,7 +20573,7 @@
    : ptr_ (p.out ())
  {
    delete this->ptr_;
-@@ -16447,102 +15398,95 @@
+@@ -17025,102 +15976,95 @@
  }
  
  ACE_INLINE
@@ -20259,7 +20701,7 @@
        
        for (CORBA::ULong i = 0; i < this->length_; ++i)
          tmp1[i] = tmp2[i];
-@@ -16555,8 +15499,8 @@
+@@ -17133,8 +16077,8 @@
      }
    }
    
@@ -20270,7 +20712,7 @@
    // Assignment operator.
    {
      if (this == &rhs)
-@@ -16567,7 +15511,7 @@
+@@ -17145,7 +16089,7 @@
        if (this->maximum_ < rhs.maximum_)
        {
          // free the old buffer
@@ -20279,7 +20721,7 @@
          _TAO_Unbounded_Sequence_IR_OpDescriptionSeq::freebuf (tmp);
          this->buffer_ = _TAO_Unbounded_Sequence_IR_OpDescriptionSeq::allocbuf (rhs.maximum_);
        }
-@@ -16577,8 +15521,8 @@
+@@ -17155,8 +16099,8 @@
      
      TAO_Unbounded_Base_Sequence::operator= (rhs);
      
@@ -20290,7 +20732,7 @@
      
      for (CORBA::ULong i = 0; i < this->length_; ++i)
        tmp1[i] = tmp2[i];
-@@ -16587,30 +15531,30 @@
+@@ -17165,30 +16109,30 @@
    }
    
    // = Accessors.
@@ -20330,7 +20772,7 @@
      if (orphan == 0)
      {
        // We retain ownership.
-@@ -16622,7 +15566,7 @@
+@@ -17200,7 +16144,7 @@
        }
        else
        {
@@ -20339,7 +20781,7 @@
        }
      }
      else // if (orphan == 1)
-@@ -16631,7 +15575,7 @@
+@@ -17209,7 +16153,7 @@
        {
          // We set the state back to default and relinquish
          // ownership.
@@ -20348,7 +20790,7 @@
          this->maximum_ = 0;
          this->length_ = 0;
          this->buffer_ = 0;
-@@ -16641,182 +15585,176 @@
+@@ -17219,76 +16163,70 @@
      return result;
    }
    
@@ -20434,17 +20876,30 @@
    return *this;
  }
  
--ACE_INLINE IR::OpDescriptionSeq_var &
--IR::OpDescriptionSeq_var::operator= (const ::IR::OpDescriptionSeq_var &p) // deep copy
+-ACE_INLINE ::IR::OpDescriptionSeq_var &
+-IR::OpDescriptionSeq_var::operator= (const ::IR::OpDescriptionSeq_var &p)
 +ACE_INLINE IR_OpDescriptionSeq_var &
 +IR_OpDescriptionSeq_var::operator= (const ::IR_OpDescriptionSeq_var &p) // deep copy
  {
    if (this != &p)
-   {
-     delete this->ptr_;
--    ACE_NEW_RETURN (this->ptr_, ::IR::OpDescriptionSeq (*p.ptr_), *this);
-+    ACE_NEW_RETURN (this->ptr_, ::IR_OpDescriptionSeq (*p.ptr_), *this);
-   }
+     {
+@@ -17299,12 +16237,12 @@
+         }
+       else
+         {
+-          OpDescriptionSeq *deep_copy =
+-            new OpDescriptionSeq (*p.ptr_);
++          IR_OpDescriptionSeq *deep_copy = 
++            new IR_OpDescriptionSeq (*p.ptr_);
+           
+           if (deep_copy != 0)
+             {
+-              OpDescriptionSeq *tmp = deep_copy;
++              IR_OpDescriptionSeq *tmp = deep_copy;
+               deep_copy = this->ptr_;
+               this->ptr_ = tmp;
+               delete deep_copy;
+@@ -17315,103 +16253,103 @@
    return *this;
  }
  
@@ -20575,7 +21030,7 @@
    : ptr_ (p.out ())
  {
    delete this->ptr_;
-@@ -16824,102 +15762,95 @@
+@@ -17419,102 +16357,95 @@
  }
  
  ACE_INLINE
@@ -20704,7 +21159,7 @@
        
        for (CORBA::ULong i = 0; i < this->length_; ++i)
          tmp1[i] = tmp2[i];
-@@ -16932,8 +15863,8 @@
+@@ -17527,8 +16458,8 @@
      }
    }
    
@@ -20715,7 +21170,7 @@
    // Assignment operator.
    {
      if (this == &rhs)
-@@ -16944,7 +15875,7 @@
+@@ -17539,7 +16470,7 @@
        if (this->maximum_ < rhs.maximum_)
        {
          // free the old buffer
@@ -20724,7 +21179,7 @@
          _TAO_Unbounded_Sequence_IR_AttrDescriptionSeq::freebuf (tmp);
          this->buffer_ = _TAO_Unbounded_Sequence_IR_AttrDescriptionSeq::allocbuf (rhs.maximum_);
        }
-@@ -16954,8 +15885,8 @@
+@@ -17549,8 +16480,8 @@
      
      TAO_Unbounded_Base_Sequence::operator= (rhs);
      
@@ -20735,7 +21190,7 @@
      
      for (CORBA::ULong i = 0; i < this->length_; ++i)
        tmp1[i] = tmp2[i];
-@@ -16964,30 +15895,30 @@
+@@ -17559,30 +16490,30 @@
    }
    
    // = Accessors.
@@ -20775,7 +21230,7 @@
      if (orphan == 0)
      {
        // We retain ownership.
-@@ -16999,7 +15930,7 @@
+@@ -17594,7 +16525,7 @@
        }
        else
        {
@@ -20784,7 +21239,7 @@
        }
      }
      else // if (orphan == 1)
-@@ -17008,7 +15939,7 @@
+@@ -17603,7 +16534,7 @@
        {
          // We set the state back to default and relinquish
          // ownership.
@@ -20793,7 +21248,7 @@
          this->maximum_ = 0;
          this->length_ = 0;
          this->buffer_ = 0;
-@@ -17018,182 +15949,176 @@
+@@ -17613,76 +16544,70 @@
      return result;
    }
    
@@ -20879,17 +21334,30 @@
    return *this;
  }
  
--ACE_INLINE IR::AttrDescriptionSeq_var &
--IR::AttrDescriptionSeq_var::operator= (const ::IR::AttrDescriptionSeq_var &p) // deep copy
+-ACE_INLINE ::IR::AttrDescriptionSeq_var &
+-IR::AttrDescriptionSeq_var::operator= (const ::IR::AttrDescriptionSeq_var &p)
 +ACE_INLINE IR_AttrDescriptionSeq_var &
 +IR_AttrDescriptionSeq_var::operator= (const ::IR_AttrDescriptionSeq_var &p) // deep copy
  {
    if (this != &p)
-   {
-     delete this->ptr_;
--    ACE_NEW_RETURN (this->ptr_, ::IR::AttrDescriptionSeq (*p.ptr_), *this);
-+    ACE_NEW_RETURN (this->ptr_, ::IR_AttrDescriptionSeq (*p.ptr_), *this);
-   }
+     {
+@@ -17693,12 +16618,12 @@
+         }
+       else
+         {
+-          AttrDescriptionSeq *deep_copy =
+-            new AttrDescriptionSeq (*p.ptr_);
++          IR_AttrDescriptionSeq *deep_copy = 
++            new IR_AttrDescriptionSeq (*p.ptr_);
+           
+           if (deep_copy != 0)
+             {
+-              AttrDescriptionSeq *tmp = deep_copy;
++              IR_AttrDescriptionSeq *tmp = deep_copy;
+               deep_copy = this->ptr_;
+               this->ptr_ = tmp;
+               delete deep_copy;
+@@ -17709,103 +16634,103 @@
    return *this;
  }
  
@@ -21020,7 +21488,7 @@
    : ptr_ (p.out ())
  {
    delete this->ptr_;
-@@ -17201,184 +16126,181 @@
+@@ -17813,90 +16738,87 @@
  }
  
  ACE_INLINE
@@ -21134,11 +21602,24 @@
 +IR_InterfaceDescription_var::operator= (const ::IR_InterfaceDescription_var &p)
  {
    if (this != &p)
-   {
-     delete this->ptr_;
--    ACE_NEW_RETURN (this->ptr_, ::IR::InterfaceDescription (*p.ptr_), *this);
-+    ACE_NEW_RETURN (this->ptr_, ::IR_InterfaceDescription (*p.ptr_), *this);
-   }
+     {
+@@ -17907,12 +16829,12 @@
+         }
+       else
+         {
+-          InterfaceDescription *deep_copy =
+-            new InterfaceDescription (*p.ptr_);
++          IR_InterfaceDescription *deep_copy = 
++            new IR_InterfaceDescription (*p.ptr_);
+           
+           if (deep_copy != 0)
+             {
+-              InterfaceDescription *tmp = deep_copy;
++              IR_InterfaceDescription *tmp = deep_copy;
+               deep_copy = this->ptr_;
+               this->ptr_ = tmp;
+               delete deep_copy;
+@@ -17923,91 +16845,91 @@
    return *this;
  }
  
@@ -21252,7 +21733,7 @@
    : ptr_ (p.out ())
  {
    delete this->ptr_;
-@@ -17386,175 +16308,175 @@
+@@ -18015,81 +16937,81 @@
  }
  
  ACE_INLINE
@@ -21355,11 +21836,24 @@
 +IR_ValueMember_var::operator= (const ::IR_ValueMember_var &p)
  {
    if (this != &p)
-   {
-     delete this->ptr_;
--    ACE_NEW_RETURN (this->ptr_, ::IR::ValueMember (*p.ptr_), *this);
-+    ACE_NEW_RETURN (this->ptr_, ::IR_ValueMember (*p.ptr_), *this);
-   }
+     {
+@@ -18100,12 +17022,12 @@
+         }
+       else
+         {
+-          ValueMember *deep_copy =
+-            new ValueMember (*p.ptr_);
++          IR_ValueMember *deep_copy = 
++            new IR_ValueMember (*p.ptr_);
+           
+           if (deep_copy != 0)
+             {
+-              ValueMember *tmp = deep_copy;
++              IR_ValueMember *tmp = deep_copy;
+               deep_copy = this->ptr_;
+               this->ptr_ = tmp;
+               delete deep_copy;
+@@ -18116,91 +17038,91 @@
    return *this;
  }
  
@@ -21473,7 +21967,7 @@
    : ptr_ (p.out ())
  {
    delete this->ptr_;
-@@ -17562,93 +16484,89 @@
+@@ -18208,93 +17130,89 @@
  }
  
  ACE_INLINE
@@ -21591,7 +22085,7 @@
        
        for (CORBA::ULong i = 0; i < this->length_; ++i)
          tmp1[i] = tmp2[i];
-@@ -17661,8 +16579,8 @@
+@@ -18307,8 +17225,8 @@
      }
    }
    
@@ -21602,7 +22096,7 @@
    // Assignment operator.
    {
      if (this == &rhs)
-@@ -17673,7 +16591,7 @@
+@@ -18319,7 +17237,7 @@
        if (this->maximum_ < rhs.maximum_)
        {
          // free the old buffer
@@ -21611,7 +22105,7 @@
          _TAO_Unbounded_Sequence_IR_ValueMemberSeq::freebuf (tmp);
          this->buffer_ = _TAO_Unbounded_Sequence_IR_ValueMemberSeq::allocbuf (rhs.maximum_);
        }
-@@ -17683,8 +16601,8 @@
+@@ -18329,8 +17247,8 @@
      
      TAO_Unbounded_Base_Sequence::operator= (rhs);
      
@@ -21622,7 +22116,7 @@
      
      for (CORBA::ULong i = 0; i < this->length_; ++i)
        tmp1[i] = tmp2[i];
-@@ -17693,30 +16611,30 @@
+@@ -18339,30 +17257,30 @@
    }
    
    // = Accessors.
@@ -21662,7 +22156,7 @@
      if (orphan == 0)
      {
        // We retain ownership.
-@@ -17728,7 +16646,7 @@
+@@ -18374,7 +17292,7 @@
        }
        else
        {
@@ -21671,7 +22165,7 @@
        }
      }
      else // if (orphan == 1)
-@@ -17737,7 +16655,7 @@
+@@ -18383,7 +17301,7 @@
        {
          // We set the state back to default and relinquish
          // ownership.
@@ -21680,7 +22174,7 @@
          this->maximum_ = 0;
          this->length_ = 0;
          this->buffer_ = 0;
-@@ -17747,182 +16665,176 @@
+@@ -18393,76 +17311,70 @@
      return result;
    }
    
@@ -21766,17 +22260,30 @@
    return *this;
  }
  
--ACE_INLINE IR::ValueMemberSeq_var &
--IR::ValueMemberSeq_var::operator= (const ::IR::ValueMemberSeq_var &p) // deep copy
+-ACE_INLINE ::IR::ValueMemberSeq_var &
+-IR::ValueMemberSeq_var::operator= (const ::IR::ValueMemberSeq_var &p)
 +ACE_INLINE IR_ValueMemberSeq_var &
 +IR_ValueMemberSeq_var::operator= (const ::IR_ValueMemberSeq_var &p) // deep copy
  {
    if (this != &p)
-   {
-     delete this->ptr_;
--    ACE_NEW_RETURN (this->ptr_, ::IR::ValueMemberSeq (*p.ptr_), *this);
-+    ACE_NEW_RETURN (this->ptr_, ::IR_ValueMemberSeq (*p.ptr_), *this);
-   }
+     {
+@@ -18473,12 +17385,12 @@
+         }
+       else
+         {
+-          ValueMemberSeq *deep_copy =
+-            new ValueMemberSeq (*p.ptr_);
++          IR_ValueMemberSeq *deep_copy = 
++            new IR_ValueMemberSeq (*p.ptr_);
+           
+           if (deep_copy != 0)
+             {
+-              ValueMemberSeq *tmp = deep_copy;
++              IR_ValueMemberSeq *tmp = deep_copy;
+               deep_copy = this->ptr_;
+               this->ptr_ = tmp;
+               delete deep_copy;
+@@ -18489,103 +17401,103 @@
    return *this;
  }
  
@@ -21907,7 +22414,7 @@
    : ptr_ (p.out ())
  {
    delete this->ptr_;
-@@ -17930,57 +16842,50 @@
+@@ -18593,57 +17505,50 @@
  }
  
  ACE_INLINE
@@ -21980,8 +22487,8 @@
      TAO_Stub *objref,
      CORBA::Boolean _tao_collocated,
      TAO_Abstract_ServantBase *servant
-@@ -17990,311 +16895,295 @@
-   this->_tao_setup_collocation (_tao_collocated);
+@@ -18653,217 +17558,201 @@
+   this->IR_ValueMemberDef_setup_collocation (_tao_collocated);
  }
  
 -#endif /* end #if !defined */
@@ -22255,11 +22762,24 @@
 +IR_ValueDescription_var::operator= (const ::IR_ValueDescription_var &p)
  {
    if (this != &p)
-   {
-     delete this->ptr_;
--    ACE_NEW_RETURN (this->ptr_, ::IR::ValueDescription (*p.ptr_), *this);
-+    ACE_NEW_RETURN (this->ptr_, ::IR_ValueDescription (*p.ptr_), *this);
-   }
+     {
+@@ -18874,12 +17763,12 @@
+         }
+       else
+         {
+-          ValueDescription *deep_copy =
+-            new ValueDescription (*p.ptr_);
++          IR_ValueDescription *deep_copy = 
++            new IR_ValueDescription (*p.ptr_);
+           
+           if (deep_copy != 0)
+             {
+-              ValueDescription *tmp = deep_copy;
++              IR_ValueDescription *tmp = deep_copy;
+               deep_copy = this->ptr_;
+               this->ptr_ = tmp;
+               delete deep_copy;
+@@ -18890,91 +17779,91 @@
    return *this;
  }
  
@@ -22373,7 +22893,7 @@
    : ptr_ (p.out ())
  {
    delete this->ptr_;
-@@ -18302,175 +17191,175 @@
+@@ -18982,81 +17871,81 @@
  }
  
  ACE_INLINE
@@ -22476,11 +22996,24 @@
 +IR_ProvidesDescription_var::operator= (const ::IR_ProvidesDescription_var &p)
  {
    if (this != &p)
-   {
-     delete this->ptr_;
--    ACE_NEW_RETURN (this->ptr_, ::IR::ProvidesDescription (*p.ptr_), *this);
-+    ACE_NEW_RETURN (this->ptr_, ::IR_ProvidesDescription (*p.ptr_), *this);
-   }
+     {
+@@ -19067,12 +17956,12 @@
+         }
+       else
+         {
+-          ProvidesDescription *deep_copy =
+-            new ProvidesDescription (*p.ptr_);
++          IR_ProvidesDescription *deep_copy = 
++            new IR_ProvidesDescription (*p.ptr_);
+           
+           if (deep_copy != 0)
+             {
+-              ProvidesDescription *tmp = deep_copy;
++              IR_ProvidesDescription *tmp = deep_copy;
+               deep_copy = this->ptr_;
+               this->ptr_ = tmp;
+               delete deep_copy;
+@@ -19083,91 +17972,91 @@
    return *this;
  }
  
@@ -22594,7 +23127,7 @@
    : ptr_ (p.out ())
  {
    delete this->ptr_;
-@@ -18478,175 +17367,175 @@
+@@ -19175,81 +18064,81 @@
  }
  
  ACE_INLINE
@@ -22697,11 +23230,24 @@
 +IR_UsesDescription_var::operator= (const ::IR_UsesDescription_var &p)
  {
    if (this != &p)
-   {
-     delete this->ptr_;
--    ACE_NEW_RETURN (this->ptr_, ::IR::UsesDescription (*p.ptr_), *this);
-+    ACE_NEW_RETURN (this->ptr_, ::IR_UsesDescription (*p.ptr_), *this);
-   }
+     {
+@@ -19260,12 +18149,12 @@
+         }
+       else
+         {
+-          UsesDescription *deep_copy =
+-            new UsesDescription (*p.ptr_);
++          IR_UsesDescription *deep_copy = 
++            new IR_UsesDescription (*p.ptr_);
+           
+           if (deep_copy != 0)
+             {
+-              UsesDescription *tmp = deep_copy;
++              IR_UsesDescription *tmp = deep_copy;
+               deep_copy = this->ptr_;
+               this->ptr_ = tmp;
+               delete deep_copy;
+@@ -19276,91 +18165,91 @@
    return *this;
  }
  
@@ -22815,7 +23361,7 @@
    : ptr_ (p.out ())
  {
    delete this->ptr_;
-@@ -18654,93 +17543,89 @@
+@@ -19368,93 +18257,89 @@
  }
  
  ACE_INLINE
@@ -22933,7 +23479,7 @@
        
        for (CORBA::ULong i = 0; i < this->length_; ++i)
          tmp1[i] = tmp2[i];
-@@ -18753,8 +17638,8 @@
+@@ -19467,8 +18352,8 @@
      }
    }
    
@@ -22944,7 +23490,7 @@
    // Assignment operator.
    {
      if (this == &rhs)
-@@ -18765,7 +17650,7 @@
+@@ -19479,7 +18364,7 @@
        if (this->maximum_ < rhs.maximum_)
        {
          // free the old buffer
@@ -22953,7 +23499,7 @@
          _TAO_Unbounded_Sequence_IR_ProvidesDescSeq::freebuf (tmp);
          this->buffer_ = _TAO_Unbounded_Sequence_IR_ProvidesDescSeq::allocbuf (rhs.maximum_);
        }
-@@ -18775,8 +17660,8 @@
+@@ -19489,8 +18374,8 @@
      
      TAO_Unbounded_Base_Sequence::operator= (rhs);
      
@@ -22964,7 +23510,7 @@
      
      for (CORBA::ULong i = 0; i < this->length_; ++i)
        tmp1[i] = tmp2[i];
-@@ -18785,30 +17670,30 @@
+@@ -19499,30 +18384,30 @@
    }
    
    // = Accessors.
@@ -23004,7 +23550,7 @@
      if (orphan == 0)
      {
        // We retain ownership.
-@@ -18820,7 +17705,7 @@
+@@ -19534,7 +18419,7 @@
        }
        else
        {
@@ -23013,7 +23559,7 @@
        }
      }
      else // if (orphan == 1)
-@@ -18829,7 +17714,7 @@
+@@ -19543,7 +18428,7 @@
        {
          // We set the state back to default and relinquish
          // ownership.
@@ -23022,7 +23568,7 @@
          this->maximum_ = 0;
          this->length_ = 0;
          this->buffer_ = 0;
-@@ -18839,182 +17724,176 @@
+@@ -19553,76 +18438,70 @@
      return result;
    }
    
@@ -23108,17 +23654,30 @@
    return *this;
  }
  
--ACE_INLINE IR::ProvidesDescSeq_var &
--IR::ProvidesDescSeq_var::operator= (const ::IR::ProvidesDescSeq_var &p) // deep copy
+-ACE_INLINE ::IR::ProvidesDescSeq_var &
+-IR::ProvidesDescSeq_var::operator= (const ::IR::ProvidesDescSeq_var &p)
 +ACE_INLINE IR_ProvidesDescSeq_var &
 +IR_ProvidesDescSeq_var::operator= (const ::IR_ProvidesDescSeq_var &p) // deep copy
  {
    if (this != &p)
-   {
-     delete this->ptr_;
--    ACE_NEW_RETURN (this->ptr_, ::IR::ProvidesDescSeq (*p.ptr_), *this);
-+    ACE_NEW_RETURN (this->ptr_, ::IR_ProvidesDescSeq (*p.ptr_), *this);
-   }
+     {
+@@ -19633,12 +18512,12 @@
+         }
+       else
+         {
+-          ProvidesDescSeq *deep_copy =
+-            new ProvidesDescSeq (*p.ptr_);
++          IR_ProvidesDescSeq *deep_copy = 
++            new IR_ProvidesDescSeq (*p.ptr_);
+           
+           if (deep_copy != 0)
+             {
+-              ProvidesDescSeq *tmp = deep_copy;
++              IR_ProvidesDescSeq *tmp = deep_copy;
+               deep_copy = this->ptr_;
+               this->ptr_ = tmp;
+               delete deep_copy;
+@@ -19649,103 +18528,103 @@
    return *this;
  }
  
@@ -23249,7 +23808,7 @@
    : ptr_ (p.out ())
  {
    delete this->ptr_;
-@@ -19022,102 +17901,95 @@
+@@ -19753,102 +18632,95 @@
  }
  
  ACE_INLINE
@@ -23378,7 +23937,7 @@
        
        for (CORBA::ULong i = 0; i < this->length_; ++i)
          tmp1[i] = tmp2[i];
-@@ -19130,8 +18002,8 @@
+@@ -19861,8 +18733,8 @@
      }
    }
    
@@ -23389,7 +23948,7 @@
    // Assignment operator.
    {
      if (this == &rhs)
-@@ -19142,7 +18014,7 @@
+@@ -19873,7 +18745,7 @@
        if (this->maximum_ < rhs.maximum_)
        {
          // free the old buffer
@@ -23398,7 +23957,7 @@
          _TAO_Unbounded_Sequence_IR_UsesDescSeq::freebuf (tmp);
          this->buffer_ = _TAO_Unbounded_Sequence_IR_UsesDescSeq::allocbuf (rhs.maximum_);
        }
-@@ -19152,8 +18024,8 @@
+@@ -19883,8 +18755,8 @@
      
      TAO_Unbounded_Base_Sequence::operator= (rhs);
      
@@ -23409,7 +23968,7 @@
      
      for (CORBA::ULong i = 0; i < this->length_; ++i)
        tmp1[i] = tmp2[i];
-@@ -19162,30 +18034,30 @@
+@@ -19893,30 +18765,30 @@
    }
    
    // = Accessors.
@@ -23449,7 +24008,7 @@
      if (orphan == 0)
      {
        // We retain ownership.
-@@ -19197,7 +18069,7 @@
+@@ -19928,7 +18800,7 @@
        }
        else
        {
@@ -23458,7 +24017,7 @@
        }
      }
      else // if (orphan == 1)
-@@ -19206,7 +18078,7 @@
+@@ -19937,7 +18809,7 @@
        {
          // We set the state back to default and relinquish
          // ownership.
@@ -23467,7 +24026,7 @@
          this->maximum_ = 0;
          this->length_ = 0;
          this->buffer_ = 0;
-@@ -19216,182 +18088,176 @@
+@@ -19947,76 +18819,70 @@
      return result;
    }
    
@@ -23553,17 +24112,30 @@
    return *this;
  }
  
--ACE_INLINE IR::UsesDescSeq_var &
--IR::UsesDescSeq_var::operator= (const ::IR::UsesDescSeq_var &p) // deep copy
+-ACE_INLINE ::IR::UsesDescSeq_var &
+-IR::UsesDescSeq_var::operator= (const ::IR::UsesDescSeq_var &p)
 +ACE_INLINE IR_UsesDescSeq_var &
 +IR_UsesDescSeq_var::operator= (const ::IR_UsesDescSeq_var &p) // deep copy
  {
    if (this != &p)
-   {
-     delete this->ptr_;
--    ACE_NEW_RETURN (this->ptr_, ::IR::UsesDescSeq (*p.ptr_), *this);
-+    ACE_NEW_RETURN (this->ptr_, ::IR_UsesDescSeq (*p.ptr_), *this);
-   }
+     {
+@@ -20027,12 +18893,12 @@
+         }
+       else
+         {
+-          UsesDescSeq *deep_copy =
+-            new UsesDescSeq (*p.ptr_);
++          IR_UsesDescSeq *deep_copy = 
++            new IR_UsesDescSeq (*p.ptr_);
+           
+           if (deep_copy != 0)
+             {
+-              UsesDescSeq *tmp = deep_copy;
++              IR_UsesDescSeq *tmp = deep_copy;
+               deep_copy = this->ptr_;
+               this->ptr_ = tmp;
+               delete deep_copy;
+@@ -20043,103 +18909,103 @@
    return *this;
  }
  
@@ -23694,7 +24266,7 @@
    : ptr_ (p.out ())
  {
    delete this->ptr_;
-@@ -19399,184 +18265,181 @@
+@@ -20147,90 +19013,87 @@
  }
  
  ACE_INLINE
@@ -23808,11 +24380,24 @@
 +IR_EventDescription_var::operator= (const ::IR_EventDescription_var &p)
  {
    if (this != &p)
-   {
-     delete this->ptr_;
--    ACE_NEW_RETURN (this->ptr_, ::IR::EventDescription (*p.ptr_), *this);
-+    ACE_NEW_RETURN (this->ptr_, ::IR_EventDescription (*p.ptr_), *this);
-   }
+     {
+@@ -20241,12 +19104,12 @@
+         }
+       else
+         {
+-          EventDescription *deep_copy =
+-            new EventDescription (*p.ptr_);
++          IR_EventDescription *deep_copy = 
++            new IR_EventDescription (*p.ptr_);
+           
+           if (deep_copy != 0)
+             {
+-              EventDescription *tmp = deep_copy;
++              IR_EventDescription *tmp = deep_copy;
+               deep_copy = this->ptr_;
+               this->ptr_ = tmp;
+               delete deep_copy;
+@@ -20257,91 +19120,91 @@
    return *this;
  }
  
@@ -23926,7 +24511,7 @@
    : ptr_ (p.out ())
  {
    delete this->ptr_;
-@@ -19584,175 +18447,175 @@
+@@ -20349,81 +19212,81 @@
  }
  
  ACE_INLINE
@@ -24029,11 +24614,24 @@
 +IR_ComponentDescription_var::operator= (const ::IR_ComponentDescription_var &p)
  {
    if (this != &p)
-   {
-     delete this->ptr_;
--    ACE_NEW_RETURN (this->ptr_, ::IR::ComponentDescription (*p.ptr_), *this);
-+    ACE_NEW_RETURN (this->ptr_, ::IR_ComponentDescription (*p.ptr_), *this);
-   }
+     {
+@@ -20434,12 +19297,12 @@
+         }
+       else
+         {
+-          ComponentDescription *deep_copy =
+-            new ComponentDescription (*p.ptr_);
++          IR_ComponentDescription *deep_copy = 
++            new IR_ComponentDescription (*p.ptr_);
+           
+           if (deep_copy != 0)
+             {
+-              ComponentDescription *tmp = deep_copy;
++              IR_ComponentDescription *tmp = deep_copy;
+               deep_copy = this->ptr_;
+               this->ptr_ = tmp;
+               delete deep_copy;
+@@ -20450,91 +19313,91 @@
    return *this;
  }
  
@@ -24147,7 +24745,7 @@
    : ptr_ (p.out ())
  {
    delete this->ptr_;
-@@ -19760,175 +18623,175 @@
+@@ -20542,81 +19405,81 @@
  }
  
  ACE_INLINE
@@ -24250,11 +24848,24 @@
 +IR_PrimaryKeyDescription_var::operator= (const ::IR_PrimaryKeyDescription_var &p)
  {
    if (this != &p)
-   {
-     delete this->ptr_;
--    ACE_NEW_RETURN (this->ptr_, ::IR::PrimaryKeyDescription (*p.ptr_), *this);
-+    ACE_NEW_RETURN (this->ptr_, ::IR_PrimaryKeyDescription (*p.ptr_), *this);
-   }
+     {
+@@ -20627,12 +19490,12 @@
+         }
+       else
+         {
+-          PrimaryKeyDescription *deep_copy =
+-            new PrimaryKeyDescription (*p.ptr_);
++          IR_PrimaryKeyDescription *deep_copy = 
++            new IR_PrimaryKeyDescription (*p.ptr_);
+           
+           if (deep_copy != 0)
+             {
+-              PrimaryKeyDescription *tmp = deep_copy;
++              IR_PrimaryKeyDescription *tmp = deep_copy;
+               deep_copy = this->ptr_;
+               this->ptr_ = tmp;
+               delete deep_copy;
+@@ -20643,91 +19506,91 @@
    return *this;
  }
  
@@ -24368,7 +24979,7 @@
    : ptr_ (p.out ())
  {
    delete this->ptr_;
-@@ -19936,175 +18799,175 @@
+@@ -20735,81 +19598,81 @@
  }
  
  ACE_INLINE
@@ -24471,11 +25082,24 @@
 +IR_HomeDescription_var::operator= (const ::IR_HomeDescription_var &p)
  {
    if (this != &p)
-   {
-     delete this->ptr_;
--    ACE_NEW_RETURN (this->ptr_, ::IR::HomeDescription (*p.ptr_), *this);
-+    ACE_NEW_RETURN (this->ptr_, ::IR_HomeDescription (*p.ptr_), *this);
-   }
+     {
+@@ -20820,12 +19683,12 @@
+         }
+       else
+         {
+-          HomeDescription *deep_copy =
+-            new HomeDescription (*p.ptr_);
++          IR_HomeDescription *deep_copy = 
++            new IR_HomeDescription (*p.ptr_);
+           
+           if (deep_copy != 0)
+             {
+-              HomeDescription *tmp = deep_copy;
++              IR_HomeDescription *tmp = deep_copy;
+               deep_copy = this->ptr_;
+               this->ptr_ = tmp;
+               delete deep_copy;
+@@ -20836,91 +19699,91 @@
    return *this;
  }
  
@@ -24589,7 +25213,7 @@
    : ptr_ (p.out ())
  {
    delete this->ptr_;
-@@ -20112,56 +18975,56 @@
+@@ -20928,56 +19791,56 @@
  }
  
  ACE_INLINE
@@ -24661,7 +25285,7 @@
      }
    
    return _tao_result;
-@@ -20169,19 +19032,8 @@
+@@ -20985,19 +19848,8 @@
  
  ACE_INLINE CORBA::Boolean
  operator<< (
@@ -24682,7 +25306,7 @@
    )
  {
    CORBA::Object_ptr _tao_corba_obj = _tao_objref;
-@@ -20191,7 +19043,7 @@
+@@ -21007,7 +19859,7 @@
  ACE_INLINE CORBA::Boolean
  operator>> (
      TAO_InputCDR &strm,
@@ -24691,7 +25315,7 @@
    )
  {
    ACE_TRY_NEW_ENV
-@@ -20201,7 +19053,7 @@
+@@ -21017,7 +19869,7 @@
        return 0;
      // narrow to the right type
      _tao_objref =
@@ -24700,7 +25324,7 @@
            obj.in (),
            ACE_TRY_ENV
          );
-@@ -20216,48 +19068,7 @@
+@@ -21032,48 +19884,7 @@
    return 0;
  }
  
@@ -24750,7 +25374,7 @@
  {
    if (
      (strm << _tao_aggregate.kind) &&
-@@ -20269,7 +19080,7 @@
+@@ -21085,7 +19896,7 @@
    
  }
  
@@ -24759,7 +25383,7 @@
  {
    if (
      (strm >> _tao_aggregate.kind) &&
-@@ -20284,7 +19095,7 @@
+@@ -21100,7 +19911,7 @@
  ACE_INLINE CORBA::Boolean
  operator<< (
      TAO_OutputCDR &strm,
@@ -24768,7 +25392,7 @@
    )
  {
    CORBA::Object_ptr _tao_corba_obj = _tao_objref;
-@@ -20294,7 +19105,7 @@
+@@ -21110,7 +19921,7 @@
  ACE_INLINE CORBA::Boolean
  operator>> (
      TAO_InputCDR &strm,
@@ -24777,7 +25401,7 @@
    )
  {
    ACE_TRY_NEW_ENV
-@@ -20304,7 +19115,7 @@
+@@ -21120,7 +19931,7 @@
        return 0;
      // narrow to the right type
      _tao_objref =
@@ -24786,7 +25410,7 @@
            obj.in (),
            ACE_TRY_ENV
          );
-@@ -20319,417 +19130,133 @@
+@@ -21135,417 +19946,133 @@
    return 0;
  }
  
@@ -25267,7 +25891,7 @@
  {
    if (
      (strm << _tao_aggregate.name.in ()) &&
-@@ -20742,7 +19269,7 @@
+@@ -21558,7 +20085,7 @@
    
  }
  
@@ -25276,7 +25900,7 @@
  {
    if (
      (strm >> _tao_aggregate.name.out ()) &&
-@@ -20755,22 +19282,16 @@
+@@ -21571,22 +20098,16 @@
    
  }
  
@@ -25302,7 +25926,7 @@
  {
    if (
      (strm << _tao_aggregate.members) &&
-@@ -20782,7 +19303,7 @@
+@@ -21598,7 +20119,7 @@
    
  }
  
@@ -25311,7 +25935,7 @@
  {
    if (
      (strm >> _tao_aggregate.members) &&
-@@ -20794,22 +19315,16 @@
+@@ -21610,22 +20131,16 @@
    
  }
  
@@ -25337,7 +25961,7 @@
  {
    if (
      (strm << _tao_aggregate.name.in ()) &&
-@@ -20823,7 +19338,7 @@
+@@ -21639,7 +20154,7 @@
    
  }
  
@@ -25346,7 +25970,7 @@
  {
    if (
      (strm >> _tao_aggregate.name.out ()) &&
-@@ -20837,48 +19352,25 @@
+@@ -21653,48 +20168,25 @@
    
  }
  
@@ -25400,7 +26024,7 @@
  {
    if (
      (strm << _tao_aggregate.contained_object.in ()) &&
-@@ -20891,7 +19383,7 @@
+@@ -21707,7 +20199,7 @@
    
  }
  
@@ -25409,7 +26033,7 @@
  {
    if (
      (strm >> _tao_aggregate.contained_object.out ()) &&
-@@ -20904,25 +19396,19 @@
+@@ -21720,25 +20212,19 @@
    
  }
  
@@ -25438,7 +26062,7 @@
    )
  {
    CORBA::Object_ptr _tao_corba_obj = _tao_objref;
-@@ -20932,7 +19418,7 @@
+@@ -21748,7 +20234,7 @@
  ACE_INLINE CORBA::Boolean
  operator>> (
      TAO_InputCDR &strm,
@@ -25447,7 +26071,7 @@
    )
  {
    ACE_TRY_NEW_ENV
-@@ -20942,7 +19428,7 @@
+@@ -21758,7 +20244,7 @@
        return 0;
      // narrow to the right type
      _tao_objref =
@@ -25456,7 +26080,7 @@
            obj.in (),
            ACE_TRY_ENV
          );
-@@ -20959,19 +19445,8 @@
+@@ -21775,19 +20261,8 @@
  
  ACE_INLINE CORBA::Boolean
  operator<< (
@@ -25477,7 +26101,7 @@
    )
  {
    CORBA::Object_ptr _tao_corba_obj = _tao_objref;
-@@ -20981,7 +19456,7 @@
+@@ -21797,7 +20272,7 @@
  ACE_INLINE CORBA::Boolean
  operator>> (
      TAO_InputCDR &strm,
@@ -25486,7 +26110,7 @@
    )
  {
    ACE_TRY_NEW_ENV
-@@ -20991,7 +19466,7 @@
+@@ -21807,7 +20282,7 @@
        return 0;
      // narrow to the right type
      _tao_objref =
@@ -25495,7 +26119,7 @@
            obj.in (),
            ACE_TRY_ENV
          );
-@@ -21006,80 +19481,20 @@
+@@ -21822,80 +20297,20 @@
    return 0;
  }
  
@@ -25579,7 +26203,7 @@
      }
    
    return _tao_result;
-@@ -21087,19 +19502,8 @@
+@@ -21903,19 +20318,8 @@
  
  ACE_INLINE CORBA::Boolean
  operator<< (
@@ -25600,7 +26224,7 @@
    )
  {
    CORBA::Object_ptr _tao_corba_obj = _tao_objref;
-@@ -21109,7 +19513,7 @@
+@@ -21925,7 +20329,7 @@
  ACE_INLINE CORBA::Boolean
  operator>> (
      TAO_InputCDR &strm,
@@ -25609,7 +26233,7 @@
    )
  {
    ACE_TRY_NEW_ENV
-@@ -21119,7 +19523,7 @@
+@@ -21935,7 +20339,7 @@
        return 0;
      // narrow to the right type
      _tao_objref =
@@ -25618,7 +26242,7 @@
            obj.in (),
            ACE_TRY_ENV
          );
-@@ -21136,19 +19540,8 @@
+@@ -21952,19 +20356,8 @@
  
  ACE_INLINE CORBA::Boolean
  operator<< (
@@ -25639,7 +26263,7 @@
    )
  {
    CORBA::Object_ptr _tao_corba_obj = _tao_objref;
-@@ -21158,7 +19551,7 @@
+@@ -21974,7 +20367,7 @@
  ACE_INLINE CORBA::Boolean
  operator>> (
      TAO_InputCDR &strm,
@@ -25648,7 +26272,7 @@
    )
  {
    ACE_TRY_NEW_ENV
-@@ -21168,7 +19561,7 @@
+@@ -21984,7 +20377,7 @@
        return 0;
      // narrow to the right type
      _tao_objref =
@@ -25657,7 +26281,7 @@
            obj.in (),
            ACE_TRY_ENV
          );
-@@ -21185,19 +19578,8 @@
+@@ -22001,19 +20394,8 @@
  
  ACE_INLINE CORBA::Boolean
  operator<< (
@@ -25678,7 +26302,7 @@
    )
  {
    CORBA::Object_ptr _tao_corba_obj = _tao_objref;
-@@ -21207,7 +19589,7 @@
+@@ -22023,7 +20405,7 @@
  ACE_INLINE CORBA::Boolean
  operator>> (
      TAO_InputCDR &strm,
@@ -25687,7 +26311,7 @@
    )
  {
    ACE_TRY_NEW_ENV
-@@ -21217,7 +19599,7 @@
+@@ -22033,7 +20415,7 @@
        return 0;
      // narrow to the right type
      _tao_objref =
@@ -25696,7 +26320,7 @@
            obj.in (),
            ACE_TRY_ENV
          );
-@@ -21232,7 +19614,7 @@
+@@ -22048,7 +20430,7 @@
    return 0;
  }
  
@@ -25705,7 +26329,7 @@
  {
    if (
      (strm << _tao_aggregate.name.in ()) &&
-@@ -21246,7 +19628,7 @@
+@@ -22062,7 +20444,7 @@
    
  }
  
@@ -25714,7 +26338,7 @@
  {
    if (
      (strm >> _tao_aggregate.name.out ()) &&
-@@ -21262,19 +19644,8 @@
+@@ -22078,19 +20460,8 @@
  
  ACE_INLINE CORBA::Boolean
  operator<< (
@@ -25735,7 +26359,7 @@
    )
  {
    CORBA::Object_ptr _tao_corba_obj = _tao_objref;
-@@ -21284,7 +19655,7 @@
+@@ -22100,7 +20471,7 @@
  ACE_INLINE CORBA::Boolean
  operator>> (
      TAO_InputCDR &strm,
@@ -25744,7 +26368,7 @@
    )
  {
    ACE_TRY_NEW_ENV
-@@ -21294,7 +19665,7 @@
+@@ -22110,7 +20481,7 @@
        return 0;
      // narrow to the right type
      _tao_objref =
@@ -25753,7 +26377,7 @@
            obj.in (),
            ACE_TRY_ENV
          );
-@@ -21309,7 +19680,7 @@
+@@ -22125,7 +20496,7 @@
    return 0;
  }
  
@@ -25762,7 +26386,7 @@
  {
    if (
      (strm << _tao_aggregate.name.in ()) &&
-@@ -21325,7 +19696,7 @@
+@@ -22141,7 +20512,7 @@
    
  }
  
@@ -25771,7 +26395,7 @@
  {
    if (
      (strm >> _tao_aggregate.name.out ()) &&
-@@ -21343,19 +19714,8 @@
+@@ -22159,19 +20530,8 @@
  
  ACE_INLINE CORBA::Boolean
  operator<< (
@@ -25792,7 +26416,7 @@
    )
  {
    CORBA::Object_ptr _tao_corba_obj = _tao_objref;
-@@ -21365,7 +19725,7 @@
+@@ -22181,7 +20541,7 @@
  ACE_INLINE CORBA::Boolean
  operator>> (
      TAO_InputCDR &strm,
@@ -25801,7 +26425,7 @@
    )
  {
    ACE_TRY_NEW_ENV
-@@ -21375,7 +19735,7 @@
+@@ -22191,7 +20551,7 @@
        return 0;
      // narrow to the right type
      _tao_objref =
@@ -25810,7 +26434,7 @@
            obj.in (),
            ACE_TRY_ENV
          );
-@@ -21390,7 +19750,7 @@
+@@ -22206,7 +20566,7 @@
    return 0;
  }
  
@@ -25819,7 +26443,7 @@
  {
    if (
      (strm << _tao_aggregate.name.in ()) &&
-@@ -21405,7 +19765,7 @@
+@@ -22221,7 +20581,7 @@
    
  }
  
@@ -25828,7 +26452,7 @@
  {
    if (
      (strm >> _tao_aggregate.name.out ()) &&
-@@ -21422,19 +19782,8 @@
+@@ -22238,19 +20598,8 @@
  
  ACE_INLINE CORBA::Boolean
  operator<< (
@@ -25849,7 +26473,7 @@
    )
  {
    CORBA::Object_ptr _tao_corba_obj = _tao_objref;
-@@ -21444,7 +19793,7 @@
+@@ -22260,7 +20609,7 @@
  ACE_INLINE CORBA::Boolean
  operator>> (
      TAO_InputCDR &strm,
@@ -25858,7 +26482,7 @@
    )
  {
    ACE_TRY_NEW_ENV
-@@ -21454,7 +19803,7 @@
+@@ -22270,7 +20619,7 @@
        return 0;
      // narrow to the right type
      _tao_objref =
@@ -25867,7 +26491,7 @@
            obj.in (),
            ACE_TRY_ENV
          );
-@@ -21471,19 +19820,8 @@
+@@ -22287,19 +20636,8 @@
  
  ACE_INLINE CORBA::Boolean
  operator<< (
@@ -25888,7 +26512,7 @@
    )
  {
    CORBA::Object_ptr _tao_corba_obj = _tao_objref;
-@@ -21493,7 +19831,7 @@
+@@ -22309,7 +20647,7 @@
  ACE_INLINE CORBA::Boolean
  operator>> (
      TAO_InputCDR &strm,
@@ -25897,7 +26521,7 @@
    )
  {
    ACE_TRY_NEW_ENV
-@@ -21503,7 +19841,7 @@
+@@ -22319,7 +20657,7 @@
        return 0;
      // narrow to the right type
      _tao_objref =
@@ -25906,7 +26530,7 @@
            obj.in (),
            ACE_TRY_ENV
          );
-@@ -21520,19 +19858,8 @@
+@@ -22336,19 +20674,8 @@
  
  ACE_INLINE CORBA::Boolean
  operator<< (
@@ -25927,7 +26551,7 @@
    )
  {
    CORBA::Object_ptr _tao_corba_obj = _tao_objref;
-@@ -21542,7 +19869,7 @@
+@@ -22358,7 +20685,7 @@
  ACE_INLINE CORBA::Boolean
  operator>> (
      TAO_InputCDR &strm,
@@ -25936,7 +26560,7 @@
    )
  {
    ACE_TRY_NEW_ENV
-@@ -21552,7 +19879,7 @@
+@@ -22368,7 +20695,7 @@
        return 0;
      // narrow to the right type
      _tao_objref =
@@ -25945,7 +26569,7 @@
            obj.in (),
            ACE_TRY_ENV
          );
-@@ -21565,23 +19892,12 @@
+@@ -22381,23 +20708,12 @@
    }
    ACE_ENDTRY;
    return 0;
@@ -25971,7 +26595,7 @@
    )
  {
    CORBA::Object_ptr _tao_corba_obj = _tao_objref;
-@@ -21591,7 +19907,7 @@
+@@ -22407,7 +20723,7 @@
  ACE_INLINE CORBA::Boolean
  operator>> (
      TAO_InputCDR &strm,
@@ -25980,7 +26604,7 @@
    )
  {
    ACE_TRY_NEW_ENV
-@@ -21601,7 +19917,7 @@
+@@ -22417,7 +20733,7 @@
        return 0;
      // narrow to the right type
      _tao_objref =
@@ -25989,7 +26613,7 @@
            obj.in (),
            ACE_TRY_ENV
          );
-@@ -21618,19 +19934,8 @@
+@@ -22434,19 +20750,8 @@
  
  ACE_INLINE CORBA::Boolean
  operator<< (
@@ -26010,7 +26634,7 @@
    )
  {
    CORBA::Object_ptr _tao_corba_obj = _tao_objref;
-@@ -21640,7 +19945,7 @@
+@@ -22456,7 +20761,7 @@
  ACE_INLINE CORBA::Boolean
  operator>> (
      TAO_InputCDR &strm,
@@ -26019,7 +26643,7 @@
    )
  {
    ACE_TRY_NEW_ENV
-@@ -21650,7 +19955,7 @@
+@@ -22466,7 +20771,7 @@
        return 0;
      // narrow to the right type
      _tao_objref =
@@ -26028,7 +26652,7 @@
            obj.in (),
            ACE_TRY_ENV
          );
-@@ -21667,19 +19972,8 @@
+@@ -22483,19 +20788,8 @@
  
  ACE_INLINE CORBA::Boolean
  operator<< (
@@ -26049,7 +26673,7 @@
    )
  {
    CORBA::Object_ptr _tao_corba_obj = _tao_objref;
-@@ -21689,7 +19983,7 @@
+@@ -22505,7 +20799,7 @@
  ACE_INLINE CORBA::Boolean
  operator>> (
      TAO_InputCDR &strm,
@@ -26058,7 +26682,7 @@
    )
  {
    ACE_TRY_NEW_ENV
-@@ -21699,7 +19993,7 @@
+@@ -22515,7 +20809,7 @@
        return 0;
      // narrow to the right type
      _tao_objref =
@@ -26067,7 +26691,7 @@
            obj.in (),
            ACE_TRY_ENV
          );
-@@ -21716,19 +20010,8 @@
+@@ -22532,19 +20826,8 @@
  
  ACE_INLINE CORBA::Boolean
  operator<< (
@@ -26088,7 +26712,7 @@
    )
  {
    CORBA::Object_ptr _tao_corba_obj = _tao_objref;
-@@ -21738,7 +20021,7 @@
+@@ -22554,7 +20837,7 @@
  ACE_INLINE CORBA::Boolean
  operator>> (
      TAO_InputCDR &strm,
@@ -26097,7 +26721,7 @@
    )
  {
    ACE_TRY_NEW_ENV
-@@ -21748,7 +20031,7 @@
+@@ -22564,7 +20847,7 @@
        return 0;
      // narrow to the right type
      _tao_objref =
@@ -26106,7 +26730,7 @@
            obj.in (),
            ACE_TRY_ENV
          );
-@@ -21765,19 +20048,8 @@
+@@ -22581,19 +20864,8 @@
  
  ACE_INLINE CORBA::Boolean
  operator<< (
@@ -26127,7 +26751,7 @@
    )
  {
    CORBA::Object_ptr _tao_corba_obj = _tao_objref;
-@@ -21787,7 +20059,7 @@
+@@ -22603,7 +20875,7 @@
  ACE_INLINE CORBA::Boolean
  operator>> (
      TAO_InputCDR &strm,
@@ -26136,7 +26760,7 @@
    )
  {
    ACE_TRY_NEW_ENV
-@@ -21797,7 +20069,7 @@
+@@ -22613,7 +20885,7 @@
        return 0;
      // narrow to the right type
      _tao_objref =
@@ -26145,7 +26769,7 @@
            obj.in (),
            ACE_TRY_ENV
          );
-@@ -21814,19 +20086,8 @@
+@@ -22630,19 +20902,8 @@
  
  ACE_INLINE CORBA::Boolean
  operator<< (
@@ -26166,7 +26790,7 @@
    )
  {
    CORBA::Object_ptr _tao_corba_obj = _tao_objref;
-@@ -21836,7 +20097,7 @@
+@@ -22652,7 +20913,7 @@
  ACE_INLINE CORBA::Boolean
  operator>> (
      TAO_InputCDR &strm,
@@ -26175,7 +26799,7 @@
    )
  {
    ACE_TRY_NEW_ENV
-@@ -21846,7 +20107,7 @@
+@@ -22662,7 +20923,7 @@
        return 0;
      // narrow to the right type
      _tao_objref =
@@ -26184,7 +26808,7 @@
            obj.in (),
            ACE_TRY_ENV
          );
-@@ -21863,19 +20124,8 @@
+@@ -22679,19 +20940,8 @@
  
  ACE_INLINE CORBA::Boolean
  operator<< (
@@ -26205,7 +26829,7 @@
    )
  {
    CORBA::Object_ptr _tao_corba_obj = _tao_objref;
-@@ -21885,7 +20135,7 @@
+@@ -22701,7 +20951,7 @@
  ACE_INLINE CORBA::Boolean
  operator>> (
      TAO_InputCDR &strm,
@@ -26214,7 +26838,7 @@
    )
  {
    ACE_TRY_NEW_ENV
-@@ -21895,7 +20145,7 @@
+@@ -22711,7 +20961,7 @@
        return 0;
      // narrow to the right type
      _tao_objref =
@@ -26223,7 +26847,7 @@
            obj.in (),
            ACE_TRY_ENV
          );
-@@ -21912,19 +20162,8 @@
+@@ -22728,19 +20978,8 @@
  
  ACE_INLINE CORBA::Boolean
  operator<< (
@@ -26244,7 +26868,7 @@
    )
  {
    CORBA::Object_ptr _tao_corba_obj = _tao_objref;
-@@ -21934,7 +20173,7 @@
+@@ -22750,7 +20989,7 @@
  ACE_INLINE CORBA::Boolean
  operator>> (
      TAO_InputCDR &strm,
@@ -26253,7 +26877,7 @@
    )
  {
    ACE_TRY_NEW_ENV
-@@ -21944,7 +20183,7 @@
+@@ -22760,7 +20999,7 @@
        return 0;
      // narrow to the right type
      _tao_objref =
@@ -26262,7 +26886,7 @@
            obj.in (),
            ACE_TRY_ENV
          );
-@@ -21961,19 +20200,8 @@
+@@ -22777,19 +21016,8 @@
  
  ACE_INLINE CORBA::Boolean
  operator<< (
@@ -26283,7 +26907,7 @@
    )
  {
    CORBA::Object_ptr _tao_corba_obj = _tao_objref;
-@@ -21983,7 +20211,7 @@
+@@ -22799,7 +21027,7 @@
  ACE_INLINE CORBA::Boolean
  operator>> (
      TAO_InputCDR &strm,
@@ -26292,7 +26916,7 @@
    )
  {
    ACE_TRY_NEW_ENV
-@@ -21993,7 +20221,7 @@
+@@ -22809,7 +21037,7 @@
        return 0;
      // narrow to the right type
      _tao_objref =
@@ -26301,7 +26925,7 @@
            obj.in (),
            ACE_TRY_ENV
          );
-@@ -22008,7 +20236,7 @@
+@@ -22824,7 +21052,7 @@
    return 0;
  }
  
@@ -26310,7 +26934,7 @@
  {
    if (
      (strm << _tao_aggregate.name.in ()) &&
-@@ -22023,7 +20251,7 @@
+@@ -22839,7 +21067,7 @@
    
  }
  
@@ -26319,7 +26943,7 @@
  {
    if (
      (strm >> _tao_aggregate.name.out ()) &&
-@@ -22038,50 +20266,38 @@
+@@ -22854,50 +21082,38 @@
    
  }
  
@@ -26377,7 +27001,7 @@
      }
    
    return _tao_result;
-@@ -22089,19 +20305,8 @@
+@@ -22905,19 +21121,8 @@
  
  ACE_INLINE CORBA::Boolean
  operator<< (
@@ -26398,7 +27022,7 @@
    )
  {
    CORBA::Object_ptr _tao_corba_obj = _tao_objref;
-@@ -22111,7 +20316,7 @@
+@@ -22927,7 +21132,7 @@
  ACE_INLINE CORBA::Boolean
  operator>> (
      TAO_InputCDR &strm,
@@ -26407,7 +27031,7 @@
    )
  {
    ACE_TRY_NEW_ENV
-@@ -22121,7 +20326,7 @@
+@@ -22937,7 +21142,7 @@
        return 0;
      // narrow to the right type
      _tao_objref =
@@ -26416,7 +27040,7 @@
            obj.in (),
            ACE_TRY_ENV
          );
-@@ -22136,7 +20341,7 @@
+@@ -22952,7 +21157,7 @@
    return 0;
  }
  
@@ -26425,7 +27049,7 @@
  {
    if (
      (strm << _tao_aggregate.name.in ()) &&
-@@ -22154,7 +20359,7 @@
+@@ -22970,7 +21175,7 @@
    
  }
  
@@ -26434,7 +27058,7 @@
  {
    if (
      (strm >> _tao_aggregate.name.out ()) &&
-@@ -22172,45 +20377,45 @@
+@@ -22988,45 +21193,45 @@
    
  }
  
@@ -26487,7 +27111,7 @@
  {
    if (
      (strm << _tao_aggregate.name.in ()) &&
-@@ -22224,7 +20429,7 @@
+@@ -23040,7 +21245,7 @@
    
  }
  
@@ -26496,7 +27120,7 @@
  {
    if (
      (strm >> _tao_aggregate.name.out ()) &&
-@@ -22238,51 +20443,28 @@
+@@ -23054,51 +21259,28 @@
    
  }
  
@@ -26553,7 +27177,7 @@
    )
  {
    CORBA::Object_ptr _tao_corba_obj = _tao_objref;
-@@ -22292,7 +20474,7 @@
+@@ -23108,7 +21290,7 @@
  ACE_INLINE CORBA::Boolean
  operator>> (
      TAO_InputCDR &strm,
@@ -26562,7 +27186,7 @@
    )
  {
    ACE_TRY_NEW_ENV
-@@ -22302,7 +20484,7 @@
+@@ -23118,7 +21300,7 @@
        return 0;
      // narrow to the right type
      _tao_objref =
@@ -26571,7 +27195,7 @@
            obj.in (),
            ACE_TRY_ENV
          );
-@@ -22317,7 +20499,7 @@
+@@ -23133,7 +21315,7 @@
    return 0;
  }
  
@@ -26580,7 +27204,7 @@
  {
    if (
      (strm << _tao_aggregate.name.in ()) &&
-@@ -22336,7 +20518,7 @@
+@@ -23152,7 +21334,7 @@
    
  }
  
@@ -26589,7 +27213,7 @@
  {
    if (
      (strm >> _tao_aggregate.name.out ()) &&
-@@ -22355,66 +20537,37 @@
+@@ -23171,66 +21353,37 @@
    
  }
  
@@ -26663,7 +27287,7 @@
    )
  {
    CORBA::Object_ptr _tao_corba_obj = _tao_objref;
-@@ -22424,7 +20577,7 @@
+@@ -23240,7 +21393,7 @@
  ACE_INLINE CORBA::Boolean
  operator>> (
      TAO_InputCDR &strm,
@@ -26672,7 +27296,7 @@
    )
  {
    ACE_TRY_NEW_ENV
-@@ -22434,7 +20587,7 @@
+@@ -23250,7 +21403,7 @@
        return 0;
      // narrow to the right type
      _tao_objref =
@@ -26681,7 +27305,7 @@
            obj.in (),
            ACE_TRY_ENV
          );
-@@ -22449,7 +20602,7 @@
+@@ -23265,7 +21418,7 @@
    return 0;
  }
  
@@ -26690,7 +27314,7 @@
  {
    if (
      (strm << _tao_aggregate.name.in ()) &&
-@@ -22469,7 +20622,7 @@
+@@ -23285,7 +21438,7 @@
    
  }
  
@@ -26699,7 +27323,7 @@
  {
    if (
      (strm >> _tao_aggregate.name.out ()) &&
-@@ -22489,7 +20642,7 @@
+@@ -23305,7 +21458,7 @@
    
  }
  
@@ -26708,7 +27332,7 @@
  {
    if (
      (strm << _tao_aggregate.name.in ()) &&
-@@ -22506,7 +20659,7 @@
+@@ -23322,7 +21475,7 @@
    
  }
  
@@ -26717,7 +27341,7 @@
  {
    if (
      (strm >> _tao_aggregate.name.out ()) &&
-@@ -22523,36 +20676,19 @@
+@@ -23339,36 +21492,19 @@
    
  }
  
@@ -26757,7 +27381,7 @@
    )
  {
    CORBA::Object_ptr _tao_corba_obj = _tao_objref;
-@@ -22562,7 +20698,7 @@
+@@ -23378,7 +21514,7 @@
  ACE_INLINE CORBA::Boolean
  operator>> (
      TAO_InputCDR &strm,
@@ -26766,7 +27390,7 @@
    )
  {
    ACE_TRY_NEW_ENV
-@@ -22572,7 +20708,7 @@
+@@ -23388,7 +21524,7 @@
        return 0;
      // narrow to the right type
      _tao_objref =
@@ -26775,7 +27399,7 @@
            obj.in (),
            ACE_TRY_ENV
          );
-@@ -22589,19 +20725,8 @@
+@@ -23405,19 +21541,8 @@
  
  ACE_INLINE CORBA::Boolean
  operator<< (
@@ -26796,7 +27420,7 @@
    )
  {
    CORBA::Object_ptr _tao_corba_obj = _tao_objref;
-@@ -22611,7 +20736,7 @@
+@@ -23427,7 +21552,7 @@
  ACE_INLINE CORBA::Boolean
  operator>> (
      TAO_InputCDR &strm,
@@ -26805,7 +27429,7 @@
    )
  {
    ACE_TRY_NEW_ENV
-@@ -22621,7 +20746,7 @@
+@@ -23437,7 +21562,7 @@
        return 0;
      // narrow to the right type
      _tao_objref =
@@ -26814,7 +27438,7 @@
            obj.in (),
            ACE_TRY_ENV
          );
-@@ -22636,7 +20761,7 @@
+@@ -23452,7 +21577,7 @@
    return 0;
  }
  
@@ -26823,7 +27447,7 @@
  {
    if (
      (strm << _tao_aggregate.name.in ()) &&
-@@ -22661,7 +20786,7 @@
+@@ -23477,7 +21602,7 @@
    
  }
  
@@ -26832,7 +27456,7 @@
  {
    if (
      (strm >> _tao_aggregate.name.out ()) &&
-@@ -22688,19 +20813,8 @@
+@@ -23504,19 +21629,8 @@
  
  ACE_INLINE CORBA::Boolean
  operator<< (
@@ -26853,7 +27477,7 @@
    )
  {
    CORBA::Object_ptr _tao_corba_obj = _tao_objref;
-@@ -22710,7 +20824,7 @@
+@@ -23526,7 +21640,7 @@
  ACE_INLINE CORBA::Boolean
  operator>> (
      TAO_InputCDR &strm,
@@ -26862,7 +27486,7 @@
    )
  {
    ACE_TRY_NEW_ENV
-@@ -22720,7 +20834,7 @@
+@@ -23536,7 +21650,7 @@
        return 0;
      // narrow to the right type
      _tao_objref =
@@ -26871,7 +27495,7 @@
            obj.in (),
            ACE_TRY_ENV
          );
-@@ -22737,19 +20851,8 @@
+@@ -23553,19 +21667,8 @@
  
  ACE_INLINE CORBA::Boolean
  operator<< (
@@ -26892,7 +27516,7 @@
    )
  {
    CORBA::Object_ptr _tao_corba_obj = _tao_objref;
-@@ -22759,7 +20862,7 @@
+@@ -23575,7 +21678,7 @@
  ACE_INLINE CORBA::Boolean
  operator>> (
      TAO_InputCDR &strm,
@@ -26901,7 +27525,7 @@
    )
  {
    ACE_TRY_NEW_ENV
-@@ -22769,7 +20872,7 @@
+@@ -23585,7 +21688,7 @@
        return 0;
      // narrow to the right type
      _tao_objref =
@@ -26910,7 +27534,7 @@
            obj.in (),
            ACE_TRY_ENV
          );
-@@ -22784,7 +20887,7 @@
+@@ -23600,7 +21703,7 @@
    return 0;
  }
  
@@ -26919,7 +27543,7 @@
  {
    if (
      (strm << _tao_aggregate.name.in ()) &&
-@@ -22799,7 +20902,7 @@
+@@ -23615,7 +21718,7 @@
    
  }
  
@@ -26928,7 +27552,7 @@
  {
    if (
      (strm >> _tao_aggregate.name.out ()) &&
-@@ -22816,19 +20919,8 @@
+@@ -23632,19 +21735,8 @@
  
  ACE_INLINE CORBA::Boolean
  operator<< (
@@ -26949,7 +27573,7 @@
    )
  {
    CORBA::Object_ptr _tao_corba_obj = _tao_objref;
-@@ -22838,7 +20930,7 @@
+@@ -23654,7 +21746,7 @@
  ACE_INLINE CORBA::Boolean
  operator>> (
      TAO_InputCDR &strm,
@@ -26958,7 +27582,7 @@
    )
  {
    ACE_TRY_NEW_ENV
-@@ -22848,7 +20940,7 @@
+@@ -23664,7 +21756,7 @@
        return 0;
      // narrow to the right type
      _tao_objref =
@@ -26967,7 +27591,7 @@
            obj.in (),
            ACE_TRY_ENV
          );
-@@ -22863,7 +20955,7 @@
+@@ -23679,7 +21771,7 @@
    return 0;
  }
  
@@ -26976,7 +27600,7 @@
  {
    if (
      (strm << _tao_aggregate.name.in ()) &&
-@@ -22879,7 +20971,7 @@
+@@ -23695,7 +21787,7 @@
    
  }
  
@@ -26985,7 +27609,7 @@
  {
    if (
      (strm >> _tao_aggregate.name.out ()) &&
-@@ -22895,51 +20987,28 @@
+@@ -23711,51 +21803,28 @@
    
  }
  
@@ -27042,7 +27666,7 @@
    )
  {
    CORBA::Object_ptr _tao_corba_obj = _tao_objref;
-@@ -22949,7 +21018,7 @@
+@@ -23765,7 +21834,7 @@
  ACE_INLINE CORBA::Boolean
  operator>> (
      TAO_InputCDR &strm,
@@ -27051,7 +27675,7 @@
    )
  {
    ACE_TRY_NEW_ENV
-@@ -22959,7 +21028,7 @@
+@@ -23775,7 +21844,7 @@
        return 0;
      // narrow to the right type
      _tao_objref =
@@ -27060,7 +27684,7 @@
            obj.in (),
            ACE_TRY_ENV
          );
-@@ -22974,7 +21043,7 @@
+@@ -23790,7 +21859,7 @@
    return 0;
  }
  
@@ -27069,7 +27693,7 @@
  {
    if (
      (strm << _tao_aggregate.name.in ()) &&
-@@ -22989,7 +21058,7 @@
+@@ -23805,7 +21874,7 @@
    
  }
  
@@ -27078,7 +27702,7 @@
  {
    if (
      (strm >> _tao_aggregate.name.out ()) &&
-@@ -23006,19 +21075,8 @@
+@@ -23822,19 +21891,8 @@
  
  ACE_INLINE CORBA::Boolean
  operator<< (
@@ -27099,7 +27723,7 @@
    )
  {
    CORBA::Object_ptr _tao_corba_obj = _tao_objref;
-@@ -23028,7 +21086,7 @@
+@@ -23844,7 +21902,7 @@
  ACE_INLINE CORBA::Boolean
  operator>> (
      TAO_InputCDR &strm,
@@ -27108,7 +27732,7 @@
    )
  {
    ACE_TRY_NEW_ENV
-@@ -23038,7 +21096,7 @@
+@@ -23854,7 +21912,7 @@
        return 0;
      // narrow to the right type
      _tao_objref =
@@ -27117,7 +27741,7 @@
            obj.in (),
            ACE_TRY_ENV
          );
-@@ -23055,19 +21113,8 @@
+@@ -23871,19 +21929,8 @@
  
  ACE_INLINE CORBA::Boolean
  operator<< (
@@ -27138,7 +27762,7 @@
    )
  {
    CORBA::Object_ptr _tao_corba_obj = _tao_objref;
-@@ -23077,7 +21124,7 @@
+@@ -23893,7 +21940,7 @@
  ACE_INLINE CORBA::Boolean
  operator>> (
      TAO_InputCDR &strm,
@@ -27147,7 +27771,7 @@
    )
  {
    ACE_TRY_NEW_ENV
-@@ -23087,7 +21134,7 @@
+@@ -23903,7 +21950,7 @@
        return 0;
      // narrow to the right type
      _tao_objref =
@@ -27156,7 +27780,7 @@
            obj.in (),
            ACE_TRY_ENV
          );
-@@ -23104,19 +21151,8 @@
+@@ -23920,19 +21967,8 @@
  
  ACE_INLINE CORBA::Boolean
  operator<< (
@@ -27177,7 +27801,7 @@
    )
  {
    CORBA::Object_ptr _tao_corba_obj = _tao_objref;
-@@ -23126,7 +21162,7 @@
+@@ -23942,7 +21978,7 @@
  ACE_INLINE CORBA::Boolean
  operator>> (
      TAO_InputCDR &strm,
@@ -27186,7 +27810,7 @@
    )
  {
    ACE_TRY_NEW_ENV
-@@ -23136,7 +21172,7 @@
+@@ -23952,7 +21988,7 @@
        return 0;
      // narrow to the right type
      _tao_objref =
@@ -27195,7 +27819,7 @@
            obj.in (),
            ACE_TRY_ENV
          );
-@@ -23153,19 +21189,8 @@
+@@ -23969,19 +22005,8 @@
  
  ACE_INLINE CORBA::Boolean
  operator<< (
@@ -27216,7 +27840,7 @@
    )
  {
    CORBA::Object_ptr _tao_corba_obj = _tao_objref;
-@@ -23175,7 +21200,7 @@
+@@ -23991,7 +22016,7 @@
  ACE_INLINE CORBA::Boolean
  operator>> (
      TAO_InputCDR &strm,
@@ -27225,7 +27849,7 @@
    )
  {
    ACE_TRY_NEW_ENV
-@@ -23185,7 +21210,7 @@
+@@ -24001,7 +22026,7 @@
        return 0;
      // narrow to the right type
      _tao_objref =
@@ -27234,7 +27858,7 @@
            obj.in (),
            ACE_TRY_ENV
          );
-@@ -23200,7 +21225,7 @@
+@@ -24016,7 +22041,7 @@
    return 0;
  }
  
@@ -27243,7 +27867,7 @@
  {
    if (
      (strm << _tao_aggregate.name.in ()) &&
-@@ -23223,7 +21248,7 @@
+@@ -24039,7 +22064,7 @@
    
  }
  
@@ -27252,7 +27876,7 @@
  {
    if (
      (strm >> _tao_aggregate.name.out ()) &&
-@@ -23248,19 +21273,8 @@
+@@ -24064,19 +22089,8 @@
  
  ACE_INLINE CORBA::Boolean
  operator<< (
@@ -27273,7 +27897,7 @@
    )
  {
    CORBA::Object_ptr _tao_corba_obj = _tao_objref;
-@@ -23270,7 +21284,7 @@
+@@ -24086,7 +22100,7 @@
  ACE_INLINE CORBA::Boolean
  operator>> (
      TAO_InputCDR &strm,
@@ -27282,7 +27906,7 @@
    )
  {
    ACE_TRY_NEW_ENV
-@@ -23280,7 +21294,7 @@
+@@ -24096,7 +22110,7 @@
        return 0;
      // narrow to the right type
      _tao_objref =
@@ -27291,7 +27915,7 @@
            obj.in (),
            ACE_TRY_ENV
          );
-@@ -23295,7 +21309,7 @@
+@@ -24111,7 +22125,7 @@
    return 0;
  }
  
@@ -27300,7 +27924,7 @@
  {
    if (
      (strm << _tao_aggregate.name.in ()) &&
-@@ -23310,7 +21324,7 @@
+@@ -24126,7 +22140,7 @@
    
  }
  
@@ -27309,7 +27933,7 @@
  {
    if (
      (strm >> _tao_aggregate.name.out ()) &&
-@@ -23327,19 +21341,8 @@
+@@ -24143,19 +22157,8 @@
  
  ACE_INLINE CORBA::Boolean
  operator<< (
@@ -27330,7 +27954,7 @@
    )
  {
    CORBA::Object_ptr _tao_corba_obj = _tao_objref;
-@@ -23349,7 +21352,7 @@
+@@ -24165,7 +22168,7 @@
  ACE_INLINE CORBA::Boolean
  operator>> (
      TAO_InputCDR &strm,
@@ -27339,7 +27963,7 @@
    )
  {
    ACE_TRY_NEW_ENV
-@@ -23359,7 +21362,7 @@
+@@ -24175,7 +22178,7 @@
        return 0;
      // narrow to the right type
      _tao_objref =
@@ -27348,7 +27972,7 @@
            obj.in (),
            ACE_TRY_ENV
          );
-@@ -23376,19 +21379,8 @@
+@@ -24192,19 +22195,8 @@
  
  ACE_INLINE CORBA::Boolean
  operator<< (
@@ -27369,7 +27993,7 @@
    )
  {
    CORBA::Object_ptr _tao_corba_obj = _tao_objref;
-@@ -23398,7 +21390,7 @@
+@@ -24214,7 +22206,7 @@
  ACE_INLINE CORBA::Boolean
  operator>> (
      TAO_InputCDR &strm,
@@ -27378,7 +28002,7 @@
    )
  {
    ACE_TRY_NEW_ENV
-@@ -23408,7 +21400,7 @@
+@@ -24224,7 +22216,7 @@
        return 0;
      // narrow to the right type
      _tao_objref =
@@ -27387,7 +28011,7 @@
            obj.in (),
            ACE_TRY_ENV
          );
-@@ -23425,19 +21417,8 @@
+@@ -24241,19 +22233,8 @@
  
  ACE_INLINE CORBA::Boolean
  operator<< (
@@ -27408,7 +28032,7 @@
    )
  {
    CORBA::Object_ptr _tao_corba_obj = _tao_objref;
-@@ -23447,7 +21428,7 @@
+@@ -24263,7 +22244,7 @@
  ACE_INLINE CORBA::Boolean
  operator>> (
      TAO_InputCDR &strm,
@@ -27417,7 +28041,7 @@
    )
  {
    ACE_TRY_NEW_ENV
-@@ -23457,7 +21438,7 @@
+@@ -24273,7 +22254,7 @@
        return 0;
      // narrow to the right type
      _tao_objref =
@@ -27426,7 +28050,7 @@
            obj.in (),
            ACE_TRY_ENV
          );
-@@ -23472,7 +21453,7 @@
+@@ -24288,7 +22269,7 @@
    return 0;
  }
  
@@ -27435,7 +28059,7 @@
  {
    if (
      (strm << _tao_aggregate.name.in ()) &&
-@@ -23494,7 +21475,7 @@
+@@ -24310,7 +22291,7 @@
    
  }
  
