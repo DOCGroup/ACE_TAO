@@ -103,6 +103,9 @@
 /// Doxygen is capable of parsing using
 #define ACE_HAS_USING_KEYWORD
 
+/// Generate icmp documentation
+#define ACE_HAS_ICMP_SUPPORT 1
+
 /// Parse some ACE_SSL classes that depend on recent versions of
 /// OpenSSL.
 #define OPENSSL_VERSION_NUMBER 0x00905820L
