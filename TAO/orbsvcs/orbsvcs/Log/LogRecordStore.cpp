@@ -145,7 +145,7 @@ TAO_LogRecordStore::remove (DsLogAdmin::RecordId id)
 int
 TAO_LogRecordStore::purge_old_records (void)
 {
-  CORBA::ULongLong num_records_to_purge =  (this->num_records_) * ( (CORBA::ULongLong) 5 / (CORBA::ULongLong)100 );
+  CORBA::ULongLong num_records_to_purge = this->num_records_ * 5U / 100U;
 
   if (num_records_to_purge < 1)
     num_records_to_purge = 1;
@@ -155,24 +155,23 @@ TAO_LogRecordStore::purge_old_records (void)
   CORBA::ULong count = 0; // count of matches found.
 
   if (num_records_to_purge > 0 )
-  {
-    for (CORBA::ULong i = 0; i < num_records_to_purge; ++i)
     {
-        if (iter.next (hash_entry) == -1 || iter.advance () == -1)
+      for (CORBA::ULongLong i = 0; i < num_records_to_purge; ++i)
         {
-          break;
-        }
+          if (iter.next (hash_entry) == -1 || iter.advance () == -1)
+            break;
 
-        if (this->remove (hash_entry->int_id_.id) == 0)
-          count++;
+          if (this->remove (hash_entry->int_id_.id) == 0)
+            count++;
+        }
     }
-  }
+
   return count;
 }
 
 
 
-TAO_LogRecordStore::LOG_RECORD_STORE&
+TAO_LogRecordStore::LOG_RECORD_STORE &
 TAO_LogRecordStore::get_storage (void)
 {
   return rec_hash_;

@@ -712,7 +712,7 @@ TAO_Log_i::retrieve (DsLogAdmin::TimeT from_time,
 
 #if defined (ACE_LACKS_LONGLONG_T)
          ACE_OS::sprintf (uint64_formating,
-                          ACE_UINT64_FORMAT_SPECIFIER,
+                          "%u",
                           ACE_U64_TO_U32 (from_time));
 #else
          ACE_OS::sprintf (uint64_formating,
@@ -1169,7 +1169,7 @@ TAO_Log_i::copy_attributes (DsLogAdmin::Log_ptr log
                             ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  const CORBA::ULong max_size =
+  const CORBA::ULongLong max_size =
     this->get_max_size (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
@@ -1247,11 +1247,7 @@ TAO_Log_i::remove_old_records (ACE_ENV_SINGLE_ARG_DECL)
   static char out[256] = "";
 
   double temp1 =
-# if defined (ACE_CONFIG_WIN32_H)
-    ACE_static_cast (double, ACE_static_cast (CORBA::LongLong, p_time));
-# else
-    p_time;
-# endif /* ACE_CONFIG_WIN32_H */
+    ACE_UINT64_DBLCAST_ADAPTER (p_time);
 
   ACE_OS::sprintf (out, "time > %.0f", temp1);
 
@@ -1302,13 +1298,15 @@ TAO_Log_i::check_capacity_alarm_threshold (ACE_ENV_SINGLE_ARG_DECL)
   this->remove_old_records (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  CORBA::LongLong max_size = this->recordstore_.get_max_size ();
-  if (max_size != 0 && this->thresholds_.length() > 0)
+  CORBA::ULongLong max_size = this->recordstore_.get_max_size ();
+  if (max_size != 0 && this->thresholds_.length () > 0)
     {
-      CORBA::LongLong current_size = this->recordstore_.get_current_size ();
-      CORBA::UShort percent =
-        (CORBA::UShort) (((double)current_size * 100) /
-                         (double) max_size);
+      CORBA::ULongLong current_size = this->recordstore_.get_current_size ();
+      const CORBA::UShort percent =
+        ACE_static_cast (
+          CORBA::UShort,
+          ((double) ACE_UINT64_DBLCAST_ADAPTER (current_size * 100U) /
+           (double) ACE_UINT64_DBLCAST_ADAPTER (max_size)));
 
       while (current_threshold_ < this->thresholds_.length ()
              && this->thresholds_[this->current_threshold_] <= percent)
@@ -1323,18 +1321,20 @@ TAO_Log_i::check_capacity_alarm_threshold (ACE_ENV_SINGLE_ARG_DECL)
                 this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
               ACE_CHECK;
 
-              notifier_->threshold_alarm (log.in (),
-                                          logid_,
-                                          this->thresholds_[this->current_threshold_],
-                                          (CORBA::UShort) percent,
-                                          severity
-                                          ACE_ENV_ARG_PARAMETER);
+              notifier_->threshold_alarm (
+                log.in (),
+                logid_,
+                this->thresholds_[this->current_threshold_],
+                percent,
+                severity
+                ACE_ENV_ARG_PARAMETER);
               ACE_CHECK;
             }
           else
             {
               if (TAO_debug_level > 0)
-                ACE_DEBUG ((LM_DEBUG,"threshold of %d breached\n",
+                ACE_DEBUG ((LM_DEBUG,
+                            "threshold of %d breached\n",
                             this->thresholds_[this->current_threshold_]));
             }
 
@@ -1353,16 +1353,19 @@ void
 TAO_Log_i::reset_capacity_alarm_threshold (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  CORBA::LongLong max_size = this->recordstore_.get_max_size ();
+  CORBA::ULongLong max_size = this->recordstore_.get_max_size ();
   if (max_size != 0 && this->thresholds_.length() > 0)
     {
-      CORBA::LongLong current_size = this->recordstore_.get_current_size ();
-      CORBA::UShort percent = (CORBA::UShort) (((double)current_size * 100) /
-                                               (double) max_size);
+      CORBA::ULongLong current_size = this->recordstore_.get_current_size ();
+      const CORBA::UShort percent =
+        ACE_static_cast (
+          CORBA::UShort,
+          (((double) ACE_UINT64_DBLCAST_ADAPTER (current_size * 100U)) /
+            (double) ACE_UINT64_DBLCAST_ADAPTER (max_size)));
 
       this->current_threshold_ = 0;
 
-      while (current_threshold_ < this->thresholds_.length ()
+      while (this->current_threshold_ < this->thresholds_.length ()
              && this->thresholds_[this->current_threshold_] <= percent)
         ++this->current_threshold_;
     }

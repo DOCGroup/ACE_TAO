@@ -338,10 +338,12 @@ ImR_Locator_i::setup_multicast (ACE_Reactor *reactor,
   return 0;
 #else /* ACE_HAS_IP_MULTICAST */
 
-  ACE_UNUSED_ARG(reactor);
-  ACE_ERROR ((LM_ERROR,
+  ACE_UNUSED_ARG (reactor);
+  ACE_UNUSED_ARG (ior);
+  ACE_DEBUG ((LM_WARNING,
               "Implementation Repository: "
-              "ACE_HAS_IP_MULTICAST not defined, multicast disabled.\n"));
+              "ACE_HAS_IP_MULTICAST is not defined. "
+              "Multicast support disabled.\n"));
 
   return 0;
 #endif /* ACE_HAS_IP_MULTICAST */

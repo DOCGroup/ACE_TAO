@@ -7,7 +7,7 @@
  *  $Id$
  *
  *  This flat file demonstrates basic persistence.
- *  
+ *
  *  @author Rob Ruff <rruff@scires.com>
  *  @author David A. Hanvey <d.hanvey@qub.ac.uk>
  */
