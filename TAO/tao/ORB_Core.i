@@ -570,10 +570,22 @@ TAO_ORB_Core::priority_endpoint_selector (void)
   return this->priority_endpoint_selector_;
 }
 
+ACE_INLINE TAO_Bands_Endpoint_Selector *
+TAO_ORB_Core::bands_endpoint_selector (void)
+{
+  return this->bands_endpoint_selector_;
+}
+
 ACE_INLINE TAO_Priority_Protocol_Selector *
 TAO_ORB_Core::priority_protocol_selector (void)
 {
   return this->priority_protocol_selector_;
+}
+
+ACE_INLINE TAO_Bands_Protocol_Selector *
+TAO_ORB_Core::bands_protocol_selector (void)
+{
+  return this->bands_protocol_selector_;
 }
 
 ACE_INLINE TAO_Client_Priority_Policy_Selector *

@@ -84,12 +84,6 @@ private:
                    CORBA::Environment &ACE_TRY_ENV);
   // Initializes <invocation>'s endpoint selection state.
 
-  int is_in_bands_range (TAO_PriorityBandedConnectionPolicy
-                         *bands_policy,
-                         CORBA::Short priority);
-  // Returns true if <priority> is within the range of any of the
-  // bands specified by the <bands_policy>.  Returns false otherwise.
-
 #endif /* TAO_HAS_RT_CORBA == 1 */
 };
 
@@ -239,6 +233,23 @@ private:
 
 // ****************************************************************
 
+class TAO_Export TAO_Bands_Endpoint_Selector : 
+  public TAO_Default_Endpoint_Selector
+{
+public:
+  TAO_Bands_Endpoint_Selector (void);
+  // Constructor.
+
+  virtual ~TAO_Bands_Endpoint_Selector (void);
+  // Destructor.
+
+  virtual void select_endpoint (TAO_GIOP_Invocation *invocation,
+                                CORBA::Environment &ACE_TRY_ENV =
+                                TAO_default_environment ());
+};
+
+// ****************************************************************
+
 class TAO_Export TAO_Protocol_Endpoint_Selector : 
   public TAO_Invocation_Endpoint_Selector
 {
@@ -315,6 +326,24 @@ protected:
 
   int is_multihomed (TAO_Endpoint *endpoint);
   // Helper for <select_endpoint>.
+};
+
+// ****************************************************************
+
+class TAO_Export TAO_Bands_Protocol_Selector : 
+  public TAO_Protocol_Endpoint_Selector
+{
+public:
+  TAO_Bands_Protocol_Selector (void);
+  // Constructor.
+
+  virtual ~TAO_Bands_Protocol_Selector (void);
+  // Destructor.
+
+protected:
+  virtual void endpoint (TAO_GIOP_Invocation *invocation,
+                         CORBA::Environment &ACE_TRY_ENV =
+                         TAO_default_environment ());
 };
 
 #endif /* TAO_HAS_RT_CORBA == 1 */
