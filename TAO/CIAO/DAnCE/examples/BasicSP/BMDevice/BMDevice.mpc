@@ -2,11 +2,11 @@
 
 project(BMDevice_DnC_stub): ciao_client_dnc {
   after += BasicSP_DnC_stub
-  sharedname = BMDevice_DnC_stub
+  sharedname = BMDevice_stub
 
   idlflags += -Wb,stub_export_macro=BMDEVICE_STUB_Export -Wb,stub_export_include=BMDevice_stub_export.h -Wb,skel_export_macro=BMDEVICE_SVNT_Export -Wb,skel_export_include=BMDevice_svnt_export.h
   libpaths += ..
-  libs += BasicSP_DnC_stub
+  libs += BasicSP_stub
   dynamicflags   = BMDEVICE_STUB_BUILD_DLL
 
   IDL_Files {
@@ -20,8 +20,8 @@ project(BMDevice_DnC_stub): ciao_client_dnc {
 
 project(BMDevice_DnC_svnt) : ciao_servant_dnc {
   after += BMDevice_DnC_stub BasicSP_DnC_stub
-  sharedname  = BMDevice_DnC_svnt
-  libs    += BMDevice_DnC_stub BasicSP_DnC_stub BasicSP_DnC_svnt
+  sharedname  = BMDevice_svnt
+  libs    += BMDevice_stub BasicSP_stub BasicSP_svnt
   libpaths += ..
   idlflags  +=  -Wb,export_macro=BMDEVICE_SVNT_Export -Wb,export_include=BMDevice_svnt_export.h
   dynamicflags = BMDEVICE_SVNT_BUILD_DLL
@@ -44,8 +44,8 @@ project(BMDevice_DnC_svnt) : ciao_servant_dnc {
 
 project(BMDevice_DnC_exec) : ciao_component_dnc {
   after += BMDevice_DnC_svnt
-  sharedname = BMDevice_DnC_exec
-  libs      += BMDevice_DnC_stub BMDevice_DnC_svnt BasicSP_DnC_stub BasicSP_DnC_svnt
+  sharedname = BMDevice_exec
+  libs      += BMDevice_stub BMDevice_svnt BasicSP_stub BasicSP_svnt
   libpaths += ..
   idlflags  +=  -Wb,export_macro=BMDEVICE_EXEC_Export -Wb,export_include=BMDevice_exec_export.h
   dynamicflags   = BMDEVICE_EXEC_BUILD_DLL

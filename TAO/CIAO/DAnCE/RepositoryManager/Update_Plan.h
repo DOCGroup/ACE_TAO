@@ -25,11 +25,11 @@
 
 namespace Deployment
 {
-  class SubcomponentInstantiationDescription;
-  class DeploymentPlan;
-  class ComponentAssemblyDescription;
-  class SubcomponentInstantiationDescription;
-  class AssemblyConnectionDescription;
+  struct SubcomponentInstantiationDescription;
+  struct DeploymentPlan;
+  struct ComponentAssemblyDescription;
+  struct SubcomponentInstantiationDescription;
+  struct AssemblyConnectionDescription;
 }
 
 namespace CIAO
