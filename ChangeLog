@@ -1,3 +1,15 @@
+Mon Jan 10 10:29:38 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          Ensure that all generated files are created before attempting to
+          create the precompiled header binary.
+
+        * bin/depgen.pl:
+
+          Use canonpath on all paths provide by the user to ensure that
+          things get substituted properly in the generated dependency file.
+
 Mon Jan 10 16:10:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Mem_Map/IO-tests/test_io.cpp:
@@ -31,26 +43,26 @@ Mon Jan 10 08:41:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sun Jan  9 19:49:19 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ACE-INSTALL.html:
+        * ACE-INSTALL.html:
 
-	  Updated to note that autoconf/automake build is available
-	  in ACE only and ACE+TAO releases.
+          Updated to note that autoconf/automake build is available
+          in ACE only and ACE+TAO releases.
 
 Sun Jan  9 18:29:13 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ACEXML/apps/svcconf/Makefile.am:
-	* ACEXML/common/Makefile.am:
-	* ACEXML/parser/parser/Makefile.am:
-	* Kokyu/Makefile.am:
-	* protocols/ace/HTBP/Makefile.am:
+        * ACEXML/apps/svcconf/Makefile.am:
+        * ACEXML/common/Makefile.am:
+        * ACEXML/parser/parser/Makefile.am:
+        * Kokyu/Makefile.am:
+        * protocols/ace/HTBP/Makefile.am:
 
           Generate pkg-config *.pc files from templates.
 
-	* ACEXML/apps/svcconf/ACEXML_XML_Svc_Conf_Parser.pc.in:
-	* ACEXML/common/ACEXML.pc.in:
-	* ACEXML/parser/parser/ACEXML_Parser.pc.in:
-	* Kokyu/Kokyu.pc.in:
-	* protocols/ace/HTBP/ACE_HTBP.pc.in:
+        * ACEXML/apps/svcconf/ACEXML_XML_Svc_Conf_Parser.pc.in:
+        * ACEXML/common/ACEXML.pc.in:
+        * ACEXML/parser/parser/ACEXML_Parser.pc.in:
+        * Kokyu/Kokyu.pc.in:
+        * protocols/ace/HTBP/ACE_HTBP.pc.in:
 
           New files, pkg-config *.pc templates.
 
@@ -102,18 +114,18 @@ Sat Jan  8 14:50:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Fri Jan  7 21:04:44 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* include/makeinclude/wrapper_macros.GNU:
+        * include/makeinclude/wrapper_macros.GNU:
 
           Added the required path settings for SSL.
 
 Fri Jan  7 18:23:19 2005  Steve Huston  <shuston@riverace.com>
 
-	* configure.ac: Corrected the check for ACE_HAS_CONFLICTING_XTI_MACROS.
-	  We're checking for a conflict of macros from other places. The
-	  requirement for this macro originally came from HP-UX, and shows
-	  as a "Future error" (aka a warning) from aC++. Simply having
-	  the macros show up when the "wrong" header is included first isn't
-	  a problem - it's the compiler complaining that they conflict.
+        * configure.ac: Corrected the check for ACE_HAS_CONFLICTING_XTI_MACROS.
+          We're checking for a conflict of macros from other places. The
+          requirement for this macro originally came from HP-UX, and shows
+          as a "Future error" (aka a warning) from aC++. Simply having
+          the macros show up when the "wrong" header is included first isn't
+          a problem - it's the compiler complaining that they conflict.
 
 Fri Jan  7 19:36:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
