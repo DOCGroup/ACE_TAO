@@ -1,3 +1,12 @@
+Tue Nov 18 00:35:51 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * include/makeinclude/component_check.GNU:
+        * include/makeinclude/wrapper_macros.GNU:
+          Added new variable, ACE_MAKE_OPTIONS, to wrapper_macros.GNU that
+          collects all the flags passed to make, e.g., ssl, sctp, rmcast,
+          etc....  Use this variable in component_check.GNU so that we
+          only have to add new flags one place. 
+
 Tue Nov 18 00:04:30 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * include/makeinclude/all_in_one.GNU:
