@@ -5,10 +5,6 @@
 #include "ace/SString.h"
 #include "ace/Sched_Params.h"
 
-#if defined (ACE_WIN32)
-# include "ace/ARGV.h"
-#endif /* ACE_WIN32 */
-
 // Perhaps we should *always* include ace/OS.i in order to make sure
 // we can always link against the OS symbols?
 #if !defined (ACE_HAS_INLINED_OSCALLS)
@@ -2136,8 +2132,8 @@ ACE_Thread_Adapter::invoke (void)
         {
           // Not spawned by ACE_Thread_Manager, use the old buggy
           // version.  You should seriously consider using
-          // ACE_Thread_Manager to spawn threads.  The following
-          // code is know to cause some problem.
+          // ACE_Thread_Manager to spawn threads.  The following code
+          // is know to cause some problem.
           CWinThread *pThread = ::AfxGetThread ();
 
           if (!pThread || pThread->m_nThreadID != ACE_OS::thr_self ())
@@ -2689,10 +2685,11 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
   if (ACE_BIT_ENABLED (flags, THR_DETACHED))
     {
 #         if defined (HPUX_10)
-    // HP-UX DCE threads' pthread_detach will smash thr_id if it's just given
-    // as an argument.  This will cause ACE_Thread_Manager (if it's doing this
-    // create) to lose track of the new thread since the ID will be passed back
-    // equal to 0.  So give pthread_detach a junker to scribble on.
+    // HP-UX DCE threads' pthread_detach will smash thr_id if it's
+    // just given as an argument.  This will cause ACE_Thread_Manager
+    // (if it's doing this create) to lose track of the new thread
+    // since the ID will be passed back equal to 0.  So give
+    // pthread_detach a junker to scribble on.
       ACE_thread_t  junker;
       cma_handle_assign(thr_id, &junker);
       ::pthread_detach (&junker);
@@ -3047,12 +3044,13 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
       if (! thr_id_provided  &&  thr_id)
         {
           if (*thr_id  &&  (*thr_id)[0] == ACE_THR_ID_ALLOCATED)
-            // *thr_id was allocated by the Thread_Manager.
-            // ::taskTcb (int tid) returns the address of the WIND_TCB
-            // (task control block).  According to the ::taskSpawn()
+            // *thr_id was allocated by the Thread_Manager.  ::taskTcb
+            // (int tid) returns the address of the WIND_TCB (task
+            // control block).  According to the ::taskSpawn()
             // documentation, the name of the new task is stored at
             // pStackBase, but is that of the current task?  If so, it
-            // might be a bit quicker than this extraction of the tcb . . .
+            // might be a bit quicker than this extraction of the tcb
+            // . . .
             ACE_OS::strncpy (*thr_id + 1, ::taskTcb (tid)->name, 10);
           else
             // *thr_id was not allocated by the Thread_Manager.
@@ -3122,9 +3120,10 @@ ACE_OS::thr_exit (void *status)
       }
     else
       {
-        // Not spawned by ACE_Thread_Manager, use the old buggy version.
-        // You should seriously consider using ACE_Thread_Manager to spawn threads.
-        // The following code is know to cause some problem.
+        // Not spawned by ACE_Thread_Manager, use the old buggy
+        // version.  You should seriously consider using
+        // ACE_Thread_Manager to spawn threads.  The following code is
+        // know to cause some problem.
         CWinThread *pThread = ::AfxGetThread ();
         if (!pThread || pThread->m_nThreadID != ACE_OS::thr_self ())
           ::_endthreadex ((DWORD) status);
@@ -3487,6 +3486,134 @@ ACE_OS::thr_key_detach (void *inst)
 # endif /* ACE_WIN32 || ACE_HAS_TSS_EMULATION */
 }
 
+int
+ACE_OS::string_to_argv (ASYS_TCHAR *buf,
+                        size_t &argc,
+                        ASYS_TCHAR **&argv,
+                        int substitute_env_args)
+{
+  // Reset the number of arguments
+  argc = 0;
+  
+  if (buf == 0)
+    return -1;
+
+  ASYS_TCHAR *cp = buf;
+
+  // First pass: count arguments.
+
+  // '#' is the start-comment token..
+  while (*cp != '\0' && *cp != '#')
+    {
+      // Skip whitespace..
+      while (ACE_OS::ace_isspace (*cp))
+        cp++;
+     
+      // Increment count and move to next whitespace..
+      if (*cp != '\0')
+        argc++;
+     
+      // Grok quotes....
+      if (*cp == '\'' || *cp == '"')
+        {
+          ASYS_TCHAR quote = *cp;
+	 
+          // Scan past the string..
+          for (cp++; *cp != '\0' && *cp != quote; cp++)
+            continue;
+
+          // '\0' implies unmatched quote..
+          if (*cp == '\0')
+            {
+              ACE_ERROR ((LM_ERROR, 
+                          ASYS_TEXT ("unmatched %c detected\n"),
+                          quote));
+              argc--;
+              break;
+            } 
+          else 
+            cp++;
+        }
+      else // Skip over non-whitespace....
+        while (*cp != '\0' && !ACE_OS::ace_isspace (*cp))
+          cp++;
+    }
+ 
+  // Second pass: copy arguments.
+  ASYS_TCHAR arg[ACE_DEFAULT_ARGV_BUFSIZ];
+  ASYS_TCHAR *argp = arg;
+ 
+  // Make sure that the buffer we're copying into is always large
+  // enough.
+  if (cp - buf >= ACE_DEFAULT_ARGV_BUFSIZ)
+    ACE_NEW_RETURN (argp,
+                    ASYS_TCHAR[cp - buf + 1],
+                    -1);
+
+  // Make a new argv vector of argc + 1 elements.
+  ACE_NEW_RETURN (argv,
+                  ASYS_TCHAR *[argc + 1],
+                  -1);
+ 
+  ASYS_TCHAR *ptr = buf;
+
+  for (size_t i = 0; i < argc; i++)
+    {
+      // Skip whitespace..
+      while (ACE_OS::ace_isspace (*ptr))
+        ptr++;
+     
+      // Copy next argument and move to next whitespace..
+      if (*ptr == '\'' || *ptr == '"')
+        {
+          ASYS_TCHAR quote = *ptr++;
+	 
+          for (cp = argp;
+               *ptr != '\0' && *ptr != quote; 
+               ptr++, cp++)
+            {
+              // @@ We can probably remove this since we ensure it's
+              // big enough earlier!
+              ACE_ASSERT (unsigned (cp - argp) < ACE_DEFAULT_ARGV_BUFSIZ);
+              *cp = *ptr;
+            }
+	 
+          *cp = '\0';
+          if (*ptr == quote)
+            ptr++;
+        }
+      else
+        {
+          for (cp = arg; 
+               *ptr && !ACE_OS::ace_isspace (*ptr); 
+               ptr++, cp++)
+            {
+              // @@ We can probably remove this since we ensure it's
+              // big enough earlier!
+              ACE_ASSERT (u_int (cp - argp) < ACE_DEFAULT_ARGV_BUFSIZ);
+              *cp = *ptr;
+            }
+
+          *cp = '\0';
+        }
+     
+      // Check for environment variable substitution here.
+      if (substitute_env_args)
+        ACE_ALLOCATOR_RETURN (argv[i],
+                              ACE_OS::strenvdup (arg),
+                              -1);
+      else
+        ACE_ALLOCATOR_RETURN (argv[i], 
+                              ACE_OS::strdup (arg),
+                              -1);
+    }
+ 
+  if (argp != arg)
+    delete [] argp;
+
+  argv[argc] = 0;
+}
+
 // Create a contiguous command-line argument buffer with each arg
 // separated by spaces.
 
@@ -3494,18 +3621,20 @@ pid_t
 ACE_OS::fork_exec (ASYS_TCHAR *argv[])
 {
 # if defined (ACE_WIN32)
-  ACE_ARGV argv_buf (argv);
+  ACE_TCHAR *buf = ACE_OS::string_to_argv (argv);
 
-  if (argv_buf.buf () != 0)
+  if (buf != 0)
     {
       PROCESS_INFORMATION process_info;
 #   if !defined (ACE_HAS_WINCE)
       STARTUPINFO startup_info;
-      ACE_OS::memset ((void *) &startup_info, 0, sizeof startup_info);
+      ACE_OS::memset ((void *) &startup_info,
+                      0,
+                      sizeof startup_info);
       startup_info.cb = sizeof startup_info;
 
       if (::CreateProcess (0,
-                           (LPTSTR) ACE_WIDE_STRING (argv_buf.buf ()),
+                           (LPTSTR) ACE_WIDE_STRING (buf),
                            0, // No process attributes.
                            0,  // No thread attributes.
                            TRUE, // Allow handle inheritance.
@@ -3517,7 +3646,7 @@ ACE_OS::fork_exec (ASYS_TCHAR *argv[])
                            &process_info))
 #   else
       if (::CreateProcess (0,
-                           (LPTSTR) ACE_WIDE_STRING (argv_buf.buf ()),
+                           (LPTSTR) ACE_WIDE_STRING (buf),
                            0, // No process attributes.
                            0,  // No thread attributes.
                            FALSE, // Can's inherit handles on CE

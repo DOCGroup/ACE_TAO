@@ -26,7 +26,7 @@ ACE_ARGV::buf (void)
   if (this->buf_ == 0 && this->state_ == ITERATIVE) 
     this->create_buf_from_queue ();
 
-  return (const ASYS_TCHAR *)this->buf_;
+  return (const ASYS_TCHAR *) this->buf_;
 }
 
 // Return the arguments in an entry-per-argument array
