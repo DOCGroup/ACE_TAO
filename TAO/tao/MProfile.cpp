@@ -30,7 +30,7 @@ TAO_MProfile::TAO_MProfile (TAO_MProfile *mprofiles)
   :  fwded_mprofile_(0),
      pfiles_ (0),
      current_ (0),
-     size_ (sz),
+     size_ (0),
      last_ (0)
 {
 
