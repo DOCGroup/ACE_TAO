@@ -69,44 +69,7 @@ HASH_STRING_MAP::equal (char *const &id1, char *const &id2)
 
 // Do this if we don't have template specialization
 
-class Dumb_String
-  // = DESCRIPTION
-  //     Desperate times call for desperate measures.  Bug your compiler
-  //     vendor to support template specialization.
-{
-public:
-  Dumb_String (char *s = 0);
-  // Default constructor
-
-  Dumb_String (const Dumb_String &ds);
-  // Copy constructor
-
-  ~Dumb_String (void);
-  // Default destructor
-
-  inline u_long hash (void) const;
-  // To satisfy Hash_Map_Manager
-
-  inline int operator== (const Dumb_String &ds) const;
-  // To satisfy Hash_Map_Manager
-
-  inline char * operator= (const Dumb_String &ds);
-  // To satisfy Hash_Map_Manager
-
-  inline int operator== (char const * s) const;
-  inline operator char * (void) const;
-  // These make life a little easier
-
-private:
-  char * s_;
-  // the string
-
-  int &copy_;
-  // reference counter
-
-  int junk_;
-  // default reference counter initializer
-};
+#include "Hash_Map_Manager_Test.h"	// Dumb_String is in here
 
 #define HASH_STRING_ENTRY ACE_Hash_Map_Entry<Dumb_String, Dumb_String>
 #define HASH_STRING_MAP \
