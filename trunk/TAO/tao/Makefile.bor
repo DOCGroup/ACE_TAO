@@ -246,6 +246,7 @@ INCDIR_NAME = tao
 INCLUDES = \
 	*.h *.i *.inl *_T.cpp *.pidl \
 	TAO_Singleton.cpp \
+   Condition.cpp \
 	orb.idl
 
 LIBFILES = $(ACE_LIB)
