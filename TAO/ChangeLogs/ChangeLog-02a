@@ -1,3 +1,10 @@
+Wed Apr  4 12:58:05 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/Dump_Schedule/Dump_Schedule.cpp:
+	* orbsvcs/tests/Sched_Conf/Sched_Conf.cpp:
+	* orbsvcs/tests/Sched_Conf/Sched_Conf_Anomalies.cpp: Disable bogus
+	  fuzz errors.
+
 Wed Apr 04 07:38:48 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/PortableServer/POA.cpp:
