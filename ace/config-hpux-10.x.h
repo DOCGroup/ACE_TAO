@@ -237,6 +237,11 @@ extern int h_errno;     /* This isn't declared in a header file on HP-UX */
 #  endif
 #endif /* ACE_HAS_THREADS */
 
+// Manually tweaking malloc paddings.
+#define ACE_MALLOC_PADDING 16
+#define ACE_MALLOC_ALIGN 8
+#define ACE_CONTROL_BLOCK_ALIGN_LONGS 0
+
 // Turns off the tracing feature.
 // To build with tracing enabled, make sure ACE_NTRACE is not defined
 #if !defined (ACE_NTRACE)
