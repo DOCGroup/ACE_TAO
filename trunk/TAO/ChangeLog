@@ -1,9 +1,17 @@
+Thu Apr 10 15:01:18 2003  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * docs/Options.html:
+
+          Add description of the new codeset related resource factory
+          options. These are -ORBNative[W]CharCodeset,
+          -ORB[W]CharCodesetTranslator.
+
 Thu Apr 10 01:39:23 2003 Pradeep Gore  <pradeep@oomworks.com>
 
 	* orbsvcs/tests/Notify/Destroy/Makefile:
 	* orbsvcs/tests/Notify/Destroy/.depend.Makefile:
 	  Corrected the Makefile.
-	
+
 Thu Apr 10 10:39:02 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/IFRService/ComponentDef_i.cpp:
@@ -17,7 +25,7 @@ Thu Apr 10 10:39:02 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 Thu Apr 10 10:30:33 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/default_client.cpp:
-	* tao/default_client.h: 
+	* tao/default_client.h:
 	* tao/Client_Strategy_Factory.cpp:
 	* tao/Client_Strategy_Factory.h: Added a new -ORB option,
 	  -ORBTransporMuxStrategyLock, and a accessor
@@ -32,12 +40,12 @@ Thu Apr 10 10:30:33 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  class. The lock will actually be created, and used by the
 	  concrete strategies. Looks like the all the concrete strategies
 	  may require some type of strategized locking. Hence this has
-	  been moved here with a purpose. 
-	
+	  been moved here with a purpose.
+
 	* tao/Muxed_TMS.cpp:
 	* tao/Muxed_TMS.h: Removed the hard coded recursive mutex, and used
 	  the strategized lock created by the client strategy factory
-	  instead. 
+	  instead.
 
 	  This fixes BUG 1491 and thanks again to Carlos for motivating
 	  this change.
@@ -56,9 +64,9 @@ Thu Apr 10 06:27:14 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/orbconf.h:
 	* tao/params.cpp: Added a compile time option to configure the
-	  DefaultInitRef. It was hardcoded to mcast://::: 
+	  DefaultInitRef. It was hardcoded to mcast://:::
 
-	  Thanks to Carlos O'Ryan for the patch. This shold fix BUG 1488. 
+	  Thanks to Carlos O'Ryan for the patch. This shold fix BUG 1488.
 
 Thu Apr 10 000:08:15 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -104,7 +112,7 @@ Wed Apr  9 15:28:47 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tao/PortableServer/ImplRepoS.cpp:
 	* tao/PortableServer/PolicyS.cpp:
 	* tao/PortableServer/ThruPOA_Object_Proxy_Impl.cpp:
-	* tao/RTPortableServer/RT_Collocation_Resolver.cpp: 
+	* tao/RTPortableServer/RT_Collocation_Resolver.cpp:
 	* orbsvcs/orbsvcs//IFRService/IFR_BaseS.cpp:
 	* orbsvcs/orbsvcs//IFRService/IFR_BasicS.cpp:
 	* orbsvcs/orbsvcs//IFRService/IFR_ComponentsS.cpp:
@@ -114,18 +122,18 @@ Wed Apr  9 15:28:47 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* TAO_IDL/be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:
 	  Use the above method in TAO_Stub to access the object_key.  This
-	  should fix [BUG 1483]. 
+	  should fix [BUG 1483].
 
 Wed Apr 09 14:54:03 2003  Pradeep Gore  <pradeep@oomworks.com>
 
 	* orbsvcs/tests/Notify/Destroy/main.cpp:
 	  Invokes the NotifyExt::EventChannelFactory::destroy method.
-	
+
 	* orbsvcs/tests/Notify/Destroy/Destroy.mpc:
 	* orbsvcs/tests/Notify/Destroy/Makefile:
 	* orbsvcs/tests/Notify/Destroy/Notify_Test_Destroy.dsp:
 	  Makefiles.
-	
+
 	* orbsvcs/tests/Notify/Makefile:
 	* orbsvcs/tests/Notify/Notify_Tests.dsw:
 	  Added the <Destroy> test.
@@ -134,8 +142,8 @@ Wed Apr 09 14:54:03 2003  Pradeep Gore  <pradeep@oomworks.com>
 	  Move the Activation_ManagerC to the top of the Makefile to fix
 	  compile errors. Thanks to Johnny Willemsen
 	  <jwillemsen@remedy.nl> for this suggestion.
-	 
-	
+
+
 Wed Apr  9 13:47:26 2003  Stuart Jones  <jones_s@ociweb.com>
 
 	* tao/Messaging/Messaging.cpp
