@@ -1,3 +1,11 @@
+Sun Jul 19 13:11:59 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* src/Key_List.cpp: Fixed one of those nasty "for loop counter
+ 	  scoping glitches.  Again, thanks to David Levine and DEC C++ for
+ 	  catching this.  * src/Key_List.cpp (reorder): Clarified the code
+ 	  so that we don't write horrible C-style hacks.  Thanks to David
+ 	  Levine and the DEC C++ compiler for finding this one!
+
 Tue Jun 30 15:43:16 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* src/Options.h		:
