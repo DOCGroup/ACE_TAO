@@ -1,4 +1,3 @@
-/* -*-C++-*- */
 // ============================================================================
 // $Id$
 // = LIBRARY
@@ -16,6 +15,7 @@
 //  Michael R MacFaden mrm@cisco.com rework API/ACE integration
 //
 // ============================================================================
+
 /*===================================================================
   Copyright (c) 1996
   Hewlett-Packard Company
@@ -34,6 +34,8 @@
 
 #include "asnmp/snmp.h"
 #include "ace/Get_Opt.h"
+
+ACE_RCSID(get, get_async, "$Id$")
 
 //
 // SNMPv1 Get Application
