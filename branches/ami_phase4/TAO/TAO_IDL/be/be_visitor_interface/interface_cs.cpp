@@ -55,21 +55,21 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
   // first generate the code for the static methods
 
   // The _narrow method
-  *os << node->local_name () << "_ptr " << node->local_name ()
+  *os << node->full_name () << "_ptr " << node->full_name ()
       << "::_narrow (" << be_idt << be_idt_nl
       << "CORBA::Object_ptr obj," << be_nl
       << "CORBA::Environment &ACE_TRY_ENV" << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl
       << "if (CORBA::is_nil (obj))" << be_idt_nl
-      << "return " << node->local_name () << "::_nil ();" << be_uidt_nl
+      << "return " << node->full_name () << "::_nil ();" << be_uidt_nl
       << "CORBA::Boolean is_a = obj->_is_a (\""
       << node->repoID () << "\", ACE_TRY_ENV);" << be_nl
-      << "ACE_CHECK_RETURN (" << node->local_name () << "::_nil ());" << be_nl
+      << "ACE_CHECK_RETURN (" << node->full_name () << "::_nil ());" << be_nl
       << "if (is_a == 0)" << be_idt_nl
-      << "return " << node->local_name () << "::_nil ();" << be_uidt_nl;
+      << "return " << node->full_name () << "::_nil ();" << be_uidt_nl;
 
-  *os << "return " << node->local_name ()
+  *os << "return " << node->full_name ()
       << "::_unchecked_narrow (obj, ACE_TRY_ENV);" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
@@ -79,14 +79,14 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
 //    assert (coll_name != 0);
 
   // The _unchecked_narrow method
-  *os << node->local_name () << "_ptr " << node->local_name ()
+  *os << node->full_name () << "_ptr " << node->full_name ()
       << "::_unchecked_narrow (" << be_idt << be_idt_nl
       << "CORBA::Object_ptr obj," << be_nl
       << "CORBA::Environment &" << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl
       << "if (CORBA::is_nil (obj))" << be_idt_nl
-      << "return " << node->local_name () << "::_nil ();" << be_uidt_nl;
+      << "return " << node->full_name () << "::_nil ();" << be_uidt_nl;
 
   *os << "TAO_Stub* stub = obj->_stubobj ();" << be_nl
       << "stub->_incr_refcnt ();" << be_nl;
@@ -101,13 +101,13 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       << "return retv;" << be_uidt << be_uidt_nl
       << "}" << be_uidt_nl;
 
-  *os << "return new " << node->local_name () << "(stub);" << be_uidt_nl
+  *os << "return new " << node->full_name () << "(stub);" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
   // The _duplicate method
-  *os << node->local_name () << "_ptr " << be_nl
-      << node->local_name () << "::_duplicate ("
-      << node->local_name () << "_ptr obj)" << be_nl
+  *os << node->full_name () << "_ptr " << be_nl
+      << node->full_name () << "::_duplicate ("
+      << node->full_name () << "_ptr obj)" << be_nl
       << "{" << be_idt_nl
       << "if (!CORBA::is_nil (obj))" << be_idt_nl
       << "obj->_incr_refcnt ();" << be_uidt_nl
@@ -125,7 +125,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
 
   // generate the is_a method
   os->indent ();
-  *os << "CORBA::Boolean " << node->local_name () << "::_is_a (" <<
+  *os << "CORBA::Boolean " << node->full_name () << "::_is_a (" <<
     "const CORBA::Char *value, CORBA::Environment &ACE_TRY_ENV)" << be_nl;
   *os << "{\n";
   os->incr_indent ();
@@ -149,7 +149,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
   *os << "}\n\n";
 
   os->indent ();
-  *os << "const char* " << node->local_name ()
+  *os << "const char* " << node->full_name ()
       << "::_interface_repository_id (void) const"
       << be_nl
       << "{" << be_idt_nl
