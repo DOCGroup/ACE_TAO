@@ -7,6 +7,7 @@
 #include "orbsvcs/CosNamingC.h"
 #include "ace/Arg_Shifter.h"
 #include "ace/OS_NS_string.h"
+#include "ace/OS_NS_unistd.h"
 
 ACE_RCSID(EC_Examples, Supplier, "$Id$")
 
