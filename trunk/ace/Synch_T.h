@@ -337,7 +337,12 @@ public:
   // Implicitly and automatically acquire (or try to acquire) the
   // lock.
 
-  ~ACE_Guard (void) { this->release (); }
+  ~ACE_Guard (void) 
+  { 
+    int error = errno;
+    this->release (); 
+    errno = error;
+  }
   // Implicitly release the lock.
 
   // = Lock accessors.
