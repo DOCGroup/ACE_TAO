@@ -1,3 +1,9 @@
+Sun Jun 04 09:40:43 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/config-cxx-common.h: with __USE_STD_IOSTREAM, added
+          #define ACE_HAS_STANDARD_CPP_LIBRARY 1.  Thanks to
+          Warren Miller <wmiller@stsci.edu> for reporting this [Bug 582].
+
 Sat Jun  3 21:18:43 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/OS.h:
@@ -6,7 +12,7 @@ Sat Jun  3 21:18:43 2000  Darrell Brunsch <brunsch@uci.edu>
         * ace/OS_Memory.h: (added)
         * ace/OS_Memory.inl: (added)
 
-          Another bit of OS split off.  Memory contains all the 
+          Another bit of OS split off.  Memory contains all the
           malloc, calloc, etc. stuff.
 
         * ace/Makefile:
@@ -31,7 +37,7 @@ Sat Jun  3 21:18:43 2000  Darrell Brunsch <brunsch@uci.edu>
           Over the years, the functions in OS.i have gotten way too
           large and complicated to make sense being inlined.  But the
           problem is too many were complicated only on some platforms,
-          while being really simple (and inline-able) on others.  
+          while being really simple (and inline-able) on others.
 
           So the question is, how to separate two versions of a function
           into the .cpp and .inl files.  The latest solution is to do
@@ -40,23 +46,23 @@ Sat Jun  3 21:18:43 2000  Darrell Brunsch <brunsch@uci.edu>
           foo_emulation for foo) and call that from the .inl file.
 
           This gives us the best of both worlds, and should be
-          the easiest to understand of the possible ways of doing 
+          the easiest to understand of the possible ways of doing
           this.
 
 Sat Jun  3 18:51:46 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * bin/msvc_auto_compile.pl:
 
-          Changed the way libraries were detected to remove false 
-          positives when the dsps are in a directory with DLL in 
-          its name.  Now it will search for " DLL " or " LIB " 
+          Changed the way libraries were detected to remove false
+          positives when the dsps are in a directory with DLL in
+          its name.  Now it will search for " DLL " or " LIB "
           instead of "DLL" or "LIB".
 
         * bin/fuzz.pl:
 
           Was giving false positives for TEXT, changed it to search
           for "TEXT (" to remove it (so it will not detect "MUTEXTYPE"
-          like words.  
+          like words.
 
           Also disabled the 80 character check for ACE_RCSID lines,
           since they are difficult to reduce in size, since they contain
@@ -70,10 +76,10 @@ Sat Jun  3 17:00:11 2000  Darrell Brunsch <brunsch@uci.edu>
           - a check to see if a file ends with a newline
           - a check to detect use of TCHAR, LPTSTR, LPCTSR, TEXT
             ASYS_TEXT, and ASYS_TCHAR
-        
+
           Changed to look at more files, including those ending with
-          .cc, .c, .pl, .htm, .html, .hxx, .cxx, .hpp, .idl and .pidl.  
-          
+          .cc, .c, .pl, .htm, .html, .hxx, .cxx, .hpp, .idl and .pidl.
+
           Changed to keep track of the number of errors and warnings
           and prints out the totals at the end of the run.  Also will
           exit with an exit code of 1 if there are any errors.
@@ -81,9 +87,9 @@ Sat Jun  3 17:00:11 2000  Darrell Brunsch <brunsch@uci.edu>
           Added a new flag, -c, which will tell fuzz.pl to get the list
           of files from ARGV instead of from searching or cvs.
 
-          Finally, also added support for the usage of 
+          Finally, also added support for the usage of
           "FUZZ: disable check_for_xxxx" and
-          "FUZZ: enable check_for_xxxx" in files so the detection can 
+          "FUZZ: enable check_for_xxxx" in files so the detection can
           be turned off for files where the "offending" usage is needed.
           This can be used with:
           - check_for_inline
@@ -92,8 +98,8 @@ Sat Jun  3 17:00:11 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Fri Jun 02 22:33:32 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/Priority_Reactor.cpp (init_bucket): Removed extra inline
-	  directive.  Thanks to Darrell for pointing this out.
+        * ace/Priority_Reactor.cpp (init_bucket): Removed extra inline
+          directive.  Thanks to Darrell for pointing this out.
 
 Fri Jun  2 11:06:33 2000  Darrell Brunsch <brunsch@uci.edu>
 
@@ -104,27 +110,27 @@ Fri Jun  2 11:06:33 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Thu Jun  2 12:30:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* ace/Caching_Utility.cpp: Changed the cache entries limit to 0 so
-	  that when the Purge_Percent is 100, all the entries are purged
-	  from the cache. Thanks to Edan Ayal <edana@bandwiz.com> for
-	  reporting this bug and sending in the fix too!
+        * ace/Caching_Utility.cpp: Changed the cache entries limit to 0 so
+          that when the Purge_Percent is 100, all the entries are purged
+          from the cache. Thanks to Edan Ayal <edana@bandwiz.com> for
+          reporting this bug and sending in the fix too!
 
 Thu Jun  1 15:16:26 2000  Ossama Othman  <ossama@uci.edu>
 
-	* ace/config-linux-common.h:
+        * ace/config-linux-common.h:
 
-	  The change that allowed more than 256 file descriptors to be
-	  opened for non-root processes on Linux only works for more
-	  recent Linux kernels, such as the 2.2.x series.  As such, the
-	  default Select Reactor size is now set to 256 for Linux kernels
-	  older than 2.2.0.  Thanks to David for pointing out this
-	  limitation.
+          The change that allowed more than 256 file descriptors to be
+          opened for non-root processes on Linux only works for more
+          recent Linux kernels, such as the 2.2.x series.  As such, the
+          default Select Reactor size is now set to 256 for Linux kernels
+          older than 2.2.0.  Thanks to David for pointing out this
+          limitation.
 
-	* m4/platform.m4 (ACE_DEFAULT_SELECT_REACTOR_SIZE):
+        * m4/platform.m4 (ACE_DEFAULT_SELECT_REACTOR_SIZE):
 
-	  Added test that sets the default Select Reactor size to 256 if
-	  the Linux kernel version is less than 2.2.0.  This change is
-	  related to the 256 file descriptor limit described above.
+          Added test that sets the default Select Reactor size to 256 if
+          the Linux kernel version is less than 2.2.0.  This change is
+          related to the 256 file descriptor limit described above.
 
 Thu Jun 01 12:35:00 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
@@ -252,15 +258,15 @@ Wed May 31 10:13:10 2000  Darrell Brunsch <brunsch@uci.edu>
 Wed May 31 11:25:34 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
         * examples/Reactor/WFMO_Reactor/test_handle_close.cpp: Fixed
-	  signed/unsigned comparison warning.
+          signed/unsigned comparison warning.
 
 Tue May 30 14:23:22 2000  Ossama Othman  <ossama@uci.edu>
 
-	* apps/Gateway/Gateway/gatewayd.cpp:
-	* examples/ASX/UPIPE_Event_Server/Options.cpp:
-	* examples/Naming/test_multiple_contexts.cpp:
+        * apps/Gateway/Gateway/gatewayd.cpp:
+        * examples/ASX/UPIPE_Event_Server/Options.cpp:
+        * examples/Naming/test_multiple_contexts.cpp:
 
-	  Added missing "ace/Log_Msg.h" include.
+          Added missing "ace/Log_Msg.h" include.
 
 Tue May 30 10:41:34 2000  Darrell Brunsch <brunsch@uci.edu>
 
@@ -272,94 +278,94 @@ Tue May 30 10:41:34 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Mon May 29 16:49:25 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/OS.i: Changed all 'ACE_Errno_Guard (errno, 0)' to
-	  'ACE_Errno_Guard (errno)' in the following methods.
+        * ace/OS.i: Changed all 'ACE_Errno_Guard (errno, 0)' to
+          'ACE_Errno_Guard (errno)' in the following methods.
 
- 	  ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv),
- 	  ACE_OS::rw_unlock (ACE_rwlock_t *rw),
- 	  ACE_OS::rw_trywrlock (ACE_rwlock_t *rw),
- 	  ACE_OS::rw_unlock (ACE_rwlock_t *rw)
+          ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv),
+          ACE_OS::rw_unlock (ACE_rwlock_t *rw),
+          ACE_OS::rw_trywrlock (ACE_rwlock_t *rw),
+          ACE_OS::rw_unlock (ACE_rwlock_t *rw)
 
-	  Thus, if a critical section of code is guarded using an
- 	  ACE_Read_Guard, and errno is set inside, the value is not
- 	  overridden with 0 when the section is exited in
- 	  ACE_OS::rw_unlock.  Thanks to Edan Ayal <edanayal@yahoo.com> for
- 	  reporting this.
+          Thus, if a critical section of code is guarded using an
+          ACE_Read_Guard, and errno is set inside, the value is not
+          overridden with 0 when the section is exited in
+          ACE_OS::rw_unlock.  Thanks to Edan Ayal <edanayal@yahoo.com> for
+          reporting this.
 
-	* ace/Connector.h: Added a new typedef defined as follows:
+        * ace/Connector.h: Added a new typedef defined as follows:
 
           typedef ACE_TYPENAME _ACE_PEER_CONNECTOR::PEER_ADDR
                   ACE_TYPENAME_ACE_PEER_CONNECTOR_PEER_ADDR;
 
           This fixes some problems on some platforms due to problems with
- 	  the typename in a cast expression.  Thanks to Ingo Dahm
- 	  <ingo.dahm@sun.com> for reporting this.
+          the typename in a cast expression.  Thanks to Ingo Dahm
+          <ingo.dahm@sun.com> for reporting this.
 
-	* ace/IO_Cntl_Msg.h: Changed the ACE_IO_Cntl_Cmds enum to be
-	  a typedef u_short so that users could create their own values.
-  	  Thanks to vsg@ivl.kiev.ua for this suggestion.
+        * ace/IO_Cntl_Msg.h: Changed the ACE_IO_Cntl_Cmds enum to be
+          a typedef u_short so that users could create their own values.
+          Thanks to vsg@ivl.kiev.ua for this suggestion.
 
-	* ace/ACE.h,
-  	* ace/ACE.h: Make the documentation consistent for both
-	  sockets and "normal" I/O methods!
+        * ace/ACE.h,
+        * ace/ACE.h: Make the documentation consistent for both
+          sockets and "normal" I/O methods!
 
 Mon May 29 11:36:28 2000  Michael Kircher <Michael.Kircher@mchp.siemens.de>
 
-	* ace/OS_Dirent.cpp: Fixed the memory allocation in open_dir,
-	  which allocated one char too little.
+        * ace/OS_Dirent.cpp: Fixed the memory allocation in open_dir,
+          which allocated one char too little.
 
 Sun May 28 17:26:28 2000  Ossama Othman  <ossama@uci.edu>
 
-	* ace/Timer_Heap_T.cpp:
-	* ace/Timer_Queue_T.cpp:
-	* apps/JAWS/server/HTTP_Helpers.cpp:
-	* apps/JAWS/server/HTTP_Response.cpp:
-	* apps/drwho/BS_Client.cpp:
-	* examples/ASX/Event_Server/Event_Server/Options.cpp:
-	* examples/Logger/simple-server/Logging_Handler.cpp:
-	* examples/Logger/simple-server/server_loggerd.cpp:
-	* examples/Mem_Map/IO-tests/test_io.cpp:
-	* examples/Naming/test_non_existent.cpp:
-	* examples/Naming/test_writers.cpp:
-	* examples/Reactor/Dgram/CODgram.cpp:
-	* examples/Reactor/Dgram/Dgram.cpp:
-	* examples/Reactor/FIFO/server.cpp:
-	* examples/Reactor/Misc/pingpong.cpp:
-	* examples/Reactor/Misc/test_signals_1.cpp:
-	* examples/Reactor/Misc/test_timer_queue.cpp:
-	* examples/Reactor/Multicast/server.cpp:
-	* examples/Service_Configurator/IPC-tests/server/Handle_Broadcast.h:
-	* examples/Service_Configurator/IPC-tests/server/Handle_L_FIFO.h:
-	* examples/Service_Configurator/IPC-tests/server/Handle_R_Dgram.h:
-	* examples/Service_Configurator/IPC-tests/server/Handle_Timeout.h:
-	* examples/Service_Configurator/IPC-tests/server/server_test.cpp:
-	* examples/Service_Configurator/Misc/Timer_Service.cpp:
-	* examples/Service_Configurator/Misc/main.cpp:
-	* examples/System_V_IPC/SV_Message_Queues/TMQ_Server.cpp:
-	* examples/Threads/process_mutex.cpp:
-	* examples/Threads/process_semaphore.cpp:
-	* examples/Threads/tss2.cpp:
-	* netsvcs/clients/Naming/Client/main.cpp:
-	* netsvcs/clients/Naming/Dump_Restore/main.cpp:
-	* performance-tests/Misc/test_naming.cpp:
-	* performance-tests/UDP/udp_test.cpp:
+        * ace/Timer_Heap_T.cpp:
+        * ace/Timer_Queue_T.cpp:
+        * apps/JAWS/server/HTTP_Helpers.cpp:
+        * apps/JAWS/server/HTTP_Response.cpp:
+        * apps/drwho/BS_Client.cpp:
+        * examples/ASX/Event_Server/Event_Server/Options.cpp:
+        * examples/Logger/simple-server/Logging_Handler.cpp:
+        * examples/Logger/simple-server/server_loggerd.cpp:
+        * examples/Mem_Map/IO-tests/test_io.cpp:
+        * examples/Naming/test_non_existent.cpp:
+        * examples/Naming/test_writers.cpp:
+        * examples/Reactor/Dgram/CODgram.cpp:
+        * examples/Reactor/Dgram/Dgram.cpp:
+        * examples/Reactor/FIFO/server.cpp:
+        * examples/Reactor/Misc/pingpong.cpp:
+        * examples/Reactor/Misc/test_signals_1.cpp:
+        * examples/Reactor/Misc/test_timer_queue.cpp:
+        * examples/Reactor/Multicast/server.cpp:
+        * examples/Service_Configurator/IPC-tests/server/Handle_Broadcast.h:
+        * examples/Service_Configurator/IPC-tests/server/Handle_L_FIFO.h:
+        * examples/Service_Configurator/IPC-tests/server/Handle_R_Dgram.h:
+        * examples/Service_Configurator/IPC-tests/server/Handle_Timeout.h:
+        * examples/Service_Configurator/IPC-tests/server/server_test.cpp:
+        * examples/Service_Configurator/Misc/Timer_Service.cpp:
+        * examples/Service_Configurator/Misc/main.cpp:
+        * examples/System_V_IPC/SV_Message_Queues/TMQ_Server.cpp:
+        * examples/Threads/process_mutex.cpp:
+        * examples/Threads/process_semaphore.cpp:
+        * examples/Threads/tss2.cpp:
+        * netsvcs/clients/Naming/Client/main.cpp:
+        * netsvcs/clients/Naming/Dump_Restore/main.cpp:
+        * performance-tests/Misc/test_naming.cpp:
+        * performance-tests/UDP/udp_test.cpp:
 
-	  Added missing "ace/Log_Msg.h" include.  This fixes a series of
-	  compile-time errors with Compaq C++.
+          Added missing "ace/Log_Msg.h" include.  This fixes a series of
+          compile-time errors with Compaq C++.
 
 Sat May 27 20:55:24 2000  Ossama Othman  <ossama@uci.edu>:
 
-	* tests/test_config.h:
+        * tests/test_config.h:
 
-	  Added missing include for "ace/Log_Msg.h."  This fixes a
-	  compile-time error from Sun C++ 5.0.
+          Added missing include for "ace/Log_Msg.h."  This fixes a
+          compile-time error from Sun C++ 5.0.
 
 Sat May 27 20:41:14 2000  Ossama Othman  <ossama@uci.edu>
 
-	* ace/Hash_Map_Manager_T.h:
+        * ace/Hash_Map_Manager_T.h:
 
-	  Added missing include for "ace/Log_Msg.h."  This fixes a
-	  compile-time error on Tru64.
+          Added missing include for "ace/Log_Msg.h."  This fixes a
+          compile-time error on Tru64.
 
 Sat May 27 17:09:03 2000  David L. Levine  <levine@cs.wustl.edu>
 
@@ -393,13 +399,13 @@ Sat May 27 14:17:35 2000  Ossama Othman  <ossama@uci.edu>
 
 Sat May 27 14:59:08 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tests/Signal_Test.cpp (worker_parent): Yet another fix of this...
-	  Now we add an ACE_static_cast to long, as well as doing the %ld!
-	  Thanks to Yamuna for fixing this!
+        * tests/Signal_Test.cpp (worker_parent): Yet another fix of this...
+          Now we add an ACE_static_cast to long, as well as doing the %ld!
+          Thanks to Yamuna for fixing this!
 
-	* ace/SOCK_Stream.h: Improved the documentation of recv_n() et al.
-	  Thanks to Sami Aario <saempylae@hotmail.com> for this
- 	  suggestion.
+        * ace/SOCK_Stream.h: Improved the documentation of recv_n() et al.
+          Thanks to Sami Aario <saempylae@hotmail.com> for this
+          suggestion.
 
 Sat May 27 01:07:01 2000  Darrell Brunsch <brunsch@uci.edu>
 

@@ -44,6 +44,7 @@
 #     define ACE_LACKS_CHAR_RIGHT_SHIFTS
 #     define ACE_LACKS_IOSTREAM_FX
 #     define ACE_LACKS_UNBUFFERED_STREAMBUF
+#     define ACE_HAS_STANDARD_CPP_LIBRARY 1
 #   else  /* ! __USE_STD_IOSTREAM */
 #     define ACE_USES_OLD_IOSTREAMS
 #   endif /* ! __USE_STD_IOSTREAM */
