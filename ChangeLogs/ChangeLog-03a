@@ -1,3 +1,13 @@
+Fri Jul 14 17:25:29 2000  Steve Huston  <shuston@riverace.com>
+
+        * tests/UNIXserver.conf:
+        * tests/UNIXclerk.conf:
+        * tests/UNIXtokens.conf:
+        * tests/Win32server.conf:
+        * tests/Win32clerk.conf:
+        * tests/Win32tokens.conf: Look for _make_ACE_Logging_Strategy in
+          ACE, not netsvcs. It was moved there recently.
+
 Fri Jul 14 12:00:26 2000  Steve Huston  <shuston@riverace.com>
 
         * ace/Log_Msg.h (ACE_Log_Msg): Replaced class comments with some new
