@@ -5,7 +5,7 @@
 # TARGTYPE "Win32 (x86) Console Application" 0x0103
 # TARGTYPE "Win32 (ALPHA) Console Application" 0x0603
 
-CFG=TAO_IDL Compiler - Win32 Alpha Debug
+CFG=TAO_IDL Compiler - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
 !MESSAGE 
@@ -14,7 +14,7 @@ CFG=TAO_IDL Compiler - Win32 Alpha Debug
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "tao_idl.mak" CFG="TAO_IDL Compiler - Win32 Alpha Debug"
+!MESSAGE NMAKE /f "tao_idl.mak" CFG="TAO_IDL Compiler - Win32 Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
@@ -44,7 +44,7 @@ CFG=TAO_IDL Compiler - Win32 Alpha Debug
 # PROP Target_Dir ""
 CPP=cl.exe
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GX /O2 /I "include" /I "be_include" /I "..\.." /D "NDEBUG" /D "WIN32" /D "_CONSOLE" /D "_MBCS" /FD /D CPP_LOCATION="\"C:\\Program Files\\DevStudio\\VC\\bin\\CL.EXE\"" /c
+# ADD CPP /nologo /MD /W3 /GX /O2 /I "include" /I "be_include" /I "../../" /D "NDEBUG" /D "WIN32" /D "_CONSOLE" /D "_MBCS" /FD /D CPP_LOCATION="\"C:\\Program Files\\DevStudio\\VC\\bin\\CL.EXE\"" /c
 # SUBTRACT CPP /YX
 RSC=rc.exe
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
@@ -72,7 +72,7 @@ LINK32=link.exe
 # PROP Target_Dir ""
 CPP=cl.exe
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /Gy /I "include" /I "be_include" /I "..\.." /D "_DEBUG" /D "WIN32" /D "_CONSOLE" /D "_MBCS" /FD /D CPP_LOCATION="\"C:\\Program Files\\DevStudio\\VC\\bin\\CL.EXE\"" /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /Gy /I "include" /I "be_include" /I "../../" /D "_DEBUG" /D "WIN32" /D "_CONSOLE" /D "_MBCS" /FD /D CPP_LOCATION="\"C:\\Program Files\\DevStudio\\VC\\bin\\CL.EXE\"" /c
 RSC=rc.exe
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
@@ -99,8 +99,8 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 CPP=cl.exe
-# ADD BASE CPP /nologo /Gt0 /W3 /GX /Zi /Od /I "include" /I "be_include" /I "..\.." /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /D IDL_CFE_VERSION=\"1.3.0\" /YX /FD /D CPP_LOCATION="\"C:\\Program Files\\DevStudio\\VC\\bin\\CL.EXE\"" /c
-# ADD CPP /nologo /MDd /Gt0 /W3 /GX /Zi /Od /I "include" /I "be_include" /I "..\.." /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /D CPP_LOCATION="\"C:\\Program Files\\DevStudio\\VC\\bin\\CL.EXE\"" /c
+# ADD BASE CPP /nologo /Gt0 /W3 /GX /Zi /Od /I "include" /I "be_include" /I "../../" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /D IDL_CFE_VERSION=\"1.3.0\" /YX /FD /D CPP_LOCATION="\"C:\\Program Files\\DevStudio\\VC\\bin\\CL.EXE\"" /c
+# ADD CPP /nologo /MDd /Gt0 /W3 /GX /Zi /Od /I "include" /I "be_include" /I "../../" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /D CPP_LOCATION="\"C:\\Program Files\\DevStudio\\VC\\bin\\CL.EXE\"" /c
 RSC=rc.exe
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
@@ -128,9 +128,9 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 CPP=cl.exe
-# ADD BASE CPP /nologo /Gt0 /W3 /GX /O2 /I "include" /I "be_include" /I "..\.." /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /D IDL_CFE_VERSION=\"1.3.0\" /FD /D CPP_LOCATION="\"C:\\Program Files\\DevStudio\\VC\\bin\\CL.EXE\"" /c
+# ADD BASE CPP /nologo /Gt0 /W3 /GX /O2 /I "include" /I "be_include" /I "../../" /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /D IDL_CFE_VERSION=\"1.3.0\" /FD /D CPP_LOCATION="\"C:\\Program Files\\DevStudio\\VC\\bin\\CL.EXE\"" /c
 # SUBTRACT BASE CPP /YX
-# ADD CPP /nologo /MD /Gt0 /W3 /GX /O2 /I "include" /I "be_include" /I "..\.." /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /FD /D CPP_LOCATION="\"C:\\Program Files\\DevStudio\\VC\\bin\\CL.EXE\"" /c
+# ADD CPP /nologo /MD /Gt0 /W3 /GX /O2 /I "include" /I "be_include" /I "../../" /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /FD /D CPP_LOCATION="\"C:\\Program Files\\DevStudio\\VC\\bin\\CL.EXE\"" /c
 RSC=rc.exe
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
@@ -157,1832 +157,490 @@ LINK32=link.exe
 # Begin Source File
 
 SOURCE=.\ast\ast_argument.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\ast\ast_array.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\ast\ast_attribute.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\ast\ast_check.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\ast\ast_concrete_type.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\ast\ast_constant.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\ast\ast_decl.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\ast\ast_enum.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\ast\ast_enum_val.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\ast\ast_exception.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\ast\ast_expression.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\ast\ast_field.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\ast\ast_generator.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\ast\ast_interface.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\ast\ast_interface_fwd.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\ast\ast_module.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\ast\ast_native.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\ast\ast_operation.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\ast\ast_predefined_type.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\ast\ast_recursive.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\ast\ast_redef.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\ast\ast_root.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\ast\ast_sequence.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\ast\ast_string.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\ast\ast_structure.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\ast\ast_type.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\ast\ast_typedef.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\ast\ast_union.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\ast\ast_union_branch.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\ast\ast_union_label.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\be\be_args.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\be\be_argument.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\be\be_array.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\be\be_attribute.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\be\be_codegen.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\be\be_constant.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\be\be_decl.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\be\be_enum.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\be\be_enum_val.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\be\be_exception.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\be\be_expression.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\be\be_field.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\be\be_generator.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\be\be_helper.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\be\be_init.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\be\be_interface.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\be\be_interface_fwd.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\be\be_module.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\be\be_native.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\be\be_operation.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\be\be_predefined_type.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\be\be_produce.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\be\be_root.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\be\be_scope.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\be\be_sequence.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\be\be_stream_factory.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\be\be_string.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\be\be_structure.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\be\be_sunsoft.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\be\be_type.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\be\be_typedef.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\be\be_union.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\be\be_union_branch.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\be\be_union_label.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\be\be_valuetype.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\be\be_valuetype_fwd.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\be\be_visitor.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\be\be_visitor_argument.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\be\be_visitor_array.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\be\be_visitor_attribute.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\be\be_visitor_constant.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\be\be_visitor_context.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\be\be_visitor_decl.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\be\be_visitor_enum.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\be\be_visitor_exception.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\be\be_visitor_factory.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\be\be_visitor_field.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\be\be_visitor_interface.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\be\be_visitor_interface_fwd.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\be\be_visitor_module.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\be\be_visitor_operation.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\be\be_visitor_root.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\be\be_visitor_scope.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\be\be_visitor_sequence.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\be\be_visitor_structure.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\be\be_visitor_typecode.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\be\be_visitor_typedef.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\be\be_visitor_union.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\be\be_visitor_union_branch.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\be\be_visitor_valuetype.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\be\be_visitor_valuetype_fwd.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\driver\drv_args.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\driver\drv_fork.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\driver\drv_init.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\driver\drv_link.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\driver\drv_preproc.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\driver\drv_private.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\fe\fe_declarator.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\fe\fe_extern.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\fe\fe_init.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\fe\fe_interface_header.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\fe\fe_lookup.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\fe\fe_private.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\fe\lex.yy.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\narrow\narrow.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\tao_idl.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\util\utl_decllist.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\util\utl_error.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\util\utl_exceptlist.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\util\utl_exprlist.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\util\utl_global.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\util\utl_identifier.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\util\utl_idlist.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\util\utl_indenter.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\util\utl_labellist.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\util\utl_list.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\util\utl_namelist.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\util\utl_scope.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\util\utl_stack.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\util\utl_string.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\util\utl_strlist.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # Begin Source File
 
 SOURCE=.\fe\y.tab.cpp
-
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-!ENDIF 
-
 # End Source File
 # End Group
 # Begin Group "Header Files"
