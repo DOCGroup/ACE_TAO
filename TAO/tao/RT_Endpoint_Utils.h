@@ -24,6 +24,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#if (TAO_HAS_RT_CORBA == 1)
+
 class TAO_GIOP_Invocation;
 
 /**
@@ -45,6 +47,8 @@ private:
   /// ctor.
   TAO_RT_Endpoint_Utils ();
 };
+
+#endif /* TAO_HAS_RT_CORBA == 1 */
 
 #include "ace/post.h"
 #endif  /* RT_ENDPOINT_UTILS_H */

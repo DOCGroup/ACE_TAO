@@ -8,6 +8,8 @@
 
 ACE_RCSID(tao, RT_Endpoint_Utils, "$Id$")
 
+#if (TAO_HAS_RT_CORBA == 1)
+
 // ****************************************************************
 
 CORBA::Policy *
@@ -69,3 +71,5 @@ TAO_RT_Endpoint_Utils::client_protocol_policy (TAO_GIOP_Invocation *invocation,
 
   return retval;
 }
+
+#endif /* TAO_HAS_RT_CORBA == 1 */
