@@ -1,3 +1,9 @@
+Mon Aug 26 08:29:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Connector.cpp:
+          Replaced all short defines with the original ones. Doxygen can't
+          generate the documentation because of the short defines.
+
 Sun Aug 25 14:15:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-win32-borland.h:
