@@ -644,6 +644,9 @@ public:
   int unbind (const char* orb_id);
   // The canonical ACE_Map methods.
 
+  TAO_ORB_Core *first_orb (void);
+  // Obtain the first ORB for the ORB_Core_instance() implementation
+
   static TAO_ORB_Table* instance (void);
   // Return a unique instance
 
@@ -655,6 +658,9 @@ protected:
 private:
   Table table_;
   // The implementation.
+
+  TAO_ORB_Core *first_orb_;
+  // The first ORB created by the user
 };
 
 // ****************************************************************
