@@ -1,3 +1,9 @@
+Sun Jan 30 20:47:11 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* examples/Simple/time-date/server.cpp:
+
+	  Fixed syntax error in ACE_RCSID macro argument.
+
 Sun Jan 30 19:57:37 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* examples/Content_Server/AMI_Iterator/Iterator_Factory_i.cpp:
