@@ -1,3 +1,11 @@
+Sat Apr 29 23:41:02 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/diffs/InterceptorC.h.diff:
+	* tao/diffs/InterceptorC.cpp.diff:
+	* tao/InterceptorC.h: Some compilers require the type specified in
+	  throw spec be well defined.  Included "Exception.h" in this
+	  file.  Regenerated Interceptor.pidl.
+
 Sat Apr 29 20:57:34 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/Buffering_Constraint_Policy.h:
