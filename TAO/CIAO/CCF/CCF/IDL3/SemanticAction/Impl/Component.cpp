@@ -95,7 +95,7 @@ namespace CCF
             cerr << "no component with name \'" << name
                  << "\' visible from scope \'" << from << "\'" << endl;
           }
-          catch (WrongType const& e)
+          catch (WrongType const&)
           {
             cerr << "incompatible type in inheritance specification" << endl;
           }
@@ -140,7 +140,7 @@ namespace CCF
             cerr << "no interface with name \'" << name
                  << "\' visible from scope \'" << from << "\'" << endl;
           }
-          catch (WrongType const& e)
+          catch (WrongType const&)
           {
             cerr << "incompatible type in supports specification" << endl;
           }

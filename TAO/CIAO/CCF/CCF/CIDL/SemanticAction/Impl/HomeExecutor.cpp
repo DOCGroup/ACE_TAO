@@ -72,7 +72,7 @@ namespace CCF
             cerr << "no home with name \'" << name
                  << "\' visible from scope \'" << from << "\'" << endl;
           }
-          catch (WrongType const& e)
+          catch (WrongType const&)
           {
             cerr << "incompatible type in implements specification" << endl;
           }
