@@ -1,3 +1,12 @@
+Fri Jul 30 20:47:14 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp
+	  (visit_interface): The generated code for creating the imported
+	  direct collocated object reference was broken and the servant
+	  was stored as a generic ServantBase instead of the interface
+	  specific servant.  Thanks to John T Geiss <jtgb@eci-esyst.com>
+	  for reporting the bug.
+
 Fri Jul 30 19:49:29 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tests/Faults/test_i.cpp:
