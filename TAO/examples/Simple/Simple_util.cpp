@@ -7,9 +7,9 @@
 
 template <class Servant>
 Server<Servant>::Server (void)
-  : ior_output_file_ (0),
-    naming_ (0),
-    ins_ (0)
+    : ior_output_file_ (0),
+      naming_ (0),
+      ins_ (0)
 {
   // no-op.
 }
@@ -73,20 +73,20 @@ template <class Servant> int
 Server<Servant>::test_for_ins (CORBA::String_var ior)
 {
 
-  CORBA::Object_ptr object =
-    this->orb_manager_.orb ()->string_to_object (ior.in ());
+  CORBA::Object_ptr bank_servant =
+    this->orb_manager_.orb ()->string_to_object (ior.in());
 
   // Add a KEY:IOR mapping to the ORB table.
-  ACE_CString ins (this->ins_);
+  ACE_CString object_id (this->ins_);
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
 		"Adding (KEY:IOR) %s:%s\n",
-		ins.c_str (),
+		object_id.c_str (),
 		ior.in ()));
 
-  if (this->orb_manager_.orb ()->_tao_add_to_IOR_table (ins,
-							object) != 0)
+  if (this->orb_manager_.orb ()->_tao_add_to_IOR_table (object_id,
+							bank_servant) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
 		       "Simple_Util : Unable to add IOR to table\n"),
 		      -1);
@@ -229,7 +229,7 @@ Server<Servant>::register_name (void)
   ACE_CATCH (CosNaming::NamingContext::AlreadyBound, ex)
     {
       ACE_TRY_ENV.clear ();
-      ACE_ERROR_RETURN ((LM_ERROR,
+      ACE_ERROR_RETURN ((LM_DEBUG,
                          "Unable to bind %s \n",
                          name),
                         -1);
@@ -332,7 +332,7 @@ Client<InterfaceObj, Var>::init (const char *name,
 
 
   ACE_DECLARE_NEW_CORBA_ENV;
-
+ 
   ACE_TRY
     {
       // Retrieve the ORB.
@@ -345,6 +345,8 @@ Client<InterfaceObj, Var>::init (const char *name,
       // Parse command line and verify parameters.
       if (this->parse_args () == -1)
         return -1;
+
+
 
       if(this->ior_ != 0)
         {
@@ -421,7 +423,7 @@ Client<InterfaceObj, Var>::obtain_initial_references (CORBA::Environment &ACE_TR
     }
   ACE_CATCHANY
     {
-      ACE_TRY_ENV.print_exception ("Client::obtain_initial_references");
+      ACE_TRY_ENV.print_exception ("Bank::obtain_initial_references");
       return -1;
     }
   ACE_ENDTRY;

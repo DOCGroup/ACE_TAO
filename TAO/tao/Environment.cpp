@@ -47,8 +47,7 @@ CORBA_Environment::CORBA_Environment (const CORBA_Environment& rhs)
     previous_ (0)
 {
   //  TAO_ORB_Core_instance ()->default_environment (this);
-  if (this->exception_)
-    this->exception_->_incr_refcnt ();
+  exception_->_incr_refcnt ();
 }
 
 CORBA_Environment::CORBA_Environment (TAO_ORB_Core* orb_core)
@@ -58,27 +57,6 @@ CORBA_Environment::CORBA_Environment (TAO_ORB_Core* orb_core)
   orb_core->default_environment (this);
 }
 #endif
-
-CORBA::ULong
-CORBA_Environment::_incr_refcnt (void)
-{
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->refcount_lock_, 0);
-  return refcount_++;
-}
-
-CORBA::ULong
-CORBA_Environment::_decr_refcnt (void)
-{
-  {
-    ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->refcount_lock_, 0);
-    this->refcount_--;
-    if (this->refcount_ != 0)
-      return this->refcount_;
-  }
-
-  delete this;
-  return 0;
-}
 
 CORBA_Environment&
 CORBA_Environment::operator= (const CORBA_Environment& rhs)
@@ -236,31 +214,3 @@ CORBA::Environment::print_exception (const char *info,
     ACE_DEBUG ((LM_ERROR,
                 "TAO: (%P|%t) no exception\n"));
 }
-
-// *********************************************************
-
-CORBA_Environment_var &
-CORBA_Environment_var::operator= (CORBA_Environment_ptr p)
-{
-  if (this->ptr_ != p)
-  {
-    if (this->ptr_ != 0)
-    delete (this->ptr_);
-
-    this->ptr_ = p;
-  }
-  return *this;
-}
-
-CORBA_Environment_var &
-CORBA_Environment_var::operator= (const CORBA_Environment_var &r)
-{
-  if (this->ptr_ != 0)
-    delete this->ptr_;
-
-  this->ptr_ = new CORBA::Environment (*r.ptr_);
-  return *this;
-}
-
-
-

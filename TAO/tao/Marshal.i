@@ -144,11 +144,11 @@ TAO_Marshal_WString::~TAO_Marshal_WString (void)
 // deep_free for Any
 ACE_INLINE CORBA::TypeCode::traverse_status
 TAO_Marshal_Any::deep_free (CORBA::TypeCode_ptr,
-                            const void *source,
+                            const void * /* source */,
                             const void *,
                             CORBA::Environment &)
 {
-  ((CORBA::Any *) source)->~CORBA_Any ();
+  // ((CORBA::Any *) source)->~CORBA_Any ();
   return CORBA::TypeCode::TRAVERSE_CONTINUE;
 }
 
@@ -193,8 +193,8 @@ TAO_Marshal_String::deep_free (CORBA::TypeCode_ptr,
                                const void *,
                                CORBA::Environment &)
 {
-  CORBA::string_free (*(CORBA::Char* *) source);
-  *(CORBA::Char* *)source = 0;
+  CORBA::string_free (*(CORBA::String *) source);
+  *(CORBA::String *)source = 0;
   return CORBA::TypeCode::TRAVERSE_CONTINUE;
 }
 
@@ -205,7 +205,7 @@ TAO_Marshal_WString::deep_free (CORBA::TypeCode_ptr,
                                 const void *,
                                 CORBA::Environment &)
 {
-  CORBA::wstring_free (*(CORBA::WChar* *) source);
-  *(CORBA::WChar* *)source = 0;
+  CORBA::wstring_free (*(CORBA::WString *) source);
+  *(CORBA::WString *)source = 0;
   return CORBA::TypeCode::TRAVERSE_CONTINUE;
 }

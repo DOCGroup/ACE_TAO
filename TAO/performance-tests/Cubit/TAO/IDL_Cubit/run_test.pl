@@ -3,7 +3,6 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
     if 0;
 
 # $Id$
-# -*- perl -*-
 
 # The first three lines above let this script run without specifying the
 # full path to perl, as long as it is in the user's PATH.
@@ -86,10 +85,6 @@ for ($i = 0; $i <= $#ARGV; $i++)
     print "run_test: Unknown Option: ".$ARGV[$i]."\n";
   }
 }
-
-(-f $exepref."server".$Process::EXE_EXT  &&
- -f $exepref."client".$Process::EXE_EXT)  ||
-  die "$0: server and/or client need to be built!\n";
 
 $SV = Process::Create ($exepref."server".$Process::EXE_EXT,
                        $svflags.

@@ -94,17 +94,6 @@ components:
       each consumer. 
       @@ TODO: how do we match this with the filtering interfaces?
 
-  Another important aspect of dispatching:
-    + If the dispatcher is reactive then there is potential for
-      dead-lock, the consumer may decide to disconnect itself during
-      the upcall or to dispatch another event.
-      The dispatching module will call back the EC_ProxyPushSupplier
-      to handle the final dispatch.
-      With Reactive dispatching the ProxyPushSupplier should use
-      recursive locks, with non-reactive dispatching regular locks
-      could be enough.
-      @@ TODO ensure that only the right people calls this method.
-
 - The ConsumerAdmin module: this object acts as a factory for the
   ProxyPushSupplier objects (i.e. the interface between the event
   channel and its consumers); the object delegates on the event
@@ -234,23 +223,9 @@ components:
     The SupplierFiltering object pushes the event [since the event is
     a set it has to push one event at a time] to the a set of
     ProxyPushSuppliers [recall that this are the consumer ambassadors] 
-    They pass the event through their own set of filters, if the
-    filter accepts the event it callbacks on the ProxyPushSupplier.
-    At that point the ProxyPushSupplier requests that the
-    DispatchingModule pushes the event.
-    The dispatching module finally pushes the event to the consumer.
+    
 
   - Adding a consumer:
-    The client calls for_consumers() and obtain_push_supplier() to
-    obtain a reference to the [global] ConsumerAdmin object and to its 
-    own ProxyPushSupplier object.
-    The ProxyPushSupplier object is initially empty, once the user
-    calls connect_push_consumer() on it the set of filters is created
-    using the Filter_Builder strategy and the user supplied QoS
-    parameters.
-    At this point the ProxyPushSupplier becomes "connected" and it
-    uses the Event_Channel implementation to broadcast its
-    subscriptions to all the Suppliers in the set.
 
   - Adding a supplier:
 

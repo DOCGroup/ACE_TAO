@@ -14,11 +14,9 @@
 #include "tao/POA_CORBA.h"
 #include "tao/Environment.h"
 #include "tao/Typecode.h"
-#include "tao/ORB.h"
 
 ACE_RCSID(tao, PolicyS, "$Id$")
 
-#if !defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
 class TAO_CORBA_Policy_Perfect_Hash_OpTable : public TAO_Perfect_Hash_OpTable
 {
 private:
@@ -94,14 +92,11 @@ TAO_CORBA_Policy_Perfect_Hash_OpTable::lookup (const char *str, unsigned int len
 }
 /* ending time is 17:16:21 */
 TAO_CORBA_Policy_Perfect_Hash_OpTable tao_CORBA_Policy_optable;
-#endif /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
 
 // skeleton constructor
 POA_CORBA::Policy::Policy (void)
 {
-#if !defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
   this->optable_ = &tao_CORBA_Policy_optable;
-#endif /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
 }
 
 // copy ctor
@@ -113,7 +108,6 @@ POA_CORBA::Policy::~Policy (void)
 {
 }
 
-#if !defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
 void POA_CORBA::Policy::_get_policy_type_skel (
     CORBA::ServerRequest &_tao_server_request,
     void *_tao_object_reference,
@@ -133,7 +127,7 @@ void POA_CORBA::Policy::_get_policy_type_skel (
   if (!(
     (_tao_out << _tao_retval)
   ))
-    ACE_THROW (CORBA::MARSHAL () );
+    ACE_THROW (CORBA::MARSHAL (CORBA::COMPLETED_NO) );
 
 }
 
@@ -156,7 +150,7 @@ void POA_CORBA::Policy::copy_skel (
   if (!(
     (_tao_out << _tao_retval.in ())
   ))
-    ACE_THROW (CORBA::MARSHAL () );
+    ACE_THROW (CORBA::MARSHAL (CORBA::COMPLETED_NO) );
 
 }
 
@@ -209,6 +203,19 @@ void POA_CORBA::Policy::_is_a_skel (
   );
 }
 
+CORBA::Boolean POA_CORBA::Policy::_is_a (
+    const char* value,
+    CORBA::Environment &ACE_TRY_ENV
+  )
+{
+  if (
+    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Policy:1.0")) ||
+    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (ACE_TRY_ENV))))
+      return 1;
+    else
+      return 0;
+}
+
 void POA_CORBA::Policy::_non_existent_skel (
     CORBA::ServerRequest &_tao_server_request,
     void * /* _tao_object_reference */ ,
@@ -229,20 +236,6 @@ void POA_CORBA::Policy::_non_existent_skel (
     &_tao_retval
   );
 }
-#endif /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
-
-CORBA::Boolean POA_CORBA::Policy::_is_a (
-    const char* value,
-    CORBA::Environment &ACE_TRY_ENV
-  )
-{
-  if (
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Policy:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (ACE_TRY_ENV))))
-      return 1;
-    else
-      return 0;
-}
 
 void* POA_CORBA::Policy::_downcast (
     const char* logical_type_id
@@ -262,7 +255,7 @@ void POA_CORBA::Policy::_dispatch (CORBA::ServerRequest &req, void *context, COR
   // find the skeleton corresponding to this opname
   if (this->_find (opname, skel) == -1)
   {
-    env.exception (new CORBA_BAD_OPERATION ());
+    env.exception (new CORBA_BAD_OPERATION (CORBA::COMPLETED_NO));
     ACE_ERROR ((LM_ERROR, "Bad operation <%s>\n", opname));
   }
 else
@@ -378,7 +371,7 @@ void* POA_CORBA::PolicyManager::_downcast (
 void POA_CORBA::PolicyManager::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
 {
   // @@ TODO
-  ACE_THROW (CORBA_BAD_OPERATION ());
+  ACE_THROW (CORBA_BAD_OPERATION (CORBA::COMPLETED_NO));
 }
 
 const char* POA_CORBA::PolicyManager::_interface_repository_id (void) const
@@ -493,7 +486,7 @@ void* POA_CORBA::PolicyCurrent::_downcast (
 
 void POA_CORBA::PolicyCurrent::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_THROW (CORBA_BAD_OPERATION ());
+  ACE_THROW (CORBA_BAD_OPERATION (CORBA::COMPLETED_NO));
 }
 
 const char* POA_CORBA::PolicyCurrent::_interface_repository_id (void) const

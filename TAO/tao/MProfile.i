@@ -1,6 +1,9 @@
 // This may look like C, but it's really -*- C++ -*-
 // $Id$
 
+#include "tao/MProfile.h"
+#include "tao/Pluggable.h"
+
 ACE_INLINE
 TAO_MProfile::TAO_MProfile (CORBA::ULong sz)
   :  forward_from_(0),
@@ -13,7 +16,7 @@ TAO_MProfile::TAO_MProfile (CORBA::ULong sz)
 }
 
 ACE_INLINE
-TAO_MProfile::TAO_MProfile (const TAO_MProfile &mprofiles)
+TAO_MProfile::TAO_MProfile (TAO_MProfile *mprofiles)
   :  forward_from_(0),
      pfiles_ (0),
      current_ (0),
@@ -23,20 +26,17 @@ TAO_MProfile::TAO_MProfile (const TAO_MProfile &mprofiles)
   this->set (mprofiles);
 }
 
-ACE_INLINE TAO_MProfile&
-TAO_MProfile::operator= (const TAO_MProfile& rhs)
-{
-  if (this == &rhs)
-    return *this;
-
-  this->set (rhs);
-  return *this;
-}
-
 ACE_INLINE
 TAO_MProfile::~TAO_MProfile (void)
-{
-  this->cleanup ();
+ {
+  if (this->pfiles_)
+    for (TAO_PHandle h = 0; h < last_; h++)
+      if (this->pfiles_[h])
+        this->pfiles_[h]->_decr_refcnt ();
+
+  delete [] pfiles_;
+  pfiles_ = 0;
+
 }
 
 // Cyclic get next.  It will simply cycle through the complete list.
@@ -132,6 +132,22 @@ TAO_MProfile::rewind (void)
 }
 
 ACE_INLINE int
+TAO_MProfile::add_profile (TAO_Profile *pfile)
+{
+  // skip by the used slots
+  if (last_ == size_) // full!
+    return -1;
+
+  pfiles_[last_++] = pfile;
+
+  if (pfile && pfile->_incr_refcnt () == 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "(%P|%t) Unable to increment reference count in add_profile!\n"),
+                      -1);
+  return last_ - 1;
+}
+
+ACE_INLINE int
 TAO_MProfile::give_profile (TAO_Profile *pfile)
 {
   // skip by the used slots
@@ -175,4 +191,41 @@ ACE_INLINE TAO_Profile_ptr *
 TAO_MProfile::pfiles (void) const
 {
   return this->pfiles_;
+}
+
+ACE_INLINE CORBA::Boolean
+TAO_MProfile::is_equivalent (TAO_MProfile *first,
+                             TAO_MProfile *second,
+                             CORBA::Environment &env)
+{
+  // Two profile lists are equivalent iff at least one of the profiles
+  // form the first list is_equivalent to at least one of the profiles
+  // from the second list!!
+  TAO_Profile_ptr *pfiles1 = first->pfiles ();
+  TAO_Profile_ptr *pfiles2 = second->pfiles ();
+  TAO_PHandle first_cnt = first->profile_count ();
+  TAO_PHandle second_cnt = second->profile_count ();
+
+  for (TAO_PHandle h1 = 0; h1 < first_cnt;h1++)
+    for (TAO_PHandle h2 = 0; h2 < second_cnt; h2++ )
+      if (pfiles1[h1]->is_equivalent (pfiles2[h2], env))
+        return 1;
+
+  return 0;
+}
+
+ACE_INLINE CORBA::ULong
+TAO_MProfile::hash (CORBA::ULong max, CORBA::Environment &env)
+{
+  CORBA::ULong hashval = 0;
+
+  if (last_ == 0)
+    return 0;
+
+  for (TAO_PHandle h=0; h < last_ ; h++)
+    hashval += pfiles_[h]->hash (max, env);
+
+  // The above hash function return an ULong between 0 and max here we
+  // simply take the average value and round.
+  return hashval / last_;
 }

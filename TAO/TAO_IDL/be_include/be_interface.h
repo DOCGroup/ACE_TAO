@@ -94,6 +94,18 @@ public:
   const char *local_coll_name (void) const;
   // retrieve the fully qualified collocated class name
 
+  virtual int gen_typecode (void);
+  // generate the typecode
+
+  virtual int gen_encapsulation (void);
+  // encapsulation for parameters
+
+  virtual long tc_size (void);
+  // return typecode size
+
+  virtual long tc_encap_len (void);
+  // return length of encapsulation
+
   virtual int traverse_inheritance_graph (tao_code_emitter gen,
                                           TAO_OutStream *os);
   // template method using breadth first traversal of inheritance graph
@@ -161,21 +173,20 @@ public:
   // helper method to determine if the interface node is involved in some kind
   // of multiple inheritance or not. Required on the skeleton side
 
-  static int gen_def_ctors_helper (be_interface* node,
-                                   be_interface* base,
+  static int gen_def_ctors_helper (be_interface* node, 
+                                   be_interface* base, 
                                    TAO_OutStream *os);
 
   //helper method to generate a call to the default constructors of all the base classes
 
-  static int gen_copy_ctors_helper (be_interface* node,
-                                   be_interface* base,
+  static int gen_copy_ctors_helper (be_interface* node, 
+                                   be_interface* base, 
                                    TAO_OutStream *os);
 
   //helper method to generate a call to the copy constructors of all the base classes
 
 
   void compute_fullskelname (void);
-  void compute_fullskelname (char *&skelname, const char * prefix);
   // compute the fully scoped skel class name
 
   int gen_operation_table (void);
