@@ -146,36 +146,8 @@ namespace TAO
                             0);
         }
 
-      PortableServer::Servant servant = 0;
-
-      {
-        // A recursive thread lock without using a recursive
-        // thread lock.  Non_Servant_Upcall has a magic
-        // constructor and destructor.  We unlock the
-        // Object_Adapter lock for the duration of the servant
-        // activator upcalls; reacquiring once the upcalls
-        // complete.  Even though we are releasing the lock, other
-        // threads will not be able to make progress since
-        // <Object_Adapter::non_servant_upcall_in_progress_> has
-        // been set.
-        TAO::Portable_Server::Non_Servant_Upcall non_servant_upcall (*this->poa_);
-        ACE_UNUSED_ARG (non_servant_upcall);
-
-        // @@
-        // Invocations of incarnate on the servant manager are serialized.
-        // Invocations of etherealize on the servant manager are serialized.
-        // Invocations of incarnate and etherealize on the servant manager are mutually exclusive.
-        servant = this->servant_activator_->incarnate (poa_current_impl.object_id (),
-                                                       this->poa_
-                                                       ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK_RETURN (0);
-
-        if (servant == 0)
-          {
-            ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
-                              0);
-          }
-      }
+      PortableServer::Servant servant = this->incarnate_servant (poa_current_impl.object_id ());
+      ACE_CHECK_RETURN (0);
 
       int error = 0;
 
@@ -214,28 +186,7 @@ namespace TAO
       // the incarnated servant.
       if (error || wait_occurred_restart_call)
         {
-          CORBA::Boolean remaining_activations =
-            this->active_object_map_->remaining_activations (servant);
-
-          // A recursive thread lock without using a recursive
-          // thread lock.  Non_Servant_Upcall has a magic
-          // constructor and destructor.  We unlock the
-          // Object_Adapter lock for the duration of the servant
-          // activator upcalls; reacquiring once the upcalls
-          // complete.  Even though we are releasing the lock,
-          // other threads will not be able to make progress since
-          // <Object_Adapter::non_servant_upcall_in_progress_> has
-          // been set.
-          TAO::Portable_Server::Non_Servant_Upcall non_servant_upcall (*this->poa_);
-          ACE_UNUSED_ARG (non_servant_upcall);
-
-          CORBA::Boolean cleanup_in_progress = 0;
-          this->servant_activator_->etherealize (poa_current_impl.object_id (),
-                                                 this->poa_,
-                                                 servant,
-                                                 cleanup_in_progress,
-                                                 remaining_activations
-                                                 ACE_ENV_ARG_PARAMETER);
+          this->etherealize_servant (poa_current_impl.object_id (), servant ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (0);
 
           // If error, throw exception.
@@ -262,6 +213,75 @@ namespace TAO
       return servant;
     }
 
+    void
+    Servant_Activator_Request_Processing_Strategy::etherealize_servant (
+      const PortableServer::ObjectId& object_id,
+      PortableServer::Servant servant
+      ACE_ENV_ARG_DECL)
+    {
+      CORBA::Boolean remaining_activations =
+        this->active_object_map_->remaining_activations (servant);
+
+      // A recursive thread lock without using a recursive
+      // thread lock.  Non_Servant_Upcall has a magic
+      // constructor and destructor.  We unlock the
+      // Object_Adapter lock for the duration of the servant
+      // activator upcalls; reacquiring once the upcalls
+      // complete.  Even though we are releasing the lock,
+      // other threads will not be able to make progress since
+      // <Object_Adapter::non_servant_upcall_in_progress_> has
+      // been set.
+      TAO::Portable_Server::Non_Servant_Upcall non_servant_upcall (*this->poa_);
+      ACE_UNUSED_ARG (non_servant_upcall);
+
+      CORBA::Boolean cleanup_in_progress = 0;
+      this->servant_activator_->etherealize (object_id,
+                                             this->poa_,
+                                             servant,
+                                             cleanup_in_progress,
+                                             remaining_activations
+                                             ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+    }
+
+    PortableServer::Servant
+    Servant_Activator_Request_Processing_Strategy::incarnate_servant (
+      const PortableServer::ObjectId& object_id
+      ACE_ENV_ARG_DECL)
+    {
+      PortableServer::Servant servant = 0;
+
+      // A recursive thread lock without using a recursive
+      // thread lock.  Non_Servant_Upcall has a magic
+      // constructor and destructor.  We unlock the
+      // Object_Adapter lock for the duration of the servant
+      // activator upcalls; reacquiring once the upcalls
+      // complete.  Even though we are releasing the lock, other
+      // threads will not be able to make progress since
+      // <Object_Adapter::non_servant_upcall_in_progress_> has
+      // been set.
+      TAO::Portable_Server::Non_Servant_Upcall non_servant_upcall (*this->poa_);
+      ACE_UNUSED_ARG (non_servant_upcall);
+
+      // @@
+      // Invocations of incarnate on the servant manager are serialized.
+      // Invocations of etherealize on the servant manager are serialized.
+      // Invocations of incarnate and etherealize on the servant manager are mutually exclusive.
+      servant = this->servant_activator_->incarnate (object_id,
+                                                     this->poa_
+                                                     ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (0);
+
+      if (servant == 0)
+        {
+          ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
+                            0);
+        }
+      else
+        {
+          return servant;
+        }
+    }
   }
 }
 

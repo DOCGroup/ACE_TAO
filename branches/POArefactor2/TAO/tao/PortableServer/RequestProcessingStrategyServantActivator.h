@@ -82,6 +82,19 @@ namespace TAO
                         ACE_ENV_ARG_DECL);
 
     private:
+      PortableServer::Servant
+      incarnate_servant (
+        const PortableServer::ObjectId& object_id
+        ACE_ENV_ARG_DECL);
+
+      void
+      etherealize_servant (
+        const PortableServer::ObjectId& object_id,
+        PortableServer::Servant servant
+        ACE_ENV_ARG_DECL);
+
+
+    private:
       TAO_POA* poa_;
       TAO_Active_Object_Map* active_object_map_;
       ServantRetentionStrategy* servant_retention_strategy_;
