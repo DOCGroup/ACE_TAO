@@ -108,11 +108,39 @@ public:
   DEF_NARROW_FROM_DECL(AST_Union);
   DEF_NARROW_FROM_SCOPE(AST_Union);
 
+  struct DefaultValue
+  {
+    union PermittedTypes
+    {
+      char char_val;
+      ACE_CDR::WChar wchar_val;
+      unsigned long bool_val;
+      ACE_INT16 short_val;
+      ACE_UINT16 ushort_val;
+      ACE_INT32 long_val;
+      ACE_UINT32 ulong_val;
+      ACE_UINT32 enum_val;
+      // TO-DO - handle (u)longlong types.
+    } u;
+    long computed_;
+    // computed == -1 => error condition
+    //          == 0 => does not exist because all cases have been covered
+    //          == 1 => already computed
+    //          == -2 => initial value
+  };
+
+  int default_value (DefaultValue &);
+  // Get the default value.
+
   // AST Dumping.
   virtual void dump (ostream &);
 
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
+
+protected:
+  int default_index_;
+  // Default label index (zero based indexing).
 
 private:
   // Data.
@@ -140,7 +168,6 @@ private:
   // check for duplicate enum labels.
   AST_UnionBranch *lookup_enum (AST_UnionBranch *b);
 
-private:
   friend int tao_yyparse (void);
   // Scope Management Protocol.
 
@@ -154,6 +181,11 @@ private:
 
   virtual AST_EnumVal *fe_add_enum_val (AST_EnumVal *v);
 
+  virtual int compute_default_value (void);
+  // Compute the default value (if any).
+
+  DefaultValue default_value_;
+  // Default value (if any).
 };
 
 #endif           // _AST_UNION_AST_UNION_HH

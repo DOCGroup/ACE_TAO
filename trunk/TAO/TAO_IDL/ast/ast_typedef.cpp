@@ -99,6 +99,23 @@ AST_Typedef::~AST_Typedef (void)
 {
 }
 
+// Given a typedef node, traverse the chain of base types until they are no
+// more typedefs, and return that most primitive base type.
+AST_Type *
+AST_Typedef::primitive_base_type (void)
+{
+  AST_Type *d = this;
+  AST_Typedef *temp = 0;
+
+  while (d && d->node_type () == AST_Decl::NT_typedef)
+    {
+      temp = AST_Typedef::narrow_from_decl (d);
+      d = AST_Type::narrow_from_decl (temp->base_type ());
+    }
+
+  return d;
+}
+
 // Redefinition of inherited virtual operations.
 
 // Dump this AST_Typedef node to the ostream o.

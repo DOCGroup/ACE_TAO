@@ -88,13 +88,16 @@ AST_Union::AST_Union (AST_ConcreteType *dt,
                       UTL_StrList *p,
                       idl_bool local,
                       idl_bool abstract)
- : AST_Decl (AST_Decl::NT_union, 
+  : AST_Decl (AST_Decl::NT_union, 
              n, 
              p),
-   UTL_Scope (AST_Decl::NT_union),
-   COMMON_Base (local, 
-                abstract)
+    UTL_Scope (AST_Decl::NT_union),
+    COMMON_Base (local, 
+                 abstract),
+    default_index_ (-2)
 {
+  this->default_value_.computed_ = -2;
+
   AST_PredefinedType *pdt = 0;
 
   if (dt == 0) 
@@ -460,6 +463,386 @@ AST_Union::lookup_branch (AST_UnionBranch *branch)
 
       return lookup_label (branch);
     }
+
+  return 0;
+}
+
+// Return the default value.
+int
+AST_Union::default_value (AST_Union::DefaultValue &dv)
+{
+  if (this->default_value_.computed_ == -2)
+    {
+      // We need to compute it.
+      if (this->compute_default_value () == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("(%N:%l) AST_Union::")
+                             ACE_TEXT ("default_value - ")
+                             ACE_TEXT ("Error computing ")
+                             ACE_TEXT ("default value\n")),
+                            -1);
+        }
+    }
+
+  dv = this->default_value_;
+  return 0;
+}
+
+// Determine the default value (if any).
+int
+AST_Union::compute_default_value (void)
+{
+  // Check if we really need a default value. This will be true if there is an
+  // explicit default case OR if an implicit default exists because not all
+  // values of the discriminant type are covered by the cases.
+
+  // Compute the total true "case" labels i.e., exclude the "default" case.
+  int total_case_members = 0;
+
+  // Instantiate a scope iterator.
+  UTL_ScopeActiveIterator *si = 0;
+  ACE_NEW_RETURN (si,
+                  UTL_ScopeActiveIterator (this,
+                                           UTL_Scope::IK_decls),
+                  -1);
+
+  while (!si->is_done ())
+    {
+      // Get the next AST decl node.
+      AST_UnionBranch *ub =
+        AST_UnionBranch::narrow_from_decl (si->item ());
+
+      if (ub != 0)
+        {
+          // If the label is a case label, increment by 1.
+          for (unsigned long i = 0;
+               i < ub->label_list_length ();
+               ++i)
+            {
+              if (ub->label (i)->label_kind () == AST_UnionLabel::UL_label)
+                {
+                  total_case_members++;
+                }
+            }
+        }
+
+      si->next ();
+    }
+
+  delete si;
+
+  // Check if the total_case_members cover the entire
+  // range of values that are permitted by the discriminant type. If they do,
+  // then a default value is not necessary. However, if such an explicit
+  // default case is provided, it must be flagged off as an error. Our
+  // front-end is not able to handle such a case since it is a semantic error
+  // and not a syntax error. Such an error is caught here.
+
+  switch (this->udisc_type ())
+    {
+    case AST_Expression::EV_short:
+    case AST_Expression::EV_ushort:
+      if (total_case_members == ACE_UINT16_MAX + 1)
+        {
+          this->default_value_.computed_ = 0;
+        }
+
+      break;
+    case AST_Expression::EV_long:
+    case AST_Expression::EV_ulong:
+      if ((unsigned int) total_case_members > ACE_UINT32_MAX)
+        {
+          this->default_value_.computed_ = 0;
+        }
+
+      break;
+    case AST_Expression::EV_longlong:
+    case AST_Expression::EV_ulonglong:
+      // Error for now.
+      this->default_value_.computed_ = -1;
+      ACE_ERROR_RETURN ((
+          LM_ERROR,
+          ACE_TEXT ("(%N:%l) AST_Union::compute_default_value ")
+          ACE_TEXT ("- unimplemented discriminant type ")
+          ACE_TEXT ("(longlong or ulonglong)\n")
+        ),
+        -1
+      );
+      ACE_NOTREACHED (break;)
+    case AST_Expression::EV_char:
+      if (total_case_members == ACE_OCTET_MAX + 1)
+        {
+          this->default_value_.computed_ = 0;
+        }
+
+      break;
+    case AST_Expression::EV_wchar:
+      if (total_case_members == ACE_WCHAR_MAX + 1)
+        {
+          this->default_value_.computed_ = 0;
+        }
+
+      break;
+    case AST_Expression::EV_bool:
+      if (total_case_members == 2)
+        {
+          this->default_value_.computed_ = 0;
+        }
+
+      break;
+    case AST_Expression::EV_any:
+      // Has to be enum.
+      {
+        AST_Decl *d = AST_Decl::narrow_from_decl (this->disc_type ());
+
+        if (d->node_type () == AST_Decl::NT_typedef)
+          {
+            AST_Typedef *bt = AST_Typedef::narrow_from_decl (d);
+            d = bt->primitive_base_type ();
+          }
+
+        AST_Enum *en = AST_Enum::narrow_from_decl (d);
+
+        if (en != 0)
+          {
+            if (total_case_members == en->member_count ())
+              {
+                this->default_value_.computed_ = 0;
+              }
+          }
+        else
+          {
+            // Error.
+            this->default_value_.computed_ = -1;
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               ACE_TEXT ("(%N:%l) AST_Union::")
+                               ACE_TEXT ("compute_default_value ")
+                               ACE_TEXT ("- disc type not an ENUM\n")),
+                              -1);
+          }
+      }
+      break;
+    default:
+      // Error.
+      this->default_value_.computed_ = -1;
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%N:%l) AST_Union::compute_default_value")
+                         ACE_TEXT (" - Bad discriminant type\n")),
+                        -1);
+      ACE_NOTREACHED (break;)
+    } // End of switch
+
+  // If we have determined that we don't need a default case and even then a
+  // default case was provided, flag this off as error.
+  if ((this->default_value_.computed_ == 0) 
+      && (this->default_index_ != -1))
+    {
+      // Error.
+      this->default_value_.computed_ = -1;
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%N:%l) AST_Union::compute_default_value")
+                         ACE_TEXT (" - default clause is invalid here\n")),
+                        -1);
+    }
+
+  // Proceed only if necessary.
+  switch (this->default_value_.computed_)
+    {
+    case -1:
+      // Error. We should never be here because errors 
+      // have already been caught
+      // above.
+      return -1;
+    case 0:
+      // Nothing more to do.
+      return 0;
+    default:
+      // Proceed further down.
+      break;
+    }
+
+  // Initialization of the default value data member.
+  switch (this->udisc_type ())
+    {
+    case AST_Expression::EV_short:
+      this->default_value_.u.short_val = ACE_INT16_MIN;
+      break;
+    case AST_Expression::EV_ushort:
+      this->default_value_.u.ushort_val = 0;
+      break;
+    case AST_Expression::EV_long:
+      // The +1 is to avert a warning on many compilers.
+      this->default_value_.u.long_val = ACE_INT32_MIN + 1;
+      break;
+    case AST_Expression::EV_ulong:
+      this->default_value_.u.ulong_val = 0;
+      break;
+    case AST_Expression::EV_char:
+      this->default_value_.u.char_val = 0;
+      break;
+    case AST_Expression::EV_wchar:
+      this->default_value_.u.wchar_val = 0;
+      break;
+    case AST_Expression::EV_bool:
+      this->default_value_.u.bool_val = 0;
+      break;
+    case AST_Expression::EV_any:
+      this->default_value_.u.enum_val = 0;
+      break;
+    case AST_Expression::EV_longlong:
+    case AST_Expression::EV_ulonglong:
+      // Unimplemented.
+    default:
+      // Error caught earlier.
+      break;
+    }
+
+  // Proceed until we have found the appropriate default value.
+  while (this->default_value_.computed_ == -2)
+    {
+      // Instantiate a scope iterator.
+      ACE_NEW_RETURN (si,
+                      UTL_ScopeActiveIterator (this, 
+                                               UTL_Scope::IK_decls),
+                      -1);
+
+      int break_loop = 0;
+
+      while (!si->is_done () && break_loop == 0)
+        {
+          // Get the next AST decl node
+          AST_UnionBranch *ub = 
+            AST_UnionBranch::narrow_from_decl (si->item ());
+
+          if (ub != 0)
+            {
+              for (unsigned long i = 0;
+                   i < ub->label_list_length () && !break_loop;
+                   ++i)
+                {
+                  if (ub->label (i)->label_kind () 
+                        == AST_UnionLabel::UL_label)
+                    {
+                      // Not a default.
+                      AST_Expression *expr = ub->label (i)->label_val ();
+
+                      if (expr == 0)
+                        {
+                          // Error.
+                          this->default_value_.computed_ = -1;
+                          ACE_ERROR_RETURN
+                            ((LM_ERROR,
+                              ACE_TEXT ("(%N:%l) AST_Union::")
+                              ACE_TEXT ("compute_default_value - ")
+                              ACE_TEXT ("Bad case label value\n")),
+                             -1);
+                        }
+
+                      switch (expr->ev ()->et)
+                        {
+                          // Check if they match in which case this
+                          // cannot be the implicit default value. So
+                          // start with a new value and try the whole loop
+                          // again because our case labels may not be sorted.
+                        case AST_Expression::EV_short:
+                          if (this->default_value_.u.short_val
+                                == expr->ev ()->u.sval)
+                            {
+                              this->default_value_.u.short_val++;
+                              break_loop = 1;
+                            }
+
+                          break;
+                        case AST_Expression::EV_ushort:
+                          if (this->default_value_.u.ushort_val
+                                == expr->ev ()->u.usval)
+                            {
+                              this->default_value_.u.ushort_val++;
+                              break_loop = 1;
+                            }
+
+                          break;
+                        case AST_Expression::EV_long:
+                          if (this->default_value_.u.long_val
+                                == expr->ev ()->u.lval)
+                            {
+                              this->default_value_.u.long_val++;
+                              break_loop = 1;
+                            }
+
+                          break;
+                        case AST_Expression::EV_ulong:
+                          if (this->default_value_.u.ulong_val
+                                == expr->ev ()->u.ulval)
+                            {
+                              this->default_value_.u.ulong_val++;
+                              break_loop = 1;
+                            }
+
+                          break;
+                        case AST_Expression::EV_char:
+                          if (this->default_value_.u.char_val
+                                == expr->ev ()->u.cval)
+                            {
+                              this->default_value_.u.char_val++;
+                              break_loop = 1;
+                            }
+
+                          break;
+                        case AST_Expression::EV_wchar:
+                          if (this->default_value_.u.wchar_val
+                                == expr->ev ()->u.wcval)
+                            {
+                              this->default_value_.u.wchar_val++;
+                              break_loop = 1;
+                            }
+
+                          break;
+                        case AST_Expression::EV_bool:
+                          if (this->default_value_.u.bool_val
+                                == expr->ev ()->u.bval)
+                            {
+                              this->default_value_.u.bool_val++;
+                              break_loop = 1;
+                            }
+
+                          break;
+                        case AST_Expression::EV_any:
+                          // this is the case of enums. We maintain
+                          // evaluated values which always start with 0
+                          if (this->default_value_.u.enum_val
+                                == expr->ev ()->u.eval)
+                            {
+                              this->default_value_.u.enum_val++;
+                              break_loop = 1;
+                            }
+
+                          break;
+                        case AST_Expression::EV_longlong:
+                        case AST_Expression::EV_ulonglong:
+                          // Unimplemented. right now - flag as error.
+                        default:
+                          // Error.
+                          break;
+                        } // End of switch.
+                    } // if label_Kind == label
+                } // End of for loop going thru all labels.
+            } // If valid union branch.
+
+          si->next ();
+        } // End of while scope iterator loop.
+
+      delete si;
+
+      // We have not aborted the inner loops which means we have found the
+      // default value.
+      if (break_loop == 0)
+        {
+          this->default_value_.computed_ = 1;
+        }
+
+    } // End of outer while (default_value.computed == -2).
 
   return 0;
 }

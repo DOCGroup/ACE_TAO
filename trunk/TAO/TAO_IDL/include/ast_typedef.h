@@ -86,6 +86,10 @@ public:
 
   virtual ~AST_Typedef (void);
 
+  AST_Type *primitive_base_type (void);
+  // Return the most primitive base type by traversing the chain of typedefed
+  // base types.
+
   // Data Accessors.
   AST_Type *base_type (void);
 
