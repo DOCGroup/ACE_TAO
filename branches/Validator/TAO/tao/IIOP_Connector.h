@@ -86,7 +86,8 @@ protected:
   int set_validate_endpoint (TAO_Endpoint *ep);
 
   int make_connection (TAO_GIOP_Invocation *invocation,
-                       TAO_Transport_Descriptor_Interface *desc);
+                       TAO_Transport_Descriptor_Interface *desc,
+                       ACE_Time_Value *timeout = 0);
 
   /// More TAO_Connector methods, please check the documentation on
   /// Transport_Connector.h

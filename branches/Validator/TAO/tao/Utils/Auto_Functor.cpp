@@ -1,12 +1,5 @@
-#ifndef Auto_Functor__cpp_
-#define Auto_Functor__cpp_
-/**
- * @file Auto_Functor.cpp
- *
- * $Id$
- *
- * @author Carlos O'Ryan <coryan@atdesk.com>
- */
+#ifndef TAO_UTILS_AUTO_FUNCTOR_H
+#define TAO_UTILS_AUTO_FUNCTOR_H
 
 #include "Auto_Functor.h"
 
@@ -14,16 +7,20 @@
 # include "Auto_Functor.inl"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID (Utils,
+           Auto_Functor,
+           "$Id$")
+
 template<typename X, typename Functor>
-TAO::Utils::Auto_Functor<X,Functor>::
-~Auto_Functor() throw()
+TAO::Utils::Auto_Functor<X,Functor>::~Auto_Functor()
+  ACE_THROW_SPEC (())
 {
   reset(0);
 }
 
-template<typename X, typename Functor>
-void TAO::Utils::Auto_Functor<X,Functor>::
-reset (X * p) throw()
+template<typename X, typename Functor> void
+TAO::Utils::Auto_Functor<X,Functor>::reset (X * p)
+  ACE_THROW_SPEC (())
 {
   if(p_ != 0)
   {
@@ -32,12 +29,12 @@ reset (X * p) throw()
   p_ = p;
 }
 
-template<typename X, typename Functor>
-void TAO::Utils::Auto_Functor<X,Functor>::
-reset (X * p, Functor f) throw()
+template<typename X, typename Functor>void
+TAO::Utils::Auto_Functor<X,Functor>::reset (X * p, Functor f)
+  ACE_THROW_SPEC (())
 {
   reset(p);
   f_ = f;
 }
 
-#endif // Auto_Functor__cpp_
+#endif /*TAO_UTILS_AUTO_FUNCTOR_H*/

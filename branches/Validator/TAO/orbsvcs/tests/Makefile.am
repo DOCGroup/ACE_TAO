@@ -20,6 +20,7 @@ SUBDIRS = \
         CosEC_Multiple \
         EC_Custom_Marshal \
         EC_Mcast \
+        EC_MT_Mcast \
         EC_Multiple \
         EC_Throughput \
         ImplRepo \

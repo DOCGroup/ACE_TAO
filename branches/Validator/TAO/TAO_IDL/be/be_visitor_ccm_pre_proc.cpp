@@ -91,7 +91,12 @@ be_visitor_ccm_pre_proc::visit_root (be_root *node)
 int
 be_visitor_ccm_pre_proc::visit_module (be_module *node)
 {
-  if (!node->imported () && this->visit_scope (node) == -1)
+  if (node->imported ())
+    {
+      return 0;
+    }
+
+  if (this->visit_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_ccm_pre_proc::"
@@ -105,6 +110,20 @@ be_visitor_ccm_pre_proc::visit_module (be_module *node)
 int
 be_visitor_ccm_pre_proc::visit_component (be_component *node)
 {
+  if (node->imported ())
+    {
+      return 0;
+    }
+
+  if (this->lookup_ccmobject () == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_ccm_pre_proc::"
+                         "visit_component - "
+                         "Components::CCMObject lookup failed\n"),
+                        -1);
+    }
+
   if (this->lookup_cookie (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -174,6 +193,11 @@ be_visitor_ccm_pre_proc::visit_component (be_component *node)
 int
 be_visitor_ccm_pre_proc::visit_home (be_home *node)
 {
+  if (node->imported ())
+    {
+      return 0;
+    }
+
   AST_Interface *xplicit = this->create_explicit (node);
 
   if (xplicit == 0)
@@ -239,6 +263,11 @@ be_visitor_ccm_pre_proc::visit_home (be_home *node)
 int
 be_visitor_ccm_pre_proc::visit_eventtype (be_eventtype *node)
 {
+  if (node->imported ())
+    {
+      return 0;
+    }
+
   if (this->create_event_consumer (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -1289,6 +1318,27 @@ be_visitor_ccm_pre_proc::gen_get_primary_key (be_home *node,
 }
 
 // ********************************************************************
+
+int
+be_visitor_ccm_pre_proc::lookup_ccmobject (void)
+{
+  Identifier local_id ("CCMObject");
+  UTL_ScopedName local_name (&local_id,
+                             0);
+  UTL_ScopedName sn (&this->module_id_,
+                     &local_name);
+  AST_Decl *d = 
+    idl_global->scopes ().top_non_null ()->lookup_by_name (&sn,
+                                                           I_TRUE);
+
+  if (d == 0)
+    {
+      return -1;
+    }
+
+  be_global->ccmobject (be_interface::narrow_from_decl (d));
+  return 0;
+}
 
 int
 be_visitor_ccm_pre_proc::lookup_cookie (be_component *node)

@@ -7,11 +7,11 @@ project(ConnectDisconnect): notifytest {
 }
 
 
-project(LifeCycleTest): notifytest {
-  exename  = LifeCycleTest
+project(LifeCycle): notifytest {
+  exename  = LifeCycle
 
   Source_Files {
-    LifeCycleTest.cpp
+    LifeCycle.cpp
   }
 }
 
@@ -23,19 +23,19 @@ project(IdAssignment): notifytest {
   }
 }
 
-project(Events_Test): notifytest {
-  exename  = Events_Test
+project(Events): notifytest {
+  exename  = Events
 
   Source_Files {
-    Events_Test.cpp
+    Events.cpp
   }
 }
 
-project(AdminProperties_Test): notifytest {
-  exename  = AdminProperties_Test
+project(AdminProperties): notifytest {
+  exename  = AdminProperties
 
   Source_Files {
-    AdminProperties_Test.cpp
+    AdminProperties.cpp
   }
 }
 

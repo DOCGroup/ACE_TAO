@@ -90,11 +90,13 @@ realclean: clean
 
 
 .obj/EstablishTrustPolicy.o .obj/EstablishTrustPolicy.so .shobj/EstablishTrustPolicy.o .shobj/EstablishTrustPolicy.so: Security/EstablishTrustPolicy.cpp \
- Security/EstablishTrustPolicy.h $(ACE_ROOT)/ace/pre.h \
+ Security/EstablishTrustPolicy.h \
+ $(ACE_ROOT)/ace/pre.h \
+ Security/security_export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
- SecurityLevel2C.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/SecurityLevel2C.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -120,7 +122,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -272,9 +275,9 @@ realclean: clean
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- Security/security_export.h \
- SecurityLevel1C.h \
- SecurityC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Security/security_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/SecurityLevel1C.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/SecurityC.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
  $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
@@ -290,18 +293,19 @@ realclean: clean
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
  $(TAO_ROOT)/tao/TimeBaseC.i \
- SecurityC.i \
- SecurityLevel1C.i \
- SecurityLevel2C.i
+ $(TAO_ROOT)/orbsvcs/orbsvcs/SecurityC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/SecurityLevel1C.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/SecurityLevel2C.i
 
 .obj/InvocationCredentialsPolicy.o .obj/InvocationCredentialsPolicy.so .shobj/InvocationCredentialsPolicy.o .shobj/InvocationCredentialsPolicy.so: \
  Security/InvocationCredentialsPolicy.cpp \
  Security/InvocationCredentialsPolicy.h \
- $(ACE_ROOT)/ace/pre.h Security/security_export.h \
+ $(ACE_ROOT)/ace/pre.h \
+ Security/security_export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
- SecurityLevel2C.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/SecurityLevel2C.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -327,7 +331,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -479,9 +484,9 @@ realclean: clean
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- Security/security_export.h \
- SecurityLevel1C.h \
- SecurityC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Security/security_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/SecurityLevel1C.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/SecurityC.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
  $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
@@ -497,16 +502,17 @@ realclean: clean
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
  $(TAO_ROOT)/tao/TimeBaseC.i \
- SecurityC.i \
- SecurityLevel1C.i \
- SecurityLevel2C.i
+ $(TAO_ROOT)/orbsvcs/orbsvcs/SecurityC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/SecurityLevel1C.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/SecurityLevel2C.i
 
 .obj/QOPPolicy.o .obj/QOPPolicy.so .shobj/QOPPolicy.o .shobj/QOPPolicy.so: Security/QOPPolicy.cpp Security/QOPPolicy.h \
- $(ACE_ROOT)/ace/pre.h Security/security_export.h \
+ $(ACE_ROOT)/ace/pre.h \
+ Security/security_export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
- SecurityLevel2C.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/SecurityLevel2C.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -532,7 +538,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -684,9 +691,9 @@ realclean: clean
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- Security/security_export.h \
- SecurityLevel1C.h \
- SecurityC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Security/security_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/SecurityLevel1C.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/SecurityC.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
  $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
@@ -702,12 +709,14 @@ realclean: clean
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
  $(TAO_ROOT)/tao/TimeBaseC.i \
- SecurityC.i \
- SecurityLevel1C.i \
- SecurityLevel2C.i
+ $(TAO_ROOT)/orbsvcs/orbsvcs/SecurityC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/SecurityLevel1C.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/SecurityLevel2C.i
 
 .obj/Security_PolicyFactory.o .obj/Security_PolicyFactory.so .shobj/Security_PolicyFactory.o .shobj/Security_PolicyFactory.so: Security/Security_PolicyFactory.cpp \
- Security/Security_PolicyFactory.h $(ACE_ROOT)/ace/pre.h \
+ Security/Security_PolicyFactory.h \
+ $(ACE_ROOT)/ace/pre.h \
+ Security/security_export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -736,7 +745,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -859,7 +869,7 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
- SecurityLevel2C.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/SecurityLevel2C.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/NVList.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
@@ -889,9 +899,9 @@ realclean: clean
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
- Security/security_export.h \
- SecurityLevel1C.h \
- SecurityC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Security/security_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/SecurityLevel1C.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/SecurityC.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
  $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
@@ -907,18 +917,20 @@ realclean: clean
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
  $(TAO_ROOT)/tao/TimeBaseC.i \
- SecurityC.i \
- SecurityLevel1C.i \
- SecurityLevel2C.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/SecurityC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/SecurityLevel1C.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/SecurityLevel2C.i \
  Security/QOPPolicy.h Security/EstablishTrustPolicy.h \
  Security/InvocationCredentialsPolicy.h
 
 .obj/Security_Current.o .obj/Security_Current.so .shobj/Security_Current.o .shobj/Security_Current.so: Security/Security_Current.cpp \
- Security/Security_Current.h $(ACE_ROOT)/ace/pre.h \
+ Security/Security_Current.h \
+ $(ACE_ROOT)/ace/pre.h \
+ Security/security_export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
- SecurityLevel2C.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/SecurityLevel2C.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -944,7 +956,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -1096,9 +1109,9 @@ realclean: clean
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- Security/security_export.h \
- SecurityLevel1C.h \
- SecurityC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Security/security_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/SecurityLevel1C.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/SecurityC.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
  $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
@@ -1114,9 +1127,9 @@ realclean: clean
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
  $(TAO_ROOT)/tao/TimeBaseC.i \
- SecurityC.i \
- SecurityLevel1C.i \
- SecurityLevel2C.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/SecurityC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/SecurityLevel1C.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/SecurityLevel2C.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/Policy_Manager.h \
  $(TAO_ROOT)/tao/Policy_Set.h \
@@ -1180,6 +1193,9 @@ realclean: clean
  $(TAO_ROOT)/tao/PICurrent.h \
  $(TAO_ROOT)/tao/PICurrent.inl \
  $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Exit.h \
+ $(ACE_ROOT)/ace/Thread_Control.h \
+ $(ACE_ROOT)/ace/Thread_Control.inl \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Containers_T.h \
@@ -1198,11 +1214,13 @@ realclean: clean
  Security/Security_Current_Impl.h Security/Security_Current.inl
 
 .obj/Security_Current_Impl.o .obj/Security_Current_Impl.so .shobj/Security_Current_Impl.o .shobj/Security_Current_Impl.so: Security/Security_Current_Impl.cpp \
- Security/Security_Current_Impl.h $(ACE_ROOT)/ace/pre.h \
+ Security/Security_Current_Impl.h \
+ $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
- $(ACE_ROOT)/ace/ace_wchar.inl Security/security_export.h \
- SecurityLevel2C.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl \
+ Security/security_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/SecurityLevel2C.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -1228,7 +1246,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -1380,9 +1399,9 @@ realclean: clean
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- Security/security_export.h \
- SecurityLevel1C.h \
- SecurityC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Security/security_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/SecurityLevel1C.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/SecurityC.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
  $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
@@ -1398,12 +1417,14 @@ realclean: clean
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
  $(TAO_ROOT)/tao/TimeBaseC.i \
- SecurityC.i \
- SecurityLevel1C.i \
- SecurityLevel2C.i
+ $(TAO_ROOT)/orbsvcs/orbsvcs/SecurityC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/SecurityLevel1C.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/SecurityLevel2C.i
 
 .obj/Security_ORBInitializer.o .obj/Security_ORBInitializer.so .shobj/Security_ORBInitializer.o .shobj/Security_ORBInitializer.so: Security/Security_ORBInitializer.cpp \
- Security/Security_ORBInitializer.h $(ACE_ROOT)/ace/pre.h \
+ Security/Security_ORBInitializer.h \
+ $(ACE_ROOT)/ace/pre.h \
+ Security/security_export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -1432,7 +1453,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -1560,7 +1582,7 @@ realclean: clean
  $(TAO_ROOT)/tao/ORBInitInfo.h \
  $(TAO_ROOT)/tao/ORBInitInfo.inl \
  Security/Security_Current.h \
- SecurityLevel2C.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/SecurityLevel2C.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/NVList.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
@@ -1590,9 +1612,9 @@ realclean: clean
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
- Security/security_export.h \
- SecurityLevel1C.h \
- SecurityC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Security/security_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/SecurityLevel1C.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/SecurityC.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
  $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
@@ -1608,9 +1630,9 @@ realclean: clean
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
  $(TAO_ROOT)/tao/TimeBaseC.i \
- SecurityC.i \
- SecurityLevel1C.i \
- SecurityLevel2C.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/SecurityC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/SecurityLevel1C.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/SecurityLevel2C.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/Policy_Manager.h \
  $(TAO_ROOT)/tao/Policy_Set.h \
@@ -1673,6 +1695,9 @@ realclean: clean
  $(TAO_ROOT)/tao/PICurrent.h \
  $(TAO_ROOT)/tao/PICurrent.inl \
  $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Exit.h \
+ $(ACE_ROOT)/ace/Thread_Control.h \
+ $(ACE_ROOT)/ace/Thread_Control.inl \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Containers_T.h \
@@ -1692,11 +1717,13 @@ realclean: clean
  Security/SecurityManager.h
 
 .obj/PrincipalAuthenticator.o .obj/PrincipalAuthenticator.so .shobj/PrincipalAuthenticator.o .shobj/PrincipalAuthenticator.so: Security/PrincipalAuthenticator.cpp \
- Security/PrincipalAuthenticator.h $(ACE_ROOT)/ace/pre.h \
+ Security/PrincipalAuthenticator.h \
+ $(ACE_ROOT)/ace/pre.h \
+ Security/security_export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
- SecurityReplaceableC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/SecurityReplaceableC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -1722,7 +1749,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -1874,10 +1902,10 @@ realclean: clean
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- Security/security_export.h \
- SecurityLevel2C.h \
- SecurityLevel1C.h \
- SecurityC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Security/security_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/SecurityLevel2C.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/SecurityLevel1C.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/SecurityC.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
  $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
@@ -1893,20 +1921,23 @@ realclean: clean
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
  $(TAO_ROOT)/tao/TimeBaseC.i \
- SecurityC.i \
- SecurityLevel1C.i \
- SecurityLevel2C.i \
- SecurityReplaceableC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/SecurityC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/SecurityLevel1C.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/SecurityLevel2C.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/SecurityReplaceableC.i \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
- $(ACE_ROOT)/ace/Array_Base.cpp Security/SecurityManager.h
+ $(ACE_ROOT)/ace/Array_Base.cpp \
+ Security/SecurityManager.h
 
 .obj/SecurityManager.o .obj/SecurityManager.so .shobj/SecurityManager.o .shobj/SecurityManager.so: Security/SecurityManager.cpp \
- Security/SecurityManager.h $(ACE_ROOT)/ace/pre.h \
+ Security/SecurityManager.h \
+ $(ACE_ROOT)/ace/pre.h \
+ Security/security_export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
- SecurityLevel2C.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/SecurityLevel2C.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -1932,7 +1963,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -2084,9 +2116,9 @@ realclean: clean
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- Security/security_export.h \
- SecurityLevel1C.h \
- SecurityC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Security/security_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/SecurityLevel1C.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/SecurityC.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
  $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
@@ -2102,12 +2134,12 @@ realclean: clean
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
  $(TAO_ROOT)/tao/TimeBaseC.i \
- SecurityC.i \
- SecurityLevel1C.i \
- SecurityLevel2C.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/SecurityC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/SecurityLevel1C.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/SecurityLevel2C.i \
  Security/PrincipalAuthenticator.h \
- SecurityReplaceableC.h \
- SecurityReplaceableC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/SecurityReplaceableC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/SecurityReplaceableC.i \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp
@@ -2143,7 +2175,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -2259,7 +2292,8 @@ realclean: clean
  $(TAO_ROOT)/tao/TimeBaseS_T.h \
  $(TAO_ROOT)/tao/TimeBaseS_T.i \
  $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
- $(TAO_ROOT)/tao/TimeBaseS.i SecurityC.h \
+ $(TAO_ROOT)/tao/TimeBaseS.i \
+ SecurityC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/NVList.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
@@ -2430,6 +2464,9 @@ realclean: clean
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Exit.h \
+ $(ACE_ROOT)/ace/Thread_Control.h \
+ $(ACE_ROOT)/ace/Thread_Control.inl \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Containers_T.h \
@@ -2492,7 +2529,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -2608,7 +2646,8 @@ realclean: clean
  $(TAO_ROOT)/tao/TimeBaseS_T.h \
  $(TAO_ROOT)/tao/TimeBaseS_T.i \
  $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
- $(TAO_ROOT)/tao/TimeBaseS.i SecurityC.h \
+ $(TAO_ROOT)/tao/TimeBaseS.i \
+ SecurityC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/NVList.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
@@ -2781,6 +2820,9 @@ realclean: clean
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Exit.h \
+ $(ACE_ROOT)/ace/Thread_Control.h \
+ $(ACE_ROOT)/ace/Thread_Control.inl \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Containers_T.h \
@@ -2813,7 +2855,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Dynamic_Service.cpp
 
 .obj/SecurityLevel2S.o .obj/SecurityLevel2S.so .shobj/SecurityLevel2S.o .shobj/SecurityLevel2S.so: SecurityLevel2S.cpp SecurityLevel2S.h \
- $(ACE_ROOT)/ace/pre.h SecurityLevel1S.h SecurityS.h \
+ $(ACE_ROOT)/ace/pre.h \
+ SecurityLevel1S.h SecurityS.h \
  $(TAO_ROOT)/tao/TimeBaseS.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/corbafwd.h \
@@ -2843,7 +2886,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -2959,7 +3003,8 @@ realclean: clean
  $(TAO_ROOT)/tao/TimeBaseS_T.h \
  $(TAO_ROOT)/tao/TimeBaseS_T.i \
  $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
- $(TAO_ROOT)/tao/TimeBaseS.i SecurityC.h \
+ $(TAO_ROOT)/tao/TimeBaseS.i \
+ SecurityC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/NVList.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
@@ -3134,6 +3179,9 @@ realclean: clean
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Exit.h \
+ $(ACE_ROOT)/ace/Thread_Control.h \
+ $(ACE_ROOT)/ace/Thread_Control.inl \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Containers_T.h \
@@ -3166,7 +3214,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Dynamic_Service.cpp
 
 .obj/SecurityReplaceableS.o .obj/SecurityReplaceableS.so .shobj/SecurityReplaceableS.o .shobj/SecurityReplaceableS.so: SecurityReplaceableS.cpp \
- SecurityReplaceableS.h $(ACE_ROOT)/ace/pre.h \
+ SecurityReplaceableS.h \
+ $(ACE_ROOT)/ace/pre.h \
  SecurityLevel2S.h SecurityLevel1S.h SecurityS.h \
  $(TAO_ROOT)/tao/TimeBaseS.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
@@ -3197,7 +3246,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -3313,7 +3363,8 @@ realclean: clean
  $(TAO_ROOT)/tao/TimeBaseS_T.h \
  $(TAO_ROOT)/tao/TimeBaseS_T.i \
  $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
- $(TAO_ROOT)/tao/TimeBaseS.i SecurityC.h \
+ $(TAO_ROOT)/tao/TimeBaseS.i \
+ SecurityC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/NVList.h \
  $(ACE_ROOT)/ace/Unbounded_Queue.h \
@@ -3394,10 +3445,10 @@ realclean: clean
  $(TAO_ROOT)/tao/IOPS_T.h \
  $(TAO_ROOT)/tao/IOPS_T.i \
  $(TAO_ROOT)/tao/IOPS_T.cpp \
- $(TAO_ROOT)/tao/IOPS.i SecurityReplaceableC.h \
- SecurityReplaceableC.i SecurityReplaceableS_T.h \
- SecurityReplaceableS_T.i SecurityReplaceableS_T.cpp \
- SecurityReplaceableS.i \
+ $(TAO_ROOT)/tao/IOPS.i \
+ SecurityReplaceableC.h SecurityReplaceableC.i \
+ SecurityReplaceableS_T.h SecurityReplaceableS_T.i \
+ SecurityReplaceableS_T.cpp SecurityReplaceableS.i \
  $(TAO_ROOT)/tao/PortableServer/Object_Adapter.h \
  $(TAO_ROOT)/tao/PortableServer/Key_Adapters.h \
  $(ACE_ROOT)/ace/Map_T.h \
@@ -3496,6 +3547,9 @@ realclean: clean
  $(TAO_ROOT)/tao/Interceptor_List.h \
  $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Exit.h \
+ $(ACE_ROOT)/ace/Thread_Control.h \
+ $(ACE_ROOT)/ace/Thread_Control.inl \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Containers_T.h \
@@ -3557,7 +3611,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -3724,7 +3779,8 @@ realclean: clean
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
- $(TAO_ROOT)/tao/TimeBaseC.i SecurityC.i \
+ $(TAO_ROOT)/tao/TimeBaseC.i \
+ SecurityC.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/MProfile.h \
  $(TAO_ROOT)/tao/MProfile.i \
@@ -3791,6 +3847,9 @@ realclean: clean
  $(TAO_ROOT)/tao/PICurrent.h \
  $(TAO_ROOT)/tao/PICurrent.inl \
  $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Exit.h \
+ $(ACE_ROOT)/ace/Thread_Control.h \
+ $(ACE_ROOT)/ace/Thread_Control.inl \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Containers_T.h \
@@ -3811,8 +3870,10 @@ realclean: clean
  $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
+ $(TAO_ROOT)/tao/LF_Invocation_Event.h \
  $(TAO_ROOT)/tao/LF_Event.h \
  $(TAO_ROOT)/tao/LF_Event.inl \
+ $(TAO_ROOT)/tao/LF_Invocation_Event.inl \
  $(TAO_ROOT)/tao/GIOP_Message_Version.h \
  $(TAO_ROOT)/tao/GIOP_Message_Version.inl \
  $(TAO_ROOT)/tao/operation_details.h \
@@ -3859,7 +3920,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -4026,8 +4088,9 @@ realclean: clean
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
- $(TAO_ROOT)/tao/TimeBaseC.i SecurityC.i \
- SecurityLevel1C.i $(TAO_ROOT)/tao/Stub.h \
+ $(TAO_ROOT)/tao/TimeBaseC.i \
+ SecurityC.i SecurityLevel1C.i \
+ $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/MProfile.h \
  $(TAO_ROOT)/tao/MProfile.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -4093,6 +4156,9 @@ realclean: clean
  $(TAO_ROOT)/tao/PICurrent.h \
  $(TAO_ROOT)/tao/PICurrent.inl \
  $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Exit.h \
+ $(ACE_ROOT)/ace/Thread_Control.h \
+ $(ACE_ROOT)/ace/Thread_Control.inl \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Containers_T.h \
@@ -4113,8 +4179,10 @@ realclean: clean
  $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
+ $(TAO_ROOT)/tao/LF_Invocation_Event.h \
  $(TAO_ROOT)/tao/LF_Event.h \
  $(TAO_ROOT)/tao/LF_Event.inl \
+ $(TAO_ROOT)/tao/LF_Invocation_Event.inl \
  $(TAO_ROOT)/tao/GIOP_Message_Version.h \
  $(TAO_ROOT)/tao/GIOP_Message_Version.inl \
  $(TAO_ROOT)/tao/operation_details.h \
@@ -4161,7 +4229,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -4328,8 +4397,8 @@ realclean: clean
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
- $(TAO_ROOT)/tao/TimeBaseC.i SecurityC.i \
- SecurityLevel1C.i SecurityLevel2C.i \
+ $(TAO_ROOT)/tao/TimeBaseC.i \
+ SecurityC.i SecurityLevel1C.i SecurityLevel2C.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/MProfile.h \
  $(TAO_ROOT)/tao/MProfile.i \
@@ -4396,6 +4465,9 @@ realclean: clean
  $(TAO_ROOT)/tao/PICurrent.h \
  $(TAO_ROOT)/tao/PICurrent.inl \
  $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Exit.h \
+ $(ACE_ROOT)/ace/Thread_Control.h \
+ $(ACE_ROOT)/ace/Thread_Control.inl \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Containers_T.h \
@@ -4416,8 +4488,10 @@ realclean: clean
  $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
+ $(TAO_ROOT)/tao/LF_Invocation_Event.h \
  $(TAO_ROOT)/tao/LF_Event.h \
  $(TAO_ROOT)/tao/LF_Event.inl \
+ $(TAO_ROOT)/tao/LF_Invocation_Event.inl \
  $(TAO_ROOT)/tao/GIOP_Message_Version.h \
  $(TAO_ROOT)/tao/GIOP_Message_Version.inl \
  $(TAO_ROOT)/tao/operation_details.h \
@@ -4435,7 +4509,8 @@ realclean: clean
  $(TAO_ROOT)/tao/ClientInterceptorAdapter.inl
 
 .obj/SecurityReplaceableC.o .obj/SecurityReplaceableC.so .shobj/SecurityReplaceableC.o .shobj/SecurityReplaceableC.so: SecurityReplaceableC.cpp \
- SecurityReplaceableC.h $(ACE_ROOT)/ace/pre.h \
+ SecurityReplaceableC.h \
+ $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -4464,7 +4539,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -4617,7 +4693,8 @@ realclean: clean
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  Security/security_export.h SecurityLevel2C.h SecurityLevel1C.h \
- SecurityC.h $(TAO_ROOT)/tao/TimeBaseC.h \
+ SecurityC.h \
+ $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
  $(TAO_ROOT)/tao/SmartProxies/smartproxies_export.h \
  $(TAO_ROOT)/tao/TAO_Singleton.h \
@@ -4631,8 +4708,9 @@ realclean: clean
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
  $(TAO_ROOT)/tao/TAO_Singleton_Manager.inl \
  $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.inl \
- $(TAO_ROOT)/tao/TimeBaseC.i SecurityC.i \
- SecurityLevel1C.i SecurityLevel2C.i SecurityReplaceableC.i \
+ $(TAO_ROOT)/tao/TimeBaseC.i \
+ SecurityC.i SecurityLevel1C.i SecurityLevel2C.i \
+ SecurityReplaceableC.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/MProfile.h \
  $(TAO_ROOT)/tao/MProfile.i \
@@ -4699,6 +4777,9 @@ realclean: clean
  $(TAO_ROOT)/tao/PICurrent.h \
  $(TAO_ROOT)/tao/PICurrent.inl \
  $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Exit.h \
+ $(ACE_ROOT)/ace/Thread_Control.h \
+ $(ACE_ROOT)/ace/Thread_Control.inl \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Containers_T.h \
@@ -4719,8 +4800,10 @@ realclean: clean
  $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
+ $(TAO_ROOT)/tao/LF_Invocation_Event.h \
  $(TAO_ROOT)/tao/LF_Event.h \
  $(TAO_ROOT)/tao/LF_Event.inl \
+ $(TAO_ROOT)/tao/LF_Invocation_Event.inl \
  $(TAO_ROOT)/tao/GIOP_Message_Version.h \
  $(TAO_ROOT)/tao/GIOP_Message_Version.inl \
  $(TAO_ROOT)/tao/operation_details.h \

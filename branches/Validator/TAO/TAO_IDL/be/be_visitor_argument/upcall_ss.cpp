@@ -442,7 +442,7 @@ int be_visitor_args_upcall_ss::visit_sequence (be_sequence *)
   return 0;
 }
 
-int be_visitor_args_upcall_ss::visit_string (be_string *node)
+int be_visitor_args_upcall_ss::visit_string (be_string *)
 {
   TAO_OutStream *os = this->ctx_->stream ();
   be_argument *arg = this->ctx_->be_node_as_argument ();
@@ -457,24 +457,7 @@ int be_visitor_args_upcall_ss::visit_string (be_string *node)
         }
       else
         {
-          *os << "ACE_const_cast (const ";
-
-          be_type *bt = this->ctx_->alias ();
-
-          if (bt != 0)
-            {
-              *os << bt->name ();
-            }
-          else if (node->width () == (long) sizeof (char))
-            {
-              *os << "char *";
-            }
-          else
-            {
-              *os << "CORBA::WChar *";
-            }
-
-          *os << ", " << arg->local_name () << ".in ())";
+          *os << arg->local_name () << ".in ()";
         }
 
       break;
@@ -485,8 +468,8 @@ int be_visitor_args_upcall_ss::visit_string (be_string *node)
           *os << arg->local_name ();
         }
       else
-        {
-          *os << arg->local_name () << ".inout ()";
+          {
+        *os << arg->local_name () << ".inout ()";
         }
 
       break;

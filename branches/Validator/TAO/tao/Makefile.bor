@@ -108,6 +108,8 @@ OBJFILES = \
 	$(OBJDIR)\Invocation.obj \
 	$(OBJDIR)\Invocation_Endpoint_Selectors.obj \
 	$(OBJDIR)\LF_Event.obj \
+	$(OBJDIR)\LF_Invocation_Event.obj \
+	$(OBJDIR)\LF_CH_Event.obj \
 	$(OBJDIR)\LF_Event_Binder.obj \
 	$(OBJDIR)\LF_Event_Loop_Thread_Helper.obj \
 	$(OBJDIR)\LF_Follower.obj \

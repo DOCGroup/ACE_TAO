@@ -2,6 +2,7 @@
 
 #include "ace/Arg_Shifter.h"
 #include "ace/Get_Opt.h"
+#include "tao/debug.h"
 #include "ConnectDisconnect.h"
 
 ACE_RCSID (Notify_Tests, ConnectDisconnect, "$Id$")
@@ -21,7 +22,11 @@ CD_Entity::CD_Entity (ConnectDisconnect* cd, int id)
 
 CD_Entity::~CD_Entity ()
 {
-  ACE_DEBUG ((LM_DEBUG, "Entity #%d destroyed\n", this->id_));
+  if (TAO_debug_level)
+    {
+      ACE_DEBUG ((LM_DEBUG, "Entity #%d destroyed\n", this->id_));
+    }
+
   cd_->on_entity_destroyed ();
 }
 
@@ -38,10 +43,10 @@ CD_IMPLEMENT_ENTITY(SequencePushSupplier)
 ConnectDisconnect::ConnectDisconnect (void)
   :any_consumer_ (0),
    structured_consumer_ (0),
-   // sequence_consumer_ (0),
+   sequence_consumer_ (0),
    any_supplier_ (0),
    structured_supplier_ (0),
-   // sequence_supplier_ (0),
+   sequence_supplier_ (0),
    count_ (10),
    consumers_ (10),
    suppliers_ (10)
@@ -64,9 +69,10 @@ ConnectDisconnect::on_entity_destroyed (void)
 {
   this->result_count_++;
 
-  ACE_DEBUG ((LM_DEBUG,
-              "result_count = %d\n",
-              this->result_count_.value ()));
+  if (TAO_debug_level)
+    ACE_DEBUG ((LM_DEBUG,
+                "result_count = %d\n",
+                this->result_count_.value ()));
 }
 
 int
@@ -239,8 +245,6 @@ ConnectDisconnect::run_test (ACE_ENV_SINGLE_ARG_DECL)
           ACE_CHECK;
           this->sequence_consumer_[i]->connect (this->consumer_admin_.in ()
                                                 ACE_ENV_ARG_PARAMETER);
-          sequence_consumer_[i]->connect (this->consumer_admin_.in () ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
         }
 
       for (i = 0; i < this->suppliers_; ++i)
@@ -292,8 +296,8 @@ ConnectDisconnect::run_test (ACE_ENV_SINGLE_ARG_DECL)
 
           // Disconnect Sequence Consumers.
           this->sequence_consumer_[i]->disconnect (
-                                           ACE_ENV_SINGLE_ARG_PARAMETER
-                                         );
+                                         ACE_ENV_SINGLE_ARG_PARAMETER
+                                     );
           ACE_CHECK;
         }
 

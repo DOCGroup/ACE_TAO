@@ -44,7 +44,7 @@ Notify_Structured_Push_Consumer::connect (
   properties[0].name = CORBA::string_dup (CosNotification::DiscardPolicy);
   properties[0].value <<= this->discard_policy_;
   properties[1].name = CORBA::string_dup (CosNotification::MaxEventsPerConsumer);
-  properties[1].value <<= (CORBA::Long)10;
+  properties[1].value <<= (CORBA::Long)this->expected_;
 
   this->proxy_supplier_->set_qos (properties);
   this->proxy_supplier_->connect_structured_push_consumer (objref.in ()
@@ -98,4 +98,3 @@ Notify_Structured_Push_Consumer::push_structured_event (
       ACE_OS::sleep (1);
     }
 }
-

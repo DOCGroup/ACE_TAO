@@ -24,18 +24,19 @@ void
 usage (const ACE_TCHAR * cmd)
 {
   ACE_DEBUG ((LM_INFO,
-              ACE_TEXT ("Usage:  %s ")
-              ACE_TEXT ("-l <location_id> ")
-              ACE_TEXT ("-k <location_kind> ")
-              ACE_TEXT ("-t <CPU|Disk|Memory|Network> ")
-              ACE_TEXT ("-s <PULL|PUSH> ")
-              ACE_TEXT ("-i <push_interval> (in seconds,")
-              ACE_TEXT (" and requires \"PUSH\" style monitoring) ")
-              ACE_TEXT ("-m <custom_monitor_ior>")
-              ACE_TEXT (" (overrides \"-t\", \"-l\" and \"-k\") ")
-              ACE_TEXT ("-o <ior_output_file> ")
-              ACE_TEXT ("-h ")
-              ACE_TEXT ("\n\n"),
+              ACE_TEXT ("Usage:\n")
+              ACE_TEXT ("  %s\n")
+              ACE_TEXT ("    -l <location_id>\n")
+              ACE_TEXT ("    -k <location_kind>\n")
+              ACE_TEXT ("    -t <CPU | Disk | Memory | Network>\n")
+              ACE_TEXT ("    -s <PULL | PUSH>\n")
+              ACE_TEXT ("    -i <push_interval> (in seconds,")
+              ACE_TEXT (" and requires \"PUSH\" style monitoring)\n")
+              ACE_TEXT ("    -m <custom_monitor_ior>")
+              ACE_TEXT (" (overrides \"-t\", \"-l\" and \"-k\")\n")
+              ACE_TEXT ("    -o <ior_output_file>\n")
+              ACE_TEXT ("    -h\n")
+              ACE_TEXT ("\n"),
               cmd));
 }
 
@@ -88,7 +89,7 @@ parse_args (int argc,
 
         case 'h':
           ::usage (argv[0]);
-          exit (0);
+          ACE_OS::exit (0);
           break;
 
         default:
@@ -97,6 +98,42 @@ parse_args (int argc,
         }
     }
 }
+
+#if defined (linux) && defined (ACE_HAS_THREADS)
+// Only the main thread can handle signals in Linux.  Run the
+// LoadManager in thread other than main().
+extern "C"
+void *
+TAO_LB_run_load_monitor (void * orb_arg)
+{
+  CORBA::ORB_ptr orb = ACE_static_cast (CORBA::ORB_ptr, orb_arg);
+
+  // Only the main thread should handle signals.
+  //
+  // @@ This is probably unnecessary since no signals should be
+  //    delivered to this thread on Linux.
+  ACE_Sig_Guard signal_guard;
+
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
+    {
+      orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "TAO Load Monitor");
+
+      return ACE_reinterpret_cast (void *, -1);
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (ACE_reinterpret_cast (void *, -1));
+
+  return 0;
+}
+#endif  /* linux && ACE_HAS_THREADS */
+
 
 CosLoadBalancing::LoadMonitor_ptr
 get_load_monitor (CORBA::ORB_ptr orb,
@@ -289,6 +326,42 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         tmp = CosLoadBalancing::LoadManager::_nil ();  // PUSH
                                                        // monitoring
 
+#if defined (linux) && defined (ACE_HAS_THREADS)
+      if (ACE_Thread_Manager::instance ()->spawn (::TAO_LB_run_load_monitor,
+                                                  orb.in ()) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "ERROR:  Unable to spawn TAO LoadMonitor's "
+                             "ORB thread.\n"),
+                            -1);
+        }
+
+      ACE_Sig_Set sigset;
+      sigset.sig_add (SIGINT);
+      sigset.sig_add (SIGTERM);
+
+      int signum = -1;
+
+      // Block waiting for the registered signals.
+      if (ACE_OS::sigwait (sigset, &signum) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%P|%t) %p\n",
+                             "ERROR waiting on signal"),
+                            -1);
+        }
+
+      ACE_ASSERT (signum == SIGINT || signum == SIGTERM);
+
+      // Deregister the LoadMonitor from the LoadManager in the PULL
+      // load monitoring case.
+      if (timer_id == -1)
+        {
+          load_manager->remove_load_monitor (location.in ()
+                                             ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
+#else
       // Activate/register the signal handler that (attempts) to
       // ensure graceful shutdown of the LoadMonitor so that
       // LoadMonitors registered with the LoadManager can be
@@ -302,13 +375,18 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (signal_handler.activate () != 0)
         return -1;
 
+      // @@ There is a subtle race condition here.  If the signal
+      //    handler thread shuts down the ORB before it is run, the
+      //    below call to ORB::run() will throw a CORBA::BAD_INV_ORDER
+      //    exception.
       orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
+#endif  /* linux && ACE_HAS_THREADS */
 
       if (timer_id != -1 && reactor->cancel_timer (timer_id) == 0)
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("ERROR:Unable to cancel \"push\" load ")
+                      ACE_TEXT ("ERROR: Unable to cancel \"push\" load ")
                       ACE_TEXT ("monitoring timer.\n")));
 
           // Just keep going.  We're shutting down anyway.

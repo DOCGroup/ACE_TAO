@@ -19,7 +19,8 @@ OBJFILES = \
         $(OBJDIR)\Messaging_PolicyFactory.obj \
         $(OBJDIR)\Messaging_Policy_i.obj \
 	$(OBJDIR)\TAO_ExtC.obj \
-        $(OBJDIR)\Twoway_Asynch_Invocation.obj
+        $(OBJDIR)\Twoway_Asynch_Invocation.obj \
+	$(OBJDIR)\AMI_ClientRequestInfo_i.obj
 
 RESOURCE = $(OBJDIR)\TAO_Messaging.res
 
@@ -34,7 +35,7 @@ CPPDIR = .
 
 INCDIR_NAME = tao\Messaging
 INCLUDES = \
-	*.h *.i \
+	*.h *.i *_T.cpp\
          Messaging.pidl
 
 LIBFILES = \

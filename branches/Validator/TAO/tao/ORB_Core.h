@@ -399,6 +399,9 @@ public:
                     const char *poa_factory_name,
                     const char *poa_factory_directive);
 
+  /// Access the POA factory name.
+  static const ACE_CString &poa_factory_name (void);
+
   /// Gets the value of TAO_ORB_Core::protocols_hooks__
   TAO_Protocols_Hooks * get_protocols_hooks (ACE_ENV_SINGLE_ARG_DECL);
 

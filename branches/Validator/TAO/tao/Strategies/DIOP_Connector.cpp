@@ -128,7 +128,8 @@ TAO_DIOP_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
 
 int
 TAO_DIOP_Connector::make_connection (TAO_GIOP_Invocation *invocation,
-                                     TAO_Transport_Descriptor_Interface *desc)
+                                     TAO_Transport_Descriptor_Interface *desc,
+                                     ACE_Time_Value * /*max_wait_time*/)
 {
   TAO_Transport *&transport = invocation->transport ();
 

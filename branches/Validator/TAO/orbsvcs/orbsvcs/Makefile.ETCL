@@ -108,6 +108,7 @@ ETCL/ETCL_y: ETCL/ETCL.yy
 
 
 .obj/ETCL_Constraint.o .obj/ETCL_Constraint.so .shobj/ETCL_Constraint.o .shobj/ETCL_Constraint.so: ETCL/ETCL_Constraint.cpp ETCL/ETCL_Constraint.h \
+ ETCL/etcl_export.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -136,13 +137,15 @@ ETCL/ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ $(ACE_ROOT)/ace/Exception_Macros.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/varbase.h \
  $(TAO_ROOT)/tao/TAO_Export.h \
@@ -210,8 +213,8 @@ ETCL/ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Auto_Ptr.h \
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
- $(ACE_ROOT)/ace/SString.i ETCL/ETCL_Constraint.inl \
- ETCL/ETCL_Constraint_Visitor.h ETCL/ETCL_y.h \
+ $(ACE_ROOT)/ace/SString.i \
+ ETCL/ETCL_Constraint.inl ETCL/ETCL_Constraint_Visitor.h ETCL/ETCL_y.h \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
@@ -237,7 +240,8 @@ ETCL/ETCL_y: ETCL/ETCL.yy
  $(TAO_ROOT)/tao/Any.i
 
 .obj/ETCL_Interpreter.o .obj/ETCL_Interpreter.so .shobj/ETCL_Interpreter.o .shobj/ETCL_Interpreter.so: ETCL/ETCL_Interpreter.cpp ETCL/ETCL_Interpreter.h \
- $(ACE_ROOT)/ace/pre.h ETCL/etcl_export.h \
+ $(ACE_ROOT)/ace/pre.h \
+ ETCL/etcl_export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -245,7 +249,8 @@ ETCL/ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Synch.h $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/OS_Dirent.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Errno.h \
@@ -263,7 +268,8 @@ ETCL/ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Synch.i \
  $(ACE_ROOT)/ace/Synch_T.h \
  $(ACE_ROOT)/ace/Synch_T.i \
@@ -277,7 +283,8 @@ ETCL/ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Priority.h ETCL/ETCL_Constraint.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ ETCL/ETCL_Constraint.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -287,6 +294,7 @@ ETCL/ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ $(ACE_ROOT)/ace/Exception_Macros.h \
  $(TAO_ROOT)/tao/varbase.h \
  $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
@@ -338,9 +346,11 @@ ETCL/ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Auto_Ptr.h \
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
- $(ACE_ROOT)/ace/SString.i ETCL/ETCL_Constraint.inl
+ $(ACE_ROOT)/ace/SString.i \
+ ETCL/ETCL_Constraint.inl
 
-.obj/ETCL_l.o .obj/ETCL_l.so .shobj/ETCL_l.o .shobj/ETCL_l.so: ETCL/ETCL_l.cpp $(ACE_ROOT)/ace/OS.h \
+.obj/ETCL_l.o .obj/ETCL_l.so .shobj/ETCL_l.o .shobj/ETCL_l.so: ETCL/ETCL_l.cpp \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -365,7 +375,8 @@ ETCL/ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  ETCL/ETCL_Interpreter.h ETCL/etcl_export.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -382,7 +393,8 @@ ETCL/ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Priority.h ETCL/ETCL_Constraint.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ ETCL/ETCL_Constraint.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -392,6 +404,7 @@ ETCL/ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ $(ACE_ROOT)/ace/Exception_Macros.h \
  $(TAO_ROOT)/tao/varbase.h \
  $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
@@ -443,10 +456,11 @@ ETCL/ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Auto_Ptr.h \
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
- $(ACE_ROOT)/ace/SString.i ETCL/ETCL_Constraint.inl \
- ETCL/ETCL_y.h
+ $(ACE_ROOT)/ace/SString.i \
+ ETCL/ETCL_Constraint.inl ETCL/ETCL_y.h
 
 .obj/ETCL_y.o .obj/ETCL_y.so .shobj/ETCL_y.o .shobj/ETCL_y.so: ETCL/ETCL_y.cpp ETCL/ETCL_y.h ETCL/ETCL_Constraint.h \
+ ETCL/etcl_export.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -475,13 +489,15 @@ ETCL/ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ $(ACE_ROOT)/ace/Exception_Macros.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/varbase.h \
  $(TAO_ROOT)/tao/TAO_Export.h \
@@ -549,7 +565,7 @@ ETCL/ETCL_y: ETCL/ETCL.yy
  $(ACE_ROOT)/ace/Auto_Ptr.h \
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
- $(ACE_ROOT)/ace/SString.i ETCL/ETCL_Constraint.inl \
- ETCL/ETCL_Interpreter.h
+ $(ACE_ROOT)/ace/SString.i \
+ ETCL/ETCL_Constraint.inl ETCL/ETCL_Interpreter.h
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

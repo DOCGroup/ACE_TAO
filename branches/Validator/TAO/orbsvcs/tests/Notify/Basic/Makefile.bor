@@ -4,13 +4,15 @@
 #
 
 NAMES = \
-        AdminProperties_Test \
+        AdminProperties \
         ConnectDisconnect \
-        Events_Test \
+        Events \
         IdAssignment \
-        LifeCycleTest \
+        LifeCycle \
         Simple \
-        Updates
+        Updates \
+	MultiTypes \
+	Filter
 
 OBJFILES = $(OBJDIR)\$(NAME).obj
 

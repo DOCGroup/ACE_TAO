@@ -145,7 +145,8 @@ TAO_UIOP_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
 
 int
 TAO_UIOP_Connector::make_connection (TAO_GIOP_Invocation *invocation,
-                                     TAO_Transport_Descriptor_Interface *desc)
+                                     TAO_Transport_Descriptor_Interface *desc,
+                                     ACE_Time_Value *max_wait_time)
 {
   if (TAO_debug_level > 0)
       ACE_DEBUG ((LM_DEBUG,
@@ -165,9 +166,6 @@ TAO_UIOP_Connector::make_connection (TAO_GIOP_Invocation *invocation,
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("(%P|%t) UIOP_Connector::connect ")
                 ACE_TEXT ("making a new connection \n")));
-
-  ACE_Time_Value *max_wait_time =
-    invocation->max_wait_time ();
 
   ACE_Synch_Options synch_options;
 
@@ -193,7 +191,10 @@ TAO_UIOP_Connector::make_connection (TAO_GIOP_Invocation *invocation,
   // increment to the handler is done in make_svc_handler (). Now
   // that we dont need the reference to it anymore we can decrement
   // the refcount whether the connection is successful ot not.
-  svc_handler->decr_refcount ();
+  long refcount = svc_handler->decr_refcount ();
+
+  ACE_ASSERT (refcount >= 0);
+  ACE_UNUSED_ARG (refcount);
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
@@ -354,7 +355,7 @@ TAO_UIOP_Connector::init_uiop_properties (void)
         tph->call_client_protocols_hook (send_buffer_size,
                                          recv_buffer_size,
                                          no_delay,
-					 enable_network_priority,
+                                         enable_network_priority,
                                          protocol_type);
 
       if(hook_result == -1)

@@ -10,9 +10,11 @@ DIRS = \
         Default_Servant \
         Identity \
         Non_Servant_Upcalls \
+        MT_Servant_Locator \
         Single_Threaded_POA \
 	Persistent_ID \
 	Policies \
+	Current \
         wait_for_completion 
 
 !include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

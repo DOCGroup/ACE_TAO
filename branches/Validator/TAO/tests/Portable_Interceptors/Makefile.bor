@@ -9,6 +9,7 @@ DIRS = \
         IORInterceptor \
 	ForwardRequest \
 	Request_Interceptor_Flow \
+	AMI \
 	PICurrent
 
 !include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

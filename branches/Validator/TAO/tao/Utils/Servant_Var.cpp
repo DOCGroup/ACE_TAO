@@ -1,13 +1,5 @@
-/**
- * @file Servant_Var.cpp
- *
- * $Id$
- *
- * @author Jody Hagins <jody@atdesk.com>
- * @author Carlos O'Ryan <coryan@atdesk.com>
- */
-#ifndef Servant_Var__cpp_
-#define Servant_Var__cpp_
+#ifndef TAO_UTILS_SERVANT_VAR_CPP
+#define TAO_UTILS_SERVANT_VAR_CPP
 
 #include "Servant_Var.h"
 
@@ -15,4 +7,8 @@
 # include "Servant_Var.inl"
 #endif /* __ACE_INLINE__ */
 
-#endif // Servant_Var__cpp_
+ACE_RCSID (Utils,
+           Servant_Var,
+           "$Id$")
+
+#endif /*TAO_UTILS_SERVANT_VAR_CPP*/

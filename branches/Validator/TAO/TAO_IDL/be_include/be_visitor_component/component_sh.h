@@ -41,6 +41,8 @@ public:
   
   virtual int visit_component (be_component *node);
   // set the right context and make a visitor
+protected:
+  virtual int generate_amh_classes (be_component *node);
 };
 
 #endif /* _BE_COMPONENT_COMPONENT_SH_H_ */

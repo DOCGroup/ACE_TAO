@@ -258,7 +258,7 @@ TAO_Queued_Data::duplicate (TAO_Queued_Data &sqd)
       ACE_NEW_MALLOC_RETURN (qd,
                              ACE_static_cast(TAO_Queued_Data *,
                                sqd.allocator_->malloc (sizeof (TAO_Queued_Data))),
-                             TAO_Queued_Data (sqd.allocator_),
+                             TAO_Queued_Data (sqd),
                             0);
 
       return qd;

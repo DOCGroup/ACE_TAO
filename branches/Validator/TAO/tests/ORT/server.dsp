@@ -86,7 +86,90 @@ LINK32=link.exe
 # Name "ORT Server - Win32 Debug"
 # Begin Group "IDL Files"
 
-# PROP Default_Filter ".idl"
+# PROP Default_Filter "idl"
+# Begin Source File
+
+SOURCE=.\ObjectReferenceFactory.idl
+
+!IF  "$(CFG)" == "ORT Server - Win32 Release"
+
+# PROP Ignore_Default_Tool 1
+# Begin Custom Build
+InputPath=.\ObjectReferenceFactory.idl
+InputName=ObjectReferenceFactory
+
+BuildCmds= \
+	..\..\..\bin\Release\tao_idl -I..\.. -Ge 1 -Gv -DCORBA3 $(InputName).idl
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ELSEIF  "$(CFG)" == "ORT Server - Win32 Debug"
+
+# PROP Ignore_Default_Tool 1
+# Begin Custom Build
+InputPath=.\ObjectReferenceFactory.idl
+InputName=ObjectReferenceFactory
+
+BuildCmds= \
+	..\..\..\bin\tao_idl -I..\.. -Ge 1 -Gv -DCORBA3 $(InputName).idl
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ENDIF 
+
+# End Source File
 # Begin Source File
 
 SOURCE=.\ORT_test.idl
@@ -173,7 +256,11 @@ BuildCmds= \
 # End Group
 # Begin Group "Inline Files"
 
-# PROP Default_Filter ".i"
+# PROP Default_Filter "i;inl"
+# Begin Source File
+
+SOURCE=.\ObjectReferenceFactoryC.i
+# End Source File
 # Begin Source File
 
 SOURCE=.\ORT_testS.i
@@ -184,15 +271,19 @@ SOURCE=.\ORT_testS.i
 # PROP Default_Filter ".h"
 # Begin Source File
 
+SOURCE=.\ObjectReferenceFactory.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\ObjectReferenceFactoryC.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\ORT_test_i.h
 # End Source File
 # Begin Source File
 
 SOURCE=.\ORT_test_IORInterceptor.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\ORT_test_IORInterceptor_ORBInitializer.h
 # End Source File
 # Begin Source File
 
@@ -202,10 +293,26 @@ SOURCE=.\ORT_testC.h
 
 SOURCE=.\ORT_testS.h
 # End Source File
+# Begin Source File
+
+SOURCE=.\ServerORBInitializer.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\ServerRequestInterceptor.h
+# End Source File
 # End Group
 # Begin Group "Source Files"
 
 # PROP Default_Filter ".cpp"
+# Begin Source File
+
+SOURCE=.\ObjectReferenceFactory.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\ObjectReferenceFactoryC.cpp
+# End Source File
 # Begin Source File
 
 SOURCE=.\ORT_test_i.cpp
@@ -213,10 +320,6 @@ SOURCE=.\ORT_test_i.cpp
 # Begin Source File
 
 SOURCE=.\ORT_test_IORInterceptor.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\ORT_test_IORInterceptor_ORBInitializer.cpp
 # End Source File
 # Begin Source File
 
@@ -229,6 +332,14 @@ SOURCE=.\ORT_testS.cpp
 # Begin Source File
 
 SOURCE=.\server.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\ServerORBInitializer.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\ServerRequestInterceptor.cpp
 # End Source File
 # End Group
 # End Target

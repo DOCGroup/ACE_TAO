@@ -71,7 +71,9 @@ BE_GlobalData::BE_GlobalData (void)
     gen_tie_classes_ (I_TRUE),
     gen_smart_proxies_ (I_FALSE),
     gen_inline_constants_ (I_FALSE),
-    lookup_strategy_ (TAO_PERFECT_HASH)
+    lookup_strategy_ (TAO_PERFECT_HASH),
+    void_type_ (0),
+    ccmobject_ (0)
 {
 }
 
@@ -876,3 +878,16 @@ BE_GlobalData::void_type (AST_PredefinedType *val)
 {
   this->void_type_ = val;
 };
+
+be_interface *
+BE_GlobalData::ccmobject (void) const
+{
+  return this->ccmobject_;
+}
+
+void
+BE_GlobalData::ccmobject (be_interface *val)
+{
+  this->ccmobject_ = val;
+}
+

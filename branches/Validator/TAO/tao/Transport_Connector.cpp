@@ -210,15 +210,30 @@ TAO_Connector::make_mprofile (const char *string,
 int
 TAO_Connector::connect (TAO_GIOP_Invocation *invocation,
                         TAO_Transport_Descriptor_Interface *desc
+                        ACE_ENV_ARG_DECL)
+{
+  return this->connect (invocation,
+                        desc,
+                        0
+                        ACE_ENV_ARG_PARAMETER);
+}
+
+int
+TAO_Connector::connect (TAO_GIOP_Invocation *invocation,
+                        TAO_Transport_Descriptor_Interface *desc,
+                        ACE_Time_Value *timeout
                         ACE_ENV_ARG_DECL_NOT_USED)
 {
   if (this->set_validate_endpoint (desc->endpoint ()) == -1)
     return -1;
 
+
   TAO_Transport *base_transport = 0;
 
   // Check the Cache first for connections
   // If transport found, reference count is incremented on assignment
+  // @@todo: We need to send the timeout value to the cache registry
+  // too. That should be the next step!
   if (this->orb_core ()->lane_resources ().transport_cache ().find_transport (desc,
                                                                               base_transport) == 0)
     {
@@ -235,7 +250,7 @@ TAO_Connector::connect (TAO_GIOP_Invocation *invocation,
       // base_transport.
       transport = base_transport;
 
-      // Succesful
+      // Successfull
       return 0;
     }
 
@@ -244,7 +259,8 @@ TAO_Connector::connect (TAO_GIOP_Invocation *invocation,
   this->orb_core_->lane_resources ().transport_cache ().purge ();
 
   return this->make_connection (invocation,
-                                desc);
+                                desc,
+                                timeout);
 }
 
 

@@ -277,7 +277,7 @@ int BasicLog_Test::display_records ()
   for (; j < rec_list->length();++j)  //dhanvey added info
 #ifndef ACE_LACKS_LONGLONG_T
    ACE_DEBUG ((LM_DEBUG,
-               "id = %Q, time= %Q\n", 
+               "id = %Q, time= %Q\n",
                rec_list[j].id, rec_list[j].time));
 #else
    ACE_DEBUG ((LM_DEBUG,
@@ -294,7 +294,7 @@ int BasicLog_Test::write_records (CORBA::ULongLong numberOfRecords
 {
   CORBA::ULongLong numOfRecs = numberOfRecords;
   if (numOfRecs == 0)
-    { 
+    {
       numOfRecs = basicLog_->get_max_size();
     }
 
@@ -305,7 +305,7 @@ int BasicLog_Test::write_records (CORBA::ULongLong numberOfRecords
 #endif
 
   int i = 0;
-  CORBA::ULongLong l;
+  CORBA::ULongLong l = 0;
 
   if (numOfRecs == 0)
   {
@@ -329,7 +329,7 @@ int BasicLog_Test::write_records (CORBA::ULongLong numberOfRecords
   else
   {
     for(l = 0 ; l < numOfRecs ;)
-    {    
+    {
         DsLogAdmin::Anys record;
         record.length(1);
         ACE_CString str ("For the test of log "
@@ -346,7 +346,7 @@ int BasicLog_Test::write_records (CORBA::ULongLong numberOfRecords
 
       }
   }
-  
+
 #ifndef ACE_LACKS_LONGLONG_T
     ACE_DEBUG ((LM_INFO,"B_test: Write_records: currentsize in bytes %Q.\n",
                basicLog_->get_current_size()));
@@ -522,7 +522,7 @@ int
 BasicLog_Test::test_retrieval (CORBA::ULong /* numberOfRecordsToWrite */)
 {
   int rc = 0;
- 
+
   if (!rc)
     {
       ACE_DEBUG ((LM_ERROR,"Test of retrieval: succeeded.\n"));
@@ -714,7 +714,7 @@ int BasicLog_Test::delete_records (CORBA::ULongLong /* numberOfRecords */)
               basicLog_->get_current_size ().lo (),
               basicLog_->get_max_size ().lo ()));
 #endif
-  
+
   nrecords = basicLog_->get_n_records ();
 
   ACE_DEBUG ((LM_ERROR,
@@ -727,9 +727,9 @@ return 0;
 int
 BasicLog_Test::test_capacity_alarm_threshold (void)
 {
- 
+
   //basicLog_->set_log_full_action(DsLogAdmin::halt);
-  
+
   DsLogAdmin::CapacityAlarmThresholdList list;
   list.length(0);
 

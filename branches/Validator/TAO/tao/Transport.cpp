@@ -5,6 +5,7 @@
 
 #include "Exception.h"
 #include "ORB_Core.h"
+#include "Leader_Follower.h"
 #include "Client_Strategy_Factory.h"
 #include "Wait_Strategy.h"
 #include "Transport_Mux_Strategy.h"
@@ -551,7 +552,9 @@ TAO_Transport::send_synchronous_message_i (const ACE_Message_Block *mb,
               TAO_Queued_Message *queued_message = 0;
               ACE_NEW_RETURN (queued_message,
                               TAO_Asynch_Queued_Message (
-                                  synch_message.current_block ()),
+                                  synch_message.current_block (),
+                                  0,
+                                  1),
                               -1);
               queued_message->push_front (this->head_, this->tail_);
             }
@@ -677,11 +680,11 @@ TAO_Transport::close_connection_no_purge (void)
 }
 
 void
-TAO_Transport::close_connection_shared (int disable_purge,
+TAO_Transport::close_connection_shared (int purge,
                                         TAO_Connection_Handler * eh)
 {
   // Purge the entry
-  if (!disable_purge)
+  if (purge)
     {
       this->transport_cache_manager ().purge_entry (this->cache_map_entry_);
     }
@@ -692,7 +695,33 @@ TAO_Transport::close_connection_shared (int disable_purge,
       return;
     }
 
-  eh->close_connection ();
+
+  int retval = 0;
+
+  // NOTE: If the wait strategy is in blocking mode, then there is no
+  // chance that it could be inside the reactor. We can safely skip
+  // driving the LF.
+  if (this->ws_->non_blocking ())
+    {
+      // NOTE: This is a work around for BUG 1020. We drive the leader
+      // follower for a predetermined amount of time. Ideally this
+      // needs to be an ORB option. But this is just the first
+      // cut. Doing that will be a todo..
+
+      ACE_Time_Value tv (ACE_DEFAULT_TIMEOUT, 0);
+      retval =
+        this->orb_core_->leader_follower ().wait_for_event (eh,
+                                                            this,
+                                                            &tv);
+
+    }
+
+  // We need to explicitly shut it down to avoid memory leaks.
+  if (retval == -1 ||
+      !this->ws_->non_blocking ())
+    {
+      eh->close_connection ();
+    }
 
   this->send_connection_closed_notifications ();
 
@@ -1200,7 +1229,9 @@ TAO_Transport::send_message_shared_i (TAO_Stub *stub,
 
   TAO_Queued_Message *queued_message = 0;
   ACE_NEW_RETURN (queued_message,
-                  TAO_Asynch_Queued_Message (message_block),
+                  TAO_Asynch_Queued_Message (message_block,
+                                             0,
+                                             1),
                   -1);
   queued_message->push_back (this->head_, this->tail_);
 

@@ -189,10 +189,6 @@ SOURCE=.\PortableGroup\PG_GenericFactory.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\PortableGroup\PG_Group_Guard.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\PortableGroup\PG_Location_Equal_To.cpp
 # End Source File
 # Begin Source File
@@ -499,10 +495,6 @@ SOURCE=.\PortableGroup\PG_Factory_Set.h
 # Begin Source File
 
 SOURCE=.\PortableGroup\PG_GenericFactory.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\PortableGroup\PG_Group_Guard.h
 # End Source File
 # Begin Source File
 
