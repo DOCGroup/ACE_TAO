@@ -107,6 +107,10 @@ public:
   virtual CORBA_InterfaceDef_ptr _get_interface (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
+  /// Get info about the object from the Interface Repository.
+  virtual CORBA::Object_ptr _get_component (
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+
 
   // DII operations to create a request.
   //
@@ -278,7 +282,7 @@ private:
 
   /// Number of outstanding references to this object.
   CORBA::ULong refcount_;
-    
+
   /// Protect reference count manipulation from race conditions.
   /**
    * This lock is only instantiated for unconstrained objects.  The

@@ -1,3 +1,73 @@
+Thu Apr 04 17:26:21 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/Object_Proxy_Impl.h:
+	* tao/Object.cpp:
+	* tao/Object.h: Added a new interface default operation
+	  <_get_component>.
+
+	* tao/Abstract_Servant_Base.h:
+	* tao/Remote_Object_Proxy_Impl.cpp:
+	* tao/Remote_Object_Proxy_Impl.h: Provided a canned stub
+	  implementation for the generic <_get_component> operation.
+
+	* tao/PortableServer/Servant_Base.cpp:
+	* tao/PortableServer/Servant_Base.h: Provided default
+	  implementation for the <_get_component> implementation for
+	  non-components.  Currently, this operation always return a nil
+	  object reference.
+
+	* tao/PortableServer/Direct_Object_Proxy_Impl.cpp:
+	* tao/PortableServer/Direct_Object_Proxy_Impl.h:
+	* tao/PortableServer/ThruPOA_Object_Proxy_Impl.cpp:
+	* tao/PortableServer/ThruPOA_Object_Proxy_Impl.h: Provided canned
+	  collocated stub implementations for the <_get_component>
+	  operation.
+
+	* TAO_IDL/be/be_interface.cpp:
+	* TAO_IDL/be/be_visitor_interface/amh_sh.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp: Added code to
+	  generate skeleton implementation for oepration <_get_component>
+	  , whose name, according to the spec., should be sent as
+	  "_component".
+
+	* TAO_IDL/be_include/be_codegen.h:
+	* TAO_IDL/be_include/be_visitor_interface.h:
+	* TAO_IDL/be_include/be_visitor_operation.h:
+	* TAO_IDL/be/be_visitor_attribute/attribute.cpp:
+	* TAO_IDL/be/be_visitor_factory.cpp:
+	* TAO_IDL/be/be_visitor_interface.cpp:
+	* TAO_IDL/be/be_visitor_operation.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface.cpp: Removed obsolete
+	  code generation states and their transitions.
+
+	* TAO_IDL/be_include/be_visitor_operation/direct_collocated_sh.h:
+	* TAO_IDL/be_include/be_visitor_operation/direct_collocated_ss.h:
+	* TAO_IDL/be_include/be_visitor_operation/thru_poa_collocated_sh.h:
+	* TAO_IDL/be_include/be_visitor_operation/thru_poa_collocated_ss.h:
+	* TAO_IDL/be_include/be_visitor_interface/direct_collocated_sh.h:
+	* TAO_IDL/be_include/be_visitor_interface/direct_collocated_ss.h:
+	* TAO_IDL/be_include/be_visitor_interface/thru_poa_collocated_sh.h:
+	* TAO_IDL/be_include/be_visitor_interface/thru_poa_collocated_ss.h:
+	* TAO_IDL/be/be_visitor_operation/direct_collocated_sh.cpp:
+	* TAO_IDL/be/be_visitor_operation/direct_collocated_ss.cpp:
+	* TAO_IDL/be/be_visitor_operation/thru_poa_collocated_sh.cpp:
+	* TAO_IDL/be/be_visitor_operation/thru_poa_collocated_ss.cpp:
+	* TAO_IDL/be/be_visitor_interface/direct_collocated_sh.cpp:
+	* TAO_IDL/be/be_visitor_interface/direct_collocated_ss.cpp:
+	* TAO_IDL/be/be_visitor_interface/thru_poa_collocated_sh.cpp:
+	* TAO_IDL/be/be_visitor_interface/thru_poa_collocated_ss.cpp:
+	  Removed old collocated code generators.  They were superceded
+	  long ago.
+
+	* tao/PortableServer/Collocated_Object.cpp:
+	* tao/PortableServer/Collocated_Object.h: Added the implementation
+	  for <_get_component>.  This class should be removed but they are
+	  still being used in
+	  TAO/tao/DynamicInterface/Dynamic_Implementation.cpp.  We need to
+	  remove these file once we remove the only usage in
+	  aforementioned file.
+
 Mon Mar 18 15:34:26 2002  Boris Kolpackov  <bosk@ipmce.ru>
 
 	* TAO_IDL/be_include/be_visitor_field/cdr_op_ci.h:
