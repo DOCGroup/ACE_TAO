@@ -272,6 +272,6 @@ be_visitor_operation_ami_exception_holder_operation_cs::visit_operation (be_oper
           << "}" << be_uidt << be_uidt_nl;
     }
 
-  *os << "};\n\n";
+  *os << "}\n\n";
   return 0;
 }
