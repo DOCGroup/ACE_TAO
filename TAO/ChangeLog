@@ -1,3 +1,20 @@
+Tue Mar 11 10:46:29 2003  Ossama Othman  <ossama@uci.edu>
+
+	* tao/corbafwd.h:
+
+	  Removed CORBA::{add,remove}_ref() static function declarations.
+	  They conflicted with the ones defined in `ValueBase.h'.
+
+	* tao/ValueBase.h:
+
+	  Corrected CORBA::{add,remove}_ref() static function declarations
+	  so that "inconsistent DLL linkage" warnings no longer occur in
+	  MS Windows TAO builds.
+
+	  Include "ace/Basic_Types.h" instead of "ace/OS.h".  The former
+	  is all that is needed for the "ptr_arith_t" typedef.  Inclusion
+	  of "ace/OS.h" is overkill.
+
 Mon Mar 10 20:24:17 2003  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.cpp: Make the SSLIOP
