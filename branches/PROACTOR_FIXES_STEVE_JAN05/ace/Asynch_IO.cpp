@@ -96,7 +96,7 @@ ACE_Asynch_Operation::open (ACE_Handler &handler,
                             const void *completion_key,
                             ACE_Proactor *proactor)
 {
-  return this->implementation ()->open (handler,
+  return this->implementation ()->open (handler.proxy (),
                                         handle,
                                         completion_key,
                                         proactor);
@@ -182,7 +182,7 @@ ACE_Asynch_Read_Stream::read (ACE_Message_Block &message_block,
                                       bytes_to_read,
                                       act,
                                       priority,
-                                     signal_number);
+                                      signal_number);
 }
 
 #if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE) && (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0))
@@ -985,15 +985,24 @@ ACE_Asynch_Transmit_File::Header_And_Trailer::transmit_buffers (void)
 ACE_Handler::ACE_Handler (void)
   : proactor_ (0), handle_ (ACE_INVALID_HANDLE)
 {
+  ACE_Handler::Proxy *p;
+  ACE_NEW (p, ACE_Handler::Proxy (this));
+  this->proxy_.reset (p);
 }
 
 ACE_Handler::ACE_Handler (ACE_Proactor *d)
   : proactor_ (d), handle_ (ACE_INVALID_HANDLE)
 {
+  ACE_Handler::Proxy *p;
+  ACE_NEW (p, ACE_Handler::Proxy (this));
+  this->proxy_.reset (p);
 }
 
 ACE_Handler::~ACE_Handler (void)
 {
+  ACE_Handler::Proxy *p = this->proxy_.get ();
+  if (p)
+    p->reset ();
 }
 
 void
@@ -1074,6 +1083,12 @@ void
 ACE_Handler::handle (ACE_HANDLE h)
 {
   this->handle_ = h;
+}
+
+ACE_Refcounted_Auto_Ptr<ACE_Handler::Proxy, ACE_SYNCH_MUTEX> &
+ACE_Handler::proxy (void)
+{
+  return this->proxy_;
 }
 
 // ************************************************************
