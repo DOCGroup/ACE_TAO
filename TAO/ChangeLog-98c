@@ -1,3 +1,11 @@
+Thu Oct 01 21:21:19 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_operation/operation_ss.cpp
+	  (gen_raise_exception): 
+	  (gen_check_exception): 
+	  (gen_demarshal_params): Removed unused local variable(s) to
+	  avoid warnings from VC5.
+
 Thu Oct  1 20:51:39 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_interface/cdr_op_cs.cpp: Added trailing
