@@ -39,14 +39,13 @@ namespace CIAO
     /// Initialize a @c Cookie with an @c ACE_Active_Map_Manager_Key
     /// This contructor make a copy of the Cookie.  Perhaps we can somehow
     /// avoid this?
-    Map_Key_Cookie (const ::OBV_Components::Cookie &ck);
+    //Map_Key_Cookie (const ::OBV_Components::Cookie &ck);
 
     /// Destroy the @c Cookie
     ~Map_Key_Cookie (void);
 
     /// Extract the @c ACE_Active_Map_Manager_Key
-    int extract (::OBV_Components::Cookie &ck,
-                 ACE_Active_Map_Manager_Key &key);
+    int extract (ACE_Active_Map_Manager_Key &key);
 
   protected:
   };

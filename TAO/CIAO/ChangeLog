@@ -1,3 +1,18 @@
+Wed Jan 08 16:48:28 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* docs/templates/CIAO_Glue_Session_Template.h: Added the complete
+	  list of operations that needs to be supported.  Next up, the
+	  implementation templates.
+
+	* ciao/Active_Objref_Map.cpp:
+	* ciao/Active_Objref_Map.h: Defined a typedef called
+	  CIAO::Active_Objref_Map for managing CORBA::Object_var's using
+	  the ACE_Active_Map_Manager and instantiate the template.
+
+	* ciao/Cookies.cpp:
+	* ciao/Cookies.h: Added insertion/extraction of
+	  ACE_Active_Map_Manager_Key operations.
+
 Tue Jan 07 23:28:28 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ciao/CIAO_common.h: Added a new file to collect common CIAO
