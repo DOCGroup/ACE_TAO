@@ -43,6 +43,15 @@ class ACE_QoS_Export ACE_QoS_Session
 
 public:
 
+  enum RSVP_Event_Type
+  {
+    RSVP_PATH_EVENT,
+    RSVP_RESV_EVENT,
+    RSVP_RESV_CONFIRM,
+    RSVP_RESV_ERROR,
+    RSVP_PATH_ERROR    
+  };
+
   /// A flag to indicate if this endpoint is a sender or a receiver or
   /// both.
   enum ACE_End_Point_Type
@@ -52,6 +61,7 @@ public:
     ACE_QOS_BOTH
   };
 
+  
   /// to shutup g++.
   virtual ~ACE_QoS_Session (void) {};
 
@@ -103,6 +113,13 @@ public:
   /// Get the file descriptor on which RSVP events will occur.
   virtual ACE_HANDLE rsvp_events_handle (void) = 0;
 
+  virtual void  rsvp_event_type (RSVP_Event_Type event_type) = 0;
+  ///Set the RAPI event that last occured
+  
+  virtual RSVP_Event_Type rsvp_event_type (void) = 0;
+  ///Get the RAPI event that last occured
+
+
   /// Get the destination address for this session.
   virtual ACE_INET_Addr dest_addr (void) const = 0;
 
@@ -141,6 +158,9 @@ protected:
 
   /// Specifies if this is a sending/receiving/both session.
   ACE_End_Point_Type flags_;
+
+  RSVP_Event_Type rsvp_event_type_;
+  //Has the last rsvp event that occured
 
 };
 

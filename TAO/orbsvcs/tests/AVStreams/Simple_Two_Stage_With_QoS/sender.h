@@ -37,7 +37,10 @@ public:
                            TAO_AV_Protocol_Object *object);
   // Set protocol object corresponding to the transport protocol
   // chosen.
-    
+
+  CORBA::Boolean modify_QoS (AVStreams::streamQoS &new_qos,
+			     const AVStreams::flowSpec &/* the_flows */,
+			     CORBA::Environment &ACE_TRY_ENV);
 protected:
   TAO_AV_Callback callback_;
   // Application callback.
@@ -121,4 +124,5 @@ private:
   ACE_CString address_;
   // Destination Address.
 
+  ACE_CString flowname_;
 };

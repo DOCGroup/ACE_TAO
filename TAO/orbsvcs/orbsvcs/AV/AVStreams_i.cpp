@@ -275,20 +275,19 @@ TAO_Basic_StreamCtrl::modify_QoS (AVStreams::streamQoS & new_qos,
 {
   ACE_TRY
     {
-
-	  if (TAO_debug_level > 0)
-      ACE_DEBUG ((LM_DEBUG,	
-		  "TAO_Basic_StreamCtrl::modify_QoS\n"));
-
+      if (TAO_debug_level > 0)
+	ACE_DEBUG ((LM_DEBUG,	
+		    "TAO_Basic_StreamCtrl::modify_QoS\n"));
+      
       AVStreams::flowSpec in_flowspec;
       AVStreams::flowSpec out_flowspec;
-
+      
       in_flowspec.length (0);
       out_flowspec.length (0);
-
+      
       int in_index = 0;
       int out_index = 0;
-
+      
       for (u_int i=0;i < flowspec.length ();i++)
 	{
 	  TAO_Forward_FlowSpec_Entry entry;
@@ -421,6 +420,8 @@ TAO_Negotiator::negotiate (AVStreams::Negotiator_ptr /* remote_negotiator */,
                            CORBA::Environment &/* ACE_TRY_ENV */)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  ACE_DEBUG ((LM_DEBUG,
+	      "TAO_Negotiator::negotiate\n"));
   return 0;
 }
 
@@ -843,7 +844,7 @@ TAO_StreamCtrl::bind_devs (AVStreams::MMDevice_ptr a_party,
           ACE_TRY_EX (set_source_id)
             {
               CORBA::Any_ptr flows_any = this->sep_a_->get_property_value ("Flows",
-                                                                          ACE_TRY_ENV);
+									   ACE_TRY_ENV);
               ACE_TRY_CHECK_EX (set_source_id);
               AVStreams::flowSpec_var flows;
               *flows_any >>= flows.out ();
@@ -1652,9 +1653,13 @@ TAO_Base_StreamEndPoint::get_control_callback (const char * /*flowname*/,
 }
 
 void
-TAO_Base_StreamEndPoint::set_flow_handler (const char * /*flowname*/,
-                                           TAO_AV_Flow_Handler * /*handler*/)
+TAO_Base_StreamEndPoint::set_flow_handler (const char *flowname,
+                                           TAO_AV_Flow_Handler *handler)
 {
+  TAO_String_Hash_Key flow_name_key (flowname);
+  if (this->flow_handler_map_.bind (flow_name_key, handler) != 0)
+    ACE_ERROR ((LM_ERROR,
+		"Error in storing flow handler\n"));	     
 }
 
 // ----------------------------------------------------------------------
@@ -1693,6 +1698,9 @@ TAO_StreamEndPoint::connect (AVStreams::StreamEndPoint_ptr responder,
     {
       if (!CORBA::is_nil (this->negotiator_.in ()))
         {
+	  ACE_DEBUG ((LM_DEBUG,
+		      "NEGOTIATOR AVIALABLE\n"));
+
           CORBA::Any_var negotiator_any = responder->get_property_value ("Negotiator");
 
           AVStreams::Negotiator_ptr peer_negotiator;
@@ -1809,6 +1817,10 @@ TAO_StreamEndPoint::connect (AVStreams::StreamEndPoint_ptr responder,
                                             flow_spec,
                                             ACE_TRY_ENV);
       ACE_TRY_CHECK;
+      
+      ACE_DEBUG ((LM_DEBUG,
+		  "The return value is %d\n",
+		  retv));
 
       if (retv == 0)
         return retv;
@@ -2146,6 +2158,36 @@ TAO_StreamEndPoint::request_connection (AVStreams::StreamEndPoint_ptr /*initiato
   return result;
 }
 
+int
+TAO_StreamEndPoint::change_qos (AVStreams::streamQoS &new_qos,
+				const AVStreams::flowSpec &the_flows,
+				CORBA::Environment &/*ACE_TRY_ENV*/)
+{
+  if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG,
+		"TAO_StreamEndPoint::change_qos\n"));
+  
+  TAO_AV_QoS qos (new_qos);
+  for (int i = 0; (unsigned) i < the_flows.length (); i++)
+    {
+      TAO_Forward_FlowSpec_Entry entry;
+      entry.parse (the_flows [i].in ());
+      TAO_String_Hash_Key flow_name_key (entry.flowname ());
+      Flow_Handler_Map_Entry *handler_entry;
+      if (this->flow_handler_map_.find (flow_name_key,
+					handler_entry) == 0)
+	{
+	  AVStreams::QoS flow_qos;
+	  if (qos.get_flow_qos (entry.flowname (), flow_qos) == 0)
+	    handler_entry->int_id_->change_qos (flow_qos);
+	  else ACE_DEBUG ((LM_DEBUG,
+			   "New QoS for the flow %s is not specified\n",
+			   entry.flowname ()));
+	}
+    }
+  return 0;
+}
+
 // Refers to modification of transport QoS.
 CORBA::Boolean
 TAO_StreamEndPoint::modify_QoS (AVStreams::streamQoS &/* new_qos */,
@@ -2406,6 +2448,7 @@ TAO_StreamEndPoint::set_negotiator (AVStreams::Negotiator_ptr new_negotiator,
   ACE_ENDTRY;
   ACE_CHECK;
 }
+
 
 // Sets the public key used for this streamendpoint.
 void
@@ -4191,7 +4234,7 @@ TAO_FlowEndPoint::TAO_FlowEndPoint (const char *flowname,
 
 void
 TAO_FlowEndPoint::set_flow_handler (const char * /*flowname*/,
-                               TAO_AV_Flow_Handler * /*handler*/)
+				    TAO_AV_Flow_Handler * /*handler*/)
 {
 }
 
@@ -5072,20 +5115,26 @@ template class ACE_Hash_Map_Entry<TAO_String_Hash_Key, AVStreams::FDev_ptr>;
 template class ACE_Hash_Map_Entry<TAO_String_Hash_Key, AVStreams::FlowConnection_ptr>;
 template class ACE_Hash_Map_Entry<TAO_String_Hash_Key, AVStreams::FlowEndPoint_ptr>;
 template class ACE_Hash_Map_Entry<TAO_String_Hash_Key, TAO_FlowSpec_Entry *>;
+template class ACE_Hash_Map_Entry<TAO_String_Hash_Key, TAO_AV_Flow_Handler *>;
 
 template class ACE_Hash_Map_Manager<TAO_String_Hash_Key, AVStreams::FDev_ptr, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Manager<TAO_String_Hash_Key, TAO_FlowSpec_Entry *, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Manager<TAO_String_Hash_Key, AVStreams::FlowConnection_ptr, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Manager<TAO_String_Hash_Key, TAO_AV_Flow_Handler*, ACE_Null_Mutex>;
 
 template class ACE_Hash_Map_Iterator<TAO_String_Hash_Key, AVStreams::FDev_ptr, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator_Ex<TAO_String_Hash_Key, AVStreams::FDev_ptr, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator_Base_Ex<TAO_String_Hash_Key, AVStreams::FDev_ptr, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Reverse_Iterator<TAO_String_Hash_Key, AVStreams::FDev_ptr, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Reverse_Iterator_Ex<TAO_String_Hash_Key, AVStreams::FDev_ptr, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Base_Ex<TAO_String_Hash_Key, TAO_AV_Flow_Handler*, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator_Ex<TAO_String_Hash_Key, TAO_AV_Flow_Handler*, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
 
 template class ACE_Hash_Map_Manager_Ex<TAO_String_Hash_Key, AVStreams::FDev_ptr, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Manager_Ex<TAO_String_Hash_Key, AVStreams::FlowConnection_ptr, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Manager_Ex<TAO_String_Hash_Key, TAO_FlowSpec_Entry *, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Manager_Ex<TAO_String_Hash_Key, TAO_AV_Flow_Handler *, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
+
 template class ACE_Hash_Map_Iterator<TAO_String_Hash_Key, AVStreams::FlowConnection_ptr, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator_Ex<TAO_String_Hash_Key, AVStreams::FlowConnection_ptr, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator_Base_Ex<TAO_String_Hash_Key, AVStreams::FlowConnection_ptr, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
@@ -5218,6 +5267,16 @@ template class ACE_Unbounded_Set_Iterator<AVStreams::FlowConsumer *>;
 #pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<TAO_String_Hash_Key, AVStreams::FlowConnection_ptr, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator<TAO_String_Hash_Key,AVStreams::FlowConnection_ptr,ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<TAO_String_Hash_Key, AVStreams::FlowConnection_ptr, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
+
+#pragma instantiate ACE_Hash_Map_Entry<TAO_String_Hash_Key,TAO_AV_Flow_Handler*>
+#pragma instantiate ACE_Hash_Map_Manager<TAO_String_Hash_Key,TAO_AV_Flow_Handler*,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Manager_Ex<TAO_String_Hash_Key, TAO_AV_Flow_Handler*, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator<TAO_String_Hash_Key,TAO_AV_Flow_Handler*,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Ex<TAO_String_Hash_Key, TAO_AV_Flow_Handler*, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<TAO_String_Hash_Key, TAO_AV_Flow_Handler*, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator<TAO_String_Hash_Key,TAO_AV_Flow_Handler*,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<TAO_String_Hash_Key, TAO_AV_Flow_Handler*, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
+
 
 #pragma instantiate ACE_Hash_Map_Entry<TAO_String_Hash_Key,AVStreams::FlowEndPoint_ptr>
 #pragma instantiate ACE_Hash_Map_Manager<TAO_String_Hash_Key,AVStreams::FlowEndPoint_ptr,ACE_Null_Mutex>

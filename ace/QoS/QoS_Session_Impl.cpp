@@ -81,7 +81,8 @@ rsvp_callback (rapi_sid_t sid,
 
         // Set the sending flowspec QoS of the given session.
         ace_qos.sending_flowspec (sending_fs);
-
+	
+	qos_session->rsvp_event_type (ACE_QoS_Session::RSVP_PATH_EVENT);
       }
 
     break;
@@ -127,6 +128,8 @@ rsvp_callback (rapi_sid_t sid,
 
       ace_qos.receiving_flowspec (receiving_flow);
 
+      qos_session->rsvp_event_type (ACE_QoS_Session::RSVP_RESV_EVENT);
+      
       break;
 
     case RAPI_PATH_ERROR:
@@ -136,7 +139,7 @@ rsvp_callback (rapi_sid_t sid,
                   errcode,
                   errvalue,
                   ACE_OS::inet_ntoa(((sockaddr_in *)errnode)->sin_addr)));
-
+      qos_session->rsvp_event_type (ACE_QoS_Session::RSVP_PATH_ERROR);
       break;
 
     case RAPI_RESV_ERROR:
@@ -146,11 +149,13 @@ rsvp_callback (rapi_sid_t sid,
                   errcode,
                   errvalue,
                   ACE_OS::inet_ntoa(((sockaddr_in *)errnode)->sin_addr)));
+      qos_session->rsvp_event_type (ACE_QoS_Session::RSVP_RESV_ERROR);
       break;
 
     case RAPI_RESV_CONFIRM:
       ACE_DEBUG ((LM_DEBUG,
                   "RESV CONFIRM Event received\n"));
+      qos_session->rsvp_event_type (ACE_QoS_Session::RSVP_RESV_CONFIRM);
       break;
 
     default:
@@ -220,6 +225,20 @@ ACE_RAPI_Session::close (void)
                 "rapi session with id %d released successfully.\n",
                 this->session_id_));
   return 0;
+}
+
+//Get the most recent RSVP event that occured 
+ACE_QoS_Session::RSVP_Event_Type
+ACE_RAPI_Session::rsvp_event_type (void)
+{
+  return this->rsvp_event_type_;
+}
+
+//Set the most recent RSVP event that occured 
+void
+ACE_RAPI_Session::rsvp_event_type (ACE_QoS_Session::RSVP_Event_Type event_type)
+{
+  this->rsvp_event_type_ = event_type;
 }
 
 int
@@ -553,3 +572,22 @@ ACE_GQoS_Session::update_qos (void)
   // WSAIoctl (GET_QOS) call goes here...
   return 0;
 }
+
+//Get the most recent RSVP event that occured 
+ACE_QoS_Session::RSVP_Event_Type
+ACE_GQoS_Session::rsvp_event_type (void)
+{
+  return this->rsvp_event_type_;
+}
+
+//Set the most recent RSVP event that occured 
+void
+ACE_GQoS_Session::rsvp_event_type (ACE_QoS_Session::RSVP_Event_Type event_type)
+{
+  this->rsvp_event_type_ = event_type;
+}
+
+
+
+
+
