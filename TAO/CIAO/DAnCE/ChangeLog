@@ -1,3 +1,11 @@
+Fri Mar  4 11:13:23 2005  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ciao/Container_Impl.cpp:
+	* ciao/Container_Impl.h:
+	* ciao/NodeApplication_Impl.cpp:
+	* ciao/NodeApplication_Impl.h: Fixed mismatched throw spec decls
+	  caused by IDL changes.
+
 Thu Mar  3 13:15:02 2005  Will Otte <wotte@dre.vanderbilt.edu>
 	
 	* Config_Handlers/DnC_Dump.h

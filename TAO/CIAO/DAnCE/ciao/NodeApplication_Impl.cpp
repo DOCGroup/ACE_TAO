@@ -240,8 +240,7 @@ CIAO::NodeApplication_Impl::install (
 
 void
 CIAO::NodeApplication_Impl::remove (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Components::RemoveFailure))
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // For each container, invoke <remove> operation to remove home and components.
   const CORBA::ULong set_size = this->container_set_.size ();
