@@ -1,5 +1,9 @@
 Mon Nov 15 09:33:49 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/Synch.h (ACE_Mutex): changed protected: to public: in
+	  ACE_Mutex so that certain compilers would be happy.  Thanks to
+ 	  Ivan Murphy for reporting this.
+
 	* ace/Configuration.h (ACE_Configuration_Section_Key): The
  	  reserved word "operator" has a typo and is typed as "Operator".
   	  Thanks to Andy Gokhale for reporting this.
