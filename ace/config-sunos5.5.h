@@ -76,7 +76,9 @@
 
 #elif defined (ghs)
 # define ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA
-# define ACE_LACKS_LONGLONG_T /* It really doesn't.  Boo. */
+# define ACE_LACKS_LINEBUFFERED_STREAMBUF
+# define ACE_LACKS_LONGLONG_T /* It really doesn't have it.  Boo. */
+# define ACE_LACKS_SIGNED_CHAR
 
   // To avoid warning about inconsistent declaration between Sun's
   // stdlib.h and GreenHills' ctype.h.
