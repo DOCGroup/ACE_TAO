@@ -9367,16 +9367,6 @@ realclean:
  Object_Proxy_Impl.h \
  Encodable.h PolicyC.i \
  ORB.i ORB_Table.h \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -9434,6 +9424,16 @@ realclean:
  params.h \
  CORBA_String.h \
  params.i \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
  Adapter.h \
  Adapter.i \
  PolicyFactory_Registry.h \
@@ -9499,7 +9499,6 @@ realclean:
  GIOP_Message_Version.inl \
  Profile.i ORBInitInfo.h PortableInterceptorC.h LocalObject.h \
  StringSeqC.h ORBInitInfo.inl ORBInitializer_Registry.h \
- TAO_Singleton.h \
  CodecFactory_ORBInitializer.h TypeCodeFactory_Adapter.h \
  PICurrent_ORBInitializer.h PICurrent.h ValueFactory_Map.h \
  ValueFactory_Map.i \
@@ -18125,11 +18124,6 @@ realclean:
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
- orbconf.h \
- $(ACE_ROOT)/ace/Basic_Types.h \
- $(ACE_ROOT)/ace/ACE_export.h \
- $(ACE_ROOT)/ace/Basic_Types.i \
- TAO_Singleton.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -18139,6 +18133,9 @@ realclean:
  $(ACE_ROOT)/ace/OS_Errno.inl \
  $(ACE_ROOT)/ace/OS_Dirent.inl \
  $(ACE_ROOT)/ace/OS_String.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/OS_String.inl \
  $(ACE_ROOT)/ace/OS_Memory.h \
  $(ACE_ROOT)/ace/OS_Memory.inl \
@@ -18177,15 +18174,6 @@ realclean:
  $(ACE_ROOT)/ace/Synch_T.cpp \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -18263,6 +18251,7 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
  $(ACE_ROOT)/ace/CDR_Base.inl \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ orbconf.h \
  varbase.h \
  corbafwd.i ORB.h \
  Exception.h \
@@ -18306,7 +18295,19 @@ realclean:
  Resource_Factory.h params.h \
  CORBA_String.h \
  params.i \
- TAO_Singleton_Manager.h TAO_Singleton.h Adapter.h \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
+ TAO_Singleton.h \
+ TAO_Singleton.inl \
+ TAO_Singleton.cpp \
+ TAO_Singleton.h \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ TAO_Singleton_Manager.h \
+ Adapter.h \
  Exception.h \
  Adapter.i PolicyFactory_Registry.h PortableInterceptorC.h \
  TAO_Export.h DynamicC.h \
@@ -28969,7 +28970,18 @@ realclean:
  Messaging_SyncScopeC.i IOPC.h Object.h Any.h IOPC.i PolicyC.h \
  Policy_ForwardC.h Remote_Object_Proxy_Impl.h \
  Object_Proxy_Impl.h \
- Encodable.h PolicyC.i PortableInterceptorC.i TAO_Singleton.h \
+ Encodable.h PolicyC.i PortableInterceptorC.i \
+ $(ACE_ROOT)/ace/Array_Base.h \
+ $(ACE_ROOT)/ace/Array_Base.inl \
+ $(ACE_ROOT)/ace/Array_Base.cpp ORB.h \
+ Services.h \
+ Services.i \
+ CORBA_String.h \
+ CORBA_String.inl \
+ ORB.i \
+ TAO_Singleton_Manager.h \
+ TAO_Singleton_Manager.inl \
+ TAO_Singleton.h \
  TAO_Singleton.inl \
  TAO_Singleton.cpp \
  TAO_Singleton.h \
@@ -28978,16 +28990,6 @@ realclean:
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- $(ACE_ROOT)/ace/Array_Base.h \
- $(ACE_ROOT)/ace/Array_Base.inl \
- $(ACE_ROOT)/ace/Array_Base.cpp \
- ORB.h Services.h \
- Services.i \
- CORBA_String.h \
- CORBA_String.inl \
- ORB.i \
  TAO_Singleton_Manager.h
 
 .obj/PolicyFactory_Registry.o .obj/PolicyFactory_Registry.so .shobj/PolicyFactory_Registry.o .shobj/PolicyFactory_Registry.so: PolicyFactory_Registry.cpp \
