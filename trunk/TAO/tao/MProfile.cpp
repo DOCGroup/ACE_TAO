@@ -3,6 +3,7 @@
 
 #include "tao/MProfile.h"
 #include "tao/Pluggable.h"
+#include "tao/Environment.h"
 
 ACE_RCSID(tao, MProfile, "$Id$")
 
