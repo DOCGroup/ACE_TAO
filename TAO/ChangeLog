@@ -1,3 +1,9 @@
+Sat Mar 22 07:41:59 2003  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * performance-tests/Cubit/TAO/Makefile: Add .NOTPARALLEL to the
+          makefile to give the IDL build a chance to complete before its
+          dependants try and fail to compile.
+
 Fri Mar 21 15:43:32 2003  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tests/Collocation/Makefile: Add .NOTPARALLEL to the makefile to
