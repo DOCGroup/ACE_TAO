@@ -1,3 +1,9 @@
+Thu Nov 14 16:19:57 2002  Balachandran Natarajan  <bala@bala@isis-server.isis.vanderbilt.edu>
+
+	* bin/auto_run_tests.lst: Added two tests, Bug_1269_Regression and
+	  Bug_1270_Regression into the daily regression suite. They will
+	  not run on Win32.
+
 Thu Nov 14 13:35:44 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Containers_T.cpp: Changed to deallocate internal nodes in
