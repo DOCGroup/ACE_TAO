@@ -1,3 +1,13 @@
+Thu Jan 17 00:54:41 2002  Mayur Deshpande  <mayur@ics.uci.edu>
+
+	* TAO_IDL/be/be_visitor_interface/amh_rh_sh.cpp: 
+	* TAO_IDL/be/be_visitor_interface/amh_rh_ss.cpp: 
+	* TAO_IDL/be/be_visitor_interface/interface.cpp: 
+	* TAO_IDL/be/be_visitor_interface/interface_sh.cpp: 
+	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+	  Made code generation logic for AMH-skeletons and AMH-RH
+	  consistent (and symmetric) in the amh_rh and amh_ss files.
+
 Tue Jan 17 08:12:22 2002  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Security.bor:

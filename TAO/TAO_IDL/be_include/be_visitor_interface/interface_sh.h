@@ -44,7 +44,7 @@ class be_visitor_interface_sh : public be_visitor_interface
     
  protected:
     virtual void this_method (be_interface *node);
-
+    virtual int generate_amh_classes (be_interface *node);
 };
 
 #endif /* _BE_INTERFACE_INTERFACE_SH_H_ */
