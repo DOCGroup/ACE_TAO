@@ -1073,7 +1073,7 @@ sub sort_dependencies {
                 if (!$self->generate_implicit_project_dependencies() ||
                     defined $ENV{MPC_VERBOSE_CIRCULAR}) {
                   print 'WARNING: Circular dependency between ' .
-                        "$list[$j] and $full\n";
+                        "$list[$j] and $project\n";
                 }
               }
               else {
