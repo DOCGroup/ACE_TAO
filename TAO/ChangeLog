@@ -11,11 +11,11 @@ Thu Mar 25 13:14:00 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  TAO_SEQUENCE_ASSERT. This macro just calls the function
 	  check_bounds () which takes care of things. At this point this
 	  method is structured in such a way to print an error message and
-	  call a hook if necessary (this was discussed in the devo-group
-	  sometime back). If native exceptions are turned on, we throw a
-	  BAD_PARAM exception. May be std::out_of_range would be better. But
-	  the thought process is to throw a CORBA exception. If exceptions
-	  are turned off we abort. 
+	  call a hook if we have it defined (this was discussed in the 
+	  devo-group sometime back). If native exceptions are turned on, 
+	  we throw a BAD_PARAM exception. May be std::out_of_range would be 
+	  better. But the thought process is to throw a CORBA exception. 
+	  If exceptions are turned off we abort. 
 
 	  We should do something better for non-exception cases. If we
 	  have hooks for these we will be in a much better position. 
