@@ -1,17 +1,17 @@
 Tue Oct 27 14:16:27 1998  James CE Johnson  <jcej@chiroptera.tragus.org>
 
-	* docs/tutorials/015/Recv.cpp : Changed atoi() to ACE_OS::atoi()
-	* docs/tutorials/015/page22.html:  Ensure that the correct cpp
-	  and header files are HREF'd
+        * docs/tutorials/015/Recv.cpp : Changed atoi() to ACE_OS::atoi()
+        * docs/tutorials/015/page22.html:  Ensure that the correct cpp
+          and header files are HREF'd
 
-	  Thanks to Susan Leibskind <shl@cc.gatech.edu> for catching these.
+          Thanks to Susan Leibskind <shl@cc.gatech.edu> for catching these.
 
 Tue Oct 27 12:31:28 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/OS.i (cond_timedwait): Made sure the broadcaster always gets
-	  signaled no matter what the "wait" function return if this is
- 	  the last waiter for this cv.  In any case, the calling thread is
-	  no longer waiting on the cv any more.
+        * ace/OS.i (cond_timedwait): Made sure the broadcaster always gets
+          signaled no matter what the "wait" function return if this is
+          the last waiter for this cv.  In any case, the calling thread is
+          no longer waiting on the cv any more.
 
 Tue Oct 27 08:22:41 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -34,6 +34,11 @@ Tue Oct 27 08:22:41 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ACE-INSTALL.html: added note about segfault when attempting to
           register a signal handler on LynxOS 3.0.0/PowerPC.
+
+        * ace/Object_Manager.cpp (fini): added check of
+          instance_->shutting_down_ on entry.  This will avoid
+          reentrance if fini () is called before the Object_Manager
+          is (explicitly) destroyed.  Thanks to Gonzo for reporting it.
 
 Tue Oct 27 05:47:21 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
