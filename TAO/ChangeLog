@@ -1,3 +1,8 @@
+Fri Dec  3 13:59:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/AVStreams/Simple_Three_Stage/sender.cpp:
+          Use LM_ERROR in the error that the input file cannot be opened
+
 Fri Dec  3 12:54:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ObjRefTemplate/ObjectReferenceTemplate_include.pidl:
