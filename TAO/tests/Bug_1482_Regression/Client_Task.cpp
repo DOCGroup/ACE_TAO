@@ -47,7 +47,12 @@ Client_Task::svc (void)
             }
 
           CORBA::Short repl = 0;
-          while (repl != 25)
+          CORBA::Long tries = 0;
+
+          ACE_Time_Value tv (1, 1);
+
+          /// No scientific underpinning for the number 10000.
+          while (repl != 25 && tries != 10000)
             {
               CORBA::Boolean pending =
                 this->orb_->work_pending (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -55,11 +60,16 @@ Client_Task::svc (void)
 
               if (pending)
                 {
-                  this->orb_->perform_work (ACE_ENV_SINGLE_ARG_PARAMETER);
+                  this->orb_->perform_work (tv
+                                            ACE_ENV_ARG_PARAMETER);
                   ACE_TRY_CHECK;
-
                   ++repl;
+
+                  // Reset tries here since we have a reply.
+                  tries = 0;
                 }
+
+              ++tries;
             }
         }
     }
