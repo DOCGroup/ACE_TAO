@@ -9,7 +9,6 @@
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class TAO_Unbounded_Sequence<CORBA::Any>;
-template class TAO_Unbounded_Sequence<CORBA::Long>;
 template class TAO_Bounded_Sequence<CORBA::Long,32>;
 template class TAO_Unbounded_Sequence<CORBA::Short>;
 template class TAO_Bounded_Sequence<CORBA::Short,32>;
@@ -21,7 +20,6 @@ template class TAO_Bounded_Object_Sequence<Coffee,32>;
 template class TAO_Object_Manager<Coffee>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate TAO_Unbounded_Sequence<CORBA::Any>
-#pragma instantiate TAO_Unbounded_Sequence<CORBA::Long>
 #pragma instantiate TAO_Bounded_Sequence<CORBA::Long,32>
 #pragma instantiate TAO_Unbounded_Sequence<CORBA::Short>
 #pragma instantiate TAO_Bounded_Sequence<CORBA::Short,32>
@@ -32,4 +30,3 @@ template class TAO_Object_Manager<Coffee>;
 #pragma instantiate TAO_Bounded_Object_Sequence<Coffee,32>
 #pragma instantiate TAO_Object_Manager<Coffee>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
