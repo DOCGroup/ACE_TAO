@@ -12,11 +12,12 @@ the client or open a separate window for the client and server.
 server:
 -------
 
-./svr -p <port_num> -h <my_hostname>
+./svr -p <port_num> -h <my_hostname> -n <number_of_servants>
 
-port_num is the port number at which the server will start the high
-priority servant. The low priority servant will be created at
-(port_num+1).
+port_num is the port number at which the server will start the first
+(and highest priority) servant. Successive servants will be created
+starting at (port_num+1). The -n parameter specifies the total number
+of servants. 
 
 The server will print the IOR of the high and low priority servants,
 but it is not required by the client.

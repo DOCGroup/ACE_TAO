@@ -190,7 +190,7 @@ static int num_of_objs = 1;
 static int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt opts (argc, argv, "h:p:n:");
+  ACE_Get_Opt opts (argc, argv, "h:p:t:");
   int c;
 
   while ((c = opts ()) != -1)
@@ -202,7 +202,7 @@ parse_args (int argc, char *argv[])
       case 'p':
 	base_port = ACE_OS::atoi (opts.optarg);
 	break;
-      case 'n':
+      case 't':
 	num_of_objs = ACE_OS::atoi (opts.optarg);
 	break;
       case '?':
@@ -211,7 +211,7 @@ parse_args (int argc, char *argv[])
 			   "usage:  %s"
 			   " -p port"
 			   " -h my_hostname"
-                           " -n num_objects"
+                           " -t num_objects"
 			   "\n", argv [0]), 1);
       }
 
