@@ -27,7 +27,7 @@ Sat Sep 05 02:05:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
           The exit code argument of Process::wait changed from
           "int" to "ACE_exitcode".
 
-Sat Sep 03 19:10:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+Sat Sep 04 19:10:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
         * tests/AMI/simple_client_muxed.conf,
           tests/AMI/simple_client_exclusive.conf:
