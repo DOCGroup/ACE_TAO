@@ -1,3 +1,9 @@
+Mon Aug 20 15:54:46 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/SUN_Proactor.cpp: Removed the instantiation of
+	  ACE_Condition<ACE_Thread_Mutex>.  Thanks to David Trusty
+ 	  <david.trusty@westwave.com> for reporting this.
+
 Mon Aug 20 15:48:30 2001  Paul Calabrese  <calabrese_p@ociweb.com>
 
         * bin/msvc_auto_compile.pl:
