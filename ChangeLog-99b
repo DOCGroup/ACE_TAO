@@ -1,3 +1,9 @@
+Mon Jul 12 14:41:14 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/config-win32.h,Object_Manager.h: cleaned up comments
+          about the non-static ACE_Object_Manager.  Thanks to
+          John Morey <jmorey@tbi.com> for reporting this.
+
 Mon Jul 12 13:54:34 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 Mon Jul 12 12:14:45 1999  David L. Levine  <levine@cs.wustl.edu>
