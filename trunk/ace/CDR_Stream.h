@@ -336,7 +336,7 @@ public:
   // = We add one method to write arrays of basic IDL types.
   // Note: the portion written starts at <x> and ends at <x + length>.
   // The length is *NOT* stored into the CDR stream.
-  CDR::Boolean write_boolean_array (CDR::Boolean *x,
+  CDR::Boolean write_boolean_array (const CDR::Boolean *x,
                                     CDR::ULong length);
   CDR::Boolean write_char_array (const CDR::Char *x, 
                                  CDR::ULong length);

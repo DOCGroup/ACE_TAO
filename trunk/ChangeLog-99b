@@ -1,3 +1,10 @@
+Sat Feb  6 22:21:14 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* ace/CDR_Stream.h: 
+	* ace/CDR_Stream.cpp: 
+	  Fixed the write_boolean_array() method; it only needs a const
+	  array of booleans.
+
 Sat Feb  6 22:07:45 1999  Jeff Parsons <parsons@cs.wustl.edu>
 
         * ace/CDR.{h,i,cpp}:  Renamed these as...
