@@ -4,6 +4,22 @@
 #  include "factories.i"
 #endif
 
+// Template specializations which allow the cached connection manager
+// to work better.
+
+size_t
+ACE_Hash_Addr<ACE_INET_Addr, TAO_Client_Connection_Handler>::hash_i (const ACE_INET_Addr &addr) const
+{
+  return addr.get_ip_address () + addr.get_port_number ();
+}
+
+int
+ACE_Hash_Addr<ACE_INET_Addr, TAO_Client_Connection_Handler>::compare_i (const ACE_INET_Addr &a1, 
+                                                                        const ACE_INET_Addr &a2) const
+{
+  return a1 != a2;
+}
+
 int
 TAO_Client_Connection_Handler::open(void *)
 {
