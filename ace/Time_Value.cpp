@@ -14,7 +14,7 @@ const ACE_Time_Value ACE_Time_Value::zero;
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Time_Value)
 
-/* Initializes the ACE_Time_Value object from a timeval. */
+// Initializes the ACE_Time_Value object from a timeval.
 
 ACE_Time_Value::ACE_Time_Value (const timeval &tv)
 {
@@ -229,3 +229,46 @@ ACE_Time_Value::normalize (void)
     }
 #endif 
 }
+
+int
+ACE_Countdown_Time::start (void)
+{
+  this->start_time_ = ACE_OS::gettimeofday ();
+  this->stopped_ = 0;
+  return 0;
+}
+
+int
+ACE_Countdown_Time::stop (void)
+{
+  if (this->max_wait_time_ != 0 && this->stopped_ == 0)
+    {
+      ACE_Time_Value elapsed_time = 
+	ACE_OS::gettimeofday () - this->start_time_;
+
+      if (*this->max_wait_time_ > elapsed_time)
+	*this->max_wait_time_ -= elapsed_time;
+      else
+	{
+	  // Used all of timeout.
+	  *this->max_wait_time_ = ACE_Time_Value::zero; 
+	  errno = ETIME;
+	}
+      this->stopped_ = 1;
+    }
+  return 0;
+}
+
+ACE_Countdown_Time::ACE_Countdown_Time (ACE_Time_Value *max_wait_time)
+  : max_wait_time_ (max_wait_time),
+    stopped_ (0)
+{
+  if (max_wait_time != 0)
+    this->start ();
+}
+
+ACE_Countdown_Time::~ACE_Countdown_Time (void)
+{
+  this->stop ();
+}
+

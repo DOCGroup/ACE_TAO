@@ -26,7 +26,7 @@ typedef ACE_Message_Queue_Iterator <ACE_NULL_SYNCH> ITERATOR;
 typedef ACE_Message_Queue_Reverse_Iterator <ACE_NULL_SYNCH> REVERSE_ITERATOR;
 
 int 
-main (int, char *argv[])
+main (int, char *[])
 {
   ACE_START_TEST ("Message_Queue_Test");
 

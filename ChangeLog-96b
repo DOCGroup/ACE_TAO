@@ -1,12 +1,12 @@
-Sun Dec  8 14:39:53 1996  Tim H. Harrison  <harrison@lambada.cs.wustl.edu>
-
-	* ace/Timer_Queue.i: Added a timer_skew_ data member and accessor
-	  methods to ACE_Timer_Queue.  Also added an expire method that
- 	  calls gettimeofday and adds the timer_skew_ for you.  These
- 	  changes will help simplify Reactor, Proactor, and ReactorEx
- 	  code.
-
 Sun Dec  8 10:27:19 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* netsvcs/servers/main.cpp (main): Fixed several small bugs in the
+ 	  netsvcs main test program.  Thanks to Alexandre Karev
+ 	  <Alexandre.Karev@cern.ch> for finding this.
+
+	* ace/Reactor: Removed the timer_skew_ data member from the 
+	  ACE_Reactor since this is now covered by the
+	  ACE_Timer_Queue.
 
 	* ace/Reactor.cpp (handle_events): Added the new version of the
  	  ACE_Countdown_Time to simplify the code.
@@ -58,6 +58,14 @@ Sun Dec  8 10:27:19 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
  	  and replaced them by generalizing the find() method to become
  	  find_thread() and find_hthread().  Thanks to Hamutal Yanay
  	  <Hamutal_Yanay@mail.icomverse.com> for suggesting this.
+
+Sun Dec  8 14:39:53 1996  Tim H. Harrison  <harrison@lambada.cs.wustl.edu>
+
+	* ace/Timer_Queue: Added a timer_skew_ data member and accessor
+	  methods to ACE_Timer_Queue.  Also added an expire method
+	  that calls gettimeofday and adds the timer_skew_ for you.  These
+ 	  changes will help simplify Reactor, Proactor, and ReactorEx
+ 	  code.
 
 Sat Dec  7 16:55:37 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 

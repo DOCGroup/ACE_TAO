@@ -35,11 +35,12 @@ main (int argc, char *argv[])
 	  l_argv[1] = 0;
 	  so = ACE_SVC_INVOKE (ACE_TS_Server_Acceptor);
 
-	  if (so->init (2, l_argv) == -1)
+	  if (so->init (1, l_argv) == -1)
 	    ACE_ERROR ((LM_ERROR, "%p\n%a", "ACE_TS_Server_Acceptor", 1));
 
 	  l_argv[0] = argv[0];
 	  l_argv[1] = "-p 10011";
+	  l_argv[2] = 0;
 	  so = ACE_SVC_INVOKE (ACE_TS_Clerk_Processor);
 
 	  if (so->init (2, l_argv) == -1)

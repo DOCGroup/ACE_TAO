@@ -65,7 +65,7 @@ run_test (int count)
 }
 
 int
-main (int argc, char *argv[])
+main (int argc, char *[])
 {
   ACE_START_TEST ("Handle_Set_Test");
 

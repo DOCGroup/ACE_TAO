@@ -80,12 +80,18 @@
 #if defined (ACE_HAS_WINSOCK2)
 #if !defined (_WINSOCK2API_)
 #include /**/ <winsock2.h>		// will also include windows.h, if not present
+#if defined (_MSC_VER)
+#pragma comment(lib, "ws2_32.lib")
+#endif /* _MSC_VER */
 #endif /* _WINSOCK2API */
 
 #define ACE_WSOCK_VERSION 2, 0
 #else
 #if !defined (_WINSOCKAPI_)
 #include /**/ <winsock.h>	// will also include windows.h, if not present
+#if defined (_MSC_VER)
+#pragma comment(lib, "wsock32.lib")
+#endif /* _MSC_VER */
 #endif /* _WINSOCKAPI */
 
 // Version 1.1 of WinSock

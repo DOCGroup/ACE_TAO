@@ -175,7 +175,7 @@ run_test (ACE_Token_Proxy *A,
 #endif /* ACE_HAS_THREADS */
 
 int
-main (int, char* argv[])
+main (int, char *[])
 {
   ACE_START_TEST ("Tokens_Test");
 #if defined (ACE_HAS_THREADS)

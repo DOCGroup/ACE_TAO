@@ -1,33 +1,16 @@
+#include "ace/Service_Config.h"
 // $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-// 
-// = FILENAME
-//    TSS_Test.cpp
-//
-// = DESCRIPTION
-//     This program tests thread specific storage of data. The ACE_TSS
-//     wrapper transparently ensures that the objects of this class
-//     will be placed in thread-specific storage. All calls on
-//     ACE_TSS::operator->() are delegated to the appropriate method
-//     in the Errno class. 
-//
-// = AUTHOR
-//    Prashant Jain and Doug Schmidt
-// 
-// ============================================================================
-
-#include "ace/Service_Config.h"
 #include "ace/Synch.h"
-#include "test_config.h"
 
-#if defined (ACE_HAS_THREADS) 
-#if !defined (ACE_TEMPLATES_REQUIRE_PRAGMA) // AIX is evil
+#if defined (ACE_HAS_THREADS)
 
-static const int ITERATIONS = 100;
+// Define a class that will be stored in thread-specific data.  Note
+// that as far as this class is concerned it's just a regular C++
+// class.  The ACE_TSS wrapper transparently ensures that
+// objects of this class will be placed in thread-specific storage.
+// All calls on ACE_TSS::operator->() are delegated to the
+// appropriate method in the Errno class.
 
 class Errno
 {
@@ -40,17 +23,18 @@ public:
 
   // Errno::flags_ is a static variable, so we've got to protect it
   // with a mutex since it isn't kept in thread-specific storage.
-  int flags (void) { 
-    ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_Mon, Errno::lock_, -1));
+  int flags (void) 
+  { 
+    ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, Errno::lock_, -1);
 
     return Errno::flags_;
   }
-  int flags (int f)
+
+  void flags (int f)
   {
-    ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, Errno::lock_, -1));
+    ACE_GUARD (ACE_Thread_Mutex, ace_mon, Errno::lock_);
 
     Errno::flags_ = f;
-    return 0;
   }
 
 private:
@@ -75,17 +59,17 @@ static ACE_TSS<Errno> TSS_Error;
 
 #if defined (ACE_HAS_THREADS)
 // Serializes output via cout.
-static ACE_Thread_Mutex cout_lock;
+static ACE_Thread_Mutex lock;
 
 typedef ACE_TSS_Guard<ACE_Thread_Mutex> GUARD;
 #else
 // Serializes output via cout.
-static ACE_Null_Mutex cout_lock;
+static ACE_Null_Mutex lock;
 
 typedef ACE_Guard<ACE_Null_Mutex> GUARD;
 #endif /* ACE_HAS_THREADS */
 
-extern "C" void 
+static void 
 cleanup (void *ptr)
 {
   ACE_DEBUG ((LM_DEBUG, "(%t) in cleanup, ptr = %x\n", ptr));
@@ -99,8 +83,6 @@ static void *
 worker (void *c)
 {
   ACE_Thread_Control tc (ACE_Service_Config::thr_mgr ());
-  ACE_NEW_THREAD;
-
   int count = int (c);
 
   ACE_thread_key_t key = 0;
@@ -112,7 +94,7 @@ worker (void *c)
   if (ACE_OS::thr_keycreate (&key, cleanup) == -1)
     ACE_ERROR ((LM_ERROR, "(%t) %p\n", "ACE_OS::thr_keycreate"));
 
-  ACE_NEW_RETURN (ip, int, 0);
+  ip = new int;
 
   if (ACE_OS::thr_setspecific (key, (void *) ip) == -1)
     ACE_ERROR ((LM_ERROR, "(%t) %p\n", "ACE_OS::thr_setspecific"));
@@ -122,7 +104,7 @@ worker (void *c)
       if (ACE_OS::thr_keycreate (&key, cleanup) == -1)
 	ACE_ERROR ((LM_ERROR, "(%t) %p\n", "ACE_OS::thr_keycreate"));
 
-      ACE_NEW_RETURN (ip, int, 0);
+      ip = new int;
 
       ACE_DEBUG ((LM_DEBUG, "(%t) in worker 1, key = %d, ip = %x\n", key, ip));
 
@@ -152,16 +134,21 @@ worker (void *c)
       TSS_Error->flags (count);
 
       {
-	// Use the guard to serialize access
-	ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, cout_lock, 0));
-	ACE_ASSERT (TSS_Error->flags () == ITERATIONS);
+	// Use the guard to serialize access to cout...
+	ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, lock, 0);
+
+	cout << "(" << ACE_Thread::self ()
+	     << ") errno = "  << TSS_Error->error () 
+	     << ", lineno = " << TSS_Error->line ()
+	     << ", flags = " << TSS_Error->flags () 
+	     << endl;
       }
       key = 0;
 
       if (ACE_OS::thr_keycreate (&key, cleanup) == -1)
 	ACE_ERROR ((LM_ERROR, "(%t) %p\n", "ACE_OS::thr_keycreate"));
 
-      ACE_NEW_RETURN (ip, int, 0);
+      ip = new int;
 
       ACE_DEBUG ((LM_DEBUG, "(%t) in worker 2, key = %d, ip = %x\n", key, ip));
 
@@ -179,6 +166,8 @@ worker (void *c)
       if (ACE_OS::thr_keyfree (key) == -1)
 	ACE_ERROR ((LM_ERROR, "(%t) %p\n", "ACE_OS::thr_keyfree"));
     }
+
+  ACE_DEBUG ((LM_DEBUG, "(%t) exiting\n"));
   return 0;
 }
 
@@ -189,38 +178,42 @@ handler (int signum)
   ACE_Service_Config::thr_mgr ()->exit (0);
 }
 
-#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
-template class ACE_TSS<Errno>;
-#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
-
-#endif /* !ACE_TEMPLATES_REQUIRE_PRAGMA */
-#endif /* ACE_HAS_THREADS */
-
 int 
-main (int, char *[])
+main (int argc, char *argv[])
 {
-  ACE_START_TEST ("TSS_Test");
-  
-#if defined (ACE_MT_SAFE)
+  // The Service_Config must be the first object defined in main...
+  ACE_Service_Config daemon (argv[0]);
   ACE_Thread_Control tc (ACE_Service_Config::thr_mgr ());
+  int threads = argc > 1 ? ACE_OS::atoi (argv[1]) : 4;
+  int count = argc > 2 ? ACE_OS::atoi (argv[2]) : 10000;
 
   // Register a signal handler.
-  ACE_Sig_Action sa ((ACE_SignalHandler) handler, SIGINT);
+  ACE_Sig_Action sa ((ACE_SignalHandler) (handler), SIGINT);
 
-  if (ACE_Service_Config::thr_mgr ()->spawn_n (ACE_MAX_THREADS, 
+#if defined (ACE_HAS_THREADS)
+  if (ACE_Service_Config::thr_mgr ()->spawn_n (threads, 
 					       ACE_THR_FUNC (&worker), 
-					       (void *) ITERATIONS,
+					       (void *) count,
 					       THR_BOUND | THR_DETACHED) == -1)
     ACE_OS::perror ("ACE_Thread_Manager::spawn_n");
 
   ACE_Service_Config::thr_mgr ()->wait ();
-#elif defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-  ACE_ERROR ((LM_ERROR, 
-	      "This platform has an evil template instantiation mechanism...\n"));
 #else
-  ACE_ERROR ((LM_ERROR, 
-	      "threads are not supported on this platform\n"));
-#endif /* defined (ACE_MT_SAFE) */
-  ACE_END_TEST;
+  worker ((void *) count);
+#endif /* ACE_HAS_THREADS */
   return 0;
 }
+
+#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+template class ACE_TSS<Errno>;
+#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
+
+#else
+int 
+main (void)
+{
+  ACE_ERROR_RETURN ((LM_ERROR, 
+		     "ACE doesn't support support threads on this platform (yet)\n"),
+		    -1);
+}
+#endif /* ACE_HAS_THREADS */
