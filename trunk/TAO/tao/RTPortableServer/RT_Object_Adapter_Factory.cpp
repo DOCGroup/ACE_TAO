@@ -10,7 +10,7 @@
 #include "RT_Policy_Validator.h"
 #include "RT_Collocation_Resolver.h"
 
-ACE_RCSID (TAO_RTPortableServer,
+ACE_RCSID (RTPortableServer,
            RT_Object_Adapter_Factory,
            "$Id$")
 
