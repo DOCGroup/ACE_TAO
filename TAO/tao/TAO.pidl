@@ -41,28 +41,6 @@
 
 module TAO
 {
-  //
-  // Client priority.
-  //
-  typedef short PrioritySelectionMode;
-  const PrioritySelectionMode USE_NO_PRIORITY     = 0;
-  const PrioritySelectionMode USE_THREAD_PRIORITY = 1;
-  const PrioritySelectionMode USE_PRIORITY_RANGE  = 2;
-
-  struct PrioritySpecification
-  {
-    PrioritySelectionMode mode;
-    short min_priority;
-    short max_priority;
-  };
-
-  const CORBA::PolicyType CLIENT_PRIORITY_POLICY_TYPE = 0x54410000;
-  local interface ClientPriorityPolicy : CORBA::Policy
-    {
-      readonly attribute PrioritySpecification priority_specification;
-    };
-
-  // ****************************************************************
 
   //
   // Buffering constraint.

@@ -8,12 +8,11 @@
 // -- ACE Include --
 #include "ace/Arg_Shifter.h"
 
-#if (TAO_HAS_RT_CORBA == 1)
+// -- RTCORBA Include --
+#include "tao/RTCORBA/RT_Policy_i.h"
 
-// -- TAO Include --
-#include "tao/RT_ORB.h"
-#include "tao/RT_Policy_i.h"
-//#include "tao/PortableServer/POA.h"
+// -- RTCORBA Include --
+#include "tao/RTCORBA/RT_ORB.h"
 
 ACE_RCSID (tao, Policy_Tester, "$Id$")
 
@@ -298,4 +297,3 @@ Policy_Tester::shutdown (CORBA::Environment &ACE_TRY_ENV)
 }
 
 
-#endif /* (TAO_HAS_RT_CORBA == 1) */

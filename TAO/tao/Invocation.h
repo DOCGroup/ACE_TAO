@@ -267,13 +267,6 @@ protected:
   /// use for invocation.
   TAO_Invocation_Endpoint_Selector *endpoint_selector_;
 
-  /// Store information used by endpoint_selector_ for making endpoint
-  /// selection decisions. This is a hack. The state should be kept in
-  /// the selector, but to do this, we'd need to dynamically allocate
-  /// the endpoint selector. Since this is in the critical path, we
-  /// don't do this.
-  // TAO_Endpoint_Selection_State endpoint_selection_state_;
-
   /**
    * If current effective policies cause the invocation to raise
    * CORBA::INV_POLICY exception, the conflicting/problematic policies

@@ -1,3 +1,505 @@
+Tue Jun 12 13:30:02 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>, Angelo Corsaro  <corsaro@cs.wustl.edu>
+
+        * tao/Endpoint_Selector_Factory.cpp:
+        * tao/Endpoint_Selector_Factory.h:
+        * tao/Default_Endpoint_Selector_Factory.cpp:
+        * tao/Default_Endpoint_Selector_Factory.h:
+        * tao/Stub_Factory.cpp:
+        * tao/Stub_Factory.h:
+        * tao/Default_Stub_Factory.cpp:
+        * tao/Default_Stub_Factory.h:
+          Moved the default implementations of the endpoint selector factory and stub
+          factory to separate files.
+
+        * tao/POA_Extension_Initializer.cpp:
+        * tao/POA_Extension_Initializer.h:
+          Add interface to register POA initializers with the ORB core.  When the POA 
+          library is loaded, it will call all of the registered initializers so that 
+          they can add POA policies, override interfaces, etc.
+
+        * tao/Policy_Set.cpp:
+        * tao/Policy_Set.h:
+        * tao/Policy_Set.i:
+          Refactored code from TAO_Policy_Manager_Impl that is now
+          reused in the POA.  The name was changed from TAO_Policy_Manager_Impl
+          to TAO_Policy_Set since Policy Manager code is only available when
+          messaging is enabled.  Also, as part of the RT CORBA subsetting, all
+          of the RT CORBA policy accessors were removed, and a generic "cached" 
+          policy accessor was put in its place.  The downside to this change
+          is that users of this class can only get CORBA::Policy * from the
+          get routines.  They need to perform the narrow (and pay for its lock)
+          now.  There is a potential optimization in the messaging code that can be
+          done to avoid narrowing in the critical path.
+
+        * tao/RTCORBA/Direct_Priority_Mapping.cpp
+        * tao/RTCORBA/Direct_Priority_Mapping.h
+        * tao/RTCORBA/Direct_Priority_Mapping.i
+        * tao/RTCORBA/Linear_Priority_Mapping.cpp
+        * tao/RTCORBA/Linear_Priority_Mapping.h
+        * tao/RTCORBA/Linear_Priority_Mapping.i
+        * tao/RTCORBA/Makefile
+        * tao/RTCORBA/Makefile.bor
+        * tao/RTCORBA/Pool_Per_Endpoint.cpp
+        * tao/RTCORBA/Pool_Per_Endpoint.h
+        * tao/RTCORBA/Pool_Per_Endpoint.i
+        * tao/RTCORBA/Priority_Mapping.cpp
+        * tao/RTCORBA/Priority_Mapping.h
+        * tao/RTCORBA/Priority_Mapping.i
+        * tao/RTCORBA/Priority_Mapping_Manager.cpp
+        * tao/RTCORBA/Priority_Mapping_Manager.h
+        * tao/RTCORBA/Priority_Mapping_Manager.i
+        * tao/RTCORBA/Private_Transport_Descriptor.cpp
+        * tao/RTCORBA/Private_Transport_Descriptor.h
+        * tao/RTCORBA/Private_Transport_Descriptor.inl
+        * tao/RTCORBA/RTCORBA.cpp
+        * tao/RTCORBA/RTCORBA.h
+        * tao/RTCORBA/RTCORBA.pidl
+        * tao/RTCORBA/rtcorbafwd.h
+        * tao/RTCORBA/rtcorba_export.h
+        * tao/RTCORBA/RT_Current.cpp
+        * tao/RTCORBA/RT_Current.h
+        * tao/RTCORBA/RT_Current.i
+        * tao/RTCORBA/RT_Endpoint_Selector_Factory.cpp
+        * tao/RTCORBA/RT_Endpoint_Selector_Factory.h
+        * tao/RTCORBA/RT_Mutex.cpp
+        * tao/RTCORBA/RT_Mutex.h
+        * tao/RTCORBA/RT_Mutex.i
+        * tao/RTCORBA/RT_ORB.cpp
+        * tao/RTCORBA/RT_ORB.h
+        * tao/RTCORBA/RT_ORB.i
+        * tao/RTCORBA/RT_ORBInitializer.cpp
+        * tao/RTCORBA/RT_ORBInitializer.h
+        * tao/RTCORBA/RT_ORB_Loader.cpp
+        * tao/RTCORBA/RT_ORB_Loader.h
+        * tao/RTCORBA/RT_PolicyFactory.cpp
+        * tao/RTCORBA/RT_PolicyFactory.h
+        * tao/RTCORBA/RT_Policy_i.cpp
+        * tao/RTCORBA/RT_Policy_i.h
+        * tao/RTCORBA/RT_Policy_i.i
+        * tao/RTCORBA/RT_Stub.cpp
+        * tao/RTCORBA/RT_Stub.h
+        * tao/RTCORBA/RT_Stub_Factory.cpp
+        * tao/RTCORBA/RT_Stub_Factory.h
+        * tao/RTCORBA/TAO_RTCORBA.dsp
+        * tao/RTCORBA/TAO_RTCORBA_Static.dsp
+        * tao/RTCORBA/Thread_Pool.cpp
+        * tao/RTCORBA/Thread_Pool.h
+        * tao/RTCORBA/Thread_Pool.i
+          Moved all RTCORBA files to the RTCORBA directory.  Created
+          a library that includes all of them and added the necessary
+          support files (e.g. Makefiles, dsp files).  Many refactorings
+          had to be done to enable this.  The most visible changes are:
+          1.  To load RTCORBA, the line "static RT_ORB_Loader """ needs
+              to be added to the application's svc.conf.
+          2.  To use RTCORBA routines, a #include "tao/RTCORBA/RTCORBA.h"
+              is needed.
+          3.  The PriorityMappingManager commandline options that used
+              to be passed to the advanced resources (Strategies) library
+              are now passed to the RT_ORB_Loader.
+          4.  The default priority mapping is direct mapped.  This is 
+              the same as if the Strategies library were loaded before,
+              but different from when Strategies wasn't loaded in that
+              the to_native () and to_CORBA () calls would just return
+              errors.
+          5.  Moved the PriorityMappingManager interface from the TAO
+              namespace to the RTCORBA namespace.
+          6.  No TAO_HAS_RT_CORBA guards!
+
+        * tests/RTCORBA/Banded_Connections/svc.conf:
+        * tests/RTCORBA/Client_Propagated/svc.conf:
+        * tests/RTCORBA/Private_Connection/svc.conf:
+        * tests/RTCORBA/Server_Declared/svc.conf:
+        * tests/RTCORBA/Server_Protocol/svc.conf:
+        * tests/RTCORBA/Thread_Pool/svc.conf:
+          Created svc.conf files and added "static RT_ORB_Loader """.
+
+        * TAOACE.dsw:
+        * TAOACE_Static.dsw:
+          Added RTCORBA and RTPortableServer libraries to project list.
+
+        * rules.tao.GNU:
+          Added RT_TAO_SRVR_LIBS and RT_TAO_CLNT_LIBS macros to 
+          make it easier to pull in the RT CORBA libraries.
+
+        * */Makefile*:
+          Updated the dependencies on all TAO Makefiles.
+
+        * examples/Buffered_Oneways/client.cpp:
+          Removed false dependency on RT CORBA.  Changed include "RTCORBA.h"
+          to "tao/TAOC.h".
+
+        * examples/PluggableUDP/DIOP/DIOP_Profile.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Profile.cpp:
+        * tao/IIOP_Profile.cpp:
+        * tao/Strategies/SHMIOP_Profile.cpp:
+        * tao/Strategies/UIOP_Profile.cpp:
+          Removed guards around code to check profile for multiple endpoints.
+          The previous code had a comment that the check was not enabled
+          when RT_CORBA wasn't enabled for performance reasons.  Since the
+          code isn't in the critical path, we just removed the check rather
+          than performing a more involved refactoring.
+
+        * performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/client.cpp:
+        * performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/server.cpp:
+        * performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/client.cpp:
+        * performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/server.cpp:
+        * performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/client.cpp:
+        * performance-tests/RTCorba/Oneways/Reliable/client.cpp:
+          Changes for the RTCORBA subsetting.  Changed namespace for
+          PriorityMappingManager, and include directory.
+
+        * tao/Acceptor_Registry.cpp:
+          Removed unnecessary RT_Policy_i.h include.
+
+        * tao/Buffering_Constraint_Policy.cpp:
+        * tao/Buffering_Constraint_Policy.h:
+          Added _tao_cached_type implementation.
+
+        * tao/Client_Priority_Policy.cpp:
+        * tao/Client_Priority_Policy.h:
+        * tao/Client_Priority_Policy.i:
+          The ClientPriorityPolicy has been deprecated and now it has been removed.
+          These files are no longer needed.
+
+        * tao/Messaging_ORBInitializer.cpp:
+        * tao/Messaging_PolicyFactory.cpp:
+        * tao/TAO.pidl:
+        * tao/TAOC.cpp:
+        * tao/TAOC.h:
+        * tao/TAOC.i:
+          Removed ClientPriorityPolicy references.
+
+        * tao/Default_Protocols_Hooks.cpp:
+        * tao/Default_Protocols_Hooks.h:
+        * tao/Protocols_Hooks.cpp:
+        * tao/Protocols_Hooks.h:
+          Removed many unnecessary methods and cleaned up code.
+
+        * tao/Strategies/Reactor_Per_Priority.cpp:
+          Updated from changes in Protocols_Hooks.h.
+
+        * tao/IIOP_Acceptor.cpp:
+        * tao/IIOP_Connector.cpp:
+        * tao/Strategies/UIOP_Acceptor.cpp:
+        * tao/Strategies/UIOP_Connector.cpp:
+          Removed RT specific code from the init_*_properties
+          routines.  No interface changes were needed for these
+          changes.  There is a lot of IIOP and UIOP specific
+          code in the RTCORBA library that should be moved out,
+          but we didn't address this change as it would involve
+          changes to the pluggable protocol interface.
+
+        * tao/Invocation.cpp:
+        * tao/Invocation.h:
+          Cleaned up files.  Removed RT_Stub.h include.
+
+        * tao/Invocation_Endpoint_Selectors.cpp:
+        * tao/Invocation_Endpoint_Selectors.h:
+        * tao/Invocation_Endpoint_Selectors.i:
+          Cleaned up remnants of TAO_Endpoint_Selection_State.
+
+        * tao/Messaging_Policy_i.cpp:
+        * tao/Messaging_Policy_i.h:
+          Added _tao_cached_type methods to allow for constant
+          time access to a couple of policies in the policy 
+          set.
+
+        * tao/ORB.cpp:
+        * tao/ORB.h:
+        * tao/ORB_Core.cpp:
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.i:
+          Removed as many RT CORBA references as possible.  Only
+          what is needed to load the RTCORBA library and resolve
+          the RT_ORB and RT_Current are left.
+
+        * tao/PolicyC.cpp:
+        * tao/PolicyC.h:
+          Added _tao_cached_type and _tao_scope methods to 
+          CORBA::Policy.  The _tao_cached_type returns a special
+          enum (see orbconf.h) for use by TAO_Policy_Set to
+          be able to retrieve policies generically in constant 
+          time.  The _tao_scope is used to specify the scope to
+          which a specific policy applies.  The current possible
+          scopes are object level, current level, ORB level, POA level,
+          and client exposed.  A policy can be in more than one
+          scope.  TAO_Policy_Set can be configured to reject policies
+          that are not in the appropriate scope without any additions
+          to the TAO_Policy_Set code.  In fact, the special case code
+          that was there, has now been removed.
+
+        * tao/Policy_Manager.cpp:
+        * tao/Policy_Manager.h:
+        * tao/Policy_Manager.i:
+          Factored out TAO_Policy_Manager_Impl code to TAO_Policy_Set
+          to allow for reuse with the POA.  Also, removed all accessors
+          to specific policies in all of the "TAO_Policy_Manager" classes.
+          If users need constant time access to policies, they should
+          use the get_cached_policy interface.  
+
+        * tao/Pool_Per_Endpoint.cpp:
+        * tao/Pool_Per_Endpoint.h:
+        * tao/Pool_Per_Endpoint.i:
+        * tao/Priority_Mapping.cpp:
+        * tao/Priority_Mapping.h:
+        * tao/Priority_Mapping.i:
+        * tao/Priority_Mapping_Manager.cpp:
+        * tao/Priority_Mapping_Manager.h:
+        * tao/Priority_Mapping_Manager.i:
+        * tao/Private_Transport_Descriptor.cpp:
+        * tao/Private_Transport_Descriptor.h:
+        * tao/Private_Transport_Descriptor.inl:
+        * tao/RTCORBA.pidl:
+        * tao/RTCORBAC.cpp:
+        * tao/RTCORBAC.h:
+        * tao/RTCORBAC.i:
+        * tao/RTCORBAS.cpp:
+        * tao/RTCORBAS.h:
+        * tao/RTCORBAS.i:
+        * tao/RTCORBAS_T.cpp:
+        * tao/RTCORBAS_T.h:
+        * tao/RTCORBAS_T.i:
+        * tao/RT_CORBA.h:
+        * tao/RT_Current.cpp:
+        * tao/RT_Current.h:
+        * tao/RT_Current.i:
+        * tao/RT_Endpoint_Selector_Factory.cpp:
+        * tao/RT_Endpoint_Selector_Factory.h:
+        * tao/RT_Endpoint_Utils.cpp:
+        * tao/RT_Endpoint_Utils.h:
+        * tao/RT_Invocation_Endpoint_Selectors.cpp:
+        * tao/RT_Invocation_Endpoint_Selectors.h:
+        * tao/RT_Invocation_Endpoint_Selectors.i:
+        * tao/RT_Mutex.cpp:
+        * tao/RT_Mutex.h:
+        * tao/RT_Mutex.i:
+        * tao/RT_ORB.cpp:
+        * tao/RT_ORB.h:
+        * tao/RT_ORB.i:
+        * tao/RT_ORBInitializer.cpp:
+        * tao/RT_ORBInitializer.h:
+        * tao/RT_ORB_Loader.cpp:
+        * tao/RT_ORB_Loader.h:
+        * tao/RT_PolicyFactory.cpp:
+        * tao/RT_PolicyFactory.h:
+        * tao/RT_Policy_i.cpp:
+        * tao/RT_Policy_i.h:
+        * tao/RT_Policy_i.i:
+        * tao/RT_Protocols_Hooks.cpp:
+        * tao/RT_Protocols_Hooks.h:
+        * tao/RT_Protocols_Hooks.i:
+        * tao/RT_Stub.cpp:
+        * tao/RT_Stub.h:
+        * tao/RT_Stub_Factory.cpp:
+        * tao/RT_Stub_Factory.h:
+        * tao/Thread_Pool.cpp:
+        * tao/Thread_Pool.h:
+        * tao/Thread_Pool.i:
+        * tao/rtcorbafwd.cpp:
+        * tao/rtcorbafwd.h:
+        * tao/rtcorbafwd.i:
+          Removed RT files from here and put them in tao/RTCORBA.
+
+        * tao/Resource_Factory.cpp:
+        * tao/Resource_Factory.h:
+        * tao/Strategies/advanced_resource.cpp:
+        * tao/Strategies/advanced_resource.h:
+        * tao/default_resource.cpp:
+        * tao/default_resource.h:
+        * tao/Strategies/TAO_Strategies.dsp:
+        * tao/Strategies/TAO_Strategies_Static.dsp:
+          Moved all priority mapping code and options to the RTCORBA
+          library.
+
+        * tao/Strategies/Direct_Priority_Mapping.cpp:
+        * tao/Strategies/Direct_Priority_Mapping.h:
+        * tao/Strategies/Direct_Priority_Mapping.i:
+        * tao/Strategies/Linear_Priority_Mapping.cpp:
+        * tao/Strategies/Linear_Priority_Mapping.h:
+        * tao/Strategies/Linear_Priority_Mapping.i:
+          Removed these files from Strategies and put them in RTCORBA.
+
+        * tao/Stub.cpp:
+        * tao/Stub.h:
+          Changes to use new Policy_Set interface and removed
+          ClientPriorityPolicy code.
+
+        * tao/TAO.dsp:
+        * tao/TAO_Static.dsp:
+          Removed RT CORBA files.
+
+        * tao/TAO_Internal.cpp:
+          Added server configurator registration for default
+          endpoint selectors and stub factories.
+
+        * tao/orbconf.h:
+          Removed TAO_HAS_RT_CORBA definitions and added cached policy
+          enumerations and policy scope enumerations.
+
+        * tao/PortableServer/Default_Policy_Validator.cpp:
+        * tao/PortableServer/Default_Policy_Validator.h:
+        * tao/PortableServer/Policy_Validator.cpp:
+        * tao/PortableServer/Policy_Validator.h:
+          Added TAO_Policy_Validator interface to enable POA extensions
+          to be able to check the consistency and validity of POA
+          Policies.
+
+        * tao/PortableServer/Servant_Dispatcher.h:
+        * tao/PortableServer/Default_Servant_Dispatcher.cpp:
+        * tao/PortableServer/Default_Servant_Dispatcher.h:
+        * tao/PortableServer/RT_Servant_Dispatcher.cpp:
+        * tao/PortableServer/RT_Servant_Dispatcher.h:
+          Added factory method to be able to create a new POA.  POA
+          extensions can override the method to instantiate different
+          kinds of POA's or perform some special initialization on
+          them.  The RTPortableServer library does this.
+
+        * tao/PortableServer/Object_Adapter.cpp:
+        * tao/PortableServer/Object_Adapter.h:
+        * tao/PortableServer/Object_Adapter.i:
+          Removed all RTCORBA specific references.  Added ability
+          to register policy validators and default POA policies
+          at initialization.
+
+        * tao/PortableServer/POA.cpp:
+        * tao/PortableServer/POA.h:
+        * tao/PortableServer/POA.i:
+          Factored out RT specific code into RTPOA.{cpp,h,i} in
+          the RTPortableServer library.  Moved implementation of
+          standard 7 POA policies to POA_Policies.{cpp,h,i}.  Moved
+          and refactored the TAO_POA_Policies class to 
+          POA_Policy_Set.{cpp,h,i} and POA_Cached_Policies.{cpp,h,i}.
+
+        * tao/PortableServer/POA_Cached_Policies.cpp:
+        * tao/PortableServer/POA_Cached_Policies.h:
+        * tao/PortableServer/POA_Cached_Policies.i:
+          Parses a POA_Policy_Set and saves policy parameters for
+          quick (no lock) access in the critical path.  This class
+          is very similar to the previous TAO_POA_Policies class
+          except that all RT CORBA specific code has been removed.
+
+        * tao/PortableServer/POA_Policies.cpp:
+        * tao/PortableServer/POA_Policies.h:
+        * tao/PortableServer/POA_Policies.i:
+          Implementation of the standard 7 POA policies.  Added
+          implementation of _tao_cached_type and _tao_scope to
+          each policy.
+
+        * tao/PortableServer/POA_Policy_Set.cpp:
+        * tao/PortableServer/POA_Policy_Set.h:
+        * tao/PortableServer/POA_Policy_Set.i:
+          Implementation of generic container for POA policies.
+          Reuses TAO_Policy_Set implementation and adds POA
+          specific validation and code to handle client exposed
+          policies generically.
+
+        * tao/PortableServer/PortableServer.h:
+          Removed RTCORBA dependency.
+
+        * tao/PortableServer/RTPortableServer.pidl:
+        * tao/PortableServer/RTPortableServerC.cpp:
+        * tao/PortableServer/RTPortableServerC.h:
+        * tao/PortableServer/RTPortableServerC.i:
+        * tao/PortableServer/RT_Acceptor_Filters.cpp:
+        * tao/PortableServer/RT_Acceptor_Filters.h:
+        * tao/PortableServer/RT_Acceptor_Filters.i:
+          Moved RT specific files from here to tao/RTPortableServer.
+
+        * tao/PortableServer/TAO_PortableServer.dsp:
+        * tao/PortableServer/TAO_PortableServer_Static.dsp:
+          Removed RT files.
+
+        * tests/Exposed_Policies/Policy_Tester.cpp:
+        * tests/Exposed_Policies/Policy_Tester.h:
+        * tests/Exposed_Policies/Policy_Verifier.cpp:
+        * tests/Exposed_Policies/Policy_Verifier.h:
+        * tests/Exposed_Policies/RT_Properties.cpp:
+        * tests/Exposed_Policies/client.cpp:
+        * tests/Exposed_Policies/server.conf:
+        * tests/Exposed_Policies/svc.conf:
+        * tests/Exposed_Policies/server.cpp:
+          Removed RT guards, fixed header file include paths, and
+          added the RT_ORB_Loader to the *.conf files.
+
+        * tao/diffs/RTCORBAS.cpp.diff:
+        * tao/diffs/RTCORBAS.h.diff:
+          Removed.  The RTCORBAS.{cpp,i,h} files are used anyway.
+
+        * RTPortableServer/Makefile:
+        * RTPortableServer/Makefile.bor:
+        * RTPortableServer/RTPortableServer.cpp:
+        * RTPortableServer/RTPortableServer.h:
+        * RTPortableServer/RTPortableServer.pidl:
+        * RTPortableServer/rtportableserver_export.h:
+        * RTPortableServer/RT_Object_Adapter_Factory.cpp:
+        * RTPortableServer/RT_Object_Adapter_Factory.h:
+        * RTPortableServer/RT_POA.cpp:
+        * RTPortableServer/RT_POA.h:
+        * RTPortableServer/RT_POA.i:
+        * RTPortableServer/RT_POA_Initializer.cpp:
+        * RTPortableServer/RT_POA_Initializer.h:
+        * RTPortableServer/RT_Policy_Validator.cpp:
+        * RTPortableServer/RT_Policy_Validator.h:
+        * RTPortableServer/RT_Servant_Dispatcher.cpp:
+        * RTPortableServer/RT_Servant_Dispatcher.h:
+        * RTPortableServer/TAO_RTPortableServer.dsp:
+        * RTPortableServer/TAO_RTPortableServer_Static.dsp:
+          Created RTPortableServer library from some files in
+          PortableServer.  Added library support and initialization files.
+
+        * tests/Policies/Manipulation.cpp:
+        * tests/Timed_Buffered_Oneways/client.cpp
+          Removed unnecessary RTCORBA reference.
+
+        * tests/RTCORBA/Banded_Connections/client.cpp:
+        * tests/RTCORBA/Banded_Connections/client.dsp:
+        * tests/RTCORBA/Banded_Connections/run_test.pl:
+        * tests/RTCORBA/Banded_Connections/server.conf:
+        * tests/RTCORBA/Banded_Connections/server.cpp:
+        * tests/RTCORBA/Banded_Connections/server.dsp:
+        * tests/RTCORBA/Client_Propagated/client.cpp:
+        * tests/RTCORBA/Client_Propagated/client.dsp:
+        * tests/RTCORBA/Client_Propagated/server.cpp:
+        * tests/RTCORBA/Client_Propagated/server.dsp:
+        * tests/RTCORBA/Client_Protocol/client.cpp:
+        * tests/RTCORBA/Client_Protocol/client.dsp:
+        * tests/RTCORBA/Client_Protocol/server.cpp:
+        * tests/RTCORBA/Client_Protocol/server.dsp:
+        * tests/RTCORBA/Client_Protocol/svc.conf:
+        * tests/RTCORBA/Explicit_Binding/client.cpp:
+        * tests/RTCORBA/Explicit_Binding/client.dsp:
+        * tests/RTCORBA/Explicit_Binding/server.cpp:
+        * tests/RTCORBA/Explicit_Binding/server.dsp:
+        * tests/RTCORBA/Explicit_Binding/svc.conf:
+        * tests/RTCORBA/MT_Client_Protocol_Priority/client.cpp:
+        * tests/RTCORBA/MT_Client_Protocol_Priority/client.dsp:
+        * tests/RTCORBA/MT_Client_Protocol_Priority/server.cpp:
+        * tests/RTCORBA/MT_Client_Protocol_Priority/server.dsp:
+        * tests/RTCORBA/Private_Connection/client.cpp:
+        * tests/RTCORBA/Private_Connection/client.dsp:
+        * tests/RTCORBA/Private_Connection/server.cpp:
+        * tests/RTCORBA/Private_Connection/server.dsp:
+        * tests/RTCORBA/RTMutex/server.cpp:
+        * tests/RTCORBA/RTMutex/server.dsp:
+        * tests/RTCORBA/Server_Declared/client.cpp:
+        * tests/RTCORBA/Server_Declared/client.dsp:
+        * tests/RTCORBA/Server_Declared/run_test.pl:
+        * tests/RTCORBA/Server_Declared/server.conf:
+        * tests/RTCORBA/Server_Declared/server.cpp:
+        * tests/RTCORBA/Server_Declared/server.dsp:
+        * tests/RTCORBA/Server_Protocol/client.cpp:
+        * tests/RTCORBA/Server_Protocol/client.dsp:
+        * tests/RTCORBA/Server_Protocol/server.cpp:
+        * tests/RTCORBA/Server_Protocol/server.dsp:
+        * tests/RTCORBA/Server_Protocol/server_iiop.conf:
+        * tests/RTCORBA/Server_Protocol/server_reverse.conf:
+        * tests/RTCORBA/Server_Protocol/server_reverse_nt.conf:
+        * tests/RTCORBA/Server_Protocol/server_shmiop.conf:
+        * tests/RTCORBA/Thread_Pool/server.cpp:
+        * tests/RTCORBA/Thread_Pool/server.dsp:
+          Modified include paths, svc.conf files, and dsp files
+          to point to the new RTCORBA library.
+
 Mon Jun 11 16:56:06 2001  Balachandran  <bala@cs.wustl.edu>
 
         * TAO version 1.1.17 released.

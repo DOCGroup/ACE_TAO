@@ -1,14 +1,12 @@
 // $Id$
 
 #include "testC.h"
-#include "tao/RT_CORBA.h"
+#include "tao/RTCORBA/RTCORBA.h"
 #include "ace/Get_Opt.h"
 #include "ace/Sched_Params.h"
 #include "ace/Task.h"
 
 #include "tao/Strategies/advanced_resource.h"
-
-#if (TAO_HAS_RT_CORBA == 1)
 
 class Worker_Thread : public ACE_Task_Base
 {
@@ -176,8 +174,8 @@ main (int argc, char *argv[])
         orb->resolve_initial_references ("PriorityMappingManager",
                                          ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      TAO::PriorityMappingManager_var mapping_manager =
-        TAO::PriorityMappingManager::_narrow (object.in (),
+      RTCORBA::PriorityMappingManager_var mapping_manager =
+        RTCORBA::PriorityMappingManager::_narrow (object.in (),
                                               ACE_TRY_ENV);
       ACE_TRY_CHECK;
       if (check_for_nil (mapping_manager.in (), "Mapping Manager") == -1)
@@ -368,16 +366,3 @@ Worker_Thread::svc (void)
   return 0;
 }
 
-#else /* TAO_HAS_RT_CORBA == 1 */
-
-int
-main (int argc, char *argv[])
-{
-  ACE_UNUSED_ARG (argc);
-  ACE_UNUSED_ARG (argv);
-  ACE_ERROR_RETURN ((LM_ERROR,
-                     "\nRTCORBA must be enabled to run this test!\n"),
-                    1);
-}
-
-#endif /* TAO_HAS_RT_CORBA == 1 */

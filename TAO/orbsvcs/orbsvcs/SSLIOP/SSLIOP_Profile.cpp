@@ -130,23 +130,8 @@ TAO_SSLIOP_Profile::decode (TAO_InputCDR& cdr)
           // It is true ssl profile, i.e., not just IIOP, so must have
           // ssl endpoints encoded.
 
-          // @@ RTCORBA_SUBSETTING:
-          // The original version pre-subsetting was as below. We moved this
-          // code out because it is not in the critical path, does not interfere
-          // with the correctness of the method.
-
           if (this->decode_endpoints () == -1)
             return -1;
-
-          //#if (TAO_HAS_RT_CORBA == 1)
-
-          // Currently there are > 1 endpoint per profile only with RTCORBA.
-
-          // Decode endpoints, if any.
-          //   if (this->decode_endpoints () == -1)
-          //     return -1;
-
-          // #endif  /* TAO_HAS_RT_CORBA == 1 */
 
           return 1;
         }

@@ -40,7 +40,6 @@
 #include "PortableInterceptorC.h"
 #include "Interceptor_List.h"
 
-#include "RT_Policy_i.h"
 #include "Protocols_Hooks.h"
 
 #include "ace/Hash_Map_Manager.h"
@@ -61,8 +60,6 @@ class TAO_TSS_Resources;
 class TAO_Reactor_Registry;
 class TAO_Leader_Follower;
 class TAO_LF_Strategy;
-class TAO_Priority_Mapping;
-class TAO_Priority_Mapping_Manager;
 class TAO_RT_ORB;
 class TAO_RT_Current;
 class TAO_MProfile;
@@ -78,10 +75,12 @@ class TAO_BiDir_Adapter;
 class TAO_Flushing_Strategy;
 
 class TAO_Stub_Factory;
+class TAO_Endpoint_Selector_Factory;
 class TAO_Service_Context;
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
+class TAO_Buffering_Constraint_Policy;
 class TAO_Eager_Buffering_Sync_Strategy;
 class TAO_Delayed_Buffering_Sync_Strategy;
 
@@ -89,6 +88,8 @@ class TAO_Delayed_Buffering_Sync_Strategy;
 
 class TAO_Transport_Sync_Strategy;
 class TAO_Sync_Strategy;
+
+class TAO_POA_Extension_Initializer;
 
 // ****************************************************************
 
@@ -253,6 +254,12 @@ public:
   /// Get the adapter registry
   TAO_Adapter_Registry *adapter_registry (void);
 
+  /// Add a POA extension initializer.  The ORB Core takes ownership of
+  /// the passed in instance.
+  void add_poa_extension_initializer (TAO_POA_Extension_Initializer *initializer);
+
+  /// Get the POA extension initializers.
+  TAO_POA_Extension_Initializer *poa_extension_initializer (void);
 
   /// @name Collocation Strategies
   //@{
@@ -364,11 +371,17 @@ public:
   /// Returns pointer to the server factory.
   TAO_Server_Strategy_Factory *server_factory (void);
 
-  /// Returns pointer to the Protocol_Hooks
+  /// Returns pointer to the Protocol_Hooks.
   TAO_Protocols_Hooks *protocols_hooks (void);
+
+  /// Returns a pointer to the Stub factory.
+  TAO_Stub_Factory *stub_factory (void);
+
+  /// Returns a pointer to the endpoint selector factory.
+  TAO_Endpoint_Selector_Factory *endpoint_selector_factory (void);
   //@}
 
-  /// Sets the value of TAO_ORBCode::stub_factory_name_
+  /// Sets the value of TAO_ORB_Core::stub_factory_name_
   static void set_stub_factory (const char *stub_factory_name);
 
   /// Sets the value of TAO_ORB_Core::resource_factory_
@@ -377,8 +390,18 @@ public:
   /// Sets the value of TAO_ORB_Core::protocols_hooks_
   static void set_protocols_hooks (const char *protocols_hooks_name);
 
+  /// Sets the value of TAO_ORB_Core::endpoint_selector_factory_
+  static void set_endpoint_selector_factory (
+    const char *endpoint_selector_factory_name);
+
+  /// Sets the name of the POA factory and the dynamic service
+  /// configurator directive to load it if needed.
+  static void set_poa_factory (
+                    const char *poa_factory_name,
+                    const char *poa_factory_directive);
+
   /// Gets the value of TAO_ORB_Core::protocols_hooks__
-  TAO_Protocols_Hooks * get_protocols_hooks (void);
+  TAO_Protocols_Hooks * get_protocols_hooks (CORBA::Environment &ACE_TRY_ENV);
 
   /// Sets the value of TAO_ORB_Core::dynamic_adapter_name_.
   static void dynamic_adapter_name (const char *name);
@@ -460,7 +483,11 @@ public:
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
   /// Accessor method for the default_policies_
-  TAO_Policy_Manager_Impl *get_default_policies (void);
+  TAO_Policy_Set *get_default_policies (void);
+
+  /// Get a cached policy.  First, check the ORB-level Policy
+  /// Manager, and then check the ORB defaults.
+  CORBA::Policy *get_cached_policy (TAO_Cached_Policy_Type type);
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
@@ -487,8 +514,6 @@ public:
   void default_environment (CORBA_Environment*);
   //@}
 
-  TAO_Endpoint_Selector_Factory *endpoint_selector_factory (void);
-
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
   /// Return the Policy_Manager for this ORB.
@@ -498,13 +523,6 @@ public:
   /// TSS storage.  The POA has to reset the policy current object on
   /// every upcall.
   TAO_Policy_Current &policy_current (void);
-
-  /// Accessor to obtain the default policy for a particular policy
-  /// type.  If there is no default policy it returns
-  /// CORBA::Policy::_nil ().
-  CORBA::Policy_ptr get_default_policy (
-      CORBA::PolicyType policy,
-      CORBA::Environment &ACE_TRY_ENV);
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
@@ -532,18 +550,7 @@ public:
   /// Access to the RoundtripTimeoutPolicy policy set on the thread or
   /// on the ORB.  In this method, we do not consider the stub since
   /// we do not have access to it.
-  //@{
-  CORBA::Policy *default_relative_roundtrip_timeout (void) const;
   CORBA::Policy *stubless_relative_roundtrip_timeout (void);
-  //@}
-
-#if (TAO_HAS_CLIENT_PRIORITY_POLICY == 1)
-
-  TAO_Client_Priority_Policy *default_client_priority (void) const;
-
-#endif /* TAO_HAS_CLIENT_PRIORITY_POLICY == 1 */
-
-  CORBA::Policy *default_sync_scope (void) const;
 
   void call_sync_scope_hook (TAO_Stub *stub,
                              int &has_synchronization,
@@ -573,50 +580,8 @@ public:
   /// This strategy will sync with the transport.
   TAO_Transport_Sync_Strategy &transport_sync_strategy (void);
 
-#if (TAO_HAS_RT_CORBA == 1)
-
-  /// Access the RTORB.
-  CORBA::Object_ptr rt_orb (CORBA::Environment &ACE_TRY_ENV);
-
-  /// Access the RT Current.
-  //@{
-  CORBA::Object_ptr rt_current (void);
-  void rt_current (CORBA::Object_ptr current);
-  //@}
-
-  /// Access the priority mapping manager class.  This is a TAO
-  /// extension but there is no standard for setting priority mapping
-  /// either.
-  CORBA::Object_ptr priority_mapping_manager (void);
-
-  /// Methods for obtaining ORB implementation default values for RT
-  /// policies.
-  //@{
-  CORBA::Policy *default_private_connection (void) const;
-  CORBA::Policy *default_priority_banded_connection (void) const;
-  CORBA::Policy *default_client_protocol (void) const;
-  CORBA::Policy *default_server_protocol (void) const;
-  CORBA::Policy *default_threadpool (void) const;
-  CORBA::Policy *default_priority_model (void) const;
-  //@}
-
-  /**
-   *
-   * Methods for obtaining effective ORB-level overrides for policies
-   * available only at the POA/ORB levels, and unavailable at
-   * Object/Current levels.
-   * @par
-   *
-   * First check for an override at the ORB scope; if nothing there,
-   * check the ORB implementation default values.
-   */
-  //@{
-  CORBA::Policy *threadpool (void);
-  CORBA::Policy *priority_model (void);
-  CORBA::Policy *server_protocol (void);
-  //@}
-
-#endif /* TAO_HAS_RT_CORBA == 1 */
+  /// Pointer to chain of POA extension initializers.
+  TAO_POA_Extension_Initializer *poa_extension_initializer_;
 
   /// Handle to the factory for protocols_hooks_..
   TAO_Protocols_Hooks *protocols_hooks_;
@@ -733,6 +698,12 @@ public:
   // -ORBDefaultInitRef options.
   CORBA::Object_ptr resolve_rir (const char *name,
                                  CORBA::Environment &);
+
+  /// Resolve the RT ORB reference for this ORB.
+  CORBA::Object_ptr resolve_rt_orb (CORBA::Environment &ACE_TRY_ENV);
+
+  /// Resolve the RT Current flyweight for this ORB.
+  CORBA::Object_ptr resolve_rt_current (CORBA::Environment &ACE_TRY_ENV);
 
   /// List all the service known by the ORB
   CORBA_ORB_ObjectIdList_ptr list_initial_references (CORBA::Environment &);
@@ -928,12 +899,11 @@ protected:
                                        ACE_Allocator *buffer_allocator,
                                        ACE_Allocator *dblock_allocator,
                                        ACE_Lock *lock);
-#if (TAO_HAS_RT_CORBA == 1)
-
-  /// Obtain and cache the RT_ORB factory object reference
+  /// Obtain and cache the RT_ORB object reference
   void resolve_rt_orb_i (CORBA::Environment &ACE_TRY_ENV);
 
-#endif /* TAO_HAS_RT_CORBA == 1 */
+  /// Obtain and cache the RT_Current flyweight reference
+  void resolve_rt_current_i (CORBA::Environment &ACE_TRY_ENV);
 
   /// Obtain and cache the dynamic any factory object reference.
   void resolve_typecodefactory_i (CORBA::Environment &ACE_TRY_ENV);
@@ -978,21 +948,6 @@ private:
 
 protected:
 
-#if (TAO_HAS_RT_CORBA == 1)
-  /// Implementation of RTCORBA::RTORB interface.
-  CORBA::Object_var rt_orb_;
-
-  /// Implementation of RTCORBA::RTCurrent interface.
-  CORBA::Object_var rt_current_;
-
-  /// Manager for setting priority mapping.
-  CORBA::Object_var priority_mapping_manager_;
-
-  // RT ORB specific command line argument parsing.
-  int RT_ORB_init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV);
-
-#endif /* TAO_HAS_RT_CORBA == 1 */
-
   /// Synchronize internal state...
   TAO_SYNCH_MUTEX lock_;
 
@@ -1025,8 +980,17 @@ protected:
   /// The cached object reference for the IORManipulataion.
   CORBA::Object_ptr ior_manip_factory_;
 
-  /// The cached object reference for the IORTable
+  /// The cached object reference for the IORTable.
   CORBA::Object_ptr ior_table_;
+
+  /// The cached object reference for the RTCORBA::RTORB.
+  CORBA::Object_ptr rt_orb_;
+
+  /// The cached object reference for the RTCORBA::RTCurrent interface.
+  CORBA::Object_ptr rt_current_;
+
+  /// The cached object reference for the priority mapping manager.
+  CORBA::Object_ptr rt_priority_mapping_manager_;
 
   /**
    * @note
@@ -1067,6 +1031,16 @@ protected:
   ACE_Allocator *message_block_msgblock_allocator_;
   //@}
 
+  // Name of the endpoint selector factory that needs to be instantiated.
+  // The default value is "Default_Endpoint_Selector_Factory". If
+  // TAO_RTCORBA is linked, the set_endpoint_selector_factory will be
+  // called to set the value to be "RT_Endpoint_Selector_Factory".
+  static const char *endpoint_selector_factory_name_;
+
+  // Name of the stub factory that needs to be instantiated.
+  // The default value is "Default_Stub_Factory". If TAO_RTCORBA is
+  // linked, the set_stub_factory will be called to set the value
+  // to be "RT_Stub_Factory".
   static const char *stub_factory_name_;
 
   // Name of the resource factory that needs to be instantiated.
@@ -1093,6 +1067,16 @@ protected:
   // function typecodefactory_adapter_name() will be called to set
   // the value to "Concrete_TypeCodeFactory_Adapter".
   static const char *typecodefactory_adapter_name_;
+
+  // Name of the service object used to create the RootPOA.  The
+  // default value is "TAO_POA".  If TAO_RTCORBA is loaded, this
+  // will be changed to TAO_RT_POA so that a POA equipped with
+  // realtime extensions will be returned.
+  static const char * TAO_ORB_Core::poa_factory_name_;
+
+  // The service configurator directive used to load
+  // poa_factory_name_ dynamically.
+  static const char * TAO_ORB_Core::poa_factory_directive_;
 
   // @@ This is not needed since the default resource factory
   //    is staticaly added to the service configurator.
@@ -1146,7 +1130,7 @@ protected:
   TAO_Policy_Manager *policy_manager_;
 
   /// The default policies.
-  TAO_Policy_Manager_Impl *default_policies_;
+  TAO_Policy_Set *default_policies_;
 
   /// Policy current.
   TAO_Policy_Current *policy_current_;

@@ -339,6 +339,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "RTCORBA_Static"=.\tao\RTCORBA\TAO_RTCORBA_Static.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "RTEvent_Static"=.\orbsvcs\orbsvcs\RTEvent_Static.dsp - Package Owner=<4>
 
 Package=<5>
@@ -355,6 +367,18 @@ Package=<4>
 ###############################################################################
 
 Project: "RTOLDEvent_Static"=.\orbsvcs\orbsvcs\RTOLDEvent_Static.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "RTPortableServer_Static"=.\tao\RTPortableServer\TAO_RTPortableServer_Static.dsp - Package Owner=<4>
 
 Package=<5>
 {{{

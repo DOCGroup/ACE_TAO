@@ -84,6 +84,12 @@ TAO_Buffering_Constraint_Policy::destroy (CORBA_Environment &)
 {
 }
 
+TAO_Cached_Policy_Type
+TAO_Buffering_Constraint_Policy::_tao_cached_type (void) const
+{
+  return TAO_CACHED_POLICY_BUFFERING_CONSTRAINT;
+}
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)

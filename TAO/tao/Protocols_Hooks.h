@@ -16,7 +16,6 @@
 #include "ace/pre.h"
 
 #include "corbafwd.h"
-#include "RTCORBAC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -32,98 +31,66 @@ class TAO_Service_Context;
 class TAO_Export TAO_Protocols_Hooks : public ACE_Service_Object
 {
 public:
-
-  /// constructor
-  TAO_Protocols_Hooks (void);
-
   /// destructor
   virtual ~TAO_Protocols_Hooks (void);
 
-  virtual int call_client_protocols_hook (TAO_ORB_Core *orb_core,
-                                          int &send_buffer_size,
+  /// Initialize the protocols hooks instance.
+  virtual void init_hooks (TAO_ORB_Core *orb_core,
+                           CORBA::Environment &ACE_TRY_ENV) = 0;
+
+  virtual int call_client_protocols_hook (int &send_buffer_size,
                                           int &recv_buffer_size,
                                           int &no_delay,
-                                          const char *protocol_type);
+                                          const char *protocol_type) = 0;
 
-  virtual int call_server_protocols_hook (TAO_ORB_Core *orb_core,
-                                          int &send_buffer_size,
+  virtual int call_server_protocols_hook (int &send_buffer_size,
                                           int &recv_buffer_size,
                                           int &no_delay,
-                                          const char *protocol_type);
+                                          const char *protocol_type) = 0;
 
-
-  /**
-   * to get the policy_type in Long format.
-   *
-   */
-  virtual void call_policy_type_hook (CORBA::PolicyList *&policy_list,
-                                      CORBA::ULong &policy_type);
-
-  virtual void validate_policy_type (CORBA::ULong slot,
-                                     CORBA::ULong &type_value,
-                                     CORBA::Environment &ACE_TRY_ENV);
 
   virtual void rt_service_context (TAO_Stub *stub,
                                    TAO_Service_Context &service_context,
                                    CORBA::Boolean restart,
-                                   CORBA::Environment &ACE_TRY_ENV);
+                                   CORBA::Environment &ACE_TRY_ENV) = 0;
 
   virtual void add_rt_service_context_hook (TAO_Service_Context &service_context,
                                             CORBA::Policy *model_policy,
                                             CORBA::Short &client_priority,
-                                            CORBA::Environment &ACE_TRY_ENV);
+                                            CORBA::Environment &ACE_TRY_ENV) = 0;
 
   virtual void get_selector_hook (CORBA::Policy *model_policy,
                                   CORBA::Boolean
                                   &is_client_propagated,
-                                  CORBA::Short &server_priority);
+                                  CORBA::Short &server_priority) = 0;
 
   virtual void get_selector_bands_policy_hook (
                            CORBA::Policy *bands_policy,
                            CORBA::Short &min_priority,
                            CORBA::Short &max_priority,
                            CORBA::Short &p,
-                           int &in_range);
-
-  /**
-   * Hook to check and override the exposed policies if needed
-   *
-   */
-  virtual CORBA::Policy *effective_priority_banded_connection_hook (CORBA::Policy *override,
-                                                                    CORBA::Policy *exposed,
-                                                                    CORBA::Environment &);
-
-  virtual CORBA::Policy *effective_client_protocol_hook (CORBA::Policy *override,
-                                                         CORBA::Policy *exposed,
-                                                         CORBA::Environment &);
+                           int &in_range) = 0;
 
   /**
    * Accessor and modifier to the current thread priority, used to
    * implement the RTCORBA::Current interface, but it is faster for
-   * some critical components.  If TAO_HAS_RT_CORBA == 0, the
-   * operations are no-ops.
+   * some critical components.  If the RTCORBA library isn't used,
+   * these operations are no-ops.
    */
   //@{
-  virtual int get_thread_priority (TAO_ORB_Core *,
-                           CORBA::Short &,
-                           CORBA::Environment &);
+  virtual int get_thread_priority (CORBA::Short &,
+                           CORBA::Environment &) = 0;
 
-  virtual int set_thread_priority (TAO_ORB_Core *,
-                           CORBA::Short,
-                           CORBA::Environment &);
+  virtual int set_thread_priority (CORBA::Short,
+                           CORBA::Environment &) = 0;
 
   //@}
-
-  virtual void set_priority_mapping (TAO_ORB_Core *,
-                                     TAO_Resource_Factory *,
-                                     CORBA::Environment &);
 
   /// Sets the default_policies for ORB.
   /// 1. Sets ORB-level policy defaults for this ORB.  Currently sets
   /// default RTCORBA policies: ServerProtocolPolicy and
   /// ClientProtocolPolicy.
-  virtual int set_default_policies (TAO_ORB_Core *orb_core);
-
+  virtual int set_default_policies (CORBA::Environment &ACE_TRY_ENV) = 0;
 };
 
 #include "ace/post.h"

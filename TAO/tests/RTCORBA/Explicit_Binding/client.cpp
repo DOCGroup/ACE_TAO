@@ -4,8 +4,7 @@
 #include "ace/Get_Opt.h"
 
 #include "tao/Strategies/advanced_resource.h"
-
-#if (TAO_HAS_RT_CORBA == 1)
+#include "tao/RTCORBA/RTCORBA.h"
 
 const char *ior = "file://test.ior";
 
@@ -93,7 +92,7 @@ main (int argc, char *argv[])
 
       // Test 1: Check that <validate_connection> establishes an
       // appropriate connection for the current set of effective
-      // policies.  
+      // policies.
       // Set ClientProtocolPolicy override to SHMIOP, and invoke
       // <validate_connection> on the object.  This should succeed, and
       // SHMIOP connection should get established.
@@ -121,13 +120,13 @@ main (int argc, char *argv[])
                   "\n     Test 1\n"));
 
       CORBA::PolicyList_var pols;
-      int status = server->_validate_connection (pols.out (), 
+      int status = server->_validate_connection (pols.out (),
                                                  ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       if (!status)
       ACE_DEBUG ((LM_DEBUG,
-                  "ERROR: <validate_connection> returned FALSE\n"));        
+                  "ERROR: <validate_connection> returned FALSE\n"));
 
       // Test 2: Check that connection established with
       // <validate_connection> is used for subsequent invocations.
@@ -159,10 +158,10 @@ main (int argc, char *argv[])
                                             ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      status = server->_validate_connection (pols.out (), 
+      status = server->_validate_connection (pols.out (),
                                              ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
       if (status)
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("<validate_connection> returned TRUE\n")));
@@ -170,7 +169,7 @@ main (int argc, char *argv[])
       //
       // This portion of code has been temporarily disabled.
       //
-  /*      
+  /*
 
       if (pols.ptr () != 0
           && pols->length () == 1
@@ -182,7 +181,7 @@ main (int argc, char *argv[])
         ACE_DEBUG ((LM_DEBUG,
                     "ERROR: Inconsistent policies do not "
                     "contain what's expected.\n"));
-  */      
+  */
       // Testing over.  Shut down Server ORB.
       ACE_DEBUG ((LM_DEBUG,
                   "\n  Testing over - shutting down\n"));
@@ -191,7 +190,7 @@ main (int argc, char *argv[])
         rt_orb->create_client_protocol_policy (protocols,
                                                ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
       policy_current->set_policy_overrides (policy_list,
                                             CORBA::SET_OVERRIDE,
                                             ACE_TRY_ENV);
@@ -210,16 +209,3 @@ main (int argc, char *argv[])
   return 0;
 }
 
-#else /* TAO_HAS_RT_CORBA == 1 */
-
-int
-main (int argc, char *argv[])
-{
-  ACE_UNUSED_ARG (argc);
-  ACE_UNUSED_ARG (argv);
-  ACE_ERROR_RETURN ((LM_ERROR,
-                     "\nRTCORBA must be enabled to run this test!\n"),
-                    1);
-}
-
-#endif /* TAO_HAS_RT_CORBA == 1 */

@@ -36,16 +36,12 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if (TAO_HAS_CLIENT_PRIORITY_POLICY == 1 || \
-     TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
+#if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
 #include "tao/PolicyC.h"
 #include "tao/TimeBaseC.h"
 
-#endif /* TAO_HAS_CLIENT_PRIORITY_POLICY == 1 ||
-          TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
-
-#include "tao/Priority_Mapping_Manager.h"
+#endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
@@ -72,211 +68,6 @@
 
 TAO_NAMESPACE  TAO
 {
-
-#if (TAO_HAS_RT_CORBA == 1)
-
-  typedef TAO_Priority_Mapping_Manager PriorityMappingManager;
-  typedef TAO_Priority_Mapping_Manager *PriorityMappingManager_ptr;
-  typedef TAO_Priority_Mapping_Manager_var PriorityMappingManager_var;
-  typedef TAO_Priority_Mapping_Manager_out PriorityMappingManager_out;
-
-#endif /* TAO_HAS_RT_CORBA == 1 */
-
-
-#if (TAO_HAS_CLIENT_PRIORITY_POLICY == 1)
-
-  typedef CORBA::Short PrioritySelectionMode;
-  typedef CORBA::Short_out PrioritySelectionMode_out;
-    TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_PrioritySelectionMode;
-
-  TAO_NAMESPACE_STORAGE_CLASS const CORBA::Short USE_NO_PRIORITY;
-
-  TAO_NAMESPACE_STORAGE_CLASS const CORBA::Short USE_THREAD_PRIORITY;
-
-  TAO_NAMESPACE_STORAGE_CLASS const CORBA::Short USE_PRIORITY_RANGE;
-
-  struct PrioritySpecification;
-  class PrioritySpecification_var;
-
-  struct TAO_Export PrioritySpecification
-  {
-
-#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
-    typedef PrioritySpecification_var _var_type;
-#endif /* ! __GNUC__ || g++ >= 2.8 */
-
-    static void _tao_any_destructor (void*);
-
-    ACE_NESTED_CLASS (TAO, PrioritySelectionMode) mode;
-    CORBA::Short min_priority;
-    CORBA::Short max_priority;
-  };
-
-  class TAO_Export PrioritySpecification_var
-  {
-  public:
-    PrioritySpecification_var (void); // default constructor
-    PrioritySpecification_var (PrioritySpecification *);
-    PrioritySpecification_var (const PrioritySpecification_var &); // copy constructor
-    PrioritySpecification_var (const PrioritySpecification &); // fixed-size types only
-    ~PrioritySpecification_var (void); // destructor
-
-    PrioritySpecification_var &operator= (PrioritySpecification *);
-    PrioritySpecification_var &operator= (const PrioritySpecification_var &);
-    PrioritySpecification_var &operator= (const PrioritySpecification &); // fixed-size types only
-    PrioritySpecification *operator-> (void);
-    const PrioritySpecification *operator-> (void) const;
-
-    operator const PrioritySpecification &() const;
-    operator PrioritySpecification &();
-    operator PrioritySpecification &() const;
-
-    // in, inout, out, _retn
-    const PrioritySpecification &in (void) const;
-    PrioritySpecification &inout (void);
-    PrioritySpecification &out (void);
-    PrioritySpecification _retn (void);
-    PrioritySpecification *ptr (void) const;
-
-  private:
-    PrioritySpecification *ptr_;
-  };
-
-  typedef PrioritySpecification &PrioritySpecification_out;
-
-  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_PrioritySpecification;
-
-  TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong CLIENT_PRIORITY_POLICY_TYPE;
-
-
-#if !defined (_TAO_CLIENTPRIORITYPOLICY___PTR_CH_)
-#define _TAO_CLIENTPRIORITYPOLICY___PTR_CH_
-
-  class ClientPriorityPolicy;
-  typedef ClientPriorityPolicy *ClientPriorityPolicy_ptr;
-
-#endif /* end #if !defined */
-
-
-#if !defined (_TAO_CLIENTPRIORITYPOLICY___VAR_CH_)
-#define _TAO_CLIENTPRIORITYPOLICY___VAR_CH_
-
-  class TAO_Export ClientPriorityPolicy_var : public TAO_Base_var
-  {
-  public:
-    ClientPriorityPolicy_var (void); // default constructor
-    ClientPriorityPolicy_var (ClientPriorityPolicy_ptr p) : ptr_ (p) {}
-    ClientPriorityPolicy_var (const ClientPriorityPolicy_var &); // copy constructor
-    ~ClientPriorityPolicy_var (void); // destructor
-
-    ClientPriorityPolicy_var &operator= (ClientPriorityPolicy_ptr);
-    ClientPriorityPolicy_var &operator= (const ClientPriorityPolicy_var &);
-    ClientPriorityPolicy_ptr operator-> (void) const;
-
-    operator const ClientPriorityPolicy_ptr &() const;
-    operator ClientPriorityPolicy_ptr &();
-    // in, inout, out, _retn
-    ClientPriorityPolicy_ptr in (void) const;
-    ClientPriorityPolicy_ptr &inout (void);
-    ClientPriorityPolicy_ptr &out (void);
-    ClientPriorityPolicy_ptr _retn (void);
-    ClientPriorityPolicy_ptr ptr (void) const;
-
-    // Hooks used by template sequence and object manager classes
-    // for non-defined forward declared interfaces.
-    static ClientPriorityPolicy_ptr duplicate (ClientPriorityPolicy_ptr);
-    static void release (ClientPriorityPolicy_ptr);
-    static ClientPriorityPolicy_ptr nil (void);
-    static ClientPriorityPolicy_ptr narrow (CORBA::Object *, CORBA::Environment &);
-    static CORBA::Object * upcast (void *);
-  
-  private:
-    ClientPriorityPolicy_ptr ptr_;
-    // Unimplemented - prevents widening assignment.
-    ClientPriorityPolicy_var (const TAO_Base_var &rhs);
-    ClientPriorityPolicy_var &operator= (const TAO_Base_var &rhs);
-  };
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_TAO_CLIENTPRIORITYPOLICY___OUT_CH_)
-#define _TAO_CLIENTPRIORITYPOLICY___OUT_CH_
-
-  class TAO_Export ClientPriorityPolicy_out
-  {
-  public:
-    ClientPriorityPolicy_out (ClientPriorityPolicy_ptr &);
-    ClientPriorityPolicy_out (ClientPriorityPolicy_var &);
-    ClientPriorityPolicy_out (const ClientPriorityPolicy_out &);
-    ClientPriorityPolicy_out &operator= (const ClientPriorityPolicy_out &);
-    ClientPriorityPolicy_out &operator= (const ClientPriorityPolicy_var &);
-    ClientPriorityPolicy_out &operator= (ClientPriorityPolicy_ptr);
-    operator ClientPriorityPolicy_ptr &();
-    ClientPriorityPolicy_ptr &ptr (void);
-    ClientPriorityPolicy_ptr operator-> (void);
-
-  private:
-    ClientPriorityPolicy_ptr &ptr_;
-  };
-
-
-#endif /* end #if !defined */
-
-
-#if !defined (_TAO_CLIENTPRIORITYPOLICY_CH_)
-#define _TAO_CLIENTPRIORITYPOLICY_CH_
-
-class TAO_Export ClientPriorityPolicy: public virtual CORBA::Policy
-  {
-  public:
-  #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
-    typedef ClientPriorityPolicy_ptr _ptr_type;
-    typedef ClientPriorityPolicy_var _var_type;
-  #endif /* ! __GNUC__ || g++ >= 2.8 */
-
-    // the static operations
-    static ClientPriorityPolicy_ptr _duplicate (ClientPriorityPolicy_ptr obj);
-    static ClientPriorityPolicy_ptr _narrow (
-        CORBA::Object_ptr obj,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      );
-    static ClientPriorityPolicy_ptr _unchecked_narrow (
-        CORBA::Object_ptr obj,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      );
-    static ClientPriorityPolicy_ptr _nil (void)
-      {
-        return (ClientPriorityPolicy_ptr)0;
-      }
-
-    virtual TAO::PrioritySpecification priority_specification (
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    virtual void *_tao_QueryInterface (ptr_arith_t type);
-
-    virtual const char* _interface_repository_id (void) const;
-
-  protected:
-    ClientPriorityPolicy (void);
-    virtual ~ClientPriorityPolicy (void);
-  private:
-    ClientPriorityPolicy (const ClientPriorityPolicy &);
-    void operator= (const ClientPriorityPolicy &);
-  };
-
-
-#endif /* end #if !defined */
-
-#endif /* TAO_HAS_CLIENT_PRIORITY_POLICY == 1 */
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
@@ -387,7 +178,7 @@ class TAO_Export ClientPriorityPolicy: public virtual CORBA::Policy
     static BufferingConstraintPolicy_ptr nil (void);
     static BufferingConstraintPolicy_ptr narrow (CORBA::Object *, CORBA::Environment &);
     static CORBA::Object * upcast (void *);
-  
+
   private:
     BufferingConstraintPolicy_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -495,14 +286,6 @@ class TAO_Export BufferingConstraintPolicy: public virtual CORBA::Policy
 }
 TAO_NAMESPACE_CLOSE // module TAO
 
-#if (TAO_HAS_CLIENT_PRIORITY_POLICY == 1)
-
-TAO_Export void operator<<= (CORBA::Any &, const TAO::PrioritySpecification &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, TAO::PrioritySpecification*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, TAO::PrioritySpecification *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const TAO::PrioritySpecification *&);
-#endif /* TAO_HAS_CLIENT_PRIORITY_POLICY == 1 */
-
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
 TAO_Export void operator<<= (CORBA::Any &, const TAO::BufferingConstraint &); // copying version
@@ -513,13 +296,6 @@ TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const TAO::BufferingC
 #endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
 
 #ifndef __ACE_INLINE__
-
-#if (TAO_HAS_CLIENT_PRIORITY_POLICY == 1)
-
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const TAO::PrioritySpecification &);
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, TAO::PrioritySpecification &);
-
-#endif /* TAO_HAS_CLIENT_PRIORITY_POLICY == 1 */
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 

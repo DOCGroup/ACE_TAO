@@ -1,7 +1,7 @@
 // $Id$
 
 #include "test_i.h"
-#include "tao/Pool_Per_Endpoint.h"
+#include "tao/RTCORBA/Pool_Per_Endpoint.h"
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
 #include "ace/Sched_Params.h"

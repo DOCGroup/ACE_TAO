@@ -22,6 +22,14 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+// Forward references.
+class ACE_CString;
+class TAO_POA_Manager;
+class TAO_POA_Policy_Set;
+class TAO_POA;
+class ACE_Lock;
+class TAO_ORB_Core;
+
 /**
  * @class TAO_Servant_Dispatcher
  *
@@ -37,6 +45,18 @@ public:
   virtual void dispatch (TAO_Object_Adapter::Servant_Upcall &servant_upcall,
                          TAO_ServerRequest &req,
                          CORBA::Environment &ACE_TRY_ENV) = 0;
+
+  /// Factory method for creating new POA's.
+  virtual TAO_POA *create_POA (const ACE_CString &name,
+                               TAO_POA_Manager &poa_manager,
+                               const TAO_POA_Policy_Set &policies,
+                               TAO_POA *parent,
+                               ACE_Lock &lock,
+                               TAO_SYNCH_MUTEX &thread_lock,
+                               TAO_ORB_Core &orb_core,
+                               TAO_Object_Adapter *object_adapter,
+                               CORBA_Environment &ACE_TRY_ENV) = 0;
+
 };
 
 #include "ace/post.h"

@@ -16,166 +16,6 @@ TAO_POA::lock (void)
   return this->lock_;
 }
 
-ACE_INLINE
-TAO_POA_Guard::TAO_POA_Guard (TAO_POA &poa,
-                              CORBA::Environment &ACE_TRY_ENV,
-                              int check_for_destruction)
-  : guard_ (poa.lock ())
-{
-  if (!this->guard_.locked ())
-    ACE_THROW (
-      CORBA::INTERNAL (
-        CORBA_SystemException::_tao_minor_code (
-          TAO_GUARD_FAILURE,
-          0),
-        CORBA::COMPLETED_NO));
-
-  // Check if a non-servant upcall is in progress.  If a non-servant
-  // upcall is in progress, wait for it to complete.  Unless of
-  // course, the thread making the non-servant upcall is this thread.
-  poa.object_adapter ().wait_for_non_servant_upcalls_to_complete (ACE_TRY_ENV);
-  ACE_CHECK;
-
-  if (check_for_destruction &&
-      poa.cleanup_in_progress ())
-    ACE_THROW (
-      CORBA::BAD_INV_ORDER (
-        CORBA_SystemException::_tao_minor_code (
-          TAO_POA_BEING_DESTROYED,
-          0),
-        CORBA::COMPLETED_NO));
-}
-
-ACE_INLINE PortableServer::ThreadPolicyValue
-TAO_POA_Policies::thread (void) const
-{
-  return this->thread_;
-}
-
-ACE_INLINE void
-TAO_POA_Policies::thread (PortableServer::ThreadPolicyValue value)
-{
-  this->thread_ = value;
-}
-
-ACE_INLINE PortableServer::LifespanPolicyValue
-TAO_POA_Policies::lifespan (void) const
-{
-  return this->lifespan_;
-}
-
-ACE_INLINE void
-TAO_POA_Policies::lifespan (PortableServer::LifespanPolicyValue value)
-{
-  this->lifespan_ = value;
-}
-
-ACE_INLINE PortableServer::IdUniquenessPolicyValue
-TAO_POA_Policies::id_uniqueness (void) const
-{
-  return this->id_uniqueness_;
-}
-
-ACE_INLINE void
-TAO_POA_Policies::id_uniqueness (PortableServer::IdUniquenessPolicyValue value)
-{
-  this->id_uniqueness_ = value;
-}
-
-ACE_INLINE PortableServer::IdAssignmentPolicyValue
-TAO_POA_Policies::id_assignment (void) const
-{
-  return this->id_assignment_;
-}
-
-ACE_INLINE void
-TAO_POA_Policies::id_assignment (PortableServer::IdAssignmentPolicyValue value)
-{
-  this->id_assignment_ = value;
-}
-
-ACE_INLINE PortableServer::ImplicitActivationPolicyValue
-TAO_POA_Policies::implicit_activation (void) const
-{
-  return this->implicit_activation_;
-}
-
-ACE_INLINE void
-TAO_POA_Policies::implicit_activation (PortableServer::ImplicitActivationPolicyValue value)
-{
-  this->implicit_activation_ = value;
-}
-
-ACE_INLINE PortableServer::ServantRetentionPolicyValue
-TAO_POA_Policies::servant_retention (void) const
-{
-  return this->servant_retention_;
-}
-
-ACE_INLINE void
-TAO_POA_Policies::servant_retention (PortableServer::ServantRetentionPolicyValue value)
-{
-  this->servant_retention_ = value;
-}
-
-ACE_INLINE PortableServer::RequestProcessingPolicyValue
-TAO_POA_Policies::request_processing (void) const
-{
-  return this->request_processing_;
-}
-
-ACE_INLINE void
-TAO_POA_Policies::request_processing (PortableServer::RequestProcessingPolicyValue value)
-{
-  this->request_processing_ = value;
-}
-
-ACE_INLINE TAO_POA_Policies::PriorityModel
-TAO_POA_Policies::priority_model (void) const
-{
-  return this->priority_model_;
-}
-
-ACE_INLINE void
-TAO_POA_Policies::priority_model (PriorityModel value)
-{
-  this->priority_model_ = value;
-}
-
-ACE_INLINE CORBA::Short
-TAO_POA_Policies::server_priority (void) const
-{
-  return this->server_priority_;
-}
-
-ACE_INLINE void
-TAO_POA_Policies::server_priority (CORBA::Short value)
-{
-  this->server_priority_ = value;
-}
-
-#if (TAO_HAS_RT_CORBA == 1)
-
-ACE_INLINE TAO_ServerProtocolPolicy *
-TAO_POA_Policies::server_protocol (void) const
-{
-  return this->server_protocol_;
-}
-
-ACE_INLINE TAO_PriorityBandedConnectionPolicy *
-TAO_POA_Policies::priority_bands (void) const
-{
-  return this->priority_bands_;
-}
-
-#endif /* TAO_HAS_RT_CORBA == 1 */
-
-ACE_INLINE const CORBA::PolicyList &
-TAO_POA_Policies::client_exposed_fixed_policies (void) const
-{
-  return this->client_exposed_fixed_policies_;
-}
-
 ACE_INLINE CORBA::ULong
 TAO_Creation_Time::creation_time_length (void)
 {
@@ -320,7 +160,7 @@ TAO_POA::destroy (CORBA::Boolean etherealize_objects,
                    ACE_TRY_ENV);
 }
 
-ACE_INLINE TAO_POA_Policies &
+ACE_INLINE TAO_POA_Policy_Set &
 TAO_POA::policies (void)
 {
   return this->policies_;
@@ -396,7 +236,7 @@ TAO_POA::activate_object (PortableServer::Servant servant,
   TAO_POA_GUARD_RETURN (0);
 
   return this->activate_object_i (servant,
-                                  this->policies ().server_priority (),
+                                  this->cached_policies_.server_priority (),
                                   ACE_TRY_ENV);
 }
 
@@ -414,7 +254,7 @@ TAO_POA::activate_object_with_id (const PortableServer::ObjectId &id,
 
   this->activate_object_with_id_i (id,
                                    servant,
-                                   this->policies ().server_priority (),
+                                   this->cached_policies_.server_priority (),
                                    ACE_TRY_ENV);
 }
 
@@ -442,7 +282,7 @@ TAO_POA::create_reference (const char *intf,
   TAO_POA_GUARD_RETURN (CORBA::Object::_nil ());
 
   return this->create_reference_i (intf,
-                                   this->policies ().server_priority (),
+                                   this->cached_policies_.server_priority (),
                                    ACE_TRY_ENV);
 }
 
@@ -458,7 +298,7 @@ TAO_POA::create_reference_with_id (const PortableServer::ObjectId &id,
 
   return this->create_reference_with_id_i (id,
                                            intf,
-                                           this->policies ().server_priority (),
+                                           this->cached_policies_.server_priority (),
                                            ACE_TRY_ENV);
 }
 
@@ -521,113 +361,6 @@ TAO_POA::id_to_reference (const PortableServer::ObjectId &oid,
   return this->id_to_reference_i (oid, ACE_TRY_ENV);
 }
 
-#if (TAO_HAS_RT_CORBA == 1)
-
-ACE_INLINE CORBA::Object_ptr
-TAO_POA::create_reference_with_priority (const char * intf,
-                                         RTCORBA::Priority priority,
-                                         CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableServer::POA::WrongPolicy))
-{
-  this->validate_policies (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
-
-  if (!this->valid_priority (priority))
-    {
-      ACE_THROW_RETURN (CORBA::BAD_PARAM (),
-                        0);
-    }
-
-  // Lock access for the duration of this transaction.
-  TAO_POA_GUARD_RETURN (0);
-
-  return this->create_reference_i (intf,
-                                   priority,
-                                   ACE_TRY_ENV);
-}
-
-ACE_INLINE CORBA::Object_ptr
-TAO_POA::create_reference_with_id_and_priority (const PortableServer::ObjectId & oid,
-                                                const char * intf,
-                                                RTCORBA::Priority priority,
-                                                CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableServer::POA::WrongPolicy))
-{
-  this->validate_policies (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
-
-  if (!this->valid_priority (priority))
-    {
-      ACE_THROW_RETURN (CORBA::BAD_PARAM (),
-                        0);
-    }
-
-  // Lock access for the duration of this transaction.
-  TAO_POA_GUARD_RETURN (0);
-
-  return this->create_reference_with_id_i (oid,
-                                           intf,
-                                           priority,
-                                           ACE_TRY_ENV);
-}
-
-ACE_INLINE PortableServer::ObjectId *
-TAO_POA::activate_object_with_priority (PortableServer::Servant servant,
-                                        RTCORBA::Priority priority,
-                                        CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableServer::POA::ServantAlreadyActive,
-                   PortableServer::POA::WrongPolicy))
-{
-  this->validate_policies (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-
-  if (!this->valid_priority (priority))
-    {
-      ACE_THROW_RETURN (CORBA::BAD_PARAM (),
-                        0);
-    }
-
-  // Lock access for the duration of this transaction.
-  TAO_POA_GUARD_RETURN (0);
-
-  return this->activate_object_i (servant,
-                                  priority,
-                                  ACE_TRY_ENV);
-}
-
-ACE_INLINE void
-TAO_POA::activate_object_with_id_and_priority (const PortableServer::ObjectId & oid,
-                                               PortableServer::Servant servant,
-                                               RTCORBA::Priority priority,
-                                               CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableServer::POA::ServantAlreadyActive,
-                   PortableServer::POA::ObjectAlreadyActive,
-                   PortableServer::POA::WrongPolicy))
-{
-  this->validate_policies (ACE_TRY_ENV);
-  ACE_CHECK;
-
-  if (!this->valid_priority (priority))
-    {
-      ACE_THROW (CORBA::BAD_PARAM ());
-    }
-
-  // Lock access for the duration of this transaction.
-  TAO_POA_GUARD;
-
-  this->activate_object_with_id_i (oid,
-                                   servant,
-                                   priority,
-                                   ACE_TRY_ENV);
-}
-
-#endif /* TAO_HAS_RT_CORBA */
-
-
 ACE_INLINE PortableServer::POA_ptr
 TAO_POA::the_parent (CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException))
@@ -689,7 +422,7 @@ TAO_POA::creation_time (void)
 ACE_INLINE CORBA::Boolean
 TAO_POA::system_id (void)
 {
-  return (CORBA::Boolean) this->system_id_;
+  return (this->cached_policies_.id_assignment () == PortableServer::SYSTEM_ID);
 }
 
 
@@ -703,7 +436,7 @@ TAO_POA::root (void)
 ACE_INLINE CORBA::Boolean
 TAO_POA::persistent (void)
 {
-  return (CORBA::Boolean) this->persistent_;
+  return (this->cached_policies_.lifespan () == PortableServer::PERSISTENT);
 }
 
 ACE_INLINE const ACE_CString &
@@ -865,3 +598,16 @@ TAO_POA::orb_core (void) const
 {
   return this->orb_core_;
 }
+
+ACE_INLINE PortableServer::ThreadPolicyValue
+TAO_POA::thread_policy (void) const
+{
+  return this->cached_policies_.thread ();
+}
+
+ACE_INLINE TAO_POA_Cached_Policies &
+TAO_POA::cached_policies (void)
+{
+  return this->cached_policies_;
+}
+

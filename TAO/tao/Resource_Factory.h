@@ -30,7 +30,6 @@
 class TAO_Acceptor_Registry;
 class TAO_Connector_Registry;
 class TAO_Reactor_Registry;
-class TAO_Priority_Mapping;
 
 class TAO_Flushing_Strategy;
 class TAO_Connection_Purging_Strategy;
@@ -183,9 +182,6 @@ public:
   /// This denotes the amount of entries to remove from the connection
   /// cache.
   virtual int purge_percentage (void) const;
-
-  /// Configure the priority mapping for the ORB
-  virtual TAO_Priority_Mapping *get_priority_mapping (void);
 
   virtual int get_parser_names (char **&names,
                                 int &number_of_names);

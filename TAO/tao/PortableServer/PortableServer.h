@@ -48,7 +48,7 @@ TAO_Requires_POA_Initializer = TAO_POA_Initializer::init ();
 #endif /* ACE_HAS_BROKEN_STATIC_CONSTRUCTORS */
 
 #define TAO_PORTABLESERVER_SAFE_INCLUDE
-#include "RTPortableServerC.h"
+#include "PortableServerC.h"
 #undef TAO_PORTABLESERVER_SAFE_INCLUDE
 
 #include "ace/post.h"

@@ -636,6 +636,21 @@ Package=<4>
 
 ###############################################################################
 
+Project: "RTCORBA"=.\tao\RTCORBA\TAO_RTCORBA.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
 Project: "RTEvent"=.\orbsvcs\orbsvcs\RTEvent.dsp - Package Owner=<4>
 
 Package=<5>
@@ -682,6 +697,27 @@ Package=<4>
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name RTSched
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "RTPortableServer"=.\tao\RTPortableServer\TAO_RTPortableServer.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name PortableServer
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name RTCORBA
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
     End Project Dependency
 }}}
 

@@ -5,6 +5,7 @@
 #include "POA.h"
 #include "Strategized_Object_Proxy_Broker.h"
 #include "ServerRequestInfo.h"
+#include "Default_Servant_Dispatcher.h"
 #include "ServerInterceptorAdapter.h"
 
 // -- ACE Include --
@@ -19,12 +20,7 @@
 #include "tao/MProfile.h"
 #include "tao/debug.h"
 #include "tao/PortableInterceptor.h"
-
-#if TAO_HAS_RT_CORBA == 1
-#include "RT_Servant_Dispatcher.h"
-#else
-#include "Default_Servant_Dispatcher.h"
-#endif /* TAO_HAS_RT_CORBA == 1 */
+#include "tao/POA_Extension_Initializer.h"
 
 #if !defined (__ACE_INLINE__)
 # include "Object_Adapter.i"
@@ -126,7 +122,8 @@ TAO_Object_Adapter::TAO_Object_Adapter (const TAO_Server_Strategy_Factory::Activ
     non_servant_upcall_condition_ (thread_lock_),
     non_servant_upcall_in_progress_ (0),
     non_servant_upcall_thread_ (ACE_OS::NULL_thread),
-    root_ (0)
+    root_ (0),
+    default_poa_policies_ ()
 {
   TAO_Object_Adapter::set_transient_poa_name_size (creation_parameters);
 
@@ -204,18 +201,52 @@ TAO_Object_Adapter::TAO_Object_Adapter (const TAO_Server_Strategy_Factory::Activ
     new_persistent_poa_name_map.release ();
   this->transient_poa_map_ =
     new_transient_poa_map.release ();
+}
 
-  // @@ RT_CORBA_SUBSETTING
-  // Initialize the servant dispatcher depending on the TAO_HAS_RT_CORBA
-  // compile flags.  This will (of course) change as soon as the RT_CORBA
-  // code gets moved into a separate library.
-#if (TAO_HAS_RT_CORBA == 1)
-  ACE_NEW (this->servant_dispatcher_,
-           TAO_RT_Servant_Dispatcher);
-#else
-  ACE_NEW (this->servant_dispatcher_,
-           TAO_Default_Servant_Dispatcher);
-#endif /* TAO_HAS_RT_CORBA == 1 */
+void
+TAO_Object_Adapter::init_default_policies (TAO_POA_Policy_Set &policies,
+                                           CORBA::Environment &ACE_TRY_ENV)
+{
+  // Initialize the default policies.
+
+  // Thread policy.
+  TAO_Thread_Policy thread_policy (PortableServer::ORB_CTRL_MODEL);
+  policies.merge_policy (&thread_policy, ACE_TRY_ENV);
+  ACE_CHECK;
+
+  // Lifespan policy.
+  TAO_Lifespan_Policy lifespan_policy (PortableServer::TRANSIENT);
+  policies.merge_policy (&lifespan_policy, ACE_TRY_ENV);
+  ACE_CHECK;
+
+  // ID uniqueness policy.
+  TAO_Id_Uniqueness_Policy id_uniqueness_policy (PortableServer::UNIQUE_ID);
+  policies.merge_policy (&id_uniqueness_policy, ACE_TRY_ENV);
+  ACE_CHECK;
+
+  // ID assignment policy.
+  TAO_Id_Assignment_Policy id_assignment_policy (PortableServer::SYSTEM_ID);
+  policies.merge_policy (&id_assignment_policy, ACE_TRY_ENV);
+  ACE_CHECK;
+
+#if (TAO_HAS_MINIMUM_POA == 0)
+  // Implicit activation policy.
+  TAO_Implicit_Activation_Policy implicit_activation_policy
+                           (PortableServer::NO_IMPLICIT_ACTIVATION);
+  policies.merge_policy (&implicit_activation_policy, ACE_TRY_ENV);
+  ACE_CHECK;
+
+  // Servant retention policy.
+  TAO_Servant_Retention_Policy servant_retention_policy (PortableServer::RETAIN);
+  policies.merge_policy (&servant_retention_policy, ACE_TRY_ENV);
+  ACE_CHECK;
+
+  // Request processing policy.
+  TAO_Request_Processing_Policy request_processing_policy
+                            (PortableServer::USE_ACTIVE_OBJECT_MAP_ONLY);
+  policies.merge_policy (&request_processing_policy, ACE_TRY_ENV);
+  ACE_CHECK;
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 }
 
 TAO_Object_Adapter::~TAO_Object_Adapter (void)
@@ -513,6 +544,28 @@ TAO_Object_Adapter::find_servant_i (const TAO_ObjectKey &key,
 void
 TAO_Object_Adapter::open (CORBA::Environment &ACE_TRY_ENV)
 {
+  // Add in the default POA policies to the default list.
+  this->init_default_policies (this->default_poa_policies (),
+                               ACE_TRY_ENV);
+  ACE_CHECK;
+
+  // Call the POA Extension initializers so that they can register their hooks.
+  TAO_POA_Extension_Initializer *extensions =
+      this->orb_core_.poa_extension_initializer ();
+  if (extensions != 0)
+    {
+      extensions->register_hooks (*this, ACE_TRY_ENV);
+      ACE_CHECK;
+    }
+
+  // If a POA extension hasn't changed the servant dispatcher, initialize the
+  // default one.
+  if (this->servant_dispatcher_ == 0)
+    {
+      ACE_NEW (this->servant_dispatcher_,
+               TAO_Default_Servant_Dispatcher);
+    }
+
   TAO_POA_Manager *poa_manager;
   ACE_NEW_THROW_EX (poa_manager,
                     TAO_POA_Manager (*this),
@@ -522,9 +575,7 @@ TAO_Object_Adapter::open (CORBA::Environment &ACE_TRY_ENV)
   PortableServer::POAManager_var safe_poa_manager = poa_manager;
 
 #if 0
-  TAO_POA_Policies root_poa_policies (this->orb_core_,
-                                      ACE_TRY_ENV);
-  ACE_CHECK;
+  TAO_POA_Policy_Set root_poa_policies (this->default_poa_policies ());
 
   if (policies == 0)
     {
@@ -535,26 +586,30 @@ TAO_Object_Adapter::open (CORBA::Environment &ACE_TRY_ENV)
       policies = &root_poa_policies;
     }
 #else
-  TAO_POA_Policies policies (this->orb_core_,
-                             ACE_TRY_ENV);
-  ACE_CHECK;
+  TAO_POA_Policy_Set policies (this->default_poa_policies ());
 
-  policies.implicit_activation (PortableServer::IMPLICIT_ACTIVATION);
+  // Specify the implicit activation policy since it should
+  // be different from the default.  Note that merge_policy
+  // takes a const reference and makes its own copy of the
+  // policy.  (Otherwise, we'd have to allocate the policy
+  // on the heap.)
+  TAO_Implicit_Activation_Policy implicit_activation_policy (
+                                      PortableServer::IMPLICIT_ACTIVATION);
+  policies.merge_policy (&implicit_activation_policy,
+                         ACE_TRY_ENV);
 #endif /* 0 */
 
   // Construct a new POA
   TAO_POA::String root_poa_name (TAO_DEFAULT_ROOTPOA_NAME);
-  ACE_NEW_THROW_EX (this->root_,
-                    TAO_POA (root_poa_name,
-                             *poa_manager,
-                             policies,
-                             0,
-                             this->lock (),
-                             this->thread_lock (),
-                             this->orb_core_,
-                             this,
-                             ACE_TRY_ENV),
-                    CORBA::NO_MEMORY ());
+  this->root_ = this->servant_dispatcher_->create_POA (root_poa_name,
+                                                       *poa_manager,
+                                                       policies,
+                                                       0,
+                                                       this->lock (),
+                                                       this->thread_lock (),
+                                                       this->orb_core_,
+                                                       this,
+                                                       ACE_TRY_ENV);
   ACE_CHECK;
 
   // The Object_Adapter will keep a reference to the Root POA so that
@@ -567,6 +622,7 @@ TAO_Object_Adapter::open (CORBA::Environment &ACE_TRY_ENV)
   // (actually it shares the ownership with its peers).
   (void) safe_poa_manager._retn ();
 }
+
 
 void
 TAO_Object_Adapter::close (int wait_for_completion,
@@ -753,7 +809,7 @@ TAO_Object_Adapter::create_collocated_object (TAO_Stub *stub,
               //       -Ossama
               stub->servant_orb (this->orb_core_.orb ());
 
-              CORBA_Object_ptr x;
+              CORBA::Object_ptr x;
               ACE_NEW_RETURN (x,
                               CORBA::Object (stub,
                                              1,
@@ -1329,7 +1385,7 @@ TAO_Object_Adapter::Servant_Upcall::single_threaded_poa_setup (CORBA::Environmen
   // lock.  Otherwise, the thread that wants to release this lock will
   // not be able to do so since it can't acquire the object adapterx
   // lock.
-  if (this->poa_->policies ().thread () == PortableServer::SINGLE_THREAD_MODEL)
+  if (this->poa_->thread_policy () == PortableServer::SINGLE_THREAD_MODEL)
     {
       int result = this->poa_->single_threaded_lock ().acquire ();
 
@@ -1347,7 +1403,7 @@ TAO_Object_Adapter::Servant_Upcall::single_threaded_poa_cleanup (void)
 {
 #if (TAO_HAS_MINIMUM_POA == 0)
   // Since the servant lock was acquired, we must release it.
-  if (this->poa_->policies ().thread () == PortableServer::SINGLE_THREAD_MODEL)
+  if (this->poa_->thread_policy () == PortableServer::SINGLE_THREAD_MODEL)
     this->poa_->single_threaded_lock ().release ();
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 }
@@ -1429,6 +1485,15 @@ TAO_Object_Adapter::Servant_Upcall::poa_cleanup (void)
           this->poa_ = 0;
         }
     }
+}
+
+void
+TAO_Object_Adapter::servant_dispatcher (TAO_Servant_Dispatcher *dispatcher)
+{
+  if (this->servant_dispatcher_)
+    delete this->servant_dispatcher_;
+
+  this->servant_dispatcher_ = dispatcher;
 }
 
 TAO_POA_Current_Impl::TAO_POA_Current_Impl (void)

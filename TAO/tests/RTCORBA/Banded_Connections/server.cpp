@@ -3,12 +3,11 @@
 #include "testS.h"
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
-#include "tao/RTCORBAC.h"
-#include "tao/Pool_Per_Endpoint.h"
+#include "tao/RTCORBA/RTCORBA.h"
+#include "tao/RTCORBA/Pool_Per_Endpoint.h"
+#include "tao/RTPortableServer/RTPortableServer.h"
 
 #include "tao/Strategies/advanced_resource.h"
-
-#if (TAO_HAS_RT_CORBA == 1)
 
 class Test_i : public POA_Test
 {
@@ -69,9 +68,9 @@ Test_i::test_method (CORBA::Short priority,
   ACE_DEBUG ((LM_DEBUG,
               "\nObject bands: \n"));
   for (CORBA::ULong i = 0; i < this->bands_.length (); ++i)
-    {      
+    {
       ACE_DEBUG ((LM_DEBUG,
-                  "%d) %d  %d\n", 
+                  "%d) %d  %d\n",
                   (i + 1), this->bands_[i].low, this->bands_[i].high));
 
       if (priority <= this->bands_[i].high
@@ -202,7 +201,7 @@ get_priority_bands (RTCORBA::PriorityBands &bands)
                          &bands[i].low);
       if (result == 0 || result == EOF)
         break;
-      
+
       working_string += ACE_OS::strlen (working_string);
       working_string += 1;
 
@@ -211,7 +210,7 @@ get_priority_bands (RTCORBA::PriorityBands &bands)
                          &bands[i].high);
       if (result == 0 || result == EOF)
         break;
-      
+
       working_string += ACE_OS::strlen (working_string);
       working_string += 1;
 
@@ -402,18 +401,18 @@ main (int argc, char *argv[])
 
       // Test 1: Attempt to create a POA with priority bands but
       // without the priority model.  Should get POA::InvalidPolicy
-      // exception. 
+      // exception.
       ACE_DEBUG ((LM_DEBUG,
                   "\n     Test 1\n"));
 
       CORBA::PolicyList poa_policy_list;
       poa_policy_list.length (1);
       poa_policy_list[0] =
-        rt_orb->create_priority_banded_connection_policy 
+        rt_orb->create_priority_banded_connection_policy
         (bands,
          ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
       poa_creation_exception_test (root_poa.in (),
                                    poa_manager.in (),
                                    poa_policy_list,
@@ -421,11 +420,11 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       // Test 2: Attempt to create a POA with priority bands that do
-      // not match the resources (i.e., endpoints/lanes).  Should get 
-      // POA::InvalidPolicy exception. 
+      // not match the resources (i.e., endpoints/lanes).  Should get
+      // POA::InvalidPolicy exception.
       ACE_DEBUG ((LM_DEBUG,
                   "\n     Test 2\n"));
-      
+
       RTCORBA::PriorityBands false_bands;
       false_bands.length (2);
       false_bands[0].low = 10000;
@@ -434,16 +433,16 @@ main (int argc, char *argv[])
       false_bands[1].high = 30;
 
       poa_policy_list[0] =
-        rt_orb->create_priority_banded_connection_policy 
+        rt_orb->create_priority_banded_connection_policy
         (false_bands,
          ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
       poa_creation_exception_test (root_poa.in (),
                                    poa_manager.in (),
                                    poa_policy_list,
                                    ACE_TRY_ENV);
-      ACE_TRY_CHECK;      
+      ACE_TRY_CHECK;
 
       // Create POA with CLIENT_PROPAGATED priority model, no bands.
       poa_policy_list[0] =
@@ -451,7 +450,7 @@ main (int argc, char *argv[])
                                               0,
                                               ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
       PortableServer::POA_var client_propagated_poa =
         root_poa->create_POA ("client_propagated_poa",
                               poa_manager.in (),
@@ -466,9 +465,9 @@ main (int argc, char *argv[])
                                               poa_priority,
                                               ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
       poa_policy_list[1] =
-        rt_orb->create_priority_banded_connection_policy 
+        rt_orb->create_priority_banded_connection_policy
         (bands,
          ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -492,8 +491,8 @@ main (int argc, char *argv[])
       if (check_for_nil (rt_server_declared_poa.in (), "RTPOA") == -1)
         return 1;
 
-      object_activation_exception_test (rt_server_declared_poa.in (), 
-                                        &server_impl, 
+      object_activation_exception_test (rt_server_declared_poa.in (),
+                                        &server_impl,
                                         wrong_priority,
                                         ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -502,10 +501,10 @@ main (int argc, char *argv[])
       // Create object 1 and register with <client_propagated_poa>.
       int result;
       ACE_DEBUG ((LM_DEBUG, "\nActivated object one as "));
-      result = create_object (client_propagated_poa.in (), 
-                              orb.in (), 
+      result = create_object (client_propagated_poa.in (),
+                              orb.in (),
                               &server_impl,
-                              ior_output_file1, 
+                              ior_output_file1,
                               ACE_TRY_ENV);
       ACE_TRY_CHECK;
       if (result == -1)
@@ -513,10 +512,10 @@ main (int argc, char *argv[])
 
       // Create object 2 and register with <server_declared_poa>.
       ACE_DEBUG ((LM_DEBUG, "\nActivated object two as "));
-      result = create_object (server_declared_poa.in (), 
-                              orb.in (), 
+      result = create_object (server_declared_poa.in (),
+                              orb.in (),
                               &server_impl2,
-                              ior_output_file2, 
+                              ior_output_file2,
                               ACE_TRY_ENV);
       ACE_TRY_CHECK;
       if (result == -1)
@@ -547,15 +546,3 @@ main (int argc, char *argv[])
   return 0;
 }
 
-#else /* TAO_HAS_RT_CORBA == 1 */
-
-int
-main (int argc, char *argv[])
-{
-  ACE_UNUSED_ARG (argc);
-  ACE_UNUSED_ARG (argv);
-  ACE_ERROR_RETURN ((LM_ERROR,
-                     "\nRTCORBA must be enabled to run this test!\n"),
-                    1);
-}
-#endif /* TAO_HAS_RT_CORBA == 1 */

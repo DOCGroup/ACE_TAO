@@ -23,225 +23,6 @@
 // Inline operations for class TAO::PrioritySpecification_var
 // *************************************************************
 
-#if (TAO_HAS_CLIENT_PRIORITY_POLICY == 1)
-
-ACE_INLINE
-TAO::PrioritySpecification_var::PrioritySpecification_var (void) // default constructor
-  : ptr_ (0)
-{}
-
-ACE_INLINE
-TAO::PrioritySpecification_var::PrioritySpecification_var (PrioritySpecification *p)
-  : ptr_ (p)
-{}
-
-ACE_INLINE
-TAO::PrioritySpecification_var::PrioritySpecification_var (const ::TAO::PrioritySpecification_var &p) // copy constructor
-{
-  if (p.ptr_)
-    ACE_NEW (this->ptr_, ::TAO::PrioritySpecification (*p.ptr_));
-  else
-    this->ptr_ = 0;
-}
-
-// fixed-size types only
-ACE_INLINE
-TAO::PrioritySpecification_var::PrioritySpecification_var (const ::TAO::PrioritySpecification &p)
-{
-  ACE_NEW (this->ptr_, ::TAO::PrioritySpecification (p));
-}
-
-ACE_INLINE
-TAO::PrioritySpecification_var::~PrioritySpecification_var (void) // destructor
-{
-  delete this->ptr_;
-}
-
-ACE_INLINE TAO::PrioritySpecification_var &
-TAO::PrioritySpecification_var::operator= (PrioritySpecification *p)
-{
-  delete this->ptr_;
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE ::TAO::PrioritySpecification_var &
-TAO::PrioritySpecification_var::operator= (const ::TAO::PrioritySpecification_var &p)
-{
-  if (this != &p)
-    {
-      if (p.ptr_ == 0)
-        {
-          delete this->ptr_;
-          this->ptr_ = 0;
-        }
-      else
-        {
-          TAO::PrioritySpecification *deep_copy = 
-            new TAO::PrioritySpecification (*p.ptr_);
-          
-          if (deep_copy != 0)
-            {
-              TAO::PrioritySpecification *tmp = deep_copy;
-              deep_copy = this->ptr_;
-              this->ptr_ = tmp;
-              delete deep_copy;
-            }
-        }
-    }
-  
-  return *this;
-}
-
-// fixed-size types only
-ACE_INLINE TAO::PrioritySpecification_var &
-TAO::PrioritySpecification_var::operator= (const ::TAO::PrioritySpecification &p)
-{
-  if (this->ptr_ != &p)
-  {
-    delete this->ptr_;
-    ACE_NEW_RETURN (this->ptr_, ::TAO::PrioritySpecification (p), *this);
-  }
-  return *this;
-}
-
-ACE_INLINE const ::TAO::PrioritySpecification *
-TAO::PrioritySpecification_var::operator-> (void) const
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::TAO::PrioritySpecification *
-TAO::PrioritySpecification_var::operator-> (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE
-TAO::PrioritySpecification_var::operator const ::TAO::PrioritySpecification &() const // cast
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE
-TAO::PrioritySpecification_var::operator ::TAO::PrioritySpecification &() // cast
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE
-TAO::PrioritySpecification_var::operator ::TAO::PrioritySpecification &() const // cast
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE const ::TAO::PrioritySpecification &
-TAO::PrioritySpecification_var::in (void) const
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE ::TAO::PrioritySpecification &
-TAO::PrioritySpecification_var::inout (void)
-{
-  return *this->ptr_;
-}
-
-// mapping for fixed size
-ACE_INLINE ::TAO::PrioritySpecification &
-TAO::PrioritySpecification_var::out (void)
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE ::TAO::PrioritySpecification
-TAO::PrioritySpecification_var::_retn (void)
-{
-  return *this->ptr_;
-}
-
-ACE_INLINE ::TAO::PrioritySpecification *
-TAO::PrioritySpecification_var::ptr (void) const
-{
-  return this->ptr_;
-}
-
-#if !defined (_TAO_CLIENTPRIORITYPOLICY___CI_)
-#define _TAO_CLIENTPRIORITYPOLICY___CI_
-
-ACE_INLINE TAO::ClientPriorityPolicy_ptr
-tao_TAO_ClientPriorityPolicy_duplicate (
-    TAO::ClientPriorityPolicy_ptr p
-  )
-{
-  return TAO::ClientPriorityPolicy::_duplicate (p);
-}
-
-ACE_INLINE void
-tao_TAO_ClientPriorityPolicy_release (
-    TAO::ClientPriorityPolicy_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-ACE_INLINE TAO::ClientPriorityPolicy_ptr
-tao_TAO_ClientPriorityPolicy_nil (
-    void
-  )
-{
-  return TAO::ClientPriorityPolicy::_nil ();
-}
-
-ACE_INLINE TAO::ClientPriorityPolicy_ptr
-tao_TAO_ClientPriorityPolicy_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
-  )
-{
-  return TAO::ClientPriorityPolicy::_narrow (p, ACE_TRY_ENV);
-}
-
-ACE_INLINE CORBA::Object *
-tao_TAO_ClientPriorityPolicy_upcast (
-    void *src
-  )
-{
-  TAO::ClientPriorityPolicy **tmp =
-    ACE_static_cast (TAO::ClientPriorityPolicy **, src);
-  return *tmp;
-}
-
-
-#endif /* end #if !defined */
-
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const TAO::PrioritySpecification &_tao_aggregate)
-{
-  if (
-    (strm << _tao_aggregate.mode) &&
-    (strm << _tao_aggregate.min_priority) &&
-    (strm << _tao_aggregate.max_priority)
-  )
-    return 1;
-  else
-    return 0;
-
-}
-
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, TAO::PrioritySpecification &_tao_aggregate)
-{
-  if (
-    (strm >> _tao_aggregate.mode) &&
-    (strm >> _tao_aggregate.min_priority) &&
-    (strm >> _tao_aggregate.max_priority)
-  )
-    return 1;
-  else
-    return 0;
-
-}
-#endif /* TAO_HAS_CLIENT_PRIORITY_POLICY == 1 */
-
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
 // *************************************************************
@@ -300,9 +81,9 @@ TAO::BufferingConstraint_var::operator= (const ::TAO::BufferingConstraint_var &p
         }
       else
         {
-          TAO::BufferingConstraint *deep_copy = 
+          TAO::BufferingConstraint *deep_copy =
             new TAO::BufferingConstraint (*p.ptr_);
-          
+
           if (deep_copy != 0)
             {
               TAO::BufferingConstraint *tmp = deep_copy;
@@ -312,7 +93,7 @@ TAO::BufferingConstraint_var::operator= (const ::TAO::BufferingConstraint_var &p
             }
         }
     }
-  
+
   return *this;
 }
 

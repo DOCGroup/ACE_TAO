@@ -8,7 +8,6 @@
 #include "tao/params.h"
 #include "tao/MProfile.h"
 #include "tao/debug.h"
-#include "tao/RT_Policy_i.h"
 #include "tao/Acceptor_Filter.h"
 #include "tao/Endpoint.h"
 

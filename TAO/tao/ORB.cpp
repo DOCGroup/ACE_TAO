@@ -19,20 +19,12 @@
 #include "CDR.h"
 #include "MProfile.h"
 
-#include "RT_ORB.h"
-#include "Priority_Mapping_Manager.h"
-#include "RT_Current.h"
-
 #include "ORBInitInfo.h"
 #include "ORBInitializer_Registry.h"
 
 #include "CodecFactory_ORBInitializer.h"
 
 #include "TypeCodeFactory_Adapter.h"
-
-#if TAO_HAS_RT_CORBA == 1
-# include "RT_ORBInitializer.h"         /* @@ This should go away! */
-#endif  /* TAO_HAS_RT_CORBA == 1 */
 
 #if TAO_HAS_CORBA_MESSAGING == 1
 # include "Messaging_ORBInitializer.h"  /* @@ This should go away! */
@@ -934,34 +926,6 @@ CORBA_ORB::resolve_policy_manager (CORBA::Environment &)
 }
 
 CORBA_Object_ptr
-CORBA_ORB::resolve_rt_current (CORBA::Environment &/*ACE_TRY_ENV*/)
-{
-
-#if (TAO_HAS_RT_CORBA == 1)
-
-  return this->orb_core_->rt_current ();
-
-#else
-
-  return CORBA_Object::_nil ();
-
-#endif /* TAO_HAS_RT_CORBA == 1 */
-
-}
-
-CORBA_Object_ptr
-CORBA_ORB::resolve_rt_orb (CORBA::Environment &ACE_TRY_ENV)
-{
-#if (TAO_HAS_RT_CORBA == 1)
-  return this->orb_core_->rt_orb (ACE_TRY_ENV);
-#else
-  ACE_UNUSED_ARG (ACE_TRY_ENV); // FUZZ: ignore check_for_ace_check
-  return CORBA_Object::_nil ();
-#endif /* TAO_HAS_RT_CORBA == 1 */
-
-}
-
-CORBA_Object_ptr
 CORBA_ORB::resolve_policy_current (CORBA::Environment &)
 {
 
@@ -1333,10 +1297,10 @@ CORBA_ORB::resolve_initial_references (const char *name,
     return this->orb_core ()->resolve_typecodefactory (ACE_TRY_ENV);
 
   else if (ACE_OS::strcmp (name, TAO_OBJID_RTORB) == 0)
-    return this->resolve_rt_orb (ACE_TRY_ENV);
+    return this->orb_core ()->resolve_rt_orb (ACE_TRY_ENV);
 
   else if (ACE_OS::strcmp (name, TAO_OBJID_RTCURRENT) == 0)
-    return this->resolve_rt_current (ACE_TRY_ENV);
+    return this->orb_core ()->resolve_rt_current (ACE_TRY_ENV);
 
   // -----------------------------------------------------------------
 
@@ -1509,30 +1473,11 @@ CORBA_ORB::init_orb_globals (CORBA::Environment &ACE_TRY_ENV)
   //    should be registered via the service configurator, for
   //    example.
 
-#if TAO_HAS_RT_CORBA == 1 || TAO_HAS_CORBA_MESSAGING == 1
+#if TAO_HAS_CORBA_MESSAGING == 1
   PortableInterceptor::ORBInitializer_ptr temp_orb_initializer =
     PortableInterceptor::ORBInitializer::_nil ();
   PortableInterceptor::ORBInitializer_var orb_initializer;
-#endif  /* TAO_HAS_RT_CORBA == 1 || TAO_HAS_CORBA_MESSAGING == 1 */
 
-#if TAO_HAS_RT_CORBA == 1
-  /// Register the RTCORBA ORBInitializer.
-  ACE_NEW_THROW_EX (temp_orb_initializer,
-                    TAO_RT_ORBInitializer,
-                    CORBA::NO_MEMORY (
-                      CORBA_SystemException::_tao_minor_code (
-                        TAO_DEFAULT_MINOR_CODE,
-                        ENOMEM),
-                      CORBA::COMPLETED_NO));
-  ACE_CHECK;
-  orb_initializer = temp_orb_initializer;
-
-  PortableInterceptor::register_orb_initializer (orb_initializer.in (),
-                                                 ACE_TRY_ENV);
-  ACE_CHECK;
-#endif  /* TAO_HAS_RT_CORBA == 1 */
-
-#if TAO_HAS_CORBA_MESSAGING == 1
   /// Register the Messaging ORBInitializer.
   ACE_NEW_THROW_EX (temp_orb_initializer,
                     TAO_Messaging_ORBInitializer,
