@@ -83,9 +83,5 @@ private:
   size_t n_;
 };
 
-#if defined (__ACE_INLINE__)
-#include "EC_Disjunction_Filter.i"
-#endif /* __ACE_INLINE__ */
-
 #include /**/ "ace/post.h"
 #endif /* TAO_EC_DISJUNCTION_FILTER_H */

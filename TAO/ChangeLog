@@ -1,3 +1,44 @@
+Wed Jan  5 11:07:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Event/ECG_Address_Server_Base.{h,cpp,i}:
+        * orbsvcs/orbsvcs/Event/ECG_ConsumerEC_Control.{h,cpp,i}:
+        * orbsvcs/orbsvcs/Event/ECG_Reactive_ConsumerEC_Control.{h,cpp,i}:
+        * orbsvcs/orbsvcs/Event/ECG_Simple_Mcast_EH.{h,cpp,i}:
+        * orbsvcs/orbsvcs/Event/EC_And_Filter.{h,cpp,i}:
+        * orbsvcs/orbsvcs/Event/EC_Basic_Factory.{h,cpp,i}:
+        * orbsvcs/orbsvcs/Event/EC_Bitmask_Filter.{h,cpp,i}:
+        * orbsvcs/orbsvcs/Event/EC_Conjunction_Filter.{h,cpp,i}:
+        * orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.{h,cpp,i}:
+        * orbsvcs/orbsvcs/Event/EC_ConsumerControl.{h,cpp,i}:
+        * orbsvcs/orbsvcs/Event/EC_Default_ProxyConsumer.{h,cpp,i}:
+        * orbsvcs/orbsvcs/Event/EC_Default_ProxySupplier.{h,cpp,i}:
+        * orbsvcs/orbsvcs/Event/EC_Disjunction_Filter.{h,cpp,i}:
+        * orbsvcs/orbsvcs/Event/EC_Dispatching.{h,cpp,i}:
+        * orbsvcs/orbsvcs/Event/EC_Event_Channel.{h,cpp,i}:
+        * orbsvcs/orbsvcs/Event/EC_Factory.{h,cpp,i}:
+        * orbsvcs/orbsvcs/Event/EC_Kokyu_Filter.{h,cpp,i}:
+        * orbsvcs/orbsvcs/Event/EC_MT_Dispatching.{h,cpp,i}:
+        * orbsvcs/orbsvcs/Event/EC_Masked_Type_Filter.{h,cpp,i}:
+        * orbsvcs/orbsvcs/Event/EC_Negation_Filter.{h,cpp,i}:
+        * orbsvcs/orbsvcs/Event/EC_Null_Factory.{h,cpp,i}:
+        * orbsvcs/orbsvcs/Event/EC_Priority_Dispatching.{h,cpp,i}:
+        * orbsvcs/orbsvcs/Event/EC_RTCORBA_Dispatching.{h,cpp,inl}:
+        * orbsvcs/orbsvcs/Event/EC_RTCORBA_Factory.{h,cpp,inl}:
+        * orbsvcs/orbsvcs/Event/EC_Reactive_Dispatching.{h,cpp,i}:
+        * orbsvcs/orbsvcs/Event/EC_Reactive_Timeout_Generator.{h,cpp,i}:
+        * orbsvcs/orbsvcs/Event/EC_Sched_Filter.{h,cpp,i}:
+        * orbsvcs/orbsvcs/Event/EC_Scheduling_Strategy.{h,cpp,i}:
+        * orbsvcs/orbsvcs/Event/EC_SupplierAdmin.{h,cpp,i}:
+        * orbsvcs/orbsvcs/Event/EC_SupplierControl.{h,cpp,i}:
+        * orbsvcs/orbsvcs/Event/EC_Supplier_Filter_Builder.{h,cpp,i}:
+        * orbsvcs/orbsvcs/Event/EC_Trivial_Supplier_Filter.{h,cpp,i}:
+        * orbsvcs/orbsvcs/Event/EC_Type_Filter.{h,cpp,i}:
+        * orbsvcs/orbsvcs/Event/Local_ESTypes.{h,cpp,i}:
+          Removed i file and updated h/cpp file.
+
+        * orbsvcs/orbsvcs/Makefile.am
+          Updated for changes above
+
 Wed Jan  5 10:50:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/RTPortableServer/RT_Acceptor_Filters.{h,cpp,i}:

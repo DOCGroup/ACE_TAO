@@ -2,10 +2,6 @@
 
 #include "EC_Bitmask_Filter.h"
 
-#if ! defined (__ACE_INLINE__)
-#include "EC_Bitmask_Filter.i"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID(Event, EC_Bitmask_Filter, "$Id$")
 
 TAO_EC_Bitmask_Filter::

@@ -4,10 +4,6 @@
 #include "EC_QOS_Info.h"
 #include "ace/Log_Msg.h"
 
-#if ! defined (__ACE_INLINE__)
-#include "EC_Sched_Filter.i"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID(Event, EC_Sched_Filter, "$Id$")
 
 TAO_EC_Sched_Filter::

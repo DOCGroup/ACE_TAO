@@ -86,9 +86,5 @@ private:
   CORBA::ULong type_value_;
 };
 
-#if defined (__ACE_INLINE__)
-#include "EC_Masked_Type_Filter.i"
-#endif /* __ACE_INLINE__ */
-
 #include /**/ "ace/post.h"
 #endif /* TAO_EC_MASKED_TYPE_FILTER_H */

@@ -3157,10 +3157,6 @@ RTEvent = \
   Event/EC_Group_Scheduling.cpp \
   Event/EC_Lifetime_Utils.cpp \
   Event/EC_Lifetime_Utils_T.cpp \
-  Event/EC_MT_Dispatching.cpp \
-  Event/EC_Masked_Type_Filter.cpp \
-  Event/EC_Negation_Filter.cpp \
-  Event/EC_Null_Factory.cpp \
   Event/EC_Null_Scheduling.cpp \
   Event/EC_ObserverStrategy.cpp \
   Event/EC_Per_Supplier_Filter.cpp \
@@ -3300,37 +3296,21 @@ nobase_include_HEADERS += \
   RtecUDPAdminC.h \
   RtecUDPAdminS.h \
   RtecUDPAdminS_T.h \
-  Event/ECG_Address_Server_Base.i \
   Event/ECG_CDR_Message_Receiver.i \
   Event/ECG_CDR_Message_Sender.i \
   Event/ECG_Complex_Address_Server.i \
-  Event/ECG_ConsumerEC_Control.i \
   Event/ECG_Mcast_EH.i \
   Event/ECG_Mcast_Gateway.i \
-  Event/ECG_Reactive_ConsumerEC_Control.i \
   Event/ECG_Simple_Address_Server.i \
-  Event/ECG_Simple_Mcast_EH.i \
   Event/ECG_UDP_EH.i \
   Event/ECG_UDP_Out_Endpoint.i \
   Event/ECG_UDP_Receiver.i \
   Event/ECG_UDP_Sender.inl \
-  Event/EC_And_Filter.i \
-  Event/EC_Basic_Factory.i \
   Event/EC_Basic_Filter_Builder.i \
-  Event/EC_Bitmask_Filter.i \
   Event/EC_Busy_Lock.i \
-  Event/EC_Conjunction_Filter.i \
-  Event/EC_ConsumerAdmin.i \
-  Event/EC_ConsumerControl.i \
   Event/EC_Default_Factory.i \
-  Event/EC_Default_ProxyConsumer.i \
-  Event/EC_Default_ProxySupplier.i \
-  Event/EC_Disjunction_Filter.i \
-  Event/EC_Dispatching.i \
   Event/EC_Dispatching_Task.i \
-  Event/EC_Event_Channel.i \
   Event/EC_Event_Channel_Base.i \
-  Event/EC_Factory.i \
   Event/EC_Filter.i \
   Event/EC_Filter_Builder.i \
   Event/EC_Gateway_IIOP_Factory.i \
@@ -3349,18 +3329,10 @@ nobase_include_HEADERS += \
   Event/EC_ProxySupplier.i \
   Event/EC_QOS_Info.i \
   Event/EC_Reactive_ConsumerControl.i \
-  Event/EC_Reactive_Dispatching.i \
   Event/EC_Reactive_SupplierControl.i \
-  Event/EC_Reactive_Timeout_Generator.i \
-  Event/EC_Scheduling_Strategy.i \
-  Event/EC_SupplierAdmin.i \
-  Event/EC_SupplierControl.i \
   Event/EC_Supplier_Filter.i \
-  Event/EC_Supplier_Filter_Builder.i \
   Event/EC_Timeout_Filter.i \
   Event/EC_Timeout_Generator.i \
-  Event/EC_Trivial_Supplier_Filter.i \
-  Event/EC_Type_Filter.i \
   Event_Utilities.i \
   RtecDefaultEventDataC.inl \
   RtecDefaultEventDataS.inl \
@@ -4382,9 +4354,7 @@ libTAO_RTCORBAEvent_la_LIBADD = \
 
 nobase_include_HEADERS += \
   Event/EC_RTCORBA_Dispatching.h \
-  Event/EC_RTCORBA_Factory.h \
-  Event/EC_RTCORBA_Dispatching.inl \
-  Event/EC_RTCORBA_Factory.inl
+  Event/EC_RTCORBA_Factory.h
 
 endif BUILD_RT_CORBA
 endif BUILD_CORBA_MESSAGING
@@ -4645,7 +4615,6 @@ nobase_include_HEADERS += \
   Event/Event_Channel.i \
   Event/Event_Manip.i \
   Event/GPlot_File.i \
-  Event/Local_ESTypes.i \
   Event/Memory_Pools.i \
   Event/RT_Task.i \
   Event/Timer_Module.i
@@ -4746,7 +4715,7 @@ nobase_include_HEADERS += \
 
 endif BUILD_CORBA_MESSAGING
 
-## Makefile.RTKokyuEvent.am 
+## Makefile.RTKokyuEvent.am
 
 if BUILD_CORBA_MESSAGING
 
@@ -4795,13 +4764,12 @@ nobase_include_HEADERS += \
   Event/EC_Kokyu_Scheduling.h \
   Event/EC_Kokyu_Dispatching.i \
   Event/EC_Kokyu_Factory.i \
-  Event/EC_Kokyu_Filter.i \
   Event/EC_Kokyu_Filter_Builder.i \
   Event/EC_Kokyu_Scheduling.i
 
 endif BUILD_CORBA_MESSAGING
 
-## Makefile.RTSchedEvent.am 
+## Makefile.RTSchedEvent.am
 
 if BUILD_CORBA_MESSAGING
 
@@ -4848,10 +4816,8 @@ nobase_include_HEADERS += \
   Event/EC_Sched_Factory.h \
   Event/EC_Sched_Filter.h \
   Event/EC_Sched_Filter_Builder.h \
-  Event/EC_Priority_Dispatching.i \
   Event/EC_Priority_Scheduling.i \
   Event/EC_Sched_Factory.i \
-  Event/EC_Sched_Filter.i \
   Event/EC_Sched_Filter_Builder.i
 
 endif BUILD_CORBA_MESSAGING
@@ -4859,7 +4825,7 @@ endif BUILD_CORBA_MESSAGING
 EXTRA_DIST += \
   RTSchedEvent.rc
 
-## Makefile.RT_Notification.am 
+## Makefile.RT_Notification.am
 
 if BUILD_RT_CORBA
 if !BUILD_MINIMUM_CORBA
@@ -4923,7 +4889,7 @@ endif BUILD_RT_CORBA
 EXTRA_DIST += \
   RT_Notification.rc
 
-## Makefile.Security.am 
+## Makefile.Security.am
 
 if BUILD_CORBA_MESSAGING
 if BUILD_INTERCEPTORS
@@ -5242,7 +5208,7 @@ endif BUILD_CORBA_MESSAGING
 EXTRA_DIST += \
   Security.rc
 
-## Makefile.SSLIOP.am 
+## Makefile.SSLIOP.am
 
 if BUILD_INTERCEPTORS
 if BUILD_CORBA_MESSAGING

@@ -20,12 +20,8 @@
 
 #include "tao/ORB_Core.h"
 
-#if ! defined (__ACE_INLINE__)
-#include "EC_Basic_Factory.i"
-#endif /* __ACE_INLINE__ */
-
-ACE_RCSID (Event, 
-           EC_Basic_Factory, 
+ACE_RCSID (Event,
+           EC_Basic_Factory,
            "$Id$")
 
 TAO_EC_Basic_Factory::TAO_EC_Basic_Factory (void)

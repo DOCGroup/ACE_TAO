@@ -82,9 +82,5 @@ private:
   size_t n_;
 };
 
-#if defined (__ACE_INLINE__)
-#include "EC_And_Filter.i"
-#endif /* __ACE_INLINE__ */
-
 #include /**/ "ace/post.h"
 #endif /* TAO_EC_AND_FILTER_H */

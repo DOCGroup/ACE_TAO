@@ -115,9 +115,5 @@ protected:
   RTCORBA::ThreadpoolLanes lanes_;
 };
 
-#if defined (__ACE_INLINE__)
-#include "EC_RTCORBA_Factory.inl"
-#endif /* __ACE_INLINE__ */
-
 #include /**/ "ace/post.h"
 #endif /* TAO_EC_RTCORBA_FACTORY_H */

@@ -2,10 +2,6 @@
 
 #include "EC_And_Filter.h"
 
-#if ! defined (__ACE_INLINE__)
-#include "EC_And_Filter.i"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID(Event, EC_And_Filter, "$Id$")
 
 TAO_EC_And_Filter::

@@ -6,10 +6,6 @@
 
 #include "ace/Reverse_Lock_T.h"
 
-#if ! defined (__ACE_INLINE__)
-#include "EC_Default_ProxySupplier.i"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID (Event,
            EC_ProxySupplier,
            "$Id$")

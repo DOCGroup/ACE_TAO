@@ -100,9 +100,5 @@ private:
   TAO_EC_Filter* child_;
 };
 
-#if defined (__ACE_INLINE__)
-#include "EC_Bitmask_Filter.i"
-#endif /* __ACE_INLINE__ */
-
 #include /**/ "ace/post.h"
 #endif /* TAO_EC_BITMASK_FILTER_H */

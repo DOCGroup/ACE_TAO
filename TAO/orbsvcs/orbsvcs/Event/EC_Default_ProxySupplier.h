@@ -72,10 +72,6 @@ private:
     ACE_THROW_SPEC ((CORBA::SystemException));
 };
 
-#if defined (__ACE_INLINE__)
-#include "EC_Default_ProxySupplier.i"
-#endif /* __ACE_INLINE__ */
-
 #include /**/ "ace/post.h"
 
 #endif /* TAO_EC_DEFAULT_PROXYSUPPLIER_H */

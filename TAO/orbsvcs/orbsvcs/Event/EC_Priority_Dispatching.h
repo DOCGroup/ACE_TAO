@@ -81,9 +81,5 @@ private:
   RtecScheduler::Scheduler_var scheduler_;
 };
 
-#if defined (__ACE_INLINE__)
-#include "EC_Priority_Dispatching.i"
-#endif /* __ACE_INLINE__ */
-
 #include /**/ "ace/post.h"
 #endif /* TAO_EC_PRIORITY_DISPATCHING_H */
