@@ -191,7 +191,7 @@ ACE_Unbounded_Queue<T>::enqueue_tail (const T &new_item)
   ACE_NEW_MALLOC_RETURN (temp,
                          ACE_static_cast(ACE_Node<T> *,
                            this->allocator_->malloc (sizeof (ACE_Node<T>))),
-                         ACE_Node<T> (this->head_->next_), 
+                         ACE_Node<T> (this->head_->next_),
                          -1);
   // Link this dummy pointer into the list.
   this->head_->next_ = temp;
@@ -314,6 +314,59 @@ ACE_Unbounded_Queue<T>::set (const T &item,
           curr->item_ = item;
           return 0;
         }
+    }
+}
+
+// ****************************************************************
+
+template <class T> void
+ACE_Unbounded_Queue_Const_Iterator<T>::dump (void) const
+{
+  // ACE_TRACE ("ACE_Unbounded_Queue_Const_Iterator<T>::dump");
+}
+
+template <class T>
+ACE_Unbounded_Queue_Const_Iterator<T>::ACE_Unbounded_Queue_Const_Iterator (const ACE_Unbounded_Queue<T> &q, int end)
+  : current_ (end == 0 ? q.head_->next_ : q.head_ ),
+    queue_ (q)
+{
+  // ACE_TRACE ("ACE_Unbounded_Queue_Const_Iterator<T>::ACE_Unbounded_Queue_Const_Iterator");
+}
+
+template <class T> int
+ACE_Unbounded_Queue_Const_Iterator<T>::advance (void)
+{
+  // ACE_TRACE ("ACE_Unbounded_Queue_Const_Iterator<T>::advance");
+  this->current_ = this->current_->next_;
+  return this->current_ != this->queue_.head_;
+}
+
+template <class T> int
+ACE_Unbounded_Queue_Const_Iterator<T>::first (void)
+{
+  // ACE_TRACE ("ACE_Unbounded_Queue_Const_Iterator<T>::first");
+  this->current_ = this->queue_.head_->next_;
+  return this->current_ != this->queue_.head_;
+}
+
+template <class T> int
+ACE_Unbounded_Queue_Const_Iterator<T>::done (void) const
+{
+  ACE_TRACE ("ACE_Unbounded_Queue_Const_Iterator<T>::done");
+
+  return this->current_ == this->queue_.head_;
+}
+
+template <class T> int
+ACE_Unbounded_Queue_Const_Iterator<T>::next (T *&item)
+{
+  // ACE_TRACE ("ACE_Unbounded_Queue_Const_Iterator<T>::next");
+  if (this->current_ == this->queue_.head_)
+    return 0;
+  else
+    {
+      item = &this->current_->item_;
+      return 1;
     }
 }
 
