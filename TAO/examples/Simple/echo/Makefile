@@ -395,8 +395,7 @@ realclean: clean
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
  $(TAO_ROOT)/tao/BoundsC.h \
- $(TAO_ROOT)/tao/BoundsC.i \
- EchoC.i
+ $(TAO_ROOT)/tao/BoundsC.i EchoC.i
 
 .obj/EchoS.o .obj/EchoS.so .shobj/EchoS.o .shobj/EchoS.so: EchoS.cpp EchoS.h EchoC.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -703,8 +702,7 @@ realclean: clean
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
  $(TAO_ROOT)/tao/BoundsC.h \
- $(TAO_ROOT)/tao/BoundsC.i \
- EchoC.i \
+ $(TAO_ROOT)/tao/BoundsC.i EchoC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/RTPortableServerC.h \
@@ -1753,8 +1751,7 @@ realclean: clean
  $(TAO_ROOT)/tao/InterfaceC.h \
  $(TAO_ROOT)/tao/ifrfwd.h \
  $(TAO_ROOT)/tao/BoundsC.h \
- $(TAO_ROOT)/tao/BoundsC.i \
- EchoC.i \
+ $(TAO_ROOT)/tao/BoundsC.i EchoC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  $(TAO_ROOT)/tao/PortableServer/RTPortableServerC.h \

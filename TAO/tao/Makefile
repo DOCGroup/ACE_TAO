@@ -14579,8 +14579,7 @@ realclean:
  $(TAO_ROOT)/tao/BoundsC.i
 
 .obj/DomainC.o .obj/DomainC.so .shobj/DomainC.o .shobj/DomainC.so: DomainC.cpp DomainC.h \
- $(ACE_ROOT)/ace/pre.h \
- corbafwd.h \
+ $(ACE_ROOT)/ace/pre.h corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -18915,8 +18914,7 @@ realclean:
  $(TAO_ROOT)/tao/varbase.h \
  $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/corbafwd.i \
- DynamicC.h \
- $(TAO_ROOT)/tao/Any.h \
+ DynamicC.h $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
@@ -24786,8 +24784,7 @@ realclean:
  $(TAO_ROOT)/tao/Sequence_T.h \
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
- IOPC.i \
- $(TAO_ROOT)/tao/Any.h \
+ IOPC.i $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Environment.h \
  $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/Object.h \
@@ -25018,8 +25015,7 @@ realclean:
  $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- $(TAO_ROOT)/tao/CDR.i \
- PollableC.i \
+ $(TAO_ROOT)/tao/CDR.i PollableC.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(TAO_ROOT)/tao/Sequence.h \
@@ -25296,8 +25292,8 @@ realclean:
  $(TAO_ROOT)/tao/CDR.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/CDR_Stream.i \
- $(TAO_ROOT)/tao/CDR.i \
- PollableC.i PollableS_T.h PollableS_T.i PollableS_T.cpp PollableS.i
+ $(TAO_ROOT)/tao/CDR.i PollableC.i \
+ PollableS_T.h PollableS_T.i PollableS_T.cpp PollableS.i
 
 .obj/CONV_FRAMEC.o .obj/CONV_FRAMEC.so .shobj/CONV_FRAMEC.o .shobj/CONV_FRAMEC.so: CONV_FRAMEC.cpp \
  $(TAO_ROOT)/tao/CONV_FRAMEC.h \
@@ -26027,8 +26023,7 @@ realclean:
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
- GIOPC.i \
- $(TAO_ROOT)/tao/GIOPS_T.h \
+ GIOPC.i $(TAO_ROOT)/tao/GIOPS_T.h \
  $(TAO_ROOT)/tao/GIOPS_T.i \
  $(TAO_ROOT)/tao/GIOPS_T.cpp \
  GIOPS.i
@@ -26288,8 +26283,7 @@ realclean:
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/Priority_Mapping_Manager.i \
- TAOC.i \
- $(TAO_ROOT)/tao/TAOS.h \
+ TAOC.i $(TAO_ROOT)/tao/TAOS.h \
  $(TAO_ROOT)/tao/TAOS_T.h \
  $(TAO_ROOT)/tao/TAOS_T.i \
  $(TAO_ROOT)/tao/TAOS_T.cpp \
@@ -32416,8 +32410,7 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- corbafwd.h \
+ $(ACE_ROOT)/ace/OS.i corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -32487,8 +32480,7 @@ realclean:
  $(ACE_ROOT)/ace/CORBA_macros.h \
  $(TAO_ROOT)/tao/varbase.h \
  $(TAO_ROOT)/tao/TAO_Export.h \
- $(TAO_ROOT)/tao/corbafwd.i \
- IOPC.h \
+ $(TAO_ROOT)/tao/corbafwd.i IOPC.h \
  $(TAO_ROOT)/tao/CDR.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
@@ -32501,8 +32493,7 @@ realclean:
  $(TAO_ROOT)/tao/Sequence_T.h \
  $(TAO_ROOT)/tao/Sequence_T.i \
  $(TAO_ROOT)/tao/Sequence_T.cpp \
- IOPC.i \
- $(TAO_ROOT)/tao/PolicyC.h \
+ IOPC.i $(TAO_ROOT)/tao/PolicyC.h \
  $(TAO_ROOT)/tao/CurrentC.h \
  $(TAO_ROOT)/tao/Object.h \
  $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
@@ -32520,12 +32511,10 @@ realclean:
  $(TAO_ROOT)/tao/Environment.h \
  $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/PolicyC.i \
- TimeBaseC.h \
- $(TAO_ROOT)/tao/Any.h \
+ TimeBaseC.h $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/TimeBaseC.i \
- RTCORBAC.i \
- $(TAO_ROOT)/tao/TAOS.h \
+ RTCORBAC.i $(TAO_ROOT)/tao/TAOS.h \
  $(TAO_ROOT)/tao/TAOS_T.h \
  $(TAO_ROOT)/tao/TAOS_T.i \
  $(TAO_ROOT)/tao/TAOS_T.cpp \
@@ -32554,8 +32543,8 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- RTCORBAS.h orbconf.h IOPS.h IOPC.h \
+ $(ACE_ROOT)/ace/OS.i RTCORBAS.h \
+ orbconf.h IOPS.h IOPC.h \
  $(TAO_ROOT)/tao/TAO_Export.h \
  $(TAO_ROOT)/tao/CDR.h \
  $(TAO_ROOT)/tao/corbafwd.h \

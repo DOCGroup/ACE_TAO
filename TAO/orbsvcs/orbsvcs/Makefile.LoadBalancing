@@ -2053,8 +2053,7 @@ realclean: clean
  LoadBalancing/ReplicaProxy.i
 
 .obj/LoadBalancingS.o .obj/LoadBalancingS.so .shobj/LoadBalancingS.o .shobj/LoadBalancingS.so: LoadBalancingS.cpp LoadBalancingS.h \
- $(ACE_ROOT)/ace/pre.h \
- LoadBalancingC.h \
+ $(ACE_ROOT)/ace/pre.h LoadBalancingC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \

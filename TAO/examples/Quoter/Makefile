@@ -1094,8 +1094,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/BoundsC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
- client.h \
- $(ACE_ROOT)/ace/Get_Opt.h \
+ client.h $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Get_Opt.i \
  $(ACE_ROOT)/ace/Task.h \
  $(ACE_ROOT)/ace/Task.i \

@@ -15319,8 +15319,7 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Operation_Table.h
 
 .obj/RtecEventCommS.o .obj/RtecEventCommS.so .shobj/RtecEventCommS.o .shobj/RtecEventCommS.so: RtecEventCommS.cpp RtecEventCommS.h \
- $(ACE_ROOT)/ace/pre.h \
- TimeBaseS.h \
+ $(ACE_ROOT)/ace/pre.h TimeBaseS.h \
  $(TAO_ROOT)/tao/TimeBaseS.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/Any.h \
@@ -15676,8 +15675,8 @@ realclean: clean
 
 .obj/RtecEventChannelAdminS.o .obj/RtecEventChannelAdminS.so .shobj/RtecEventChannelAdminS.o .shobj/RtecEventChannelAdminS.so: RtecEventChannelAdminS.cpp \
  RtecEventChannelAdminS.h \
- $(ACE_ROOT)/ace/pre.h \
- RtecEventCommS.h TimeBaseS.h \
+ $(ACE_ROOT)/ace/pre.h RtecEventCommS.h \
+ TimeBaseS.h \
  $(TAO_ROOT)/tao/TimeBaseS.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/Any.h \
@@ -16036,8 +16035,8 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Operation_Table.h
 
 .obj/RtecUDPAdminS.o .obj/RtecUDPAdminS.so .shobj/RtecUDPAdminS.o .shobj/RtecUDPAdminS.so: RtecUDPAdminS.cpp RtecUDPAdminS.h \
- $(ACE_ROOT)/ace/pre.h \
- RtecEventCommS.h TimeBaseS.h \
+ $(ACE_ROOT)/ace/pre.h RtecEventCommS.h \
+ TimeBaseS.h \
  $(TAO_ROOT)/tao/TimeBaseS.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/Any.h \
