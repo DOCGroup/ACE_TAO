@@ -1229,35 +1229,88 @@ you have to say CTRL-C to get back to the prompt.
 </li>
 </ul>
 
-<a NAME="log"></a>CORBA Telecom Service</h3>
+<hr WIDTH="100%">
+<h3><a NAME="log"></a>CORBA Telecom Log Service </h3>
 
-<h4>
-Last updated: Fri Sep 3 1999</h4>
+<h4> Last updated: Sun Oct 17 14:35:11 CDT 1999 </h4>
 Point of contact: <a href="mailto:pradeep@cs.wustl.edu">Pradeep Gore</a>
-<p>The CORBA Telecom Service is being implemented.This is based on previous work by <a href="mailto:mjb2@cs.wustl.edu">Matt</a>.
+<p>The CORBA <a href="http://www.omg.org/cgi-bin/doc?telecom/98-12-04"> Telecom Log Service </a> prototype was released in TAO version 1.0.6.
 
 <br>
-<h3>
-Features supported in the first version:</h3>
+<h3> Features supported in the first version:</h3>
 
 <ul>
-<li>
-The Log Service (<tt>$TAO_ROOT/orbsvcs/orbsvcs/Log</tt>) will implement the
-<tt>DsLogAdmin </tt>module.
-<br> We could support the <tt>DsEventLogAdmin </tt> module next, which uses the <a href= "#ec">COS Event Service </a>
-<br>
-We do not support the <tt>DsLogNotification </tt> module because it needs the
-    <tt>CORBA Notification Service</tt>
-</li>
-<li>Initially all Log records will be stored in memory, later we will add support for persistant storage.
+  <li>
+      The Log Service implementation under <tt>$TAO_ROOT/orbsvcs/orbsvcs/Log</tt>
+      implements the <tt>DsLogAdmin </tt>module.
+      <br>
+  </li>
 
-    </li>
-<li>
-A simple test (<tt>$TAO_ROOT/orbsvcs/examples/Log_Service</tt>) that demonstrates how to create and use the Log Service.</li>
-
+  <li>
+      The Logging_Service (<tt>$TAO_ROOT/orbsvcs/Logging_Service</tt>) starts the Log
+      Service and registers the Log Service Factory with the Naming Service
+      as "BasicLogFactory".
+      <br>
+  </li>
+  <li>
+      The test <tt>$TAO_ROOT/orbsvcs/examples/Log/Client</tt> demonstrates
+      a simple use of the Log Service.
+      <br>
+  </li>
+  <li>
+      The Query Language supported at present is "TCL".
+	  The Log record id and Log record time are treated as properties
+	  of the log and can be referenced in a query as "id" and "time"
+	  respectively.
+      <br>
+  </li>
 </ul>
 
-<hr WIDTH="100%">
+<h3> Things to be done: </h3>
+<ul>
+  <li>
+      Write a more complete test to thoroughly check all features of the Log Service.
+      <br>
+  </li>
+  <li>
+      Implement a few remaining methods - <br>
+      For the <tt>Log</tt> interface:
+      setting the max. record life, log duration, weekly scheduling and copy.<br>
+      For the <tt>LogMgr</tt> interface:list_logs_by_id
+      <br>
+  </li>
+</ul>
+
+<h3> Future work and enhancements: </h3>
+<ul>
+  <li>
+      Support the <tt>DsEventLogAdmin </tt> module, which uses
+      the <a href= "#ec">COS Event Service </a>
+      <br>
+  </li>
+  <li>
+      Support the <tt>DsLogNotification </tt> module after the
+      <tt>CORBA Notification Service</tt> is complete.
+      <br>
+  </li>
+  <li>
+      Currently all Log records are stored in memory, later we could add
+      support for persistant storage.
+      <br>
+  </li>
+  <li>
+      Support "Extended TCL" as the Query Language.
+      <br>
+	  Support the record attributes as name-value pair properties.
+	  <br>
+  </li>
+  <li>
+	Use Red-Black trees to optimize lookup on frequently used query keys -
+	namely record id's and time.
+	<br> 
+  </li>
+</ul>
+
 <!--#include virtual="ec.html" -->
 <p>
 <hr>
