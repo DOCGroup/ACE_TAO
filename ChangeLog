@@ -1,15 +1,20 @@
+Sat Sep 11 00:49:39 2004  Olli Savia  <ops@iki.fi>
+
+        * ace/IOStream.h:
+          Changed NULL to 0 to silence compile time warning.
+        
 Fri Sep 10 15:39:22 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace/High_Res_Timer.{h inl cpp}: Added a new static method that
-	  calculates the difference between two ACE_hrtime_t quantities.
-	  Takes into account that the time counter may have wrapped around
-	  between the start and end. Changed all time difference calculations
-	  to use the new elapsed_hrtime() method.
+        * ace/High_Res_Timer.{h inl cpp}: Added a new static method that
+          calculates the difference between two ACE_hrtime_t quantities.
+          Takes into account that the time counter may have wrapped around
+          between the start and end. Changed all time difference calculations
+          to use the new elapsed_hrtime() method.
 
 Fri Sep 10 13:53:00 UTC 2004  Martin Corino  <mcorino@remedy.nl>
 
-	* ace/Time_Value.h:
-	* ace/Time_Value.inl:
+        * ace/Time_Value.h:
+        * ace/Time_Value.inl:
 
       Moved '#include "ace/Basic_Types.h"' from Time_Value.cpp to
       Time_Value.h because it's needed there since ACE_UINT64 is
@@ -17,28 +22,28 @@ Fri Sep 10 13:53:00 UTC 2004  Martin Corino  <mcorino@remedy.nl>
 
 Thu Sep 09 18:29:17 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/Time_Value.h (msec):
-	* ace/Time_Value.inl (msec):
+        * ace/Time_Value.h (msec):
+        * ace/Time_Value.inl (msec):
 
-	  Even though MSVC++ 6 supports 64 bit integers, it does not
-	  support the "long long" syntax.  Instead it supports its own
-	  "__int64" built-in type.  Use "ACE_UINT64" instead of "unsigned
-	  long long".  Fixes syntax errors exhibited by MSVC++ 6.
+          Even though MSVC++ 6 supports 64 bit integers, it does not
+          support the "long long" syntax.  Instead it supports its own
+          "__int64" built-in type.  Use "ACE_UINT64" instead of "unsigned
+          long long".  Fixes syntax errors exhibited by MSVC++ 6.
 
 Thu Sep  9 16:40:27 2004  Steve Huston  <shuston@riverace.com>
 
-	* apps/Gateway/Gateway/Connection_Handler.cpp:
-	* apps/Gateway/Gateway/Connection_Handler_Connector.cpp:
-	* apps/Gateway/Gateway/File_Parser.{h cpp}:
-	* apps/Gateway/Gateway/Gateway.cpp:
-	* apps/Gateway/Gateway/gatewayd.cpp:
-	* apps/Gateway/Peer/Options.{h cpp}:
-	* apps/Gateway/Peer/Peer.{h cpp}: Narrow/wide char fixes.
+        * apps/Gateway/Gateway/Connection_Handler.cpp:
+        * apps/Gateway/Gateway/Connection_Handler_Connector.cpp:
+        * apps/Gateway/Gateway/File_Parser.{h cpp}:
+        * apps/Gateway/Gateway/Gateway.cpp:
+        * apps/Gateway/Gateway/gatewayd.cpp:
+        * apps/Gateway/Peer/Options.{h cpp}:
+        * apps/Gateway/Peer/Peer.{h cpp}: Narrow/wide char fixes.
 
-	* apps/Gateway/Gateway/Options.h: Removed const char *connector_host()
-	  method because it's not ever defined or referenced.
+        * apps/Gateway/Gateway/Options.h: Removed const char *connector_host()
+          method because it's not ever defined or referenced.
 
-	* apps/Gateway/Peer/peer.mpc: New project definition.
+        * apps/Gateway/Peer/peer.mpc: New project definition.
 
 Thu Sep  9 16:17:38 2004  Olli Savia  <ops@iki.fi>
 
