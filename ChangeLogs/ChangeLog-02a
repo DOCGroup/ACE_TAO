@@ -1,3 +1,8 @@
+Sun Mar 11 17:46:45 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/Local_Name_Space_T.cpp: Fixed a compiler error on Win32
+	  Unicode platforms. 
+
 Sun Mar 11 17:28:40 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/QoS/QoS_Session_Impl.cpp (rsvp_callback): <errflags> was unused.
