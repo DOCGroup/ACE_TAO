@@ -2860,7 +2860,12 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
     }
 
   if (result == 0)
-    --s->count_;
+    {
+#if defined (ACE_LACKS_COND_TIMEDWAIT_RESET)
+      tv = ACE_OS::gettimeofday ();
+#endif /* ACE_LACKS_COND_TIMEDWAIT_RESET */
+      --s->count_;
+    }
 
   if (result != -1)
     ACE_OS::mutex_unlock (&s->lock_);
