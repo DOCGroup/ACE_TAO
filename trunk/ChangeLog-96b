@@ -1,3 +1,11 @@
+Tue Nov 26 21:35:53 1996  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/OS.cpp:  check for 0 thr_id before dereferencing with
+ 	  STHREADS in ACE_OS::thr_create()
+
+	* Log_Msg.cpp: fake out TSS on VxWorks in Log_Msg::instance()
+ 	  by using a spare field in the task control block
+
 Tue Nov 26 21:06:13 1996  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
 
 	* ace/Pipe.cpp (open): This change relates to Win32 code only.
@@ -9,6 +17,7 @@ Tue Nov 26 21:06:13 1996  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
 	  Reactors also without any problems.
 
 Tue Nov 26 11:27:33 1996  David L. Levine  <levine@cs.wustl.edu>
+
 	* tests/{CPP_Test,Mutex_Test,Shared_Memory_MM_Test,SPIPE_Test}.cpp:
  	  added VXWORKS support for these tests by spawning a new thread
  	  instead of forking a new process (the same as on Win32)
