@@ -1,34 +1,41 @@
+Mon Dec 06 08:25:22 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * include/makeinclude/platform_sunos5_sunc++.GNU: added more
+          comments about support of 64-bit binaries with Sun CC 5.0.
+          Thanks to Dani Flexer <dani.flexer@israel.sun.com> for
+          providing them.
+
 Mon Dec  6 07:55:05 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/config-sunos5.7.h: Added several new #defines needed to
-	  port ACE to 64 bit Solaris.  Thanks to Dani Flexer
- 	  <dani.flexer@israel.sun.com> for these.
+        * ace/config-sunos5.7.h: Added several new #defines needed to
+          port ACE to 64 bit Solaris.  Thanks to Dani Flexer
+          <dani.flexer@israel.sun.com> for these.
 
-	* ace/ACE.cpp: Changed the implementation of count_interfaces()
-	  to handle the fact that size_t is a 64 bit type but the
- 	  parameter to ioctl needs to be an int, which according to LP64
- 	  is 32 bits.  Thanks to Dani Flexer <dani.flexer@israel.sun.com>
- 	  for reporting this.
+        * ace/ACE.cpp: Changed the implementation of count_interfaces()
+          to handle the fact that size_t is a 64 bit type but the
+          parameter to ioctl needs to be an int, which according to LP64
+          is 32 bits.  Thanks to Dani Flexer <dani.flexer@israel.sun.com>
+          for reporting this.
 
-	* netsvcs/lib/Client_Logging_Handler.cpp (handle_signal): 
-	  If SIGPIPE occurs, ACE_Client_Logging_Handler::handle_signal()
- 	  returns -1, thus removing svc handler from reactor.  Since svc
- 	  handler is implemented as a singleton here, all next incoming
- 	  SPIPE connections operate on object that is already destroyed ->
- 	  SIGSEGV/SIGBUS.  Therefore, we now return 0 in handle_signal().
-  	  Thanks to Dmitry Ergy <dergy@websci.ru> for reporting this.
+        * netsvcs/lib/Client_Logging_Handler.cpp (handle_signal):
+          If SIGPIPE occurs, ACE_Client_Logging_Handler::handle_signal()
+          returns -1, thus removing svc handler from reactor.  Since svc
+          handler is implemented as a singleton here, all next incoming
+          SPIPE connections operate on object that is already destroyed ->
+          SIGSEGV/SIGBUS.  Therefore, we now return 0 in handle_signal().
+          Thanks to Dmitry Ergy <dergy@websci.ru> for reporting this.
 
-	* netsvcs/lib/Server_Logging_Handler_T.cpp (svc): The following
-	  loop
+        * netsvcs/lib/Server_Logging_Handler_T.cpp (svc): The following
+          loop
 
-	    while ((result = this->handle_input ()) > 0)
-	      continue;
-  
+            while ((result = this->handle_input ()) > 0)
+              continue;
+
           causes server thread to leave its execution loop, because handle_input()
-	  always returns 0 or -1.  This should be replaced with
-  
+          always returns 0 or -1.  This should be replaced with
+
             while ((result = this->handle_input ()) == 0)
-  
+
           Thanks to Dmitry Ergy <dergy@websci.ru> for reporting this.
 
 Sun Dec 05 21:54:47 1999  David L. Levine  <levine@cs.wustl.edu>
