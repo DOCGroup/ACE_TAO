@@ -1,3 +1,10 @@
+Tue Jan  6 11:14:57 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/IFR_Client/Interface.pidl:
+
+	  Removed this file form the repo since it is not used and
+	  woefully out of date. 
+
 Tue Jan  6 11:13:00 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Messaging/Messaging.pidl:
