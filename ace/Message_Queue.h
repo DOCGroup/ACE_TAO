@@ -32,11 +32,11 @@ template <ACE_SYNCH_DECL> class ACE_Message_Queue_Reverse_Iterator;
  *
  * @brief Base class for <ACE_Message_Queue>, which is the central
  * queueing facility for messages in the ACE framework.
- * 
+ *
  * For all the <ACE_Time_Value> pointer parameters the caller will
  * block until action is possible if <timeout> == 0.  Otherwise, it
  * will wait until the absolute time specified in *<timeout>
- * elapses.  
+ * elapses.
  */
 class ACE_Export ACE_Message_Queue_Base
 {
@@ -97,7 +97,7 @@ public:
    * deactivated (in which case <errno> == <ESHUTDOWN>), when a signal
    * occurs (in which case <errno> == <EINTR>, or if the time
    * specified in timeout elapses (in which case <errno> ==
-   * <EWOULDBLOCK>).  
+   * <EWOULDBLOCK>).
    */
   virtual int dequeue_head (ACE_Message_Block *&first_item,
                             ACE_Time_Value *timeout = 0) = 0;
@@ -123,11 +123,11 @@ public:
   /// Number of total messages on the queue.
   virtual size_t message_count (void) = 0;
 
-  /// New value of the number of total bytes on the queue, i.e., 
+  /// New value of the number of total bytes on the queue, i.e.,
   /// sum of the message block sizes.
   virtual void message_bytes (size_t new_size) = 0;
 
-  /// New value of the number of total length on the queue, i.e., 
+  /// New value of the number of total length on the queue, i.e.,
   /// sum of the message block lengths.
   virtual void message_length (size_t new_length) = 0;
 
