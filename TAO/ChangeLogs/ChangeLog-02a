@@ -1,3 +1,12 @@
+Tue Feb  1 17:43:09 2000  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/Command_Handler.cpp: 
+	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/ctr.cpp: 
+
+	Fixed compile errors and warning with egcs-1.1.1 on Sun OS 5.7.
+	Thanks to   Alex Luk <fluk7@ie.cuhk.edu.hk> and  Kenneth Osenbroch
+	<kennetho@stud.cs.uit.no>  for reporting this.
+	
 Tue Feb  1 16:50:28 2000  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* orbsvcs/tests/AVStreams/mpeg_shared/com.cpp:
