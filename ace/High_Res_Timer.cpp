@@ -44,6 +44,7 @@ ACE_ALLOC_HOOK_DEFINE(ACE_High_Res_Timer)
 /* static */
 int ACE_High_Res_Timer::global_scale_factor_status_ = 0;
 
+
 #if defined (linux)
 // Determine the apparent CPU clock speed from /proc/cpuinfo
 ACE_UINT32
@@ -174,7 +175,7 @@ ACE_High_Res_Timer::global_scale_factor (void)
                 // We have a high-res timer
                 ACE_High_Res_Timer::global_scale_factor 
                   (ACE_static_cast (unsigned int, 
-                                    freq.QuadPart / ACE_ONE_SECOND_IN_USECS));
+                                    freq.QuadPart / ACE_HR_SCALE_CONVERSION));
               }
             else
               // High-Res timers not supported
@@ -310,6 +311,9 @@ ACE_High_Res_Timer::elapsed_time (ACE_Time_Value &tv) const
 }
 
 #if defined (ACE_HAS_POSIX_TIME)
+// Note... Win32 does not have ACE_HAS_POSIX_TIME, so the scale factor
+// does not need to take into account the different units on Win32.
+
 void
 ACE_High_Res_Timer::elapsed_time (struct timespec &elapsed_time) const
 {
@@ -353,16 +357,26 @@ ACE_High_Res_Timer::elapsed_time (ACE_hrtime_t &nanoseconds) const
   // Please do _not_ rearrange this equation.  It is carefully
   // designed and tested to avoid overflow on machines that don't have
   // native 64-bit ints.
+#if defined (ACE_WIN32)
+  nanoseconds = (this->end_ - this->start_) 
+                * (1000000u / ACE_High_Res_Timer::global_scale_factor ());
+#else
   nanoseconds = (this->end_ - this->start_) 
                 * (1000u / ACE_High_Res_Timer::global_scale_factor ());
+#endif /* ACE_WIN32 */
 }
 
 void
 ACE_High_Res_Timer::elapsed_time_incr (ACE_hrtime_t &nanoseconds) const
 {
   // Same as above.
+#if defined (ACE_WIN32)
+  nanoseconds = this->total_
+                / ACE_High_Res_Timer::global_scale_factor () * 1000000u;
+#else
   nanoseconds = this->total_ 
                 / ACE_High_Res_Timer::global_scale_factor () * 1000u;
+#endif
 }
 
 #if !defined (ACE_HAS_WINCE)

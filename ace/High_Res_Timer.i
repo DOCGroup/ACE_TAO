@@ -8,7 +8,7 @@ ACE_High_Res_Timer::hrtime_to_tv (ACE_Time_Value &tv,
   // The following are based on the units of global_scale_factor_
   // being 1/microsecond.  Therefore, dividing by it converts
   // clock ticks to microseconds.
-  tv.sec ((long) (hrt / (ACE_UINT32) ACE_ONE_SECOND_IN_USECS /
+  tv.sec ((long) (hrt / (ACE_UINT32) ACE_HR_SCALE_CONVERSION /
                   global_scale_factor ()));
 
   // Calculate usec in a manner that's compatible with ACE_U_LongLong.
@@ -18,8 +18,18 @@ ACE_High_Res_Timer::hrtime_to_tv (ACE_Time_Value &tv,
   // tv.usec = (hrt - tv.sec * ACE_ONE_SECOND_IN_USECS * global_scale_factor_)/
   //           global_scale_factor
   ACE_hrtime_t tmp = tv.sec ();
-  tmp *= ((ACE_UINT32) ACE_ONE_SECOND_IN_USECS * global_scale_factor ());
+  tmp *= ((ACE_UINT32) ACE_HR_SCALE_CONVERSION * global_scale_factor ());
+#if defined (ACE_WIN32)
+  // Win32's scale factor is in ticks/msec, so multiply up to usec.
+  ACE_hrtime_t subsec = hrt - tmp;         // Remainder of ticks < 1sec
+  long msec = (long) (subsec / global_scale_factor ());  // #msec
+  long usec = (long) (subsec - (msec * global_scale_factor ()));
+  //     (tick * usec/msec) / tick/msec     = usec  
+  usec = (usec * 1000)      / (long) global_scale_factor ();
+  tv.usec ((msec * 1000) + usec);
+#else
   tv.usec ((long) ((hrt - tmp) / global_scale_factor ()));
+#endif
 }
 
 
@@ -115,6 +125,13 @@ ACE_High_Res_Timer::elapsed_microseconds (ACE_hrtime_t &usecs) const
 {
   usecs =
     (ACE_hrtime_t) ((this->end_ - this->start_) / global_scale_factor ());
+#if defined (ACE_WIN32)
+  // Win32 scale factor is in msec, so multiply up to usecs and pick up
+  // the straggling usecs from the modulus.
+  usecs *= 1000u;
+  usecs +=
+   (ACE_hrtime_t) ((this->end_ - this->start_) % (global_scale_factor () * 1000u));
+#endif
 }
 
 ACE_INLINE void
