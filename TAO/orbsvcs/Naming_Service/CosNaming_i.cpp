@@ -325,7 +325,7 @@ NS_NamingContext::resolve (const CosNaming::Name& n,
 
   // if the name we had to resolve was simple, we just need
   // to return the result.
-  return (ACE_NESTED_CLASS (CORBA,Object)::_duplicate (item));
+  return CORBA::Object::_duplicate (item);
 }
 
 void 
@@ -441,7 +441,7 @@ NS_NamingContext::list (CORBA::ULong how_many,
        ACE_UNUSED_ARG (bind_iter);
 	 
        //  bind_iter->initialize (bi); 
-       ACE_NESTED_CLASS (CosNaming, BindingIterator)::_duplicate (bi);
+	   CosNaming::BindingIterator::_duplicate (bi);
        
        n = how_many;
     }
