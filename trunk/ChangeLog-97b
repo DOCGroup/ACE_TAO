@@ -1,3 +1,31 @@
+Thu Nov  6 23:05:14 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/Select_Reactor.cpp, ace/ACE.cpp: Broaded the comparison so
+ 	  that we only try to use {set|get}rlimit() if ACE_LACKS_RLIMIT is
+ 	  *false*.  Thanks to Arturo Montes <mitosys@colomsat.net.co> for
+ 	  reporting this.
+
+	* ace/Object_Manager: Added support for
+ 	  get_singleton_lock(ACE_Mutex *).  Thanks to Arturo Montes
+ 	  <mitosys@colomsat.net.co> for reporting this.
+
+	* ace/Connector.cpp: If connect_n() fails make sure to return -1.
+  	  Thanks to Stephen Coy <stevec@magna.com.au> for pointing out the
+ 	  problem.
+
+	* ace/config-sco-5.0.0.h: Removed the ACE_LACKS_RLIMIT flag.
+  	  Thanks to Arturo Montes <mitosys@colomsat.net.co> for reporting
+ 	  this.
+
+	* tests: Changed all uses of "localhost" to
+ 	  ACE_DEFAULT_SERVER_HOST.  This solves some problems with MVS.
+  	  Thanks to Chuck Gehr <gehr@sweng.stortek.com> for reporting
+ 	  this.
+
+	* examples/Timer_Queue: Changed COMMAND to CMD so it won't
+ 	  conflict with the HP/YUX compiler.  Thanks to Sandro Doro
+ 	  <doros@aureus.sublink.org> for reporting this.
+
 Thu Nov 06 22:13:01 1997    <irfan@TWOSTEP>
 
 	* examples/Connection/blocking/SPIPE-connector.cpp (init): Fixed
@@ -25,28 +53,9 @@ Thu Nov 06 22:13:01 1997    <irfan@TWOSTEP>
  	  to return 0 when local_addr is anything other than
  	  ACE_Addr::sap_any.
 
-Thu Nov  6 19:40:41 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
-
-	* ace/Object_Manager: Added support for
- 	  get_singleton_lock(ACE_Mutex *).  Thanks to Arturo Montes
- 	  <mitosys@colomsat.net.co> for reporting this.
-
-	* ace/Connector.cpp: If connect_n() fails make sure to return -1.
-  	  Thanks to Stephen Coy <stevec@magna.com.au> for pointing out the
- 	  problem.
-
-	* ace/config-sco-5.0.0.h: Removed the ACE_LACKS_RLIMIT flag.
-  	  Thanks to Arturo Montes <mitosys@colomsat.net.co> for reporting
- 	  this.
-
-	* tests: Changed all uses of "localhost" to
- 	  ACE_DEFAULT_SERVER_HOST.  This solves some problems with MVS.
-  	  Thanks to Chuck Gehr <gehr@sweng.stortek.com> for reporting
- 	  this.
-
-	* examples/Timer_Queue: Changed COMMAND to CMD so it won't
- 	  conflict with the HP/YUX compiler.  Thanks to Sandro Doro
- 	  <doros@aureus.sublink.org> for reporting this.
+	* ace/Synch_T.h: Fixed all the ACE_SYNCH_* defines.  Thanks to
+ 	  Matthias Kerkhoff <make@cs.tu-berlin.de> for pointing the
+ 	  problems.
 
 Thu Nov 06 18:30:42 1997  Steve Huston  <shuston@riverace.com>
 
@@ -66,19 +75,6 @@ Thu Nov 06 18:30:42 1997  Steve Huston  <shuston@riverace.com>
 
 	* tests/Reactor_Performance_Test.cpp: Don't crash if any of the
 	  client's connect attempts fail.
-
-Thu Nov 06 19:55:35 1997    <irfan@TWOSTEP>
-
-	* ace/Synch_T.h: Fixed all the ACE_SYNCH_* defines.  Thanks to
- 	  Matthias Kerkhoff <make@cs.tu-berlin.de> for pointing the
- 	  problems.
-
-Thu Nov  6 16:51:36 1997  Sumedh Mungee  <sumedh@lindy.cs.wustl.edu>
-
-	* tests/SOCK_Connector_Test.cpp (find_another_host): Added
-	  ACE_NETBSD to the #if define around gethostent.
-
-Thu Nov 06 10:07:26 1997  Steve Huston  <shuston@riverace.com>
 
 	* ace/Reactor.h: Added #include "ace/Handle_Set.h" - AIX needs the
 	  class definition when generating templates in programs.
@@ -103,6 +99,11 @@ Thu Nov 06 10:07:26 1997  Steve Huston  <shuston@riverace.com>
 	  generation.
 
 	* tests/Timer_Queue_Test.cpp: Limit the number of iterations to 2000.
+
+Thu Nov  6 16:51:36 1997  Sumedh Mungee  <sumedh@lindy.cs.wustl.edu>
+
+	* tests/SOCK_Connector_Test.cpp (find_another_host): Added
+	  ACE_NETBSD to the #if define around gethostent.
 
 Thu Nov 06 00:08:01 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 

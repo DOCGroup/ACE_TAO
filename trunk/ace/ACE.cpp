@@ -1472,7 +1472,7 @@ int
 ACE::max_handles (void)
 {
   ACE_TRACE ("ACE::max_handles");
-#if defined (RLIMIT_NOFILE)
+#if defined (RLIMIT_NOFILE) && !defined (ACE_LACKS_RLIMIT)
   rlimit rl;
   ACE_OS::getrlimit (RLIMIT_NOFILE, &rl);
   return rl.rlim_cur;
@@ -1482,7 +1482,7 @@ ACE::max_handles (void)
   return FD_SETSIZE;
 #else
   ACE_NOTSUP_RETURN (-1);
-#endif /* ACE_WIN32 */
+#endif /* defined (RLIMIT_NOFILE) && !defined (ACE_LACKS_RLIMIT) */
 }
 
 // Set the number of currently open handles in the process.
@@ -1494,7 +1494,7 @@ int
 ACE::set_handle_limit (int new_limit)
 {
   ACE_TRACE ("ACE::set_handle_limit");
-#if defined (RLIMIT_NOFILE) 
+#if defined (RLIMIT_NOFILE) && !defined (ACE_LACKS_RLIMIT)
   struct rlimit rl;
 
   if (ACE_OS::getrlimit (RLIMIT_NOFILE, &rl) != -1)
@@ -1512,7 +1512,7 @@ ACE::set_handle_limit (int new_limit)
 #else
   new_limit = new_limit;
   ACE_NOTSUP_RETURN (-1);
-#endif /* ACE_WIN32 */
+#endif /* defined (RLIMIT_NOFILE) && !defined (ACE_LACKS_RLIMIT) */
 }
 
 // Flags are file status flags to turn on.
