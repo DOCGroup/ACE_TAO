@@ -30,6 +30,8 @@ int
 switchHook (WIND_TCB *pOldTcb,    // pointer to old task's WIND_TCB.
             WIND_TCB *pNewTcb)   // pointer to new task's WIND_TCB.
 {
+  ACE_UNUSED_ARG (pOldTcb);
+
   // We create the client threads with names starting with "@".
   if (pNewTcb->name[0] == '@')
     ctx++;

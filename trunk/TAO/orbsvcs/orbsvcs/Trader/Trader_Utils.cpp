@@ -449,6 +449,8 @@ construct_dynamic_prop (const char* name,
                         CORBA::TypeCode_ptr returned_type,
                         const CORBA::Any& extra_info)
 {
+  ACE_UNUSED_ARG (name);
+
   CosTradingDynamic::DynamicProp* dp_struct = 0;
 
   ACE_NEW_RETURN (dp_struct, CosTradingDynamic::DynamicProp, 0);
@@ -834,6 +836,8 @@ copy_in_follow_option (CosTrading::PolicySeq& policy_seq,
   TAO_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch,
                    CosTrading::Lookup::InvalidPolicyValue))
 {
+  ACE_UNUSED_ARG (TAO_IN_ENV);
+
   CosTrading::FollowOption follow_option = CosTrading::local_only;
   CosTrading::FollowOption trader_max_follow_policy =
     this->trader_.import_attributes ().max_follow_policy ();

@@ -451,6 +451,7 @@ TAO_PropertySet::TAO_PropertySet (const CosPropertyService::PropertyTypes allowe
   : allowed_property_types_ (allowed_property_types),
     allowed_property_names_ (number_of_allowed_properties)
 {
+  ACE_UNUSED_ARG (TAO_IN_ENV);
 }
 // PropertySetFactory needs this constructor. Store all the initial
 // properies with *normal* modes.
@@ -740,8 +741,10 @@ TAO_PropertySet::define_properties (const CosPropertyService::Properties &nprope
 // PropertySet.
 
 CORBA::ULong
-TAO_PropertySet::get_number_of_properties ( CORBA::Environment &TAO_IN_ENV)
+TAO_PropertySet::get_number_of_properties (CORBA::Environment &TAO_IN_ENV)
 {
+  ACE_UNUSED_ARG (TAO_IN_ENV);
+
   return this->hash_table_.current_size ();
 }
 
@@ -1128,6 +1131,8 @@ TAO_PropertySet::delete_properties (const CosPropertyService::PropertyNames &pro
 CORBA::Boolean
 TAO_PropertySet::delete_all_properties (CORBA::Environment &TAO_IN_ENV)
 {
+  ACE_UNUSED_ARG (TAO_IN_ENV);
+
   TAO_TRY
     {
       // Get all the property names in a names' sequence.
@@ -1176,6 +1181,8 @@ TAO_PropertySet::delete_all_properties (CORBA::Environment &TAO_IN_ENV)
 CORBA::Boolean
 TAO_PropertySet::is_property_defined (const char *property_name,  CORBA::Environment &TAO_IN_ENV)
 {
+  ACE_UNUSED_ARG (TAO_IN_ENV);
+
   ACE_DEBUG ((LM_DEBUG, "is_property_defined\n"));
 
   CosProperty_Hash_Key hash_key (property_name);

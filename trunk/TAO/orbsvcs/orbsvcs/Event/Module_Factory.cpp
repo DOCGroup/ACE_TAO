@@ -167,6 +167,8 @@ TAO_Reactive_Module_Factory::destroy_supplier_module (ACE_ES_Supplier_Module* x)
 TAO_EC_Timer_Module*
 TAO_Reactive_Module_Factory::create_timer_module (ACE_EventChannel* ec)
 {
+  ACE_UNUSED_ARG (ec);
+
   return new TAO_EC_ST_Timer_Module (TAO_ORB_Core_instance ()->reactor ());
 }
 
