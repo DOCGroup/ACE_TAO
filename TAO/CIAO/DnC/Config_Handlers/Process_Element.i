@@ -59,6 +59,36 @@ private:
 };
 
 /*
+ *  Wrapper class for the process member functions which does not have DOMNodeIterator parameter
+ */
+
+template <typename OBJ, typename DATA>
+class Process_Member_Function_Remote: public Process_Function<DATA> {
+public:
+  typedef void (OBJ::*func_type) (DATA&);
+  typedef DATA data_type;
+
+  Process_Member_Function(OBJ& obj, func_type f)
+    : obj_(&obj), f_(f)
+  {
+  }
+
+  Process_Member_Function(OBJ* obj, func_type f)
+    : obj_(obj), f_(f)
+  {
+  }
+
+  virtual void call(DOMNodeIterator* iter, DATA& data)
+  {
+    (obj_->*f_) (data);
+  }
+
+private:
+  OBJ* obj_;
+  func_type f_;
+};
+
+/*
  *  Wrapper class for the static process member functions.
  */
 
@@ -149,9 +179,9 @@ process_sequence_remote(DOMDocument* doc, DOMNodeIterator* iter, DOMNode* node,
     {
       OBJECT obj (iter, false);
       
-      Process_Member_Function<OBJECT, DATA>
+      Process_Member_Function_Remote<OBJECT, DATA>
         pf(obj, func);
-      process_sequential_element (node, doc, iter, seq, &pf, id_map);
+      process_sequential_element (node, doc, 0, seq, &pf, id_map);
     }
 
   return result;
@@ -280,13 +310,13 @@ process_element_remote(DOMDocument* doc, DOMNodeIterator* iter, DOMNode* note,
           DOMNamedNodeMap* named_node_map = node->getAttributes ();
           int length = named_node_map->getLength ();
 
-          Process_Member_Function<OBJECT, DATA>
+          Process_Member_Function_Remote<OBJECT, DATA>
             pf(&obj, func);
 
           if (length == 1)
-              pf(iter, elem);
+              pf(elem);
           else
-              process_element_attributes(named_node_map, doc, iter, 0, elem, &pf, id_map);
+              process_element_attributes(named_node_map, doc, 0, 0, elem, &pf, id_map);
         }
     }
 
