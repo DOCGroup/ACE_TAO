@@ -2,7 +2,6 @@
 // Hey, Emacs!  This is a C++ file!
 // $Id$
 
-
 // ============================================================================
 //
 // = LIBRARY
@@ -16,33 +15,8 @@
 // 
 // ============================================================================
 
-#ifndef ACE_FILECACHE_H
+#if !defined (ACE_FILECACHE_H)
 #define ACE_FILECACHE_H
-
-// This is a cached filesystem implementation based loosely on the
-// implementation of JAWS_File.  The interfaces will be nearly the
-// same.  The under-the-hood implementation should hopefully be a
-// much faster thing.
-
-// These will be given their own implementations later. For now, we
-// borrow the implementation provided by JAWS.
-
-// TODO:
-
-// (1) Get rid of the useless copying of files when reading.  Although
-// it does make sure the file you send isn't being changed, it doesn't
-// make sure the file is in a sensible state before sending it.
-
-// Alternative: if the file get's trashed while it is being shipped, let
-// the client request the file again.  The cache should have an updated
-// copy by that point.
-
-// (2) Use hashing for locating files.  This means I need a hastable
-// implementation with buckets.
-
-// (3) Only lock when absolutely necessary.  JAWS_Virtual_Filesystem was
-// rather conservative, but for some reason it still ran into problems.
-// Since this design should be simpler, problems should be easier to spot.
 
 #include "ace/Mem_Map.h"
 #include "ace/Synch.h"
@@ -51,13 +25,23 @@
 class ACE_Filecache_Object;
 class ACE_Filecache;
 
-class ACE_Filecache_Handle
+class ACE_Export ACE_Filecache_Handle
   // = TITLE
   //     Abstraction over a real file.  This is meant to be the entry
-  //     point into the Cached Virtual Filesystem.  On creation, the
-  //     cache is checked, and reference count is incremented.  On
-  //     destruction, reference count is decremented.  If the
-  //     reference count is 0, the file is removed from the cache.
+  //     point into the Cached Virtual Filesystem.
+  // 
+  // = DESCRIPTION
+  // This is a cached filesystem implementation based loosely on the
+  // implementation of JAWS_File.  The interfaces will be nearly the
+  // same.  The under-the-hood implementation should hopefully be a
+  // much faster thing.
+  //
+  // These will be given their own implementations later. For now, we
+  // borrow the implementation provided by JAWS.
+  //
+  // On creation, the cache is checked, and reference count is
+  // incremented.  On destruction, reference count is decremented.  If
+  // the reference count is 0, the file is removed from the cache.
   //
   //     E.g. 1,
   //       {
@@ -76,6 +60,24 @@ class ACE_Filecache_Handle
   //         ACE_Filecache_Handle foo("foo.html", content_length);
   //         this->peer ().recv (foo.address (), content_length);
   //       }
+  //
+  // TODO:
+
+  // (1) Get rid of the useless copying of files when reading.  Although
+  // it does make sure the file you send isn't being changed, it doesn't
+  // make sure the file is in a sensible state before sending it.
+
+  // Alternative: if the file get's trashed while it is being shipped, let
+  // the client request the file again.  The cache should have an updated
+  // copy by that point.
+
+  // (2) Use hashing for locating files.  This means I need a hastable
+  // implementation with buckets.
+
+  // (3) Only lock when absolutely necessary.  JAWS_Virtual_Filesystem was
+  // rather conservative, but for some reason it still ran into problems.
+  // Since this design should be simpler, problems should be easier to spot.
+  //
 {
 public:
 
@@ -119,44 +121,31 @@ private:
   // A dup()'d version of the one from this->file_.
 };
 
-class ACE_Filecache
+class ACE_Export ACE_Filecache
   // = TITLE
-  //     A hash table holding the information about entry point into the
-  //     Cached Virtual Filesystem. On insertion, the reference count is
-  //     incremented. On destruction, reference count is decremented.
+  //     A hash table holding the information about entry point into
+  //     the Cached Virtual Filesystem. On insertion, the reference
+  //     count is incremented. On destruction, reference count is
+  //     decremented.
 {
 public:
-  static ACE_Filecache * instance (void);
+  static ACE_Filecache *instance (void);
   // Singleton pattern.
 
   ~ACE_Filecache (void);
 
-  ACE_Filecache_Object *fetch (const char * filename);
+  ACE_Filecache_Object *fetch (const char *filename);
   // Return the file associated with ``filename'' if it is in the cache,
   // or create if not.
 
-  ACE_Filecache_Object *remove (const char * filename);
+  ACE_Filecache_Object *remove (const char *filename);
   // Remove the file associated with ``filename'' from the cache.
 
-  ACE_Filecache_Object *insert (ACE_Filecache_Object * new_file);
+  ACE_Filecache_Object *insert (ACE_Filecache_Object *new_file);
   // Add a new file to the cache.
 
-  ACE_Filecache_Object *replace (ACE_Filecache_Object * new_file);
+  ACE_Filecache_Object *replace (ACE_Filecache_Object *new_file);
   // Replace an existing file in the cache (or insert if not already in).
-
-protected:
-  ACE_Filecache (void);
-  // Prevent it from being called.
-
-private:
-  int fetch_i (const char * filename);
-  // Internal fetch method does not require locking.
-
-  ACE_Filecache_Object * remove_i (int index);
-  // Internal remove method, no locking.
-
-  ACE_Filecache_Object * insert_i (ACE_Filecache_Object *new_file);
-  // Internal insertion method, no locking.
 
 public:
 
@@ -171,7 +160,19 @@ public:
     // This will be ignored for now.
   };
 
+protected:
+  ACE_Filecache (void);
+  // Prevent it from being called.
+
 private:
+  int fetch_i (const char *filename);
+  // Internal fetch method does not require locking.
+
+  ACE_Filecache_Object *remove_i (int index);
+  // Internal remove method, no locking.
+
+  ACE_Filecache_Object *insert_i (ACE_Filecache_Object *new_file);
+  // Internal insertion method, no locking.
 
   ACE_Filecache_Object *table_[DEFAULT_VIRTUAL_FILESYSTEM_TABLE_SIZE];
   int size_;
@@ -180,7 +181,7 @@ private:
   static ACE_SYNCH_RW_MUTEX lock_;
 };
 
-class ACE_Filecache_Object
+class ACE_Export ACE_Filecache_Object
   // = TITLE
   //     Abstraction over a real file.  This is what the Virtual
   //     Filesystem contains.  This class is not intended for general
@@ -236,7 +237,8 @@ protected:
   // Common initialization code,
 
 private:
-  int error_i (int error_value, const char * s = "ACE_Filecache_Object");
+  int error_i (int error_value,
+	       const char *s = "ACE_Filecache_Object");
   // Internal error logging method, no locking.
 
 public:
@@ -280,7 +282,8 @@ private:
   int reference_count_;
   ACE_SYNCH_RW_MUTEX lock_;
   // reference_count_ counts how many users of the file there are.
-  // lock_ provides a synchronization mechanism for critical sections of code.
+  // lock_ provides a synchronization mechanism for critical sections
+  // of code.
 };
 
 #endif /* ACE_FILECACHE_H */
