@@ -116,21 +116,30 @@ ACE_Handle_Set_Iterator::operator () (void)
     {
       ACE_HANDLE result = this->handle_index_;
 
-      // Increment the iterator.
+      // Increment the iterator and advance to the next bit in this
+      // word.
       this->handle_index_++;
       this->word_val_ = (this->word_val_ >> 1) & ACE_MSB_MASK;
 
-      // If've examined all the bits in this word, we'll go onto the
-      // next word.
+      // If we've examined all the bits in this word, we'll go onto
+      // the next word.
 
       if (this->word_val_ == 0) 
 	{
-	  // Loop until we've found the first non-zero bit or we run
-	  // past the <maxhandlep1> of the bitset.
-	  while (this->handle_index_ < maxhandlep1
-		 && this->handles_.mask_.fds_bits[++this->word_num_] == 0)
+	  // Start the handle_index_ at the beginning of the next word
+	  // and then loop until we've found the first non-zero bit or
+	  // we run past the <maxhandlep1> of the bitset.
+
+	  for (this->handle_index_ = ++this->word_num_ * ACE_Handle_Set::WORDSIZE;
+	       this->handle_index_ < maxhandlep1
+		 && this->handles_.mask_.fds_bits[this->word_num_] == 0;
+	       this->word_num_++)
 	    this->handle_index_ += ACE_Handle_Set::WORDSIZE;
 	  
+          ACE_DEBUG ((LM_DEBUG,
+		      "handle_index_: %d, maxhandlep1: %d, word_num_: %d\n",
+		      handle_index_, maxhandlep1, word_num_));
+
 	  // If the bit index becomes >= the maxhandlep1 that means
 	  // there weren't any more bits set that we want to consider.
 	  // Therefore, we'll just store the maxhandlep1, which will
@@ -151,7 +160,7 @@ ACE_Handle_Set_Iterator::operator () (void)
       // represents (this information is used by subsequent calls to
       // <operator()>).
 
-      for (; 
+      for (;
 	   ACE_BIT_DISABLED (this->word_val_, 1);
 	   this->handle_index_++)
 	this->word_val_ = (this->word_val_ >> 1) & ACE_MSB_MASK;
