@@ -2,8 +2,19 @@ Thu Feb 24 21:05:42 2005  Boris Kolpackov  <boris@kolpackov.net>
 
 	* protocols/ace/RMCast/Socket.h:
 	* protocols/ace/RMCast/Socket.cpp: Removed class-scope
-	using-declaration for VxWorks can't handle it.
+	  using-declaration for VxWorks can't handle it.
 
+Thu Feb 24 12:37:19 2005  Steve Huston  <shuston@riverace.com>
+
+	* ace/Asynch_Acceptor.cpp (accept): Use ==, not =, to check a value.
+	  This is why constants work better on the left-hand side...
+
+	* ace/POSIX_Asynch_IO.{h cpp} (ACE_POSIX_Asynch_Result):
+	* ace/WIN32_Asynch_IO.{h cpp} (ACE_WIN32_Asynch_Result): Changed
+	  the handler_proxy_ from a Proxy_Ptr& to a Proxy_Ptr. This causes
+	  the reference count to be incremented properly, avoiding premature
+	  deletion of the ACE_Handler. Fixes weird errors and crashes with
+	  Proactor_Test.
 
 Wed Feb 23 13:53:39 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
@@ -22,7 +33,7 @@ Wed Feb 23 19:48:59 2005  Boris Kolpackov  <boris@kolpackov.net>
 	* protocols/ace/RMCast/Link.cpp:
 	* protocols/ace/RMCast/Socket.cpp:
 	* protocols/ace/RMCast/Socket.h: Replaced auto_ptr with
-	ACE_Auto_Ptr.
+	  ACE_Auto_Ptr.
 
 Tue Feb 22 18:03:41 2005  Steve Huston  <shuston@riverace.com>
 
