@@ -5,7 +5,6 @@
 #include "poa_macros.h"
 #include "tao/IORInterceptor/IORInfoC.h"
 #include "tao/Server_Strategy_Factory.h"
-#include "tao/Interceptor_List.h"
 #include "tao/ORB_Core.h"
 #include "tao/IORInterceptor_Adapter.h"
 
