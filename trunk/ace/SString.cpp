@@ -265,10 +265,11 @@ ACE_CString::ACE_CString (const ACE_USHORT16 *s,
     {
       this->release_ = 1;
 
-      this->len_ = ACE_WString::strlen (s);
-      //@@ Can this fail, and we will segfault later?
-      this->rep_ = (char *) this->allocator_->malloc (this->len_ + 1);
-      this->buf_len_ = this->len_ + 1;
+      size_t len = ACE_WString::strlen (s);
+      ACE_ALLOCATOR (this->rep_,
+                     (char *) this->allocator_->malloc (len + 1));
+      this->len_ = len;
+      this->buf_len_ = len + 1;
 
       // Copy the ACE_USHORT16 * string byte-by-byte into the char *
       // string.
@@ -299,8 +300,8 @@ ACE_CString::set (const char *s,
 
       this->rep_ = temp;
       this->buf_len_ = new_buf_len;
-      this->len_ = len;
       this->release_ = 1;
+      this->len_ = len;
       ACE_OS::memcpy (this->rep_, s, len);
       // NUL terminate.
       this->rep_[len] = '\0';
@@ -329,8 +330,6 @@ ACE_CString::set (const char *s,
         {
           this->buf_len_ = len;
           this->len_ = len;
-          //@@ Do we need null terminate? No null is a problem for <<
-          // and if user expects null.
           this->rep_ = (char *) s;
         }
       else
