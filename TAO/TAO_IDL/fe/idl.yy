@@ -370,30 +370,34 @@ interface_def
 interface :
 	interface_header
 	{
-	  UTL_Scope     *s = idl_global->scopes()->top_non_null();
+	  UTL_Scope     *s = idl_global->scopes ()->top_non_null ();
 	  AST_Interface *i = NULL;
 	  AST_Decl	*v = NULL;
-	  UTL_StrList   *p = idl_global->pragmas();
+	  UTL_StrList   *p = idl_global->pragmas ();
 	  ACE_UNUSED_ARG (v);
 
 	  /*
 	   * Make a new interface node and add it to its enclosing scope
 	   */
 	  if (s != NULL && $1 != NULL) {
-	    i = idl_global->gen()->create_interface($1->interface_name(),
-						    $1->inherits(),
-						    $1->n_inherits(),
-						    p);
+	    i = idl_global->gen ()->create_interface (
+                                       $1->interface_name (),
+                                       $1->inherits (),
+                                       $1->n_inherits (),
+                                       $1->inherits_flat (),
+                                       $1->n_inherits_flat,
+                                       p
+                                     );
             AST_Interface::fwd_redefinition_helper (i,s,p);
 	    /*
 	     * Add the interface to its definition scope
 	     */
-	    (void) s->fe_add_interface(i);
+	    (void) s->fe_add_interface (i);
 	  }
 	  /*
 	   * Push it on the scope stack
 	   */
-	  idl_global->scopes()->push(i);
+	  idl_global->scopes ()->push (i);
         }
 	'{'
 	{
