@@ -169,7 +169,7 @@ TAO_NAMESPACE_BEGIN (CORBA)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ORBid, 0)
 TAO_NAMESPACE_END
 
-CORBA::TypeCode_ptr CORBA_ORB::_tc_ObjectId = 0;
+CORBA::TypeCode_ptr CORBA::ORB::_tc_ObjectId = 0;
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
 
@@ -423,12 +423,12 @@ TAO_TypeCodes::init (void)
     CORBA::tk_string,
     0,                      // string length
   };
-  CORBA_ORB::_tc_ObjectId =
+  CORBA::ORB::_tc_ObjectId =
     new CORBA::TypeCode (CORBA::tk_alias,
                          sizeof (_oc_CORBA_ObjectId),
                          (char *) &_oc_CORBA_ObjectId,
                          0,
-                         sizeof (CORBA_ORB::ObjectId));
+                         sizeof (CORBA::ORB::ObjectId));
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
 
@@ -950,7 +950,7 @@ TAO_TypeCodes::fini (void)
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
-  CORBA::release (CORBA_ORB::_tc_ObjectId);
+  CORBA::release (CORBA::ORB::_tc_ObjectId);
 
   // Service types
   CORBA::release (CORBA::_tc_ServiceType);

@@ -154,7 +154,7 @@ TAO_NAMESPACE  CORBA
   class _TAO_DomainManager_Remote_Proxy_Broker;
   
   class TAO_Export DomainManager
-    : public virtual CORBA_Object
+    : public virtual CORBA::Object
   {
   public:
   #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -243,7 +243,7 @@ TAO_NAMESPACE  CORBA
   public:
     virtual ~_TAO_DomainManager_Proxy_Impl (void) { }
     virtual ::CORBA::Policy_ptr get_domain_policy (
-        CORBA_Object *_collocated_tao_target_,
+        CORBA::Object *_collocated_tao_target_,
         CORBA::PolicyType policy_type
         ACE_ENV_ARG_DECL
       )
@@ -274,7 +274,7 @@ TAO_NAMESPACE  CORBA
     
     virtual ~_TAO_DomainManager_Remote_Proxy_Impl (void) { }
     virtual ::CORBA::Policy_ptr get_domain_policy (
-        CORBA_Object *_collocated_tao_target_,
+        CORBA::Object *_collocated_tao_target_,
         CORBA::PolicyType policy_type
         ACE_ENV_ARG_DECL
       )
@@ -542,7 +542,7 @@ TAO_NAMESPACE  CORBA
   public:
     virtual ~_TAO_ConstructionPolicy_Proxy_Impl (void) { }
     virtual void make_domain_manager (
-        CORBA_Object *_collocated_tao_target_,
+        CORBA::Object *_collocated_tao_target_,
         CORBA::InterfaceDef_ptr object_type,
         CORBA::Boolean constr_policy
         ACE_ENV_ARG_DECL
@@ -575,7 +575,7 @@ TAO_NAMESPACE  CORBA
     
     virtual ~_TAO_ConstructionPolicy_Remote_Proxy_Impl (void) { }
     virtual void make_domain_manager (
-        CORBA_Object *_collocated_tao_target_,
+        CORBA::Object *_collocated_tao_target_,
         CORBA::InterfaceDef_ptr object_type,
         CORBA::Boolean constr_policy
         ACE_ENV_ARG_DECL
@@ -702,10 +702,10 @@ TAO_NAMESPACE  CORBA
     
     virtual void _downcast (
         void* target,
-        CORBA_Object *src
+        CORBA::Object *src
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    virtual CORBA_Object* _upcast (void *src) const;
+    virtual CORBA::Object* _upcast (void *src) const;
   };
   
 #endif /* end #if !defined */

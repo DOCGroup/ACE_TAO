@@ -13,7 +13,7 @@ ACE_RCSID (tao,
 // String utility support; this needs to be integrated with the ORB's
 // own memory allocation subsystem.
 
-CORBA_String_var::CORBA_String_var (char *p)
+CORBA::String_var::String_var (char *p)
   : ptr_ (p)
 {
   // NOTE: According to the CORBA spec this string must *not* be
@@ -21,19 +21,19 @@ CORBA_String_var::CORBA_String_var (char *p)
   // calling code.  argument is consumed. p should never be NULL
 }
 
-CORBA_String_var::CORBA_String_var (const CORBA_String_var& r)
+CORBA::String_var::String_var (const CORBA::String_var& r)
 {
   this->ptr_ = CORBA::string_dup (r.ptr_);
 }
 
-CORBA_String_var::~CORBA_String_var (void)
+CORBA::String_var::~String_var (void)
 {
   CORBA::string_free (this->ptr_);
   this->ptr_ = 0;
 }
 
-CORBA_String_var &
-CORBA_String_var::operator= (char *p)
+CORBA::String_var &
+CORBA::String_var::operator= (char *p)
 {
   if (this->ptr_ != p)
     {
@@ -43,8 +43,8 @@ CORBA_String_var::operator= (char *p)
   return *this;
 }
 
-CORBA_String_var &
-CORBA_String_var::operator= (const char *p)
+CORBA::String_var &
+CORBA::String_var::operator= (const char *p)
 {
   CORBA::string_free (this->ptr_);
 
@@ -52,8 +52,8 @@ CORBA_String_var::operator= (const char *p)
   return *this;
 }
 
-CORBA_String_var &
-CORBA_String_var::operator= (const CORBA_String_var& r)
+CORBA::String_var &
+CORBA::String_var::operator= (const CORBA::String_var& r)
 {
   if (this != &r)
     {
@@ -65,7 +65,7 @@ CORBA_String_var::operator= (const CORBA_String_var& r)
 
 // ****************************************************************
 
-CORBA_WString_var::CORBA_WString_var (CORBA::WChar *p)
+CORBA::WString_var::WString_var (CORBA::WChar *p)
   : ptr_ (p)
 {
   // NOTE: According to the CORBA spec this string must *not* be
@@ -73,19 +73,19 @@ CORBA_WString_var::CORBA_WString_var (CORBA::WChar *p)
   // calling code.  argument is consumed. p should never be NULL
 }
 
-CORBA_WString_var::CORBA_WString_var (const CORBA_WString_var& r)
+CORBA::WString_var::WString_var (const CORBA::WString_var& r)
 {
   this->ptr_ = CORBA::wstring_dup (r.ptr_);
 }
 
-CORBA_WString_var::~CORBA_WString_var (void)
+CORBA::WString_var::~WString_var (void)
 {
   CORBA::wstring_free (this->ptr_);
   this->ptr_ = 0;
 }
 
-CORBA_WString_var &
-CORBA_WString_var::operator= (CORBA::WChar *p)
+CORBA::WString_var &
+CORBA::WString_var::operator= (CORBA::WChar *p)
 {
   if (this->ptr_ != p)
     {
@@ -95,8 +95,8 @@ CORBA_WString_var::operator= (CORBA::WChar *p)
   return *this;
 }
 
-CORBA_WString_var &
-CORBA_WString_var::operator= (const CORBA::WChar *p)
+CORBA::WString_var &
+CORBA::WString_var::operator= (const CORBA::WChar *p)
 {
   CORBA::wstring_free (this->ptr_);
 
@@ -104,8 +104,8 @@ CORBA_WString_var::operator= (const CORBA::WChar *p)
   return *this;
 }
 
-CORBA_WString_var &
-CORBA_WString_var::operator= (const CORBA_WString_var& r)
+CORBA::WString_var &
+CORBA::WString_var::operator= (const CORBA::WString_var& r)
 {
   if (this != &r)
     {
@@ -162,7 +162,7 @@ operator>> (istream &is, CORBA::String_out &so)
 ostream &
 operator<< (ostream &os, const CORBA::WString_var &wsv)
 {
-  CORBA::ULong len = ACE_OS::wslen (wsv.in ());
+  const CORBA::ULong len = ACE_OS::wslen (wsv.in ());
 
   for (CORBA::ULong i = 0; i < len; ++i)
     {
@@ -177,7 +177,7 @@ operator>> (istream &is, CORBA::WString_var &wsv)
 {
   is.seekg (0, ios::end);
   // @@ is.tellg()/sizeof(CORBA::WChar) instead?
-  CORBA::ULong len = is.tellg ();
+  const CORBA::ULong len = is.tellg ();
   wsv = CORBA::wstring_alloc (len);
   is.seekg (0, ios::beg);
 
@@ -201,7 +201,7 @@ ostream &
 operator<< (ostream &os, CORBA::WString_out &wso)
 {
   CORBA::WChar *tmp = wso.ptr ();
-  CORBA::ULong len = ACE_OS::wslen (tmp);
+  const CORBA::ULong len = ACE_OS::wslen (tmp);
 
   for (CORBA::ULong i = 0; i < len; ++i)
     {
@@ -216,7 +216,7 @@ operator>> (istream &is, CORBA::WString_out &wso)
 {
   is.seekg (0, ios::end);
   // @@ is.tellg()/sizeof(CORBA::WChar) instead?
-  CORBA::ULong len = is.tellg ();
+  const CORBA::ULong len = is.tellg ();
   wso = CORBA::wstring_alloc (len);
   is.seekg (0, ios::beg);
 

@@ -11,19 +11,23 @@
 #include "tao/Principal.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(tao, Principal, "$Id$")
 
-CORBA_Principal::CORBA_Principal (void)
+ACE_RCSID (tao,
+           Principal,
+           "$Id$")
+
+
+CORBA::Principal::Principal (void)
   : refcount_ (1)
 {
 }
 
-CORBA_Principal::~CORBA_Principal (void)
+CORBA::Principal::~Principal (void)
 {
 }
 
 CORBA::Boolean
-operator<< (TAO_OutputCDR& cdr, CORBA_Principal* x)
+operator<< (TAO_OutputCDR& cdr, CORBA::Principal* x)
 {
   if (x != 0)
     {
@@ -39,7 +43,7 @@ operator<< (TAO_OutputCDR& cdr, CORBA_Principal* x)
 }
 
 CORBA::Boolean
-operator>> (TAO_InputCDR& cdr, CORBA_Principal*& x)
+operator>> (TAO_InputCDR& cdr, CORBA::Principal*& x)
 {
   CORBA::ULong length;
   cdr.read_ulong (length);

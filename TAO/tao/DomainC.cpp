@@ -387,7 +387,7 @@ CORBA::_TAO_DomainManager_Remote_Proxy_Impl::_TAO_DomainManager_Remote_Proxy_Imp
 // Remote Implementation of the IDL interface methods
 
 ::CORBA::Policy_ptr CORBA::_TAO_DomainManager_Remote_Proxy_Impl::get_domain_policy (
-    CORBA_Object *_collocated_tao_target_,
+    CORBA::Object *_collocated_tao_target_,
     CORBA::PolicyType policy_type
     ACE_ENV_ARG_DECL
   )
@@ -741,7 +741,7 @@ CORBA::Boolean CORBA::DomainManager::_is_a (const CORBA::Char *value ACE_ENV_ARG
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Object:1.0")))
   return 1; // success using local knowledge
   else
-    return this->CORBA_Object::_is_a (value ACE_ENV_ARG_PARAMETER);
+    return this->Object::_is_a (value ACE_ENV_ARG_PARAMETER);
 }
 
 void *CORBA::DomainManager::_tao_QueryInterface (ptr_arith_t type)
@@ -1168,7 +1168,7 @@ CORBA::_TAO_ConstructionPolicy_Remote_Proxy_Impl::_TAO_ConstructionPolicy_Remote
 // Remote Implementation of the IDL interface methods
 
 void CORBA::_TAO_ConstructionPolicy_Remote_Proxy_Impl::make_domain_manager (
-    CORBA_Object *_collocated_tao_target_,
+    CORBA::Object *_collocated_tao_target_,
     CORBA::InterfaceDef_ptr object_type,
     CORBA::Boolean constr_policy
     ACE_ENV_ARG_DECL
@@ -1516,7 +1516,7 @@ CORBA::Boolean CORBA::ConstructionPolicy::_is_a (const CORBA::Char *value ACE_EN
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Object:1.0")))
   return 1; // success using local knowledge
   else
-    return this->CORBA_Object::_is_a (value ACE_ENV_ARG_PARAMETER);
+    return this->Object::_is_a (value ACE_ENV_ARG_PARAMETER);
 }
 
 void *CORBA::ConstructionPolicy::_tao_QueryInterface (ptr_arith_t type)
@@ -1681,7 +1681,7 @@ CORBA::_TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList::_shrink_buffer (C
 void 
 CORBA::_TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList::_downcast (
     void* target,
-    CORBA_Object *src
+    CORBA::Object *src
     ACE_ENV_ARG_DECL
   )
 {
@@ -1690,7 +1690,7 @@ CORBA::_TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList::_downcast (
   ACE_CHECK;
 }
 
-CORBA_Object*
+CORBA::Object*
 CORBA::_TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList::_upcast (void *src) const
 {
   CORBA::DomainManager **tmp = ACE_static_cast (CORBA::DomainManager**, src);

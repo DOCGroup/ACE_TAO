@@ -1,5 +1,6 @@
+// -*- C++ -*-
+//
 // $Id$
-// This may look like C, but it's really -*- C++ -*-
 
 ACE_INLINE CORBA::Boolean
 CORBA::is_nil (CORBA::NamedValue_ptr nv)
@@ -16,7 +17,7 @@ CORBA::release (CORBA::NamedValue_ptr nv)
 
 // constructor
 ACE_INLINE
-CORBA_NamedValue::CORBA_NamedValue (void)
+CORBA::NamedValue::NamedValue (void)
   : refcount_ (1),
     flags_ (0),
     name_ (0)
@@ -25,41 +26,41 @@ CORBA_NamedValue::CORBA_NamedValue (void)
 
 // return the name
 ACE_INLINE const char*
-CORBA_NamedValue::name (void) const
+CORBA::NamedValue::name (void) const
 {
   return this->name_;
 }
 
 // return the value
 ACE_INLINE CORBA::Any_ptr
-CORBA_NamedValue::value (void) const
+CORBA::NamedValue::value (void) const
 {
   return ACE_const_cast (CORBA::Any_ptr, &this->any_);
 }
 
 // return the flags
 ACE_INLINE CORBA::Flags
-CORBA_NamedValue::flags (void) const
+CORBA::NamedValue::flags (void) const
 {
   return this->flags_;
 }
 
-ACE_INLINE CORBA_NamedValue*
-CORBA_NamedValue::_duplicate (CORBA_NamedValue *x)
+ACE_INLINE CORBA::NamedValue*
+CORBA::NamedValue::_duplicate (CORBA::NamedValue *x)
 {
   if (x != 0)
     x->_incr_refcnt ();
   return x;
 }
 
-ACE_INLINE CORBA_NamedValue*
-CORBA_NamedValue::_nil (void)
+ACE_INLINE CORBA::NamedValue*
+CORBA::NamedValue::_nil (void)
 {
   return 0;
 }
 
 // *************************************************************
-// Inline operations for class CORBA_NamedValue_var
+// Inline operations for class CORBA::NamedValue_var
 // *************************************************************
 
 ACE_INLINE CORBA::Boolean
@@ -76,158 +77,158 @@ CORBA::release (CORBA::NVList_ptr nvl)
 }
 
 ACE_INLINE
-CORBA_NamedValue_var::CORBA_NamedValue_var (void)
-  : ptr_ (CORBA_NamedValue::_nil ())
+CORBA::NamedValue_var::NamedValue_var (void)
+  : ptr_ (CORBA::NamedValue::_nil ())
 {
 }
 
 ACE_INLINE
-CORBA_NamedValue_var::CORBA_NamedValue_var (CORBA_NamedValue_ptr p)
+CORBA::NamedValue_var::NamedValue_var (CORBA::NamedValue_ptr p)
   : ptr_ (p)
 {}
 
 ACE_INLINE
-CORBA_NamedValue_var::~CORBA_NamedValue_var (void)
+CORBA::NamedValue_var::~NamedValue_var (void)
 {
   CORBA::release (this->ptr_);
 }
 
-ACE_INLINE CORBA_NamedValue_ptr
-CORBA_NamedValue_var::ptr (void) const
+ACE_INLINE CORBA::NamedValue_ptr
+CORBA::NamedValue_var::ptr (void) const
 {
   return this->ptr_;
 }
 
 ACE_INLINE
-CORBA_NamedValue_var::CORBA_NamedValue_var (const CORBA_NamedValue_var &p)
-  : ptr_ (CORBA_NamedValue::_duplicate (p.ptr ()))
+CORBA::NamedValue_var::NamedValue_var (const CORBA::NamedValue_var &p)
+  : ptr_ (CORBA::NamedValue::_duplicate (p.ptr ()))
 {}
 
-ACE_INLINE CORBA_NamedValue_var &
-CORBA_NamedValue_var::operator= (CORBA_NamedValue_ptr p)
+ACE_INLINE CORBA::NamedValue_var &
+CORBA::NamedValue_var::operator= (CORBA::NamedValue_ptr p)
 {
   CORBA::release (this->ptr_);
   this->ptr_ = p;
   return *this;
 }
 
-ACE_INLINE CORBA_NamedValue_var &
-CORBA_NamedValue_var::operator= (const CORBA_NamedValue_var &p)
+ACE_INLINE CORBA::NamedValue_var &
+CORBA::NamedValue_var::operator= (const CORBA::NamedValue_var &p)
 {
   if (this != &p)
   {
     CORBA::release (this->ptr_);
-    this->ptr_ = CORBA_NamedValue::_duplicate (p.ptr ());
+    this->ptr_ = CORBA::NamedValue::_duplicate (p.ptr ());
   }
   return *this;
 }
 
 ACE_INLINE
-CORBA_NamedValue_var::operator const CORBA_NamedValue_ptr &() const
+CORBA::NamedValue_var::operator const CORBA::NamedValue_ptr &() const
 {
   return this->ptr_;
 }
 
 ACE_INLINE
-CORBA_NamedValue_var::operator CORBA_NamedValue_ptr &()
+CORBA::NamedValue_var::operator CORBA::NamedValue_ptr &()
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_NamedValue_ptr
-CORBA_NamedValue_var::operator-> (void) const
+ACE_INLINE CORBA::NamedValue_ptr
+CORBA::NamedValue_var::operator-> (void) const
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_NamedValue_ptr
-CORBA_NamedValue_var::in (void) const
+ACE_INLINE CORBA::NamedValue_ptr
+CORBA::NamedValue_var::in (void) const
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_NamedValue_ptr &
-CORBA_NamedValue_var::inout (void)
+ACE_INLINE CORBA::NamedValue_ptr &
+CORBA::NamedValue_var::inout (void)
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_NamedValue_ptr &
-CORBA_NamedValue_var::out (void)
+ACE_INLINE CORBA::NamedValue_ptr &
+CORBA::NamedValue_var::out (void)
 {
   CORBA::release (this->ptr_);
-  this->ptr_ = CORBA_NamedValue::_nil ();
+  this->ptr_ = CORBA::NamedValue::_nil ();
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_NamedValue_ptr
-CORBA_NamedValue_var::_retn (void)
+ACE_INLINE CORBA::NamedValue_ptr
+CORBA::NamedValue_var::_retn (void)
 {
   // yield ownership
-  CORBA_NamedValue_ptr val = this->ptr_;
-  this->ptr_ = CORBA_NamedValue::_nil ();
+  CORBA::NamedValue_ptr val = this->ptr_;
+  this->ptr_ = CORBA::NamedValue::_nil ();
   return val;
 }
 
 // *************************************************************
-// Inline operations for class CORBA_NamedValue_out
+// Inline operations for class CORBA::NamedValue_out
 // *************************************************************
 
 ACE_INLINE
-CORBA_NamedValue_out::CORBA_NamedValue_out (CORBA_NamedValue_ptr &p)
+CORBA::NamedValue_out::NamedValue_out (CORBA::NamedValue_ptr &p)
         : ptr_ (p)
 {
-  this->ptr_ = CORBA_NamedValue::_nil ();
+  this->ptr_ = CORBA::NamedValue::_nil ();
 }
 
 ACE_INLINE
-CORBA_NamedValue_out::CORBA_NamedValue_out (CORBA_NamedValue_var &p)
+CORBA::NamedValue_out::NamedValue_out (CORBA::NamedValue_var &p)
   : ptr_ (p.out ())
 {
   CORBA::release (this->ptr_);
-  this->ptr_ = CORBA_NamedValue::_nil ();
+  this->ptr_ = CORBA::NamedValue::_nil ();
 }
 
 ACE_INLINE
-CORBA_NamedValue_out::CORBA_NamedValue_out (CORBA_NamedValue_out &p)
+CORBA::NamedValue_out::NamedValue_out (CORBA::NamedValue_out &p)
   : ptr_ (p.ptr_)
 {}
 
-ACE_INLINE CORBA_NamedValue_out &
-CORBA_NamedValue_out::operator= (CORBA_NamedValue_out &p)
+ACE_INLINE CORBA::NamedValue_out &
+CORBA::NamedValue_out::operator= (CORBA::NamedValue_out &p)
 {
   this->ptr_ = p.ptr_;
   return *this;
 }
 
-ACE_INLINE CORBA_NamedValue_out &
-CORBA_NamedValue_out::operator= (const CORBA_NamedValue_var &p)
+ACE_INLINE CORBA::NamedValue_out &
+CORBA::NamedValue_out::operator= (const CORBA::NamedValue_var &p)
 {
-  this->ptr_ = CORBA_NamedValue::_duplicate (p.ptr ());
+  this->ptr_ = CORBA::NamedValue::_duplicate (p.ptr ());
   return *this;
 }
 
-ACE_INLINE CORBA_NamedValue_out &
-CORBA_NamedValue_out::operator= (CORBA_NamedValue_ptr p)
+ACE_INLINE CORBA::NamedValue_out &
+CORBA::NamedValue_out::operator= (CORBA::NamedValue_ptr p)
 {
   this->ptr_ = p;
   return *this;
 }
 
 ACE_INLINE
-CORBA_NamedValue_out::operator CORBA_NamedValue_ptr &()
+CORBA::NamedValue_out::operator CORBA::NamedValue_ptr &()
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_NamedValue_ptr &
-CORBA_NamedValue_out::ptr (void)
+ACE_INLINE CORBA::NamedValue_ptr &
+CORBA::NamedValue_out::ptr (void)
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_NamedValue_ptr
-CORBA_NamedValue_out::operator-> (void)
+ACE_INLINE CORBA::NamedValue_ptr
+CORBA::NamedValue_out::operator-> (void)
 {
   return this->ptr_;
 }
@@ -238,7 +239,7 @@ CORBA_NamedValue_out::operator-> (void)
 
 // constructor
 ACE_INLINE
-CORBA_NVList::CORBA_NVList (void)
+CORBA::NVList::NVList (void)
   : max_ (0),
     refcount_ (1),
     incoming_ (0),
@@ -247,185 +248,186 @@ CORBA_NVList::CORBA_NVList (void)
 }
 
 ACE_INLINE CORBA::ULong
-CORBA_NVList::count (ACE_ENV_SINGLE_ARG_DECL) const
+CORBA::NVList::count (ACE_ENV_SINGLE_ARG_DECL) const
 {
-  (ACE_const_cast(CORBA_NVList*,this))->evaluate (ACE_ENV_SINGLE_ARG_PARAMETER);
+  (ACE_const_cast (CORBA::NVList *,
+                   this))->evaluate (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   return this->max_;
 }
 
-ACE_INLINE CORBA_NVList*
-CORBA_NVList::_duplicate (CORBA_NVList *x)
+ACE_INLINE CORBA::NVList*
+CORBA::NVList::_duplicate (CORBA::NVList *x)
 {
   if (x != 0)
     x->_incr_refcnt ();
   return x;
 }
 
-ACE_INLINE CORBA_NVList*
-CORBA_NVList::_nil (void)
+ACE_INLINE CORBA::NVList*
+CORBA::NVList::_nil (void)
 {
   return 0;
 }
 
 // *************************************************************
-// Inline operations for class CORBA_NVList_var
+// Inline operations for class CORBA::NVList_var
 // *************************************************************
 
 ACE_INLINE
-CORBA_NVList_var::CORBA_NVList_var (void)
-  : ptr_ (CORBA_NVList::_nil ())
+CORBA::NVList_var::NVList_var (void)
+  : ptr_ (CORBA::NVList::_nil ())
 {
 }
 
 ACE_INLINE
-CORBA_NVList_var::CORBA_NVList_var (CORBA_NVList_ptr p)
+CORBA::NVList_var::NVList_var (CORBA::NVList_ptr p)
   : ptr_ (p)
 {}
 
 ACE_INLINE
-CORBA_NVList_var::~CORBA_NVList_var (void)
+CORBA::NVList_var::~NVList_var (void)
 {
   CORBA::release (this->ptr_);
 }
 
-ACE_INLINE CORBA_NVList_ptr
-CORBA_NVList_var::ptr (void) const
+ACE_INLINE CORBA::NVList_ptr
+CORBA::NVList_var::ptr (void) const
 {
   return this->ptr_;
 }
 
 ACE_INLINE
-CORBA_NVList_var::CORBA_NVList_var (const CORBA_NVList_var &p)
-  : ptr_ (CORBA_NVList::_duplicate (p.ptr ()))
+CORBA::NVList_var::NVList_var (const CORBA::NVList_var &p)
+  : ptr_ (CORBA::NVList::_duplicate (p.ptr ()))
 {}
 
-ACE_INLINE CORBA_NVList_var &
-CORBA_NVList_var::operator= (CORBA_NVList_ptr p)
+ACE_INLINE CORBA::NVList_var &
+CORBA::NVList_var::operator= (CORBA::NVList_ptr p)
 {
   CORBA::release (this->ptr_);
   this->ptr_ = p;
   return *this;
 }
 
-ACE_INLINE CORBA_NVList_var &
-CORBA_NVList_var::operator= (const CORBA_NVList_var &p)
+ACE_INLINE CORBA::NVList_var &
+CORBA::NVList_var::operator= (const CORBA::NVList_var &p)
 {
   if (this != &p)
   {
     CORBA::release (this->ptr_);
-    this->ptr_ = CORBA_NVList::_duplicate (p.ptr ());
+    this->ptr_ = CORBA::NVList::_duplicate (p.ptr ());
   }
   return *this;
 }
 
 ACE_INLINE
-CORBA_NVList_var::operator const CORBA_NVList_ptr &() const
+CORBA::NVList_var::operator const CORBA::NVList_ptr &() const
 {
   return this->ptr_;
 }
 
 ACE_INLINE
-CORBA_NVList_var::operator CORBA_NVList_ptr &()
+CORBA::NVList_var::operator CORBA::NVList_ptr &()
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_NVList_ptr
-CORBA_NVList_var::operator-> (void) const
+ACE_INLINE CORBA::NVList_ptr
+CORBA::NVList_var::operator-> (void) const
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_NVList_ptr
-CORBA_NVList_var::in (void) const
+ACE_INLINE CORBA::NVList_ptr
+CORBA::NVList_var::in (void) const
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_NVList_ptr &
-CORBA_NVList_var::inout (void)
+ACE_INLINE CORBA::NVList_ptr &
+CORBA::NVList_var::inout (void)
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_NVList_ptr &
-CORBA_NVList_var::out (void)
+ACE_INLINE CORBA::NVList_ptr &
+CORBA::NVList_var::out (void)
 {
   CORBA::release (this->ptr_);
-  this->ptr_ = CORBA_NVList::_nil ();
+  this->ptr_ = CORBA::NVList::_nil ();
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_NVList_ptr
-CORBA_NVList_var::_retn (void)
+ACE_INLINE CORBA::NVList_ptr
+CORBA::NVList_var::_retn (void)
 {
   // yield ownership
-  CORBA_NVList_ptr val = this->ptr_;
-  this->ptr_ = CORBA_NVList::_nil ();
+  CORBA::NVList_ptr val = this->ptr_;
+  this->ptr_ = CORBA::NVList::_nil ();
   return val;
 }
 
 // *************************************************************
-// Inline operations for class CORBA_NVList_out
+// Inline operations for class CORBA::NVList_out
 // *************************************************************
 
 ACE_INLINE
-CORBA_NVList_out::CORBA_NVList_out (CORBA_NVList_ptr &p)
+CORBA::NVList_out::NVList_out (CORBA::NVList_ptr &p)
         : ptr_ (p)
 {
-  this->ptr_ = CORBA_NVList::_nil ();
+  this->ptr_ = CORBA::NVList::_nil ();
 }
 
 ACE_INLINE
-CORBA_NVList_out::CORBA_NVList_out (CORBA_NVList_var &p)
+CORBA::NVList_out::NVList_out (CORBA::NVList_var &p)
   : ptr_ (p.out ())
 {
   CORBA::release (this->ptr_);
-  this->ptr_ = CORBA_NVList::_nil ();
+  this->ptr_ = CORBA::NVList::_nil ();
 }
 
 ACE_INLINE
-CORBA_NVList_out::CORBA_NVList_out (CORBA_NVList_out &p)
+CORBA::NVList_out::NVList_out (CORBA::NVList_out &p)
   : ptr_ (p.ptr_)
 {}
 
-ACE_INLINE CORBA_NVList_out &
-CORBA_NVList_out::operator= (CORBA_NVList_out &p)
+ACE_INLINE CORBA::NVList_out &
+CORBA::NVList_out::operator= (CORBA::NVList_out &p)
 {
   this->ptr_ = p.ptr_;
   return *this;
 }
 
-ACE_INLINE CORBA_NVList_out &
-CORBA_NVList_out::operator= (const CORBA_NVList_var &p)
+ACE_INLINE CORBA::NVList_out &
+CORBA::NVList_out::operator= (const CORBA::NVList_var &p)
 {
-  this->ptr_ = CORBA_NVList::_duplicate (p.ptr ());
+  this->ptr_ = CORBA::NVList::_duplicate (p.ptr ());
   return *this;
 }
 
-ACE_INLINE CORBA_NVList_out &
-CORBA_NVList_out::operator= (CORBA_NVList_ptr p)
+ACE_INLINE CORBA::NVList_out &
+CORBA::NVList_out::operator= (CORBA::NVList_ptr p)
 {
   this->ptr_ = p;
   return *this;
 }
 
 ACE_INLINE
-CORBA_NVList_out::operator CORBA_NVList_ptr &()
+CORBA::NVList_out::operator CORBA::NVList_ptr &()
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_NVList_ptr &
-CORBA_NVList_out::ptr (void)
+ACE_INLINE CORBA::NVList_ptr &
+CORBA::NVList_out::ptr (void)
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA_NVList_ptr
-CORBA_NVList_out::operator-> (void)
+ACE_INLINE CORBA::NVList_ptr
+CORBA::NVList_out::operator-> (void)
 {
   return this->ptr_;
 }
