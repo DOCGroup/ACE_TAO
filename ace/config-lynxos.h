@@ -198,7 +198,7 @@ extern "C"
 // = Proactor stuff
 
 // Aio works on lynx
-#define ACE_HAS_AIO_CALLS
+// #define ACE_HAS_AIO_CALLS
 
 // AIOCB Proactor works on Lynx. But it is not
 // multi-threaded.
@@ -207,5 +207,5 @@ extern "C"
 // Proactor. Once <pthreadd_sigmask> is available on Lynx, we can turn
 // on SIG Proactor for this platform.
 // #define ACE_POSIX_SIG_PROACTOR
-#define ACE_POSIX_AIOCB_PROACTOR
+#define ACE_POSIX_AIOCB_PROACTOR 
 #endif /* ACE_CONFIG_H */
