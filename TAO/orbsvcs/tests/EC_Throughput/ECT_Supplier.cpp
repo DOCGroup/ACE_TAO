@@ -26,9 +26,10 @@ main (int argc, char *argv [])
 
 ECTS_Driver::ECTS_Driver (void)
   : n_suppliers_ (1),
-    event_count_ (100),
-    event_period_ (100),
+    burst_count_ (10),
+    burst_size_ (100),
     event_size_ (128),
+    burst_pause_ (100),
     event_a_ (ACE_ES_EVENT_UNDEFINED),
     event_b_ (ACE_ES_EVENT_UNDEFINED + 1),
     pid_file_name_ (0)
@@ -67,17 +68,19 @@ ECTS_Driver::run (int argc, char* argv[])
       ACE_DEBUG ((LM_DEBUG,
                   "Execution parameters:\n"
                   "  suppliers = <%d>\n"
-                  "  event count = <%d>\n"
-                  "  event period = <%d>\n"
+                  "  burst count = <%d>\n"
+                  "  burst size = <%d>\n"
                   "  event size = <%d>\n"
+                  "  burst size = <%d>\n"
                   "  supplier Event A = <%d>\n"
                   "  supplier Event B = <%d>\n"
                   "  pid file name = <%s>\n",
 
                   this->n_suppliers_,
-                  this->event_count_,
-                  this->event_period_,
+                  this->burst_count_,
+                  this->burst_size_,
                   this->event_size_,
+                  this->burst_pause_,
                   this->event_a_,
                   this->event_b_,
 
@@ -191,44 +194,48 @@ ECTS_Driver::supplier_task (Test_Supplier *supplier,
 {
   TAO_TRY
     {
-      ACE_Time_Value tv (0, this->event_period_);
+      ACE_Time_Value tv (0, this->burst_pause_);
 
       const ACE_Message_Block mb (this->event_size_);
 
-      for (int i = 0; i < this->event_count_; ++i)
+      RtecEventComm::EventSet event (1);
+      event.length (1);
+      event[0].header.source = supplier->supplier_id ();
+      event[0].header.ttl = 1;
+
+      ACE_hrtime_t t = ACE_OS::gethrtime ();
+      ORBSVCS_Time::hrtime_to_TimeT (event[0].header.creation_time, t);
+      event[0].header.ec_recv_time = ORBSVCS_Time::zero;
+      event[0].header.ec_send_time = ORBSVCS_Time::zero;
+
+      event[0].data.x = 0;
+      event[0].data.y = 0;
+
+      // We use replace to minimize the copies, this should result
+      // in just one memory allocation;
+      event[0].data.payload.replace (this->event_size_,
+                                     &mb);
+
+      for (int i = 0; i < this->burst_count_; ++i)
         {
-          RtecEventComm::EventSet event (1);
-          event.length (1);
-          event[0].header.source = supplier->supplier_id ();
-          event[0].header.ttl = 1;
+          for (int j = 0; j < this->burst_size_; ++j)
+            {
+              if (j % 2 == 0)
+                event[0].header.type = this->event_a_;
+              else
+                event[0].header.type = this->event_b_;
 
-          ACE_hrtime_t t = ACE_OS::gethrtime ();
-          ORBSVCS_Time::hrtime_to_TimeT (event[0].header.creation_time, t);
-          event[0].header.ec_recv_time = ORBSVCS_Time::zero;
-          event[0].header.ec_send_time = ORBSVCS_Time::zero;
-
-          if (i == ACE_static_cast (CORBA::Long, this->event_count_) - 1)
-            event[0].header.type = ACE_ES_EVENT_SHUTDOWN;
-          else if (i % 2 == 0)
-            event[0].header.type = this->event_a_;
-          else
-            event[0].header.type = this->event_b_;
-
-          event[0].data.x = 0;
-          event[0].data.y = 0;
-
-          // We use replace to minimize the copies, this should result
-          // in just one memory allocation;
-          event[0].data.payload.replace (this->event_size_,
-					 &mb);
-
-          supplier->consumer_proxy ()->push(event, TAO_TRY_ENV);
-          TAO_CHECK_ENV;
-
-          // ACE_DEBUG ((LM_DEBUG, "(%t) supplier push event\n"));
-
+              // ACE_DEBUG ((LM_DEBUG, "(%t) supplier push event\n"));
+              supplier->consumer_proxy ()->push(event, TAO_TRY_ENV);
+            }
           ACE_OS::sleep (tv);
         }
+
+      // Send one event shutdown from each supplier
+      event[0].header.type = ACE_ES_EVENT_SHUTDOWN;
+      supplier->consumer_proxy ()->push(event, TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+      
     }
   TAO_CATCH (CORBA::SystemException, sys_ex)
     {
@@ -256,7 +263,7 @@ ECTS_Driver::connect_suppliers (RtecEventChannelAdmin::EventChannel_ptr channel,
       this->suppliers_[i]->connect (buf,
                                     this->event_a_,
                                     this->event_b_,
-                                    this->event_period_,
+                                    this->burst_pause_,
                                     channel,
                                     _env);
       if (_env.exception () != 0) return;
@@ -285,7 +292,7 @@ ECTS_Driver::disconnect_suppliers (CORBA::Environment &_env)
 int
 ECTS_Driver::parse_args (int argc, char *argv [])
 {
-  ACE_Get_Opt get_opt (argc, argv, "ds:n:t:b:h:p:");
+  ACE_Get_Opt get_opt (argc, argv, "ds:u:n:t:b:h:p:");
   int opt;
 
   while ((opt = get_opt ()) != EOF)
@@ -296,16 +303,20 @@ ECTS_Driver::parse_args (int argc, char *argv [])
           this->n_suppliers_ = ACE_OS::atoi (get_opt.optarg);
           break;
 
-        case 'n':
-          this->event_count_ = ACE_OS::atoi (get_opt.optarg);
+        case 'u':
+          this->burst_count_ = ACE_OS::atoi (get_opt.optarg);
           break;
 
-        case 't':
-          this->event_period_ = ACE_OS::atoi (get_opt.optarg);
+        case 'n':
+          this->burst_size_ = ACE_OS::atoi (get_opt.optarg);
           break;
 
         case 'b':
           this->event_size_ = ACE_OS::atoi (get_opt.optarg);
+          break;
+
+        case 't':
+          this->burst_pause_ = ACE_OS::atoi (get_opt.optarg);
           break;
 
         case 'h':
@@ -329,9 +340,10 @@ ECTS_Driver::parse_args (int argc, char *argv [])
                       "Usage: %s "
                       "[ORB options] "
                       "-s <nsuppliers> "
-                      "-n <event count> "
-                      "-t <event period (usecs)> "
+                      "-u <burst count> "
+                      "-n <burst size> "
                       "-b <event payload size> "
+                      "-T <burst pause (usecs)> "
                       "-h <eventa,eventb> "
                       "-p <pid file name> "
                       "\n",
@@ -340,14 +352,24 @@ ECTS_Driver::parse_args (int argc, char *argv [])
         }
     }
 
-  if (this->event_count_ <= 0)
+  if (this->burst_count_ <= 0)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "%s: event count (%d) is out of range, "
+                  "%s: burst count (%d) is out of range, "
                   "reset to default (%d)\n",
-                  argv[0], this->event_count_,
+                  argv[0], this->burst_count_,
                   100));
-      this->event_count_ = 100;
+      this->burst_count_ = 100;
+    }
+
+  if (this->burst_size_ <= 0)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "%s: burst size (%d) is out of range, "
+                  "reset to default (%d)\n",
+                  argv[0], this->burst_size_,
+                  10));
+      this->burst_size_ = 10;
     }
 
   if (this->event_size_ < 0)

@@ -26,7 +26,8 @@ class Test_Consumer : public POA_RtecEventComm::PushConsumer
   //
   // = DESCRIPTION
 public:
-  Test_Consumer (Driver* driver, void* cookie);
+  Test_Consumer (Driver* driver, void* cookie,
+                 int n_suppliers);
 
   void connect (const char* name,
 		int event_a,
@@ -50,9 +51,20 @@ private:
   void* cookie_;
   // A magic cookie passed by the driver that we pass back in our
   // callbacks.
+
+  int n_suppliers_;
+  // The number of suppliers that are feeding this consumer, we
+  // terminate once we receive a shutdown event from each supplier.
   
   RtecEventChannelAdmin::ProxyPushSupplier_var supplier_proxy_;
   // We talk to the EC using this proxy.
+
+  ACE_SYNCH_MUTEX lock_;
+  int recv_count_;
+  // How many events we have received.
+
+  int shutdown_count_;
+  // How many shutdown events we have received.
 };
 
 class Driver
@@ -73,12 +85,11 @@ public:
   int run (int argc, char* argv[]);
   // Execute the test.
 
-  void push_consumer (void* consumer_cookie,
-		      ACE_hrtime_t arrival,
-		      const RtecEventComm::EventSet& events,
-		      CORBA::Environment&);
-  // Callback method for consumers, if any of our consumers has
-  // received events it will invoke this method.
+  void shutdown_consumer (void* consumer_cookie,
+                          CORBA::Environment&);
+  // Callback method for consumers, each consumer will call this
+  // method once it receives all the shutdown events from the
+  // suppliers.
 
 private:
   int parse_args (int argc, char* argv[]);
@@ -96,8 +107,10 @@ private:
   int n_consumers_;
   // The number of consumers.
 
-  int event_count_;
-  // How many messages we will send in the suppliers
+  int n_suppliers_;
+  // How many suppliers are sending events, used for shutdown, each
+  // supplier sends a shutdown message after it finishes, the consumer
+  // finishes when all the suppliers do.
 
   int event_a_;
   int event_b_;
@@ -106,9 +119,12 @@ private:
   const char* pid_file_name_;
   // The name of a file where the process stores its pid
 
-  ACE_SYNCH_MUTEX recv_count_mutex_;
-  int recv_count_;
-  // How many events we have received.
+  CORBA::ORB_var orb_;
+  // A reference to the ORB, to shut it down properly.
+
+  ACE_SYNCH_MUTEX lock_;
+  int active_count_;
+  // How many consumers are still receiving events.
 };
 
 #endif /* ECT_CONSUMER_H */
