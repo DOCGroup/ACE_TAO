@@ -304,6 +304,18 @@ private:
  *
  * @brief Implement a do nothing <ACE_Semaphore>, i.e., all the methods are
  * no ops.
+ *
+ * Although the methods are no-ops, the return values are different for
+ * the blocking as opposed to timed acquires.  The blocking version of
+ * acquire() is often used to serialize access to a critical section,
+ * whereas the timed version is often used to wait for another thread
+ * to update some condition or change some shared state.  When using an
+ * ACE_Null_Semaphore, however, there's no other thread involved to
+ * change a state or condition (otherwise, a null semaphore would be
+ * inappropriate).  Returning an error value signifies that the
+ * state or condition has not been (and can't be) changed, which is
+ * consistent with the behavior of the threaded case where a timeout
+ * occurs before the state or condition is changed.
  */
 class ACE_Export ACE_Null_Semaphore
 {
