@@ -1,3 +1,22 @@
+Mon May 15 14:20:38 2000  Ossama Othman  <ossama@uci.edu>
+
+	* tao/Object.cpp (operator>>):
+
+	  Improved the "could not create all profiles" error message by
+	  stating that the problem could be related to address resolution
+	  failure (e.g. DNS).  Also added a comment discussing when the
+	  problem may occur.  Thanks to David for suggesting that the
+	  error describe the problem a bit more.  The previous message was
+	  an implementation detail that isn't generally useful to end
+	  users.
+
+	  Note that this error message should no longer be displayed, at
+	  least not due to any address resolution problem since address
+	  resolution, in the case of IIOP, has been delayed until
+	  connection establishment is initiated.  In the case of an
+	  address resolution problem, a CORBA::TRANSIENT() exception
+	  should be thrown.
+
 Mon May 15 14:55:39 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* orbsvcs/IFR_Service/TypeCodeFactory_i.cpp:
