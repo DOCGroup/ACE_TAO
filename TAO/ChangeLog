@@ -1,3 +1,43 @@
+Fri Apr 11 02:58:32 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * IFR_Client_Adapter.cpp:
+
+	  Cosmetic changes.
+
+        * Interceptor_List.cpp:
+        * Interceptor_List.h:
+        * Interceptor_List.inl:
+        * ORB_Core.cpp:
+        * ORB_Core.h:
+        * ObjectReferenceTemplate.pidl:
+        * ObjectReferenceTemplateC.cpp:
+        * ObjectReferenceTemplateC.h:
+        * PortableInterceptor.pidl:
+        * PortableInterceptorC.cpp:
+        * PortableInterceptorC.h:
+        * TAO.dsp:
+        * IORInterceptor/TAO_IORInterceptor.dsp:
+
+	  Modified files toward finishing the TAO_IORInterceptor
+	  library.
+
+        * PI_Forward.pidl:
+        * PI_ForwardC.cpp:
+        * PI_ForwardC.h:
+        * PI_ForwardC.i:
+
+	  New files, collecting typedefs used by both
+	  PortableInterceptor.pidl and ObjectReferenceTemplate.pidl.
+
+        * IORInterceptor/IORInterceptor_Adapter_Impl.cpp:
+        * IORInterceptor/IORInterceptor_Adapter_Impl.h:
+        * IORInterceptor_Adapter.cpp:
+        * IORInterceptor_Adapter.h:
+
+	  Abstract and concrete adapter classes whose methods
+	  wrap the few remaining dependencies in TAO on
+	  PortableInterceptor::IORInterceptor.
+
 Thu Apr 10 22:44:04 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/PortableInterceptor.pidl:
