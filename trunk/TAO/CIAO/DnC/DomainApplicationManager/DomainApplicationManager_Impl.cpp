@@ -23,15 +23,10 @@ DomainApplicationManager_Impl (CORBA::ORB_ptr orb,
     deployment_file_ (CORBA::string_dup (deployment_file)),
     deployment_config_ (orb)
 {
-  // Initialize the <all_connections_> sequence.
-  //@@ Gan, this is not necessary.
-  this->all_connections_->length (0);
 }
 
 CIAO::DomainApplicationManager_Impl::~DomainApplicationManager_Impl ()
 {
-  //@@ Gan, this is not necessary either. The destructor will do this for you.
-  this->artifact_map_.unbind_all ();
 }
 
 void
@@ -54,7 +49,7 @@ init (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
         ACE_THROW (Deployment::PlanError ());
 
       // Invoke preparePlan for each child deployment plan.
-      for (size_t i = 0; i < this->num_child_plans_; i++)
+      for (CORBA::ULong i = 0; i < this->num_child_plans_; i++)
         {
           // Get the NodeManager object reference.
           ::Deployment::NodeManager_var my_node_manager =
@@ -77,10 +72,16 @@ init (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
           // NodeApplicationManager object reference.  @@TODO: Does
           // preparePlan take a _var type variable?
 
-	  //@@ Gan, shouldn't you do narrow here in case something goes wrong?
-          ::Deployment::NodeApplicationManager_var my_nam =
+          ::Deployment::ApplicationManager_var app_manager =
             my_node_manager->preparePlan (artifacts.child_plan_
                                           ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+
+          // Narrow down to NodeApplicationManager object reference
+          ::Deployment::NodeApplicationManager_var my_nam =
+            ::Deployment::NodeApplicationManager::_narrow (app_manager.in ()
+                                                           ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
 
           if (CORBA::is_nil (my_nam.in ()))
             {
@@ -108,7 +109,7 @@ int
 CIAO::DomainApplicationManager_Impl::
 get_plan_info (void)
 {
-  size_t length = this->plan_.instance.length ();
+  CORBA::ULong length = this->plan_.instance.length ();
 
   // Error: If there are no nodes in the plan => No nodes to deploy the
   // components
@@ -121,7 +122,7 @@ get_plan_info (void)
   for (CORBA::ULong index = 0; index < length; index ++)
     {
       int matched = 0;
-      for (size_t i = 0; i < this->node_manager_names_.size (); i++)
+      for (CORBA::ULong i = 0; i < this->node_manager_names_.size (); i++)
         // If a match is found do not add it to the list of unique
         // node names
         if (ACE_OS::strcmp (this->plan_.instance [index].node.in (),
@@ -166,7 +167,7 @@ split_plan (void)
   // Initialize the total number of child deployment plans specified
   // by the global plan.
 
- for (size_t i = 0; i < this->num_child_plans_; i++)
+ for (CORBA::ULong i = 0; i < this->num_child_plans_; i++)
   {
     ::Deployment::DeploymentPlan_var tmp_plan;
     ACE_NEW_RETURN (tmp_plan,
@@ -175,7 +176,6 @@ split_plan (void)
 
     tmp_plan->UUID = CORBA::string_dup (this->plan_.UUID.in ());
 
-    //@@Gan, all the following initialization is not necessary.
     tmp_plan->implementation.length (0);
     tmp_plan->instance.length (0);
     tmp_plan->connection.length (0);
@@ -209,9 +209,6 @@ split_plan (void)
       // Fill in the child deployment plan in the map.
 
       // Get the instance deployment description
-
-      //@@  Gan, after the first cut we should use either pointer or reference
-      //    to reduce a bit of overhead of copying.
       ::Deployment::InstanceDeploymentDescription my_instance =
         (this->plan_.instance)[i];
 
@@ -323,19 +320,32 @@ get_outgoing_connections (::Deployment::Connections_out provided,
       // or "event sink".
       for (CORBA::ULong j = 0; j < this->plan_.connection.length (); j++)
         {
-	  //@@Gan, seems that you are assuming that there is a special sequence
-	  //  between the two subcomponentportendpoints in a connection. Has Jai
-	  //  confirmed this for you about if he will follow the rule?
-
-	  //@@  Gan, after the first cut we should use either pointer or reference
-	  //    to reduce a bit of overhead of copying.
           ::Deployment::PlanConnectionDescription tmp_conn
             = this->plan_.connection[j];
 
-	  //@@  Gan, after the first cut we should use either pointer or reference
-	  //    to reduce a bit of overhead of copying.
-          ::Deployment::PlanSubcomponentPortEndpoint dest_endpoint
-            = tmp_conn.internalEndpoint[1]; /* The "destination" end point */
+          /* The "source" end point */
+          ::Deployment::PlanSubcomponentPortEndpoint src_endpoint;
+
+          /* The "destination" end point */
+          ::Deployment::PlanSubcomponentPortEndpoint dest_endpoint;
+
+          switch (tmp_conn.internalEndpoint[0].kind)
+          {
+          case ::Deployment::Facet:
+          case ::Deployment::EventConsumer:
+            src_endpoint = tmp_conn.internalEndpoint[0];
+            dest_endpoint = tmp_conn.internalEndpoint[1];
+            break;
+          case ::Deployment::SimplexReceptacle:
+          case ::Deployment::MultiplexReceptacle:
+          case ::Deployment::EventEmitter:
+          case ::Deployment::EventPublisher:
+            src_endpoint = tmp_conn.internalEndpoint[1];
+            dest_endpoint = tmp_conn.internalEndpoint[0];
+            break;
+          default:
+            break;
+          }
 
           // instanceRef of this particular receiver side component instance.
           CORBA::ULong dest_instanceRef = dest_endpoint.instanceRef;
@@ -346,18 +356,10 @@ get_outgoing_connections (::Deployment::Connections_out provided,
             continue; // This connection is not got involved.
 
           // Otherwise, this connection is what we are interested in ...
-
-	  //@@  Gan, after the first cut we should use either pointer or reference
-	  //    to reduce a bit of overhead of copying.
-          ::Deployment::PlanSubcomponentPortEndpoint src_endpoint
-            = tmp_conn.internalEndpoint[0]; /* The "source" end point */
-
           // instanceRef of the provider side component instance.
           CORBA::ULong src_instanceRef = src_endpoint.instanceRef;
 
           // Get the prvoider side component instance name and port name.
-	  //@@ Gan, using string_var here is not really necessary,
-	  //   a plain const char * is better. Too many copies are made unnecessarily.
           CORBA::String_var provider_name =
             (this->plan_.instance[src_instanceRef].name).in ();
 
@@ -378,17 +380,18 @@ get_outgoing_connections (::Deployment::Connections_out provided,
               CORBA::ULong length = retn_connections->length ();
               retn_connections->length (length + 1);
 
-	      //@@ Gan, here you have to switch the name for me. You should give back
-	      // the event_publisher/emitter or the recetacle's name to me. Because
-	      // I don't know anything about the connection as a pair of two endpoints.
-	      // also the port kind is needed to be switched.
+              // Get the "receiver" side connection infomation.
               (*retn_connections)[length] = this->all_connections_[k];
-              (*retn_connections)[length].kind = src_endpoint.kind;
+              (*retn_connections)[length].instanceName = 
+                (this->plan_.instance[dest_endpoint.instanceRef]).name;
+              (*retn_connections)[length].portName = 
+                dest_endpoint.portName;
+              (*retn_connections)[length].kind = dest_endpoint.kind;
             }
         }
     }
 
-    provided = retn_connections._retn ();
+    provided = retn_connections._retn (); // return the connection.
     return;
 }
 
@@ -407,7 +410,7 @@ startLaunch (const ::Deployment::Properties & configProperty,
   ACE_TRY
     {
       // Invoke startLaunch() operations on each cached NodeApplicationManager
-      for (size_t i = 0; i < this->num_child_plans_; i++)
+      for (CORBA::ULong i = 0; i < this->num_child_plans_; i++)
         {
           // Get the NodeApplicationManager object reference.
           ACE_Hash_Map_Entry
@@ -467,7 +470,7 @@ finishLaunch (::CORBA::Boolean start
   ACE_TRY
     {
       // Invoke finishLaunch() operation on each cached NodeApplication object.
-      for (size_t i = 0; i < this->num_child_plans_; i++)
+      for (CORBA::ULong i = 0; i < this->num_child_plans_; i++)
         {
           // Get the NodeApplication object reference.
           ACE_Hash_Map_Entry
@@ -516,7 +519,7 @@ start (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
   ACE_TRY
     {
       // Invoke start() operation on each cached NodeApplication object.
-      for (size_t i = 0; i < this->num_child_plans_; i++)
+      for (CORBA::ULong i = 0; i < this->num_child_plans_; i++)
         {
           // Get the NodeApplication object reference.
           ACE_Hash_Map_Entry
@@ -556,8 +559,7 @@ destroyApplication ()
     {
       // Invoke destroyManager() operation on each cached
       // NodeManager object.
-      // @@NOTE: This is different from the DnC spec since we think the
-      for (size_t i = 0; i < this->num_child_plans_; i++)
+      for (CORBA::ULong i = 0; i < this->num_child_plans_; i++)
         {
           // Get the NodeManager and NodeApplicationManager object references.
           ACE_Hash_Map_Entry
