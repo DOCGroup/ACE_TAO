@@ -38,11 +38,13 @@ static size_t n_workers = 10;
 // Amount to release the semaphore.
 static size_t n_release_count = 3;
 
+#if !defined (ACE_HAS_STHREADS)
 // Number of times to call test_timeout().
 static size_t test_timeout_count;
 
 // Number of timeouts.
 static size_t timeouts = 0;
+#endif /* ! ACE_HAS_STHREADS */
 
 // Explain usage and exit.
 static void 
