@@ -1,4 +1,3 @@
-// Mem_Map.cpp
 // $Id$
 
 // Defines the member functions for the memory mapping facility.
@@ -37,7 +36,7 @@ ACE_Mem_Map::close (void)
   return this->close_handle ();
 }
 
-ACE_Mem_Map::~ACE_Mem_Map (void) 
+ACE_Mem_Map::~ACE_Mem_Map (void)
 {
   ACE_TRACE ("ACE_Mem_Map::~ACE_Mem_Map");
 
@@ -47,13 +46,13 @@ ACE_Mem_Map::~ACE_Mem_Map (void)
 // This function does the dirty work of actually calling ACE_OS::mmap
 // to map the file into memory.
 
-int 
-ACE_Mem_Map::map_it (ACE_HANDLE handle, 
-		     int len_request, 
-		     int prot, 
-		     int share, 
-		     void *addr, 
-		     off_t pos,
+int
+ACE_Mem_Map::map_it (ACE_HANDLE handle,
+                     int len_request,
+                     int prot,
+                     int share,
+                     void *addr,
+                     off_t pos,
                      LPSECURITY_ATTRIBUTES sa)
 {
   ACE_TRACE ("ACE_Mem_Map::map_it");
@@ -75,7 +74,7 @@ ACE_Mem_Map::map_it (ACE_HANDLE handle,
     }
 
   // At this point we know <file_len> is not negative...
-  this->length_ = ACE_static_cast(size_t, file_len); 
+  this->length_ = ACE_static_cast(size_t, file_len);
 
   if (len_request == -1)
     len_request = 0;
@@ -87,34 +86,34 @@ ACE_Mem_Map::map_it (ACE_HANDLE handle,
 
       // Extend the backing store.
 #if defined (ACE_HAS_P_READ_WRITE)
-      if (ACE_OS::pwrite (this->handle_, "", 1, 
-			  len_request > 0 ? len_request - 1 : 0) == -1)
+      if (ACE_OS::pwrite (this->handle_, "", 1,
+                          len_request > 0 ? len_request - 1 : 0) == -1)
 #else
-      if (ACE_OS::lseek (this->handle_, 
-			 len_request > 0 ? len_request - 1 : 0, 
-			 SEEK_SET) == -1
-	  || ACE_OS::write (this->handle_, "", 1) == -1
-	  || ACE_OS::lseek (this->handle_, 0, SEEK_SET) == -1)
+      if (ACE_OS::lseek (this->handle_,
+                         len_request > 0 ? len_request - 1 : 0,
+                         SEEK_SET) == -1
+          || ACE_OS::write (this->handle_, "", 1) == -1
+          || ACE_OS::lseek (this->handle_, 0, SEEK_SET) == -1)
 #endif /* ACE_HAD_P_READ_WRITE */
-	return -1;
+        return -1;
     }
 
-  this->base_addr_ = ACE_OS::mmap (this->base_addr_, 
-				   this->length_,
-				   prot, 
-				   share, 
-				   this->handle_, 
-				   off_t (ACE::round_to_pagesize (pos)),
-				   &this->file_mapping_,
+  this->base_addr_ = ACE_OS::mmap (this->base_addr_,
+                                   this->length_,
+                                   prot,
+                                   share,
+                                   this->handle_,
+                                   off_t (ACE::round_to_pagesize (pos)),
+                                   &this->file_mapping_,
                                    sa);
 
-  return this->base_addr_ == MAP_FAILED ? -1 : 0; 
+  return this->base_addr_ == MAP_FAILED ? -1 : 0;
 }
 
 int
 ACE_Mem_Map::open (LPCTSTR file_name,
-		   int flags,
-		   int mode,
+                   int flags,
+                   int mode,
                    LPSECURITY_ATTRIBUTES sa)
 {
   ACE_TRACE ("ACE_Mem_Map::open");
@@ -133,14 +132,14 @@ ACE_Mem_Map::open (LPCTSTR file_name,
 }
 
 int
-ACE_Mem_Map::map (LPCTSTR file_name, 
-		  int len, 
-		  int flags, 
-		  int mode, 
-		  int prot, 
-		  int share, 
-		  void *addr, 
-		  off_t pos,
+ACE_Mem_Map::map (LPCTSTR file_name,
+                  int len,
+                  int flags,
+                  int mode,
+                  int prot,
+                  int share,
+                  void *addr,
+                  off_t pos,
                   LPSECURITY_ATTRIBUTES sa)
 {
   ACE_TRACE ("ACE_Mem_Map::map");
@@ -148,12 +147,12 @@ ACE_Mem_Map::map (LPCTSTR file_name,
 
   if (this->open (file_name, flags, mode, sa) == -1)
     return -1;
-  else 
+  else
     return this->map_it (this->handle (), len, prot, share, addr, pos, sa);
 }
 
 ACE_Mem_Map::ACE_Mem_Map (void)
-  : base_addr_ (MAP_FAILED), 
+  : base_addr_ (MAP_FAILED),
     length_ (0),
     handle_ (ACE_INVALID_HANDLE),
     file_mapping_ (ACE_INVALID_HANDLE),
@@ -163,18 +162,18 @@ ACE_Mem_Map::ACE_Mem_Map (void)
   ACE_OS::memset (this->filename_, 0, sizeof this->filename_);
 }
 
-// Map a file specified by FILE_NAME. 
+// Map a file specified by FILE_NAME.
 
 ACE_Mem_Map::ACE_Mem_Map (LPCTSTR file_name,
-			  int len, 
-			  int flags, 
-			  int mode, 
-			  int prot, 
-			  int share, 
-			  void *addr, 
-			  off_t pos,
+                          int len,
+                          int flags,
+                          int mode,
+                          int prot,
+                          int share,
+                          void *addr,
+                          off_t pos,
                           LPSECURITY_ATTRIBUTES sa)
-  : base_addr_ (MAP_FAILED), 
+  : base_addr_ (MAP_FAILED),
     length_ (0),
     handle_ (ACE_INVALID_HANDLE),
     file_mapping_ (ACE_INVALID_HANDLE),
@@ -188,14 +187,14 @@ ACE_Mem_Map::ACE_Mem_Map (LPCTSTR file_name,
 // Map a file from an open file descriptor HANDLE.  This function will
 // lookup the length of the file if it is not given.
 
-ACE_Mem_Map::ACE_Mem_Map (ACE_HANDLE handle, 
-			  int len, 
-			  int prot, 
-			  int share, 
-			  void *addr, 
-			  off_t pos,
+ACE_Mem_Map::ACE_Mem_Map (ACE_HANDLE handle,
+                          int len,
+                          int prot,
+                          int share,
+                          void *addr,
+                          off_t pos,
                           LPSECURITY_ATTRIBUTES sa)
-  : base_addr_ (MAP_FAILED), 
+  : base_addr_ (MAP_FAILED),
     length_ (0),
     handle_ (ACE_INVALID_HANDLE),
     file_mapping_ (ACE_INVALID_HANDLE),
