@@ -110,7 +110,7 @@ echo_svr:	test1.o echo_svr.o
 endif
 
 clean:
-	-rm -rf *.o Log $(BIN) obj.* core Templates.DB .make.state
+	-rm -rf *.o $(BIN) obj.* core Templates.DB .make.state
 
 install:
 	-@echo "Nothing to install, these are tests!"

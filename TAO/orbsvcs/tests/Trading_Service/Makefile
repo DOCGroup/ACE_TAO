@@ -88,7 +88,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 .PRECIOUS: TTestS.cpp TTestS.h TTestC.cpp TTestC.h
 
 clean:
-	-/bin/rm -rf *.o Log $(BIN) obj.* core Templates.DB .make.state
+	-/bin/rm -rf *.o $(BIN) obj.* core Templates.DB .make.state
 
 realclean: clean
 	-/bin/rm -rf $(addsuffix .h, $(IDL_FILES)) $(addsuffix .i, $(IDL_FILES)) $(addsuffix .cpp, $(IDL_FILES))
