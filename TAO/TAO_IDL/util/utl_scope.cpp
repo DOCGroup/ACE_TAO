@@ -955,6 +955,54 @@ UTL_Scope::call_add (void)
 
 // Private lookup mechanism.
 
+// For dealing with lookups of 'Object' and 'TypeCode'.
+AST_Decl *
+UTL_Scope::lookup_pseudo (Identifier *e)
+{
+  Identifier *item_name = 0;
+  AST_Decl *d = 0;
+  UTL_ScopeActiveIterator *i = 0;
+
+  if (ACE_OS::strcmp (e->get_string (), "Object") == 0)
+    {
+      // Iterate over the global scope.
+      UTL_ScopeActiveIterator global_iter (idl_global->scopes ()->bottom (),
+                                           UTL_Scope::IK_decls);
+
+      i = &global_iter;
+    }
+  else if (ACE_OS::strcmp (e->get_string (), "TypeCode") == 0)
+    {
+      // Occurrences of "TypeCode" in IDL files must be scoped with
+      // "CORBA" so we know we'll be in the CORBA module if we get
+      // this far, and we can use "this" for the scope of the iterator.
+      UTL_ScopeActiveIterator corba_iter (this,
+                                          UTL_Scope::IK_decls);
+
+      i = &corba_iter;
+    }
+  else
+    {
+      return 0;
+    }
+
+  while (!i->is_done ())
+    {
+      d = i->item ();
+
+      item_name = d->local_name ();
+
+      if (e->compare (item_name))
+        {
+          return d;
+        }
+
+      i->next ();
+    }
+
+  return 0;
+}
+
 // Lookup the node for a primitive (built in) type.
 AST_Decl *
 UTL_Scope::lookup_primitive_type (AST_Expression::ExprType et)
@@ -1101,38 +1149,38 @@ UTL_Scope::look_in_inherited (UTL_ScopedName *e,
                                  0 /* not in parent */);
       if (d != 0)
         {
-                if (d_before == 0)
+          if (d_before == 0)
             {
               // First result found.
-                    d_before = d;
-                  }
-                else
+              d_before = d;
+            }
+          else
             {
               // Conflict against further results?
-                    if (d != d_before)
+              if (d != d_before)
                 {
                   ACE_ERROR ((LM_ERROR,
-                                          "warning in %s line %d: ",
+                              "warning in %s line %d: ",
                               idl_global->filename ()->get_string (),
-                                          idl_global->lineno ()));
+                              idl_global->lineno ()));
 
-                              e->dump (*ACE_DEFAULT_LOG_STREAM);
+                  e->dump (*ACE_DEFAULT_LOG_STREAM);
 
                   ACE_ERROR ((LM_ERROR,
-                                          " is ambiguous in scope.\n"
+                              " is ambiguous in scope.\n"
                               "Found "));
 
-                        d->name ()->dump (*ACE_DEFAULT_LOG_STREAM);
+                  d->name ()->dump (*ACE_DEFAULT_LOG_STREAM);
 
                   ACE_ERROR ((LM_ERROR,
-                                          " and "));
+                              " and "));
 
-                              d_before->name ()->dump (*ACE_DEFAULT_LOG_STREAM);
+                  d_before->name ()->dump (*ACE_DEFAULT_LOG_STREAM);
 
                   ACE_ERROR ((LM_ERROR,
-                                          ".\n"));
-                      }
-                  }
+                              ".\n"));
+                }
+            }
         }
     }
 
@@ -1144,30 +1192,52 @@ AST_Decl *
 UTL_Scope::lookup_by_name_local (Identifier *e,
                                  long index)
 {
-  if (index > 0 && index == (long )this->nmembers ())
+  if (index > 0 && index == (long) this->nmembers ())
     {
       return 0;
     }
 
-  UTL_ScopeActiveIterator *i = 0;
-  ACE_NEW_RETURN (i,
-                  UTL_ScopeActiveIterator (this,
-                                           UTL_Scope::IK_both),
-                  0);
+  // Will return 0 unless looking up 'Object' or 'TypeCode'.
+  AST_Decl *d = this->lookup_pseudo (e);
 
-  AST_Decl *d = 0;
+  if (d != 0)
+    {
+      return d;
+    }
+
+  if (this->idl_keyword_clash (e) != 0)
+    {
+      return 0;
+    }
+
+  UTL_ScopeActiveIterator i (this,
+                             UTL_Scope::IK_both);
   Identifier *item_name = 0;
 
+  idl_bool in_corba = 
+    ACE_OS::strcmp (e->get_string (), "CORBA") == 0;
+
   // Iterate over this scope.
-  while (!i->is_done ())
+  while (!i.is_done ())
     {
-      d = i->item ();
+      d = i.item ();
 
       item_name = d->local_name ();
 
       if (item_name == 0)
         {
-          i->next ();
+          i.next ();
+          continue;
+        }
+
+      // Right now we populate the global scope with all the CORBA basic
+      // types, so something like 'ULong' in an IDL file will find a
+      // match, unless we skip over these items. This is a workaround until
+      // there's time to fix the code generation for CORBA basic types.
+      if (!in_corba
+          && ACE_OS::strcmp (d->name ()->head ()->get_string (), "CORBA") == 0)
+        {
+          i.next ();
           continue;
         }
 
@@ -1175,8 +1245,6 @@ UTL_Scope::lookup_by_name_local (Identifier *e,
         {
           if (index == 0)
             {
-              delete i;
-
               // Special case for forward declared interfaces.
               // Look through the forward declaration and retrieve
               // the full definition.
@@ -1195,15 +1263,13 @@ UTL_Scope::lookup_by_name_local (Identifier *e,
           // the scoped name we're working with.
             {
               index--;
-              i->next ();
+              i.next ();
               continue;
             }
         }
 
-      i->next ();
+      i.next ();
     }
-
-  delete i;
 
   // OK, not found, check if this scope is a module, and if so,
   // look in previous openings, if any.
@@ -1300,7 +1366,7 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
                                      treat_as_ref);
             }
 
-          if ((d == 0) && in_parent)
+          if ((d == 0) && in_parent && idl_global->err_count () == 0)
             {
 
               // OK, not found. Go down parent scope chain.
