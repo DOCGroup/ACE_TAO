@@ -36,6 +36,9 @@ Fri Sep 25 12:40:45 1998  David L. Levine  <levine@cs.wustl.edu>
           template instantiation because it conflicted with the
           ACE_Node<ACE_INT32> instantiation in ace/Stats.cpp.
 
+        * docs/ACE-porting.html: updated "auto configure" link.  Thanks
+          to Ossama for reporting this.
+
 Fri Sep 25 12:15:00 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
         * ace: The following ACE_TRACE calls being made during the
