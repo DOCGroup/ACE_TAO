@@ -1,3 +1,18 @@
+Fri Mar  8 09:44:56 2002  Ossama Othman  <ossama@uci.edu>
+
+	* examples/Advanced/ch_3/Makefile (LDLIBS):
+
+	  Corrected order of libraries to fix link-time errors.  Thanks to
+  	  James Mansion <james.mansion@uk.nomura.com> suggesting the fix.
+
+	  (BIN):
+
+	  Do not build the example if CORBA Messaging support is
+	  disabled.  The client attempts use
+	  CORBA::Object::_validate_connection(). Thanks to James Mansion
+	  for reporting that the example didn't compile when minimum CORBA
+	  support was enabled.
+
 Fri Mar  8 09:30:32 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/IFR_Service/Repository_i.cpp:
