@@ -5,6 +5,8 @@
 
 #include "orbsvcs/CosLoadBalancingC.h"
 
+#include "tao/ORB_Constants.h"
+
 
 ACE_RCSID (LoadBalancing,
            ORBInitializer,
@@ -63,7 +65,7 @@ ORBInitializer::post_init (
 
   info->add_server_request_interceptor (safe_reject_interceptor.in ()
                                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;  
+  ACE_CHECK;
 }
 
 
