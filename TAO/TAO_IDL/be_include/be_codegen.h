@@ -275,6 +275,10 @@ public:
   int start_server_template_skeletons (const char *fname);
   // Set the server template skeletons stream.
 
+  int start_anyop_header (const char *fname);
+  int start_anyop_source (const char *fname);
+  // TAO developers only.
+
   int end_client_header (void);
   // Generate code at the end such as the <<= and >>= operators alongwith the
   // ending #endif statement.
@@ -299,6 +303,10 @@ public:
 
   int end_server_skeletons (void);
   // Put a last #endif in the server skeletons.
+
+  int end_anyop_header (void);
+  int end_anyop_source (void);
+  // TAO developers only.
 
   TAO_OutStream *client_header (void);
   // Get the client header stream.
@@ -332,6 +340,10 @@ public:
 
   TAO_OutStream *server_template_inline (void);
   // Get the server template inline stream.
+
+  TAO_OutStream *anyop_header (void);
+  TAO_OutStream *anyop_source (void);
+  // TAO developers only. Accessors to the streams.
 
   void gperf_input_stream (TAO_OutStream *gperf_input);
   // Set the gperf input file stream.
@@ -425,6 +437,10 @@ private:
 
   TAO_OutStream *server_template_inline_;
   // Server side template inline file.
+
+  TAO_OutStream *anyop_header_;
+  TAO_OutStream *anyop_source_;
+  // For use by TAO developers only.
 
   TAO_OutStream *gperf_input_stream_;
   // TAO_OutStream to collect the input for gperf program.

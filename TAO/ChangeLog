@@ -1,3 +1,19 @@
+Sun Nov  9 17:57:40 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_global.cpp:
+        * TAO_IDL/be/be_visitor_root/root.cpp:
+        * TAO_IDL/be/be_visitor_tmplinst/tmplinst_cs.cpp:
+        * TAO_IDL/be_include/be_codegen.h:
+        * TAO_IDL/be_include/be_global.h:
+        * TAO_IDL/driver/drv_args.cpp:
+
+          Added a new IDL compiler option (intended for use on TAO
+          .pidl files only) and associated mechanism to generate
+          Any operators into a separate set of .h and .cpp files.
+          This option will result in footprint reduction in most,
+          if not all, application programs that link to TAO.
+
 Sun Nov  9 17:57:57 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Synch_Refcountable.h:
@@ -37,6 +53,7 @@ Sun Nov  9 17:57:57 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  
 	  Fixed fuzz errors.
 
+>>>>>>> 1.2874
 Sun Nov  9 22:12:29 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * tao/Makefile.dirs:

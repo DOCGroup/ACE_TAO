@@ -43,11 +43,45 @@ TAO_CodeGen::TAO_CodeGen (void)
     server_template_skeletons_ (0),
     server_inline_ (0),
     server_template_inline_ (0),
+    anyop_header_ (0),
+    anyop_source_ (0),
     gperf_input_stream_ (0),
     gperf_input_filename_ (0),
     curr_os_ (0),
     visitor_factory_ (0)
 {
+  // Initialize the anyop streams here so we won't have to fuss
+  // with it in the visitors.
+  if (be_global->gen_anyop_files ())
+    {
+      int status = 0;
+
+      status =
+        this->start_anyop_header (
+                  be_global->be_get_anyop_header_fname ()
+                );
+
+      if (status == -1)
+        {
+          ACE_ERROR ((LM_ERROR,
+                             "(%N:%l) TAO_CodeGen::"
+                             "TAO_CodeGen - "
+                             "Error opening anyop header file\n"));
+        }
+                  
+      status =
+        this->start_anyop_source (
+                  be_global->be_get_anyop_source_fname ()
+                );
+
+      if (status == -1)
+        {
+          ACE_ERROR ((LM_ERROR,
+                             "(%N:%l) TAO_CodeGen::"
+                             "TAO_CodeGen - "
+                             "Error opening anyop source file\n"));
+        }
+    }
 }
 
 // destructor
@@ -64,6 +98,8 @@ TAO_CodeGen::~TAO_CodeGen (void)
   delete this->client_inline_;
   delete this->server_inline_;
   delete this->server_template_inline_;
+  delete this->anyop_header_;
+  delete this->anyop_source_;
 #if !defined (linux) && !defined (__QNX__)
   // This causes a seg fault on Linux RH 5.1.  Let it leak . . .
   delete this->gperf_input_stream_;
@@ -786,6 +822,109 @@ TAO_CodeGen::server_template_inline (void)
   return this->server_template_inline_;
 }
 
+int
+TAO_CodeGen::start_anyop_header (const char *fname)
+{
+  // Retrieve the singleton instance to the outstream factory.
+  TAO_OutStream_Factory *factory = TAO_OUTSTREAM_FACTORY::instance ();
+
+  // Retrieve a specialized instance.
+  this->anyop_header_ = factory->make_outstream ();
+
+  if (!this->anyop_header_)
+    {
+      return -1;
+    }
+
+  if (this->anyop_header_->open (fname,
+                                 TAO_OutStream::TAO_CLI_HDR)
+       == -1)
+    {
+      return -1;
+    }
+
+  *this->anyop_header_ << be_nl 
+                       << "// TAO_IDL - Generated from" << be_nl
+                       << "// " << __FILE__ << ":" << __LINE__
+                       << be_nl << be_nl;
+
+  // Generate the #ident string, if any.
+  this->gen_ident_string (this->anyop_header_);
+
+  // Generate the #ifndef clause.
+  this->gen_ifndef_string (fname,
+                           this->anyop_header_,
+                           "_TAO_IDL_",
+                           "_ANYOP_H_");
+
+  if (be_global->pre_include () != 0)
+    {
+      *this->anyop_header_ << "#include /**/ \""
+                           << be_global->pre_include ()
+                           << "\"";
+    }
+
+  return 0;
+}
+
+TAO_OutStream *
+TAO_CodeGen::anyop_header (void)
+{
+  return this->anyop_header_;
+}
+
+int
+TAO_CodeGen::start_anyop_source (const char *fname)
+{
+  // Retrieve the singleton instance to the outstream factory.
+  TAO_OutStream_Factory *factory = TAO_OUTSTREAM_FACTORY::instance ();
+
+  // Retrieve a specialized instance.
+  this->anyop_source_ = factory->make_outstream ();
+
+  if (!this->anyop_source_)
+    {
+      return -1;
+    }
+
+  if (this->anyop_source_->open (fname,
+                                 TAO_OutStream::TAO_CLI_IMPL)
+       == -1)
+    {
+      return -1;
+    }
+
+  // Generate the include statement for the precompiled header file.
+  if (be_global->pch_include ())
+    {
+      *this->anyop_source_ << "#include \""
+                           << be_global->pch_include ()
+                           << "\"";
+    }
+
+  // Generate the include statement for the client header. We just
+  // need to put only the base names. Path info is not required.
+  *this->anyop_source_ << "\n#include \""
+                       << be_global->be_get_client_hdr_fname (1)
+                       << "\"";
+
+  // Generate the include statement for the anyop header. We just
+  // need to put only the base names. Path info is not required.
+  *this->anyop_source_ << "\n#include \""
+                       << be_global->be_get_anyop_header_fname (1)
+                       << "\"";
+
+  this->gen_standard_include (this->anyop_source_,
+                              "tao/Typecode.h");
+
+  return 0;
+}
+
+TAO_OutStream *
+TAO_CodeGen::anyop_source (void)
+{
+  return this->anyop_source_;
+}
 
 // Set the server header stream.
 int
@@ -936,6 +1075,7 @@ TAO_CodeGen::end_client_header (void)
     }
 
   *this->client_header_ << "#endif /* ifndef */" << be_nl << be_nl;
+
   return 0;
 }
 
@@ -1109,6 +1249,30 @@ TAO_CodeGen::end_server_skeletons (void)
   // Code to put the last #endif.
   *this->server_skeletons_ << "\n\n#endif /* ifndef */\n";
 
+  return 0;
+}
+
+int
+TAO_CodeGen::end_anyop_header (void)
+{
+  // Code to put the last #endif.
+  *this->anyop_header_ << "\n\n";
+
+  if (be_global->post_include () != 0)
+    {
+      *this->anyop_header_ << "#include /**/ \""
+                           << be_global->post_include ()
+                           << "\"\n\n";
+    }
+
+  *this->anyop_header_ << "#endif /* ifndef */" << be_nl << be_nl;
+
+  return 0;
+}
+
+int
+TAO_CodeGen::end_anyop_source (void)
+{
   return 0;
 }
 
@@ -1576,11 +1740,18 @@ TAO_CodeGen::gen_any_file_includes (void)
 {
   if (be_global->any_support ())
     {
+      TAO_OutStream *stream = this->client_stubs_;
+
+      if (be_global->gen_anyop_files ())
+        {
+          stream = this->anyop_source_;
+        }
+
       this->gen_cond_file_include (
           idl_global->decls_seen_masks.interface_seen_
           | idl_global->decls_seen_masks.valuetype_seen_,
           "tao/Any_Impl_T.h",
-          this->client_stubs_
+          stream
         );
 
       this->gen_cond_file_include (
@@ -1588,19 +1759,19 @@ TAO_CodeGen::gen_any_file_includes (void)
           | idl_global->decls_seen_masks.seq_seen_
           | idl_global->decls_seen_masks.exception_seen_,
           "tao/Any_Dual_Impl_T.h",
-          this->client_stubs_
+          stream
         );
 
       this->gen_cond_file_include (
           idl_global->decls_seen_masks.array_seen_,
           "tao/Any_Array_Impl_T.h",
-          this->client_stubs_
+          stream
         );
 
       this->gen_cond_file_include (
           idl_global->decls_seen_masks.enum_seen_,
           "tao/Any_Basic_Impl_T.h",
-          this->client_stubs_
+          stream
         );
     }
 }
