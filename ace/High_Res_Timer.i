@@ -54,7 +54,7 @@ ACE_INLINE void
 ACE_High_Res_Timer::elapsed_microseconds (ACE_hrtime_t &usecs) const
 {
   if (scale_factor_ > 0) {
-    usecs = (ACE_hrtime_t) ((this->end_ - this->start_) / 1000L / scale_factor_);
+    usecs = (ACE_hrtime_t) ((this->end_ - this->start_) / scale_factor_) / 1000L;
   } else {
     usecs = (this->end_ - this->start_) / 1000L;
   }
@@ -72,8 +72,8 @@ ACE_High_Res_Timer::hrtime_to_tv (ACE_Time_Value &tv,
 				  double scale_factor)
 {
   if (scale_factor > 0) {
-    tv.sec ((ACE_hrtime_t) (hrt / 1000000L / scale_factor));
-    tv.usec ((ACE_hrtime_t) (hrt % 1000000L / scale_factor));
+    tv.sec ((ACE_hrtime_t) (hrt / scale_factor) / 1000000L);
+    tv.usec ((ACE_hrtime_t) (hrt / scale_factor) % 1000000L);
   } else {
     tv.sec (hrt / 1000000L);
     tv.usec (hrt % 1000000L);
