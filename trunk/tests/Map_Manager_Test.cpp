@@ -63,6 +63,20 @@ test_hash_map_manager (size_t table_size, size_t iterations)
   for (i = 0; i < iterations; i++)
     ACE_ASSERT (map.bind (i, i) != -1);
 
+#if 1
+  {
+    i = 0;
+
+    for (HASH_ITERATOR iter = map.begin ();
+	 iter != map.end ();
+	 iter++, i++)
+      {
+	HASH_ENTRY &item = *iter;
+	ACE_DEBUG ((LM_DEBUG, "%d ", i));
+      }
+    ACE_DEBUG ((LM_DEBUG, "\n"));
+  }
+#else
   {
     HASH_ITERATOR iterator (map);
 
@@ -73,7 +87,22 @@ test_hash_map_manager (size_t table_size, size_t iterations)
       ACE_DEBUG ((LM_DEBUG, "%d ", i));
     ACE_DEBUG ((LM_DEBUG, "\n"));
   }
+#endif /* 1 */
 
+#if 1
+  {
+    i = iterations - 1;
+
+    for (HASH_REVERSE_ITERATOR iter = map.rbegin ();
+	 iter != map.rend ();
+	 iter++, i--)
+      {
+	HASH_ENTRY &item = *iter;
+	ACE_DEBUG ((LM_DEBUG, "%d ", i));
+      }
+    ACE_DEBUG ((LM_DEBUG, "\n"));
+  }
+#else
   {
     HASH_REVERSE_ITERATOR iterator (map);
 
@@ -84,7 +113,22 @@ test_hash_map_manager (size_t table_size, size_t iterations)
       ACE_DEBUG ((LM_DEBUG, "%d ", i));
     ACE_DEBUG ((LM_DEBUG, "\n"));
   }
+#endif /* 1 */
 
+#if 1
+  {
+    i = 0;
+
+    for (HASH_MAP_MANAGER::iterator iter = map.begin ();
+	 iter != map.end ();
+	 iter++, i++)
+      {
+	HASH_MAP_MANAGER::ENTRY &item = *iter;
+	ACE_DEBUG ((LM_DEBUG, "%d ", i));
+      }
+    ACE_DEBUG ((LM_DEBUG, "\n"));
+  }
+#else
   {
     HASH_MAP_MANAGER::ITERATOR iterator (map);
 
@@ -95,7 +139,22 @@ test_hash_map_manager (size_t table_size, size_t iterations)
       ACE_DEBUG ((LM_DEBUG, "%d ", i));
     ACE_DEBUG ((LM_DEBUG, "\n"));
   }
+#endif /* 1 */
 
+#if 1
+  {
+    i = iterations - 1;
+
+    for (HASH_MAP_MANAGER::reverse_iterator iter = map.rbegin ();
+	 iter != map.rend ();
+	 iter++, i--)
+      {
+	HASH_MAP_MANAGER::ENTRY &item = *iter;
+	ACE_DEBUG ((LM_DEBUG, "%d ", i));
+      }
+    ACE_DEBUG ((LM_DEBUG, "\n"));
+  }
+#else
   {
     HASH_MAP_MANAGER::REVERSE_ITERATOR iterator (map);
 
@@ -106,6 +165,7 @@ test_hash_map_manager (size_t table_size, size_t iterations)
       ACE_DEBUG ((LM_DEBUG, "%d ", i));
     ACE_DEBUG ((LM_DEBUG, "\n"));
   }
+#endif /* 1 */
 
   for (i = 0; i < iterations; i++)
     {
@@ -288,6 +348,7 @@ main (int argc, char *argv[])
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Hash_Map_Manager<TYPE, TYPE, MUTEX>;
+template class ACE_Hash_Map_Iterator_Base<TYPE, TYPE, MUTEX>;
 template class ACE_Hash_Map_Iterator<TYPE, TYPE, MUTEX>;
 template class ACE_Hash_Map_Reverse_Iterator<TYPE, TYPE, MUTEX>;
 template class ACE_Hash_Map_Entry<TYPE, TYPE>;
@@ -298,6 +359,7 @@ template class ACE_Map_Reverse_Iterator<TYPE, TYPE, MUTEX>;
 template class ACE_Map_Entry<TYPE, TYPE>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Hash_Map_Manager<TYPE, TYPE, MUTEX>
+#pragma instantiate ACE_Hash_Map_Iterator_Base<TYPE, TYPE, MUTEX>
 #pragma instantiate ACE_Hash_Map_Iterator<TYPE, TYPE, MUTEX>
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator<TYPE, TYPE, MUTEX>
 #pragma instantiate ACE_Hash_Map_Entry<TYPE, TYPE>
