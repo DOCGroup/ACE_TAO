@@ -66,7 +66,7 @@ CIAO::AssemblyFactory_Impl::create_assembly (const char * assembly_loc
   ACE_CHECK_RETURN (0);
 
   CORBA::Object_var objref
-    = this->poa_->id_to_reference (oid
+    = this->poa_->id_to_reference (oid.in ()
                                    ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
