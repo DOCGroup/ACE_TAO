@@ -84,7 +84,7 @@ public class SOCKStream
     {
       // Get the data out
       String buf = s.toString ();
-      this.oStream_.println (buf);
+      this.oStream_.print (buf);
       this.oStream_.flush ();
       return buf.length ();
     }
@@ -96,7 +96,7 @@ public class SOCKStream
    */
   public int send (String s) throws IOException
     {
-      this.oStream_.println (s);
+      this.oStream_.print (s);
       this.oStream_.flush ();
       return s.length ();
     }
