@@ -515,7 +515,7 @@ CORBA_UnknownUserException::CORBA_UnknownUserException (CORBA_Any &ex)
 
 CORBA_UnknownUserException::CORBA_UnknownUserException (
       const CORBA_UnknownUserException& e)
-  : CORBA_UserException ()
+  : CORBA_UserException (e._type ())
 {
   ACE_NEW (this->exception_,
            CORBA_Any (*e.exception_));
@@ -657,7 +657,7 @@ TAO_Exceptions::make_standard_typecode (CORBA::TypeCode_ptr &tcp,
 
   const char prefix[] = "IDL:omg.org/CORBA/";
   const char suffix[] = ":1.0";
-  char *full_id =
+  CORBA::String full_id =
     CORBA::string_alloc (sizeof prefix
                          + ACE_OS::strlen (name)
                          + sizeof suffix);
@@ -676,6 +676,8 @@ TAO_Exceptions::make_standard_typecode (CORBA::TypeCode_ptr &tcp,
                       ACE_TRY_ENV) != CORBA::TypeCode::TRAVERSE_CONTINUE;
   ACE_CHECK; // @@ Maybe we should transform this exception
 
+  CORBA::string_free (full_id);  // No longer need the string
+
   result = result || stream.write_string (completed) == 0
     || stream.encode (CORBA::_tc_TypeCode,
                       &TC_completion_status, 0,
@@ -687,8 +689,6 @@ TAO_Exceptions::make_standard_typecode (CORBA::TypeCode_ptr &tcp,
 
   // @@ It is possible to throw an exception at this point?
   //    What if the exception typecode has not been initialized yet?
-
-  CORBA::string_free (full_id);
 
   // OK, we stuffed the buffer we were given (or grew a bigger one;
   // hope to avoid that during initialization).  Now build and return
@@ -702,6 +702,7 @@ TAO_Exceptions::make_standard_typecode (CORBA::TypeCode_ptr &tcp,
                                      1,
                                      sizeof (CORBA_SystemException)),
                     CORBA_NO_MEMORY ());
+  ACE_CHECK;
 
   TAO_Exceptions::system_exceptions->add (tcp);
 
