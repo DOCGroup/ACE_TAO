@@ -1,3 +1,9 @@
+Sun Oct 10 00:21:39 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* DAnCE/examples/BasicSP/BMDisplay/BMDisplay.mpc:
+
+	  Fixed a typo.
+
 Sat Oct  9 23:43:52 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* DAnCE/Config_Handlers/Plan_Handler.cpp:
