@@ -1,3 +1,15 @@
+Wed Jul 30 17:00:03 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
+	
+	* examples/RTScheduling/FP_SchedulingC.h:
+	* examples/RTScheduling/FP_SchedulingC.cpp:
+	* examples/RTScheduling/FP_SchedulingC.i:	
+	* examples/RTScheduling/MIF_SchedulingC.h:
+	* examples/RTScheduling/MIF_SchedulingC.cpp:
+	* examples/RTScheduling/MIF_SchedulingC.i:
+
+	  Generated stubs with exceptions. This should fix compile errors
+	  on Redhat 7.1 and Debian builds.
+
 Wed Jul 30 16:09:23 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/FaultTolerance/FT_ClientRequest_Interceptor.cpp: 
@@ -120,8 +132,6 @@ Wed Jul 30 12:50:33 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 
 	* tao/PortableServer/ServantBase.cpp: The effect of the above change.
-	
-
 
 Tue Jul 29 16:27:52 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
