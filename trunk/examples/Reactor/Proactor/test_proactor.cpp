@@ -88,8 +88,8 @@ private:
 };
 
 Receiver::Receiver (void)
-  : handle_ (ACE_INVALID_HANDLE),
-    dump_file_ (ACE_INVALID_HANDLE)
+  : dump_file_ (ACE_INVALID_HANDLE),
+    handle_ (ACE_INVALID_HANDLE)
 {
 }
 
@@ -105,6 +105,9 @@ Receiver::open (ACE_HANDLE handle,
 {
   // New connection, initiate stuff
 
+  // @@ Just debugging.
+  ACE_DEBUG ((LM_DEBUG, "Receiver::open called\n"));
+  
   // Cache the new connection
   this->handle_ = handle;
 
@@ -112,7 +115,9 @@ Receiver::open (ACE_HANDLE handle,
   this->file_offset_ = 0;
 
   // Open dump file (in OVERLAPPED mode)
-  this->dump_file_ = ACE_OS::open (dump_file, _O_CREAT | O_RDWR | _O_TRUNC | FILE_FLAG_OVERLAPPED);
+  this->dump_file_ = ACE_OS::open (dump_file,
+                                   O_CREAT | O_RDWR | O_TRUNC | FILE_FLAG_OVERLAPPED,
+                                   0600);
   if (this->dump_file_ == ACE_INVALID_HANDLE)
     {
       ACE_ERROR ((LM_ERROR, "%p\n", "ACE_OS::open"));
@@ -133,18 +138,29 @@ Receiver::open (ACE_HANDLE handle,
       return;
     }
 
-  // Duplicate the message block so that we can keep it around
-  ACE_Message_Block &duplicate = *message_block.duplicate ();
-
-  // Initial data (data which came with the AcceptEx call)
-  ACE_Asynch_Read_Stream::Result fake_result (*this,
-                                              this->handle_,
-                                              duplicate,
-                                              initial_read_size,
-                                              0,
-                                              ACE_INVALID_HANDLE);
-  // This will call the callback
-  fake_result.complete (message_block.length (), 1, 0);
+  // Fake the result and make the <handle_read_stream> get
+  // called. But, not, if there is '0' is transferred. 
+  if (message_block.length () != 0)
+    {
+      // Duplicate the message block so that we can keep it around.
+      ACE_Message_Block &duplicate = *message_block.duplicate ();
+      
+      // Initial data (data which came with the AcceptEx call)
+      ACE_Asynch_Read_Stream::Result fake_result (*this,
+                                                  this->handle_,
+                                                  duplicate,
+                                                  initial_read_size,
+                                                  0,
+                                                  ACE_INVALID_HANDLE);
+      // This will call the callback
+      fake_result.complete (message_block.length (), 1, 0);
+    }
+  else
+    // Otherwise, make sure we proceed. Initiate reading the
+    // stream. 
+    // Initiate new read from the stream
+    if (this->initiate_read_stream () == -1)
+      return;
 }
 
 int
@@ -197,7 +213,10 @@ Receiver::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
 	return;
     }
   else
-    done = 1;
+    {
+      ACE_DEBUG ((LM_DEBUG, "Receiver Completed\n"));
+      done = 1;
+    }
 }
 
 void
@@ -358,7 +377,9 @@ int
 Sender::transmit_file (void)
 {
   // Open file (in SEQUENTIAL_SCAN mode)
-  ACE_HANDLE file_handle = ACE_OS::open (file, GENERIC_READ | FILE_FLAG_SEQUENTIAL_SCAN);
+  ACE_HANDLE file_handle = ACE_OS::open (file,
+                                         GENERIC_READ); // | FILE_FLAG_SEQUENTIAL_SCAN);
+  
   if (file_handle == ACE_INVALID_HANDLE)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_OS::open"), -1);
 
@@ -561,21 +582,36 @@ main (int argc, char *argv[])
 
   // If passive side
   if (host == 0)
-   {
-     if (acceptor.open (ACE_INET_Addr (port),
-			initial_read_size,
-			1) == -1)
-       return -1;
-   }
+    {
+      if (acceptor.open (ACE_INET_Addr (port),  // INET_Address.
+                         initial_read_size,     // Initial read size.
+                         1,                     // Pass addresses.
+                         5,                     // Backlog.
+                         1,                     // Reuse address.
+                         0,                     // Default proactor. 
+                         0,                     // No-validate new connection.
+                         0,                     // No reissuing AND
+                         1                      // Just one accept.
+                         ) == -1)
+        return -1;
+    }
+  
   // If active side
   else if (sender.open (host, port) == -1)
     return -1;
-
+  
   int error = 0;
-
+  
   while (!error && !done)
     // dispatch events
     error = ACE_Proactor::instance ()->handle_events ();
 
   return 0;
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Asynch_Acceptor<Receiver>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Asynch_Acceptor<Receiver>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
