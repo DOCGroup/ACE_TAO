@@ -31,9 +31,7 @@ private:
   static mySingleton *instance_;
 
   mySingleton () { ACE_DEBUG ((LM_DEBUG, "mySingleton %d ctor\n", NUMBER)); }
-  // Can't use Log_Message here, yet, because it might already be deleted.
-  // It should work after ACE_Object_Manager starts using ::at_exit ().
-  ~mySingleton () { /* ACE_DEBUG ((LM_DEBUG, "mySingleton %d dtor\n", NUMBER));  */ }
+  ~mySingleton () { ACE_DEBUG ((LM_DEBUG, "mySingleton %d dtor\n", NUMBER)); }
 
   friend class friend_declaration_to_avoid_compiler_warning_with_private_ctor;
 };
