@@ -1,3 +1,10 @@
+Mon Jul 19 21:26:57 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.{h,i}: reverted sigwait () changes on Digital
+          Unix.  They cause examples/Threads/process_manager.cpp
+          to not compile on DU 5.0 with cxx 6.2-021.  See
+          Mon Jul 19 21:13:16 1999  Doug Anderson  <doug@clark.net>.
+
 Mon Jul 19 21:13:16 1999  Doug Anderson  <doug@clark.net>
 
         * ace/ACE.cpp,ace/Basic_Types.h,ace/CDR_Stream.{h,cpp},
