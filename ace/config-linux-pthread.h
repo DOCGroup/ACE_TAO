@@ -28,6 +28,10 @@
 #define ACE_HAS_POSIX_TIME
 #define ACE_LACKS_STRRECVFD
 
+// ONLY define this if you have config'd multicast into a 2.x kernel.
+// If you do anything else, we've never tested it!
+#define ACE_HAS_IP_MULTICAST
+
 // Platform supports System V IPC (most versions of UNIX, but not Win32)
 #define ACE_HAS_SYSV_IPC			
 
@@ -72,7 +76,7 @@
 #define ACE_PAGE_SIZE 4096
 
 #define ACE_HAS_SUNOS4_GETTIMEOFDAY
-#define LINUX 1.2.10
+#define LINUX 2.0.29
 
 // Turns off the tracing feature.
 #if !defined (ACE_NTRACE)
