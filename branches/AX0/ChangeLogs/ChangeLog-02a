@@ -1,3 +1,9 @@
+Mon Feb 11 10:52:24 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* XML/examples/test_docs/svcconf.dtd: Simplied the svc.conf.dtd by
+	  removing the <params> tags and making it an attribute for
+	  <initializer> and <static> tags.
+
 Sun Feb 10 22:11:43 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Parse_Node.cpp:

@@ -36,14 +36,16 @@
                   type (module|service_object|stream) #REQUIRED>
 
 <!-- Initializing function for dynamic entry.  -->
-<!ELEMENT initializer (params)*>
+<!ELEMENT initializer EMPTY>
 <!ATTLIST initializer init CDATA #REQUIRED
-                      path CDATA #IMPLIED>
+                      path CDATA #IMPLIED
+                      params CDATA #IMPLIED>
 
 <!-- A 'static' entry takes an ID attribute and an optional -->
 <!-- parameter lists.  -->
-<!ELEMENT static (params)*>
-<!ATTLIST static id ID #REQUIRED>
+<!ELEMENT static EMPTY>
+<!ATTLIST static id ID #REQUIRED
+                 params CDATA #IMPLIED>
 
 <!-- A 'suspend' entry takes an ID attribute.  -->
 <!ELEMENT suspend EMPTY>
@@ -56,10 +58,3 @@
 <!-- A 'remove' entry takes an ID attribute.  -->
 <!ELEMENT remove EMPTY>
 <!ATTLIST remove id IDREF #REQUIRED>
-
-<!-- A params entry can appear within dynamic and static.    -->
-<!-- Parameters can appear multiple time and the SAX handler -->
-<!-- for Service_Configurator is supposed to concatinate     -->
-<!-- them together with appropriate white space to separate  -->
-<!-- parameters appeared in separate elements.               -->
-<!ELEMENT params (#PCDATA)>
