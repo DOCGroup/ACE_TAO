@@ -28,10 +28,10 @@
 
 #if defined (ACE_HAS_TEMPLATE_TYPEDEFS)
 #define ACE_FILE_CONNECTOR ACE_FILE_Connector
-#define ACE_FILE_STREAM ACE_FILE_Stream
+#define ACE_FILE_STREAM ACE_FILE_IO
 #else /* TEMPLATES are broken (must be a cfront-based compiler...) */
 #define ACE_FILE_CONNECTOR ACE_FILE_Connector, ACE_FILE_Addr
-#define ACE_FILE_STREAM ACE_FILE_Stream, ACE_FILE_Addr
+#define ACE_FILE_STREAM ACE_FILE_IO, ACE_FILE_Addr
 #endif /* ACE_TEMPLATE_TYPEDEFS */
 
 struct ACE_FILE_Info

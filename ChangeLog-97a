@@ -1,199 +1,16 @@
-Tue Jun  3 21:23:48 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+Wed Jun 04 12:21:41 1997    <irfan@TWOSTEP>
 
-	* ace/Timer_{Queue,Hash}: Fixed some uses of template typedefs
- 	  since GCC is too lame to handle them correctly.  Therefore, I
- 	  had to expand TIMER_QUEUE into the ugly fully expanded name.
+	* ace/OS.h: Made sure that some #defines were guarded for
+ 	  redefinition specially for the Bristol (that provides Win32 API
+ 	  on AIX) headers. Thanks to Rich Christy (rchristy@cccis.com) for
+ 	  suggesting these changes.
 
-	* ace/Timer_Queue_T.cpp: Moved the implementation of
- 	  ACE_Event_Handler_Handle_Timeout_Upcall from Timer_Queue.* into
- 	  Timer_Queue_T.* since only template classes should go into *_T.*
- 	  files.
+	* ace/Handle_Set.h: Changed the type of handle_index from int to
+ 	  u_int on Win32.  Thanks to Jack Erickson (jack@cibc.com) for
+ 	  suggesting this.
 
-Tue Jun  3 18:16:02 1997  Darrell Brunsch <brunsch@cs.wustl.edu>
-
-	* ace/Timer_Queue.*:
-
-	  Templatized ACE_Event_Handler_Handle_Timeout_Upcall with LOCK
-		
-	  Added deletion() to Upcall Functors.  This gets called if there
- 	  are any nodes in a queue and the queue's destructor is called
-
-	* ace/Timer_Queue_T.*:
-
-	  Changed iterator accessor to public
-
-	  Removed two template parameters from ACE_Timer_Node_T so only
- 	  EVENT is left.  Added accessors instead of using friendships,
- 	  and deleted the constructor (use set() instead)
-
-	  Changed iterator into a general iterator (with first(), next(),
- 	  isdone() and item () methods)
-	  
-	  Added remove_first () method that removes and returns the
- 	  earliest timer in the queue
-	  
-	  Added ACE_Free_List support
-
-	* ace/Timer_Heap*:
-
-	  Added upcall functor deletion() support
-
-	  Added remove_first () method that removes and returns the
- 	  earliest timer in the queue
-	  
-	* ace/Timer_List*:
-
-	  Changed to double-linked circular list and changed the timer_id
- 	  to be a pointer to the node (like it is in Timer Wheel and Timer
- 	  Hash)
-
-	  Added upcall functor deletion() support
-
-	  Added remove_first () method that removes and returns the
- 	  earliest timer in the queue
-	  
-	  Added check for timer_id of -1 so we don't try to delete the
- 	  error code if it is passed into cancel
-
-	  Changed Timer_List_Iterator_T constructor parameter from list to
- 	  listParm to resolve a conflict with STL.  Thanks to Todd
- 	  Barkalow <barkate@louisville.stortek.com> for this fix
-
-	* ace/Timer_Wheel*:
-
-	  Added HighRes timer support
-
-	  Added upcall functor deletion() support
-
-	  Added earliest_pos_ variable to keep track of the list with the
- 	  earliest node
-
-	  Created an expire that is specialized for ACE_Timer_Wheel
-
-	  Added remove_first () method that removes and returns the
- 	  earliest timer in the queue
-	  
-	  Added check for timer_id of -1 so we don't try to delete the
- 	  error code if it is passed into cancel
-
-	* ace/Timer_Hash*:
-
-	  Added Timer Hash Queue - This is a class that can take another
- 	  timer queue type (Timer List, Timer Heap...) as a template
- 	  parameter (BUCKET) and then do an intermediate hash of a timer
- 	  to determine which queue among a table of timer queues to put
- 	  the timer into.  ACE_Timer_Hash is typedefed to the Timer List
- 	  version and ACE_Timer_Hash_Heap is typedefed to the Timer Heap
- 	  version
-
-	  Added HighRes timer support
-
-	  Added upcall functor deletion() support
-
-	  Created an expire that is specialized for ACE_Timer_Hash
-
-	  Added remove_first () method that removes and returns the
- 	  earliest timer in the queue
-	  
-	  Added check for timer_id of -1 so we don't try to delete the
- 	  error code if it is passed into cancel
-
-	* ace/Free_List.*
-
-	  Added ACE_Free_List<T> and ACE_Locked_Free_List<T, LOCK>.  These
- 	  are used to maintain free lists of nodes. ACE_Free_List is a
- 	  abstract class where ACE_Locked_Free_List is a concrete one that
- 	  has a mutex parameter (LOCK).
-
-	* ace/OS.h:
-
-	  Added ACE_DEFAULT_TIMER_HASH_TABLE_SIZE constant
-
-	  Added ACE_DEFAULT_FREE_LIST_* constants
-
-	* ace/Proactor.*:
-
-	  Added deletion() to Upcall Functors.  This gets called if there
- 	  are any nodes in a queue and the queue's destructor is called.
-
-	* tests/Timer_Queue_Test.cpp:
-
-	  Added HighRes timer support
-
-	  Changed the array of timer queues into a list (to more easily
- 	  add/remove/comment out an entry)
-
-	  Added some more performance tests with randomization
-
-Tue Jun  3 00:26:06 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
-
-	* ace/OS.h: Changed the access protection for ACE_cond_t,
- 	  ACE_sema_t, ACE_event_t, and ACE_rwlock_t so that it is
- 	  protected rather than private.  In addition, added ACE_Export to
- 	  all of these classes so that they are visible outside of a DLL.
-  	  Thanks to Ivan Murphy for these suggestions.
-
-	* ace/OS.h: Changed the value of ACE_MAX_DEFAULT_PORT on Win32 to
- 	  0 in order to work around a nasty NTism...  Thanks to Jon Biggar
-	  <jon@sems.com> for reporting this.
-
-Mon Jun  2 16:29:48 1997  James C Hu  <jxh@lambada.cs.wustl.edu>
-
-	* ace/Process.*:
-	  - Fixed ACE_Process::spawn to close descriptors after having
-	  been duped.
-	  - Fixed ACE_Process::spawn to exit () after an error is
-	  encountered in the child process, rather than returning.
-	  - Fixed ACE_Process_Options::set_handles to duplicate handles
-	  that are passed in, and then to close them in the destructor.
-
-Sun Jun 01 22:21:28 1997  David L. Levine  <levine@cs.wustl.edu>
-
-	* examples/Threads/tss1.cpp: made some globals non-static or
-	  const so that tss1 will link with Sun C++ 4.2 -O3.  I don't
-	  know what the problem is; it only shows up with optimization
-	  enabled.  These fixes work around it.
-
-Sun Jun 01 20:29:20 1997  James CE Johnson <jcej@lads.com>
-
-	* ace/IOStream*:
-	  - removed the old 4/5/97 comments
-	  - made operator>>, << on QuotedString a template
-
-	  This last makes QuotedString much more functional.  As
-	  templated functions, the QuotedString can now be used on
-	  other iostream-type objects.  The previous method of
-	  defining the function only for the type of ACE_IOStream
-	  being created was didn't provide this flexibility.
-
-Sat May 31 07:01:22 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
-
-	* ace/Log_Msg.cpp (open): To avoid handle leaks, we need to
- 	  shutdown the message_queue before trying to reopen it.  Thanks
- 	  to Per Andersson for this suggestion.
-
-	* include/makeinclude/platform_osf1_4.0.GNU: Added a new platform
- 	  config file.  Thanks to James Johnson for this.
-
-Fri May 30 16:25:25 1997    <irfan@TWOSTEP>
-
-	* CPP-inclient.cpp (main): Properly compare to the "quit"
- 	  string. Thanks to "Andre Arpin" <arpin@adan.kingston.net> for
- 	  reporting this.
-
-	* tests/UPIPE_SAP_Test.cpp (connector): Changed the eof marker in
- 	  the strings.
-
-Fri May 30 14:04:44 1997  James C Hu  <jxh@lambada.cs.wustl.edu>
-
-	* include/makeinclude/platform_irix6.4_sgic++.GNU: added to make
-	  things compile on latest SGI machines.  Removed +pp and -woff...
-	  flags from the CCFLAGS variable.  Added new -woff flags to hide
-	  other warnings.
-
-	* ace/config-irix6.4-sgic++*.h: copied corresponding configs from
-	  irix6.2 and removed ACE_HAS_SVR4_TIME, since this seems to be no
-	  longer true of irix6.4.
+	* ace/FILE.h (ACE_FILE_STREAM): Fixed this #define from
+ 	  ACE_FILE_Stream to ACE_FILE_IO.
 
 Fri May 30 02:39:39 1997    <irfan@TWOSTEP>
 
@@ -211,14 +28,6 @@ Fri May 30 02:39:39 1997    <irfan@TWOSTEP>
  	  Win32, the except mask must also be set for asynchronous
  	  connects.
 
-Thu May 29 21:28:25 1997    <harrison@samba.cs.wustl.edu>
-
-	* Process.*: Removed the ACE_Process_Old class.
-
-	* Local_Tokens_T.*: Removed all these files.  They have not been
-	  used by the token library for some time.  They were mistakenly
-	  put in the release.
-
 Thu May 29 02:00:14 1997    <irfan@TWOSTEP>
 
 	* ACE.cpp (is_process_active): Added this method which checks if a
@@ -226,7 +35,7 @@ Thu May 29 02:00:14 1997    <irfan@TWOSTEP>
 	  this code. 
 
 	* ace/OS.i (kill): Changed PROCESS_ALL_ACCESS to
- 	  PROCESS_TERMINATE.
+ 	  PROCESS_TERMINATE.	
 
 	* ace/ACE.cpp (bind_port): Changed the implementation of this
  	  method such that a recently used port is not used again in the
@@ -277,60 +86,6 @@ Thu May 29 02:00:14 1997    <irfan@TWOSTEP>
 	* tests/UPIPE_SAP_Test.cpp: Fixed output message.
 
 	* Handle_Set.i (operator): Fixed typo.
-
-Thu May 29 11:09:52 1997  David L. Levine  <levine@cs.wustl.edu>
-
-	* include/makeinclude/rules.local.GNU: check for directory
-	  write permission before attempting to install.  This helps
-	  support shared ACE workspaces.  There are two easy ways
-	  to not install "private" libraries in the shared workspace:
-	  1) remove write permission from $WRAPPER_ROOT/ace, or
-	  2) add "INSTALL=" to invocations of "make".
-
-Thu May 29 06:07:18 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
-
-	* ace/OS.i (thr_join): Revised some code in the #ifdef'd out
- 	  version of ACE_OS::thr_join() so that it will compile correctly.
-  	  Note that this code isn't currently used, but someday it will
- 	  be.  Thanks to Hamutal Yanay for reporting this.
-
-Wed May 28 16:37:57 1997  David L. Levine  <levine@cs.wustl.edu>
-
-	* ace/OS.{h,i} (ACE_Time_Value): added default constructor,
-	  which does not call normalize ().  ACE_Time_Value::normalize ()
-	  was showing up as a relatively minor, but signficant hot
-	  spot in Event Channel latency tests.
-
-Wed May 28 16:02:53 1997  James C Hu  <jxh@lambada.cs.wustl.edu>
-
-	* ace/OS.i: Changes to strdup and getpid for CHORUS, as per Wei
-	  Chiang's suggestions.
-
-Tue May 27 18:26:51 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
-
-	* ace/config-hpux-10.x-decthreads.h: Added support for HP/UX 10.10
- 	  with DCE threads.  Thanks to Shankar Krishnamoorthy
- 	  <kshankar@lucent.com> for these fixes.
-
-	* ace/Local_Tokens_T.h: #if def'd out all of this file since it
- 	  doesn't seem to be used anymore.  Thanks to Shankar
- 	  Krishnamoorthy <kshankar@lucent.com> for reporting this.
-
-	* ace/Makefile (TEMPLATE_FILES): Removed Local_Tokens_T since it
- 	  doesn't appear to be used anywhere.
-
-Tue May 27 18:47:34 1997  James C Hu  <jxh@lambada.cs.wustl.edu>
-
-	* tests/*.cpp: Various changes for EBCIDIC compatibility.
-	  Thanks to Chuck Gehr for pointing out the need for this!
-
-	* tests/test_config.h: Added ACE_ALPHABET to aid a-z sending and
-	  comparing.
-
-Tue May 27 15:03:25 1997  David L. Levine  <levine@cs.wustl.edu>
-
-	* tests/Future_Test.cpp: added ACE_Future{_Rep}<int> template
-	  specializations.
 
 Tue May 27 07:49:03 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
