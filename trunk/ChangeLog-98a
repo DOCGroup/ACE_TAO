@@ -1,4 +1,7 @@
-Mon Jan 12 13:03:07 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+Mon Jan 12 14:18:29 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tests/Reactor_Timer_Test.cpp (main): Changed long i to size_t i
+	  to be consistent.
 
 	* ace/Select_Reactor.h: Updated the explanation of how the
  	  ACE_Select_Reactor_Token works.  Thanks to Detlef Becker for
