@@ -1,3 +1,28 @@
+Wed Aug  1 13:15:10 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_visitor_operation/ami_exception_holder_operation_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/exceptlist_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/interceptors_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/interceptors_exceptlist.cpp:
+        * TAO_IDL/be/be_visitor_operation/interceptors_ss.cpp:
+        * tao/Stub.h:
+        * tao/Invocation.cpp:
+
+          Modified the struct TAO_Exception_Data to contain the repository id
+          instead of the type code, since the type code was used only to
+          furnish the repo id string. The twoway invoke() method and generated
+          code have been modified accordingly. Also, the interceptor method
+          exceptions() now creates a simple array of type codes instead of
+          an array of TAO_Exception_Data structs. If type codes are suppressed 
+          in generated code, the interceptor methods result() (which returns an
+          Any) and exception() (from which the spec requires a list of type
+          codes as the return value) will throw CORBA::NO_IMPLEMENT(). If only
+          Anys are suppressed in generated code, only result() will throw the
+          exception. Thanks to Russell Mora <rd.mora@econz.co.nz> for reporting
+          the clash of type code suppression and exceptions, and to Ossama Othman 
+          <othman@cs.wustl.edu> and Carlos O'Ryan <coryan@ece.uci.edu> for
+          their suggestions.
+
 Wed Aug  1 11:32:26 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Strategies/UIOP_Connection_Handler.cpp:Fixed a compile error
