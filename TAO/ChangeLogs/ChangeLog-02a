@@ -1,3 +1,10 @@
+Wed Jan 23 16:40:21 2002  Jaiganesh Balasubramanian  <jai@kelvar.ece.uci.edu>
+
+	* tao/ORB.cpp:
+	  Made changes to get the correct port value to search the NameService
+	  when the ORBDefaultInitRef option is used.
+	  The changes are made thanks to Andrew L. Shwaika<als@solvo.ru>
+	
 Wed Jan 23 14:16:35 2002  Carlos O'Ryan  <coryan@uci.edu>
 
 	* TAO_IDL/include/ast_argument.h:
