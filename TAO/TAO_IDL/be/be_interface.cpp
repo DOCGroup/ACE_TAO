@@ -990,7 +990,7 @@ be_interface::gen_operation_table (void)
                              "be_visitor_interface_ss",
                              "::",
                              "visit_interface-",
-                             "make_outstream failed"),
+                             "make_outstream failed\n"),
                             -1);
 
         // Store the outstream with the codegen singleton.
@@ -1003,7 +1003,7 @@ be_interface::gen_operation_table (void)
                              "be_visitor_interface_ss",
                              "::",
                              "visit_interface-",
-                             "gperf_input.tmp file open failed"),
+                             "gperf_input.tmp file open failed\n"),
                             -1);
 
         // Add the gperf input header.
@@ -1041,7 +1041,7 @@ be_interface::gen_operation_table (void)
                          "be_interface",
                          "::",
                          "gen_operation_table",
-                         "unknown op_lookup_strategy"),
+                         "unknown op_lookup_strategy\n"),
                         -1);
     }
   return 0;
@@ -1201,7 +1201,7 @@ be_interface::gen_optable_entries (be_interface *derived)
                          "be_interface",
                          "::",
                          "gen_optable_entries",
-                         "unknown op_lookup_strategy"),
+                         "unknown op_lookup_strategy\n"),
                         -1);
     }
   return 0;
