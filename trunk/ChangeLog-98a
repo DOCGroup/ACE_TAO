@@ -1,3 +1,11 @@
+Wed Dec 24 08:14:32 1997  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Log_Msg.cpp (instance): without threads, dynamically create
+          the ACE_Log_Msg instance instead of using a static.  Now, without
+          threads, the ACE library has no statics that require destruction
+          (at least on Solaris/g++ and Linux).  And, all of the ACE tests
+          Purify cleanly.
+
 Wed Dec 24 04:25:49 1997    <nw1@DINGO>
 
 	* ace/OS.i (sema_init): Added checking for initial semaphore
