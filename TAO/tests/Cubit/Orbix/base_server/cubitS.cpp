@@ -1,4 +1,6 @@
-#include "cubit.h"
+
+
+#include "cubit.hh"
 
 
 #define Cubit_dispatch_impl
@@ -37,7 +39,19 @@ Ro~cube_octet~+o{o},>{o},N{}\
             if (!IT_r.convertToReply ("\
 o\
 ", IT_env)) return 1;
-            IT_r.insertOctet (IT_result);
+            switch (IT_r.targetProtocol()) {
+                case CORBA::IT_INTEROPERABLE_OR_KIND:
+                {
+                    IT_r.insertOctet (IT_result);
+                    break;
+                }
+                case CORBA::IT_ORBIX_OR_KIND:
+                default:
+                {
+                    IT_r.insertOctet (IT_result);
+                    break;
+                }
+            }
             }
 
         else IT_r.makeSystemException (IT_env);
@@ -73,7 +87,19 @@ Ro~cube_short~+s{s},>{s},N{}\
             if (!IT_r.convertToReply ("\
 s\
 ", IT_env)) return 1;
-            IT_r << IT_result;
+            switch (IT_r.targetProtocol()) {
+                case CORBA::IT_INTEROPERABLE_OR_KIND:
+                {
+                    IT_r << IT_result;
+                    break;
+                }
+                case CORBA::IT_ORBIX_OR_KIND:
+                default:
+                {
+                    IT_r << IT_result;
+                    break;
+                }
+            }
             }
 
         else IT_r.makeSystemException (IT_env);
@@ -109,7 +135,19 @@ Ro~cube_long~+l{l},>{l},N{}\
             if (!IT_r.convertToReply ("\
 l\
 ", IT_env)) return 1;
-            IT_r << IT_result;
+            switch (IT_r.targetProtocol()) {
+                case CORBA::IT_INTEROPERABLE_OR_KIND:
+                {
+                    IT_r << IT_result;
+                    break;
+                }
+                case CORBA::IT_ORBIX_OR_KIND:
+                default:
+                {
+                    IT_r << IT_result;
+                    break;
+                }
+            }
             }
 
         else IT_r.makeSystemException (IT_env);
@@ -145,7 +183,19 @@ Ro~cube_struct~+values{R~Cubit::Many~o{o},l{l},s{s}},>{R~Cubit::Many~o{o},l{l},s
             if (!IT_r.convertToReply ("\
 R~Cubit::Many~o{o},l{l},s{s}\
 ", IT_env)) return 1;
-            IT_result.encodeOp (IT_r);
+            switch (IT_r.targetProtocol()) {
+                case CORBA::IT_INTEROPERABLE_OR_KIND:
+                {
+                    IT_result.encodeOp (IT_r);
+                    break;
+                }
+                case CORBA::IT_ORBIX_OR_KIND:
+                default:
+                {
+                    IT_result.encodeOp (IT_r);
+                    break;
+                }
+            }
             }
 
         else IT_r.makeSystemException (IT_env);
@@ -185,7 +235,19 @@ e_4th,e_5th}~Cubit::e_0th o{o};Cubit::e_1st s{s};Cubit::e_2nd l{l};Cubit::e_3rd,
             if (!IT_r.convertToReply ("\
 U~Cubit::oneof~{E~Cubit::discrim~e_0th,e_1st,e_2nd,e_3rd,e_4th,e_5th}~Cubit::e_0th o{o};Cubit::e_1st s{s};Cubit::e_2nd l{l};Cubit::e_3rd,$ cm{R~Cubit::Many~o{o},l{l},s{s}}\
 ", IT_env)) return 1;
-            IT_result.encodeOp (IT_r);
+            switch (IT_r.targetProtocol()) {
+                case CORBA::IT_INTEROPERABLE_OR_KIND:
+                {
+                    IT_result.encodeOp (IT_r);
+                    break;
+                }
+                case CORBA::IT_ORBIX_OR_KIND:
+                default:
+                {
+                    IT_result.encodeOp (IT_r);
+                    break;
+                }
+            }
             }
 
         else IT_r.makeSystemException (IT_env);

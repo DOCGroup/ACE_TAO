@@ -2,7 +2,7 @@
 #ifndef cubit_ih
 #define cubit_ih
 
-#include "cubit.h"
+#include "cubit.hh"
 
 
 #ifdef Cubit_USE_BOA
