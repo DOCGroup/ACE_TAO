@@ -302,15 +302,6 @@ Distributer::init (int argc,
     this->distributer_receiver_mmdevice_->_this (ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
 
-  /// Bind to receivers.
-  this->connection_manager_.bind_to_receivers (this->distributer_name_,
-                                               distributer_sender_mmdevice.in (),
-                                               ACE_TRY_ENV);
-  ACE_CHECK_RETURN (-1);
-
-  /// Connect to receivers
-  this->connection_manager_.connect_to_receivers (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (-1);
 
   /// Bind to sender.
   this->connection_manager_.bind_to_sender (this->sender_name_,
@@ -318,11 +309,21 @@ Distributer::init (int argc,
                                             distributer_receiver_mmdevice.in (),
                                             ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
-
+  
   /// Connect to sender.
   this->connection_manager_.connect_to_sender (ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
-
+  
+  /// Bind to receivers.
+  this->connection_manager_.bind_to_receivers (this->distributer_name_,
+                                               distributer_sender_mmdevice.in (),
+                                               ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+  
+  /// Connect to receivers
+  this->connection_manager_.connect_to_receivers (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+  
   return 0;
 }
 
