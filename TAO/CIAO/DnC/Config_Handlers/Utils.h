@@ -81,16 +81,8 @@ namespace CIAO {
       static CORBA::Octet parse_octet (DOMNodeIterator * iter);
       // Parse octect type
 
-      static DOMDocument* create_document (const char * url);
-      // Create a document from the URL
-
       static DOMBuilder* create_parser ();
       // Create a parser from the URL
-
-      static DOMNodeIterator * parse_href_tag (XMLURL xml_url,
-                                               DOMDocument * doc);
-      // Process the <href = "URL"> and return an iterator to the
-      // new document
     };
   }
 

@@ -108,64 +108,6 @@ CIAO::Config_Handler::Utils::parse_octet (DOMNodeIterator * iter)
   return Utils::parse_char (iter);
 }
 
-DOMDocument*
-CIAO::Config_Handler::Utils::create_document (const char * url)
-{
-  xercesc::XMLPlatformUtils::Initialize();
-  static const XMLCh gLS[] = { xercesc::chLatin_L,
-                               xercesc::chLatin_S,
-                               xercesc::chNull };
-
-  DOMImplementation* impl
-    = DOMImplementationRegistry::getDOMImplementation(gLS);
-  //auto_ptr<DOMImplementation> cleanup_impl (impl);
-
-  DOMBuilder* parser =
-    ((DOMImplementationLS*)impl)->
-    createDOMBuilder(DOMImplementationLS::MODE_SYNCHRONOUS, 0);
-  //auto_ptr<DOMBuilder> cleanup_parser (parser);
-
-  // Discard comment nodes in the document
-  parser->setFeature (XMLUni::fgDOMComments, false);
-
-  // Disable datatype normalization. The XML 1.0 attribute value
-  // normalization always occurs though.
-  parser->setFeature (XMLUni::fgDOMDatatypeNormalization, true);
-
-  // Do not create EntityReference nodes in the DOM tree. No
-  // EntityReference nodes will be created, only the nodes
-  // corresponding to their fully expanded sustitution text will be
-  // created.
-  parser->setFeature (XMLUni::fgDOMEntities, false);
-
-  // Perform Namespace processing.
-  parser->setFeature (XMLUni::fgDOMNamespaces, true);
-
-  // Perform Validation
-  parser->setFeature (XMLUni::fgDOMValidation, true);
-
-  // Do not include ignorable whitespace in the DOM tree.
-  parser->setFeature (XMLUni::fgDOMWhitespaceInElementContent, false);
-
-  // Enable the parser's schema support.
-  parser->setFeature (XMLUni::fgXercesSchema, true);
-
-  // Enable full schema constraint checking, including checking which
-  // may be time-consuming or memory intensive. Currently, particle
-  // unique attribution constraint checking and particle derivation
-  // restriction checking are controlled by this option.
-  parser->setFeature (XMLUni::fgXercesSchemaFullChecking, true);
-
-  // The parser will treat validation error as fatal and will exit.
-  parser->setFeature (XMLUni::fgXercesValidationErrorAsFatal, true);
-
-
-  DOMDocument* doc = parser->parseURI (url);
-  //auto_ptr<DOMDocument> cleanup_doc (doc);
-
-  return doc;
-}
-
 DOMBuilder*
 CIAO::Config_Handler::Utils::create_parser ()
 {
@@ -217,48 +159,5 @@ CIAO::Config_Handler::Utils::create_parser ()
   // The parser will treat validation error as fatal and will exit.
   parser->setFeature (XMLUni::fgXercesValidationErrorAsFatal, true);
 
-
-  //DOMDocument* doc = parser->parseURI (url);
-  //auto_ptr<DOMDocument> cleanup_doc (doc);
-
   return parser;
-}
-
-DOMNodeIterator *
-CIAO::Config_Handler::Utils::parse_href_tag (XMLURL url, DOMDocument * doc)
-{
-  char * document_path = 0;
-  if (url.isRelative ())
-  {
-    char * doc_path = XMLString::transcode (doc->getDocumentURI ());
-    XMLCh * temp = XMLString::transcode (doc_path);
-    url.makeRelativeTo (temp);
-    document_path = XMLString::transcode (url.getURLText ());
-
-    // Release allocated memory
-    XMLString::release (&doc_path);
-    XMLString::release (&temp);
-  }
-  else
-  {
-    document_path = XMLString::transcode (url.getURLText ());
-
-  }
-
-  DOMDocument* href_doc =
-    CIAO::Config_Handler::Utils::create_document (document_path);
-  //auto_ptr<DOMDocument> cleanup_doc (href_doc);
-
-  DOMDocumentTraversal* traverse (href_doc);
-  DOMNode* root = (href_doc->getDocumentElement ());
-  unsigned long filter = DOMNodeFilter::SHOW_ELEMENT |
-                         DOMNodeFilter::SHOW_TEXT;
-
-  // release allocated memory
-  XMLString::release (&document_path);
-
-  return traverse->createNodeIterator (root,
-                                       filter,
-                                       0,
-                                       true);
 }
