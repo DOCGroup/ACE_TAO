@@ -1,22 +1,25 @@
 // -*- C++ -*-
-//
-// $Id$
 
 #include "SSLIOP_Current.h"
 #include "tao/debug.h"
 
-ACE_RCSID (TAO_SSLIOP, SSLIOP_Current, "$Id$")
+
+ACE_RCSID (TAO_SSLIOP,
+           SSLIOP_Current,
+           "$Id$")
+
 
 #if !defined (__ACE_INLINE__)
 # include "SSLIOP_Current.inl"
 #endif /* __ACE_INLINE__ */
 
-TAO_SSLIOP_Current::TAO_SSLIOP_Current (const char *orb_id)
+
+int TAO_SSLIOP_Current::_tao_class_id = 0;
+
+
+TAO_SSLIOP_Current::TAO_SSLIOP_Current (TAO_ORB_Core *orb_core)
   : tss_slot_ (0),
-    orb_id_ (orb_id),
-    orb_core_ (0),
-    setup_done_ (0),
-    previous_current_impl_ (0)
+    orb_core_ (orb_core)
 {
 }
 
@@ -100,61 +103,288 @@ TAO_SSLIOP_Current::no_context (CORBA::Environment &)
 }
 
 void
-TAO_SSLIOP_Current::setup (TAO_SSLIOP_Current_Impl *impl)
+TAO_SSLIOP_Current::setup (TAO_SSLIOP_Current_Impl *&prev_impl,
+                           TAO_SSLIOP_Current_Impl *new_impl,
+                           CORBA::Boolean &setup_done)
 {
   // Set the current context and remember the old one.
 
-  this->previous_current_impl_ = this->implementation ();
+  prev_impl = this->implementation ();
 
-  (void) this->implementation (impl);  // Check for error?
+  (void) this->implementation (new_impl);  // Check for error?
 
   // Setup is complete.
-  this->setup_done_ = 1;
+  setup_done = 1;
 }
 
 void
-TAO_SSLIOP_Current::teardown (void)
+TAO_SSLIOP_Current::teardown (TAO_SSLIOP_Current_Impl *prev_impl,
+                              CORBA::Boolean &setup_done)
 {
-  if (this->setup_done_)
+  if (setup_done)
     {
       // Reset the old context.
-      (void) this->implementation (this->previous_current_impl_);
-      this->setup_done_ = 0;
+      (void) this->implementation (prev_impl);
+      setup_done = 0;
     }
 }
 
-int
-TAO_SSLIOP_Current::init (void)
+TAO_SSLIOP_Current_ptr
+TAO_SSLIOP_Current::_narrow (
+  CORBA::Object_ptr obj,
+  CORBA::Environment &ACE_TRY_ENV)
 {
-  int result = 0;
+  return TAO_SSLIOP_Current::_unchecked_narrow (obj, ACE_TRY_ENV);
+}
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
-    {
-      int argc = 0;
-      char **argv = 0;
-      CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                            argv,
-                                            this->orb_id_.in (),
-                                            ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+TAO_SSLIOP_Current_ptr
+TAO_SSLIOP_Current::_unchecked_narrow (
+  CORBA::Object_ptr obj,
+  CORBA::Environment &)
+{
+  if (CORBA::is_nil (obj))
+    return TAO_SSLIOP_Current::_nil ();
 
-      this->orb_core_ = orb.in ()->orb_core ();
+  return
+    ACE_reinterpret_cast
+      (
+         TAO_SSLIOP_Current_ptr,
+         obj->_tao_QueryInterface
+           (
+             ACE_reinterpret_cast
+             (
+                ptr_arith_t,
+                &TAO_SSLIOP_Current::_tao_class_id
+             )
+           )
+       );
+}
 
-      // No longer need the ORBid, so reclaim the memory it was
-      // occupying.
-      (void) this->orb_id_.out ();
-    }
-  ACE_CATCHANY
-    {
-      if (TAO_debug_level >= 1)
-        ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                             "Could not initialize SSLIOP::Current");
+TAO_SSLIOP_Current_ptr
+TAO_SSLIOP_Current::_duplicate (TAO_SSLIOP_Current_ptr obj)
+{
+  if (!CORBA::is_nil (obj))
+    obj->_add_ref ();
 
-      result = -1;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
+  return obj;
+}
 
-  return result;
+void *
+TAO_SSLIOP_Current::_tao_QueryInterface (ptr_arith_t type)
+{
+  void *retv = 0;
+  if (type == ACE_reinterpret_cast
+      (ptr_arith_t,
+       &TAO_SSLIOP_Current::_tao_class_id))
+    retv = ACE_reinterpret_cast (void*, this);
+  else if (type == ACE_reinterpret_cast
+           (ptr_arith_t,
+            &::SSLIOP::Current::_tao_class_id))
+    retv = ACE_reinterpret_cast
+      (
+       void *,
+       ACE_static_cast
+       (
+        SSLIOP::Current_ptr,
+        this
+        )
+       );
+  else if (type == ACE_reinterpret_cast
+           (ptr_arith_t,
+            &::CORBA::Current::_tao_class_id))
+    retv = ACE_reinterpret_cast
+      (
+       void *,
+       ACE_static_cast
+       (
+        CORBA::Current_ptr,
+        this
+        )
+       );
+  else if (type == ACE_reinterpret_cast (ptr_arith_t,
+                                         &CORBA::Object::_tao_class_id))
+    retv = ACE_reinterpret_cast (void *,
+                                 ACE_static_cast (CORBA::Object_ptr, this));
+
+  if (retv)
+    this->_add_ref ();
+
+  return retv;
+}
+
+const char *
+TAO_SSLIOP_Current::_interface_repository_id (void) const
+{
+  return "IDL:TAO_SSLIOP_Current:1.0";
+}
+
+// ----------------------------------------------------------------
+
+TAO_SSLIOP_Current_ptr
+tao_TAO_SSLIOP_Current_duplicate (
+    TAO_SSLIOP_Current_ptr p
+  )
+{
+  return TAO_SSLIOP_Current::_duplicate (p);
+}
+
+void
+tao_TAO_SSLIOP_Current_release (
+    TAO_SSLIOP_Current_ptr p
+  )
+{
+  CORBA::release (p);
+}
+
+TAO_SSLIOP_Current_ptr
+tao_TAO_SSLIOP_Current_nil (
+    void
+  )
+{
+  return TAO_SSLIOP_Current::_nil ();
+}
+
+TAO_SSLIOP_Current_ptr
+tao_TAO_SSLIOP_Current_narrow (
+    CORBA::Object *p,
+    CORBA::Environment &ACE_TRY_ENV
+  )
+{
+  return TAO_SSLIOP_Current::_narrow (p, ACE_TRY_ENV);
+}
+
+CORBA::Object *
+tao_TAO_SSLIOP_Current_upcast (
+    void *src
+  )
+{
+  TAO_SSLIOP_Current **tmp =
+    ACE_static_cast (TAO_SSLIOP_Current **, src);
+  return *tmp;
+}
+
+// *************************************************************
+// Operations for class TAO_SSLIOP_Current_var
+// *************************************************************
+
+TAO_SSLIOP_Current_var::TAO_SSLIOP_Current_var (void) // default constructor
+  : ptr_ (TAO_SSLIOP_Current::_nil ())
+{
+}
+
+::TAO_SSLIOP_Current_ptr
+TAO_SSLIOP_Current_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+TAO_SSLIOP_Current_var::TAO_SSLIOP_Current_var (
+  const ::TAO_SSLIOP_Current_var &p)
+  : TAO_Base_var (),
+    ptr_ (TAO_SSLIOP_Current::_duplicate (p.ptr ()))
+{
+}
+
+TAO_SSLIOP_Current_var::~TAO_SSLIOP_Current_var (void)
+{
+  CORBA::release (this->ptr_);
+}
+
+TAO_SSLIOP_Current_var &
+TAO_SSLIOP_Current_var::operator= (TAO_SSLIOP_Current_ptr p)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = p;
+  return *this;
+}
+
+TAO_SSLIOP_Current_var &
+TAO_SSLIOP_Current_var::operator= (const ::TAO_SSLIOP_Current_var &p)
+{
+  if (this != &p)
+  {
+    CORBA::release (this->ptr_);
+    this->ptr_ = ::TAO_SSLIOP_Current::_duplicate (p.ptr ());
+  }
+  return *this;
+}
+
+TAO_SSLIOP_Current_var::operator const ::TAO_SSLIOP_Current_ptr &() const
+{
+  return this->ptr_;
+}
+
+TAO_SSLIOP_Current_var::operator ::TAO_SSLIOP_Current_ptr &()
+{
+  return this->ptr_;
+}
+
+::TAO_SSLIOP_Current_ptr
+TAO_SSLIOP_Current_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+::TAO_SSLIOP_Current_ptr
+TAO_SSLIOP_Current_var::in (void) const
+{
+  return this->ptr_;
+}
+
+::TAO_SSLIOP_Current_ptr &
+TAO_SSLIOP_Current_var::inout (void)
+{
+  return this->ptr_;
+}
+
+::TAO_SSLIOP_Current_ptr &
+TAO_SSLIOP_Current_var::out (void)
+{
+  CORBA::release (this->ptr_);
+  this->ptr_ = ::TAO_SSLIOP_Current::_nil ();
+  return this->ptr_;
+}
+
+::TAO_SSLIOP_Current_ptr
+TAO_SSLIOP_Current_var::_retn (void)
+{
+  // yield ownership of managed obj reference
+  ::TAO_SSLIOP_Current_ptr val = this->ptr_;
+  this->ptr_ = ::TAO_SSLIOP_Current::_nil ();
+  return val;
+}
+
+::TAO_SSLIOP_Current_ptr
+TAO_SSLIOP_Current_var::tao_duplicate (TAO_SSLIOP_Current_ptr p)
+{
+  return ::TAO_SSLIOP_Current::_duplicate (p);
+}
+
+void
+TAO_SSLIOP_Current_var::tao_release (TAO_SSLIOP_Current_ptr p)
+{
+  CORBA::release (p);
+}
+
+::TAO_SSLIOP_Current_ptr
+TAO_SSLIOP_Current_var::tao_nil (void)
+{
+  return ::TAO_SSLIOP_Current::_nil ();
+}
+
+::TAO_SSLIOP_Current_ptr
+TAO_SSLIOP_Current_var::tao_narrow (
+    CORBA::Object *p,
+    CORBA::Environment &ACE_TRY_ENV
+  )
+{
+  return ::TAO_SSLIOP_Current::_narrow (p, ACE_TRY_ENV);
+}
+
+CORBA::Object *
+TAO_SSLIOP_Current_var::tao_upcast (void *src)
+{
+  TAO_SSLIOP_Current **tmp =
+    ACE_static_cast (TAO_SSLIOP_Current **, src);
+  return *tmp;
 }

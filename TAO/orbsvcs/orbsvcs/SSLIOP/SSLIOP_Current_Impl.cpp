@@ -15,11 +15,6 @@ ACE_RCSID (TAO_SSLIOP,
 #include <openssl/x509.h>
 
 
-TAO_SSLIOP_Current_Impl::TAO_SSLIOP_Current_Impl (void)
-  : ssl_ (0)
-{
-}
-
 TAO_SSLIOP_Current_Impl::~TAO_SSLIOP_Current_Impl (void)
 {
 }

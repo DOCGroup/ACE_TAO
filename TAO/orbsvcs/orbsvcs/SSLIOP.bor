@@ -31,6 +31,7 @@ OBJFILES = \
 	$(OBJDIR)\SSLIOP_ORBInitializer.obj \
 	$(OBJDIR)\SSLIOP_Profile.obj \
 	$(OBJDIR)\SSLIOP_Transport.obj \
+	$(OBJDIR)\SSLIOP_Util.obj \
         $(OBJDIR)\SSLIOPC.obj
 
 RESOURCE = $(OBJDIR)\orbsvcs.res

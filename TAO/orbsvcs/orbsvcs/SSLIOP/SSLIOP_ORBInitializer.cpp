@@ -32,17 +32,27 @@ TAO_SSLIOP_ORBInitializer::pre_init (
 {
   TAO_ENV_ARG_DEFN;
 
-  CORBA::String_var orb_id = info->orb_id (ACE_TRY_ENV);
+  TAO_ORBInitInfo_var tao_info =
+    TAO_ORBInitInfo::_narrow (info,
+                              ACE_TRY_ENV);
   ACE_CHECK;
+
+  if (CORBA::is_nil (tao_info.in ()))
+    ACE_THROW (CORBA::INV_OBJREF ());
+
+  // SSLIOP doesn't use the ORB Core until a request invocation occurs
+  // so there is no problem in retrieving the ORB Core pointer in this
+  // pre_init() method.
+  TAO_ORB_Core *orb_core = tao_info->orb_core ();
 
   // Create the SSLIOP::Current object.
   // Note that a new SSLIOP::Current object is created for each ORB.
-  // It wouldn't be very used to share security context information
+  // It wouldn't be very useful to share security context information
   // with another ORB that isn't configured with security, for
   // example.
   SSLIOP::Current_ptr current = SSLIOP::Current::_nil ();
   ACE_NEW_THROW_EX (current,
-                    TAO_SSLIOP_Current (orb_id.in ()),
+                    TAO_SSLIOP_Current (orb_core),
                     CORBA::NO_MEMORY (
                       CORBA_SystemException::_tao_minor_code (
                         TAO_DEFAULT_MINOR_CODE,
@@ -99,7 +109,7 @@ TAO_SSLIOP_ORBInitializer::post_init (
           tao_current->tss_slot (slot);
         }
       else
-        ACE_THROW (CORBA::INTERNAL ());                                 
+        ACE_THROW (CORBA::INTERNAL ());
     }
 
   // Create the SSLIOP secure invocation server request interceptor.

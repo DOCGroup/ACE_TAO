@@ -25,6 +25,9 @@
 #include "orbsvcs/SSLIOPC.h"
 #include "tao/IIOP_Connection_Handler.h"
 
+#include "SSLIOP_Current.h"
+
+class TAO_SSLIOP_Current_Impl;
 
 /**
  * @class TAO_IIOP_SSL_Connection_Handler
@@ -76,12 +79,12 @@ protected:
  * security support, this guard is used to ensure that
  * configuration/deconfiguration is exception safe.
  */
-class TAO_SSLIOP_Export TAO_Null_SSL_State_Guard
+class TAO_Null_SSL_State_Guard
 {
 public:
 
   /// Constructor that sets up the null TSS SSL state.
-  TAO_Null_SSL_State_Guard (TAO_ORB_Core *orb_core,
+  TAO_Null_SSL_State_Guard (TAO_SSLIOP_Current_ptr current,
                             int &result);
 
   /// Destructor that restores the previous TSS SSL state.
@@ -89,10 +92,28 @@ public:
 
 private:
 
+  /// The SSLIOP::Current implementation that was previously
+  /// associated with the current thread and invocation.
+  /**
+   * It is stored here until the invocation completes, after which it
+   * placed back into TSS.
+   */
+  TAO_SSLIOP_Current_Impl *previous_current_impl_;
+
   /// Reference to the SSLIOP::Current object.
-  SSLIOP::Current_var current_;
+  TAO_SSLIOP_Current_ptr current_;
+
+  /// Flag that specifies whether or not setup of the SSLIOP::Current
+  /// object completed for the current thread and invocation.
+  CORBA::Boolean setup_done_;
 
 };
+
+
+#if defined (__ACE_INLINE__)
+#include "IIOP_SSL_Connection_Handler.inl"
+#endif /* __ACE_INLINE__ */
+
 
 #include "ace/post.h"
 

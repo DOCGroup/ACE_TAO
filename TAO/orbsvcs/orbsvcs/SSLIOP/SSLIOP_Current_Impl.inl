@@ -2,6 +2,13 @@
 //
 // $Id$
 
+
+ACE_INLINE
+TAO_SSLIOP_Current_Impl::TAO_SSLIOP_Current_Impl (void)
+  : ssl_ (0)
+{
+}
+
 ACE_INLINE void
 TAO_SSLIOP_Current_Impl::ssl (SSL *s)
 {

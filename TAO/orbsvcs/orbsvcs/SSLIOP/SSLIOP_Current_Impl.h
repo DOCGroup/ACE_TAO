@@ -44,7 +44,6 @@ public:
   TAO_SSLIOP_Current_Impl (void);
 
   /// Destructor
-  /// Protected to force allocation on the heap.
   ~TAO_SSLIOP_Current_Impl (void);
 
   /// SSLIOP-specific version of the
