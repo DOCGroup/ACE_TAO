@@ -1,6 +1,13 @@
+Fri Sep 24 17:20:41 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/config-kcc-common.h: KCC does support auto_ptr<T>::reset
+	  after 3.4.  Made sure we don't define ACE_AUTO_PTR_LACKS_RESET
+	  for newer version of KCC.  Thanks to Ossama for reporting the
+	  problem.
+
 Fri Sep 24 08:59:13 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* examples/Connection/blocking/SPIPE-{acceptor,connector}.cpp: 
+	* examples/Connection/blocking/SPIPE-{acceptor,connector}.cpp:
 	  Reformatted some of the code.
 
 Fri Sep 24 08:27:28 1999  David L. Levine  <levine@cs.wustl.edu>
