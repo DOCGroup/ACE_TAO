@@ -38,9 +38,6 @@
 #include "ace/ARGV.h"
 #include "ace/Sched_Params.h"
 
-// TAO includes.
-#include "tao/PortableServer/ORB_Manager.h"
-
 // MT Cubit application includes.
 #include "cubit_i.h"
 #include "Task_Client.h"

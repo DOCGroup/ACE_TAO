@@ -4,7 +4,6 @@
 
 #include "StubFaultConsumer.h"
 #include "ace/Get_Opt.h"
-#include "tao/PortableServer/ORB_Manager.h"
 #include "orbsvcs/PortableGroup/PG_Properties_Encoder.h"
 
 StubFaultConsumer::StubFaultConsumer ()

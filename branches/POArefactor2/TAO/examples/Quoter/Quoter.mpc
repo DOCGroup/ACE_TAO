@@ -30,7 +30,7 @@ project(*Factory Finder): namingexe, lifecycle, minimum_corba, utils {
   }
 }
 
-project(*Generic Factory): namingexe, lifecycle, minimum_corba {
+project(*Generic Factory): namingexe, lifecycle, minimum_corba, utils {
   idlflags += -I../../orbsvcs/orbsvcs
   includes += ../../orbsvcs/orbsvcs
   Source_Files {

@@ -15,7 +15,6 @@
 
 #include "FT_TestReplica_i.h"
 #include "FT_ReplicaFactory_i.h"
-#include "tao/PortableServer/ORB_Manager.h"
 #include "tao/ORB_Constants.h"
 #include "FT_TestReplicaC.h"
 // FUZZ: disable check_for_streams_include

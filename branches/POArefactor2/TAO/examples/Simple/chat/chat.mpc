@@ -13,7 +13,7 @@ project(*server) : taoexe, utils, portableserver, iortable {
   }
 }
 
-project(*client): taoexe, portableserver {
+project(*client): taoexe, portableserver, utils {
   IDL_Files {
     Receiver.idl
     Broadcaster.idl

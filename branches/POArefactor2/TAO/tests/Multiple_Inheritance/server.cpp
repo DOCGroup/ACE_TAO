@@ -2,7 +2,7 @@
 
 #include "ace/Get_Opt.h"
 #include "Multiple_Inheritance_i.h"
-#include "tao/PortableServer/ORB_Manager.h"
+#include "tao/Utils/ORB_Manager.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 
