@@ -1903,15 +1903,12 @@ sub check_features {
 sub need_to_write_project {
   my($self) = shift;
 
-  if ($self->check_features($self->get_assignment('requires'),
-                            $self->get_assignment('avoids'))) {
-    foreach my $key ('source_files', keys %{$self->{'generated_exts'}}) {
-      my($names) = $self->{$key};
-      foreach my $name (keys %$names) {
-        foreach my $key (keys %{$names->{$name}}) {
-          if (defined $names->{$name}->{$key}->[0]) {
-            return 1;
-          }
+  foreach my $key ('source_files', keys %{$self->{'generated_exts'}}) {
+    my($names) = $self->{$key};
+    foreach my $name (keys %$names) {
+      foreach my $key (keys %{$names->{$name}}) {
+        if (defined $names->{$name}->{$key}->[0]) {
+          return 1;
         }
       }
     }
@@ -2015,19 +2012,30 @@ sub write_project {
     &$progress();
   }
 
-  if ($self->need_to_write_project()) {
-    ## Writing the non-static file so set it to 0
-    if ($self->get_dynamic()) {
-      $self->{'writing_type'} = 0;
-      ($status, $error) = $self->write_output_file($name);
+  if ($self->check_features($self->get_assignment('requires'),
+                            $self->get_assignment('avoids'))) {
+    if ($self->need_to_write_project()) {
+      ## Writing the non-static file so set it to 0
+      if ($self->get_dynamic()) {
+        $self->{'writing_type'} = 0;
+        ($status, $error) = $self->write_output_file($name);
+      }
+
+      if ($status &&
+          $self->get_static() && $self->separate_static_project()) {
+        $name = $self->transform_file_name(
+                          $self->static_project_file_name());
+
+        ## Writing the static file so set it to 1
+        $self->{'writing_type'} = 1;
+        ($status, $error) = $self->write_output_file($name);
+      }
     }
-
-    if ($status && $self->get_static() && $self->separate_static_project()) {
-      $name = $self->transform_file_name($self->static_project_file_name());
-
-      ## Writing the static file so set it to 1
-      $self->{'writing_type'} = 1;
-      ($status, $error) = $self->write_output_file($name);
+  }
+  else {
+    if (defined $ENV{MPC_VERBOSE_FEATURES}) {
+      print "WARNING: Skipping the " . $self->get_assignment('project_name') .
+            " project due to the current features\n";
     }
   }
 
