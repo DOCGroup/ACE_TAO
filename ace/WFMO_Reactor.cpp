@@ -1322,7 +1322,7 @@ ACE_WFMO_Reactor::dispatch_handles (size_t wait_status)
 {
   // dispatch_index is the absolute index.  Only += is used to
   // increment it.
-  int dispatch_index = 0;
+  size_t dispatch_index = 0;
 
   // Cache this value, this is the absolute value.
   size_t max_handlep1 = this->handler_rep_.max_handlep1 ();
