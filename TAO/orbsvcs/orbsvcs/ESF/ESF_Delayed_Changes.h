@@ -21,6 +21,8 @@
 #include "ESF_Busy_Lock.h"
 #include "ace/Containers.h"
 
+class ACE_Command_Base;
+
 template<class Target,class Object> class TAO_ESF_Connected_Command;
 template<class Target,class Object> class TAO_ESF_Disconnected_Command;
 template<class Target,class Object> class TAO_ESF_Reconnected_Command;
