@@ -31,6 +31,9 @@ Sat Jun 15 20:30:41 2002  Steve Huston  <shuston@riverace.com>
           value now (0 == success).  Simplifies the code, and makes the
           result.success() call return 1 iff the operation succeeded.
 
+        Thanks very much to Alex Libman for these ideas and for working
+        to improve these classes for ACE and C++NPv2!
+
 Sat Jun 15 12:01:38 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/Obstack_T.cpp (request): Don't lose an initial set of characters
