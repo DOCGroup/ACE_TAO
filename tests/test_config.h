@@ -89,6 +89,8 @@ const size_t ACE_MAX_THREADS = 4;
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Ending %s test at %D\n"), program)); \
   ace_file_stream::instance()->close ()
 
+#define ACE_CLOSE_TEST_LOG ace_file_stream::instance()->close ()
+
 #if !defined (ACE_WIN32)
 #define ACE_APPEND_LOG(NAME) \
   const ACE_TCHAR *program = NAME; \
