@@ -25,5 +25,15 @@ main (int argc, char *argv[])
 
 
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+template class ACE_Connector<PEER_HANDLER, ACE_SOCK_CONNECTOR>;
+template class ACE_Guard<ACE_RW_Mutex>;
+template class ACE_Map_Iterator<int, ACE_Svc_Tuple<PEER_HANDLER> *, ACE_RW_Mutex>;
+template class ACE_Map_Manager<int, ACE_Svc_Tuple<PEER_HANDLER> *, ACE_RW_Mutex>;
+template class ACE_Read_Guard<ACE_RW_Mutex>;
+template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_SYNCH>;
+template class ACE_Svc_Tuple<PEER_HANDLER>;
+template class ACE_Write_Guard<ACE_RW_Mutex>;
+template class ACE_TSS<ACE_Dynamic>;
 template class IPC_Client<PEER_HANDLER, ACE_SOCK_CONNECTOR>;
+template class Peer_Handler<ACE_SOCK_STREAM>;
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
