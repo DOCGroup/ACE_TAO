@@ -1,3 +1,10 @@
+Thu Jul  5 21:16:00 2001  Craig Rodrigues <crodrigu@bbn.com>
+
+         * orbsvcs/orbsvcs/AV/AV_Core.h
+
+           Added some Borland compiler pragma options to prevent
+           singleton problems when AV_Core is in a DLL. 
+
 Thu Jul  5 20:41:00 2001  Craig Rodrigues <crodrigu@bbn.com>
 
          * tao/CONV_FRAMEC.h
