@@ -1,3 +1,15 @@
+Sat May 13 12:19:10 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/Policies/Makefile:
+          The test does not compile unless corba_messaging is enabled.
+
+        * tao/SHMIOP_Connect.cpp:
+          I did not use the timeout value.  This is part of the changes to
+          make it look like the other protocols.
+
+        * orbsvcs/tests/Event/Basic/Observer.cpp:
+          Removed unused variable.
+
 Fri May 12 20:35:25 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 	* examples/Buffered_Oneways/client.cpp:
