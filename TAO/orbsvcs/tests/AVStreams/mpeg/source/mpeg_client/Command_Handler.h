@@ -107,6 +107,11 @@ public:
 private:
   ACE_SOCK_CODgram dgram_;
   // UDP datagram on which to send/recv data
+  
+  ACE_SOCK_Stream stream_;
+  // TCP stream socket
+
+  ACE_SOCK_Connector connector_;
 
   ACE_HANDLE command_handle_;
   // The fd for the UNIX command socket

@@ -16,6 +16,11 @@ class Video_Control_i
 {
 public:
   Video_Control_i ();
+  // constructor
+
+  int create_handlers (void);
+  // creates the data and signal handlers
+
   virtual CORBA::Boolean init_video (const Video_Control::INITvideoPara &para,
                                      Video_Control::INITvideoReply_out reply,
                                      CORBA::Environment &_tao_environment);
@@ -87,6 +92,6 @@ protected:
 
 // Video_Control_i instance singleton.
 // %%
-typedef ACE_Singleton <Video_Control_i, ACE_NULL_SYNCH> VIDEO_CONTROL_I;
+typedef ACE_Singleton <Video_Control_i, ACE_Null_Mutex> VIDEO_CONTROL_I;
 
 #endif /* if !defined (AV_VIDEO_CONTROL_H) */

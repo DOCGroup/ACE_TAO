@@ -3,29 +3,9 @@
 #include "server.h"
 #include "ace/Process.h"
 
-// Creates a svc handler by passing "this", i.e.  a reference to the
-// acceptor that created it this is needed by the svc_handler to
-// remove the acceptor handle from the reactor called by the acceptor
-// to create a new svc_handler to handle the new connection.
-
-int
-AV_Acceptor::make_svc_handler (AV_Svc_Handler *&sh)
-{
-  ACE_NEW_RETURN (sh,
-                  //                AV_Svc_Handler (ACE_Reactor::instance (),
-                  AV_Svc_Handler (TAO_ORB_Core_instance ()->reactor (),
-                                  this),
-                  -1);
-  return 0;
-}
-
 // Initialize the svc_handler, and the acceptor. 
 
-AV_Svc_Handler::AV_Svc_Handler (ACE_Reactor *reactor,
-                                AV_Acceptor *acceptor)
-  : ACE_Svc_Handler <ACE_SOCK_STREAM, 
-                     ACE_NULL_SYNCH> (0, 0, reactor),
-    acceptor_ (acceptor)
+AV_Svc_Handler::AV_Svc_Handler (ACE_Thread_Manager *t)
 {
 }
 
@@ -41,6 +21,7 @@ AV_Svc_Handler::open (void *)
   ACE_DEBUG ((LM_DEBUG, 
               "(%P|%t) AV_Svc_Handler::open called\n"));
   return this->svc ();
+  //  return 0;
 }
 
 // this will handle the connection
@@ -66,10 +47,10 @@ AV_Svc_Handler::handle_connection (ACE_HANDLE)
   if (this->peer ().recv_n (&cmd,
                             1) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "%P|%t, Command recieve failed: %p"),
+                       "(%P|%t) Command recieve failed: %p\n"),
                       -1);
   ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) Command recieved is %d",
+              "(%P|%t) Command recieved is %d\n",
               cmd));
   // Change these CMD's to enums and put them in a "appropriate" namespace
   switch (cmd)
@@ -88,21 +69,28 @@ AV_Svc_Handler::handle_connection (ACE_HANDLE)
         */
 
         ACE_Process_Options video_process_options;
-        video_process_options.command_line ("./vs -ORBport 0");
+        video_process_options.command_line ("./vs -ORBport 8522");
 
         // Create the semaphore
-        ACE_SV_Semaphore_Simple semaphore (4242,
-                                           ACE_SV_Semaphore_Simple::ACE_CREATE,
-                                           0);
- 
+        //        ACE_Process_Semaphore semaphore (0,
+        //                                         "Video_Server_Semaphore");
         
         ACE_Process video_process;
-        video_process.spawn (video_process_options);
+        if (video_process.spawn (video_process_options) == -1)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%P|%t) ACE_Process:: spawn failed: %p\n",
+                             "spawn"),
+                            -1);
         // %% need to close down the orb fd's
         // in the child process!!
 
         // %% wait until the child finishes booting
-        semaphore.acquire ();
+        //         if (semaphore.acquire () == -1)
+        //           ACE_ERROR_RETURN ((LM_ERROR,
+        //                              "(%P|%t) semaphore acquire failed: %p\n",
+        //                              "acquire"),
+        //                             -1);
+        ::sleep (5);
         // Wait until a ACE_SV_Semaphore's value is greater than 0, the
         // decrement it by 1 and return. Dijkstra's P operation, Tannenbaums
         // DOWN operation.
@@ -178,18 +166,19 @@ AV_Server_Sig_Handler::register_handler (void)
   // keep the ACE_Reactor from calling us back on the "/dev/null"
   // descriptor.
 
-  if (TAO_ORB_Core_instance ()->reactor ()->register_handler
-      (this, ACE_Event_Handler::NULL_MASK) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, 
-                       "%p\n", 
-                       "register_handler"),
-                      -1);
+   if (TAO_ORB_Core_instance ()->reactor ()->register_handler
+       (this, ACE_Event_Handler::NULL_MASK) == -1)
+     ACE_ERROR_RETURN ((LM_ERROR, 
+                        "%p\n", 
+                        "register_handler"),
+                       -1);
 
   // handles these signals.
-  this->sig_set.sig_add (SIGCHLD);  
-  this->sig_set.sig_add (SIGBUS);
-  this->sig_set.sig_add (SIGINT);
-  this->sig_set.sig_add (SIGTERM);
+   //   this->sig_set.fill_set ();
+   this->sig_set.sig_add (SIGCHLD);  
+   this->sig_set.sig_add (SIGBUS); 
+   this->sig_set.sig_add (SIGINT); 
+   this->sig_set.sig_add (SIGTERM);
 
   // Register the signal handler object to catch the signals.  if
   if (TAO_ORB_Core_instance ()->reactor ()->register_handler 
@@ -235,7 +224,7 @@ AV_Server_Sig_Handler::shutdown (ACE_HANDLE, ACE_Reactor_Mask)
 int
 AV_Server_Sig_Handler::handle_signal (int signum, siginfo_t *, ucontext_t *)
 {
-  //  ACE_DEBUG ((LM_DEBUG, "(%t) received signal %S\n", signum));
+  ACE_DEBUG ((LM_DEBUG, "(%t) received signal %S\n", signum));
 
   switch (signum)
     {
@@ -415,8 +404,8 @@ AV_Server::init (int argc,
   PortableServer::POA_var child_poa = 
     this->orb_manager_.child_poa ();
   // Initialize the Naming Server
-  this->naming_server_.init (orb,
-                             child_poa);
+  //   this->naming_server_.init (orb,       
+  //                              child_poa);
 
   result = this->parse_args (argc, argv);
   if (result < 0)
@@ -446,6 +435,9 @@ AV_Server::run (CORBA::Environment& env)
   // "listen" on the socket
   if (this->acceptor_.open (this->server_control_addr_,
                             TAO_ORB_Core_instance ()->reactor ()) == -1)
+                            //                            0,
+                            //                            0
+                            //                            &this->thread_strategy_) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), -1);
 
   ACE_DEBUG ((LM_DEBUG,
@@ -469,13 +461,15 @@ AV_Server::~AV_Server (void)
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) AV_Server: Removing handlers from the Reactor\n"));
   
-  TAO_ORB_Core_instance ()->reactor ()->remove_handler 
-    (this->acceptor_.get_handle (),
-     ACE_Event_Handler::ACCEPT_MASK);
+  if (TAO_ORB_Core_instance ()->reactor ()->remove_handler 
+      (this->acceptor_.get_handle (),
+       ACE_Event_Handler::ACCEPT_MASK) == -1)
+    ACE_ERROR ((LM_ERROR,
+                "(%P|%t) remove_handler for acceptor failed\n"));
 
-  TAO_ORB_Core_instance ()->reactor ()->remove_handler
-    (&this->signal_handler_,
-     ACE_Event_Handler::NULL_MASK);
+  //  TAO_ORB_Core_instance ()->reactor ()->remove_handler
+  //    (&this->signal_handler_,
+  //     ACE_Event_Handler::NULL_MASK);
 }
 
 int
