@@ -1,3 +1,10 @@
+Mon Mar 31 11:52:26 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/IOP_Codec.pidl: Fixed some comments
+	* tao/IOP_CodecC.{h,cpp,i}: Regenerated the files since the one
+	  merged form the branch was apparently created from the IDL
+	  compiler when its internal state was busted.
+
 Mon Mar 31 10:01:13 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils_T.cpp (set_is_multiple):

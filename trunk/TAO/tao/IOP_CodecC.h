@@ -32,7 +32,8 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-#include "TAO_Export.h"
+
+#include "tao/TAO_Export.h"
 #include "tao/Any_T.h"
 
 #if defined (TAO_EXPORT_MACRO)
