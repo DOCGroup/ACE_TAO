@@ -1,3 +1,18 @@
+Fri Dec 10 15:20:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Profile.cpp:
+        * tao/PortableServer/ServantRetentionStrategy.{h.cpp}:
+        * tao/PortableServer/RequestProcessingStrategy.h:
+        * tao/PortableServer/RequestProcessingStrategyAOMOnly.{h,cpp}:
+        * tao/PortableServer/Root_POA.h:
+        * tao/PortableServer/PortableServer.cpp:
+        * tao/PortableServer/ThreadStrategy*.{h,cpp}:
+        * tao/PortableServer/Adapter_Activator.h:
+        * tao/PortableServer/ImplRepo_i.{h,cpp}:
+        * tao/Environment.h:
+        * tao/TypeCodeFactory_Adapter.h:
+          Fixed compile problems for emulated exceptions and minimum corba.
+
 Fri Dec 10 13:27:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Root_POA.{h,cpp}:
