@@ -205,6 +205,7 @@ extern "C" { char * cuserid (char *s); }
 #undef ACE_LACKS_UCONTEXT_H
 #define ACE_HAS_UCONTEXT_T
 #define ACE_HAS_SOCKLEN_T
+#define ACE_HAS_GETIFADDRS
 #endif
 
 #include <unistd.h>
@@ -213,7 +214,7 @@ extern "C" { char * cuserid (char *s); }
    When they are implemented, then _POSIX_REALTIME_SIGNALS will be
    defined, as specified in the POSIX standard.
    Refer to e-mail thread on freebsd-hackers mailing list, October 2002. */
-#if defined (_POSIX_REALTIME_SIGNALS) && (_POSIX_REALTIME_SIGNALS > 0)
+#if defined (_POSIX_REALTIME_SIGNALS) && (_POSIX_REALTIME_SIGNALS != -1)
 #    define ACE_HAS_AIO_CALLS
 #    ifndef SIGRTMIN
 #       define SIGRTMIN 32
