@@ -153,6 +153,10 @@ TAO_Thread_Lane::TAO_Thread_Lane (TAO_Thread_Pool &pool,
 void
 TAO_Thread_Lane::validate_and_map_priority (ACE_ENV_SINGLE_ARG_DECL)
 {
+  // Make sure that <static_threads_> is not zero.
+  if (this->static_threads_ == 0)
+    ACE_THROW (CORBA::BAD_PARAM ());
+
   // Check that the priority is in bounds.
   if (this->lane_priority_ < RTCORBA::minPriority ||
       this->lane_priority_ > RTCORBA::maxPriority)

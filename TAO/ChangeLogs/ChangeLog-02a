@@ -1,3 +1,11 @@
+Mon Mar 25 15:07:24 2002  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/RTCORBA/Thread_Pool.cpp (validate_and_map_priority): We
+	  don't support thread lanes without any static threads - user
+	  must have at least one static thread in each lane.  Added a
+	  check for this inside the lane creation code.  Thanks to Michele
+	  Amoretti <amoretti@CE.UniPR.IT> for pointing this out.
+
 Mon Mar 25 09:56:00 2002  Si Mong Park  <spark@ociweb.com>
 
         * TAO/orbsvcs/Event_Service/Event_Service.cpp:
