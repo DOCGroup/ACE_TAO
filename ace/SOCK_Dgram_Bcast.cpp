@@ -113,7 +113,8 @@ ACE_SOCK_Dgram_Bcast::mk_broadcast (const char *host_name)
   ifc.ifc_len = sizeof buf;
   ifc.ifc_buf = buf;
 
-  // Get interface structure and initialize the addresses using UNIX techniques.
+  // Get interface structure and initialize the addresses using UNIX
+  // techniques.
   if (ACE_OS::ioctl (s, SIOCGIFCONF, (char *) &ifc) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", 
 		      "ACE_SOCK_Dgram_Bcast::mk_broadcast: ioctl (get interface configuration)"),
