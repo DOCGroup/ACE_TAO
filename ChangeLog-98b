@@ -2,6 +2,9 @@ Tue Sep 01 20:59:11 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.i (ts_object): commented test appearing after the #endif.
 
+        * etc/ACE-guidelines.html: added section on scripts.  Added rule
+          to prefix constants and enum values with ACE_ or TAO_.
+
 Tue Sep  1 19:05:05 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * tests/XtReactor_Test.cpp: Added a new version that should work
