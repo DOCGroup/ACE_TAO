@@ -2,13 +2,27 @@
 
 // $Id$
 
-// IDL for Control and Management of Audio/Video Streams
-// Revised Submission
+// ============================================================================
+//
+// = LIBRARY
+//    cos
+// 
+// = FILENAME
+//   AVStreams.idl
+//
+// = AUTHOR
+//    OMG
+//    
+// 
+// ============================================================================
 
 #include "CosPropertyService.idl"
 
 module AVStreams
 {
+// = DESCRIPTION
+//  IDL for Control and Management of Audio/Video Streams
+//  Revised Submission
   struct QoS
   {
     string QoSType;
@@ -20,9 +34,9 @@ module AVStreams
   typedef sequence<QoS> streamQoS;
   
   typedef sequence<string> flowSpec;
-
+  
   typedef sequence<string> protocolSpec;
-
+  
   // @@ sequence<octet> is broken for tao_idl ?
   typedef string key;
   // typedef sequence<octet> key;
@@ -60,19 +74,24 @@ module AVStreams
   typedef string streamEvent;
 
   exception notSupported {};
+
   exception PropertyException {};
+
   // An flow protocol related error
   exception FPError { string flow_name; };
-
+  
   exception streamOpFailed
   {
     string reason;
   };
+
   exception streamOpDenied
   {
     string reason;
   };
+
   exception noSuchFlow {};
+
   exception QoSRequestFailed
   {
     string reason;
@@ -89,7 +108,8 @@ module AVStreams
     
     boolean modify_QoS (inout streamQoS new_qos,
                        in flowSpec the_spec)
-      raises (noSuchFlow, QoSRequestFailed);
+      raises (noSuchFlow, 
+              QoSRequestFailed);
 
     // Called by StreamEndPoint when something goes wrong
     // with a flow
@@ -100,14 +120,17 @@ module AVStreams
                       // specified
                       in any fp_settings)		// Currently SFP accepts 
       // SFPStatus structure
-      raises (noSuchFlow, FPError);
+      raises (noSuchFlow, 
+              FPError);
     
     Object get_flow_connection (in string flow_name) 
-      raises (noSuchFlow, notSupported);
+      raises (noSuchFlow, 
+              notSupported);
     
     void set_flow_connection (in string flow_name,
                              in Object flow_connection)
-      raises (noSuchFlow, notSupported);
+      raises (noSuchFlow, 
+              notSupported);
   };
 
   interface Negotiator
@@ -125,22 +148,26 @@ module AVStreams
   interface StreamCtrl : Basic_StreamCtrl 
   {
     
-    boolean bind_devs(in MMDevice a_party, in MMDevice b_party,
-                      inout streamQoS the_qos,
-                      in flowSpec the_flows)
-      raises (streamOpFailed, noSuchFlow, QoSRequestFailed);
+    boolean bind_devs (in MMDevice a_party, in MMDevice b_party,
+                       inout streamQoS the_qos,
+                       in flowSpec the_flows)
+      raises (streamOpFailed, 
+              noSuchFlow, 
+              QoSRequestFailed);
     
-    boolean bind(in StreamEndPoint_A a_party,
-                 in StreamEndPoint_B b_party,
-                 inout streamQoS the_qos,
-                 in flowSpec the_flows)
-      raises (streamOpFailed, noSuchFlow, QoSRequestFailed);
+    boolean bind (in StreamEndPoint_A a_party,
+                  in StreamEndPoint_B b_party,
+                  inout streamQoS the_qos,
+                  in flowSpec the_flows)
+      raises (streamOpFailed, 
+              noSuchFlow, 
+              QoSRequestFailed);
     
-    void unbind_party(in StreamEndPoint the_ep,
-                      in flowSpec the_spec)
+    void unbind_party (in StreamEndPoint the_ep,
+                       in flowSpec the_spec)
       raises (streamOpFailed, noSuchFlow);
     
-    void unbind()
+    void unbind ()
       raises (streamOpFailed);
   };
   
@@ -148,24 +175,26 @@ module AVStreams
   //  interface MCastConfigIf : CosPropertyService::PropertySet{
   interface MCastConfigIf 
   {
-    boolean set_peer(in Object peer,
-                     inout streamQoS the_qos,
-                     in flowSpec the_spec)
-      raises (QoSRequestFailed, streamOpFailed);
+    boolean set_peer (in Object peer,
+                      inout streamQoS the_qos,
+                      in flowSpec the_spec)
+      raises (QoSRequestFailed, 
+              streamOpFailed);
     
-    void configure(in CosPropertyService::Property a_configuration);
+    void configure (in CosPropertyService::Property a_configuration);
 
-    void set_initial_configuration(in CosPropertyService::Properties initial);
+    void set_initial_configuration (in CosPropertyService::Properties initial);
 
     // Uses <format_name> standardised by OMG and IETF
-    void set_format(in string flowName, in string format_name)
+    void set_format (in string flowName, 
+                     in string format_name)
       raises (notSupported);
 
     // Note, some of these device params are standardised by OMG
-    void set_dev_params(in string flowName,
-                        in CosPropertyService::Properties new_params)
-      raises(CosPropertyService::PropertyException,
-             streamOpFailed);
+    void set_dev_params (in string flowName,
+                         in CosPropertyService::Properties new_params)
+      raises (CosPropertyService::PropertyException,
+              streamOpFailed);
 
   };
 
@@ -173,74 +202,86 @@ module AVStreams
   //  interface StreamEndPoint : CosPropertyService::PropertySet{
   interface StreamEndPoint 
   {
-    void stop(in flowSpec the_spec) raises (noSuchFlow);
-    void start(in flowSpec the_spec) raises (noSuchFlow);
-    void destroy(in flowSpec the_spec) raises (noSuchFlow);
+    void stop (in flowSpec the_spec) 
+      raises (noSuchFlow);
+    void start (in flowSpec the_spec) 
+      raises (noSuchFlow);
+    void destroy (in flowSpec the_spec) 
+      raises (noSuchFlow);
     
-    boolean connect(in StreamEndPoint responder,
-                    inout streamQoS qos_spec,
-                    in flowSpec the_spec)
-      raises (noSuchFlow, QoSRequestFailed, streamOpFailed);
+    boolean connect (in StreamEndPoint responder,
+                     inout streamQoS qos_spec,
+                     in flowSpec the_spec)
+      raises (noSuchFlow, 
+              QoSRequestFailed, 
+              streamOpFailed);
 
-    boolean request_connection(in StreamEndPoint initiator,
-                               in boolean is_mcast,
-                               inout streamQoS qos,
-                               inout flowSpec the_spec)
+    boolean request_connection (in StreamEndPoint initiator,
+                                in boolean is_mcast,
+                                inout streamQoS qos,
+                                inout flowSpec the_spec)
       raises (streamOpDenied, noSuchFlow,
               QoSRequestFailed, FPError);
 
-    boolean modify_QoS(inout streamQoS new_qos,
-                       in flowSpec the_flows)
-      raises (noSuchFlow, QoSRequestFailed);
+    boolean modify_QoS (inout streamQoS new_qos,
+                        in flowSpec the_flows)
+      raises (noSuchFlow, 
+              QoSRequestFailed);
 
-    boolean set_protocol_restriction(in protocolSpec the_pspec);
+    boolean set_protocol_restriction (in protocolSpec the_pspec);
 
     void disconnect(in flowSpec the_spec)
-      raises (noSuchFlow, streamOpFailed);
+      raises (noSuchFlow, 
+              streamOpFailed);
 
-    void set_FPStatus(in flowSpec the_spec,
+    void set_FPStatus (in flowSpec the_spec,
                       in string fp_name,
                       in any fp_settings)
-      raises (noSuchFlow, FPError);
+      raises (noSuchFlow, 
+              FPError);
 
-    Object get_fep(in string flow_name)
-      raises (notSupported, noSuchFlow);
+    Object get_fep (in string flow_name)
+      raises (notSupported, 
+              noSuchFlow);
 
-    string add_fep(in Object the_fep)
+    string add_fep (in Object the_fep)
       // Can fail for reasons {duplicateFepName, duplicateRef}
-      raises (notSupported, streamOpFailed);
+      raises (notSupported, 
+              streamOpFailed);
 
-    void remove_fep(in string fep_name)
-      raises (notSupported, streamOpFailed);
+    void remove_fep (in string fep_name)
+      raises (notSupported, 
+              streamOpFailed);
 
-    void set_negotiator(in Negotiator new_negotiator);
-    void set_key(in string flow_name, in key the_key);
-    void set_source_id(in long source_id);
+    void set_negotiator (in Negotiator new_negotiator);
+    void set_key (in string flow_name, 
+                  in key the_key);
+    void set_source_id (in long source_id);
   };
 
   interface StreamEndPoint_A : StreamEndPoint
   {
 
-    boolean multiconnect(inout streamQoS the_qos,
-                         inout flowSpec the_spec)
+    boolean multiconnect (inout streamQoS the_qos,
+                          inout flowSpec the_spec)
       raises (noSuchFlow, QoSRequestFailed, streamOpFailed);
 
-    boolean connect_leaf(in StreamEndPoint_B the_ep,
-                         inout streamQoS the_qos,
-                         in flowSpec the_flows)
+    boolean connect_leaf (in StreamEndPoint_B the_ep,
+                          inout streamQoS the_qos,
+                          in flowSpec the_flows)
       raises (streamOpFailed, noSuchFlow,
               QoSRequestFailed, notSupported);
 
-    void disconnect_leaf(in StreamEndPoint_B the_ep,
-                         in flowSpec theSpec)
+    void disconnect_leaf (in StreamEndPoint_B the_ep,
+                          in flowSpec theSpec)
       raises(streamOpFailed, noSuchFlow);
   };
 
   interface StreamEndPoint_B : StreamEndPoint 
   {
 
-    boolean multiconnect(inout streamQoS the_qos,
-                         inout flowSpec the_spec)
+    boolean multiconnect (inout streamQoS the_qos,
+                          inout flowSpec the_spec)
       raises (streamOpFailed, noSuchFlow,
               QoSRequestFailed, FPError);
   };
@@ -250,34 +291,41 @@ module AVStreams
   interface VDev 
   {
 
-    boolean set_peer(
-                     in StreamCtrl the_ctrl,
-                     in VDev the_peer_dev,
-                     inout streamQoS the_qos,
-                     in flowSpec the_spec)
-      raises (noSuchFlow, QoSRequestFailed, streamOpFailed);
+    boolean set_peer (in StreamCtrl the_ctrl,
+                      in VDev the_peer_dev,
+                      inout streamQoS the_qos,
+                      in flowSpec the_spec)
+      raises (noSuchFlow, 
+              QoSRequestFailed, 
+              streamOpFailed);
 
-    boolean set_Mcast_peer(in StreamCtrl the_ctrl,
-                           in MCastConfigIf a_mcastconfigif,
-                           inout streamQoS the_qos,
-                           in flowSpec the_spec)
-      raises (noSuchFlow, QoSRequestFailed, streamOpFailed);
+    boolean set_Mcast_peer (in StreamCtrl the_ctrl,
+                            in MCastConfigIf a_mcastconfigif,
+                            inout streamQoS the_qos,
+                            in flowSpec the_spec)
+      raises (noSuchFlow, 
+              QoSRequestFailed, 
+              streamOpFailed);
 
-    void configure(in CosPropertyService::Property the_config_mesg)
-      raises(PropertyException, streamOpFailed);
+    void configure (in CosPropertyService::Property the_config_mesg)
+      raises (PropertyException, 
+              streamOpFailed);
 
     // Uses <formatName> standardised by OMG and IETF
-    void set_format(in string flowName, in string format_name)
+    void set_format (in string flowName, 
+                     in string format_name)
       raises (notSupported);
 
     // Note, some of these device params are standardised by OMG
-    void set_dev_params(in string flowName,
-                        in CosPropertyService::Properties new_params)
-      raises(PropertyException, streamOpFailed);
+    void set_dev_params (in string flowName,
+                         in CosPropertyService::Properties new_params)
+      raises (PropertyException, 
+              streamOpFailed);
 
-    boolean modify_QoS(inout streamQoS the_qos,
-                       in flowSpec the_spec)
-      raises (noSuchFlow, QoSRequestFailed);
+    boolean modify_QoS (inout streamQoS the_qos,
+                        in flowSpec the_spec)
+      raises (noSuchFlow, 
+              QoSRequestFailed);
 
   };
 
@@ -285,49 +333,62 @@ module AVStreams
   //  interface MMDevice : CosPropertyService::PropertySet 
   interface MMDevice  
   {
-    StreamEndPoint_A create_A(in StreamCtrl the_requester,
+    StreamEndPoint_A create_A (in StreamCtrl the_requester,
+                               out VDev the_vdev,
+                               inout streamQoS the_qos,
+                               out boolean met_qos,
+                               inout string named_vdev,
+                               in flowSpec the_spec)
+      raises (streamOpFailed, 
+              streamOpDenied, 
+              notSupported,
+              QoSRequestFailed, 
+              noSuchFlow);
+
+    StreamEndPoint_B create_B(in StreamCtrl the_requester,
                               out VDev the_vdev,
                               inout streamQoS the_qos,
                               out boolean met_qos,
                               inout string named_vdev,
                               in flowSpec the_spec)
-      raises(streamOpFailed, streamOpDenied, notSupported,
-             QoSRequestFailed, noSuchFlow);
+      raises (streamOpFailed, 
+              streamOpDenied, 
+              notSupported,
+              QoSRequestFailed, 
+              noSuchFlow);
+    
+    StreamCtrl bind (in MMDevice peer_device,
+                     inout streamQoS the_qos,
+                     out boolean is_met,
+                     in flowSpec the_spec)
+      raises (streamOpFailed, 
+              noSuchFlow, 
+              QoSRequestFailed);
+    
+    StreamCtrl bind_mcast (in MMDevice first_peer,
+                           inout streamQoS the_qos,
+                           out boolean is_met,
+                           in flowSpec the_spec)
+      raises (streamOpFailed, 
+              noSuchFlow, 
+              QoSRequestFailed);
 
-    StreamEndPoint_B create_B(
-                              in StreamCtrl the_requester,
-                              out VDev the_vdev,
-                              inout streamQoS the_qos,
-                              out boolean met_qos,
-                              inout string named_vdev,
-                              in flowSpec the_spec)
-      raises(streamOpFailed, streamOpDenied, notSupported,
-             QoSRequestFailed, noSuchFlow);
-
-    StreamCtrl bind(in MMDevice peer_device,
-                    inout streamQoS the_qos,
-                    out boolean is_met,
-                    in flowSpec the_spec)
-      raises (streamOpFailed, noSuchFlow, QoSRequestFailed);
-
-    StreamCtrl bind_mcast(in MMDevice first_peer,
-                          inout streamQoS the_qos,
-                          out boolean is_met,
-                          in flowSpec the_spec)
-      raises (streamOpFailed, noSuchFlow, QoSRequestFailed);
-
-    void destroy(in StreamEndPoint the_ep, in string vdev_name)
+    void destroy (in StreamEndPoint the_ep, 
+                  in string vdev_name)
       // ie VDev not found
       raises (notSupported);
+    
+    string add_fdev (in Object the_fdev)
+      raises (notSupported, 
+              streamOpFailed);
 
-    string add_fdev(in Object the_fdev)
-      raises(notSupported, streamOpFailed);
+    Object get_fdev (in string flow_name)
+      raises (notSupported, 
+              noSuchFlow);
 
-    Object get_fdev(in string flow_name)
-      raises(notSupported, noSuchFlow);
-
-    void remove_fdev(in string flow_name)
-      raises (notSupported, noSuchFlow);
+    void remove_fdev (in string flow_name)
+      raises (notSupported, 
+              noSuchFlow);
 
   };
 
