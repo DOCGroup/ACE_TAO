@@ -3681,6 +3681,12 @@ private:
   // Inherit the logging features if the parent thread has an
   // <ACE_Log_Msg>.
 
+#if defined (ACE_WIN32)
+  int rethrow_w32_structural_exception (void);
+  // This function prints out warning message and pass
+  // the exception on to outer layer.
+#endif /* ACE_WIN32 */
+
   ACE_THR_FUNC user_func_;
   // Thread startup function passed in by the user (C++ linkage).
 
