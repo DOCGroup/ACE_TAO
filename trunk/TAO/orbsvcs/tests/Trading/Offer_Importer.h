@@ -63,7 +63,7 @@ public:
 
 private:
 
-  void perform_queries_with_policies (const TAO_Policy_Manager& policy_manager,
+  void perform_queries_with_policies (const TAO_Policy_Creator& policy_manager,
                                       CORBA::Environment& _env)
     TAO_THROW_SPEC ((CORBA::SystemException,
                      CosTrading::IllegalServiceType,
