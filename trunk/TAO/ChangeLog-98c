@@ -4,6 +4,7 @@ Wed Nov 12 23:59:29 1997    <nw1@COYOTE>
  	  on NT.
 	
 	* TAO/TAO_IDL/be/be_scope.cpp:
+	* TAO/TAO_IDL/fe/idl.ll:
 	* TAO/TAO_IDL/fe/lex.yy.cpp:
 	* TAO/TAO_IDL/fe/y.tab.cpp:
 	* TAO/TAO_IDL/include/ast_decl.h:
