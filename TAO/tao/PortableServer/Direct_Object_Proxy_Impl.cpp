@@ -37,7 +37,7 @@ TAO_Direct_Object_Proxy_Impl::_non_existent (const CORBA::Object_ptr target
           ACE_ENV_SINGLE_ARG_PARAMETER);
 
       // @@ Maybe we want to change this exception...
-      ACE_THROW_RETURN (CORBA::INV_OBJREF (), 0);
+      ACE_TRY_THROW (CORBA::INV_OBJREF ());
     }
   ACE_CATCH (CORBA::OBJECT_NOT_EXIST, ex)
     {
