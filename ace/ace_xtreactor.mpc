@@ -6,13 +6,25 @@ project(ACE_XtReactor) : acedefaults, aceversion, core, acelib, ace_xt {
   sharedname   = ACE_XtReactor
   dynamicflags = ACE_XTREACTOR_BUILD_DLL
 
+  Source_Files {
+    XtReactor.cpp
+  }
+
   Header_Files {
     XtReactor.h
     ACE_XtReactor_export.h
   }
-  Source_Files(ACE_COMPONENTS) {
-    Demux {
-      XtReactor.cpp
-    }
+
+  Inline_Files {
+  }
+
+  Template_Files {
+  }
+
+  Resource_Files {
+  }
+
+  Pkgconfig_Files {
+    ACE_XtReactor.pc.in
   }
 }
