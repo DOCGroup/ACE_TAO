@@ -15,13 +15,12 @@ use lib "../../../../../bin";
 require ACEutils;
 
 $nsport = 20000 + ACE::uniqueid ();
-$server_port = 0;
 $iorfile = "cubit.ior";
 $exepref = '.' . $DIR_SEPARATOR;
 $svnsflags = " -o $iorfile";
 $clnsflags = " -f $iorfile";
-$clflags = " -ORBobjrefstyle url";
-$svflags = " -ORBobjrefstyle url";
+$clflags = "";
+$svflags = "";
 $mcast = 0;
 
 #make sure the file is gone, so we can wait on it.
@@ -79,8 +78,8 @@ for ($i = 0; $i <= $#ARGV; $i++)
     }
     if ($ARGV[$i] eq "-orblite")
     {
-      $clargs .= " -ORBgioplite";
-      $svargs .= " -ORBgioplite";
+      $clflags .= " -ORBgioplite";
+      $svflags .= " -ORBgioplite";
       last SWITCH;
     }
     print "run_test: Unknown Option: ".$ARGV[$i]."\n";

@@ -10,7 +10,7 @@ require Process;
 require ACEutils;
 
 $SV = Process::Create ($EXEPREFIX."server".$Process::EXE_EXT,
-                       " -ORBobjrefstyle url");
+                       "");
 
 sleep ($ACE::sleeptime);
 

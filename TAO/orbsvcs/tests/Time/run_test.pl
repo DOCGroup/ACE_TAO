@@ -71,19 +71,19 @@ sub time_service_test_using_ir
 {
   $ir_dir = "..".$DIR_SEPARATOR."..".$DIR_SEPARATOR."ImplRepo_Service".$DIR_SEPARATOR;
   $IR = Process::Create ($ir_dir."ImplRepo_Service".$Process::EXE_EXT,
-                         "-ORBsvcconf implrepo.conf -ORBobjrefstyle url -d 1");
+                         "-ORBsvcconf implrepo.conf -d 1");
 
   ACE::waitforfile ($implrepo_ior);
 
   $SV1 = Process::Create ($time_dir."server".$Process::EXE_EXT,
-                         "-o $server_ior -i -r -ORBobjrefstyle url");
+                         "-o $server_ior -i -r");
 
   ACE::waitforfile ($server_ior);
 
   sleep 10;
 
   $SV2 = Process::Create ($time_dir."clerk".$Process::EXE_EXT,
-                          "-f $server_ior -o clerk_ior -ORBobjrefstyle url");
+                          "-f $server_ior -o clerk_ior");
 
   sleep 10;
 

@@ -9,7 +9,6 @@ use lib "../../../bin";
 require ACEutils;
 
 $brace="\#\#\#\#\#";
-$cdr_iter = 100;
 @tests = ("basic_types", "tc", "growth");
 @argslist = ("-n 256 -l 10", "", "-l 64 -h 256 -s 4 -n 100");
 $test = "";
@@ -27,7 +26,7 @@ sub run_test
                              "$args");
     print STDERR "\t$test RUNNING\n";
     $retval = ($TST->Wait ()) / 256;
-    if (retval != 0)
+    if ($retval != 0)
     {
         print STDERR "$brace $test $args FAILED; exited with value $retval\n";
     }

@@ -22,12 +22,33 @@
 #include "ace/Profile_Timer.h"
 #include "ace/Get_Opt.h"
 
-//#define USING_PURIFY
+#define USING_PURIFY
 //#define USING_PURIFY_FOR_SERVANT_LOOKUP
-//#define USING_PURIFY_FOR_UNDERBAR_THIS
+#define USING_PURIFY_FOR_UNDERBAR_THIS
 
 #if defined (USING_PURIFY)
+#if defined(ACE_WIN32)
 #include "pure.h"
+
+#else
+
+#include "quantify.h"
+inline int QuantifyClearData ()
+{
+  return quantify_clear_data ();
+}
+
+inline int QuantifyStartRecordingData ()
+{
+  return quantify_start_recording_data ();
+}
+
+inline int QuantifyStopRecordingData ()
+{
+  return quantify_stop_recording_data ();
+}
+
+#endif /* ACE_WIN32 */
 #endif /* USING_PURIFY */
 
 class test_i : public POA_test

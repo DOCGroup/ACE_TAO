@@ -50,8 +50,7 @@ server ();
 sleep $sleeptime;
 
 client ();
-sleep $sleeptime;
+$CL->Wait ();
 
-$NS->Kill ();
-$SV->Kill ();
-
+$NS->Kill (); $NS->Wait ();
+$SV->Kill (); $SV->Wait ();
