@@ -29,6 +29,9 @@ Wed Mar 11 14:37:08 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 	* TAO_IDL/be/be_visitor_typedef.cpp: Eliminated the multiple
 	declaration of typedefed variables and their typecodes.
 
+	* TAO_IDL/be/be_visitor_interface.cpp: The "_is_a_skel" now uses
+	the same table driven approach as the other skeletons do.
+
 Wed Mar 11 12:54:59 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tests/POA/Explicit_Activation/server.cpp (main): The server was

@@ -1252,41 +1252,47 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
 
   // generate code for the _is_a skeleton
   os->indent ();
+  *os << "static const TAO_Param_Data_Skel " << node->flatname ()
+      << "_is_a_paramdata [] = " << be_nl;
+  *os << "{" << be_idt_nl;
+  *os << "{CORBA::_tc_boolean, 0, 0}," << be_nl;
+  *os << "{CORBA::_tc_string, CORBA::ARG_IN, 0}" << be_uidt_nl;
+  *os << "};" << be_nl;
+  *os << "static const TAO_Call_Data_Skel " << node->flatname ()
+      << "_is_a_calldata = " << be_nl;
+  *os << "{\"_is_a\", 1, 2, " << node->flatname () << "_is_a_paramdata};" << be_nl;
   *os << "void " << node->full_skel_name ()
       << "::_is_a_skel (" << be_idt << be_idt_nl
-      << "CORBA::ServerRequest &req, " << be_nl
+      << "CORBA::ServerRequest &_tao_server_request, " << be_nl
       << "void * _tao_object_reference," << be_nl
       << "void * /*context*/," << be_nl
       << "CORBA::Environment &_tao_environment" << be_uidt_nl
       << ")" << be_uidt_nl;
-
   *os << "{\n";
   os->incr_indent ();
-  *os << "CORBA::NVList_ptr nvlist;" << be_nl;
-  *os << "CORBA::NamedValue_ptr nv;" << be_nl;
-  *os << "CORBA::Any temp_value (CORBA::_tc_string);" << be_nl;
-  *os << "CORBA::Any *any;" << be_nl;
-  *os << "CORBA::Boolean *retval = new CORBA::Boolean;" << be_nl;
-  *os << "CORBA::String value;" << be_nl;
-  *os << be_nl;
-  *os << "req.orb()->create_list (0, nvlist);" << be_nl;
-  *os << "nv = nvlist->add_value (0, temp_value, "
-      << "CORBA::ARG_IN, _tao_environment);" << be_nl;
-  *os << "req.params (nvlist, _tao_environment); // parse the args" << be_nl;
-  *os << "if (_tao_environment.exception () != 0) return;" << be_nl;
-  *os << "value = *(CORBA::String *)nv->value ()->value ();" << be_nl;
-
-  *os << node->full_skel_name () << "_ptr \t impl = ("
+  *os << node->full_skel_name () << "_ptr\t_tao_impl = ("
       << node->full_skel_name () << "_ptr) _tao_object_reference;"
       << be_nl;
-
-  *os << "*retval = impl->_is_a (value, _tao_environment);" << be_nl
-      << "if (_tao_environment.exception () != 0) return;" << be_nl;
-  *os << "any = new CORBA::Any (CORBA::_tc_boolean, "
-      << "retval, CORBA::B_TRUE);" << be_nl;
-  *os << "req.result (any, _tao_environment);\n";
-  os->decr_indent ();
+  *os << "CORBA::Boolean _tao_retval;" << be_nl;
+  *os << "char *_tao_value = 0;" << be_nl;
+  *os << "_tao_server_request.demarshal (" << be_idt_nl
+      << "_tao_environment, " << be_nl
+      << "&" << node->flatname () << "_is_a_calldata, " << be_nl
+      << "&_tao_retval, " << be_nl
+      << "&_tao_value" << be_uidt_nl
+      << ");" << be_nl;
+  *os << "if (_tao_environment.exception () != 0) return;" << be_nl;
+  *os << "_tao_retval = _tao_impl->_is_a (_tao_value, _tao_environment);"
+      << be_nl;
+  *os << "_tao_server_request.marshal (" << be_idt_nl
+      << "_tao_environment, " << be_nl
+      << "&" << node->flatname () << "_is_a_calldata, " << be_nl
+      << "&_tao_retval, " << be_nl
+      << "&_tao_value" << be_uidt_nl
+      << ");" << be_nl;
+  *os << "CORBA::string_free (_tao_value);" << be_uidt_nl;
   *os << "}\n\n";
+
 
   os->indent ();
   *os << "CORBA::Boolean " << node->full_skel_name ()
