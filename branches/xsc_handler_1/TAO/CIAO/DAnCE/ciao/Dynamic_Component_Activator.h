@@ -89,6 +89,8 @@ namespace CIAO
     /// Pointer to our ORB
     CORBA::ORB_var orb_;
 
+    // @@ Jai, why are there two mutexes here?Can you get one of them
+    //out of the way?
     /// Mutex that synchronizes access to the array.
     ACE_SYNCH_MUTEX  mutex_;
 

@@ -46,10 +46,16 @@ using CIAO::Utility::write_IOR;
  *
  * @@Assumptions:
  * 1. Now the implementation is not thread safe.
+ * // @@Gan, the above assumption is _really_ bad. Could you please
+ * use the lock in the imeplementation to do some simple
+ * prootections.
  **/
 
 namespace CIAO
 {
+  // @@ Gan, as we discussed before can you please wrap this
+  // implementation in a namespace Node_Application or whatever to
+  // signify that it belongs to another software piece of CIAO?
   class CIAO_SERVER_Export NodeApplication_Impl
     : public virtual POA_Deployment::NodeApplication,
       public virtual PortableServer::RefCountServantBase
@@ -107,24 +113,24 @@ namespace CIAO
                        ::Deployment::ImplEntryPointNotFound,
                        ::Deployment::InstallationFailure,
                        ::Components::InvalidConfiguration));
-                       
+
     /// Get the object reference of the NodeApplicationManager.
     /// This might come in handy later.
     virtual ::CORBA::Object_ptr
     get_node_application_manager (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-    // Access the readonly attribute.
+    /// Access the readonly attribute.
     virtual ::Deployment::Properties *
     properties (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-    // Remove everything inside including all components and homes.
+    /// Remove everything inside including all components and homes.
     virtual void remove (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
-      
+
     /// Create a container interface, which will be hosted in this NodeApplication.
-    virtual ::Deployment::Container_ptr 
+    virtual ::Deployment::Container_ptr
       create_container (const ::Deployment::Properties &properties
                         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
@@ -175,7 +181,11 @@ namespace CIAO
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Deployment::StartError));
 
-    /// To sotre all created Component object.
+    /// To store all created Component object.
+    // @@Gan/Jai, as we discussed before this is simply a BAD
+    //idea. These need to moved into the container.
+    // @@ Jai/Gan, how about using CCMObject_var instead of
+    //CCMObject_ptr's?
     typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
                                     Components::CCMObject_ptr,
                                     ACE_Hash<ACE_CString>,
@@ -189,11 +199,13 @@ namespace CIAO
 
     /// Keep a list of managed Container objects.
     Object_Set<Deployment::Container, Deployment::Container_var> container_set_;
-
     /// Keep a pointer to the managing ORB serving this servant.
     CORBA::ORB_var orb_;
 
     /// Keep a pointer to the managing POA.
+    // @@Gan/Jai, which POA is this? Same as the component POA or a
+    // different one. My sense is that its different. Could you please
+    //document it?
     PortableServer::POA_var poa_;
 
     /// Cached properties

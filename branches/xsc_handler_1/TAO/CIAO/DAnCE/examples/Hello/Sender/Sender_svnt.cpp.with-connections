@@ -92,7 +92,7 @@ namespace Sender_Impl
     ::Components::CCMHome_ptr home,
     ::CIAO::Session_Container *c,
     Sender_Servant *sv)
-      : ACE_NESTED_CLASS (CIAO, Context_Impl_Base (home, c)), 
+      : ACE_NESTED_CLASS (CIAO, Context_Impl_Base (home, c)),
       ctx_svnt_base (home, c, sv)
     {
     }
@@ -112,7 +112,7 @@ namespace Sender_Impl
     {
       PortableServer::ObjectId_var oid =
         PortableServer::string_to_ObjectId (obj_id);
-      CIAO::Servant_Activator *sa = 
+      CIAO::Servant_Activator *sa =
       this->container_->ports_servant_activator ();
       sa->update_port_activator (oid);
     }
@@ -146,17 +146,17 @@ namespace Sender_Impl
       retval->length (this->ciao_publishes_click_out_map_.current_size ());
       CORBA::ULong i = 0;
 
-      ACE_Active_Map_Manager< 
+      ACE_Active_Map_Manager<
       ::Hello::TimeOutConsumer_var>::iterator end =
       this->ciao_publishes_click_out_map_.end ();
 
-      for (ACE_Active_Map_Manager< 
+      for (ACE_Active_Map_Manager<
       ::Hello::TimeOutConsumer_var>::iterator iter =
       this->ciao_publishes_click_out_map_.begin ();
       iter != end;
       ++iter)
       {
-        ACE_Active_Map_Manager< 
+        ACE_Active_Map_Manager<
         ::Hello::TimeOutConsumer_var>::ENTRY &entry = *iter;
 
         ::Hello::TimeOutConsumer_var c =
@@ -186,17 +186,17 @@ namespace Sender_Impl
     ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
     {
-      ACE_Active_Map_Manager< 
+      ACE_Active_Map_Manager<
       ::Hello::TimeOutConsumer_var>::iterator end =
       this->ciao_publishes_click_out_map_.end ();
 
-      for (ACE_Active_Map_Manager< 
+      for (ACE_Active_Map_Manager<
       ::Hello::TimeOutConsumer_var>::iterator iter =
       this->ciao_publishes_click_out_map_.begin ();
       iter != end;
       ++iter)
       {
-        ACE_Active_Map_Manager< 
+        ACE_Active_Map_Manager<
         ::Hello::TimeOutConsumer_var>::ENTRY &entry = *iter;
 
         ::Hello::TimeOutConsumer_var c =
@@ -398,7 +398,7 @@ namespace Sender_Impl
         >
       MACRO_MADNESS_TYPEDEF;
 
-      ACE_NEW_THROW_EX ( 
+      ACE_NEW_THROW_EX (
       tmp,
       MACRO_MADNESS_TYPEDEF (
       "Hello_Sender_push_message",
@@ -409,7 +409,7 @@ namespace Sender_Impl
       this),
       CORBA::NO_MEMORY ());
 
-      CIAO::Servant_Activator *sa = 
+      CIAO::Servant_Activator *sa =
       this->container_->ports_servant_activator ();
 
       if (!sa->register_port_activator (tmp))
@@ -635,6 +635,7 @@ namespace Sender_Impl
     ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
     {
+      // @@Jai, an ACE_CHECK please
       this->activate_component ();
       this->executor_->start (
       ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -647,6 +648,7 @@ namespace Sender_Impl
     ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
     {
+      // @@Jai, an ACE_CHECK_RETURN please
       this->activate_component ();
       return this->executor_->local_message (
       ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -670,6 +672,7 @@ namespace Sender_Impl
     ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
     {
+      // @@ Jai, Why is this required?
       ACE_ENV_ARG_NOT_USED;
       ::CORBA::Object_var obj_var;
       ::Components::EventConsumerBase_var ecb_var;
@@ -733,4 +736,3 @@ namespace Sender_Impl
     c);
   }
 }
-

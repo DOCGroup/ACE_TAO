@@ -15,6 +15,7 @@
 
 #include /**/ "ace/pre.h"
 
+// @@ Jai, why is this includion necessary. Looks heavy weight to me.
 #include "CCM_ComponentS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -36,11 +37,11 @@ namespace CIAO
 
     virtual ~Dynamic_Component_Servant_Base (void);
 
-    virtual PortableServer::Servant 
+    virtual PortableServer::Servant
       create (PortableServer::ObjectId &oid) = 0;
 
     virtual void destroy (PortableServer::ObjectId &oid) = 0;
-  
+
     virtual void update_destroy_count () = 0;
 
   protected:

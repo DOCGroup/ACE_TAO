@@ -40,9 +40,9 @@ namespace CIAO
    * @brief Servant implementation for the interface Deployment::Container
    *
    * This class implements the Deployment::Container
-   * interface which is not defined by the CCM DnC specification. 
-   * As the interface implies, this is actually part of the deployment 
-   * interface and is used to manage the lifecycle of the installed 
+   * interface which is not defined by the CCM DnC specification.
+   * As the interface implies, this is actually part of the deployment
+   * interface and is used to manage the lifecycle of the installed
    * components and homes.
    */
   class CIAO_SERVER_Export Container_Impl
@@ -67,7 +67,7 @@ namespace CIAO
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     /// Install all homes and components
-    Deployment::ComponentInfos * 
+    Deployment::ComponentInfos *
       install (const ::Deployment::ContainerImplementationInfo & container_impl_info
                ACE_ENV_ARG_DECL_WITH_DEFAULTS)
         ACE_THROW_SPEC ((CORBA::SystemException,
@@ -77,17 +77,17 @@ namespace CIAO
                          Components::InvalidConfiguration));
 
     /// Remove all homes and components
-    virtual void 
+    virtual void
       remove (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
         ACE_THROW_SPEC ((CORBA::SystemException,
                          Components::RemoveFailure));
 
     /// Deployment::Container interface defined attributes/operations.
-    virtual ::Deployment::Properties * 
+    virtual ::Deployment::Properties *
       properties (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
         ACE_THROW_SPEC ((CORBA::SystemException));
 
-    virtual ::Deployment::NodeApplication_ptr 
+    virtual ::Deployment::NodeApplication_ptr
       get_node_application (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
         ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -100,7 +100,7 @@ namespace CIAO
 
 
     // Install the home of this particular component
-    virtual ::Components::CCMHome_ptr 
+    virtual ::Components::CCMHome_ptr
       install_home (const ::Deployment::ComponentImplementationInfo & impl_info
                     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
         ACE_THROW_SPEC ((CORBA::SystemException,
@@ -120,15 +120,15 @@ namespace CIAO
      * side support of this either. So bear me if you think I avoid
      * the real thinking for easiness.
      */
-    // Remove the home of this particular component 
-    virtual void 
+    // Remove the home of this particular component
+    virtual void
       remove_home (const char * comp_ins_name
                    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
         ACE_THROW_SPEC ((CORBA::SystemException,
                          Components::RemoveFailure));
 
     // Get all homes
-    virtual ::Components::CCMHomes * 
+    virtual ::Components::CCMHomes *
       get_homes (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
         ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -144,8 +144,8 @@ namespace CIAO
     virtual void remove_component (const char * comp_ins_name
                                    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
-                       Components::RemoveFailure));    
-    
+                       Components::RemoveFailure));
+
     /// Set the cached object reference.
     void set_objref (Deployment::Container_ptr o
                      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
@@ -154,6 +154,9 @@ namespace CIAO
     /// _this if there's no cached reference available.  Notice that
     /// this method does *NOT* increase the reference count of the
     /// cached reference.
+    /// @@ Gan, caller should own memory. In this case you shoudl
+    /// return a duplicate OR add a const to the operation
+    /// signature. This is simply bad programming.
     Deployment::Container_ptr get_objref (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
 protected:
@@ -164,6 +167,7 @@ protected:
     PortableServer::POA_var poa_;
 
     /// Internal container implementation.
+    // @@ Gan/Jai, heard of auto_ptr <>?
     CIAO::Container *container_;
 
     /// Cached ConfigValues.
@@ -184,7 +188,8 @@ protected:
     typedef CCMHome_Map::iterator Home_Iterator;
     CCMHome_Map home_map_;
 
-    /// To sotre all created Component object.
+    /// To store all created Component object.
+    // @@Gan, see how this caching is duplicated..
     typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
                                     Components::CCMObject_ptr,
                                     ACE_Hash<ACE_CString>,

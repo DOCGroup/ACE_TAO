@@ -30,13 +30,14 @@
 
 namespace CIAO
 {
-  template <typename COMP_SVNT, typename COMP_EXEC, 
+  template <typename COMP_SVNT, typename COMP_EXEC,
             typename COMP_EXEC_VAR, typename EXEC, typename EXEC_VAR,
             typename COMP>
   class Dynamic_Component_Servant
     : public virtual Dynamic_Component_Servant_Base
   {
   public:
+    // @@Jai, please add documentation for these methods.
     Dynamic_Component_Servant (Components::EnterpriseComponent_ptr ec,
                                Components::CCMHome_ptr home,
                                Home_Servant_Impl_Base *home_servant,
@@ -44,24 +45,30 @@ namespace CIAO
 
     virtual ~Dynamic_Component_Servant (void);
 
-    virtual PortableServer::Servant 
+    virtual PortableServer::Servant
       create (PortableServer::ObjectId &oid);
 
     virtual void destroy (PortableServer::ObjectId &oid);
 
-    virtual void update_destroy_count ();
+    virtual void update_destroy_count (void);
 
   protected:
     Components::EnterpriseComponent_var executor_;
+
     Home_Servant_Impl_Base *home_servant_;
+
     Components::CCMHome_var home_;
+
+    // @@ Jai, please document why this is there.
     ACE_Hash_Map_Manager_Ex<PortableServer::ObjectId,
                             COMP_SVNT *,
                             TAO_ObjectId_Hash,
                             ACE_Equal_To<PortableServer::ObjectId>,
                             ACE_SYNCH_MUTEX>
       servant_map_;
-    int component_removed_;
+
+    // @@ Jai, please explain what this flag means?
+    bool component_removed_;
   };
 }
 

@@ -1,9 +1,28 @@
+Fri Mar 11 16:29:30 (IST) 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ciao/Container_Base.h:
+	* ciao/Container_Impl.cpp:
+	* ciao/Container_Impl.h:
+	* ciao/Dynamic_Component_Activator.cpp:
+	* ciao/Dynamic_Component_Activator.h:
+	* ciao/Dynamic_Component_Servant_Base.h:
+	* ciao/Dynamic_Component_Servant_T.cpp:
+	* ciao/Dynamic_Component_Servant_T.h:
+	* ciao/NodeApplication_Impl.cpp:
+	* ciao/NodeApplication_Impl.h:
+	* ciao/Swapping_Container.cpp:
+	* ciao/Swapping_Container.h:
+	* examples/Hello/Sender/Sender_svnt.cpp.with-connections:
+
+	  Left @@ comments for Jai and some for Gan. 
+
 Thu Mar 10 13:46:21 2005  Will Otte <wotte@dre.vanderbilt.edu>
+
 	* XMLSchema/Types.hpp
 	* XSCRT/ExtendedTypeInfo.ipp
 
-	Updated the XSCRT runtime to the latest version to fix warnings
-	in VC7.
+	  Updated the XSCRT runtime to the latest version to fix warnings
+	  in VC7. 
 	
 Thu Mar 10 10:29:32 2005  Jaiganesh B  <jai@dre.vanderbilt.edu>
 

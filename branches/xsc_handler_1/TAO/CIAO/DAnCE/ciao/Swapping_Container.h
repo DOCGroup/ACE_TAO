@@ -18,6 +18,8 @@
 #define CIAO_SWAPPING_CONTAINER_H
 #include /**/ "ace/pre.h"
 
+// @@ Jai, are all these inclusions necessary? Please cut down on them
+// to a minimum
 #include "tao/ORB.h"
 #include "tao/PortableServer/PortableServer.h"
 #include "tao/PortableServer/Servant_Base.h"
@@ -113,6 +115,7 @@ namespace CIAO
 // tao/ValueType/ValueFactory.h but here we take advantage of
 // the fact that we have access to the current ORB indirectly
 // through the context and container.
+// @@Jai, is this macro required here?
 #define CIAO_REGISTER_OBV_FACTORY(FACTORY, VALUETYPE) \
   {  \
     CORBA::ValueFactory factory = new FACTORY; \

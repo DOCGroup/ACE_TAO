@@ -105,7 +105,7 @@ namespace CIAO
     ACE_CHECK_RETURN (-1);
 
     this->create_connections_POA (root_poa.in ()
-                           ACE_ENV_ARG_PARAMETER);
+                                  ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (-1);
 
     PortableServer::POAManager_var poa_manager =
@@ -213,6 +213,9 @@ namespace CIAO
                                           PortableServer::POA_ptr root
                                           ACE_ENV_ARG_DECL)
   {
+    // @@ Jai, see how this method more or less does things (like
+    // setting policies)  like create_connections_POA (). Could you
+    // please refactor them into a seperate method?
     CORBA::PolicyList policies (0);
 
     if (p != 0)
@@ -286,9 +289,9 @@ namespace CIAO
     PortableServer::POA_ptr tmp = 0;
 
     if (t == Container::Component)
-    {
-      tmp = this->home_servant_poa_.in ();
-    }
+      {
+        tmp = this->home_servant_poa_.in ();
+      }
     else
       tmp = this->facet_cons_poa_.in ();
 
@@ -296,7 +299,7 @@ namespace CIAO
       = tmp->activate_object (p
                               ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (0);
-    
+
     CORBA::Object_var objref
       = tmp->id_to_reference (oid.in ()
                               ACE_ENV_ARG_PARAMETER);
