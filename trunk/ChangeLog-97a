@@ -1,5 +1,20 @@
 Fri May 16 12:25:32 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
+	* ace/Log_Record.h: need to #include "ace/ACE.h" before
+	  "ace/Log_Priority.h" so that "Log_Priority.h" sees the
+	  configuration stuff (otherwise the following fix won't work).
+
+	* ace/Log_Priority.h: Added a workaround for lame C++ compilers
+ 	  like the one on HP/UX that can't support large enums.  Thanks to
+ 	  Robert Head for reporting this.
+
+	* ace/Singleton: Added the new ACE_TSS_Singleton, which stores
+ 	  Singletons in thread-specific storage.  Thanks to Chris Lahey
+ 	  and Rich Christy <rchristy@cccis.com> for this.
+
+	* ace/OS.h: Removed the ACE_Singleton_Strategy since we don't need
+ 	  it anymore.
+
 	* netsvcs/lib: Added the new Server_Logging_Handler_T.* and
  	  Log_Message_Receiver.* netsvcs.  Thanks to Per Andersson for
  	  contributing these.

@@ -58,6 +58,7 @@ private:
 template<ACE_SYNCH_1>
 class Log_Message_Receiver_Impl
 {
+  friend class ACE_Shutup_GPlusPlus;  // Turn off g++ warning
 public:
   static Log_Message_Receiver_Impl *create (void);
   static Log_Message_Receiver_Impl *attach (Log_Message_Receiver_Impl<ACE_SYNCH_2> *body);

@@ -10,54 +10,29 @@
 //
 // = DESCRIPTION
 //     This program tests various features of ACE_Thread and the
-//     thread-specific storage variant of <ACE_SingletonEx>.
+//     thread-specific storage variant of <ACE_Singleton>.
 //
 // = AUTHOR
 //    Prashant Jain and Doug Schmidt
 // 
 // ============================================================================
 
-#include "ace/Task.h"
-#include "ace/Token.h"
-#include "ace/Singleton.h"
+#include "TSS_Data.h"
+#include "TSS_Obj.h"
+#include "TSS_Task.h"
 
 #if defined (ACE_HAS_THREADS)
 
 const int MAX_TASKS = 4;
 const int MAX_ITERATIONS = 10;
 
-class TSS_Data
-  // = TITLE
-  //   Data that is stored in thread-specific storage.
-{
-public:
-  void *data (void) { return this->data_; }
-  void data (void *v) { this->data_ = v; }
-  
-private:
-  // = data_ will be thread-specific data so it doesn't need a lock.
-  void *data_;
-};
+ACE_Atomic_Op<ACE_Token, int> Test_Task::count_ (0);
+ACE_Atomic_Op<ACE_Token, int> Test_Task::wait_count_ (0);
+ACE_Atomic_Op<ACE_Token, int> Test_Task::max_count_ (0);
+int num_tasks = 0;
 
-#if 0
-typedef ACE_SingletonEx<ACE_TSS <TSS_Data>, ACE_SYNCH_MUTEX, ACE_SINGLETON_TSS>
-	TSS_DATA;
-#else
-typedef ACE_Singleton<TSS_Data, ACE_SYNCH_MUTEX>
-	TSS_DATA;
-#endif
-
-class TSS_Obj
-  // = TITLE
-  //     This object is stored in thread-specific storage.
-{
-public:
-  TSS_Obj (void);
-  ~TSS_Obj (void);
-
-private:
-  static ACE_Atomic_Op<ACE_Thread_Mutex, int> count_;
-};
+// ACE synchronization object.
+static ACE_Token token;
 
 ACE_Atomic_Op<ACE_Thread_Mutex, int> TSS_Obj::count_ = 0;
 
@@ -72,32 +47,6 @@ TSS_Obj::~TSS_Obj (void)
   TSS_Obj::count_--;
   ACE_DEBUG ((LM_DEBUG, "(%t) TSS_Obj-: %d\n", (int) TSS_Obj::count_));
 }
-
-class Test_Task
-{
-public:
-
-  Test_Task (void);
-  ~Test_Task (void);
-
-  int open (void *arg);
-
-  static void *svc (void *arg);
-
-  static ACE_Atomic_Op<ACE_Token, int> wait_count_;
-  static ACE_Atomic_Op<ACE_Token, int> max_count_;
-
-private:
-  static ACE_Atomic_Op<ACE_Token, int> count_;
-};
-
-ACE_Atomic_Op<ACE_Token, int> Test_Task::count_ (0);
-ACE_Atomic_Op<ACE_Token, int> Test_Task::wait_count_ (0);
-ACE_Atomic_Op<ACE_Token, int> Test_Task::max_count_ (0);
-int num_tasks = 0;
-
-// ACE synchronization object.
-static ACE_Token token;
 
 Test_Task::Test_Task (void)
 {
@@ -223,14 +172,11 @@ main (int argc, char *argv[])
 template class ACE_Atomic_Op<ACE_Thread_Mutex, int>;
 template class ACE_Atomic_Op<ACE_Token, int>;
 template class ACE_TSS<TSS_Obj>;
-#if 0
-template class ACE_SingletonEx<TSS_Data, ACE_SYNCH_MUTEX, ACE_SINGLETON_TSS>;
-#else
-template class ACE_Singleton<TSS_Data, ACE_SYNCH_MUTEX>;
-#endif
+template class ACE_TSS_Singleton<TSS_Data>;
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
 
 #else
+
 int 
 main (int, char *[])
 {
