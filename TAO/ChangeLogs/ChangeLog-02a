@@ -1,3 +1,11 @@
+Mon Mar  5 11:37:18 2001  Fuzz Master D <brunsch@uci.edu>
+
+        * tests/Leader_Followers/run_test_mt.pl: (added)
+        * tests/Param_Test/run_test_dii.pl: 
+
+          Fixed to work on both Windows and Linux (and Solaris
+          should follow Linux).
+
 Mon Mar  5 11:24:05 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/Event_Service/Event_Service.cpp:
