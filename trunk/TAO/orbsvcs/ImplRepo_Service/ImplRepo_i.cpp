@@ -480,7 +480,7 @@ ImplRepo_i::server_is_running (const char *server,
   else
     return new_location;
 
-  ACE_TRY_CHECK;
+  ACE_CHECK_RETURN ("");
 
   char *pos = ACE_OS::strstr (new_location, "://");
 
@@ -743,7 +743,7 @@ ImplRepo_i::run (CORBA::Environment &ACE_TRY_ENV)
 
   // Check for a memory error.
   if (server_iter.get () == 0)
-    ACE_THROW (CORBA::NO_MEMORY ());
+    ACE_THROW_RETURN (CORBA::NO_MEMORY (), -1);
 
   Server_Repository::HASH_IMR_ENTRY *server_entry;
 

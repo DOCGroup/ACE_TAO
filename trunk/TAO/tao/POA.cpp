@@ -498,7 +498,7 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
       {
         PortableServer::POA_var root_poa = this->server_object_->_default_POA ();
 
-        if (CORBA::is_nil (root_poa))
+        if (CORBA::is_nil (root_poa.in ()))
           {
             // No root POA.  This seems bad.
             ACE_ERROR ((LM_ERROR, "Server_Object's Default POA is bad\n"));
@@ -3646,7 +3646,7 @@ TAO_POA::key_to_object (const TAO_ObjectKey &key,
       ACE_CHECK_RETURN (obj);
 
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG, "IMR IOR = \n%s\n", imr_str));
+        ACE_DEBUG ((LM_DEBUG, "IMR IOR = \n%s\n", imr_str.in ()));
 
       char *pos = ACE_OS::strstr (imr_str.inout (), "://");
 

@@ -6,7 +6,7 @@
 ACE_INLINE const char 
 TAO_UIOP_Profile::get_object_key_delimiter (void)
 {
-  return TAO_UIOP_Profile::object_key_delimiter_;
+  return TAO_UIOP_Profile::object_key_delimiter;
 }
 
 ACE_INLINE const TAO_ObjectKey &
