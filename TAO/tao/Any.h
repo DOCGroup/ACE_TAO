@@ -95,6 +95,12 @@ public:
   void operator<<= (CORBA::ULong);
   // insert an unsigned long
 
+  void operator<<= (CORBA::LongLong);
+  // insert a long long
+
+  void operator<<= (CORBA::ULongLong);
+  // insert an unsigned long long
+
   void operator<<= (CORBA::Float);
   // insert a float
 
@@ -126,6 +132,12 @@ public:
 
   CORBA::Boolean operator>>= (CORBA::ULong&) const;
   // extract an unsigned long
+
+  CORBA::Boolean operator>>= (CORBA::LongLong&) const;
+  // extract a long long
+
+  CORBA::Boolean operator>>= (CORBA::ULongLong&) const;
+  // extract an unsigned long long
 
   CORBA::Boolean operator>>= (CORBA::Float&) const;
   // extract a float
@@ -165,6 +177,12 @@ public:
     CORBA::Char val_;
   };
 
+  struct TAO_Export from_wchar
+  {
+    from_wchar (CORBA::WChar wc);
+    CORBA::WChar val_;
+  };
+
   struct TAO_Export from_string
   {
     from_string (char* s,
@@ -180,6 +198,9 @@ public:
 
   void operator<<= (from_char);
   // insert a char
+
+  void operator<<= (from_wchar);
+  // insert a wchar
 
   void operator<<= (from_octet);
   // insert an octet
@@ -202,6 +223,12 @@ public:
   {
     to_char (CORBA::Char &c);
     CORBA::Char &ref_;
+  };
+
+  struct TAO_Export to_wchar
+  {
+    to_wchar (CORBA::WChar &wc);
+    CORBA::WChar &ref_;
   };
 
   struct TAO_Export to_octet
@@ -233,6 +260,9 @@ public:
 
   CORBA::Boolean operator>>= (to_char) const;
   // extract a char
+
+  CORBA::Boolean operator>>= (to_wchar) const;
+  // extract a wchar
 
   CORBA::Boolean operator>>= (to_string) const;
   // extract a bounded string

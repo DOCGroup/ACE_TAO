@@ -1,3 +1,13 @@
+Fri Aug 21 13:47:27 1998  Jeff Parsons <jp4@cs.wustl.edu>
+
+	* tao/Typecode.cpp:
+	  private_equal() was missing tk_ulonglong in the switch
+	  statement.
+
+	* tao/Any.{h,i,cpp):
+	  Added <<= and >>= for long long, unsigned long long
+	  and wchar.
+
 Fri Aug 21 11:34:42 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* tests/Cubit/TAO/IDL_Cubit/client_i.cpp (init_naming_service): 
