@@ -472,6 +472,10 @@ public:
   /// Return the POA Manager related to this POA
   TAO_POA_Manager &tao_poa_manager ();
 
+  bool is_poa_generated (CORBA::Object_ptr reference,
+                         PortableServer::ObjectId &system_id
+                          ACE_ENV_ARG_DECL);
+
 protected:
 
   /// Template method for creating new POA's of this type.

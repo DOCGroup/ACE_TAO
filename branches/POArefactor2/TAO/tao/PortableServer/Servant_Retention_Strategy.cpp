@@ -239,37 +239,11 @@ namespace TAO
       PortableServer::Servant servant = 0;
       int result = -1;
 
-// @bala, shouldn't this just be in the POA, just check the adapter first?
-
-      // Search the active object map for the servant
-      TAO::ObjectKey_var key = reference->_key (ACE_ENV_SINGLE_ARG_PARAMETER);
+      PortableServer::ObjectId system_id;
+      bool is_generated = this->poa_->is_poa_generated (reference, system_id ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
-      // If the object reference was not created by this POA, the
-      // WrongAdapter exception is raised.
-      PortableServer::ObjectId system_id;
-      TAO_Object_Adapter::poa_name poa_system_name;
-      CORBA::Boolean is_root = 0;
-      CORBA::Boolean is_persistent = 0;
-      CORBA::Boolean is_system_id = 0;
-      TAO::Portable_Server::Temporary_Creation_Time poa_creation_time;
-
-      int parse_result =
-        this->poa_->parse_key (key.in (),
-                               poa_system_name,
-                               system_id,
-                               is_root,
-                               is_persistent,
-                               is_system_id,
-                               poa_creation_time);
-      if (parse_result != 0 ||
-          !this->poa_->root () &&
-          poa_system_name != this->poa_->system_name () ||
-          is_root != this->poa_->root () ||
-          is_persistent != this->poa_->active_policy_strategies().lifespan_strategy()->persistent () ||
-          is_system_id != this->poa_->system_id () ||
-          !this->poa_->active_policy_strategies().lifespan_strategy()->persistent () &&
-          poa_creation_time != this->poa_->creation_time_)
+      if (!is_generated)
         {
           ACE_THROW_RETURN (PortableServer::POA::WrongAdapter (),
                             0);
