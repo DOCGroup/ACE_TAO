@@ -128,9 +128,12 @@ TAO_POA_Manager::deactivate_i (CORBA::Boolean etherealize_objects,
        ++iterator)
     {
       TAO_POA *poa = *iterator;
-      poa->etherealize_servants (etherealize_objects,
-                                 wait_for_completion,
-                                 ACE_TRY_ENV);
+      poa->destroy (etherealize_objects,
+                    wait_for_completion,
+                    ACE_TRY_ENV);
+//       poa->etherealize_servants (etherealize_objects,
+//                                  wait_for_completion,
+//                                  ACE_TRY_ENV);
       ACE_CHECK;
     }
 
