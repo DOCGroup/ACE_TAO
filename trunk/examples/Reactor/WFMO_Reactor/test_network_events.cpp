@@ -32,6 +32,7 @@
 // ============================================================================
 
 #include "ace/Reactor.h"
+#include "ace/WFMO_Reactor.h"
 #include "ace/INET_Addr.h"
 #include "ace/SOCK_Stream.h"
 #include "ace/SOCK_Acceptor.h"
@@ -149,8 +150,24 @@ Network_Listener::handle_input (ACE_HANDLE handle)
   ACE_INET_Addr remote_address;
   ACE_SOCK_Stream stream;
 
-  ACE_ASSERT (this->acceptor_.accept (stream, &remote_address) == 0);
-
+  int reset_new_handle = 0;
+#if defined (ACE_WIN32)
+  // Try to find out if the implementation of the reactor that we are
+  // using is the WFMO_Reactor. If so we need to reset the event
+  // association for the newly created handle. This is because the
+  // newly created handle will inherit the properties of the listen
+  // handle, including its event associations.
+  if (dynamic_cast <ACE_WFMO_Reactor *> (this->reactor ()->implementation ()))
+    reset_new_handle = 1;
+#endif /* ACE_WIN32 */
+  
+  ACE_ASSERT (this->acceptor_.accept (stream, // stream
+                                      &remote_address, // remote address
+                                      0, // timeout
+                                      1, // restart
+                                      reset_new_handle  // reset new handler
+                                      ) == 0);
+  
   ACE_DEBUG ((LM_DEBUG, "Remote connection from: "));
   remote_address.dump ();
 

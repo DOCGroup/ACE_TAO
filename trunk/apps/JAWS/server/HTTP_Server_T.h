@@ -29,7 +29,8 @@ public:
   int accept (ACE_SOCK_Stream &new_stream,
 	      ACE_Addr *remote_addr = 0,
 	      ACE_Time_Value *timeout = 0,
-	      int restart = 1) const;
+	      int restart = 1,
+              int reset_new_handle = 0) const;
   
 private:
   LOCK lock_;

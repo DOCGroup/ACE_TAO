@@ -26,7 +26,7 @@ int main (int argc, char *argv[])
 
   /* Associate address with endpoint */
   if (ACE_OS::bind (s_handle, (struct sockaddr *) &saddr, 
-            sizeof saddr) == -1) 
+                    sizeof saddr) == -1) 
     ACE_OS::perror ("bind"), ACE_OS::exit (1);
 
   /* Make endpoint listen for service requests */
@@ -46,7 +46,7 @@ int main (int argc, char *argv[])
       /* Create a new endpoint of communication */
       do 
 	n_handle = ACE_OS::accept (s_handle, (struct sockaddr *) 
-			     &cli_addr, &cli_addr_len);
+                                   &cli_addr, &cli_addr_len);
       while (n_handle == ACE_INVALID_HANDLE && errno == EINTR);
 	
       if (n_handle == ACE_INVALID_HANDLE) 
@@ -57,7 +57,7 @@ int main (int argc, char *argv[])
 
       int addr_len = sizeof cli_addr.sin_addr.s_addr;
       hp = ACE_OS::gethostbyaddr ((char *) &cli_addr.sin_addr,
-                          addr_len, AF_INET);
+                                  addr_len, AF_INET);
 
       if (hp != 0) 
         ACE_OS::printf ("client %s\n", hp->h_name), ACE_OS::fflush (stdout);
