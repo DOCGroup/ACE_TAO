@@ -1,3 +1,15 @@
+Sun Dec  3 20:03:16 2000  Ossama Othman  <ossama@uci.edu>
+
+	* examples/Web_Crawler/Command_Processor.cpp:
+
+	  Removed duplicate template instantiations.  Thanks to Paul Rubel
+	  <prubel@bbn.com> for pointing out this bug, and for providing a
+	  fix.
+
+	* THANKS:
+
+	  Added Paul to the Hall-of-Fame.
+
 Sun Dec  3 15:23:50 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * performance-tests/Misc/childbirth_time.cpp:
