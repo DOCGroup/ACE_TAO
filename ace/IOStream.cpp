@@ -110,13 +110,17 @@ ACE_Streambuf::underflow (void)
   // If input mode is not set, any attempt to read from the stream is
   // a failure.
 
-  if (! (mode_ & ios::in))
+  if (ACE_BIT_DISABLED (mode_, ios::in))
     return EOF;
 
   // If base () is empty then this is the first time any get/put
   // operation has been attempted on the stream.
 
+#if defined (ACE_HAS_STANDARD_CPP_LIBRARY)
+  if (!eback ())
+#else /* ACE_HAS_STANDARD_CPP_LIBRARY */
   if (!this->base ())
+#endif /* ACE_HAS_STANDARD_CPP_LIBRARY */
     {
       // Set base () to use our private read buffer.  The arguments are:
       //        beginning of the buffer (base ())
@@ -125,7 +129,7 @@ ACE_Streambuf::underflow (void)
       //
       // We have to say "no" to the third parameter because we want to
       // explicitly handle deletion of the TWO buffers at destruction.
-      //
+
       setb (this->eback_saved_,
             this->eback_saved_ + streambuf_size_, 0);
 
@@ -153,12 +157,11 @@ ACE_Streambuf::underflow (void)
       //
       if (this->cur_mode_ == this->put_mode_)
         {
-          // Dump any pending output to the peer.  This is not
-          // really necessary because of the dual-buffer arrangement
-          // we've set up but intuitively it makes sense to send
-          // the pending data before we request data since the peer
-          // will probably need what we're sending before it can
-          // respond.
+          // Dump any pending output to the peer.  This is not really
+          // necessary because of the dual-buffer arrangement we've
+          // set up but intuitively it makes sense to send the pending
+          // data before we request data since the peer will probably
+          // need what we're sending before it can respond.
           if (out_waiting () && syncout () == EOF)
             return EOF;
 
@@ -167,16 +170,15 @@ ACE_Streambuf::underflow (void)
           this->pbase_saved_ = pbase ();
           this->pptr_saved_  = pptr ();
           this->epptr_saved_ = epptr ();
-          //
+
           // Disable put mode as described in the constructor.
-          //
           setp (0, 0);
 
-          // Like the case where base () is false, we now point base ()
-          // to use our private get buffer.
-
+          // Like the case where base () is false, we now point base
+          // () to use our private get buffer.
           setb (this->eback_saved_,
-                this->eback_saved_ + streambuf_size_, 0);
+                this->eback_saved_ + streambuf_size_,
+                0);
 
           // And restore the previous state of the get pointers.
 
@@ -192,10 +194,10 @@ ACE_Streambuf::underflow (void)
       // mode before reading everything.  In that case, we take this
       // opportunity to feed it back to the iostream.
       if (in_avail ())
-        // Remember that we return an int so that we can give
-        // back EOF.  The explicit cast prevents us from
-        // returning a signed char when we're not returning EOF.
-          return (u_char) *gptr ();
+        // Remember that we return an int so that we can give back
+        // EOF.  The explicit cast prevents us from returning a signed
+        // char when we're not returning EOF.
+        return (u_char) *gptr ();
     }
 
   // We really shouldn't be here unless there is a lack of data in the
@@ -203,7 +205,7 @@ ACE_Streambuf::underflow (void)
 
   int result = fillbuf ();
 
-  // fillbuf will give us EOF if there was an error with the peer.  In
+  // Fillbuf will give us EOF if there was an error with the peer.  In
   // that case, we can do no more input.
 
   if (EOF == result)
@@ -230,8 +232,11 @@ ACE_Streambuf::overflow (int c)
   if (! (mode_ & ios::out))
     return EOF;
 
-  // First invokation of a get or put function
+#if defined (ACE_HAS_STANDARD_CPP_LIBRARY)
+  if (!eback ())
+#else /* ACE_HAS_STANDARD_CPP_LIBRARY */
   if (!base ())
+#endif /* ACE_HAS_STANDARD_CPP_LIBRARY */
     {
       // Set base () to use put's private buffer.
       //
@@ -247,7 +252,7 @@ ACE_Streambuf::overflow (int c)
       // Set the mode for optimization.
       this->cur_mode_ = this->put_mode_;
     }
-  else  // We're already reading or writting
+  else  // We're already reading or writing
     {
       // If we're coming out of get mode...
       if (this->cur_mode_ == this->get_mode_)
@@ -296,9 +301,9 @@ ACE_Streambuf::overflow (int c)
 int
 ACE_Streambuf::syncin (void)
 {
-  // As discussed, there really isn't any way to sync input from a socket-like
-  // device.  We specifially override this base-class function so that it won't
-  // do anything evil to us.
+  // As discussed, there really isn't any way to sync input from a
+  // socket-like device.  We specifially override this base-class
+  // function so that it won't do anything evil to us.
   return 0;
 }
 
@@ -320,18 +325,19 @@ ACE_Streambuf::syncout (void)
 int
 ACE_Streambuf::sync (void)
 {
-  // sync () is fairly traditional in that it syncs both input and output.
-  // We could have omitted the call to syncin () but someday, we may want it
-  // to do something.
+  // sync () is fairly traditional in that it syncs both input and
+  // output.  We could have omitted the call to syncin () but someday,
+  // we may want it to do something.
 
   syncin ();
 
-  // Don't bother syncing the output unless there is data to be sent...
+  // Don't bother syncing the output unless there is data to be
+  // sent...
 
   if (out_waiting ())
     return syncout ();
-
-  return 0;
+  else
+    return 0;
 }
 
 // flushbuf
@@ -339,31 +345,30 @@ ACE_Streambuf::sync (void)
 int
 ACE_Streambuf::flushbuf (void)
 {
-  // pptr () is one character beyond the last character put
-  // into the buffer.  pbase () points to the beginning of
-  // the put buffer.  Unless pptr () is greater than pbase ()
-  // there is nothing to be sent to the peer.
-  //
+  // pptr () is one character beyond the last character put into the
+  // buffer.  pbase () points to the beginning of the put buffer.
+  // Unless pptr () is greater than pbase () there is nothing to be
+  // sent to the peer.
+
   if (pptr () <= pbase ())
-	return 0;
+    return 0;
 
   // 4/12/97 -- JCEJ
   // Kludge!!!
-  // If the remote side shuts down the connection, an attempt to
-  // send () to the remote will result in the message 'Broken Pipe'
-  // I think this is an OS message, I've tracked it down to the
-  // ACE_OS::write () function.  That's the last one to be called
-  // before the message.  I can only test this on Linux though, so
-  // I don't know how other systems will react.
+  // If the remote side shuts down the connection, an attempt to send
+  // () to the remote will result in the message 'Broken Pipe' I think
+  // this is an OS message, I've tracked it down to the ACE_OS::write
+  // () function.  That's the last one to be called before the
+  // message.  I can only test this on Linux though, so I don't know
+  // how other systems will react.
   //
   // To get around this gracefully, I do a PEEK recv () with an
-  // immediate (nearly) timeout.  recv () is much more graceful
-  // on it's failure.  If we get -1 from recv () not due to timeout
-  // then we know we're SOL.
+  // immediate (nearly) timeout.  recv () is much more graceful on
+  // it's failure.  If we get -1 from recv () not due to timeout then
+  // we know we're SOL.
   //
   // Q:  Is 'errno' threadsafe?  Should the section below be a
   //     critical section?
-  //
   //
   // char tbuf[1];
   // ACE_Time_Value to (0,1);
@@ -376,23 +381,19 @@ ACE_Streambuf::flushbuf (void)
   //	}
   // }
   //
-  // The correct way to handle this is for the application to
-  // trap (and ignore?) SIGPIPE.  Thanks to Amos Shapira
-  // for reminding me of this.
-  //
+  // The correct way to handle this is for the application to trap
+  // (and ignore?) SIGPIPE.  Thanks to Amos Shapira for reminding me
+  // of this.
 
-  // Starting at the beginning of the buffer, send as much
-  // data as there is waiting.  send guarantees that all
-  // of the data will be sent or an error will be returned.
-  //
+  // Starting at the beginning of the buffer, send as much data as
+  // there is waiting.  send guarantees that all of the data will be
+  // sent or an error will be returned.
+
   if (this->send (pbase (), pptr () - pbase ()) == -1)
-  {
-	return EOF;
-  }
+    return EOF;
 
   // Now that we've sent everything in the output buffer, we reset the
   // buffer pointers to appear empty.
-  //
   setp (base (), ebuf ());
 
   return 0;
@@ -409,18 +410,19 @@ ACE_Streambuf::get_one_byte (void)
 
   if (this->recv_n (base (), 1, MSG_PEEK, recv_timeout_) != 1)
     return EOF;
-
-  return 1;
+  else
+    return 1;
 }
+
+// This will be called when the read (get) buffer has been exhausted
+// (ie -- gptr == egptr).
 
 int
 ACE_Streambuf::fillbuf (void)
-  // This will be called when the read (get) buffer has been
-  // exhausted (ie -- gptr == egptr)
 {
-  // Invoke recv_n to get exactly one byte from the remote.  This
-  // will block until something shows up.
-  //
+  // Invoke recv_n to get exactly one byte from the remote.  This will
+  // block until something shows up.
+
   if (get_one_byte () == EOF)
     return EOF;
 
@@ -440,7 +442,7 @@ ACE_Streambuf::fillbuf (void)
 
   setg (base (), base (), base () + bc);
 
-  // Return the byte-read-count including the one from <get_one_byte>
+  // Return the byte-read-count including the one from <get_one_byte>.
   return bc;
 }
 
@@ -457,35 +459,39 @@ ACE_Streambuf::ACE_Streambuf (u_int streambuf_size, int io_mode)
  (void)reset_put_buffer ();
 }
 
-u_int ACE_Streambuf::streambuf_size (void)
+u_int 
+ACE_Streambuf::streambuf_size (void)
 {
   return streambuf_size_;
 }
 
-u_int ACE_Streambuf::get_waiting (void)
-  // Return the number of bytes not yet gotten.
-  //	eback + get_waiting = gptr
+// Return the number of bytes not yet gotten. eback + get_waiting =
+// gptr.
+
+u_int 
+ACE_Streambuf::get_waiting (void)
 {
-	return this->gptr_saved_ - this->eback_saved_;
+  return this->gptr_saved_ - this->eback_saved_;
 }
 
-u_int ACE_Streambuf::get_avail (void)
-  // Return the number of bytes in the get area (includes some already gotten);
-  //	eback + get_avail = egptr
+// Return the number of bytes in the get area (includes some already
+// gotten); eback + get_avail = egptr.
+
+u_int 
+ACE_Streambuf::get_avail (void)
 {
-	return this->egptr_saved_ - this->eback_saved_;
+  return this->egptr_saved_ - this->eback_saved_;
 }
 
-u_int ACE_Streambuf::put_avail (void)
-  // Return the number of bytes to be 'put' onto the stream media.
-  //	pbase + put_avail = pptr
+// Return the number of bytes to be 'put' onto the stream media.
+// pbase + put_avail = pptr.
+
+u_int 
+ACE_Streambuf::put_avail (void)
 {
-	return this->pptr_saved_ - this->pbase_saved_;
+  return this->pptr_saved_ - this->pbase_saved_;
 }
 
-char *
-ACE_Streambuf::reset_get_buffer (char * newBuffer, u_int _streambuf_size, u_int _gptr, u_int _egptr)
-//
 // Typical usage:
 //
 //	u_int  newGptr  = otherStream->get_waiting ();
@@ -495,11 +501,16 @@ ACE_Streambuf::reset_get_buffer (char * newBuffer, u_int _streambuf_size, u_int 
 //
 //	'myStream' now has the get buffer of 'otherStream' and can use it in any way.
 //	'otherStream' now has a new, empty get buffer.
-//
+
+char *
+ACE_Streambuf::reset_get_buffer (char *newBuffer,
+                                 u_int _streambuf_size,
+                                 u_int _gptr,
+                                 u_int _egptr)
 {
   char * rval = this->eback_saved_;
 
-  // The get area is where the iostrem will get data from.  This is
+  // The get area is where the iostream will get data from.  This is
   // our read buffer.  There are three pointers which describe the
   // read buffer:
   //
@@ -516,15 +527,13 @@ ACE_Streambuf::reset_get_buffer (char * newBuffer, u_int _streambuf_size, u_int 
   // of our read-dedicated buffer.
   //
   if (newBuffer)
-  {
-	if (streambuf_size_ != _streambuf_size)
-		return NULL;
-	this->eback_saved_ = newBuffer;
-  }
+    {
+      if (streambuf_size_ != _streambuf_size)
+        return NULL;
+      this->eback_saved_ = newBuffer;
+    }
   else
-  {
-  	ACE_NEW_RETURN (this->eback_saved_, char[streambuf_size_], 0);
-  }
+    ACE_NEW_RETURN (this->eback_saved_, char[streambuf_size_], 0);
 
   this->gptr_saved_ = this->eback_saved_ + _gptr;
   this->egptr_saved_ = this->eback_saved_ + _egptr;
@@ -538,17 +547,18 @@ ACE_Streambuf::reset_get_buffer (char * newBuffer, u_int _streambuf_size, u_int 
   return rval;
 }
 
-char *
-ACE_Streambuf::reset_put_buffer (char * newBuffer, u_int _streambuf_size, u_int _pptr)
-//
 // Typical usage:
 //
 //	u_int  newPptr = otherStream->put_avail ();
 //	char * newBuf  = otherStream->reset_put_buffer ();
 //	char * oldputbuf = otherStream->reset_put_buffer (newBuf, otherStream->streambuf_size (), newPptr);
-//
+
+char *
+ACE_Streambuf::reset_put_buffer (char *newBuffer,
+                                 u_int _streambuf_size,
+                                 u_int _pptr)
 {
-  char * rval = this->pbase_saved_;
+  char *rval = this->pbase_saved_;
 
   // The put area is where the iostream will put data that needs to be
   // sent to the peer.  This becomes our write buffer.  The three
@@ -564,15 +574,13 @@ ACE_Streambuf::reset_put_buffer (char * newBuffer, u_int _streambuf_size, u_int 
   // these three pointers.
   //
   if (newBuffer)
-  {
-	if (streambuf_size_ != _streambuf_size)
-		return NULL;
-	this->pbase_saved_ = newBuffer;
-  }
+    {
+      if (streambuf_size_ != _streambuf_size)
+        return NULL;
+      this->pbase_saved_ = newBuffer;
+    }
   else
-  {
-  	ACE_NEW_RETURN (this->pbase_saved_, char[streambuf_size_], 0);
-  }
+    ACE_NEW_RETURN (this->pbase_saved_, char[streambuf_size_], 0);
 
   this->pptr_saved_ = this->pbase_saved_ + _pptr;
   this->epptr_saved_ = this->pbase_saved_ + streambuf_size_;
@@ -612,5 +620,4 @@ ACE_Streambuf::~ACE_Streambuf (void)
 }
 
 #endif /* !ACE_LACKS_ACE_IOSTREAM */
-
 #endif /* ACE_IOSTREAM_C */
