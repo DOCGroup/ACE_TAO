@@ -94,7 +94,6 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
       << "// " << __FILE__ << ":" << __LINE__;
 
   *os << be_nl << be_nl
-      << "template<>" << be_nl
       << "void" << be_nl
       << "TAO::Value_Traits<" << node->name  () << ">::tao_add_ref (" 
       << be_idt << be_idt_nl
@@ -105,7 +104,6 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
       << "}";
 
   *os << be_nl << be_nl
-      << "template<>" << be_nl
       << "void" << be_nl
       << "TAO::Value_Traits<" << node->name () << ">::tao_remove_ref ("
       << be_idt << be_idt_nl

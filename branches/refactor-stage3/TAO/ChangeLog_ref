@@ -1,3 +1,33 @@
+Fri Jun 27 11:16:04 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_traits.cpp:
+        * TAO_IDL/be/be_visitor_array/array_ci.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp:
+
+          Replace 'template<>' with 'ACE_TEMPLATE_SPECIALIZATION'
+          in declarations of specialized template classes in
+          generated stub header files. Also removed 'template<>'
+          from the specialization implementations in the stub
+          source file. These changes please a larger number of
+          compilers.
+
+        * tao/PolicyC.cpp:
+        * tao/Policy_ForwardC.h:
+
+          Made changes corresponding to those above for the one
+          interface in TAO that is forward declared in one .pidl
+          files and fully defined in another - CORBA::Policy.
+
+        * tao/Object_Argument_T.cpp:
+
+          Removed #if 0/#endif pair that was inadvertently checked
+          in.
+
+        * tao/Sequence_T.h:
+
+          Added include file need by gcc/cygwin.
+
 Thu Jun 26 17:13:39 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_array/array_ch.cpp:

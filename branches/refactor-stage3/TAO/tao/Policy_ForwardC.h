@@ -245,14 +245,17 @@ TAO_NAMESPACE_CLOSE // module CORBA
 
 namespace TAO
 {
-  template<>
+  ACE_TEMPLATE_SPECIALIZATION
   struct TAO_Export Objref_Traits<CORBA::Policy>
   {
     static CORBA::Policy_ptr tao_duplicate (CORBA::Policy_ptr);
     static void tao_release (CORBA::Policy_ptr);
     static CORBA::Policy_ptr tao_nil (void);
+    static CORBA::Boolean tao_marshal (CORBA::Policy_ptr,
+                                       TAO_OutputCDR &);
   };
-};
+}
+
 
 // ==========================================================
 
