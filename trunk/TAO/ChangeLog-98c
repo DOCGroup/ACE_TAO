@@ -1,37 +1,37 @@
 Tue Jun 16 17:00:14 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
-	* TAO_IDL/be_include/be_interface.h: Added a helper called
-	"collocated_ctor_helper" that will be passed to the
-	traverse_inheritance_graph to generate calls to the CTORs of each
-	and every base class in the viryal inheritance hierarchy
+        * TAO_IDL/be_include/be_interface.h: Added a helper called
+        "collocated_ctor_helper" that will be passed to the
+        traverse_inheritance_graph to generate calls to the CTORs of each
+        and every base class in the viryal inheritance hierarchy
 
-	* TAO_IDL/be/be_interface.cpp: Added code for
-	collocated_ctor_helper method.
+        * TAO_IDL/be/be_interface.cpp: Added code for
+        collocated_ctor_helper method.
 
-	* TAO_IDL/be/be_visitor_interface.cpp: In the constructor for the
-	collocated class, we now call the interface node's
-	traverse_inheritance_graph with collocated_ctor_helper method as
-	the callback. This will generate calls to the ctors of all the
-	base classes in the entire class hierarchy.
+        * TAO_IDL/be/be_visitor_interface.cpp: In the constructor for the
+        collocated class, we now call the interface node's
+        traverse_inheritance_graph with collocated_ctor_helper method as
+        the callback. This will generate calls to the ctors of all the
+        base classes in the entire class hierarchy.
 
-	* TAO_IDL/be/be_visitor_exception.cpp: On suggestions by Irfan,
-	the generated code no more duplicates the typecode. Instead, it
-	will be the receipient's responsibility to duplicate the typecode
-	for the exceptions.
+        * TAO_IDL/be/be_visitor_exception.cpp: On suggestions by Irfan,
+        the generated code no more duplicates the typecode. Instead, it
+        will be the receipient's responsibility to duplicate the typecode
+        for the exceptions.
 
-	* TAO_IDL/be/be_visitor_union_branch.cpp: A quick fix has been
-	made in the generated modifier functions. We now make sure that
-	memory is allocated to pointer union members if they were not
-	already set. Note that this solution is simply a quick fix to
-	allow making progress for IDl using unions. We still need to make
-	sure that old storage is freed. Will be done in the next attempt.
-	Thanks to Seth for reporting the problem.
+        * TAO_IDL/be/be_visitor_union_branch.cpp: A quick fix has been
+        made in the generated modifier functions. We now make sure that
+        memory is allocated to pointer union members if they were not
+        already set. Note that this solution is simply a quick fix to
+        allow making progress for IDl using unions. We still need to make
+        sure that old storage is freed. Will be done in the next attempt.
+        Thanks to Seth for reporting the problem.
 
 Tue Jun 16 16:52:16 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/Event_Service/Makefile:
-	* orbsvcs/tests/Event_Latency/Makefile:
-	  Updated dependencies.
+        * orbsvcs/Event_Service/Makefile:
+        * orbsvcs/tests/Event_Latency/Makefile:
+          Updated dependencies.
 
 1998-06-16  Torben Worm  <tworm@cumbia.cs.wustl.edu>
 
@@ -46,6 +46,9 @@ Tue Jun 16 15:39:43 1998  David L. Levine  <levine@cs.wustl.edu>
           expressions instead of character counts, so is more resilient.
           Ported to Linux (and many other Unix platforms that don't
           have ksh).
+
+        * tests/Cubit/TAO/IDL_Cubit/collocation_test.cpp: added ACE_THR_FUNC
+          static cast of svr_worker to avoid warning on VxWorks.
 
 Tue Jun 16 15:14:50 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
