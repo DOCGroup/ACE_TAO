@@ -1,4 +1,14 @@
-<<<<<<< ChangeLog-96b
+Sun Nov 10 13:22:03 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Pipe.cpp (open): Set the loopback socket into TCP_NODELAY
+ 	  mode so that we don't block for 200 ms...  Thanks to Luca
+ 	  Priorelli <lucapri@mbox.vol.it>.
+
+	* ace/Thread_Manager: Created a new version of spawn_n() that
+ 	  gives parameters for stack, stack_size, and also for the
+ 	  assigned ACE_hthread_t's.  Thanks to Thilo Kielmann
+ 	  <kielmann@informatik.uni-siegen.de> for suggesting this.
+
 Sat Nov  9 11:23:13 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Synch.i: Fixed a bug in ACE_Thread_Mutex_Guard.
@@ -60,7 +70,6 @@ Tue Nov  5 03:09:44 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
  	  I should have been doing a ::CloseHandle (handle) instead.
   	  Thanks to Luca for finding this!
 
-=======
 Sat Nov  9 01:44:15 1996  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
 
 	* ace/Message_Queue: Added forward and reverse iterators to
@@ -79,16 +88,18 @@ Sat Nov  9 01:44:15 1996  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
  	  typedefs does not break existing code.
 
 Tue Nov  5 14:26:32 1996  David Levine  <levine@cs.wustl.edu>
-	* include/makeinclude/wrapper_macros.GNU:  Changed LINK.{c,cc}
-	  commands to use LD instead of CXX.  Changed all platform
-	  macros files (except for g++ on VxWorks) to correspond.
-	* tests/run_tests.sh:  changed -e test to -f for portability and
-	  reordered tests.  Thanks to Michael Michael Rueger
-	  <m_rueger@SYSCOMP.DE> for originally creating run_tests.sh, and
-	  for maintaining it, and to Alan Stewart <axs2@osi.com> for
-	  suggesting fixes/enhancements.
-	* tests/Time_Service_Test.cpp and Tokens_Test.cpp:  changed to
-	  return 0 on success instead of 42
+	* include/makeinclude/wrapper_macros.GNU: Changed LINK.{c,cc}
+ 	  commands to use LD instead of CXX.  Changed all platform macros
+ 	  files (except for g++ on VxWorks) to correspond.
+
+	* tests/run_tests.sh: changed -e test to -f for portability and
+ 	  reordered tests.  Thanks to Michael Michael Rueger
+ 	  <m_rueger@SYSCOMP.DE> for originally creating run_tests.sh, and
+ 	  for maintaining it, and to Alan Stewart <axs2@osi.com> for
+ 	  suggesting fixes/enhancements.
+
+	* tests/Time_Service_Test.cpp and Tokens_Test.cpp: changed to
+ 	  return 0 on success instead of 42
 
 Fri Nov  1 03:53:39 1996  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
 
@@ -97,7 +108,6 @@ Fri Nov  1 03:53:39 1996  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
  	  available implementation of STL from HP.  Currently,
  	  ACE_Registry uses these STL classes.
 
->>>>>>> 4.14
 Fri Nov  1 00:25:01 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/CORBA_Handler.cpp (process_events): There was a very subtle
