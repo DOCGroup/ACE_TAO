@@ -50,34 +50,33 @@ endif # CPU
 
 #### Green Hills location, and target-specific definitions.
 ifeq ($(CPU),86)
-  # Without this RANLIB, ld386 complains that it can't read the
+  # With GHS' ax, ld386 complains that it can't read the
   # archive symbol table.
-  RANLIB = $(WIND_BASE)/host/$(WIND_HOST_TYPE)/bin/ranlib386
   ifndef GHS
     GHS = /project/doc/wind/green/vx$(CPU)
   endif # GHS
+  AR = $(WIND_BASE)/host/$(WIND_HOST_TYPE)/bin/ar386
+  ARFLAGS  = rsu
   LIBS += $(GHS)/libedgnoe.a
 else
 ifeq ($(CPU),ppc)
   ifndef GHS
     GHS = /appl/newgreen/vx$(CPU)603
   endif # GHS
+  AR = ax
+  ARFLAGS  = cr
   LIBS += $(GHS)/ghsbltin.o $(GHS)/ghsmath.o
 endif # ppc
 endif # CPU
 
 
-CC              = cxvx$(CPU)
-CXX             = $(CC)
-CCFLAGS         += $(CFLAGS) --no_rtti -tnone
-DCFLAGS         += -g
-DLD             = $(CXX)
-LD              = $(CXX)
-LDFLAGS         = --no_auto_instantiation
-OCFLAGS         += -OL -OM
-PIC             =
-AR              = ax
-ARFLAGS         = r
-ifndef RANLIB
-  RANLIB        = /bin/true
-endif # RANLIB
+CC       = cxvx$(CPU)
+CXX      = $(CC)
+CCFLAGS  += $(CFLAGS) --no_rtti -tnone
+DCFLAGS  += -g
+DLD      = $(CXX)
+LD       = $(CXX)
+LDFLAGS  = --no_auto_instantiation
+OCFLAGS  += -OL -OM
+PIC      =
+RANLIB   = @true
