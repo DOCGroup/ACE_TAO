@@ -1,3 +1,10 @@
+Tue Mar 19 09:46:09 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/performance-tests/RTEvent/RTCORBA_Callback/Callback.h:
+
+	  No need to include "ace/pre.h" since this header is only used
+	  for an executable binary, not a library.
+
 Tue Mar 19 10:18:42 2002  Carlos O'Ryan  <coryan@uci.edu>
 
 	* orbsvcs/performance-tests/RTEvent/lib/Client_Options.h:
