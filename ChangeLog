@@ -1,7 +1,11 @@
+Sat Jul  5 06:57:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * THANKS: Updated e-mail address of Serge Kolgan
+
 Fri Jul 4 17:05:39 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
-	* include\makeinclude\ace_flags.bor: 
-	  
+        * include/makeinclude/ace_flags.bor:
+
 	  Added the TAO_RTSCHEDULER_CFLAGS flag to build RTSCheduler
 	  library using Borland compiler.
 
