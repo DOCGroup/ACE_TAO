@@ -256,7 +256,10 @@ ACE_OS::mkfifo (const ACE_TCHAR *file, mode_t mode)
 
 // These prototypes are chronically lacking from many versions of
 // UNIX.
+#if !defined (ACE_HAS_ISASTREAM_PROTO)
 extern "C" int isastream (int);
+#endif /* ACE_HAS_ISASTREAM_PROTO */
+
 # if !defined (ACE_HAS_GETRUSAGE_PROTO)
 extern "C" int getrusage (int who, struct rusage *rusage);
 # endif /* ! ACE_HAS_GETRUSAGE_PROTO */
