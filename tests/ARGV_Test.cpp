@@ -24,7 +24,7 @@ USELIB("..\ace\aced.lib");
 //---------------------------------------------------------------------------
 #endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
 
-int main(int argc, char *argv[])
+int main(int, char *argv[])
 {
   ACE_START_TEST (ASYS_TEXT ("ARGV_Test"));
 
@@ -46,7 +46,7 @@ int main(int argc, char *argv[])
               ASYS_TEXT (a.argc ())));
 
   // Print the contents of the combined <ACE_ARGV>.
-  for (int i = 0; i < a.argc (); i++)
+  for (size_t i = 0; i < a.argc (); i++)
     ACE_DEBUG ((LM_DEBUG,
                 ASYS_TEXT ("(%d) %s\n"),
                 i,
