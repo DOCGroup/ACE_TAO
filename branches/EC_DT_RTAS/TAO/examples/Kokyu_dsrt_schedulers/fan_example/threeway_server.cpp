@@ -14,8 +14,7 @@
 
 ACE_RCSID(MT_Server, server, "$Id$")
 
-const char *ior_output_file = "test2.ior";
-const char *shfile = "shfile.txt";
+const char *ior_output_file = "test1.ior";
 
 int nthreads = 2;
 int enable_dynamic_scheduling = 1;
@@ -103,20 +102,6 @@ main (int argc, char *argv[])
 
   task_stats.init (100000);
 
-  int mflags = O_RDWR | O_CREAT;
-  int fd;
-  off_t length = 1;
-  unsigned char *mptr;
-
-  fd = shm_open(shfile, mflags, S_IRWXU);
-  ftruncate(fd, length);
-  mptr = (unsigned char*)mmap(NULL, 1, PROT_READ|PROT_WRITE, MAP_SHARED, fd, 0);
-  close(fd);
-
-  *mptr = 2;
-
-  ACE_DEBUG ((LM_DEBUG, "open share file result is %d", fd));
-
 //  TAO_debug_level = 1;
   
   ACE_TRY_NEW_ENV
@@ -168,33 +153,30 @@ main (int argc, char *argv[])
               disp_impl_type = Kokyu::DSRT_OS_BASED;
             }
 
-          ACE_DEBUG((LM_DEBUG,"temp 1\n"));
           ACE_NEW_RETURN (scheduler,
                           EDF_Scheduler (orb.in (),
                                          disp_impl_type,
                                          sched_policy,
                                          sched_scope), -1);
 
-	  ACE_DEBUG((LM_DEBUG,"temp 2\n"));
           manager->rtscheduler (scheduler);
 
           CORBA::Object_var object =
             orb->resolve_initial_references ("RTScheduler_Current"
                                               ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
-          ACE_DEBUG((LM_DEBUG,"temp 3\n"));
           current  =
             RTScheduling::Current::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
 
       ACE_DEBUG((LM_DEBUG,"before activate server\n"));
-      Complex_Server_i server_impl (orb.in (),
+      Simple_Server_i server_impl (orb.in (),
                                    current.in (),
                                    task_stats,
                                    enable_yield);
 
-      Complex_Server_var server =
+      Simple_Server_var server =
         server_impl._this (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 

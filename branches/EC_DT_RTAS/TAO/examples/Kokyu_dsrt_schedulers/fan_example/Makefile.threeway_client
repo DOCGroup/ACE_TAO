@@ -21,12 +21,12 @@ ifndef CIAO_ROOT
 endif
 
 TAO_IDL = ../../../../bin/tao_idl
-IDL_FILES = test
+IDL_FILES = work 
 IDL_SRC = $(foreach ext, C.cpp S.cpp, $(foreach file, $(IDL_FILES), $(file)$(ext)))
 
 FILES = \
   cpuload \
-  testC \
+  workC \
   threeway_client
 
 #----------------------------------------------------------------------------
@@ -47,7 +47,7 @@ TEMPINCDIR := $(TEMPINCDIR)/threeway_client
 all: $(TEMPINCDIR)
 
 $(TEMPINCDIR):
-	@-test1 -d $(TEMPINCDIR) || mkdir -p $(TEMPINCDIR) $(ACE_NUL_STDERR)
+	@-work -d $(TEMPINCDIR) || mkdir -p $(TEMPINCDIR) $(ACE_NUL_STDERR)
 
 endif
 
@@ -66,7 +66,7 @@ all: idl_stubs
 
 # This rule forces make to run the idl_stubs
 # target before building any of the source files.
-testC.cpp threeway_client.cpp: idl_stubs
+workC.cpp threeway_client.cpp: idl_stubs
 endif
 
 include $(ACE_ROOT)/include/makeinclude/macros.GNU

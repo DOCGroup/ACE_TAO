@@ -1,8 +1,0 @@
-//$Id$
-
-interface Simple_Server
-{
-  oneway void test_method (in long x);
-
-  void shutdown ();
-};
