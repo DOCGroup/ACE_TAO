@@ -1,3 +1,8 @@
+Wed Nov 20 10:26:58 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/CosNotification_Static.dsp: Fixed path to some
+	  idl files in the project.
+
 Tue Nov 19 22:32:30 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tao/Acceptor_Registry.cpp (is_collocated):
