@@ -126,6 +126,28 @@ HTTP_Helper::HTTP_month (int month)
   return HTTP_Helper::months_[month];
 }
 
+char *
+HTTP_Helper::HTTP_decode_string (char *path)
+  // fix the path if it needs fixing/is fixable
+{
+  // replace the percentcodes with the actual character
+  int i,j;
+  char percentcode[3];
+  
+  for (i = j = 0; path[i] != '\0'; i++,j++) {
+    if (path[i] == '%') {
+      percentcode[0] = path[++i];
+      percentcode[1] = path[++i];
+      percentcode[2] = '\0';
+      path[j] = ACE_OS::strtol (percentcode, (char **)0, 16);
+    }
+    else path[j] = path[i];
+  }
+  path[j] = path[i];
+
+  return path;
+}
+
 int
 HTTP_Helper::fixyear (int year)
 {
