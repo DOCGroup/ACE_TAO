@@ -210,6 +210,36 @@ sub check_for_id_string ()
     }
 }
 
+# check for _MSC_VER >= 1200
+sub check_for_msc_ver_string ()
+{
+    print "Running _MSC_VER check\n";
+    foreach $file (@files_cpp, @files_inl, @files_h) {
+        my $found = 0;
+        if (open (FILE, $file)) {
+            my $disable = 0;
+            print "Looking at file $file\n" if $opt_d;
+            while (<FILE>) {
+                if (/FUZZ\: disable check_for_msc_ver/) {
+                    $disable = 1;
+                }
+                if (/FUZZ\: enable check_for_msc_ver/) {
+                    $disable = 0;
+                }
+                if ($disable == 0 and /\_MSC_VER \>= 1200/) {
+                    $found = 1;
+                }
+            }
+            close (FILE);
+            if ($found == 1) {
+               print_error ("Incorrect _MSC_VER >= 1200 found in $file");
+            }
+        }
+        else {
+            print STDERR "Error: Could not open $file\n";
+        }
+    }
+}
 
 # This test checks for the newline at the end of a file
 sub check_for_newline ()
@@ -618,10 +648,10 @@ sub check_for_pre_and_post ()
                         print_error ("post.h missing \"/**/\" in $file");
                         ++$post;
                     }
-                    if (/^\s*#\s*include\s*/**/\s*\"ace\/pre\.h\"/) {
+                    if (/^\s*#\s*include\s*\/\*\*\/\s*\"ace\/pre\.h\"/) {
                         ++$pre;
                     }
-                    if (/^\s*#\s*include\s*/**/\s*\"ace\/post\.h\"/) {
+                    if (/^\s*#\s*include\s*\/\*\*\/\s*\"ace\/post\.h\"/) {
                         ++$post;
                     }
                 }
@@ -1289,6 +1319,7 @@ if ($opt_t) {
 print "--------------------Configuration: Fuzz - Level ",$opt_l,
       "--------------------\n";
 
+check_for_msc_ver_string () if ($opt_l >= 6);
 check_for_noncvs_files () if ($opt_l >= 1);
 check_for_streams_include () if ($opt_l >= 6);
 check_for_dependency_file () if ($opt_l >= 1);
