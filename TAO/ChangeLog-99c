@@ -1,3 +1,18 @@
+Wed Jul 21 10:46:50 1999  Pradeep Gore  <pradeep@danzon.cs.wustl.edu>
+
+	* orbsvcs/tests/CosEC_Basic/CosEC_Basic.cpp:
+	* orbsvcs/tests/CosEC_Multiple/CosEC_Multiple.cpp:
+	* orbsvcs/tests/CosEC_Multiple/CosECConsumer.cpp:
+	* examples/Event_Comm/Notifier_Handler.cpp:
+	* examples/Event_Comm/Consumer_Handler.cpp:
+	  fixed Green Hills compiler warnings for return values from methods.
+	* orbsvcs/examples/CosEC/Factory/CosEventChannelFactory_i.cpp:
+	  fixed Green Hills compiler warnings for return values from methods.
+	  modified the <create> method to pass the POAManager to the
+	  <create_POA> method.This fixes the problem of the factory not
+	  working properly. Thanks to Alex Hornby <alex@anvil.co.uk> for
+	  reporting this.
+
 Wed Jul 21 08:55:12 1999  Steve Huston  <shuston@riverace.com>
 
         * TAO_IDL/driver/drv_preproc.cpp: For IBM C++ 3.6, add -qflag=w:w
