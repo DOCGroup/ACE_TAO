@@ -678,11 +678,11 @@ TAO_Transport::close_connection_no_purge (void)
 }
 
 void
-TAO_Transport::close_connection_shared (int disable_purge,
+TAO_Transport::close_connection_shared (int purge,
                                         TAO_Connection_Handler * eh)
 {
   // Purge the entry
-  if (!disable_purge)
+  if (purge)
     {
       this->transport_cache_manager ().purge_entry (this->cache_map_entry_);
     }
