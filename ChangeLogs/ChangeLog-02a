@@ -1,3 +1,10 @@
+Sat Dec 29 16:14:41 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/OS.h: 
+	* ace/Default_Constants.h: Moved some constants from this file to
+	  OS.h as it needed includes in OS.h. Need to take a better look
+	  before any other dissection can be performed.
+	  
 Sat Dec 29 12:08:40 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/ace_dll.dsp:

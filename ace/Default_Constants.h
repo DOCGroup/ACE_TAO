@@ -38,18 +38,6 @@
 #   define ACE_MAX_FULLY_QUALIFIED_NAME_LEN 256
 # endif /* ACE_MAX_FULLY_QUALIFIED_NAME_LEN */
 
-# if defined (ACE_HAS_4_4BSD_SENDMSG_RECVMSG)
-    // Control message size to pass a file descriptor.
-#   define ACE_BSD_CONTROL_MSG_LEN sizeof (struct cmsghdr) + sizeof (ACE_HANDLE)
-#   if defined (ACE_LACKS_CMSG_DATA_MACRO)
-#     if defined (ACE_LACKS_CMSG_DATA_MEMBER)
-#       define CMSG_DATA(cmsg) ((unsigned char *) ((struct cmsghdr *) (cmsg) + 1))
-#     else
-#       define CMSG_DATA(cmsg) ((cmsg)->cmsg_data)
-#     endif /* ACE_LACKS_CMSG_DATA_MEMBER */
-#   endif /* ACE_LACKS_CMSG_DATA_MACRO */
-# endif /* ACE_HAS_4_4BSD_SENDMSG_RECVMSG */
-
 #if !defined (ACE_DEFAULT_PAGEFILE_POOL_BASE)
 #define ACE_DEFAULT_PAGEFILE_POOL_BASE (void *) 0
 #endif /* ACE_DEFAULT_PAGEFILE_POOL_BASE */
@@ -271,17 +259,6 @@
 #   define ACE_DEFAULT_DIR_PERMS 0755
 # endif /* ACE_DEFAULT_DIR_PERMS */
 
-// Default size of the ACE Reactor.
-# if defined (FD_SETSIZE)
-int const ACE_FD_SETSIZE = FD_SETSIZE;
-# else
-#   define ACE_FD_SETSIZE FD_SETSIZE
-# endif /* ACE_FD_SETSIZE */
-
-# if !defined (ACE_DEFAULT_SELECT_REACTOR_SIZE)
-#   define ACE_DEFAULT_SELECT_REACTOR_SIZE ACE_FD_SETSIZE
-# endif /* ACE_DEFAULT_SELECT_REACTOR_SIZE */
-
 # if !defined (ACE_DEFAULT_TIMEPROBE_TABLE_SIZE)
 #   define ACE_DEFAULT_TIMEPROBE_TABLE_SIZE 8 * 1024
 # endif /* ACE_DEFAULT_TIMEPROBE_TABLE_SIZE */
@@ -353,11 +330,11 @@ int const ACE_FD_SETSIZE = FD_SETSIZE;
 #   if !defined (ACE_NON_BLOCKING_BUG_DELAY)
 #     define ACE_NON_BLOCKING_BUG_DELAY 35000
 #   endif /* ACE_NON_BLOCKING_BUG_DELAY */
-# else /* !ACE_WIN32 */
-
-#define ACE_MAX_USERID L_cuserid
-
 # endif /*ACE_WIN32*/
+
+
+
+
 
 
 
