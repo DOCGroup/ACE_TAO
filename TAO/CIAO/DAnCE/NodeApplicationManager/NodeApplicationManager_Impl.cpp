@@ -24,10 +24,10 @@ init (const char *nodeapp_location,
   ACE_TRY
   {
     if (nodeapp_location == 0)
-      ACE_THROW (CORBA::BAD_PARAM ());
+      ACE_THROW_RETURN (CORBA::BAD_PARAM (), 0);
 
     if (spawn_delay_ == 0)
-      ACE_THROW (CORBA::BAD_PARAM ());
+      ACE_THROW_RETURN (CORBA::BAD_PARAM (), 0);
 
     this->nodeapp_path_.set (nodeapp_location);
     this->spawn_delay_ = delay;
@@ -100,10 +100,10 @@ create_node_application (const ACE_CString & options
   CIAO::NodeApplication_Callback_Impl * callback_servant = 0;
   ACE_NEW_THROW_EX (callback_servant,
                     CIAO::NodeApplication_Callback_Impl (this->orb_.in (),
-                                                              this->callback_poa_.in (),
-                                                              this->objref_.in (),
-                                                              prop.in ()),
-                    CORBA::INTERNAL ());
+                                                    this->callback_poa_.in (),
+                                                    this->objref_.in (),
+                                                    prop.in ()),
+                                                    CORBA::INTERNAL ());
   ACE_CHECK_RETURN (Deployment::NodeApplication::_nil());
 
   PortableServer::ServantBase_var servant_var (callback_servant);
