@@ -154,6 +154,18 @@ SOURCE=.\CosNamingS.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Property\CosPropertyService_i.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\CosPropertyServiceC.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\CosPropertyServiceS.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\CosTimeBaseC.cpp
 # End Source File
 # Begin Source File
@@ -888,6 +900,87 @@ USERDEP__COSNA="..\..\tao_idl\tao_idl_static.exe"
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\CosNaming.idl
 InputName=CosNaming
+
+BuildCmds= \
+	..\..\tao_idl\tao_idl_static -Wb,export_macro=TAO_ORBSVCS_Export   -Wb,export_include=orbsvcs_export.h $(InputName).idl
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\CosPropertyService.idl
+
+!IF  "$(CFG)" == "ORB Services Static - Win32 Release"
+
+# Begin Custom Build - Invoking TAO_IDL Compiler
+InputPath=.\CosPropertyService.idl
+InputName=CosPropertyService
+
+BuildCmds= \
+	..\..\tao_idl\tao_idl_static -Wb,export_macro=TAO_ORBSVCS_Export   -Wb,export_include=orbsvcs_export.h $(InputName).idl
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ELSEIF  "$(CFG)" == "ORB Services Static - Win32 Debug"
+
+# Begin Custom Build - Invoking TAO_IDL Compiler
+InputPath=.\CosPropertyService.idl
+InputName=CosPropertyService
 
 BuildCmds= \
 	..\..\tao_idl\tao_idl_static -Wb,export_macro=TAO_ORBSVCS_Export   -Wb,export_include=orbsvcs_export.h $(InputName).idl
