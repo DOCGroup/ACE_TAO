@@ -20,7 +20,7 @@
 // ============================================================================
 
 // Note, for this test the config.h file *must* come first!
-#include "ace/config.h"
+#include "ace/inc_user_config.h"
 
 // Force test of ACE_U_LongLong class on all platforms except
 // ACE_WIN32 and with ACE_SIZEOF_LONG == 8.  ACE_U_LongLong isn't
@@ -47,6 +47,7 @@
 # endif /* ACE_NO_INLINE */
 #endif /* ACE_HAS_HI_RES_TIMER || (ACE_HAS_LONGLONG_T && ACE_SIZEOF_LONG == 4) */
 
+#include "test_config.h"
 #include "ace/ACE.h"
 
 #if !defined (ACE_WIN32)  &&  (ACE_SIZEOF_LONG == 4)
@@ -135,7 +136,7 @@ main (int, char *[])
   ACE_ASSERT (tv5 == tv7);
 
 #if !defined (ACE_WIN32) && (ACE_SIZEOF_LONG == 4)
-  if (test_ace_u_longlong () != 0) 
+  if (test_ace_u_longlong () != 0)
     ++ret;
 #endif /* ! ACE_WIN32 && ACE_SIZEOF_LONG == 4 */
 
