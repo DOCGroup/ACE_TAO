@@ -1,3 +1,25 @@
+Tue Jun 29 13:38:52 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* AUTHORS:
+
+	  Added an AUTHORS file to bring ACE closer to recent software
+	  distribution conventions.
+	
+	* Makefile:
+
+	  Added Carlos' websvcs directory to the release, in addition to
+	  the missing top-level ACE Configuration project files and
+	  directories.
+
+	* config.guess:
+	* config.sub:
+	* ltconfig:
+	* ltmain.sh:
+	* missing:
+	* mkinstalldirs:
+
+	  Updated from latest GNU libtool and GNU automake.
+
 Tue Jun 29 12:07:08 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* README:
