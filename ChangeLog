@@ -1,3 +1,72 @@
+Tue Apr  10 1:44:02 2001  Yamuna Krishnamurthy  <yamuna@ace.cs.wustl.edu>
+
+	* examples/QOS/Change_Sender_TSpec/receiver.cpp: 
+	* examples/QOS/Change_Sender_TSpec/receiver.dsp: 
+	* examples/QOS/Change_Sender_TSpec/sender.cpp: 
+	* examples/QOS/Change_Sender_TSpec/sender.dsp: 	
+	* examples/QOS/Change_Sender_TSpec/Sender_QoS_Event_Handler.h: 
+	* examples/QOS/Change_Sender_TSpec/Sender_QoS_Event_Handler.cpp: 
+	* examples/QOS/Change_Sender_TSpec/Receiver_QoS_Event_Handler.h: 
+	* examples/QOS/Change_Sender_TSpec/Receiver_QoS_Event_Handler.cpp: 
+	* examples/QOS/Change_Sender_TSpec/QoS_Util.h: 
+	* examples/QOS/Change_Sender_TSpec/QoS_Util.cpp: 
+	* examples/QOS/Change_Sender_TSpec/QoS_Signal_Handler.h: 
+	* examples/QOS/Change_Sender_TSpec/QoS_Signal_Handler.cpp: 
+	* examples/QOS/Change_Sender_TSpec/FlowSpec_Dbase.h: 
+	* examples/QOS/Change_Sender_TSpec/Fill_ACE_QoS.h: 
+	* examples/QOS/Change_Sender_TSpec/Fill_ACE_QoS.cpp: 
+	* examples/QOS/Change_Sender_TSpec/README: 
+	* examples/QOS/Change_Sender_TSpec/Makefile: 
+
+	  Added a test to dynamically change the Sender flow spec in
+	  order to continuously change the PATH messages.
+	
+	* examples/QOS/Change_Receiver_FlowSpec/receiver.cpp: 
+	* examples/QOS/Change_Receiver_FlowSpec/receiver.dsp: 
+	* examples/QOS/Change_Receiver_FlowSpec/sender.cpp: 
+	* examples/QOS/Change_Receiver_FlowSpec/sender.dsp: 	
+	* examples/QOS/Change_Receiver_FlowSpec/Sender_QoS_Event_Handler.h: 
+	* examples/QOS/Change_Receiver_FlowSpec/Sender_QoS_Event_Handler.cpp: 
+	* examples/QOS/Change_Receiver_FlowSpec/Receiver_QoS_Event_Handler.h: 
+	* examples/QOS/Change_Receiver_FlowSpec/Receiver_QoS_Event_Handler.cpp: 
+	* examples/QOS/Change_Receiver_FlowSpec/QoS_Util.h: 
+	* examples/QOS/Change_Receiver_FlowSpec/QoS_Util.cpp: 
+	* examples/QOS/Change_Receiver_FlowSpec/QoS_Signal_Handler.h: 
+	* examples/QOS/Change_Receiver_FlowSpec/QoS_Signal_Handler.cpp: 
+	* examples/QOS/Change_Receiver_FlowSpec/FlowSpec_Dbase.h: 
+	* examples/QOS/Change_Receiver_FlowSpec/Fill_ACE_QoS.h: 
+	* examples/QOS/Change_Receiver_FlowSpec/Fill_ACE_QoS.cpp: 
+	* examples/QOS/Change_Receiver_FlowSpec/README: 
+	* examples/QOS/Change_Receiver_FlowSpec/Makefile: 
+
+	  Added a test to dynamically change the Receiver flow spec in
+	  order to continuously change the RESV messages.
+	
+	* examples/QOS/Simple/receiver.cpp: 
+	* examples/QOS/Simple/receiver.dsp: 
+	* examples/QOS/Simple/sender.cpp: 
+	* examples/QOS/Simple/sender.dsp: 	
+	* examples/QOS/Simple/Sender_QoS_Event_Handler.h: 
+	* examples/QOS/Simple/Sender_QoS_Event_Handler.cpp: 
+	* examples/QOS/Simple/Receiver_QoS_Event_Handler.h: 
+	* examples/QOS/Simple/Receiver_QoS_Event_Handler.cpp: 
+	* examples/QOS/Simple/QoS_Util.h: 
+	* examples/QOS/Simple/QoS_Util.cpp: 
+	* examples/QOS/Simple/QoS_Signal_Handler.h: 
+	* examples/QOS/Simple/QoS_Signal_Handler.cpp: 
+	* examples/QOS/Simple/FlowSpec_Dbase.h: 
+	* examples/QOS/Simple/Fill_ACE_QoS.h: 
+	* examples/QOS/Simple/Fill_ACE_QoS.cpp: 
+	* examples/QOS/Simple/README: 
+	* examples/QOS/Simple/Makefile: 
+
+	  Moved the original QOS example to Simple.
+	
+	* examples/QOS/Makefile: 
+	* examples/QOS/QOS.dsw: 	
+	
+	  Updated the Makefile to compile the constituent tests.
+	
 Mon Apr  9 18:48:02 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* include/makeinclude/Makefile.rtems: Zapped 
