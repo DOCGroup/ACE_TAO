@@ -6,6 +6,9 @@ Wed Sep 09 07:01:26 1998  David L. Levine  <levine@cs.wustl.edu>
         * tests/Cubit/TAO/MT_Cubit/Makefile: fixed dependencies, many
           were missing a / after $(ACE_ROOT).
 
+        * TAO_IDL/be/be_interface.cpp (cleanup_gperf_temp_file): added
+          comment on why we don't delete ss on Linux.
+
 Tue Sep  8 21:47:46 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * tests/Simple/grid/Grid_i.cpp: Changed some RANGE_ERRORs
