@@ -18,19 +18,23 @@
 #ifndef DSI_FORWARDING_PROXY_H
 #define DSI_FORWARDING_PROXY_H
 
+#include "ace/pre.h"
+
 #include "orbsvcs/LoadBalancingS.h"
+#include "LoadBalancing_export.h"
+
+# if !defined (ACE_LACKS_PRAGMA_ONCE)
+#   pragma once
+# endif /* ACE_LACKS_PRAGMA_ONCE */
 
 // Forward declaration.
-class LoadBalancer_Impl;
+class TAO_LB_LoadBalancer;
 
 // @@ Ossama: we have to change the implementation to use a
 // ServantLocator, that can actually raise the ForwardingRequest
 // exception.
-// @@ Also: please remember to use the '#pragma once' madness, prefix
-// the names of your classes and don't forget the TAO_XXXX_Export
-// macros.
 
-class DSI_ForwardingProxy : public PortableServer::DynamicImplementation
+class TAO_LoadBalancing_Export TAO_LB_DSI_ForwardingProxy : public PortableServer::DynamicImplementation
 {
   // = TITLE
   //    Class that provides request forwarding.
@@ -42,8 +46,8 @@ class DSI_ForwardingProxy : public PortableServer::DynamicImplementation
   //    client should redirect its requests.
 
 public:
-  DSI_ForwardingProxy (LoadBalancer_Impl *load_balancer,
-                       const char *interface_id);
+ TAO_LB_DSI_ForwardingProxy (TAO_LB_LoadBalancer *load_balancer,
+                             const char *interface_id);
   // Constructor that sets the interface repository ID this DSI object
   // is associated with.
 
@@ -61,7 +65,7 @@ public:
     ACE_THROW_SPEC (());
 
 private:
-  LoadBalancer_Impl *load_balancer_;
+  TAO_LB_LoadBalancer *load_balancer_;
   // The load balancer implementation.
 
   CORBA::String_var interface_id_;

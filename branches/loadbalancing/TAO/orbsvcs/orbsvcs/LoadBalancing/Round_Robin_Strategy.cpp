@@ -9,22 +9,22 @@
 ACE_RCSID(orbsvcs, Round_Robin_Strategy, "$Id$")
 
 
-Round_Robin_Strategy::Round_Robin_Strategy (void)
+TAO_LB_Round_Robin_Strategy::TAO_LB_Round_Robin_Strategy (void)
   : proxies_ (),
     next_replica_ (this->proxies_.begin ())
 {
 }
 
-Round_Robin_Strategy::~Round_Robin_Strategy (void)
+TAO_LB_Round_Robin_Strategy::~TAO_LB_Round_Robin_Strategy (void)
 {
   // @@ Are the objects deactivated from the POA?  And shouldn't this
   // be done by the LoadBalancing strategy *before* the destructor is
   // invoked?
 
-  ReplicaProxySetIterator begin = this->proxies_.begin ();
-  ReplicaProxySetIterator end = this->proxies_.end ();
+  TAO_LB_ReplicaProxySetIterator begin = this->proxies_.begin ();
+  TAO_LB_ReplicaProxySetIterator end = this->proxies_.end ();
 
-  for (ReplicaProxySetIterator i = begin;
+  for (TAO_LB_ReplicaProxySetIterator i = begin;
        i != end;
        ++i)
     {
@@ -34,7 +34,7 @@ Round_Robin_Strategy::~Round_Robin_Strategy (void)
 }
 
 CORBA::Object_ptr
-Round_Robin_Strategy::replica (CORBA::Environment &ACE_TRY_ENV)
+TAO_LB_Round_Robin_Strategy::replica (CORBA::Environment &ACE_TRY_ENV)
 {
   // @@ Ossama: more code that is not thread safe
   if (this->proxies_.is_empty ())
@@ -53,7 +53,7 @@ Round_Robin_Strategy::replica (CORBA::Environment &ACE_TRY_ENV)
   if (this->next_replica_ == this->proxies_.end ())
     this->next_replica_ = this->proxies_.begin ();
 
-  ReplicaProxy_Impl * proxy_servant = *(this->next_replica_);
+  TAO_LB_ReplicaProxy * proxy_servant = *(this->next_replica_);
 
   // Advance to the next Replica in the set in preparation for the
   // next call to this method.
@@ -74,7 +74,7 @@ Round_Robin_Strategy::replica (CORBA::Environment &ACE_TRY_ENV)
 }
 
 int
-Round_Robin_Strategy::insert (ReplicaProxy_Impl *proxy)
+TAO_LB_Round_Robin_Strategy::insert (TAO_LB_ReplicaProxy *proxy)
 {
   // @@ Ossama: more code that is not thread safe
   int r = this->proxies_.insert (proxy);
@@ -83,7 +83,7 @@ Round_Robin_Strategy::insert (ReplicaProxy_Impl *proxy)
 }
 
 int
-Round_Robin_Strategy::remove (ReplicaProxy_Impl *proxy)
+TAO_LB_Round_Robin_Strategy::remove (TAO_LB_ReplicaProxy *proxy)
 {
   // @@ Ossama: more code that is not thread safe
   int r = this->proxies_.remove (proxy);

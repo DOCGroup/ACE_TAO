@@ -11,7 +11,7 @@
 
 ACE_RCSID(orbsvcs, ReplicaProxy, "$Id$")
 
-ReplicaProxy_Impl::ReplicaProxy_Impl (void)
+TAO_LB_ReplicaProxy::TAO_LB_ReplicaProxy (void)
   : has_high_load_ (0),
     balancer_ (0),
     current_load_ (0),
@@ -21,8 +21,8 @@ ReplicaProxy_Impl::ReplicaProxy_Impl (void)
 }
 
 void
-ReplicaProxy_Impl::current_load (CORBA::Float load,
-                                 CORBA::Environment &ACE_TRY_ENV)
+TAO_LB_ReplicaProxy::current_load (CORBA::Float load,
+                                   CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((LoadBalancing::ReplicaProxy::InvalidLoad,
                    CORBA::SystemException))
 {
@@ -39,7 +39,7 @@ ReplicaProxy_Impl::current_load (CORBA::Float load,
 }
 
 void
-ReplicaProxy_Impl::disconnect (CORBA::Environment &ACE_TRY_ENV)
+TAO_LB_ReplicaProxy::disconnect (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((LoadBalancing::ReplicaProxy::NotConnected,
                    CORBA::SystemException))
 {
@@ -58,10 +58,10 @@ ReplicaProxy_Impl::disconnect (CORBA::Environment &ACE_TRY_ENV)
     }
 }
 
-void ReplicaProxy_Impl::connect (LoadBalancer_Impl *balancer,
-                                 LoadBalancing::ReplicaControl_ptr control,
-                                 CORBA::Object_ptr replica,
-                                 CORBA::Environment &ACE_TRY_ENV)
+void TAO_LB_ReplicaProxy::connect (TAO_LB_LoadBalancer *balancer,
+                                   LoadBalancing::ReplicaControl_ptr control,
+                                   CORBA::Object_ptr replica,
+                                   CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((LoadBalancing::ReplicaProxy::NilControl,
                    LoadBalancing::ReplicaProxy::NilReplica,
                    CORBA::SystemException))
@@ -74,14 +74,14 @@ void ReplicaProxy_Impl::connect (LoadBalancer_Impl *balancer,
   if (balancer == 0)
     ACE_THROW (CORBA::BAD_PARAM (
       CORBA_SystemException::_tao_minor_code (
-        TAO_NULL_POINTER_MINOR_CODE,
-        0),
+        TAO_DEFAULT_MINOR_CODE,
+        EINVAL),
       CORBA::COMPLETED_NO));
   else
     this->balancer_ = balancer;
 
   if (!CORBA::is_nil (control))
-    this->control_ =  LoadBalancing::ReplicaControl::_duplicate (control);
+    this->control_ = LoadBalancing::ReplicaControl::_duplicate (control);
   else
     ACE_THROW (LoadBalancing::ReplicaProxy::NilControl ());
 

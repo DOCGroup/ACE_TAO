@@ -22,8 +22,12 @@
 #include "orbsvcs/LoadBalancingS.h"
 #include "ace/Containers.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#  pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 // Forward declarations
-class ReplicaProxy_Impl;
+class TAO_LB_ReplicaProxy;
 
 // @@ Ossama: is this the kind of data structure that you want to use
 // in this case? I mean the iterator is invalidated on each insertion
@@ -32,10 +36,10 @@ class ReplicaProxy_Impl;
 // servers should be small (say around 10), and additions/removals
 // rare, so the data structure is probably not a real problem.
 
-typedef ACE_Unbounded_Set<ReplicaProxy_Impl *> ReplicaProxySet;
-typedef ACE_Unbounded_Set_Iterator<ReplicaProxy_Impl *> ReplicaProxySetIterator;
+typedef ACE_Unbounded_Set<TAO_LB_ReplicaProxy *> TAO_LB_ReplicaProxySet;
+typedef ACE_Unbounded_Set_Iterator<TAO_LB_ReplicaProxy *> TAO_LB_ReplicaProxySetIterator;
 
-class TAO_LoadBalancing_Export Round_Robin_Strategy : public Load_Balancing_Strategy
+class TAO_LoadBalancing_Export TAO_LB_Round_Robin_Strategy : public TAO_LB_LoadBalancing_Strategy
 {
   // = TITLE
   //    Round Robin load balancing strategy
@@ -46,22 +50,23 @@ class TAO_LoadBalancing_Export Round_Robin_Strategy : public Load_Balancing_Stra
   //    fashion.
 
 public:
-  Round_Robin_Strategy (void);
+  TAO_LB_Round_Robin_Strategy (void);
   // Constructor.
 
-  ~Round_Robin_Strategy (void);
+  ~TAO_LB_Round_Robin_Strategy (void);
   // Destructor
 
   // = The Load_Balancing_Strategy methods
-  virtual CORBA::Object_ptr replica (CORBA_Environment &ACE_TRY_ENV);
-  virtual int insert (ReplicaProxy_Impl *);
-  virtual int remove (ReplicaProxy_Impl *);
+  virtual CORBA::Object_ptr replica (CORBA_Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual int insert (TAO_LB_ReplicaProxy *);
+  virtual int remove (TAO_LB_ReplicaProxy *);
 
 private:
-  ReplicaProxySet proxies_;
+  TAO_LB_ReplicaProxySet proxies_;
   // Set containing the ReplicaProxy servants.
 
-  ACE_Unbounded_Set_Iterator<ReplicaProxy_Impl*> next_replica_;
+  ACE_Unbounded_Set_Iterator<TAO_LB_ReplicaProxy *> next_replica_;
 };
 
 #endif  /* ROUND_ROBIN_STRATEGY_H */

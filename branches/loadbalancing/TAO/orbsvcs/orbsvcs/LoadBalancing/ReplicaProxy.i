@@ -1,13 +1,14 @@
+// -*- C++ -*-
 // $Id$
 
 ACE_INLINE CORBA::Float
-ReplicaProxy_Impl::current_load (void) const
+TAO_LB_ReplicaProxy::current_load (void) const
 {
   return this->current_load_;
 }
 
 ACE_INLINE CORBA::Object_ptr
-ReplicaProxy_Impl::replica (void)
+TAO_LB_ReplicaProxy::replica (void)
 {
   return CORBA::Object::_duplicate (this->replica_.in ());
 }

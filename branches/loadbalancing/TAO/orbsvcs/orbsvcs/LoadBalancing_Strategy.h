@@ -19,15 +19,17 @@
 #define LOAD_BALANCING_STRATEGY_H
 
 #include "orbsvcs/LoadBalancingS.h"
+#include "LoadBalancing_export.h"
 
-// @@ Ossama: the general comments on filenames, class names,
-// TAO_XXX_Export an other things like that apply.
+# if !defined (ACE_LACKS_PRAGMA_ONCE)
+#   pragma once
+# endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class ReplicaProxy_Impl;
+class TAO_LB_ReplicaProxy;
 
 // The abstract load balancing strategy class.
 
-class Load_Balancing_Strategy
+class TAO_LoadBalancing_Export TAO_LB_LoadBalancing_Strategy
 {
   // = TITLE
   //    Load balancing strategy abstract base class.
@@ -37,7 +39,7 @@ class Load_Balancing_Strategy
   //    strategies should implement.
 
 public:
-  virtual ~Load_Balancing_Strategy (void);
+  virtual ~TAO_LB_LoadBalancing_Strategy (void);
   // Destructor
 
   // @@ The name of the method should be more meaningful, what about:
@@ -48,14 +50,14 @@ public:
   // Return the object reference to the Replica to which requests should
   // be redirected.
 
-  virtual int insert (ReplicaProxy_Impl *) = 0;
+  virtual int insert (TAO_LB_ReplicaProxy *) = 0;
   // Insert ReplicaProxy servant into the set of replica proxies upon
   // which the load balancing algorithm is performed.
 
-  virtual int remove (ReplicaProxy_Impl *) = 0;
+  virtual int remove (TAO_LB_ReplicaProxy *) = 0;
   // Remove ReplicaProxy servant from the set of replica proxies.
 
-  virtual void load_changed (ReplicaProxy_Impl *impl,
+  virtual void load_changed (TAO_LB_ReplicaProxy *proxy,
                              CORBA::Environment &ACE_TRY_ENV);
   // The load on one proxy has changed.
   // @@ Ossama: see my comments on LoadBalancing_i about changing the

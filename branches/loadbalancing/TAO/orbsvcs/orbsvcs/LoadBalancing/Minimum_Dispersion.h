@@ -11,7 +11,7 @@
 //    Minimum_Dispersion_Strategy.h
 //
 // = AUTHOR
-//    Ossama Othman <ossama@uci.edu>
+//    Carlos O'Ryan <coryan@uci.edu>
 //
 // ============================================================================
 
@@ -22,43 +22,46 @@
 #include "orbsvcs/LoadBalancingS.h"
 #include "ace/Containers.h"
 
+# if !defined (ACE_LACKS_PRAGMA_ONCE)
+#   pragma once
+# endif /* ACE_LACKS_PRAGMA_ONCE */
+
 // @@ Ossama: my class names suck too, any idea on what would be a
 // good name for this strategy? It basically tries to keep all the
 // loads "close to the average",  if one server is much higher than
 // the load it is deemed too loaded and the advisory is sent.
 
 // Forward declarations
-class ReplicaProxy_Impl;
+class TAO_LB_ReplicaProxy;
 
-typedef ACE_Unbounded_Set<ReplicaProxy_Impl *> ReplicaProxySet;
-typedef ACE_Unbounded_Set_Iterator<ReplicaProxy_Impl *> ReplicaProxySetIterator;
+typedef ACE_Unbounded_Set<TAO_LB_ReplicaProxy *> TAO_LB_ReplicaProxySet;
+typedef ACE_Unbounded_Set_Iterator<TAO_LB_ReplicaProxy *> TAO_LB_ReplicaProxySetIterator;
 
-class TAO_LoadBalancing_Export Minimum_Dispersion_Strategy : public Load_Balancing_Strategy
+class TAO_LoadBalancing_Export TAO_LB_Minimum_Dispersion_Strategy : public TAO_LB_LoadBalancing_Strategy
 {
   // = TITLE
-  //    Round Robin load balancing strategy
+  //    Minimum Dispersion load balancing strategy
 
   // = DESCRIPTION
-  //    Simple load balancing strategy that causes requests to be
-  //    forwarded to next Replica in the set, i.e. in a "round robin"
-  //    fashion.
+  //
 
 public:
-  Minimum_Dispersion_Strategy (void);
+  TAO_LB_Minimum_Dispersion_Strategy (void);
   // Constructor.
 
-  ~Minimum_Dispersion_Strategy (void);
+  ~TAO_LB_Minimum_Dispersion_Strategy (void);
   // Destructor
 
-  // = The Load_Balancing_Strategy methods
-  virtual CORBA::Object_ptr replica (CORBA_Environment &ACE_TRY_ENV);
-  virtual int insert (ReplicaProxy_Impl *);
-  virtual int remove (ReplicaProxy_Impl *);
-  virtual void load_changed (ReplicaProxy_Impl *,
+  // = The TAO_LB_LoadBalancing_Strategy methods
+  virtual CORBA::Object_ptr replica (CORBA_Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual int insert (TAO_LB_ReplicaProxy *);
+  virtual int remove (TAO_LB_ReplicaProxy *);
+  virtual void load_changed (TAO_LB_ReplicaProxy *,
                              CORBA::Environment &ACE_TRY_ENV);
 
 private:
-  ReplicaProxySet proxies_;
+  TAO_LB_ReplicaProxySet proxies_;
   // Set containing the ReplicaProxy servants.
 };
 
