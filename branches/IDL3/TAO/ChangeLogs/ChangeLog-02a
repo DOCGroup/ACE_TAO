@@ -1,3 +1,171 @@
+Sun Mar 24 16:30:01 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/ast/ast_structure_fwd.cpp:
+        * TAO_IDL/ast/ast_union_fwd.cpp:
+        * TAO_IDL/be/be_structure_fwd.cpp:
+        * TAO_IDL/be/be_union_fwd.cpp:
+        * TAO_IDL/be/be_visitor_structure_fwd.cpp:
+        * TAO_IDL/be/be_visitor_union_fwd.cpp:
+        * TAO_IDL/be/be_visitor_structure_fwd/structure_fwd_ch.cpp:
+        * TAO_IDL/be/be_visitor_union_fwd/union_fwd_ch.cpp:
+        * TAO_IDL/be_include/be_structure_fwd.h:
+        * TAO_IDL/be_include/be_union_fwd.h:
+        * TAO_IDL/be_include/be_visitor_structure_fwd.h:
+        * TAO_IDL/be_include/be_visitor_union_fwd.h:
+        * TAO_IDL/be_include/be_visitor_structure_fwd/structure_fwd_ch.h:
+        * TAO_IDL/be_include/be_visitor_union_fwd/union_fwd_ch.h:
+        * TAO_IDL/include/ast_structure_fwd.h:
+        * TAO_IDL/include/ast_union_fwd.h:
+
+	  New files for forward declared structs and unions, along 
+	  with the associated visitors.
+
+        * TAO_IDL/Makefile.BE:
+        * TAO_IDL/Makefile.FE:
+        * TAO_IDL/TAO_IDL_BE.bor:
+        * TAO_IDL/TAO_IDL_BE_DLL.dsp
+        * TAO_IDL/TAO_IDL_BE_LIB.dsp
+        * TAO_IDL/TAO_IDL_FE.bor:
+        * TAO_IDL/TAO_IDL_FE_DLL.dsp:
+        * TAO_IDL/TAO_IDL_FE_LIB.dsp:
+        * TAO_IDL/tao_idl.cpp:
+        * TAO_IDL/tao_idl_static.dsp
+        * TAO_IDL/ast/ast_check.cpp:
+        * TAO_IDL/ast/ast_generator.cpp:
+        * TAO_IDL/ast/ast_interface.cpp:
+        * TAO_IDL/ast/ast_interface_fwd.cpp:
+        * TAO_IDL/ast/ast_module.cpp:
+        * TAO_IDL/ast/ast_redef.cpp:
+        * TAO_IDL/ast/ast_structure.cpp:
+        * TAO_IDL/ast/ast_type.cpp:
+        * TAO_IDL/be/be_constant.cpp:
+        * TAO_IDL/be/be_decl.cpp:
+        * TAO_IDL/be/be_enum.cpp:
+        * TAO_IDL/be/be_enum_val.cpp:
+        * TAO_IDL/be/be_exception.cpp:
+        * TAO_IDL/be/be_field.cpp:
+        * TAO_IDL/be/be_generator.cpp:
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_interface_fwd.cpp:
+        * TAO_IDL/be/be_module.cpp:
+        * TAO_IDL/be/be_operation.cpp:
+        * TAO_IDL/be/be_predefined_type.cpp:
+        * TAO_IDL/be/be_sequence.cpp:
+        * TAO_IDL/be/be_string.cpp:
+        * TAO_IDL/be/be_structure.cpp:
+        * TAO_IDL/be/be_typedef.cpp:
+        * TAO_IDL/be/be_union.cpp:
+        * TAO_IDL/be/be_union_branch.cpp:
+        * TAO_IDL/be/be_valuetype.cpp:
+        * TAO_IDL/be/be_visitor.cpp:
+        * TAO_IDL/be/be_visitor_amh_pre_proc.cpp:
+        * TAO_IDL/be/be_visitor_ami_pre_proc.cpp:
+        * TAO_IDL/be/be_visitor_factory.cpp:
+        * TAO_IDL/be/be_visitor_interface.cpp:
+        * TAO_IDL/be/be_visitor_module.cpp:
+        * TAO_IDL/be/be_visitor_sequence.cpp:
+        * TAO_IDL/be/be_visitor_valuetype.cpp:
+        * TAO_IDL/be/be_visitor_argument/invoke_cs.cpp:
+        * TAO_IDL/be/be_visitor_argument/marshal_ss.cpp:
+        * TAO_IDL/be/be_visitor_argument/post_upcall_ss.cpp:
+        * TAO_IDL/be/be_visitor_argument/pre_invoke_cs.cpp:
+        * TAO_IDL/be/be_visitor_argument/upcall_ss.cpp:
+        * TAO_IDL/be/be_visitor_array/array_ch.cpp:
+        * TAO_IDL/be/be_visitor_array/array_ci.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface.cpp:
+        * TAO_IDL/be/be_visitor_module/module.cpp:
+        * TAO_IDL/be/be_visitor_operation/interceptors_info_rettype.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/remote_proxy_impl_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/rettype.cpp:
+        * TAO_IDL/be/be_visitor_operation/rettype_marshal_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/rettype_return_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/rettype_vardecl_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/rettype_vardecl_ss.cpp:
+        * TAO_IDL/be/be_visitor_sequence/buffer_type.cpp:
+        * TAO_IDL/be/be_visitor_sequence/elemtype.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_unbounded_sequence_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_base.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_ci.cpp:
+        * TAO_IDL/be/be_visitor_structure/structure_ch.cpp:
+        * TAO_IDL/be/be_visitor_structure/structure_ci.cpp:
+        * TAO_IDL/be/be_visitor_union/union_ch.cpp:
+        * TAO_IDL/be/be_visitor_union/union_ci.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/private_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype.cpp:
+        * TAO_IDL/be_include/be_codegen.h:
+        * TAO_IDL/be_include/be_decl.h:
+        * TAO_IDL/be_include/be_enum_val.h:
+        * TAO_IDL/be_include/be_field.h:
+        * TAO_IDL/be_include/be_generator.h:
+        * TAO_IDL/be_include/be_interface_fwd.h:
+        * TAO_IDL/be_include/be_module.h:
+        * TAO_IDL/be_include/be_operation.h:
+        * TAO_IDL/be_include/be_union_branch.h:
+        * TAO_IDL/be_include/be_visitor.h:
+        * TAO_IDL/be_include/be_visitor_argument.h:
+        * TAO_IDL/be_include/be_visitor_enum.h:
+        * TAO_IDL/be_include/be_visitor_exception.h:
+        * TAO_IDL/be_include/be_visitor_interface.h:
+        * TAO_IDL/be_include/be_visitor_interface_fwd.h:
+        * TAO_IDL/be_include/be_visitor_typecode.h:
+        * TAO_IDL/be_include/be_visitor_typedef.h:
+        * TAO_IDL/be_include/be_visitor_valuetype_fwd.h:
+        * TAO_IDL/be_include/be_visitor_argument/marshal_ss.h:
+        * TAO_IDL/be_include/be_visitor_argument/post_upcall_ss.h:
+        * TAO_IDL/be_include/be_visitor_argument/upcall_ss.h:
+        * TAO_IDL/be_include/be_visitor_interface/interface.h:
+        * TAO_IDL/be_include/be_visitor_module/module.h:
+        * TAO_IDL/be_include/be_visitor_sequence/buffer_type.h:
+        * TAO_IDL/be_include/be_visitor_sequence/elemtype.h:
+        * TAO_IDL/be_include/be_visitor_sequence/sequence_base.h:
+        * TAO_IDL/be_include/be_visitor_valuetype/valuetype.h:
+        * TAO_IDL/fe/fe_declarator.cpp:
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/include/ast_decl.h:
+        * TAO_IDL/include/ast_extern.h:
+        * TAO_IDL/include/ast_generator.h:
+        * TAO_IDL/include/ast_interface.h:
+        * TAO_IDL/include/ast_interface_fwd.h:
+        * TAO_IDL/include/ast_module.h:
+        * TAO_IDL/include/ast_type.h:
+        * TAO_IDL/include/ast_visitor.h:
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/include/utl_err.h:
+        * TAO_IDL/include/utl_idlist.h:
+        * TAO_IDL/include/utl_scope.h:
+        * TAO_IDL/util/utl_err.cpp:
+        * TAO_IDL/util/utl_idlist.cpp:
+        * TAO_IDL/util/utl_scope.cpp:
+
+	  - Added functionality to existing files to complete the
+	    support of forward declared structs and unions, including
+	    checks to output an error message if a forward declared
+	    struct or union is used anywhere but as a sequence element.
+
+	  - Moved the AST_Interface method compare(), which compares
+	    two scoped names for equality, to UTL_IdList, so it can
+	    be used with any two scoped names.
+
+	  - Moved the SIZE_TYPE enum, along with its associated
+	    set/set/compute methods, from class be_decl to class
+	    AST_Type, making it accessible to the front end, and
+	    not inherited by any class that doesn't need it. Also
+	    removed size type functionality from class be_operation,
+	    since it was never used.
+
+	  - Removed generation of 'struct <structname>' from code
+	    generation for fully defined struct, and removed
+	    'class <classname>' from code generation for fully
+	    defined union. If these occur inside an interface or
+	    value type, and the struct or union has been previously
+	    forward declared, the MSVC compiler has an internal error.
+
+	  - Cosmetic changes to both source code and generated code.
+
 Fri Mar 15 16:02:47 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/Makefile.EXE:
