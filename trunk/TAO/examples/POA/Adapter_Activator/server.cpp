@@ -62,7 +62,7 @@ public:
   CORBA::Boolean unknown_adapter (PortableServer::POA_ptr parent,
                                   const char *name,
                                   CORBA_Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException);
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::PolicyList first_poa_policies_;
   CORBA::PolicyList second_poa_policies_;

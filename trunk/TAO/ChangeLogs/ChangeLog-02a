@@ -1,3 +1,10 @@
+Tue Jul 18 10:00:27 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* examples/POA/Adapter_Activator/server.cpp (AdapterActivator):
+	  Fixed typo.
+
+        * tao/POA.pidl: Forgot to remove file in last checkin.
+
 Mon Jul 17 19:51:02 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/POA.i (TAO_POA_Guard): Changes the guard to throw INTERNAL
