@@ -1,3 +1,10 @@
+Wed Feb  5 11:54:22 2003  Ossama Othman  <ossama@uci.edu>
+
+	* Makefile.am:
+
+	  Neglected to commit this file in the previous commit.  Added
+	  `apps' directory to the list of subdirectories.
+
 Sat Feb  1 14:21:38 2003  Ossama Othman  <ossama@uci.edu>
 
 	* configure.ac:
