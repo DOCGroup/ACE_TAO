@@ -1,3 +1,13 @@
+Thu Aug  7 09:51:31 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* factories.cpp: Incorrect use of ACE_ASSERT in
+	TAO_Server_Factory::object_lookup_strategy removed.
+
+	* objtable.cpp: The octet sequence object key was being cast into
+	a char* resulting in undefined behavior at times due to the lack
+	of a NULL character to terminate it. Changes were made in the bind
+	and find methods of TAO_Active_Demux_Table.
+
 Thu Aug 07 03:52:31 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* TAO version 0.0.8, released Thu Aug 07 03:52:31 1997.
