@@ -519,7 +519,18 @@ NS_BindingIterator::destroy (CORBA::Environment &IT_env)
   //  CORBA::release (tie_ref_);
 }
 
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
+// These templates will specialized in libACE.* if the platforms does
+// not define ACE_MT_SAFE.
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Hash_Map_Manager<NS_ExtId, NS_IntId, ACE_Null_Mutex>;
 template class  ACE_Hash_Map_Entry<NS_ExtId, NS_IntId>;
-template class  ACE_Hash_Map_Iterator<NS_ExtId, NS_IntId, ACE_Null_Mutex> ;
+template class  ACE_Hash_Map_Iterator<NS_ExtId, NS_IntId, ACE_Null_Mutex>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Hash_Map_Manager<NS_ExtId, NS_IntId, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Entry<NS_ExtId, NS_IntId>
+#pragma instantiate ACE_Hash_Map_Iterator<NS_ExtId, NS_IntId, ACE_Null_Mutex>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+#endif /* ACE_MT_SAFE */
 
