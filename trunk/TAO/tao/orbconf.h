@@ -321,18 +321,6 @@ const size_t TAO_DEFAULT_ORB_TABLE_SIZE = 16;
 #define TAO_ENV_DECLARE_NEW_ENV \
     TAO_ENV_EMIT_CODE(ACE_DECLARE_NEW_CORBA_ENV)
 
-/**
- * Please do not use, obsolescent.  Use TAO_ENV_DECLARE_NEW_ENV
- * instead.
- * @todo remove all uses of this macro from ACE+TAO.
- */
-#if !defined (TAO_HAS_EXCEPTIONS) || defined (TAO_ENV_BKWD_COMPAT)
-#  define TAO_ENV_ARG_DEFN
-#else
-#  define TAO_ENV_ARG_DEFN CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ()
-#endif /* TAO_HAS_EXCEPTIONS */
-//@}
-
 #if !defined (TAO_HAS_EXCEPTIONS)
 // This thing can be moved into the above when we drop TAO_ENV_BKWD_COMPAT.
 #  define TAO_ENV_RAISE(ex) ACE_TRY_ENV.exception (ex)
