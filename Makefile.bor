@@ -4,6 +4,7 @@
 
 DIRS = \
         ace \
+        examples \
         performance-tests \
         tests
 

@@ -1,3 +1,12 @@
+Tue Jan  1 14:09:26 2002  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * examples/Map_Manager/test_hash_map_manager.cpp:
+          Made this example compiling when ACE_USES_WCHAR is set
+
+        * Makefile.bor:
+          Added examples directory because all examples for which there are
+          BCB makefiles now build when ACE_USES_WCHAR is set
+
 Tue Jan  1 00:02:12 2002  Nanbor Wang <nanbor@cs.wustl.edu>
 
         * ace/ace_dll.vcp: Added String_Base_Const.*.
