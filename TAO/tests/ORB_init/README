@@ -59,7 +59,7 @@ test.  The correct output is:
 
         Successfully caught CORBA system exception after the
         last ORB was released with the following repository ID:
-          IDL:omg.org/CORBA/UNKNOWN:1.0
+          IDL:omg.org/CORBA/OBJECT_NOT_EXIST:1.0
         This exception was expected.  It is safe to ignore it.
 
         ORB_init test completed successfully.
