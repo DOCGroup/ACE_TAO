@@ -179,6 +179,10 @@ SOURCE=.\CORBALOC_Parser.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\CORBANAME_Parser.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\CurrentC.h
 # End Source File
 # Begin Source File
@@ -835,6 +839,10 @@ SOURCE=.\CORBALOC_Parser.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\CORBANAME_Parser.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\default_client.i
 # End Source File
 # Begin Source File
@@ -1312,6 +1320,10 @@ SOURCE=.\corbafwd.cpp
 # Begin Source File
 
 SOURCE=.\CORBALOC_Parser.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\CORBANAME_Parser.cpp
 # End Source File
 # Begin Source File
 
