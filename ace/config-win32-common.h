@@ -7,6 +7,11 @@
 #ifndef ACE_WIN32_COMMON_H
 #define ACE_WIN32_COMMON_H
 
+// Define WIN32 if not already defined.
+#ifndef WIN32
+#define WIN32
+#endif /* WIN32 */
+
 // ---------------- platform features or lack of them -------------
 
 #if !defined (ACE_HAS_WINCE)

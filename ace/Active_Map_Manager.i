@@ -61,3 +61,49 @@ ACE_Active_Map_Manager_Key::increment_generation_count (void)
   ++this->generation_;
 }
 
+/* static */
+ACE_INLINE size_t
+ACE_Active_Map_Manager_Key::size (void)
+{
+  return sizeof (u_long) + sizeof (u_long);
+}
+
+ACE_INLINE void 
+ACE_Active_Map_Manager_Key::decode (const void *d)
+{
+  // Cast so that we can do pointer arithmetic.
+  const char *data = (const char *) d;
+
+  // Grab the index first.
+  ACE_OS::memcpy (&this->index_,
+                  data,
+                  sizeof this->index_);
+
+  // Move along...
+  data += sizeof this->index_;
+
+  // Grab the generation second.
+  ACE_OS::memcpy (&this->generation_,
+                  data,
+                  sizeof this->generation_);
+}
+
+ACE_INLINE void 
+ACE_Active_Map_Manager_Key::encode (void *d) const
+{
+  // Cast so that we can do pointer arithmetic.
+  char *data = (char *) d;
+
+  // Grab the index first.
+  ACE_OS::memcpy (data,
+                  &this->index_,
+                  sizeof this->index_);
+
+  // Move along...
+  data += sizeof this->index_;
+
+  // Grab the generation second.
+  ACE_OS::memcpy (data,
+                  &this->generation_,
+                  sizeof this->generation_);
+}

@@ -17,4 +17,4 @@ ACE_RCSID(ace, Active_Map_Manager_T, "$Id$")
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Active_Map_Manager)
 
-#endif /* ACE_ACTIVE_MAP_MANAGER_C */
+#endif /* ACE_ACTIVE_MAP_MANAGER_T_C */

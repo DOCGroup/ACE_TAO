@@ -1,7 +1,8 @@
 // $Id$
 
 template <class T> ACE_INLINE int 
-ACE_Active_Map_Manager<T>::create_key (ACE_Active_Map_Manager_Key &key)
+ACE_Active_Map_Manager<T>::bind (ACE_Active_Map_Manager_Key &key,
+                                 T *&internal_value)
 {
   size_t index;
   int result = this->next_free (index);
@@ -17,6 +18,29 @@ ACE_Active_Map_Manager<T>::create_key (ACE_Active_Map_Manager_Key &key)
 
       // Copy the key for the user.
       key = this->search_structure_[index].ext_id_;
+
+      // This is where the user should place the value.
+      internal_value = &this->search_structure_[index].int_id_;
+
+      // Update the current size.
+      ++this->cur_size_;
+    }
+
+  return result;
+}
+
+template <class T> ACE_INLINE int 
+ACE_Active_Map_Manager<T>::bind (const T &value,
+                                 ACE_Active_Map_Manager_Key &key)
+{
+  T *internal_value = 0;
+  int result = this->bind (key,
+                           internal_value);
+
+  if (result == 0)
+    {
+      // Store new value.
+      *internal_value = value;
     }
 
   return result;
@@ -30,25 +54,8 @@ ACE_Active_Map_Manager<T>::bind (const T &value)
 }
 
 template <class T> ACE_INLINE int 
-ACE_Active_Map_Manager<T>::bind (const T &value,
-                                 ACE_Active_Map_Manager_Key &key)
-{
-  int result = this->create_key (key);
-
-  if (result == 0)
-    {
-      // Store new value.
-      this->search_structure_[key.index ()].int_id_ = value;
-
-      // Update the current size.
-      ++this->cur_size_;
-    }
-
-  return result;
-}
-
-template <class T> ACE_INLINE int 
-ACE_Active_Map_Manager<T>::find (const ACE_Active_Map_Manager_Key &key)
+ACE_Active_Map_Manager<T>::find (const ACE_Active_Map_Manager_Key &key,
+                                 T *&internal_value)
 {
   size_t index = key.index ();
   size_t generation = key.generation ();
@@ -56,22 +63,52 @@ ACE_Active_Map_Manager<T>::find (const ACE_Active_Map_Manager_Key &key)
   if (index > this->total_size_ ||
       this->search_structure_[index].ext_id_.generation () != generation ||
       this->search_structure_[index].ext_id_.index () == this->free_list_id ())
-    return -1;
+    {
+      return -1;
+    }
+  else
+    {
+      // This is where the user value is.
+      internal_value = &this->search_structure_[index].int_id_;
+    }
 
   return 0;
+}
+
+template <class T> ACE_INLINE int 
+ACE_Active_Map_Manager<T>::find (const ACE_Active_Map_Manager_Key &key)
+{
+  T *internal_value = 0;
+  return this->find (key, 
+                     internal_value);
 }
 
 template <class T> ACE_INLINE int 
 ACE_Active_Map_Manager<T>::find (const ACE_Active_Map_Manager_Key &key, 
                                  T &value)
 {  
+  T *internal_value = 0;
+  int result = this->find (key,
+                           internal_value);
+  
+  if (result == 0)
+    {
+      value = *internal_value;
+    }
+
+  return result;
+}
+
+template <class T> ACE_INLINE int 
+ACE_Active_Map_Manager<T>::rebind (const ACE_Active_Map_Manager_Key &key,
+                                   const T &value)
+{
   int result = this->find (key);
   
   if (result == 0)
     {
-      // Get current value for key.
-      size_t index = key.index ();
-      value = this->search_structure_[index].int_id_;
+      // Store new value.
+      this->search_structure_[key.index ()].int_id_ = value;
     }
 
   return result;
@@ -98,12 +135,20 @@ ACE_Active_Map_Manager<T>::rebind (const ACE_Active_Map_Manager_Key &key,
 
 template <class T> ACE_INLINE int 
 ACE_Active_Map_Manager<T>::rebind (const ACE_Active_Map_Manager_Key &key,
-                                   const T &value)
+                                   const T &value,
+                                   ACE_Active_Map_Manager_Key &old_key,
+                                   T &old_value)
 {
   int result = this->find (key);
   
   if (result == 0)
     {
+      // Copy old key.
+      old_key = this->search_structure_[key.index ()].ext_id_;
+      
+      // Copy old value.
+      old_value = this->search_structure_[key.index ()].int_id_;
+      
       // Store new value.
       this->search_structure_[key.index ()].int_id_ = value;
     }
@@ -111,35 +156,42 @@ ACE_Active_Map_Manager<T>::rebind (const ACE_Active_Map_Manager_Key &key,
   return result;
 }
 
-template <class T> ACE_INLINE void
-ACE_Active_Map_Manager<T>::shared_unbind (const ACE_Active_Map_Manager_Key &key)
+template <class T> ACE_INLINE int
+ACE_Active_Map_Manager<T>::unbind (const ACE_Active_Map_Manager_Key &key,
+                                   T *&internal_value)
 {
-  size_t index = key.index ();      
+  int result = this->find (key,
+                           internal_value);
+  
+  if (result == 0)
+    {
+      size_t index = key.index ();      
+      
+      // Move from occupied list to free list
+      this->move_from_occupied_list_to_free_list (index);
 
-  // Move from occupied list to free list
-  this->move_from_occupied_list_to_free_list (index);
+      // Reset the index.  This will tell us that this entry is free.
+      this->search_structure_[index].ext_id_.index (this->free_list_id ());
 
-  // Reset the index.  This will tell us that this entry is free.
-  this->search_structure_[index].ext_id_.index (this->free_list_id ());
+      // Update the current size.
+      --this->cur_size_;
+    }
 
-  // Update the current size.
-  --this->cur_size_;
+  return result;
 }
 
 template <class T> ACE_INLINE int 
 ACE_Active_Map_Manager<T>::unbind (const ACE_Active_Map_Manager_Key &key, 
                                    T &value)
 {
-  int result = this->find (key);
+  T *internal_value;
+  int result = this->unbind (key,
+                             internal_value);
   
   if (result == 0)
     {
       // Copy old value.
-      size_t index = key.index ();      
-      value = this->search_structure_[index].int_id_;
-
-      // Unbind.
-      this->shared_unbind (key);
+      value = *internal_value;
     }
 
   return result;
@@ -148,15 +200,9 @@ ACE_Active_Map_Manager<T>::unbind (const ACE_Active_Map_Manager_Key &key,
 template <class T> ACE_INLINE int 
 ACE_Active_Map_Manager<T>::unbind (const ACE_Active_Map_Manager_Key &key)
 {
-  int result = this->find (key);
-  
-  if (result == 0)
-    {
-      // Unbind.
-      this->shared_unbind (key);
-    }
-
-  return result;
+  T *internal_value;
+  return this->unbind (key,
+                       internal_value);
 }
 
 template <class T> ACE_INLINE 

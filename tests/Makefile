@@ -27,6 +27,7 @@ BIN =   Aio_Platform_Test \
 	OrdMultiSet_Test \
 	Hash_Map_Manager_Test \
 	IOStream_Test \
+	Map_Test \
 	Map_Manager_Test \
 	Mem_Map_Test \
 	MM_Shared_Memory_Test \
