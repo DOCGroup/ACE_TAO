@@ -88,7 +88,9 @@ my(%custom) = ('commandflags'  => 1,
               );
 
 ## Deal with these components in a special way
-my(@specialComponents) = ('header_files', 'inline_files');
+my(%specialComponents) = ('header_files' => 1,
+                          'inline_files' => 1,
+                         );
 
 ## Valid component names within a project along with the valid file extensions
 my(%vc) = ('source_files'        => [ "\\.cpp", "\\.cxx", "\\.cc", "\\.c", "\\.C", ],
@@ -278,11 +280,13 @@ sub begin_project {
       }
 
       if (defined $file) {
-        foreach my $currently (@{$self->{'reading_parent'}}) {
-          if ($currently eq $file) {
-            $status = 0;
-            $error = 'Cyclic inheritance detected: ' .
-                     $parent;
+        if (defined $self->{'reading_parent'}->[0]) {
+          foreach my $currently (@{$self->{'reading_parent'}}) {
+            if ($currently eq $file) {
+              $status = 0;
+              $error = 'Cyclic inheritance detected: ' .
+                       $parent;
+            }
           }
         }
 
@@ -294,7 +298,7 @@ sub begin_project {
             push(@{$self->{'reading_parent'}}, $file);
 
             ## Collect up some information about the inheritance tree
-            my($tree) = $self->get_current_input();
+            my($tree) = $self->{'current_input'};
             if (!defined $self->{'inheritance_tree'}->{$tree}) {
               $self->{'inheritance_tree'}->{$tree} = {};
             }
@@ -323,7 +327,7 @@ sub begin_project {
             if (!defined $self->{'reading_parent'}->[0]) {
               $file =~ s/\.[^\.]+$//;
               $self->information('Inheriting from \'' . basename($file) .
-                                 '\' in ' . $self->get_current_input() .
+                                 '\' in ' . $self->{'current_input'} .
                                  ' is redundant at line ' .
                                  $self->get_line_number() . '.');
             }
@@ -675,11 +679,8 @@ sub parse_components {
     $$comps{$current} = [];
   }
 
-  foreach my $special (@specialComponents) {
-    if ($special eq $tag) {
-      $self->{'special_supplied'}->{$tag} = 1;
-      last;
-    }
+  if (defined $specialComponents{$tag}) {
+    $self->{'special_supplied'}->{$tag} = 1;
   }
 
   while(<$fh>) {
@@ -782,7 +783,7 @@ sub process_feature {
   my($names)   = shift;
   my($parents) = shift;
   my($status)  = 1;
-  my($error)   = '';
+  my($error)   = undef;
 
   my($requires) = '';
   my($avoids)   = '';
@@ -901,7 +902,7 @@ sub parse_define_custom {
       }
       elsif ($line =~ /^}/) {
         $status = 1;
-        $errorString = '';
+        $errorString = undef;
 
         ## Propagate the custom defined values into the mapped values
         foreach my $key (keys %{$self->{'valid_names'}}) {
@@ -1066,9 +1067,9 @@ sub process_duplicate_modification {
       my($parts) = $self->create_array($nval);
       my(%seen)  = ();
       my($value) = '';
-      foreach my $part (reverse @$parts) {
+      foreach my $part (@$parts) {
         if (!defined $seen{$part}) {
-          $value = "$part $value";
+          $value .= $part . ' ';
           $seen{$part} = 1;
         }
       }
@@ -1081,11 +1082,11 @@ sub process_duplicate_modification {
 sub read_template_input {
   my($self)        = shift;
   my($status)      = 1;
-  my($errorString) = '';
+  my($errorString) = undef;
   my($file)        = undef;
   my($tag)         = undef;
   my($ti)          = $self->get_ti_override();
-  my($override)    = 0;
+  my($override)    = undef;
 
   if ($self->exe_target()) {
     if ($self->get_static() == 1) {
@@ -1270,48 +1271,49 @@ sub generate_default_target_names {
 
 
 sub generate_default_pch_filenames {
-  my($self)  = shift;
-  my($files) = shift;
-  my($pname) = $self->escape_regex_special(
-                       $self->get_assignment('project_name'));
+  my($self)    = shift;
+  my($files)   = shift;
+  my($pchhdef) = (defined $self->get_assignment('pch_header'));
+  my($pchcdef) = (defined $self->get_assignment('pch_source'));
 
-  if (!defined $self->get_assignment('pch_header')) {
-    my($count)    = 0;
-    my($matching) = undef;
+  if (!$pchhdef || !$pchcdef) {
+    my($pname)     = $self->escape_regex_special(
+                             $self->get_assignment('project_name'));
+    my($hcount)    = 0;
+    my($ccount)    = 0;
+    my($hmatching) = undef;
+    my($cmatching) = undef;
     foreach my $file (@$files) {
-      foreach my $ext (@{$self->{'valid_components'}->{'header_files'}}) {
-        if ($file =~ /(.*_pch$ext)$/) {
-          $self->process_assignment('pch_header', $1);
-          ++$count;
-          if ($file =~ /$pname/) {
-            $matching = $file;
+      if (!$pchhdef) {
+        foreach my $ext (@{$self->{'valid_components'}->{'header_files'}}) {
+          if ($file =~ /(.*_pch$ext)$/) {
+            $self->process_assignment('pch_header', $1);
+            ++$hcount;
+            if ($file =~ /$pname/) {
+              $hmatching = $file;
+            }
+            last;
           }
-          last;
+        }
+      }
+      if (!$pchcdef) {
+        foreach my $ext (@{$self->{'valid_components'}->{'source_files'}}) {
+          if ($file =~ /(.*_pch$ext)$/) {
+            $self->process_assignment('pch_source', $1);
+            ++$ccount;
+            if ($file =~ /$pname/) {
+              $cmatching = $file;
+            }
+            last;
+          }
         }
       }
     }
-    if ($count > 1 && defined $matching) {
-      $self->process_assignment('pch_header', $matching);
+    if (!$pchhdef && $hcount > 1 && defined $hmatching) {
+      $self->process_assignment('pch_header', $hmatching);
     }
-  }
-
-  if (!defined $self->get_assignment('pch_source')) {
-    my($count)    = 0;
-    my($matching) = undef;
-    foreach my $file (@$files) {
-      foreach my $ext (@{$self->{'valid_components'}->{'source_files'}}) {
-        if ($file =~ /(.*_pch$ext)$/) {
-          $self->process_assignment('pch_source', $1);
-          ++$count;
-          if ($file =~ /$pname/) {
-            $matching = $file;
-          }
-          last;
-        }
-      }
-    }
-    if ($count > 1 && defined $matching) {
-      $self->process_assignment('pch_source', $matching);
+    if (!$pchcdef && $ccount > 1 && defined $cmatching) {
+      $self->process_assignment('pch_source', $cmatching);
     }
   }
 }
@@ -1363,20 +1365,6 @@ sub remove_extra_pch_listings {
 }
 
 
-sub is_special_tag {
-  my($self) = shift;
-  my($tag)  = shift;
-
-  foreach my $t (@specialComponents) {
-    if ($tag eq $t) {
-      return 1;
-    }
-  }
-
-  return 0;
-}
-
-
 sub sift_files {
   my($self)  = shift;
   my($files) = shift;
@@ -1395,8 +1383,7 @@ sub sift_files {
                               (!defined $pchc || $file ne $pchc)) {
         my($exclude) = 0;
         if (defined $$ec{$tag}) {
-          my($excludes) = $$ec{$tag};
-          foreach my $exc (@$excludes) {
+          foreach my $exc (@{$$ec{$tag}}) {
             if ($file =~ /$exc$/) {
               $exclude = 1;
               last;
@@ -1411,10 +1398,8 @@ sub sift_files {
           push(@saved, $file);
         }
 
-        if (!$exclude) {
-          if (!$self->already_added($array, $file)) {
-            push(@$array, $file);
-          }
+        if (!$exclude && !$self->already_added($array, $file)) {
+          push(@$array, $file);
         }
         last;
       }
@@ -1496,7 +1481,7 @@ sub generate_default_components {
         $$comps{$defcomp} = [];
         my($array) = $$comps{$defcomp};
 
-        if (!$self->is_special_tag($tag)) {
+        if (!defined $specialComponents{$tag}) {
           $self->sift_files($files, $exts, $pchh, $pchc, $tag, $array);
           if ($tag eq 'source_files') {
             foreach my $gentype (keys %{$self->{'generated_exts'}}) {
@@ -1786,9 +1771,8 @@ sub add_corresponding_component_files {
 
         if (!$found) {
           foreach my $ext (@exts) {
-            my($built) = "$sfile$ext";
-            if (-r $built) {
-               push(@$array, $built);
+            if (-r "$sfile$ext") {
+               push(@$array, "$sfile$ext");
                $found = 1;
                last;
             }
@@ -1808,7 +1792,7 @@ sub add_corresponding_component_files {
 
 sub get_default_project_name {
   my($self) = shift;
-  my($name) = $self->get_current_input();
+  my($name) = $self->{'current_input'};
 
   if ($name eq '') {
     $name = $self->transform_file_name($self->base_directory());
@@ -1844,7 +1828,7 @@ sub generate_defaults {
   ## If the pch file names are empty strings then we need to fix that
   $self->fix_pch_filenames();
 
-  ## Generate default components, but @specialComponents
+  ## Generate default components, but %specialComponents
   ## are skipped in the initial default components generation
   $self->generate_default_components(\@files);
 
@@ -1862,16 +1846,16 @@ sub generate_defaults {
     $self->list_default_generated($gentype, ['source_files']);
   }
 
-  ## Add @specialComponents files based on the
+  ## Add %specialComponents files based on the
   ## source_components (i.e. .h and .i or .inl based on .cpp)
-  foreach my $tag (@specialComponents) {
+  foreach my $tag (keys %specialComponents) {
     $self->add_corresponding_component_files(['source_files',
                                               'template_files'], $tag);
   }
 
-  ## Now, if the @specialComponents are still empty
+  ## Now, if the %specialComponents are still empty
   ## then take any file that matches the components extension
-  foreach my $tag (@specialComponents) {
+  foreach my $tag (keys %specialComponents) {
     if (!$self->{'special_supplied'}->{$tag}) {
       my($names) = $self->{$tag};
       if (defined $names) {
@@ -2158,7 +2142,7 @@ sub check_features {
 
   if ($info && !$status) {
     $self->diagnostic("Skipping " . $self->get_assignment('project_name') .
-                      " (" . $self->get_current_input() . "), it $why.");
+                      " ($self->{'current_input'}), it $why.");
   }
 
   return $status;
@@ -2187,7 +2171,7 @@ sub write_output_file {
   my($self)     = shift;
   my($name)     = shift;
   my($status)   = 0;
-  my($error)    = '';
+  my($error)    = undef;
   my($tover)    = $self->get_template_override();
   my($template) = (defined $tover ? $tover : $self->get_template()) .
                   ".$TemplateExtension";
@@ -2302,7 +2286,7 @@ sub write_output_file {
 sub write_project {
   my($self)      = shift;
   my($status)    = 1;
-  my($error)     = '';
+  my($error)     = undef;
   my($file_name) = $self->transform_file_name($self->project_file_name());
   my($progress)  = $self->get_progress_callback();
 
@@ -2490,18 +2474,13 @@ sub relative {
             my($icwd) = ($self->{'convert_slashes'} ? lc($cwd) : $cwd);
             my($ival) = ($self->{'convert_slashes'} ? lc($val) : $val);
             if (index($icwd, $ival) == 0) {
-              my($count)   = 0;
               my($current) = $icwd;
               substr($current, 0, length($ival)) = '';
               while($current =~ /^\\/) {
                 $current =~ s/^\///;
               }
-              my($length) = length($current);
-              for(my $i = 0; $i < $length; ++$i) {
-                if (substr($current, $i, 1) eq '/') {
-                  ++$count;
-                }
-              }
+
+              my($count) = ($current =~ tr/\///);
               $ival = '../' x $count;
               $ival =~ s/\/$//;
               if ($self->{'convert_slashes'}) {

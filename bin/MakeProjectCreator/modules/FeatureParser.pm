@@ -53,7 +53,7 @@ sub parse_line {
   my($if)     = shift;
   my($line)   = shift;
   my($status) = 1;
-  my($error)  = '';
+  my($error)  = undef;
 
   if ($line eq '') {
   }

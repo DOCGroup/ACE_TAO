@@ -213,7 +213,7 @@ sub parse_known {
   my($self)        = shift;
   my($line)        = shift;
   my($status)      = 1;
-  my($errorString) = '';
+  my($errorString) = undef;
   my($type)        = $self->{'grammar_type'};
   my(@values)      = ();
 
@@ -392,8 +392,8 @@ sub generate_default_file_list {
 
   if (opendir($dh, $dir)) {
     my($need_dir) = ($dir ne '.');
+    my($skip)     = 0;
     foreach my $file (grep(!/^\.\.?$/, readdir($dh))) {
-      my($skip) = 0;
       ## Prefix each file name with the directory only if it's not '.'
       my($full) = ($need_dir ? "$dir/" : '') . $file;
 
@@ -406,7 +406,10 @@ sub generate_default_file_list {
         }
       }
 
-      if (!$skip) {
+      if ($skip) {
+        $skip = 0;
+      }
+      else {
         push(@files, $full);
       }
     }
@@ -525,6 +528,8 @@ sub modify_assignment_value {
 
 
 sub get_assignment_hash {
+  ## NOTE: If anything in this block changes, then you must make the
+  ## same change in process_assignment.
   my($self)   = shift;
   my($tag)    = ($self->{'reading_global'} ? 'global_assign' : 'assign');
   my($assign) = $self->{$tag};
@@ -548,7 +553,16 @@ sub process_assignment {
 
   ## If no hash table was passed in
   if (!defined $assign) {
-    $assign = $self->get_assignment_hash();
+    ## NOTE: If anything in this block changes, then you must make the
+    ## same change in get_assignment_hash.
+    my($tag) = ($self->{'reading_global'} ? 'global_assign' : 'assign');
+    $assign  = $self->{$tag};
+
+    ## If we haven't yet defined the hash table in this project
+    if (!defined $assign) {
+      $assign = {};
+      $self->{$tag} = $assign;
+    }
   }
 
   if (defined $value) {
@@ -728,12 +742,6 @@ sub get_relative {
 }
 
 
-sub get_current_input {
-  my($self) = shift;
-  return $self->{'current_input'};
-}
-
-
 sub get_progress_callback {
   my($self) = shift;
   return $self->{'progress'};
@@ -869,6 +877,7 @@ sub process_duplicate_modification {
   #my($name)   = shift;
   #my($assign) = shift;
 }
+
 
 sub generate_recursive_input_list {
   #my($self)    = shift;
