@@ -77,7 +77,7 @@ main (int argc, char *argv[])
     {
       ACE_DEBUG ((LM_INFO,
                   "(%P|%t) Received CORBA::NO_PERMISSION from "
-                  "server.\n"));
+                  "server, as expected.\n"));
     }
   ACE_CATCHANY
     {
@@ -86,6 +86,10 @@ main (int argc, char *argv[])
       return 1;
     }
   ACE_ENDTRY;
+
+  ACE_DEBUG ((LM_DEBUG,
+              "\n"
+              "Secure_Invocation test passed.\n"));
 
   return 0;
 }

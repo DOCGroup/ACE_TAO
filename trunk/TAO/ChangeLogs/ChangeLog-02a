@@ -1,3 +1,20 @@
+Sat Jun 09 21:03:45 2001  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/tests/Security/Secure_Invocation/Foo_i.cpp:
+	* orbsvcs/tests/Security/Secure_Invocation/client.cpp:
+	* orbsvcs/tests/Security/Secure_Invocation/run_test.pl:
+	* orbsvcs/tests/Security/Secure_Invocation/server.cpp:
+
+	  More test output improvements.
+
+Sat Jun 09 20:54:10 2001  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/tests/Security/Secure_Invocation/Foo_i.cpp (baz):
+	* orbsvcs/tests/Security/Secure_Invocation/server.cpp (main): 
+
+	  Improved test output so that it is more obvious when the test
+	  passes.
+
 Sat Jun 09 19:25:06 2001  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/tests/Security/Secure_Invocation/run_test.pl:

@@ -88,8 +88,10 @@ Foo_i::baz (CORBA::Environment &ACE_TRY_ENV)
                                BUFSIZ);
 
           ACE_DEBUG ((LM_DEBUG,
-                      "(%P|%t) SecAttribute %u -- "
-                      "Certificate issuer: %s\n",
+                      "\n"
+                      "Security::SecAttribute %u -- Certificate Issuer\n"
+                      "===============================================\n"
+                      "%s\n",
                       i,
                       buf));
 
