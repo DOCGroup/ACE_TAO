@@ -30,11 +30,8 @@ Options are case sensitive, e.g., "-U" has a different meaning than "-u".
 ./server [-p <port_num>]                // starting port
          [-h <my_hostname>]             // IP address to use
          [-t <number_of_servants>]      // # of servant threads to create
-         [-s ]                          // Do NOT use the naming service
          [-f <ior_file> ]               // specify a file to output all ior's
          [-m ]                          // Use multiple priorities for threads
-         [-U ]                          // Run the server utilization test
-                                        //   use the same option on the client
          [-r ]                          // Run the thread-per-rate test
 
 [-p <port_num>] is the port number at which the server will start the
@@ -53,10 +50,6 @@ Options are case sensitive, e.g., "-U" has a different meaning than "-u".
 
         Default Value: 2
 
-[-s ] Disables the use of the naming service to register the servants.
-
-        Default Value: Use naming service enabled.
-
 [-f <ior_file> ] Use to specify a file to write all the iors from the
   different servants out to disk.
 
@@ -67,14 +60,6 @@ Options are case sensitive, e.g., "-U" has a different meaning than "-u".
 
         Default Value: Disabled.  One priority will be used for the
                        low priority threads.
-
-[-U ] Run the server utilization test.  This option overrides the "-t"
-  option.  This option sets the number threads to one.  NOTE: to use
-  this option successfully, you should also use "-U" on the client
-  side.
-
-        Default Value: Disabled. To enable, specify "-U" on the
-                       command line.
 
 [-r] turn on the thread-per-rate tests.  (Priority inversion tests)
 
@@ -89,17 +74,15 @@ by the client.
          [-d <datatype>]        // what datatype to use for calls
          [-n <num_calls>]       // number of CORBA calls to make.
          [-t <num_of_clients>]  // number of client threads to create
-         [-f <ior_file>]        // specify a file to dump the iors
-         [-r]                   // use thread-per-rate test.
-         [-o]                   // makes client use oneway calls instead
+         [-f <ior_file>]        // specify the file from which we read the object references (iors), if any.
+         [-r]                   // run thread-per-rate test.
+         [-o]                   // makes client use oneway calls.  By default, twoway calls are used.
          [-x]                   // makes a call to servant to shutdown
-         [-u <seconds> ]        // run the client utilization test for <seconds> seconds
-         [-U <seconds> ]        // run the servant utilization test for <seconds> seconds
-         [-1]                   // use one to n test.
-         [-g <granularity>]     // choose the granularity of timing calls
-         [-c]                   // obtain number of context switches.
-         [-s]                   // makes client *NOT* use the name service
-         [-m]                   // use multiple priorities for the low priority client.
+         [-u <seconds> ]        // run the client utilization test for a number of <seconds>.
+         [-1]                   // run the one-to-n test.
+         [-g <granularity>]     // choose the granularity of the timing of CORBA calls
+         [-c]                   // run the number of context switches test.
+         [-m]                   // use multiple priorities for the low priority clients.
 
 [-d <datatype>]  <datatype> is one of the following:
 
@@ -120,12 +103,12 @@ by the client.
 
         Default Value: 2
 
-[-f <ior_file> ] Use to specify a file to write all the iors from the
-  different servants out to disk.
+[-f <ior_file> ] Use to specify a file to read the object references (iors) of the
+  different servants from disk.
 
-        Default Value: nil, which means not to write the iors to disk.
+        Default Value: nil, which means not to read the iors from disk.
 
-[-r] turn on the thread-per-rate tests.  (Priority inversion tests)
+[-r] run the thread-per-rate test.  (Priority inversion tests)
 
         Default Value: Disabled.
 
@@ -134,22 +117,17 @@ by the client.
 
         Default Value: Disabled
 
-[-x] makes the client call the shutdown() method on the servant which
-   invokes the shutdown() method on the ORB and causes it to exit.
+[-x] makes the client call the shutdown() method on the servant which in turn
+   invokes the shutdown() method on the ORB and causes it to exit gracefully.
 
         Default Value: Disabled
 
-[-u] runs the client utilization test.  This option overrides the "-t"
-     option to specify one client.
+[-u <seconds>] runs the client/server utilization test for a number of <seconds>.
+     (Note: This option overrides any specified "-t" option)
 
         Default Value: Disabled
 
-[-U] runs the *servant* utilization test.  This option should be used
-     in conjunction with the server's "-U" option.
-
-        Default Value: Disabled
-
-[-1] runs one to n test.  One servant services all low priority clients.
+[-1] runs one-to-n test.  One servant services all low priority clients.
 
         Default Value: Disabled
 
@@ -178,10 +156,6 @@ by the client.
 
         Default Value: Disabled
 
-[-s] Makes client *NOT* use the name service
-
-        Default Value: Disabled.  Will try to use the naming service.
-
 [-m] Use multiple priorities for the low priority client
 
         Default Value: Disabled.  Will use one priority for all low priority clients.
@@ -189,13 +163,13 @@ by the client.
 Running on VxWorks
 ------------------
 
-To run the server and client on a single VxWorks target:
+A typical run of the server and client on a single VxWorks target:
 
   -> iam "<your login>"
   -> ld < server
   -> ld < client
-  -> spa server, "-s", "-f", "ior.txt", "-t", "2"
-  -> spa client, "-s", "-f", "ior.txt", "-t", "2", "-n", "1000"
+  -> spa server, "-f", "ior.txt", "-t", "2"
+  -> spa client, "-f", "ior.txt", "-t", "2", "-n", "1000"
 
 RESULTS
 -------
