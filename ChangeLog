@@ -1,3 +1,9 @@
+Mon Sep 23 13:00:13 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/Log_Msg_NT_Event_Log.{h,cpp}: Made the #ifdefs consistent
+	  in both the *.h and *.cpp files.  Thanks to Johnny Willemsen for
+ 	  reporting this.
+
 Mon Sep 23 13:14:28 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/Task.h (wait()):
