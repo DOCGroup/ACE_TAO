@@ -1,7 +1,8 @@
 Mon Mar 15 02:27:05 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/POA.{h,cpp} (etherealize_servants): Moved the function out
-	  of destroy method.
+	* tao/POA.{h,cpp}: Applied "some" ACE try macros into POA.
+	  (etherealize_servants): Moved the function out of destroy
+	  method.
 
 	* tao/POAManager.{h,i,cpp} (remove_poa): Removed the POAManager if
 	  there is no more POA under this POAManager's control.  The
