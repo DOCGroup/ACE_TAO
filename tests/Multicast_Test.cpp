@@ -519,8 +519,8 @@ MCT_Event_Handler::join (const ACE_INET_Addr &mcast_addr,
 {
   if (this->mcast_.join (mcast_addr, reuse_addr, net_if) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, 
-                       ACE_TEXT ("MCT_Event_Handler::join - ")
-                       ACE_TEXT ("Could not join group.\n")),
+                       ACE_TEXT ("MCT_Event_Handler::join - %p\n"),
+                       ACE_TEXT ("Could not join group")),
                       -1);
 
   char buf[MAX_STRING_SIZE];
