@@ -156,7 +156,7 @@ be_visitor_operation_interceptors_cs::
   if (!visitor)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_operation_interceptors_ch::"
+                         "be_visitor_operation_interceptors_cs::"
                          "visit_operation - "
                          "Bad visitor to return type\n"),
                         -1);
@@ -179,7 +179,7 @@ be_visitor_operation_interceptors_cs::
       *os << be_uidt;
     }
 
-  *os << ");" << be_uidt_nl << be_nl;
+  *os << ");\n" << be_uidt_nl;
 
   // Here I still need to generate the other methods + private args.
   *os << "virtual Dynamic::ParameterList * arguments "
@@ -203,8 +203,8 @@ be_visitor_operation_interceptors_cs::
       << "CORBA::Environment &ACE_TRY_ENV = " << be_idt_nl
       << "TAO_default_environment ()" << be_uidt << be_uidt_nl
       << ")" << be_nl
-      << "ACE_THROW_SPEC ((CORBA::SystemException));"
-      << be_uidt_nl << be_uidt_nl;
+      << "ACE_THROW_SPEC ((CORBA::SystemException));\n"
+      << be_uidt;
 
   // Store the result for later use.
   // generate the return type.
@@ -223,10 +223,9 @@ be_visitor_operation_interceptors_cs::
   // void since we can't have a private member to be of void type.
   if (!this->void_return_type (bt))
     {
-      *os << "void result (";
+      *os << be_nl << "void result (";
       ctx = *this->ctx_;
       ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_INFO_RETTYPE_CH);
-      ctx.sub_state (TAO_CodeGen::TAO_INTERCEPTORS_INFO_STUB);
       visitor = tao_cg->make_visitor (&ctx);
 
       if (!visitor || (bt->accept (visitor) == -1))
@@ -239,10 +238,10 @@ be_visitor_operation_interceptors_cs::
                             -1);
         }
 
-      *os << " result);\n" << be_nl;
+      *os << " result);\n";
     }
 
-  *os << "private:" << be_idt_nl;
+  *os << be_uidt_nl << "private:" << be_idt_nl;
 
   *os << "TAO_ClientRequestInfo_" << node->flat_name ();
 
@@ -342,7 +341,7 @@ be_visitor_operation_interceptors_cs::
         }
     }
 
-  *os << " &);" << be_nl;
+  *os << " &);\n" << be_nl;
 
   // Need to generate the args as reference memebers...
   // Generate the member list with the appropriate mapping. For these
@@ -391,7 +390,6 @@ be_visitor_operation_interceptors_cs::
     {
       ctx = *this->ctx_;
       ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_INFO_RETTYPE_CH);
-      ctx.sub_state (TAO_CodeGen::TAO_INTERCEPTORS_INFO_STUB);
       visitor = tao_cg->make_visitor (&ctx);
 
       if (!visitor || (bt->accept (visitor) == -1))
@@ -411,7 +409,7 @@ be_visitor_operation_interceptors_cs::
       *os << be_uidt_nl;
     }
 
-  *os << "};" << be_nl << be_nl;
+  *os << "};\n" << be_nl;
 
   return 0;
 }
@@ -863,7 +861,6 @@ be_visitor_operation_interceptors_cs::
 
       ctx = *this->ctx_;
       ctx.state (TAO_CodeGen::TAO_OPERATION_RETTYPE_CH);
-      ctx.sub_state (TAO_CodeGen::TAO_INTERCEPTORS_INFO_STUB);
       visitor = tao_cg->make_visitor (&ctx);
 
       if (!visitor || (bt->accept (visitor) == -1))

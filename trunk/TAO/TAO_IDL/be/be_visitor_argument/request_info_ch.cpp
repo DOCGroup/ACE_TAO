@@ -76,72 +76,24 @@ int be_visitor_args_request_info_ch::visit_argument (be_argument *node)
 int be_visitor_args_request_info_ch::visit_array (be_array *node)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
-  be_type *bt = 0;
-
-  // Use the typedefed name if that is the one used in the IDL defn.
-  if (this->ctx_->alias ())
-    {
-      bt = this->ctx_->alias ();
-    }
-  else
-    {
-      bt = node;
-    }
-
-  // ACE_NESTED_CLASS macros needed for MSVC, but only for stub code,
-  // because otherwise the types are not defined in the
-  // same scope, which they must be to use ACE_NESTED_CLASS.
-
-  be_decl* scope =
-    be_scope::narrow_from_scope (bt->defined_in ())->decl ();
 
   switch (this->direction ())
     {
     case AST_Argument::dir_IN:
       {
-        if (scope == this->ctx_->scope ())
-          {
-            *os << "const ACE_NESTED_CLASS (";
-            *os << scope->name () << ",";
-            *os << bt->local_name ();
-            *os  << "_slice) *";
-          }
-        else
-          {
-            *os << "const " << this->type_name (node) << "_slice *";
-          }
+        *os << "const " << this->type_name (node) << "_slice *";
 
         break;
       }
     case AST_Argument::dir_INOUT:
       {
-        if (scope == this->ctx_->scope ())
-          {
-            *os << "ACE_NESTED_CLASS (";
-	          *os << scope->name () << ",";
-	          *os << bt->local_name ();
-	          *os  << "_slice) *";
-          }
-        else
-          {
-            *os << this->type_name (node) << "_slice *";
-          }
+        *os << this->type_name (node) << "_slice *";
 
         break;
       }
     case AST_Argument::dir_OUT:
       {
-        if (scope == this->ctx_->scope ())
-          {
-            *os << "ACE_NESTED_CLASS (";
-	          *os << scope->name () << ",";
-	          *os << bt->local_name ();
-	          *os  << "_out) ";
-          }
-        else
-          {
-            *os << this->type_name (node, "_out");
-          }
+        *os << this->type_name (node, "_out");
 
         break;
       }
@@ -153,72 +105,24 @@ int be_visitor_args_request_info_ch::visit_array (be_array *node)
 int be_visitor_args_request_info_ch::visit_enum (be_enum *node)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
-  be_type *bt = 0;
-
-  // Use the typedefed name if that is the one used in the IDL defn.
-  if (this->ctx_->alias ())
-    {
-      bt = this->ctx_->alias ();
-    }
-  else
-    {
-      bt = node;
-    }
-
-  // ACE_NESTED_CLASS macros needed for MSVC, but only for stub code,
-  // because otherwise the types are not defined in the
-  // same scope, which they must be to use ACE_NESTED_CLASS.
-
-  be_decl* scope =
-    be_scope::narrow_from_scope (bt->defined_in ())->decl ();
 
   switch (this->direction ())
     {
     case AST_Argument::dir_IN:
       {
-        if (scope == this->ctx_->scope ())
-          {
-            *os << "const ACE_NESTED_CLASS (";
-            *os << scope->name () << ",";
-            *os << bt->local_name ();
-	          *os  << ") &";
-          }
-        else
-          {
-            *os << "const " << this->type_name (node) << " &";
-          }
+        *os << "const " << this->type_name (node) << " &";
 
         break;
       }
     case AST_Argument::dir_INOUT:
       {
-        if (scope == this->ctx_->scope ())
-          {
-            *os << "ACE_NESTED_CLASS (";
-	          *os << scope->name () << ",";
-	          *os << bt->local_name ();
-	          *os  << ") &";
-          }
-        else
-          {
-            *os << this->type_name (node) << " &";
-          }
+        *os << this->type_name (node) << " &";
 
         break;
       }
     case AST_Argument::dir_OUT:
       {
-        if (scope == this->ctx_->scope ())
-          {
-            *os << "ACE_NESTED_CLASS (";
-	          *os << scope->name () << ",";
-	          *os << bt->local_name ();
-	          *os  << "_out)";
-          }
-        else
-          {
-            *os << this->type_name (node, "_out");
-          }
+        *os << this->type_name (node, "_out");
 
         break;
       }
@@ -292,24 +196,6 @@ int be_visitor_args_request_info_ch::visit_predefined_type (
   )
 {
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
-  be_type *bt = 0;
-
-  // Use the typedefed name if that is the one used in the IDL defn.
-  if (this->ctx_->alias ())
-    {
-      bt = this->ctx_->alias ();
-    }
-  else
-    {
-      bt = node;
-    }
-
-  // ACE_NESTED_CLASS macros needed for MSVC, but only for stub code,
-  // because otherwise the types are not defined in the
-  // same scope, which they must be to use ACE_NESTED_CLASS.
-
-  be_decl* scope =
-    be_scope::narrow_from_scope (bt->defined_in ())->decl ();
 
   // Check if the type is an any.
   if (node->pt () == AST_PredefinedType::PT_any)
@@ -318,49 +204,19 @@ int be_visitor_args_request_info_ch::visit_predefined_type (
         {
         case AST_Argument::dir_IN:
           {
-            if (scope == this->ctx_->scope ())
-              {
-                *os << "const ACE_NESTED_CLASS (";
-                *os << scope->name () << ",";
-                *os << bt->local_name ();
-	              *os  << ") &";
-              }
-            else
-              {
-                *os << "const " << this->type_name (node) << " &";
-              }
+            *os << "const " << this->type_name (node) << " &";
 
             break;
           }
         case AST_Argument::dir_INOUT:
           {
-            if (scope == this->ctx_->scope ())
-              {
-                *os << "ACE_NESTED_CLASS (";
-                *os << scope->name () << ",";
-                *os << bt->local_name ();
-	              *os  << ") &";
-              }
-            else
-              {
-                *os << this->type_name (node) << " &";
-              }
+            *os << this->type_name (node) << " &";
 
             break;
           }
         case AST_Argument::dir_OUT:
           {
-            if (scope == this->ctx_->scope ())
-              {
-                *os << "ACE_NESTED_CLASS (";
-	              *os << scope->name () << ",";
-	              *os << bt->local_name ();
-	              *os  << "_out)";
-              }
-            else
-              {
-                *os << this->type_name (node, "_out");
-              }
+            *os << this->type_name (node, "_out");
 
             break;
           }
@@ -387,49 +243,19 @@ int be_visitor_args_request_info_ch::visit_predefined_type (
         {
         case AST_Argument::dir_IN:
           {
-            if (scope == this->ctx_->scope ())
-              {
-                *os << "const ACE_NESTED_CLASS (";
-                *os << scope->name () << ",";
-                *os << bt->local_name ();
-	              *os  << ") &";
-              }
-            else
-              {
-                *os << "const " << this->type_name (node) << " &";
-              }
+            *os << "const " << this->type_name (node) << " &";
 
             break;
           }
         case AST_Argument::dir_INOUT:
           {
-            if (scope == this->ctx_->scope ())
-              {
-                *os << "ACE_NESTED_CLASS (";
-                *os << scope->name () << ",";
-                *os << bt->local_name ();
-	              *os  << ") &";
-              }
-            else
-              {
-                *os << this->type_name (node) << " &";
-              }
+            *os << this->type_name (node) << " &";
 
             break;
           }
         case AST_Argument::dir_OUT:
           {
-            if (scope == this->ctx_->scope ())
-              {
-                *os << "ACE_NESTED_CLASS (";
-	              *os << scope->name () << ",";
-	              *os << bt->local_name ();
-	              *os  << "_out)";
-              }
-            else
-              {
-                *os << this->type_name (node, "_out");
-              }
+            *os << this->type_name (node, "_out");
 
             break;
           }
@@ -442,70 +268,22 @@ int be_visitor_args_request_info_ch::visit_predefined_type (
 int be_visitor_args_request_info_ch::visit_sequence (be_sequence *node)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get the stream
-  be_type *bt = 0;
-
-  // Use the typedefed name if that is the one used in the IDL defn.
-  if (this->ctx_->alias ())
-    {
-      bt = this->ctx_->alias ();
-    }
-  else
-    {
-      bt = node;
-    }
-
-  // ACE_NESTED_CLASS macros needed for MSVC, but only for stub code,
-  // because otherwise the types are not defined in the
-  // same scope, which they must be to use ACE_NESTED_CLASS.
-
-  be_decl* scope =
-    be_scope::narrow_from_scope (bt->defined_in ())->decl ();
 
   switch (this->direction ())
     {
     case AST_Argument::dir_IN:
       {
-        if (scope == this->ctx_->scope ())
-          {
-            *os << "const ACE_NESTED_CLASS (";
-            *os << scope->name () << ",";
-            *os << bt->local_name ();
-            *os  << ") &";
-          }
-        else
-          {
-            *os << "const " << this->type_name (node) << " &";
-          }
-
-      break;
+        *os << "const " << this->type_name (node) << " &";
+        break;
       }
     case AST_Argument::dir_INOUT:
       {
-        if (scope == this->ctx_->scope ())
-          {
-            *os << "ACE_NESTED_CLASS (";
-	          *os << scope->name () << ",";
-	          *os << bt->local_name ();
-	          *os  << ") &";
-          }
-        else
-          *os << this->type_name (node) << " &";
+        *os << this->type_name (node) << " &";
         break;
       }
     case AST_Argument::dir_OUT:
       {
-        if (scope == this->ctx_->scope ())
-          {
-            *os << "ACE_NESTED_CLASS (";
-	          *os << scope->name () << ",";
-	          *os << bt->local_name ();
-	          *os  << "_out) ";
-          }
-        else
-          {
-            *os << this->type_name (node, "_out");
-          }
-
+        *os << this->type_name (node, "_out");
         break;
       }
 
@@ -555,72 +333,24 @@ int be_visitor_args_request_info_ch::visit_string (be_string *node)
 int be_visitor_args_request_info_ch::visit_structure (be_structure *node)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get the stream
-  be_type *bt = 0;
-
-  // Use the typedefed name if that is the one used in the IDL defn.
-  if (this->ctx_->alias ())
-    {
-      bt = this->ctx_->alias ();
-    }
-  else
-    {
-      bt = node;
-    }
-
-  // ACE_NESTED_CLASS macros needed for MSVC, but only for stub code,
-  // because otherwise the types are not defined in the
-  // same scope, which they must be to use ACE_NESTED_CLASS.
-
-  be_decl* scope =
-    be_scope::narrow_from_scope (bt->defined_in ())->decl ();
 
   switch (this->direction ())
     {
     case AST_Argument::dir_IN:
       {
-        if (scope == this->ctx_->scope ())
-          {
-            *os << "const ACE_NESTED_CLASS (";
-	          *os << scope->name () << ",";
-	          *os << bt->local_name ();
-	          *os  << ") &";
-          }
-        else
-          {
-            *os << "const " << this->type_name (node) << " &";
-          }
+        *os << "const " << this->type_name (node) << " &";
 
         break;
       }
     case AST_Argument::dir_INOUT:
       {
-        if (scope == this->ctx_->scope ())
-          {
-            *os << "ACE_NESTED_CLASS (";
-	          *os << scope->name () << ",";
-	          *os << bt->local_name ();
-	          *os  << ") &";
-          }
-        else
-          {
-            *os << this->type_name (node) << " &";
-          }
+        *os << this->type_name (node) << " &";
 
         break;
       }
     case AST_Argument::dir_OUT:
       {
-        if (scope == this->ctx_->scope ())
-          {
-            *os << "ACE_NESTED_CLASS (";
-	          *os << scope->name () << ",";
-	          *os << bt->local_name ();
-	          *os  << "_out) ";
-          }
-        else
-          {
-            *os << this->type_name (node, "_out");
-          }
+        *os << this->type_name (node, "_out");
 
         break;
       }
@@ -632,72 +362,24 @@ int be_visitor_args_request_info_ch::visit_structure (be_structure *node)
 int be_visitor_args_request_info_ch::visit_union (be_union *node)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get the stream
-  be_type *bt = 0;
-
-  // Use the typedefed name if that is the one used in the IDL defn.
-  if (this->ctx_->alias ())
-    {
-      bt = this->ctx_->alias ();
-    }
-  else
-    {
-      bt = node;
-    }
-
-  // ACE_NESTED_CLASS macros needed for MSVC, but only for stub code,
-  // because otherwise the types are not defined in the
-  // same scope, which they must be to use ACE_NESTED_CLASS.
-
-  be_decl* scope =
-    be_scope::narrow_from_scope (bt->defined_in ())->decl ();
 
   switch (this->direction ())
     {
     case AST_Argument::dir_IN:
       {
-        if (scope == this->ctx_->scope ())
-          {
-            *os << "const ACE_NESTED_CLASS (";
-	          *os << scope->name () << ",";
-	          *os << bt->local_name ();
-	            *os  << ") &";
-          }
-        else
-          {
-            *os << "const " << this->type_name (node) << " &";
-          }
+        *os << "const " << this->type_name (node) << " &";
 
         break;
       }
     case AST_Argument::dir_INOUT:
       {
-        if (scope == this->ctx_->scope ())
-          {
-            *os << "ACE_NESTED_CLASS (";
-	          *os << scope->name () << ",";
-	          *os << bt->local_name ();
-	          *os  << ") &";
-          }
-        else
-          {
-            *os << this->type_name (node) << " &";
-          }
+        *os << this->type_name (node) << " &";
 
         break;
       }
     case AST_Argument::dir_OUT:
       {
-        if (scope == this->ctx_->scope ())
-          {
-            *os << "ACE_NESTED_CLASS (";
-	          *os << scope->name () << ",";
-	          *os << bt->local_name ();
-	          *os  << "_out) ";
-          }
-        else
-          {
-            *os << this->type_name (node, "_out");
-          }
+        *os << this->type_name (node, "_out");
 
         break;
       }

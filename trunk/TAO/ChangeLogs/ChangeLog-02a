@@ -1,3 +1,20 @@
+Tue Apr  3 13:04:55 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * TAO_IDL/be_include/be_codegen.h:
+        * TAO_IDL/be/be_visitor_argument/request_info_arglist.cpp:
+        * TAO_IDL/be/be_visitor_argument/request_info_ch.cpp:
+        * TAO_IDL/be/be_visitor_argument/request_info_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/interceptors_arglist.cpp:
+        * TAO_IDL/be/be_visitor_operation/interceptors_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/interceptors_info_rettype.cpp:
+        * TAO_IDL/be/be_visitor_operation/rettype.cpp:
+          Another iteration in the process of moving the interceptors to
+          the .cpp file.
+          This time we remove the ACE_NESTED_CLASS() macros, because now
+          the interceptors are always generated on a separate namespace.
+          Eliminating the macros removed the need for a sub_state, and I
+          was able to remove 1000 lines of code from the IDL compiler.
+
 Tue Apr  3 10:54:29 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/corba.h:

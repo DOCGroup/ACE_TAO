@@ -58,26 +58,7 @@ be_visitor_operation_rettype::visit_array (be_array *node)
   else
     bt = node;
 
-  // ACE_NESTED_CLASS macros needed for MSVC, but only for interceptors
-  // stub code, because otherwise the types are not defined in the
-  // same scope, which they must be to use ACE_NESTED_CLASS.
-
-  be_decl* scope =
-    be_scope::narrow_from_scope (bt->defined_in ())->decl ();
-
-  if (scope == this->ctx_->scope ()
-      && this->ctx_->sub_state () == TAO_CodeGen::TAO_INTERCEPTORS_INFO_STUB)
-    {
-      *os << "ACE_NESTED_CLASS (";
-      *os << scope->name () << ",";
-      *os << bt->local_name ();
-      *os << "_slice) *";
-    }
-  else
-    {
-      *os << bt->name () << "_slice *";
-    }
-
+  *os << bt->name () << "_slice *";
 
   return 0;
 }
@@ -94,28 +75,7 @@ be_visitor_operation_rettype::visit_enum (be_enum *node)
   else
     bt = node;
 
-  // ACE_NESTED_CLASS macros needed for MSVC, but only for interceptors
-  // stub code, because otherwise the types are not defined in the
-  // same scope, which they must be to use ACE_NESTED_CLASS.
-
-  be_decl* scope =
-    be_scope::narrow_from_scope (bt->defined_in ())->decl ();
-
-  if (scope == this->ctx_->scope ()
-      && this->ctx_->sub_state () == TAO_CodeGen::TAO_INTERCEPTORS_INFO_STUB)
-    {
-      *os << "ACE_NESTED_CLASS (";
-	    *os << scope->name () << ",";
-	    *os << bt->local_name ();
-	    *os << ")";
-
-      // Reset the substate.
-      this->ctx_->sub_state (TAO_CodeGen::TAO_SUB_STATE_UNKNOWN);
-    }
-  else
-    {
-      *os << bt->name ();
-    }
+  *os << bt->name ();
 
   return 0;
 }
@@ -183,13 +143,6 @@ be_visitor_operation_rettype::visit_predefined_type (be_predefined_type *node)
   else
     bt = node;
 
-  // ACE_NESTED_CLASS macros needed for MSVC, but only for interceptors
-  // stub code, because otherwise the types are not defined in the
-  // same scope, which they must be to use ACE_NESTED_CLASS.
-
-  be_decl* scope =
-    be_scope::narrow_from_scope (bt->defined_in ())->decl ();
-
   switch (node->pt ())
     {
     case AST_PredefinedType::PT_pseudo:
@@ -204,43 +157,13 @@ be_visitor_operation_rettype::visit_predefined_type (be_predefined_type *node)
       break;
     case AST_PredefinedType::PT_any:
       {
-        if (scope == this->ctx_->scope ()
-            && this->ctx_->sub_state () 
-                 == TAO_CodeGen::TAO_INTERCEPTORS_INFO_STUB)
-          {
-            *os << "ACE_NESTED_CLASS (";
-            *os << scope->name () << ", ";
-            *os << bt->local_name ();
-	          *os  << ") *";
-
-            // Reset the substate.
-            this->ctx_->sub_state (TAO_CodeGen::TAO_SUB_STATE_UNKNOWN);
-          }
-        else
-          {
-            *os << bt->name () << " *";
-          }
+        *os << bt->name () << " *";
 
         break;
-      } 
+      }
     default:
       {
-        if (scope == this->ctx_->scope ()
-            && this->ctx_->sub_state () 
-                 == TAO_CodeGen::TAO_INTERCEPTORS_INFO_STUB)
-          {
-            *os << "ACE_NESTED_CLASS (";
-            *os << scope->name () << ", ";
-            *os << bt->local_name ();
-	          *os  << ")";
-
-            // Reset the substate.
-            this->ctx_->sub_state (TAO_CodeGen::TAO_SUB_STATE_UNKNOWN);
-          }
-        else
-          {
-            *os << bt->name ();
-          }
+        *os << bt->name ();
 
         break;
       }
@@ -264,28 +187,7 @@ be_visitor_operation_rettype::visit_sequence (be_sequence *node)
   else
     bt = node;
 
-  // ACE_NESTED_CLASS macros needed for MSVC, but only for interceptors
-  // stub code, because otherwise the types are not defined in the
-  // same scope, which they must be to use ACE_NESTED_CLASS.
-
-  be_decl* scope =
-    be_scope::narrow_from_scope (bt->defined_in ())->decl ();
-
-  if (scope == this->ctx_->scope ()
-      && this->ctx_->sub_state () == TAO_CodeGen::TAO_INTERCEPTORS_INFO_STUB)
-    {
-      *os << "ACE_NESTED_CLASS (";
-      *os << scope->name () << ",";
-      *os << bt->local_name ();
-      *os  << ") *";
-
-      // Reset the substate.
-      this->ctx_->sub_state (TAO_CodeGen::TAO_SUB_STATE_UNKNOWN);
-    }
-  else
-    {
-      *os << bt->name () << " *";
-    }
+  *os << bt->name () << " *";
 
   return 0;
 }
@@ -320,29 +222,8 @@ be_visitor_operation_rettype::visit_structure (be_structure *node)
   else
     bt = node;
 
-  // ACE_NESTED_CLASS macros needed for MSVC, but only for interceptors
-  // stub code, because otherwise the types are not defined in the
-  // same scope, which they must be to use ACE_NESTED_CLASS.
+  *os << bt->name ();
 
-  be_decl* scope =
-    be_scope::narrow_from_scope (bt->defined_in ())->decl ();
-
-  if (scope == this->ctx_->scope ()
-      && this->ctx_->sub_state () == TAO_CodeGen::TAO_INTERCEPTORS_INFO_STUB)
-    {
-      *os << "ACE_NESTED_CLASS (";
-      *os << scope->name () << ",";
-      *os << bt->local_name ();
-      *os  << ")";
-
-      // Reset the substate.
-      this->ctx_->sub_state (TAO_CodeGen::TAO_SUB_STATE_UNKNOWN);
-    }
-  else
-    {
-      *os << bt->name ();
-    }
-  
   // Based on whether we are variable or not, we return a pointer or the
   // aggregate type.
   if (node->size_type () == be_decl::VARIABLE)
@@ -382,29 +263,8 @@ be_visitor_operation_rettype::visit_union (be_union *node)
   else
     bt = node;
 
-  // ACE_NESTED_CLASS macros needed for MSVC, but only for interceptors
-  // stub code, because otherwise the types are not defined in the
-  // same scope, which they must be to use ACE_NESTED_CLASS.
+  *os << bt->name ();
 
-  be_decl* scope =
-    be_scope::narrow_from_scope (bt->defined_in ())->decl ();
-
-  if (scope == this->ctx_->scope ()
-      && this->ctx_->sub_state () == TAO_CodeGen::TAO_INTERCEPTORS_INFO_STUB)
-    {
-      *os << "ACE_NESTED_CLASS (";
-      *os << scope->name () << ",";
-      *os << bt->local_name ();
-      *os  << ")";
-
-      // Reset the substate.
-      this->ctx_->sub_state (TAO_CodeGen::TAO_SUB_STATE_UNKNOWN);
-    }
-  else
-    {
-      *os << bt->name ();
-    }
-  
   // Based on whether we are variable or not, we return a pointer or the
   // aggregate type.
   if (node->size_type () == be_decl::VARIABLE)
