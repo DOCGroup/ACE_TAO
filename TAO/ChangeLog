@@ -5,7 +5,7 @@ Mon Jun 23 19:04:03 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
         * tao/Pseudo_VarOut_T.h:
         * tao/Seq_Var_T.h:
         * tao/VarOut_T.h:
-	* TAO_IDL/be/be_visitor_interface/iknterface_sh.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
 	  
 	  Added typedefs of the return types of the .in(), .inout(),
 	  .out() and ._retn() operations for _vars. Also added
