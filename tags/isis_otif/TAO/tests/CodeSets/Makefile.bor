@@ -1,0 +1,9 @@
+#
+# $Id$
+#
+
+DIRS = \
+        simple \
+	libs
+
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

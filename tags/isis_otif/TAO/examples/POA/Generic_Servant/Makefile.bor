@@ -1,0 +1,7 @@
+#
+# Makefile for building the POA Generic_Servant examples
+#
+
+MAKEFILES = client.bor generic_servant.bor
+
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

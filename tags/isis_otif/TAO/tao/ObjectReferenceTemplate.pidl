@@ -1,0 +1,75 @@
+// -*- IDL -*-
+
+/**
+ * @file ObjectReferenceTemplate.pidl
+ *
+ * $Id$
+ *
+ * @brief Pre-compiled IDL source for the ObjectReferenceTemplate module.
+ *
+ * This file is used to generate ObjectReferenceTemplateC.{h,i,cpp},
+ * using the following command:
+ *
+ *   tao_idl.exe
+ *        -o orig -Gp -Gd -Ge 1
+ *        -Wb,export_macro=TAO_Export
+ *        -Wb,export_include=tao/TAO_Export.h
+ *        -Wb,pre_include="ace/pre.h"
+ *        -Wb,post_include="ace/post.h"
+ *        ObjectReferenceTemplate.pidl
+ *
+ * and then:
+ *
+ * cp orig/ObjectReferenceTemplateC.{h,i,cpp} .
+ * patch < diffs/ObjectReferenceTemplate.diff
+ *
+ * The code left in ObjectReferenceTemplateC.{h,i,cpp} is ready for use.
+ *
+ */
+
+// File: ObjectReferenceTemplate.idl
+
+#ifndef _OBJECT_REFERENCE_TEMPLATE_IDL_
+#define _OBJECT_REFERENCE_TEMPLATE_IDL_
+
+#include <orb.idl>
+
+#include <OctetSeq.pidl>
+#include <StringSeq.pidl>
+
+module PortableInterceptor
+{
+  typeprefix PortableInterceptor "omg.org";
+
+  typedef string ServerId;
+  typedef string ORBId;
+  typedef CORBA::StringSeq AdapterName;
+  typedef CORBA::OctetSeq ObjectId;
+
+  abstract valuetype ObjectReferenceFactory {
+    // boolean equals (in ObjectReferenceFactory other);
+    Object make_object (in string repository_id,
+			in ObjectId id);
+    // IOP::TaggedProfileSeq make_profiles (in string repository_id,
+    //                                      in ObjectId id);
+  };
+
+  abstract valuetype ObjectReferenceTemplate : ObjectReferenceFactory {
+    readonly attribute ServerId server_id;
+    readonly attribute ORBId orb_id;
+    readonly attribute AdapterName adapter_name;
+  };
+
+  typedef sequence<ObjectReferenceTemplate> ObjectReferenceTemplateSeq;
+
+  typedef long AdapterManagerId;
+
+  typedef short AdapterState;
+  const AdapterState    HOLDING         = 0;
+  const AdapterState    ACTIVE          = 1;
+  const AdapterState    DISCARDING      = 2;
+  const AdapterState    INACTIVE        = 3;
+  const AdapterState    NON_EXISTENT    = 4;
+};
+
+#endif  /* _OBJECT_REFERENCE_TEMPLATE_IDL_ */

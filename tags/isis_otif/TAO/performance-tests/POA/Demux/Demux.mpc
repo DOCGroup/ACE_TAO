@@ -1,0 +1,16 @@
+project: namingexe {
+  Source_Files {
+    demux_test_server.cpp
+    demux_test_i.cpp
+    server.cpp
+  }
+}
+
+project(client): namingexe {
+  exename = client
+
+  Source_Files {
+    demux_test_client.cpp
+    client.cpp
+  }
+}
