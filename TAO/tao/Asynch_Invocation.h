@@ -79,6 +79,9 @@ public:
   //                         TAO_default_environment ());
   //   // No CORBA::Context support (deprecated).
 
+  const IOP::ServiceContextList& reply_service_info (void) const;
+  // Accessor to the reply ServiceContextList.
+
 private:
   int invoke_i (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException));

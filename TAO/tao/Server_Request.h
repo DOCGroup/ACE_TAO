@@ -163,6 +163,11 @@ public:
                                TAO_default_environment ()) = 0;
   // Start a Reply message.
 
+  virtual const IOP::ServiceContextList &request_service_info (void) const = 0;
+  virtual const IOP::ServiceContextList &reply_service_info (void) = 0;
+  // Accessor to the underlying ServiceContextList for request/reply
+  // message.
+
   //  CORBA::Context_ptr ctx (void) = 0;
   // return the context pointer
 

@@ -28,6 +28,7 @@
 
 #include "tao/Sequence.h"
 #include "tao/Typecode.h"
+#include "tao/IOPC.h"
 
 // Forward declarations.
 class ACE_Addr;
@@ -126,6 +127,7 @@ public:
                               const TAO_Profile *profile,
                               const char* opname,
                               CORBA::ULong request_id,
+                              const IOP::ServiceContextList &ctx,
                               CORBA::Boolean is_twoway,
                               TAO_OutputCDR &output,
                               CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())

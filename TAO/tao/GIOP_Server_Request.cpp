@@ -62,7 +62,8 @@ TAO_GIOP_ServerRequest::
     exception_type_ (TAO_GIOP_NO_EXCEPTION),
     orb_core_ (orb_core),
     version_ (version),
-    service_info_ (),
+    request_service_info_ (),
+    reply_service_info_ (),
     request_id_ (0),
     object_key_ (),
     requesting_principal_ (0)
@@ -86,7 +87,7 @@ TAO_GIOP_ServerRequest::parse_header_std (void)
 
   TAO_InputCDR& input = *this->incoming_;
 
-  input >> this->service_info_;
+  input >> this->request_service_info_;
   CORBA::Boolean hdr_status = (CORBA::Boolean) input.good_bit ();
 
   // Get the rest of the request header ...
@@ -236,7 +237,8 @@ TAO_GIOP_ServerRequest::
     exception_type_ (TAO_GIOP_NO_EXCEPTION),
     orb_core_ (orb_core),
     version_ (version),
-    service_info_ (0),
+    request_service_info_ (),
+    reply_service_info_ (),
     request_id_ (request_id),
     object_key_ (object_key),
     requesting_principal_ (0)
@@ -626,9 +628,7 @@ TAO_GIOP_ServerRequest::init_reply (CORBA::Environment &ACE_TRY_ENV)
                            *this->outgoing_,
                            this->orb_core_);
 
-  TAO_GIOP_ServiceContextList resp_ctx;
-  resp_ctx.length (0);
-  *this->outgoing_ << resp_ctx;
+  *this->outgoing_ << this->reply_service_info_;
   this->outgoing_->write_ulong (this->request_id_);
 
   // Standard exceptions are caught in Connect::handle_input

@@ -76,7 +76,7 @@ int
 TAO_Exclusive_TMS::dispatch_reply (CORBA::ULong request_id,
                                    CORBA::ULong reply_status,
                                    const TAO_GIOP_Version& version,
-                                   TAO_GIOP_ServiceContextList& reply_ctx,
+                                   IOP::ServiceContextList& reply_ctx,
                                    TAO_GIOP_Message_State* message_state)
 {
   // There can be only one message state possible. Just do a sanity
@@ -235,7 +235,7 @@ int
 TAO_Muxed_TMS::dispatch_reply (CORBA::ULong request_id,
                                CORBA::ULong reply_status,
                                const TAO_GIOP_Version &version,
-                               TAO_GIOP_ServiceContextList &reply_ctx,
+                               IOP::ServiceContextList &reply_ctx,
                                TAO_GIOP_Message_State *message_state)
 {
   // This message state should be the same as the one we have here,

@@ -266,6 +266,7 @@ TAO_GIOP::dump_msg (const char *label,
     }
 }
 
+#if 0
 CORBA::Boolean
 operator<< (TAO_OutputCDR &cdr,
             const TAO_GIOP_ServiceContext &x)
@@ -323,6 +324,7 @@ operator>> (TAO_InputCDR &cdr,
     }
   return (CORBA::Boolean) cdr.good_bit ();
 }
+#endif /* 0 */
 
 CORBA::Boolean
 TAO_GIOP::start_message (const TAO_GIOP_Version &version,
@@ -337,7 +339,8 @@ TAO_GIOP::start_message (const TAO_GIOP_Version &version,
 }
 
 CORBA::Boolean
-TAO_GIOP::write_request_header (CORBA::ULong request_id,
+TAO_GIOP::write_request_header (const IOP::ServiceContextList& svc_ctx,
+                                CORBA::ULong request_id,
                                 CORBA::Boolean is_roundtrip,
                                 const TAO_opaque& key,
                                 const char *opname,
@@ -346,7 +349,7 @@ TAO_GIOP::write_request_header (CORBA::ULong request_id,
                                 TAO_ORB_Core *orb_core)
 {
   if (orb_core->orb_params ()->use_lite_protocol ())
-    return TAO_GIOP::write_request_header_lite (orb_core->service_context (),
+    return TAO_GIOP::write_request_header_lite (svc_ctx,
                                                 request_id,
                                                 is_roundtrip,
                                                 key,
@@ -354,7 +357,7 @@ TAO_GIOP::write_request_header (CORBA::ULong request_id,
                                                 principal,
                                                 msg);
   else
-    return TAO_GIOP::write_request_header_std (orb_core->service_context (),
+    return TAO_GIOP::write_request_header_std (svc_ctx,
                                                request_id,
                                                is_roundtrip,
                                                key,
@@ -797,7 +800,7 @@ int
 TAO_GIOP::parse_reply (TAO_Transport *,
                        TAO_ORB_Core *,
                        TAO_GIOP_Message_State &state,
-                       TAO_GIOP_ServiceContextList &reply_ctx,
+                       IOP::ServiceContextList &reply_ctx,
                        CORBA::ULong &request_id,
                        CORBA::ULong &reply_status)
 {
@@ -1029,7 +1032,7 @@ TAO_GIOP::process_server_request (TAO_Transport *transport,
                                TAO_GIOP::Reply,
                                output,
                                orb_core);
-      TAO_GIOP_ServiceContextList resp_ctx;
+      IOP::ServiceContextList resp_ctx;
       resp_ctx.length (0);
       output << resp_ctx;
 
@@ -1383,7 +1386,7 @@ TAO_GIOP::send_reply_exception (const TAO_GIOP_Version &version,
   ACE_TRY_NEW_ENV
     {
       // create and write a dummy context
-      TAO_GIOP_ServiceContextList resp_ctx;
+      IOP::ServiceContextList resp_ctx;
       resp_ctx.length (0);
       output << resp_ctx;
 
@@ -1481,7 +1484,7 @@ TAO_GIOP::start_message_lite (const TAO_GIOP_Version &,
 }
 
 CORBA::Boolean
-TAO_GIOP::write_request_header_std (const TAO_GIOP_ServiceContextList& svc_ctx,
+TAO_GIOP::write_request_header_std (const IOP::ServiceContextList& svc_ctx,
                                     CORBA::ULong request_id,
                                     CORBA::Boolean is_roundtrip,
                                     const TAO_opaque& key,
@@ -1501,7 +1504,7 @@ TAO_GIOP::write_request_header_std (const TAO_GIOP_ServiceContextList& svc_ctx,
 }
 
 CORBA::Boolean
-TAO_GIOP::write_request_header_lite (const TAO_GIOP_ServiceContextList&,
+TAO_GIOP::write_request_header_lite (const IOP::ServiceContextList&,
                                      CORBA::ULong request_id,
                                      CORBA::Boolean is_roundtrip,
                                      const TAO_opaque &key,
@@ -1628,6 +1631,7 @@ TAO_GIOP::parse_header_lite (TAO_InputCDR &input,
   return 0;
 }
 
+#if 0
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class TAO_Unbounded_Sequence<TAO_GIOP_ServiceContext>;
 template class TAO_Unbounded_Sequence<TAO_IOP_TaggedComponent>;
@@ -1635,3 +1639,4 @@ template class TAO_Unbounded_Sequence<TAO_IOP_TaggedComponent>;
 #pragma instantiate TAO_Unbounded_Sequence<TAO_GIOP_ServiceContext>
 #pragma instantiate TAO_Unbounded_Sequence<TAO_IOP_TaggedComponent>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+#endif /* 0 */

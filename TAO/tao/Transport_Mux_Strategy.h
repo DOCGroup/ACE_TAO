@@ -41,7 +41,7 @@ class TAO_Export TAO_Transport_Mux_Strategy
   //
   // = DESCRIPTION
   //
-  
+
 public:
   TAO_Transport_Mux_Strategy (TAO_Transport *transport);
   // Base class constructor.
@@ -59,12 +59,12 @@ public:
   virtual int bind_dispatcher (CORBA::ULong request_id,
                                TAO_Reply_Dispatcher *rd);
   // Bind the dispatcher with the request id. Commonalities in the
-  // derived class implementations is kept here.  
-  
+  // derived class implementations is kept here.
+
   virtual int dispatch_reply (CORBA::ULong request_id,
                               CORBA::ULong reply_status,
                               const TAO_GIOP_Version& version,
-                              TAO_GIOP_ServiceContextList& reply_ctx,
+                              IOP::ServiceContextList& reply_ctx,
                               TAO_GIOP_Message_State* message_state) = 0;
   // Dispatch the reply for <request_id>, cleanup any resources
   // allocated for that request.
@@ -78,14 +78,14 @@ public:
 
   virtual void destroy_message_state (TAO_GIOP_Message_State *) = 0;
   // Destroy a CDR stream.
-  
+
   virtual int idle_after_send (void) = 0;
   // Request has been just sent, but the reply is not received. Idle
   // the transport now.
-  
+
   // virtual int idle_after_reply (void) = 0;
   // Request is sent and the reply is received. Idle the transport
-  // now. 
+  // now.
 
   //  virtual int reply_received (const CORBA::ULong request_id) = 0;
   // Check whether the reply has been receieved for the request with
@@ -126,7 +126,7 @@ public:
   virtual int dispatch_reply (CORBA::ULong request_id,
                               CORBA::ULong reply_status,
                               const TAO_GIOP_Version& version,
-                              TAO_GIOP_ServiceContextList& reply_ctx,
+                              IOP::ServiceContextList& reply_ctx,
                               TAO_GIOP_Message_State* message_state);
   // Dispatch the reply for <request_id>, cleanup any resources
   // allocated for that request.
@@ -140,10 +140,10 @@ public:
   virtual int idle_after_send (void);
   // Request has been just sent, but the reply is not received. Idle
   // the transport now.
-  
+
   // virtual int idle_after_reply (void);
   // Request is sent and the reply is received. Idle the transport
-  // now. 
+  // now.
 
   // virtual int reply_received (const CORBA::ULong request_id);
   // Check whether the reply has been receieved for the request with
@@ -162,7 +162,7 @@ protected:
   // Reply Dispatcher corresponding to the request.
 
   TAO_GIOP_Message_State message_state_;
-  // Message state to read the incoming message. 
+  // Message state to read the incoming message.
 };
 
 // *********************************************************************
@@ -186,7 +186,7 @@ public:
   virtual CORBA::ULong request_id (void);
   // Generate and return an unique request id for the current
   // invocation.
-  
+
   virtual int bind_dispatcher (CORBA::ULong request_id,
                                TAO_Reply_Dispatcher *rh);
   // Bind the dispatcher with the request id.
@@ -194,7 +194,7 @@ public:
   virtual int dispatch_reply (CORBA::ULong request_id,
                               CORBA::ULong reply_status,
                               const TAO_GIOP_Version& version,
-                              TAO_GIOP_ServiceContextList& reply_ctx,
+                              IOP::ServiceContextList& reply_ctx,
                               TAO_GIOP_Message_State* message_state);
   // Dispatch the reply for <request_id>, cleanup any resources
   // allocated for that request.
@@ -208,10 +208,10 @@ public:
   virtual int idle_after_send (void);
   // Request has been just sent, but the reply is not received. Idle
   // the transport now.
-  
+
   // virtual int idle_after_reply (void);
   // Request is sent and the reply is received. Idle the transport
-  // now. 
+  // now.
 
   //  virtual int reply_received (const CORBA::ULong request_id);
   // Check whether the reply has been receieved for the request with
@@ -224,7 +224,7 @@ protected:
   // request_id().
 
   ACE_SYNCH_MUTEX request_id_lock_;
-  // Lock to protect the state of the request id generator. 
+  // Lock to protect the state of the request id generator.
 
   typedef ACE_Hash_Map_Manager_Ex <CORBA::ULong,
                                    TAO_Reply_Dispatcher *,
