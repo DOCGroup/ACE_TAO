@@ -1,3 +1,43 @@
+Sun Jun  7 17:54:31 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* docs/Options.html: Added options available for ORB,
+	  Resource_Factory, and Default_Server_Strategy_Factory.
+
+	* tao/IIOP_ORB.{h,cpp}: Removed _register_collocation from
+	  IIOP_ORB and all usage of it.  Also, when using a global
+	  collocation table, it gets the table from the resource factory.
+
+	* tao/ORB.h: Remove pure virtual function _register_collocation.
+
+	* tao/ORB.cpp: Register the ORB's listening endpoint to the global
+	  collocation table if we are using one.
+
+	* ORB_Core.{h,i,cpp}: Added a new class TAO_COLTBL_Lock to choose
+	  the lock to use in global collocation table at run time.
+
+	  Added a command option in ORB_Core to disable collocation
+	  optimization and an option in  Resource Factory to decide to use
+	  a global collocation table or not.
+
+	  (using_collocation): Get whether we want to use the collocation
+	  optimization.
+
+	  (add_to_collocation_table): Used to register a listening
+	  endpoint when an ORB gets initialized.
+
+	  (get_collocated_poa): This function look thru the collocation
+	  table and return the root poa associate with the ORB.
+
+	  (get_global_collocation_table): Return a pointer to the global
+	  collocation table if we choose to use one, otherwise, return 0.
+
+	* tao/Server_Strategy_Factory.{h,cpp} (create_coltbl_lock): Added
+	  new method to allow not using a lock in the global collocation
+	  table.
+
+	* tao/default_server.{h,cpp} (create_coltbl_lock): Added
+	  implementation of this method.
+
 Sat Jun 06 21:17:13 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/Cubit/TAO/MT_Cubit/{server,client}.dsp: Both projects now
