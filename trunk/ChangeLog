@@ -1,3 +1,10 @@
+Sat Jun 26 11:44:05 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tests/XtReactor_Test.cpp:
+
+	  Added missing #include "ace/OS_NS_unistd.h".  It is needed for
+	  the ACE_OS::sleep() declaration.
+
 Fri Jun 25 17:40:29 2004  Steve Huston  <shuston@riverace.com>
 
 	* tests/Max_Default_Port_Test.cpp (client): Specify AF_INET when

@@ -27,7 +27,9 @@
 
 #include "test_config.h"
 
-ACE_RCSID(tests, XtReactor_Test, "$Id$")
+ACE_RCSID (tests,
+           XtReactor_Test,
+           "$Id$")
 
 #if defined (ACE_HAS_XT)
 
@@ -38,6 +40,8 @@ ACE_RCSID(tests, XtReactor_Test, "$Id$")
 #include "ace/SOCK_Connector.h"
 #include "ace/Service_Config.h"
 #include "ace/Thread_Manager.h"
+
+#include "ace/OS_NS_unistd.h"
 
 #include /**/ <X11/Intrinsic.h>
 #include /**/ <X11/Xatom.h>
