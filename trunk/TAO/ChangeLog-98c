@@ -1,3 +1,8 @@
+Mon Dec 21 20:45:26 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* examples/POA/Generic_Servant/MyFooServant.cpp: Changed
+ 	  ACE_Svc_Export to GENERIC_SERVANT_Export.
+
 Mon Dec 21 17:05:25 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* TAO/TAO-INSTALL.html: Updated the installation notes to indicate
