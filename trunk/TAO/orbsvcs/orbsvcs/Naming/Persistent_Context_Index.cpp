@@ -6,6 +6,7 @@
 #include "tao/debug.h"
 
 #include "ace/Auto_Ptr.h"
+#include "ace/OS_NS_unistd.h"
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
