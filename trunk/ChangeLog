@@ -1,3 +1,8 @@
+Mon May  6 13:37:45 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* bin/generate_performance_chart.sh: Changed the range of the y
+	  range for the plots. 
+
 Mon May  6 07:39:22 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* ace/Message_Queue_T.cpp (notify): Moved int queue_count definition
