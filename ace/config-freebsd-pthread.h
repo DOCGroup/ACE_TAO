@@ -36,7 +36,7 @@
 #define ACE_LACKS_SIGSET
 
 // Use of <malloc.h> is deprecated.
-#defined ACE_LACKS_MALLOC_H
+#define ACE_LACKS_MALLOC_H
 
 // sched.h still not fully support on FreeBSD ?
 // this is taken from /usr/src/lib/libc_r/uthread/pthread-private.h
