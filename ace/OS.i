@@ -1437,6 +1437,8 @@ ACE_OS::cond_wait (ACE_cond_t *cv,
 
   if (result != -1)
     {
+      // If we're the last waiter thread during this particular
+      // broadcast then let all the other threads proceed.
       if (cv->was_broadcast_ && cv->waiters_ == 0)
 #if defined (VXWORKS)
 	ACE_OS::sema_post (&cv->waiters_done_);
@@ -3203,7 +3205,6 @@ ACE_OS::sema_post (ACE_sema_t *s)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::sema_post (s), ace_result_), int, -1);
 #elif defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
   int result = -1;
-  int count_was_zero;
 
   if (ACE_OS::mutex_lock (&s->lock_) == 0)
     {
@@ -3323,7 +3324,7 @@ ACE_OS::sema_wait (ACE_sema_t *s)
 	    break;
 	  }
 
-      s->waiters_--;
+      --s->waiters_;
     }
 
   if (result == 0)
