@@ -1,3 +1,15 @@
+Mon Oct 14 17:23:43 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* ace/CDR_Base.cpp (consolidate): Reverted the optimization
+	  performed in "Tue Mar 12 17:43:32 2002  Balachandran Natarajan
+	  <bala@cs.wustl.edu>". This optimizations created problems for
+	  CORBA::Any implementation which assumes that the data is totally
+	  contained within the Any. Using the optimization created problems 
+          for Any's that are copied between different threads. Thanks to 
+          Chen Jian <jchen@huawei.com> for reporting this problem.
+
+	* THANKS: Added Chen Jian <jchen@huawei.com> to the hall of fame.  
+
 Mon Oct 14  10:12:31 2002  Steve Huston  <shuston@riverace.com>
 
         Fix for Bugzilla # 1316:
