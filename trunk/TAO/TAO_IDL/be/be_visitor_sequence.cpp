@@ -112,6 +112,9 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
   be_type *bt;       // type node
   TAO_OutStream *os = this->ctx_->stream ();
 
+  if (node->cli_hdr_gen () || node->imported ())
+    return 0;
+
   // first create a name for ourselves
   if (node->create_name (this->ctx_->tdef ()) == -1)
     {
@@ -477,6 +480,9 @@ be_visitor_sequence_ci::~be_visitor_sequence_ci (void)
 be_visitor_sequence_ci::visit_sequence (be_sequence *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
+
+  if (node->cli_inline_gen () || node->imported ())
+    return 0;
 
   // all we do is generate the _var and _out implementations
   if (this->gen_var_impl (node) == -1)
@@ -996,6 +1002,9 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
   // generate the constructors
   be_type *bt;       // type node
   TAO_OutStream *os = this->ctx_->stream ();
+
+  if (node->cli_stub_gen () || node->imported ())
+    return 0;
 
   // generate the ifdefined macro for the sequence type
   os->gen_ifdef_macro (node->flatname ());

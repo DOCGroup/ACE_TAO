@@ -2947,7 +2947,7 @@ be_visitor_operation_argument::visit_argument (be_argument *node)
   if (!op)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_argument::"
+                         "(%N:%l) be_visitor_arglist::"
                          "visit_argument - "
                          "Bad operation\n"),
                         -1);
@@ -2964,7 +2964,7 @@ be_visitor_operation_argument::visit_argument (be_argument *node)
   if (!intf)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_argument::"
+                         "(%N:%l) be_visitor_arglist::"
                          "visit_argument - "
                          "Bad interface\n"),
                         -1);

@@ -566,34 +566,37 @@ be_visitor_module_ch::visit_module (be_module *node)
 {
   TAO_OutStream *os; // output stream
 
-  os = this->ctx_->stream ();
-
-  // XXXASG - Modules really map to namespace. We need to see if our target
-  // compiler supports namespaces or not. This visitor generates a class for a
-  // module. We can have the factory generate another module visitor that can
-  // generate namespaces
-
-  os->indent (); // start from whatever indentation level we were at
-  // now generate the class definition
-  *os << "class " << node->local_name () << be_nl
-      << "{" << be_nl
-      << "public:\n";
-  os->incr_indent (0);
-
-  // generate code for the module definition by traversing thru the
-  // elements of its scope. We depend on the front-end to have made sure
-  // that only legal syntactic elements appear in our scope.
-  if (this->visit_scope (node) == -1)
+  if (!node->cli_hdr_gen () && !node->imported ())
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_module_ch::"
-                         "visit_module - "
-                         "codegen for scope failed\n"), -1);
+      os = this->ctx_->stream ();
+
+      // XXXASG - Modules really map to namespace. We need to see if our target
+      // compiler supports namespaces or not. This visitor generates a class for a
+      // module. We can have the factory generate another module visitor that can
+      // generate namespaces
+
+      os->indent (); // start from whatever indentation level we were at
+      // now generate the class definition
+      *os << "class " << node->local_name () << be_nl
+          << "{" << be_nl
+          << "public:\n";
+      os->incr_indent (0);
+
+      // generate code for the module definition by traversing thru the
+      // elements of its scope. We depend on the front-end to have made sure
+      // that only legal syntactic elements appear in our scope.
+      if (this->visit_scope (node) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_module_ch::"
+                             "visit_module - "
+                             "codegen for scope failed\n"), -1);
+        }
+
+      *os << be_uidt_nl
+          << "}; // module " << node->name () << "\n\n";
+
     }
-
-  *os << be_uidt_nl
-      << "}; // module " << node->name () << "\n\n";
-
   return 0;
 }
 
@@ -615,35 +618,38 @@ be_visitor_module_sh::visit_module (be_module *node)
 {
   TAO_OutStream *os; // output stream
 
-  os = this->ctx_->stream ();
-
-  // generate the skeleton class name
-
-  os->indent (); // start with whatever indentation level we are at
-
-  // now generate the class definition. The prefix POA_ is prepended to our
-  // name only if we are the outermost module
-  if (!node->is_nested ())
-    // we are outermost module
-    *os << "class POA_" << node->local_name () << be_nl;
-  else
-    // we are inside another module
-    *os << "class " << node->local_name () << be_nl;
-
-  *os << "{" << be_nl
-      << "public:"
-      << be_idt;
-
-  if (this->visit_scope (node) == -1)
+  if (!node->srv_hdr_gen () && !node->imported ()) // not generated and not imported
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_module_sh::"
-                         "visit_module - "
-                         "codegen for scope failed\n"), -1);
-    }
+      os = this->ctx_->stream ();
 
-  os->decr_indent ();
-  *os << "};\n\n";
+      // generate the skeleton class name
+
+      os->indent (); // start with whatever indentation level we are at
+
+      // now generate the class definition. The prefix POA_ is prepended to our
+      // name only if we are the outermost module
+      if (!node->is_nested ())
+        // we are outermost module
+        *os << "class POA_" << node->local_name () << be_nl;
+      else
+        // we are inside another module
+        *os << "class " << node->local_name () << be_nl;
+
+      *os << "{" << be_nl
+          << "public:"
+          << be_idt;
+
+      if (this->visit_scope (node) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_module_sh::"
+                             "visit_module - "
+                             "codegen for scope failed\n"), -1);
+        }
+
+      os->decr_indent ();
+      *os << "};\n\n";
+    }
   return 0;
 
 }

@@ -116,7 +116,8 @@ int be_visitor_structure_ch::visit_structure (be_structure *node)
 {
   TAO_OutStream *os; // output stream
 
-  if (!node->cli_hdr_gen ()) // not already generated
+  if (!node->cli_hdr_gen () && !node->imported ()) // not already generated and
+                                                   // not imported
     {
       os = this->ctx_->stream ();
 
@@ -200,7 +201,7 @@ be_visitor_structure_ci::~be_visitor_structure_ci (void)
 // visit the Structure node and its scope
 int be_visitor_structure_ci::visit_structure (be_structure *node)
 {
-  if (!node->cli_inline_gen ())
+  if (!node->cli_inline_gen () && !node->imported ())
     {
       if (node->gen_var_impl () == -1)
         {
@@ -230,7 +231,9 @@ int be_visitor_structure_ci::visit_structure (be_structure *node)
   return 0;
 }
 
+// ***************************************************************************
 // for client stubs
+// ***************************************************************************
 be_visitor_structure_cs::be_visitor_structure_cs (be_visitor_context *ctx)
   : be_visitor_structure (ctx)
 {
@@ -245,7 +248,7 @@ int be_visitor_structure_cs::visit_structure (be_structure *node)
 {
   TAO_OutStream *os; // output stream
 
-  if (!node->cli_stub_gen ())
+  if (!node->cli_stub_gen () && !node->imported ())
     {
       os = this->ctx_->stream ();
 

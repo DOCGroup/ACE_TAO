@@ -378,6 +378,24 @@ be_visitor_args_pre_docall_cs::~be_visitor_args_pre_docall_cs (void)
 {
 }
 
+int
+be_visitor_args_pre_docall_cs::void_return_type (void)
+{
+  // is the operation return type void?
+  be_argument *arg = this->ctx_->be_node_as_argument ();
+  ACE_ASSERT (arg != 0);
+  be_operation *op = be_operation::narrow_from_scope (arg->defined_in ());
+  ACE_ASSERT (arg != 0);
+
+  be_type *bt = be_type::narrow_from_decl (op->return_type ());
+  if (bt->node_type () == AST_Decl::NT_pre_defined
+      && (be_predefined_type::narrow_from_decl (bt)->pt ()
+          == AST_PredefinedType::PT_void))
+    return 1;
+  else
+    return 0;
+}
+
 int be_visitor_args_pre_docall_cs::visit_argument (be_argument *node)
 {
   this->ctx_->node (node); // save the argument node
@@ -427,9 +445,16 @@ be_visitor_args_pre_docall_cs::visit_array (be_array *node)
       os->indent ();
       *os << bt->name () << "_slice *&_tao_base_" << arg->local_name ()
           << " = " << arg->local_name () << ".ptr ();\n";
-      *os << "ACE_NEW_RETURN (_tao_base_" << arg->local_name ()
-          << ", " << bt->name () << "_slice, _tao_base_"
-          << arg->local_name () << ");\n";
+      if (!this->void_return_type ())
+        {
+          *os << "ACE_NEW_RETURN (_tao_base_" << arg->local_name ()
+              << ", " << bt->name () << "_slice, _tao_retval);\n";
+        }
+      else
+        {
+          *os << "ACE_NEW (_tao_base_" << arg->local_name ()
+              << ", " << bt->name () << "_slice);\n";
+        }
       break;
     default:
       break;
@@ -526,8 +551,16 @@ be_visitor_args_pre_docall_cs::visit_predefined_type (be_predefined_type *node)
           os->indent ();
           *os << bt->name () << " *&_tao_base_" << arg->local_name ()
               << " = " << arg->local_name () << ".ptr ();" << be_nl;
-          *os << "ACE_NEW_RETURN (_tao_base_" << arg->local_name ()
-              << ", CORBA::Any, _tao_base_" << arg->local_name () << ");\n";
+          if (!this->void_return_type ())
+            {
+              *os << "ACE_NEW_RETURN (_tao_base_" << arg->local_name ()
+                  << ", CORBA::Any, _tao_retval);\n";
+            }
+          else
+            {
+              *os << "ACE_NEW (_tao_base_" << arg->local_name ()
+                  << ", CORBA::Any);\n";
+            }
           break;
         default:
           break;
@@ -560,8 +593,16 @@ be_visitor_args_pre_docall_cs::visit_sequence (be_sequence *node)
       os->indent ();
       *os << bt->name () << " *&_tao_base_" << arg->local_name ()
           << " = " << arg->local_name () << ".ptr ();" << be_nl;
-      *os << "ACE_NEW_RETURN (_tao_base_" << arg->local_name () << ", "
-          << bt->name () << ", _tao_base_" << arg->local_name () << ");\n";
+      if (!this->void_return_type ())
+        {
+          *os << "ACE_NEW_RETURN (_tao_base_" << arg->local_name ()
+              << ", " << bt->name () << ", _tao_retval);\n";
+        }
+      else
+        {
+          *os << "ACE_NEW (_tao_base_" << arg->local_name ()
+              << ", " << bt->name () << ");\n";
+        }
       break;
     default:
       break;
@@ -612,8 +653,16 @@ be_visitor_args_pre_docall_cs::visit_structure (be_structure *node)
           os->indent ();
           *os << bt->name () << " *&_tao_base_" << arg->local_name ()
               << " = " << arg->local_name () << ".ptr ();" << be_nl;
-          *os << "ACE_NEW_RETURN (_tao_base_" << arg->local_name () << ", "
-              << bt->name () << ", _tao_base_" << arg->local_name () << ");\n";
+          if (!this->void_return_type ())
+            {
+              *os << "ACE_NEW_RETURN (_tao_base_" << arg->local_name ()
+                  << ", " << bt->name () << ", _tao_retval);\n";
+            }
+          else
+            {
+              *os << "ACE_NEW (_tao_base_" << arg->local_name ()
+                  << ", " << bt->name () << ");\n";
+            }
           break;
         default:
           break;
@@ -643,8 +692,16 @@ be_visitor_args_pre_docall_cs::visit_union (be_union *node)
           os->indent ();
           *os << bt->name () << " *&_tao_base_" << arg->local_name ()
               << " = " << arg->local_name () << ".ptr ();" << be_nl;
-          *os << "ACE_NEW_RETURN (_tao_base_" << arg->local_name () << ", "
-              << bt->name () << ", _tao_base_" << arg->local_name () << ");\n";
+          if (!this->void_return_type ())
+            {
+              *os << "ACE_NEW_RETURN (_tao_base_" << arg->local_name ()
+                  << ", " << bt->name () << ", _tao_retval);\n";
+            }
+          else
+            {
+              *os << "ACE_NEW (_tao_base_" << arg->local_name ()
+                  << ", " << bt->name () << ");\n";
+            }
           break;
         default:
           break;

@@ -588,7 +588,8 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
   TAO_OutStream *os; // output stream
   long i;            // loop index
 
-  if (!node->cli_hdr_gen ()) // not already generated
+  if (!node->cli_hdr_gen () && !node->imported ()) // not already generated and
+                                                   // not imported
     {
 
       os = this->ctx_->stream ();
@@ -767,6 +768,9 @@ be_visitor_interface_ci::visit_interface (be_interface *node)
 {
   TAO_OutStream *os; // output stream
 
+  if (node->cli_inline_gen () || node->imported ())
+    return 0;
+
   os = this->ctx_->stream ();
 
   os->indent (); // start from the current indentation level
@@ -840,6 +844,9 @@ int
 be_visitor_interface_cs::visit_interface (be_interface *node)
 {
   TAO_OutStream *os; // output stream
+
+  if (node->cli_stub_gen () || node->imported ())
+    return 0;
 
   os = this->ctx_->stream ();
 
@@ -988,6 +995,9 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
   unsigned long i; // loop index
   static char namebuf [NAMEBUFSIZE]; // holds the class name
 
+  if (node->srv_hdr_gen () || node->imported ())
+    return 0;
+
   ACE_OS::memset (namebuf, '\0', NAMEBUFSIZE);
 
   os = this->ctx_->stream ();
@@ -1131,6 +1141,9 @@ be_visitor_interface_si::visit_interface (be_interface *node)
 {
   TAO_OutStream *os; // output stream
 
+  if (node->srv_inline_gen () || node->imported ())
+    return 0;
+
   os = this->ctx_->stream ();
 
   os->indent (); // start with whatever indentation level we are at
@@ -1167,6 +1180,9 @@ int
 be_visitor_interface_ss::visit_interface (be_interface *node)
 {
   TAO_OutStream *os; // output stream
+
+  if (node->srv_skel_gen () || node->imported ())
+    return 0;
 
   os = this->ctx_->stream ();
 
