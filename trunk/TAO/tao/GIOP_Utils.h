@@ -28,13 +28,13 @@
 
 class TAO_Transport;
 
+/**
+ * All GIOP messages include a header and message type.  Not
+ * really a message type, but needed to bring that information
+ * back somehow.
+ */
 typedef enum GIOP_Messages
 {
-  // = DESCRIPTION
-  //   All GIOP messages include a header and message type.  Not
-  //   really a message type, but needed to bring that information
-  //   back somehow.
-
   // = GIOP message types.
   TAO_GIOP_REQUEST = 0,                // sent by client.
   TAO_GIOP_REPLY = 1,                  // by server.
