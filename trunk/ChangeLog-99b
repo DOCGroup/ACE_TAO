@@ -1,3 +1,9 @@
+Fri Aug 13 18:55:51 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Handle_Set.h (ACE_Handle_Set): Clarified the meaning of the
+	  nbits_ array.  Thanks to Hao Ruan <hruan@lucent.com> for
+ 	  motivating this.
+
 Fri Aug 13 21:18:40 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.i (llseek): on Linux, moved extern "C" llseek ()

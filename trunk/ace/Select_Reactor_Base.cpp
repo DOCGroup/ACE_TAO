@@ -653,7 +653,9 @@ ACE_Select_Reactor_Notify::handle_input (ACE_HANDLE handle)
               break;
             default:
               // Should we bail out if we get an invalid mask?
-              ACE_ERROR ((LM_ERROR, ASYS_TEXT ("invalid mask = %d\n"), buffer.mask_));
+              ACE_ERROR ((LM_ERROR,
+                          ASYS_TEXT ("invalid mask = %d\n"),
+                          buffer.mask_));
             }
           if (result == -1)
             buffer.eh_->handle_close (ACE_INVALID_HANDLE,
