@@ -22,7 +22,6 @@
 // ============================================================================
 
 #include "test_config.h"
-#include "ace/Service_Config.h"
 #include "ace/Synch.h"
 #include "ace/Stream.h"
 #include "ace/Module.h"
@@ -112,7 +111,6 @@ Common_Task::close (u_long exit_status)
 int
 Supplier::svc (void)
 {
-  ACE_NEW_THREAD;
   ACE_Message_Block *mb;
 
   // Send one message for each letter of the alphabet, then send an empty
@@ -155,8 +153,6 @@ Consumer::put (ACE_Message_Block *mb, ACE_Time_Value *tv)
 int
 Consumer::svc (void)
 {
-  ACE_NEW_THREAD;
-
   ACE_Message_Block *mb = 0;
   int result = 0;
   char *c = ACE_ALPHABET;

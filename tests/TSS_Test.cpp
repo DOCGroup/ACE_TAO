@@ -20,10 +20,11 @@
 //
 // ============================================================================
 
-#include "test_config.h"
-#include "ace/Service_Config.h"
 #include "ace/Synch.h"
+#include "ace/Thread_Manager.h"
+#include "ace/Signal.h"
 #include "TSS_Test_Errno.h"
+#include "test_config.h"
 
 #if defined (ACE_HAS_THREADS)
 
@@ -69,8 +70,6 @@ cleanup (void *ptr)
 static void *
 worker (void *c)
 {
-  ACE_NEW_THREAD;
-
   int count = int (c);
 
   ACE_thread_key_t key = ACE_OS::NULL_key;

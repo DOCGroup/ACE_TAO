@@ -20,7 +20,7 @@
 #include "test_config.h"
 #include "ace/Synch.h"
 #include "ace/Thread.h"
-#include "ace/Service_Config.h"
+#include "ace/Thread_Manager.h"
 #include "ace/Get_Opt.h"
 
 #if defined (ACE_HAS_THREADS)
@@ -106,8 +106,6 @@ test_timeout (void)
 static void *
 worker (void *)
 {
-  ACE_NEW_THREAD;
-  
   for (size_t iterations = 1;
        iterations <= n_iterations;
        iterations++)

@@ -18,10 +18,10 @@
 // 
 // ============================================================================
 
-#include "test_config.h"
-#include "ace/Service_Config.h"
 #include "ace/Get_Opt.h"
+#include "ace/Thread_Manager.h"
 #include "ace/Synch.h"
+#include "test_config.h"
 
 #if defined (ACE_HAS_THREADS)
 
@@ -52,8 +52,6 @@ recursive_worker (size_t nesting_level,
 static void *
 worker (void *arg)
 {
-  ACE_NEW_THREAD;
-
   ACE_Recursive_Thread_Mutex *rm = (ACE_Recursive_Thread_Mutex *) arg;
   recursive_worker (0, rm);
   return 0;

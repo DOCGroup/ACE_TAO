@@ -19,9 +19,9 @@
 // 
 // ============================================================================
 
-#include "test_config.h"
-#include "ace/Service_Config.h"
 #include "ace/Thread_Manager.h"
+#include "ace/Signal.h"
+#include "test_config.h"
 
 #if defined (ACE_HAS_THREADS)
 
@@ -62,8 +62,6 @@ handler (int signum)
 static void *
 worker (int iterations)
 {
-  ACE_NEW_THREAD;
-
   ACE_Thread_Manager *thr_mgr = ACE_Thread_Manager::instance ();
 
   for (int i = 0; i < iterations; i++)
@@ -112,8 +110,6 @@ main (int, char *[])
   // it gets deleted.  Specifically, we need to delete it before
   // the main thread's TSS is cleaned up.
   ACE_NEW_RETURN (signal_catcher, ACE_TSS<Signal_Catcher>, 1);
-
-  ACE_Service_Config daemon;
 
   // Register a signal handler.
   ACE_Sig_Action sa ((ACE_SignalHandler) handler, SIGINT);

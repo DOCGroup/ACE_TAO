@@ -352,10 +352,6 @@ cached_connect (STRAT_CONNECTOR &con, const ACE_INET_Addr &server_addr)
 static void *
 client (void *arg)
 {
-#if (defined (ACE_WIN32) || defined (VXWORKS)) && defined (ACE_HAS_THREADS)
-  ACE_NEW_THREAD;
-#endif /* (defined (ACE_WIN32) || defined (VXWORKS)) && defined (ACE_HAS_THREADS) */
-
   ACE_INET_Addr *remote_addr = (ACE_INET_Addr *) arg;
   ACE_INET_Addr server_addr (remote_addr->get_port_number (),
 			     ACE_DEFAULT_SERVER_HOST);
@@ -386,10 +382,6 @@ client (void *arg)
 static void *
 server (void *arg)
 {
-#if (defined (ACE_WIN32) || defined (VXWORKS)) && defined (ACE_HAS_THREADS)
-  ACE_NEW_THREAD;
-#endif /* (defined (ACE_WIN32) || defined (VXWORKS)) && defined (ACE_HAS_THREADS) */
-
   ACCEPTOR *acceptor = (ACCEPTOR *) arg;
   ACE_INET_Addr cli_addr;
   const ACE_Time_Value tv (ACE_DEFAULT_TIMEOUT);
