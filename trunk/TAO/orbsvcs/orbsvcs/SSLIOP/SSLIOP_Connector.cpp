@@ -542,6 +542,7 @@ TAO_SSLIOP_Connector::ssliop_connect (TAO_SSLIOP_Endpoint *ssl_endpoint,
       long refcount = svc_handler->decr_refcount ();
 
       ACE_ASSERT (refcount >= 0);
+      ACE_UNUSED_ARG (refcount);
      
 
       if (TAO_debug_level > 0)
