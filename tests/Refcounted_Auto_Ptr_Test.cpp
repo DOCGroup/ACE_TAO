@@ -22,6 +22,7 @@
 #include "ace/Task.h"
 #include "ace/Message_Queue.h"
 #include "ace/Method_Request.h"
+#include "ace/Null_Mutex.h"
 #include "ace/Activation_Queue.h"
 #include "ace/Refcounted_Auto_Ptr.h"
 #include "Refcounted_Auto_Ptr_Test.h"

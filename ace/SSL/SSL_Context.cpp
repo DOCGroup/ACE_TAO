@@ -10,6 +10,7 @@
 #include "SSL_Context.inl"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/Guard_T.h"
 #include "ace/Object_Manager.h"
 #include "ace/Log_Msg.h"
 #include "ace/Singleton.h"
