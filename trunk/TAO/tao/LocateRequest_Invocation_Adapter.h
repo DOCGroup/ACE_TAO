@@ -26,6 +26,8 @@ namespace CORBA
   typedef Object *Object_ptr;
 }
 
+class ACE_Time_Value;
+
 namespace TAO
 {
   /**
@@ -40,7 +42,7 @@ namespace TAO
    *  creation and invocation of locate request invocations to the
    *  target object
    *
-   * @todo: Need to think what happens if the target is
+   * @todo Need to think what happens if the target is
    *  collocated. Looks like there are no ways to utilize the
    *  opportunity that may have been presented.
    */
