@@ -1,6 +1,4 @@
-//
 // $Id$
-//
 
 // ============================================================================
 //
@@ -18,9 +16,9 @@
 //
 // ============================================================================
 
-//#include	"idl.h"
-//#include	"idl_extern.h"
-#include	"be.h"
+//#include      "idl.h"
+//#include      "idl_extern.h"
+#include        "be.h"
 
 #include "be_visitor_sequence.h"
 
@@ -44,7 +42,7 @@ be_visitor_sequence_ch::gen_bounded_sequence (be_sequence *node)
 
   // generate the class name
   be_type  *pt; // base types
-      
+
   if (bt->node_type () == AST_Decl::NT_typedef)
   {
     // get the primitive base type of this typedef node
@@ -82,9 +80,9 @@ be_visitor_sequence_ch::gen_bounded_sequence (be_sequence *node)
   // constructor
   *os << class_name << " (CORBA::ULong length," << be_idt_nl;
   pt->accept (visitor); *os <<" *data," << be_nl
-	    << "CORBA::Boolean release=0)" << be_uidt_nl
+            << "CORBA::Boolean release=0)" << be_uidt_nl
       << "// Constructor using the data and memory management flag." << be_nl
-      << ": TAO_Bounded_Base_Sequence (length, " << node->max_size () << ", data, release)" << be_nl 
+      << ": TAO_Bounded_Base_Sequence (length, " << node->max_size () << ", data, release)" << be_nl
       << "{" << be_nl
       << "}" << be_nl
       << be_nl;
@@ -96,7 +94,7 @@ be_visitor_sequence_ch::gen_bounded_sequence (be_sequence *node)
       << "{" << be_idt_nl;
   pt->accept(visitor); *os <<" *tmp1 = allocbuf (" << node->max_size () << ");" << be_nl
       << be_nl;
-  pt->accept(visitor); *os <<" * const tmp2 = ACE_reinterpret_cast ("; 
+  pt->accept(visitor); *os <<" * const tmp2 = ACE_reinterpret_cast (";
   pt->accept (visitor); *os << " * ACE_CAST_CONST, rhs.buffer_);" << be_nl
       << be_nl
       << "for (CORBA::ULong i = 0; i < this->length_; ++i)" << be_idt_nl
@@ -105,7 +103,7 @@ be_visitor_sequence_ch::gen_bounded_sequence (be_sequence *node)
       << "this->buffer_ = tmp1;" << be_uidt_nl
       << "}" << be_nl
       << be_nl;
-    
+
   // operator=
   *os << class_name << " &operator= (const " << class_name << " &rhs)" << be_nl
       << "// Assignment operator.  " << be_nl
@@ -121,7 +119,7 @@ be_visitor_sequence_ch::gen_bounded_sequence (be_sequence *node)
       << be_nl
       <<"TAO_Bounded_Base_Sequence::operator= (rhs);" << be_nl
       << be_nl;
-  pt->accept(visitor); *os <<"* tmp1 = ACE_reinterpret_cast ("; 
+  pt->accept(visitor); *os <<"* tmp1 = ACE_reinterpret_cast (";
   pt->accept(visitor); *os << " *, this->buffer_);" << be_nl;
   pt->accept(visitor); *os <<"* const tmp2 = ACE_reinterpret_cast (";
       pt->accept (visitor); *os << " * ACE_CAST_CONST, rhs.buffer_);" << be_nl
@@ -153,7 +151,7 @@ be_visitor_sequence_ch::gen_bounded_sequence (be_sequence *node)
       << "const "; pt->accept (visitor); *os << " &operator[] (CORBA::ULong i) const// operator []" << be_nl
       << "{" << be_idt_nl
       << "ACE_ASSERT (i < this->maximum_);" << be_nl
-      << "const "; pt->accept (visitor); *os << "* tmp = ACE_reinterpret_cast (const "; 
+      << "const "; pt->accept (visitor); *os << "* tmp = ACE_reinterpret_cast (const ";
   pt->accept (visitor); *os << "* ACE_CAST_CONST,this->buffer_);" << be_nl
       << "return tmp[i];" << be_uidt_nl
       << "}" << be_nl
@@ -189,7 +187,7 @@ be_visitor_sequence_ch::gen_bounded_sequence (be_sequence *node)
       << "{" << be_idt_nl
       << "if (this->buffer_ == 0 || this->release_ == 0)" << be_idt_nl
       << "return;" << be_uidt_nl;
-  pt->accept(visitor); *os <<" *tmp = ACE_reinterpret_cast ("; 
+  pt->accept(visitor); *os <<" *tmp = ACE_reinterpret_cast (";
   pt->accept (visitor); *os << " *, this->buffer_);" << be_nl
       << "freebuf (tmp);" << be_nl
       << "this->buffer_ = 0;" << be_uidt_nl
@@ -204,14 +202,16 @@ be_visitor_sequence_ch::gen_bounded_sequence (be_sequence *node)
       << "{" << be_idt_nl
       << "// We retain ownership." << be_nl
       << "if (this->buffer_ == 0)" << be_nl
-	    << "{" << be_idt_nl
+            << "{" << be_idt_nl
       << "result = allocbuf (this->maximum_);" << be_nl
       << "this->buffer_ = result;" << be_uidt_nl
-	    << "}" << be_nl
+            << "}" << be_nl
       << "else" << be_nl
-	    << "{" << be_idt_nl
-      << "result = ACE_reinterpret_cast ("; pt->accept (visitor); *os << "*, this->buffer_);" << be_uidt_nl
-	    << "}" << be_uidt_nl
+            << "{" << be_idt_nl
+      << "result = ACE_reinterpret_cast (";
+  pt->accept (visitor);
+  *os << "*, this->buffer_);" << be_uidt_nl
+      << "}" << be_uidt_nl
       << "}" << be_nl
       << "else // if (orphan == CORBA::B_TRUE)" << be_nl
       << "{" << be_idt_nl
@@ -247,8 +247,8 @@ be_visitor_sequence_ch::gen_bounded_sequence (be_sequence *node)
       << "this->length_ = length;" << be_nl
       << "if (this->buffer_ && this->release_ == CORBA::B_TRUE)" << be_nl
       << "{" << be_idt_nl;
-  pt->accept(visitor); *os <<"* tmp = ACE_reinterpret_cast("; 
-  pt->accept (visitor); *os << "*, this->buffer_);" << be_nl
+  pt->accept(visitor); *os <<"* tmp = ACE_reinterpret_cast(";
+  pt->accept (visitor); *os << "* ACE_CAST_CONST, this->buffer_);" << be_nl
       << "freebuf (tmp);" << be_uidt_nl
       << "}" << be_nl
       << "this->buffer_ = data;" << be_nl

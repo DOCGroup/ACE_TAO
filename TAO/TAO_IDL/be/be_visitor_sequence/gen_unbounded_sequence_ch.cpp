@@ -1,6 +1,4 @@
-//
 // $Id$
-//
 
 // ============================================================================
 //
@@ -276,7 +274,9 @@ be_visitor_sequence_ch::gen_unbounded_sequence (be_sequence *node)
   // get_buffer
   *os << "const "; pt->accept (visitor); *os << " *get_buffer (void) const" << be_nl
       << "{" << be_idt_nl
-      << "return ACE_reinterpret_cast(const "; pt->accept (visitor); *os << " *, this->buffer_);" << be_uidt_nl
+      << "return ACE_reinterpret_cast(const ";
+  pt->accept (visitor);
+  *os << " * ACE_CAST_CONST, this->buffer_);" << be_uidt_nl
       << "}" << be_nl
       << be_nl;
 
