@@ -1,3 +1,12 @@
+Mon Aug  4 11:48:46 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/tests/FaultTolerance/Makefile:
+	* orbsvcs/tests/FaultTolerance/Makefile.bor: Added
+	  GroupRef_Manipulation test to the daily builds.
+
+	* orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/svc.conf:
+	  This file is not needed.
+
 Mon Aug  4 11:06:55 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Tagged_Components.cpp (remove_component):
