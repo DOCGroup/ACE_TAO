@@ -366,21 +366,6 @@ typedef int key_t;
   #endif /* ghs */
 
   #include /**/ <vxWorks.h>
-
-#if 0 /* This no longer seems to be necessary? */
-  #if defined (__GNUC__)
-    // This horrible hack works around a problem with the <string.h> that
-    // is distributed with Tornado 1.0.1/VxWorks 5.3.1.  Some of the prototypes
-    // in that file "conflicts with [their] built-in declaration" in g++ 2.7.2.
-    // They use size_t, but the built-in declarations apparently use unsigned
-    // long.  So, temporarily #define size_t to be u_long.
-    #define size_t u_long
-    #include /**/ <string.h>
-    #undef size_t
-    // At this point, size_t reverts to its original:
-    // typedef unsigned int size_t;
-  #endif /* __GNUC__ */
-#endif /* 0 */
 #endif /* VXWORKS */
 
 
