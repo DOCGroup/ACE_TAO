@@ -1,3 +1,7 @@
+Tue Aug  4 12:11:55 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
+
+	* docs/releasenotes/index.html: Added logging service section
+
 Tue Aug 04 11:08:56 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* TAO_IDL/GenExportH.BAT: Moved it to where it really belong,
