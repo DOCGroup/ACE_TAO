@@ -1,3 +1,12 @@
+Wed Jun 12 11:49:33 2002  Steve Huston  <shuston@riverace.com>
+
+        * examples/C++NPv2/AC_Client_Logging_Daemon.cpp: Changed to
+          match book.
+
+        * examples/C++NPv2/Reactor_Logging_Server_Adapter.cpp (init):
+          Use ACE_Auto_Array_Ptr to be cleaner about allocated char ptr
+          array. Coincides with book change.
+
 Tue Jun 11 10:23:03 2002  Stephen Torri	<storri@cs.wustl.edu>
 
 	* ace/String_Base.h: Updated comments/documentation on the String_Base

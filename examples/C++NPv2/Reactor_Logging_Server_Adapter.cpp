@@ -8,21 +8,21 @@
 #define _REACTOR_LOGGING_SERVER_ADAPTER_C
 
 #include "ace/ACE.h"
+#include "ace/Auto_Ptr.h"
 #include "Reactor_Logging_Server_Adapter.h"
 
 template <class ACCEPTOR> int
 Reactor_Logging_Server_Adapter<ACCEPTOR>::init (int argc,
                                                 ACE_TCHAR *argv[]) {
   int i;
-  const int MAX_ARGS = 10;
-  char *char_argv[MAX_ARGS];
-  for (i = 0; i < argc && i < MAX_ARGS; ++i)
+  ACE_Auto_Array_Ptr<char *> char_argv (new char*[argc]);
+
+  for (i = 0; i < argc; ++i)
     char_argv[i] = ACE::strnew (ACE_TEXT_ALWAYS_CHAR (argv[i]));
-  ACE_NEW_NORETURN (server_,
-                    Reactor_Logging_Server<ACCEPTOR>
-                      (i, char_argv, ACE_Reactor::instance ()));
-  for (i = 0; i < argc && i < MAX_ARGS; ++i)
-    ACE::strdelete (char_argv[i]);
+  ACE_NEW_NORETURN (server_, Reactor_Logging_Server<ACCEPTOR>
+                               (i, char_argv.get (),
+                                ACE_Reactor::instance ()));
+  for (i = 0; i < argc; ++i) ACE::strdelete (char_argv[i]);
   return server_ == 0 ? -1 : 0;
 }
 
