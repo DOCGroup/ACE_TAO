@@ -1,3 +1,9 @@
+Fri Mar 26 15:38:00 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/IOR_Multicast.cpp (handle_input): 
+	  Cosmetic change. Moved the null termination of service name 
+	  ahead so it prints properly in the ACE_DEBUG.
+
 Fri Mar 26 16:00:58 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Makefile: instead of not building Time
