@@ -111,30 +111,21 @@ namespace TAO
     char* extract_type_id (const CORBA::Any& val);
     FT::ObjectGroupId extract_object_group_id (const CORBA::Any& val);
 
-    /**
-    * Set a new primary member on an object group.
-    */
-    int set_new_primary_on_object_group (
-      FT::ObjectGroup_ptr object_group,
-      const FT::Location & the_location
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS
-    )
-    ACE_THROW_SPEC ((
-      CORBA::SystemException
-      , PortableGroup::ObjectGroupNotFound
-      , PortableGroup::MemberNotFound
-      , FT::PrimaryNotSet
-      , FT::BadReplicationStyle
-    ));
+    int get_membership_style (
+      const FT::Properties & properties,
+      FT::MembershipStyleValue & membership_style);
 
-    /**
-    * Extract the value of the MinimumNumberReplicas property from
-    * the_criteria.
-    */
+    int get_replication_style (
+      const FT::Properties & properties,
+      FT::ReplicationStyleValue & replication_style);
+
     int get_minimum_number_replicas (
-      const char * type_id,
-      const PortableGroup::Criteria & the_criteria,
-      CORBA::UShort & minimum_number_replicas);
+      const FT::Properties & properties,
+      FT::MinimumNumberReplicasValue & minimum_number_replicas);
+
+    int get_initial_number_replicas (
+      const FT::Properties & properties,
+      FT::InitialNumberReplicasValue & initial_number_replicas);
 
   public:
 

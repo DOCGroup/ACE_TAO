@@ -18,6 +18,7 @@
 
 #include "orbsvcs/FT_ReplicationManager/FT_FaultConsumer.h"
 #include "orbsvcs/FT_ReplicationManagerC.h"
+#include "orbsvcs/PortableGroup/PG_Property_Utils.h"
 #include <tao/debug.h>
 
 ACE_RCSID (FT_FaultConsumer,
@@ -170,7 +171,6 @@ void TAO::FT_FaultConsumer::push_structured_event (
   if (result == 0)
   {
     result = this->validate_event_type (event);
-    ACE_CHECK;
     if (result != 0)
     {
       ACE_ERROR ((LM_ERROR,
@@ -185,19 +185,35 @@ void TAO::FT_FaultConsumer::push_structured_event (
   if (result == 0)
   {
     TAO::FT_FaultEventDescriptor fault_event_desc;
-    result = this->analyze_fault_event (
-      event,
-      fault_event_desc
-      ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (-1);
-    if (result != 0)
+
+    // Make sure we catch and swallow any CORBA exceptions locally
+    // so they do not propagate back to the Fault Notifier.
+    ACE_TRY_NEW_ENV
     {
-      ACE_ERROR ((LM_ERROR,
+      result = this->analyze_fault_event (
+        event,
+        fault_event_desc
+        ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+      if (result != 0)
+      {
+        ACE_ERROR ((LM_ERROR,
+          ACE_TEXT (
+            "TAO::FT_FaultConsumer::push_structured_event: "
+            "Could not analyze fault event.\n")
+        ));
+      }
+    }
+    ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
         ACE_TEXT (
           "TAO::FT_FaultConsumer::push_structured_event: "
           "Could not analyze fault event.\n")
-      ));
+      );
     }
+    ACE_CHECK_RETURN (-1);
+    ACE_ENDTRY;
 
     // Debugging support.
 #if (TAO_DEBUG_LEVEL_NEEDED == 1)
@@ -484,28 +500,119 @@ int TAO::FT_FaultConsumer::analyze_fault_event (
   //   property and MembershipStyle of the object group is FT::MEMB_INF_CTRL,
   //   create and add a new member.
 
-  //Q: How do we get the ObjectGroup from the ObjectGroupId?
-  //A: ??
-
-  //Q: Then, how do we get the properties of the ObjectGroup to
-  // figure out the ReplicationStyle, current primary,
-  // MinimumNumberReplicas, etc.?
-  //A: FT::PropertyManager::get_properties().
-
-  // Assuming we have the ObjectGroup reference...
-  FT::ObjectGroup_var the_object_group;
-
-  // Get the properties associated with this ObjectGroup.
-#if 0
-  if (result == 0)
+  //@@ Q: How do we get the ObjectGroup from the ObjectGroupId?
+  //@@ A: Use TAO-specific extension to PortableGroup::ObjectGroupManager
+  // interface (get_object_group_ref_from_id()).
+#if (INTEGRATED_WITH_REPLICATION_MANAGER == 1)
+  if ((fault_event_desc.object_at_location_failed == 1) && (result == 0))
   {
-    FT::Properties_var properties =
-      this->replication_manager_->get_properties (
-        the_object_group.in()
+    FT::ObjectGroup_var the_object_group =
+      this->replication_manager_->get_object_group_ref_from_id (
+        fault_event_desc.object_group_id
         ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (-1);
+    if (CORBA::is_nil (the_object_group.in()))
+    {
+      ACE_ERROR ((LM_ERROR,
+        ACE_TEXT (
+          "TAO::FT_FaultConsumer::analyze_fault_event: "
+          "Could not get ObjectGroup reference from ObjectGroupId: <%Q>.\n"),
+          fault_event_desc.object_group_id
+      ));
+      result = -1;
+    }
+
+    //@@ Q: How do we get the properties of the ObjectGroup to
+    // figure out the ReplicationStyle, current primary,
+    // MinimumNumberReplicas, etc.?
+    //@@ A: FT::PropertyManager::get_properties().
+
+    // Get the properties associated with this ObjectGroup.
+    FT::Properties_var properties;
+    if (result == 0)
+    {
+      properties = this->replication_manager_->get_properties (
+        the_object_group.in()
+        ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (-1);
+
+      // Get the MembershipStyle property.
+      FT::MembershipStyleValue membership_style;
+      result = this->get_membership_style (properties.in(), membership_style);
+      if (result != 0)
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+          ACE_TEXT (
+            "TAO::FT_FaultConsumer::analyze_fault_event: "
+            "Could not extract MembershipStyle from properties on "
+            "ObjectGroup with id <%Q>.\n"),
+          fault_event_desc.object_group_id),
+          -1);
+      }
+      else
+      {
+        fault_event_desc.membership_style = membership_style;
+      }
+
+      // Get the ReplicationStyle property.
+      FT::ReplicationStyleValue replication_style;
+      result = this->get_replication_style (properties.in(), replication_style);
+      if (result != 0)
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+          ACE_TEXT (
+            "TAO::FT_FaultConsumer::analyze_fault_event: "
+            "Could not extract ReplicationStyle from properties on "
+            "ObjectGroup with id <%Q>.\n"),
+          fault_event_desc.object_group_id),
+          -1);
+      }
+      else
+      {
+        fault_event_desc.replication_style = replication_style;
+      }
+
+      // Get the MinimumNumberReplicas property.
+      FT::MinimumNumberReplicasValue minimum_number_replicas;
+      result = this->get_minimum_number_replicas (
+        properties.in(), minimum_number_replicas);
+      if (result != 0)
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+          ACE_TEXT (
+            "TAO::FT_FaultConsumer::analyze_fault_event: "
+            "Could not extract MinimumNumberReplicas from properties on "
+            "ObjectGroup with id <%Q>.\n"),
+          fault_event_desc.object_group_id),
+          -1);
+      }
+      else
+      {
+        fault_event_desc.minimum_number_replicas = minimum_number_replicas;
+      }
+
+      // Get the InitialNumberReplicas property.
+      FT::InitialNumberReplicasValue initial_number_replicas;
+      result = this->get_initial_number_replicas (
+        properties.in(), initial_number_replicas);
+      if (result != 0)
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+          ACE_TEXT (
+            "TAO::FT_FaultConsumer::analyze_fault_event: "
+            "Could not extract InitialNumberReplicas from properties on "
+            "ObjectGroup with id <%Q>.\n"),
+          fault_event_desc.object_group_id),
+          -1);
+      }
+      else
+      {
+        fault_event_desc.initial_number_replicas = initial_number_replicas;
+      }
+
+    }
   }
-#endif
+#endif /* (INTEGRATED_WITH_REPLICATION_MANAGER == 1) */
 
   return result;
 }
@@ -544,5 +651,143 @@ TAO::FT_FaultConsumer::extract_object_group_id (const CORBA::Any& val)
   }
 
   return id;
+}
+
+//
+//TODO: Use TAO_PG::find() to get property values from properties
+// instead of all these specific "get" functions.
+//
+
+// Get the MembershipStyle property.
+int TAO::FT_FaultConsumer::get_membership_style (
+  const FT::Properties & properties,
+  FT::MembershipStyleValue & membership_style)
+{
+  FT::Name prop_name (1);
+  prop_name.length (1);
+  prop_name[0].id = CORBA::string_dup (FT::FT_MEMBERSHIP_STYLE);
+  int result = 0;
+
+  FT::Value value;
+  if (TAO_PG::get_property_value (prop_name, properties, value)
+    && ((value >>= membership_style) == 1))
+  {
+#if (TAO_DEBUG_LEVEL_NEEDED == 1)
+    if (TAO_debug_level > 6)
+#endif /* (TAO_DEBUG_LEVEL_NEEDED == 1) */
+    {
+      ACE_DEBUG ((LM_DEBUG,
+        ACE_TEXT (
+          "TAO::FT_FaultConsumer::analyze_fault_event: "
+          "MembershipStyle is <%d>:\n"),
+        membership_style
+      ));
+    }
+  }
+  else
+  {
+    result = -1;
+  }
+
+  return result;
+}
+
+int TAO::FT_FaultConsumer::get_replication_style (
+  const FT::Properties & properties,
+  FT::ReplicationStyleValue & replication_style)
+{
+  FT::Name prop_name (1);
+  prop_name.length (1);
+  prop_name[0].id = CORBA::string_dup (FT::FT_REPLICATION_STYLE);
+  int result = 0;
+
+  FT::Value value;
+  if (TAO_PG::get_property_value (prop_name, properties, value)
+    && ((value >>= replication_style) == 1))
+  {
+#if (TAO_DEBUG_LEVEL_NEEDED == 1)
+    if (TAO_debug_level > 6)
+#endif /* (TAO_DEBUG_LEVEL_NEEDED == 1) */
+    {
+      ACE_DEBUG ((LM_DEBUG,
+        ACE_TEXT (
+          "TAO::FT_FaultConsumer::analyze_fault_event: "
+          "ReplicationStyle is <%d>:\n"),
+        replication_style
+      ));
+    }
+  }
+  else
+  {
+    result = -1;
+  }
+
+  return result;
+}
+
+int TAO::FT_FaultConsumer::get_minimum_number_replicas (
+  const FT::Properties & properties,
+  FT::MinimumNumberReplicasValue & minimum_number_replicas)
+{
+  FT::Name prop_name (1);
+  prop_name.length (1);
+  prop_name[0].id = CORBA::string_dup (FT::FT_MINIMUM_NUMBER_REPLICAS);
+  int result = 0;
+
+  FT::Value value;
+  if (TAO_PG::get_property_value (prop_name, properties, value)
+    && ((value >>= minimum_number_replicas) == 1))
+  {
+#if (TAO_DEBUG_LEVEL_NEEDED == 1)
+    if (TAO_debug_level > 6)
+#endif /* (TAO_DEBUG_LEVEL_NEEDED == 1) */
+    {
+      ACE_DEBUG ((LM_DEBUG,
+        ACE_TEXT (
+          "TAO::FT_FaultConsumer::analyze_fault_event: "
+          "MinimumNumberReplicas is <%d>:\n"),
+        minimum_number_replicas
+      ));
+    }
+  }
+  else
+  {
+    result = -1;
+  }
+
+  return result;
+}
+
+int TAO::FT_FaultConsumer::get_initial_number_replicas (
+  const FT::Properties & properties,
+  FT::InitialNumberReplicasValue & initial_number_replicas)
+{
+  FT::Name prop_name (1);
+  prop_name.length (1);
+  prop_name[0].id = CORBA::string_dup (FT::FT_INITIAL_NUMBER_REPLICAS);
+  int result = 0;
+
+  FT::Value value;
+  if (TAO_PG::get_property_value (prop_name, properties, value)
+    && ((value >>= initial_number_replicas) == 1))
+  {
+#if (TAO_DEBUG_LEVEL_NEEDED == 1)
+    if (TAO_debug_level > 6)
+#endif /* (TAO_DEBUG_LEVEL_NEEDED == 1) */
+    {
+      ACE_DEBUG ((LM_DEBUG,
+        ACE_TEXT (
+          "TAO::FT_FaultConsumer::analyze_fault_event: "
+          "InitialNumberReplicas is <%d>:\n"),
+        initial_number_replicas
+      ));
+    }
+  }
+  else
+  {
+    result = -1;
+  }
+
+  return result;
 }
 

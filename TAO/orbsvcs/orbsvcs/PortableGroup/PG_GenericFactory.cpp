@@ -578,7 +578,7 @@ TAO_PG_GenericFactory::process_criteria (
   //       changed.
   if (membership_style == PortableGroup::MEMB_INF_CTRL)
     {
-      if (minimum_number_replicas < minimum_number_replicas
+      if (minimum_number_replicas > initial_number_replicas
           || ACE_static_cast (CORBA::ULong,
                               minimum_number_replicas) > factory_infos_count)
         {

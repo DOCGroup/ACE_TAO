@@ -16,8 +16,6 @@
 #include "FT_Property_Validator.h"
 
 #include "ace/Get_Opt.h"
-#include "orbsvcs/CosNamingC.h"
-#include "tao/PortableServer/ORB_Manager.h"
 #include "orbsvcs/PortableGroup/PG_Properties_Decoder.h"
 #include "orbsvcs/PortableGroup/PG_Properties_Encoder.h"
 
@@ -34,21 +32,27 @@ ACE_RCSID (FT_ReplicationManager,
            FT_ReplicationManager,
            "$Id$")
 
-
 TAO::FT_ReplicationManager::FT_ReplicationManager ()
-  : ior_output_file_(0)
+  : internals_()
+  , orb_(CORBA::ORB::_nil())
+  , iorm_(TAO_IOP::TAO_IOR_Manipulation::_nil())
+  , ior_output_file_(0)
   , ns_name_(0)
-  , internals_ ()
-  , object_group_manager_ ()
+  , replication_manager_ref_(FT::ReplicationManager::_nil())
+  , naming_context_(CosNaming::NamingContext::_nil())
+  , object_group_manager_()
   , property_manager_ (this->object_group_manager_)
   , generic_factory_ (this->object_group_manager_, this->property_manager_)
+  , fault_notifier_(TAO::FT_FaultNotifier::_nil())
+  , fault_consumer_()
+  , test_iogr_(FT::ObjectGroup::_nil())
 {
-  // @note "this->init()" is not called here (in the constructor)
-  //       since it may thrown an exception.  Throwing an exception in
-  //       a constructor in an emulated exception environment is
-  //       problematic since native exception semantics cannot be
-  //       reproduced in such a case.  As such, init() must be called
-  //       by whatever code instantiates this ReplicationManager.
+  //@@Note: this->init() is not called here (in the constructor)
+  // since it may throw an exception.  Throwing an exception in
+  // a constructor in an emulated exception environment is
+  // problematic since native exception semantics cannot be
+  // reproduced in such a case.  As such, init() must be called
+  // by whatever code instantiates this ReplicationManager.
 }
 
 TAO::FT_ReplicationManager::~FT_ReplicationManager (void)
@@ -61,7 +65,7 @@ TAO::FT_ReplicationManager::~FT_ReplicationManager (void)
 
 int TAO::FT_ReplicationManager::parse_args (int argc, char * argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "n:o:q");
+  ACE_Get_Opt get_opts (argc, argv, "n:o:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -98,42 +102,59 @@ const char * TAO::FT_ReplicationManager::identity () const
   return this->identity_.c_str();
 }
 
-int TAO::FT_ReplicationManager::init (TAO_ORB_Manager & orbManager
-  ACE_ENV_ARG_DECL)
+int TAO::FT_ReplicationManager::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
 {
   int result = 0;
-  this->orb_ = orbManager.orb();
+  this->orb_ = CORBA::ORB::_duplicate (orb);
 
-  // set our property validator
-  FT_Property_Validator * property_validator;
-  ACE_NEW_THROW_EX (
-      property_validator,
-      FT_Property_Validator,
-      CORBA::NO_MEMORY ()
-  );
-  ACE_CHECK;
+  // Create our Property Validator and set it on the Property Manager.
+  TAO::FT_Property_Validator * property_validator = 0;
+  ACE_NEW_RETURN (property_validator, TAO::FT_Property_Validator (), -1);
+  if (property_validator != 0)
+  {
+    this->property_manager_.init (property_validator);
+  }
+  else
+  {
+    ACE_ERROR_RETURN ((LM_ERROR,
+      ACE_TEXT (
+        "TAO::FT_ReplicationManager::init: "
+        "Could not create Property Validator.\n")),
+      -1);
+  }
 
-  this->property_manager_.init (property_validator);
-
-  //TODO - the poa should be externally settable
-  this->object_group_manager_.init (this->orb_, orbManager.root_poa());
-
-  // Get an object reference for the ORBs IORManipulation object!
-  CORBA::Object_var IORM =
-    this->orb_->resolve_initial_references (TAO_OBJID_IORMANIPULATION,
-                                      0
-                                      ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
-
-  this->iorm_ = TAO_IOP::TAO_IOR_Manipulation::_narrow (IORM.in ()
-                                                  ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
-
-  // Register with the ORB.
-  this->ior_ = orbManager.activate (this
-      ACE_ENV_ARG_PARAMETER);
+  // Get the RootPOA.
+  CORBA::Object_var poa_obj = this->orb_->resolve_initial_references (
+    TAO_OBJID_ROOTPOA ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
+  PortableServer::POA_var poa =
+    PortableServer::POA::_narrow (poa_obj.in() ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
+  // Initialize the Object Group Manager.
+  this->object_group_manager_.init (this->orb_in(), poa.in());
+
+  // Get an object reference for the ORBs IORManipulation object.
+  CORBA::Object_var iorm_obj = this->orb_->resolve_initial_references (
+    TAO_OBJID_IORMANIPULATION ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
+
+  this->iorm_ = TAO_IOP::TAO_IOR_Manipulation::_narrow (
+    iorm_obj.in () ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
+
+  // Activate ourselves in the POA.
+  PortableServer::ObjectId_var oid = poa->activate_object (
+    this ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
+  CORBA::Object_var this_obj = poa->id_to_reference (
+    oid.in() ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
+  this->replication_manager_ref_ = FT::ReplicationManager::_narrow (
+    this_obj.in() ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
+
+  // Publish our IOR, either to a file or the Naming Service.
   if (this->ior_output_file_ != 0)
   {
     this->identity_ = "file:";
@@ -142,8 +163,6 @@ int TAO::FT_ReplicationManager::init (TAO_ORB_Manager & orbManager
   }
   else
   {
-    // if no IOR file specified,
-    // then always try to register with name service
     this->ns_name_ = "ReplicationManager";
   }
 
@@ -214,14 +233,16 @@ int TAO::FT_ReplicationManager::write_ior()
   FILE* out = ACE_OS::fopen (this->ior_output_file_, "w");
   if (out)
   {
-    ACE_OS::fprintf (out, "%s", static_cast<const char *>(this->ior_));
+    CORBA::String_var ior_str = this->orb_->object_to_string (
+      this->replication_manager_ref_.in());
+    ACE_OS::fprintf (out, "%s", ior_str.in());
     ACE_OS::fclose (out);
     result = 0;
   }
   else
   {
     ACE_ERROR ((LM_ERROR,
-      "Open failed for %s\n", this->ior_output_file_
+      ACE_TEXT("Open failed for %s\n"), this->ior_output_file_
     ));
   }
   return result;

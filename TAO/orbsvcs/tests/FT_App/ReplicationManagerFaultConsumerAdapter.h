@@ -3,6 +3,7 @@
 // $Id$
 #ifndef REPLICATION_MANAGER_FAULT_CONSUMER_ADAPTER_H
 #define REPLICATION_MANAGER_FAULT_CONSUMER_ADAPTER_H
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -11,10 +12,6 @@
 #include <orbsvcs/FT_NotifierC.h>
 #include <orbsvcs/FT_FaultDetectorFactoryC.h>
 #include <ace/Vector_T.h>
-
-//////////////////////
-// Forward references
-class TAO_ORB_Manager;
 
 /////////////////////
 // Class declarations

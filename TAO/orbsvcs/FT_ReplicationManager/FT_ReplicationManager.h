@@ -17,29 +17,22 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/FT_ReplicationManagerS.h"
-#include "orbsvcs/FT_NotifierC.h"
-#include "tao/IORManipulation/IORC.h"
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+//@@ Review all these header files and make sure they are all needed
+//   or if some can be replaced with forward declarations.
+#include "orbsvcs/FT_ReplicationManagerS.h"
+#include "orbsvcs/FT_NotifierC.h"
+#include "tao/IORManipulation/IORC.h"
 #include "orbsvcs/PortableGroupC.h"
-
 #include "orbsvcs/PortableGroup/PG_PropertyManager.h"
 #include "orbsvcs/PortableGroup/PG_GenericFactory.h"
 #include "orbsvcs/PortableGroup/PG_ObjectGroupManager.h"
 #include "orbsvcs/FaultTolerance/FT_Service_Activate.h"
-
-/////////////////////
-// Forward references
-
-//@@ The ORB_Manager has been deprecated, though it is still
-// used in various TAO services implementations.  I recommend against
-// using it.  -- Steve Totten
-class TAO_ORB_Manager;
-
+#include "orbsvcs/FT_ReplicationManager/FT_FaultConsumer.h"
+#include "orbsvcs/CosNamingC.h"
 
 namespace TAO
 {
@@ -81,7 +74,7 @@ namespace TAO
    * @param orbManager our ORB -- we keep var to it.
    * @return zero for success; nonzero is process return code for failure.
    */
-  int init (TAO_ORB_Manager & orbManager ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+  int init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
   /**
    * Prepare to exit.
@@ -421,26 +414,22 @@ namespace TAO
     /// The orb
     CORBA::ORB_var orb_;
 
-    /// IOR of this object as assigned by orb.
-    CORBA::String_var ior_;
-
-    // The ORBs IORManipulation object
+    // The ORB's IORManipulation object
     TAO_IOP::TAO_IOR_Manipulation_var iorm_;
 
     /// A file to which the factory's IOR should be written.
     const char * ior_output_file_;
 
-    /// A dummy test IOGR used for unit testing (and its group id)
-    CORBA::Object_var test_iogr_;
-    CORBA::ULongLong test_iogr_group_id_;
-
-
     /// A name to be used to register the factory with the name service.
+    //@@ Are *all* of these needed?
     const char * ns_name_;
     CosNaming::NamingContext_var naming_context_;
     CosNaming::Name this_name_;
 
-    /// A human-readable string to distinguish this from other Notifiers.
+    /// Our object reference.
+    FT::ReplicationManager_var replication_manager_ref_;
+
+    /// A human-readable string to identify this Replication Manager.
     ACE_CString identity_;
 
     /// The ObjectGroupManager that implements the functionality
@@ -454,8 +443,15 @@ namespace TAO
     /// The GenericFactory responsible for creating all object groups.
     TAO_PG_GenericFactory generic_factory_;
 
-    /// The registered fault notifier
+    /// The fault notifier.
     FT::FaultNotifier_var fault_notifier_;
+
+    /// The fault consumer.
+    TAO::FT_FaultConsumer fault_consumer_;
+
+    /// A dummy test IOGR used for unit testing (and its group id)
+    FT::ObjectGroup_var test_iogr_;
+    FT::ObjectGroupId test_iogr_group_id_;
   };
 
 } // namespace TAO

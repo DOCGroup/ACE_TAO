@@ -19,6 +19,13 @@
 #include <fstream>
 
 
+
+/////////////////////////////////////////////////////
+// Constants
+
+const CORBA::ULong MAX_TEST_FACTORIES = 10;
+
+
 /////////////////////////////////////////////////////
 // Test default properties
 //
@@ -255,7 +262,7 @@ int FT_UnitTests::test_002 (int run_test,
       FT::MinimumNumberReplicasValue minimum_number_replicas_out = 999;
 
       FT::Value value;
- 
+
       // create a test type-id
       const char * type_id = "IDL:FT_TEST/TestReplica:1.0";
 
@@ -389,7 +396,7 @@ int FT_UnitTests::test_003 (int run_test,
       FT::MinimumNumberReplicasValue minimum_number_replicas_out = 999;
 
       FT::Value value;
- 
+
       // create a test type-id
       const char * type_id = "IDL:FT_TEST/TestReplica:1.0";
 
@@ -471,7 +478,7 @@ int FT_UnitTests::test_004 (int run_test,
       FT::MinimumNumberReplicasValue minimum_number_replicas_in = 2;
 
       FT::Value value;
- 
+
       // create a test type-id
       const char * type_id = "IDL:FT_TEST/TestReplica:1.0";
 
@@ -489,6 +496,9 @@ int FT_UnitTests::test_004 (int run_test,
 
       value <<= minimum_number_replicas_in;
       encoder.add(::FT::FT_MINIMUM_NUMBER_REPLICAS, value);
+
+      value <<= (PortableGroup::FactoryInfos *)this->factories_;
+      encoder.add(::FT::FT_FACTORIES, value);
 
       // allocate and populate the criteria
       FT::Properties_var props_in;
@@ -766,18 +776,37 @@ int FT_UnitTests::parse_args (int argc, char * argv[])
       }
       case 'f':
       {
-        // use this list of iors to construct a list of 
+        // use this list of iors to construct a list of
         // FactoryInfos for the unit tests
         char * file_list = get_opts.opt_arg ();
+
+        // create a FactoryInfos to hold the factory info
+        FT::FactoryInfos * temp = 0;
+        ACE_NEW_THROW_EX (temp,
+                          FT::FactoryInfos,
+                          CORBA::NO_MEMORY (
+                            CORBA::SystemException::_tao_minor_code (
+                              TAO_DEFAULT_MINOR_CODE,
+                              ENOMEM),
+                              CORBA::COMPLETED_NO));
+        ACE_CHECK_RETURN (1);
+
+        this->factories_ = temp;
+
         char * delim;
         char * ior_file;
-        int count = 0;
-        int i;
+        CORBA::ULong count = 0;
+        CORBA::ULong i = 0;
+
         do
         {
           delim = ACE_OS::strchr (file_list, ';');
           ior_file = file_list;
-          if (delim != 0)
+          if (delim == 0)
+          {
+            file_list = 0;  // make sure we terminate after this file
+          }
+          else
           {
             *delim = '\0';
             file_list = delim + 1;
@@ -793,7 +822,7 @@ int FT_UnitTests::parse_args (int argc, char * argv[])
           }
 
           CORBA::Object_var obj = orb_->string_to_object(ior);
-          FT::GenericFactory_var factory = factory.in();
+          FT::GenericFactory_var factory = FT::GenericFactory::_narrow(obj);
           if (CORBA::is_nil(factory))
           {
             std::cerr << "Can't resolve GenericFactory IOR in " << ior_file << std::endl;
@@ -803,12 +832,14 @@ int FT_UnitTests::parse_args (int argc, char * argv[])
 
           // create a dummy FactoryInfo for testing.
           i = count++;
-          factories_[i].the_factory = FT::GenericFactory::_narrow(obj);
-          factories_.length(count);
-          factories_[i].the_location.length (1);
-          factories_[i].the_location[0].id = ior_file;  // use filename as location
-          factories_[i].the_criteria = 0;
-        } while (delim != 0);
+          this->factories_->length(count);
+          this->factories_[i].the_factory = factory;
+          this->factories_[i].the_location.length (1);
+          // use filename as location
+          this->factories_[i].the_location[0].id = CORBA::string_dup(ior_file);
+
+        } while (file_list != 0);
+
         break;
       }
     }

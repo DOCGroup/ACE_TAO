@@ -40,14 +40,14 @@ public:
   /**
    * Run a unit test
    * @param the test-number of the test to run.
-   * @return 0 if test ran successfully, any other 
+   * @return 0 if test ran successfully, any other
    *         value is a failure.
    */
   int run_test (int test_number);
 
   /**
    * Runs all unit tests.
-   * @returns 0 if all tests were sucessful, otherwise 
+   * @returns 0 if all tests were successful, otherwise
    *          returns the number of failed tests.
    */
   int run_all_tests ();
@@ -95,8 +95,8 @@ private:
   // an iogr for use in the unit tests
   CORBA::Object_var test_iogr_;
 
-  // A list of FactoryInfos ofr the unit tests
-  FT::FactoryInfos factories_;
+  // A list of FactoryInfos for the unit tests
+  FT::FactoryInfos_var factories_;
 };
 
 
