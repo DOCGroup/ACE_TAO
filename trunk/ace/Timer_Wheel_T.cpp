@@ -560,7 +560,8 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK>::expire (const ACE_Time_Value &cur_ti
             }
         }
 
-      while (this->wheel_[earliest]->get_next ()->get_timer_value () <= next_earliest_time)
+      while (this->wheel_[earliest]->get_next () != this->wheel_[earliest]
+		     && this->wheel_[earliest]->get_next ()->get_timer_value () <= next_earliest_time)
         {
           // Remove the first node in the earliest position
           ACE_Timer_Node_T<TYPE> *expired = this->wheel_[earliest]->get_next ();

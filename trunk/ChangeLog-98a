@@ -1,3 +1,13 @@
+Sun Jan 18 17:27:52 1998  Darrell Brunsch  <brunsch@cs.wustl.edu>
+
+	* ace/Timer_Wheel_T.cpp: Fixed a problem with Timer Wheel's 
+	  expire().  The problem occured when the handle_timeout() method 
+	  of the event handler used would return a 0.  This causes the 
+	  Timer Queue to cancel all timers using that event handler.  
+	  Because Timer Wheel's expire caches the position of some timers 
+	  that will be expired, it was trying to expire timers that were
+	  already cancelled.  Now it checks the timer before it expires.
+
 Sun Jan 18 16:08:36 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/Thread_Manager: Modified the signature to the spawn_n()
