@@ -13,7 +13,7 @@
 // = DESCRIPTION
 //     Visitor for the Valuetype class.
 //     This one generates code for accessor and modifier functions of
-//     valuetype state members (in the stub or inline file).
+//     valuetype state members (in the stub file).
 //
 // = AUTHOR
 //    Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>
@@ -72,7 +72,7 @@ visit_field (be_field *node)
   return 0;
 }
 
-// =visit operations on all possible data types  that a union_branch can be
+// =visit operations on all possible data types that a field can be
 
 int
 be_visitor_valuetype_field_cs::visit_array (be_array *node)
@@ -100,7 +100,7 @@ be_visitor_valuetype_field_cs::visit_array (be_array *node)
     }
   os = this->ctx_->stream ();
   if (bt->node_type () != AST_Decl::NT_typedef // not a typedef
-      && bt->is_child (bu)) // bt is defined inside the union
+      && bt->is_child (bu)) // bt is defined inside the valuetype
     {
       // instantiate a visitor context with a copy of our context. This info
       // will be modified based on what type of node we are visiting
@@ -109,7 +109,7 @@ be_visitor_valuetype_field_cs::visit_array (be_array *node)
                        // is still the same
 
       // first generate the inline operations for this anonymous array type
-      ctx.state (TAO_CodeGen::TAO_ARRAY_CI);
+      ctx.state (TAO_CodeGen::TAO_ARRAY_CS);
       be_visitor *visitor = tao_cg->make_visitor (&ctx);
       if (!visitor)
         {
@@ -642,7 +642,7 @@ be_visitor_valuetype_field_cs::visit_sequence (be_sequence *node)
                        // is still the same
 
       // first generate the inline operations for this anonymous sequence type
-      ctx.state (TAO_CodeGen::TAO_SEQUENCE_CI);
+      ctx.state (TAO_CodeGen::TAO_SEQUENCE_CS);
       be_visitor *visitor = tao_cg->make_visitor (&ctx);
       if (!visitor)
         {
@@ -880,7 +880,7 @@ be_visitor_valuetype_field_cs::visit_structure (be_structure *node)
                        // is still the same
 
       // first generate the enum declaration
-      ctx.state (TAO_CodeGen::TAO_STRUCT_CI);
+      ctx.state (TAO_CodeGen::TAO_STRUCT_CS);
       be_visitor *visitor = tao_cg->make_visitor (&ctx);
       if (!visitor)
         {
@@ -1030,7 +1030,7 @@ be_visitor_valuetype_field_cs::visit_union (be_union *node)
                        // is still the same
 
       // first generate the enum declaration
-      ctx.state (TAO_CodeGen::TAO_UNION_CI);
+      ctx.state (TAO_CodeGen::TAO_UNION_CS);
       be_visitor *visitor = tao_cg->make_visitor (&ctx);
       if (!visitor)
         {

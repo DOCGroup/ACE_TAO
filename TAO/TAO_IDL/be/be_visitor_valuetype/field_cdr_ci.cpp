@@ -415,7 +415,7 @@ be_visitor_valuetype_field_cdr_ci::visit_valuetype_fwd (be_valuetype_fwd *)
       *os << "(strm << " << pre_ << f->local_name () << post_ << ").in ()";
       break;
     case TAO_CodeGen::TAO_CDR_SCOPE:
-      // nothing to be done because an valuetype cannit be declared inside a
+      // nothing to be done because an valuetype cannot be declared inside a
       // structure
       break;
     default:
