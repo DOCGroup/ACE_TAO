@@ -2,6 +2,8 @@
 
 #include "basic_func.h"
 
+ACE_RCSID(Misc, basic_func, "$Id$")
+
 int A, B, C, D, E, F;
 
 void

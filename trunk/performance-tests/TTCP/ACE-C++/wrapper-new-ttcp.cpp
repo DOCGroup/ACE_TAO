@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 // $Id$
 
 /*
@@ -43,9 +42,6 @@
  * Distribution Status -
  *      Public Domain.  Distribution Unlimited.
  */
-#ifndef lint
-static char RCSid[] = "ttcp.c $Revision$";
-#endif
 
 /* #define BSD43 */
 /* #define BSD42 */
@@ -94,6 +90,8 @@ struct rusage
 #else
 #include <sys/resource.h>
 #endif
+
+ACE_RCSID(ACE_C++, wrapper_new_ttcp, "$Id$")
 
 struct sockaddr_in sinme;
 struct sockaddr_un sunme;

@@ -35,6 +35,8 @@
 #include "ace/Sched_Params.h"
 #include "ace/Get_Opt.h"
 
+ACE_RCSID(Misc, preempt, "$Id$")
+
 #if defined (ACE_HAS_THREADS) || ! defined (ACE_LACKS_FORK)
 
 #if defined (ACE_HAS_STHREADS)

@@ -1,5 +1,5 @@
 // $Id$
-//
+
 // ============================================================================
 //
 // = LIBRARY
@@ -55,6 +55,8 @@ static const char usage [] = "[-? |\n"
 #include "ace/High_Res_Timer.h"
 #include "ace/Get_Opt.h"
 #include "ace/Synch.h"
+
+ACE_RCSID(Misc, context_switch_time, "$Id$")
 
 #if defined (ACE_HAS_THREADS)
 

@@ -1,5 +1,5 @@
 // $Id$
-//
+
 // ============================================================================
 //
 // = LIBRARY
@@ -67,6 +67,8 @@
 #include "ace/Process.h"
 #include "ace/Profile_Timer.h"
 #include "ace/Thread_Manager.h"
+
+ACE_RCSID(Misc, childbirth_time, "$Id$")
 
 #define  ACE_STOP_SIGN  ACE_OS::sleep (0)
 

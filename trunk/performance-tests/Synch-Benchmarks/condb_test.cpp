@@ -5,6 +5,8 @@
 #include "Options.h"
 #include "Benchmark_Performance.h"
 
+ACE_RCSID(Synch_Benchmarks, condb_test, "$Id$")
+
 #if defined (ACE_HAS_THREADS)
 
 class ACE_Svc_Export Cond_Brdcast_Test : public Benchmark_Performance

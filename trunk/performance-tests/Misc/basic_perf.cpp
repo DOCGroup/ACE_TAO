@@ -24,6 +24,8 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS.h"
 
+ACE_RCSID(Misc, basic_perf, "$Id$")
+
 static const char usage [] = "[-? |\n"
                              "            [-i <iterations> [1000000]]";
 

@@ -20,6 +20,9 @@
 #include "ace/SString.h"
 #include "ace/Naming_Context.h"
 #include "ace/Profile_Timer.h"
+
+ACE_RCSID(Misc, test_naming, "$Id$")
+
 #define ACE_NS_MAX_ENTRIES 4000
 
 static char name[BUFSIZ];

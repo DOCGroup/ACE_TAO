@@ -3,6 +3,8 @@
 #define  ACE_BUILD_SVC_DLL
 #include "Benchmark_Base.h"
 
+ACE_RCSID(Synch_Benchmarks, Benchmark_Base, "$Id$")
+
 #if defined (ACE_HAS_THREADS)
 
 // Initialize the static variables.

@@ -1,3 +1,41 @@
+Mon Aug  3 17:53:48 1998  Gonzalo Diethelm  <gonzo@tango.cs.wustl.edu>
+
+	* performance-tests/Makefile: 
+	* performance-tests/Misc/basic_func.cpp: 
+	* performance-tests/Misc/basic_perf.cpp: 
+	* performance-tests/Misc/childbirth_time.cpp: 
+	* performance-tests/Misc/context_switch_time.cpp: 
+	* performance-tests/Misc/preempt.cpp: 
+	* performance-tests/Misc/test_mutex.cpp: 
+	* performance-tests/Misc/test_naming.cpp: 
+	* performance-tests/Misc/test_singleton.cpp: 
+	* performance-tests/Synch-Benchmarks/Benchmark_Base.cpp: 
+	* performance-tests/Synch-Benchmarks/Benchmark_Performance.cpp: 
+	* performance-tests/Synch-Benchmarks/Options.cpp: 
+	* performance-tests/Synch-Benchmarks/Performance_Test.cpp: 
+	* performance-tests/Synch-Benchmarks/condb_test.cpp: 
+	* performance-tests/Synch-Benchmarks/conds_test.cpp: 
+	* performance-tests/Synch-Benchmarks/context_test.cpp: 
+	* performance-tests/Synch-Benchmarks/memory_test.cpp: 
+	* performance-tests/Synch-Benchmarks/mutex_test.cpp: 
+	* performance-tests/Synch-Benchmarks/pipe_proc_test.cpp: 
+	* performance-tests/Synch-Benchmarks/pipe_thr_test.cpp: 
+	* performance-tests/Synch-Benchmarks/recursive_lock_test.cpp: 
+	* performance-tests/Synch-Benchmarks/rwrd_test.cpp: 
+	* performance-tests/Synch-Benchmarks/rwwr_test.cpp: 
+	* performance-tests/Synch-Benchmarks/sema_test.cpp: 
+	* performance-tests/Synch-Benchmarks/synch_driver.cpp: 
+	* performance-tests/Synch-Benchmarks/sysvsema_test.cpp: 
+	* performance-tests/Synch-Benchmarks/token_test.cpp: 
+	* performance-tests/TTCP/ACE-C++/wrapper-new-ttcp.cpp: 
+	* performance-tests/TTCP/C/new-ttcp.cpp: 
+	* performance-tests/TTCP/ORBeline/ttcp_i.cpp: 
+	* performance-tests/TTCP/Orbix/ttcpC.cpp: 
+	* performance-tests/TTCP/Orbix/ttcpS.cpp: 
+	* performance-tests/TTCP/Orbix/ttcp_i.cpp: 
+	* performance-tests/UDP/udp_test.cpp: 
+	Added ACE_RCSID to these files.
+
 Sun Aug  2 19:43:04 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 	* tests/Reactor_Performance_Test.cpp:  Made a change suggested by 

@@ -1,8 +1,8 @@
-
 // $Id$
 
 #include "ttcp.hh"
 
+ACE_RCSID(Orbix, ttcpS, "$Id$")
 
 #define ttcp_sequence_dispatch_impl
 
