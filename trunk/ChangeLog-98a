@@ -1,3 +1,9 @@
+Wed Feb 18 15:30:48 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* include/makeinclude/rules.lib.GNU: 
+	  Now we can create libraries with some files in
+	  subdirectories. Though the Makefile still needs to set VPATH.
+
 Wed Feb 18 12:22:48 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Buffer_Stream_Test.cpp (Consumer::svc): added a
