@@ -85,23 +85,23 @@ TAO_GIOP_Message_Connectors::
     {
       // Request completed successfully
     case TAO_GIOP_NO_EXCEPTION:
-      params.reply_status_ = 
+      params.reply_status_ =
         TAO_PLUGGABLE_MESSAGE_NO_EXCEPTION;
       break;
 
       // Request terminated with user exception
     case TAO_GIOP_USER_EXCEPTION:
-      params.reply_status_ = 
+      params.reply_status_ =
         TAO_PLUGGABLE_MESSAGE_USER_EXCEPTION;
       break;
       // Request terminated with system exception
     case TAO_GIOP_SYSTEM_EXCEPTION:
-      params.reply_status_ = 
+      params.reply_status_ =
         TAO_PLUGGABLE_MESSAGE_SYSTEM_EXCEPTION;
       break;
       // Reply is a location forward type
     case TAO_GIOP_LOCATION_FORWARD:
-      params.reply_status_ = 
+      params.reply_status_ =
         TAO_PLUGGABLE_MESSAGE_LOCATION_FORWARD;
       break;
       // Reply is a location forward perm type
@@ -110,12 +110,12 @@ TAO_GIOP_Message_Connectors::
       // LOCATION_FORWARD as there is a controversy surrounding the
       // usage of this in the OMG.
     case TAO_GIOP_LOCATION_FORWARD_PERM:
-      params.reply_status_ = 
+      params.reply_status_ =
         TAO_PLUGGABLE_MESSAGE_LOCATION_FORWARD;
       break;
       // Reply is a location forward type
     case TAO_GIOP_NEEDS_ADDRESSING_MODE:
-      params.reply_status_ = 
+      params.reply_status_ =
         TAO_PLUGGABLE_MESSAGE_NEEDS_ADDRESSING_MODE;
       break;
     default:
@@ -159,9 +159,9 @@ TAO_GIOP_Message_Connectors::
                     ACE_TEXT ("extracting reply status\n")));
       return -1;
     }
-  
+
   return 0;
-  
+
 }
 
 
@@ -184,7 +184,7 @@ TAO_GIOP_Message_Connectors::validate_version (TAO_GIOP_Message_State *state)
 
 
 int
-TAO_GIOP_Message_Connectors::process_client_message (TAO_Transport * /*transport*/, 
+TAO_GIOP_Message_Connectors::process_client_message (TAO_Transport * /*transport*/,
                                                      TAO_ORB_Core * /*orb_core*/,
                                                      TAO_InputCDR & /*input*/,
                                                      CORBA::Octet /*message_type*/)
@@ -225,7 +225,7 @@ TAO_GIOP_Message_Connector_10::
    // @@ (JP) Temporary hack until all of GIOP 1.2 is implemented.
   if (response_flags == TAO_TWOWAY_RESPONSE_FLAG)
     msg << CORBA::Any::from_octet (1);
-  else 
+  else
     msg << CORBA::Any::from_octet (0);
 
   // In this case we cannot recognise anything other than the Object
@@ -254,8 +254,16 @@ TAO_GIOP_Message_Connector_10::
   // unverified user ID, and then verifying the message (i.e. a dummy
   // service context entry is set up to hold a digital signature for
   // this message, then patched shortly before it's sent).
-  static CORBA::Principal_ptr principal = 0;
-  msg << principal;
+
+  /***** This has been deprecated in the 2.4 spec ******/
+  //static CORBA::Principal_ptr principal = 0;
+  //msg << principal;
+
+  // This is now introduced in 2.4 spec
+  CORBA::OctetSeq req_principal (0);
+  req_principal.length (0);
+  msg << req_principal;
+
 
 
   return 1;
@@ -309,7 +317,7 @@ TAO_GIOP_Message_Connector_10::
     case TAO_GIOP_REQUEST:
       // In GIOP 1.0 and GIOP 1.1 this is an error,
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("TAO (%P|%t) TAO_GIOP_Message_Connector_10::parse_reply: ") 
+                         ACE_TEXT ("TAO (%P|%t) TAO_GIOP_Message_Connector_10::parse_reply: ")
                          ACE_TEXT ("request.\n")),
                         -1);
 
@@ -388,10 +396,10 @@ TAO_GIOP_Message_Connector_12::
   msg << opdetails.request_id ();
 
   const CORBA::Octet response_flags = opdetails.response_flags ();
-  
+
   // Here are the Octet values for different policies
   // '00000000' for SYNC_NONE
-  // '00000001' for SYNC_WITH_TRANSPORT
+  // '00000000' for SYNC_WITH_TRANSPORT
   // '00000010' for SYNC_WITH_SERVER
   // '00000011' for SYNC_WITH_TARGET
   // '00000011' for regular two ways, but if they are invoked via a
@@ -403,18 +411,15 @@ TAO_GIOP_Message_Connector_12::
   // Second the response flags
   // Sync scope - ignored by server if request is not oneway.
   else if (response_flags == CORBA::Octet (TAO::SYNC_NONE) ||
+           response_flags == CORBA::Octet (TAO::SYNC_WITH_TRANSPORT) ||
            response_flags == CORBA::Octet (TAO::SYNC_EAGER_BUFFERING) ||
            response_flags == CORBA::Octet (TAO::SYNC_DELAYED_BUFFERING))
     // No response required.
     msg << CORBA::Any::from_octet (0);
 
-  else if (response_flags == CORBA::Octet (TAO::SYNC_WITH_TRANSPORT))
-    // Return after receiving message.
-    msg << CORBA::Any::from_octet (1);
-
   else if (response_flags == CORBA::Octet (TAO::SYNC_WITH_SERVER))
     // Return before dispatching to the servant
-    msg << CORBA::Any::from_octet (2);
+    msg << CORBA::Any::from_octet (1);
 
   else if (response_flags == CORBA::Octet (TAO::SYNC_WITH_TARGET))
     // Return after dispatching servant.
@@ -431,11 +436,11 @@ TAO_GIOP_Message_Connector_12::
   if (this->marshall_target_spec (spec,
                                   msg) == 0)
     return 0;
-  
+
   // Write the operation name
-  msg.write_string (opdetails.opname_len (), 
+  msg.write_string (opdetails.opname_len (),
                     opdetails.opname ());
-  
+
   // Write the service context list
   msg << opdetails.service_info ();
 
@@ -455,7 +460,7 @@ TAO_GIOP_Message_Connector_12::
 {
   // Write the request id
   msg << request_id;
-  
+
   // Write the target address
   if (this->marshall_target_spec (spec,
                                   msg) == 0)
@@ -495,7 +500,7 @@ TAO_GIOP_Message_Connector_12::
       {
         // As this is a union send in the discriminant first
         msg << GIOP::KeyAddr;
-        
+
         // Get the object key
         const TAO_ObjectKey *key = spec.object_key ();
         if (key)
@@ -516,10 +521,10 @@ TAO_GIOP_Message_Connector_12::
       {
         // As this is a union send in the discriminant first
         msg << GIOP::ProfileAddr;
-        
+
         // Get the profile
         const IOP::TaggedProfile *pfile = spec.profile ();
-        
+
         if (pfile)
           {
             // Marshall in the object key
@@ -538,16 +543,16 @@ TAO_GIOP_Message_Connector_12::
       {
         // As this is a union send in the discriminant first
         msg << GIOP::ReferenceAddr;
-        
+
         // Get the IOR
         IOP::IOR *ior;
         CORBA::ULong index = spec.iop_ior (ior);
-        
+
         if (ior)
           {
             // This is a struct IORAddressingInfo. So, marshall each
             // member of the struct one after another in the order
-            // defined. 
+            // defined.
             msg << index;
             msg << *ior;
           }
@@ -566,7 +571,7 @@ TAO_GIOP_Message_Connector_12::
                     ACE_TEXT ("(%N |%l) Unable to handle this request \n")));
       return 0;
     }
-    
+
   return 1;
 }
 
@@ -584,7 +589,7 @@ parse_reply (TAO_Message_State_Factory &mesg_state,
     {
     case TAO_GIOP_REQUEST:
       // We could get this in Bi_Dir GIOP
-      // So, we take some action. 
+      // So, we take some action.
       break;
     case TAO_GIOP_CANCELREQUEST:
     case TAO_GIOP_LOCATEREQUEST:
@@ -619,7 +624,7 @@ parse_reply (TAO_Message_State_Factory &mesg_state,
       // Never happens: why??
       break;
     }
-  
+
   // Align the read pointer on an 8-byte boundary
   state->cdr.align_read_ptr (TAO_GIOP_MESSAGE_ALIGN_PTR);
   return 0;
