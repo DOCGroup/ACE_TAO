@@ -23,6 +23,7 @@ FtRtEvent_Test_Base::FtRtEvent_Test_Base()
 : gateway_(0)
 , use_gateway_(1)
 {
+  options_.num_events = -1;
   options_.num_iterations=100;
   options_.timer_interval.set(1,0);
   options_.proxy_consumer_file="consumer.ior";
@@ -36,7 +37,7 @@ FtRtEvent_Test_Base::~FtRtEvent_Test_Base()
 int 
 FtRtEvent_Test_Base::parse_args(int argc, ACE_TCHAR** argv ACE_ENV_ARG_DECL)
 {
-  ACE_Get_Opt get_opt (argc, argv, ACE_LIB_TEXT("d:f:hi:k:np:?"));
+  ACE_Get_Opt get_opt (argc, argv, ACE_LIB_TEXT("d:e:f:hi:k:np:?"));
     int opt;
 
   while ((opt = get_opt ()) != EOF)
@@ -45,6 +46,10 @@ FtRtEvent_Test_Base::parse_args(int argc, ACE_TCHAR** argv ACE_ENV_ARG_DECL)
     {
     case 'd':
       TAO_FTRTEC::Log::level(ACE_OS::atoi(get_opt.opt_arg ()));
+      break;
+    case 'e':
+      options_.num_events = ACE_OS::atoi(get_opt.opt_arg ());
+      options_.num_iterations= INT_MAX;
       break;
     case 'i':
       {
@@ -57,6 +62,7 @@ FtRtEvent_Test_Base::parse_args(int argc, ACE_TCHAR** argv ACE_ENV_ARG_DECL)
       }
       break;
     case 'k':
+      options_.num_events = INT_MAX;
       options_.num_iterations = atoi(get_opt.opt_arg ());
       break;
     case 'n':
