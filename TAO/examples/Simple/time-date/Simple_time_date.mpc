@@ -16,7 +16,7 @@ project(*lib): portableserver {
   }
 }
 
-project(*server): portableserver {
+project(*server): taoserver {
   IDL_Files {
   }
   Source_Files {
@@ -26,7 +26,7 @@ project(*server): portableserver {
   }
 }
 
-project(*client): namingexe {
+project(*client): taoclient, namingexe {
   after += *lib
   libs  += Time_Date
   Source_Files {
