@@ -1,3 +1,13 @@
+Mon Oct  5 11:28:02 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Event/Event_Channel.cpp: 
+	  MSVC++ does not like
+	      auto_ptr<Foo> x = new Foo;
+	  but it does like
+	      auto_ptr<Foo> x (new Foo);
+	  Thanks to Nanbor for catching this problem and commiting the
+	  fix.
+
 Mon Oct  5 10:47:52 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
 	* TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
