@@ -142,6 +142,10 @@ class TAO_GIOP_MessageHeader
   //   This is the header sent with ever GIOP request!
 
 public:
+
+  TAO_GIOP_MessageHeader (void);
+  // Constructor.
+
   // version numbers
   enum
   {
@@ -264,9 +268,9 @@ public:
   TAO_GIOP_LocateRequestHeader (void);
   // Constructor
 
-  CORBA::Boolean init (TAO_InputCDR &msg,
-                       CORBA_Environment &TAO_IN_ENV =
-                           TAO_default_environment ());
+  void init (TAO_InputCDR &msg,
+             CORBA_Environment &TAO_IN_ENV =
+                 TAO_default_environment ());
   // Initialize the header from the values found in <msg>.
 
   CORBA::ULong request_id;
@@ -300,20 +304,12 @@ class TAO_Export TAO_GIOP
 
 public:
 
-  static const CORBA::ULong tao_specific_message_types;
-  // Number of TAO specific message types = 3.
-
   enum Message_Type
   {
     // = DESCRIPTION
     //   All GIOP messages include a header and message type.  Not
     //   really a message type, but needed to bring that information
     //   back somehow.
-
-    // = TAO specific message types.
-    CommunicationError = -3,    // Invalid request.
-    EndOfFile = -2,             // "discovered" by either.
-    ShortRead = -1,             // "discovered" by either.
 
     // = GIOP message types.
     Request = 0,                // sent by client.
@@ -344,15 +340,15 @@ public:
                                               TAO_OutputCDR &msg,
                                               TAO_ORB_Core *orb_core);
   // Write the GIOP request header.
-  
+
   static CORBA::Boolean write_locate_request_header (CORBA::ULong request_id,
                                                      const TAO_opaque &key,
                                                      TAO_OutputCDR &msg);
   // Write the GIOP locate request header.
 
-  static CORBA::Boolean send_message (TAO_Transport *transport,
-                                      TAO_OutputCDR &stream,
-                                      TAO_ORB_Core* orb_core);
+  static int send_message (TAO_Transport *transport,
+                           TAO_OutputCDR &stream,
+                           TAO_ORB_Core* orb_core);
   // Send message, returns TRUE if success, else FALSE.
 
   static void dump_msg (const char *label,
@@ -368,9 +364,6 @@ public:
                               size_t len);
   // Loop on data read ... this is required since <recv> won't block
   // until the requested amount of data is available.
-
-  static const char *message_name (TAO_GIOP::Message_Type which);
-  // Returns the stringified <MsgType>.
 
   static TAO_GIOP_ReplyStatusType convert_CORBA_to_GIOP_exception (CORBA::exception_type corba_type);
   // Convert the exception type from CORBA to GIOP
@@ -393,18 +386,18 @@ public:
                           TAO_GIOP_ServiceContextList& reply_ctx,
                           CORBA::ULong& request_id,
                           CORBA::ULong& reply_status);
-  static int process_server_message (TAO_Transport *transport,
-                                     TAO_ORB_Core *orb_core,
-                                     TAO_InputCDR &cdr,
-                                     const TAO_GIOP_MessageHeader& header);
+  static void process_server_message (TAO_Transport *transport,
+                                      TAO_ORB_Core *orb_core,
+                                      TAO_InputCDR &cdr,
+                                      const TAO_GIOP_MessageHeader& header);
 
-  static int process_server_request (TAO_Transport *transport,
-                                     TAO_ORB_Core* orb_core,
-                                     TAO_InputCDR &input,
-                                     TAO_OutputCDR &output,
-                                     CORBA::Boolean &response_required,
-                                     CORBA::ULong &request_id,
-                                     CORBA::Environment &ACE_TRY_ENV);
+  static void process_server_request (TAO_Transport *transport,
+                                      TAO_ORB_Core* orb_core,
+                                      TAO_InputCDR &input,
+                                      TAO_OutputCDR &output,
+                                      CORBA::Boolean &response_required,
+                                      CORBA::ULong &request_id,
+                                      CORBA::Environment &ACE_TRY_ENV);
   // A request was received on the server side.
   // <transport> is the source of the message (and thus where the
   // replies should be sent).
@@ -414,13 +407,13 @@ public:
   // <request_id> and <response_required> are set as part of the
   // message processing.
 
-  static int process_server_locate (TAO_Transport *transport,
-                                    TAO_ORB_Core* orb_core,
-                                    TAO_InputCDR &input,
-                                    TAO_OutputCDR &output,
-                                    CORBA::Boolean &response_required,
-                                    CORBA::ULong &request_id,
-                                    CORBA::Environment &ACE_TRY_ENV);
+  static void process_server_locate (TAO_Transport *transport,
+                                     TAO_ORB_Core* orb_core,
+                                     TAO_InputCDR &input,
+                                     TAO_OutputCDR &output,
+                                     CORBA::Boolean &response_required,
+                                     CORBA::ULong &request_id,
+                                     CORBA::Environment &ACE_TRY_ENV);
   // A LocateRequest was received on the server side.
   // <transport> is the source of the message (and thus where the
   // replies should be sent).
@@ -456,8 +449,8 @@ private:
                                                   CORBA::Principal_ptr principal,
                                                   TAO_OutputCDR &msg);
   // Encode the standard header for the Request, assuming that the
-  // GIOP header is already there. 
-  
+  // GIOP header is already there.
+
   static CORBA::Boolean write_request_header_lite (const TAO_GIOP_ServiceContextList& svc_ctx,
                                                    CORBA::ULong request_id,
                                                    CORBA::Boolean is_roundtrip,
@@ -475,7 +468,7 @@ private:
 
   static int parse_header_std (ACE_Message_Block *payload,
                                TAO_GIOP_MessageHeader& header);
-  
+
   static int parse_header_lite (ACE_Message_Block *payload,
                                 TAO_GIOP_MessageHeader& header);
 };

@@ -51,7 +51,7 @@ public:
   // Returns the specific IOP instance, in this case IIOP.
 
   void close_connection (void);
-  // Call the corresponding connection handlers handle_close method.
+  // Call the corresponding connection handlers close method.
 
   int idle (void);
   // Idles the corresponding connection handler.
@@ -143,9 +143,6 @@ public:
   virtual int register_handler (void);
   // Register the handler with the reactor. This will be called by the
   // Wait Strategy if Reactor is used  for that strategy.
-
-  virtual int handle_close (void);
-  // The connection was closed, let everybody know about it....
 
 protected:
   int check_unexpected_data (void);

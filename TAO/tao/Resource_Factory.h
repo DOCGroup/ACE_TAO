@@ -44,7 +44,7 @@ class TAO_Export TAO_Cached_Connector_Lock : public ACE_Adaptive_Lock
   //   This lock class determines the type underlying lock
   //   when it gets constructed.
 public:
-  TAO_Cached_Connector_Lock (void);
+  TAO_Cached_Connector_Lock (TAO_ORB_Core *orb_core = 0);
   ~TAO_Cached_Connector_Lock (void);
 };
 

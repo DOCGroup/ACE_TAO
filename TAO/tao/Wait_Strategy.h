@@ -60,9 +60,6 @@ public:
   virtual int handle_input (void) = 0;
   // Handle the input.
 
-  virtual int handle_close (void) = 0;
-  // The connection was closed, take appropiate action...
-
   virtual int register_handler (void) = 0;
   // Register the handler with the Reactor if it makes sense for the
   // strategy.
@@ -100,9 +97,6 @@ public:
   // Handle the input. Delegate this job to Transport object. Before
   // that suspend the handler in the Reactor.
 
-  virtual int handle_close (void);
-  // The connection was closed, take appropiate action...
-
   virtual int register_handler (void);
   // Register the handler with the Reactor.
 
@@ -135,7 +129,6 @@ public:
                                int two_way);
   virtual int wait (void);
   virtual int handle_input (void);
-  virtual int handle_close (void);
   virtual int register_handler (void);
 
 protected:
@@ -184,9 +177,6 @@ public:
 
   virtual int handle_input (void);
   // Handle the input. Delegate this job to Transport object.
-
-  virtual int handle_close (void);
-  // The connection was closed, take appropiate action...
 
   virtual int register_handler (void);
   // No-op. Return 0.

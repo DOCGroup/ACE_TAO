@@ -87,7 +87,7 @@ public:
   virtual TAO_Transport *transport (void);
 
 protected:
-  TAO_UIOP_Client_Transport *uiop_transport_;
+  TAO_UIOP_Client_Transport *transport_;
   // Reference to the transport object, it is owned by this class.
 };
 
@@ -143,7 +143,7 @@ public:
   TAO_Transport *transport (void);
 
 protected:
-  TAO_UIOP_Server_Transport *uiop_transport_;
+  TAO_UIOP_Server_Transport *transport_;
   // @@ New transport object reference.
 
   virtual int handle_locate (TAO_InputCDR &msg,

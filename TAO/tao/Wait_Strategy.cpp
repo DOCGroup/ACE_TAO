@@ -88,13 +88,6 @@ TAO_Wait_On_Reactor::handle_input (void)
   return result;
 }
 
-int
-TAO_Wait_On_Reactor::handle_close (void)
-{
-  this->reply_received_ = -1;
-  return 0;
-}
-
 // Register the handler with the Reactor.
 int
 TAO_Wait_On_Reactor::register_handler (void)
@@ -384,40 +377,35 @@ TAO_Wait_On_Leader_Follower::handle_input (void)
 
   // Receive any data that is available, without blocking...
   int result = this->transport_->handle_client_input (0);
-  if (result == -1 && TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "TAO (%P|%t) - Wait_On_LF::handle_input, "
-                "handle_client_input == -1\n"));
+
 
   // Data was read, but there the reply has not been completely
   // received...
   if (result == 0)
     return 0;
 
-  // Severe error, abort....
-  if (result == 1)
+  if (result == -1)
     {
-      this->reply_received_ = 1;
-      result = 0;
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG,
+                    "TAO (%P|%t) - Wait_On_LF::handle_input, "
+                    "handle_client_input == -1\n"));
+      this->reply_received_ = -1;
     }
 
-  //ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - waking up <%x>\n",
-  //          this->transport_));
+  if (result == 1)
+    {
+      // Change the result value to something that the Reactor can
+      // understand
+      result = 0;
+      this->reply_received_ = 1;
+    }
 
+  // Wake up any threads waiting for this message, either because the
+  // message failed or because we really received it.
   this->wake_up ();
 
   return result;
-}
-
-int
-TAO_Wait_On_Leader_Follower::handle_close (void)
-{
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon,
-                    this->transport_->orb_core ()->leader_follower_lock (),
-                    -1);
-  this->reply_received_ = -1;
-  this->wake_up ();
-  return 0;
 }
 
 // Register the handler.
@@ -502,12 +490,6 @@ TAO_Wait_On_Read::handle_input (void)
 {
   // Block to get the whole message.
   return this->transport_->handle_client_input (1);
-}
-
-int
-TAO_Wait_On_Read::handle_close (void)
-{
-  return 0;
 }
 
 // No-op.

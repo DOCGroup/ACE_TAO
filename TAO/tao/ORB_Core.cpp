@@ -32,7 +32,7 @@ typedef ACE_TSS_Singleton<TAO_ORB_Core_TSS_Resources, ACE_SYNCH_MUTEX>
 
 // ****************************************************************
 
-CORBA::Environment&
+CORBA::Environment &
 TAO_default_environment ()
 {
   // @@ This is a slight violation of layering, we should use
@@ -75,6 +75,8 @@ TAO_ORB_Core::~TAO_ORB_Core (void)
   delete this->orb_params_;
 
   ACE_OS::free (this->orbid_);
+
+  delete this->poa_current_;
 }
 
 int

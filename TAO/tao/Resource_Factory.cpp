@@ -2,8 +2,25 @@
 
 #include "tao/Resource_Factory.h"
 #include "ace/Dynamic_Service.h"
+#include "tao/ORB_Core.h"
+#include "tao/Server_Strategy_Factory.h"
 
 ACE_RCSID(tao, Resource_Factory, "$Id$")
+
+// ****************************************************************
+
+TAO_Cached_Connector_Lock::TAO_Cached_Connector_Lock (TAO_ORB_Core *orb_core)
+{
+  this->lock_ = orb_core->server_factory ()->create_cached_connector_lock ();
+}
+
+TAO_Cached_Connector_Lock::~TAO_Cached_Connector_Lock (void)
+{
+  delete this->lock_;
+  this->lock_ = 0;
+}
+
+// ****************************************************************
 
 TAO_Protocol_Item::TAO_Protocol_Item (const ACE_CString &name)
   :   name_ (name),
