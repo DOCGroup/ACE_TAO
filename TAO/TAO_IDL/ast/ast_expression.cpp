@@ -94,7 +94,7 @@ AST_Expression::fill_definition_details()
  * An AST_Expression denoting a symbolic name
  */
 AST_Expression::AST_Expression (UTL_ScopedName *nm)
-	      : pd_ec (EC_symbol),
+  : pd_ec (EC_symbol),
 		pd_ev (NULL),
 		pd_v1 (NULL),
 		pd_v2 (NULL),
@@ -127,7 +127,7 @@ AST_Expression::AST_Expression (AST_Expression *v,
  */
 AST_Expression::AST_Expression (ExprComb c, 
                                 AST_Expression *ev1,
-			       AST_Expression *ev2)
+			                          AST_Expression *ev2)
   : pd_ec (c),
 		pd_ev (NULL),
 		pd_v1 (ev1),
@@ -141,7 +141,7 @@ AST_Expression::AST_Expression (ExprComb c,
  * An AST_Expression denoting a short integer
  */
 AST_Expression::AST_Expression(short sv)
-	      : pd_ec(EC_none),
+  : pd_ec(EC_none),
 		pd_ev(NULL),
 		pd_v1(NULL),
 		pd_v2(NULL),
@@ -158,7 +158,7 @@ AST_Expression::AST_Expression(short sv)
  * An AST_Expression denoting an unsigned short integer
  */
 AST_Expression::AST_Expression(unsigned short usv)
-	      : pd_ec(EC_none),
+  : pd_ec(EC_none),
 		pd_ev(NULL),
 		pd_v1(NULL),
 		pd_v2(NULL),
@@ -175,7 +175,7 @@ AST_Expression::AST_Expression(unsigned short usv)
  * An AST_Expression denoting a long integer
  */
 AST_Expression::AST_Expression(long lv)
-	      : pd_ec(EC_none),
+  : pd_ec(EC_none),
 		pd_ev(NULL),
 		pd_v1(NULL),
 		pd_v2(NULL),
@@ -192,7 +192,7 @@ AST_Expression::AST_Expression(long lv)
  * An AST_Expression denoting a long integer being used as a boolean
  */
 AST_Expression::AST_Expression(long lv, ExprType t)
-	      : pd_ec(EC_none),
+	: pd_ec(EC_none),
 		pd_ev(NULL),
 		pd_v1(NULL),
 		pd_v2(NULL),
@@ -209,7 +209,7 @@ AST_Expression::AST_Expression(long lv, ExprType t)
  * An AST_Expression denoting an unsigned long integer
  */
 AST_Expression::AST_Expression(unsigned long ulv)
-	      : pd_ec(EC_none),
+	: pd_ec(EC_none),
 		pd_ev(NULL),
 		pd_v1(NULL),
 		pd_v2(NULL),
@@ -226,7 +226,7 @@ AST_Expression::AST_Expression(unsigned long ulv)
  * An AST_Expression denoting a 32-bit floating point number
  */
 AST_Expression::AST_Expression(float fv)
-	      : pd_ec(EC_none),
+	: pd_ec(EC_none),
 		pd_ev(NULL),
 		pd_v1(NULL),
 		pd_v2(NULL),
@@ -243,7 +243,7 @@ AST_Expression::AST_Expression(float fv)
  * An AST_Expression denoting a 64-bit floating point number
  */
 AST_Expression::AST_Expression(double dv)
-	      : pd_ec(EC_none),
+	: pd_ec(EC_none),
 		pd_ev(NULL),
 		pd_v1(NULL),
 		pd_v2(NULL),
@@ -260,7 +260,7 @@ AST_Expression::AST_Expression(double dv)
  * An AST_Expression denoting a character
  */
 AST_Expression::AST_Expression(char cv)
-	      : pd_ec(EC_none),
+	: pd_ec(EC_none),
 		pd_ev(NULL),
 		pd_v1(NULL),
 		pd_v2(NULL),
@@ -277,7 +277,7 @@ AST_Expression::AST_Expression(char cv)
  * An AST_Expression denoting a wide character
  */
 AST_Expression::AST_Expression(ACE_OutputCDR::from_wchar wcv)
-	      : pd_ec(EC_none),
+	: pd_ec(EC_none),
 		pd_ev(NULL),
 		pd_v1(NULL),
 		pd_v2(NULL),
@@ -294,7 +294,7 @@ AST_Expression::AST_Expression(ACE_OutputCDR::from_wchar wcv)
  * An AST_Expression denoting an octet (unsigned char)
  */
 AST_Expression::AST_Expression(unsigned char ov)
-	      : pd_ec(EC_none),
+	: pd_ec(EC_none),
 		pd_ev(NULL),
 		pd_v1(NULL),
 		pd_v2(NULL),
@@ -311,7 +311,7 @@ AST_Expression::AST_Expression(unsigned char ov)
  * An AST_Expression denoting a string (char * encapsulated as a String)
  */
 AST_Expression::AST_Expression(UTL_String *sv)
-	      : pd_ec(EC_none),
+	: pd_ec(EC_none),
 		pd_ev(NULL),
 		pd_v1(NULL),
 		pd_v2(NULL),
@@ -328,7 +328,7 @@ AST_Expression::AST_Expression(UTL_String *sv)
  * An AST_Expression denoting a wide string
  */
 AST_Expression::AST_Expression(char *sv)
-	      : pd_ec(EC_none),
+	: pd_ec(EC_none),
 		pd_ev(NULL),
 		pd_v1(NULL),
 		pd_v2(NULL),
@@ -1658,7 +1658,7 @@ AST_Expression::eval_symbol(AST_Expression::EvalKind ek)
 AST_Expression::AST_ExprValue *
 AST_Expression::coerce(AST_Expression::ExprType t)
 {
-  AST_ExprValue *copy;
+  AST_ExprValue *copy = 0;
 
   /*
    * Is it already of the right type?
@@ -1779,34 +1779,34 @@ AST_Expression::eval_internal(AST_Expression::EvalKind ek)
   /*
    * Already evaluated?
    */
-  if (pd_ev != NULL)
-    return eval_kind(pd_ev, ek);
+  if (this->pd_ev != NULL)
+    return eval_kind(this->pd_ev, ek);
   /*
    * OK, must evaluate operator
    */
-  switch (pd_ec) {
+  switch (this->pd_ec) {
   case EC_add:
   case EC_minus:
   case EC_mul:
   case EC_div:
   case EC_mod:
-    pd_ev = eval_bin_op(ek);
-    return eval_kind(pd_ev, ek);
+    this->pd_ev = eval_bin_op(ek);
+    return eval_kind(this->pd_ev, ek);
   case EC_or:
   case EC_xor:
   case EC_and:
   case EC_left:
   case EC_right:
-    pd_ev = eval_bit_op(ek);
-    return eval_kind(pd_ev, ek);
+    this->pd_ev = eval_bit_op(ek);
+    return eval_kind(this->pd_ev, ek);
   case EC_u_plus:
   case EC_u_minus:
   case EC_bit_neg:
-    pd_ev = eval_un_op(ek);
-    return eval_kind(pd_ev, ek);
+    this->pd_ev = eval_un_op(ek);
+    return eval_kind(this->pd_ev, ek);
   case EC_symbol:
-    pd_ev = eval_symbol(ek);
-    return eval_kind(pd_ev, ek);
+    this->pd_ev = eval_symbol(ek);
+    return eval_kind(this->pd_ev, ek);
   case EC_none:
     return NULL;
   }
