@@ -113,7 +113,7 @@ extern "C" {
      See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
    */
-  PACE_INLINE time_t pace_mktime (const tm * timeptr);
+  PACE_INLINE time_t pace_mktime (struct tm * timeptr);
 
   /** 
      PACE's implementation of the POSIX function nanosleep.
@@ -128,7 +128,7 @@ extern "C" {
      See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
      IEEE Std 1003.1, 1996 Edition), Section 8.1.
    */
-  PACE_INLINE size_t pace_strftime (const char *s, size_t maxsize,
+  PACE_INLINE size_t pace_strftime (char *s, size_t maxsize,
                                     const char *format,
                                     const struct tm *timeptr);
 

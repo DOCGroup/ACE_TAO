@@ -126,7 +126,7 @@ pace_localtime_r (const time_t * clock, struct tm * result)
 
 PACE_INLINE
 time_t
-pace_mktime (const tm * timeptr)
+pace_mktime (struct tm * timeptr)
 {
   return mktime (timeptr);
 }
@@ -141,7 +141,7 @@ pace_nanosleep (const struct timespec * rqtp,
 
 PACE_INLINE
 size_t
-pace_strftime (const char *s, size_t maxsize,
+pace_strftime (char *s, size_t maxsize,
                const char *format,
                const struct tm *timeptr)
 {
@@ -149,7 +149,7 @@ pace_strftime (const char *s, size_t maxsize,
 }
 
 PACE_INLINE
-int
+time_t
 pace_time (time_t * tloc)
 {
   return time (tloc);
