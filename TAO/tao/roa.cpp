@@ -65,22 +65,9 @@ ROA::ROA (CORBA::ORB_ptr owning_orb,
     call_count_ (0),
     skeleton_ (0)
 {
-  TAO_ORB_Core *p = TAO_ORB_CORE::instance();
-  TAO_Server_Strategy_Factory *f = owning_orb->server_factory ();
-
-  ACE_ASSERT (p->root_poa () == 0);
-
-  // Initialize the endpoint ... or try!
-  if (client_acceptor_.open (p->orb()->params()->addr (),
-			     ACE_Reactor::instance (),
-			     f->creation_strategy (),
-			     f->accept_strategy (),
-			     f->concurrency_strategy (),
-			     f->scheduling_strategy ()) == -1)
-    // XXXCJC Need to return an error somehow!!  Maybe set do_exit?
-    ;
-
-  client_acceptor_.acceptor ().get_local_addr (addr_);
+  TAO_Server_Strategy_Factory *f = orb_->server_factory ();
+  TAO_ORB_Core* p = TAO_ORB_CORE::instance ();
+  
   this->objtable_ = f->object_lookup_strategy ();
 
   if (this->objtable_ != 0)
@@ -128,11 +115,12 @@ ROA::create (CORBA::OctetSeq &key,
 
   IIOP::Version ver (IIOP::MY_MAJOR, IIOP::MY_MINOR);
   // Cast below de-warns on Sun's C++
-  CORBA::String h = (char*)addr_.get_host_name ();
+  const ACE_INET_Addr& addr = orb_->params ()->addr ();
+  CORBA::String h = (char*)addr.get_host_name ();
 
   data = new IIOP_Object (id, IIOP::ProfileBody (ver,
 						 h,
-						 addr_.get_port_number (),
+						 addr.get_port_number (),
 						 key));
   if (data != 0)
     env.clear ();
@@ -429,9 +417,3 @@ request_forwarder (TAO_opaque &target_key,
 #if !defined (__ACE_INLINE__)
 #  include "roa.i"
 #endif /* __ACE_INLINE__ */
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Strategy_Acceptor<TAO_OA_Connection_Handler, ACE_SOCK_ACCEPTOR>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Strategy_Acceptor<TAO_OA_Connection_Handler, ACE_SOCK_ACCEPTOR>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

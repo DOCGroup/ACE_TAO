@@ -16,13 +16,11 @@
 // 
 // ============================================================================
 
-#if 0
 #  include "ace/Reactor.h"
 #  include "ace/Acceptor.h"
 #  include "ace/SOCK_Acceptor.h"
 #  include "ace/Synch.h"
 #  include "ace/Svc_Handler.h"
-#endif
 
 // Forward Decls
 class TAO_OA_Parameters;
@@ -78,6 +76,6 @@ private:
   TAO_OA_Parameters *params_;
 };
 
-typedef ACE_Strategy_Acceptor<TAO_OA_Connection_Handler, ACE_SOCK_ACCEPTOR> ROA_Acceptor;
+typedef ACE_Strategy_Acceptor<TAO_OA_Connection_Handler, ACE_SOCK_ACCEPTOR> TAO_Acceptor;
 
 #endif /* TAO_CONNECT_H */

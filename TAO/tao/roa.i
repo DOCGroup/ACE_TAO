@@ -9,9 +9,3 @@ ROA::orb (void) const
 {
   return orb_;
 }
-
-ACE_INLINE ACE_INET_Addr
-ROA::get_addr (void) const
-{
-  return addr_;
-}

@@ -47,6 +47,29 @@ DEFINE_GUID (IID_CORBA_ORB,
 DEFINE_GUID (IID_STUB_Object,
 	     0xa201e4c7, 0xf258, 0x11ce, 0x95, 0x98, 0x0, 0x0, 0xc0, 0x7c, 0xa8, 0x98);
 
+CORBA_ORB::CORBA_ORB (void)
+  : client_factory_ (0),
+    client_factory_from_service_config_ (CORBA::B_FALSE),
+    server_factory_ (0),
+    server_factory_from_service_config_ (CORBA::B_FALSE)
+{
+  refcount_ = 1;
+
+  TAO_Server_Strategy_Factory *f = this->server_factory ();
+
+  // Initialize the endpoint ... or try!
+  if (client_acceptor_.open (this->params()->addr (),
+			     TAO_ORB_CORE::instance()->reactor(),
+			     f->creation_strategy (),
+			     f->accept_strategy (),
+			     f->concurrency_strategy (),
+			     f->scheduling_strategy ()) == -1)
+    // @@ CJC Need to return an error somehow!!  Maybe set do_exit?
+    ;
+
+  client_acceptor_.acceptor ().get_local_addr (addr_);
+}
+
 TAO_Client_Strategy_Factory *
 CORBA_ORB::client_factory (void)
 {
@@ -190,6 +213,8 @@ CORBA::ORB_init (int &argc,
   // @@ should use the ORB's name in place of argv[0]?
   svc_config_argv[svc_config_argc++] = argv[0];
 
+  CORBA::String_var host = CORBA::string_dup ("");
+  CORBA::UShort port = 5001;  // some default port -- needs to be a #defined value
   for (int i = 1; i < argc; )
     {
       if (ACE_OS::strcmp (argv[i], "-ORBsvcconf") == 0)
@@ -216,6 +241,32 @@ CORBA::ORB_init (int &argc,
           svc_config_argv[svc_config_argc++] = "-d";
           argvec_shift (argc, &argv[i], 1);
         }
+      else if (ACE_OS::strcmp (argv[i], "-ORBhost") == 0)
+	{
+          // Specify the name of the host (i.e., interface) on which
+          // the server should listen
+	  if (i + 1 < argc)
+	    host = CORBA::string_dup (argv[i + 1]);
+
+          argvec_shift (argc, &argv[i], 2);
+	}
+      else if (ACE_OS::strcmp (argv[i], "-ORBport") == 0)
+	{
+          // Specify the port number/name on which we should listen
+	  if (i + 1 < argc)
+            // @@ We shouldn't limit this to being specified as an int! --cjc
+	    port = ACE_OS::atoi (argv[i + 1]);
+
+          argvec_shift (argc, &argv[i], 2);
+	}
+      else if (ACE_OS::strcmp (argv[i], "-ORBrcvsock") == 0)
+	{
+          // Specify the size of the socket's receive buffer
+	}
+      else if (ACE_OS::strcmp (argv[i], "-ORBsndsock") == 0)
+	{
+          // Specify the size of the socket's send buffer
+	}
       else
         {
           i++;
@@ -237,6 +288,13 @@ CORBA::ORB_init (int &argc,
   }
 #endif	/* DEBUG */
 
+  ACE_INET_Addr rendezvous;
+  // create a INET_Addr
+  if (ACE_OS::strlen (host) > 0)
+    rendezvous.set (port, host);
+  else 
+    rendezvous.set (port);
+  
   // On Win32, we should be collecting information from the Registry
   // such as what ORBs are configured, specific configuration details
   // like whether they generate IOR or URL style stringified objrefs
@@ -343,6 +401,7 @@ CORBA::ORB_init (int &argc,
   // not at this level.  Do we really need this stuff?  What is the
   // alternative format (other than IOR)?  --cjc
   the_orb->use_omg_ior_format (CORBA::Boolean (use_ior));
+  the_orb->params()->addr(rendezvous);
   
   return the_orb;
 }
@@ -392,12 +451,9 @@ CORBA_ORB::BOA_init (int &argc,
   TAO_OA_Parameters *params = TAO_ORB_CORE::instance()->oa_params();
   CORBA::BOA_ptr rp;
   CORBA::String_var id = boa_identifier;
-  CORBA::String_var host = CORBA::string_dup ("");
   CORBA::String_var demux = CORBA::string_dup ("dynamic_hash"); // default, at least for now
-  CORBA::UShort port = 5001;  // some default port -- needs to be a #defined value
   CORBA::ULong tablesize = 0; // default table size for lookup tables
   CORBA::Boolean use_threads = CORBA::B_FALSE;
-  ACE_INET_Addr rendezvous;
   CORBA::Environment env;
 
   for (int i = 0; i < argc; )
@@ -413,24 +469,6 @@ CORBA_ORB::BOA_init (int &argc,
 
           argvec_shift (argc, &argv[i], 2);
         }
-      else if (ACE_OS::strcmp (argv[i], "-OAhost") == 0)
-	{
-          // Specify the name of the host (i.e., interface) on which
-          // the server should listen
-	  if (i + 1 < argc)
-	    host = CORBA::string_dup (argv[i + 1]);
-
-          argvec_shift (argc, &argv[i], 2);
-	}
-      else if (ACE_OS::strcmp (argv[i], "-OAport") == 0)
-	{
-          // Specify the port number/name on which we should listen
-	  if (i + 1 < argc)
-            // @@ We shouldn't limit this to being specified as an int! --cjc
-	    port = ACE_OS::atoi (argv[i + 1]);
-
-          argvec_shift (argc, &argv[i], 2);
-	}
       else if (ACE_OS::strcmp (argv[i], "-OAobjdemux") == 0)
 	{
           // Specify the demultiplexing strategy to be used for object
@@ -448,14 +486,6 @@ CORBA_ORB::BOA_init (int &argc,
 
           argvec_shift (argc, &argv[i], 2);
 	}
-      else if (ACE_OS::strcmp (argv[i], "-OArcvsock") == 0)
-	{
-          // Specify the size of the socket's receive buffer
-	}
-      else if (ACE_OS::strcmp (argv[i], "-OAsndsock") == 0)
-	{
-          // Specify the size of the socket's send buffer
-	}
       else if (ACE_OS::strcmp (argv[i], "-OAthread") == 0)
 	{
           // Specify whether or not threads should be used.
@@ -465,12 +495,6 @@ CORBA_ORB::BOA_init (int &argc,
       else
 	i++;
     }
-  
-  // create a INET_Addr
-  if (ACE_OS::strlen (host) > 0)
-    rendezvous.set (port, host);
-  else 
-    rendezvous.set (port);
   
   //    ACE_MT (ACE_GUARD (ACE_Thread_Mutex, roa_mon, lock_));
 
@@ -505,7 +529,9 @@ CORBA_ORB::BOA_init (int &argc,
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Dynamic_Service<TAO_Server_Strategy_Factory>;
 template class ACE_Dynamic_Service<TAO_Client_Strategy_Factory>;
+template class ACE_Strategy_Acceptor<TAO_OA_Connection_Handler, ACE_SOCK_ACCEPTOR>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Dynamic_Service<TAO_Server_Strategy_Factory>
 #pragma instantiate ACE_Dynamic_Service<TAO_Client_Strategy_Factory>
+#pragma instantiate ACE_Strategy_Acceptor<TAO_OA_Connection_Handler, ACE_SOCK_ACCEPTOR>
 #endif
