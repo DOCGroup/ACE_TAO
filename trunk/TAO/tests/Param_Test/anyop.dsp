@@ -11,7 +11,7 @@ CFG=Param_Test Anyop - Win32 Debug
 !MESSAGE NMAKE /f "anyop.mak".
 !MESSAGE 
 !MESSAGE You can specify a configuration when running NMAKE
-!MESSAGE by defining the macro CFG on the command line. For example:
+!MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
 !MESSAGE NMAKE /f "anyop.mak" CFG="Param_Test Anyop - Win32 Debug"
 !MESSAGE 
