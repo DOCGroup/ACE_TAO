@@ -142,6 +142,7 @@ sub initfiletypes {
 
     local %filenames =
 	('Makefile'     => 'Makefile',
+	 'Makefile.*'   => 'Makefile',
 	 'README'       => 'README files',
 	 'COPYING'      => 'Licenses',
 	 'LICENSE.*'    => 'Licenses',
@@ -155,6 +156,7 @@ sub initfiletypes {
     local %fileexts =
 	('cc'    => 'C++ sources',
 	 'cpp'   => 'C++ sources',
+	 'inl'   => 'C++ sources',
 	 'i'     => 'C++ sources',
 	 'h'     => 'Headers',
 	 'hh'    => 'Headers',
@@ -166,6 +168,7 @@ sub initfiletypes {
 	 'yy'    => 'yacc source',
 	 'l'     => 'lex source',
 	 'll'    => 'lex source',
+	 'pm'    => 'perl script',
 	 'pl'    => 'perl script',
 	 'perl'  => 'perl script',
 	 'GNU'   => 'GNU make config',
@@ -177,7 +180,14 @@ sub initfiletypes {
 	 'bib'   => 'BibTeX',
 	 'sty'   => 'TeX styles',
 	 'bld'   => 'VxWorks build file',
+	 'am'    => 'Automake file',
+	 'icc'   => 'VisualAge project files',
+	 'icp'   => 'VisualAge project files',
+	 'vac'   => 'VisualAge project files',
+	 'vcp'   => 'Microsof eMbedded Visual Tools project files',
+	 'vcw'   => 'Microsof eMbedded Visual Tools project files',
 	 'bpr'   => 'Borland project files',
+	 'bor'   => 'Borland project files',
 	 'dsp'   => 'DevStudio project files',
 	 'DSP'   => 'DevStudio project files',
 	 'mdp'   => 'MSVC project files',
@@ -216,7 +226,7 @@ sub initfiletypes {
 	updateRE($desc, $re);
     }
 
-    updateRE('Others', '.*');
+     updateRE('Others', '.*');
 
 #    while (($desc, $reseed) = each %typeRE) {
 #	print STDERR $desc, " ==> ", $reseed, "\n";
