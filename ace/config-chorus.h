@@ -44,6 +44,12 @@
 // Used in OS.i to map an actor id into a KnCap.
 #define ACE_CHORUS_MAX_ACTORS 64
 
+// This is not needed when compiling for PPC.  It is necessary
+// for certain methods in ACE.cpp.
+#if defined(sparc) && !defined(__unix)
+# define __unix
+#endif
+
 #if defined(CHORUS_4)
 # define ACE_CHORUS_DEFAULT_MIN_STACK_SIZE 0x8000
 # define ACE_HAS_4_4BSD_SENDMSG_RECVMSG
