@@ -17,10 +17,10 @@ public:
              CORBA::ULong len, ACE_Auto_Event &two_way_done);
 
   Two_Objects_Test::Octet_Seq *
-    twoway_method (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+    twoway_method (TAO_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void shutdown (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+  void shutdown (TAO_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

@@ -21,7 +21,7 @@ Second_i::Second_i (CORBA::ORB_ptr orb,
 }
 
 Two_Objects_Test::Octet_Seq *
-Second_i::twoway_method (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+Second_i::twoway_method (TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Two_Objects_Test::Octet_Seq  *preply_mesg;
