@@ -24,6 +24,7 @@
 #include "orbsvcs/ESF/ESF_Worker.h"
 
 #include "tao/ORB.h"
+#include "tao/PolicyC.h"
 
 #include "ace/Event_Handler.h"
 
