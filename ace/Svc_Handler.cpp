@@ -24,16 +24,22 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::operator new (size_t n)
 {
   ACE_TRACE ("ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::operator new");
 
-  if (ACE_Dynamic::instance () == 0)
+  ACE_Dynamic *const dynamic_instance = ACE_Dynamic::instance ();
+
+  if (dynamic_instance == 0)
     {
-      ACE_ASSERT (ACE_Dynamic::instance () != 0);  // Ran out of TSS keys?
+      // If this ACE_ASSERT fails, it may be due to running of out TSS
+      // keys.  Try using ACE_HAS_TSS_EMULATION, or increasing
+      // ACE_DEFAULT_THREAD_KEYS if already using TSS emulation.
+      ACE_ASSERT (dynamic_instance != 0);
+
       return 0;
     }
   else
     {
       // Allocate the memory and store it (usually in thread-specific
       // storage, depending on config flags).
-      ACE_Dynamic::instance ()->set ();
+      dynamic_instance->set ();
 
       return ::new char[n];
     }
