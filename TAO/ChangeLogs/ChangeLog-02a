@@ -1,3 +1,13 @@
+Thu May 24 10:30:23 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
+
+          Removed generation of "_var_type" typedef for
+          anonymous sequences, since the _var class for
+          anonymous sequences is not generated. Thanks to
+          Lothar Werzinger <Werzinger.Lothar@krones.de> for
+          reporting this bug.
+
 Thu May 24 09:47:30 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be/be_predefined_type.cpp:
