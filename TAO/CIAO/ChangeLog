@@ -1,3 +1,12 @@
+Wed Jun 30 17:00:10 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * DnC/RepositoryManager/RepositoryManager_Impl.cpp:
+        * DnC/RepositoryManager/RepositoryManager_Impl.h:
+        * DnC/RepositoryManager/Repository_Manager.cpp:
+
+          Added code to catch parser exceptions for
+          incorrect URls
+
 Wed Jun 30 13:32:08 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
 	* DnC/tests/NodeApplicationTest/NodeAppTest.mpc:

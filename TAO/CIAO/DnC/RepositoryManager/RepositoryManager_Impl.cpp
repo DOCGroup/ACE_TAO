@@ -44,43 +44,81 @@ installPackage (const char* installation_name,
                    Deployment::NameExists,
                    Deployment::PackageError))
 {
-  xercesc::XMLPlatformUtils::Initialize();
-  XercesDOMParser *tpd_parser = new XercesDOMParser;
-  XercesDOMParser *pc_parser = new XercesDOMParser;
-  auto_ptr<XercesDOMParser> cleanup_parser (tpd_parser);
-  auto_ptr<XercesDOMParser> cleanup_pc_parser (pc_parser);
-  XercesDOMParser::ValSchemes val_schema = XercesDOMParser::Val_Auto;
+  try
+    {
+      xercesc::XMLPlatformUtils::Initialize();
+    }
+  catch (const XMLException& xml_e)
+    {
+      char* message = XMLString::transcode (xml_e.getMessage());
+      ACE_Auto_Basic_Array_Ptr<char> cleanup_message (message);
+      ACE_DEBUG ((LM_DEBUG, "Error during initialization : %s\n", message));
+      return;
+    }
+  try
+    {
+      CIAO::Config_Handler::Config_Error_Handler tpd_err_handler;
+      CIAO::Config_Handler::Config_Error_Handler pc_err_handler;
+      std::auto_ptr<DOMBuilder> tpd_parser (CIAO::Config_Handler::Utils::
+                                            create_parser ());
+      tpd_parser->setErrorHandler(&tpd_err_handler);
+      DOMDocument* tpd_doc = tpd_parser->parseURI (location);
 
-  tpd_parser->setValidationScheme (val_schema);
-  tpd_parser->setDoNamespaces (true);
-  tpd_parser->setDoSchema (true);
-  tpd_parser->setValidationSchemaFullChecking (true);
-  tpd_parser->setCreateEntityReferenceNodes (false);
-  tpd_parser->setIncludeIgnorableWhitespace (false);
-  tpd_parser->parse (location);
+      if (tpd_err_handler.getErrors())
+        {
+          throw DOMException ();
+        }
 
-  DOMDocument* tpd_doc = tpd_parser->getDocument ();
+      CIAO::Config_Handler::TPD_Handler top_pc_handler 
+        (tpd_doc,
+         DOMNodeFilter::SHOW_ELEMENT |
+         DOMNodeFilter::SHOW_TEXT);
+      ACE_TString package_location = top_pc_handler.
+          process_TopLevelPackageDescription ();
 
-  CIAO::Config_Handler::TPD_Handler top_pc_handler (tpd_doc,
+      std::auto_ptr<DOMBuilder> pc_parser (CIAO::Config_Handler::Utils::
+                                           create_parser ());
+      pc_parser->setErrorHandler(&pc_err_handler);
+      DOMDocument* pc_doc = pc_parser->parseURI (package_location.c_str());
+
+      if (pc_err_handler.getErrors())
+        {
+          throw DOMException ();
+        }
+
+      CIAO::Config_Handler::PC_Handler pc_handler (pc_doc,
                                                    DOMNodeFilter::SHOW_ELEMENT |
                                                    DOMNodeFilter::SHOW_TEXT);
-  ACE_TString package_location = top_pc_handler.
-      process_TopLevelPackageDescription ();
+      pc_handler.process_PackageConfiguration (this->pc_);
+      this->pc_table_.bind (installation_name, &(pc_));
+    }
+  catch (CORBA::Exception& ex)
+    {
+      ACE_PRINT_EXCEPTION (ex, "Caught CORBA Exception: ");
+      return;
+    }
+  catch (const DOMException& e)
+    {
+      const unsigned int maxChars = 2047;
+      XMLCh errText[maxChars + 1];
 
-  pc_parser->setValidationScheme (val_schema);
-  pc_parser->setDoNamespaces (true);
-  pc_parser->setDoSchema (true);
-  pc_parser->setValidationSchemaFullChecking (true);
-  pc_parser->setCreateEntityReferenceNodes (false);
-  pc_parser->setIncludeIgnorableWhitespace (false);
-  pc_parser->parse (package_location.c_str());
-  DOMDocument* pc_doc = pc_parser->getDocument ();
-
-  CIAO::Config_Handler::PC_Handler pc_handler (pc_doc,
-                                               DOMNodeFilter::SHOW_ELEMENT |
-                                               DOMNodeFilter::SHOW_TEXT);
-  pc_handler.process_PackageConfiguration (this->pc_);
-  this->pc_table_.bind (installation_name, &(pc_));
+      ACE_ERROR ((LM_ERROR, "\nException occured while parsing %s: \
+                  \n",location));
+      ACE_ERROR ((LM_ERROR, "DOMException code: %d\n ", e.code));
+      if (DOMImplementation::loadDOMExceptionMsg (e.code, errText, maxChars))
+        {
+          char* message = XMLString::transcode (errText);
+          ACE_Auto_Basic_Array_Ptr<char> cleanup_message (message);
+          ACE_ERROR ((LM_ERROR, "Message is: %s\n", message));
+        }
+      ACE_ERROR ((LM_ERROR, "Caught DOM exception\n"));
+      return;
+    }
+  catch (...)
+    {
+      ACE_ERROR ((LM_ERROR, "Caught unknown exception\n"));
+      return;
+    }
 }
 
 // @@ (OO) Method definitions should never use "_WITH_DEFAULTS"

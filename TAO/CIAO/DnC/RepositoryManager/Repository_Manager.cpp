@@ -25,8 +25,6 @@ int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   // top level package URL
-  XercesDOMParser::ValSchemes val_schema = XercesDOMParser::Val_Auto;
-  
   char* package_url = 0;
 
   // deployment plan URL
@@ -74,24 +72,42 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   try
     {
       xercesc::XMLPlatformUtils::Initialize();
+    }
 
+  catch (const XMLException& xml_e)
+    {
+      char* message = XMLString::transcode (xml_e.getMessage());
+      ACE_Auto_Basic_Array_Ptr<char> cleanup_message (message);
+      ACE_DEBUG ((LM_DEBUG, "Error during initialization : %s\n", message));
+      return 1;
+    }
+  try
+    {
       // get a reference to the parser.
-      XercesDOMParser *plan_parser = new XercesDOMParser;
+      std::auto_ptr<DOMBuilder> plan_parser (CIAO::Config_Handler::Utils::
+                                             create_parser ());
+      CIAO::Config_Handler::Config_Error_Handler handler;
+      plan_parser->setErrorHandler(&handler);
 
-      // free up DOMBuilder. DOMBuilder also deletes the DOMDocument memory.
-      auto_ptr<XercesDOMParser> cleanup_parser (plan_parser);
-
-      plan_parser->setValidationScheme (val_schema);
-      plan_parser->setDoNamespaces (true);
-      plan_parser->setDoSchema (true);
-      plan_parser->setValidationSchemaFullChecking (true);
-      plan_parser->setCreateEntityReferenceNodes (false);
-      plan_parser->setIncludeIgnorableWhitespace (false);
-      plan_parser->parse (plan_url);
+      std::auto_ptr<DOMBuilder> tpd_parser (CIAO::Config_Handler::Utils::
+                                            create_parser ());
+      CIAO::Config_Handler::Config_Error_Handler tpd_handler;
+      tpd_parser->setErrorHandler(&tpd_handler);
 
       // use the parser to parse the deployment plan URL and create
       // a DOM document.
-      DOMDocument* plan_doc = plan_parser->getDocument ();
+      DOMDocument* plan_doc = plan_parser->parseURI (plan_url);
+      if (handler.getErrors())
+        {
+          return 1;
+        }
+
+      DOMDocument* tpd_doc = tpd_parser->parseURI (package_url);
+      if (tpd_handler.getErrors())
+        {
+          return 1;
+        }
+
       if (plan_doc == NULL)
         {
           ACE_DEBUG ((LM_DEBUG, "Null DOM Document obtained, \
@@ -234,6 +250,18 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     }
   catch (const DOMException& e)
     {
+      const unsigned int maxChars = 2047;
+      XMLCh errText[maxChars + 1];
+
+      ACE_ERROR ((LM_ERROR, "\nException occured while parsing %s: \
+                  \n",plan_url));
+      ACE_ERROR ((LM_ERROR, "DOMException code: %d\n ", e.code));
+      if (DOMImplementation::loadDOMExceptionMsg (e.code, errText, maxChars))
+        {
+          char* message = XMLString::transcode (errText);
+          ACE_Auto_Basic_Array_Ptr<char> cleanup_message (message);
+          ACE_ERROR ((LM_ERROR, "Message is: %s\n", message));
+        }
       //ACE_PRINT_EXCEPTION ("Caught DOM Exception: ");
       ACE_ERROR ((LM_ERROR, "Caught DOM exception\n"));
       while (true); // @@ (OO) What purpose does this server?
