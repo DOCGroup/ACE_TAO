@@ -1,3 +1,17 @@
+Thu Jan 31 17:21:49 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/Trace.cpp (constructor and destructor): Do not attempt
+          trace output if ACE has not been initialized. There is too
+          much not set up yet to bother trying. If you are on a platform
+          with ACE_HAS_NONSTATIC_OBJECT_MANAGER (such as Windows) and you
+          really, really need tracing in static objects, you should
+          try #define ACE_HAS_NONSTATIC_OBJECT_MANAGER 0  in your config.h
+          along with #define ACE_NTRACE 0.  Beware, though, there are
+          crocodiles lurking there - platforms defined to use non-static
+          object manager are that way for good reason.
+
+          Thank you to Shmulik Regev <shmul@vself.com> for reporting this.
+
 Thu Jan 31 13:32:07 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* XML/common/XML_Common.dsp: Fixed the LIB path to use relative
