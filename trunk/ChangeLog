@@ -1,3 +1,12 @@
+Tue Apr 22 06:41:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/SStringfwd.h:
+          Do the forward declaration of ACE_String_Base with CHAR instead
+          of T. With Borland C++ the template parameter of the forward
+          declaration must be exactly the same as with the real template
+          parameter in the template definition. This fixes the strange Kylix
+          errors.
+
 Tue Apr 22 06:14:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-cygwin32-common.h:
