@@ -181,7 +181,7 @@ Write_Handler::svc (void)
 static void *
 client (void *arg)
 {
-  ACE_INET_Addr *connection_addr = 
+  ACE_INET_Addr *connection_addr =
     ACE_reinterpret_cast (ACE_INET_Addr *, arg);
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) running client\n"));
@@ -278,10 +278,13 @@ main (int argc, char *argv[])
     {
       ACE_Select_Reactor *impl_ptr;
       ACE_NEW_RETURN (impl_ptr, ACE_Priority_Reactor, -1);
-      impl = auto_ptr<ACE_Select_Reactor> (impl_ptr);
+      auto_ptr<ACE_Select_Reactor> auto_impl (impl_ptr);
+      impl = auto_impl;
+
       ACE_Reactor *reactor_ptr;
       ACE_NEW_RETURN (reactor_ptr, ACE_Reactor (impl_ptr), -1);
-      reactor = auto_ptr<ACE_Reactor> (reactor_ptr);
+      auto_ptr<ACE_Reactor> auto_reactor (reactor_ptr);
+      reactor = auto_reactor;
       ACE_Reactor::instance (reactor_ptr);
     }
 

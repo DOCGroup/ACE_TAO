@@ -178,7 +178,10 @@ main (int argc, ASYS_TCHAR *argv[])
   // If we are using other that the default implementation, we must
   // clean up.
   if (opt_select_reactor || opt_wfmo_reactor)
-    impl = auto_ptr <ACE_Reactor_Impl> (ACE_Reactor::instance ()->implementation ());
+    {
+      auto_ptr<ACE_Reactor_Impl> auto_impl (ACE_Reactor::instance ()->implementation ());
+      impl = auto_impl;
+    }
 
   // Callback object
   Handler handler;

@@ -1,3 +1,14 @@
+Sun Apr 18 00:26:28 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* TAO/tao/Stub.cpp (set_policy_overrides):
+	* TAO/tao/POA.cpp (create_POA):
+	* tests/Notify_Performance_Test.cpp (main):
+	* tests/Reactor_Performance_Test.cpp (main):
+	* tests/Priority_Reactor_Test.cpp (main):
+
+	  Avoided annoying g++ warning about <auto_ptr> by explicitly
+	  making a temporary.
+
 Sat Apr 17 18:52:38 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/Memory_Pool.cpp (acquire): Changed use of auto_ptr.
