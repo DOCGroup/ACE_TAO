@@ -8,7 +8,7 @@
 #	Local macros
 #----------------------------------------------------------------------------
 
-BIN     = test_log_msg test_ostream
+BIN     = test_log_msg test_ostream test_callback
 
 LSRC    = $(addsuffix .cpp,$(BIN))
 
