@@ -1,3 +1,19 @@
+Thu Jul  8 17:48:42 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* tao/Invocation_Adapter.cpp:
+	* tao/Invocation_Adapter.h:
+	* tao/Messaging/Asynch_Invocation_Adapter.cpp:
+	* tao/Messaging/Asynch_Invocation_Adapter.h:
+
+	  Corrected the memory leak fix in this checkin
+ 	  "Fri Jun 11 15:30:57 2004  Balachandran Natarajan
+	  <bala@dre.vanderbilt.edu>". 
+
+	  This should fix the failure with Bug_1482_Regression tests in
+	  our daily builds. Coincidentally this should also fix the
+	  problem that Keith O'Hara reported while trying to run FT_App
+	  tests. 
+
 Thu Jul  8 18:25:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_codegen.cpp:

@@ -26,16 +26,21 @@
 #include "tao/TAO_Export.h"
 #include "tao/Invocation_Utils.h"
 #include "tao/Collocation_Strategy.h"
+#include "tao/CORBA_methods.h"
+#include "tao/Pseudo_VarOut_T.h"
+
 
 struct TAO_Exception_Data;
 class TAO_Operation_Details;
 class TAO_Stub;
 class ACE_Time_Value;
 
+
 namespace  CORBA
 {
   class Object;
   typedef Object *Object_ptr;
+  typedef TAO_Pseudo_Var_T<Object> Object_var;
 
   class Environment;
 }
@@ -166,7 +171,7 @@ namespace TAO
     virtual Invocation_Status invoke_remote_i (
         TAO_Stub *stub,
         TAO_Operation_Details &details,
-        CORBA::Object_ptr &effective_target,
+        CORBA::Object_var &effective_target,
         ACE_Time_Value *&max_wait_time
         ACE_ENV_ARG_DECL);
 
@@ -184,7 +189,7 @@ namespace TAO
     virtual Invocation_Status invoke_collocated_i (
         TAO_Stub *stub,
         TAO_Operation_Details &details,
-        CORBA::Object_ptr &effective_target,
+        CORBA::Object_var &effective_target,
         Collocation_Strategy strat
         ACE_ENV_ARG_DECL);
 
@@ -197,7 +202,7 @@ namespace TAO
      */
     virtual Invocation_Status invoke_twoway (
         TAO_Operation_Details &op,
-        CORBA::Object_ptr &effective_target,
+        CORBA::Object_var &effective_target,
         Profile_Transport_Resolver &r,
         ACE_Time_Value *&max_wait_time
         ACE_ENV_ARG_DECL);
@@ -211,7 +216,7 @@ namespace TAO
      */
     virtual Invocation_Status invoke_oneway (
         TAO_Operation_Details &op,
-        CORBA::Object_ptr &effective_target,
+        CORBA::Object_var &effective_target,
         Profile_Transport_Resolver &r,
         ACE_Time_Value *&max_wait_time
         ACE_ENV_ARG_DECL);
@@ -227,7 +232,7 @@ namespace TAO
 
     /// Helper method that takes care of setting the profiles within
     /// the stub object if the target gets forwarded
-    void object_forwarded (CORBA::Object *&effective_target,
+    void object_forwarded (CORBA::Object_var &effective_target,
                            TAO_Stub *stub
                            ACE_ENV_ARG_DECL);
   protected:
