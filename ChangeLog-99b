@@ -1,3 +1,56 @@
+Fri Jul 16 13:55:34 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/config-win32-borland.h: Updated this file to enable some
+	  necessary macros.  Thanks to Christopher Kohlhoff
+ 	  <chris@kohlhoff.com> for reporting this.
+
+	* tests/DLL_Test.cpp,
+	  tests/run_test.bat: Updated these to handle the appropriate
+ 	  directory where the Borland tests are built.  Thanks to
+ 	  Christopher Kohlhoff <chris@kohlhoff.com> for reporting this.
+
+	* netsvcs/lib/Logging_Strategy.cpp (init): When the application
+ 	  program is started, none of the log output is sent to the
+ 	  Client_Logging_Service.  Further investigation shows that the
+ 	  ACE_Log_Msg::open() method is responsible for connecting to the
+ 	  client logger if the ACE_Log_Msg::LOGGER flag is set.  However,
+ 	  the connections never attempted because the ACE_Log_Msg::open()
+ 	  method is called before the Logging_Strategy flags have been
+ 	  parsed.  This problem was fixed by rearranging the point at
+ 	  which the ACE_LOG_MSG->open() method was called.  Thanks to
+ 	  Jerry De Master <jdemaste@ipdinc.com> for contributing this.
+
+	* netsvcs/lib/Client_Logging_Handler.cpp (send),
+	  netsvcs/lib/Log_Message_Receiver.cpp (log_output):
+	  All log message output in ACE is done through one of the
+ 	  ACE_Log_Record::print() methods.  Each of the overloaded methods
+ 	  has a <flags> argument as the second argument.  However, all
+ 	  uses of the ACE_Log_Record::print() method in
+ 	  Log_Message_Receiver.cpp and Client_Logging_Handler.cpp pass
+ 	  zero for the flags argument.  To fix this, simply pass
+	  ACE_Log_Msg::instance()->flags() instead of 0.  Thanks to Jerry
+ 	  De Master <jdemaste@ipdinc.com> for contributing this.
+
+	* ace/Log_Record.cpp (format_msg): Added code for the new
+	  ACE_Log_Record::format_msg() method that adds the date/time
+ 	  stamp to the ACE_Log_Msg::VERBOSE_LITE output.  Thanks to Jerry
+ 	  De Master <jdemaste@ipdinc.com> for contributing this.
+
+	* netsvcs/lib/Logging_Strategy.cpp (init): Make sure the
+	  ACE_Log_Msg::VERBOSE_LITE flag is OR'd into the clr_flags()
+ 	  call.  Thanks to Jerry De Master <jdemaste@ipdinc.com> for
+ 	  reporting this.
+  
+	* netsvcs/lib/Logging_Strategy.cpp (tokenize): Make sure that
+	  the ACE_Log_Msg::VERBOSE_LITE flag is correctly parsed.  Thanks
+ 	  to Jerry De Master <jdemaste@ipdinc.com> for reporting this.
+
+	* ace/Memory_Pool.h: Added a way to set the segment_size in
+ 	  ACE_Shared_Memory_Pool_Options and ACE_Shared_Memory_Pool.
+  	  Thanks to Serge Kolgan <skolgan@cisco.com> for this fix.  [This
+ 	  feature was actually added a couple of beta releases ago, but
+ 	  somehow the ChangeLog entry got lost.]
+
 Fri Jul 16 09:20:42 1999  Arturo Montes <mitosys@colomsat.net.co>
   
         * ace/OS.i: Patch the dl* family to keep ACE
@@ -14,14 +67,6 @@ Fri Jul 16 11:50:24 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 	* tests/Basic_Types_Test.cpp (main): Reverted my previous
 	  change.  It was not a safe assumption.
   
-Fri Jul 16 11:50:24 1999  Douglas C. Schmidt <schmidt@cs.wustl.edu>
-  
-	* ace/Memory_Pool.h: Added a way to set the segment_size in
- 	  ACE_Shared_Memory_Pool_Options and ACE_Shared_Memory_Pool.
-  	  Thanks to Serge Kolgan <skolgan@cisco.com> for this fix.  [This
- 	  feature was actually added a couple of beta releases ago, but
- 	  somehow the ChangeLog entry got lost.]
-
 Fri Jul 16 02:28:10 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Log_Msg.cpp (log): Changed (*va_arg (argp,PTF))(), which

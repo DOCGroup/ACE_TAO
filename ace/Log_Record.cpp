@@ -120,7 +120,14 @@ ACE_Log_Record::format_msg (const ASYS_TCHAR *host_name,
                             u_long verbose_flag,
                             ASYS_TCHAR *verbose_msg)
 {
-  if (ACE_BIT_ENABLED (verbose_flag, ACE_Log_Msg::VERBOSE))
+  /* 0123456789012345678901234     */
+  /* Oct 18 14:25:36.000 1989<nul> */
+  ASYS_TCHAR timestamp[26]; // Only used by VERBOSE and VERBOSE_LITE.
+
+  if (ACE_BIT_ENABLED (verbose_flag,
+                       ACE_Log_Msg::VERBOSE)
+      || ACE_BIT_ENABLED (verbose_flag,
+                          ACE_Log_Msg::VERBOSE_LITE))
     {
       time_t now = this->time_stamp_.sec ();
       ASYS_TCHAR ctp[26]; // 26 is a magic number...
@@ -134,38 +141,43 @@ ACE_Log_Record::format_msg (const ASYS_TCHAR *host_name,
       ctp[19] = '\0'; // NUL-terminate after the time.
       ctp[24] = '\0'; // NUL-terminate after the date.
 
+      ACE_OS::sprintf (timestamp,
+                       ASYS_TEXT ("%s.%03d %s"),
+                       ctp + 4,
+                       this->time_stamp_.usec () / 1000,
+                       ctp + 20);
+    }
+
+  if (ACE_BIT_ENABLED (verbose_flag,
+                       ACE_Log_Msg::VERBOSE))
+    {
 # if defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS)
       const ASYS_TCHAR *lhost_name =  (const ASYS_TCHAR *) ((host_name == 0)
-        ? ((char *) ASYS_TEXT ("<local_host>")) : ((char *) host_name));
+                                                            ? ((char *) ASYS_TEXT ("<local_host>")) 
+                                                            : ((char *) host_name));
 # else /* ! defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS) */
       const ASYS_TCHAR *lhost_name = ((host_name == 0)
-        ? ASYS_TEXT ("<local_host>") : host_name);
+                                      ? ASYS_TEXT ("<local_host>") 
+                                      : host_name);
 # endif /* ! defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS) */
-
       ACE_OS::sprintf (verbose_msg,
-                       ASYS_TEXT ("%s.%03lu %s@%s@%ld@%s@%s"),
-                       ctp + 4,
-                       this->time_stamp_.usec () / 1000lu,
-                       ctp + 20,
+                       ASYS_TEXT ("%s@%s@%d@%s@%s"),
+                       timestamp,
                        lhost_name,
                        this->pid_,
                        ACE_Log_Record::priority_name (ACE_Log_Priority (this->type_)),
                        this->msg_data_);
     }
   else if (ACE_BIT_ENABLED (verbose_flag, ACE_Log_Msg::VERBOSE_LITE))
-    {
-      ACE_OS::sprintf (verbose_msg,
-                       ASYS_TEXT ("%s@%s"),
-                       ACE_Log_Record::priority_name (ACE_Log_Priority (this->type_)),
-                       this->msg_data_);
-    }
+    ACE_OS::sprintf (verbose_msg,
+                     ASYS_TEXT ("%s@%s@%s"),
+                     timestamp,
+                     ACE_Log_Record::priority_name (ACE_Log_Priority (this->type_)),
+                     this->msg_data_);
   else
-    {
-      ACE_OS::sprintf (verbose_msg,
-                       ASYS_TEXT ("%s"),
-                       this->msg_data_);
-    }
-
+    ACE_OS::sprintf (verbose_msg,
+                     ASYS_TEXT ("%s"),
+                     this->msg_data_);
   return 0;
 }
 
