@@ -182,7 +182,7 @@ Command_Handler::get_handle (void) const
 int
 Command_Handler::handle_input (ACE_HANDLE fd)
 {
-  //  cerr << "(" << getpid () << " Command_Handler::handle_input\n" ;
+  cerr << "(" << getpid () << " Command_Handler::handle_input:busy_ = " << this->busy_ << endl;
   unsigned char cmd;
   int val;
   
@@ -194,12 +194,15 @@ Command_Handler::handle_input (ACE_HANDLE fd)
 
       // if we get an interrupt while reading we go back to the event loop    
       if (val == 1)
-        return 0;
+        {
+          this->busy_ = 0;
+          return 0;
+        }
 
       FILE * fp = NULL;   /* file pointer for experiment plan */
       usr1_flag = 0;
     
-      //      fprintf(stderr, "CTR: cmd received - %d\n", cmd);
+      fprintf(stderr, "CTR: cmd received - %d\n", cmd);
       TAO_TRY
         {
           switch (cmd)
@@ -265,6 +268,8 @@ Command_Handler::handle_input (ACE_HANDLE fd)
               exit(1);
               break;
             }
+          this->busy_ = 0;
+          // unset the busy flag,done with processing the command.
         }
       TAO_CATCHANY
         {
@@ -272,9 +277,7 @@ Command_Handler::handle_input (ACE_HANDLE fd)
           return -1;
         }
       TAO_ENDTRY;
-      //      cerr << "returning from Command_Handler::handle_input \n";
-      this->busy_ = 0;
-      // unset the busy flag,done with processing the command.
+      cerr << "returning from Command_Handler::handle_input \n";
     }
   return 0;
 }
@@ -282,7 +285,7 @@ Command_Handler::handle_input (ACE_HANDLE fd)
 int 
 Command_Handler::init_av (void)
 {
-  //  cerr << "inside init_av \n";
+  cerr << "inside init_av \n";
   int i, j;
 
   /* try to stop and close previous playing */
@@ -432,7 +435,7 @@ Command_Handler::init_av (void)
         }
       return 0;
     }
-  //  cerr << "returning from init_av \n";
+  cerr << "returning from init_av \n";
   return 0;
 }
 
