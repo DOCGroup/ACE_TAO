@@ -50,8 +50,8 @@ class Worker_Task;
 class Synchronisers
 {
 public:
-  friend IO_Task;
-  friend Worker_Task;
+  friend class IO_Task;
+  friend class Worker_Task;
 
   enum
   {

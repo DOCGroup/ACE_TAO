@@ -1,3 +1,9 @@
+Thu Dec  6 11:19:18 2001  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* performance-tests/Server_Concurrency/Queue_Based_Workers/RT_CORBA_Workers.h: 
+	* performance-tests/Server_Concurrency/Leader_Follower/RT_CORBA_Leader_Follower.h:
+	  Fixed warnings in gcc 3.0.2 
+
 Thu Dec  6 11:15:28 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* performance-tests/Server_Concurrency/Queue_Based_Workers/RT_CORBA_Workers.h: 
