@@ -1,3 +1,9 @@
+Thu Feb  4 00:02:17 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/orbconf.h: Made sure _WIN32 doesn't get redefined.  Thanks
+	  to Terry Rosenbaum <Terry.Rosenbaum@Radiology.MSU.edu> for
+	  pointing this out.
+
 Wed Feb 03 15:01:22 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/TAO_Internal.cpp (open_services): Do not try to parse the
