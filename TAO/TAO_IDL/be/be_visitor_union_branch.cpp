@@ -1418,6 +1418,78 @@ be_visitor_union_branch_public_ci::visit_predefined_type (be_predefined_type *no
 int
 be_visitor_union_branch_public_ci::visit_sequence (be_sequence *node)
 {
+  TAO_OutStream *os; // output stream
+  be_union_branch *ub =
+    this->ctx_->be_node_as_union_branch (); // get union branch
+  be_union *bu =
+    this->ctx_->be_scope_as_union ();  // get the enclosing union backend
+  be_type *bt;
+
+  // check if we are visiting this node via a visit to a typedef node
+  if (this->ctx_->alias ())
+    bt = this->ctx_->alias ();
+  else
+    bt = node;
+
+  if (!ub || !bu)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_union_branch_public_ci::"
+                         "visit_sequence - "
+                         "bad context information\n"
+                         ), -1);
+    }
+  os = this->ctx_->stream ();
+
+  // (1) set from a const
+  *os << "// accessor to set the member" << be_nl
+      << "ACE_INLINE void" << be_nl
+      << bu->name () << "::" << ub->local_name ()
+      << " (const " << bt->name () << " &val)" << be_nl
+      << "{" << be_idt_nl;
+
+  // set the discriminant to the appropriate label
+  if (ub->label ()->label_kind () == AST_UnionLabel::UL_label)
+    {
+      // valid label
+      *os << "// set the discriminant val" << be_nl;
+      // check if the case label is a symbol or a literal
+      if (ub->label ()->label_val ()->ec () == AST_Expression::EC_symbol)
+        {
+          *os << "this->disc_ = " << ub->label ()->label_val ()->n ()
+              << ";" << be_nl;
+        }
+      else
+        {
+          *os << "this->disc_ = " << ub->label ()->label_val () << ";"
+              << be_nl;
+        }
+      *os << "// set the value" << be_nl
+          << "*this->" << ub->local_name () << "_ = val;" << be_uidt_nl;
+    }
+  else
+    {
+      // default label
+      // XXXASG - TODO
+    }
+  *os << "}" << be_nl;
+
+  // readonly get method
+  *os << "// readonly get method " << be_nl
+      << "ACE_INLINE const " << bt->name () << " &" << be_nl
+      << bu->name () << "::" << ub->local_name () << " (void) const" << be_nl
+      << "{" << be_idt_nl
+      << "return *this->" << ub->local_name () << "_;" << be_uidt_nl
+      << "}" << be_nl;
+
+  // read/write get method
+  *os << "// read/write get method " << be_nl
+      << "ACE_INLINE " << bt->name () << " &" << be_nl
+      << bu->name () << "::" << ub->local_name () << " (void)" << be_nl
+      << "{" << be_idt_nl
+      << "return *this->" << ub->local_name () << "_;" << be_uidt_nl
+      << "}\n\n";
+
   return 0;
 }
 

@@ -1,3 +1,18 @@
+Sat Mar 14 16:40:05 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_operation.cpp: We were not generating the
+	"_get_" and "_set_" prefixes for operations corresponding to
+	attributes. This is now fixed.
+
+	* TAO_IDL/be/be_visitor_enum.cpp: Typecode implementation of enum
+	class was not getting generated due to an incorrect "if"
+	condition. Thanks to Seth Widoff for noticing this.
+
+	* TAO_IDL/be/be_visitor_union_branch.cpp: We had forgotten to
+	generate the "set" and "get" operation implementation for union
+	members that are sequences. Thanks to Seth Widoff for noticing
+	this.
+
 Sat Mar 14 02:48:55 1998  Sumedh Mungee  <sumedh@lindy.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Makefile (IDL_FILES): Added the SFP IDL files
@@ -20,17 +35,17 @@ Sat Mar 14 02:17:34 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 	interface with the bootstrapped Naming Service. All the Trader
 	interfaces are implicitly activated in the Trader class. In the
 	future we'll want to have the Trading Service bootstrappable
-	through the resolve_initial_references method. 
+	through the resolve_initial_references method.
 
 Sat Mar 14 00:36:30 1998  Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp (define_property): 
+	* orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp (define_property):
 
-	* orbsvcs/orbsvcs/Property/CosPropertyService_i.h (PropertyNamesIterator): 
+	* orbsvcs/orbsvcs/Property/CosPropertyService_i.h (PropertyNamesIterator):
 
-	* orbsvcs/orbsvcs/Property/CosProperty_Hash.cpp (CosProperty_Hash_Value): 
+	* orbsvcs/orbsvcs/Property/CosProperty_Hash.cpp (CosProperty_Hash_Value):
 
-	* orbsvcs/orbsvcs/Property/CosProperty_Hash.h: 
+	* orbsvcs/orbsvcs/Property/CosProperty_Hash.h:
 	The tao_idl compiler has been made to generate Any at some places
 	where it was generating Any_var. Hence, I had to modify this
 	implementaion to accomadate this change.
