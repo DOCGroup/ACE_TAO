@@ -25,8 +25,8 @@ Fri Oct  5 16:44:22 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* TAO_IDL/fe/idl.yy:
 	* TAO_IDL/fe/y.tab.cpp: Patches from Russ Noseworthy that were
 	  needed to compile with GCC  2.95.3 which properly supported
-	  namespace std (Apparently Russ seems to modified the compiler to
-	  do this)
+	  namespace std (Apparently Russ seems to have a modified compiler
+	  that supports this)
 
 Fri Oct  5 16:03:26 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
