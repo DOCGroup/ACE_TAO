@@ -1454,19 +1454,7 @@ TAO_ORB_Core::service_context_list (
     CORBA::Boolean restart
     ACE_ENV_ARG_DECL)
 {
-  // @@ We look at the services if they are loaded. But if more
-  // services offer this feature we may want to keep expanding the
-  // 'if' conditions with a check for whether a service returned a
-  // valid Policy object.
-  if (this->ft_service_.service_callback ())
-    {
-      this->ft_service_.service_callback ()->service_context_list (stub,
-                                                                   service_context.service_info (),
-                                                                   restart
-                                                                   ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
-    }
-
+  // @NOTE: Can use Interceptors instead..
   this->protocols_hooks_->rt_service_context (stub,
                                               service_context,
                                               restart

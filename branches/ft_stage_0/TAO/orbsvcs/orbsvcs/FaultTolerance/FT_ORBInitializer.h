@@ -6,11 +6,9 @@
  *
  *  $Id$
  *
- *  @author  Bala Natarajan <bala@cs.wustl.edu>
+ *  @author  Balachandran Natarajan <bala@cs.wustl.edu>
  */
 //=============================================================================
-
-
 #ifndef TAO_FT_ORB_INITIALIZER_H
 #define TAO_FT_ORB_INITIALIZER_H
 
@@ -55,8 +53,19 @@ private:
   /// Register FTCORBA policy factories.
   void register_policy_factories (
          PortableInterceptor::ORBInitInfo_ptr info
-         ACE_ENV_ARG_DECL);
+         ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
+  /// Register the necessary interceptors.
+  void register_server_request_interceptors (
+         PortableInterceptor::ORBInitInfo_ptr info
+         ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  void register_client_request_interceptors (
+         PortableInterceptor::ORBInitInfo_ptr info
+         ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 };
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)

@@ -83,29 +83,6 @@ public:
   virtual int raise_transient_failure (TAO_GIOP_Invocation *invoke,
                                        TAO_Profile *profile
                                        ACE_ENV_ARG_DECL);
-
-
-  /**
-   * Send the message state to the FT service for logging. This hook
-   * sends the message state after the server receives the
-   * message. The message at this point has been verified that it is a
-   * GIOP message.
-   */
-  virtual void service_log_msg_rcv (TAO_Message_State_Factory &state);
-
-  /**
-   * Send the message state to the FT service for logging. This hook
-   * sends the message state after the POA receives upcall but just
-   * before the call has been dispatched to the servant
-   */
-  virtual void service_log_msg_pre_upcall (TAO_ServerRequest &req);
-
-  /**
-   * Send the message state to the FT service for logging. This hook
-   * sends the message state just before the reply is ready to be
-   * dispatched.
-   */
-  virtual void service_log_msg_post_upcall (TAO_ServerRequest &req);
 };
 
 

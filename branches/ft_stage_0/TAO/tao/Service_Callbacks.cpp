@@ -82,26 +82,3 @@ TAO_Service_Callbacks::raise_transient_failure (
       CORBA::COMPLETED_MAYBE),
       2);
 }
-
-void
-TAO_Service_Callbacks::service_log_msg_rcv (
-    TAO_Message_State_Factory & /*state*/)
-{
-  return;
-}
-
-
-void
-TAO_Service_Callbacks::service_log_msg_pre_upcall (
-    TAO_ServerRequest & /*req*/)
-{
-  return;
-}
-
-
-void
-TAO_Service_Callbacks::service_log_msg_post_upcall (
-    TAO_ServerRequest & /*req*/)
-{
-  return;
-}

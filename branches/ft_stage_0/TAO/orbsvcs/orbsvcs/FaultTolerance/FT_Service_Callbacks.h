@@ -6,7 +6,7 @@
  *
  * A concrete FT service callback implementation
  *
- * @author Bala Natarajan <bala@cs.wustl.edu>
+ * @author Balachandran Natarajan <bala@cs.wustl.edu>
  */
 //=============================================================================
 
@@ -45,39 +45,11 @@ public:
   /// Dtor
   virtual ~TAO_FT_Service_Callbacks (void);
 
-  /// @deprecated The following method has been deprecated. Will go after TAO
-  /// 1.2.1.
-  /// This method would search the list of <mprofile> to identify a
-  /// TAG_FT_PRIMARY and set that profile as <pfile>.
-  virtual CORBA::Boolean  select_profile (TAO_MProfile *mprofile,
-                                          TAO_Profile *&pfile);
-
-  /// @deprecated The following method has been deprecated. Will go after TAO
-  /// 1.2.1.
-  virtual CORBA::Boolean  reselect_profile (TAO_Stub* stub,
-                                            TAO_Profile *&pfile);
-
-  // This method would search the IOR list for the first non-primary
-  // in case of primary failure.
-
-  /// @deprecated The following method has been deprecated. Will go after TAO
-  /// 1.2.1.
-  /// Reset any of the local flags that we may have
-  virtual void reset_profile_flags (void);
-
   /// Check whether <obj> is nil or not. FT spec suggests some
   /// extensions for a CORBA::is_nil () operation.
   virtual CORBA::Boolean object_is_nil (CORBA::Object_ptr obj);
 
   // Need to do is_equivalent and hash also here
-
-  virtual void service_context_list (TAO_Stub *&stub,
-                                     IOP::ServiceContextList &service_list,
-                                     CORBA::Boolean restart
-                                     ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
-  // Add relevant stuff to the service context list
 
   /// Check whether we need to raise an exception or go for a
   /// reinvocaton.
@@ -93,33 +65,7 @@ public:
       TAO_Profile *profile
       ACE_ENV_ARG_DECL);
 
-  /// Log the message. The message state  is the message on the server
-  /// after it has been received in the GIOP layer
-  virtual void service_log_msg_rcv (
-      TAO_Message_State_Factory &state);
-
-  virtual void service_log_msg_pre_upcall (
-      TAO_ServerRequest &req);
-
-  virtual void service_log_msg_post_upcall (
-      TAO_ServerRequest &req);
-
 private:
-
-  /// Makes  the  request service_context list
-  void request_service_context (TAO_Stub *&stub,
-                                IOP::ServiceContextList &service_list
-                                ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
-  /// Make the group version service context list
-  void group_version_service_context (TAO_Stub *&stub,
-                                      IOP::ServiceContextList &service_list
-                                      ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
-  /// Get the ObjectGroupRef version from the profile in use.
-  void get_object_group_version (TAO_Profile *profile);
 
   /// Check whether the right flags are available so that we can issue a
   /// restart.

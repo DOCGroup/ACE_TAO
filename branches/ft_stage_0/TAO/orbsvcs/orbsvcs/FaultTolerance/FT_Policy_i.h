@@ -63,7 +63,7 @@ public:
   virtual TAO_FT_Request_Duration_Policy *clone (void) const;
 
   // = The FT::RequestDurationPolicy methods
-  virtual TimeBase::TimeT request_duration_value (ACE_ENV_SINGLE_ARG_DECL)
+  virtual TimeBase::TimeT request_duration_policy_value (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::PolicyType policy_type (
@@ -209,7 +209,7 @@ private:
 #endif /* _MSC_VER */
 
 #if defined (__ACE_INLINE__)
-#include "FT_Policy_i.i"
+#include "FT_Policy_i.inl"
 #endif /* __ACE_INLINE__ */
 
 
