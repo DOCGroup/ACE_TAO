@@ -12,7 +12,8 @@
 ACE_RCSID(Shared_Malloc, test_persistence, "$Id$")
 
 typedef ACE_Malloc <ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex> MALLOC;
-typedef ACE_Malloc_Iterator <ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex> MALLOC_ITERATOR;
+typedef ACE_Malloc_LIFO_Iterator <ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex> MALLOC_LIFO_ITERATOR;
+typedef ACE_Malloc_FIFO_Iterator <ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex> MALLOC_FIFO_ITERATOR;
 
 // Shared memory manager.
 static MALLOC *shmem_allocator = 0;
@@ -208,22 +209,44 @@ GUI_Handler::find_employee (const char *name)
 int
 GUI_Handler::list_employees (void)
 {
-  MALLOC_ITERATOR iterator (*shmem_allocator);
-
   ACE_DEBUG ((LM_DEBUG,
               "The following employees were found.......\n\n"));
 
-  for (void *temp = 0;
-       iterator.next (temp) != 0;
-       iterator.advance ())
-    {
-      Employee *employee = ACE_reinterpret_cast (Employee *,
-                                                 temp);
-      ACE_DEBUG ((LM_DEBUG,
-                  "Employee name: %s\nEmployee id:   %d\n",
-                  employee->name (),
-                  employee->id ()));
-    }
+  {
+    ACE_DEBUG ((LM_DEBUG,
+                "LIFO order:\n"));
+    MALLOC_LIFO_ITERATOR iterator (*shmem_allocator);
+
+    for (void *temp = 0;
+         iterator.next (temp) != 0;
+         iterator.advance ())
+      {
+        Employee *employee = ACE_reinterpret_cast (Employee *,
+                                                   temp);
+        ACE_DEBUG ((LM_DEBUG,
+                    "Employee name: %s\nEmployee id:   %d\n",
+                    employee->name (),
+                    employee->id ()));
+      }
+  }
+
+  {
+    ACE_DEBUG ((LM_DEBUG,
+                "FIFO order:\n"));
+    MALLOC_FIFO_ITERATOR iterator (*shmem_allocator);
+
+    for (void *temp = 0;
+         iterator.next (temp) != 0;
+         iterator.advance ())
+      {
+        Employee *employee = ACE_reinterpret_cast (Employee *,
+                                                   temp);
+        ACE_DEBUG ((LM_DEBUG,
+                    "Employee name: %s\nEmployee id:   %d\n",
+                    employee->name (),
+                    employee->id ()));
+      }
+  }
   return 0;
 }
 
@@ -288,9 +311,11 @@ main (int argc, char *argv[])
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 // The following instantiation is in ace/System_Time.cpp:
 // template class ACE_Malloc <ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex>;
-template class ACE_Malloc_Iterator <ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex>;
+template class ACE_Malloc_FIFO_Iterator <ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex>;
+template class ACE_Malloc_LIFO_Iterator <ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 // The following instantiation is in ace/System_Time.cpp:
 // #pragma instantiate ACE_Malloc <ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex>
-#pragma instantiate ACE_Malloc_Iterator <ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex>
+#pragma instantiate ACE_Malloc_FIFO_Iterator <ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex>
+#pragma instantiate ACE_Malloc_LIFO_Iterator <ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

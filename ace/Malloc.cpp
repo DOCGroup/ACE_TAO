@@ -70,11 +70,14 @@ ACE_Name_Node::ACE_Name_Node (const char *name,
                               ACE_Name_Node *next)
   : name_ (name_ptr),
     pointer_ (pointer),
-    next_ (next)
+    next_ (next),
+    prev_ (0)
 {
   ACE_TRACE ("ACE_Name_Node::ACE_Name_Node");
   char *n = this->name_;
   ACE_OS::strcpy (n, name);
+  if (next != 0)
+    next->prev_ = this;
 }
 
 ACE_Name_Node::ACE_Name_Node (const ACE_Name_Node &)

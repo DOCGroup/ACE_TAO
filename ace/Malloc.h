@@ -124,8 +124,10 @@ class ACE_Export ACE_Name_Node
   //    This class supports "named memory regions" within <ACE_Malloc>.
   //
   // = DESCRIPTION
-  //   Internally, the named memory regions are stored as a linked
-  //   list within the <Memory_Pool>.
+  //   Internally, the named memory regions are stored as a
+  //   doubly-linked list within the <Memory_Pool>.  This makes
+  //   it easy to iterate over the items in the list in both FIFO
+  //   and LIFO order.
 public:
   // = Initialization methods.
   ACE_Name_Node (const char *name,
@@ -156,7 +158,10 @@ public:
   // Pointer to the contents.
 
   ACE_NAME_NODE_PTR next_;
-  // Pointer to the next node in the chain.
+  // Pointer to the next node in the doubly-linked list.
+
+  ACE_NAME_NODE_PTR prev_;
+  // Pointer to the previous node in the doubly-linked list.
 
   void dump (void) const;
   // Dump the state of the object.
