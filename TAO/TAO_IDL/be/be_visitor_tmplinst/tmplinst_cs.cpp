@@ -216,7 +216,9 @@ be_visitor_tmplinst_cs::visit_valuetype (be_valuetype *node)
 int
 be_visitor_tmplinst_cs::visit_operation (be_operation *node)
 {
-  if (this->this_mode_generated (node) || node->imported ())
+  if (this->this_mode_generated (node)
+      || node->imported ()
+      || node->is_local ())
     {
       return 0;
     }
@@ -895,7 +897,7 @@ be_visitor_tmplinst_cs::gen_varout_tmplinst (be_sequence *node,
             << "TAO_Valuetype_Manager<" << this->linebreak_
             << be_idt << be_idt_nl
             << bt->name () << "," << this->linebreak_ << be_nl
-            << bt->name () << "_var," << this->linebreak_ << be_uidt_nl
+            << bt->name () << "_var" << this->linebreak_ << be_uidt_nl
             << ">" << this->linebreak_ << be_uidt << be_uidt_nl
             << ">" << this->suffix_
             << be_uidt << be_uidt << be_uidt;
@@ -907,7 +909,7 @@ be_visitor_tmplinst_cs::gen_varout_tmplinst (be_sequence *node,
             << "TAO_Valuetype_Manager<" << this->linebreak_
             << be_idt << be_idt_nl
             << bt->name () << "," << this->linebreak_ << be_nl
-            << bt->name () << "_var," << this->linebreak_ << be_uidt_nl
+            << bt->name () << "_var" << this->linebreak_ << be_uidt_nl
             << ">" << this->linebreak_ << be_uidt << be_uidt_nl
             << ">" << this->suffix_
             << be_uidt << be_uidt << be_uidt;
@@ -920,7 +922,7 @@ be_visitor_tmplinst_cs::gen_varout_tmplinst (be_sequence *node,
             << "TAO_Valuetype_Manager<" << this->linebreak_
             << be_idt << be_idt_nl
             << bt->name () << "," << this->linebreak_ << be_nl
-            << bt->name () << "_var," << this->linebreak_ << be_uidt_nl
+            << bt->name () << "_var" << this->linebreak_ << be_uidt_nl
             << ">" << this->linebreak_ << be_uidt << be_uidt_nl
             << ">" << this->suffix_
             << be_uidt << be_uidt << be_uidt;
