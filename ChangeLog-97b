@@ -8,7 +8,10 @@ Sun Sep 14 21:02:31 1997  David L. Levine  <levine@cs.wustl.edu>
 	* include/makeinclude/platform_irix6.x-32_sgic++.GNU,
 	  platform_tandem.GNU: added debug = 1, to disable ACE_NDEBUG.
 
-	* Managed_Object.h: added #include of ace/OS.h because
+	* ace/Acceptor.cpp: added #include of ace/Handle_Set.h so that
+	  it will compile on g++/Solaris.
+
+	* ace/Managed_Object.h: added #include of ace/OS.h because
 	  ACE_Cleanup class is used.
 
 	* ace/Managed_Object.cpp: only #include ace/Synch.h if
@@ -16,6 +19,8 @@ Sun Sep 14 21:02:31 1997  David L. Levine  <levine@cs.wustl.edu>
 	  appears to be necessary with Digital Unix.  But, it causes
 	  inline functions warnings with g++, both with inlining
 	  enabled and disabled.  Circular #includes are evil :-)
+
+	* ace/Select_Reactor.cpp: added template instantiation.
 	
 	* ace/Svc_Conf_y.cpp: commented out unused args and wrapped
 	  assignments in "if" conditionals to avoid g++ warnings.
