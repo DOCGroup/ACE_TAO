@@ -29,6 +29,11 @@ TAO_CEC_Reactive_Pulling_Strategy::
      relative_timeout_ (relative_timeout),
      event_channel_ (event_channel),
      orb_ (CORBA::ORB::_duplicate (orb))
+#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
+   // Initialise timer_id_ to an invalid timer id, so that in case we don't
+   // schedule a timer, we don't cancel a random timer at shutdown
+   , timer_id_ (-1)
+#endif /* TAO_HAS_CORBA_MESSAGING */
 {
   this->reactor_ =
     this->orb_->orb_core ()->reactor ();

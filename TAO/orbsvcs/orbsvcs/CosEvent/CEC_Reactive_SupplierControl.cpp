@@ -40,15 +40,14 @@ TAO_CEC_Reactive_SupplierControl::
     adapter_ (this),
     event_channel_ (ec),
     orb_ (CORBA::ORB::_duplicate (orb))
-{
-  this->reactor_ =
-    this->orb_->orb_core ()->reactor ();
-
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
    // Initialise timer_id_ to an invalid timer id, so that in case we don't
    // schedule a timer, we don't cancel a random timer at shutdown
-   timer_id_ = -1;
+   , timer_id_ (-1)
 #endif /* TAO_HAS_CORBA_MESSAGING */
+{
+  this->reactor_ =
+    this->orb_->orb_core ()->reactor ();
 }
 
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
@@ -64,15 +63,14 @@ TAO_CEC_Reactive_SupplierControl::
     adapter_ (this),
     typed_event_channel_ (ec),
     orb_ (CORBA::ORB::_duplicate (orb))
-{
-  this->reactor_ =
-    this->orb_->orb_core ()->reactor ();
-
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
    // Initialise timer_id_ to an invalid timer id, so that in case we don't
    // schedule a timer, we don't cancel a random timer at shutdown
-   timer_id_ = -1;
+   , timer_id_ (-1)
 #endif /* TAO_HAS_CORBA_MESSAGING */
+{
+  this->reactor_ =
+    this->orb_->orb_core ()->reactor ();
 }
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
