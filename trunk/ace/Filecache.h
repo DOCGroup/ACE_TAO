@@ -217,7 +217,6 @@ private:
   // = Synchronization variables.
   ACE_SYNCH_RW_MUTEX hash_lock_[DEFAULT_VIRTUAL_FILESYSTEM_TABLE_SIZE];
   ACE_SYNCH_RW_MUTEX file_lock_[DEFAULT_VIRTUAL_FILESYSTEM_TABLE_SIZE];
-  static ACE_SYNCH_RW_MUTEX lock_;
 };
 
 class ACE_Filecache_Object
