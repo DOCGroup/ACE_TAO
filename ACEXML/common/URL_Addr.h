@@ -55,6 +55,11 @@ public:
    */
   virtual int string_to_addr (const ACEXML_Char* address);
 
+  //  Function to shut up Borland C++
+#if defined (ACE_USES_WCHAR)
+  virtual int string_to_addr (const char* address);
+#endif
+
   /**
    *  Transform the current <ACE_INET_Addr> address into string format. If
    *  <ipaddr_format> is non-0 this produces

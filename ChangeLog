@@ -1,3 +1,10 @@
+Fri Oct 04 22:24:23 2002  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * ACEXML\common\URL_Addr.cpp (string_to_addr): Added a new wrapper
+          which matches the signature in ACE_INET_Addr, and delegates the
+          work to the ACEXML_Char function to work around Borland BCB
+          warning about hidden virtual function.
+
 Fri Oct  4 21:32:51 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/Service_Manager.cpp (list_services): Correct compiler
