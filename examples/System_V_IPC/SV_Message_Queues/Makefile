@@ -50,6 +50,7 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/OS.h \
  $(WRAPPER_ROOT)/ace/config.h \
  $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/OS.i \
  $(WRAPPER_ROOT)/ace/Trace.h \
  $(WRAPPER_ROOT)/ace/Log_Msg.h \
  $(WRAPPER_ROOT)/ace/Log_Record.h \
@@ -60,11 +61,19 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.h \
  $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.i \
  $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(WRAPPER_ROOT)/ace/Synch.i \
  $(WRAPPER_ROOT)/ace/Synch_T.h \
  $(WRAPPER_ROOT)/ace/Event_Handler.h \
+ $(WRAPPER_ROOT)/ace/Event_Handler.i \
+ $(WRAPPER_ROOT)/ace/Synch_T.i \
+ $(WRAPPER_ROOT)/ace/Thread.h \
+ $(WRAPPER_ROOT)/ace/Thread.i \
  $(WRAPPER_ROOT)/ace/Set.h \
+ $(WRAPPER_ROOT)/ace/Set.i \
+ $(WRAPPER_ROOT)/ace/Signal.i \
  $(WRAPPER_ROOT)/ace/SV_Message_Queue.h \
  $(WRAPPER_ROOT)/ace/SV_Message.h \
+ $(WRAPPER_ROOT)/ace/SV_Message.i \
  $(WRAPPER_ROOT)/ace/SV_Message_Queue.i \
  test.h
 .obj/MQ_Client.o .shobj/MQ_Client.so: MQ_Client.cpp \
@@ -73,6 +82,7 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/OS.h \
  $(WRAPPER_ROOT)/ace/config.h \
  $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/OS.i \
  $(WRAPPER_ROOT)/ace/Trace.h \
  $(WRAPPER_ROOT)/ace/Log_Msg.h \
  $(WRAPPER_ROOT)/ace/Log_Record.h \
@@ -80,6 +90,7 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/Log_Record.i \
  $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/SV_Message.h \
+ $(WRAPPER_ROOT)/ace/SV_Message.i \
  $(WRAPPER_ROOT)/ace/SV_Message_Queue.i \
  test.h
 .obj/TMQ_Server.o .shobj/TMQ_Server.so: TMQ_Server.cpp \
@@ -89,6 +100,7 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/OS.h \
  $(WRAPPER_ROOT)/ace/config.h \
  $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/OS.i \
  $(WRAPPER_ROOT)/ace/Trace.h \
  $(WRAPPER_ROOT)/ace/Log_Msg.h \
  $(WRAPPER_ROOT)/ace/Log_Record.h \
@@ -99,14 +111,24 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.h \
  $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.i \
  $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(WRAPPER_ROOT)/ace/Synch.i \
  $(WRAPPER_ROOT)/ace/Synch_T.h \
  $(WRAPPER_ROOT)/ace/Event_Handler.h \
+ $(WRAPPER_ROOT)/ace/Event_Handler.i \
+ $(WRAPPER_ROOT)/ace/Synch_T.i \
+ $(WRAPPER_ROOT)/ace/Thread.h \
+ $(WRAPPER_ROOT)/ace/Thread.i \
  $(WRAPPER_ROOT)/ace/Set.h \
+ $(WRAPPER_ROOT)/ace/Set.i \
+ $(WRAPPER_ROOT)/ace/Signal.i \
  $(WRAPPER_ROOT)/ace/Typed_SV_Message_Queue.h \
  $(WRAPPER_ROOT)/ace/SV_Message_Queue.h \
  $(WRAPPER_ROOT)/ace/SV_Message.h \
+ $(WRAPPER_ROOT)/ace/SV_Message.i \
  $(WRAPPER_ROOT)/ace/SV_Message_Queue.i \
  $(WRAPPER_ROOT)/ace/Typed_SV_Message.h \
+ $(WRAPPER_ROOT)/ace/Typed_SV_Message.i \
+ $(WRAPPER_ROOT)/ace/Typed_SV_Message_Queue.i \
  test.h
 .obj/TMQ_Client.o .shobj/TMQ_Client.so: TMQ_Client.cpp \
  $(WRAPPER_ROOT)/ace/Typed_SV_Message_Queue.h \
@@ -115,6 +137,7 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/OS.h \
  $(WRAPPER_ROOT)/ace/config.h \
  $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/OS.i \
  $(WRAPPER_ROOT)/ace/Trace.h \
  $(WRAPPER_ROOT)/ace/Log_Msg.h \
  $(WRAPPER_ROOT)/ace/Log_Record.h \
@@ -122,8 +145,11 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/Log_Record.i \
  $(WRAPPER_ROOT)/ace/ACE.i \
  $(WRAPPER_ROOT)/ace/SV_Message.h \
+ $(WRAPPER_ROOT)/ace/SV_Message.i \
  $(WRAPPER_ROOT)/ace/SV_Message_Queue.i \
  $(WRAPPER_ROOT)/ace/Typed_SV_Message.h \
+ $(WRAPPER_ROOT)/ace/Typed_SV_Message.i \
+ $(WRAPPER_ROOT)/ace/Typed_SV_Message_Queue.i \
  test.h
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY
