@@ -1,3 +1,9 @@
+Tue Dec 12 01:07:39 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/Log_Msg.cpp:
+
+          Changed a comment to remove a false warning by fuzz.
+
 Mon Dec 11 15:10:00 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 	* ace/Get_Opt.h:
