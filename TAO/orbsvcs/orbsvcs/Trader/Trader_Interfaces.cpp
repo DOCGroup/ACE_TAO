@@ -1888,6 +1888,8 @@ export_proxy (CosTrading::Lookup_ptr,
                   CosTrading::DuplicatePolicyName))
 {
   ACE_THROW_RETURN (CORBA::UNKNOWN (), 0);
+
+  return 0;
 }
 
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
@@ -1914,6 +1916,8 @@ describe_proxy (const char *
                   CosTrading::Proxy::NotProxyOfferId))
 {
   ACE_THROW_RETURN (CORBA::UNKNOWN (), 0);
+
+  return 0;
 }
 
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>

@@ -1,3 +1,10 @@
+Wed Mar 24 11:00:12 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* orbsvcs/orbsvcs/Trader/Trader_Interfaces.cpp:
+
+	  More fixes like these "Wed Mar 24 07:36:38 2004  Balachandran
+	  Natarajan  <bala@dre.vanderbilt.edu>"
+
 Wed Mar 24 10:37:17 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* docs/compiler.html:
