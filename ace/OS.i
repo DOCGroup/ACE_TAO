@@ -6900,12 +6900,9 @@ ACE_OS::sigwait (sigset_t *set, int *sig)
 ACE_INLINE int
 ACE_OS::sigtimedwait (const sigset_t *set,
                       siginfo_t *info,
-                      const struct timespec *timeout
+                      const struct timespec *timeout)
 {
   ACE_TRACE ("ACE_OS::sigtimedwait");
-  siginfo_t local_siginfo;
-  if (info == 0)
-    info = &local_siginfo;
 #if defined (ACE_HAS_SIGTIMEDWAIT)
   ACE_OSCALL_RETURN (::sigtimedwait (set, info, timeout),
                      int, -1);
