@@ -681,7 +681,9 @@ void
 TAO_Transport::close_connection_no_purge (void)
 {
   TAO_Connection_Handler * eh = this->invalidate_event_handler ();
-  this->close_connection_shared (0, eh);
+
+  this->close_connection_shared (0,
+                                 eh);
 }
 
 void
@@ -700,16 +702,14 @@ TAO_Transport::close_connection_shared (int purge,
       return;
     }
 
-
-  int retval = 0;
-
   // Set the event handler in the connection close wait state.
   (void) eh->connection_close_wait ();
 
   // NOTE: If the wait strategy is in blocking mode, then there is no
   // chance that it could be inside the reactor. We can safely skip
-  // driving the LF.
-  if (this->ws_->non_blocking ())
+  // driving the LF. If <purge> is 0, then we are cleaned up by the
+  // cache. So no point in driving the LF either.
+  if (this->ws_->non_blocking () && purge)
     {
       // NOTE: This is a work around for BUG 1020. We drive the leader
       // follower for a predetermined amount of time. Ideally this
@@ -717,15 +717,14 @@ TAO_Transport::close_connection_shared (int purge,
       // cut. Doing that will be a todo..
 
       ACE_Time_Value tv (ACE_DEFAULT_TIMEOUT, 0);
-      retval =
-        this->orb_core_->leader_follower ().wait_for_event (eh,
+      this->orb_core_->leader_follower ().wait_for_event (eh,
                                                             this,
-                                                            &tv);
+                                                          &tv);
 
     }
 
   // We need to explicitly shut it down to avoid memory leaks.
-  if (retval == -1 ||
+  if (!eh->successful () ||
       !this->ws_->non_blocking ())
     {
       eh->close_connection ();

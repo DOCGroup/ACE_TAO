@@ -1,3 +1,9 @@
+Fri Nov 29 19:25:59 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/Transport.cpp: Prevented the thread doing the server side
+	  purging from waiting on the LF and waiting for connection
+	  closure, since its of no use.
+
 Fri Nov 29 18:13:03 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Notify/ThreadPool_Task.cpp: Changed to use
