@@ -5858,6 +5858,10 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
         case S_objLib_OBJ_TIMEOUT:
           error = ETIME;
           break;
+        case S_objLib_OBJ_UNAVAILABLE:
+          if (msec_timeout == 0)
+            error = ETIME;
+          break;
         default:
           error = errno;
           break;
