@@ -1,3 +1,9 @@
+Fri Aug  3 09:55:38 2001  Ossama Othman  <ossama@uci.edu>
+
+	* bin/auto_run_tests.lst:
+
+	  Added the new TAO "DLL_ORB" test to the list of tests to run.
+
 Fri Aug  3 08:26:45 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/RW_Process_Mutex.cpp: Added a missing comma in the
