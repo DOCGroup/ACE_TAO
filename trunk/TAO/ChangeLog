@@ -1,3 +1,12 @@
+Mon Jul 21 16:24:07 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/append.cpp:
+
+	  Applied a fix for unions with an enum discriminator similar to 
+	  what is used for the same case in skip.cpp. Thanks to
+	  Sunil Rottoo <srottoo@adacelcanada.com> for pointing out the
+	  problem and suggesting the fix.
+
 Mon Jul 21 15:58:39 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/ast/ast_expression.cpp:
