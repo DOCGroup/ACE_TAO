@@ -1,3 +1,7 @@
+Sat Dec 15 16:20:28 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/ace_os_dll.vcp: Added the files OS_QoS.{h,cpp}.
+
 Sat Dec 15 09:52:14 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 	* examples/Misc/test_set.cpp:
