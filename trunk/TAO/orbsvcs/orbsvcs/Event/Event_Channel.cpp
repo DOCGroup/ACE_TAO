@@ -352,7 +352,7 @@ dump_event (const RtecEventComm::Event &event)
   ACE_DEBUG ((LM_DEBUG, "source_ = %d "
               "type_ = %d "
               "time_ = %u.\n",
-              ACE_reinterpret_cast (void*, event.header.source),
+              ACE_reinterpret_cast (void*, (int) event.header.source),
               event.header.type,
               // The divide-by-1 is for ACE_U_LongLong support.
               ORBSVCS_Time::to_hrtime (event.header.creation_time) / 1));

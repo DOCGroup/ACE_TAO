@@ -1,3 +1,9 @@
+Fri Jun 22 18:31:35 2001  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Event/Event_Channel.cpp (dump_event):
+
+          Fixed a compile error on Sun CC42.
+
 Fri Jun 22 13:20:19 2001  Paul Calabrese <calabrese_p@ociweb.com>
 
         * tao/Acceptor_Registry.cpp:
@@ -14,17 +20,17 @@ Fri Jun 22 13:20:19 2001  Paul Calabrese <calabrese_p@ociweb.com>
 
 Fri Jun 22 09:24:54 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
-	* tao/Protocols_Hooks.cpp:
-	* tao/Stub_Factory.cpp:
+        * tao/Protocols_Hooks.cpp:
+        * tao/Stub_Factory.cpp:
 
-	  Added template instantiations to fix up the noinline
-	  builds.
+          Added template instantiations to fix up the noinline
+          builds.
 
 Fri Jun 22 07:06:52 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* docs/tutorials/Quoter/Event_Service/Makefile:
-	* docs/tutorials/Quoter/RT_Event_Service/Makefile: Updated
-	  dependencies.
+        * docs/tutorials/Quoter/Event_Service/Makefile:
+        * docs/tutorials/Quoter/RT_Event_Service/Makefile: Updated
+          dependencies.
 
 Fri Jun 22 08:14:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
@@ -34,9 +40,9 @@ Fri Jun 22 08:14:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
 Fri Jun 22 01:07:02 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
-	* performance-tests/Cubit/TAO/MT_Cubit/client.h (MT_Priority):
+        * performance-tests/Cubit/TAO/MT_Cubit/client.h (MT_Priority):
 
-	  Made the destructor virtual to fix warning under gcc-3.0.
+          Made the destructor virtual to fix warning under gcc-3.0.
 
 Thu Jun 21 21:31:59 2001  Ossama Othman  <ossama@uci.edu>
 
@@ -50,15 +56,15 @@ Thu Jun 21 21:31:59 2001  Ossama Othman  <ossama@uci.edu>
 
 Thu Jun 21 21:06:17 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
-	* tests/RTCORBA/Client_Protocol/server.cpp:
-	* tests/RTCORBA/Client_Propagated/server.cpp:
-	* tests/RTCORBA/Explicit_Binding/server.cpp:
-	* tests/RTCORBA/Private_Connection/server.cpp:
-	* tests/RTCORBA/Server_Protocol/server.cpp:
-	* tests/RTCORBA/Thread_Pool/server.cpp:
+        * tests/RTCORBA/Client_Protocol/server.cpp:
+        * tests/RTCORBA/Client_Propagated/server.cpp:
+        * tests/RTCORBA/Explicit_Binding/server.cpp:
+        * tests/RTCORBA/Private_Connection/server.cpp:
+        * tests/RTCORBA/Server_Protocol/server.cpp:
+        * tests/RTCORBA/Thread_Pool/server.cpp:
 
-	  Added RTPortableServer.h include to statically link in the
-	  RTPOA for static builds.
+          Added RTPortableServer.h include to statically link in the
+          RTPOA for static builds.
 
 Thu Jun 21 20:38:47 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
@@ -69,15 +75,15 @@ Thu Jun 21 20:38:47 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
 Thu Jun 21 13:00:31 2001  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
-	* tao/PortableServer/POA.cpp:
-	* tao/PortableServer/PAO.h:
-	* tao/PortableServer/PortableServerC.h:
+        * tao/PortableServer/POA.cpp:
+        * tao/PortableServer/PAO.h:
+        * tao/PortableServer/PortableServerC.h:
 
-	  Set inheritance from PortableServer::POA in class TAO_POA to be virtual.
+          Set inheritance from PortableServer::POA in class TAO_POA to be virtual.
 
-	  Added new method (_tao_poa_downcast) to safely downcast instances of
-	  PortableServer::POA to TAO_POA. This method has to be used instead
-	  of ACE_dynamic_cast for downcasting the POA.
+          Added new method (_tao_poa_downcast) to safely downcast instances of
+          PortableServer::POA to TAO_POA. This method has to be used instead
+          of ACE_dynamic_cast for downcasting the POA.
 
 Thu Jun 21 12:57:34 2001  Paul Calabrese <calabrese_p@ociweb.com>
 
@@ -109,7 +115,7 @@ Thu Jun 21 09:47:59 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
 Thu Jun 21 09:47:48 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/IIOP_Connector.h: Fixed a warning in g++.
+        * tao/IIOP_Connector.h: Fixed a warning in g++.
 
 Thu Jun 21 07:49:15 2001  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -136,31 +142,31 @@ Thu Jun 21 07:49:15 2001  Chad Elliott  <elliott_c@ociweb.com>
 
 Thu Jun 21 06:52:02 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* performance-tests/RTCorba/Multiple_Endpoints/Common/Makefile:
-	  Updated dependencies.
+        * performance-tests/RTCorba/Multiple_Endpoints/Common/Makefile:
+          Updated dependencies.
 
 Wed Jun 20 19:20:15 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tests/RTCORBA/Banded_Connections/run_test.pl:
-	* tests/RTCORBA/Banded_Connections/bands.unix:
+        * tests/RTCORBA/Banded_Connections/run_test.pl:
+        * tests/RTCORBA/Banded_Connections/bands.unix:
 
-	  There was a change in priority ranges between Solaris 5.7 and
-	  5.8. For the SCHED_OTHER policy, the ranges are:
+          There was a change in priority ranges between Solaris 5.7 and
+          5.8. For the SCHED_OTHER policy, the ranges are:
 
-	  Sun 5.8 Minimum =   0 Maximum = 59
-	  Sun 5.7 Minimum = -60 Maximum = 60
+          Sun 5.8 Minimum =   0 Maximum = 59
+          Sun 5.7 Minimum = -60 Maximum = 60
 
-	  Therefore, the above scripts were updated to reflect the new
-	  range.  Similar changes may be needed for the other RT tests.
+          Therefore, the above scripts were updated to reflect the new
+          range.  Similar changes may be needed for the other RT tests.
 
 Wed Jun 20 18:45:40 2001  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
-	* performance-tests/RTCorba/Multiple_Endpoints/Common/Makefile:
- 	* performance-tests/RTCorba/Multiple_Endpoints/Common/Endpoint_Per_Priority/Makefile:
-	* performance-tests/RTCorba/Multiple_Endpoints/Common/Orb_Per_Priority/Makefile:
-	* performance-tests/RTCorba/Multiple_Endpoints/Common/Single_Endpoint/Makefile:
+        * performance-tests/RTCorba/Multiple_Endpoints/Common/Makefile:
+        * performance-tests/RTCorba/Multiple_Endpoints/Common/Endpoint_Per_Priority/Makefile:
+        * performance-tests/RTCorba/Multiple_Endpoints/Common/Orb_Per_Priority/Makefile:
+        * performance-tests/RTCorba/Multiple_Endpoints/Common/Single_Endpoint/Makefile:
 
-	  Updated Makefiles to fix the static builds.
+          Updated Makefiles to fix the static builds.
 
 Wed Jun 20 17:37:28 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -179,22 +185,22 @@ Wed Jun 20 17:37:28 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 Wed Jun 20 15:36:27 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
-	* performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/Client.dsp:
-	* performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/Makefile:
-	* performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/Project.dsw:
-	* performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/README:
-	* performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/Server.dsp:
-	* performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/client.conf:
-	* performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/client.cpp:
-	* performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/run-test.pl:
-	* performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/server.conf:
-	* performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/server.cpp:
-	* performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/server.conf:
-	* performance-tests/RTCorba/Multiple_Endpoints/Makefile:
+        * performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/Client.dsp:
+        * performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/Makefile:
+        * performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/Project.dsw:
+        * performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/README:
+        * performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/Server.dsp:
+        * performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/client.conf:
+        * performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/client.cpp:
+        * performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/run-test.pl:
+        * performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/server.conf:
+        * performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/server.cpp:
+        * performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/server.conf:
+        * performance-tests/RTCorba/Multiple_Endpoints/Makefile:
 
-	  Removed test. The feature that it was testing (which was deprecated)
-	  has now been removed from TAO as a result of the RTCORBA
-	  subsetting.
+          Removed test. The feature that it was testing (which was deprecated)
+          has now been removed from TAO as a result of the RTCORBA
+          subsetting.
 
 Wed Jun 20 14:22:47 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -240,19 +246,19 @@ Wed Jun 20 10:52:40 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 Wed Jun 20 10:29:56 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
-	* tao/PortableServer/POA.cpp:
-	* tao/PortableServer/POA_Cached_Policies.h:
-	* tao/PortableServer/POA_Cached_Policies.i:
+        * tao/PortableServer/POA.cpp:
+        * tao/PortableServer/POA_Cached_Policies.h:
+        * tao/PortableServer/POA_Cached_Policies.i:
 
-	  Fixed bug caused by the unintentional removal of setting
-	  the ImplicitActivationPolicy to IMPLICIT_ACTIVATION on
-	  the RootPOA under minimum builds.  Since the
-	  ImplicitActivationPolicy is not compiled for these builds,
-	  a check was added to the TAO_POA constructor to set it to
-	  IMPLICIT_ACTIVATION in the cached policies if the POA was
-	  the root one.  In non-minimal builds, this policy is
-	  can be set before creating the POA which is the ideal place.
-	  The special case code is not compiled for non-minimal builds.
+          Fixed bug caused by the unintentional removal of setting
+          the ImplicitActivationPolicy to IMPLICIT_ACTIVATION on
+          the RootPOA under minimum builds.  Since the
+          ImplicitActivationPolicy is not compiled for these builds,
+          a check was added to the TAO_POA constructor to set it to
+          IMPLICIT_ACTIVATION in the cached policies if the POA was
+          the root one.  In non-minimal builds, this policy is
+          can be set before creating the POA which is the ideal place.
+          The special case code is not compiled for non-minimal builds.
 
 Wed Jun 20 09:38:40 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
@@ -282,13 +288,13 @@ Wed Jun 20 09:19:32 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
 Wed Jun 20 07:55:26 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp: Fixed a warning in Win32
-	  debug builds.
+        * orbsvcs/orbsvcs/AV/AVStreams_i.cpp: Fixed a warning in Win32
+          debug builds.
 
 Wed Jun 20 07:31:14 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/Big_Reply/Big_Reply_i.cpp: Fixed a compile error on
-	  Linux.
+        * tests/Big_Reply/Big_Reply_i.cpp: Fixed a compile error on
+          Linux.
 Wed Jun 20 07:48:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * tests/Makefile.bor
@@ -296,11 +302,11 @@ Wed Jun 20 07:48:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
 Tue Jun 19 14:35:43 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
-	* tao/Strategies/GIOP_Message_NonReactive_Base.cpp:
+        * tao/Strategies/GIOP_Message_NonReactive_Base.cpp:
 
-	  Added the GIOP version info in creation of TAO_InputCDR object
-	  in more_messages(). This is due to the changes made regarding the
-	  WChar implementation of GIOP 1.2.
+          Added the GIOP version info in creation of TAO_InputCDR object
+          in more_messages(). This is due to the changes made regarding the
+          WChar implementation of GIOP 1.2.
 
 Tue Jun 19 14:35:43 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -313,27 +319,27 @@ Tue Jun 19 14:35:43 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 Tue Jun 19 12:27:39 2001  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
-	* tests/Endpoint_Per_Priority/Makefile.bor:
-	* tests/Endpoint_Per_Priority/client.conf:
-	* tests/Endpoint_Per_Priority/run_test.pl:
-	* tests/Endpoint_Per_Priority/server.cpp:
-	* tests/Endpoint_Per_Priority/test_i.cpp:
-	* tests/Endpoint_Per_Priority/Endpoint_Per_Priority.dsw:
-	* tests/Endpoint_Per_Priority/README:
-	* tests/Endpoint_Per_Priority/client.cpp:
-	* tests/Endpoint_Per_Priority/server.bor:
-	* tests/Endpoint_Per_Priority/server.dsp:
-	* tests/Endpoint_Per_Priority/test_i.h:
-	* tests/Endpoint_Per_Priority/Makefile:
-	* tests/Endpoint_Per_Priority/client.bor:
-	* tests/Endpoint_Per_Priority/client.dsp:
-	* tests/Endpoint_Per_Priority/server.conf:
-	* tests/Endpoint_Per_Priority/test.idl:
-	* tests/Endpoint_Per_Priority/test_i.i:
-	* tests/Endpoint_Per_Priority:
-	  Removed test. The feature it was testing (which was deprecated)
-	  has now been removed from TAO as a result of the RTCORBA
-	  subsetting.
+        * tests/Endpoint_Per_Priority/Makefile.bor:
+        * tests/Endpoint_Per_Priority/client.conf:
+        * tests/Endpoint_Per_Priority/run_test.pl:
+        * tests/Endpoint_Per_Priority/server.cpp:
+        * tests/Endpoint_Per_Priority/test_i.cpp:
+        * tests/Endpoint_Per_Priority/Endpoint_Per_Priority.dsw:
+        * tests/Endpoint_Per_Priority/README:
+        * tests/Endpoint_Per_Priority/client.cpp:
+        * tests/Endpoint_Per_Priority/server.bor:
+        * tests/Endpoint_Per_Priority/server.dsp:
+        * tests/Endpoint_Per_Priority/test_i.h:
+        * tests/Endpoint_Per_Priority/Makefile:
+        * tests/Endpoint_Per_Priority/client.bor:
+        * tests/Endpoint_Per_Priority/client.dsp:
+        * tests/Endpoint_Per_Priority/server.conf:
+        * tests/Endpoint_Per_Priority/test.idl:
+        * tests/Endpoint_Per_Priority/test_i.i:
+        * tests/Endpoint_Per_Priority:
+          Removed test. The feature it was testing (which was deprecated)
+          has now been removed from TAO as a result of the RTCORBA
+          subsetting.
 
 Tue Jun 19 12:25:09 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
@@ -363,11 +369,11 @@ Tue Jun 19 10:38:07 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
 Tue Jun 19 09:46:30 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
-	* tests/Exposed_Policies/Makefile:
+        * tests/Exposed_Policies/Makefile:
 
-	  Added guards to Makefile to prevent compilation on
-	  minimum CORBA builds, since this test uses both
-	  RTCORBA and Messaging features.
+          Added guards to Makefile to prevent compilation on
+          minimum CORBA builds, since this test uses both
+          RTCORBA and Messaging features.
 
 Tue Jun 19 07:26:59 2001  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -384,34 +390,34 @@ Tue Jun 19 07:26:59 2001  Chad Elliott  <elliott_c@ociweb.com>
 
 Mon Jun 18 22:03:25 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/Big_Reply/Big_Reply.dsw:
-	* tests/Big_Reply/server.dsp:
-	* tests/Big_Reply/client.dsp: Win32 files for compilation.
+        * tests/Big_Reply/Big_Reply.dsw:
+        * tests/Big_Reply/server.dsp:
+        * tests/Big_Reply/client.dsp: Win32 files for compilation.
 
 Mon Jun 18 20:32:07 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/Big_Reply: A new test for testing whether the server ORB
-	  can send large replies to the client without hanging. This test
-	  depicts a situation that is one of the motivating factors for a
-	  need to fix bug 575.
+        * tests/Big_Reply: A new test for testing whether the server ORB
+          can send large replies to the client without hanging. This test
+          depicts a situation that is one of the motivating factors for a
+          need to fix bug 575.
 
-	* tests/Big_Reply/Big_Reply_i.cpp:
-	* tests/Big_Reply/Big_Reply_i.h:
-	* tests/Big_Reply/Client_Task.cpp:
-	* tests/Big_Reply/Client_Task.h:
-	* tests/Big_Reply/Makefile:
-	* tests.Big_Reply/Makefile.bor:
-	* tests/Big_Reply/README:
-	* tests/Big_Reply/Test.idl:
-	* tests/Big_Reply/client.bor:
-	* tests/Big_Reply/client.cpp:
-	* tests/Big_Reply/run_test.pl:
-	* tests/Big_reply/server.bor:
-	* tests/Big_Reply/server.cpp: Files for this test. This test will
-	  not work till we checkin the fix for bug 575. But we wanted to
-	  have this test in the daily builds.
+        * tests/Big_Reply/Big_Reply_i.cpp:
+        * tests/Big_Reply/Big_Reply_i.h:
+        * tests/Big_Reply/Client_Task.cpp:
+        * tests/Big_Reply/Client_Task.h:
+        * tests/Big_Reply/Makefile:
+        * tests.Big_Reply/Makefile.bor:
+        * tests/Big_Reply/README:
+        * tests/Big_Reply/Test.idl:
+        * tests/Big_Reply/client.bor:
+        * tests/Big_Reply/client.cpp:
+        * tests/Big_Reply/run_test.pl:
+        * tests/Big_reply/server.bor:
+        * tests/Big_Reply/server.cpp: Files for this test. This test will
+          not work till we checkin the fix for bug 575. But we wanted to
+          have this test in the daily builds.
 
-	* tests/Makefile: Added the above test to the Makefile.
+        * tests/Makefile: Added the above test to the Makefile.
 
 Mon Jun 18 18:58:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
@@ -428,9 +434,9 @@ Mon Jun 18 13:01:32 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
 Mon Jun 18 11:32:48 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/Strategies/GIOP_Message_NonReactive_Handler.cpp
-	  (read_message): Removed a superfluous check that I added for
-	  debugging.
+        * tao/Strategies/GIOP_Message_NonReactive_Handler.cpp
+          (read_message): Removed a superfluous check that I added for
+          debugging.
 
 Mon Jun 18 11:07:27 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
@@ -457,11 +463,11 @@ Mon Jun 18 11:07:27 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
 Mon Jun 18 10:38:02 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
-	* tao/PortableServer/Default_Policy_Validator.cpp:
-	* tao/PortableServer/Object_Adapter.cpp:
+        * tao/PortableServer/Default_Policy_Validator.cpp:
+        * tao/PortableServer/Object_Adapter.cpp:
 
-	  Added TAO_HAS_MINIMUM_POA guards to help get the
-	  minimum build compiling again.
+          Added TAO_HAS_MINIMUM_POA guards to help get the
+          minimum build compiling again.
 
 Mon Jun 18 10:15:46 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
@@ -490,16 +496,16 @@ Mon Jun 18 09:01:48 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 Sun Jun 17 18:24:18 2001  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
-	* performance-tests/RTCorba/Multiple_Endpoints/Makefile:
-	* performance-tests/RTCorba/Multiple_Endpoints/Common/Makefile:
-	* performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/Makefile:
-	* performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/client.cpp:
-	* performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/server.cpp:
-	* performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/Makefile:
-	* performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/client.cpp:
-	* performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/server.cpp:
-	  Fixed compilation problems by adding the missing include, and
-	  regenerated dependencies.
+        * performance-tests/RTCorba/Multiple_Endpoints/Makefile:
+        * performance-tests/RTCorba/Multiple_Endpoints/Common/Makefile:
+        * performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/Makefile:
+        * performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/client.cpp:
+        * performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/server.cpp:
+        * performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/Makefile:
+        * performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/client.cpp:
+        * performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/server.cpp:
+          Fixed compilation problems by adding the missing include, and
+          regenerated dependencies.
 
 Sun Jun 17 10:12:49 2001  Craig Rodrigues  <crodrigues@bbn.com>
 
@@ -509,8 +515,8 @@ Sun Jun 17 10:12:49 2001  Craig Rodrigues  <crodrigues@bbn.com>
 
 Sun Jun 17 08:08:52 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Strategies/GIOP_Message_NonReactive_Base.cpp: Fixed a
-	  compile error with KCC.
+        * tao/Strategies/GIOP_Message_NonReactive_Base.cpp: Fixed a
+          compile error with KCC.
 
 Sat Jun 16 22:00:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
@@ -529,11 +535,11 @@ Sat Jun 16 22:00:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
 Sat Jun 16 18:23:43 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Strategies/GIOP_Message_NonReactive_Handler.cpp:
-	* orbsvcs/orbsvcs/AV/sfp.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Dispatching_Task.cpp:
-	* orbsvcs/orbsvcs/CosEvent/CEC_Dispatching_Task.cpp: Fixed compile
-	  errors.
+        * tao/Strategies/GIOP_Message_NonReactive_Handler.cpp:
+        * orbsvcs/orbsvcs/AV/sfp.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Dispatching_Task.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Dispatching_Task.cpp: Fixed compile
+          errors.
 
 Sat Jun 16 12:15:00 2001  Craig Rodrigues <crodrigu@bbn.com>
 
@@ -543,32 +549,32 @@ Sat Jun 16 12:15:00 2001  Craig Rodrigues <crodrigu@bbn.com>
 
 Sat Jun 16 10:25:16 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/CDR.h:
-	* tao/CDR.i: Added an extra flag argument to the constructor to
-	  keep up with the changes in ACE.
+        * tao/CDR.h:
+        * tao/CDR.i: Added an extra flag argument to the constructor to
+          keep up with the changes in ACE.
 
-	* tao/GIOP_Message_Base.cpp:
-	* tao/GIOP_Message_Lite.cpp:
-	* tao/Pluggable_Messaging_Utils.cpp:
-	* tao/Asynch_Reply_Dispatcher.cpp:
-	* tao/Synch_Reply_Dispatcher.cpp:
-	* tao/DynamicInterface/DII_Reply_Dispatcher.cpp: Added the extra
-	  flag to the places where the message blocks are constructed.
+        * tao/GIOP_Message_Base.cpp:
+        * tao/GIOP_Message_Lite.cpp:
+        * tao/Pluggable_Messaging_Utils.cpp:
+        * tao/Asynch_Reply_Dispatcher.cpp:
+        * tao/Synch_Reply_Dispatcher.cpp:
+        * tao/DynamicInterface/DII_Reply_Dispatcher.cpp: Added the extra
+          flag to the places where the message blocks are constructed.
 
 Fri Jun 15 23:52:44 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/Strategies/GIOP_Message_NonReactive_Handler.cpp
-	  (read_message): Added EWOULDBLOCK to one of the expected failure
-	  and instead of returning 0, retrying the recv operation.  This
-	  fixed the sporadic failures when sending large message with
-	  SHMIOP.
+        * tao/Strategies/GIOP_Message_NonReactive_Handler.cpp
+          (read_message): Added EWOULDBLOCK to one of the expected failure
+          and instead of returning 0, retrying the recv operation.  This
+          fixed the sporadic failures when sending large message with
+          SHMIOP.
 
 Fri Jun 15 20:24:19 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tao/ORB_Table.cpp:
+        * tao/ORB_Table.cpp:
 
-	  Removed three unnecessary Hash Map related template
-	  instantiations.
+          Removed three unnecessary Hash Map related template
+          instantiations.
 
 Fri Jun 15 21:14:16 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
@@ -1642,8 +1648,8 @@ Mon Jun 11 16:56:06 2001  Balachandran  <bala@cs.wustl.edu>
 
 Mon Jun 11 11:51:06 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tests/RTCORBA/Banded_Connections/run_test.pl: Fixed the scripts
-	  for execution on NT.
+        * tests/RTCORBA/Banded_Connections/run_test.pl: Fixed the scripts
+          for execution on NT.
 
 Mon Jun 11 11:26:38 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 
