@@ -159,6 +159,7 @@ CORBA_Any::operator= (const CORBA_Any &src)
       if (this->value_)
         {
           DEEP_FREE (this->type_, this->value_, 0, env);
+          delete this->value_;
         }
 
       if (this->type_)
@@ -215,6 +216,7 @@ CORBA_Any::~CORBA_Any (void)
       if (this->value_)
         {
           DEEP_FREE (this->type_, this->value_, 0, env);
+          delete this->value_;
           this->value_ = 0;
         }
     }
@@ -246,6 +248,7 @@ CORBA_Any::replace (CORBA::TypeCode_ptr tc,
       if (this->value_)
         {
           DEEP_FREE (this->type_, this->value_, 0, env);
+          delete this->value_;
         }
     }
 
