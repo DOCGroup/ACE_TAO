@@ -5,6 +5,7 @@
 #include "ace/Task.h"
 #include "ace/Module.h"
 #include "ace/Service_Config.h"
+#include "ace/Object_Manager.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Task.i"
@@ -22,6 +23,24 @@
 // Lock the creation of the Singleton.
 ACE_Thread_Mutex ACE_Task_Exit::ace_task_lock_;
 #endif /* defined (ACE_MT_SAFE) */
+
+#if defined (ACE_HAS_SIG_C_FUNC)
+extern "C" void
+ACE_Task_Exit_cleanup (void *instance, void *)
+{
+  ACE_TRACE ("ACE_Task_Exit::cleanup");
+
+  delete (ACE_TSS_TYPE (ACE_Task_Exit) *) instance;
+}
+#else
+void
+ACE_Task_Exit::cleanup (void *instance, void *)
+{
+  ACE_TRACE ("ACE_Task_Exit::cleanup");
+
+  delete (ACE_TSS_TYPE (ACE_Task_Exit) *) instance;
+}
+#endif /* ACE_HAS_SIG_C_FUNC */
 
 // NOTE:  this preprocessor directive should match the one in
 // ACE_Task_Base::svc_run () below.  This prevents the two statics
@@ -43,6 +62,13 @@ ACE_Task_Exit::instance (void)
 
       if (instance_ == 0)
 	ACE_NEW_RETURN (instance_, ACE_TSS_TYPE (ACE_Task_Exit), 0);
+
+      // Register for destruction with ACE_Object_Manager.
+#if defined ACE_HAS_SIG_C_FUNC
+      ACE_Object_Manager::at_exit (instance_, ACE_Task_Exit_cleanup, 0);
+#else
+      ACE_Object_Manager::at_exit (instance_, ACE_Task_Exit::cleanup, 0);
+#endif /* ACE_HAS_SIG_C_FUNC */
     }
 
   return ACE_TSS_GET (instance_, ACE_Task_Exit);
