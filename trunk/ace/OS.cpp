@@ -1049,12 +1049,10 @@ ACE_TSS_Cleanup::exit (void * /* status */)
   // in an array without invoking the according destructors.
 
   {
-#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-    ACE_Thread_Mutex *lock =
+    ACE_MT (ACE_Thread_Mutex *lock =
       ACE_Managed_Object<ACE_Thread_Mutex>::get_preallocated_object
         (ACE_Object_Manager::ACE_TSS_CLEANUP_LOCK);
-    ACE_GUARD (ACE_Thread_Mutex, ace_mon, *lock);
-#endif /* ACE_MT_SAFE */
+      ACE_GUARD (ACE_Thread_Mutex, ace_mon, *lock));
 
     // Prevent recursive deletions
 
@@ -1118,12 +1116,10 @@ ACE_TSS_Cleanup::exit (void * /* status */)
   // Acquiring ACE_TSS_Cleanup::lock_ to free TLS keys and remove
   // entries from ACE_TSS_Info table.
   {
-#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-    ACE_Thread_Mutex *lock =
+    ACE_MT (ACE_Thread_Mutex *lock =
       ACE_Managed_Object<ACE_Thread_Mutex>::get_preallocated_object
         (ACE_Object_Manager::ACE_TSS_CLEANUP_LOCK);
-    ACE_GUARD (ACE_Thread_Mutex, ace_mon, *lock);
-#endif /* ACE_MT_SAFE */
+      ACE_GUARD (ACE_Thread_Mutex, ace_mon, *lock));
 
 #if 0
     // We shouldn't free the key and remove it from the table here
@@ -1182,13 +1178,11 @@ ACE_TSS_Cleanup::instance (void)
   // Create and initialize thread-specific key.
   if (ACE_TSS_Cleanup::instance_ == 0)
     {
-#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
       // Insure that we are serialized!
-      ACE_Thread_Mutex *lock =
+      ACE_MT (ACE_Thread_Mutex *lock =
         ACE_Managed_Object<ACE_Thread_Mutex>::get_preallocated_object
           (ACE_Object_Manager::ACE_TSS_CLEANUP_LOCK);
-      ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *lock, 0);
-#endif /* ACE_MT_SAFE */
+        ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *lock, 0));
 
       // Now, use the Double-Checked Locking pattern to make sure we
       // only create the ACE_TSS_Cleanup instance once.
@@ -1205,12 +1199,10 @@ ACE_TSS_Cleanup::insert (ACE_thread_key_t key,
                          void *inst)
 {
 // ACE_TRACE ("ACE_TSS_Cleanup::insert");
-#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-  ACE_Thread_Mutex *lock =
+  ACE_MT (ACE_Thread_Mutex *lock =
     ACE_Managed_Object<ACE_Thread_Mutex>::get_preallocated_object
       (ACE_Object_Manager::ACE_TSS_CLEANUP_LOCK);
-  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *lock, -1);
-#endif /* ACE_MT_SAFE */
+    ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *lock, -1));
 
   return this->table_.insert (ACE_TSS_Info (key, destructor, inst));
 }
@@ -1219,12 +1211,10 @@ int
 ACE_TSS_Cleanup::remove (ACE_thread_key_t key)
 {
 // ACE_TRACE ("ACE_TSS_Cleanup::remove");
-#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-  ACE_Thread_Mutex *lock =
+  ACE_MT (ACE_Thread_Mutex *lock =
     ACE_Managed_Object<ACE_Thread_Mutex>::get_preallocated_object
       (ACE_Object_Manager::ACE_TSS_CLEANUP_LOCK);
-  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *lock, -1);
-#endif /* ACE_MT_SAFE */
+    ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *lock, -1));
 
   return this->table_.remove (ACE_TSS_Info (key));
 }
@@ -1232,12 +1222,10 @@ ACE_TSS_Cleanup::remove (ACE_thread_key_t key)
 int 
 ACE_TSS_Cleanup::detach (void *inst)
 { 
-#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-  ACE_Thread_Mutex *lock =
+  ACE_MT (ACE_Thread_Mutex *lock =
     ACE_Managed_Object<ACE_Thread_Mutex>::get_preallocated_object
       (ACE_Object_Manager::ACE_TSS_CLEANUP_LOCK);
-  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *lock, -1);
-#endif /* ACE_MT_SAFE */
+    ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *lock, -1));
   
   ACE_TSS_Info *key_info = 0;
   int success = 0;
@@ -1283,12 +1271,10 @@ ACE_TSS_Cleanup::detach (ACE_thread_key_t key, ACE_thread_t tid)
 int 
 ACE_TSS_Cleanup::key_used (ACE_thread_key_t key)
 {
-#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-  ACE_Thread_Mutex *lock =
+  ACE_MT (ACE_Thread_Mutex *lock =
     ACE_Managed_Object<ACE_Thread_Mutex>::get_preallocated_object
       (ACE_Object_Manager::ACE_TSS_CLEANUP_LOCK);
-  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *lock, -1);
-#endif /* ACE_MT_SAFE */
+    ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *lock, -1));
 
   ACE_TSS_Info *key_info = 0;
 

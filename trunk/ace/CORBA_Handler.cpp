@@ -356,12 +356,11 @@ ACE_MT_CORBA_Handler::dump (void) const
   ACE_DEBUG ((LM_DEBUG, "instance_ = %x", this->instance_));
   ACE_DEBUG ((LM_DEBUG, "\nthr_mgr_ = %x", this->thr_mgr_));
   this->pipe_.dump ();
-#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-  ACE_Thread_Mutex *lock =
+  ACE_MT (ACE_Thread_Mutex *lock =
     ACE_Managed_Object<ACE_Thread_Mutex>::get_preallocated_object
       (ACE_Object_Manager::ACE_MT_CORBA_HANDLER_LOCK);
-  if (lock != 0) lock->dump ();
-#endif /* ACE_MT_SAFE */
+    if (lock != 0) lock->dump ());
+
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
@@ -377,12 +376,10 @@ ACE_MT_CORBA_Handler::instance (void)
 
   if (ACE_MT_CORBA_Handler::instance_ == 0)
     {
-#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-      ACE_Thread_Mutex *lock =
+      ACE_MT (ACE_Thread_Mutex *lock =
         ACE_Managed_Object<ACE_Thread_Mutex>::get_preallocated_object
           (ACE_Object_Manager::ACE_MT_CORBA_HANDLER_LOCK);
-      ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *lock, 0);
-#endif /* ACE_MT_SAFE */
+        ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *lock, 0));
 
       if (ACE_MT_CORBA_Handler::instance_ == 0)
         ACE_NEW_RETURN (ACE_MT_CORBA_Handler::instance_,
@@ -453,12 +450,10 @@ ACE_MT_CORBA_Handler::process_events (void *)
   // the instance must exist.
   if (ACE_MT_CORBA_Handler::instance_ == 0)
     {
-#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-      ACE_Thread_Mutex *lock =
+      ACE_MT (ACE_Thread_Mutex *lock =
         ACE_Managed_Object<ACE_Thread_Mutex>::get_preallocated_object
           (ACE_Object_Manager::ACE_MT_CORBA_HANDLER_LOCK);
-      ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *lock, 0);
-#endif /* ACE_MT_SAFE */
+        ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *lock, 0));
 
       ACE_ASSERT (ACE_MT_CORBA_Handler::instance_ != 0);
     }
