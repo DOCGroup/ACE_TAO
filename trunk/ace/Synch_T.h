@@ -290,6 +290,9 @@ public:
   
   typedef ACE_Null_Condition_Mutex CONDITION;
   // "Do-nothing" Condition type.
+
+  typedef ACE_Null_Mutex SEMAPHORE;
+  // "Do-nothing" Condition type.
 };
 #else /* Necessary to support broken cfront-based C++ compilers... */
 #define ACE_NULL_SYNCH ACE_Null_Mutex, ACE_Null_Condition_Mutex
@@ -717,6 +720,8 @@ public:
   typedef ACE_Recursive_Thread_Mutex RECURSIVE_MUTEX;
   typedef ACE_RW_Thread_Mutex RW_MUTEX;
   typedef ACE_Condition_Thread_Mutex CONDITION;
+  typedef ACE_Thread_Semaphore SEMAPHORE;
+  typedef ACE_Null_Mutex NULL_SEMAPHORE;
 };
 #define ACE_SYNCH_MUTEX ACE_MT_SYNCH::MUTEX
 #define ACE_SYNCH_NULL_MUTEX ACE_MT_SYNCH::NULL_MUTEX
@@ -724,6 +729,8 @@ public:
 #define ACE_SYNCH_RECURSIVE_MUTEX ACE_MT_SYNCH::RECURSIVE_MUTEX
 #define ACE_SYNCH_RW_MUTEX ACE_MT_SYNCH::RW_MUTEX
 #define ACE_SYNCH_CONDITION ACE_MT_SYNCH::CONDITION
+#define ACE_SYNCH_NULL_SEMAPHORE ACE_MT_SYNCH::NULL_SEMAPHORE
+#define ACE_SYNCH_SEMAPHORE ACE_MT_SYNCH::SEMAPHORE
 #else /* Necessary to support broken cfront-based C++ compilers... */
 #define ACE_MT_SYNCH ACE_Thread_Mutex, ACE_Condition_Thread_Mutex
 #define ACE_SYNCH_MUTEX ACE_Thread_Mutex
@@ -732,6 +739,8 @@ public:
 #define ACE_SYNCH_RECURSIVE_MUTEX ACE_Recursive_Thread_Mutex
 #define ACE_SYNCH_RW_MUTEX ACE_RW_Thread_Mutex
 #define ACE_SYNCH_CONDITION ACE_Thread_Condition
+#define ACE_SYNCH_SEMAPHORE ACE_Thread_Semaphore
+#define ACE_SYNCH_NULL_SEMAPHORE  ACE_Null_Mutex;
 #endif /* ACE_HAS_TEMPLATE_TYPEDEFS */
 
 #define ACE_SYNCH ACE_MT_SYNCH
@@ -743,6 +752,8 @@ public:
 #define ACE_SYNCH_RECURSIVE_MUTEX ACE_Null_Mutex
 #define ACE_SYNCH_RW_MUTEX ACE_Null_Mutex
 #define ACE_SYNCH_CONDITION ACE_Null_Condition
+#define ACE_SYNCH_SEMAPHORE ACE_Thread_Semaphore
+#define ACE_SYNCH_NULL_SEMAPHORE ACE_Null_Mutex
 #endif /* ACE_HAS_THREADS */
 
 #if defined (__ACE_INLINE__)
