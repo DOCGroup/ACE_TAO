@@ -278,7 +278,6 @@ realclean: clean
   $(TAO_ROOT)/tao/DomainC.i \
   $(TAO_ROOT)/tao/WrongTransactionC.h \
   $(TAO_ROOT)/tao/WrongTransactionC.i \
-  $(TAO_ROOT)/tao/ObjectIDListC.h \
   $(TAO_ROOT)/tao/StringSeqC.h \
   $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.h \
@@ -513,8 +512,7 @@ realclean: clean
   $(TAO_ROOT)/tao/DomainC.h \
   $(TAO_ROOT)/tao/DomainC.i \
   $(TAO_ROOT)/tao/WrongTransactionC.h \
-  $(TAO_ROOT)/tao/WrongTransactionC.i \
-  $(TAO_ROOT)/tao/ObjectIDListC.h testC.i \
+  $(TAO_ROOT)/tao/WrongTransactionC.i testC.i \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
   $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -746,8 +744,7 @@ realclean: clean
   $(TAO_ROOT)/tao/DomainC.h \
   $(TAO_ROOT)/tao/DomainC.i \
   $(TAO_ROOT)/tao/WrongTransactionC.h \
-  $(TAO_ROOT)/tao/WrongTransactionC.i \
-  $(TAO_ROOT)/tao/ObjectIDListC.h testC.i \
+  $(TAO_ROOT)/tao/WrongTransactionC.i testC.i \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
   $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -977,8 +974,7 @@ realclean: clean
   $(TAO_ROOT)/tao/DomainC.h \
   $(TAO_ROOT)/tao/DomainC.i \
   $(TAO_ROOT)/tao/WrongTransactionC.h \
-  $(TAO_ROOT)/tao/WrongTransactionC.i \
-  $(TAO_ROOT)/tao/ObjectIDListC.h testC.i
+  $(TAO_ROOT)/tao/WrongTransactionC.i testC.i
 
 .obj/Client_ORBInitializer.o .obj/Client_ORBInitializer.so .shobj/Client_ORBInitializer.o .shobj/Client_ORBInitializer.so: Client_ORBInitializer.cpp \
   Client_ORBInitializer.h $(ACE_ROOT)/ace/pre.h \
@@ -1392,8 +1388,7 @@ realclean: clean
   $(TAO_ROOT)/tao/DomainC.h \
   $(TAO_ROOT)/tao/DomainC.i \
   $(TAO_ROOT)/tao/WrongTransactionC.h \
-  $(TAO_ROOT)/tao/WrongTransactionC.i \
-  $(TAO_ROOT)/tao/ObjectIDListC.h testC.i
+  $(TAO_ROOT)/tao/WrongTransactionC.i testC.i
 
 .obj/Server_Request_Interceptor.o .obj/Server_Request_Interceptor.so .shobj/Server_Request_Interceptor.o .shobj/Server_Request_Interceptor.so: Server_Request_Interceptor.cpp \
   $(ACE_ROOT)/ace/pre.h \
@@ -1595,7 +1590,6 @@ realclean: clean
   $(TAO_ROOT)/tao/DomainC.i \
   $(TAO_ROOT)/tao/WrongTransactionC.h \
   $(TAO_ROOT)/tao/WrongTransactionC.i \
-  $(TAO_ROOT)/tao/ObjectIDListC.h \
   $(TAO_ROOT)/tao/StringSeqC.h \
   $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.h \
@@ -1808,7 +1802,6 @@ realclean: clean
   $(TAO_ROOT)/tao/DomainC.i \
   $(TAO_ROOT)/tao/WrongTransactionC.h \
   $(TAO_ROOT)/tao/WrongTransactionC.i \
-  $(TAO_ROOT)/tao/ObjectIDListC.h \
   $(TAO_ROOT)/tao/StringSeqC.h \
   $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.h \
@@ -2154,8 +2147,7 @@ realclean: clean
   $(TAO_ROOT)/tao/DomainC.h \
   $(TAO_ROOT)/tao/DomainC.i \
   $(TAO_ROOT)/tao/WrongTransactionC.h \
-  $(TAO_ROOT)/tao/WrongTransactionC.i \
-  $(TAO_ROOT)/tao/ObjectIDListC.h testC.i \
+  $(TAO_ROOT)/tao/WrongTransactionC.i testC.i \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
   $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
