@@ -35,6 +35,7 @@
 #include "ace/Task.h"
 #include "ace/Thread_Semaphore.h"
 #include "ace/OS_NS_signal.h"
+#include "ace/OS_NS_string.h"
 #include "ace/OS_NS_errno.h"
 #include "ace/os_include/netinet/os_tcp.h"
 
@@ -1268,33 +1269,33 @@ Sender::close ()
 void
 Sender::addresses (const ACE_INET_Addr& peer, const ACE_INET_Addr& local)
 {
-  ACE_TCHAR str[256];
-  ACE_TCHAR str2[256];
+  char str[256];
+  char str2[256];
   ACE_INET_Addr addr ((u_short) 0, host);
 
   // This checks to make sure the peer address given to us matches what
   // we expect it to be.
-  // This check will fail when Asynch_Connector::parse_addresses does 
-  // not handle IPv6 addresses
-  if (0 != peer.get_host_addr (str, sizeof (str) / sizeof (ACE_TCHAR))) 
+  if (0 != peer.get_host_addr (str, sizeof (str)))
     {
-      if (0 != addr.get_host_addr (str2, sizeof (str2) / sizeof (ACE_TCHAR))) 
+      if (0 != addr.get_host_addr (str2, sizeof (str2)))
         {
-          if (0 != strncmp (str, str2, sizeof (str) / sizeof (ACE_TCHAR)))
+          if (0 != ACE_OS::strncmp (str, str2, sizeof (str)))
             {
-              ACE_ERROR ((LM_ERROR, 
-                          ACE_TEXT ("(%t) Sender %d peer address (%s) does not "
-                                    "match host address (%s)\n"),
-                          this->index_,
-                          str, str2));
+              ACE_ERROR
+                ((LM_ERROR,
+                  ACE_TEXT ("(%t) Sender %d peer address (%C) does not ")
+                  ACE_TEXT ("match host address (%C)\n"),
+                  this->index_,
+                  str, str2));
               return;
             }
          }
        else
          {
-           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("(%t) Sender %d unable to convert host addr\n"),
-                      this->index_));
+           ACE_ERROR
+             ((LM_ERROR,
+               ACE_TEXT ("(%t) Sender %d unable to convert host addr\n"),
+               this->index_));
            return;
         }
      }
@@ -1306,10 +1307,10 @@ Sender::addresses (const ACE_INET_Addr& peer, const ACE_INET_Addr& local)
       return;
     }
 
-  if (0 == local.addr_to_string (str, sizeof (str) / sizeof (ACE_TCHAR)))
+  if (0 == local.addr_to_string (str, sizeof (str)))
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%t) Sender %d connected on %s\n"),
+                  ACE_TEXT ("(%t) Sender %d connected on %C\n"),
                   this->index_,
                   str));
     }

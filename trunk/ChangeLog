@@ -1,3 +1,8 @@
+Wed Feb 25 12:09:31 2004  Steve Huston  <shuston@riverace.com>
+
+	* tests/Proactor_Test_IPV6.cpp: Fixed problems with mismatched
+	  char/wchar_t usage.
+
 Wed Feb 25 10:43:32 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/config-lynxos.h:
