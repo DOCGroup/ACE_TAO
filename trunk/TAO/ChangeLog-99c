@@ -47,7 +47,6 @@ Wed Mar 10 16:43:55 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 Wed Mar 10 10:43:08 EST 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
 	* TAO_IDL/fe/idl.yy:
-	  
 	  The front-end was incorrectly handling "const" definitions of
 	  type strings. Thanks to Yaolong Lan (lyaolong@cs.sunysb.edu) for
 	  reporting the problem.
