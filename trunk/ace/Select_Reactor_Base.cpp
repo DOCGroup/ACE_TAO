@@ -569,7 +569,7 @@ ACE_Select_Reactor_Notify::notify (ACE_Event_Handler *eh,
 
 int
 ACE_Select_Reactor_Notify::dispatch_notifications (int &number_of_active_handles,
-                                                   const ACE_Handle_Set &rd_mask)
+                                                   ACE_Handle_Set &rd_mask)
 {
   ACE_TRACE ("ACE_Select_Reactor_Notify::handle_notification");
 
@@ -580,6 +580,7 @@ ACE_Select_Reactor_Notify::dispatch_notifications (int &number_of_active_handles
       && rd_mask.is_set (read_handle))
     {
       number_of_active_handles--;
+      rd_mask.clr_bit (read_handle);
       return this->handle_input (read_handle);
     }
   else

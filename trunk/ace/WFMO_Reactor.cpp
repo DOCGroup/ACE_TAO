@@ -1860,7 +1860,7 @@ ACE_WFMO_Reactor::dump (void) const
 
 int
 ACE_WFMO_Reactor_Notify::dispatch_notifications (int &number_of_active_handles,
-                                                 const ACE_Handle_Set &rd_mask)
+                                                 ACE_Handle_Set &rd_mask)
 {
   return -1;
 }
