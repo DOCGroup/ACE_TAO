@@ -1024,12 +1024,12 @@ typedef void (*ACE_SignalHandlerV)(...);
 #include /**/ <sys/timeb.h>
 
 // The following 3 defines are used by the ACE Name Server...
-#define ACE_DEFAULT_NAMESPACE_DIR "C:\\temp"
+#define ACE_DEFAULT_NAMESPACE_DIR __TEXT ("C:\\temp")
 #define ACE_DEFAULT_LOCALNAME "\\localnames"
 #define ACE_DEFAULT_GLOBALNAME "\\globalnames"
 
 // Used for ACE_MMAP_Memory_Pool
-#define ACE_DEFAULT_BACKING_STORE "C:\\temp\\ace-malloc-XXXXXX" 
+#define ACE_DEFAULT_BACKING_STORE __TEXT ("C:\\temp\\ace-malloc-XXXXXX")
 
 // Used for logging
 #define ACE_DEFAULT_LOGFILE "C:\\temp\\logfile"
@@ -1056,11 +1056,11 @@ typedef void (*ACE_SignalHandlerV)(...);
 #define ACE_DEV_NULL "nul"
 
 // Define the pathname separator characters for Win32 (ugh).
-#define ACE_DIRECTORY_SEPARATOR_STR "\\"
-#define ACE_DIRECTORY_SEPARATOR_CHAR '\\'
+#define ACE_DIRECTORY_SEPARATOR_STR __TEXT ("\\")
+#define ACE_DIRECTORY_SEPARATOR_CHAR __TEXT ('\\')
 #define ACE_LD_SEARCH_PATH "PATH"
 #define ACE_LD_SEARCH_PATH_SEPARATOR_STR ";"
-#define ACE_LOGGER_KEY "\\temp\\server_daemon"
+#define ACE_LOGGER_KEY __TEXT ("\\temp\\server_daemon")
 #define ACE_DLL_SUFFIX ".dll"
 
 // This will help until we figure out everything:
@@ -1784,9 +1784,15 @@ typedef void *(*ACE_THR_C_FUNC)(void *);
 #endif /* MAP_FAILED */
 
 #if defined (ACE_HAS_CHARPTR_DL)
-typedef LPTSTR ACE_DL_TYPE;
+typedef char * ACE_DL_TYPE;
+#if defined (ACE_HAS_UNICODE)
+typedef wchar_t * ACE_WIDE_DL_TYPE;
+#endif /* ACE_HAS_UNICODE */
 #else
-typedef LPCTSTR ACE_DL_TYPE;
+typedef const char * ACE_DL_TYPE;
+#if defined (ACE_HAS_UNICODE)
+typedef const wchar_t * ACE_WIDE_DL_TYPE;
+#endif /* ACE_HAS_UNICODE */
 #endif /* ACE_HAS_CHARPTR_DL */
 
 #if !defined (ACE_HAS_SIGINFO_T)
@@ -1888,7 +1894,7 @@ public:
 #endif /* ACE_WIN32 && ACE_HAS_WTHREADS */
 
   // = A set of wrappers for determining config info.
-  static char *cuserid (char *user, size_t maxlen = 32);
+  static LPTSTR cuserid (LPTSTR user, size_t maxlen = 32);
   static int uname (struct utsname *name);
   static long sysinfo (int cmd, char *buf, long count);
   static int hostname (char *name, size_t maxnamelen);
@@ -2046,7 +2052,7 @@ public:
   static int isastream (ACE_HANDLE handle);
   static int isatty (ACE_HANDLE handle);
   static off_t lseek (ACE_HANDLE handle, off_t offset, int whence);
-  static ACE_HANDLE open (LPCTSTR filename, int mode, int perms = 0);
+  static ACE_HANDLE open (const char *filename, int mode, int perms = 0);
   static int putmsg (ACE_HANDLE handle, const struct strbuf *ctl, const
                      struct strbuf *data, int flags); 
   static putpmsg (ACE_HANDLE handle, const struct strbuf *ctl, const
@@ -2226,13 +2232,29 @@ public:
   static wchar_t *strrchr (const wchar_t *s, int c);
   static int strcmp (const wchar_t *s, const wchar_t *t);
   static wchar_t *strcpy (wchar_t *s, const wchar_t *t);
-//  static wchar_t *strstr (const wchar_t *s, const wchar_t *t);
-//  static wchar_t *strdup (const wchar_t *s);
   static size_t strlen (const wchar_t *s);
   static int strncmp (const wchar_t *s, const wchar_t *t, size_t len);
   static wchar_t *strncpy (wchar_t *s, const wchar_t *t, size_t len);
   static wchar_t *strtok (wchar_t *s, const wchar_t *tokens);
   static long strtol (const wchar_t *s, wchar_t **ptr, int base);
+  //static int isspace (wint_t c);
+
+#if defined (ACE_WIN32)
+  static wchar_t *strstr (const wchar_t *s, const wchar_t *t);
+  static wchar_t *strdup (const wchar_t *s);
+  static int sprintf (wchar_t *buf, const char *format, ...);
+  static int sprintf (wchar_t *buf, const wchar_t *format, ...);
+
+  static int access (const wchar_t *path, int amode);
+  static FILE *fopen (const wchar_t *filename, const wchar_t *mode);
+  static wchar_t *getenv (const wchar_t *symbol);
+  static int system (const wchar_t *s);
+  static int hostname (wchar_t *name, size_t maxnamelen);
+  static ACE_HANDLE open (const wchar_t *filename, int mode, int perms = 0);
+  static int unlink (const wchar_t *path);
+  static void *dlopen (ACE_WIDE_DL_TYPE filename, int mode);
+
+#endif /* ACE_WIN32 */
 #endif /* ACE_HAS_UNICODE */
 
   // = A set of wrappers for TLI.
@@ -2372,6 +2394,15 @@ private:
    do { POINTER = new CONSTRUCTOR; \
      if (POINTER == 0) { errno = ENOMEM; return; } \
      } while (0)
+
+#include "ace/SString.h"
+
+#if defined (UNICODE)
+#define ACE_WIDE_STRING(ASCII) \
+ACE_WString (ASCII).fast_rep ()
+#else
+#define ACE_WIDE_STRING(ASCII) ASCII
+#endif /* UNICODE */
 
 #if defined (ACE_HAS_INLINED_OSCALLS)
 #if defined (ACE_INLINE)

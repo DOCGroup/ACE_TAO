@@ -299,7 +299,7 @@ ACE_Log_Msg::ACE_Log_Msg (void)
 int
 ACE_Log_Msg::open (const char *prog_name, 
 		   u_long flags, 
-		   const char *logger_key)
+		   LPCTSTR logger_key)
 {
   ACE_TRACE ("ACE_Log_Msg::open");
   ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, *lock_, -1));

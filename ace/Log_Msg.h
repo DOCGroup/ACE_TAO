@@ -124,7 +124,7 @@ public:
 
   int open (const char *prog_name, 
 	    u_long options_flags = ACE_Log_Msg::STDERR, 
-	    const char *logger_key = 0);
+	    LPCTSTR logger_key = 0);
   // Initialize the ACE error handling facility.  <prog_name> is the
   // name of the executable program.  <flags> are a bitwise-or of
   // options flags passed to the Logger (see the enum above for the valid

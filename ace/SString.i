@@ -56,7 +56,7 @@ ACE_SString::operator[] (size_t index) const
 
 // Get the underlying pointer (does not make a copy, so beware!).
 
-ACE_INLINE char *
+ACE_INLINE const char *
 ACE_SString::rep (void) const
 {
   ACE_TRACE ("ACE_SString::rep");
@@ -105,7 +105,7 @@ ACE_WString::rep (void) const
 
 // Get at the underlying representation directly!
 
-ACE_INLINE ACE_USHORT16 *
+ACE_INLINE const ACE_USHORT16 *
 ACE_WString::fast_rep (void) const
 {
   return this->rep_;

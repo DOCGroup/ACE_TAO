@@ -14,7 +14,7 @@
 ACE_ALLOC_HOOK_DEFINE(ACE_Malloc)
 
 template <class MALLOC>
-ACE_Allocator_Adapter<MALLOC>::ACE_Allocator_Adapter (const char *pool_name)
+ACE_Allocator_Adapter<MALLOC>::ACE_Allocator_Adapter (LPCTSTR pool_name)
   : allocator_ (pool_name)
 { 
   ACE_TRACE ("ACE_Allocator_Adapter<MALLOC>::ACE_Allocator_Adapter");
@@ -150,7 +150,7 @@ ACE_Malloc<ACE_MEM_POOL_2, LOCK>::open (void)
 }
 
 template <ACE_MEM_POOL_1, class LOCK> 
-ACE_Malloc<ACE_MEM_POOL_2, LOCK>::ACE_Malloc (const char *pool_name)
+ACE_Malloc<ACE_MEM_POOL_2, LOCK>::ACE_Malloc (LPCTSTR pool_name)
   : memory_pool_ (pool_name),
     lock_ (pool_name == 0 ? 0 : ACE::basename (pool_name, 
 					       ACE_DIRECTORY_SEPARATOR_CHAR))
@@ -160,8 +160,8 @@ ACE_Malloc<ACE_MEM_POOL_2, LOCK>::ACE_Malloc (const char *pool_name)
 }
 
 template <ACE_MEM_POOL_1, class LOCK>
-ACE_Malloc<ACE_MEM_POOL_2, LOCK>::ACE_Malloc (const char *pool_name,
-					      const char *lock_name, 
+ACE_Malloc<ACE_MEM_POOL_2, LOCK>::ACE_Malloc (LPCTSTR pool_name,
+					      LPCTSTR lock_name, 
 					      const ACE_MEM_POOL_OPTIONS *options)
   : memory_pool_ (pool_name, options),
     lock_ (lock_name)
@@ -172,8 +172,8 @@ ACE_Malloc<ACE_MEM_POOL_2, LOCK>::ACE_Malloc (const char *pool_name,
 
 #if !defined (ACE_HAS_TEMPLATE_TYPEDEFS)
 template <ACE_MEM_POOL_1, class LOCK>
-ACE_Malloc<ACE_MEM_POOL_2, LOCK>::ACE_Malloc (const char *pool_name,
-					      const char *lock_name, 
+ACE_Malloc<ACE_MEM_POOL_2, LOCK>::ACE_Malloc (LPCTSTR pool_name,
+					      LPCTSTR lock_name, 
 					      const void *options)
   : memory_pool_ (pool_name, (const ACE_MEM_POOL_OPTIONS *) options),
     lock_ (lock_name)
@@ -376,7 +376,7 @@ ACE_Malloc<ACE_MEM_POOL_2, LOCK>::shared_find (const char *name)
 
 template <ACE_MEM_POOL_1, class LOCK> int
 ACE_Malloc<ACE_MEM_POOL_2, LOCK>::shared_bind (const char *name, 
-					 void *pointer)
+					       void *pointer)
 {
   // Combine the two allocations into one to avoid overhead...
   ACE_Name_Node *new_node = (ACE_Name_Node *) 

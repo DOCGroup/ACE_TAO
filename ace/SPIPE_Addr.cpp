@@ -64,28 +64,28 @@ ACE_SPIPE_Addr::set (LPCTSTR addr,
   len += sizeof(this->SPIPE_addr_.gid_);
 
 #if defined (ACE_WIN32)
-  char *colonp = ACE_OS::strchr (addr, ':');
-  char temp[BUFSIZ] ;
+  TCHAR *colonp = ACE_OS::strchr (addr, ':');
+  TCHAR temp[BUFSIZ];
 
   if (colonp == 0) // Assume it's a port number.
     {
-      ACE_OS::strcpy(temp, "\\\\.\\pipe\\") ;
-      ACE_OS::strcat(temp, addr) ;
+      ACE_OS::strcpy(temp, __TEXT ( "\\\\.\\pipe\\"));
+      ACE_OS::strcat(temp, addr);
     }
   else
     {
-      ACE_OS::strcpy(temp, "\\\\") ;
-      *colonp = '\0';
-      if (ACE_OS::strcmp(addr, "localhost") == 0)
-	ACE_OS::strcat(temp, ".") ; // change localhost to .
+      ACE_OS::strcpy(temp, __TEXT ("\\\\"));
+      *colonp = __TEXT ('\0');
+      if (ACE_OS::strcmp(addr, __TEXT ("localhost")) == 0)
+	ACE_OS::strcat(temp, __TEXT (".")); // change localhost to .
       else
-	ACE_OS::strcat(temp, addr) ;
-      ACE_OS::strcat(temp, "\\pipe\\"    ) ;
-      ACE_OS::strcat(temp, colonp+1) ;
+	ACE_OS::strcat(temp, addr);
+      ACE_OS::strcat(temp, __TEXT ("\\pipe\\"));
+      ACE_OS::strcat(temp, colonp+1);
     }
-
   this->ACE_Addr::base_set (AF_SPIPE, 
 			    ACE_OS::strlen (temp) + len);
+
   ACE_OS::strcpy(this->SPIPE_addr_.rendezvous_, temp) ;
 
 #else

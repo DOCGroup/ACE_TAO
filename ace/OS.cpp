@@ -1151,7 +1151,7 @@ ACE_OS::fork_exec (char *argv[])
 #if defined (ACE_WIN32)
   ACE_ARGV argv_buf (argv);
 
-  char *buf = argv_buf.buf ();
+  LPTSTR buf = (LPTSTR) ACE_WIDE_STRING (argv_buf.buf ());  
 
   if (buf != 0)
     {

@@ -133,7 +133,7 @@ ACE_Mem_Map::open (LPCTSTR file_name,
 }
 
 int
-ACE_Mem_Map::map (const char file_name[], 
+ACE_Mem_Map::map (LPCTSTR file_name, 
 		  int len, 
 		  int flags, 
 		  int mode, 
@@ -164,7 +164,7 @@ ACE_Mem_Map::ACE_Mem_Map (void)
 
 // Map a file specified by FILE_NAME. 
 
-ACE_Mem_Map::ACE_Mem_Map (const char file_name[], 
+ACE_Mem_Map::ACE_Mem_Map (LPCTSTR file_name,
 			  int len, 
 			  int flags, 
 			  int mode, 

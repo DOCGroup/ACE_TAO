@@ -185,7 +185,7 @@ ACE_File_Lock::ACE_File_Lock (ACE_HANDLE h)
   this->set_handle (h);
 }
 
-ACE_File_Lock::ACE_File_Lock (const char *name, 
+ACE_File_Lock::ACE_File_Lock (LPCTSTR name, 
 			      int flags, 
 			      mode_t perms)
 {

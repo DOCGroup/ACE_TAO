@@ -16,7 +16,7 @@ ACE_Local_Memory_Pool::dump (void) const
   ACE_TRACE ("ACE_Local_Memory_Pool::dump");
 }
 
-ACE_Local_Memory_Pool::ACE_Local_Memory_Pool (const char *,
+ACE_Local_Memory_Pool::ACE_Local_Memory_Pool (LPCTSTR ,
 					      const OPTIONS *)
 {
   ACE_TRACE ("ACE_Local_Memory_Pool::ACE_Local_Memory_Pool");
@@ -101,7 +101,7 @@ ACE_MMAP_Memory_Pool::protect (void *addr, size_t len, int prot)
   return ACE_OS::mprotect (addr, len, prot);
 }
 
-ACE_MMAP_Memory_Pool::ACE_MMAP_Memory_Pool (const char *backing_store_name,
+ACE_MMAP_Memory_Pool::ACE_MMAP_Memory_Pool (LPCTSTR backing_store_name,
 					    const OPTIONS *options)
   : base_addr_ (0),
     flags_ (MAP_SHARED),
@@ -275,7 +275,7 @@ ACE_MMAP_Memory_Pool::remap (void *addr)
   return this->map_file (current_file_offset);
 }
 
-ACE_MMAP_Memory_Pool_Options::ACE_MMAP_Memory_Pool_Options (const char *base_addr,
+ACE_MMAP_Memory_Pool_Options::ACE_MMAP_Memory_Pool_Options (char *base_addr,
 							    int use_fixed_addr,
 							    int write_each_page)
   : base_addr_ (base_addr),
@@ -330,7 +330,7 @@ ACE_MMAP_Memory_Pool::handle_signal (int signum, siginfo_t *siginfo, ucontext_t 
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Lite_MMAP_Memory_Pool)
 
-ACE_Lite_MMAP_Memory_Pool::ACE_Lite_MMAP_Memory_Pool (const char *backing_store_name,
+ACE_Lite_MMAP_Memory_Pool::ACE_Lite_MMAP_Memory_Pool (LPCTSTR backing_store_name,
 						      const OPTIONS *options)
   : ACE_MMAP_Memory_Pool (backing_store_name, options)
 {
@@ -378,7 +378,7 @@ ACE_Sbrk_Memory_Pool::dump (void) const
   ACE_TRACE ("ACE_Sbrk_Memory_Pool::dump");
 }
 
-ACE_Sbrk_Memory_Pool::ACE_Sbrk_Memory_Pool (const char *,
+ACE_Sbrk_Memory_Pool::ACE_Sbrk_Memory_Pool (LPCTSTR ,
 					    const OPTIONS *)
 {
   ACE_TRACE ("ACE_Sbrk_Memory_Pool::ACE_Sbrk_Memory_Pool");
@@ -388,7 +388,7 @@ ACE_Sbrk_Memory_Pool::ACE_Sbrk_Memory_Pool (const char *,
 #if !defined (ACE_LACKS_SYSV_SHMEM)
 ACE_ALLOC_HOOK_DEFINE(ACE_Shared_Memory_Pool)
 
-ACE_Shared_Memory_Pool_Options::ACE_Shared_Memory_Pool_Options (const char *base_addr,
+ACE_Shared_Memory_Pool_Options::ACE_Shared_Memory_Pool_Options (char *base_addr,
 								size_t max_segments,
 								size_t file_perms)
   : base_addr_ (base_addr),
@@ -493,7 +493,7 @@ ACE_Shared_Memory_Pool::handle_signal (int , siginfo_t *siginfo, ucontext_t *)
   return 0;
 }
 
-ACE_Shared_Memory_Pool::ACE_Shared_Memory_Pool (const char *backing_store_name,
+ACE_Shared_Memory_Pool::ACE_Shared_Memory_Pool (LPCTSTR backing_store_name,
 						const OPTIONS *options)
   : base_addr_ (0),
     file_perms_ (ACE_DEFAULT_FILE_PERMS),
