@@ -24,7 +24,7 @@ TAO_POA_Guard::TAO_POA_Guard (TAO_POA &poa,
 {
   if (!this->guard_.locked ())
     ACE_THROW (
-      CORBA::TRANSIENT (
+      CORBA::INTERNAL (
         CORBA_SystemException::_tao_minor_code (
           TAO_GUARD_FAILURE,
           0),
