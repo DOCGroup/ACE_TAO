@@ -49,7 +49,7 @@ main (int, char *[])
   server_options.command_line (APPLICATION "server.conf");
   ACE_Process server;
 
-  if (server.start (server_options) == -1)
+  if (server.spawn (server_options) == -1)
     ACE_ERROR_RETURN ((LM_DEBUG, "%n %p.\n", "Server fork failed"), 0);
   else
     ACE_DEBUG ((LM_DEBUG, "Server forked with pid = %d.\n", server.getpid ()));
@@ -60,7 +60,7 @@ main (int, char *[])
   clerk_options.command_line (APPLICATION "client.conf");
   ACE_Process clerk;
 
-  if (clerk.start (clerk_options) == -1)
+  if (clerk.spawn (clerk_options) == -1)
     ACE_ERROR_RETURN ((LM_DEBUG, "%p.\n", "Clerk fork failed"), 0);
   else
     ACE_DEBUG ((LM_DEBUG, "Server forked with pid = %d.\n", clerk.getpid ()));

@@ -200,7 +200,7 @@ main (int, char *[])
 
   // Start up the token server.
   ACE_Process new_process;
-  if (new_process.start (options) == -1)
+  if (new_process.spawn (options) == -1)
     ACE_ERROR_RETURN ((LM_DEBUG, "%p fork failed.\n", "Tokens_Tests.cpp"), 0);
   else
     ACE_DEBUG ((LM_DEBUG, "Server forked with pid = %d.\n", new_process.getpid ()));

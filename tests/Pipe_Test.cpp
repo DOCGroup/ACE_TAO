@@ -106,7 +106,7 @@ main (int argc, char *argv[])
 	{
 	  ACE_Process server;
 
-	  ACE_ASSERT (server.start (options) != -1);
+	  ACE_ASSERT (server.spawn (options) != -1);
 
 	  ACE_DEBUG ((LM_DEBUG, "Server forked with pid = %d.\n", server.getpid ()));
 
