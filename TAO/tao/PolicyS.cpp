@@ -255,6 +255,7 @@ void* POA_CORBA::Policy::_downcast (
   return 0;
 }
 
+#if !defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
 void POA_CORBA::Policy::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &env)
 {
   TAO_Skeleton skel; // pointer to skeleton for operation
@@ -268,6 +269,7 @@ void POA_CORBA::Policy::_dispatch (CORBA::ServerRequest &req, void *context, COR
 else
     skel (req, this, context, env);
 }
+#endif /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
 
 const char* POA_CORBA::Policy::_interface_repository_id (void) const
 {
@@ -373,12 +375,6 @@ void* POA_CORBA::PolicyManager::_downcast (
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/Object:1.0") == 0)
     return ACE_static_cast(PortableServer::Servant, this);
   return 0;
-}
-
-void POA_CORBA::PolicyManager::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
-{
-  // @@ TODO
-  ACE_THROW (CORBA_BAD_OPERATION ());
 }
 
 const char* POA_CORBA::PolicyManager::_interface_repository_id (void) const
@@ -489,11 +485,6 @@ void* POA_CORBA::PolicyCurrent::_downcast (
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/Object:1.0") == 0)
     return ACE_static_cast(PortableServer::Servant, this);
   return 0;
-}
-
-void POA_CORBA::PolicyCurrent::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
-{
-  ACE_THROW (CORBA_BAD_OPERATION ());
 }
 
 const char* POA_CORBA::PolicyCurrent::_interface_repository_id (void) const

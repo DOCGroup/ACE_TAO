@@ -1,6 +1,52 @@
+Wed Jun 09 23:16:21 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/orbconf.h: Without Minimum CORBA, the user will get regular
+	  (no locality constraints) policies by default.  With Minimum
+	  CORBA, the user will get locality constraint policies by
+	  default.
+
+	  If #define TAO_HAS_REMOTE_POLICIES 0, then the user will always
+	  get locality constraint policies (regardless of Minimum CORBA).
+
+	  If #define TAO_HAS_REMOTE_POLICIES 1, then the user will always
+	  get regular policies (regardless of Minimum CORBA).
+
+	  Thanks to Nanbor for helping with this.
+
+	* tao/Servant_Base.cpp (_dispatch): Added a non-op, exception
+	  throwing _dispatch().
+
+	* tao/Servant_Base.h: TAO_Local_ServantBase should virtually
+	  inherit from TAO_ServantBase.
+
+	* tao/POAS:
+	* tao/DynAnyS:
+	* tao/Current:
+
+	  Removed the _dispatch() method from all locality constraint
+	  classes.  Also for the policy classes, moved the _dispatch()
+	  method into the TAO_HAS_LOCALITY_CONSTRAINT_POLICIES defines.
+
+	* tao/Policy: Made the Policy stub and skeleton classes aware of
+	  TAO_HAS_LOCALITY_CONSTRAINT_POLICIES, and moved the extra
+	  methods not required for locality constraint policies under the
+	  TAO_HAS_LOCALITY_CONSTRAINT_POLICIES #defines.
+
+	* tao/Messaging_Policy_i (RelativeRoundtripTimeoutPolicy): Made
+	  inheritance virtual and removed extra copy constructor.
+
+	* tao/MessagingC (all policies): Since the policies are locality
+	  constrained, we can make the stub methods pure virtual and make
+	  sure that the _narrow method does not create the stub class.
+
+	* tao/POA.h (all policies): Removed unnecessary copy constructors.
+
+	* tao/POA_CORBA: Made the CORBA::Current, PolicyManager, and
+	  PolicyCurrent classes locality constrained to match the spec.
+
 Wed Jun  9 22:18:10 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Sequence_T.cpp	 
+	* tao/Sequence_T.cpp
 	* tao/Sequence_T.h
 	* tao/Sequence_T.i: Added an operator= (T_var) in
  	  TAO_Object_Manager class. This was achieved by adding an extra
@@ -10,22 +56,22 @@ Wed Jun  9 22:18:10 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
  	  had to be changed. An extra template parameter was added in
  	  these classes also.
 
-	* tao/DomainC.cpp 
-	* tao/DomainC.h 
-	* tao/DomainC.i 
-	* tao/PolicyC.cpp 
+	* tao/DomainC.cpp
+	* tao/DomainC.h
+	* tao/DomainC.i
+	* tao/PolicyC.cpp
 	* tao/PolicyC.h
-	* tao/PolicyC.i 
-	* tao/Request.cpp 
-	* tao/Request.h 
+	* tao/PolicyC.i
+	* tao/Request.cpp
+	* tao/Request.h
 	* tao/corbafwd.h: The changes in these files were done to reflect
  	  the changes that were made in the classes above.  They had to be
  	  done keep in sync with the new template class declarations.
 
 	* TAO_IDL/be/be_visitor_sequence/elemtype.cpp
 	* TAO_IDL/be/be_visitor_sequence/gen_object_manager_ch.cpp
-	* TAO_IDL/be/be_visitor_sequence/gen_object_manager_ci.cpp 
-	* TAO_IDL/be/be_visitor_sequence/sequence_base.cpp 
+	* TAO_IDL/be/be_visitor_sequence/gen_object_manager_ci.cpp
+	* TAO_IDL/be/be_visitor_sequence/sequence_base.cpp
 	* TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp
 	* TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp
 	* TAO_IDL/be_include/be_visitor_sequence/sequence_base.h: Changes
@@ -47,11 +93,11 @@ Wed Jun  9 20:16:36 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	  + Requests are issued using version 1.1 or version 1.0,
 	    depending on the version of the profile.
 	  + Acceptors create v 1.1 profiles by default, but can generate
-	    1.0 profiles if a -ORBendpoint option with an explicit version 
+	    1.0 profiles if a -ORBendpoint option with an explicit version
 	    is present (like -ORBendpoint iiop://1.0@host:0)
 	  + Replys are sent using the same version that the request
-	  + There is a framework to receive a request (or reply) broken in 
-	    multiple fragments.  The framework is not specially efficient, 
+	  + There is a framework to receive a request (or reply) broken in
+	    multiple fragments.  The framework is not specially efficient,
 	    is does not handle fragments with different byte order or
 	    different GIOP versions and is completely untested. TAO does
 	    *not* generate fragments.
@@ -89,7 +135,7 @@ Wed Jun  9 20:16:36 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	  Moved the code to initialize a Request or LocateRequest message
 	  to the transport classes, not only this isolates the use of
 	  TAO_GIOP even further, it is also needed because the transport
-	  class needs to query the version of the Profile to determine the 
+	  class needs to query the version of the Profile to determine the
 	  version of the GIOP message.
 
 	* tao/ORB_Core.h:
@@ -102,8 +148,8 @@ Wed Jun  9 20:16:36 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* tao/Transport_Mux_Strategy.h:
 	* tao/Transport_Mux_Strategy.cpp:
 	  Changed the interfaces in the the ORB core to use a
-	  TAO_GIOP_Message_State that keeps track of not only the payload, 
-	  but of any fragments for the current message, the current amount 
+	  TAO_GIOP_Message_State that keeps track of not only the payload,
+	  but of any fragments for the current message, the current amount
 	  of data read on the fragment, etc.
 
 	* tao/Pluggable.h:

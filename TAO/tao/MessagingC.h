@@ -177,7 +177,7 @@ TAO_NAMESPACE  Messaging
     virtual RebindMode rebind_mode (
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
-      );
+      ) = 0;
     virtual CORBA::Boolean _is_a (
         const CORBA::Char *type_id,
         CORBA::Environment &env =
@@ -270,7 +270,7 @@ TAO_NAMESPACE  Messaging
     virtual SyncScope synchronization (
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
-      );
+      ) = 0;
     virtual CORBA::Boolean _is_a (
         const CORBA::Char *type_id,
         CORBA::Environment &env =
@@ -400,7 +400,7 @@ TAO_NAMESPACE  Messaging
     virtual PriorityRange priority_range (
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
-      );
+      ) = 0;
     virtual CORBA::Boolean _is_a (
         const CORBA::Char *type_id,
         CORBA::Environment &env =
@@ -493,7 +493,7 @@ TAO_NAMESPACE  Messaging
     virtual PriorityRange priority_range (
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
-      );
+      ) = 0;
     virtual CORBA::Boolean _is_a (
         const CORBA::Char *type_id,
         CORBA::Environment &env =
@@ -586,7 +586,7 @@ TAO_NAMESPACE  Messaging
     virtual TimeBase::UtcT start_time (
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
-      );
+      ) = 0;
     virtual CORBA::Boolean _is_a (
         const CORBA::Char *type_id,
         CORBA::Environment &env =
@@ -679,7 +679,7 @@ TAO_NAMESPACE  Messaging
     virtual TimeBase::UtcT end_time (
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
-      );
+      ) = 0;
     virtual CORBA::Boolean _is_a (
         const CORBA::Char *type_id,
         CORBA::Environment &env =
@@ -772,7 +772,7 @@ TAO_NAMESPACE  Messaging
     virtual TimeBase::UtcT start_time (
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
-      );
+      ) = 0;
     virtual CORBA::Boolean _is_a (
         const CORBA::Char *type_id,
         CORBA::Environment &env =
@@ -865,7 +865,7 @@ TAO_NAMESPACE  Messaging
     virtual TimeBase::UtcT end_time (
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
-      );
+      ) = 0;
     virtual CORBA::Boolean _is_a (
         const CORBA::Char *type_id,
         CORBA::Environment &env =
@@ -958,7 +958,7 @@ TAO_NAMESPACE  Messaging
     virtual TimeBase::TimeT relative_expiry (
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
-      );
+      ) = 0;
     virtual CORBA::Boolean _is_a (
         const CORBA::Char *type_id,
         CORBA::Environment &env =
@@ -1051,7 +1051,7 @@ TAO_NAMESPACE  Messaging
     virtual TimeBase::TimeT relative_expiry (
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
-      );
+      ) = 0;
     virtual CORBA::Boolean _is_a (
         const CORBA::Char *type_id,
         CORBA::Environment &env =
@@ -1181,7 +1181,7 @@ TAO_NAMESPACE  Messaging
     virtual RoutingTypeRange routing_range (
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
-      );
+      ) = 0;
     virtual CORBA::Boolean _is_a (
         const CORBA::Char *type_id,
         CORBA::Environment &env =
@@ -1274,7 +1274,7 @@ TAO_NAMESPACE  Messaging
     virtual CORBA::UShort max_hops (
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
-      );
+      ) = 0;
     virtual CORBA::Boolean _is_a (
         const CORBA::Char *type_id,
         CORBA::Environment &env =
@@ -1367,7 +1367,7 @@ TAO_NAMESPACE  Messaging
     virtual Ordering allowed_orders (
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
-      );
+      ) = 0;
     virtual CORBA::Boolean _is_a (
         const CORBA::Char *type_id,
         CORBA::Environment &env =

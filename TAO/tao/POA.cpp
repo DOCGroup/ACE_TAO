@@ -2596,12 +2596,6 @@ TAO_Thread_Policy::TAO_Thread_Policy (PortableServer::ThreadPolicyValue value,
 {
 }
 
-TAO_Thread_Policy::TAO_Thread_Policy (const TAO_Thread_Policy &rhs)
-  : value_ (rhs.value_),
-    poa_ (PortableServer::POA::_duplicate (rhs.poa_.in ()))
-{
-}
-
 PortableServer::ThreadPolicyValue
 TAO_Thread_Policy::value (CORBA::Environment &ACE_TRY_ENV)
 {
@@ -2674,12 +2668,6 @@ TAO_Lifespan_Policy::TAO_Lifespan_Policy (PortableServer::LifespanPolicyValue va
                                           PortableServer::POA_ptr poa)
   : value_ (value),
     poa_ (PortableServer::POA::_duplicate (poa))
-{
-}
-
-TAO_Lifespan_Policy::TAO_Lifespan_Policy (const TAO_Lifespan_Policy &rhs)
-  : value_ (rhs.value_),
-    poa_ (PortableServer::POA::_duplicate (rhs.poa_.in ()))
 {
 }
 
@@ -2756,12 +2744,6 @@ TAO_Id_Uniqueness_Policy::TAO_Id_Uniqueness_Policy (PortableServer::IdUniqueness
 {
 }
 
-TAO_Id_Uniqueness_Policy::TAO_Id_Uniqueness_Policy (const TAO_Id_Uniqueness_Policy &rhs)
-  : value_ (rhs.value_),
-    poa_ (PortableServer::POA::_duplicate (rhs.poa_.in ()))
-{
-}
-
 PortableServer::IdUniquenessPolicyValue
 TAO_Id_Uniqueness_Policy::value (CORBA::Environment &ACE_TRY_ENV)
 {
@@ -2832,12 +2814,6 @@ TAO_Id_Assignment_Policy::TAO_Id_Assignment_Policy (PortableServer::IdAssignment
                                                     PortableServer::POA_ptr poa)
   : value_ (value),
     poa_ (PortableServer::POA::_duplicate (poa))
-{
-}
-
-TAO_Id_Assignment_Policy::TAO_Id_Assignment_Policy (const TAO_Id_Assignment_Policy &rhs)
-  : value_ (rhs.value_),
-    poa_ (PortableServer::POA::_duplicate (rhs.poa_.in ()))
 {
 }
 
@@ -2916,12 +2892,6 @@ TAO_Implicit_Activation_Policy::TAO_Implicit_Activation_Policy (PortableServer::
 {
 }
 
-TAO_Implicit_Activation_Policy::TAO_Implicit_Activation_Policy (const TAO_Implicit_Activation_Policy &rhs)
-  : value_ (rhs.value_),
-    poa_ (PortableServer::POA::_duplicate (rhs.poa_.in ()))
-{
-}
-
 PortableServer::ImplicitActivationPolicyValue
 TAO_Implicit_Activation_Policy::value (CORBA::Environment &ACE_TRY_ENV)
 {
@@ -2995,12 +2965,6 @@ TAO_Servant_Retention_Policy::TAO_Servant_Retention_Policy (PortableServer::Serv
 {
 }
 
-TAO_Servant_Retention_Policy::TAO_Servant_Retention_Policy (const TAO_Servant_Retention_Policy &rhs)
-  : value_ (rhs.value_),
-    poa_ (PortableServer::POA::_duplicate (rhs.poa_.in ()))
-{
-}
-
 PortableServer::ServantRetentionPolicyValue
 TAO_Servant_Retention_Policy::value (CORBA::Environment &ACE_TRY_ENV)
 {
@@ -3071,12 +3035,6 @@ TAO_Request_Processing_Policy::TAO_Request_Processing_Policy (PortableServer::Re
                                                               PortableServer::POA_ptr poa)
   : value_ (value),
     poa_ (PortableServer::POA::_duplicate (poa))
-{
-}
-
-TAO_Request_Processing_Policy::TAO_Request_Processing_Policy (const TAO_Request_Processing_Policy &rhs)
-  : value_ (rhs.value_),
-    poa_ (PortableServer::POA::_duplicate (rhs.poa_.in ()))
 {
 }
 
