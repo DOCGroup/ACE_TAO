@@ -58,7 +58,7 @@ protected:
 
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_LoadBalancing, TAO_LB_Component)
-  //ACE_STATIC_SVC_REQUIRE (TAO_LB_Component)
+ACE_STATIC_SVC_REQUIRE (TAO_LB_Component)
 ACE_FACTORY_DECLARE (TAO_LoadBalancing, TAO_LB_Component)
 
 
