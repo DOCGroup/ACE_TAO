@@ -56,6 +56,20 @@ namespace CORBA
    * available through the Interface Repositories.  Think of it as a
    * "globally scoped" name distinguishing each exception.
    */
+
+  /* NOTE:
+     According to the OMG CORBA C++ Mapping version 1.1, all 
+	 constructors, copy constructors and assignment operators
+	 should be moved to "protected" section in class declarations
+
+	 Since the current MS Visual C++ 6.0 compiler will cause some
+	 problems to TAO's exception mechanism, so we defer doing this until
+	 we full migrate from VC 6.0 to VC 7.0 and higher version. 
+
+     This later change only affect the "Exception.h" file and won't
+	 affect the "Exception.cpp" file.
+  */ 
+
   class TAO_Export Exception
   {
   public:
@@ -75,13 +89,13 @@ namespace CORBA
     // = The static narrow operation.
     static Exception *_downcast (Exception *x);
 
-    // = These are TAO-specific extensions.
-
     /// Return the repository ID of the Exception.
-    const char *_rep_id (void) const;
+    virtual const char *_rep_id (void) const;
 
     /// Return the name of the Exception.
-    const char *_name (void) const;
+    virtual const char *_name (void) const;
+
+    // = These are TAO-specific extensions.
 
     /// Will be overridden in the concrete derived classes.
     virtual CORBA::TypeCode_ptr _type (void) const;
@@ -167,6 +181,9 @@ namespace CORBA
     /// The narrow operation.
     static UserException *_downcast (CORBA::Exception *exception);
 
+	/// The const version of narrow operation
+    static const UserException *_downcast(const CORBA::Exception *exception);
+
     // = TAO specific extension.
 
     /// Constructor from a repository id.
@@ -225,6 +242,8 @@ namespace CORBA
     /// Narrow to a SystemException.
     static SystemException *_downcast (CORBA::Exception *exception);
 
+	/// The const version of narrow operation to a SystemException
+    static const SystemException *_downcast(const CORBA::Exception *exception);
 
     // = TAO-specific extension.
 
@@ -261,6 +280,10 @@ namespace CORBA
     virtual void _raise (void) {}
 
   protected:
+
+    /// Constructor using a repository id.
+    SystemException (CORBA::ULong code,
+                     CORBA::CompletionStatus completed);
 
     /// Constructor using a repository id.
     SystemException (const char *repository_id,
