@@ -9,18 +9,17 @@ int main (int argc, char *argv[])
     {
       Server_i svr_i;
 
-      int init_result;
-
-      init_result = svr_i.init (argc, argv ACE_ENV_ARG_PARAMETER);
+      const int init_result = svr_i.init (argc, argv ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (init_result != 0)
         return 1;
 
     }
-  ACE_CATCH (CORBA::SystemException, ex)
+  ACE_CATCHANY
     {
-            ACE_PRINT_EXCEPTION (ex, "CORBA exception raised in server!");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "CORBA exception raised in server!");
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (-1);
