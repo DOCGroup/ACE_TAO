@@ -515,8 +515,8 @@ main (int argc, char *argv[])
 	default:
 	  client (&server_addr);
 	  // Shutdown the server process.
-	  ACE_OS::kill (pid, SIGINT);
-	  ACE_OS::wait ();
+	  if (ACE_OS::kill (pid, SIGINT) == 0)
+	    ACE_OS::wait ();
 	  break;
 	  /* NOTREACHED */
 	}
