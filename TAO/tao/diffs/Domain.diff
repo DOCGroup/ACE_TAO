@@ -1,5 +1,5 @@
---- orig/DomainC.cpp	2003-11-03 20:40:54.000000000 -0600
-+++ DomainC.cpp	2003-11-03 21:16:48.000000000 -0600
+--- orig/DomainC.cpp	2003-11-20 18:47:47.000000000 -0600
++++ DomainC.cpp	2003-11-20 18:55:45.000000000 -0600
 @@ -30,13 +30,17 @@
  
  
@@ -24,10 +24,10 @@
  
  #if defined (__BORLANDC__)
  #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
-@@ -46,9 +50,42 @@
- #include "DomainC.i"
- #endif /* !defined INLINE */
+@@ -48,6 +52,40 @@
  
+ // TAO_IDL - Generated from
+ // be/be_visitor_arg_traits.cpp:62
 +// TAO specific stuff.
 +namespace CORBA
 +{
@@ -62,9 +62,19 @@
 +  return adapter->interfacedef_cdr_insert (cdr, this->x_);
 +}
 +
- // TAO_IDL - Generated from
- // be/be_visitor_arg_traits.cpp:60
--
+ 
  // Arg traits specializations.
  namespace TAO
- {
+@@ -683,12 +721,6 @@
+ #endif /* end #if !defined */
+ 
+   template class
+-    TAO::Ret_Object_Argument_T<
+-        CORBA::Policy_ptr,
+-        CORBA::Policy_var
+-      >;
+-
+-  template class
+     TAO::Objref_Traits<
+         CORBA::DomainManager
+       >;
