@@ -1,7 +1,3 @@
-Mon Aug 13 19:46:18 2001  Balachandran  <bala@cs.wustl.edu>
-
-        * ACE version 5.1.19 released.
-
 Sun Aug 12 02:17:01 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/MEM_Acceptor.cpp:
