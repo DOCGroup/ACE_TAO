@@ -15,7 +15,7 @@
 #define ACE_DUMP_T_H
 #include "ace/pre.h"
 
-#include "ace/Dump.h"
+#include "ace/Logging/Dump.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -67,7 +67,7 @@ private:
 #endif /* ACE_NDEBUG */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/Dump_T.cpp"
+#include "ace/Logging/Dump_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

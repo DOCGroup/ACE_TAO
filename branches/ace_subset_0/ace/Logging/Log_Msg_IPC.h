@@ -14,7 +14,7 @@
 #define ACE_LOG_MSG_LOGGER_H
 #include "ace/pre.h"
 
-#include "ace/Log_Msg_Backend.h"
+#include "ace/Logging/Log_Msg_Backend.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -24,12 +24,12 @@
 // included in the <ACE_Log_Msg> class, but due to "order of include"
 // problems it can't be...
 #if defined (ACE_HAS_STREAM_PIPES)
-# include "ace/SPIPE_Connector.h"
+# include "ace/IPC/SPIPE_Connector.h"
 typedef ACE_SPIPE_Stream ACE_LOG_MSG_IPC_STREAM;
 typedef ACE_SPIPE_Connector ACE_LOG_MSG_IPC_CONNECTOR;
 typedef ACE_SPIPE_Addr ACE_LOG_MSG_IPC_ADDR;
 #else
-# include "ace/SOCK_Connector.h"
+# include "ace/Sockets/SOCK_Connector.h"
 typedef ACE_SOCK_Stream ACE_LOG_MSG_IPC_STREAM;
 typedef ACE_SOCK_Connector ACE_LOG_MSG_IPC_CONNECTOR;
 typedef ACE_INET_Addr ACE_LOG_MSG_IPC_ADDR;

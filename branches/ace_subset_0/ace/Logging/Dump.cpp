@@ -1,9 +1,9 @@
 // $Id$
 
-#include "ace/Synch_T.h"
-#include "ace/Dump.h"
-#include "ace/Object_Manager.h"
-#include "ace/Log_Msg.h"
+#include "ace/Threads/Synch_T.h"
+#include "ace/Logging/Dump.h"
+#include "ace/Utils/Object_Manager.h"
+#include "ace/Logging/Log_Msg.h"
 
 ACE_RCSID(ace, Dump, "$Id$")
 

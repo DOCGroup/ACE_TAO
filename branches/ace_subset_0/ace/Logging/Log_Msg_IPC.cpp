@@ -1,7 +1,7 @@
 // $Id$
 
-#include "ace/Log_Msg_IPC.h"
-#include "ace/Log_Record.h"
+#include "ace/Logging/Log_Msg_IPC.h"
+#include "ace/Logging/Log_Record.h"
 
 ACE_RCSID(ace, Log_Msg_IPC, "$Id$")
 

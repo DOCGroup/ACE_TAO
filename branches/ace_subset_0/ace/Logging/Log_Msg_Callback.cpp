@@ -1,6 +1,6 @@
 // $Id$
 
-#include "ace/Log_Msg_Callback.h"
+#include "ace/Logging/Log_Msg_Callback.h"
 
 ACE_RCSID(ace, Log_Msg_Callback, "$Id$")
 
