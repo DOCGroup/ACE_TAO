@@ -37,18 +37,16 @@ JAWS_File_Handle::vfs_ = JAWS_Virtual_Filesystem::instance ();
 JAWS_Virtual_Filesystem * JAWS_Virtual_Filesystem::cvf_ = 0;
 ACE_SYNCH_MUTEX JAWS_Virtual_Filesystem::lock_;
 
+// this is how you make data opaque in C++
+// I'd like to do this with JAWS_File too, but Doug would pro'ly kill me
 class JAWS_Virtual_Filesystem_Singleton
 {
 public:
   JAWS_Virtual_Filesystem_Singleton (void)
-  {
-    this->singleton_ = JAWS_Virtual_Filesystem::instance ();
-  }
+  { this->singleton_ = JAWS_Virtual_Filesystem::instance (); }
 
   ~JAWS_Virtual_Filesystem_Singleton (void)
-  {
-    delete this->singleton_;
-  }
+  { delete this->singleton_; }
 
 private:
   JAWS_Virtual_Filesystem * singleton_;
@@ -91,18 +89,23 @@ JAWS_File_Handle::~JAWS_File_Handle (void)
 {
   if (this->handle_ != ACE_INVALID_HANDLE)
     {
+      // this was dup ()'d
       ACE_OS::close (this->handle_);
     }
+
   if (this->file_ != 0)
     {
       switch (this->file_->action ())
         {
         case JAWS_File::WRITING:
           this->file_->release ();
+          // assert (this->file_->reference_count () == 0);
+          // put it into the CVF
           this->vfs_->replace (this->file_);
           break;
 
         case JAWS_File::WAITING:
+          // last one using a stale file is resposible for deleting it
           if (this->file_->release () == 0)
             delete this->file_;
           break;
