@@ -1,3 +1,10 @@
+Tue Feb 12 17:53:31 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tao/PortableServer/POA.cpp (destroy_i): 
+	  Got a duplicate before releasing the poa so that it stays around
+	  while we change its status and call the corresponding
+	  interceptor's adapter_state_changed methods.
+
 Tue Feb 12 16:01:25 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tao/PICurrent.cpp (copy):
