@@ -364,17 +364,6 @@ pace_sprintf (char* s, const char* format, ...)
   return result;
 }
 
-int
-pace_snprintf (char *s, size_t  n, const char *format, ...)
-{
-  int result = 0;
-  va_list ap;
-  va_start (ap, format);
-  result = vsnprintf (s, n, format, ap);
-  va_end (ap);
-  return result;
-}
-
 PACE_INLINE
 FILE *
 pace_tmpfile ()
@@ -394,13 +383,4 @@ int
 pace_ungetc (int c, FILE * stream)
 {
  return ungetc (c, stream);
-}
-
-PACE_INLINE
-int
-pace_vsprintf (char * buffer,
-               const char * format,
-               va_list argptr)
-{
-  return vsprintf (buffer, format, argptr);
 }

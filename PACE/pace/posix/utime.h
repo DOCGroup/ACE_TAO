@@ -23,6 +23,11 @@
 extern "C" {
 #endif /* PACE_HAS_CPLUSPLUS */
 
+  /** 
+     PACE's implementation of the POSIX function utime.
+     See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
+     IEEE Std 1003.1, 1996 Edition), Section 5.6.6.
+   */
   PACE_INLINE int pace_utime (const char * path,
                               const struct utimbuf * times);
 

@@ -22,8 +22,18 @@
 extern "C" {
 #endif /* PACE_HAS_CPLUSPLUS */
 
+  /** 
+     PACE's implementation of the POSIX function getpwuid.
+     See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
+     IEEE Std 1003.1, 1996 Edition), Section 9.2.2.
+   */
   PACE_INLINE struct passwd * pace_getpwuid (uid_t uid);
 
+  /** 
+     PACE's implementation of the POSIX function getpwuid_r.
+     See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
+     IEEE Std 1003.1, 1996 Edition), Section 9.2.2.
+   */
   PACE_INLINE int pace_getpwuid_r (uid_t uid,
                                    struct passwd * pwd,
                                    char * buffer,
@@ -31,8 +41,18 @@ extern "C" {
                                    struct passwd ** result);
   /* Requires PACE_HAS_POSIX_PTHREAD_SEMANTICS. */
 
+  /** 
+     PACE's implementation of the POSIX function getpwnam.
+     See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
+     IEEE Std 1003.1, 1996 Edition), Section 9.2.2.
+   */
   PACE_INLINE struct passwd * pace_getpwnam (const char * name);
 
+  /** 
+     PACE's implementation of the POSIX function getpwnam_r.
+     See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
+     IEEE Std 1003.1, 1996 Edition), Section 9.2.2.
+   */
   PACE_INLINE int pace_getpwnam_r (const char * name,
                                    struct passwd * pwd,
                                    char * buffer,

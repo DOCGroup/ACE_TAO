@@ -22,14 +22,39 @@
 extern "C" {
 #endif /* PACE_HAS_CPLUSPLUS */
 
+  /** 
+     PACE's implementation of the POSIX function sem_close.
+     See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
+     IEEE Std 1003.1, 1996 Edition), Section 11.2.4.
+   */
   PACE_INLINE int pace_sem_close (sem_t * sem);
 
+  /** 
+     PACE's implementation of the POSIX function sem_destroy.
+     See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
+     IEEE Std 1003.1, 1996 Edition), Section 11.2.2.
+   */
   PACE_INLINE int pace_sem_destroy (sem_t * sem);
 
+  /** 
+     PACE's implementation of the POSIX function sem_getvalue.
+     See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
+     IEEE Std 1003.1, 1996 Edition), Section 11.2.8.
+   */
   PACE_INLINE int pace_sem_getvalue (sem_t * sem, int * sval);
 
+  /** 
+     PACE's implementation of the POSIX function sem_init.
+     See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
+     IEEE Std 1003.1, 1996 Edition), Section 11.2.1.
+   */
   PACE_INLINE int pace_sem_init (sem_t * sem, int pshared, unsigned int value);
 
+  /** 
+     PACE's implementation of the POSIX function sem_open.
+     See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
+     IEEE Std 1003.1, 1996 Edition), Section 11.2.3.
+   */
   # define pace_sem_open(X) sem_open X
   /* int fprintf (FILE *stream, const char *format, (*//* args *//*) ... );
    *
@@ -38,12 +63,32 @@ extern "C" {
    * surrounding the arguments.
    */
 
+  /** 
+     PACE's implementation of the POSIX function sem_post.
+     See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
+     IEEE Std 1003.1, 1996 Edition), Section 11.2.7.
+   */
   PACE_INLINE int pace_sem_post (sem_t * sem);
 
+  /** 
+     PACE's implementation of the POSIX function sem_trywait.
+     See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
+     IEEE Std 1003.1, 1996 Edition), Section 11.2.6.
+   */
   PACE_INLINE int pace_sem_trywait (sem_t * sem);
 
+  /** 
+     PACE's implementation of the POSIX function sem_unlink.
+     See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
+     IEEE Std 1003.1, 1996 Edition), Section 11.2.5.
+   */
   PACE_INLINE int pace_sem_unlink (const char * name);
 
+  /** 
+     PACE's implementation of the POSIX function sem_wait.
+     See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
+     IEEE Std 1003.1, 1996 Edition), Section 11.2.6.
+   */
   PACE_INLINE int pace_sem_wait (sem_t * sem);
 
 #if defined (PACE_HAS_CPLUSPLUS)
