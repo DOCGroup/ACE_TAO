@@ -31,121 +31,13 @@ public:
   typedef TAO_Local_ServantBase LocalServantBase;
   typedef TAO_DynamicImplementation DynamicImplementation;
 
-  typedef CORBA::String Identifier;
-  typedef CORBA::String_var Identifier_var;
-  typedef CORBA::String_out Identifier_out;
-
-  static CORBA::TypeCode_ptr _tc_Identifier;
-
-  typedef CORBA::String RepositoryId;
-  typedef CORBA::String_var RepositoryId_var;
-  typedef CORBA::String_out RepositoryId_out;
-
-  static CORBA::TypeCode_ptr _tc_RepositoryId;
-
-
-#if !defined (_PORTABLESERVER_CURRENTBASE___PTR_CH_)
-#define _PORTABLESERVER_CURRENTBASE___PTR_CH_
-
-class CurrentBase;
-  typedef CurrentBase *CurrentBase_ptr;
-
-#endif // end #if !defined
-
-
-#if !defined (_PORTABLESERVER_CURRENTBASE___VAR_CH_)
-#define _PORTABLESERVER_CURRENTBASE___VAR_CH_
-
-  class TAO_Export CurrentBase_var
-  {
-  public:
-    CurrentBase_var (void); // default constructor
-    CurrentBase_var (CurrentBase_ptr);
-    CurrentBase_var (const CurrentBase_var &); // copy constructor
-    ~CurrentBase_var (void); // destructor
-
-    CurrentBase_var &operator= (CurrentBase_ptr);
-    CurrentBase_var &operator= (const CurrentBase_var &);
-    CurrentBase_ptr operator-> (void) const;
-
-    operator const CurrentBase_ptr &() const;
-    operator CurrentBase_ptr &();
-    // in, inout, out, _retn
-    CurrentBase_ptr in (void) const;
-    CurrentBase_ptr &inout (void);
-    CurrentBase_ptr &out (void);
-    CurrentBase_ptr _retn (void);
-    CurrentBase_ptr ptr (void) const;
-
-  private:
-    CurrentBase_ptr ptr_;
-  };
-
-
-#endif // end #if !defined
-
-
-#if !defined (_PORTABLESERVER_CURRENTBASE___OUT_CH_)
-#define _PORTABLESERVER_CURRENTBASE___OUT_CH_
-
-  class TAO_Export CurrentBase_out
-  {
-  public:
-    CurrentBase_out (CurrentBase_ptr &);
-    CurrentBase_out (CurrentBase_var &);
-    CurrentBase_out (CurrentBase_out &);
-    CurrentBase_out &operator= (CurrentBase_out &);
-    CurrentBase_out &operator= (const CurrentBase_var &);
-    CurrentBase_out &operator= (CurrentBase_ptr);
-    operator CurrentBase_ptr &();
-    CurrentBase_ptr &ptr (void);
-    CurrentBase_ptr operator-> (void);
-
-  private:
-    CurrentBase_ptr &ptr_;
-  };
-
-
-#endif // end #if !defined
-
-
-#if !defined (_PORTABLESERVER_CURRENTBASE_CH_)
-#define _PORTABLESERVER_CURRENTBASE_CH_
-
-  class TAO_Export CurrentBase: public virtual ACE_CORBA_1 (Object)
-  {
-  public:
-    // the static operations
-    static CurrentBase_ptr _duplicate (CurrentBase_ptr obj);
-    static CurrentBase_ptr _narrow (CORBA::Object_ptr obj, CORBA::Environment &env);
-    static CurrentBase_ptr _nil (void);
-    static CurrentBase_ptr _bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env);
-
-    virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA::Environment &env);
-  protected:
-    CurrentBase (
-        STUB_Object *objref = 0,
-        TAO_ServantBase *servant = 0,
-        CORBA::Boolean collocated = CORBA::B_FALSE
-      );
-  public:
-    virtual ~CurrentBase (void);
-  private:
-    CurrentBase (const CurrentBase&);
-    void operator= (const CurrentBase&);
-  };
-
-
-#endif // end #if !defined
-
-  static CORBA::TypeCode_ptr _tc_CurrentBase;
 
   class POA;
 
 #if !defined (_PORTABLESERVER_POA___PTR_CH_)
 #define _PORTABLESERVER_POA___PTR_CH_
 
-typedef POA *POA_ptr;
+  typedef POA *POA_ptr;
 
 #endif // end #if !defined
 
@@ -297,7 +189,7 @@ typedef POA *POA_ptr;
 
   class ForwardRequest;
   typedef ForwardRequest *ForwardRequest_ptr;
-  
+
 #endif /* end #if !defined */
 
 
@@ -2151,7 +2043,7 @@ class Current;
 #if !defined (_PORTABLESERVER_CURRENT_CH_)
 #define _PORTABLESERVER_CURRENT_CH_
 
-  class TAO_Export Current: public virtual CurrentBase
+  class TAO_Export Current: public virtual CORBA::Current
   {
   public:
     // the static operations

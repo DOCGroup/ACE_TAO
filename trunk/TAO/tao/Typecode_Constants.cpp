@@ -66,6 +66,14 @@ CORBA::TypeCode_ptr CORBA::_tc_Object;
 // Two typecodes for exceptions
 CORBA::TypeCode_ptr CORBA::_tc_Bounds;
 CORBA::TypeCode_ptr CORBA::_tc_BadKind;
+// Some more typecodes in the CORBA namespace. We keep adding to this list as
+// we find more and more things being introduced to the CORBA namespace
+CORBA::TypeCode_ptr CORBA::_tc_Policy;
+CORBA::TypeCode_ptr CORBA::_tc_PolicyList;
+CORBA::TypeCode_ptr CORBA::_tc_Current;
+CORBA::TypeCode_ptr CORBA::_tc_Identifier;
+CORBA::TypeCode_ptr CORBA::_tc_RepositoryId;
+CORBA::TypeCode_ptr CORBA::_tc_PolicyType;
 // Internal to TAO ORB
 CORBA::TypeCode_ptr TC_opaque;
 CORBA::TypeCode_ptr TC_ServiceContextList;
@@ -221,7 +229,99 @@ TAO_TypeCodes::init (void)
                                             tc_buf_BadKind,
                                             CORBA::B_TRUE);
 
-  // The following are internal to the TAO ORB
+  static const CORBA::Long _oc_CORBA_Identifier[] =
+  {
+    TAO_ENCAP_BYTE_ORDER, // byte order
+    25, 0x49444c3a, 0x434f5242, 0x412f4964, 0x656e7469, 0x66696572, 0x3a312e30,
+    0x0,  // repository ID = IDL:CORBA/Identifier:1.0
+    11, 0x4964656e, 0x74696669, 0x65720000,  // name = Identifier
+    CORBA::tk_string,
+    0, // string length
+  };
+
+  CORBA::_tc_Identifier = new CORBA::TypeCode (CORBA::tk_alias,
+                                               sizeof (_oc_CORBA_Identifier),
+                                               (char *) &_oc_CORBA_Identifier,
+                                               CORBA::B_TRUE);
+
+  static const CORBA::Long _oc_CORBA_RepositoryId[] =
+  {
+    TAO_ENCAP_BYTE_ORDER, // byte order
+    27, 0x49444c3a, 0x434f5242, 0x412f5265, 0x706f7369, 0x746f7279, 0x49643a31,
+    0x2e300000,  // repository ID = IDL:CORBA/RepositoryId:1.0
+    13, 0x5265706f, 0x7369746f, 0x72794964, 0x0,  // name = RepositoryId
+    CORBA::tk_string,
+    0, // string length
+  };
+  CORBA::_tc_RepositoryId = new CORBA::TypeCode (CORBA::tk_alias,
+                                                 sizeof
+                                                 (_oc_CORBA_RepositoryId),
+                                                 (char *)
+                                                 &_oc_CORBA_RepositoryId,
+                                                 CORBA::B_TRUE);
+
+
+  static const CORBA::Long _oc_CORBA_PolicyType[] =
+  {
+    TAO_ENCAP_BYTE_ORDER, // byte order
+    25, 0x49444c3a, 0x434f5242, 0x412f506f, 0x6c696379, 0x54797065, 0x3a312e30,
+    0x0,  // repository ID = IDL:CORBA/PolicyType:1.0
+    11, 0x506f6c69, 0x63795479, 0x70650000,  // name = PolicyType
+    CORBA::tk_ulong,
+  };
+  CORBA::_tc_PolicyType = new CORBA::TypeCode (CORBA::tk_alias, sizeof
+                                               (_oc_CORBA_PolicyType),
+                                               (char *)
+                                               &_oc_CORBA_PolicyType,
+                                               CORBA::B_TRUE);
+
+  static const CORBA::Long _oc_CORBA_Policy[] =
+  {
+    TAO_ENCAP_BYTE_ORDER, // byte order
+    21, 0x49444c3a, 0x434f5242, 0x412f506f,
+    0x6c696379, 0x3a312e30, 0x0,  // repository ID = IDL:CORBA/Policy:1.0
+    7, 0x506f6c69, 0x63790000,  // name = Policy,
+  };
+  CORBA::_tc_Policy = new CORBA::TypeCode (CORBA::tk_objref,
+                                           sizeof (_oc_CORBA_Policy),
+                                           (char *) &_oc_CORBA_Policy,
+                                           CORBA::B_TRUE);
+
+ static const CORBA::Long _oc_CORBA_PolicyList[] =
+ {
+   TAO_ENCAP_BYTE_ORDER, // byte order
+   25, 0x49444c3a, 0x434f5242, 0x412f506f, 0x6c696379, 0x4c697374, 0x3a312e30,
+   0x0,  // repository ID = IDL:CORBA/PolicyList:1.0
+   11, 0x506f6c69, 0x63794c69, 0x73740000,  // name = PolicyList
+   CORBA::tk_sequence, // typecode kind
+   60, // encapsulation length
+   TAO_ENCAP_BYTE_ORDER, // byte order
+   CORBA::tk_objref, // typecode kind
+   52, // encapsulation length
+   TAO_ENCAP_BYTE_ORDER, // byte order
+   21, 0x49444c3a, 0x434f5242, 0x412f506f, 0x6c696379, 0x3a312e30,
+   0x0,  // repository ID = IDL:CORBA/Policy:1.0
+   7, 0x506f6c69, 0x63790000,  // name = Policy,
+   0,
+ };
+ CORBA::_tc_PolicyList = new CORBA::TypeCode (CORBA::tk_alias,
+                                              sizeof (_oc_CORBA_PolicyList),
+                                              (char *) &_oc_CORBA_PolicyList,
+                                              CORBA::B_TRUE);
+
+ static const CORBA::Long _oc_CORBA_Current[] =
+ {
+   TAO_ENCAP_BYTE_ORDER, // byte order
+   22, 0x49444c3a, 0x434f5242, 0x412f4375, 0x7272656e, 0x743a312e, 0x30000000,
+   // repository ID = IDL:CORBA/Current:1.0
+   8, 0x43757272, 0x656e7400,  // name = Current,
+ };
+ CORBA::_tc_Current = new CORBA::TypeCode (CORBA::tk_objref,
+                                           sizeof (_oc_CORBA_Current),
+                                           (char *) &_oc_CORBA_Current,
+                                           CORBA::B_TRUE);
+
+ // The following are internal to the TAO ORB
 
   // Octet codes for the parameters of the "Opaque" (sequence of octet)
   // data type used various places internally ... a CDR encapsulation
@@ -394,6 +494,19 @@ TAO_TypeCodes::fini (void)
   delete CORBA::_tc_Bounds;
 
   delete CORBA::_tc_BadKind;
+
+  // additional typecodes in the CORBA namespace
+  delete CORBA::_tc_Policy;
+
+  delete CORBA::_tc_PolicyList;
+
+  delete CORBA::_tc_Current;
+
+  delete CORBA::_tc_Identifier;
+
+  delete CORBA::_tc_RepositoryId;
+
+  delete CORBA::_tc_PolicyType;
 
   // TAO specific
   delete TC_opaque;

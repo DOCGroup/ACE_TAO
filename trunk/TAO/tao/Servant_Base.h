@@ -109,9 +109,9 @@ public:
   // incarnated by the DSI servant and performs the processing
   // necessary to execute the request.
 
-  virtual PortableServer::RepositoryId _primary_interface (const PortableServer::ObjectId &oid,
-                                                           PortableServer::POA_ptr poa,
-                                                           CORBA::Environment &env) = 0;
+  virtual CORBA::RepositoryId _primary_interface (const PortableServer::ObjectId &oid,
+                                                  PortableServer::POA_ptr poa,
+                                                  CORBA::Environment &env) = 0;
   // The _primary_interface() method receives an ObjectId value and a
   // POA_ptr as input parameters and returns a valid RepositoryId
   // representing the most-derived interface for that oid.

@@ -15,17 +15,6 @@
 #include "PolicyC.i"
 #endif /* !defined INLINE */
 
-static const CORBA::Long _oc_CORBA_PolicyType[] =
-{
-  TAO_ENCAP_BYTE_ORDER, // byte order
-  25, 0x49444c3a, 0x434f5242, 0x412f506f, 0x6c696379, 0x54797065, 0x3a312e30, 0x0,  // repository ID = IDL:CORBA/PolicyType:1.0
-  11, 0x506f6c69, 0x63795479, 0x70650000,  // name = PolicyType
-  CORBA::tk_ulong,
-
-};
-static CORBA::TypeCode _tc__tc_CORBA_PolicyType (CORBA::tk_alias, sizeof (_oc_CORBA_PolicyType), (char *) &_oc_CORBA_PolicyType, CORBA::B_FALSE);
-CORBA::TypeCode_ptr CORBA::_tc_PolicyType = &_tc__tc_CORBA_PolicyType;
-
 CORBA_Policy_ptr CORBA_Policy::_duplicate (CORBA_Policy_ptr obj)
 {
   if (!CORBA::is_nil (obj))
@@ -158,16 +147,6 @@ const char* CORBA_Policy::_interface_repository_id (void) const
   return "IDL:CORBA/Policy:1.0";
 }
 
-static const CORBA::Long _oc_CORBA_Policy[] =
-{
-  TAO_ENCAP_BYTE_ORDER, // byte order
-  21, 0x49444c3a, 0x434f5242, 0x412f506f, 0x6c696379, 0x3a312e30, 0x0,  // repository ID = IDL:CORBA/Policy:1.0
-  7, 0x506f6c69, 0x63790000,  // name = Policy,
-};
-static CORBA::TypeCode _tc__tc_CORBA_Policy (CORBA::tk_objref, sizeof (_oc_CORBA_Policy), (char *) &_oc_CORBA_Policy, CORBA::B_FALSE);
-CORBA::TypeCode_ptr CORBA::_tc_Policy = &_tc__tc_CORBA_Policy;
-
-
 #if !defined (_CORBA_POLICYLIST_CS_)
 #define _CORBA_POLICYLIST_CS_
 
@@ -189,36 +168,5 @@ CORBA_PolicyList::CORBA_PolicyList (const CORBA::PolicyList &seq) // copy ctor
 CORBA_PolicyList::~CORBA_PolicyList (void) // dtor
 {}
 
-static const CORBA::Long _oc_CORBA_PolicyList_seq[] =
-{
-    TAO_ENCAP_BYTE_ORDER, // byte order
-    CORBA::tk_objref, // typecode kind
-    52, // encapsulation length
-    TAO_ENCAP_BYTE_ORDER, // byte order
-    21, 0x49444c3a, 0x434f5242, 0x412f506f, 0x6c696379, 0x3a312e30, 0x0,  // repository ID = IDL:CORBA/Policy:1.0
-    7, 0x506f6c69, 0x63790000,  // name = Policy,
-  0,
-};
-static CORBA::TypeCode _tc__tc_CORBA_PolicyList_seq (CORBA::tk_sequence, sizeof (_oc_CORBA_PolicyList_seq), (char *) &_oc_CORBA_PolicyList_seq, CORBA::B_FALSE);
-CORBA::TypeCode_ptr _tc_CORBA_PolicyList_seq = &_tc__tc_CORBA_PolicyList_seq;
-
 
 #endif /* end #if !defined */
-
-static const CORBA::Long _oc_CORBA_PolicyList[] =
-{
-  TAO_ENCAP_BYTE_ORDER, // byte order
-  25, 0x49444c3a, 0x434f5242, 0x412f506f, 0x6c696379, 0x4c697374, 0x3a312e30, 0x0,  // repository ID = IDL:CORBA/PolicyList:1.0
-  11, 0x506f6c69, 0x63794c69, 0x73740000,  // name = PolicyList
-  CORBA::tk_sequence, // typecode kind
-  60, // encapsulation length
-    TAO_ENCAP_BYTE_ORDER, // byte order
-    CORBA::tk_objref, // typecode kind
-    52, // encapsulation length
-    TAO_ENCAP_BYTE_ORDER, // byte order
-    21, 0x49444c3a, 0x434f5242, 0x412f506f, 0x6c696379, 0x3a312e30, 0x0,  // repository ID = IDL:CORBA/Policy:1.0
-    7, 0x506f6c69, 0x63790000,  // name = Policy,
-  0,
-};
-static CORBA::TypeCode _tc__tc_CORBA_PolicyList (CORBA::tk_alias, sizeof (_oc_CORBA_PolicyList), (char *) &_oc_CORBA_PolicyList, CORBA::B_FALSE);
-CORBA::TypeCode_ptr CORBA::_tc_PolicyList = &_tc__tc_CORBA_PolicyList;

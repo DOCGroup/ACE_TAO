@@ -13,136 +13,6 @@
 #include "POAS.i"
 #endif // !defined INLINE
 
-static const TAO_operation_db_entry PortableServer_CurrentBase_operations [] = {
-  {"_is_a", &POA_PortableServer::CurrentBase::_is_a_skel}
-};
-
-static const CORBA::Long _tao_PortableServer_CurrentBase_optable_size = sizeof (ACE_Hash_Map_Entry<const char *, TAO_Skeleton>) * (2);
-static char _tao_PortableServer_CurrentBase_optable_pool [_tao_PortableServer_CurrentBase_optable_size];
-static ACE_Static_Allocator_Base _tao_PortableServer_CurrentBase_allocator (_tao_PortableServer_CurrentBase_optable_pool, _tao_PortableServer_CurrentBase_optable_size);
-static TAO_Dynamic_Hash_OpTable tao_PortableServer_CurrentBase_optable (PortableServer_CurrentBase_operations, 1, 1, &_tao_PortableServer_CurrentBase_allocator);
-
-// skeleton constructor
-POA_PortableServer::CurrentBase::CurrentBase (void)
-{
-  this->optable_ = &tao_PortableServer_CurrentBase_optable;
-}
-
-void POA_PortableServer::CurrentBase::_is_a_skel (
-    CORBA::ServerRequest &_tao_server_request,
-    void * _tao_object_reference,
-    void * /*context*/,
-    CORBA::Environment &_tao_orb_environment
-  )
-{
-  CORBA::Environment _tao_skel_environment;
-  static const TAO_Param_Data_Skel PortableServer_CurrentBase_is_a_paramdata [] =
-  {
-    {CORBA::_tc_boolean, 0, 0},
-    {CORBA::_tc_string, CORBA::ARG_IN, 0}
-  };
-  static const TAO_Call_Data_Skel PortableServer_CurrentBase_is_a_calldata =
-  {"_is_a", 1, 2, PortableServer_CurrentBase_is_a_paramdata};
-  POA_PortableServer::CurrentBase_ptr  _tao_impl = (POA_PortableServer::CurrentBase_ptr) _tao_object_reference;
-  CORBA::Boolean _tao_retval;
-  char *_tao_value = 0;
-  _tao_server_request.demarshal (
-    _tao_orb_environment,
-    &PortableServer_CurrentBase_is_a_calldata,
-    &_tao_retval,
-    &_tao_value
-  );
-  if (_tao_orb_environment.exception () != 0) return;
-  _tao_retval = _tao_impl->_is_a (_tao_value, _tao_skel_environment);
-  _tao_server_request.marshal (
-    _tao_orb_environment,
-    _tao_skel_environment,
-    &PortableServer_CurrentBase_is_a_calldata,
-    &_tao_retval,
-    &_tao_value
-  );
-  CORBA::string_free (_tao_value);
-}
-
-CORBA::Boolean POA_PortableServer::CurrentBase::_is_a (
-    const char* value,
-    CORBA::Environment &_tao_orb_environment
-  )
-{
-  if (
-    (!ACE_OS::strcmp ((char *)value, "IDL:PortableServer/CurrentBase:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (_tao_orb_environment))))
-      return CORBA::B_TRUE;
-    else
-      return CORBA::B_FALSE;
-}
-
-void* POA_PortableServer::CurrentBase::_downcast (
-    const char* logical_type_id
-  )
-{
-  if (ACE_OS::strcmp (logical_type_id, "IDL:PortableServer/CurrentBase:1.0") == 0)
-    return ACE_static_cast (POA_PortableServer::CurrentBase_ptr, this);
-  if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/Object:1.0") == 0)
-    return ACE_static_cast(PortableServer::Servant, this);
-  return 0;
-}
-
-void POA_PortableServer::CurrentBase::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &env)
-{
-  TAO_Skeleton skel; // pointer to skeleton for operation
-  const char *opname = req.operation (); // retrieve operation name
-  // find the skeleton corresponding to this opname
-  if (this->_find (opname, skel) == -1)
-  {
-    env.exception (new CORBA_BAD_OPERATION (CORBA::COMPLETED_NO));
-    ACE_ERROR ((LM_ERROR, "Bad operation <%s>\n", opname));
-  }
-else
-  	skel (req, this, context, env);
-}
-
-const char* POA_PortableServer::CurrentBase::_interface_repository_id (void) const
-{
-  return "IDL:PortableServer/CurrentBase:1.0";
-}
-
-POA_PortableServer::_tao_collocated_CurrentBase::_tao_collocated_CurrentBase (
-    POA_PortableServer::CurrentBase_ptr  servant,
-    STUB_Object *stub
-  )
-  : ACE_NESTED_CLASS (PortableServer, CurrentBase) (stub, servant, CORBA::B_TRUE),
-    CORBA_Object (stub, servant, CORBA::B_TRUE),
-    servant_ (servant)
-{
-}
-
-POA_PortableServer::CurrentBase_ptr POA_PortableServer::_tao_collocated_CurrentBase::_get_servant (void) const
-{
-  return this->servant_;
-}
-
-CORBA::Boolean POA_PortableServer::_tao_collocated_CurrentBase::_is_a (
-    const char* logical_type_id,
-    CORBA::Environment &_tao_orb_environment
-  )
-{
-  return this->servant_->_is_a (
-      logical_type_id,
-      _tao_orb_environment
-    );
-}
-
-
-PortableServer::CurrentBase*
-POA_PortableServer::CurrentBase::_this (CORBA_Environment &_env)
-{
-  STUB_Object *stub = this->_create_stub (_env);
-  if (_env.exception () != 0)
-    return 0;
-  return new POA_PortableServer::_tao_collocated_CurrentBase (this, stub);
-}
-
 static const TAO_operation_db_entry PortableServer_ThreadPolicy_operations [] = {
   {"_get_value", &POA_PortableServer::ThreadPolicy::_get_value_skel},
   {"copy", &POA_PortableServer::ThreadPolicy::copy_skel},
@@ -2945,7 +2815,7 @@ CORBA::Boolean POA_PortableServer::Current::_is_a (
 {
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:PortableServer/Current:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:PortableServer/CurrentBase:1.0")) ||
+    (!ACE_OS::strcmp ((char *)value, "IDL:CORBA/Current:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (_tao_orb_environment))))
       return CORBA::B_TRUE;
     else
@@ -2958,8 +2828,8 @@ void* POA_PortableServer::Current::_downcast (
 {
   if (ACE_OS::strcmp (logical_type_id, "IDL:PortableServer/Current:1.0") == 0)
     return ACE_static_cast (POA_PortableServer::Current_ptr, this);
-  if (ACE_OS::strcmp (logical_type_id, "IDL:PortableServer/CurrentBase:1.0") == 0)
-    return ACE_static_cast (POA_PortableServer::CurrentBase_ptr, this);
+  if (ACE_OS::strcmp (logical_type_id, "IDL:CORBA/Current:1.0") == 0)
+    return ACE_static_cast (POA_CORBA::Current_ptr, this);
   if (ACE_OS::strcmp (logical_type_id, "IDL:omg.org/CORBA/Object:1.0") == 0)
     return ACE_static_cast(PortableServer::Servant, this);
   return 0;
@@ -2989,7 +2859,7 @@ POA_PortableServer::_tao_collocated_Current::_tao_collocated_Current (
     STUB_Object *stub
   )
   : ACE_NESTED_CLASS (PortableServer, Current) (stub, servant, CORBA::B_TRUE),
-    ACE_NESTED_CLASS (POA_PortableServer, _tao_collocated_CurrentBase) (servant, stub),
+    POA_CORBA::_tao_collocated_Current (servant, stub),
     CORBA_Object (stub, servant, CORBA::B_TRUE),
     servant_ (servant)
 {

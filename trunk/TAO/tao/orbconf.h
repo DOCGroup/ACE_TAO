@@ -122,9 +122,11 @@
 // This deals with platforms that support namespaces vs platforms that
 // don't.
 #if defined (ACE_HAS_USING_KEYWORD)
-#define TAO_NAMESPACE struct
+#define TAO_NAMESPACE namespace
+#define TAO_NAMESPACE_STORAGE_CLASS extern
 #else
-#define TAO_NAMESPACE struct
+#define TAO_NAMESPACE struct TAO_EXPORT_MACRO
+#define TAO_NAMESPACE_STORAGE_CLASS static
 #endif /* ACE_HAS_USING_KEYWORD */
 
 // In some environments it is useful to swap the bytes on write, for

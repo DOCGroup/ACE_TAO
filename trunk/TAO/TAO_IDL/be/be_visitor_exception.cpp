@@ -191,7 +191,15 @@ int be_visitor_exception_ch::visit_exception (be_exception *node)
       if (node->is_nested ())
         {
           // we have a scoped name
-          *os << "static CORBA::TypeCode_ptr "
+
+          // is our enclosing scope a module? We need this check because for
+          // platforms that support namespaces, the typecode must be declared
+          // extern
+          if (node->defined_in ()->scope_node_type () == AST_Decl::NT_module)
+            *os << "TAO_NAMESPACE_STORAGE_CLASS ";
+          else
+            *os << "static ";
+          *os << "CORBA::TypeCode_ptr "
               << node->tc_name ()->last_component () << ";\n\n";
         }
       else
