@@ -1,3 +1,12 @@
+Thu Jan  8 15:45:50 GMT 2004  Paul Morrison  <epm@prismtechnologies.com>
+
+        * ace/OS_NS_sys_shm.inl
+        * ace/OS_NS_sys_msg.inl
+        * ace/OS_NS_stdlib.cpp
+        * ace/Mem_Map.i
+
+        Changed to fix LynxOS compilation errors.
+
 Thu Jan  8 07:47:58 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/QoS/qos.mpc:
