@@ -1,3 +1,13 @@
+Wed Sep 01 16:32:53 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/IORS.h:
+	  The copy constructor is private and unimplemented to avoid any
+	  copying.
+
+	* tao/TAO.dsp:
+	* tao/TAO_Static.dsp:
+	  Added new files Profile.{h,i,cpp}
+
 Wed Sep 01 16:04:31 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Naming/Persistent_Naming_Context.cpp,
