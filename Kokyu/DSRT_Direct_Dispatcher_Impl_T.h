@@ -12,6 +12,7 @@
 #define DSRT_DIRECT_DISPATCHER_IMPL_T_H
 #include "ace/pre.h"
 #include "ace/Task.h"
+#include "ace/Copy_Disabled.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -94,7 +95,7 @@ namespace Kokyu
   class DSRT_Direct_Dispatcher_Impl :
     public ACE_Task_Base,
     public DSRT_Dispatcher_Impl<DSRT_Scheduler_Traits>,
-    public non_copyable
+    public ACE_Copy_Disabled
   {
   public:
     typedef typename

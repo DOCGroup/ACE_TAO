@@ -11,6 +11,7 @@
 #ifndef KOKYU_DSRT_H
 #define KOKYU_DSRT_H
 #include "ace/pre.h"
+#include "ace/Copy_Disabled.h"
 
 //#if !defined (ACE_LACKS_PRAGMA_ONCE)
 //# pragma once
@@ -48,7 +49,7 @@ namespace Kokyu
    * dynamic scheduling of threads.
    */
   template <class DSRT_Scheduler_Traits>
-  class DSRT_Dispatcher : private non_copyable
+  class DSRT_Dispatcher : private ACE_Copy_Disabled
   {
   public:
     typedef typename DSRT_Scheduler_Traits::Guid_t Guid_t;
@@ -99,7 +100,7 @@ namespace Kokyu
    */
 
   template <class DSRT_Scheduler_Traits>
-  class DSRT_Dispatcher_Factory : private non_copyable
+  class DSRT_Dispatcher_Factory : private ACE_Copy_Disabled
     {
     public:
       typedef auto_ptr<DSRT_Dispatcher<DSRT_Scheduler_Traits> > DSRT_Dispatcher_Auto_Ptr;
