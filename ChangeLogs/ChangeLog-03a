@@ -1,3 +1,19 @@
+Mon Apr  2 09:57:31 2001  Darrell Brunsch <brunsch@uci.edu>
+
+        * bin/PerlACE/MSProject.pm:
+
+          Made a change to the tao_idl depencency checking.  
+          It was only checking for tao_idl and $(InputName) where
+          some places we use $(InputPath) instead.
+
+        * ace/config-win32-msvc-5.h:
+        * ace/config-win32-msvc-6.h:
+
+          Disabled the Inheritance by Dominance informational 
+          warning that MSVC gives.  We have cases of this all over
+          the place, and normally we just disable the warning on
+          a file by file basis, but now we just do a blanket disable.
+
 Mon Apr  2 08:45:24 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * bin/nightlybuilds/builds.lst:
