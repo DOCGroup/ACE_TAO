@@ -1,3 +1,8 @@
+Tue Mar  2 11:41:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
+
+        * examples/Simulator/DOVEBrowser/DoubleVisComp.java: Added flexible
+	  monotonic scaling of all DoubleVisComp windows.
+
 Tue Mar  2 02:32:34 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/IIOP_Profile.{h,i,cpp}: Added new file IIOP_Profile.i for
