@@ -1,3 +1,16 @@
+Fri Nov  7 19:25:29 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* performance-tests//Latency/AMI/run_test.pl:
+	* performance-tests//Latency/DSI/run_test.pl:
+	* performance-tests//Latency/Single_Threaded/default_configuration.pl:
+	* performance-tests//Latency/Single_Threaded/run_test.pl:
+	* performance-tests//Latency/Thread_Per_Connection/run_test.pl:
+	* performance-tests//Latency/Thread_Pool/run_test.pl:
+
+	  Fixed the number of iterations so that our tests run
+	  longer. They run for a short time exhibiting jitters in our
+	  daily builds.
+
 Fri Nov  7 18:40:46 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/tests/Security/Big_Request/Makefile:
