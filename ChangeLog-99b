@@ -1,9 +1,14 @@
+Wed Jul 07 22:44:22 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/Recursive_Mutex_Test.cpp (main): added comment
+          explaining why the stack size is now set.
+
 Wed Jul  7 22:01:13 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/config-win32-borland.h: Only enable 
-	  ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION if we're running on
- 	  older versions of Borland.  Thanks to Christopher Kohlhoff
- 	  <chris@kohlhoff.com> for reporting this.
+        * ace/config-win32-borland.h: Only enable
+          ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION if we're running on
+          older versions of Borland.  Thanks to Christopher Kohlhoff
+          <chris@kohlhoff.com> for reporting this.
 
 Wed Jul 07 21:37:33 1999  David L. Levine  <levine@cs.wustl.edu>
 

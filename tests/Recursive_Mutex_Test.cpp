@@ -87,6 +87,8 @@ main (int, ASYS_TCHAR *[])
 #if defined (ACE_HAS_THREADS)
   ACE_Recursive_Thread_Mutex rm;
 
+  // Some platforms, such as LynxOS/PPC, have a default stack size
+  // that's too small.  Use a bigger stack . . .
   size_t stack_sizes [ACE_MAX_THREADS];
   for (unsigned int i = 0; i < ACE_MAX_THREADS; ++i)
     stack_sizes[i] = 100000;
