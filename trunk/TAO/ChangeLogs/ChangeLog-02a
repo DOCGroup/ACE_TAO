@@ -1,3 +1,8 @@
+Wed May 15 16:39:36 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* docs/tutorials/Quoter/Makefile: Only add On_Demand_Activation to
+	  DIRS if corba_messaging=1.
+
 Tue May 14 16:05:13 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* TAO_IDL/driver/drv_preproc.cpp (DRV_copy_input): Added ACE_OS:: to
