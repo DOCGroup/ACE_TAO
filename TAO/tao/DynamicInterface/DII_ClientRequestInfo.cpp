@@ -14,8 +14,9 @@ TAO_DII_ClientRequestInfo::TAO_DII_ClientRequestInfo (
   TAO_GIOP_Invocation *_tao_invocation,
   CORBA::Object_ptr _tao_target,
   CORBA::Request * request)
-  : TAO_ClientRequestInfo (_tao_invocation, _tao_target),
-    request_ (request)
+  : TAO_ClientRequestInfo_i (_tao_invocation, _tao_target),
+    request_ (request),
+    result_ (0)
 {
 }
 
@@ -30,13 +31,13 @@ TAO_DII_ClientRequestInfo::arguments (ACE_ENV_SINGLE_ARG_DECL)
 
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
 
-  CORBA::ULong len = this->request_->arguments ()->count ();
-  parameter_list->length(len);
+  const CORBA::ULong len = this->request_->arguments ()->count ();
+  parameter_list->length (len);
 
-  for(CORBA::ULong = 0; i < len; ++i)
+  for (CORBA::ULong i = 0; i < len; ++i)
   {
     (*parameter_list)[len].argument <<=
-      *this->request_->arguments ()->item (len)->value();
+      *this->request_->arguments ()->item (len)->value ();
 
     switch(this->request_->arguments ()->item (len)->flags ())
       {
@@ -76,10 +77,10 @@ TAO_DII_ClientRequestInfo::exceptions (ACE_ENV_SINGLE_ARG_DECL)
 
   CORBA::ExceptionList_var ex_list = this->request_->exceptions ();
 
-  CORBA::ULong count = ex_list->count ();
+  const CORBA::ULong count = ex_list->count ();
   exception_list->length (count);
 
-  for (CORBA::ULong = 0; i < count; ++i)
+  for (CORBA::ULong i = 0; i < count; ++i)
     {
       (*exception_list)[i] = ex_list->item (i);
     }
@@ -92,7 +93,7 @@ TAO_DII_ClientRequestInfo::result (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Generate the result on demand.
-  CORBA::Boolean tk_void_any = 0;
+  const CORBA::Boolean tk_void_any = 0;
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any
                                     ACE_ENV_ARG_PARAMETER);
@@ -100,7 +101,7 @@ TAO_DII_ClientRequestInfo::result (ACE_ENV_SINGLE_ARG_DECL)
 
   CORBA::Any_var safe_result_any = result_any;
 
-  (*result_any) <<= this->_result;
+  (*result_any) <<= this->result_;
   return safe_result_any._retn ();
 }
 
@@ -108,7 +109,7 @@ void
 TAO_DII_ClientRequestInfo::result (CORBA::Long result)
 {
   // update the result
-  this->_result = result;
+  this->result_ = result;
 }
 
 char *
