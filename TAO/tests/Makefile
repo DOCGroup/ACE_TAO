@@ -47,7 +47,8 @@ DIRS  = CDR \
 	Forwarding \
 	Exposed_Policies \
 	Smart_Proxies \
-	QtTests
+	QtTests \
+	Multiple
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
