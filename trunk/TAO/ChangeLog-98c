@@ -1,6 +1,9 @@
 1998-06-16  Torben Worm  <tworm@cumbia.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/CC_LockSet.{h,cpp}
+	* orbsvcs/tests/Concurrency/CC_command.h, CC_client.cpp
+	  Removed errors detected by DU cxx
+
+	* orbsvcs/orbsvcs/Concurrency/CC_LockSet.{h,cpp}
 	  Cleaned up debugging code.
 
 Tue Jun 16 14:01:52 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
