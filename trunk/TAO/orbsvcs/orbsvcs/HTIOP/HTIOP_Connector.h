@@ -38,8 +38,8 @@ namespace ACE
   namespace HTBP
   {
     class Environment;
-  };
-};
+  }
+}
 
 class TAO_GIOP_Invocation;
 

@@ -20,7 +20,7 @@
 
 ACE_RCSID (HTIOP,
            TAO_HTIOP_Connector,
-           "$Id$");
+           "$Id$")
 
 
 TAO::HTIOP::Connector::Connector (ACE::HTBP::Environment *ht_env)
