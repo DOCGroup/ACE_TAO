@@ -31,7 +31,7 @@ operator<<(ostream & os, CCS::Thermometer_ptr t)
         os << "Cannot show state for nil reference." << endl;
         return os;
     }
-    
+
     // Try to narrow and print what kind of device it is.
     CCS::Thermostat_var tmstat = CCS::Thermostat::_narrow(t);
     os << (CORBA::is_nil(tmstat.in()) ? "Thermometer:" : "Thermostat:")
@@ -186,7 +186,7 @@ main(int argc, char * argv[])
         for (CORBA::ULong i = 0; i < list->length(); i++)
             cout << list[i].in();
         cout << endl;
-        
+
         // Change the location of first device in the list
         CCS::AssetType anum = list[(CORBA::ULong) 0]->asset_num();
         cout << "Changing location of device "
@@ -199,10 +199,10 @@ main(int argc, char * argv[])
 
         // Find first thermostat in list.
         CCS::Thermostat_var tmstat;
-        for (   CORBA::ULong i = 0;
-                i < list->length() && CORBA::is_nil(tmstat.in());
-                i++) {
-            tmstat = CCS::Thermostat::_narrow(list[i]);
+        for (   CORBA::ULong j = 0;
+                j < list->length() && CORBA::is_nil(tmstat.in());
+                j++) {
+            tmstat = CCS::Thermostat::_narrow(list[j]);
         }
 
         // Check that we found a thermostat on the list.
@@ -230,17 +230,17 @@ main(int argc, char * argv[])
         ctrl->find(ss);
 
         // Show the devices found in that room.
-        for (CORBA::ULong i = 0; i < ss.length(); i++)
-            cout << ss[i].device.in();      // Overloaded <<
+        for (CORBA::ULong k = 0; k < ss.length(); k++)
+            cout << ss[k].device.in();      // Overloaded <<
         cout << endl;
-        
+
         // Increase the temperature of all thermostats
         // by 40 degrees. First, make a new list (tss)
         // containing only thermostats.
         cout << "Increasing thermostats by 40 degrees." << endl;
         CCS::Controller::ThermostatSeq tss;
-        for (CORBA::ULong i = 0; i < list->length(); i++) {
-            tmstat = CCS::Thermostat::_narrow(list[i]);
+        for (CORBA::ULong l = 0; l < list->length(); l++) {
+            tmstat = CCS::Thermostat::_narrow(list[l]);
             if (CORBA::is_nil(tmstat.in()))
                 continue;                   // Skip thermometers
             len = tss.length();
