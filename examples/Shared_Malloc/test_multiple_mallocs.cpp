@@ -20,7 +20,7 @@ void *RESPONSE_BASE_ADDR = ((void *) (128 * 1024 * 1024));
 const char *RESPONSE_STRING = "hello from response repository";
 
 int 
-main (void)
+main (int, char *[])
 {
   ACE_MMAP_Memory_Pool_Options request_options (REQUEST_BASE_ADDR);
 

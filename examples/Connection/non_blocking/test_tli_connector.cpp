@@ -48,7 +48,7 @@ template class Peer_Handler<ACE_TLI_STREAM>;
 
 #else
 int
-main (void)
+main (int, char *[])
 {
   ACE_ERROR_RETURN ((LM_ERROR, "your platform does not support TLI\n"), 1);
 }

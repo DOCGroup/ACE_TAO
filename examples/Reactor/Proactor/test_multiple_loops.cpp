@@ -79,7 +79,7 @@ public:
 };
 
 int
-main (void)
+main (int, char *[])
 {
   Timeout_Handler handler;
   ACE_Proactor proactor (0, 0, 1);

@@ -46,7 +46,7 @@ public:
 };
 
 int
-main (void)
+main (int, char *[])
 {
   SOCK outer_sock;
   // Note that the SOCK superclass is *not* printed.
