@@ -7,6 +7,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/OS_NS_sys_time.h"
+#include "ace/Guard_T.h"
 #include "ace/Timer_Wheel_T.h"
 #include "ace/Log_Msg.h"
 

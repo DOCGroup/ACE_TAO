@@ -61,6 +61,8 @@
 #include "ace/Reactor.h"
 #include "ace/TP_Reactor.h"
 #include "ace/OS_NS_signal.h"
+#include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_string.h"
 #include "ace/Synch_Traits.h"
 #include "ace/Thread_Semaphore.h"
 

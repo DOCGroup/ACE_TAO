@@ -29,7 +29,9 @@
 #include "ace/Null_Mutex.h"
 #include "ace/Null_Condition.h"
 #include "ace/High_Res_Timer.h"
+#include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
+#include "ace/OS_NS_sys_time.h"
 
 ACE_RCSID(tests, Message_Queue_Test, "$Id$")
 

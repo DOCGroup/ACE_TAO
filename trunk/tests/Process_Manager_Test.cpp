@@ -26,6 +26,7 @@
 // ============================================================================
 
 #include "test_config.h"
+#include "ace/OS_NS_unistd.h"
 #include "ace/Process_Manager.h"
 #include "ace/Get_Opt.h"
 #include "ace/Thread.h"

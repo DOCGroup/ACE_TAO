@@ -23,6 +23,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/ACE.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_string.h"
 #include "ace/os_include/os_dirent.h"
 
 ACE_RCSID(tests, Process_Mutex_Test, "$Id$")

@@ -634,7 +634,7 @@ dnl    fi
   ])
 
  AC_ARG_ENABLE([rtti],
-  AS_HELP_STRING(--enable-rtti,enable run-time type identification *Currently only for Sun C++* [[[no]]]),
+  AS_HELP_STRING(--enable-rtti,enable run-time type identification [[[yes]]]),
   [
    case "${enableval}" in
     yes)
@@ -643,14 +643,18 @@ dnl    fi
           *solaris*)
                ace_user_enable_rtti=yes
                ;;
+          *aix*)
+               ace_user_enable_rtti=yes
+               ;;
           *)
                ;;
         esac
       else
-        AC_MSG_WARN([Not using Sun C++. RTTI will not be enabled.])
+        AC_MSG_WARN([We do not know if rtti needs enabling for this compiler.])
       fi
       ;;
     no)
+      ace_user_enable_rtti=no
       ;;
     *)
       AC_MSG_ERROR([bad value ${enableval} for --enable-rtti])
