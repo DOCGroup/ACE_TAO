@@ -486,13 +486,13 @@
     <P>
     <h3>DIOP Endpoint Overview</h3>
     <P>
-      DIOP endpoints in TAO have the same form as IIOP endpoints, a
+      Since DIOP endpoints in TAO have the same form as IIOP endpoints, a
       detailed description is therefore omitted. DIOP has no support
       for endpoint-specific options.
     <P>
-      It is recommended to explicitely set port numbers for endpoints,
-      as automatic selection of free endpoints is not supported for
-      UDP sockets. The ORB would try to use the same default port
+      We recommend explicitly setting port numbers for endpoints
+      since TAO does not support automatic selection of free endpoints for
+      UDP sockets.  Instead, the ORB will try to use the same default port
       number in every case.
 
     <h3>DIOP Endpoint Examples</h3>
@@ -508,7 +508,7 @@
     <address><a href="mailto:ossama@uci.edu">Ossama Othman</a></address>
 <!-- Created: Thu May 18 08:37:25 PDT 2000 -->
 <!-- hhmts start -->
-Last modified: Wed June 11 00:21:48 Central Standard Time 2002
+Last modified: Wed Jun 12 10:25:43 CDT 2002
 <!-- hhmts end -->
   </body>
 </html>
