@@ -90,7 +90,7 @@ validate_connection (CORBA::Object_ptr object
     {
       ACE_TRY
         {
-          object->_non_existent (ACE_ENV_ARG_PARAMETER);
+          object->_non_existent (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
       ACE_CATCH (CORBA::TRANSIENT, exception)
