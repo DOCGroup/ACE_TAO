@@ -4,7 +4,7 @@
 //
 // = LIBRARY
 //    tests
-// 
+//
 // = FILENAME
 //    Priority_Buffer_Test.cpp
 //
@@ -16,7 +16,7 @@
 //
 // = AUTHOR
 //    Prashant Jain and Doug Schmidt
-// 
+//
 // ============================================================================
 
 #include "ace/Message_Queue.h"
@@ -42,6 +42,8 @@ consumer (void *args)
   ACE_Message_Queue<ACE_MT_SYNCH> *msg_queue = (ACE_Message_Queue<ACE_MT_SYNCH> *) args;
 
   u_long cur_priority = 27;
+  if (! cur_priority) /* null */;  // To suppress ghs warning about unused
+                                   // local variable "cur_priority".
   int local_count = 0;
 
   // Keep looping, reading a message out of the queue, until we
@@ -62,7 +64,7 @@ consumer (void *args)
       cur_priority = mb->msg_priority ();
 
       if (length > 0)
-	ACE_ASSERT (c == *mb->rd_ptr ());
+        ACE_ASSERT (c == *mb->rd_ptr ());
 
       // Free up the buffer memory and the Message_Block. Note that
       // the destructor of Message Block will delete the the actual
@@ -70,7 +72,7 @@ consumer (void *args)
       mb->release ();
 
       if (length == 0)
-	break;
+        break;
     }
   ACE_ASSERT (local_count == count);
   return 0;
@@ -94,17 +96,17 @@ producer (void *args)
       count++;
 
       // Allocate a new message
-      
+
       ACE_NEW_RETURN (mb, ACE_Message_Block (1), 0);
       *mb->rd_ptr () = *c;
 
       // Set the priority.
       mb->msg_priority (count);
       mb->wr_ptr (1);
-      
+
       // Enqueue in priority order.
       if (msg_queue->enqueue_prio (mb) == -1)
-	ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "put_next"), 0);
+        ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "put_next"), 0);
     }
 
   // Now send a 0-sized shutdown message to the other thread
@@ -119,7 +121,7 @@ producer (void *args)
   // the size of the lines!).
   consumer (msg_queue);
 
-  return 0; 
+  return 0;
 }
 
 #endif /* ACE_HAS_THREADS */
@@ -127,7 +129,7 @@ producer (void *args)
 // Spawn off one thread that copies stdin to stdout in order of the
 // size of each line.
 
-int 
+int
 main (int, char *[])
 {
   ACE_START_TEST ("Priority_Buffer_Test");
@@ -136,9 +138,9 @@ main (int, char *[])
   // Message queue.
   ACE_Message_Queue<ACE_MT_SYNCH> msg_queue (max_queue);
 
-  if (ACE_Thread_Manager::instance ()->spawn (ACE_THR_FUNC (producer), 
-					     (void *) &msg_queue,
-					     THR_NEW_LWP | THR_DETACHED) == -1)
+  if (ACE_Thread_Manager::instance ()->spawn (ACE_THR_FUNC (producer),
+                                             (void *) &msg_queue,
+                                             THR_NEW_LWP | THR_DETACHED) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "spawn"), 1);
 
   // Wait for producer and consumer threads to exit.
