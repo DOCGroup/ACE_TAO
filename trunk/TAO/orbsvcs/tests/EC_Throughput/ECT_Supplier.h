@@ -21,8 +21,7 @@
 
 #include "ace/High_Res_Timer.h"
 #include "orbsvcs/Channel_Clients_T.h"
-
-class ECTS_Driver;
+#include "ECT_Driver.h"
 
 class Test_Supplier : public ACE_Task<ACE_SYNCH>
 {
@@ -31,10 +30,9 @@ class Test_Supplier : public ACE_Task<ACE_SYNCH>
   //   Simplifies the supplier task startup.
   //
   // = DESCRIPTION
-  //   Runs the ECTS_Driver::supplier_task() method in another thread.
   //
 public:
-  Test_Supplier (ECTS_Driver *driver);
+  Test_Supplier (ECT_Driver *driver);
 
   int svc (void);
   // Run the test, just forwards to the driver
@@ -67,7 +65,7 @@ public:
   // Dump the results...
 
 private:
-  ECTS_Driver *driver_;
+  ECT_Driver *driver_;
   // Class we forward to.
 
   void *cookie_;
@@ -93,66 +91,6 @@ private:
   int event_a_;
   int event_b_;
   // The test data.
-};
-
-class ECTS_Driver
-{
-  //
-  // = TITLE
-  //
-  // = DESCRIPTION
-  //
-public:
-  ECTS_Driver (void);
-
-  enum {
-    MAX_SUPPLIERS = 16
-    // Maximum number of suppliers.
-  };
-
-  int run (int argc, char* argv[]);
-  // Execute the test.
-
-private:
-  int parse_args (int argc, char* argv[]);
-  // parse the command line args
-
-  void connect_suppliers (RtecEventChannelAdmin::EventChannel_ptr local_ec,
-                          CORBA::Environment &_env);
-  void disconnect_suppliers (CORBA::Environment &_env);
-  // Connect the suppliers.
-
-  void activate_suppliers (CORBA::Environment &_env);
-  // Activate the suppliers, i.e. they start generating events.
-
-  void dump_results (void);
-  // Dump the results for each supplier.
-
-private:
-  Test_Supplier* suppliers_[ECTS_Driver::MAX_SUPPLIERS];
-  // The suppliers array.
-
-  int n_suppliers_;
-  // The number of suppliers.
-
-  int burst_count_;
-  // How many bursts we will send from each supplier.
-
-  int burst_size_;
-  // The number of events
-
-  int event_size_;
-  // The size of the payload on each event.
-
-  int burst_pause_;
-  // The time between each event burst, in microseconds.
-
-  int event_a_;
-  int event_b_;
-  // We send two types of events, with different contents.
-
-  const char* pid_file_name_;
-  // The name of a file where the process stores its pid
 };
 
 #endif /* ECT_SUPPLIER_H */
