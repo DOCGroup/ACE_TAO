@@ -197,7 +197,7 @@ main (int, ACE_TCHAR *[])
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Temporary path too long\n")), -1);
 
   // Add the filename to the end
-  ACE_OS::strcat (temp_file, ACE_TEXT ("mm_shared_mem_testXXXXXX"));
+  ACE_OS_String::strcat (temp_file, ACE_TEXT ("mm_shared_mem_testXXXXXX"));
 
   // Store in the global variable.
   shm_key = temp_file;

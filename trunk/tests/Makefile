@@ -40,6 +40,7 @@ BIN =   Aio_Platform_Test \
         IOStream_Test \
         Lazy_Map_Manager_Test \
         Log_Msg_Test \
+	Logging_Strategy_Test \
         Malloc_Test \
         Map_Test \
         Map_Manager_Test \
