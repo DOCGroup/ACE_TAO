@@ -27,10 +27,15 @@ ACE_Message_Block * m3;
 
 void dump(char * msg)
 {
-  cout << msg << "\n"
-       << "m1: " << m1->data_block()->reference_count() << "\n"
-       << "m2: " << m2->data_block()->reference_count() << "\n"
-       << "m3: " << m3->data_block()->reference_count() << endl;
+  ACE_DEBUG ((LM_INFO,
+              "%s\n"
+              "m1: %d\n"
+              "m2: %d\n"
+              "m3: %d\n",
+              msg,
+              m1->data_block()->reference_count(),
+              m2->data_block()->reference_count(),
+              m3->data_block()->reference_count()));
 }
 
 int main(int, char*[])
@@ -58,7 +63,8 @@ int main(int, char*[])
     TAO_OutputCDR cdr;
     cdr.write_octet_array_mb(m1);
     dump("expect 3,3,3"); // that's what I expected, anyway
-    cout << "total cdr length is " << cdr.total_length() << endl;
+    ACE_DEBUG ((LM_INFO, "total cdr length is %u\n",
+                ACE_static_cast (u_int, cdr.total_length())));
   }
   dump("expect 2,2,2"); // that's what I expected, anyway
 
