@@ -1,3 +1,9 @@
+Tue Apr 17 06:15:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+
+	* bin/auto_run_tests.lst:
+
+	  Added the UDP Pluggable Protocol test to the list of executed tests.
+
 Mon Apr 16 20:42:46 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * include/makeinclude/platform_qnx_rtp_gcc.GNU:
