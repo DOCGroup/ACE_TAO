@@ -33,10 +33,10 @@ extern "C" char *strerror (int);
 // "tao_debug_level", etc. to protect the namespace.
 
 // 0 to ??; higher == more
-extern unsigned int TAO_debug_level;	
+extern unsigned int ACE_Svc_Export TAO_debug_level;	
 
 // set by getopt
-extern char *TAO_debug_filter;
+extern char * ACE_Svc_Export TAO_debug_filter;
 
 // These are just simple 0, 1, and 2 argument messages that will
 // appear when debugging's enabled, regardless of category.  They also
@@ -89,24 +89,24 @@ extern char *TAO_debug_filter;
 // in that string are in the "TAO_debug_filter" string, the message is
 // then printed.  Assign thosee characters as needed.
 
-extern void _EXPFUNC dmsg_filter (const char *_FAR filter,
+extern void ACE_Svc_Export dmsg_filter (const char *_FAR filter,
 				  const char *_FAR fmt, ...);
 
 // Filter according to TAO_debug_level instead of category.  (For speed,
 // test against TAO_debug_level directly.)
 
-extern void _EXPFUNC dmsg_filter (u_int level, 
+extern void ACE_Svc_Export dmsg_filter (u_int level, 
 				  const char *_FAR fmt, ...);
 
 // General varargs debug message printer, no filtering
 
-extern void _EXPFUNC dmsg_v (const char *_FAR fmt, ...);
-extern void _EXPFUNC _dmsg_x (CORBA_Environment _FAR &env,
+extern void ACE_Svc_Export dmsg_v (const char *_FAR fmt, ...);
+extern void ACE_Svc_Export _dmsg_x (CORBA_Environment _FAR &env,
 				const char *_FAR info);
-extern void _EXPFUNC dmsg_opaque (char *_FAR label,
+extern void ACE_Svc_Export dmsg_opaque (char *_FAR label,
 				  u_char *_FAR buffer,
 				  u_long len);
-extern void _EXPFUNC dmsg_opaque_full (char *_FAR label,
+extern void ACE_Svc_Export dmsg_opaque_full (char *_FAR label,
 				       const u_char *_FAR buffer,
 				       u_long len);
 #endif /* DEBUG */

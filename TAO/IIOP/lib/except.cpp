@@ -427,7 +427,7 @@ CORBA_Environment::exception_type (void) const
 //
 // XXX make this a member function on "Environment"
 
-void _EXPFUNC
+void ACE_Svc_Export
 print_exception (const CORBA_Exception *x,
 		 const char *info,
 		 FILE *stream)

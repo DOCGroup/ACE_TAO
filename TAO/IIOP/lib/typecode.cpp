@@ -374,7 +374,6 @@ CORBA_TypeCode::prv_name (CORBA_Environment &env) const
     case tk_alias:
     case tk_except:
       {
-	CORBA_ULong len;
 	CDR stream;
 
 	stream.setup_encapsulation (_buffer, (size_t)_length);

@@ -37,8 +37,8 @@
 #define funlockfile(f)
 #endif	// _POSIX_THREADS
 
-u_int TAO_debug_level	= 0;
-char *TAO_debug_filter	= "l";
+u_int ACE_Svc_Export TAO_debug_level	= 0;
+char * ACE_Svc_Export TAO_debug_filter	= "l";
 static FILE *debug_stream = stderr;
 
 // The rest of this file is not needed without -DDEBUG, and unless the
@@ -121,7 +121,7 @@ setup (void)
 #endif	// OS-specific initialization
 
 
-void _EXPFUNC
+void ACE_Svc_Export
 dmsg_filter (const char *_FAR categories,
 	     const char *_FAR fmt,
 	     ...)
@@ -164,7 +164,7 @@ dmsg_filter (const char *_FAR categories,
 #endif
 }
 
-void _EXPFUNC
+void ACE_Svc_Export
 dmsg_filter (u_int level, 
 	     const char *_FAR fmt, 
 	     ...)
@@ -189,7 +189,7 @@ dmsg_filter (u_int level,
 #endif
 }
 
-void _EXPFUNC
+void ACE_Svc_Export
 dmsg_v (const char *_FAR fmt, 
 	...)
 {
@@ -210,7 +210,7 @@ dmsg_v (const char *_FAR fmt,
 #endif
 }
 
-void _EXPFUNC
+void ACE_Svc_Export
 _dmsg_x (CORBA_Environment _FAR	&env,
 	 const char *_FAR info)
 {
@@ -235,7 +235,7 @@ _dmsg_x (CORBA_Environment _FAR	&env,
 #endif
 }
 
-void _EXPFUNC
+void ACE_Svc_Export
 dmsg_opaque (char *_FAR label,
 	     u_char *_FAR buffer,
 	     u_long len)
@@ -286,7 +286,7 @@ dmsg_opaque (char *_FAR label,
 #endif
 }
 
-void _EXPFUNC
+void ACE_Svc_Export
 dmsg_opaque_full (char *_FAR label,
 		  const u_char *_FAR buffer,
 		  u_long len)

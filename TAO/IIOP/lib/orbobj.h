@@ -43,7 +43,7 @@ extern const IID 		IID_CORBA_ORB;
 
 // ORB initialisation, per OMG document 94-9-46.
 
-CORBA_ORB_ptr
+CORBA_ORB_ptr ACE_Svc_Export
 CORBA_ORB_init (int &argc,
 		char *const *argv,
 		char *orb_name,
