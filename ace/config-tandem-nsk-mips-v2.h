@@ -274,7 +274,7 @@ extern int cma_sigwait  (sigset_t *);
 //=========================================================================
 
 // Compiler/platform contains the <sys/syscall.h> file.
-#define ACE_HAS_SYSCALL_H
+#define ACE_HAS_SYS_SYSCALL_H
 
 // Platform lacks malloc.h
 #define ACE_LACKS_MALLOC_H

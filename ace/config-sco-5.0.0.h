@@ -39,7 +39,7 @@
 #define ACE_HAS_TERM_IOCTLS
 
 // Compiler/platform contains the <sys/syscall.h> file.
-//#define ACE_HAS_SYSCALL_H
+//#define ACE_HAS_SYS_SYSCALL_H
 
 // Fixes a problem with HP/UX not wrapping the mmap(2) header files
 // with extern "C".
@@ -73,9 +73,6 @@
 #define ACE_HAS_STRERROR
 
 #define ACE_HAS_TIMEZONE_GETTIMEOFDAY
-
-// HP/UX has an undefined syscall for GETRUSAGE...
-//#define ACE_HAS_SYSCALL_GETRUSAGE
 
 // Note, this only works if the flag is set above!
 //#define ACE_HAS_GETRUSAGE

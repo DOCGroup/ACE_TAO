@@ -62,7 +62,7 @@
 #endif
 
 // Compiler/platform contains the <sys/syscall.h> file.
-#define ACE_HAS_SYSCALL_H
+#define ACE_HAS_SYS_SYSCALL_H
 // But doesn't have a prototype for syscall()
 #define ACE_LACKS_SYSCALL
 
@@ -138,9 +138,7 @@
 #define ACE_HAS_SVR4_DYNAMIC_LINKING
 #endif
 
-// HP/UX has an undefined syscall for GETRUSAGE...
-#define ACE_HAS_SYSCALL_GETRUSAGE
-// Note, this only works if the flag is set above!
+// Platform supports the getrusage() system call.
 #define ACE_HAS_GETRUSAGE
 
 // Platform has the sigwait function in a header file

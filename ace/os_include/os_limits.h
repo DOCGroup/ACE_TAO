@@ -31,9 +31,9 @@
 # include /**/ <limits.h>
 #endif /* !ACE_LACKS_LIMITS_H */
 
-#if !defined (ACE_LACKS_PARAM_H)
+#if !defined (ACE_LACKS_SYS_PARAM_H)
 #  include /**/ <sys/param.h>
-#endif /* ACE_LACKS_PARAM_H */
+#endif /* ACE_LACKS_SYS_PARAM_H */
 
 // Place all additions (especially function declarations) within extern "C" {}
 #ifdef __cplusplus

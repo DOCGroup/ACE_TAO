@@ -65,9 +65,9 @@
 
 # include "ace/os_include/sys/os_types.h"
 
-# if !defined (ACE_LACKS_PARAM_H)
+# if !defined (ACE_LACKS_SYS_PARAM_H)
 #  include /**/ <sys/param.h>
-# endif /* ACE_LACKS_PARAM_H */
+# endif /* ACE_LACKS_SYS_PARAM_H */
 
 # include "ace/ACE_export.h"
 

@@ -153,7 +153,7 @@
 #define ACE_HAS_STRPTIME
 #define ACE_HAS_SVR4_DYNAMIC_LINKING
 #define ACE_HAS_SVR4_SIGNAL_T
-#define ACE_HAS_SYSCALL_H
+#define ACE_HAS_SYS_SYSCALL_H
 #define ACE_HAS_SYSV_IPC
 #if (ACE_MT_SAFE == 0)
 // clearerr is not defined when _REENTRANT is not defined

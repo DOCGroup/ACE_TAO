@@ -69,18 +69,24 @@ ACE_OS::setrlimit (int resource, const struct rlimit *rl)
 
   ACE_NOTSUP_RETURN (-1);
 #else
-  ACE_OSCALL_RETURN (::setrlimit (
 # if defined (ACE_HAS_RLIMIT_RESOURCE_ENUM)
-                                  (ACE_HAS_RLIMIT_RESOURCE_ENUM) resource,
-# else
-                                  resource,
-# endif /* ACE_HAS_RLIMIT_RESOURCE_ENUM */
-# if defined (ACE_HAS_NONCONST_SETRLIMIT)
+#  if defined (ACE_HAS_NONCONST_SETRLIMIT)
+  ACE_OSCALL_RETURN (::setrlimit ((ACE_HAS_RLIMIT_RESOURCE_ENUM) resource,
                                   const_cast<struct rlimit *>(rl)
-# else
-                                  rl
-# endif /* ACE_HAS_NONCONST_SETRLIMIT */
                                   ), int, -1);
+# else
+  ACE_OSCALL_RETURN (::setrlimit ((ACE_HAS_RLIMIT_RESOURCE_ENUM) resource,
+                                  resource,
+                                  ), int, -1);
+#  endif /* ACE_HAS_NONCONST_SETRLIMIT */				  
+# else /* ACE_HAS_RLIMIT_RESOURCE_ENUM */
+#  if defined (ACE_HAS_NONCONST_SETRLIMIT)
+  ACE_OSCALL_RETURN (::setrlimit (resource, const_cast<struct rlimit *>(rl)
+                                  ), int, -1);
+#  else
+  ACE_OSCALL_RETURN (::setrlimit (resource, rl), int, -1);
+#  endif /* ACE_HAS_NONCONST_SETRLIMIT */
+# endif /* ACE_HAS_RLIMIT_RESOURCE_ENUM */  
 #endif /* ACE_LACKS_RLIMIT */
 }
 
