@@ -17,7 +17,7 @@
 #ifndef TAO_CONSTRAINT_VISITOR_H
 #define TAO_CONSTRAINT_VISITOR_H
 
-#include "Trader.h"
+#include "Interpreter_Utils.h"
 
 class TAO_Constraint;
 class TAO_Unary_Constraint;
@@ -106,18 +106,11 @@ class TAO_Constraint_Validator : public TAO_Constraint_Visitor
   //    at which point we can back out of the traversal and indicate
   //    failure.
 public:
-
-  TAO_Constraint_Validator (const CosTradingRepos::ServiceTypeRepository::TypeStruct& 
-                            type_struct);
-  // The constructor creates a map of property names to their values
-  // from the Type Description retrieved from the
-  // ServiceTypeRepository. The ServiceTypeRepository throws
-  // exceptions when it's displeased with the type name provided to
-  // it. The map allows O(lg n) associative access, rather than the
-  // O(n) sequential lookup from the CORBA data structures.
+  TAO_Constraint_Validator (void);
+  // Constructor.
 
   virtual ~TAO_Constraint_Validator (void);
-  // Desctructor.
+  // Destructor.
 
   int validate (TAO_Constraint* root);
   // Validate returns 1 if the expression tree whose root is <root>
@@ -173,11 +166,13 @@ public:
   virtual int visit_property (TAO_Property_Constraint* literal);
   // The property must be defined in the service type description.
 
-private:
+protected:
 
   TAO_Typecode_Table type_map_;
   // A map gleaned from the ServiceTypeStruct, which correlates
   // property names with their types.
+
+private:
 
   CORBA::TypeCode* extract_type (TAO_Constraint* expr_type,
                                  TAO_Expression_Type& type);
@@ -198,7 +193,7 @@ private:
   TAO_Constraint_Validator& operator= (const TAO_Constraint_Validator&);
 };
 
-#include "Trader_Utils.h"
+// #include "Trader_Utils.h"
 
 class TAO_Constraint_Evaluator : public TAO_Constraint_Visitor
 {
@@ -221,8 +216,8 @@ class TAO_Constraint_Evaluator : public TAO_Constraint_Visitor
   //     is zero and undefined properties.
 public:
 
-  TAO_Constraint_Evaluator (CosTrading::Offer* offer,
-                            CORBA::Boolean supports_dynamic_properties = 1);
+  TAO_Constraint_Evaluator (void);
+  // Constructor.
 
   CORBA::Boolean evaluate_constraint (TAO_Constraint* root);
   // Evaluate returns 1 if the offer satisfies the constraints
@@ -338,12 +333,10 @@ private:
   TAO_Constraint_Evaluator& operator= (const TAO_Constraint_Evaluator&);
   // Disallow copying.
 
+protected:
+
   TAO_Lookup_Table props_;
   // The map of property names to their values for a property.
-
-  TAO_Property_Evaluator prop_eval_;
-  // Utility with which to evaluate the properties of an offer, be
-  // they dyanmic or static.
 
   Operand_Queue queue_;
   // The result of a non_boolean operation.
