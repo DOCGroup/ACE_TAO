@@ -100,7 +100,7 @@ private:
   ACE_HANDLE proc_handle_;
   // I/O handle for /proc file system.
 
-#elif defined (ACE_HAS_GETRUSAGE)
+#elif defined (ACE_HAS_GETRUSAGE) && !defined (ACE_WIN32)
   void subtract (timeval &tdiff, timeval &t0, timeval &t1);
   // Substract two timestructs and store their difference.
 
