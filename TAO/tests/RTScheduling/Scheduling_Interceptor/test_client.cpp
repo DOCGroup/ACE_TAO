@@ -3,6 +3,7 @@
 #include "tao/RTScheduling/RTScheduler_Manager.h"
 #include "testC.h"
 
+int
 main (int argc, char* argv [])
 {
   ACE_TRY
@@ -51,38 +52,43 @@ main (int argc, char* argv [])
 						   ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-      const char * name = 0;
+  const char * name = 0;
   CORBA::Policy_ptr sched_param = 0;
   CORBA::Policy_ptr implicit_sched_param = 0;
   
   current->begin_scheduling_segment (name,
-					    sched_param,
-					    implicit_sched_param
-					    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-
-      server->one_way (ior);
-  
-      ACE_DEBUG ((LM_DEBUG,
-		  "IOR = %s\n",
-		  server->two_way (ior)));
-
-	  current->end_scheduling_segment (name
-					  ACE_ENV_ARG_PARAMETER);
+				     sched_param,
+				     implicit_sched_param
+				     ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   
-      orb->run ();
+  server->one_way (ior);
+  
+  ACE_DEBUG ((LM_DEBUG,
+	      "IOR = %s\n",
+	      server->two_way (ior)));
+
+  current->end_scheduling_segment (name
+				   ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+  
+  orb->run ();
+
     }
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            "Caught exception:");
-      return 1;
+      
     }
   ACE_ENDTRY; 
-  
+
   return 0;
 }
+
+
+
+
 
 
 
