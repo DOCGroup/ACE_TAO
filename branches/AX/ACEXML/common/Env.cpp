@@ -1,9 +1,9 @@
 // -*- C++ -*-  $Id$
 
-#include "Common/Env.h"
+#include "common/Env.h"
 
 #if !defined (__ACEXML_INLINE__)
-# include "Common/Env.i"
+# include "common/Env.i"
 #endif /* __ACEXML_INLINE__ */
 
 ACEXML_Env::ACEXML_Env (void)

@@ -1,6 +1,6 @@
 // $Id$
 
-#include "Common/FileCharStream.h"
+#include "common/FileCharStream.h"
 #include "ace/ACE.h"
 
 ACEXML_FileCharStream::ACEXML_FileCharStream (void)

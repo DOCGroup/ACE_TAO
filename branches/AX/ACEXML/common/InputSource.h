@@ -3,7 +3,7 @@
 #ifndef _ACEXML_INPUTSOURCE_H_
 #define _ACEXML_INPUTSOURCE_H_
 
-#include "Common/CharStream.h"
+#include "common/CharStream.h"
 
 class ACEXML_Export ACEXML_InputSource
 {

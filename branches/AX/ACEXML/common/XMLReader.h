@@ -3,10 +3,10 @@
 #ifndef _ACEXML_XMLREADER_H_
 #define _ACEXML_XMLREADER_H_
 
-#include "Common/ContentHandler.h"
-#include "Common/DTDHandler.h"
-#include "Common/EntityResolver.h"
-#include "Common/ErrorHandler.h"
+#include "common/ContentHandler.h"
+#include "common/DTDHandler.h"
+#include "common/EntityResolver.h"
+#include "common/ErrorHandler.h"
 
 class ACEXML_Export ACEXML_XMLReader
 {

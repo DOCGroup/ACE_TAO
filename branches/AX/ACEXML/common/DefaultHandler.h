@@ -3,10 +3,10 @@
 #ifndef ACEXML_DEFAULTHANDLER_H
 #define ACEXML_DEFAULTHANDLER_H
 
-#include "Common/ContentHandler.h"
-#include "Common/DTDHandler.h"
-#include "Common/EntityResolver.h"
-#include "Common/ErrorHandler.h"
+#include "common/ContentHandler.h"
+#include "common/DTDHandler.h"
+#include "common/EntityResolver.h"
+#include "common/ErrorHandler.h"
 
 class ACEXML_Export ACEXML_DefaultHandler
   : public ACEXML_ContentHandler,
@@ -184,6 +184,6 @@ public:
 };
 
 #if defined (__ACEXML_INLINE__)
-# include "Common/DefaultHandler.i"
+# include "common/DefaultHandler.i"
 #endif /* __ACEXML_INLINE__ */
 #endif /* ACEXML_DEFAULTHANDLER_H */

@@ -1,8 +1,8 @@
 // -*- C++ -*-  $Id$
 
-#include "Common/DefaultHandler.h"
+#include "common/DefaultHandler.h"
 #if !defined (__ACEXML_INLINE__)
-# include "Common/DefaultHandler.i"
+# include "common/DefaultHandler.i"
 #endif /* __ACEXML_INLINE__ */
 
 ACEXML_DefaultHandler::ACEXML_DefaultHandler (void)

@@ -3,7 +3,7 @@
 #ifndef _ACEXML_EXCEPTION_H_
 #define _ACEXML_EXCEPTION_H_
 
-#include "Common/XML_Types.h"
+#include "common/XML_Types.h"
 
 class ACEXML_Export ACEXML_Exception
 {
@@ -36,6 +36,6 @@ protected:
 };
 
 #if defined (__ACEXML_INLINE__)
-# include "Common/Exception.i"
+# include "common/Exception.i"
 #endif /* __ACEXML_INLINE__ */
 #endif /* _ACEXML_EXCEPTION_H_ */

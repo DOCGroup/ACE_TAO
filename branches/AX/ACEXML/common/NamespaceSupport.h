@@ -3,7 +3,7 @@
 #ifndef ACEXML_NAMESPACESUPPORT_H
 #define ACEXML_NAMESPACESUPPORT_H
 
-#include "Common/XML_Types.h"
+#include "common/XML_Types.h"
 #include "ace/Functor.h"
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Containers_T.h"
@@ -153,6 +153,6 @@ private:
 
 
 #if defined (__ACEXML_INLINE__)
-# include "Common/NamespaceSupport.i"
+# include "common/NamespaceSupport.i"
 #endif /* __ACEXML_INLINE__ */
 #endif /* ACEXML_NAMESPACESUPPORT_H */

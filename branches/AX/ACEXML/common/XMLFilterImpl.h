@@ -3,13 +3,13 @@
 #ifndef ACEXML_XMLFILTERIMPL_H
 #define ACEXML_XMLFILTERIMPL_H
 
-#include "Common/XMLFilter.h"
-#include "Common/XMLReader.h"
-#include "Common/Locator.h"
-#include "Common/ContentHandler.h"
-#include "Common/DTDHandler.h"
-#include "Common/EntityResolver.h"
-#include "Common/ErrorHandler.h"
+#include "common/XMLFilter.h"
+#include "common/XMLReader.h"
+#include "common/Locator.h"
+#include "common/ContentHandler.h"
+#include "common/DTDHandler.h"
+#include "common/EntityResolver.h"
+#include "common/ErrorHandler.h"
 
 class ACEXML_Export ACEXML_XMLFilterImpl
   : public ACEXML_XMLFilter,
@@ -308,6 +308,6 @@ private:
 };
 
 #if defined (__ACEXML_INLINE__)
-# include "Common/XMLFilterImpl.i"
+# include "common/XMLFilterImpl.i"
 #endif /* __ACEXML_INLINE__ */
 #endif /* ACEXML_XMLFILTERIMPL_H */

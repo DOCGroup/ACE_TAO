@@ -4,7 +4,7 @@
 
 #ifndef _ACEXML_TRANSCODE_H_
 #define _ACEXML_TRANSCODE_H_
-#include "Common/XML_Types.h"
+#include "common/XML_Types.h"
 
 class ACEXML_Export ACEXML_Transcoder
 {
@@ -69,6 +69,6 @@ public:
 };
 
 #if defined (__ACEXML_INLINE__)
-# include "Common/Transcode.i"
+# include "common/Transcode.i"
 #endif /* __ACEXML_INLINE__ */
 #endif /* _ACEXML_TRANSCODE_H_ */
