@@ -12,7 +12,10 @@
 #endif /* ! __ACE_INLINE__ */
 
 // Do we really need this #define here?
-#define LINUX 1.2.10
+#define LINUX 2.0.29
+// ONLY define this if you have config'd multicast into a 2.x kernel.
+// If you do anything else, we've never tested it!
+#define ACE_HAS_IP_MULTICAST
 
 #define ACE_HAS_PENTIUM
 #define ACE_HAS_LONGLONG
