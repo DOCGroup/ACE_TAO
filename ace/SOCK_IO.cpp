@@ -25,8 +25,8 @@ ACE_SOCK_IO::dump (void) const
 // returns the number of bytes read.
 
 ssize_t
-ACE_SOCK_IO::recv (iovec *io_vec,
-                   const ACE_Time_Value *timeout)
+ACE_SOCK_IO::recvv (iovec *io_vec,
+                    const ACE_Time_Value *timeout)
 {
   ACE_TRACE ("ACE_SOCK_IO::recvv");
 #if defined (FIONREAD)
