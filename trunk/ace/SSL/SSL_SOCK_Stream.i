@@ -114,7 +114,7 @@ ACE_SSL_SOCK_Stream::recv (void *buf,
                            ACE_static_cast (char *, buf),
                            n);
 
-  if (status <= 0) 
+  if (status <= 0)
     {
       switch (::SSL_get_error (this->ssl_, status))
         {
@@ -259,20 +259,51 @@ ACE_SSL_SOCK_Stream::close (void)
 {
   ACE_TRACE ("ACE_SSL_SOCK_Stream::close");
 
-  if (this->ssl_ == 0)
-    return -1;
+  if (this->ssl_ == 0 || this->get_handle () == ACE_INVALID_HANDLE)
+    return 0;  // SSL_SOCK_Stream was never opened.
 
   // SSL_shutdown() returns 1 on successful shutdown of the SSL
   // connection, not 0.
-  if (::SSL_shutdown (this->ssl_) != 1)
+  int status = ::SSL_shutdown (this->ssl_);
+
+  if (status <= 0)
     {
+      switch (::SSL_get_error (this->ssl_, status))
+      {
+      case SSL_ERROR_WANT_WRITE:
+        ACE_DEBUG ((LM_DEBUG, "SSL_ERROR_WANT_WRITE\n"));
+        break;
+      case SSL_ERROR_WANT_READ:
+        ACE_DEBUG ((LM_DEBUG, "SSL_ERROR_WANT_READ\n"));
+        break;
+      case SSL_ERROR_WANT_X509_LOOKUP:
+        ACE_DEBUG ((LM_DEBUG, "SSL_ERROR_WANT_X509_LOOKUP\n"));
+        break;
+      case SSL_ERROR_NONE:
+        ACE_DEBUG ((LM_DEBUG, "SSL_ERROR_NONE\n"));
+        break;
+      case SSL_ERROR_SYSCALL:
+        ACE_DEBUG ((LM_DEBUG, "SSL_ERROR_SYSCALL\n"));
+        break;
+      case SSL_ERROR_ZERO_RETURN:
+        ACE_DEBUG ((LM_DEBUG, "SSL_ERROR_ZERO_RETURN\n"));
+        break;
+      default:
+#ifndef ACE_NDEBUG
+        ACE_DEBUG ((LM_DEBUG, "STATUS = %d\n", status));
+#endif  /* ACE_NDEBUG */
+        break;
+      }
+
       // Save/restore errno
       ACE_Errno_Guard error (errno);
       (void) this->stream_.close ();
-  
+      this->set_handle (ACE_INVALID_HANDLE);
+
       return -1;
     }
 
+  this->set_handle (ACE_INVALID_HANDLE);
   return this->stream_.close ();
 }
 
@@ -288,6 +319,3 @@ ACE_SSL_SOCK_Stream::ssl (void) const
 {
   return this->ssl_;
 }
-
-
-
