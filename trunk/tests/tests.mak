@@ -5604,6 +5604,7 @@ DEP_CPP_SV_SH=\
 	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
 	{$(INCLUDE)}"\ace\Malloc_T.h"\
 	{$(INCLUDE)}"\ace\Malloc_T.i"\
+	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
 	{$(INCLUDE)}"\ace\Managed_Object.h"\
 	{$(INCLUDE)}"\ace\Managed_Object.i"\
 	{$(INCLUDE)}"\ace\Mem_Map.h"\
@@ -6154,7 +6155,9 @@ DEP_CPP_REACTOR=\
 SOURCE=.\IOStream_Test.cpp
 DEP_CPP_IOSTR=\
 	{$(INCLUDE)}"\.\test_config.h"\
+	{$(INCLUDE)}"\ace\Acceptor.cpp"\
 	{$(INCLUDE)}"\ace\Acceptor.h"\
+	{$(INCLUDE)}"\ace\Acceptor.i"\
 	{$(INCLUDE)}"\ace\ACE.h"\
 	{$(INCLUDE)}"\ace\ACE.i"\
 	{$(INCLUDE)}"\ace\Addr.h"\
@@ -6169,6 +6172,8 @@ DEP_CPP_IOSTR=\
 	{$(INCLUDE)}"\ace\Containers.cpp"\
 	{$(INCLUDE)}"\ace\Containers.h"\
 	{$(INCLUDE)}"\ace\Containers.i"\
+	{$(INCLUDE)}"\ace\Dynamic.h"\
+	{$(INCLUDE)}"\ace\Dynamic.i"\
 	{$(INCLUDE)}"\ace\Event_Handler.h"\
 	{$(INCLUDE)}"\ace\Event_Handler.i"\
 	{$(INCLUDE)}"\ace\Free_List.cpp"\
@@ -6205,7 +6210,12 @@ DEP_CPP_IOSTR=\
 	{$(INCLUDE)}"\ace\Memory_Pool.i"\
 	{$(INCLUDE)}"\ace\Message_Block.h"\
 	{$(INCLUDE)}"\ace\Message_Block.i"\
+	{$(INCLUDE)}"\ace\Message_Queue.cpp"\
 	{$(INCLUDE)}"\ace\Message_Queue.h"\
+	{$(INCLUDE)}"\ace\Message_Queue.i"\
+	{$(INCLUDE)}"\ace\Module.cpp"\
+	{$(INCLUDE)}"\ace\Module.h"\
+	{$(INCLUDE)}"\ace\Module.i"\
 	{$(INCLUDE)}"\ace\Object_Manager.h"\
 	{$(INCLUDE)}"\ace\Object_Manager.i"\
 	{$(INCLUDE)}"\ace\OS.h"\
@@ -6223,6 +6233,9 @@ DEP_CPP_IOSTR=\
 	{$(INCLUDE)}"\ace\Shared_Object.i"\
 	{$(INCLUDE)}"\ace\Signal.h"\
 	{$(INCLUDE)}"\ace\Signal.i"\
+	{$(INCLUDE)}"\ace\Singleton.cpp"\
+	{$(INCLUDE)}"\ace\Singleton.h"\
+	{$(INCLUDE)}"\ace\Singleton.i"\
 	{$(INCLUDE)}"\ace\SOCK.h"\
 	{$(INCLUDE)}"\ace\SOCK.i"\
 	{$(INCLUDE)}"\ace\SOCK_Acceptor.h"\
@@ -6239,12 +6252,17 @@ DEP_CPP_IOSTR=\
 	{$(INCLUDE)}"\ace\Strategies.h"\
 	{$(INCLUDE)}"\ace\Strategies_T.cpp"\
 	{$(INCLUDE)}"\ace\Strategies_T.h"\
+	{$(INCLUDE)}"\ace\Stream_Modules.cpp"\
+	{$(INCLUDE)}"\ace\Stream_Modules.h"\
+	{$(INCLUDE)}"\ace\Stream_Modules.i"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
 	{$(INCLUDE)}"\ace\Svc_Conf_Tokens.h"\
+	{$(INCLUDE)}"\ace\Svc_Handler.cpp"\
 	{$(INCLUDE)}"\ace\Svc_Handler.h"\
+	{$(INCLUDE)}"\ace\Svc_Handler.i"\
 	{$(INCLUDE)}"\ace\Synch.h"\
 	{$(INCLUDE)}"\ace\Synch.i"\
 	{$(INCLUDE)}"\ace\Synch_Options.h"\
@@ -6253,7 +6271,9 @@ DEP_CPP_IOSTR=\
 	{$(INCLUDE)}"\ace\Synch_T.i"\
 	{$(INCLUDE)}"\ace\Task.h"\
 	{$(INCLUDE)}"\ace\Task.i"\
+	{$(INCLUDE)}"\ace\Task_T.cpp"\
 	{$(INCLUDE)}"\ace\Task_T.h"\
+	{$(INCLUDE)}"\ace\Task_T.i"\
 	{$(INCLUDE)}"\ace\Thread.h"\
 	{$(INCLUDE)}"\ace\Thread.i"\
 	{$(INCLUDE)}"\ace\Thread_Manager.h"\
@@ -6266,6 +6286,7 @@ DEP_CPP_IOSTR=\
 	{$(INCLUDE)}"\ace\Trace.h"\
 	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
+	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 
@@ -7046,7 +7067,9 @@ DEP_CPP_ENUM_=\
 	{$(INCLUDE)}"\ace\ACE.i"\
 	{$(INCLUDE)}"\ace\Addr.h"\
 	{$(INCLUDE)}"\ace\Addr.i"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
 	{$(INCLUDE)}"\ace\config-win32-common.h"\
 	{$(INCLUDE)}"\ace\config-win32.h"\
 	{$(INCLUDE)}"\ace\config.h"\

@@ -1,3 +1,16 @@
+Thu Nov 20 10:45:08 1997    <irfan@TWOSTEP>
+
+	* tests/MT_SOCK_Test.cpp: Uncommented socket close call.
+
+	* ace/WFMO_Reactor.cpp (open): Open the notification handler
+ 	  *after* the timer queue has been created.
+
+	* ace/ACE.cpp (get_ip_interfaces): Changed rep() to fast_rep() to
+ 	  prevent memory leak.
+	
+	* ace/Reactor.cpp (ACE_Reactor): Fixed error of not creating any
+ 	  Reactors on UNIX.
+
 Thu Nov 20 10:45:10 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.3.54, released Thu Nov 20 10:45:10 1997.
