@@ -8,7 +8,7 @@ ACE_RCSID(ImplRepo, nestea_client_i, "$Id$")
 
 // Constructor.
 Nestea_Client_i::Nestea_Client_i (void)
-  : server_key_ (ACE_OS::strdup ("key0")),
+  : server_key_ (ACE::strnew ("key0")),
     server_ (Nestea_Bookshelf::_nil ())
 {
 }
@@ -29,7 +29,7 @@ Nestea_Client_i::parse_args (void)
         TAO_debug_level++;
         break;
       case 'k':  // ior provide on command line
-        this->server_key_ = ACE_OS::strdup (get_opts.optarg);
+        this->server_key_ = ACE::strnew (get_opts.optarg);
         break;
       case '?':
       default:
@@ -74,11 +74,9 @@ Nestea_Client_i::run ()
 Nestea_Client_i::~Nestea_Client_i (void)
 {
   // Free resources
-  // Close the ior files
   CORBA::release (this->server_);
 
-  if (this->server_key_ != 0)
-    delete this->server_key_;
+  delete [] this->server_key_;
 }
 
 
