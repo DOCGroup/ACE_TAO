@@ -1,8 +1,19 @@
+Sun Apr 22 14:26:56 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * ace/OS.h:
+          Some warnings are automatically disabled, but the pragmas only
+          make sense for MSVC.
+
+        * ace/streams.h:
+          Fixed problems for Sun/CC-4.2, the trick is to include
+          strstream.h on MINGW32 *and* unix-like platforms, while
+          strstrea.h is included for all other WinXX-based compilers.
+
 Sat Apr 21 19:02:27 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* netsvcs/clients/Naming/Dump_Restore/Makefile:
-	* netsvcs/clients/Naming/Client/Makefile: Removed duplicated ACE
-	  library.  I thought I removed them all.
+        * netsvcs/clients/Naming/Dump_Restore/Makefile:
+        * netsvcs/clients/Naming/Client/Makefile: Removed duplicated ACE
+          library.  I thought I removed them all.
 
 Sat Apr 21 15:31:27 2001  Carlos O'Ryan  <coryan@uci.edu>
 
