@@ -298,15 +298,3 @@ ACE_Static_Allocator<POOL_SIZE>::print_stats (void) const
 }
 #endif /* ACE_HAS_MALLOC_STATS */
 
-template <size_t POOL_SIZE> ACE_INLINE void 
-ACE_Static_Allocator<POOL_SIZE>::dump (void) const
-{
-  ACE_TRACE ("ACE_Static_Allocator<POOL_SIZE>::dump");
-
-  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\noffset_ = %d\n"), this->offset_));
-  ACE_HEX_DUMP ((LM_DEBUG, this->pool_, POOL_SIZE));
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\n")));
-
-  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
-}
