@@ -201,12 +201,7 @@ Messaging::ExceptionHolder_var::operator= (const ExceptionHolder_var &p)
   return *this;
 }
 
-Messaging::ExceptionHolder_var::operator const Messaging::ExceptionHolder* () const // cast
-{
-  return this->ptr_;
-}
-
-Messaging::ExceptionHolder_var::operator Messaging::ExceptionHolder* () // cast
+Messaging::ExceptionHolder_var::operator Messaging::ExceptionHolder*& () // cast
 {
   return this->ptr_;
 }
@@ -392,7 +387,7 @@ CORBA::Boolean Messaging::ExceptionHolder::_tao_unmarshal (
   CORBA::Boolean retval =
     CORBA::ValueBase::_tao_unmarshal_pre (
         strm,
-        factory,
+        factory.out (),
         base,
         ExceptionHolder::_tao_obv_static_repository_id ()
       );
