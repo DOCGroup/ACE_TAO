@@ -28,25 +28,25 @@ print STDERR "\n********** RTCORBA Priority Banded Connections Unit Test\n";
 $server_args =
     "-n $iorfile1 -o $iorfile2 -b bands.unix -ORBSvcConf $server_conf "
     ."-ORBdebuglevel 1 -p 67 -w 78 "
-    ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=66 "
-    ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=75 "
+    ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=69 "
+    ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=76 "
     ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=80 ";
 
 $client_args =
     "-n file://$iorfile1 -o file://$iorfile2 "
-    ."-a 76 -b 80 -c 64";
+    ."-a 67 -b 75 -c 77";
 
 if ($^O eq "MSWin32") {
     $server_args =
         "-n $iorfile1 -o $iorfile2 -b bands.nt -ORBSvcConf $server_conf "
             ."-ORBdebuglevel 1 -p 1 -w 3 "
             ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=2 "
-                ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=5 "
+                ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=4 "
                     ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=6 ";
 
     $client_args =
         "-n file://$iorfile1 -o file://$iorfile2 "
-            ."-a 4 -b 6 -c 3";
+            ."-a 1 -b 4 -c 6 ";
 }
 
 $SV = new PerlACE::Process ("server", $server_args);
@@ -56,7 +56,7 @@ $SV->Spawn ();
 
 if (PerlACE::waitforfile_timed ($iorfile2, 10) == -1) {
     print STDERR "ERROR: cannot find file <$iorfile2>\n";
-    $SV->Kill (); 
+    $SV->Kill ();
     exit 1;
 }
 

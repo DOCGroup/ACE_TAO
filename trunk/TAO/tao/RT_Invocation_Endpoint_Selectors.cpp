@@ -56,17 +56,22 @@ TAO_Priority_Endpoint_Selector::select_endpoint (TAO_GIOP_Invocation
     {
       // Profiles contains more than one endpoint.  Find one with the
       // right priority.
+
+      // Right now it is assumed that the priority bands are adjacent, and
+      // that for each priority band the ORB has an endpoint at a priority
+      // that is set to the maximum of the associated band.
       TAO_Endpoint *endpoint = 0;
+      TAO_Endpoint *prev_endpoint = invocation->profile_->endpoint ();
       for (TAO_Endpoint *endp = invocation->profile_->endpoint ();
            endp != 0;
            endp = endp->next ())
         {
-          if (endp->priority ()
-              == invocation->endpoint_selection_state_.client_priority_)
+          if (endp->priority () > invocation->endpoint_selection_state_.client_priority_)
             {
-              endpoint = endp;
+              endpoint = prev_endpoint;
               break;
             }
+          prev_endpoint = endp;
         }
 
       if (endpoint != 0)
@@ -196,18 +201,18 @@ TAO_Protocol_Endpoint_Selector::~TAO_Protocol_Endpoint_Selector (void)
 }
 
 void
-TAO_Protocol_Endpoint_Selector::select_endpoint (TAO_GIOP_Invocation 
+TAO_Protocol_Endpoint_Selector::select_endpoint (TAO_GIOP_Invocation
                                                  *invocation,
                                                  CORBA::Environment &ACE_TRY_ENV)
 {
   /// Narrow down to the right policy.
-  RTCORBA::ClientProtocolPolicy_var cp_policy = 
+  RTCORBA::ClientProtocolPolicy_var cp_policy =
     RTCORBA::ClientProtocolPolicy::_narrow (
                                             invocation->endpoint_selection_state_.
                                             client_protocol_policy_,
                                             ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   /// Cast to TAO_ClientProtocolPolicy
   TAO_ClientProtocolPolicy *client_protocol_policy =
     ACE_static_cast (TAO_ClientProtocolPolicy *,
@@ -216,7 +221,7 @@ TAO_Protocol_Endpoint_Selector::select_endpoint (TAO_GIOP_Invocation
   /// Get the ProtocolList
   RTCORBA::ProtocolList & protocols =
     client_protocol_policy->protocols_rep ();
-  
+
   CORBA::ULong protocol_index =
     invocation->endpoint_selection_state_.client_protocol_index_;
 
@@ -245,7 +250,7 @@ TAO_Protocol_Endpoint_Selector::select_endpoint (TAO_GIOP_Invocation
   // Find a Profile for the next protocol we would like to try.
   TAO_Profile *profile = 0;
   TAO_MProfile& mprofile = invocation->stub_->base_profiles ();
-  
+
   for (TAO_PHandle i = 0;
        i < mprofile.profile_count ();
        ++i)
