@@ -3,16 +3,13 @@
 # $Id$
 #
 #----------------------------------------------------------------------------
+
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # ! TAO_ROOT
 
-MAKEFILE = Makefile
-LIBNAME  = libTAO_RTCORBA
-LIB      = $(LIBNAME).a
-SHLIB    = $(LIBNAME).$(SOEXT)
 
-ACE_SHLIBS = -lTAO -lACE
+
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
@@ -20,6 +17,14 @@ ACE_SHLIBS = -lTAO -lACE
 
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
+
+ifeq ($(corba_messaging),1)
+
+LIBNAME  = libTAO_RTCORBA
+MAKEFILE = Makefile
+LIB      = $(LIBNAME).a
+SHLIB    = $(LIBNAME).$(SOEXT)
+ACE_SHLIBS = -lTAO -lACE
 
 CPP_SRCS += \
   Direct_Priority_Mapping \
@@ -44,8 +49,6 @@ CPP_SRCS += \
   RT_Stub \
   RT_Stub_Factory \
   Thread_Pool
-  
-  
 
 IDL_SRC = \
         $(addsuffix S.cpp, $(IDL_FILES)) \
@@ -53,6 +56,8 @@ IDL_SRC = \
 FILES = $(CPP_SRCS)
 DEFS  = $(addsuffix .h,$(FILES))
 LSRC  = $(addsuffix .cpp,$(FILES))
+
+endif # corba_messaging
 
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
@@ -64,9 +69,14 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 #----------------------------------------------------------------------------
 #       Local targets (and local hacks)
 #----------------------------------------------------------------------------
+ifeq ($(corba_messaging),1)
 
 LDFLAGS += -L$(TAO_ROOT)/tao
 CPPFLAGS += -I$(TAO_ROOT)
+
+else
+all:
+endif # corba_messaging
 
 #----------------------------------------------------------------------------
 #       Dependencies
