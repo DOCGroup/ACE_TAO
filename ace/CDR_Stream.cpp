@@ -13,7 +13,7 @@ int
 ACE_CDR::grow (ACE_Message_Block *mb, size_t minsize)
 {
   size_t newsize =
-    ACE_CDR::first_size (minsize);
+    ACE_CDR::first_size (minsize + ACE_CDR::MAX_ALIGNMENT);
 
   if (newsize <= mb->size ())
     return 0;
