@@ -35,7 +35,7 @@ TAO_Thread_Policy::TAO_Thread_Policy (PortableServer::ThreadPolicyValue value,
 
 TAO_Thread_Policy::TAO_Thread_Policy (const TAO_Thread_Policy &rhs)
   : value_ (rhs.value_),
-    poa_ (PortableServer::POA::_duplicate (rhs.poa_))
+    poa_ (PortableServer::POA::_duplicate (rhs.poa_.in ()))
 {
 }
 
@@ -99,7 +99,7 @@ TAO_Lifespan_Policy::TAO_Lifespan_Policy (PortableServer::LifespanPolicyValue va
 
 TAO_Lifespan_Policy::TAO_Lifespan_Policy (const TAO_Lifespan_Policy &rhs)
   : value_ (rhs.value_),
-    poa_ (PortableServer::POA::_duplicate (rhs.poa_))
+    poa_ (PortableServer::POA::_duplicate (rhs.poa_.in ()))
 {
 }
 
@@ -162,7 +162,7 @@ TAO_Id_Uniqueness_Policy::TAO_Id_Uniqueness_Policy (PortableServer::IdUniqueness
 
 TAO_Id_Uniqueness_Policy::TAO_Id_Uniqueness_Policy (const TAO_Id_Uniqueness_Policy &rhs)
   : value_ (rhs.value_),
-    poa_ (PortableServer::POA::_duplicate (rhs.poa_))
+    poa_ (PortableServer::POA::_duplicate (rhs.poa_.in ()))
 {
 }
 
@@ -225,7 +225,7 @@ TAO_Id_Assignment_Policy::TAO_Id_Assignment_Policy (PortableServer::IdAssignment
 
 TAO_Id_Assignment_Policy::TAO_Id_Assignment_Policy (const TAO_Id_Assignment_Policy &rhs)
   : value_ (rhs.value_),
-    poa_ (PortableServer::POA::_duplicate (rhs.poa_))
+    poa_ (PortableServer::POA::_duplicate (rhs.poa_.in ()))
 {
 }
 
@@ -288,7 +288,7 @@ TAO_Implicit_Activation_Policy::TAO_Implicit_Activation_Policy (PortableServer::
 
 TAO_Implicit_Activation_Policy::TAO_Implicit_Activation_Policy (const TAO_Implicit_Activation_Policy &rhs)
   : value_ (rhs.value_),
-    poa_ (PortableServer::POA::_duplicate (rhs.poa_))
+    poa_ (PortableServer::POA::_duplicate (rhs.poa_.in ()))
 {
 }
 
@@ -351,7 +351,7 @@ TAO_Servant_Retention_Policy::TAO_Servant_Retention_Policy (PortableServer::Serv
 
 TAO_Servant_Retention_Policy::TAO_Servant_Retention_Policy (const TAO_Servant_Retention_Policy &rhs)
   : value_ (rhs.value_),
-    poa_ (PortableServer::POA::_duplicate (rhs.poa_))
+    poa_ (PortableServer::POA::_duplicate (rhs.poa_.in ()))
 {
 }
 
@@ -414,7 +414,7 @@ TAO_Request_Processing_Policy::TAO_Request_Processing_Policy (PortableServer::Re
 
 TAO_Request_Processing_Policy::TAO_Request_Processing_Policy (const TAO_Request_Processing_Policy &rhs)
   : value_ (rhs.value_),
-    poa_ (PortableServer::POA::_duplicate (rhs.poa_))
+    poa_ (PortableServer::POA::_duplicate (rhs.poa_.in ()))
 {
 }
 
