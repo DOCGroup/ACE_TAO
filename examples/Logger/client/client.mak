@@ -156,6 +156,7 @@ DEP_CPP_LOGGI=\
 	{$(INCLUDE)}"\ace\stdcpp.h"\
 	{$(INCLUDE)}"\ace\Time_Value.h"\
 	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 
