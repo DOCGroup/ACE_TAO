@@ -11,14 +11,37 @@ void traverse_package (Deployment::PackageConfiguration* &pc,
                        Deployment::DeploymentPlan &plan,
                        REF_MAP &ref_map, REF_MAP &primary_ref_map)
 {
+  // @@ (OO) The three loops in this function are nested, meaning that
+  //         performance will be O(n^3).  On top of that, each of the
+  //         loops makes function calls that execute nested loops
+  //         themselves, potentially increasing the execution time by
+  //         several additonal orders of magnitude (e.g. O(n^6).  Is
+  //         this really the only way to implement the required
+  //         functionality?  This is really only a problem if the sets
+  //         being traversed are large.
+
+  // @@ (OO) The "continue loop" condition portion of the for
+  //         statement is executed during each loop iteration.  To
+  //         improve performance execute it only once outside the
+  //         for-loop.
+  
   // traverse the package configuration structure to get to the
   // BasePackage which consists of assemblies.
   //
   for (CORBA::ULong x = 0; x < pc->basePackage.length (); ++x)
     {
-      for (CORBA::ULong y = 0; 
+      // @@ (OO) The "continue loop" condition portion of the for
+      //         statement is executed during each loop iteration.  To
+      //         improve performance execute it only once outside the
+      //         for-loop.
+      for (CORBA::ULong y = 0;
            y < pc->basePackage[x].implementation.length (); ++y)
         {
+          // @@ (OO) The "continue loop" condition portion of the for
+          //         statement is executed during each loop iteration.  To
+          //         improve performance execute it only once outside the
+          //         for-loop.
+
           // traverse the .cpd file and get to the referenced .cid file
           //
           Deployment::ComponentImplementationDescription cid =
@@ -43,7 +66,7 @@ void traverse_assembly (Deployment::ComponentAssemblyDescription &assembly,
                         Deployment::DeploymentPlan &plan,
                         REF_MAP &ref_map, REF_MAP &primary_ref_map)
 {
-  // traverse the assembly (ComponentAssemblyDescription) and 
+  // traverse the assembly (ComponentAssemblyDescription) and
   // processes the instances and the connection within the assembly.
   //
   for (CORBA::ULong k = 0; k < assembly.instance.length (); ++k)
@@ -98,7 +121,7 @@ void traverse_assembly_connection (Deployment::ComponentAssemblyDescription
       CORBA::ULong ins_ref = assembly_connection.internalEndpoint[n].
                              instanceRef;
       const char* ins_name = assembly.instance[ins_ref].name;
-      for (CORBA::ULong w = 0; w < plan.instance.length (); 
+      for (CORBA::ULong w = 0; w < plan.instance.length ();
            ++w)
         {
           const char* pl_name = plan.instance[w].name;
@@ -224,7 +247,7 @@ void update_artifacts (Deployment::MonolithicImplementationDescription &mid,
 }
 
 void update_common_artifact_and_art_ref (Deployment::
-                                         ImplementationArtifactDescription 
+                                         ImplementationArtifactDescription
                                          &pack_iad,
                                          REF_MAP &primary_ref_map,
                                          REF_MAP &ref_map,

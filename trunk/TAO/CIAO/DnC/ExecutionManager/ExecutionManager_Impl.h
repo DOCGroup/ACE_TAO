@@ -49,17 +49,21 @@ namespace CIAO
     {
 
     public:
-      // Default constructor.
+      /// Constructor.
       ExecutionManager_Impl (CORBA::ORB_ptr orb,
                              PortableServer::POA_ptr poa,
                              const char * init_file
                              ACE_ENV_ARG_DECL);
 
-      // Default destructor.
+      // @@ (OO) Since this class is reference counted, please make this
+      //         destructor protected to enforce proper memory managment
+      //         through the reference counting mechanism (i.e. to
+      //         disallow calling operator delete() on an instance of
+      //         this class.
+      /// Destructor.
       ~ExecutionManager_Impl ();
 
-
-      // Generate an ApplicationManager factory.
+      /// Generate an ApplicationManager factory.
       virtual Deployment::DomainApplicationManager_ptr
         preparePlan
         (
@@ -73,12 +77,12 @@ namespace CIAO
                          Deployment::StartError
                          ));
 
-      // Return a set of the currently held DomainApplicationMnager.
+      /// Return a set of the currently held DomainApplicationMnager.
       virtual Deployment::DomainApplicationManagers *
         getManagers (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
         ACE_THROW_SPEC ((CORBA::SystemException));
 
-      // Destroy a specific manager.
+      /// Destroy a specific manager.
       virtual void
         destroyManager
         (
@@ -107,21 +111,25 @@ namespace CIAO
       typedef Table::iterator Iterator;
       */
 
-      // Cached ORB pointer
+      /// Cached ORB pointer
       CORBA::ORB_var orb_;
 
-      // Cached POA pointer
+      /// Cached POA pointer
       PortableServer::POA_var poa_;
 
       // Internal Hashtable
       // Table table_;
 
-      // Path to the initialization file
+      /      // Path to the initialization file
       ACE_CString init_file_;
 
       Deployment::DomainApplicationManager_var dam_;
 
-      // Cached servant of the DomainApplicaitonmanager.
+      // @@ (OO) You may want to consider caching this->dam_servant_
+      //         into a TAO::Utils::Servant_Var<> to ease memory
+      //         management, e.g. automatically decreasing reference
+      //         counts, etc.
+      /// Cached servant of the DomainApplicaitonmanager.
       CIAO::DomainApplicationManager_Impl * dam_servant_;
     };
 

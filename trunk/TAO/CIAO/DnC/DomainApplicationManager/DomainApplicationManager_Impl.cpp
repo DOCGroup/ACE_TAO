@@ -23,20 +23,39 @@ DomainApplicationManager_Impl (CORBA::ORB_ptr orb,
     poa_ (PortableServer::POA::_duplicate (poa)),
     target_manager_ (Deployment::TargetManager::_duplicate (manager)),
     plan_ (plan),
+    // @@ (OO) You don't initialize num_child_plans_ to reasonable a
+    //         default (0?).  You should do so to make it easy to
+    //         detect run-time problems related to this variable.
+    //
+  // @@ (OO) The default size for an ACE_Hash_Map_Mapanger is quiet
+  //         large.  The maximum size of an ACE_Hash_Map_Manager is
+  //         also fixed, i.e. it does not grow dynamically on demand.
+  //         Make sure the default size of artifact_map_ is
+  //         appropriate for your needs.  You may also want to make
+  //         the size configurable at compile-time, at least.
     deployment_file_ (CORBA::string_dup (deployment_file)),
     deployment_config_ (orb)
 {
   ACE_NEW_THROW_EX (this->all_connections_,
-		                Deployment::Connections (),
-		                CORBA::NO_MEMORY ());
+                    Deployment::Connections (),
+                    CORBA::NO_MEMORY ());
   ACE_CHECK;
 }
 
 CIAO::DomainApplicationManager_Impl::~DomainApplicationManager_Impl ()
 {
+  // @@ (OO) Debugging output should not be displayed in production
+  //         code unless requested by the user (e.g. via a debug
+  //         flag/option).
   ACE_DEBUG ((LM_DEBUG, "DomainApplicationManager destroyed\n"));
+
+  // @@ (OO) You don't call delete() on this->all_connections_,
+  //         meaning that you're probably leaking it.
 }
 
+// @@ (OO) Method definitions should never use "_WITH_DEFAULTS"
+//         versions of emulated exception parameters.  Please remove
+//         the "_WITH_DEFAULTS"
 void
 CIAO::DomainApplicationManager_Impl::
 init (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
@@ -57,6 +76,10 @@ init (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       if (! this->split_plan ())
         ACE_THROW (Deployment::PlanError ());
 
+
+      // @@ (OO) Please change "i++" to "++i".  The prefix increment
+      //         operator is more efficient than the postfix increment
+      //         operator.
       // Invoke preparePlan for each child deployment plan.
       for (CORBA::ULong i = 0; i < this->num_child_plans_; i++)
         {
@@ -122,7 +145,14 @@ get_plan_info (void)
   if ( this->deployment_config_.init (this->deployment_file_) == -1 )
     return 0;
 
+  // @@ (OO) Since length is a constant, please declare it as such,
+  //         i.e. "const CORBA::ULong length = ...", to improve "const
+  //         correctness".
   CORBA::ULong length = this->plan_.instance.length ();
+
+  // @@ (OO) There is no need to check for zero length.  The loop
+  //         below will not execute if it is zero is the loop
+  //         condition (index < length) will not be satisfied.
 
   // Error: If there are no nodes in the plan => No nodes to deploy the
   // components
@@ -134,7 +164,18 @@ get_plan_info (void)
   int num_plans = 0;
   for (CORBA::ULong index = 0; index < length; index ++)
     {
+      // @@ (OO) Please declare "matched" as a bool since it is
+      //         actually used as a boolean value.
       int matched = 0;
+
+      // @@ (OO) The "continue loop" condition portion of the for
+      //         statement is executed during each loop iteration.  To
+      //         improve performance execute it only once outside the
+      //         for-loop.
+
+      // @@ (OO) Please change "i++" to "++i".  The prefix increment
+      //         operator is more efficient than the postfix increment
+      //         operator.
       for (CORBA::ULong i = 0; i < this->node_manager_names_.size (); i++)
         // If a match is found do not add it to the list of unique
         // node names
@@ -158,8 +199,8 @@ get_plan_info (void)
             return 0; /* Failure */
 
           // Add this unique node_name to the list of NodeManager names
-         // this->node_manager_names_.push_back
-         //   (CORBA::string_dup
+          // this->node_manager_names_.push_back
+          //   (CORBA::string_dup
           //   (this->plan_.instance [index].node.in ()));
 
           this->node_manager_names_.push_back(this->plan_.instance [index].node.in ());
@@ -171,6 +212,11 @@ get_plan_info (void)
 
   // Set the length of the Node Managers
   this->num_child_plans_ = num_plans;
+
+  // @@ (OO) In all of our code, a successful return condition is
+  //         equated with zero, not one, unless a boolean value is
+  //         returned.  To clarify this, I suggest changing the return
+  //         value of this method to bool.
 
   // Indicate success
   return 1;
@@ -185,7 +231,10 @@ split_plan (void)
   // Initialize the total number of child deployment plans specified
   // by the global plan.
 
- for (CORBA::ULong i = 0; i < this->num_child_plans_; i++)
+  // @@ (OO) Please change "i++" to "++i".  The prefix increment
+  //         operator is more efficient than the postfix increment
+  //         operator.
+  for (CORBA::ULong i = 0; i < this->num_child_plans_; i++)
   {
     ::Deployment::DeploymentPlan_var tmp_plan;
     ACE_NEW_RETURN (tmp_plan,
@@ -194,6 +243,8 @@ split_plan (void)
 
     tmp_plan->UUID = CORBA::string_dup (this->plan_.UUID.in ());
 
+    // @@ (OO) Are these necessary?  A default constructed sequence
+    //         should already have a length of zero.
     tmp_plan->implementation.length (0);
     tmp_plan->instance.length (0);
     tmp_plan->connection.length (0);
@@ -222,6 +273,9 @@ split_plan (void)
   // (2) Retrieve the necessary information to contruct the node-level
   //     plans one by one.
 
+  // @@ (OO) Please change "i++" to "++i".  The prefix increment
+  //         operator is more efficient than the postfix increment
+  //         operator.
   for (CORBA::ULong i = 0; i < (this->plan_.instance).length (); i++)
     {
       // Fill in the child deployment plan in the map.
@@ -267,6 +321,11 @@ split_plan (void)
       // Initialize with the correct sequence length.
       CORBA::ULongSeq ulong_seq;
       ulong_seq.length (my_implementation.artifactRef.length ());
+
+      // @@ (OO) The "continue loop" condition portion of the for
+      //         statement is executed during each loop iteration.  To
+      //         improve performance execute it only once outside the
+      //         for-loop.
 
       // Append the "ArtifactDeploymentDescriptions artifact" field
       // with some new "artifacts", which is specified by the
@@ -318,6 +377,15 @@ add_connections (const Deployment::Connections & incoming_conn)
   // Expand the length of the <all_connection_> sequence.
   this->all_connections_->length (old_len + incoming_conn.length ());
 
+  // @@ (OO) Please change "i++" to "++i".  The prefix increment
+  //         operator is more efficient than the postfix increment
+  //         operator.
+
+  // @@ (OO) The "continue loop" condition portion of the for
+  //         statement is executed during each loop iteration.  To
+  //         improve performance execute it only once outside the
+  //         for-loop.
+
   // Store the connections to the <all_conections_> sequence
   for (CORBA::ULong i = 0; i < incoming_conn.length (); i++)
   {
@@ -325,7 +393,9 @@ add_connections (const Deployment::Connections & incoming_conn)
   }
 }
 
-
+// @@ (OO) Method definitions should never use "_WITH_DEFAULTS"
+//         versions of emulated exception parameters.  Please remove
+//         the "_WITH_DEFAULTS"
 void
 CIAO::DomainApplicationManager_Impl::
 startLaunch (const ::Deployment::Properties & configProperty,
@@ -336,9 +406,22 @@ startLaunch (const ::Deployment::Properties & configProperty,
                    ::Deployment::StartError,
                    ::Deployment::InvalidProperty))
 {
+  // @@ (OO) An unused argument in C++ is marked by removing the
+  //         parameter name.  We only use ACE_UNUSED_ARG() when there
+  //         are multiple preprocessor-time cases (e.g. different
+  //         platform-specific implementations, and at least one of
+  //         them uses the argument, while some others do not.  In
+  //         this case, please remove the below ACE_UNUSED_ARG, and
+  //         comment out the "start" parameter name above, e.g.:
+  //
+  //             CORBA::Boolean /* start */
   ACE_UNUSED_ARG (start);
   ACE_TRY
     {
+      // @@ (OO) Please change "i++" to "++i".  The prefix increment
+      //         operator is more efficient than the postfix increment
+      //         operator.
+
       // Invoke startLaunch() operations on each cached NodeApplicationManager
       for (CORBA::ULong i = 0; i < this->num_child_plans_; i++)
         {
@@ -399,14 +482,17 @@ startLaunch (const ::Deployment::Properties & configProperty,
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            "DomainApplicationManager_Impl::startLaunch\t\n");
       ACE_RE_THROW;
-      return;
+      return;  // @@ (OO) What purpose does this "return" statement
+               //         serve?
     }
   ACE_ENDTRY;
 
   ACE_CHECK_RETURN (0);
 }
 
-
+// @@ (OO) Method definitions should never use "_WITH_DEFAULTS"
+//         versions of emulated exception parameters.  Please remove
+//         the "_WITH_DEFAULTS"
 void
 CIAO::DomainApplicationManager_Impl::
 finishLaunch (::CORBA::Boolean start
@@ -416,6 +502,10 @@ finishLaunch (::CORBA::Boolean start
 {
   ACE_TRY
     {
+      // @@ (OO) Please change "i++" to "++i".  The prefix increment
+      //         operator is more efficient than the postfix increment
+      //         operator.
+
       // Invoke finishLaunch() operation on each cached NodeApplication object.
       for (CORBA::ULong i = 0; i < this->num_child_plans_; i++)
         {
@@ -461,14 +551,17 @@ finishLaunch (::CORBA::Boolean start
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            "DomainApplicationManager_Impl::finishLaunch\t\n");
       ACE_RE_THROW;
-      return;
+      return;  // @@ (OO) What purpose does this "return" statement
+               //         serve?
     }
   ACE_ENDTRY;
 
   ACE_CHECK_RETURN (0);
 }
 
-
+// @@ (OO) Method definitions should never use "_WITH_DEFAULTS"
+//         versions of emulated exception parameters.  Please remove
+//         the "_WITH_DEFAULTS"
 void
 CIAO::DomainApplicationManager_Impl::
 start (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
@@ -477,6 +570,10 @@ start (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 {
   ACE_TRY
     {
+      // @@ (OO) Please change "i++" to "++i".  The prefix increment
+      //         operator is more efficient than the postfix increment
+      //         operator.
+
       // Invoke start() operation on each cached NodeApplication object.
       for (CORBA::ULong i = 0; i < this->num_child_plans_; i++)
         {
@@ -502,13 +599,17 @@ start (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            "DomainApplicationManager_Impl::start\t\n");
       ACE_RE_THROW;
-      return;
+      return; // @@ (OO) What purpose does this return statement
+              //         serve?
     }
   ACE_ENDTRY;
 
   ACE_CHECK_RETURN (0);
 }
 
+// @@ (OO) Method definitions should never use "_WITH_DEFAULTS"
+//         versions of emulated exception parameters.  Please remove
+//         the "_WITH_DEFAULTS"
 void
 CIAO::DomainApplicationManager_Impl::
 destroyApplication (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
@@ -517,6 +618,10 @@ destroyApplication (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 {
   ACE_TRY
     {
+      // @@ (OO) Please change "i++" to "++i".  The prefix increment
+      //         operator is more efficient than the postfix increment
+      //         operator.
+
       // Invoke destroyManager() operation on each cached
       // NodeManager object.
       for (CORBA::ULong i = 0; i < this->num_child_plans_; i++)
@@ -544,7 +649,8 @@ destroyApplication (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            "DomainApplicationManager_Impl::destroyApplication\t\n");
-      ACE_RE_THROW;
+      ACE_RE_THROW; // @@ (OO) What purpose does this "return"
+                    //         statement serve?
       return;
     }
   ACE_ENDTRY;
@@ -552,6 +658,9 @@ destroyApplication (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
   ACE_CHECK;
 }
 
+// @@ (OO) Method definitions should never use "_WITH_DEFAULTS"
+//         versions of emulated exception parameters.  Please remove
+//         the "_WITH_DEFAULTS"
 void
 CIAO::DomainApplicationManager_Impl::
 destroyManager (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
@@ -560,6 +669,9 @@ destroyManager (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 {
   ACE_TRY
     {
+      // @@ (OO) Please change "i++" to "++i".  The prefix increment
+      //         operator is more efficient than the postfix increment
+      //         operator.
       for (CORBA::ULong i = 0; i < this->num_child_plans_; i++)
         {
           // Get the NodeManager and NodeApplicationManager object references.
@@ -593,13 +705,17 @@ destroyManager (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            "DomainApplicationManager_Impl::destroyManager\t\n");
       ACE_RE_THROW;
-      return;
+      return;  // @@ (OO) What purpose does this "return" statement
+               //         serve?
     }
   ACE_ENDTRY;
 
   ACE_CHECK;
 }
 
+// @@ (OO) Method definitions should never use "_WITH_DEFAULTS"
+//         versions of emulated exception parameters.  Please remove
+//         the "_WITH_DEFAULTS"
 // Returns the DeploymentPlan associated with this ApplicationManager.
 ::Deployment::DeploymentPlan *
 CIAO::DomainApplicationManager_Impl::
@@ -625,10 +741,13 @@ get_outgoing_connections (const Deployment::DeploymentPlan &plan)
 		  Deployment::Connections,
 		  0);
 
+  // @@ (OO) Please change "i++" to "++i".  The prefix increment
+  //         operator is more efficient than the postfix increment
+  //         operator.
+
   // For each component instance in the child plan ...
   for (CORBA::ULong i = 0; i < plan.instance.length (); i++)
   {
-
     // Get the component instance name
     if (!get_outgoing_connections_i (plan.instance[i].name.in (),
 				     connections.inout ()))
@@ -645,22 +764,30 @@ get_outgoing_connections_i (const char * instname,
   // Search in all the connections in the plan.
   for (CORBA::ULong i = 0; i < this->plan_.connection.length(); ++i)
   {
+    // @@ (OO) Since len is a constant, please declare it as such,
+    //         i.e. "const CORBA::ULong len = ...".
     CORBA::ULong len = retv.length ();
 
     // Current connection that we are looking at.
-    const Deployment::PlanConnectionDescription & curr_conn
-      = this->plan_.connection[i];
+    const Deployment::PlanConnectionDescription & curr_conn =
+      this->plan_.connection[i];
+
+    // @@ (OO) The "continue loop" condition portion of the for
+    //         statement is executed during each loop iteration.  To
+    //         improve performance execute it only once outside the
+    //         for-loop.
 
     //The modeling tool should make sure there are always 2 endpoints
     //in a connection.
     for (CORBA::ULong p_index = 0;
          p_index < curr_conn.internalEndpoint.length ();
-	       ++p_index)
+         ++p_index)
     {
-      const Deployment::PlanSubcomponentPortEndpoint & endpoint
-	      = curr_conn.internalEndpoint[p_index];
+      const Deployment::PlanSubcomponentPortEndpoint & endpoint =
+        curr_conn.internalEndpoint[p_index];
 
-      // If the component name matches the name of one of the endpoints in the connection.
+      // If the component name matches the name of one of the
+      // endpoints in the connection.
       if (ACE_OS::strcmp (this->plan_.instance[endpoint.instanceRef].name.in (),
 			                    instname) == 0 )
       {
@@ -682,6 +809,12 @@ get_outgoing_connections_i (const char * instname,
 	          bool found = false;
 
 	          //ACE_DEBUG ((LM_DEBUG, "step3\n"));
+
+                  // @@ (OO) The "continue loop" condition portion of
+                  //         the for statement is executed during each
+                  //         loop iteration.  To improve performance
+                  //         execute it only once outside the
+                  //         for-loop.
 
 	          // Now we have to search in the received connections to get the objRef.
 	          for (CORBA::ULong conn_index = 0;
@@ -727,6 +860,15 @@ void
 CIAO::DomainApplicationManager_Impl::
 dump_connections (const ::Deployment::Connections & connections)
 {
+  // @@ (OO) The "continue loop" condition portion of the for
+  //         statement is executed during each loop iteration.  To
+  //         improve performance execute it only once outside the
+  //         for-loop.
+
+  // @@ (OO) Please change "i++" to "++i".  The prefix increment
+  //         operator is more efficient than the postfix increment
+  //         operator.
+
   for (CORBA::ULong i = 0; i < connections.length (); i++)
   {
     ACE_DEBUG ((LM_DEBUG, "instanceName: %s\n", connections[i].instanceName.in ()));

@@ -65,6 +65,8 @@ namespace CIAO
                       CIAO::Map_Key_Cookie,
                       CORBA::NO_MEMORY ());
 
+    // @@ (OO) An "ACE_CHECK_RETURN (0) is missing here.
+
     return ret_val;
   }
 

@@ -73,6 +73,11 @@ namespace CIAO
       ACE_THROW_SPEC ((CORBA::SystemException));
 
 
+    // @@ (OO) Since this class is reference counted, please make this
+    //         destructor protected to enforce proper memory managment
+    //         through the reference counting mechanism (i.e. to
+    //         disallow calling operator delete() on an instance of
+    //         this class.
     /// Destructor
     virtual ~DomainApplicationManager_Impl (void);
 
@@ -109,6 +114,11 @@ namespace CIAO
      * the UUID associated. The get_uuid method is used in this case.
      */
     void set_uuid (const char * uuid);
+
+    // @@ (OO) To improve const correctness, this method should be
+    //         declared as const, i.e.:
+    //
+    //           const char * get_uuid () const;
     const char * get_uuid ();
 
     /*===========================================================
