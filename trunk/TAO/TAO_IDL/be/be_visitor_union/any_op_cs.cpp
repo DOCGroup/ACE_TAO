@@ -134,8 +134,8 @@ be_visitor_union_any_op_cs::visit_union (be_union *node)
       << "}\n\n";
 
   *os << "CORBA::Boolean operator>>= (" << be_idt << be_idt_nl
-      << "const CORBA::Any &_tao_any, const " << be_nl
-      << node->name () << " *&_tao_elem" << be_uidt_nl
+      << "const CORBA::Any &_tao_any," << be_nl
+      << "const " << node->name () << " *&_tao_elem" << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl
       << "ACE_TRY_NEW_ENV" << be_nl
@@ -268,7 +268,7 @@ gen_extraction (TAO_OutStream *os,
       << "((CORBA::Any *)&_tao_any)->_tao_replace (" << be_idt << be_idt_nl
       << node->tc_name () << "," << be_nl
       << "1," << be_nl
-      << "ACE_reinterpret_cast(void*,_tao_elem)," << be_nl
+      << "_tao_elem," << be_nl
       << "ACE_TRY_ENV" << be_uidt_nl
       << ");" << be_uidt_nl
       << "ACE_TRY_CHECK;" << be_nl;
@@ -284,7 +284,7 @@ gen_const_extraction (TAO_OutStream *os,
       << "((CORBA::Any *)&_tao_any)->_tao_replace (" << be_idt << be_idt_nl
       << node->tc_name () << "," << be_nl
       << "1," << be_nl
-      << "ACE_reinterpret_cast(void*,_tao_elem)," << be_nl
+      << "_tao_elem," << be_nl
       << "ACE_TRY_ENV" << be_uidt_nl
       << ");" << be_uidt_nl
       << "ACE_TRY_CHECK;" << be_nl;
