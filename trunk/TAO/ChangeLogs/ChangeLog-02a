@@ -1,3 +1,11 @@
+Tue Apr 24 11:42:17 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tao/PollableC.h:
+
+          Added missing inline implementation to constructor
+          from pointer for Pollable_var, PollableSet_var, and
+          DIIPollable_var.
+
 Tue Apr 24 11:09:14 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * orbsvcs/IFR_Service/tmplinst.cpp:
