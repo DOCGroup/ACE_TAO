@@ -1,8 +1,15 @@
+Thu Oct 15 13:54:23 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* examples/Callback_Quoter/Supplier_i.cpp:
+	  examples/Callback_Quoter/Supplier_i.h
+	  Changed the names as they conflicted with (lowercase)
+	  supplier.cpp on NT.
+
 Thu Oct 15 13:22:39 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
         * TAO/tests/Param_Test/param_test_i.cpp:
           Added a Param_Test:: qualifier to declaration of
-          PathSpec_var rPathSpec - got rid of a compile error. 
+          PathSpec_var rPathSpec - got rid of a compile error.
 
 Thu Oct 15 10:49:58 1998  David L. Levine  <levine@cs.wustl.edu>
 
