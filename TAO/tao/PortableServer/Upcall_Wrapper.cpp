@@ -6,11 +6,11 @@
 #if TAO_HAS_INTERCEPTORS == 1
 # include "PICurrent_Guard.h"
 
-# include "tao/PortableInterceptor.h"
 # include "tao/PortableServer/ServerRequestInfo.h"
 # include "tao/PortableServer/ServerInterceptorAdapter.h"
-
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
+
+#include "tao/PortableInterceptor.h"
 
 #include "tao/TAO_Server_Request.h"
 #include "tao/CDR.h"
