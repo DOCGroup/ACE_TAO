@@ -1,3 +1,9 @@
+Fri Aug 11 05:50:59 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tests/IDL_Test/Makefile.bor: Added IDLDIR = . so this
+	  test would compile under Borland C++ 5.0.  Thanks to
+ 	  <johnny.willemsen@meco.nl> for reporting the bug.
+
 Thu Aug 10 23:11:01 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 	* tests/MT_Client/server.cpp:
