@@ -134,11 +134,19 @@ SOURCE=.\helper.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\longlong.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\nested_struct.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=.\objref.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\objref_struct.cpp
 # End Source File
 # Begin Source File
 
@@ -254,11 +262,19 @@ SOURCE=.\helper.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\longlong.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\nested_struct.h
 # End Source File
 # Begin Source File
 
 SOURCE=.\objref.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\objref_struct.h
 # End Source File
 # Begin Source File
 
