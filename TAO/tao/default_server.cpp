@@ -504,7 +504,7 @@ template class ACE_Thread_Strategy<TAO_Server_Connection_Handler>;
 
 #if defined (TAO_USES_STATIC_SERVICE) || defined (TAO_PLATFORM_SVC_CONF_FILE_NOTSUP)
 ACE_STATIC_SVC_DEFINE (TAO_Default_Server_Strategy_Factory,
-		       ASYS_TEXT ("TAO_Default_Server_Strategy_Factory"),
+		       ASYS_TEXT ("Server_Strategy_Factory"),
                        ACE_SVC_OBJ_T,
                        &ACE_SVC_NAME (TAO_Default_Server_Strategy_Factory),
 		       ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
