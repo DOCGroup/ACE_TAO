@@ -199,7 +199,33 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
       *os << "POA_" <<parent->full_name () << "::";
     }
 
-  *os << "TAO_ServerRequest_Info_"<< node->flat_name () << "  ri (" << this->compute_operation_name (node) << ",\n"
+  *os << "TAO_ServerRequest_Info_"<< node->flat_name (); 
+  // We need the interface node in which this operation was defined. However,
+  // if this operation node was an attribute node in disguise, we get this
+  // information from the context and add a "_get"/"_set" to the flat
+  // name to get around the problem of overloaded methods which are
+  // generated for attributes.
+  if (this->ctx_->attribute ())
+    {
+      bt = be_type::narrow_from_decl (node->return_type ());
+      if (!bt)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_interceptors_ch::"
+                             "visit_operation - "
+                             "Bad return type\n"),
+                            -1);
+        }
+      
+      // grab the right visitor to generate the return type if its not
+      // void it means it is not the accessor.
+      if (!this->void_return_type (bt))
+        *os <<"_get";
+      else
+        *os <<"_set";
+    }
+
+  *os<< "  ri (" << this->compute_operation_name (node) << ",\n"
       << "_tao_server_request.service_info ()";
   
   // This necesary becos: (a) a comma is needed if there are arguments
@@ -251,7 +277,7 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
 
   // make the upcall and assign to the return val
   ctx = *this->ctx_;
-  ctx.state (TAO_CodeGen::TAO_OPERATION_RETVAL_INVOKE_CS);
+  ctx.state (TAO_CodeGen::TAO_OPERATION_RETVAL_ASSIGN_SS);
   visitor = tao_cg->make_visitor (&ctx);
   if (!visitor || (bt->accept (visitor) == -1))
     {
@@ -299,7 +325,7 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
       *os << "// Update the result" << be_nl
           << "ri.result (";
       ctx = *this->ctx_;
-      ctx.state (TAO_CodeGen::TAO_OPERATION_RETVAL_ASSIGN_SS);
+      ctx.state (TAO_CodeGen::TAO_OPERATION_RETVAL_SS);
       visitor = tao_cg->make_visitor (&ctx);
       if (!visitor || (bt->accept (visitor) == -1))
         {
