@@ -71,7 +71,7 @@ find_another_host (char other_host[])
     }
 
   endhostent ();
-#endif /* !defined (ACE_WIN32) && !defined (VXWORKS) */
+#endif /* !defined (ACE_WIN32) && !defined (VXWORKS) !defined (ACE_NETBSD) */
 }
 
 static int
@@ -92,7 +92,9 @@ fail_no_listener_nonblocking (void)
   // Need a port that will fail.
   ACE_ASSERT (status == -1);		
 
-  if (errno == EWOULDBLOCK) 
+  // On some systems, a failed connect to localhost will return
+  // ECONNREFUSED directly, instead of EWOULDBLOCK. That is also fine.
+  if (errno == EWOULDBLOCK || errno == ECONNREFUSED) 
     {
       status = con.complete (sock);
 
