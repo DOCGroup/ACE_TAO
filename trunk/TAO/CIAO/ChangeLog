@@ -1,3 +1,13 @@
+Wed Aug 11 12:45:09 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* CIDLC/CIDLC.mpc:
+
+	  Added new files startting with Exec* into the CIDLC project. 
+	
+	* CIAOTAO.mwc:
+
+	  Added tests section to the above file.
+
 Wed Aug 11 15:08:44 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/CIDL/CodeGen/CodeGen.mpc:
