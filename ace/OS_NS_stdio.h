@@ -336,15 +336,16 @@ namespace ACE_OS {
                  size_t nitems,
                  FILE *fp);
 
-  // The old gets () which directly maps to the evil, unprotected
-  // gets () has been deprecated.  If you really need gets (),
-  // consider the following one.
-
-  // A better gets ().
-  //   If n == 0, input is swallowed, but NULL is returned.
-  //   Otherwise, reads up to n-1 bytes (not including the newline),
-  //              then swallows rest up to newline
-  //              then swallows newline
+  /**
+   * The old gets () which directly maps to the evil, unprotected
+   * gets () has been deprecated.  If you really need gets (),
+   * consider the following one.
+   *
+   * A better gets ().
+   * If n == 0, input is swallowed, but NULL is returned.
+   * Otherwise, reads up to n-1 bytes (not including the newline),
+   * then swallows rest up to newline then swallows newline
+   */
   extern ACE_Export
   char *gets (char *str, int n = 0);
 

@@ -825,19 +825,6 @@ ACE_OS::fwrite (const void *ptr, size_t size, size_t nitems, FILE *fp)
   ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::fwrite (ptr, size, nitems, fp), int, 0);
 }
 
-#if 0
-// @@ gets is evil anyway.
-//    and it is *** DEPRECATED *** now.  If you
-//    really needs gets, use ACE_OS::gets (char*, int)
-//    instead.
-ACE_INLINE char *
-ACE_OS::gets (char *str)
-{
-  ACE_OS_TRACE ("ACE_OS::gets");
-  ACE_OSCALL_RETURN (::gets (str), char *, 0);
-}
-#endif /* 0 */
-
 ACE_INLINE void
 ACE_OS::perror (const char *s)
 {
@@ -975,19 +962,19 @@ ACE_INLINE char *
 ACE_OS::tempnam (const char *dir, const char *pfx)
 {
   ACE_OS_TRACE ("ACE_OS::tempnam");
-#if defined (ACE_HAS_WINCE) || defined (ACE_LACKS_TEMPNAM)
+#if defined (ACE_LACKS_TEMPNAM)
   ACE_UNUSED_ARG (dir);
   ACE_UNUSED_ARG (pfx);
   ACE_NOTSUP_RETURN (0);
 #elif defined (ACE_PSOS)
   // pSOS only considers the directory prefix
   ACE_UNUSED_ARG (pfx);
-  ACE_OSCALL_RETURN (::tmpnam ((char *) dir), char *, 0);
+  ACE_OSCALL_RETURN (::tmpnam (const_cast <char *> (dir)), char *, 0);
 #elif (defined (ACE_WIN32) && ((defined (__BORLANDC__) && (__BORLANDC__ < 0x600)) || defined (__DMC__)))
-  ACE_OSCALL_RETURN (::_tempnam ((char *) dir, (char *) pfx), char *, 0);
-#else /* ACE_HAS_WINCE || ACE_LACKS_TEMPNAM */
+  ACE_OSCALL_RETURN (::_tempnam (const_cast <char *> (dir), const_cast<char *> (pfx)), char *, 0);
+#else /* ACE_LACKS_TEMPNAM */
   ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::tempnam (dir, pfx), char *, 0);
-#endif /* VXWORKS */
+#endif /* ACE_LACKS_TEMPNAM */
 }
 
 #if defined (ACE_HAS_WCHAR)
@@ -995,17 +982,17 @@ ACE_INLINE wchar_t *
 ACE_OS::tempnam (const wchar_t *dir, const wchar_t *pfx)
 {
   ACE_OS_TRACE ("ACE_OS::tempnam");
-#if defined (ACE_HAS_WINCE) || defined (ACE_LACKS_TEMPNAM)
+#if defined (ACE_LACKS_TEMPNAM)
   ACE_UNUSED_ARG (dir);
   ACE_UNUSED_ARG (pfx);
   ACE_NOTSUP_RETURN (0);
 #elif defined(ACE_WIN32)
 #  if (defined (__BORLANDC__) && (__BORLANDC__ < 0x600)) || defined (__DMC__)
-  ACE_OSCALL_RETURN (::_wtempnam ((wchar_t*) dir, (wchar_t*) pfx), wchar_t *, 0);
+  ACE_OSCALL_RETURN (::_wtempnam (const_cast <wchar_t*> (dir), const_cast <wchar_t*> (pfx)), wchar_t *, 0);
 #  else
   ACE_OSCALL_RETURN (::_wtempnam (dir, pfx), wchar_t *, 0);
 #  endif /* __BORLANDC__ */
-#else /* ACE_HAS_WINCE || ACE_LACKS_TEMPNAM */
+#else /* ACE_LACKS_TEMPNAM */
   // No native wide-char support; convert to narrow and call the char* variant.
   char *ndir = ACE_Wide_To_Ascii (dir).char_rep ();
   char *npfx = ACE_Wide_To_Ascii (pfx).char_rep ();
@@ -1023,7 +1010,7 @@ ACE_OS::tempnam (const wchar_t *dir, const wchar_t *pfx)
       ACE_OS::free (name);
     }
   return wname;
-#endif /* VXWORKS */
+#endif /* ACE_LACKS_TEMPNAM */
 }
 #endif /* ACE_HAS_WCHAR */
 

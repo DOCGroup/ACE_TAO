@@ -23,6 +23,7 @@
 #include "ace/Addr.h"
 
 #if defined(VXWORKS)
+   // Needed to get INET_ADDR_LEN
 #  include /**/ "inetLib.h"
 #endif /* VXWORKS */
 
