@@ -1,3 +1,56 @@
+Thu Feb 22 12:28:15 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/TP_Reactor.cpp (handle_events): Here is the description of
+	  how things were working and where the problem was: In the
+	  TP_Reactor there is one leader thread waiting in select() and
+	  the others waiting on the token.  During deactivation(), the
+	  <deactivation_> flag is set on the reactor, signal_all_threads()
+	  is called on the token, and an empty notification is send to the
+	  current leader thread.  signal_all_threads() sets the
+	  <signal_all_threads_> flag on the Token when there are waiters
+	  on the Token (does nothing if there are no waiters).  This
+	  scheme worked fine when there were leader and follower threads
+	  waiting.  When a new leader is chosen, it returns the magic
+	  number 2 from token.acquire_read() and hence exits gracefully
+	  from the handle_events().  However, the problem was that when
+	  some (or all) of the TP threads are busy running upcalls,
+	  signal_all_threads() was a no-op and the magic number 2 was not
+	  returned from token.acquire_read() and hence the exit from
+	  handle_events() was flagged as an error.
+
+	  The fix is as described below: 
+
+	  (1) ACE_Token::signal_all_threads() does not make sense.  The
+	  token is a mutex, not a condition variable.  Therefore, it does
+	  not make sense to have a signal_all_threads() methods.  Plus I
+	  believe that the method does not do as advertised.  Therefore, I
+	  removed this method from the token class.
+
+	  (2) There is no need to signal all the threads in the
+	  TP_Reactor.  Marking the Reactor as closed and signaling the
+	  leader thread is enough.  The leader thread will wake up to
+	  handle the empty event, the next leader will see that the
+	  Reactor is closed and exit gracefully.  This will continue until
+	  all the waiters are drained.
+
+	  (3) With the above change, there is no need to check for an
+	  magic returns from token.acquire_read().  When a thread gets the
+	  token, it checks the deactivation flag before proceeding.  If
+	  the Reactor is closed, it gracefully exits.  Otherwise, it
+	  continues as leader.
+
+	  (4) Since there is no need to call token.signal_all_threads(),
+	  ACE_TP_Reactor::wakeup_all_threads() can be removed since it is
+	  now the same as ACE_Select_Reactor_T::wakeup_all_threads().
+
+	  Note that this change should help with making
+	  Thread_Pool_Reactor_Test run without shutdown errors.
+	  
+	* ace/Select_Reactor_T.i (deactivate): The setting of the
+	  <deactivated_> flag and waking up of all the threads should be
+	  atomic.  I am being picky about this one but I think am I right.
+	  Also added the guard to the accessor.
+
 Thu Feb 22 08:51:42 2001  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/OS.i:  

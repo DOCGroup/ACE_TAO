@@ -58,8 +58,8 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::register_handler (int signum,
 {
   ACE_TRACE ("ACE_Select_Reactor_T::register_handler");
   return this->signal_handler_->register_handler (signum,
-						  new_sh, new_disp,
-						  old_sh, old_disp);
+                                                  new_sh, new_disp,
+                                                  old_sh, old_disp);
 }
 
 #if defined (ACE_WIN32)
@@ -136,8 +136,8 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::cancel_timer (long timer_id,
 {
   ACE_TRACE ("ACE_Select_Reactor_T::cancel_timer");
   return this->timer_queue_->cancel (timer_id,
-				     arg,
-				     dont_call_handle_close);
+                                     arg,
+                                     dont_call_handle_close);
 }
 
 // Performs operations on the "ready" bits.
@@ -224,12 +224,14 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::alertable_handle_events (ACE_Tim
 template <class ACE_SELECT_REACTOR_TOKEN> /* ACE_INLINE */ int
 ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::deactivated (void)
 {
+  ACE_MT (ACE_GUARD_RETURN (ACE_SELECT_REACTOR_TOKEN, ace_mon, this->token_, -1));
   return this->deactivated_;
 }
 
 template <class ACE_SELECT_REACTOR_TOKEN> /* ACE_INLINE */ void
 ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::deactivate (int do_stop)
 {
+  ACE_MT (ACE_GUARD (ACE_SELECT_REACTOR_TOKEN, ace_mon, this->token_));
   this->deactivated_ = do_stop;
   this->wakeup_all_threads ();
 }
