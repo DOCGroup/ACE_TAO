@@ -4,6 +4,7 @@
 #define ACE_BUILD_SVC_DLL
 #endif /* ACE_BUILD_SVC_DLL */
 
+#include "ace/OS_NS_string.h"
 #include "ace/Get_Opt.h"
 #include "ace/Asynch_Acceptor.h"
 #include "ace/LOCK_SOCK_Acceptor.h"

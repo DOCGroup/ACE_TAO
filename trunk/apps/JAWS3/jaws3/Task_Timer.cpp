@@ -4,6 +4,8 @@
 #define JAWS_BUILD_DLL
 #endif
 
+#include "ace/OS_NS_sys_time.h"
+
 #include "jaws3/Task_Timer.h"
 #include "jaws3/Timer_Helpers.h"
 

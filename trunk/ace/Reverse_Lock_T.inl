@@ -1,6 +1,7 @@
 /* -*- C++ -*- */
 // $Id$
 
+#include "ace/config-all.h"
 #include "ace/OS_NS_errno.h"
 
 template <class ACE_LOCKING_MECHANISM> ACE_INLINE

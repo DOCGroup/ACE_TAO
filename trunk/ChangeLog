@@ -1,3 +1,16 @@
+Wed Sep  1 17:16:29 2004  Steve Huston  <shuston@riverace.com>
+
+	* ace/Reverse_Lock_T.inl:
+	* ace/Typed_SV_Message.inl: Added #include "ace/config-all.h" to get
+	  missing macros (ACE_NOTSUP_RETURN, ACE_TRACE).
+
+	* apps/JAWS/clients/Caching/http_client.cpp:
+	* apps/JAWS/clients/Caching/http_handler.cpp:
+	* apps/JAWS/server/HTTP_Response.cpp:
+	* apps/JAWS/server/HTTP_Server.{h cpp}:
+	* apps/JAWS/server/IO.cpp:
+	* apps/JAWS3/jaws3/Task_Timer.cpp: Add missing includes.
+
 Wed Sep  1 12:32:31 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/OS_NS_Thread.inl (mutex_init):

@@ -17,12 +17,12 @@
 #ifndef HTTP_SERVER_H
 #define HTTP_SERVER_H
 
-#include "ace/Service_Object.h"
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/Service_Config.h"
+#include "ace/Service_Object.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Acceptor.h"
 #include "ace/LOCK_SOCK_Acceptor.h"
