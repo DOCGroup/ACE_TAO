@@ -1,13 +1,14 @@
 // $Id$
 
-#include "tao/ORB.h"
-#include "TestC.h"
-#include <string>
 #include "tao/DynamicInterface/Request.h"
+#include "TestC.h"
+#include "tao/ORB.h"
 #include "ace/Get_Opt.h"
-#include "Hello.h"
+#include <string>
 
-ACE_RCSID(ICMG_Any_Bug, client, "$Id$")
+ACE_RCSID (ICMG_Any_Bug,
+           client,
+           "$Id$")
 
 const char *ior = "file://test.ior";
 

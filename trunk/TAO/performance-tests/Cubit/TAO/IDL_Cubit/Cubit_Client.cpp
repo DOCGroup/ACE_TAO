@@ -737,8 +737,8 @@ Cubit_Client::cube_long_sequence (int,
       // gets in the way.
       input[0] = 4;
 
-#if (ACE_HAS_PURIFY == 1)
-      for(int i=1;i<l;i++)
+#if defined (ACE_HAS_PURIFY) && (ACE_HAS_PURIFY == 1)
+      for (int i = 1; i < l; i++)
         input[i]=11;
 #endif /* ACE_HAS_PURIFY == 1 */
 
@@ -811,8 +811,8 @@ Cubit_Client::cube_octet_sequence (int,
       // gets in the way.
       input[0] = 4;
 
-#if (ACE_HAS_PURIFY == 1)
-      for(int i=1;i<l;i++)
+#if defined (ACE_HAS_PURIFY) && (ACE_HAS_PURIFY == 1)
+      for (int i = 1 ; i < l; i++)
         input[i]=10;
 #endif /* ACE_HAS_PURIFY == 1 */
 
@@ -888,8 +888,8 @@ Cubit_Client::cube_many_sequence (int,
       in.s = 5;
       in.o = 6;
 
-#if (ACE_HAS_PURIFY == 1)
-      for(int i=1;i<l;i++)
+#if defined (ACE_HAS_PURIFY) && (ACE_HAS_PURIFY == 1)
+      for(int i=1; i < l; i++)
         {
           Cubit::Many &inb = input[i];
           inb.l=7;
@@ -972,7 +972,7 @@ Cubit_Client::cube_rti_data (int,
 
       for (int j = 0; j < numUpdates; ++j)
         {
-#if (ACE_HAS_PURIFY == 1)
+#if defined (ACE_HAS_PURIFY) && (ACE_HAS_PURIFY == 1)
           Cubit::RtiObjectUpdateMessageHeader o;
           ACE_OS::memset (&o, 0, sizeof(Cubit::RtiObjectUpdateMessageHeader));
           input.msgs[j].oumh (o);
@@ -995,7 +995,7 @@ Cubit_Client::cube_rti_data (int,
 
           for (int k = 0; k < numAttrs; ++k)
             {
-#if (ACE_HAS_PURIFY == 1)
+#if defined (ACE_HAS_PURIFY) && (ACE_HAS_PURIFY == 1)
               Cubit::HandleValuePair h;
               ACE_OS::memset (&h, 0, sizeof(Cubit::HandleValuePair));
               oumh.messagePayload[k] = h;
@@ -1643,7 +1643,7 @@ Cubit_Client::run ()
       this->shutdown_server (this->shutdown_
                              ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      
+
       ACE_TRY_EX (SHM)
 	{
 	  this->cubit_->ping (ACE_ENV_SINGLE_ARG_PARAMETER);

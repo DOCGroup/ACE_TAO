@@ -1,3 +1,28 @@
+Wed May 12 20:09:16 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp:
+	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_i.cpp:
+	* tests/Connection_Timeout/client.cpp (main):
+
+	  Fixed "use of undefined preprocessor constant" warnings
+	  revealed by compiling with g++'s "-Wundef" preprocessor flag.
+
+	* tests/Big_Twoways/Session.cpp (validate_connections):
+	* tests/LongUpcalls/AMI_Manager.cpp (validate_connection):
+	* tests/LongUpcalls/Manager.cpp (validate_connection):
+
+	  A preprocessor conditional was checking the value of an
+	  incorrect preprocessor constant.  "TAO_HAS_MESSAGING" ->
+	  "TAO_HAS_CORBA_MESSAGING".  Fixes problem where code that used
+	  CORBA::Object::_validate_connection() method was never called.
+
+	* tests/ICMG_Any_Bug/client.cpp:
+
+	  Reordered #include preprocessor directives to force all
+	  necessary non-dependent names to be parsed prior to the
+	  templates that use them (i.e. TAO_Pseudo_{Var,Out}_T).  Fixes
+	  GNU g++ 3.4 compile-time errors.
+
 Wed May 12 09:31:10 2004  Carlos O'Ryan  <coryan@atdesk.com>
 
 	* orbsvcs/performance-tests/RTEvent/lib/ORB_Shutdown.h:
