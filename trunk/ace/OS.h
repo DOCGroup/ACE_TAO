@@ -5888,7 +5888,7 @@ public:
   static ACE_thread_t thr_self (void);
   static void thr_self (ACE_hthread_t &);
   static int thr_setprio (ACE_hthread_t thr_id,
-                          int prio);
+                          int prio, int thr_policy=-1);
   static int thr_setprio (const ACE_Sched_Priority prio);
   static int thr_suspend (ACE_hthread_t target_thread);
   static int thr_cancel (ACE_thread_t t_id);
