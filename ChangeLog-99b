@@ -1,7 +1,7 @@
 Fri Jun 18 11:37:31 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Service_Config.h (class ACE_Static_Svc_Descriptor): Changed
-	  LPCTSTR to 'const ASYS_TCHAR*'.
+	  the type of <name_> from LPTCSTR to 'const ASYS_TCHAR*'.
 
 Thu Jun 17 12:46:30 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
