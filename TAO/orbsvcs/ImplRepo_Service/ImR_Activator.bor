@@ -11,14 +11,13 @@ NAME = ImR_Activator
 OBJFILES = \
 	$(OBJDIR)\ImR_Activator.obj \
 	$(OBJDIR)\ImR_Activator_i.obj \
-   $(OBJDIR)\Iterator.obj \
-   $(OBJDIR)\Locator.obj \
-   $(OBJDIR)\Options.obj \
+        $(OBJDIR)\Iterator.obj \
+        $(OBJDIR)\Activator_Options.obj \
 	$(OBJDIR)\Server_Info.obj \
 	$(OBJDIR)\Server_Repository.obj \
 	$(OBJDIR)\Repository_Configuration.obj \
-   $(OBJDIR)\XML_ContentHandler.obj \
-   $(OBJDIR)\NT_Service.obj
+        $(OBJDIR)\XML_ContentHandler.obj \
+	$(OBJDIR)\Activator_NT_Service.obj
 
 CFLAGS = \
 	$(ACE_CFLAGS) \
