@@ -14,12 +14,15 @@ Run the test as follows:
 
 	$ perl run_test.pl
 
-Expected output is the following:
+Output should be very similar to the following:
 
 ==== Running IORInterceptor test
-(1008|868) Added tagged component to the IOR
-(1008|868) containing the string: FOO_IORInterceptor
-FOO::test: <IOR:01000000...>
-(1060|260) String extracted from tagged component data: FOO_IORInterceptor
+(4956|16384) Added tagged component containing the
+(4956|16384)   string "FOO_IORInterceptor" to all profiles.
+(4956|16384) Added tagged component containing the
+(4956|16384)   string "FOO_IORInterceptor" to all IIOP profiles.
+(4956|16384) Successfully retrieved effective policy.
+FOO::test: <IOR:...>
+(4957|16384) String extracted from tagged component data: FOO_IORInterceptor
 "test_i" is shutting down.
 Event loop finished.
