@@ -1,3 +1,8 @@
+Tue May  6 08:54:06 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/PortableServer/Default_ORTC.h: Removed an extra include of
+	  pre.h. 
+
 Tue May 06 14:46:20 2003  Simon McQueen  <sm@prismtechnologies.com>
 
         * orbsvcs/LoadBalancer/LoadManager_Static.dsp:
