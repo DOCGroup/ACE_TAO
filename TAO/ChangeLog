@@ -1,3 +1,12 @@
+Tue Nov 19 22:32:30 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/Acceptor_Registry.cpp (is_collocated):
+
+	  Fixed problem where only the first endpoint in an endpoint chain
+	  was used when determining if an acceptor is collocated despite
+	  the fact the endpoint chain was "walked" when making this
+	  determination.
+
 Tue Nov 19 15:16:56 2002  Pradeep Gore  <pradeep@oomworks.com>
 
 	* orbsvcs/tests/Notify/Structured_Multi_Filter/Structured_Filter_Consumer.bor:
