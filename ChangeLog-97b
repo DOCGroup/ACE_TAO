@@ -1,3 +1,11 @@
+Tue Oct  7 17:10:51 1997  Carlos O'Ryan  <coryan@swarm.cs.wustl.edu>
+
+	* ace/Token_Manager.cpp: 
+	  Added a defined(ACE_MT_SAFE) protection around the lock creation
+	  on ACE_Token_Manager::instance(), otherwise it would not work on
+	  platforms without threads. Thanks to "Neil B. Cohen"
+	  <nbc@metsci.com> for pointing this one out.
+
 Tue Oct  7 07:07:45 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Parse_Node.cpp (symbol): Added an ACE_ERROR_RETURN instead
