@@ -4,6 +4,7 @@
 #include "Repository_i.h"
 #include "EventPortDef_i.h"
 #include "EventDef_i.h"
+#include "IFR_Service_Utils_T.h"
 
 ACE_RCSID (IFRService, 
            EventPortDef_i, 
@@ -135,35 +136,24 @@ TAO_EventPortDef_i::describe (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 CORBA::Contained::Description *
-TAO_EventPortDef_i::describe_i (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_EventPortDef_i::describe_i (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  CORBA::ComponentIR::EventPortDescription *ev_desc = 0;
-  ACE_NEW_RETURN (ev_desc,
-                  CORBA::ComponentIR::EventPortDescription,
-                  0);
+  CORBA::ComponentIR::EventPortDescription epd;
+  TAO_IFR_Desc_Utils<CORBA::ComponentIR::EventPortDescription,
+                     TAO_EventPortDef_i>::fill_desc_begin (
+                                              epd,
+                                              this->repo_,
+                                              this->section_key_
+                                              ACE_ENV_ARG_PARAMETER
+                                            );
+  ACE_CHECK_RETURN (0);
 
   ACE_TString holder;
   this->repo_->config ()->get_string_value (this->section_key_,
-                            "name",
-                            holder);
-  ev_desc->name = holder.fast_rep ();
-  this->repo_->config ()->get_string_value (this->section_key_,
-                            "id",
-                            holder);
-  ev_desc->id = holder.fast_rep ();
-  this->repo_->config ()->get_string_value (this->section_key_,
-                            "container_id",
-                            holder);
-  ev_desc->defined_in = holder.fast_rep ();
-  this->repo_->config ()->get_string_value (this->section_key_,
-                            "version",
-                            holder);
-  ev_desc->version = holder.fast_rep ();
-  this->repo_->config ()->get_string_value (this->section_key_,
                             "base_type",
                             holder);
-  ev_desc->event = holder.fast_rep ();
+  epd.event = holder.fast_rep ();
 
   CORBA::Contained::Description *retval = 0;
   ACE_NEW_RETURN (retval,
@@ -171,6 +161,14 @@ TAO_EventPortDef_i::describe_i (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
                   0);
 
   retval->kind = this->def_kind ();
-  retval->value <<= ev_desc;
+  retval->value <<= epd;
   return retval;
 }
+
+CORBA::DefinitionKind
+TAO_EventPortDef_i::def_kind (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  return CORBA::dk_none;
+}
+

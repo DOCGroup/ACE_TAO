@@ -176,35 +176,21 @@ CORBA::Contained::Description *
 TAO_ComponentDef_i::describe_i (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  CORBA::ComponentIR::ComponentDescription *desc_ptr = 0;
-  ACE_NEW_RETURN (desc_ptr,
-                  CORBA::ComponentIR::ComponentDescription,
-                  0);
-  CORBA::ComponentIR::ComponentDescription_var desc_var = desc_ptr;
+  CORBA::ComponentIR::ComponentDescription cd;
+  TAO_IFR_Desc_Utils<CORBA::ComponentIR::ComponentDescription,
+                     TAO_ComponentDef_i>::fill_desc_begin (
+                                              cd,
+                                              this->repo_,
+                                              this->section_key_
+                                              ACE_ENV_ARG_PARAMETER
+                                            );
+  ACE_CHECK_RETURN (0);
 
   ACE_TString holder;
   this->repo_->config ()->get_string_value (this->section_key_,
-                                            "name",
-                                            holder);
-  desc_ptr->name = holder.fast_rep ();;
-  this->repo_->config ()->get_string_value (this->section_key_,
-                                            "id",
-                                            holder);
-  desc_ptr->id = holder.fast_rep ();
-
-  this->repo_->config ()->get_string_value (this->section_key_,
-                                            "container_id",
-                                            holder);
-  desc_ptr->defined_in = holder.c_str ();
-  this->repo_->config ()->get_string_value (this->section_key_,
-                                            "version",
-                                            holder);
-  desc_ptr->version = holder.fast_rep ();
-
-  this->repo_->config ()->get_string_value (this->section_key_,
                                             "base_component",
                                             holder);
-  desc_ptr->base_component = holder.fast_rep ();
+  cd.base_component = holder.fast_rep ();
 
   CORBA::ULong count = 0;
   ACE_Configuration_Section_Key supports_key;
@@ -220,7 +206,7 @@ TAO_ComponentDef_i::describe_i (ACE_ENV_SINGLE_ARG_DECL)
                                                  count);
     }
 
-  desc_ptr->supported_interfaces.length (count);
+  cd.supported_interfaces.length (count);
   char *stringified = 0;
   CORBA::ULong i = 0;
 
@@ -231,40 +217,40 @@ TAO_ComponentDef_i::describe_i (ACE_ENV_SINGLE_ARG_DECL)
                                                 stringified,
                                                 holder);
 
-      desc_ptr->supported_interfaces[i] = holder.c_str ();
+      cd.supported_interfaces[i] = holder.c_str ();
     }
 
   TAO_Port_Desc_Seq_Utils<
       CORBA::ComponentIR::ProvidesDescriptionSeq
-    >::port_descriptions (desc_ptr->provided_interfaces,
+    >::port_descriptions (cd.provided_interfaces,
        this->repo_->config (),
        this->section_key_,
        "provides");
 
   TAO_Port_Desc_Seq_Utils<
       CORBA::ComponentIR::UsesDescriptionSeq
-    >::port_descriptions (desc_ptr->used_interfaces,
+    >::port_descriptions (cd.used_interfaces,
        this->repo_->config (),
        this->section_key_,
        "uses");
 
   TAO_Port_Desc_Seq_Utils<
       CORBA::ComponentIR::EventPortDescriptionSeq
-    >::port_descriptions (desc_ptr->emits_events,
+    >::port_descriptions (cd.emits_events,
       this->repo_->config (),
       this->section_key_,
       "emits");
 
   TAO_Port_Desc_Seq_Utils<
       CORBA::ComponentIR::EventPortDescriptionSeq
-    >::port_descriptions (desc_ptr->publishes_events,
+    >::port_descriptions (cd.publishes_events,
       this->repo_->config (),
       this->section_key_,
       "publishes");
 
   TAO_Port_Desc_Seq_Utils<
       CORBA::ComponentIR::EventPortDescriptionSeq
-    >::port_descriptions (desc_ptr->consumes_events,
+    >::port_descriptions (cd.consumes_events,
       this->repo_->config (),
       this->section_key_,
       "consumes");
@@ -283,7 +269,7 @@ TAO_ComponentDef_i::describe_i (ACE_ENV_SINGLE_ARG_DECL)
                                                  count);
     }
 
-  desc_ptr->attributes.length (count);
+  cd.attributes.length (count);
   ACE_Configuration_Section_Key attr_key;
 
   for (i = 0; i < count; ++i)
@@ -298,12 +284,12 @@ TAO_ComponentDef_i::describe_i (ACE_ENV_SINGLE_ARG_DECL)
                                            0);
       TAO_ExtAttributeDef_i impl (this->repo_);
       impl.section_key (attr_key);
-      impl.fill_description (desc_ptr->attributes[i]
+      impl.fill_description (cd.attributes[i]
                              ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
     }
 
-  desc_ptr->type = this->type_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+  cd.type = this->type_i (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   CORBA::Contained::Description *cont_desc_ptr = 0;
@@ -315,7 +301,7 @@ TAO_ComponentDef_i::describe_i (ACE_ENV_SINGLE_ARG_DECL)
 
   cont_desc_ptr->kind = CORBA::dk_Component;
 
-  cont_desc_ptr->value <<= desc_ptr;
+  cont_desc_ptr->value <<= cd;
   return retval._retn ();
 }
 

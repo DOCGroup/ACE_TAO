@@ -1410,7 +1410,7 @@ TAO_ValueDef_i::describe_value_i (ACE_ENV_SINGLE_ARG_DECL)
                                                          param_count);
               fv_desc->initializers[i].members.length (param_count);
 
-              for (j = 0; j < param_count; +j)
+              for (j = 0; j < param_count; ++j)
                 {
                   stringified = TAO_IFR_Service_Utils::int_to_string (j);
                   this->repo_->config ()->open_section (params_key,

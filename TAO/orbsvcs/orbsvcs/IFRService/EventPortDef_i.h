@@ -101,6 +101,14 @@ public:
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
   // From Contained_i's pure virtual function.
+
+private:
+  virtual CORBA::DefinitionKind def_kind (
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  // Dummy method so we can consolidate derived class methods
+  // in this 'abstract' base class.
 };
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
