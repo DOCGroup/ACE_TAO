@@ -778,6 +778,74 @@ struct ACE_rwlock_t
 };
 
 #endif /* ACE_HAS_DCETHREADS || ACE_HAS_PTHREADS */
+#elif defined (ACE_HAS_WTHREADS)
+typedef CRITICAL_SECTION ACE_thread_mutex_t;
+typedef struct
+{
+  int type_; // Either USYNC_THREAD or USYNC_PROCESS
+  union 
+  {
+    HANDLE proc_mutex_;
+    CRITICAL_SECTION thr_mutex_;
+  };
+} ACE_mutex_t;
+typedef HANDLE ACE_sema_t;
+
+struct ACE_cond_t
+  // = TITLE
+  //   This structure is used to implement condition variables on NT.
+  //
+  // = DESCRIPTION
+  //   At the current time, this stuff only works for threads
+  //   within the same process.
+{
+  DWORD waiters_;
+  // Number of waiting threads.
+
+  ACE_sema_t sema_;
+  // Queue up threads waiting for the condition to become signaled.
+};
+
+struct ACE_rwlock_t
+  // = TITLE 
+  //   This is used to implement readers/writer locks on NT.
+  //
+  // = DESCRIPTION
+  //   At the current time, this stuff only works for threads
+  //   within the same process.
+{
+  ACE_mutex_t lock_; 
+  // Serialize access to internal state.
+ 
+  ACE_cond_t waiting_readers_;
+  // Reader threads waiting to acquire the lock.
+ 
+  int num_waiting_readers_;
+  // Number of waiting readers.
+ 
+  ACE_cond_t waiting_writers_;
+  // Writer threads waiting to acquire the lock.
+ 
+  int num_waiting_writers_;
+  // Number of waiting writers.
+ 
+  int ref_count_;
+  // Value is -1 if writer has the lock, else this keeps track of the
+  // number of readers holding the lock.
+};
+
+// These need to be different values, neither of which can be 0...
+#define USYNC_THREAD 1
+#define USYNC_PROCESS 2
+
+#define THR_CANCEL_DISABLE      0
+#define THR_CANCEL_ENABLE       0
+#define THR_CANCEL_DEFERRED     0
+#define THR_CANCEL_ASYNCHRONOUS 0
+#define THR_DETACHED    0       // ?? ignore in most places 
+#define THR_BOUND       0       // ?? ignore in most places
+#define THR_NEW_LWP     0       // ?? ignore in most places
+#define THR_SUSPENDED   CREATE_SUSPENDED
 #else /* !ACE_HAS_THREADS, i.e., the OS/platform doesn't support threading. */
 // Give these things some reasonable value...
 #define THR_CANCEL_DISABLE      0
@@ -1100,68 +1168,24 @@ inline DWORD ACE_LOW_DWORD  (ACE_QWORD q) { return (DWORD) q; }
 inline DWORD ACE_HIGH_DWORD (ACE_QWORD q) { return (DWORD) (q >> 32); }
 #endif /* !defined (_MSC_VER) */
 
-// Win32 dummys to help compilation
+// Win32 dummies to help compilation.
 
 typedef void *sigset_t;    // Who knows?
 typedef int mode_t;
-typedef CRITICAL_SECTION ACE_thread_mutex_t;
-typedef struct
-{
-  int type_; // Either USYNC_THREAD or USYNC_PROCESS
-  union 
-  {
-    HANDLE proc_mutex_;
-    CRITICAL_SECTION thr_mutex_;
-  };
-} ACE_mutex_t;
-typedef HANDLE ACE_sema_t;
 typedef int uid_t;
 typedef int gid_t;
 typedef int hrtime_t;
 typedef char *caddr_t;
-
-struct ACE_cond_t
-  // = TITLE
-  //   This structure is used to implement condition variables on NT.
-  //
-  // = DESCRIPTION
-  //   At the current time, this stuff only works for threads
-  //   within the same process.
-{
-  DWORD waiters_;
-  // Number of waiting threads.
-
-  ACE_sema_t sema_;
-  // Queue up threads waiting for the condition to become signaled.
-};
-
-struct ACE_rwlock_t
-  // = TITLE 
-  //   This is used to implement readers/writer locks on NT.
-  //
-  // = DESCRIPTION
-  //   At the current time, this stuff only works for threads
-  //   within the same process.
-{
-  ACE_mutex_t lock_; 
-  // Serialize access to internal state.
- 
-  ACE_cond_t waiting_readers_;
-  // Reader threads waiting to acquire the lock.
- 
-  int num_waiting_readers_;
-  // Number of waiting readers.
- 
-  ACE_cond_t waiting_writers_;
-  // Writer threads waiting to acquire the lock.
- 
-  int num_waiting_writers_;
-  // Number of waiting writers.
- 
-  int ref_count_;
-  // Value is -1 if writer has the lock, else this keeps track of the
-  // number of readers holding the lock.
-};
+struct rlimit { };
+struct t_call { };
+struct t_bind { };
+struct t_info { };
+struct t_optmgmt { };
+struct t_discon { };
+struct t_unitdata { };
+struct t_uderr { };
+struct netbuf { };
+struct flock { }; // not used with Win32 locking...
 
 // Wrapper for NT Events.
 typedef HANDLE ACE_event_t;
@@ -1174,19 +1198,6 @@ typedef SOCKET ACE_SOCKET;
 
 #define ACE_INVALID_HANDLE INVALID_HANDLE_VALUE
 #define ACE_SYSCALL_FAILED 0xFFFFFFFF
-
-// These need to be different values, neither of which can be 0...
-#define USYNC_THREAD 1
-#define USYNC_PROCESS 2
-
-#define THR_CANCEL_DISABLE      0
-#define THR_CANCEL_ENABLE       0
-#define THR_CANCEL_DEFERRED     0
-#define THR_CANCEL_ASYNCHRONOUS 0
-#define THR_DETACHED    0       // ?? ignore in most places 
-#define THR_BOUND       0       // ?? ignore in most places
-#define THR_NEW_LWP     0       // ?? ignore in most places
-#define THR_SUSPENDED   CREATE_SUSPENDED
 
 // Needed to map calls to NT transparently.
 #define MS_ASYNC 0
@@ -1214,20 +1225,6 @@ struct iovec
   char *iov_base; // data to be read/written
   size_t iov_len; // byte count to read/write
 };
-
-struct rlimit { };
-struct t_call { };
-struct t_bind { };
-struct t_info { };
-struct t_optmgmt { };
-struct t_discon { };
-struct t_unitdata { };
-struct t_uderr { };
-struct netbuf { };
-struct flock { }; // not used with Win32 locking...
-
-// Deal with whatever UNICODE mapping the application is compiling
-// with!
 
 #else /* !defined (ACE_WIN32) */
 
@@ -1878,10 +1875,10 @@ public:
   static int cond_signal (ACE_cond_t *cv);
   static int cond_timedwait (ACE_cond_t *cv, ACE_mutex_t *m, ACE_Time_Value *);
   static int cond_wait (ACE_cond_t *cv, ACE_mutex_t *m);
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) && defined (ACE_HAS_WTHREADS)
   static int cond_timedwait (ACE_cond_t *cv, ACE_thread_mutex_t *m, ACE_Time_Value *);
   static int cond_wait (ACE_cond_t *cv, ACE_thread_mutex_t *m);
-#endif /* ACE_WIN32 */
+#endif /* ACE_WIN32 && ACE_HAS_WTHREADS */
 
   // = A set of wrappers for determining config info.
   static char *cuserid (char *user, size_t maxlen = 32);
@@ -2311,6 +2308,10 @@ public:
   static ACE_hthread_t NULL_hthread;
   // This is necessary to deal with POSIX pthreads and their use of
   // structures for thread handles.
+
+  static ACE_thread_key_t NULL_key;
+  // This is necessary to deal with POSIX pthreads and their use of
+  // structures for TSS keys.
 
 #if defined (ACE_WIN32)
   static int socket_initialized_;

@@ -272,7 +272,7 @@ ACE_TSS<TYPE>::ts_get (void) const
 template <class TYPE> 
 ACE_TSS<TYPE>::ACE_TSS (TYPE *ts_obj)
   : once_ (0),
-    key_ (0)    
+    key_ (ACE_OS::NULL_key)    
 {
   // If caller has passed us a non-NULL TYPE *, then we'll just use
   // this to initialize the thread-specific value.  Thus, subsequent
@@ -426,7 +426,7 @@ ACE_TSS_Guard<LOCK>::init_key (void)
 {
 // ACE_TRACE ("ACE_TSS_Guard<LOCK>::init_key");
 
-  this->key_ = 0;
+  this->key_ = ACE_OS::NULL_key;
   ACE_Thread::keycreate (&this->key_, 
 			 &ACE_TSS_Guard<LOCK>::cleanup,
 			 (void *) this);

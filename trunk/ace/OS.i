@@ -1278,7 +1278,7 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
 #endif /* ACE_HAS_THREADS */		     
 }
 
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) && defined (ACE_HAS_WTHREADS)
 ACE_INLINE int 
 ACE_OS::cond_timedwait (ACE_cond_t *cv, 
 			ACE_thread_mutex_t *external_mutex, 
@@ -1363,7 +1363,7 @@ ACE_OS::cond_wait (ACE_cond_t *cv,
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_THREADS */		     
 }
-#endif /* ACE_WIN32 */
+#endif /* ACE_WIN32 && ACE_HAS_WTHREADS */
 
 ACE_INLINE int 
 ACE_OS::rw_rdlock (ACE_rwlock_t *rw)

@@ -44,7 +44,7 @@ friend class ACE_Stream_Iterator<ACE_SYNCH_2>;
 public:
   enum
   {
-    M_DELETE = 1
+    M_DELETE = 3
     // Indicates that close() deletes the Tasks.  Don't change this
     // value without updating the same enum in class ACE_Module...
   };
@@ -66,9 +66,9 @@ public:
   // <ACE_Stream_Head> and <ACE_Stream_Tail> are used, respectively.
   // <arg> is the value past in to the open() methods of the tasks.
 
-  int close (u_long flags = M_DELETE);
+  int close (int flags = M_DELETE);
   // Close down the stream and release all the resources.
-
+  
   ~ACE_Stream (void);
   // Close down the stream and release all the resources.
 
@@ -77,14 +77,14 @@ public:
   int push (ACE_Module<ACE_SYNCH_2> *mod);
   // Add a new module <mod> right below the Stream head.
 
-  int pop (u_long flags = M_DELETE);
+  int pop (int flags = M_DELETE);
   // Remove the <mod> right below the Stream head and close it down.
 
   int top (ACE_Module<ACE_SYNCH_2> *&mod);
   // Return the top module on the stream (right below the stream
   // head).
 
-  int remove (const char *mod, u_long flags = M_DELETE);
+  int remove (const char *mod, int flags = M_DELETE);
   // Remove the named module <mod> from the stream.  This bypasses the
   // strict LIFO ordering of push() and pop().
 

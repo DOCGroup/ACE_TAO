@@ -13,6 +13,9 @@
 #define fd_mask __fd_mask
 #define MAXNAMLEN  __DIR_NAME_MAX
 
+// Compiler must see template source.
+#define ACE_TEMPLATES_REQUIRE_SOURCE
+
 // Compiler/platform uses macro for ctime
 #define ACE_HAS_BROKEN_CTIME
 
@@ -102,10 +105,6 @@
 
 // Platform supports System V IPC
 #define ACE_HAS_SYSV_IPC
-
-// Compiler implements templates that support typedefs inside
-// of classes used as formal arguments
-//#define ACE_HAS_TEMPLATE_TYPEDEFS
 
 // Platform/compiler supports timezone * as second parameter to gettimeofday()
 #define ACE_HAS_TIMEZONE_GETTIMEOFDAY

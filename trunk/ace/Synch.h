@@ -197,6 +197,299 @@ private:
 #endif /* ACE_WIN32 */
 };
 
+class ACE_Export ACE_RW_Mutex
+  // = TITLE
+  //     Wrapper for readers/writer locks.
+  //
+  // = DESCRIPTION
+  //     These are most useful for applications that have many more
+  //     parallel readers than writers...
+{
+public:
+  ACE_RW_Mutex (int type = USYNC_THREAD, 
+		LPCTSTR name = 0,
+		void *arg = 0);
+  // Initialize a readers/writer lock.
+
+  ~ACE_RW_Mutex (void);
+  // Implicitly destroy a readers/writer lock
+
+  int remove (void);
+  // Explicitly destroy a readers/writer lock.
+
+  int acquire_read (void);
+  // Acquire a read lock, but block if a writer hold the lock.
+
+  int acquire_write (void);
+  // Acquire a write lock, but block if any readers or a 
+  // writer hold the lock.
+
+  int tryacquire_read (void);
+  // Conditionally acquire a read lock (i.e., won't block).
+
+  int tryacquire_write (void);
+  // Conditionally acquire a write lock (i.e., won't block).
+
+  int acquire (void);
+  // Note, for interface uniformity with other synchronization
+  // wrappers we include the <acquire> method.  This is implemented as
+  // a write-lock to be on the safe-side...
+
+  int tryacquire (void);
+  // Note, for interface uniformity with other synchronization
+  // wrappers we include the <tryacquire> method.  This is implemented
+  // as a write-lock to be on the safe-side...
+
+  int release (void);  
+  // Unlock a readers/writer lock.
+
+  const ACE_rwlock_t &lock (void) const;
+  // Return the underlying lock.
+
+  void dump (void) const;
+  // Dump the state of an object.
+
+  ACE_ALLOC_HOOK_DECLARE;
+  // Declare the dynamic allocation hooks.
+
+private:
+  ACE_rwlock_t lock_;
+  // Readers/writer lock.
+
+  // = Prevent assignment and initialization.
+  void operator= (const ACE_RW_Mutex &) {}
+  ACE_RW_Mutex (const ACE_RW_Mutex &) {}
+};
+
+class ACE_Export ACE_Mutex
+  // = TITLE
+  //     ACE_Mutex wrapper (valid in same process or across processes
+  //     (depending on TYPE flag))
+{
+public:
+  ACE_Mutex (int type = USYNC_THREAD, 
+	     LPCTSTR name = 0,
+	     void *arg = 0);
+  // Initialize the mutex.
+
+  ~ACE_Mutex (void);
+  // Implicitly destroy the mutex.
+
+  int remove (void);
+  // Explicitly destroy the mutex.
+
+  int acquire (void);
+  // Acquire lock ownership (wait on priority queue if necessary).
+
+  int tryacquire (void);
+  // Conditionally acquire lock (i.e., don't wait on queue).
+
+  int release (void);  
+  // Release lock and unblock a thread at head of priority queue.
+
+  int acquire_read (void);
+  // Acquire lock ownership (wait on priority queue if necessary).
+
+  int acquire_write (void);
+  // Acquire lock ownership (wait on priority queue if necessary).
+
+  int tryacquire_read (void);
+  // Conditionally acquire a lock (i.e., won't block).
+
+  int tryacquire_write (void);
+  // Conditionally acquire a lock (i.e., won't block).
+
+  const ACE_mutex_t &lock (void) const;
+  // Return the underlying mutex.
+
+  void dump (void) const;
+  // Dump the state of an object.
+
+  ACE_ALLOC_HOOK_DECLARE;
+  // Declare the dynamic allocation hooks.
+
+//private:
+  ACE_mutex_t lock_;
+  // Mutex type supported by the OS.
+
+private:
+  // = Prevent assignment and initialization.
+  void operator= (const ACE_Mutex &) {}
+  ACE_Mutex (const ACE_Mutex &) {}
+};
+
+class ACE_Export ACE_Process_Mutex
+  // = TITLE
+  //     ACE_Mutex wrapper (valid in same process, as well as across
+  //     processes).
+{
+public:
+  ACE_Process_Mutex (LPCTSTR name = ACE_DEFAULT_MUTEX, void *arg = 0);
+  // Create a Process_Mutex, passing in the optional <name>.
+
+  ~ACE_Process_Mutex (void);
+
+  int remove (void);
+  // Explicitly destroy the mutex.
+
+  int acquire (void);
+  // Acquire lock ownership (wait on priority queue if necessary).
+
+  int tryacquire (void);
+  // Conditionally acquire lock (i.e., don't wait on queue).
+
+  int release (void);  
+  // Release lock and unblock a thread at head of priority queue.
+
+  int acquire_read (void);
+  // Acquire lock ownership (wait on priority queue if necessary).
+
+  int acquire_write (void);
+  // Acquire lock ownership (wait on priority queue if necessary).
+
+  int tryacquire_read (void);
+  // Conditionally acquire a lock (i.e., won't block).
+
+  int tryacquire_write (void);
+  // Conditionally acquire a lock (i.e., won't block).
+
+  void dump (void) const;
+  // Dump the state of an object.
+
+  ACE_ALLOC_HOOK_DECLARE;
+  // Declare the dynamic allocation hooks.
+
+#if defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM)
+  ACE_Mutex lock_;
+#else
+  ACE_SV_Semaphore_Complex lock_;
+  // We need this to get the right semantics...
+#endif /* ACE_WIN32 */
+};
+
+class ACE_Export ACE_RW_Process_Mutex : public ACE_Process_Mutex
+  // = TITLE
+  //     Wrapper for readers/writer locks that exist across processes.
+{
+public:
+  ACE_RW_Process_Mutex (LPCTSTR name = ACE_DEFAULT_MUTEX,
+			void *arg = 0);
+
+  void dump (void) const;
+  // Dump the state of an object.
+
+  ACE_ALLOC_HOOK_DECLARE;
+  // Declare the dynamic allocation hooks.
+};
+
+class ACE_Null_Barrier
+  // = TITLE 
+  //     Implements "NULL barrier synchronization".
+{
+public:
+  ACE_Null_Barrier (u_int,
+		    const char * = 0, 
+		    void * = 0) {}
+  // Initialize the barrier to synchronize <count> threads.
+
+  int wait (void) { return 0; }
+  // Block the caller until all <count> threads have called <wait> and
+  // then allow all the caller threads to continue in parallel.
+
+  void dump (void) const {}
+  // Dump the state of an object.
+
+  ACE_ALLOC_HOOK_DECLARE;
+  // Declare the dynamic allocation hooks.
+
+private:
+
+  // = Prevent assignment and initialization.
+  void operator= (const ACE_Null_Barrier &) {}
+  ACE_Null_Barrier (const ACE_Null_Barrier &) {}
+};
+
+class ACE_Export ACE_Null_Mutex
+  // = TITLE
+  //     Implement a do nothing <ACE_Mutex>, i.e., all the methods are
+  //     no ops. 
+{
+public:
+  ACE_Null_Mutex (LPCTSTR = 0) {}
+  ~ACE_Null_Mutex (void) {}
+  int remove (void) { return 0; }
+
+  int acquire (void) { return 0; }
+  int tryacquire (void) { return 0; }
+  int release (void) { return 0; }
+  int acquire_write (void) { return 0; }
+  int tryacquire_write (void) { return 0; }
+  int acquire_read (void) { return 0; }
+  int tryacquire_read (void) { return 0; }
+
+  void dump (void) const { }
+  // Dump the state of an object.
+
+  ACE_ALLOC_HOOK_DECLARE;
+  // Declare the dynamic allocation hooks.
+};
+
+class ACE_Export ACE_Null_Condition_Mutex
+  // = TITLE
+  //     Implement a do nothing <ACE_Condition> variable wrapper, i.e.,
+  //     all methods are no ops.  This class is necessary since some
+  //     C++ compilers are *very* lame...
+{
+public:
+  ACE_Null_Condition_Mutex (ACE_Null_Mutex &m, int = 0, 
+			    LPCTSTR = 0, void * = 0): mutex_ (m) {}
+  ~ACE_Null_Condition_Mutex (void) {}
+  int remove (void) { return 0; }
+  int wait (ACE_Time_Value * = 0) { errno = ETIME; return -1; }
+  int signal (void) { return 0; }
+  int broadcast (void) { return 0; }
+  ACE_Null_Mutex &mutex (void) { return this->mutex_; }
+
+  void dump (void) const {}
+  // Dump the state of an object.
+
+  // ACE_ALLOC_HOOK_DECLARE;
+  // Declare the dynamic allocation hooks.
+
+private:
+  ACE_Null_Mutex &mutex_; // Reference to mutex lock.  
+
+  // = Prevent assignment and initialization.
+  void operator= (const ACE_Null_Condition_Mutex &) {}
+  ACE_Null_Condition_Mutex (const ACE_Null_Condition_Mutex &c): mutex_ (c.mutex_) {}
+};
+
+class ACE_Export ACE_Null_Mutex_Guard
+  // = TITLE
+  //     This data structure is meant to be used within a method or
+  //     function...  It performs automatic aquisition and release of
+  //     an ACE_Null_Mutex.
+  //
+  // = DESCRIPTION
+  //     This should be a specialization of ACE_Guard, but compiler
+  //     bugs preclude this...
+{
+public:
+  ACE_Null_Mutex_Guard (ACE_Null_Mutex &) {}
+  ~ACE_Null_Mutex_Guard (void) {}
+  int remove (void) { return 0; }
+  int locked (void) { return 1; }
+  int acquire (void) { return 0; }
+  int tryacquire (void) { return 0; }
+  int release (void) { return 0; }
+  void dump (void) const { }
+
+protected:
+  // = Prevent assignment and initialization.
+  void operator= (const ACE_Null_Mutex_Guard &) {}
+  ACE_Null_Mutex_Guard (const ACE_Null_Mutex_Guard &) {}
+};
+
 #if defined (ACE_HAS_THREADS) // ACE platform supports some form of threading.
 
 class ACE_Export ACE_Event
@@ -315,63 +608,6 @@ public:
 
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks
-};
-
-class ACE_Export ACE_Mutex
-  // = TITLE
-  //     ACE_Mutex wrapper (valid in same process or across processes
-  //     (depending on TYPE flag)) 
-{
-public:
-  ACE_Mutex (int type = USYNC_THREAD, 
-	     LPCTSTR name = 0,
-	     void *arg = 0);
-  // Initialize the mutex.
-
-  ~ACE_Mutex (void);
-  // Implicitly destroy the mutex.
-
-  int remove (void);
-  // Explicitly destroy the mutex.
-
-  int acquire (void);
-  // Acquire lock ownership (wait on priority queue if necessary).
-
-  int tryacquire (void);
-  // Conditionally acquire lock (i.e., don't wait on queue).
-
-  int release (void);  
-  // Release lock and unblock a thread at head of priority queue.
-
-  int acquire_read (void);
-  // Acquire lock ownership (wait on priority queue if necessary).
-
-  int acquire_write (void);
-  // Acquire lock ownership (wait on priority queue if necessary).
-
-  int tryacquire_read (void);
-  // Conditionally acquire a lock (i.e., won't block).
-
-  int tryacquire_write (void);
-  // Conditionally acquire a lock (i.e., won't block).
-
-  const ACE_mutex_t &lock (void) const;
-  // Return the underlying mutex.
-
-  void dump (void) const;
-  // Dump the state of an object.
-
-  ACE_ALLOC_HOOK_DECLARE;
-  // Declare the dynamic allocation hooks.
-
-//private:
-  ACE_mutex_t lock_;
-  // Mutex type supported by the OS.
-
-private:
-  // = Prevent assignment and initialization.
-  void operator= (const ACE_Mutex &) {}
-  ACE_Mutex (const ACE_Mutex &) {}
 };
 
 class ACE_Export ACE_Thread_Mutex
@@ -625,70 +861,6 @@ private:
   ACE_Recursive_Thread_Mutex (const ACE_Recursive_Thread_Mutex &);
 };
 
-class ACE_Export ACE_RW_Mutex
-  // = TITLE
-  //     Wrapper for readers/writer locks.
-  //
-  // = DESCRIPTION
-  //     These are most useful for applications that have many more
-  //     parallel readers than writers...
-{
-public:
-  ACE_RW_Mutex (int type = USYNC_THREAD, 
-		LPCTSTR name = 0,
-		void *arg = 0);
-  // Initialize a readers/writer lock.
-
-  ~ACE_RW_Mutex (void);
-  // Implicitly destroy a readers/writer lock
-
-  int remove (void);
-  // Explicitly destroy a readers/writer lock.
-
-  int acquire_read (void);
-  // Acquire a read lock, but block if a writer hold the lock.
-
-  int acquire_write (void);
-  // Acquire a write lock, but block if any readers or a 
-  // writer hold the lock.
-
-  int tryacquire_read (void);
-  // Conditionally acquire a read lock (i.e., won't block).
-
-  int tryacquire_write (void);
-  // Conditionally acquire a write lock (i.e., won't block).
-
-  int acquire (void);
-  // Note, for interface uniformity with other synchronization
-  // wrappers we include the <acquire> method.  This is implemented as
-  // a write-lock to be on the safe-side...
-
-  int tryacquire (void);
-  // Note, for interface uniformity with other synchronization
-  // wrappers we include the <tryacquire> method.  This is implemented
-  // as a write-lock to be on the safe-side...
-
-  int release (void);  
-  // Unlock a readers/writer lock.
-
-  const ACE_rwlock_t &lock (void) const;
-  // Return the underlying lock.
-
-  void dump (void) const;
-  // Dump the state of an object.
-
-  ACE_ALLOC_HOOK_DECLARE;
-  // Declare the dynamic allocation hooks.
-
-private:
-  ACE_rwlock_t lock_;
-  // Readers/writer lock.
-
-  // = Prevent assignment and initialization.
-  void operator= (const ACE_RW_Mutex &) {}
-  ACE_RW_Mutex (const ACE_RW_Mutex &) {}
-};
-
 class ACE_Export ACE_RW_Thread_Mutex : public ACE_RW_Mutex
   // = TITLE
   //     Wrapper for readers/writer locks that exist within a process.
@@ -839,178 +1011,6 @@ public:
 };
 
 #endif /* ACE_HAS_THREADS */
-
-class ACE_Export ACE_Process_Mutex
-  // = TITLE
-  //     ACE_Mutex wrapper (valid in same process, as well as across
-  //     processes).
-{
-public:
-  ACE_Process_Mutex (LPCTSTR name = ACE_DEFAULT_MUTEX, void *arg = 0);
-  // Create a Process_Mutex, passing in the optional <name>.
-
-  ~ACE_Process_Mutex (void);
-
-  int remove (void);
-  // Explicitly destroy the mutex.
-
-  int acquire (void);
-  // Acquire lock ownership (wait on priority queue if necessary).
-
-  int tryacquire (void);
-  // Conditionally acquire lock (i.e., don't wait on queue).
-
-  int release (void);  
-  // Release lock and unblock a thread at head of priority queue.
-
-  int acquire_read (void);
-  // Acquire lock ownership (wait on priority queue if necessary).
-
-  int acquire_write (void);
-  // Acquire lock ownership (wait on priority queue if necessary).
-
-  int tryacquire_read (void);
-  // Conditionally acquire a lock (i.e., won't block).
-
-  int tryacquire_write (void);
-  // Conditionally acquire a lock (i.e., won't block).
-
-  void dump (void) const;
-  // Dump the state of an object.
-
-  ACE_ALLOC_HOOK_DECLARE;
-  // Declare the dynamic allocation hooks.
-
-#if defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM)
-  ACE_Mutex lock_;
-#else
-  ACE_SV_Semaphore_Complex lock_;
-  // We need this to get the right semantics...
-#endif /* ACE_WIN32 */
-};
-
-class ACE_Export ACE_RW_Process_Mutex : public ACE_Process_Mutex
-  // = TITLE
-  //     Wrapper for readers/writer locks that exist across processes.
-{
-public:
-  ACE_RW_Process_Mutex (LPCTSTR name = ACE_DEFAULT_MUTEX,
-			void *arg = 0);
-
-  void dump (void) const;
-  // Dump the state of an object.
-
-  ACE_ALLOC_HOOK_DECLARE;
-  // Declare the dynamic allocation hooks.
-};
-
-class ACE_Null_Barrier
-  // = TITLE 
-  //     Implements "NULL barrier synchronization".
-{
-public:
-  ACE_Null_Barrier (u_int,
-		    const char * = 0, 
-		    void * = 0) {}
-  // Initialize the barrier to synchronize <count> threads.
-
-  int wait (void) { return 0; }
-  // Block the caller until all <count> threads have called <wait> and
-  // then allow all the caller threads to continue in parallel.
-
-  void dump (void) const {}
-  // Dump the state of an object.
-
-  ACE_ALLOC_HOOK_DECLARE;
-  // Declare the dynamic allocation hooks.
-
-private:
-
-  // = Prevent assignment and initialization.
-  void operator= (const ACE_Null_Barrier &) {}
-  ACE_Null_Barrier (const ACE_Null_Barrier &) {}
-};
-
-class ACE_Export ACE_Null_Mutex
-  // = TITLE
-  //     Implement a do nothing <ACE_Mutex>, i.e., all the methods are
-  //     no ops. 
-{
-public:
-  ACE_Null_Mutex (LPCTSTR = 0) {}
-  ~ACE_Null_Mutex (void) {}
-  int remove (void) { return 0; }
-
-  int acquire (void) { return 0; }
-  int tryacquire (void) { return 0; }
-  int release (void) { return 0; }
-  int acquire_write (void) { return 0; }
-  int tryacquire_write (void) { return 0; }
-  int acquire_read (void) { return 0; }
-  int tryacquire_read (void) { return 0; }
-
-  void dump (void) const { }
-  // Dump the state of an object.
-
-  ACE_ALLOC_HOOK_DECLARE;
-  // Declare the dynamic allocation hooks.
-};
-
-class ACE_Export ACE_Null_Condition_Mutex
-  // = TITLE
-  //     Implement a do nothing <ACE_Condition> variable wrapper, i.e.,
-  //     all methods are no ops.  This class is necessary since some
-  //     C++ compilers are *very* lame...
-{
-public:
-  ACE_Null_Condition_Mutex (ACE_Null_Mutex &m, int = 0, 
-			    LPCTSTR = 0, void * = 0): mutex_ (m) {}
-  ~ACE_Null_Condition_Mutex (void) {}
-  int remove (void) { return 0; }
-  int wait (ACE_Time_Value * = 0) { errno = ETIME; return -1; }
-  int signal (void) { return 0; }
-  int broadcast (void) { return 0; }
-  ACE_Null_Mutex &mutex (void) { return this->mutex_; }
-
-  void dump (void) const {}
-  // Dump the state of an object.
-
-  // ACE_ALLOC_HOOK_DECLARE;
-  // Declare the dynamic allocation hooks.
-
-private:
-  ACE_Null_Mutex &mutex_; // Reference to mutex lock.  
-
-  // = Prevent assignment and initialization.
-  void operator= (const ACE_Null_Condition_Mutex &) {}
-  ACE_Null_Condition_Mutex (const ACE_Null_Condition_Mutex &c): mutex_ (c.mutex_) {}
-};
-
-class ACE_Export ACE_Null_Mutex_Guard
-  // = TITLE
-  //     This data structure is meant to be used within a method or
-  //     function...  It performs automatic aquisition and release of
-  //     an ACE_Null_Mutex.
-  //
-  // = DESCRIPTION
-  //     This should be a specialization of ACE_Guard, but compiler
-  //     bugs preclude this...
-{
-public:
-  ACE_Null_Mutex_Guard (ACE_Null_Mutex &) {}
-  ~ACE_Null_Mutex_Guard (void) {}
-  int remove (void) { return 0; }
-  int locked (void) { return 1; }
-  int acquire (void) { return 0; }
-  int tryacquire (void) { return 0; }
-  int release (void) { return 0; }
-  void dump (void) const { }
-
-protected:
-  // = Prevent assignment and initialization.
-  void operator= (const ACE_Null_Mutex_Guard &) {}
-  ACE_Null_Mutex_Guard (const ACE_Null_Mutex_Guard &) {}
-};
 
 #if defined (__ACE_INLINE__)
 #include "ace/Synch.i"

@@ -46,13 +46,13 @@ parse_args (int argc, char *argv[])
     switch (c)
     {
     case 'd':
-      ::release_mutex = 0;
+      release_mutex = 0;
       break;
     case 'c':
-      ::child_process = 1;
+      child_process = 1;
       break;
     case 'n':
-      ::mutex_name = get_opt.optarg;
+      mutex_name = get_opt.optarg;
       break;
     default:
       print_usage_and_die ();
@@ -61,21 +61,21 @@ parse_args (int argc, char *argv[])
 }
 
 static void
-doit ()
+acquire_release (void)
 {
-  ACE_Process_Mutex mutex (::mutex_name);
+  ACE_Process_Mutex mutex (mutex_name);
   // Make sure the constructor succeeded
   ACE_ASSERT (ACE_LOG_MSG->op_status () == 0);
   // Grab the lock 
   ACE_ASSERT (mutex.acquire () == 0);
-  ACE_DEBUG ((LM_DEBUG, "(%P) Mutex acquired %s\n", ::mutex_name));
+  ACE_DEBUG ((LM_DEBUG, "(%P) Mutex acquired %s\n", mutex_name));
   ACE_DEBUG ((LM_DEBUG, "(%P) Working....\n"));
   // work
   ACE_OS::sleep (2);
   // Check if we need to release the mutex
-  if (::release_mutex == 1)
+  if (release_mutex == 1)
     {
-      ACE_DEBUG ((LM_DEBUG, "(%P) Releasing the mutex %s\n", ::mutex_name));
+      ACE_DEBUG ((LM_DEBUG, "(%P) Releasing the mutex %s\n", mutex_name));
       ACE_ASSERT (mutex.release () == 0);
     }
 }
@@ -83,13 +83,13 @@ doit ()
 int 
 main (int argc, char *argv[])
 {
-  ::parse_args (argc, argv);
+  parse_args (argc, argv);
 
   // Child process code
-  if (::child_process)
+  if (child_process)
     {      
       ACE_APPEND_LOG ("Process_Mutex_Test-children");      
-      ::doit ();
+      acquire_release ();
       ACE_END_LOG;      
     }
   else
@@ -101,8 +101,8 @@ main (int argc, char *argv[])
       s_argv[0] = "Process_Mutex_Test" ACE_PLATFORM_EXE_SUFFIX;
       s_argv[1] = "-c"; // child/slave process
       s_argv[2] = "-n";
-      s_argv[3] = ::mutex_name;
-      if (::release_mutex == 0)	
+      s_argv[3] = mutex_name;
+      if (release_mutex == 0)	
 	s_argv[4] = "-d";
       else
 	s_argv[4] = 0;

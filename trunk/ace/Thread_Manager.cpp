@@ -98,11 +98,10 @@ ACE_Thread_Manager::thr_self (ACE_hthread_t &self)
       ACE_Thread_Descriptor td;
       ACE_thread_t id = ACE_OS::thr_self ();
       
-      int i = this->thread_descriptor_i (id, td);
+      if (this->thread_descriptor_i (id, td) == -1)
+	return -1;
 
-      if (i == -1) 
-	return -1; 
-      handle = &this->thr_table_[i].thr_handle_;
+      handle = &td.thr_handle_;
 
       // Update the TSS cache. 
       ACE_LOG_MSG->thr_handle (handle);

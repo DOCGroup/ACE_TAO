@@ -48,10 +48,12 @@ ACE_OS::mutex_lock_cleanup (void *mutex)
 // = Static initialization.
 
 // This is necessary to deal with POSIX pthreads insanity.  This
-// guarantees that we've got a "zero'd" thread id even when ACE_thread_t
-// is implemented as a structure...
+// guarantees that we've got a "zero'd" thread id even when
+// ACE_thread_t, ACE_hthread_t, and ACE_thread_key_t are implemented
+// as structures...
 ACE_thread_t ACE_OS::NULL_thread;
 ACE_hthread_t ACE_OS::NULL_hthread;
+ACE_thread_key_t ACE_OS::NULL_key
 
 ACE_OS::ACE_OS (void)
 {
@@ -1102,9 +1104,6 @@ ACE_OS::thr_keycreate (ACE_thread_key_t *key,
 
   if (*key != ACE_SYSCALL_FAILED)
     {
-      // if TlsAlloc succeeded, TlsSetValue also succeeds.
-      // ::TlsSetValue (*key, inst);
-
       // Extract out the thread-specific table instance and stash away
       // the key and destructor so that we can free it up later on...
       return ACE_TSS_Cleanup::instance ()->insert (*key, dest, inst);

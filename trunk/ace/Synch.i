@@ -74,41 +74,67 @@ ACE_File_Lock::set_handle (ACE_HANDLE h)
   this->lock_.handle_ = h;
 }
 
-#if defined (ACE_HAS_THREADS)
-
-ACE_INLINE const ACE_sema_t &
-ACE_Semaphore::lock (void) const
+ACE_INLINE const ACE_rwlock_t &
+ACE_RW_Mutex::lock (void) const
 {
-// ACE_TRACE ("ACE_Semaphore::lock");
-  return this->semaphore_;
+// ACE_TRACE ("ACE_RW_Mutex::lock");
+  return this->lock_;
 }
 
 ACE_INLINE int
-ACE_Semaphore::remove (void)
+ACE_RW_Mutex::remove (void)
 {
-// ACE_TRACE ("ACE_Semaphore::remove");
-  return ACE_OS::sema_destroy (&this->semaphore_);
+// ACE_TRACE ("ACE_RW_Mutex::remove");
+  return ACE_OS::rwlock_destroy (&this->lock_);
 }
 
 ACE_INLINE int
-ACE_Semaphore::acquire (void)
+ACE_RW_Mutex::acquire_read (void)
 {
-// ACE_TRACE ("ACE_Semaphore::acquire");
-  return ACE_OS::sema_wait (&this->semaphore_);
+// ACE_TRACE ("ACE_RW_Mutex::acquire_read");
+  return ACE_OS::rw_rdlock (&this->lock_);
+}  
+
+ACE_INLINE int 
+ACE_RW_Mutex::acquire_write (void)
+{
+// ACE_TRACE ("ACE_RW_Mutex::acquire_write");
+  return ACE_OS::rw_wrlock (&this->lock_);
 }
 
-ACE_INLINE int
-ACE_Semaphore::tryacquire (void)
+ACE_INLINE int 
+ACE_RW_Mutex::acquire (void)
 {
-// ACE_TRACE ("ACE_Semaphore::tryacquire");
-  return ACE_OS::sema_trywait (&this->semaphore_);
+// ACE_TRACE ("ACE_RW_Mutex::acquire");
+  return ACE_OS::rw_wrlock (&this->lock_);
 }
 
-ACE_INLINE int
-ACE_Semaphore::release (void)
+ACE_INLINE int 
+ACE_RW_Mutex::tryacquire_read (void)
 {
-// ACE_TRACE ("ACE_Semaphore::release");
-  return ACE_OS::sema_post (&this->semaphore_);
+// ACE_TRACE ("ACE_RW_Mutex::tryacquire_read");
+  return ACE_OS::rw_tryrdlock (&this->lock_);
+}
+
+ACE_INLINE int 
+ACE_RW_Mutex::tryacquire_write (void)
+{
+// ACE_TRACE ("ACE_RW_Mutex::tryacquire_write");
+  return ACE_OS::rw_trywrlock (&this->lock_);
+}
+
+ACE_INLINE int 
+ACE_RW_Mutex::tryacquire (void)
+{
+// ACE_TRACE ("ACE_RW_Mutex::tryacquire");
+  return this->tryacquire_write ();
+}
+
+ACE_INLINE int 
+ACE_RW_Mutex::release (void)
+{
+// ACE_TRACE ("ACE_RW_Mutex::release");
+  return ACE_OS::rw_unlock (&this->lock_);
 }
 
 ACE_INLINE int
@@ -173,6 +199,43 @@ ACE_Mutex::remove (void)
 // ACE_TRACE ("ACE_Mutex::remove");
   return ACE_OS::mutex_destroy (&this->lock_);
 }
+
+ACE_INLINE const ACE_sema_t &
+ACE_Semaphore::lock (void) const
+{
+// ACE_TRACE ("ACE_Semaphore::lock");
+  return this->semaphore_;
+}
+
+ACE_INLINE int
+ACE_Semaphore::remove (void)
+{
+// ACE_TRACE ("ACE_Semaphore::remove");
+  return ACE_OS::sema_destroy (&this->semaphore_);
+}
+
+ACE_INLINE int
+ACE_Semaphore::acquire (void)
+{
+// ACE_TRACE ("ACE_Semaphore::acquire");
+  return ACE_OS::sema_wait (&this->semaphore_);
+}
+
+ACE_INLINE int
+ACE_Semaphore::tryacquire (void)
+{
+// ACE_TRACE ("ACE_Semaphore::tryacquire");
+  return ACE_OS::sema_trywait (&this->semaphore_);
+}
+
+ACE_INLINE int
+ACE_Semaphore::release (void)
+{
+// ACE_TRACE ("ACE_Semaphore::release");
+  return ACE_OS::sema_post (&this->semaphore_);
+}
+
+#if defined (ACE_HAS_THREADS)
 
 ACE_INLINE const ACE_thread_mutex_t &
 ACE_Thread_Mutex::lock (void) const
@@ -357,69 +420,6 @@ ACE_Recursive_Thread_Mutex::set_nesting_level (int d)
 {
 // ACE_TRACE ("ACE_Recursive_Thread_Mutex::set_nesting_level");
   this->nesting_level_ = d;
-}
-
-ACE_INLINE const ACE_rwlock_t &
-ACE_RW_Mutex::lock (void) const
-{
-// ACE_TRACE ("ACE_RW_Mutex::lock");
-  return this->lock_;
-}
-
-ACE_INLINE int
-ACE_RW_Mutex::remove (void)
-{
-// ACE_TRACE ("ACE_RW_Mutex::remove");
-  return ACE_OS::rwlock_destroy (&this->lock_);
-}
-
-ACE_INLINE int
-ACE_RW_Mutex::acquire_read (void)
-{
-// ACE_TRACE ("ACE_RW_Mutex::acquire_read");
-  return ACE_OS::rw_rdlock (&this->lock_);
-}  
-
-ACE_INLINE int 
-ACE_RW_Mutex::acquire_write (void)
-{
-// ACE_TRACE ("ACE_RW_Mutex::acquire_write");
-  return ACE_OS::rw_wrlock (&this->lock_);
-}
-
-ACE_INLINE int 
-ACE_RW_Mutex::acquire (void)
-{
-// ACE_TRACE ("ACE_RW_Mutex::acquire");
-  return ACE_OS::rw_wrlock (&this->lock_);
-}
-
-ACE_INLINE int 
-ACE_RW_Mutex::tryacquire_read (void)
-{
-// ACE_TRACE ("ACE_RW_Mutex::tryacquire_read");
-  return ACE_OS::rw_tryrdlock (&this->lock_);
-}
-
-ACE_INLINE int 
-ACE_RW_Mutex::tryacquire_write (void)
-{
-// ACE_TRACE ("ACE_RW_Mutex::tryacquire_write");
-  return ACE_OS::rw_trywrlock (&this->lock_);
-}
-
-ACE_INLINE int 
-ACE_RW_Mutex::tryacquire (void)
-{
-// ACE_TRACE ("ACE_RW_Mutex::tryacquire");
-  return this->tryacquire_write ();
-}
-
-ACE_INLINE int 
-ACE_RW_Mutex::release (void)
-{
-// ACE_TRACE ("ACE_RW_Mutex::release");
-  return ACE_OS::rw_unlock (&this->lock_);
 }
 
 #endif /* ACE_HAS_THREADS */
