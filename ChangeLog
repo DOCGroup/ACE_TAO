@@ -73,12 +73,7 @@ Thu Feb 22 08:43:30 2001  Carlos O'Ryan  <coryan@uci.edu>
 Thu Feb 22 07:51:36 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
         * ace/OS.i: Reverted the change "Thu Feb 22 03:31:06 2001
-          Krishnakumar B  <kitty@ace.cs.wustl.edu> ". The beta 5.1.13 is
-          going to be zapped.
-
-Thu Feb 22 03:52:25 2001  Krishnakumar B  <kitty@cs.wustl.edu>
-
-        * ACE version 5.1.13 released.
+          Krishnakumar B  <kitty@ace.cs.wustl.edu> ". 
 
 Thu Feb 22 03:31:06 2001  Krishnakumar B  <kitty@ace.cs.wustl.edu>
 
