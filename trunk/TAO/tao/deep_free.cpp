@@ -441,6 +441,9 @@ TAO_Marshal_Sequence::deep_free (CORBA::TypeCode_ptr  tc,
   // class. That class allocate  and deallocates the buffer, using
   // virtual methods.
 
+  ACE_UNUSED_ARG (dest);
+  ACE_UNUSED_ARG (env);
+
   if (tc)
     {
       TAO_Base_Sequence *src = ACE_reinterpret_cast(TAO_Base_Sequence*,source);
