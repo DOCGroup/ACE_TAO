@@ -1,26 +1,15 @@
-Thu Oct 23 22:07:03 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
-
-	* ace/Thread_Manager.cpp (wait_task,wait_grp):  We should also
-	  check for thread creation flags when collection information for
-	  threads belong to this group and don't try to join those threads
-	  created with THR_DETACHED or THR_DAEMON.
-
-Thu Oct 23 21:22:16 1997  Darrell Brunsch <brunsch@cs.wustl.edu>
-
-	* ACE-INSTALL.html: Copied some documentation about makefile flags
-	  from include/makeinclude/wrapper_macros.GNU and added a section
-	  for this.
-
-Thu Oct 23 20:37:44 1997  David L. Levine  <levine@cs.wustl.edu>
-
-	* ace/Array.*: added ACE_Array_Iterator.
-
-Thu Oct 23 17:28:11 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
-
-	* ace/Mem_Map.i (close_filemapping_handle): Moved this above its
- 	  uses in the file so that g++ would de-warn.
-
 Thu Oct 23 19:05:08 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/Thread_Manager.cpp (find_hthread): Replaced the call
+	
+	  if (iter.next ()->thr_handle_ == h_id)
+
+	  to 
+
+	  if (ACE_OS::thr_equal (iter.next ()->thr_handle_, h_id))
+	  
+	  since the other one isn't portable to Pthreads.  Thanks to
+ 	  Stephen Coy <stevec@magna.com.au> for reporting this.
 
 	* ace/Hash_Map_Manager.cpp: Removed the sentinel in the
  	  Hash_Map_Manager.  Sentinels are evil since they require us to
@@ -63,6 +52,28 @@ Thu Oct 23 19:05:08 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 	* ace/Singleton.cpp (dump): There was a typo in the dump() method
  	  for ACE_TSS_Singleton, it should be
  	  ACE_TSS_Singleton::instance_i().  I've fixed this.
+
+Thu Oct 23 22:07:03 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
+
+	* ace/Thread_Manager.cpp (wait_task,wait_grp): We should also
+ 	  check for thread creation flags when collection information for
+ 	  threads belong to this group and don't try to join those threads
+ 	  created with THR_DETACHED or THR_DAEMON.
+
+Thu Oct 23 21:22:16 1997  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+	* ACE-INSTALL.html: Copied some documentation about makefile flags
+	  from include/makeinclude/wrapper_macros.GNU and added a section
+	  for this.
+
+Thu Oct 23 20:37:44 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/Array.*: added ACE_Array_Iterator.
+
+Thu Oct 23 17:28:11 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* ace/Mem_Map.i (close_filemapping_handle): Moved this above its
+ 	  uses in the file so that g++ would de-warn.
 
 Thu Oct 23 15:30:17 1997  Steve Huston  <shuston@riverace.com>
 
