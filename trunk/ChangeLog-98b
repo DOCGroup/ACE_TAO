@@ -1,3 +1,17 @@
+Wed Jun 24 06:54:00 EET DST 1998 Wei Chiang <chiang@horizon.ntc.nokia.com>
+	* Attached "CLASSIX_" to all the file names in ace/CLASSIX.
+        * Modified include statments in ace/CLASSIX/* to reflect the
+          name changes.
+        * Added Makefile in ace/CLASSIX
+        * ace/CLASSIX/CLASSIX_Reactor.h:
+          ACE_CLASSIX_Reactor_Notify is now derived from ACE_Reactor_Notify
+	  The private data member, select_reactor_, is now an
+          ACE_CLASSIX_Reactor class instead of an ACE_Select_Reactor class. 
+        * ace/CLASSIX/CLASSIX_Reactor.cpp:
+ 	  in open() 
+	  uses ACE_dynamic_cast() to cast <theReactor>
+          parameter from  ACE_Reactor_Impl to ACE_CLASSIX_Reactor
+
 Tue Jun 23 22:18:42 1998  Douglas C. Schmidt  <schmidt@cumbia.cs.wustl.edu>
 
 	* examples/Mem_Map/file-reverse/file-reverse.cpp: Fixed a minor
