@@ -18,7 +18,7 @@ module HUDisplay
   local interface CCM_RateGen_Executor
     : Components::EnterpriseComponent, opmode
   {
-    realonly attribute long hertz;
+    readonly attribute long hertz;
   }
 
   local interface CCM_RateGen
