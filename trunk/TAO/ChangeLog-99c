@@ -1,3 +1,24 @@
+Tue Nov 30 19:12:16 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* docs/tutorials/Quoter/index.html:
+	* docs/tutorials/Quoter/RT_Event_Service/index.html:
+	* docs/tutorials/Quoter/RT_Event_Service/Makefile:
+	* docs/tutorials/Quoter/RT_Event_Service/Stock_Consumer.cpp:
+	* docs/tutorials/Quoter/RT_Event_Service/Stock_Consumer.h:
+	* docs/tutorials/Quoter/RT_Event_Service/Stock_Factory_i.cpp:
+	* docs/tutorials/Quoter/RT_Event_Service/Stock_Factory_i.h:
+	* docs/tutorials/Quoter/RT_Event_Service/Stock_i.cpp:
+	* docs/tutorials/Quoter/RT_Event_Service/Stock_i.h:
+	* docs/tutorials/Quoter/RT_Event_Service/client.cpp:
+	* docs/tutorials/Quoter/RT_Event_Service/server.cpp:
+	  New tutorial on how to use the real-time Events Service for
+	  event filtering.
+
+	* docs/tutorials/Quoter/Event_Service/Makefile:
+	* docs/tutorials/Quoter/Event_Service/Stock_Consumer.h:
+	* docs/tutorials/Quoter/Event_Service/index.html:
+	  Fixed some typos
+
 Tue Nov 30 16:47:52 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/util/utl_scope.cpp:
