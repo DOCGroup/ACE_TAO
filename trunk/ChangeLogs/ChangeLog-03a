@@ -1,3 +1,12 @@
+Tue May  7 10:31:24 2002  Alex Libman <AlexL@rumblegroup.com>
+
+	* tests/TP_Reactor_Test.cpp:
+	* tests/TP_Reactor_Test.h: Fixed the tests to work fine on all
+	  platforms.  
+	
+	* tests/run_test.lst (TP_Reactor_Test): Enabled the test for the
+	  daily runs. 
+
 Mon May 06 16:31:14 2002  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* examples/Reactor/WFMO_Reactor/Abandoned.cpp (handle_timeout): 
