@@ -86,7 +86,7 @@ Server_i::init_naming_service (CORBA::Environment& env)
   // Generate an IOR for the AccountManager Object and register it
   // with POA.
 
-  CORBA::String_var str  =
+  CORBA::String_var str =
     this->orb_manager_.activate_under_child_poa ("AccountManager",
                                                  this->account_manager_impl_,
                                                  env);
