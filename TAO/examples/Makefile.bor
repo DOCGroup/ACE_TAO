@@ -4,6 +4,7 @@
 #
 
 DIRS =  \
+        AMH \
         Buffered_AMI \
         Buffered_Oneways \
         Callback_Quoter Simple \

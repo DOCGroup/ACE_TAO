@@ -1,3 +1,14 @@
+Fri Jul 12 13:52:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Makefile.bor:
+          Added AMH directory
+
+        * examples/AMH/Makefile.bor:
+          New BCB makefile to build subdirectory
+
+        * examples/AMH/Sink_Server/*.bor:
+          Added BCB makefiles for this example
+
 Fri Jul 12 13:39:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Makefile.bor:
