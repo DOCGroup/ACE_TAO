@@ -152,7 +152,7 @@ LIB32=link.exe -lib
 CPP=cl.exe
 # ADD BASE CPP /nologo /Gt0 /W3 /GX /Zi /Od /Gy /I "..\\" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /FD /c
 # SUBTRACT BASE CPP /YX
-# ADD CPP /nologo /MTd /Gt0 /W3 /GX /Zi /Od /Gy /I "..\\" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /FD /c
+# ADD CPP /nologo /Gt0 /W3 /GX /Zi /Od /Gy /I "..\\" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /FD /MTd /c
 # SUBTRACT CPP /YX
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo /o".\ace.bsc"
@@ -200,7 +200,7 @@ LIB32=link.exe -lib
 CPP=cl.exe
 # ADD BASE CPP /nologo /Gt0 /W3 /GX /Zi /Od /Gy /I "..\\" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "UNICODE" /FD /c
 # SUBTRACT BASE CPP /YX
-# ADD CPP /nologo /MTd /Gt0 /W3 /GX /Zi /Od /Gy /I "..\\" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "UNICODE" /FD /c
+# ADD CPP /nologo /Gt0 /W3 /GX /Zi /Od /Gy /I "..\\" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "UNICODE" /FD /MTd /c
 # SUBTRACT CPP /YX
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo /o".\ace.bsc"
@@ -451,6 +451,29 @@ DEP_CPP_ACTIV=\
 	".\WFMO_Reactor.i"\
 	".\ws2tcpip.h"\
 	
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Unicode Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Active_Map_Manager.cpp
+
+!IF  "$(CFG)" == "ACE static library - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Unicode Release"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Debug"
 
 !ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Release"
 
@@ -14426,6 +14449,14 @@ SOURCE=.\Activation_Queue.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Active_Map_Manager.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Active_Map_Manager_T.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Addr.h
 # End Source File
 # Begin Source File
@@ -15134,6 +15165,14 @@ SOURCE=.\ACE.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\Active_Map_Manager.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Active_Map_Manager_T.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\Addr.i
 # End Source File
 # Begin Source File
@@ -15683,6 +15722,31 @@ SOURCE=.\Acceptor.cpp
 
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Active_Map_Manager_T.cpp
+
+!IF  "$(CFG)" == "ACE static library - Win32 Debug"
+
+# PROP Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Unicode Release"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Unicode Release"
 
 !ENDIF 
 
