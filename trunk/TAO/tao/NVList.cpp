@@ -439,6 +439,19 @@ CORBA_NVList::evaluate (CORBA::Environment &ACE_TRY_ENV)
                      ACE_TRY_ENV);
 }
 
+CORBA::Boolean
+CORBA_NVList::_lazy_has_arguments (void) const
+{
+  if (this->incoming_ != 0)
+    {
+      return this->incoming_->length () == 0 ? 0 : 1;
+    }
+  else
+    {
+      return this->count () == 0 ? 0 : 1;
+    }
+}
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Node<CORBA::NamedValue_ptr>;
 template class ACE_Unbounded_Queue<CORBA::NamedValue_ptr>;
