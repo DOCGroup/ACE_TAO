@@ -26,7 +26,9 @@ $iorfile = PerlACE::LocalFile("amh.ior");
 unlink $iorfile;
 
 $delay_time = $reply_delay_time*1000; #convert to microseconds
-$AMH = new PerlACE::Process ("st_server", "-ORBsvcconf st_server.conf -o $iorfile -s $delay_time");
+$AMH = new PerlACE::Process ("st_server", "-ORBsvcconf st_server" .
+                             "$PerlACE::svcconf_ext".
+                             " -o $iorfile -s $delay_time");
 $CL = new PerlACE::Process ("client", "-k file://$iorfile -n $iterations");
 
 print STDERR "\n    Starting AMH Sink Server with $reply_delay_time milliseconds delayed response: \n\n";

@@ -11,7 +11,7 @@ use PerlACE::Run_Test;
 $status = 0;
 
 $sample_cfg = PerlACE::LocalFile ("sample.cfg");
-$svc_conf = PerlACE::LocalFile ("svc.conf");
+$svc_conf = PerlACE::LocalFile ("svc$PerlACE::svcconf_ext");
 
 # Run two copies of the same test...
 $T1 = new PerlACE::Process ("EC_Mcast",

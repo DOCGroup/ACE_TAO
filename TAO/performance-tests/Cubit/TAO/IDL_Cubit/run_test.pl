@@ -17,9 +17,9 @@ use English;
 $status = 0;
 
 $iorfile = PerlACE::LocalFile ("cubit.ior");
-$iiop_lite_conf = PerlACE::LocalFile ("iiop_lite.conf");
-$uiop_lite_conf = PerlACE::LocalFile ("uiop_lite.conf");
-$server_shmiop_conf = PerlACE::LocalFile ("server_shmiop.conf");
+$iiop_lite_conf = PerlACE::LocalFile ("iiop_lite$PerlACE::svcconf_ext");
+$uiop_lite_conf = PerlACE::LocalFile ("uiop_lite$PerlACE::svcconf_ext");
+$server_shmiop_conf = PerlACE::LocalFile ("server_shmiop$PerlACE::svcconf_ext");
 
 $svnsflags = " -f $iorfile";
 $clnsflags = " -f $iorfile";

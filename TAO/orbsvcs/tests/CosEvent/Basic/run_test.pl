@@ -13,7 +13,7 @@ use PerlACE::Run_Test;
 
 $status = 0;
 
-$svc_pull_conf = PerlACE::LocalFile ("svc.pull.conf");
+$svc_pull_conf = PerlACE::LocalFile ("svc.pull$PerlACE::svcconf_ext");
 
 sub RunTest ($$$)
 {

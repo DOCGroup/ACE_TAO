@@ -13,11 +13,11 @@ $iorfile = PerlACE::LocalFile ("test.ior");
 unlink $iorfile;
 $status = 0;
 
-$server_reverse_conf    = PerlACE::LocalFile ("server_reverse.conf");
-$server_iiop_conf       = PerlACE::LocalFile ("server_iiop.conf");
-$server_uiop_conf       = PerlACE::LocalFile ("server_uiop.conf");
-$server_shmiop_conf     = PerlACE::LocalFile ("server_shmiop.conf");
-$server_reverse_nt_conf = PerlACE::LocalFile ("server_reverse_nt.conf");
+$server_reverse_conf    = PerlACE::LocalFile ("server_reverse$PerlACE::svcconf_ext");
+$server_iiop_conf       = PerlACE::LocalFile ("server_iiop$PerlACE::svcconf_ext");
+$server_uiop_conf       = PerlACE::LocalFile ("server_uiop$PerlACE::svcconf_ext");
+$server_shmiop_conf     = PerlACE::LocalFile ("server_shmiop$PerlACE::svcconf_ext");
+$server_reverse_nt_conf = PerlACE::LocalFile ("server_reverse_nt$PerlACE::svcconf_ext");
 
 # Configurations for all tests to be run.
 @server_opts =

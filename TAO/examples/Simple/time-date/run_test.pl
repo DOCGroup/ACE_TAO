@@ -10,7 +10,7 @@ use PerlACE::Run_Test;
 
 $status = 0;
 $iorfile = "ior";
-$conf = PerlACE::LocalFile ("client.conf");
+$conf = PerlACE::LocalFile ("client" . "$PerlACE::svcconf_ext");
 
 # Remove the file before starting the test.
 unlink $iorfile;

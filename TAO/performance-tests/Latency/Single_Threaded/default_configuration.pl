@@ -10,7 +10,7 @@ use PerlACE::Run_Test;
 
 $status = 0;
 $iorfile     = PerlACE::LocalFile ("test.ior");
-$defaultconf = PerlACE::LocalFile ("default.conf");
+$defaultconf = PerlACE::LocalFile ("default$PerlACE::svcconf_ext");
 
 print STDERR "================ Single-threaded (default) Latency Test\n";
 

@@ -11,7 +11,7 @@ use PerlACE::Run_Test;
 $status = 0;
 $threads = '8';
 $iorfile = PerlACE::LocalFile ("test.ior");
-$sv_conf = PerlACE::LocalFile ("server.conf");
+$sv_conf = PerlACE::LocalFile ("server$PerlACE::svcconf_ext");
 
 unlink $iorfile;
 

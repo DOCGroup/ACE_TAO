@@ -10,7 +10,7 @@ use PerlACE::Run_Test;
 
 $status = 0;
 $iorfile = PerlACE::LocalFile ("test.ior");
-$svc_conf = PerlACE::LocalFile ("svc.conf");
+$svc_conf = PerlACE::LocalFile ("svc$PerlACE::svcconf_ext");
 
 print STDERR "================ Throughput test\n";
 

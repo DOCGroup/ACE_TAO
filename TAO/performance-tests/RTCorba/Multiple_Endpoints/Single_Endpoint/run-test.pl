@@ -9,8 +9,8 @@ use lib '../../../../../bin';
 use PerlACE::Run_Test;
 
 $status = 0;
-$client_conf = PerlACE::LocalFile ("client.conf");
-$server_conf = PerlACE::LocalFile ("server.conf");
+$client_conf = PerlACE::LocalFile ("client$PerlACE::svcconf_ext");
+$server_conf = PerlACE::LocalFile ("server$PerlACE::svcconf_ext");
 $iorfile = PerlACE::LocalFile ("test.ior");
 
 $SV = new PerlACE::Process ("server",

@@ -10,8 +10,8 @@ use PerlACE::Run_Test;
 
 $status = 0;
 
-$ec_conf = PerlACE::LocalFile ("ec.conf");
-$ec_mt_conf = PerlACE::LocalFile ("ec_mt.conf");
+$ec_conf = PerlACE::LocalFile ("ec$PerlACE::svcconf_ext");
+$ec_mt_conf = PerlACE::LocalFile ("ec$PerlACE::svcconf_ext");
 
 print STDERR "================ Collocated tests, single threaded\n";
 
