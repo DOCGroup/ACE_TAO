@@ -1,3 +1,11 @@
+Fri Jul 31 08:23:14 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* examples/Misc/test_XtReactor[12].cpp: Updated these files so
+ 	  they will work correctly with the "new" Reactor structure.  Boy,
+ 	  it's been a long time since anyone actually tried to use this
+ 	  stuff... ;-) Thanks to J-M Strauss <strauss@limeil.cea.fr> for
+ 	  reporting this.
+
 Thu Jul 30 21:25:31 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Svc_Conf_y.cpp: This file didn't get patched with our
