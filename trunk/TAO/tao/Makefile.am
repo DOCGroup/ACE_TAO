@@ -105,6 +105,7 @@ ORB_CORE_FILES = \
   MProfile.cpp \
   Stub.cpp \
   Typecode.cpp \
+  AbstractBase \
   ValueBase.cpp \
   ValueFactory.cpp \
   ValueFactory_Map.cpp \
