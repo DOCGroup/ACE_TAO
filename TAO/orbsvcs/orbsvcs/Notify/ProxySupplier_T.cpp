@@ -115,7 +115,7 @@ TAO_Notify_ProxySupplier_T<SERVANT_TYPE>::subscription_change (const CosNotifica
                         CORBA::INTERNAL ());
     ACE_CHECK;
 
-    this->subscribed_types_.init (seq_added, seq_removed);
+    this->subscribed_types_.add_and_remove (seq_added, seq_removed);
   }
 
   this->event_manager_->subscription_change (this, seq_added, seq_removed ACE_ENV_ARG_PARAMETER);

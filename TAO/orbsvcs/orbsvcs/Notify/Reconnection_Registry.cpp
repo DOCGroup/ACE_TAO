@@ -191,7 +191,8 @@ namespace TAO_Notify
       iter.next (entry);
       iter.advance ())
     {
-      ACE_TRY_NEW_ENV
+      ACE_DECLARE_NEW_ENV;
+      ACE_TRY
       {
         if (DEBUG_LEVEL > 0)
         {

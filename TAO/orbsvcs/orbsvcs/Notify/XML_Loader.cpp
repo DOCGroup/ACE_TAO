@@ -172,7 +172,8 @@ namespace TAO_Notify
       Topology_Object* cur;
       if (object_stack_.top (cur) == 0)
       {
-        ACE_TRY_NEW_ENV
+        ACE_DECLARE_NEW_ENV;
+        ACE_TRY
         {
           NVPList attrs;
           CORBA::Long id = makeNVPList (attrs, xml_attrs);

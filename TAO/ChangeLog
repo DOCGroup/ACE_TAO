@@ -1,3 +1,33 @@
+Tue Nov 30 11:15:29 2004  Dale Wilson  <wilson_d@ociweb.com>
+
+        * orbsvcs/orbsvcs/Notify/ProxyConsumer.h:
+        * orbsvcs/orbsvcs/Notify/ProxyConsumer.cpp:
+          Missing namespace qualifier on argument.
+
+        * orbsvcs/orbsvcs/Notify/EventTypeSeq.h:
+        * orbsvcs/orbsvcs/Notify/EventTypeSeq.cpp:
+        * orbsvcs/orbsvcs/Notify/ProxyConsumer_T.cpp:
+        * orbsvcs/orbsvcs/Notify/ConsumerAdmin.cpp:
+        * orbsvcs/orbsvcs/Notify/ProxySupplier_T.cpp:
+        * orbsvcs/orbsvcs/Notify/Admin.cpp:
+          Replace another overloading of the init method name
+          with a unique and more descriptive name.
+
+        * orbsvcs/orbsvcs/Notify/Consumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Any/ProxyPushConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Reconnection_Registry.cpp:
+        * orbsvcs/orbsvcs/Notify/Routing_Slip.cpp:
+        * orbsvcs/orbsvcs/Notify/XML_Loader.cpp:
+        * orbsvcs/orbsvcs/Notify/SupplierAdmin.cpp:
+          BCB6 builds complaining about undefined "ex" in ACE_TRY_NEW_ENV{ ... }ACE_CATCHANY
+          s/ACE_TRY_NEW_ENV/ACE_DECLARE_NEW_ENV;ACE_TRY/
+
+        * orbsvcs/orbsvcs/Notify/Structured/RT_StructuredProxyPushSupplier.cpp:
+          Unused ENV argument
+
+        * orbsvcs/orbsvcs/Notify/Topology_Object.h:
+          Remove unnecessary virtual inheritence
+
 Tue Nov 30 09:53:57 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/orbsvcs/Notify/Admin.cpp:

@@ -202,7 +202,8 @@ TAO_Notify_Consumer::deliver (TAO_Notify_Method_Request_Event * request ACE_ENV_
             request->sequence ()
             ));
           request->complete ();
-          ACE_TRY_NEW_ENV
+          ACE_DECLARE_NEW_ENV;
+          ACE_TRY
           {
             this->proxy_supplier ()->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
             ACE_TRY_CHECK;
@@ -223,7 +224,8 @@ TAO_Notify_Consumer::DispatchStatus
 TAO_Notify_Consumer::dispatch_request (TAO_Notify_Method_Request_Event * request)
 {
   DispatchStatus result = DISPATCH_SUCCESS;
-  ACE_TRY_NEW_ENV
+  ACE_DECLARE_NEW_ENV;
+  ACE_TRY
   {
     request->event ()->push (this ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
@@ -324,7 +326,8 @@ TAO_Notify_Consumer::dispatch_request (TAO_Notify_Method_Request_Event * request
 TAO_Notify_Consumer::DispatchStatus
 TAO_Notify_Consumer::dispatch_batch (const CosNotification::EventBatch& batch)
 {
-  ACE_TRY_NEW_ENV
+  ACE_DECLARE_NEW_ENV;
+  ACE_TRY
   {
     this->push (batch ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
@@ -446,7 +449,8 @@ TAO_Notify_Consumer::dispatch_from_queue (Request_Queue & requests, ACE_Guard <T
           ace_mon.acquire ();
         }
         ace_mon.release ();
-        ACE_TRY_NEW_ENV
+        ACE_DECLARE_NEW_ENV;
+        ACE_TRY
         {
           this->proxy_supplier ()->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
@@ -533,7 +537,8 @@ TAO_Notify_Consumer::handle_timeout (const ACE_Time_Value&, const void*)
 {
   TAO_Notify_Refcountable_Guard_T<TAO_Notify_Consumer> grd (this);
   this->timer_id_ = -1;  // This must come first, because dispatch_pending may try to resched
-  ACE_TRY_NEW_ENV
+  ACE_DECLARE_NEW_ENV;
+  ACE_TRY
     {
       this->dispatch_pending (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;

@@ -304,7 +304,7 @@ TAO_Notify_SupplierAdmin::offer_change (const CosNotification::EventTypeSeq & ad
                         CORBA::INTERNAL ());
     ACE_CHECK;
 
-    this->subscribed_types_.init (seq_added, seq_removed);
+    this->subscribed_types_.add_and_remove (seq_added, seq_removed);
 
     TAO_Notify_Subscription_Change_Worker worker (added, removed);
 
