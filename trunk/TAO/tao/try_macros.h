@@ -84,9 +84,6 @@
 // MSVC++ gives a warning if there is no return after the throw
 // expression, it is possible that other compilers have the same
 // problem.
-#define TAO_THROW_RETURN(EXCEPTION, RETURN) do {\
-  throw EXCEPTION; \
-  return RETURN; } while (0)
 #define TAO_THROW_ENV_RETURN(EXCEPTION, ENV, RETURN) do { \
   throw EXCEPTION; \
   return RETURN; } while (0)
@@ -97,7 +94,6 @@
 
 #else
 
-#define TAO_THROW_RETURN(EXCEPTION, RETURN) throw EXCEPTION
 #define TAO_THROW_ENV_RETURN(EXCEPTION, ENV, RETURN) throw EXCEPTION
 #define TAO_RETHROW_RETURN(RETURN) throw
 #define TAO_RETHROW_RETURN_VOID throw
