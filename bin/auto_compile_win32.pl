@@ -54,6 +54,8 @@ TAO/orbsvcs/orbsvcs/orbsvcs.dsw, CosTime:
 TAO/orbsvcs/orbsvcs/orbsvcs.dsw, CosLifeCycle:
 TAO/orbsvcs/orbsvcs/orbsvcs.dsw, RTSched:
 TAO/orbsvcs/orbsvcs/orbsvcs.dsw, RTEvent:
+TAO/orbsvcs/orbsvcs/orbsvcs.dsw, RTSchedEvent:
+TAO/orbsvcs/orbsvcs/orbsvcs.dsw, RTOLDEvent:
 TAO/orbsvcs/orbsvcs/orbsvcs.dsw, CosEvent:
 TAO/orbsvcs/orbsvcs/orbsvcs.dsw, CosNotification:
 TAO/orbsvcs/orbsvcs/orbsvcs.dsw, CosProperty:
@@ -271,6 +273,8 @@ TAO/orbsvcs/orbsvcs/orbsvcs.dsw, CosTime:
 TAO/orbsvcs/orbsvcs/orbsvcs.dsw, CosLifeCycle:
 TAO/orbsvcs/orbsvcs/orbsvcs.dsw, RTSched:
 TAO/orbsvcs/orbsvcs/orbsvcs.dsw, RTEvent:
+TAO/orbsvcs/orbsvcs/orbsvcs.dsw, RTSchedEvent:
+TAO/orbsvcs/orbsvcs/orbsvcs.dsw, RTOLDEvent:
 TAO/orbsvcs/orbsvcs/orbsvcs.dsw, CosEvent:
 TAO/orbsvcs/orbsvcs/orbsvcs.dsw, CosNotification:
 TAO/orbsvcs/orbsvcs/orbsvcs.dsw, CosProperty:
