@@ -109,7 +109,7 @@ Client::bind_to_remote_mmdevice (int argc,
   
   CORBA::Object_var mmdevice_object = 
     this->manager_.orb ()->string_to_object (ior,
-                                            env);
+                                             env);
   TAO_CHECK_ENV_RETURN (env, 1);
 
   this->remote_mmdevice_ = 
