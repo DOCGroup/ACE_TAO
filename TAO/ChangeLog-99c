@@ -1,3 +1,31 @@
+Fri Dec 03 02:32:03 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/Any.h:
+	* tao/CDR.h:
+	* tao/CONV_FRAMEC.h:
+	* tao/DomainC.h:
+	* tao/Exception.h:
+	* tao/GIOP.h:
+	* tao/IOPC.h:
+	* tao/IORC.h:
+	* tao/InterceptorC.h:
+	* tao/InterfaceC.h:
+	* tao/MessagingC.h:
+	* tao/ORB.h:
+	* tao/ORB_Core.h:
+	* tao/Object.h:
+	* tao/ObjectIDList.h:
+	* tao/POAC.h:
+	* tao/PolicyC.h:
+	* tao/PollableC.h:
+	* tao/Principal.h:
+	* tao/Sequence.h:
+	* tao/TAOC.h:
+	* tao/TimeBaseC.h:
+	* tao/corbafwd.h:
+	* tao/orbconf.h: Made sure all the top level functions are
+	  exported correctly.
+
 Thu Dec  2 22:01:25 1999  Marina Spivak  <marina@cs.wustl.edu>
 
 	* performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/Client.dsp

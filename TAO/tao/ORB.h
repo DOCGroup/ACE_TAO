@@ -747,7 +747,7 @@ private:
                                     ACE_Time_Value *timeout,
                                     CORBA::Environment& ACE_TRY_ENV);
   // Resolve the given service based on the service ID.
-  
+
   int multicast_query (char* &buf,
                        const char *service_name,
                        u_short port,
@@ -862,34 +862,34 @@ private:
   CORBA::ORB_ptr &ptr_;
 };
 
-extern TAO_Export void
+TAO_Export void
 operator<<= (CORBA::Any &, const CORBA::ORB::InvalidName &);
-extern TAO_Export void
+TAO_Export void
 operator<<= (CORBA::Any &, CORBA::ORB::InvalidName*);
-extern TAO_Export CORBA::Boolean
+TAO_Export CORBA::Boolean
 operator>>= (const CORBA::Any &, CORBA::ORB::InvalidName *&);
-extern TAO_Export CORBA::Boolean
+TAO_Export CORBA::Boolean
 operator<< (TAO_OutputCDR &, const CORBA::ORB::InvalidName &);
-extern TAO_Export CORBA::Boolean
+TAO_Export CORBA::Boolean
 operator>> (TAO_InputCDR &, CORBA::ORB::InvalidName &);
 
 # if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
 
-extern TAO_Export ostream &
+TAO_Export ostream &
 operator<< (ostream &, const CORBA::String_var &);
-extern TAO_Export istream &
+TAO_Export istream &
 operator>> (istream &, CORBA::String_var &);
-extern TAO_Export ostream &
+TAO_Export ostream &
 operator<< (ostream &, CORBA::String_out &);
-extern TAO_Export istream &
+TAO_Export istream &
 operator>> (istream &, CORBA::String_out &);
-extern TAO_Export ostream &
+TAO_Export ostream &
 operator<< (ostream &, const CORBA::WString_var &);
-extern TAO_Export istream &
+TAO_Export istream &
 operator>> (istream &, CORBA::WString_var &);
-extern TAO_Export ostream &
+TAO_Export ostream &
 operator<< (ostream &, CORBA::WString_out &);
-extern TAO_Export istream &
+TAO_Export istream &
 operator>> (istream &, CORBA::WString_out &);
 
 # endif /* ACE_LACKS_IOSTREAM_TOTALLY */

@@ -644,7 +644,7 @@ template <class T,class T_var> class TAO_Unbounded_Object_Sequence;
 // Provide a simple function to access the TSS default environment.
 // We tried with CORBA_Environment::default_environment (),
 // CORBA::default_environment() and others.
-extern TAO_Export CORBA_Environment& TAO_default_environment (void);
+TAO_Export CORBA_Environment& TAO_default_environment (void);
 
 enum TAO_SERVANT_LOCATION
 {
@@ -703,11 +703,11 @@ TAO_NAMESPACE CORBA
 
   // = String memory management.
   TAO_NAMESPACE_INLINE_FUNCTION Char* string_alloc (ULong len);
-  TAO_NAMESPACE_STORAGE_CLASS Char* string_dup (const Char *);
+  TAO_Export  Char* string_dup (const Char *);
   TAO_NAMESPACE_INLINE_FUNCTION void string_free (Char *);
 
   // This is a TAO extension and must go away....
-  TAO_NAMESPACE_STORAGE_CLASS Char* string_copy (const Char *);
+  TAO_Export Char* string_copy (const Char *);
 
   typedef CORBA_String_var String_var;
   typedef CORBA_String_out String_out;
@@ -719,7 +719,7 @@ TAO_NAMESPACE CORBA
 
   // = String memory management routines.
   TAO_NAMESPACE_INLINE_FUNCTION WChar* wstring_alloc (ULong len);
-  TAO_NAMESPACE_STORAGE_CLASS WChar* wstring_dup (const WChar *const);
+  TAO_Export  WChar* wstring_dup (const WChar *const);
   TAO_NAMESPACE_INLINE_FUNCTION void wstring_free (WChar *const);
 
   typedef CORBA_WString_var WString_var;
@@ -1657,13 +1657,13 @@ TAO_NAMESPACE CORBA
   // There could be a single version of these methods, but g++ 2.7.2
   // gets horribly confused if we used CORBA::default_environment() at
   // this point.
-  TAO_NAMESPACE_STORAGE_CLASS ORB_ptr ORB_init (int &argc,
-                                                char *argv[],
-                                                const char *orb_name = 0);
-  TAO_NAMESPACE_STORAGE_CLASS ORB_ptr ORB_init (int &argc,
-                                                char *argv[],
-                                                const char *orb_name,
-                                                CORBA_Environment &ACE_TRY_ENV);
+  TAO_Export ORB_ptr ORB_init (int &argc,
+                               char *argv[],
+                               const char *orb_name = 0);
+  TAO_Export ORB_ptr ORB_init (int &argc,
+                               char *argv[],
+                               const char *orb_name,
+                               CORBA_Environment &ACE_TRY_ENV);
   // ORB initialisation
 
   // = TAO extensions...
@@ -1806,10 +1806,10 @@ TAO_NAMESPACE_CLOSE  // end of class (namespace) CORBA
 typedef TAO_Unbounded_Sequence<CORBA::Octet> TAO_opaque;
 extern TAO_Export CORBA::TypeCode_ptr TC_opaque;
 
-extern TAO_Export CORBA::Boolean
+TAO_Export CORBA::Boolean
 operator<< (TAO_OutputCDR&, const TAO_opaque&);
 
-extern TAO_Export CORBA::Boolean
+TAO_Export CORBA::Boolean
 operator>> (TAO_InputCDR&, TAO_opaque&);
 
 class TAO_ObjectKey;

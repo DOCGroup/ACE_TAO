@@ -417,15 +417,15 @@ TAO_NAMESPACE_CLOSE // module TAO
 
 #if defined (TAO_HAS_CORBA_MESSAGING)
 
-void TAO_Export operator<<= (CORBA::Any &, const TAO::PrioritySpecification &); // copying version
-void TAO_Export operator<<= (CORBA::Any &, TAO::PrioritySpecification*); // noncopying version
-CORBA::Boolean TAO_Export operator>>= (const CORBA::Any &, TAO::PrioritySpecification *&);
+TAO_Export void operator<<= (CORBA::Any &, const TAO::PrioritySpecification &); // copying version
+TAO_Export void operator<<= (CORBA::Any &, TAO::PrioritySpecification*); // noncopying version
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, TAO::PrioritySpecification *&);
 // Any operators for interface TAO::ClientPriorityPolicy
-void TAO_Export operator<<= (CORBA::Any &, TAO::ClientPriorityPolicy_ptr);
-CORBA::Boolean TAO_Export operator>>= (const CORBA::Any &, TAO::ClientPriorityPolicy *&);
-void TAO_Export operator<<= (CORBA::Any &, const TAO::BufferingConstraint &); // copying version
-void TAO_Export operator<<= (CORBA::Any &, TAO::BufferingConstraint*); // noncopying version
-CORBA::Boolean TAO_Export operator>>= (const CORBA::Any &, TAO::BufferingConstraint *&);
+TAO_Export void operator<<= (CORBA::Any &, TAO::ClientPriorityPolicy_ptr);
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, TAO::ClientPriorityPolicy *&);
+TAO_Export void operator<<= (CORBA::Any &, const TAO::BufferingConstraint &); // copying version
+TAO_Export void operator<<= (CORBA::Any &, TAO::BufferingConstraint*); // noncopying version
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, TAO::BufferingConstraint *&);
 // Any operators for interface TAO::BufferingConstraintPolicy
 void  operator<<= (CORBA::Any &, TAO::BufferingConstraintPolicy_ptr);
 CORBA::Boolean  operator>>= (const CORBA::Any &, TAO::BufferingConstraintPolicy *&);
@@ -436,10 +436,10 @@ CORBA::Boolean  operator>>= (const CORBA::Any &, TAO::BufferingConstraintPolicy 
 
 #if defined (TAO_HAS_CORBA_MESSAGING)
 
-CORBA::Boolean TAO_Export operator<< (TAO_OutputCDR &, const TAO::PrioritySpecification &);
-CORBA::Boolean TAO_Export operator>> (TAO_InputCDR &, TAO::PrioritySpecification &);
-CORBA::Boolean TAO_Export operator<< (TAO_OutputCDR &, const TAO::BufferingConstraint &);
-CORBA::Boolean TAO_Export operator>> (TAO_InputCDR &, TAO::BufferingConstraint &);
+TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const TAO::PrioritySpecification &);
+TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, TAO::PrioritySpecification &);
+TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const TAO::BufferingConstraint &);
+TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, TAO::BufferingConstraint &);
 
 #endif /* TAO_HAS_CORBA_MESSAGING */
 
