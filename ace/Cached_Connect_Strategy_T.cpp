@@ -328,7 +328,6 @@ ACE_Cached_Connect_Strategy_Ex<ACE_T2>::connect_svc_handler_i
   // Check if the user passed a hint svc_handler
   if (sh != 0)
     {
-
       int result = this->check_hint_i (sh,
                                        remote_addr,
                                        timeout,
@@ -358,14 +357,13 @@ ACE_Cached_Connect_Strategy_Ex<ACE_T2>::connect_svc_handler_i
       if (result != 0)
         return result;
 
+      // Increment the refcount
+      entry->ext_id_.increment ();
     }
 
   // For all successful cases: mark the <svc_handler> in the cache
   // as being <in_use>.  Therefore recyclable is BUSY.
   entry->ext_id_.recycle_state (ACE_RECYCLABLE_BUSY);
-
-  // And increment the refcount
-  entry->ext_id_.increment ();
 
   return 0;
 }
