@@ -1200,9 +1200,10 @@ int be_visitor_args_vardecl_ss::visit_array (be_array *node)
       os->indent ();
       if (node->size_type () == be_type::VARIABLE)
         {
-          *os << bt->name () << "_slice *_tao_ptr_" << arg->local_name () << ";" << be_nl;
+          *os << bt->name () << "_var _tao_var_"
+	      << arg->local_name () << ";" << be_nl;
           *os << bt->name () << "_out " << arg->local_name ()
-              << " (_tao_ptr_" << arg->local_name () << ");\n";
+              << " (_tao_var_" << arg->local_name () << ".ptr ());\n";
         }
       else
         *os << bt->name () << " " << arg->local_name () << ";\n";
@@ -1257,10 +1258,12 @@ int be_visitor_args_vardecl_ss::visit_interface (be_interface *node)
       break;
     case AST_Argument::dir_OUT:
       os->indent ();
-      *os << "CORBA::Object_ptr _tao_base_" << arg->local_name () << ";\n";
-      *os << bt->name () << "_ptr _tao_ptr_" << arg->local_name () << ";" << be_nl;
+      *os << "CORBA::Object_ptr _tao_base_"
+	  << arg->local_name () << ";" << be_nl;
+      *os << bt->name () << "_var _tao_var_"
+	  << arg->local_name () << ";" << be_nl;
       *os << bt->name () << "_out " << arg->local_name ()
-          << " (_tao_ptr_" << arg->local_name () << ");\n";
+          << " (_tao_var_" << arg->local_name () << ".ptr ());\n";
       break;
     }
   return 0;
@@ -1288,10 +1291,12 @@ int be_visitor_args_vardecl_ss::visit_interface_fwd (be_interface_fwd *node)
       break;
     case AST_Argument::dir_OUT:
       os->indent ();
-      *os << "CORBA::Object_ptr _tao_base_" << arg->local_name () << ";\n";
-      *os << bt->name () << "_ptr _tao_ptr_" << arg->local_name () << ";" << be_nl;
+      *os << "CORBA::Object_ptr _tao_base_"
+	  << arg->local_name () << ";" << be_nl;
+      *os << bt->name () << "_var _tao_ptr_"
+	  << arg->local_name () << ";" << be_nl;
       *os << bt->name () << "_out " << arg->local_name ()
-          << " (_tao_ptr_" << arg->local_name () << ");\n";
+          << " (_tao_var_" << arg->local_name () << ".ptr ());\n";
       break;
     }
   return 0;
@@ -1321,9 +1326,10 @@ int be_visitor_args_vardecl_ss::visit_predefined_type (be_predefined_type *node)
 	  break;
 	case AST_Argument::dir_OUT:
           os->indent ();
-          *os << bt->name () << " *_tao_ptr_" << arg->local_name () << ";" << be_nl;
+          *os << bt->name () << " _tao_var_"
+	      << arg->local_name () << ";" << be_nl;
           *os << bt->name () << "_out " << arg->local_name ()
-              << " (_tao_ptr_" << arg->local_name () << ");\n";
+              << " (_tao_var_" << arg->local_name () << ".ptr ());\n";
 	  break;
 	} // end switch direction
     } // end of if
@@ -1338,9 +1344,10 @@ int be_visitor_args_vardecl_ss::visit_predefined_type (be_predefined_type *node)
           break;
         case AST_Argument::dir_OUT:
           os->indent ();
-          *os << bt->name () << "_ptr _tao_ptr_" << arg->local_name () << ";" << be_nl;
+          *os << bt->name () << "_var _tao_ptr_"
+	      << arg->local_name () << ";" << be_nl;
           *os << bt->name () << "_out " << arg->local_name ()
-              << " (_tao_ptr_" << arg->local_name () << ");\n";
+              << " (_tao_var_" << arg->local_name () << ".ptr ());\n";
           break;
 	} // end switch direction
     } // end else if
@@ -1381,9 +1388,10 @@ int be_visitor_args_vardecl_ss::visit_sequence (be_sequence *node)
       break;
     case AST_Argument::dir_OUT:
       os->indent ();
-      *os << bt->name () << " *_tao_ptr_" << arg->local_name () << ";" << be_nl;
+      *os << bt->name () << "_var _tao_var_"
+	  << arg->local_name () << ";" << be_nl;
       *os << bt->name () << "_out " << arg->local_name ()
-          << " (_tao_ptr_" << arg->local_name () << ");\n";
+          << " (_tao_var_" << arg->local_name () << ".out () );\n";
       break;
     }
   return 0;
@@ -1404,9 +1412,10 @@ int be_visitor_args_vardecl_ss::visit_string (be_string *)
       break;
     case AST_Argument::dir_OUT:
       os->indent ();
-      *os << "char *_tao_ptr_" << arg->local_name () << ";" << be_nl;
+      *os << "CORBA::String_var _tao_var_"
+	  << arg->local_name () << ";" << be_nl;
       *os << "CORBA::String_out " << arg->local_name ()
-          << " (_tao_ptr_" << arg->local_name () << ");\n";
+          << " (_tao_var_" << arg->local_name () << ".ptr ());\n";
       break;
     }
   return 0;
@@ -1436,9 +1445,10 @@ int be_visitor_args_vardecl_ss::visit_structure (be_structure *node)
       // check if it is variable sized
       if (node->size_type () == be_type::VARIABLE)
         {
-          *os << bt->name () << " *_tao_ptr_" << arg->local_name () << ";" << be_nl;
+          *os << bt->name () << "_var _tao_var_"
+	      << arg->local_name () << ";" << be_nl;
           *os << bt->name () << "_out " << arg->local_name ()
-              << " (_tao_ptr_" << arg->local_name () << ");\n";
+              << " (_tao_ptr_" << arg->local_name () << ".ptr ());\n";
         }
       else
         *os << bt->name () << " " << arg->local_name () << ";\n";
@@ -1471,9 +1481,10 @@ int be_visitor_args_vardecl_ss::visit_union (be_union *node)
       // check if it is variable sized
       if (node->size_type () == be_type::VARIABLE)
         {
-          *os << bt->name () << " *_tao_ptr_" << arg->local_name () << ";" << be_nl;
+          *os << bt->name () << "_var _tao_ptr_"
+	      << arg->local_name () << ";" << be_nl;
           *os << bt->name () << "_out " << arg->local_name ()
-              << " (_tao_ptr_" << arg->local_name () << ");\n";
+              << " (_tao_ptr_" << arg->local_name () << ". ptr());\n";
         }
       else
         *os << bt->name () << " " << arg->local_name () << ";\n";
@@ -1556,7 +1567,7 @@ int be_visitor_args_marshal_ss::visit_array (be_array *)
       break;
     case AST_Argument::dir_OUT:
       os->indent ();
-      *os << "_tao_ptr_" << arg->local_name ();
+      *os << "_tao_var_" << arg->local_name () << ".ptr ()";
       break;
     }
   return 0;
@@ -1631,7 +1642,7 @@ int be_visitor_args_marshal_ss::visit_predefined_type (be_predefined_type *node)
 	  break;
 	case AST_Argument::dir_OUT:
           os->indent ();
-          *os << "_tao_ptr_" << arg->local_name ();
+          *os << "_tao_var_" << arg->local_name () << ".ptr ()";
 	  break;
 	} // end switch direction
     } // end of if
@@ -1646,7 +1657,7 @@ int be_visitor_args_marshal_ss::visit_predefined_type (be_predefined_type *node)
 	  break;
 	case AST_Argument::dir_OUT:
           os->indent ();
-          *os << "&_tao_ptr_" << arg->local_name ();
+          *os << "_tao_var_" << arg->local_name () << ".ptr ()";
 	  break;
 	} // end switch direction
     } // end else if
@@ -1681,7 +1692,7 @@ int be_visitor_args_marshal_ss::visit_sequence (be_sequence *)
       break;
     case AST_Argument::dir_OUT:
       os->indent ();
-      *os << "_tao_ptr_" << arg->local_name ();
+      *os << "_tao_var_" << arg->local_name () << ".ptr ()";
       break;
     }
   return 0;
@@ -1702,7 +1713,7 @@ int be_visitor_args_marshal_ss::visit_string (be_string *)
       break;
     case AST_Argument::dir_OUT:
       os->indent ();
-      *os << "&_tao_ptr_" << arg->local_name ();
+      *os << "_tao_var_" << arg->local_name () << ".ptr ()";
       break;
     }
   return 0;
@@ -1724,7 +1735,7 @@ int be_visitor_args_marshal_ss::visit_structure (be_structure *node)
     case AST_Argument::dir_OUT:
       os->indent ();
       if (node->size_type () == be_type::VARIABLE)
-        *os << "_tao_ptr_" << arg->local_name ();
+        *os << "_tao_var_" << arg->local_name () << ".ptr ()";
       else
         *os << "&" << arg->local_name ();
       break;
@@ -1748,7 +1759,7 @@ int be_visitor_args_marshal_ss::visit_union (be_union *node)
     case AST_Argument::dir_OUT:
       os->indent ();
       if (node->size_type () == be_type::VARIABLE)
-        *os << "_tao_ptr_" << arg->local_name ();
+        *os << "_tao_var_" << arg->local_name () << ".ptr ()";
       else
         *os << "&" << arg->local_name ();
       break;
@@ -2133,13 +2144,13 @@ int be_visitor_args_post_upcall_ss::visit_interface (be_interface *node)
       os->indent ();
       *os << "CORBA::release (_tao_base_" << arg->local_name () << ");"
           << be_nl;
-      *os << "_tao_base_" << arg->local_name () << " = " << arg->local_name ()
-          << ";\n";
+      *os << "_tao_base_" << arg->local_name ()
+	  << " = " << arg->local_name () << ";\n";
       break;
     case AST_Argument::dir_OUT:
       os->indent ();
-      *os << "_tao_base_" << arg->local_name () << " = _tao_ptr_"
-          << arg->local_name () << ";\n";
+      *os << "_tao_base_" << arg->local_name () << " = _tao_var_"
+          << arg->local_name () << ".in ();\n";
       break;
     }
   return 0;
@@ -2163,8 +2174,8 @@ int be_visitor_args_post_upcall_ss::visit_interface_fwd (be_interface_fwd *node)
       break;
     case AST_Argument::dir_OUT:
       os->indent ();
-      *os << "_tao_base_" << arg->local_name () << " = _tao_ptr_"
-          << arg->local_name () << ";\n";
+      *os << "_tao_base_" << arg->local_name () << " = _tao_var_"
+          << arg->local_name () << ".in ();\n";
       break;
     }
   return 0;

@@ -271,6 +271,7 @@ Cubit_Client::cube_union_dii (void)
 
   CORBA::release (req);
   delete u;
+  delete r;
 }
 
 // Cube a short.
@@ -618,6 +619,7 @@ Cubit_Client::cube_struct_dii (void)
     dmsg ("DII cube_struct ... success!!");
 
   CORBA::release (req);
+  delete result;
 }
 
 void
