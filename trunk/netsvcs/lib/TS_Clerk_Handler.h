@@ -20,6 +20,7 @@
 #include "ace/Connector.h"
 #include "ace/SOCK_Connector.h"
 #include "ace/Malloc.h"
+#include "ace/Time_Request_Reply.h"
 
 // A simple struct containing delta time and a sequence number
 struct ACE_Time_Info 

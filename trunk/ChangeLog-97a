@@ -1,3 +1,35 @@
+Wed Apr 16 17:05:55 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* tests/Process_Strategy_Test.cpp: Only compile this test if
+ 	  ACE_LACKS_EXEC is *not* defined since ACE_Process_Strategy
+ 	  requires fork().  Thanks to Irfan for pointing this out!
+
+	* netsvcs/lib: Fixed a couple o' typos that had escaped detection
+ 	  last night.  Thanks to David Levine for reporting this.
+
+	* ace/Synch[_T].h: removed the use of {} rather than ; for
+	  the private copy constructors and assignment operators.
+	  Hopefully this won't break code on older C++ compilers.  Thanks
+	  to Berni Merkle <merkle@io.freinet.de> for suggesting this.
+
+	* Added a whole slew of minor fixes for unused variables in
+	  the tests and examples.  Thanks to Torbjorn Lindgren
+	  <tl@funcom.no> for reporing these.
+
+	* ace/Handle_Set.cpp (ACE_Handle_Set_Iterator): The order of 
+	  the clause
+
+	  this->handles_.mask_.fds_bits[this->index_] == 0
+	  && this->num_ < ACE_Handle_Set::MAXSIZE
+
+	  was backwards.  It should be:
+
+	  this->index_ < ACE_Handle_Set::NUM_WORDS
+          && this->handles_.mask_.fds_bits[this->index_] == 0
+
+	  Thanks to Michael Newton <michaeln@in.ot.com.au> for
+	  reporting this.
+
 Wed Apr 16 16:55:47 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/SString.{h,cpp}: Modified CString to not allocate 1 byte for

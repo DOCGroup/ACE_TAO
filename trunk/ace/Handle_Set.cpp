@@ -207,8 +207,8 @@ ACE_Handle_Set_Iterator::ACE_Handle_Set_Iterator (const ACE_Handle_Set &f)
   // Loop until we've found the first non-zero bit or we run off the
   // end of the bitset.
   for (; 
-	this->handles_.mask_.fds_bits[this->index_] == 0
-	&& this->num_ < ACE_Handle_Set::MAXSIZE;
+	this->num_ < ACE_Handle_Set::MAXSIZE
+	&& this->handles_.mask_.fds_bits[this->index_] == 0;
 	this->index_++)
     this->num_ += ACE_Handle_Set::WORDSIZE;
 

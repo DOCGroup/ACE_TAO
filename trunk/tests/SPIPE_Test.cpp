@@ -74,7 +74,6 @@ server (void *)
   ACE_SPIPE_Acceptor acceptor;
   ACE_SPIPE_Stream new_stream;
   char buf[BUFSIZ];
-  int n;
   char t = 'a';
 
   const char *rendezvous = PIPE_NAME;
@@ -92,7 +91,7 @@ server (void *)
 
   ACE_DEBUG ((LM_DEBUG, "Accepted connection\n"));
 
-  while ((n = new_stream.recv (buf, 1)) > 0)
+  while (new_stream.recv (buf, 1) > 0)
     {
       ACE_ASSERT (t == buf[0]);
       t++;

@@ -31,6 +31,8 @@
 #include "ace/Service_Config.h"
 #include "test_config.h"
 
+#if !defined (ACE_LACKS_EXEC)
+
 typedef ACE_Svc_Handler <ACE_SOCK_STREAM, ACE_NULL_SYNCH> SVC_HANDLER;
 
 class Counting_Service : public SVC_HANDLER
@@ -323,11 +325,14 @@ Counting_Service::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
   ACE_OS::exit (0);
   return 0;
 }
+#endif /* !ACE_LACKS_EXEC */
 
 int
 main (int argc, char *argv[])
 {
-  // ACE_START_TEST ("Process_Stratey_Test");
+  ACE_START_TEST ("Process_Stratey_Test");
+
+#if !defined (ACE_LACKS_EXEC)
   ACE_Service_Config svc_conf;
 
   // Initialize the counting file.
@@ -348,6 +353,9 @@ main (int argc, char *argv[])
 
   ACE_Service_Config::run_reactor_event_loop ();
 
-  // ACE_END_TEST;
+#else
+  ACE_ERROR ((LM_ERROR, "fork() not supported on this platform\n"));
+#endif /* !ACE_LACKS_EXEC */
+  ACE_END_TEST;
   return 0;
 }

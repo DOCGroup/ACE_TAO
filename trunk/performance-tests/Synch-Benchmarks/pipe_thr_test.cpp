@@ -28,11 +28,10 @@ Pipe_Thr_Test::reader (Pipe_Thr_Test *t)
   ACE_HANDLE handle = t->pipe_handles[0];
   int ni = t->thr_id ();
   size_t length = options.msg_size ();
-  ssize_t n;
   char *to; 
   ACE_NEW_RETURN (to, char[length], 0);
 
-  while ((n = ACE_OS::read (handle, to, length)) > 0)
+  while (ACE_OS::read (handle, to, length) > 0)
     options.thr_work_count[ni]++;
 
   return 0;

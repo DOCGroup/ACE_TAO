@@ -144,7 +144,9 @@ CLI_Stream<PR_ST_2>::svc (void)
 
   time_t t = ACE_OS::time (0L);
   ACE_OS::cuserid (login_name);
-  ACE_OS::sprintf (buf, "user %s %s", login_name, ACE_OS::ctime (&t));
+  ACE_OS::sprintf (buf, "user %s %s", 
+		   login_name, 
+		   ACE_OS::ctime ((const time_t *) &t));
 
   if (this->peer ().send_n (buf, ACE_OS::strlen (buf) + 1) == -1)
     return -1;

@@ -41,7 +41,7 @@ int
 AAL_CP::handle_input (ACE_HANDLE)
 {
   char buf[BUFSIZ];
-  int n;
+  ssize_t n;
   ACE_INET_Addr from_addr;
 
   ACE_DEBUG ((LM_DEBUG, "Activity occurred on handle %d!\n",
@@ -49,7 +49,7 @@ AAL_CP::handle_input (ACE_HANDLE)
   if ((n = ACE_SOCK_Dgram::recv (buf, sizeof buf, from_addr)) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "handle_input"));
   else
-    ACE_DEBUG ((LM_DEBUG, "got buf = %s\n", buf));
+    ACE_DEBUG ((LM_DEBUG, "got buf = %*s\n", n, buf));
   
   return 0;
 }

@@ -149,8 +149,8 @@ private:
   // Locking structure for OS record locks.
 
   // = Prevent assignment and initialization.
-  void operator= (const ACE_File_Lock &) {}
-  ACE_File_Lock (const ACE_File_Lock &) {}
+  void operator= (const ACE_File_Lock &);
+  ACE_File_Lock (const ACE_File_Lock &);
 };
 
 class ACE_Export ACE_Semaphore
@@ -217,8 +217,8 @@ private:
   ACE_sema_t semaphore_;
 
   // = Prevent assignment and initialization.
-  void operator= (const ACE_Semaphore &) {}
-  ACE_Semaphore (const ACE_Semaphore &) {}
+  void operator= (const ACE_Semaphore &);
+  ACE_Semaphore (const ACE_Semaphore &);
 };
 
 class ACE_Export ACE_Process_Semaphore
@@ -351,8 +351,8 @@ private:
   // Readers/writer lock.
 
   // = Prevent assignment and initialization.
-  void operator= (const ACE_RW_Mutex &) {}
-  ACE_RW_Mutex (const ACE_RW_Mutex &) {}
+  void operator= (const ACE_RW_Mutex &);
+  ACE_RW_Mutex (const ACE_RW_Mutex &);
 };
 
 class ACE_Export ACE_Mutex
@@ -416,8 +416,8 @@ public:
 
 private:
   // = Prevent assignment and initialization.
-  void operator= (const ACE_Mutex &) {}
-  ACE_Mutex (const ACE_Mutex &) {}
+  void operator= (const ACE_Mutex &);
+  ACE_Mutex (const ACE_Mutex &);
 };
 
 class ACE_Export ACE_Process_Mutex
@@ -513,8 +513,8 @@ public:
 private:
 
   // = Prevent assignment and initialization.
-  void operator= (const ACE_Null_Barrier &) {}
-  ACE_Null_Barrier (const ACE_Null_Barrier &) {}
+  void operator= (const ACE_Null_Barrier &);
+  ACE_Null_Barrier (const ACE_Null_Barrier &);
 };
 
 class ACE_Export ACE_Null_Mutex
@@ -568,8 +568,9 @@ private:
   ACE_Null_Mutex &mutex_; // Reference to mutex lock.  
 
   // = Prevent assignment and initialization.
-  void operator= (const ACE_Null_Condition_Mutex &) {}
-  ACE_Null_Condition_Mutex (const ACE_Null_Condition_Mutex &c): mutex_ (c.mutex_) {}
+  void operator= (const ACE_Null_Condition_Mutex &);
+  ACE_Null_Condition_Mutex (const ACE_Null_Condition_Mutex &c): mutex_
+    (c.mutex_) {}
 };
 
 class ACE_Export ACE_Null_Mutex_Guard
@@ -594,8 +595,8 @@ public:
 
 private:
   // = Prevent assignment and initialization.
-  void operator= (const ACE_Null_Mutex_Guard &) {}
-  ACE_Null_Mutex_Guard (const ACE_Null_Mutex_Guard &) {}
+  void operator= (const ACE_Null_Mutex_Guard &);
+  ACE_Null_Mutex_Guard (const ACE_Null_Mutex_Guard &);
 };
 
 class ACE_TSS_Adapter
@@ -693,13 +694,12 @@ public:
 
 private:
 
-  // prevent copy constructors
-  ACE_Event (const ACE_Event& event);
-
-  // prevent assignment operators
-  const ACE_Event &operator= (const ACE_Event &rhs);
-
   ACE_event_t handle_;
+  // The underlying handle.
+
+  // = Prevent copying.
+  ACE_Event (const ACE_Event& event);
+  const ACE_Event &operator= (const ACE_Event &rhs);
 };
 
 class ACE_Export ACE_Manual_Event : public ACE_Event
@@ -811,8 +811,8 @@ public:
 
 private:
   // = Prevent assignment and initialization.
-  void operator= (const ACE_Thread_Mutex &) {}
-  ACE_Thread_Mutex (const ACE_Thread_Mutex &) {}
+  void operator= (const ACE_Thread_Mutex &);
+  ACE_Thread_Mutex (const ACE_Thread_Mutex &);
 };
 
 class ACE_Export ACE_Thread_Mutex_Guard
@@ -862,7 +862,7 @@ private:
   // Keeps track of whether we acquired the lock or failed.
 
   // = Prevent assignment and initialization.
-  void operator= (const ACE_Thread_Mutex_Guard &) {}
+  void operator= (const ACE_Thread_Mutex_Guard &);
   ACE_Thread_Mutex_Guard (const ACE_Thread_Mutex_Guard &g): lock_ (g.lock_) {}
 };
 
@@ -927,7 +927,7 @@ private:
   // Reference to mutex lock.
 
   // = Prevent assignment and initialization.
-  void operator= (const ACE_Condition_Thread_Mutex &) {}
+  void operator= (const ACE_Condition_Thread_Mutex &);
   ACE_Condition_Thread_Mutex (const ACE_Condition_Thread_Mutex &c): mutex_ (c.mutex_) {}
 };
 
@@ -1002,7 +1002,7 @@ private:
   // Current owner of the lock.
 
   // = Prevent assignment and initialization.
-  void operator= (const ACE_Recursive_Thread_Mutex &) {}
+  void operator= (const ACE_Recursive_Thread_Mutex &);
   ACE_Recursive_Thread_Mutex (const ACE_Recursive_Thread_Mutex &);
 };
 
@@ -1113,7 +1113,7 @@ private:
   // barrier).
 
   // = Prevent assignment and initialization.
-  void operator= (const ACE_Barrier &) {}
+  void operator= (const ACE_Barrier &);
   ACE_Barrier (const ACE_Barrier &): sub_barrier_1_ (0, lock_), sub_barrier_2_ (0, lock_) {}
 };
 
