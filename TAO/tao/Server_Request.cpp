@@ -99,10 +99,23 @@ IIOP_ServerRequest::IIOP_ServerRequest (TAO_InputCDR &input,
                                            &this->object_key_,
                                            0,
                                            env);
+#if !defined (TAO_COPY_OPNAME)
+  CORBA::Long length;
+  hdr_status = hdr_status && input.decode (CORBA::_tc_long,
+					   &length,
+					   0,
+					   env);
+  if (hdr_status)
+    {
+      this->operation_ = input.rd_ptr ();
+      hdr_status = input.skip_bytes (length);
+    }
+#else
   hdr_status = hdr_status && input.decode (CORBA::_tc_string,
                                            &this->operation_,
                                            0,
                                            env);
+#endif
   hdr_status = hdr_status && input.decode (CORBA::_tc_Principal,
                                            &this->requesting_principal_,
                                            0,

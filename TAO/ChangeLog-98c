@@ -1,3 +1,12 @@
+Tue May 26 16:24:41 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Server_Request.h: 
+	* tao/Server_Request.cpp: 
+	  The Server Request does not need to copy the operation name from
+	  the CDR stream. In TAO there is no translation for strings and
+	  the underlying stream survives during all the invocation.
+	  Fortunately the strings in CDR are zero terminated.
+
 Tue May 26 12:40:30 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* tao/ORB.cpp: We seem to have an extra comma here...
