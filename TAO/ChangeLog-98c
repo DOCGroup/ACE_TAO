@@ -1,12 +1,17 @@
+Fri Oct 09 02:19:09 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/IIOP_Object.cpp (Profile): Added new constructor.
+
 Fri Oct  9 01:15:54 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* tao/Operation_Table.cpp: 
 	* tao/Operation_Table.h: 
 	* TAO_IDL/be/be_interface.cpp: 
-	Integrated Linear Search operation lookup strategy option to
-	TAO_IDL. We use again GPERF for generating lookup method for
-	this. Thanks to great work by Vishal (vishal@cs), GPERF has an
-	option to generate linear search code. 
+
+	  Integrated Linear Search operation lookup strategy option to
+ 	  TAO_IDL. We use again GPERF for generating lookup method for
+ 	  this. Thanks to great work by Vishal (vishal@cs), GPERF has an
+ 	  option to generate linear search code.
  
 Thu Oct  8 17:37:14 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 

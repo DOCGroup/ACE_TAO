@@ -75,6 +75,12 @@ public:
              const ACE_INET_Addr &addr);
     // Called by server.
 
+    Profile (const char *host,
+             const CORBA::UShort port,
+             const TAO_opaque &object_key,
+             const ACE_INET_Addr &addr);
+    // Called by server.
+
     Profile (const ACE_INET_Addr &addr,
              const char *object_key);
     // Called by client or server.
