@@ -1,0 +1,20 @@
+# $Id$
+# LynxOS with g++
+
+debug = 1
+shared_libs =
+static_libs = 1
+
+CC              = gcc
+CXX             = g++
+CFLAGS          += -mthreads -pipe      #### -Wall -Wpointer-arith -Winline
+CCFLAGS         += $(CFLAGS) -fno-implicit-templates -fno-strict-prototype
+DCFLAGS         += -g
+DLD             = $(CXX)
+LD              = $(CXX)
+LIBS            += -lnetinet -lnsl
+OCFLAGS         += -O2
+AR              = ar
+ARFLAGS         = ruv
+RANLIB          = @true
+PRELIB          = @true
