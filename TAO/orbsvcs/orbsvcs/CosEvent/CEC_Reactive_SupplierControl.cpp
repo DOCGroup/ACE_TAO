@@ -5,6 +5,7 @@
 #include "CEC_SupplierAdmin.h"
 #include "CEC_ProxyPushConsumer.h"
 #include "CEC_ProxyPullConsumer.h"
+#include "tao/ORB_Core.h"
 #include "ace/Reactor.h"
 
 #if ! defined (__ACE_INLINE__)

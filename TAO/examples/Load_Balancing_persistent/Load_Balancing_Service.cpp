@@ -13,8 +13,9 @@
 // ============================================================================
 
 #include "Load_Balancing_Service.h"
-#include "ace/Get_Opt.h"
 #include "Load_Balancer_i.h"
+#include "tao/debug.h"
+#include "ace/Get_Opt.h"
 
 Load_Balancing_Service::Load_Balancing_Service (void)
   : ior_output_file_ (0)
@@ -79,10 +80,10 @@ Load_Balancing_Service::init (int argc,
       if (result < 0)
         return result;
 
-      
+
       CORBA::PolicyList policies (2);
       policies.length (2);
-      
+
       // Lifespan policy
       policies[0] =
         this->orb_manager_.root_poa()->create_lifespan_policy (PortableServer::PERSISTENT,
@@ -94,13 +95,13 @@ Load_Balancing_Service::init (int argc,
                                                                           ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      PortableServer::POA_var persistent_POA = 
+      PortableServer::POA_var persistent_POA =
         this->orb_manager_.root_poa()->create_POA ("persistent",
                                                    this->orb_manager_.poa_manager (),
                                                    policies,
                                                    ACE_TRY_ENV);
       ACE_TRY_CHECK;
-                                                   
+
 
       // Destroy policy objects
       for (CORBA::ULong i = 0;
@@ -121,7 +122,7 @@ Load_Balancing_Service::init (int argc,
       // Activate the POA manager
       //PortableServer::ServantBase_var s = factory_servant;
       this->orb_manager_.activate_poa_manager (ACE_TRY_ENV);
-      ACE_TRY_CHECK;  
+      ACE_TRY_CHECK;
 
       CORBA::Object_var objref = factory_servant->_this ();
 

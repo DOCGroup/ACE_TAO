@@ -2,9 +2,12 @@
 
 #define ACE_BUILD_SVC_DLL
 #define Alt_Resource_Factory_BUILD_DLL
+
+#include "Time_Date.h"
+#include "tao/TAO_Singleton.h"
+#include "tao/debug.h"
 #include "ace/Get_Opt.h"
 #include "ace/Dynamic_Service.h"
-#include "Time_Date.h"
 
 ACE_Reactor *
 My_Resource_Factory::get_reactor (void)

@@ -1,10 +1,12 @@
 // $Id$
 
+#include "Cubit_Client.h"
+#include "Cubit_Server.h"
+
 #include "ace/Synch.h"
 #include "ace/Get_Opt.h"
 #include "ace/ARGV.h"
-#include "Cubit_Client.h"
-#include "Cubit_Server.h"
+#include "ace/Thread_Manager.h"
 
 ACE_RCSID(IDL_Cubit, collocation_test, "$Id$")
 

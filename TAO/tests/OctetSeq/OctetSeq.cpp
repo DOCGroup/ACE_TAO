@@ -22,7 +22,6 @@
 #include "ace/High_Res_Timer.h"
 
 #include "tao/corba.h"
-#include "tao/debug.h"
 #include "testC.h"
 
 ACE_RCSID(OctetSeq, OctetSeq, "$Id$")

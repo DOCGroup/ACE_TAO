@@ -1,6 +1,7 @@
 //$Id$
 #include "FT_Policy_i.h"
 
+#include "tao/debug.h"
 
 #if !defined (__ACE_INLINE__)
 #include "FT_Policy_i.i"

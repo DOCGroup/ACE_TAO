@@ -42,6 +42,8 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+class TAO_Profile;
+
 class TAO_FT_Export TAO_FT_IOGR_Property  : public TAO_IOP::TAO_IOR_Property,
                                          public CORBA::LocalObject
 {

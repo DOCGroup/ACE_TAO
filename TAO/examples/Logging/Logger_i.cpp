@@ -2,6 +2,7 @@
 
 #include "LoggerC.h"
 #include "Logger_i.h"
+#include "tao/debug.h"
 #include "ace/ACE.h"
 #include "ace/INET_Addr.h"
 #include "ace/Log_Record.h"

@@ -1,8 +1,10 @@
 // $Id$
 
-#include "ace/Get_Opt.h"
-#include "ace/Auto_Ptr.h"
-#include "ace/Sched_Params.h"
+#include "EC_Multiple.h"
+
+#include "Scheduler_Runtime1.h"
+#include "Scheduler_Runtime2.h"
+#include "Scheduler_Runtime_Dynamic.h" /* infos_3 */
 
 #include "orbsvcs/Event_Utilities.h"
 #include "orbsvcs/Event_Service_Constants.h"
@@ -12,11 +14,12 @@
 #include "orbsvcs/Sched/Config_Scheduler.h"
 #include "orbsvcs/Runtime_Scheduler.h"
 #include "orbsvcs/Event/Event_Channel.h"
-#include "EC_Multiple.h"
 
-#include "Scheduler_Runtime1.h"
-#include "Scheduler_Runtime2.h"
-#include "Scheduler_Runtime_Dynamic.h" /* infos_3 */
+#include "tao/ORB_Core.h"
+
+#include "ace/Get_Opt.h"
+#include "ace/Auto_Ptr.h"
+#include "ace/Sched_Params.h"
 
 #if defined (sun)
 # include <sys/lwp.h> /* for _lwp_self */

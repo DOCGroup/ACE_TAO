@@ -9,6 +9,7 @@
 
 #include "Table_Adapter.h"
 #include "IOR_Table_Impl.h"
+#include "tao/ORB_Core.h"
 #include "tao/Object.h"
 
 ACE_RCSID(IORTable, Table_Adapter, "$Id$")

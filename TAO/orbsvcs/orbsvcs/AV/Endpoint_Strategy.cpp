@@ -15,6 +15,10 @@
 // ============================================================================
 
 #include "Endpoint_Strategy.h"
+
+#include "tao/debug.h"
+#include "tao/ORB_Core.h"
+
 #include "ace/Process_Semaphore.h"
 
 ACE_RCSID(AV, Endpoint_Strategy, "$Id$")

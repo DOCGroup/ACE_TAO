@@ -24,6 +24,7 @@
 #include "idl_bool.h"
 #include "tao/ORB.h"
 #include "tao/IFR_Client/InterfaceC.h"
+#include "ace/Containers.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

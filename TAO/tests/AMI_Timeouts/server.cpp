@@ -15,7 +15,7 @@
 
 #include "ace/Get_Opt.h"
 #include "tao/corba.h"
-#include "tao/PortableServer/POA.h"
+#include "tao/debug.h"
 #include "timeout_i.h"
 #include "timeout_client.h"
 

@@ -8,7 +8,7 @@ ACE_RCSID (QtTests, server, "$Id$")
 
 #if !defined (ACE_HAS_QT)
 
-int 
+int
 main (int, char *[])
 {
   ACE_ERROR ((LM_INFO,
@@ -60,7 +60,7 @@ main (int argc, char *argv[])
     return 1;
 
   // Qt specific stuff for running with TAO...
-  QApplication app (argc, argv); 
+  QApplication app (argc, argv);
   TAO_QtResource_Factory::set_context (&app);
 
   ACE_DECLARE_NEW_CORBA_ENV;
@@ -99,16 +99,16 @@ main (int argc, char *argv[])
       QVBox box;
 
       box.resize (145, 100);
-      QLCDNumber lcd (2, &box, "lcd_display"); 
-      
+      QLCDNumber lcd (2, &box, "lcd_display");
+
       // Connect the signal from the hosted servant with the public
       // SLOT method display () for the LCD Widget.
- 
+
       QObject::connect (&display_impl,
                         SIGNAL (set_value (int)),
                         &lcd,
                         SLOT (display (int)));
-      
+
       app.setMainWidget(&box);
       box.show ();
 
@@ -136,9 +136,9 @@ main (int argc, char *argv[])
       poa_manager->activate (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      // We choose to run the main Qt event loop.. 
+      // We choose to run the main Qt event loop..
       app.exec ();
-            
+
     }
   ACE_CATCHANY
     {

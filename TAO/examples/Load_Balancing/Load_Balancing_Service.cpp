@@ -13,8 +13,9 @@
 // ============================================================================
 
 #include "Load_Balancing_Service.h"
-#include "ace/Get_Opt.h"
 #include "Load_Balancer_i.h"
+#include "tao/debug.h"
+#include "ace/Get_Opt.h"
 
 Load_Balancing_Service::Load_Balancing_Service (void)
   : ior_output_file_ (0)

@@ -13,13 +13,14 @@
 //=============================================================================
 
 
-#include "ace/Get_Opt.h"
-#include "ace/Task.h"
-
-#include "timeoutC.h"
-
 #include "timeout_i.h"
 #include "timeout_client.h"
+#include "timeoutC.h"
+
+#include "tao/debug.h"
+
+#include "ace/Get_Opt.h"
+#include "ace/Task.h"
 
 ACE_RCSID (AMI,
            client,

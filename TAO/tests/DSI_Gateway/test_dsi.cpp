@@ -1,7 +1,6 @@
 // $Id$
 
 #include "test_dsi.h"
-#include "tao/debug.h"
 #include "tao/DynamicInterface/Request.h"
 
 #if !defined(__ACE_INLINE__)
@@ -49,7 +48,7 @@ DSI_Simple_Server::invoke (CORBA::ServerRequest_ptr request,
   // Updates the byte order state, if necessary.
   target_request->invoke (ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   // Outgoing reply must have the same byte order as the incoming one.
   request->_tao_reply_byte_order (target_request->_tao_byte_order ());
 }

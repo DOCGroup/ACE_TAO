@@ -18,6 +18,7 @@
 
 #include "helper.h"
 #include "ub_any_seq.h"
+#include "tao/debug.h"
 
 const CORBA::ULong TEST_SEQ_LENGTH = 5;
 const CORBA::ULong NUM_TEST_TYPES = 4;

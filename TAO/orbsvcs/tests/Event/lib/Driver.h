@@ -24,7 +24,9 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/RtecEventChannelAdminS.h"
+
 #include "ace/Stats.h"
+#include "ace/Task.h"
 
 class TAO_EC_Event_Channel_Attributes;
 class TAO_Module_Factory;

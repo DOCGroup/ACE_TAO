@@ -18,6 +18,7 @@
 // ============================================================================
 
 #include "Servant_Manager.h"
+#include "tao/debug.h"
 
 ACE_RCSID(On_Demand_Activation, Servant_Manager, "$Id$")
 

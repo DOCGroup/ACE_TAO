@@ -11,6 +11,8 @@
 #include "Notify_Event.h"
 #include "Notify_MT_Worker_Task.h"
 
+#include "tao/debug.h"
+
 ACE_RCSID(Notify, Notify_Default_EMO_Factory, "$Id$")
 
 #define ASYNCH_UPDATES_THREADS 1

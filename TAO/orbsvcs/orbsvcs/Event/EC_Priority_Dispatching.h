@@ -25,6 +25,8 @@
 #include "orbsvcs/RtecSchedulerC.h"
 #include "sched_event_export.h"
 
+#include "ace/Thread_Manager.h"
+
 class TAO_EC_Dispatching_Task;
 class TAO_EC_Event_Channel;
 

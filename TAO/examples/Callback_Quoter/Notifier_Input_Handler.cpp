@@ -18,6 +18,8 @@
 // ===========================================================
 
 #include "Notifier_Input_Handler.h"
+#include "tao/debug.h"
+#include "tao/ORB_Core.h"
 #include "ace/Get_Opt.h"
 
 // Constructor.

@@ -6,7 +6,6 @@
 #include "ssl_endpoints.h"
 #include "tao/CDR.h"
 #include "tao/Environment.h"
-#include "tao/debug.h"
 
 ACE_RCSID(TAO_SSLIOP, SSLIOP_Profile, "$Id$")
 

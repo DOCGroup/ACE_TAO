@@ -16,13 +16,15 @@
 //
 // ============================================================================
 
-#include "ace/Get_Opt.h"
-#include "ace/Task.h"
-
 #include "UDPC.h"
 
 #include "UDP_i.h"
 #include "UDP_Client_i.h"
+
+#include "tao/debug.h"
+
+#include "ace/Get_Opt.h"
+#include "ace/Task.h"
 
 ACE_RCSID(AMI, client, "$Id$")
 
@@ -136,7 +138,7 @@ main (int argc, char *argv[])
       client->activate ();
 
       // ORB loop, will be shut down by our client thread
-      
+
       orb->run (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 

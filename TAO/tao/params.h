@@ -24,6 +24,7 @@
 
 #include "tao/CORBA_String.h"
 #include "ace/SString.h"
+#include "ace/Unbounded_Queue.h"
 
 // Forward decls.
 

@@ -21,9 +21,10 @@
 #define SCHEDENTRY_H
 #include "ace/pre.h"
 
+#include "sched_export.h"
 #include "orbsvcs/RtecSchedulerC.h"
 #include "orbsvcs/Event_Service_Constants.h"
-#include "sched_export.h"
+#include "ace/Containers.h"
 
 //////////////////////
 // Helper Functions //

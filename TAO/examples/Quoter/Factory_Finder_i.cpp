@@ -15,9 +15,10 @@
 // ============================================================================
 
 #include "ace/Get_Opt.h"
-#include "tao/corba.h"
 #include "Factory_Finder_i.h"
 #include "QuoterC.h"
+#include "tao/corba.h"
+#include "tao/ORB_Core.h"
 
 ACE_RCSID(Quoter, Factory_Finder_i, "$Id$")
 
@@ -44,7 +45,7 @@ Quoter_Factory_Finder_i::find_factories (const CosLifeCycle::Key &factory_key,
   const char *exception_message = "Null Message";
 
   CosLifeCycle::Factories *factories_ptr = 0;
-  
+
   ACE_TRY
   {
     // Get a reference to the ORB.

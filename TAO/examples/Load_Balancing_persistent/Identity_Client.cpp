@@ -12,10 +12,11 @@
 //
 // ============================================================================
 
-#include "ace/Get_Opt.h"
 #include "Identity_Client.h"
 #include "IdentityC.h"
 #include "Load_BalancerC.h"
+#include "tao/debug.h"
+#include "ace/Get_Opt.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/Stats.h"
 

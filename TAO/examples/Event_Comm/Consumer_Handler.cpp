@@ -1,6 +1,7 @@
 // $Id$
 
 #include "Consumer_Handler.h"
+#include "tao/ORB_Core.h"
 
 ACE_RCSID(Consumer, Consumer_Handler, "$Id$")
 

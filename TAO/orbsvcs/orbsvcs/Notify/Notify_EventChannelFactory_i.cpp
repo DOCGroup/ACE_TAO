@@ -8,6 +8,8 @@
 #include "Notify_FilterFactory_i.h"
 #include "Notify_Event.h"
 
+#include "tao/debug.h"
+
 ACE_RCSID(Notify, Notify_EventChannelFactory_i, "$Id$")
 
 TAO_Notify_EventChannelFactory_i::TAO_Notify_EventChannelFactory_i (void)

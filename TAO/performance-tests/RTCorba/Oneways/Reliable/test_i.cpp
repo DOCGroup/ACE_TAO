@@ -1,7 +1,6 @@
 // $Id$
 
 #include "test_i.h"
-#include "tao/debug.h"
 #include "ace/ACE.h"
 
 ACE_RCSID(Reliable, test_i, "$Id$")

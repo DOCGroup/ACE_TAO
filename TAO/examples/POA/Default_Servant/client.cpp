@@ -15,11 +15,12 @@
 //
 //====================================================================
 
+#include "FileC.h"
+#include "tao/debug.h"
 #include "ace/streams.h"
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
 #include "ace/OS.h"
-#include "FileC.h"
 
 ACE_RCSID(Default_Servant, client, "$Id$")
 

@@ -5,6 +5,8 @@
 #include "Notify_Event.h"
 #include "Notify_Event_Processor.h"
 
+#include "tao/debug.h"
+
 ACE_RCSID(Notify, TAO_Notify_Event_Dispatch_Command, "$Id$")
 
 TAO_Notify_Event_Dispatch_Command::TAO_Notify_Event_Dispatch_Command (TAO_Notify_Event_Processor* event_processor, TAO_Notify_Event* event, TAO_Notify_EventListener* event_listener)

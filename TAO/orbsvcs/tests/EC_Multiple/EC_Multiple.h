@@ -26,6 +26,7 @@
 #include "orbsvcs/RtecEventCommS.h"
 #include "orbsvcs/Channel_Clients_T.h"
 #include "orbsvcs/Event/EC_Gateway_Sched.h"
+#include "orbsvcs/CosNamingC.h"
 
 class Test_ECG;
 

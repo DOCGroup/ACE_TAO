@@ -20,16 +20,18 @@
 #ifndef ACCOUNTMANAGER_I_H
 #define ACCOUNTMANAGER_I_H
 
-#include "ace/ACE.h"
+#include "BankS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/OS.h"
-#include "tao/PortableServer/ORB_Manager.h"
-#include "BankS.h"
 #include "Account_i.h"
+#include "tao/PortableServer/ORB_Manager.h"
+
+#include "ace/Hash_Map_Manager.h"
+#include "ace/OS.h"
+#include "ace/ACE.h"
 
 class AccountManager_i : public POA_Bank::AccountManager
 {

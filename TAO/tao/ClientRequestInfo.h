@@ -37,7 +37,6 @@
 #include "PortableInterceptorC.h"
 #include "LocalObject.h"
 #include "StringSeqC.h"
-#include "Invocation.h"
 
 class TAO_GIOP_Invocation;
 

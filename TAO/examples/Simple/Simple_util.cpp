@@ -5,6 +5,7 @@
 
 #include "Simple_util.h"
 #include "tao/IORTable/IORTable.h"
+#include "tao/debug.h"
 
 // Constructor.
 

@@ -7,6 +7,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/DynamicInterface/Dynamic_Implementation.h"
+#include "ace/Singleton.h"
 #include "ace/Malloc.h"
 
 class DatabaseImpl

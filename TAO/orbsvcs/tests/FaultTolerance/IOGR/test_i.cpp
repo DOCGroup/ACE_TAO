@@ -1,7 +1,6 @@
 // $Id$
 
 #include "test_i.h"
-#include "tao/debug.h"
 
 #if !defined(__ACE_INLINE__)
 //#include "test_i.i"

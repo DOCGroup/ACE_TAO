@@ -1,6 +1,7 @@
 // $Id$
 
 #include "sender.h"
+#include "tao/debug.h"
 #include "ace/Get_Opt.h"
 #include "ace/High_Res_Timer.h"
 
@@ -17,7 +18,7 @@ Sender_Callback::handle_start (void)
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            "Sender_Callback::handle_start pace data failed");
-      
+
       return -1;
     }
   ACE_ENDTRY;
@@ -99,10 +100,10 @@ Sender::parse_args (int argc,
         {
         case 'f':
           this->filename_ = opts.optarg;
-          if (TAO_debug_level > 0) 
+          if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG,
                         "Input File Name %s\n",
-                        this->filename_.c_str ()));                      
+                        this->filename_.c_str ()));
           break;
 	case 'r':
 	  this->frame_rate_ = ACE_OS::atoi (opts.optarg);
@@ -131,16 +132,16 @@ Sender::register_sender (CORBA::Environment &ACE_TRY_ENV)
 		       " (%P|%t) Unable to initialize "
 		       "the TAO_Naming_Client. \n"),
 		      -1);
-  
-  // Register the sender mmdevice object with the ORB 
+
+  // Register the sender mmdevice object with the ORB
   ACE_NEW_RETURN (this->sender_mmdevice_,
                   TAO_MMDevice (&this->endpoint_strategy_),
                   -1);
-  
+
   // Servant Reference Counting to manage lifetime
   PortableServer::ServantBase_var safe_sender_mmdevice =
     this->sender_mmdevice_;
-  
+
   CORBA::Object_var mmdevice =
     this->sender_mmdevice_->_this (ACE_TRY_ENV);
   ACE_CHECK_RETURN(-1);
@@ -148,7 +149,7 @@ Sender::register_sender (CORBA::Environment &ACE_TRY_ENV)
   CosNaming::Name sender_mmdevice_name (1);
   sender_mmdevice_name.length (1);
   sender_mmdevice_name [0].id = CORBA::string_dup ("Sender");
-  
+
   // Register the server object with the naming server.
   this->my_naming_client_->rebind (sender_mmdevice_name,
                                    mmdevice.in (),
@@ -164,19 +165,19 @@ Sender::init (int argc,
 	      CORBA::Environment &ACE_TRY_ENV)
 {
   // Initialize the endpoint strategy with the orb and poa.
-  int result =   
-    this->endpoint_strategy_.init (TAO_AV_CORE::instance ()->orb (), 
+  int result =
+    this->endpoint_strategy_.init (TAO_AV_CORE::instance ()->orb (),
                                    TAO_AV_CORE::instance ()->poa ());
-  
+
   // Parse the command line arguments
-  result = this->parse_args (argc, 
+  result = this->parse_args (argc,
 				 argv);
 
   if (result < 0)
     ACE_ERROR_RETURN ((LM_ERROR,
 		       " (%P|%t) Error in Parse Args \n"),
 		      -1);
-  
+
   // Open file to read.
   this->fp_ = ACE_OS::fopen (this->filename_.c_str (),
 			     "r");
@@ -185,9 +186,9 @@ Sender::init (int argc,
 		       "Cannot open output file %s\n",
 		       this->filename_.c_str ()),
 		      -1);
-  else 
+  else
     ACE_DEBUG ((LM_DEBUG,
-                "File opened successfully\n"));		  
+                "File opened successfully\n"));
 
   // Register the object reference with the Naming Service.
   result = this->register_sender (ACE_TRY_ENV);
@@ -197,7 +198,7 @@ Sender::init (int argc,
     ACE_ERROR_RETURN ((LM_ERROR,
                        "(%P|%t) Error binding to the naming service\n"),
                       -1);
-  
+
   return 0;
 }
 
@@ -208,7 +209,7 @@ Sender::pace_data (CORBA::Environment &ACE_TRY_ENV)
 
   // Time within which a frame should be sent.
   double frame_time = 1/ (double) this->frame_rate_;
-  
+
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
                 "Frame Time ONE = %f\n Frame Rate = %d\n",
@@ -221,38 +222,38 @@ Sender::pace_data (CORBA::Environment &ACE_TRY_ENV)
 
   // The time between two consecutive frames.
   inter_frame_time.set (frame_time);
-  
+
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
                 "Inter Frame Time = %d\n",
                 inter_frame_time.msec ()));
-  
+
   ACE_TRY
     {
-      
+
       // The time taken for sending a frame and preparing for the next frame
       ACE_High_Res_Timer elapsed_timer;
-            
+
       // Continue to send data till the file is read to the end.
       while (1)
 	{
           // Count the frames sent.
 	  count_++;
-          
+
           // Reset the message block.
           this->mb_.reset ();
-          
+
           // Read from the file into a message block.
           int n = ACE_OS::fread (this->mb_.wr_ptr (),
                                  1,
                                  this->mb_.size (),
                                  SENDER::instance ()->file ());
-	  
+
           if (n < 0)
 	    ACE_ERROR_RETURN ((LM_ERROR,
 			       "Sender::pace_data fread failed\n"),
 			      -1);
-	  
+
 	  if (n == 0)
 	    {
               // At end of file break the loop and end the client.
@@ -260,16 +261,16 @@ Sender::pace_data (CORBA::Environment &ACE_TRY_ENV)
                 ACE_DEBUG ((LM_DEBUG,"Handle_Start:End of file\n"));
               break;
             }
-          
+
           this->mb_.wr_ptr (n);
-          
+
   	  if (this->count_ > 1)
   	    {
               // Second frame and beyond
-              
+
               // Stop the timer that was started just before the previous frame was sent.
   	      elapsed_timer.stop ();
-              
+
               // Get the time elapsed after sending the previous frame.
   	      ACE_Time_Value elapsed_time;
               elapsed_timer.elapsed_time (elapsed_time);
@@ -278,7 +279,7 @@ Sender::pace_data (CORBA::Environment &ACE_TRY_ENV)
                 ACE_DEBUG ((LM_DEBUG,
                             "Elapsed Time = %d\n",
                             elapsed_time.msec ()));
-              
+
               // Check to see if the inter frame time has elapsed.
   	      if (elapsed_time < inter_frame_time)
                 {
@@ -290,17 +291,17 @@ Sender::pace_data (CORBA::Environment &ACE_TRY_ENV)
                     ACE_DEBUG ((LM_DEBUG,
                                 "Wait Time = %d\n",
                                 wait_time.msec ()));
-                  
+
                   // run the orb for the wait time so the client can continue other orb requests.
   		  TAO_AV_CORE::instance ()->orb ()->run (wait_time,
   							 ACE_TRY_ENV);
                   ACE_TRY_CHECK;
   		}
   	    }
-          
+
           // Start timer before sending the frame.
   	  elapsed_timer.start ();
-	  
+
           // Send frame.
           int result = this->protocol_object_->send_frame (&this->mb_);
 
@@ -309,32 +310,32 @@ Sender::pace_data (CORBA::Environment &ACE_TRY_ENV)
   			       "send failed:%p","Sender::pace_data send\n"),
                               -1);
           ACE_DEBUG ((LM_DEBUG,"Sender::pace_data buffer sent succesfully\n"));
-          
+
         } // end while
 
 
       AVStreams::flowSpec stop_spec;
-      
+
       // Get the strem controoler for this stream.
-      CORBA::Any_ptr streamctrl_any = 
+      CORBA::Any_ptr streamctrl_any =
         SENDER::instance ()->get_endpoint ()->get_property_value ("Related_StreamCtrl",
                                                                   ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
       AVStreams::StreamCtrl_ptr streamctrl;
-      
+
       *streamctrl_any >>= streamctrl;
 
       // Destroy the stream
       streamctrl->destroy (stop_spec,
                            ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
       // Shut the orb down.
       TAO_AV_CORE::instance ()->orb ()->shutdown (0,
                                                   ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
     }
   ACE_CATCHANY
     {
@@ -420,4 +421,3 @@ TAO_AV_Endpoint_Reactive_Strategy_B<Sender_StreamEndPoint,TAO_VDev,AV_Null_Media
 #pragma instantiate
 TAO_AV_Endpoint_Reactive_Strategy<Sender_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-

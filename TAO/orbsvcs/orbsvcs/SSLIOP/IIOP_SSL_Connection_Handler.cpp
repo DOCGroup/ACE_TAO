@@ -6,7 +6,7 @@
 #include "tao/Timeprobe.h"
 #include "tao/ORB_Core.h"
 #include "tao/ORB.h"
-
+#include "tao/debug.h"
 
 ACE_RCSID(TAO_SSLIOP, IIOP_SSL_Connect, "$Id$")
 

@@ -1,10 +1,12 @@
 // $Id$
 
-#include "ace/Read_Buffer.h"
 #include "PP_Test_Client.h"
 
 #include "tao/Timeprobe.h"
 #include "tao/TAO_Internal.h"
+#include "tao/debug.h"
+
+#include "ace/Read_Buffer.h"
 
 ACE_RCSID(IDL_Cubit, Cubit_Client, "$Id$")
 
@@ -275,14 +277,14 @@ PP_Test_Client::shutdown_server (int do_shutdown)
     {
       if (do_shutdown)
         {
-          ACE_DEBUG ((LM_DEBUG, 
+          ACE_DEBUG ((LM_DEBUG,
                       "shutdown on Pluggable_Test object\n"));
 
           this->objref_->shutdown (ACE_TRY_ENV);
 
           ACE_TRY_CHECK;
 
-          ACE_DEBUG ((LM_DEBUG, 
+          ACE_DEBUG ((LM_DEBUG,
                       "server, please ACE_OS::exit"));
         }
     }
@@ -317,7 +319,7 @@ PP_Test_Client::run_oneway (void)
 
       if (this->shutdown_)
         {
-          ACE_DEBUG ((LM_DEBUG, 
+          ACE_DEBUG ((LM_DEBUG,
                       "shutdown on Pluggable_Test object\n"));
 
           ACE_FUNCTION_TIMEPROBE (PP_TEST_CLIENT_SERVER_SHUTDOWN_START);
@@ -325,7 +327,7 @@ PP_Test_Client::run_oneway (void)
           this->objref_->shutdown (ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
-          ACE_DEBUG ((LM_DEBUG, 
+          ACE_DEBUG ((LM_DEBUG,
                       "server, please ACE_OS::exit"));
         }
     }
@@ -360,7 +362,7 @@ PP_Test_Client::run_void (void)
 
       if (this->shutdown_)
         {
-          ACE_DEBUG ((LM_DEBUG, 
+          ACE_DEBUG ((LM_DEBUG,
                       "shutdown on Pluggable_Test object\n"));
 
           ACE_FUNCTION_TIMEPROBE (PP_TEST_CLIENT_SERVER_SHUTDOWN_START);
@@ -368,7 +370,7 @@ PP_Test_Client::run_void (void)
           this->objref_->shutdown (ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
-          ACE_DEBUG ((LM_DEBUG, 
+          ACE_DEBUG ((LM_DEBUG,
                       "server, please ACE_OS::exit"));
         }
     }
@@ -476,4 +478,3 @@ PP_Test_Client::init (int argc, char **argv)
   ACE_ENDTRY;
   return 0;
 }
-

@@ -1026,7 +1026,7 @@ TAO_GIOP_Message_Base::
 
   if (transport->send (&message_block) == -1 && errno != ENOENT)
     {
-      if (TAO_orbdebug)
+      if (TAO_debug_level > 0)
         ACE_ERROR ((LM_ERROR,
                     "(%P|%t) error closing connection %lu, errno = %d\n",
                     transport->id (), errno));

@@ -12,10 +12,10 @@
 
 #ifndef TAO_CLEANUP_FUNC_REGISTRY_H
 #define TAO_CLEANUP_FUNC_REGISTRY_H
-
 #include "ace/pre.h"
 
 #include "corbafwd.h"
+#include "ace/Array_Base.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

@@ -18,6 +18,7 @@
 // ============================================================================
 
 #include "server_B.h"
+#include "tao/debug.h"
 
 ACE_RCSID(Triangle_Test, server_B, "$Id$")
 

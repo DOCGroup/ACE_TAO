@@ -1,15 +1,18 @@
 // $Id$
 
-#include "ace/Get_Opt.h"
-#include "ace/Auto_Ptr.h"
-#include "ace/Sched_Params.h"
+#include "ECT_Supplier_Driver.h"
 
-#include "tao/Timeprobe.h"
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/Event_Utilities.h"
 #include "orbsvcs/Event_Service_Constants.h"
 #include "orbsvcs/Time_Utilities.h"
-#include "ECT_Supplier_Driver.h"
+
+#include "tao/Timeprobe.h"
+#include "tao/debug.h"
+
+#include "ace/Get_Opt.h"
+#include "ace/Auto_Ptr.h"
+#include "ace/Sched_Params.h"
 
 ACE_RCSID(EC_Throughput, ECT_Supplier_Driver, "$Id$")
 

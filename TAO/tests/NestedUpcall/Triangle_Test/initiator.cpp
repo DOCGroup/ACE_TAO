@@ -17,8 +17,9 @@
 //
 // ============================================================================
 
-#include "ace/Read_Buffer.h"
 #include "initiator.h"
+#include "tao/debug.h"
+#include "ace/Read_Buffer.h"
 
 ACE_RCSID(Triangle_Test, initiator, "$Id$")
 

@@ -1,11 +1,12 @@
 // $Id$
 
+#include "LoggerC.h"
+#include "Logging_Test_i.h"
+#include "orbsvcs/CosNamingC.h"
+#include "tao/debug.h"
 #include "ace/INET_Addr.h"
 #include "ace/SOCK_Dgram_Mcast.h"
 #include "ace/OS.h"
-#include "orbsvcs/CosNamingC.h"
-#include "LoggerC.h"
-#include "Logging_Test_i.h"
 
 ACE_RCSID(Logger, Logging_Test_i, "$Id$")
 

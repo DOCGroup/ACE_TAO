@@ -56,7 +56,7 @@ be_visitor_interface_strategized_proxy_broker_sh::visit_interface (be_interface 
       << "// Helper methods that takes care to create the proxy" << be_nl
       << "// as soon as their use is necessary."
       << be_idt_nl
-      << "void create_proxy (" << be_idt_nl << "TAO_ORB_Core::TAO_Collocation_Strategies strategy,"
+      << "void create_proxy (" << be_idt_nl << "int collocation_strategy,"
       << be_nl << "CORBA::Environment &ACE_TRY_ENV"
       << be_uidt_nl << ");"
       << be_uidt_nl << be_nl
@@ -65,7 +65,7 @@ be_visitor_interface_strategized_proxy_broker_sh::visit_interface (be_interface 
       << "// are totally stateless, and those can be shared by all the" << be_nl
       << "// instances of a given IDL interface type." << be_nl
       << "::" << node->full_base_proxy_impl_name () << be_nl
-      <<" *proxy_cache_[TAO_ORB_Core::COLLOCATION_STRATEGIES_NUM];"
+      <<" *proxy_cache_[TAO_Collocation_Strategies::CS_LAST];"
       << be_nl << be_nl
       << "TAO_SYNCH_MUTEX mutex_;"
       << be_uidt_nl;

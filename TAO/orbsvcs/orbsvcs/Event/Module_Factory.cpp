@@ -5,6 +5,8 @@
 #include "orbsvcs/Event/Event_Channel.h"
 #include "orbsvcs/Event/Module_Factory.h"
 
+#include "tao/ORB_Core.h"
+
 ACE_RCSID(Event, Module_Factory, "$Id$")
 
 TAO_Module_Factory::~TAO_Module_Factory (void)

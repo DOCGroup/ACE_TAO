@@ -15,14 +15,17 @@
 #define TAO_PROTOCOLS_HOOKS_H
 #include "ace/pre.h"
 
-#include "tao/ORB_Core.h"
-#include "tao/RTCORBAC.h"
+#include "RTCORBAC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Service_Object.h"
+
+class TAO_ORB_Core;
+class TAO_GIOP_Invocation;
+class TAO_Resource_Factory;
 
 class TAO_Export TAO_Protocols_Hooks : public ACE_Service_Object
 {

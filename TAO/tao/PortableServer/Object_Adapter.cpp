@@ -16,7 +16,8 @@
 #include "tao/Stub.h"
 #include "tao/Profile.h"
 #include "tao/MProfile.h"
-
+#include "tao/debug.h"
+#include "tao/PortableInterceptor.h"
 
 #if !defined (__ACE_INLINE__)
 # include "Object_Adapter.i"

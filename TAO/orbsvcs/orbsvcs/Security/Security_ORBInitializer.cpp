@@ -1,6 +1,7 @@
 // -*- C++ -*-
 
 #include "Security_ORBInitializer.h"
+#include "tao/debug.h"
 
 ACE_RCSID (TAO_Security,
            Security_ORBInitializer,

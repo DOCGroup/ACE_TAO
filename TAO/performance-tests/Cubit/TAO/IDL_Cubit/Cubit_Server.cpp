@@ -2,6 +2,7 @@
 
 #include "Cubit_Server.h"
 #include "tao/TAO_Internal.h"
+#include "tao/debug.h"
 
 ACE_RCSID(IDL_Cubit, Cubit_Server, "$Id$")
 

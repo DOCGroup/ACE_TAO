@@ -4,6 +4,8 @@
 
 #include "SSLIOP_ORBInitializer.h"
 
+#include "tao/debug.h"
+
 ACE_RCSID (TAO_SSLIOP,
            SSLIOP_ORBInitializer,
            "$Id$")

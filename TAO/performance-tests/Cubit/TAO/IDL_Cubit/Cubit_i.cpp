@@ -13,13 +13,15 @@
 //
 // ============================================================================
 
-#include "tao/corba.h"
-#include "ace/Auto_Ptr.h"
 #include "Cubit_Client.h"
 #include "Cubit_i.h"
-
-#include "tao/Timeprobe.h"
 #include "RTI_IO.h"
+
+#include "tao/corba.h"
+#include "tao/debug.h"
+#include "tao/Timeprobe.h"
+
+#include "ace/Auto_Ptr.h"
 
 ACE_RCSID(IDL_Cubit, Cubit_Client, "Cubit_i.cpp,v 1.8 1999/07/07 15:01:28 irfan Exp")
 

@@ -13,10 +13,10 @@
 //
 // ============================================================================
 
+#include "param_test_i.h"
+#include "tao/debug.h"
 #include "ace/Get_Opt.h"
 #include "ace/Log_Msg.h"
-
-#include "param_test_i.h"
 
 ACE_RCSID(Param_Test, server, "$Id$")
 

@@ -25,6 +25,8 @@
 #include "orbsvcs/ESF/ESF_Delayed_Changes.h"
 #include "orbsvcs/ESF/ESF_Delayed_Command.h"
 
+#include "tao/ORB_Core.h"
+
 #include "ace/Arg_Shifter.h"
 #include "ace/Sched_Params.h"
 

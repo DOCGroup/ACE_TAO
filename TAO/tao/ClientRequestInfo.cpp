@@ -496,4 +496,27 @@ TAO_ClientRequestInfo::get_reply_service_context (
                     0);
 }
 
+void
+TAO_ClientRequestInfo::reply_status (int invoke_status)
+{
+  switch (invoke_status)
+    {
+    case TAO_INVOKE_OK:
+      this->reply_status_ = PortableInterceptor::SUCCESSFUL;
+      break;
+    case TAO_INVOKE_RESTART:
+      if (this->invocation_->received_location_forward ())
+        this->reply_status_ = PortableInterceptor::LOCATION_FORWARD;
+      else
+        this->reply_status_ = PortableInterceptor::TRANSPORT_RETRY;
+      break;
+    default:
+      // We should only get here if the invocation status is
+      // TAO_INVOKE_EXCEPTION, i.e. a CORBA::SystemException, so set
+      // the appropriate reply status.
+      this->reply_status_ = PortableInterceptor::SYSTEM_EXCEPTION;
+      break;
+    }
+}
+
 #endif /* TAO_HAS_INTERCEPTORS == 1 */

@@ -6,6 +6,8 @@
 #include "Notify_Proxy_T.h"
 #include "Notify_Event_Manager.h"
 
+#include "tao/debug.h"
+
 ACE_RCSID(Notify, Notify_Proxy_T, "$Id$")
 
 template <class SERVANT_TYPE>

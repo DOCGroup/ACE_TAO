@@ -18,6 +18,7 @@
 
 #include "helper.h"
 #include "except.h"
+#include "tao/debug.h"
 
 #include "tao/DynamicInterface/Unknown_User_Exception.h"
 

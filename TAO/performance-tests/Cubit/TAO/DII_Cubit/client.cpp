@@ -18,8 +18,9 @@
 //
 // ============================================================================
 
-#include "tao/corba.h"
 #include "tao/DynamicInterface/Request.h"
+#include "tao/corba.h"
+#include "tao/debug.h"
 #include "ace/Profile_Timer.h"
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"

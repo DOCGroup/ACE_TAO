@@ -3,6 +3,8 @@
 #include "Consumer_Input_Handler.h"
 #include "Consumer_Handler.h"
 
+#include "tao/ORB_Core.h"
+
 ACE_RCSID(Consumer, Consumer_Input_Handler, "$Id$")
 
 Consumer_Input_Handler::Consumer_Input_Handler (void)

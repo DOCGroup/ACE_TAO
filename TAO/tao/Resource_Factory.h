@@ -25,7 +25,7 @@
 #include "tao/Pluggable.h"
 #include "tao/Protocol_Factory.h"
 #include "tao/orbconf.h"
-#include "ace/Containers_T.h"
+#include "ace/Unbounded_Set.h"
 
 class TAO_Acceptor_Registry;
 class TAO_Connector_Registry;

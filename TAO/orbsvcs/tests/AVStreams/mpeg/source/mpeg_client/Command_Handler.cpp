@@ -2,6 +2,7 @@
 
 #include "Command_Handler.h"
 #include "ctr.cpp"
+#include "tao/debug.h"
 
 ACE_RCSID(mpeg_client, Command_Handler, "$Id$")
 
@@ -75,7 +76,7 @@ Command_Handler::init (int argc,
 {
   this->argc_ = argc;
   this->argv_ = argv;
-  
+
   // Increase the debug_level so that we can see the output
   TAO_debug_level++;
   CORBA::String_var ior;
@@ -102,7 +103,7 @@ Command_Handler::init (int argc,
       ACE_TRY_CHECK;
 
       this->orb_manager_.activate_poa_manager (ACE_TRY_ENV);
-      
+
       // Initialize the naming services
       if (my_name_client_.init (orb_manager_.orb ()) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -398,7 +399,7 @@ Command_Handler::init_av (void)
   int i;
 
   ACE_Time_Value sleep_delay;
-  sleep_delay.usec(10000); 
+  sleep_delay.usec(10000);
 
   /* try to stop and close previous playing */
   if (audioSocket >= 0 || videoSocket >= 0)
@@ -419,7 +420,7 @@ Command_Handler::init_av (void)
              ACE_OS::write (asp[0],&message,BUFSIZ);
              ABpid = -1;
            }
-        
+
            ACE_OS::sleep(sleep_delay);
          }
        if (videoSocket >= 0)
@@ -552,7 +553,7 @@ Command_Handler::init_java_av (char *audio_ior,
                                char *video_file)
 {
   ACE_Time_Value sleep_delay;
-  sleep_delay.usec(10000); 
+  sleep_delay.usec(10000);
   if (audio_file != 0)
     ACE_DEBUG ((LM_DEBUG,"%s\n",audio_file));
   if (video_file != 0)
@@ -1898,7 +1899,7 @@ Command_Handler::connect_to_video_server (void)
   AVStreams::flowSpec_var flow_spec (new AVStreams::flowSpec);
   // Bind the client and server mmdevices.
 
-  
+
   ACE_NEW_RETURN (this->video_reactive_strategy_,
                   Video_Endpoint_Reactive_Strategy_A (&this->orb_manager_,
                                                       this),
@@ -2861,7 +2862,7 @@ Audio_Client_StreamEndPoint::handle_close (void)
 CORBA::Boolean
 Audio_Client_StreamEndPoint::handle_preconnect (AVStreams::flowSpec &the_spec)
 {
-  
+
   ACE_DEBUG ((LM_DEBUG,"(%P|%t) handle_preconnect called\n"));
   ACE_INET_Addr local_addr;
 
@@ -2906,11 +2907,11 @@ Audio_Client_StreamEndPoint::handle_preconnect (AVStreams::flowSpec &the_spec)
                                              "MIME:audio/au",
                                              "TCP",
                                              CORBA::string_dup (client_address_string));
-  
+
   the_spec [0] = udp_flow_entry.entry_to_string ();
-  
+
   //the_spec.length (1);
-  //the_spec [0] = 
+  //the_spec [0] =
 
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) client flow spec is %s\n",
@@ -2932,12 +2933,12 @@ Audio_Client_StreamEndPoint::handle_postconnect (AVStreams::flowSpec& server_spe
                   0);
   if (entry->parse (server_spec[0].in ()) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "Video_Client_StreamEndPoint::handle_postconnect parse  failed\n"), 0);
-  
+
   // Take the first string of the sequence .
   ACE_INET_Addr server_udp_addr (entry->address_str ());
-  
+
   ACE_DEBUG ((LM_DEBUG, "\nFlow Spec %s\n", entry->address_str ()));
-    
+
   server_udp_addr.dump ();
   if (ACE_OS::connect (this->dgram_.get_handle (),(sockaddr *) server_udp_addr.get_addr (),
                        server_udp_addr.get_size ()) == -1)
@@ -3047,9 +3048,9 @@ Video_Client_StreamEndPoint::handle_preconnect (AVStreams::flowSpec &the_spec)
                                              "MIME:video/mpeg",
                                              "UDP",
                                              CORBA::string_dup (client_address_string));
-  
+
   the_spec [0] = udp_flow_entry.entry_to_string ();
-  
+
   //the_spec.length (1);
   //the_spec [0] = CORBA::string_dup (client_address_string);
 
@@ -3070,7 +3071,7 @@ Video_Client_StreamEndPoint::handle_postconnect (AVStreams::flowSpec& server_spe
                   0);
   if (entry->parse (server_spec[0].in ()) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "Video_Client_StreamEndPoint::handle_postconnect parse  failed\n"), 0);
-  
+
   // Take the first string of the sequence .
   ACE_INET_Addr server_udp_addr (entry->address_str ());
 

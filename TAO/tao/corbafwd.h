@@ -59,6 +59,28 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+/// Define symbolic names for the ORB collocation strategies.
+class TAO_Collocation_Strategies
+{
+public:
+  enum {
+    /// i.e no collocation.
+    CS_REMOTE_STRATEGY,
+
+    /// Calls to the collocated object are forwarded by the POA.
+    CS_THRU_POA_STRATEGY,
+
+    /// Calls to the collocated object are made directly to its
+    /// servant.
+    CS_DIRECT_STRATEGY,
+
+    /// This value should always be the last value in the enumeration.
+    /// It provides the count for the number of collocation
+    /// strategies.
+    CS_LAST
+  };
+};
+
 // Forward declarations of some data types are needed.
 
 class CORBA_Any;

@@ -6,6 +6,8 @@
 #include "CEC_SupplierAdmin.h"
 #include "CEC_ConsumerAdmin.h"
 
+#include "tao/ORB_Core.h"
+
 #if ! defined (__ACE_INLINE__)
 #include "CEC_Reactive_Pulling_Strategy.i"
 #endif /* __ACE_INLINE__ */

@@ -23,6 +23,8 @@
 #include "Notify_Event_Processor.h"
 #include "Notify_Worker_Task.h"
 
+#include "tao/debug.h"
+
 ACE_RCSID(Notify, Notify_ConsumerAdmin_i, "$Id$")
 
 // Implementation skeleton constructor

@@ -282,7 +282,7 @@ TAO_Advanced_Resource_Factory::init_protocol_factories (void)
 
       if (protocol_factory == 0)
         {
-          if (TAO_orbdebug)
+          if (TAO_debug_level > 0)
             ACE_ERROR ((LM_WARNING,
                         "(%P|%t) WARNING - No %s found in Service Repository."
                         "  Using default instance.\n",
@@ -345,7 +345,7 @@ TAO_Advanced_Resource_Factory::init_protocol_factories (void)
 
       if (protocol_factory == 0)
         {
-          if (TAO_orbdebug)
+          if (TAO_debug_level > 0)
             ACE_ERROR ((LM_WARNING,
                         "(%P|%t) WARNING - No %s found in Service Repository."
                         "  Using default instance.\n",

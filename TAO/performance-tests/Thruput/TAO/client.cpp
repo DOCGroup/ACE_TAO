@@ -16,11 +16,14 @@
 //
 // ============================================================================
 
+#include "ttcpC.h"
+#include "ttcp_decl.h"
+
+#include "tao/debug.h"
+
 #include "ace/ACE.h"
 #include "ace/Read_Buffer.h"
 #include "ace/Get_Opt.h"
-#include "ttcpC.h"
-#include "ttcp_decl.h"
 
 ACE_RCSID(TAO, client, "$Id$")
 

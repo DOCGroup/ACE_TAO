@@ -13,6 +13,8 @@
 #include "Notify_Collection_Factory.h"
 #include "Notify_AdminProperties.h"
 
+#include "tao/debug.h"
+
 ACE_RCSID(Notify, Notify_EventChannel_i, "$Id$")
 
 TAO_Notify_EventChannel_i::TAO_Notify_EventChannel_i (TAO_Notify_EventChannelFactory_i* my_factory)

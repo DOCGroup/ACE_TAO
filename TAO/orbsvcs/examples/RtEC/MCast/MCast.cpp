@@ -7,6 +7,7 @@
 #include "orbsvcs/Event/EC_Event_Channel.h"
 #include "orbsvcs/Event/EC_Default_Factory.h"
 #include "orbsvcs/Event/EC_Gateway_UDP.h"
+#include "tao/ORB_Core.h"
 #include "ace/Get_Opt.h"
 
 ACE_RCSID(EC_Examples, MCast, "$Id$")
