@@ -108,7 +108,7 @@ test_i::~test_i (void)
 
 void
 test_i::start_test (CORBA::ULong iterations
-                    ACE_ENV_ARG_DECL)
+                    ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->iterations_ = iterations;
