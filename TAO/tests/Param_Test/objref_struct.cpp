@@ -19,7 +19,9 @@
 #include "helper.h"
 #include "objref_struct.h"
 
-ACE_RCSID(Param_Test, objref_struct, "$Id$")
+ACE_RCSID (Param_Test,
+           objref_struct, 
+           "$Id$")
 
 // ************************************************************************
 //               Test_Objref_Struct

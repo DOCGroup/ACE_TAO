@@ -1,3 +1,50 @@
+Thu Aug 14 17:42:02 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/Param_Test/any.cpp:
+        * tests/Param_Test/bd_array_seq.cpp:
+        * tests/Param_Test/bd_long_seq.cpp:
+        * tests/Param_Test/bd_short_seq.cpp:
+        * tests/Param_Test/bd_str_seq.cpp:
+        * tests/Param_Test/bd_string.cpp:
+        * tests/Param_Test/bd_struct_seq.cpp:
+        * tests/Param_Test/bd_wstr_seq.cpp:
+        * tests/Param_Test/bd_wstring.cpp:
+        * tests/Param_Test/big_union.cpp:
+        * tests/Param_Test/complex_any.cpp:
+        * tests/Param_Test/driver.cpp:
+        * tests/Param_Test/except.cpp:
+        * tests/Param_Test/fixed_array.cpp:
+        * tests/Param_Test/fixed_struct.cpp:
+        * tests/Param_Test/helper.cpp:
+        * tests/Param_Test/multdim_array.cpp:
+        * tests/Param_Test/nested_struct.cpp:
+        * tests/Param_Test/objref.cpp:
+        * tests/Param_Test/objref_struct.cpp:
+        * tests/Param_Test/options.cpp:
+        * tests/Param_Test/param_test_i.cpp:
+        * tests/Param_Test/recursive_struct.cpp:
+        * tests/Param_Test/recursive_union.cpp:
+        * tests/Param_Test/results.cpp:
+        * tests/Param_Test/short.cpp:
+        * tests/Param_Test/small_union.cpp:
+        * tests/Param_Test/typecode.cpp:
+        * tests/Param_Test/ub_any_seq.cpp:
+        * tests/Param_Test/ub_array_seq.cpp:
+        * tests/Param_Test/ub_long_seq.cpp:
+        * tests/Param_Test/ub_objref_seq.cpp:
+        * tests/Param_Test/ub_short_seq.cpp:
+        * tests/Param_Test/ub_str_seq.cpp:
+        * tests/Param_Test/ub_string.cpp:
+        * tests/Param_Test/ub_struct_seq.cpp:
+        * tests/Param_Test/ub_wstr_seq.cpp:
+        * tests/Param_Test/ub_wstring.cpp:
+        * tests/Param_Test/ulonglong.cpp:
+        * tests/Param_Test/var_array.cpp:
+        * tests/Param_Test/var_struct.cpp:
+
+          Fixed initialization of OUT argument in DII version of Any test,
+          and made cosmetic changes to all Param Test source files.
+
 Thu Aug 14 15:49:58 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/driver/drv_args.cpp:

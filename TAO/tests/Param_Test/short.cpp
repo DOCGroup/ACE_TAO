@@ -19,7 +19,9 @@
 #include "helper.h"
 #include "short.h"
 
-ACE_RCSID(Param_Test, short, "$Id$")
+ACE_RCSID (Param_Test, 
+           short, 
+           "$Id$")
 
 // ************************************************************************
 //               Test_Short

@@ -19,7 +19,9 @@
 #include "helper.h"
 #include "big_union.h"
 
-ACE_RCSID(Param_Test, big_union, "$Id$")
+ACE_RCSID (Param_Test, 
+           big_union, 
+           "$Id$")
 
 // ************************************************************************
 //               Test_Big_Union

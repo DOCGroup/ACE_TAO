@@ -19,7 +19,9 @@
 #include "helper.h"
 #include "ub_wstring.h"
 
-ACE_RCSID(Param_Test, ub_wstring, "$Id$")
+ACE_RCSID (Param_Test,
+           ub_wstring, 
+           "$Id$")
 
 // ************************************************************************
 //               Test_Unbounded_WString
