@@ -16,9 +16,6 @@ $SV  = new PerlACE::Process ("server", "-o $iorfile");
 $CL1 = new PerlACE::Process ("client", " -k file://$iorfile");
 $CL2 = new PerlACE::Process ("client", " -k file://$iorfile");
 
-for ($i=0; $i!=75; $i++)
-{
-    print STDERR "******************* $i\n";
 $SV->Spawn ();
 
 if (PerlACE::waitforfile_timed ($iorfile, 15) == -1) {
@@ -52,6 +49,5 @@ if ($server != 0) {
 }
 
 unlink $iorfile;
-}
 
 exit $status;
