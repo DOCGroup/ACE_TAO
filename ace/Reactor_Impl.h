@@ -477,6 +477,12 @@ public:
                                            ACE_Reactor_Mask    = ACE_Event_Handler::ALL_EVENTS_MASK) = 0;
 
   /**
+   * Return the Event_Handler associated with <handle>.  Return 0 if
+   * <handle> is not registered.
+   */
+  virtual ACE_Event_Handler *find_handler (ACE_HANDLE handle) = 0;
+
+  /**
    * Check to see if <handle> is associated with a valid Event_Handler
    * bound to <mask>.  Return the <event_handler> associated with this
    * <handler> if <event_handler> != 0.

@@ -4486,14 +4486,16 @@ ACE_OS::event_timedwait (ACE_event_t *event,
         {
           event->waiting_threads_++;
 
+          ACE_Time_Value absolute_timeout = *timeout;
+
           // cond_timewait() expects absolute time, check
           // <use_absolute_time> flag.
-          if (use_absolute_time == 0 && timeout != 0)
-            *timeout += ACE_OS::gettimeofday ();
+          if (use_absolute_time == 0)
+            absolute_timeout += ACE_OS::gettimeofday ();
 
           if (ACE_OS::cond_timedwait (&event->condition_,
                                       &event->lock_,
-                                      timeout) != 0)
+                                      &absolute_timeout) != 0)
             {
               result = -1;
               error = errno;

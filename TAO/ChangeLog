@@ -1,3 +1,22 @@
+Thu May 22 14:13:37 2003  Irfan Pyarali  <irfan@oomworks.com>
+
+	* Merged Reactor_RefCount branch with the main truck since all ACE
+	  level changes are now complete.  New branch is
+	  Reactor_RefCount_1.
+
+Thu May 15 19:46:49 2003  Irfan Pyarali  <irfan@oomworks.com>
+
+	* TAO/orbsvcs/orbsvcs/AV/TCP.cpp:
+	* TAO/orbsvcs/orbsvcs/PortableGroup/UIPMC_Connector.cpp:
+	* TAO/orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp:
+	* TAO/orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp:
+	* TAO/tao/IIOP_Connector.cpp:
+	* TAO/tao/Strategies/DIOP_Connector.cpp:
+	* TAO/tao/Strategies/SHMIOP_Connector.cpp:
+	* TAO/tao/Strategies/UIOP_Connector.cpp:
+
+	  Fixed Connector related template instantiations.
+
 Thu May 22 10:51:22 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/ORB_Core.cpp (create_object): If create_collocated_object ()
