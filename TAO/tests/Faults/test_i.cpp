@@ -15,7 +15,15 @@ Callback_i::shutdown (CORBA::Boolean is_clean,
 {
   if (is_clean == 0)
     {
-      ACE_DEBUG ((LM_DEBUG, "Performing catastrophic shutdown\n%a"));
+      ACE_DEBUG ((LM_DEBUG, "Performing catastrophic shutdown\n"));
+
+// Tru64 seems to hang and not abort and dump core when abort() is called
+// here. This needs further investigation. This fix is a temporary one.
+#if defined (DIGITAL_UNIX) || defined (DEC_CXX)
+      ACE_OS::_exit();
+#else
+      ACE_OS::abort();
+#endif
       return;
     }
   ACE_DEBUG ((LM_DEBUG, "Performing clean shutdown\n"));
@@ -50,7 +58,12 @@ Simple_Server_i::shutdown_now (CORBA::Boolean is_clean,
 {
   if (is_clean == 0)
     {
-      ACE_DEBUG ((LM_DEBUG, "Performing catastrophic shutdown %a\n"));
+      ACE_DEBUG ((LM_DEBUG, "Performing catastrophic shutdown \n"));
+#if defined (DIGITAL_UNIX) || defined (DEC_CXX)
+      ACE_OS::_exit();
+#else
+      ACE_OS::abort();
+#endif
       return;
     }
 
