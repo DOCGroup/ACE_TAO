@@ -1,3 +1,14 @@
+Wed Jun 23 12:33:31 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* orbsvcs/tests/AVStreams/sfp/run_test.pl: 
+	  Added a new run_test.pl for the sfp tests.
+	* orbsvcs/tests/AVStreams/sfp/client.cpp:
+	  Added a new option -a to specify the server address.
+	  Also fixed some warnings. Thanks to Carlos and David for
+	  reporting these.  		
+	* orbsvcs/tests/AVStreams/sfp/common.h:
+	  Made the default server address as localhost:10000.
+			
 Wed Jun 23 11:32:29 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
 
   * /TAO/tests/InterOp-Naming/INS_i.cpp : Fixed a warning for an unused argument.
