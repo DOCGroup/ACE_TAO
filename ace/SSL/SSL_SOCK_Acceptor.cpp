@@ -13,7 +13,9 @@ ACE_ALLOC_HOOK_DEFINE(ACE_SSL_SOCK_Acceptor)
 #include "SSL_SOCK_Acceptor.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
-ACE_RCSID (ACE_SSL, SSL_SOCK_Acceptor, "$Id$")
+ACE_RCSID (ACE_SSL,
+           SSL_SOCK_Acceptor,
+           "$Id$")
 
 int
 ACE_SSL_SOCK_Acceptor::shared_accept_start (ACE_Time_Value *timeout,
@@ -95,48 +97,50 @@ ACE_SSL_SOCK_Acceptor::ssl_accept (ACE_SSL_SOCK_Stream &new_stream) const
   if (!SSL_in_accept_init (new_stream.ssl ()))
     ::SSL_set_accept_state (new_stream.ssl ());
 
-  int status = ::SSL_accept (new_stream.ssl ());
-
-  if (status <= 0)
+  int status = 0;
+  long verify_error = 0;
+  do
     {
-//       if (::BIO_sock_should_retry (status))
-//         {
+      status = ::SSL_accept (new_stream.ssl ());
+
       switch (::SSL_get_error (new_stream.ssl (), status))
         {
+        case SSL_ERROR_NONE:
+          verify_error =
+            ::SSL_get_verify_result (new_stream.ssl ());
+
+          if (verify_error != X509_V_OK)
+            {
+#ifndef ACE_NDEBUG
+              ACE_DEBUG ((LM_DEBUG,
+                          "(%P|%t) X.509 certificate verification "
+                          "error:%s\n",
+                          ::X509_verify_cert_error_string (verify_error)));
+#endif  /* ACE_NDEBUG */
+
+              (void) new_stream.close ();
+              return -1;
+            }
+
+          return 0;
+
         case SSL_ERROR_WANT_WRITE:
         case SSL_ERROR_WANT_READ:
-        case SSL_ERROR_WANT_X509_LOOKUP:
-          // If blocked, try again.
-          errno = EWOULDBLOCK;
           break;
+
         default:
 #ifndef ACE_NDEBUG
           ERR_print_errors_fp (stderr);
 #endif  /* ACE_NDEBUG */
-          break;
+          return -1;
         }
-//        }
-#ifndef ACE_NDEBUG
-//      else
-//        ERR_print_errors_fp (stderr);
-#endif  /* ACE_NDEBUG */
-     // return -1;
     }
+  while (::SSL_pending (new_stream.ssl ()));
 
-  long verify_error = ::SSL_get_verify_result (new_stream.ssl ());
-  if (verify_error != X509_V_OK)
-    {
-#ifndef ACE_NDEBUG
-      ACE_DEBUG ((LM_DEBUG,
-                  "(%P|%t) X.509 certificate verify error:%s\n",
-                  ::X509_verify_cert_error_string (verify_error)));
-#endif  /* ACE_NDEBUG */
+  // If we get this far then we would have blocked.
+  errno = EWOULDBLOCK;
 
-      (void) new_stream.close ();
-      return -1;
-    }
-
-  return 0;
+  return -1;
 }
 
 // General purpose routine for accepting new connections.
