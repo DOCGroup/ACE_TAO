@@ -170,7 +170,7 @@
 #define ACE_LACKS_THREAD_STACK_ADDR
 #endif  /* ACE_MT_SAFE != 0 */
 #define ACE_HAS_TIUSER_H
-#define ACE_HAS_TLI
+#define ACE_HAS_XTI
 #define ACE_HAS_TLI_PROTOTYPES
 #define ACE_HAS_UALARM
 #define ACE_HAS_UCONTEXT_T
