@@ -1,3 +1,11 @@
+Thu Feb 20 18:45:29 2003  Ossama Othman  <ossama@uci.edu>
+
+	* examples/C++NPv2/Service_Reporter.cpp:
+
+	  Include "ace/Service_Types.h" to pull ACE_Service_Type_Impl
+	  class declaration.  Necessitated by inter-header dependency
+	  reductions.
+
 Thu Feb 20 18:31:10 2003  Ossama Othman  <ossama@uci.edu>
 
 	* ace/Strategies_T.cpp:
