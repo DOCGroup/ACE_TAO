@@ -116,10 +116,7 @@
 #define ACE_MT_SAFE 1
 #define ACE_NEW_THROWS_EXCEPTIONS 1
 #define ACE_TEMPLATES_REQUIRE_SOURCE 1
-#define ACE_UINT64_TYPEDEF unsigned long long
 #define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
-
-typedef unsigned long long ACE_UINT64;
 
 #if defined(__x86_64__)
 #define ACE_SIZEOF_DOUBLE 8
@@ -131,6 +128,10 @@ typedef unsigned long long ACE_UINT64;
 #define ACE_SIZEOF_SHORT 2
 #define ACE_SIZEOF_VOID_P 8
 #define ACE_SIZEOF_WCHAR 4
+
+typedef unsigned long ACE_UINT64;
+typedef   signed long ACE_INT64;
+
 #define ACE_SSIZE_T_FORMAT_SPECIFIER	ACE_LIB_TEXT ("%ld")
 #define ACE_SIZE_T_FORMAT_SPECIFIER	ACE_LIB_TEXT ("%lu")
 
@@ -146,6 +147,10 @@ typedef unsigned long long ACE_UINT64;
 #define ACE_SIZEOF_SHORT 2
 #define ACE_SIZEOF_VOID_P 4
 #define ACE_SIZEOF_WCHAR 4
+
+typedef unsigned long long ACE_UINT64;
+typedef   signed long long ACE_INT64;
+
 #else
 # error unknown CPU architecture
 #endif
