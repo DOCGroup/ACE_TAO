@@ -26,10 +26,11 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:338
+// be\be_codegen.cpp:323
 
 
 #include "PollableC.h"
+#include "tao/CDR.h"
 #include "ace/OS_NS_string.h"
 
 #if defined (__BORLANDC__)
@@ -41,7 +42,7 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be/be_visitor_arg_traits.cpp:62
+// be\be_visitor_arg_traits.cpp:64
 
 // Arg traits specializations.
 namespace TAO
@@ -50,7 +51,7 @@ namespace TAO
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_cs.cpp:60
+// be\be_visitor_interface/interface_cs.cpp:60
 
 // Traits specializations for CORBA::Pollable.
 
@@ -187,7 +188,7 @@ CORBA::Pollable::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_cs.cpp:60
+// be\be_visitor_interface/interface_cs.cpp:60
 
 // Traits specializations for CORBA::DIIPollable.
 
@@ -328,7 +329,7 @@ CORBA::DIIPollable::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_cs.cpp:60
+// be\be_visitor_interface/interface_cs.cpp:60
 
 // Traits specializations for CORBA::PollableSet.
 
@@ -374,7 +375,7 @@ TAO::Collocation_Proxy_Broker *
   ) = 0;
 
 // TAO_IDL - Generated from 
-// be/be_visitor_exception/exception_cs.cpp:63
+// be\be_visitor_exception/exception_cs.cpp:63
 
 CORBA::PollableSet::NoPossiblePollable::NoPossiblePollable (void)
   : CORBA::UserException (
@@ -459,7 +460,7 @@ void CORBA::PollableSet::NoPossiblePollable::_tao_decode (
 
 
 // TAO_IDL - Generated from 
-// be/be_visitor_exception/exception_cs.cpp:63
+// be\be_visitor_exception/exception_cs.cpp:63
 
 CORBA::PollableSet::UnknownPollable::UnknownPollable (void)
   : CORBA::UserException (
@@ -635,7 +636,7 @@ CORBA::PollableSet::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_root/root.cpp:1725
+// be\be_visitor_root/root.cpp:1633
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
