@@ -12,7 +12,7 @@ TAO_GIOP_Message_Version::TAO_GIOP_Message_Version (
 
 ACE_INLINE
 TAO_GIOP_Message_Version::TAO_GIOP_Message_Version (CORBA::Octet maj,
-						    CORBA::Octet min)
+                                                    CORBA::Octet min)
   : major (maj),
     minor (min)
 {
@@ -38,7 +38,7 @@ TAO_GIOP_Message_Version::operator= (
 
 ACE_INLINE void
 TAO_GIOP_Message_Version::set_version (CORBA::Octet maj,
-				       CORBA::Octet min)
+                                       CORBA::Octet min)
 {
   this->major = maj;
   this->minor = min;
