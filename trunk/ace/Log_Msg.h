@@ -138,11 +138,12 @@ class ACE_Thread_Descriptor;
  * specific and specifies the priority levels logged by the thread.
  * The <process_priority_mask_> class attribute is not thread-specific
  * and specifies the priority levels that will be logged by all
- * threads in the process.  By default, all levels are enabled for
- * <priority_mask_> and all levels are disabled for
- * <process_priority_mask_> (i.e. each thread determines which
- * priority levels will be logged).  Both priority masks can be
- * modified using the priority_mask() method of this class.
+ * threads in the process.  By default, all levels are disabled for
+ * <priority_mask_> and all levels are enabled for
+ * <process_priority_mask_> (i.e. the process-wide mask controls
+ * the settings, and each instance can expand on it if desired).
+ * Both priority masks can be modified using the priority_mask()
+ * method of this class.
  */
 class ACE_Export ACE_Log_Msg
 {
