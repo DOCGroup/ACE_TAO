@@ -144,7 +144,17 @@
 #endif
 
 // By default, we use non-static object manager on Win32.  That is,
-// the object manager is allocated in main's stack memory.
+// the object manager is allocated in main's stack memory.  If this
+// does not suit your need, you can disable the behavior by defining
+// ACE_HAS_NONSTATIC_OBJECT_MANAGER to 0.
+//
+// MFC users: Since the main function is defined withing MFC library,
+// you'll need to instantiate the ACE_Object_Manager by doing either,
+//
+// 1. Using static object manager (as described above.)
+// 2. Instantiate Object Manager in your CApplication derived class
+//    and define ACE_DONT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER.
+//
 #if !defined (ACE_HAS_NONSTATIC_OBJECT_MANAGER)
 # define ACE_HAS_NONSTATIC_OBJECT_MANAGER
 #elif (ACE_HAS_NONSTATIC_OBJECT_MANAGER == 0)
