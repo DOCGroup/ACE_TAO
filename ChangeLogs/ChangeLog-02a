@@ -1,3 +1,11 @@
+Sun Aug 12 00:34:42 2001  Steve Huston  <shuston@riverace.com>
+
+        * ace/Log_Record.h:
+        * ace/Log_Record.i (msg_data()): Changed ACE_TCHAR *msg_data()
+          to:  const ACE_TCHAR *msg_data (void) const. Makes it safer,
+          and conforms to all current usage inside ACE. Also makes
+          C++ Network Programming examples simpler :-)
+
 Fri Aug 10 19:39:48 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * bin/auto_run_tests.lst:
