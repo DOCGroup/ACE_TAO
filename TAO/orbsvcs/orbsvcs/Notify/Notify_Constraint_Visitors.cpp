@@ -1122,7 +1122,7 @@ TAO_Notify_Constraint_Visitor::array_does_contain (
   ACE_TRY
     {
       CORBA::TypeCode_var type = any->type ();
-      CORBA::TCKind kind = TAO_DynAnyFactory::unalias (type
+      CORBA::TCKind kind = TAO_DynAnyFactory::unalias (type.in ()
                                                        TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
@@ -1267,6 +1267,8 @@ TAO_Notify_Constraint_Visitor::union_does_contain (
       return 0;
     }
   ACE_ENDTRY;
+
+  return 1;
 }
 
 CORBA::Boolean
@@ -1275,11 +1277,12 @@ TAO_Notify_Constraint_Visitor::any_does_contain (
     TAO_ETCL_Literal_Constraint &item
   )
 {
-  CORBA::Any *result = 0;
+  const CORBA::Any *result = 0;
 
   *any >>= result;
 
-  TAO_ETCL_Literal_Constraint element (result);
+  TAO_ETCL_Literal_Constraint element (ACE_const_cast (CORBA::Any *,
+                                                       result));
 
   return (item == element);
 }
