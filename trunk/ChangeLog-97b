@@ -1,3 +1,37 @@
+Thu Oct 30 10:50:21 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* ace/OS.h: Added new macro--ACE_CLASS_IS_NAMESPACE ()--to
+ 	  designate that a class is being used as a pseudo-namespace.  It
+ 	  declares private CTOR, Copy CTOR, and DTOR, as well as a friend
+ 	  declaration in order to de-warn on g++.  Typical usage would be
+ 	  something like:
+
+	  class FooBarNamespace
+	  {
+	    ACE_CLASS_IS_NAMESPACE (FooBarNamespace);
+
+	  public:
+	    static ...
+	  };
+
+	  The ACE_OS class has been updated to use this.
+	
+	* ace/ACE.h: Updated class ACE to use the new
+ 	  ACE_CLASS_IS_NAMESPACE ().
+
+	* ace/OS.i (getopt): Changed ACE_LACKS_SOME_POSIX_PROTOTYPES back
+ 	  to ACE_LACKS_POSIX_PROTOTYPES so that a clean build on Linux is
+ 	  achievable now.
+	(msgsnd): Corrected errant spelling from
+ 	  ACE_LACKS_POSIX_SOME_PROTOTYPES to
+ 	  ACE_LACKS_SOME_POSIX_PROTOTYPES.
+
+Thu Oct 30 07:02:03 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* include/makeinclude/platform_chorus.GNU (CXX): Replaced
+	  DCFLAGS += -g with DCFLAGS += -gstabs+.  Thanks to 
+	  Wei Chiang for this.
+
 Thu Oct 30 07:02:03 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/OS.cpp: It's not valid to set the NULL_key to anything other
@@ -15,15 +49,6 @@ Thu Oct 30 07:02:03 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 	* include/makeinclude/platform_chorus.GNU (CXX): Replaced
 	  DCFLAGS += -g with DCFLAGS += -gstabs+.  Thanks to 
 	  Wei Chiang for this.
-
-Thu Oct 30 10:50:21 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
-
-	* ace/OS.i (getopt): Changed ACE_LACKS_SOME_POSIX_PROTOTYPES back
- 	to ACE_LACKS_POSIX_PROTOTYPES so that a clean build on Linux is
- 	achievable now.
-	(msgsnd): Corrected errant spelling from
- 	ACE_LACKS_POSIX_SOME_PROTOTYPES to
- 	ACE_LACKS_SOME_POSIX_PROTOTYPES.
 
 Thu Oct 30 06:14:58 1997  David L. Levine  <levine@cs.wustl.edu>
 
