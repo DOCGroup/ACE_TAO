@@ -442,8 +442,8 @@ typedef ostream& (*__omanip_)(ostream&);
         PUT_PROT(MT,char,CODE) \
         PUT_PROT(MT,u_char,CODE) \
         PUT_PROT(MT,const char *,CODE) \
-        PUT_PROT(MT,const u_char *,CODE) \
-        PUT_PROT(MT,const void *,CODE) \
+        PUT_PROT(MT,u_char *,CODE) \
+        PUT_PROT(MT,void *,CODE) \
         inline virtual MT& operator<<(__omanip_ func) CODE2 \
         inline virtual MT& operator<<(__manip_ func)  CODE2
 
@@ -545,9 +545,7 @@ public:
 #endif /* ACE_HAS_STRING_CLASS */
 
   // = Using the macros to provide get/set operators.
-#if !defined (ACE_LACKS_IOSTREAM_SETGET)
   GETPUT_FUNC_SET (ACE_IOStream<STREAM>)
-#endif /* ACE_LACKS_IOSTREAM_SETSET */
 
 #if defined (ACE_LACKS_IOSTREAM_FX)
   virtual int ipfx (int need = 0) {  return good(); }
