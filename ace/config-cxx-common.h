@@ -18,12 +18,14 @@
     // are enabled by platform_osf1_4.0.GNU/wrapper_macros.GNU.
 #   if defined (ACE_HAS_EXCEPTIONS)  &&  !defined (linux)
 #     define ACE_NEW_THROWS_EXCEPTIONS
-#   endif /* ACE_HAS_EXCEPTIONS */
+#   endif /* ACE_HAS_EXCEPTIONS && ! linux */
 #   define ACE_HAS_ANSI_CASTS
 #   if !defined (__RTTI)
 #     define ACE_LACKS_RTTI
 #   endif
-#   define ACE_HAS_STDCPP_STL_INCLUDES
+#   if !defined (linux)
+#     define ACE_HAS_STDCPP_STL_INCLUDES
+#   endif /* ! linux */
 #   define ACE_HAS_TEMPLATE_SPECIALIZATION
 #   define ACE_HAS_TEMPLATE_TYPEDEFS
 #   define ACE_HAS_TYPENAME_KEYWORD
