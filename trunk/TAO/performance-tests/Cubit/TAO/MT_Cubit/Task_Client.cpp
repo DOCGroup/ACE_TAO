@@ -602,7 +602,7 @@ Client::run_tests (Cubit_ptr cb,
                          (u_long) ((sleep_time - delta) < 0
                                      ? 0
                                      : (sleep_time - delta)));
-                ACE_OS::sleep (tv);
+      ACE_OS::sleep (tv);
 
       // Elapsed time will be in microseconds.
       ACE_Time_Value delta_t;
