@@ -1,3 +1,11 @@
+Tue May 25 11:21:00 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/fe/idl.yy:
+	* TAO_IDL/fe/y.tab.{h,cpp}:
+	  Added a couple of ACE_UNUSED_ARG macros to the
+	  yacc file and regenerated y.tab. Thanks to David
+	  Levine for pointing out the egcs warnings.
+
 Tue May 25 11:03:17 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp:
