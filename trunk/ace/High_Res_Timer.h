@@ -100,6 +100,9 @@ public:
   void elapsed_time (ACE_Time_Value &tv);
   // Set <tv> to the number of microseconds elapsed.
 
+  void elapsed_time (ACE_hrtime_t &nanoseconds);
+  // Set <nanoseconds> to the number of nanoseconds elapsed.
+
 #if defined (ACE_HAS_POSIX_TIME)
   void elapsed_time (struct timespec &);
   // returns the elapsed (stop - start) time in a struct timespec (sec, nsec)
