@@ -23,16 +23,25 @@
 #define _TAO_IDL_PORTABLEINTERCEPTORC_H_
 
 #include "ace/pre.h"
-#include "tao/corba.h"
+
+#include "tao/corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/corbafwd.h"
-#include "CurrentC.h"
 #include "DynamicC.h"
 #include "MessagingC.h"
+#include "CurrentC.h"
+#include "IOPC.h"
+#include "PolicyC.h"
+
+#if TAO_HAS_MINIMUM_CORBA == 1
+
+#include "ValueBase.h"
+#include "ValueFactory.h"
+
+#endif  /* TAO_HAS_MINIMUM_CORBA == 1 */
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
@@ -249,14 +258,14 @@ TAO_NAMESPACE  PortableInterceptor
     virtual CORBA::TypeCode_ptr _type (void) const;
   }; // Exception PortableInterceptor::ForwardRequest.
 
-TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ForwardRequest;
+TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ForwardRequest;
 
 
 #endif /* end #if !defined */
 
   typedef CORBA::Short ReplyStatus;
   typedef CORBA::Short_out ReplyStatus_out;
-  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ReplyStatus;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ReplyStatus;
 
   TAO_NAMESPACE_STORAGE_CLASS const CORBA::Short SUCCESSFUL;
 
@@ -272,7 +281,7 @@ TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ForwardRequest;
 
   typedef CORBA::ULong SlotId;
   typedef CORBA::ULong_out SlotId_out;
-  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_SlotId;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_SlotId;
 
 
 #if !defined (_PORTABLEINTERCEPTOR_INVALIDSLOT_CH_)
@@ -315,7 +324,7 @@ TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ForwardRequest;
     virtual CORBA::TypeCode_ptr _type (void) const;
   }; // Exception PortableInterceptor::InvalidSlot.
 
-TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_InvalidSlot;
+TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_InvalidSlot;
 
 
 #endif /* end #if !defined */
@@ -667,14 +676,14 @@ TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_InvalidSlot;
         PortableInterceptor::InvalidSlot
       )) = 0;
 
-    virtual ::IOP::ServiceContext * get_request_service_context (
+    virtual IOP::ServiceContext * get_request_service_context (
         IOP::ServiceId id TAO_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
 
-    virtual ::IOP::ServiceContext * get_reply_service_context (
+    virtual IOP::ServiceContext * get_reply_service_context (
         IOP::ServiceId id TAO_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
@@ -824,7 +833,7 @@ TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_InvalidSlot;
         CORBA::SystemException
       )) = 0;
 
-    virtual ::IOP::TaggedProfile * effective_profile (
+    virtual IOP::TaggedProfile * effective_profile (
         TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
@@ -845,14 +854,14 @@ TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_InvalidSlot;
         CORBA::SystemException
       )) = 0;
 
-    virtual ::IOP::TaggedComponent * get_effective_component (
+    virtual IOP::TaggedComponent * get_effective_component (
         IOP::ComponentId id TAO_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
 
-    virtual ::IOP::TaggedComponentSeq * get_effective_components (
+    virtual IOP::TaggedComponentSeq * get_effective_components (
         IOP::ComponentId id TAO_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
@@ -894,22 +903,22 @@ TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_InvalidSlot;
   typedef char * ServerId;
   typedef CORBA::String_var ServerId_var;
   typedef CORBA::String_out ServerId_out;
-  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ServerId;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ServerId;
 
   typedef char * ORBId;
   typedef CORBA::String_var ORBId_var;
   typedef CORBA::String_out ORBId_out;
-  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ORBId;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ORBId;
 
   typedef CORBA::StringSeq AdapterName;
   typedef CORBA::StringSeq_var AdapterName_var;
   typedef CORBA::StringSeq_out AdapterName_out;
-  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_AdapterName;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_AdapterName;
 
   typedef CORBA::OctetSeq ObjectId;
   typedef CORBA::OctetSeq_var ObjectId_var;
   typedef CORBA::OctetSeq_out ObjectId_out;
-  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ObjectId;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ObjectId;
 
 
 #if !defined (_PORTABLEINTERCEPTOR_SERVERREQUESTINFO___PTR_CH_)
@@ -1558,22 +1567,23 @@ TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_InvalidSlot;
     static const char* _tao_obv_static_repository_id ();
 
     virtual CORBA::Object_ptr make_object (
-        const char *,
-        const PortableInterceptor::ObjectId &
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS) = 0;
+        const char *, const PortableInterceptor::ObjectId & TAO_ENV_ARG_DECL_WITH_DEFAULTS
 
-  protected:
-    ObjectReferenceFactory ();
-    virtual ~ObjectReferenceFactory ();
+      ) = 0;
 
-    // TAO internals
-    virtual void *_tao_obv_narrow (ptr_arith_t);
-    virtual CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &);
-    virtual CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
 
-  private:
-    ObjectReferenceFactory (const ObjectReferenceFactory &);
-    void operator= (const ObjectReferenceFactory &);
+    protected:
+      ObjectReferenceFactory ();
+      virtual ~ObjectReferenceFactory ();
+
+      // TAO internals
+      virtual void *_tao_obv_narrow (ptr_arith_t);
+      virtual CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &);
+      virtual CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
+
+    private:
+      ObjectReferenceFactory (const ObjectReferenceFactory &);
+      void operator= (const ObjectReferenceFactory &);
 
     };
 
@@ -1665,26 +1675,30 @@ TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_InvalidSlot;
 
       // (TAO extensions or internals)
       static CORBA::Boolean _tao_unmarshal (
-                                            TAO_InputCDR &,
-                                            ObjectReferenceTemplate *&
-                                            );
+          TAO_InputCDR &,
+          ObjectReferenceTemplate *&
+        );
       virtual const char* _tao_obv_repository_id () const;
       static const char* _tao_obv_static_repository_id ();
 
-      virtual char * server_id (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS) = 0;
+      virtual char * server_id (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
 
-      virtual char * orb_id (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS) = 0;
+    ) = 0;
+    virtual char * orb_id (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
 
-      virtual ::PortableInterceptor::AdapterName * adapter_name (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS) = 0;
+  ) = 0;
+  virtual ::PortableInterceptor::AdapterName * adapter_name (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
 
-    protected:
-      ObjectReferenceTemplate ();
-      virtual ~ObjectReferenceTemplate ();
+) = 0;
 
-      // TAO internals
-      virtual void *_tao_obv_narrow (ptr_arith_t);
-      virtual CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &);
-      virtual CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
+protected:
+  ObjectReferenceTemplate ();
+  virtual ~ObjectReferenceTemplate ();
+
+  // TAO internals
+  virtual void *_tao_obv_narrow (ptr_arith_t);
+  virtual CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &);
+  virtual CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
 
 private:
   ObjectReferenceTemplate (const ObjectReferenceTemplate &);
@@ -1853,15 +1867,15 @@ private:
 
 #endif /* end #if !defined */
 
-TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ObjectReferenceTemplateSeq;
+TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ObjectReferenceTemplateSeq;
 
 typedef CORBA::Long AdapterManagerId;
 typedef CORBA::Long_out AdapterManagerId_out;
-TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_AdapterManagerId;
+TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_AdapterManagerId;
 
 typedef CORBA::Short AdapterState;
 typedef CORBA::Short_out AdapterState_out;
-TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_AdapterState;
+TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_AdapterState;
 
 TAO_NAMESPACE_STORAGE_CLASS const CORBA::Short HOLDING;
 
@@ -2189,7 +2203,8 @@ public:
 
   virtual void adapter_manager_state_changed (
       PortableInterceptor::AdapterManagerId id,
-      PortableInterceptor::AdapterState state TAO_ENV_ARG_DECL_WITH_DEFAULTS
+      PortableInterceptor::AdapterState state
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -2197,7 +2212,8 @@ public:
 
   virtual void adapter_state_changed (
       const PortableInterceptor::ObjectReferenceTemplateSeq & templates,
-      PortableInterceptor::AdapterState state TAO_ENV_ARG_DECL_WITH_DEFAULTS
+      PortableInterceptor::AdapterState state
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -2574,7 +2590,7 @@ public:
       CORBA::SystemException
     )) = 0;
 
-  virtual ::IOP::CodecFactory_ptr codec_factory (
+  virtual IOP::CodecFactory_ptr codec_factory (
       TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((
@@ -2843,8 +2859,8 @@ TAO_NAMESPACE CORBA
 TAO_NAMESPACE_CLOSE
 //@@ Boris: end experimental
 
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const PortableInterceptor::ObjectReferenceFactory *);
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, PortableInterceptor::ObjectReferenceFactory *&);
+TAO_ExportCORBA::Boolean operator<< (TAO_OutputCDR &, const PortableInterceptor::ObjectReferenceFactory *);
+TAO_ExportCORBA::Boolean operator>> (TAO_InputCDR &, PortableInterceptor::ObjectReferenceFactory *&);
 //@@ Boris: begin experimental
 TAO_NAMESPACE CORBA
 {
@@ -2854,8 +2870,8 @@ TAO_NAMESPACE CORBA
 TAO_NAMESPACE_CLOSE
 //@@ Boris: end experimental
 
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const PortableInterceptor::ObjectReferenceTemplate *);
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, PortableInterceptor::ObjectReferenceTemplate *&);
+TAO_ExportCORBA::Boolean operator<< (TAO_OutputCDR &, const PortableInterceptor::ObjectReferenceTemplate *);
+TAO_ExportCORBA::Boolean operator>> (TAO_InputCDR &, PortableInterceptor::ObjectReferenceTemplate *&);
 
 #if !defined _TAO_CDR_OP_PortableInterceptor_ObjectReferenceTemplateSeq_H_
 #define _TAO_CDR_OP_PortableInterceptor_ObjectReferenceTemplateSeq_H_

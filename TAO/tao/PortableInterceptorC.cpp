@@ -21,6 +21,9 @@
 
 #include "PortableInterceptorC.h"
 
+#include "StringSeqC.h"
+#include "OctetSeqC.h"
+
 #if defined (__BORLANDC__)
 #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
 #endif /* __BORLANDC__ */
@@ -29,9 +32,9 @@
 #include "PortableInterceptorC.i"
 #endif /* !defined INLINE */
 
-int PortableInterceptor::Interceptor::_tao_class_id = 0;
-
 #include "CORBA_String.h"
+
+int PortableInterceptor::Interceptor::_tao_class_id = 0;
 
 // *************************************************************
 // Operations for class PortableInterceptor::Interceptor_var
@@ -437,7 +440,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableInterceptor_ForwardRequest (
 
 TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (PortableInterceptor)
-TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ForwardRequest, &_tc_TAO_tc_PortableInterceptor_ForwardRequest)
+TAO_NAMESPACE_DEFINE (::CORBA::TypeCode_ptr, _tc_ForwardRequest, &_tc_TAO_tc_PortableInterceptor_ForwardRequest)
 TAO_NAMESPACE_END
 
 // TAO extension - the virtual _type method.
@@ -478,7 +481,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableInterceptor_ReplyStatus (
 
 TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (PortableInterceptor)
-TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ReplyStatus, &_tc_TAO_tc_PortableInterceptor_ReplyStatus)
+TAO_NAMESPACE_DEFINE (::CORBA::TypeCode_ptr, _tc_ReplyStatus, &_tc_TAO_tc_PortableInterceptor_ReplyStatus)
 TAO_NAMESPACE_END
 
 TAO_NAMESPACE_TYPE (const CORBA::Short)
@@ -535,7 +538,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableInterceptor_SlotId (
 
 TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (PortableInterceptor)
-TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_SlotId, &_tc_TAO_tc_PortableInterceptor_SlotId)
+TAO_NAMESPACE_DEFINE (::CORBA::TypeCode_ptr, _tc_SlotId, &_tc_TAO_tc_PortableInterceptor_SlotId)
 TAO_NAMESPACE_END
 
 // Default constructor.
@@ -652,7 +655,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableInterceptor_InvalidSlot (
 
 TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (PortableInterceptor)
-TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_InvalidSlot, &_tc_TAO_tc_PortableInterceptor_InvalidSlot)
+TAO_NAMESPACE_DEFINE (::CORBA::TypeCode_ptr, _tc_InvalidSlot, &_tc_TAO_tc_PortableInterceptor_InvalidSlot)
 TAO_NAMESPACE_END
 
 // TAO extension - the virtual _type method.
@@ -1467,7 +1470,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableInterceptor_ServerId (
 
 TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (PortableInterceptor)
-TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ServerId, &_tc_TAO_tc_PortableInterceptor_ServerId)
+TAO_NAMESPACE_DEFINE (::CORBA::TypeCode_ptr, _tc_ServerId, &_tc_TAO_tc_PortableInterceptor_ServerId)
 TAO_NAMESPACE_END
 
 static const CORBA::Long _oc_PortableInterceptor_ORBId[] =
@@ -1500,7 +1503,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableInterceptor_ORBId (
 
 TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (PortableInterceptor)
-TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ORBId, &_tc_TAO_tc_PortableInterceptor_ORBId)
+TAO_NAMESPACE_DEFINE (::CORBA::TypeCode_ptr, _tc_ORBId, &_tc_TAO_tc_PortableInterceptor_ORBId)
 TAO_NAMESPACE_END
 
 static const CORBA::Long _oc_PortableInterceptor_AdapterName[] =
@@ -1557,7 +1560,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableInterceptor_AdapterName (
 
 TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (PortableInterceptor)
-TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_AdapterName, &_tc_TAO_tc_PortableInterceptor_AdapterName)
+TAO_NAMESPACE_DEFINE (::CORBA::TypeCode_ptr, _tc_AdapterName, &_tc_TAO_tc_PortableInterceptor_AdapterName)
 TAO_NAMESPACE_END
 
 static const CORBA::Long _oc_PortableInterceptor_ObjectId[] =
@@ -1614,7 +1617,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableInterceptor_ObjectId (
 
 TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (PortableInterceptor)
-TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ObjectId, &_tc_TAO_tc_PortableInterceptor_ObjectId)
+TAO_NAMESPACE_DEFINE (::CORBA::TypeCode_ptr, _tc_ObjectId, &_tc_TAO_tc_PortableInterceptor_ObjectId)
 TAO_NAMESPACE_END
 
 int PortableInterceptor::ServerRequestInfo::_tao_class_id = 0;
@@ -1880,7 +1883,6 @@ const char* PortableInterceptor::ServerRequestInfo::_interface_repository_id (vo
 }
 
 int PortableInterceptor::ClientRequestInterceptor::_tao_class_id = 0;
-
 
 // *************************************************************
 // Operations for class PortableInterceptor::ClientRequestInterceptor_var
@@ -2404,6 +2406,166 @@ const char* PortableInterceptor::ServerRequestInterceptor::_interface_repository
   return "IDL:PortableInterceptor/ServerRequestInterceptor:1.0";
 }
 
+// *************************************************************
+// Operations for class PortableInterceptor::ObjectReferenceFactory_var
+// *************************************************************
+
+PortableInterceptor::ObjectReferenceFactory_var::ObjectReferenceFactory_var (void) // default constructor
+  : ptr_ (0)
+{}
+
+PortableInterceptor::ObjectReferenceFactory_var::ObjectReferenceFactory_var (ObjectReferenceFactory* p)
+  : ptr_ (p)
+{}
+
+PortableInterceptor::ObjectReferenceFactory_var::ObjectReferenceFactory_var (const ObjectReferenceFactory* p)
+  : ptr_ (ACE_const_cast(ObjectReferenceFactory*, p))
+{}
+
+PortableInterceptor::ObjectReferenceFactory*
+PortableInterceptor::ObjectReferenceFactory_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+PortableInterceptor::ObjectReferenceFactory_var::ObjectReferenceFactory_var (const ObjectReferenceFactory_var &p) // copy constructor
+{
+  CORBA::add_ref (p.ptr ());
+  this->ptr_ = p.ptr ();
+}
+
+PortableInterceptor::ObjectReferenceFactory_var::~ObjectReferenceFactory_var (void) // destructor
+{
+  CORBA::remove_ref (this->ptr_);
+}
+
+PortableInterceptor::ObjectReferenceFactory_var &
+PortableInterceptor::ObjectReferenceFactory_var::operator= (ObjectReferenceFactory* p)
+{
+  CORBA::remove_ref (this->ptr_);
+  this->ptr_ = p;
+  return *this;
+}
+
+PortableInterceptor::ObjectReferenceFactory_var &
+PortableInterceptor::ObjectReferenceFactory_var::operator= (const ObjectReferenceFactory_var &p)
+{
+  if (this != &p)
+  {
+    CORBA::remove_ref (this->ptr_);
+    ObjectReferenceFactory* tmp = p.ptr ();
+    CORBA::add_ref (tmp);
+    this->ptr_ = tmp;
+  }
+  return *this;
+}
+
+PortableInterceptor::ObjectReferenceFactory_var::operator const PortableInterceptor::ObjectReferenceFactory* () const // cast
+{
+  return this->ptr_;
+}
+
+PortableInterceptor::ObjectReferenceFactory_var::operator PortableInterceptor::ObjectReferenceFactory* () // cast
+{
+  return this->ptr_;
+}
+
+PortableInterceptor::ObjectReferenceFactory*
+PortableInterceptor::ObjectReferenceFactory_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+PortableInterceptor::ObjectReferenceFactory*
+PortableInterceptor::ObjectReferenceFactory_var::in (void) const
+{
+  return this->ptr_;
+}
+
+PortableInterceptor::ObjectReferenceFactory* &
+PortableInterceptor::ObjectReferenceFactory_var::inout (void)
+{
+  return this->ptr_;
+}
+
+PortableInterceptor::ObjectReferenceFactory* &
+PortableInterceptor::ObjectReferenceFactory_var::out (void)
+{
+  CORBA::remove_ref (this->ptr_);
+  this->ptr_ = 0;
+  return this->ptr_;
+}
+
+PortableInterceptor::ObjectReferenceFactory*
+PortableInterceptor::ObjectReferenceFactory_var::_retn (void)
+{
+  // yield ownership of managed obj reference
+  ObjectReferenceFactory* tmp = this->ptr_;
+  this->ptr_ = 0;
+  return tmp;
+}
+
+// *************************************************************
+// Operations for class PortableInterceptor::ObjectReferenceFactory_out
+// *************************************************************
+
+PortableInterceptor::ObjectReferenceFactory_out::ObjectReferenceFactory_out (ObjectReferenceFactory* &p)
+  : ptr_ (p)
+{
+  this->ptr_ = 0;
+}
+
+PortableInterceptor::ObjectReferenceFactory_out::ObjectReferenceFactory_out (ObjectReferenceFactory_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  CORBA::remove_ref (this->ptr_);
+  this->ptr_ = 0;
+}
+
+PortableInterceptor::ObjectReferenceFactory_out::ObjectReferenceFactory_out (const ObjectReferenceFactory_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (ObjectReferenceFactory_out&,p).ptr_)
+{}
+
+PortableInterceptor::ObjectReferenceFactory_out &
+PortableInterceptor::ObjectReferenceFactory_out::operator= (const ObjectReferenceFactory_out &p)
+{
+  this->ptr_ = ACE_const_cast (ObjectReferenceFactory_out&,p).ptr_;
+  return *this;
+}
+
+PortableInterceptor::ObjectReferenceFactory_out &
+PortableInterceptor::ObjectReferenceFactory_out::operator= (const ObjectReferenceFactory_var &p)
+{
+  ObjectReferenceFactory* tmp = p.ptr ();
+  CORBA::add_ref (tmp);
+  this->ptr_ = tmp;
+  return *this;
+}
+
+PortableInterceptor::ObjectReferenceFactory_out &
+PortableInterceptor::ObjectReferenceFactory_out::operator= (ObjectReferenceFactory* p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+PortableInterceptor::ObjectReferenceFactory_out::operator PortableInterceptor::ObjectReferenceFactory* &() // cast
+{
+  return this->ptr_;
+}
+
+PortableInterceptor::ObjectReferenceFactory* &
+PortableInterceptor::ObjectReferenceFactory_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+PortableInterceptor::ObjectReferenceFactory*
+PortableInterceptor::ObjectReferenceFactory_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
 PortableInterceptor::ObjectReferenceFactory* PortableInterceptor::ObjectReferenceFactory::_downcast (CORBA::ValueBase* v)
 {
   if (v == 0) return 0;
@@ -2459,6 +2621,166 @@ CORBA::Boolean PortableInterceptor::ObjectReferenceFactory::_tao_unmarshal (TAO_
   new_object = ObjectReferenceFactory::_downcast (base);
   // %! unmarshal_post
   return 1;
+}
+
+// *************************************************************
+// Operations for class PortableInterceptor::ObjectReferenceTemplate_var
+// *************************************************************
+
+PortableInterceptor::ObjectReferenceTemplate_var::ObjectReferenceTemplate_var (void) // default constructor
+  : ptr_ (0)
+{}
+
+PortableInterceptor::ObjectReferenceTemplate_var::ObjectReferenceTemplate_var (ObjectReferenceTemplate* p)
+  : ptr_ (p)
+{}
+
+PortableInterceptor::ObjectReferenceTemplate_var::ObjectReferenceTemplate_var (const ObjectReferenceTemplate* p)
+  : ptr_ (ACE_const_cast(ObjectReferenceTemplate*, p))
+{}
+
+PortableInterceptor::ObjectReferenceTemplate*
+PortableInterceptor::ObjectReferenceTemplate_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+PortableInterceptor::ObjectReferenceTemplate_var::ObjectReferenceTemplate_var (const ObjectReferenceTemplate_var &p) // copy constructor
+{
+  CORBA::add_ref (p.ptr ());
+  this->ptr_ = p.ptr ();
+}
+
+PortableInterceptor::ObjectReferenceTemplate_var::~ObjectReferenceTemplate_var (void) // destructor
+{
+  CORBA::remove_ref (this->ptr_);
+}
+
+PortableInterceptor::ObjectReferenceTemplate_var &
+PortableInterceptor::ObjectReferenceTemplate_var::operator= (ObjectReferenceTemplate* p)
+{
+  CORBA::remove_ref (this->ptr_);
+  this->ptr_ = p;
+  return *this;
+}
+
+PortableInterceptor::ObjectReferenceTemplate_var &
+PortableInterceptor::ObjectReferenceTemplate_var::operator= (const ObjectReferenceTemplate_var &p)
+{
+  if (this != &p)
+  {
+    CORBA::remove_ref (this->ptr_);
+    ObjectReferenceTemplate* tmp = p.ptr ();
+    CORBA::add_ref (tmp);
+    this->ptr_ = tmp;
+  }
+  return *this;
+}
+
+PortableInterceptor::ObjectReferenceTemplate_var::operator const PortableInterceptor::ObjectReferenceTemplate* () const // cast
+{
+  return this->ptr_;
+}
+
+PortableInterceptor::ObjectReferenceTemplate_var::operator PortableInterceptor::ObjectReferenceTemplate* () // cast
+{
+  return this->ptr_;
+}
+
+PortableInterceptor::ObjectReferenceTemplate*
+PortableInterceptor::ObjectReferenceTemplate_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+PortableInterceptor::ObjectReferenceTemplate*
+PortableInterceptor::ObjectReferenceTemplate_var::in (void) const
+{
+  return this->ptr_;
+}
+
+PortableInterceptor::ObjectReferenceTemplate* &
+PortableInterceptor::ObjectReferenceTemplate_var::inout (void)
+{
+  return this->ptr_;
+}
+
+PortableInterceptor::ObjectReferenceTemplate* &
+PortableInterceptor::ObjectReferenceTemplate_var::out (void)
+{
+  CORBA::remove_ref (this->ptr_);
+  this->ptr_ = 0;
+  return this->ptr_;
+}
+
+PortableInterceptor::ObjectReferenceTemplate*
+PortableInterceptor::ObjectReferenceTemplate_var::_retn (void)
+{
+  // yield ownership of managed obj reference
+  ObjectReferenceTemplate* tmp = this->ptr_;
+  this->ptr_ = 0;
+  return tmp;
+}
+
+// *************************************************************
+// Operations for class PortableInterceptor::ObjectReferenceTemplate_out
+// *************************************************************
+
+PortableInterceptor::ObjectReferenceTemplate_out::ObjectReferenceTemplate_out (ObjectReferenceTemplate* &p)
+  : ptr_ (p)
+{
+  this->ptr_ = 0;
+}
+
+PortableInterceptor::ObjectReferenceTemplate_out::ObjectReferenceTemplate_out (ObjectReferenceTemplate_var &p) // constructor from _var
+  : ptr_ (p.out ())
+{
+  CORBA::remove_ref (this->ptr_);
+  this->ptr_ = 0;
+}
+
+PortableInterceptor::ObjectReferenceTemplate_out::ObjectReferenceTemplate_out (const ObjectReferenceTemplate_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (ObjectReferenceTemplate_out&,p).ptr_)
+{}
+
+PortableInterceptor::ObjectReferenceTemplate_out &
+PortableInterceptor::ObjectReferenceTemplate_out::operator= (const ObjectReferenceTemplate_out &p)
+{
+  this->ptr_ = ACE_const_cast (ObjectReferenceTemplate_out&,p).ptr_;
+  return *this;
+}
+
+PortableInterceptor::ObjectReferenceTemplate_out &
+PortableInterceptor::ObjectReferenceTemplate_out::operator= (const ObjectReferenceTemplate_var &p)
+{
+  ObjectReferenceTemplate* tmp = p.ptr ();
+  CORBA::add_ref (tmp);
+  this->ptr_ = tmp;
+  return *this;
+}
+
+PortableInterceptor::ObjectReferenceTemplate_out &
+PortableInterceptor::ObjectReferenceTemplate_out::operator= (ObjectReferenceTemplate* p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+PortableInterceptor::ObjectReferenceTemplate_out::operator PortableInterceptor::ObjectReferenceTemplate* &() // cast
+{
+  return this->ptr_;
+}
+
+PortableInterceptor::ObjectReferenceTemplate* &
+PortableInterceptor::ObjectReferenceTemplate_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+PortableInterceptor::ObjectReferenceTemplate*
+PortableInterceptor::ObjectReferenceTemplate_out::operator-> (void)
+{
+  return this->ptr_;
 }
 
 PortableInterceptor::ObjectReferenceTemplate* PortableInterceptor::ObjectReferenceTemplate::_downcast (CORBA::ValueBase* v)
@@ -2689,7 +3011,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableInterceptor_ObjectReferenceTemplateSeq
 
 TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (PortableInterceptor)
-TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ObjectReferenceTemplateSeq, &_tc_TAO_tc_PortableInterceptor_ObjectReferenceTemplateSeq)
+TAO_NAMESPACE_DEFINE (::CORBA::TypeCode_ptr, _tc_ObjectReferenceTemplateSeq, &_tc_TAO_tc_PortableInterceptor_ObjectReferenceTemplateSeq)
 TAO_NAMESPACE_END
 
 static const CORBA::Long _oc_PortableInterceptor_AdapterManagerId[] =
@@ -2728,7 +3050,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableInterceptor_AdapterManagerId (
 
 TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (PortableInterceptor)
-TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_AdapterManagerId, &_tc_TAO_tc_PortableInterceptor_AdapterManagerId)
+TAO_NAMESPACE_DEFINE (::CORBA::TypeCode_ptr, _tc_AdapterManagerId, &_tc_TAO_tc_PortableInterceptor_AdapterManagerId)
 TAO_NAMESPACE_END
 
 static const CORBA::Long _oc_PortableInterceptor_AdapterState[] =
@@ -2765,7 +3087,7 @@ static CORBA::TypeCode _tc_TAO_tc_PortableInterceptor_AdapterState (
 
 TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (PortableInterceptor)
-TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_AdapterState, &_tc_TAO_tc_PortableInterceptor_AdapterState)
+TAO_NAMESPACE_DEFINE (::CORBA::TypeCode_ptr, _tc_AdapterState, &_tc_TAO_tc_PortableInterceptor_AdapterState)
 TAO_NAMESPACE_END
 
 TAO_NAMESPACE_TYPE (const CORBA::Short)
@@ -2788,8 +3110,8 @@ TAO_NAMESPACE_TYPE (const CORBA::Short)
 TAO_NAMESPACE_BEGIN (PortableInterceptor)
 TAO_NAMESPACE_DEFINE (const CORBA::Short, NON_EXISTENT, 4)
 TAO_NAMESPACE_END
-int PortableInterceptor::IORInfo::_tao_class_id = 0;
 
+int PortableInterceptor::IORInfo::_tao_class_id = 0;
 
 // *************************************************************
 // Operations for class PortableInterceptor::IORInfo_var
@@ -4243,8 +4565,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const PortableIntercepto
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    CORBA::Boolean result =
-      type->equivalent (PortableInterceptor::_tc_ForwardRequest TAO_ENV_ARG_PARAMETER);
+
+    CORBA::Boolean result = type->equivalent (PortableInterceptor::_tc_ForwardRequest TAO_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
     if (!result)
