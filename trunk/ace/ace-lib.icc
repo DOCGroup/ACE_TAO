@@ -6,12 +6,12 @@ if $__TOS_WIN__ {
 }
 if $__TOS_AIX__ {
 	option PlatformOptions = null
-	TARG = "aced.a"
+	TARG = "libACE.a"
 }
 
 option
 	 PlatformOptions,
-         incl(searchPath,'H:\ACE_wrappers'),
+         incl(searchPath,'..'),
        	 define ("__ACE_INLINE__","0"),
          define("ACE_HAS_DLL","0"),
          link(exportAll),
@@ -22,7 +22,6 @@ option
                 {
                        option macros(global)
                         {
-                             source type(cpp) "ACE.h"
                              source type(cpp) "OS.h"
                         }
                  source type(cpp) "Log_Msg.cpp"
@@ -188,17 +187,12 @@ option
                  source type(cpp) "WIN32_Proactor.cpp"
                  source type(cpp) "XtReactor.cpp"
                  source type(cpp) "Active_Map_Manager_T.cpp"
-                 source type(cpp) "Cache_Hash_T.cpp"
-                 source type(cpp) "Cache_Heap_T.cpp"
-                 source type(cpp) "Cache_Manager_T.cpp"
                  source type(cpp) "Containers_T.cpp"
                  source type(cpp) "Dump_T.cpp"
                  source type(cpp) "Env_Value_T.cpp"
                  source type(cpp) "Event_Handler_T.cpp"
                  source type(cpp) "Functor_T.cpp"
-                 source type(cpp) "Hash_Bucket_T.cpp"
                  source type(cpp) "Hash_Map_Manager_T.cpp"
-                 source type(cpp) "Hash_Purgable_Map_Manager_T.cpp"
                  source type(cpp) "IOStream_T.cpp"
                  source type(cpp) "Local_Name_Space_T.cpp"
                  source type(cpp) "Malloc_T.cpp"
@@ -232,7 +226,6 @@ option
                  source type (cpp) "Functor_T.cpp"
                  source type (cpp) "Future.cpp"
                  source type (cpp) "Hash_Map_Manager_T.cpp"
-                 source type (cpp) "ace/Hash_Purgable_Map_Manager_T.cpp"
                  source type (cpp) "IOStream_T.cpp"
                  source type (cpp) "LOCK_SOCK_Acceptor.cpp"
                  source type (cpp) "Local_Name_Space_T.cpp"
