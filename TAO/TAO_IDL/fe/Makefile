@@ -54,20 +54,22 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 #----------------------------------------------------------------------------
 
 CPPFLAGS += -D_REENTRANT -I../include -I. -DCPP_LOCATION=\"$(CXX)\" -DIDL_CFE_VERSION=$(IDL_CFE_VERSION)
-YACC   = bison
+YACC   = yacc
 LEX	= flex
-YFLAGS	= -t -d -y
+YFLAGS	= -t -d 
 LFLAGS	= -t
 
 # Create the parser and lexer
-y.tab.hh y.tab.cpp: idl.yy
+y.tab.h y.tab.cpp: idl.yy
 	@-$(RM) $@
 	$(YACC) $(YFLAGS) idl.yy
 	mv -f y.tab.c y.tab.cpp
 
 lex.yy.cpp: idl.ll y.tab.h
 	$(LEX) $(LFLAGS) idl.ll > $@
-
+	sed -e "s/unistd/stdio/g" -e "s@#include <@#include /**/ <@" < $@ >> /tmp/$@
+	cp /tmp/$@ $@
+	$(RM) -f /tmp/$@
 
 #----------------------------------------------------------------------------
 #	Dependencies
