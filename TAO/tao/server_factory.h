@@ -4,7 +4,7 @@
 //
 // = LIBRARY
 //     TAO
-// 
+//
 // = FILENAME
 //     server_factory.h
 //
@@ -38,7 +38,7 @@ public:
   // <init> so that the other portions of the ORB have a chance to
   // "settle" in their initialization since the streategies herein
   // might need some of that information.
-  
+
   // = Server-side factory types.
   typedef ACE_Creation_Strategy<TAO_Server_Connection_Handler>
           CREATION_STRATEGY;
@@ -71,6 +71,9 @@ public:
 
   virtual ACE_Lock *create_poa_mgr_lock (void);
   // Return a new lock for use in locking the POA Manager.
+
+  virtual ACE_Lock *create_servant_lock (void);
+  // Return a new lock for use in locking the servant.
 };
 
 #endif /* TAO_SERVER_FACTORY_H */
