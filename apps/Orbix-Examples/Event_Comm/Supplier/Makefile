@@ -19,7 +19,7 @@ SHOBJ	= $(addsuffix .so,$(FILES))
 
 SRX	= ../src/.obj
 
-LDLIBS	= $(addprefix .shobj/,$(LOBJ)) ../src/libEvent_Comm.a 
+LDLIBS	= $(addprefix $(VSHDIR),$(LOBJ)) ../src/libEvent_Comm.a 
 
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 
