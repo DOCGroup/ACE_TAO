@@ -1,3 +1,17 @@
+Thu Sep  7 15:59:23 2000  Ossama Othman  <ossama@uci.edu>
+
+	* TAO_IDL/be/be_visitor_operation/interceptors_cs.cpp
+	  (visit_operation):
+
+	  Added missing space between argument type and argument name in
+	  the generated code.  This fixes a syntax error in the generated
+	  code.
+
+	* TAO_IDL/be/be_visitor_operation/interceptors_ss.cpp
+	  (visit_operation):
+
+	  Cosmetic update to generated code.
+
 Thu Sep 07 14:06:40 2000  Ossama Othman  <ossama@uci.edu>
 
 	* tao/ORB.cpp (ORB_init):
