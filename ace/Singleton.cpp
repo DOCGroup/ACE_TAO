@@ -105,7 +105,7 @@ ACE_TSS_Singleton<TYPE, ACE_LOCK>::dump (void)
 
 #if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
   ACE_DEBUG ((LM_DEBUG, "instance_ = %x",
-              ACE_Singleton<TYPE, ACE_LOCK>::instance_i ()));
+              ACE_TSS_Singleton<TYPE, ACE_LOCK>::instance_i ()));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
 }
