@@ -9,7 +9,7 @@ Wed Oct 31 17:32:38 2001  Jeff Parsons <parsons@cs.wustl.edu>
           current version of gperf (a bug fix to gperf was checked in
           a short while back). Specifically, an optable entry for the
           _interface() method of CORBA::SequenceDef was missing. Thanks
-          to Stuart Jones <sjones@clcsmail.kcs.nasa.gov> Chad Elliott
+          to Stuart Jones <sjones@clcsmail.ksc.nasa.gov> Chad Elliott
           <elliott_c@ociweb.com> and Phil Mesnier <mesnier_p@ociweb.com>
           for reporting this bug. This fix closes [BUGID:1076].
 
