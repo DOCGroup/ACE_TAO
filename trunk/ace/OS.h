@@ -1844,18 +1844,28 @@ struct stat
 // programs to have their own ACE-wide "default".
 
 // PROCESS-level values
-#     if !defined(_UNICOS)
+// MM-Graz: added unixware 7.1
+#     if !defined(_UNICOS) && !defined(UNIXWARE_7_1)
 #       define ACE_PROC_PRI_FIFO_MIN  (sched_get_priority_min(SCHED_FIFO))
 #       define ACE_PROC_PRI_RR_MIN    (sched_get_priority_min(SCHED_RR))
 #       define ACE_PROC_PRI_OTHER_MIN (sched_get_priority_min(SCHED_OTHER))
-#     else /* UNICOS is missing a sched_get_priority_min() implementation */
+#     else /* UNICOS is missing a sched_get_priority_min() implementation,
+              SCO too */
 #       define ACE_PROC_PRI_FIFO_MIN  0
 #       define ACE_PROC_PRI_RR_MIN    0
 #       define ACE_PROC_PRI_OTHER_MIN 0
 #     endif
-#     define ACE_PROC_PRI_FIFO_MAX  (sched_get_priority_max(SCHED_FIFO))
-#     define ACE_PROC_PRI_RR_MAX    (sched_get_priority_max(SCHED_RR))
-#     define ACE_PROC_PRI_OTHER_MAX (sched_get_priority_max(SCHED_OTHER))
+// MM-Graz: added unixware 7.1
+#     if !defined(UNIXWARE_7_1)
+#       define ACE_PROC_PRI_FIFO_MAX  (sched_get_priority_max(SCHED_FIFO))
+#       define ACE_PROC_PRI_RR_MAX    (sched_get_priority_max(SCHED_RR))
+#       define ACE_PROC_PRI_OTHER_MAX (sched_get_priority_max(SCHED_OTHER))
+#     else /* SCO missing sched_get_priority_max() implementation */
+#       define ACE_PROC_PRI_FIFO_MAX  59
+#       define ACE_PROC_PRI_RR_MAX    59
+#       define ACE_PROC_PRI_OTHER_MAX 59
+#     endif
+
 #     if !defined(ACE_PROC_PRI_FIFO_DEF)
 #       define ACE_PROC_PRI_FIFO_DEF (ACE_PROC_PRI_FIFO_MIN + (ACE_PROC_PRI_FIFO_MAX - ACE_PROC_PRI_FIFO_MIN)/2)
 #     endif
@@ -2006,6 +2016,15 @@ typedef pthread_mutex_t ACE_thread_mutex_t;
 #       define USYNC_PROCESS PTHREAD_PROCESS_SHARED
 #       endif /* ! USYNC_PROCESS */
 #     endif /* ACE_HAS_PTHREADS_DRAFT4 */
+
+
+/* MM-Graz:  prevent warnings */
+#undef THR_BOUND
+#undef THR_NEW_LWP
+#undef THR_DETACHED
+#undef THR_SUSPENDED
+#undef THR_DAEMON
+
 
 #     define THR_BOUND               0x00000001
 #     if defined (CHORUS)
