@@ -17,6 +17,7 @@
 
 #include "ACE_QoS_Export.h"
 #include "ace/INET_Addr.h"
+#include "ace/OS_QoS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

@@ -610,6 +610,10 @@ SOURCE=.\OS_Memory.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\OS_QoS.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\OS_String.cpp
 # End Source File
 # Begin Source File
@@ -1651,6 +1655,10 @@ SOURCE=.\OS_Log_Msg_Attributes.h
 # Begin Source File
 
 SOURCE=.\OS_Memory.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\OS_QoS.h
 # End Source File
 # Begin Source File
 
