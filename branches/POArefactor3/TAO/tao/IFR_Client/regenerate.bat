@@ -1,4 +1,4 @@
-tao_idl -GA -I. -I.. -I..\.. -Ge 1 -Sc -GT -I../.. -Wb,export_macro=TAO_IFR_Client_Export -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" -Wb,export_include=ifr_client_export.h IFR_Base.pidl
-tao_idl -GA -I. -I.. -I..\.. -Ge 1 -Sc -GT -I../.. -Wb,export_macro=TAO_IFR_Client_Export -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" -Wb,export_include=ifr_client_export.h IFR_Basic.pidl
-tao_idl -GA -I. -I.. -I..\.. -Ge 1 -Sc -GT -I../.. -Wb,export_macro=TAO_IFR_Client_Export -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" -Wb,export_include=ifr_client_export.h IFR_Components.pidl
-tao_idl -GA -I. -I.. -I..\.. -Ge 1 -Sc -GT -I../.. -Wb,export_macro=TAO_IFR_Client_Export -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" -Wb,export_include=ifr_client_export.h IFR_Extended.pidl
+tao_idl -o orig -GA -I. -I.. -I..\.. -Ge 1 -GT -I../.. -Wb,export_macro=TAO_IFR_Client_Export -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" -Wb,stub_export_include=ifr_client_export.h IFR_Base.pidl
+tao_idl -o orig -GA -I. -I.. -I..\.. -Ge 1 -GT -I../.. -Wb,export_macro=TAO_IFR_Client_Export -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" -Wb,stub_export_include=ifr_client_export.h IFR_Basic.pidl
+tao_idl -o orig -GA -I. -I.. -I..\.. -Ge 1 -GT -I../.. -Wb,export_macro=TAO_IFR_Client_Export -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" -Wb,stub_export_include=ifr_client_export.h IFR_Components.pidl
+tao_idl -o orig -GA -I. -I.. -I..\.. -Ge 1 -GT -I../.. -Wb,export_macro=TAO_IFR_Client_Export -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" -Wb,stub_export_include=ifr_client_export.h IFR_Extended.pidl
