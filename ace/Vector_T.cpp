@@ -17,7 +17,7 @@ ACE_RCSID(ace, Vector_T, "$Id$")
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Vector)
 
-template <class T, const size_t DEFAULT_SIZE>
+template <class T, size_t DEFAULT_SIZE>
 void ACE_Vector<T, DEFAULT_SIZE>::resize (const size_t new_size,
 					  const T& t)
 {
@@ -30,7 +30,7 @@ void ACE_Vector<T, DEFAULT_SIZE>::resize (const size_t new_size,
   length_ = new_size;
 }
 
-template <class T, const size_t DEFAULT_SIZE>
+template <class T, size_t DEFAULT_SIZE>
 void ACE_Vector<T, DEFAULT_SIZE>::push_back (const T& elem)
 {
   if (length_ == curr_max_size_)
@@ -42,7 +42,7 @@ void ACE_Vector<T, DEFAULT_SIZE>::push_back (const T& elem)
   (*this)[length_-1] = elem;
 }
 
-template <class T, const size_t DEFAULT_SIZE>
+template <class T, size_t DEFAULT_SIZE>
 void ACE_Vector<T, DEFAULT_SIZE>::dump (void) const
 {
 #if 0
