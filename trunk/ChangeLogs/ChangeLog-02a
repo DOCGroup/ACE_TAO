@@ -4,6 +4,8 @@ Mon Apr 24 09:15:03 2000  Darrell Brunsch <brunsch@uci.edu>
 
           Forgot a couple of ')'s that showed up on Lynx builds.
 
+          Also, ACE_const_char doesn't exist, ACE_const_cast does.
+
 Sun Apr 23 19:51:41 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/ACE.cpp:
