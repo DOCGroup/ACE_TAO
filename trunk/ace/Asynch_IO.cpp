@@ -829,10 +829,6 @@ ACE_Asynch_Accept_Handler::ACE_Asynch_Accept_Handler (ACE_Reactor* reactor,
   : reactor_ (reactor),
     proactor_ (proactor)
 {
-  if (this->reactor_ == 0)
-    this->reactor_ = ACE_Reactor::instance ();
-  if (this->proactor_ == 0)
-    this->proactor_ = ACE_Proactor::instance ();
 }
 
 ACE_Asynch_Accept_Handler::~ACE_Asynch_Accept_Handler (void)
@@ -859,14 +855,20 @@ ACE_Asynch_Accept_Handler::register_accept_call (ACE_Asynch_Accept::Result* resu
   // If this is the only item, then it means there the set was empty
   // before. So enable the <handle> in the reactor.
   if (this->result_queue_.size () == 1)
-    this->reactor_->resume_handlers ();
-
+    {
+      int return_val = this->reactor_->resume_handler (result->listen_handle ());
+      if (return_val != 0)
+        return return_val;
+    }
+  
   return 0;
 }
 
-ACE_Asynch_Accept::Result*
+ACE_Asynch_Accept::Result *
 ACE_Asynch_Accept_Handler::deregister_accept_call (void)
 {
+  ACE_DEBUG ((LM_DEBUG, "ACE_Asynch_Accept_Handler::deregister_accept_call\n"));
+  
   // The queue is updated by main thread in the register function call and
   // thru the auxillary thread  in the deregister fun. So let us mutex
   // it.
@@ -877,14 +879,17 @@ ACE_Asynch_Accept_Handler::deregister_accept_call (void)
   int return_dequeue = this->result_queue_.dequeue_head (result);
   if (return_dequeue == -1)
     return 0;
-  // Sanity check.
-  if (result == 0)
-    return 0;
+  
+  ACE_ASSERT (result != 0);
 
   // Disable the <handle> in the reactor if no <accept>'s are
   // pending.
   if (this->result_queue_.size () == 0)
-    this->reactor_->suspend_handlers ();
+    {
+      int return_val = this->reactor_->suspend_handler (result->listen_handle ()); 
+      if (return_val != 0)
+        return 0;
+    }
 
   // Return the result pointer.
   return result;
@@ -1023,7 +1028,7 @@ ACE_Asynch_Accept::open (ACE_Handler &handler,
 
   // Suspend the <handle> now. Enable only when the <accept> is issued
   // by the application.
-  this->reactor_.suspend_handlers ();
+  this->reactor_.suspend_handler (this->handle_);
 
   // Spawn the thread. It is the only thread we are going to have. It
   // will do the <handle_events> on the reactor.
