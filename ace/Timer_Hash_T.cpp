@@ -1,3 +1,5 @@
+// $Id$
+
 #if !defined (ACE_TIMER_HASH_T_C)
 #define ACE_TIMER_HASH_T_C
 
