@@ -20,15 +20,22 @@ namespace TAO
   {
     ACE_TRY_NEW_ENV
       {
-        this->x_->value ()->impl ()->_tao_decode (cdr
-                                                  ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+        if (this->x_ !=0 &&
+            this->x_->value ()->impl ())
+          {
+            this->x_->value ()->impl ()->_tao_decode (cdr
+                                                      ACE_ENV_ARG_PARAMETER);
+            ACE_TRY_CHECK;
+          }
       }
     ACE_CATCHANY
       {
         return 0;
       }
     ACE_ENDTRY;
+
+    this->byte_order_ =
+      cdr.byte_order ();
 
     return 1;
   }
@@ -63,11 +70,21 @@ namespace TAO
   CORBA::Boolean
   NVList_Argument::demarshal (TAO_InputCDR &cdr)
   {
+
+
     ACE_TRY_NEW_ENV
       {
-        this->x_->_tao_decode (cdr,
-                               CORBA::ARG_INOUT | CORBA::ARG_OUT
-                               ACE_ENV_ARG_PARAMETER);
+        // Now, get all the "return", "out", and "inout" parameters
+        // from the response message body ... return parameter is
+        // first, the rest are in the order defined in the IDL spec
+        // (which is also the order that DII users are required to
+        // use).
+
+        this->x_->_tao_incoming_cdr (
+            cdr,
+            CORBA::ARG_OUT | CORBA::ARG_INOUT,
+            this->lazy_evaluation_
+            ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
       }
     ACE_CATCHANY
@@ -87,23 +104,23 @@ namespace TAO
 
     for (CORBA::ULong i = 0; i < len; ++i)
       {
-        (*list)[len].argument <<= *this->x_->item (len)->value ();
+        (*list)[i].argument <<= *this->x_->item (i)->value ();
 
-        switch (this->x_->item (len)->flags ())
+        switch (this->x_->item (i)->flags ())
           {
           case CORBA::ARG_IN:
             {
-              (*list)[len].mode = CORBA::PARAM_IN;
+              (*list)[i].mode = CORBA::PARAM_IN;
               break;
             }
           case CORBA::ARG_INOUT:
             {
-              (*list)[len].mode = CORBA::PARAM_INOUT;
+              (*list)[i].mode = CORBA::PARAM_INOUT;
               break;
             }
           case CORBA::ARG_OUT:
             {
-              (*list)[len].mode = CORBA::PARAM_OUT;
+              (*list)[i].mode = CORBA::PARAM_OUT;
               break;
             }
           default:
@@ -112,4 +129,3 @@ namespace TAO
       }
   }
 }
-

@@ -47,7 +47,6 @@ TAO_Operation_Details::corba_exception (const char *id
                     0);
 }
 
-
 bool
 TAO_Operation_Details::marshal_args (TAO_OutputCDR &cdr)
 {

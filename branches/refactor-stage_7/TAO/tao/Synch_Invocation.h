@@ -52,13 +52,21 @@ namespace TAO
 
   protected:
 
+    /**
+     * This method is selectively made virtual, so that inherited
+     * classes can overload the  user exception handling type. For
+     * example the DII needs a totally different method of
+     * user exception exception handling
+     */
+    virtual Invocation_Status handle_user_exception (TAO_InputCDR &cdr
+                                                     ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::Exception));
+
     Invocation_Status location_forward (TAO_InputCDR &cdr
                                         ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-    Invocation_Status handle_user_exception (TAO_InputCDR &cdr
-                                             ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::Exception));
+
 
     Invocation_Status handle_system_exception (TAO_InputCDR &cdr
                                                ACE_ENV_ARG_DECL)

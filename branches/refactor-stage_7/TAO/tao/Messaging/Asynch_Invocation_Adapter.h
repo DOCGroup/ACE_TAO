@@ -50,7 +50,7 @@ namespace TAO
    * IDL compiler.
    *
    */
-  class TAO_Messaging_Export Asynch_Invocation_Adapter : private Invocation_Adapter
+  class TAO_Messaging_Export Asynch_Invocation_Adapter : public Invocation_Adapter
   {
   public:
     Asynch_Invocation_Adapter (

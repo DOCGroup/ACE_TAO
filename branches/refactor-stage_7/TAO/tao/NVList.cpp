@@ -274,7 +274,7 @@ CORBA::NVList::item (CORBA::ULong n
 void
 CORBA::NVList::_tao_incoming_cdr (TAO_InputCDR &cdr,
                                   int flag,
-                                  int &lazy_evaluation
+                                  bool &lazy_evaluation
                                   ACE_ENV_ARG_DECL)
 {
   // If the list is empty then using lazy evaluation is the only
@@ -282,10 +282,10 @@ CORBA::NVList::_tao_incoming_cdr (TAO_InputCDR &cdr,
   // @@ There are other cases where we can use lazy evaluation, for
   //    example if the list is not empty but the anys own all their
   //    objects.
-  if (lazy_evaluation == 0 && this->max_ == 0)
-    lazy_evaluation = 1;
+  if (lazy_evaluation == false && this->max_ == 0)
+    lazy_evaluation = true;
 
-  if (lazy_evaluation == 0)
+  if (lazy_evaluation == false)
     {
       this->_tao_decode (cdr,
                          flag

@@ -7,17 +7,12 @@ ACE_RCSID (DynamicInterface,
            "$Id$")
 
 #include "ExceptionList.h"
-#include "DII_Invocation.h"
+#include "DII_Invocation_Adapter.h"
+#include "DII_Arguments.h"
 #include "tao/Object.h"
 #include "tao/Pluggable_Messaging_Utils.h"
-
-#if TAO_HAS_INTERCEPTORS == 1
-#include "DII_ClientRequestInfo.h"
-#include "tao/ClientInterceptorAdapter.h"
-#include "tao/Stub.h"
-#include "tao/ORB_Core.h"
-#endif /* TAO_HAS_INTERCEPTORS */
-
+#include "tao/NVList.h"
+#include "tao/Any_Unknown_IDL_Type.h"
 
 #if !defined (__ACE_INLINE__)
 # include "Request.inl"
@@ -77,7 +72,7 @@ CORBA::Request::Request (CORBA::Object_ptr obj,
     contexts_ (0),
     ctx_ (CORBA::Context::_nil ()),
     refcount_ (1),
-    lazy_evaluation_ (0),
+    lazy_evaluation_ (false),
     response_received_ (0),
     byte_order_ (TAO_ENCAP_BYTE_ORDER)
 {
@@ -104,7 +99,7 @@ CORBA::Request::Request (CORBA::Object_ptr obj,
     contexts_ (0),
     ctx_ (CORBA::Context::_nil ()),
     refcount_ (1),
-    lazy_evaluation_ (0),
+    lazy_evaluation_ (false),
     response_received_ (0),
     byte_order_ (TAO_ENCAP_BYTE_ORDER)
 {
@@ -148,180 +143,84 @@ CORBA::Request::invoke (ACE_ENV_SINGLE_ARG_DECL)
   CORBA::Boolean argument_flag =
     this->args_->_lazy_has_arguments ();
 
+  size_t number_args = 0;
 
-  TAO_GIOP_DII_Invocation call (this->target_->_stubobj (),
-                                this->opname_,
-                                ACE_static_cast (CORBA::ULong,
-                                                 ACE_OS::strlen (this->opname_)),
-                                argument_flag,
-                                this->orb_->orb_core (),
-                                this,
-                                this->byte_order_);
+  TAO::NamedValue_Argument _tao_retval (this->result_);
 
 
-#if (TAO_HAS_INTERCEPTORS == 1)
-  int _invoke_status;
-  TAO_ClientRequestInterceptor_Adapter _tao_vfr (
-    this->target_->_stubobj()->orb_core ()->client_request_interceptors (),
-    &call,
-    _invoke_status);
+  TAO::NVList_Argument _tao_in_list (this->args_,
+                                     this->lazy_evaluation_);
 
-  TAO_DII_ClientRequestInfo _tao_ri (&call,
-                                     this->target_,
-                                     this);
-#endif  /* TAO_HAS_INTERCEPTORS */
+  TAO::Argument *_tao_arg_list [] = {
+    &_tao_retval,
+    &_tao_in_list
+  };
 
-  // Loop as needed for forwarding.
-  for (;;)
-    {
-      call.start (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+  if (argument_flag)
+    number_args = 2;
+  else
+    number_args = 1;
 
-      CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
+  TAO::DII_Invocation_Adapter _tao_call (
+       this->target_,
+       _tao_arg_list,
+       number_args,
+       ACE_const_cast (char *, this->opname_),
+       ACE_static_cast (CORBA::ULong,
+                        ACE_OS::strlen (this->opname_)),
+       this->exceptions_.in (),
+       this);
 
-#if TAO_HAS_INTERCEPTORS == 1
-      _tao_vfr.send_request (&_tao_ri
-                             ACE_ENV_ARG_PARAMETER);
-
-
-#endif /* TAO_HAS_INTERCEPTORS */
-
-      call.prepare_header (ACE_static_cast (CORBA::Octet,
-                                            flag)
-                           ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
-
-      this->args_->_tao_encode (call.out_stream (),
-                                CORBA::ARG_IN | CORBA::ARG_INOUT
-                                ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
-
-      // Make the call ... blocking for the response.
-      int status = call.invoke (this->exceptions_.in ()
-                                ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
-
-      if (status == TAO_INVOKE_RESTART)
-        {
-          continue;
-        }
-
-      if (status == TAO_INVOKE_EXCEPTION)
-        {
-          // Shouldn't happen.
-#if TAO_HAS_INTERCEPTORS == 1
-          _tao_vfr.receive_exception (&_tao_ri
-                                      ACE_ENV_ARG_PARAMETER);
-#endif
-          return;
-        }
-
-      if (status != TAO_INVOKE_OK)
-        {
-          ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE,
-                                     CORBA::COMPLETED_MAYBE));
-        }
-
-      // The only case left is status == TAO_INVOKE_OK, exit the
-      // loop.  We cannot retry because at this point we either
-      // got a reply or something with n status of COMPLETED_MAYBE,
-      // thus we cannot reissue the request if we are to satisfy the
-      // "at most once" semantics.
-      break;
-    }
+  _tao_call.invoke (0,
+                    0
+                    ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 
   // If this request was created by a gateway, then result_
   // and/or args_ are shared by a CORBA::ServerRequest, whose
   // reply must be in the same byte order as the reply we are
   // handling here. So we set the member to be accessed later.
-  this->byte_order_ = call.inp_stream ().byte_order ();
-
-  // Now, get all the "return", "out", and "inout" parameters
-  // from the response message body ... return parameter is
-  // first, the rest are in the order defined in the IDL spec
-  // (which is also the order that DII users are required to
-  // use).
-
-  if (this->result_ != 0 && this->result_->value ()->impl ())
-    {
-      // We can be sure that the impl is a TAO::Unknown_IDL_Type.
-      this->result_->value ()->impl ()->_tao_decode (call.inp_stream ()
-                                                     ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
-    }
-
-  this->args_->_tao_incoming_cdr (call.inp_stream (),
-                                  CORBA::ARG_OUT | CORBA::ARG_INOUT,
-                                  this->lazy_evaluation_
-                                  ACE_ENV_ARG_PARAMETER);
-
-#if TAO_HAS_INTERCEPTORS == 1
-  _tao_ri.result (_invoke_status);
-
-  _tao_ri.reply_status (_invoke_status);
-  _tao_vfr.receive_reply (&_tao_ri
-                          ACE_ENV_ARG_PARAMETER);
-#endif  /* TAO_HAS_INTERCEPTORS */
+  this->byte_order_ = _tao_retval.byte_order ();
 }
 
 void
 CORBA::Request::send_oneway (ACE_ENV_SINGLE_ARG_DECL)
 {
-  CORBA::Boolean argument_flag = this->args_->_lazy_has_arguments ();
+  CORBA::Boolean argument_flag =
+    this->args_->_lazy_has_arguments ();
 
-  TAO_GIOP_Oneway_Invocation call (this->target_->_stubobj (),
-                                   this->opname_,
-                                   ACE_static_cast (CORBA::ULong,
-                                           ACE_OS::strlen (this->opname_)),
-                                   argument_flag,
-                                   this->orb_->orb_core (),
-                                   this->byte_order_);
+  size_t number_args = 0;
 
-  // Loop as needed for forwarding.
-  for (;;)
-    {
-      call.start (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+  TAO::NamedValue_Argument _tao_retval (this->result_);
 
-      CORBA::Octet response_flag = ACE_static_cast (CORBA::Octet,
-                                                    call.sync_scope ());
 
-      call.prepare_header (response_flag
-                           ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+  TAO::NVList_Argument _tao_in_list (this->args_,
+                                     this->lazy_evaluation_);
 
-      this->args_->_tao_encode (call.out_stream (),
-                                CORBA::ARG_IN | CORBA::ARG_INOUT
-                                ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+  TAO::Argument *_tao_arg_list [] = {
+    &_tao_retval,
+    &_tao_in_list
+  };
 
-      int status = call.invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+  if (argument_flag)
+    number_args = 2;
+  else
+    number_args = 1;
 
-      if (status == TAO_INVOKE_RESTART)
-        {
-          continue;
-        }
+  TAO::Invocation_Adapter _tao_call (
+      this->target_,
+      _tao_arg_list,
+      number_args,
+      ACE_const_cast (char *, this->opname_),
+      ACE_static_cast (CORBA::ULong,
+                       ACE_OS::strlen (this->opname_)),
+      0,
+      TAO::TAO_ONEWAY_INVOCATION);
 
-      if (status == TAO_INVOKE_EXCEPTION)
-        {
-          // Shouldn't happen.
-          return;
-        }
-
-      if (status != TAO_INVOKE_OK)
-        {
-          ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE,
-                                     CORBA::COMPLETED_MAYBE));
-        }
-
-      // The only case left is status == TAO_INVOKE_OK, exit the
-      // loop.  We cannot retry because at this point we either
-      // got a reply or something with an status of
-      // COMPLETED_MAYBE, thus we cannot reissue the request if we
-      // are to satisfy the "at most once" semantics.
-      break;
-    }
+  _tao_call.invoke (0,
+                    0
+                    ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 }
 
 void
@@ -337,51 +236,38 @@ CORBA::Request::send_deferred (ACE_ENV_SINGLE_ARG_DECL)
 
   CORBA::Boolean argument_flag = this->args_->count () ? 1 : 0;
 
-  TAO_GIOP_DII_Deferred_Invocation call (this->target_->_stubobj (),
-                                         this->orb_->orb_core (),
-                                         argument_flag,
-                                         this,
-                                         this->byte_order_);
+  TAO::NamedValue_Argument _tao_retval (this->result_);
 
-  // Loop as needed for forwarding.
-  for (;;)
-    {
-      call.start (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+  TAO::NVList_Argument _tao_in_list (this->args_,
+                                     this->lazy_evaluation_);
 
-      CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
+  TAO::Argument *_tao_arg_list [] = {
+    &_tao_retval,
+    &_tao_in_list
+  };
 
-      call.prepare_header (ACE_static_cast (CORBA::Octet, flag)
-                           ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+  size_t number_args = 0;
 
-      this->args_->_tao_encode (call.out_stream (),
-                                CORBA::ARG_IN | CORBA::ARG_INOUT
-                                ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+  if (argument_flag)
+    number_args = 2;
+  else
+    number_args = 1;
 
-      // Make the call without blocking.
-      CORBA::ULong status = call.invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+  TAO::DII_Deferred_Invocation_Adapter _tao_call (
+      this->target_,
+      _tao_arg_list,
+      number_args,
+      ACE_const_cast (char *, this->opname_),
+      ACE_static_cast (CORBA::ULong,
+                       ACE_OS::strlen (this->opname_)),
+      0,
+      this->orb_->orb_core (),
+      this);
 
-      if (status == TAO_INVOKE_RESTART)
-        {
-          continue;
-        }
-
-      if (status != TAO_INVOKE_OK)
-        {
-          ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE,
-                                     CORBA::COMPLETED_MAYBE));
-        }
-
-      // The only case left is status == TAO_INVOKE_OK, exit the
-      // loop.  We cannot retry because at this point we either
-      // got a reply or something with an status of
-      // COMPLETED_MAYBE, thus we cannot reissue the request if we
-      // are to satisfy the "at most once" semantics.
-      break;
-    }
+  _tao_call.invoke (0,
+                    0
+                    ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 }
 
 void

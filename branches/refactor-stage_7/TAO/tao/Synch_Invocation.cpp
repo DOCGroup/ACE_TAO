@@ -458,6 +458,8 @@ namespace TAO
                     buf.in ()));
       }
 
+    mon.set_status (TAO_INVOKE_USER_EXCEPTION);
+
 #if defined (TAO_HAS_EXCEPTIONS)
     // If we have native exceptions, we must manage the memory allocated
     // by the call above to alloc(). Otherwise the Environment class
@@ -470,8 +472,6 @@ namespace TAO
     // We can not use ACE_THROW here.
     ACE_TRY_ENV.exception (exception);
 #endif
-
-    mon.set_status (TAO_INVOKE_USER_EXCEPTION);
 
     return TAO_INVOKE_USER_EXCEPTION;
   }

@@ -215,19 +215,6 @@ namespace TAO
                                        ACE_Time_Value *&max_wait_time
                                        ACE_ENV_ARG_DECL)
   {
-    // Should never get here..
-    if (this->type_ == TAO_TWOWAY_INVOCATION
-        && this->mode_ == TAO_ASYNCHRONOUS_CALLBACK_INVOCATION)
-      {
-
-        ACE_THROW_RETURN (CORBA::INTERNAL (
-            CORBA::SystemException::_tao_minor_code (
-                TAO_DEFAULT_MINOR_CODE,
-                EINVAL),
-            CORBA::COMPLETED_NO),
-                          TAO_INVOKE_FAILURE);
-      }
-
     ACE_Time_Value tmp_wait_time;
     bool is_timeout  =
       this->get_timeout (tmp_wait_time);
@@ -251,48 +238,92 @@ namespace TAO
 
     if (this->type_ == TAO_ONEWAY_INVOCATION)
       {
-        // Grab the syncscope policy from the ORB.
-        bool has_synchronization = false;
-        Messaging::SyncScope sync_scope;
-        stub->orb_core ()->call_sync_scope_hook (stub,
-                                                 has_synchronization,
-                                                 sync_scope);
-
-        if (has_synchronization)
-          op.response_flags (sync_scope);
-        else
-          op.response_flags (Messaging::SYNC_WITH_TRANSPORT);
-
-        TAO::Synch_Oneway_Invocation synch (this->target_,
-                                            resolver,
-                                            op);
-
-        Invocation_Status s =
-          synch.remote_oneway (max_wait_time
-                               ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
-
-        if (s == TAO_INVOKE_RESTART)
-          effective_target = synch.steal_forwarded_reference ();
+        return this->invoke_oneway (op,
+                                    effective_target,
+                                    resolver,
+                                    max_wait_time
+                                    ACE_ENV_ARG_PARAMETER);
       }
-    else if (this->type_ == TAO_TWOWAY_INVOCATION
-             && this->mode_ == TAO_SYNCHRONOUS_INVOCATION)
+    else if (this->type_ == TAO_TWOWAY_INVOCATION)
       {
         // @@ NOTE:Need to change this to something better. Too many
         // hash defines meaning the same  thing..
         op.response_flags (TAO_TWOWAY_RESPONSE_FLAG);
-        TAO::Synch_Twoway_Invocation synch (this->target_,
-                                            resolver,
-                                            op);
-
-
-        synch.remote_twoway (max_wait_time
-                               ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
-
-        if (s == TAO_INVOKE_RESTART)
-          effective_target = synch.steal_forwarded_reference ();
+        return this->invoke_twoway (op,
+                                    effective_target,
+                                    resolver,
+                                    max_wait_time
+                                    ACE_ENV_ARG_PARAMETER);
       }
+
+    return s;
+  }
+
+  Invocation_Status
+  Invocation_Adapter::invoke_twoway (TAO_Operation_Details &op,
+                                     CORBA::Object *&effective_target,
+                                     Profile_Transport_Resolver &r,
+                                     ACE_Time_Value *&max_wait_time
+                                     ACE_ENV_ARG_DECL)
+  {
+    // Simple sanity check
+    if (this->mode_ != TAO_SYNCHRONOUS_INVOCATION ||
+        this->type_ != TAO_TWOWAY_INVOCATION)
+      {
+        ACE_THROW_RETURN (CORBA::INTERNAL (
+            CORBA::SystemException::_tao_minor_code (
+                TAO_DEFAULT_MINOR_CODE,
+                EINVAL),
+            CORBA::COMPLETED_NO),
+                          TAO_INVOKE_FAILURE);
+      }
+
+    TAO::Synch_Twoway_Invocation synch (this->target_,
+                                        r,
+                                        op);
+
+    Invocation_Status status =
+      synch.remote_twoway (max_wait_time
+                           ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
+
+    if (status == TAO_INVOKE_RESTART)
+      effective_target = synch.steal_forwarded_reference ();
+
+    return status;
+  }
+
+  Invocation_Status
+  Invocation_Adapter::invoke_oneway (TAO_Operation_Details &op,
+                                     CORBA::Object *&effective_target,
+                                     Profile_Transport_Resolver &r,
+                                     ACE_Time_Value *&max_wait_time
+                                     ACE_ENV_ARG_DECL)
+  {
+    // Grab the syncscope policy from the ORB.
+    bool has_synchronization = false;
+    Messaging::SyncScope sync_scope;
+
+    r.stub ()->orb_core ()->call_sync_scope_hook (r.stub (),
+                                                  has_synchronization,
+                                                  sync_scope);
+
+    if (has_synchronization)
+      op.response_flags (sync_scope);
+    else
+      op.response_flags (Messaging::SYNC_WITH_TRANSPORT);
+
+    TAO::Synch_Oneway_Invocation synch (this->target_,
+                                        r,
+                                        op);
+
+    Invocation_Status s =
+      synch.remote_oneway (max_wait_time
+                           ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
+
+    if (s == TAO_INVOKE_RESTART)
+      effective_target = synch.steal_forwarded_reference ();
 
     return s;
   }

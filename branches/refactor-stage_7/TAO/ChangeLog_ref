@@ -1,3 +1,58 @@
+Mon Sep 15 20:22:46 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Invocation_Adapter.cpp:
+	* tao/Invocation_Adapter.h: The call invoke () was made
+	  remote. Further, the code underwent some refactoring to create
+	  the following methods 
+
+	  - invoke_twoway ()
+	  - invoke_oneway () 
+
+	  These methods are all protected and shouldn't affect objects
+	  that interact with this class. The above refactoring was needed
+	  to allow DII, and DSI to share some of the common code base. 
+
+	* tao/Invocation_Base.h: Made the method arguments () virtual so
+	  that the inherited classes can override the implementation. 
+
+	* tao/Invocation_Utils.h: Added enums for TAO_DII_INVOCATION and
+	  TAO_DII_DEFERRED_INVOCATION 
+
+	* tao/NVList.cpp: 
+	* tao/NVList.h: Method _tao_incoming_cdr () will use a bool
+	  instead of a int.
+
+	* tao/Synch_Invocation.h: Made handle_user_exception () virtual so
+	  that the derived classes can override the implementation. 
+
+	* tao/DynamicInterface/DII_Arguments.cpp:
+	* tao/DynamicInterface/DII_Arguments.h:
+	* tao/DynamicInterface/DII_Arguments.inl: Fixed compile errors
+	  with g++. Also passed the flag for lazy evaluation to the
+	  argument classes. 
+
+	* tao/DynamicInterface/DII_Invocation.cpp:
+	* tao/DynamicInterface/DII_Invocation.h:
+	* tao/DynamicInterface/DII_Invocation.inl: New implementation of
+	  the DII and Deferred invocations. 
+
+	* tao/DynamicInterface/Makefile:
+	* tao/DynamicInterface/Request.cpp:
+	* tao/DynamicInterface/Request.h:
+	* tao/DynamicInterface/Request.inl: Used the new argument classes
+	  to create invocation objects. 
+
+	* tao/DynamicInterface/Server_Request.h:
+	* tao/DynamicInterface/Server_Request.inl: Made the
+	  lazy_evaluation_ flag to be a bool instead of an int.
+
+	* tao/Messaging/Asynch_Invocation.h: Held a pointer to the
+	  TAO_Asynch_Reply_Dispatcher_Base instead of
+	  TAO_Asynch_Reply_Dispatcher.
+	
+	* tao/Messaging/Asynch_Invocation_Adapter.h: Made the inheritance
+	  from Invocation_Adapter to be public instead of private. 
+
 Thu Sep 11 17:54:43 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Abstract_Servant_Base.h:
