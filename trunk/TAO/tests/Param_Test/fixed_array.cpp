@@ -125,7 +125,7 @@ Test_Fixed_Array::check_validity (CORBA::Request_ptr req)
 
   // we have forced the ORB to allocate memory for the return value so that we
   // can test the >>= operator
-  Param_Test::Fixed_Array *ret;
+  // Param_Test::Fixed_Array *ret;
   Param_Test::Fixed_Array_forany forany (this->ret_.out ());
   *req->result ()->value () >>= forany;
   return this->check_validity ();
