@@ -1,3 +1,31 @@
+Fri Mar 31 18:36:34 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/GIOP_Message_Accept_State.cpp (write_reply_header): 
+	* tao/GIOP_Message_Accept_State.h:
+	* tao/GIOP_Message_Accept_State.i:
+	* tao/GIOP_Message_Acceptors.cpp:
+	* tao/GIOP_Message_Acceptors.h:
+	* tao/GIOP_Message_Acceptors.i:
+	* tao/GIOP_Message_Base.h:
+	* tao/GIOP_Message_Base.cpp:
+	* tao/GIOP_Message_Connectors.cpp:
+	* tao/GIOP_Message_Connectors.h:
+	* tao/GIOP_Message_Lite.cpp:
+	* tao/GIOP_Message_Lite.h:
+	* tao/GIOP_Server_Request.h:
+	* tao/GIOP_Server_Request.cpp:
+	* tao/GIOP_Utils.cpp:
+	* tao/GIOP_Utils.h:
+	* tao/IIOP_Connect.h:
+	* tao/Pluggable_Messaging.h:
+	* tao/Pluggable_Messaging_Utils.h:
+	* tao/Pluggable_Messaging_Utils.i: Added a new method by name
+	  write_reply_header () to the pluggable messaging
+	  interface. Changes in other files are for implementation and
+	  proper usage of this method within our GIOP
+	  implementation. This is in line with Carlos's suggestion. I have
+	  not got around to address his other comments.
+
 Fri Mar 31 08:15:39 2000  David L. Levine  <levine@cs.wustl.edu>
 
         * TAO_IDL/be/be_visitor_interface/smart_proxy_ch.cpp:

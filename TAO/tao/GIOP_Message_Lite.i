@@ -24,27 +24,4 @@ TAO_GIOP_Message_Lite::parse_header (TAO_GIOP_Message_State *state)
   return 0;
 }
 
-ACE_INLINE CORBA::Boolean
-TAO_GIOP_Message_Lite::
-  make_reply (CORBA::ULong request_id,
-              TAO_OutputCDR &output)
-{
-  // Write the GIOP header first
-  // @@ Bala: i still believe it is a bad idea to have those generic
-  // enums for all the message types....
-  this->write_protocol_header (TAO_PLUGGABLE_MESSAGE_REPLY,
-                               output);
 
-  // create and write a dummy context
-  // We dont really need this. But for some reason the reply is not
-  // parsable on the receiving side?
-  // @@ Bala, look in to this
-  IOP::ServiceContextList resp_ctx;
-  resp_ctx.length (0);
-  output << resp_ctx;
-
-  // Write the request ID
-  output.write_ulong (request_id);
-
-  return 0;
-}
