@@ -2054,7 +2054,7 @@ class TAO_DynamicAny_Export DynUnion: public virtual DynAny
 #if !defined (__TAO_UNBOUNDED_OBJECT_SEQUENCE_DYNAMICANY_DYNANYSEQ_CH_)
 #define __TAO_UNBOUNDED_OBJECT_SEQUENCE_DYNAMICANY_DYNANYSEQ_CH_
 
-    class _TAO_Unbounded_Object_Sequence_DynamicAny_DynAnySeq : public TAO_Unbounded_Base_Sequence
+    class TAO_EXPORT_MACRO _TAO_Unbounded_Object_Sequence_DynamicAny_DynAnySeq : public TAO_Unbounded_Base_Sequence
     {
     public:
       // = Initialization and termination methods.
