@@ -1452,3 +1452,85 @@ IDL_GlobalData::fini (void)
   delete [] this->ident_string_;
   this->ident_string_ = 0;
 }
+
+void
+IDL_GlobalData::create_uses_multiple_stuff (
+    AST_Component *c,
+    AST_Component::port_description &pd
+  )
+{
+  ACE_CString struct_name (pd.id->get_string ());
+  struct_name += "Connection";
+  Identifier struct_id (struct_name.c_str ());
+  UTL_ScopedName sn (&struct_id, 0);
+  AST_Structure *connection = 
+    idl_global->gen ()->create_structure (&sn, 0, 0);
+  struct_id.destroy ();
+  
+  Identifier object_id ("objref");
+  UTL_ScopedName object_name (&object_id,
+                              0);
+  AST_Field *object_field = 
+    idl_global->gen ()->create_field (pd.impl,
+                                      &object_name,
+                                      AST_Field::vis_NA);
+  (void) DeclAsScope (connection)->fe_add_field (object_field);
+  object_id.destroy ();
+
+  Identifier local_id ("Cookie");
+  UTL_ScopedName local_name (&local_id,
+                             0);
+  Identifier module_id ("Components");
+  UTL_ScopedName scoped_name (&module_id,
+                              &local_name);
+  AST_Decl *d = c->lookup_by_name (&scoped_name,
+                                   I_TRUE);
+  local_id.destroy ();
+  module_id.destroy ();
+
+  if (d == 0)
+    {
+      // This would happen if we haven't included Componennts.idl.
+      idl_global->err ()->lookup_error (&scoped_name);
+      return;
+    }
+
+  AST_ValueType *cookie = AST_ValueType::narrow_from_decl (d);
+  
+  Identifier cookie_id ("ck");
+  UTL_ScopedName cookie_name (&cookie_id,
+                              0);
+  AST_Field *cookie_field =
+    idl_global->gen ()->create_field (cookie,
+                                      &cookie_name,
+                                      AST_Field::vis_NA);
+  (void) DeclAsScope (connection)->fe_add_field (cookie_field);
+  cookie_id.destroy ();
+  
+  (void) c->fe_add_structure (connection);
+  
+  ACE_UINT64 bound = 0;
+  AST_Expression *bound_expr =
+    idl_global->gen ()->create_expr (bound,
+                                     AST_Expression::EV_ulong);
+  AST_Sequence *sequence =
+    idl_global->gen ()->create_sequence (bound_expr,
+                                         connection,
+                                         0,
+                                         0,
+                                         0);
+                                         
+  ACE_CString seq_string (pd.id->get_string ());
+  seq_string += "Connections";
+  Identifier seq_id (seq_string.c_str ());
+  UTL_ScopedName seq_name (&seq_id,
+                           0);
+  AST_Typedef *connections =
+    idl_global->gen ()->create_typedef (sequence,
+                                        &seq_name,
+                                        0,
+                                        0);
+  seq_id.destroy ();
+  
+  (void) c->fe_add_typedef (connections);
+}
