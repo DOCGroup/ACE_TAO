@@ -136,7 +136,7 @@ ACE::Ping_Socket::open (ACE_Addr const & local,
 int
 ACE::Ping_Socket::receive_echo_reply (ACE_Time_Value const * timeout)
 {
-  ACE_TRACE ("ACE::Ping_Socket::Ping_Socket");
+  ACE_TRACE ("ACE::Ping_Socket::receive_echo_reply");
 
   ACE_Time_Value before, after;
 
