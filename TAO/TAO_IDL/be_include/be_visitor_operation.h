@@ -60,5 +60,7 @@
 #include "be_visitor_operation/ami_handler_reply_stub_operation_ch.h"
 #include "be_visitor_operation/ami_handler_reply_stub_operation_cs.h"
 #include "be_visitor_operation/ami_exception_holder_operation_cs.h"
+#include "be_visitor_operation/smart_proxy_ch.h"
+#include "be_visitor_operation/smart_proxy_cs.h"
 
 #endif // TAO_BE_VISITOR_OPERATION_H
