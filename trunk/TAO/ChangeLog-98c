@@ -1,3 +1,9 @@
+Tue Aug  4 12:55:06 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
+
+	* orbsvcs/tests/Logger/run_test.pl: Revised test script to call
+	the executables in the correct directories.
+ 	
+
 Tue Aug  4 12:11:55 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
 
 	* docs/releasenotes/index.html: Added logging service section
