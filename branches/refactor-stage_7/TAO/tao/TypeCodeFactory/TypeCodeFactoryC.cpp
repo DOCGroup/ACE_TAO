@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:302
+// be/be_codegen.cpp:302
 
 
 #include "TypeCodeFactory_Loader.h"
@@ -37,11 +37,11 @@
 #endif /* __BORLANDC__ */
 
 #if !defined (__ACE_INLINE__)
-#include "TypeCodeFactoryC.inl"
+#include "TypeCodeFactoryC.inl-Wb,export_macro=TAO_TypeCodeFactory_Export"
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_arg_traits.cpp:60
+// be/be_visitor_arg_traits.cpp:60
 
 // Arg traits specializations.
 namespace TAO
@@ -49,9 +49,7 @@ namespace TAO
 };
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:60
-
-#if defined (_MSC_VER)
+// be/be_visitor_interface/interface_cs.cpp:60
 
 // Traits specializations for CORBA::TypeCodeFactory.
 
@@ -85,8 +83,6 @@ TAO::Objref_Traits<CORBA::TypeCodeFactory>::tao_marshal (
 {
   return p->marshal (cdr);
 }
-
-#endif /* _MSC_VER */
 
 // Function pointer for collocation factory initialization.
 TAO::Collocation_Proxy_Broker * 
@@ -177,7 +173,7 @@ CORBA::TypeCodeFactory::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
+// be/be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_CORBA_TypeCodeFactory[] =
 {
@@ -215,7 +211,7 @@ namespace CORBA
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/any_op_cs.cpp:50
+// be/be_visitor_interface/any_op_cs.cpp:50
 
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
@@ -284,42 +280,23 @@ operator>>= (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/root.cpp:1702
+// be/be_visitor_root/root.cpp:1702
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
   template class
-    TAO::In_Var_Size_Argument_T<
-        CORBA::sequence
+    TAO::Objref_Traits<
+        CORBA::TypeCodeFactory
       >;
-
-  template class
-    TAO::In_Var_Size_Argument_T<
-        CORBA::sequence
-      >;
-
-  template class
-    TAO::In_Var_Size_Argument_T<
-        CORBA::sequence
-      >;
-
-  template class
-    TAO::In_Var_Size_Argument_T<
-        CORBA::sequence
-      >;
-
-  template class TAO::Objref_Traits<CORBA::TypeCodeFactory>;
 
   template class
     TAO_Objref_Var_T<
-        CORBA::TypeCodeFactory,
-        TAO::Objref_Traits<CORBA::TypeCodeFactory>
+        CORBA::TypeCodeFactory
       >;
   
   template class
     TAO_Objref_Out_T<
-        CORBA::TypeCodeFactory,
-        TAO::Objref_Traits<CORBA::TypeCodeFactory>
+        CORBA::TypeCodeFactory
       >;
 
   template class
@@ -330,37 +307,18 @@ operator>>= (
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 # pragma instantiate \
-    TAO::In_Var_Size_Argument_T< \
-        CORBA::sequence \
+    TAO::Objref_Traits< \
+        CORBA::TypeCodeFactory \
       >
-
-# pragma instantiate \
-    TAO::In_Var_Size_Argument_T< \
-        CORBA::sequence \
-      >
-
-# pragma instantiate \
-    TAO::In_Var_Size_Argument_T< \
-        CORBA::sequence \
-      >
-
-# pragma instantiate \
-    TAO::In_Var_Size_Argument_T< \
-        CORBA::sequence \
-      >
-
-# pragma instantiate TAO::Objref_Traits<CORBA::TypeCodeFactory>
 
 # pragma instantiate \
     TAO_Objref_Var_T< \
-        CORBA::TypeCodeFactory, \
-        TAO::Objref_Traits<CORBA::TypeCodeFactory> \
+        CORBA::TypeCodeFactory
       >
   
 # pragma instantiate \
     TAO_Objref_Out_T< \
-        CORBA::TypeCodeFactory, \
-        TAO::Objref_Traits<CORBA::TypeCodeFactory> \
+        CORBA::TypeCodeFactory
       >
 
 # pragma instantiate \

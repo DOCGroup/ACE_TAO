@@ -64,6 +64,8 @@
 #define _INTERFACE_IDL_
 #pragma prefix "omg.org"
 
+#include <orb.idl>
+
 module IR 
 {
   enum DefinitionKind 

@@ -26,11 +26,11 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:302
+// be/be_codegen.cpp:302
 
 
 #include "IFR_ComponentsC.h"
-#include "tao/Stub.h"
+#include "tao/Exception_Data.h"
 #include "tao/Invocation_Adapter.h"
 #include "tao/Object_T.h"
 #include "tao/Any_Impl_T.h"
@@ -50,7 +50,7 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_arg_traits.cpp:60
+// be/be_visitor_arg_traits.cpp:60
 
 // Arg traits specializations.
 namespace TAO
@@ -74,7 +74,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_arg_traits.cpp:263
+  // be/be_visitor_arg_traits.cpp:263
 
 #if !defined (_CORBA_INTERFACEDEFSEQ__ARG_TRAITS_CS_)
 #define _CORBA_INTERFACEDEFSEQ__ARG_TRAITS_CS_
@@ -110,7 +110,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_arg_traits.cpp:263
+  // be/be_visitor_arg_traits.cpp:263
 
 #if !defined (_CORBA_VALUEDEFSEQ__ARG_TRAITS_CS_)
 #define _CORBA_VALUEDEFSEQ__ARG_TRAITS_CS_
@@ -129,7 +129,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_arg_traits.cpp:263
+  // be/be_visitor_arg_traits.cpp:263
 
 #if !defined (_CORBA_EXTINITIALIZERSEQ__ARG_TRAITS_CS_)
 #define _CORBA_EXTINITIALIZERSEQ__ARG_TRAITS_CS_
@@ -148,7 +148,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_arg_traits.cpp:263
+  // be/be_visitor_arg_traits.cpp:263
 
 #if !defined (_CORBA_EXCEPTIONDEFSEQ__ARG_TRAITS_CS_)
 #define _CORBA_EXCEPTIONDEFSEQ__ARG_TRAITS_CS_
@@ -167,7 +167,7 @@ namespace TAO
 #endif /* end #if !defined */
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_arg_traits.cpp:263
+  // be/be_visitor_arg_traits.cpp:263
 
 #if !defined (_CORBA_PARDESCRIPTIONSEQ__ARG_TRAITS_CS_)
 #define _CORBA_PARDESCRIPTIONSEQ__ARG_TRAITS_CS_
@@ -357,9 +357,7 @@ namespace TAO
 };
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:60
-
-#if defined (_MSC_VER)
+// be/be_visitor_interface/interface_cs.cpp:60
 
 // Traits specializations for CORBA::ComponentIR::EventDef.
 
@@ -393,8 +391,6 @@ TAO::Objref_Traits<CORBA::ComponentIR::EventDef>::tao_marshal (
 {
   return p->marshal (cdr);
 }
-
-#endif /* _MSC_VER */
 
 // Function pointer for collocation factory initialization.
 TAO::Collocation_Proxy_Broker * 
@@ -521,7 +517,7 @@ CORBA::ComponentIR::EventDef::marshal (TAO_OutputCDR &cdr)
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
+// be/be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_CORBA_ComponentIR_EventDef[] =
 {
@@ -562,9 +558,7 @@ namespace CORBA
   }
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:60
-
-#if defined (_MSC_VER)
+  // be/be_visitor_interface/interface_cs.cpp:60
   
   // Traits specializations for CORBA::ComponentIR::Container.
   
@@ -598,8 +592,6 @@ namespace CORBA
   {
     return p->marshal (cdr);
   }
-
-#endif /* _MSC_VER */
   
   // Function pointer for collocation factory initialization.
   TAO::Collocation_Proxy_Broker * 
@@ -608,7 +600,7 @@ namespace CORBA
     ) = 0;
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_cs.cpp:78
+  // be/be_visitor_operation/operation_cs.cpp:78
   
   ::CORBA::ComponentIR::ComponentDef_ptr CORBA::ComponentIR::Container::create_component (
       const char * id,
@@ -667,7 +659,7 @@ namespace CORBA
   }
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_cs.cpp:78
+  // be/be_visitor_operation/operation_cs.cpp:78
   
   ::CORBA::ComponentIR::HomeDef_ptr CORBA::ComponentIR::Container::create_home (
       const char * id,
@@ -732,7 +724,7 @@ namespace CORBA
   }
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_cs.cpp:78
+  // be/be_visitor_operation/operation_cs.cpp:78
   
   ::CORBA::ComponentIR::EventDef_ptr CORBA::ComponentIR::Container::create_event (
       const char * id,
@@ -908,7 +900,7 @@ CORBA::ComponentIR::Container::marshal (TAO_OutputCDR &cdr)
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
+// be/be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_CORBA_ComponentIR_Container[] =
 {
@@ -949,9 +941,7 @@ namespace CORBA
   }
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:60
-
-#if defined (_MSC_VER)
+  // be/be_visitor_interface/interface_cs.cpp:60
   
   // Traits specializations for CORBA::ComponentIR::ModuleDef.
   
@@ -985,8 +975,6 @@ namespace CORBA
   {
     return p->marshal (cdr);
   }
-
-#endif /* _MSC_VER */
   
   // Function pointer for collocation factory initialization.
   TAO::Collocation_Proxy_Broker * 
@@ -1110,7 +1098,7 @@ CORBA::ComponentIR::ModuleDef::marshal (TAO_OutputCDR &cdr)
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
+// be/be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_CORBA_ComponentIR_ModuleDef[] =
 {
@@ -1151,9 +1139,7 @@ namespace CORBA
   }
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:60
-
-#if defined (_MSC_VER)
+  // be/be_visitor_interface/interface_cs.cpp:60
   
   // Traits specializations for CORBA::ComponentIR::Repository.
   
@@ -1187,8 +1173,6 @@ namespace CORBA
   {
     return p->marshal (cdr);
   }
-
-#endif /* _MSC_VER */
   
   // Function pointer for collocation factory initialization.
   TAO::Collocation_Proxy_Broker * 
@@ -1308,7 +1292,7 @@ CORBA::ComponentIR::Repository::marshal (TAO_OutputCDR &cdr)
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
+// be/be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_CORBA_ComponentIR_Repository[] =
 {
@@ -1350,9 +1334,7 @@ namespace CORBA
   }
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:60
-
-#if defined (_MSC_VER)
+  // be/be_visitor_interface/interface_cs.cpp:60
   
   // Traits specializations for CORBA::ComponentIR::ProvidesDef.
   
@@ -1386,8 +1368,6 @@ namespace CORBA
   {
     return p->marshal (cdr);
   }
-
-#endif /* _MSC_VER */
   
   // Function pointer for collocation factory initialization.
   TAO::Collocation_Proxy_Broker * 
@@ -1396,7 +1376,7 @@ namespace CORBA
     ) = 0;
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_cs.cpp:78
+  // be/be_visitor_operation/operation_cs.cpp:78
   
   ::CORBA::InterfaceDef_ptr CORBA::ComponentIR::ProvidesDef::interface_type (
       ACE_ENV_SINGLE_ARG_DECL
@@ -1440,7 +1420,7 @@ namespace CORBA
   }
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_cs.cpp:78
+  // be/be_visitor_operation/operation_cs.cpp:78
   
   void CORBA::ComponentIR::ProvidesDef::interface_type (
       CORBA::InterfaceDef_ptr interface_type
@@ -1587,7 +1567,7 @@ CORBA::ComponentIR::ProvidesDef::marshal (TAO_OutputCDR &cdr)
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
+// be/be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_CORBA_ComponentIR_ProvidesDef[] =
 {
@@ -1629,7 +1609,7 @@ namespace CORBA
   }
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
+  // be/be_visitor_typecode/typecode_defn.cpp:284
   
   static const CORBA::Long _oc_CORBA_ComponentIR_ProvidesDescription[] =
   {
@@ -1796,7 +1776,7 @@ namespace CORBA
     }
     
     // TAO_IDL - Generated from 
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_cs.cpp:66
+    // be/be_visitor_structure/structure_cs.cpp:66
     
     void 
     CORBA::ComponentIR::ProvidesDescription::_tao_any_destructor (
@@ -1809,9 +1789,7 @@ namespace CORBA
     }
     
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:60
-
-#if defined (_MSC_VER)
+    // be/be_visitor_interface/interface_cs.cpp:60
     
     // Traits specializations for CORBA::ComponentIR::UsesDef.
     
@@ -1845,8 +1823,6 @@ namespace CORBA
     {
       return p->marshal (cdr);
     }
-
-#endif /* _MSC_VER */
     
     // Function pointer for collocation factory initialization.
     TAO::Collocation_Proxy_Broker * 
@@ -1855,7 +1831,7 @@ namespace CORBA
       ) = 0;
     
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_cs.cpp:78
+    // be/be_visitor_operation/operation_cs.cpp:78
     
     ::CORBA::InterfaceDef_ptr CORBA::ComponentIR::UsesDef::interface_type (
         ACE_ENV_SINGLE_ARG_DECL
@@ -1899,7 +1875,7 @@ namespace CORBA
     }
     
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_cs.cpp:78
+    // be/be_visitor_operation/operation_cs.cpp:78
     
     void CORBA::ComponentIR::UsesDef::interface_type (
         CORBA::InterfaceDef_ptr interface_type
@@ -1944,7 +1920,7 @@ namespace CORBA
     }
     
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_cs.cpp:78
+    // be/be_visitor_operation/operation_cs.cpp:78
     
     CORBA::Boolean CORBA::ComponentIR::UsesDef::is_multiple (
         ACE_ENV_SINGLE_ARG_DECL
@@ -1988,7 +1964,7 @@ namespace CORBA
     }
     
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_cs.cpp:78
+    // be/be_visitor_operation/operation_cs.cpp:78
     
     void CORBA::ComponentIR::UsesDef::is_multiple (
         CORBA::Boolean is_multiple
@@ -2135,7 +2111,7 @@ namespace CORBA
   }
   
   // TAO_IDL - Generated from
-  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
+  // be/be_visitor_typecode/typecode_defn.cpp:284
   
   static const CORBA::Long _oc_CORBA_ComponentIR_UsesDef[] =
   {
@@ -2175,7 +2151,7 @@ namespace CORBA
     }
     
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
+    // be/be_visitor_typecode/typecode_defn.cpp:284
     
     static const CORBA::Long _oc_CORBA_ComponentIR_UsesDescription[] =
     {
@@ -2346,7 +2322,7 @@ namespace CORBA
       }
       
       // TAO_IDL - Generated from 
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_cs.cpp:66
+      // be/be_visitor_structure/structure_cs.cpp:66
       
       void 
       CORBA::ComponentIR::UsesDescription::_tao_any_destructor (
@@ -2359,9 +2335,7 @@ namespace CORBA
       }
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:60
-
-#if defined (_MSC_VER)
+      // be/be_visitor_interface/interface_cs.cpp:60
       
       // Traits specializations for CORBA::ComponentIR::EventPortDef.
       
@@ -2395,8 +2369,6 @@ namespace CORBA
       {
         return p->marshal (cdr);
       }
-
-#endif /* _MSC_VER */
       
       // Function pointer for collocation factory initialization.
       TAO::Collocation_Proxy_Broker * 
@@ -2405,7 +2377,7 @@ namespace CORBA
         ) = 0;
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_cs.cpp:78
+      // be/be_visitor_operation/operation_cs.cpp:78
       
       ::CORBA::ComponentIR::EventDef_ptr CORBA::ComponentIR::EventPortDef::event (
           ACE_ENV_SINGLE_ARG_DECL
@@ -2449,7 +2421,7 @@ namespace CORBA
       }
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_cs.cpp:78
+      // be/be_visitor_operation/operation_cs.cpp:78
       
       void CORBA::ComponentIR::EventPortDef::event (
           CORBA::ComponentIR::EventDef_ptr event
@@ -2494,7 +2466,7 @@ namespace CORBA
       }
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_cs.cpp:78
+      // be/be_visitor_operation/operation_cs.cpp:78
       
       CORBA::Boolean CORBA::ComponentIR::EventPortDef::is_a (
           const char * event_id
@@ -2643,7 +2615,7 @@ namespace CORBA
     }
     
     // TAO_IDL - Generated from
-    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
+    // be/be_visitor_typecode/typecode_defn.cpp:284
     
     static const CORBA::Long _oc_CORBA_ComponentIR_EventPortDef[] =
     {
@@ -2686,7 +2658,7 @@ namespace CORBA
       }
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
+      // be/be_visitor_typecode/typecode_defn.cpp:284
       
       static const CORBA::Long _oc_CORBA_ComponentIR_EventPortDescription[] =
       {
@@ -2852,7 +2824,7 @@ namespace CORBA
         }
         
         // TAO_IDL - Generated from 
-        // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_cs.cpp:66
+        // be/be_visitor_structure/structure_cs.cpp:66
         
         void 
         CORBA::ComponentIR::EventPortDescription::_tao_any_destructor (
@@ -2865,9 +2837,7 @@ namespace CORBA
         }
         
         // TAO_IDL - Generated from
-        // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:60
-
-#if defined (_MSC_VER)
+        // be/be_visitor_interface/interface_cs.cpp:60
         
         // Traits specializations for CORBA::ComponentIR::EmitsDef.
         
@@ -2901,8 +2871,6 @@ namespace CORBA
         {
           return p->marshal (cdr);
         }
-
-#endif /* _MSC_VER */
         
         // Function pointer for collocation factory initialization.
         TAO::Collocation_Proxy_Broker * 
@@ -3017,7 +2985,7 @@ namespace CORBA
       }
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
+      // be/be_visitor_typecode/typecode_defn.cpp:284
       
       static const CORBA::Long _oc_CORBA_ComponentIR_EmitsDef[] =
       {
@@ -3058,9 +3026,7 @@ namespace CORBA
         }
         
         // TAO_IDL - Generated from
-        // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:60
-
-#if defined (_MSC_VER)
+        // be/be_visitor_interface/interface_cs.cpp:60
         
         // Traits specializations for CORBA::ComponentIR::PublishesDef.
         
@@ -3094,8 +3060,6 @@ namespace CORBA
         {
           return p->marshal (cdr);
         }
-
-#endif /* _MSC_VER */
         
         // Function pointer for collocation factory initialization.
         TAO::Collocation_Proxy_Broker * 
@@ -3210,7 +3174,7 @@ namespace CORBA
       }
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
+      // be/be_visitor_typecode/typecode_defn.cpp:284
       
       static const CORBA::Long _oc_CORBA_ComponentIR_PublishesDef[] =
       {
@@ -3253,9 +3217,7 @@ namespace CORBA
         }
         
         // TAO_IDL - Generated from
-        // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:60
-
-#if defined (_MSC_VER)
+        // be/be_visitor_interface/interface_cs.cpp:60
         
         // Traits specializations for CORBA::ComponentIR::ConsumesDef.
         
@@ -3289,8 +3251,6 @@ namespace CORBA
         {
           return p->marshal (cdr);
         }
-
-#endif /* _MSC_VER */
         
         // Function pointer for collocation factory initialization.
         TAO::Collocation_Proxy_Broker * 
@@ -3405,7 +3365,7 @@ namespace CORBA
       }
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
+      // be/be_visitor_typecode/typecode_defn.cpp:284
       
       static const CORBA::Long _oc_CORBA_ComponentIR_ConsumesDef[] =
       {
@@ -3447,9 +3407,7 @@ namespace CORBA
         }
         
         // TAO_IDL - Generated from
-        // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:60
-
-#if defined (_MSC_VER)
+        // be/be_visitor_interface/interface_cs.cpp:60
         
         // Traits specializations for CORBA::ComponentIR::ComponentDef.
         
@@ -3483,8 +3441,6 @@ namespace CORBA
         {
           return p->marshal (cdr);
         }
-
-#endif /* _MSC_VER */
         
         // Function pointer for collocation factory initialization.
         TAO::Collocation_Proxy_Broker * 
@@ -3493,7 +3449,7 @@ namespace CORBA
           ) = 0;
         
         // TAO_IDL - Generated from
-        // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_cs.cpp:78
+        // be/be_visitor_operation/operation_cs.cpp:78
         
         ::CORBA::ComponentIR::ComponentDef_ptr CORBA::ComponentIR::ComponentDef::base_component (
             ACE_ENV_SINGLE_ARG_DECL
@@ -3537,7 +3493,7 @@ namespace CORBA
         }
         
         // TAO_IDL - Generated from
-        // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_cs.cpp:78
+        // be/be_visitor_operation/operation_cs.cpp:78
         
         void CORBA::ComponentIR::ComponentDef::base_component (
             CORBA::ComponentIR::ComponentDef_ptr base_component
@@ -3582,7 +3538,7 @@ namespace CORBA
         }
         
         // TAO_IDL - Generated from
-        // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_cs.cpp:78
+        // be/be_visitor_operation/operation_cs.cpp:78
         
         ::CORBA::InterfaceDefSeq * CORBA::ComponentIR::ComponentDef::supported_interfaces (
             ACE_ENV_SINGLE_ARG_DECL
@@ -3626,7 +3582,7 @@ namespace CORBA
         }
         
         // TAO_IDL - Generated from
-        // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_cs.cpp:78
+        // be/be_visitor_operation/operation_cs.cpp:78
         
         void CORBA::ComponentIR::ComponentDef::supported_interfaces (
             const CORBA::InterfaceDefSeq & supported_interfaces
@@ -3671,7 +3627,7 @@ namespace CORBA
         }
         
         // TAO_IDL - Generated from
-        // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_cs.cpp:78
+        // be/be_visitor_operation/operation_cs.cpp:78
         
         ::CORBA::ComponentIR::ProvidesDef_ptr CORBA::ComponentIR::ComponentDef::create_provides (
             const char * id,
@@ -3727,7 +3683,7 @@ namespace CORBA
         }
         
         // TAO_IDL - Generated from
-        // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_cs.cpp:78
+        // be/be_visitor_operation/operation_cs.cpp:78
         
         ::CORBA::ComponentIR::UsesDef_ptr CORBA::ComponentIR::ComponentDef::create_uses (
             const char * id,
@@ -3786,7 +3742,7 @@ namespace CORBA
         }
         
         // TAO_IDL - Generated from
-        // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_cs.cpp:78
+        // be/be_visitor_operation/operation_cs.cpp:78
         
         ::CORBA::ComponentIR::EmitsDef_ptr CORBA::ComponentIR::ComponentDef::create_emits (
             const char * id,
@@ -3842,7 +3798,7 @@ namespace CORBA
         }
         
         // TAO_IDL - Generated from
-        // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_cs.cpp:78
+        // be/be_visitor_operation/operation_cs.cpp:78
         
         ::CORBA::ComponentIR::PublishesDef_ptr CORBA::ComponentIR::ComponentDef::create_publishes (
             const char * id,
@@ -3898,7 +3854,7 @@ namespace CORBA
         }
         
         // TAO_IDL - Generated from
-        // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_cs.cpp:78
+        // be/be_visitor_operation/operation_cs.cpp:78
         
         ::CORBA::ComponentIR::ConsumesDef_ptr CORBA::ComponentIR::ComponentDef::create_consumes (
             const char * id,
@@ -4076,7 +4032,7 @@ namespace CORBA
       }
       
       // TAO_IDL - Generated from
-      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
+      // be/be_visitor_typecode/typecode_defn.cpp:284
       
       static const CORBA::Long _oc_CORBA_ComponentIR_ComponentDef[] =
       {
@@ -4119,7 +4075,7 @@ namespace CORBA
         }
         
         // TAO_IDL - Generated from 
-        // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_cs.cpp:66
+        // be/be_visitor_sequence/sequence_cs.cpp:65
 
 #if !defined (_CORBA_COMPONENTIR_PROVIDESDESCRIPTIONSEQ_CS_)
 #define _CORBA_COMPONENTIR_PROVIDESDESCRIPTIONSEQ_CS_
@@ -4172,7 +4128,7 @@ namespace CORBA
 #endif /* end #if !defined */
         
         // TAO_IDL - Generated from
-        // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
+        // be/be_visitor_typecode/typecode_defn.cpp:284
         
         static const CORBA::Long _oc_CORBA_ComponentIR_ProvidesDescriptionSeq[] =
         {
@@ -4371,7 +4327,7 @@ namespace CORBA
           }
           
           // TAO_IDL - Generated from 
-          // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_cs.cpp:66
+          // be/be_visitor_sequence/sequence_cs.cpp:65
 
 #if !defined (_CORBA_COMPONENTIR_USESDESCRIPTIONSEQ_CS_)
 #define _CORBA_COMPONENTIR_USESDESCRIPTIONSEQ_CS_
@@ -4424,7 +4380,7 @@ namespace CORBA
 #endif /* end #if !defined */
           
           // TAO_IDL - Generated from
-          // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
+          // be/be_visitor_typecode/typecode_defn.cpp:284
           
           static const CORBA::Long _oc_CORBA_ComponentIR_UsesDescriptionSeq[] =
           {
@@ -4625,7 +4581,7 @@ namespace CORBA
             }
             
             // TAO_IDL - Generated from 
-            // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_cs.cpp:66
+            // be/be_visitor_sequence/sequence_cs.cpp:65
 
 #if !defined (_CORBA_COMPONENTIR_EVENTPORTDESCRIPTIONSEQ_CS_)
 #define _CORBA_COMPONENTIR_EVENTPORTDESCRIPTIONSEQ_CS_
@@ -4678,7 +4634,7 @@ namespace CORBA
 #endif /* end #if !defined */
             
             // TAO_IDL - Generated from
-            // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
+            // be/be_visitor_typecode/typecode_defn.cpp:284
             
             static const CORBA::Long _oc_CORBA_ComponentIR_EventPortDescriptionSeq[] =
             {
@@ -4876,7 +4832,7 @@ namespace CORBA
               }
               
               // TAO_IDL - Generated from
-              // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
+              // be/be_visitor_typecode/typecode_defn.cpp:284
               
               static const CORBA::Long _oc_CORBA_ComponentIR_ComponentDescription[] =
               {
@@ -6514,7 +6470,7 @@ TAO_ENCAP_BYTE_ORDER, // byte order
                 }
                 
                 // TAO_IDL - Generated from 
-                // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_cs.cpp:66
+                // be/be_visitor_structure/structure_cs.cpp:66
                 
                 void 
                 CORBA::ComponentIR::ComponentDescription::_tao_any_destructor (
@@ -6527,9 +6483,7 @@ TAO_ENCAP_BYTE_ORDER, // byte order
                 }
                 
                 // TAO_IDL - Generated from
-                // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:60
-
-#if defined (_MSC_VER)
+                // be/be_visitor_interface/interface_cs.cpp:60
                 
                 // Traits specializations for CORBA::ComponentIR::FactoryDef.
                 
@@ -6563,8 +6517,6 @@ TAO_ENCAP_BYTE_ORDER, // byte order
                 {
                   return p->marshal (cdr);
                 }
-
-#endif /* _MSC_VER */
                 
                 // Function pointer for collocation factory initialization.
                 TAO::Collocation_Proxy_Broker * 
@@ -6679,7 +6631,7 @@ TAO_ENCAP_BYTE_ORDER, // byte order
               }
               
               // TAO_IDL - Generated from
-              // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
+              // be/be_visitor_typecode/typecode_defn.cpp:284
               
               static const CORBA::Long _oc_CORBA_ComponentIR_FactoryDef[] =
               {
@@ -6721,9 +6673,7 @@ TAO_ENCAP_BYTE_ORDER, // byte order
                 }
                 
                 // TAO_IDL - Generated from
-                // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:60
-
-#if defined (_MSC_VER)
+                // be/be_visitor_interface/interface_cs.cpp:60
                 
                 // Traits specializations for CORBA::ComponentIR::FinderDef.
                 
@@ -6757,8 +6707,6 @@ TAO_ENCAP_BYTE_ORDER, // byte order
                 {
                   return p->marshal (cdr);
                 }
-
-#endif /* _MSC_VER */
                 
                 // Function pointer for collocation factory initialization.
                 TAO::Collocation_Proxy_Broker * 
@@ -6873,7 +6821,7 @@ TAO_ENCAP_BYTE_ORDER, // byte order
               }
               
               // TAO_IDL - Generated from
-              // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
+              // be/be_visitor_typecode/typecode_defn.cpp:284
               
               static const CORBA::Long _oc_CORBA_ComponentIR_FinderDef[] =
               {
@@ -6914,9 +6862,7 @@ TAO_ENCAP_BYTE_ORDER, // byte order
                 }
                 
                 // TAO_IDL - Generated from
-                // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:60
-
-#if defined (_MSC_VER)
+                // be/be_visitor_interface/interface_cs.cpp:60
                 
                 // Traits specializations for CORBA::ComponentIR::HomeDef.
                 
@@ -6950,8 +6896,6 @@ TAO_ENCAP_BYTE_ORDER, // byte order
                 {
                   return p->marshal (cdr);
                 }
-
-#endif /* _MSC_VER */
                 
                 // Function pointer for collocation factory initialization.
                 TAO::Collocation_Proxy_Broker * 
@@ -6960,7 +6904,7 @@ TAO_ENCAP_BYTE_ORDER, // byte order
                   ) = 0;
                 
                 // TAO_IDL - Generated from
-                // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_cs.cpp:78
+                // be/be_visitor_operation/operation_cs.cpp:78
                 
                 ::CORBA::ComponentIR::HomeDef_ptr CORBA::ComponentIR::HomeDef::base_home (
                     ACE_ENV_SINGLE_ARG_DECL
@@ -7004,7 +6948,7 @@ TAO_ENCAP_BYTE_ORDER, // byte order
                 }
                 
                 // TAO_IDL - Generated from
-                // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_cs.cpp:78
+                // be/be_visitor_operation/operation_cs.cpp:78
                 
                 void CORBA::ComponentIR::HomeDef::base_home (
                     CORBA::ComponentIR::HomeDef_ptr base_home
@@ -7049,7 +6993,7 @@ TAO_ENCAP_BYTE_ORDER, // byte order
                 }
                 
                 // TAO_IDL - Generated from
-                // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_cs.cpp:78
+                // be/be_visitor_operation/operation_cs.cpp:78
                 
                 ::CORBA::InterfaceDefSeq * CORBA::ComponentIR::HomeDef::supported_interfaces (
                     ACE_ENV_SINGLE_ARG_DECL
@@ -7093,7 +7037,7 @@ TAO_ENCAP_BYTE_ORDER, // byte order
                 }
                 
                 // TAO_IDL - Generated from
-                // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_cs.cpp:78
+                // be/be_visitor_operation/operation_cs.cpp:78
                 
                 void CORBA::ComponentIR::HomeDef::supported_interfaces (
                     const CORBA::InterfaceDefSeq & supported_interfaces
@@ -7138,7 +7082,7 @@ TAO_ENCAP_BYTE_ORDER, // byte order
                 }
                 
                 // TAO_IDL - Generated from
-                // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_cs.cpp:78
+                // be/be_visitor_operation/operation_cs.cpp:78
                 
                 ::CORBA::ComponentIR::ComponentDef_ptr CORBA::ComponentIR::HomeDef::managed_component (
                     ACE_ENV_SINGLE_ARG_DECL
@@ -7182,7 +7126,7 @@ TAO_ENCAP_BYTE_ORDER, // byte order
                 }
                 
                 // TAO_IDL - Generated from
-                // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_cs.cpp:78
+                // be/be_visitor_operation/operation_cs.cpp:78
                 
                 void CORBA::ComponentIR::HomeDef::managed_component (
                     CORBA::ComponentIR::ComponentDef_ptr managed_component
@@ -7227,7 +7171,7 @@ TAO_ENCAP_BYTE_ORDER, // byte order
                 }
                 
                 // TAO_IDL - Generated from
-                // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_cs.cpp:78
+                // be/be_visitor_operation/operation_cs.cpp:78
                 
                 ::CORBA::ValueDef_ptr CORBA::ComponentIR::HomeDef::primary_key (
                     ACE_ENV_SINGLE_ARG_DECL
@@ -7271,7 +7215,7 @@ TAO_ENCAP_BYTE_ORDER, // byte order
                 }
                 
                 // TAO_IDL - Generated from
-                // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_cs.cpp:78
+                // be/be_visitor_operation/operation_cs.cpp:78
                 
                 void CORBA::ComponentIR::HomeDef::primary_key (
                     CORBA::ValueDef_ptr primary_key
@@ -7316,7 +7260,7 @@ TAO_ENCAP_BYTE_ORDER, // byte order
                 }
                 
                 // TAO_IDL - Generated from
-                // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_cs.cpp:78
+                // be/be_visitor_operation/operation_cs.cpp:78
                 
                 ::CORBA::ComponentIR::FactoryDef_ptr CORBA::ComponentIR::HomeDef::create_factory (
                     const char * id,
@@ -7375,7 +7319,7 @@ TAO_ENCAP_BYTE_ORDER, // byte order
                 }
                 
                 // TAO_IDL - Generated from
-                // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_cs.cpp:78
+                // be/be_visitor_operation/operation_cs.cpp:78
                 
                 ::CORBA::ComponentIR::FinderDef_ptr CORBA::ComponentIR::HomeDef::create_finder (
                     const char * id,
@@ -7556,7 +7500,7 @@ TAO_ENCAP_BYTE_ORDER, // byte order
               }
               
               // TAO_IDL - Generated from
-              // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
+              // be/be_visitor_typecode/typecode_defn.cpp:284
               
               static const CORBA::Long _oc_CORBA_ComponentIR_HomeDef[] =
               {
@@ -7596,7 +7540,7 @@ TAO_ENCAP_BYTE_ORDER, // byte order
                 }
                 
                 // TAO_IDL - Generated from
-                // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
+                // be/be_visitor_typecode/typecode_defn.cpp:284
                 
                 static const CORBA::Long _oc_CORBA_ComponentIR_HomeDescription[] =
                 {
@@ -10186,7 +10130,7 @@ TAO_ENCAP_BYTE_ORDER, // byte order
                   }
                   
                   // TAO_IDL - Generated from 
-                  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_cs.cpp:66
+                  // be/be_visitor_structure/structure_cs.cpp:66
                   
                   void 
                   CORBA::ComponentIR::HomeDescription::_tao_any_destructor (
@@ -10199,7 +10143,7 @@ TAO_ENCAP_BYTE_ORDER, // byte order
                   }
                   
                   // TAO_IDL - Generated from
-                  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/any_op_cs.cpp:50
+                  // be/be_visitor_interface/any_op_cs.cpp:50
                   
                   ACE_TEMPLATE_SPECIALIZATION
                   CORBA::Boolean
@@ -10254,7 +10198,7 @@ TAO_ENCAP_BYTE_ORDER, // byte order
                   }
                   
                   // TAO_IDL - Generated from
-                  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/any_op_cs.cpp:50
+                  // be/be_visitor_interface/any_op_cs.cpp:50
                   
                   ACE_TEMPLATE_SPECIALIZATION
                   CORBA::Boolean
@@ -10309,7 +10253,7 @@ TAO_ENCAP_BYTE_ORDER, // byte order
                   }
                   
                   // TAO_IDL - Generated from
-                  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/any_op_cs.cpp:50
+                  // be/be_visitor_interface/any_op_cs.cpp:50
                   
                   ACE_TEMPLATE_SPECIALIZATION
                   CORBA::Boolean
@@ -10364,7 +10308,7 @@ TAO_ENCAP_BYTE_ORDER, // byte order
                   }
                   
                   // TAO_IDL - Generated from
-                  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/any_op_cs.cpp:50
+                  // be/be_visitor_interface/any_op_cs.cpp:50
                   
                   ACE_TEMPLATE_SPECIALIZATION
                   CORBA::Boolean
@@ -10419,7 +10363,7 @@ TAO_ENCAP_BYTE_ORDER, // byte order
                   }
                   
                   // TAO_IDL - Generated from
-                  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/any_op_cs.cpp:50
+                  // be/be_visitor_interface/any_op_cs.cpp:50
                   
                   ACE_TEMPLATE_SPECIALIZATION
                   CORBA::Boolean
@@ -10474,7 +10418,7 @@ TAO_ENCAP_BYTE_ORDER, // byte order
                   }
                   
                   // TAO_IDL - Generated from 
-                  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/any_op_cs.cpp:54
+                  // be/be_visitor_structure/any_op_cs.cpp:54
                   
                   // Copying insertion.
                   void operator<<= (
@@ -10532,7 +10476,7 @@ TAO_ENCAP_BYTE_ORDER, // byte order
                   }
                   
                   // TAO_IDL - Generated from
-                  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/any_op_cs.cpp:50
+                  // be/be_visitor_interface/any_op_cs.cpp:50
                   
                   ACE_TEMPLATE_SPECIALIZATION
                   CORBA::Boolean
@@ -10587,7 +10531,7 @@ TAO_ENCAP_BYTE_ORDER, // byte order
                   }
                   
                   // TAO_IDL - Generated from 
-                  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/any_op_cs.cpp:54
+                  // be/be_visitor_structure/any_op_cs.cpp:54
                   
                   // Copying insertion.
                   void operator<<= (
@@ -10645,7 +10589,7 @@ TAO_ENCAP_BYTE_ORDER, // byte order
                   }
                   
                   // TAO_IDL - Generated from
-                  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/any_op_cs.cpp:50
+                  // be/be_visitor_interface/any_op_cs.cpp:50
                   
                   ACE_TEMPLATE_SPECIALIZATION
                   CORBA::Boolean
@@ -10700,7 +10644,7 @@ TAO_ENCAP_BYTE_ORDER, // byte order
                   }
                   
                   // TAO_IDL - Generated from 
-                  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/any_op_cs.cpp:54
+                  // be/be_visitor_structure/any_op_cs.cpp:54
                   
                   // Copying insertion.
                   void operator<<= (
@@ -10758,7 +10702,7 @@ TAO_ENCAP_BYTE_ORDER, // byte order
                   }
                   
                   // TAO_IDL - Generated from
-                  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/any_op_cs.cpp:50
+                  // be/be_visitor_interface/any_op_cs.cpp:50
                   
                   ACE_TEMPLATE_SPECIALIZATION
                   CORBA::Boolean
@@ -10813,7 +10757,7 @@ TAO_ENCAP_BYTE_ORDER, // byte order
                   }
                   
                   // TAO_IDL - Generated from
-                  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/any_op_cs.cpp:50
+                  // be/be_visitor_interface/any_op_cs.cpp:50
                   
                   ACE_TEMPLATE_SPECIALIZATION
                   CORBA::Boolean
@@ -10868,7 +10812,7 @@ TAO_ENCAP_BYTE_ORDER, // byte order
                   }
                   
                   // TAO_IDL - Generated from
-                  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/any_op_cs.cpp:50
+                  // be/be_visitor_interface/any_op_cs.cpp:50
                   
                   ACE_TEMPLATE_SPECIALIZATION
                   CORBA::Boolean
@@ -10923,7 +10867,7 @@ TAO_ENCAP_BYTE_ORDER, // byte order
                   }
                   
                   // TAO_IDL - Generated from
-                  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/any_op_cs.cpp:50
+                  // be/be_visitor_interface/any_op_cs.cpp:50
                   
                   ACE_TEMPLATE_SPECIALIZATION
                   CORBA::Boolean
@@ -10978,7 +10922,7 @@ TAO_ENCAP_BYTE_ORDER, // byte order
                   }                  
                   
                   // TAO_IDL - Generated from 
-                  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/any_op_cs.cpp:54
+                  // be/be_visitor_sequence/any_op_cs.cpp:54
                   
                   // Copying insertion.
                   void operator<<= (
@@ -11036,7 +10980,7 @@ TAO_ENCAP_BYTE_ORDER, // byte order
                   }                  
                   
                   // TAO_IDL - Generated from 
-                  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/any_op_cs.cpp:54
+                  // be/be_visitor_sequence/any_op_cs.cpp:54
                   
                   // Copying insertion.
                   void operator<<= (
@@ -11094,7 +11038,7 @@ TAO_ENCAP_BYTE_ORDER, // byte order
                   }                  
                   
                   // TAO_IDL - Generated from 
-                  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/any_op_cs.cpp:54
+                  // be/be_visitor_sequence/any_op_cs.cpp:54
                   
                   // Copying insertion.
                   void operator<<= (
@@ -11152,7 +11096,7 @@ TAO_ENCAP_BYTE_ORDER, // byte order
                   }
                   
                   // TAO_IDL - Generated from 
-                  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/any_op_cs.cpp:54
+                  // be/be_visitor_structure/any_op_cs.cpp:54
                   
                   // Copying insertion.
                   void operator<<= (
@@ -11210,7 +11154,7 @@ TAO_ENCAP_BYTE_ORDER, // byte order
                   }
                   
                   // TAO_IDL - Generated from
-                  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/any_op_cs.cpp:50
+                  // be/be_visitor_interface/any_op_cs.cpp:50
                   
                   ACE_TEMPLATE_SPECIALIZATION
                   CORBA::Boolean
@@ -11265,7 +11209,7 @@ TAO_ENCAP_BYTE_ORDER, // byte order
                   }
                   
                   // TAO_IDL - Generated from
-                  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/any_op_cs.cpp:50
+                  // be/be_visitor_interface/any_op_cs.cpp:50
                   
                   ACE_TEMPLATE_SPECIALIZATION
                   CORBA::Boolean
@@ -11320,7 +11264,7 @@ TAO_ENCAP_BYTE_ORDER, // byte order
                   }
                   
                   // TAO_IDL - Generated from
-                  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/any_op_cs.cpp:50
+                  // be/be_visitor_interface/any_op_cs.cpp:50
                   
                   ACE_TEMPLATE_SPECIALIZATION
                   CORBA::Boolean
@@ -11375,7 +11319,7 @@ TAO_ENCAP_BYTE_ORDER, // byte order
                   }
                   
                   // TAO_IDL - Generated from 
-                  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/any_op_cs.cpp:54
+                  // be/be_visitor_structure/any_op_cs.cpp:54
                   
                   // Copying insertion.
                   void operator<<= (
@@ -11433,7 +11377,7 @@ TAO_ENCAP_BYTE_ORDER, // byte order
                   }
                   
                   // TAO_IDL - Generated from
-                  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:63
+                  // be/be_visitor_interface/cdr_op_cs.cpp:63
                   
                   CORBA::Boolean operator<< (
                       TAO_OutputCDR &strm,
@@ -11469,7 +11413,7 @@ TAO_ENCAP_BYTE_ORDER, // byte order
                   }
                   
                   // TAO_IDL - Generated from
-                  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:63
+                  // be/be_visitor_interface/cdr_op_cs.cpp:63
                   
                   CORBA::Boolean operator<< (
                       TAO_OutputCDR &strm,
@@ -11505,7 +11449,7 @@ TAO_ENCAP_BYTE_ORDER, // byte order
                   }
                   
                   // TAO_IDL - Generated from
-                  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:63
+                  // be/be_visitor_interface/cdr_op_cs.cpp:63
                   
                   CORBA::Boolean operator<< (
                       TAO_OutputCDR &strm,
@@ -11541,7 +11485,7 @@ TAO_ENCAP_BYTE_ORDER, // byte order
                   }
                   
                   // TAO_IDL - Generated from
-                  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:63
+                  // be/be_visitor_interface/cdr_op_cs.cpp:63
                   
                   CORBA::Boolean operator<< (
                       TAO_OutputCDR &strm,
@@ -11577,7 +11521,7 @@ TAO_ENCAP_BYTE_ORDER, // byte order
                   }
                   
                   // TAO_IDL - Generated from
-                  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:63
+                  // be/be_visitor_interface/cdr_op_cs.cpp:63
                   
                   CORBA::Boolean operator<< (
                       TAO_OutputCDR &strm,
@@ -11613,7 +11557,7 @@ TAO_ENCAP_BYTE_ORDER, // byte order
                   }
                   
                   // TAO_IDL - Generated from
-                  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:63
+                  // be/be_visitor_interface/cdr_op_cs.cpp:63
                   
                   CORBA::Boolean operator<< (
                       TAO_OutputCDR &strm,
@@ -11649,7 +11593,7 @@ TAO_ENCAP_BYTE_ORDER, // byte order
                   }
                   
                   // TAO_IDL - Generated from
-                  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:63
+                  // be/be_visitor_interface/cdr_op_cs.cpp:63
                   
                   CORBA::Boolean operator<< (
                       TAO_OutputCDR &strm,
@@ -11685,7 +11629,7 @@ TAO_ENCAP_BYTE_ORDER, // byte order
                   }
                   
                   // TAO_IDL - Generated from
-                  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:63
+                  // be/be_visitor_interface/cdr_op_cs.cpp:63
                   
                   CORBA::Boolean operator<< (
                       TAO_OutputCDR &strm,
@@ -11721,7 +11665,7 @@ TAO_ENCAP_BYTE_ORDER, // byte order
                   }
                   
                   // TAO_IDL - Generated from
-                  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:63
+                  // be/be_visitor_interface/cdr_op_cs.cpp:63
                   
                   CORBA::Boolean operator<< (
                       TAO_OutputCDR &strm,
@@ -11757,7 +11701,7 @@ TAO_ENCAP_BYTE_ORDER, // byte order
                   }
                   
                   // TAO_IDL - Generated from
-                  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:63
+                  // be/be_visitor_interface/cdr_op_cs.cpp:63
                   
                   CORBA::Boolean operator<< (
                       TAO_OutputCDR &strm,
@@ -11793,7 +11737,7 @@ TAO_ENCAP_BYTE_ORDER, // byte order
                   }
                   
                   // TAO_IDL - Generated from
-                  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:63
+                  // be/be_visitor_interface/cdr_op_cs.cpp:63
                   
                   CORBA::Boolean operator<< (
                       TAO_OutputCDR &strm,
@@ -11829,7 +11773,7 @@ TAO_ENCAP_BYTE_ORDER, // byte order
                   }
                   
                   // TAO_IDL - Generated from
-                  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_cs.cpp:95
+                  // be/be_visitor_sequence/cdr_op_cs.cpp:95
                   
                   #if !defined _TAO_CDR_OP_CORBA_ComponentIR_ProvidesDescriptionSeq_CPP_
                   #define _TAO_CDR_OP_CORBA_ComponentIR_ProvidesDescriptionSeq_CPP_
@@ -11901,7 +11845,7 @@ TAO_ENCAP_BYTE_ORDER, // byte order
                   #endif /* _TAO_CDR_OP_CORBA_ComponentIR_ProvidesDescriptionSeq_CPP_ */
                   
                   // TAO_IDL - Generated from
-                  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_cs.cpp:95
+                  // be/be_visitor_sequence/cdr_op_cs.cpp:95
                   
                   #if !defined _TAO_CDR_OP_CORBA_ComponentIR_UsesDescriptionSeq_CPP_
                   #define _TAO_CDR_OP_CORBA_ComponentIR_UsesDescriptionSeq_CPP_
@@ -11973,7 +11917,7 @@ TAO_ENCAP_BYTE_ORDER, // byte order
                   #endif /* _TAO_CDR_OP_CORBA_ComponentIR_UsesDescriptionSeq_CPP_ */
                   
                   // TAO_IDL - Generated from
-                  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_cs.cpp:95
+                  // be/be_visitor_sequence/cdr_op_cs.cpp:95
                   
                   #if !defined _TAO_CDR_OP_CORBA_ComponentIR_EventPortDescriptionSeq_CPP_
                   #define _TAO_CDR_OP_CORBA_ComponentIR_EventPortDescriptionSeq_CPP_
@@ -12045,7 +11989,7 @@ TAO_ENCAP_BYTE_ORDER, // byte order
                   #endif /* _TAO_CDR_OP_CORBA_ComponentIR_EventPortDescriptionSeq_CPP_ */
                   
                   // TAO_IDL - Generated from
-                  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:63
+                  // be/be_visitor_interface/cdr_op_cs.cpp:63
                   
                   CORBA::Boolean operator<< (
                       TAO_OutputCDR &strm,
@@ -12081,7 +12025,7 @@ TAO_ENCAP_BYTE_ORDER, // byte order
                   }
                   
                   // TAO_IDL - Generated from
-                  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:63
+                  // be/be_visitor_interface/cdr_op_cs.cpp:63
                   
                   CORBA::Boolean operator<< (
                       TAO_OutputCDR &strm,
@@ -12117,7 +12061,7 @@ TAO_ENCAP_BYTE_ORDER, // byte order
                   }
                   
                   // TAO_IDL - Generated from
-                  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:63
+                  // be/be_visitor_interface/cdr_op_cs.cpp:63
                   
                   CORBA::Boolean operator<< (
                       TAO_OutputCDR &strm,
@@ -12153,20 +12097,24 @@ TAO_ENCAP_BYTE_ORDER, // byte order
                   }
                   
                   // TAO_IDL - Generated from
-                  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/root.cpp:1702
+                  // be/be_visitor_root/root.cpp:1702
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
 #if !defined (_CORBA_INTERFACEDEF__ARG_TRAITS_TMPLINST_CS_)
 #define _CORBA_INTERFACEDEF__ARG_TRAITS_TMPLINST_CS_
                   
-                    template class TAO::Arg_Traits<CORBA::InterfaceDef>;
+                    template class
+                      TAO::Arg_Traits<
+                          CORBA::InterfaceDef
+                        >;
                   
                     template class
                       TAO::Object_Arg_Traits_T<
                           CORBA::InterfaceDef_ptr,
                           CORBA::InterfaceDef_var,
-                          CORBA::InterfaceDef_out
+                          CORBA::InterfaceDef_out,
+                          TAO::Objref_Traits<CORBA::InterfaceDef>
                         >;
 
 #endif /* end #if !defined */
@@ -12177,7 +12125,7 @@ TAO_ENCAP_BYTE_ORDER, // byte order
                     template class TAO::Arg_Traits<CORBA::InterfaceDefSeq>;
                   
                     template class
-                      TAO::Var_Size_Arg_Traits<
+                      TAO::Var_Size_Arg_Traits_T<
                           CORBA::InterfaceDefSeq,
                           CORBA::InterfaceDefSeq_var,
                           CORBA::InterfaceDefSeq_out
@@ -12188,13 +12136,17 @@ TAO_ENCAP_BYTE_ORDER, // byte order
 #if !defined (_CORBA_VALUEDEF__ARG_TRAITS_TMPLINST_CS_)
 #define _CORBA_VALUEDEF__ARG_TRAITS_TMPLINST_CS_
                   
-                    template class TAO::Arg_Traits<CORBA::ValueDef>;
+                    template class
+                      TAO::Arg_Traits<
+                          CORBA::ValueDef
+                        >;
                   
                     template class
                       TAO::Object_Arg_Traits_T<
                           CORBA::ValueDef_ptr,
                           CORBA::ValueDef_var,
-                          CORBA::ValueDef_out
+                          CORBA::ValueDef_out,
+                          TAO::Objref_Traits<CORBA::ValueDef>
                         >;
 
 #endif /* end #if !defined */
@@ -12205,7 +12157,7 @@ TAO_ENCAP_BYTE_ORDER, // byte order
                     template class TAO::Arg_Traits<CORBA::ValueDefSeq>;
                   
                     template class
-                      TAO::Var_Size_Arg_Traits<
+                      TAO::Var_Size_Arg_Traits_T<
                           CORBA::ValueDefSeq,
                           CORBA::ValueDefSeq_var,
                           CORBA::ValueDefSeq_out
@@ -12219,7 +12171,7 @@ TAO_ENCAP_BYTE_ORDER, // byte order
                     template class TAO::Arg_Traits<CORBA::ExtInitializerSeq>;
                   
                     template class
-                      TAO::Var_Size_Arg_Traits<
+                      TAO::Var_Size_Arg_Traits_T<
                           CORBA::ExtInitializerSeq,
                           CORBA::ExtInitializerSeq_var,
                           CORBA::ExtInitializerSeq_out
@@ -12233,7 +12185,7 @@ TAO_ENCAP_BYTE_ORDER, // byte order
                     template class TAO::Arg_Traits<CORBA::ExceptionDefSeq>;
                   
                     template class
-                      TAO::Var_Size_Arg_Traits<
+                      TAO::Var_Size_Arg_Traits_T<
                           CORBA::ExceptionDefSeq,
                           CORBA::ExceptionDefSeq_var,
                           CORBA::ExceptionDefSeq_out
@@ -12247,7 +12199,7 @@ TAO_ENCAP_BYTE_ORDER, // byte order
                     template class TAO::Arg_Traits<CORBA::ParDescriptionSeq>;
                   
                     template class
-                      TAO::Var_Size_Arg_Traits<
+                      TAO::Var_Size_Arg_Traits_T<
                           CORBA::ParDescriptionSeq,
                           CORBA::ParDescriptionSeq_var,
                           CORBA::ParDescriptionSeq_out
@@ -12258,16 +12210,42 @@ TAO_ENCAP_BYTE_ORDER, // byte order
 #if !defined (_CORBA_COMPONENTIR_COMPONENTDEF__ARG_TRAITS_TMPLINST_CS_)
 #define _CORBA_COMPONENTIR_COMPONENTDEF__ARG_TRAITS_TMPLINST_CS_
                   
-                    template class TAO::Arg_Traits<CORBA::ComponentIR::ComponentDef>;
+                    template class
+                      TAO::Arg_Traits<
+                          CORBA::ComponentIR::ComponentDef
+                        >;
                   
                     template class
                       TAO::Object_Arg_Traits_T<
                           CORBA::ComponentIR::ComponentDef_ptr,
                           CORBA::ComponentIR::ComponentDef_var,
-                          CORBA::ComponentIR::ComponentDef_out
+                          CORBA::ComponentIR::ComponentDef_out,
+                          TAO::Objref_Traits<CORBA::ComponentIR::ComponentDef>
                         >;
 
 #endif /* end #if !defined */
+                  
+                    template class
+                      TAO::Ret_Object_Argument_T<
+                          CORBA::ComponentIR::ComponentDef_ptr,
+                          CORBA::ComponentIR::ComponentDef_var
+                        >;
+                  
+                    template class
+                      TAO::In_Object_Argument_T<
+                          CORBA::ComponentIR::ComponentDef_ptr
+                        >;
+                  
+                    template class
+                      TAO::Ret_Var_Size_Argument_T<
+                          CORBA::InterfaceDefSeq,
+                          CORBA::InterfaceDefSeq_var
+                        >;
+                  
+                    template class
+                      TAO::In_Var_Size_Argument_T<
+                          CORBA::InterfaceDefSeq
+                        >;
                   
                     template class
                       TAO::Ret_Object_Argument_T<
@@ -12309,22 +12287,25 @@ TAO_ENCAP_BYTE_ORDER, // byte order
                           CORBA::ComponentIR::ConsumesDef_var
                         >;
                   
-                    template class TAO::Objref_Traits<CORBA::ComponentIR::ComponentDef>;
+                    template class
+                      TAO::Objref_Traits<
+                          CORBA::ComponentIR::ComponentDef
+                        >;
                   
                     template class
                       TAO_Objref_Var_T<
-                          CORBA::ComponentIR::ComponentDef,
-                          TAO::Objref_Traits<CORBA::ComponentIR::ComponentDef>
+                          CORBA::ComponentIR::ComponentDef
                         >;
                     
                     template class
                       TAO_Objref_Out_T<
-                          CORBA::ComponentIR::ComponentDef,
-                          TAO::Objref_Traits<CORBA::ComponentIR::ComponentDef>
+                          CORBA::ComponentIR::ComponentDef
                         >;
                   
                     template class
-                      TAO::Narrow_Utils<CORBA::ComponentIR::ComponentDef>;
+                      TAO::Narrow_Utils<
+                          CORBA::ComponentIR::ComponentDef
+                        >;
                   
                     template class
                       TAO::Any_Impl_T<
@@ -12334,112 +12315,20 @@ TAO_ENCAP_BYTE_ORDER, // byte order
 #if !defined (_CORBA_COMPONENTIR_HOMEDEF__ARG_TRAITS_TMPLINST_CS_)
 #define _CORBA_COMPONENTIR_HOMEDEF__ARG_TRAITS_TMPLINST_CS_
                   
-                    template class TAO::Arg_Traits<CORBA::ComponentIR::HomeDef>;
+                    template class
+                      TAO::Arg_Traits<
+                          CORBA::ComponentIR::HomeDef
+                        >;
                   
                     template class
                       TAO::Object_Arg_Traits_T<
                           CORBA::ComponentIR::HomeDef_ptr,
                           CORBA::ComponentIR::HomeDef_var,
-                          CORBA::ComponentIR::HomeDef_out
+                          CORBA::ComponentIR::HomeDef_out,
+                          TAO::Objref_Traits<CORBA::ComponentIR::HomeDef>
                         >;
 
 #endif /* end #if !defined */
-                  
-                    template class
-                      TAO::Ret_Object_Argument_T<
-                          CORBA::ComponentIR::FactoryDef_ptr,
-                          CORBA::ComponentIR::FactoryDef_var
-                        >;
-                  
-                    template class
-                      TAO::In_Var_Size_Argument_T<
-                          CORBA::sequence
-                        >;
-                  
-                    template class
-                      TAO::In_Var_Size_Argument_T<
-                          CORBA::sequence
-                        >;
-                  
-                    template class
-                      TAO::Ret_Object_Argument_T<
-                          CORBA::ComponentIR::FinderDef_ptr,
-                          CORBA::ComponentIR::FinderDef_var
-                        >;
-                  
-                    template class TAO::Objref_Traits<CORBA::ComponentIR::HomeDef>;
-                  
-                    template class
-                      TAO_Objref_Var_T<
-                          CORBA::ComponentIR::HomeDef,
-                          TAO::Objref_Traits<CORBA::ComponentIR::HomeDef>
-                        >;
-                    
-                    template class
-                      TAO_Objref_Out_T<
-                          CORBA::ComponentIR::HomeDef,
-                          TAO::Objref_Traits<CORBA::ComponentIR::HomeDef>
-                        >;
-                  
-                    template class
-                      TAO::Narrow_Utils<CORBA::ComponentIR::HomeDef>;
-                  
-                    template class
-                      TAO::Any_Impl_T<
-                          CORBA::ComponentIR::HomeDef
-                        >;
-
-#if !defined (_CORBA_COMPONENTIR_EVENTDEF__ARG_TRAITS_TMPLINST_CS_)
-#define _CORBA_COMPONENTIR_EVENTDEF__ARG_TRAITS_TMPLINST_CS_
-                  
-                    template class TAO::Arg_Traits<CORBA::ComponentIR::EventDef>;
-                  
-                    template class
-                      TAO::Object_Arg_Traits_T<
-                          CORBA::ComponentIR::EventDef_ptr,
-                          CORBA::ComponentIR::EventDef_var,
-                          CORBA::ComponentIR::EventDef_out
-                        >;
-
-#endif /* end #if !defined */
-                  
-                    template class TAO::Objref_Traits<CORBA::ComponentIR::EventDef>;
-                  
-                    template class
-                      TAO_Objref_Var_T<
-                          CORBA::ComponentIR::EventDef,
-                          TAO::Objref_Traits<CORBA::ComponentIR::EventDef>
-                        >;
-                    
-                    template class
-                      TAO_Objref_Out_T<
-                          CORBA::ComponentIR::EventDef,
-                          TAO::Objref_Traits<CORBA::ComponentIR::EventDef>
-                        >;
-                  
-                    template class
-                      TAO::Narrow_Utils<CORBA::ComponentIR::EventDef>;
-                  
-                    template class
-                      TAO::Any_Impl_T<
-                          CORBA::ComponentIR::EventDef
-                        >;
-                  
-                    template class
-                      TAO::Ret_Object_Argument_T<
-                          CORBA::ComponentIR::ComponentDef_ptr,
-                          CORBA::ComponentIR::ComponentDef_var
-                        >;
-                  
-                    template class
-                      TAO::In_Object_Argument_T<
-                          CORBA::ComponentIR::ComponentDef_ptr
-                        >;
-                  
-                    template class
-                      TAO::In_Var_Size_Argument_T<
-                          CORBA::sequence
-                        >;
                   
                     template class
                       TAO::Ret_Object_Argument_T<
@@ -12453,8 +12342,104 @@ TAO_ENCAP_BYTE_ORDER, // byte order
                         >;
                   
                     template class
+                      TAO::Ret_Object_Argument_T<
+                          CORBA::ValueDef_ptr,
+                          CORBA::ValueDef_var
+                        >;
+                  
+                    template class
                       TAO::In_Object_Argument_T<
                           CORBA::ValueDef_ptr
+                        >;
+                  
+                    template class
+                      TAO::Ret_Object_Argument_T<
+                          CORBA::ComponentIR::FactoryDef_ptr,
+                          CORBA::ComponentIR::FactoryDef_var
+                        >;
+                  
+                    template class
+                      TAO::In_Var_Size_Argument_T<
+                          CORBA::ParDescriptionSeq
+                        >;
+                  
+                    template class
+                      TAO::In_Var_Size_Argument_T<
+                          CORBA::ExceptionDefSeq
+                        >;
+                  
+                    template class
+                      TAO::Ret_Object_Argument_T<
+                          CORBA::ComponentIR::FinderDef_ptr,
+                          CORBA::ComponentIR::FinderDef_var
+                        >;
+                  
+                    template class
+                      TAO::Objref_Traits<
+                          CORBA::ComponentIR::HomeDef
+                        >;
+                  
+                    template class
+                      TAO_Objref_Var_T<
+                          CORBA::ComponentIR::HomeDef
+                        >;
+                    
+                    template class
+                      TAO_Objref_Out_T<
+                          CORBA::ComponentIR::HomeDef
+                        >;
+                  
+                    template class
+                      TAO::Narrow_Utils<
+                          CORBA::ComponentIR::HomeDef
+                        >;
+                  
+                    template class
+                      TAO::Any_Impl_T<
+                          CORBA::ComponentIR::HomeDef
+                        >;
+
+#if !defined (_CORBA_COMPONENTIR_EVENTDEF__ARG_TRAITS_TMPLINST_CS_)
+#define _CORBA_COMPONENTIR_EVENTDEF__ARG_TRAITS_TMPLINST_CS_
+                  
+                    template class
+                      TAO::Arg_Traits<
+                          CORBA::ComponentIR::EventDef
+                        >;
+                  
+                    template class
+                      TAO::Object_Arg_Traits_T<
+                          CORBA::ComponentIR::EventDef_ptr,
+                          CORBA::ComponentIR::EventDef_var,
+                          CORBA::ComponentIR::EventDef_out,
+                          TAO::Objref_Traits<CORBA::ComponentIR::EventDef>
+                        >;
+
+#endif /* end #if !defined */
+                  
+                    template class
+                      TAO::Objref_Traits<
+                          CORBA::ComponentIR::EventDef
+                        >;
+                  
+                    template class
+                      TAO_Objref_Var_T<
+                          CORBA::ComponentIR::EventDef
+                        >;
+                    
+                    template class
+                      TAO_Objref_Out_T<
+                          CORBA::ComponentIR::EventDef
+                        >;
+                  
+                    template class
+                      TAO::Narrow_Utils<
+                          CORBA::ComponentIR::EventDef
+                        >;
+                  
+                    template class
+                      TAO::Any_Impl_T<
+                          CORBA::ComponentIR::EventDef
                         >;
                   
                     template class
@@ -12465,74 +12450,83 @@ TAO_ENCAP_BYTE_ORDER, // byte order
                   
                     template class
                       TAO::In_Var_Size_Argument_T<
-                          CORBA::sequence
+                          CORBA::ValueDefSeq
                         >;
                   
                     template class
                       TAO::In_Var_Size_Argument_T<
-                          CORBA::sequence
+                          CORBA::ExtInitializerSeq
                         >;
                   
-                    template class TAO::Objref_Traits<CORBA::ComponentIR::Container>;
+                    template class
+                      TAO::Objref_Traits<
+                          CORBA::ComponentIR::Container
+                        >;
                   
                     template class
                       TAO_Objref_Var_T<
-                          CORBA::ComponentIR::Container,
-                          TAO::Objref_Traits<CORBA::ComponentIR::Container>
+                          CORBA::ComponentIR::Container
                         >;
                     
                     template class
                       TAO_Objref_Out_T<
-                          CORBA::ComponentIR::Container,
-                          TAO::Objref_Traits<CORBA::ComponentIR::Container>
+                          CORBA::ComponentIR::Container
                         >;
                   
                     template class
-                      TAO::Narrow_Utils<CORBA::ComponentIR::Container>;
+                      TAO::Narrow_Utils<
+                          CORBA::ComponentIR::Container
+                        >;
                   
                     template class
                       TAO::Any_Impl_T<
                           CORBA::ComponentIR::Container
                         >;
                   
-                    template class TAO::Objref_Traits<CORBA::ComponentIR::ModuleDef>;
+                    template class
+                      TAO::Objref_Traits<
+                          CORBA::ComponentIR::ModuleDef
+                        >;
                   
                     template class
                       TAO_Objref_Var_T<
-                          CORBA::ComponentIR::ModuleDef,
-                          TAO::Objref_Traits<CORBA::ComponentIR::ModuleDef>
+                          CORBA::ComponentIR::ModuleDef
                         >;
                     
                     template class
                       TAO_Objref_Out_T<
-                          CORBA::ComponentIR::ModuleDef,
-                          TAO::Objref_Traits<CORBA::ComponentIR::ModuleDef>
+                          CORBA::ComponentIR::ModuleDef
                         >;
                   
                     template class
-                      TAO::Narrow_Utils<CORBA::ComponentIR::ModuleDef>;
+                      TAO::Narrow_Utils<
+                          CORBA::ComponentIR::ModuleDef
+                        >;
                   
                     template class
                       TAO::Any_Impl_T<
                           CORBA::ComponentIR::ModuleDef
                         >;
                   
-                    template class TAO::Objref_Traits<CORBA::ComponentIR::Repository>;
+                    template class
+                      TAO::Objref_Traits<
+                          CORBA::ComponentIR::Repository
+                        >;
                   
                     template class
                       TAO_Objref_Var_T<
-                          CORBA::ComponentIR::Repository,
-                          TAO::Objref_Traits<CORBA::ComponentIR::Repository>
+                          CORBA::ComponentIR::Repository
                         >;
                     
                     template class
                       TAO_Objref_Out_T<
-                          CORBA::ComponentIR::Repository,
-                          TAO::Objref_Traits<CORBA::ComponentIR::Repository>
+                          CORBA::ComponentIR::Repository
                         >;
                   
                     template class
-                      TAO::Narrow_Utils<CORBA::ComponentIR::Repository>;
+                      TAO::Narrow_Utils<
+                          CORBA::ComponentIR::Repository
+                        >;
                   
                     template class
                       TAO::Any_Impl_T<
@@ -12542,33 +12536,46 @@ TAO_ENCAP_BYTE_ORDER, // byte order
 #if !defined (_CORBA_COMPONENTIR_PROVIDESDEF__ARG_TRAITS_TMPLINST_CS_)
 #define _CORBA_COMPONENTIR_PROVIDESDEF__ARG_TRAITS_TMPLINST_CS_
                   
-                    template class TAO::Arg_Traits<CORBA::ComponentIR::ProvidesDef>;
+                    template class
+                      TAO::Arg_Traits<
+                          CORBA::ComponentIR::ProvidesDef
+                        >;
                   
                     template class
                       TAO::Object_Arg_Traits_T<
                           CORBA::ComponentIR::ProvidesDef_ptr,
                           CORBA::ComponentIR::ProvidesDef_var,
-                          CORBA::ComponentIR::ProvidesDef_out
+                          CORBA::ComponentIR::ProvidesDef_out,
+                          TAO::Objref_Traits<CORBA::ComponentIR::ProvidesDef>
                         >;
 
 #endif /* end #if !defined */
                   
-                    template class TAO::Objref_Traits<CORBA::ComponentIR::ProvidesDef>;
+                    template class
+                      TAO::Ret_Object_Argument_T<
+                          CORBA::InterfaceDef_ptr,
+                          CORBA::InterfaceDef_var
+                        >;
+                  
+                    template class
+                      TAO::Objref_Traits<
+                          CORBA::ComponentIR::ProvidesDef
+                        >;
                   
                     template class
                       TAO_Objref_Var_T<
-                          CORBA::ComponentIR::ProvidesDef,
-                          TAO::Objref_Traits<CORBA::ComponentIR::ProvidesDef>
+                          CORBA::ComponentIR::ProvidesDef
                         >;
                     
                     template class
                       TAO_Objref_Out_T<
-                          CORBA::ComponentIR::ProvidesDef,
-                          TAO::Objref_Traits<CORBA::ComponentIR::ProvidesDef>
+                          CORBA::ComponentIR::ProvidesDef
                         >;
                   
                     template class
-                      TAO::Narrow_Utils<CORBA::ComponentIR::ProvidesDef>;
+                      TAO::Narrow_Utils<
+                          CORBA::ComponentIR::ProvidesDef
+                        >;
                   
                     template class
                       TAO::Any_Impl_T<
@@ -12599,33 +12606,40 @@ TAO_ENCAP_BYTE_ORDER, // byte order
 #if !defined (_CORBA_COMPONENTIR_USESDEF__ARG_TRAITS_TMPLINST_CS_)
 #define _CORBA_COMPONENTIR_USESDEF__ARG_TRAITS_TMPLINST_CS_
                   
-                    template class TAO::Arg_Traits<CORBA::ComponentIR::UsesDef>;
+                    template class
+                      TAO::Arg_Traits<
+                          CORBA::ComponentIR::UsesDef
+                        >;
                   
                     template class
                       TAO::Object_Arg_Traits_T<
                           CORBA::ComponentIR::UsesDef_ptr,
                           CORBA::ComponentIR::UsesDef_var,
-                          CORBA::ComponentIR::UsesDef_out
+                          CORBA::ComponentIR::UsesDef_out,
+                          TAO::Objref_Traits<CORBA::ComponentIR::UsesDef>
                         >;
 
 #endif /* end #if !defined */
                   
-                    template class TAO::Objref_Traits<CORBA::ComponentIR::UsesDef>;
+                    template class
+                      TAO::Objref_Traits<
+                          CORBA::ComponentIR::UsesDef
+                        >;
                   
                     template class
                       TAO_Objref_Var_T<
-                          CORBA::ComponentIR::UsesDef,
-                          TAO::Objref_Traits<CORBA::ComponentIR::UsesDef>
+                          CORBA::ComponentIR::UsesDef
                         >;
                     
                     template class
                       TAO_Objref_Out_T<
-                          CORBA::ComponentIR::UsesDef,
-                          TAO::Objref_Traits<CORBA::ComponentIR::UsesDef>
+                          CORBA::ComponentIR::UsesDef
                         >;
                   
                     template class
-                      TAO::Narrow_Utils<CORBA::ComponentIR::UsesDef>;
+                      TAO::Narrow_Utils<
+                          CORBA::ComponentIR::UsesDef
+                        >;
                   
                     template class
                       TAO::Any_Impl_T<
@@ -12653,22 +12667,25 @@ TAO_ENCAP_BYTE_ORDER, // byte order
                           CORBA::ComponentIR::UsesDescription
                         >;
                   
-                    template class TAO::Objref_Traits<CORBA::ComponentIR::EventPortDef>;
+                    template class
+                      TAO::Objref_Traits<
+                          CORBA::ComponentIR::EventPortDef
+                        >;
                   
                     template class
                       TAO_Objref_Var_T<
-                          CORBA::ComponentIR::EventPortDef,
-                          TAO::Objref_Traits<CORBA::ComponentIR::EventPortDef>
+                          CORBA::ComponentIR::EventPortDef
                         >;
                     
                     template class
                       TAO_Objref_Out_T<
-                          CORBA::ComponentIR::EventPortDef,
-                          TAO::Objref_Traits<CORBA::ComponentIR::EventPortDef>
+                          CORBA::ComponentIR::EventPortDef
                         >;
                   
                     template class
-                      TAO::Narrow_Utils<CORBA::ComponentIR::EventPortDef>;
+                      TAO::Narrow_Utils<
+                          CORBA::ComponentIR::EventPortDef
+                        >;
                   
                     template class
                       TAO::Any_Impl_T<
@@ -12699,33 +12716,40 @@ TAO_ENCAP_BYTE_ORDER, // byte order
 #if !defined (_CORBA_COMPONENTIR_EMITSDEF__ARG_TRAITS_TMPLINST_CS_)
 #define _CORBA_COMPONENTIR_EMITSDEF__ARG_TRAITS_TMPLINST_CS_
                   
-                    template class TAO::Arg_Traits<CORBA::ComponentIR::EmitsDef>;
+                    template class
+                      TAO::Arg_Traits<
+                          CORBA::ComponentIR::EmitsDef
+                        >;
                   
                     template class
                       TAO::Object_Arg_Traits_T<
                           CORBA::ComponentIR::EmitsDef_ptr,
                           CORBA::ComponentIR::EmitsDef_var,
-                          CORBA::ComponentIR::EmitsDef_out
+                          CORBA::ComponentIR::EmitsDef_out,
+                          TAO::Objref_Traits<CORBA::ComponentIR::EmitsDef>
                         >;
 
 #endif /* end #if !defined */
                   
-                    template class TAO::Objref_Traits<CORBA::ComponentIR::EmitsDef>;
+                    template class
+                      TAO::Objref_Traits<
+                          CORBA::ComponentIR::EmitsDef
+                        >;
                   
                     template class
                       TAO_Objref_Var_T<
-                          CORBA::ComponentIR::EmitsDef,
-                          TAO::Objref_Traits<CORBA::ComponentIR::EmitsDef>
+                          CORBA::ComponentIR::EmitsDef
                         >;
                     
                     template class
                       TAO_Objref_Out_T<
-                          CORBA::ComponentIR::EmitsDef,
-                          TAO::Objref_Traits<CORBA::ComponentIR::EmitsDef>
+                          CORBA::ComponentIR::EmitsDef
                         >;
                   
                     template class
-                      TAO::Narrow_Utils<CORBA::ComponentIR::EmitsDef>;
+                      TAO::Narrow_Utils<
+                          CORBA::ComponentIR::EmitsDef
+                        >;
                   
                     template class
                       TAO::Any_Impl_T<
@@ -12735,33 +12759,40 @@ TAO_ENCAP_BYTE_ORDER, // byte order
 #if !defined (_CORBA_COMPONENTIR_PUBLISHESDEF__ARG_TRAITS_TMPLINST_CS_)
 #define _CORBA_COMPONENTIR_PUBLISHESDEF__ARG_TRAITS_TMPLINST_CS_
                   
-                    template class TAO::Arg_Traits<CORBA::ComponentIR::PublishesDef>;
+                    template class
+                      TAO::Arg_Traits<
+                          CORBA::ComponentIR::PublishesDef
+                        >;
                   
                     template class
                       TAO::Object_Arg_Traits_T<
                           CORBA::ComponentIR::PublishesDef_ptr,
                           CORBA::ComponentIR::PublishesDef_var,
-                          CORBA::ComponentIR::PublishesDef_out
+                          CORBA::ComponentIR::PublishesDef_out,
+                          TAO::Objref_Traits<CORBA::ComponentIR::PublishesDef>
                         >;
 
 #endif /* end #if !defined */
                   
-                    template class TAO::Objref_Traits<CORBA::ComponentIR::PublishesDef>;
+                    template class
+                      TAO::Objref_Traits<
+                          CORBA::ComponentIR::PublishesDef
+                        >;
                   
                     template class
                       TAO_Objref_Var_T<
-                          CORBA::ComponentIR::PublishesDef,
-                          TAO::Objref_Traits<CORBA::ComponentIR::PublishesDef>
+                          CORBA::ComponentIR::PublishesDef
                         >;
                     
                     template class
                       TAO_Objref_Out_T<
-                          CORBA::ComponentIR::PublishesDef,
-                          TAO::Objref_Traits<CORBA::ComponentIR::PublishesDef>
+                          CORBA::ComponentIR::PublishesDef
                         >;
                   
                     template class
-                      TAO::Narrow_Utils<CORBA::ComponentIR::PublishesDef>;
+                      TAO::Narrow_Utils<
+                          CORBA::ComponentIR::PublishesDef
+                        >;
                   
                     template class
                       TAO::Any_Impl_T<
@@ -12771,33 +12802,40 @@ TAO_ENCAP_BYTE_ORDER, // byte order
 #if !defined (_CORBA_COMPONENTIR_CONSUMESDEF__ARG_TRAITS_TMPLINST_CS_)
 #define _CORBA_COMPONENTIR_CONSUMESDEF__ARG_TRAITS_TMPLINST_CS_
                   
-                    template class TAO::Arg_Traits<CORBA::ComponentIR::ConsumesDef>;
+                    template class
+                      TAO::Arg_Traits<
+                          CORBA::ComponentIR::ConsumesDef
+                        >;
                   
                     template class
                       TAO::Object_Arg_Traits_T<
                           CORBA::ComponentIR::ConsumesDef_ptr,
                           CORBA::ComponentIR::ConsumesDef_var,
-                          CORBA::ComponentIR::ConsumesDef_out
+                          CORBA::ComponentIR::ConsumesDef_out,
+                          TAO::Objref_Traits<CORBA::ComponentIR::ConsumesDef>
                         >;
 
 #endif /* end #if !defined */
                   
-                    template class TAO::Objref_Traits<CORBA::ComponentIR::ConsumesDef>;
+                    template class
+                      TAO::Objref_Traits<
+                          CORBA::ComponentIR::ConsumesDef
+                        >;
                   
                     template class
                       TAO_Objref_Var_T<
-                          CORBA::ComponentIR::ConsumesDef,
-                          TAO::Objref_Traits<CORBA::ComponentIR::ConsumesDef>
+                          CORBA::ComponentIR::ConsumesDef
                         >;
                     
                     template class
                       TAO_Objref_Out_T<
-                          CORBA::ComponentIR::ConsumesDef,
-                          TAO::Objref_Traits<CORBA::ComponentIR::ConsumesDef>
+                          CORBA::ComponentIR::ConsumesDef
                         >;
                   
                     template class
-                      TAO::Narrow_Utils<CORBA::ComponentIR::ConsumesDef>;
+                      TAO::Narrow_Utils<
+                          CORBA::ComponentIR::ConsumesDef
+                        >;
                   
                     template class
                       TAO::Any_Impl_T<
@@ -12823,8 +12861,8 @@ TAO_ENCAP_BYTE_ORDER, // byte order
                           CORBA::ComponentIR::ProvidesDescription
                         >;
 
-#if !defined (_CORBA_COMPONENTIR_PROVIDESDESCRIPTIONSEQ_CS_)
-#define _CORBA_COMPONENTIR_PROVIDESDESCRIPTIONSEQ_CS_
+#if !defined (_CORBA_COMPONENTIR_PROVIDESDESCRIPTION__EXPLICIT_CS_)
+#define _CORBA_COMPONENTIR_PROVIDESDESCRIPTION__EXPLICIT_CS_
                   
                     template class
                       TAO_Unbounded_Sequence<
@@ -12857,8 +12895,8 @@ TAO_ENCAP_BYTE_ORDER, // byte order
                           CORBA::ComponentIR::UsesDescription
                         >;
 
-#if !defined (_CORBA_COMPONENTIR_USESDESCRIPTIONSEQ_CS_)
-#define _CORBA_COMPONENTIR_USESDESCRIPTIONSEQ_CS_
+#if !defined (_CORBA_COMPONENTIR_USESDESCRIPTION__EXPLICIT_CS_)
+#define _CORBA_COMPONENTIR_USESDESCRIPTION__EXPLICIT_CS_
                   
                     template class
                       TAO_Unbounded_Sequence<
@@ -12891,8 +12929,8 @@ TAO_ENCAP_BYTE_ORDER, // byte order
                           CORBA::ComponentIR::EventPortDescription
                         >;
 
-#if !defined (_CORBA_COMPONENTIR_EVENTPORTDESCRIPTIONSEQ_CS_)
-#define _CORBA_COMPONENTIR_EVENTPORTDESCRIPTIONSEQ_CS_
+#if !defined (_CORBA_COMPONENTIR_EVENTPORTDESCRIPTION__EXPLICIT_CS_)
+#define _CORBA_COMPONENTIR_EVENTPORTDESCRIPTION__EXPLICIT_CS_
                   
                     template class
                       TAO_Unbounded_Sequence<
@@ -12930,33 +12968,40 @@ TAO_ENCAP_BYTE_ORDER, // byte order
 #if !defined (_CORBA_COMPONENTIR_FACTORYDEF__ARG_TRAITS_TMPLINST_CS_)
 #define _CORBA_COMPONENTIR_FACTORYDEF__ARG_TRAITS_TMPLINST_CS_
                   
-                    template class TAO::Arg_Traits<CORBA::ComponentIR::FactoryDef>;
+                    template class
+                      TAO::Arg_Traits<
+                          CORBA::ComponentIR::FactoryDef
+                        >;
                   
                     template class
                       TAO::Object_Arg_Traits_T<
                           CORBA::ComponentIR::FactoryDef_ptr,
                           CORBA::ComponentIR::FactoryDef_var,
-                          CORBA::ComponentIR::FactoryDef_out
+                          CORBA::ComponentIR::FactoryDef_out,
+                          TAO::Objref_Traits<CORBA::ComponentIR::FactoryDef>
                         >;
 
 #endif /* end #if !defined */
                   
-                    template class TAO::Objref_Traits<CORBA::ComponentIR::FactoryDef>;
+                    template class
+                      TAO::Objref_Traits<
+                          CORBA::ComponentIR::FactoryDef
+                        >;
                   
                     template class
                       TAO_Objref_Var_T<
-                          CORBA::ComponentIR::FactoryDef,
-                          TAO::Objref_Traits<CORBA::ComponentIR::FactoryDef>
+                          CORBA::ComponentIR::FactoryDef
                         >;
                     
                     template class
                       TAO_Objref_Out_T<
-                          CORBA::ComponentIR::FactoryDef,
-                          TAO::Objref_Traits<CORBA::ComponentIR::FactoryDef>
+                          CORBA::ComponentIR::FactoryDef
                         >;
                   
                     template class
-                      TAO::Narrow_Utils<CORBA::ComponentIR::FactoryDef>;
+                      TAO::Narrow_Utils<
+                          CORBA::ComponentIR::FactoryDef
+                        >;
                   
                     template class
                       TAO::Any_Impl_T<
@@ -12966,33 +13011,40 @@ TAO_ENCAP_BYTE_ORDER, // byte order
 #if !defined (_CORBA_COMPONENTIR_FINDERDEF__ARG_TRAITS_TMPLINST_CS_)
 #define _CORBA_COMPONENTIR_FINDERDEF__ARG_TRAITS_TMPLINST_CS_
                   
-                    template class TAO::Arg_Traits<CORBA::ComponentIR::FinderDef>;
+                    template class
+                      TAO::Arg_Traits<
+                          CORBA::ComponentIR::FinderDef
+                        >;
                   
                     template class
                       TAO::Object_Arg_Traits_T<
                           CORBA::ComponentIR::FinderDef_ptr,
                           CORBA::ComponentIR::FinderDef_var,
-                          CORBA::ComponentIR::FinderDef_out
+                          CORBA::ComponentIR::FinderDef_out,
+                          TAO::Objref_Traits<CORBA::ComponentIR::FinderDef>
                         >;
 
 #endif /* end #if !defined */
                   
-                    template class TAO::Objref_Traits<CORBA::ComponentIR::FinderDef>;
+                    template class
+                      TAO::Objref_Traits<
+                          CORBA::ComponentIR::FinderDef
+                        >;
                   
                     template class
                       TAO_Objref_Var_T<
-                          CORBA::ComponentIR::FinderDef,
-                          TAO::Objref_Traits<CORBA::ComponentIR::FinderDef>
+                          CORBA::ComponentIR::FinderDef
                         >;
                     
                     template class
                       TAO_Objref_Out_T<
-                          CORBA::ComponentIR::FinderDef,
-                          TAO::Objref_Traits<CORBA::ComponentIR::FinderDef>
+                          CORBA::ComponentIR::FinderDef
                         >;
                   
                     template class
-                      TAO::Narrow_Utils<CORBA::ComponentIR::FinderDef>;
+                      TAO::Narrow_Utils<
+                          CORBA::ComponentIR::FinderDef
+                        >;
                   
                     template class
                       TAO::Any_Impl_T<
@@ -13025,13 +13077,17 @@ TAO_ENCAP_BYTE_ORDER, // byte order
 #if !defined (_CORBA_INTERFACEDEF__ARG_TRAITS_TMPLINST_CS_)
 #define _CORBA_INTERFACEDEF__ARG_TRAITS_TMPLINST_CS_
                   
-                  # pragma instantiate TAO::Arg_Traits<CORBA::InterfaceDef>
+                  # pragma instantiate \
+                      TAO::Arg_Traits< \
+                          CORBA::InterfaceDef \
+                        >
                   
                   # pragma instantiate \
                       TAO::Object_Arg_Traits_T< \
                           CORBA::InterfaceDef_ptr, \
                           CORBA::InterfaceDef_var, \
-                          CORBA::InterfaceDef_out \
+                          CORBA::InterfaceDef_out, \
+                          TAO::Objref_Traits<CORBA::InterfaceDef> \
                         >
 
 #endif /* end #if !defined */
@@ -13042,7 +13098,7 @@ TAO_ENCAP_BYTE_ORDER, // byte order
                   # pragma instantiate TAO::Arg_Traits<CORBA::InterfaceDefSeq>
                   
                   # pragma instantiate \
-                      TAO::Var_Size_Arg_Traits< \
+                      TAO::Var_Size_Arg_Traits_T< \
                           CORBA::InterfaceDefSeq, \
                           CORBA::InterfaceDefSeq_var, \
                           CORBA::InterfaceDefSeq_out \
@@ -13053,13 +13109,17 @@ TAO_ENCAP_BYTE_ORDER, // byte order
 #if !defined (_CORBA_VALUEDEF__ARG_TRAITS_TMPLINST_CS_)
 #define _CORBA_VALUEDEF__ARG_TRAITS_TMPLINST_CS_
                   
-                  # pragma instantiate TAO::Arg_Traits<CORBA::ValueDef>
+                  # pragma instantiate \
+                      TAO::Arg_Traits< \
+                          CORBA::ValueDef \
+                        >
                   
                   # pragma instantiate \
                       TAO::Object_Arg_Traits_T< \
                           CORBA::ValueDef_ptr, \
                           CORBA::ValueDef_var, \
-                          CORBA::ValueDef_out \
+                          CORBA::ValueDef_out, \
+                          TAO::Objref_Traits<CORBA::ValueDef> \
                         >
 
 #endif /* end #if !defined */
@@ -13070,7 +13130,7 @@ TAO_ENCAP_BYTE_ORDER, // byte order
                   # pragma instantiate TAO::Arg_Traits<CORBA::ValueDefSeq>
                   
                   # pragma instantiate \
-                      TAO::Var_Size_Arg_Traits< \
+                      TAO::Var_Size_Arg_Traits_T< \
                           CORBA::ValueDefSeq, \
                           CORBA::ValueDefSeq_var, \
                           CORBA::ValueDefSeq_out \
@@ -13084,7 +13144,7 @@ TAO_ENCAP_BYTE_ORDER, // byte order
                   # pragma instantiate TAO::Arg_Traits<CORBA::ExtInitializerSeq>
                   
                   # pragma instantiate \
-                      TAO::Var_Size_Arg_Traits< \
+                      TAO::Var_Size_Arg_Traits_T< \
                           CORBA::ExtInitializerSeq, \
                           CORBA::ExtInitializerSeq_var, \
                           CORBA::ExtInitializerSeq_out \
@@ -13098,7 +13158,7 @@ TAO_ENCAP_BYTE_ORDER, // byte order
                   # pragma instantiate TAO::Arg_Traits<CORBA::ExceptionDefSeq>
                   
                   # pragma instantiate \
-                      TAO::Var_Size_Arg_Traits< \
+                      TAO::Var_Size_Arg_Traits_T< \
                           CORBA::ExceptionDefSeq, \
                           CORBA::ExceptionDefSeq_var, \
                           CORBA::ExceptionDefSeq_out \
@@ -13112,7 +13172,7 @@ TAO_ENCAP_BYTE_ORDER, // byte order
                   # pragma instantiate TAO::Arg_Traits<CORBA::ParDescriptionSeq>
                   
                   # pragma instantiate \
-                      TAO::Var_Size_Arg_Traits< \
+                      TAO::Var_Size_Arg_Traits_T< \
                           CORBA::ParDescriptionSeq, \
                           CORBA::ParDescriptionSeq_var, \
                           CORBA::ParDescriptionSeq_out \
@@ -13123,16 +13183,30 @@ TAO_ENCAP_BYTE_ORDER, // byte order
 #if !defined (_CORBA_COMPONENTIR_COMPONENTDEF__ARG_TRAITS_TMPLINST_CS_)
 #define _CORBA_COMPONENTIR_COMPONENTDEF__ARG_TRAITS_TMPLINST_CS_
                   
-                  # pragma instantiate TAO::Arg_Traits<CORBA::ComponentIR::ComponentDef>
+                  # pragma instantiate \
+                      TAO::Arg_Traits< \
+                          CORBA::ComponentIR::ComponentDef \
+                        >
                   
                   # pragma instantiate \
                       TAO::Object_Arg_Traits_T< \
                           CORBA::ComponentIR::ComponentDef_ptr, \
                           CORBA::ComponentIR::ComponentDef_var, \
-                          CORBA::ComponentIR::ComponentDef_out \
+                          CORBA::ComponentIR::ComponentDef_out, \
+                          TAO::Objref_Traits<CORBA::ComponentIR::ComponentDef> \
                         >
 
 #endif /* end #if !defined */
+                  
+                  # pragma instantiate \
+                      TAO::In_Object_Argument_T< \
+                          CORBA::ComponentIR::ComponentDef_ptr \
+                        >
+                  
+                  # pragma instantiate \
+                      TAO::In_Var_Size_Argument_T< \
+                          CORBA::InterfaceDefSeq \
+                        >
                   
                   # pragma instantiate \
                       TAO::In_Object_Argument_T< \
@@ -13144,22 +13218,25 @@ TAO_ENCAP_BYTE_ORDER, // byte order
                           CORBA::ComponentIR::EventDef_ptr \
                         >
                   
-                  # pragma instantiate TAO::Objref_Traits<CORBA::ComponentIR::ComponentDef>
+                  # pragma instantiate \
+                      TAO::Objref_Traits< \
+                          CORBA::ComponentIR::ComponentDef \
+                        >
                   
                   # pragma instantiate \
                       TAO_Objref_Var_T< \
-                          CORBA::ComponentIR::ComponentDef, \
-                          TAO::Objref_Traits<CORBA::ComponentIR::ComponentDef> \
+                          CORBA::ComponentIR::ComponentDef
                         >
                     
                   # pragma instantiate \
                       TAO_Objref_Out_T< \
-                          CORBA::ComponentIR::ComponentDef, \
-                          TAO::Objref_Traits<CORBA::ComponentIR::ComponentDef> \
+                          CORBA::ComponentIR::ComponentDef
                         >
                   
                   # pragma instantiate \
-                      TAO::Narrow_Utils<CORBA::ComponentIR::ComponentDef>
+                      TAO::Narrow_Utils< \
+                          CORBA::ComponentIR::ComponentDef \
+                        >
                   
                   # pragma instantiate \
                       TAO::Any_Impl_T< \
@@ -13169,94 +13246,20 @@ TAO_ENCAP_BYTE_ORDER, // byte order
 #if !defined (_CORBA_COMPONENTIR_HOMEDEF__ARG_TRAITS_TMPLINST_CS_)
 #define _CORBA_COMPONENTIR_HOMEDEF__ARG_TRAITS_TMPLINST_CS_
                   
-                  # pragma instantiate TAO::Arg_Traits<CORBA::ComponentIR::HomeDef>
+                  # pragma instantiate \
+                      TAO::Arg_Traits< \
+                          CORBA::ComponentIR::HomeDef \
+                        >
                   
                   # pragma instantiate \
                       TAO::Object_Arg_Traits_T< \
                           CORBA::ComponentIR::HomeDef_ptr, \
                           CORBA::ComponentIR::HomeDef_var, \
-                          CORBA::ComponentIR::HomeDef_out \
+                          CORBA::ComponentIR::HomeDef_out, \
+                          TAO::Objref_Traits<CORBA::ComponentIR::HomeDef> \
                         >
 
 #endif /* end #if !defined */
-                  
-                  # pragma instantiate \
-                      TAO::In_Var_Size_Argument_T< \
-                          CORBA::sequence \
-                        >
-                  
-                  # pragma instantiate \
-                      TAO::In_Var_Size_Argument_T< \
-                          CORBA::sequence \
-                        >
-                  
-                  # pragma instantiate TAO::Objref_Traits<CORBA::ComponentIR::HomeDef>
-                  
-                  # pragma instantiate \
-                      TAO_Objref_Var_T< \
-                          CORBA::ComponentIR::HomeDef, \
-                          TAO::Objref_Traits<CORBA::ComponentIR::HomeDef> \
-                        >
-                    
-                  # pragma instantiate \
-                      TAO_Objref_Out_T< \
-                          CORBA::ComponentIR::HomeDef, \
-                          TAO::Objref_Traits<CORBA::ComponentIR::HomeDef> \
-                        >
-                  
-                  # pragma instantiate \
-                      TAO::Narrow_Utils<CORBA::ComponentIR::HomeDef>
-                  
-                  # pragma instantiate \
-                      TAO::Any_Impl_T< \
-                          CORBA::ComponentIR::HomeDef \
-                        >
-
-#if !defined (_CORBA_COMPONENTIR_EVENTDEF__ARG_TRAITS_TMPLINST_CS_)
-#define _CORBA_COMPONENTIR_EVENTDEF__ARG_TRAITS_TMPLINST_CS_
-                  
-                  # pragma instantiate TAO::Arg_Traits<CORBA::ComponentIR::EventDef>
-                  
-                  # pragma instantiate \
-                      TAO::Object_Arg_Traits_T< \
-                          CORBA::ComponentIR::EventDef_ptr, \
-                          CORBA::ComponentIR::EventDef_var, \
-                          CORBA::ComponentIR::EventDef_out \
-                        >
-
-#endif /* end #if !defined */
-                  
-                  # pragma instantiate TAO::Objref_Traits<CORBA::ComponentIR::EventDef>
-                  
-                  # pragma instantiate \
-                      TAO_Objref_Var_T< \
-                          CORBA::ComponentIR::EventDef, \
-                          TAO::Objref_Traits<CORBA::ComponentIR::EventDef> \
-                        >
-                    
-                  # pragma instantiate \
-                      TAO_Objref_Out_T< \
-                          CORBA::ComponentIR::EventDef, \
-                          TAO::Objref_Traits<CORBA::ComponentIR::EventDef> \
-                        >
-                  
-                  # pragma instantiate \
-                      TAO::Narrow_Utils<CORBA::ComponentIR::EventDef>
-                  
-                  # pragma instantiate \
-                      TAO::Any_Impl_T< \
-                          CORBA::ComponentIR::EventDef \
-                        >
-                  
-                  # pragma instantiate \
-                      TAO::In_Object_Argument_T< \
-                          CORBA::ComponentIR::ComponentDef_ptr \
-                        >
-                  
-                  # pragma instantiate \
-                      TAO::In_Var_Size_Argument_T< \
-                          CORBA::sequence \
-                        >
                   
                   # pragma instantiate \
                       TAO::In_Object_Argument_T< \
@@ -13270,74 +13273,161 @@ TAO_ENCAP_BYTE_ORDER, // byte order
                   
                   # pragma instantiate \
                       TAO::In_Var_Size_Argument_T< \
-                          CORBA::sequence \
+                          CORBA::ParDescriptionSeq \
                         >
                   
                   # pragma instantiate \
                       TAO::In_Var_Size_Argument_T< \
-                          CORBA::sequence \
+                          CORBA::ExceptionDefSeq \
                         >
                   
-                  # pragma instantiate TAO::Objref_Traits<CORBA::ComponentIR::Container>
+                  # pragma instantiate \
+                      TAO::Objref_Traits< \
+                          CORBA::ComponentIR::HomeDef \
+                        >
                   
                   # pragma instantiate \
                       TAO_Objref_Var_T< \
-                          CORBA::ComponentIR::Container, \
-                          TAO::Objref_Traits<CORBA::ComponentIR::Container> \
+                          CORBA::ComponentIR::HomeDef
                         >
                     
                   # pragma instantiate \
                       TAO_Objref_Out_T< \
-                          CORBA::ComponentIR::Container, \
-                          TAO::Objref_Traits<CORBA::ComponentIR::Container> \
+                          CORBA::ComponentIR::HomeDef
                         >
                   
                   # pragma instantiate \
-                      TAO::Narrow_Utils<CORBA::ComponentIR::Container>
+                      TAO::Narrow_Utils< \
+                          CORBA::ComponentIR::HomeDef \
+                        >
+                  
+                  # pragma instantiate \
+                      TAO::Any_Impl_T< \
+                          CORBA::ComponentIR::HomeDef \
+                        >
+
+#if !defined (_CORBA_COMPONENTIR_EVENTDEF__ARG_TRAITS_TMPLINST_CS_)
+#define _CORBA_COMPONENTIR_EVENTDEF__ARG_TRAITS_TMPLINST_CS_
+                  
+                  # pragma instantiate \
+                      TAO::Arg_Traits< \
+                          CORBA::ComponentIR::EventDef \
+                        >
+                  
+                  # pragma instantiate \
+                      TAO::Object_Arg_Traits_T< \
+                          CORBA::ComponentIR::EventDef_ptr, \
+                          CORBA::ComponentIR::EventDef_var, \
+                          CORBA::ComponentIR::EventDef_out, \
+                          TAO::Objref_Traits<CORBA::ComponentIR::EventDef> \
+                        >
+
+#endif /* end #if !defined */
+                  
+                  # pragma instantiate \
+                      TAO::Objref_Traits< \
+                          CORBA::ComponentIR::EventDef \
+                        >
+                  
+                  # pragma instantiate \
+                      TAO_Objref_Var_T< \
+                          CORBA::ComponentIR::EventDef
+                        >
+                    
+                  # pragma instantiate \
+                      TAO_Objref_Out_T< \
+                          CORBA::ComponentIR::EventDef
+                        >
+                  
+                  # pragma instantiate \
+                      TAO::Narrow_Utils< \
+                          CORBA::ComponentIR::EventDef \
+                        >
+                  
+                  # pragma instantiate \
+                      TAO::Any_Impl_T< \
+                          CORBA::ComponentIR::EventDef \
+                        >
+                  
+                  # pragma instantiate \
+                      TAO::In_Var_Size_Argument_T< \
+                          CORBA::ValueDefSeq \
+                        >
+                  
+                  # pragma instantiate \
+                      TAO::In_Var_Size_Argument_T< \
+                          CORBA::ExtInitializerSeq \
+                        >
+                  
+                  # pragma instantiate \
+                      TAO::Objref_Traits< \
+                          CORBA::ComponentIR::Container \
+                        >
+                  
+                  # pragma instantiate \
+                      TAO_Objref_Var_T< \
+                          CORBA::ComponentIR::Container
+                        >
+                    
+                  # pragma instantiate \
+                      TAO_Objref_Out_T< \
+                          CORBA::ComponentIR::Container
+                        >
+                  
+                  # pragma instantiate \
+                      TAO::Narrow_Utils< \
+                          CORBA::ComponentIR::Container \
+                        >
                   
                   # pragma instantiate \
                       TAO::Any_Impl_T< \
                           CORBA::ComponentIR::Container \
                         >
                   
-                  # pragma instantiate TAO::Objref_Traits<CORBA::ComponentIR::ModuleDef>
+                  # pragma instantiate \
+                      TAO::Objref_Traits< \
+                          CORBA::ComponentIR::ModuleDef \
+                        >
                   
                   # pragma instantiate \
                       TAO_Objref_Var_T< \
-                          CORBA::ComponentIR::ModuleDef, \
-                          TAO::Objref_Traits<CORBA::ComponentIR::ModuleDef> \
+                          CORBA::ComponentIR::ModuleDef
                         >
                     
                   # pragma instantiate \
                       TAO_Objref_Out_T< \
-                          CORBA::ComponentIR::ModuleDef, \
-                          TAO::Objref_Traits<CORBA::ComponentIR::ModuleDef> \
+                          CORBA::ComponentIR::ModuleDef
                         >
                   
                   # pragma instantiate \
-                      TAO::Narrow_Utils<CORBA::ComponentIR::ModuleDef>
+                      TAO::Narrow_Utils< \
+                          CORBA::ComponentIR::ModuleDef \
+                        >
                   
                   # pragma instantiate \
                       TAO::Any_Impl_T< \
                           CORBA::ComponentIR::ModuleDef \
                         >
                   
-                  # pragma instantiate TAO::Objref_Traits<CORBA::ComponentIR::Repository>
+                  # pragma instantiate \
+                      TAO::Objref_Traits< \
+                          CORBA::ComponentIR::Repository \
+                        >
                   
                   # pragma instantiate \
                       TAO_Objref_Var_T< \
-                          CORBA::ComponentIR::Repository, \
-                          TAO::Objref_Traits<CORBA::ComponentIR::Repository> \
+                          CORBA::ComponentIR::Repository
                         >
                     
                   # pragma instantiate \
                       TAO_Objref_Out_T< \
-                          CORBA::ComponentIR::Repository, \
-                          TAO::Objref_Traits<CORBA::ComponentIR::Repository> \
+                          CORBA::ComponentIR::Repository
                         >
                   
                   # pragma instantiate \
-                      TAO::Narrow_Utils<CORBA::ComponentIR::Repository>
+                      TAO::Narrow_Utils< \
+                          CORBA::ComponentIR::Repository \
+                        >
                   
                   # pragma instantiate \
                       TAO::Any_Impl_T< \
@@ -13347,33 +13437,40 @@ TAO_ENCAP_BYTE_ORDER, // byte order
 #if !defined (_CORBA_COMPONENTIR_PROVIDESDEF__ARG_TRAITS_TMPLINST_CS_)
 #define _CORBA_COMPONENTIR_PROVIDESDEF__ARG_TRAITS_TMPLINST_CS_
                   
-                  # pragma instantiate TAO::Arg_Traits<CORBA::ComponentIR::ProvidesDef>
+                  # pragma instantiate \
+                      TAO::Arg_Traits< \
+                          CORBA::ComponentIR::ProvidesDef \
+                        >
                   
                   # pragma instantiate \
                       TAO::Object_Arg_Traits_T< \
                           CORBA::ComponentIR::ProvidesDef_ptr, \
                           CORBA::ComponentIR::ProvidesDef_var, \
-                          CORBA::ComponentIR::ProvidesDef_out \
+                          CORBA::ComponentIR::ProvidesDef_out, \
+                          TAO::Objref_Traits<CORBA::ComponentIR::ProvidesDef> \
                         >
 
 #endif /* end #if !defined */
                   
-                  # pragma instantiate TAO::Objref_Traits<CORBA::ComponentIR::ProvidesDef>
+                  # pragma instantiate \
+                      TAO::Objref_Traits< \
+                          CORBA::ComponentIR::ProvidesDef \
+                        >
                   
                   # pragma instantiate \
                       TAO_Objref_Var_T< \
-                          CORBA::ComponentIR::ProvidesDef, \
-                          TAO::Objref_Traits<CORBA::ComponentIR::ProvidesDef> \
+                          CORBA::ComponentIR::ProvidesDef
                         >
                     
                   # pragma instantiate \
                       TAO_Objref_Out_T< \
-                          CORBA::ComponentIR::ProvidesDef, \
-                          TAO::Objref_Traits<CORBA::ComponentIR::ProvidesDef> \
+                          CORBA::ComponentIR::ProvidesDef
                         >
                   
                   # pragma instantiate \
-                      TAO::Narrow_Utils<CORBA::ComponentIR::ProvidesDef>
+                      TAO::Narrow_Utils< \
+                          CORBA::ComponentIR::ProvidesDef \
+                        >
                   
                   # pragma instantiate \
                       TAO::Any_Impl_T< \
@@ -13404,33 +13501,40 @@ TAO_ENCAP_BYTE_ORDER, // byte order
 #if !defined (_CORBA_COMPONENTIR_USESDEF__ARG_TRAITS_TMPLINST_CS_)
 #define _CORBA_COMPONENTIR_USESDEF__ARG_TRAITS_TMPLINST_CS_
                   
-                  # pragma instantiate TAO::Arg_Traits<CORBA::ComponentIR::UsesDef>
+                  # pragma instantiate \
+                      TAO::Arg_Traits< \
+                          CORBA::ComponentIR::UsesDef \
+                        >
                   
                   # pragma instantiate \
                       TAO::Object_Arg_Traits_T< \
                           CORBA::ComponentIR::UsesDef_ptr, \
                           CORBA::ComponentIR::UsesDef_var, \
-                          CORBA::ComponentIR::UsesDef_out \
+                          CORBA::ComponentIR::UsesDef_out, \
+                          TAO::Objref_Traits<CORBA::ComponentIR::UsesDef> \
                         >
 
 #endif /* end #if !defined */
                   
-                  # pragma instantiate TAO::Objref_Traits<CORBA::ComponentIR::UsesDef>
+                  # pragma instantiate \
+                      TAO::Objref_Traits< \
+                          CORBA::ComponentIR::UsesDef \
+                        >
                   
                   # pragma instantiate \
                       TAO_Objref_Var_T< \
-                          CORBA::ComponentIR::UsesDef, \
-                          TAO::Objref_Traits<CORBA::ComponentIR::UsesDef> \
+                          CORBA::ComponentIR::UsesDef
                         >
                     
                   # pragma instantiate \
                       TAO_Objref_Out_T< \
-                          CORBA::ComponentIR::UsesDef, \
-                          TAO::Objref_Traits<CORBA::ComponentIR::UsesDef> \
+                          CORBA::ComponentIR::UsesDef
                         >
                   
                   # pragma instantiate \
-                      TAO::Narrow_Utils<CORBA::ComponentIR::UsesDef>
+                      TAO::Narrow_Utils< \
+                          CORBA::ComponentIR::UsesDef \
+                        >
                   
                   # pragma instantiate \
                       TAO::Any_Impl_T< \
@@ -13458,22 +13562,25 @@ TAO_ENCAP_BYTE_ORDER, // byte order
                           CORBA::ComponentIR::UsesDescription \
                         >
                   
-                  # pragma instantiate TAO::Objref_Traits<CORBA::ComponentIR::EventPortDef>
+                  # pragma instantiate \
+                      TAO::Objref_Traits< \
+                          CORBA::ComponentIR::EventPortDef \
+                        >
                   
                   # pragma instantiate \
                       TAO_Objref_Var_T< \
-                          CORBA::ComponentIR::EventPortDef, \
-                          TAO::Objref_Traits<CORBA::ComponentIR::EventPortDef> \
+                          CORBA::ComponentIR::EventPortDef
                         >
                     
                   # pragma instantiate \
                       TAO_Objref_Out_T< \
-                          CORBA::ComponentIR::EventPortDef, \
-                          TAO::Objref_Traits<CORBA::ComponentIR::EventPortDef> \
+                          CORBA::ComponentIR::EventPortDef
                         >
                   
                   # pragma instantiate \
-                      TAO::Narrow_Utils<CORBA::ComponentIR::EventPortDef>
+                      TAO::Narrow_Utils< \
+                          CORBA::ComponentIR::EventPortDef \
+                        >
                   
                   # pragma instantiate \
                       TAO::Any_Impl_T< \
@@ -13504,33 +13611,40 @@ TAO_ENCAP_BYTE_ORDER, // byte order
 #if !defined (_CORBA_COMPONENTIR_EMITSDEF__ARG_TRAITS_TMPLINST_CS_)
 #define _CORBA_COMPONENTIR_EMITSDEF__ARG_TRAITS_TMPLINST_CS_
                   
-                  # pragma instantiate TAO::Arg_Traits<CORBA::ComponentIR::EmitsDef>
+                  # pragma instantiate \
+                      TAO::Arg_Traits< \
+                          CORBA::ComponentIR::EmitsDef \
+                        >
                   
                   # pragma instantiate \
                       TAO::Object_Arg_Traits_T< \
                           CORBA::ComponentIR::EmitsDef_ptr, \
                           CORBA::ComponentIR::EmitsDef_var, \
-                          CORBA::ComponentIR::EmitsDef_out \
+                          CORBA::ComponentIR::EmitsDef_out, \
+                          TAO::Objref_Traits<CORBA::ComponentIR::EmitsDef> \
                         >
 
 #endif /* end #if !defined */
                   
-                  # pragma instantiate TAO::Objref_Traits<CORBA::ComponentIR::EmitsDef>
+                  # pragma instantiate \
+                      TAO::Objref_Traits< \
+                          CORBA::ComponentIR::EmitsDef \
+                        >
                   
                   # pragma instantiate \
                       TAO_Objref_Var_T< \
-                          CORBA::ComponentIR::EmitsDef, \
-                          TAO::Objref_Traits<CORBA::ComponentIR::EmitsDef> \
+                          CORBA::ComponentIR::EmitsDef
                         >
                     
                   # pragma instantiate \
                       TAO_Objref_Out_T< \
-                          CORBA::ComponentIR::EmitsDef, \
-                          TAO::Objref_Traits<CORBA::ComponentIR::EmitsDef> \
+                          CORBA::ComponentIR::EmitsDef
                         >
                   
                   # pragma instantiate \
-                      TAO::Narrow_Utils<CORBA::ComponentIR::EmitsDef>
+                      TAO::Narrow_Utils< \
+                          CORBA::ComponentIR::EmitsDef \
+                        >
                   
                   # pragma instantiate \
                       TAO::Any_Impl_T< \
@@ -13540,33 +13654,40 @@ TAO_ENCAP_BYTE_ORDER, // byte order
 #if !defined (_CORBA_COMPONENTIR_PUBLISHESDEF__ARG_TRAITS_TMPLINST_CS_)
 #define _CORBA_COMPONENTIR_PUBLISHESDEF__ARG_TRAITS_TMPLINST_CS_
                   
-                  # pragma instantiate TAO::Arg_Traits<CORBA::ComponentIR::PublishesDef>
+                  # pragma instantiate \
+                      TAO::Arg_Traits< \
+                          CORBA::ComponentIR::PublishesDef \
+                        >
                   
                   # pragma instantiate \
                       TAO::Object_Arg_Traits_T< \
                           CORBA::ComponentIR::PublishesDef_ptr, \
                           CORBA::ComponentIR::PublishesDef_var, \
-                          CORBA::ComponentIR::PublishesDef_out \
+                          CORBA::ComponentIR::PublishesDef_out, \
+                          TAO::Objref_Traits<CORBA::ComponentIR::PublishesDef> \
                         >
 
 #endif /* end #if !defined */
                   
-                  # pragma instantiate TAO::Objref_Traits<CORBA::ComponentIR::PublishesDef>
+                  # pragma instantiate \
+                      TAO::Objref_Traits< \
+                          CORBA::ComponentIR::PublishesDef \
+                        >
                   
                   # pragma instantiate \
                       TAO_Objref_Var_T< \
-                          CORBA::ComponentIR::PublishesDef, \
-                          TAO::Objref_Traits<CORBA::ComponentIR::PublishesDef> \
+                          CORBA::ComponentIR::PublishesDef
                         >
                     
                   # pragma instantiate \
                       TAO_Objref_Out_T< \
-                          CORBA::ComponentIR::PublishesDef, \
-                          TAO::Objref_Traits<CORBA::ComponentIR::PublishesDef> \
+                          CORBA::ComponentIR::PublishesDef
                         >
                   
                   # pragma instantiate \
-                      TAO::Narrow_Utils<CORBA::ComponentIR::PublishesDef>
+                      TAO::Narrow_Utils< \
+                          CORBA::ComponentIR::PublishesDef \
+                        >
                   
                   # pragma instantiate \
                       TAO::Any_Impl_T< \
@@ -13576,33 +13697,40 @@ TAO_ENCAP_BYTE_ORDER, // byte order
 #if !defined (_CORBA_COMPONENTIR_CONSUMESDEF__ARG_TRAITS_TMPLINST_CS_)
 #define _CORBA_COMPONENTIR_CONSUMESDEF__ARG_TRAITS_TMPLINST_CS_
                   
-                  # pragma instantiate TAO::Arg_Traits<CORBA::ComponentIR::ConsumesDef>
+                  # pragma instantiate \
+                      TAO::Arg_Traits< \
+                          CORBA::ComponentIR::ConsumesDef \
+                        >
                   
                   # pragma instantiate \
                       TAO::Object_Arg_Traits_T< \
                           CORBA::ComponentIR::ConsumesDef_ptr, \
                           CORBA::ComponentIR::ConsumesDef_var, \
-                          CORBA::ComponentIR::ConsumesDef_out \
+                          CORBA::ComponentIR::ConsumesDef_out, \
+                          TAO::Objref_Traits<CORBA::ComponentIR::ConsumesDef> \
                         >
 
 #endif /* end #if !defined */
                   
-                  # pragma instantiate TAO::Objref_Traits<CORBA::ComponentIR::ConsumesDef>
+                  # pragma instantiate \
+                      TAO::Objref_Traits< \
+                          CORBA::ComponentIR::ConsumesDef \
+                        >
                   
                   # pragma instantiate \
                       TAO_Objref_Var_T< \
-                          CORBA::ComponentIR::ConsumesDef, \
-                          TAO::Objref_Traits<CORBA::ComponentIR::ConsumesDef> \
+                          CORBA::ComponentIR::ConsumesDef
                         >
                     
                   # pragma instantiate \
                       TAO_Objref_Out_T< \
-                          CORBA::ComponentIR::ConsumesDef, \
-                          TAO::Objref_Traits<CORBA::ComponentIR::ConsumesDef> \
+                          CORBA::ComponentIR::ConsumesDef
                         >
                   
                   # pragma instantiate \
-                      TAO::Narrow_Utils<CORBA::ComponentIR::ConsumesDef>
+                      TAO::Narrow_Utils< \
+                          CORBA::ComponentIR::ConsumesDef \
+                        >
                   
                   # pragma instantiate \
                       TAO::Any_Impl_T< \
@@ -13628,8 +13756,8 @@ TAO_ENCAP_BYTE_ORDER, // byte order
                           CORBA::ComponentIR::ProvidesDescription \
                         >
 
-#if !defined (_CORBA_COMPONENTIR_PROVIDESDESCRIPTIONSEQ_CS_)
-#define _CORBA_COMPONENTIR_PROVIDESDESCRIPTIONSEQ_CS_
+#if !defined (_CORBA_COMPONENTIR_PROVIDESDESCRIPTION__EXPLICIT_CS_)
+#define _CORBA_COMPONENTIR_PROVIDESDESCRIPTION__EXPLICIT_CS_
                   
                   # pragma instantiate \
                       TAO_Unbounded_Sequence< \
@@ -13662,8 +13790,8 @@ TAO_ENCAP_BYTE_ORDER, // byte order
                           CORBA::ComponentIR::UsesDescription \
                         >
 
-#if !defined (_CORBA_COMPONENTIR_USESDESCRIPTIONSEQ_CS_)
-#define _CORBA_COMPONENTIR_USESDESCRIPTIONSEQ_CS_
+#if !defined (_CORBA_COMPONENTIR_USESDESCRIPTION__EXPLICIT_CS_)
+#define _CORBA_COMPONENTIR_USESDESCRIPTION__EXPLICIT_CS_
                   
                   # pragma instantiate \
                       TAO_Unbounded_Sequence< \
@@ -13696,8 +13824,8 @@ TAO_ENCAP_BYTE_ORDER, // byte order
                           CORBA::ComponentIR::EventPortDescription \
                         >
 
-#if !defined (_CORBA_COMPONENTIR_EVENTPORTDESCRIPTIONSEQ_CS_)
-#define _CORBA_COMPONENTIR_EVENTPORTDESCRIPTIONSEQ_CS_
+#if !defined (_CORBA_COMPONENTIR_EVENTPORTDESCRIPTION__EXPLICIT_CS_)
+#define _CORBA_COMPONENTIR_EVENTPORTDESCRIPTION__EXPLICIT_CS_
                   
                   # pragma instantiate \
                       TAO_Unbounded_Sequence< \
@@ -13735,33 +13863,40 @@ TAO_ENCAP_BYTE_ORDER, // byte order
 #if !defined (_CORBA_COMPONENTIR_FACTORYDEF__ARG_TRAITS_TMPLINST_CS_)
 #define _CORBA_COMPONENTIR_FACTORYDEF__ARG_TRAITS_TMPLINST_CS_
                   
-                  # pragma instantiate TAO::Arg_Traits<CORBA::ComponentIR::FactoryDef>
+                  # pragma instantiate \
+                      TAO::Arg_Traits< \
+                          CORBA::ComponentIR::FactoryDef \
+                        >
                   
                   # pragma instantiate \
                       TAO::Object_Arg_Traits_T< \
                           CORBA::ComponentIR::FactoryDef_ptr, \
                           CORBA::ComponentIR::FactoryDef_var, \
-                          CORBA::ComponentIR::FactoryDef_out \
+                          CORBA::ComponentIR::FactoryDef_out, \
+                          TAO::Objref_Traits<CORBA::ComponentIR::FactoryDef> \
                         >
 
 #endif /* end #if !defined */
                   
-                  # pragma instantiate TAO::Objref_Traits<CORBA::ComponentIR::FactoryDef>
+                  # pragma instantiate \
+                      TAO::Objref_Traits< \
+                          CORBA::ComponentIR::FactoryDef \
+                        >
                   
                   # pragma instantiate \
                       TAO_Objref_Var_T< \
-                          CORBA::ComponentIR::FactoryDef, \
-                          TAO::Objref_Traits<CORBA::ComponentIR::FactoryDef> \
+                          CORBA::ComponentIR::FactoryDef
                         >
                     
                   # pragma instantiate \
                       TAO_Objref_Out_T< \
-                          CORBA::ComponentIR::FactoryDef, \
-                          TAO::Objref_Traits<CORBA::ComponentIR::FactoryDef> \
+                          CORBA::ComponentIR::FactoryDef
                         >
                   
                   # pragma instantiate \
-                      TAO::Narrow_Utils<CORBA::ComponentIR::FactoryDef>
+                      TAO::Narrow_Utils< \
+                          CORBA::ComponentIR::FactoryDef \
+                        >
                   
                   # pragma instantiate \
                       TAO::Any_Impl_T< \
@@ -13771,33 +13906,40 @@ TAO_ENCAP_BYTE_ORDER, // byte order
 #if !defined (_CORBA_COMPONENTIR_FINDERDEF__ARG_TRAITS_TMPLINST_CS_)
 #define _CORBA_COMPONENTIR_FINDERDEF__ARG_TRAITS_TMPLINST_CS_
                   
-                  # pragma instantiate TAO::Arg_Traits<CORBA::ComponentIR::FinderDef>
+                  # pragma instantiate \
+                      TAO::Arg_Traits< \
+                          CORBA::ComponentIR::FinderDef \
+                        >
                   
                   # pragma instantiate \
                       TAO::Object_Arg_Traits_T< \
                           CORBA::ComponentIR::FinderDef_ptr, \
                           CORBA::ComponentIR::FinderDef_var, \
-                          CORBA::ComponentIR::FinderDef_out \
+                          CORBA::ComponentIR::FinderDef_out, \
+                          TAO::Objref_Traits<CORBA::ComponentIR::FinderDef> \
                         >
 
 #endif /* end #if !defined */
                   
-                  # pragma instantiate TAO::Objref_Traits<CORBA::ComponentIR::FinderDef>
+                  # pragma instantiate \
+                      TAO::Objref_Traits< \
+                          CORBA::ComponentIR::FinderDef \
+                        >
                   
                   # pragma instantiate \
                       TAO_Objref_Var_T< \
-                          CORBA::ComponentIR::FinderDef, \
-                          TAO::Objref_Traits<CORBA::ComponentIR::FinderDef> \
+                          CORBA::ComponentIR::FinderDef
                         >
                     
                   # pragma instantiate \
                       TAO_Objref_Out_T< \
-                          CORBA::ComponentIR::FinderDef, \
-                          TAO::Objref_Traits<CORBA::ComponentIR::FinderDef> \
+                          CORBA::ComponentIR::FinderDef
                         >
                   
                   # pragma instantiate \
-                      TAO::Narrow_Utils<CORBA::ComponentIR::FinderDef>
+                      TAO::Narrow_Utils< \
+                          CORBA::ComponentIR::FinderDef \
+                        >
                   
                   # pragma instantiate \
                       TAO::Any_Impl_T< \

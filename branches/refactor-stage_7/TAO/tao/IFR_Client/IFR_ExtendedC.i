@@ -27,7 +27,7 @@
 
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:70
+// be/be_visitor_interface/interface_ci.cpp:70
 
 #if !defined (_CORBA_FIXEDDEF___CI_)
 #define _CORBA_FIXEDDEF___CI_
@@ -48,6 +48,7 @@ CORBA::FixedDef::FixedDef (
     the_TAO_FixedDef_Proxy_Broker_ (0)
 {
   this->CORBA_FixedDef_setup_collocation (_tao_collocated);
+  
 }
 
 ACE_INLINE
@@ -63,7 +64,7 @@ CORBA::FixedDef::FixedDef (
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:70
+// be/be_visitor_interface/interface_ci.cpp:70
 
 #if !defined (_CORBA_VALUEMEMBERDEF___CI_)
 #define _CORBA_VALUEMEMBERDEF___CI_
@@ -84,6 +85,7 @@ CORBA::ValueMemberDef::ValueMemberDef (
     the_TAO_ValueMemberDef_Proxy_Broker_ (0)
 {
   this->CORBA_ValueMemberDef_setup_collocation (_tao_collocated);
+  
 }
 
 ACE_INLINE
@@ -99,7 +101,7 @@ CORBA::ValueMemberDef::ValueMemberDef (
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:70
+// be/be_visitor_interface/interface_ci.cpp:70
 
 #if !defined (_CORBA_VALUEDEF___CI_)
 #define _CORBA_VALUEDEF___CI_
@@ -120,6 +122,7 @@ CORBA::ValueDef::ValueDef (
     the_TAO_ValueDef_Proxy_Broker_ (0)
 {
   this->CORBA_ValueDef_setup_collocation (_tao_collocated);
+  
 }
 
 ACE_INLINE
@@ -135,7 +138,7 @@ CORBA::ValueDef::ValueDef (
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:70
+// be/be_visitor_interface/interface_ci.cpp:70
 
 #if !defined (_CORBA_EXTVALUEDEF___CI_)
 #define _CORBA_EXTVALUEDEF___CI_
@@ -156,6 +159,7 @@ CORBA::ExtValueDef::ExtValueDef (
     the_TAO_ExtValueDef_Proxy_Broker_ (0)
 {
   this->CORBA_ExtValueDef_setup_collocation (_tao_collocated);
+  
 }
 
 ACE_INLINE
@@ -171,7 +175,7 @@ CORBA::ExtValueDef::ExtValueDef (
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:70
+// be/be_visitor_interface/interface_ci.cpp:70
 
 #if !defined (_CORBA_VALUEBOXDEF___CI_)
 #define _CORBA_VALUEBOXDEF___CI_
@@ -192,6 +196,7 @@ CORBA::ValueBoxDef::ValueBoxDef (
     the_TAO_ValueBoxDef_Proxy_Broker_ (0)
 {
   this->CORBA_ValueBoxDef_setup_collocation (_tao_collocated);
+  
 }
 
 ACE_INLINE
@@ -207,7 +212,7 @@ CORBA::ValueBoxDef::ValueBoxDef (
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_ci.cpp:72
+// be/be_visitor_interface/cdr_op_ci.cpp:72
 
 TAO_IFR_Client_Export CORBA::Boolean operator<< (
     TAO_OutputCDR &,
@@ -220,7 +225,7 @@ TAO_IFR_Client_Export CORBA::Boolean operator>> (
   );
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/cdr_op_ci.cpp:70
+// be/be_visitor_structure/cdr_op_ci.cpp:70
 
 ACE_INLINE
 CORBA::Boolean operator<< (
@@ -258,7 +263,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ci.cpp:81
+// be/be_visitor_sequence/cdr_op_ci.cpp:81
 
 #if !defined _TAO_CDR_OP_CORBA_ValueMemberSeq_I_
 #define _TAO_CDR_OP_CORBA_ValueMemberSeq_I_
@@ -276,7 +281,7 @@ CORBA::Boolean TAO_IFR_Client_Export operator>> (
 #endif /* _TAO_CDR_OP_CORBA_ValueMemberSeq_I_ */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_ci.cpp:72
+// be/be_visitor_interface/cdr_op_ci.cpp:72
 
 TAO_IFR_Client_Export CORBA::Boolean operator<< (
     TAO_OutputCDR &,
@@ -289,7 +294,7 @@ TAO_IFR_Client_Export CORBA::Boolean operator>> (
   );
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_ci.cpp:72
+// be/be_visitor_interface/cdr_op_ci.cpp:72
 
 TAO_IFR_Client_Export CORBA::Boolean operator<< (
     TAO_OutputCDR &,
@@ -302,7 +307,7 @@ TAO_IFR_Client_Export CORBA::Boolean operator>> (
   );
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/cdr_op_ci.cpp:70
+// be/be_visitor_structure/cdr_op_ci.cpp:70
 
 ACE_INLINE
 CORBA::Boolean operator<< (
@@ -353,7 +358,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/cdr_op_ci.cpp:70
+// be/be_visitor_structure/cdr_op_ci.cpp:70
 
 ACE_INLINE
 CORBA::Boolean operator<< (
@@ -394,7 +399,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_ci.cpp:72
+// be/be_visitor_interface/cdr_op_ci.cpp:72
 
 TAO_IFR_Client_Export CORBA::Boolean operator<< (
     TAO_OutputCDR &,
@@ -407,7 +412,7 @@ TAO_IFR_Client_Export CORBA::Boolean operator>> (
   );
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/cdr_op_ci.cpp:70
+// be/be_visitor_structure/cdr_op_ci.cpp:70
 
 ACE_INLINE
 CORBA::Boolean operator<< (
@@ -458,7 +463,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_ci.cpp:72
+// be/be_visitor_interface/cdr_op_ci.cpp:72
 
 TAO_IFR_Client_Export CORBA::Boolean operator<< (
     TAO_OutputCDR &,
