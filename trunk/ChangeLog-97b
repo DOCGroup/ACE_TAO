@@ -76,6 +76,19 @@ Thu Oct 30 06:14:58 1997  David L. Levine  <levine@cs.wustl.edu>
           Removed tss_close() because it was a no-op without tss_open ()
           dynamic allocation.
 
+        * ace/OS.cpp (tss_open): On VxWorks, don't check for 0 tss_base ().
+          It's not always 0 on program startup, especially if a program
+          has been previously run by the shell directly, without spawning
+          a new task to run it.
+
+        * ace/OS.*: added ACE_TSS_EMULATION support for non-scalar
+          ACE_thread_key_t.  Thanks to Chuck Gehr <gehr@sweng.stortek.com>
+          for motivating this.
+
+        * ace/config-mvs.h: added ACE_HAS_NONSCALAR_THREAD_KEY_T.  It
+          is only used with ACE_HAS_TSS_EMULATION, which currently is
+          not supported on MVS.
+
 Thu Oct 30 03:25:13 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 
 	* ace/Hash_Map_Manager.cpp (close_i): Can't use ACE_DES*
