@@ -1,12 +1,19 @@
+Tue May 12 02:59:27 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* performance-tests/Misc/childbirth_time.cpp: Added ACE_OS::sleep
+	  (0) before all timing sections start.  This ensures we own a
+	  fresh time slice when the timing begin and reduce the chances of
+	  getting preempted
+
 Tue May 12 00:42:05 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
-	
+
 	* bin/dsp2dsp.pl: This file clones a new MSVC 5.0 dsp file based
 	  on setting from another dsp file.  It is most useful in adding
 	  new project files into tests/.
-	
+
 	* tests/WinCE/*: New project files.  Updated the workspace.
 	  Please see CE-status for the current progress.
-	
+
         * tests/Buffer_Stream_Test.cpp:
         * tests/Conn_Test.cpp:
         * tests/Enum_Interfaces_Test.cpp:
@@ -16,10 +23,10 @@ Tue May 12 00:42:05 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
         * tests/Reactors_Test.cpp:
         * tests/Thread_Manager_Test.cpp:
         * tests/Thread_Mutex_Test.cpp: Made CE friendly.
-	
+
         * tests/test_config.h: Moved some common definitions shared among
 	  CE and other platforms out.
-	
+
         * ace/Acceptor.cpp:
         * ace/Acceptor.h:
         * ace/Connector.cpp:
@@ -29,10 +36,10 @@ Tue May 12 00:42:05 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
         * ace/Svc_Handler.h:
         * ace/Synch.h:
         * ace/Synch.i: CE stuff.
-	
+
         * ace/config-WinCE.h: Defined ACE_DEFAULT_SERVER_HOST in UNICODE
 	  here to overwrite the default setting.
-	
+
 	* ace/Synch.i (ACE_Lock): CE needs a default ctor here.
 
 Mon May 11 15:43:01 1998  Nanbor Wang  <nanbor@cs.wustl.edu>

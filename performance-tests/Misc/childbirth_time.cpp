@@ -62,6 +62,8 @@
 #include "ace/Profile_Timer.h"
 #include "ace/Thread_Manager.h"
 
+#define  ACE_STOP_SIGN  ACE_OS::sleep (0)
+
 #define MAX_NO_ITERATION  10000
 #if defined (ACE_WIN32)
 #define SUBPROGRAM "date.exe"
@@ -101,7 +103,7 @@ prof_ace_process (size_t iteration)
 
       for (size_t c = 0; c < iteration; c++)
         {
-          ACE_OS::sleep (0);
+          ACE_STOP_SIGN;
           ptimer.start ();
           result = aProcess.spawn (popt);
           ptimer.stop ();
@@ -137,7 +139,7 @@ prof_fork (size_t iteration)
 
       for (size_t i = 0; i < iteration; i++)
         {
-          ACE_OS::sleep (0);
+          ACE_STOP_SIGN;
           ptimer.start ();
           switch (ACE_OS::fork ())
             {
@@ -176,7 +178,7 @@ prof_native_thread (size_t iteration)
 
       for (size_t i = 0; i < iteration; i++)
         {
-          ACE_OS::sleep (0);
+          ACE_STOP_SIGN;
           ptimer.start ();
           for (int j = 0; j < MULTIPLY_FACTOR; j++)
             {
@@ -224,7 +226,7 @@ prof_ace_os_thread (size_t iteration)
 
       for (size_t i = 0; i < iteration; i++)
         {
-          ACE_OS::sleep (0);
+          ACE_STOP_SIGN;
           ptimer.start ();
 
           for (int j = 0; j < MULTIPLY_FACTOR; j++)
@@ -261,7 +263,7 @@ prof_tm_thread (size_t iteration)
 
       for (size_t i = 0; i < iteration; i++)
         {
-          ACE_OS::sleep (0);
+          ACE_STOP_SIGN;
           ptimer.start ();
 
           if (ACE_Thread_Manager::instance ()->spawn_n (MULTIPLY_FACTOR,
