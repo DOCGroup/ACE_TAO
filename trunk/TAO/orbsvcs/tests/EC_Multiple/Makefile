@@ -24,6 +24,7 @@ endif # Event
 #----------------------------------------------------------------------------
 
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+include $(TAO_ROOT)/rules.tao.GNU
 
 ifeq ($(ACE_HAS_GNUG_PRE_2_8),1)
   # This test causes g++ 2.7.2.3 (the compiler) to core dump.
@@ -31,6 +32,7 @@ ifeq ($(ACE_HAS_GNUG_PRE_2_8),1)
 	@echo orbsvcs/tests/EC_Multiple is not built with older versions of g++
 else # ! ACE_HAS_GNUG_PRE_2_8
   include $(ACE_ROOT)/include/makeinclude/macros.GNU
+include $(TAO_ROOT)/rules.tao.GNU
   include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
   include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
   include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
