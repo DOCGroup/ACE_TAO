@@ -176,14 +176,8 @@ template <class TYPE> TYPE *
 ACE_TSS<TYPE>::ts_get (void) const
 {
   if (this->once_ == 0)
-  {
     // Create and initialize thread-specific ts_obj.
-      if(this->ts_init ()==-1)
-      {
-          return 0; // This should not happen!
-      }
-  }
-    
+    this->ts_init ();
 
   TYPE *ts_obj = 0;
 
@@ -292,13 +286,8 @@ ACE_TSS<TYPE>::ts_object (TYPE *new_ts_obj)
   // <ts_init> does it for us and we'll end up with deadlock
   // otherwise...
   if (this->once_ == 0)
-  {
     // Create and initialize thread-specific ts_obj.
-      if(this->ts_init ()==-1)
-      {
-          return 0;  // This should not happen!
-      }
-  }
+    this->ts_init ();
 
   // Ensure that we are serialized!
   ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->keylock_, 0);
