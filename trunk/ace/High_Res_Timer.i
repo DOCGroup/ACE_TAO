@@ -43,6 +43,19 @@ ACE_High_Res_Timer::gettimeofday (const ACE_OS::ACE_HRTimer_Op op)
 }
 
 
+// Get the current high res timer as the time of day. This is intended
+// to be used for a gettimeofday replacement in ACE_Timer_Queue and
+// derived classes so the timers will bebased on high res timers rather
+// than wall clock time. It uses the ACE_High_Res_Timer::gettimeofday
+// function, which is deprecated. If it gets removed, please move the
+// code down here, intact.
+ACE_INLINE ACE_Time_Value
+ACE_High_Res_Timer::gettimeofday_hr (void)
+{
+  return ACE_High_Res_Timer::gettimeofday ();
+}
+
+
 ACE_INLINE ACE_hrtime_t
 ACE_High_Res_Timer::gettime (const ACE_OS::ACE_HRTimer_Op op)
 {

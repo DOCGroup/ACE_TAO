@@ -166,6 +166,12 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
 
+  static ACE_Time_Value gettimeofday_hr (void);
+  // Get the current "time" as the high resolution counter at this time.
+  // This is intended to be useful for supplying to a ACE_Timer_Queue
+  // as the gettimeofday function, thereby basing the timer calculations
+  // on the high res timer rather than wall clock time.
+
   static ACE_Time_Value gettimeofday (const ACE_OS::ACE_HRTimer_Op =
                                         ACE_OS::ACE_HRTIMER_GETTIME);
   // THIS FUNCTION IS DEPRECATED.  PLEASE USE <ACE_OS::gettimeofday>
