@@ -24,7 +24,7 @@ Callback::sample_history (void)
 
 void
 Callback::sample (Test::Timestamp the_timestamp
-                  ACE_ENV_ARG_DECL)
+                  ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_hrtime_t elapsed = ACE_OS::gethrtime () - the_timestamp;
