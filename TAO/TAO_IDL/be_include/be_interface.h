@@ -161,7 +161,7 @@ public:
   // compute the fully qualified collocated class name.
 
 private:
-  void be_interface::gen_gperf_input_header (TAO_OutStream *ss);
+  void gen_gperf_input_header (TAO_OutStream *ss);
   // Output the header (type declaration and %%) to the gperf's input
   // file.
 
