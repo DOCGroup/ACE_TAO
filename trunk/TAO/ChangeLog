@@ -1,3 +1,11 @@
+Mon Aug  5 17:14:45 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Vault.cpp (make_X509):
+	  (make_EVP_PKEY):
+
+	  Added missing error checks.  Thanks to Dmitry Khrapov
+	  <yavannadil@yahoo.com> for providing a patch.
+
 Mon Aug  5 09:38:18 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
         * orbsvcs/examples/PSS/Client.dsp:
