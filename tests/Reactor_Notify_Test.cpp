@@ -4,7 +4,7 @@
 //
 // = LIBRARY
 //      tests
-// 
+//
 // = FILENAME
 //      Reactors_Test.cpp
 //
@@ -14,7 +14,7 @@
 //
 // = AUTHOR
 //      Douglas C. Schmidt
-// 
+//
 // ============================================================================
 
 #include "ace/Synch.h"
@@ -78,7 +78,7 @@ Supplier_Task::open (void *)
                       -1);
   // Register the pipe's write handle with the <Reactor> for writing.
   // This should mean that it's always "active."
-  else if (ACE_Reactor::instance ()->register_handler 
+  else if (ACE_Reactor::instance ()->register_handler
       (this->pipe_.write_handle (),
        this,
        ACE_Event_Handler::WRITE_MASK) == -1)
@@ -116,7 +116,7 @@ Supplier_Task::~Supplier_Task (void)
   this->pipe_.close ();
 }
 
-int 
+int
 Supplier_Task::svc (void)
 {
   size_t i;
@@ -134,21 +134,21 @@ Supplier_Task::svc (void)
                   "(%t) notifying reactor\n"));
       // Notify the Reactor, which will call <handle_exception>.
       if (ACE_Reactor::instance ()->notify (this) == -1)
-	ACE_ERROR_RETURN ((LM_ERROR,
+        ACE_ERROR_RETURN ((LM_ERROR,
                            "(%t) %p\n",
                            "notify"),
                           -1);
 
       // Wait for our <handle_exception> method to release the
       // semaphore.
-      else if (this->waiter_.acquire () == -1) 
-	ACE_ERROR_RETURN ((LM_ERROR,
+      else if (this->waiter_.acquire () == -1)
+        ACE_ERROR_RETURN ((LM_ERROR,
                            "(%t) %p\n",
                            "acquire"),
                           -1);
     }
 
-  ACE_DEBUG ((LM_DEBUG, 
+  ACE_DEBUG ((LM_DEBUG,
               "(%t) **** starting limited notifications test\n"));
 
   // Only allow 1 iteration per <ACE_Reactor::notify>
@@ -160,26 +160,26 @@ Supplier_Task::svc (void)
                   "(%t) notifying reactor\n"));
       // Notify the Reactor.
       if (ACE_Reactor::instance ()->notify (this) == -1)
-	ACE_ERROR_RETURN ((LM_ERROR,
+        ACE_ERROR_RETURN ((LM_ERROR,
                            "(%t) %p\n",
                            "notify"),
                           -1);
 
       // Wait for our <handle_exception> method to release the
       // semaphore.
-      else if (this->waiter_.acquire () == -1) 
-	ACE_ERROR_RETURN ((LM_ERROR,
+      else if (this->waiter_.acquire () == -1)
+        ACE_ERROR_RETURN ((LM_ERROR,
                            "(%t) %p\n",
                            "acquire"),
                           -1);
     }
 
-  ACE_DEBUG ((LM_DEBUG, 
+  ACE_DEBUG ((LM_DEBUG,
               "(%t) **** exiting thread test\n"));
   return 0;
 }
 
-int 
+int
 Supplier_Task::handle_exception (ACE_HANDLE handle)
 {
   ACE_ASSERT (handle == ACE_INVALID_HANDLE);
@@ -190,18 +190,24 @@ Supplier_Task::handle_exception (ACE_HANDLE handle)
   return 0;
 }
 
-int 
+int
 Supplier_Task::handle_output (ACE_HANDLE handle)
 {
   ACE_ASSERT (handle == this->pipe_.write_handle ());
   ACE_DEBUG ((LM_DEBUG,
               "(%t) handle_output\n"));
+
+  // This function is called by the main thread, believe it or not :-)
+  // That's because the pipe's write handle is always active.  So,
+  // give the Supplier_Task a chance to run.
+  ACE_OS::thr_yield ();
+
   return 0;
 }
 
 #endif /* ACE_HAS_THREADS */
 
-int 
+int
 main (int, char *[])
 {
   ACE_START_TEST ("Reactor_Notify_Test");
@@ -228,7 +234,7 @@ main (int, char *[])
           switch (ACE_Reactor::instance ()->handle_events (timeout))
             {
             case -1:
-              ACE_ERROR_RETURN ((LM_ERROR, 
+              ACE_ERROR_RETURN ((LM_ERROR,
                                  "(%t) %p\n",
                                  "reactor"),
                                 -1);
