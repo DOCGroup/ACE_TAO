@@ -4,7 +4,6 @@
 #include "ace/Process.h"
 #include "ace/ARGV.h"
 #include "ace/SString.h"
-#include "ace/Service_Config.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Process.i"
@@ -71,25 +70,13 @@ ACE_Process::spawn (ACE_Process_Options &options)
       {
         if (options.get_stdin () != ACE_INVALID_HANDLE
             && ACE_OS::dup2 (options.get_stdin (), ACE_STDIN) == -1)
-          {
-            ACE_DEBUG ((LM_MAX,
-                        "(%P): ACE_Process::spawn (); unable to open stdin; exiting!!!!\n"));
-            ACE_OS::exit (errno);
-          }
+          ACE_OS::exit (errno);
         else if (options.get_stdout () != ACE_INVALID_HANDLE
                  && ACE_OS::dup2 (options.get_stdout (), ACE_STDOUT) == -1)
-          {
-            ACE_DEBUG ((LM_MAX,
-                        "(%P): ACE_Process::spawn (); unable to open stdout; exiting!!!!\n"));
-            ACE_OS::exit (errno);
-          }
+          ACE_OS::exit (errno);
         else if (options.get_stderr () != ACE_INVALID_HANDLE
                  && ACE_OS::dup2 (options.get_stderr (), ACE_STDERR) == -1)
-          {
-            ACE_DEBUG ((LM_MAX,
-                        "(%P): ACE_Process::spawn (); unable to open stderr; exiting!!!!\n"));
-            ACE_OS::exit (errno);
-          }
+          ACE_OS::exit (errno);
 
         // close down unneeded descriptors
         ACE_OS::close (options.get_stdin ());
@@ -125,12 +112,6 @@ ACE_Process::spawn (ACE_Process_Options &options)
         if (result == -1)
           {
             // If the execv fails, this child needs to exit.
-            
-            // Print the message if debug_ is greater than 1 in the
-            // service configurator.
-            if (ACE_Service_Config::debug_ > 1)
-              ACE_DEBUG ((LM_MAX,
-                          "(%P): ACE_Process::spawn (); exec failed: exiting!!!!\n"));
             
             // Exit with the errno so that the calling process can
             // catch this and figure out what went wrong.
