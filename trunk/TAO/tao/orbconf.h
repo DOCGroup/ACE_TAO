@@ -250,6 +250,9 @@
 #  define TAO_ENV_EMIT_CODE2(X,Y)
 #endif /* TAO_HAS_EXCEPTIONS && !TAO_ENV_BKWD_COMPAT */
 
+/// Helper macro
+#define TAO_ENV_EMIT_DUMMY
+
 /// Declare a CORBA::Environment argument as the last argument of a
 /// function
 /**
@@ -261,11 +264,16 @@
  * mechanism to write code that is portable to platforms with and
  * without native C++ exceptions.
  */
-#define TAO_ENV_ARG_DECL TAO_ENV_EMIT_CODE2(/**/,CORBA::Environment &ACE_TRY_ENV)
+#define TAO_ENV_ARG_DECL \
+    TAO_ENV_EMIT_CODE2(TAO_ENV_EMIT_DUMMY, \
+                       CORBA::Environment &ACE_TRY_ENV)
 
 /// Declare a CORBA::Environment argument with the default value
 /// obtained from the TAO orb.  Similar to TAO_ENV_ARG_DECL
-#define TAO_ENV_ARG_DECL_WITH_DEFAULTS TAO_ENV_EMIT_CODE2(/**/,CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+#define TAO_ENV_ARG_DECL_WITH_DEFAULTS \
+    TAO_ENV_EMIT_CODE2(TAO_ENV_EMIT_DUMMY, \
+                       CORBA::Environment &ACE_TRY_ENV = \
+                           TAO_default_environment ())
 
 /// Declare a CORBA::Environment argument that is not used by the
 /// function definition.
@@ -273,28 +281,38 @@
  * Similar to TAO_ENV_ARG_DECL, but the formal parameter name is
  * dropped to avoid warnings about unused parameters
  */
-#define TAO_ENV_ARG_DECL_NOT_USED TAO_ENV_EMIT_CODE2(/**/,CORBA::Environment &)
+#define TAO_ENV_ARG_DECL_NOT_USED \
+    TAO_ENV_EMIT_CODE2(TAO_ENV_EMIT_DUMMY, \
+                       CORBA::Environment &)
 
 /// Declare a CORBA::Environment argument for methods that do not take
 /// any other parameters
-#define TAO_ENV_SINGLE_ARG_DECL TAO_ENV_EMIT_CODE(CORBA::Environment &ACE_TRY_ENV)
+#define TAO_ENV_SINGLE_ARG_DECL \
+    TAO_ENV_EMIT_CODE(CORBA::Environment &ACE_TRY_ENV)
 
 /// Declare a CORBA::Environment argument with a default value for
 /// methods that do not take any other parameters
-#define TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS TAO_ENV_EMIT_CODE(CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+#define TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS \
+    TAO_ENV_EMIT_CODE(CORBA::Environment &ACE_TRY_ENV = \
+                          TAO_default_environment ())
 
 /// Declare a CORBA::Environment argument for for ethods
-#define TAO_ENV_SINGLE_ARG_DECL_NOT_USED TAO_ENV_EMIT_CODE(CORBA::Environment &)
+#define TAO_ENV_SINGLE_ARG_DECL_NOT_USED \
+    TAO_ENV_EMIT_CODE(CORBA::Environment &)
 
 /// Use the CORBA::Environment argument is a nested call
-#define TAO_ENV_ARG_PARAMETER TAO_ENV_EMIT_CODE2(/**/,ACE_TRY_ENV)
+#define TAO_ENV_ARG_PARAMETER \
+    TAO_ENV_EMIT_CODE2(TAO_ENV_EMIT_DUMMY, \
+                       ACE_TRY_ENV)
 
 /// Use the CORBA::Environment argument is a nested call, assuming the
 /// called function take only the ACE_TRY_ENV argument.
-#define TAO_ENV_SINGLE_ARG_PARAMETER TAO_ENV_EMIT_CODE(ACE_TRY_ENV)
+#define TAO_ENV_SINGLE_ARG_PARAMETER \
+    TAO_ENV_EMIT_CODE(ACE_TRY_ENV)
 
 /// Eliminate unused argument warnings about ACE_TRY_ENV
-#define TAO_ENV_ARG_NOT_USED TAO_ENV_EMIT_CODE(ACE_UNUSED_ARG(ACE_TRY_ENV))
+#define TAO_ENV_ARG_NOT_USED \
+    TAO_ENV_EMIT_CODE(ACE_UNUSED_ARG(ACE_TRY_ENV))
 
 /// Declare a CORBA::Environment variable.
 /**
@@ -302,7 +320,8 @@
  * it when compiled with native C++ exceptions, but use the argument
  * in all platforms
  */
-#define TAO_ENV_DECLARE_NEW_ENV TAO_ENV_EMIT_CODE(ACE_DECLARE_NEW_CORBA_ENV)
+#define TAO_ENV_DECLARE_NEW_ENV \
+    TAO_ENV_EMIT_CODE(ACE_DECLARE_NEW_CORBA_ENV)
 
 /**
  * Please do not use, obsolescent.  Use TAO_ENV_DECLARE_NEW_ENV
