@@ -1,3 +1,11 @@
+Sun Jan 27 13:22:11 2002  Ossama Othman  <ossama@uci.edu>
+
+	* performance-tests/README:
+	* performance-tests/Latency/README:
+
+	  Updated in accordance with the new "Latency" performance test
+	  organization.
+
 Sun Jan 27 12:51:02 2002  Ossama Othman  <ossama@uci.edu>
 
 	* performance-tests/Makefile (DIRS):
