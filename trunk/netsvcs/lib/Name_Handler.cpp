@@ -6,6 +6,7 @@
 #include "ace/Auto_Ptr.h"
 #include "Name_Handler.h"
 #include "ace/Signal.h"
+#include "ace/OS_NS_string.h"
 
 ACE_RCSID(lib,
           Name_Handler,

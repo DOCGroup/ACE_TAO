@@ -1,8 +1,51 @@
+Mon Nov 10 16:43:19 2003  Steve Huston  <shuston@riverace.com>
+
+	* ace/Acceptor.cpp: Add #include "ace/OS_NS_stdio.h" to get sprintf()
+	  and "ace/OS_NS_string.h" to get strdup().
+
+	* ace/Svc_Conf_l.cpp: Add #include "ace/OS_NS_string.h" for strrchr().
+
+	* ace/Synch_Traits.h: Add #include "ace/config-all.h" to find the
+	  template and threads config settings.
+
+	* ace/RMCast/RMCast_UDP_Proxy.cpp:
+	* ace/RMCast/RMCast_IO_UDP.i: Added #include "ace/OS_Memory.h" to
+	  get ACE_NEW_RETURN.
+
+	* netsvcs/lib/Log_Message_Receiver.h: Add #include of either
+	  "ace/Thread_Mutex.h" or "ace/Null_Mutex.h" for the ACE_Guard
+	  template arg (ACE_SYNCH_MUTEX_T).
+
+	* netsvcs/lib/TS_Clerk_Handler.h: Add #include
+	  "ace/os_include/os_dirent.h" to get MAXNAMLEN.
+
+	* netsvcs/lib/TS_Clerk_Handler.cpp: Add #include
+	  "ace/OS_NS_string.h" to get strcat() and "ace/OS_NS_stdio.h" to
+	  get sprintf().
+
+	* netsvcs/lib/Client_Logging_Handler.cpp: Add #include
+	  "ace/OS_NS_stdio.h" to get ACE_OS::sprintf().
+
+	* netsvcs/lib/Name_Handler.cpp: Add #include "ace/OS_NS_string.h" to
+	  get ACE_OS::strlen().
+
+	* netsvcs/clients/Naming/Client/Client_Test.cpp: Add #include
+	  "ace/OS_NS_stdio.h" for ACE_OS::fgets(), "ace/OS_NS_unistd.h"
+	  for ACE_OS::getpid(), "ace/OS_NS_string.h" for strtok(), and
+	  "ace/os_include/os_ctype.h" for isupper()/tolower().
+
+	* netsvcs/client/Naming/Dump_Restore/Dump_Restore.cpp: Add #include
+	  "ace/OS_NS_string.h", "ace/OS_NS_stdio.h", and "ace/OS_NS_unistd.h"
+	  to get missing ACE_OS functions.
+
+	* tests/Service_Config_DLL.cpp: Add #include "ace/OS_NS_string.h" and
+	  "ace/OS_NS_stdio.h" to get missing ACE_OS functions.
+
 Mon Nov 10 22:30:14 2003  Kobi Cohen-Arazi  <kobi@mivzak.com>
 
 	* ace/TSS_T.cpp: 
-	Fix ts_get and ts_object functions to check ts_init() return value, and
-	return 0 when ts_init failed.
+	  Fix ts_get and ts_object functions to check ts_init() return value,
+	  and return 0 when ts_init failed.
 
 Mon Nov 10 20:15:46 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
@@ -556,7 +599,7 @@ Fri Nov  7 23:29:02 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 2003-11-07  Emre Turkay  <turkaye@dre.vanderbilt.edu>
 
 	* ace/config-win32-msvc.h:
-	Added QT_DLL definition.
+	  Added QT_DLL definition.
 
 Fri Nov  7 21:09:01 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 

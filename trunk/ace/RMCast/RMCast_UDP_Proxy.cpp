@@ -9,6 +9,7 @@
 #include "RMCast_Module.h"
 #include "RMCast_IO_UDP.h"
 #include "ace/Message_Block.h"
+#include "ace/OS_Memory.h"
 #include "ace/OS_NS_string.h"
 #include "ace/os_include/arpa/os_inet.h"
 
