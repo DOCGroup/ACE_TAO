@@ -1703,7 +1703,7 @@ The TODO list runs like this:
 Point of contact: <A HREF="mailto:ossama@uci.edu">Ossama Othman</A>
 
 <P>
-For up-to-date information, see the project web site
+Additional information is available
 <A HREF="http://doc.ece.uci.edu/TAO/Security/">here</A>.
 
 <P>
@@ -1733,7 +1733,7 @@ Implemented Features:
         security mechanism.
       </LI>
           <LI>
-            The <CODE>Security::QOPPolicy</CODE> policy has been
+            The <CODE>SecurityLevel2::QOPPolicy</CODE> policy has been
             implemented.  This policy is used to set the desired
             invocation Quality-of-Protection (QoP).  It can be created
             using <CODE>ORB::create_policy()</CODE>, and used in
@@ -1749,6 +1749,34 @@ Implemented Features:
             TAO's SSLIOP pluggable protocol implementation is now
             thread-safe.
           </LI>
+          <LI>
+            The <CODE>SecurityLevel2::EstablishTrustPolicy</CODE>
+	    policy has been implemented.  This policy is used to set
+	    the desired 
+            invocation level of establishment of trust.  It can be created
+            using <CODE>ORB::create_policy()</CODE>, and used in
+            conjunction with the standard policy manipulation CORBA
+            features (e.g. <CODE>PolicyManager</CODE>,
+            <CODE>PolicyCurrent</CODE>), meaning that this policy can
+            be set on a per-ORB, per-thread or per-object basis.
+            <P>
+              This policy makes it possible to, for example, make
+              authenticated and non-authenticated invocations within
+              the same client process.
+          </LI>
+
+      </LI>
+      <LI>
+        Implemented
+        <CODE>SecurityLevel2::PrincipalAuthenticator</CODE> support
+	for SSLIOP.  In particular, a SSLIOP-specific
+	<CODE>SecurityReplaceable::Vault</CODE> implementation is now
+	available.
+      </LI>
+      <LI>
+        Initial SSLIOP-specific <CODE>Credentials</CODE>
+	implementation is complete.
+      </LI>
     </UL>
   </LI>
 </UL>
@@ -1762,7 +1790,7 @@ Current Status:
     development.
   </LI>
       <LI>
-        Begin implementation of the interfaces in the
+        Began implementation of the interfaces in the
         <CODE>SecurityReplaceable</CODE> IDL module.  They provide the
         ability to replace key security components in the ORB with
         another implementation with ease.  Thus, the security
@@ -1775,7 +1803,7 @@ Schedule:
 <UL>
 
       <LI>
-        <FONT COLOR=BLUE>April 2002</FONT><BR>
+        <FONT COLOR=BLUE>October 2002</FONT><BR>
         <UL>
           <LI>
             Begin implementation of the Common Secure Interoperability
@@ -1785,17 +1813,9 @@ Schedule:
         </UL>
       </LI>
 
+<!--
   <LI>
-    <FONT COLOR=BLUE>September 2002</FONT><BR>
-    <UL>
-      <LI>
-        SSLIOP performance enhancements.
-      </LI>
-    </UL>
-  </LI>
-
-  <LI>
-    <FONT COLOR=BLUE>October 2002</FONT>
+    <FONT COLOR=BLUE>November 2002</FONT>
     <UL>
       <LI>
         Request authentication via
@@ -1822,26 +1842,49 @@ Schedule:
       </LI>
     </UL
   </LI>
+-->
 
   <LI>
     <FONT COLOR=BLUE>November 2002</FONT><BR>
     <UL>
       <LI>
-        Begin implementation of a <CODE>DomainManager</CODE> and/or
-        <I>Domain Membership</I> specification for TAO.
-        This is needed to support security domains.
+        Begin implementation of the <I>Authentication Token Layer
+        Attribute Service (ATLAS)</I> specification for TAO.
       </LI>
     </UL>
   </LI>
 
   <LI>
-    <FONT COLOR=BLUE>December 2002</FONT>
+    <FONT COLOR=BLUE>December 2002</FONT><BR>
     <UL>
       <LI>
-        Begin work on the CORBA Non-Repudiation Service.
+        Begin implementation of the <I>Resource Access Decision (RAD)
+	Facility</I>specification for TAO. 
       </LI>
     </UL>
   </LI>
+
+
+  <LI>
+    <FONT COLOR=BLUE>February 2003</FONT><BR>
+    <UL>
+      <LI>
+        Begin implementation of the <I>Security Domain Membership
+        Management (SDMM)</I> specification for TAO.
+        It is needed to support security domains.
+      </LI>
+    </UL>
+  </LI>
+
+  <LI>
+    <FONT COLOR=BLUE>April 2003</FONT><BR>
+    <UL>
+      <LI>
+        SSLIOP and SECIOP performance enhancements.
+      </LI>
+    </UL>
+  </LI>
+
 
 </UL>
 
