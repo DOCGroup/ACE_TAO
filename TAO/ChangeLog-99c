@@ -1,3 +1,11 @@
+Tue May 11 20:40:52 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/Environment.cpp:
+	  Added a check for NULL pointer before dereferencing the
+	  exception (to increment the refcount) in the copy
+	  constructor. This was causing all the DII param_tests to
+	  fail.
+
 Tue May 11 18:06:40 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Makefile:
