@@ -8,150 +8,179 @@ MAKEFILE = Makefile
 LIB      = libACE.a
 SHLIB    = libACE.$(SOEXT)
 
-FILES    = Log_Msg \
-           ACE \
-           Activation_Queue \
-           Active_Map_Manager \
-           Addr \
-           ARGV \
-           Arg_Shifter \
-           Asynch_IO \
-           Basic_Types \
-           Containers \
-           CDR_Stream \
-           CORBA_Handler \
-           CORBA_Ref \
-           DEV \
-           DEV_Addr \
-           DEV_Connector \
-           DEV_IO \
-	   Dirent \
-	   DLL \
-           Dump \
-           Dynamic \
-           Event_Handler \
-           Filecache \
-           FIFO \
-           FIFO_Recv \
-           FIFO_Recv_Msg \
-           FIFO_Send \
-           FIFO_Send_Msg \
-           FILE \
-           FILE_Addr \
-           FILE_Connector \
-           FILE_IO \
-           Functor \
-           Get_Opt \
-           Handle_Set \
-           Hash_Map_Manager \
-           High_Res_Timer \
-           INET_Addr \
-           IOStream \
-           IO_SAP \
-           IPC_SAP \
-           Local_Name_Space \
-           Local_Tokens \
-           LSOCK \
-           LSOCK_Acceptor \
-           LSOCK_CODgram \
-           LSOCK_Connector \
-           LSOCK_Dgram \
-           LSOCK_Stream \
-           Log_Record \
-           Malloc \
-           Map \
-           Mem_Map \
-           Memory_Pool \
-           Message_Block \
-           Message_Queue \
-           Method_Request \
-           Msg_WFMO_Reactor \
-           Name_Proxy \
-           Name_Request_Reply \
-           Name_Space \
-           Naming_Context \
-           Object_Manager \
-           Obstack \
-           OS \
-           Parse_Node \
-           Pipe \
-           Priority_Reactor \
-           Proactor \
-           Process \
-           Process_Manager \
-           Profile_Timer \
-           Reactor \
-           Read_Buffer \
-           Registry \
-           Registry_Name_Space \
-           Remote_Name_Space \
-           Remote_Tokens \
-           SOCK \
-           SOCK_Acceptor \
-           SOCK_CODgram \
-           SOCK_Connector \
-           SOCK_Dgram \
-           SOCK_Dgram_Bcast \
-           SOCK_IO \
-           SOCK_Dgram_Mcast \
-           SOCK_Stream \
-           SPIPE \
-           SPIPE_Acceptor \
-           SPIPE_Addr \
-           SPIPE_Connector \
-           SPIPE_Stream \
-           SString \
-           Sched_Params \
-	   Select_Reactor_Base \
-           Select_Reactor \
-           Shared_Memory \
-           Service_Config \
-           Service_Manager \
-           Service_Object \
-           Service_Types \
-           Service_Repository \
-           Shared_Memory_MM \
-           Shared_Memory_SV \
-           Shared_Object \
-           Signal \
-           Stats \
-           Strategies \
-           SV_Message \
-           SV_Message_Queue \
-           SV_Semaphore_Complex \
-           SV_Semaphore_Simple \
-           SV_Shared_Memory \
-           Synch \
-           Synch_Options \
-           System_Time \
-	   TP_Reactor \
-           Task \
-           Timer_Hash \
-           Timer_Heap \
-           Timer_List \
-           Timer_Queue \
-           Timer_Wheel \
-           TLI \
-           TLI_Acceptor \
-           TLI_Connector \
-           TLI_Stream \
-           Thread \
-           Thread_Manager \
-           Timeprobe \
-           Time_Request_Reply \
-           Token \
-           Token_Collection \
-           Token_Invariants \
-           Token_Manager \
-           Token_Request_Reply \
-           Trace \
-           TTY_IO \
-           UNIX_Addr \
-           UPIPE_Acceptor \
-           UPIPE_Connector \
-           UPIPE_Stream \
-           WFMO_Reactor \
-           XtReactor
+OS_FILES = \
+  ACE \
+  Basic_Types \
+  OS
+UTILS_FILES = \
+  Active_Map_Manager \
+  Arg_Shifter \
+  ARGV \
+  Containers \
+  Dirent \
+  Dynamic \
+  Filecache \
+  Functor \
+  Get_Opt \
+  Hash_Map_Manager \
+  High_Res_Timer \
+  Method_Request \
+  Object_Manager \
+  Profile_Timer \
+  Registry \
+  SString \
+  Stats \
+  System_Time \
+  Time_Request_Reply \
+  Timeprobe \
+  Timer_Hash \
+  Timer_Heap \
+  Timer_List \
+  Timer_Queue \
+  Timer_Wheel
+LOGGING_FILES = \
+  Dump \
+  Log_Msg \
+  Log_Record \
+  Trace
+THREADS_FILES = \
+  Activation_Queue \
+  Process \
+  Process_Manager \
+  Sched_Params \
+  Synch \
+  Synch_Options \
+  Thread \
+  Thread_Manager \
+  Token
+DEMUX_FILES = \
+  Event_Handler \
+  Handle_Set \
+  Priority_Reactor \
+  Proactor \
+  Reactor \
+  Select_Reactor \
+  Select_Reactor_Base \
+  WFMO_Reactor
+CONNECTION_FILES = \
+  Asynch_IO \
+  Strategies
+SOCKETS_FILES = \
+  IPC_SAP \
+  LSOCK \
+  LSOCK_Acceptor \
+  LSOCK_CODgram \
+  LSOCK_Connector \
+  LSOCK_Dgram \
+  LSOCK_Stream \
+  SOCK \
+  SOCK_Acceptor \
+  SOCK_CODgram \
+  SOCK_Connector \
+  SOCK_Dgram \
+  SOCK_Dgram_Bcast \
+  SOCK_Dgram_Mcast \
+  SOCK_IO \
+  SOCK_Stream
+IPC_FILES = \
+  Addr \
+  DEV \
+  DEV_Addr \
+  DEV_Connector \
+  DEV_IO \
+  FIFO \
+  FIFO_Recv \
+  FIFO_Recv_Msg \
+  FIFO_Send \
+  FIFO_Send_Msg \
+  FILE_Addr \
+  FILE \
+  FILE_Connector \
+  FILE_IO \
+  INET_Addr \
+  IO_SAP \
+  IOStream \
+  Pipe \
+  Signal \
+  SPIPE_Addr \
+  SPIPE \
+  SPIPE_Acceptor \
+  SPIPE_Connector \
+  SPIPE_Stream \
+  SV_Message \
+  SV_Message_Queue \
+  SV_Semaphore_Complex \
+  SV_Semaphore_Simple \
+  SV_Shared_Memory \
+  TLI \
+  TLI_Acceptor \
+  TLI_Connector \
+  TLI_Stream \
+  TTY_IO \
+  UNIX_Addr \
+  UPIPE_Acceptor \
+  UPIPE_Connector \
+  UPIPE_Stream
+SVCCONF_FILES = \
+  DLL \
+  Parse_Node \
+  Service_Config \
+  Service_Manager \
+  Service_Object \
+  Service_Repository \
+  Service_Types \
+  Shared_Object \
+  Svc_Conf_l \
+  Svc_Conf_y
+STREAMS_FILES = \
+  CDR_Stream \
+  Message_Block \
+  Message_Queue \
+  Task
+MEMORY_FILES = \
+  Malloc \
+  Mem_Map \
+  Memory_Pool \
+  Obstack \
+  Read_Buffer \
+  Shared_Memory \
+  Shared_Memory_MM \
+  Shared_Memory_SV
+TOKEN_FILES = \
+  Local_Tokens \
+  Remote_Tokens \
+  Token_Collection \
+  Token_Invariants \
+  Token_Manager \
+  Token_Request_Reply
+OTHER_FILES = \
+  CORBA_Handler \
+  CORBA_Ref \
+  Local_Name_Space \
+  Msg_WFMO_Reactor \
+  Name_Proxy \
+  Name_Request_Reply \
+  Name_Space \
+  Naming_Context \
+  Registry_Name_Space \
+  Remote_Name_Space \
+  TP_Reactor \
+  XtReactor
+
+FILES = \
+  $(OS_FILES) \
+  $(UTILS_FILES) \
+  $(LOGGING_FILES) \
+  $(THREADS_FILES) \
+  $(DEMUX_FILES) \
+  $(CONNECTION_FILES) \
+  $(SOCKETS_FILES) \
+  $(IPC_FILES) \
+  $(SVCCONF_FILES) \
+  $(STREAMS_FILES) \
+  $(MEMORY_FILES) \
+  $(TOKEN_FILES) \
+  $(OTHER_FILES)
 
 TEMPLATE_FILES = \
            Acceptor \
@@ -162,7 +191,7 @@ TEMPLATE_FILES = \
            Containers_T \
            Dump_T \
            Dynamic_Service \
-	   Env_Value_T \
+           Env_Value_T \
            Event_Handler_T \
            Free_List \
            Functor_T \
@@ -180,7 +209,7 @@ TEMPLATE_FILES = \
            Module \
            Pair_T \
            RB_Tree \
-	   Select_Reactor_T \
+           Select_Reactor_T \
            Singleton \
            Strategies_T \
            Stream \
@@ -199,22 +228,35 @@ TEMPLATE_FILES = \
            Typed_SV_Message \
            Typed_SV_Message_Queue
 
+####
+#### Build customization.
+####
+#ifndef ACE_COMPONENTS
+#  #### CURRENTLY UNUSED!
+#  #### XXXX [Please see docs/ACE-subsets.html for documentation.] XXXX
+#  ACE_COMPONENTS = \
+#    OS \
+#    Utils \
+#    Logging \
+#    Threads \
+#    Demux \
+#    Connection \
+#    Sockets \
+#    IPC \
+#    Svcconf \
+#    Streams \
+#    Memory \
+#    Token \
+#    Other
+#endif # ACE_COMPONENTS
+
 ifeq ($(AIX_TEMPLATE_HACK),1)
   FILES = 0_ACE_All_Src
   TEMPLATE_FILES = 0_ACE_All_Tmp
 endif
 
-DEFS    = $(addsuffix .h,$(FILES)) Svc_Conf_Tokens.h
-DEFS    += $(addsuffix .i,$(FILES))
-LSRC    = $(addsuffix .cpp,$(FILES)) \
-          Svc_Conf_l.cpp Svc_Conf_y.cpp
-LSRC2   = $(addsuffix .cpp,$(TEMPLATE_FILES))
-
-#### Build the ACE shared library _before_ the static library.
-#### This works around an apparent problem with template
-#### instantiation with Sun C++ 4.1 and 4.2 (the symptom is link
-#### error due to ACE_TimeValue::normalize () not being found).
-BUILD   = $(VSHLIB) $(SHLIBA) $(VLIB)
+LSRC  = $(addsuffix .cpp,$(FILES))
+LSRC2 = $(addsuffix .cpp,$(TEMPLATE_FILES))
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
@@ -224,6 +266,7 @@ include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 
 ifneq ($(GHS),)
   ifeq ($(CPU),86)
+    #### With Green Hills for x86 target, compile gethrtime.cpp.
     FILES += gethrtime
     LSRC += gethrtime.cpp
   endif # 86
@@ -234,7 +277,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU
 #### Disable installs in this ($(ACE_ROOT)/ace) directory, because this
-#### is the (default) destination of installs anyways.  And this will prevent
+#### is the (default) destination of installs anyways.  This line prevents
 #### creation of a link from the ACE library to itself when the build of
 #### the ACE library fails.
 INSTALL =
