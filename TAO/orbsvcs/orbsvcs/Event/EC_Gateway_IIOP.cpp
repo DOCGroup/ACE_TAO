@@ -1,8 +1,13 @@
 // $Id$
 
 #include "orbsvcs/Event/EC_Gateway_IIOP.h"
+#include "orbsvcs/Event/ECG_Defaults.h"
 #include "orbsvcs/Event_Utilities.h"
 #include "orbsvcs/Time_Utilities.h"
+#include "EC_Gateway_IIOP_Factory.h"
+#include "ace/Dynamic_Service.h"
+
+#include "ECG_ConsumerEC_Control.h"
 
 ACE_RCSID(Event, EC_Gateway_IIOP, "$Id$")
 
@@ -14,12 +19,29 @@ TAO_EC_Gateway_IIOP::TAO_EC_Gateway_IIOP (void)
      consumer_ (this),
      consumer_is_active_ (0),
      supplier_ (this),
-     supplier_is_active_ (0)
+     supplier_is_active_ (0),
+     ec_control_ (0),
+     factory_ (0)
 {
+  if (this->factory_ == 0)
+    {
+      this->factory_ =
+             ACE_Dynamic_Service<TAO_EC_Gateway_IIOP_Factory>::instance ("EC_Gateway_IIOP_Factory");
+
+      if (this->factory_ == 0)
+        {
+          TAO_EC_Gateway_IIOP_Factory *f = 0;
+          ACE_NEW (f,
+                   TAO_EC_Gateway_IIOP_Factory);
+          this->factory_ = f;
+        }
+    }
 }
 
 TAO_EC_Gateway_IIOP::~TAO_EC_Gateway_IIOP (void)
 {
+   delete ec_control_;
+   ec_control_ = 0;
 }
 
 int
@@ -43,6 +65,12 @@ TAO_EC_Gateway_IIOP::init_i (RtecEventChannelAdmin::EventChannel_ptr supplier_ec
       RtecEventChannelAdmin::EventChannel::_duplicate (supplier_ec);
     this->consumer_ec_ =
       RtecEventChannelAdmin::EventChannel::_duplicate (consumer_ec);
+
+	if (ec_control_ == 0)
+     {
+        ec_control_ = factory_->create_consumerec_control(this);
+        ec_control_->activate();
+     }
 
     return 0;
   }
@@ -137,7 +165,7 @@ TAO_EC_Gateway_IIOP::update_consumer (
     ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  if (c_qos.dependencies.length () <= 1)
+  if (c_qos.dependencies.length () == 0)
     return;
 
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
@@ -468,6 +496,18 @@ TAO_EC_Gateway_IIOP::push_to_consumer (
       consumer->push (event ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
+  ACE_CATCH (CORBA::OBJECT_NOT_EXIST, not_used)
+    {
+      ec_control_->event_channel_not_exist (this ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCH (CORBA::SystemException, sysex)
+    {
+      ec_control_->system_exception (this,
+                                     sysex
+                                     ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+    }
   ACE_CATCHANY
     {
       // Shouldn't happen.
@@ -479,6 +519,8 @@ int
 TAO_EC_Gateway_IIOP::shutdown (ACE_ENV_SINGLE_ARG_DECL)
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, -1);
+
+  ec_control_->shutdown();
 
   this->close_i (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
@@ -515,6 +557,41 @@ TAO_EC_Gateway_IIOP::shutdown (ACE_ENV_SINGLE_ARG_DECL)
     RtecEventChannelAdmin::EventChannel::_nil ();
 
   return 0;
+}
+
+CORBA::Boolean
+TAO_EC_Gateway_IIOP::is_consumer_ec_connected_i (void) const
+{
+  return !CORBA::is_nil (this->consumer_ec_.in ());
+}
+
+CORBA::Boolean
+TAO_EC_Gateway_IIOP::consumer_ec_non_existent (
+      CORBA::Boolean_out disconnected
+      ACE_ENV_ARG_DECL)
+{
+  CORBA::Object_var consumer_ec;
+  {
+    ACE_GUARD_THROW_EX (
+        TAO_SYNCH_MUTEX, ace_mon, this->lock_,
+        CORBA::INTERNAL ());
+    ACE_CHECK_RETURN (0);
+
+    disconnected = 0;
+    if (this->is_consumer_ec_connected_i () == 0)
+      {
+        disconnected = 1;
+        return 0;
+      }
+
+    consumer_ec = CORBA::Object::_duplicate (this->consumer_ec_.in ());
+  }
+
+#if (TAO_HAS_MINIMUM_CORBA == 0)
+  return consumer_ec->_non_existent (ACE_ENV_SINGLE_ARG_PARAMETER);
+#else
+  return 0;
+#endif /* TAO_HAS_MINIMUM_CORBA */
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

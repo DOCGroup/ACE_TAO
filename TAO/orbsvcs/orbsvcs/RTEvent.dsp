@@ -248,6 +248,18 @@ SOURCE=.\Event\EC_Gateway_IIOP.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Event\EC_Gateway_IIOP_Factory.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\ECG_ConsumerEC_Control.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\ECG_Reactive_ConsumerEC_Control.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Event\EC_Group_Scheduling.cpp
 # End Source File
 # Begin Source File
@@ -546,6 +558,18 @@ SOURCE=.\Event\EC_Gateway.h
 # Begin Source File
 
 SOURCE=.\Event\EC_Gateway_IIOP.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\EC_Gateway_IIOP_Factory.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\ECG_ConsumerEC_Control.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\ECG_Reactive_ConsumerEC_Control.h
 # End Source File
 # Begin Source File
 
