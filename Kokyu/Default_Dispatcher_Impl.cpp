@@ -22,7 +22,7 @@ Default_Dispatcher_Impl::init_i (const Dispatcher_Attributes& attrs)
 {
   //create and init the dispatcher tasks here
 
-  //ACE_DEBUG ((LM_DEBUG, "entering init_t\n" ));
+  ACE_DEBUG ((LM_DEBUG, "entering init_t\n" ));
   int size;
   size = attrs.config_info_set_.size ();
 
@@ -61,7 +61,7 @@ Default_Dispatcher_Impl::init_i (const Dispatcher_Attributes& attrs)
       //tasks_[i++].reset (task);
     }
 
-  thr_creation_flags_ = attrs.thread_creation_flags ();
+  this->thr_creation_flags_ = attrs.thread_creation_flags ();
 
   if (attrs.immediate_activation_ && !this->activated_)
     {
