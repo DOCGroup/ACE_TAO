@@ -397,14 +397,14 @@ main (int argc, char *argv[])
       if (error_count == 0)
         {
           ACE_Time_Value diff = after - before;
-          u_int long us = diff.sec () * 1000 * 1000 + diff.usec ();
+          unsigned long us = diff.sec () * 1000 * 1000 + diff.usec ();
           
           us /= call_count;
           
           if (us > 0)
             ACE_DEBUG ((LM_DEBUG,
-			"cube average call ACE_OS::time\t= %ld.%.03ldms, \t"
-			"%ld calls/second\n",
+			"cube average call ACE_OS::time\t= %d.%.03dms, \t"
+			"%d calls/second\n",
 			us / 1000, us % 1000,
 			1000000L / us));
         }
