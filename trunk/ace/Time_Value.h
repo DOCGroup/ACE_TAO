@@ -24,6 +24,24 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 
+# if !defined (ACE_HAS_WINCE) && !defined (ACE_PSOS_DIAB_MIPS)
+#     include /**/ <time.h>
+#   if defined (__Lynx__)
+#     include /**/ <st.h>
+#     include /**/ <sem.h>
+#   endif /* __Lynx__ */
+# endif /* ACE_HAS_WINCE ACE_PSOS_DIAB_MIPS */
+
+# if defined (ACE_LACKS_SYSTIME_H)
+// Some platforms may need to include this, but I suspect that most
+// will get it from <time.h>
+#   if defined (VXWORKS)
+#     include /**/ <sys/times.h>
+#   else
+#     include /**/ <sys/time.h>
+#   endif /* VXWORKS */
+# endif /* ACE_LACKS_SYSTIME_H */
+
 // Define some helpful constants.
 // Not type-safe, and signed.  For backward compatibility.
 #define ACE_ONE_SECOND_IN_MSECS 1000L
@@ -63,7 +81,7 @@ typedef struct timespec
 
 # if defined(ACE_LACKS_TIMESPEC_T)
 typedef struct timespec timespec_t;
-# endif /* ACE_LACKS_TIMESPEC_T *
+# endif /* ACE_LACKS_TIMESPEC_T */
 
 // -------------------------------------------------------------------
 

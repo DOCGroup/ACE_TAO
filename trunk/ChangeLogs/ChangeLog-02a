@@ -1,3 +1,11 @@
+Wed Apr 10 10:54:58 2002  Ossama Othman  <ossama@uci.edu>
+
+	* ace/OS.h:
+	* ace/Time_Value.h:
+
+	  Moved "time" related includes from OS.h to Time_Value.h.  Fixes
+	  build problems on Unix platforms.
+
 Wed Apr 10 10:40:36 2002  Ossama Othman  <ossama@uci.edu>
 
 	Inter-header dependency reductions:

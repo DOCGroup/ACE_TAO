@@ -632,24 +632,6 @@ extern "C" pthread_t pthread_self (void);
 #  define ACE_OS_TRACE(X)
 # endif /* ACE_OS_TRACE */
 
-# if !defined (ACE_HAS_WINCE) && !defined (ACE_PSOS_DIAB_MIPS)
-#     include /**/ <time.h>
-#   if defined (__Lynx__)
-#     include /**/ <st.h>
-#     include /**/ <sem.h>
-#   endif /* __Lynx__ */
-# endif /* ACE_HAS_WINCE ACE_PSOS_DIAB_MIPS */
-
-# if defined (ACE_LACKS_SYSTIME_H)
-// Some platforms may need to include this, but I suspect that most
-// will get it from <time.h>
-#   if defined (VXWORKS)
-#     include /**/ <sys/times.h>
-#   else
-#     include /**/ <sys/time.h>
-#   endif /* VXWORKS */
-# endif /* ACE_LACKS_SYSTIME_H */
-
 # if defined (ACE_USES_STD_NAMESPACE_FOR_STDC_LIB) && \
              (ACE_USES_STD_NAMESPACE_FOR_STDC_LIB != 0)
 using std::time_t;
