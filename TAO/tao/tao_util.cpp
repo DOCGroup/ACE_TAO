@@ -17,10 +17,10 @@
 
 // constructor
 TAO_ORB_Manager::TAO_ORB_Manager (CORBA::ORB_ptr orb,
-                                  PortableServer::POA_ptr root_poa,
+                                  PortableServer::POA_ptr poa,
                                   PortableServer::POAManager_ptr poa_manager)
   : orb_ (orb),
-    root_poa_ (root_poa),
+    poa_ (poa),
     poa_manager_ (poa_manager)
 {
 }
@@ -42,7 +42,7 @@ TAO_ORB_Manager::init (int argc,
       TAO_CHECK_ENV_RETURN (env, -1);
     }
 
-  if (CORBA::is_nil (this->root_poa_.in ()))
+  if (CORBA::is_nil (this->poa_.in ()))
     {
       // Get the POA from the ORB.
       CORBA::Object_var poa_object =
@@ -54,18 +54,18 @@ TAO_ORB_Manager::init (int argc,
                           -1);
 
       // Get the POA object.
-      this->root_poa_ =
-        PortableServer::POA::_narrow (poa_object.in (), env);
+      this->poa_ =
+        PortableServer::POA::_narrow (poa_object.in (),
+                                      env);
 
       TAO_CHECK_ENV_RETURN (env, -1);
     }
 
   if (CORBA::is_nil (this->poa_manager_.in ()))
     {
-
       // Get the POA_Manager.
       this->poa_manager_ =
-        this->root_poa_->the_POAManager (env);
+        this->poa_->the_POAManager (env);
 
       TAO_CHECK_ENV_RETURN (env, -1);
     }
@@ -77,14 +77,14 @@ TAO_ORB_Manager::init (int argc,
 
 int
 TAO_ORB_Manager::init_child_poa (int argc,
-				 char** argv,       
-				 char* poa_name,
+				 char **argv,       
+				 char *poa_name,
 				 CORBA_Environment &env)
 {
   int init_result;
   
   // check to see if root poa has to be created.
-  init_result = this->init (argc,argv,env);
+  init_result = this->init (argc, argv, env);
 
   if (init_result == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -96,14 +96,14 @@ TAO_ORB_Manager::init_child_poa (int argc,
   PortableServer::PolicyList policies (2);
   policies.length (2);
   policies[0] =
-    this->root_poa_->create_id_assignment_policy (PortableServer::USER_ID,
-                                                  env);
+    this->poa_->create_id_assignment_policy (PortableServer::USER_ID,
+                                             env);
   // @@ Must destroy the policies created to avoid memory leaks!
   TAO_CHECK_ENV_RETURN (env, -1);
 
   policies[1] =
-    this->root_poa_->create_lifespan_policy (PortableServer::PERSISTENT,
-                                             env);
+    this->poa_->create_lifespan_policy (PortableServer::PERSISTENT,
+                                        env);
   // @@ Must destroy the policies created to avoid memory leaks!
   TAO_CHECK_ENV_RETURN (env, -1);
 
@@ -111,10 +111,10 @@ TAO_ORB_Manager::init_child_poa (int argc,
   // the object key each time it invokes the server.
 
   this->child_poa_ =
-    this->root_poa_->create_POA (poa_name,
-                                 this->poa_manager_.in (),
-                                 policies,
-                                 env);
+    this->poa_->create_POA (poa_name,
+                            this->poa_manager_.in (),
+                            policies,
+                            env);
   TAO_CHECK_ENV_RETURN (env, -1);
   // @@ Warning!  If create_POA fails, then the policies won't be
   // destroyed and there will be hell to pay in memory leaks!
@@ -138,13 +138,13 @@ TAO_ORB_Manager::activate (PortableServer::Servant servant,
                            CORBA_Environment &env)
 {
   PortableServer::ObjectId_var id =
-    this->root_poa_->activate_object (servant,
-                                      env);
+    this->poa_->activate_object (servant,
+                                 env);
   TAO_CHECK_ENV_RETURN (env, 0);
 
   CORBA::Object_var obj =
-    this->root_poa_->id_to_reference (id.in (),
-                                      env);
+    this->poa_->id_to_reference (id.in (),
+                                 env);
   TAO_CHECK_ENV_RETURN (env, 0);
 
   CORBA::String str =
@@ -223,8 +223,8 @@ TAO_ORB_Manager::orb (void)
 TAO_ORB_Manager::~TAO_ORB_Manager (void)
 {
   CORBA::Environment env;
-  if (CORBA::is_nil (this->root_poa_.in ()) == 0)
-    this->root_poa_->destroy (CORBA::B_TRUE,
-                              CORBA::B_TRUE,
-                              env);
+  if (CORBA::is_nil (this->poa_.in ()) == 0)
+    this->poa_->destroy (CORBA::B_TRUE,
+                         CORBA::B_TRUE,
+                         env);
 }
