@@ -1,3 +1,10 @@
+Fri Feb 28 14:20:57 2003  Ossama Othman  <ossama@uci.edu>
+
+	* tao/Environment.h:
+
+	  Removed another TAO_ORB_Core friend declaration that may be
+	  responsible for namespace related build problems on Solaris.
+
 Thu  Feb 27, 2003  15:14:58  Pradeep Gore  <pradeep@oomworks.com>
 
 	* orbsvcs/orbsvcs/CosNotification_Static.dsp:
