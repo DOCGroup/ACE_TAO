@@ -73,8 +73,9 @@ realclean: clean
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/TAO_Time_Service_Server.o .obj/TAO_Time_Service_Server.o .obj/TAO_Time_Service_Server.o .obj/TAO_Time_Service_Server.o: Time/TAO_Time_Service_Server.cpp \
- Time/TAO_UTO.h $(ACE_ROOT)/ace/pre.h \
+.obj/TAO_Time_Service_Server.o .obj/TAO_Time_Service_Server.so .shobj/TAO_Time_Service_Server.o .shobj/TAO_Time_Service_Server.so: Time/TAO_Time_Service_Server.cpp \
+ Time/TAO_UTO.h \
+ $(ACE_ROOT)/ace/pre.h \
  TimeServiceS.h \
  TimeBaseS.h \
  $(TAO_ROOT)/tao/TimeBaseS.h \
@@ -83,8 +84,6 @@ realclean: clean
  $(TAO_ROOT)/tao/CDR.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -427,15 +426,13 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/ORB_Manager.h \
  Time/TAO_Time_Service_Server.h
 
-.obj/TAO_Time_Service_Clerk.o .obj/TAO_Time_Service_Clerk.o .obj/TAO_Time_Service_Clerk.o .obj/TAO_Time_Service_Clerk.o: Time/TAO_Time_Service_Clerk.cpp \
+.obj/TAO_Time_Service_Clerk.o .obj/TAO_Time_Service_Clerk.so .shobj/TAO_Time_Service_Clerk.o .shobj/TAO_Time_Service_Clerk.so: Time/TAO_Time_Service_Clerk.cpp \
  Time/TAO_Time_Service_Clerk.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -806,7 +803,7 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/ORB_Manager.h \
  Time/TAO_UTO.h
 
-.obj/TAO_UTO.o .obj/TAO_UTO.o .obj/TAO_UTO.o .obj/TAO_UTO.o: Time/TAO_UTO.cpp Time/TAO_UTO.h \
+.obj/TAO_UTO.o .obj/TAO_UTO.so .shobj/TAO_UTO.o .shobj/TAO_UTO.so: Time/TAO_UTO.cpp Time/TAO_UTO.h \
  $(ACE_ROOT)/ace/pre.h \
  TimeServiceS.h \
  TimeBaseS.h \
@@ -816,8 +813,6 @@ realclean: clean
  $(TAO_ROOT)/tao/CDR.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -1159,13 +1154,11 @@ realclean: clean
  Time/time_export.h Time/TAO_TIO.h \
  $(TAO_ROOT)/tao/PortableServer/ORB_Manager.h
 
-.obj/TAO_TIO.o .obj/TAO_TIO.o .obj/TAO_TIO.o .obj/TAO_TIO.o: Time/TAO_TIO.cpp Time/TAO_TIO.h \
+.obj/TAO_TIO.o .obj/TAO_TIO.so .shobj/TAO_TIO.o .shobj/TAO_TIO.so: Time/TAO_TIO.cpp Time/TAO_TIO.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/PortableServer/ORB_Manager.h \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -1512,13 +1505,11 @@ realclean: clean
  TimeServiceS.i \
  Time/TAO_UTO.h Time/time_export.h
 
-.obj/Timer_Helper.o .obj/Timer_Helper.o .obj/Timer_Helper.o .obj/Timer_Helper.o: Time/Timer_Helper.cpp Time/Timer_Helper.h \
+.obj/Timer_Helper.o .obj/Timer_Helper.so .shobj/Timer_Helper.o .shobj/Timer_Helper.so: Time/Timer_Helper.cpp Time/Timer_Helper.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Event_Handler.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -1889,16 +1880,15 @@ realclean: clean
  CosNamingS_T.cpp \
  CosNamingS.i
 
-.obj/TimeServiceS.o .obj/TimeServiceS.o .obj/TimeServiceS.o .obj/TimeServiceS.o: TimeServiceS.cpp TimeServiceS.h \
- $(ACE_ROOT)/ace/pre.h TimeBaseS.h \
+.obj/TimeServiceS.o .obj/TimeServiceS.so .shobj/TimeServiceS.o .shobj/TimeServiceS.so: TimeServiceS.cpp TimeServiceS.h \
+ $(ACE_ROOT)/ace/pre.h \
+ TimeBaseS.h \
  $(TAO_ROOT)/tao/TimeBaseS.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/CDR.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -2011,7 +2001,8 @@ realclean: clean
  $(TAO_ROOT)/tao/TimeBaseS_T.h \
  $(TAO_ROOT)/tao/TimeBaseS_T.i \
  $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
- $(TAO_ROOT)/tao/TimeBaseS.i TimeBaseC.h \
+ $(TAO_ROOT)/tao/TimeBaseS.i \
+ TimeBaseC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Services.h \
@@ -2249,11 +2240,9 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Object_Adapter.i \
  $(TAO_ROOT)/tao/PortableServer/Operation_Table.h
 
-.obj/TimeServiceC.o .obj/TimeServiceC.o .obj/TimeServiceC.o .obj/TimeServiceC.o: TimeServiceC.cpp TimeServiceC.h \
+.obj/TimeServiceC.o .obj/TimeServiceC.so .shobj/TimeServiceC.o .shobj/TimeServiceC.so: TimeServiceC.cpp TimeServiceC.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corba.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \

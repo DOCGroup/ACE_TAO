@@ -43,13 +43,11 @@ include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/EC_Basic.o .obj/EC_Basic.o .obj/EC_Basic.o .obj/EC_Basic.o: EC_Basic.cpp \
+.obj/EC_Basic.o .obj/EC_Basic.so .shobj/EC_Basic.o .shobj/EC_Basic.so: EC_Basic.cpp \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -489,20 +487,19 @@ include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Event_Manip.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Event_Channel.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Module_Factory.h \
- EC_Basic.h $(ACE_ROOT)/ace/High_Res_Timer.h \
+ EC_Basic.h \
+ $(ACE_ROOT)/ace/High_Res_Timer.h \
  $(ACE_ROOT)/ace/High_Res_Timer.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Channel_Clients_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Channel_Clients_T.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Channel_Clients_T.cpp \
  EC_Basic.i
 
-.obj/EC_Basic.o .obj/EC_Basic.o .obj/EC_Basic.o .obj/EC_Basic.o: EC_Basic.cpp \
+.obj/EC_Basic.o .obj/EC_Basic.so .shobj/EC_Basic.o .shobj/EC_Basic.so: EC_Basic.cpp \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -942,7 +939,8 @@ include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Event_Manip.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Event_Channel.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/Module_Factory.h \
- EC_Basic.h $(ACE_ROOT)/ace/High_Res_Timer.h \
+ EC_Basic.h \
+ $(ACE_ROOT)/ace/High_Res_Timer.h \
  $(ACE_ROOT)/ace/High_Res_Timer.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Channel_Clients_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Channel_Clients_T.i \

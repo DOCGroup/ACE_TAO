@@ -47,12 +47,10 @@ Dump_Schedule: $(addprefix $(VDIR),$(DUMP_OBJS))
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/Dump_Schedule.o .obj/Dump_Schedule.o .obj/Dump_Schedule.o .obj/Dump_Schedule.o: Dump_Schedule.cpp \
+.obj/Dump_Schedule.o .obj/Dump_Schedule.so .shobj/Dump_Schedule.o .shobj/Dump_Schedule.so: Dump_Schedule.cpp \
  $(ACE_ROOT)/ace/Sched_Params.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \

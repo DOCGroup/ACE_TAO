@@ -46,13 +46,11 @@ CPPFLAGS += -I../lib -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/RtEC_Based_CosEC.o .obj/RtEC_Based_CosEC.o .obj/RtEC_Based_CosEC.o .obj/RtEC_Based_CosEC.o: RtEC_Based_CosEC.cpp RtEC_Based_CosEC.h \
+.obj/RtEC_Based_CosEC.o .obj/RtEC_Based_CosEC.so .shobj/RtEC_Based_CosEC.o .shobj/RtEC_Based_CosEC.so: RtEC_Based_CosEC.cpp RtEC_Based_CosEC.h \
  ../lib/CosEvent_Utilities.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseC.h \
  $(TAO_ROOT)/tao/corba.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \

@@ -69,12 +69,10 @@ realclean: clean
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/CosPropertyService_i.o .obj/CosPropertyService_i.o .obj/CosPropertyService_i.o .obj/CosPropertyService_i.o: Property/CosPropertyService_i.cpp \
+.obj/CosPropertyService_i.o .obj/CosPropertyService_i.so .shobj/CosPropertyService_i.o .shobj/CosPropertyService_i.so: Property/CosPropertyService_i.cpp \
  Property/CosPropertyService_i.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -408,11 +406,10 @@ realclean: clean
  CosPropertyServiceS_T.cpp \
  CosPropertyServiceS.i
 
-.obj/CosPropertyServiceS.o .obj/CosPropertyServiceS.o .obj/CosPropertyServiceS.o .obj/CosPropertyServiceS.o: CosPropertyServiceS.cpp CosPropertyServiceS.h \
- $(ACE_ROOT)/ace/pre.h CosPropertyServiceC.h \
+.obj/CosPropertyServiceS.o .obj/CosPropertyServiceS.so .shobj/CosPropertyServiceS.o .shobj/CosPropertyServiceS.so: CosPropertyServiceS.cpp CosPropertyServiceS.h \
+ $(ACE_ROOT)/ace/pre.h \
+ CosPropertyServiceC.h \
  $(TAO_ROOT)/tao/corba.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -762,11 +759,9 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Object_Adapter.i \
  $(TAO_ROOT)/tao/PortableServer/Operation_Table.h
 
-.obj/CosPropertyServiceC.o .obj/CosPropertyServiceC.o .obj/CosPropertyServiceC.o .obj/CosPropertyServiceC.o: CosPropertyServiceC.cpp CosPropertyServiceC.h \
+.obj/CosPropertyServiceC.o .obj/CosPropertyServiceC.so .shobj/CosPropertyServiceC.o .shobj/CosPropertyServiceC.so: CosPropertyServiceC.cpp CosPropertyServiceC.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corba.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \

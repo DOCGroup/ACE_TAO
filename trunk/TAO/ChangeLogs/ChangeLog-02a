@@ -1,244 +1,254 @@
+Mon Nov  6 17:26:30 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * */Makefile:
+          Update all dependencies again. The last version commited had
+          only .obj/*.o files listed, none of the .shobj files was listed.
+
+        * performance-tests/Latency/single_threaded.pl:
+          Run only the single threaded test, used to generate the
+          performance graph.
+
 Mon Nov  6 17:16:29 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* orbsvcs/IFR_Service/TypeCodeFactory_skel.cpp:
+        * orbsvcs/IFR_Service/TypeCodeFactory_skel.cpp:
 
-	  Updated the overlooked POA_CORBA::TypeCodeFactory::_dispatch
-	  method to use Bruce Trask's synchronous_upcall_dispatch()
-	  call. This was causing a protection fault when _dispatch
-	  was called. Thanks to Jean-Christophe Dubois <jcd@one.com>
-	  for reporting this bug.
+          Updated the overlooked POA_CORBA::TypeCodeFactory::_dispatch
+          method to use Bruce Trask's synchronous_upcall_dispatch()
+          call. This was causing a protection fault when _dispatch
+          was called. Thanks to Jean-Christophe Dubois <jcd@one.com>
+          for reporting this bug.
 
 Mon Nov  6 16:55:05 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/IIOP_Connect.h:
-	* tao/UIOP_Connect.h: Added the TAO_Export for the TAO_*_Property
-	  class.  
+        * tao/IIOP_Connect.h:
+        * tao/UIOP_Connect.h: Added the TAO_Export for the TAO_*_Property
+          class.
 
-	* tao/IIOP_Connector.cpp:
-	* tao/UIOP_Connector.cpp:
-	* tao/SHMIOP_Connector.cpp: Added a ACE_TEXT macro for a ACE_DEBUG
-	  statement 
+        * tao/IIOP_Connector.cpp:
+        * tao/UIOP_Connector.cpp:
+        * tao/SHMIOP_Connector.cpp: Added a ACE_TEXT macro for a ACE_DEBUG
+          statement
 
 Mon Nov  6 16:16:55 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/*/Makefile: Updated dependencies.
+        * orbsvcs/*/Makefile: Updated dependencies.
 
 Mon Nov  6 15:29:04 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/ast/ast_interface.cpp:
+        * TAO_IDL/ast/ast_interface.cpp:
 
-	  Modified redefine() method to check for self-concatenation
-	  before concatenating pragma lists. Changes made to interface
-	  redefinition code (seeing full definition after a forward
-	  declaration, for example) have introduced a case where
-	  self-concatenation can happen. In this case, the 
-	  concatenation should just be skipped. Thanks to Ossama's
-	  SecurityLevel2.idl file for bringing this case to light.
+          Modified redefine() method to check for self-concatenation
+          before concatenating pragma lists. Changes made to interface
+          redefinition code (seeing full definition after a forward
+          declaration, for example) have introduced a case where
+          self-concatenation can happen. In this case, the
+          concatenation should just be skipped. Thanks to Ossama's
+          SecurityLevel2.idl file for bringing this case to light.
 
 Mon Nov  6 15:10:27 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* docs/Options.html: Updated the documentation
-	
-	* tests/*/Makefile:
-	* tests/performance_tests/*/Makefile: Updated dependencies. 
+        * docs/Options.html: Updated the documentation
+
+        * tests/*/Makefile:
+        * tests/performance_tests/*/Makefile: Updated dependencies.
 
 Mon Nov  6 14:50:23 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Makefile.bor: Added new files.
+        * tao/Makefile.bor: Added new files.
 
 Mon Nov  6 14:34:17 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/TAO.dsp:
-	* tao/TAO_Static.dsp: Updated files.
+        * tao/TAO.dsp:
+        * tao/TAO_Static.dsp: Updated files.
 
 Mon Nov  6 13:54:20 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	Changes related to the new caching scheme in TAO. Please see
-	http://www.cs.wustl.edu/~bala/connection_mgmt.html for the
-	requirements that were a guiding factor for these
-	changes. Further, the present set of changes includes only the
-	Caching scheme. The purging which was a part of the scheme (that
-	will be gone with this changes) has not been added. It will be
-	done in the next set of changes due in another few days/weeks.
+        Changes related to the new caching scheme in TAO. Please see
+        http://www.cs.wustl.edu/~bala/connection_mgmt.html for the
+        requirements that were a guiding factor for these
+        changes. Further, the present set of changes includes only the
+        Caching scheme. The purging which was a part of the scheme (that
+        will be gone with this changes) has not been added. It will be
+        done in the next set of changes due in another few days/weeks.
 
-	* tao/Base_Connection_Property.h:
-	* tao/Base_Connection_Property.inl:
-	* tao/Base_Connection_Property.cpp: An abstraction for the
-	  connection property. This class at present encapsulates the
-	  TAO_Endpoint which is used as a key to look up connections from
-	  the Cache. Looking up connections based on the Endpoint is the
-	  base on which the whole Caching scheme works. This class can be
-	  extended to attach properties for connections ex. QoS
-	  properties. Lookups can then be done based on the endpoint with
-	  the specific properties.
+        * tao/Base_Connection_Property.h:
+        * tao/Base_Connection_Property.inl:
+        * tao/Base_Connection_Property.cpp: An abstraction for the
+          connection property. This class at present encapsulates the
+          TAO_Endpoint which is used as a key to look up connections from
+          the Cache. Looking up connections based on the Endpoint is the
+          base on which the whole Caching scheme works. This class can be
+          extended to attach properties for connections ex. QoS
+          properties. Lookups can then be done based on the endpoint with
+          the specific properties.
 
-	* tao/Cache_Entries.h:
-	* tao/Cache_Entries.cpp:
-	* tao/Cache_Entries.inl:  Provides wrapper classes for the Key and
-	  Value fields of a Cache map.
+        * tao/Cache_Entries.h:
+        * tao/Cache_Entries.cpp:
+        * tao/Cache_Entries.inl:  Provides wrapper classes for the Key and
+          Value fields of a Cache map.
 
-	* tao/Connection_Cache_Manager.h:
-	* tao/Connection_Cache_Manager.cpp:
-	* tao/Connection_Cache_Manager.inl: A wrapper class for the
-	  connection cache. This class holds an instance of
-	  ACE_Hash_Map_Manager on which the connections are
-	  cached. This wrapper is necessary as we can extend the interface
-	  and implementation to iterate over the map based on a specific
-	  requirement. One good example is the case for FT, wherein we
-	  would like to choose connections to a FT server and return the
-	  list of such connections to the caller. 
+        * tao/Connection_Cache_Manager.h:
+        * tao/Connection_Cache_Manager.cpp:
+        * tao/Connection_Cache_Manager.inl: A wrapper class for the
+          connection cache. This class holds an instance of
+          ACE_Hash_Map_Manager on which the connections are
+          cached. This wrapper is necessary as we can extend the interface
+          and implementation to iterate over the map based on a specific
+          requirement. One good example is the case for FT, wherein we
+          would like to choose connections to a FT server and return the
+          list of such connections to the caller.
 
-	* tao/Connection_Handler.h:
-	* tao/Connection_Handler.cpp:
-	* tao/Connection_Handler.inl: An abstract base class for the
-	  connection handlers (event handlers). This base class is used by
-	  both the Server and Client Connection handlers. A pointer to
-	  this base class is held by the Connection Cache. This class (and
-	  hence the inherited classes) is refcounted. The refcount
-	  indicates the number of places the references are held. The
-	  refcounting does part of the memory management.
+        * tao/Connection_Handler.h:
+        * tao/Connection_Handler.cpp:
+        * tao/Connection_Handler.inl: An abstract base class for the
+          connection handlers (event handlers). This base class is used by
+          both the Server and Client Connection handlers. A pointer to
+          this base class is held by the Connection Cache. This class (and
+          hence the inherited classes) is refcounted. The refcount
+          indicates the number of places the references are held. The
+          refcounting does part of the memory management.
 
-	* tao/Client_Strategy_Factory.h:
-	* tao/Client_Strategy_Factory.cpp: Removed the method
-	  create_cached_connector_lock (). This lock for the Connection
-	  Cache is within TAO_Connection_Cache_Manager.
+        * tao/Client_Strategy_Factory.h:
+        * tao/Client_Strategy_Factory.cpp: Removed the method
+          create_cached_connector_lock (). This lock for the Connection
+          Cache is within TAO_Connection_Cache_Manager.
 
-	* tao/default_client.cpp:
-	* tao/default_client.h: Removed the method
-	  create_cached_connector_lock (). The option -ORBConnectorLock
-	  has been removed as it does not make much sense in the present
-	  context.
+        * tao/default_client.cpp:
+        * tao/default_client.h: Removed the method
+          create_cached_connector_lock (). The option -ORBConnectorLock
+          has been removed as it does not make much sense in the present
+          context.
 
-	* tao/Connector_Registry.h:
-	* tao/Connector_Registry.cpp: All references to purging scheme has
-	  been removed.
+        * tao/Connector_Registry.h:
+        * tao/Connector_Registry.cpp: All references to purging scheme has
+          been removed.
 
-	* tao/Endpoint.h:
-	* tao/Endpoint.i: Added priority as one of the argument to the
-	  constructor with a default value. Further, added is_equivalent
-	  (), hash () and duplicate () as pure virtual functions. The
-	  Base_Connection_Property class (and in turn the TAO_Cache_ExtId
-	  class) depends on these virtual functions to check for
-	  equivalency, get a hash value and do a deep copy respectively.
+        * tao/Endpoint.h:
+        * tao/Endpoint.i: Added priority as one of the argument to the
+          constructor with a default value. Further, added is_equivalent
+          (), hash () and duplicate () as pure virtual functions. The
+          Base_Connection_Property class (and in turn the TAO_Cache_ExtId
+          class) depends on these virtual functions to check for
+          equivalency, get a hash value and do a deep copy respectively.
 
-	* tao/IIOP_Connect.h:
-	* tao/IIOP_Connect.cpp:
-	* tao/UIOP_Connect.h:
-	* tao/UIOP_Connect.cpp:
-	* tao/SHMIOP_Connect.h:
-	* tao/SHMIOP_Connect.cpp: Zapped the base class
-	  TAO_*_Handler_Base. This class practically provided nothing but
-	  an extra class in inheritance hierarchy. The protocol property
-	  structure that was defined within this TAO_*_Handler_Base class
-	  has been made a different class by name TAO_*_Properties. The
-	  connection handlers will now inherit directly from the Service
-	  Handler specialised by the type of stream and the
-	  TAO_Connection_Handler class. Implementation for a couple of
-	  virtual methods defined in TAO_Connection_Handler class have
-	  been added. The memory management of the connection handlers on
-	  both the server and client side follows the same pattern. If the
-	  handlers are registered with the reactor, the handlers are
-	  marked and their refcounts bumped up. When the Connection Cache
-	  is closed the Handle_Set of the handlers that are registered
-	  with the reactor are passed back to the ORB_Core and the
-	  refcounts decreased by one. This Handle_Set is used by the
-	  ORB_Core to de-register those handles from the reactor. The
-	  reactor then calls handle_close () on these handlers. At that
-	  point of time, refcounts are further decreased by one, which
-	  makes the handlers destroy themselves.  This scheme of memory
-	  management helps for both these cases (1) When the reactor
-	  dissappears before the ORB_Core and (2) When the ORB_Core
-	  dissappears before the reactor.
+        * tao/IIOP_Connect.h:
+        * tao/IIOP_Connect.cpp:
+        * tao/UIOP_Connect.h:
+        * tao/UIOP_Connect.cpp:
+        * tao/SHMIOP_Connect.h:
+        * tao/SHMIOP_Connect.cpp: Zapped the base class
+          TAO_*_Handler_Base. This class practically provided nothing but
+          an extra class in inheritance hierarchy. The protocol property
+          structure that was defined within this TAO_*_Handler_Base class
+          has been made a different class by name TAO_*_Properties. The
+          connection handlers will now inherit directly from the Service
+          Handler specialised by the type of stream and the
+          TAO_Connection_Handler class. Implementation for a couple of
+          virtual methods defined in TAO_Connection_Handler class have
+          been added. The memory management of the connection handlers on
+          both the server and client side follows the same pattern. If the
+          handlers are registered with the reactor, the handlers are
+          marked and their refcounts bumped up. When the Connection Cache
+          is closed the Handle_Set of the handlers that are registered
+          with the reactor are passed back to the ORB_Core and the
+          refcounts decreased by one. This Handle_Set is used by the
+          ORB_Core to de-register those handles from the reactor. The
+          reactor then calls handle_close () on these handlers. At that
+          point of time, refcounts are further decreased by one, which
+          makes the handlers destroy themselves.  This scheme of memory
+          management helps for both these cases (1) When the reactor
+          dissappears before the ORB_Core and (2) When the ORB_Core
+          dissappears before the reactor.
 
-	  Also, moved some of the code that was protocol independent in to
-	  the base class TAO_Connection_Handler.
+          Also, moved some of the code that was protocol independent in to
+          the base class TAO_Connection_Handler.
 
-	* tao/IIOP_Acceptor.h:
-	* tao/UIOP_Acceptor.h:
-	* tao/SHMIOP_Acceptor.h: Renamed the struct that had the
-	  connection property to TAO_*_Properties.
+        * tao/IIOP_Acceptor.h:
+        * tao/UIOP_Acceptor.h:
+        * tao/SHMIOP_Acceptor.h: Renamed the struct that had the
+          connection property to TAO_*_Properties.
 
-	* tao/IIOP_Endpoint.h:
-	* tao/IIOP_Endpoint.cpp:
-	* tao/UIOP_Endpoint.h:
-	* tao/UIOP_Endpoint.cpp:
-	* tao/SHMIOP_Endpoint.h:
-	* tao/SHMIOP_Endpoint.cpp: Provided implementation for the methods
-	  hash (), is_equivalent () and duplicate ().
+        * tao/IIOP_Endpoint.h:
+        * tao/IIOP_Endpoint.cpp:
+        * tao/UIOP_Endpoint.h:
+        * tao/UIOP_Endpoint.cpp:
+        * tao/SHMIOP_Endpoint.h:
+        * tao/SHMIOP_Endpoint.cpp: Provided implementation for the methods
+          hash (), is_equivalent () and duplicate ().
 
-	* tao/Pluggable.h:
-	* tao/Pluggable.i:
-	* tao/Pluggable.cpp: Removed references to the purging
-	  scheme. Cached the pointer to the ORB_Core in TAO_Connector and
-	  provided accesors to the ORB_Core. All the *_Connector classes
-	  had its own copy of the ORB_Core. So, they have been moved to
-	  the base class TAO_Connector.
+        * tao/Pluggable.h:
+        * tao/Pluggable.i:
+        * tao/Pluggable.cpp: Removed references to the purging
+          scheme. Cached the pointer to the ORB_Core in TAO_Connector and
+          provided accesors to the ORB_Core. All the *_Connector classes
+          had its own copy of the ORB_Core. So, they have been moved to
+          the base class TAO_Connector.
 
-	* tao/IIOP_Transport.h:
-	* tao/IIOP_Transport.cpp:
-	* tao/UIOP_Transport.h:
-	* tao/UIOP_Transport.cpp:
-	* tao/SHMIOP_Transport.h:
-	* tao/SHMIOP_Transport.cpp: Added a method service_handler () to
-	  access the underlying service handler associated with the
-	  transport. Changed the implementation of idle () method. This
-	  now calls the idle on the correspoding handler that it holds.
+        * tao/IIOP_Transport.h:
+        * tao/IIOP_Transport.cpp:
+        * tao/UIOP_Transport.h:
+        * tao/UIOP_Transport.cpp:
+        * tao/SHMIOP_Transport.h:
+        * tao/SHMIOP_Transport.cpp: Added a method service_handler () to
+          access the underlying service handler associated with the
+          transport. Changed the implementation of idle () method. This
+          now calls the idle on the correspoding handler that it holds.
 
-	* tao/Acceptor_Impl.cpp: Removed references to the existing
-	  purging scheme. Further, changed the scheme in which the open
-	  connections are kept track in a reactive-concurrency model. Now
-	  the corresponding handlers will be marked as being registered
-	  with the reactor and their reference count bumped up before the
-	  handler is registered with the reactor.
+        * tao/Acceptor_Impl.cpp: Removed references to the existing
+          purging scheme. Further, changed the scheme in which the open
+          connections are kept track in a reactive-concurrency model. Now
+          the corresponding handlers will be marked as being registered
+          with the reactor and their reference count bumped up before the
+          handler is registered with the reactor.
 
-	* tao/ORB_Core.h:
-	* tao/ORB_Core.cpp:
-	* tao/ORB_Core.i: Added an instance of the
-	  Connection_Cache_Manager in the ORB_Core and provided an
-	  accessor for it. Removed the Handle_Set that was kept in the
-	  ORB_Core and the accessors of the Handle_Set.
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.cpp:
+        * tao/ORB_Core.i: Added an instance of the
+          Connection_Cache_Manager in the ORB_Core and provided an
+          accessor for it. Removed the Handle_Set that was kept in the
+          ORB_Core and the accessors of the Handle_Set.
 
-	* tao/Resource_Factory.h:
-	* tao/Resource_Factory.cpp:
-	* tao/default_resource.h:
-	* tao/default_resource.cpp:  Zapped the class
-	  TAO_Cached_Connector_Lock as we now hold a single lock on the
-	  Cache_Map. Added a method create_cached_connection_lock (). This
-	  method creates the right lock for the Connection_Cache. Added an
-	  option -ORBConnectionLock that can used at ORB initialisation.
+        * tao/Resource_Factory.h:
+        * tao/Resource_Factory.cpp:
+        * tao/default_resource.h:
+        * tao/default_resource.cpp:  Zapped the class
+          TAO_Cached_Connector_Lock as we now hold a single lock on the
+          Cache_Map. Added a method create_cached_connection_lock (). This
+          method creates the right lock for the Connection_Cache. Added an
+          option -ORBConnectionLock that can used at ORB initialisation.
 
-	* tao/Makefile:
-	* tao/PortableServer/Makefile:
-	* tao/DynamicAny/Makefile:
-	* tao/IORManipulation/Makefile:
-	* tao/IORTable/Makefile: Updated dependencies.
+        * tao/Makefile:
+        * tao/PortableServer/Makefile:
+        * tao/DynamicAny/Makefile:
+        * tao/IORManipulation/Makefile:
+        * tao/IORTable/Makefile: Updated dependencies.
 
 Mon Nov  6 13:03:51 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/DynamicInterface/ExceptionList.cpp:
+        * tao/DynamicInterface/ExceptionList.cpp:
 
-	  Removed explicit instantiation of
-	  ACE_Unbounded_Queue<CORBA::TypeCode_ptr> and related
-	  types, since they already exist in tao/Exception.cpp.
+          Removed explicit instantiation of
+          ACE_Unbounded_Queue<CORBA::TypeCode_ptr> and related
+          types, since they already exist in tao/Exception.cpp.
 
 Mon Nov  6 12:28:41 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_union.cpp:
-	* TAO_IDL/be_include/be_union.h:
-	* TAO_IDL/ast/ast_union.cpp:
-	* TAO_IDL/include/ast_union.h:
+        * TAO_IDL/be/be_union.cpp:
+        * TAO_IDL/be_include/be_union.h:
+        * TAO_IDL/ast/ast_union.cpp:
+        * TAO_IDL/include/ast_union.h:
 
-	  Had to move default_index_, default_index() and
-	  compute_default_index() from be_union to ast_union,
-	  in order to fix problems caused by a similar move
-	  of default_value_, default_value() and 
-	  compute_default_value() recently.
+          Had to move default_index_, default_index() and
+          compute_default_index() from be_union to ast_union,
+          in order to fix problems caused by a similar move
+          of default_value_, default_value() and
+          compute_default_value() recently.
 
 Mon Nov  6 09:50:37 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tao/ORB_Core.cpp (stubless_relative_roundtrip_timeout): 
-	  Put a TAO_HAS_CORBA_MESSAGING guard around the implementation of
-	  this function to satisfy the ssl=1 case.
+        * tao/ORB_Core.cpp (stubless_relative_roundtrip_timeout):
+          Put a TAO_HAS_CORBA_MESSAGING guard around the implementation of
+          this function to satisfy the ssl=1 case.
 
 Mon Nov  6 10:06:09 2000  Carlos O'Ryan  <coryan@uci.edu>
 

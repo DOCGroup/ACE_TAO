@@ -42,14 +42,12 @@ include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/DynSched_Test.o .obj/DynSched_Test.o .obj/DynSched_Test.o .obj/DynSched_Test.o: DynSched_Test.cpp \
+.obj/DynSched_Test.o .obj/DynSched_Test.so .shobj/DynSched_Test.o .shobj/DynSched_Test.so: DynSched_Test.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Sched/Strategy_Scheduler.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Sched/DynSched.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -380,14 +378,12 @@ include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
  $(TAO_ROOT)/orbsvcs/orbsvcs/Sched/DynSched.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Sched/Strategy_Scheduler.i
 
-.obj/DynSched_Test.o .obj/DynSched_Test.o .obj/DynSched_Test.o .obj/DynSched_Test.o: DynSched_Test.cpp \
+.obj/DynSched_Test.o .obj/DynSched_Test.so .shobj/DynSched_Test.o .shobj/DynSched_Test.so: DynSched_Test.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Sched/Strategy_Scheduler.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Sched/DynSched.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \

@@ -65,11 +65,9 @@ realclean: clean
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/client.o .obj/client.o .obj/client.o .obj/client.o: client.cpp Callback_i.h callbackS.h callbackC.h \
+.obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp Callback_i.h callbackS.h callbackC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -398,7 +396,8 @@ realclean: clean
  callbackS_T.h callbackS_T.i callbackS_T.cpp callbackS.i \
  $(ACE_ROOT)/ace/Sample_History.h \
  $(ACE_ROOT)/ace/Sample_History.inl \
- Callback_i.inl $(ACE_ROOT)/ace/High_Res_Timer.h \
+ Callback_i.inl \
+ $(ACE_ROOT)/ace/High_Res_Timer.h \
  $(ACE_ROOT)/ace/High_Res_Timer.i \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Get_Opt.i \
@@ -417,11 +416,9 @@ realclean: clean
  $(ACE_ROOT)/ace/Stream_Modules.h \
  $(ACE_ROOT)/ace/Stream_Modules.cpp
 
-.obj/server.o .obj/server.o .obj/server.o .obj/server.o: server.cpp Server_i.h callbackS.h callbackC.h \
+.obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp Server_i.h callbackS.h callbackC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -753,11 +750,9 @@ realclean: clean
  $(ACE_ROOT)/ace/Sched_Params.h \
  $(ACE_ROOT)/ace/Sched_Params.i
 
-.obj/Server_i.o .obj/Server_i.o .obj/Server_i.o .obj/Server_i.o: Server_i.cpp Server_i.h callbackS.h callbackC.h \
+.obj/Server_i.o .obj/Server_i.so .shobj/Server_i.o .shobj/Server_i.so: Server_i.cpp Server_i.h callbackS.h callbackC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -1085,11 +1080,9 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  callbackS_T.h callbackS_T.i callbackS_T.cpp callbackS.i Server_i.inl
 
-.obj/Callback_i.o .obj/Callback_i.o .obj/Callback_i.o .obj/Callback_i.o: Callback_i.cpp Callback_i.h callbackS.h callbackC.h \
+.obj/Callback_i.o .obj/Callback_i.so .shobj/Callback_i.o .shobj/Callback_i.so: Callback_i.cpp Callback_i.h callbackS.h callbackC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -1420,11 +1413,9 @@ realclean: clean
  $(ACE_ROOT)/ace/Sample_History.inl \
  Callback_i.inl
 
-.obj/callbackC.o .obj/callbackC.o .obj/callbackC.o .obj/callbackC.o: callbackC.cpp callbackC.h \
+.obj/callbackC.o .obj/callbackC.so .shobj/callbackC.o .shobj/callbackC.so: callbackC.cpp callbackC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -1742,11 +1733,9 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  callbackC.i
 
-.obj/callbackS.o .obj/callbackS.o .obj/callbackS.o .obj/callbackS.o: callbackS.cpp callbackS.h callbackC.h \
+.obj/callbackS.o .obj/callbackS.so .shobj/callbackS.o .shobj/callbackS.so: callbackS.cpp callbackS.h callbackC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
