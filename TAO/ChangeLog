@@ -1,3 +1,9 @@
+Sat Jul 12 18:43:31 2003  Irfan Pyarali  <irfan@oomworks.com>
+
+	* tests\RTCORBA\Priority_Inversion_With_Bands\client.cpp (svc): 
+
+	  Improved output format.
+
 Sat Jul 12 18:27:10 2003  Irfan Pyarali  <irfan@oomworks.com>
 
 	* tests\RTCORBA\Priority_Inversion_With_Bands\client.cpp: 
