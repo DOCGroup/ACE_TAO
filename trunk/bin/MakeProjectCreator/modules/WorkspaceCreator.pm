@@ -484,8 +484,8 @@ sub write_workspace {
 
   if ($self->get_toplevel()) {
     if ($addfile) {
-      ## VC6 is the only tool that currently cannot work with duplicate names, but
-      ## duplicates really don't make sense for anything but Makefile-style projects.
+      ## To be consistent across multiple project types, we disallow
+      ## duplicate project names for all types, not just VC6.
       ## Note that these name are handled case-insensitive by VC6
       my(%names) = ();
       foreach my $project (@{$self->{'projects'}}) {
@@ -506,8 +506,9 @@ sub write_workspace {
     my($name) = $self->transform_file_name($self->workspace_file_name());
 
     my($abort_creation) = 0;
-    if ($duplicates > 0 && !$self->allow_duplicates()) {
-      print "ERROR: Duplicates not allowed.\n";
+    if ($duplicates > 0) {
+      print "ERROR: Duplicate project names are " .
+            "not allowed within a workspace.\n";
       $abort_creation = 1;
     }
     else {
@@ -530,45 +531,63 @@ sub write_workspace {
         mkpath($dir, 0, 0777);
       }
 
-      ## First write the output to a temporary file
-      my($tmp) = "MWC$>.$$";
-      my($different) = 1;
-      if (open($fh, ">$tmp")) {
-        $self->pre_workspace($fh);
-        $self->write_comps($fh, $creator);
-        $self->post_workspace($fh);
-        close($fh);
+      if ($self->compare_output()) {
+        ## First write the output to a temporary file
+        my($tmp) = "MWC$>.$$";
+        my($different) = 1;
+        if (open($fh, ">$tmp")) {
+          $self->pre_workspace($fh);
+          $self->write_comps($fh, $creator);
+          $self->post_workspace($fh);
+          close($fh);
 
-        if (-r $name &&
-            -s $tmp == -s $name && compare($tmp, $name) == 0) {
-          $different = 0;
+          if (-r $name &&
+              -s $tmp == -s $name && compare($tmp, $name) == 0) {
+            $different = 0;
+          }
         }
-      }
-      else {
-        $error = "ERROR: Unable to open $tmp for output.";
-        $status = 0;
-      }
+        else {
+          $error = "ERROR: Unable to open $tmp for output.";
+          $status = 0;
+        }
 
-      if ($status) {
-        if ($different) {
-          unlink($name);
-          if (rename($tmp, $name)) {
+        if ($status) {
+          if ($different) {
+            unlink($name);
+            if (rename($tmp, $name)) {
+              if ($addfile) {
+                $self->add_file_written($name);
+              }
+            }
+            else {
+              $error = 'ERROR: Unable to open ' . $self->getcwd() .
+                       "/$name for output";
+              $status = 0;
+            }
+          }
+          else {
+            ## We will pretend that we wrote the file
+            unlink($tmp);
             if ($addfile) {
               $self->add_file_written($name);
             }
           }
-          else {
-            $error = 'ERROR: Unable to open ' . $self->getcwd() .
-                     "/$name for output";
-            $status = 0;
-          }
         }
-        else {
-          ## We will pretend that we wrote the file
-          unlink($tmp);
+      }
+      else {
+        if (open($fh, ">$name")) {
+          $self->pre_workspace($fh);
+          $self->write_comps($fh, $creator);
+          $self->post_workspace($fh);
+          close($fh);
+
           if ($addfile) {
             $self->add_file_written($name);
           }
+        }
+        else {
+          $error = "ERROR: Unable to open $name for output.";
+          $status = 0;
         }
       }
     }
@@ -1419,12 +1438,6 @@ sub source_listing_callback {
 sub generate_implicit_project_dependencies {
   #my($self) = shift;
   return 0;
-}
-
-
-sub allow_duplicates {
-  #my($self) = shift;
-  return 1;
 }
 
 
