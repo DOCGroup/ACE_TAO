@@ -80,10 +80,13 @@ realclean: clean
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/Content_Iterator_i.o .obj/Content_Iterator_i.so .shobj/Content_Iterator_i.o .shobj/Content_Iterator_i.so: Content_Iterator_i.cpp Content_Iterator_i.h \
- $(ACE_ROOT)/ace/pre.h Web_ServerS.h \
- $(TAO_ROOT)/tao/MessagingS.h \
- $(TAO_ROOT)/tao/orbconf.h \
+.obj/Content_Iterator_i.o .obj/Content_Iterator_i.so .shobj/Content_Iterator_i.o .shobj/Content_Iterator_i.so: Content_Iterator_i.cpp \
+ $(ACE_ROOT)/ace/FILE_Connector.h \
+ $(ACE_ROOT)/ace/pre.h \
+ $(ACE_ROOT)/ace/FILE_IO.h \
+ $(ACE_ROOT)/ace/FILE.h \
+ $(ACE_ROOT)/ace/IO_SAP.h \
+ $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -104,6 +107,25 @@ realclean: clean
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/IO_SAP.i \
+ $(ACE_ROOT)/ace/FILE_Addr.h \
+ $(ACE_ROOT)/ace/Addr.h \
+ $(ACE_ROOT)/ace/Addr.i \
+ $(ACE_ROOT)/ace/FILE_Addr.i \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/FILE.i \
+ $(ACE_ROOT)/ace/FILE_IO.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/FILE_Connector.i \
+ Content_Iterator_i.h Web_ServerS.h \
+ $(TAO_ROOT)/tao/MessagingS.h \
+ $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/TimeBaseS.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/Any.h \
@@ -111,14 +133,7 @@ realclean: clean
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -167,8 +182,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/try_macros.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
@@ -390,9 +403,9 @@ realclean: clean
  Web_ServerS_T.h Web_ServerS_T.i Web_ServerS_T.cpp Web_ServerS.i
 
 .obj/Iterator_Factory_i.o .obj/Iterator_Factory_i.so .shobj/Iterator_Factory_i.o .shobj/Iterator_Factory_i.so: Iterator_Factory_i.cpp Content_Iterator_i.h \
- $(ACE_ROOT)/ace/pre.h Web_ServerS.h \
- $(TAO_ROOT)/tao/MessagingS.h \
- $(TAO_ROOT)/tao/orbconf.h \
+ $(ACE_ROOT)/ace/FILE_Addr.h \
+ $(ACE_ROOT)/ace/pre.h \
+ $(ACE_ROOT)/ace/Addr.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -413,6 +426,21 @@ realclean: clean
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Addr.i \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/FILE_Addr.i \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/FILE_IO.h \
+ $(ACE_ROOT)/ace/FILE.h \
+ $(ACE_ROOT)/ace/IO_SAP.h \
+ $(ACE_ROOT)/ace/IO_SAP.i \
+ $(ACE_ROOT)/ace/FILE.i \
+ $(ACE_ROOT)/ace/FILE_IO.i Web_ServerS.h \
+ $(TAO_ROOT)/tao/MessagingS.h \
+ $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/TimeBaseS.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/Any.h \
@@ -420,10 +448,7 @@ realclean: clean
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
@@ -476,8 +501,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/try_macros.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
@@ -1013,10 +1036,13 @@ realclean: clean
  Web_ServerC.h Web_ServerC.i Web_ServerS_T.h Web_ServerS_T.i \
  Web_ServerS_T.cpp Web_ServerS.i Iterator_Factory_i.h
 
-.obj/Content_Iterator_i.o .obj/Content_Iterator_i.so .shobj/Content_Iterator_i.o .shobj/Content_Iterator_i.so: Content_Iterator_i.cpp Content_Iterator_i.h \
- $(ACE_ROOT)/ace/pre.h Web_ServerS.h \
- $(TAO_ROOT)/tao/MessagingS.h \
- $(TAO_ROOT)/tao/orbconf.h \
+.obj/Content_Iterator_i.o .obj/Content_Iterator_i.so .shobj/Content_Iterator_i.o .shobj/Content_Iterator_i.so: Content_Iterator_i.cpp \
+ $(ACE_ROOT)/ace/FILE_Connector.h \
+ $(ACE_ROOT)/ace/pre.h \
+ $(ACE_ROOT)/ace/FILE_IO.h \
+ $(ACE_ROOT)/ace/FILE.h \
+ $(ACE_ROOT)/ace/IO_SAP.h \
+ $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -1037,6 +1063,25 @@ realclean: clean
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/IO_SAP.i \
+ $(ACE_ROOT)/ace/FILE_Addr.h \
+ $(ACE_ROOT)/ace/Addr.h \
+ $(ACE_ROOT)/ace/Addr.i \
+ $(ACE_ROOT)/ace/FILE_Addr.i \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/FILE.i \
+ $(ACE_ROOT)/ace/FILE_IO.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/FILE_Connector.i \
+ Content_Iterator_i.h Web_ServerS.h \
+ $(TAO_ROOT)/tao/MessagingS.h \
+ $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/TimeBaseS.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/Any.h \
@@ -1044,14 +1089,7 @@ realclean: clean
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.h \
  $(ACE_ROOT)/ace/Based_Pointer_T.i \
  $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
@@ -1100,8 +1138,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/try_macros.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
@@ -1323,9 +1359,9 @@ realclean: clean
  Web_ServerS_T.h Web_ServerS_T.i Web_ServerS_T.cpp Web_ServerS.i
 
 .obj/Iterator_Factory_i.o .obj/Iterator_Factory_i.so .shobj/Iterator_Factory_i.o .shobj/Iterator_Factory_i.so: Iterator_Factory_i.cpp Content_Iterator_i.h \
- $(ACE_ROOT)/ace/pre.h Web_ServerS.h \
- $(TAO_ROOT)/tao/MessagingS.h \
- $(TAO_ROOT)/tao/orbconf.h \
+ $(ACE_ROOT)/ace/FILE_Addr.h \
+ $(ACE_ROOT)/ace/pre.h \
+ $(ACE_ROOT)/ace/Addr.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -1346,6 +1382,21 @@ realclean: clean
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Addr.i \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/FILE_Addr.i \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/FILE_IO.h \
+ $(ACE_ROOT)/ace/FILE.h \
+ $(ACE_ROOT)/ace/IO_SAP.h \
+ $(ACE_ROOT)/ace/IO_SAP.i \
+ $(ACE_ROOT)/ace/FILE.i \
+ $(ACE_ROOT)/ace/FILE_IO.i Web_ServerS.h \
+ $(TAO_ROOT)/tao/MessagingS.h \
+ $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/TimeBaseS.h \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/Any.h \
@@ -1353,10 +1404,7 @@ realclean: clean
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
@@ -1409,8 +1457,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
  $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/try_macros.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \

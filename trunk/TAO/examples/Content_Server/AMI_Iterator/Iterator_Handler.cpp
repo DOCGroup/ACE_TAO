@@ -8,7 +8,7 @@
 #include "ace/Process_Manager.h"
 #include "Iterator_Handler.h"
 
-ACE_RCSID(Content_Server, Iterator_Handler, "$Id$")
+ACE_RCSID(AMI_Iterator, Iterator_Handler, "$Id$")
 
 Iterator_Handler::Iterator_Handler (void)
   : file_ ((const ACE_FILE_Addr &) ACE_Addr::sap_any),
@@ -117,7 +117,7 @@ Iterator_Handler::run (int * request_count,
   ACE_CHECK;
 }
 
-void 
+void
 Iterator_Handler::initialize_content_iterator (
     const char * pathname,
     Web_Server::Iterator_Factory_ptr factory,
@@ -136,7 +136,7 @@ Iterator_Handler::initialize_content_iterator (
   ACE_FILE_Connector connector;
 
   if (connector.connect (this->file_io_,
-                         this->file_, 
+                         this->file_,
                          0,
                          ACE_Addr::sap_any,
                          0,

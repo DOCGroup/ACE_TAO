@@ -25,11 +25,11 @@ module Web_Server
     short status;
  };
 
-  struct Metadata_Type 
+  struct Metadata_Type
   {
     // Modification date.
     string modification_date;
-    
+
     // Type of content.
     string content_type;
   };
@@ -39,7 +39,7 @@ module Web_Server
     // This factory method returns a <Content_Iterator> that
     // can be used to read the <contents> associated with
     // <pathname> one ``chunk'' at a time.  The <metadata>
-    // reports information about the <contents>. 
+    // reports information about the <contents>.
     void get_iterator (in string pathname,
                        out Content_Iterator contents,
                        out Metadata_Type metadata)
