@@ -10,8 +10,8 @@ utilization, and degree of priority inversion incurred by TAO twoway
 operations invoked under different workloads and priorities.  For
 more information and empirical results, please see
 
-http://www.cs.wustl.edu/~schmidt/RT-perf.ps.gz
-http://www.cs.wustl.edu/~schmidt/RT-OS.ps.gz
+http://www.cs.wustl.edu/~schmidt/PDF/RT-perf.pdf
+http://www.cs.wustl.edu/~schmidt/PDF/RT-OS.pdf
 
 COMPILING
 ---------
