@@ -39,12 +39,12 @@ ACEXML_HttpCharStream::open (const ACEXML_Char *url)
   delete[] this->url_;
   this->url_ = 0;
 
-  this->url_ = ACE::strnew (url);
+  this->url_ = ACE_OS::strdup (url);
 
   ACE_NEW_RETURN (this->url_addr_, ACEXML_URL_Addr, -1);
   ACE_NEW_RETURN (this->stream_, ACEXML_Mem_Map_Stream, -1);
 
-  if (this->url_addr_->string_to_addr (ACE_TEXT_ALWAYS_CHAR(this->url_)) == -1)
+  if (this->url_addr_->string_to_addr (this->url_) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "cannot convert URL"), -1);
 
   ACE_NEW_RETURN (this->connector_,
@@ -209,25 +209,24 @@ ACEXML_HttpCharStream::get_url (size_t& len)
 int
 ACEXML_HttpCharStream::send_request (void)
 {
-  int commandsize = ACE_OS::strlen (this->url_addr_->get_path_name ())
-    + ACE_OS::strlen (this->url_addr_->get_host_name ())
-    + 20 * sizeof (ACEXML_Char)    // Extra
-    + 1 * sizeof (ACEXML_Char)     // NUL byte
-    + 16 * sizeof (ACEXML_Char);   // Protocol filler...
+  char* path = ACE_OS::strdup (ACE_TEXT_ALWAYS_CHAR (this->url_addr_->get_path_name()));
+  ACE_Auto_Basic_Array_Ptr<char> path_ptr (path);
+  int commandsize = ACE_OS::strlen (path)
+                    + ACE_OS::strlen (this->url_addr_->get_host_name ())
+                    + 20     // Extra
+                    + 1      // NUL byte
+                    + 16 ;   // Protocol filler...
 
-  ACEXML_Char* command;
-  ACE_NEW_RETURN (command, ACEXML_Char[commandsize], -1);
+  char* command;
+  ACE_NEW_RETURN (command, char[commandsize], -1);
 
   // Ensure that the <command> memory is deallocated.
-  ACE_Auto_Basic_Array_Ptr<ACEXML_Char> cmd_ptr (command);
+  ACE_Auto_Basic_Array_Ptr<char> cmd_ptr (command);
 
-  int bytes = ACE_OS::sprintf (command,
-                               ACE_TEXT("GET %s HTTP/1.0\r\n"),
-                               this->url_addr_->get_path_name ());
-  bytes += ACE_OS::sprintf (&command[bytes],
-                            ACE_TEXT("Host: %s\r\n"),
-                            this->url_addr_->get_host_name());
-  bytes += ACE_OS::sprintf (&command[bytes], ACE_TEXT("\r\n"));
+  int bytes = ACE_OS::sprintf (command, "GET %s HTTP/1.0\r\n", path);
+  bytes += ACE_OS::sprintf (&command[bytes], "Host: %s\r\n",
+                            this->url_addr_->get_host_name ());
+  bytes += ACE_OS::sprintf (&command[bytes], "\r\n");
 
   ACE_Time_Value tv (ACE_DEFAULT_TIMEOUT);
 
