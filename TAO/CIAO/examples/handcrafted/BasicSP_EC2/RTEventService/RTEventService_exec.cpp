@@ -251,6 +251,14 @@ CIAO::Object_Reference_Cookie::Object_Reference_Cookie (CORBA::Object_ptr obj)
 int
 CIAO::Object_Reference_Cookie::insert (CORBA::Object_ptr obj)
 {
+  // CORBA::ORB_var orb = obj->orb_core ()->orb ();
+
+  // PortableServer::ObjectId_var oid = orb->object_to_id (obj);
+
+  // this->cookieValue ().length (oid->length ());
+
+  // this->cookieValue ().get_buffer (0);
+
   return 0;
 }
 
@@ -265,8 +273,7 @@ CIAO::Object_Reference_Cookie::extract (::Components::Cookie *ck,
 
   ::CORBA::OctetSeq * x = c->get_cookie ();
 
-  //if (x->length () != CORBA::Object::size ())
-  //  return -1;
+  // obj = CORBA::ORB::string_to_object (x);
 
   return 0;
 }
