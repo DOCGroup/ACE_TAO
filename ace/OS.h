@@ -4,14 +4,19 @@
 // ============================================================================
 //
 // = LIBRARY
-//    ace
+//   ace
 //
 // = FILENAME
-//    OS.h
+//   OS.h
+//
+// = DESCRIPTION
+//   This file and its associated OS.i and OS.cpp files are the primary
+//   point of portability for ACE.  Once you get this file ported to a
+//   new platform, then pretty much everything else comes for "free."
 //
 // = AUTHOR
-//    Doug Schmidt <schmidt@cs.wustl.edu>, Jesper S. M|ller
-//    <stophph@diku.dk>, and a cast of thousands...
+//   Doug Schmidt <schmidt@cs.wustl.edu>, Jesper S. M|ller
+//   <stophph@diku.dk>, and a cast of thousands...
 //
 // ============================================================================
 
