@@ -1,3 +1,9 @@
+Fri Aug  2 11:35:17 2002  Ossama Othman  <ossama@uci.edu>
+
+	* docs/interceptors.html:
+
+	  Updated CORBA spec URLs.
+
 Fri Aug  2 08:44:19 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* orbsvcs/PSS/PSDL_Struct_Visitor.cpp (gen_code_for_si): 
