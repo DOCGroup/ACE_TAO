@@ -141,7 +141,7 @@ public:
   // To handle System Exceptions at the lowest level,
   // a method returning the request_id_ is needed.
 
-  CORBA::ULong request_id (void);
+  virtual CORBA::ULong request_id (void);
 
   CORBA::Object_ptr forward_location (void);
   // get the forward_location

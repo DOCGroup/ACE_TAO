@@ -1,5 +1,16 @@
 Thu Aug 26 20:26:02 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
+        * TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
+        * TAO_IDL/be_include/be_visitor_operation/operation_cs.h:
+        * TAO_IDL/be_include/be_visitor_operation/operation_ss.h:
+        * tao/GIOP_Server_Request.h:
+        * tao/Interceptor.cpp:
+        * tao/InterceptorC.h:
+        * tao/ORB.i:
+        * tao/Server_Request.h:
+        * tao/corba.h:  Ready to rock'n roll.
+
 	* TAO_IDL/be/be_visitor_sequence/cdr_op_ch.cpp:
 	* TAO_IDL/be/be_visitor_sequence/cdr_op_ci.cpp:
 	* TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp: Supressed
