@@ -1,0 +1,212 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <!-- $Id$ -->
+    <title>TAO Performance Tuning</title>
+    <LINK href="tao.css" rel="stylesheet" type="text/css">
+  </head>
+
+  <body>
+    <h1>TAO Performance Tuning</h1>
+
+    <h2>Overview</h2>
+
+    <p>
+      As is the case with most applications, including compilers,
+      enabling optimizations can often introduce side effects that may
+      not be desirable for all applications.  For this reason, TAO is
+      by default, <i>i.e.</i> "out-of-the-box," configured for
+      stability rather than for speed or scalability.
+    </p>
+
+    <p>
+      This document describes how to configure
+      <a href ="index.html">TAO</a> for optimum throughput or
+      scalability for a variety of applications.  However, the user
+      should bear in mind that often times trade-offs exist between
+      speed, size and scalability.  For example, it may not be
+      possible to configure both a highly scalable and exceedingly
+      fast ORB.  Specifically, it may boil down to being one or the
+      other, but not both.
+    </p>
+
+    <h2>Optimizing Throughput</h2>
+
+    <p>
+      "Throughput" refers to the number of events occurring per unit
+      time, where "events" can refer to ORB-mediated method
+      invocations, for example.  This section describes how to
+      optimize throughput on both the client side and the server
+      side.
+    </p>
+
+    <p>
+      It is important to understand that enabling throughput
+      optimizations for one side of an invocation, such as the client
+      side, may not affect how well the server side performs.  This is
+      particularly important when the client side ORB implementation
+      and the server side ORB implementation are developed by
+      different ORB developers or vendors.
+    </p>
+
+    <h3>Optimizing Throughput on the Client Side</h3>
+
+    <p>
+      Client side ORB throughput optimizations entail improving the
+      rate at which CORBA requests (method invocations) are sent to
+      the target server.  Depending on the application, various
+      techniques can be employed to improve the rate at which CORBA
+      requests are sent and/or the amount of work the client can
+      perform as requests are sent or replies received.  Such
+      techniques include taking advantage of:
+    </p>
+    <ul>
+      <li>
+	<b>Run-time features</b> offered by the ORB, such as
+	Asynchronous Method Invocations (AMI)
+      </li>
+      <li>
+	<b>ORB configurations</b>, such as disabling synchronization
+	of various parts of the ORB in a single-threaded application
+      </li>
+    </ul>
+
+    <h4>Run-Time Optimizations on the Client Side</h4>
+
+    <p>
+      For two-way invocations, i.e. those that expect a reply
+      (including "void" replies), Asynchronous Method Invocations
+      (AMI) can be used to give the client the opportunity to perform
+      other work as a CORBA request is sent to the target, handled by
+      the target, and the reply is received.
+    </p>
+
+    <h4>Client Side Optimization Through ORB Configuration</h4>
+
+    <p>
+      A client side TAO ORB can be optimized for various types of
+      applications:
+    </p>
+
+    <ul>
+      <li>
+	<b>Single-Threaded</b>
+	<ul>
+	  <li>
+	    <p>
+	      A single-threaded client side application may not require
+	      the internal thread synchronization performed by TAO.
+	      Hence, it may be useful to add the following line to your
+	      <code>svc.conf</code> file:
+	    </p>
+
+	    <blockquote>
+	      <code>static <a href = "Options.html#DefaultClient">Client_Strategy_Factory</a> "<a href="Options.html#-ORBProfileLock">-ORBProfileLock</a> null"</code>
+	    </blockquote>
+
+	    <p>
+	      If such an entry already exists in your
+	      <code>svc.conf</code> file, then just add
+	      <code>-ORBProfileLock null</code> to the list options
+	      between the quotes found after
+	      <code>Client_Strategy_Factory</code>.
+	    </p>
+
+	    <p>
+	      Other options include disabling synchronization in the
+	      components of TAO responsible for constructing and sending
+	      requests to the target, and for receiving replies.  These
+	      components are called "connection handlers."  To disable
+	      synchronization in the client connection handlers, simply
+	      add:
+	    <p>
+
+	    <blockquote>
+	      <code>
+		<a href="Options.html#-ORBClientConnectionHandler">
+		  -ORBClientConnectionHandler</a> ST
+	      </code>
+	    </blockquote>
+
+	    <p>
+	      to the list of <code>Client_Strategy_Factory</code>
+	      options.  Other values for this option, such as
+	      <code>RW</code>, are more appropriate for "pure"
+	      clients.  See the <code>
+		<a href="Options.html#-ORBClientConnectionHandler">
+		  -ORBClientConnectionHandler</a></code> option
+	      documentation for details.
+	    </p>
+	    
+	  </li>
+	</ul>
+      </li>
+
+      <li>
+	<b>Low Client Scalability Requirements</b>
+	<ul>
+	  <li>
+	    <p>
+	      Clients with lower scalability requirements can dedicate a
+	      connection to a given request.  This means no other
+	      requests or replies will be sent or received,
+	      respectively, over that connection.  The connection is
+	      <i>exclusive</i> to a given request, thus reducing
+	      contention on a connection.  However, that exclusivity
+	      comes at the cost of a smaller number of requests that
+	      may be issued at a given point in time.  To enable this
+	      behaviour, add the following option to the
+	      <code>Client_Strategy_Factory</code> line of your
+	      <code>svc.conf</code> file:
+
+	    <blockquote>
+	      <code>
+		<a href="Options.html#-ORBTransportMuxStrategy">
+		  -ORBTransportMuxStrategy</a> EXCLUSIVE
+	      </code>
+	    </blockquote>
+
+	  </li>
+	</ul>
+      </li>
+    </ul>
+
+    <h3>Optimizing Throughput on the Server Side</h3>
+
+    <p>
+      FILL IN THE BLANK
+    </p>
+
+    <h2>Optimizing Scalability</h2>
+
+    <p>
+      "Scalability" refers to how well an ORB performs as the number
+      of outstanding CORBA requests increases.  For example, will
+      performance degrade slowly or quickly as the number of pending
+      CORBA requests on the client side increases from <code>10</code>
+      to <code>1000</code>, and similarly on the server side.  In
+      particular, ORB scalability is particular important on the
+      server side since a server will often handle many more requests
+      than a client will send.
+    </p>
+
+    <h3>Optimizing Scalability on the Client Side</h3>
+
+    <p>
+      FILL IN THE BLANK
+    </p>
+
+    <h3>Optimizing Scalability on the Server Side</h3>
+
+    <p>
+      FILL IN THE BLANK
+    </p>
+
+    <hr>
+    <address><a href="mailto:ossama@uci.edu">Ossama Othman</a></address>
+<!-- Created: Mon Nov 26 13:22:00 PST 2001 -->
+<!-- hhmts start -->
+Last modified: Sat Dec 15 21:11:41 Pacific Standard Time 2001
+<!-- hhmts end -->
+  </body>
+</html>
