@@ -1,10 +1,15 @@
+Fri Oct  3 08:14:26 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* examples/handcrafted/BasicSP_EC/EC/EC.mpc: Fixed a problem with
+	  the MPC file. Thanks to Johnny Willemsen for poitning this out. 
+
 Thu Oct  2 15:02:10 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
 	* CCF/CCF/IDL2/Traversal/TypeId.hpp:
 	* CCF/CCF/IDL2/Traversal/TypeId.cpp:
 	* CCF/CCF/IDL2/Traversal.hpp:
 	* CCF/CCF/IDL2/SyntaxTree.hpp:
-	* CCF/CCF/IDL2/SemanticAction.hpp: added missing pieces for
+	* CCF/CCF/IDL2/SemanticAction.hpp: Added missing pieces for
 	  typeid/typeprefix support.
 
 Wed Oct  1 14:26:09 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
