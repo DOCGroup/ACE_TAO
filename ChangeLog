@@ -1,3 +1,9 @@
+Mon Aug 28 15:05:27 2000  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+
+	* ace/OS_Dirent.cpp: Changed a condition in readdir_emulation ()
+	  to query properly for an invalid file handle. Thanks to
+	  Nir Drang <Nir@bandwiz.com> for reporting this.
+
 Mon Aug 28 12:16:27 2000  Ossama Othman  <ossama@uci.edu>
 
 	* ace/Makefile.am (libACE_OS_la_SOURCES, HEADER_FILES,
