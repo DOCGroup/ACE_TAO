@@ -152,17 +152,40 @@ TAO_PG_ObjectGroupManager::add_member (
 
 PortableGroup::ObjectGroup_ptr
 TAO_PG_ObjectGroupManager::remove_member (
-    PortableGroup::ObjectGroup_ptr /* object_group */,
-    const PortableGroup::Location & /* the_location */
+    PortableGroup::ObjectGroup_ptr object_group,
+    const PortableGroup::Location & the_location
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableGroup::ObjectGroupNotFound,
                    PortableGroup::MemberNotFound))
 {
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->lock_, 0);
 
-  // @@ DO NOT REMOVE MEMBER IF ITS GENERICFACTORY REFERENCE IS NOT
-  //    NIL!
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),
+  TAO_PG_ObjectGroup_Map_Entry * group_entry =
+    this->get_group_entry (object_group
+                           ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (PortableGroup::ObjectGroup::_nil ());
+
+  TAO_PG_MemberInfo_Set & member_infos = group_entry->member_infos;
+
+  TAO_PG_MemberInfo_Set::iterator end = member_infos.end ();
+
+  for (TAO_PG_MemberInfo_Set::iterator i = member_infos.begin ();
+       i != end;
+       ++i)
+    {
+      const TAO_PG_MemberInfo & info = *i;
+
+      if (info.location == the_location)
+        {
+          if (member_infos.remove (info) == 0)
+            return PortableGroup::ObjectGroup::_duplicate (object_group);
+          else
+            break;
+        }
+    }
+
+  ACE_THROW_RETURN (PortableGroup::MemberNotFound (),
                     PortableGroup::ObjectGroup::_nil ());
 }
 
@@ -192,7 +215,7 @@ TAO_PG_ObjectGroupManager::locations_of_members (
 
   PortableGroup::Locations_var locations = temp;
 
-  TAO_PG_MemberInfo_Set & member_infos = group_entry->member_infos;
+  const TAO_PG_MemberInfo_Set & member_infos = group_entry->member_infos;
 
   locations->length (member_infos.size ());
 
@@ -218,7 +241,6 @@ TAO_PG_ObjectGroupManager::get_object_group_id (
                     guard,
                     this->lock_,
                     0);
-
 
   TAO_PG_ObjectGroup_Map_Entry * entry =
     this->get_group_entry (object_group
