@@ -144,6 +144,7 @@ public:
     // emitting code for the interface forward declaration
     TAO_INTERFACE_FWD_CH,
     TAO_INTERFACE_FWD_CI,
+    TAO_INTERFACE_FWD_CDR_OP_CI,
 
     // emitting code for the module
     TAO_MODULE_CH,
@@ -215,6 +216,7 @@ public:
     TAO_ROOT_ANY_OP_CH,
     TAO_ROOT_ANY_OP_CS,
     TAO_ROOT_CDR_OP_CH,
+    TAO_ROOT_CDR_OP_CI,
     TAO_ROOT_CDR_OP_CS,
 
     // emitting sequences

@@ -71,12 +71,16 @@ be_visitor_scope::visit_scope (be_scope *node)
 
             }
           be_decl *bd = be_decl::narrow_from_decl (d);
-          // set the scope node as "node" in which the code is being generated
-          // so that elements in the node's scope can use it for code generation
+          // set the scope node as "node" in which the code is being
+          // generated so that elements in the node's scope can use it
+          // for code generation
+
           this->ctx_->scope (node->decl ());
+
           // set the node to be visited
           this->ctx_->node (bd);
           this->elem_number_++;
+
           // do any pre processing using the next item info
           if (this->pre_process (bd) == -1)
             {
