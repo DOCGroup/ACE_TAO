@@ -1,3 +1,10 @@
+Thu Jan 28 11:41:39 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp: 
+	  Disabled the support for the new EC implementation, it is not
+	  compiled by default in orbsvcs, hence it cannot be used by
+	  default either.
+
 Wed Jan 27 22:09:14 1999  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
 	* orbsvcs/tests/AVStreams/mpeg/source/server/Property_Exporter.cpp: 
