@@ -99,6 +99,31 @@ TAO_Stub::TAO_Stub (char *repository_id,
   this->set_base_profiles (profiles);
 }
 
+void
+TAO_Stub::add_forward_profiles (const TAO_MProfile &mprofiles)
+{
+  // we assume that the profile_in_use_ is being
+  // forwarded!  Grab the lock so things don't change.
+  ACE_MT (ACE_GUARD (ACE_Lock,
+                     guard,
+                     *this->profile_lock_ptr_));
+
+  TAO_MProfile *now_pfiles = this->forward_profiles_;
+  if (now_pfiles == 0)
+    now_pfiles = &this->base_profiles_;
+
+  ACE_NEW (this->forward_profiles_,
+           TAO_MProfile (mprofiles));
+
+  // forwarded profile points to the new IOR (profiles)
+  this->profile_in_use_->forward_to (this->forward_profiles_);
+
+  // new profile list points back to the list which was forwarded.
+  this->forward_profiles_->forward_from (now_pfiles);
+
+  // make sure we start at the beginning of mprofiles
+  this->forward_profiles_->rewind ();
+}
 // Quick'n'dirty hash of objref data, for partitioning objrefs into
 // sets.
 //
@@ -900,32 +925,8 @@ TAO_Stub::validate_connection (
   return 0;
 }
 
-void
-TAO_Stub::add_forward_profiles (const TAO_MProfile &mprofiles)
-{
-  // we assume that the profile_in_use_ is being
-  // forwarded!  Grab the lock so things don't change.
-  ACE_MT (ACE_GUARD (ACE_Lock,
-                     guard,
-                     *this->profile_lock_ptr_));
 
-  TAO_MProfile *now_pfiles = this->forward_profiles_;
-  if (now_pfiles == 0)
-    now_pfiles = &this->base_profiles_;
-
-  ACE_NEW (this->forward_profiles_,
-           TAO_MProfile (mprofiles));
-
-  // forwarded profile points to the new IOR (profiles)
-  this->profile_in_use_->forward_to (this->forward_profiles_);
-
-  // new profile list points back to the list which was forwarded.
-  this->forward_profiles_->forward_from (now_pfiles);
-
-  // make sure we start at the beginning of mprofiles
-  this->forward_profiles_->rewind ();
-}
-
+#endif /* TAO_HAS_CORBA_MESSAGING */
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
@@ -938,5 +939,3 @@ template class ACE_Auto_Basic_Ptr<TAO_Policy_Manager_Impl>;
 #pragma instantiate ACE_Auto_Basic_Ptr<TAO_Policy_Manager_Impl>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
-#endif /* TAO_HAS_CORBA_MESSAGING */
