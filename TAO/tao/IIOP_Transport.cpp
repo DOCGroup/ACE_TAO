@@ -6,6 +6,7 @@
 #include "Wait_Strategy.h"
 #include "debug.h"
 #include "GIOP_Message_Base.h"
+// #include "GIOP_Message_Lite.h"
 #include "Protocols_Hooks.h"
 
 #if !defined (__ACE_INLINE__)

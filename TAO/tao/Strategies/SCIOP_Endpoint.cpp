@@ -1,8 +1,10 @@
 #include "SCIOP_Endpoint.h"
-#include "tao/debug.h"
-#include "ace/Synch_T.h"
 
 #if TAO_HAS_SCIOP == 1
+
+#include "tao/debug.h"
+#include "ace/Synch_T.h"
+#include "tao/ORB_Endpoints.h"
 
 ACE_RCSID (tao,
            IIOP_Endpoint,
