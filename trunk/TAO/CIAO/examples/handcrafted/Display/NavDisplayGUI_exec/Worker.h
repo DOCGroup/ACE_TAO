@@ -5,6 +5,7 @@
 
 #include "ace/Task.h"
 #include "ace/Synch.h"
+#include "tao/corba.h"
 #include "RootPanel.h"
 
 class Worker : public ACE_Task_Base
