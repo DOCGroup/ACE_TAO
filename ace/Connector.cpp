@@ -800,7 +800,7 @@ ACE_Strategy_Connector<SH, PR_CO_2>::connect_svc_handler
 template <class SH, PR_CO_1> int
 ACE_Strategy_Connector<SH, PR_CO_2>::activate_svc_handler (SVC_HANDLER *svc_handler)
 {
-  return this->concurrency_strategy_->activate_svc_handler (svc_handler);
+  return this->concurrency_strategy_->activate_svc_handler (svc_handler, this);
 }
 
 #undef SH
