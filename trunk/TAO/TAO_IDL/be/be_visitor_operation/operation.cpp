@@ -173,8 +173,8 @@ be_visitor_operation::gen_throw_spec (be_operation *node)
 
                     }
 
-                  *os << be_nl << ", ";
-                  *os << excp->name ();
+                  *os << "," << be_nl
+                      << "::" << excp->name ();
                 }
             }
 
@@ -443,7 +443,7 @@ be_visitor_operation::gen_stub_operation_body (
 
   // Declare return type helper class.
 
-  *os << "TAO::Arg_Traits<";
+  *os << "TAO::Arg_Traits< ";
 
   this->gen_arg_template_param_name (node,
                                      return_type,
@@ -657,7 +657,7 @@ be_visitor_operation::gen_stub_body_arglist (be_operation *node,
       arg = AST_Argument::narrow_from_decl (arg_decl_iter.item ());
 
       *os << be_nl
-          << "TAO::Arg_Traits<";
+          << "TAO::Arg_Traits< ";
 
       this->gen_arg_template_param_name (arg,
                                          arg->field_type (),
@@ -759,6 +759,12 @@ be_visitor_operation::gen_arg_template_param_name (AST_Decl *scope,
           default:
             break;
         }
+    }
+  else
+    {
+      // If it is not a basic type, then it is a scoped name, and
+      // we need this to possibly disambiguate.
+      *os << "::";
     }
 
   // For types other than the 4 above, don't unalias the type name

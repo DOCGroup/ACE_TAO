@@ -1,3 +1,17 @@
+Fri May 21 17:25:05 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_operation/direct_proxy_impl_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation.cpp:
+        * TAO_IDL/be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:
+        
+          Added leading double colons in several places where scoped
+          names are generated - in the exception list in raises
+          clauses, and in the template argument to TAO::Arg_Traits
+          when it is instantiated. Thanks again to Jessica Pistole
+          <Jessica.Pistole@jhuapl.edu> and also to Ed Mulholland
+          <emulholl@atl.lmco.com> for coming up with the use cases
+          where the necessity for disambiguation is demonstrated.
+
 Fri May 21 15:01:06 2004  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tests/CodeSets/libs/UCS4_UTF16/WUCS4_UTF16.cpp:
