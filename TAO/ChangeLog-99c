@@ -1,3 +1,10 @@
+Fri Sep 10 19:20:11 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/MessagingS.h:
+	* tao/MessagingS.cpp:
+	  Added the missing _dispatch() methods to the Policies, the
+	  compiler did not like the multiple inheritance madness.
+
 Fri Sep 10 14:05:12 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* orbsvcs/tests/Simple_Naming/client.cpp,
