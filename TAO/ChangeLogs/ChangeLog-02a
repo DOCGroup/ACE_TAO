@@ -1,26 +1,26 @@
 Wed Oct  4 17:41:53 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tao/ior_corbaname_export.h: 
+	* tao/ior_corbaname_export.h:
 	* tao/ior_corbaname/CORBANAME_Parser.*:
-	
+
 	  Moved the files up one directory to tao.
 	  Removed all the files in tao/ior_corbaname/.
-	  
-	* tao/default_resource.cpp: 
+
+	* tao/default_resource.cpp:
 	  Added the code for dynamically loading CORBANAME_Parser.
-	
-	* tao/Makefile: 
+
+	* tao/Makefile:
 	  Added an entry for CORBANAME_Parser.
-	
+
 	* orbsvcs/tests/ior_corbaname/
 	* tao/tests/ior_corbaname/
-	
+
 	  Moved the $TAO_ROOT/tests/ior_corbaname directory contents here
-	  as the test depends on Naming Service. 
+	  as the test depends on Naming Service.
 	  Removed all the files in $TAO_ROOT/tests/ior_corbaname.
 
-	  With these set of changes, TAO supports corbaname scheme. 
-	
+	  With these set of changes, TAO supports corbaname scheme.
+
 Wed Oct  4 18:49:18 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/ast/ast_enum.cpp:
@@ -71,7 +71,7 @@ Wed Oct  4 13:45:48 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	  The GIOP_Server_Request.* files have been renamed.
 	  Class TAO_GIOP_ServerRequest is now
-	  TAO_ServerRequest. It no longer inherits from 
+	  TAO_ServerRequest. It no longer inherits from
 	  CORBA::ServerRequest and contains no DSI-specific
 	  members or functions. Likewise the CORBA::ServerRequest
 	  class contains only DSI-specific functionality.
@@ -120,10 +120,10 @@ Wed Oct  4 13:45:48 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 	* tao/corbafwd.h:
 
 	  Changes to TAO library files. Besides the changes mentioned
-	  above, TAO_Pluggable_Reply_Params has been modified to
-	  no longer include an NVList member, but instead includes a
-	  a boolean and a ptr_arith_t member used in CDR stream padding
-	  for DSI requests in the message acceptors.
+	  above, TAO_Pluggable_Reply_Params has been modified to no longer
+	  include an NVList member, but instead includes a boolean and a
+	  ptr_arith_t member used in CDR stream padding for DSI requests
+	  in the message acceptors.
 
 	* tao/IORTable/Table_Adapter.cpp:
 	* tao/IORTable/Table_Adapter.h:
@@ -183,14 +183,16 @@ Wed Oct 04 12:01:47 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 	* docs/releasenotes/index.html
 	* docs/releasenotes/RTCorba.html
 
-	  Added documentation relative to RT-CORBA implementation, as well as the
-	  development status, and updated the release notes to point to the new document.
+	  Added documentation relative to RT-CORBA implementation, as well
+	  as the development status, and updated the release notes to
+	  point to the new document.
 
 	* tests/Exposed_Policies/Policy_Tester.cpp:
 	* tests/Exposed_Policies/Policy_Verifier.cpp:
 	* tests/Exposed_Policies/server.cpp:
 
-	  Removed ";" after the ACE_RCSID to avoid warning on certaion platform.
+	  Removed ";" after the ACE_RCSID to avoid warning on certaion
+	  platform.
 
 Tue Oct  3 22:04:08 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
