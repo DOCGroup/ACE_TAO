@@ -170,10 +170,16 @@ public:
   /**
    * This is the primary entry point into the ACE_Service_Config (the
    * constructor just handles simple initializations).  It parses
-   * arguments passed in from <argc> and <argv> parameters.  The
+   * arguments passed in from @c argc and @c argv parameters.  The
    * arguments that are valid in a call to this method include:
    *
-   * - '-b' Option to indicate that we should be a daemon
+   * - '-b' Option to indicate that we should be a daemon. Note that when
+   *        this option is used, the process will be daemonized before the
+   *        service configuration file(s) are read. During daemonization,
+   *        (on POSIX systems) the current directory will be changed to "/"
+   *        so the caller should either fully specify the file names, or
+   *        execute a @c chroot() to the appropriate directory.
+   *        @sa ACE::daemonize().
    * - '-d' Turn on debugging mode
    * - '-f' Option to read in the list of svc.conf file names
    * - '-k' Option to read a wide string where in the logger output can
@@ -188,20 +194,22 @@ public:
    *        Please observe the difference between options '-f' that looks
    *        for a list of files and here a list of services.
    *
-   * Returns number of errors that occurred on failure and 0
-   * otherwise.
+   * @arg logger_key   indicates where to write the logging output,
+   *                   which is typically either a STREAM pipe or a
+   *                   socket address.
+   * @arg ignore_static_svcs   if 1 then static services are not loaded,
+   *                   otherwise, they are loaded.
+   * @arg ignore_default_svc_conf_file  if non-0 then the @c svc.conf
+   *                   configuration file will be ignored.
+   * @arg ignore_debug_flag> if non-0 then the application is responsible
+   *                   for setting the @c ACE_Log_Msg::priority_mask
+   *                   appropriately.
    *
-   * The <logger_key> indicates where to write the logging output,
-   * which is typically either a STREAM pipe or a socket address.  If
-   * <ignore_static_svcs> is 1 then static services are not loaded,
-   * otherwise, they are loaded.  If <ignore_default_svc_conf_file> is
-   * non-0 then the <svc.conf> configuration file will be ignored.
-   * Returns zero upon success, -1 if the file is not found or cannot
-   * be opened (errno is set accordingly), otherwise returns the
-   * number of errors encountered loading the services in the
-   * specified svc.conf configuration file.  If <ignore_debug_flag> is
-   * non-0 then the application is responsible for setting the
-   * <ACE_Log_Msg::priority_mask> appropriately.
+   * @retval -1   the configuration file is not found or cannot
+   *              be opened (errno is set accordingly).
+   * @retval  0   Success.
+   * @retval  &gt; 0  The number of errors encountered while processing
+   *              the service configuration file(s).
    */
   static int open (int argc,
                    ACE_TCHAR *argv[],

@@ -14,22 +14,13 @@ ACE_RCSID(servers, main, "$Id$")
 int
 main (int argc, char *argv[])
 {
-  // Create an adapter to end the event loop.
-  ACE_Sig_Adapter sa ((ACE_Sig_Handler_Ex) ACE_Reactor::end_event_loop);
-
-  ACE_Sig_Set sig_set;
-  sig_set.sig_add (SIGINT);
-  sig_set.sig_add (SIGQUIT);
-
-  // Register ourselves to receive signals so we can shut down
-  // gracefully.
-  if (ACE_Reactor::instance ()->register_handler (sig_set,
-                                                  &sa) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n"),
-                      -1);
 
   // Try to link in the svc.conf entries dynamically.
+  //
+  // Warning - do not try to move the ACE_Reactor signal handling work
+  // up to before this call - if the user specified -b (be a daemon),
+  // all handles will be closed, including the Reactor's pipe.
+
   if (ACE_Service_Config::open (argc, argv) == -1)
     {
       if (errno != ENOENT)
@@ -132,8 +123,17 @@ main (int argc, char *argv[])
 
           // Run forever, performing the configured services until we
           // are shut down by a SIGINT/SIGQUIT signal.
+          // Create an adapter to end the event loop.
+          ACE_Sig_Adapter sa ((ACE_Sig_Handler_Ex) ACE_Reactor::end_event_loop);
 
-          ACE_Reactor::run_event_loop ();
+          ACE_Sig_Set sig_set;
+          sig_set.sig_add (SIGINT);
+          sig_set.sig_add (SIGQUIT);
+          if (ACE_Reactor::instance ()->register_handler (sig_set,
+                                                          &sa) == -1)
+            ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n")));
+          else
+            ACE_Reactor::run_event_loop ();
 
           // Destructors of ACE_Service_Object_Ptr's automagically
           // call fini().
@@ -147,8 +147,20 @@ main (int argc, char *argv[])
 
       // Run forever, performing the configured services until we are
       // shut down by a SIGINT/SIGQUIT signal.
+      // Create an adapter to end the event loop.
+      ACE_Sig_Adapter sa ((ACE_Sig_Handler_Ex) ACE_Reactor::end_event_loop);
 
-      ACE_Reactor::run_event_loop ();
+      ACE_Sig_Set sig_set;
+      sig_set.sig_add (SIGINT);
+      sig_set.sig_add (SIGQUIT);
+
+      // Register ourselves to receive signals so we can shut down
+      // gracefully.
+      if (ACE_Reactor::instance ()->register_handler (sig_set,
+                                                      &sa) == -1)
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n")));
+      else
+        ACE_Reactor::run_event_loop ();
     }
 
   return 0;
