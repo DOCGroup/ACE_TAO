@@ -316,7 +316,7 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR>::alloc_node (void)
 }
 
 template <class TYPE, class FUNCTOR> void 
-ACE_Timer_Wheel_T<TYPE, FUNCTOR>::free_node (NODE *node)
+ACE_Timer_Wheel_T<TYPE, FUNCTOR>::free_node (ACE_Timer_Node_T<TYPE, FUNCTOR> *node)
 {
   // Add to the beginning of the freelist
   node->next_ = this->freelist_;
@@ -362,7 +362,7 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR>::remove (void)
 }
 
 template <class TYPE, class FUNCTOR> void 
-ACE_Timer_Wheel_T<TYPE, FUNCTOR>::reschedule (NODE *expired)
+ACE_Timer_Wheel_T<TYPE, FUNCTOR>::reschedule (ACE_Timer_Node_T<TYPE, FUNCTOR> *expired)
 {
   ACE_TRACE ("ACE_Timer_Wheel_T::reschedule");
 
