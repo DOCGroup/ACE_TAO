@@ -1,3 +1,9 @@
+Thu Jan 28 10:04:39 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* ace/Hash_Map_Manager_T.cpp: 
+	  Reverted to version 4.2, thanks to Kirthika for helping find
+	  this one.
+
 Thu Jan 28 09:11:29 1999  Andreas Tobler <toa@pop.agri.ch>
 
         * ace/config-linuxppcr5.h: added this config file, for
