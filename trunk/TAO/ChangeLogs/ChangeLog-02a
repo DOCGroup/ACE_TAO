@@ -1,6 +1,15 @@
+Tue Dec  5 15:07:45 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+	* tao/Policy_Manager.h
+	* tao/Policy_Manager.cpp:
+
+	  All policy accessors in TAO_Policy_Manager now use
+	  double-checked locking.  This should significantly improve
+	  performance on the critical path.
+
 Tue Dec  5 12:57:33 2000  Ossama Othman  <ossama@uci.edu>
 
-	* tests/Portable_Interceptors/Benchmark/server.cpp (main): 
+	* tests/Portable_Interceptors/Benchmark/server.cpp (main):
 	* tests/Portable_Interceptors/Dynamic/server.cpp (main):
 	* tests/Portable_Interceptors/Service_Context_Manipulation/server.cpp
 	  (main):

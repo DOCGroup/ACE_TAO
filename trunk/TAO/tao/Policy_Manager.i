@@ -77,8 +77,13 @@ TAO_Policy_Manager::set_policy_overrides (
 ACE_INLINE CORBA::Policy *
 TAO_Policy_Manager::relative_roundtrip_timeout (void)
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, 0);
-  return this->impl_.relative_roundtrip_timeout ();
+  // Double-checked locking.
+  if (this->impl_.relative_roundtrip_timeout_)
+    {
+      ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, 0);
+      return this->impl_.relative_roundtrip_timeout ();
+    }
+  return 0;
 }
 
 #if (TAO_HAS_CLIENT_PRIORITY_POLICY == 1)
@@ -86,8 +91,13 @@ TAO_Policy_Manager::relative_roundtrip_timeout (void)
 ACE_INLINE TAO_Client_Priority_Policy *
 TAO_Policy_Manager::client_priority (void)
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, 0);
-  return this->impl_.client_priority ();
+  // Double-checked locking.
+  if (this->impl_.client_priority_)
+    {
+      ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, 0);
+      return this->impl_.client_priority ();
+    }
+  return 0;
 }
 
 #endif /* TAO_HAS_CLIENT_PRIORITY_POLICY == 1 */
@@ -95,8 +105,13 @@ TAO_Policy_Manager::client_priority (void)
 ACE_INLINE CORBA::Policy *
 TAO_Policy_Manager::sync_scope (void)
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, 0);
-  return this->impl_.sync_scope ();
+  // Double-checked locking.
+  if (this->impl_.sync_scope_)
+    {
+      ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, 0);
+      return this->impl_.sync_scope ();
+    }
+  return 0;
 }
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
@@ -104,8 +119,13 @@ TAO_Policy_Manager::sync_scope (void)
 ACE_INLINE TAO_Buffering_Constraint_Policy *
 TAO_Policy_Manager::buffering_constraint (void)
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, 0);
-  return this->impl_.buffering_constraint ();
+  // Double-checked locking.
+  if (this->impl_.buffering_constraint_)
+    {
+      ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, 0);
+      return this->impl_.buffering_constraint ();
+    }
+  return 0;
 }
 
 #endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
@@ -115,43 +135,73 @@ TAO_Policy_Manager::buffering_constraint (void)
 ACE_INLINE TAO_PriorityModelPolicy *
 TAO_Policy_Manager::priority_model (void)
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, 0);
-  return this->impl_.priority_model ();
+  // Double-checked locking.
+  if (this->impl_.priority_model_)
+    {
+      ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, 0);
+      return this->impl_.priority_model ();
+    }
+  return 0;
 }
 
 ACE_INLINE TAO_ThreadpoolPolicy *
 TAO_Policy_Manager::threadpool (void)
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, 0);
-  return this->impl_.threadpool ();
+  // Double-checked locking.
+  if (this->impl_.threadpool_)
+    {
+      ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, 0);
+      return this->impl_.threadpool ();
+    }
+  return 0;
 }
 
 ACE_INLINE TAO_PrivateConnectionPolicy *
 TAO_Policy_Manager::private_connection (void)
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, 0);
-  return this->impl_.private_connection ();
+  // Double-checked locking.
+  if (this->impl_.private_connection_)
+    {
+      ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, 0);
+      return this->impl_.private_connection ();
+    }
+  return 0;
 }
 
 ACE_INLINE TAO_PriorityBandedConnectionPolicy *
 TAO_Policy_Manager::priority_banded_connection (void)
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, 0);
-  return this->impl_.priority_banded_connection ();
+  // Double-checked locking.
+  if (this->impl_.priority_banded_connection_)
+    {
+      ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, 0);
+      return this->impl_.priority_banded_connection ();
+    }
+  return 0;
 }
 
 ACE_INLINE TAO_ServerProtocolPolicy *
 TAO_Policy_Manager::server_protocol (void)
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, 0);
-  return this->impl_.server_protocol ();
+  // Double-checked locking.
+  if (this->impl_.server_protocol_)
+    {
+      ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, 0);
+      return this->impl_.server_protocol ();
+    }
+  return 0;
 }
 
 ACE_INLINE TAO_ClientProtocolPolicy *
 TAO_Policy_Manager::client_protocol (void)
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, 0);
-  return this->impl_.client_protocol ();
+  // Double-checked locking.
+  if (this->impl_.client_protocol_)
+    {
+      ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, 0);
+      return this->impl_.client_protocol ();
+    }
+  return 0;
 }
 
 #endif /* TAO_HAS_RT_CORBA == 1 */
