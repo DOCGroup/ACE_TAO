@@ -5632,7 +5632,10 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
       /* NOTREACHED */
     }
 #     endif /* ACE_HAS_SIGNAL_OBJECT_AND_WAIT */
-  else if (last_waiter)
+  // Note that this *must* be an "if" statement rather than an "else
+  // if" statement since the caller may have timed out and hence the
+  // result would have been -1 above.
+  if (last_waiter)
     // Release the signaler/broadcaster if we're the last waiter.
 #     if defined (ACE_WIN32)
     ACE_OS::event_signal (&cv->waiters_done_);
