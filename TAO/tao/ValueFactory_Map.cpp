@@ -23,7 +23,9 @@
 # include "tao/ValueFactory_Map.i"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID(tao, ValueFactory_Map, "$Id$")
+ACE_RCSID (tao, 
+           ValueFactory_Map, 
+           "$Id$")
 
 
 TAO_ValueFactory_Map::TAO_ValueFactory_Map ()
@@ -85,7 +87,6 @@ int
 TAO_ValueFactory_Map::unbind (const char *repo_id,
                               CORBA_ValueFactory &factory)
 {
-  // ACE_Hash_Map_Entry<const char *, CORBA_ValueFactory_ptr> *prev_entry;
   FACTORY_MAP_MANAGER::ENTRY *prev_entry;
   int ret = 0;
   ret = this->map_.find (repo_id,
@@ -96,11 +97,13 @@ TAO_ValueFactory_Map::unbind (const char *repo_id,
       factory = prev_entry->int_id_;
       char *temp = ACE_const_cast (char *, prev_entry->ext_id_);
       ret = this->map_.unbind (prev_entry);
+
       if (ret == 0)
         {
           CORBA::string_free (temp);
         }
     }
+
   return ret;
 }
 
@@ -117,6 +120,7 @@ TAO_ValueFactory_Map::find (const char *repo_id,
     {
       factory->_add_ref ();    // The caller gets one reference as gift.
     }
+
   return ret;
 }
 
