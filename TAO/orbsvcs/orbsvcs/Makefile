@@ -219,7 +219,7 @@ CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/tao/compat -I$(TAO_ROOT)/orbsvcs $(TSS_O
 idl_stubs: $(addsuffix .h, $(IDL_FILES))
 
 clean:
-	-/bin/rm -rf *.o Log $(BIN) obj.* core Templates.DB .make.state
+	-/bin/rm -rf *.o $(BIN) obj.* core Templates.DB .make.state
 
 realclean: clean
 	-/bin/rm -rf $(addsuffix .h, $(IDL_FILES)) $(addsuffix .i, $(IDL_FILES)) $(addsuffix .cpp, $(IDL_FILES))
