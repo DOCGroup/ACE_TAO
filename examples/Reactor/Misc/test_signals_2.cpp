@@ -4,7 +4,7 @@
 // handler per-signal.
 
 /* This test works as follows:
-	
+
 	1. To test the "original" semantics of ACE (i.e., only one
 	   ACE_Event_Handler can be registered per signal), you don't
 	   need to do anything special.  Existing programs work the
@@ -19,7 +19,7 @@
 	   per-signal.
 
 	   To run this version of the test do the following:
-  
+
 	   % ./test-signal
 	   ./test_signals
 	   waiting for SIGINT or SIGQUIT
@@ -53,7 +53,7 @@
 	   signal handling with 3rd party libraries.
 
 	   To run this version of the test do the following:
-  
+
 	   % ./test_signals 1
 
 	   waiting for SIGINT or SIGQUIT
@@ -100,6 +100,7 @@
 #include "ace/Reactor.h"
 #include "ace/WFMO_Reactor.h"
 #include "ace/Select_Reactor.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID(Misc, test_signals_2, "$Id$")
 
@@ -130,7 +131,7 @@ public:
                              ucontext_t *)
   {
     this->count_++;
-    ACE_DEBUG ((LM_DEBUG, 
+    ACE_DEBUG ((LM_DEBUG,
 	       "\nsignal %S occurred in Sig_Handler_1 (%s, %d, %d) with count = %d",
 	       signum,
                 this->msg_,
@@ -194,7 +195,7 @@ public:
                              ucontext_t *)
   {
     this->count_++;
-    ACE_DEBUG ((LM_DEBUG, 
+    ACE_DEBUG ((LM_DEBUG,
 	       "\nsignal %S occurred in Sig_Handler_2 (%s, %d, %d) with count = %d",
 	       signum,
                 this->msg_,

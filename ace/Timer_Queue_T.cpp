@@ -76,7 +76,7 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::calculate_timeout (ACE_Time_Value *m
     return max_wait_time;
   else
     {
-      ACE_Time_Value cur_time = this->gettimeofday ();
+      ACE_Time_Value cur_time (this->gettimeofday ());
 
       if (this->earliest_time () > cur_time)
         {
@@ -121,7 +121,7 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::calculate_timeout (ACE_Time_Value *m
     }
   else
     {
-      ACE_Time_Value cur_time = this->gettimeofday ();
+      ACE_Time_Value cur_time (this->gettimeofday ());
 
       if (this->earliest_time () > cur_time)
         {

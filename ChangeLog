@@ -1,3 +1,16 @@
+Wed Apr 10 07:44:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Timer_Queue_T.h:
+          Instead of creating a ACE_Time_Value with the default constructor
+          and immediatly filling it with the assignment operator, create the
+          ACE_Time_Value with the copy constructor
+
+        * examples/Logger/simple-server/Logging_Acceptor.cpp:
+        * examples/Service_Configurator/IPC-tests/server/Handle_R_Stream.h:
+        * examples/Reactor/Misc/test_signals_2.cpp:
+          Added missing includes of Log_Msg.h. These where caused by the
+          compilation speedup of Don Hinton on April 5th.
+
 Tue Apr  9 22:59:20 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * ace/config-sunos5.5.h:
