@@ -22,13 +22,12 @@ PLANNED MAJOR CHANGES "SOMETIME IN THE FUTURE" (i.e., exact beta not known)
 
   . ONGOING - ETA 11/10 -- currently targeted for TAO 1.4.5.  75% complete.
 
+- (Ossama) Remainder of CSIv2 code that didn't make it into TAO 1.4.2
+
+  . ONGOING - ETA 2/30 -- currently targeted for TAO 1.4.5.
 
 PLANNED MAJOR CHANGES TARGETED FOR TAO-1.4.4
 ============================================
-
-- (Ossama) Remainder of CSIv2 code that didn't make it into TAO 1.4.2
-
-  . ONGOING - ETA 11/30
 
 . The tao-config script has been replaced by pkg-config metadata files
   which are installed in ${prefix}/lib/pkgconfig by the automake build.

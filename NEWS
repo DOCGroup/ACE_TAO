@@ -7,6 +7,16 @@ PLANNED MAJOR CHANGES TARGETED FOR ACE-5.4.4
 . The ace-config script has been replaced by pkg-config metadata files 
   which are installed in ${prefix}/lib/pkgconfig by the automake build.
 
+. Remove ACE_OS::gets() implementation.  While this ACE implementation
+  of gets() did not contain the security holes that all standard
+  gets() implementations have, keeping it around only serves to foster
+  confusion since (1) some may incorrectly assume that this
+  ACE-specific gets() implementation has the same holes as standard
+  ones, and (2) invoking it with a default size argument so that it
+  looks like a standard gets() call results in behavior that is
+  different from the standard.  Use ACE_OS::fgets() instead.
+
+
 USER VISIBLE CHANGES BETWEEN ACE-5.4.2 and ACE-5.4.3
 ====================================================
 
