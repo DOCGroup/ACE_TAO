@@ -60,7 +60,10 @@
 # include /**/ <limits.h>   // Integer limits
 # include /**/ <float.h>    // Floating point limits
 # include /**/ <stdlib.h>   // Other types
-# include /**/ <sys/types.h>
+
+# if !defined (ACE_LACKS_SYS_TYPES_H)
+#   include /**/ <sys/types.h>
+# endif  /* ACE_LACKS_SYS_TYPES_H */
 
 # include "ace/ACE_export.h"
 
