@@ -1,8 +1,9 @@
 // $Id$
 
+#include "ace/os_include/os_assert.h"
+#include "ace/OS_NS_stdio.h"
 #include "Supplier_Router.h"
 #include "Options.h"
-#include "ace/os_include/os_assert.h"
 
 ACE_RCSID(Event_Server, Supplier_Router, "$Id$")
 

@@ -5,6 +5,7 @@
 #ifndef ACE_TEST_UPIPE_H
 #define ACE_TEST_UPIPE_H
 
+#include "ace/OS_NS_unistd.h"
 #include "ace/Svc_Handler.h"
 #include "ace/UPIPE_Stream.h"
 

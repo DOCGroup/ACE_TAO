@@ -18,6 +18,7 @@
 //
 // ============================================================================
 
+#include "ace/OS_NS_unistd.h"
 #include "ace/Service_Config.h"
 #include "ace/Service_Object.h"
 #include "ace/Log_Msg.h"

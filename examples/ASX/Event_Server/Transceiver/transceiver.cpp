@@ -4,6 +4,7 @@
 // role of either Consumer or Supplier.  You can terminate this
 // program by typing ^C....
 
+#include "ace/OS_NS_string.h"
 #include "ace/Service_Config.h"
 #include "ace/SOCK_Connector.h"
 #include "ace/Connector.h"
