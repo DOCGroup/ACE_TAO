@@ -1,3 +1,23 @@
+Mon Nov 24 20:40:47 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
+
+	* tao/corbacom.i: 
+	  Fixed string allocation problem for String_var(char*): if it
+	  does not copy the string we run into problems with the
+	  demarshalling code.
+
+	* orbsvcs/lib/Event_Utilities.cpp: 
+	* orbsvcs/lib/Event_Utilities.h: 
+	* orbsvcs/lib/Event_Utilities.i: 
+	* orbsvcs/lib/RtecEventChannelAdmin.idl: 
+	* orbsvcs/lib/RtecEventChannelAdminC.cpp: 
+	* orbsvcs/lib/RtecEventChannelAdminC.h: 
+	  Removed the unused forward_event parameter in the ConsumerQoS.
+
+	* orbsvcs/lib/RtecSchedulerC.h: 
+	* orbsvcs/lib/RtecSchedulerC.i: 
+	  Hand crafted the T_out constructors to take a "const T_out&"
+	  instead of just "T_out&".
+
 Sat Nov 22 18:21:10 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* TAO_IDL/be_include/be_codegen.h, be/be_codegen.cpp: Added a

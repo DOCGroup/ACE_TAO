@@ -11,10 +11,6 @@ ACE_ConsumerQOS_Factory::ACE_ConsumerQOS_Factory (void) :
   qos_ (),
   designator_set_ (0)
 {
-  qos_.forward_event.source_ = 0;
-  qos_.forward_event.type_ = 0;
-  qos_.forward_event.time_ = 0;
-  // TODO: qos_.forward_event.data_.lval (0);
 }
 
 ACE_ConsumerQOS_Factory::~ACE_ConsumerQOS_Factory (void)
@@ -81,7 +77,6 @@ void
 ACE_ConsumerQOS_Factory::debug (const RtecEventChannelAdmin::ConsumerQOS& qos)
 {
   ACE_DEBUG ((LM_DEBUG, "ConsumerQOS { \n"));
-  event_debug ("    forward", qos.forward_event);
 
   for (u_int i = 0; i < qos.dependencies.length (); ++i)
     {
