@@ -1,5 +1,4 @@
-/* -*- C++ -*- */
-
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -17,7 +16,7 @@
 #define ACE_SOCK_SEQ_ACCEPTOR_H
 
 #include "ace/pre.h"
-#include "ace/config.h"
+
 #include "ace/ACE_export.h"
 
 #include "ace/SOCK_SEQPACK_Association.h"
@@ -27,7 +26,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Time_Value.h"
+
+class ACE_Time_Value;
 
 /**
  * @class ACE_SOCK_SEQPACK_Acceptor
