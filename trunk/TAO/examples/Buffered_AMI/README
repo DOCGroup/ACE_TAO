@@ -29,7 +29,8 @@ Notes:
   TAO. This enables the AMI code in it.
 
 - Use -GC on the TAO IDL compiler if you want to generate code for AMI
-  callbacks.
+  callbacks. The IDL compiler needs to be compiled with IDL_HAS_VALUETYPE
+  defined.
 
 - You should also use the muxed TransportMuxStrategy since the
   exclusive strategy will result in multiple queues, one for each
