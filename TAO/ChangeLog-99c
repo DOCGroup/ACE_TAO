@@ -1,60 +1,65 @@
+Tue Jan 26 22:06:01 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * rules.tao.GNU,docs/configurations.html: moved TAO_ORBSVCS
+          documentation from rules.tao.GNU to docs/configurations.html.
+
 Tue Jan 26 16:24:57 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Event/README: 
-	* orbsvcs/orbsvcs/Event/EC_Event_Channel.h: 
-	  Added some documentation about the new Event Channel
-	  implementation.
+        * orbsvcs/orbsvcs/Event/README:
+        * orbsvcs/orbsvcs/Event/EC_Event_Channel.h:
+          Added some documentation about the new Event Channel
+          implementation.
 
-	* orbsvcs/orbsvcs/Event/EC_Dispatching.cpp: 
-	* orbsvcs/orbsvcs/Event/EC_Dispatching.h: 
-	* orbsvcs/orbsvcs/Event/EC_Factory.cpp: 
-	* orbsvcs/orbsvcs/Event/EC_Filter.cpp: 
-	* orbsvcs/orbsvcs/Event/EC_Filter.h: 
-	* orbsvcs/orbsvcs/Event/EC_Filter.i: 
-	* orbsvcs/orbsvcs/Event/EC_Filter_Builder.cpp: 
-	* orbsvcs/orbsvcs/Event/EC_Filter_Builder.h: 
-	* orbsvcs/orbsvcs/Event/EC_Filter_Builder.i: 
-	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp: 
-	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.h: 
-	  Added the implementation of a null filter and the corresponding
-	  filter builder. Also implemented the reactive dispatching
-	  strategy.
+        * orbsvcs/orbsvcs/Event/EC_Dispatching.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Dispatching.h:
+        * orbsvcs/orbsvcs/Event/EC_Factory.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Filter.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Filter.h:
+        * orbsvcs/orbsvcs/Event/EC_Filter.i:
+        * orbsvcs/orbsvcs/Event/EC_Filter_Builder.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Filter_Builder.h:
+        * orbsvcs/orbsvcs/Event/EC_Filter_Builder.i:
+        * orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ProxySupplier.h:
+          Added the implementation of a null filter and the corresponding
+          filter builder. Also implemented the reactive dispatching
+          strategy.
 
 Mon Jan 25 17:24:50 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Event/Timer_Module.h: 
-	  Removed superfluous component in include path, thanks to
-	  Eric B. Mitchell <emitchell@altaira.com> for reporting this
-	  one.
+        * orbsvcs/orbsvcs/Event/Timer_Module.h:
+          Removed superfluous component in include path, thanks to
+          Eric B. Mitchell <emitchell@altaira.com> for reporting this
+          one.
 
-	* orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.cpp: 
-	* orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.h: 
-	* orbsvcs/orbsvcs/Event/EC_Dispatching.h: 
-	* orbsvcs/orbsvcs/Event/EC_Dispatching.i: 
-	* orbsvcs/orbsvcs/Event/EC_Event_Channel.cpp: 
-	* orbsvcs/orbsvcs/Event/EC_Event_Channel.h: 
-	* orbsvcs/orbsvcs/Event/EC_Event_Channel.i: 
-	* orbsvcs/orbsvcs/Event/EC_Factory.h: 
-	* orbsvcs/orbsvcs/Event/EC_Filter.h: 
-	* orbsvcs/orbsvcs/Event/EC_Filter.i: 
-	* orbsvcs/orbsvcs/Event/EC_Filter_Builder.h: 
-	* orbsvcs/orbsvcs/Event/EC_Filter_Builder.i: 
-	* orbsvcs/orbsvcs/Event/EC_ProxyConsumer.cpp: 
-	* orbsvcs/orbsvcs/Event/EC_ProxyConsumer.h: 
-	* orbsvcs/orbsvcs/Event/EC_ProxyConsumer.i: 
-	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp: 
-	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.h: 
-	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.i: 
-	* orbsvcs/orbsvcs/Event/EC_SupplierAdmin.cpp: 
-	* orbsvcs/orbsvcs/Event/EC_SupplierAdmin.h: 
-	  These files compile now, and are fairly complete, but I still
-	  have to implement the TAO_EC_Filter hierarchy, the dispatching
-	  strategies and a couple of example ProxySupplier/ProxyConsumer
-	  classes.
-	  We also need to implement the locking strategies.
+        * orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.h:
+        * orbsvcs/orbsvcs/Event/EC_Dispatching.h:
+        * orbsvcs/orbsvcs/Event/EC_Dispatching.i:
+        * orbsvcs/orbsvcs/Event/EC_Event_Channel.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Event_Channel.h:
+        * orbsvcs/orbsvcs/Event/EC_Event_Channel.i:
+        * orbsvcs/orbsvcs/Event/EC_Factory.h:
+        * orbsvcs/orbsvcs/Event/EC_Filter.h:
+        * orbsvcs/orbsvcs/Event/EC_Filter.i:
+        * orbsvcs/orbsvcs/Event/EC_Filter_Builder.h:
+        * orbsvcs/orbsvcs/Event/EC_Filter_Builder.i:
+        * orbsvcs/orbsvcs/Event/EC_ProxyConsumer.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ProxyConsumer.h:
+        * orbsvcs/orbsvcs/Event/EC_ProxyConsumer.i:
+        * orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ProxySupplier.h:
+        * orbsvcs/orbsvcs/Event/EC_ProxySupplier.i:
+        * orbsvcs/orbsvcs/Event/EC_SupplierAdmin.cpp:
+        * orbsvcs/orbsvcs/Event/EC_SupplierAdmin.h:
+          These files compile now, and are fairly complete, but I still
+          have to implement the TAO_EC_Filter hierarchy, the dispatching
+          strategies and a couple of example ProxySupplier/ProxyConsumer
+          classes.
+          We also need to implement the locking strategies.
 
-	* orbsvcs/orbsvcs/Makefile: 
-	  Updated dependencies.
+        * orbsvcs/orbsvcs/Makefile:
+          Updated dependencies.
 
 Mon Jan 25 13:54:00 1999  David L. Levine  <levine@cs.wustl.edu>
 
