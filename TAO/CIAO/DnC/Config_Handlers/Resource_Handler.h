@@ -1,14 +1,14 @@
 //==================================================================
 /**
- *  @file  Domain_Handler.h
+ *  @file  Resource_Handler.h
  *
  *  $Id$
  *
  *  @author Jaiganesh Balasubramanian <jai@dre.vanderbilt.edu>
  */
 //=====================================================================
-#ifndef DOMAIN_HANDLER_H
-#define DOMAIN_HANDLER_H
+#ifndef RESOURCE_HANDLER_H
+#define RESOURCE_HANDLER_H
 #include /**/ "ace/pre.h"
 
 #include "DeploymentC.h"
@@ -47,9 +47,9 @@ namespace CIAO
   namespace Config_Handler
   {
     /**
-     * @class Domain_Handler
+     * @class Resource_Handler
      *
-     * @brief Handler class for <Domain> type 
+     * @brief Handler class for <Resource> type 
      *
      * This class is within the Target Data Model subpackage of the
      * Deployment & Configuration package.
@@ -59,27 +59,30 @@ namespace CIAO
      * element is returned.
      */
 
-    class Config_Handler_Export Domain_Handler
+    class Config_Handler_Export Resource_Handler
     {
     public:
 
       /// constructor
-      Domain_Handler (DOMDocument* doc, unsigned long filter_);
+      Resource_Handler (DOMDocument* doc, unsigned long filter_);
 
       /// constructor
-      Domain_Handler (DOMNodeIterator* iter, bool release = false);
+      Resource_Handler (DOMNodeIterator* iter, bool release = false);
 
       /// destructor
-      ~Domain_Handler(void);
+      ~Resource_Handler(void);
 
-      /// Process the Domain type
-      void process_domain (::Deployment::Domain &domain);
+      /// Process the Resource type
+      void process_resource (DOMNodeIterator * iter,
+                             ::Deployment::Resource &resource);
 
-      /// Process the UUID attribute
-      void process_uuid (const XMLCh* uuid, ::Deployment::Domain &domain);
+      /// Process the name attribute
+      void process_name (const XMLCh* name,
+                         ::Deployment::Resource &resource);
 
-      /// Process the label attribute
-      void process_label (const XMLCh* label, ::Deployment::Domain &domain);
+      /// Process the resourceType attribute
+      void process_resource_type (const XMLCh* resource_type,
+                                  ::Deployment::Resource &resource);
 
     private:
 
@@ -99,4 +102,4 @@ namespace CIAO
 
 #include /**/ "ace/post.h"
 
-#endif /* DOMAIN_HANDLER_H */
+#endif /* RESOURCE_HANDLER_H */
