@@ -2143,12 +2143,10 @@ ACE_Thread_Adapter::invoke (void)
   // reference.
   if (this->thr_mgr () != 0)
     {
-# if !defined (ACE_HAS_MINIMAL_ACE_OS)
       ACE_Thread_Exit &exit_hook = *ACE_Thread_Exit::instance ();
       // Keep track of the <Thread_Manager> that's associated with this
       // <exit_hook>.
       exit_hook.thr_mgr (this->thr_mgr ());
-# endif /* ! ACE_HAS_MINIMAL_ACE_OS */
     }
 # else
   // Without TSS, create an <ACE_Thread_Exit> instance.  When this
@@ -2161,7 +2159,7 @@ ACE_Thread_Adapter::invoke (void)
   exit_hook.thr_mgr (this->thr_mgr ());
 # endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE || ACE_HAS_TSS_EMULATION */
 
-#endif
+#endif /* ! ACE_USE_THREAD_MANAGER_ADAPTER */
 
   // Extract the arguments.
   ACE_THR_FUNC_INTERNAL func = ACE_reinterpret_cast (ACE_THR_FUNC_INTERNAL,
@@ -3430,6 +3428,10 @@ ACE_OS::thr_setspecific (ACE_thread_key_t key, void *data)
     ::TlsSetValue (key, data);
     ACE_TSS_Cleanup::instance ()->key_used (key);
     return 0;
+#   else
+    ACE_UNUSED_ARG (key);
+    ACE_UNUSED_ARG (data);
+    ACE_NOTSUP_RETURN (-1);
 #   endif /* ACE_HAS_STHREADS */
 # else
   ACE_UNUSED_ARG (key);
@@ -3460,7 +3462,10 @@ ACE_OS::thr_keyfree (ACE_thread_key_t key)
     // the key and destructor.
     ACE_TSS_Cleanup::instance ()->remove (key);
     ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::TlsFree (key), ace_result_), int, -1);
-#   endif /* ACE_HAS_STHREADS */
+#   else
+    ACE_UNUSED_ARG (key);
+    ACE_NOTSUP_RETURN (-1);
+#   endif /* ACE_HAS_TSS_EMULATION */
 # else
   ACE_UNUSED_ARG (key);
   ACE_NOTSUP_RETURN (-1);
@@ -3579,7 +3584,12 @@ ACE_OS::thr_keycreate (ACE_thread_key_t *key,
     else
       ACE_FAIL_RETURN (-1);
       /* NOTREACHED */
-#   endif /* ACE_HAS_STHREADS */
+#   else
+    ACE_UNUSED_ARG (key);
+    ACE_UNUSED_ARG (dest);
+    ACE_UNUSED_ARG (inst);
+    ACE_NOTSUP_RETURN (-1);
+#   endif /* ACE_HAS_TSS_EMULATION */
 # else
   ACE_UNUSED_ARG (key);
   ACE_UNUSED_ARG (dest);
