@@ -1,10 +1,16 @@
+Fri Apr 24 15:45:38 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/config-sunos5.5-*.h: set ACE_THR_PRI_FIFO_DEF to 30, because
+          sched_get_priority_min is not implemented on Solaris 2.5.x.
+
 Fri Apr 24 09:12:39 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tests/Env_Value_Test.cpp: Made it UNICODE safe.
+        * tests/Env_Value_Test.cpp: Made it UNICODE safe.
 
-	* tests/version_tests/version_tests.dsw:
-	* tests/version_tests/OrdMultiSet_Test.dsp: Added new project
-	  file.  
+        * tests/version_tests/version_tests.dsw:
+        * tests/version_tests/OrdMultiSet_Test.dsp: Added new project
+          file.
+
 Fri Apr 24 09:09:49 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-linux-common.h: added ACE_HAS_4_4BSD_SENDMSG_RECVMSG.
