@@ -88,10 +88,6 @@ public:
    */
   virtual int addr_to_string (char *buffer, size_t length) = 0;
 
-  /// This method is used when a connection has been reset, requiring
-  /// the hint to be cleaned up and reset to NULL.
-  virtual void reset_hint (void) = 0;
-
   /// This method returns a deep copy of the corresponding endpoints by
   /// allocating memory.
   virtual TAO_Endpoint *duplicate (void) = 0;

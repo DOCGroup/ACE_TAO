@@ -18,6 +18,8 @@
 #define TAO_ORBCONF_H
 #include "ace/pre.h"
 
+#include "tao/taoconfig.h"
+
 // "ace/OS.h" is overkill.  "ace/Basic_Types.h" is enough.  In
 // particular, it is needed for the definition of ACE_LITTLE_ENDIAN.
 #include "ace/Basic_Types.h"

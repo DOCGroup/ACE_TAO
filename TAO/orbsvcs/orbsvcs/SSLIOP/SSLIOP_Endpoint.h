@@ -42,7 +42,7 @@ const ACE_UINT32 TAO_TAG_SSL_ENDPOINTS = 0x54414f01U;
  * @brief SSLIOP-specific implementation of PP Framework Endpoint
  *        interface.
  *
- * 
+ *
  */
 class TAO_SSLIOP_Export TAO_SSLIOP_Endpoint : public TAO_Endpoint
 {
@@ -66,7 +66,6 @@ public:
   //@{
   virtual TAO_Endpoint *next (void);
   virtual int addr_to_string (char *buffer, size_t length);
-  virtual void reset_hint (void);
 
   /// Return true if this endpoint is equivalent to @param
   /// other_endpoint.

@@ -57,7 +57,8 @@ public:
   /// does not require any address resolution processing.
   TAO_DIOP_Endpoint (const char *host,
                      CORBA::UShort port,
-                     const ACE_INET_Addr &addr);
+                     const ACE_INET_Addr &addr,
+                     CORBA::Short priority = TAO_INVALID_PRIORITY);
 
   /// Constructor.
   TAO_DIOP_Endpoint (const ACE_INET_Addr &addr,
@@ -79,9 +80,6 @@ public:
   //@{
   virtual TAO_Endpoint *next (void);
   virtual int addr_to_string (char *buffer, size_t length);
-  virtual void reset_hint (void);
-
-  /// Makes a copy of <this>
   virtual TAO_Endpoint *duplicate (void);
 
   /// Return true if this endpoint is equivalent to <other_endpoint>.  Two
