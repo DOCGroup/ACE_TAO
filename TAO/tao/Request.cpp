@@ -109,7 +109,7 @@ CORBA_Request::send_oneway (void)
   stub->AddRef ();
 
   stub->do_dynamic_call ((char *) opname_,
-                         CORBA::B_TRUE,
+                         CORBA::B_FALSE,
                          args_,
                          result_,
                          flags_,
