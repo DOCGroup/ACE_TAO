@@ -29,9 +29,17 @@ typedef ATMSAPAddress ATM_Addr;
 #elif defined (ACE_HAS_FORE_ATM_WS2)
 #define FORE_NAME_SPACE NS_ALL
 typedef struct sockaddr_atm ATM_Addr;
+#elif defined (ACE_HAS_LINUX_ATM)
+#include "atm.h"
+//pbrandao:as Linux has this 2 structs separeted we "link it" here
+typedef struct _linux_atm_addr
+{
+  struct sockaddr_atmsvc sockaddratmsvc;
+  struct atm_sap atmsap;   
+} ATM_Addr;
 #else
 typedef int ATM_Addr;
-#endif /* ACE_HAS_FORE_ATM_XTI/ACE_HAS_FORE_ATM_WS2 */
+#endif /* ACE_HAS_FORE_ATM_XTI/ACE_HAS_FORE_ATM_WS2/ACE_HAS_LINUX_ATM */
 
 class ACE_Export ACE_ATM_Addr : public ACE_Addr
 {

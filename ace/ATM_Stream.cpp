@@ -69,10 +69,9 @@ ACE_ATM_Stream::get_peer_name (void) const
 
   if (ACE_OS::getpeername(this->get_handle (),
                           (struct sockaddr *) &name,
-                          &nameSize) != 0)
-    {
-      return 0;
-    }
+                          &nameSize) != 0) {
+    return 0;
+  }
 
   char buffer[256];
   for (unsigned int index = 0; index < ATM_ADDR_SIZE - 1; index++ ) {
@@ -108,20 +107,41 @@ ACE_ATM_Stream::get_peer_name (void) const
   }
 
   return host_name;
+#elif defined (ACE_HAS_LINUX_ATM)
+  ATM_Addr name;
+  int nameSize = sizeof(name.sockaddratmsvc);
+
+  if (ACE_OS::getpeername(this->get_handle (),
+                          (struct sockaddr *) &(name.sockaddratmsvc),
+                          &nameSize) < 0) {
+    ACE_OS::perror("ACE_ATM_Stream(get_peer_name): ");
+    return 0;
+  }
+
+  static ACE_TCHAR buffer[MAX_ATM_ADDR_LEN + 1];
+  int total_len;
+  if ((total_len = atm2text(buffer,sizeof buffer,
+                            (struct sockaddr *)&(name.sockaddratmsvc), 
+                            A2T_PRETTY|A2T_NAME)) < 0) {
+    ACE_DEBUG((LM_DEBUG,ASYS_TEXT("ACE_ATM_Stream(get_peer_name):%d"),errno));
+    return 0;
+  }
+
+  return (char*)buffer;
 #else
   return 0;
-#endif /* ACE_HAS_FORE_ATM_XTI */
+#endif /* ACE_HAS_FORE_ATM_XTI || ACE_HAS_FORE_ATM_WS2 || ACE_HAS_LINUX_ATM */
 }
 
 ACE_HANDLE
 ACE_ATM_Stream::get_handle (void) const
 {
   ACE_TRACE ("ACE_ATM_Stream::get_handle");
-#if defined (ACE_HAS_FORE_ATM_XTI) || defined (ACE_HAS_FORE_ATM_WS2)
+#if defined (ACE_HAS_FORE_ATM_XTI) || defined (ACE_HAS_FORE_ATM_WS2) || defined (ACE_HAS_LINUX_ATM)
   return stream_.get_handle ();
 #else
   return 0;
-#endif /* ACE_HAS_FORE_ATM_XTI || ACE_HAS_FORE_ATM_WS2 */
+#endif /* ACE_HAS_FORE_ATM_XTI || ACE_HAS_FORE_ATM_WS2 || ACE_HAS_LINUX_ATM */
 }
 
 int
@@ -223,9 +243,51 @@ ACE_ATM_Stream::get_vpi_vci (ACE_UINT16 &vpi,
   vci = ( ACE_UINT16 )connID.VCI;
 
   return 0;
+#elif defined (ACE_HAS_LINUX_ATM)
+#if defined (SO_ATMPVC) /* atm version>=0.62 */
+  struct sockaddr_atmpvc mypvcaddr;
+  int addrpvclen = sizeof(mypvcaddr);
+  if (ACE_OS::getsockopt(stream_.get_handle(),
+                         SOL_ATM,
+                         SO_ATMPVC, 
+                         ACE_reinterpret_cast(char*,&mypvcaddr),
+                         &addrpvclen) < 0) {
+    ACE_DEBUG(LM_DEBUG,
+              ASYS_TEXT("ACE_ATM_Stream::get_vpi_vci: getsockopt %d\n"),
+              errno);
+    return -1;
+  }
+  vpi = (ACE_UINT16)mypvcaddr.sap_addr.vpi;
+  vci = (ACE_UINT16)mypvcaddr.sap_addr.vci;
+
+  return 0;
+#elif defined (SO_VCID) /* patch for atm version 0.59 */
+  struct atm_vcid mypvcid; 
+  int pvcidlen = sizeof(mypvcid);
+  if (ACE_OS::getsockopt(stream_.get_handle(),
+                         SOL_ATM,SO_VCID,
+                         ACE_reinterpret_cast(char*,&mypvcid),
+                         &pvcidlen) < 0) {
+    ACE_DEBUG(LM_DEBUG,
+              ASYS_TEXT("ACE_ATM_Stream::get_vpi_vci: getsockopt %d\n"),
+              errno);
+    return -1;
+  }
+  vpi = (ACE_UINT16)mypvcid.vpi;
+  vci = (ACE_UINT16)mypvcid.vci;
+
+  return 0;
+#else
+  ACE_DEBUG(LM_DEBUG,
+            ASYS_TEXT("ACE_ATM_Stream::get_vpi_vci: Not implemented in this ATM version. Update to >= 0.62\n Or patch 0.59"));
+  ACE_UNUSED_ARG (vci);
+  ACE_UNUSED_ARG (vpi);
+
+  return (-1);
+#endif /* SO_ATMPVC || SO_VCID */
 #else
   return (-1);
-#endif /* ACE_HAS_FORE_ATM_XTI */
+#endif /* ACE_HAS_FORE_ATM_XTI || ACE_HAS_FORE_ATM_WS2 || ACE_HAS_LINUX_ATM */
 }
 
 #endif /* ACE_HAS_ATM */
