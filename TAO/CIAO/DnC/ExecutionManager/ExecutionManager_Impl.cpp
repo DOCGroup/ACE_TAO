@@ -92,7 +92,7 @@ CIAO::ExecutionManager_Impl::unbind (const char *id)
 Deployment::DomainApplicationManager_ptr
 CIAO::ExecutionManager_Impl::
 preparePlan (const Deployment::DeploymentPlan &plan,
-             CORBA::Boolean 
+             CORBA::Boolean
              ACE_ENV_ARG_DECL_WITH_DEFAULTS)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Deployment::ResourceNotAvailable,

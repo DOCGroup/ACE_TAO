@@ -51,7 +51,7 @@ namespace CIAO
   public:
     // Default constructor.
     ExecutionManager_Impl (CORBA::ORB_ptr orb,
-			   PortableServer::POA_ptr poa,
+                           PortableServer::POA_ptr poa,
                            const char * init_file
                            ACE_ENV_ARG_DECL);
 
