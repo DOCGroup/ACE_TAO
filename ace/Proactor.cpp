@@ -571,10 +571,14 @@ ACE_Proactor::handle_signal (int, siginfo_t *, ucontext_t *)
   // completed in the I/O completion queue.
 
   ACE_Time_Value timeout (0, 0);
-  int result;
+  int result = 0;
 
-  while ((result = this->handle_events (timeout)) == 1)
-    continue;
+  while (1)
+    {
+      result = this->handle_events (timeout);
+      if (result != 0 || errno == ETIME)
+        break;      
+    }
 
   // If our handle_events failed, we'll report a failure to the
   // Reactor.
