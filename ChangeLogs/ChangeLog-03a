@@ -1,3 +1,10 @@
+Thu Apr  4 10:30:54 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/RMCast:
+	* ace/SSL/Makefile:
+	* ace/Makefile: Updated dependency. Other directories need this
+	  too. Will get to them before the beta. 
+
 Thu Apr  4 11:05:48 2002  Carlos O'Ryan  <coryan@uci.edu>
 
 	* ace/Select_Reactor_Base.cpp:
@@ -6,9 +13,9 @@ Thu Apr  4 11:05:48 2002  Carlos O'Ryan  <coryan@uci.edu>
 
 Thu Apr  4 08:32:26 UTC 2002  Don Hinton  <dhinton@ieee.org>
 
-	* ace/CDRStream.cpp (ctor):
-	  Modified default ctor to always add ACE_CDR::MAX_ALIGNMENT to
-	  the size parameter since it is always required since the
+	* ace/CDR_Stream.cpp (ctor):
+	  Modified default ctor to always add ACE_CDR::MAX_ALIGNMENT to 
+	  the size parameter since it is always required since the 
 	  subsequent call to ACE_CDR::mb_align() might advance the
 	  (rd|wr)_ptr's up to ACE_CDR::MAX_ALIGNMENT-1 bytes.
 
@@ -173,9 +180,9 @@ Mon Apr  1 11:56:55 2002  Steve Totten  <totten_s@ociweb.com>
         * ace/Process.h:
         * ace/Process.cpp:
 
-        Applied change from Rich Seibel <seibel_r@ociweb.com> to add a
-        reset for the command_line_calculated_ flag (three places) and
-        rewrote the description of command_line_buf().
+          Applied change from Rich Seibel <seibel_r@ociweb.com> to add a
+	  reset for the command_line_calculated_ flag (three places) and
+	  rewrote the description of command_line_buf(). 
 
 Mon Apr  1 12:38:44 2002  Steve Huston  <shuston@riverace.com>
 
