@@ -211,7 +211,7 @@ Thu Mar 25 16:34:55 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
           ushort, char or wchar as discriminator was broken.  This was
           giving all kinds of problems with the new test in Param_Test
           (union inside any).  Hopefully it will fix the problem that
-          Frank Buschmann reported.
+          Frank Buschmann <Frank.Buschmann@mchp.siemens.de> reported.
 
         * tao/Typecode.cpp:
           Changed one of the methods (private_member_label) to use the
