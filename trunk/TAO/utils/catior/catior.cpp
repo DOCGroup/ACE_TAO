@@ -149,12 +149,6 @@ catior (CORBA::String str,
       tmp += 2;
     }
 
-  if (tmp [0] && !isspace (tmp [0]))
-    {
-      env.exception (new CORBA::BAD_PARAM (CORBA::COMPLETED_NO));
-      return  0;
-    }
-
   // Create deencapsulation stream ... then unmarshal objref from that
   // stream.
 
