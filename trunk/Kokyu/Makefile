@@ -13,7 +13,8 @@ CPP_SRCS += \
 	Kokyu \
 	Dispatcher_Impl \
 	Dispatcher_Task \
-	Default_Dispatcher_Impl
+	Default_Dispatcher_Impl \
+	DSRT_Dispatcher_Impl 
 
 FILES = $(CPP_SRCS)
 DEFS  = $(addsuffix .h,$(FILES))
