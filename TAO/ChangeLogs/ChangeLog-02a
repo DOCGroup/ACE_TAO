@@ -1,3 +1,8 @@
+Sat Apr 06 22:24:03 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Policy_Validator.cpp: #included debug.h. This should fix
+	  compile errors in the minimum builds.
+
 Sat Apr 06 15:50:19 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* examples/POA/POA_BiDir/POA_BiDir.cpp (main): Fixed a compiler
