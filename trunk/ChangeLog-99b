@@ -1,5 +1,9 @@
 Mon Nov  8 09:41:34 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/config-g++-common.h: Added ACE_LACKS_PLACEMENT_OPERATOR_NEW
+	  for older versions of G++.  Thanks to David Levine for reporting
+ 	  this.
+
 	* ace/config-sunos5.5.h: Added a #define for 
 	  ACE_LACKS_PLACEMENT_OPERATOR_DELETE to handle problems with
  	  SunC++ 4.2.
