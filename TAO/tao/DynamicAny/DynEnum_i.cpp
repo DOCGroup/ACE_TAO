@@ -34,40 +34,42 @@ void
 TAO_DynEnum_i::init (const CORBA_Any &any,
                      CORBA::Environment &ACE_TRY_ENV)
 {
-  // The type will be correct if this constructor called from a
-  // factory function, but it could also be called by the user,
-  // so.....
-  int tk =
-    TAO_DynAnyFactory::unalias (this->type_.in (),
+  CORBA::TypeCode_var tc = any.type ();
+
+  CORBA::TCKind kind =
+    TAO_DynAnyFactory::unalias (tc.in (),
                                 ACE_TRY_ENV);
   ACE_CHECK;
 
-  if (tk == CORBA::tk_enum)
-    {
-      // Get the CDR stream of the argument.
-      ACE_Message_Block* mb = any._tao_get_cdr ();
-
-      TAO_InputCDR cdr (mb,
-                        any._tao_byte_order ());
-
-      cdr.read_ulong (this->value_);
-    }
-  else
+  if (kind != CORBA::tk_enum)
     {
       ACE_THROW (DynamicAny::DynAnyFactory::InconsistentTypeCode ());
     }
+
+  this->type_ = tc;
+
+  ACE_Message_Block *mb = any._tao_get_cdr ();
+
+  TAO_InputCDR cdr (mb,
+                    any._tao_byte_order ());
+
+  cdr.read_ulong (this->value_);
 }
 
 void
 TAO_DynEnum_i::init (CORBA_TypeCode_ptr tc,
                      CORBA::Environment &ACE_TRY_ENV)
 {
-  // Need to check if called by user.
-  int tk = TAO_DynAnyFactory::unalias (tc,
-                                       ACE_TRY_ENV);
+  CORBA::TCKind kind = TAO_DynAnyFactory::unalias (tc,
+                                                   ACE_TRY_ENV);
   ACE_CHECK;
-  if (tk != CORBA::tk_enum)
-    ACE_THROW (DynamicAny::DynAnyFactory::InconsistentTypeCode ());
+
+  if (kind != CORBA::tk_enum)
+    {
+      ACE_THROW (DynamicAny::DynAnyFactory::InconsistentTypeCode ());
+    }
+
+  this->type_ = CORBA::TypeCode::_duplicate (tc);
 }
 
 // ****************************************************************
