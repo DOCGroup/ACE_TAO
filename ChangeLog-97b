@@ -10,6 +10,9 @@ Mon Nov 17 15:37:52 1997  David L. Levine  <levine@cs.wustl.edu>
           address being INADDR_ANY.  Without that check, get_host_name ()
           never returns the caller's own hostname.
 
+        * netsvcs/lib/Makefile: the first line of the Local Target
+          (Server_Logging_Handler.*) override mysteriously disappeared.
+
 Mon Nov 17 02:09:57 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.3.49, released Mon Nov 17 02:09:57 1997.
