@@ -15,7 +15,7 @@
 #	include	<unistd.h>		// for getopt on some systems
 
 #else	// windows
-#	include "getopt.h"		// e.g. GNU's version
+#include "ace/Get_Opt.h"
 
 #endif
 
@@ -36,7 +36,7 @@
 #include	"../lib/bridge/tcpoa.hh"
 
 
-extern char 	*optarg;	// missing on some platforms
+// extern char 	*optarg;	// missing on some platforms
 
 extern void
 print_exception (const CORBA_Exception *, const char *, FILE *f=stdout);
@@ -230,7 +230,7 @@ OA_listen (
     str = orb_ptr->object_to_string (obj, env);
     if (env.exception () != 0) {
 	print_exception (env.exception (), "object2string");
-	return 1;
+	 return 1;
     }
     puts ((char *)str);
     fflush (stdout);
@@ -267,7 +267,7 @@ OA_listen (
 	//
 #else
 	fprintf (stderr, "error:  no popen(), can't create child\n");
-	env.exception (new CORBA_IMP_LIMIT);
+//	env.exception (new CORBA_IMP_LIMIT);
 	return 1;
 #endif	// !defined (HAVE_POPEN)
     }
@@ -301,7 +301,7 @@ OA_listen (
 	    oa_ptr->get_request (tcpoa_dispatch,
 		    fwd_ref ? tcpoa_forwarder : 0,
 		    do_threads, &obj_key, &tv, env);
-	}
+	}         
 
 	//
 	// XXX "env2" should be checked to see if TypeCode::id() reported
@@ -332,8 +332,8 @@ OA_listen (
 //
 int
 main (
-    int			argc,
-    char		*const *argv
+    int    argc,
+    char   *argv[]
 )
 {
     CORBA_Environment	env;
@@ -349,16 +349,18 @@ main (
     //
     // Parse the command line, get options
     //
-    int			c;
+	ACE_Get_Opt get_opt (argc, argv, "di:fk:o:p:t");
 
-    while ((c = getopt (argc, argv, "di:fk:o:p:t")) != EOF)
+	int c; 
+	
+	while ((c = get_opt ()) != -1)
 	switch (c) {
 	  case 'd':			// more debug noise
 	    debug_level++;
 	    continue;
 
 	  case 'i':			// idle seconds b4 exit
-	    idle = atoi (optarg);
+	    idle = atoi (get_opt.optarg);
 	    continue;
 
 	  case 'f':			// fork child server
@@ -366,15 +368,15 @@ main (
 	    continue;
 
 	  case 'k':			// key (str)
-	    key = (CORBA_String) optarg;
+	    key = (CORBA_String) get_opt.optarg;;
 	    continue;
 
 	  case 'o':			// orb name
-	    orb_name = optarg;
+	    orb_name = get_opt.optarg;;
 	    continue;
 
 	  case 'p':			// portnum
-	    oa_name = optarg;
+	    oa_name = get_opt.optarg;;
 	    continue;
 	
 	  case 't':			// create thread-per-request
@@ -408,14 +410,14 @@ main (
 
     orb_ptr = CORBA_ORB_init (argc, argv, orb_name, env);
     if (env.exception () != 0) {
-	print_exception (env.exception (), "ORB init");
-	return 1;
+	   print_exception (env.exception (), "ORB init");
+	   return 1;
     }
 
     oa_ptr = TCP_OA::init (orb_ptr, oa_name, env);
     if (env.exception () != 0) {
-	print_exception (env.exception (), "OA init");
-	return 1;
+	   print_exception (env.exception (), "OA init");
+	   return 1;
     }
 
     return OA_listen (orb_ptr, oa_ptr, key, idle, do_fork, do_threads);

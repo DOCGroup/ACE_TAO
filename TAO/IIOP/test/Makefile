@@ -7,7 +7,7 @@ include		$(ROOT)/Makefile.conf
 
 CPPFLAGS +=	-I$(ROOT)/proto/include
 
-LDLIBS =	-R$(ROOT)/proto/lib -L$(ROOT)/proto/lib -lcorba -lpthread
+LDLIBS =	-Qoption ld -R$(ROOT)/proto/lib -L$(ROOT)/proto/lib -lcorba
 
 PROG_SRCS =	svr.cpp clnt.cpp cubit.cpp \
 		test1.cpp test1_clnt.cpp test1_svr.cpp \

@@ -42,7 +42,7 @@
 		CORBA_ ## truetype &out_a2, \
 		CORBA_ ## truetype &inout_a3, \
 		CORBA_Environment &env) { \
-	CORBA_ ## truetype _retval = 0; \
+	CORBA_ ## truetype _retval; \
 	STUB_Object	*_obj; \
 	if (target->QueryInterface (IID_STUB_Object, (void **)&_obj) \
 		!= NOERROR) \
@@ -54,6 +54,11 @@
 	} \
 	return _retval; \
     }
+
+//  changed extern const calldata test1_ ## typename ## _calldata;
+//  to     const calldata test1_ ## typename ## _calldata; \
+
+//	changed CORBA_ ## truetype _retval = 0; to changed CORBA_ ## truetype _retval;
 
 #define	DEFINE_TEST(typename, truetype) \
 	DEFINE_TEST3(typename, truetype, truetype)
