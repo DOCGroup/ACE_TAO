@@ -194,7 +194,7 @@ u_char * asn1::build_int( u_char *data,
    * consecutive 1's or 0's at the most significant end of the
    * integer.
    */
-  mask = 0x1FF << ((8 * (sizeof(long) - 1)) - 1);
+  mask = u_long (0x1FF) << ((8 * (sizeof(u_long) - 1)) - 1);
   /* mask is 0xFF800000 on a big-endian machine */
   while((((integer & mask) == 0) || ((integer & mask) == mask))
         && intsize > 1){
@@ -207,7 +207,7 @@ u_char * asn1::build_int( u_char *data,
   if (*datalength < intsize)
     return 0;
   *datalength -= intsize;
-  mask = 0xFF << (8 * (sizeof(long) - 1));
+  mask = u_long (0xFF) << (8 * (sizeof(u_long) - 1));
   /* mask is 0xFF000000 on a big-endian machine */
   while(intsize--){
     *data++ = (u_char)((integer & mask) >> (8 * (sizeof(long) - 1)));
@@ -245,7 +245,7 @@ u_char * asn1::build_unsigned_int( u_char *data,
   if (intsize != sizeof (long))
     return 0;
   integer = *intp;
-  mask = 0xFF << (8 * (sizeof(long) - 1));
+  mask = u_long (0xFF) << (8 * (sizeof(u_long) - 1));
   /* mask is 0xFF000000 on a big-endian machine */
   if ((u_char)((integer & mask) >> (8 * (sizeof(long) - 1))) & 0x80){
     /* if MSB is set */
@@ -257,7 +257,7 @@ u_char * asn1::build_unsigned_int( u_char *data,
    * There should be no sequence of 9 consecutive 1's or 0's at the most significant end of the
    * integer.
    */
-  mask = 0x1FF << ((8 * (sizeof(long) - 1)) - 1);
+  mask = u_long (0x1FF) << ((8 * (sizeof(u_long) - 1)) - 1);
   /* mask is 0xFF800000 on a big-endian machine */
   while((((integer & mask) == 0) || ((integer & mask) == mask)) && intsize > 1){
     intsize--;
@@ -273,7 +273,7 @@ u_char * asn1::build_unsigned_int( u_char *data,
     *data++ = '\0';
     intsize--;
   }
-  mask = 0xFF << (8 * (sizeof(long) - 1));
+  mask = u_long (0xFF) << (8 * (sizeof(u_long) - 1));
   /* mask is 0xFF000000 on a big-endian machine */
   while(intsize--){
     *data++ = (u_char)((integer & mask) >> (8 * (sizeof(long) - 1)));
@@ -921,7 +921,7 @@ u_char * asn1::build_unsigned_int64( u_char *data,
   intsize = 8;
   low = cp->low;
   high = cp->high;
-  mask = 0xFF << (8 * (sizeof(long) - 1));
+  mask = u_long (0xFF) << (8 * (sizeof(u_long) - 1));
   /* mask is 0xFF000000 on a big-endian machine */
   if ((u_char)((high & mask) >> (8 * (sizeof(long) - 1))) & 0x80){
     /* if MSB is set */
@@ -934,7 +934,7 @@ u_char * asn1::build_unsigned_int64( u_char *data,
    * There should be no sequence of 9 consecutive 1's or 0's at the most
    * significant end of the integer.
    */
-  mask2 = 0x1FF << ((8 * (sizeof(long) - 1)) - 1);
+  mask2 = u_long (0x1FF) << ((8 * (sizeof(u_long) - 1)) - 1);
   /* mask2 is 0xFF800000 on a big-endian machine */
   while((((high & mask2) == 0) || ((high & mask2) == mask2))
         && intsize > 1){
