@@ -1,3 +1,17 @@
+Tue May 28 07:44:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Event/BCU.h:
+        * orbsvcs/orbsvcs/Event/Dispatching_Modules.h:
+        * orbsvcs/orbsvcs/Event/Event_Channel.h:
+        * orbsvcs/orbsvcs/Event/Event_Manip.h:
+        * orbsvcs/orbsvcs/Event/GPlot_File.cpp:
+        * orbsvcs/orbsvcs/Event/GPlot_File.h:
+        * orbsvcs/orbsvcs/Event/Local_ESTypes.h:
+        * orbsvcs/orbsvcs/Event/Memory_Pools.h:
+        * orbsvcs/orbsvcs/Event/Module_Factory.h:
+        * orbsvcs/orbsvcs/Event/RT_Task.h:
+          Converted old style documentation to doxygen style documentation
+
 Mon May 27 10:46:41 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/Remote_Object_Proxy_Impl.cpp: Fixed gcc warnings on invalid
