@@ -1,3 +1,4 @@
+
 /*
 
 COPYRIGHT
@@ -51,8 +52,8 @@ Technical Data and Computer Software clause at DFARS 252.227-7013 and FAR
 Sun, Sun Microsystems and the Sun logo are trademarks or registered
 trademarks of Sun Microsystems, Inc.
 
-SunSoft, Inc.  
-2550 Garcia Avenue 
+SunSoft, Inc.
+2550 Garcia Avenue
 Mountain View, California  94043
 
 NOTE:
@@ -80,6 +81,9 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 extern	"C" int yywrap();
 #endif	// (defined(apollo) || defined(hpux)) && defined(__cplusplus)
 
+void yyerror (char *);
+int yylex (void);
+extern "C" int yywrap (void);
 %}
 
 /*
@@ -106,7 +110,7 @@ extern	"C" int yywrap();
   double		dval;		/* Double value		*/
   float			fval;		/* Float value		*/
   char			cval;		/* Char value		*/
-  
+
   String		*sval;		/* String value		*/
   char			*strval;	/* char * value		*/
   Identifier		*idval;		/* Identifier		*/
@@ -213,6 +217,7 @@ extern	"C" int yywrap();
 
 %type <idval>	interface_decl id
 
+%type <ival> type_dcl
 %%
 
 /*
@@ -287,7 +292,7 @@ module	: MODULE
 		new UTL_ScopedName(new Identifier($3, 1, 0, I_FALSE), NULL);
 	    AST_Module		*m = NULL;
 	    UTL_Scope		*s = idl_global->scopes()->top_non_null();
-	    UTL_StrList		*p = idl_global->pragmas();	
+	    UTL_StrList		*p = idl_global->pragmas();
 
 	    idl_global->set_parse_state(IDL_GlobalData::PS_ModuleIDSeen);
 	    /*
@@ -857,10 +862,10 @@ type_dcl
 	  {
 	    idl_global->set_parse_state(IDL_GlobalData::PS_TypedefSeen);
 	  }
-	  type_declarator
-	| struct_type
-	| union_type
-	| enum_type
+	  type_declarator {$$ = 0;}
+	| struct_type { $$ = 0;}
+	| union_type  { $$ = 0;}
+	| enum_type   { $$ = 0;}
 	;
 
 type_declarator :
@@ -888,10 +893,10 @@ type_declarator :
 	    l = new UTL_DecllistActiveIterator($3);
 	    for (;!(l->is_done()); l->next()) {
 	      d = l->item();
-	      if (d == NULL) 
+	      if (d == NULL)
 		continue;
               AST_Type * tp = d->compose($1);
-              if (tp == NULL) 
+              if (tp == NULL)
 		continue;
 	      t = idl_global->gen()->create_typedef(tp, d->name(), p);
 	      (void) s->fe_add_typedef(t);
@@ -1091,14 +1096,14 @@ char_type
 
 octet_type
 	: OCTET
-	{ 
+	{
           $$ = AST_Expression::EV_octet;
 	}
 	;
 
 boolean_type
 	: BOOLEAN
-	{ 
+	{
 	  $$ = AST_Expression::EV_bool;
         }
 	;
@@ -1202,10 +1207,10 @@ member	:
 	    l = new UTL_DecllistActiveIterator($3);
 	    for (;!(l->is_done()); l->next()) {
 	      d = l->item();
-	      if (d == NULL) 
+	      if (d == NULL)
 		continue;
  	      AST_Type *tp = d->compose($1);
-	      if (tp == NULL) 
+	      if (tp == NULL)
 		continue;
 	      f = idl_global->gen()->create_field(tp, d->name(), p);
 	      (void) s->fe_add_field(f);
@@ -1600,7 +1605,7 @@ enumerator :
 	   */
 	  if (s != NULL && s->scope_node_type() == AST_Decl::NT_enum) {
 	    c = AST_Enum::narrow_from_scope(s);
-	    if (c != NULL) 
+	    if (c != NULL)
 	      e = idl_global->gen()->create_enum_val(c->next_enum_val(), n, p);
 	    (void) s->fe_add_enum_val(e);
 	  }
@@ -1634,8 +1639,8 @@ sequence_type_spec
 	  } else if ($1 == NULL) {
 	    $$ = NULL;
 	  } else {
- 	    AST_Type *tp = AST_Type::narrow_from_decl($1); 
-	    if (tp == NULL) 
+ 	    AST_Type *tp = AST_Type::narrow_from_decl($1);
+	    if (tp == NULL)
 	      $$ = NULL;
 	    else {
 	      $$ = idl_global->gen()->create_sequence($4, tp);
@@ -1909,7 +1914,7 @@ attribute:
 	    }
 	    delete l;
 	  }
-	}	    
+	}
 	;
 
 opt_readonly
@@ -2124,7 +2129,7 @@ parameter :
 	      (void) s->fe_add_argument(a);
 	    }
 	  }
-	}	    
+	}
 	;
 
 param_type_spec

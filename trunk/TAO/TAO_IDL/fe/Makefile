@@ -20,7 +20,7 @@ FE_FILES	= \
 
 OTHER_FILES	= \
 		y.tab \
-		lex.yy 
+		lex.yy
 
 FILES	 = $(FE_FILES) $(OTHER_FILES)
 
@@ -56,8 +56,8 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 CPPFLAGS += -D_REENTRANT -I../include -I. -DCPP_LOCATION=\"$(CXX)\" -DIDL_CFE_VERSION=$(IDL_CFE_VERSION)
 YACC   = bison
 LEX	= flex
-YFLAGS	= -t -d -y 
-LFLAGS	= -t 
+YFLAGS	= -t -d -y
+LFLAGS	= -t
 
 # Create the parser and lexer
 y.tab.hh y.tab.cpp: idl.yy

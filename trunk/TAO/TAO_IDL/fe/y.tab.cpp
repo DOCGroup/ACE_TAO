@@ -1,5 +1,5 @@
 
-# line 72 "idl.yy"
+# line 73 "idl.yy"
 #include "idl.h"
 #include "idl_extern.h"
 
@@ -11,8 +11,11 @@
 extern	"C" int yywrap();
 #endif	// (defined(apollo) || defined(hpux)) && defined(__cplusplus)
 
+void yyerror (char *);
+int yylex (void);
+extern "C" int yywrap (void);
 
-# line 89 "idl.yy"
+# line 93 "idl.yy"
 typedef union
 #ifdef __cplusplus
 	YYSTYPE
@@ -37,7 +40,7 @@ typedef union
   double		dval;		/* Double value		*/
   float			fval;		/* Float value		*/
   char			cval;		/* Char value		*/
-  
+
   String		*sval;		/* String value		*/
   char			*strval;	/* char * value		*/
   Identifier		*idval;		/* Identifier		*/
@@ -134,7 +137,7 @@ YYSTYPE *yyv;
 static int yymaxdepth = YYMAXDEPTH;
 # define YYERRCODE 256
 
-# line 2220 "idl.yy"
+# line 2239 "idl.yy"
 
 /* programs */
 
@@ -315,7 +318,7 @@ yytabelem yypgo[]={
    505,   504,   503,   502,     2,   501,   159,   142,   155,   179,
    130,   182,   234,   500,   143,   141,    10,   499,   498,   105,
    104,   103,   321,   497,   496,   495,     6,    76,   494,   493,
-     1,    15,   492,   491,   490,     0,   489,   207,   488,   166,
+     1,    15,   492,   491,   490,     0,   166,   489,   207,   488,
    487,   162,   486,   158,   485,   484,   483,   482,   481,   480,
    479,   478,   477,   476,   475,   474,   473,   472,   471,   470,
    469,   468,   467,   466,   465,   464,   463,   462,   461,   460,
@@ -330,8 +333,8 @@ yytabelem yypgo[]={
    340,   339,   335,   334,   332,   322 };
 yytabelem yyr1[]={
 
-     0,    66,    67,    67,    70,    68,    72,    68,    74,    68,
-    76,    68,    78,    68,    79,    68,    80,    81,    82,    83,
+     0,    67,    68,    68,    70,    69,    72,    69,    74,    69,
+    76,    69,    78,    69,    79,    69,    80,    81,    82,    83,
     77,    75,    75,    86,    87,    89,    84,    90,    64,    32,
     91,    22,    22,    88,    88,    93,    92,    94,    92,    95,
     92,    97,    92,    99,    92,   100,    92,    20,   101,    21,
@@ -340,7 +343,7 @@ yytabelem yyr1[]={
     48,    33,    34,    35,    35,    36,    36,    37,    37,    38,
     38,    38,    39,    39,    39,    40,    40,    40,    40,    41,
     41,    41,    41,    42,    42,    42,    43,    43,    43,    43,
-    43,    43,    44,   108,    69,    69,    69,    69,   110,   109,
+    43,    43,    44,   108,    66,    66,    66,    66,   110,   109,
      1,     1,     2,     2,     2,    56,    56,    56,    56,    56,
     56,     4,     4,     4,     3,     3,     3,    28,   111,    29,
     29,    60,    60,    30,   112,    31,    31,    61,    62,    49,
@@ -371,7 +374,7 @@ yytabelem yyr2[]={
      3,     2,     2,     2,     7,     2,     7,     2,     7,     2,
      7,     7,     2,     7,     7,     2,     7,     7,     7,     2,
      5,     5,     5,     3,     2,     7,     3,     3,     3,     3,
-     3,     3,     3,     1,     6,     2,     2,     2,     1,     7,
+     3,     3,     3,     1,     7,     3,     3,     3,     1,     7,
      2,     2,     3,     2,     3,     2,     2,     2,     2,     2,
      2,     2,     2,     2,     2,     2,     2,     5,     1,     9,
      1,     2,     2,     5,     1,     9,     1,     3,     3,     2,
@@ -392,9 +395,9 @@ yytabelem yyr2[]={
      1,     5,     1,     9,     1 };
 yytabelem yychk[]={
 
--10000000,   -66,   -67,   -68,   -69,   -71,   -73,   -75,   -77,   256,
+-10000000,   -67,   -68,   -69,   -66,   -71,   -73,   -75,   -77,   256,
    261,    -7,   -10,    -8,   258,   279,   -84,   -85,   259,   272,
-   273,   275,   -32,   -64,   260,   -67,   -70,   -72,   -74,   -76,
+   273,   275,   -32,   -64,   260,   -68,   -70,   -72,   -74,   -76,
    -78,   -79,  -108,  -104,  -164,   -80,  -113,  -123,  -141,   -86,
    -22,    58,   -90,    59,    59,    59,    59,    59,    59,  -109,
     -1,    -2,    -3,   -56,    -4,   -16,    -7,   -10,    -8,   -49,
@@ -410,11 +413,11 @@ yytabelem yychk[]={
    -65,   -44,   -34,   -35,   -36,   -37,   -38,   -39,   -40,   -41,
    -42,    43,    45,   126,   -16,   -43,    40,   292,   293,   294,
    295,   296,   297,   -44,   -44,  -152,  -106,  -166,   -82,  -115,
-  -125,  -143,   -89,   -92,   -69,   -71,   -73,   -96,   -98,   256,
+  -125,  -143,   -89,   -92,   -66,   -71,   -73,   -96,   -98,   256,
    -63,   -59,   282,   284,   285,    44,    44,   -24,   -45,    91,
   -150,   124,    94,    38,   299,   300,    43,    45,    42,    47,
     37,   -42,   -42,   -42,   -34,  -155,  -158,    -2,    61,  -119,
-   -67,  -116,  -118,    -1,   256,    40,  -144,  -146,   257,   125,
+   -68,  -116,  -118,    -1,   256,    40,  -144,  -146,   257,   125,
    -93,   -94,   -95,   -97,   -99,  -100,   283,   -12,   -15,   286,
    -56,    -6,   -16,  -101,  -111,   -25,  -160,    62,   -36,   -37,
    -38,   -39,   -39,   -40,   -40,   -41,   -41,   -41,    41,    62,
@@ -1356,79 +1359,79 @@ int yyparse()
 	{
 		
 case 4:
-# line 230 "idl.yy"
+# line 235 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_TypeDeclSeen);
         } break;
 case 5:
-# line 234 "idl.yy"
+# line 239 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_NoState);
         } break;
 case 6:
-# line 238 "idl.yy"
+# line 243 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_ConstDeclSeen);
         } break;
 case 7:
-# line 242 "idl.yy"
+# line 247 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_NoState);
         } break;
 case 8:
-# line 246 "idl.yy"
+# line 251 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_ExceptDeclSeen);
         } break;
 case 9:
-# line 250 "idl.yy"
+# line 255 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_NoState);
         } break;
 case 10:
-# line 254 "idl.yy"
+# line 259 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_InterfaceDeclSeen);
         } break;
 case 11:
-# line 258 "idl.yy"
+# line 263 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_NoState);
         } break;
 case 12:
-# line 262 "idl.yy"
+# line 267 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_ModuleDeclSeen);
         } break;
 case 13:
-# line 266 "idl.yy"
+# line 271 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_NoState);
         } break;
 case 14:
-# line 270 "idl.yy"
+# line 275 "idl.yy"
 {
 	  idl_global->err()->syntax_error(idl_global->parse_state());
 	} break;
 case 15:
-# line 274 "idl.yy"
+# line 279 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_NoState);
 	  yyerrok;
 	} break;
 case 16:
-# line 281 "idl.yy"
+# line 286 "idl.yy"
 {
 	    idl_global->set_parse_state(IDL_GlobalData::PS_ModuleSeen);
 	  } break;
 case 17:
-# line 285 "idl.yy"
+# line 290 "idl.yy"
 {
 	    UTL_ScopedName 	*n =
 		new UTL_ScopedName(new Identifier(yypvt[-0].strval, 1, 0, I_FALSE), NULL);
 	    AST_Module		*m = NULL;
 	    UTL_Scope		*s = idl_global->scopes()->top_non_null();
-	    UTL_StrList		*p = idl_global->pragmas();	
+	    UTL_StrList		*p = idl_global->pragmas();
 
 	    idl_global->set_parse_state(IDL_GlobalData::PS_ModuleIDSeen);
 	    /*
@@ -1444,17 +1447,17 @@ case 17:
 	    idl_global->scopes()->push(m);
 	  } break;
 case 18:
-# line 306 "idl.yy"
+# line 311 "idl.yy"
 {
 	    idl_global->set_parse_state(IDL_GlobalData::PS_ModuleSqSeen);
 	  } break;
 case 19:
-# line 310 "idl.yy"
+# line 315 "idl.yy"
 {
 	    idl_global->set_parse_state(IDL_GlobalData::PS_ModuleBodySeen);
 	  } break;
 case 20:
-# line 314 "idl.yy"
+# line 319 "idl.yy"
 {
 	    idl_global->set_parse_state(IDL_GlobalData::PS_ModuleQsSeen);
 	    /*
@@ -1463,7 +1466,7 @@ case 20:
 	    idl_global->scopes()->pop();
 	  } break;
 case 23:
-# line 330 "idl.yy"
+# line 335 "idl.yy"
 {
 	  UTL_Scope     *s = idl_global->scopes()->top_non_null();
 	  AST_Interface *i = NULL;
@@ -1471,6 +1474,8 @@ case 23:
 	  UTL_StrList   *p = idl_global->pragmas();
 	  AST_Decl	*d = NULL;
 	  AST_Interface *fd = NULL;
+
+	  ACE_UNUSED_ARG (v);
 
 	  /*
 	   * Make a new interface node and add it to its enclosing scope
@@ -1546,17 +1551,17 @@ case 23:
 	  idl_global->scopes()->push(i);
         } break;
 case 24:
-# line 412 "idl.yy"
+# line 419 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_InterfaceSqSeen);
 	} break;
 case 25:
-# line 416 "idl.yy"
+# line 423 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_InterfaceBodySeen);
 	} break;
 case 26:
-# line 420 "idl.yy"
+# line 427 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_InterfaceQsSeen);
 	  /*
@@ -1565,18 +1570,18 @@ case 26:
 	  idl_global->scopes()->pop();
 	} break;
 case 27:
-# line 431 "idl.yy"
+# line 438 "idl.yy"
 {
 	   idl_global->set_parse_state(IDL_GlobalData::PS_InterfaceSeen);
 	 } break;
 case 28:
-# line 435 "idl.yy"
+# line 442 "idl.yy"
 {
 	   idl_global->set_parse_state(IDL_GlobalData::PS_InterfaceIDSeen);
 	   yyval.idval = yypvt[-0].idval;
 	 } break;
 case 29:
-# line 443 "idl.yy"
+# line 450 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_InheritSpecSeen);
 	  /*
@@ -1588,93 +1593,93 @@ case 29:
 	  yyval.ihval = new FE_InterfaceHeader(new UTL_ScopedName(yypvt[-1].idval, NULL), yypvt[-0].nlval);
 	} break;
 case 30:
-# line 457 "idl.yy"
+# line 464 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_InheritColonSeen);
         } break;
 case 31:
-# line 461 "idl.yy"
+# line 468 "idl.yy"
 {
 	  yyval.nlval = yypvt[-0].nlval;
 	} break;
 case 32:
-# line 465 "idl.yy"
+# line 472 "idl.yy"
 {
 	  yyval.nlval = NULL;
 	} break;
 case 35:
-# line 477 "idl.yy"
+# line 484 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_TypeDeclSeen);
         } break;
 case 36:
-# line 481 "idl.yy"
+# line 488 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_NoState);
         } break;
 case 37:
-# line 485 "idl.yy"
+# line 492 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_ConstDeclSeen);
         } break;
 case 38:
-# line 489 "idl.yy"
+# line 496 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_NoState);
         } break;
 case 39:
-# line 493 "idl.yy"
+# line 500 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_ExceptDeclSeen);
         } break;
 case 40:
-# line 497 "idl.yy"
+# line 504 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_NoState);
         } break;
 case 41:
-# line 501 "idl.yy"
+# line 508 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_AttrDeclSeen);
         } break;
 case 42:
-# line 505 "idl.yy"
+# line 512 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_NoState);
         } break;
 case 43:
-# line 509 "idl.yy"
+# line 516 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_OpDeclSeen);
         } break;
 case 44:
-# line 513 "idl.yy"
+# line 520 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_NoState);
         } break;
 case 45:
-# line 517 "idl.yy"
+# line 524 "idl.yy"
 {
 	  idl_global->err()->syntax_error(idl_global->parse_state());
 	} break;
 case 46:
-# line 521 "idl.yy"
+# line 528 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_NoState);
 	  yyerrok;
 	} break;
 case 47:
-# line 529 "idl.yy"
+# line 536 "idl.yy"
 {
 	  yyval.nlval = new UTL_NameList(yypvt[-1].idlist, yypvt[-0].nlval);
 	} break;
 case 48:
-# line 537 "idl.yy"
+# line 544 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_SNListCommaSeen);
         } break;
 case 49:
-# line 541 "idl.yy"
+# line 548 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_ScopedNameSeen);
 
@@ -1686,24 +1691,24 @@ case 49:
 	  }
 	} break;
 case 50:
-# line 552 "idl.yy"
+# line 559 "idl.yy"
 {
 	  yyval.nlval = NULL;
 	} break;
 case 51:
-# line 559 "idl.yy"
+# line 566 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_SN_IDSeen);
 
 	  yyval.idlist = new UTL_IdList(yypvt[-0].idval, NULL);
 	} break;
 case 52:
-# line 565 "idl.yy"
+# line 572 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_ScopeDelimSeen);
         } break;
 case 53:
-# line 569 "idl.yy"
+# line 576 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_SN_IDSeen);
 
@@ -1711,12 +1716,12 @@ case 53:
 			      new UTL_IdList(yypvt[-0].idval, NULL));
 	} break;
 case 54:
-# line 577 "idl.yy"
+# line 584 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_ScopeDelimSeen);
         } break;
 case 55:
-# line 581 "idl.yy"
+# line 588 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_SN_IDSeen);
 
@@ -1724,12 +1729,12 @@ case 55:
 	  yyval.idlist = yypvt[-3].idlist;
 	} break;
 case 56:
-# line 590 "idl.yy"
+# line 597 "idl.yy"
 {
             yyval.idval = new Identifier(yypvt[-0].strval, 1, 0, I_FALSE);
         } break;
 case 57:
-# line 597 "idl.yy"
+# line 604 "idl.yy"
 {
 	  UTL_Scope		*s = idl_global->scopes()->top_non_null();
 	  UTL_ScopedName	*n = new UTL_ScopedName(yypvt[-0].idval, NULL);
@@ -1747,33 +1752,35 @@ case 57:
 	  }
 	} break;
 case 58:
-# line 617 "idl.yy"
+# line 624 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_ConstSeen);
         } break;
 case 59:
-# line 621 "idl.yy"
+# line 628 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_ConstTypeSeen);
         } break;
 case 60:
-# line 625 "idl.yy"
+# line 632 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_ConstIDSeen);
         } break;
 case 61:
-# line 629 "idl.yy"
+# line 636 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_ConstAssignSeen);
         } break;
 case 62:
-# line 633 "idl.yy"
+# line 640 "idl.yy"
 {
 	  UTL_ScopedName	*n = new UTL_ScopedName(yypvt[-4].idval, NULL);
 	  UTL_Scope		*s = idl_global->scopes()->top_non_null();
 	  AST_Constant		*c = NULL;
 	  UTL_StrList		*p = idl_global->pragmas();
 	  AST_Decl		*v = NULL;
+
+	  ACE_UNUSED_ARG (v);
 
 	  idl_global->set_parse_state(IDL_GlobalData::PS_ConstExprSeen);
 	  /*
@@ -1791,17 +1798,17 @@ case 62:
 	  }
 	} break;
 case 68:
-# line 664 "idl.yy"
+# line 673 "idl.yy"
 {
 	  yyval.etval = AST_Expression::EV_string;
 	} break;
 case 69:
-# line 668 "idl.yy"
+# line 677 "idl.yy"
 {
 	  yyval.etval = AST_Expression::EV_wstring;
         } break;
 case 70:
-# line 672 "idl.yy"
+# line 681 "idl.yy"
 {
 	  UTL_Scope		*s = idl_global->scopes()->top_non_null();
 	  AST_Decl		*d = NULL;
@@ -1837,78 +1844,78 @@ case 70:
 	    yyval.etval = AST_Expression::EV_any;
 	} break;
 case 74:
-# line 714 "idl.yy"
+# line 723 "idl.yy"
 {
 	  yyval.exval = idl_global->gen()->create_expr(AST_Expression::EC_or, yypvt[-2].exval, yypvt[-0].exval);
 	} break;
 case 76:
-# line 722 "idl.yy"
+# line 731 "idl.yy"
 {
 	  yyval.exval = idl_global->gen()->create_expr(AST_Expression::EC_xor, yypvt[-2].exval, yypvt[-0].exval);
 	} break;
 case 78:
-# line 730 "idl.yy"
+# line 739 "idl.yy"
 {
 	  yyval.exval = idl_global->gen()->create_expr(AST_Expression::EC_and, yypvt[-2].exval, yypvt[-0].exval);
 	} break;
 case 80:
-# line 738 "idl.yy"
+# line 747 "idl.yy"
 {
 	  yyval.exval = idl_global->gen()->create_expr(AST_Expression::EC_right,yypvt[-2].exval,yypvt[-0].exval);
 	} break;
 case 81:
-# line 742 "idl.yy"
+# line 751 "idl.yy"
 {
 	  yyval.exval = idl_global->gen()->create_expr(AST_Expression::EC_left,yypvt[-2].exval,yypvt[-0].exval);
 	} break;
 case 83:
-# line 750 "idl.yy"
+# line 759 "idl.yy"
 {
 	  yyval.exval = idl_global->gen()->create_expr(AST_Expression::EC_add, yypvt[-2].exval, yypvt[-0].exval);
 	} break;
 case 84:
-# line 754 "idl.yy"
+# line 763 "idl.yy"
 {
 	  yyval.exval = idl_global->gen()->create_expr(AST_Expression::EC_minus,yypvt[-2].exval,yypvt[-0].exval);
 	} break;
 case 86:
-# line 762 "idl.yy"
+# line 771 "idl.yy"
 {
 	  yyval.exval = idl_global->gen()->create_expr(AST_Expression::EC_mul, yypvt[-2].exval, yypvt[-0].exval);
 	} break;
 case 87:
-# line 766 "idl.yy"
+# line 775 "idl.yy"
 {
 	  yyval.exval = idl_global->gen()->create_expr(AST_Expression::EC_div, yypvt[-2].exval, yypvt[-0].exval);
 	} break;
 case 88:
-# line 770 "idl.yy"
+# line 779 "idl.yy"
 {
 	  yyval.exval = idl_global->gen()->create_expr(AST_Expression::EC_mod, yypvt[-2].exval, yypvt[-0].exval);
 	} break;
 case 90:
-# line 778 "idl.yy"
+# line 787 "idl.yy"
 {
 	  yyval.exval = idl_global->gen()->create_expr(AST_Expression::EC_u_plus,
 					      yypvt[-0].exval,
 					      NULL);
 	} break;
 case 91:
-# line 784 "idl.yy"
+# line 793 "idl.yy"
 {
 	  yyval.exval = idl_global->gen()->create_expr(AST_Expression::EC_u_minus,
 					      yypvt[-0].exval,
 					      NULL);
 	} break;
 case 92:
-# line 790 "idl.yy"
+# line 799 "idl.yy"
 {
 	  yyval.exval = idl_global->gen()->create_expr(AST_Expression::EC_bit_neg,
 					      yypvt[-0].exval,
 					      NULL);
 	} break;
 case 93:
-# line 799 "idl.yy"
+# line 808 "idl.yy"
 {
 	  /*
 	   * An expression which is a scoped name is not resolved now,
@@ -1918,60 +1925,72 @@ case 93:
 	  yyval.exval = idl_global->gen()->create_expr(yypvt[-0].idlist);
 	} break;
 case 95:
-# line 809 "idl.yy"
+# line 818 "idl.yy"
 {
 	  yyval.exval = yypvt[-1].exval;
 	} break;
 case 96:
-# line 816 "idl.yy"
+# line 825 "idl.yy"
 {
 	  yyval.exval = idl_global->gen()->create_expr(yypvt[-0].ival);
 	} break;
 case 97:
-# line 820 "idl.yy"
+# line 829 "idl.yy"
 {
 	  yyval.exval = idl_global->gen()->create_expr(yypvt[-0].sval);
 	} break;
 case 98:
-# line 824 "idl.yy"
+# line 833 "idl.yy"
 {
 	  yyval.exval = idl_global->gen()->create_expr(yypvt[-0].cval);
 	} break;
 case 99:
-# line 828 "idl.yy"
+# line 837 "idl.yy"
 {
 	  yyval.exval = idl_global->gen()->create_expr(yypvt[-0].dval);
 	} break;
 case 100:
-# line 832 "idl.yy"
+# line 841 "idl.yy"
 {
 	  yyval.exval = idl_global->gen()->create_expr((idl_bool) I_TRUE,
 					    AST_Expression::EV_bool);
 	} break;
 case 101:
-# line 837 "idl.yy"
+# line 846 "idl.yy"
 {
 	  yyval.exval = idl_global->gen()->create_expr((idl_bool) I_FALSE,
 					    AST_Expression::EV_bool);
 	} break;
 case 102:
-# line 845 "idl.yy"
+# line 854 "idl.yy"
 {
 	    yypvt[-0].exval->evaluate(AST_Expression::EK_const);
 	    yyval.exval = idl_global->gen()->create_expr(yypvt[-0].exval, AST_Expression::EV_ulong);
 	} break;
 case 103:
-# line 853 "idl.yy"
+# line 862 "idl.yy"
 {
 	    idl_global->set_parse_state(IDL_GlobalData::PS_TypedefSeen);
 	  } break;
+case 104:
+# line 865 "idl.yy"
+{yyval.ival = 0;} break;
+case 105:
+# line 866 "idl.yy"
+{ yyval.ival = 0;} break;
+case 106:
+# line 867 "idl.yy"
+{ yyval.ival = 0;} break;
+case 107:
+# line 868 "idl.yy"
+{ yyval.ival = 0;} break;
 case 108:
-# line 864 "idl.yy"
+# line 873 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_TypeSpecSeen);
         } break;
 case 109:
-# line 868 "idl.yy"
+# line 877 "idl.yy"
 {
 	  UTL_Scope		*s = idl_global->scopes()->top_non_null();
 	  UTL_DecllistActiveIterator *l;
@@ -1979,6 +1998,8 @@ case 109:
 	  AST_Typedef		*t = NULL;
 	  AST_Decl		*v = NULL;
 	  UTL_StrList		*p = idl_global->pragmas();
+
+          ACE_UNUSED_ARG (v);
 
 	  idl_global->set_parse_state(IDL_GlobalData::PS_DeclaratorsSeen);
 	  /*
@@ -1989,10 +2010,10 @@ case 109:
 	    l = new UTL_DecllistActiveIterator(yypvt[-0].dlval);
 	    for (;!(l->is_done()); l->next()) {
 	      d = l->item();
-	      if (d == NULL) 
+	      if (d == NULL)
 		continue;
               AST_Type * tp = d->compose(yypvt[-2].dcval);
-              if (tp == NULL) 
+              if (tp == NULL)
 		continue;
 	      t = idl_global->gen()->create_typedef(tp, d->name(), p);
 	      (void) s->fe_add_typedef(t);
@@ -2001,12 +2022,12 @@ case 109:
 	  }
 	} break;
 case 112:
-# line 905 "idl.yy"
+# line 916 "idl.yy"
 {
 	  yyval.dcval = idl_global->scopes()->bottom()->lookup_primitive_type(yypvt[-0].etval);
 	} break;
 case 114:
-# line 910 "idl.yy"
+# line 921 "idl.yy"
 {
 	  UTL_Scope	*s = idl_global->scopes()->top_non_null();
 	  AST_Decl	*d = NULL;
@@ -2018,17 +2039,17 @@ case 114:
 	  yyval.dcval = d;
 	} break;
 case 127:
-# line 945 "idl.yy"
+# line 956 "idl.yy"
 {
 	  yyval.dlval = new UTL_DeclList(yypvt[-1].deval, yypvt[-0].dlval);
 	} break;
 case 128:
-# line 953 "idl.yy"
+# line 964 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_DeclsCommaSeen);
         } break;
 case 129:
-# line 957 "idl.yy"
+# line 968 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_DeclsDeclSeen);
 
@@ -2040,22 +2061,22 @@ case 129:
 	  }
 	} break;
 case 130:
-# line 968 "idl.yy"
+# line 979 "idl.yy"
 {
 	  yyval.dlval = NULL;
 	} break;
 case 133:
-# line 980 "idl.yy"
+# line 991 "idl.yy"
 {
 	  yyval.dlval = new UTL_DeclList(yypvt[-1].deval, yypvt[-0].dlval);
 	} break;
 case 134:
-# line 988 "idl.yy"
+# line 999 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_DeclsCommaSeen);
         } break;
 case 135:
-# line 992 "idl.yy"
+# line 1003 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_DeclsDeclSeen);
 
@@ -2067,106 +2088,108 @@ case 135:
 	  }
 	} break;
 case 136:
-# line 1003 "idl.yy"
+# line 1014 "idl.yy"
 {
 	  yyval.dlval = NULL;
 	} break;
 case 137:
-# line 1010 "idl.yy"
+# line 1021 "idl.yy"
 {
 	  yyval.deval = new FE_Declarator(new UTL_ScopedName(yypvt[-0].idval, NULL),
 				 FE_Declarator::FD_simple, NULL);
 	} break;
 case 138:
-# line 1018 "idl.yy"
+# line 1029 "idl.yy"
 {
 	  yyval.deval = new FE_Declarator(new UTL_ScopedName(yypvt[-0].dcval->local_name(), NULL),
 				 FE_Declarator::FD_complex,
 				 yypvt[-0].dcval);
 	} break;
 case 141:
-# line 1032 "idl.yy"
+# line 1043 "idl.yy"
 {
 	  yyval.etval = AST_Expression::EV_long;
 	} break;
 case 142:
-# line 1036 "idl.yy"
+# line 1047 "idl.yy"
 {
 	  yyval.etval = AST_Expression::EV_longlong;
         } break;
 case 143:
-# line 1040 "idl.yy"
+# line 1051 "idl.yy"
 {
 	  yyval.etval = AST_Expression::EV_short;
 	} break;
 case 144:
-# line 1047 "idl.yy"
+# line 1058 "idl.yy"
 {
 	  yyval.etval = AST_Expression::EV_ulong;
 	} break;
 case 145:
-# line 1051 "idl.yy"
+# line 1062 "idl.yy"
 {
 	  yyval.etval = AST_Expression::EV_ulonglong;
         } break;
 case 146:
-# line 1055 "idl.yy"
+# line 1066 "idl.yy"
 {
 	  yyval.etval = AST_Expression::EV_ushort;
 	} break;
 case 147:
-# line 1062 "idl.yy"
+# line 1073 "idl.yy"
 {
 	  yyval.etval = AST_Expression::EV_double;
 	} break;
 case 148:
-# line 1066 "idl.yy"
+# line 1077 "idl.yy"
 {
 	  yyval.etval = AST_Expression::EV_float;
 	} break;
 case 149:
-# line 1070 "idl.yy"
+# line 1081 "idl.yy"
 {
 	  yyval.etval = AST_Expression::EV_longdouble;
         } break;
 case 150:
-# line 1077 "idl.yy"
+# line 1088 "idl.yy"
 {
 	  yyval.etval = AST_Expression::EV_char;
 	} break;
 case 151:
-# line 1081 "idl.yy"
+# line 1092 "idl.yy"
 {
 	  yyval.etval = AST_Expression::EV_wchar;
         } break;
 case 152:
-# line 1088 "idl.yy"
-{ 
+# line 1099 "idl.yy"
+{
           yyval.etval = AST_Expression::EV_octet;
 	} break;
 case 153:
-# line 1095 "idl.yy"
-{ 
+# line 1106 "idl.yy"
+{
 	  yyval.etval = AST_Expression::EV_bool;
         } break;
 case 154:
-# line 1102 "idl.yy"
+# line 1113 "idl.yy"
 {
 	  yyval.etval = AST_Expression::EV_any;
 	} break;
 case 155:
-# line 1109 "idl.yy"
+# line 1120 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_StructSeen);
         } break;
 case 156:
-# line 1113 "idl.yy"
+# line 1124 "idl.yy"
 {
 	  UTL_Scope		*s = idl_global->scopes()->top_non_null();
 	  UTL_ScopedName	*n = new UTL_ScopedName(yypvt[-0].idval, NULL);
 	  AST_Structure		*d = NULL;
 	  UTL_StrList		*p = idl_global->pragmas();
 	  AST_Decl		*v = NULL;
+
+          ACE_UNUSED_ARG (v);
 
 	  idl_global->set_parse_state(IDL_GlobalData::PS_StructIDSeen);
 	  /*
@@ -2183,17 +2206,17 @@ case 156:
 	  idl_global->scopes()->push(d);
 	} break;
 case 157:
-# line 1135 "idl.yy"
+# line 1148 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_StructSqSeen);
         } break;
 case 158:
-# line 1139 "idl.yy"
+# line 1152 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_StructBodySeen);
         } break;
 case 159:
-# line 1143 "idl.yy"
+# line 1156 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_StructQsSeen);
 	  /*
@@ -2209,17 +2232,17 @@ case 159:
 	  }
 	} break;
 case 163:
-# line 1168 "idl.yy"
+# line 1181 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_MemberTypeSeen);
         } break;
 case 164:
-# line 1172 "idl.yy"
+# line 1185 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_MemberDeclsSeen);
         } break;
 case 165:
-# line 1176 "idl.yy"
+# line 1189 "idl.yy"
 {
 	  UTL_Scope		*s = idl_global->scopes()->top_non_null();
 	  UTL_DecllistActiveIterator *l = NULL;
@@ -2241,10 +2264,10 @@ case 165:
 	    l = new UTL_DecllistActiveIterator(yypvt[-2].dlval);
 	    for (;!(l->is_done()); l->next()) {
 	      d = l->item();
-	      if (d == NULL) 
+	      if (d == NULL)
 		continue;
  	      AST_Type *tp = d->compose(yypvt[-4].dcval);
-	      if (tp == NULL) 
+	      if (tp == NULL)
 		continue;
 	      f = idl_global->gen()->create_field(tp, d->name(), p);
 	      (void) s->fe_add_field(f);
@@ -2253,49 +2276,51 @@ case 165:
 	  }
 	} break;
 case 166:
-# line 1209 "idl.yy"
+# line 1222 "idl.yy"
 {
 	  idl_global->err()->syntax_error(idl_global->parse_state());
 	} break;
 case 167:
-# line 1213 "idl.yy"
+# line 1226 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_NoState);
 	  yyerrok;
 	} break;
 case 168:
-# line 1221 "idl.yy"
+# line 1234 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_UnionSeen);
         } break;
 case 169:
-# line 1225 "idl.yy"
+# line 1238 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_UnionIDSeen);
         } break;
 case 170:
-# line 1229 "idl.yy"
+# line 1242 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_SwitchSeen);
         } break;
 case 171:
-# line 1233 "idl.yy"
+# line 1246 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_SwitchOpenParSeen);
         } break;
 case 172:
-# line 1237 "idl.yy"
+# line 1250 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_SwitchTypeSeen);
         } break;
 case 173:
-# line 1241 "idl.yy"
+# line 1254 "idl.yy"
 {
 	  UTL_Scope		*s = idl_global->scopes()->top_non_null();
 	  UTL_ScopedName	*n = new UTL_ScopedName(yypvt[-8].idval, NULL);
 	  AST_Union		*u = NULL;
 	  AST_Decl		*v = NULL;
 	  UTL_StrList		*p = idl_global->pragmas();
+
+          ACE_UNUSED_ARG (v);
 
 	  idl_global->set_parse_state(IDL_GlobalData::PS_SwitchCloseParSeen);
 	  /*
@@ -2317,17 +2342,17 @@ case 173:
 	  idl_global->scopes()->push(u);
 	} break;
 case 174:
-# line 1268 "idl.yy"
+# line 1283 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_UnionSqSeen);
         } break;
 case 175:
-# line 1272 "idl.yy"
+# line 1287 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_UnionBodySeen);
         } break;
 case 176:
-# line 1276 "idl.yy"
+# line 1291 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_UnionQsSeen);
 	  /*
@@ -2343,27 +2368,27 @@ case 176:
 	  }
 	} break;
 case 177:
-# line 1294 "idl.yy"
+# line 1309 "idl.yy"
 {
 	  yyval.dcval = idl_global->scopes()->bottom()->lookup_primitive_type(yypvt[-0].etval);
 	} break;
 case 178:
-# line 1298 "idl.yy"
+# line 1313 "idl.yy"
 {
 	  yyval.dcval = idl_global->scopes()->bottom()->lookup_primitive_type(yypvt[-0].etval);
 	} break;
 case 179:
-# line 1302 "idl.yy"
+# line 1317 "idl.yy"
 {
 	  yyval.dcval = idl_global->scopes()->bottom()->lookup_primitive_type(yypvt[-0].etval);
 	} break;
 case 180:
-# line 1306 "idl.yy"
+# line 1321 "idl.yy"
 {
 	  yyval.dcval = idl_global->scopes()->bottom()->lookup_primitive_type(yypvt[-0].etval);
 	} break;
 case 182:
-# line 1311 "idl.yy"
+# line 1326 "idl.yy"
 {
 	  UTL_Scope		*s = idl_global->scopes()->top_non_null();
 	  AST_Decl		*d = NULL;
@@ -2424,17 +2449,17 @@ case 182:
 	    idl_global->err()->lookup_error(yypvt[-0].idlist);
 	} break;
 case 186:
-# line 1381 "idl.yy"
+# line 1396 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_UnionLabelSeen);
         } break;
 case 187:
-# line 1385 "idl.yy"
+# line 1400 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_UnionElemSeen);
         } break;
 case 188:
-# line 1389 "idl.yy"
+# line 1404 "idl.yy"
 {
 	  UTL_Scope		*s = idl_global->scopes()->top_non_null();
 	  UTL_LabellistActiveIterator *l = NULL;
@@ -2463,23 +2488,23 @@ case 188:
 	  }
 	} break;
 case 189:
-# line 1417 "idl.yy"
+# line 1432 "idl.yy"
 {
 	  idl_global->err()->syntax_error(idl_global->parse_state());
 	} break;
 case 190:
-# line 1421 "idl.yy"
+# line 1436 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_NoState);
 	  yyerrok;
 	} break;
 case 191:
-# line 1429 "idl.yy"
+# line 1444 "idl.yy"
 {
 	  yyval.llval = new UTL_LabelList(yypvt[-1].ulval, yypvt[-0].llval);
 	} break;
 case 192:
-# line 1436 "idl.yy"
+# line 1451 "idl.yy"
 {
 	  if (yypvt[-1].llval == NULL)
 	    yyval.llval = new UTL_LabelList(yypvt[-0].ulval, NULL);
@@ -2489,17 +2514,17 @@ case 192:
 	  }
 	} break;
 case 193:
-# line 1445 "idl.yy"
+# line 1460 "idl.yy"
 {
 	  yyval.llval = NULL;
 	} break;
 case 194:
-# line 1452 "idl.yy"
+# line 1467 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_DefaultSeen);
         } break;
 case 195:
-# line 1456 "idl.yy"
+# line 1471 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_LabelColonSeen);
 
@@ -2508,17 +2533,17 @@ case 195:
 				       NULL);
 	} break;
 case 196:
-# line 1464 "idl.yy"
+# line 1479 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_CaseSeen);
         } break;
 case 197:
-# line 1468 "idl.yy"
+# line 1483 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_LabelExprSeen);
         } break;
 case 198:
-# line 1472 "idl.yy"
+# line 1487 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_LabelColonSeen);
 
@@ -2526,12 +2551,12 @@ case 198:
 						     yypvt[-2].exval);
 	} break;
 case 199:
-# line 1482 "idl.yy"
+# line 1497 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_UnionElemTypeSeen);
         } break;
 case 200:
-# line 1486 "idl.yy"
+# line 1501 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_UnionElemDeclSeen);
 	  /*
@@ -2555,18 +2580,20 @@ case 200:
 	  }
 	} break;
 case 201:
-# line 1512 "idl.yy"
+# line 1527 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_EnumSeen);
         } break;
 case 202:
-# line 1516 "idl.yy"
+# line 1531 "idl.yy"
 {
 	  UTL_Scope		*s = idl_global->scopes()->top_non_null();
 	  UTL_ScopedName	*n = new UTL_ScopedName(yypvt[-0].idval, NULL);
 	  AST_Enum		*e = NULL;
 	  AST_Decl		*v = NULL;
 	  UTL_StrList		*p = idl_global->pragmas();
+
+          ACE_UNUSED_ARG (v);
 
 	  idl_global->set_parse_state(IDL_GlobalData::PS_EnumIDSeen);
 	  /*
@@ -2586,17 +2613,17 @@ case 202:
 	  idl_global->scopes()->push(e);
 	} break;
 case 203:
-# line 1541 "idl.yy"
+# line 1558 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_EnumSqSeen);
         } break;
 case 204:
-# line 1545 "idl.yy"
+# line 1562 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_EnumBodySeen);
         } break;
 case 205:
-# line 1549 "idl.yy"
+# line 1566 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_EnumQsSeen);
 	  /*
@@ -2610,12 +2637,12 @@ case 205:
 	  }
 	} break;
 case 207:
-# line 1568 "idl.yy"
+# line 1585 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_EnumCommaSeen);
         } break;
 case 210:
-# line 1577 "idl.yy"
+# line 1594 "idl.yy"
 {
 	  UTL_Scope		*s = idl_global->scopes()->top_non_null();
 	  UTL_ScopedName	*n =
@@ -2630,23 +2657,23 @@ case 210:
 	   */
 	  if (s != NULL && s->scope_node_type() == AST_Decl::NT_enum) {
 	    c = AST_Enum::narrow_from_scope(s);
-	    if (c != NULL) 
+	    if (c != NULL)
 	      e = idl_global->gen()->create_enum_val(c->next_enum_val(), n, p);
 	    (void) s->fe_add_enum_val(e);
 	  }
 	} break;
 case 211:
-# line 1601 "idl.yy"
+# line 1618 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_SequenceCommaSeen);
         } break;
 case 212:
-# line 1605 "idl.yy"
+# line 1622 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_SequenceExprSeen);
         } break;
 case 213:
-# line 1609 "idl.yy"
+# line 1626 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_SequenceQsSeen);
 	  /*
@@ -2663,8 +2690,8 @@ case 213:
 	  } else if (yypvt[-5].dcval == NULL) {
 	    yyval.dcval = NULL;
 	  } else {
- 	    AST_Type *tp = AST_Type::narrow_from_decl(yypvt[-5].dcval); 
-	    if (tp == NULL) 
+ 	    AST_Type *tp = AST_Type::narrow_from_decl(yypvt[-5].dcval);
+	    if (tp == NULL)
 	      yyval.dcval = NULL;
 	    else {
 	      yyval.dcval = idl_global->gen()->create_sequence(yypvt[-2].exval, tp);
@@ -2677,7 +2704,7 @@ case 213:
 	  }
 	} break;
 case 214:
-# line 1640 "idl.yy"
+# line 1657 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_SequenceQsSeen);
 	  /*
@@ -2708,7 +2735,7 @@ case 214:
 	  }
 	} break;
 case 215:
-# line 1673 "idl.yy"
+# line 1690 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_SequenceSeen);
 	  /*
@@ -2717,28 +2744,28 @@ case 215:
 	  idl_global->scopes()->push(NULL);
 	} break;
 case 216:
-# line 1681 "idl.yy"
+# line 1698 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_SequenceSqSeen);
         } break;
 case 217:
-# line 1685 "idl.yy"
+# line 1702 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_SequenceTypeSeen);
 	  yyval.dcval = yypvt[-0].dcval;
         } break;
 case 218:
-# line 1694 "idl.yy"
+# line 1711 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_StringSqSeen);
         } break;
 case 219:
-# line 1698 "idl.yy"
+# line 1715 "idl.yy"
 {
 	   idl_global->set_parse_state(IDL_GlobalData::PS_StringExprSeen);
         } break;
 case 220:
-# line 1702 "idl.yy"
+# line 1719 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_StringQsSeen);
 	  /*
@@ -2757,7 +2784,7 @@ case 220:
 	  }
 	} break;
 case 221:
-# line 1720 "idl.yy"
+# line 1737 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_StringCompleted);
 	  /*
@@ -2773,22 +2800,22 @@ case 221:
                     ->fe_add_string(AST_String::narrow_from_decl(yyval.dcval));
 	} break;
 case 222:
-# line 1738 "idl.yy"
+# line 1755 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_StringSeen);
         } break;
 case 223:
-# line 1746 "idl.yy"
+# line 1763 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_StringSqSeen);
         } break;
 case 224:
-# line 1750 "idl.yy"
+# line 1767 "idl.yy"
 {
 	   idl_global->set_parse_state(IDL_GlobalData::PS_StringExprSeen);
         } break;
 case 225:
-# line 1754 "idl.yy"
+# line 1771 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_StringQsSeen);
 	  /*
@@ -2807,7 +2834,7 @@ case 225:
 	  }
 	} break;
 case 226:
-# line 1772 "idl.yy"
+# line 1789 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_StringCompleted);
 	  /*
@@ -2823,17 +2850,17 @@ case 226:
                     ->fe_add_string(AST_String::narrow_from_decl(yyval.dcval));
 	} break;
 case 227:
-# line 1790 "idl.yy"
+# line 1807 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_StringSeen);
         } break;
 case 228:
-# line 1797 "idl.yy"
+# line 1814 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_ArrayIDSeen);
         } break;
 case 229:
-# line 1801 "idl.yy"
+# line 1818 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_ArrayCompleted);
 	  /*
@@ -2845,12 +2872,12 @@ case 229:
 	  }
 	} break;
 case 230:
-# line 1815 "idl.yy"
+# line 1832 "idl.yy"
 {
 	  yyval.elval = new UTL_ExprList(yypvt[-1].exval, yypvt[-0].elval);
 	} break;
 case 231:
-# line 1822 "idl.yy"
+# line 1839 "idl.yy"
 {
 	  if (yypvt[-1].elval == NULL)
 	    yyval.elval = new UTL_ExprList(yypvt[-0].exval, NULL);
@@ -2860,22 +2887,22 @@ case 231:
 	  }
 	} break;
 case 232:
-# line 1831 "idl.yy"
+# line 1848 "idl.yy"
 {
 	  yyval.elval = NULL;
 	} break;
 case 233:
-# line 1838 "idl.yy"
+# line 1855 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_DimSqSeen);
         } break;
 case 234:
-# line 1842 "idl.yy"
+# line 1859 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_DimExprSeen);
         } break;
 case 235:
-# line 1846 "idl.yy"
+# line 1863 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_DimQsSeen);
 	  /*
@@ -2889,17 +2916,17 @@ case 235:
 	    yyval.exval = yypvt[-2].exval;
 	} break;
 case 236:
-# line 1863 "idl.yy"
+# line 1880 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_AttrSeen);
         } break;
 case 237:
-# line 1867 "idl.yy"
+# line 1884 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_AttrTypeSeen);
         } break;
 case 238:
-# line 1871 "idl.yy"
+# line 1888 "idl.yy"
 {
 	  UTL_Scope		*s = idl_global->scopes()->top_non_null();
 	  UTL_DecllistActiveIterator *l = NULL;
@@ -2931,29 +2958,31 @@ case 238:
 	  }
 	} break;
 case 239:
-# line 1905 "idl.yy"
+# line 1922 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_AttrROSeen);
 	  yyval.bval = I_TRUE;
 	} break;
 case 240:
-# line 1910 "idl.yy"
+# line 1927 "idl.yy"
 {
 	  yyval.bval = I_FALSE;
 	} break;
 case 241:
-# line 1917 "idl.yy"
+# line 1934 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_ExceptSeen);
 	} break;
 case 242:
-# line 1921 "idl.yy"
+# line 1938 "idl.yy"
 {
 	  UTL_Scope		*s = idl_global->scopes()->top_non_null();
 	  UTL_ScopedName	*n = new UTL_ScopedName(yypvt[-0].idval, NULL);
 	  AST_Exception		*e = NULL;
 	  UTL_StrList		*p = idl_global->pragmas();
 	  AST_Decl		*v = NULL;
+
+          ACE_UNUSED_ARG (v);
 
 	  idl_global->set_parse_state(IDL_GlobalData::PS_ExceptIDSeen);
 	  /*
@@ -2970,17 +2999,17 @@ case 242:
 	  idl_global->scopes()->push(e);
 	} break;
 case 243:
-# line 1943 "idl.yy"
+# line 1962 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_ExceptSqSeen);
         } break;
 case 244:
-# line 1947 "idl.yy"
+# line 1966 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_ExceptBodySeen);
         } break;
 case 245:
-# line 1951 "idl.yy"
+# line 1970 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_ExceptQsSeen);
 	  /*
@@ -2989,12 +3018,12 @@ case 245:
 	  idl_global->scopes()->pop();
 	} break;
 case 246:
-# line 1963 "idl.yy"
+# line 1982 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_OpTypeSeen);
         } break;
 case 247:
-# line 1967 "idl.yy"
+# line 1986 "idl.yy"
 {
 	  UTL_Scope		*s = idl_global->scopes()->top_non_null();
 	  UTL_ScopedName	*n =
@@ -3024,17 +3053,17 @@ case 247:
 	  idl_global->scopes()->push(o);
 	} break;
 case 248:
-# line 1996 "idl.yy"
+# line 2015 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_OpParsCompleted);
         } break;
 case 249:
-# line 2000 "idl.yy"
+# line 2019 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_OpRaiseCompleted);
         } break;
 case 250:
-# line 2004 "idl.yy"
+# line 2023 "idl.yy"
 {
 	  UTL_Scope		*s = idl_global->scopes()->top_non_null();
 	  AST_Operation		*o = NULL;
@@ -3057,66 +3086,66 @@ case 250:
 	  idl_global->scopes()->pop();
 	} break;
 case 251:
-# line 2029 "idl.yy"
+# line 2048 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_OpAttrSeen);
 	  yyval.ofval = AST_Operation::OP_oneway;
 	} break;
 case 252:
-# line 2034 "idl.yy"
+# line 2053 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_OpAttrSeen);
 	  yyval.ofval = AST_Operation::OP_idempotent;
 	} break;
 case 253:
-# line 2039 "idl.yy"
+# line 2058 "idl.yy"
 {
 	  yyval.ofval = AST_Operation::OP_noflags;
 	} break;
 case 255:
-# line 2047 "idl.yy"
+# line 2066 "idl.yy"
 {
 	  yyval.dcval =
 	    idl_global->scopes()->bottom()
 	       ->lookup_primitive_type(AST_Expression::EV_void);
 	} break;
 case 256:
-# line 2056 "idl.yy"
+# line 2075 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_OpSqSeen);
         } break;
 case 257:
-# line 2060 "idl.yy"
+# line 2079 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_OpQsSeen);
         } break;
 case 258:
-# line 2064 "idl.yy"
+# line 2083 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_OpSqSeen);
         } break;
 case 259:
-# line 2069 "idl.yy"
+# line 2088 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_OpQsSeen);
         } break;
 case 261:
-# line 2079 "idl.yy"
+# line 2098 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_OpParCommaSeen);
         } break;
 case 264:
-# line 2088 "idl.yy"
+# line 2107 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_OpParDirSeen);
         } break;
 case 265:
-# line 2092 "idl.yy"
+# line 2111 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_OpParTypeSeen);
         } break;
 case 266:
-# line 2096 "idl.yy"
+# line 2115 "idl.yy"
 {
 	  UTL_Scope		*s = idl_global->scopes()->top_non_null();
 	  AST_Argument		*a = NULL;
@@ -3136,12 +3165,12 @@ case 266:
 	  }
 	} break;
 case 267:
-# line 2118 "idl.yy"
+# line 2137 "idl.yy"
 {
 	  yyval.dcval = idl_global->scopes()->bottom()->lookup_primitive_type(yypvt[-0].etval);
 	} break;
 case 269:
-# line 2123 "idl.yy"
+# line 2142 "idl.yy"
 {
 	  UTL_Scope	*s = idl_global->scopes()->top_non_null();
 	  AST_Decl	*d = NULL;
@@ -3153,74 +3182,74 @@ case 269:
 	  yyval.dcval = d;
 	} break;
 case 270:
-# line 2137 "idl.yy"
+# line 2156 "idl.yy"
 {
 	  yyval.dival = AST_Argument::dir_IN;
 	} break;
 case 271:
-# line 2141 "idl.yy"
+# line 2160 "idl.yy"
 {
 	  yyval.dival = AST_Argument::dir_OUT;
 	} break;
 case 272:
-# line 2145 "idl.yy"
+# line 2164 "idl.yy"
 {
 	  yyval.dival = AST_Argument::dir_INOUT;
 	} break;
 case 273:
-# line 2152 "idl.yy"
+# line 2171 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_OpRaiseSeen);
         } break;
 case 274:
-# line 2156 "idl.yy"
+# line 2175 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_OpRaiseSqSeen);
         } break;
 case 275:
-# line 2161 "idl.yy"
+# line 2180 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_OpRaiseQsSeen);
 	  yyval.nlval = yypvt[-1].nlval;
 	} break;
 case 276:
-# line 2166 "idl.yy"
+# line 2185 "idl.yy"
 {
 	  yyval.nlval = NULL;
 	} break;
 case 277:
-# line 2173 "idl.yy"
+# line 2192 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_OpContextSeen);
         } break;
 case 278:
-# line 2177 "idl.yy"
+# line 2196 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_OpContextSqSeen);
         } break;
 case 279:
-# line 2182 "idl.yy"
+# line 2201 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_OpContextQsSeen);
 	  yyval.slval = yypvt[-1].slval;
 	} break;
 case 280:
-# line 2187 "idl.yy"
+# line 2206 "idl.yy"
 {
 	  yyval.slval = NULL;
 	} break;
 case 281:
-# line 2194 "idl.yy"
+# line 2213 "idl.yy"
 {
 	  yyval.slval = new UTL_StrList(yypvt[-1].sval, yypvt[-0].slval);
 	} break;
 case 282:
-# line 2202 "idl.yy"
+# line 2221 "idl.yy"
 {
 	  idl_global->set_parse_state(IDL_GlobalData::PS_OpContextCommaSeen);
         } break;
 case 283:
-# line 2206 "idl.yy"
+# line 2225 "idl.yy"
 {
 	  if (yypvt[-3].slval == NULL)
 	    yyval.slval = new UTL_StrList(yypvt[-0].sval, NULL);
@@ -3230,7 +3259,7 @@ case 283:
 	  }
 	} break;
 case 284:
-# line 2215 "idl.yy"
+# line 2234 "idl.yy"
 {
 	  yyval.slval = NULL;
 	} break;
