@@ -2957,22 +2957,35 @@ ACE::timestamp (ACE_TCHAR date_and_time[],
                    (int) local.wMinute,
                    (int) local.wSecond,
                    (int) local.wMilliseconds * 1000);
+  date_and_time[26] = '\0';
+  return &date_and_time[11];
 #else  /* UNIX */
   ACE_TCHAR timebuf[26]; // This magic number is based on the ctime(3c) man page.
   ACE_Time_Value cur_time = ACE_OS::gettimeofday ();
   time_t secs = cur_time.sec ();
+
   ACE_OS::ctime_r (&secs,
                    timebuf,
                    sizeof timebuf);
   ACE_OS::strncpy (date_and_time,
                    timebuf,
                    date_and_timelen);
-  ACE_OS::sprintf (&date_and_time[19],
-                   ".%06ld",
+  char yeartmp[5];
+  ACE_OS::strncpy (yeartmp,
+                   &date_and_time[20],
+                   4);
+  char timetmp[9];
+  ACE_OS::strncpy (timetmp,
+                   &date_and_time[11],
+                   8);
+  ACE_OS::sprintf (&date_and_time[11],
+                   "%s %s.%06ld",
+                   yeartmp,
+                   timetmp,
                    cur_time.usec ());
+  date_and_time[33] = '\0';
+  return &date_and_time[15];
 #endif /* WIN32 */
-  date_and_time[26] = '\0';
-  return &date_and_time[11];
 }
 
 // This function rounds the request to a multiple of the page size.
