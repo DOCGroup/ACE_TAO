@@ -2,25 +2,43 @@
 // $Id$
 
 // The following configuration file is designed to work for SunOS 5.5
-// platforms using the SunC++ 4.0.x compiler.
+// platforms using the SunC++ 4.x compiler.
 
 #if !defined (ACE_CONFIG_H)
 #define ACE_CONFIG_H
 
+// Compiler version-specific settings:
+#if defined (__SUNPRO_CC)
+#  if (__SUNPRO_CC < 0x410)
+    // The following might not be necessary, but I can't tell: my build
+    // with Sun C++ 4.0.1 never completes.
+#    define ACE_NEEDS_DEV_IO_CONVERSION
+#  elif (__SUNPRO_CC >= 0x420)
+    // Sun C++ 4.2 (and beyond) supports template specialization.
+#    define ACE_TEMPLATES_REQUIRE_SPECIALIZATION
+#    define ACE_TEMPLATES_REQUIRE_SOURCE
+#  endif
+#endif /* __SUNPRO_CC */
+
 #if ! defined (__ACE_INLINE__)
-#define __ACE_INLINE__
+// NOTE:  if you have link problems with undefined inline template functions,
+// be sure that the #define of __ACE_INLINE__ below is not commented out.
+#  define __ACE_INLINE__
 #endif /* ! __ACE_INLINE__ */
 
-// until we can trust exception handling with Sun C++, it's not enabled . . .
-// #define ACE_HAS_EXCEPTIONS
-
 #define ACE_HAS_TEMPLATE_SPECIALIZATION
+
+// ACE_HAS_EXCEPTIONS precludes -noex, but without -noex causes problems
+// with Sun C++ 4.1/4.2 on multiprocessor UltraSparcs:  threaded
+// executables core dump when threads exit.  This problem does not seem
+// to appear on single-processor UltraSparcs.  So until exception handling
+// gets fixed on MP machines, we can't use this with Sun C++ 4.1/4.2 . . .
+// #define ACE_HAS_EXCEPTIONS
 
 // Platform supports pread() and pwrite()
 #define ACE_HAS_P_READ_WRITE
 
 #define ACE_HAS_UNICODE
-// #define ACE_HAS_TEMPLATE_TYPEDEFS
 
 // Platform supports System V IPC (most versions of UNIX, but not Win32)
 #define ACE_HAS_SYSV_IPC			
@@ -79,8 +97,8 @@
 #define ACE_HAS_POSIX_TIME
 #define ACE_HAS_SVR4_TIME
 
-// Only enable this if you don't mind linking with -lposix4
-// #defined ACE_HAS_CLOCK_GETTIME
+// ACE_HAS_CLOCK_GETTIME requires linking with -lposix4.
+// #define ACE_HAS_CLOCK_GETTIME
 
 // Platform supports the /proc file system.
 #define ACE_HAS_PROC_FS
@@ -167,8 +185,6 @@
 
 // Use the poll() event demultiplexor rather than select().
 //#define ACE_USE_POLL
-
-#define ACE_NEEDS_DEV_IO_CONVERSION
 
 // 10 millisecond fudge factor to account for Solaris timers...
 #if !defined (ACE_TIMER_SKEW)
