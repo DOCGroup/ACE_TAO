@@ -26,7 +26,7 @@ TAO_DLL_ORB::~TAO_DLL_ORB (void)
 }
 
 int
-TAO_DLL_ORB::init (int argc, ACE_TCHAR *argv[])
+TAO_DLL_ORB::init (int /*argc*/, ACE_TCHAR *argv[])
 {
   // This class is deprecated.  See the class documentation in
   // DLL_ORB.h for details explaining why this is so.
