@@ -27,7 +27,7 @@ ifeq (Naming,$(findstring Naming,$(TAO_ORBSVCS)))
   BIN = $(BIN2)
 endif # Naming
 
-SRC = $(addsuffix .cpp, $(BIN2) ncontextext_client_i Iterator_Factory_i) $(IDL_SRC)
+SRC = $(addsuffix .cpp, $(BIN2) ncontextext_client_i) $(IDL_SRC)
 
 CLIENT_OBJS=$(addsuffix .o, client ncontextext_client_i) Web_ServerC.o Web_ServerS.o
 
@@ -50,9 +50,6 @@ include $(TAO_ROOT)/taoconfig.mk
 #----------------------------------------------------------------------------
 
 .PRECIOUS: $(foreach ext, $(IDL_EXT), Web_Server$(ext))
-
-server: $(addprefix $(VDIR),$(SERVER_OBJS))
-	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 client: $(addprefix $(VDIR),$(CLIENT_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
