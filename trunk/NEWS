@@ -18,6 +18,9 @@ PLANNED MAJOR CHANGES TARGETED FOR ACE-5.4.3
   ACE - Initially Fri Aug 13 15:26:40 2004  Dale Wilson  <wilson_d@ociweb.com>
         with many others following on.
 
+- (Johnny) Ported to HPUX 11i v2 on Itanium
+  Finished, Mon Aug 23 17:53:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
 *** not user visible, but probably significant anyway
 - Added code to ace for platform RedHat AS 3.0 on Opteron.
   Wed Aug 25 14:58:51 2004  Rich Seibel <seibel_r@ociweb.com>
