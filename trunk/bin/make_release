@@ -59,7 +59,7 @@ if (-d '/pkg/gnu/bin') {
   $gnu = '';
 }
 
-my $export_dir = '/export2/project/ftp-doc/pub/ACE';
+my $export_dir = '/project/ftp-doc/pub/ACE';
 my $diffs_dir = "$export_dir/diffs";
 my $exec_prefix = '';
 my $generate_man_pages = 0;
@@ -266,6 +266,8 @@ if ($update_versions  &&  "$kit" ne 'ace+tao') {
   $status = &create_kit ();
   unless ($status) {
     &diff ();
+  } else {
+    warn "$0: diffs not create because create_kit returned $status\n";
   }
 
   if ("$ace_tag"  ||  "$tao_tag") {
@@ -550,11 +552,16 @@ sub diff () {
 
     my $module = "$kit" eq 'ace'  ?  'ACE_wrappers'  :  'ACE_wrappers/TAO';
 
-    &ex ("sleep 60; nice -15 $cvs -q rdiff -u -r $previous_tag -r $tag " .
+    &ex ("nice -15 $cvs -q rdiff -u -r $previous_tag -r $tag " .
            "$module 2>/dev/null | " .
          "nice -15 sed 's%ACE_wrappers-repository/%ACE_wrappers/%g' | " .
          "nice -15 $gzip -9 > $diffs_dir/$previous_tag-$tag.diff.gz")
      if -d "$diffs_dir";
+
+    warn "$0: diffs not created because \"$diffs_dir\" does not exist\n"
+      unless -d "$diffs_dir";
+  } else {
+    warn "$0: diffs not created because previous_version is null\n";
   }
 
   #### Ignore return value.  No promises on diffs.
