@@ -167,6 +167,10 @@ SOURCE=.\corba.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\CORBA_String.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\corbafwd.h
 # End Source File
 # Begin Source File
@@ -807,6 +811,10 @@ SOURCE=.\CONV_FRAMES.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\CORBA_String.inl
+# End Source File
+# Begin Source File
+
 SOURCE=.\corbafwd.i
 # End Source File
 # Begin Source File
@@ -1272,6 +1280,10 @@ SOURCE=.\CONV_FRAMEC.cpp
 # Begin Source File
 
 SOURCE=.\CONV_FRAMES.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\CORBA_String.cpp
 # End Source File
 # Begin Source File
 
