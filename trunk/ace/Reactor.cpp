@@ -1738,20 +1738,4 @@ ACE_Reactor::dump (void) const
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
 ACE_MT (template class ACE_Guard<ACE_REACTOR_MUTEX>);
 template class ACE_Event_Handler_Handle_Timeout_Upcall<ACE_SYNCH_RECURSIVE_MUTEX>;
-template class ACE_Free_List<ACE_Timer_Node_T<ACE_Event_Handler *> >;
-template class ACE_Locked_Free_List<ACE_Timer_Node_T<ACE_Event_Handler *>,
-                                    ACE_Null_Mutex>;
-template class ACE_Timer_List_Iterator_T<ACE_Event_Handler *,
-  ACE_Event_Handler_Handle_Timeout_Upcall<ACE_SYNCH_RECURSIVE_MUTEX>,
-  ACE_SYNCH_RECURSIVE_MUTEX>;
-template class ACE_Timer_List_T<ACE_Event_Handler *, 
-  ACE_Event_Handler_Handle_Timeout_Upcall<ACE_SYNCH_RECURSIVE_MUTEX>, 
-  ACE_SYNCH_RECURSIVE_MUTEX>;
-template class ACE_Timer_Node_T<ACE_Event_Handler *>;
-template class ACE_Timer_Queue_Iterator_T<ACE_Event_Handler *,
-  ACE_Event_Handler_Handle_Timeout_Upcall<ACE_SYNCH_RECURSIVE_MUTEX>,
-  ACE_SYNCH_RECURSIVE_MUTEX>;
-template class ACE_Timer_Queue_T<ACE_Event_Handler *, 
-  ACE_Event_Handler_Handle_Timeout_Upcall<ACE_SYNCH_RECURSIVE_MUTEX>, 
-  ACE_SYNCH_RECURSIVE_MUTEX>;
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
