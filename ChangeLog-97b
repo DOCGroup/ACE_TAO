@@ -1,14 +1,19 @@
+Mon Oct 20 14:07:37 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/config-hpux-10.x.h: Added #define ACE_DEFAULT_BASE_ADDR
+	  ((char *) 0x80000000) so that the various mmap() tests
+	  will work on HP/UX.  Thanks to Stephen Coy <stevec@magna.com.au>
+	  for reporting this.
+
+	* ace/OS.i: Fixed the implementation of ACE_OS::cond_timedwait()
+ 	  so that it will work on VxWorks.  Thanks to David Levine for
+ 	  chasing this down and doing most of the changes.
+
 Mon Oct 20 22:23:42 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 
 	* tests/Sigset_Ops_Test.cpp (main): It is not legal too for
 	  sigismember to return 0 if we pass an invalid signal to it.
 	  Thanks to Stephen Coy <stevec@magna.com.au> for fixing this.
-
-Mon Oct 20 14:07:37 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
-
-	* ace/OS.i: Fixed the implementation of ACE_OS::cond_timedwait()
- 	  so that it will work on VxWorks.  Thanks to David Levine for
- 	  chasing this down and doing most of the changes.
 
 Mon Oct 20 12:05:39 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 
