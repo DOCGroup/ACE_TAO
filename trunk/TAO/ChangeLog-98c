@@ -1,3 +1,28 @@
+Wed Jan 28 13:56:07 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tests/POA/Makefile: 
+	* tests/POA/Default_Servant/Default_Servant.dsw: 
+	* tests/POA/Default_Servant/File.idl: 
+	* tests/POA/Default_Servant/File_i.cpp: 
+	* tests/POA/Default_Servant/File_i.h: 
+	* tests/POA/Default_Servant/Makefile: 
+	* tests/POA/Default_Servant/client.cpp: 
+	* tests/POA/Default_Servant/client.dsp: 
+	* tests/POA/Default_Servant/server.cpp: 
+	* tests/POA/Default_Servant/server.dsp: 
+	* tests/POA/Default_Servant/svc.conf: 
+	* tests/POA/Explicit_Activation_POA_Ids/Explicit_Activation_POA_Ids.dsp: 
+	* tests/POA/Explicit_Activation_POA_Ids/Explicit_Activation_POA_Ids.dsw: 
+	* tests/POA/Explicit_Activation_POA_Ids/Foo.idl: 
+	* tests/POA/Explicit_Activation_POA_Ids/MyFooServant.cpp: 
+	* tests/POA/Explicit_Activation_POA_Ids/MyFooServant.h: 
+	* tests/POA/Explicit_Activation_POA_Ids/client.cpp: 
+	* tests/POA/Explicit_Activation_POA_Ids/client.dsp: 
+	* tests/POA/Explicit_Activation_POA_Ids/server.cpp: 
+	* tests/POA/Explicit_Activation_POA_Ids/server.dsp: 
+	* tests/POA/Explicit_Activation_POA_Ids/svc.conf: 
+	  Added some missing tests that were in the POA branch.
+
 Wed Jan 28 13:35:11 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* tests/Param_Test/server.cpp: Changed so that the IOR is printed
