@@ -582,7 +582,7 @@ public:
 #endif /* ACE_WIN32 */
 };
 
-class ACE_Export ACE_RW_Process_Mutex : public ACE_Process_Mutex
+class ACE_Export ACE_RW_Process_Mutex
 {
   // = TITLE
   //     Wrapper for readers/writer locks that exist across processes.
