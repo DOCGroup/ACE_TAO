@@ -54,12 +54,6 @@ private:
   TAO_ORB_Manager orb_manager_;
   // The ORB manager.
 
-  size_t context_size_;
-  // Size of the hash_table allocated upon the creation of the Naming
-  // Service context (if one is created).  Note: all the contexts
-  // created under the given context will use the same size for their
-  // initial hash table allocations.
-
   TAO_Naming_Server my_naming_server_;
   // Naming Server instance.
 
@@ -68,6 +62,12 @@ private:
 
   const char *pid_file_name_;
   // File to output the process id.
+
+  size_t context_size_;
+  // Size of the hash_table allocated upon the creation of the Naming
+  // Service context (if one is created).  Note: all the contexts
+  // created under the given context will use the same size for their
+  // initial hash table allocations.
 };
 
 #endif /* TAO_NAMING_SERVICE_H */
