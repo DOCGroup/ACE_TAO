@@ -149,12 +149,6 @@ Package=<5>
 
 Package=<4>
 {{{
-    Begin Project Dependency
-    Project_Dep_Name RTEvent_Static
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name RTSched_Static
-    End Project Dependency
 }}}
 
 ###############################################################################
@@ -167,12 +161,6 @@ Package=<5>
 
 Package=<4>
 {{{
-    Begin Project Dependency
-    Project_Dep_Name RTEvent_Static
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name RTSched_Static
-    End Project Dependency
 }}}
 
 ###############################################################################
@@ -185,9 +173,6 @@ Package=<5>
 
 Package=<4>
 {{{
-    Begin Project Dependency
-    Project_Dep_Name CosNaming_Static
-    End Project Dependency
 }}}
 
 ###############################################################################
