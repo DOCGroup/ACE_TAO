@@ -54,11 +54,8 @@ be_visitor_interface_any_op_ch::visit_interface (be_interface *node)
   os->indent ();
   *os << "// Any operators for interface " << node->name () << be_nl;
   *os << "void " << idl_global->export_macro ()
-      << " operator<<= (CORBA::Any &, " << node->name ()
-      << " _ptr); // copying version" << be_nl;
-  *os << "void " << idl_global->export_macro ()
-      << " operator<<= (CORBA::Any &, " << node->name ()
-      << "_ptr*); // noncopying version" << be_nl;
+      << " operator<<= (CORBA::Any &, " << node->name () 
+      << "_ptr);" << be_nl;
   *os << "CORBA::Boolean " << idl_global->export_macro ()
       << " operator>>= (const CORBA::Any &, "
       << node->name () << " *&);\n";

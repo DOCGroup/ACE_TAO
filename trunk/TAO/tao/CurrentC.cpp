@@ -72,7 +72,7 @@ const char* CORBA_Current::_interface_repository_id (void) const
   return "IDL:CORBA/Current:1.0";
 }
 
-void operator<<= (CORBA::Any &_tao_any, CORBA_Current_ptr _tao_elem) // copying
+void operator<<= (CORBA::Any &_tao_any, CORBA_Current_ptr _tao_elem)
 {
   CORBA::Environment _tao_env;
   CORBA::Object_ptr *_tao_obj_ptr;
@@ -80,11 +80,7 @@ void operator<<= (CORBA::Any &_tao_any, CORBA_Current_ptr _tao_elem) // copying
   *_tao_obj_ptr = CORBA_Current::_duplicate (_tao_elem);
   _tao_any.replace (CORBA::_tc_Current, _tao_obj_ptr, 1, _tao_env);
 }
-void operator<<= (CORBA::Any &_tao_any, CORBA_Current_ptr *_tao_elem) // non copying
-{
-  CORBA::Environment _tao_env;
-  _tao_any.replace (CORBA::_tc_Current, _tao_elem, 0, _tao_env);
-}
+
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA_Current_ptr &_tao_elem)
 {
   CORBA::Environment _tao_env;
