@@ -40,8 +40,10 @@ RSC=rc.exe
 # PROP Output_Dir ""
 # PROP Intermediate_Dir "LIB\Release\ETCL"
 # PROP Target_Dir ""
+MTL=midl.exe
+LINK32=link.exe -lib
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GX /O2 /I "../" /I "../../" /I "../../../" /D "_MBCS" /D "_LIB" /D "TAO_AS_STATIC_LIBS" /D "NDEBUG" /D "ACE_AS_STATIC_LIBS" /D "WIN32" /FD /c
+# ADD CPP /nologo /MD /W3 /GX /O2 /I "../" /I "../../" /I "../../../" /I "../../../../" /D "_MBCS" /D "_LIB" /D "TAO_AS_STATIC_LIBS" /D "NDEBUG" /D "ACE_AS_STATIC_LIBS" /D "WIN32" /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
@@ -64,8 +66,10 @@ LIB32=link.exe -lib
 # PROP Output_Dir ""
 # PROP Intermediate_Dir "LIB\Debug\ETCL"
 # PROP Target_Dir ""
+MTL=midl.exe
+LINK32=link.exe -lib
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /YX /FD /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "../" /I "../../" /I "../../../" /D "_MBCS" /D "_LIB" /D "TAO_AS_STATIC_LIBS" /D "_DEBUG" /D "ACE_AS_STATIC_LIBS" /D "WIN32" /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "../" /I "../../" /I "../../../" /I "../../../../" /D "_MBCS" /D "_LIB" /D "TAO_AS_STATIC_LIBS" /D "_DEBUG" /D "ACE_AS_STATIC_LIBS" /D "WIN32" /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
@@ -87,19 +91,19 @@ LIB32=link.exe -lib
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 # Begin Source File
 
-SOURCE=.\ETCL\ETCL_Constraint.cpp
+SOURCE=.\ETCL_Constraint.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\ETCL\ETCL_Interpreter.cpp
+SOURCE=.\ETCL_Interpreter.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\ETCL\ETCL_l.cpp
+SOURCE=.\ETCL_l.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\ETCL\ETCL_y.cpp
+SOURCE=.\ETCL_y.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -107,23 +111,23 @@ SOURCE=.\ETCL\ETCL_y.cpp
 # PROP Default_Filter "h;hpp;hxx;hm"
 # Begin Source File
 
-SOURCE=.\ETCL\ETCL_Constraint.h
+SOURCE=.\ETCL_Constraint.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\ETCL\ETCL_Constraint_Visitor.h
+SOURCE=.\ETCL_Constraint_Visitor.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\ETCL\etcl_export.h
+SOURCE=.\etcl_export.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\ETCL\ETCL_Interpreter.h
+SOURCE=.\ETCL_Interpreter.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\ETCL\ETCL_y.h
+SOURCE=.\ETCL_y.h
 # End Source File
 # End Group
 # Begin Group "Inline Files"
@@ -131,7 +135,7 @@ SOURCE=.\ETCL\ETCL_y.h
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=.\ETCL\ETCL_Constraint.i
+SOURCE=.\ETCL_Constraint.inl
 # End Source File
 # End Group
 # End Target
