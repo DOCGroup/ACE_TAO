@@ -114,11 +114,6 @@ TAO_NotifyLogFactory_i::create (
   // Set the id to return..
   id = this->max_id_;
 
-  // Store the id in the LogIdList.
-  CORBA::ULong len = logid_list_.length();
-  logid_list_.length(len+1);
-  logid_list_[len] = id;
-
   return notifylog;
 }
 
@@ -185,7 +180,7 @@ TAO_NotifyLogFactory_i::create_with_id (
   ACE_CHECK_RETURN (notify_log._retn ());
 
   // Add to the Hash table..
-  if (hash_map_.bind (id, 
+  if (hash_map_.bind (id,
                       DsNotifyLogAdmin::NotifyLog::_duplicate (notify_log.in ())) == -1)
     ACE_THROW_RETURN (CORBA::INTERNAL (),
                       DsNotifyLogAdmin::NotifyLog::_nil ());
