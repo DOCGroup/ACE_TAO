@@ -737,7 +737,7 @@ TAO_POA::id_to_servant (const PortableServer::ObjectId &oid
                                 ACE_ENV_ARG_PARAMETER);
 }
 
-ACE_INLINE CORBA::Object_ptr
+CORBA::Object_ptr
 TAO_POA::id_to_reference (const PortableServer::ObjectId &oid
                           ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
