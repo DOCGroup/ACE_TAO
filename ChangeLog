@@ -1,3 +1,15 @@
+Fri Nov  7 17:11:15 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/Dev_Poll_Reactor.cpp:
+          Added #include of os_poll.h and OS_NS_sys_mman.h.
+
+        * ace/OS_NS_string.inl:
+          Added #include of os_string.h.
+
+        * ace/OS_NS_wchar.{h,inl}:
+          Added #ifdef ACE_HAS_WCHAR around fgetwc() declaration as well
+          as some cosmetic changes, #ifdef indentation.
+
 Fri Nov  7 11:28:39 2003  Steve Huston  <shuston@riverace.com>
 
 	* tests/Vector_Test.cpp: Added tests of the equality and inequality
