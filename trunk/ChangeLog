@@ -1,3 +1,8 @@
+Sat Aug 31 14:57:53 2002  Balachandran Natarajan  <bala@isis-server.vuse.vanderbilt.edu>
+
+	* THANKS: Added Cemal Yilmaz <cyilmaz@cs.umd.edu> to the hall of
+	  fame. 
+
 Sat Aug 31 13:55:52 2002  Balachandran Natarajan  <bala@isis-server.vuse.vanderbilt.edu>
 	* ace/OS.i (ctime_r): This fixes a problem on Linux for the call
 	  to ::ctime_r where the pointer returned (result) is the same as
