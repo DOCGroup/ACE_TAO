@@ -1,3 +1,12 @@
+Mon Jun 10 22:48:11 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tao/TypeCode.cpp (private_member_type):
+
+	  For the valuetype case, changed the skip to skip_short for the
+	  ValueModifier and Visibility fields, since these are both inserted
+	  into the type code as shorts. Previously, skip_ulong was being called.
+	  Thanks to Chen Jian <jchen@huawei.com> for pointing out the mismatch.
+
 Mon Jun 10 13:55:48 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 
 	* performance-tests/Latency/AMH/Single_Threaded/Roundtrip.cpp:
