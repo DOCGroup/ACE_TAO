@@ -1743,7 +1743,10 @@ ACE_Unbounded_Set_Iterator<T>::operator* (void)
   //ACE_TRACE ("ACE_Unbounded_Set_Iterator<T>::operator*");
   T *retv = 0;
 
-  ACE_ASSERT (this->next (retv) != 0);
+  int result = this->next (retv);
+  ACE_ASSERT (result != 0);
+  ACE_UNUSED_ARG (result);
+
   return *retv;
 }
 

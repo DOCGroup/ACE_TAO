@@ -684,7 +684,10 @@ ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::operator* (void)
   ACE_TRACE ("ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::operator*");
   ACE_Map_Entry<EXT_ID, INT_ID> *retv = 0;
 
-  ACE_ASSERT (this->next (retv) != 0);
+  int result = this->next (retv);
+  ACE_ASSERT (result != 0);
+  ACE_UNUSED_ARG (result);
+
   return *retv;
 }
 
