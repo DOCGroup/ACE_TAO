@@ -1,3 +1,13 @@
+Mon Sep 30 12:21:32 2002  Ossama Othman  <ossama@uci.edu>
+
+	From Christophe Juniet <cjuniet@entreview.com>
+	* ace/Sock_Connect.cpp (get_bcast_addr, get_ip_interfaces)
+	  (count_interfaces):
+
+	  The ifr_addr.sa_len field was not taken into account when
+	  incrementing the ifreq pointer.  Addresses network interface
+	  enumeration problems in FreeBSD builds.
+
 Mon Sep 30 09:33:42 2002  Christopher Kohlhoff  <chris@kohlhoff.com>
 
         * bin/MakeProjectCreator/templates/bor.mpd:

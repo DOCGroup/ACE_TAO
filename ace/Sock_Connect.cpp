@@ -378,7 +378,7 @@ ACE_Sock_Connect::get_bcast_addr (ACE_UINT32 &bcast_addr,
 
   for (int n = ifc.ifc_len / sizeof (struct ifreq);
        n > 0;
-#if !defined(CHORUS_4)
+#if !defined (CHORUS_4) && !defined (__FreeBSD__)
        n--, ifr++)
 #else
        n--,
@@ -386,7 +386,7 @@ ACE_Sock_Connect::get_bcast_addr (ACE_UINT32 &bcast_addr,
              ifr++ :
              ifr = (struct ifreq *)
              (ifr->ifr_addr.sa_len + (caddr_t) &ifr->ifr_addr)))
-#endif /* CHORUS_4 */
+#endif /* !CHORUS_4 && !__FreeBSD__ */
     {
       struct sockaddr_in if_addr;
 
@@ -1033,7 +1033,7 @@ ACE_Sock_Connect::get_ip_interfaces (size_t &count,
 #endif /* ! _UNICOS */
         }
 
-#if !defined(CHORUS_4)
+#if !defined (CHORUS_4)  && !defined (__FreeBSD__)
       pcur++;
 #else
       if (pcur->ifr_addr.sa_len <= sizeof (struct sockaddr))
@@ -1045,7 +1045,7 @@ ACE_Sock_Connect::get_ip_interfaces (size_t &count,
            pcur = (struct ifreq *)
                (pcur->ifr_addr.sa_len + (caddr_t) &pcur->ifr_addr);
         }
-#endif
+#endif  /* !CHORUS_4 && !__FreeBSD__ */
     }
   return 0;
 #elif defined (VXWORKS)
@@ -1179,7 +1179,7 @@ ACE_Sock_Connect::count_interfaces (ACE_HANDLE handle, size_t &how_many)
         break;
 
       if_count++;
-#if !defined(CHORUS_4)
+#if !defined (CHORUS_4) && !defined (__FreeBSD__)
       p_ifs++;
 #else
      if (p_ifs->ifr_addr.sa_len <= sizeof (struct sockaddr))
@@ -1191,7 +1191,7 @@ ACE_Sock_Connect::count_interfaces (ACE_HANDLE handle, size_t &how_many)
           p_ifs = (struct ifreq *)
               (p_ifs->ifr_addr.sa_len + (caddr_t) &p_ifs->ifr_addr);
        }
-#endif /* CHORUS_4 */
+#endif /* !CHORUS_4 && !__FreeBSD__ */
     }
 
   ACE_OS::free (ifcfg.ifc_req);
