@@ -1,3 +1,16 @@
+Wed Jul 28 18:29:46 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* ace/config-win32.h:
+	  Removed ACE_HAS_STD_TEMPLATE_SPECIALIZATION
+	  definition. See below.
+
+	* ace/config-win32-common.h:
+	  Added ACE_HAS_STD_TEMPLATE_SPECIALIZATION
+	  definition, since there is a place for MSVC 6.0 stuff like this.
+	  Also added ACE_HAS_BROKEN_IMPLICIT_CONST_CAST
+	  definition for a generated code bug fix that just didn't have one version
+	  that would satisfy both SunCC and MSVC.
+
 Wed Jul 28 18:26:53 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* ace/CDR_Stream.cpp:
