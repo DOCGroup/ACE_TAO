@@ -1,3 +1,12 @@
+Mon Dec 13 00:14:01 2004  Olli Savia  <ops@iki.fi>
+
+        * protocols/ace/HTBP/HTBP_Filter.cpp:
+          Removed unnecessary <sstream> include.
+
+        * tests/Reactor_Dispatch_Order_Test.cpp:
+          LynxOS 3.x needs the same special handling as OpenBSD to
+          pass this test.
+
 Sat Dec 11 17:38:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Atomic_Op_T.h:
@@ -5,16 +14,16 @@ Sat Dec 11 17:38:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sat Dec 11 17:26:09 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* bin/tao_other_tests.lst:
+        * bin/tao_other_tests.lst:
 
-	  Added a new test to the daily builds.
+          Added a new test to the daily builds.
 
 Sat Dec 11 10:39:38 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* ace/{Atomic_Op.h,Atomic_Op_T.h,Atomic_Op_T.inl,Atomic_Op_T.inl}
-	  (operator=): Updated the ACE_Atomic_Op so that it allows
- 	  "chained assignments."  Thanks to Michael Altmann <michael dot
- 	  altmann dot extern at mchh dot siemens dot de> for these fixes.
+        * ace/{Atomic_Op.h,Atomic_Op_T.h,Atomic_Op_T.inl,Atomic_Op_T.inl}
+          (operator=): Updated the ACE_Atomic_Op so that it allows
+          "chained assignments."  Thanks to Michael Altmann <michael dot
+          altmann dot extern at mchh dot siemens dot de> for these fixes.
 
 Sat Dec 11 09:53:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -23,9 +32,9 @@ Sat Dec 11 09:53:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Fri Dec 10 18:40:29 2004  Steve Huston  <shuston@riverace.com>
 
-	* tests/Reactor_Exceptions_Test.cpp: Force the ACE_SOCK_Dgram to all
-	  its work with IPv4. Allows this test to run clean on IPv6 systems
-	  as well as IPv4.
+        * tests/Reactor_Exceptions_Test.cpp: Force the ACE_SOCK_Dgram to all
+          its work with IPv4. Allows this test to run clean on IPv6 systems
+          as well as IPv4.
 
 Fri Dec 10 23:06:24 UTC 2004  Don Hinton  <don.hinton@vanderbilt.edu>
 
@@ -63,11 +72,11 @@ Fri Dec 10 08:55:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Dec  9 14:04:12 2004  Steve Huston  <shuston@riverace.com>
 
-	* ACE-INSTALL.html: Clarified that there is no leading '#' character
-	  for the 'include' statement in platform_macros.GNU. Thanks to
-	  Dave Dalapati <dalapati@comcast.net> for this suggestion.
+        * ACE-INSTALL.html: Clarified that there is no leading '#' character
+          for the 'include' statement in platform_macros.GNU. Thanks to
+          Dave Dalapati <dalapati@comcast.net> for this suggestion.
 
-	* THANKS: Added Dave Dalapati to the Hall of Fame.
+        * THANKS: Added Dave Dalapati to the Hall of Fame.
 
 Tue Dec  7 18:24:06 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -78,36 +87,36 @@ Tue Dec  7 18:24:06 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Tue Dec  7 18:48:39 2004  Steve Huston  <shuston@riverace.com>
 
-	* bin/Makefile.am: Comment out the TESTS for now. The auto_run_tests.pl
-	  depends on having the tests built in the same tree as the sources.
+        * bin/Makefile.am: Comment out the TESTS for now. The auto_run_tests.pl
+          depends on having the tests built in the same tree as the sources.
 
-	* tests/Makefile.am: Change TESTS to a list of all the test programs
-	  and TEST_ENVIRONMENT to an invocation of "run_test.pl -t" to enable
-	  it to run each test separately.
+        * tests/Makefile.am: Change TESTS to a list of all the test programs
+          and TEST_ENVIRONMENT to an invocation of "run_test.pl -t" to enable
+          it to run each test separately.
 
 Tue Dec  7 18:38:19 2004  Steve Huston  <shuston@riverace.com>
 
-	* m4/aio.m4: In the check for POSIX Realtime signals, do the
-	  #include <signal.h> first, enclosed in extern "C", else HP-UX
-	  gets a bad definition for an internal function call (___sysconf()).
+        * m4/aio.m4: In the check for POSIX Realtime signals, do the
+          #include <signal.h> first, enclosed in extern "C", else HP-UX
+          gets a bad definition for an internal function call (___sysconf()).
 
 Tue Dec  7 17:48:21 2004  Steve Huston  <shuston@riverace.com>
 
-	* examples/APG/ThreadManagement/Priorities.cpp: Fixed message block
-	  handling logic errors. Can't just queue the same block to multiple
-	  tasks, especially those in different threads. Now it clones the block
-	  for each putq(), and queues a MB_BREAK block when it's done so the
-	  service threads know to stop. Thanks to <spo@ngls.net> for reporting
-	  this problem.
+        * examples/APG/ThreadManagement/Priorities.cpp: Fixed message block
+          handling logic errors. Can't just queue the same block to multiple
+          tasks, especially those in different threads. Now it clones the block
+          for each putq(), and queues a MB_BREAK block when it's done so the
+          service threads know to stop. Thanks to <spo@ngls.net> for reporting
+          this problem.
 
-	  Fixes Bugzilla #2002
-	  (http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=2002)
+          Fixes Bugzilla #2002
+          (http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=2002)
 
 Tue Dec  7 13:10:08 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* ace/Logging_Strategy.cpp (init): Make sure that the dynamically
-	  allocated ostream is deleted on shutdown.  Thanks to Zvika
- 	  Ashani <zvika at aspectusvi dot com> for reporting this.
+        * ace/Logging_Strategy.cpp (init): Make sure that the dynamically
+          allocated ostream is deleted on shutdown.  Thanks to Zvika
+          Ashani <zvika at aspectusvi dot com> for reporting this.
 
 Tue Dec  7 08:19:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -116,33 +125,33 @@ Tue Dec  7 08:19:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Dec  6 18:16:39 2004  Steve Huston  <shuston@riverace.com>
 
-	* m4/config_h.m4: Added AH_TEMPLATE for ACE_HAS_POSIX_REALTIME_SIGNALS.
+        * m4/config_h.m4: Added AH_TEMPLATE for ACE_HAS_POSIX_REALTIME_SIGNALS.
 
-	* m4/aio.m4: Split the realtime-signals check out of the AIO
-	  functionality check. If the basic AIO calls are available and
-	  functional, then check if the signal-based AIO test works. If so,
-	  set ACE_HAS_POSIX_REALTIME_SIGNALS.
+        * m4/aio.m4: Split the realtime-signals check out of the AIO
+          functionality check. If the basic AIO calls are available and
+          functional, then check if the signal-based AIO test works. If so,
+          set ACE_HAS_POSIX_REALTIME_SIGNALS.
 
-	* tests/Makefile.am: Include the run_test.pl script in TESTS and
-	  note it as a dist_check_SCRIPTS, not noinst_SCRIPTS. This lets
-	  "make check" run it.
+        * tests/Makefile.am: Include the run_test.pl script in TESTS and
+          note it as a dist_check_SCRIPTS, not noinst_SCRIPTS. This lets
+          "make check" run it.
 
-	* tests/run_test.pl: Add $top_srcdir to the path for locating
-	  Perl auxiliary modules. For automake builds, this is needed since
-	  the script isn't linked into the build tree.
+        * tests/run_test.pl: Add $top_srcdir to the path for locating
+          Perl auxiliary modules. For automake builds, this is needed since
+          the script isn't linked into the build tree.
 
 Mon Dec  6 16:34:29 2004  Steve Huston  <shuston@riverace.com>
 
-	* ACE-INSTALL.html: Removed mention and instructions for the 'clone'
-	  program. Favor use of bin/create_ace_build.pl since it is more
-	  reliable, simpler, doesn't rely on Makefile content that's not
-	  there, and doesn't need to be built first.
+        * ACE-INSTALL.html: Removed mention and instructions for the 'clone'
+          program. Favor use of bin/create_ace_build.pl since it is more
+          reliable, simpler, doesn't rely on Makefile content that's not
+          there, and doesn't need to be built first.
 
-	* bin/clone.1:
-	* bin/clone.cpp: Removed; this program has been superseded by the
-	  bin/create_ace_build.pl script. See ACE-INSTALL.html for details.
+        * bin/clone.1:
+        * bin/clone.cpp: Removed; this program has been superseded by the
+          bin/create_ace_build.pl script. See ACE-INSTALL.html for details.
 
-	  Thanks to Neil Cohen <nbc@cisco.com> for bringing this up.
+          Thanks to Neil Cohen <nbc@cisco.com> for bringing this up.
 
 Mon Dec  6 10:46:02 2004  Chad Elliott  <elliott_c@ociweb.com>
 
