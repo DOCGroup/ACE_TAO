@@ -1,11 +1,63 @@
+Wed May 23 15:11:29 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * performance-tests/Makefile:
+        * performance-tests/README:
+        * performance-tests/Latency/Latency.dsw:
+        * performance-tests/Latency/Makefile:
+        * performance-tests/Latency/Makefile.bor:
+        * performance-tests/Latency/README:
+        * performance-tests/Latency/TestImpl.java:
+        * performance-tests/Latency/ami-latency-client.bor:
+        * performance-tests/Latency/ami-latency-client.cpp:
+        * performance-tests/Latency/ami-throughput-client.bor:
+        * performance-tests/Latency/ami-throughput-client.cpp:
+        * performance-tests/Latency/client-mt-exclusive.conf:
+        * performance-tests/Latency/client-st-exclusive.conf:
+        * performance-tests/Latency/client-st-muxed.conf:
+        * performance-tests/Latency/client.bor:
+        * performance-tests/Latency/client.conf:
+        * performance-tests/Latency/client.cpp:
+        * performance-tests/Latency/client.dsp:
+        * performance-tests/Latency/deferred_synch_client.dsp:
+        * performance-tests/Latency/dii_client.bor:
+        * performance-tests/Latency/dii_client.cpp:
+        * performance-tests/Latency/java_client.java:
+        * performance-tests/Latency/java_server.java:
+        * performance-tests/Latency/multi_threaded.pl:
+        * performance-tests/Latency/run_test.pl:
+        * performance-tests/Latency/scalability.pl:
+        * performance-tests/Latency/server.bor:
+        * performance-tests/Latency/server.conf:
+        * performance-tests/Latency/server.cpp:
+        * performance-tests/Latency/server.dsp:
+        * performance-tests/Latency/single_threaded.pl:
+        * performance-tests/Latency/st_client.bor:
+        * performance-tests/Latency/st_client.conf:
+        * performance-tests/Latency/st_client.cpp:
+        * performance-tests/Latency/st_client.dsp:
+        * performance-tests/Latency/st_server.bor:
+        * performance-tests/Latency/st_server.conf:
+        * performance-tests/Latency/st_server.cpp:
+        * performance-tests/Latency/st_server.dsp:
+        * performance-tests/Latency/test.idl:
+        * performance-tests/Latency/test_i.cpp:
+        * performance-tests/Latency/test_i.h:
+        * performance-tests/Latency/test_i.i:
+          Removed the Latency test(s).  The test has been superseeded by:
+          Single_Threaded_Latency, AMI_Latency, DII_Latency, DSI_Latency,
+          Deferred_Latency and Thread_Pool_Latency.
+          I didn't remove this stuff before because I was making sure that
+          the new tests were useful for the nightly regression testsuite.
+          This completes the fixes for [BUGID:324]
+
 Wed May 23 15:55:27 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* examples/Simple/squareit/README
-	* examples/Simple/fullname/README:
-	* examples/Simple/invert_string/README:
-	* examples/Simple/palindrome/README: A simple set of examples that
-	  will be implemented by our summer interns. The README files
-	  specify what they are expected to do.
+        * examples/Simple/squareit/README
+        * examples/Simple/fullname/README:
+        * examples/Simple/invert_string/README:
+        * examples/Simple/palindrome/README: A simple set of examples that
+          will be implemented by our summer interns. The README files
+          specify what they are expected to do.
 
 Wed May 23 15:09:21 2001  Paul Calabrese <calabrese_p@ociweb.com>
 
@@ -32,8 +84,8 @@ Wed May 23 14:26:07 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 Wed May 23 13:01:44 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/RTCORBA/Thread_Pool/client.cpp: Changed the default number
-	  of iterations.
+        * tests/RTCORBA/Thread_Pool/client.cpp: Changed the default number
+          of iterations.
 
 Wed May 23 11:53:00 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
