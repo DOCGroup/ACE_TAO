@@ -471,7 +471,7 @@ ACE_OutputCDR::write_array (const void *x,
       ACE_OS::memcpy (buf, x, size*length);
       return 1;
 #else
-      if (!this->do_byte_swap_)
+      if (!this->do_byte_swap_ || align == 1)
         {
           ACE_OS::memcpy (buf, x, size*length);
           return 1;
