@@ -32,6 +32,7 @@
   <property category="build.platform" name="solaris.default" value="gnuc++"/>
   <property category="build.platform" name="solaris.gnuc++.enabled" value="1"/>
   <property category="build.platform" name="solaris.sunforte.enabled" value="1"/>
+  <property category="build.platform" name="win32.CygWin.enabled" value="1"/>
   <property category="build.platform" name="win32.Debug_Build.toolset" value="win32b"/>
   <property category="build.platform" name="win32.MinGW.enabled" value="1"/>
   <property category="build.platform" name="win32.Release_Build.toolset" value="win32b"/>
@@ -86,6 +87,21 @@
   <property category="solaris.Debug_Build.sunforte.forte_cpp_compile" name="option.minus_xprefetch.enabled" value="1"/>
   <property category="solaris.Debug_Build.sunforte.forte_cpp_link" name="option.minus_o.enabled" value="1"/>
   <property category="solaris.sunforte.Debug_Build" name="saved" value="1"/>
+  <property category="win32.Debug_Build.CygWin.dlltool_def" name="option.export-all.enabled" value="1"/>
+  <property category="win32.Debug_Build.CygWin.dlltool_def" name="option.output-def.enabled" value="1"/>
+  <property category="win32.Debug_Build.CygWin.dlltool_lib" name="option.output-lib.enabled" value="1"/>
+  <property category="win32.Debug_Build.CygWin.g++compile" name="option.o.enabled" value="1"/>
+<%foreach(defines common_defines macros)%>
+  <property category="win32.Debug_Build.CygWin.g++compile" name="option.D_MACRO_VALUE.arg.<%forcount%>" value="<%define%>"/>
+<%endfor%>
+<%foreach(includes)%>
+  <property category="win32.Debug_Build.CygWin.g++compile" name="option.I.arg.<%forcount%>" value="<%include%>"/>
+<%endfor%>
+  <property category="win32.Debug_Build.CygWin.g++compile" name="option.I.arg.merge" value="0"/>
+  <property category="win32.Debug_Build.CygWin.g++compile" name="option.I.enabled" value="1"/>
+  <property category="win32.Debug_Build.CygWin.g++compile" name="option.o.enabled" value="1"/>
+  <property category="win32.Debug_Build.CygWin.g++link" name="option.o.enabled" value="1"/>
+  <property category="win32.Debug_Build.CygWin.windres" name="option.o.enabled" value="1"/>
   <property category="win32.Debug_Build.MinGW.dlltool_def" name="option.export-all.enabled" value="1"/>
   <property category="win32.Debug_Build.MinGW.dlltool_def" name="option.output-def.enabled" value="1"/>
   <property category="win32.Debug_Build.MinGW.dlltool_lib" name="option.dllname.enabled" value="1"/>
