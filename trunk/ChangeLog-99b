@@ -1,3 +1,18 @@
+Thu Dec  9 19:55:58 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* acconfig.h:
+	* configure.in:
+
+	  Added checks/support for the ACE_HAS_PTHREADS_UNIX98_EXT macro.
+
+	* ace/OS.h (ACE_rwlock_t):
+	* ace/OS.i (rw_tryrdlock, rw_trywrlock, rw_rdlock, rw_wrlock,
+	            rw_unlock):
+
+	  ACE_LACKS_RWLOCK_T should not imply !ACE_HAS_PTHREADS_UNIX98_EXT
+	  because the pthread_rwlock_t type exist despite the fact that
+	  rwlock_t doesn't.
+
 Thu Dec 09 15:53:20 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Malloc.cpp:
