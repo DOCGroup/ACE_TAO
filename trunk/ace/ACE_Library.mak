@@ -197,7 +197,6 @@ CLEAN :
 	-@erase "$(INTDIR)\Token_Invariants.obj"
 	-@erase "$(INTDIR)\Token_Manager.obj"
 	-@erase "$(INTDIR)\Token_Request_Reply.obj"
-	-@erase "$(INTDIR)\TP_Reactor.obj"
 	-@erase "$(INTDIR)\Trace.obj"
 	-@erase "$(INTDIR)\TTY_IO.obj"
 	-@erase "$(INTDIR)\UNIX_Addr.obj"
@@ -386,7 +385,6 @@ LINK32_OBJS= \
 	"$(INTDIR)\Token_Invariants.obj" \
 	"$(INTDIR)\Token_Manager.obj" \
 	"$(INTDIR)\Token_Request_Reply.obj" \
-	"$(INTDIR)\TP_Reactor.obj" \
 	"$(INTDIR)\Trace.obj" \
 	"$(INTDIR)\TTY_IO.obj" \
 	"$(INTDIR)\UNIX_Addr.obj" \
@@ -541,7 +539,6 @@ CLEAN :
 	-@erase "$(INTDIR)\Token_Invariants.obj"
 	-@erase "$(INTDIR)\Token_Manager.obj"
 	-@erase "$(INTDIR)\Token_Request_Reply.obj"
-	-@erase "$(INTDIR)\TP_Reactor.obj"
 	-@erase "$(INTDIR)\Trace.obj"
 	-@erase "$(INTDIR)\TTY_IO.obj"
 	-@erase "$(INTDIR)\UNIX_Addr.obj"
@@ -715,7 +712,6 @@ LIB32_OBJS= \
 	"$(INTDIR)\Token_Invariants.obj" \
 	"$(INTDIR)\Token_Manager.obj" \
 	"$(INTDIR)\Token_Request_Reply.obj" \
-	"$(INTDIR)\TP_Reactor.obj" \
 	"$(INTDIR)\Trace.obj" \
 	"$(INTDIR)\TTY_IO.obj" \
 	"$(INTDIR)\UNIX_Addr.obj" \
@@ -870,7 +866,6 @@ CLEAN :
 	-@erase "$(INTDIR)\Token_Invariants.obj"
 	-@erase "$(INTDIR)\Token_Manager.obj"
 	-@erase "$(INTDIR)\Token_Request_Reply.obj"
-	-@erase "$(INTDIR)\TP_Reactor.obj"
 	-@erase "$(INTDIR)\Trace.obj"
 	-@erase "$(INTDIR)\TTY_IO.obj"
 	-@erase "$(INTDIR)\UNIX_Addr.obj"
@@ -1044,7 +1039,6 @@ LIB32_OBJS= \
 	"$(INTDIR)\Token_Invariants.obj" \
 	"$(INTDIR)\Token_Manager.obj" \
 	"$(INTDIR)\Token_Request_Reply.obj" \
-	"$(INTDIR)\TP_Reactor.obj" \
 	"$(INTDIR)\Trace.obj" \
 	"$(INTDIR)\TTY_IO.obj" \
 	"$(INTDIR)\UNIX_Addr.obj" \
@@ -1199,7 +1193,6 @@ CLEAN :
 	-@erase "$(INTDIR)\Token_Invariants.obj"
 	-@erase "$(INTDIR)\Token_Manager.obj"
 	-@erase "$(INTDIR)\Token_Request_Reply.obj"
-	-@erase "$(INTDIR)\TP_Reactor.obj"
 	-@erase "$(INTDIR)\Trace.obj"
 	-@erase "$(INTDIR)\TTY_IO.obj"
 	-@erase "$(INTDIR)\UNIX_Addr.obj"
@@ -1374,7 +1367,6 @@ LIB32_OBJS= \
 	"$(INTDIR)\Token_Invariants.obj" \
 	"$(INTDIR)\Token_Manager.obj" \
 	"$(INTDIR)\Token_Request_Reply.obj" \
-	"$(INTDIR)\TP_Reactor.obj" \
 	"$(INTDIR)\Trace.obj" \
 	"$(INTDIR)\TTY_IO.obj" \
 	"$(INTDIR)\UNIX_Addr.obj" \
@@ -1529,7 +1521,6 @@ CLEAN :
 	-@erase "$(INTDIR)\Token_Invariants.obj"
 	-@erase "$(INTDIR)\Token_Manager.obj"
 	-@erase "$(INTDIR)\Token_Request_Reply.obj"
-	-@erase "$(INTDIR)\TP_Reactor.obj"
 	-@erase "$(INTDIR)\Trace.obj"
 	-@erase "$(INTDIR)\TTY_IO.obj"
 	-@erase "$(INTDIR)\UNIX_Addr.obj"
@@ -1703,7 +1694,6 @@ LIB32_OBJS= \
 	"$(INTDIR)\Token_Invariants.obj" \
 	"$(INTDIR)\Token_Manager.obj" \
 	"$(INTDIR)\Token_Request_Reply.obj" \
-	"$(INTDIR)\TP_Reactor.obj" \
 	"$(INTDIR)\Trace.obj" \
 	"$(INTDIR)\TTY_IO.obj" \
 	"$(INTDIR)\UNIX_Addr.obj" \
@@ -1858,7 +1848,6 @@ CLEAN :
 	-@erase "$(INTDIR)\Token_Invariants.obj"
 	-@erase "$(INTDIR)\Token_Manager.obj"
 	-@erase "$(INTDIR)\Token_Request_Reply.obj"
-	-@erase "$(INTDIR)\TP_Reactor.obj"
 	-@erase "$(INTDIR)\Trace.obj"
 	-@erase "$(INTDIR)\TTY_IO.obj"
 	-@erase "$(INTDIR)\UNIX_Addr.obj"
@@ -2048,7 +2037,6 @@ LINK32_OBJS= \
 	"$(INTDIR)\Token_Invariants.obj" \
 	"$(INTDIR)\Token_Manager.obj" \
 	"$(INTDIR)\Token_Request_Reply.obj" \
-	"$(INTDIR)\TP_Reactor.obj" \
 	"$(INTDIR)\Trace.obj" \
 	"$(INTDIR)\TTY_IO.obj" \
 	"$(INTDIR)\UNIX_Addr.obj" \
@@ -2203,7 +2191,6 @@ CLEAN :
 	-@erase "$(INTDIR)\Token_Invariants.obj"
 	-@erase "$(INTDIR)\Token_Manager.obj"
 	-@erase "$(INTDIR)\Token_Request_Reply.obj"
-	-@erase "$(INTDIR)\TP_Reactor.obj"
 	-@erase "$(INTDIR)\Trace.obj"
 	-@erase "$(INTDIR)\TTY_IO.obj"
 	-@erase "$(INTDIR)\UNIX_Addr.obj"
@@ -2388,7 +2375,6 @@ LINK32_OBJS= \
 	"$(INTDIR)\Token_Invariants.obj" \
 	"$(INTDIR)\Token_Manager.obj" \
 	"$(INTDIR)\Token_Request_Reply.obj" \
-	"$(INTDIR)\TP_Reactor.obj" \
 	"$(INTDIR)\Trace.obj" \
 	"$(INTDIR)\TTY_IO.obj" \
 	"$(INTDIR)\UNIX_Addr.obj" \
@@ -2543,7 +2529,6 @@ CLEAN :
 	-@erase "$(INTDIR)\Token_Invariants.obj"
 	-@erase "$(INTDIR)\Token_Manager.obj"
 	-@erase "$(INTDIR)\Token_Request_Reply.obj"
-	-@erase "$(INTDIR)\TP_Reactor.obj"
 	-@erase "$(INTDIR)\Trace.obj"
 	-@erase "$(INTDIR)\TTY_IO.obj"
 	-@erase "$(INTDIR)\UNIX_Addr.obj"
@@ -2728,7 +2713,6 @@ LINK32_OBJS= \
 	"$(INTDIR)\Token_Invariants.obj" \
 	"$(INTDIR)\Token_Manager.obj" \
 	"$(INTDIR)\Token_Request_Reply.obj" \
-	"$(INTDIR)\TP_Reactor.obj" \
 	"$(INTDIR)\Trace.obj" \
 	"$(INTDIR)\TTY_IO.obj" \
 	"$(INTDIR)\UNIX_Addr.obj" \
@@ -7526,38 +7510,6 @@ NODEP_CPP_MSG_W=\
 ################################################################################
 # Begin Source File
 
-SOURCE=.\TP_Reactor.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-
-"$(INTDIR)\TP_Reactor.obj" : $(SOURCE) "$(INTDIR)"
-
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-
-"$(INTDIR)\TP_Reactor.obj" : $(SOURCE) "$(INTDIR)"
-
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-
-"$(INTDIR)\TP_Reactor.obj" : $(SOURCE) "$(INTDIR)"
-
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-
-"$(INTDIR)\TP_Reactor.obj" : $(SOURCE) "$(INTDIR)"
-
-
-!ENDIF 
-
-# End Source File
-################################################################################
-# Begin Source File
-
 SOURCE=.\Arg_Shifter.cpp
 DEP_CPP_ARG_S=\
 	".\Arg_Shifter.h"\
@@ -7792,6 +7744,9 @@ NODEP_CPP_TTY_I=\
 # Begin Source File
 
 SOURCE=.\Trace.cpp
+
+!IF  "$(CFG)" == "ACE static library - Win32 Release"
+
 NODEP_CPP_TRACE=\
 	".\ace\ACE.h"\
 	".\ace\inc_user_config.h"\
@@ -7800,26 +7755,44 @@ NODEP_CPP_TRACE=\
 	".\ace\Trace.i"\
 	
 
-!IF  "$(CFG)" == "ACE static library - Win32 Release"
-
-
 "$(INTDIR)\Trace.obj" : $(SOURCE) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ACE static library - Win32 Debug"
 
+NODEP_CPP_TRACE=\
+	".\ace\ACE.h"\
+	".\ace\inc_user_config.h"\
+	".\ace\Log_Msg.h"\
+	".\ace\Trace.h"\
+	".\ace\Trace.i"\
+	
 
 "$(INTDIR)\Trace.obj" : $(SOURCE) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ACE static library - Win32 Unicode Debug"
 
+NODEP_CPP_TRACE=\
+	".\ace\ACE.h"\
+	".\ace\inc_user_config.h"\
+	".\ace\Log_Msg.h"\
+	".\ace\Trace.h"\
+	".\ace\Trace.i"\
+	
 
 "$(INTDIR)\Trace.obj" : $(SOURCE) "$(INTDIR)"
 
 
 !ELSEIF  "$(CFG)" == "ACE static library - Win32 Unicode Release"
 
+NODEP_CPP_TRACE=\
+	".\ace\ACE.h"\
+	".\ace\inc_user_config.h"\
+	".\ace\Log_Msg.h"\
+	".\ace\Trace.h"\
+	".\ace\Trace.i"\
+	
 
 "$(INTDIR)\Trace.obj" : $(SOURCE) "$(INTDIR)"
 
@@ -12365,38 +12338,6 @@ NODEP_CPP_MSG_W=\
 
 
 "$(INTDIR)\Msg_WFMO_Reactor.obj" : $(SOURCE) "$(INTDIR)"
-
-
-!ENDIF 
-
-# End Source File
-################################################################################
-# Begin Source File
-
-SOURCE=.\TP_Reactor.cpp
-
-!IF  "$(CFG)" == "ACE static library - Win32 Release"
-
-
-"$(INTDIR)\TP_Reactor.obj" : $(SOURCE) "$(INTDIR)"
-
-
-!ELSEIF  "$(CFG)" == "ACE static library - Win32 Debug"
-
-
-"$(INTDIR)\TP_Reactor.obj" : $(SOURCE) "$(INTDIR)"
-
-
-!ELSEIF  "$(CFG)" == "ACE static library - Win32 Unicode Debug"
-
-
-"$(INTDIR)\TP_Reactor.obj" : $(SOURCE) "$(INTDIR)"
-
-
-!ELSEIF  "$(CFG)" == "ACE static library - Win32 Unicode Release"
-
-
-"$(INTDIR)\TP_Reactor.obj" : $(SOURCE) "$(INTDIR)"
 
 
 !ENDIF 
