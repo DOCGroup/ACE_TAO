@@ -2,8 +2,6 @@
 
 #include "RecursDef_i.h"
 
-#include "ace/SString.h"
-
 
 ACE_RCSID (IFRService,
            RecursDef_i,
