@@ -74,7 +74,7 @@ static const char *TAO_GIOP_Timeprobe_Description[] =
 
 enum
 {
-  // Timeprobe description table start key 
+  // Timeprobe description table start key
   TAO_GIOP_SEND_REQUEST_START = 100,
   TAO_GIOP_SEND_REQUEST_END,
 
@@ -692,10 +692,10 @@ TAO_GIOP_Invocation::start (CORBA::Environment &env)
   // Determine the object key and the address to which we'll need a
   // connection.
   const TAO_opaque *key;
-  ACE_INET_Addr *server_addr_p = 0;    
+  ACE_INET_Addr *server_addr_p = 0;
 
   {
-    ACE_MT (ACE_WRITE_GUARD (ACE_SYNCH_RW_MUTEX, guard, data_->get_fwd_profile_lock ()));
+    ACE_MT (ACE_WRITE_GUARD (ACE_SYNCH_MUTEX, guard, data_->get_fwd_profile_lock ()));
 
     if (data_->get_fwd_profile_i () != 0)
       {
@@ -708,7 +708,7 @@ TAO_GIOP_Invocation::start (CORBA::Environment &env)
         server_addr_p = &data_->profile.object_addr ();
       }
   }
-  
+
   if (server_addr_p == 0)
     {
       env.exception (new CORBA::COMM_FAILURE (CORBA::COMPLETED_NO));
@@ -922,13 +922,13 @@ TAO_GIOP_Invocation::invoke (CORBA::ExceptionList &exceptions,
       // not just the connection.  Without reinitializing, we'd give
       // false error reports to applications.
       {
-        ACE_MT (ACE_READ_GUARD_RETURN (ACE_SYNCH_RW_MUTEX, 
-                                       guard, 
-                                       data_->get_fwd_profile_lock (), 
+        ACE_MT (ACE_READ_GUARD_RETURN (ACE_SYNCH_MUTEX,
+                                       guard,
+                                       data_->get_fwd_profile_lock (),
                                        TAO_GIOP_SYSTEM_EXCEPTION));
 
 
-        IIOP::Profile *old = data_->set_fwd_profile (0); 
+        IIOP::Profile *old = data_->set_fwd_profile (0);
         delete old;
         // sets the forwarding profile to 0 and deletes the old one;
       }
@@ -1185,7 +1185,7 @@ TAO_GIOP_Invocation::location_forward (CORBA::Environment &env)
 
   // the copy method on IIOP::Profile will be used to copy the content
   data_->set_fwd_profile (&iIOP_Object_ptr->profile);
-  // store the new profile in the forwarding profile 
+  // store the new profile in the forwarding profile
   // note: this has to be and is thread safe
 
   // The object is no longer needed, because we have now the IIOP_Object
@@ -1295,10 +1295,10 @@ TAO_GIOP_Invocation::invoke (TAO_Exception_Data *excepts,
       // not just the connection.  Without reinitializing, we'd give
       // false error reports to applications.
       {
-        ACE_MT (ACE_READ_GUARD_RETURN (ACE_SYNCH_RW_MUTEX, guard, data_->get_fwd_profile_lock (), TAO_GIOP_SYSTEM_EXCEPTION));
+        ACE_MT (ACE_READ_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, data_->get_fwd_profile_lock (), TAO_GIOP_SYSTEM_EXCEPTION));
 
 
-        IIOP::Profile *old = data_->set_fwd_profile (0); 
+        IIOP::Profile *old = data_->set_fwd_profile (0);
         delete old;
         // sets the forwarding profile to 0 and deletes the old one;
       }
