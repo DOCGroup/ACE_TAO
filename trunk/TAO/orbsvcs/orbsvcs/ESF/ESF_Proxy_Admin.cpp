@@ -3,7 +3,7 @@
 #ifndef TAO_ESF_PROXY_ADMIN_CPP
 #define TAO_ESF_PROXY_ADMIN_CPP
 
-#include "ESF_Proxy_Admin.h"
+
 
 #if ! defined (__ACE_INLINE__)
 #include "ESF_Proxy_Admin.i"

@@ -1,3 +1,11 @@
+Sat Dec 30 11:31:43 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/ESF/ESF_Proxy_Admin.cpp:
+	* orbsvcs/orbsvcs/ESF/ESF_Immediate_Changes.cpp:
+	* orbsvcs/orbsvcs/ESF/ESF_Peer_Admin.cpp:
+	* tao/Typecode.cpp. Added patches provided by J. Russell
+	  Noseworthy <rnosewor@objectsciences.com> for SPRO 5.1.
+
 Sat Dec 30 10:39:41 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/BiDirectional/test_i.cpp:
