@@ -8,7 +8,7 @@ endif
 
 LDLIBS = -lTAO_CosNotification -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_DynamicAny -lTAO_IORTable -lTAO_PortableServer -lTAO
 
-LSRC = Notify_Service.cpp
+SRC = Notify_Server.cpp Notify_Service.cpp
 
 NOTIFY_OBJS=$(LSRC:.cpp=.o)
 
