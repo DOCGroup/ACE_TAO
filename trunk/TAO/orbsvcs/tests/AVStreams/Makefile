@@ -11,6 +11,7 @@
 DIRS =	Bidirectional_Flows \
 	Component_Switching \
 	Simple_Two_Stage \
+	Simple_Two_Stage_With_QoS \
 	Simple_Three_Stage \
 	Asynch_Three_Stage \
 	Latency \
