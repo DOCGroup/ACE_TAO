@@ -308,9 +308,9 @@ public:
   // reference elements, which are freed using release(). The freebuf
   // function will ignore null pointers passed to it.
 
-  // = orbos/98-01-11 proposed extensions.
-  char* *get_buffer (CORBA::Boolean orphan = 0);
-  const char* *get_buffer (void) const;
+  // = Fast buffer accessors.
+  char **get_buffer (CORBA::Boolean orphan = 0);
+  const char **get_buffer (void) const;
 
   virtual void _allocate_buffer (CORBA::ULong length);
   virtual void _deallocate_buffer (void);
@@ -381,9 +381,10 @@ public:
   // Implement the methods for all the sequence, please seee
   // TAO_Base_Sequence.
 
-  // = orbos/98-01-11 proposed extensions.
+  // = Fast buffer accessors.
   CORBA::Octet *get_buffer (CORBA::Boolean orphan = 0);
   const CORBA::Octet *get_buffer (void) const;
+
   // NOTE: This last two methods can be rendered useless in certain
   // cases, see below.
   void replace (CORBA::ULong max,
