@@ -40,10 +40,13 @@ module CORBA
     OctetSeq service_detail;
   };
 
+  typedef sequence<ServiceOption> ServiceOptionSeq;
+  typedef sequence<ServiceDetail> ServiceDetailSeq;
+
   struct ServiceInformation
   {
-    sequence<ServiceOption> service_options;
-    sequence<ServiceDetail> service_details;
+    ServiceOptionSeq service_options;
+    ServiceDetailSeq service_details;
   };
 };
 
