@@ -1,3 +1,5 @@
+// $Id$
+
 ACE_INLINE void
 CORBA::release (CORBA_ServerRequest *req)
 {

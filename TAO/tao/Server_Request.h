@@ -179,8 +179,8 @@ public:
   IIOP_ServerRequest (const TAO_GIOP_RequestHeader &hdr,
                       CDR *req,
                       CDR *resp,
-		      CORBA::ORB_ptr the_orb,
-		      TAO_POA *the_poa);
+                      CORBA::ORB_ptr the_orb,
+                      TAO_POA *the_poa);
   // Constructor
 
   virtual ~IIOP_ServerRequest (void);
@@ -268,5 +268,9 @@ private:
   TAO_POA *poa_;
   // The object adapter with whicih this server request is associated.
 };
+
+#if defined (__ACE_INLINE__)
+# include "tao/Server_Request.i"
+#endif /* __ACE_INLINE__ */
 
 #endif /* TAO_SERVER_REQUEST_H */

@@ -67,13 +67,13 @@ private:
   // following are not allowed
 
   CORBA_Request (CORBA::Object_ptr obj,
-		 const CORBA::Char *op,
-		 CORBA::NVList_ptr args,
-		 CORBA::NamedValue_ptr result,
-		 CORBA::Flags flags);
+                 const CORBA::Char *op,
+                 CORBA::NVList_ptr args,
+                 CORBA::NamedValue_ptr result,
+                 CORBA::Flags flags);
 
   CORBA_Request (CORBA::Object_ptr obj,
-		 const CORBA::Char *op);
+                 const CORBA::Char *op);
 
   ~CORBA_Request (void);
 
@@ -101,5 +101,9 @@ private:
   CORBA::ULong refcount_;
   // reference counting
 };
+
+#if defined (__ACE_INLINE__)
+# include "tao/Request.i"
+#endif /* __ACE_INLINE__ */
 
 #endif /* TAO_REQUEST_H */
