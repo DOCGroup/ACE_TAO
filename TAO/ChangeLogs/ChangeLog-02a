@@ -10,6 +10,13 @@ Mon Jun  3 11:10:59 2002  Jeff Parsons <parsons@cs.wustl.edu>
           Thanks to Craig Rodrigues <crodrigu@bbn.com> for supplying the
           patch.
 
+Sun Jun  2 17:52:17 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.h (init_with_orb):
+	* orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.cpp (init_with_orb):
+	  Add flag (defaulted to true) which makes initializing a multicast
+	  listening endpoint optional.
+
 Fri May 31 15:22:00 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Event/ECG_Mcast_EH.cpp: 
