@@ -76,8 +76,8 @@ Text_Input_Device_Wrapper::create_input_message (void)
   // punctuation for these and all comments...
 
   // construct a new message block to send
-  ACE_Message_Block *message;
-  ACE_NEW_RETURN (message, 
+  ACE_Message_Block *mb;
+  ACE_NEW_RETURN (mb, 
                   ACE_Message_Block (read_length_), 
                   0);
 
@@ -96,13 +96,13 @@ Text_Input_Device_Wrapper::create_input_message (void)
   // Copy buf into the Message_Block and update the wr_ptr ().
   if (mb->copy (read_buf, read_length_) < 0) 
     {
-      delete message;
+      delete mb;
       ACE_ERROR_RETURN ((LM_ERROR,
                          "read buffer copy failed"),
                         0);
     }
 
-  return message;
+  return mb;
 }
 
 // creates a new message block, carrying data
@@ -117,7 +117,7 @@ Text_Output_Driver_Wrapper::Text_Output_Driver_Wrapper (int logging)
 int 
 Text_Output_Driver_Wrapper::write_output_message (void *message)
 {
-  ACE_Message_Block *message;
+  return 0;
 }
 
 // consume and possibly print out the passed message
@@ -172,7 +172,7 @@ User_Input_Task::svc (void)
       break;
 
   // we are done.
-  this->relay_->end_transmission (Bounded_Packet_Relay_Driver::CANCELLED);
+  this->relay_->end_transmission (Bounded_Packet_Relay_Base::CANCELLED);
   this->queue_->deactivate ();
   ACE_DEBUG ((LM_DEBUG,
               "terminating input thread\n"));
