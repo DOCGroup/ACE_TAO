@@ -192,7 +192,7 @@ protected:
  * ACE_Asynch_Read_Stream::Result class. 
  */
 class ACE_Export ACE_WIN32_Asynch_Read_Stream_Result : public virtual ACE_Asynch_Read_Stream_Result_Impl,
-                                                       public virtual ACE_WIN32_Asynch_Result
+                                                       public ACE_WIN32_Asynch_Result
 {
   /// Factory class will have special permissions.
   friend class ACE_WIN32_Asynch_Read_Stream;
@@ -1249,7 +1249,7 @@ public:
  * ACE_Asynch_Read_Dgram::Result class. 
  */
 class ACE_Export ACE_WIN32_Asynch_Read_Dgram_Result : public virtual ACE_Asynch_Read_Dgram_Result_Impl,
-                                                      public virtual ACE_WIN32_Asynch_Result
+                                                      public ACE_WIN32_Asynch_Result
 {
   /// Factory class will have special permissions.
   friend class ACE_WIN32_Asynch_Read_Dgram;

@@ -1,3 +1,37 @@
+Tue Jul  3 06:20:13 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+  
+        * ace/Reactor.h,
+        * ace/Reactor_Impl.h,
+	* ace/Select_Reactor_Base.cpp,
+	* ace/Select_Reactor_Base.i,
+  	* ace/Select_Reactor_Base.h,
+    	* ace/WFMO_Reactor.cpp,
+      	* ace/WFMO_Reactor.h: Added an enhancement that allows the
+	  Reactor to selectively purge event handlers from its
+ 	  notification queue according to their Reactor_Mask type.  Thanks
+ 	  to Edan Ayal <edana@bandwiz.com> for contributing this.	
+  
+	* tests/Reactor_Notify_Test.cpp (run_notify_purge_test): 
+	  Added a new set of tests for the new selective notification
+ 	  purging features of the Reactor.  Thanks to Edan Ayal
+ 	  <edana@bandwiz.com> for contributing this.
+
+	* ace/WIN32_Asynch_IO.cpp: Removed the
+	  ACE_WIN32_Asynch_Result (handler, act, event, 0, 0, priority,
+ 	  signal_number), initializer since we no longer use virtual
+ 	  inheritance.  Thanks to Alexander Libman
+ 	  <alexander.libman@baltimore.com> for reporting this.
+
+	* ace/WIN32_Asynch_IO.h: Removed the virtual inheritance from
+	  ACE_WIN32_Asynch_Result for the ACE_Asynch_Read_Stream_Result
+ 	  and ACE_Asynch_Read_Dgram_Result classes.  Thanks to Alexander
+ 	  Libman <alexander.libman@baltimore.com> for reporting this.
+
+	* ace/Refcounted_Auto_Ptr.h: Made the destructor of
+	  ACE_Refcounted_Auto_Ptr virtual so that users can override it
+ 	  locally.  Thanks to Jenny Kowald <jkowald@oz.agile.tv> for
+ 	  reporting this.
+
 Tue Jul  3 09:40:59 2001  Chad Elliott  <elliott_c@ociweb.com>
 
         * include/makeinclude/platform_osf1_4.0.GNU:

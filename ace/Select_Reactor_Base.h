@@ -176,7 +176,8 @@ public:
    * the reactor itself). Returns the number of notifications purged.
    * Returns -1 on error.
    */
-  virtual int purge_pending_notifications (ACE_Event_Handler *);
+  virtual int purge_pending_notifications (ACE_Event_Handler *,
+                                           ACE_Reactor_Mask = ACE_Event_Handler::ALL_EVENTS_MASK);
 
   /// Dump the state of an object.
   virtual void dump (void) const;
@@ -400,7 +401,8 @@ public:
    * <ACE_Event_Handler> object. Returns the number of notifications
    * purged. Returns -1 on error.
    */
-  virtual int purge_pending_notifications (ACE_Event_Handler * = 0);
+  virtual int purge_pending_notifications (ACE_Event_Handler * = 0,
+                                           ACE_Reactor_Mask    = ACE_Event_Handler::ALL_EVENTS_MASK);
 
 protected:
   /// Allow manipulation of the <wait_set_> mask and <ready_set_> mask.

@@ -52,7 +52,7 @@ public:
   ACE_Refcounted_Auto_Ptr (const ACE_Refcounted_Auto_Ptr<X, ACE_LOCK> &r);
 
   /// Destructor.
-  ~ACE_Refcounted_Auto_Ptr (void);
+  virtual ~ACE_Refcounted_Auto_Ptr (void);
 
   /// Assignment operator that binds <this> and <r> to the same 
   /// <ACE_Refcounted_Auto_Ptr_Rep>. An <ACE_Refcounted_Auto_Ptr_Rep> 

@@ -744,9 +744,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::reset_timer_interval
   ACE_TRACE ("ACE_Select_Reactor_T::reset_timer_interval");
   ACE_MT (ACE_GUARD_RETURN (ACE_SELECT_REACTOR_TOKEN, ace_mon, this->token_, -1));
 
-  return this->timer_queue_->reset_interval
-    (timer_id,
-     interval);
+  return this->timer_queue_->reset_interval (timer_id, interval);
 }
 
 // Main event loop driver that blocks for <max_wait_time> before

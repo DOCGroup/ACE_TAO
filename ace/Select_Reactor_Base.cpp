@@ -479,7 +479,8 @@ ACE_Select_Reactor_Notify::max_notify_iterations (void)
 // Returns the number of entries removed. Returns -1 on error.
 // ACE_NOTSUP_RETURN if ACE_HAS_REACTOR_NOTIFICATION_QUEUE is not defined.
 int
-ACE_Select_Reactor_Notify::purge_pending_notifications (ACE_Event_Handler *eh)
+ACE_Select_Reactor_Notify::purge_pending_notifications (ACE_Event_Handler *eh,
+                                                        ACE_Reactor_Mask   mask)
 {
   ACE_TRACE ("ACE_Select_Reactor_Notify::purge_pending_notifications");
 
@@ -505,26 +506,34 @@ ACE_Select_Reactor_Notify::purge_pending_notifications (ACE_Event_Handler *eh)
                           -1);
 
       // If this is not a Reactor notify (it is for a particular handler),
-      // and it matches the specified handler (or purging all), then
+      // and it matches the specified handler (or purging all),
+      // and applying the mask would totally eliminate the notification, then
       // release it and count the number purged.
-      if (0 != temp->eh_ && (0 == eh || eh == temp->eh_))
-        {
-          if (-1 == this->free_queue_.enqueue_head (temp))
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_LIB_TEXT ("%p\n"),
-                               ACE_LIB_TEXT ("enqueue_head")),
-                              -1);
-          ++number_purged;
-        }
+      if ((0 != temp->eh_) &&
+          (0 == eh || eh == temp->eh_) &&
+          ACE_BIT_DISABLED (temp->mask_, ~mask)) // the existing notificationmask
+                                                 // is left with nothing when
+                                                 // applying the mask
+      {
+        if (-1 == this->free_queue_.enqueue_head (temp))
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_LIB_TEXT ("%p\n"),
+                             ACE_LIB_TEXT ("enqueue_head")),
+                            -1);
+        ++number_purged;
+      }
       else
-        {
-          // To preserve it, move it to the local_queue.
-          if (-1 == local_queue.enqueue_head (temp))
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_LIB_TEXT ("%p\n"),
-                               ACE_LIB_TEXT ("enqueue_head")),
-                              -1);
-        }
+      {
+        // To preserve it, move it to the local_queue.
+        // But first, if this is not a Reactor notify (it is for a particularhandler),
+        // and it matches the specified handler (or purging all), then
+        // apply the mask
+        if ((0 != temp->eh_) &&
+            (0 == eh || eh == temp->eh_))
+          ACE_CLR_BITS(temp->mask_, mask);
+        if (-1 == local_queue.enqueue_head (temp))
+          return -1;
+      }
     }
 
   if (this->notify_queue_.size ())
