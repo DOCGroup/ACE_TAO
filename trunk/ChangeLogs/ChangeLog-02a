@@ -1,3 +1,12 @@
+Mon Mar  5 11:29:36 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * docs/ACE-categories.html:
+          Fixed links to the doxygen files.
+
+        * ace/Pipe.cpp:
+          Fixed what looks like a typo, we want to *disable* the stream
+          pipes under QNX, not to enable them just on that platform.
+
 Mon Mar  5 08:20:21 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/RMCast/RMCast_Fragment_Test.cpp:
