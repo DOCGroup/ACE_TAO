@@ -35,10 +35,10 @@ typedef ACE_Strategy_Acceptor<TAO_Server_Connection_Handler,
 class TAO_Export TAO_IIOP_Acceptor : public TAO_Acceptor
 {
   // = TITLE
-  //   @@ Fred, please fill in here.
+  //   TAO_IIOP_Acceptor
   //
   // = DESCRIPTION
-  //   @@ Fred, please fill in here.
+  //   The IIOP specific bridge class for the concrete acceptor.
 public:
   // TAO_IIOP_Acceptor (ACE_INET_Addr &addr);
   // Create Acceptor object using addr.
@@ -58,10 +58,10 @@ public:
 
 private:
   TAO_IIOP_BASE_ACCEPTOR base_acceptor_;
-  //   @@ Fred, please fill in here.
+  // the concrete acceptor, as a pointer to it's base class.
 
   CORBA::ULong tag_;
-  //   @@ Fred, please fill in here.
+  //  the IOP specific tag.
 };
 
 #endif  /* TAO_IIOP_ACCEPTOR_H */

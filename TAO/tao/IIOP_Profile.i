@@ -55,14 +55,14 @@ TAO_IIOP_Profile::port (CORBA::UShort p)
   return this->port_ = p;
 }
 
-ACE_INLINE const Version *
+ACE_INLINE const TAO_IOP_Version *
 TAO_IIOP_Profile::version (void)
 {
   return &this->version_;
 }
 
-ACE_INLINE const Version *
-TAO_IIOP_Profile::version (Version *v)
+ACE_INLINE const TAO_IOP_Version *
+TAO_IIOP_Profile::version (TAO_IOP_Version *v)
 {
   this->version_ = *v;
   return &this->version_;
@@ -81,7 +81,7 @@ TAO_IIOP_Profile::_nil (void)
 }
 
 ACE_INLINE TAO_MProfile *
-TAO_IIOP_Profile::forward_to (void)
+TAO_IIOP_Profile::forward_to_i (void)
 {
   return this->forward_to_;
 }

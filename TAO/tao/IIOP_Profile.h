@@ -60,12 +60,12 @@ public:
   // already been marshaled.
 
   TAO_IIOP_Profile (const ACE_INET_Addr &addr,
-                    const Version &version,
+                    const TAO_IOP_Version &version,
                     const char *object_key);
   //  Profile constructor, explicitly define the protocol version.
 
   TAO_IIOP_Profile (const ACE_INET_Addr &addr,
-                    const Version &version,
+                    const TAO_IOP_Version &version,
                     const TAO_ObjectKey &object_key);
   //  Profile constructor, explicitly define the protocol version.
 
@@ -85,7 +85,7 @@ public:
 
   TAO_IIOP_Profile (const char *host,
                     CORBA::UShort port,
-                    const Version &version,
+                    const TAO_IOP_Version &version,
                     const TAO_ObjectKey &object_key);
   //  Profile constructor, explicitly define the protocol version
 
@@ -99,7 +99,7 @@ public:
   TAO_IIOP_Profile (const TAO_IIOP_Profile &pfile);
   // Profile copy constructor
 
-  TAO_IIOP_Profile (const Version &version);
+  TAO_IIOP_Profile (const TAO_IOP_Version &version);
   // Profile constructor, explicitly define the version.
 
   TAO_IIOP_Profile (void);
@@ -146,9 +146,9 @@ public:
   //  return a pointer to the Object Key.
 
   virtual void forward_to (TAO_MProfile *mprofiles);
-  // object will assume ownership for this object!!
+  // client object will assume ownership for this object!!
 
-  virtual TAO_MProfile *get_forward_to (void);
+  virtual TAO_MProfile *forward_to (void);
   // copy of MProfile, user must delete.
 
   CORBA::Boolean is_equivalent (TAO_Profile *other_profile,
@@ -184,11 +184,11 @@ public:
   CORBA::UShort port (CORBA::UShort p);
   // set the port number
 
-  const Version *version (void);
+  const TAO_IOP_Version *version (void);
   // return a pointer to this profile's version.  This object
   // maintains ownership.
 
-  const Version *version (Version *v);
+  const TAO_IOP_Version *version (TAO_IOP_Version *v);
   // First set the version then return a pointer to it.  This object
   // maintains ownership.
 
@@ -231,7 +231,7 @@ private:
   int set (const ACE_INET_Addr &addr);
   // helper method to set the INET_Addr.
 
-  virtual TAO_MProfile *forward_to (void);
+  virtual TAO_MProfile *forward_to_i (void);
   // reference to the TAO_MProfile which the current profile was
   // forwarded to.  This object keeps ownership
   // NOT THREAD SAFE
@@ -253,7 +253,7 @@ private:
   TAO_opaque body_;
   // Marshaled profile (CDR).
 
-  Version version_;
+  TAO_IOP_Version version_;
   // IIOP version number.
 
   TAO_ObjectKey object_key_;

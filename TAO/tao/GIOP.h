@@ -129,7 +129,7 @@ typedef TAO_Unbounded_Sequence<TAO_IOP_TaggedComponent>
 
 // namespace TAO_GIOP
 
-struct TAO_Version
+struct TAO_GIOP_Version
 {
   CORBA::Octet major;
   CORBA::Octet minor;
@@ -152,7 +152,7 @@ public:
   };
 
   CORBA::Char magic [4]; // "GIOP"
-  TAO_Version giop_version;
+  TAO_GIOP_Version giop_version;
   CORBA::Octet byte_order; // 0 = big, 1 = little
   CORBA::Octet message_type; // MsgType above
   CORBA::ULong message_size; // in byte_order!

@@ -275,7 +275,7 @@ TAO_GIOP::send_request (TAO_Transport  *transport,
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) closing conn %d after fault %p\n",
                   transport->handle (), "GIOP::send_request ()"));
     }
-    transport->close_conn ();
+    transport->close_connection ();
     return 0 ;
   }
 
@@ -290,7 +290,7 @@ TAO_GIOP::send_request (TAO_Transport  *transport,
                   "(%P|%t) GIOP::send_request (): ",
                   "EOF, closing conn %d\n", transport->handle()));
     }
-    transport->close_conn();
+    transport->close_connection ();
     return 0;
   }
 
@@ -346,7 +346,7 @@ TAO_GIOP::close_connection (TAO_Transport *transport, void *)
                     which));
   }
 
-  transport->close_conn ();
+  transport->close_connection ();
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) shut down transport, handle %d\n", which));
 }
@@ -389,7 +389,7 @@ TAO_GIOP::send_error (TAO_Transport *transport)
     ACE_DEBUG ((LM_DEBUG, "(%P|%t) aborted transport handle %d\n", transport->handle ()));
   }
   // @@
-  transport->close_conn ();
+  transport->close_connection ();
   transport = 0;
 }
 
@@ -400,7 +400,7 @@ TAO_GIOP::read_buffer (TAO_Transport *transport,
 {
   ACE_FUNCTION_TIMEPROBE (TAO_GIOP_READ_BUFFER_START);
 
-  ssize_t bytes_read = transport->receive (buf, len);
+  ssize_t bytes_read = transport->recv (buf, len);
 
   if (bytes_read == -1 && errno == ECONNRESET)
     {
@@ -458,7 +458,6 @@ TAO_GIOP::recv_request (TAO_Transport *transport,
 
   ssize_t header_len = TAO_GIOP_HEADER_LEN;
 
-  // @@ would like to use use_lite_protocol, fredk
   if (orb_core->orb_params ()->use_lite_protocol ())
     header_len = 5;
 

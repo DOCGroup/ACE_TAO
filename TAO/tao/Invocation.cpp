@@ -339,7 +339,7 @@ TAO_GIOP_Invocation::close_connection (void)
   // not just the connection.  Without reinitializing, we'd give
   // false error reports to applications.
 
-  this->data_->profile_in_use ()->transport ()->close_conn ();
+  this->data_->profile_in_use ()->transport ()->close_connection ();
   this->data_->profile_in_use ()->reset_hint ();
 
   // @@ Get rid of any forwarding profiles and reset
@@ -383,7 +383,7 @@ TAO_GIOP_Invocation::location_forward (TAO_InputCDR &inp_stream,
     {
       // Handle the exception for this level here and throw it out again.
       ACE_PRINT_EXCEPTION (ex, "invoke, location forward (decode)");
-      transport->close_conn ();
+      transport->close_connection ();
       ACE_RETHROW;
     }
   ACE_ENDTRY;
@@ -396,7 +396,7 @@ TAO_GIOP_Invocation::location_forward (TAO_InputCDR &inp_stream,
 
   if (stubobj == 0)
     {
-      transport->close_conn ();
+      transport->close_connection ();
       ACE_THROW_RETURN (CORBA::UNKNOWN (CORBA::COMPLETED_NO), TAO_GIOP_SYSTEM_EXCEPTION);
     }
 
@@ -486,7 +486,7 @@ TAO_GIOP_Twoway_Invocation::invoke (CORBA::ExceptionList &exceptions,
                                                      this->inp_stream_,
                                                      this->orb_core_);
 
-  transport->resume_conn (this->orb_core_->reactor ());
+  transport->resume_connection (this->orb_core_->reactor ());
   // suspend was called in TAO_Client_Connection_Handler::handle_input
 
   switch (m)
@@ -522,7 +522,7 @@ TAO_GIOP_Twoway_Invocation::invoke (CORBA::ExceptionList &exceptions,
 
     case TAO_GIOP::EndOfFile:
       // @@ This should only refer to "getting GIOP MessageError" message only.
-      transport->close_conn ();
+      transport->close_connection ();
       ACE_THROW_RETURN (CORBA::COMM_FAILURE (CORBA::COMPLETED_MAYBE), TAO_GIOP_SYSTEM_EXCEPTION);
     }
 
@@ -557,7 +557,7 @@ TAO_GIOP_Twoway_Invocation::invoke (CORBA::ExceptionList &exceptions,
   this->inp_stream_ >> reply_ctx;
   if (!this->inp_stream_.good_bit ())
     {
-      transport->close_conn ();
+      transport->close_connection ();
       ACE_THROW_RETURN (CORBA::MARSHAL (CORBA::COMPLETED_NO), TAO_GIOP_SYSTEM_EXCEPTION);
     }
 
@@ -566,7 +566,7 @@ TAO_GIOP_Twoway_Invocation::invoke (CORBA::ExceptionList &exceptions,
       || !this->inp_stream_.read_ulong (reply_status)
       || reply_status > TAO_GIOP_LOCATION_FORWARD)
     {
-      transport->close_conn ();
+      transport->close_connection ();
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) bad Response header\n"));
       ACE_THROW_RETURN (CORBA::COMM_FAILURE (CORBA::COMPLETED_MAYBE), TAO_GIOP_SYSTEM_EXCEPTION);
     }
@@ -609,7 +609,7 @@ TAO_GIOP_Twoway_Invocation::invoke (CORBA::ExceptionList &exceptions,
         {
           if (this->inp_stream_.read_string (buf) == 0)
             {
-              transport->close_conn ();
+              transport->close_connection ();
               ACE_THROW_RETURN (CORBA::MARSHAL (CORBA::COMPLETED_YES), TAO_GIOP_SYSTEM_EXCEPTION);
             }
         }
@@ -672,7 +672,7 @@ TAO_GIOP_Twoway_Invocation::invoke (CORBA::ExceptionList &exceptions,
                   }
                 ACE_CATCH (CORBA_SystemException, ex)
                   {
-                    transport->close_conn ();
+                    transport->close_connection ();
                     ACE_RETHROW;
                   }
                 ACE_ENDTRY;
@@ -770,7 +770,7 @@ TAO_GIOP_Twoway_Invocation::invoke (TAO_Exception_Data *excepts,
                                                      this->orb_core_);
 
   // suspend was called in TAO_Client_Connection_Handler::handle_input
-  transport->resume_conn (this->orb_core_->reactor ());
+  transport->resume_connection (this->orb_core_->reactor ());
 
   switch (m)
     {
@@ -805,7 +805,7 @@ TAO_GIOP_Twoway_Invocation::invoke (TAO_Exception_Data *excepts,
 
     case TAO_GIOP::EndOfFile:
       // @@ This should only refer to "getting GIOP MessageError" message only.
-      transport->close_conn ();
+      transport->close_connection ();
       ACE_THROW_RETURN (CORBA::COMM_FAILURE (CORBA::COMPLETED_MAYBE), TAO_GIOP_SYSTEM_EXCEPTION);
     }
 
@@ -840,7 +840,7 @@ TAO_GIOP_Twoway_Invocation::invoke (TAO_Exception_Data *excepts,
   this->inp_stream_ >> reply_ctx;
   if (!this->inp_stream_.good_bit ())
     {
-      transport->close_conn ();
+      transport->close_connection ();
       ACE_THROW_RETURN (CORBA::MARSHAL (CORBA::COMPLETED_NO), TAO_GIOP_SYSTEM_EXCEPTION);
     }
 
@@ -849,7 +849,7 @@ TAO_GIOP_Twoway_Invocation::invoke (TAO_Exception_Data *excepts,
       || !this->inp_stream_.read_ulong (reply_status)
       || reply_status > TAO_GIOP_LOCATION_FORWARD)
     {
-      transport->close_conn ();
+      transport->close_connection ();
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) bad Response header\n"));
       ACE_THROW_RETURN (CORBA::COMM_FAILURE (CORBA::COMPLETED_MAYBE), TAO_GIOP_SYSTEM_EXCEPTION);
     }
@@ -892,7 +892,7 @@ TAO_GIOP_Twoway_Invocation::invoke (TAO_Exception_Data *excepts,
         {
           if (this->inp_stream_.read_string (buf) == 0)
             {
-              this->data_->profile_in_use ()->transport ()->close_conn ();
+              this->data_->profile_in_use ()->transport ()->close_connection ();
               ACE_THROW_RETURN (CORBA::MARSHAL (CORBA::COMPLETED_YES), TAO_GIOP_SYSTEM_EXCEPTION);
             }
         }
@@ -956,7 +956,7 @@ TAO_GIOP_Twoway_Invocation::invoke (TAO_Exception_Data *excepts,
                   }
                 ACE_CATCH (CORBA_SystemException, ex)
                   {
-                    this->data_->profile_in_use ()->transport ()->close_conn ();
+                    this->data_->profile_in_use ()->transport ()->close_connection ();
                     ACE_RETHROW;
                   }
                 ACE_ENDTRY;
@@ -1020,7 +1020,7 @@ TAO_GIOP_Locate_Request_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
                                                      this->inp_stream_,
                                                      this->orb_core_);
 
-  transport->resume_conn (this->orb_core_->reactor ());
+  transport->resume_connection (this->orb_core_->reactor ());
   // suspend was called in TAO_Client_Connection_Handler::handle_input
 
   switch (m)
@@ -1039,7 +1039,7 @@ TAO_GIOP_Locate_Request_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
           || request_id != this->my_request_id_
           || !this->inp_stream_.read_ulong (locate_status))
         {
-          transport->close_conn ();
+          transport->close_connection ();
           ACE_DEBUG ((LM_DEBUG,
                       "(%P|%t) bad Response header\n"));
           ACE_THROW_RETURN (CORBA::COMM_FAILURE (CORBA::COMPLETED_MAYBE), TAO_GIOP_SYSTEM_EXCEPTION);
@@ -1080,7 +1080,7 @@ TAO_GIOP_Locate_Request_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
 
     case TAO_GIOP::EndOfFile:
       // @@ This should only refer to "getting GIOP MessageError" message only.
-      transport->close_conn ();
+      transport->close_connection ();
       ACE_THROW_RETURN (CORBA::COMM_FAILURE (CORBA::COMPLETED_MAYBE), TAO_GIOP_SYSTEM_EXCEPTION);
     }
 
