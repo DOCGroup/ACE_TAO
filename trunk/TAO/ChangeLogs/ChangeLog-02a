@@ -1,3 +1,9 @@
+Wed Mar 28 14:45:53 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/Forwarding/client.cpp (run_test): 
+	* tests/MProfile_Forwarding/client.cpp:
+	* tests/MProfile/client.cpp: Fixed fuzz warnings.
+
 Wed Mar 28 14:42:14 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be/be_visitor_interface/remote_proxy_broker_cs.cpp:
