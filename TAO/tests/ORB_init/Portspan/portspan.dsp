@@ -134,7 +134,7 @@ SOURCE=.\simple.idl
 
 !IF  "$(CFG)" == "portspan - Win32 Release"
 
-USERDEP__SIMPL="..\..\..\bin\Release\tao_idl.exe"	
+USERDEP__SIMPL="..\..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build
 InputPath=.\simple.idl
 InputName=simple
@@ -173,7 +173,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "portspan - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__SIMPL="..\..\..\bin\tao_idl.exe"	
+USERDEP__SIMPL="..\..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build
 InputPath=.\simple.idl
 InputName=simple

@@ -142,7 +142,7 @@ InputPath=.\Test.idl
 InputName=Test
 
 BuildCmds= \
-	$(ACE_ROOT)\bin\tao_idl -o $(OutDir) -Ge 1 -Sc $(InputPath)
+	$(ACE_ROOT)\bin\Release\tao_idl -o $(OutDir) -Ge 1 -Sc $(InputPath)
 
 "$(OutDir)\$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
