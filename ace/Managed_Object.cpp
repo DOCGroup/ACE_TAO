@@ -11,4 +11,9 @@
 #include "ace/Managed_Object.i"
 #endif /* __ACE_INLINE__ */
 
+template <class TYPE>
+ACE_Cleanup_Adapter<TYPE>::~ACE_Cleanup_Adapter (void)
+{
+}
+
 #endif /* ACE_MANAGED_OBJECT_CPP */
