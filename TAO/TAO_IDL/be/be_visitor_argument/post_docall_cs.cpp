@@ -85,6 +85,7 @@ be_visitor_args_post_docall_cs::visit_interface (be_interface *node)
   switch (this->direction ())
     {
     case AST_Argument::dir_INOUT:
+    case AST_Argument::dir_OUT:
       {
         os->indent ();
         // assign the narrowed obj reference

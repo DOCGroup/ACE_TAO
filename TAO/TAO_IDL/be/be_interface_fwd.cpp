@@ -500,17 +500,6 @@ be_interface_fwd::gen_out_impl (void)
 
   return 0;
 }
-int
-be_interface_fwd::gen_typecode (void)
-{
-  return 0;
-}
-
-long
-be_interface_fwd::tc_size (void)
-{
-  return 0;
-}
 
 int
 be_interface_fwd::accept (be_visitor *visitor)

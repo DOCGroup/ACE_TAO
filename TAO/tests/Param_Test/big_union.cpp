@@ -278,7 +278,11 @@ Test_Big_Union::check_validity (void)
             if (in_array[i] != inout_array[i]
                 || in_array[i] != out_array[i]
                 || in_array[i] != ret_array[i])
-              return 0;
+              {
+                ACE_DEBUG ((LM_DEBUG, 
+                            "mismatch of arrays\n"));
+                return 0;
+              }
           }
       }
       break;

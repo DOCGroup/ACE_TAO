@@ -222,20 +222,6 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
 
         }
 
-      // do any post processing for the retval
-      ctx = *this->ctx_;
-      ctx.state (TAO_CodeGen::TAO_OPERATION_RETVAL_POST_INVOKE_CS);
-      visitor = tao_cg->make_visitor (&ctx);
-      if (!visitor || (bt->accept (visitor) == -1))
-        {
-          delete visitor;
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_operation_cs::"
-                             "visit_operation - "
-                             "codegen for return type post do_static_call failed\n"),
-                            -1);
-        }
-
       if (!this->void_return_type (bt))
         {
           // now generate the normal successful return statement
@@ -592,8 +578,36 @@ be_interpretive_visitor_operation_cs::gen_marshal_and_invoke (be_operation
                          "(%N:%l) be_interpretive_visitor_operation_cs::"
                          "gen_marshal_and_invoke - "
                          "codegen for checking exception failed\n"),
-                            -1);
+                        -1);
 
+    }
+
+  // do any post processing for the arguments
+  ctx = *this->ctx_;
+  ctx.state (TAO_CodeGen::TAO_OPERATION_ARG_POST_INVOKE_CS);
+  visitor = tao_cg->make_visitor (&ctx);
+  if (!visitor || (node->accept (visitor) == -1))
+    {
+      delete visitor;
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_operation_cs::"
+                         "visit_operation - "
+                         "codegen for args post do_static_call failed\n"),
+                        -1);
+    }
+
+  // do any post processing for the retval
+  ctx = *this->ctx_;
+  ctx.state (TAO_CodeGen::TAO_OPERATION_RETVAL_POST_INVOKE_CS);
+  visitor = tao_cg->make_visitor (&ctx);
+  if (!visitor || (bt->accept (visitor) == -1))
+    {
+      delete visitor;
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_operation_cs::"
+                         "visit_operation - "
+                         "codegen for return type post do_static_call failed\n"),
+                        -1);
     }
 
   return 0;
@@ -830,6 +844,7 @@ be_compiled_visitor_operation_cs::gen_marshal_and_invoke (be_operation
       // check if there was a user exception, else demarshal the
       // return val (if any) and parameters (if any) that came with
       // the response message
+      os->indent ();
       *os << "TAO_InputCDR &_tao_in = _tao_call.inp_stream ();" << be_nl
           << "if (!(\n" << be_idt << be_idt << be_idt;
     }

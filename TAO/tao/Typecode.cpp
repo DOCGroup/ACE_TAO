@@ -93,6 +93,8 @@ CORBA_TypeCode::CORBA_TypeCode (CORBA::TCKind kind)
     byte_order_ (0),
     kind_ (kind),
     parent_ (0),
+    tc_base_ (0),
+    root_tc_base_ (0),
     refcount_ (1),
     orb_owns_ (1),
     private_state_ (new TC_Private_State (kind)),
@@ -212,6 +214,15 @@ CORBA_TypeCode::CORBA_TypeCode (CORBA::TCKind kind,
       // to remain dangling. Hence we save a handle to the original
       // allocated buffer.
 
+      // *NOTE* that the buffer parameter is simply our encapsulation. It does
+      // not contain our TypeCode::kind () and the length. These are passed as
+      // separate parameters. However, in case of indirected typecodes, the
+      // offset value for the indirection will effectively point to the tk_kind
+      // field in our CDR representation. Hence, we introduce a new field
+      // called tc_base_ which represents the start of our CDR
+      // representation. The buffer_ data member will point to our
+      // encapsulation. 
+
       // @@ The typecode buffer contain the encapsulation byte order
       // in the first byte...
       const CORBA::Octet *ptr =
@@ -219,14 +230,27 @@ CORBA_TypeCode::CORBA_TypeCode (CORBA::TCKind kind,
                               buffer);
       this->byte_order_ = *ptr;
 
+      // allocate a buffer which will accomodate our entire encapsulation plus
+      // 4 bytes for our tk_kind value and 4 bytes for our encapsulation
+      // length. The extra MAX_ALIGNMENT bytes are necessary to ensure that we
+      // will get a properly aligned buffer.
+
       ACE_NEW (this->non_aligned_buffer_,
-               char [this->length_ + ACE_CDR::MAX_ALIGNMENT]);
+               char [this->length_ + 4 + 4 + ACE_CDR::MAX_ALIGNMENT]);
 
       char* start = ptr_align_binary (this->non_aligned_buffer_,
                                       ACE_CDR::MAX_ALIGNMENT);
 
-      (void) ACE_OS::memcpy (start, buffer, this->length_);
-      this->buffer_ = start;
+      (void) ACE_OS::memcpy (start, &this->kind_, 4);
+      (void) ACE_OS::memcpy (start + 4, &this->length_, 4);
+      (void) ACE_OS::memcpy (start + 8, buffer, this->length_);
+      // we are the topmost level typecode and hence our typecode base is
+      // the start whereas the buffer_ which represents the encapsulation is 8
+      // bytes ahead of the typecode base
+      this->tc_base_ = start;
+      // since we do not have any parents, we are the root
+      this->root_tc_base_ = start;
+      this->buffer_ = start + 4 + 4;
       this->private_state_->tc_size_known_ = 1;
       this->private_state_->tc_size_ = size;
     }
@@ -240,6 +264,10 @@ CORBA_TypeCode::CORBA_TypeCode (CORBA::TCKind kind,
       this->byte_order_ = *ptr;
 
       this->buffer_ = buffer;
+      // our typecode base is 8 bytes prior to our encapsulation and our root
+      // base is the same as that of our parent's
+      this->tc_base_ = this->buffer_ - 8;
+      this->root_tc_base_ = parent->root_tc_base_;
     }
 }
 

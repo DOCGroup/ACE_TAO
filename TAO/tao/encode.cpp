@@ -565,16 +565,43 @@ TAO_Marshal_Union::encode (CORBA::TypeCode_ptr tc,
         {
           member_val = base_union->_access (0);
           // marshal according to the matched typecode
-          return stream->encode (member_tc, member_val,
-                                 data2, ACE_TRY_ENV);
+
+          if (member_tc->kind () == CORBA::tk_objref)
+            {
+              // we know that the object pointer is stored in a
+              // TAO_Object_Field_T parametrized type
+              TAO_Object_Field_T<CORBA_Object>* field =
+                ACE_reinterpret_cast (TAO_Object_Field_T<CORBA_Object> *,
+                                      member_val);
+              CORBA::Object_ptr ptr = field->_upcast ();
+              return stream->encode (member_tc, &ptr, data2, ACE_TRY_ENV);
+            }
+          else
+            {
+              return stream->encode (member_tc, member_val,
+                                     data2, ACE_TRY_ENV);
+            }
         }
     }
   // we are here only if there was no match
   if (default_tc)
     {
       member_val = base_union->_access (0);
-      return stream->encode (default_tc, member_val, data2,
-                             ACE_TRY_ENV);
+      if (default_tc->kind () == CORBA::tk_objref)
+        {
+          // we know that the object pointer is stored in a
+          // TAO_Object_Field_T parametrized type
+          TAO_Object_Field_T<CORBA_Object>* field =
+            ACE_reinterpret_cast (TAO_Object_Field_T<CORBA_Object> *,
+                                  member_val);
+          CORBA::Object_ptr ptr = field->_upcast ();
+          return stream->encode (default_tc, &ptr, data2, ACE_TRY_ENV);
+        }
+      else
+        {
+          return stream->encode (default_tc, member_val,
+                                 data2, ACE_TRY_ENV);
+        }
     }
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,

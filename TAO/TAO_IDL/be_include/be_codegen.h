@@ -366,10 +366,22 @@ public:
   enum CG_SUB_STATE
   {
     // sub states
+
+    // these are for the CDR operators
     TAO_CDR_INPUT,
     TAO_CDR_OUTPUT,
     TAO_CDR_SCOPE,
 
+    // these are for typecode generation
+    TAO_TC_DEFN_TYPECODE, // top level typecode
+    TAO_TC_DEFN_TYPECODE_NESTED, // nested tc
+    TAO_TC_DEFN_ENCAPSULATION, // encapsulation
+    TAO_TC_DEFN_SCOPE, // scope
+    TAO_TC_DEFN_TC_SIZE, // tc size computation
+    TAO_TC_DEFN_ENCAP_LEN, // encap size computation
+    TAO_TC_DEFN_SCOPE_LEN, // scope size computation
+
+    // used to denote either error or don't care
     TAO_SUB_STATE_UNKNOWN
   };
 

@@ -94,18 +94,6 @@ public:
   const char *local_coll_name (void) const;
   // retrieve the fully qualified collocated class name
 
-  virtual int gen_typecode (void);
-  // generate the typecode
-
-  virtual int gen_encapsulation (void);
-  // encapsulation for parameters
-
-  virtual long tc_size (void);
-  // return typecode size
-
-  virtual long tc_encap_len (void);
-  // return length of encapsulation
-
   virtual int traverse_inheritance_graph (tao_code_emitter gen,
                                           TAO_OutStream *os);
   // template method using breadth first traversal of inheritance graph

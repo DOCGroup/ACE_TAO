@@ -213,90 +213,6 @@ be_sequence::managed_type (void)
   return this->mt_;
 }
 
-// generate typecode.
-// Typecode for sequences comprises the enumerated value followed by the
-// encapsulation of the parameters
-
-int
-be_sequence::gen_typecode (void)
-{
-  TAO_OutStream *cs; // output stream
-  TAO_NL  nl;        // end line
-  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
-
-  cs = cg->client_stubs ();
-  cs->indent (); // start from whatever indentation level we were at
-
-  *cs << "CORBA::tk_sequence, // typecode kind" << nl;
-  *cs << this->tc_encap_len () << ", // encapsulation length\n";
-  // now emit the encapsulation
-  return this->gen_encapsulation ();
-}
-
-// generate encapsulation
-// An encapsulation for ourselves will be necessary when we are part of some
-// other IDL type and a typecode for that other type is being generated. This
-// will comprise our typecode kind. IDL types with parameters will additionally
-// have the encapsulation length and the entire typecode description
-
-int
-be_sequence::gen_encapsulation (void)
-{
-  TAO_OutStream *os; // output stream
-  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
-  be_type *bt; // base type
-
-  os = cg->client_stubs ();
-  os->incr_indent ();
-
-  *os << "TAO_ENCAP_BYTE_ORDER, // byte order\n";
-
-  // emit typecode of element type
-  bt = be_type::narrow_from_decl (this->base_type ());
-  if (!bt || (bt->gen_typecode () == -1))
-    {
-      ACE_ERROR ((LM_ERROR, "be_sequence::gen_typecode - bad base type\n"));
-      return -1;
-    }
-
-  //  emit the length
-  os->decr_indent ();
-  *os << this->max_size () << ",\n";
-  return 0;
-}
-
-// compute typecode size
-long
-be_sequence::tc_size (void)
-{
-  // 4 bytes for enumeration, 4 bytes for storing encap length val, followed by the
-  // actual encapsulation length
-  return 4 + 4 + this->tc_encap_len ();
-}
-
-long
-be_sequence::tc_encap_len (void)
-{
-  if (this->encap_len_ == -1) // not computed yet
-    {
-      be_type *bt; // base type
-
-      this->encap_len_ = 4;  // holds the byte order flag
-      // add the encapsulation length of our base type
-      bt = be_type::narrow_from_decl (this->base_type ());
-      if (!bt)
-        {
-          ACE_ERROR ((LM_ERROR,
-                      "be_sequence::tc_encap_len - bad base type\n"));
-          return 0;
-        }
-      this->encap_len_ += bt->tc_size ();
-      this->encap_len_ += 4; // to hold the max size
-
-    }
-  return this->encap_len_;
-}
-
 /*
  * Add this be_sequence to the locally defined types in this scope
  */
@@ -445,6 +361,37 @@ be_sequence::object_manager_name ()
   return namebuf; 
 }
 
+
+idl_bool
+be_sequence::in_recursion (be_type *node)
+{
+  if (!node)
+    {
+      // there has to be a parameter
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ASYS_TEXT ("(%N:%l) be_sequence::")
+                         ASYS_TEXT ("in_recursion - ")
+                         ASYS_TEXT ("bad parameter node\n")),
+                        0);
+    }
+
+  be_type *type = be_type::narrow_from_decl (this->base_type ());
+  if (!type)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ASYS_TEXT ("(%N:%l) be_sequence::")
+                         ASYS_TEXT ("in_recursion - ")
+                         ASYS_TEXT ("bad base type\n")),
+                        0);
+    }
+  
+  if (!ACE_OS::strcmp (node->fullname (), type->fullname ()))
+    // they match
+    return 1;
+  else
+    // not in recursion
+    return 0;
+}
 
 // Narrowing
 IMPL_NARROW_METHODS3 (be_sequence, AST_Sequence, be_scope, be_type)

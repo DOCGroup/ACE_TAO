@@ -97,11 +97,16 @@ A complete list of all modifications to TAO is available in the <a href="http://
 <a NAME="idl"></a>IDL Compiler</h3>
 Point of contact: <a href="mailto:gokhale@research.bell-labs.com">Aniruddha
 Gokhale</a>
-<p>Current status: (As of Jan 22, 1999.)
+<p>Current status: (As of May 15, 1999.)
 <ul>
 <li>
 Generated code closely follows the C++ Mapping specified in the latest
 C++ mapping for CORBA 2.3 (Document ptc/98-09-03).</li>
+
+<li>
+We are now able to handle recursive types. We are also able to
+generate optimized typecodes.
+</li>
 
 <li>
 Struct members of type strings and arrays of strings now use the managed

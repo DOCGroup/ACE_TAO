@@ -30,3 +30,12 @@
 
 ACE_RCSID(be, be_visitor_typecode, "$Id$")
 
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Node<be_visitor_typecode_defn::QNode*>;
+template class ACE_Unbounded_Queue<be_visitor_typecode_defn::QNode*>;
+template class ACE_Unbounded_Queue_Iterator<be_visitor_typecode_defn::QNode*>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Node<be_visitor_typecode_defn::QNode*>
+#pragma instantiate ACE_Unbounded_Queue<be_visitor_typecode_defn::QNode*>
+#pragma instantiate ACE_Unbounded_Queue_Iterator<be_visitor_typecode_defn::QNode*>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -373,6 +373,13 @@ be_visitor_sequence_cdr_op_cs::visit_predefined_type (be_predefined_type *node)
         case TAO_CodeGen::TAO_CDR_OUTPUT:
           *os << " ((const char *)_tao_sequence.get_buffer (), ";
           break;
+        default:
+          // error
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_sequence_cdr_op_cs"
+                             "::visit_predefined_type - "
+                             "bad codegen substate\n"),
+                            -1);
         }
       break;
     default:
@@ -566,6 +573,8 @@ be_visitor_sequence_cdr_op_cs::visit_node (be_type *bt)
                 *os << ".in ()";
               }
           }
+        default:
+          break;
         }
       *os << ");";
       break;

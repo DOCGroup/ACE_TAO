@@ -154,6 +154,21 @@ public:
   TAO_OutStream &operator<< (const char *str);
   // output the char string and return a reference to ourselves
 
+  TAO_OutStream &operator<< (const ACE_CDR::UShort num);
+  // output the integer and return a reference to ourselves
+
+  TAO_OutStream &operator<< (const ACE_CDR::Short num);
+  // output the integer and return a reference to ourselves
+
+  TAO_OutStream &operator<< (const ACE_CDR::ULong num);
+  // output the integer and return a reference to ourselves
+
+  TAO_OutStream &operator<< (const ACE_CDR::Long num);
+  // output the integer and return a reference to ourselves
+
+  TAO_OutStream &operator<< (const unsigned long num);
+  // output the integer and return a reference to ourselves
+
   TAO_OutStream &operator<< (const long num);
   // output the integer and return a reference to ourselves
 
