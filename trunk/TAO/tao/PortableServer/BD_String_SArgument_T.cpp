@@ -7,7 +7,7 @@
 #include "tao/Dynamic_ParameterC.h"
 
 #if !defined (__ACE_INLINE__)
-#include "tao/BD_String_SArgument_T.inl"
+#include "tao/PortableServer/BD_String_SArgument_T.inl"
 #endif /* __ACE_INLINE__ */
 
 

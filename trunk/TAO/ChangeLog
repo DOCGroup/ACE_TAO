@@ -1,3 +1,17 @@
+Tue Feb 22 21:58:24 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/PortableServer/BD_String_SArgument_T.cpp:
+
+	  Corrected inline source file name in #include directive.
+
+	* tao/PortableServer/Var_Array_SArgument_T.cpp
+	  (Out_Var_Array_SArgument_T::interceptor_param):
+
+	  Initialize the temporary "_forany" instance being inserted into
+	  the Any with underlying pointer of the "_var" attribute
+	  representing "out" variable array argument.  Addresses build
+	  errors and warnings in a number of builds.
+
 Tue Feb 22 20:59:18 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/PortableServer/Upcall_Wrapper.cpp:
