@@ -2412,7 +2412,7 @@ ACE::timestamp (ACE_TCHAR date_and_time[],
 #if defined (WIN32)
    // Emulate Unix.  Win32 does NOT support all the UNIX versions
    // below, so DO we need this ifdef.
-  static const char *day_of_week_name[] = {
+  static const ACE_TCHAR *day_of_week_name[] = {
     ACE_LIB_TEXT ("Sun"),
     ACE_LIB_TEXT ("Mon"),
     ACE_LIB_TEXT ("Tue"),
@@ -2422,7 +2422,7 @@ ACE::timestamp (ACE_TCHAR date_and_time[],
     ACE_LIB_TEXT ("Sat")
   };
 
-  static const char *month_name[] = {
+  static const ACE_TCHAR *month_name[] = {
     ACE_LIB_TEXT ("Jan"),
     ACE_LIB_TEXT ("Feb"),
     ACE_LIB_TEXT ("Mar"),
