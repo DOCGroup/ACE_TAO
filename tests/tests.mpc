@@ -1394,6 +1394,7 @@ project(Thread Pool Reactor Test) : aceexe {
 
   Source_Files {
     Thread_Pool_Reactor_Test.cpp
+    Main.cpp
   }
   Header_Files {
   }
