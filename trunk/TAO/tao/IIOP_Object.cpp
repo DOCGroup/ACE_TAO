@@ -387,6 +387,7 @@ IIOP_Object::IIOP_Object (char *repository_id,
                           const char *objkey)
   : STUB_Object (repository_id),
     profile (addr, objkey),
+    fwd_profile_ (0),
     refcount_ (1)
 {
 }

@@ -177,7 +177,7 @@ TAO_Server_Connection_Handler::svc (void)
 // non-zero if for a two-way and <output> to any necessary response
 // (including errors).  In case of errors, -1 is returned and
 // additional information carried in <env>.
-// The request ID is needed by handle_input, so a it is passed back
+// The request ID is needed by handle_input. It is passed back
 // as reference.
 
 int

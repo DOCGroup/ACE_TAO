@@ -1,3 +1,12 @@
+Wed Jun 24 21:41:21 1998  Michael Kircher  <mk1@cs.wustl.edu>
+
+	* tao/Connect.cpp: Added a lock to the access of the 
+	  forwarding profile. Some overhead might be due to that,
+	  but we don't want to sacrifice stability.
+
+	* tao/IIOP_Object.{h,icpp}: Added thread safe access functions 
+          for the forwarding profile.
+
 Wed Jun 24 18:13:21 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/tests/EC_Multiple/EC_Multiple.cpp: 
