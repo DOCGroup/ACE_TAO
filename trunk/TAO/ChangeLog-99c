@@ -1,3 +1,8 @@
+Sat Apr 24 08:51:11 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Event/EC_Factory.cpp:
+	  IRIX required an extra #include
+
 Sat Apr 24 07:21:24 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * performance-tests/Cubit/TAO/MT_Cubit/Global.cpp (get_high_priority):
@@ -258,7 +263,6 @@ Wed Apr 21 14:45:28 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
           Added compile-time support for the new Event Channel, just for
           experimentation purposes.
 
->>>>>>> 1.874
 Wed Apr 21 11:06:57 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * performance-tests/Cubit/TAO/MT_Cubit/Globals.{h,cpp},
