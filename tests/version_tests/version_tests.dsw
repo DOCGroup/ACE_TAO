@@ -63,6 +63,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "Dynamic_Priority_Test"=.\Dynamic_Priority_Test.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Enum_Interfaces_Test"=.\Enum_Interfaces_Test.dsp - Package Owner=<4>
 
 Package=<5>
@@ -195,7 +207,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "MsgQueue_Notifications_Test"=.\MsgQueue_Notifications_Test.dsp - Package Owner=<4>
+Project: "Message_Queue_Test"=.\Message_Queue_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -207,7 +219,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Message_Queue_Test"=.\Message_Queue_Test.dsp - Package Owner=<4>
+Project: "MsgQueue_Notifications_Test"=.\MsgQueue_Notifications_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -639,7 +651,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Upgradable_RW_Test"=.\Upgradable_RW_Test.dsp - Package Owner=<4>
+Project: "UPIPE_SAP_Test"=.\UPIPE_SAP_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -651,8 +663,7 @@ Package=<4>
 
 ###############################################################################
 
-
-Project: "UPIPE_SAP_Test"=.\UPIPE_SAP_Test.dsp - Package Owner=<4>
+Project: "Upgradable_RW_Test"=.\Upgradable_RW_Test.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
