@@ -25,8 +25,8 @@ typedef Dynamic_Bitset bit_vector;
 /**
  * @class Update_Manager
  *
- * @brief Manages the set_update() requests to the replicas for in AMI replication strategy. 
- *        Once the primary get the first n replies from the backup replicas and n >= 
+ * @brief Manages the set_update() requests to the replicas for in AMI replication strategy.
+ *        Once the primary get the first n replies from the backup replicas and n >=
  *        transaction_depth, it will signal the event specified in the constructor.
  */
 
@@ -43,7 +43,7 @@ public:
   void handle_exception(int id);
 
 private:
-  ACE_Auto_Event& evt_; 
+  ACE_Auto_Event& evt_;
   bit_vector replied_;
   bit_vector signal_condition_;
   bit_vector suicide_condition_;

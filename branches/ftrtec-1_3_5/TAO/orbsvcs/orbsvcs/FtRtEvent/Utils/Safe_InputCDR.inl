@@ -1,6 +1,6 @@
 // $Id$
 
-inline 
+inline
 Safe_InputCDR::Safe_InputCDR(const char* buf, int size)
 : TAO_InputCDR((ACE_Message_Block*)0)
 {

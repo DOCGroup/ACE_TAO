@@ -46,10 +46,11 @@ void setup_object_group(TAO_FTEC_Event_Channel* es,
       member_list[0].the_location = Fault_Detector::instance()->my_location();
       member_list[0].ior = FTRT::ObjectGroupManager::_duplicate(ec);
 
-      if (membership == TAO_FTEC_Event_Channel::PRIMARY)
+      if (membership == TAO_FTEC_Event_Channel::PRIMARY) {
         es->create_group(member_list, 0
             ACE_ENV_ARG_PARAMETER);
-
+        ACE_CHECK;
+      }
       else { // BACKUP
         FtRtecEventChannelAdmin::EventChannel_var primary =
           resolve<FtRtecEventChannelAdmin::EventChannel>(naming_context,
@@ -59,9 +60,20 @@ void setup_object_group(TAO_FTEC_Event_Channel* es,
 
         TAO_FTRTEC::Log(1, "Got Primary address from Naming Service\n");
 
-        primary->join_group(member_list[0] ACE_ENV_ARG_PARAMETER);
+        bool finished = true;
+        do {
+          ACE_TRY {
+            primary->join_group(member_list[0] ACE_ENV_ARG_PARAMETER);
+            ACE_TRY_CHECK;
+          }
+          ACE_CATCH(CORBA::COMM_FAILURE, ex) {
+            if (ex.minor() == 6) finished = false;
+            else ACE_RE_THROW;
+          }
+          ACE_ENDTRY;
+          ACE_CHECK;
+        } while(! finished);
       }
-      ACE_CHECK;
     }
 }
 

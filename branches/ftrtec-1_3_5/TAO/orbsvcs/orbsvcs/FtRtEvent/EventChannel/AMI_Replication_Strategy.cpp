@@ -28,7 +28,7 @@ AMI_Replication_Strategy::replicate_request(
   ACE_UNUSED_ARG(oid);
 }
 
-void 
+void
 AMI_Replication_Strategy::add_member(const FTRT::ManagerInfo & info,
                                      CORBA::ULong object_group_ref_version
                                      ACE_ENV_ARG_DECL_NOT_USED)

@@ -14,8 +14,9 @@ ACE_RCSID (EventChannel,
 
 
 GroupInfoPublisherBase::GroupInfoPublisherBase()
-: primary_(false)
+: info_(new Info)
 {
+  info_->primary = false;
 }
 
 
@@ -34,19 +35,19 @@ void GroupInfoPublisherBase::set_naming_context(CosNaming::NamingContext_var nam
 bool
 GroupInfoPublisherBase::is_primary() const
 {
-  return primary_;
+  return info_->primary;
 }
 
 CORBA::Object_var
 GroupInfoPublisherBase::group_reference() const
 {
-  return iogr_;
+  return info_->iogr;
 }
 
 FtRtecEventChannelAdmin::EventChannel_var
 GroupInfoPublisherBase::successor() const
 {
-  return successor_;
+  return info_->successor;
 }
 
 
@@ -54,16 +55,17 @@ GroupInfoPublisherBase::successor() const
 const GroupInfoPublisherBase::BackupList&
 GroupInfoPublisherBase::backups() const
 {
-  return backups_;
+  return info_->backups;
 }
 
-void
-GroupInfoPublisherBase::update(const FTRT::ManagerInfoList & info_list,
-                           int my_position
-                           ACE_ENV_ARG_DECL)
+GroupInfoPublisherBase::Info_ptr
+GroupInfoPublisherBase::setup_info(const FTRT::ManagerInfoList & info_list,
+                                   int my_position
+                                   ACE_ENV_ARG_DECL)
 {
-  bool become_primary = (my_position == 0 && !primary_);
-  primary_ = (my_position == 0);
+  Info_ptr result(new Info);
+
+  result->primary = (my_position == 0);
 
   /// create the object group
   size_t len = info_list.length();
@@ -80,52 +82,70 @@ GroupInfoPublisherBase::update(const FTRT::ManagerInfoList & info_list,
     IOGR_Maker::instance()->make_iogr(iors ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  iogr_ =
+  result->iogr =
     ::FtRtecEventChannelAdmin::EventChannel::_narrow(obj.in()
                                                      ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  if (primary_ && !CORBA::is_nil(naming_context_.in())) {
-    TAO_FTRTEC::Log(1, "Registering to the Name Service\n");
-    naming_context_->rebind(FTRTEC::Identification_Service::instance()->name(),
-                            iogr_.in() ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
-  }
-
   /// check if sucessor changed
   size_t successors_length = info_list.length() - my_position -1;
 
-  if (successors_length != backups_.length())  {
+  if (successors_length != info_->backups.length())  {
     // successor changed, update successor
     iors.length(successors_length);
     for (i = 0; i < successors_length; ++i) {
       iors[i] = CORBA::Object::_duplicate(info_list[i+ my_position+1].ior.in());
-
     }
 
     obj =  IOGR_Maker::instance()->merge_iors(iors
                                               ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
 
-    successor_ = FtRtecEventChannelAdmin::EventChannel::_narrow(obj.in()
-                                                                ACE_ENV_ARG_PARAMETER);
-    FtRtecEventChannelAdmin::EventChannel_var t = successor_;
+    result->successor =
+      FtRtecEventChannelAdmin::EventChannel::_narrow(obj.in()
+                                                     ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
+  }
+  else {
+    result->successor = info_->successor;
+  }
 
-    // update backups
-    backups_.length(successors_length);
-    for (i = 0; i < successors_length; ++i)  {
-      backups_[i] =
-        FtRtecEventChannelAdmin::EventChannel::_narrow(
-                      info_list[i+ my_position+1].ior.in()
-                      ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+  // update backups
+  result->backups.length(successors_length);
+  for (i = 0; i < successors_length; ++i)  {
+    result->backups[i] =
+      FtRtecEventChannelAdmin::EventChannel::_narrow(
+      info_list[i+ my_position+1].ior.in()
+      ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
+  }
+
+  return result;
+}
+
+void
+GroupInfoPublisherBase::update_info(GroupInfoPublisherBase::Info_ptr info)
+{
+  if (info->primary) {
+    if (!info_->primary) {
+      // now we become the primary, notify the subscribers
+      for (size_t i = 0; i < subscribers_.size(); ++i)
+        subscribers_[i]->become_primary();
+    }
+
+    if (!CORBA::is_nil(naming_context_.in())) {
+      TAO_FTRTEC::Log(1, "Registering to the Name Service\n");
+      ACE_TRY_NEW_ENV {
+        naming_context_->rebind(FTRTEC::Identification_Service::instance()->name(),
+          info->iogr.in() ACE_ENV_ARG_PARAMETER);
+        ACE_TRY_CHECK;
+      }
+      ACE_CATCHALL {
+        /// there's nothing we can do if the naming service is down
+      }
+      ACE_ENDTRY;
     }
   }
-
-  if (become_primary) {
-    // notify the subscribers
-    for (i = 0; i < subscribers_.size(); ++i)
-      subscribers_[i]->become_primary();
-  }
+  info_ = info;
 }
+

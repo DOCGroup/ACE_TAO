@@ -179,7 +179,7 @@ AMI_Primary_Replication_Strategy::replicate_request(
 
 }
 
-void 
+void
 AMI_Primary_Replication_Strategy::add_member(const FTRT::ManagerInfo & info,
                                              CORBA::ULong object_group_ref_version
                                              ACE_ENV_ARG_DECL)
@@ -198,18 +198,18 @@ AMI_Primary_Replication_Strategy::add_member(const FTRT::ManagerInfo & info,
 
   TAO::Utils::Implicit_Deactivator deactivator(&add_member_handler);
 
-  CORBA::Object_var obj = 
+  CORBA::Object_var obj =
     root_poa_->id_to_reference(oid.in() ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  FTRT::AMI_ObjectGroupManagerHandler_var handler = 
+  FTRT::AMI_ObjectGroupManagerHandler_var handler =
     FTRT::AMI_ObjectGroupManagerHandler::_narrow(obj.in() ACE_ENV_ARG_PARAMETER);
 
   for (unsigned i = 0; i < num_backups; ++i) {
     ACE_TRY {
       backups[i].in()->sendc_add_member(handler.in(),
                                         info,
-                                        object_group_ref_version 
+                                        object_group_ref_version
                                         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
@@ -218,7 +218,7 @@ AMI_Primary_Replication_Strategy::add_member(const FTRT::ManagerInfo & info,
     }
     ACE_ENDTRY;
   }
-  // decrement the number of members so the event can be signaled once 
+  // decrement the number of members so the event can be signaled once
   // all replys have been received.
   add_member_handler.add_member_excep(NULL);
 

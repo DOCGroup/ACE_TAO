@@ -46,14 +46,14 @@ namespace FTRTEC
     initialized = 1;
 
     bool ami = false;
-  
+
     // Parse any service configurator parameters.
     while (argc > 0) {
       if (ACE_OS::strcasecmp (argv[0], ACE_LIB_TEXT("AMI")) ==0 )
         ami = true;
       if (ACE_OS::strcasecmp (argv[0], ACE_LIB_TEXT("-threads")) ==0  && argc > 1) {
         FTRTEC::threads = ACE_OS::atoi(argv[1]);
-        if (FTRTEC::threads ==0 ) 
+        if (FTRTEC::threads ==0 )
           FTRTEC::threads = 1;
         ++argv; --argc;
       }

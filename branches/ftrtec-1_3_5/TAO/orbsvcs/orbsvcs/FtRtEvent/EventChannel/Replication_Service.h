@@ -25,7 +25,7 @@
 
 namespace FTRTEC
 {
-  class TAO_FTRTEC_Export Replication_Service 
+  class TAO_FTRTEC_Export Replication_Service
     : public TAO_FTEC_Become_Primary_Listener
     , public ACE_Service_Object
   {

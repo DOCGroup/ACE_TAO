@@ -32,8 +32,8 @@ public:
   virtual ~Replication_Strategy();
 
   /**
-   * Check if the incoming set_update() request is out of sequence. This is only 
-   * used for basic replication strategy. It throws FTRT::OutOfSequence when the 
+   * Check if the incoming set_update() request is out of sequence. This is only
+   * used for basic replication strategy. It throws FTRT::OutOfSequence when the
    * incoming request is not valid.
    */
   virtual void check_validity(ACE_ENV_SINGLE_ARG_DECL);

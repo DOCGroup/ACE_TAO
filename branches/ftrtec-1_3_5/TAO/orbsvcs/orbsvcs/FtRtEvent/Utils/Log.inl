@@ -22,7 +22,7 @@ namespace TAO_FTRTEC {
   {
     log_level_ = log_level;
   }
-  
+
   ACE_INLINE
   void Log::hexdump(unsigned int level, const char* buf, size_t len, const char* msg)
   {

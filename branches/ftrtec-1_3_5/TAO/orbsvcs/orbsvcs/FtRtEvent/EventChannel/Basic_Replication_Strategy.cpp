@@ -10,7 +10,7 @@ ACE_RCSID (EventChannel,
            Basic_Replication_Strategy,
            "$Id$")
 
-/// The mutex has to be recursive; otherwise, if the second replicate_request() is 
+/// The mutex has to be recursive; otherwise, if the second replicate_request() is
 /// called while the first replicate_request() is waiting for reply, we will get
 /// a deadlock.
 Basic_Replication_Strategy::Basic_Replication_Strategy(bool mt)
@@ -81,14 +81,25 @@ Basic_Replication_Strategy::replicate_request(
     Request_Context_Repository().set_transaction_depth(transaction_depth-1 ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
 
-    TAO_FTRTEC::Log::hexdump(4, (const char*)state.get_buffer(), state.length(), "  sending state ");
     if (transaction_depth > 1) {
-      successor->set_update(state ACE_ENV_ARG_PARAMETER);
+      bool finished = true;
+      do {
+        ACE_TRY_EX(SET_UPDATE) {
+          successor->set_update(state ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK_EX(SET_UPDATE);
+        }
+        ACE_CATCH(CORBA::COMM_FAILURE, ex) {
+          if (ex.minor() == 6)   finished = false;
+          else  ACE_RE_THROW;
+        }
+        ACE_ENDTRY;
+        ACE_CHECK;
+      } while(!finished);
     }
     else {
-      ACE_TRY {
+      ACE_TRY_EX(ONEWAY_SET_UPDATE) {
         successor->oneway_set_update(state ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+        ACE_TRY_CHECK_EX(ONEWAY_SET_UPDATE);
       }
       ACE_CATCHANY {
       }
@@ -101,13 +112,25 @@ Basic_Replication_Strategy::replicate_request(
   }
 }
 
-void 
+void
 Basic_Replication_Strategy::add_member(const FTRT::ManagerInfo & info,
                                        CORBA::ULong object_group_ref_version
                                        ACE_ENV_ARG_DECL_NOT_USED)
 {
   FtRtecEventChannelAdmin::EventChannel_var successor = GroupInfoPublisher::instance()->successor();
-  successor->add_member(info, object_group_ref_version ACE_ENV_ARG_PARAMETER);
+  bool finished = true;
+  do {
+    ACE_TRY {
+      successor->add_member(info, object_group_ref_version ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+    }
+    ACE_CATCH(CORBA::COMM_FAILURE, ex) {
+      if (ex.minor() == 6) finished = false;
+      else ACE_RE_THROW;
+    }
+    ACE_ENDTRY;
+    ACE_CHECK;
+  } while (!finished);
 }
 
 int  Basic_Replication_Strategy::acquire_read (void)

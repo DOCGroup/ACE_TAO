@@ -153,7 +153,7 @@ namespace {
     TAO_FTEC_ProxyPushSupplier* proxy = ec->find_proxy_push_supplier(op.object_id);
 
 
-    if (proxy == NULL) {// proxy not found 
+    if (proxy == NULL) {// proxy not found
       TAO_FTRTEC::Log(3, "Throwing FTRT::InvalidUpdate\n");
       ACE_THROW(FTRT::InvalidUpdate());
     }
@@ -450,7 +450,7 @@ void TAO_FTEC_Event_Channel_Impl::suspend_push_supplier (
 
   TAO_FTEC_ProxyPushSupplier* proxy = this->find_proxy_push_supplier(oid);
 
-  if (proxy == NULL) { // proxy not found 
+  if (proxy == NULL) { // proxy not found
     TAO_FTRTEC::Log(3, "Throwing FtRtecEventComm::InvalidObjectID\n");
     ACE_THROW(FtRtecEventComm::InvalidObjectID());
   }
@@ -472,7 +472,7 @@ void TAO_FTEC_Event_Channel_Impl::resume_push_supplier (
 
   TAO_FTEC_ProxyPushSupplier* proxy = this->find_proxy_push_supplier(oid);
 
-  if (proxy == NULL) { // proxy not found 
+  if (proxy == NULL) { // proxy not found
     TAO_FTRTEC::Log(3, "Throwing FtRtecEventComm::InvalidObjectID\n");
     ACE_THROW(FtRtecEventComm::InvalidObjectID());
   }
@@ -491,7 +491,7 @@ void TAO_FTEC_Event_Channel_Impl::push (
   FTRTEC_TRACE("TAO_FTEC_Event_Channel_Impl::push");
   TAO_FTEC_ProxyPushConsumer* proxy = this->find_proxy_push_consumer(oid);
 
-  if (proxy == NULL) { // proxy not found 
+  if (proxy == NULL) { // proxy not found
     TAO_FTRTEC::Log(3, "Throwing FtRtecEventComm::InvalidObjectID\n");
     ACE_THROW(FtRtecEventComm::InvalidObjectID());
   }
