@@ -21,6 +21,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Handle_Set.h"
+#include "ace/os_include/sys/os_types.h"
 
 /**
  * @class ACE_Process_Options

@@ -1,3 +1,21 @@
+Tue Jun 24 01:25:38 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/OS.h:
+          Removed a set of defines, e.g.,  LPSECURITY_ATTRIBUTES, and
+          ACE_OVERLAPPED struct in the ACE_PSOS that were missed before.
+
+        * ace/OS.h:
+        * ace/os_include/os_stdint.h:
+        * ace/os_include/sys/os_types.h:
+        * ace/Process.h:
+          Moved typedefs for pid_t and ACE_exitcode and definition for
+          ACE_INVALID_PID to os_types.h and included it in Process.h.
+
+        * ace/os_include/sys/os_uio.h:
+        * ace/os_include/os_limits.h:
+          Moved ACE_IOV_MAX and IOV_MAX defines from os_uio.h to
+          os_limits.h and included os_limits.h in os_uio,h.
+
 Mon Jun 23 12:46:05 2003  Rich Seibel <seibel_r@ociweb.com>
 
         * bin/tao_other_tests.lst:
@@ -55,10 +73,10 @@ Sun Jun 22 04:32:15 UTC 2003  Don Hinton  <dhinton@dresystems.com>
           Moved ssize_t typedef here from Basic_Types.h.
 
         * ace/config-win32-common.h:
-                  Add ACE_LACKS_PTHREAD_H.
+          Add ACE_LACKS_PTHREAD_H.
 
-        * /ace/Malloc_Allocator.i:
-                  Fixed typo.
+        * ace/Malloc_Allocator.i:
+          Fixed typo.
 
 Sun Jun 22 03:27:10 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 

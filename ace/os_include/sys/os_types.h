@@ -108,10 +108,6 @@ extern "C"
 #  endif /* ACE_WIN32 */
 #endif /* ACE_LACKS_KEY_T */
 
-#if defined (ACE_WIN32) && !defined(__MINGW32__)
-   typedef long pid_t;
-#endif /* ACE_WIN32 && !__MINGW32__ */
-
 #if !defined (ACE_HAS_SSIZE_T)
 #  if defined (ACE_WIN64)
   typedef SSIZE_T ssize_t;
@@ -119,6 +115,27 @@ extern "C"
   typedef int ssize_t;
 #  endif /* ACE_WIN64 */
 #endif /* ACE_HAS_SSIZE_T */
+
+#if defined (ACE_WIN32)
+   typedef DWORD ACE_exitcode;
+#else
+   typedef int ACE_exitcode;
+#endif /* ACE_WIN32 */
+
+#if defined (ACE_WIN32) && !defined(__MINGW32__)
+   typedef long pid_t;
+#elif defined (ACE_PSOS) && (!defined (ACE_PSOSIM) && defined (ACE_PSOS_CANT_USE_SYS_TYPES))
+#  if defined (ACE_PSOS_DIAB_PPC)
+#    define ACE_INVALID_PID ((pid_t) ~0)
+#  else /* !defined (ACE_PSOS_DIAB_PPC) */
+     typedef long pid_t;
+#  endif /* defined (ACE_PSOS_DIAB_PPC) */
+   typedef char* caddr_t;
+#endif /* ACE_PSOS_CANT_USE_SYS_TYPES */
+
+# if !defined (ACE_INVALID_PID)
+# define ACE_INVALID_PID ((pid_t) -1)
+# endif /* ACE_INVALID_PID */
 
 #ifdef __cplusplus
 }
