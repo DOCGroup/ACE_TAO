@@ -1,3 +1,10 @@
+Sat May 19 08:41:05 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* docs/tutorials/Quoter/Event_Service/Makefile:
+	* docs/tutorials/Quoter/Event_Service/Makefile: Updated
+	  dependencies.  This should take care of the NoInterceptors
+	  build. 
+
 Fri May 18 22:16:38 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* examples/PluggableUDP/DIOP/DIOP_Acceptor.cpp: Fixed a warning in
