@@ -2,8 +2,8 @@
 // $Id$
 //
 
-#include "orbsvcs/Event_Utilities.h"
 #include "Stock_i.h"
+#include <orbsvcs/Event_Utilities.h>
 
 Quoter_Stock_i::Quoter_Stock_i (const char *symbol,
                                 const char *full_name,
@@ -48,7 +48,7 @@ Quoter_Stock_i::set_price (CORBA::Double new_price)
 
   // Initialize the header
   const char *symbol = this->data_.symbol;
-  e.header.type = 
+  e.header.type =
     ((int(symbol[0]) << 24)
      | (int(symbol[1]) << 16)
      | (int(symbol[2]) << 8)
@@ -80,15 +80,15 @@ Quoter_Stock_i::connect (RtecEventChannelAdmin::SupplierAdmin_ptr supplier_admin
     this->supplier_personality_._this ();
 
    const char *symbol = this->data_.symbol;
-   CORBA::ULong type =   
+   CORBA::ULong type =
       ((int(symbol[0]) << 24)
        | (int(symbol[1]) << 16)
        | (int(symbol[2]) << 8)
        | int(symbol[3]));
-   CORBA::ULong source = 1; 
+   CORBA::ULong source = 1;
    ACE_SupplierQOS_Factory publications;
    publications.insert (source, type, 0, 1);
-   
+
    this->consumer_proxy_->connect_push_supplier (supplier.in (),
                                                  publications.get_SupplierQOS ());
 }

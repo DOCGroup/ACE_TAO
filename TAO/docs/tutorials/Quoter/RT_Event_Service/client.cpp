@@ -2,9 +2,9 @@
 // $Id$
 //
 
-#include "orbsvcs/CosNamingC.h"
-#include "orbsvcs/Event_Utilities.h"
 #include "Stock_Consumer.h"
+#include <orbsvcs/CosNamingC.h>
+#include <orbsvcs/Event_Utilities.h>
 #include <iostream>
 
 int main (int argc, char* argv[])
@@ -45,7 +45,7 @@ int main (int argc, char* argv[])
       if (ACE_OS::strlen (argv[i]) < 4)
         continue;
 
-      CORBA::ULong type = 
+      CORBA::ULong type =
         ((int(argv[i][0]) << 24)
          | (int(argv[i][1]) << 16)
          | (int(argv[i][2]) << 8)
