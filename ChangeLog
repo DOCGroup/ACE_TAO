@@ -1,3 +1,8 @@
+Fri Dec  3 11:50:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Timeprobe_T.cpp:
+          Fixed casing in include
+
 Thu Dec  2 13:38:33 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * apps/soreduce/Library.h:
