@@ -29,8 +29,8 @@ ACE_Control_Block::dump (void) const
   ACE_TRACE ("ACE_Control_Block::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_POINTER_CAST (this->name_head_)->dump ();
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT("freep_ = %x"), ACE_POINTER_CAST (this->freep_)));
+  ((ACE_Name_Node *) this->name_head_)->dump ();
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT("freep_ = %x"), (ACE_Malloc_Header *) this->freep_));
 
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
@@ -49,7 +49,7 @@ ACE_Name_Node::ACE_Name_Node (const char *name,
     next_ (next)
 {
   ACE_TRACE ("ACE_Name_Node::ACE_Name_Node");
-  char *n = ACE_POINTER_CAST (this->name_);
+  char *n = this->name_;
   ACE_OS::strcpy (n, name);
 }
 
@@ -62,7 +62,8 @@ ACE_Name_Node::ACE_Name_Node (const ACE_Name_Node &)
 const char *
 ACE_Name_Node::name (void) const
 {
-  return ACE_POINTER_CAST (this->name_);
+  const char *c = this->name_;
+  return c;
 }
 
 void
@@ -77,9 +78,12 @@ ACE_Name_Node::dump (void) const
   ACE_TRACE ("ACE_Name_Node");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT("pointer = %x"), ACE_POINTER_CAST (this->pointer_)));
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT("\nnext_ = %x"), ACE_POINTER_CAST (this->next_)));
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT("\nname_ = (%x, %s)"), ACE_POINTER_CAST (this->name_), ACE_POINTER_CAST (this->name_)));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT("pointer = %x"), (const char *) this->pointer_));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT("\nnext_ = %x"), (ACE_Name_Node *) this->next_));
+  ACE_DEBUG ((LM_DEBUG,
+              ASYS_TEXT("\nname_ = (%x, %s)"),
+              (const char *) this->name_,
+              (const char *) this->name_));
   ACE_DEBUG ((LM_DEBUG, ASYS_TEXT("\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
