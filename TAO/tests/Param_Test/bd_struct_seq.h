@@ -69,14 +69,14 @@ protected:
 
   void print_sequence (const Param_Test::Bounded_StructSeq &s);
   // print individual sequence
+
 private:
   // called by the 2 public versions of check_validity
-  CORBA::Boolean
-  Test_Bounded_Struct_Sequence::check_validity_engine 
-            (const Param_Test::Bounded_StructSeq &the_in,
-             const Param_Test::Bounded_StructSeq &the_inout,
-             const Param_Test::Bounded_StructSeq &the_out,
-             const Param_Test::Bounded_StructSeq &the_ret);
+  CORBA::Boolean check_validity_engine 
+          (const Param_Test::Bounded_StructSeq &the_in,
+	   const Param_Test::Bounded_StructSeq &the_inout,
+	   const Param_Test::Bounded_StructSeq &the_out,
+	   const Param_Test::Bounded_StructSeq &the_ret);
 
   char *opname_;
   // operation name
