@@ -145,7 +145,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
   *os << "  return 1; // success using local knowledge\n";
   os->decr_indent ();
   *os << "else" << be_nl;
-  *os << "  return this->CORBA_Object::_is_a (value, env); // remote call\n";
+  *os << "  return this->CORBA_Object::_is_a (value, env);\n";
   os->decr_indent ();
   *os << "}\n\n";
 
