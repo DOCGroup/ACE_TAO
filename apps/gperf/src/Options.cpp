@@ -80,7 +80,7 @@ Options::usage (void)
   ACE_ERROR ((LM_ERROR,
               "Usage: %n [-acCdDef[num]gGhH<hashname>i<init>IjJ"
               "k<keys>K<keyname>lL<language>mMnN<function name>o"
-              "Oprs<size>S<switches>tTvZ<class name>].\n"
+              "Oprs<size>S<switches>tTvVZ<class name>].\n"
               "(type %n -h for help)\n"));
 }
 
@@ -369,7 +369,8 @@ Options::operator() (int argc, char *argv[])
                              "\tgroup of fields per line.\n"
                              "-T\tPrevents the transfer of the type declaration to the output file.\n"
                              "\tUse this option if the type is already defined elsewhere.\n"
-                             "-v\tPrints out the current version number\n"
+                             "-v\tPrints out the current version number and exits with a value of 0\n"
+                             "-v\tExits silently with a value of 0.\n"
                              "-Z\tAllow user to specify name of generated C++ class.  Default\n"
                              "\tname is `Perfect_Hash.'\n",
                              DEFAULT_JUMP_VALUE,
@@ -595,8 +596,15 @@ Options::operator() (int argc, char *argv[])
                       "%n: version %s\n%r\n%a",
                       version_string,
                       &Options::usage,
-                      1));
-          // Set the class name.
+                      0));
+          /* NOTREACHED */
+          break;
+        // Exit with value of 0 (this is useful to check if gperf exists)
+        case 'V':
+          ACE_OS::exit (0);
+          /* NOTREACHED */
+          break;
+        // Set the class name.
         case 'Z':               
           {
             class_name = getopt.optarg;
