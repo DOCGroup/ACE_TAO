@@ -1,3 +1,11 @@
+Fri May 26 11:09:45 2000  Ossama Othman  <ossama@uci.edu>
+
+	* utils/IOR-parser/ior-handler.cpp:
+	* utils/IOR-parser/ior-parser.cpp:
+
+	  Include "ace/Log_Msg.h" to pull in the appropriate definition of
+	  the ACE logging macros.
+
 Fri May 26 12:13:23 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/Any.cpp:
