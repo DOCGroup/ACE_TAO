@@ -619,6 +619,4 @@ TAO_Wait_On_Read::wait (CORBA::ULong request_id,
     }
   
   return 0;
-} 
-
- 
+}
