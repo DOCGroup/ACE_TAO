@@ -1,3 +1,11 @@
+Wed May 24 20:18:59 2000  Ossama Othman  <ossama@uci.edu>
+
+	* ace/Select_Reactor_Base.cpp (open):
+
+	  Temporarily backed out change that added ability to set handle
+	  limit to value greater than FD_SETSIZE.  It breaks platforms
+	  that don't support getrlimit().
+
 Wed May 24 18:56:16 2000  Darrell Brunsch <brunsch@uci.edu>:
 
         * ace/OS_Export.h: (added)
