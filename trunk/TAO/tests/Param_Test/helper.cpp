@@ -22,7 +22,7 @@
 const CORBA::ULong TEST_BUFSIZE = 128;
 
 ACE_RCSID (Param_Test,
-           helper, 
+           helper,
            "$Id$")
 
 Generator::Generator (void)
@@ -108,7 +108,7 @@ Generator::gen_fixed_struct (void)
   this->fixed_struct_.s = (CORBA::Short) ACE_OS::rand ();
   this->fixed_struct_.o = ACE_OS::rand () % 128;
   this->fixed_struct_.f = (CORBA::Float) (ACE_OS::rand () * 1.0);
-  this->fixed_struct_.b = (CORBA::Boolean) ACE_OS::rand () % 2;
+  this->fixed_struct_.b = (CORBA::Boolean) (ACE_OS::rand () % 2);
   this->fixed_struct_.d = (ACE_OS::rand () * 1.0);
   return this->fixed_struct_;
 }
@@ -118,7 +118,7 @@ Generator::gen_step (void)
 {
   this->step_.name.id = this->gen_string ();
   this->step_.name.kind = this->gen_string ();
-  this->step_.process = (CORBA::Boolean) ACE_OS::rand () % 2;
+  this->step_.process = (CORBA::Boolean) (ACE_OS::rand () % 2);
   return this->step_;
 }
 
