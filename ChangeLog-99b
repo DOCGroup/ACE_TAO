@@ -1,4 +1,7 @@
-Tue Jan 26 18:23:25 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+Tue Jan 26 20:44:36 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/SOCK_IO.cpp (send,recv): Changed to use sendv/recvv to
+	  handle variable arguments send/recv.
 
 	* ACE-INSTALL.html: Fixed the dead link to CE-status.  Thanks to
 	  Mike Preradovic <michael_preradovic@epicdata.com> for reporting
