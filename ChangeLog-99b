@@ -1,6 +1,6 @@
 Thu Jul  8 23:15:06 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 	
-	  Merging the "ami_phase3" branch on to the main branch. Change
+	* Merging the "ami_phase3" branch on to the main branch. Change
 	  was done to the CDR_Stream{h,i} files  to add the method
 	  <byte_order> to the CDR class. Other than that, no change was
 	  done to ACE.
@@ -130,6 +130,10 @@ Thu Jul 08 12:35:23 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 Thu Jul  8 11:33:50 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+        * Rebuilt the ACE+TAO.tar.gz file.  For some reason, there
+	  was a ^M at the end of each line!  Thanks to Bruce Edge
+ 	  <bedge@sattel.com> for reporting this.
+	
         * ace/Based_Pointer_Repository.cpp (unbind): Rearranged the
           iterator code a bit to see if that'll make DEC C++ happy.
 

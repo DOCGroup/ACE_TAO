@@ -1,13 +1,13 @@
 Thu Jul  8 22:55:59 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 	 
-	  Thanks to Michael Kircher and Carlos, we have put together most
-	  of the TAO_IDL code and  tao code for the AMI call back
-	  implementation. This commit is the result of the merging process
-	  between the "ami_phase3" branch and the current branch. 
-  
-  	  Most of the support for the AMI Callback is added. But all the
+	* Thanks to Michael Kircher and Carlos, we have put together most
+	  of the TAO_IDL code and tao code for the AMI call back
+ 	  implementation. This commit is the result of the merging process
+ 	  between the "ami_phase3" branch and the current branch.
+	
+  	* Most of the support for the AMI Callback is added. But all the
 	  AMI specific code is conditionally compiled using
-	  "TAO_HAS_CORBA_MESSAGING" and "TAO_POLLER". 
+ 	  "TAO_HAS_CORBA_MESSAGING" and "TAO_POLLER".
 
 Thu Jul  8 21:50:02 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
