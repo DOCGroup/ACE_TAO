@@ -30,6 +30,14 @@ Command line options are:
 		persistent storage. The default filename
 		is "ifr_default_backing_store".
 
+ -m		Enables read/write locking of IFR calls.
+		If the IFR is started up with
+		multithreading enabled - for example if
+		a service config file is used that specifies
+		thread-per-connection - this option should be
+		used. Note that if ACE_HAS_THREADS is not
+		defined, this option will be ignored.
+
  -r		Uses win32 registry for the database. Not
 		available with persistence. If -p is on
 		the command line, this option is ignored.

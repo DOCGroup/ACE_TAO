@@ -66,7 +66,20 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Remove the repository entry.
 
+  virtual void destroy_i (
+      CORBA::Environment &ACE_TRY_ENV =
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
   virtual IR::Contained::Description *describe (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  // From Contained_i's pure virtual function.
+
+  virtual IR::Contained::Description *describe_i (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -80,7 +93,20 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
   // From IDLType_i's pure virtual function.
 
+  virtual CORBA::TypeCode_ptr type_i (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  // From IDLType_i's pure virtual function.
+
   virtual IR::InterfaceDefSeq *base_interfaces (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  IR::InterfaceDefSeq *base_interfaces_i (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -93,7 +119,20 @@ public:
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+  void base_interfaces_i (
+      const IR::InterfaceDefSeq &base_interfaces,
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
   virtual CORBA::Boolean is_abstract (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  CORBA::Boolean is_abstract_i (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -106,7 +145,20 @@ public:
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+  void is_abstract_i (
+      CORBA::Boolean is_abstract,
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
   virtual CORBA::Boolean is_local (
+     CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  CORBA::Boolean is_local_i (
      CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -119,7 +171,21 @@ public:
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+  void is_local_i (
+      CORBA::Boolean is_local,
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
   virtual CORBA::Boolean is_a (
+      const char *interface_id,
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  CORBA::Boolean is_a_i (
       const char *interface_id,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
@@ -139,7 +205,34 @@ public:
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+  IR::AttributeDef_ptr create_attribute_i (
+      const char *id,
+      const char *name,
+      const char *version,
+      IR::IDLType_ptr type,
+      IR::AttributeMode mode,
+      const IR::ExceptionDefSeq &get_exceptions,
+      const IR::ExceptionDefSeq &put_exceptions,
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
   virtual IR::OperationDef_ptr create_operation (
+      const char *id,
+      const char *name,
+      const char *version,
+      IR::IDLType_ptr result,
+      IR::OperationMode mode,
+      const IR::ParDescriptionSeq &params,
+      const IR::ExceptionDefSeq &exceptions,
+      const IR::ContextIdSeq &contexts,
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  IR::OperationDef_ptr create_operation_i (
       const char *id,
       const char *name,
       const char *version,

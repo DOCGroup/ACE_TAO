@@ -66,6 +66,13 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
   // Pure virtual.
 
+  virtual void destroy_i (
+      CORBA::Environment &ACE_TRY_ENV =
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
+  // Pure virtual- the unlocked version called by destroy() wrapper.
+
 protected:
   char *int_to_string (CORBA::ULong number) const;
   // Convert an unsigned int to a string of its hex form.

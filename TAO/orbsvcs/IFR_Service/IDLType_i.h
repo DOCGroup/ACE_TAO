@@ -59,6 +59,13 @@ public:
     )
     ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
   // Defined in concrete classes.
+
+  virtual CORBA::TypeCode_ptr type_i (
+      CORBA::Environment &ACE_TRY_ENV =
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
+  // Defined in concrete classes.
 };
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)

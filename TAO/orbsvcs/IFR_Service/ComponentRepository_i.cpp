@@ -22,6 +22,27 @@ TAO_ComponentRepository_i::~TAO_ComponentRepository_i (void)
 
 IR::ComponentDef_ptr 
 TAO_ComponentRepository_i::create_component (
+    const char *id,
+    const char *name,
+    const char *version,
+    IR::ComponentDef_ptr base_component,
+    const IR::InterfaceDefSeq & supports_interfaces,
+    CORBA::Environment &ACE_TRY_ENV
+  )
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  TAO_IFR_WRITE_GUARD_RETURN (IR::ComponentDef::_nil ());
+
+  return this->create_component_i (id,
+                                   name,
+                                   version,
+                                   base_component,
+                                   supports_interfaces,
+                                   ACE_TRY_ENV);
+}
+
+IR::ComponentDef_ptr 
+TAO_ComponentRepository_i::create_component_i (
     const char * /* id */,
     const char * /* name */,
     const char * /* version */,
@@ -37,6 +58,29 @@ TAO_ComponentRepository_i::create_component (
 
 IR::HomeDef_ptr 
 TAO_ComponentRepository_i::create_home (
+    const char *id,
+    const char *name,
+    const char *version,
+    IR::HomeDef_ptr base_component,
+    IR::ComponentDef_ptr managed_component,
+    IR::ValueDef_ptr primary_key,
+    CORBA::Environment &ACE_TRY_ENV
+  )
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  TAO_IFR_WRITE_GUARD_RETURN (IR::HomeDef::_nil ());
+
+  return this->create_home_i (id,
+                              name,
+                              version,
+                              base_component,
+                              managed_component,
+                              primary_key,
+                              ACE_TRY_ENV);
+}
+
+IR::HomeDef_ptr 
+TAO_ComponentRepository_i::create_home_i (
     const char * /* id */,
     const char * /* name */,
     const char * /* version */,

@@ -63,13 +63,33 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Remove the repository entry.
 
-  virtual CORBA::TypeCode_ptr type (
+  virtual void destroy_i (
       CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+  virtual CORBA::TypeCode_ptr type (
+      CORBA::Environment &ACE_TRY_ENV =
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  // From IDLType_i's pure virtual function.
+
+  virtual CORBA::TypeCode_ptr type_i (
+      CORBA::Environment &ACE_TRY_ENV =
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  // From IDLType_i's pure virtual function.
+
   virtual CORBA::ULong bound (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+  CORBA::ULong bound_i (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -82,7 +102,20 @@ public:
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+  void bound_i (
+      CORBA::ULong bound,
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
   virtual CORBA::TypeCode_ptr element_type (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  CORBA::TypeCode_ptr element_type_i (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -94,7 +127,20 @@ public:
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+  IR::IDLType_ptr element_type_def_i (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
   virtual void element_type_def (
+      IR::IDLType_ptr element_type_def,
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  void element_type_def_i (
       IR::IDLType_ptr element_type_def,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()

@@ -64,11 +64,25 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Remove the repository entry.
 
+  virtual void destroy_i (
+      CORBA::Environment &ACE_TRY_ENV =
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
   virtual CORBA::TypeCode_ptr type (
       CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
+  // From IDLType_i's pure virtual function.
+
+  virtual CORBA::TypeCode_ptr type_i (
+      CORBA::Environment &ACE_TRY_ENV =
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  // From IDLType_i's pure virtual function.
 
   virtual CORBA::ULong bound (
       CORBA::Environment &ACE_TRY_ENV = 
@@ -76,7 +90,20 @@ public:
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+  CORBA::ULong bound_i (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
   virtual void bound (
+      CORBA::ULong bound,
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  void bound_i (
       CORBA::ULong bound,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()

@@ -29,17 +29,35 @@ void
 TAO_ModuleDef_i::destroy (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  TAO_IFR_WRITE_GUARD;
+
+  this->destroy_i (ACE_TRY_ENV);
+}
+
+void 
+TAO_ModuleDef_i::destroy_i (CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
   // Destroy our members.
-  TAO_Container_i::destroy (ACE_TRY_ENV);
+  TAO_Container_i::destroy_i (ACE_TRY_ENV);
   ACE_CHECK;
     
   // Destroy ourself.
-  TAO_Contained_i::destroy (ACE_TRY_ENV);
+  TAO_Contained_i::destroy_i (ACE_TRY_ENV);
   ACE_CHECK;
 }
 
 IR::Contained::Description *
 TAO_ModuleDef_i::describe (CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  TAO_IFR_READ_GUARD_RETURN (0);
+
+  return this->describe_i (ACE_TRY_ENV);
+}
+
+IR::Contained::Description *
+TAO_ModuleDef_i::describe_i (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   IR::Contained::Description *desc_ptr = 0;
@@ -55,7 +73,7 @@ TAO_ModuleDef_i::describe (CORBA::Environment &ACE_TRY_ENV)
 
   IR::ModuleDescription md;
 
-  md.name = this->name (ACE_TRY_ENV);
+  md.name = this->name_i (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
   md.id = this->id (ACE_TRY_ENV);
@@ -69,7 +87,7 @@ TAO_ModuleDef_i::describe (CORBA::Environment &ACE_TRY_ENV)
 
   md.defined_in = container_id.c_str ();
 
-  md.version = this->id (ACE_TRY_ENV);
+  md.version = this->id_i (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
   retval->value <<= md;

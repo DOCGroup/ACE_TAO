@@ -32,6 +32,15 @@ CORBA::TypeCode_ptr
 TAO_AliasDef_i::type (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  TAO_IFR_READ_GUARD_RETURN (CORBA::TypeCode::_nil ());
+
+  return this->type_i (ACE_TRY_ENV);
+}
+
+CORBA::TypeCode_ptr 
+TAO_AliasDef_i::type_i (CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
   ACE_TString id;
   this->repo_->config ()->get_string_value (this->section_key_,
                                             "id",
@@ -60,7 +69,7 @@ TAO_AliasDef_i::type (CORBA::Environment &ACE_TRY_ENV)
 
   auto_ptr<TAO_IDLType_i> safety (impl);
 
-  CORBA::TypeCode_var tc = impl->type (ACE_TRY_ENV);
+  CORBA::TypeCode_var tc = impl->type_i (ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
 
   return this->repo_->tc_factory ()->create_alias_tc (id.c_str (),
@@ -71,6 +80,15 @@ TAO_AliasDef_i::type (CORBA::Environment &ACE_TRY_ENV)
 
 IR::IDLType_ptr 
 TAO_AliasDef_i::original_type_def (CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  TAO_IFR_READ_GUARD_RETURN (IR::IDLType::_nil ());
+
+  return this->original_type_def_i (ACE_TRY_ENV);
+}
+
+IR::IDLType_ptr 
+TAO_AliasDef_i::original_type_def_i (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TString original_type;
@@ -105,6 +123,17 @@ TAO_AliasDef_i::original_type_def (CORBA::Environment &ACE_TRY_ENV)
 void 
 TAO_AliasDef_i::original_type_def (IR::IDLType_ptr original_type_def,
                                    CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  TAO_IFR_WRITE_GUARD;
+
+  this->original_type_def_i (original_type_def,
+                             ACE_TRY_ENV);
+}
+
+void 
+TAO_AliasDef_i::original_type_def_i (IR::IDLType_ptr original_type_def,
+                                     CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   PortableServer::ObjectId_var oid =
