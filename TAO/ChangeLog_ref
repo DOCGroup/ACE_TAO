@@ -1,3 +1,11 @@
+Thu Aug 28 12:16:16 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_ami_pre_proc.cpp:
+        * TAO_IDL/be/be_visitor_operation/ami_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/obv_module.cpp:
+
+          Fixed code generation bugs related to AMI.
+
 Thu Aug 28 11:42:46 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_interface.cpp:
