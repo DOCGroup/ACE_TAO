@@ -165,12 +165,11 @@ TAO_GIOP_Client_Message_Factory::handle_input (TAO_Transport *transport,
 
 CORBA::Boolean
 TAO_GIOP_Client_Message_Factory::write_request_header (const IOP::ServiceContextList& /*svc_ctx*/,
-                                                CORBA::ULong request_id,
-                                                CORBA::Octet response_flags,
-                                                TAO_Stub */*stub*/,
-                                                const CORBA::Short address_disposition,
-                                                const char */*opname*/,
-                                                TAO_OutputCDR &msg)
+                                                       CORBA::ULong request_id,
+                                                       CORBA::Octet response_flags,
+                                                       TAO_Target_Specification & /*spec*/,
+                                                       const char */*opname*/,
+                                                       TAO_OutputCDR &msg)
 {
   // Adding only stuff that are common to all versions of GIOP. 
   // @@ Note: If at any stage we feel that this amount of granularity

@@ -120,8 +120,10 @@ TAO_GIOP_DII_Deferred_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
   this->TAO_GIOP_Invocation::start (ACE_TRY_ENV);
   ACE_CHECK;
 
+  TAO_Target_Specification spec;
+  spec.target_specifier (this->profile_->object_key ());
   this->transport_->start_request (this->orb_core_,
-                                   this->stub_,
+                                   spec,
                                    this->out_stream_,
                                    ACE_TRY_ENV);
   ACE_CHECK;

@@ -25,6 +25,7 @@
 // BALA Temporrary inclusion
 #include "tao/Pluggable_Messaging.h"
 #include "tao/GIOP_Utils.h"
+#include "tao/target_identifier.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -89,8 +90,7 @@ public:
   send_request_header (const IOP::ServiceContextList &svc_ctx,  
                        CORBA::ULong request_id,
                        CORBA::Octet response_flags,
-                       TAO_Stub *stub,
-                       const short address_disposition,
+                       TAO_Target_Specification &spec,
                        const char* opname,
                        TAO_OutputCDR &msg);
   
@@ -131,18 +131,18 @@ public:
   // = The TAO_Transport methods, please check the documentation in
   //   "tao/Pluggable.h" for more details.
   virtual void start_request (TAO_ORB_Core *orb_core,
-                              const TAO_Profile *profile,
+                              TAO_Target_Specification &spec,
                               TAO_OutputCDR &output,
                               CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void start_locate (TAO_ORB_Core *orb_core,
-                             TAO_Stub *stub,
-                             const short addressing_disposition,
+                             TAO_Target_Specification &spec,
                              CORBA::ULong request_id,
                              TAO_OutputCDR &output,
                              CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
+  
   virtual int send_request (TAO_Stub *stub,
                             TAO_ORB_Core *orb_core,
                             TAO_OutputCDR &stream,
@@ -158,8 +158,7 @@ public:
   send_request_header (const IOP::ServiceContextList &svc_ctx,  
                        CORBA::ULong request_id,
                        CORBA::Octet response_flags,
-                       TAO_Stub *stub,
-                       const short address_disposition,
+                       TAO_Target_Specification &spec,
                        const char* opname,
                        TAO_OutputCDR &msg);
   

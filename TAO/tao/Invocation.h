@@ -82,19 +82,6 @@ public:
   // they want to. All the synchronous invocations <idle> the
   // Transport, but asynchronous invocations do not do that.
 
-  enum TAO_Target_Address
-  {
-    Key_Addr = 0,
-    Profile_Addr,
-    Reference_Addr
-  };
-  // This enum is basically a equivalent of the addressing mechanism
-  // as defined by the GIOP classes. As things would be bad to get the
-  // GIOP specific details in to this class, we have this enum. Now it
-  // would like all the Messaging layers can hack on this addressing
-  // scheme. This would also prevent magic numbers to float around and
-  // this is the our main aim.
-
   void prepare_header (CORBA::Octet response_flags,
                        CORBA_Environment &ACE_TRY_ENV =
                          TAO_default_environment ())

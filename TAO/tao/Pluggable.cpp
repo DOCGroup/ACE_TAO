@@ -11,6 +11,7 @@
 #include "tao/debug.h"
 
 #include "ace/ACE.h"
+#include "tao/target_identifier.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Pluggable.i"
@@ -217,7 +218,7 @@ TAO_Transport::leader_follower_condition_variable (void)
 
 void
 TAO_Transport::start_request (TAO_ORB_Core *,
-                              TAO_Stub * ,
+                              TAO_Target_Specification & /*spec */,
                               TAO_OutputCDR &,
                               CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
@@ -227,8 +228,7 @@ TAO_Transport::start_request (TAO_ORB_Core *,
 
 void
 TAO_Transport::start_locate (TAO_ORB_Core *,
-                             TAO_Stub * /*stub*/,
-                             const short ,
+                             TAO_Target_Specification & /*spec */,
                              CORBA::ULong,
                              TAO_OutputCDR &,
                              CORBA::Environment &ACE_TRY_ENV)
