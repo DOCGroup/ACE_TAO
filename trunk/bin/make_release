@@ -426,7 +426,7 @@ sub create_kit () {
 
   # These files don't get LF->CRLF conversions done when making the zip.
   $bin_files =
-    "\"\\.dsp|\\.dsw|\\.mak|\\.mdp|\\.ide|\\.exe\|\\.gz\|\\.zip\|\\.gif\"";
+    "\"\\.dsp|\\.dsw|\\.mak|\\.mdp|\\.ide|\\.exe\|\\.ico\|\\.gz\|\\.zip\|\\.gif\"";
 
   if ($kit eq 'ace') {
     system ("$exec_prefix" .
