@@ -23,10 +23,10 @@
 #include "FooC.h"
 
 static char *server_IOR_ = 0;
+
 static int iterations = 6;
 
-
-int
+static int
 read_ior (char *filename)
 {
   // Open the file for reading.
@@ -46,7 +46,6 @@ read_ior (char *filename)
                       -1);
   return 0;
 }
-
 
 static int
 parse_args (int argc, char **argv)
@@ -93,6 +92,8 @@ parse_args (int argc, char **argv)
 int
 main (int argc, char **argv)
 {
+  // @@ Michael, this function is too long.  Can you please break it
+  // up into multiple smaller functions.
   CORBA::Environment env;
   
   // Initialize the ORB
@@ -126,11 +127,13 @@ main (int argc, char **argv)
       return -1;
     }
   
-  CORBA::String_var original_location = orb->object_to_string (foo.in (), env);
+  CORBA::String_var original_location =
+    orb->object_to_string (foo.in (), env);
+
   if (env.exception () == 0)
-    {
-      ACE_DEBUG ((LM_DEBUG, "original location = %s \n", original_location.in ()));
-    }
+    ACE_DEBUG ((LM_DEBUG,
+                "original location = %s \n",
+                original_location.in ()));
   else
     {
       env.print_exception ("ORB::object_to_string");
@@ -141,7 +144,6 @@ main (int argc, char **argv)
   
   for (int i = 1; i <= iterations; i++)
     {
-      
       // About half way through
       if (i % 3 == 0)
         {
@@ -161,12 +163,14 @@ main (int argc, char **argv)
 	  
           // If exception
           if (env.exception () != 0)
-            {
-              ACE_DEBUG ((LM_DEBUG, "Got an exception. :-(\n"));
-            }
+            ACE_DEBUG ((LM_DEBUG,
+                        "Got an exception. :-(\n"));
           else
-            // Print the result of doit () method of the foo reference.
-            ACE_DEBUG ((LM_DEBUG, "doit() returned %d \n", result));
+            // Print the result of doit () method of the foo
+            // reference.
+            ACE_DEBUG ((LM_DEBUG,
+                        "doit() returned %d \n",
+                        result));
         }
     }
   

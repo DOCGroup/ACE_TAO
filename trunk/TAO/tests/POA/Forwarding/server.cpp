@@ -10,7 +10,7 @@
 // = DESCRIPTION
 //
 // = AUTHOR
-//    Irfan Pyarali
+//    Irfan Pyarali and Michael Kircher
 // ===========================================================================================
 
 #include "tao/corba.h"
@@ -18,52 +18,56 @@
 #include "MyFooServant.h"
 
 static char *first_foo_forward_to_IOR_ = 0;
+
 static char *second_foo_forward_to_IOR_ = 0;
-FILE* first_foo_ior_output_file_;
-FILE* second_foo_ior_output_file_;
 
+static FILE *first_foo_ior_output_file_;
 
-int
-read_ior (char *filename, const unsigned int foo_number)
+static FILE *second_foo_ior_output_file_;
+
+static int
+read_ior (char *filename,
+          const u_int foo_number)
 {
   // Open the file for reading.
   ACE_HANDLE f_handle_ = ACE_OS::open (filename,0);
   
   if (f_handle_ == ACE_INVALID_HANDLE)
     ACE_ERROR_RETURN ((LM_ERROR,
-    "Unable to open %s for writing: %p\n",
+                       "Unable to open %s for writing: %p\n",
 		       filename),
 		      -1);
   ACE_Read_Buffer ior_buffer (f_handle_);
+
   if (foo_number == 1)
     {
       first_foo_forward_to_IOR_ = ior_buffer.read ();
+
       if (first_foo_forward_to_IOR_ == 0)
 	ACE_ERROR_RETURN ((LM_ERROR,
-                         "Unable to allocate memory to read ior: %p\n"),
+                           "Unable to allocate memory to read ior: %p\n"),
 			  -1);  
     }
   else if (foo_number == 2)
     {
       second_foo_forward_to_IOR_ = ior_buffer.read ();
+
       if (second_foo_forward_to_IOR_ == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Unable to allocate memory to read ior: %p\n"),
-			                     -1);
+                          -1);
     }
   
   if (foo_number == 1)
-    ACE_DEBUG ((LM_DEBUG, "POA approach: Read ior: %s\n",
+    ACE_DEBUG ((LM_DEBUG,
+                "POA approach: Read ior: %s\n",
                 first_foo_forward_to_IOR_));  
   else if (foo_number == 2)
-    ACE_DEBUG ((LM_DEBUG, "Locator approach: Read ior: %s\n",
+    ACE_DEBUG ((LM_DEBUG,
+                "Locator approach: Read ior: %s\n",
                 second_foo_forward_to_IOR_));  
-
   return 0;
 }
-
-
-
 
 static int
 parse_args (int argc, char **argv)
@@ -132,8 +136,7 @@ parse_args (int argc, char **argv)
   return 0;
 }
 
-
-void 
+static void 
 get_forward_reference (char *IOR,
                        CORBA::Object_var &forward_location_var,
                        CORBA::ORB_var &orb,
@@ -149,15 +152,20 @@ get_forward_reference (char *IOR,
           return;
         }
       
-      if (CORBA::is_nil(forward_location_var.in()))      
-        ACE_DEBUG ((LM_DEBUG,"Error: Forward_to location is wrong\n"));
+      if (CORBA::is_nil (forward_location_var.in ()))
+        ACE_DEBUG ((LM_DEBUG,
+                    "Error: Forward_to location is wrong\n"));
     }
 }
 
 int
 main (int argc, char **argv)
 {
+  // @@ Michael, this function is WAY too long!  Can you please break
+  // it up into a number of subfunctions and put them into a class or
+  // something?!  It's impossible to tell what's going on here!
   int result = parse_args (argc, argv);
+
   if (result == -1)
     return -1;
 
@@ -203,7 +211,8 @@ main (int argc, char **argv)
   
   // Id Assignment Policy
   policies[0] =
-    root_poa->create_id_assignment_policy (PortableServer::USER_ID, env);
+    root_poa->create_id_assignment_policy (PortableServer::USER_ID,
+                                           env);
   if (env.exception () != 0)
     {
       env.print_exception ("PortableServer::POA::create_id_assignment_policy");
@@ -220,11 +229,10 @@ main (int argc, char **argv)
     }
   
   
-  // Documentation !!!!
-  // first_POA will contain an object which will use the POA
-  // directly to do forwarding
+  // Documentation !!!!  first_POA will contain an object which will
+  // use the POA directly to do forwarding
   
-  // second_POA will contain an object which will use the 
+  // second_POA will contain an object which will use the
   // Servant_Locator to do forwarding
   
   PortableServer::POA_var first_poa;
@@ -270,7 +278,6 @@ main (int argc, char **argv)
 	return -1; 
       }
     
-    
     ACE_CString name = "secondPOA";
     
     // Create secondPOA as child of RootPOA with the above policies
@@ -287,7 +294,6 @@ main (int argc, char **argv)
       }
   }
   
-  
   // Creation of childPOAs is over. Destroy the Policy objects.
   for (CORBA::ULong i = 0;
        i < policies.length () && env.exception () == 0;
@@ -296,21 +302,20 @@ main (int argc, char **argv)
       CORBA::Policy_ptr policy = policies[i];
       policy->destroy (env);
     }
+
   if (env.exception () != 0)
     {
       env.print_exception ("PortableServer::POA::create_POA");
       return -1;
     }
   
-  
-  // Get the forward_to reference to feed it into 
-  // object implementations
+  // Get the forward_to reference to feed it into object
+  // implementations
   CORBA::Object_var first_foo_forward_to;
   get_forward_reference (first_foo_forward_to_IOR_,
                          first_foo_forward_to,
                          orb,
                          env);
-  
   CORBA::Object_var second_foo_forward_to;
   get_forward_reference (second_foo_forward_to_IOR_,
                          second_foo_forward_to,
@@ -326,11 +331,11 @@ main (int argc, char **argv)
                                     27,
                                     first_foo_forward_to.in ());
 
-  // Create ObjectId and use that ObjectId to activate the first_foo_impl
-  // object.
+  // Create ObjectId and use that ObjectId to activate the
+  // first_foo_impl object.
   //
   // Operation Used :
-  //  void activate_object_with_id( in ObjectId oid, in Servant p_servant)
+  //  void activate_object_with_id ( in ObjectId oid, in Servant p_servant)
   //       raises (ObjectAlreadyActive, ServantAlreadyActive, WrongPolicy);
   PortableServer::ObjectId_var first_foo_oid =
     PortableServer::string_to_ObjectId ("firstFoo");
@@ -376,12 +381,10 @@ main (int argc, char **argv)
       ACE_DEBUG ((LM_DEBUG, "POA approach: Wrote IOR to a file.\n"));
     }
   
+  // instantiate the servant locator and set it for the second child
+  // POA The locator gets to know where to forward to
   
-  // instantiate the servant locator and set it for 
-  // the second child POA
-  // The locator gets to know where to forward to
-  
-  MyFooServantLocator servant_locator_impl (second_foo_forward_to.in());
+  MyFooServantLocator servant_locator_impl (second_foo_forward_to.in ());
   PortableServer::ServantLocator_var servant_locator =
     servant_locator_impl._this (env);
   
@@ -401,8 +404,6 @@ main (int argc, char **argv)
       env.print_exception ("PortableServer::POAManager::set_servant_manager");
       return -1;
     }
-
-  
   
   // Create the second MyFooServant
   //            ======
@@ -416,7 +417,6 @@ main (int argc, char **argv)
   CORBA::Object_var second_foo =
     second_poa->create_reference_with_id (second_foo_oid.in (),
                                           "IDL:Foo:1.0", env);
-
   if (env.exception () != 0)
     {
       env.print_exception ("PortableServer::POA::create_reference_with_id");
@@ -425,7 +425,6 @@ main (int argc, char **argv)
   
   // Invoke object_to_string on the references created in firstPOA and
   // secondPOA.
-  
 
   CORBA::String_var second_foo_ior = 
     orb->object_to_string (second_foo.in (), env);
@@ -436,7 +435,6 @@ main (int argc, char **argv)
       return -1;
     }
   
-
   ACE_DEBUG ((LM_DEBUG,
               "Locator approach: Own IOR: %s\n",
               second_foo_ior.in ()));
@@ -462,7 +460,10 @@ main (int argc, char **argv)
     }
   
   if (orb->run () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "CORBA::ORB::run"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p\n",
+                       "CORBA::ORB::run"),
+                      -1);
   
   // Destroy RootPOA. (Also destroys childPOA)
   root_poa->destroy (CORBA::B_TRUE,

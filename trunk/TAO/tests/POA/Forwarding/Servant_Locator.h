@@ -17,18 +17,17 @@
 //
 //==================================================================================
 
-#include "tao/corba.h"
-
 #if !defined (MYFOOSERVANTLOCATOR_H)
 #define MYFOOSERVANTLOCATOR_H
 
+#include "tao/corba.h"
 
 class MyFooServantLocator : public POA_PortableServer::ServantLocator
 {
   // = TITLE
   //   This class is used by a POA with USE_SERVANT_MANAGER and
   //   NON_RETAIN policy.
- public:
+public:
   MyFooServantLocator (CORBA::Object_ptr forward_to_ptr);
   // constructor
 
@@ -51,19 +50,20 @@ class MyFooServantLocator : public POA_PortableServer::ServantLocator
 
   void forward (CORBA::Environment &env);
   
- private:
+private:
   int counter_;
   // Counter for number of invocations of this.
   
   PortableServer::Servant servant;
-  // There really exists only one servant, which is returned all the time.
+  // There really exists only one servant, which is returned all the
+  // time.
   
   CORBA::Object_ptr forward_to_ptr_;
   // location to forward to
 
-  unsigned int forwarding;
+  u_int forwarding;
   // flag to tell if to forward or not.
 };
 
-#endif // MYFOOSERVANTLOCATOR_H
+#endif /* MYFOOSERVANTLOCATOR_H */
 
