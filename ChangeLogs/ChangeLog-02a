@@ -1,3 +1,9 @@
+Fri Oct  5 13:55:02 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/Makefile: Removed the SUPPRESS_DASH_G option. Not really
+	  sure where it is used. Further, added a tab to the place where
+	  rules for CHORUS are set.
+
 Fri Oct 05 05:56:50 2001  Balachandran  <bala@cs.wustl.edu>
 
         * ACE version 5.2 released.
