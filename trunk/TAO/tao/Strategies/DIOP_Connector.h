@@ -51,8 +51,12 @@ public:
   /// Destructor.
   ~TAO_DIOP_Connector (void);
 
-  // = The TAO_Connector methods, please check the documentation on
-  // Pluggable.h
+  /**
+   * @name The TAO_Connector Methods
+   *
+   * Please check the documentation in Pluggable.h for details.
+   */
+  //@{
   int open (TAO_ORB_Core *orb_core);
   int close (void);
 
@@ -61,17 +65,23 @@ public:
   virtual int check_prefix (const char *endpoint);
 
   virtual char object_key_delimiter (void) const;
+  //@}
 
 protected:
 
-  /// = More TAO_Connector methods, please check the documentation on
-  ///   Transport_Acceptor.h
+  /**
+   * @name More TAO_Connector Methods
+   *
+   * Please check the documentation in Transport_Acceptor.h for details.
+   */
+  //@{
   int set_validate_endpoint (TAO_Endpoint *ep);
 
   int make_connection (TAO_GIOP_Invocation *invocation,
                        TAO_Transport_Descriptor_Interface *desc);
 
   virtual TAO_Profile * make_profile (ACE_ENV_SINGLE_ARG_DECL);
+  //@}
 
   /// Obtain tcp properties that must be used by this connector, i.e.,
   /// initialize <tcp_properties_>.

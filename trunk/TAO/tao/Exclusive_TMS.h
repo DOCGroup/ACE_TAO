@@ -44,8 +44,13 @@ public:
   /// Destructor.
   virtual ~TAO_Exclusive_TMS (void);
 
-  // = Please read the documentation in the TAO_Transport_Mux_Strategy
-  //   class.
+  /**
+   * @name The TAO_Transport_Mux_Strategy overrided methods
+   *
+   * Please read the documentation in the TAO_Transport_Mux_Strategy class
+   * for details.
+   */
+  //@{
   virtual CORBA::ULong request_id (void);
   virtual int bind_dispatcher (CORBA::ULong request_id,
                                TAO_Reply_Dispatcher *rh);
@@ -56,6 +61,7 @@ public:
   virtual int idle_after_send (void);
   virtual int idle_after_reply (void);
   virtual void connection_closed (void);
+  //@}
 
 protected:
   /// Used to generate a different request_id on each call to

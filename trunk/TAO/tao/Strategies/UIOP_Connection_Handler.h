@@ -15,7 +15,11 @@
 #define TAO_UIOP_CONNECTION_HANDLER_H
 #include "ace/pre.h"
 
-#include "UIOP_Transport.h"
+#include "tao/corbafwd.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if TAO_HAS_UIOP == 1
 
@@ -28,18 +32,17 @@
 #include "tao/Connection_Handler.h"
 #include "tao/corbafwd.h"
 #include "tao/Wait_Strategy.h"
-
+#include "UIOP_Transport.h"
 
 // Forward Decls
 class TAO_Pluggable_Messaging;
 
 /**
- * @class TAO_IIOP_Properties
+ * @class TAO_UIOP_Properties
  *
  * @brief Unix Domain Sockets protocol properties specification for a
- *  set of  connections.
+ *  set of connections.
  */
-
 class TAO_Strategies_Export TAO_UIOP_Properties
 {
 public:
@@ -51,15 +54,13 @@ public:
 // ****************************************************************
 
 /**
- * @class TAO_IIOP_Connection_Handler
+ * @class TAO_UIOP_Connection_Handler
  *
  * @brief  Handles requests on a single connection.
  *
  * The Connection handler which is common for the Acceptor and
  * the Connector
  */
-
-
 class TAO_Strategies_Export TAO_UIOP_Connection_Handler : public TAO_UIOP_SVC_HANDLER,
                                                           public TAO_Connection_Handler
 {
@@ -83,7 +84,7 @@ public:
   virtual int open (void *);
 
 
-  /// = Active object activation method.
+  /// Active object activation method.
   virtual int activate (long flags = THR_NEW_LWP,
                         int n_threads = 1,
                         int force_active = 0,
@@ -116,10 +117,11 @@ protected:
 
   /// = Event Handler overloads
 
-  /// Reads a message from the <peer()>, dispatching and servicing it
-  /// appropriately.
-  /// handle_input() just delegates on handle_input_i() which timeouts
-  /// after <max_wait_time>
+  /**
+   * Reads a message from the <peer()>, dispatching and servicing it
+   * appropriately. handle_input() just delegates on handle_input_i() which
+   * timeouts after <max_wait_time>.
+   */
   virtual int handle_input (ACE_HANDLE = ACE_INVALID_HANDLE);
 
 private:

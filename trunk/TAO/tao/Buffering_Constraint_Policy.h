@@ -32,18 +32,17 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+/**
+ * @class TAO_Buffering_Constraint_Policy
+ *
+ * @brief Implementation class for TAO-specific Buffering Constraint Policy.
+ *
+ * This policy is used to control the buffering of requests by the ORB.
+ */
 class TAO_Export TAO_Buffering_Constraint_Policy
   : public TAO::BufferingConstraintPolicy,
     public TAO_Local_RefCounted_Object
 {
-  // = TITLE
-  //     Implementation class for TAO-specific Buffering Constraint
-  //     Policy.
-  //
-  // = DESCRIPTION
-  //     This policy is used to control the buffering of requests by
-  //     the ORB.
-  //
 public:
   /// Constructor.
   TAO_Buffering_Constraint_Policy (const TAO::BufferingConstraint &buffering_constraint);

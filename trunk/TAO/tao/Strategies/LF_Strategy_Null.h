@@ -22,6 +22,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 /**
+ * @class TAO_LF_Strategy_Null
+ *
  * @brief A concrete TAO_LF_Strategy for ORB configurations that do
  * not use the Leader/Followers event loop.
  */
@@ -43,6 +45,7 @@ public:
                                      TAO_Leader_Follower &);
   virtual void reset_event_loop_thread (int call_reset,
                                         TAO_Leader_Follower &);
+  //@}
 };
 
 #if defined (__ACE_INLINE__)

@@ -45,17 +45,17 @@
 
 class TAO_Acceptor;
 
+/**
+ * @class RTCORBA::ServerProtocolPolicy Acceptor_Filter.
+ *
+ * @brief Populates mprofile with endpoints selected based on the
+ * RTCORBA::ServerProtocolPolicy.
+ */
 class TAO_RTPortableServer_Export TAO_Server_Protocol_Acceptor_Filter :
   public TAO_Acceptor_Filter
 {
-  // = TITLE
-  //   RTCORBA::ServerProtocolPolicy Acceptor_Filter.
-  //
-  // = DESCRIPTION
-  //   Populates mprofile with endpoints selected based on the
-  //   RTCORBA::ServerProtocolPolicy.
-  //
 public:
+  /// Constructor
   TAO_Server_Protocol_Acceptor_Filter (RTCORBA::ProtocolList &protocols);
 
   /// Populate <mprofile> based on what's in <protocols_>.
@@ -70,9 +70,9 @@ public:
   int encode_endpoints (TAO_MProfile &mprofile);
 
 private:
+  /// Value of the ServerProtocolPolicy used for endpoint
+  /// selection.
   RTCORBA::ProtocolList &protocols_;
-  // Value of the ServerProtocolPolicy used for endpoint
-  // selection.
 };
 
 #if defined (__ACE_INLINE__)

@@ -57,9 +57,11 @@ public:
   const ACE_INET_Addr *endpoints (void);
 
   /**
-   * The TAO_Acceptor methods, check the documentation in
-   * Pluggable.h for details.
+   * @name The TAO_Acceptor Methods
+   *
+   * Please check the documentation in Pluggable.h for details.
    */
+  //@{
   virtual int open (TAO_ORB_Core *orb_core,
                     ACE_Reactor *reactor,
                     int version_major,
@@ -81,6 +83,7 @@ public:
 
   virtual int object_key (IOP::TaggedProfile &profile,
                           TAO_ObjectKey &key);
+  //@}
 
   /**
    * Set the host name for the given addr.

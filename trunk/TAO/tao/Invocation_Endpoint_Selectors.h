@@ -85,20 +85,21 @@ public:
 
 // ****************************************************************
 
+/**
+ * @class TAO_Default_Endpoint_Selector
+ *
+ * @brief Default strategy for endpoint selection.
+ *
+ * This strategy is used when there are no policies set or when
+ * the only policy set is RTCORBA::PriorityModelPolicy and its
+ * value is RTCORBA::SERVER_DECLARED.
+ * The strategy is to try the first endpoint from the first
+ * profile in the IOR.  If that doesn't work, try the next
+ * profile, and so on.
+ */
 class TAO_Export TAO_Default_Endpoint_Selector :
   public TAO_Invocation_Endpoint_Selector
 {
-  // = TITLE
-  //   Default strategy for endpoint selection.
-  //
-  // = DESCRIPTION
-  //   This strategy is used when there are no policies set or when
-  //   the only policy set is RTCORBA::PriorityModelPolicy and its
-  //   value is RTCORBA::SERVER_DECLARED.
-  //   The strategy is to try the first endpoint from the first
-  //   profile in the IOR.  If that doesn't work, try the next
-  //   profile, and so on.
-  //
 public:
   /// Constructor.
   TAO_Default_Endpoint_Selector (void);

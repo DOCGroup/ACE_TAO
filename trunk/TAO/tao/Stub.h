@@ -48,24 +48,23 @@ class TAO_Profile;
 // by the interpreter.
 typedef CORBA::Exception* (*TAO_Exception_Alloc) (void);
 
+/**
+ * @struct TAO_Exception_Data
+ *
+ * @brief Description of a single exception.
+ *
+ * The interpreter needs a way to allocate memory to hold the exception
+ * that was raised by the stub. This data structure provides the typecode
+ * for the exception as well as a static function pointer that
+ * does the job of memory allocation.
+ */
 struct TAO_Exception_Data
 {
-  // = TITLE
-  //    TAO_Exception_Data
-  //
-  // = DESCRIPTION
-  //    Description of a single exception.
-  //
-  //    The interpreter needs a way to allocate memory to hold the exception
-  //    that was raised by the stub. This data structure provides the typecode
-  //    for the exception as well as a static function pointer that
-  //    does the job of memory allocation.
-
+  /// Repository id of the exception.
   const char *id;
-  // Repository id of the exception.
 
+  /// The allocator for this exception.
   TAO_Exception_Alloc alloc;
-  // The allocator for this exception.
 };
 
 /**

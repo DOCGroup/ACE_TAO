@@ -45,10 +45,10 @@ public:
   /// small footprint implementation of the marshal engine.
   friend class TAO_Marshal_Sequence;
 
-  /// destructor.
+  /// Destructor.
   virtual ~TAO_Base_Sequence (void);
 
-  /// return the maximum length of the sequence
+  /// Return the maximum length of the sequence
   CORBA::ULong maximum (void) const;
 
   /**
@@ -196,18 +196,18 @@ protected:
 class TAO_Export TAO_Bounded_Base_Sequence : public TAO_Base_Sequence
 {
 public:
-  /// set the length, for this sequences this call is ignored if the
+  /// Set the length, for this sequences this call is ignored if the
   /// new length is greater that the maximum.
   void length (CORBA::ULong length);
 
   /**
-   * return the current length, it cannot go into the base class due
+   * Return the current length, it cannot go into the base class due
    * to the C++ name lookup rules (if you don't know what I'm talking
    * about, then try moving it there).
    */
   CORBA::ULong length (void) const;
 
-  /// destructor.
+  /// Destructor.
   virtual ~TAO_Bounded_Base_Sequence (void);
 
 protected:
@@ -229,13 +229,13 @@ protected:
 
 /**
  * @class TAO_Unbounded_String_Sequence
- =TITLE
- * Unbounded sequence of strings.
- * =DESCRIPTION
+ *
+ * @brief Unbounded sequence of strings.
+ *
  * IDL sequences of strings must automatically duplicate and
  * release their members based on some global <release> flag.
  */
-class TAO_Export TAO_Unbounded_String_Sequence 
+class TAO_Export TAO_Unbounded_String_Sequence
   : public TAO_Unbounded_Base_Sequence
 {
 
@@ -375,13 +375,13 @@ public:
 
 /**
  * @class TAO_Unbounded_WString_Sequence
- =TITLE
- * Unbounded sequence of wstrings.
- * =DESCRIPTION
+ *
+ * @brief Unbounded sequence of wstrings.
+ *
  * IDL sequences of wstrings must automatically duplicate and
  * release their members based on some global <release> flag.
  */
-class TAO_Export TAO_Unbounded_WString_Sequence 
+class TAO_Export TAO_Unbounded_WString_Sequence
   : public TAO_Unbounded_Base_Sequence
 {
 
@@ -475,7 +475,7 @@ public:
       const TAO_Unbounded_WString_Sequence &
     );
 
-  /// read-write accessor
+  /// Read-write accessor
   TAO_SeqElem_WString_Manager operator[] (CORBA::ULong slot) const;
 
   /**
@@ -539,7 +539,7 @@ ACE_TEMPLATE_SPECIALIZATION
  * Specializing the TAO_Unbounded_Sequence<T> parametric
  * class, is an excellent way to achieve this optimizations.
  */
-class TAO_Export TAO_Unbounded_Sequence<CORBA::Octet> 
+class TAO_Export TAO_Unbounded_Sequence<CORBA::Octet>
   : public TAO_Unbounded_Base_Sequence
 {
 public:

@@ -37,33 +37,34 @@
 #include "tao/Acceptor_Impl.h"
 #include "tao/GIOP_Message_Version.h"
 
-
-// TAO UIOP_Acceptor concrete call definition
-
+/**
+ * @class TAO_UIOP_Acceptor
+ *
+ * @brief The UIOP-specific bridge class for the concrete acceptor.
+ */
 class TAO_Strategies_Export TAO_UIOP_Acceptor : public TAO_Acceptor
 {
-  // = TITLE
-  //   The UIOP-specific bridge class for the concrete acceptor.
-  //
-  // = DESCRIPTION
-  //
 public:
   // TAO_UIOP_Acceptor (ACE_UNIX_Addr &addr);
   // Create Acceptor object using addr.
 
+  /// Create Acceptor object using addr.
   TAO_UIOP_Acceptor (CORBA::Boolean flag = 0);
-  // Create Acceptor object using addr.
 
+  /// Destructor
   virtual ~TAO_UIOP_Acceptor (void);
-  // Destructor
 
   typedef ACE_Strategy_Acceptor<TAO_UIOP_Connection_Handler, ACE_LSOCK_ACCEPTOR> TAO_UIOP_BASE_ACCEPTOR;
   typedef TAO_Creation_Strategy<TAO_UIOP_Connection_Handler> TAO_UIOP_CREATION_STRATEGY;
   typedef TAO_Concurrency_Strategy<TAO_UIOP_Connection_Handler> TAO_UIOP_CONCURRENCY_STRATEGY;
   typedef TAO_Accept_Strategy<TAO_UIOP_Connection_Handler, ACE_LSOCK_ACCEPTOR> TAO_UIOP_ACCEPT_STRATEGY;
 
-  // = The TAO_Acceptor methods, check the documentation in
-  //   Pluggable.h for details.
+  /**
+   * @name The TAO_Acceptor Methods
+   *
+   * Please check the documentation in Pluggable.h for details.
+   */
+  //@{
   virtual int open (TAO_ORB_Core *orb_core,
                     ACE_Reactor *reactor,
                     int version_major,
@@ -85,57 +86,59 @@ public:
 
   virtual int object_key (IOP::TaggedProfile &profile,
                           TAO_ObjectKey &key);
+  //@}
+
 private:
+  /// Implement the common part of the open*() methods
   int open_i (const char *rendezvous,
               ACE_Reactor *reactor);
-  // Implement the common part of the open*() methods
 
+  /// Set the rendezvous point and verify that it is
+  /// valid (e.g. wasn't truncated because it was too long).
   void rendezvous_point (ACE_UNIX_Addr &, const char *rendezvous);
-  // Set the rendezvous point and verify that it is
-  // valid (e.g. wasn't truncated because it was too long).
 
+  /// Parse protocol specific options.
   int parse_options (const char *options);
-  // Parse protocol specific options.
 
+  /// Obtains uiop properties that must be used by this acceptor, i.e.,
+  /// initializes <uiop_properties_>.
   int init_uiop_properties (void);
-  // Obtains uiop properties that must be used by this acceptor, i.e.,
-  // initializes <uiop_properties_>.
 
+  /// Create a UIOP profile representing this acceptor.
   int create_new_profile (const TAO_ObjectKey &object_key,
                           TAO_MProfile &mprofile,
                           CORBA::Short priority);
-  // Create a UIOP profile representing this acceptor.
 
+  /// Add the endpoints on this acceptor to a shared profile.
   int create_shared_profile (const TAO_ObjectKey &object_key,
                              TAO_MProfile &mprofile,
                              CORBA::Short priority);
-  // Add the endpoints on this acceptor to a shared profile.
 
 private:
+  /// The concrete acceptor, as a pointer to its base class.
   TAO_UIOP_BASE_ACCEPTOR base_acceptor_;
-  // the concrete acceptor, as a pointer to its base class.
 
+  // Acceptor strategies.
   TAO_UIOP_CREATION_STRATEGY *creation_strategy_;
   TAO_UIOP_CONCURRENCY_STRATEGY *concurrency_strategy_;
   TAO_UIOP_ACCEPT_STRATEGY *accept_strategy_;
-  // Acceptor strategies.
 
+  /// The GIOP version for this endpoint
   TAO_GIOP_Message_Version version_;
-  // The GIOP version for this endpoint
 
+  /// ORB Core.
   TAO_ORB_Core *orb_core_;
-  // ORB Core.
 
+  /// Flag that determines whether or not the rendezvous point should
+  /// be unlinked on close.  This is really only used when an error
+  /// occurs.
   int unlink_on_close_;
-  // Flag that determines whether or not the rendezvous point should
-  // be unlinked on close.  This is really only used when an error
-  // occurs.
 
+  /// Should we use GIOP lite??
   CORBA::Boolean lite_flag_;
-  // Should we use GIOP lite??
 
+  /// Properties for all connections accepted by this acceptor.
   TAO_UIOP_Properties uiop_properties_;
-  // Properties for all connections accepted by this acceptor.
 };
 
 # endif /* TAO_HAS_UIOP == 1 */

@@ -47,7 +47,7 @@ class TAO_Strategies_Export TAO_SHMIOP_Connection_Handler :
 {
 
 public:
-
+  /// Constructor.
   TAO_SHMIOP_Connection_Handler (ACE_Thread_Manager* t = 0);
 
   /// Constructor. <arg> parameter is used by the Acceptor to pass the
@@ -65,7 +65,7 @@ public:
   virtual int open (void *);
 
 
-  /// = Active object activation method.
+  /// Active object activation method.
   virtual int activate (long flags = THR_NEW_LWP,
                         int n_threads = 1,
                         int force_active = 0,
@@ -98,12 +98,13 @@ protected:
 
   /// = Event Handler overloads
 
-  /// Reads a message from the <peer()>, dispatching and servicing it
-  /// appropriately.
-  /// handle_input() just delegates on handle_input_i() which timeouts
-  /// after <max_wait_time>, this is used in thread-per-connection to
-  /// ensure that server threads eventually exit.
-
+  /**
+   * Reads a message from the <peer()>, dispatching and servicing it
+   * appropriately.
+   * handle_input() just delegates on handle_input_i() which timeouts
+   * after <max_wait_time>, this is used in thread-per-connection to
+   * ensure that server threads eventually exit.
+   */
   virtual int handle_input (ACE_HANDLE = ACE_INVALID_HANDLE);
 
 private:
