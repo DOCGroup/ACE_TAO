@@ -186,59 +186,6 @@ namespace Sender_Impl
       }
     }
 
-    /*
-    ::Components::ConsumerDescriptions *
-    Sender_Context::get_all_consumers (
-    ACE_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((
-    ::CORBA::SystemException))
-    {
-      ::Components::ConsumerDescriptions *tmp = 0;
-      ACE_NEW_THROW_EX (tmp,
-                        ::Components::ConsumerDescriptions
-                        (this->ciao_publishes_click_out_map_.current_size ()),
-                        CORBA::NO_MEMORY ());
-      ::Components::ConsumerDescriptions_var retval = tmp;
-
-      retval->length (this->ciao_publishes_click_out_map_.current_size ());
-      CORBA::ULong i = 0;
-
-      ACE_Active_Map_Manager< 
-      ::Hello::TimeOutConsumer_var>::iterator end =
-      this->ciao_publishes_click_out_map_.end ();
-
-      for (ACE_Active_Map_Manager< 
-      ::Hello::TimeOutConsumer_var>::iterator iter =
-      this->ciao_publishes_click_out_map_.begin ();
-      iter != end;
-      ++iter, ++i)
-      {
-        ACE_Active_Map_Manager< 
-        ::Hello::TimeOutConsumer_var>::ENTRY &entry = *iter;
-
-        ::Hello::TimeOutConsumer_var c =
-        ::Hello::TimeOutConsumer::_narrow (
-        entry.int_id_.in ()
-        ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK;
-
-        ::Components::ConsumerDescription *cd = 0;
-        ACE_NEW_THROW_EX (cd,
-                          OBV_Components::ConsumerDescription (),
-                          CORBA::NO_MEMORY ());
-        ::Components::ConsumerDescription_var safe = cd;
-
-        safe->name ("");
-        safe->type_id ("");
-        safe->consumer (c);
-
-        retval[i] = safe;
-      }
-
-      return retval._retn ();
-    }
-    */
-
     ::Components::Cookie *
     Sender_Context::subscribe_click_out (
     ::Hello::TimeOutConsumer_ptr c
@@ -810,18 +757,6 @@ namespace Sender_Impl
       return this->executor_->local_message (
       ACE_ENV_SINGLE_ARG_PARAMETER);
     }
-
-    /*
-    ::Components::ConsumerDescriptions *
-    Sender_Servant::get_all_consumers (
-        ACE_ENV_SINGLE_ARG_DECL
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException))
-    {
-      return this->context_->get_all_consumers (
-         ACE_ENV_ARG_PARAMETER);
-    }
-    */
 
     void
     Sender_Servant::local_message (
