@@ -112,6 +112,10 @@ try to fix it for you.
 	  you don't have this patch, the sv* commands for compiling
 	  and linking will not be present on the system. <P>
 
+	  If you are using AIX 4.2.1 or later, there is no patch needed;
+	  the dynamic library APIs are included in the base operating
+	  system. <P>
+
 	  BTW, here's a technique from Rob Jordan &lt<A
      HREF="mailto:jordan@hursley.ibm.com">jordan@hursley.ibm.com</A>&gt
      that can reduce the size of the ACE libraries by
@@ -160,11 +164,19 @@ pthreads</A>.<P>
 
 <DT> <B> HP-UX 9.x and 10.x </B> <BR><BR>
 
-<DD> The current HP/UX C++ compiler is incredibly lame and has
-	  problems compiling ACE templates and achieving template
-	  closure.  I've heard that the next release is better...
-	  In the meantime, you might try using GNU GCC or SunC++
-	  on HP/UX. <P>
+<DD> HP sells 2 C++ compilers for HP-UX 10.x.  If you are using 9.x,
+	  there's only the first one.
+<UL>
+<LI>HP C++ - this is CC, HP's cfront-based compiler.  As of ACE 4.4, it
+	  can be used, but some people have problems with templates.
+	  Caveat emptor.  It's been said that you should run version 10.24,
+	  if not later.
+
+<LI>HP aC++ - this is aCC, HP's new, ANSI-to-be compiler.  It handles ACE
+	  pretty well.  You should use either version A.01.06 (or later), or
+	  A.01.03.  Patches .04 and .05 do not work.
+</UL>
+<P>
 
 <DT> <B> OSF/1 3.2 and 4.0 (a.k.a. Digital UNIX 4.0a) </B> <BR><BR>
 
@@ -191,11 +203,13 @@ kielmann@informatik.uni-siegen.de</A>&gt and David Trumble &lt<A
 HREF="mailto:trumble@cvg.enet.dec.com">trumble@cvg.enet.dec.com</A>&gt
 for help with this port. <P>
 
-<DT><B> UnixWare 2.01 </B> <BR><BR>
+<DT><B> UnixWare </B> <BR><BR>
 <DD>
      Steve Huston &lt<A HREF="mailto:shuston@riverace.com">shuston@riverace.com</A>&gt
-	has ported ACE to work with UnixWare 2.01 and
-	  its standard C++ compiler.<P>
+	has ported ACE to work with UnixWare 2.01 and g++. <P>
+
+	Ganesh Pai &lt<A HREF="mailto:gpai@voicetek.com">gpai@voicetek.com</A>&gt
+	subsequently did the port for version 2.1.2, also with g++. <P>
 
 <DT><B>Chorus</B> <BR><BR>
 <DD>
@@ -458,7 +472,7 @@ ACE contains project files for Microsoft Visual C++ 4.x (*.mdp) and
      <BR>
      <CODE>#include "config-win32.h"</CODE><BR>
      <BR>
-<LI> Now load up the project file for ACE (ACE_ROOT\ace\ace.mdp or
+<LI> Now load up the project file for ACE (ACE_ROOT\ace\ACE_Library.mdp or
      ACE_ROOT\ace\ace.dsw).  If you are using MSVC 4.x, you will
      need to add paths to your global settings.  In
      Tools|Options|Directories, add ACE_ROOT to your include path
