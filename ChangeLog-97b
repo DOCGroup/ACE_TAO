@@ -1,28 +1,34 @@
+Fri Nov 14 22:57:04 1997  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/config-vxworks*.h: added ACE_LACKS_NETDB_REENTRANT_FUNCTIONS.
+          This is necessary for the gethostby{addr,name}_r support added
+          yesterday.
+
 Fri Nov 14 18:42:23 1997  Steve Huston  <shuston@riverace.com>
 
-	* tests/Priority_Reactor_Test.cpp: Fixed client to close its socket
-	  before exiting from the thread/process.
+        * tests/Priority_Reactor_Test.cpp: Fixed client to close its socket
+          before exiting from the thread/process.
 
 Fri Nov 14 17:41:40 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
-	* ace/OS.i: Fixed some typos in strsplit_r().
+        * ace/OS.i: Fixed some typos in strsplit_r().
 
-	* ace/OS.h: Moved the ACE_ALLOCATOR* stuff from Malloc_T.h to
- 	  OS.h, which is where it belongs.
+        * ace/OS.h: Moved the ACE_ALLOCATOR* stuff from Malloc_T.h to
+          OS.h, which is where it belongs.
 
-	* examples/Reactor/Dgram: Reformatted some of the example
-	  code to make it more readable.
+        * examples/Reactor/Dgram: Reformatted some of the example
+          code to make it more readable.
 
 Fri Nov 14 17:08:00 1997  Chris Cleeland  <cleeland@tango.cs.wustl.edu>
 
-	* ace/OS.* (strsplit_r): Added fix by Scott * for this.
+        * ace/OS.* (strsplit_r): Added fix by Scott * for this.
 
-	* ace/OS.h: Added definitions to work around VxWorks' lack of
- 	  proper ANSI C/C++ prototypes for the functions found in
- 	  <arpa/inet.h>.  The definitions were taken from Solaris 2.5.1, but
- 	  appear to work just fine.  For now this is only in effect when
- 	  compiling with the Green Hills (ghs) environment, but it should
- 	  probably be used for others (such as g++) as well.
+        * ace/OS.h: Added definitions to work around VxWorks' lack of
+          proper ANSI C/C++ prototypes for the functions found in
+          <arpa/inet.h>.  The definitions were taken from Solaris 2.5.1, but
+          appear to work just fine.  For now this is only in effect when
+          compiling with the Green Hills (ghs) environment, but it should
+          probably be used for others (such as g++) as well.
 
 Fri Nov 14 01:10:33 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -39,110 +45,110 @@ Thu Nov 13 20:29:18 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Thu Nov 13 19:11:36 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
-	* ace/config-sunos5.4.*: Solaris 2.4 doesn't support the ualarm()
- 	  call unless you use the (broken) /usr/ucb/cc compiler.  Here's a
- 	  patch for $ACE_ROOT/ace/config-sunos5.4-sunc++-4.x.h to fix the
- 	  problem.  Thanks to Caleb Epstein
- 	  <epstein_caleb_unix@jpmorgan.com> for reporting this.
+        * ace/config-sunos5.4.*: Solaris 2.4 doesn't support the ualarm()
+          call unless you use the (broken) /usr/ucb/cc compiler.  Here's a
+          patch for $ACE_ROOT/ace/config-sunos5.4-sunc++-4.x.h to fix the
+          problem.  Thanks to Caleb Epstein
+          <epstein_caleb_unix@jpmorgan.com> for reporting this.
 
 Thu Nov 13 19:25:50 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
-	* include/makeinclude/platform_irix6.x-sgic++.GNU:
-	  Updated comment on when should the user disable the use of
-	  -lpthread
+        * include/makeinclude/platform_irix6.x-sgic++.GNU:
+          Updated comment on when should the user disable the use of
+          -lpthread
 
 Thu Nov 13 18:18:16 1997  Steve Huston  <shuston@riverace.com>
 
-	* ace/Containers.h, Containers.cpp, Hash_Map_Manager.cpp, Malloc_T.h:
-	  Removed the conditional code for the macro
-	  ACE_HAS_HPUX_ACC_BROKEN_TEMPLATE_DESTRUCTOR.  The workaround for
-	  this compiler bug is to remove "this->" from the object pointer
-	  used in the ACE_DES_FREE_TEMPLATE macro invocation.  This compiler
-	  bug is HP case SR5003396259 for future reference.
+        * ace/Containers.h, Containers.cpp, Hash_Map_Manager.cpp, Malloc_T.h:
+          Removed the conditional code for the macro
+          ACE_HAS_HPUX_ACC_BROKEN_TEMPLATE_DESTRUCTOR.  The workaround for
+          this compiler bug is to remove "this->" from the object pointer
+          used in the ACE_DES_FREE_TEMPLATE macro invocation.  This compiler
+          bug is HP case SR5003396259 for future reference.
 
-	* ace/config-hpux-10.x-hpc++.h: Added ACE_HAS_ANSI_CASTS; removed
-	  ACE_HAS_HPUX_ACC_BROKEN_TEMPLATE_DESTRUCTOR (both for aC++ only).
+        * ace/config-hpux-10.x-hpc++.h: Added ACE_HAS_ANSI_CASTS; removed
+          ACE_HAS_HPUX_ACC_BROKEN_TEMPLATE_DESTRUCTOR (both for aC++ only).
 
-	* ace/README: Removed ACE_HAS_HPUX_ACC_BROKEN_TEMPLATE_DESTRUCTOR, as
-	  it is no longer used.
+        * ace/README: Removed ACE_HAS_HPUX_ACC_BROKEN_TEMPLATE_DESTRUCTOR, as
+          it is no longer used.
 
 Thu Nov 13 16:51:40 1997    <nw1@CHA-CHA>
 
-	* ace/OS.h:  Added two new macros ACE_FACTORY_DECLARE and
-	  ACE_FACTORY_DEFINE.  Changed definitions of
-	  ACE_SVC_FACTORY_DECLARE AND ACE_SVC_FACTORY_DEFINE to use these
-	  two macros.  Refer to changes of the ACE_Export related macros
-	  below, you can now declare/define your service factories as,
+        * ace/OS.h:  Added two new macros ACE_FACTORY_DECLARE and
+          ACE_FACTORY_DEFINE.  Changed definitions of
+          ACE_SVC_FACTORY_DECLARE AND ACE_SVC_FACTORY_DEFINE to use these
+          two macros.  Refer to changes of the ACE_Export related macros
+          below, you can now declare/define your service factories as,
 
-	       ACE_FACTORY_DECLARE (FOOBAR, fac_class);
-	       ACE_FACTORY_DEFINE (FOOBAR, fac_class);
+               ACE_FACTORY_DECLARE (FOOBAR, fac_class);
+               ACE_FACTORY_DEFINE (FOOBAR, fac_class);
 
-	  This will ensure they get define properly and proper decoration
-	  will be added.
+          This will ensure they get define properly and proper decoration
+          will be added.
 
 Thu Nov 13 16:52:31 1997  Nanbor Wang  <nw1@merengue.cs.wustl.edu>
 
-	* ace/Thread_Manager.cpp: Removed all ! defined
-	  (ACE_HAS_FSU_PTHREAD).  Thanks to ARTURO MONTES
-	  <mitosys@colomsat.net.co> for reporting this.
+        * ace/Thread_Manager.cpp: Removed all ! defined
+          (ACE_HAS_FSU_PTHREAD).  Thanks to ARTURO MONTES
+          <mitosys@colomsat.net.co> for reporting this.
 
-	* ace/config-gcc-2.7.2.h: Added ACE_HAS_TEMPLATE_SPECIALIZATION.
-	  Thanks to ARTURO MONTES <mitosys@colomsat.net.co> for reporting
-	  this.
+        * ace/config-gcc-2.7.2.h: Added ACE_HAS_TEMPLATE_SPECIALIZATION.
+          Thanks to ARTURO MONTES <mitosys@colomsat.net.co> for reporting
+          this.
 
-	* ace/config-fsu-pthread.h: added ACE_LACKS_THREAD_PROCESS_SCOPING.
-	  Thanks to ARTURO MONTES <mitosys@colomsat.net.co> for reporting
-	  this.
+        * ace/config-fsu-pthread.h: added ACE_LACKS_THREAD_PROCESS_SCOPING.
+          Thanks to ARTURO MONTES <mitosys@colomsat.net.co> for reporting
+          this.
 
-	* ace/OS.h: Separate definition of proper export flag for
-	  platforms from setting these flags for building/not building
-	  DLL.  I keep ACE_Export and ACE_Svc_Export to remain backward
-	  compatibality but now, they are defined using the new "common"
-	  definition.  This changes is made in hope that it will simplify
-	  codes generated by TAO_IDL compiler.
+        * ace/OS.h: Separate definition of proper export flag for
+          platforms from setting these flags for building/not building
+          DLL.  I keep ACE_Export and ACE_Svc_Export to remain backward
+          compatibality but now, they are defined using the new "common"
+          definition.  This changes is made in hope that it will simplify
+          codes generated by TAO_IDL compiler.
 
-	  Several new directives are added to these file.  These common
-	  directives will be set to proper values (macros) according to
-	  the platform we use.  They are:
+          Several new directives are added to these file.  These common
+          directives will be set to proper values (macros) according to
+          the platform we use.  They are:
 
-    		ACE_Proper_Export_Flag
-    		ACE_Proper_Import_Flag
-    		ACE_EXPORT_SINGLETON_DECLATATION(T)
-    		ACE_IMPORT_SINGLETON_DECLARATION(T)
-    		ACE_PROPER_SINGLETON_INSTANTIATION(T)
+                ACE_Proper_Export_Flag
+                ACE_Proper_Import_Flag
+                ACE_EXPORT_SINGLETON_DECLATATION(T)
+                ACE_IMPORT_SINGLETON_DECLARATION(T)
+                ACE_PROPER_SINGLETON_INSTANTIATION(T)
 
-	  I use them to define ACE_Export and ACE_Svc_Export.  I hope it
-	  is easier to define your own export decoration flag now.  Here
-	  is an example.  Say you want to define an export flag for your
-	  DLL file : foobar.dll.  First, you need to add the following to
-	  a common header file:
+          I use them to define ACE_Export and ACE_Svc_Export.  I hope it
+          is easier to define your own export decoration flag now.  Here
+          is an example.  Say you want to define an export flag for your
+          DLL file : foobar.dll.  First, you need to add the following to
+          a common header file:
 
-	  // Here are definition for FOO_BAR library.
- 	  #if defined (FOOBAR_HAS_DLL) && (FOOBAR_HAS_DLL == 1)
-	  #  if defined (FOOBAR_BUILD_DLL)
-	  #    define FOOBAR_Export ACE_Proper_Export_Flag
-	  #    define FOOBAR_SINGLETON_DECLARATION(T) ACE_EXPORT_SINGLETON_DECLARATION (T)
-	  #    define FOOBAR_SINGLETON_INSTANTIATION(T) ACE_PROPER_SINGLETON_INSTANTIATION (T)
-	  #  else
-	  #    define FOOBAR_Export ACE_Proper_Import_Flag
-	  #    define FOOBAR_SINGLETON_DECLARATION(T) ACE_IMPORT_SINGLETON_DECLARATION (T)
-	  #    define FOOBAR_SINGLETON_INSTANTIATION(T)
-	  #  endif /* FOOBAR_BUILD_DLL */
-	  #else /* ! FOOBAR_HAS_DLL */
-	  #  define FOOBAR_Export
-	  #  define FOOBAR_SINGLETON_DECLARATION(T)
-	  #  define FOOBAR_SINGLETON_INSTANTIATION(T)
-	  #endif /* FOOBAR_HAS_DLL */
+          // Here are definition for FOO_BAR library.
+          #if defined (FOOBAR_HAS_DLL) && (FOOBAR_HAS_DLL == 1)
+          #  if defined (FOOBAR_BUILD_DLL)
+          #    define FOOBAR_Export ACE_Proper_Export_Flag
+          #    define FOOBAR_SINGLETON_DECLARATION(T) ACE_EXPORT_SINGLETON_DECLARATION (T)
+          #    define FOOBAR_SINGLETON_INSTANTIATION(T) ACE_PROPER_SINGLETON_INSTANTIATION (T)
+          #  else
+          #    define FOOBAR_Export ACE_Proper_Import_Flag
+          #    define FOOBAR_SINGLETON_DECLARATION(T) ACE_IMPORT_SINGLETON_DECLARATION (T)
+          #    define FOOBAR_SINGLETON_INSTANTIATION(T)
+          #  endif /* FOOBAR_BUILD_DLL */
+          #else /* ! FOOBAR_HAS_DLL */
+          #  define FOOBAR_Export
+          #  define FOOBAR_SINGLETON_DECLARATION(T)
+          #  define FOOBAR_SINGLETON_INSTANTIATION(T)
+          #endif /* FOOBAR_HAS_DLL */
 
-	  Be sure to include "ace/OS.h" before these definitions so that
-	  the macros they use will be properly initialized.  After you've
-	  done this, on Win32, define "FOOBAR_HAS_DLL=1" if you want to
-	  build DLL, define it as "FOOBAR_HAS_DLL=0" if you want to build
-	  static library.  In your library project file, you must define
-	  the directives FOOBAR_BUILD_DLL and decorate classes/objects you
-	  want to export with FOOBAR_Export so that they can be declared
-	  automatically according whether you are building/linking with
-	  static library or dynamic library.
+          Be sure to include "ace/OS.h" before these definitions so that
+          the macros they use will be properly initialized.  After you've
+          done this, on Win32, define "FOOBAR_HAS_DLL=1" if you want to
+          build DLL, define it as "FOOBAR_HAS_DLL=0" if you want to build
+          static library.  In your library project file, you must define
+          the directives FOOBAR_BUILD_DLL and decorate classes/objects you
+          want to export with FOOBAR_Export so that they can be declared
+          automatically according whether you are building/linking with
+          static library or dynamic library.
 
 Thu Nov 13 05:47:42 1997  David L. Levine  <levine@cs.wustl.edu>
 
