@@ -40,6 +40,12 @@ TAO_POA::objectkey_prefix [TAO_POA::TAO_OBJECTKEY_PREFIX_SIZE] = {
   000
 };
 
+TAO_POA*
+TAO_POA::_tao_poa_downcast(void)
+{
+  return this;
+}
+
 #if (TAO_HAS_MINIMUM_POA == 0)
 
 PortableServer::ThreadPolicy_ptr
@@ -680,7 +686,7 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
             this->server_object_->_default_POA (ACE_TRY_ENV);
           ACE_CHECK;
 
-          tao_poa = ACE_dynamic_cast (TAO_POA *, poa.in ());
+          tao_poa = poa->_tao_poa_downcast();
           PortableServer::ObjectId_var id =
             tao_poa->servant_to_id_i (this->server_object_, ACE_TRY_ENV);
           ACE_CHECK;
