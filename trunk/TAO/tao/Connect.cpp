@@ -274,7 +274,7 @@ TAO_Server_Connection_Handler::handle_locate (TAO_InputCDR &input,
       // The proper Locacte_Reply will tell the client what is going on.
 
       // // Remove the exception
-      // env.clear ();
+      env.clear ();
     }
 
   // Create the response.
