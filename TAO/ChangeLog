@@ -1,3 +1,8 @@
+Tue May 13 09:48:26 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* docs/Options_new.html: A new file whose contents cold replace
+	  the contents in our canonical Options.html page.
+
 Tue May 13 09:48:42 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/IFR_Service/ifr_adding_visitor.cpp:
