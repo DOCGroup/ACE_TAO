@@ -44,15 +44,9 @@ class ACE_Allocator;
 class TAO_OutputCDR;
 class TAO_InputCDR;
 
-#if defined (__Lynx__)
-
-// LynxOS uses macro THREAD_CANCELLED internally, so it must
-// be undefined to avoid compilation errors
-#if defined (THREAD_CANCELLED)
+#if defined (ACE_HAS_PREDEFINED_THREAD_CANCELLED_MACRO)
 #undef THREAD_CANCELLED
-#endif /* THREAD_CANCELLED */
-
-#endif /*__Lynx__ */
+#endif /* ACE_HAS_PREDEFINED_THREAD_CANCELLED_MACRO */
 
 // This is already done in orbconf.h. But this file is totally
 // decoupled from its contents that we have to do this here. Including
