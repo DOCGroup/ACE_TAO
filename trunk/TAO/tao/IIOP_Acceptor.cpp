@@ -53,6 +53,7 @@ TAO_IIOP_Acceptor::TAO_IIOP_Acceptor (CORBA::Boolean flag)
     port_span_ (1),
     hosts_ (0),
     endpoint_count_ (0),
+    hostname_in_ior_ (0),
     version_ (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR),
     orb_core_ (0),
     lite_flag_ (flag),
@@ -367,11 +368,28 @@ TAO_IIOP_Acceptor::open (TAO_ORB_Core *orb_core,
 
   this->hosts_[0] = 0;
 
-  if (this->hostname (orb_core,
-                      addr,
-                      this->hosts_[0],
-                      specified_hostname) != 0)
-    return -1;
+  if (this->hostname_in_ior_ != 0)
+    {
+      if (TAO_debug_level > 2)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("Overriding address in IOR with %s\n"),
+                      this->hostname_in_ior_));
+        }
+      if (this->hostname (orb_core,
+                          addr,
+                          this->hosts_[0],
+                          this->hostname_in_ior_) != 0)
+        return -1;
+    }
+  else
+    {
+      if (this->hostname (orb_core,
+                          addr,
+                          this->hosts_[0],
+                          specified_hostname) != 0)
+        return -1;
+    }
 
   // Copy the addr.  The port is (re)set in
   // TAO_IIOP_Acceptor::open_i().
@@ -704,10 +722,27 @@ TAO_IIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core)
           if_addrs[i].get_ip_address() == INADDR_LOOPBACK)
         continue;
 
-      if (this->hostname (orb_core,
-                          if_addrs[i],
-                          this->hosts_[host_cnt]) != 0)
-        return -1;
+      if (this->hostname_in_ior_ != 0)
+        {
+          if (TAO_debug_level > 2)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("Overriding address in IOR with %s\n"),
+                          this->hostname_in_ior_));
+            }
+          if (this->hostname (orb_core,
+                              if_addrs[i],
+                              this->hosts_[host_cnt],
+                              this->hostname_in_ior_) != 0)
+            return -1;
+        }
+      else
+        {
+          if (this->hostname (orb_core,
+                              if_addrs[i],
+                              this->hosts_[host_cnt]) != 0)
+            return -1;
+        }
 
       // Copy the addr.  The port is (re)set in
       // TAO_IIOP_Acceptor::open_i().
@@ -876,6 +911,10 @@ TAO_IIOP_Acceptor::parse_options (const char *str)
                                   -1);
 
               this->port_span_ = ACE_static_cast (u_short, range);
+            }
+          else if (name == "hostname_in_ior")
+            {
+              this->hostname_in_ior_ = value.rep ();
             }
           else
             ACE_ERROR_RETURN ((LM_ERROR,
