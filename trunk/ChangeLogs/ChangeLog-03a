@@ -1,10 +1,20 @@
+Thu Dec  7 02:31:44 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/config-WinCE.h:
+
+          Disabled inlining for SH3 Release configuration.  The SH3 compiler
+          has problems with inlined functions (in this case, ACE_OS::dlerror's
+          static variable was staying unresolved).  Thanks to Ricardo Chan 
+          <ricchan@nortelnetworks.com> for pointing this out to me. 
+
 Thu Dec  7 03:33:49 2000  Marina Spivak  <marina@cs.wustl.edu>
 
 	* bin/auto_run_tests.lst:
 
 	  Added RTCORBA MT test.
 
-Wed Dec 06 19:52:42 2000  Darrell Brunsch <brunsch@uci.edu>
+Wed Dec  6 19:52:42 2000  Darrell Brunsch <brunsch@uci.edu>
+
 
         * ace/Auto_Ptr.i:
 
