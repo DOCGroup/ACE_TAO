@@ -19,8 +19,6 @@ SHOBJ   = $(addsuffix .so,$(FILES))
 
 LIBS    += $(ACELIB)
 
-LDLIBS  = -lClient_Test
-
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 
 BIN2    = main
