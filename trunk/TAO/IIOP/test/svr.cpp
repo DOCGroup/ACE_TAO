@@ -13,15 +13,8 @@
 #include <string.h>
 #include <ace/Get_Opt.h>
 
-#if	unix
-#	include	<unistd.h>		// for getopt on some systems
-
-#else	// windows
-
-#endif
-
 #include	"cubit.hh"
-#include	<corba/toa.hh>
+#include	<corba/boa.hh>
 
 
 //
@@ -31,11 +24,10 @@
 
 //
 // XXX this stuff is ugly but needed, since this exposes features
-// (IIOP forwarding) that TOA doesn't provide.
+// (IIOP forwarding) that BOA doesn't provide.
 //
 #include	<connmgr.hh>
-#include	<tcpoa.hh>
-
+#include	<roa.hh>
 
 // extern char 	*optarg;	// missing on some platforms
 
@@ -220,7 +212,7 @@ main (
 {
   CORBA_Environment	env;
   CORBA_ORB_ptr	orb_ptr;
-  TCP_OA_ptr		oa_ptr;
+  ROA_ptr		oa_ptr;
   CORBA_Boolean	do_fork = CORBA_B_FALSE;
   CORBA_Boolean	do_threads = CORBA_B_FALSE;
   CORBA_String	key = (CORBA_String) "key0";
@@ -273,7 +265,7 @@ main (
       continue;
 	
     case 't':			// create thread-per-connection
-      params->usingThreads(1);
+      params->using_threads(1);
       continue;
 
       // XXX set debug filters ...
@@ -310,7 +302,7 @@ main (
       svraddr.set(oa_name);
     }
 
-  oa_ptr = TCP_OA::init (orb_ptr, svraddr, env);
+  oa_ptr = ROA::init (orb_ptr, svraddr, env);
   if (env.exception () != 0) {
     print_exception (env.exception (), "OA init");
     return 1;
@@ -318,22 +310,6 @@ main (
   // Register the OA with ACE_ROA
   params->oa(oa_ptr);		// Should this be done in TCP_OA's CTOR?
 
-#if 0
-  // This is the old call and syntax
-  return OA_listen (orb_ptr, oa_ptr, key, idle, do_fork, do_threads);
-  int
-    OA_listen (
-	       CORBA_ORB_ptr	orb_ptr,
-	       TCP_OA_ptr		oa_ptr,
-	       CORBA_String	key,
-	       int			idle,
-	       CORBA_Boolean	do_fork,
-	       CORBA_Boolean	do_threads
-	       )
-    {
-      return 0;
-    }
-#endif
   //
   // Create the object we'll be implementing.
   //
@@ -419,12 +395,15 @@ main (
   // connection. 
   //
   int terminationStatus = 0;
-#if defined(USE_ACE_EVENT_HANDLING)
+
   // Set the callbacks for our implementation (cheesy!!!)
   params->upcall(tcpoa_dispatch);
   params->forwarder(fwd_ref ? tcpoa_forwarder : 0);
   params->context(&obj_key);
 
+#if !defined(USE_HOMEBREW_EVENT_LOOP)
+  ACE_Service_Config::run_reactor_event_loop();
+#else
   while (1)
     {
       int result = params->reactor()->handle_events ();
@@ -435,36 +414,6 @@ main (
 	  break;
 	}
     }
-#else
-  while (oa_ptr->shutting_down () != CORBA_B_TRUE) {
-    if (idle == -1)
-      oa_ptr->get_request (tcpoa_dispatch,
-			   fwd_ref ? tcpoa_forwarder : 0,
-			   do_threads, &obj_key, 0, env);
-    else {
-      timeval		tv;
-
-      tv.tv_sec = idle;
-      tv.tv_usec = 0;
-      oa_ptr->get_request (tcpoa_dispatch,
-			   fwd_ref ? tcpoa_forwarder : 0,
-			   do_threads, &obj_key, &tv, env);
-    }
-
-    //
-    // XXX "env2" should be checked to see if TypeCode::id() reported
-    // an exception ...
-    //
-    CORBA_Environment	env2;
-
-    if (env.exception () != 0
-	&& ACE_OS::strcmp ((char *)env.exception ()->id (),
-			   _tc_CORBA_INITIALIZE->id (env2)) == 0) {
-      print_exception (env.exception (), "TCP_OA::get_request");
-      return 1;
-    }
-    env.clear ();
-  }
 #endif
 
   //

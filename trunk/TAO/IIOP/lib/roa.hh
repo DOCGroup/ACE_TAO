@@ -1,94 +1,198 @@
 /* This may look like C, but it's really -*- C++ -*- */
 
-#ifndef ACE_ROA_GLOBALS
-#  define ACE_ROA_GLOBALS
+// = LIB
+//     TAO
+// = AUTHOR
+//     Chris Cleeland & David Brownell
+// = FILENAME
+//     roa.hh
+// = VERSION
+//     $Id$
 
-#  include <ace/Reactor.h>
-#  include <ace/Acceptor.h>
-#  include <ace/SOCK_Acceptor.h>
-#  include <ace/Synch.h>
-#  include <ace/Svc_Handler.h>
+#ifndef ACE_ROA_H
+#  define ACE_ROA_H
+
+#  include <ace/INET_Addr.h>
 
 #  if defined(__IIOP_BUILD)
-#    include "toa.hh"
+#    include "boa.hh"
 #  else
-#    include <corba/toa.hh>
+#    include <corba/boa.hh>
 #  endif
 
-class TCP_OA;
-typedef TCP_OA* TCP_OA_ptr;
+class ACE_Svc_Export ROA;
+typedef ROA* ROA_ptr;
 
-// Provide a namespace/scope for singletons and other things
-// WARNING!  Not thread-safe yet!
-class ROA_Parameters
+#  include "params.hh"
+#  include "connect.hh"
+
+// Determine the appropriate default thread flags, based on system.
+// When I put the concurrency strategy into the factory, then this will
+// go away b/c the concurrency strategy will do this appropriate
+// for each platform!
+#  if defined(linux)
+#    define ROA_DEFAULT_THREADFLAGS  (THR_DETACHED)
+#  elif defined(WIN32)
+#    define ROA_DEFAULT_THREADFLAGS  (THR_DETACHED|THR_SCOPE_PROCESS)
+#  elif defined(sparc)
+#    define ROA_DEFAULT_THREADFLAGS  (THR_DETACHED|THR_SCOPE_PROCESS)
+#  else
+#    define ROA_DEFAULT_THREADFLAGS  (THR_DETACHED)
+#  endif
+
+extern const IID IID_ROA;
+
+struct Dispatch_Context
+// = TITLE
+//    Structure holding information necessary for GIOP functionality.
+// = DESCRIPTION
+// Data structure passed as "context" to the GIOP code, which then
+// calls back one of the two helper routines as part of handling any
+// particular incoming request.
+{
+  BOA::dsi_handler	skeleton;
+				// Function pointer to skeleton glue
+				// function.
+  void (*check_forward) (CORBA_OctetSeq& key,
+			 CORBA_Object_ptr& fwd_ref,
+			 void* context,
+			 CORBA_Environment& env);
+				// Function to check if the request
+				// should be forwarded (whatever that
+				// means)
+  void* context;
+				// Who knows...another overloading of
+				// the word "context"
+  ROA_ptr oa;
+				// This should really be a BOA_ptr,
+				// but currently it doesn't support
+				// the one call we need to make
+				// through here: <handle_message()>.
+  ACE_SOCK_Stream endpoint;
+				// The communication endpoint from
+				// which the data needs to be read.
+				// NOTE!!!  This type MUST match that
+				// used for ROA_Handler!
+};
+
+class ACE_Svc_Export ROA : public BOA
+// = TITLE
+//     Realtime Object Adapter class.
 {
 public:
-  typedef TOA::dsi_handler UpcallFunc;
-  typedef void (*ForwardFunc)(CORBA_OctetSeq&, CORBA_Object_ptr&, void*, CORBA_Environment&);
+  // = ROA Support
+  static ROA_ptr init(CORBA_ORB_ptr which_orb, 
+		      ACE_INET_Addr& addr,
+		      CORBA_Environment& env);
+				// NON-STANDARD CALL.
+				// According to CORBA V2.0, this
+				// functionality should really be
+				// <ROA_ptr
+				// ORB::ROA_init(argc,argv,ident)>.
+				//
+				// The current signature is residue
+				// from when this code was part of
+				// the SunSoft IIOP reference
+				// implementation.
 
-  static ROA_Parameters* instance();
 
-  ACE_Reactor* reactor();
-  void reactor(ACE_Reactor* r);
+  void clean_shutdown(CORBA_Environment& env);
+				// NON-STANDARD CALL.
+				// OA user asks for a clean shutdown
+				// of the OA after currently active
+				// calls complete.  OA "requester"
+				// (calls <get_request>) asks if we're
+				// shutting down, and if so closes
+				// down transport cleanly.
+  CORBA_Boolean shutting_down();
+				// NON-STANDARD CALL.
+				// Returns <TRUE> if we're in the process
+				// of shutting down.
 
-  int usingThreads();
-  void usingThreads(int i);
 
-  // This should probably be replaced with fields that are a bit more
-  // meaningful, but I need to dig through the code to find out what
-  // "more meaningful" really means first.
-  void* context();
-  void context(void* p);
+  CORBA_OctetSeq* get_key(CORBA_Object_ptr obj,
+			  CORBA_Environment& env);
+				// NON-STANDARD CALL.
+				// When dispatching a request to an
+				// object, you need to be able to get
+				// the object key you used to create
+				// the reference.  It's the main way
+				// servers distinguish two object
+				// references from each other.
+    
+  CORBA_ORB_ptr orb() const;
+				// Returns pointer to the ORB with which
+				// this OA is associated.
+				// SHOULD PROBABLY MOVE TO BOA!
 
-  // In our first test case, this will always be set to tcp_oa_dispatcher
-  UpcallFunc upcall();
-  void upcall(UpcallFunc f);
+#if defined(ROA_NEED_REQ_KEY)
+  CORBA_OctetSeq* get_target_key(CORBA_Environment& env);
+  CORBA_Principal_ptr get_client_principal(CORBA_Environment& env);
+#endif
 
-  // In our first test case, this will always be set to
-  // tcp_oa_forwarder (even though we don't understand what the hell
-  // it does!)
-  ForwardFunc forwarder();
-  void forwarder(ForwardFunc f);
+  int handle_message (Dispatch_Context& context,
+		      CORBA_Environment& env);
+				// Reads incoming GIOP messages,
+				// dispatches them, and sends back any
+				// required replies.  Returns 1 for
+				// success, 0==EOF, -1==error.
 
-  TCP_OA_ptr oa();
-  void oa(TCP_OA_ptr anOA);
+  // = BOA Support
+  CORBA_Object_ptr create(CORBA_OctetSeq& obj_id,
+			  CORBA_String type_id,
+			  CORBA_Environment& env);
 
-  unsigned int threadFlags();
-  void threadFlags(unsigned int f);
+  void register_dir(BOA::dsi_handler handler,
+		    void* context,
+		    CORBA_Environment& env);
+    
+  void get_request(CORBA_Boolean use_threads,
+		   struct timeval* tvp,	// should be an ACE_Time_Value
+		   CORBA_Environment& env);
+  void get_request(BOA::dsi_handler,
+		   void check_forward(CORBA_OctetSeq&,CORBA_Object_ptr&,void*,CORBA_Environment&),
+		   CORBA_Boolean,
+		   void*,
+		   timeval*,
+		   CORBA_Environment&);
+  void please_shutdown(CORBA_Environment& env);
 
-protected:
-  ROA_Parameters();
+  // = COM IUnknown Support
+  //     The <__stdcall> needs to remain here until we get rid of COM crap.
+  ULONG __stdcall AddRef ();
+  ULONG __stdcall Release ();
+  HRESULT __stdcall QueryInterface (REFIID riid, void** ppv);
 
 private:
-  static ROA_Parameters* _instance;
+  ACE_INET_Addr addr;		// The address of the endpoint
+				// on which we're listening for
+				// connections and requests.
+  CORBA_Boolean do_exit;	// Flag set by <clean_shutdown()>
+  ROA_Acceptor clientAcceptor_;	// The acceptor listening for requests.
+  CORBA_ORB_ptr _orb;		// Pointer to our ORB.
 
-  ACE_Reactor* reactor_;
-  int usingThreads_;
-  void* context_p_;
-  UpcallFunc upcall_;
-  ForwardFunc forwarder_;
-  TCP_OA_ptr oa_;
-  unsigned int threadFlags_;
+  u_int call_count;		// Used by COM stuff
+  u_int refcount;		// Used by COM stuff
+
+  BOA::dsi_handler skeleton;	// Skeleton function
+  void* context;		// Who knows!?!
+
+  ACE_Thread_Mutex lock_;	// Locks critical sections within ROA code methods (was tcpoa_mutex)
+  ACE_Thread_Mutex com_lock_;	// Locks critical sections in COM-related code (was tcpoa_lock)
+#if defined(ROA_NEED_REQ_KEY)
+  ACE_thread_key_t req_key_;	// Key into TSS for a thread's request header
+#endif
+
+  ROA(CORBA_ORB_ptr orb_arg,
+      ACE_INET_Addr& rendesvous,
+      CORBA_Environment& env);
+  virtual ~ROA();
+
+  // Copy and assignment:  just say no
+  ROA (const ROA& src);
+  ROA& operator=(const ROA& src);
 };
 
-class ROA_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
-{
-public:
-  ROA_Handler();
-  virtual int open(void*);
-  virtual int svc(void);
-
-  ROA_Parameters* params();
-  void params(ROA_Parameters* p);
-
-protected:
-  virtual int handle_input(ACE_HANDLE = ACE_INVALID_HANDLE);
-  virtual int handle_close(ACE_HANDLE, ACE_Reactor_Mask);
-
-  ROA_Parameters* params_;
-};
-
-typedef ACE_Acceptor<ROA_Handler, ACE_SOCK_ACCEPTOR> ROA_Acceptor;
 
 #  if defined(__ACE_INLINE__)
 #    include "roa.i"
