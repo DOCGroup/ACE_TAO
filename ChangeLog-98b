@@ -1,3 +1,10 @@
+Sat May  9 20:09:13 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Thread_Manager.h: Changed the type of lock used by
+	  <thread_desc_freelist_> to ACE_SYNCH_MUTEX.  Or else, it won't
+	  compile on platforms that doesn't support thread.  Thanks to
+	  Woody Zenfell <woody@arl.wustl.edu> for reporting this.
+
 Fri May 08 22:29:01 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * ace/SOCK_Dgram_Mcast.cpp (subscribe): CE UNICODE related fix.
