@@ -26,7 +26,12 @@ const int ACE_ATM_Addr::SELECTOR = 0x99;
 // Default constructor
 
 ACE_ATM_Addr::ACE_ATM_Addr (void)
+#if defined (ACE_HAS_FORE_ATM_XTI)
   : ACE_Addr (AF_ATM,
+#else
+  : ACE_Addr (AF_UNSPEC,
+#endif /* ACE_HAS_FORE_ATM_XTI */
+
               sizeof this->atm_addr_)
 {
   // ACE_TRACE ("ACE_ATM_Addr::ACE_ATM_Addr");
@@ -41,14 +46,12 @@ ACE_ATM_Addr::ACE_ATM_Addr (void)
 ACE_ATM_Addr::ACE_ATM_Addr (const ACE_ATM_Addr &sap)
 {
   ACE_TRACE ("ACE_ATM_Addr::ACE_ATM_Addr");
-  this->init ();
   this->set (sap);
 }
 
 ACE_ATM_Addr::ACE_ATM_Addr (const ATMSAPAddress *sap)
 {
   ACE_TRACE ("ACE_ATM_Addr::ACE_ATM_Addr");
-  this->init ();
   this->set (sap);
 }
 
@@ -56,14 +59,13 @@ ACE_ATM_Addr::ACE_ATM_Addr (const ASYS_TCHAR sap[])
 {
   ACE_TRACE ("ACE_ATM_Addr::ACE_ATM_Addr");
 
-  // @@ Joe, you might consider putting the call to init() into set().
-  this->init ();
   this->set (sap);
 }
 
 void
 ACE_ATM_Addr::init (void)
 {
+#if defined (ACE_HAS_FORE_ATM_XTI)
   // Note: this approach may be FORE implementation-specific.  When we
   // bind with tag_addr ABSENT and tag_selector PRESENT, only the
   // selector (i.e. address[19]) is used by the TP.  The rest of the
@@ -88,6 +90,8 @@ ACE_ATM_Addr::init (void)
   ACE_OS::memcpy (atm_addr_.sap.t_atm_sap_appl.ID.user_defined_ID,
                   BHLI_MAGIC,
                   sizeof atm_addr_.sap.t_atm_sap_appl.ID);
+#else
+#endif /* ACE_HAS_FORE_ATM_XTI */
 }
 
 int
@@ -98,9 +102,10 @@ ACE_ATM_Addr::set (const ACE_ATM_Addr &sap)
   this->ACE_Addr::base_set (sap.get_type (),
                             sap.get_size ());
 
+#if defined (ACE_HAS_FORE_ATM_XTI)
   ACE_ASSERT (sap.get_type () == AF_ATM);
+#endif /* ACE_HAS_FORE_ATM_XTI */
 
-  // It's ok to make the copy.
   (void) ACE_OS::memcpy ((void *) &this->atm_addr_,
                          (void *) &sap.atm_addr_,
                          sizeof this->atm_addr_);
@@ -112,10 +117,13 @@ ACE_ATM_Addr::set (const ATMSAPAddress *sap)
 {
   ACE_TRACE ("ACE_ATM_Addr::set");
 
+#if defined (ACE_HAS_FORE_ATM_XTI)
   this->ACE_Addr::base_set (AF_ATM,
+#else
+  this->ACE_Addr::base_set (AF_UNSPEC,
+#endif /* ACE_HAS_FORE_ATM_XTI */
                             sizeof (*sap));
 
-  // It's ok to make the copy.
   (void) ACE_OS::memcpy ((void *) &this->atm_addr_,
                          (void *) sap,
                          sizeof this->atm_addr_);
@@ -127,8 +135,10 @@ ACE_ATM_Addr::set (const ASYS_TCHAR address[])
 {
   ACE_TRACE ("ACE_ATM_Addr::set");
 
+#if defined (ACE_HAS_FORE_ATM_XTI)
   atm_addr_.sap.t_atm_sap_addr.SVE_tag_addr =
     (int8_t) T_ATM_PRESENT;
+#endif /* ACE_HAS_FORE_ATM_XTI */
   return this->string_to_addr (address);
 }
 
@@ -139,8 +149,13 @@ ACE_ATM_Addr::string_to_addr (const ASYS_TCHAR sap[])
 {
   ACE_TRACE ("ACE_ATM_Addr::string_to_addr");
 
+#if defined (ACE_HAS_FORE_ATM_XTI)
   this->ACE_Addr::base_set (AF_ATM,
+#else
+  this->ACE_Addr::base_set (AF_UNSPEC,
+#endif /* ACE_HAS_FORE_ATM_XTI */
                             sizeof this->atm_addr_);
+#if defined (ACE_HAS_FORE_ATM_XTI)
   struct hostent *entry;
   struct atmnsap_addr *nsap;
 
@@ -163,12 +178,15 @@ ACE_ATM_Addr::string_to_addr (const ASYS_TCHAR sap[])
                       ATMNSAP_ADDR_LEN);
     }
   else
+#endif /* ACE_HAS_FORE_ATM_XTI */
     {
       errno = EINVAL;
       return -1;
     }
 
+#if defined (ACE_HAS_FORE_ATM_XTI)
   return 0;
+#endif /* ACE_HAS_FORE_ATM_XTI */
 }
 
 // Transform the current address into string format.
@@ -179,6 +197,7 @@ ACE_ATM_Addr::addr_to_string (ASYS_TCHAR addr[],
 {
   ACE_TRACE ("ACE_ATM_Addr::addr_to_string");
 
+#if defined (ACE_HAS_FORE_ATM_XTI)
   ASYS_TCHAR buffer[MAXNAMELEN + 1];
   struct atmnsap_addr nsap;
   ACE_OS::memcpy (nsap.atmnsap,
@@ -197,6 +216,9 @@ ACE_ATM_Addr::addr_to_string (ASYS_TCHAR addr[],
     ACE_OS::strcpy(addr, buffer);
 
   return 0;
+#else
+  return -1;
+#endif /* ACE_HAS_FORE_ATM_XTI */
 }
 
 const ASYS_TCHAR *
@@ -216,7 +238,12 @@ ACE_ATM_Addr::set_addr (void *addr, int len)
 {
   ACE_TRACE ("ACE_ATM_Addr::set_addr");
 
-  this->ACE_Addr::base_set (AF_ATM, len);
+#if defined (ACE_HAS_FORE_ATM_XTI)
+  this->ACE_Addr::base_set (AF_ATM,
+#else
+  this->ACE_Addr::base_set (AF_UNSPEC,
+#endif /* ACE_HAS_FORE_ATM_XTI */
+                            len);
   ACE_OS::memcpy ((void *) &this->atm_addr_,
                   (void *) addr, len);
 }
@@ -239,7 +266,11 @@ ACE_ATM_Addr::operator == (const ACE_ATM_Addr &sap) const
 
   return ACE_OS::memcmp (&atm_addr_,
                          &sap.atm_addr_,
+#if defined (ACE_HAS_FORE_ATM_XTI)
                          sizeof (struct ATMSAPAddress)) == 0;
+#else
+                         sizeof (ATMSAPAddress)) == 0;
+#endif /* ACE_HAS_FORE_ATM_XTI */
 }
 
 void
@@ -271,6 +302,8 @@ int
 ACE_ATM_Addr::get_local_address (ACE_HANDLE fd,
                                  u_char addr[])
 {
+#if defined (ACE_HAS_FORE_ATM_XTI)
+                         sizeof (struct ATMSAPAddress)) == 0;
   ATMSAPAddress local_addr;
   struct t_bind boundaddr;
 
@@ -287,6 +320,9 @@ ACE_ATM_Addr::get_local_address (ACE_HANDLE fd,
                   local_addr.sap.t_atm_sap_addr.address,
                   ATMNSAP_ADDR_LEN);
   return 0;
+#else
+  return -1;
+#endif /* ACE_HAS_FORE_ATM_XTI */
 }
 
 char *
@@ -295,6 +331,7 @@ ACE_ATM_Addr::construct_options(ACE_HANDLE fd,
                                 int flags,
                                 long *optsize)
 {
+#if defined (ACE_HAS_FORE_ATM_XTI)
   struct t_opthdr *popt;
   char *buf;
   int qos_cells;
@@ -440,4 +477,7 @@ ACE_ATM_Addr::construct_options(ACE_HANDLE fd,
   *optsize = (char *) popt - buf;
 
   return buf;
+#else
+  return 0;
+#endif /* ACE_HAS_FORE_ATM_XTI */
 }

@@ -25,6 +25,10 @@
 
 #include "ace/Addr.h"
 
+#if !defined (ACE_HAS_FORE_ATM_XTI)
+typedef int ATMSAPAddress;
+#endif /* ACE_HAS_FORE_ATM_XTI */
+
 class ACE_Export ACE_ATM_Addr : public ACE_Addr
 {
   // = TITLE
