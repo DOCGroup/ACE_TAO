@@ -13,8 +13,6 @@ Thu May  7 15:29:46 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
           <brunsch@cs.wustl.edu> for catching this one before we even
           tried it :-)
 
-Thu May  7 15:17:30 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
-
         * Makefile:
         * orbsvcs/README:
           The README file is generated from the docs/orbsvcs.html page
@@ -37,18 +35,9 @@ Thu May  7 15:17:30 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
           Updated the document to reflect the new location of the Logging
           Service implementation.
 
-Thu May  7 14:28:01 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
-
-        * Moved the explanation about adding IDL files to MSVC++ from the
-          docs/releasenotes/index.html file to the TAO-INSTALL.html file.
-
-Thu May  7 12:56:55 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
-
         * docs/orbsvcs.html:
           Updated the documentation on the directory hierarchy and
           contents.
-
-Thu May  7 11:34:13 1998  Carlos O'Ryan  <coryan@swarm.cs.wustl.edu>
 
         * orbsvcs/tests/EC_Multiple/EC_Multiple.cpp:
           Fixed template instantiation pragmas.
@@ -63,6 +52,11 @@ Thu May  7 11:34:13 1998  Carlos O'Ryan  <coryan@swarm.cs.wustl.edu>
         * tao/encode.cpp:
         * tao/Server_Request.cpp:
           Fixed several warnings, mostly unused variables.
+
+Thu May  7 14:28:01 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+        * Moved the explanation about adding IDL files to MSVC++ from the
+          docs/releasenotes/index.html file to the TAO-INSTALL.html file.
 
 Thu May 07 11:19:25 1998  David L. Levine  <levine@cs.wustl.edu>
 
