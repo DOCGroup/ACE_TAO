@@ -1,3 +1,21 @@
+Thu Apr 22 20:45:27 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ASNMP/asnmp/address.cpp:
+	* ASNMP/asnmp/address.h:
+	* ASNMP/asnmp/octet.cpp:
+	* ASNMP/asnmp/octet.h:
+	* ASNMP/asnmp/oid.cpp:
+	* ASNMP/asnmp/oid.h:
+	* ASNMP/asnmp/target.cpp:
+	* ASNMP/asnmp/target.h:
+	* ASNMP/asnmp/vb.cpp:
+	* ASNMP/asnmp/vb.h:
+	* ASNMP/tests/Octet_Test.cpp:
+	* ASNMP/tests/Oid_Test.cpp:
+
+	  Changed all return types for equality, relational and logical
+	  operators to "bool", as is the norm for modern C++.
+
 Fri Apr 16 16:53:20 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tests/Gauge_Test.cpp (TestGuage):

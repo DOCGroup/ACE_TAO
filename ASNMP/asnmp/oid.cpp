@@ -270,76 +270,76 @@ Oid& Oid::operator+=( const char *a)
 
 //=============[ int operator == oid,oid ]=================================
 // equivlence operator overloaded
-int operator==( const Oid &lhs, const Oid &rhs)
+bool operator==( const Oid &lhs, const Oid &rhs)
 {
   // ensure same len, then use left_comparison
   if (rhs.length() != lhs.length())
-    return 0;
+    return false;
   if( lhs.left_comparison( rhs.length(), rhs) == 0)
-    return 1;
+    return true;
   else
-    return 0;
+    return false;
 }
 
 //==============[ operator!=( Oid &x,Oid &y) ]=============================
 //not equivlence operator overloaded
-int operator!=( const Oid &lhs,const Oid &rhs)
+bool operator!=( const Oid &lhs,const Oid &rhs)
 {
   return (!(lhs == rhs));
 }
 
 //==============[ operator<( Oid &x,Oid &y) ]=============================
 // less than < overloaded
-int operator<( const Oid &lhs,const Oid &rhs)
+bool operator<( const Oid &lhs,const Oid &rhs)
 {
   int result;
 
   // call left_comparison with the current
   // Oidx, Oidy and len of Oidx
   if ((result = lhs.left_comparison( rhs.length(), rhs)) < 0)
-    return 1;
+    return true;
   else if (result > 0)
-    return 0;
+    return false;
 
   else{
     // if here, equivalent substrings, call the shorter one <
     if (lhs.length() < rhs.length())
-      return 1;
+      return true;
     else
-      return 0;
+      return false;
   }
 }
 
 //==============[ operator<=( Oid &x,Oid &y) ]=============================
 // less than <= overloaded
-int operator<=( const Oid &x,const Oid &y)
+bool operator<=( const Oid &x,const Oid &y)
 {
   if ( (x < y) || (x == y) )
-    return 1;
+    return true;
   else
-    return 0;
+    return false;
 }
 
 //==============[ operator>( Oid &x,Oid &y) ]=============================
 // greater than > overloaded
-int operator>( const Oid &x,const Oid &y)
+bool operator>( const Oid &x,const Oid &y)
 {
   // just invert existing <=
   if (!(x<=y))
-    return 1;
+    return true;
   else
-    return 0;
+    return false;
 }
 
 //==============[ operator>=( Oid &x,Oid &y) ]=============================
 // greater than >= overloaded
-int operator>=( const Oid &x,const Oid &y)
+bool operator>=( const Oid &x,const Oid &y)
 {
   // just invert existing <
   if (!(x<y))
-    return 1;
+    return true;
   else
-    return 0;
+    return false;
 }
 
 //===============[Oid::oidval ]=============================================

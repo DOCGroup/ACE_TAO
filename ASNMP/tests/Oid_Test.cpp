@@ -51,12 +51,12 @@ ACE_RCSID(tests, Oid_Test, "$Id$")
 
   SmiUINT32 get_syntax();
   Oid& operator=( const Oid &oid);
-  int operator==( const Oid &lhs,const Oid &rhs);
-  int operator!=( const Oid &lhs,const Oid &rhs);
-  int operator<( const Oid &lhs,const Oid &rhs);
-  int operator<=( const Oid &lhs,const Oid &rhs);
-  int operator>( const Oid &lhs,const Oid &rhs);
-  int operator>=( const Oid &lhs,const Oid &rhs);
+  bool operator==( const Oid &lhs,const Oid &rhs);
+  bool operator!=( const Oid &lhs,const Oid &rhs);
+  bool operator<( const Oid &lhs,const Oid &rhs);
+  bool operator<=( const Oid &lhs,const Oid &rhs);
+  bool operator>( const Oid &lhs,const Oid &rhs);
+  bool operator>=( const Oid &lhs,const Oid &rhs);
   Oid& operator+=( const char *a);
   Oid& operator+=( const unsigned long i);
   Oid& operator+=( const Oid &o);
