@@ -1,3 +1,20 @@
+Thu Mar 01 07:07:03 2001  Christopher Kohlhoff  <chris@kohlhoff.com>
+
+        * include/makeinclude/recurse.bor:
+          Added support for makefiles which contain multiple targets.
+
+        * examples/IPC_SAP/SOCK_SAP/Makefile.bor:
+        * examples/Log_Msg/Makefile.bor:
+        * examples/Map_Manager/Makefile.bor:
+        * examples/Mem_Map/file-reverse/Makefile.bor:
+        * examples/RMCast/Send_File/Makefile.bor:
+        * examples/Service_Configurator/IPC-tests/client/Makefile.bor:
+        * examples/Threads/Makefile.bor:
+        * netsvcs/clients/Logger/Makefile.bor:
+        * tests/Makefile.bor:
+        * tests/RMCast/Makefile.bor:
+          Updated to work with new multi-target makefile support.
+
 Wed Feb 28 22:58:50 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * html/index.html:
