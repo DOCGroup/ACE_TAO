@@ -23,16 +23,16 @@
 // The following ASSERT macro is courtesy of Alexandre Karev
 // <akg@na47sun05.cern.ch>.
 #if defined (ACE_NDEBUG)
-#define	ACE_ASSERT(x)
+#define ACE_ASSERT(x)
 #else
-#define	ACE_ASSERT(X) \
+#define ACE_ASSERT(X) \
   do { if(!(X)) { \
   int __ace_error = ACE_OS::last_error (); \
   ACE_Log_Msg *ace___ = ACE_Log_Msg::instance (); \
   ace___->set (ASYS_TEXT (__FILE__), __LINE__, -1, __ace_error, ace___->restart (), ace___->msg_ostream ()); \
   ace___->log (LM_ERROR, ASYS_TEXT ("ACE_ASSERT: file %N, line %l assertion failed for '%s'.%a\n"), ASYS_WIDE_STRING (#X), -1); \
   } } while (0)
-#endif	/* ACE_NDEBUG */
+#endif  /* ACE_NDEBUG */
 
 #if defined (ACE_NLOGGING)
 #define ACE_HEX_DUMP(X)
@@ -140,6 +140,9 @@ public:
   static int exists (void);
   // Returns non-null if an ACE_Log_Msg exists for the calling thread.
 
+  static void disable_debug_messages();
+  // Clears the LM_DEBUG flag from the default priority mask used to
+  // initialise ACE_Log_Msg instances.
   ACE_Log_Msg (void);
   // Initialize logger.
 
@@ -147,8 +150,8 @@ public:
   // cleanup logger.
 
   int open (const ASYS_TCHAR *prog_name,
-	    u_long options_flags = ACE_Log_Msg::STDERR,
-	    LPCTSTR logger_key = 0);
+            u_long options_flags = ACE_Log_Msg::STDERR,
+            LPCTSTR logger_key = 0);
   // Initialize the ACE error handling facility.  <prog_name> is the
   // name of the executable program.  <flags> are a bitwise-or of
   // options flags passed to the Logger (see the enum above for the valid
@@ -278,11 +281,11 @@ public:
   void local_host (const ASYS_TCHAR *);
 
   void set (const ASYS_TCHAR *file,
-	    int line,
-	    int op_status = -1,
-	    int errnum = 0,
-	    int restart = 1,
-	    ostream *os = 0);
+            int line,
+            int op_status = -1,
+            int errnum = 0,
+            int restart = 1,
+            ostream *os = 0);
   // Set the line number, file name, operational status, error number,
   // restart flag, and ostream.  This combines all the other set
   // methods into a single method.
@@ -325,9 +328,9 @@ public:
   // sinks.
 
   int log_hexdump (ACE_Log_Priority log_priority,
-		   const char *buffer,
-		   int size,
-		   const ASYS_TCHAR *text = 0);
+                   const char *buffer,
+                   int size,
+                   const ASYS_TCHAR *text = 0);
   // Method to log hex dump.  This is useful for debugging.  Calls
   // <log> to do the actual print, but formats first to make the chars
   // printable.
@@ -403,6 +406,8 @@ private:
   static int instance_count_;
   // Number of existing Log_Msg instances; when 0, delete program/host
   // names
+  static u_long default_priority_mask_;
+  // Priority mask to use for each new instance
 
   static void close (void);
   // For cleanup, at program termination.
