@@ -23,12 +23,14 @@ Static_Log_Message_Receiver<ACE_SYNCH_USE>::log_output (char const *hostname,
                                                         ACE_Log_Record &record,
                                                         ostream *outputfile)
 {
+  if (outputfile != 0)
+    {
 #if defined (ACE_HAS_THREADS)
-  static ACE_SYNCH_MUTEX_T lock_;
-  ACE_Guard<ACE_SYNCH_MUTEX_T> guard (lock_);
+      static ACE_SYNCH_MUTEX_T lock_;
+      ACE_Guard<ACE_SYNCH_MUTEX_T> guard (lock_);
 #endif /* ACE_HAS_THREADS */
-
-  record.print (hostname, 0, (*outputfile) );
+      record.print (hostname, 0, *outputfile);
+    }
 }
 
 #if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
@@ -100,8 +102,11 @@ Log_Message_Receiver_Impl<ACE_SYNCH_USE>::log_output (char const *hostname,
                                                       ACE_Log_Record &record,
                                                       ostream *outputfile)
 {
-  ACE_MT (Guard guard (print_lock_));
-  record.print (hostname, 0, (*outputfile) );
+  if (outputfile != 0)
+    {
+      ACE_MT (Guard guard (print_lock_));
+      record.print (hostname, 0, *outputfile);
+    }
 }
 
 template<ACE_SYNCH_DECL> inline

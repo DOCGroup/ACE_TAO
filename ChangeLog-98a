@@ -1,5 +1,10 @@
 Wed Feb 18 16:07:14 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
+	* netsvcs/lib/Log_Message_Receiver.cpp (log_output): There was a
+ 	  problem where "outputfile" can be NULL, which causes problems
+ 	  when it is dereferenced.  Thanks to Stephen Coy
+ 	  <stevec@magna.com.au> for reporting this.
+
 	* ace/ACE.cpp (ldfind): modified the code to allow it to
  	  consistently return a status indicating whether or not a
  	  potential shared library file was found.  Thanks to Patrick
