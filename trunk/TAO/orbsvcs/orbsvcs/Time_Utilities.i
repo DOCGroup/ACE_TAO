@@ -49,7 +49,7 @@ ORBSVCS_Time::TimeT_to_Time_Value (ACE_Time_Value& lhs,
   ORBSVCS_Time::TimeT_to_hrtime (t, rhs);
 
   lhs.set (ACE_static_cast(ACE_UINT32, t / ACE_ONE_SECOND_IN_NSECS),
-           ACE_static_cast(ACE_UINET32, (t % ACE_ONE_SECOND_IN_NSECS) / 1000));
+           ACE_static_cast(ACE_UINT32, (t % ACE_ONE_SECOND_IN_NSECS) / 1000));
 }
 
 ACE_INLINE ACE_Time_Value
