@@ -639,7 +639,8 @@ The service configurator is now used to load protocol factories.
 &lt;key_string&gt; = &lt;string&gt; | empty_string<br>
 </code></blockquote>
 
-            <code>uiop</code> URL style object references syntax is as:
+            The <code>uiop</code> URL style object references syntax
+            is:
 
 <blockquote><code>
 &lt;uioploc&gt; = "uioploc://"[&lt;addr_list&gt;]["|"&lt;key_string&gt;]<br>
@@ -660,7 +661,8 @@ The service configurator is now used to load protocol factories.
             forward slash is needed to prevent ambiguities of
             where the rendezvous point ends and where the key
             string begins since both may contain forward
-            slashes in them.
+            slashes in them.  The new <code>corbaloc:uiop</code> URL
+            format may also be used.
 	    <p>
             It should be noted that these formats have been superseded
             by the new <code>corbaloc</code>
