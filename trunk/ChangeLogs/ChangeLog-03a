@@ -1,3 +1,9 @@
+Sun May 21 17:11:12 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/Configuration.cpp:
+
+          Fixed some ACE_USES_WCHAR problems.
+
 Sun May 21 12:29:11 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * bin/run_all_list.pm:
