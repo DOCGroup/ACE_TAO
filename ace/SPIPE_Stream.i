@@ -97,7 +97,8 @@ ACE_SPIPE_Stream::send_handle (ACE_HANDLE handle) const
   ACE_TRACE ("ACE_SPIPE_Stream::send_handle");
 #if defined (ACE_HAS_STREAM_PIPES)
   return ACE_OS::ioctl (this->get_handle (), I_SENDFD, (void *) handle);
-#elif defined (ACE_WIN32)
+#elif defined (ACE_WIN32) && \
+      (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0))
   DWORD procID;
   WSAPROTOCOL_INFO protInfo;
   ssize_t res;
@@ -151,7 +152,8 @@ ACE_SPIPE_Stream::recv_handle (ACE_HANDLE &handle) const
       handle = recvfd.fd;
       return 0;
     }
-#elif defined (ACE_WIN32)
+#elif defined (ACE_WIN32) && \
+      (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0))
   pid_t procID = ACE_OS::getpid();
   WSAPROTOCOL_INFO protInfo;
   ssize_t res;

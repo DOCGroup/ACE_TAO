@@ -23,6 +23,13 @@
 # error ACE requires Windows CE 3.0 and later.
 #endif  // UNDER_CE
 
+// CE 3 doesn't have Winsock 2, but CE 4 does.
+#if (UNDER_CE < 400)
+# if !defined (ACE_HAS_WINSOCK2)
+#  define ACE_HAS_WINSOCK2 0
+# endif
+#endif /* UNDER_CE < 400 */
+
 #if !defined (ACE_HAS_WINCE)
 # define ACE_HAS_WINCE 1
 #endif
