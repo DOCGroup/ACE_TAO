@@ -1,3 +1,15 @@
+Fri Jan 30 07:41:20 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/MPC.pm:
+        * bin/MakeProjectCreator/modules/MWC.pm:
+        * bin/mpc.pl:
+        * bin/mwc.pl:
+
+          Pulled the creator lists out of the perl scripts and moved them
+          into the new MPC and MWC modules.  This will allow the extension
+          of MPC by providing a way to hook new workspace and project types
+          into MPC without adding anything to the MPC repository.
+
 Thu Jan 29 14:10:51 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/MakeWorkspaceCreator.pm:

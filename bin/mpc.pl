@@ -19,25 +19,7 @@ use File::Basename;
 my($basePath) = getExecutePath($0) . '/MakeProjectCreator';
 unshift(@INC, $basePath . '/modules');
 
-require Driver;
-
-# ************************************************************
-# Data Section
-# ************************************************************
-
-my(@creators) = ('GNUACEProjectCreator',
-                 'NMakeProjectCreator',
-                 'VC6ProjectCreator',
-                 'VC7ProjectCreator',
-                 'VC71ProjectCreator',
-                 'BorlandProjectCreator',
-                 'CbxProjectCreator',
-                 'GHSProjectCreator',
-                 'EM3ProjectCreator',
-                 'VA4ProjectCreator',
-                 'MakeProjectCreator',
-                 'AutomakeProjectCreator',
-                );
+require MPC;
 
 # ************************************************************
 # Subroutine Section
@@ -93,8 +75,8 @@ sub getExecutePath {
 
 
 # ************************************************************
-# Subroutine Section
+# Main Section
 # ************************************************************
 
-my($driver) = new Driver($basePath, basename($0), @creators);
-exit($driver->run(@ARGV));
+my($driver) = new MPC();
+exit($driver->execute($basePath, basename($0), \@ARGV));
