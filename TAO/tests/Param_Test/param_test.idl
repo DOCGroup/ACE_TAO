@@ -306,6 +306,18 @@ interface Param_Test
                             inout Big_Union u2,
                             out Big_Union u3);
 
+  enum Small_Union_Switch { A_LONG, A_SHORT };
+  union Small_Union switch (Small_Union_Switch)
+    {
+    case A_LONG:
+      long the_long;
+    case A_SHORT:
+      short the_short;
+    };
+  Small_Union test_small_union (in Small_Union u1,
+                                inout Small_Union u2,
+                                out Small_Union u3);
+
   // The following two structs are used to help compose
   // a complex Any for the test function below.
   struct level4
