@@ -1,3 +1,23 @@
+Tue Mar 30 23:24:02 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* configure.in:
+	* m4/features.m4:
+	* m4/threads.m4:
+	  Updated several library checks to use a single call of my
+	  re/implementation of the new autoconf AC_SEARCH_LIBS test instead
+	  of having several AC_CHECK_LIB calls in a row.  Nice!
+
+	  The thread detection tests were overhauled.  They are now
+	  simpler but retain the same functionality as the previous
+	  tests.  They were greatly reduced in size so debugging, updating
+	  and enhancing should be much easier now.
+
+	* m4/acinclude.m4:
+	  Reimplemented Autoconf's AC_SEARCH_LIBS into ACE_SEARCH_LIBS.
+	  The functionality is the same but the ACE reimplementation
+ 	  actually works when C++ is the test language.  For some reason
+	  Autoconf's test isn't being generated properly by GNU M4.
+	  
 Tue Mar 30 22:04:49 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/config-win32-common.h: Added definition of

@@ -872,63 +872,39 @@ dnl Some platforms do not have a dynamic linking library, however the
 dnl dlopen, dlclose, etc., functions may exist in the C library.
 dnl (e.g. Digital UNIX)
 dnl Check for dynamic linking library
-AC_CHECK_FUNC(dlopen, ace_has_svr4_dynamic_linking=yes, dnl
-  AC_CHECK_LIB(dl, dlopen,
-    [
-     ace_has_svr4_dynamic_linking=yes
-     LIBS="$LIBS -ldl"
-    ],
-    AC_CHECK_LIB(svld, dlopen,
-      [
-       ace_has_svr4_dynamic_linking=yes
-       LIBS="$LIBS -lsvld"
-      ],
-      AC_CHECK_LIB(dld, shl_get,,))))
+ACE_SEARCH_LIBS(dlopen, dl svld, ace_has_svr4_dynamic_linking=yes, dnl
+  [
+   ace_has_svr4_dynamic_linking=no
+   AC_CHECK_LIB(dld, shl_get,,)
+  ])
 
 dnl Check if the socket library is available
-AC_CHECK_FUNC(socket, , dnl
-  AC_CHECK_LIB(socket, socket,,))
+ACE_SEARCH_LIBS(socket, socket,,)dnl
 
 dnl Check for gethostbyname in -lnsl since some platforms (e.g. Solaris)
 dnl put it there.
-AC_CHECK_FUNC(gethostbyname, , dnl
-  AC_CHECK_LIB(nsl, gethostbyname,,))
+ACE_SEARCH_LIBS(gethostbyname, nsl, , )dnl
 
 dnl Check for getservbyname in -lxnet since some platforms (e.g. Solaris)
-dnl may put it there.  Define ACE_LACKS_GETSERVBYNAME in case the getservbyname
-dnl AC_CHECK_FUNC gets skipped due to caching.
-ace_lacks_getservbyname=no
-AC_CHECK_FUNC(getservbyname, , dnl 
-  AC_CHECK_LIB(xnet, getservbyname, , ace_lacks_getservbyname=yes))
+dnl may put it there.
+ACE_SEARCH_LIBS(getservbyname, xnet, , AC_DEFINE(ACE_LACKS_GETSERVBYNAME))dnl
 
-dnl For some reason autoheader misses ACE_LACKS_GETSERVBYNAME if I put the
-dnl AC_DEFINE in the above getservbyname() tests.
-if test $ace_lacks_getservbyname = yes; then
-  AC_DEFINE(ACE_LACKS_GETSERVBYNAME)
-fi
 
 dnl Check for compile() regex function in -lgen.  Solaris, for example,
 dnl may put it there.
-AC_CHECK_FUNC(compile, , dnl
-  AC_CHECK_LIB(gen, compile, ,))
+ACE_SEARCH_LIBS(compile, gen,,)dnl
 
 dnl Check for exception handling library (e.g. for Digital UNIX)
-AC_CHECK_FUNC(exc_continue, , dnl
-  AC_CHECK_LIB(exc, exc_continue, ,))
+ACE_SEARCH_LIBS(exc_continue, exc,,)dnl
 
 dnl Check for ctime_r in -lc_r.  Some platforms, such as Digital UNIX,
 dnl put reentrant functions such as asctime_r, ctime_r, gmtime_r, and
 dnl localtime_r in -lc_r.
-AC_CHECK_FUNC(ctime_r, , dnl
-  AC_CHECK_LIB(c_r, ctime_r, ,))
+ACE_SEARCH_LIBS(ctime_r, c_r,,)dnl
 
 dnl TLI library check
-ace_has_tli_funcs=yes
-AC_CHECK_FUNC(t_accept, , dnl
-  AC_CHECK_LIB(xti, t_accept, ,
-    AC_CHECK_LIB(tli_r, t_accept, ,
-      AC_CHECK_LIB(tli, t_accept, ,
-        AC_CHECK_LIB(nsl, t_accept, ,ace_has_tli_funcs=no)))))
+ACE_SEARCH_LIBS(t_accept, xti tli_r tli nsl, dnl
+  ace_has_tli_funcs=yes, ace_has_tli_funcs=no)
 
 dnl Check for all of the things we need to compile and link threads
 dnl properly.
@@ -938,11 +914,17 @@ fi dnl test "$ace_user_enable_threads" = yes
 
 dnl Check for sched_yield() in posix4 library.
 dnl Some platforms, such as Solaris, may define sched_yield() there.
-dnl Later we run AC_CHECK_FUNC(sched_yield), which is redundant i this case
+dnl Later we run AC_CHECK_FUNC(sched_yield), which is redundant in this case
 dnl but is needed if sched_yield() is defined in one of the other libraries
 dnl we check for.
-AC_CHECK_FUNC(sched_yield, ace_has_sched_yield=yes, dnl
-  AC_CHECK_LIB(posix4, sched_yield, ace_has_sched_yield=yes,))
+ACE_SEARCH_LIBS(sched_yield, posix4, ace_has_sched_yield=yes,)dnl
+
+dnl Check for asynchronous IO calls
+ACE_CHECK_ASYNCH_IO
+
+dnl Additional `-lposix4' library check since it may not be added by the
+dnl above checks on some platforms that may need it
+ACE_SEARCH_LIBS(clock_gettime, posix4, AC_DEFINE(ACE_HAS_CLOCK_GETTIME),)dnl
 
 
 dnl
@@ -962,7 +944,7 @@ fi
 dnl Check for sys/wait.h Posix.1 compliance
 AC_HEADER_SYS_WAIT
 
-if test "$am_cv_cygwin32" = yes; then
+if test "$ac_cv_cygwin" = yes; then
   AC_CHECK_HEADER(cygwin32/socket.h, dnl
      AC_DEFINE(ACE_HAS_CYGWIN32_SOCKET_H),)
 fi
@@ -3021,11 +3003,6 @@ AC_CHECK_FUNC(getmsg, dnl
 
 AC_CHECK_FUNC(gethostbyaddr,,) dnl
 
-dnl We already check for getservbyname during the library checks.
-dnl AC_CHECK_FUNC(getservbyname, dnl
-dnl   ,
-dnl   AC_DEFINE(ACE_LACKS_GETSERVBYNAME))
-
 AC_CHECK_FUNC(difftime, dnl
   ,
   AC_DEFINE(ACE_LACKS_DIFFTIME))
@@ -3171,9 +3148,6 @@ if test "$ac_cv_func_alarm" != yes &&
    test "$ac_cv_func_signal" != yes; then
   AC_DEFINE(ACE_LACKS_UNIX_SIGNALS)
 fi
-
-AC_CHECK_FUNC(clock_gettime, dnl
-  AC_DEFINE(ACE_HAS_CLOCK_GETTIME),)
 
 AC_CHECK_FUNC(fork, dnl
   ,
@@ -5490,9 +5464,6 @@ if test "$ace_user_enable_threads" = yes; then
       # TODO: How do we check for recursive thread exit semantics
     ], AC_DEFINE(ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS),)
 fi
-
-dnl Check for asynchronous IO calls
-ACE_CHECK_ASYNCH_IO
 
 dnl Check for UNIX domain sockets
 ACE_CACHE_CHECK(for UNIX domain sockets,
