@@ -1,5 +1,7 @@
 // $Id$
 
+#define ACE_BUILD_DLL
+#include "ace/OS.h"
 #include "Arg_Shifter.h"
 
 ACE_Arg_Shifter::ACE_Arg_Shifter (int &argc, char **argv, char **temp)
