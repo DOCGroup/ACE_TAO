@@ -28,7 +28,7 @@ public:
   Quoter_Factory_Finder_Impl (void);
   ~Quoter_Factory_Finder_Impl (void);
 
-  virtual CosLifeCycle::Factories * find_factories (const CosLifeCycle::Key & factory_key,
+  virtual CosLifeCycle::Factories * find_factories (const CosLifeCycle::Key &factory_key,
                                                     CORBA::Environment &_tao_environment);
   // Returns a squence of Factories if factories matching the
   // factory_key were found. If no factory was found, then the

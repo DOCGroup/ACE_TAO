@@ -32,24 +32,26 @@ public:
   ~Quoter_Generic_Factory_Server (void);
   // Destructor
 
-  int init (int argc, char *argv[], CORBA::Environment& env);
+  int init (int argc,
+            char *argv[],
+            CORBA::Environment& env);
   // Initialize the Quoter_Server state - parsing arguments and ...
 
   int run (CORBA::Environment& env);
-  // Run the orb 
+  // Run the orb.
 
-  unsigned int parse_args ();
-  // parse the passed parameters
+  u_int parse_args (void);
+  // Parse the passed parameters.
 
 private:
   TAO_ORB_Manager orb_manager_;
   // instance of the ORB Manager
 
   Quoter_Generic_Factory_Impl *quoter_Generic_Factory_Impl_ptr_;
-  // instance of the Quoter Generic Factory 
+  // Instance of the Quoter Generic Factory.
   
   CosNaming::NamingContext_var quoterNamingContext_var_;
-  // reference to the Quoter naming context
+  // Reference to the Quoter naming context.
 
   int argc_;
   // Number of commandline arguments.
