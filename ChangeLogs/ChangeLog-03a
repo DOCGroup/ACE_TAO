@@ -1,3 +1,8 @@
+Mon Jan 21 00:13:42 2002  Christopher Kohlhoff  <chris@kohlhoff.com>
+
+        * ace/streams.h:
+          Workaround for Borland C++ 5.5.1 bug we have now just hit.
+
 Sun Jan 20 21:42:53 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/Framework_Component.cpp:

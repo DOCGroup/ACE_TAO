@@ -60,6 +60,9 @@
 #       include /**/ <strstream.h>
 #     endif /* _MSC_VER */
 #   else
+#     if defined (__BORLANDC__) && (__BORLANDC__ == 0x551)
+#       include /**/ <iterator>
+#     endif /* __BORLANDC__ && __BORLANDC__ == 0x551 */
 #     include /**/ <iostream>
 #     include /**/ <fstream>
 #     include /**/ <istream>
