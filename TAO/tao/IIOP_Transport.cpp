@@ -9,6 +9,7 @@
 #include "tao/Wait_Strategy.h"
 #include "tao/Reply_Dispatcher.h"
 #include "tao/ORB_Core.h"
+#include "tao/debug.h"
 
 #if defined (ACE_ENABLE_TIMEPROBES)
 
@@ -196,6 +197,16 @@ TAO_IIOP_Client_Transport::handle_client_input (int block)
 
   // Get the CDR stream for reading the input.
   TAO_InputCDR* cdr = this->input_cdr_stream ();
+  
+  // @@ Exclsive RMS instead of giving the CDR given by the Invocation
+  //    class, it should give the preallocated CDR so that it can give
+  //    that CDR to the invocation back, if there is a valid reply or
+  //    it can just forget it, if there was a close connection message
+  //    or something. (Alex).
+  
+  // If RMS not expecting any message, handle the unexpected data.
+  if (cdr == 0)
+    return this->check_unexpected_data ();
 
   TAO_GIOP::Message_Type message_type =
     TAO_GIOP::recv_message (this,
@@ -277,7 +288,7 @@ TAO_IIOP_Client_Transport::handle_client_input (int block)
   if (reply_dispatcher == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%N:%l:(%P | %t):TAO_IIOP_Client_Transport::handle_client_input: "
-                       "Failed to find Reply Handler.\n"),
+                       "Failed to find Reply Dispatcher.\n"),
                       -1);
 
   // Init the Reply dispatcher with all the reply info.
@@ -326,6 +337,53 @@ TAO_IIOP_Client_Transport::resume_handler (void)
   return this->orb_core ()->reactor ()->resume_handler
     (this->client_handler ()); 
 }
+
+int
+TAO_IIOP_Client_Transport::check_unexpected_data (void)
+{
+  // We're a client, so we're not expecting to see input.  Still we
+  // better check what it is!
+  char ignored;
+  ssize_t ret = this->client_handler ()->peer().recv (&ignored,
+                                                      sizeof ignored,
+                                                      MSG_PEEK);
+  switch (ret)
+    {
+    case 0:
+    case -1:
+      // 0 is a graceful shutdown
+      // -1 is a somewhat ugly shutdown
+      //
+      // Both will result in us returning -1 and this connection
+      // getting closed
+      //
+      if (TAO_debug_level)
+        ACE_DEBUG ((LM_WARNING,
+                    "TAO_IIOP_Client_Transport::check_unexpected_data: "
+                    "closing connection on fd %d\n",
+                    this->client_handler ()->peer().get_handle ()));
+      break;
+
+    case 1:
+      //
+      // @@ Fix me!!
+      //
+      // This should be the close connection message.  Since we don't
+      // handle this yet, log an error, and close the connection.
+      ACE_ERROR ((LM_WARNING,
+                  "TAO_IIOP_Client_Transport::check_unexpected_data: "
+                  "input while not expecting a response; "
+                  "closing connection on fd %d\n",
+                  this->client_handler ()->peer().get_handle ()));
+      break;
+    }
+
+  // We're not expecting input at this time, so we'll always
+  // return -1 for now.
+  return -1;
+}
+
+// *********************************************************************
 
 ssize_t
 TAO_IIOP_Transport::send (const ACE_Message_Block *mblk, ACE_Time_Value *s)

@@ -161,6 +161,10 @@ public:
   // Resume the handler from the reactor. This will be called by the 
   // Wait Strategy if Reactor is used  for that strategy. 
 
+protected:
+  int check_unexpected_data (void);
+  // This method checks for unexpected data.
+
 private:
   TAO_Client_Connection_Handler *client_handler_;
   // pointer to the corresponding client side connection handler.

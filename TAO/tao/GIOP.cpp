@@ -623,6 +623,17 @@ TAO_GIOP::recv_message (TAO_Transport *transport,
 
   transport->incr_message_offset (len);
 
+  // If we have read the whole message, reset the states for the input
+  // message.
+  if (transport->message_size () == transport->message_offset ())
+    {
+      // Reset.
+      transport->message_size (0);
+  
+      // Current message is received fully.
+      transport->message_received (1);
+    }
+  
   return retval;
 }
 

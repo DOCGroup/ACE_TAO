@@ -114,10 +114,10 @@ TAO_Exclusive_RMS::find_dispatcher (CORBA::ULong request_id)
 {
   if (this->request_id_ != request_id)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "%N:%l:TAO_Exclusive_RMS::find_handler: ",
+                       "%N:%l:TAO_Exclusive_RMS::find_handler: "
                        "Failed to find the handler\n"),
                       0);
-
+  
   return this->rd_;
 }
 
@@ -133,4 +133,5 @@ TAO_Exclusive_RMS::set_cdr_stream (TAO_InputCDR *cdr)
 void
 TAO_Exclusive_RMS::destroy_cdr_stream (void)
 {
+  this->cdr_ = 0;
 }

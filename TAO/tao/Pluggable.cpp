@@ -23,6 +23,7 @@
 TAO_Transport::TAO_Transport (TAO_ORB_Core *orb_core)
   : message_size_ (0),
     message_offset_ (0),
+    message_received_ (0),
     rms_ (0),
     ws_ (0),
     orb_core_ (0)
@@ -108,6 +109,21 @@ TAO_Transport::incr_message_offset (CORBA::Long bytes_transferred)
   this->message_offset_ +=  bytes_transferred;
 
   return 0;
+}
+
+// Set the flag to indicate whether the input message was read fully
+// or no. 
+void
+TAO_Transport::message_received (int received)
+{
+  this->message_received_ = received;
+}
+
+// Get the flag.
+int
+TAO_Transport::message_received (void) const
+{
+  return this->message_received_;
 }
 
 // Get it.

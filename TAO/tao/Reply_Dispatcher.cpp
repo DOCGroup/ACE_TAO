@@ -65,10 +65,10 @@ TAO_Synch_Reply_Dispatcher::~TAO_Synch_Reply_Dispatcher (void)
 {
 }
 
-// Dispatch the reply using the Stub object.
+// Dispatch the reply.
 int
 TAO_Synch_Reply_Dispatcher::dispatch_reply (void)
 {
-  // NO OP.
+  // @@ Handover the input CDR to the Invocation class. 
   return 0;
 }
