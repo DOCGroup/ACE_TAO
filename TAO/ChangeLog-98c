@@ -1,3 +1,11 @@
+Thu Oct  9 23:17:37 1997  Douglas C. Schmidt  <schmidt@merengue.cs.wustl.edu>
+
+	* tao/giop.cpp (invoke): If an error occurs, make sure to mark the
+ 	  handler_ as no longer being in use before we set it to 0.
+
+	* tao/giop.cpp (TAO_GIOP_Invocation): We need to make sure that
+ 	  handler_ isn't 0 before we mark it as no longer being in use.
+
 Thu Oct  9 11:33:46 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
 	* tao/giop.cpp: 
