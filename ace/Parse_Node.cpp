@@ -77,7 +77,7 @@ ACE_Parse_Node::link (ACE_Parse_Node *n)
 
 ACE_Stream_Node::ACE_Stream_Node (const ACE_Static_Node *str_ops,
                                   const ACE_Parse_Node *str_mods)
-  : ACE_Parse_Node (str_ops->name ()),
+  : ACE_Parse_Node (str_ops == 0 ? "<unknown>" : str_ops->name ()),
     node_ (str_ops),
     mods_ (str_mods)
 {
