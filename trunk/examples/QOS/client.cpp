@@ -296,9 +296,9 @@ main (int argc, char * argv[])
   // Set the QOS according to the supplied ACE_QoS. The I/O control
   // code used under the hood is SIO_SET_QOS.
   if (ACE_OS::ioctl (dgram_mcast.get_handle (), // Socket.
-	                 ACE_SIO_SET_QOS,
+                     ACE_SIO_SET_QOS,
                      ace_qos, // ACE_QoS.
-					 &dwBytes) == -1) // bytes returned.
+                     &dwBytes) == -1) // bytes returned.
     ACE_ERROR ((LM_ERROR,
                 "Error in Qos set ACE_OS::ioctl() %d\n",
                 dwBytes));					   	
@@ -410,9 +410,9 @@ FindServiceProvider(int iProtocol,
                       if (bQos && bMulticast)
                         {
                           if ((ACE_XP1_QOS_SUPPORTED == ((ACE_XP1_QOS_SUPPORTED
-                                                      & protocol_buffer[i].dwServiceFlags1)))
+                                                          & protocol_buffer[i].dwServiceFlags1)))
                               && (ACE_XP1_SUPPORT_MULTIPOINT == (ACE_XP1_SUPPORT_MULTIPOINT &
-                                                             protocol_buffer[i].dwServiceFlags1)))
+                                                                 protocol_buffer[i].dwServiceFlags1)))
                             {
                               *pProtocolInfo = protocol_buffer[i];
                               bProtocolFound = TRUE;
@@ -422,7 +422,7 @@ FindServiceProvider(int iProtocol,
                       else if (bQos)
                         {
                           if (ACE_XP1_QOS_SUPPORTED == (ACE_XP1_QOS_SUPPORTED
-                                                    & protocol_buffer[i].dwServiceFlags1))
+                                                        & protocol_buffer[i].dwServiceFlags1))
                             {
                               *pProtocolInfo = protocol_buffer[i];
                               bProtocolFound = TRUE;
@@ -432,9 +432,9 @@ FindServiceProvider(int iProtocol,
                       else if (bMulticast)
                         {
                           if ((ACE_XP1_SUPPORT_MULTIPOINT == (ACE_XP1_SUPPORT_MULTIPOINT &   
-                                                          protocol_buffer[i].dwServiceFlags1)) 
+                                                              protocol_buffer[i].dwServiceFlags1)) 
                               && (ACE_XP1_QOS_SUPPORTED != (ACE_XP1_QOS_SUPPORTED & 
-                                                        protocol_buffer[i].dwServiceFlags1)))
+                                                            protocol_buffer[i].dwServiceFlags1)))
                             {
                               *pProtocolInfo = protocol_buffer[i];
                               bProtocolFound = TRUE;
@@ -442,7 +442,7 @@ FindServiceProvider(int iProtocol,
                             }
                         }
                       else if ((ACE_XP1_QOS_SUPPORTED != (ACE_XP1_QOS_SUPPORTED 
-                                                      & protocol_buffer[i].dwServiceFlags1)))
+                                                          & protocol_buffer[i].dwServiceFlags1)))
                         {
                           *pProtocolInfo = protocol_buffer[i];
                           bProtocolFound = TRUE;

@@ -1,3 +1,16 @@
+Fri Oct  1 14:44:12 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
+
+	* ace/OS.h : Added the Winsock2 GQOS related #defines to this
+	  file. The #defines are limited to the ones used in the ACE QOS 
+	  example.
+   	
+	* ACE_wrappers/examples/QOS/server.cpp:
+	* ACE_wrappers/examples/QOS/client.cpp:
+	* ACE_wrappers/examples/QOS/QosEvent.h: 
+	  Changed the QOS example to use the ACE flags instead of Windows 
+	  flags. Removed the #defines from the example and moved them to 
+	  OS.h
+
 Fri Oct  1 13:14:17 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ChangeLog: Added more Borland support.  Thanks to
