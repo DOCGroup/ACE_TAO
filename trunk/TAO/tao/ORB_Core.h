@@ -843,7 +843,7 @@ public:
   /// Set up the ORB Core's acceptor to listen on the
   /// previously-specified port for requests.  Returns -1 on failure,
   /// otherwise 0.
-  int open (TAO_ENV_ARG_DECL);
+  int open (TAO_ENV_SINGLE_ARG_DECL);
 
   /// Return the underlying transport cache
   TAO_Transport_Cache_Manager *transport_cache (void);
@@ -934,6 +934,12 @@ protected:
   /// registered interceptors when ORB::destroy() is called.
   void destroy_interceptors (TAO_ENV_SINGLE_ARG_DECL);
 
+  /// Pointer to the list of protocol loaded into this ORB instance.
+  /// Helper method to hold the common code part for -ORBEndpoint and
+  /// -ORBListenEndpoint options.
+  int set_endpoint_helper (const char *current_arg
+                           TAO_ENV_ARG_DECL);
+
 private:
 
   /// The ORB Core should not be copied.
@@ -968,12 +974,6 @@ protected:
   TAO_Collocation_Resolver *collocation_resolver_;
 
   TAO_Stub_Factory *stub_factory_;
-
-  /// Pointer to the list of protocol loaded into this ORB instance.
-  /// Helper method to hold the common code part for -ORBEndpoint and
-  /// -ORBListenEndpoint options.
-  int set_endpoint_helper (const char *current_arg
-                           TAO_ENV_ARG_PARAMETER);
 
   TAO_ProtocolFactorySet *protocol_factories_;
 
