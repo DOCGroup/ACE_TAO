@@ -19,11 +19,11 @@ TAO_ValueMemberDef_i::~TAO_ValueMemberDef_i (void)
 {
 }
 
-IR::DefinitionKind
+IR_DefinitionKind
 TAO_ValueMemberDef_i::def_kind (CORBA::Environment &)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return IR::dk_ValueMember;
+  return dk_ValueMember;
 }
 
 void 
@@ -42,7 +42,7 @@ TAO_ValueMemberDef_i::destroy_i (CORBA::Environment & /* ACE_TRY_ENV */)
   // TODO
 }
 
-IR::Contained::Description *
+IR_Contained::Description *
 TAO_ValueMemberDef_i::describe (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -51,7 +51,7 @@ TAO_ValueMemberDef_i::describe (CORBA::Environment &ACE_TRY_ENV)
   return this->describe_i (ACE_TRY_ENV);
 }
 
-IR::Contained::Description *
+IR_Contained::Description *
 TAO_ValueMemberDef_i::describe_i (CORBA::Environment & /* ACE_TRY_ENV */)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -76,16 +76,16 @@ TAO_ValueMemberDef_i::type_i (CORBA::Environment & /* ACE_TRY_ENV */)
   return 0;
 }
 
-IR::IDLType_ptr 
+IR_IDLType_ptr 
 TAO_ValueMemberDef_i::type_def (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_IFR_READ_GUARD_RETURN (IR::IDLType::_nil ());
+  TAO_IFR_READ_GUARD_RETURN (IR_IDLType::_nil ());
 
   return this->type_def_i (ACE_TRY_ENV);
 }
 
-IR::IDLType_ptr 
+IR_IDLType_ptr 
 TAO_ValueMemberDef_i::type_def_i (CORBA::Environment & /* ACE_TRY_ENV */)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -94,7 +94,7 @@ TAO_ValueMemberDef_i::type_def_i (CORBA::Environment & /* ACE_TRY_ENV */)
 }
 
 void 
-TAO_ValueMemberDef_i::type_def (IR::IDLType_ptr type_def,
+TAO_ValueMemberDef_i::type_def (IR_IDLType_ptr type_def,
                                 CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -105,7 +105,7 @@ TAO_ValueMemberDef_i::type_def (IR::IDLType_ptr type_def,
 }
 
 void 
-TAO_ValueMemberDef_i::type_def_i (IR::IDLType_ptr /* type_def */,
+TAO_ValueMemberDef_i::type_def_i (IR_IDLType_ptr /* type_def */,
                                   CORBA::Environment & /* ACE_TRY_ENV */)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {

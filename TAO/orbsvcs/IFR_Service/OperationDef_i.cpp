@@ -23,14 +23,14 @@ TAO_OperationDef_i::~TAO_OperationDef_i (void)
 {
 }
 
-IR::DefinitionKind
+IR_DefinitionKind
 TAO_OperationDef_i::def_kind (CORBA::Environment &)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return IR::dk_Operation;
+  return dk_Operation;
 }
 
-IR::Contained::Description *
+IR_Contained::Description *
 TAO_OperationDef_i::describe (CORBA::Environment &ACE_TRY_ENV )
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -39,17 +39,17 @@ TAO_OperationDef_i::describe (CORBA::Environment &ACE_TRY_ENV )
   return this->describe_i (ACE_TRY_ENV);
 }
 
-IR::Contained::Description *
+IR_Contained::Description *
 TAO_OperationDef_i::describe_i (CORBA::Environment &ACE_TRY_ENV )
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  IR::Contained::Description *desc_ptr = 0;
+  IR_Contained::Description *desc_ptr = 0;
   ACE_NEW_THROW_EX (desc_ptr,
-                    IR::Contained::Description,
+                    IR_Contained::Description,
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (0);
 
-  IR::Contained::Description_var retval = desc_ptr;
+  IR_Contained::Description_var retval = desc_ptr;
 
   retval->kind = this->def_kind (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
@@ -94,16 +94,16 @@ TAO_OperationDef_i::result_i (CORBA::Environment &ACE_TRY_ENV)
   return impl->type_i (ACE_TRY_ENV);
 }
 
-IR::IDLType_ptr 
+IR_IDLType_ptr 
 TAO_OperationDef_i::result_def (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_IFR_READ_GUARD_RETURN (IR::IDLType::_nil ());
+  TAO_IFR_READ_GUARD_RETURN (IR_IDLType::_nil ());
 
   return this->result_def_i (ACE_TRY_ENV);
 }
 
-IR::IDLType_ptr 
+IR_IDLType_ptr 
 TAO_OperationDef_i::result_def_i (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -123,21 +123,21 @@ TAO_OperationDef_i::result_def_i (CORBA::Environment &ACE_TRY_ENV)
                                              "def_kind",
                                              kind);
 
-  IR::DefinitionKind def_kind =
-    ACE_static_cast (IR::DefinitionKind, kind);
+  IR_DefinitionKind def_kind =
+    ACE_static_cast (IR_DefinitionKind, kind);
 
   CORBA::Object_var obj =
     this->repo_->servant_factory ()->create_objref (def_kind,
                                                     result_path.c_str (),
                                                     ACE_TRY_ENV);
-  ACE_CHECK_RETURN (IR::IDLType::_nil ());
+  ACE_CHECK_RETURN (IR_IDLType::_nil ());
 
-  return IR::IDLType::_narrow (obj.in (),
+  return IR_IDLType::_narrow (obj.in (),
                                ACE_TRY_ENV);
 }
 
 void 
-TAO_OperationDef_i::result_def (IR::IDLType_ptr result_def,
+TAO_OperationDef_i::result_def (IR_IDLType_ptr result_def,
                                 CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -148,7 +148,7 @@ TAO_OperationDef_i::result_def (IR::IDLType_ptr result_def,
 }
 
 void 
-TAO_OperationDef_i::result_def_i (IR::IDLType_ptr result_def,
+TAO_OperationDef_i::result_def_i (IR_IDLType_ptr result_def,
                                   CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -165,7 +165,7 @@ TAO_OperationDef_i::result_def_i (IR::IDLType_ptr result_def,
                                             result_path.in ());
 }
 
-IR::ParDescriptionSeq *
+IR_ParDescriptionSeq *
 TAO_OperationDef_i::params (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -174,7 +174,7 @@ TAO_OperationDef_i::params (CORBA::Environment &ACE_TRY_ENV)
   return this->params_i (ACE_TRY_ENV);
 }
 
-IR::ParDescriptionSeq *
+IR_ParDescriptionSeq *
 TAO_OperationDef_i::params_i (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -213,9 +213,9 @@ TAO_OperationDef_i::params_i (CORBA::Environment &ACE_TRY_ENV)
 
   size_t size = key_queue.size ();
 
-  IR::ParDescriptionSeq *pd_seq = 0;
+  IR_ParDescriptionSeq *pd_seq = 0;
   ACE_NEW_THROW_EX (pd_seq,
-                    IR::ParDescriptionSeq (size),
+                    IR_ParDescriptionSeq (size),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (0);
 
@@ -224,14 +224,14 @@ TAO_OperationDef_i::params_i (CORBA::Environment &ACE_TRY_ENV)
   if (size == 0)
     return pd_seq;
 
-  IR::ParDescriptionSeq_var retval = pd_seq;
+  IR_ParDescriptionSeq_var retval = pd_seq;
 
   for (i = 0; i < size; ++i)
     {
       ACE_Configuration_Section_Key key;
       key_queue.dequeue_head (key);
 
-      IR::ParameterDescription pd;
+      IR_ParameterDescription pd;
 
       ACE_TString name;
       this->repo_->config ()->get_string_value (key,
@@ -245,7 +245,7 @@ TAO_OperationDef_i::params_i (CORBA::Environment &ACE_TRY_ENV)
                                                  "mode",
                                                  mode);
 
-      pd.mode = ACE_static_cast (IR::ParameterMode, mode);
+      pd.mode = ACE_static_cast (IR_ParameterMode, mode);
 
       ACE_TString type_path;
       this->repo_->config ()->get_string_value (key,
@@ -273,8 +273,8 @@ TAO_OperationDef_i::params_i (CORBA::Environment &ACE_TRY_ENV)
                                                  "def_kind",
                                                  kind);
 
-      IR::DefinitionKind def_kind =
-        ACE_static_cast (IR::DefinitionKind, kind);
+      IR_DefinitionKind def_kind =
+        ACE_static_cast (IR_DefinitionKind, kind);
 
       CORBA::Object_var obj = 
         this->repo_->servant_factory ()->create_objref (def_kind,
@@ -282,7 +282,7 @@ TAO_OperationDef_i::params_i (CORBA::Environment &ACE_TRY_ENV)
                                                         ACE_TRY_ENV);
       ACE_CHECK_RETURN (0);
 
-      pd.type_def = IR::IDLType::_narrow (obj.in (),
+      pd.type_def = IR_IDLType::_narrow (obj.in (),
                                           ACE_TRY_ENV);
       ACE_CHECK_RETURN (0);
 
@@ -293,7 +293,7 @@ TAO_OperationDef_i::params_i (CORBA::Environment &ACE_TRY_ENV)
 }
 
 void 
-TAO_OperationDef_i::params (const IR::ParDescriptionSeq &params,
+TAO_OperationDef_i::params (const IR_ParDescriptionSeq &params,
                             CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -304,7 +304,7 @@ TAO_OperationDef_i::params (const IR::ParDescriptionSeq &params,
 }
 
 void 
-TAO_OperationDef_i::params_i (const IR::ParDescriptionSeq &params,
+TAO_OperationDef_i::params_i (const IR_ParDescriptionSeq &params,
                               CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -358,16 +358,16 @@ TAO_OperationDef_i::params_i (const IR::ParDescriptionSeq &params,
     }
 }
 
-IR::OperationMode 
+IR_OperationMode 
 TAO_OperationDef_i::mode (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_IFR_READ_GUARD_RETURN (IR::OP_NORMAL);
+  TAO_IFR_READ_GUARD_RETURN (IR_OP_NORMAL);
 
   return this->mode_i (ACE_TRY_ENV);
 }
 
-IR::OperationMode 
+IR_OperationMode 
 TAO_OperationDef_i::mode_i (CORBA::Environment &)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -376,11 +376,11 @@ TAO_OperationDef_i::mode_i (CORBA::Environment &)
                                              "mode",
                                              mode);
 
-  return ACE_static_cast (IR::OperationMode, mode);
+  return ACE_static_cast (IR_OperationMode, mode);
 }
 
 void 
-TAO_OperationDef_i::mode (IR::OperationMode mode,
+TAO_OperationDef_i::mode (IR_OperationMode mode,
                           CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -391,7 +391,7 @@ TAO_OperationDef_i::mode (IR::OperationMode mode,
 }
 
 void 
-TAO_OperationDef_i::mode_i (IR::OperationMode mode,
+TAO_OperationDef_i::mode_i (IR_OperationMode mode,
                             CORBA::Environment &)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -400,7 +400,7 @@ TAO_OperationDef_i::mode_i (IR::OperationMode mode,
                                              mode);
 }
 
-IR::ContextIdSeq *
+IR_ContextIdSeq *
 TAO_OperationDef_i::contexts (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -409,7 +409,7 @@ TAO_OperationDef_i::contexts (CORBA::Environment &ACE_TRY_ENV)
   return this->contexts_i (ACE_TRY_ENV);
 }
 
-IR::ContextIdSeq *
+IR_ContextIdSeq *
 TAO_OperationDef_i::contexts_i (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -445,9 +445,9 @@ TAO_OperationDef_i::contexts_i (CORBA::Environment &ACE_TRY_ENV)
 
   size_t size = context_queue.size ();
 
-  IR::ContextIdSeq *ci_seq = 0;
+  IR_ContextIdSeq *ci_seq = 0;
   ACE_NEW_THROW_EX (ci_seq,
-                    IR::ContextIdSeq (size),
+                    IR_ContextIdSeq (size),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (0);
 
@@ -465,7 +465,7 @@ TAO_OperationDef_i::contexts_i (CORBA::Environment &ACE_TRY_ENV)
 }
 
 void 
-TAO_OperationDef_i::contexts (const IR::ContextIdSeq &contexts,
+TAO_OperationDef_i::contexts (const IR_ContextIdSeq &contexts,
                               CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -476,7 +476,7 @@ TAO_OperationDef_i::contexts (const IR::ContextIdSeq &contexts,
 }
 
 void 
-TAO_OperationDef_i::contexts_i (const IR::ContextIdSeq &contexts,
+TAO_OperationDef_i::contexts_i (const IR_ContextIdSeq &contexts,
                                 CORBA::Environment &)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -505,7 +505,7 @@ TAO_OperationDef_i::contexts_i (const IR::ContextIdSeq &contexts,
     }
 }
 
-IR::ExceptionDefSeq *
+IR_ExceptionDefSeq *
 TAO_OperationDef_i::exceptions (CORBA::Environment &ACE_TRY_ENV )
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -514,7 +514,7 @@ TAO_OperationDef_i::exceptions (CORBA::Environment &ACE_TRY_ENV )
   return this->exceptions_i (ACE_TRY_ENV);
 }
 
-IR::ExceptionDefSeq *
+IR_ExceptionDefSeq *
 TAO_OperationDef_i::exceptions_i (CORBA::Environment &ACE_TRY_ENV )
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -526,7 +526,7 @@ TAO_OperationDef_i::exceptions_i (CORBA::Environment &ACE_TRY_ENV )
                                           excepts_key);
 
   int index = 0;
-  ACE_Unbounded_Queue<IR::DefinitionKind> kind_queue;
+  ACE_Unbounded_Queue<IR_DefinitionKind> kind_queue;
   ACE_Unbounded_Queue<ACE_TString> path_queue;
 
   // This section may not have been created.
@@ -535,7 +535,7 @@ TAO_OperationDef_i::exceptions_i (CORBA::Environment &ACE_TRY_ENV )
       ACE_TString field_name, type_path;
       ACE_Configuration::VALUETYPE type;
       u_int kind = 0;
-      IR::DefinitionKind def_kind = IR::dk_none;
+      IR_DefinitionKind def_kind = dk_none;
       ACE_Configuration_Section_Key except_key;
 
       while (this->repo_->config ()->enumerate_values (excepts_key,
@@ -563,7 +563,7 @@ TAO_OperationDef_i::exceptions_i (CORBA::Environment &ACE_TRY_ENV )
                                                          kind);
 
               def_kind = 
-                ACE_static_cast (IR::DefinitionKind, kind);
+                ACE_static_cast (IR_DefinitionKind, kind);
 
               kind_queue.enqueue_tail (def_kind);
             }
@@ -572,9 +572,9 @@ TAO_OperationDef_i::exceptions_i (CORBA::Environment &ACE_TRY_ENV )
 
   size_t size = kind_queue.size ();
 
-  IR::ExceptionDefSeq *ed_seq = 0;
+  IR_ExceptionDefSeq *ed_seq = 0;
   ACE_NEW_THROW_EX (ed_seq,
-                    IR::ExceptionDefSeq (size),
+                    IR_ExceptionDefSeq (size),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (0);
 
@@ -583,11 +583,11 @@ TAO_OperationDef_i::exceptions_i (CORBA::Environment &ACE_TRY_ENV )
   if (index == 0)
     return ed_seq;
 
-  IR::ExceptionDefSeq_var retval = ed_seq;
+  IR_ExceptionDefSeq_var retval = ed_seq;
 
   for (CORBA::ULong i = 0; i < size; ++i)
     {
-      IR::DefinitionKind def_kind;
+      IR_DefinitionKind def_kind;
       kind_queue.dequeue_head (def_kind);
 
       ACE_TString path;
@@ -599,7 +599,7 @@ TAO_OperationDef_i::exceptions_i (CORBA::Environment &ACE_TRY_ENV )
                                                         ACE_TRY_ENV);
       ACE_CHECK_RETURN (0);
 
-      retval[i] = IR::ExceptionDef::_narrow (obj.in (),
+      retval[i] = IR_ExceptionDef::_narrow (obj.in (),
                                              ACE_TRY_ENV);
       ACE_CHECK_RETURN (0);
     }
@@ -608,7 +608,7 @@ TAO_OperationDef_i::exceptions_i (CORBA::Environment &ACE_TRY_ENV )
 }
 
 void 
-TAO_OperationDef_i::exceptions (const IR::ExceptionDefSeq &exceptions,
+TAO_OperationDef_i::exceptions (const IR_ExceptionDefSeq &exceptions,
                                 CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -619,7 +619,7 @@ TAO_OperationDef_i::exceptions (const IR::ExceptionDefSeq &exceptions,
 }
 
 void 
-TAO_OperationDef_i::exceptions_i (const IR::ExceptionDefSeq &exceptions,
+TAO_OperationDef_i::exceptions_i (const IR_ExceptionDefSeq &exceptions,
                                   CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -657,12 +657,12 @@ TAO_OperationDef_i::exceptions_i (const IR::ExceptionDefSeq &exceptions,
 
 }
 
-IR::OperationDescription
+IR_OperationDescription
 TAO_OperationDef_i::make_description (
       CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  IR::OperationDescription od;
+  IR_OperationDescription od;
 
   od.name = this->name_i (ACE_TRY_ENV);
   ACE_CHECK_RETURN (od);
@@ -686,12 +686,12 @@ TAO_OperationDef_i::make_description (
   od.mode = this->mode_i (ACE_TRY_ENV);
   ACE_CHECK_RETURN (od);
 
-  IR::ContextIdSeq_var cid_seq = this->contexts_i (ACE_TRY_ENV);
+  IR_ContextIdSeq_var cid_seq = this->contexts_i (ACE_TRY_ENV);
   ACE_CHECK_RETURN (od);
 
   od.contexts = cid_seq.in ();
 
-  IR::ParDescriptionSeq_var pd_seq = this->params_i (ACE_TRY_ENV);
+  IR_ParDescriptionSeq_var pd_seq = this->params_i (ACE_TRY_ENV);
   ACE_CHECK_RETURN (od);
 
   od.parameters = pd_seq.in ();

@@ -273,16 +273,16 @@ TAO_Contained_i::version_i (const char *version,
                                             version);
 }
 
-IR::Container_ptr
+IR_Container_ptr
 TAO_Contained_i::defined_in (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_IFR_READ_GUARD_RETURN (IR::Container::_nil ());
+  TAO_IFR_READ_GUARD_RETURN (IR_Container::_nil ());
 
   return this->defined_in_i (ACE_TRY_ENV);
 }
 
-IR::Container_ptr
+IR_Container_ptr
 TAO_Contained_i::defined_in_i (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -310,18 +310,18 @@ TAO_Contained_i::defined_in_i (CORBA::Environment &ACE_TRY_ENV)
                                              "def_kind",
                                              kind);
 
-  IR::DefinitionKind def_kind =
-    ACE_static_cast (IR::DefinitionKind, kind);
+  IR_DefinitionKind def_kind =
+    ACE_static_cast (IR_DefinitionKind, kind);
 
   CORBA::Object_var obj =
     this->repo_->servant_factory ()->create_objref (def_kind,
                                                     container_path.c_str (),
                                                     ACE_TRY_ENV);
-  ACE_CHECK_RETURN (IR::Container::_nil ());
+  ACE_CHECK_RETURN (IR_Container::_nil ());
 
-  IR::Container_var retval = IR::Container::_narrow (obj.in (),
+  IR_Container_var retval = IR_Container::_narrow (obj.in (),
                                                      ACE_TRY_ENV);
-  ACE_CHECK_RETURN (IR::Container::_nil ());
+  ACE_CHECK_RETURN (IR_Container::_nil ());
 
   return retval._retn ();
 }
@@ -347,16 +347,16 @@ TAO_Contained_i::absolute_name_i (CORBA::Environment &)
   return CORBA::string_dup (absolute_name.c_str ());
 }
 
-IR::Repository_ptr
+IR_Repository_ptr
 TAO_Contained_i::containing_repository (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_IFR_READ_GUARD_RETURN (IR::Repository::_nil ());
+  TAO_IFR_READ_GUARD_RETURN (IR_Repository::_nil ());
 
   return this->containing_repository_i (ACE_TRY_ENV);
 }
 
-IR::Repository_ptr
+IR_Repository_ptr
 TAO_Contained_i::containing_repository_i (CORBA::Environment &)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -364,7 +364,7 @@ TAO_Contained_i::containing_repository_i (CORBA::Environment &)
 }
 
 void
-TAO_Contained_i::move (IR::Container_ptr new_container,
+TAO_Contained_i::move (IR_Container_ptr new_container,
                        const char *new_name,
                        const char *new_version,
                        CORBA::Environment &ACE_TRY_ENV)
@@ -482,18 +482,18 @@ TAO_Contained_i::contents_name_update (ACE_TString stem,
 }
 
 void
-TAO_Contained_i::move_i (IR::Container_ptr new_container,
+TAO_Contained_i::move_i (IR_Container_ptr new_container,
                          const char *new_name,
                          const char *new_version,
                          CORBA::Boolean cleanup,
                          CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  IR::Repository_var my_repo =
+  IR_Repository_var my_repo =
     this->containing_repository_i (ACE_TRY_ENV);
   ACE_CHECK;
 
-  IR::DefinitionKind container_dk =
+  IR_DefinitionKind container_dk =
     new_container->def_kind (ACE_TRY_ENV);
   ACE_CHECK;
 
@@ -502,7 +502,7 @@ TAO_Contained_i::move_i (IR::Container_ptr new_container,
 
   // Check that we're not trying to move to a different repository,
   // and set the container impl, used in each switch case below.
-  if (container_dk == IR::dk_Repository)
+  if (container_dk == dk_Repository)
     {
       if (my_repo.in () != new_container)
         {
@@ -535,7 +535,7 @@ TAO_Contained_i::move_i (IR::Container_ptr new_container,
 
       auto_ptr<TAO_Contained_i> safety (impl);
 
-      IR::Repository_var your_repo =
+      IR_Repository_var your_repo =
         impl->containing_repository_i (ACE_TRY_ENV);
       ACE_CHECK;
 
@@ -550,7 +550,7 @@ TAO_Contained_i::move_i (IR::Container_ptr new_container,
       ACE_CHECK;
     }
 
-  IR::DefinitionKind my_dk = this->def_kind (ACE_TRY_ENV);
+  IR_DefinitionKind my_dk = this->def_kind (ACE_TRY_ENV);
   ACE_CHECK;
 
   CORBA::String_var id = this->id_i (ACE_TRY_ENV);
@@ -572,17 +572,17 @@ TAO_Contained_i::move_i (IR::Container_ptr new_container,
       // Call the appropriate create function.
       switch (my_dk)
       {
-        case IR::dk_Enum:
+        case dk_Enum:
         {
           TAO_EnumDef_i impl (this->repo_,
                               this->section_key_);
 
-          IR::EnumMemberSeq_var members = impl.members_i (ACE_TRY_ENV);
+          IR_EnumMemberSeq_var members = impl.members_i (ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
-          if (container_dk == IR::dk_Struct
-              || container_dk == IR::dk_Union
-              || container_dk == IR::dk_Exception)
+          if (container_dk == dk_Struct
+              || container_dk == dk_Union
+              || container_dk == dk_Exception)
             {
               this->move_pre_process (new_container,
                                       my_path.c_str (),
@@ -591,7 +591,7 @@ TAO_Contained_i::move_i (IR::Container_ptr new_container,
               ACE_TRY_CHECK;
             }
 
-          IR::EnumDef_var new_defn =
+          IR_EnumDef_var new_defn =
             container_impl->create_enum_i (id.in (),
                                            new_name,
                                            new_version,
@@ -600,12 +600,12 @@ TAO_Contained_i::move_i (IR::Container_ptr new_container,
           ACE_TRY_CHECK;
           break;
         }
-        case IR::dk_Alias:
+        case dk_Alias:
         {
           TAO_AliasDef_i impl (this->repo_,
                                this->section_key_);
 
-          IR::IDLType_var otype = impl.original_type_def_i (ACE_TRY_ENV);
+          IR_IDLType_var otype = impl.original_type_def_i (ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
           container_impl->create_alias_i (id.in (),
@@ -616,7 +616,7 @@ TAO_Contained_i::move_i (IR::Container_ptr new_container,
           ACE_TRY_CHECK;
           break;
         }
-        case IR::dk_Native:
+        case dk_Native:
         {
           container_impl->create_native_i (id.in (),
                                            new_name,
@@ -625,12 +625,12 @@ TAO_Contained_i::move_i (IR::Container_ptr new_container,
           ACE_TRY_CHECK;
           break;
         }
-        case IR::dk_ValueBox:
+        case dk_ValueBox:
         {
           TAO_ValueBoxDef_i impl (this->repo_,
                                   this->section_key_);
 
-          IR::IDLType_var otype = impl.original_type_def_i (ACE_TRY_ENV);
+          IR_IDLType_var otype = impl.original_type_def_i (ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
           container_impl->create_value_box_i (id.in (),
@@ -641,17 +641,17 @@ TAO_Contained_i::move_i (IR::Container_ptr new_container,
           ACE_TRY_CHECK;
           break;
         }
-        case IR::dk_Struct:
+        case dk_Struct:
         {
           TAO_StructDef_i impl (this->repo_,
                                 this->section_key_);
 
-          IR::StructMemberSeq_var members = impl.members_i (ACE_TRY_ENV);
+          IR_StructMemberSeq_var members = impl.members_i (ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
-          if (container_dk == IR::dk_Struct
-              || container_dk == IR::dk_Union
-              || container_dk == IR::dk_Exception)
+          if (container_dk == dk_Struct
+              || container_dk == dk_Union
+              || container_dk == dk_Exception)
             {
               this->move_pre_process (new_container,
                                       my_path.c_str (),
@@ -660,7 +660,7 @@ TAO_Contained_i::move_i (IR::Container_ptr new_container,
               ACE_TRY_CHECK;
             }
 
-          IR::StructDef_var new_defn =
+          IR_StructDef_var new_defn =
             container_impl->create_struct_i (id.in (),
                                              new_name,
                                              new_version,
@@ -673,21 +673,21 @@ TAO_Contained_i::move_i (IR::Container_ptr new_container,
 
           break;
         }
-        case IR::dk_Union:
+        case dk_Union:
         {
           TAO_UnionDef_i impl (this->repo_,
                                this->section_key_);
 
-          IR::IDLType_var disc_type =
+          IR_IDLType_var disc_type =
             impl.discriminator_type_def_i (ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
-          IR::UnionMemberSeq_var members = impl.members_i (ACE_TRY_ENV);
+          IR_UnionMemberSeq_var members = impl.members_i (ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
-          if (container_dk == IR::dk_Struct
-              || container_dk == IR::dk_Union
-              || container_dk == IR::dk_Exception)
+          if (container_dk == dk_Struct
+              || container_dk == dk_Union
+              || container_dk == dk_Exception)
             {
               this->move_pre_process (new_container,
                                       my_path.c_str (),
@@ -696,7 +696,7 @@ TAO_Contained_i::move_i (IR::Container_ptr new_container,
               ACE_TRY_CHECK;
             }
 
-          IR::UnionDef_var new_defn =
+          IR_UnionDef_var new_defn =
             container_impl->create_union_i (id.in (),
                                             new_name,
                                             new_version,
@@ -710,9 +710,9 @@ TAO_Contained_i::move_i (IR::Container_ptr new_container,
 
           break;
         }
-        case IR::dk_Module:
+        case dk_Module:
         {
-          IR::ModuleDef_var new_defn =
+          IR_ModuleDef_var new_defn =
             container_impl->create_module_i (id.in (),
                                              new_name,
                                              new_version,
@@ -724,15 +724,15 @@ TAO_Contained_i::move_i (IR::Container_ptr new_container,
 
           break;
         }
-        case IR::dk_Exception:
+        case dk_Exception:
         {
           TAO_ExceptionDef_i impl (this->repo_,
                                    this->section_key_);
 
-          IR::StructMemberSeq_var members = impl.members_i (ACE_TRY_ENV);
+          IR_StructMemberSeq_var members = impl.members_i (ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
-          IR::ExceptionDef_var new_defn =
+          IR_ExceptionDef_var new_defn =
             container_impl->create_exception_i (id.in (),
                                                 new_name,
                                                 new_version,
@@ -745,12 +745,12 @@ TAO_Contained_i::move_i (IR::Container_ptr new_container,
 
           break;
         }
-        case IR::dk_Interface:
+        case dk_Interface:
         {
           TAO_InterfaceDef_i impl (this->repo_,
                                    this->section_key_);
 
-          IR::InterfaceDefSeq_var bases = 
+          IR_InterfaceDefSeq_var bases = 
             impl.base_interfaces_i (ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
@@ -760,7 +760,7 @@ TAO_Contained_i::move_i (IR::Container_ptr new_container,
           CORBA::Boolean is_local = impl.is_local_i (ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
-          IR::InterfaceDef_var new_defn =
+          IR_InterfaceDef_var new_defn =
             container_impl->create_interface_i (id.in (),
                                                 new_name,
                                                 new_version,
@@ -775,12 +775,12 @@ TAO_Contained_i::move_i (IR::Container_ptr new_container,
 
           break;
         }
-        case IR::dk_Constant:
+        case dk_Constant:
         {
           TAO_ConstantDef_i impl (this->repo_,
                                   this->section_key_);
 
-          IR::IDLType_var type_def = impl.type_def_i (ACE_TRY_ENV);
+          IR_IDLType_var type_def = impl.type_def_i (ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
           CORBA::Any_var value = impl.value_i (ACE_TRY_ENV);
@@ -795,26 +795,26 @@ TAO_Contained_i::move_i (IR::Container_ptr new_container,
           ACE_TRY_CHECK;
           break;
         }
-        case IR::dk_Attribute:
+        case dk_Attribute:
         {
           TAO_AttributeDef_i impl (this->repo_,
                                    this->section_key_);
 
-          IR::IDLType_var type_def = impl.type_def_i (ACE_TRY_ENV);
+          IR_IDLType_var type_def = impl.type_def_i (ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
-          IR::AttributeMode mode = impl.mode_i (ACE_TRY_ENV);
+          IR_AttributeMode mode = impl.mode_i (ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
-          IR::ExceptionDefSeq_var get_excepts =
+          IR_ExceptionDefSeq_var get_excepts =
             impl.get_exceptions (ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
-          IR::ExceptionDefSeq_var put_excepts =
+          IR_ExceptionDefSeq_var put_excepts =
             impl.put_exceptions (ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
-          if (container_dk == IR::dk_Interface)
+          if (container_dk == dk_Interface)
             {
               TAO_InterfaceDef_i idef (this->repo_,
                                        container_key);
@@ -830,7 +830,7 @@ TAO_Contained_i::move_i (IR::Container_ptr new_container,
               ACE_TRY_CHECK;
               break;
             }
-          else if (container_dk == IR::dk_Value)
+          else if (container_dk == dk_Value)
             {
               TAO_ValueDef_i vdef (this->repo_,
                                    container_key);
@@ -851,28 +851,28 @@ TAO_Contained_i::move_i (IR::Container_ptr new_container,
               ACE_THROW (CORBA::BAD_PARAM (4, CORBA::COMPLETED_NO));
             }
         }
-        case IR::dk_Operation:
+        case dk_Operation:
         {
           TAO_OperationDef_i impl (this->repo_,
                                    this->section_key_);
 
-          IR::IDLType_var result = impl.result_def_i (ACE_TRY_ENV);
+          IR_IDLType_var result = impl.result_def_i (ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
-          IR::OperationMode mode = impl.mode_i (ACE_TRY_ENV);
+          IR_OperationMode mode = impl.mode_i (ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
-          IR::ParDescriptionSeq_var params = impl.params_i (ACE_TRY_ENV);
+          IR_ParDescriptionSeq_var params = impl.params_i (ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
-          IR::ExceptionDefSeq_var exceptions = 
+          IR_ExceptionDefSeq_var exceptions = 
             impl.exceptions_i (ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
-          IR::ContextIdSeq_var contexts = impl.contexts_i (ACE_TRY_ENV);
+          IR_ContextIdSeq_var contexts = impl.contexts_i (ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
-          if (container_dk == IR::dk_Interface)
+          if (container_dk == dk_Interface)
             {
               TAO_InterfaceDef_i idef (this->repo_,
                                        container_key);
@@ -889,7 +889,7 @@ TAO_Contained_i::move_i (IR::Container_ptr new_container,
               ACE_TRY_CHECK;
               break;
             }
-          else if (container_dk == IR::dk_Value)
+          else if (container_dk == dk_Value)
             {
               TAO_ValueDef_i vdef (this->repo_,
                                    container_key);
@@ -911,18 +911,18 @@ TAO_Contained_i::move_i (IR::Container_ptr new_container,
               ACE_THROW (CORBA::BAD_PARAM (4, CORBA::COMPLETED_NO));
             }
         }
-        case IR::dk_Value:
-        case IR::dk_Home:
-        case IR::dk_Component:
-        case IR::dk_Factory:
-        case IR::dk_Finder:
-        case IR::dk_PrimaryKey:
-        case IR::dk_Provides:
-        case IR::dk_Uses:
-        case IR::dk_Emits:
-        case IR::dk_Publishes:
-        case IR::dk_Consumes:
-        case IR::dk_ValueMember:
+        case dk_Value:
+        case dk_Home:
+        case dk_Component:
+        case dk_Factory:
+        case dk_Finder:
+        case dk_PrimaryKey:
+        case dk_Provides:
+        case dk_Uses:
+        case dk_Emits:
+        case dk_Publishes:
+        case dk_Consumes:
+        case dk_ValueMember:
           // TODO
         default:
           break;
@@ -980,12 +980,12 @@ TAO_Contained_i::move_i (IR::Container_ptr new_container,
                                               1);
     }
 
-  if (container_dk != IR::dk_Repository)
+  if (container_dk != dk_Repository)
     delete container_impl;
 }
 
 void
-TAO_Contained_i::move_pre_process (IR::Container_ptr container,
+TAO_Contained_i::move_pre_process (IR_Container_ptr container,
                                    const char *contained_path,
                                    const char *name,
                                    CORBA::Environment &ACE_TRY_ENV)
@@ -1047,7 +1047,7 @@ TAO_Contained_i::move_pre_process (IR::Container_ptr container,
 }
 
 void
-TAO_Contained_i::move_contents (IR::Container_ptr new_container,
+TAO_Contained_i::move_contents (IR_Container_ptr new_container,
                                 CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -1107,11 +1107,11 @@ TAO_Contained_i::move_contents (IR::Container_ptr new_container,
         }
     }
 
-  IR::DefinitionKind kind = this->def_kind (ACE_TRY_ENV);
+  IR_DefinitionKind kind = this->def_kind (ACE_TRY_ENV);
   ACE_CHECK;
 
   // Specific to InterfaceDef_i and ValueDef_i
-  if (kind == IR::dk_Interface || kind == IR::dk_Value)
+  if (kind == dk_Interface || kind == dk_Value)
     {
       int index = 0;
       ACE_TString section_name;

@@ -10,7 +10,7 @@
 //    EnumDef_i.h
 //
 // = DESCRIPTION
-//    IR::EnumDef servant class.
+//    IR_EnumDef servant class.
 //
 // = AUTHOR
 //    Jeff Parsons <parsons@cs.wustl.edu>
@@ -50,7 +50,7 @@ public:
   virtual ~TAO_EnumDef_i (void);
   // Destructor
 
-  virtual IR::DefinitionKind def_kind (
+  virtual IR_DefinitionKind def_kind (
       CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
@@ -71,27 +71,27 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
   // From IDLType_i's pure virtual function.
 
-  virtual IR::EnumMemberSeq *members (
+  virtual IR_EnumMemberSeq *members (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  IR::EnumMemberSeq *members_i (
+  IR_EnumMemberSeq *members_i (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void members (
-      const IR::EnumMemberSeq &members,
+      const IR_EnumMemberSeq &members,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void members_i (
-      const IR::EnumMemberSeq &members,
+      const IR_EnumMemberSeq &members,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )

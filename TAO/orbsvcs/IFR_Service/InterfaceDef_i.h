@@ -10,7 +10,7 @@
 //    InterfaceDef_i.h
 //
 // = DESCRIPTION
-//    IR::InterfaceDef servant class.
+//    IR_InterfaceDef servant class.
 //
 // = AUTHOR
 //    Jeff Parsons <parsons@cs.wustl.edu>
@@ -52,7 +52,7 @@ public:
   virtual ~TAO_InterfaceDef_i (void);
   // Destructor  
 
-  virtual IR::DefinitionKind def_kind (
+  virtual IR_DefinitionKind def_kind (
       CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
@@ -72,14 +72,14 @@ public:
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual IR::Contained::Description *describe (
+  virtual IR_Contained::Description *describe (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
   // From Contained_i's pure virtual function.
 
-  virtual IR::Contained::Description *describe_i (
+  virtual IR_Contained::Description *describe_i (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -100,27 +100,27 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
   // From IDLType_i's pure virtual function.
 
-  virtual IR::InterfaceDefSeq *base_interfaces (
+  virtual IR_InterfaceDefSeq *base_interfaces (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  IR::InterfaceDefSeq *base_interfaces_i (
+  IR_InterfaceDefSeq *base_interfaces_i (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void base_interfaces (
-      const IR::InterfaceDefSeq &base_interfaces,
+      const IR_InterfaceDefSeq &base_interfaces,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void base_interfaces_i (
-      const IR::InterfaceDefSeq &base_interfaces,
+      const IR_InterfaceDefSeq &base_interfaces,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
@@ -192,64 +192,64 @@ public:
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual IR::AttributeDef_ptr create_attribute (
+  virtual IR_AttributeDef_ptr create_attribute (
       const char *id,
       const char *name,
       const char *version,
-      IR::IDLType_ptr type,
-      IR::AttributeMode mode,
-      const IR::ExceptionDefSeq &get_exceptions,
-      const IR::ExceptionDefSeq &put_exceptions,
+      IR_IDLType_ptr type,
+      IR_AttributeMode mode,
+      const IR_ExceptionDefSeq &get_exceptions,
+      const IR_ExceptionDefSeq &put_exceptions,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  IR::AttributeDef_ptr create_attribute_i (
+  IR_AttributeDef_ptr create_attribute_i (
       const char *id,
       const char *name,
       const char *version,
-      IR::IDLType_ptr type,
-      IR::AttributeMode mode,
-      const IR::ExceptionDefSeq &get_exceptions,
-      const IR::ExceptionDefSeq &put_exceptions,
+      IR_IDLType_ptr type,
+      IR_AttributeMode mode,
+      const IR_ExceptionDefSeq &get_exceptions,
+      const IR_ExceptionDefSeq &put_exceptions,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual IR::OperationDef_ptr create_operation (
+  virtual IR_OperationDef_ptr create_operation (
       const char *id,
       const char *name,
       const char *version,
-      IR::IDLType_ptr result,
-      IR::OperationMode mode,
-      const IR::ParDescriptionSeq &params,
-      const IR::ExceptionDefSeq &exceptions,
-      const IR::ContextIdSeq &contexts,
+      IR_IDLType_ptr result,
+      IR_OperationMode mode,
+      const IR_ParDescriptionSeq &params,
+      const IR_ExceptionDefSeq &exceptions,
+      const IR_ContextIdSeq &contexts,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  IR::OperationDef_ptr create_operation_i (
+  IR_OperationDef_ptr create_operation_i (
       const char *id,
       const char *name,
       const char *version,
-      IR::IDLType_ptr result,
-      IR::OperationMode mode,
-      const IR::ParDescriptionSeq &params,
-      const IR::ExceptionDefSeq &exceptions,
-      const IR::ContextIdSeq &contexts,
+      IR_IDLType_ptr result,
+      IR_OperationMode mode,
+      const IR_ParDescriptionSeq &params,
+      const IR_ExceptionDefSeq &exceptions,
+      const IR_ContextIdSeq &contexts,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void inherited_contents (
-      ACE_Unbounded_Queue<IR::DefinitionKind> &kind_queue,
+      ACE_Unbounded_Queue<IR_DefinitionKind> &kind_queue,
       ACE_Unbounded_Queue<ACE_TString> &path_queue,
-      IR::DefinitionKind limit_type,
+      IR_DefinitionKind limit_type,
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
