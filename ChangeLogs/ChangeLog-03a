@@ -1,3 +1,13 @@
+Sat Jan 22 12:30:33 2000  Ossama Othman  <ossama@uci.edu>
+
+	* ace/ACE.cpp:
+	* ace/Service_Config.cpp:
+	* ace/Template_Instantiations.cpp:
+
+	  Moved ACE_LOCAL_MEMORY_POOL/ACE_Null_Mutex related template
+	  instantions to ACE.cpp.  This fixes a single threaded build
+	  problem.
+
 Thu Jan 20 09:15:50 2000  Ossama Othman  <ossama@uci.edu>
 
 	* bin/bootstrap:
