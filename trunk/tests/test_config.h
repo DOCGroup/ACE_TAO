@@ -101,9 +101,7 @@ typedef size_t KEY;
 
 #define ACE_NEW_THREAD \
 do {\
-  ACE_LOG_MSG->msg_ostream (ace_file_stream.output_file ()); \
-  ACE_LOG_MSG->clr_flags (ACE_Log_Msg::STDERR | ACE_Log_Msg::LOGGER ); \
-  ACE_LOG_MSG->set_flags (ACE_Log_Msg::OSTREAM); \
+      ACE_LOG_MSG->msg_ostream (ace_file_stream.ourput_file ()) ;\
 } while (0)
 
 #define ACE_APPEND_LOG(NAME) \
