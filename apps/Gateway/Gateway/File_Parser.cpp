@@ -36,24 +36,32 @@ File_Parser<ENTRY>::getword (char buf[])
 
 // Get the next string from the file via this->readword()
 // Check make sure the string forms a valid number.
+
 template <class ENTRY> FP_RETURN_TYPE
 File_Parser<ENTRY>::getint (ACE_INT32 &value)
 {
   char buf[BUFSIZ];
-  FP_RETURN_TYPE read_result = this->readword(buf);
+  FP_RETURN_TYPE read_result = this->readword (buf);
+
   if (read_result == FP::SUCCESS)
     {
-      // ptr is used for error checking with ACE_OS::strtol
-      char *ptr;
-
-      // try to convert the buf to a decimal number
-      value = ACE_OS::strtol (buf, &ptr, 10);
-
-      // check if the buf is a decimal or not
-      if (value == 0 && ptr == buf)
-	return FP::PARSE_ERROR;
+      // Check to see if this is the "use the default value" symbol?
+      if (buf[0] == '*')
+        return FP::DEFAULT;
       else
-	return FP::SUCCESS;
+        {
+          // ptr is used for error checking with ACE_OS::strtol.
+          char *ptr;
+
+          // try to convert the buf to a decimal number
+          value = ACE_OS::strtol (buf, &ptr, 10);
+
+          // check if the buf is a decimal or not
+          if (value == 0 && ptr == buf)
+            return FP::PARSE_ERROR;
+          else
+            return FP::SUCCESS;
+        }
     }
   else
     return read_result;

@@ -39,6 +39,9 @@ public:
     CONSUMER_ACCEPTOR = 010,
     SUPPLIER_CONNECTOR = 020,
     CONSUMER_CONNECTOR = 040
+
+    DEFAULT_TIMEOUT = 32
+    // The maximum timeout for trying to re-establish connections.
   };
 
   static Options *instance (void);
@@ -105,6 +108,9 @@ public:
   const char *consumer_config_file (void) const;
   // Name of the consumer map configuration file.
 
+  long max_timeout (void) const;
+  // The maximum retry timeout delay.
+
 private:
   Options (void);
   // Initialization.
@@ -151,6 +157,9 @@ private:
   u_short consumer_connector_port_;
   // The connector port number, i.e., the one that we use to actively
   // establish connections with a gatewayd and create a Consumer.
+
+  long max_timeout_;
+  // The maximum retry timeout delay.
 
   char proxy_config_file_[MAXPATHLEN + 1];
   // Name of the connection configuration file.

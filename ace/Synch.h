@@ -1191,6 +1191,14 @@ public:
   ACE_RW_Thread_Mutex (LPCTSTR name = 0,
 		       void *arg = 0);
 
+  int tryacquire_write_upgrade (void);
+  // Conditionally upgrade a read lock to a write lock.  This only
+  // works if there are no other readers present, in which case the
+  // method returns 0.  Otherwise, the method returns -1 and sets
+  // <errno> to <EBUSY>.  Note that the caller of this method *must*
+  // already possess this lock as a read lock (but this condition is
+  // not checked by the current implementation).
+
   void dump (void) const;
   // Dump the state of an object.
 
