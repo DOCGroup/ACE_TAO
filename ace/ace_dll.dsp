@@ -1334,6 +1334,10 @@ SOURCE=.\Copy_Disabled.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\CORBA_macros.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Date_Time.h
 # End Source File
 # Begin Source File
