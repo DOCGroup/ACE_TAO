@@ -27,11 +27,11 @@
 #include "ace/Process.h"
 
 #define APPLICATION \
-".." ACE_DIRECTORY_SEPARATOR_STR_A \
-"netsvcs" ACE_DIRECTORY_SEPARATOR_STR_A \
-"servers" ACE_DIRECTORY_SEPARATOR_STR_A \
-"main" ACE_PLATFORM_EXE_SUFFIX \
-" -f " ACE_PLATFORM
+__TEXT ("..") ACE_DIRECTORY_SEPARATOR_STR \
+__TEXT ("netsvcs") ACE_DIRECTORY_SEPARATOR_STR \
+__TEXT ("servers") ACE_DIRECTORY_SEPARATOR_STR \
+__TEXT ("main") ACE_PLATFORM_EXE_SUFFIX \
+__TEXT (" -f ") ACE_PLATFORM
 
 int
 main (int, char *[])
@@ -46,7 +46,7 @@ main (int, char *[])
   ACE_OS::unlink (ACE_DEFAULT_BACKING_STORE);
 
   ACE_Process_Options server_options;
-  server_options.command_line (APPLICATION "server.conf");
+  server_options.command_line (APPLICATION __TEXT ("server.conf"));
   ACE_Process server;
 
   if (server.spawn (server_options) == -1)
@@ -57,7 +57,7 @@ main (int, char *[])
   ACE_OS::sleep (3);
 
   ACE_Process_Options clerk_options;
-  clerk_options.command_line (APPLICATION "clerk.conf");
+  clerk_options.command_line (APPLICATION __TEXT ("clerk.conf"));
   ACE_Process clerk;
 
   if (clerk.spawn (clerk_options) == -1)
