@@ -21,6 +21,15 @@
 
 #include "orbsvcs/CosPropertyServiceS.h"
 
+
+
+
+
+
+
+
+
+
 class TAO_PropertySetFactory : public POA_CosPropertyService::PropertySetFactory 
 {  
  
