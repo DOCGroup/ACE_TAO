@@ -38,17 +38,6 @@ class TAO_Resource_Factory;
 typedef ACE_Unbounded_Set<TAO_Acceptor*>
         TAO_AcceptorSet;
 
-// @@ Fred&Ossama: Even though ye typing fingers may ache the DOC
-//    group style (or lack of it) is to call this stuff
-//    TAO_AcceptorSetIterator (not Itor).
-//    You may want to define this typedef inside the Acceptor_Registry
-//    to avoid namespace pollution. This is specially true since you
-//    don't export the Iterator (or the set) in the class interface,
-//    and it is only used in the implementation.
-//
-typedef ACE_Unbounded_Set_Iterator<TAO_Acceptor*>
-        TAO_AcceptorSetItor;
-
 class TAO_Export TAO_Acceptor_Registry
 {
   // = TITLE
