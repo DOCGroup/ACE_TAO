@@ -8,19 +8,20 @@ ES_OBJS=$(LSRC:.cpp=.o)
 
 LDLIBS = -lorbsvcs -lTAO
 
-#----------------------------------------------------------------------------
-#       Include macros and targets
-#----------------------------------------------------------------------------
-
-include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+BIN2 = CosEvent_Service
 
 #### If the TAO orbsvcs library wasn't built with sufficient components,
 #### don't try to build here.
 TAO_ORBSVCS := $(shell $(ACE_ROOT)/bin/ace_components --orbsvcs)
 ifeq (CosEvent,$(findstring CosEvent,$(TAO_ORBSVCS)))
-  BIN = CosEvent_Service
+  BIN = $(BIN2)
 endif # CosEvent
 
+#----------------------------------------------------------------------------
+#       Include macros and targets
+#----------------------------------------------------------------------------
+
+include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU

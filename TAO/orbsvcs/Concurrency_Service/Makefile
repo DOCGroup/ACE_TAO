@@ -13,19 +13,20 @@ SRC = Concurrency_Service.cpp
 LDLIBS  = -lorbsvcs -lTAO
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 
-#----------------------------------------------------------------------------
-#       Include macros and targets
-#----------------------------------------------------------------------------
-
-include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+BIN2 = Concurrency_Service
 
 #### If the TAO orbsvcs library wasn't built with sufficient components,
 #### don't try to build here.
 TAO_ORBSVCS := $(shell $(ACE_ROOT)/bin/ace_components --orbsvcs)
 ifeq (Concurrency,$(findstring Concurrency,$(TAO_ORBSVCS)))
-  BIN = Concurrency_Service
+  BIN = $(BIN2)
 endif # Concurrency
 
+#----------------------------------------------------------------------------
+#       Include macros and targets
+#----------------------------------------------------------------------------
+
+include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
