@@ -76,6 +76,13 @@ ifeq ($(CPU),)
   CPU = PPC604
 endif # default CPU
 
+ifeq ($(CPU),PPC403)
+  BINXSYM_NAME = xsym
+  CFLAGS += -B$(GCCLIB_DIR)/ -DCPU=PPC403 -mcpu=403
+  CCFLAGS += -fno-implicit-templates
+  GCCLIB_DIR = $(HOST_DIR)/lib/gcc-lib/powerpc-wrs-vxworks/cygnus-2.7.2-960126
+  TOOLENV = ppc
+else
 ifeq ($(CPU),PPC604)
   BINXSYM_NAME = xsym
   CFLAGS += -B$(GCCLIB_DIR)/ -DCPU=PPC604
@@ -189,6 +196,7 @@ endif # SIMNT
 endif # PPC860
 endif # PPC603
 endif # PPC604
+endif # PPC403
 
 #### END target CPU-specific settings
 
