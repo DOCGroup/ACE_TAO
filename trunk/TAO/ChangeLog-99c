@@ -1,3 +1,7 @@
+Mon Jun 28 18:06:20 1999 Fred Kuhns <fredk@cs.wustl.edu>
+        * Commited fixes for type codes in IOR exceptions
+          IORS.cpp and IORC.cpp
+	
 Mon Jun 28 18:04:54 1999 Fred Kuhns <fredk@cs.wustl.edu>
         * Added test for IORManipultion
           TAO/tests/IORManipultion
