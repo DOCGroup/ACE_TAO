@@ -258,8 +258,6 @@ TAO_ORB_Core::~TAO_ORB_Core (void)
 #endif /* TAO_HAS_RT_CORBA == 1 */
 
   delete this->transport_sync_strategy_;
-
-  ACE_DEBUG ((LM_DEBUG, "******************** YESH! ***************\n"));
 }
 
 int
