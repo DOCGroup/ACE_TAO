@@ -64,9 +64,9 @@ Demux_Test_Client::init (int argc, char *argv [],
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            "ORB_init");
       ACE_RETHROW;
-      return -1;
     }
   ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
 
   // now parse the rest of the arguments to determine the POA depth, the number
   // of objects with each POA and other info
@@ -126,9 +126,9 @@ Demux_Test_Client::init (int argc, char *argv [],
             ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                                  "object_to_string");
             ACE_RETHROW;
-            return -1;
           }
         ACE_ENDTRY;
+        ACE_CHECK_RETURN (-1);
       } // j and i loop
 
   ACE_OS::fclose (this->ior_fp_);
@@ -286,13 +286,13 @@ Demux_Test_Client::run (CORBA::Environment &ACE_TRY_ENV)
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            "run failed");
+      ACE_ERROR ((LM_ERROR,
+                  "(%N:%l) Demux_Test_Client::run - "
+                  "Error running the Client\n"));
       ACE_RETHROW;
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) Demux_Test_Client::run - "
-                         "Error running the Client\n"),
-                        -1);
     }
   ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
 
   ACE_OS::fclose (this->result_fp_);
 
@@ -306,13 +306,13 @@ Demux_Test_Client::run (CORBA::Environment &ACE_TRY_ENV)
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            "shutdown failed");
+      ACE_ERROR ((LM_ERROR,
+                  "(%N:%l) Demux_Test_Client::run - "
+                  "Error running the Client\n"));
       ACE_RETHROW;
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) Demux_Test_Client::run - "
-                         "Error running the Client\n"),
-                        -1);
     }
   ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
 
       // now print the results
   if (this->print_results () == -1)

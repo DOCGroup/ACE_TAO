@@ -66,9 +66,9 @@ Demux_Test_Server::init (int argc, char *argv [],
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "ORB_init");
       ACE_RETHROW;
-      return -1;
     }
   ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
 
   // Grab the ROOT POA
   ACE_TRY_EX (GET_ROOT_POA)
@@ -77,7 +77,7 @@ Demux_Test_Server::init (int argc, char *argv [],
                                    // an object which we then have to narrow.
       // Get the Root POA
 
-      temp = 
+      temp =
         this->orb_->resolve_initial_references ("RootPOA",
                                                 ACE_TRY_ENV);
       ACE_TRY_CHECK_EX(GET_ROOT_POA);
@@ -96,9 +96,9 @@ Demux_Test_Server::init (int argc, char *argv [],
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            "PortableServer::POA::_narrow");
       ACE_RETHROW;
-      return -1;
     }
   ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
 
   // grab the POA Manager
   ACE_TRY_EX (GET_POA_MGR)
@@ -113,9 +113,9 @@ Demux_Test_Server::init (int argc, char *argv [],
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            "RootPOA->the_POAManager");
       ACE_RETHROW;
-      return -1;
     }
   ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
 
   // now parse the rest of the arguments to determine the POA depth, the number
   // of objects with each POA and other info
@@ -190,9 +190,9 @@ Demux_Test_Server::init (int argc, char *argv [],
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            "creating policy");
       ACE_RETHROW;
-      return -1;
     }
   ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
 
   // now create a POA hierarchy of the desired depth and populate each POA with
   // the specified number of objects. Finally, activate these objects.
@@ -239,9 +239,9 @@ Demux_Test_Server::init (int argc, char *argv [],
           ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                                "create_POA");
           ACE_RETHROW;
-          return -1;
         }
       ACE_ENDTRY;
+      ACE_CHECK_RETURN (-1);
 
       for (j = 0; j < this->num_objs_; j++)
         {
@@ -267,9 +267,9 @@ Demux_Test_Server::init (int argc, char *argv [],
                   ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                                        "poa->activate_obj");
                   ACE_RETHROW;
-                  return -1;
                 }
               ACE_ENDTRY;
+              ACE_CHECK_RETURN (-1);
 
               // Get the IOR and output it to the file
               ACE_TRY_EX (IOR)
@@ -290,9 +290,9 @@ Demux_Test_Server::init (int argc, char *argv [],
                   ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                                        "object_to_string");
                   ACE_RETHROW;
-                  return -1;
                 }
               ACE_ENDTRY;
+              ACE_CHECK_RETURN (-1);
             }
           else
             {
@@ -341,9 +341,9 @@ Demux_Test_Server::init (int argc, char *argv [],
                   ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                                        "object_to_string");
                   ACE_RETHROW;
-                  return -1;
                 }
               ACE_ENDTRY;
+              ACE_CHECK_RETURN (-1);
 
             }// end of if (!use_user_id_)
 
@@ -369,9 +369,9 @@ Demux_Test_Server::init (int argc, char *argv [],
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            "poa_mgr->activate");
       ACE_RETHROW;
-      return -1;
     }
   ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
 
   // success
   return 0;
@@ -473,8 +473,7 @@ Demux_Test_Server::run (CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_TRY
     {
-
-      if (this->orb_->run () == -1)
+      if (this->orb_->run (ACE_TRY_ENV) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) Demux_Test_Server::run - "
