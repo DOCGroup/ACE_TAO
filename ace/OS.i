@@ -10793,7 +10793,7 @@ ACE_OS::getuid (void)
   return 0;
 # elif defined (ACE_WIN32) || defined(CHORUS)
   // ACE_TRACE ("ACE_OS::getuid");
-  ACE_NOTSUP_RETURN (-1);
+  ACE_NOTSUP_RETURN (ACE_static_cast (uid_t, -1));
 #else
   ACE_OSCALL_RETURN (::getuid (), uid_t, (uid_t) -1);
 # endif /* VXWORKS */
