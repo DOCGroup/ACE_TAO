@@ -188,6 +188,26 @@ ACE_TP_Reactor::handle_events (ACE_Time_Value *max_wait_time)
     return result;
 }
 
+int
+ACE_TP_Reactor::mask_ops (ACE_HANDLE handle,
+                          ACE_Reactor_Mask mask,
+                          int ops)
+{
+  ACE_TRACE ("ACE_Select_Reactor_T::mask_ops");
+  ACE_MT (ACE_GUARD_RETURN (ACE_Select_Reactor_Token,
+          ace_mon, this->token_, -1));
+
+  int result = this->bit_ops (handle, mask,
+                              this->suspend_set_,
+                              ops);
+  if (result < 0)
+    return result;
+
+  return this->bit_ops (handle, mask,
+                        this->wait_set_,
+                        ops);
+}
+
 void
 ACE_TP_Reactor::no_op_sleep_hook (void *)
 {
