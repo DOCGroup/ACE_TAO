@@ -4,10 +4,10 @@
 options and can be configured to run a single EC, two ECs connected
 through a Gateway, short-circuit the EC, use a global, local or
 precomputed schedule, etc.
+
         Please see the scripts for typical configurations.
 
-        A simple test is that will use a pre-computed schedule would
-be:
+        A simple test is that uses a pre-computed schedule would be:
 
 # Run the Naming Service
 $ ../../Naming_Service/Naming_Service -ORBport 20000 \
