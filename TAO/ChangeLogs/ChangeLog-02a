@@ -1,3 +1,8 @@
+Tue Mar 27 23:23:31 2001  Craig Rodrigues <crodrigu@bbn.com>
+
+        * orbsvcs/tests/Trading/Makefile
+          Prevent unnecessary symlink from being installed in $ACE_ROOT/ace 
+
 Tue Mar 27 20:11:31 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/tests/AVStreams/Simple_Two_Stage/Makefile:
