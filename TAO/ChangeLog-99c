@@ -1,5 +1,12 @@
 Sat Jul  3 10:54:00 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
+	* TAO_IDL/be/be_visitor_operation/ami_handler_skeleton_cs.cpp:
+	  Added this file. This file generates the demarshalling skeletons
+	  for the Reply Handler and then calls the Reply Handler's call
+	  back hook methods. This file is not fully done yet. But this
+	  visitor is not used for the time being.
+
+
 	* tao/Transport_Mux_Strategy.cpp: Fixed the explicit template
 	  instantiation problems.
 
