@@ -1,16 +1,21 @@
 // -*- C++ -*-
 
 #include "PrincipalAuthenticator.h"
-//#include "PrincipalAuthenticator_Impl.h"
+#include "SecurityManager.h"
 
 ACE_RCSID (Security,
            PrincipalAuthenticator,
            "$Id$")
 
 
-TAO_PrincipalAuthenticator::TAO_PrincipalAuthenticator (void)
-  : vaults_ ()
+TAO_PrincipalAuthenticator::TAO_PrincipalAuthenticator (
+  TAO_SecurityManager *manager)
+  : vaults_ (),
+    security_manager_ (manager)
 {
+  // Make sure the SecurityManager exists at least as long as this
+  // PrincipalAuthenticator.
+  (void) SecurityLevel2::SecurityManager::_duplicate (manager);
 }
 
 TAO_PrincipalAuthenticator::~TAO_PrincipalAuthenticator (void)
@@ -20,6 +25,8 @@ TAO_PrincipalAuthenticator::~TAO_PrincipalAuthenticator (void)
   for (size_t i = 0; i < count; ++i)
     CORBA::release (ACE_static_cast (SecurityReplaceable::Vault_ptr,
                                      this->vaults_[i]));
+
+  CORBA::release (this->security_manager_);
 }
 
 Security::AuthenticationMethodList *
@@ -101,6 +108,13 @@ TAO_PrincipalAuthenticator::authenticate (
         break;
     }
 
+  if (status == Security::SecAuthSuccess)
+    {
+      this->security_manager_->add_own_credentials (creds
+                                                    TAO_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (Security::SecAuthFailure);
+    }
+
   return status;
 }
 
@@ -136,6 +150,13 @@ TAO_PrincipalAuthenticator::continue_authentication (
       if (status == Security::SecAuthSuccess
           || status == Security::SecAuthContinue)
         break;
+    }
+
+  if (status == Security::SecAuthSuccess)
+    {
+      this->security_manager_->add_own_credentials (creds
+                                                    TAO_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (Security::SecAuthFailure);
     }
 
   return status;

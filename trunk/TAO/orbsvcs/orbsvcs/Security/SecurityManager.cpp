@@ -36,12 +36,22 @@ SecurityLevel2::CredentialsList *
 TAO_SecurityManager::own_credentials (TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
+                    monitor,
+                    this->lock_,
+                    0);
+
+  SecurityLevel2::CredentialsList *creds_list = 0;
+  ACE_NEW_THROW_EX (creds_list,
+                    SecurityLevel2::CredentialsList (this->own_credentials_),
+                    CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
                         TAO_DEFAULT_MINOR_CODE,
-                        ENOTSUP),
-                      CORBA::COMPLETED_NO),
-                    0);
+                        ENOMEM),
+                      CORBA::COMPLETED_NO));
+  ACE_CHECK_RETURN (0);
+
+  return creds_list;
 }
 
 SecurityLevel2::RequiredRights_ptr
@@ -70,7 +80,7 @@ TAO_SecurityManager::principal_authenticator (TAO_ENV_SINGLE_ARG_DECL)
       {
         TAO_PrincipalAuthenticator *pa = 0;
         ACE_NEW_THROW_EX (pa,
-                          TAO_PrincipalAuthenticator,
+                          TAO_PrincipalAuthenticator (this),
                           CORBA::NO_MEMORY (
                             CORBA::SystemException::_tao_minor_code (
                               TAO_DEFAULT_MINOR_CODE,
@@ -126,15 +136,38 @@ TAO_SecurityManager::get_target_credentials (CORBA::Object_ptr /* obj_ref */
 
 void
 TAO_SecurityManager::remove_own_credentials (
-    SecurityLevel2::Credentials_ptr /* creds */
+    SecurityLevel2::Credentials_ptr creds
     TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_THROW (CORBA::NO_IMPLEMENT (
-               CORBA::SystemException::_tao_minor_code (
-                TAO_DEFAULT_MINOR_CODE,
-                ENOTSUP),
-               CORBA::COMPLETED_NO));
+  ACE_GUARD (TAO_SYNCH_MUTEX, monitor, this->lock_);
+
+  // Check if the given Credentials are already in the "own
+  // credentials" list.
+
+  const CORBA::ULong len = this->own_credentials_.length ();
+
+  // @@ A linear search.  Yuck!
+  for (CORBA::ULong i = 0; i < len; ++i)
+    if (this->own_credentials_[i] == creds)
+      {
+        if (i = len - 1)
+          this->own_credentials_.length (len - 1);
+        else
+          {
+            // Avoid building a new CredentialsList.  Just invalidate
+            // the Credentials in the current position in the
+            // CredentialsList.
+            //
+            // This is has the disadvantage that it will leave "holes"
+            // in the CredentialsList.
+            this->own_credentials_[i] = SecurityLevel2::Credentials::_nil ();
+          }
+
+        return;
+      }
+
+  ACE_THROW (CORBA::BAD_PARAM ());
 }
 
 CORBA::Policy_ptr
@@ -148,4 +181,38 @@ TAO_SecurityManager::get_security_policy (CORBA::PolicyType /* policy_type */
                         ENOTSUP),
                       CORBA::COMPLETED_NO),
                     CORBA::Policy::_nil ());
+}
+
+void
+TAO_SecurityManager::add_own_credentials (SecurityLevel2::Credentials_ptr creds
+                                          TAO_ENV_ARG_DECL)
+{
+  ACE_GUARD (TAO_SYNCH_MUTEX, monitor, this->lock_);
+
+  // Check if the given Credentials are already in the "own
+  // credentials" list.
+
+  const CORBA::ULong len = this->own_credentials_.length ();
+
+  CORBA::ULong empty_slot = 0;
+
+  // @@ A linear search.  Yuck!
+  for (CORBA::ULong i = 0; i < len; ++i)
+    if (this->own_credentials_[i] == creds)
+      ACE_THROW (CORBA::BAD_PARAM ());
+    else if (empty_slot == 0
+             && CORBA::is_nil (this->own_credentials_[i]))
+      empty_slot = i;
+
+  if (empty_slot != 0)
+    {
+      this->own_credentials_[empty_slot] =
+        SecurityLevel2::Credentials::_duplicate (creds);
+    }
+  else
+    {
+      this->own_credentials_.length (len + 1);
+      this->own_credentials_[len] =
+        SecurityLevel2::Credentials::_duplicate (creds);
+    }
 }

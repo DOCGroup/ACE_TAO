@@ -1683,7 +1683,7 @@ realclean: clean
  $(ACE_ROOT)/ace/OS_Errno.h \
  $(ACE_ROOT)/ace/OS_Export.h \
  $(ACE_ROOT)/ace/OS_Errno.inl \
- SecurityLevel2C.h \
+ SecurityReplaceableC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -1869,14 +1869,17 @@ realclean: clean
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  Security/security_export.h \
+ SecurityLevel2C.h \
  SecurityLevel1C.h \
  SecurityC.h \
  SecurityC.i \
  SecurityLevel1C.i \
  SecurityLevel2C.i \
+ SecurityReplaceableC.i \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
- $(ACE_ROOT)/ace/Array_Base.cpp
+ $(ACE_ROOT)/ace/Array_Base.cpp \
+ Security/SecurityManager.h
 
 .obj/SecurityManager.o .obj/SecurityManager.so .shobj/SecurityManager.o .shobj/SecurityManager.so: Security/SecurityManager.cpp \
  Security/SecurityManager.h \
@@ -2082,6 +2085,8 @@ realclean: clean
  SecurityLevel1C.i \
  SecurityLevel2C.i \
  Security/PrincipalAuthenticator.h \
+ SecurityReplaceableC.h \
+ SecurityReplaceableC.i \
  $(ACE_ROOT)/ace/Array_Base.h \
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp
