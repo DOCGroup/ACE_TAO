@@ -164,6 +164,7 @@ ACE_Hash_Map_Manager<EXT_ID, INT_ID, LOCK>::close_i (void)
       this->allocator_->free (this->table_);
       this->table_ = 0;
       this->allocator_->free (this->sentinel_);
+      this->sentinel_ = 0;
     }
   return 0;
 }
@@ -211,23 +212,17 @@ template <class EXT_ID, class INT_ID, class LOCK> int
 ACE_Hash_Map_Manager<EXT_ID, INT_ID, LOCK>::bind_i (const EXT_ID &ext_id,
 						    const INT_ID &int_id)
 {
-  u_long loc = this->hash (ext_id) % this->total_size_;
+  ACE_Hash_Map_Entry<EXT_ID, INT_ID> *temp;
 
-  ACE_Hash_Map_Entry<EXT_ID, INT_ID> *temp = this->table_[loc];
+  u_long loc;
+  int result = this->shared_find (ext_id, temp, loc);
 
-  for (this->sentinel_->ext_id_ = ext_id;
-       this->equal (temp->ext_id_, ext_id) == 0;
-       temp = temp->next_)
-    continue;
-
-  this->sentinel_->ext_id_ = sentinel_ext_id_fakenull_;
-
-  if (temp == this->sentinel_) 
+  if (result == -1)
     {
       void *ptr;
       // Not found.
       ACE_ALLOCATOR_RETURN (ptr,
-			    this->allocator_->malloc (sizeof (ACE_Hash_Map_Entry<EXT_ID, INT_ID>)			    ),
+			    this->allocator_->malloc (sizeof (ACE_Hash_Map_Entry<EXT_ID, INT_ID>)),
 			    -1);
 
       this->table_[loc] = 
@@ -253,24 +248,17 @@ template <class EXT_ID, class INT_ID, class LOCK> int
 ACE_Hash_Map_Manager<EXT_ID, INT_ID, LOCK>::trybind_i (const EXT_ID &ext_id,
 						       INT_ID &int_id)
 {
-  u_long loc = this->hash (ext_id) % this->total_size_;
+  ACE_Hash_Map_Entry<EXT_ID, INT_ID> *temp;
 
-  ACE_Hash_Map_Entry<EXT_ID, INT_ID> *temp = this->table_[loc];
+  u_long loc;
+  int result = this->shared_find (ext_id, temp, loc);
 
-  for (this->sentinel_->ext_id_ = ext_id;
-       this->equal (temp->ext_id_, ext_id) == 0;
-       temp = temp->next_)
-    continue;
-
-  this->sentinel_->ext_id_ = sentinel_ext_id_fakenull_;
-
-  if (temp == this->sentinel_) 
+  if (result == -1)
     {
       // Not found.
       void *ptr;
-      // Not found.
       ACE_ALLOCATOR_RETURN (ptr,
-			    this->allocator_->malloc (sizeof (ACE_Hash_Map_Entry<EXT_ID, INT_ID>)			    ),
+			    this->allocator_->malloc (sizeof (ACE_Hash_Map_Entry<EXT_ID, INT_ID>)),
 			    -1);
 
       this->table_[loc] = 
@@ -299,19 +287,13 @@ template <class EXT_ID, class INT_ID, class LOCK> int
 ACE_Hash_Map_Manager<EXT_ID, INT_ID, LOCK>::unbind_i (const EXT_ID &ext_id,
 						      INT_ID &int_id)
 {
-  u_long loc = this->hash (ext_id) % this->total_size_;
-
-  ACE_Hash_Map_Entry<EXT_ID, INT_ID> *temp = this->table_[loc];
+  ACE_Hash_Map_Entry<EXT_ID, INT_ID> *temp;
   ACE_Hash_Map_Entry<EXT_ID, INT_ID> *prev = 0;
 
-  for (this->sentinel_->ext_id_ = ext_id;
-       this->equal (temp->ext_id_, ext_id) == 0;
-       temp = temp->next_)
-    prev = temp;
+  u_long loc;
+  int result = this->shared_find (ext_id, temp, prev, loc);
 
-  this->sentinel_->ext_id_ = sentinel_ext_id_fakenull_;
-
-  if (temp == this->sentinel_) 
+  if (result == -1) 
     {
       errno = ENOENT;
       return -1;
@@ -356,9 +338,10 @@ ACE_Hash_Map_Manager<EXT_ID, INT_ID, LOCK>::unbind (const EXT_ID &ext_id)
 
 template <class EXT_ID, class INT_ID, class LOCK> int 
 ACE_Hash_Map_Manager<EXT_ID, INT_ID, LOCK>::shared_find (const EXT_ID &ext_id,
-							 ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&entry)
+							 ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&entry,
+                                                         u_long &loc)
 {
-  u_long loc = this->hash (ext_id) % this->total_size_;
+  loc = this->hash (ext_id) % this->total_size_;
 
   ACE_Hash_Map_Entry<EXT_ID, INT_ID> *temp = this->table_[loc];
 
@@ -382,12 +365,42 @@ ACE_Hash_Map_Manager<EXT_ID, INT_ID, LOCK>::shared_find (const EXT_ID &ext_id,
 }
 
 template <class EXT_ID, class INT_ID, class LOCK> int 
+ACE_Hash_Map_Manager<EXT_ID, INT_ID, LOCK>::shared_find (const EXT_ID &ext_id,
+							 ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&entry,
+							 ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&prev,
+                                                         u_long &loc)
+{
+  loc = this->hash (ext_id) % this->total_size_;
+
+  ACE_Hash_Map_Entry<EXT_ID, INT_ID> *temp = this->table_[loc];
+
+  for (this->sentinel_->ext_id_ = ext_id;
+       this->equal (temp->ext_id_, ext_id) == 0;
+       temp = temp->next_)
+    prev = temp;
+
+  this->sentinel_->ext_id_ = sentinel_ext_id_fakenull_;
+
+  if (temp != this->sentinel_)
+    {
+      entry = temp;
+      return 0;
+    }
+  else
+    {
+      errno = ENOENT;
+      return -1;
+    }
+}
+
+template <class EXT_ID, class INT_ID, class LOCK> int 
 ACE_Hash_Map_Manager<EXT_ID, INT_ID, LOCK>::find_i (const EXT_ID &ext_id,
 						    INT_ID &int_id)
 {
   ACE_Hash_Map_Entry<EXT_ID, INT_ID> *entry;
-  
-  if (this->shared_find (ext_id, entry) == -1)
+
+  u_long dummy;
+  if (this->shared_find (ext_id, entry, dummy) == -1)
     return -1;
   else
     {
@@ -400,8 +413,9 @@ template <class EXT_ID, class INT_ID, class LOCK> int
 ACE_Hash_Map_Manager<EXT_ID, INT_ID, LOCK>::find_i (const EXT_ID &ext_id)
 {
   ACE_Hash_Map_Entry<EXT_ID, INT_ID> *entry;
-  
-  return this->shared_find (ext_id, entry);
+
+  u_long dummy;
+  return this->shared_find (ext_id, entry, dummy);
 }
 
 template <class EXT_ID, class INT_ID, class LOCK> int 
@@ -429,7 +443,8 @@ ACE_Hash_Map_Manager<EXT_ID, INT_ID, LOCK>::rebind_i (const EXT_ID &ext_id,
 {
   ACE_Hash_Map_Entry<EXT_ID, INT_ID> *node;
 
-  if (this->shared_find (ext_id, node) == -1)
+  u_long dummy;
+  if (this->shared_find (ext_id, node, dummy) == -1)
     return this->bind_i (ext_id, int_id);
   else
     {
