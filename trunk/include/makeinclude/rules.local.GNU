@@ -87,6 +87,10 @@ install.local: 	$(INSTALL)
 deinstall.local:
 	$(RM) $(INSTALL) $(LIB:%.a=$(INSLIB)/%*.a) $(SHLIB:%.so=$(INSLIB)/%*.so)
 
+
+#### To disable installs, just remove write permission from $WRAPPER_ROOT/ace.
+#### Or, add "INSTALL=" to your "make" invocation.
+
 $(INSBIN)/%$(VAR) \
 $(INSINC)/ace% \
 $(INSLIB)/%$(VAR).a \
@@ -101,19 +105,23 @@ $(INSMAN)/man7/% \
 $(INSMAN)/man8/% \
 $(INSMAN)/manl/% \
 $(INSMAN)/mann/% :
-	@if test -s $@ ; then \
-		echo "$(@F) already installed" ; \
-        else \
-		echo "Installing $(@F) -> $(@D)" ; \
-		ln -s $(shell pwd)/$(@F) $@ ; \
+	@if test -w $(@D) ; then \
+		if test -s $@ ; then \
+			echo "$(@F) already installed" ; \
+		else \
+			echo "Installing $(@F) -> $(@D)" ; \
+			ln -s $(shell pwd)/$(@F) $@ ; \
+		fi \
 	fi
 ifdef MVSLIB
 #special for MVS in order to use the .x files
-	@if test -s $(@:.so=.x) ; then \
-		echo "$(@F:.so=.x) already installed" ; \
-	else \
-		echo "Installing $(@F:.so=.x) -> $(@D)" ; \
-		ln -s $(shell pwd)/$(@F:.so=.x) $(@:.so=.x) ; \
+	@if test -w $(@D) ; then \
+		if test -s $(@:.so=.x) ; then \
+			echo "$(@F:.so=.x) already installed" ; \
+		else \
+			echo "Installing $(@F:.so=.x) -> $(@D)" ; \
+			ln -s $(shell pwd)/$(@F:.so=.x) $(@:.so=.x) ; \
+			fi \
 	fi
 endif
 
