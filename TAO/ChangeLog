@@ -1,3 +1,15 @@
+Mon Nov 10 16:44:43 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/DynamicInterface/Request.cpp (poll_response):
+
+          Reverted the return value to be CORBA::Request::response_recieved_,
+          but also added a call to perform_work() with a timeout of 0, if
+          response_received_ is false, so that, in the single-threaded
+          case, the application doesn't starve the ORB (and prevent the
+          appearance of the response). Thanks to David Faure <faure@kde.org>
+          for reporting the problem, and to Bala Natarajan 
+          <bala@dre.vanderbilt.edu> for his help with the fix.
+
 Mon Nov 10 22:43:42 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * examples/Kokyu_dsrt_schedulers/fp_example/Makefile.fp_client:
