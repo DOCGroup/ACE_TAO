@@ -62,7 +62,7 @@ NOTE:
 SunOS, SunSoft, Sun, Solaris, Sun Microsystems or the Sun logo are
 trademarks or registered trademarks of Sun Microsystems, Inc.
 
- */
+*/
 
 // utl_string.cc - Implementation of quick and dirty TEMPORARY String
 //		   for IDL compiler
@@ -73,70 +73,57 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 ACE_RCSID(util, utl_string, "$Id$")
 
 /*
- * Constructors
+ * Constructors.
  */
 
 UTL_String::UTL_String (void)
-  : p_str (NULL),
-    c_str (NULL),
-    len (0),
-    alloced (0)
+  : p_str (0),
+    c_str (0),
+    len (0)
 {
 }
 
 UTL_String::UTL_String (const char *str)
 {
-  if (str == NULL)
+  if (str == 0)
     {
-      len = alloced = 0;
-      p_str = c_str = NULL;
+      this->len = 0;
+      this->p_str = 0;
+      this->c_str = 0;
     }
   else
     {
-      len = ACE_OS::strlen (str);
-      alloced = len + 1;
-      p_str = ACE_OS::strdup (str);
-      c_str = ACE_OS::strdup (str);
-      ACE_OS::strcpy (p_str, str);
-      canonicalize ();
+      this->len = ACE_OS::strlen (str);
+      this->p_str = ACE_OS::strdup (str);
+      this->c_str = (char *) ACE_OS::malloc (this->len + 1);
+      this->canonicalize ();
     }
-}
-
-UTL_String::UTL_String (unsigned long maxlen)
-{
-  len = maxlen;
-  alloced = maxlen + 1;
-  p_str = new char [alloced];
-  c_str = new char [alloced];
-  p_str[0] = '\0';
-  c_str[0] = '\0';
 }
 
 UTL_String::UTL_String (UTL_String *s)
 {
-  char	*b;
-
-  if (s == NULL)
+  if (s == 0)
     {
-     p_str = c_str = NULL;
-     alloced = len = 0;
+     this->p_str = 0;
+     this->c_str = 0;
+     this->len = 0;
     }
   else
     {
-      b = s->get_string ();
-      if (b == NULL)
+      char *b = s->get_string ();
+
+      if (b == 0)
         {
-          p_str = c_str = NULL;
-          alloced = len = 0;
+          this->p_str = 0;
+          this->c_str = 0;
+          this->len = 0;
         }
       else
         {
-          len = ACE_OS::strlen (b);
-          alloced = len + 1;
-          p_str = new char [alloced];
-          c_str = new char [alloced];
-          ACE_OS::strcpy (p_str, b);
-          canonicalize ();
+          this->len = ACE_OS::strlen (b);
+          this->p_str = ACE_OS::strdup (b);
+          this->c_str = (char *) ACE_OS::malloc (this->len + 1);
+          this->canonicalize ();
         }
     }
 }
@@ -146,7 +133,7 @@ UTL_String::~UTL_String (void)
 }
 
 /*
- * Private operations
+ * Private operations.
  */
 
 // Compute a canonical form for this string. This is (implemented as)
@@ -155,47 +142,65 @@ UTL_String::~UTL_String (void)
 void
 UTL_String::canonicalize (void)
 {
-  unsigned long	i;
+  for (unsigned long i = 0; i < this->len; ++i)
+    {
+      if (isalpha (this->p_str[i]))
+        {
+          this->c_str[i] = (char) toupper (this->p_str[i]);
+        }
+      else
+        {
+          this->c_str[i] = this->p_str[i];
+        }
+    }
 
-  for (i = 0; i < len; i++)
-    c_str[i] = (char) (isalpha (p_str[i]) ? toupper (p_str[i]) : p_str[i]);
-
-  c_str[i] = '\0';
+  c_str[this->len] = '\0';
 }
 
 /*
- * Public operations
+ * Public operations.
  */
 
-// Compare two String *
+// Compare two UTL_String *.
 long
 UTL_String::compare (UTL_String *s)
 {
-  char	*s_c_str;
-  long	result;
+  char *s_c_str;
+  long result;
 
-  if (c_str == NULL || s == NULL || (s_c_str = s->get_canonical_rep ()) == NULL)
-    result = I_FALSE;
+  if (this->c_str == 0 
+      || s == 0 
+      || (s_c_str = s->get_canonical_rep ()) == 0)
+    {
+      result = I_FALSE;
+    }
   else
-    result = (ACE_OS::strcmp (c_str, s_c_str) == 0) ? I_TRUE : I_FALSE;
+    {
+      result = 
+        (ACE_OS::strcmp (this->c_str, s_c_str) == 0) ? I_TRUE : I_FALSE;
+    }
 
   /*
-   * Check that the names are typed consistently
+   * Check that the names are typed consistently.
    */
-  if (result == I_TRUE && ACE_OS::strcmp (p_str, s->get_string ()) != 0)
+  if (result == I_TRUE 
+      && ACE_OS::strcmp (this->p_str, s->get_string ()) != 0)
     {
       // Prevents redundant error reporting if we're in this branch.
       result = I_FALSE;
 
       if (idl_global->case_diff_error ())
         {
-          idl_global->err ()->name_case_error (p_str, s->get_string ());
+          idl_global->err ()->name_case_error (this->p_str, 
+                                               s->get_string ());
         }
       else
         {
-          idl_global->err ()->name_case_warning (p_str, s->get_string ());
+          idl_global->err ()->name_case_warning (this->p_str, 
+                                                 s->get_string ());
         }
     }
+
   return result;
 }
 
@@ -205,14 +210,24 @@ UTL_String::compare_quiet (UTL_String *s)
   char	*s_c_str;
   long	result;
 
-  if (c_str == NULL || s == NULL || (s_c_str = s->get_canonical_rep ()) == NULL)
-    result = I_FALSE;
-  else if (ACE_OS::strcmp (c_str, s_c_str) != 0)
-    result = I_FALSE;
-  else if (ACE_OS::strcmp (p_str, s->get_string ()) != 0)
-    result = I_TRUE;
+  if (this->c_str == 0 
+      || s == 0 
+      || (s_c_str = s->get_canonical_rep ()) == 0)
+    {
+      result = I_FALSE;
+    }
+  else if (ACE_OS::strcmp (this->c_str, s_c_str) != 0)
+    {
+      result = I_FALSE;
+    }
+  else if (ACE_OS::strcmp (this->p_str, s->get_string ()) != 0)
+    {
+      result = I_TRUE;
+    }
   else
-    result = I_FALSE;
+    {
+      result = I_FALSE;
+    }
 
   return result;
 }
@@ -233,36 +248,33 @@ UTL_String::destroy (void)
     }
 }
 
-// Get the char * from a String
+// Get the char * from a String.
 char *
 UTL_String::get_string (void)
 {
   return this->p_str;
 }
 
-// Get the canonical representation from a String
+// Get the canonical representation from a String.
 char *
 UTL_String::get_canonical_rep (void)
 {
-  if (this->c_str == NULL)
+  if (this->c_str == 0)
     {
-      ACE_NEW_RETURN (this->c_str,
-                      char [this->alloced],
-                      0);
-
-      canonicalize ();
+      this->c_str = (char *) ACE_OS::malloc (this->len + 1);
+      this->canonicalize ();
     }
 
   return this->c_str;
 }
 
 /*
- * Redefined virtual operations
+ * Redefined virtual operations.
  */
 
-// AST Dumping
+// AST Dumping.
 void
 UTL_String::dump (ostream &o)
 {
-  o << p_str;
+  o << this->p_str;
 }
