@@ -1,3 +1,11 @@
+Tue Apr  5 13:41:27 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* configure.ac:
+
+	  Removed ACE_SUBST for ACE_LIBDIR, ACE_LIBS, ACE_INCLUDEDIR,
+	  TAO_LIBDIR, TAO_LIBS, and TAO_INCLUDEDIR since we're using
+	  pkg-config now.
+
 Tue Apr  5 13:30:21 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* ace/Pipe.cpp:

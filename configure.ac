@@ -7471,28 +7471,6 @@ dnl LDFLAGS="$ACE_LDFLAGS $LDFLAGS"
 dnl AC_SUBST(LDFLAGS)
 dnl AC_SUBST(LIBOBJS)
 
-dnl These definitions are expanded in the makefile and ace-config
-if test "$no_x" != yes; then
-  ACE_LIBDIR="${X_LIBS} -L\${libdir}"
-else
-  ACE_LIBDIR='-L${libdir}'
-fi
-ACE_LIBS="${X_PRE_LIBS} ${ACE_XLIBS} ${X_EXTRA_LIBS} ${LIBS}"
-ACE_INCLUDEDIR='-I${includedir}'
-
-AC_SUBST([ACE_LIBDIR])
-AC_SUBST([ACE_LIBS])
-AC_SUBST([ACE_INCLUDEDIR])
-
-dnl These definitions are expanded in the makefile and ace-config
-#TAO_LIBDIR='-L${libdir}'
-#TAO_LIBS="-lACE ${LIBS}"
-#TAO_INCLUDEDIR='-I${includedir}'
-#
-#AC_SUBST([TAO_LIBDIR])
-#AC_SUBST([TAO_LIBS])
-#AC_SUBST([TAO_INCLUDEDIR])
-
 dnl Force CXXFLAGS to be substituted in Makefiles that don't "need" them.
 AC_SUBST([CXXFLAGS])
 
