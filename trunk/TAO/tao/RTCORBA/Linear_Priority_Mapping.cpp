@@ -10,7 +10,9 @@
 # include "Linear_Priority_Mapping.i"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID(Strategies, Linear_Priority_Mapping, "$Id$")
+ACE_RCSID (Strategies, 
+           Linear_Priority_Mapping, 
+           "$Id$")
 
 TAO_Linear_Priority_Mapping::TAO_Linear_Priority_Mapping (long policy)
   : policy_ (policy)
@@ -27,9 +29,15 @@ CORBA::Boolean
 TAO_Linear_Priority_Mapping::to_native (RTCORBA::Priority corba_priority,
                                         RTCORBA::NativePriority &native_priority)
 {
-  if (corba_priority < RTCORBA::minPriority ||
-      corba_priority > RTCORBA::maxPriority)
-    return 0;
+  if (corba_priority < RTCORBA::minPriority 
+           // The line below will always be false unless the value of
+           // RTCORBA::maxPriority, which is now assigned the value of
+           // 32767, is changed in RTCORBA.pidl.
+//      || corba_priority > RTCORBA::maxPriority
+     )
+    {
+      return 0;
+    }
 
 #if defined (ACE_WIN32)
   // Count up the number of distinct native priorities on current
