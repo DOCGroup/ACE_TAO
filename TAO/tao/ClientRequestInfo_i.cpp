@@ -508,7 +508,7 @@ TAO_ClientRequestInfo_i::response_expected (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 Messaging::SyncScope
-TAO_ClientRequestInfo_i::sync_scope (ACE_ENV_SINGLE_ARG_DECL)
+TAO_ClientRequestInfo_i::sync_scope (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->invocation_->sync_scope ();

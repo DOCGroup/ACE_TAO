@@ -97,12 +97,6 @@ CORBA::String_out::String_out (CORBA::String_var &s)
 }
 
 ACE_INLINE
-CORBA::String_out::String_out (TAO_String_Manager &s)
-  : ptr_ (s.out ())
-{
-}
-
-ACE_INLINE
 CORBA::String_out::String_out (const CORBA::String_out &s)
   : ptr_ (s.ptr_)
 {
@@ -233,12 +227,6 @@ CORBA::WString_out::WString_out (CORBA::WChar *&s)
 
 ACE_INLINE
 CORBA::WString_out::WString_out (CORBA::WString_var &s)
-  : ptr_ (s.out ())
-{
-}
-
-ACE_INLINE
-CORBA::WString_out::WString_out (TAO_WString_Manager &s)
   : ptr_ (s.out ())
 {
 }

@@ -32,7 +32,7 @@ namespace TAO
                    this->details_.opname_len (),
                    strat
                    ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
+    ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
 
     if (this->forwarded_to_.in () != 0)
       return TAO_INVOKE_RESTART;

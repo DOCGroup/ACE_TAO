@@ -31,6 +31,7 @@
 #include "tao/Object_Argument_T.h"
 #include "tao/Arg_Traits_T.h"
 #include "tao/OBV_Constants.h"
+#include "tao/corbafwd.h"
 
 // Forward declarations.
 class TAO_InputCDR;
@@ -44,6 +45,8 @@ namespace TAO
 namespace CORBA
 {
   class TypeCode;
+
+  class Environment;
 
   typedef TAO_Pseudo_Var_T<TypeCode> TypeCode_var;
   typedef TAO_Pseudo_Out_T<TypeCode, TypeCode_var> TypeCode_out;
@@ -607,8 +610,8 @@ namespace TAO
   /// Used in generated code if CORBA::TypeCode is an argument or return type.
   template<>
   class TAO_Export Arg_Traits<CORBA::TypeCode>
-    : public Object_Arg_Traits_T<CORBA::TypeCode_ptr, 
-                                 CORBA::TypeCode_var, 
+    : public Object_Arg_Traits_T<CORBA::TypeCode_ptr,
+                                 CORBA::TypeCode_var,
                                  CORBA::TypeCode_out>
   {
   };
@@ -702,10 +705,10 @@ TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR& cdr,
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR& cdr,
                                       CORBA::TypeCode *&x);
 
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, 
+TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &,
                                       const CORBA::TCKind &);
 
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, 
+TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &,
                                       CORBA::TCKind &);
 
 #if defined (__ACE_INLINE__)

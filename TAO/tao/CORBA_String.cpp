@@ -1,11 +1,13 @@
-#include "tao/CORBA_String.h"
+#include "CORBA_String.h"
+#include "Managed_Types.h"
+#include "ace/OS.h"
+#include "ace/iosfwd.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/CORBA_String.inl"
 #endif /* ! __ACE_INLINE__ */
 
-#include "ace/OS.h"
-#include "ace/streams.h"
+
 
 ACE_RCSID (tao,
            CORBA_String,
@@ -199,6 +201,24 @@ CORBA::WString_var::operator= (const CORBA::WString_var& r)
     }
   return *this;
 }
+
+// These methods moved to the CPP file to avoid cyclic dependencies.
+// ----------------------------------------------------
+//  String_out type
+// ----------------------------------------------------
+CORBA::String_out::String_out (TAO_String_Manager &s)
+  : ptr_ (s.out ())
+{
+}
+
+// ----------------------------------------------------
+//  WString_out type
+// ----------------------------------------------------
+CORBA::WString_out::WString_out (TAO_WString_Manager &s)
+  : ptr_ (s.out ())
+{
+}
+
 
 // *************************************************************
 // C++ iostream operators for (W)String_var and (W)String_out

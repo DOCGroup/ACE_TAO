@@ -29,7 +29,7 @@
 
 #include "tao/orbconf.h"
 #include "tao/Exception.h"
-
+#include "tao/CDR.h"
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -62,25 +62,25 @@
 
 TAO_NAMESPACE  CORBA
 {
-  
+
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/exception_ch.cpp:51
 
 #if !defined (_CORBA_BOUNDS_CH_)
 #define _CORBA_BOUNDS_CH_
-  
+
   class TAO_Export Bounds : public CORBA::UserException
   {
   public:
-    
+
     Bounds (void);
     Bounds (const Bounds &);
     ~Bounds (void);
 
     Bounds &operator= (const Bounds &);
-    
+
     static void _tao_any_destructor (void *);
-    
+
     static Bounds *_downcast (CORBA::Exception *);
     static CORBA::Exception *_alloc (void);
 
@@ -92,21 +92,21 @@ TAO_NAMESPACE  CORBA
         TAO_OutputCDR &
         ACE_ENV_ARG_DECL_NOT_USED
       ) const;
-    
+
     virtual void _tao_decode (
         TAO_InputCDR &
         ACE_ENV_ARG_DECL_NOT_USED
       );
-    
+
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/exception_ch.cpp:125
-    
+
     virtual CORBA::TypeCode_ptr _type (void) const;
   };
-  
+
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
-  
+
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_Bounds;
 
 #endif /* end #if !defined */
@@ -158,4 +158,3 @@ TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA::Bounds &);
 
 #include "ace/post.h"
 #endif /* ifndef */
-

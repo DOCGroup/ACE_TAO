@@ -17,16 +17,18 @@
 
 #include "ace/pre.h"
 
-#include "tao/Managed_Types.h"
+#include "tao/TAO_Export.h"
+#include "tao/Basic_Types.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-
 // For the (W)String_var and (W)String_out iostream operators.
 #include "ace/iosfwd.h"
 
+class TAO_String_Manager;
+class TAO_WString_Manager;
 
 namespace CORBA
 {

@@ -101,14 +101,14 @@ namespace TAO
   }
 
   TAO_Service_Context &
-  Invocation_Base::request_service_context (ACE_ENV_SINGLE_ARG_DECL)
+  Invocation_Base::request_service_context (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     return this->details_.request_service_context ();
   }
 
   TAO_Service_Context &
-  Invocation_Base::reply_service_context (ACE_ENV_SINGLE_ARG_DECL)
+  Invocation_Base::reply_service_context (void)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     return this->details_.request_service_context ();

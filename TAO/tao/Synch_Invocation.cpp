@@ -26,7 +26,7 @@ namespace TAO
 
   Invocation_Status
   Synch_Twoway_Invocation::remote_twoway (ACE_Time_Value *max_wait_time
-                                          ACE_ENV_SINGLE_ARG_DECL)
+                                          ACE_ENV_ARG_DECL)
   {
     ACE_Countdown_Time countdown (max_wait_time);
 
@@ -190,8 +190,6 @@ namespace TAO
 
     // Set the translators
     this->resolver_.transport ()->assign_translators (&cdr, 0);
-
-    int i = 0;
 
     // At this point it can be assumed that the GIOP/whatever protocol
     // header and the reply header are already handled.  Further it
