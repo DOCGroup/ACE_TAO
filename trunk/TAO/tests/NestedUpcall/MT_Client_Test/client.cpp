@@ -197,7 +197,8 @@ MT_Client::init (int argc, char **argv,
 
   this->client_number_ = client_number;
 
-  ACE_TRY_NEW_ENV
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
     {
       char buf[64];
       ACE_OS::sprintf (buf, "thread_%x", this);
@@ -269,7 +270,7 @@ MT_Client::init (int argc, char **argv,
                            "MT_Client::init");
       return -1;
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
 
   return 0;
 }
@@ -280,7 +281,8 @@ MT_Client::init (int argc, char **argv,
 int
 main (int argc, char **argv)
 {
-  ACE_TRY_NEW_ENV
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
     {
       TAO_ORB_Manager orb_manager;
 
