@@ -1,11 +1,16 @@
 Mon May 27 13:18:51 UTC 2002  Don Hinton <dhinton@ieee.org>
-	
+
 	* ace/OS.i (mkstemp):
 
 	  Implemented this method in terms of ::mktemp for platforms
 	  that have ::mktemp.  It's used in ACE_DLL::set_handle()--may
 	  need to rethink that implementation or implement ::mktemp
 	  emulation for those platforms lacking it.
+
+	* tests/Framework_Component_DLL.dsp:
+	* tests/tests.dsw:
+
+	  Added new dsp for Framework_Component_DLL.
 
 	* tests/Framework_Component_DLL.cpp:
 	  
