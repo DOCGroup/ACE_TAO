@@ -1,3 +1,29 @@
+Fri Mar 30 19:57:14 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+	* tests/Makefile:
+	* tests/Makefile.bor:
+	* tests/README:
+	* tests/MT_Timeout/Makefile:
+	* tests/MT_Timeout/Makefile.bor:
+	* tests/MT_Timeout/client.bor:
+	* tests/MT_Timeout/server.bor:
+	* tests/MT_Timeout/README:
+	* tests/MT_Timeout/Test.idl:
+	* tests/MT_Timeout/run_test.pl:
+	* tests/MT_Timeout/Client_Task.h:
+	* tests/MT_Timeout/Client_Task.cpp:
+	* tests/MT_Timeout/Server_Task.h:
+	* tests/MT_Timeout/Server_Task.cpp:
+	* tests/MT_Timeout/Sleep_Service.h:
+	* tests/MT_Timeout/Sleep_Service.cpp:
+	* tests/MT_Timeout/client.cpp:
+	* tests/MT_Timeout/server.cpp:
+	  New regression test for bug 842.  The client creates multiple
+	  threads, each thread repeatedly send requests to a server that
+	  blocks for an specified amount of time.  Each client thread sets
+	  a roundtrip timeout policy.  The test currently deadlocks, while
+	  it should terminate in a relatively short amount of time.
+
 Fri Mar 30 18:52:54 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/Collocation/Makefile:
