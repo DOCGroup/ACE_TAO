@@ -1,8 +1,14 @@
+Fri Aug  6 20:22:02 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* configure.ac:
+	  Added check for mkstemp() which sets ACE_LACKS_MKSTEMP if
+	  it is not available.
+
 Fri Aug  6 19:13:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
 
         * ace/config-openvms.h:
         Added ACE_HAS_VOIDPTR_GETTIMEOFDAY.
-        
+
 Fri Aug  6 08:17:23 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* m4/ace.m4:
@@ -72,13 +78,13 @@ Fri Aug  6 08:17:23 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 Fri Aug  6 10:26:20 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ace/OS_NS_string.h:
-        
+
           Added include of ACE.h needed for WIN32 version of change in
-          
+
           Fri Aug  6 07:58:54 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ace/OS_NS_string.inl:
-        
+
           Fixed typo and mismatched return type for WIN32.
 
 Fri Aug  6 14:15:12 UTC 2004  Johnny Willemsen  <jwillemen@remedy.nl>
