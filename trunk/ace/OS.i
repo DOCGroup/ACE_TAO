@@ -5181,7 +5181,66 @@ ACE_OS::thr_self (void)
 #endif /* ACE_HAS_THREADS */
 }
 
+
 #if defined (ACE_HAS_TSS_EMULATION)
+
+#if defined(ACE_USE_NATIVE_KEYS)
+ACE_INLINE int
+ACE_OS::thr_getspecific (ACE_OS_thread_key_t key, void **data)
+{
+  // ACE_TRACE ("ACE_OS::thr_getspecific");
+#if defined (ACE_HAS_THREADS)
+# if defined (ACE_HAS_STHREADS)
+    ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_getspecific (key, data), ace_result_), int, -1);
+# elif defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
+#   if !defined (ACE_HAS_FSU_PTHREADS) && !defined (ACE_HAS_PTHREAD_GETSPECIFIC_DATAPTR)
+      // Note, don't use "::" here since the following call is often a macro.
+      *data = pthread_getspecific (key);
+#   elif !defined (ACE_HAS_FSU_PTHREADS) && defined (ACE_HAS_SETKIND_NP) || defined (ACE_HAS_PTHREAD_GETSPECIFIC_DATAPTR)
+      ::pthread_getspecific (key, data);
+#   else /* ACE_HAS_FSU_PTHREADS */
+      ::pthread_getspecific (key, data);
+#   endif       /*  ACE_HAS_FSU_PTHREADS */
+      return 0;
+# elif defined (ACE_HAS_WTHREADS)
+
+  // The following handling of errno is designed like this due to
+  // ACE_Log_Msg::instance calling ACE_OS::thr_getspecific.
+  // Basically, it is ok for a system call to reset the error to zero.
+  // (It really shouldn't, though).  However, we have to remember to
+  // store errno *immediately* after an error is detected.  Calling
+  // ACE_ERROR_RETURN((..., errno)) did not work because errno was
+  // cleared before being passed to the thread-specific instance of
+  // ACE_Log_Msg.  The workaround for was to make it so
+  // thr_getspecific did not have the side effect of clearing errno.
+  // The correct fix is for ACE_ERROR_RETURN to store errno
+  //(actually ACE_OS::last_error) before getting the ACE_Log_Msg tss
+  // pointer, which is how it is implemented now.  However, other uses
+  // of ACE_Log_Msg may not work correctly, so we're keeping this as
+  // it is for now.
+
+  int error = errno;
+  *data = ::TlsGetValue (key);
+#   if !defined (ACE_HAS_WINCE)
+  if (*data == 0 && (errno = ::GetLastError ()) != NO_ERROR)
+
+    return -1;
+  else
+#   endif /* ACE_HAS_WINCE */
+    {
+      errno = error;
+      return 0;
+    }
+# endif /* ACE_HAS_STHREADS */
+#else
+  ACE_UNUSED_ARG (key);
+  ACE_UNUSED_ARG (data);
+  ACE_NOTSUP_RETURN (-1);
+#endif /* ACE_HAS_THREADS */
+}
+#endif /* ACE_USE_NATIVE_KEYS */
+
+#if !defined(ACE_USE_NATIVE_KEYS)
 ACE_INLINE
 void **&
 ACE_TSS_Emulation::tss_base ()
@@ -5192,6 +5251,7 @@ ACE_TSS_Emulation::tss_base ()
   return tss_collection_ [ACE_OS::thr_self ()];
 # endif /* VXWORKS */
 }
+#endif /* !ACE_USE_NATIVE_KEYS */
 
 ACE_INLINE
 u_int
