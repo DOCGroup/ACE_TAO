@@ -54,7 +54,7 @@ void Request_Context_Repository::generate_object_id(
 void
 Request_Context_Repository::set_object_id(
   const FtRtecEventChannelAdmin::ObjectId& object_id
-  ACE_ENV_ARG_DECL)
+  ACE_ENV_ARG_DECL_NOT_USED)
 {
   /*
   PortableInterceptor::Current_var pic =
