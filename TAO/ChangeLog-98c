@@ -1,3 +1,13 @@
+Tue Jan 20 20:25:41 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/sequence.h: 
+	* tao/sequence.i: 
+	* tao/sequence.cpp: 
+	* tao/sequence_T.i: 
+	* tao/sequence_T.cpp: 
+	  Another round of changes, this time fixing several bugs reported
+	  by Andy and Irfan.
+
 Tue Jan 20 20:23:57 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/nvlist.h: 
