@@ -9,7 +9,7 @@ script was started.  It looks for .mpc files and generates a project or
 projects for each one found.
 
 
-Usage: mwc.pl [-global <file>] [-include <directory>] [-recurse]
+Usage: mwc.pl [-global <file>] [-include <directory>] [-recurse[=dir1,...]]
               [-ti <dll | lib | dll_exe | lib_exe>:<file>]
               [-template <file>] [-relative NAME=VAR] [-base <project>]
               [-noreldefs] [-notoplevel] [-static] [-static_only]
@@ -38,7 +38,8 @@ Usage: mwc.pl [-global <file>] [-include <directory>] [-recurse]
                        addition to dynamic projects.
        -static_only    Specifies that only static projects will be generated.
        -recurse        Recurse from the current directory and generate from
-                       all found input files.
+                       all found input files.  If directories are passed to
+                       this option, then those directories are not recursed.
        -relative       Any $() variable in an mpc that is matched to NAME
                        is replaced by VAR only if VAR can be made into a
                        relative path based on the current working directory.
@@ -96,6 +97,12 @@ The -notoplevel option tells mwc.pl to generate all projects for a
 workspace, but do not generate the top level workspace file.  For mpc.pl, it
 says process the mpc files, but do not generate the project files.
 
+The -recurse option is used to search for all files that could be processed
+from the current directory and its sub-directories.  If directories are
+passed in a comma separated list (e.g -recurse=examples,apps,TAO), then
+those directories will be excluded when searching for project or workspace
+files.
+
 The -type option can be used multiple times on the same command line to
 generate projects of different types per mpc file.  The default type is
 always gnuace.  NOTE: The -ti option overrides the template input file for all
@@ -117,7 +124,7 @@ file) is not provided, the project creator will attempt to create a default
 project in the directory from which the script was started.
 
 
-Usage: mpc.pl [-global <file>] [-include <directory>] [-recurse]
+Usage: mpc.pl [-global <file>] [-include <directory>] [-recurse[=dir1,...]]
               [-ti <dll | lib | dll_exe | lib_exe>:<file>]
               [-template <file>] [-relative NAME=VAR] [-base <project>]
               [-noreldefs] [-notoplevel] [-static] [-static_only]
@@ -146,7 +153,8 @@ Usage: mpc.pl [-global <file>] [-include <directory>] [-recurse]
                        addition to dynamic projects.
        -static_only    Specifies that only static projects will be generated.
        -recurse        Recurse from the current directory and generate from
-                       all found input files.
+                       all found input files.  If directories are passed to
+                       this option, then those directories are not recursed.
        -relative       Any $() variable in an mpc that is matched to NAME
                        is replaced by VAR only if VAR can be made into a
                        relative path based on the current working directory.

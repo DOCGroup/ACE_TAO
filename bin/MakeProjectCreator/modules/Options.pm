@@ -62,11 +62,11 @@ sub options {
   my($global)     = undef;
   my($template)   = undef;
   my($feature_f)  = undef;
+  my($recurse)    = undef;
   my($dynamic)    = ($defaults ? 1 : undef);
   my($reldefs)    = ($defaults ? 1 : undef);
   my($toplevel)   = ($defaults ? 1 : undef);
   my($static)     = ($defaults ? 0 : undef);
-  my($recurse)    = ($defaults ? 0 : undef);
   my($makeco)     = ($defaults ? 0 : undef);
 
   ## Process the command line arguments
@@ -143,8 +143,15 @@ sub options {
     elsif ($arg eq '-notoplevel') {
       $toplevel = 0;
     }
-    elsif ($arg eq '-recurse') {
-      $recurse = 1;
+    elsif ($arg =~ /^\-recurse(=(.*))?/) {
+      my($exc) = $2;
+      if (!defined $exc) {
+        $recurse = [];
+      }
+      else {
+        my(@exc) = split(',', $exc);
+        $recurse = \@exc;
+      }
     }
     elsif ($arg eq '-template') {
       $i++;
