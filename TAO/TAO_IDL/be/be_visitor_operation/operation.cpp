@@ -119,7 +119,7 @@ be_visitor_operation::gen_throw_spec (be_operation *node)
   be_interface *iface = be_interface::narrow_from_decl (scope);
 
   // Check if this is IF and it's not VT.
-  if (!(iface != 0 && iface->is_valuetype ()))
+  if (iface != 0 && !iface->is_valuetype ())
     {
       *os << be_idt_nl << throw_spec_open;
       *os << be_idt_nl << "CORBA::SystemException";
@@ -163,7 +163,7 @@ be_visitor_operation::gen_throw_spec (be_operation *node)
     }
 
   // Check if this is IF and it's not VT.
-  if (!(iface != 0 && iface->is_valuetype ()))
+  if (iface != 0 && !iface->is_valuetype ())
     {
       *os << be_uidt_nl << throw_spec_close << be_uidt;
     }
