@@ -1,3 +1,9 @@
+Fri Jun 11 20:36:37 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* examples/POA/TIE/run_test.pl: Changed the way the client process
+	was launched. Initial a system call was used. But now we are using
+	a Process::Create call to do that.
+
 Fri Jun 11 20:04:07 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* performance-tests/Cubit/TAO/IDL_Cubit/run_test.pl:
