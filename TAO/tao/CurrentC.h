@@ -130,8 +130,7 @@ class  CORBA_Current : public virtual ACE_CORBA_1 (Object)
 #endif /* end #if !defined */
 
 // Any operators for interface CORBA_Current
-void operator<<= (CORBA::Any &, const CORBA_Current &); // copying version
-void operator<<= (CORBA::Any &, CORBA_Current*); // noncopying version
+void operator<<= (CORBA::Any &, CORBA_Current_ptr);
 CORBA::Boolean operator>>= (const CORBA::Any &, CORBA_Current *&);
 
 #if defined (__ACE_INLINE__)
