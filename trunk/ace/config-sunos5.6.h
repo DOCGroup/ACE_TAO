@@ -10,16 +10,6 @@
 
 // #include the SunOS 5.5 config file, then add SunOS 5.6 updates below.
 
-// Unless the user has set _POSIX_C_SOURCE specifically, set it up
-// to enable POSIX.1b-1993 (Real Time). This will enable shm_open
-// and friends.
-#if !defined (_POSIX_C_SOURCE)
-#  define _POSIX_C_SOURCE 199309L
-#  ifndef __EXTENSIONS__
-#    define __EXTENSIONS__
-#  endif
-#endif
-
 #include "ace/config-sunos5.5.h"
 
 #if defined(__GNUC__) && __GNUC__ >= 2 && __GNUC_MINOR__ >= 95
