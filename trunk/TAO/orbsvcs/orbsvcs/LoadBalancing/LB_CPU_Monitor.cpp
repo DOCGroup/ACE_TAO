@@ -90,10 +90,17 @@ TAO_LB_CPU_Monitor::loads (ACE_ENV_SINGLE_ARG_DECL)
   //       last 5 and 15 minutes can be used instead.
   double loadavg[1];
 
-  int samples = ::getloadavg (loadavg, 1);
+  const int samples = ::getloadavg (loadavg, 1);
 
   if (samples == 1)
-    load = loadavg[0] / ::sysconf (_SC_NPROCESSORS_ONLN);
+    {
+      const long num_processors = ::sysconf (_SC_NPROCESSORS_ONLN);
+
+      if (num_processors > 0)
+        load = loadavg[0] / num_processors;
+      else
+        ACE_THROW_RETURN (CORBA::TRANSIENT (), 0);  // Correct exception?
+    }
   else
     ACE_THROW_RETURN (CORBA::TRANSIENT (), 0);  // Correct exception?
 
