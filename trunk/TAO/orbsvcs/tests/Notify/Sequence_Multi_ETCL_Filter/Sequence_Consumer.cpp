@@ -85,7 +85,7 @@ create_consumeradmin (CosNotifyChannelAdmin::EventChannel_ptr ec
   ACE_CHECK_RETURN (0);
 
   CosNotifyFilter::Filter_var filter =
-    ffact->create_filter ("ETCL" ACE_ENV_ARG_PARAMETER);
+    ffact->create_filter ("EXTENDED_TCL" ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   if(CORBA::is_nil(filter.in()))
