@@ -1,4 +1,7 @@
-Fri Apr 16 19:34:54 1999 Alexander Babu Arulanthu <alex@cs.wustl.edu>
+Fri Apr 16 19:36:35 1999 Alexander Babu Arulanthu <alex@cs.wustl.edu>
+
+	* ace/Proactor.h (ACE_Proactor): Switched the order of TIMER_QUEUE
+	and delete_implementation in the constructor. 
 
 	* examples/Reactor/Proactor/test_multiple_loops.cpp: Fixed to work
 	on the WIN32 correctly. This can work only on WIN32 (combining
