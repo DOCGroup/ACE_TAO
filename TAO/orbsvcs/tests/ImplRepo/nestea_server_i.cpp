@@ -8,7 +8,7 @@ ACE_RCSID(ImplRepo, nestea_server_i, "$Id$")
 
 const char *NESTEA_DATA_FILENAME = "nestea.dat";
 
-Nestea_Server_i::Nestea_Server_i (const char *filename)
+Nestea_Server_i::Nestea_Server_i (const char */*filename*/)
   : server_impl_ (0),
     ior_output_file_ (0),
     ir_helper_ (0),

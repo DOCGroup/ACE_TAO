@@ -10,7 +10,7 @@ ACE_RCSID(ImplRepo, nestea_i, "$Id$")
 
 // Constructor
 
-Nestea_i::Nestea_i (const char *filename, int shutdown)
+  Nestea_i::Nestea_i (const char *filename, int /*shutdown*/)
 : cans_ (0)
 {
   this->data_filename_ = ACE::strnew (filename);
