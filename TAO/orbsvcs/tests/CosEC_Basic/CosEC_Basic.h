@@ -48,6 +48,7 @@ public:
 
   int init (int argc, char *argv[]);
   // Starts up an ORB, a Rtec and the CosEC.
+  // Returns 0 on success, -1 on error.
 
   void run (void);
   // Connects a consumer and a supplier to the CosEC and sends 1 event
@@ -57,6 +58,18 @@ public:
   // Closes down the Rtec and CosEC.
 
 private:
+  int init_ORB (int argc, char *argv[]);
+  // initializes the ORB.
+  // Returns 0 on success, -1 on error.
+
+  int init_RtEC (void);
+  // initializes the Real Time EC.
+  // Returns 0 on success, -1 on error.
+
+  int init_CosEC (void);
+  // initializes the COS EC.
+  // Returns 0 on success, -1 on error.
+
   CORBA::ORB_var orb_;
   // The ORB that we use.
 
@@ -65,6 +78,9 @@ private:
 
   ACE_Config_Scheduler scheduler_impl_;
   // Scheduler used by the Rtec.
+
+  RtecScheduler::Scheduler_var scheduler_;
+  // Reference to the Scheduler after activating it in the ORB.
 
   ACE_EventChannel ec_impl_;
   // The servant object of the Rtec.
