@@ -1,3 +1,11 @@
+Mon Jul  5 08:39:06 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* tools/Segment_Timer/Segment_Timer.cpp:
+	* tools/static_configurator/Static_Assembly_Parser.cpp:
+
+	  Fixed warnings that were caused from converting strings to
+	  non-const char *. 
+
 Mon Jul  5 08:36:07 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/temp/README:
