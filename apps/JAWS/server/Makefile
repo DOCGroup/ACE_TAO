@@ -18,6 +18,7 @@ MYFILES  	= \
 	HTTP_Handler \
 	HTTP_Helpers \
 	JAWS_Pipeline \
+	JAWS_Concurrency \
 	HTTP_Request \
 	HTTP_Response \
 	Parse_Headers \
