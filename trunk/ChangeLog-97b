@@ -1,3 +1,11 @@
+Tue Oct 21 14:14:33 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
+
+	* examples/Timer_Queue/Thread_Timer_Queue_Test.h: 
+	* examples/Timer_Queue/Thread_Timer_Queue_Test.cpp: 
+	  Use the typedef for Upcall to define the base Timer_Queue.
+	  Input_Task inherits from ACE_Task_Base, no need for ACE_Task<>
+	  here.
+
 Tue Oct 21 13:45:53 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/config-irix6.x-sgic++-nothreads.h: Added ACE_HAS_TERM_IOCTLS

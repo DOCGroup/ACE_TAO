@@ -71,8 +71,10 @@ Handler::cancelled (void)
   return 0;
 }
 
-Input_Task::Input_Task (Thread_Timer_Queue *queue, Thread_Timer_Queue_Test_Driver &timer_queue_driver)
-  : queue_ (queue),
+Input_Task::Input_Task (Thread_Timer_Queue *queue,
+			Thread_Timer_Queue_Test_Driver &timer_queue_driver)
+  : ACE_Task_Base (ACE_Thread_Manager::instance ()),
+    queue_ (queue),
     usecs_ (ACE_ONE_SECOND_IN_USECS), 
     driver_ (timer_queue_driver)
 {
