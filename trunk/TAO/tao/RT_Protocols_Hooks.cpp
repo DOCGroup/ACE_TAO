@@ -523,8 +523,6 @@ ACE_STATIC_SVC_DEFINE (TAO_RT_Protocols_Hooks,
                        0)
 ACE_FACTORY_DEFINE (TAO, TAO_RT_Protocols_Hooks)
 
-#endif /* TAO_HAS_RT_CORBA == 1 */
-
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
 template class ACE_Dynamic_Service<TAO_RT_Protocols_Hooks>;
@@ -534,3 +532,6 @@ template class ACE_Dynamic_Service<TAO_RT_Protocols_Hooks>;
 #pragma instantiate ACE_Dynamic_Service<TAO_RT_Protocols_Hooks>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+#endif /* TAO_HAS_RT_CORBA == 1 */
+
