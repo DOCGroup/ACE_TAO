@@ -1,3 +1,15 @@
+Mon Aug 31 15:22:42 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+	* TAOACE.dsw:
+	* TAOACE_Static.dsw:
+	* tao/TAO.dsw:
+	* tao/TAO.dsp:
+	* tao/TAO_Static.dsp:
+	* TAO_IDL/tao_idl.dsw:
+	* TAO_IDL/tao_idl.dsp:
+	* TAO_IDL/tao_idl_static.dsp:
+	  Updated for MSVC 6.
+
 Mon Aug 31 07:50:23 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Scheduler_Factory.cpp (dump_schedule):
