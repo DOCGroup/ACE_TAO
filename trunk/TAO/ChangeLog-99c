@@ -1,3 +1,9 @@
+Wed Apr 14 16:43:32 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/ORB_Core.cpp:
+	  One of the strings removed in ORB_Core::init() was not
+	  duplicated first.
+
 Wed Apr 14 15:33:35 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/AV/Endpoint_Strategy.cpp: 
