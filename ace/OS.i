@@ -3516,8 +3516,14 @@ ACE_OS::sema_post (ACE_sema_t *s, size_t release_count)
 {
 #if defined (ACE_WIN32) && !defined (ACE_USES_WINCE_SEMA_SIMULATION)
   // Win32 supports this natively.
+#  if defined (ACE_HAS_PACE)
+  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::ReleaseSemaphore (*(s->sema_),
+										  release_count, 0), ace_result_),
+										  int, -1);
+#  else
   ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::ReleaseSemaphore (*s, release_count, 0),
                                           ace_result_), int, -1);
+#  endif /* ACE_HAS_PACE */
 #else
   // On POSIX platforms we need to emulate this ourselves.
   // @@ We can optimize on this implementation.  However,
@@ -6377,7 +6383,7 @@ ACE_OS::truncate (const ACE_TCHAR *filename,
                   off_t offset)
 {
   ACE_OS_TRACE ("ACE_OS::truncate");
-#if defined (ACE_HAS_PACE)
+#if defined (ACE_HAS_PACE) && !defined (ACE_WIN32)
   int fd = ::pace_open (filename, O_RDWR, ACE_DEFAULT_FILE_PERMS);
   int result = 0;
   if (fd == -1)
@@ -7379,6 +7385,7 @@ ACE_OS::thr_join (ACE_hthread_t thr_handle,
 {
   ACE_OS_TRACE ("ACE_OS::thr_join");
 #if defined (ACE_HAS_PACE)
+  int ace_result_ = 0;
   ACE_OSCALL_RETURN ( ACE_ADAPT_RETVAL (::pace_pthread_join (thr_handle, status),
                                         ace_result_), int, -1);
 #elif defined (ACE_HAS_THREADS)
@@ -7436,6 +7443,7 @@ ACE_OS::thr_join (ACE_thread_t waiter_id,
 {
   ACE_OS_TRACE ("ACE_OS::thr_join");
 #if defined (ACE_HAS_PACE)
+  int ace_result_ = 0;
   ACE_UNUSED_ARG (thr_id);
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pace_pthread_join (waiter_id, status),
                                        ace_result_), int, -1);
@@ -7484,6 +7492,7 @@ ACE_OS::thr_setcancelstate (int new_state, int *old_state)
 {
   ACE_OS_TRACE ("ACE_OS::thr_setcancelstate");
 #if defined (ACE_HAS_PACE)
+  int ace_result_ = 0;
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pace_pthread_setcancelstate (new_state, old_state),
                                        ace_result_), int, -1);
 #elif defined (ACE_HAS_THREADS)
@@ -7529,6 +7538,7 @@ ACE_OS::thr_setcanceltype (int new_type, int *old_type)
 {
   ACE_OS_TRACE ("ACE_OS::thr_setcanceltype");
 #if defined (ACE_HAS_PACE)
+  int ace_result_ = 0;
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pace_pthread_setcanceltype (new_type, old_type),
                                        ace_result_), int, -1);
 #elif defined (ACE_HAS_THREADS)
@@ -7566,6 +7576,7 @@ ACE_OS::thr_cancel (ACE_thread_t thr_id)
 {
   ACE_OS_TRACE ("ACE_OS::thr_cancel");
 #if defined (ACE_HAS_PACE)
+  int ace_result_ = 0;
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pace_pthread_cancel (thr_id),
                                        ace_result_), int, -1);
 #elif defined (ACE_HAS_THREADS)
@@ -7718,6 +7729,7 @@ ACE_OS::thr_sigsetmask (int how,
 {
   ACE_OS_TRACE ("ACE_OS::thr_sigsetmask");
 #if defined (ACE_HAS_PACE)
+  int ace_result_;
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pace_pthread_sigmask (how, nsm, osm),
                                        ace_result_), int, -1);
 #elif defined (ACE_HAS_THREADS)
@@ -7802,6 +7814,7 @@ ACE_OS::thr_kill (ACE_thread_t thr_id, int signum)
 {
   ACE_OS_TRACE ("ACE_OS::thr_kill");
 #if defined (ACE_HAS_PACE)
+  int ace_result_ = 0;
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pace_pthread_kill (thr_id, signum),
                                        ace_result_), int, -1);
 #elif defined (ACE_HAS_THREADS)
@@ -7934,6 +7947,7 @@ ACE_OS::thr_setprio (ACE_hthread_t thr_id, int prio)
   if (result == -1)
     return result; // error in pthread_getschedparam
   param.sched_priority = prio;
+  int ace_result_ = 0;
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pace_pthread_setschedparam (thr_id, policy, &param),
                                        ace_result_), int, -1);
 #elif defined (ACE_HAS_THREADS)
@@ -10020,7 +10034,7 @@ ACE_INLINE FILE *
 ACE_OS::fdopen (ACE_HANDLE handle, const ACE_TCHAR *mode)
 {
   ACE_OS_TRACE ("ACE_OS::fdopen");
-#if defined (ACE_HAS_PACE)
+#if defined (ACE_HAS_PACE) && !defined (ACE_WIN32)
   ACE_OSCALL_RETURN (::pace_fdopen (handle, mode), FILE*, 0);
 # elif defined (ACE_WIN32)
   // kernel file handle -> FILE* conversion...
@@ -10606,7 +10620,7 @@ ACE_OS::waitpid (pid_t pid,
                  ACE_HANDLE handle)
 {
   ACE_OS_TRACE ("ACE_OS::waitpid");
-#if defined (ACE_HAS_PACE)
+#if defined (ACE_HAS_PACE) && !defined (ACE_WIN32)
   ACE_UNUSED_ARG (handle);
   ACE_OSCALL_RETURN (::pace_waitpid (pid, status, wait_options), int, -1);
 #elif defined (VXWORKS) || defined (ACE_PSOS)
@@ -10754,7 +10768,7 @@ ACE_OS::sigaction (int signum,
   ACE_OS_TRACE ("ACE_OS::sigaction");
   if (signum == 0)
     return 0;
-#if defined (ACE_HAS_PACE)
+#if defined (ACE_HAS_PACE) && !defined (ACE_WIN32)
   ACE_OSCALL_RETURN (::pace_sigaction (signum, nsa, osa), int, -1);
 #elif defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
   struct sigaction sa;
@@ -11460,6 +11474,7 @@ ACE_INLINE int
 ACE_OS::pthread_sigmask (int how, const sigset_t *nsp, sigset_t *osp)
 {
 #if defined (ACE_HAS_PACE)
+  int ace_result_ = 0;
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pace_pthread_sigmask (how, nsp, osp),
                                        ace_result_), int, -1);
 #elif defined (ACE_HAS_PTHREADS_STD)  &&  !defined (ACE_LACKS_PTHREAD_SIGMASK)
