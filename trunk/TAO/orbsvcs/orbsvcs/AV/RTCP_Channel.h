@@ -3,6 +3,8 @@
 #ifndef RTCP_CHANNEL_INCLUDE
 #define RTCP_CHANNEL_INCLUDE
 
+#include "ace/pre.h"
+
 #include "ace/OS.h"
 #include "ace/Message_Block.h"
 #include "ace/SString.h"
@@ -214,4 +216,7 @@ private:
   unsigned int octets_sent_;
 };
 
-#endif
+#include "ace/post.h"
+#endif /* RTCP_CHANNEL_INCLUDE */
+
+

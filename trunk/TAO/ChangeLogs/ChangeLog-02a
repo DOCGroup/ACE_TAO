@@ -1,3 +1,13 @@
+Thu Nov 15 17:54:41 2001  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* orbsvcs/orbsvcs/AV/RTCP_Channel.h:
+	* orbsvcs/orbsvcs/AV/RTCP_Packet.h:  Added #includes of ace/pre.h, 
+	  and ace/post.h.  Thanks to Rob Ruff.
+	* orbsvcs/orbsvcs/AV/md5.h:  Added names of variables to function
+	  prototypes to appease HPUX compiler.
+	* orbsvcs/orbsvcs/AV/md5.c:  Changed prototypes from "classic"
+	  to ISO/ANSI style function prototyping to appease KAI C++.
+
 Wed Nov 14 13:42:42 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* orbsvcs/orbsvcs/AV/RTCP.h:

@@ -36,12 +36,12 @@ extern "C" {
 #endif
 
 /* void MD5Init PROTO_LIST ((MD5_CTX *)); */
-void MD5Init (MD5_CTX *);
+void MD5Init (MD5_CTX *context);
 /* void MD5Update PROTO_LIST */
 /*  ((MD5_CTX *, unsigned char *, unsigned int)); */
-void MD5Update (MD5_CTX *, unsigned char *, unsigned int);
+void MD5Update (MD5_CTX *context, unsigned char *input, unsigned int inputLen);
 /* void MD5Final PROTO_LIST ((unsigned char [16], MD5_CTX *)); */
-void MD5Final (unsigned char [16], MD5_CTX *);
+void MD5Final (unsigned char digest[16], MD5_CTX *context);
 
 #ifdef __cplusplus
 }
