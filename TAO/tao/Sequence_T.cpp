@@ -416,9 +416,9 @@ TAO_Valuetype_Manager<T,T_var>::operator= (
 
   if (this->release_)
     {
-      T_var::tao_remove_ref (*this->ptr_);
+      T_var::tao_remove_ref (this->ptr_);
       *this->ptr_ = *rhs.ptr_;
-      T_var::tao_add_ref (*this->ptr_);
+      T_var::tao_add_ref (this->ptr_);
     }
   else
     {
