@@ -1,3 +1,10 @@
+Mon Jul 23 13:06:39 2001  Steve Huston  <shuston@riverace.com>
+
+        * ace/WFMO_Reactor.cpp (event_handling): Corrected the loop check
+          to account for a zero ACE_Time_Value *, avoiding a crash in
+          tests/Reactor_Timer_Test, as well as any other program that
+          called ACE_Reactor::handle_events with a zero timer pointer.
+
 Mon Jul 23 10:39:55 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * ace/OS.h: Added /**/ between #include and <sys/times.h> to

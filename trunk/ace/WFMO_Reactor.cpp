@@ -1644,7 +1644,7 @@ ACE_WFMO_Reactor::event_handling (ACE_Time_Value *max_wait_time,
           // is all the way to 0, just return, as the entire time the
           // caller wanted to wait has been used up.
           countdown.update ();     // Reflect time waiting for events
-          if (max_wait_time->usec () == 0)
+          if (0 == max_wait_time || max_wait_time->usec () == 0)
             break;
         }
     }
