@@ -19,8 +19,8 @@ ACE_Typed_SV_Message<T>::ACE_Typed_SV_Message (const T &d,
 					       long t, 
 					       int l, 
 					       int m)
-  : data_ (d),
-    type_ (t)
+  : type_ (t),
+    data_ (d)
 {
   ACE_TRACE ("ACE_Typed_SV_Message<T>::ACE_Typed_SV_Message");
   this->length (l);
