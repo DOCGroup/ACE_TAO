@@ -1,3 +1,42 @@
+Wed Mar 27 15:10:27 2002  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tests/Reactor_Dispatch_Order_Test: Added a new test to check the
+	  order of dispatching of ACE Reactors.  Order should be: timeout,
+	  output, and then input.  Currently, Select and WFMO Reactors are
+	  tested.
+
+	  The following files we updated to include the new test:
+
+	  - tests/Makefile
+	  - tests/Makefile.am
+	  - tests/Makefile.bor
+	  - tests/Reactor_Dispatch_Order_Test.dsp
+	  - tests/Reactor_Dispatch_Order_Test.icc
+	  - tests/icc.bat
+	  - tests/run_test.lst
+	  - tests/run_tests.bat
+	  - tests/run_tests.psosim
+	  - tests/run_tests_remote.lst
+	  - tests/tests.dsw
+	  - tests/tests.icp
+
+	* ace/WFMO_Reactor.cpp (upcall): Changed the dispatch order to
+	  match the Select_Reactor's dispatch order.  The order now is:
+
+	  FD_WRITE
+	  FD_CONNECT
+	  FD_OOB
+	  FD_READ
+	  FD_CLOSE
+	  FD_ACCEPT
+	  FD_QOS
+	  FD_GROUP_QOS
+
+	  Thanks to Steve Huston <shuston@riverace.com> for pointing this
+	  out.
+
+	* tests/icc.bat: Removed duplicates.
+
 Wed Mar 27 10:25:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/High_Res_Timer.{h,cpp}:

@@ -103,6 +103,7 @@ check_PROGRAMS = \
   RB_Tree_Test \
   Reactor_Exceptions_Test \
   Reactor_Notify_Test \
+  Reactor_Dispatch_Order_Test \
   Reactor_Performance_Test \
   Reactor_Timer_Test \
   Reactors_Test \
@@ -236,6 +237,8 @@ RB_Tree_Test_SOURCES = RB_Tree_Test.cpp RB_Tree_Test.h
 Reactor_Exceptions_Test_SOURCES = Reactor_Exceptions_Test.cpp
 
 Reactor_Notify_Test_SOURCES = Reactor_Notify_Test.cpp
+
+Reactor_Dispatch_Order_Test_SOURCES = Reactor_Dispatch_Order_Test.cpp
 
 Reactor_Performance_Test_SOURCES = Reactor_Performance_Test.cpp \
                                    Reactor_Performance_Test.h

@@ -1992,40 +1992,6 @@ ACE_WFMO_Reactor::upcall (ACE_Event_Handler *event_handler,
   long actual_events = events.lNetworkEvents;
   int action;
 
-  if (ACE_BIT_ENABLED (actual_events, FD_READ))
-    {
-      action = event_handler->handle_input (io_handle);
-      if (action <= 0)
-        {
-          ACE_CLR_BITS (actual_events, FD_READ);
-          if (action == -1)
-            ACE_SET_BITS (problems, ACE_Event_Handler::READ_MASK);
-        }
-    }
-
-  if (ACE_BIT_ENABLED (actual_events, FD_CLOSE)
-      && ACE_BIT_DISABLED (problems, ACE_Event_Handler::READ_MASK))
-    {
-      action = event_handler->handle_input (io_handle);
-      if (action <= 0)
-        {
-          ACE_CLR_BITS (actual_events, FD_CLOSE);
-          if (action == -1)
-            ACE_SET_BITS (problems, ACE_Event_Handler::READ_MASK);
-        }
-    }
-
-  if (ACE_BIT_ENABLED (actual_events, FD_ACCEPT))
-    {
-      action = event_handler->handle_input (io_handle);
-      if (action <= 0)
-        {
-          ACE_CLR_BITS (actual_events, FD_ACCEPT);
-          if (action == -1)
-            ACE_SET_BITS (problems, ACE_Event_Handler::ACCEPT_MASK);
-        }
-    }
-
   if (ACE_BIT_ENABLED (actual_events, FD_WRITE))
     {
       action = event_handler->handle_output (io_handle);
@@ -2073,6 +2039,40 @@ ACE_WFMO_Reactor::upcall (ACE_Event_Handler *event_handler,
           ACE_CLR_BITS (actual_events, FD_OOB);
           if (action == -1)
             ACE_SET_BITS (problems, ACE_Event_Handler::EXCEPT_MASK);
+        }
+    }
+
+  if (ACE_BIT_ENABLED (actual_events, FD_READ))
+    {
+      action = event_handler->handle_input (io_handle);
+      if (action <= 0)
+        {
+          ACE_CLR_BITS (actual_events, FD_READ);
+          if (action == -1)
+            ACE_SET_BITS (problems, ACE_Event_Handler::READ_MASK);
+        }
+    }
+
+  if (ACE_BIT_ENABLED (actual_events, FD_CLOSE)
+      && ACE_BIT_DISABLED (problems, ACE_Event_Handler::READ_MASK))
+    {
+      action = event_handler->handle_input (io_handle);
+      if (action <= 0)
+        {
+          ACE_CLR_BITS (actual_events, FD_CLOSE);
+          if (action == -1)
+            ACE_SET_BITS (problems, ACE_Event_Handler::READ_MASK);
+        }
+    }
+
+  if (ACE_BIT_ENABLED (actual_events, FD_ACCEPT))
+    {
+      action = event_handler->handle_input (io_handle);
+      if (action <= 0)
+        {
+          ACE_CLR_BITS (actual_events, FD_ACCEPT);
+          if (action == -1)
+            ACE_SET_BITS (problems, ACE_Event_Handler::ACCEPT_MASK);
         }
     }
 
