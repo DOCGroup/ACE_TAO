@@ -1,3 +1,82 @@
+Fri Feb 09 10:50:47 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Queued_Message.h:
+        * tao/Queued_Message.inl:
+        * tao/Queued_Message.cpp:
+	  Add new class to represent a queued message in the outgoing
+	  path.  This class has to keep more than just the message block,
+	  it also takes care of timeouts and signaling any waiting thread
+	  when the message is sent.
+
+        * tao/Message_Sent_Callback.h:
+        * tao/Message_Sent_Callback.inl:
+        * tao/Message_Sent_Callback.cpp:
+	  Define interface to signal threads waiting for a message to be
+	  sent out, e.g. twoway requests blocked waiting for a queued
+	  message.
+
+        * tao/Flushing_Strategy.h:
+        * tao/Flushing_Strategy.cpp:
+        * tao/Block_Flushing_Strategy.h:
+        * tao/Block_Flushing_Strategy.cpp:
+        * tao/Reactive_Flushing_Strategy.h
+        * tao/Reactive_Flushing_Strategy.cpp:
+	  New classes to control how the outgoing data is flushed,
+	  either by blocking on write() or by using the reactor.
+
+	* tao/Resource_Factory.h:
+        * tao/default_resource.h:
+        * tao/default_resource.cpp:
+	  Add new methods to create the flushing strategy.
+
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.i:
+        * tao/ORB_Core.cpp:
+	  Add accessor for the flushing strategy.  Notice that the
+	  strategy is stateless so a single instance (per-ORB) is needed.
+
+        * tao/Sync_Strategies.h:
+        * tao/Sync_Strategies.cpp:
+	  The Sync_Strategies have been simplified.  They are now
+	  stateless, and they only need to answer a couple of questions
+	  (1) should a message be buffered, (2) should the ORB flush a
+	  queue.
+
+        * performance-tests/Latency/st_client.cpp:
+	  Destroy the ORB on shutdown.
+
+        * tao/TAO.dsp:
+        * tao/TAO_Static.dsp:
+	  Add the new files to the TAO project files.
+
+        * tao/Transport.h:
+        * tao/Transport.inl:
+        * tao/Transport.cpp:
+	  Move much of the functionality of sending and outgoing message
+	  queue up to the base transport class.  Remove a lot of code
+	  deailing with the previous (blocking) queues.
+
+        * tao/IIOP_Transport.cpp:
+        * tao/IIOP_Connection_Handler.cpp:
+        * tao/Strategies/SHMIOP_Transport.cpp:
+        * tao/Strategies/SHMIOP_Connection_Handler.cpp:
+        * tao/Strategies/UIOP_Transport.cpp:
+        * tao/Strategies/UIOP_Connection_Handler.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
+	  Change the transport and connection handlers to use the new
+	  outgoing message queue, the flushing strategy and the changes to
+	  the SyncStrategy.
+
+        * tao/GIOP_Message_Base.cpp:
+	  Propagate a few interface changes.
+
+        * tests/LongWrites/LongWrites.dsw:
+        * tests/LongWrites/client.dsp:
+        * tests/LongWrites/server.dsp:
+        * tests/LongWrites/run_test.pl:
+	  Got the test to compile (and run) under NT.
+
 Wed Feb  7 14:31:48 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * orbsvcs/Makefile:

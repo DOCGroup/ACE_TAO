@@ -875,7 +875,7 @@ TAO_GIOP_Message_Base::send_error (TAO_Transport *transport)
                              0);
   ACE_Message_Block message_block(&data_block);
   message_block.wr_ptr (TAO_GIOP_MESSAGE_HEADER_LEN);
-                            
+
   int result = transport->send (&message_block);
   if (result == -1)
     {
