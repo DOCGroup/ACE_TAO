@@ -6,8 +6,40 @@
 #include "be.h"
 #include "be_visitor.h"
 
+be_visitor::be_visitor (void)
+  : node_ (0),
+    os_ (0)
+{
+}
+
 be_visitor::~be_visitor (void)
 {
+  this->node_ = 0;
+  this->os_ = 0;
+}
+
+void
+be_visitor::be_node (be_decl *node)
+{
+  this->node_ = node;
+}
+
+be_decl *
+be_visitor::be_node (void)
+{
+  return this->node_;
+}
+
+TAO_OutStream &
+be_visitor::stream (void)
+{
+  return *this->os_;
+}
+
+void
+be_visitor::stream (TAO_OutStream *os)
+{
+  this->os_ = os;
 }
 
 int be_visitor::visit_decl (be_decl *)
@@ -17,27 +49,30 @@ int be_visitor::visit_decl (be_decl *)
 
 int be_visitor::visit_scope (be_scope *node)
 {
+  // proceed if the number of members in our scope is greater than 0
   if (node->nmembers () > 0)
     {
+      // initialize an iterator to iterate thru our scope
       UTL_ScopeActiveIterator *si;
       ACE_NEW_RETURN (si,
 		      UTL_ScopeActiveIterator (node,
 					       UTL_Scope::IK_decls),
 		      -1);
+      // continue until each element is visited
       while (!si->is_done ())
 	{
 	  AST_Decl *d = si->item ();
-	  be_decl *bd = be_decl::narrow_from_decl (d); 
+	  be_decl *bd = be_decl::narrow_from_decl (d);
 	  if (bd == 0 || bd->accept (this) == -1)
 	    {
 	      delete si;
 	      return -1;
 	    }
 	  si->next ();
-	}
+	} // end of while loop
       delete si;
     }
-  
+
   return 0;
 }
 

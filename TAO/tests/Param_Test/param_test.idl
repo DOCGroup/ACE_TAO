@@ -1,4 +1,4 @@
-// $Id
+// $Id$
 
 // ============================================================================
 //
@@ -28,6 +28,8 @@ interface Coffee
 
   attribute Desc description; // provides us the coffee object type
 };
+
+typedef sequence<Coffee> ObjSeq;
 
 interface Param_Test
 {
@@ -67,10 +69,12 @@ interface Param_Test
                       out StrSeq s3);
 
 
+  typedef string DUMMY;
   // variable structures
   struct Var_Struct
   {
-    string dummy;
+    DUMMY dummy1;
+    DUMMY dummy2;
     StrSeq seq;
   };
 
@@ -88,6 +92,13 @@ interface Param_Test
   Nested_Struct test_nested_struct (in Nested_Struct s1,
                                     inout Nested_Struct s2,
                                     out Nested_Struct s3);
+
+  // sequences of structs
+  typedef sequence<Var_Struct> StructSeq;
+
+  StructSeq test_struct_sequence (in StructSeq s1,
+                                  inout StructSeq s2,
+                                  out StructSeq s3);
   // object references
   Coffee make_coffee (); // make a Coffee object
   Coffee test_objref (in Coffee o1, inout Coffee o2, out Coffee o3);

@@ -18,8 +18,10 @@
 #if !defined (TAO_BE_CODEGEN_H)
 #define TAO_BE_CODEGEN_H
 
-#define NAMEBUFSIZE  1024
+#define NAMEBUFSIZE 1024
 // maximum length of static buffers used to store names
+
+class TAO_Visitor_Factory;
 
 class TAO_CodeGen
 {
@@ -33,7 +35,10 @@ public:
 
   // define all the code generation states. The first letter C/S of the suffix stands
   // for client/server-side and the second letter H/I/S stands for
-  // header/inline/impl file.
+  // header/inline/impl file. These are used to denote the state or the context
+  // of code generation we are in and serves to produce the right kind of
+  // visitor for us
+
   enum CG_STATE
   {
     // initial state
@@ -233,6 +238,10 @@ public:
   ~TAO_CodeGen (void);
   // destructor
 
+  be_visitor *make_visitor (CG_STATE);
+  // Factory that makes the right visitor based on the state. This
+  // delegates the task to its factory data member
+
   be_state *make_state (void);
   // factory method returning appropriate subclass of the be_state object
   // based on the current code generation state
@@ -281,6 +290,9 @@ public:
 
   TAO_OutStream *outstream (void);
   // retrieve current out stream being used
+
+  void visitor_factory (TAO_Visitor_Factory *);
+  // set the visitor factory  object
 
   int end_client_header (void);
   // put a last #endif in the client header
@@ -342,6 +354,9 @@ private:
 
   be_decl *node_;
   // save current node in this
+
+  TAO_Visitor_Factory *visitor_factory_;
+  // visitor factory object
 };
 
 typedef ACE_Singleton<TAO_CodeGen, ACE_SYNCH_RECURSIVE_MUTEX> TAO_CODEGEN;

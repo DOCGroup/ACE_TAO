@@ -69,6 +69,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include	"idl_extern.h"
 #include	"be.h"
 
+#include        "be_interpretive.h"
+
 /*
  * Do the work of this BE. This is the dummy BE so we dont do anything in
  * particular here
@@ -76,46 +78,97 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 void
 BE_produce()
 {
-
-#if 0
-  // let us print all the global values
-  cout << "filename is " << endl;
-  idl_global->filename()->dump(cout);
-  cout << endl;
-  cout << "main filename is " << endl;
-  idl_global->main_filename()->dump(cout);
-  cout << endl;
-  cout << "real filename is " << endl;
-  idl_global->real_filename()->dump(cout);
-  cout << endl;
-  cout << "stripped filename is " << endl;
-  idl_global->stripped_filename()->dump(cout);
-  cout << endl;
-  cout << "IDL source filename is " << endl;
-  idl_global->idl_src_file()->dump(cout);
-  cout << endl;
-  cout << "prog_name is " << idl_global->prog_name() << endl;
-#endif
+  TAO_CodeGen *cg = TAO_CODEGEN::instance (); // code generator instance
   be_root *root;   // root of the AST made up of BE nodes
+
+  // XXXASG - Here is where we will have a choice of what to initialize
+  cg->visitor_factory (new TAO_Interpretive_Visitor_Factory);
+
   AST_Decl *d = idl_global->root ();
   root = be_root::narrow_from_decl (d);
-  if (root == NULL)
+  if (root == NULL) // no root
     {
-      cerr << "No root" << endl;
+      ACE_ERROR ((LM_ERROR,
+                  "(%N:%l) be_produce - "
+                  "No Root\n"));
+      BE_abort();
+    }
+
+  // get the appropriate visitor from the factory
+
+  // (1) generate client header
+  be_visitor *root_visitor_ch = cg->make_visitor (TAO_CodeGen::TAO_ROOT_CH);
+  if (root->accept (root_visitor_ch) == -1)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "(%N:%l) be_produce - "
+                  "client header for Root failed\n"));
+      BE_abort();
+    }
+
+
+  // (2) generate client inline
+  be_visitor *root_visitor_ci = cg->make_visitor (TAO_CodeGen::TAO_ROOT_CI);
+  if (root->accept (root_visitor_ci) == -1)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "(%N:%l) be_produce - "
+                  "client inline for Root failed\n"));
+      BE_abort();
+    }
+
+
+  // (3) generate client stubs
+  be_visitor *root_visitor_cs = cg->make_visitor (TAO_CodeGen::TAO_ROOT_CS);
+  if (root->accept (root_visitor_cs) == -1)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "(%N:%l) be_produce - "
+                  "client stubs for Root failed\n"));
+      BE_abort();
+    }
+
+
+  // (4) generate server header
+  be_visitor *root_visitor_sh = cg->make_visitor (TAO_CodeGen::TAO_ROOT_SH);
+  if (root->accept (root_visitor_sh) == -1)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "(%N:%l) be_produce - "
+                  "server header for Root failed\n"));
+      BE_abort();
+    }
+
+
+  // (5) generate server inline
+  be_visitor *root_visitor_si = cg->make_visitor (TAO_CodeGen::TAO_ROOT_SI);
+  if (root->accept (root_visitor_si) == -1)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "(%N:%l) be_produce - "
+                  "server inline for Root failed\n"));
+      BE_abort();
+    }
+
+
+  // (6) generate server skeletons
+  be_visitor *root_visitor_ss = cg->make_visitor (TAO_CodeGen::TAO_ROOT_SS);
+  if (root->accept (root_visitor_ss) == -1)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "(%N:%l) be_produce - "
+                  "server skeletons for Root failed\n"));
       BE_abort();
     }
 
 #if 0
-  // this was just for debugging
-  root->dump (cerr);
-#endif
-
   // start the code generation process
   if (root->gen_idl2cplusplus_mapping() == -1)
     {
       cerr << "Mapping process failed" << endl;
       BE_abort();
     }
+#endif
 }
 
 /*

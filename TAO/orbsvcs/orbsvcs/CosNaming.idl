@@ -5,26 +5,26 @@
 //
 // = LIBRARY
 //    cos
-// 
+//
 // = FILENAME
 //    CosNaming.idl
 //
 // = AUTHOR
 //    Marina Spivak
-// 
+//
 // ============================================================================
 
 module CosNaming
   // = TITLE
-  // This module provides interface for using COS Naming Service.   
+  // This module provides interface for using COS Naming Service.
 {
   typedef string Istring;
-  struct NameComponent 
+  struct NameComponent
   {
-    Istring id;	
+    Istring id;
     // This is the name that is used to identify object references.
 
-    Istring kind;	
+    Istring kind;
     // Stores any addtional info about the object reference.
   };
   // This is a 'simple' name.
@@ -35,7 +35,7 @@ module CosNaming
   // the names of the nested contexts, and cn is the name of the
   // object bound in cn-1.
 
-  enum BindingType 
+  enum BindingType
   {
     nobject,
     // object binding.
@@ -44,10 +44,10 @@ module CosNaming
     // naming context binding.
   };
 
-  struct Binding 
+  struct Binding
   {
     Name    	binding_name;
-    BindingType	binding_type;                                  
+    BindingType	binding_type;
   };
 
   typedef sequence <Binding> BindingList;
@@ -55,40 +55,40 @@ module CosNaming
   interface BindingIterator;
   // Forward declaration.
 
-  interface NamingContext 
+  interface NamingContext
     // = TITLE
     // Interface for managing name bindings and naming contexts.
     {
       // = Exceptions.
 
-      enum NotFoundReason 
-      { 
+      enum NotFoundReason
+      {
 	missing_node,
 	not_context,
 	not_object
       };
-        
-      exception NotFound 
+
+      exception NotFound
 	{
 	  NotFoundReason why;
 	  Name rest_of_name;
 	};
       // Indicates that the name does not identify a binding.
 
-      exception CannotProceed 
+      exception CannotProceed
 	{
-	  //Commented out due to the bug in Orbix compiler               
+	  //Commented out due to the bug in Orbix compiler
 	  NamingContext cxt;
 	  Name rest_of_name;
 	};
       // Implementation has given up for some reason.  The client,
       // however, may be able to continue operation at the returned
       // naming context.
-                                 
-      exception InvalidName {};                             
-      // A name of length 0 is invalid. 
-      // Implementations may place further restrictions.            
-                               
+
+      exception InvalidName {};
+      // A name of length 0 is invalid.
+      // Implementations may place further restrictions.
+
       exception AlreadyBound {};
       // Indicates that the specified name is already bound to some
       // object.  Only one object can be bound to a particular name in
@@ -100,7 +100,7 @@ module CosNaming
 
       // = Binding operations.
 
-      void bind (in Name n, in Object obj)             
+      void bind (in Name n, in Object obj)
 	raises(NotFound, CannotProceed, InvalidName, AlreadyBound);
       // create a binding for name <n> and object <obj> in the naming
       // context.  Compound names are treated as follows: ctx->bind
@@ -111,20 +111,20 @@ module CosNaming
       // and <rebind_context> in order to participate in name
       // resolution later.
 
-      void rebind (in Name n, in Object obj)   
+      void rebind (in Name n, in Object obj)
 	raises(NotFound, CannotProceed, InvalidName);
       // this is similar to <bind> operation above, except for when
       // the binding for the specified name already exists in the
       // specified context.  In that case, the existing binding is
       // replaced with the new one.
-		
-      void bind_context (in Name n, in NamingContext nc)               
+
+      void bind_context (in Name n, in NamingContext nc)
 	raises(NotFound, CannotProceed, InvalidName, AlreadyBound);
       // This is the version of <bind> specifically for binding naming
       // contexts, so that they will participate in name resolution
       // when compound names are passed to be resolved.
 
-      void rebind_context (in Name n, in NamingContext nc)     
+      void rebind_context (in Name n, in NamingContext nc)
 	raises(NotFound, CannotProceed, InvalidName);
       // This is a version of <rebind> specifically for naming
       // contexts, so that they can participate in name resolution
@@ -175,10 +175,10 @@ module CosNaming
       // the context object if it is not bound to any names in the
       // given address space.  <destroys> decrements the reference
       // count of the context if bindings to it exist.
-		
+
       // = Listing the naming context.
-		
-      void list (in unsigned long how_many, 
+
+      void list (in unsigned long how_many,
 		 out BindingList bl, out BindingIterator bi);
       // Returns at most the requested number of bindings <how_many>
       // in <bl>.  If the naming context contains additional bindings,
@@ -187,7 +187,7 @@ module CosNaming
       // returned as null.
     };
 
-  interface BindingIterator 
+  interface BindingIterator
     // = TITLE
     // Interface for iterating over Bindings returned with the <list>
     // operation.
@@ -196,7 +196,7 @@ module CosNaming
       // This operation returns the next binding.  If there are no
       // more bindings false is returned.
 
-      boolean next_n (in unsigned long how_many, 
+      boolean next_n (in unsigned long how_many,
 		      out BindingList bl);
       // This operation returns at most the requested number of
       // bindings.
