@@ -1,3 +1,8 @@
+Wed Oct 14 15:30:42 1998  Steve Huston  <shuston@riverace.com>
+
+	* ace/Message_Block_T.h: Removed ACE_Export from definition of template
+	  class ACE_Locked_Data_Block.
+
 Wed Oct 14 12:36:00 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/config-cygwin32-common.h,
