@@ -741,7 +741,7 @@ protected:
 };
 
 #if defined(__ACE_INLINE__)
-# include "ace/CDR.i"
+# include "ace/CDR_Stream.i"
 #else
 
 // CDR output operators for primitive types

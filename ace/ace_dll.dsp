@@ -1806,7 +1806,7 @@ DEP_CPP_BASIC=\
 # End Source File
 # Begin Source File
 
-SOURCE=.\CDR.cpp
+SOURCE=.\CDR_Stream.cpp
 
 !IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
 
@@ -25570,7 +25570,7 @@ SOURCE=.\Basic_Types.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\CDR.h
+SOURCE=.\CDR_Stream.h
 # End Source File
 # Begin Source File
 
@@ -26378,7 +26378,7 @@ SOURCE=.\Basic_Types.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\CDR.i
+SOURCE=.\CDR_Stream.i
 # End Source File
 # Begin Source File
 

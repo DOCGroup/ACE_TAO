@@ -18,7 +18,7 @@ FILES    = Log_Msg \
            Asynch_IO \
            Basic_Types \
            Containers \
-           CDR \
+           CDR_Stream \
            CORBA_Handler \
            CORBA_Ref \
            DEV \
