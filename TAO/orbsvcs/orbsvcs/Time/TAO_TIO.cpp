@@ -264,3 +264,8 @@ TAO_TIO::time (CORBA::Environment &TAO_IN_ENV)
   TAO_ENDTRY;
   return uto->_this ();
 }
+
+
+
+
+

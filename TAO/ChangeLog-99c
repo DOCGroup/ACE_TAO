@@ -1,3 +1,92 @@
+Mon Mar 22 16:40:36 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
+
+	The first version of the InterOperable Naming Service is commited.
+
+	* tao/ORB.cpp: Changed the resolve_initial_references () to check 
+	  for the ORB params ORBInitRef and ORBDefaultInitRef.
+
+	  resolve_initial_references ():
+	  The references are resolved in the following order :
+	  1. ORBInitRef 2. DefaultInitRef 3. Multicast to service.
+	  The IORs can be specified in the iiopname or iioploc format. 
+
+	  multicast_query ():
+	  Sends out a multicast to locate a service (specified by a service
+	  name) and receives the response using TCP instead of UDP. The service
+	  name and port are sent in the data of the multicast.
+ 	
+	  multicast_to_service ():
+	  Calls multicast_query with a service name instead of a service ID. 
+	  Owns the memory read into in multicast_query ().
+
+	  resolve_naming_service (), resolve_trading_service () :
+	  Call multicast_to_service () with a service name instead of a service ID.
+	
+	* tao/IIOP_ORB.h: Added the following APIs to the ORB to access the
+	  table of IORs TAO_IOR_LookupTable :
+	  _tao_add_to_IOR_table ()
+	  _tao_find_in_IOR_table ().
+
+	* tao/IIOP_ORB.cpp: Added the function
+ 	  iioploc_string_to_object().  This function is called by the
+ 	  string_to_object () for iioploc IORs.  It creates a multiple
+ 	  profile stub object and then an object reference.  The
+ 	  string_to_object () parses the incoming ior to detect an iioploc
+ 	  IOR and then calls the iiooploc_ior_to_string (). Conversion for
+ 	  the iiopname type IORs will be added soon.
+
+	* tao/ORB_Core.cpp: Added the options -ORBInitRef and
+ 	  -ORBDefaultInitRef.  Added the orb parameters init_ref and
+ 	  ior_lookup_table. These parameters are populated based on the
+ 	  commandline options. They are used by the
+ 	  resolve_initial_references () that calls get on these params
+ 	  through the singleton instance of the ORB core.
+
+	* tao/POA.cpp: Added a TAO_Object_key_prefix (^t^a^o\0). All the
+ 	  changes are within #ifndef (TAO_NO_IOR_TABLE).  Changed the
+ 	  parse_key () to skip over the TAO Object key prefix.  Changed
+ 	  the create_object_key () to prepend TAO Object key to all
+ 	  generated object keys.
+	
+	* tao/Connect.cpp : Changed the handle_message () to parse the
+ 	  object key in the incoming IIOP request. If the object key is
+ 	  not preceded by ^(TAO)/0
+	  (which is now the default for all usual TAO object keys) then
+ 	  the key is treated as simple and looked up in the IOR table. A
+ 	  LOCATION_FORWARD/NOT_EXIST exception is raised if the key is
+ 	  found/not-found in the table.  Currently only the GIOP Request
+ 	  type messages are handled. Similar logic will be added to the
+ 	  GIOP LocateRequest type messages. This will go into the
+ 	  handle_locate method.
+
+	* orbsvcs/orbsvcs/IOR_Multicast.cpp: Changed the handle_input
+ 	  method to receive a multicast for a service, parse the data for
+ 	  the service name and a reply port.  Then use TCP to send back
+ 	  the IOR of the requested service. If the service is other than a
+ 	  "NameService" then the table is looked up for an IOR. The table
+ 	  can be populated through commandline orb parameters and can use
+ 	  iioploc/iiopname format IORs.
+	
+	* tao/Makefile: 
+	* tao/IOR_LookupTable.h:
+	* tao/IOR_LookupTable.cpp: This is an abstraction over the hash
+ 	  map manager.  It is used by the orb to keep track of the
+ 	  object-id : IOR mappings. The table is owned by the orb and
+ 	  _tao_{add,find}_ior_{to,in}_table are APIs to access it.  The
+ 	  APIs take CORBA_Object * as a parameter and stringify it before
+ 	  adding to the table. This takes care of adding only valid IOR
+ 	  strings to the table.
+
+	* orbsvcs/orbsvcs/Makefile:
+	* orbsvcs/orbsvcs/IOR_LookupTable.h:
+	* orbsvcs/orbsvcs/IOR_LookupTable.cpp:
+ 	  Removed IOR_LookupTable, it is now in $TAO_ROOT/tao.
+
+	* tao/params.{cpp,h,i}: Added the params init_ref, ior_lookup_table and 
+	  default_init_ref to the orb core. Also added the GET/SET methods for these.
+
+	* tao/orbconf.h: Added the protocol prefixes iiopname and iioploc.
+	
 Mon Mar 22 14:13:17 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/Makefile,orbsvcs/orbsvcs/Makefile: added ace_components

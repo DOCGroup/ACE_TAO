@@ -23,11 +23,13 @@
 #include "tao/corbafwd.h"
 #include "tao/Exception.h"
 
+
 typedef enum
 {
   TAO_SERVICEID_NAMESERVICE,
   TAO_SERVICEID_TRADINGSERVICE
 } TAO_Service_ID;
+
 
 // @@ NW: Disable messing with the alignment for now.
 // For some reason, PC compilers don't implement "natural" alignment,
@@ -248,6 +250,12 @@ public:
   // must implement this and determine what is a collocated object
   // based on information provided in the STUB_Object.
 
+  virtual int _tao_add_to_IOR_table (ACE_CString object_id, CORBA::Object_ptr obj) = 0;
+  // Add a mapping ObjectID->IOR to the table.
+  
+  virtual int _tao_find_in_IOR_table (ACE_CString object_id, CORBA::Object_ptr &obj) = 0;
+  // Find the given ObjectID in the table.
+  
 #if !defined (TAO_HAS_MINIMUM_CORBA)
 
   void create_list (CORBA::Long count,
@@ -435,19 +443,18 @@ private:
   // Resolve the trading object reference.
 
   int multicast_query (char *buf,
-                       TAO_Service_ID service_id,
-                       u_short port,
-                       ACE_Time_Value *timeout,
-                       u_short attempts);
+		       const char *service_name,
+		       u_short port,
+		       ACE_Time_Value *timeout);
+  
   // returns and IOR string, the client is responsible for freeing
   // memory!
-
-  CORBA_Object_ptr multicast_to_service (TAO_Service_ID service_id,
+  
+  CORBA_Object_ptr multicast_to_service (const char *service_name,
                                          u_short port,
-                                         ACE_Time_Value *timeout,
-                                         u_short attempts);
+                                         ACE_Time_Value *timeout);
   // Resolve the refernce of a service of type <name>.
-
+  
   ACE_SYNCH_MUTEX lock_;
   // lock required for mutual exclusion between multiple threads.
 
@@ -552,3 +559,12 @@ private:
 #endif /* _MSV_VER */
 
 #endif /* TAO_ORB_H */
+
+
+
+
+
+
+
+
+

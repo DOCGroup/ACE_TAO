@@ -197,3 +197,28 @@ TAO_ORB_Parameters::trading_service_port (void) const
 {
   return this->trading_service_port_;
 }
+
+ACE_INLINE TAO_IOR_LookupTable *
+TAO_ORB_Parameters::ior_lookup_table (void) 
+{
+  return this->ior_lookup_table_;
+}
+
+ACE_INLINE void
+TAO_ORB_Parameters::ior_lookup_table (TAO_IOR_LookupTable *table)
+{
+  this->ior_lookup_table_ = table;
+}
+
+ACE_INLINE void
+TAO_ORB_Parameters::default_init_ref (const ACE_CString &default_init_ref)
+{
+  this->default_init_ref_ = default_init_ref;
+}
+
+ACE_INLINE char *
+TAO_ORB_Parameters::default_init_ref (void) const
+{
+  return this->default_init_ref_.rep ();
+}
+

@@ -26,13 +26,13 @@
 
 #include "ace/Synch_T.h"
 #include "ace/Hash_Map_Manager.h"
-#include "orbsvcs/orbsvcs_export.h"
+#include "tao/corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class TAO_ORBSVCS_Export TAO_IOR_LookupTable
+class TAO_Export TAO_IOR_LookupTable
 {
 
 public:
@@ -48,31 +48,31 @@ public:
   // This creates and initialises the table.
   // Currently, the hash map manager.
 
-  int add_ior (const ACE_CString &object_name,
-               const ACE_CString &ior);
+  int add_ior (ACE_CString object_name,
+               ACE_CString ior);
   // Associate <object_name> with <ior>.  If <object_name> is already in the
   // map then the <ACE_Hash_Map_Entry> is not changed.  Returns 0 if a
   // new IOR is bound successfully, returns 1 if an attempt is made
   // to bind an existing object_name, and returns -1 if failures occur.
-
-  int find_ior (const ACE_CString &object_name,
+  
+  int find_ior (ACE_CString object_name,
                 ACE_CString &ior);
   // Locate <object_name> and pass out parameter via <ior>.  If the IOR is
   // found, return 0. Return -1 if not found.
-
+  
 private:
-
+  
   ACE_CString object_name_;
   // object string to do the lookup with.
-
+  
   ACE_CString ior_;
   // IOR returned as a result of the lookup.
-
+  
   ACE_Hash_Map_Manager<ACE_CString,
-                       ACE_CString,
-                       ACE_Null_Mutex> hash_map_;
+    ACE_CString,
+    ACE_Null_Mutex> hash_map_;
   // Maintains the table of object_names -> IORs.
-
+  
 };
 
 #endif /* TAO_IOR_LOOKUPTABLE_H */
