@@ -1,0 +1,33 @@
+project(prio_server): kokyu_dsrt_scheduler_server {
+  exename = prio_server
+  Source_Files {
+    test_i.cpp
+    prio_server.cpp
+  }
+}
+
+project(twoway_server): kokyu_dsrt_scheduler_server {
+  exename = twoway_server
+  Source_Files {
+    test_i.cpp
+    twoway_server.cpp
+  }
+}
+
+project(prio_client): orbsvcsexe, kokyu_dsrt_scheduler_client {
+  exename = prio_client
+  libs += TAO_Svc_Utils
+  Source_Files {
+    testC.cpp
+    prio_client.cpp
+  }
+}
+project(twoway_client): orbsvcsexe, kokyu_dsrt_scheduler_client {
+  exename = twoway_client
+  libs += TAO_Svc_Utils
+  Source_Files {
+    testC.cpp
+    twoway_client.cpp
+  }
+}
+

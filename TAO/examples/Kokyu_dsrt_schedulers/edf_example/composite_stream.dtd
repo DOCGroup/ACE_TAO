@@ -1,0 +1,93 @@
+<!-- Composite Stream XML output DTD -->
+<!-- Author: Sriram Chadalavada -->
+<!-- Copyright(C), 2003 - The University of Kansas -->
+
+<!-- There must be at least one entity sub-element in the composite stream element -->
+<!ELEMENT COMPOSITE_STREAM
+	(ENTITY)+ >
+	<!ATTLIST COMPOSITE_STREAM
+		experiment CDATA	#IMPLIED
+	>
+
+<!-- An ENTITY element must comprise of at least one of counter, event, histogram_group or object entities  -->
+	<!ELEMENT ENTITY 
+		((COUNTER | EVENT | HISTOGRAM_GROUP | OBJECT)+,DATA?) >
+		<!ATTLIST ENTITY 
+			experiment CDATA	#IMPLIED
+			number	CDATA 		#REQUIRED 
+			time_stamp CDATA	#REQUIRED
+			type	NMTOKENS 	#REQUIRED
+			tag     CDATA		#REQUIRED 
+		>				
+
+<!--DATA element contains binary (extra) data of a datastream entity (snapshot o
+r regular event) in coded  using encoding specified by format atribute -->
+        <!ELEMENT DATA  (#PCDATA)>
+                 <!ATTLIST DATA
+                        format CDATA    #REQUIRED
+                 >
+
+<!-- COUNTER element has no sub-elements and its attributes are listed below  -->
+		<!ELEMENT COUNTER EMPTY> 
+			<!ATTLIST COUNTER 
+				name		NMTOKENS	#REQUIRED 
+				family		NMTOKENS	#REQUIRED
+				id	        CDATA	 	#REQUIRED 
+			 	count		CDATA		#REQUIRED 
+				first_updatetime CDATA 		#REQUIRED 
+				last_updatetime	CDATA 		#REQUIRED 
+			>
+
+<!-- EVENT element has no sub-elements and its attributes are listed below  -->
+		<!ELEMENT EVENT	EMPTY> 
+			<!ATTLIST EVENT 
+				name			NMTOKENS        #REQUIRED 
+				family			NMTOKENS	#REQUIRED
+				id			CDATA		#REQUIRED 
+			> 
+
+<!--  HISTOGRAM_GROUP element has no sub-elements and its attributes are listed below  -->
+		<!ELEMENT HISTOGRAM_GROUP  
+			(HISTOGRAM)+> 
+			<!ATTLIST HISTOGRAM_GROUP 
+				name			NMTOKENS  	#REQUIRED
+				family			NMTOKENS	#REQUIRED 
+				id			CDATA		#REQUIRED 
+				ymax			CDATA           #REQUIRED
+				ymin			CDATA           #REQUIRED
+				lowerbound		CDATA           #REQUIRED
+				upperbound		CDATA           #REQUIRED
+				range			CDATA           #REQUIRED
+				num_buckets		CDATA           #REQUIRED
+				num_histograms  	CDATA 		#REQUIRED 
+				num_events  		CDATA		#REQUIRED 
+				first_updatetime        CDATA		#REQUIRED 
+				last_updatetime   	CDATA		#REQUIRED 
+				status			CDATA		#REQUIRED
+			>
+<!-- HISTOGRAM element comprises of the elements UNDERFLOW, BUCKET (at least one) and OVERFLOW in that order and has one attribute 'number'  -->
+			<!ELEMENT HISTOGRAM 
+				(UNDERFLOW, (BUCKET)+, OVERFLOW)> 
+				<!ATTLIST HISTOGRAM
+					number		CDATA		#REQUIRED
+				>
+<!-- UNDERFLOW  element has no sub-elements and its attributes are listed below  -->
+					<!ELEMENT UNDERFLOW EMPTY> 
+						<!ATTLIST UNDERFLOW 
+							value 	   CDATA 	#REQUIRED 
+						>	 
+
+<!-- BUCKET element has no sub-elements and its attributes are listed below  -->
+					<!ELEMENT BUCKET EMPTY> 
+						<!ATTLIST BUCKET 
+							number 	   CDATA 	#REQUIRED 
+							lb	   CDATA	#REQUIRED 
+							ub	   CDATA	#REQUIRED 
+							value	   CDATA	#REQUIRED 
+						> 
+
+<!-- OVERFLOW element has no sub-elements and its attributes are listed below  -->
+					<!ELEMENT OVERFLOW EMPTY> 
+						<!ATTLIST OVERFLOW 
+							value 	   CDATA 	#REQUIRED 
+						>

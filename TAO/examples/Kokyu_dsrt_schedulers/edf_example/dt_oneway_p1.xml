@@ -1,0 +1,14 @@
+<?xml version = "1.0" encoding="iso-8859-1" standalone="no"?>
+<!DOCTYPE COMPOSITE_STREAM SYSTEM "composite_stream.dtd">
+<COMPOSITE_STREAM>
+<ENTITY number="1" time_stamp="385578612240818" tag="0" type="Event">
+<EVENT  name="SCHEDULE" family="DSRT_DISPATCH" id="320" />
+</ENTITY>
+<ENTITY number="2" time_stamp="385578612629681" tag="1" type="Event">
+<EVENT  name="START_SERVICE" family="TEST_ONE" id="192" />
+</ENTITY>
+<ENTITY number="3" time_stamp="385596484671488" tag="0" type="Event">
+<EVENT  name="SCHEDULE" family="DSRT_DISPATCH" id="320" />
+</ENTITY>
+<!--Not in the boundary-->
+</COMPOSITE_STREAM>
