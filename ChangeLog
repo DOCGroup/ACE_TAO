@@ -1,3 +1,11 @@
+Fri Apr 23 12:50:34 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tests/Config_Test.cpp (iniCompare):
+
+	  Changed type of equality flag variable from an "int" to a
+	  "bool".  Addresses a "'&=' : unsafe mix of type 'int' and type
+	  'bool' in operation" warning exhibited by MSVC++ 6.
+
 Fri Apr 23 11:23:04 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/Local_Tokens.cpp:
