@@ -49,16 +49,14 @@
   // Processor type, if necessary.  Green Hills defines "ppc".
 # if defined (ppc)
 #   define ACE_HAS_POWERPC_TIMER
-# endif /* ppc */
-
-# if defined (i386) || defined (__i386__)
+# elif defined (i386) || defined (__i386__)
     // If running an Intel, assume that it's a Pentium so that
     // ACE_OS::gethrtime () can use the RDTSC instruction.  If
     // running a 486 or lower, be sure to comment this out.
     // (If not running an Intel CPU, this #define will not be seen
     //  because of the i386 protection, so it can be ignored.)
 #   define ACE_HAS_PENTIUM
-# endif /* i386 */
+# endif /* ppc || i386 */
 
 # define ACE_CONFIG_INCLUDE_GHS_COMMON
 # include "ace/config-ghs-common.h"
@@ -73,6 +71,7 @@
 
 #define ACE_DEFAULT_MAX_SOCKET_BUFSIZ 32768
 #define ACE_DEFAULT_THREAD_KEYS 16
+#define ACE_HAS_BROKEN_ACCEPT_ADDR
 #define ACE_HAS_BROKEN_SENDMSG
 #define ACE_HAS_BROKEN_WRITEV
 #define ACE_HAS_CHARPTR_SOCKOPT
@@ -91,6 +90,7 @@
 #define ACE_HAS_SIGINFO_T
 #define ACE_HAS_SIGWAIT
 #define ACE_HAS_SIG_ATOMIC_T
+#define ACE_HAS_STRDUP_EMULATION
 #define ACE_HAS_STRERROR
 #define ACE_HAS_THREADS
 #define ACE_HAS_TSS_EMULATION
@@ -108,6 +108,7 @@
 #define ACE_LACKS_MADVISE
 #define ACE_LACKS_MALLOC_H
 #define ACE_LACKS_MEMORY_H
+#define ACE_LACKS_MKFIFO
 #define ACE_LACKS_MKTEMP
 #define ACE_LACKS_MMAP
 #define ACE_LACKS_MPROTECT
@@ -128,6 +129,7 @@
 #define ACE_LACKS_STRCASECMP
 #define ACE_LACKS_STRRECVFD
 #define ACE_LACKS_SYSCALL
+#define ACE_LACKS_SYSTIME_H
 #define ACE_LACKS_SYSV_MSG_H
 #define ACE_LACKS_SYSV_SHMEM
 #define ACE_LACKS_SYS_NERR
@@ -137,21 +139,21 @@
 #define ACE_LACKS_UCONTEXT_H
 #define ACE_LACKS_UNIX_SIGNALS
 #define ACE_LACKS_UTSNAME_T
-#if !defined (ACE_MT_SAFE)
-# define ACE_MT_SAFE 1
-#endif
-#define ACE_LACKS_SYSTIME_H
 #define ACE_PAGE_SIZE 4096
 #define ACE_THR_PRI_FIFO_DEF 101
 #define ACE_THR_PRI_OTHER_DEF ACE_THR_PRI_FIFO_DEF
 
+#if !defined (ACE_MT_SAFE)
+# define ACE_MT_SAFE 1
+#endif
+
+#if !defined (ACE_NEEDS_HUGE_THREAD_STACKSIZE)
+# define ACE_NEEDS_HUGE_THREAD_STACKSIZE 64000
+#endif /* ACE_NEEDS_HUGE_THREAD_STACKSIZE */
+
 #if !defined (ACE_NTRACE)
 # define ACE_NTRACE 1
 #endif /* ACE_NTRACE */
-
-#define ACE_HAS_STRDUP_EMULATION
-#define ACE_LACKS_MKFIFO
-#define ACE_HAS_BROKEN_ACCEPT_ADDR
 
 // By default, don't include RCS Id strings in object code.
 #if !defined (ACE_USE_RCSID)
