@@ -1,3 +1,9 @@
+Fri Feb 11 10:22:15 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_valuetype/valuetype.cpp:
+	  I overlooked this fix for valuetypes similar to the
+	  one for attributes in my entry for yesterday.
+
 Fri Feb 11 09:53:30 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tests/IDL_Test/reopened_modules.idl:
