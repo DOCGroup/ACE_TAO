@@ -60,6 +60,7 @@ public:
   // TAO_Trader constructor.
 
   typedef TAO_Offer_Database<MAP_LOCK_TYPE> Offer_Database;
+  // Offer Database Trait.
 
   TAO_Trader (Trader_Components components = LOOKUP);
   // Constructor which based on its arguments will create 
@@ -81,11 +82,6 @@ protected:
   typedef TAO_Trader<TRADER_LOCK_TYPE, MAP_LOCK_TYPE> TRADER_SELF;
   
   Offer_Database offer_database_; 
-  // A monitor (i.e. an STL map + a lock) serving as a storage for
-  // all the service offers of a trader.
-  // Structure: a map (actually a monitor) of service type names to  
-  // a counter + a map (a monitor) of offers for that service type.  A map of offers for 
-  // a service type (an internal map) is  a mapping from a number ids to offers.
 
   ACE_Lock_Adapter<TRADER_LOCK_TYPE> lock_;
   // lock that guards the state of the trader (its configuration).
@@ -94,12 +90,10 @@ protected:
   
   PortableServer::ServantBase* ifs_[5];
   
- private:
-
-    // = Disallow these operations.
+private:
+  
+  // = Disallow these operations.
   ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Trader<TRADER_LOCK_TYPE, MAP_LOCK_TYPE> &))
-  ACE_UNIMPLEMENTED_FUNC (TAO_Trader (const TAO_Trader<TRADER_LOCK_TYPE, MAP_LOCK_TYPE> &))
-
 };
 
   // *************************************************************
