@@ -1,9 +1,7 @@
-
 // $Id$
 
 #include "AMH_Servant.h"
 #include "Base_Server.h"
-#include "Base_Server.inl"
 
 void
 usage (const char *message)
