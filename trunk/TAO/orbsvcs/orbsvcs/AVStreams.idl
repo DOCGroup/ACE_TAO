@@ -48,7 +48,7 @@ module AVStreams
   // protocol names registered by OMG.
   // e.g., TCP, UDP, AAL5, IPX, RTP
 
-  typedef sequence<octet> key;
+  typedef sequence<octet> encryption_key;
   // Used as a key for public-key encryption
 
   struct SFPStatus
@@ -338,7 +338,7 @@ module AVStreams
       // Used to "attach" a negotiator to the endpoint
 
       void set_key (in string flow_name, 
-                    in key the_key);
+                    in encryption_key the_key);
       // Used for public key encryption.
     
       void set_source_id (in long source_id);
