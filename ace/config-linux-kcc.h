@@ -84,6 +84,7 @@
 
 // Compiler/platform has the getrusage() system call.
 #define ACE_HAS_GETRUSAGE
+#define ACE_HAS_GETRUSAGE_PROTO
 
 // Compiler/platform defines the sig_atomic_t typedef.
 #define ACE_HAS_SIG_ATOMIC_T

@@ -1,3 +1,14 @@
+Sun Dec  7 10:20:46 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Service_Config.cpp (parse_args): Added an appropriate macro
+ 	  to switch from char * to UNICODE.  Thanks to Timothy A. Brown
+ 	  <tabrown@montana.com> for reporting this.
+
+	* ace/config-linux-*.h: Added ACE_HAS_GETRUSAGE_PROTO to all
+	  the linux config files.  Hopefully, this will help ACE to work
+	  better with glibc.  Thanks to Ernie Makris <emakris@ziplink.net>
+	  and Torbjorn Lindgren <tl@funcom.no> for their help.
+
 Sat Dec 06 13:30:11 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.4.3, released Sat Dec 06 13:30:11 1997.
