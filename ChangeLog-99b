@@ -1,5 +1,10 @@
 Mon Dec 20 23:55:18 1999  Ossama Othman  <othman@cs.wustl.edu>
 
+	* Makefile:
+
+	  Removed ACE+autoconf bootstrapping commands.  Bootstrapping must
+	  be done later in the process (i.e. in bin/make_release).
+
 	* bin/make_release:
 
 	  Fixed MD5 checksum generation.
