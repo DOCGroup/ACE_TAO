@@ -93,6 +93,7 @@ class TAO_ORBSVCS_Export TAO_Basic_StreamCtrl
   // Destructor
 
  protected:
+  
   AVStreams::VDev_var vdev_a_;
   AVStreams::VDev_var vdev_b_;
   // The Virtual Devices for this stream
@@ -224,7 +225,7 @@ public:
   virtual CORBA::Boolean connect (AVStreams::StreamEndPoint_ptr responder, 
                                   AVStreams::streamQoS &qos_spec, 
                                   const AVStreams::flowSpec &the_spec,  
-                                  CORBA::Environment &env);
+                                  CORBA::Environment &env) = 0;
   // Called by StreamCtrl. responder is the peer to connect to
 
   virtual CORBA::Boolean request_connection (AVStreams::StreamEndPoint_ptr initiator, 
@@ -332,6 +333,11 @@ class TAO_ORBSVCS_Export TAO_Server_StreamEndPoint :
 public:
   TAO_Server_StreamEndPoint (void);
   // Constructor
+
+  virtual CORBA::Boolean connect (AVStreams::StreamEndPoint_ptr responder, 
+                                  AVStreams::streamQoS &qos_spec, 
+                                  const AVStreams::flowSpec &the_spec,  
+                                  CORBA::Environment &env);
 
   virtual CORBA::Boolean request_connection (AVStreams::StreamEndPoint_ptr initiator, 
                                              CORBA::Boolean is_mcast, 
