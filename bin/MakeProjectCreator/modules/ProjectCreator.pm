@@ -159,6 +159,7 @@ sub new {
   $self->{'pctype'}                = $self->extractType("$self");
   $self->{'defaulted'}             = {};
   $self->{'custom_types'}          = {};
+  $self->{'parents_read'}          = {};
   $self->{'feature_parser'}        = new FeatureParser($gfeature, $feature);
   $self->{'convert_slashes'}       = $self->convert_slashes();
   $self->{'sort_files'}            = $self->sort_files();
@@ -253,6 +254,7 @@ sub parse_line {
             $self->{'special_supplied'}     = {};
             $self->{'type_specific_assign'} = {};
             $self->{'flag_overrides'}       = {};
+            $self->{'parents_read'}         = {};
             $self->reset_generating_types();
           }
         }
@@ -307,13 +309,16 @@ sub parse_line {
               }
 
               if ($status) {
-                ## Begin reading the parent
-                push(@{$self->{'reading_parent'}}, $file);
-                $status = $self->parse_file($file);
-                pop(@{$self->{'reading_parent'}});
+                if (!defined $self->{'parents_read'}->{$file}) {
+                  $self->{'parents_read'}->{$file} = 1;
+                  ## Begin reading the parent
+                  push(@{$self->{'reading_parent'}}, $file);
+                  $status = $self->parse_file($file);
+                  pop(@{$self->{'reading_parent'}});
 
-                if (!$status) {
-                  $errorString = "ERROR: Invalid parent: $parent";
+                  if (!$status) {
+                    $errorString = "ERROR: Invalid parent: $parent";
+                  }
                 }
               }
             }
