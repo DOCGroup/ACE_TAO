@@ -10,6 +10,7 @@ Fri Mar 19 00:15:21 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 	* ace/config-win32-common.h: When not using MFC, CE needs to
 	  include <windows.h> and <wce.h> explicitly.
 
+	* ace/Log_Record.cpp (print):
 	* ace/OS.{h,cpp} (ACE_CE_Bridge): Changed to use HWND to record
 	  target window handle instead of CWnd. Also, we stop passing
 	  output string in a CString anymore.  The string is now created
