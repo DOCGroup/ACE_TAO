@@ -31,6 +31,7 @@ TAO/tests/RTCORBA/Server_Protocol/run_test.pl: !MINIMUM
 TAO/tests/RTCORBA/Client_Protocol/run_test.pl: !MINIMUM
 TAO/tests/RTCORBA/Private_Connection/run_test.pl: !MINIMUM
 TAO/tests/RTCORBA/Explicit_Binding/run_test.pl: !MINIMUM
+TAO/tests/Hello/run_test.pl
 TAO/tests/Muxing/run_test.pl: !ST
 TAO/tests/MT_Client/run_test.pl: !ST
 TAO/tests/MT_Server/run_test.pl: !ST
@@ -80,9 +81,9 @@ TAO/examples/POA/FindPOA/run_test.pl: !MINIMUM
 TAO/examples/POA/Forwarding/run_test.pl: !MINIMUM
 TAO/examples/POA/NewPOA/run_test.pl: !MINIMUM
 TAO/examples/POA/On_Demand_Activation/run_test.pl: !MINIMUM !STATIC
-TAO/examples/POA/On_Demand_Loading/run_test.pl: !MINIMUM !STATIC
+TAO/examples/POA/On_Demand_Loading/run_test.pl: !MINIMUM !STATIC !KCC_Linux
 TAO/examples/POA/Reference_Counted_Servant/run_test.pl
-TAO/examples/POA/Loader/run_test.pl: !MINIMUM !STATIC
+TAO/examples/POA/Loader/run_test.pl: !MINIMUM !STATIC !KCC_Linux
 TAO/examples/POA/RootPOA/run_test.pl
 TAO/examples/Simple/bank/run_test.pl
 TAO/examples/Simple/grid/run_test.pl
