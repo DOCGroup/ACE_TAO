@@ -1,3 +1,8 @@
+Tue Jan 18 15:37:25 2000  Joe Hoffert  <joeh@cs.wustl.edu>
+
+	* ace/ATM_Connector.{cpp,h,i}, ATM_QoS.{cpp,h}, ATM_Stream.{cpp,i}:
+ 	  Adding changes to support FORE's latest WinSock2 ATM support.
+
 Tue Jan 18 13:44:34 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tests/Thread_Pool_Test.cpp: Replaced int with size_t to
