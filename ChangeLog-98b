@@ -1,3 +1,12 @@
+Mon May 18 12:31:32 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+	* ace/Service_Config.{h,i,cpp}: Added an accessor debug() for
+	  external access to the <debug_> variable.  More debug messages
+	  check this before displaying.
+
+	* ace/Parse_Node.cpp: Checks Service_Config's debug flag before
+	  outputting debug messages.
+
 Mon May 18 08:34:35 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/config-sunos5.6.h: Added an #define for
