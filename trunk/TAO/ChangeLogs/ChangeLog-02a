@@ -1,3 +1,12 @@
+Wed May 15 15:20:15 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/IFRService/ConstantDef_i.cpp:
+
+          Added a missing release from an ACE_Auto_Basic_Array_Ptr,
+          which was causing the value of the constant to be trashed
+          before it was returned. Thanks to Craig Rodrigues 
+          <crodrigu@bbn.com> for reporting the bug.
+
 Wed May 15 11:26:15 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* orbsvcs/tests/Security/Big_Request/Makefile: 
