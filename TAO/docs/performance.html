@@ -87,17 +87,17 @@
     <h4>Run-time Client Optimizations</h4>
 
     <p>
-      For two-way invocations, i.e. those that expect a reply
-      (including "void" replies), Asynchronous Method Invocations
-      (AMI) can be used to give the client the opportunity to perform
-      other work as a CORBA request is sent to the target, handled by
-      the target, and the reply is received.
+      For two-way invocations, i.e., those that expect a reply
+      (including ``<CODE>void</CODE>'' replies), Asynchronous method
+      invocations (AMI) can be used to give the client the opportunity
+      to perform other work as a CORBA request is sent to the target,
+      handled by the target, and the reply is received.
     </p>
 
     <h4>Client Optimizations via ORB Configuration</h4>
 
     <p>
-      A client side TAO ORB can be optimized for various types of
+      A TAO client ORB can be optimized for various types of
       applications:
     </p>
 
@@ -107,9 +107,9 @@
 	<ul>
 	  <li>
 	    <p>
-	      A single-threaded client side application may not require
+	      A single-threaded client application may not require
 	      the internal thread synchronization performed by TAO.
-	      Hence, it may be useful to add the following line to your
+	      It may therefore be useful to add the following line to your
 	      <code>svc.conf</code> file:
 	    </p>
 
@@ -128,8 +128,8 @@
 	    <p>
 	      Other options include disabling synchronization in the
 	      components of TAO responsible for constructing and sending
-	      requests to the target, and for receiving replies.  These
-	      components are called "connection handlers."  To disable
+	      requests to the target and for receiving replies.  These
+	      components are called ``connection handlers.''  To disable
 	      synchronization in the client connection handlers, simply
 	      add:
 	    <p>
@@ -161,11 +161,12 @@
 	  <li>
 	    <p>
 	      Clients with lower scalability requirements can dedicate a
-	      connection to a given request.  This means no other
-	      requests or replies will be sent or received,
-	      respectively, over that connection.  The connection is
-	      <i>exclusive</i> to a given request, thus reducing
-	      contention on a connection.  However, that exclusivity
+	      connection to one request at a time, which means that no
+              other requests or replies will be sent or received,
+	      respectively, over that connection while a request is
+              pending.  The connection is <i>exclusive</i> to a given
+              request, thus reducing contention on a connection.
+              However, that exclusivity 
 	      comes at the cost of a smaller number of requests that
 	      may be issued at a given point in time.  To enable this
 	      behaviour, add the following option to the
@@ -194,14 +195,13 @@
     <h3>Optimizing Scalability</h3>
 
     <p>
-      "Scalability" refers to how well an ORB performs as the number
-      of outstanding CORBA requests increases.  For example, will
-      performance degrade slowly or quickly as the number of pending
-      CORBA requests on the client side increases from <code>10</code>
-      to <code>1000</code>, and similarly on the server side.  In
-      particular, ORB scalability is particular important on the
-      server side since a server will often handle many more requests
-      than a client will send.
+      In this context, ``scalability'' refers to how well an ORB
+      performs as the number of CORBA requests increases.  For
+      example, a non-scalable configuration will perform poorly as the
+      number of pending CORBA requests on the client increases from
+      <code>10</code> to <code>1,000</code>, and similarly on the
+      server.  ORB scalability is particular important on the server
+      since it must often handle many requests from multiple clients.
     </p>
 
     <h3>Optimizing Client Scalability</h3>
@@ -216,11 +216,11 @@
       FILL IN THE BLANK
     </p>
 
-    <hr>
+    <hr><P>
     <address><a href="mailto:ossama@uci.edu">Ossama Othman</a></address>
 <!-- Created: Mon Nov 26 13:22:00 PST 2001 -->
 <!-- hhmts start -->
-Last modified: Sun Dec 16 10:55:27 CST 2001
+Last modified: Sun Dec 16 11:36:28 CST 2001
 <!-- hhmts end -->
   </body>
 </html>
