@@ -1,3 +1,9 @@
+Tue Nov 17 09:37:32 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/config-linux-common.h: removed
+         ACE_HAS_BROKEN_EXPLICIT_DESTRUCTOR because it caused compilation
+         failure with egcs 1.0.2.
+
 Tue Nov 17 09:12:00 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
         * ace/SString.{h, i}: added < , > operators to string classes
@@ -10,23 +16,23 @@ Tue Nov 17 09:12:00 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
 Mon Nov 16 17:55:00 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
-        * ace/Functor_T.{h, i}  
+        * ace/Functor_T.{h, i}
           ace/RB_Tree.{cpp, h, i} : added less-than comparison functor
           (aka function object aka GOF Command Pattern) to allow ACE_RB_Tree
-	  to be used with key types that do not support a < operator.
+          to be used with key types that do not support a < operator.
           Thanks to Mark De Jong <mdj@intervu.net> for reporting the less-than
- 	  problem and suggesting part of the solution.  Also cleaned up class 
-	  naming and comments to conform to ACE coding standards, fixed an 
-	  access violation that occurred when deleting items from a tree.
+          problem and suggesting part of the solution.  Also cleaned up class
+          naming and comments to conform to ACE coding standards, fixed an
+          access violation that occurred when deleting items from a tree.
 
-        * tests/RB_Tree_Test.{cpp, dsp} 
-	  tests/run_tests.bat
-	  tests.dsw:                    Added a test to verify correct tree 
-	  behavior under insertion and deletion for different key and item 
-	  types and insertion orders.
-	
-	* apps/JAWS/PROTOTYPE/HTTPU/http_headers.{cpp, h}: Changed type names
-	  for ACE_RB_Tree and associated classes.
+        * tests/RB_Tree_Test.{cpp, dsp}
+          tests/run_tests.bat
+          tests.dsw:                    Added a test to verify correct tree
+          behavior under insertion and deletion for different key and item
+          types and insertion orders.
+
+        * apps/JAWS/PROTOTYPE/HTTPU/http_headers.{cpp, h}: Changed type names
+          for ACE_RB_Tree and associated classes.
 
 Sun Nov 15 16:34:11 1998  David L. Levine  <levine@cs.wustl.edu>
 
