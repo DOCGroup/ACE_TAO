@@ -1,3 +1,8 @@
+Mon Mar 31 13:20:41 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+ 	* TAO_IDL/be/be_visitor_interface/smart_proxy_cs.cpp: Fixed a
+	  typo. 
+
 Mon Mar 31 13:05:41 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_interface/interface_ci.cpp:
@@ -76,7 +81,7 @@ Mon Mar 31 14:18:23 2003  Simon McQueen  <sm@prismtechnologies.com>
 Mon Mar 31 06:57:16 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* TAO_IDL/be/be_visitor_interface/smart_proxy_ch.cpp:
-	* TAO_IDL/be/be_visitor_interface/smart_proxy_cs.cpp: Fixed a
+	* TAO_IDL/be/be_visitor_interface/smart_proxy_cs.cpp: Fixed 
 	  warning in BCB builds by generating the other version of
 	  CORBA::_stubobj (). Thanks to Johnny for reporting this.
 
