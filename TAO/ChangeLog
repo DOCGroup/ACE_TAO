@@ -1,3 +1,10 @@
+Fri Sep 27 21:07:12 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/Any.cpp (operator<<): Reverted this "Thu Sep 26 17:06:11
+	  2002  Balachandran Natarajan
+	  <bala@isis-server.isis.vanderbilt.edu>"  entry. This shows up
+	  more problems than it solves. 
+
 Fri Sep 27 13:40:32 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/LoadBalancer/Signal_Handler.h:
