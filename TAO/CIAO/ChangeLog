@@ -1,3 +1,20 @@
+Thu Jul  1 15:37:33 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * DAnCE/tests/Config_Handlers/CompImplDesc_Handler_Test.cpp:
+        * DAnCE/tests/Config_Handlers/CompIntrDesc_Handler_Test.cpp:
+        * DAnCE/tests/Config_Handlers/CompPkgDesc_Handler_Test.cpp:
+        * DAnCE/tests/Config_Handlers/Domain_Handler_Test.cpp:
+        * DAnCE/tests/Config_Handlers/Handler_Test.cpp:
+        * DAnCE/tests/Config_Handlers/Handler_Test.h:
+        * DAnCE/tests/Config_Handlers/Handler_Test.i:
+        * DAnCE/tests/Config_Handlers/Handler_Tests.mpc:
+        * DAnCE/tests/Config_Handlers/IAD_Handler_Test.cpp:
+        * DAnCE/tests/Config_Handlers/PC_Handler_Test.cpp:
+        * DAnCE/tests/Config_Handlers/Plan_Handler_Test.cpp:
+        * DAnCE/tests/Config_Handlers/handler_test.mpb:
+
+          Checking in the tests for the XML handlers.
+
 Thu Jul  1 15:29:57 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * DAnCE/tests/Config_Handlers/HUDisplay/Airframe.ccd:
