@@ -1,3 +1,12 @@
+Fri Nov 21 11:16:50 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/DynamicAny/DynSequence_i.cpp (equal):
+
+          Added check for equal sequence length before doing the
+          member-wise comparison. Thanks to David Kinder
+          <david.kinder@sophos.com> for reporting the bug. This
+          closes [BUGID:1654].
+
 Fri Nov 21 10:31:38 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/ast/ast_decl.cpp:
