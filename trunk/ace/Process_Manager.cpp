@@ -130,7 +130,7 @@ ACE_Process_Manager::start (ACE_Process_Options &options)
   ACE_TRACE ("ACE_Process_Manager::start");
 
   ACE_Process process;
-  pid_t pid = process.start (options);
+  pid_t pid = process.spawn (options);
 
   // Only include the pid in the parent's table.
   if (pid == -1 || pid == 0)
