@@ -677,10 +677,10 @@ int
 ACE_Recursive_Thread_Mutex::get_nesting_level (void)
 {
   // ACE_TRACE ("ACE_Recursive_Thread_Mutex::get_nesting_level");
-#if defined (ACE_HAS_WINCE)
-  errno = ENOTSUP;
-  return -1;                    // @@ Is this the right value to return?
-#elif defined (ACE_WIN32)
+#if defined (ACE_HAS_WINCE) || defined (VXWORKS)
+  ACE_NOTSUP_RETURN (-1);
+#elif defined (ACE_HAS_RECURSIVE_MUTEXES)
+  // This is really a Win32-ism...
   return this->recursive_mutex_.RecursionCount;
 #else
   int nesting_level = 0;
