@@ -10,16 +10,15 @@
 #----------------------------------------------------------------------------
 
 BIN 	= Logging_Service
+VBIN    = $(BIN:%=%$(VAR))
 
-SRC	= Logging_Service_i.cpp Logging_Service.cpp 
+SRC	= Logging_Service_i.cpp Logging_Service.cpp
 
 LDLIBS	= -lorbsvcs -lTAO
 
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 
-BUILD 	= $(BIN)
-
-LOGGING_OBJS = 	Logging_Service_i.o Logging_Service.o 
+LOGGING_OBJS = 	Logging_Service_i.o Logging_Service.o
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO

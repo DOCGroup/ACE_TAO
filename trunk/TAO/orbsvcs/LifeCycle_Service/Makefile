@@ -1,7 +1,7 @@
 #
 # $Id$
-# 
-# =TITLE 
+#
+# =TITLE
 #  Makefile to create the LifeCycle_Service
 
 ifndef TAO_ROOT
@@ -12,12 +12,10 @@ TAO_IDLFLAGS=-I$(TAO_ROOT)/orbsvcs/orbsvcs
 
 
 BIN = Life_Cycle_Service
+VBIN = $(BIN:%=%$(VAR))
 
 # The following lines tell the souce code that the trading
 # service is available.
-
-BUILD = $(BIN)
-
 
 LIFE_CYCLE_SERVICE_SRCS = \
 	Life_Cycle_Service.cpp Life_Cycle_Service_i.cpp \

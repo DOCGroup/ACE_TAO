@@ -1,6 +1,7 @@
 # $Id$
 
-BUILD = ECM_Supplier ECM_Consumer
+BIN = ECM_Supplier ECM_Consumer
+VBIN = $(BIN:%=%$(VAR))
 LDLIBS= -lorbsvcs -lTAO
 
 ifndef TAO_ROOT
@@ -16,7 +17,7 @@ IDL_SRC	= dataC dataS
 ECM_Supplier_OBJS=$(addsuffix .o,ECM_Supplier ECM_Data $(IDL_SRC))
 ECM_Consumer_OBJS=$(addsuffix .o,ECM_Consumer ECM_Data $(IDL_SRC))
 
-SRC =   $(addsuffix .cpp, $(BUILD)) \
+SRC =   $(addsuffix .cpp, $(BIN)) \
 	$(addsuffix .cpp, $(IDL_SRC)) \
 	ECM_Data.cpp
 
@@ -49,7 +50,7 @@ ECM_Consumer: $(addprefix $(VDIR),$(ECM_Consumer_OBJS))
 
 realclean:
 	$(RM) -f dataC.* dataS.* dataS_T.*
-	$(RM) -f $(BUILD)
+	$(RM) -f $(BIN)
 
 #----------------------------------------------------------------------------
 #       Dependencies

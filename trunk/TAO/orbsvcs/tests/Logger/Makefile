@@ -21,7 +21,7 @@ SRC = 	Logging_Test.cpp \
 LOGGING_TEST_OBJS = Logging_Test_i.o Logging_Test.o
 
 BIN = Logging_Test
-BUILD = $(BIN)
+VBIN = $(BIN:%=%$(VAR))
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 
 #----------------------------------------------------------------------------

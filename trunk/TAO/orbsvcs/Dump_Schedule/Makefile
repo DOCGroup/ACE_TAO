@@ -1,7 +1,7 @@
 # $Id$
 
 BIN = Dump_Schedule
-BUILD = $(BIN)
+VBIN = $(BIN:%=%$(VAR))
 
 DUMP_SRCS = \
 	Dump_Schedule.cpp
