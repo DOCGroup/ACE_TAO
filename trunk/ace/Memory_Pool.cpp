@@ -400,7 +400,7 @@ int
 ACE_MMAP_Memory_Pool::remap (void *addr)
 {
   ACE_TRACE ("ACE_MMAP_Memory_Pool::remap");
-  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("Remapping with fault address at: %X\n"), addr));
+  //  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("Remapping with fault address at: %X\n"), addr));
   off_t current_map_size = ACE_OS::filesize (this->mmap_.handle ());
   // ACE_OS::lseek (this->mmap_.handle (), 0, SEEK_END);
 
