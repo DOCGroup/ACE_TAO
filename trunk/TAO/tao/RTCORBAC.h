@@ -25,6 +25,8 @@
 #include "tao/PolicyC.h"
 #include "TimeBaseC.h"
 
+#include "tao/Encodable.h"
+
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
@@ -1037,7 +1039,10 @@ class TAO_Export PriorityBandedConnectionPolicy: public virtual CORBA::Policy
 #if !defined (_RTCORBA_PROTOCOLPROPERTIES_CH_)
 #define _RTCORBA_PROTOCOLPROPERTIES_CH_
 
-class TAO_Export ProtocolProperties : public virtual CORBA_Object
+
+class TAO_Export ProtocolProperties : public virtual CORBA_Object,
+                                      public TAO_Encodable
+
   {
   public:
   #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -1066,6 +1071,13 @@ class TAO_Export ProtocolProperties : public virtual CORBA_Object
 
     virtual const char* _interface_repository_id (void) const;
 
+    //////////////////////////////////////////////////////
+    // CDR Encoding Support 
+    
+    virtual CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr);
+    
+    virtual CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr);
+   
   protected:
     ProtocolProperties (void);
     virtual ~ProtocolProperties (void);
