@@ -1,7 +1,19 @@
+Wed Nov 17 01:24:27 1999  Krishnakumar Elakkara Pathayapura  <krish@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Log/LogRecordStore.h (class LogRecordStore):
+	  Changed to use RecordId as key in Hash_Map_Manager instead
+	  of LogId.
+
 Wed Nov 17 01:08:02 1999  Krishnakumar Elakkara Pathayapura  <krish@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Log/LogRecordStore.cpp (LogRecordStore):
-	  fixed bugs
+	  Used prefix operators because ACE emulation of U Long Long
+	  (for platforms that don't have one) does not define postfix
+	  operators. Thanks to Bill Tovrea <gwtovrea@west.raytheon.com>
+	  for reporting this problem.
+
+	  Also used the RecordId as key in Hash_Map_Manager instead
+	  of LogId.
 
 Tue Nov 16 20:55:52 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 

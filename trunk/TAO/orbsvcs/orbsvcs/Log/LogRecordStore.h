@@ -94,11 +94,11 @@ class LogRecordStore
   int purge_old_records (void);
   // Deletes "old" records from the store.
 
-  typedef ACE_Hash_Map_Manager <DsLogAdmin::LogId,
+  typedef ACE_Hash_Map_Manager <DsLogAdmin::RecordId,
     DsLogAdmin::LogRecord, ACE_Null_Mutex> LOG_RECORD_HASH_MAP;
-  typedef ACE_Hash_Map_Iterator <DsLogAdmin::LogId,
+  typedef ACE_Hash_Map_Iterator <DsLogAdmin::RecordId,
     DsLogAdmin::LogRecord, ACE_Null_Mutex> LOG_RECORD_HASH_MAP_ITER;
-  typedef ACE_Hash_Map_Entry <DsLogAdmin::LogId,
+  typedef ACE_Hash_Map_Entry <DsLogAdmin::RecordId,
     DsLogAdmin::LogRecord> LOG_RECORD_HASH_MAP_ENTRY;
   // Defines macros to represent the hash that maps ids to
   // DsLogAdmin::LogRecords.
@@ -123,7 +123,7 @@ class LogRecordStore
   CORBA::ULongLong max_size_;
   // The maximum size of the log.
 
-  CORBA::ULong current_size_;
+  CORBA::ULongLong current_size_;
   // The current size (in bytes) of the log
 
   CORBA::ULongLong num_records_;
