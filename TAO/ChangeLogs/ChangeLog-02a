@@ -1,15 +1,24 @@
+Web Feb 28 09:02:51 2001  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * Makefile.bor
+        * orbsvcs/tests/Makefile.bor
+        * orbsvcs/tests/Simple_Naming/Makefile.bor
+
+          The orbsvcs tests for which there is a correct BCB makefile
+          are now build in the all build
+
 Tue Feb 27 17:45:55 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/Latency/control.cpp: 	
-	* orbsvcs/tests/AVStreams/Latency/pong.cpp: 
-	* orbsvcs/tests/AVStreams/Latency/ping.cpp: 
-	* orbsvcs/tests/AVStreams/Latency/run_test.pl: 
+	* orbsvcs/tests/AVStreams/Latency/control.cpp:
+	* orbsvcs/tests/AVStreams/Latency/pong.cpp:
+	* orbsvcs/tests/AVStreams/Latency/ping.cpp:
+	* orbsvcs/tests/AVStreams/Latency/run_test.pl:
 
-	  Added script to run test. 	  	  
+	  Added script to run test.
 
 Tue Feb 27 16:36:06 2001  Christopher Kohlhoff  <chris@kohlhoff.com>
 
-        * orbsvcs/IFR_Service/tao_ifr.bor: 
+        * orbsvcs/IFR_Service/tao_ifr.bor:
           Added library required for debug build.
 
         * tests/AMI_Timeouts/client.bor:
@@ -18,19 +27,19 @@ Tue Feb 27 16:36:06 2001  Christopher Kohlhoff  <chris@kohlhoff.com>
 
 Tue Feb 27 15:23:37 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/Pluggable/server.cpp: 
+	* orbsvcs/tests/AVStreams/Pluggable/server.cpp:
 
 	  Fixed unused args compile warnings.
-	
+
 Tue Feb 27 12:21:03 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/IIOP_Connector.cpp: Moved the template instantiations to the
 	  top of the file as this was creating problem with SunCC
 	  5.0. Thanks to Christian Mueffling <cvm@aiss.de> for reporting
-	  this. 
+	  this.
 
 	* tao/UIOP_Connector.cpp:
-	* tao/SHMIOP_Connector.cpp: 
+	* tao/SHMIOP_Connector.cpp:
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp:
 	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp: Added the same
 	  fix for these protocols too.
@@ -52,9 +61,9 @@ Tue Feb 27 12:17:18 2001  Jeff Parsons <parsons@cs.wustl.edu>
         * tao/Sequence.cpp:
 
           In the operator= methods in each sequence class, modified
-          the case where the release_ member is 0 to set the 
+          the case where the release_ member is 0 to set the
           buffer to 0 if rhs.maximum_ is 0. Otherwise allocbuf (0)
-          is called, which may lead to problems. Thanks to Virgilijus Globis 
+          is called, which may lead to problems. Thanks to Virgilijus Globis
           <virgis@megagis.lt> for reporting this bug.
 
         * tao/MessagingC.h:
@@ -76,8 +85,8 @@ Tue Feb 27 11:34:00 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  TAO_String_Manager which allocates memory in the constructor and
 	  destroys memory in the destructor. This allocation and
 	  deallocation comes into play for every call even when it is not
-	  used. 
-	
+	  used.
+
 	* tao/Stub.cpp:
 	* tao/Stub.h:
 	* tao/Stub.i: Added a pointer to the IOP::IOR in this class. When
@@ -92,39 +101,39 @@ Tue Feb 27 06:35:36 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 Tue Feb 27 04:32:00 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/run_test.pl: 
-	* orbsvcs/tests/AVStreams/Multicast/run_test.pl: 
-	* orbsvcs/tests/AVStreams/Full_Profile/run_test.pl: 
-	* orbsvcs/tests/AVStreams/Pluggable/run_test.pl: 
+	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/run_test.pl:
+	* orbsvcs/tests/AVStreams/Multicast/run_test.pl:
+	* orbsvcs/tests/AVStreams/Full_Profile/run_test.pl:
+	* orbsvcs/tests/AVStreams/Pluggable/run_test.pl:
 
-	  Added scripts to run the AVStreams tests.	
+	  Added scripts to run the AVStreams tests.
 
 Mon Feb 26 20:01:06 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/ftp.cpp: 
-	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/server.cpp: 	
-	* orbsvcs/tests/AVStreams/Multicast/ftp.cpp: 
-	* orbsvcs/tests/AVStreams/Multicast/server.cpp: 	
-	* orbsvcs/tests/AVStreams/Latency/control.cpp: 
-	* orbsvcs/tests/AVStreams/Full_Profile/ftp.cpp: 
-	* orbsvcs/tests/AVStreams/Full_Profile/server.cpp: 
-	* orbsvcs/tests/AVStreams/Pluggable/ftp.cpp: 
-	* orbsvcs/tests/AVStreams/Pluggable/server.cpp: 	
+	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/ftp.cpp:
+	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/server.cpp:
+	* orbsvcs/tests/AVStreams/Multicast/ftp.cpp:
+	* orbsvcs/tests/AVStreams/Multicast/server.cpp:
+	* orbsvcs/tests/AVStreams/Latency/control.cpp:
+	* orbsvcs/tests/AVStreams/Full_Profile/ftp.cpp:
+	* orbsvcs/tests/AVStreams/Full_Profile/server.cpp:
+	* orbsvcs/tests/AVStreams/Pluggable/ftp.cpp:
+	* orbsvcs/tests/AVStreams/Pluggable/server.cpp:
 
 	  Ensured clean termination of the processes.
-	
-	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp: 
-	* orbsvcs/orbsvcs/AV/AVStreams_i.h: 
-	  
+
+	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
+	* orbsvcs/orbsvcs/AV/AVStreams_i.h:
+
 	  Corrected multicasting address formating to fix the Multicast
-	  and Multicast_Full_Profile tests. 
+	  and Multicast_Full_Profile tests.
 
 	  Also fixed the iteration through the reverse flow spec set in
 	  TAO_StreamEndPoint::start.
 
 	  Thanks to Craig Rodrigues <crodrigu@bbn.com> for reporting these
 	  bugs.
-	
+
 
 
 Mon Feb 26 19:05:57 2001  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
@@ -155,7 +164,7 @@ Mon Feb 26 16:34:55 2001  Christopher Kohlhoff  <chris@kohlhoff.com>
           Include IFR_Service and TAO_Service in default build.
 
 Mon Feb 26 15:35:10 2001  Phil Mesnier  <mesnier_p@ociweb.com>
-  
+
         Port to Unixware 7 (7.1.1) Using UDK CC (7.1.1.b)
 
         * orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:
@@ -184,7 +193,7 @@ Mon Feb 26 15:35:10 2001  Phil Mesnier  <mesnier_p@ociweb.com>
 Mon Feb 26 14:09:29 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
         * tests/Collocation/Diamond_i.cpp (color): Fixed a warning in
-          Tru64_CXX builds.   
+          Tru64_CXX builds.
 
 Mon Feb 26 12:52:48 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -215,7 +224,7 @@ Mon Feb 26 12:52:48 2001  Jeff Parsons <parsons@cs.wustl.edu>
         * tao/DynamicInterface/Server_Request.inl:
 
           Added accessors to the byte order of the underlying
-          invocation. These will be used by a gateway to 
+          invocation. These will be used by a gateway to
           preserve the byte order of a request it is handling,
           even if it is a byte order different than that of the
           gateway's platform. CORBA::Request also stores the
@@ -224,9 +233,9 @@ Mon Feb 26 12:52:48 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tests/DSI_Gateway/test_dsi.cpp:
 
-          Added lines to the gateway's invoke() method to use the 
+          Added lines to the gateway's invoke() method to use the
           above accessors, to get and set the appropriate byte orders
-          immediately before and after the call to 
+          immediately before and after the call to
           CORBA::Request::invoke().
 
 Mon Feb 26 10:28:45 2001  Darrell Brunsch <brunsch@uci.edu>
