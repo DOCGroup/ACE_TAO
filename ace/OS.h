@@ -4078,15 +4078,18 @@ struct flock
 #   endif /* ! VXWORKS */
 # endif /* ACE_LACKS_FILELOCKS */
 
-# if !defined (ACE_HAS_IP_MULTICAST)
-struct ip_mreq
-{
-  struct in_addr imr_multiaddr;
-  // IP multicast address of group
-  struct in_addr imr_interface;
-  // local IP address of interface
-};
-# endif /* ACE_HAS_IP_MULTICAST */
+# if !defined (ACE_HAS_IP_MULTICAST)  &&  !defined (IP_ADD_MEMBERSHIP)
+  // Even if ACE_HAS_IP_MULTICAST is not defined, if IP_ADD_MEMBERSHIP
+  // is defined, assume that the ip_mreq struct is also defined
+  // (presumably in netinet/in.h).
+  struct ip_mreq
+  {
+    struct in_addr imr_multiaddr;
+    // IP multicast address of group
+    struct in_addr imr_interface;
+    // local IP address of interface
+  };
+# endif /* ! ACE_HAS_IP_MULTICAST  &&  ! IP_ADD_MEMBERSHIP */
 
 # if !defined (ACE_HAS_STRBUF_T)
 struct strbuf
