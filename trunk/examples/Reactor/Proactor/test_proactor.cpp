@@ -602,12 +602,12 @@ main (int argc, char *argv[])
   else if (sender.open (host, port) == -1)
     return -1;
 
-  int error = 0;
+  int success = 1;
 
-  while (!error && !done)
+  while (success > 0  && !done)
     // dispatch events
-    error = ACE_Proactor::instance ()->handle_events ();
-
+    success = ACE_Proactor::instance ()->handle_events ();
+  
   return 0;
 }
 

@@ -680,7 +680,7 @@ ACE_WIN32_Proactor::handle_events (unsigned long milli_seconds)
                                        (void *) completion_key,
                                        errno);
     }
-  return 0;
+  return 1;
 }
 
 void

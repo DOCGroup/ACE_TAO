@@ -127,7 +127,8 @@ public:
 #endif /* 0 */
 
   virtual ACE_HANDLE get_handle (void) const;
-  // Get the event handle.
+  // Get the event handle. This is a no-op in POSIX. Returns
+  // ACE_INVALID_HANDLE. 
 
   // Methods used to create Asynch_IO_Result objects. We create the right
   // objects here in these methods.
@@ -242,15 +243,15 @@ class ACE_Export ACE_POSIX_AIOCB_Proactor : public ACE_POSIX_Proactor
   // = TITLE
   //
   //     This Proactor makes use of Asynchronous I/O Control Blocks
-  //     (AIOCB) to get the completion status of the <aio_> operations
-  //     issued.
+  //     (AIOCB) to notify/get the completion status of the <aio_>
+  //     operations issued.
   //
   // = DESCRIPTION
   //
 
   friend class ACE_AIOCB_Notify_Pipe_Manager;
   // Handler needs to call application specific code.
-
+  
   friend class ACE_POSIX_AIOCB_Asynch_Operation;
   // This class does the registering of Asynch Operations with the
   // Proactor which is necessary in the AIOCB strategy.
@@ -268,13 +269,16 @@ public:
 
   virtual int handle_events (ACE_Time_Value &wait_time);
   // Dispatch a single set of events.  If <wait_time> elapses before
-  // any events occur, return.  Return 0 on success, non-zero (-1) on
-  // timeouts/errors and errno is set accordingly.
+  // any events occur, return 0.  Return 1 on success i.e., when a
+  // completion is dispatched, non-zero (-1) on errors and errno is
+  // set accordingly.
 
   virtual int handle_events (void);
   // Block indefinitely until at least one event is dispatched.
-  // Return 0 on success, non-zero (-1) on timeouts/errors and errno
-  // is set accordingly.
+  // Dispatch a single set of events.  If <wait_time> elapses before
+  // any events occur, return 0.  Return 1 on success i.e., when a
+  // completion is dispatched, non-zero (-1) on errors and errno is
+  // set accordingly. 
 
   virtual int post_completion (ACE_POSIX_Asynch_Result *result);
   // Post a result to the completion port of the Proactor.
@@ -297,7 +301,8 @@ public:
 protected:
   virtual int handle_events (unsigned long milli_seconds);
   // Dispatch a single set of events.  If <milli_seconds> elapses
-  // before any events occur, return.
+  // before any events occur, return 0. Return 1 if a completion
+  // dispatched. Return -1 on errors.
 
   void application_specific_code (ACE_POSIX_Asynch_Result *asynch_result,
 				  u_long bytes_transferred,
@@ -348,14 +353,17 @@ public:
 
   virtual int handle_events (ACE_Time_Value &wait_time);
   // Dispatch a single set of events.  If <wait_time> elapses before
-  // any events occur, return.  Return 0 on success, non-zero (-1) on
-  // timeouts/errors and errno is set accordingly.
+  // any events occur, return 0.  Return 1 on success i.e., when a
+  // completion is dispatched, non-zero (-1) on errors and errno is
+  // set accordingly. 
 
   virtual int handle_events (void);
   // Block indefinitely until at least one event is dispatched.
-  // Return 0 on success, non-zero (-1) on timeouts/errors and errno
-  // is set accordingly.
-
+  // Dispatch a single set of events.  If <wait_time> elapses before
+  // any events occur, return 0.  Return 1 on success i.e., when a
+  // completion is dispatched, non-zero (-1) on errors and errno is
+  // set accordingly.
+ 
   virtual int post_completion (ACE_POSIX_Asynch_Result *result);
   // Post a result to the completion port of the Proactor.
 
@@ -377,7 +385,8 @@ public:
 protected:
   virtual int handle_events (unsigned long milli_seconds);
   // Dispatch a single set of events.  If <milli_seconds> elapses
-  // before any events occur, return.
+  // before any events occur, return 0. Return 1 if a completion is
+  // dispatched. Return -1 on errors.
 
   sigset_t RT_completion_signals_;
   // These signals are used for completion notification by the
