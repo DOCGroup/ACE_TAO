@@ -1,3 +1,21 @@
+Mon Jan 17 15:49:25 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_field/field_ch.cpp:
+	  Fix to scoping of field name generation in header
+	  file when structs and/or unions are nested. Thanks to
+	  Hugh Arnold <harnold@itginc.com> for reporting this
+	  bug and sending in the example file.
+
+	* TAO_IDL/be/be_visitor_scope.cpp:
+	  Cosmetic changes.
+
+	* tests/IDL_Test/union.idl:
+	  Added example IDL file mentioned above to test suite.
+
+	* tests/IDL_Test/idl_test.dsp:
+	  Updated project settings to make custom build settings
+	  identical for all the IDL files in the test suite.
+
 Tue Jan 18 10:54:49 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 	* docs/Options.html:
