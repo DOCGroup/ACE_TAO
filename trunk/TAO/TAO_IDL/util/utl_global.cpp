@@ -956,15 +956,18 @@ IDL_GlobalData::validate_included_idl_files (void)
   char post_abspath[MAXPATHLEN];
   char **path_tmp = 0;
   char *post_tmp = 0;
+  char *full_path = 0;
 
   for (size_t j = 0; j < n_pre_preproc_includes; ++j)
     {
       // Check this name with the names list that we got from the
       // preprocessor.
       size_t valid_file = 0;
-      (void) FULLPATH (pre_abspath, pre_preproc_includes[j], MAXPATHLEN);
+      full_path = FULLPATH (pre_abspath,
+                            pre_preproc_includes[j],
+                            MAXPATHLEN);
 
-      if (pre_abspath != 0)
+      if (full_path != 0)
         {
           for (size_t ni = 0; ni < n_post_preproc_includes; ++ni)
             {

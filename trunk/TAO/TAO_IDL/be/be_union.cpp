@@ -157,13 +157,34 @@ be_union::gen_empty_default_label (void)
     {
       return I_TRUE;
     }
+    
+  unsigned long n_labels = this->nlabels ();
       
-  if (pdt->pt () == AST_PredefinedType::PT_boolean && this->nmembers () == 2)
+  if (pdt->pt () == AST_PredefinedType::PT_boolean && n_labels == 2)
     {
       return I_FALSE;
     }
     
   return I_TRUE;
+}
+
+unsigned long
+be_union::nlabels (void)
+{
+  unsigned long retval = 0;
+
+  for (UTL_ScopeActiveIterator si (this, UTL_Scope::IK_decls);
+       !si.is_done ();
+       si.next ())
+    {
+      AST_Decl *d = si.item ();
+      AST_UnionBranch *ub =
+        AST_UnionBranch::narrow_from_decl (d);
+
+     retval += ub->label_list_length ();
+    }
+    
+  return retval;
 }
 
 // Narrowing.
