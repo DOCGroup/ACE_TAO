@@ -19,7 +19,6 @@
 //
 //============================================================
 
-
 #if !defined (IOR_CORBALOC_CLIENT_I_H)
 #define IOR_CORBALOC_CLIENT_I_H
 
@@ -51,7 +50,6 @@ class IOR_corbaloc_Client_i
 
   /// Naming context
   CosNaming::NamingContextExt_var naming_context_;
-
 };
 
 #endif /* IOR_CORBALOC_CLIENT_I_H */
