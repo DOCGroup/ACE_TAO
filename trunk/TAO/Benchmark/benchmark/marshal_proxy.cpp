@@ -19,3 +19,5 @@
 #include "benchmark/marshal_proxy.i"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID(benchmark, marshal_proxy, "$Id$")
+

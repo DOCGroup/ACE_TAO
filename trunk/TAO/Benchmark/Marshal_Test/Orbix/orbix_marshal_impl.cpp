@@ -6,6 +6,8 @@
 #include "orbix_marshal_impl.i"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID(Orbix, orbix_marshal_impl, "$Id$")
+
 // All the methods of the SSI class
 void
 Marshal_SSI_Impl::test_short (CORBA::Short s1,

@@ -21,6 +21,8 @@
 #include "tao_marshal_server.i"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID(TAO, tao_marshal_server, "$Id$")
+
 int
 Tao_Marshal_Server_Proxy::run (CORBA_Marshal_Proxy::OPTIONS &options,
 				CORBA_Marshal_Proxy::RESULTS &results)

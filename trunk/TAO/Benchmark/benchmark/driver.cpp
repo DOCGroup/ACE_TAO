@@ -2,6 +2,8 @@
 
 #include "benchmark/driver.h"
 
+ACE_RCSID(benchmark, driver, "$Id$")
+
 template <class T>
 CORBA_Benchmark_Driver<T>::CORBA_Benchmark_Driver (T *proxy)
   : proxy_ (proxy)

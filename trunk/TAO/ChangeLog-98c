@@ -1,3 +1,53 @@
+Mon Aug  3 16:49:45 1998  Gonzalo Diethelm  <gonzo@tango.cs.wustl.edu>
+
+	* TAO_IDL/Makefile: 
+	We don't attempt to traverse any subdirectories now.
+	
+	* TAO_IDL/ast/Makefile: 
+	* TAO_IDL/be/Makefile: 
+	* TAO_IDL/be/be_state.cpp: 
+	* TAO_IDL/be/be_state_argument.cpp: 
+	* TAO_IDL/be/be_state_array.cpp: 
+	* TAO_IDL/be/be_state_attribute.cpp: 
+	* TAO_IDL/be/be_state_exception.cpp: 
+	* TAO_IDL/be/be_state_operation.cpp: 
+	* TAO_IDL/be/be_state_sequence.cpp: 
+	* TAO_IDL/be/be_state_structure.cpp: 
+	* TAO_IDL/be/be_state_typedef.cpp: 
+	* TAO_IDL/be/be_state_union.cpp: 
+	* TAO_IDL/driver/Makefile: 
+	* TAO_IDL/fe/Makefile: 
+	* TAO_IDL/narrow/Makefile: 
+	* TAO_IDL/util/Makefile: 
+	Erased these now useless files.
+
+	* Benchmark/Marshal_Test/Orbix/marshal.h: 
+	Added a RCS Id.
+
+	* Benchmark/Marshal_Test/Orbix/client.cpp: 
+	* Benchmark/Marshal_Test/Orbix/marshal.h: 
+	* Benchmark/Marshal_Test/Orbix/orbix_marshal_client.cpp: 
+	* Benchmark/Marshal_Test/Orbix/orbix_marshal_impl.cpp: 
+	* Benchmark/Marshal_Test/Orbix/orbix_marshal_server.cpp: 
+	* Benchmark/Marshal_Test/Orbix/server.cpp: 
+	* Benchmark/Marshal_Test/TAO/client.cpp: 
+	* Benchmark/Marshal_Test/TAO/marshalC.cpp: 
+	* Benchmark/Marshal_Test/TAO/marshalS.cpp: 
+	* Benchmark/Marshal_Test/TAO/server.cpp: 
+	* Benchmark/Marshal_Test/TAO/tao_marshal_client.cpp: 
+	* Benchmark/Marshal_Test/TAO/tao_marshal_impl.cpp: 
+	* Benchmark/Marshal_Test/TAO/tao_marshal_server.cpp: 
+	* Benchmark/Marshal_Test/VisiBroker/client.cpp: 
+	* Benchmark/Marshal_Test/VisiBroker/server.cpp: 
+	* Benchmark/Marshal_Test/VisiBroker/visi_marshal_client.cpp: 
+	* Benchmark/Marshal_Test/VisiBroker/visi_marshal_impl.cpp: 
+	* Benchmark/Marshal_Test/VisiBroker/visi_marshal_server.cpp: 
+	* Benchmark/benchmark/driver.cpp: 
+	* Benchmark/benchmark/marshal_options.cpp: 
+	* Benchmark/benchmark/marshal_proxy.cpp: 
+	* Benchmark/benchmark/marshal_results.cpp: 
+	Added ACE_RCSID to these files.
+
 Mon Aug  3 15:05:39 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* orbsvcs/tests/AVStreams/mpeg/Makefile: Added this Makefile

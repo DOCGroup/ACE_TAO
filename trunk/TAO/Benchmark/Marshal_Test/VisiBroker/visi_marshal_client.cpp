@@ -19,6 +19,8 @@
 #include "visi_marshal_client.i"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID(VisiBroker, visi_marshal_client, "$Id$")
+
 int
 Visi_Marshal_Client_Proxy::run (CORBA_Marshal_Proxy::OPTIONS &options,
 				CORBA_Marshal_Proxy::RESULTS &results)

@@ -1,6 +1,5 @@
 // $Id$
 
-
 #ifndef marshal_h
 #define marshal_h
 

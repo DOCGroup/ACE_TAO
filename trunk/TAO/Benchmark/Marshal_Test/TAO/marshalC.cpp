@@ -3,6 +3,8 @@
 #include <stdio.h>
 #include "marshalC.h"
 
+ACE_RCSID(TAO, marshalC, "$Id$")
+
 // constructor
 Marshal::Marshal(STUB_Object *refdata)
   : CORBA_Object(refdata)

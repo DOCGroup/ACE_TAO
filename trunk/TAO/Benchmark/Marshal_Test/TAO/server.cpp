@@ -3,6 +3,8 @@
 #include "benchmark/driver.h"
 #include "tao_marshal_server.h"
 
+ACE_RCSID(TAO, server, "$Id$")
+
 int main (int argc, char *argv [])
 {
   // instantiate a DRIVER with the Tao_Client_Proxy as the template
