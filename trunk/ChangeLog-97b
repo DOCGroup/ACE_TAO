@@ -7,6 +7,8 @@ Tue Nov 04 10:12:21 1997  David L. Levine  <levine@cs.wustl.edu>
         * examples/Timer_Queue/Thread_Timer_Queue_Test.cpp: changed
           another lock () to mutex ().
 
+        * tests/run_tests.vxworks: added MT_SOCK_Test.
+
 Tue Nov 04 04:13:23 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.3.36, released Tue Nov 04 04:13:23 1997.
