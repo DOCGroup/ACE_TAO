@@ -110,32 +110,39 @@ ACE_SSL_SOCK_Stream::recv (void *buf,
         ACE_NOTSUP_RETURN (-1);
     }
 
-  int status = ::SSL_read (this->ssl_,
+  int status = 0;
+  do
+    {
+      status = ::SSL_read (this->ssl_,
                            ACE_static_cast (char *, buf),
                            n);
 
-  if (status <= 0)
-    {
       switch (::SSL_get_error (this->ssl_, status))
         {
+        case SSL_ERROR_NONE:
+          return status;
         case SSL_ERROR_WANT_READ:
-          errno = EWOULDBLOCK;
           break;
         case SSL_ERROR_ZERO_RETURN:
           // @@ This appears to be the right/expected thing to do.
           //    However, it'd be nice if someone could verify this.
           //
-          // The peer has notified us that it is shutting down via the
-          // SSL "close_notify" message so we need to shutdown, too.
+          // The peer has notified us that it is shutting down via
+          // the SSL "close_notify" message so we need to
+          // shutdown, too.
           (void) ::SSL_shutdown (this->ssl_);
-          break;
+          return 0;
         default:
 #ifndef ACE_NDEBUG
           ERR_print_errors_fp (stderr);
 #endif  /* ACE_NDEBUG */
-          break;
+          return -1;
         }
     }
+  while (::SSL_pending (this->ssl_));
+
+  // If we get this far then, we would have blocked.
+  errno = EWOULDBLOCK;
 
   return status;
 }
@@ -178,32 +185,40 @@ ACE_SSL_SOCK_Stream::recv (void *buf,
 
   // @@ FIXME: Not thread safe!
 
-  int status = ::SSL_read (this->ssl_,
+  int status = 0;
+
+  do
+    {
+      status = ::SSL_read (this->ssl_,
                            ACE_static_cast (char*, buf),
                            n);
 
-  if (status <= 0)
-    {
       switch (::SSL_get_error (this->ssl_, status))
         {
+        case SSL_ERROR_NONE:
+          return status;
         case SSL_ERROR_WANT_READ:
-          errno = EWOULDBLOCK;
           break;
         case SSL_ERROR_ZERO_RETURN:
           // @@ This appears to be the right/expected thing to do.
           //    However, it'd be nice if someone could verify this.
           //
-          // The peer has notified us that it is shutting down via the
-          // SSL "close_notify" message so we need to shutdown, too.
+          // The peer has notified us that it is shutting down via
+          // the SSL "close_notify" message so we need to
+          // shutdown, too.
           (void) ::SSL_shutdown (this->ssl_);
-          break;
+          return 0;
         default:
 #ifndef ACE_NDEBUG
           ERR_print_errors_fp (stderr);
 #endif  /* ACE_NDEBUG */
-          break;
+          return -1;
         }
     }
+  while (::SSL_pending (this->ssl_));
+
+  // If we get this far then, we would have blocked.
+  errno = EWOULDBLOCK;
 
   return status;
 }

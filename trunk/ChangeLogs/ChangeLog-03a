@@ -1,3 +1,13 @@
+Tue Mar 20 00:40:43 2001  Ossama Othman  <ossama@uci.edu>
+
+	* ace/SSL/SSL_SOCK_Stream.i (recv):
+
+	  Fixed non-blocking IO support for this method.  It was necessary
+	  to ensure that a full SSL record was read before returning
+	  control to the caller.  Note that the send() method doesn't need
+	  modification since OpenSSL always writes a full record before
+	  returning.  [Bug 393]
+
 Mon Mar 19 19:53:34 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * include/makeinclude/ace_flags.bor:
