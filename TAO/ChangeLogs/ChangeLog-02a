@@ -26,7 +26,9 @@ Thu Sep 13 12:46:45 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  () to purge_entry (). The mark_invalid () does not remove the
 	  handler from cache. Just leaving the cache entry after the
 	  connection is closed leads to increase in run time memory
-	  requirements. See bug #1025 for details.
+	  requirements. See bug #1025 for details. Thanks to
+	  Jean-Christophe Dubois <jcd@one.com> and Kevin <krc@one.com> for
+	  reporting this.
 	
 	* tao/IIOP_Connection_Handler.cpp:
 	* tao/Strategies/DIOP_Connection_Handler.cpp:
