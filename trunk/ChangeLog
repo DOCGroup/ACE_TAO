@@ -1,3 +1,11 @@
+Fri Dec 17 13:41:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_unistd.cpp:
+          Converted ACE casts to C++ casts, removed the checks for win32 and
+          vxworks for execlp, execle and execl, these methods are not
+          implemented for any environment, so no need to have a special
+          notsup for windows and vxworks
+
 Fri Dec 17 13:19:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/IOStream_T.cpp:
