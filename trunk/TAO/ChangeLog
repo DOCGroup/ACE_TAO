@@ -1,3 +1,8 @@
+Mon Aug 12 10:02:29 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* docs/releasenotes/index.html: Updated link to CCM (CIAO)'s
+	  release note.
+
 Mon Aug 12 07:16:39 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/LoadBalancing/LB_Component.h:
@@ -16,7 +21,7 @@ Mon Aug 12 07:16:39 2002  Ossama Othman  <ossama@uci.edu>
 
 	  Pass a pseudo-reference to the ORB to the
 	  LB_ObjectReferenceFactory constructor.
-	  
+
 	* orbsvsc/orbsvcs/LoadBalancing/LB_ORBInitializer.h:
 
 	  Cache the options passed to the LB_Components object.  They are
@@ -75,12 +80,12 @@ Sat Aug 10 17:09:27 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* orbsvcs/examples/PSS/Server.dsp:
 	* orbsvcs/examples/PSS/Simple_Naming.dsp: Removed them from the
 	  repo. They dont seem to work right in any configuration and this
-	  should be fixed after the beta. 
+	  should be fixed after the beta.
 
 Fri Aug 9 21:22:45 2002  Yamuna Krishnamurthy  <yamuna@oomworks.com>
-	
-	* tao/RTCORBA/TAO_RTCORBA.dsp: 
-	* tao/RTCORBA/TAO_RTCORBA_Static.dsp: 	
+
+	* tao/RTCORBA/TAO_RTCORBA.dsp:
+	* tao/RTCORBA/TAO_RTCORBA_Static.dsp:
 
 	  Reacreated the project files to add files
 	  Network_Priority_Mapping.{h,cpp,i},
@@ -111,7 +116,7 @@ Fri Aug  9 11:57:20 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  <bala@cs.wustl.edu>". Yes, some compilers are buggy. But they
 	  look like buggy code and it takes a lot of time to track
 	  them. This one took me a atleast 8 hours to get to the
-	  problem. 
+	  problem.
 
 	  This should fix somerandom core dumps with MT_Timeout test which
 	  uses this feature heavily.
@@ -119,19 +124,19 @@ Fri Aug  9 11:57:20 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 Thu Aug  8 23:12:23 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Makefile: Reverted this change "Thu Aug  8
-	  18:31:00 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>"  
+	  18:31:00 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>"
 
 Thurs Aug 8 22:33:45 2002  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
-	* tao/Transport.h: 
-	  
+	* tao/Transport.h:
+
 	  Made the send_message_shared method virtual so it can be
 	  overriden by derived classes. Also made the
 	  send_message_shared_i and check_event_handler_i methods
 	  protected so they can be accessed by derived classes.
-	
-	* tao/IIOP_Transport.h: 	
-	* tao/IIOP_Transport.cpp: 		
+
+	* tao/IIOP_Transport.h:
+	* tao/IIOP_Transport.cpp:
 
 	  Overrode the send_message_shared method in order to add the call
 	  to connection_handler_->set_dscp_codepoint (). This was
@@ -154,7 +159,7 @@ Thurs Aug 8 22:33:45 2002  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 	  protocol properties, could be specified without any protocol
 	  properties set for any of the protocols chosen. Thanks to Irfan
 	  Pyarali <irfan@oomworks.com> for pointing to it.
-	
+
 Thu Aug  8 13:35:27 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/ast/ast_expressions.cpp:
@@ -178,7 +183,7 @@ Thu Aug  8 18:31:00 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* orbsvcs/orbsvcs/Makefile: If we fail during a recursive
 	  make, exit with error code 1.  This makes it easier to detect errors
-	  in automated builds.  Thanks to Gary Duzan <gduzan@bbn.com> for 
+	  in automated builds.  Thanks to Gary Duzan <gduzan@bbn.com> for
 	  inspiring the fix.
 
 Thurs Aug 8 11:36:45 2002  Yamuna Krishnamurthy  <yamuna@oomworks.com>
@@ -200,7 +205,7 @@ Thurs Aug 8 11:36:45 2002  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 	  Network_Priority_Mapping.obj,
 	  Network_Priority_Mapping_Manager.obj to compile with Borland
 	  compiler.
-	
+
 Wed Aug  7 23:23:45 2002  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
 	* tao/RTCORBA/TAO_RTCORBA.dsp:
@@ -213,24 +218,24 @@ Wed Aug  7 23:23:45 2002  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
 Mon Aug  5 15:49:45 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* TAO/TAO-INSTALL.html: Added an entry explaining how to 
+	* TAO/TAO-INSTALL.html: Added an entry explaining how to
 	  get information on subsetting the TAO ORB services.
-  
+
 Wed Aug  7 16:12:45 2002  Yamuna Krishnamurthy  <yamuna@oomworks.com>
-	
+
 	* tests/RTCORBA/Diffserv/Makefile:
-	* tests/RTCORBA/Diffserv/README:	
+	* tests/RTCORBA/Diffserv/README:
 	* tests/RTCORBA/Diffserv/client.cpp:
- 	* tests/RTCORBA/Diffserv/server.cpp: 	
-	* tests/RTCORBA/Diffserv/test.idl: 		
-	* tests/RTCORBA/Diffserv/Custom_Network_Priority_Mapping.h: 	
+ 	* tests/RTCORBA/Diffserv/server.cpp:
+	* tests/RTCORBA/Diffserv/test.idl:
+	* tests/RTCORBA/Diffserv/Custom_Network_Priority_Mapping.h:
 
 	  Added the Diffserv test to demonstrate the setting of Diffserv
 	  Codepoints in the GIOP request and replies.
 
 Wed Aug  7 11:59:58 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* orbsvcs/examples/PSS/Client.dsp: 
+	* orbsvcs/examples/PSS/Client.dsp:
 	* orbsvcs/examples/PSS/Server.dsp:
 	* orbsvcs/examples/PSS/Simple_Naming.dsp:
 	  Updated the release configurations.
@@ -318,7 +323,7 @@ Wed Aug  7 00:35:45 2002  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 	* tao/Connection_Handler.h:
 	* tao/Connection_Handler.cpp:
 
-	  Added: 
+	  Added:
 	  update_protocol_properties - to update the tcp protocol
 	  properties by getting the current tcp protocol properties from
 	  the protocol policies set at the ORB,thread, object or POA
@@ -328,7 +333,7 @@ Wed Aug  7 00:35:45 2002  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 	* tao/IIOP_Connection_Handler.cpp:
 	* tao/IIOP_Connection_Handler.i:
 
-	  Added: 
+	  Added:
 	  set_dscp_codepoint - to set the dscp codepoint on the tcp
 	  connection used by the connection handler that sends GIOP
 	  request and response messages. When the connection is diffserv
@@ -365,7 +370,7 @@ Wed Aug  7 00:35:45 2002  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 	* tao/IIOP_Transport.cpp:
 
 	  Made the connection_handler_i accessor method public.
-	  connection handler. 
+	  connection handler.
 
 Tue Aug  6 22:42:22 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
