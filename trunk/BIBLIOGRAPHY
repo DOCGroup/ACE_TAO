@@ -1,6 +1,185 @@
 The following articles document and describe various aspects of the
-ACE object-oriented network programming components (and the underlying
-design patterns) included in this release.
+object-oriented network programming components and the underlying
+design patterns included in ACE, TAO, and JAWS.  A complete list of
+publications is available at
+
+http://www.cs.wustl.edu/~schmidt/resume.html
+
+========================================
+
+@article{Schmidt:97r,
+	AUTHOR = {Douglas C. Schmidt and Chris Cleeland},
+	TITLE = "{Applying Patterns to Develop Extensible and Maintainable ORB Middleware}",
+	JOURNAL = "Communications of the ACM (Special Issue on
+	Software Maintenance)", 
+	EDITORS={W. Tsai},
+	VOLUME = 40,
+	NUMBER = 12,
+	YEAR = 1997,
+	MONTH = "December"
+}
+
+@article{Schmidt:97q,
+	AUTHOR = {Douglas C. Schmidt and David L. Levine and Sumedh Mungee},
+	TITLE = "{The Design and Performance of Real-Time Object Request Brokers}",
+	JOURNAL = "Computer Communications",
+	YEAR = 1997,
+}
+
+@incollection{Schmidt:97n,
+	AUTHOR = "Douglas C. Schmidt",
+        TITLE = "{Applying Design Patterns and Frameworks to Develop 
+	Object-Oriented Communication Software}",
+	BOOKTITLE = "Handbook of Programming Languages",
+	EDITOR="Peter Salus",
+	PUBLISHER = "MacMillan Computer Publishing",
+	YEAR = 1997
+}
+
+@inproceedings{Schmidt:97m,
+	AUTHOR = "Douglas C. Schmidt and Tim Harrison and Nat Pryce",
+        TITLE = "{Thread-Specific Storage -- An Object Behavioral
+	Pattern for Accessing per-Thread State Efficiently}",  
+	BOOKTITLE = "Submitted to the $4^{th}$ Pattern
+	Languages of Programming Conference", 
+	LOCATION="Allerton Park, IL",
+	YEAR = 1997,
+	MONTH = "September",
+}
+
+@inproceedings{Schmidt:97l,
+        AUTHOR = "Tim Harrison and Irfan Pyrarli and Douglas C. Schmidt and Thomas Jordan",
+        TITLE = "{Proactor -- An Object Behavioral Pattern for
+                  Dispatching Asynchronous Event Handlers}", 
+        BOOKTITLE="The $4^{th}$ Pattern Languages of Programming Conference",
+	YEAR = 1997,
+	MONTH = "September",
+        ABSTRACT = ""
+}
+
+@inproceedings{Schmidt:97k,
+        AUTHOR = "James Hu and Irfan Pyrarli and Douglas C. Schmidt",
+        TITLE = "{Measuring the Impact of Event Dispatching and Concurrency Models on Web 
+	Server Performance Over High-speed Networks}",
+        BOOKTITLE="Proceedings of the $2^{nd}$ Global Internet Conference",
+	ORGANIZATION={IEEE},
+	YEAR = 1997,
+	MONTH = "November",
+        ABSTRACT = "",
+}
+
+@inproceedings{Schmidt:97j,
+         AUTHOR = "Aniruddha Gokhale and Douglas C. Schmidt",
+         TITLE = "{Evaluating the Performance of Demultiplexing Strategies for Real-time CORBA}",
+         BOOKTITLE="Proceedings of GLOBECOM '97",
+         ADDRESS={Phoenix, AZ},
+         ORGANIZATION="IEEE",
+         YEAR = 1997,
+         MONTH = "November",
+         ABSTRACT = ""
+} 
+
+@inproceedings{Schmidt:97i,
+        AUTHOR = "Timothy H. Harrison and David L. Levine and Douglas C. Schmidt",
+        TITLE = "{The Design and Performance of a Real-time CORBA Event Service}",
+        BOOKTITLE="Proceedings of OOPSLA '97",
+        ADDRESS={Atlanta, GA},
+        ORGANIZATION="ACM",
+        YEAR = 1997,
+        MONTH = "October",
+        ABSTRACT = "",
+}
+
+@inproceedings{Schmidt:97g,
+        AUTHOR = "James Hu and Sumedh Mungee and Douglas C. Schmidt",
+        TITLE = "{Principles for Developing and Measuring
+	   	  High-performance Web Servers over ATM}",
+        BOOKTITLE="Submitted to INFOCOM '97 (Washington University Technical Report \#WUCS-97-10)",
+	YEAR = 1997,
+	MONTH = "February",
+        ABSTRACT = ""
+}
+
+@inproceedings{Schmidt:97f,
+        AUTHOR = "Aniruddha Gokhale and Douglas C. Schmidt",
+        TITLE = "{Principles for Optimizing CORBA Internet
+		  Inter-ORB Protocol Performance}",
+        BOOKTITLE="Submitted to the Hawaiian International Conference on System Sciences (Washington University Technical Report \#WUCS-97-10)",
+	YEAR = 1998,
+	MONTH = "January",
+        ABSTRACT = ""
+}
+
+@incollection{Schmidt:97e,
+	AUTHOR = "Chris Cleeland and Tim Harrison and Douglas C. Schmidt",
+        TITLE = "{External Polymorphism -- An
+	Object Structural Pattern for Transparently Extending Concrete
+	Data Types}", 
+	BOOKTITLE = "Pattern Languages of Program Design",
+	EDITOR="Robert Martin and Frank Buschmann and Dirk Riehle",
+	PUBLISHER = "Addison-Wesley",
+	ADDRESS={Reading, MA},
+	YEAR = 1997,
+}
+
+@incollection{Schmidt:97d,
+	AUTHOR = "Douglas C. Schmidt and Tim Harrison",
+        TITLE = "{Double-Checked Locking -- An Object Behavioral
+	Pattern for Initializing and Accessing Thread-safe Objects
+	Efficiently}", 
+	BOOKTITLE = "Pattern Languages of Program Design",
+	EDITOR="Robert Martin and Frank Buschmann and Dirk Riehle",
+	PUBLISHER = "Addison-Wesley",
+	ADDRESS={Reading, MA},
+	YEAR = 1997,
+}
+
+@incollection{Schmidt:97c,
+	AUTHOR = "Douglas C. Schmidt",
+        TITLE = "{Acceptor and Connector:
+	Design Patterns for Initializing Communication Services}",
+	BOOKTITLE = "Pattern Languages of Program Design",
+	EDITOR="Robert Martin and Frank Buschmann and Dirk Riehle",
+	PUBLISHER = "Addison-Wesley",
+	ADDRESS={Reading, MA},
+	YEAR = 1997,
+	ANNOTE = http://www.cs.wustl.edu/~schmidt/,
+}
+
+@inproceedings{Schmidt:97b,
+	AUTHOR = "Prashant Jain and Douglas C. Schmidt",
+        TITLE = "{Service Configurator: 
+	A Pattern for Dynamic Configuration of Services}",
+	BOOKTITLE="Proceedings of the $3^{rd}$ Conference on
+	Object-Oriented Technologies and Systems",  
+	PUBLISHER = "USENIX",
+	LOCATION="Portland, OR",
+	YEAR = 1997,
+	MONTH = "June",
+}
+
+@incollection{Schmidt:97a,
+	AUTHOR = "Irfan Pyarali and Timothy H. Harrison and Douglas C. Schmidt",
+        TITLE = "{Asynchronous Completion Token: an Object Behavioral Pattern for
+	Efficient Asynchronous Event Handling}",
+	BOOKTITLE = "Pattern Languages of Program Design",
+	EDITOR="Robert Martin and Frank Buschmann and Dirk Riehle",
+	PUBLISHER = "Addison-Wesley",
+	ADDRESS={Reading, MA},
+	YEAR = 1997,
+}
+
+@article{Schmidt:96v,
+        AUTHOR = "Prashant Jain and Douglas Schmidt",
+        TITLE = "{Experiences Converting a C++ Communication Software
+	Framework to Java}",  
+        JOURNAL = "C++ Report",
+        YEAR = 1997,
+        VOLUME = 9,
+        NUMBER = 1,
+        MONTH = "January",
+        ABSTRACT = ""
+}
 
 @incollection{Schmidt:96n,
 	AUTHOR = "Irfan Pyarali and Timothy H. Harrison and Douglas C. Schmidt",
@@ -12,53 +191,6 @@ design patterns) included in this release.
 	MONTH = "November/December",
 	EDITOR={Douglas C. Schmidt},
 	ABSTRACT = ""
-}
-
-@inproceedings{Schmidt:96k,
-	AUTHOR = " Douglas C. Schmidt and Tim Harrison",
-        TITLE = "{Double-Checked Locking -- An Object Behavioral
-	Pattern for Initializing and Accessing Thread-safe Objects
-	Efficiently}", 
-	BOOKTITLE = "Proceedings of the $3^{rd}$ Pattern Languages of Programming
-	Conference", 
-	LOCATION="Allerton Park, Illinois",
-	YEAR = 1996,
-	MONTH = "September",
-	ABSTRACT = "http://www.cs.wustl.edu/~schmidt/TSS-pattern.ps.gz"
-}
-
-@inproceedings{Schmidt:96j,
-	AUTHOR = "Douglas C. Schmidt",
-        TITLE = "{Acceptor and Connector:
-	Design Patterns for Initializing Communication Services}",
-	BOOKTITLE = "Proceedings of the $1^{st}$ European Pattern Languages of Programming
-	Conference", 
-	LOCATION="Kloster Irsee, Germany",
-	YEAR = 1996,
-	MONTH = "July",
-}
-
-@inproceedings{Schmidt:96i,
-	AUTHOR = "Prashant Jain and Douglas C. Schmidt",
-        TITLE = "{Service Configurator: 
-	A Pattern for Dynamic Configuration and Reconfiguration of Communication Services}",
-	BOOKTITLE = "Proceedings of the $3^{rd}$ Pattern Languages of Programming
-	Conference", 
-	LOCATION="Allerton Park, Illinois",
-	YEAR = 1996,
-	MONTH = "September",
-}
-
-@inproceedings{Schmidt:96h,
-	AUTHOR = "Timothy H. Harrison and Douglas C. Schmidt and Irfan Pyarali",
-        TITLE = "{Asynchronous Completion Token: an Object Behavioral Pattern for
-	Efficient Asynchronous Event Handling}",
-	BOOKTITLE = "Proceedings of the $3^{rd}$
-	Annual Conference on the Pattern Languages of Programs",
-	ADDRESS={Monticello, Illinois},
-        PAGES="1--7",
-	YEAR = 1996,
-	MONTH = "September"
 }
 
 @inproceedings{Schmidt:96g,

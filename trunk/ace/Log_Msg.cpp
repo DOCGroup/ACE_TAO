@@ -87,14 +87,13 @@ private:
 
 };
 
-// Instance count for Log_Msg - used to know when dynamically allocated
-// storage (program name and host name) can be safely deleted.
+// Instance count for Log_Msg - used to know when dynamically
+// allocated storage (program name and host name) can be safely
+// deleted.
 int ACE_Log_Msg::instance_count_ = 0;
 
-
-
 void
-ACE_Log_Msg::close ()
+ACE_Log_Msg::close (void)
 {
 #if !defined (VXWORKS)
   // Please note that this will be called by a statement that is
