@@ -15,7 +15,7 @@ Tue Oct 20 07:43:56 1998  David L. Levine  <levine@cs.wustl.edu>
           config-sunos5.4-centerline-2.x.h,config-sunos5.4-g++.h,
           config-sunos5.4-sunc++-4.x-orbix.h,config-sunos5.4-sunc++-4.x.h,
           config-sunos5.5.h,config-unixware-2.01-g++.h,
-          config-unixware-2.1.2-g++.h,config-irix6.x-common.h:
+          config-unixware-2.1.2-g++.h,config-irix6.x-common.h,README:
           removed ACE_HAS_SVR4_TIME because it is no longer used.
           Thanks to Peter Nordlund <petern@nada.kth.se> for
           reporting this.
@@ -37,8 +37,13 @@ Tue Oct 20 07:43:56 1998  David L. Levine  <levine@cs.wustl.edu>
           added static cast 0 to ACE_hrtime_t to please g++
           on VxWorks (which uses ACE_U_LongLong for ACE_hrtime_t).
 
-        * ace/config-cygwin32-common.h: removed msg_control{,len}
-          redefines, because they were commented out.
+        * ace/config-cygwin32-common.h: removed msg_accrights{,len}
+          defines, because they were commented out.
+
+        * OS.h,config-aix-4.1.x.h,config-linux-common.h,README:
+          added ACE_LACKS_MSG_ACCRIGHTS support.  This consolidates
+          code that was in both of the config files.  Thanks to
+          Ossama for suggesting it.
 
 Tue Oct 20 07:09:31 1998  Steve Huston  <shuston@riverace.com>
 
