@@ -1,3 +1,22 @@
+Mon Feb 14 00:41:11 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/RMCast/Bits.h:
+
+	  Added support for single-threaded configurations.
+
+	* ace/RMCast/Link.cpp:
+
+	  Explicitly cast INADDR_ANY argument in ACE_INET_Addr constructor
+	  call to ACE_UINT32.  Addresses constructor ambiguity issues
+	  exhibited by some compilers.
+
+	* ace/RMCast/Protocol.h:
+	* ace/RMCast/Simulator.h:
+	* ace/RMCast/Socket.h:
+
+	  Added missing #include directives now made necessary by header
+	  reductions in "Bits.h".
+
 Sun Feb 13 13:32:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Timer_Queue_Adapters.h:

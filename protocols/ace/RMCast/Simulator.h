@@ -1,3 +1,5 @@
+// -*- C++ -*-
+
 // file      : ace/RMCast/Simulator.h
 // author    : Boris Kolpackov <boris@kolpackov.net>
 // cvs-id    : $Id$
@@ -5,9 +7,11 @@
 #ifndef ACE_RMCAST_SIMULATOR_H
 #define ACE_RMCAST_SIMULATOR_H
 
-#include <ace/RMCast/Stack.h>
-#include <ace/RMCast/Protocol.h>
-#include <ace/RMCast/Bits.h>
+#include "ace/RMCast/Stack.h"
+#include "ace/RMCast/Protocol.h"
+#include "ace/RMCast/Bits.h"
+
+#include "ace/Thread_Mutex.h"
 
 namespace ACE_RMCast
 {
