@@ -22,6 +22,18 @@ Fri Feb 26 21:03:47 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* orbsvcs/orbsvcs/Event/Timer_Module.cpp: 
 	  Fixed Timeprobe use.
 
+	* orbsvcs/orbsvcs/Event/EC_ConsumerAdmin_T.cpp: 
+	  Minor cosmetic fixes.
+
+	* orbsvcs/orbsvcs/Event/README: 
+	  Added more details, started a section that describes the
+	  interaction between the components.
+
+	* orbsvcs/orbsvcs/Event/EC_SupplierFiltering.cpp: 
+	  The SupplierFiltering module splits an EventSet into single
+	  events before passing them to the ProxyPushSuppliers, this is
+	  needed so that filtering will work correctly.
+
 Fri Feb 26 18:29:04 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/tests/Time/implrepo.conf
