@@ -1,3 +1,119 @@
+Mon Jan  5 17:51:36 2004  Steve Huston  <shuston@riverace.com>
+
+	* ace/Condition_T.cpp: Added #include "ace/OS_NS_Threads.h" to get
+	  ACE_cond_t, and a forward ref for ACE_Time_Value, both so Visual
+	  Age C++ can see these when instantiating templates.
+
+	* ace/Condition_T.cpp: Added #include "ace/Log_Msg.h" to pick up
+	  ACE_ERROR, LM_ERROR, etc.
+
+	* ace/Timer_Queue_Adapters.cpp: Added #include "ace/OS_NS_sys_time.h"
+	  to see ACE_OS::gettimeofday().
+
+	* ace/Svc_Handler.cpp:
+	* examples/Timer_Queue/Async_Timer_Queue_Test.cpp:
+	* examples/Timer_Queue/Reactor_Timer_Queue_Test.cpp:
+	* examples/Timer_Queue/Thread_Timer_Queue_Test.cpp: Add #include
+	  "ace/OS_NS_sys_time.h" so Visual Age C++ can see
+	  ACE_OS::gettimeofday().
+
+	* examples/APG/Active_Objects/AO.cpp:
+	* examples/APG/Active_Objects/AO2.cpp:
+	* performance-tests/Misc/childbirth_time.cpp: Added #include
+	  "ace/OS_NS_unistd.h" to see ACE_OS::sleep().
+
+	* examples/APG/Containers/DLList.cpp:
+	* examples/APG/Containers/Stacks.cpp:
+	* examples/APG/Containers/Queues.cpp:
+	* examples/APG/Containers/Array.cpp:
+	* examples/APG/Containers/Sets.cpp: Added #include "ace/OS_Memory.h"
+	  to see ACE_NEW[_RETURN].
+
+	* examples/APG/Streams/Answerer.cpp:
+	* examples/APG/ThreadPools/Futures.cpp:
+	* examples/APG/ThreadPools/LF_ThreadPool.cpp:
+	* examples/APG/ThreadPools/ThreadPool.cpp:
+	* examples/APG/ThreadPools/TP_Reactor.cpp:
+	* examples/APG/ThreadSafety/Semaphore.cpp:
+	* examples/Threads/future1.cpp:
+	* examples/Threads/future2.cpp: Added #include
+	  "ace/OS_NS_string.h" to get ACE_OS::strlen(), et al.
+
+	* examples/Timer_Queue/Driver.cpp: Added missing #includes to make
+	  Visual C++ happy.
+
+        * examples/ASX/Event_Server/Event_Server/Consumer_Router.cpp:
+        * examples/ASX/Event_Server/Event_Server/Supplier_Router.cpp:
+          Add #include "ace/OS_NS_string.h" so Visual Age C++ can see
+          ACE_OS::strdup().
+
+	* examples/Connection/non_blocking/CPP-acceptor.cpp: Add #include
+	  "ace/OS_NS_unistd.h" to get ACE_OS::write().
+
+	* examples/Connection/non_blocking/CPP-connector.cpp: Add #include
+	  "ace/OS_NS_stdio.h" so Visual Age C++ can see ACE_OS::rewind(); add
+	  #include "ace/OS_NS_unistd.h" to get ACE_OS::read().
+
+	* examples/Misc/test_read_buffer.cpp: Add #include "ace/OS_NS_fcntl.h"
+	  so Visual Age C++ can see ACE_OS::open().
+
+	* examples/Shared_Malloc/test_malloc.cpp: Add #include
+	  "ace/OS_NS_stdio.h" to see ACE_OS::sprintf() and "ace/OS_NS_string.h"
+	  to see ACE_OS::memset().
+
+	* examples/Shared_Malloc/Options.cpp: Add #include "ace/OS_NS_stdlib.h"
+	  so Visual Age C++ can see ACE_OS::atoi() and exit().
+
+	* examples/Shared_Malloc/test_multiple_mallocs.cpp:
+	* examples/Shared_Malloc/test_persistence.cpp:
+	* performance-tests/TCP/tcp_test.cpp: Add #include
+	  "ace/OS_NS_string.h" to pick up a bunch of ACE_OS string members.
+
+	* examples/Threads/auto_event.cpp:
+	* examples/Threads/barrier2.cpp:
+	* examples/Threads/manual_event.cpp:
+	* examples/Threads/process_manager.cpp:
+	* examples/Threads/task_three.cpp:
+	* examples/Threads/task_four.cpp:
+	* examples/Threads/thread_manager.cpp:
+	* examples/Threads/thread_pool.cpp: Added #include
+	  "ace/OS_NS_unistd.h" to get sleep(), write().
+
+	* examples/Threads/reader_writer.cpp: Added #include "ace/Guard_T.h"
+	  and "ace/RW_Mutex.h" so Visual Age C++ can see these classes.
+
+	* examples/Threads/recursive_mutex.cpp: Added #include "ace/Guard_T.h"
+	  and "ace/Recursive_Thread_Mutex.h" so Visual Age C++ can see these
+	  classes.
+
+	* examples/Threads/thread_specific.{h cpp}: Added #include
+	  "ace/Guard_T.h", "ace/OS_NS_stdio.h", "ace/OS_NS_string.h", and
+	  "ace/OS_NS_unistd.h" to satisfy Visual Age C++.
+
+	* performance-tests/Misc/context_switch_time.cpp: Added #include
+	  "ace/OS_NS_stdio.h" to get ACE_OS::perror().
+
+	* performance-tests/Misc/test_singleton.cpp: Added #include
+	  "ace/Guard_T.h" to get ACE_Guard stuff.
+
+	* performance-tests/Misc/test_naming.cpp: Added #include "ace/ACE.h"
+	  to get ACE::basename().
+
+	* performance-tests/SCTP/Options_Manager.h" Added #include
+	  "ace/streams.h" to portably get ostream.
+
+	* tests/Message_Queue_Notifications_Test.cpp:
+	* tests/Process_Strategy_Test.cpp:
+	* tests/Svc_Handler_Test.cpp: Added #include "ace/Synch_Traits.h",
+	  "ace/Null_Condition.h", and "ace/Null_Mutex.h" so Visual Age C++
+	  can see the stuff needed for ACE_NULL_SYNCH.
+
+	* tests/Thread_Pool_Test.cpp: Add #include "ace/OS_NS_string.h" so
+	  Visual Age C++ can see ACE_OS::strlen().
+
+	* tests/Naming_Test.cpp: Add #include "ace/ACE.h" so Visual Age C++
+	  can see ACE::basename().
+
 Mon Jan  5 16:34:18 2004  Steve Huston  <shuston@riverace.com>
 
 	Incorporated these fixes from Riverace's ACE 5.3:

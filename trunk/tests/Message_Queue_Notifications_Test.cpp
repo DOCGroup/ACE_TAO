@@ -40,6 +40,9 @@
 #include "ace/Reactor_Notification_Strategy.h"
 #include "ace/Atomic_Op.h"
 #include "ace/Barrier.h"
+#include "ace/Synch_Traits.h"
+#include "ace/Null_Condition.h"
+#include "ace/Null_Mutex.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
 

@@ -11,6 +11,9 @@
 // Dorn <Karlheinz.Dorn@med.siemens.de>.  It was modified to utilize
 // more ACE features by Doug Schmidt <schmidt@cs.wustl.edu>.
 
+#include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_string.h"
+#include "ace/OS_NS_unistd.h"
 #include "ace/OS_main.h"
 #include "ace/Task.h"
 #include "ace/Service_Config.h"

@@ -3,6 +3,7 @@
 // Test the capability of <ACE_Malloc> to handle multiple mallocs
 // rooted at different base addresses.
 
+#include "ace/OS_NS_string.h"
 #include "ace/Malloc.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/Process_Mutex.h"

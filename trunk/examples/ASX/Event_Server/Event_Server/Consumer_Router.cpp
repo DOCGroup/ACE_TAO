@@ -2,6 +2,7 @@
 
 #include "ace/os_include/os_assert.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_string.h"
 #include "Consumer_Router.h"
 #include "Options.h"
 

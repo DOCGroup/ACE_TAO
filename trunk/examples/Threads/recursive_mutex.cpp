@@ -12,6 +12,9 @@ ACE_RCSID(Threads, recursive_mutex, "$Id$")
 
 #if defined (ACE_HAS_THREADS)
 
+#include "ace/Guard_T.h"
+#include "ace/Recursive_Thread_Mutex.h"
+
 // Total number of iterations.
 static size_t n_iterations = 1000;
 static size_t n_threads = 4;
