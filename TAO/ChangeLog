@@ -1,6 +1,7 @@
 Wed Jul 10 10:11:30 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 
 	* TAO_IDL/be/be_visitor_valuetype/arglist.cpp (visit_operation):
+
           We need to throw an exceptions that was assigned in a different
 	  place (by the app-developer).  ACE_THROW does not fit the bill
 	  since the ACE_THROW macro contructs the exception passed to it.
