@@ -45,6 +45,11 @@ if [ ! "$ACE_ROOT" ]; then
   export ACE_ROOT
 fi
 
+# Some tests fork/exec copies of themselves (e.g. Pipe_Test). If execvp
+# ends up getting used, the PATH has to include "." or the test won't work.
+PATH=.:$PATH
+export PATH
+
 IFS="|"
 tmp=/tmp
 compilation_log="log/compilations.log"
