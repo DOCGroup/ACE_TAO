@@ -141,7 +141,7 @@ Connection_Handler::handle_input (ACE_HANDLE)
                          this->get_handle ()),
                         -1);
     default:
-      if (((unsigned int) buf[0]) == EOF)
+      if (((int) buf[0]) == (int) EOF)
 	ACE_ERROR_RETURN ((LM_ERROR,
 			   "(%P|%t) closing log daemon (fd = %d)\n",
                            this->get_handle ()),
