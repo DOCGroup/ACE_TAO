@@ -1,3 +1,9 @@
+Fri Jan  2 16:28:00 1998  Nanbor Wang  <nw1@cs.wustl.edu>
+
+	* clients/Caching/http_handler.cpp:
+	* clients/Blobby/Blob.cpp: Added missing explicit template
+	  instantiations.
+
 Mon Dec 29 20:20:36 1997  James C Hu  <jxh@cs.wustl.edu>
 
 	* clients/Caching/http_handler.cpp: Idem to previous change.
