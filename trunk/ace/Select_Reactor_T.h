@@ -585,8 +585,9 @@ protected:
 
 
 private:
-  ACE_Select_Reactor_T (const ACE_Select_Reactor_T &);
-  ACE_Select_Reactor_T &operator = (const ACE_Select_Reactor_T &);
+  ACE_Select_Reactor_T (const ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN> &);
+  ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN> &operator= 
+    (const ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN> &);
   // Deny access since member-wise won't work...
 };
 

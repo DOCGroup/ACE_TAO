@@ -1,3 +1,10 @@
+Fri Sep 04 18:54:32 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Select_Reactor_T.cpp (ACE_Select_Reactor_T): Made sure that
+ 	  all references to Select_Reactor have the template argument in
+ 	  them.  Thanks to "Gehr, Chuck R" <GehrCR@LOUISVILLE.STORTEK.COM>
+ 	  for sending the patches.
+
 Fri Sep  4 18:29:29 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* examples/Reactor/Proactor/test_proactor.cpp: Changed to use
