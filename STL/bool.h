@@ -23,9 +23,17 @@ namespace std {
  *
  */
 
+#if !defined (bool)
 #define bool int
+#endif /* bool */
+
+#if !defined (true)
 #define true 1
+#endif /* true */
+
+#if !defined (false)
 #define false 0
+#endif /* false */
 
 /*
  *Added by d:\\convert.pl --begin--

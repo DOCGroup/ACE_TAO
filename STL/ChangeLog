@@ -1,3 +1,7 @@
+Fri Dec  6 02:08:35 1996  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
+
+	* bool.h: Made the defines for bool, true, and false conditional.
+
 Wed Dec  4 00:17:11 1996  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
 
 	* vector.h: Modified to remove the default argument to the
