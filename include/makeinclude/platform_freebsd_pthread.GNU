@@ -2,20 +2,31 @@
 
 # platform_freebsd_pthread.GNU
 
+#####################################################
+# Replace 3 with 2 if you are running FreeBSD 2.x.x
+#  ** How do we detect os version here?
+#####################################################
+VERSION = 3
+
+ifneq ($(VERSION),3)
+versioned_so = 1
+endif
+
 optimize = 1
 
-# For pthreads support on FreeBSD, you need
-
 debug = 1
-versioned_so = 1
 
 CC              = gcc
 CXX		= g++
 CFLAGS          += -Wall -Wpointer-arith -pipe -D_THREAD_SAFE
 CCFLAGS         += $(CFLAGS) -fno-implicit-templates
 DCFLAGS         += -g
+LDFLAGS		= -pthread
+ifeq ($(VERSION),3)
+  LDFLAGS		+= -Wl,-rpath $(ACE_ROOT)/ace
+endif
 DLD             = $(CXX)
-LD		= $(CXX) -pthread
+LD		= $(CXX)
 LIBS            += -lstdc++ -lcompat
 OCFLAGS         += -O
 PIC             = -fpic
