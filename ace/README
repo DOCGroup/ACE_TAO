@@ -1,6 +1,7 @@
-ACE Portability Macros
+// $Id$
 
-----------------------------------------
+ACE Portability Macros
+----------------------
 
 The following describes the meaning of the C++ compiler macros that
 can be set in the config*.h file.  When you port ACE to a new platform
@@ -10,7 +11,7 @@ in this directory to see what's already been defined.  If you need to
 add new macros, please send them to me and I'll add them to this file.
 
 Eventually, most of this information should be auto-discovered via GNU
-autoconf, which Ossama Othman is working on at
+autoconf, which Ossama Othman is working on, at
 http://www.cs.wustl.edu/~othman/aceconf/.
 
 Macro                                   Description
@@ -327,9 +328,6 @@ ACE_HAS_NONCONST_SELECT_TIMEVAL         Platform's select() uses
 ACE_HAS_OLD_MALLOC                      Compiler/platform uses old
                                         malloc()/free() prototypes
                                         (ugh)
-ACE_HAS_ONLY_TWO_PARAMS_FOR_ASCTIME_R_AND_CTIME_R Uses ctime_r &
-                                        asctime_r with only two
-                                        parameters vs. three.
 ACE_HAS_ONLY_SCHED_OTHER                Platform, e.g., Solaris 2.5,
                                         only supports SCHED_OTHER
                                         POSIX scheduling policy.
