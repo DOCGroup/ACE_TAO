@@ -173,9 +173,7 @@ connect_client (void *arg)
 
   for (ssize_t cntr = 0; cntr < NO_OF_ITERATION; cntr ++)
     {
-      ACE_OS::sprintf (buf, ACE_TEXT ("Iteration ")ACE_SSIZE_T_FORMAT_SPECIFIER,
-                       cntr);
-
+      ACE_OS::sprintf (buf, ACE_TEXT ("Iteration %d"), cntr);
       ssize_t slen = (ACE_OS::strlen (buf) + 1) * sizeof (ACE_TCHAR);
 
       if (stream.send (buf, slen) < slen)

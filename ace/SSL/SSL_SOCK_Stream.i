@@ -1,8 +1,7 @@
 // -*- C++ -*-
-//
 // $Id$
 
-// SSL_SOCK_Stream.i
+// SOCK_Stream.i
 
 ASYS_INLINE void
 ACE_SSL_SOCK_Stream::set_handle (ACE_HANDLE fd)
@@ -58,52 +57,32 @@ ACE_SSL_SOCK_Stream::~ACE_SSL_SOCK_Stream (void)
 }
 
 ASYS_INLINE ssize_t
-ACE_SSL_SOCK_Stream::send_i (const void *buf,
-                             size_t n,
-                             int flags) const
+ACE_SSL_SOCK_Stream::send (const void *buf,
+                           size_t n,
+                           int flags) const
 {
-  ACE_TRACE ("ACE_SSL_SOCK_Stream::send_i");
+  ACE_TRACE ("ACE_SSL_SOCK_Stream::send");
 
-  // NOTE: Caller must provide thread-synchronization.
+  // @@ FIXME: Not thread safe!
 
   // No send flags are supported in SSL.
   if (flags != 0)
     ACE_NOTSUP_RETURN (-1);
 
-  int bytes_sent = 0;
-
-  // The SSL_write() call is wrapped in a do/while(SSL_pending())
-  // loop to force a full SSL record (SSL is a record-oriented
-  // protocol, not a stream-oriented one) to be read prior to
-  // returning to the Reactor.  This is necessary to avoid some subtle
-  // problems where data from another record is potentially handled
-  // before the current record is fully handled.
+  int status = 0;
   do
     {
-      bytes_sent = ::SSL_write (this->ssl_,
-                                ACE_static_cast (const char*, buf),
-                                n);
+      status = ::SSL_write (this->ssl_,
+                            ACE_static_cast (const char*, buf),
+                            n);
 
-      switch (::SSL_get_error (this->ssl_, bytes_sent))
+      switch (::SSL_get_error (this->ssl_, status))
         {
         case SSL_ERROR_NONE:
-          return bytes_sent;
-
+          return status;
         case SSL_ERROR_WANT_READ:
         case SSL_ERROR_WANT_WRITE:
           break;
-
-        case SSL_ERROR_ZERO_RETURN:
-          // @@ This appears to be the right/expected thing to do.
-          //    However, it'd be nice if someone could verify this.
-          //
-          // The peer has notified us that it is shutting down via
-          // the SSL "close_notify" message so we need to
-          // shutdown, too.
-
-          (void) ::SSL_shutdown (this->ssl_);
-          return bytes_sent;
-
         default:
 #ifndef ACE_NDEBUG
           ERR_print_errors_fp (stderr);
@@ -116,91 +95,7 @@ ACE_SSL_SOCK_Stream::send_i (const void *buf,
   // If we get this far then we would have blocked.
   errno = EWOULDBLOCK;
 
-  return bytes_sent;
-}
-
-ASYS_INLINE ssize_t
-ACE_SSL_SOCK_Stream::send (const void *buf,
-                           size_t n,
-                           int flags) const
-{
-  return this->send_i (buf, n, flags);
-}
-
-ASYS_INLINE ssize_t
-ACE_SSL_SOCK_Stream::recv_i (void *buf,
-                             size_t n,
-                             int flags) const
-{
-  ACE_TRACE ("ACE_SSL_SOCK_Stream::recv_i");
-
-  // NOTE: Caller must provide thread-synchronization.
-
-  int bytes_read = 0;
-
-  // The SSL_read() and SSL_peek() calls are wrapped in a
-  // do/while(SSL_pending()) loop to force a full SSL record (SSL is a
-  // record-oriented protocol, not a stream-oriented one) to be read
-  // prior to returning to the Reactor.  This is necessary to avoid
-  // some subtle problems where data from another record is
-  // potentially handled before the current record is fully handled.
-  do
-    {
-      if (flags)
-        {
-          if (ACE_BIT_ENABLED (flags, MSG_PEEK))
-            bytes_read = ::SSL_peek (this->ssl_,
-                                     ACE_static_cast (char *, buf),
-                                     n);
-          else
-            ACE_NOTSUP_RETURN (-1);
-        }
-      else
-        bytes_read = ::SSL_read (this->ssl_,
-                                 ACE_static_cast (char *, buf),
-                                 n);
-
-      int status = ::SSL_get_error (this->ssl_, bytes_read);
-      switch (status)
-        {
-        case SSL_ERROR_NONE:
-          return bytes_read;
-
-        case SSL_ERROR_WANT_READ:
-        case SSL_ERROR_WANT_WRITE:
-          break;
-
-        case SSL_ERROR_ZERO_RETURN:
-          // @@ This appears to be the right/expected thing to do.
-          //    However, it'd be nice if someone could verify this.
-          //
-          // The peer has notified us that it is shutting down via
-          // the SSL "close_notify" message so we need to
-          // shutdown, too.
-          (void) ::SSL_shutdown (this->ssl_);
-          return bytes_read;
-
-        case SSL_ERROR_SYSCALL:
-          if (bytes_read == 0)
-            // An EOF occured but the SSL "close_notify" message was
-            // not sent.  This is a protocol error, but we ignore it.
-            return 0;
-
-          // If not an EOF, then fall through to "default" case.
-
-        default:
-#ifndef ACE_NDEBUG
-          ERR_print_errors_fp (stderr);
-#endif  /* ACE_NDEBUG */
-          return -1;
-        }
-    }
-  while (::SSL_pending (this->ssl_));
-
-  // If we get this far then we would have blocked.
-  errno = EWOULDBLOCK;
-
-  return bytes_read;
+  return status;  
 }
 
 ASYS_INLINE ssize_t
@@ -208,7 +103,56 @@ ACE_SSL_SOCK_Stream::recv (void *buf,
                            size_t n,
                            int flags) const
 {
-  return this->recv_i (buf, n, flags);
+  ACE_TRACE ("ACE_SSL_SOCK_Stream::recv");
+
+  // @@ FIXME: Not thread safe!
+
+  if (flags)
+    {
+      if (ACE_BIT_ENABLED (flags, MSG_PEEK))
+        return ::SSL_peek (this->ssl_,
+                           ACE_static_cast (char*, buf),
+                           n);
+      else
+        ACE_NOTSUP_RETURN (-1);
+    }
+
+  int status = 0;
+  do
+    {
+      status = ::SSL_read (this->ssl_,
+                           ACE_static_cast (char *, buf),
+                           n);
+
+      switch (::SSL_get_error (this->ssl_, status))
+        {
+        case SSL_ERROR_NONE:
+          return status;
+        case SSL_ERROR_WANT_READ:
+        case SSL_ERROR_WANT_WRITE:
+          break;
+        case SSL_ERROR_ZERO_RETURN:
+          // @@ This appears to be the right/expected thing to do.
+          //    However, it'd be nice if someone could verify this.
+          //
+          // The peer has notified us that it is shutting down via
+          // the SSL "close_notify" message so we need to
+          // shutdown, too.
+          (void) ::SSL_shutdown (this->ssl_);
+          return status;
+        default:
+#ifndef ACE_NDEBUG
+          ERR_print_errors_fp (stderr);
+#endif  /* ACE_NDEBUG */
+          return -1;
+        }
+    }
+  while (::SSL_pending (this->ssl_));
+
+  // If we get this far then we would have blocked.
+  errno = EWOULDBLOCK;
+
+  return status;
 }
 
 ASYS_INLINE ssize_t
@@ -217,7 +161,36 @@ ACE_SSL_SOCK_Stream::send (const void *buf,
 {
   ACE_TRACE ("ACE_SSL_SOCK_Stream::send");
 
-  return this->send_i (buf, n, 0);
+  // @@ FIXME: Not thread safe!
+
+  int status = 0;
+
+  do
+    {
+      status = ::SSL_write (this->ssl_,
+                            ACE_static_cast (const char *, buf),
+                            n);
+
+      switch (::SSL_get_error (this->ssl_, status))
+        {
+        case SSL_ERROR_NONE:
+          return 0;
+        case SSL_ERROR_WANT_READ:
+        case SSL_ERROR_WANT_WRITE:
+          break;
+        default:
+#ifndef ACE_NDEBUG
+          ERR_print_errors_fp (stderr);
+#endif  /* ACE_NDEBUG */
+          return -1;
+        }
+    }
+  while (::SSL_pending (this->ssl_));
+
+  // If we get this far then we would have blocked.
+  errno = EWOULDBLOCK;
+
+  return status;
 }
 
 ASYS_INLINE ssize_t
@@ -226,7 +199,45 @@ ACE_SSL_SOCK_Stream::recv (void *buf,
 {
   ACE_TRACE ("ACE_SSL_SOCK_Stream::recv");
 
-  return this->recv_i (buf, n, 0);
+  // @@ FIXME: Not thread safe!
+
+  int status = 0;
+
+  do
+    {
+      status = ::SSL_read (this->ssl_,
+                           ACE_static_cast (char*, buf),
+                           n);
+
+      switch (::SSL_get_error (this->ssl_, status))
+        {
+        case SSL_ERROR_NONE:
+          return status;
+        case SSL_ERROR_WANT_READ:
+        case SSL_ERROR_WANT_WRITE:
+          break;
+        case SSL_ERROR_ZERO_RETURN:
+          // @@ This appears to be the right/expected thing to do.
+          //    However, it'd be nice if someone could verify this.
+          //
+          // The peer has notified us that it is shutting down via
+          // the SSL "close_notify" message so we need to
+          // shutdown, too.
+          (void) ::SSL_shutdown (this->ssl_);
+          return status;
+        default:
+#ifndef ACE_NDEBUG
+          ERR_print_errors_fp (stderr);
+#endif  /* ACE_NDEBUG */
+          return -1;
+        }
+    }
+  while (::SSL_pending (this->ssl_));
+
+  // If we get this far then we would have blocked.
+  errno = EWOULDBLOCK;
+
+  return status;
 }
 
 ASYS_INLINE ssize_t
@@ -284,13 +295,6 @@ ACE_SSL_SOCK_Stream::close (void)
     return 0;  // SSL_SOCK_Stream was never opened.
 
   int status = 0;
-
-  // The SSL_close() call is wrapped in a do/while(SSL_pending())
-  // loop to force a full SSL record (SSL is a record-oriented
-  // protocol, not a stream-oriented one) to be read prior to
-  // returning to the Reactor.  This is necessary to avoid some subtle
-  // problems where data from another record is potentially handled
-  // before the current record is fully handled.
   do
     {
       // SSL_shutdown() returns 1 on successful shutdown of the SSL

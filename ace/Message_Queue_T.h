@@ -10,6 +10,7 @@
  */
 //=============================================================================
 
+
 #ifndef ACE_MESSAGE_QUEUE_T_H
 #define ACE_MESSAGE_QUEUE_T_H
 #include "ace/pre.h"

@@ -230,7 +230,7 @@ Thread_Pool::test_queue_deactivation_shutdown (void)
           static size_t count = 0;
 
           ACE_OS::sprintf (mb->wr_ptr (),
-                           ACE_SIZE_T_FORMAT_SPECIFIER, 
+                           "%d\n",
                            count);
           n = ACE_OS::strlen (mb->rd_ptr ());
 
@@ -320,7 +320,7 @@ Thread_Pool::test_empty_message_shutdown (void)
           static size_t count = 0;
 
           ACE_OS::sprintf (mb->wr_ptr (),
-                           ACE_SIZE_T_FORMAT_SPECIFIER,
+                           "%d\n",
                            count);
           n = ACE_OS::strlen (mb->rd_ptr ());
 

@@ -5,9 +5,7 @@
 
 
 ASYS_INLINE
-ACE_SSL_SOCK_Acceptor::ACE_SSL_SOCK_Acceptor (ACE_Reactor *reactor)
-  : acceptor_ (),
-    reactor_ (reactor)
+ACE_SSL_SOCK_Acceptor::ACE_SSL_SOCK_Acceptor (void)
 {
   ACE_TRACE ("ACE_SSL_SOCK_Acceptor::ACE_SSL_SOCK_Acceptor");
 }
@@ -17,14 +15,12 @@ ACE_SSL_SOCK_Acceptor::ACE_SSL_SOCK_Acceptor (const ACE_Addr &local_sap,
                                               int reuse_addr,
                                               int protocol_family,
                                               int backlog,
-                                              int protocol,
-                                              ACE_Reactor *reactor)
+                                              int protocol)
   : acceptor_ (local_sap,
                reuse_addr,
                protocol_family,
                backlog,
-               protocol),
-    reactor_ (reactor)
+               protocol)
 {
   ACE_TRACE ("ACE_SSL_SOCK_Acceptor::ACE_SSL_SOCK_Acceptor");
 
@@ -39,8 +35,7 @@ ACE_SSL_SOCK_Acceptor::ACE_SSL_SOCK_Acceptor (const ACE_Addr &local_sap,
                                               int reuse_addr,
                                               int protocol_family,
                                               int backlog,
-                                              int protocol,
-                                              ACE_Reactor *reactor)
+                                              int protocol)
   : acceptor_ (local_sap,
                protocolinfo,
                g,
@@ -48,8 +43,7 @@ ACE_SSL_SOCK_Acceptor::ACE_SSL_SOCK_Acceptor (const ACE_Addr &local_sap,
                reuse_addr,
                protocol_family,
                backlog,
-               protocol),
-    reactor_ (reactor)
+               protocol)
 {
   ACE_TRACE ("ACE_SSL_SOCK_Acceptor::ACE_SSL_SOCK_Acceptor");
 
@@ -83,16 +77,8 @@ ACE_SSL_SOCK_Acceptor::close (void)
   return this->acceptor_.close ();
 }
 
-ASYS_INLINE void
-ACE_SSL_SOCK_Acceptor::reactor (ACE_Reactor *r)
+ASYS_INLINE
+ACE_SSL_SOCK_Acceptor::~ACE_SSL_SOCK_Acceptor (void)
 {
-  // NOTE: Be careful not to change the Reactor in the middle of a
-  //       non-blocking accept().
-  this->reactor_ = r;
-}
-
-ASYS_INLINE ACE_Reactor *
-ACE_SSL_SOCK_Acceptor::reactor (void) const
-{
-  return this->reactor_;
+  ACE_TRACE ("ACE_SSL_SOCK_Acceptor::~ACE_SSL_SOCK_Acceptor");
 }

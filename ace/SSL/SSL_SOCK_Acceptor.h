@@ -27,7 +27,6 @@
 #include "SSL_SOCK_Stream.h"
 
 #include "ace/SOCK_Acceptor.h"
-#include "ace/Reactor.h"
 
 /**
  * @class ACE_SSL_SOCK_Acceptor
@@ -44,8 +43,7 @@ class ACE_SSL_Export ACE_SSL_SOCK_Acceptor : public ACE_SSL_SOCK
 public:
 
   /// Default constructor.
-  ACE_SSL_SOCK_Acceptor (ACE_Reactor *reactor =
-                           ACE_Reactor::instance ());
+  ACE_SSL_SOCK_Acceptor (void);
 
   /// Default dtor.
   ~ACE_SSL_SOCK_Acceptor (void);
@@ -59,10 +57,7 @@ public:
 			 int reuse_addr = 0,
 			 int protocol_family = PF_INET,
 			 int backlog = ACE_DEFAULT_BACKLOG,
-			 int protocol = 0,
-                         ACE_Reactor *reactor =
-                           ACE_Reactor::instance ()
-);
+			 int protocol = 0);
 
   /// Initialize a passive-mode QoS-enabled acceptor socket.  Returns 0
   /// on success and -1 on failure.
@@ -73,9 +68,7 @@ public:
 			 int reuse_addr,
 			 int protocol_family,
 			 int backlog = ACE_DEFAULT_BACKLOG,
-			 int protocol = 0,
-                         ACE_Reactor *reactor =
-                           ACE_Reactor::instance ());
+			 int protocol = 0);
 
   /**
    * Initiate a passive mode SSL/BSD-style acceptor socket.
@@ -120,14 +113,6 @@ public:
               int reset_new_handle = 0) const;
   //@}
 
-  /// Set the Reactor used when completing the SSL passive
-  /// connection.
-  void reactor (ACE_Reactor *r);
-
-  /// Return the Reactor used when completing the SSL passive
-  /// connection.
-  ACE_Reactor *reactor (void) const;
-
   /// Meta-type info
   //@{
   typedef ACE_INET_Addr PEER_ADDR;
@@ -151,21 +136,13 @@ protected:
 			    int in_blocking_mode,
 			    int reset_new_handle) const;
 
-  /// Complete blocking SSL passive connection establishment.
+  /// Complete SSL passive connection establishment.
   int ssl_accept (ACE_SSL_SOCK_Stream &new_stream) const;
-
-  /// Complete non-blocking SSL passive connection establishment.
-  int ssl_accept (ACE_SSL_SOCK_Stream &new_stream,
-                  ACE_Time_Value *timeout) const;
 
 private:
 
   /// The BSD-socket workhorse
   ACE_SOCK_Acceptor acceptor_;
-
-  /// Pointer to the Reactor responsible for dispatching the event
-  /// handler responsible for completing the SSL passive connection.
-  ACE_Reactor *reactor_;
 
 };
 

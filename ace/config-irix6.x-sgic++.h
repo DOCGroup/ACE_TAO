@@ -11,21 +11,10 @@
 // Include basic (non-threaded) configuration
 #include "ace/config-irix6.x-sgic++-nothreads.h"
 
-#define ACE_HAS_UALARM
-
-// Scheduling functions are declared in <sched.h>
-#define ACE_NEEDS_SCHED_H
-
-// Compile using multi-thread libraries by default
-#if !defined (ACE_MT_SAFE)
-  #define ACE_MT_SAFE 1
-#endif /* ACE_MT_SAFE */
-
-#if (ACE_MT_SAFE != 0)
-
 // Add threading support
 
 #define ACE_HAS_IRIX62_THREADS
+#define ACE_HAS_UALARM
 
 // Needed for the threading stuff?
 #include /**/ <task.h>
@@ -50,10 +39,16 @@
 // The pthread_cond_timedwait call does not reset the timer.
 #define ACE_LACKS_COND_TIMEDWAIT_RESET 1
 
+// Scheduling functions are declared in <sched.h>
+#define ACE_NEEDS_SCHED_H
+
 // When threads are enabled READDIR_R is supported on IRIX.
 #undef ACE_LACKS_READDIR_R
 
-#endif /* (ACE_MT_SAFE == 0) */
+// Compile using multi-thread libraries
+#if !defined (ACE_MT_SAFE)
+  #define ACE_MT_SAFE 1
+#endif /* ACE_MT_SAFE */
 
 #include "ace/post.h"
 #endif /* ACE_CONFIG_IRIX6X_H */

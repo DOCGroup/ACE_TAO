@@ -17,9 +17,7 @@
 #include <openssl/err.h>
 #include <openssl/rand.h>
 
-ACE_RCSID (ACE_SSL,
-           SSL_Context,
-           "$Id$")
+ACE_RCSID (ACE_SSL, SSL_Context, "$Id$")
 
 #ifdef ACE_HAS_THREADS
 ACE_mutex_t * ACE_SSL_Context::lock_ = 0;

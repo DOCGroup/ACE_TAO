@@ -12,33 +12,28 @@
 #include "SSL_SOCK_Stream.i"
 #endif
 
-ACE_RCSID (ACE_SSL,
-           SSL_SOCK_Stream,
-           "$Id$")
+ACE_RCSID (ACE_SSL, SSL_SOCK_Stream, "$Id$")
 
 ACE_ALLOC_HOOK_DEFINE(ACE_SSL_SOCK_Stream)
 
 ssize_t
-ACE_SSL_SOCK_Stream::sendv (const iovec iov[], size_t n) const
+ACE_SSL_SOCK_Stream::sendv (const iovec iov[],
+                            size_t n) const
 {
   ACE_TRACE ("ACE_SSL_SOCK_Stream::sendv");
 
-  // There is subtle problem in this method that occurs when using
-  // non-blocking IO.  The semantics of a non-blocking scatter write
-  // (sendv()) are not possible to retain with the emulation in this
-  // method.
-
+  // Mimics ACE_OS::sendv.
+  int result = 0;
   ssize_t bytes_sent = 0;
-
-  for (size_t i = 0; i < n; ++i)
+  for (size_t i = 0; i < n && result != -1; i++)
     {
-      int result = this->send (iov[i].iov_base,
-                               iov[i].iov_len);
-      if (result == -1)
-        return -1;
-      else
-        bytes_sent += result;
+      result = this->send (iov[i].iov_base,
+                           iov[i].iov_len);
+      bytes_sent += iov[i].iov_len;     // Gets ignored on error anyway
     }
+
+  if (result == -1)
+    bytes_sent = -1;
 
   return bytes_sent;
 }
@@ -108,20 +103,24 @@ ACE_SSL_SOCK_Stream::send (const void *buf,
 {
   ACE_TRACE ("ACE_SSL_SOCK_Stream::send");
 
+  if (flags)
+    ACE_NOTSUP_RETURN (-1);
+
+  // Mimics <ACE::send>.
   if (timeout == 0)
-    return this->send (buf, len, flags);
+    return this->send (buf, len);
 
   int val = 0;
   if (ACE::enter_send_timedwait (this->get_handle (),
                                  timeout,
                                  val) == -1)
     return -1;
-
-  ssize_t bytes_transferred = this->send (buf, len, flags);
-
-  ACE::restore_non_blocking_mode (this->get_handle (), val);
-
-  return bytes_transferred;
+  else
+    {
+      ssize_t bytes_transferred = this->send (buf, len);
+      ACE::restore_non_blocking_mode (this->get_handle (), val);
+      return bytes_transferred;
+    }
 }
 
 ssize_t
@@ -132,87 +131,90 @@ ACE_SSL_SOCK_Stream::recv (void *buf,
 {
   ACE_TRACE ("ACE_SSL_SOCK_Stream::recv");
 
+  // Mimics code in <ACE::recv>.
+  int peek = 0;
+
+  if (flags)
+    {
+      if ((flags | MSG_PEEK) == MSG_PEEK)
+        peek = 1;
+      else
+        ACE_NOTSUP_RETURN (-1);
+    }
+
   if (timeout == 0)
     return this->recv (buf, n, flags);
-
-  int val = 0;
-  if (ACE::enter_recv_timedwait (this->get_handle (),
-                                 timeout,
-                                 val) == -1)
-    return -1;
-
-  ssize_t bytes_transferred = this->recv (buf, n, flags);
-
-  ACE::restore_non_blocking_mode (this->get_handle (), val);
-
-  return bytes_transferred;
+  {
+    int val = 0;
+    if (ACE::enter_recv_timedwait (this->get_handle (),
+                                   timeout,
+                                   val) == -1)
+      return -1;
+    else
+      {
+        ssize_t bytes_transferred = this->recv (buf, n, flags);
+        ACE::restore_non_blocking_mode (this->get_handle (), val);
+        return bytes_transferred;
+      }
+  }
 }
 
 
 ssize_t
-ACE_SSL_SOCK_Stream::send (size_t n, ...) const
+ACE_SSL_SOCK_Stream::send (size_t n,
+                           ...) const
 {
   ACE_TRACE ("ACE_SSL_SOCK_Stream::send");
 
-  size_t total_tuples = n / 2;
-
+  // Mimics <ACE_SOCK_IO::send (...)>.
   va_list argp;
+  size_t total_tuples = n / 2;
+  iovec *iovp;
+#if defined (ACE_HAS_ALLOCA)
+  iovp = (iovec *) alloca (total_tuples * sizeof (iovec));
+#else
+  ACE_NEW_RETURN (iovp,
+                  iovec[total_tuples],
+                  -1);
+#endif /* !defined (ACE_HAS_ALLOCA) */
+
   va_start (argp, n);
 
-  ssize_t bytes_sent = 0;
-
-  // NOTE: This method used to fill an IO vector (e.g. iovec) and then
-  //       send it using a scatter write (sendv()).  However, it is
-  //       not possible to emulate a non-blocking scatter write over
-  //       SSL.  As such, there is no point in attempting to use
-  //       scatter writes over SSL.
-  for (size_t i = 0; i < total_tuples; ++i)
+  for (size_t i = 0; i < total_tuples; i++)
     {
-      ssize_t result = this->send_n (va_arg (argp, char *),
-                                     va_arg (argp, ssize_t));
-
-      if (result == -1)
-        {
-          va_end (argp);
-          return -1;
-        }
-      else
-        bytes_sent += result;
+      iovp[i].iov_base = va_arg (argp, char *);
+      iovp[i].iov_len = va_arg (argp, ssize_t);
     }
 
+  ssize_t result = this->sendv (iovp,
+                                total_tuples);
+#if !defined (ACE_HAS_ALLOCA)
+  delete [] iovp;
+#endif /* !defined (ACE_HAS_ALLOCA) */
   va_end (argp);
-
-  return bytes_sent;
+  return result;
 }
 
 ssize_t
-ACE_SSL_SOCK_Stream::recv (size_t n, ...) const
+ACE_SSL_SOCK_Stream::recv (size_t n,
+                           ...) const
 {
   ACE_TRACE ("ACE_SSL_SOCK_Stream::recv");
-
   size_t total_tuples = n / 2;
-
   va_list argp;
   va_start (argp, n);
 
+  ssize_t result = 0;
   ssize_t bytes_recv = 0;
-
-  for (size_t i = 0; i < total_tuples; ++i)
+  for (size_t i = 0; i < total_tuples; i++)
     {
-      ssize_t result = this->recv_n (va_arg (argp, char *),
-                                     va_arg (argp, ssize_t));
-
+      result = this->recv_n (va_arg (argp, char *), va_arg (argp, ssize_t));
       if (result == -1)
-        {
-          va_end (argp);
-          return -1;
-        }
-      else
-        bytes_recv += result;
+        return -1;
+      bytes_recv += result;
     }
 
   va_end (argp);
-
   return bytes_recv;
 }
 
@@ -224,7 +226,7 @@ ACE_SSL_SOCK_Stream::send_n (const void *buf,
 {
   ACE_TRACE ("ACE_SSL_SOCK_Stream::send_n");
 
-  // No support for send flags in SSL.
+  //no support for send flags in SSL
   if (flags != 0)
     ACE_NOTSUP_RETURN (-1);
 
@@ -385,44 +387,94 @@ ACE_SSL_SOCK_Stream::send_n (const void *buf, int len, int flags) const
   return bytes_transferred;
 }
 
+
+//Taken from OS.cpp, writev ()
 ssize_t
-ACE_SSL_SOCK_Stream::sendv_n (const iovec iov[], size_t iovcnt) const
+ACE_SSL_SOCK_Stream::sendv_n (const iovec iov[], size_t n) const
 {
   ACE_TRACE ("ACE_SSL_SOCK_Stream::sendv_n");
+  size_t length = 0;
+  size_t i;
 
-  ssize_t bytes_sent = 0;
+  // Determine the total length of all the buffers in <iov>.
+  for (i = 0; i < n; i++)
+    if (ACE_static_cast (const int, iov[i].iov_len) < 0)
+      return -1;
+    else
+      length += iov[i].iov_len;
 
-  for (size_t i = 0; i < iovcnt; ++i)
+  char *buf;
+
+#   if defined (ACE_HAS_ALLOCA)
+  buf = (char *) alloca (length);
+#   else
+  ACE_NEW_RETURN (buf,
+                  char[length],
+                  -1);
+#   endif /* !defined (ACE_HAS_ALLOCA) */
+
+  char *ptr = buf;
+
+  for (i = 0; i < n; i++)
     {
-      int result = this->send_n (iov[i].iov_base,
-                                 iov[i].iov_len);
-
-      if (result == -1)
-        return -1;
-      else
-        bytes_sent += result;
+      ACE_OS::memcpy (ptr, iov[i].iov_base, iov[i].iov_len);
+      ptr += iov[i].iov_len;
     }
 
-  return bytes_sent;
+  ssize_t result = this->send_n (buf, length);
+#   if !defined (ACE_HAS_ALLOCA)
+  delete [] buf;
+#   endif /* !defined (ACE_HAS_ALLOCA) */
+  return result;
 }
 
+// Taken straight from OS.cpp, readv ()
 ssize_t
-ACE_SSL_SOCK_Stream::recvv_n (iovec iov[], size_t iovcnt) const
+ACE_SSL_SOCK_Stream::recvv_n (iovec iov[], size_t n) const
 {
   ACE_TRACE ("ACE_SSL_SOCK_Stream::recvv_n");
+  ssize_t length = 0;
+  size_t i;
 
-  ssize_t bytes_read = 0;
+  for (i = 0; i < n; i++)
+    if (ACE_static_cast (int, iov[i].iov_len) < 0)
+      return -1;
+    else
+      length += iov[i].iov_len;
 
-  for (size_t i = 0; i < iovcnt; ++i)
+  char *buf;
+#   if defined (ACE_HAS_ALLOCA)
+  buf = (char *) alloca (length);
+#   else
+  ACE_NEW_RETURN (buf,
+                  char[length],
+                  -1);
+#   endif /* !defined (ACE_HAS_ALLOCA) */
+
+  length = this->recv_n (buf, length);
+
+  if (length != -1)
     {
-      int result = this->recv_n (iov[i].iov_base,
-                                 iov[i].iov_len);
+      char *ptr = buf;
+      int copyn = length;
 
-      if (result == -1)
-        return -1;
-      else
-        bytes_read += result;
+      for (i = 0;
+           i < n && copyn > 0;
+           i++)
+        {
+          ACE_OS::memcpy (iov[i].iov_base, ptr,
+                          // iov_len is int on some platforms, size_t
+                          // on others
+                          copyn > (int) iov[i].iov_len
+                            ? (size_t) iov[i].iov_len
+                            : (size_t) copyn);
+          ptr += iov[i].iov_len;
+          copyn -= iov[i].iov_len;
+        }
     }
 
-  return bytes_read;
+#   if !defined (ACE_HAS_ALLOCA)
+  delete [] buf;
+#   endif /* !defined (ACE_HAS_ALLOCA) */
+  return length;
 }

@@ -6,9 +6,10 @@
  *
  *  $Id$
  *
- *  @author Douglas C.  Schmidt <schmidt@cs.wustl.edu>
+ *  @author Doug Schmidt
  */
 //=============================================================================
+
 
 #ifndef ACE_CONTAINERS_H
 #define ACE_CONTAINERS_H

@@ -95,14 +95,6 @@ LINK32=link.exe
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 # Begin Source File
 
-SOURCE=.\SSL_Accept_Handler.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\SSL_Connect_Handler.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\SSL_Context.cpp
 # End Source File
 # Begin Source File
@@ -125,14 +117,6 @@ SOURCE=.\SSL_SOCK_Stream.cpp
 # Begin Group "Header Files"
 
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
-# Begin Source File
-
-SOURCE=.\SSL_Accept_Handler.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\SSL_Connect_Handler.h
-# End Source File
 # Begin Source File
 
 SOURCE=.\SSL_Context.h
