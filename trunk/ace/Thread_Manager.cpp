@@ -618,9 +618,10 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
       int sched_policy = ACE_SCHED_OTHER;
 
       // Get the system policy and priority
+      ACE_hthread_t thr_handle;
+      ACE_Thread::self (thr_handle);
       if (ACE_Thread::getprio (
-		    ACE_static_cast (ACE_hthread_t, 
-		                     ACE_Thread::self ()),
+                             thr_handle,
                              tmp_priority,
                              sched_policy) == -1)
         {
