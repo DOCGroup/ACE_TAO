@@ -1,12 +1,14 @@
-// $Id$
-
 #include "RT_Endpoint_Selector_Factory.h"
 #include "RT_Invocation_Endpoint_Selectors.h"
-#include "tao/Invocation.h"
 #include "RT_Endpoint_Utils.h"
 #include "RT_Stub.h"
 
-ACE_RCSID(tao, RT_Endpoint_Selector_Factory, "$Id$")
+#include "tao/Invocation.h"
+#include "tao/Protocols_Hooks.h"
+
+ACE_RCSID (tao,
+           RT_Endpoint_Selector_Factory,
+           "$Id$")
 
 // ****************************************************************
 
