@@ -1,3 +1,9 @@
+Tue Apr 07 15:25:08 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/config-irix*.h: fixed determination of ACE_SIZEOF_LONG_DOUBLE,
+          depending on system release and ABI.  Thanks to Robert J.
+          Laferriere <laferrie@gsao.med.ge.com> for figurting it all out.
+
 Mon Apr 06 01:29:35 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/ace_ce_dll.dsp: Update project files.  Rearrange dll filenames a
