@@ -1376,14 +1376,15 @@ ace_thread_adapter (void *args)
 
 ACE_Thread_Adapter::ACE_Thread_Adapter (ACE_THR_FUNC f, void *a)
   : func_(f), 
+    arg_(a)
 #if !defined (ACE_THREADS_DONT_INHERIT_LOG_MSG)
+    ,
     ostream_ (NULL),
     priority_mask_ (0),
     tracing_enabled_ (0),
     restart_ (1),
-    trace_depth_ (0),
+    trace_depth_ (0)
 #endif /* ACE_THREADS_DONT_INHERIT_LOG_MSG */
-    arg_(a)
 {
 // ACE_TRACE ("Ace_Thread_Adapter::Ace_Thread_Adapter");
 #if !defined (ACE_THREADS_DONT_INHERIT_LOG_MSG)
