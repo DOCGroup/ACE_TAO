@@ -20,7 +20,7 @@ ifeq (,$(optimize))
   optimize = 1
 endif
 ifeq (,$(rtti))
-  rtti = 0
+  rtti = 1
 endif
 ifeq (,$(threads))
   threads = 1
@@ -42,7 +42,7 @@ SOEXT       = a
 aix_build = 1
 
 ifeq (0,$(rtti))
-  CFLAGS += -fno-rtti
+  CFLAGS += -fno-rtti -DACE_LACKS_RTTI
 endif
 
 ifeq (1,$(threads))
@@ -79,7 +79,16 @@ OCCFLAGS        = $(OCFLAGS)
 ifeq ($(threads),1)
 SOFLAGS        += -pthread
 endif
+
+# AIX 5 has a new ld option, -bexpfull, that exports all the symbols that
+# g++ 3.3+ needs to work correctly. The new option is available by default
+# in AIX 5.2 and later, but must be installed by a patch to AIX 5.1.
+ifeq ($(AIX_MAJOR_VERS),5)
+SOFLAGS        += -shared -Wl,-bexpfull # -Wl,-bloadmap:lib.map
+else
 SOFLAGS        += -shared -Wl,-bexpall # -Wl,-bloadmap:lib.map
+endif
+
 LIBS           += -lxti -ldl
 ARFLAGS         = cruv
 RANLIB          = ranlib
@@ -90,4 +99,3 @@ RANLIB          = ranlib
 include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
 
 CCFLAGS         += $(CFLAGS) $(TEMPLATES_FLAG)
-
