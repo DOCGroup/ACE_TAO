@@ -40,10 +40,10 @@ bind (ACE_Naming_Context *ns_context, int result)
       if (i % 50 == 0)
         ACE_DEBUG ((LM_DEBUG, "."));
       ACE_OS::sprintf (name, "%s%d", "name", i);
-      ACE_WString w_name (name);
+      ACE_NS_WString w_name (name);
 
       ACE_OS::sprintf (value, "%s%d", "value", i);
-      ACE_WString w_value (value);
+      ACE_NS_WString w_value (value);
 
       ACE_OS::sprintf (type, "%s%d", "type", i);
       if (ns_context->bind (w_name, w_value, type) != result) {
@@ -60,9 +60,9 @@ rebind (ACE_Naming_Context *ns_context, int result)
   for (int i = 1; i <= ACE_NS_MAX_ENTRIES; i++)
     {
       ACE_OS::sprintf (name, "%s%d", "name", i);
-      ACE_WString w_name (name);
+      ACE_NS_WString w_name (name);
       ACE_OS::sprintf (value, "%s%d", "value", -i);
-      ACE_WString w_value (value);
+      ACE_NS_WString w_value (value);
       ACE_OS::sprintf (type, "%s%d", "type", -i);
       if (ns_context->rebind (w_name, w_value, type) != result) {
         ACE_ERROR ((LM_ERROR, "rebind failed!"));
@@ -77,7 +77,7 @@ unbind (ACE_Naming_Context *ns_context, int result)
   for (int i = 1; i <= ACE_NS_MAX_ENTRIES; i++)
     {
       ACE_OS::sprintf (name, "%s%d", "name", i);
-      ACE_WString w_name (name);
+      ACE_NS_WString w_name (name);
       if (ns_context->unbind (w_name) != result) {
         ACE_ERROR ((LM_ERROR, "unbind failed!"));
       }
@@ -94,9 +94,9 @@ find (ACE_Naming_Context *ns_context, int sign, int result)
   for (int i = 1; i <= ACE_NS_MAX_ENTRIES; i++)
     {
       ACE_OS::sprintf (name, "%s%d", "name", i);
-      ACE_WString w_name (name);
+      ACE_NS_WString w_name (name);
 
-      ACE_WString w_value;
+      ACE_NS_WString w_value;
       char *type_out;
 
       if (sign == 1)
@@ -110,7 +110,7 @@ find (ACE_Naming_Context *ns_context, int sign, int result)
           ACE_OS::sprintf (temp_type, "%s%d", "type", -i);
         }
 
-      ACE_WString val (temp_val);
+      ACE_NS_WString val (temp_val);
 
       int resolve_result = ns_context->resolve (w_name, w_value, type_out);
       if (resolve_result != result) {
