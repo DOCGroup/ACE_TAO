@@ -4,7 +4,7 @@
 #include "orbsvcs/Event_Utilities.h"
 #include "orbsvcs/Time_Utilities.h"
 
-ACE_RCSID(Event, EC_Gateway, "$Id$")
+ACE_RCSID(Event, EC_Gateway_IIOP, "$Id$")
 
 TAO_EC_Gateway_IIOP::TAO_EC_Gateway_IIOP (void)
   :  busy_count_ (0),
@@ -61,12 +61,28 @@ TAO_EC_Gateway_IIOP::close (ACE_ENV_SINGLE_ARG_DECL)
   this->close_i (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
+void
+TAO_EC_Gateway_IIOP::cleanup_consumer_proxies (ACE_ENV_SINGLE_ARG_DECL)
+{
+  ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
+
+  this->cleanup_consumer_proxies_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+}
 
 void
 TAO_EC_Gateway_IIOP::close_i (ACE_ENV_SINGLE_ARG_DECL)
 {
   // ACE_DEBUG ((LM_DEBUG, "ECG (%t) Closing gateway\n"));
+  this->disconnect_consumer_proxies_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
 
+  this->disconnect_supplier_proxy_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
+}
+
+void
+TAO_EC_Gateway_IIOP::disconnect_consumer_proxies_i (ACE_ENV_SINGLE_ARG_DECL)
+{
   if (this->consumer_proxy_map_.current_size () > 0)
     {
       for (Consumer_Map_Iterator j = this->consumer_proxy_map_.begin ();
@@ -100,7 +116,11 @@ TAO_EC_Gateway_IIOP::close_i (ACE_ENV_SINGLE_ARG_DECL)
       this->default_consumer_proxy_ =
         RtecEventChannelAdmin::ProxyPushConsumer::_nil ();
     }
+}
 
+void
+TAO_EC_Gateway_IIOP::disconnect_supplier_proxy_i (ACE_ENV_SINGLE_ARG_DECL)
+{
   if (!CORBA::is_nil (this->supplier_proxy_.in ()))
     {
       this->supplier_proxy_->disconnect_push_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -131,6 +151,34 @@ TAO_EC_Gateway_IIOP::update_consumer (
 
   this->update_consumer_i (c_qos ACE_ENV_ARG_PARAMETER);
 }
+
+void
+TAO_EC_Gateway_IIOP::cleanup_consumer_proxies_i (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+{
+  if (this->consumer_proxy_map_.current_size () > 0)
+    {
+      for (Consumer_Map_Iterator j = this->consumer_proxy_map_.begin ();
+           j != this->consumer_proxy_map_.end ();
+           ++j)
+        {
+          RtecEventComm::PushConsumer_ptr consumer = (*j).int_id_;
+          if (CORBA::is_nil (consumer))
+            continue;
+
+          CORBA::release (consumer);
+        }
+      // Remove all the elements on the map.  Calling close() does not
+      // work because the map is left in an inconsistent state.
+      this->consumer_proxy_map_.open ();
+    }
+
+  if (!CORBA::is_nil (this->default_consumer_proxy_.in ()))
+    {
+      this->default_consumer_proxy_ =
+        RtecEventChannelAdmin::ProxyPushConsumer::_nil ();
+    }
+}
+
 
 void
 TAO_EC_Gateway_IIOP::update_consumer_i (
@@ -391,7 +439,7 @@ TAO_EC_Gateway_IIOP::push (const RtecEventComm::EventSet &events
       out[0].header.ttl--;
 
       // ACE_DEBUG ((LM_DEBUG, "ECG: event sent to proxy\n"));
-      proxy->push (out ACE_ENV_ARG_PARAMETER);
+      this->push_to_consumer(proxy, out ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
 
@@ -407,7 +455,24 @@ TAO_EC_Gateway_IIOP::push (const RtecEventComm::EventSet &events
         ACE_CHECK;
       }
   }
+}
 
+void
+TAO_EC_Gateway_IIOP::push_to_consumer (
+    RtecEventChannelAdmin::ProxyPushConsumer_ptr consumer,
+    const RtecEventComm::EventSet& event
+    ACE_ENV_ARG_DECL)
+{
+  ACE_TRY
+    {
+      consumer->push (event ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      // Shouldn't happen.
+    }
+  ACE_ENDTRY;
 }
 
 int
