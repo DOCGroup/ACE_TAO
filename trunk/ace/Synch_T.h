@@ -169,19 +169,19 @@ public:
   TYPE operator-= (const TYPE &i);
   // Atomically decrement <count_> by dec.
 
-  TYPE operator== (const TYPE &i) const;
+  int operator== (const TYPE &i) const;
   // Atomically compare <count_> with rhs.
 
-  TYPE operator>= (const TYPE &i) const;
+  int operator>= (const TYPE &i) const;
   // Atomically check if <count_> greater than or equal to rhs.
 
-  TYPE operator> (const TYPE &rhs) const;
+  int operator> (const TYPE &rhs) const;
   // Atomically check if <count_> greater than rhs.
 
-  TYPE operator<= (const TYPE &rhs) const;
+  int operator<= (const TYPE &rhs) const;
   // Atomically check if <count_> less than or equal to rhs.
 
-  TYPE operator< (const TYPE &rhs) const;
+  int operator< (const TYPE &rhs) const;
   // Atomically check if <count_> less than rhs.
 
   void operator= (const TYPE &i);
