@@ -3883,7 +3883,7 @@ extern "C" {
 /* differ between OSes, so if you write code that uses the mode, be careful */
 /* of the platform differences. */
 #   if defined (ACE_HAS_SVR4_DYNAMIC_LINKING)
-#     if defined (ACE_HAS_DLFCN_H_BROKEN_EXTERN_C)
+#    if defined (ACE_HAS_DLFCN_H_BROKEN_EXTERN_C)
 extern "C" {
 #     endif /* ACE_HAS_DLFCN_H_BROKEN_EXTERN_C */
 #     include /**/ <dlfcn.h>
@@ -3895,7 +3895,11 @@ extern "C" {
 #     if !defined (RTLD_LAZY)
 #       define RTLD_LAZY 1
 #     endif /* !RTLD_LAZY */
+#   if defined (__KCC)
+#   define ACE_DEFAULT_SHLIB_MODE RTLD_LAZY | RTLD_GROUP | RTLD_NODELETE
+#   else    
 #   define ACE_DEFAULT_SHLIB_MODE RTLD_LAZY
+#   endif /* KCC */
 #   elif defined (__hpux)
 #     if defined(__GNUC__) || __cplusplus >= 199707L
 #       include /**/ <dl.h>
@@ -3912,6 +3916,7 @@ extern "C" {
   typedef void *ACE_SHLIB_HANDLE;
 #   define ACE_SHLIB_INVALID_HANDLE 0
 #   define ACE_DEFAULT_SHLIB_MODE RTLD_LAZY
+
 #   endif /* ACE_HAS_SVR4_DYNAMIC_LINKING */
 
 #   if defined (ACE_HAS_SOCKIO_H)
