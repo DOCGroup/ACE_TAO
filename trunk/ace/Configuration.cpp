@@ -1163,7 +1163,7 @@ ACE_Configuration_ExtId::operator != (const ACE_Configuration_ExtId& rhs) const
 u_long
 ACE_Configuration_ExtId::hash (void) const
 {
-  ACE_TString temp (name_);
+  ACE_TString temp (name_, 0, 0);
   return temp.hash ();
 }
 
@@ -1365,10 +1365,14 @@ ACE_Configuration_Heap::load_key (const ACE_Configuration_Section_Key& key,
   ACE_Configuration_Section_Key_Heap* pKey =
     ACE_dynamic_cast (ACE_Configuration_Section_Key_Heap*,
                       get_internal_key (key));
-  if (!pKey)
-    return -1;
 
-  name = pKey->path_;
+  if (!pKey)
+    {
+      return -1;
+    }
+
+  ACE_TString temp (pKey->path_, 0, 0);
+  name.assign_nocopy (temp);
   return 0;
 }
 
@@ -1472,8 +1476,8 @@ ACE_Configuration_Heap::new_section (const ACE_TString& section,
         }
 
       ACE_Configuration_ExtId name (ptr);
-      ACE_Configuration_Section_IntId entry ((VALUE_MAP*) value_hash_map ,
- (SUBSECTION_MAP*) section_hash_map);
+      ACE_Configuration_Section_IntId entry ((VALUE_MAP*) value_hash_map,
+                                             (SUBSECTION_MAP*) section_hash_map);
 
       // Do a normal bind.  This will fail if there's already an
       // entry with the same name.
@@ -1501,7 +1505,7 @@ ACE_Configuration_Heap::new_section (const ACE_TString& section,
   // set the result
   ACE_Configuration_Section_Key_Heap *temp;
   ACE_NEW_RETURN (temp,
-                  ACE_Configuration_Section_Key_Heap (section.fast_rep ()),
+                  ACE_Configuration_Section_Key_Heap (ptr),
                   -1);
   result = ACE_Configuration_Section_Key (temp);
   return return_value;
@@ -1558,19 +1562,25 @@ ACE_Configuration_Heap::open_simple_section (const ACE_Configuration_Section_Key
                                              int create,
                                              ACE_Configuration_Section_Key& result)
 {
-  ACE_TString section;
+  ACE_TString section (0, 0, 0);
+
   if (load_key (base, section))
-    return -1;
+    {
+      return -1;
+    }
 
   // Only add the \\ if were not at the root
   if (section.length ())
-    section += ACE_LIB_TEXT ("\\");
+    {
+      section += ACE_LIB_TEXT ("\\");
+    }
 
   section += sub_section;
 
   // resolve the section
   ACE_Configuration_ExtId ExtId (section.fast_rep ());
   ACE_Configuration_Section_IntId IntId;
+
   if (index_->find (ExtId, IntId, allocator_))
     {
       if (!create)
@@ -1578,16 +1588,15 @@ ACE_Configuration_Heap::open_simple_section (const ACE_Configuration_Section_Key
           errno = ENOENT;
           return -1;
         }
+
       return add_section (base, sub_section, result);
     }
 
   ACE_Configuration_Section_Key_Heap *temp;
-
   ACE_NEW_RETURN (temp,
                   ACE_Configuration_Section_Key_Heap (section.fast_rep ()),
                   -1);
   result = ACE_Configuration_Section_Key (temp);
-
   return 0;
 }
 
@@ -1937,45 +1946,6 @@ ACE_Configuration_Heap::set_binary_value (const ACE_Configuration_Section_Key& k
       return 0;
     }
 
-/*
-  // Find this section
-  ACE_Configuration_ExtId ExtId (section.fast_rep ());
-  ACE_Configuration_Section_IntId IntId;
-  if (index_->find (ExtId, IntId, allocator_))
-    return -1;    // section does not exist
-
-  // See if the value exists first
-  ACE_Configuration_ExtId VExtIdFind (name);
-  ACE_Configuration_Value_IntId VIntIdFind;
-  if (IntId.value_hash_map_->find (VExtIdFind, VIntIdFind, allocator_))
-    {
-      // it doesn't exist, bind it
-      ACE_TCHAR* pers_name =
- (ACE_TCHAR *) allocator_->malloc ((ACE_OS::strlen (name) + 1) * sizeof (ACE_TCHAR));
-      ACE_OS::strcpy (pers_name, name);
-      ACE_TCHAR* pers_value =
- (ACE_TCHAR *) allocator_->malloc (length);
-      ACE_OS::memcpy (pers_value, data, length);
-      ACE_Configuration_ExtId VExtId (pers_name);
-      ACE_Configuration_Value_IntId VIntId (pers_value, length);
-      if (IntId.value_hash_map_->bind (VExtId, VIntId, allocator_))
-        {
-          allocator_->free (pers_value);
-          allocator_->free (pers_name);
-          return -1;
-        }
-      return 0;
-    }
-  else
-    {
-      // it does exist, free the old value memory
-      VIntIdFind.free (allocator_);
-      // Assign a new value
-      ACE_TCHAR* pers_value = (ACE_TCHAR *) allocator_->malloc (length);
-      ACE_OS::memcpy (pers_value, data, length);
-      VIntIdFind = ACE_Configuration_Value_IntId (pers_value, length);
-    }
-*/
   return 0;
 }
 
@@ -2023,26 +1993,38 @@ ACE_Configuration_Heap::get_integer_value (const ACE_Configuration_Section_Key& 
                                            u_int& value)
 {
   ACE_ASSERT (this->allocator_);
-  if (validate_name (name))
-    return -1;
+
+  if (this->validate_name (name) != 0)
+    {
+      return -1;
+    }
 
   // Get the section name from the key
-  ACE_TString section;
-  if (load_key (key, section))
-    return -1;
+  ACE_TString section (0, 0, 0);
+
+  if (this->load_key (key, section) != 0)
+    {
+      return -1;
+    }
 
   // Find this section
   ACE_Configuration_ExtId ExtId (section.fast_rep ());
   ACE_Configuration_Section_IntId IntId;
-  if (index_->find (ExtId, IntId, allocator_))
-    return -1;    // section does not exist
+
+  if (index_->find (ExtId, IntId, allocator_) != 0)
+    {
+      return -1;    // section does not exist
+    }
 
 
   // See if it exists first
   ACE_Configuration_ExtId VExtId (name);
   ACE_Configuration_Value_IntId VIntId;
-  if (IntId.value_hash_map_->find (VExtId, VIntId, allocator_))
-    return -1;    // unknown value
+
+  if (IntId.value_hash_map_->find (VExtId, VIntId, allocator_) != 0)
+    {
+      return -1;    // unknown value
+    }
 
   // Check type
   if (VIntId.type_ != ACE_Configuration::INTEGER)

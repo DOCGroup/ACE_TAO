@@ -151,6 +151,14 @@ public:
   ACE_String_Base < CHAR > &operator = (const ACE_String_Base < CHAR > &s);
 
   /**
+   *  Assignment alternative method (does not copy memory).
+   *
+   *  @param s Input ACE_String_Base string to assign to this object.
+   *  @return Return this string.
+   */
+  ACE_String_Base < CHAR > &assign_nocopy (const ACE_String_Base < CHAR > &s);
+
+  /**
    * Copy @a s into this @a ACE_String_Base.  Memory is _not_
    * allocated/freed if @a release is 0.
    *

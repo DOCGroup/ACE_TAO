@@ -1,3 +1,21 @@
+Tue Mar  4 09:31:01 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ace/Configuration.cpp:
+
+	  For temporary ACE_TStrings used internally, switched to the
+	  non-allocating constructor. Also made cosmetic changes and
+	  changed some ACE_TString assignments to use the nocopy
+	  assignment method added below.
+
+	* ace/String_Base.h:
+	* ace/String_Base.i:
+
+	  Added a nocopy assignment method.
+
+	* ace/ace_dll.dsp:
+
+	  Added Unbounded_Queue.h to the project.
+
 Mon Mar  3 11:39:20 2003  Ossama Othman  <ossama@uci.edu>
 
 	* ace/Strategies_T.h:
