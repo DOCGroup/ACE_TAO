@@ -1,3 +1,7 @@
+Wed Jun  4 13:47:45 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* THANKS: Added Jason Cohen to the hall of fame.
+
 Wed Jun  4 12:43:41 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* ace/CDR_Stream.cpp: Removed a duplicate semicolon. Thanks to Rob
