@@ -60,6 +60,12 @@ public:
             TAO_Service_ID service_id);
   // Initialization method.
 
+  int init (const char *ior,
+            const char *mcast_addr,
+            TAO_Service_ID service_id);
+  // Initialization method. Takes in "address:port" string as a 
+  // parameter. 
+
   ~TAO_IOR_Multicast (void);
   // Destructor.
 
@@ -74,6 +80,10 @@ public:
   // Returns the internal handle used to receive multicast.
 
 private:
+  int common_init (const char *ior,
+                   TAO_Service_ID service_id);
+  // Factor common functionality from the two init functions.
+
   char buf_[BUFSIZ];
   // temporary buffer.
 

@@ -124,6 +124,11 @@ public:
   void name_service_port (CORBA::UShort port);
   // Set/Get the port of our name service.
 
+  const char *mcast_discovery_endpoint (void) const;
+  void mcast_discovery_endpoint (const ACE_CString &mde);
+  // Set/Get address:port for Multicast Discovery Protocol for 
+  // the Naming Service.
+  
   CORBA::UShort trading_service_port (void) const;
   void trading_service_port (CORBA::UShort port);
   // Set/Get the port of our trading service.
@@ -220,6 +225,10 @@ private:
 
   CORBA::UShort implrepo_service_port_;
   // The port number of our configured Implementation Repository.
+
+  ACE_CString mcast_discovery_endpoint_;
+  // address:port for Multicast Discovery Protocol for the Naming 
+  // Service.
 
   ACE_CString init_ref_;
   // Initial Reference supplied as <ObjectID>:<IOR>
