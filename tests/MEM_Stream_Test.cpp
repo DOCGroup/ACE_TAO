@@ -310,6 +310,7 @@ int test_reactive (const ACE_TCHAR *prog, ACE_MEM_Addr &server_addr)
       status = 1;
     }
 
+  ACE_UNUSED_ARG (prog);
   return status;
 }
 
@@ -385,6 +386,7 @@ int test_multithreaded (const ACE_TCHAR *prog, ACE_MEM_Addr &server_addr)
       status = 1;
     }
 
+  ACE_UNUSED_ARG (prog);
   return status;
 }
 
