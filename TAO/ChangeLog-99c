@@ -1,3 +1,11 @@
+Sat Sep 05 02:00:00 1999  Luther J. Baker  <ljb1@cs.wustl.edu>
+
+	 * ORB_Core.cpp: Part 1 of two part incremental change to allow
+	   ORB_init to correctly parse 'mangled' orb flags and arguments
+	   ie -ORBflag 123, -orbflag 123, -oRbfLAg123, "-orbflag123"
+	   Please note, my day is incorrect. It is Sun... but this is
+	   the associated ChangeLogTag for the file.
+
 Sat Sep 05 02:05:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 	
 	* TAO_IDL/driver/drv_preproc.cpp: 
