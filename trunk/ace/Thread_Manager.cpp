@@ -135,7 +135,7 @@ ACE_Thread_Descriptor::terminate ()
          // Threads created with THR_DAEMON shouldn't exist here, but
          // just to be safe, let's put it here.
 
-         if (ACE_BIT_ENABLED (this->thr_state_, ACE_Thread_Manager::ACE_THR_JOINING))
+         if (ACE_BIT_DISABLED (this->thr_state_, ACE_Thread_Manager::ACE_THR_JOINING))
            {
              if (ACE_BIT_DISABLED (this->flags_, THR_DETACHED | THR_DAEMON)
                  || ACE_BIT_ENABLED (this->flags_, THR_JOINABLE))
