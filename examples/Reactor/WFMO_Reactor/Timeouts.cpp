@@ -77,5 +77,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   if (ACE_Reactor::run_event_loop(run_time) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p.\n", "main"), -1);
 
+  ACE_Reactor::instance ()->cancel_timer(&handler);
+
   return 0;
 }
