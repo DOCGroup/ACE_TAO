@@ -131,7 +131,7 @@ TAO_DynAnyFactory::make_dyn_any (const CORBA_Any &any,
       case CORBA::tk_string:
       case CORBA::tk_wstring:
         {
-          TAO_DynAny_i *p;
+          TAO_DynAny_i *p = 0;
 
           ACE_NEW_THROW_EX (p,
                             TAO_DynAny_i,
@@ -147,7 +147,7 @@ TAO_DynAnyFactory::make_dyn_any (const CORBA_Any &any,
       case CORBA::tk_struct:
       case CORBA::tk_except:
         {
-          TAO_DynStruct_i *p;
+          TAO_DynStruct_i *p = 0;
 
           ACE_NEW_THROW_EX (p,
                             TAO_DynStruct_i,
@@ -162,7 +162,7 @@ TAO_DynAnyFactory::make_dyn_any (const CORBA_Any &any,
         }
       case CORBA::tk_sequence:
         {
-          TAO_DynSequence_i *p;
+          TAO_DynSequence_i *p = 0;
 
           ACE_NEW_THROW_EX (p,
                             TAO_DynSequence_i,
@@ -177,7 +177,7 @@ TAO_DynAnyFactory::make_dyn_any (const CORBA_Any &any,
         }
       case CORBA::tk_union:
         {
-          TAO_DynUnion_i *p;
+          TAO_DynUnion_i *p = 0;
 
           ACE_NEW_THROW_EX (p,
                             TAO_DynUnion_i,
@@ -192,7 +192,7 @@ TAO_DynAnyFactory::make_dyn_any (const CORBA_Any &any,
         }
       case CORBA::tk_enum:
         {
-          TAO_DynEnum_i *p;
+          TAO_DynEnum_i *p = 0;
 
           ACE_NEW_THROW_EX (p,
                             TAO_DynEnum_i,
@@ -207,7 +207,7 @@ TAO_DynAnyFactory::make_dyn_any (const CORBA_Any &any,
         }
       case CORBA::tk_array:
         {
-          TAO_DynArray_i *p;
+          TAO_DynArray_i *p = 0;
 
           ACE_NEW_THROW_EX (p,
                             TAO_DynArray_i,
@@ -269,7 +269,7 @@ TAO_DynAnyFactory::make_dyn_any (CORBA::TypeCode_ptr tc,
       case CORBA::tk_string:
       case CORBA::tk_wstring:
         {
-          TAO_DynAny_i *p;
+          TAO_DynAny_i *p = 0;
 
           ACE_NEW_THROW_EX (p,
                             TAO_DynAny_i,
@@ -285,7 +285,7 @@ TAO_DynAnyFactory::make_dyn_any (CORBA::TypeCode_ptr tc,
       case CORBA::tk_struct:
       case CORBA::tk_except:
         {
-          TAO_DynStruct_i *p;
+          TAO_DynStruct_i *p = 0;
 
           ACE_NEW_THROW_EX (p,
                             TAO_DynStruct_i,
@@ -300,7 +300,7 @@ TAO_DynAnyFactory::make_dyn_any (CORBA::TypeCode_ptr tc,
         }
       case CORBA::tk_sequence:
         {
-          TAO_DynSequence_i *p;
+          TAO_DynSequence_i *p = 0;
 
           ACE_NEW_THROW_EX (p,
                             TAO_DynSequence_i,
@@ -315,7 +315,7 @@ TAO_DynAnyFactory::make_dyn_any (CORBA::TypeCode_ptr tc,
         }
       case CORBA::tk_union:
         {
-          TAO_DynUnion_i *p;
+          TAO_DynUnion_i *p = 0;
 
           ACE_NEW_THROW_EX (p,
                             TAO_DynUnion_i,
@@ -330,7 +330,7 @@ TAO_DynAnyFactory::make_dyn_any (CORBA::TypeCode_ptr tc,
         }
       case CORBA::tk_enum:
         {
-          TAO_DynEnum_i *p;
+          TAO_DynEnum_i *p = 0;
 
           ACE_NEW_THROW_EX (p,
                             TAO_DynEnum_i,
@@ -345,7 +345,7 @@ TAO_DynAnyFactory::make_dyn_any (CORBA::TypeCode_ptr tc,
         }
       case CORBA::tk_array:
         {
-          TAO_DynArray_i *p;
+          TAO_DynArray_i *p = 0;
 
           ACE_NEW_THROW_EX (p,
                             TAO_DynArray_i,
