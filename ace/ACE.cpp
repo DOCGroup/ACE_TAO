@@ -1064,7 +1064,8 @@ ACE::get_temp_dir (wchar_t *buffer, size_t buffer_len)
 #  endif /* ACE_HAS_WINCE */
 
   // Make sure to return -1 if there is an error
-  if (result == 0 && ::GetLastError () != ERROR_SUCCESS)
+  if (result == 0 && ::GetLastError () != ERROR_SUCCESS  
+      || result > ACE_static_cast (int, buffer_len))
     result = -1;
 
   return result;

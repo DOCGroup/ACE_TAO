@@ -444,9 +444,8 @@ public:
   static int get_temp_dir (char *buffer, size_t buffer_len);
   static int get_temp_dir (wchar_t *buffer, size_t buffer_len);
   // Returns the temporary directory including the trailing slash in 
-  // <buffer>.  Returns the number of characters in the temp path (but 
-  // doesn't fill in <buffer> if it is not large enough).  Returns -1 
-  // for any other error.
+  // <buffer>.  Returns -1 for an error or if the buffer_len is not
+  // long enough.
 
   static ACE_HANDLE open_temp_file (const char *name,
                                     int mode,
