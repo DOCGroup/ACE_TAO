@@ -100,7 +100,6 @@ ACE_Singleton<TYPE, LOCK>::cleanup (void *object, void *)
   delete (TYPE *) object;
   object = 0;
 }
-      ::atexit (ACE_Static_Object_Lock::atexit);
 
 #if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
 // Pointer to the Singleton instance.
