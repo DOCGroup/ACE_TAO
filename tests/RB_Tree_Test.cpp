@@ -38,11 +38,15 @@ USELIB("..\ace\aced.lib");
 
 // These arrays of numbers as ints and character strings
 // are used to instantiate key and item nodes in the tree.
-static char *number_strings [] = {"10", "20", "30", "40",
-                                  "50", "60", "70", "80"};
+static const char *number_strings [] =
+{
+  "10", "20", "30", "40", "50", "60", "70", "80"
+};
 
-static int number_integers [] = {10, 20, 30, 40,
-                                 50, 60, 70, 80};
+static int number_integers [] = 
+{
+  10, 20, 30, 40, 50, 60, 70, 80
+};
 
 // These arrays of ints are used to shuffle the order of insertion
 // of keys and items for the various trees.

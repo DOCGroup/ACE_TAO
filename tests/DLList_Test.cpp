@@ -26,7 +26,7 @@ USELIB("..\ace\aced.lib");
 //---------------------------------------------------------------------------
 #endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
 
-static ASYS_TCHAR * string_table[] =
+static LPCTSTR string_table[] =
 {
   ASYS_TEXT ("hello"),
   ASYS_TEXT ("guten Tag"),

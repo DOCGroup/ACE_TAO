@@ -117,7 +117,7 @@ private:
   // The connector port number, i.e., the one that we use to actively
   // establish connections with a gatewayd and create a Consumer.
 
-  char *connector_host_;
+  const char *connector_host_;
   // Our connector host, i.e., where the gatewayd process is running.
 
   long timeout_;

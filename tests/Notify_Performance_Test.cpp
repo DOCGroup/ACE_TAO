@@ -9,14 +9,13 @@
 //    Notify_Performance_Test.cpp
 //
 // = DESCRIPTION
-//
 //    This test is used to time the notification mechanisms of the
 //    ACE_Reactors. Both the WFMO_Reactor and Select_Reactor can be
 //    tested. The notify() mechanism can also be tested with or
 //    without data.
 //
 // = AUTHOR
-//    Irfan Pyarali
+//    Irfan Pyarali <irfan@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -71,7 +70,8 @@ Handler::handle_exception (ACE_HANDLE handle)
 }
 
 // Execute the client tests.
-void *
+
+static void *
 client (void *arg)
 {
   // Number of client (user) threads
@@ -94,7 +94,8 @@ client (void *arg)
 }
 
 // Sets up the correct reactor (based on platform and options)
-void
+
+static void
 create_reactor (void)
 {
   ACE_Reactor_Impl *impl = 0;
@@ -114,10 +115,10 @@ create_reactor (void)
   ACE_Reactor::instance (reactor);
 }
 
-void
+static void
 print_results (ACE_Profile_Timer::ACE_Elapsed_Time &et)
 {
-  ASYS_TCHAR *reactor_type = 0;
+  LPCTSTR reactor_type = 0;
   if (opt_wfmo_reactor)
     reactor_type = ASYS_TEXT ("WFMO_Reactor");
   else if (opt_select_reactor)
@@ -125,16 +126,26 @@ print_results (ACE_Profile_Timer::ACE_Elapsed_Time &et)
   else
     reactor_type = ASYS_TEXT ("Platform's default Reactor");
 
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\nNotify_Performance Test statistics:\n\n")));
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\tReactor Type: %s\n"), reactor_type));
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\tWorker threads (calling notify()): %d\n"), opt_nthreads));
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\tIteration per thread: %d\n"), opt_nloops));
+  ACE_DEBUG ((LM_DEBUG,
+              ASYS_TEXT ("\nNotify_Performance Test statistics:\n\n")));
+  ACE_DEBUG ((LM_DEBUG,
+              ASYS_TEXT ("\tReactor Type: %s\n"),
+              reactor_type));
+  ACE_DEBUG ((LM_DEBUG,
+              ASYS_TEXT ("\tWorker threads (calling notify()): %d\n"),
+              opt_nthreads));
+  ACE_DEBUG ((LM_DEBUG,
+              ASYS_TEXT ("\tIteration per thread: %d\n"),
+              opt_nloops));
   if (opt_pass_notify_data)
-    ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\tData was passed in the notify() call\n")));
+    ACE_DEBUG ((LM_DEBUG,
+                ASYS_TEXT ("\tData was passed in the notify() call\n")));
   else
-    ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\tNo data was passed in the notify() call\n")));
+    ACE_DEBUG ((LM_DEBUG,
+                ASYS_TEXT ("\tNo data was passed in the notify() call\n")));
 
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\n\tTiming results notify() call:\n")));
+  ACE_DEBUG ((LM_DEBUG,
+              ASYS_TEXT ("\n\tTiming results notify() call:\n")));
   ACE_DEBUG ((LM_DEBUG,
               ASYS_TEXT ("\t\treal time = %f secs \n\t\tuser time = %f secs \n\t\tsystem time = %f secs\n\n"),
               et.real_time,
@@ -148,6 +159,7 @@ main (int argc, ASYS_TCHAR *argv[])
   ACE_START_TEST (ASYS_TEXT ("Notify_Performance_Test"));
 
   ACE_Get_Opt getopt (argc, argv, ASYS_TEXT ("swdc:l:"));
+
   for (int c; (c = getopt ()) != -1; )
     switch (c)
       {
@@ -209,7 +221,8 @@ main (int argc, ASYS_TCHAR *argv[])
   // Print results
   print_results (et);
 
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%P|%t) waiting for the worker threads...\n")));
+  ACE_DEBUG ((LM_DEBUG,
+              ASYS_TEXT ("(%P|%t) waiting for the worker threads...\n")));
 
   // Wait for all worker to get done.
   ACE_Thread_Manager::instance ()->wait ();

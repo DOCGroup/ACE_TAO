@@ -19,10 +19,13 @@ main (int argc, char *argv[])
 {
   int  size = argc > 1 ? atoi (argv[1]) : DEFAULT_SIZE;
   int  iterations = argc > 2 ? atoi (argv[2]) : DEFAULT_COUNT;
-  char *buf = new char[size];
+  char *buf;
 
-  //char *pipe_name = ACE_DEFAULT_RENDEZVOUS;
-  char *pipe_name = "acepipe";
+  ACE_NEW_RETURN (buf,
+                  new char[size],
+                  1);
+
+  const char *pipe_name = "acepipe";
   char *rendezvous;
   rendezvous = MAKE_PIPE_NAME (pipe_name);
 
@@ -30,18 +33,27 @@ main (int argc, char *argv[])
   ACE_SPIPE_Connector con;
   int i;
 
-  if (con.connect (cli_stream, ACE_SPIPE_Addr (rendezvous)) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", rendezvous), -1);
+  if (con.connect (cli_stream,
+                   ACE_SPIPE_Addr (rendezvous)) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p\n",
+                       rendezvous),
+                      -1);
 
   ACE_OS::strcpy (buf, "hello");
   size = ACE_OS::strlen (buf) + 1;
 
   for (i = 0; i < iterations; i++)
     if (cli_stream.send (buf, size) != size)
-      ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "putmsg"), -1);
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "putmsg"),
+                        -1);
 
   if (cli_stream.close () == -1)
-      ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "close"), -1);
-
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "close"),
+                        -1);
   return 0;
 }

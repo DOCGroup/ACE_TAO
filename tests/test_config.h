@@ -246,7 +246,7 @@ ACE_Test_Output::set_output (const ASYS_TCHAR *filename, int append)
 {
   ASYS_TCHAR temp[MAXPATHLEN];
   // Ignore the error value since the directory may already exist.
-  ASYS_TCHAR *test_dir;
+  LPCTSTR test_dir;
 
 #if !defined (ACE_HAS_WINCE)
   test_dir = ACE_OS::getenv ("ACE_TEST_DIR");
@@ -254,8 +254,6 @@ ACE_Test_Output::set_output (const ASYS_TCHAR *filename, int append)
   if (test_dir == 0)
 #endif /* ACE_HAS_WINCE */
     test_dir = ASYS_TEXT ("");
-
-
 
   ACE_OS::sprintf (temp,
                    ASYS_TEXT ("%s%s%s%s"),
@@ -268,8 +266,8 @@ ACE_Test_Output::set_output (const ASYS_TCHAR *filename, int append)
   // This is the only way I could figure out to avoid a console warning
   // about opening an existing file (w/o O_CREAT), or attempting to unlink
   // a non-existant one.
-  int fd;
-  if ((fd = ACE_OS::open (temp, O_WRONLY | O_CREAT, 0x644)) != ERROR)
+  int fd = ACE_OS::open (temp, O_WRONLY | O_CREAT, 0x644);
+  if (fd != ERROR)
     {
       ACE_OS::close (fd);
       ACE_OS::unlink (temp);
