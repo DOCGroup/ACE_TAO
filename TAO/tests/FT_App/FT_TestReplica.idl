@@ -1,0 +1,80 @@
+// $Id$
+// FT_TestReplica.idl
+#ifndef FT_TESTREPLICA_IDL
+#define FT_TESTREPLICA_IDL
+
+#include "orbsvcs/FT_Replica.idl"
+
+module FT_TEST
+{
+  /**
+   * A FT_TEST::Replica provides a test target for a FT::FaultDetector
+   * It is Updateable (and therefore Checkpointable)
+   * and PullMonitorable
+   * It declares a simple counter that can be set, incremented, and read
+   * via method calls.  The counter is also exposed as a property.
+   */
+  interface TestReplica : ::FT::Updateable, ::FT::PullMonitorable
+  {
+    /**
+     *  set the counter to an specific value.
+     * @param value is the number to be set.
+     */
+    void set(in long value);
+    /**
+     * add delta to the counter.
+     * @param delta is the number to be added: (delta may be positive, negative or zero).
+     * @returns the new value of the counter.
+     */
+    long increment(in long delta);
+
+    /**
+     * retrieve the current counter.
+     * @returns the value of the counter.
+     */
+    long get();
+
+
+    /**
+     * enumerate the points at which
+     * the test replica might be induced to die.
+     */
+    enum Bane
+    {
+      NOT_YET,
+      RIGHT_NOW,
+      DURING_GET,
+      BEFORE_SET,
+      AFTER_SET,
+      BEFORE_INCREMENT,
+      AFTER_INCREMENT,
+      DURING_ATTRIBUTE_GET,
+      BEFORE_ATTRIBUTE_SET,
+      AFTER_ATTRIBUTE_SET,
+      DURING_GET_UPDATE,
+      BEFORE_SET_UPDATE,
+      AFTER_SET_UPDATE,
+      DURING_GET_STATE,
+      BEFORE_SET_STATE,
+      AFTER_SET_STATE,
+      DURING_IS_ALIVE,
+      DENY_IS_ALIVE
+    };
+
+
+    /**
+     * die a horrid death.
+     * @param when is an arbitrary code to indicate how and when to die.
+     */
+    oneway void die(in Bane when);
+
+    /**
+     * provide direct access to the counter.
+     * Suports the same functionality as set and get.
+     * Encapsulization??? this is a test, remember.
+     */
+    attribute long counter;
+  };
+};
+
+#endif // for #ifndef FT_TESTREPLICA_IDL
