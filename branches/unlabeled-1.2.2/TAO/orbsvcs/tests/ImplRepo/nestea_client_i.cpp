@@ -13,30 +13,6 @@ Nestea_Client_i::Nestea_Client_i (void)
 {
 }
 
-// Reads the Server factory ior from a file
-
-int
-Nestea_Client_i::read_ior (char *filename)
-{
-  // Open the file for reading.
-  ACE_HANDLE f_handle_ = ACE_OS::open (filename, 0);
-
-  if (f_handle_ == ACE_INVALID_HANDLE)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Unable to open %s for writing: %p\n",
-                       filename),
-                      -1);
-  ACE_Read_Buffer ior_buffer (f_handle_);
-  this->server_key_ = ior_buffer.read ();
-
-  if (this->server_key_ == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Unable to allocate memory to read ior: %p\n"),
-                      -1);
-
-  ACE_OS::close (f_handle_);
-  return 0;
-}
 
 // Parses the command line arguments and returns an error status.
 
