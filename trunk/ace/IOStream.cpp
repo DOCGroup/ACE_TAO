@@ -400,7 +400,7 @@ ACE_Streambuf::get_one_byte (void)
   // anything else in the buffer. (Ok, we could use flags to tell it
   // to block but I like this better.)
 
-  if (this->recv_n (base (), 1, MSG_PEEK, recv_timeout_) != 1)
+  if (this->recv_n (base (), 1, MSG_PEEK, this->recv_timeout_) != 1)
     {
       if (errno == ETIME)
         this->timeout_ = 1;
@@ -425,7 +425,7 @@ ACE_Streambuf::fillbuf (void)
   // Now, get whatever else may be in the buffer.  This will return if
   // there is nothing in the buffer.
 
-  int bc = this->recv (base (), blen (), recv_timeout_);
+  int bc = this->recv (base (), blen (), this->recv_timeout_);
 
   // recv will give us -1 if there was a problem.  If there was
   // nothing waiting to be read, it will give us 0.  That isn't an

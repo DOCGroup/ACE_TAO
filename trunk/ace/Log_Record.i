@@ -9,9 +9,6 @@ ACE_Log_Record::encode (void)
   ACE_TRACE ("ACE_Log_Record::encode");
   this->length_ = htonl (this->length_);
   this->type_ = htonl (this->type_);
-  this->time_stamp_ = ACE_Time_Value (this->time_stamp_.sec (),
-				      this->time_stamp_.usec ());
-
   // Make sure we don't enclose the sec() and usec() fields until
   // they've been normalized.
   this->time_stamp_.sec (htonl (this->time_stamp_.sec ()));
