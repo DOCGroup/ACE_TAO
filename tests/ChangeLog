@@ -1,3 +1,11 @@
+Mon Aug 12 08:14:51 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/Select_Reactor_Notify.cpp: 
+	* ace/Select_Reactor_Notify.h: Added a new method
+	  notify_message_to_queue () which puts the notify message into a 
+	  user-level queue. Now the reactor sends only message into the
+	  pipe for all the messages in queue. 
+	
 Tue Aug 06 00:39:15 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/Select_Reactor_Notify.h:

@@ -139,6 +139,17 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
+
+#if defined (ACE_HAS_REACTOR_NOTIFICATION_QUEUE)
+
+  /// Add the <buffer> to the user level notification queue. The
+  /// <notification_required> returns whether the queue needs a
+  /// notification to be sent in the pipe or not.
+  int notify_message_to_queue (ACE_Notification_Buffer &buffer,
+                               int &notification_required);
+#endif/*ACE_HAS_REACTOR_NOTIFICATION_QUEUE*/
+
+protected:
   /**
    * Keep a back pointer to the <ACE_Select_Reactor>.  If this value
    * if NULL then the <ACE_Select_Reactor> has been initialized with
