@@ -1,3 +1,8 @@
+Mon Jun 29 11:37:28 1998  Steve Huston  <shuston@riverace.com>
+
+	* ace/ACE.cpp: Added a 'const' to initialized ASYS_TCHAR * - string
+	  literal conversion to char * is deprecated in C++.
+
 Sun Jun 28 22:16:51 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * examples/Service_Configurator/Misc/main.cpp (main): removed
