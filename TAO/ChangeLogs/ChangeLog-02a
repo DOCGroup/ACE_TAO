@@ -1,3 +1,11 @@
+Wed Dec 26 02:16:33 2001  Mayur Deshpande  <mayur@ics.uci.edu>
+
+	* TAO_IDL/be/be_operation_strategy.cpp:
+        * TAO_IDL/be/be_operation_strategy.cpp be_include/be_codegen.h:
+        * TAO_IDL/be_include/be_operation_strategy.h:
+        * TAO_IDL/be_include/be_visitor_amh_pre_proc.h:
+	  Nuked training white-spaces and carriage returns
+
 Tue Dec 25 22:48:32 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 	* orbsvcs/orbsvcs/Event/ECG_UDP_Protocol.h:
@@ -96,89 +104,88 @@ Tue Dec 25 12:16:42 2001  Mayur Deshpande  <mayur@ics.uci.edu>
 
 	* TAO/TAO_IDL:
 	  Changes to various files (as documented below) to incorporate
-	the following features of AMH:
-	- The "_this()" method of the AMH-skeleton now returns the
-	original interface and not AMH_interface as was the case before.
-	This is a bug fix. For the canonical Stock::Quoter example, this
-	is what is generated: 
+	  the following features of AMH:
+	  - The "_this()" method of the AMH-skeleton now returns the
+	  original interface and not AMH_interface as was the case before.
+	  This is a bug fix. For the canonical Stock::Quoter example, this
+	  is what is generated:
 		Stock::Quoter::_this() {...}
-	- The AMH-operation (in the AMH-skeleton) is now of void return
-	type and it's arguments are of type IN and INOUT from the original
-	interface.  This is a bug fix.
-	- Generate the ResponseHandler class with correct inheritance.
-	For the canonical Stock::Quoter example this is what should be
-	generated:
+	  - The AMH-operation (in the AMH-skeleton) is now of void return
+	  type and it's arguments are of type IN and INOUT from the original
+	  interface.  This is a bug fix.
+	  - Generate the ResponseHandler class with correct inheritance.
+	  For the canonical Stock::Quoter example this is what should be
+	  generated:
 	    class  TAO_AMH_QuoterResponseHandler
 	    : public virtual Stock::AMH_QuoterResponseHandler,
               p\ublic virtual TAO_AMH_ResponseHandler {...}
-	Currently the parent classes are generated with a POA_ suffix.
-	This is a known bug and will be fixed soon.
-	- Generate the signature for the RH-operation (in the RH class).
-	This operation is of void return type and its arguments are any
-	return values along with any OUT ot INOUT parameters.
-	- The above changes all pertain to code generation in the skeleton
-	header files.
-	
+	  Currently the parent classes are generated with a POA_ suffix.
+	  This is a known bug and will be fixed soon.
+	  - Generate the signature for the RH-operation (in the RH class).
+	  This operation is of void return type and its arguments are any
+	  return values along with any OUT ot INOUT parameters.
+	  - The above changes all pertain to code generation in the skeleton
+	  header files.
+
 Tue Dec 25 12:16:42 2001  Mayur Deshpande  <mayur@ics.uci.edu>
 
-	* TAO_IDL/be_include/be_visitor_operation.h: 
-	* TAO_IDL/be_include/be_visitor_interface.h: 
-	* TAO_IDL/be/be_visitor_operation/operation.cpp: 
-	* TAO_IDL/be/be_visitor_interface/interface.cpp: 
-	* TAO_IDL/be/be_visitor_operation.cpp: 
+	* TAO_IDL/be_include/be_visitor_operation.h:
+	* TAO_IDL/be_include/be_visitor_interface.h:
+	* TAO_IDL/be/be_visitor_operation/operation.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface.cpp:
+	* TAO_IDL/be/be_visitor_operation.cpp:
 	* TAO_IDL/be/be_visitor_interface.cpp:
 	  Adding appropriate 'include file' lines so that the AMH header and
-	source files (amh_s(h/s).(h/cpp)) are included while compilation. 
+	  source files (amh_s(h/s).(h/cpp)) are included while compilation.
 
 Tue Dec 25 12:11:15 2001  Mayur Deshpande  <mayur@ics.uci.edu>
 
-	* TAO_IDL/be/be_visitor_operation/amh_sh.cpp: 
-	* TAO_IDL/be/be_visitor_operation/amh_ss.cpp: 
-	* TAO_IDL/be_include/be_visitor_operation/amh_sh.h: 
-	* TAO_IDL/be_include/be_visitor_operation/amh_ss.h: 
+	* TAO_IDL/be/be_visitor_operation/amh_sh.cpp:
+	* TAO_IDL/be/be_visitor_operation/amh_ss.cpp:
+	* TAO_IDL/be_include/be_visitor_operation/amh_sh.h:
+	* TAO_IDL/be_include/be_visitor_operation/amh_ss.h:
 	  - Changed code to generate the correct signature for the
-	amh-operation.  This method is now of void return type and has
-	only INOUT and IN parameters as arguments.
+	  amh-operation.  This method is now of void return type and has
+	  only INOUT and IN parameters as arguments.
 	  - Added code to generate the signature for the RH-operation.
-	Again of void return type and arguments are return, OUT and INOUT. 
-	
+	  Again of void return type and arguments are return, OUT and INOUT.
+
 Tue Dec 25 12:06:40 2001  Mayur Deshpande  <mayur@ics.uci.edu>
 
-	* TAO_IDL/be/be_visitor_interface/amh_ss.cpp: 
-	* TAO_IDL/be/be_visitor_interface/amh_sh.cpp: 
-	* TAO_IDL/be_include/be_visitor_interface/amh_ss.h: 
+	* TAO_IDL/be/be_visitor_interface/amh_ss.cpp:
+	* TAO_IDL/be/be_visitor_interface/amh_sh.cpp:
+	* TAO_IDL/be_include/be_visitor_interface/amh_ss.h:
 	* TAO_IDL/be_include/be_visitor_interface/amh_sh.h:
 	  Changed "_this" method of AMH-Skeleton to return the original
-	interface and not the AMH_interface.  Added placeholder code for
-	generating the ResponseHandler class interface.
-	
+	  interface and not the AMH_interface.  Added placeholder code for
+	  generating the ResponseHandler class interface.
 
 Tue Dec 25 11:49:35 2001  Mayur Deshpande  <mayur@ics.uci.edu>
 
-	* TAO_IDL/be_include/be_codegen.h: 
+	* TAO_IDL/be_include/be_codegen.h:
 	* TAO_IDL/be/be_visitor_factory.cpp:
 	  Added supporting code so that the correct AMH visitor is generated
-	from the factory for 'next_state'
+	  from the factory for 'next_state'
 
 Tue Dec 25 11:36:00 2001  Mayur Deshpande  <mayur@ics.uci.edu>
 
-	* TAO_IDL/be_include/be_visitor_amh_pre_proc.h: 
-	* TAO_IDL/be/be_visitor_amh_pre_proc.cpp: 
+	* TAO_IDL/be_include/be_visitor_amh_pre_proc.h:
+	* TAO_IDL/be/be_visitor_amh_pre_proc.cpp:
 	  Added code and uncommented some of Darrell's code to:
-	- Generate the ResponseHandler class.
-	- Generate the inheritance tree for the RH class
-	- Generate the signature for the RH-operation 
-	- Various minor bug fixes to previous code.  These include
-	  generating the correct signature for the amh_operation (void
-	  return type)
+	  - Generate the ResponseHandler class.
+	  - Generate the inheritance tree for the RH class
+	  - Generate the signature for the RH-operation
+	  - Various minor bug fixes to previous code.  These include
+	    generating the correct signature for the amh_operation (void
+	    return type)
 
 Tue Dec 25 11:27:34 2001  Mayur Deshpande  <mayur@ics.uci.edu>
 
-	* TAO_IDL/be/be_operation_strategy.cpp: 
+	* TAO_IDL/be/be_operation_strategy.cpp:
 	* TAO_IDL/be_include/be_operation_strategy.h:
 	  Changed next_state to return AMH-state; similar to AMI
-	strategy.  Not used currently, but this is placeholder code that
-	may be needed later.
+	  strategy.  Not used currently, but this is placeholder code that
+	  may be needed later.
 
 Tue Dec 25 12:23:40 2001  Carlos O'Ryan  <coryan@uci.edu>
 
