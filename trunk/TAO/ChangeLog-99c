@@ -1,3 +1,8 @@
+Mon Jul 19 19:42:04 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/corbafwd.h,Exception.cpp: added minor code support for
+          EINVAL errno. [Bug 74]
+
 Mon Jul 19 17:44:36 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * examples/POA/TIE/Makefile: don't try to build with

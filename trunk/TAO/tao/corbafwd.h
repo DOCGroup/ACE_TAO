@@ -1721,6 +1721,7 @@ TAO_NAMESPACE CORBA
 #define TAO_EFAULT_MINOR_CODE       0xEU
 #define TAO_EBUSY_MINOR_CODE        0xFU
 #define TAO_EEXIST_MINOR_CODE       0x10U
+#define TAO_EINVAL_MINOR_CODE       0x11U
 // *Don't* use TAO_<errno>_MINOR_CODE greater than 0x7FU!
 
 // These numbers are assigned by the OpenGroup, a database is
