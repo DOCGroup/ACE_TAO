@@ -235,7 +235,7 @@ ACE_Test_Output::ACE_Test_Output (void)
 
 ACE_Test_Output::~ACE_Test_Output (void)
 {
-#if !defined (ACE_HAS_WINCE)
+#if !defined (ACE_WIN32)
   ACE_LOG_MSG->msg_ostream (&cerr);
   ACE_LOG_MSG->clr_flags (ACE_Log_Msg::OSTREAM);
   ACE_LOG_MSG->set_flags (ACE_Log_Msg::STDERR);
