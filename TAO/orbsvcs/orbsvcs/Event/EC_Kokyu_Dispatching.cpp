@@ -105,8 +105,8 @@ TAO_EC_Kokyu_Dispatching::push_nocopy (TAO_EC_ProxyPushSupplier* proxy,
   Kokyu::QoSDescriptor qosd;
   qosd.preemption_priority_     = qos_info.preemption_priority;
   qosd.deadline_ = rt_info->period;
-  qosd.execution_time_ = 
-    ORBSVCS_Time::TimeT_to_Time_Value (rt_info->worst_case_execution_time);
+  ORBSVCS_Time::TimeT_to_Time_Value (qosd.execution_time_,
+                                     rt_info->worst_case_execution_time);
 
   this->dispatcher_->dispatch(cmd,qosd);
 }
