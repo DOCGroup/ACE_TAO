@@ -43,7 +43,8 @@ public:
                       int reuse_addr = 1,
                       int perms = ACE_DEFAULT_FILE_PERMS);
 
-  /// Initiate a passive-mode STREAM pipe listener.
+  /// Initiate a passive-mode STREAM pipe listener.  Returns 0 on
+  /// success and -1 on failure.
   int open (const ACE_SPIPE_Addr &local_sap,
             int reuse_addr = 1,
             int perms = ACE_DEFAULT_FILE_PERMS);

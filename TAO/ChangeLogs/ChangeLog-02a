@@ -1,7 +1,13 @@
+Wed Nov 28 18:33:35 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* docs/Options.html: Clarified that it's legal to pass
+	  multiple -ORBSvcConfDirective options to the ORB's command-line.
+	  Thanks to Patrick N <pn@milhouse.co.uk> for motivating this.
+
 Sat Dec 01 09:37:26 2001  Balachandran  <bala@cs.wustl.edu>
-
+  
         * TAO version 1.2.1 released.
-
+  
 Wed Nov 28 13:40:39 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/SmartProxies/SmartProxies.dsp:

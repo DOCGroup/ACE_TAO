@@ -1,3 +1,46 @@
+Sat Dec  1 18:03:51 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ace/config-macosx.h:
+  	* include/makeinclude/platform_macosx.GNU:
+	  Added support so that ACE will build and run on Mac OS X 10.1.
+  	  Thanks to John Michael Zorko <j.zorko@att.net> for contributing
+ 	  this.
+	
+Fri Nov 30 19:08:19 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ace/ARGV.cpp (dump): Fixed a bug with dump() so that it
+	  works properly even if argv_ changes.  Thanks to Kyle Brost
+ 	  <Kyle.Brost@quest.com> for this fix.
+
+Thu Nov 29 16:31:57 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ace/OS.{h,i,cpp}: Changed the return value of
+	  ACE_Time_Value::operator+= and operator -= to be ACE_Time_Value
+ 	  & rather than void.  Also, added overloaded operator++ and
+ 	  operator--.  This is all to make this stuff work better with
+ 	  ACE_Atomic_Op.  Thanks to Kelly F. Hickel <kfh@mqsoftware.com>
+ 	  for suggesting this.
+
+	* ace/Asynch_Acceptor.cpp (parse_address): Changed
+   	  the "message_block.size () - 2 * this->address_size ()" argument
+ 	  to "bytes_to_read_" to work properly on Win32.  Thanks to Kelly
+ 	  F. Hickel <kfh@mqsoftware.com> for reporting this.
+
+Wed Nov 28 17:44:26 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/OS_Dirent.cpp (readdir_emulation): Fixed a memory leak
+	  in the dirent emulation.  Thanks to Olivier Brunet
+ 	  <obrunet@groupama-ccama.tm.fr> for reporting this.
+
+	* ace/SPIPE_Acceptor.h (ACE_SPIPE_Acceptor): Clarified the
+	  return value of open().  Thanks to Garth Watney
+ 	  <Garth.J.Watney@jpl.nasa.gov> for motivating this.
+
+	* ace/OS.h: Added a workaround to the Borland bug for
+	  ACE_OS::stat().  Thanks to Christopher Kohlhoff
+ 	  <chris@kohlhoff.com> and Chris Able <cable@scires.com> for
+ 	  reporting/fixing this.
+  
 Sat Dec 01 09:26:27 2001  Balachandran  <bala@cs.wustl.edu>
 
         * ACE version 5.2.1 released.

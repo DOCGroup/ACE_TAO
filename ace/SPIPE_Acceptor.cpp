@@ -109,9 +109,7 @@ ACE_SPIPE_Acceptor::create_new_instance (int perms)
 
 
   if (handle == ACE_INVALID_HANDLE)
-    {
-      return -1;
-    }
+    return -1;
   else
     {
       // Start the Connect (analogous to listen () for a socket).  Completion

@@ -57,6 +57,7 @@ ACE_OS_Dirent::opendir_emulation (const ACE_TCHAR *filename)
     ACE_OS_String::strcat (dir->directory_name_, extra);
   dir->current_handle_ = INVALID_HANDLE_VALUE;
   dir->started_reading_ = 0;
+  dir->dirent_ = 0;
   return dir;
 #else /* ACE_WIN32 */
   ACE_UNUSED_ARG (filename);
@@ -73,6 +74,7 @@ ACE_OS_Dirent::closedir_emulation (ACE_DIR *d)
 
   d->current_handle_ = INVALID_HANDLE_VALUE;
   d->started_reading_ = 0;
+  ACE_OS_Memory::free (d->dirent_);
 #else /* ACE_WIN32 */
   ACE_UNUSED_ARG (d);  
 #endif /* ACE_WIN32 */
@@ -82,6 +84,9 @@ dirent *
 ACE_OS_Dirent::readdir_emulation (ACE_DIR *d)
 {
 #if defined (ACE_WIN32)
+  ACE_OS_Memory::free (d->dirent_);
+  d->dirent_ = 0;
+
   if (!d->started_reading_)
     {
       d->current_handle_ = ACE_TEXT_FindFirstFile (d->directory_name_,

@@ -1200,13 +1200,23 @@ public:
   // = The following arithmetic methods operate on <Time_Value>s.
 
   /// Add <tv> to this.
-  void operator += (const ACE_Time_Value &tv);
+  ACE_Time_Value &operator += (const ACE_Time_Value &tv);
 
   /// Subtract <tv> to this.
-  void operator -= (const ACE_Time_Value &tv);
+  ACE_Time_Value &operator -= (const ACE_Time_Value &tv);
 
   /// Multiply the time value by the <d> factor, which must be >= 0.
   ACE_Time_Value &operator *= (double d);
+
+  /// Increment microseconds (the only reason this is here is
+  /// to allow the use of ACE_Atomic_Op with ACE_Time_Value).
+  ACE_Time_Value operator++ (int);  // Postfix advance
+  ACE_Time_Value &operator++ (void);  // Prefix advance
+ 
+  /// Decrement microseconds (the only reason this is here is
+  /// to allow the use of ACE_Atomic_Op with ACE_Time_Value).
+  ACE_Time_Value operator-- (int);  // Postfix dec
+  ACE_Time_Value &operator-- (void);  // Prefix dec
 
   /// Adds two ACE_Time_Value objects together, returns the sum.
   friend ACE_OS_Export ACE_Time_Value operator + (const ACE_Time_Value &tv1,
@@ -4964,7 +4974,7 @@ typedef double ACE_timer_t;
   // = typedef for the _stat data structure
   typedef pace_stat_s ACE_stat;
 # else
-#   if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
+#   if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE) && !defined (__BORLANDC__)
       typedef struct _stat ACE_stat;
 #   else
       typedef struct stat ACE_stat;
