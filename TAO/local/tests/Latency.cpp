@@ -7,6 +7,7 @@
 
 #include "ace/Get_Opt.h"
 #include "ace/Sched_Params.h"
+#include "ace/Profile_Timer.h"
 
 #include "Event_Utilities.h"
 #include "Event_Service_Constants.h"
@@ -23,9 +24,9 @@ static const char usage [] = "[-? |\n"
 "            [-t <timeout interval>, msec [250]]]";
 
 // Configuration parameters.
-static u_int consumers = 4;
+static u_int consumers = 1;
 static u_int suppliers = 1;
-static u_int total_messages = 10;
+static u_int total_messages = 1000;
 static int measure_jitter = 0;
 static u_int timeout_interval = 250; // msec
 
@@ -35,6 +36,9 @@ static int shutting_down = 0;
 // This is global to allow the Supplier to short ciruit the EC
 // and talk directly to consumers.  For testing only :-)
 static Latency_Consumer **consumer;
+
+// This is a global timer to obtain some performance results.
+ACE_Profile_Timer global_profile_timer;
 
 // ************************************************************
 
@@ -112,38 +116,65 @@ void
 Latency_Consumer::push (const RtecEventComm::EventSet &events,
                         CORBA::Environment &)
 {
+  ACE_DEBUG ((LM_DEBUG, "Latency_Consumer:push - "));
   // @@ ACE_TIMEPROBE ("push event to consumer");
-
-  #if defined (quantify)
-    // If measuring jitter, just Quantify the supplier-consumer path.
-    if (measure_jitter)
-      {
-        quantify_stop_recording_data ();
-      }
-  #endif /* quantify */
-
-  if (events[0].type_ == ACE_ES_EVENT_SHUTDOWN)
-    this->shutdown ();
+  
+  global_profile_timer.stop ();
+  ACE_Profile_Timer::ACE_Elapsed_Time et;
+  if (global_profile_timer.elapsed_time (et) == -1)
+    {
+      ACE_ERROR ((LM_ERROR, "failure while measuring time\n"));
+    }
   else
     {
-      if (measure_jitter_)
-        {
-          const ACE_hrtime_t now = ACE_OS::gethrtime ();
-          // Note: the division by 1 provides transparent support of
-          // ACE_U_LongLong.
-          ACE_Time_Value latency (now / 1000000000,
-                                  (now / 1 % 1000000000) / 1000);
-          latency -= ACE_Time_Value (events[0].time_ / 1000000000,
-                                     (events[0].time_ / 1 % 1000000000) / 1000);
+      ACE_DEBUG ((LM_DEBUG,
+		  "RAW_TIME (real/user/system): %f %f %f", 
+		  et.real_time, et.user_time, et.system_time));
+    }
 
-          if (! shutting_down)
-            {
-              if (min_latency_ > latency) min_latency_ = latency;
-              if (max_latency_ < latency) max_latency_ = latency;
-              total_latency_ += latency;
-              ++total_pushes_;
-            }
-        }
+  if (events.length () == 0)
+    {
+      ACE_DEBUG ((LM_DEBUG, "no events\n"));
+      return;
+    }
+  ACE_DEBUG ((LM_DEBUG, "%d event(s)\n", events.length ()));
+
+#if defined (quantify)
+  // If measuring jitter, just Quantify the supplier-consumer path.
+  if (measure_jitter)
+    {
+      quantify_stop_recording_data ();
+    }
+#endif /* quantify */
+
+  for (int i = 0; i < events.length (); ++i)
+    {
+      if (events[i].type_ == ACE_ES_EVENT_SHUTDOWN)
+	{
+	  ACE_DEBUG ((LM_DEBUG, "Latency Consumer: received shutdown event\n"));
+	  this->shutdown ();
+	}
+      else
+	{
+	  if (measure_jitter_)
+	    {
+	      const ACE_hrtime_t now = ACE_OS::gethrtime ();
+	      // Note: the division by 1 provides transparent support of
+	      // ACE_U_LongLong.
+	      ACE_Time_Value latency (now / 1000000000,
+				      (now / 1 % 1000000000) / 1000);
+	      latency -= ACE_Time_Value (events[0].time_ / 1000000000,
+					 (events[0].time_ / 1 % 1000000000) / 1000);
+
+	      if (! shutting_down)
+		{
+		  if (min_latency_ > latency) min_latency_ = latency;
+		  if (max_latency_ < latency) max_latency_ = latency;
+		  total_latency_ += latency;
+		  ++total_pushes_;
+		}
+	    }
+	}
 
       // @@ ACE_TIMEPROBE_PRINT;
     }
@@ -158,11 +189,13 @@ Latency_Consumer::shutdown (void)
     {
       // Disconnect from the push supplier.
       suppliers_->disconnect_push_supplier (ACE_TRY_ENV);
+      ACE_CHECK_ENV;
+
       CORBA::release (suppliers_);
 
-      // @@ TODO: Shutdown the ORB here (how to get an orb to call
-      // shutdown on it?)
-      // ACE_MT_CORBA_Handler::instance()->reactor()->end_event_loop();
+      // @@ TODO: Do this portably (keeping the ORB_ptr returned from
+      // ORB_init)
+      TAO_ORB_Core_instance ()->orb ()->shutdown ();
       ACE_DEBUG ((LM_DEBUG, "@@ we should shutdown here!!!\n"));
       ACE_CHECK_ENV;
     }
@@ -364,79 +397,99 @@ void
 Latency_Supplier::push (const RtecEventComm::EventSet &events,
 			CORBA::Environment & _env)
 {
-  if (!master_ && events[0].type_ == ACE_ES_EVENT_SHUTDOWN)
-    this->shutdown ();
-  else if (events[0].type_ == ACE_ES_EVENT_INTERVAL_TIMEOUT)
+  ACE_DEBUG ((LM_DEBUG, "Latency_Supplier::push - "));
+  
+  if (events.length () == 0)
     {
-      // Create the event to send.
-      RtecEventComm::Event event;
-      // TODO: Set the SOURCE ID event.source_ = this;
-      event.type_ = ACE_ES_EVENT_NOTIFICATION;
-      ++total_sent_;
+      ACE_DEBUG ((LM_DEBUG, "no events\n"));
+      return;
+    }
 
-      if (timestamp_)
+  ACE_DEBUG ((LM_DEBUG, "%d event(s)\n", events.length ()));
+
+  for (int i = 0; i < events.length (); ++i)
+    {
+      if (!master_ && events[i].type_ == ACE_ES_EVENT_SHUTDOWN)
 	{
-	  const ACE_hrtime_t now = ACE_OS::gethrtime ();
-	  // David, time_ is now a long.  I'm not sure if this calculation correct now.
-	  //event.time_.set (now / 1000000000, (now % 1000000000) / 1000);
-	  event.time_ = now;
+	  ACE_DEBUG ((LM_DEBUG, "Latency Supplier: received shutdown event\n"));
+	  this->shutdown ();
 	}
-
-      // @@ ACE_TIMEPROBE_RESET;
-      // @@ ACE_TIMEPROBE ("start with new event in Supplier");
-
-      ACE_TRY
+      else if (events[i].type_ == ACE_ES_EVENT_INTERVAL_TIMEOUT)
 	{
-	  if (short_circuit_EC)
+	  // Create the event to send.
+	  RtecEventComm::Event event;
+	  event.source_ = supplier_id_;
+	  event.type_ = ACE_ES_EVENT_NOTIFICATION;
+	  ++total_sent_;
+
+	  if (timestamp_)
 	    {
-	      for (u_int cons = 0; cons < consumers; ++cons)
-		{
-		  // This constructor is fast.
-		  const RtecEventComm::EventSet es (1, 1, &event);
-		  consumer [cons]->push (es, ACE_TRY_ENV);
-		}
+	      const ACE_hrtime_t now = ACE_OS::gethrtime ();
+	      // @@ David, time_ is now a long.  I'm not sure if this
+	      // calculation correct now.
+	      // event.time_.set (now / 1000000000, (now % 1000000000) / 1000);
+	      event.time_ = now;
 	    }
-	  else
+
+	  // @@ ACE_TIMEPROBE_RESET;
+	  // @@ ACE_TIMEPROBE ("start with new event in Supplier");
+
+	  ACE_TRY
 	    {
-#if defined (quantify)
-	      // If measuring jitter, just Quantify the supplier-consumer path.
-	      if (measure_jitter)
+	      if (short_circuit_EC)
 		{
-		  quantify_start_recording_data ();
+		  for (u_int cons = 0; cons < consumers; ++cons)
+		    {
+		      global_profile_timer.start ();
+		      // This constructor is fast.
+		      const RtecEventComm::EventSet es (1, 1, &event);
+		      consumer [cons]->push (es, ACE_TRY_ENV);
+		    }
 		}
+	      else
+		{
+#if defined (quantify)
+		  // If measuring jitter, just Quantify the supplier-consumer path.
+		  if (measure_jitter)
+		    {
+		      quantify_start_recording_data ();
+		    }
 #endif /* quantify */
 
-	      // @@ ACE_TIMEPROBE ("time to read high-res clock and "
-	      // @@ "compare an int with 0");
-	      RtecEventComm::EventSet events (1);
-	      events.length (1);
-	      events[0] = event;
-	      consumers_->push (events, ACE_TRY_ENV);
-	    }
-	  ACE_CHECK_ENV;
-	} 
-      ACE_CATCH (RtecEventComm::Disconnected, d)
-	{
-	  ACE_ERROR ((LM_ERROR, "(%t) Latency_Supplier::push: disconnected.\n"));
-	}
-      ACE_CATCHANY
-	{
-	  ACE_ERROR ((LM_ERROR, "(%t) %s Latency_Supplier::push:"
-		      " unexpected exception.\n",
-		      entry_point ()));
-	}
-      ACE_ENDTRY;
+		  // @@ ACE_TIMEPROBE ("time to read high-res clock and "
+		  // @@ "compare an int with 0");
+		  global_profile_timer.start ();
 
-      // Check if we're done.
-      if (master_ && (total_sent_ >= total_messages_))
+		  RtecEventComm::EventSet events (1);
+		  events.length (1);
+		  events[0] = event;
+		  consumers_->push (events, ACE_TRY_ENV);
+		}
+	      ACE_CHECK_ENV;
+	    } 
+	  ACE_CATCH (RtecEventComm::Disconnected, d)
+	    {
+	      ACE_ERROR ((LM_ERROR, "(%t) Latency_Supplier::push: disconnected.\n"));
+	    }
+	  ACE_CATCHANY
+	    {
+	      ACE_ERROR ((LM_ERROR, "(%t) %s Latency_Supplier::push:"
+			  " unexpected exception.\n",
+			  entry_point ()));
+	    }
+	  ACE_ENDTRY;
+
+	  // Check if we're done.
+	  if (master_ && (total_sent_ >= total_messages_))
 	this->shutdown ();
-    }
-  else
-    {
-      ACE_ERROR ((LM_ERROR, "(%t) %s received unexpected events: ", 
-                  entry_point ()));
-      // ::dump_sequence (events);
-      return;
+	}
+      else
+	{
+	  ACE_ERROR ((LM_ERROR, "(%t) %s received unexpected events: ", 
+		      entry_point ()));
+	  // ::dump_sequence (events);
+	  return;
+	}
     }
 }
 
@@ -471,7 +524,7 @@ Latency_Supplier::shutdown (void)
 	{
 	  // Create the shutdown message.
 	  RtecEventComm::Event event;
-	  // TODO: Set the EVENT SOURCE event.source_ = this;
+	  event.source_ = supplier_id_;
 	  event.type_ = ACE_ES_EVENT_SHUTDOWN;
 
 	  // Push the shutdown event.
@@ -499,6 +552,7 @@ Latency_Supplier::shutdown (void)
       ACE_ERROR ((LM_ERROR, "(%t) %s Latency_Supplier::shutdown:"
                   " unexpected exception.\n",
                   entry_point ()));
+      ACE_TRY_ENV.print_exception ("Latency_Supplier::shutdown");
     }
   ACE_ENDTRY;
 }
@@ -687,8 +741,8 @@ main (int argc, char *argv [])
       CORBA::POA_ptr poa =
 	orb->POA_init(argc, argv, "POA");
 
-      // if (get_options (argc, argv))
-      // ACE_OS::exit (-1);
+      if (get_options (argc, argv))
+	ACE_OS::exit (-1);
 
 
 

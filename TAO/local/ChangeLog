@@ -1,3 +1,8 @@
+Tue Nov 18 13:26:32 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
+
+	* tests/Latency.cpp: 
+	  Added minimal code to measure round trip delays through the EC.
+
 Mon Nov 17 18:44:29 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
 	* tests/Latency.h: 
