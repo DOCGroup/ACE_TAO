@@ -43,7 +43,7 @@ Time_Date_Client_i::run (char *name,
     {
       CORBA::Long l;
 
-      // Get the time_date.
+      // Get the time & date in binary format.
       client_->bin_date (l,
                          ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -52,18 +52,17 @@ Time_Date_Client_i::run (char *name,
                   "(%P|%t) Binary time_date = %d\n",
                   l));
 
+      // Get the time & date in string format.
       CORBA::String_var str_var;
       client_->str_date (str_var.out(),
-                            ACE_TRY_ENV);
+                         ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) String time_date = %s\n",
                   str_var.in()));
-
   
       client_.shutdown ();
-
     }
   ACE_CATCH (CORBA::UserException, range_ex)
     {
@@ -84,7 +83,7 @@ Time_Date_Client_i::run (char *name,
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class Client<Time_Date_Factory,Time_Date_Factory_var>;
+template class Client<Time_Date,Time_Date_var>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate Client<Time_Date_Factory,Time_Date_Factory_var>
+#pragma instantiate Client<Time_Date,Time_Date_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

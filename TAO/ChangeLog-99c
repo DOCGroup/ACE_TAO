@@ -1,20 +1,25 @@
+Tue Jun  1 14:37:14 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* examples/Simple/time-date: Got this example to work on UNIX
+	  platforms, as well as NT.
+
 Tue Jun  1 13:56:09 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
 
 	Replaced ACE_U_LongLong * ACE_UINT64 with 
 	ACE_U_LongLong * ACE_UINT32 in the following files :
 
-	* o* orbsvcs/orbsvcs/Time/TAO_Time_Service_Server.cpp
+	* orbsvcs/orbsvcs/Time/TAO_Time_Service_Server.cpp
         * orbsvcs/orbsvcs/Time/TAO_Time_Service_Clerk.cpp
         * orbsvcs/orbsvcs/Time/Timer_Helper.cpp
 
 Tue Jun 01 12:33:53 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/TAO.cpp (init_child_poa and init): Added new methods that
-	  take the addition orb name parameter.
+ 	  take the addition orb name parameter.
 
 	* performance-tests/Cubit/TAO/MT_Cubit/Cubit_Task.cpp
 	  (initialize_orb): Fixed orb initialization such that a different
-	  orb name is specified for every new ORB.
+ 	  orb name is specified for every new ORB.
 
 Tue Jun 01 10:45:04 1999  David L. Levine  <levine@cs.wustl.edu>
 

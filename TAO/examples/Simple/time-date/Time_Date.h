@@ -5,6 +5,9 @@
 
 class ACE_Svc_Export DLL_ORB : public ACE_Task_Base
 {
+  // = TITLE
+  //   Define a class that dynamically links an ORB into a server
+  //   process via the <ACE_Service_Configurator>.
 public:
   virtual int init (int argc, char *argv[]);
   // Initialize the <TAO_ORB_Manager>.
@@ -21,11 +24,16 @@ public:
 
 class ACE_Svc_Export Time_Date_Servant : public ACE_Service_Object
 {
+  // = TITLE
+  //   Define a class that dynamically links the Time_Date service
+  //   into a server process via the <ACE_Service_Configurator>.  Note
+  //   that this assumes the ORB has been linked previously.
 public:
   virtual int init (int argc, char *argv[]);
   // Initialize the <Time_Date> servant.
 
   int parse_args (int argc, char *argv[]);
+  // Parse the "command-line" arguments.
 
 private:
    Time_Date_i servant_;
