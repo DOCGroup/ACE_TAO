@@ -510,7 +510,9 @@ also receives other options that are specific to it. <P>
     <td>If the value of the flag is 0, tao_idl will generate code that
         will use native C++ exceptions. If the value of the flag is 1,
         tao_idl will generate code that will use the <CODE>CORBA::Environment</CODE> variable for
-        passing exceptions </td>
+        passing exceptions. If the value of the flag is 2, the C++ 'throw' keyword will be used
+	in place of ACE_THROW_SPEC, ACE_THROW, and ACE_RETRHOW (ACE_THROW_RETURN and 
+	TAO_INTERCEPTOR_THROW will still be used). </td>
     <td>&nbsp;</td>
   </tr>
 
