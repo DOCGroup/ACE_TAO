@@ -161,9 +161,15 @@ TAO_Thread_Lane::validate_and_map_priority (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW (CORBA::BAD_PARAM ());
 
   // Check that the priority is in bounds.
-  if (this->lane_priority_ < RTCORBA::minPriority ||
-      this->lane_priority_ > RTCORBA::maxPriority)
-    ACE_THROW (CORBA::BAD_PARAM ());
+  if (this->lane_priority_ < RTCORBA::minPriority
+           // The line below will always be false unless the value of
+           // RTCORBA::maxPriority, which is now assigned the value of
+           // 32767, is changed in RTCORBA.pidl.
+//      || this->lane_priority_ > RTCORBA::maxPriority
+     )
+    {
+      ACE_THROW (CORBA::BAD_PARAM ());
+    }
 
   CORBA::ORB_ptr orb =
     this->pool_.manager ().orb_core ().orb ();

@@ -130,9 +130,15 @@ void
 TAO_RT_POA::validate_priority (RTCORBA::Priority priority
                                ACE_ENV_ARG_DECL)
 {
-  if (priority < RTCORBA::minPriority ||
-      priority > RTCORBA::maxPriority)
-    ACE_THROW (CORBA::BAD_PARAM ());
+  if (priority < RTCORBA::minPriority 
+           // The line below will always be false unless the value of
+           // RTCORBA::maxPriority, which is now assigned the value of
+           // 32767, is changed in RTCORBA.pidl.
+//      || priority > RTCORBA::maxPriority
+     )
+    {
+      ACE_THROW (CORBA::BAD_PARAM ());
+    }
 
   // If this POA is using a thread pool with lanes, make sure the
   // priority matches one of the thread lanes.  Note that in this
