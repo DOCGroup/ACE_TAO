@@ -55,12 +55,13 @@ ACE_TP_Token_Guard::ACE_TP_Token_Guard (ACE_Select_Reactor_Token &token,
    owner_ (0)
 {
   result = this->grab_token (max_wait_time);
+
 }
 
 ACE_INLINE
 ACE_TP_Token_Guard::~ACE_TP_Token_Guard (void)
 {
-  if (this->owner_)
+  if (this->owner_ == 1)
     {
       ACE_MT (this->token_.release ());
       this->owner_ = 0;
@@ -70,10 +71,13 @@ ACE_TP_Token_Guard::~ACE_TP_Token_Guard (void)
 ACE_INLINE void
 ACE_TP_Token_Guard::release_token (void)
 {
-  ACE_MT (this->token_.release ());
+  if (this->owner_ == 1)
+    {
+      ACE_MT (this->token_.release ());
 
-  // We are not the owner anymore..
-  this->owner_ = 0;
+      // We are not the owner anymore..
+      this->owner_ = 0;
+    }
 }
 
 ACE_INLINE int
