@@ -87,6 +87,9 @@ private:
   int register_clerk (void);
   // Bind the clerk in the appropriate context in the Naming Service.
 
+  int if_first_clerk (CosNaming::Name clerk_context_name);
+  // Check if this is the first clerk.
+
   int init_IR (void);
   // Initialise the Interface Repository and register the clerk
   // implementation with it.

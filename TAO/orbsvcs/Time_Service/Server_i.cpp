@@ -106,7 +106,7 @@ Server_i::create_server (void)
   TAO_TRY
     {
       // Create a new server object.
-      ACE_NEW_RETURN (this->time_service_server_impl_,
+	   ACE_NEW_RETURN (this->time_service_server_impl_,
 		      TAO_Time_Service_Server,
 		      0);
 
@@ -145,6 +145,26 @@ Server_i::create_server (void)
   return 0;
 }
 
+int 
+Server_i::if_first_server (CosNaming::Name &server_context_name)
+{
+	TAO_TRY
+	{
+		this->my_name_server_->resolve
+			 (server_context_name, TAO_TRY_ENV);
+		TAO_CHECK_ENV;
+	}
+	TAO_CATCH (CORBA::UserException, userex)
+    {
+      ACE_UNUSED_ARG (userex);
+	  printf("First Server\n");
+      //TAO_TRY_ENV.print_exception ("User Exception");
+      return 1;
+    }
+	TAO_ENDTRY;
+	return 0;
+}
+
 // Bind the Server in the context 'ServerContext' with the name
 // 'Server:<hostname>'.
 
@@ -159,12 +179,21 @@ Server_i::register_server (void)
 
       CosNaming::NamingContext_var server_context;
 
-      if (CORBA::is_nil (this->my_name_server_->resolve
-			 (server_context_name, TAO_TRY_ENV)))
+	  printf("gotchya");
+      //CORBA::Object_ptr temp = this->my_name_server_->resolve
+		//	 (server_context_name, TAO_TRY_ENV);
+      //TAO_TRY_ENV.print_exception ("except:");
+	  
+	  //TAO_CHECK_ENV;
+	
+	if (if_first_server (server_context_name))	
 	{
+		//printf("isnil\n");
+	   //TAO_TRY_ENV.print_exception ("except:");
 	  // This is the first server. Get a new context and bind it
 	  // to the naming service.
-	  TAO_TRY_ENV.clear ();
+	  //TAO_TRY_ENV.clear ();
+	  //printf("exception cleared\n");
 
 	  // Get context.
 	  server_context =
@@ -177,11 +206,15 @@ Server_i::register_server (void)
 						 TAO_TRY_ENV);
 	  TAO_CHECK_ENV;
 	}
-      TAO_CHECK_ENV;
+      //TAO_CHECK_ENV;
 
       char host_name[MAXHOSTNAMELEN];
       char server_mc_name[MAXHOSTNAMELEN];
       ACE_OS::hostname (host_name,MAXHOSTNAMELEN);
+
+	  ACE_DEBUG ((LM_DEBUG,
+				  "hostname %s",
+				   host_name));
 
       CosNaming::Name server_name (server_context_name);
 
@@ -199,10 +232,16 @@ Server_i::register_server (void)
 		  "Binding ServerContext -> %s\n",
 		  server_name[1].id.in ()));
     }
+  TAO_CATCH (CORBA::UserException, userex)
+    {
+      ACE_UNUSED_ARG (userex);
+      TAO_TRY_ENV.print_exception ("User Exception");
+      return -1;
+    }
   TAO_CATCHANY
     {
       TAO_TRY_ENV.print_exception ("(%P|%t) Exception from init_naming_service ()\n");
-      TAO_TRY_ENV.clear ();
+      //TAO_TRY_ENV.clear ();
       return -1;
     }
   TAO_ENDTRY;
@@ -247,12 +286,15 @@ Server_i::init (int argc,
       // Get the orb.
       this->orb_ = this->orb_manager_.orb ();
 
+	  printf("1\n");
       // Register the above implementation with the Naming Service.
       this->init_naming_service (TAO_TRY_ENV);
 
+	  printf("2\n");
       // Create the server object.
       this->create_server ();
 
+	  printf("3\n");
       // Register the server object with the Naming Service.
       this->register_server ();
 
