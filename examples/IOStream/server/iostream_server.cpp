@@ -62,17 +62,18 @@ public:
 		
     if (!(this -> peer () >> i >> f >> s))
       {
-	cerr << "Error getting data" << endl ;
-	return - 1 ;
+	cerr << "Server: Error getting data" << endl ;
+        return - 1 ;
       }
 
-    cerr << "Received (" << i << ") (" << f << ") (" << s << ")" << endl ;
+    cerr << "Server Received: (" << i << ") (" << f << ") (" << s << ")" << endl ;
 
-    if (!(this -> peer () << "Received (" << i << ") (" << f << ") (" << s << ")" << endl))
+    if (!(this -> peer () << "Received: " << i << " " << f << " " << s << endl))
       {
 	cerr << __LINE__ << "Error sending data" << endl ;
 	return - 1 ;
       }
+
 #else
     if (!(this -> peer () >> i >> f))
       {
@@ -82,7 +83,7 @@ public:
 
     cerr << "Received (" << i << ") (" << f << ")" << endl;
 
-    if (!(this -> peer () << "Received (" << i << ") (" << f << ")" << endl))
+    if (!(this -> peer () << i << " " << f << endl))
       {
 	cerr << __LINE__ << "Error sending data" << endl ;
 	return - 1 ;
@@ -92,7 +93,7 @@ public:
     // sync () function.  Some iostreams implementations let us use a
     // 'flush' function much like the 'endl' function.
 
-    this->peer ().sync ();
+    // this->peer ().sync ();
     return 0;
   }
 };
@@ -121,7 +122,7 @@ main (int argc, char *argv [])
 
   Logging_Acceptor peer_acceptor ;
 	
-  if (peer_acceptor.open (ACE_INET_Addr (argc > 1 ? atoi (argv[1]) : ACE_DEFAULT_SERVER_PORT)) == - 1) 
+  if (peer_acceptor.open (ACE_INET_Addr (argc > 1 ? atoi (argv[1]) : ACE_DEFAULT_SERVER_PORT)) == - 1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), - 1);
 
   else if (ACE_Service_Config::reactor ()->register_handler 

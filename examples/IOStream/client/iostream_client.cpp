@@ -12,16 +12,15 @@ int main (int argc, char *argv[])
 
   if (connector.connect (server, addr) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), -1);
-  
-  server << "1 2.3 testing" << endl;	// Command the server to execute function 'foo'
-  server.sync ();			// Force the data to the server.
+
+  server << "1 2.3 testing" << endl;	// Buffer up some things to send to the server.
 
   int i;
   float f;
 
 #if defined (__GNUC__)
   String s1;
-  QuotedString s2;
+  String s2;
   server >> s1 >> i >> f >> s2;
 
   cerr << "Server said:\n\t";
@@ -30,9 +29,11 @@ int main (int argc, char *argv[])
   cerr << f << " ";
   cerr << s2 << endl;
 #else
-  server >> i >> f;
+  String s1;
+  server s1 >> i >> f;
 
   cerr << "Server said:\n\t";
+  cerr << s1 << " ";
   cerr << i << " ";
   cerr << f << endl;
 #endif /* __GNUC__ */
