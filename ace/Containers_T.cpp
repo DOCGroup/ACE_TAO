@@ -1128,7 +1128,8 @@ ACE_Fixed_Set_Iterator<T, ACE_SIZE>::done (void) const
 {
   ACE_TRACE ("ACE_Fixed_Set_Iterator<T, ACE_SIZE>::done");
 
-  return ACE_static_cast (size_t, this->next_) >= this->s_.cur_size_;
+  return ACE_static_cast (ACE_CAST_CONST size_t, this->next_) >=
+    this->s_.cur_size_;
 }
 
 template <class T, size_t ACE_SIZE> int
@@ -1356,7 +1357,8 @@ ACE_Bounded_Set_Iterator<T>::done (void) const
 {
   ACE_TRACE ("ACE_Bounded_Set_Iterator<T>::done");
 
-  return ACE_static_cast(size_t, this->next_) >= this->s_.cur_size_;
+  return ACE_static_cast (ACE_CAST_CONST size_t, this->next_) >=
+    this->s_.cur_size_;
 }
 
 template <class T> int
