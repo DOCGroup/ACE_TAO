@@ -8,11 +8,8 @@
 #	Local macros
 #----------------------------------------------------------------------------
 
-DIRS  =	CosEC \
-	RtEC \
-	Notify \
-	Log \
-	Security
+DIRS  =	RedGreen \
+	Throughput
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO

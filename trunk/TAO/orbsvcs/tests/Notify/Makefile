@@ -9,7 +9,8 @@
 #----------------------------------------------------------------------------
 
 DIRS  =	lib \
-	Basic
+	Basic \
+	performance-tests
 
 
 ifndef TAO_ROOT

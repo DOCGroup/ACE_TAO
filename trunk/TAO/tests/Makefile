@@ -45,7 +45,10 @@ DIRS  = CDR \
 	LongUpcalls \
 	RTCORBA \
 	Forwarding \
-	Exposed_Policies
+	Exposed_Policies \
+	Smart_Proxies \
+	QtTests \
+	ior_corbaloc
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
