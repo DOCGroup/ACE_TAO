@@ -263,7 +263,8 @@ be_generator::create_valuetype (UTL_ScopedName *n,
 }
 
 AST_InterfaceFwd *
-be_generator::create_valuetype_fwd(UTL_ScopedName *n, UTL_StrList *p)
+be_generator::create_valuetype_fwd (UTL_ScopedName *n, 
+                                    UTL_StrList *p)
 {
 #ifdef IDL_HAS_VALUETYPE
   be_valuetype_fwd *retval = 0;

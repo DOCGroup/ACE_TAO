@@ -82,13 +82,20 @@ ACE_RCSID(fe, fe_extern, "$Id$")
 
 // yacc parser interface
 
-extern int tao_yyparse ();
+extern int tao_yyparse (void);
 extern FILE *tao_yyin;
 
 int
-FE_yyparse ()
+FE_yyparse (void)
 {
-  return tao_yyparse ();
+  int result = tao_yyparse ();
+
+  if (idl_global->err_count () == 0) 
+    {
+      idl_global->root ()->call_add ();
+    }
+
+  return result;
 }
 
 void
@@ -97,7 +104,7 @@ FE_set_yyin (File *f)
   tao_yyin = ACE_reinterpret_cast (FILE *, f);
 }
 
-// constructor interfaces 
+// Constructor interfaces.
 
 UTL_Error *
 FE_new_UTL_Error (void)
@@ -126,7 +133,7 @@ FE_new_UTL_String (char *str)
 {
   UTL_String *retval = 0;
   ACE_NEW_RETURN (retval,
-                  UTL_String,
+                  UTL_String (str),
                   0);
 
   return retval;
