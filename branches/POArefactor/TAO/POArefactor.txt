@@ -1,3 +1,11 @@
+Tue Sep 14 12:17:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/ORT_Adapter_Factory.h:
+        * tao/ObjRefTemplate/ORT_Adapter_Factory_Impl.{h,cpp}:
+          Removed exception spec from create/destroy method, for the destroy
+          it is not needed, for the create, we could just return 0 in case of
+          out of memory
+
 Tue Sep 14 11:26:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/POA_ThreadPolicy.h:
