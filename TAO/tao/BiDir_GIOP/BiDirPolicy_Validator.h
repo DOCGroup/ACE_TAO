@@ -12,8 +12,8 @@
  */
 //=============================================================================
 
-#ifndef TAO_POLICY_VALIDATOR_H_
-#define TAO_POLICY_VALIDATOR_H_
+#ifndef TAO_BIDIR_POLICY_VALIDATOR_H_
+#define TAO_BIDIR_POLICY_VALIDATOR_H_
 
 #include /**/ "ace/pre.h"
 #include "bidirgiop_export.h"
@@ -53,4 +53,4 @@ private:
 };
 
 #include /**/ "ace/post.h"
-#endif /**/
+#endif /* TAO_BIDIR_POLICY_VALIDATOR_H_ */
