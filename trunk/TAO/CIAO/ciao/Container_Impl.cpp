@@ -1,9 +1,13 @@
 // $Id$
 #include "Container_Impl.h"
 
+#include "ace/Auto_Ptr.h"
+#include "ace/OS_NS_string.h"
+
 #if !defined (__ACE_INLINE__)
 # include "Container_Impl.inl"
 #endif /* __ACE_INLINE__ */
+
 
 CIAO::Container_Impl::~Container_Impl ()
 {

@@ -1,8 +1,9 @@
 //$Id$
 
 #include "CPK_Handler.h"
-#include "tao/Exception.h"
 #include "Utils.h"
+#include "tao/Exception.h"
+#include "ace/OS_NS_string.h"
 
 using CIAO::Config_Handler::Utils;
 
@@ -13,7 +14,7 @@ process_CCMComponentPortKind (DOMNodeIterator * iter,
 {
   char* facet = XMLString::transcode (XStr ("Facet"));
   char* simplex_receptacle = XMLString::transcode (XStr ("SimplexReceptacle"));
-  char* multiplex_receptacle = XMLString::transcode 
+  char* multiplex_receptacle = XMLString::transcode
                                  (XStr ("MultiplexReceptacle"));
   char* event_emitter = XMLString::transcode (XStr ("EventEmitter"));
   char* event_publisher = XMLString::transcode (XStr ("EventPublisher"));

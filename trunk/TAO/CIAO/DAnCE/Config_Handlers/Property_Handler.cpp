@@ -2,9 +2,11 @@
 
 #include "Property_Handler.h"
 #include "Any_Handler.h"
+#include "Utils.h"
 #include "tao/Exception.h"
 #include "ace/Auto_Ptr.h"
-#include "Utils.h"
+#include "ace/SString.h"
+
 
 using CIAO::Config_Handler::Utils;
 using CIAO::Config_Handler::Any_Handler;
@@ -28,7 +30,7 @@ CIAO::Config_Handler::Property_Handler::process_Property (DOMNodeIterator * iter
           valid_value = 1;
           if (node->hasAttributes ())
             {
-              xercesc::DOMNamedNodeMap * named_node_map = 
+              xercesc::DOMNamedNodeMap * named_node_map =
                 node->getAttributes ();
               int length = named_node_map->getLength ();
               if (length > 1)
@@ -37,21 +39,21 @@ CIAO::Config_Handler::Property_Handler::process_Property (DOMNodeIterator * iter
                     {
                       DOMNode * attr_node = named_node_map->item (j);
                       XStr attr_node_name = attr_node->getNodeName ();
-                      char*  attr_node_value_ch = 
+                      char*  attr_node_value_ch =
                         XMLString::transcode (attr_node->getNodeValue ());
                       ACE_TString attr_node_value = attr_node_value_ch;
                       XMLString::release (&attr_node_value_ch);
                       if (attr_node_name = XStr (ACE_TEXT ("href")))
                         {
                           XMLURL url (attr_node_value.c_str ());
-                          DOMNodeIterator * value_iter = 
-                            Utils::parse_href_tag (url, 
+                          DOMNodeIterator * value_iter =
+                            Utils::parse_href_tag (url,
                                                    node->getOwnerDocument ());
                           // Get to the root-node
                           value_iter->nextNode ();
 
                           // Process the value node present there
-                          Any_Handler::process_Any (value_iter, 
+                          Any_Handler::process_Any (value_iter,
                                                     property.value);
                         }
                     }
@@ -63,7 +65,7 @@ CIAO::Config_Handler::Property_Handler::process_Property (DOMNodeIterator * iter
             // Process the value associated
             Any_Handler::process_Any (iter, property.value);
         }
-      else 
+      else
         {
           if (! valid_name || ! valid_value)
             {
