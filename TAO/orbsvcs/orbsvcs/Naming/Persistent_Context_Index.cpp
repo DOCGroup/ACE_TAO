@@ -353,6 +353,7 @@ template class ACE_Hash_Map_Iterator<TAO_Persistent_Index_ExtId, TAO_Persistent_
 template class ACE_Hash_Map_Iterator_Ex<TAO_Persistent_Index_ExtId, TAO_Persistent_Index_IntId, ACE_Hash<TAO_Persistent_Index_ExtId>, ACE_Equal_To<TAO_Persistent_Index_ExtId>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Reverse_Iterator<TAO_Persistent_Index_ExtId, TAO_Persistent_Index_IntId, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Reverse_Iterator_Ex<TAO_Persistent_Index_ExtId, TAO_Persistent_Index_IntId, ACE_Hash<TAO_Persistent_Index_ExtId>, ACE_Equal_To<TAO_Persistent_Index_ExtId>, ACE_Null_Mutex>;
+template class ACE_Auto_Basic_Ptr<ACE_Shared_Hash_Map<TAO_Persistent_Index_ExtId,  TAO_Persistent_Index_IntId>::ITERATOR>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Auto_Basic_Ptr<TAO_Naming_Context>
 #pragma instantiate ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_SYNCH_MUTEX>
@@ -367,5 +368,6 @@ template class ACE_Hash_Map_Reverse_Iterator_Ex<TAO_Persistent_Index_ExtId, TAO_
 #pragma instantiate ACE_Hash_Map_Iterator<TAO_Persistent_Index_ExtId, TAO_Persistent_Index_IntId, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Iterator_Ex<TAO_Persistent_Index_ExtId, TAO_Persistent_Index_IntId, ACE_Hash<TAO_Persistent_Index_ExtId>, ACE_Equal_To<TAO_Persistent_Index_ExtId>, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator<TAO_Persistent_Index_ExtId, TAO_Persistent_Index_IntId, ACE_Null_Mutex>
+#pragma instantiate ACE_Auto_Basic_Ptr<ACE_Shared_Hash_Map<TAO_Persistent_Index_ExtId,  TAO_Persistent_Index_IntId>::ITERATOR>
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<TAO_Persistent_Index_ExtId, TAO_Persistent_Index_IntId, ACE_Hash<TAO_Persistent_Index_ExtId>, ACE_Equal_To<TAO_Persistent_Index_ExtId>, ACE_Null_Mutex>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
