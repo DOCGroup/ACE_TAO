@@ -2,6 +2,14 @@ Thu Apr 27 15:08:31 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/DynAny_i.h: Also need to include Typecode.h here.
 
+Thu Apr 27 15:07:21 2000  Shawn Hannan <hannan@cs.wustl.edu>
+
+		* orbsvcs/examples/RtEC/Simple/Consumer.cpp:
+		* orbsvcs/examples/RtEC/Simple/Supplier.cpp:
+
+		  Replaced #include "orbsvcs/RtecEventChannelAdminS.h"
+		  with #include "orbsvcs/RtecEventChannelAdminC.h"
+
 Thu Apr 27 11:10:51 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/Makefile:
