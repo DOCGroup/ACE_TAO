@@ -432,7 +432,7 @@ TAO_AV_TCP_Connector::close (void)
 //------------------------------------------------------------
 
 int
-TAO_AV_TCP_Base_Acceptor::open (TAO_AV_TCP_Acceptor *acceptor,
+TAO_AV_TCP_Base_Acceptor::acceptor_open (TAO_AV_TCP_Acceptor *acceptor,
                                 ACE_Reactor *reactor,
                                 const ACE_INET_Addr &local_addr,
                                 TAO_FlowSpec_Entry *entry)
@@ -537,7 +537,7 @@ TAO_AV_TCP_Acceptor::open (TAO_Base_StreamEndPoint *endpoint,
                 buf
                 ));
 
-  int result = this->acceptor_.open (this,
+  int result = this->acceptor_.acceptor_open (this,
                                      av_core->reactor (),
                                      *inet_addr,
                                      entry);
@@ -572,7 +572,7 @@ TAO_AV_TCP_Acceptor::open_default (TAO_Base_StreamEndPoint *endpoint,
                   ACE_INET_Addr ("0"),
                   -1);
 
-  int result = this->acceptor_.open (this,
+  int result = this->acceptor_.acceptor_open (this,
                                      av_core->reactor (),
                                      *address,
                                      entry);
