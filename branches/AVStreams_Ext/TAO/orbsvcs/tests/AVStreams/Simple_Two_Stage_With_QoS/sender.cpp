@@ -74,7 +74,9 @@ Sender::Sender (void)
     protocol_ ("QoS_UDP"),
     frame_rate_ (1.0),
     mb_ (BUFSIZ),
-    address_ ("localhost:8000")
+    address_ ("localhost:8000"),
+    src_addr_ (0),
+    dest_addr_  (0)
 {
 }
 
@@ -91,7 +93,7 @@ Sender::parse_args (int argc,
                     char **argv)
 {
   // Parse command line arguments
-  ACE_Get_Opt opts (argc, argv, "f:p:r:v:s:d");
+  ACE_Get_Opt opts (argc, argv, "f:p:r:vs:d:");
 
   int c;
   while ((c= opts ()) != -1)
@@ -118,7 +120,7 @@ Sender::parse_args (int argc,
         case 'd':
           this->address_ = opts.opt_arg ();
 	  ACE_NEW_RETURN (this->dest_addr_,
-			  ACE_INET_Addr (opts.opt_arg ()),
+			  ACE_INET_Addr (this->address_.c_str ()),
 			  0);
           break;
         default:
@@ -413,7 +415,7 @@ Sender::pace_data (ACE_ENV_SINGLE_ARG_DECL)
           // Reset the message block.
           this->mb_.reset ();
 
-          if (this->frame_count_ == 25)
+          if (this->frame_count_ == 3)
             {
               TAO_Forward_FlowSpec_Entry entry (this->flowname_.c_str (),
                                                 "IN",
