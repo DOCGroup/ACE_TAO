@@ -1,3 +1,16 @@
+Sat Aug 14 18:17:59 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_interface.cpp:
+        
+          In the traversal of the inheritance graph for components, changed 
+          the algorithm so that CCMObject is processed before the base
+          component, if any. This move ensures that, in the generated
+          copy constructor in the skeleton class of the equivalent interface,
+          the calls to base class copy constructors will be generated in
+          the correct order. For compilers that are strict about this,
+          the correct order is depth-first pre-order on the inheritance
+          tree.
+
 Sat Aug 14 12:11:06 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/Event/ECG_UDP_Out_Endpoint.cpp (is_loopback):
