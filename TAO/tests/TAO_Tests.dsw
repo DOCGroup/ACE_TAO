@@ -510,7 +510,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Simple Client"=.\Simple\client.dsp - Package Owner=<4>
+Project: "Simple Time Client"=.\Simple\time\client.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -522,7 +522,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Simple Server"=.\Simple\server.dsp - Package Owner=<4>
+Project: "Simple Time Server"=.\Simple\time\server.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
