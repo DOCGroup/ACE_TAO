@@ -405,7 +405,7 @@ public:
    * multiple times for the same <event_handler> and <sig_action> but
    * different <signals>.
    */
-  virtual int register_handler (const ACE_Sig_Set &signals,
+  virtual int register_handler (const ACE_Sig_Set &sigset,
                                 ACE_Event_Handler *event_handler,
                                 ACE_Sig_Action *sig_action = 0);
 

@@ -154,6 +154,7 @@ CONTROLLED_FILES = \
         os-patches \
         performance-tests \
         tests \
+	Kokyu \
         websvcs
 
 RELEASE_FILES = \

@@ -1,3 +1,14 @@
+Tue Oct  7 14:54:47 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ace/Reactor.h: Renamed a variable name, signals to sigset. The
+	  former was creating problems when Reactor is used with
+	  Qt. Thanks to Hans Utz <hans.utz@informatik.uni-ulm.de> for
+	  reporting the problem. 
+
+	* Makefile: Added Kokyu to the list of controlled files. Thanks to
+	  Don Hinton for the patch and Werner Buchert for reporting the
+	  problem. 
+
 Tue Oct 07 14:01:11 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Mem_Map/IO-tests/test_io.cpp:
