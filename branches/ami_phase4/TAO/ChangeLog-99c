@@ -1,5 +1,12 @@
 Tue Jul 13 23:32:05 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
   
+	* tests/NestedUpcall/Simple/simple-client.cpp
+	* tests/MT_Client/simple-client.conf
+	* tests/MT_Client/client_muxed.conf : Added these files.
+  
+	* tests/NestedUpcall/Simple/client.cpp
+	* tests/NestedUpcall/Simple/server.cpp : cosmetic changes. 
+  
 	* tao/ORB_Core.cpp
 	* tao/Reply_Dispatcher.cpp
 	* tao/Reply_Dispatcher.h
