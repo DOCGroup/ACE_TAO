@@ -41,10 +41,10 @@ TAO/tests/BiDirectional_NestedUpcall/run_test.pl: !MINIMUM !STATIC
 TAO/tests/Leader_Followers/run_test.pl: !ST
 TAO/tests/Leader_Followers/run_test_mt.pl: !ST
 TAO/tests/Multiple_Inheritance/run_test.pl
-TAO/tests/Bug_1269_Regression/run_test.pl: !SANDBOX !MINIMUM
-TAO/tests/Bug_1270_Regression/run_test.pl: !SANDBOX !MINIMUM
-TAO/tests/Bug_1020_Basic_Regression/run_test.pl: !SANDBOX !MINIMUM !ST
-TAO/tests/Bug_1020_Regression/run_test.pl: !SANDBOX !MINIMUM !ST
+TAO/tests/Bug_1269_Regression/run_test.pl: !Win32 !MINIMUM
+TAO/tests/Bug_1270_Regression/run_test.pl: !Win32 !MINIMUM
+TAO/tests/Bug_1020_Basic_Regression/run_test.pl: !Win32 !MINIMUM !ST
+TAO/tests/Bug_1020_Regression/run_test.pl: !MINIMUM !ST
 TAO/tests/RTCORBA/Banded_Connections/run_test.pl: !MINIMUM !ST !Linux
 TAO/tests/RTCORBA/Client_Propagated/run_test.pl: !MINIMUM !ST !Linux
 TAO/tests/RTCORBA/Client_Protocol/run_test.pl: !MINIMUM !ST
@@ -113,7 +113,7 @@ TAO/tests/ORB_destroy/run_test.pl
 TAO/tests/ORB_shutdown/run_test.pl
 TAO/tests/DSI_Gateway/run_test.pl: !MINIMUM
 TAO/tests/DynAny_Test/run_test.pl: !MINIMUM
-# BROKEN TAO/tests/Connection_Purging/run_test.pl: !ST
+TAO/tests/Connection_Purging/run_test.pl: !ST
 TAO/tests/LongUpcalls/run_test.pl: !MINIMUM
 TAO/tests/Reliable_Oneways/run_test.pl: !MINIMUM
 TAO/tests/Blocking_Sync_None/run_test.pl: !MINIMUM
