@@ -7696,24 +7696,6 @@ CORBA::Boolean operator>> (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-#if !defined (_CORBA_VALUEDEF__ARG_TRAITS_TMPLINST_CS_)
-#define _CORBA_VALUEDEF__ARG_TRAITS_TMPLINST_CS_
-
-  template class
-    TAO::Arg_Traits<
-        CORBA::ValueDef
-      >;
-
-  template class
-    TAO::Object_Arg_Traits_T<
-        CORBA::ValueDef_ptr,
-        CORBA::ValueDef_var,
-        CORBA::ValueDef_out,
-        TAO::Objref_Traits<CORBA::ValueDef>
-      >;
-
-#endif /* end #if !defined */
-
   template class
     TAO::Ret_Var_Size_Argument_T<
         CORBA::InitializerSeq,
@@ -7721,30 +7703,9 @@ CORBA::Boolean operator>> (
       >;
 
   template class
-    TAO::In_Var_Size_Argument_T<
-        CORBA::InitializerSeq
-      >;
-
-  template class
-    TAO::Ret_Object_Argument_T<
-        CORBA::ValueDef_ptr,
-        CORBA::ValueDef_var
-      >;
-
-  template class
-    TAO::In_Object_Argument_T<
-        CORBA::ValueDef_ptr
-      >;
-
-  template class
     TAO::Ret_Var_Size_Argument_T<
         CORBA::ValueDefSeq,
         CORBA::ValueDefSeq_var
-      >;
-
-  template class
-    TAO::In_Var_Size_Argument_T<
-        CORBA::ValueDefSeq
       >;
 
 #if !defined (_CORBA_VALUEDEF_FULLVALUEDESCRIPTION__ARG_TRAITS_TMPLINST_CS_)
@@ -7795,20 +7756,6 @@ CORBA::Boolean operator>> (
         CORBA::ValueMemberSeq
       >;
 
-#if !defined (_CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_)
-#define _CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_
-
-  template class TAO::Arg_Traits<CORBA::InitializerSeq>;
-
-  template class
-    TAO::Var_Size_Arg_Traits_T<
-        CORBA::InitializerSeq,
-        CORBA::InitializerSeq_var,
-        CORBA::InitializerSeq_out
-      >;
-
-#endif /* end #if !defined */
-
   template class
     TAO_Var_Var_T<
         CORBA::ValueDef::FullValueDescription
@@ -7843,12 +7790,6 @@ CORBA::Boolean operator>> (
       >;
 
   template class
-    TAO::Ret_Object_Argument_T<
-        CORBA::OperationDef_ptr,
-        CORBA::OperationDef_var
-      >;
-
-  template class
     TAO::Objref_Traits<
         CORBA::ValueDef
       >;
@@ -7872,20 +7813,6 @@ CORBA::Boolean operator>> (
     TAO::Any_Impl_T<
         CORBA::ValueDef
       >;
-
-#if !defined (_CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_)
-#define _CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_
-
-  template class TAO::Arg_Traits<CORBA::ValueDefSeq>;
-
-  template class
-    TAO::Var_Size_Arg_Traits_T<
-        CORBA::ValueDefSeq,
-        CORBA::ValueDefSeq_var,
-        CORBA::ValueDefSeq_out
-      >;
-
-#endif /* end #if !defined */
 
   template class
     TAO::Objref_Traits<
@@ -8096,39 +8023,6 @@ CORBA::Boolean operator>> (
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#if !defined (_CORBA_VALUEDEF__ARG_TRAITS_TMPLINST_CS_)
-#define _CORBA_VALUEDEF__ARG_TRAITS_TMPLINST_CS_
-
-# pragma instantiate \
-    TAO::Arg_Traits< \
-        CORBA::ValueDef \
-      >
-
-# pragma instantiate \
-    TAO::Object_Arg_Traits_T< \
-        CORBA::ValueDef_ptr, \
-        CORBA::ValueDef_var, \
-        CORBA::ValueDef_out, \
-        TAO::Objref_Traits<CORBA::ValueDef> \
-      >
-
-#endif /* end #if !defined */
-
-# pragma instantiate \
-    TAO::In_Var_Size_Argument_T< \
-        CORBA::InitializerSeq \
-      >
-
-# pragma instantiate \
-    TAO::In_Object_Argument_T< \
-        CORBA::ValueDef_ptr \
-      >
-
-# pragma instantiate \
-    TAO::In_Var_Size_Argument_T< \
-        CORBA::ValueDefSeq \
-      >
-
 #if !defined (_CORBA_VALUEDEF_FULLVALUEDESCRIPTION__ARG_TRAITS_TMPLINST_CS_)
 #define _CORBA_VALUEDEF_FULLVALUEDESCRIPTION__ARG_TRAITS_TMPLINST_CS_
 
@@ -8177,20 +8071,6 @@ CORBA::Boolean operator>> (
         CORBA::ValueMemberSeq \
       >
 
-#if !defined (_CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_)
-#define _CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_
-
-# pragma instantiate TAO::Arg_Traits<CORBA::InitializerSeq>
-
-# pragma instantiate \
-    TAO::Var_Size_Arg_Traits_T< \
-        CORBA::InitializerSeq, \
-        CORBA::InitializerSeq_var, \
-        CORBA::InitializerSeq_out \
-      >
-
-#endif /* end #if !defined */
-
 # pragma instantiate \
     TAO_Var_Var_T< \
         CORBA::ValueDef::FullValueDescription \
@@ -8236,20 +8116,6 @@ CORBA::Boolean operator>> (
     TAO::Any_Impl_T< \
         CORBA::ValueDef \
       >
-
-#if !defined (_CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_)
-#define _CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_
-
-# pragma instantiate TAO::Arg_Traits<CORBA::ValueDefSeq>
-
-# pragma instantiate \
-    TAO::Var_Size_Arg_Traits_T< \
-        CORBA::ValueDefSeq, \
-        CORBA::ValueDefSeq_var, \
-        CORBA::ValueDefSeq_out \
-      >
-
-#endif /* end #if !defined */
 
 # pragma instantiate \
     TAO::Objref_Traits< \
