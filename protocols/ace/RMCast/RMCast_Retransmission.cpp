@@ -67,6 +67,26 @@ ACE_RMCast_Retransmission::resend (ACE_UINT32 max_sequence_number)
 }
 
 int
+ACE_RMCast_Retransmission::resend_all (void)
+{
+  if (this->next () == 0)
+    return 0;
+
+  ACE_RMCast_Resend_Worker worker (this->next (), ACE_UINT32_MAX);
+
+  if (this->messages_.for_each (&worker) == -1)
+    return -1;
+
+  return worker.n;
+}
+
+int
+ACE_RMCast_Retransmission::has_data (void)
+{
+  return !this->messages_.empty ();
+}
+
+int
 ACE_RMCast_Retransmission::close (void)
 {
   // @@

@@ -9,7 +9,7 @@
 # include "RMCast_UDP_Event_Handler.i"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID(ace, RMCast_Event_Handler, "$Id$")
+ACE_RCSID(ace, RMCast_UDP_Event_Handler, "$Id$")
 
 ACE_RMCast_UDP_Event_Handler::~ACE_RMCast_UDP_Event_Handler (void)
 {

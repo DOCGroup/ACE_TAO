@@ -19,10 +19,16 @@ FILES= \
 	RMCast_Membership \
 	RMCast_Retransmission \
 	RMCast_Reordering \
+	RMCast_Reliable_Factory \
+	RMcast_Singleton_Factory \
+	RMCast_Control_Splitter \
+	RMcast_Resend_Handler \
 	\
 	RMCast_IO_UDP \
 	RMCast_UDP_Event_Handler \
-	RMCast_UDP_Proxy
+	RMCast_UDP_Proxy \
+	RMCast_UDP_Reliable_Receiver \
+	RMCast_UDP_Reliable_Sender
 
 #----------------------------------------------------------------------------
 #       Include macros and targets

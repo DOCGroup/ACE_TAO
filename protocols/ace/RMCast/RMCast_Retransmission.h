@@ -59,6 +59,15 @@ public:
    */
   int resend (ACE_UINT32 max_sequence_number);
 
+  //! Resend all messages
+  /*!
+   * Resends all the messages currently in the queue.
+   */
+  int resend_all (void);
+
+  /// Return 0 if there is no pending data to send
+  int has_data (void);
+
   //! Cleanup all the stored messages
   virtual int close (void);
 
