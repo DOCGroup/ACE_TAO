@@ -59,13 +59,11 @@ INTERPRETIVE_MARSHALING_FILES = \
   decode.cpp \
   deep_free.cpp \
   encode.cpp \
-  CDR_Interpreter.cpp \
   Marshal.cpp \
   skip.cpp
 
 IDL_COMPILER_FILES = \
   Managed_Types.cpp \
-  Union.cpp \
   Operation_Table.cpp
 
 ORB_CORE_FILES = \
@@ -240,7 +238,6 @@ HEADER_FILES = \
   BoundsC.h \
   Buffering_Constraint_Policy.h \
   CDR.h \
-  CDR_Interpreter.h \
   CONV_FRAMEC.h \
   CONV_FRAMES.h \
   CONV_FRAMES_T.h \
@@ -353,7 +350,6 @@ HEADER_FILES = \
   UIOP_Factory.h \
   UIOP_Profile.h \
   UIOP_Transport.h \
-  Union.h \
   ValueBase.h \
   ValueFactory.h \
   ValueFactory_Map.h \

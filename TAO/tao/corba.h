@@ -81,7 +81,6 @@
 #include "tao/Managed_Types.h"
 #include "tao/Sequence.h"
 #include "tao/Object_KeyC.h"
-#include "tao/Union.h"
 #include "tao/ValueBase.h"
 #include "tao/ValueFactory.h"
 #include "tao/Services.h"

@@ -70,9 +70,9 @@ realclean: clean
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/CosLifeCycleS.o .obj/CosLifeCycleS.so .shobj/CosLifeCycleS.o .shobj/CosLifeCycleS.so: CosLifeCycleS.cpp CosLifeCycleS.h \
+.obj/CosLifeCycleS.o .obj/CosLifeCycleS.so .shobj/CosLifeCycleS.o .shobj/CosLifeCycleS.so: CosLifeCycleS.cpp CosLifeCycleS.h CosNamingS.h \
  $(ACE_ROOT)/ace/pre.h \
- CosNamingS.h CosNamingC.h \
+ CosNamingC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
@@ -355,7 +355,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -364,9 +363,9 @@ realclean: clean
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
  Naming/naming_export.h CosNamingC.i CosNamingS_T.h CosNamingS_T.i \
- CosNamingS_T.cpp CosNamingS.i CosLifeCycleC.h \
- LifeCycle/lifecycle_export.h CosLifeCycleC.i CosLifeCycleS_T.h \
- CosLifeCycleS_T.i CosLifeCycleS_T.cpp CosLifeCycleS.i
+ CosNamingS_T.cpp CosNamingS.i CosLifeCycleC.h CosLifeCycleC.i \
+ CosLifeCycleS_T.h CosLifeCycleS_T.i CosLifeCycleS_T.cpp \
+ CosLifeCycleS.i
 
 .obj/LifeCycleServiceS.o .obj/LifeCycleServiceS.so .shobj/LifeCycleServiceS.o .shobj/LifeCycleServiceS.so: LifeCycleServiceS.cpp LifeCycleServiceS.h \
  $(ACE_ROOT)/ace/pre.h \
@@ -653,7 +652,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -662,15 +660,15 @@ realclean: clean
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
  Naming/naming_export.h CosNamingC.i CosNamingS_T.h CosNamingS_T.i \
- CosNamingS_T.cpp CosNamingS.i CosLifeCycleC.h \
- LifeCycle/lifecycle_export.h CosLifeCycleC.i CosLifeCycleS_T.h \
- CosLifeCycleS_T.i CosLifeCycleS_T.cpp CosLifeCycleS.i \
- LifeCycleServiceC.h LifeCycleServiceC.i LifeCycleServiceS_T.h \
- LifeCycleServiceS_T.i LifeCycleServiceS_T.cpp LifeCycleServiceS.i
+ CosNamingS_T.cpp CosNamingS.i CosLifeCycleC.h CosLifeCycleC.i \
+ CosLifeCycleS_T.h CosLifeCycleS_T.i CosLifeCycleS_T.cpp \
+ CosLifeCycleS.i LifeCycleServiceC.h LifeCycle/lifecycle_export.h \
+ LifeCycleServiceC.i LifeCycleServiceS_T.h LifeCycleServiceS_T.i \
+ LifeCycleServiceS_T.cpp LifeCycleServiceS.i
 
 .obj/CosLifeCycleC.o .obj/CosLifeCycleC.so .shobj/CosLifeCycleC.o .shobj/CosLifeCycleC.so: CosLifeCycleC.cpp CosLifeCycleC.h \
- $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corba.h \
+ $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -952,7 +950,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -960,8 +957,7 @@ realclean: clean
  $(TAO_ROOT)/tao/ifrfwd.h \
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
- LifeCycle/lifecycle_export.h CosNamingC.h Naming/naming_export.h \
- CosNamingC.i CosLifeCycleC.i
+ CosNamingC.h Naming/naming_export.h CosNamingC.i CosLifeCycleC.i
 
 .obj/LifeCycleServiceC.o .obj/LifeCycleServiceC.so .shobj/LifeCycleServiceC.o .shobj/LifeCycleServiceC.so: LifeCycleServiceC.cpp LifeCycleServiceC.h \
  $(ACE_ROOT)/ace/pre.h \
@@ -1247,7 +1243,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \

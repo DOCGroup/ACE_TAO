@@ -418,7 +418,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -712,7 +711,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -1010,7 +1008,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -1305,7 +1302,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -1601,7 +1597,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -1895,7 +1890,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -2189,7 +2183,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -2498,7 +2491,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -2803,7 +2795,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -3097,7 +3088,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -3395,7 +3385,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -3689,7 +3678,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -3983,7 +3971,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -4277,7 +4264,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -4571,7 +4557,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -4865,7 +4850,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -5159,7 +5143,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -5453,7 +5436,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -5747,7 +5729,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -6041,7 +6022,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -6335,7 +6315,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -6629,7 +6608,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -6923,7 +6901,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -7217,7 +7194,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -7511,7 +7487,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -7805,7 +7780,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -8099,7 +8073,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -8393,7 +8366,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -8687,7 +8659,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -8981,7 +8952,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -9275,7 +9245,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -9569,7 +9538,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -9863,7 +9831,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -10157,7 +10124,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -10451,7 +10417,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -10745,7 +10710,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -11039,7 +11003,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -11333,7 +11296,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -11627,7 +11589,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -11921,7 +11882,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -12215,7 +12175,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -12510,7 +12469,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -12804,7 +12762,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -13098,7 +13055,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -13393,7 +13349,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -13687,7 +13642,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -13981,7 +13935,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -14275,7 +14228,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -14569,7 +14521,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \

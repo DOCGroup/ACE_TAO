@@ -115,7 +115,6 @@ TAO_NAMESPACE_END
 
 // default constructor
 GIOP::TargetAddress::TargetAddress (void)
-  : TAO_Base_Union ()
 {
   ACE_OS::memset (&this->disc_, 0, sizeof (this->disc_));
   ACE_OS::memset (&this->u_, 0, sizeof (this->u_));
@@ -123,7 +122,6 @@ GIOP::TargetAddress::TargetAddress (void)
 
 // copy constructor
 GIOP::TargetAddress::TargetAddress (const GIOP::TargetAddress &u)
-  : TAO_Base_Union ()
 {
   this->disc_ = u.disc_;
   switch (this->disc_)
@@ -217,28 +215,6 @@ void GIOP::TargetAddress::_reset (CORBA::Short, CORBA::Boolean /*finalize*/)
       break;
     default:
       break;
-  }
-}
-
-// the virtual overloaded access method
-void *GIOP::TargetAddress::_access (CORBA::Boolean alloc_flag)
-{
-  switch (this->disc_)
-  {
-    case 0:
-      if (alloc_flag)
-        ACE_NEW_RETURN (this->u_.object_key_, TAO_ObjectKey, 0);
-      return this->u_.object_key_;
-    case 1:
-      if (alloc_flag)
-        ACE_NEW_RETURN (this->u_.profile_, IOP::TaggedProfile, 0);
-      return this->u_.profile_;
-    case 2:
-      if (alloc_flag)
-        ACE_NEW_RETURN (this->u_.ior_, GIOP::IORAddressingInfo, 0);
-      return this->u_.ior_;
-    default:
-      return 0;
   }
 }
 

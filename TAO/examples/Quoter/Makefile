@@ -116,6 +116,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
@@ -254,15 +255,14 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Servant_Base.i \
  $(TAO_ROOT)/tao/IORS.i \
  $(TAO_ROOT)/tao/Interceptor.h \
- $(TAO_ROOT)/tao/InterceptorS.h \
  $(TAO_ROOT)/tao/InterceptorC.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/Any.h \
- $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/InterceptorC.i \
  $(TAO_ROOT)/tao/Interceptor.i \
  $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -279,12 +279,16 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
+ $(TAO_ROOT)/tao/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Server_Request.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/Marshal.h \
  $(TAO_ROOT)/tao/Marshal.i \
  $(TAO_ROOT)/tao/singletons.h \
@@ -391,7 +395,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -400,7 +403,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/BoundsC.h \
  $(TAO_ROOT)/tao/BoundsC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/LifeCycle/lifecycle_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
@@ -409,12 +411,13 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
 
 .obj/QuoterS.o .obj/QuoterS.so .shobj/QuoterS.o .shobj/QuoterS.so: QuoterS.cpp QuoterS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleS.h \
- $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.h \
+ $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
@@ -553,15 +556,14 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Servant_Base.i \
  $(TAO_ROOT)/tao/IORS.i \
  $(TAO_ROOT)/tao/Interceptor.h \
- $(TAO_ROOT)/tao/InterceptorS.h \
  $(TAO_ROOT)/tao/InterceptorC.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/Any.h \
- $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/InterceptorC.i \
  $(TAO_ROOT)/tao/Interceptor.i \
  $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -578,12 +580,16 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
+ $(TAO_ROOT)/tao/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Server_Request.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/Marshal.h \
  $(TAO_ROOT)/tao/Marshal.i \
  $(TAO_ROOT)/tao/singletons.h \
@@ -690,7 +696,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -705,7 +710,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/LifeCycle/lifecycle_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleS_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleS_T.i \
@@ -719,6 +723,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
@@ -859,15 +864,14 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Servant_Base.i \
  $(TAO_ROOT)/tao/IORS.i \
  $(TAO_ROOT)/tao/Interceptor.h \
- $(TAO_ROOT)/tao/InterceptorS.h \
  $(TAO_ROOT)/tao/InterceptorC.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/Any.h \
- $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/InterceptorC.i \
  $(TAO_ROOT)/tao/Interceptor.i \
  $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -884,12 +888,16 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
+ $(TAO_ROOT)/tao/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Server_Request.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/Marshal.h \
  $(TAO_ROOT)/tao/Marshal.i \
  $(TAO_ROOT)/tao/singletons.h \
@@ -996,7 +1004,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -1022,7 +1029,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/Stream_Modules.cpp \
  QuoterC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/LifeCycle/lifecycle_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleC.i \
  QuoterC.i
 
@@ -1032,6 +1038,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
@@ -1172,15 +1179,14 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Servant_Base.i \
  $(TAO_ROOT)/tao/IORS.i \
  $(TAO_ROOT)/tao/Interceptor.h \
- $(TAO_ROOT)/tao/InterceptorS.h \
  $(TAO_ROOT)/tao/InterceptorC.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/Any.h \
- $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/InterceptorC.i \
  $(TAO_ROOT)/tao/Interceptor.i \
  $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -1197,12 +1203,16 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
+ $(TAO_ROOT)/tao/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Server_Request.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/Marshal.h \
  $(TAO_ROOT)/tao/Marshal.i \
  $(TAO_ROOT)/tao/singletons.h \
@@ -1309,7 +1319,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -1334,7 +1343,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/QoS_Session.h \
  $(ACE_ROOT)/ace/SOCK.i \
  $(ACE_ROOT)/ace/SOCK_Dgram.i \
- $(ACE_ROOT)/ace/QoS_Manager.h \
  $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/Naming_Context_Interface.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.h \
@@ -1346,7 +1354,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  Quoter_i.h QuoterS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/LifeCycle/lifecycle_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleS_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleS_T.i \
@@ -1359,6 +1366,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
@@ -1497,15 +1505,14 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Servant_Base.i \
  $(TAO_ROOT)/tao/IORS.i \
  $(TAO_ROOT)/tao/Interceptor.h \
- $(TAO_ROOT)/tao/InterceptorS.h \
  $(TAO_ROOT)/tao/InterceptorC.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/Any.h \
- $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/InterceptorC.i \
  $(TAO_ROOT)/tao/Interceptor.i \
  $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -1522,12 +1529,16 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
+ $(TAO_ROOT)/tao/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Server_Request.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/Marshal.h \
  $(TAO_ROOT)/tao/Marshal.i \
  $(TAO_ROOT)/tao/singletons.h \
@@ -1634,7 +1645,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -1653,7 +1663,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/LifeCycle/lifecycle_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleS_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleS_T.i \
@@ -1666,6 +1675,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
@@ -1804,15 +1814,14 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Servant_Base.i \
  $(TAO_ROOT)/tao/IORS.i \
  $(TAO_ROOT)/tao/Interceptor.h \
- $(TAO_ROOT)/tao/InterceptorS.h \
  $(TAO_ROOT)/tao/InterceptorC.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/Any.h \
- $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/InterceptorC.i \
  $(TAO_ROOT)/tao/Interceptor.i \
  $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -1829,12 +1838,16 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
+ $(TAO_ROOT)/tao/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Server_Request.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/Marshal.h \
  $(TAO_ROOT)/tao/Marshal.i \
  $(TAO_ROOT)/tao/singletons.h \
@@ -1941,7 +1954,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -1964,7 +1976,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/LifeCycle/lifecycle_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleS_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleS_T.i \
@@ -1978,6 +1989,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
@@ -2117,15 +2129,14 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Servant_Base.i \
  $(TAO_ROOT)/tao/IORS.i \
  $(TAO_ROOT)/tao/Interceptor.h \
- $(TAO_ROOT)/tao/InterceptorS.h \
  $(TAO_ROOT)/tao/InterceptorC.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/Any.h \
- $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/InterceptorC.i \
  $(TAO_ROOT)/tao/Interceptor.i \
  $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -2142,12 +2153,16 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
+ $(TAO_ROOT)/tao/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Server_Request.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/Marshal.h \
  $(TAO_ROOT)/tao/Marshal.i \
  $(TAO_ROOT)/tao/singletons.h \
@@ -2254,7 +2269,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -2273,7 +2287,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/LifeCycle/lifecycle_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleS_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleS_T.i \
@@ -2286,6 +2299,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
@@ -2424,15 +2438,14 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Servant_Base.i \
  $(TAO_ROOT)/tao/IORS.i \
  $(TAO_ROOT)/tao/Interceptor.h \
- $(TAO_ROOT)/tao/InterceptorS.h \
  $(TAO_ROOT)/tao/InterceptorC.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/Any.h \
- $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/InterceptorC.i \
  $(TAO_ROOT)/tao/Interceptor.i \
  $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -2449,12 +2462,16 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
+ $(TAO_ROOT)/tao/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Server_Request.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/Marshal.h \
  $(TAO_ROOT)/tao/Marshal.i \
  $(TAO_ROOT)/tao/singletons.h \
@@ -2561,7 +2578,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -2600,6 +2616,7 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/Min_Max.h \
@@ -2739,15 +2756,14 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Servant_Base.i \
  $(TAO_ROOT)/tao/IORS.i \
  $(TAO_ROOT)/tao/Interceptor.h \
- $(TAO_ROOT)/tao/InterceptorS.h \
  $(TAO_ROOT)/tao/InterceptorC.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
- $(TAO_ROOT)/tao/Any.h \
- $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/InterceptorC.i \
  $(TAO_ROOT)/tao/Interceptor.i \
  $(TAO_ROOT)/tao/ORB.i \
+ $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
@@ -2764,12 +2780,16 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
+ $(TAO_ROOT)/tao/Smart_Proxies.h \
+ $(TAO_ROOT)/tao/Smart_Proxies.i \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Server_Request.i \
+ $(TAO_ROOT)/tao/LocalObject.h \
+ $(TAO_ROOT)/tao/LocalObject.i \
  $(TAO_ROOT)/tao/Marshal.h \
  $(TAO_ROOT)/tao/Marshal.i \
  $(TAO_ROOT)/tao/singletons.h \
@@ -2876,7 +2896,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/InconsistentTypeCodeC.h \
  $(TAO_ROOT)/tao/DynAny_i.h \
- $(TAO_ROOT)/tao/Union.h \
  $(TAO_ROOT)/tao/ObjectIDList.h \
  $(TAO_ROOT)/tao/ObjectIDList.i \
  $(TAO_ROOT)/tao/WrongTransactionC.h \
@@ -2895,7 +2914,6 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleC.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/LifeCycle/lifecycle_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleS_T.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosLifeCycleS_T.i \

@@ -67,20 +67,20 @@ GIOP::IORAddressingInfo_var::operator-> (void)
   return this->ptr_;
 }
 
-ACE_INLINE 
+ACE_INLINE
 GIOP::IORAddressingInfo_var::operator const GIOP::IORAddressingInfo &() const // cast
 {
   return *this->ptr_;
 }
 
-ACE_INLINE 
-GIOP::IORAddressingInfo_var::operator GIOP::IORAddressingInfo &() // cast 
+ACE_INLINE
+GIOP::IORAddressingInfo_var::operator GIOP::IORAddressingInfo &() // cast
 {
   return *this->ptr_;
 }
 
-ACE_INLINE 
-GIOP::IORAddressingInfo_var::operator GIOP::IORAddressingInfo &() const// cast 
+ACE_INLINE
+GIOP::IORAddressingInfo_var::operator GIOP::IORAddressingInfo &() const// cast
 {
   return *this->ptr_;
 }
@@ -97,7 +97,7 @@ GIOP::IORAddressingInfo_var::inout (void)
   return *this->ptr_;
 }
 
-// mapping for variable size 
+// mapping for variable size
 ACE_INLINE GIOP::IORAddressingInfo *&
 GIOP::IORAddressingInfo_var::out (void)
 {
@@ -158,7 +158,7 @@ GIOP::IORAddressingInfo_out::operator= (GIOP::IORAddressingInfo *p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 GIOP::IORAddressingInfo_out::operator GIOP::IORAddressingInfo *&() // cast
 {
   return this->ptr_;
@@ -196,15 +196,8 @@ GIOP::TargetAddress::_reset (void)
   ACE_OS::memcpy (&this->u_, 0, sizeof (this->u_));
 }
 
-// returns pointer to the discriminant
-ACE_INLINE void *
-GIOP::TargetAddress::_discriminant (void)
-{
-  return &this->disc_;
-}
-
 // the implicit _default () method
-ACE_INLINE void 
+ACE_INLINE void
 GIOP::TargetAddress::_default ()
 {
   this->disc_ = -32768;
@@ -237,14 +230,14 @@ GIOP::TargetAddress::object_key (const TAO_ObjectKey &val)
     );
 }
 
-// readonly get method 
+// readonly get method
 ACE_INLINE const TAO_ObjectKey &
 GIOP::TargetAddress::object_key (void) const
 {
   return *this->u_.object_key_;
 }
 
-// read/write get method 
+// read/write get method
 ACE_INLINE TAO_ObjectKey &
 GIOP::TargetAddress::object_key (void)
 {
@@ -264,14 +257,14 @@ GIOP::TargetAddress::profile (const IOP::TaggedProfile &val)
     );
 }
 
-// readonly get method 
+// readonly get method
 ACE_INLINE const IOP::TaggedProfile &
 GIOP::TargetAddress::profile (void) const
 {
   return *this->u_.profile_;
 }
 
-// read/write get method 
+// read/write get method
 ACE_INLINE IOP::TaggedProfile &
 GIOP::TargetAddress::profile (void)
 {
@@ -291,14 +284,14 @@ GIOP::TargetAddress::ior (const GIOP::IORAddressingInfo &val)
     );
 }
 
-// readonly get method 
+// readonly get method
 ACE_INLINE const GIOP::IORAddressingInfo &
 GIOP::TargetAddress::ior (void) const
 {
   return *this->u_.ior_;
 }
 
-// read/write get method 
+// read/write get method
 ACE_INLINE GIOP::IORAddressingInfo &
 GIOP::TargetAddress::ior (void)
 {
@@ -369,20 +362,20 @@ GIOP::TargetAddress_var::operator-> (void)
   return this->ptr_;
 }
 
-ACE_INLINE 
+ACE_INLINE
 GIOP::TargetAddress_var::operator const GIOP::TargetAddress &() const // cast
 {
   return *this->ptr_;
 }
 
-ACE_INLINE 
-GIOP::TargetAddress_var::operator GIOP::TargetAddress &() // cast 
+ACE_INLINE
+GIOP::TargetAddress_var::operator GIOP::TargetAddress &() // cast
 {
   return *this->ptr_;
 }
 
-ACE_INLINE 
-GIOP::TargetAddress_var::operator GIOP::TargetAddress &() const// cast 
+ACE_INLINE
+GIOP::TargetAddress_var::operator GIOP::TargetAddress &() const// cast
 {
   return *this->ptr_;
 }
@@ -399,7 +392,7 @@ GIOP::TargetAddress_var::inout (void)
   return *this->ptr_;
 }
 
-// mapping for variable size 
+// mapping for variable size
 ACE_INLINE GIOP::TargetAddress *&
 GIOP::TargetAddress_var::out (void)
 {
@@ -467,7 +460,7 @@ GIOP::TargetAddress_out::operator= (GIOP::TargetAddress *p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 GIOP::TargetAddress_out::operator GIOP::TargetAddress *&() // cast
 {
   return this->ptr_;
@@ -498,7 +491,7 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const GIOP::IORAddres
     return 1;
   else
     return 0;
-  
+
 }
 
 ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, GIOP::IORAddressingInfo &_tao_aggregate)
@@ -510,7 +503,7 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, GIOP::IORAddressingInf
     return 1;
   else
     return 0;
-  
+
 }
 
 
@@ -590,4 +583,3 @@ ACE_INLINE CORBA::Boolean operator>> (
   }
   return result;
 }
-

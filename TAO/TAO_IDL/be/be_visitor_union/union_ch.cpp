@@ -65,7 +65,7 @@ int be_visitor_union_ch::visit_union (be_union *node)
       *os << "class " << node->local_name () << "_var;" << be_nl << be_nl;
 
       *os << "class " << idl_global->stub_export_macro () << " "
-          << node->local_name () << ": public TAO_Base_Union " << be_nl
+          << node->local_name () << be_nl
           << "{" << be_nl
           << "public:" << be_idt_nl
 
@@ -183,16 +183,8 @@ int be_visitor_union_ch::visit_union (be_union *node)
       *os << "void _reset (" << bt->nested_type_name (node)
           << ", CORBA::Boolean);" << be_nl;
       *os << "// Frees any allocated storage" << be_nl << be_nl;
-      // the virtual overloaded _discriminant method
-      *os << "virtual void *_discriminant (void);" << be_nl;
-      *os << "// returns pointer to the discriminant" << be_nl << be_nl;
-      // the overloaded virtual reset method
-      *os << "virtual void _reset (void);" << be_nl;
+      *os << "void _reset (void);" << be_nl;
       *os << "// calls the above reset with finalize=1" << be_nl << be_nl;
-      // the _access method
-      *os << "virtual void *_access (CORBA::Boolean flag);" << be_nl;
-      *os << "// accesses the right data member. "
-          << "Also will allocate on TRUE flag" << be_nl << be_uidt_nl;
       *os << "}; // " << node->name () << "\n\n";
 
       if (!node->is_local ())
