@@ -164,7 +164,7 @@ private:
   // How wide the printed field width must be to contain the maximum
   // hash value.
 
-  static int determined_[Vectors::ALPHA_SIZE];
+  static int determined_[ACE_STANDARD_CHARACTER_SET_SIZE];
   // Sets the slot location for all keysig characters that are now
   // determined.
 };

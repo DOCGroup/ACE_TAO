@@ -250,7 +250,7 @@ Gen_Perf::open (void)
     {
       ACE_OS::srand (ACE_OS::time (0));
 
-      for (int i = 0; i < Vectors::ALPHA_SIZE; i++)
+      for (int i = 0; i < ACE_STANDARD_CHARACTER_SET_SIZE; i++)
         Vectors::asso_values[i] = (ACE_OS::rand () & asso_value_max - 1);
     }
   else
@@ -259,7 +259,7 @@ Gen_Perf::open (void)
 
       // Initialize array if user requests non-zero default.
       if (asso_value)
-        for (int i = Vectors::ALPHA_SIZE - 1; i >= 0; i--)
+        for (int i = ACE_STANDARD_CHARACTER_SET_SIZE - 1; i >= 0; i--)
           Vectors::asso_values[i] = asso_value & option.asso_max () - 1;
     }
 
@@ -436,7 +436,7 @@ Gen_Perf::~Gen_Perf (void)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "\ndumping occurrence and associated values tables\n"));
-      for (int i = 0; i < Vectors::ALPHA_SIZE; i++)
+      for (int i = 0; i < ACE_STANDARD_CHARACTER_SET_SIZE; i++)
         if (Vectors::occurrences[i])
           ACE_DEBUG ((LM_DEBUG,
                       "Vectors::asso_values[%c] = %6d, Vectors::occurrences[%c] = %6d\n",

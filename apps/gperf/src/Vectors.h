@@ -38,15 +38,10 @@ class Vectors
   //   Static class data members that are shared between several
   //   classes via inheritance.
 public:
-  enum
-  {
-    ALPHA_SIZE = 128
-  };
-
-  static int occurrences[ALPHA_SIZE];
+  static int occurrences[ACE_STANDARD_CHARACTER_SET_SIZE];
   // Counts occurrences of each key set character.
 
-  static int asso_values[ALPHA_SIZE];
+  static int asso_values[ACE_STANDARD_CHARACTER_SET_SIZE];
   // Value associated with each character.
 };
 
