@@ -1,3 +1,15 @@
+Mon Mar 29 20:12:12 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
+
+	* TAO/examples/Simple/time:
+	  Updated the following projects to contain Simple_util.*
+	  Removed the obsolete files. Thanks to Barry Hoggard 
+	  <hoggard@cfx.com> for pointing this out.
+
+	  * TAO/examples/Simple/timeserver.dsp
+	  * TAO/examples/Simple/timeclient.dsp
+	  * TAO/examples/Simple/timeserver_static.dsp
+	  * TAO/examples/Simple/timeclient_static.dsp
+
 Mon Mar 29 19:10:09 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/Stub.h:
