@@ -31,7 +31,7 @@ public:
   virtual CORBA_Object_ptr lookup(const CORBA_OctetSeq &key) = 0;
   // CORBA Object key lookup strategy
 
-  virtual void register_obj(const CORBA_OctetSeq &key, const CORBA_Object_ptr &obj)=0; 
+  virtual int register_obj(const CORBA_OctetSeq &key, const CORBA_Object_ptr &obj)=0; 
   // registers a CORBA_Object into the object table and associates the key with
   // it
 
