@@ -1,3 +1,29 @@
+Mon Oct 07 15:21:44 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ACEXML/apps/svcconf/XML_Svc_Conf_Parser.dsp:
+	* ACEXML/common/XML_Common.dsp:
+	* ACEXML/parser/debug_validator/Debug_Validator.dsp:
+	* ACEXML/parser/parser/Parser.dsp:
+	* ACEXML/tests/HttpCharStream_Test.dsp:
+	* ACEXML/tests/NamespaceSupport_Test.dsp:
+	* ACEXML/tests/Transcoder_Test.dsp:
+	* apps/JAWS2/server.dsp:
+	* examples/Export/test.dsp:
+	* examples/IPC_SAP/FILE_SAP/client.dsp:
+	* examples/Logger/client/client.dsp:
+	* examples/Logger/simple-server/server_loggerd.dsp:
+	* examples/QOS/Simple/receiver.dsp:
+	* examples/QOS/Simple/sender.dsp:
+	* examples/Reactor/Multicast/client.dsp:
+	* examples/Reactor/Multicast/server.dsp:
+	* examples/Reactor/Proactor/test_udp_proactor.dsp:
+	* examples/Synch/proc_sema.dsp:
+	* tests/DLL_Test_Impl.dsp:
+	* tests/Framework_Component_DLL.dsp: Disabled the generation
+	  of precompiled headers.  They were taking up too much disk space
+	  on the nightly build machines.  Thanks to Ossama for noticing
+	  this.
+
 Sun Oct  6 09:03:28 2002  Ossama Othman  <ossama@uci.edu>
 
 	* ace/UPIPE_Stream.cpp (send):
