@@ -24,7 +24,7 @@ LSRC = $(PROG_SRCS)
 CUBIT_SVR_OBJS = cubitC.o cubitS.o svr.o cubit_i.o tmplinst.o
 CUBIT_CLT_OBJS = cubitC.o cubitS.o clnt.o tmplinst.o
 
-BIN = svr clnt
+BIN = server client
 BUILD = $(BIN)
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 VBIN = $(BIN:%=%$(VAR))
@@ -50,10 +50,10 @@ DCFLAGS = -g
 #$(IDL_SRC): cubit.idl
 #	$(TAO_ROOT)/TAO_IDL/tao_idl cubit.idl
 
-svr:	$(addprefix $(VDIR),$(CUBIT_SVR_OBJS))
+server:	$(addprefix $(VDIR),$(CUBIT_SVR_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS)
 
-clnt:	$(addprefix $(VDIR),$(CUBIT_CLT_OBJS))
+client:	$(addprefix $(VDIR),$(CUBIT_CLT_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS)
 
 realclean: clean
