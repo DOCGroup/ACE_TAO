@@ -1,3 +1,10 @@
+Fri Jul 14 15:02:47 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* PACE/pace/win32/dirent.h:
+
+	  pace_dir changed to PACE_DIR.
+	  PACE_TCHAR changed to char.
+
 Fri Jul 14 14:34:43 2000  David L. Levine <levine@cs.wustl.edu>
 
         * pace/assert.h,pace/{posix,win32}/assert.{h,inl}:
