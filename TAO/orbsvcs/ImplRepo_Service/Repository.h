@@ -67,7 +67,12 @@ public:
   //  int startup ();
   // Starts up the server based on the information.
   // Returns:  0  if successful
-  //           -1 if there is no registration command (it has to be manually restarted)
+  //           -1 if there is no registration command (it has to be manually 
+  //              restarted)
+
+  int starting_up_;
+  // This is a flag to determine if the process has already been spawned
+  // and we are just waiting for it to start up.
 
 private:
   ACE_TString logical_server_name_;
@@ -146,6 +151,13 @@ public:
                         ACE_TString &ping_ior);
   // Returns information related to a running copy.
   
+  int starting_up (const ACE_TString POA_name, int new_value);
+  // Checks the starting_up_ variable in the Server_Info and 
+  // returns the previous value or -1 if the POA_name wasn't found
+
+  int starting_up (const ACE_TString POA_name);
+  // Same as above but does not alter the value.
+
   int remove (const ACE_TString POA_name);
   // Removes the server from the Repository.
 

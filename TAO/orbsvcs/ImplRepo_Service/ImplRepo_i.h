@@ -136,7 +136,7 @@ private:
   IR_Adapter_Activator *activator_;
   // Used for the forwarding of any type of POA.
 
-  Repository repository_;
+  Server_Repository repository_;
   // Repository containing information about each server.
 
   TAO_ORB_Manager orb_manager_;

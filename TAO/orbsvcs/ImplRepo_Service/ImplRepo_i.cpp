@@ -79,26 +79,27 @@ ImplRepo_i::activate_object (CORBA::Object_ptr obj,
                            obj->_servant ());
 }
 
-// Starts the server <server> if it is not already started
+// Starts the server defined by the POA name <server> if it is 
+// not already started and if it can be started.
 
 Implementation_Repository::INET_Addr *
 ImplRepo_i::activate_server (const char *server,
                              CORBA::Environment &ACE_TRY_ENV)
 {
   int start = 0;
-  ASYS_TCHAR *ping_ior;
+  ACE_TString ping_ior, host;
+  unsigned short port;
+
   Implementation_Repository::INET_Addr *address =
     new Implementation_Repository::INET_Addr;
   address->port_ = 0;
   address->host_ = CORBA::string_dup ("");
 
   if (OPTIONS::instance()->debug () >= 1)
-    ACE_DEBUG ((LM_DEBUG,
-                "Activating Server: %s\n",
-                server));
+    ACE_DEBUG ((LM_DEBUG, "Activating Server: %s\n", server));
 
   // Find out if it is already running
-  if (this->repository_.get_ping_ior (server, ping_ior) != 0)
+  if (this->repository_.get_running_info (server, host, port, ping_ior) != 0)
     {
       // If we had problems getting the ping_ior, probably meant that
       // there is no <server> registered
@@ -109,13 +110,14 @@ ImplRepo_i::activate_server (const char *server,
                         address);
     }
 
-  // if length is 0, then none is running yet.
-  if (ACE_OS::strlen (ping_ior) != 0)
+  // Check to see if there is one running (if there is a ping_ior)
+  if (ping_ior.length () != 0)
     {
+      // It is running
       ACE_TRY
         {
           CORBA::Object_var object =
-            this->orb_manager_.orb ()->string_to_object (ping_ior,
+            this->orb_manager_.orb ()->string_to_object (ping_ior.c_str (),
                                                          ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
@@ -132,70 +134,102 @@ ImplRepo_i::activate_server (const char *server,
                                 address);
             }
 
+          // Check to see if we can ping it
           ping_object->ping (ACE_TRY_ENV);
           ACE_TRY_CHECK;
         }
       ACE_CATCHANY
         {
+          // If we got an exception, then we have to restart it.
           start = 1;
         }
       ACE_ENDTRY;
     }
   else
+    // We need to restart
     start = 1;
 
   // Start it up...
   if (start == 1)
     {
-      // Start it up
-      char *cl;
+      // Check to see if it is already starting up
+      int startup_val = this->repository_.starting_up (server, 1);
 
-      int status = this->repository_.get_comm_line (server,
-                                                    cl);
-
-      if (status == 0)
+      if (startup_val == -1)
         {
+          ACE_ERROR ((LM_ERROR,
+                      "Error: Cannot find startup info for server <%s>\n",
+                      server));
+          ACE_THROW_RETURN (Implementation_Repository::Not_Found (),
+                            address);
+        }
+      
+      if (startup_val == 0)
+        {
+          ACE_TString logical, startup, working;
+          if (this->repository_.get_startup_info (server, logical, startup, working) != 0)
+            {
+              ACE_ERROR ((LM_ERROR,
+                          "Error: Cannot find startup info for server <%s>\n",
+                          server));
+              ACE_THROW_RETURN (Implementation_Repository::Not_Found (),
+                                address);
+            }
+
+          if (startup.length () == 0)
+            {
+              // If there is no startup information, throw a transient exception
+              ACE_ERROR ((LM_ERROR,
+                          "Error: No startup information for server <%s>\n",
+                          server));
+              ACE_THROW_RETURN (CORBA::TRANSIENT (CORBA::COMPLETED_NO), address);
+            }
+
+
           if (OPTIONS::instance()->debug () >= 1)
-            ACE_DEBUG ((LM_DEBUG,
-                        "Starting %s\n",
-                        server));
+            ACE_DEBUG ((LM_DEBUG, "Starting %s\n", server));
+      
           ACE_Process_Options proc_opts;
 
-          proc_opts.command_line (cl);
+          proc_opts.command_line (startup.c_str ());
+          proc_opts.working_directory (working.c_str ());
 
           ACE_Process proc;
 
           if (proc.spawn (proc_opts) == -1)
             {
-              ACE_ERROR ((LM_ERROR,
-                          "Error: Cannot activate server <%s> using <%s>\n",
+              ACE_ERROR ((LM_ERROR, 
+                         "Error: Cannot activate server <%s> using <%s>\n",
                           server,
-                          cl));
-              delete [] cl;
+                          startup.c_str ()));
               ACE_THROW_RETURN (Implementation_Repository::Cannot_Activate (CORBA::string_dup ("N/A")),
                                 address);
             }
-
-          delete [] cl;
         }
-      else
+      
+      // Now that the server has been started up, we need to go back into the event
+      // loop so we can get the reponse or handle other requests
+      TAO_ORB_Core *orb_core = TAO_ORB_Core_instance ();
+
+      int starting_up;
+      
+      while ((starting_up = this->repository_.starting_up (server)) == 1)
+          orb_core->reactor ()->handle_events ();
+      
+      // Check to see if it disappeared on us
+      if (starting_up == -1)
         {
           ACE_ERROR ((LM_ERROR,
-                      "Error: Cannot find commandline for server <%s>\n",
+                      "Error: Cannot find startup info for server <%s>\n",
                       server));
           ACE_THROW_RETURN (Implementation_Repository::Not_Found (),
                             address);
         }
 
-      // @@ Here is where we need to wait for the response so we can
-      // find out where (host/port) the server started
-      ACE_OS::sleep (3);
+      // Now it should be started.
     }
 
-  char *host;
-  u_short port;
-
-  if (this->repository_.get_hostport (server, host, port) != 0)
+  if (this->repository_.get_running_info (server, host, port, ping_ior) != 0)
     {
       ACE_ERROR ((LM_ERROR,
                   "ImplRepo_i::activate_server: "
@@ -204,7 +238,7 @@ ImplRepo_i::activate_server (const char *server,
       return address;
     }
 
-  address->host_ = CORBA::string_dup (host);
+  address->host_ = CORBA::string_dup (host.c_str ());
   address->port_ = port;
 
   return address;
@@ -220,20 +254,16 @@ ImplRepo_i::register_server (const char *server,
   if (OPTIONS::instance()->debug () >= 2)
         ACE_DEBUG ((LM_DEBUG, "Server: %s\n"
                               "Command Line: %s\n"
-                              "Environment: %s\n"
                               "Working Directory: %s\n\n",
                               server,
                               options.command_line_.in (),
-                              options.environment_.in (),
                               options.working_directory_.in ()));
-
-  Repository_Record rec (options.command_line_,
-                         options.working_directory_,
-                         "",
-                         0,
-                         "");
-
-  int status = this->repository_.add (server, rec);
+  
+  // Add the server
+  int status = this->repository_.add (server, 
+                                      "",
+                                      options.command_line_.in (), 
+                                      options.working_directory_.in ());
 
   if (status == 1)
     {
@@ -253,8 +283,8 @@ ImplRepo_i::register_server (const char *server,
                               "Command Line: %s\n"
                               "Working Directory: %s\n\n",
                               server,
-                              rec.comm_line,
-                              rec.wdir));
+                              options.command_line_.in (),
+                              options.working_directory_.in ()));
     }
 }
 
@@ -267,13 +297,13 @@ ImplRepo_i::reregister_server (const char *server,
                                CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_UNUSED_ARG (ACE_TRY_ENV);
-  Repository_Record rec (options.command_line_,
-                         options.working_directory_,
-                         "",
-                         0,
-                         "");
 
-  this->repository_.update (server, rec);
+  this->repository_.remove (server);
+
+  this->repository_.add (server, 
+                         "",
+                         options.command_line_.in (),
+                         options.working_directory_.in ());
 
   if (OPTIONS::instance()->debug () >= 1)
     ACE_DEBUG ((LM_DEBUG,
@@ -284,8 +314,8 @@ ImplRepo_i::reregister_server (const char *server,
                           "Command Line: %s\n"
                           "Working Directory: %s\n\n",
                           server,
-                          rec.comm_line,
-                          rec.wdir));
+                          options.command_line_.in (),
+                          options.working_directory_.in ()));
 }
 
 // Remove the server entry from the Repository
@@ -326,32 +356,12 @@ ImplRepo_i::server_is_running (const char *server,
                 server));
 
   // Update the record in the repository
-  Repository_Record rec;
 
-  if (this->repository_.resolve (server, rec) == -1)
-    {
-      ACE_ERROR ((LM_ERROR,
-                  "Error: Unknown Server <%s>\n",
-                  server));
-      ACE_THROW_RETURN (Implementation_Repository::Not_Found (),
-                        new_addr);
-    }
-
-  // Delete the stuff that we will update
-  delete [] rec.ping_ior;
-  delete [] rec.host;
-
-  ACE_NEW_RETURN (rec.host, ASYS_TCHAR[ACE_OS::strlen (addr.host_.in ()) + 1], 0);
-  ACE_OS::strcpy (rec.host, addr.host_.in ());
-  rec.port = addr.port_;
-  
+  // Get the stringified ping_ior
   ASYS_TCHAR *ping_ior = this->orb_manager_.orb ()->object_to_string (ping, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
-  ACE_NEW_RETURN (rec.ping_ior, ASYS_TCHAR[ACE_OS::strlen (ping_ior) + 1], 0);
-  ACE_OS::strcpy (rec.ping_ior, ping_ior);
-
-  if (this->repository_.update (server, rec) == 0)
+  if (this->repository_.update (server, addr.host_.in (), addr.port_, ping_ior) == 0)
     {
       if (OPTIONS::instance()->debug () >= 1)
         ACE_DEBUG ((LM_DEBUG,
@@ -361,20 +371,13 @@ ImplRepo_i::server_is_running (const char *server,
   else
     {
       ACE_ERROR ((LM_ERROR,
-                 "Error: While updating Repository while server_is_running () %s\n",
+                 "Error: Could not update running information for server <%s>\n",
                  server));
-      return new_addr;
+      ACE_THROW_RETURN (Implementation_Repository::Not_Found (), new_addr);
     }
-
-  if (OPTIONS::instance()->debug () >= 2)
-    ACE_DEBUG ((LM_DEBUG,
-                "The old host/port was: %Lu:%hu\n",
-                rec.host,
-                rec.port));
 
   ACE_INET_Addr my_addr = TAO_ORB_Core_instance ()->orb_params ()->addr ();
 
-  // @@ We are assuming that we are on the same machine right now
   new_addr->host_ = CORBA::string_dup (my_addr.get_host_name ());
   new_addr->port_ = my_addr.get_port_number ();
 
@@ -393,34 +396,18 @@ void
 ImplRepo_i::server_is_shutting_down (const char *server,
                                      CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_UNUSED_ARG (ACE_TRY_ENV);
-  Repository_Record rec;
-
-  if (this->repository_.resolve (server, rec) == 0)
+  if (this->repository_.update (server, "", 0, "") == 0)
     {
-      ACE_OS::strcpy (rec.host, ASYS_TEXT (""));
-      rec.port = 0;
-      ACE_OS::strcpy (rec.ping_ior, ASYS_TEXT (""));
-
-      if (this->repository_.update (server, rec) == 0)
-        {
-          if (OPTIONS::instance()->debug () >= 1)
-            ACE_DEBUG ((LM_DEBUG,
-                        "Successful server_is_shutting_down () of <%s>\n",
-                        server));
-        }
-      else
-        {
-          ACE_ERROR ((LM_ERROR,
-                     "Error: While updating Repository while shutting down <%s>\n",
-                     server));
-        }
+      if (OPTIONS::instance()->debug () >= 1)
+        ACE_DEBUG ((LM_DEBUG,
+                    "Successful server_is_shutting_down () of <%s>\n",
+                    server));
     }
   else
     {
       ACE_ERROR ((LM_ERROR,
-                  "Error: Unknown Server <%s>\n",
-                  server));
+                 "Error: Could not update information for unknown server <%s>\n",
+                 server));
       ACE_THROW (Implementation_Repository::Not_Found ());
     }
 }
@@ -522,25 +509,24 @@ ImplRepo_i::run (CORBA::Environment& env)
 CORBA::String
 ImplRepo_i::get_forward_host (const char *server)
 {
-  char *host;
-  u_short port;
+  ACE_TString host, ping_ior;
+  unsigned short port;
 
-  if (this->repository_.get_hostport (server, host, port) != 0)
+  if (this->repository_.get_running_info (server, host, port, ping_ior) != 0)
     return 0;
 
-  return host;
+  return CORBA::string_dup (host.c_str ());
 }
 
 CORBA::UShort
 ImplRepo_i::get_forward_port (const char *server)
 {
-  char *host;
-  u_short port;
+  ACE_TString host, ping_ior;
+  unsigned short port;
 
-  if (this->repository_.get_hostport (server, host, port) != 0)
+  if (this->repository_.get_running_info (server, host, port, ping_ior) != 0)
     return 0;
 
-  delete host;
   return port;
 }
 
