@@ -1,3 +1,13 @@
+Mon Jan 26 16:15:18 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* tao/giop.cpp (read_buffer): Modified this to detect ECONNRESET
+ 	and report is as a normal EOF occurrence.  This will hopefully
+ 	eliminate a disturbing (but innocuous) message on NT.  Thanks to
+ 	Frank H. at SAIC for reporting this.
+
+	* tests/Param_Test/run_test: Added this script to run the server
+ 	and client with all arguments.
+
 Mon Jan 26 16:02:51 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tests/Cubit/TAO/MT_Cubit/Makefile: 
