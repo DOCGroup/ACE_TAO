@@ -75,10 +75,10 @@ public class Semaphore
     }
 
   /**
-   * Acquire the Semaphore.  Note that the call will return if <timeout>
-   * amount of time expires.
-   *@param tv amount of time (TimeValue) to wait before returning
-   * (unless operation completes before)
+   * Acquire the Semaphore.  Throws a TimeoutException if the semaphore
+   * isn't acquired before the given absolute time.
+   *@param tv time (TimeValue) to wait until before throwing a
+   * TimeoutException (unless the semaphore is acquired before that)
    *@exception TimeoutException wait timed out exception
    *@exception InterruptedException exception during wait
    */

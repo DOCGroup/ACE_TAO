@@ -52,6 +52,7 @@ class WaitObject extends TimedWait
  */
 public class Token
 {
+
   /**
    * Acquire the token. Note that this will block. The method uses
    * synchronized blocks internally to avoid race conditions.
@@ -64,7 +65,7 @@ public class Token
     {
       try
 	{
-	  return this.acquire (new TimeValue ());
+	  return this.acquire (null);
 	}
       catch (TimeoutException e)
 	{
@@ -75,17 +76,20 @@ public class Token
     }
 
   /**
-   * Acquire the token. Wait for timeout amount of time. The method
-   * uses synchronized blocks internally to avoid race conditions. 
-   *@param timeout Amount of time to wait for in trying to acquire the
-   * token.
+   * Acquire the token.  
+   * Throws a TimeoutException if the token isn't acquired before the
+   * given absolute time timeout.
+   *@param timeout time (TimeValue) to wait until before throwing a
+   * TimeoutException (unless the token is acquired before that).
+   * Performs a blocking acquire if the given timeout is null.
    *@return 0 if acquires without calling <sleepHook>
    * 1 if <sleepHook> is called.
    * -1 if failure occurs
    *@exception TimeoutException exception if timeout occurs
    *@exception InterruptedException exception during wait
    */
-  public int acquire (TimeValue timeout) throws InterruptedException, TimeoutException
+  public int acquire (TimeValue timeout) 
+      throws InterruptedException, TimeoutException
     {
       int result = 0;
       WaitObject snl = new WaitObject ();
@@ -95,26 +99,26 @@ public class Token
 	  synchronized (this)
 	    {
 	      mustWait = !this.snq_.isEmpty ();
-	      if (mustWait &&
-		  Thread.currentThread ().toString ().compareTo (this.owner_) == 0)
+
+	      if (mustWait && isOwner ())
 		{
 		  // I am the one who has the token. So just increment
 		  // the nesting level
 		  this.nestingLevel_++;
-		  return result;
+		  return 0;
 		}
 	      // Add local lock to the queue
 	      this.snq_.addElement (snl);
 	    }
 	  if (mustWait)
-	    {
+	  {
 	      result = 1;
-	      // Call sleep hook
-	      sleepHook ();
-	      snl.timedWait (timeout);  // Do a blocking wait
-	    }
+	      sleepHook();
+	      snl.timedWait(timeout);
+	  }
+
 	  // Set the owner of the token
-	  this.owner_ = Thread.currentThread ().toString ();
+	  setOwner();
 	}
       return result;
     }
@@ -122,29 +126,29 @@ public class Token
   /**
    * Try to acquire the token. Implements a non-blocking acquire.
    *@return 0 if acquires without calling <sleepHook>
-   * 1 if <sleepHook> is called.
    * -1 if failure occurs
    */
   public synchronized int tryAcquire ()
     {
       int result = 0;
-      if (!this.snq_.isEmpty ())
+
+      if (this.snq_.isEmpty ())
 	{
 	  // No one has the token, so acquire it
 	  this.snq_.addElement (new WaitObject ());
+
+      setOwner();
 	}
-      // Check if I am the one holding the token.
-      else if (Thread.currentThread ().toString ().compareTo (this.owner_) == 0)
+      else if (isOwner())
 	{
 	  this.nestingLevel_++;
 	}
       // Someone else has the token.
       else
 	{
-	  // Will have to block to acquire the token, so call
-	  // sleepHook and return 
-	  sleepHook ();
-	  result = 1;
+      // Would have to block to acquire the token, so return
+      // failure.
+	  result = -1;
 	}
       return result;
     }
@@ -163,7 +167,8 @@ public class Token
    * An optimized method that efficiently reacquires the token if no
    * other threads are waiting.  This is useful for situations where
    * you don't want to degrade the quality of service if there are
-   * other threads waiting to get the token. 
+   * other threads waiting to get the token.  This blocks until it
+   * can regain the token.
    *@param requeuePosition Position in the queue where to insert the
    * lock. If requeuePosition == -1 and there are other threads
    * waiting to obtain the token we are queued at the end of the list
@@ -177,7 +182,7 @@ public class Token
   {
     try
       {
-	this.renew (requeuePosition, new TimeValue ());
+	this.renew (requeuePosition, null);
       }
     catch (TimeoutException e)
       {
@@ -190,7 +195,8 @@ public class Token
    * An optimized method that efficiently reacquires the token if no
    * other threads are waiting.  This is useful for situations where
    * you don't want to degrade the quality of service if there are
-   * other threads waiting to get the token. 
+   * other threads waiting to get the token.  If the given TimeValue
+   * is null, it's the same as calling renew(int requeuePosition).
    *@param requeuePosition Position in the queue where to insert the
    * lock. If requeuePosition == -1 and there are other threads
    * waiting to obtain the token we are queued at the end of the list
@@ -198,8 +204,8 @@ public class Token
    * entries to skip over before inserting our thread into the list of
    * waiters (e.g.,requeuePosition == 0 means "insert at front of the
    * queue").
-   *@param timeout Amount of time to wait for in trying to acquire the
-   * token.
+   *@param timeout Throw a TimeoutException if the token isn't renewed
+   * before this absolute time timeout.
    *@exception TimeoutException exception if timeout occurs
    *@exception InterruptedException exception during wait
    */
@@ -210,81 +216,100 @@ public class Token
     int saveNestingLevel = 0;
 
     synchronized (this)
-      {
-	// Check if there is a thread waiting to acquire the token. If
-	// not or if requeuePosition == 0, then we don't do anything
-	// and we simply keep the token. 
-	if (this.snq_.size () > 1 && requeuePosition != 0)
-	  {
-	    // Save the nesting level
-	    saveNestingLevel = this.nestingLevel_;
-	    this.nestingLevel_ = 0;
-
-	    // Reinsert ourselves at requeuePosition in the queue
-	    snl = (WaitObject) this.snq_.firstElement ();
-	    this.snq_.removeElementAt (0);
-
-	    if (requeuePosition < 0)
-	      this.snq_.addElement (snl);  // Insert at end
-	    else
-	      this.snq_.insertElementAt (snl, requeuePosition);
-
-	    synchronized (this.snq_.firstElement ())
-	      {
-		// Notify the first waiting thread in the queue
-		WaitObject obj = (WaitObject) this.snq_.firstElement ();
-		// Set its condition to be true so that it falls out
-		// of the for loop
-		obj.condition (true);
-		// Now signal the thread
-		obj.signal ();
-	      }    
-	  }
-      }
+    {
+        // Check if there is a thread waiting to acquire the token. If
+        // not or if requeuePosition == 0, then we don't do anything
+        // and we simply keep the token. 
+        if (this.snq_.size () > 1 && requeuePosition != 0)
+        {
+            // Save the nesting level
+            saveNestingLevel = this.nestingLevel_;
+            this.nestingLevel_ = 0;
+            
+            // Reinsert ourselves at requeuePosition in the queue
+            snl = (WaitObject) this.snq_.firstElement ();
+            this.snq_.removeElementAt (0);
+            
+            if (requeuePosition < 0)
+                this.snq_.addElement (snl);  // Insert at end
+            else
+                this.snq_.insertElementAt (snl, Math.min(requeuePosition,
+                                                         this.snq_.size()));
+            
+            synchronized (this.snq_.firstElement ())
+            {
+                // Notify the first waiting thread in the queue
+                WaitObject obj = (WaitObject) this.snq_.firstElement ();
+                // Set its condition to be true so that it falls out
+                // of the for loop
+                obj.condition (true);
+                // Now signal the thread
+                obj.signal ();
+            }    
+        }
+    }
     
     // Check if we reinserted the lock in the queue and therefore need
     // to do a wait 
     if (snl != null)
-      {
-	synchronized (snl)
-	  {
-	    // Set the condition to be false so that we can begin the
-	    // wait 
-	    snl.condition (false);
-	    // Do a blocking wait
+    {
+        synchronized (snl)
+        {
+            // Set the condition to be false so that we can begin the
+            // wait 
+            snl.condition (false);
+	    // Wait until the given absolute time (or until notified
+	    // if the timeout is null)
 	    snl.timedWait (timeout);
-	  }
-	// Restore the nesting level and current owner of the lock
-	this.nestingLevel_ = saveNestingLevel;
-	this.owner_ = Thread.currentThread ().toString ();
-      }
+        }
+        // Restore the nesting level and current owner of the lock
+        this.nestingLevel_ = saveNestingLevel;
+
+        // Set the owner of the token
+        setOwner();
+    }
   }
 
   /**
-   * Release the token.
+   * Release the token.  It is safe for non-owners to call
+   * this.
    */
   public synchronized void release ()
   {
+    if (!isOwner())
+        return;
+
     // Check if nestingLevel > 0 and if so, decrement it
     if (this.nestingLevel_ > 0)
-      this.nestingLevel_--;
+        this.nestingLevel_--;
     else
-      {
-	this.snq_.removeElementAt (0);
-	if (!this.snq_.isEmpty ())
-	  {
-	    synchronized (this.snq_.firstElement ())
-	      {
-		// Notify the first waiting thread in the queue
-		WaitObject obj = (WaitObject) this.snq_.firstElement ();
-		// Set its condition to be true so that it falls out
-		// of the for loop
-		obj.condition (true);
-		// Now signal the thread
-		obj.signal ();
-	      }
-	  }
-      }
+        {
+            this.snq_.removeElementAt (0);
+            if (!this.snq_.isEmpty ())
+            {
+                synchronized (this.snq_.firstElement ())
+                {
+                    // Notify the first waiting thread in the queue
+                    WaitObject obj = (WaitObject) this.snq_.firstElement ();
+                    // Set its condition to be true so that it falls out
+                    // of the for loop
+                    obj.condition (true);
+                    // Now signal the thread
+                    obj.signal ();
+                }
+            }
+        }
+  }
+
+  // The next two methods allow subclasses to change the behavior of the
+  // checking and setting the Object owner_ member variable.  The default
+  // is to use the current Thread's toString() as the Object.
+  protected void setOwner() {
+      this.owner_ = Thread.currentThread().toString();
+  }
+
+  protected boolean isOwner() {
+      return Thread.currentThread().toString().equals(this.owner_);
   }
 
   private Vector snq_ = new Vector ();
@@ -293,6 +318,8 @@ public class Token
   private int nestingLevel_ = 0;
   // Current Nesting Level
 
-  private String owner_ = null;
-  // Current owner of the token.
+  private Object owner_ = null;
+  // Current owner of the token.  The setOwner() and isOwner()
+  // methods provide subclasses with the ability to change the
+  // behavior.  The default is to use the Thread.toString().
 }

@@ -50,7 +50,7 @@ public class ServiceObject implements EventHandler
   /** 
    * Called when timer expires. Overwrite this method to do
    * anything useful. 
-   *@param tv Time Value for which timer was set
+   *@param tv Time Value for when timer expired
    *@param obj An arbitrary object that was passed to the Timer Queue
    * (Asynchronous Completion Token)
    *@return -1
