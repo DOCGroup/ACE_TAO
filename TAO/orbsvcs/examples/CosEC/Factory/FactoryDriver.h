@@ -61,14 +61,14 @@ class FactoryDriver
   const char* child_poa_name_;
   // The name of the Child POA.
 
+  CORBA::ORB_var orb_;
+  // The ORB that we use.
+
   TAO_CosEventChannelFactory_i *factory_servant_;
   // The factory servant.
 
   PortableServer::POA_var root_poa_;
   // Reference to the root poa.
-
-  CORBA::ORB_var orb_;
-  // The ORB that we use.
 
   CosEventChannelFactory::ChannelFactory_var factory_;
   // The corba object after activation.
