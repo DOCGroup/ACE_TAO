@@ -119,9 +119,12 @@ public:
 
   // = Resource Retrieval
 
+#if 0
+  /// @@ todo: Need to go at a later date!
   /// @@ Backwards compatibility, return 1 if the ORB core should use
   ///    TSS resources
   virtual int use_tss_resources (void) const;
+#endif /*if 0*/
 
   /// @@ Backwards compatibility, return 1 if the ORB core should use
   ///    Locked_Data_Blocks

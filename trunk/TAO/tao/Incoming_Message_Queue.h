@@ -22,6 +22,7 @@
 
 /// Forward declarations
 class ACE_Data_Block;
+class ACE_Allocator;
 class TAO_ORB_Core;
 class TAO_Queued_Data;
 class TAO_Transport;
@@ -52,7 +53,8 @@ class TAO_Transport;
 class TAO_Export TAO_Incoming_Message_Queue
 {
 public:
-  /// Contructor.
+
+  /// Constructor.
   TAO_Incoming_Message_Queue (TAO_ORB_Core *orb_core);
 
   /// Destructor.
@@ -122,16 +124,16 @@ class TAO_Export TAO_Queued_Data
 {
 public:
   /// Default Constructor
-  TAO_Queued_Data (void);
+  TAO_Queued_Data (ACE_Allocator *alloc = 0);
 
   /// Constructor.
-  TAO_Queued_Data (ACE_Message_Block *mb);
+  TAO_Queued_Data (ACE_Message_Block *mb, ACE_Allocator *alloc = 0);
 
   /// Copy constructor.
   TAO_Queued_Data (const TAO_Queued_Data &qd);
 
   /// Creation and deletion of a node in the queue.
-  static TAO_Queued_Data* get_queued_data (void);
+  static TAO_Queued_Data* get_queued_data (ACE_Allocator *alloc = 0);
 
   static void release (TAO_Queued_Data *qd);
 
@@ -171,6 +173,9 @@ private:
   /// Replace the datablock with a one allocated on the heap or
   /// allocator
   static void replace_data_block (ACE_Message_Block &mb);
+
+private:
+  ACE_Allocator *allocator_;
 };
 
 

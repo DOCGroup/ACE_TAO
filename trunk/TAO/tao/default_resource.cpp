@@ -33,8 +33,7 @@ ACE_RCSID (tao,
            "$Id$")
 
 TAO_Default_Resource_Factory::TAO_Default_Resource_Factory (void)
-  : use_tss_resources_ (0),
-    use_locked_data_blocks_ (1),
+  : use_locked_data_blocks_ (1),
     parser_names_count_ (0),
     parser_names_ (0),
     protocol_factories_ (),
@@ -121,19 +120,9 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
                             ACE_LIB_TEXT("-ORBResources")) == 0)
       {
         curarg++;
-        if (curarg < argc)
-          {
-            ACE_TCHAR* name = argv[curarg];
 
-            if (ACE_OS::strcasecmp (name,
-                                    ACE_LIB_TEXT("global")) == 0)
-              this->use_tss_resources_ = 0;
-            else if (ACE_OS::strcasecmp (name,
-                                         ACE_LIB_TEXT("tss")) == 0)
-              this->use_tss_resources_ = 1;
-            else
-              this->report_option_value_error (ACE_LIB_TEXT("-ORBResources"), name);
-          }
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_LIB_TEXT ("(%P|%t) This option has been deprecated \n")));
       }
 
     else if (ACE_OS::strcasecmp (argv[curarg],
@@ -542,11 +531,14 @@ TAO_Default_Resource_Factory::init_protocol_factories (void)
   return 0;
 }
 
+#if 0
+// @@todo: Need to go at a later date!
 int
 TAO_Default_Resource_Factory::use_tss_resources (void) const
 {
-  return this->use_tss_resources_;
+  return 0;
 }
+#endif /*if 0*/
 
 int
 TAO_Default_Resource_Factory::use_locked_data_blocks (void) const

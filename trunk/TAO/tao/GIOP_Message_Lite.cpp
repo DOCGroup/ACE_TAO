@@ -1609,11 +1609,11 @@ TAO_GIOP_Message_Lite::make_queued_data (size_t sz)
   // bytes. As we may not know how many bytes will be lost, we will
   // allocate ACE_CDR::MAX_ALIGNMENT extra.
   ACE_Data_Block *db =
-    this->orb_core_->data_block_for_message_block (sz +
-                                                   ACE_CDR::MAX_ALIGNMENT);
+    this->orb_core_->create_input_cdr_data_block (sz +
+                                                  ACE_CDR::MAX_ALIGNMENT);
 
   ACE_Allocator *alloc =
-    this->orb_core_->message_block_msgblock_allocator ();
+    this->orb_core_->input_cdr_msgblock_allocator ();
 
   ACE_Message_Block mb (db,
                         0,

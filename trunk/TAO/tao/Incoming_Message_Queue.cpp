@@ -1,7 +1,7 @@
 #include "Incoming_Message_Queue.h"
 #include "ORB_Core.h"
 #include "debug.h"
-
+#include "ace/Malloc_T.h"
 
 #if !defined (__ACE_INLINE__)
 # include "Incoming_Message_Queue.inl"
@@ -19,8 +19,12 @@ TAO_Incoming_Message_Queue::TAO_Incoming_Message_Queue (TAO_ORB_Core *orb_core)
 
 TAO_Incoming_Message_Queue::~TAO_Incoming_Message_Queue (void)
 {
-  // Delete the QD
-  if (this->size_)
+  int sz = this->size_;
+
+  // Delete all the nodes left behind
+  for (int i = 0;
+       i < sz;
+       i++)
     {
       TAO_Queued_Data *qd = this->dequeue_head ();
       TAO_Queued_Data::release (qd);
@@ -127,8 +131,7 @@ TAO_Incoming_Message_Queue::enqueue_tail (TAO_Queued_Data *nd)
 // Methods  for TAO_Queued_Data
 /************************************************************************/
 
-
-TAO_Queued_Data::TAO_Queued_Data (void)
+TAO_Queued_Data::TAO_Queued_Data (ACE_Allocator *alloc)
   : msg_block_ (0),
     missing_data_ (0),
     byte_order_ (0),
@@ -136,11 +139,13 @@ TAO_Queued_Data::TAO_Queued_Data (void)
     minor_version_ (0),
     more_fragments_ (0),
     msg_type_ (TAO_PLUGGABLE_MESSAGE_MESSAGERROR),
-    next_ (0)
+    next_ (0),
+    allocator_ (alloc)
 {
 }
 
-TAO_Queued_Data::TAO_Queued_Data (ACE_Message_Block *mb)
+TAO_Queued_Data::TAO_Queued_Data (ACE_Message_Block *mb,
+                                  ACE_Allocator *alloc)
   : msg_block_ (mb),
     missing_data_ (0),
     byte_order_ (0),
@@ -148,7 +153,8 @@ TAO_Queued_Data::TAO_Queued_Data (ACE_Message_Block *mb)
     minor_version_ (0),
     more_fragments_ (0),
     msg_type_ (TAO_PLUGGABLE_MESSAGE_MESSAGERROR),
-    next_ (0)
+    next_ (0),
+    allocator_ (alloc)
 {
 }
 
@@ -160,32 +166,117 @@ TAO_Queued_Data::TAO_Queued_Data (const TAO_Queued_Data &qd)
     minor_version_ (qd.minor_version_),
     more_fragments_ (qd.more_fragments_),
     msg_type_ (qd.msg_type_),
-    next_ (0)
+    next_ (0),
+    allocator_ (qd.allocator_)
 {
 }
 
-
-/*static*/ void
-TAO_Queued_Data::replace_data_block (ACE_Message_Block &mb)
+/*static*/
+TAO_Queued_Data *
+TAO_Queued_Data::get_queued_data (ACE_Allocator *alloc)
 {
-  size_t newsize =
-    ACE_CDR::total_length (&mb, 0) + ACE_CDR::MAX_ALIGNMENT;
+  TAO_Queued_Data *qd = 0;
 
-  ACE_Data_Block *db =
-    mb.data_block ()->clone_nocopy ();
+  if (alloc)
+    {
+      ACE_NEW_MALLOC_RETURN (qd,
+                            ACE_static_cast (TAO_Queued_Data *,
+                              alloc->malloc (sizeof (TAO_Queued_Data))),
+                            TAO_Queued_Data (alloc),
+                            0);
 
-  if (db->size (newsize) == -1)
-    return;
+      return qd;
+    }
 
-  ACE_Message_Block tmp (db);
-  ACE_CDR::mb_align (&tmp);
+  // No allocator, so use the global pool!
+  // @@ TODO: We should be removing this at some point of time!
+  if (TAO_debug_level == 4)
+    {
+      // This debug is for testing purposes!
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO (%P|%t) - Queued_Data[%d]::get_queued_data\n",
+                  "Using global pool for allocation \n"));
+    }
 
-  tmp.copy (mb.rd_ptr (), mb.length());
-  mb.data_block (tmp.data_block ()->duplicate ());
+  ACE_NEW_RETURN (qd,
+                  TAO_Queued_Data,
+                  0);
 
-  mb.rd_ptr (tmp.rd_ptr ());
-  mb.wr_ptr (tmp.wr_ptr ());
+  return qd;
+}
 
-  // Remove the DONT_DELETE flags from mb
-  mb.clr_self_flags (ACE_Message_Block::DONT_DELETE);
+/*static*/
+void
+TAO_Queued_Data::release (TAO_Queued_Data *qd)
+{
+  //// TODO
+  ACE_Message_Block::release (qd->msg_block_);
+
+  if (qd->allocator_)
+    {
+      ACE_DES_FREE (qd,
+                    qd->allocator_->free,
+                    TAO_Queued_Data);
+
+      return;
+    }
+
+  // @@todo: Need to be removed at some point of time!
+  if (TAO_debug_level == 4)
+    {
+      // This debug is for testing purposes!
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO (%P|%t) - Queued_Data[%d]::release\n",
+                  "Using global pool for releasing \n"));
+    }
+  delete qd;
+
+}
+
+
+TAO_Queued_Data *
+TAO_Queued_Data::duplicate (TAO_Queued_Data &sqd)
+{
+  // Check to see if the underlying block is on the stack. If not it
+  // is fine. If the datablock is on stack, try to make a copy of that
+  // before doing a duplicate.
+  // @@ todo: Theoretically this should be within the Message Block,
+  // but we dont have much scope to do this in that mess. Probably in
+  // the next stage of MB rewrite we should be okay
+  ACE_Message_Block::Message_Flags fl =
+    sqd.msg_block_->self_flags ();
+
+  if (ACE_BIT_ENABLED (fl,
+                       ACE_Message_Block::DONT_DELETE))
+    (void) TAO_Queued_Data::replace_data_block (*sqd.msg_block_);
+
+
+  TAO_Queued_Data *qd = 0;
+
+  if (sqd.allocator_)
+    {
+      ACE_NEW_MALLOC_RETURN (qd,
+                             ACE_static_cast(TAO_Queued_Data *,
+                               sqd.allocator_->malloc (sizeof (TAO_Queued_Data))),
+                             TAO_Queued_Data (sqd.allocator_),
+                            0);
+
+      return qd;
+    }
+
+  // No allocator, so use the global pool!
+  // @@ TODO: We should be removing this at some point of time!
+  if (TAO_debug_level == 4)
+    {
+      // This debug is for testing purposes!
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO (%P|%t) - Queued_Data[%d]::duplicate\n",
+                  "Using global pool for allocation \n"));
+    }
+
+  ACE_NEW_RETURN (qd,
+                  TAO_Queued_Data (sqd),
+                  0);
+
+  return qd;
 }

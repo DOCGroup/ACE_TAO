@@ -57,11 +57,14 @@ TAO_Resource_Factory::~TAO_Resource_Factory (void)
 {
 }
 
+#if 0
+// @@todo: Need to go at a later date!
 int
 TAO_Resource_Factory::use_tss_resources (void) const
 {
   return 0;
 }
+#endif /*if 0*/
 
 int
 TAO_Resource_Factory::use_locked_data_blocks (void) const
