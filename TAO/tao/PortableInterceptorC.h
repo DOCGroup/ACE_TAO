@@ -1029,6 +1029,17 @@ public:
       CORBA::SystemException
     ));
 
+  // = TAO specific,has been added because there is no extraction 
+  // operator for getting an exception out of an Any. Seems more like a 
+  // bug in the spec.
+  virtual CORBA::Exception * _received_exception (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((
+      CORBA::SystemException
+    ));
+
   virtual char * received_exception_id (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
@@ -1191,6 +1202,17 @@ public:
   static void _tao_any_destructor (void*);
 
   virtual CORBA::Any * sending_exception (
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((
+      CORBA::SystemException
+    ));
+
+  // = TAO specific,has been added because there is no extraction 
+  // operator for getting an exception out of an Any. Seems more like a 
+  // bug in the spec.
+  virtual CORBA::Exception * _sending_exception (
       CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
