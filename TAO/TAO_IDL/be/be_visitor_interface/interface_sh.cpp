@@ -109,7 +109,7 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
 
   *os << "virtual CORBA::Boolean _is_a (" << be_idt << be_idt_nl
       << "const char* logical_type_id," << be_nl
-      << "CORBA::Environment &_tao_environment = " << be_idt_nl
+      << "CORBA::Environment &ACE_TRY_ENV = " << be_idt_nl
       << "CORBA::Environment::default_environment ()"
       << be_uidt << be_uidt_nl
       << ");" << be_uidt_nl;
@@ -133,7 +133,7 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
       << "CORBA::ServerRequest &req," << be_nl
       << "void *obj," << be_nl
       << "void *context," << be_nl
-      << "CORBA::Environment &_tao_enviroment = " << be_idt_nl
+      << "CORBA::Environment &ACE_TRY_ENV = " << be_idt_nl
       << "CORBA::Environment::default_environment ()"
       << be_uidt << be_uidt_nl
       << ");" << be_uidt << "\n\n";
@@ -144,7 +144,7 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
       << "CORBA::ServerRequest &req," << be_nl
       << "void *obj," << be_nl
       << "void *context," << be_nl
-      << "CORBA::Environment &_tao_enviroment = " << be_idt_nl
+      << "CORBA::Environment &ACE_TRY_ENV = " << be_idt_nl
       << "CORBA::Environment::default_environment ()"
       << be_uidt << be_uidt_nl
       << ");" << be_uidt << "\n\n";
@@ -170,7 +170,7 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
   *os << "virtual void _dispatch (" << be_idt << be_idt_nl
       << "CORBA::ServerRequest &_tao_req," << be_nl
       << "void *_tao_context," << be_nl
-      << "CORBA::Environment &_tao_env = " << be_idt_nl
+      << "CORBA::Environment &ACE_TRY_ENV = " << be_idt_nl
       << "CORBA::Environment::default_environment ()"
       << be_uidt << be_uidt_nl
       << ");" << be_uidt << "\n\n";
@@ -178,7 +178,7 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
   // Print out the _this() method.
   os->indent ();
   *os << node->name () << " *_this (" << be_idt << be_idt_nl
-      << "CORBA::Environment &_tao_environment = " << be_idt_nl
+      << "CORBA::Environment &ACE_TRY_ENV = " << be_idt_nl
       << "CORBA::Environment::default_environment ()"
       << be_uidt << be_uidt_nl
       << ");" << be_uidt << "\n";
