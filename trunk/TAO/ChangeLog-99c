@@ -1,3 +1,8 @@
+Fri Apr 16 09:39:47 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/NestedUpcall/Triangle_Test/Makefile:
+          removed unnecessary use of orbsvcs include path and library.
+
 Fri Apr 16 09:36:14 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/default_resource.cpp: removed ACE_*Guard instantiation
