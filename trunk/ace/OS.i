@@ -674,11 +674,7 @@ ACE_OS::chdir (const char *path)
 ACE_INLINE int
 ACE_OS::strcasecmp (const char *s, const char *t)
 {
-  ACE_UNUSED_ARG (s);
-  ACE_UNUSED_ARG (t);
-
-  // ACE_TRACE ("ACE_OS::strcasecmp");
-  ACE_NOTSUP_RETURN (-1);
+  return ::_stricmp (s, t);
 }
 
 ACE_INLINE int
@@ -7369,6 +7365,13 @@ ACE_OS::strcpy (wchar_t *s, const wchar_t *t)
 {
   // ACE_TRACE ("ACE_OS::strcpy");
   return ::wcscpy (s, t);
+}
+
+ACE_INLINE int
+ACE_OS::strcasecmp (const wchar_t *s, const wchar_t *t)
+{
+  // ACE_TRACE ("ACE_OS::strcasecmp");
+  return :: _wcsicmp (s, t);
 }
 
 ACE_INLINE size_t
