@@ -41,7 +41,7 @@ public:
   // destructor
 
   virtual int visit_valuetype (be_valuetype *node);
-  // visit interface
+  // visit valuetype
 };
 
 #endif /* _BE_VALUETYPE_ANY_OP_CS_H_ */
