@@ -1,3 +1,9 @@
+Tue Apr  10 07:58:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * performance-tests/latency/dii-client.bor
+          Corrected name of executable so that perl scripts can find
+          this client
+
 Mon Apr  9 21:05:07 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAOACE.dsw:
@@ -33,7 +39,7 @@ Mon Apr  9 21:05:07 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
           Cosmetic changes plus a change to the dummy typecode
           member passed in StuctMembers and UnionMembers to create
-          StructDefs, ExceptionDefs and UnionDefs in the IfR. 
+          StructDefs, ExceptionDefs and UnionDefs in the IfR.
           I was using _tc_null, and the spec requires _tc_void.
 
         * orbsvcs/tests/InterfaceRepo/IFR_Test/Admin_Client.cpp:
@@ -85,7 +91,7 @@ Mon Apr  9 18:17:14 2001  Ossama Othman  <ossama@uci.edu>
 	* examples/PluggableUDP/DIOP/DIOP_Connector.cpp (make_profile):
 	* tao/Strategies/UIOP_Profile.cpp (TAO_DIOP_Profile):
 	* tao/Strategies/UIOP_Profile.h (TAO_DIOP_Profile):
-	
+
 	  The endpoint string is no longer passed to Profile
 	  constructors.  Previously, this string was passed to the
 	  Profile's constructor at which point TAO_Profile::parse_string()
@@ -199,8 +205,8 @@ Mon Apr  9 16:25:00 2001  Michael Kircher <Michael.Kircher@mchp.siemens.de>
 
         * examples/PluggableUDP/DIOP/DIOP_Transport.h:
         * examples/PluggableUDP/DIOP/DIOP_Transport.cpp:
-  
-          Made use of the possiblity to set the initial size of the 
+
+          Made use of the possiblity to set the initial size of the
           input CDR buffer. In combination with the single read strategy,
           which tries to read as much as the buffer can take, it is now
           possible to read a complete UDP packet on a single read without
@@ -270,7 +276,7 @@ Mon Apr 09 09:24:54 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 Mon Apr  9 07:13:37 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-        * examples/POA/Loader/Server_Manager.cpp: Fixed warnings with g++.  
+        * examples/POA/Loader/Server_Manager.cpp: Fixed warnings with g++.
 
 Mon Apr  9 06:54:06 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
