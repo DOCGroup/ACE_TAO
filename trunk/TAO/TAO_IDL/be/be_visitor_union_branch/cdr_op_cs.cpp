@@ -395,8 +395,20 @@ be_visitor_union_branch_cdr_op_cs::visit_predefined_type (be_predefined_type *no
     case TAO_CodeGen::TAO_CDR_INPUT:
 
       if (node->pt () == AST_PredefinedType::PT_pseudo)
-        *os << "result = strm >> _tao_union."
-            << f->local_name () << " ();";
+        {
+          if (!ACE_OS::strcmp (node->local_name ()->get_string (), "TypeCode"))
+            *os << "CORBA::TypeCode_var _tao_union_tmp;" << be_nl;
+
+          else if (!ACE_OS::strcmp (node->local_name ()->get_string (), "Object"))
+            *os << "CORBA::Object_var _tao_union_tmp;" << be_nl;
+
+          //@@TODO - case for ValueBase.
+
+          *os << "result = strm >> _tao_union_tmp.out ();" << be_nl
+              << "if (result)" << be_idt_nl
+              << "_tao_union." << f->local_name () << " (_tao_union_tmp.in ());"
+              << be_uidt;
+        }
       else if (node->pt () == AST_PredefinedType::PT_char)
         *os << "CORBA::Char _tao_union_tmp;" << be_nl
             << "CORBA::Any::to_char _tao_union_helper "
