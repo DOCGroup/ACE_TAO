@@ -4,6 +4,22 @@ This directory contains a number of tests to validate that TAO is
 functioning correctly.  The individual directories contain READMEs on
 how to run the following tests:
 
+        . AMI
+
+          This is a simple test for AMI callback model.
+
+        . Bidirectional
+
+          This is a test that exercises the birectional GIOP connection
+          implementation in TAO.
+
+        . Bidirectional_NestedUpcall
+
+          This test is similar to the $TAO_ROOT/tests/BiDirectional
+          test. The only difference is that, this test uses the
+          select_mt reactor, which helps the server to make calls to
+          client during the upcall.
+
         . CDR
 
           This directory contains several tests for the CDR stream
@@ -20,6 +36,12 @@ how to run the following tests:
           and checks whether cached handlers are purged effectively
           when the process runs out of descriptors.
 
+        . DSI_Gateway
+                    
+          A simple test for the DSI/DII gateway support. TAO can
+          optimize some demarshaling/marshaling and data copying in
+          the implementation of DSI/DII based gateways.
+          
         . DynAny_Test
 
           Tests TAO's DynAny feature, which allows composition and
@@ -37,6 +59,12 @@ how to run the following tests:
           This tests the methods work_pending() and perform_work()
           methods of the orb.
 
+        . Explosed_Policies          
+          
+          This directory contains a test case used to verify that the
+          client exposed policies get embedded correctly in the IOR
+          and exposed to the client in the object reference.
+          
         . FL_Cube
 
           Test the integration of the FL toolkit and TAO.
@@ -47,8 +75,6 @@ how to run the following tests:
           client crashes.
 
         . Forwarding
-        
-          
 
         . IDL_Test
 
@@ -57,6 +83,10 @@ how to run the following tests:
           build cleanly, except pragma.idl, which generates pragma
           prefixes. These prefixes are checked for correctness in
           main.cpp.
+
+        . ior_corbaloc
+        
+          This is test to exercise the corbaname: style URL.
 
         . IORManipulation
 
@@ -70,17 +100,14 @@ how to run the following tests:
           CORBA::ORB::resolve_initial_references () for non-locality
           constrained objects.
 
-        . Interceptors
-
-          This test allows you to visually check the correct
-          invocation of TAO's pseudo-portable interceptors.
-
         . Leader_Followers
 
           This is a test for server applications that have client
           threads (threads making remote calls) starting before event
           loop threads (threads running the event loop).
 
+        . LongUpcalls          
+          
         . MProfile
 
           This program tests fundamentals of TAO's ORB fault tolerance
@@ -103,6 +130,11 @@ how to run the following tests:
           clients can send requests to it, the requests are handled in
           different threads.
 
+        . Multiple
+                    
+          This test make sure that the collocation scheme works fine
+          in case of diamond shaped multiple inheritance.
+          
         . Multiple_Inheritance
 
           This test exercises IDL interfaces that inherit from
@@ -126,11 +158,17 @@ how to run the following tests:
           code, i.e., a call to perform_work() or run() from the
           implementation of the servant.
 
+        . ORB_destroy
+        
+          A simple ORB destruction test.
+                    
         . ORB_init
 
           The ORB_init test simply verifies that the CORBA::ORB_init()
           call behaves as defined in the OMG CORBA specification.
 
+        . Object_Loader          
+          
         . OctetSeq
 
           Measures the cost of marshaling and demarshaling of
@@ -146,20 +184,37 @@ how to run the following tests:
 
           Tests all the features of TAO's protocol engine.
 
+        . Policies
+        
+          This is a stress test for the ORB's Policy interfaces.  
+                  
+        . Portable_Interceptors
+        
+          A series of tests for the Portable Interceptors feature.
+          
+        . QtTests
+
+          This example illustrates the usage of the QtReactor from TAO.
+
         . RTCORBA
 
           A collection of tests exercising features from RTCORBA 1.0
           specification. Tests exercising TAO-specific RT features
           can be found in $TAO_ROOT/performance-tests/RTCorba.
 
-        . QtTests
-
-          This example illustrates the usage of the QtReactor from TAO.
+        . Single_Read
+        
+          This is a stress test for TAO's "single read" feature.
 
         . Smart Proxies
 
           Tests the smart proxy feature which allows the user to
           specify a proxy in plaec of the default proxy (stub).
+
+        . Strategies
+          
+          This test helps show the various ways in which the default
+          and advanced TAO strategies can be dynamically loaded.
 
         . Timed_Buffered_Oneways
 
