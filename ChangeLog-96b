@@ -1,3 +1,88 @@
+Sun Dec  1 19:19:02 1996  Douglas C. Schmidt  <schmidt@lambada.cs.wustl.edu>
+
+	* ace/ReactorEx: Added a new parameter to the Reactor's
+ 	  initialization methods so that we can install a subclass of
+ 	  ACE_Timer_Queue.  This is in anticipation of Tim's new
+ 	  "real-time" implementation of a timer queue.
+
+	* ace/Reactor: Added a new parameter to the Reactor's
+ 	  initialization methods so that we can install a subclass of
+ 	  ACE_Timer_Queue.  This is in anticipation of Tim's new
+ 	  "real-time" implementation of a timer queue.
+
+	* ace/Reactor: Changed the internal Reactor name
+ 	  ACE_Notification_Handler to ACE_Reactor_Notify to be consistent
+ 	  with the ACE_ReactorEx_Notify class.
+
+	* examples/Reactor/Misc/test_demuxing.cpp: Revised this test so
+ 	  that it now illustrates the new notification mechanism of the
+ 	  ACE_Message_Queue class.
+
+	* examples/Reactor/Misc: Changed the name of the signal_tester.cpp
+ 	  file to test_demuxing.cpp, which is really what this does.
+
+	* ace/Strategies: Created a suite of "Notification Strategies"
+ 	  that are used with the new ACE_Message_Queue notification
+ 	  scheme.
+
+	* ace: Created a new pair of files called Strategies_T.cpp and
+ 	  Strategies_T.h and move the template ACE_*Strategies classes
+ 	  into those files.  This was necessary since there are now new
+ 	  non-template notification strategies in Strategies.{h,cpp}.
+
+	* ace/Message_Queue: Created a new "notification hook" mechanism
+ 	  that makes it possible for event demuxers (like ACE_Reactor and
+ 	  ACE_ReactorEx) to be informed automatically when a Message_Block
+ 	  is inserted into the Message_Queue.  This is useful for
+ 	  sitations where you'd like to integrate multiple threads (each
+ 	  of which is pumping data into an ACE_Message_Queue) with an
+ 	  ACE_Reactor or an ACE_ReactorEx.  Thanks to Matthias Kerkhoff
+ 	  <make@cs.tu-berlin.de> and Luca for suggesting this.
+
+	* ace/Synch.h: Modified the implementation of
+ 	  ACE_Null_Condition_Mutex::wait() so that it always returns -1
+ 	  and sets errno to ETIME.  This reflects the fact that if you'll
+ 	  never be awakened if you "sleep" on a Null_Condition...
+
+	* ace/ReactorEx: Generalized the ACE_ReactorEx so that its
+ 	  notify() method now behaves like the ACE_Reactor, i.e., it can
+ 	  queue up ACE_Event_Handlers that are dispatched in the ReactorEx
+ 	  thread of control.
+
+	* tests: Renamed the Shared_Memory_MM_Test.cpp to
+ 	  MM_Shared_Memory_Test.cpp and remove the
+ 	  Shared_Memory_SV_Test.cpp since it was redundant to the
+ 	  SV_Shared_Memory_Test.cpp.
+
+	* tests/SV_Shared_Memory_Test.cpp (main): Revised the SVSV IPC
+ 	  shared memory test to be more robust.
+
+	* ace/SV_Semaphore_Simple.cpp (open): If the char *name == 0 then
+ 	  use ACE_DEFAULT_SEM_KEY instead.
+
+	* ace/Memory_Pool: Generalized the ACE_Shared_Memory_Pool so that
+ 	  there can be more than 1 shared memory pool active at a time
+	  (similar to what we did for ACE_MMAP_Memory_Pool).
+
+	* ace/Memory_Pool.h: There was an unnecessary
+ 	  ACE_SV_Semaphore_Complex in ACE_Shared_Memory_Pool that was left
+ 	  over from earlier days.  I've removed this.
+
+	* ace/Memory_Pool.cpp (ACE_Shared_Memory_Pool): Revised
+	  the constructor so that if we get a NULL pool_name we'll
+	  initialize the 
+
+	* examples/Makefile: Added the System_V_IPC and Shared_Memory
+ 	  directories.
+
+	* ace/Message_Queue.h: Added a virtual destructor to
+ 	  ACE_Message_Queue so that it can be destroyed appropriately,
+ 	  even if subclassed.
+
+	* ace/Message_Queue.h: Renamed enqueue() to enqueue_prio() to be
+ 	  consistent with the other names (e.g., enqueue_head() and
+ 	  enqueue_tail().  Updated the test programs to reflect this.
+
 Sun Dec  1 12:06:46 1996  David L. Levine  <levine@cs.wustl.edu>
 	* ace/config-vxworks*.h: Removed #define ACE_HAS_STRBUF_T:
  	  copy and paste error
@@ -46,6 +131,12 @@ Sat Nov 30 12:02:00 1996  Douglas C. Schmidt  <schmidt@lambada.cs.wustl.edu>
  	  OS from CDC (based on LYNX).  Thanks to Alexandre Karev
  	  <karev@cern.ch> for reporting this.
 
+Sat Nov 20 12:23:45 1996  Prashant Jain  <pjain@merengue.cs.wustl.edu>
+
+	* tests/Naming_Test.cpp (main): Added code that creates a unique
+	  backing store name and removes the backing store every time
+	  the test is run.
+
 Fri Nov 29 12:54:12 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Stream.cpp (open): Changed tail->close() and head->close()
@@ -92,11 +183,6 @@ Fri Nov 29 12:54:12 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
  	  automatically iterates multiple times in order to test whether
  	  there are problems with rapidly opening and closing NT socket
  	  handles...
-
-Fri Nov 29 12:23:45 1996  Prashant Jain  <pjain@merengue.cs.wustl.edu>
-
-	* tests/Naming_Test.cpp (main): Added code that removes the
-	  backing store every time the test is run.
 
 Thu Nov 28 03:07:48 1996  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
 

@@ -13,6 +13,7 @@ BIN = 	Barrier_Test \
 	CPP_Test \
 	Future_Test \
 	Handle_Set_Test \
+	MM_Shared_Memory_Test \
 	Map_Manager_Test \
 	Mem_Map_Test \
 	Message_Queue_Test \
@@ -24,8 +25,6 @@ BIN = 	Barrier_Test \
 	Reactor_Timer_Test \
 	Reader_Writer_Test \
 	Recursive_Mutex_Test \
-	Shared_Memory_MM_Test \
-	Shared_Memory_SV_Test \
 	SPIPE_Test \
 	SString_Test \
 	SV_Shared_Memory_Test \
@@ -288,6 +287,31 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/Log_Priority.h \
  $(WRAPPER_ROOT)/ace/Log_Record.i \
  $(WRAPPER_ROOT)/ace/ACE.i test_config.h
+.obj/MM_Shared_Memory_Test.o .shobj/MM_Shared_Memory_Test.so: MM_Shared_Memory_Test.cpp \
+ $(WRAPPER_ROOT)/ace/Shared_Memory_MM.h \
+ $(WRAPPER_ROOT)/ace/Shared_Memory.h \
+ $(WRAPPER_ROOT)/ace/ACE.h \
+ $(WRAPPER_ROOT)/ace/OS.h \
+ $(WRAPPER_ROOT)/ace/Time_Value.h \
+ $(WRAPPER_ROOT)/ace/config.h \
+ $(WRAPPER_ROOT)/ace/stdcpp.h \
+ $(WRAPPER_ROOT)/ace/Trace.h \
+ $(WRAPPER_ROOT)/ace/Log_Msg.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.h \
+ $(WRAPPER_ROOT)/ace/Log_Priority.h \
+ $(WRAPPER_ROOT)/ace/Log_Record.i \
+ $(WRAPPER_ROOT)/ace/ACE.i \
+ $(WRAPPER_ROOT)/ace/Mem_Map.h \
+ $(WRAPPER_ROOT)/ace/Thread.h \
+ $(WRAPPER_ROOT)/ace/Thread_Manager.h \
+ $(WRAPPER_ROOT)/ace/Synch.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(WRAPPER_ROOT)/ace/Synch_T.h \
+ $(WRAPPER_ROOT)/ace/Event_Handler.h \
+ test_config.h
 .obj/Map_Manager_Test.o .shobj/Map_Manager_Test.so: Map_Manager_Test.cpp \
  $(WRAPPER_ROOT)/ace/Map_Manager.h \
  $(WRAPPER_ROOT)/ace/ACE.h \
@@ -741,47 +765,6 @@ include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/Reactor.i \
  $(WRAPPER_ROOT)/ace/Svc_Conf_Tokens.h \
  $(WRAPPER_ROOT)/ace/Get_Opt.h \
- test_config.h
-.obj/Shared_Memory_MM_Test.o .shobj/Shared_Memory_MM_Test.so: Shared_Memory_MM_Test.cpp \
- $(WRAPPER_ROOT)/ace/Shared_Memory_MM.h \
- $(WRAPPER_ROOT)/ace/Shared_Memory.h \
- $(WRAPPER_ROOT)/ace/ACE.h \
- $(WRAPPER_ROOT)/ace/OS.h \
- $(WRAPPER_ROOT)/ace/Time_Value.h \
- $(WRAPPER_ROOT)/ace/config.h \
- $(WRAPPER_ROOT)/ace/stdcpp.h \
- $(WRAPPER_ROOT)/ace/Trace.h \
- $(WRAPPER_ROOT)/ace/Log_Msg.h \
- $(WRAPPER_ROOT)/ace/Log_Record.h \
- $(WRAPPER_ROOT)/ace/Log_Priority.h \
- $(WRAPPER_ROOT)/ace/Log_Record.i \
- $(WRAPPER_ROOT)/ace/ACE.i \
- $(WRAPPER_ROOT)/ace/Mem_Map.h \
- $(WRAPPER_ROOT)/ace/Thread.h \
- $(WRAPPER_ROOT)/ace/Thread_Manager.h \
- $(WRAPPER_ROOT)/ace/Synch.h \
- $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.h \
- $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.h \
- $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.i \
- $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.i \
- $(WRAPPER_ROOT)/ace/Synch_T.h \
- $(WRAPPER_ROOT)/ace/Event_Handler.h \
- test_config.h
-.obj/Shared_Memory_SV_Test.o .shobj/Shared_Memory_SV_Test.so: Shared_Memory_SV_Test.cpp \
- $(WRAPPER_ROOT)/ace/Shared_Memory_SV.h \
- $(WRAPPER_ROOT)/ace/Shared_Memory.h \
- $(WRAPPER_ROOT)/ace/ACE.h \
- $(WRAPPER_ROOT)/ace/OS.h \
- $(WRAPPER_ROOT)/ace/Time_Value.h \
- $(WRAPPER_ROOT)/ace/config.h \
- $(WRAPPER_ROOT)/ace/stdcpp.h \
- $(WRAPPER_ROOT)/ace/Trace.h \
- $(WRAPPER_ROOT)/ace/Log_Msg.h \
- $(WRAPPER_ROOT)/ace/Log_Record.h \
- $(WRAPPER_ROOT)/ace/Log_Priority.h \
- $(WRAPPER_ROOT)/ace/Log_Record.i \
- $(WRAPPER_ROOT)/ace/ACE.i \
- $(WRAPPER_ROOT)/ace/SV_Shared_Memory.h \
  test_config.h
 .obj/SPIPE_Test.o .shobj/SPIPE_Test.so: SPIPE_Test.cpp \
  $(WRAPPER_ROOT)/ace/OS.h \
