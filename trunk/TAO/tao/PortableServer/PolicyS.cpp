@@ -920,7 +920,8 @@ POA_CORBA::Policy::Policy (void)
 }
 
 POA_CORBA::Policy::Policy (const Policy& rhs)
-  :  TAO_ServantBase (rhs)
+  : TAO_Abstract_ServantBase (rhs),
+    TAO_ServantBase (rhs)
 {}
 
 POA_CORBA::Policy::~Policy (void)

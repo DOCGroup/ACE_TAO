@@ -5986,7 +5986,8 @@ POA_ImplementationRepository::ServerInformationIterator::ServerInformationIterat
 }
 
 POA_ImplementationRepository::ServerInformationIterator::ServerInformationIterator (const ServerInformationIterator& rhs)
-  :  TAO_ServantBase (rhs)
+  : TAO_Abstract_ServantBase (rhs),
+    TAO_ServantBase (rhs)
 {}
 
 POA_ImplementationRepository::ServerInformationIterator::~ServerInformationIterator (void)

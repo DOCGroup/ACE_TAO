@@ -327,7 +327,8 @@ POA_Messaging::ReplyHandler::ReplyHandler (void)
 }
 
 POA_Messaging::ReplyHandler::ReplyHandler (const ReplyHandler& rhs)
-  :  TAO_ServantBase (rhs)
+  : TAO_Abstract_ServantBase (rhs),
+    TAO_ServantBase (rhs)
 {}
 
 POA_Messaging::ReplyHandler::~ReplyHandler (void)

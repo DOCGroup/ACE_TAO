@@ -1407,8 +1407,9 @@ POA_CORBA::ConstructionPolicy::ConstructionPolicy (void)
 }
 
 POA_CORBA::ConstructionPolicy::ConstructionPolicy (const ConstructionPolicy& rhs)
-  :  ACE_NESTED_CLASS (POA_CORBA,Policy) (rhs),
-    TAO_ServantBase (rhs)
+  : TAO_Abstract_ServantBase (rhs),
+    TAO_ServantBase (rhs),
+    ACE_NESTED_CLASS (POA_CORBA,Policy) (rhs)
 {}
 
 POA_CORBA::ConstructionPolicy::~ConstructionPolicy (void)
