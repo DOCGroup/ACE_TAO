@@ -52,6 +52,8 @@ CCFLAGS		+= -ptnone -no_prelink
 #CCFLAGS	+= -ptused -prelink
 # Instantiate used templates, but do not run prelinker
 #CCFLAGS		+= -ptused
+# Suppress warnings about "pack" pragmas not being defined
+CCFLAGS         += -diag_suppress 3284
 
 LDFLAGS		+= -Wl,-woff,15
 LDFLAGS		+= -Wl,-woff,84
