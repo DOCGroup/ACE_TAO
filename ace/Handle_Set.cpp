@@ -161,12 +161,13 @@ ACE_Handle_Set::sync (ACE_HANDLE max)
 {
   ACE_TRACE ("ACE_Handle_Set::sync");
 #if !defined (ACE_WIN32)
+  fd_mask * maskp = (fd_mask *)(this->mask_.fds_bits);
   this->size_ = 0;
 
   for (int i = ACE_DIV_BY_WORDSIZE(max - 1);
        i >= 0; 
        i--)
-    this->size_ += ACE_Handle_Set::count_bits (this->mask_.fds_bits[i]);
+    this->size_ += ACE_Handle_Set::count_bits (maskp[i]);
 
   this->set_max (max);
 #else
@@ -181,6 +182,8 @@ ACE_Handle_Set::set_max (ACE_HANDLE current_max)
 {
   ACE_TRACE ("ACE_Handle_Set::set_max");
 #if !defined(ACE_WIN32)
+  fd_mask * maskp = (fd_mask *)(this->mask_.fds_bits);
+
   if (this->size_ == 0)
     this->max_handle_ = ACE_INVALID_HANDLE;
   else
@@ -188,13 +191,13 @@ ACE_Handle_Set::set_max (ACE_HANDLE current_max)
       int i;
 
       for (i = ACE_DIV_BY_WORDSIZE(current_max - 1);
-	   this->mask_.fds_bits[i] == 0; 
+	   maskp[i] == 0; 
 	   i--)
 	continue;
 
 #if 1 /* !defined(ACE_HAS_BIG_FD_SET) */
       this->max_handle_ = ACE_MULT_BY_WORDSIZE(i);
-      for (fd_mask val = this->mask_.fds_bits[i]; 
+      for (fd_mask val = maskp[i]; 
 	   (val & ~1) != 0; // This obscure code is needed since "bit 0" is in location 1...
 	   val = (val >> 1) & ACE_MSB_MASK)
 	this->max_handle_++;
@@ -246,6 +249,17 @@ ACE_Handle_Set_Iterator::operator () (void)
   // No sense searching further than the max_handle_ + 1;
   ACE_HANDLE maxhandlep1 = this->handles_.max_handle_ + 1;
 
+  // HP-UX 11 plays some games with the fd_mask type - fd_mask is defined
+  // as an int_32t, but the fds_bits is an array of longs.  This makes
+  // plainly indexing through the array by hand tricky, since the FD_*
+  // macros treat the array as int32_t.  So the bits are in the right place
+  // for int32_t, even though the array is long.  This, they say, is to
+  // preserve the same in-memory layout for 32-bit and 64-bit processes.
+  // So, we play the same game as the FD_* macros to get the bits right.
+  // On all other systems, this amounts to practically a NOP, since this
+  // is what would have been done anyway, without all this type jazz.
+  fd_mask * maskp = (fd_mask *)(this->handles_.mask_.fds_bits);
+
   if (this->handle_index_ >= maxhandlep1)
     // We've seen all the handles we're interested in seeing for this
     // iterator.
@@ -270,7 +284,7 @@ ACE_Handle_Set_Iterator::operator () (void)
 
 	  for (this->handle_index_ = ACE_MULT_BY_WORDSIZE(++this->word_num_);
 	       this->handle_index_ < maxhandlep1
-		 && this->handles_.mask_.fds_bits[this->word_num_] == 0;
+		 && maskp[this->word_num_] == 0;
 	       this->word_num_++)
 	    this->handle_index_ += ACE_Handle_Set::WORDSIZE;
 	  
@@ -286,7 +300,7 @@ ACE_Handle_Set_Iterator::operator () (void)
 	    }
 	  else
 	    // Load the bits of the next word.
-	    this->word_val_ = this->handles_.mask_.fds_bits[this->word_num_];
+	    this->word_val_ = maskp[this->word_num_];
 	}
 
       // Loop until we get <word_val_> to have its least significant
@@ -385,10 +399,12 @@ ACE_Handle_Set_Iterator::ACE_Handle_Set_Iterator (const ACE_Handle_Set &hs)
   // No sense searching further than the max_handle_ + 1;
   ACE_HANDLE maxhandlep1 = this->handles_.max_handle_ + 1;
 
+  fd_mask * maskp = (fd_mask *)(this->handles_.mask_.fds_bits);
+
   // Loop until we've found the first non-zero bit or we run past the
   // <maxhandlep1> of the bitset.
   while (this->handle_index_ < maxhandlep1
-	 && this->handles_.mask_.fds_bits[++this->word_num_] == 0)
+	 && maskp[++this->word_num_] == 0)
     this->handle_index_ += ACE_Handle_Set::WORDSIZE;
 
   // If the bit index becomes >= the maxhandlep1 that means there
@@ -401,7 +417,7 @@ ACE_Handle_Set_Iterator::ACE_Handle_Set_Iterator (const ACE_Handle_Set &hs)
     // Loop until we get <word_val_> to have its least significant bit
     // enabled, keeping track of which <handle_index> this represents
     // (this information is used by <operator()>).
-    for (this->word_val_ = this->handles_.mask_.fds_bits[this->word_num_];
+    for (this->word_val_ = maskp[this->word_num_];
 	 ACE_BIT_DISABLED (this->word_val_, 1)
 	   && this->handle_index_ < maxhandlep1;
 	 this->handle_index_++)
