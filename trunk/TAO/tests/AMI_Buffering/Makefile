@@ -67,7 +67,7 @@ realclean: clean
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/admin.o .obj/admin.so .shobj/admin.o .shobj/admin.so: admin.cpp AMI_Buffering_Admin.h \
+.obj/admin.o .obj/admin.o .obj/admin.o .obj/admin.o: admin.cpp AMI_Buffering_Admin.h \
  $(ACE_ROOT)/ace/pre.h TestS.h \
  $(TAO_ROOT)/tao/Messaging/MessagingS.h \
  $(TAO_ROOT)/tao/Messaging/messaging_export.h \
@@ -376,8 +376,8 @@ realclean: clean
  $(TAO_ROOT)/tao/DynamicC.i \
  $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
  $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i TestC.i \
- TestS_T.h TestS_T.i TestS_T.cpp TestS.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
+ TestC.i TestS_T.h TestS_T.i TestS_T.cpp TestS.i \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -389,7 +389,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Get_Opt.i
 
-.obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp AMI_Buffering.h \
+.obj/server.o .obj/server.o .obj/server.o .obj/server.o: server.cpp AMI_Buffering.h \
  $(ACE_ROOT)/ace/pre.h TestS.h \
  $(TAO_ROOT)/tao/Messaging/MessagingS.h \
  $(TAO_ROOT)/tao/Messaging/messaging_export.h \
@@ -698,8 +698,8 @@ realclean: clean
  $(TAO_ROOT)/tao/DynamicC.i \
  $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
  $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i TestC.i \
- TestS_T.h TestS_T.i TestS_T.cpp TestS.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
+ TestC.i TestS_T.h TestS_T.i TestS_T.cpp TestS.i \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Containers.h \
  $(ACE_ROOT)/ace/Containers.i \
@@ -711,7 +711,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Get_Opt.i
 
-.obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp Reply_Handler.h \
+.obj/client.o .obj/client.o .obj/client.o .obj/client.o: client.cpp Reply_Handler.h \
  $(ACE_ROOT)/ace/pre.h TestS.h \
  $(TAO_ROOT)/tao/Messaging/MessagingS.h \
  $(TAO_ROOT)/tao/Messaging/messaging_export.h \
@@ -1020,8 +1020,8 @@ realclean: clean
  $(TAO_ROOT)/tao/DynamicC.i \
  $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
  $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i TestC.i \
- TestS_T.h TestS_T.i TestS_T.cpp TestS.i Client_Task.h \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
+ TestC.i TestS_T.h TestS_T.i TestS_T.cpp TestS.i Client_Task.h \
  $(ACE_ROOT)/ace/Task.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Containers.h \
@@ -1061,7 +1061,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Get_Opt.i
 
-.obj/Reply_Handler.o .obj/Reply_Handler.so .shobj/Reply_Handler.o .shobj/Reply_Handler.so: Reply_Handler.cpp Reply_Handler.h \
+.obj/Reply_Handler.o .obj/Reply_Handler.o .obj/Reply_Handler.o .obj/Reply_Handler.o: Reply_Handler.cpp Reply_Handler.h \
  $(ACE_ROOT)/ace/pre.h TestS.h \
  $(TAO_ROOT)/tao/Messaging/MessagingS.h \
  $(TAO_ROOT)/tao/Messaging/messaging_export.h \
@@ -1370,10 +1370,10 @@ realclean: clean
  $(TAO_ROOT)/tao/DynamicC.i \
  $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
  $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i TestC.i \
- TestS_T.h TestS_T.i TestS_T.cpp TestS.i
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
+ TestC.i TestS_T.h TestS_T.i TestS_T.cpp TestS.i
 
-.obj/Client_Task.o .obj/Client_Task.so .shobj/Client_Task.o .shobj/Client_Task.so: Client_Task.cpp Client_Task.h \
+.obj/Client_Task.o .obj/Client_Task.o .obj/Client_Task.o .obj/Client_Task.o: Client_Task.cpp Client_Task.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/post.h \
@@ -1603,7 +1603,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Stream_Modules.h \
  $(ACE_ROOT)/ace/Stream_Modules.cpp
 
-.obj/AMI_Buffering.o .obj/AMI_Buffering.so .shobj/AMI_Buffering.o .shobj/AMI_Buffering.so: AMI_Buffering.cpp AMI_Buffering.h \
+.obj/AMI_Buffering.o .obj/AMI_Buffering.o .obj/AMI_Buffering.o .obj/AMI_Buffering.o: AMI_Buffering.cpp AMI_Buffering.h \
  $(ACE_ROOT)/ace/pre.h TestS.h \
  $(TAO_ROOT)/tao/Messaging/MessagingS.h \
  $(TAO_ROOT)/tao/Messaging/messaging_export.h \
@@ -1912,10 +1912,10 @@ realclean: clean
  $(TAO_ROOT)/tao/DynamicC.i \
  $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
  $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i TestC.i \
- TestS_T.h TestS_T.i TestS_T.cpp TestS.i
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
+ TestC.i TestS_T.h TestS_T.i TestS_T.cpp TestS.i
 
-.obj/AMI_Buffering_Admin.o .obj/AMI_Buffering_Admin.so .shobj/AMI_Buffering_Admin.o .shobj/AMI_Buffering_Admin.so: AMI_Buffering_Admin.cpp AMI_Buffering_Admin.h \
+.obj/AMI_Buffering_Admin.o .obj/AMI_Buffering_Admin.o .obj/AMI_Buffering_Admin.o .obj/AMI_Buffering_Admin.o: AMI_Buffering_Admin.cpp AMI_Buffering_Admin.h \
  $(ACE_ROOT)/ace/pre.h TestS.h \
  $(TAO_ROOT)/tao/Messaging/MessagingS.h \
  $(TAO_ROOT)/tao/Messaging/messaging_export.h \
@@ -2224,10 +2224,11 @@ realclean: clean
  $(TAO_ROOT)/tao/DynamicC.i \
  $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
  $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i TestC.i \
- TestS_T.h TestS_T.i TestS_T.cpp TestS.i
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
+ TestC.i TestS_T.h TestS_T.i TestS_T.cpp TestS.i
 
-.obj/TestC.o .obj/TestC.so .shobj/TestC.o .shobj/TestC.so: TestC.cpp TestC.h $(TAO_ROOT)/tao/corba.h \
+.obj/TestC.o .obj/TestC.o .obj/TestC.o .obj/TestC.o: TestC.cpp TestC.h \
+ $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -2565,7 +2566,7 @@ realclean: clean
  $(TAO_ROOT)/tao/ClientInterceptorAdapter.h \
  $(TAO_ROOT)/tao/ClientInterceptorAdapter.inl
 
-.obj/TestS.o .obj/TestS.so .shobj/TestS.o .shobj/TestS.so: TestS.cpp TestS.h \
+.obj/TestS.o .obj/TestS.o .obj/TestS.o .obj/TestS.o: TestS.cpp TestS.h \
  $(TAO_ROOT)/tao/Messaging/MessagingS.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/Messaging/messaging_export.h \
@@ -2874,8 +2875,8 @@ realclean: clean
  $(TAO_ROOT)/tao/DynamicC.i \
  $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
  $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
- $(TAO_ROOT)/tao/PortableInterceptorC.i TestC.i \
- TestS_T.h TestS_T.i TestS_T.cpp TestS.i \
+ $(TAO_ROOT)/tao/PortableInterceptorC.i \
+ TestC.i TestS_T.h TestS_T.i TestS_T.cpp TestS.i \
  $(TAO_ROOT)/tao/PortableServer/Object_Adapter.h \
  $(TAO_ROOT)/tao/PortableServer/Key_Adapters.h \
  $(ACE_ROOT)/ace/Map_T.h \
