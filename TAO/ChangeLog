@@ -1,3 +1,13 @@
+Thu Dec  4 08:19:26 2003  Dale Wilson  <wilson_d@ociweb.com>
+
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/IOGR_Maker.cpp:
+          Structure member name change:  ft_domain_id->group_domain_id
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroupManager.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroupManager.cpp:
+          Restore implementation of get_object_group_ref_from_id lost
+          during reversion to original.
+
 Wed Dec  3 14:37:41 2003  Dale Wilson  <wilson_d@ociweb.com>
 
         * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.h:
