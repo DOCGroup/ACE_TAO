@@ -1,7 +1,28 @@
+Tue May 25 01:42:03 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/Exception.h (TAO_Exceptions): Added an static ACE_Allocator
+	  pointer <global_allocator_> which is used when building the
+	  global system exception typecode.
+
+	* tao/Exception.cpp (init,fini): Added creation and deletion of
+	  <global_allocator_>.
+	  (make_unknown_user_typecode,make_standard_typecode): Changed to
+	  use the TAO_Exceptions::global_allocator_ for OutputCDR's.  They
+	  are default to acquire allocators from the ORB.  But we have to
+	  move the typecode creation before the ORB_init call so we can
+	  throw exceptions in case ORB_init itself failed.
+
+	* tao/ORB.cpp (ORB_init): Moved init_orb_globals method before
+	  oc->init because init_orb_globals no longer accesses the orb.
+	  This allows up to throw an exception if ORB_init failed.  TAO
+	  players, notice that you should not access any orb specific
+	  information from within init_orb_globals method because the ORB
+	  was not initialized when the orb globals get constructed.
+
 Mon May 24 22:15:05 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/corbafwd.h:
-	  Added a 'CORBA_' to one of the TypeCode typedefs so it 
+	  Added a 'CORBA_' to one of the TypeCode typedefs so it
 	  cosmetically matches the other groups of typedefs.
 
 Mon May 24 17:56:22 1999  Jeff Parsons  <parsons@cs.wustl.edu>
@@ -50,7 +71,7 @@ Mon May 24 16:20:39 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	    struct foo {
 	      long x;
 	      sequence<foo> offspring;
-	    }; 
+	    };
 	  Also made the IDL compiler use interpreted marshaling
 	  until a further mod to the IDl compiler is made
 	  (according to Andy, his changes work now only for
