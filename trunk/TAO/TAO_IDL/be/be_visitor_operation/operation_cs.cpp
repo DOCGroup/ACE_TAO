@@ -56,8 +56,7 @@ be_visitor_operation_cs::post_process (be_decl *bd)
 int
 be_visitor_operation_cs::visit_operation (be_operation *node)
 {
-  be_interface *intf;
-  intf = this->ctx_->attribute ()
+  be_interface *intf = this->ctx_->attribute ()
     ? be_interface::narrow_from_scope (this->ctx_->attribute ()->defined_in ())
     : be_interface::narrow_from_scope (node->defined_in ());
 
@@ -70,21 +69,19 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
                         -1);
     }
 
-  TAO_OutStream *os; // output stream
-  be_type *bt;       // type node
-  be_visitor_context ctx;  // visitor context
-  be_visitor *visitor; // visitor
-
-  os = this->ctx_->stream ();
+  TAO_OutStream *os = this->ctx_->stream ();
   this->ctx_->node (node); // save the node for future use
 
   if (node->is_local ())
-    return 0;
+    {
+      return 0;
+    }
 
   os->indent (); // start with the current indentation level
 
   // retrieve the operation return type
-  bt = be_type::narrow_from_decl (node->return_type ());
+  be_type *bt = be_type::narrow_from_decl (node->return_type ());
+
   if (!bt)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -94,10 +91,16 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
                         -1);
     }
 
+  if (bt->node_type () == AST_Decl::NT_typedef)
+    {
+      be_typedef *btd = be_typedef::narrow_from_decl (bt);
+      bt = btd->primitive_base_type ();
+    }
+
   // Generate the return type mapping (same as in the header file)
-  ctx = *this->ctx_;
+  be_visitor_context ctx = *this->ctx_;
   ctx.state (TAO_CodeGen::TAO_OPERATION_RETTYPE_OTHERS);
-  visitor = tao_cg->make_visitor (&ctx);
+  be_visitor *visitor = tao_cg->make_visitor (&ctx);
 
   if ((!visitor) || (bt->accept (visitor) == -1))
     {
@@ -137,21 +140,15 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
       *os << be_nl << be_nl;
     }
 
-  AST_Type *rt = 0;
-  be_type *brt = 0;
-  AST_Decl::NodeType bnt;
+  AST_Decl::NodeType bnt = bt->base_node_type ();
   be_predefined_type *bpt = 0;
-  AST_PredefinedType::PredefinedType pdt;
+  AST_PredefinedType::PredefinedType pdt = AST_PredefinedType::PT_void;
 
   if (!this->void_return_type (bt))
     {
-      rt = node->return_type ();
-      brt = be_type::narrow_from_decl (rt);
-      bnt = brt->base_node_type ();
-
       if (bnt == AST_Decl::NT_pre_defined)
         {
-          bpt = be_predefined_type::narrow_from_decl (brt);
+          bpt = be_predefined_type::narrow_from_decl (bt);
           pdt = bpt->pt ();
 
           if (pdt == AST_PredefinedType::PT_longlong)
