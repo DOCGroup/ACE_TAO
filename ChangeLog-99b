@@ -1,3 +1,11 @@
+Sat May 08 08:44:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
+
+        * ace/RB_Tree.{cpp, h, i}
+          tests/RB_Tree_Test.cpp
+          apps/JAWS/PROTOTYPE/HTTPU/http_headers.cpp: Added more implementation
+          code and necessary template instantiations for migrationof RB_Tree
+          class templates to conform to the ACE_Hash_Map_Manager API.
+
 Sat May 08 03:59:52 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/config-win32-common.h: Re-ordered __ACE_INLINE__ macro check
