@@ -1,3 +1,8 @@
+Fri Mar  9 16:47:15 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* bin/nightlybuilds/builds.lst (LIST):
+	  Added HPUX to the scoreboard.
+	
 Fri Mar  9 14:34:34 2001  Chad Elliott  <elliott_c@ociweb.com>
 
         * PACE/Makefile:
@@ -234,6 +239,7 @@ Mon Mar  5 11:29:36 2001  Carlos O'Ryan  <coryan@uci.edu>
           Fixed what looks like a typo, we want to *disable* the stream
           pipes under QNX, not to enable them just on that platform.
 
+>>>>>>> 4.1711
 Mon Mar  5 08:20:21 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/RMCast/RMCast_Fragment_Test.cpp:
@@ -939,6 +945,7 @@ Mon Feb 26 19:01:16 2001  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
           set the logging key via the ACE_Logging_Strategy.  Thanks to
           Chris Kohlhoff <chris@kohlhoff.com> for contributing this.
 
+>>>>>>> 4.1694
 Mon Feb 26 18:18:38 2001  Steve Huston  <shuston@riverace.com>
 
         * ace/SString.i
@@ -2765,6 +2772,7 @@ Fri Jan 19 13:01:13 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 
           Thanks to Chad Elliott  <elliott_c@ociweb.com> for making this fix.
 
+>>>>>>> 4.1649
 Fri Jan 19 11:22:42 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 
         * docs/tutorials/022/client_handler.cpp :
