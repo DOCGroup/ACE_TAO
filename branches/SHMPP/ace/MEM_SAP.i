@@ -19,7 +19,8 @@ ACE_MEM_SAP::acquire_buffer (const ssize_t size)
     return 0;                  // not initialized.
 
   size_t *lptr = ACE_static_cast (size_t *,
-                               this->shm_malloc_->malloc (sizeof (size_t) + size));
+                                  this->shm_malloc_->malloc (sizeof (size_t) + size));
+
   *lptr = size;
   ++lptr;
 
@@ -64,10 +65,19 @@ ACE_MEM_SAP::get_buf_len (const off_t off, void *&buf)
   if (this->shm_malloc_ == 0)
     return -1;
 
-  size_t *lptr = (size_t*) ((char *) this->shm_malloc_->memory_pool ().base_addr () + off);
-  buf = lptr + 1;
+  ssize_t retv = 0;
 
-  return *lptr;
+  ACE_SEH_TRY
+    {
+      size_t *lptr = (size_t*) ((char *) this->shm_malloc_->memory_pool ().base_addr () + off);
+      buf = lptr + 1;
+      retv = *lptr;
+    }
+  ACE_SEH_EXCEPT (this->shm_malloc_->memory_pool ().seh_selector (GetExceptionInformation ()))
+    {
+    }
+
+  return retv;
 }
 
 ASYS_INLINE int
