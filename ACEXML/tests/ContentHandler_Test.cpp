@@ -34,7 +34,7 @@ private:
 const ACEXML_Char * Basic_Content_Tester::test_string_ =
   ACE_TEXT ("<?xml version=\"1.0\"?>")
   ACE_TEXT ("<translation type=\"unfinished\">Example\n")
-  ACE_TEXT ("d&apos;internationalisation</translation></xml>");
+  ACE_TEXT ("d&apos;internationalisation</translation>");
 
 void
 Basic_Content_Tester::characters (const ACEXML_Char *ch,
@@ -73,7 +73,8 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   Basic_Content_Tester tester;
   ACEXML_StrCharStream *test_stream = 0;
   ACE_NEW_RETURN (test_stream, ACEXML_StrCharStream, -1);
-  if (test_stream->open (tester.get_test_string (), ACE_TEXT ("test_stream")) < 0)
+  if (test_stream->open (tester.get_test_string (),
+                         ACE_TEXT ("test_stream")) < 0)
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unable to create input stream\n")));
       return -1;
@@ -82,15 +83,19 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   ACEXML_Parser parser;
   parser.setContentHandler (&tester);
   ACEXML_TRY_NEW_ENV
-    {
-      parser.parse (&input ACEXML_ENV_ARG_PARAMETER);
-      ACEXML_TRY_CHECK;
-    }
-  ACEXML_CATCHANY
-    {
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Caught exception.\n")));
-      status = 1;
-    }
+  {
+    parser.setFeature (ACE_TEXT ("http://xml.org/sax/features/validation"),
+                       0
+                       ACEXML_ENV_ARG_PARAMETER);
+    ACEXML_TRY_CHECK;
+    parser.parse (&input ACEXML_ENV_ARG_PARAMETER);
+    ACEXML_TRY_CHECK;
+  }
+  ACEXML_CATCH (ACEXML_SAXException, ex)
+  {
+    ex.print();
+    status = 1;
+  }
   ACEXML_ENDTRY;
   return status;
 }
