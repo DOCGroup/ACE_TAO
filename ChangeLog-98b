@@ -10,7 +10,7 @@ Tue Aug 18 14:15:23 1998  Steve Huston  <shuston@riverace.com>
 	  defaults from the old lib settings.  Sorry if the gcc one is wrong.
 
 	* ace/config-hpux-10.x.h:  Added ACE_HAS_SIGISMEMBER_BUG, plus...
-	* aceconfig-hpux11.h:  Set threads things based on the setting
+	* ace/config-hpux11.h:  Set threads things based on the setting
 	  of ACE_HAS_THREADS, which gets set in platform_macros.GNU (see above)
 	  to build with threads support.
 
