@@ -1,3 +1,15 @@
+Thu Nov 13 18:18:16 1997  Steve Huston  <shuston@riverace.com>
+
+	* ace/Containers.h, Containers.cpp, Hash_Map_Manager.cpp, Malloc_T.h:
+	  Removed the conditional code for the macro
+	  ACE_HAS_HPUX_ACC_BROKEN_TEMPLATE_DESTRUCTOR.  The workaround for
+	  this compiler bug is to remove "this->" from the object pointer
+	  used in the ACE_DES_FREE_TEMPLATE macro invocation.  This compiler
+	  bug is HP case SR5003396259 for future reference.
+
+	* ace/config-hpux-10.x-hpc++.h: Added ACE_HAS_ANSI_CASTS; removed
+	  ACE_HAS_HPUX_ACC_BROKEN_TEMPLATE_DESTRUCTOR (both for aC++ only).
+
 Thu Nov 13 16:51:40 1997    <nw1@CHA-CHA>
 
 	* ace/OS.h:  Added two new macros ACE_FACTORY_DECLARE and
