@@ -69,6 +69,18 @@ int be_visitor_root::visit_root (be_root *node)
         break;
       case TAO_CodeGen::TAO_ROOT_SS:
         {
+          be_visitor_arg_traits arg_visitor ("S", &ctx);
+          status = node->accept (&arg_visitor);
+
+          if (status == -1)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "(%N:%l) be_visitor_root::"
+                                 "visit_root - "
+                                 "failed to generate skeleton arg traits\n"),
+                                -1);
+            }
+
           if (be_global->gen_thru_poa_collocation ()
               || be_global->gen_direct_collocation ())
             {
@@ -80,7 +92,7 @@ int be_visitor_root::visit_root (be_root *node)
                   ACE_ERROR_RETURN ((LM_ERROR,
                                      "(%N:%l) be_visitor_root::"
                                      "visit_root - "
-                                     "failed to generate stub arg traits\n"),
+                                     "failed to generate collocated skeleton arg traits\n"),
                                     -1);
                 }
             }
@@ -1669,7 +1681,7 @@ be_visitor_root::gen_explicit_tmplinst (be_root *node,
       if (be_global->gen_anyop_files ())
         {
           tao_cg->anyop_source ()->gen_endif_AHETI ();
-          
+
           *tao_cg->anyop_source () << "\n";
         }
     }

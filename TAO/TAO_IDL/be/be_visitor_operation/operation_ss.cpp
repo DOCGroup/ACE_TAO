@@ -415,8 +415,39 @@ be_visitor_operation_ss::gen_skel_operation_body (be_operation * node,
   *os << "static size_t const _tao_nargs =" << be_nl
       << "  sizeof (_tao_args) / sizeof (_tao_args[0]);" << be_nl << be_nl;
 
-  *os << "TAO_" << node->flat_name ()
-      << "_Upcall_Command _tao_upcall_command (" << be_idt_nl
+  *os << "TAO_" << node->flat_name ();
+
+  // We need the interface node in which this operation was defined.
+  // However, if this operation node was an attribute node in
+  // disguise, we get this information from the context and add a
+  // "_get"/"_set" to the flat name to get around the problem of
+  // overloaded methods which are generated for attributes.
+  if (this->ctx_->attribute ())
+    {
+      be_type * const bt = be_type::narrow_from_decl (node->return_type ());
+
+      if (!bt)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_upcall_command_ss::"
+                             "visit_operation - "
+                             "Bad return type\n"),
+                            -1);
+        }
+
+      // Grab the right visitor to generate the return type if its not
+      // void it means it is not the accessor.
+      if (!this->void_return_type (bt))
+        {
+          *os << "_get";
+        }
+      else
+        {
+          *os << "_set";
+        }
+    }
+
+  *os << "_Upcall_Command _tao_upcall_command (" << be_idt_nl
       << "  _tao_impl";
 
   if (!node->void_return_type () || node->argument_count () > 0)
@@ -485,7 +516,6 @@ be_visitor_operation_ss::gen_skel_body_arglist (be_operation * node,
             break;
         }
 
-      *os << "_arg_val _tao_" << arg->local_name () << " ("
-          << arg->local_name () << ");";
+      *os << "_arg_val _tao_" << arg->local_name () << ";";
     }
 }

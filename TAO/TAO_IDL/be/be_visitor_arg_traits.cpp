@@ -39,6 +39,9 @@
 #include "utl_identifier.h"
 #include "idl_defines.h"
 
+#include <string>
+
+
 ACE_RCSID (be,
            be_visitor_arg_traits,
            "$Id$")
@@ -110,9 +113,12 @@ be_visitor_arg_traits::visit_interface (be_interface *node)
       idl_bool stub = (this->ctx_->state () == TAO_CodeGen::TAO_ROOT_CS);
       BE_GlobalData *b = be_global;
 
-      // This should be generated even for imported nodes. The ifdef guard prevents
-      // multiple declarations.
-      os->gen_ifdef_macro (node->flat_name (), "arg_traits");
+      std::string guard_suffix =
+        std::string (this->S_) + std::string ("arg_traits");
+
+      // This should be generated even for imported nodes. The ifdef
+      // guard prevents multiple declarations.
+      os->gen_ifdef_macro (node->flat_name (), guard_suffix.c_str ());
 
       *os << be_nl << be_nl
           << "ACE_TEMPLATE_SPECIALIZATION" << be_nl
@@ -124,8 +130,15 @@ be_visitor_arg_traits::visit_interface (be_interface *node)
           << "Object_" << this->S_ << "Arg_Traits_T<" << be_idt << be_idt_nl
           << node->name () << "_ptr," << be_nl
           << node->name () << "_var," << be_nl
-          << node->name () << "_out," << be_nl
-          << "TAO::Objref_Traits<" << node->name () << ">" << be_uidt_nl
+          << node->name () << "_out";
+
+      if (ACE_OS::strlen (this->S_) == 0)
+        {
+          *os << "," << be_nl
+            << "TAO::Objref_Traits<" << node->name () << ">";
+        }
+
+      *os << be_uidt_nl
           << ">" << be_uidt << be_uidt << be_uidt << be_uidt_nl
           << "{" << be_nl
           << "};";
@@ -182,9 +195,12 @@ be_visitor_arg_traits::visit_valuetype (be_valuetype *node)
     {
       TAO_OutStream *os = this->ctx_->stream ();
 
-      // This should be generated even for imported nodes. The ifdef guard prevents
-      // multiple declarations.
-      os->gen_ifdef_macro (node->flat_name (), "arg_traits");
+      std::string guard_suffix =
+        std::string (this->S_) + std::string ("arg_traits");
+
+      // This should be generated even for imported nodes. The ifdef
+      // guard prevents multiple declarations.
+      os->gen_ifdef_macro (node->flat_name (), guard_suffix.c_str ());
 
       *os << be_nl << be_nl
           << "ACE_TEMPLATE_SPECIALIZATION" << be_nl
@@ -283,10 +299,22 @@ be_visitor_arg_traits::visit_operation (be_operation *node)
           TAO_OutStream *os = this->ctx_->stream ();
           idl_bool wide = (str->width () != 1);
 
-          *os << be_nl << be_nl
-              << "struct " << node->flat_name () << " {};"
-              << be_nl << be_nl
-              << "ACE_TEMPLATE_SPECIALIZATION" << be_nl
+          *os << be_nl << be_nl;
+
+          idl_bool const skel =
+            (this->ctx_->state () == TAO_CodeGen::TAO_ROOT_SS);
+
+          // Avoid generating a duplicate structure in the skeleton
+          // when generating Arg_Traits<> for ThruPOA and direct
+          // collocation code.
+          if (!skel
+              || (skel && ACE_OS::strlen (this->S_) != 0))
+            {
+              *os << "struct " << node->flat_name () << " {};"
+                  << be_nl << be_nl;
+            }
+
+          *os << "ACE_TEMPLATE_SPECIALIZATION" << be_nl
               << "class " << be_global->stub_export_macro () << " "
               << this->S_ << "Arg_Traits<" << node->flat_name ()
               << ">" << be_idt_nl
@@ -349,10 +377,21 @@ be_visitor_arg_traits::visit_argument (be_argument *node)
   // the same operation, so we use the argument's flat name to
   // declare an empty struct, and use that struct as the template
   // parameter for Arg_Traits<>.
-  *os << be_nl << be_nl
-      << "struct " << node->flat_name () << " {};"
-      << be_nl << be_nl
-      << "ACE_TEMPLATE_SPECIALIZATION" << be_nl
+  *os << be_nl << be_nl;
+
+  idl_bool const skel =
+    (this->ctx_->state () == TAO_CodeGen::TAO_ROOT_SS);
+
+  // Avoid generating a duplicate structure in the skeleton when
+  // generating Arg_Traits<> for ThruPOA and direct collocation code.
+  if (!skel
+      || (skel && ACE_OS::strlen (this->S_) != 0))
+    {
+      *os << "struct " << node->flat_name () << " {};"
+          << be_nl << be_nl;
+    }
+
+  *os << "ACE_TEMPLATE_SPECIALIZATION" << be_nl
       << "class " << be_global->stub_export_macro () << " "
       << this->S_ << "Arg_Traits<" << node->flat_name ()
       << ">" << be_idt_nl
@@ -381,9 +420,12 @@ be_visitor_arg_traits::visit_sequence (be_sequence *node)
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
-  // This will include the bound if there is one, and should also
-  // prevent duplication, even if there have been further typdefs.
-  os->gen_ifdef_macro (alias->flat_name (), "arg_traits");
+  std::string guard_suffix =
+    std::string (this->S_) + std::string ("arg_traits");
+
+  // This should be generated even for imported nodes. The ifdef
+  // guard prevents multiple declarations.
+  os->gen_ifdef_macro (alias->flat_name (), guard_suffix.c_str ());
 
   *os << be_nl << be_nl
       << "ACE_TEMPLATE_SPECIALIZATION" << be_nl
@@ -428,23 +470,38 @@ be_visitor_arg_traits::visit_string (be_string *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  os->gen_ifdef_macro (node->flat_name (), "arg_traits");
+  std::string guard_suffix =
+    std::string (this->S_) + std::string ("arg_traits");
 
-  // A workaround 'dummy' type, since bounded (w)strings are all
-  // generated as typedefs of (w)char *.
-  *os << be_nl << be_nl
-      << "struct ";
-      
-  if (alias == 0)
+  // This should be generated even for imported nodes. The ifdef
+  // guard prevents multiple declarations.
+  os->gen_ifdef_macro (node->flat_name (), guard_suffix.c_str ());
+
+
+  idl_bool const skel =
+    (this->ctx_->state () == TAO_CodeGen::TAO_ROOT_SS);
+
+  // Avoid generating a duplicate structure in the skeleton when
+  // generating Arg_Traits<> for ThruPOA and direct collocation code.
+  if (!skel
+      || (skel && ACE_OS::strlen (this->S_) != 0))
     {
-      *os << node->flat_name ();
-    }
-  else
-    {    
-      *os << alias->local_name () << "_" << bound;
-    }
+      // A workaround 'dummy' type, since bounded (w)strings are all
+      // generated as typedefs of (w)char *.
+      *os << be_nl << be_nl
+          << "struct ";
+      
+      if (alias == 0)
+        {
+          *os << node->flat_name ();
+        }
+      else
+        {    
+          *os << alias->local_name () << "_" << bound;
+        }
     
-  *os << " {};";
+      *os << " {};";
+    }
     
   *os << be_nl << be_nl
       << "ACE_TEMPLATE_SPECIALIZATION" << be_nl
@@ -484,9 +541,12 @@ be_visitor_arg_traits::visit_array (be_array *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  // This should be generated even for imported nodes. The ifdef guard prevents
-  // multiple declarations.
-  os->gen_ifdef_macro (node->flat_name (), "arg_traits");
+  std::string guard_suffix =
+    std::string (this->S_) + std::string ("arg_traits");
+
+  // This should be generated even for imported nodes. The ifdef
+  // guard prevents multiple declarations.
+  os->gen_ifdef_macro (node->flat_name (), guard_suffix.c_str ());
 
   *os << be_nl << be_nl
       << "ACE_TEMPLATE_SPECIALIZATION" << be_nl
@@ -539,9 +599,12 @@ be_visitor_arg_traits::visit_enum (be_enum *node)
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
-  // This should be generated even for imported nodes. The ifdef guard prevents
-  // multiple declarations.
-  os->gen_ifdef_macro (node->flat_name (), "arg_traits");
+  std::string guard_suffix =
+    std::string (this->S_) + std::string ("arg_traits");
+
+  // This should be generated even for imported nodes. The ifdef
+  // guard prevents multiple declarations.
+  os->gen_ifdef_macro (node->flat_name (), guard_suffix.c_str ());
 
   *os << be_nl << be_nl
       << "ACE_TEMPLATE_SPECIALIZATION" << be_nl
@@ -584,7 +647,12 @@ be_visitor_arg_traits::visit_predefined_type (be_predefined_type *node)
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
-  os->gen_ifdef_macro ("corba_any", "arg_traits");
+  std::string guard_suffix =
+    std::string (this->S_) + std::string ("arg_traits");
+
+  // This should be generated even for imported nodes. The ifdef
+  // guard prevents multiple declarations.
+  os->gen_ifdef_macro ("corba_any", guard_suffix.c_str ());
 
   *os << be_nl << be_nl
       << "ACE_TEMPLATE_SPECIALIZATION" << be_nl
@@ -620,7 +688,12 @@ be_visitor_arg_traits::visit_structure (be_structure *node)
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
-  os->gen_ifdef_macro (node->flat_name (), "arg_traits");
+  std::string guard_suffix =
+    std::string (this->S_) + std::string ("arg_traits");
+
+  // This should be generated even for imported nodes. The ifdef
+  // guard prevents multiple declarations.
+  os->gen_ifdef_macro (node->flat_name (), guard_suffix.c_str ());
 
   *os << be_nl << be_nl
       << "ACE_TEMPLATE_SPECIALIZATION" << be_nl
@@ -712,7 +785,12 @@ be_visitor_arg_traits::visit_union (be_union *node)
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
-  os->gen_ifdef_macro (node->flat_name (), "arg_traits");
+  std::string guard_suffix =
+    std::string (this->S_) + std::string ("arg_traits");
+
+  // This should be generated even for imported nodes. The ifdef
+  // guard prevents multiple declarations.
+  os->gen_ifdef_macro (node->flat_name (), guard_suffix.c_str ());
 
   *os << be_nl << be_nl
       << "ACE_TEMPLATE_SPECIALIZATION" << be_nl
