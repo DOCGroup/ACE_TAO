@@ -26,15 +26,18 @@ Tue Dec 23 07:26:28 1997  David L. Levine  <levine@cs.wustl.edu>
         * include/makeinclude/platform_osf1_4.0.GNU: removed some warning
           suppressions that are no longer needed.
 
+        * ace/Log_Msg.cpp (~ACE_Log_Msg): clean up the message queue and
+          allocated strings on non-threaded platforms.
+
 Mon Dec 22 22:42:57 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/OS: Added a few minor changes to Nanbor's Semaphore 
-	  emulation for WinCE.
+        * ace/OS: Added a few minor changes to Nanbor's Semaphore
+          emulation for WinCE.
 
 Mon Dec 22 11:39:19 1997    <irfan@PACHANGA>
 
-	* OS.i (event_timedwait): Added code to handle timeouts.  Thanks
- 	  to Luca Priorelli <lucapri@mbox.vol.it> for reporting this.
+        * OS.i (event_timedwait): Added code to handle timeouts.  Thanks
+          to Luca Priorelli <lucapri@mbox.vol.it> for reporting this.
 
 Mon Dec 22 07:03:13 1997  David L. Levine  <levine@cs.wustl.edu>
 
@@ -43,89 +46,89 @@ Mon Dec 22 07:03:13 1997  David L. Levine  <levine@cs.wustl.edu>
 
 Mon Dec 22 03:08:22 1997    <nw1@DINGO>
 
-	* ace/OS.i: Modified ACE_OS::cond_* for WinCE.
+        * ace/OS.i: Modified ACE_OS::cond_* for WinCE.
 
-	* ace/config-win32-common.h:  Prevent ACE from using NT specific 
-	  API on Win CE.
+        * ace/config-win32-common.h:  Prevent ACE from using NT specific
+          API on Win CE.
 
 Sun Dec 21 16:19:40 1997  Nanbor Wang  <nw1@merengue.cs.wustl.edu>
 
-	* ace/OS.{h,i} (ACE_OS::sema_*): Added semaphore simulation code
-	  for WinCE.  This code is currently protected
-	  ACE_USES_WINCE_SEMA_SIMULATION for debugging the code on NT.
-	  This flag should soon be obsolete and changed to ACE_HAS_WINCE.
+        * ace/OS.{h,i} (ACE_OS::sema_*): Added semaphore simulation code
+          for WinCE.  This code is currently protected
+          ACE_USES_WINCE_SEMA_SIMULATION for debugging the code on NT.
+          This flag should soon be obsolete and changed to ACE_HAS_WINCE.
 
-	  Moved ACE_event_t macro definition for Win32 before ACE_sema_t
-	  definition for NT.  I need to use it in semaphore simulation.
+          Moved ACE_event_t macro definition for Win32 before ACE_sema_t
+          definition for NT.  I need to use it in semaphore simulation.
 
-	* ace/OS.h (class ACE_Cleanup_Info::operator ==, !=): Removed
-	  keyword struct.  ACE_Cleanup_Info is a class now.
+        * ace/OS.h (class ACE_Cleanup_Info::operator ==, !=): Removed
+          keyword struct.  ACE_Cleanup_Info is a class now.
 
-	* ace/Containers.h (class ACE_Double_Linked_List): Removed
-	  unused function declarations.
+        * ace/Containers.h (class ACE_Double_Linked_List): Removed
+          unused function declarations.
 
-	* ace/Containers.h (class ACE_DNode): Removed ACE_DNode class.
+        * ace/Containers.h (class ACE_DNode): Removed ACE_DNode class.
 
 Sun Dec 21 18:47:09 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* ACE version 4.4.8, released Sun Dec 21 18:47:09 1997.
+        * ACE version 4.4.8, released Sun Dec 21 18:47:09 1997.
 
 Sun Dec 21 12:39:38 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
-	* ace/OS.h (ACE_OS): Made the netdb_{acquire()/release()} methods
- 	  public to help ACE users stuck on weird OS platforms.  Thanks to
- 	  Arturo Montes <mitosys@colomsat.net.co> for this suggestion.
+        * ace/OS.h (ACE_OS): Made the netdb_{acquire()/release()} methods
+          public to help ACE users stuck on weird OS platforms.  Thanks to
+          Arturo Montes <mitosys@colomsat.net.co> for this suggestion.
 
-	* ace: Changed all ACE class documentation so that it puts the
- 	  =TITLE and =DESCRIPTION comments *after* the opening '{' rather
- 	  than before.  I did this since (1) it makes emacs C++ mode
- 	  happier and (2) it makes Rational Rose reverse-engineering tool
- 	  happier too.  Thanks to Thomas Jordan
- 	  <Thomas_Jordan@deluxedata.com> for suggesting this.
+        * ace: Changed all ACE class documentation so that it puts the
+          =TITLE and =DESCRIPTION comments *after* the opening '{' rather
+          than before.  I did this since (1) it makes emacs C++ mode
+          happier and (2) it makes Rational Rose reverse-engineering tool
+          happier too.  Thanks to Thomas Jordan
+          <Thomas_Jordan@deluxedata.com> for suggesting this.
 
-	* ace/LOCK_SOCK_Acceptor.h: The accept() method of class
- 	  ACE_LOCK_SOCK_Acceptor is no longer a virtual.  I don't know why
- 	  this was made virtual in the first place, but it was a mistake.
+        * ace/LOCK_SOCK_Acceptor.h: The accept() method of class
+          ACE_LOCK_SOCK_Acceptor is no longer a virtual.  I don't know why
+          this was made virtual in the first place, but it was a mistake.
 
 Sun Dec 21 15:24:42 1997  Nanbor Wang  <nw1@merengue.cs.wustl.edu>
 
-	* ace/OS.h (class ACE_Cleanup_Info::operator ==, !=): Removed
-	  keyword struct.  ACE_Cleanup_Info is a class now.
+        * ace/OS.h (class ACE_Cleanup_Info::operator ==, !=): Removed
+          keyword struct.  ACE_Cleanup_Info is a class now.
 
-	* ace/Containers.h (class ACE_Double_Linked_List): Removed
-	  unused function declarations.
+        * ace/Containers.h (class ACE_Double_Linked_List): Removed
+          unused function declarations.
 
-	* ace/Containers.h (class ACE_DNode): Removed ACE_DNode class.
+        * ace/Containers.h (class ACE_DNode): Removed ACE_DNode class.
 
 Sat Dec 20 11:05:45 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
-	* tests/test_config.h (ACE_INIT_LOG): Added (%P|%t) to an
- 	  ACE_DEBUG statement to make it consistent.
+        * tests/test_config.h (ACE_INIT_LOG): Added (%P|%t) to an
+          ACE_DEBUG statement to make it consistent.
 
-	* tests/IOStream_Test.cpp (spawn): Revised the test so that it
- 	  prints data correctly to the child processes.
+        * tests/IOStream_Test.cpp (spawn): Revised the test so that it
+          prints data correctly to the child processes.
 
-	* examples/Shared_Malloc/test_multiple_mallocs.cpp (main): Moved
- 	  the final print statement inside one of the if blocks so that it
- 	  appears only every second invocation to remind people to rerun
- 	  the program to remove the leaks.  Thanks to Tom Arbuckle
- 	  <arbuckle@uran.informatik.uni-bonn.de> for suggesting this.
+        * examples/Shared_Malloc/test_multiple_mallocs.cpp (main): Moved
+          the final print statement inside one of the if blocks so that it
+          appears only every second invocation to remind people to rerun
+          the program to remove the leaks.  Thanks to Tom Arbuckle
+          <arbuckle@uran.informatik.uni-bonn.de> for suggesting this.
 
-	* ace/Malloc*: Changed ACE_MALLOC_STATS to ACE_HAS_MALLOC_STATS
-	  since this is more consistent with ACE conventions.  Also,
-	  added ACE_HAS_MALLOC_STATS to the ace/README file.  Thanks
-	  to Tom Arbuckle <arbuckle@uran.informatik.uni-bonn.de> for
-	  suggesting this.
+        * ace/Malloc*: Changed ACE_MALLOC_STATS to ACE_HAS_MALLOC_STATS
+          since this is more consistent with ACE conventions.  Also,
+          added ACE_HAS_MALLOC_STATS to the ace/README file.  Thanks
+          to Tom Arbuckle <arbuckle@uran.informatik.uni-bonn.de> for
+          suggesting this.
 
-	* ace/Memory_Pool.cpp (ACE_Shared_Memory_Pool): Fixed the logic
- 	  for naming the backing store if the sscanf() call fails.  Thanks
- 	  to Tom Arbuckle <arbuckle@uran.informatik.uni-bonn.de> for
- 	  suggesting this.
+        * ace/Memory_Pool.cpp (ACE_Shared_Memory_Pool): Fixed the logic
+          for naming the backing store if the sscanf() call fails.  Thanks
+          to Tom Arbuckle <arbuckle@uran.informatik.uni-bonn.de> for
+          suggesting this.
 
 Sat Dec 20 15:39:00 1997  Nanbor Wang  <nw1@merengue.cs.wustl.edu>
 
-	* tests/IOStream_Test.cpp (spawn): Changed ACE_LACKS_EXEC to
-	  ACE_LACKS_FORK.
+        * tests/IOStream_Test.cpp (spawn): Changed ACE_LACKS_EXEC to
+          ACE_LACKS_FORK.
 
 Sat Dec 20 09:42:06 1997  David L. Levine  <levine@cs.wustl.edu>
 
@@ -134,15 +137,15 @@ Sat Dec 20 09:42:06 1997  David L. Levine  <levine@cs.wustl.edu>
 
 Fri Dec 19 23:20:42 1997  Nanbor Wang  <nw1@merengue.cs.wustl.edu>
 
-	* tests/IOStream_Test.cpp (client): Removed an extra read.
+        * tests/IOStream_Test.cpp (client): Removed an extra read.
 
-	* ace/OS.h: ACE_SEH_FINALLY should always be executed on UNIX
-	  platforms.
+        * ace/OS.h: ACE_SEH_FINALLY should always be executed on UNIX
+          platforms.
 
 Fri Dec 19 18:49:26 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/IOStream_T.i: Enhanced ACE_IOStream and its companions as
-   	  follows:
+        * ace/IOStream_T.i: Enhanced ACE_IOStream and its companions as
+          follows:
 
           - ACE_Streambuf_T<> now distinguishes recv() timeout failure from
             a "real" stream failure
@@ -153,17 +156,17 @@ Fri Dec 19 18:49:26 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
           - IOStream_Test.cpp tests the streambuf timeout via the stream eof()
             and retrys if possible.
 
-	  Thanks to James Johnson <jcej@lads.com> for these fixes.
+          Thanks to James Johnson <jcej@lads.com> for these fixes.
 
-	* ace/Log_Record.i: Removed a no-op assignment to Time_Value
-	  in the encode() method.    Thanks to Patrick J. McNerthney
- 	  <pat@thememedia.com> for reporting this.
+        * ace/Log_Record.i: Removed a no-op assignment to Time_Value
+          in the encode() method.    Thanks to Patrick J. McNerthney
+          <pat@thememedia.com> for reporting this.
 
-	* ace/Log_Record.i: The time stamp put into the ACE_Log_Record
-	  gets all messed up when the ACE_Log_Record is transmitted to the
-	  Server_Logging_Handler and the client is run on a little-endian
-	  architecture.  This is because the ACE_Log_Record::encode method
-	  does:
+        * ace/Log_Record.i: The time stamp put into the ACE_Log_Record
+          gets all messed up when the ACE_Log_Record is transmitted to the
+          Server_Logging_Handler and the client is run on a little-endian
+          architecture.  This is because the ACE_Log_Record::encode method
+          does:
 
           this->time_stamp_ = ACE_Time_Value
 
@@ -171,13 +174,13 @@ Fri Dec 19 18:49:26 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
           htonl (this->time_stamp_.usec ()));
 
           When the ACE_Time_Value is passed in the resulting values from
- 	  "htonl", it calls "normalize" which totally messes with the
- 	  values passed.  Thanks to Patrick J. McNerthney
- 	  <pat@thememedia.com> for reporting this.
+          "htonl", it calls "normalize" which totally messes with the
+          values passed.  Thanks to Patrick J. McNerthney
+          <pat@thememedia.com> for reporting this.
 
-	* ace/OS.i: Fixed ctime_r() so that it doesn't crash if a NULL is
- 	  returned from ctime_r().  Thanks to Patrick J. McNerthney
- 	  <pat@thememedia.com> for reporting this.
+        * ace/OS.i: Fixed ctime_r() so that it doesn't crash if a NULL is
+          returned from ctime_r().  Thanks to Patrick J. McNerthney
+          <pat@thememedia.com> for reporting this.
 
 Fri Dec 19 09:44:28 1997  David L. Levine  <levine@cs.wustl.edu>
 
