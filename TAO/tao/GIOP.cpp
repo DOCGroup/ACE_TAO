@@ -1426,7 +1426,7 @@ TAO_GIOP::send_reply_exception (const TAO_GIOP_Version &version,
 
       // Close the handle.
       ACE_DEBUG ((LM_DEBUG,
-                  "(%P|%t) cannot marshal exception %p\n",
+                  "(%P|%t) cannot marshal exception, handle = %d: %p\n",
                   transport->handle (),
                   "TAO_GIOP::send_reply_exception"));
       return -1;
