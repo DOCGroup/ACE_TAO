@@ -1,37 +1,37 @@
 Fri Oct 31 14:09:37 2003  Edward R. Mulholland  <emulholl@atl.lmco.com>
 
-	* ace/Multihomed_INET_Addr.cpp: 
-	* ace/Multihomed_INET_Addr.h: 
+        * ace/Multihomed_INET_Addr.cpp:
+        * ace/Multihomed_INET_Addr.h:
 
-	  The port numbers of the secondary addresses are now kept in sync
-	  with the port number of the primary address.
+          The port numbers of the secondary addresses are now kept in sync
+          with the port number of the primary address.
 
-	* ace/SOCK_SEQPACK_Acceptor.h: 
-	* ace/SOCK_SEQPACK_Association.h: 
-	* ace/SOCK_SEQPACK_Connector.h: 
-	* ace/OS.h:
+        * ace/SOCK_SEQPACK_Acceptor.h:
+        * ace/SOCK_SEQPACK_Association.h:
+        * ace/SOCK_SEQPACK_Connector.h:
+        * ace/OS.h:
 
           The PEER_ADDR typedefs have been changed from ACE_INET_Addr to
-	  ACE_Multihomed_INET_Addr.  The "broken templates" section of
-	  OS.h has been changed accordingly.
+          ACE_Multihomed_INET_Addr.  The "broken templates" section of
+          OS.h has been changed accordingly.
 
-	* ace/SOCK_SEQPACK_Acceptor.cpp:
+        * ace/SOCK_SEQPACK_Acceptor.cpp:
 
-	  Hostname restrictions are now preserved during wildcard bind
-	  operations.
-	
+          Hostname restrictions are now preserved during wildcard bind
+          operations.
+
 Fri Oct 31 07:50:48 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* bin/MakeProjectCreator/config/dynamicinterface.mpb:
-	* bin/MakeProjectCreator/config/iorinterceptor.mpb:
-	* bin/MakeProjectCreator/config/messaging.mpb:
-	* bin/MakeProjectCreator/config/objreftemplate.mpb:
-	* bin/MakeProjectCreator/config/valuetype.mpb:
+        * bin/MakeProjectCreator/config/dynamicinterface.mpb:
+        * bin/MakeProjectCreator/config/iorinterceptor.mpb:
+        * bin/MakeProjectCreator/config/messaging.mpb:
+        * bin/MakeProjectCreator/config/objreftemplate.mpb:
+        * bin/MakeProjectCreator/config/valuetype.mpb:
 
-	  The dependencies were not right. For long the weak links between
-	  libraries allowed us to get away without proper
-	  dependencies. With the refactoring the dependencies got explicit
-	  and we need the dependencies set right.
+          The dependencies were not right. For long the weak links between
+          libraries allowed us to get away without proper
+          dependencies. With the refactoring the dependencies got explicit
+          and we need the dependencies set right.
 
 Fri Oct 31 07:38:40 2003  Chad Elliott  <elliott_c@ociweb.com>
 
