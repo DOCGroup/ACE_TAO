@@ -17,7 +17,8 @@ Tue Jan 27 14:56:49 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Basic_Types.*: more cleanup: got rid of ACE_USES_ACE_U_LONGLONG,
           replaced VXWORKS && ghs with ACE_HAS_WCHAR_TYPEDEFS_CHAR, and
-          factored out some common #defines.
+          factored out some common #defines.  Rearranged ACE_SIZEOF_LONG_LONG
+          and ACE_UINT64 logic so that it works on NT.
 
 Tue Jan 27 08:28:34 1998  Steve Huston  <shuston@riverace.com>
 
