@@ -17,8 +17,7 @@
 #include "ace/ACE.h"
 #include "ace/Log_Msg.h"
 
-#include <iostream.h>
-#include <fstream.h>
+#include "ace/streams.h"
 
 #if !defined (ACE_HAS_TEMPLATE_SPECIALIZATION)
 class KEY
@@ -145,11 +144,7 @@ ACE_Test_Output::set_output (const char *filename, int append)
                    ACE::basename (filename, ACE_DIRECTORY_SEPARATOR_CHAR),
                    ".log");
 
-  int flags = ios::out;
-  if (append)
-    flags |= ios::app;
-
-  this->output_file_.open (temp, flags);
+  this->output_file_.open (temp, ios::out | (append ? ios::app : ios::trunc));
   if (this->output_file_.bad ())
     return -1;
 

@@ -411,7 +411,7 @@ SnmpSyntax *IpAddress::clone() const
 }
 
 //-------[ return the Fully Qualified Domain Name ]----------------------
-char *IpAddress::resolve_hostname(int &status)
+const char *IpAddress::resolve_hostname(int &status)
 {
   if ((iv_friendly_name_[0] == 0) && valid_flag)
     addr_to_friendly();
@@ -609,7 +609,7 @@ IpAddress::operator const char *() const
 }
 
 //----[ IP address get char representation ]--------------------------
-char * IpAddress::to_string()
+const char * IpAddress::to_string()
 {
   return (char *)output_buffer;
 }
@@ -934,7 +934,7 @@ UdpAddress::operator const char *() const
 }
 
 //----[ UDP address get char representation ]--------------------------
-char * UdpAddress::to_string()
+const char * UdpAddress::to_string()
 {
   return (char *)output_buffer;
 }
@@ -1062,7 +1062,7 @@ NetbiosAddress::~NetbiosAddress()
 {
 }
 
-char *NetbiosAddress::to_string()
+const char *NetbiosAddress::to_string()
 {
   return (char *)output_buffer;
 }
@@ -1429,7 +1429,7 @@ IpxAddress::operator const char *() const
 }
 
 //----[ IPX address get char representation ]--------------------------
-char * IpxAddress::to_string()
+const char * IpxAddress::to_string()
 {
   return (char *)output_buffer;
 }
@@ -1650,7 +1650,7 @@ IpxSockAddress::operator const char *() const
 }
 
 //----[ IPXSock address get char representation ]--------------------------
-char * IpxSockAddress::to_string()
+const char * IpxSockAddress::to_string()
 {
   return (char *)output_buffer;
 }
@@ -1939,7 +1939,7 @@ MacAddress::operator const char *() const
   return (char *)output_buffer;
 }
 //----[ MAC address get char representation ]--------------------------
-char * MacAddress::to_string()
+const char * MacAddress::to_string()
 {
   return (char *)output_buffer;
 }
@@ -2367,7 +2367,7 @@ GenAddress::operator const char *() const
 }
 
 // to_string form of the contained address
-char * GenAddress::to_string()
+const char * GenAddress::to_string()
 {
   if ( address != 0)
     return address->to_string();        // pass thru
@@ -2453,7 +2453,7 @@ DecNetAddress::~DecNetAddress()
 {
 }
 
-char *DecNetAddress::to_string()
+const char *DecNetAddress::to_string()
 {
   return (char *)output_buffer;
 }
@@ -2589,7 +2589,7 @@ AppleTalkAddress::~AppleTalkAddress()
 {
 }
 
-char *AppleTalkAddress::to_string()
+const char *AppleTalkAddress::to_string()
 {
   return (char *)output_buffer;
 }

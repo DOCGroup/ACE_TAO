@@ -91,7 +91,6 @@ static void TestSnmpTarget()
   OctetStr rd("rd_comm"), wr("wr_comm");
   ACE_ASSERT(rd.valid() == 1);
   ACE_ASSERT(wr.valid() == 1);
-  char *crd = "rd_comm", *cwr = "wr_comm";
 
   // constructor and get tests
   UdpAddress ga;

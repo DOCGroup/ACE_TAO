@@ -230,7 +230,7 @@ class ACE_Export UdpTarget: public SnmpTarget
     friend int operator==( const UdpTarget &lhs, const UdpTarget &rhs);
     // compare two C targets
 
-    char *to_string();
+    const char *to_string();
     // string representation of object
 
     SnmpTarget *clone() const;
