@@ -1216,7 +1216,6 @@ TAO_Marshal_Value::append (CORBA::TypeCode_ptr  tc,
 {
   TAO::traverse_status retval =
     TAO::TRAVERSE_CONTINUE;
-  CORBA::TypeCode_var param;
 
   // Use the same method to append our base valuetype.
   // To achive this we'll need to distinguish between
@@ -1264,10 +1263,14 @@ TAO_Marshal_Value::append (CORBA::TypeCode_ptr  tc,
     }
 
   // Handle our base valuetype if any.
-  param = tc->concrete_base_type (ACE_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::TypeCode_var param =
+    tc->concrete_base_type (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
 
-  if (param->kind () != CORBA::tk_null)
+  CORBA::TCKind const param_kind = param->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (TAO::TRAVERSE_STOP);
+
+  if (param_kind != CORBA::tk_null)
     {
       retval = this->append (param.in (),
                              src,

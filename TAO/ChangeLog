@@ -1,3 +1,16 @@
+Fri Apr  1 00:27:15 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/append.cpp (append):
+
+	  Fixed emulated exception error.
+
+Thu Mar 31 19:46:09 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/TypeCode_Value_Field.inl:
+
+	  Full member specializations must be preceeded by a "template<>"
+	  declaration.  Addresses build warnings exhibited by HP aC++.
+
 Thu Mar 31 14:19:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Valuetype/AbstractBase.cpp:
