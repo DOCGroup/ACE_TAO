@@ -1,24 +1,24 @@
 Wed Sep 24 17:05:00 2003  Curt Hibbs  <hibbs_c@ociweb.com>
 
-        * orbsvcs/LoadBalancer/LoadBalancer.mpc
+        * orbsvcs/LoadBalancer/LoadBalancer.mpc:
           Added dependency on iormanip to eliminate link errors.
 
-        * orbsvcs/orbsvcs/LoadBalancing/LB_Random.cpp
+        * orbsvcs/orbsvcs/LoadBalancing/LB_Random.cpp:
           Explicitly cast the intentional conversion of an int to
           a float to eliminate a compiler warning on VC++ 7.1.
 
-        * orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroupManager.cpp
+        * orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroupManager.cpp:
 
-        * tao/Utils/Utils.mpc
+        * tao/Utils/Utils.mpc:
           Added dependency on portableserver to eliminate link errors.
 
-        * orbsvcs/orbsvcs/FTORB.mpc
-        * orbsvcs/orbsvcs/FT_CORBA_ORB.idl
+        * orbsvcs/orbsvcs/FTORB.mpc:
+        * orbsvcs/orbsvcs/FT_CORBA_ORB.idl:
           Temporarily reverted to TagFTGroupTaggedComponent (which duplicates
           TagGroupTaggedComponent) because it causes a circular dependency 
           problem. Will reinstate this change later.
 
-        * orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.cpp
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.cpp:
           Explicitly cast to ULong to eliminate compiler warning on VC++ 7.
 
 Wed Sep 24 11:41:48 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
@@ -29,30 +29,30 @@ Wed Sep 24 11:41:48 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 Tue Sep 23 21:30:00 2003  Curt Hibbs  <hibbs_c@ociweb.com>
 
-        * orbsvcs/orbsvcs/CosLoadBalancing.mpc
-        * orbsvcs/orbsvcs/FTORB.mpc
-        * orbsvcs/tests/FaultTolerance/IOGRManipulation/FaultTolerance_IOGRManipulation.mpc
-        * orbsvcs/orbsvcs/PortableGroup.mpc
+        * orbsvcs/orbsvcs/CosLoadBalancing.mpc:
+        * orbsvcs/orbsvcs/FTORB.mpc:
+        * orbsvcs/tests/FaultTolerance/IOGRManipulation/FaultTolerance_IOGRManipulation.mpc:
+        * orbsvcs/orbsvcs/PortableGroup.mpc:
           Changed to eliminate link errors.
 
-        * orbsvcs/orbsvcs/FT_CORBA_ORB.idl
-        * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.cpp
-        * orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.cpp
-        * orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.cpp
-        * orbsvcs/orbsvcs/LoadBalancing/LB_LoadManager.cpp
-        * orbsvcs/orbsvcs/PortableGroup/PG_Default_Property_Validator.h
-        * orbsvcs/orbsvcs/PortableGroup/PG_Factory_Set.h
-        * orbsvcs/orbsvcs/PortableGroup/PG_GenericFactory.cpp
-        * orbsvcs/orbsvcs/PortableGroup/PG_GenericFactory.h
-        * orbsvcs/orbsvcs/PortableGroup/PG_Group_Guard.cpp
-        * orbsvcs/orbsvcs/PortableGroup/PG_Group_Guard.h
-        * orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroupManager.cpp
-        * orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroupManager.h
-        * orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroup_Map.cpp
-        * orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroup_Map.h
-        * orbsvcs/orbsvcs/PortableGroup/PG_PropertyManager.cpp
-        * orbsvcs/orbsvcs/PortableGroup/PG_PropertyManager.h
-        * orbsvcs/orbsvcs/PortableGroup/PG_Property_Utils.cpp
+        * orbsvcs/orbsvcs/FT_CORBA_ORB.idl:
+        * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.cpp:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.cpp:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.cpp:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_LoadManager.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Default_Property_Validator.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Factory_Set.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_GenericFactory.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_GenericFactory.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Group_Guard.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Group_Guard.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroupManager.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroupManager.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroup_Map.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroup_Map.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_PropertyManager.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_PropertyManager.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Property_Utils.cpp:
           TagFTGroupTaggedComponent was previously moved to Portablegroups
 	  as  TagGroupTaggedComponent, but was never removed from
 	  FT_CORBA_ORB.idl.   Consequently, some code was using the
@@ -60,9 +60,9 @@ Tue Sep 23 21:30:00 2003  Curt Hibbs  <hibbs_c@ociweb.com>
 	  version. This removes the FT version and changes all code that
 	  referenced it to now use the PortableGroup version. 
 
-        * orbsvcs/tests/FT_App/FT_Client.cpp
-        * orbsvcs/tests/FT_App/FT_UnitTests.cpp
-        * orbsvcs/tests/FaultTolerance/IOGRManipulation/IOGRTest.cpp
+        * orbsvcs/tests/FT_App/FT_Client.cpp:
+        * orbsvcs/tests/FT_App/FT_UnitTests.cpp:
+        * orbsvcs/tests/FaultTolerance/IOGRManipulation/IOGRTest.cpp:
           Changed to eliminate compile errors due to merging changes.
 
 Tue Sep 23 17:19:48 2003  Steve Totten  <totten_s@ociweb.com>
@@ -78,12 +78,12 @@ Tue Sep 23 17:19:48 2003  Steve Totten  <totten_s@ociweb.com>
 
         * orbsvcs/orbsvcs/FaultTolerance/FT_ServerRequest_Interceptor.h:
           Changed forward declaration of IOP::ServiceContext to quiet
-	  compiler warnings on VC++ 6.0. 
+	  compiler warnings on VC++ 6.0.
 
 Tue Sep 23 17:03:40 2003  Dale Wilson  <wilson_d@ociweb.com>
 
         * orbsvcs/tests/FT_App/FT_App.mpc:
-        fix mpc->include path to find TAO/orbsvcs/orbsvcs/* stuff
+          fix mpc->include path to find TAO/orbsvcs/orbsvcs/* stuff
 
         * orbsvcs/tests/FT_App/FT_Replica.cpp:
         * orbsvcs/tests/FT_App/FT_ReplicaFactory_i.h:
@@ -91,11 +91,10 @@ Tue Sep 23 17:03:40 2003  Dale Wilson  <wilson_d@ociweb.com>
         * orbsvcs/tests/FT_App/FT_TestReplica_i.h:
         * orbsvcs/tests/FT_App/FT_TestReplica_i.cpp:
         * orbsvcs/tests/FT_App/StubFaultConsumer.h:
-        finish code (still untested) for ReplicaFactory.
-
+          finish code (still untested) for ReplicaFactory.
 
         * tao/Utils/ServantMain.h:
-        fix documentation
+          fix documentation
 
         These changes were made in the oci_haft branch.
 
@@ -107,10 +106,10 @@ Mon Sep 22 18:26:42 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 Mon Sep 22 17:42:23 2003  Dale Wilson  <wilson_d@ociweb.com>
 	
-        * orbsvcs/test/FT_App/FT_ReplicaFactory_i.cpp
-        * orbsvcs/test/FT_App/FT_ReplicaFactory_i.h
-        * orbsvcs/test/FT_App/FT_ReplicaFactory_i.cpp
-        * orbsvcs/test/FT_App/FT_Replica.cpp
+        * orbsvcs/test/FT_App/FT_ReplicaFactory_i.cpp:
+        * orbsvcs/test/FT_App/FT_ReplicaFactory_i.h:
+        * orbsvcs/test/FT_App/FT_ReplicaFactory_i.cpp:
+        * orbsvcs/test/FT_App/FT_Replica.cpp:
           Implement GenericFactory to create test replicas.
 
           These changes were made in the oci_haft branch.
@@ -121,7 +120,6 @@ Mon Sep 22 17:05:31 2003  Dale Wilson  <wilson_d@ociweb.com>
           Fixing some library dependancies.  Nothing significant.
 
           These changes were made in the oci_haft branch.
-
 
 Sat Sep 20 16:46:29 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
@@ -203,8 +201,8 @@ Fri Sep 19 16:29:42 2003  Dale Wilson  <wilson_d@ociweb.com>
 
 Fri Sep 19 13:50:09 2003  Dale Wilson  <wilson_d@ociweb.com>
 
-        * orbsvcs\FT_ReplicationManager\FT_ReplicationManager.cpp
-        * orbsvcs\FT_ReplicationManager\FT_ReplicationManager.h
+        * orbsvcs\FT_ReplicationManager\FT_ReplicationManager.cpp:
+        * orbsvcs\FT_ReplicationManager\FT_ReplicationManager.h:
           Added new includes needed because of changes made to reduce
           include dependancies in the HEAD branch.
 
@@ -245,22 +243,22 @@ Wed Sep 18 11:30:00 2003  Curt Hibbs  <hibbs_c@ociweb.com>
     These files were added as part of the initial check in of
     Replication Manager implementation.
 
-        * orbsvcs\orbsvcs\FT_CORBA.idl
-        * orbsvcs\orbsvcs\FaultTolerance.mpc
-        * orbsvcs\orbsvcs\PortableGroup\PG_Default_Property_Validator.cpp
-        * orbsvcs\orbsvcs\PortableGroup\PG_Default_Property_Validator.h
-        * orbsvcs\orbsvcs\PortableGroup\PG_Factory_Set.h
-        * orbsvcs\orbsvcs\PortableGroup\PG_GenericFactory.cpp
-        * orbsvcs\orbsvcs\PortableGroup\PG_GenericFactory.h
-        * orbsvcs\orbsvcs\PortableGroup\PG_Group_Guard.cpp
-        * orbsvcs\orbsvcs\PortableGroup\PG_Group_Guard.h
-        * orbsvcs\orbsvcs\PortableGroup\PG_ObjectGroupManager.cpp
-        * orbsvcs\orbsvcs\PortableGroup\PG_ObjectGroupManager.h
-        * orbsvcs\orbsvcs\PortableGroup\PG_ObjectGroup_Map.cpp
-        * orbsvcs\orbsvcs\PortableGroup\PG_ObjectGroup_Map.h
-        * orbsvcs\orbsvcs\PortableGroup\PG_PropertyManager.cpp
-        * orbsvcs\orbsvcs\PortableGroup\PG_PropertyManager.h
-        * orbsvcs\orbsvcs\PortableGroup\PG_Property_Utils.cpp
+        * orbsvcs\orbsvcs\FT_CORBA.idl:
+        * orbsvcs\orbsvcs\FaultTolerance.mpc:
+        * orbsvcs\orbsvcs\PortableGroup\PG_Default_Property_Validator.cpp:
+        * orbsvcs\orbsvcs\PortableGroup\PG_Default_Property_Validator.h:
+        * orbsvcs\orbsvcs\PortableGroup\PG_Factory_Set.h:
+        * orbsvcs\orbsvcs\PortableGroup\PG_GenericFactory.cpp:
+        * orbsvcs\orbsvcs\PortableGroup\PG_GenericFactory.h:
+        * orbsvcs\orbsvcs\PortableGroup\PG_Group_Guard.cpp:
+        * orbsvcs\orbsvcs\PortableGroup\PG_Group_Guard.h:
+        * orbsvcs\orbsvcs\PortableGroup\PG_ObjectGroupManager.cpp:
+        * orbsvcs\orbsvcs\PortableGroup\PG_ObjectGroupManager.h:
+        * orbsvcs\orbsvcs\PortableGroup\PG_ObjectGroup_Map.cpp:
+        * orbsvcs\orbsvcs\PortableGroup\PG_ObjectGroup_Map.h:
+        * orbsvcs\orbsvcs\PortableGroup\PG_PropertyManager.cpp:
+        * orbsvcs\orbsvcs\PortableGroup\PG_PropertyManager.h:
+        * orbsvcs\orbsvcs\PortableGroup\PG_Property_Utils.cpp:
              This code was modified in support of the Replication Manager,
              and contains the following major changes:
              - The property validator is now settable.
@@ -271,10 +269,10 @@ Wed Sep 18 11:30:00 2003  Curt Hibbs  <hibbs_c@ociweb.com>
              - GroupEntries are now accessed (keyed) by ObjectGroupId
                (previously they were accessed by FactoryCreateionId).
 
-        * orbsvcs\tests\FT_App\FT_App.mpc
-        * orbsvcs\tests\FT_App\FT_Client.cpp
-        * orbsvcs\tests\FT_App\FT_UnitTests.cpp
-        * orbsvcs\tests\FT_App\FT_UnitTests.h
+        * orbsvcs\tests\FT_App\FT_App.mpc:
+        * orbsvcs\tests\FT_App\FT_Client.cpp:
+        * orbsvcs\tests\FT_App\FT_UnitTests.cpp:
+        * orbsvcs\tests\FT_App\FT_UnitTests.h:
              Unit test scaffolding was added for the Replication Manager,
              and several unit tests were included.
 
@@ -284,8 +282,7 @@ Wed Sep  3 13:35:32 2003  Dale Wilson  <wilson_d@ociweb.com>
 
         * orbsvcs/Fault_Detector/FT_FaultDetectorFactory_i.h:
         * orbsvcs/Fault_Detector/FT_FaultDetectorFactory_i.cpp:
-
-    Get the ENV args right.
+          Get the ENV args right.
 
         * orbsvcs/Fault_Notifier/FT_Notifier_i.h:
         * orbsvcs/Fault_Notifier/FT_Notifier_i.cpp:
@@ -333,9 +330,7 @@ Wed Sep  3 13:35:32 2003  Dale Wilson  <wilson_d@ociweb.com>
         * orbsvcs/tests/FT_App/run_test_notifier.pl:
         * orbsvcs/tests/FT_App/testscript:
 
-
           These changes were made in the oci_haft branch.
-
 
 Wed Aug 27 13:45:45 2003  Dale Wilson  <wilson_d@ociweb.com>
 
@@ -379,12 +374,11 @@ Thu Aug  7 16:39:14 2003  Dale Wilson  <wilson_d@ociweb.com>
         * orbsvcs/Fault_Detector/FT_FaultDetectorFactory_i.h:
         * orbsvcs/Fault_Detector/FT_FaultDetectorFactory_i.cpp:
         * orbsvcs/Fault_Detector/Fault_Detector_Main.cpp:
-
           Make dependancy on NameService optional.
 
         * orbsvcs/orbsvcs/PortableGroup.idl:
           Fix include so PortableGroup can be included from outside
-    orbsvcs directory.
+          orbsvcs directory.
 
         * tests/FT_App/FT_Client.cpp:
         * tests/FT_App/FT_Replica.cpp:
@@ -394,17 +388,16 @@ Thu Aug  7 16:39:14 2003  Dale Wilson  <wilson_d@ociweb.com>
         * tests/FT_App/run_test_notifier.pl:
         * tests/FT_App/testscript:
           Make fault points generic rather than method specific.   Add
-    "before replication" fault point.
+          "before replication" fault point.
 
           These changes were made in the oci_haft branch.
 
 Wed Aug 06 14:40:00 2003  Curt Hibbs <hibbs_c@ociweb.com>
 
-        * orbsvcs/Fault_Detector/FT_FaultDetectorFactory_i.cpp
-        * orbsvcs/Fault_Detector/FT_FaultDetectorFactory_i.h
-        * orbsvcs/orbsvcs/FT_CORBA.idl
-        * orbsvcs/orbsvcs/FT_FaultDetectorFactory.idl
-
+        * orbsvcs/Fault_Detector/FT_FaultDetectorFactory_i.cpp:
+        * orbsvcs/Fault_Detector/FT_FaultDetectorFactory_i.h:
+        * orbsvcs/orbsvcs/FT_CORBA.idl:
+        * orbsvcs/orbsvcs/FT_FaultDetectorFactory.idl:
           Completed the conditional use of PortableGroups in FT_CORBA.idl
           that was begun by Dale Wilson. The typedef trick used by Dale
           to allow PortableGroup symbols to be used in the FT namespace
@@ -528,7 +521,6 @@ Wed Jul 23 17:23:33 2003  Dale Wilson  <wilson_d@ociweb.com>
 
         * orbsvcs/Fault_Detector/Fault_Detector.h:
         * orbsvcs/Fault_Detector/Fault_Detector.cpp:
-
           Removed these files.
 
           These changes were made in the oci_haft branch.
