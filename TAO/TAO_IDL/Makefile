@@ -8865,7 +8865,7 @@ tags:
  be_include/be_visitor_operation/ami_ch.h \
  be_include/be_visitor_operation/ami_cs.h \
  be_include/be_visitor_operation/ami_handler_reply_stub_operation_ch.h \
- be_include/be_visitor_operation/ami_handler_skeleton_cs.h \
+ be_include/be_visitor_operation/ami_handler_reply_stub_operation_cs.h \
  be_include/be_visitor_operation/ami_exception_holder_operation_cs.h \
  be_include/be_visitor_root.h be_include/be_visitor_root/root.h \
  be_include/be_visitor_root/root_ch.h \
@@ -10564,7 +10564,7 @@ tags:
  be_include/be_visitor_operation/ami_ch.h \
  be_include/be_visitor_operation/ami_cs.h \
  be_include/be_visitor_operation/ami_handler_reply_stub_operation_ch.h \
- be_include/be_visitor_operation/ami_handler_skeleton_cs.h \
+ be_include/be_visitor_operation/ami_handler_reply_stub_operation_cs.h \
  be_include/be_visitor_operation/ami_exception_holder_operation_cs.h \
  be/be_visitor_valuetype/field_ch.cpp \
  be/be_visitor_valuetype/field_cs.cpp \
@@ -10929,7 +10929,7 @@ tags:
  be_include/be_visitor_operation/ami_ch.h \
  be_include/be_visitor_operation/ami_cs.h \
  be_include/be_visitor_operation/ami_handler_reply_stub_operation_ch.h \
- be_include/be_visitor_operation/ami_handler_skeleton_cs.h \
+ be_include/be_visitor_operation/ami_handler_reply_stub_operation_cs.h \
  be_include/be_visitor_operation/ami_exception_holder_operation_cs.h \
  be/be_visitor_operation/operation.cpp \
  be/be_visitor_operation/arglist.cpp \
@@ -10985,7 +10985,7 @@ tags:
  be/be_visitor_operation/rettype_pre_invoke_cs.cpp \
  be/be_visitor_operation/ami_ch.cpp be/be_visitor_operation/ami_cs.cpp \
  be/be_visitor_operation/ami_handler_reply_stub_operation_ch.cpp \
- be/be_visitor_operation/ami_handler_skeleton_cs.cpp \
+ be/be_visitor_operation/ami_handler_reply_stub_operation_cs.cpp \
  be/be_visitor_operation/ami_exception_holder_operation_cs.cpp
 .obj/be_visitor_root.o .obj/be_visitor_root.so .shobj/be_visitor_root.o .shobj/be_visitor_root.so: be/be_visitor_root.cpp include/idl.h \
  $(ACE_ROOT)/ace/ACE.h $(ACE_ROOT)/ace/OS.h \
