@@ -264,6 +264,15 @@ protected:
   // Process service configuration requests as indicated in the
   // <service_config_file>.  Returns -1 if errors occur, else 0.
 
+  static int process_directive (char directive[]);
+  // Process one service configuration <directive>, which is passed as
+  // a string.  Returns -1 if errors occur, else 0.
+
+  static int process_directives_i (void);
+  // This is the implementation function that <process_directives> and
+  // <process_directive> both call.  Returns -1 if errors occur, else
+  // 0.
+
   static void parse_args (int, ASYS_TCHAR *argv[]);
   // Handle the command-line options intended for the
   // <ACE_Service_Config>.  Note that <argv[0]> is assumed to be the

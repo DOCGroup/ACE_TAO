@@ -202,7 +202,10 @@ void
 ACE_Service_Config::parse_args (int argc, ASYS_TCHAR *argv[])
 {
   ACE_TRACE ("ACE_Service_Config::parse_args");
-  ACE_Get_Opt getopt (argc, argv, ASYS_TEXT ("bdf:k:ns:"), 1); // Start at argv[1]
+  ACE_Get_Opt getopt (argc,
+                      argv,
+                      ASYS_TEXT ("bdf:k:ns:S:"),
+                      1); // Start at argv[1].
 
   for (int c; (c = getopt ()) != -1; )
     switch (c)
@@ -232,12 +235,22 @@ ACE_Service_Config::parse_args (int argc, ASYS_TCHAR *argv[])
           if (ACE_Reactor::instance ()->register_handler
               (ACE_Service_Config::signum_,
                ACE_Service_Config::signal_handler_) == -1)
-            ACE_ERROR ((LM_ERROR, ASYS_TEXT ("cannot obtain signal handler\n")));
+            ACE_ERROR ((LM_ERROR,
+                        ASYS_TEXT ("cannot obtain signal handler\n")));
 #endif /* ACE_LACKS_UNIX_SIGNALS */
           break;
         }
+      case 'S':
+        // Process just a single directive.
+        if (ACE_Service_Config::process_directive (getopt.optarg) == -1)
+          ACE_ERROR ((LM_ERROR,
+                      ASYS_TEXT ("%p\n"),
+                      ASYS_TEXT ("process_directives")));
+        break;
       default:
-        ACE_ERROR ((LM_ERROR, ASYS_TEXT ("%c is not a ACE_Service_Config option\n"), c));
+        ACE_ERROR ((LM_ERROR,
+                    ASYS_TEXT ("%c is not a ACE_Service_Config option\n"),
+                    c));
         break;
       }
 }
@@ -290,6 +303,48 @@ ACE_Service_Config::initialize (const ACE_Service_Type *sr,
     return 0;
 }
 
+int
+ACE_Service_Config::process_directives_i (void)
+{
+
+  // AC 970827 Skip the heap check because yacc allocates a buffer
+  // here which will be reported as a memory leak for some reason.
+  ACE_NO_HEAP_CHECK
+
+  // The fact that these are all global variables means that we really
+  // can't be doing this processing in multiple threads
+  // simultaneously...
+  ace_yyerrno = 0;
+  ace_yylineno = 1;
+
+  // Use an auto_ptr to make sure that we release this memory
+  // regardless of how we exit...
+  ACE_NEW_RETURN (ace_obstack, ACE_Obstack, -1);
+
+  auto_ptr<ACE_Obstack> holder (ace_obstack);
+
+  ace_yyparse ();
+
+  if (ace_yyerrno > 0)
+    {
+      errno = EINVAL; // This is a hack, better errors should be provided...
+      return ace_yyerrno;
+    }
+  else
+    return 0;
+}
+
+int
+ACE_Service_Config::process_directive (char directive[])
+{
+  ACE_TRACE ("ACE_Service_Config::process_directives");
+
+  // @@ What needs to happen at this point is for the <directive> to
+  // be placed into a buffer that the YY_INPUT macro knows how to
+  // process correctly.
+  return ACE_Service_Config::process_directives_i ();
+}
+
 // Process service configuration requests as indicated in the
 // <service_config_file>.
 
@@ -298,7 +353,8 @@ ACE_Service_Config::process_directives (void)
 {
   ACE_TRACE ("ACE_Service_Config::process_directives");
 
-  FILE *fp = ACE_OS::fopen (ACE_Service_Config::service_config_file_, ASYS_TEXT ("r"));
+  FILE *fp = ACE_OS::fopen (ACE_Service_Config::service_config_file_,
+                            ASYS_TEXT ("r"));
 
   if (fp == 0)
     {
@@ -307,30 +363,8 @@ ACE_Service_Config::process_directives (void)
     }
   else
     {
-      // AC 970827 Skip the heap check because yacc allocates a buffer
-      // here which will be reported as a memory leak for some reason.
-      ACE_NO_HEAP_CHECK
-
       ace_yyrestart (fp);
-
-      ace_yyerrno = 0;
-      ace_yylineno = 1;
-
-      // Use an auto_ptr to make sure that we release this memory
-      // regardless of how we exit...
-      ACE_NEW_RETURN (ace_obstack, ACE_Obstack, -1);
-
-      auto_ptr<ACE_Obstack> holder (ace_obstack);
-
-      ace_yyparse ();
-
-      if (ace_yyerrno > 0)
-        {
-          errno = EINVAL; // This is a hack, better errors should be provided...
-          return ace_yyerrno;
-        }
-      else
-        return 0;
+      return ACE_Service_Config::process_directives_i ();
     }
 }
 
@@ -472,7 +506,9 @@ ACE_Service_Config::reconfigure (void)
     }
 
   if (ACE_Service_Config::process_directives () == -1)
-    ACE_ERROR ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("process_directives")));
+    ACE_ERROR ((LM_ERROR,
+                ASYS_TEXT ("%p\n"),
+                ASYS_TEXT ("process_directives")));
 }
 
 // Run the event loop until the <ACE_Reactor::handle_events>
