@@ -33,7 +33,7 @@ CIAO::HomeRegistrar_Impl::find_home_impl (const char *name
                                                   ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      ahome = Components::CCMHome::_narrow (obj
+      ahome = Components::CCMHome::_narrow (obj.in ()
                                             ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
@@ -44,7 +44,7 @@ CIAO::HomeRegistrar_Impl::find_home_impl (const char *name
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
 
-  if (CORBA::is_nil (ahome))
+  if (CORBA::is_nil (ahome.in ()))
     ACE_THROW_RETURN (Components::HomeNotFound (), 0);
   return ahome._retn ();
 }
