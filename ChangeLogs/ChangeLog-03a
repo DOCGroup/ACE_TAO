@@ -1,3 +1,19 @@
+Thu Apr 05 02:48:51 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/MEM_IO.cpp (write): My earlier change was causing the test
+	  to crash.
+
+	* ace/MEM_Stream.h:
+	* ace/MEM_Stream.i:
+	* ace/MEM_Stream.cpp: Added a new method to inform the stream to
+	  clean up its resources when closing down.
+
+	* tests/MEM_Stream_Test.cpp (handle_close): Handle_close should
+	  only inform it's peer to destroy the mmap file instead of
+	  removing the file itself.
+
+	*
+
 Wed Apr  4 16:21:13 2001  Darrell Brunsch <brunsch@uci.edu>
 
         * bin/auto_run_tests.lst:
