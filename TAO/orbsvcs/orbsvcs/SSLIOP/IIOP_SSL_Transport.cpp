@@ -29,9 +29,9 @@ TAO_IIOP_SSL_Transport::~TAO_IIOP_SSL_Transport (void)
 }
 
 int
-TAO_IIOP_SSL_Transport::handle_input_i (TAO_Resume_Handle &rh,
-                                        ACE_Time_Value *max_wait_time,
-                                        int block)
+TAO_IIOP_SSL_Transport::handle_input (TAO_Resume_Handle &rh,
+                                      ACE_Time_Value *max_wait_time,
+                                      int block)
 {
   int result = 0;
 
@@ -44,7 +44,7 @@ TAO_IIOP_SSL_Transport::handle_input_i (TAO_Resume_Handle &rh,
     return -1;
 
   return
-    this->TAO_IIOP_Transport::handle_input_i (rh,
-                                              max_wait_time,
-                                              block);
+    this->TAO_IIOP_Transport::handle_input (rh,
+                                            max_wait_time,
+                                            block);
 }

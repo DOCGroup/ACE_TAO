@@ -21,6 +21,9 @@ href="http://www.cs.wustl.edu/~schmidt/TAO.html">TAO</a>:
 <TD valign="top">
 <ul>
 <li>
+<a href="#ace">ACE Wrappers</a></li>
+
+<li>
 <a href="#idl">IDL Compiler</a></li>
 
 <li>
@@ -155,6 +158,82 @@ href="http://www.cs.wustl.edu/~schmidt/TAO.html">TAO</a>:
 A complete list of all modifications to TAO is available in the <a href="../../ChangeLog">ChangeLog</a>.
 <p>
 <hr>
+
+<h3>
+<a NAME="ace"></a>ACE Wrappers</h3>
+<p>Current status: (As of July 07, 2003.)
+<ul>
+<li>
+
+The following changes are related to improving memory management of
+Event Handlers when they interact with Reactors (and Timer Queues).
+When a handler is registered with the Reactor, the Reactor increments
+the reference count on the handler.  The Reactor also increments this
+reference count when making upcalls on the handler.  The reference
+count is decremented when an upcall completes or when the handler is
+removed from the Reactor. <p>
+
+This mechanism is similar to what happens between POAs and Servants
+and it allows for the safe deletion of handlers.  This mechanism is
+particularly need for multi-threaded applications that can have
+multiple threads executing upcalls on a handler that needs to be
+shutdown in a safe manner.  The following illustrates an example of
+how this mechanism works: <p>
+
+<ul>
+<li> When a handler is created, it reference count is one. 
+	  
+<li> After the handler is registered with the Reactor, it reference
+count becomes two.
+
+<li> At this point, the handler creator can let go of the handler
+reference, bringing down the reference count to one.
+
+<li> For each thread executing upcalls on the handler, the Reactor
+increments the reference count by one. So if three threads were
+simultaneously making upcalls on a handler, the reference count would
+be four.
+
+<li> Assuming an external event (and thread) decides to close the
+handler.  It simply removes the handler from the Reactor.  This
+decreases the reference count to three.
+
+<li> As each thread completes their upcall, the reference reduces.
+
+<li> Once the final thread exits the upcall, the reference reaches
+zero, and the handler is finally deleted.
+
+</ul> <p>
+
+This mechanism ensures that the handler is not deleted until the final
+upcall thread exits the handler. <p>
+
+Reference counting on handlers is optional and is disabled by default.
+To enable reference counting on a handler, reset its reference
+counting policy to "ENABLED". <p>
+
+To facilitate reference counting of handlers, an ACE_Event_Handler_var
+class was added.  This class is akin to the
+PortableServer::ServantBase_var class. <p>
+
+Similar reference counting related changes were made to the Timer
+Queues so that handlers can be used in a thread safe manner with the
+queues. <p>
+
+The Connector implementation was completely revised to utilize the new
+memory management mechanisms and remove existing concurrency bugs. <p>
+
+Several new examples/tests were added:
+Reference_Counted_Event_Handler_Test,
+MT_Reference_Counted_Event_Handler_Test,
+MT_Reference_Counted_Notify_Test, Timer_Queue_Reference_Counting_Test,
+NonBlocking_Conn_Test, Reactor_Registration_Test, WFMO_Reactor_Test,
+Timer_Cancellation_Test
+
+</li>
+</ul>
+<hr>
+</ul>
 
 <h3>
 <a NAME="idl"></a>IDL Compiler</h3>

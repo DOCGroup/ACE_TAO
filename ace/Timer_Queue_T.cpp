@@ -12,6 +12,7 @@
 #include "ace/Signal.h"
 #include "ace/Timer_Queue_T.h"
 #include "ace/Log_Msg.h"
+#include "ace/Reactor_Timer_Interface.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Timer_Queue_T.i"
@@ -51,8 +52,6 @@ ACE_Timer_Node_T<TYPE>::~ACE_Timer_Node_T (void)
 {
   ACE_TRACE ("ACE_Timer_Node_T::~ACE_Timer_Node_T");
 }
-
-
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK>
 ACE_Timer_Queue_Iterator_T<TYPE, FUNCTOR, ACE_LOCK>::ACE_Timer_Queue_Iterator_T (void)
@@ -208,6 +207,33 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::mutex (void)
   return this->mutex_;
 }
 
+template <class TYPE, class FUNCTOR, class ACE_LOCK> long
+ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::schedule (const TYPE &type,
+                                                      const void *act,
+                                                      const ACE_Time_Value &future_time,
+                                                      const ACE_Time_Value &interval)
+{
+  ACE_MT (ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->mutex_, -1));
+
+  // Schedule the timer.
+  int result =
+    this->schedule_i (type,
+                      act,
+                      future_time,
+                      interval);
+
+  // Return on failure.
+  if (result == -1)
+    return result;
+
+  // Inform upcall functor of successful registration.
+  this->upcall_functor ().registration (*this,
+                                        type,
+                                        act);
+
+  // Return result;
+  return result;
+}
 
 // Run the <handle_timeout> method for all Timers whose values are <=
 // <cur_time>.
@@ -231,8 +257,13 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::expire (const ACE_Time_Value &cur_ti
   while ((result = this->dispatch_info_i (cur_time,
                                           info)) != 0)
     {
-      // call the functor
-      this->upcall (info.type_, info.act_, cur_time);
+      const void *upcall_act = 0;
+
+      this->preinvoke (info, cur_time, upcall_act);
+
+      this->upcall (info, cur_time);
+
+      this->postinvoke (info, cur_time, upcall_act);
 
       number_of_timers_expired++;
 
@@ -241,7 +272,6 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::expire (const ACE_Time_Value &cur_ti
   ACE_UNUSED_ARG (result);
   return number_of_timers_expired;
 }
-
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK> int
 ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::dispatch_info_i (const ACE_Time_Value &cur_time,
@@ -267,7 +297,8 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::dispatch_info_i (const ACE_Time_Valu
           // Make sure that we skip past values that have already
           // "expired".
           do
-            expired->set_timer_value (expired->get_timer_value () + expired->get_interval ());
+            expired->set_timer_value (expired->get_timer_value () +
+                                      expired->get_interval ());
           while (expired->get_timer_value () <= cur_time);
 
           // Since this is an interval timer, we need to reschedule
@@ -285,7 +316,6 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::dispatch_info_i (const ACE_Time_Valu
 
   return 0;
 }
-
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK> void
 ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::return_node (ACE_Timer_Node_T<TYPE> *node)
@@ -306,51 +336,142 @@ ACE_Event_Handler_Handle_Timeout_Upcall<ACE_LOCK>::~ACE_Event_Handler_Handle_Tim
 }
 
 template <class ACE_LOCK> int
-ACE_Event_Handler_Handle_Timeout_Upcall<ACE_LOCK>::timeout (TIMER_QUEUE &timer_queue,
-                                                            ACE_Event_Handler *handler,
-                                                            const void *act,
-                                                            const ACE_Time_Value &cur_time)
+ACE_Event_Handler_Handle_Timeout_Upcall<ACE_LOCK>::registration (TIMER_QUEUE &,
+                                                                 ACE_Event_Handler *event_handler,
+                                                                 const void *)
 {
-  // Upcall to the <handler>s handle_timeout() method.
-  if (handler->handle_timeout (cur_time, act) == -1)
+  int requires_reference_counting =
+    event_handler->reference_counting_policy ().value () ==
+    ACE_Event_Handler::Reference_Counting_Policy::ENABLED;
+
+  if (requires_reference_counting)
     {
-#if 0
-      // Commented out until we figure out how to break the coupling that results...
-      if (handler->reactor ())
-        // Call the reactor's cancel_timer() method to minimize locking.
-        handler->reactor ()->cancel_timer (handler, 0); // 0 means "call handle_close()".
-      else
-#endif
-        timer_queue.cancel (handler, 0); 
+      event_handler->add_reference ();
     }
 
   return 0;
 }
 
 template <class ACE_LOCK> int
-ACE_Event_Handler_Handle_Timeout_Upcall<ACE_LOCK>::cancellation (TIMER_QUEUE &timer_queue,
-                                                                 ACE_Event_Handler *handler)
+ACE_Event_Handler_Handle_Timeout_Upcall<ACE_LOCK>::preinvoke (TIMER_QUEUE & /* timer_queue */,
+                                                              ACE_Event_Handler *event_handler,
+                                                              const void * /* timer_act */,
+                                                              int /* recurring_timer */,
+                                                              const ACE_Time_Value & /* cur_time */,
+                                                              const void *&upcall_act)
 {
-  ACE_UNUSED_ARG (timer_queue);
+  int requires_reference_counting =
+    event_handler->reference_counting_policy ().value () ==
+    ACE_Event_Handler::Reference_Counting_Policy::ENABLED;
+
+  if (requires_reference_counting)
+    {
+      event_handler->add_reference ();
+
+      upcall_act = &this->requires_reference_counting_;
+    }
+
+  return 0;
+}
+
+template <class ACE_LOCK> int
+ACE_Event_Handler_Handle_Timeout_Upcall<ACE_LOCK>::postinvoke (TIMER_QUEUE & /* timer_queue */,
+                                                               ACE_Event_Handler *event_handler,
+                                                               const void * /* timer_act */,
+                                                               int /* recurring_timer */,
+                                                               const ACE_Time_Value & /* cur_time */,
+                                                               const void *upcall_act)
+{
+  if (upcall_act == &this->requires_reference_counting_)
+    {
+      event_handler->remove_reference ();
+    }
+
+  return 0;
+}
+
+template <class ACE_LOCK> int
+ACE_Event_Handler_Handle_Timeout_Upcall<ACE_LOCK>::timeout (TIMER_QUEUE &timer_queue,
+                                                            ACE_Event_Handler *event_handler,
+                                                            const void *act,
+                                                            int recurring_timer,
+                                                            const ACE_Time_Value &cur_time)
+{
+  int requires_reference_counting = 0;
+
+  if (!recurring_timer)
+    {
+      requires_reference_counting =
+        event_handler->reference_counting_policy ().value () ==
+        ACE_Event_Handler::Reference_Counting_Policy::ENABLED;
+    }
+
+  // Upcall to the <handler>s handle_timeout method.
+  if (event_handler->handle_timeout (cur_time, act) == -1)
+    {
+      if (event_handler->reactor ())
+        event_handler->reactor_timer_interface ()->cancel_timer (event_handler, 0);
+      else
+        timer_queue.cancel (event_handler, 0); // 0 means "call handle_close()".
+    }
+
+  if (!recurring_timer &&
+      requires_reference_counting)
+    {
+      event_handler->remove_reference ();
+    }
+
+  return 0;
+}
+
+template <class ACE_LOCK> int
+ACE_Event_Handler_Handle_Timeout_Upcall<ACE_LOCK>::cancel_type (TIMER_QUEUE &,
+                                                                ACE_Event_Handler *event_handler,
+                                                                int dont_call,
+                                                                int &requires_reference_counting)
+{
+  requires_reference_counting =
+    event_handler->reference_counting_policy ().value () ==
+    ACE_Event_Handler::Reference_Counting_Policy::ENABLED;
 
   // Upcall to the <handler>s handle_close method
-  handler->handle_close (ACE_INVALID_HANDLE,
-                         ACE_Event_Handler::TIMER_MASK);
+  if (dont_call == 0)
+    event_handler->handle_close (ACE_INVALID_HANDLE,
+                                 ACE_Event_Handler::TIMER_MASK);
+
+  return 0;
+}
+
+template <class ACE_LOCK> int
+ACE_Event_Handler_Handle_Timeout_Upcall<ACE_LOCK>::cancel_timer (TIMER_QUEUE &,
+                                                                 ACE_Event_Handler *event_handler,
+                                                                 int,
+                                                                 int requires_reference_counting)
+{
+  if (requires_reference_counting)
+    event_handler->remove_reference ();
+
   return 0;
 }
 
 template <class ACE_LOCK> int
 ACE_Event_Handler_Handle_Timeout_Upcall<ACE_LOCK>::deletion (TIMER_QUEUE &timer_queue,
-                                                             ACE_Event_Handler *handler,
-                                                             const void *arg)
+                                                             ACE_Event_Handler *event_handler,
+                                                             const void *)
 {
-  ACE_UNUSED_ARG (timer_queue);
-  ACE_UNUSED_ARG (handler);
-  ACE_UNUSED_ARG (arg);
+  int requires_reference_counting = 0;
 
-  // Does nothing
+  this->cancel_type (timer_queue,
+                     event_handler,
+                     0,
+                     requires_reference_counting);
+
+  this->cancel_timer (timer_queue,
+                      event_handler,
+                      0,
+                      requires_reference_counting);
 
   return 0;
 }
 
-#endif /* ACE_TIMER_QUEUE_T_C*/
+#endif /* ACE_TIMER_QUEUE_T_C */

@@ -33,13 +33,6 @@ TAO_UIOP_Transport::TAO_UIOP_Transport (TAO_UIOP_Connection_Handler *handler,
   , connection_handler_ (handler)
   , messaging_object_ (0)
 {
-  if (connection_handler_ != 0)
-    {
-      // REFCNT: Matches one of
-      // TAO_Transport::connection_handler_close() or
-      // TAO_Transport::close_connection_shared.
-      this->connection_handler_->incr_refcount();
-    }
   if (flag)
     {
       // Use the lite version of the protocol
@@ -56,7 +49,6 @@ TAO_UIOP_Transport::TAO_UIOP_Transport (TAO_UIOP_Connection_Handler *handler,
 
 TAO_UIOP_Transport::~TAO_UIOP_Transport (void)
 {
-  ACE_ASSERT(this->connection_handler_ == 0);
   delete this->messaging_object_;
 }
 
@@ -79,9 +71,9 @@ TAO_UIOP_Transport::messaging_object (void)
 }
 
 ssize_t
-TAO_UIOP_Transport::send_i (iovec *iov, int iovcnt,
-                            size_t &bytes_transferred,
-                            const ACE_Time_Value *max_wait_time)
+TAO_UIOP_Transport::send (iovec *iov, int iovcnt,
+                          size_t &bytes_transferred,
+                          const ACE_Time_Value *max_wait_time)
 {
   ssize_t retval = this->connection_handler_->peer ().sendv (iov, iovcnt,
                                                              max_wait_time);
@@ -92,9 +84,9 @@ TAO_UIOP_Transport::send_i (iovec *iov, int iovcnt,
 }
 
 ssize_t
-TAO_UIOP_Transport::recv_i (char *buf,
-                            size_t len,
-                            const ACE_Time_Value *max_wait_time)
+TAO_UIOP_Transport::recv (char *buf,
+                          size_t len,
+                          const ACE_Time_Value *max_wait_time)
 {
   ssize_t n = this->connection_handler_->peer ().recv (buf,
                                                        len,
@@ -109,7 +101,7 @@ TAO_UIOP_Transport::recv_i (char *buf,
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - %p \n"),
                   ACE_TEXT ("TAO - read message failure ")
-                  ACE_TEXT ("recv_i () \n")));
+                  ACE_TEXT ("recv () \n")));
     }
 
   // Error handling
@@ -128,31 +120,6 @@ TAO_UIOP_Transport::recv_i (char *buf,
 
   return n;
 }
-
-int
-TAO_UIOP_Transport::register_handler_i (void)
-{
-  if (TAO_debug_level > 4)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "TAO (%P|%t) - UIOP_Transport::register_handler %d\n",
-                  this->id ()));
-    }
-  // @@ It seems like this method should go away, the right reactor is
-  //    picked at object creation time.
-  ACE_Reactor *r = this->orb_core_->reactor ();
-
-  if (r == this->connection_handler_->reactor ())
-    return 0;
-
-  // Set the flag in the Connection Handler
-  this->ws_->is_registered (1);
-
-  // Register the handler with the reactor
-  return  r->register_handler (this->connection_handler_,
-                               ACE_Event_Handler::READ_MASK);
-}
-
 
 int
 TAO_UIOP_Transport::send_request (TAO_Stub *stub,
@@ -218,14 +185,6 @@ TAO_UIOP_Transport::messaging_init (CORBA::Octet major,
   this->messaging_object_->init (major,
                                  minor);
   return 1;
-}
-
-TAO_Connection_Handler *
-TAO_UIOP_Transport::invalidate_event_handler_i (void)
-{
-  TAO_Connection_Handler * eh = this->connection_handler_;
-  this->connection_handler_ = 0;
-  return eh;
 }
 
 #endif  /* TAO_HAS_UIOP */

@@ -20,14 +20,16 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+// need to fix THR_DETACHED, then we can get rid of OS.h
 #include "ace/OS.h"
 #include "ace/os_include/os_signal.h"
-// need to fix THR_DETACHED, then we can get rid of OS.h
 #include "ace/os_include/os_pthread.h"
+#include "ace/Atomic_Op.h"
 
 // Forward declaration.
 class ACE_Message_Block;
 class ACE_Reactor;
+class ACE_Reactor_Timer_Interface;
 class ACE_Thread_Manager;
 class ACE_Process;
 
@@ -165,6 +167,9 @@ public:
   /// Get the event demultiplexors.
   virtual ACE_Reactor *reactor (void) const;
 
+  /// Get only the reactor's timer related interface.
+  virtual ACE_Reactor_Timer_Interface *reactor_timer_interface (void) const;
+
 #if !defined (ACE_HAS_WINCE)
   /**
    * Used to read from non-socket ACE_HANDLEs in our own thread to
@@ -193,10 +198,99 @@ public:
                                    ACE_Thread_Manager *thr_mgr);
 #endif /* ACE_HAS_WINCE */
 
+  /// Reference count type.
+  typedef long Reference_Count;
+
+  /// Increment reference count on the handler.
+  /**
+   * This method is called when the handler is registered with the
+   * Reactor and when the Reactor makes an upcall on the handler.
+   * Reference count is 1 when the handler is created.
+   *
+   * @return Current reference count.
+   */
+  virtual Reference_Count add_reference (void);
+
+  /// Decrement reference count on the handler.
+  /**
+   * This method is called when the handler is removed from the
+   * Reactor and when an upcall made on the handler by the Reactor
+   * completes.  Handler is deleted when the reference count reaches
+   * 0.
+   *
+   * @return Current reference count.
+   */
+  virtual Reference_Count remove_reference (void);
+
+  /**
+   * @class Policy
+   *
+   * @brief Base class for all handler policies.
+   */
+  class ACE_Export Policy
+  {
+
+  public:
+
+    /// Virtual destructor.
+    virtual ~Policy (void);
+  };
+
+  /**
+   * @class Reference_Counting_Policy
+   *
+   * @brief This policy dictates the reference counting requirements
+   * for the handler.
+   *
+   * This policy allows applications to configure whether it wants the
+   * Reactor to call add_reference() and remove_reference() during
+   * registrations, removals, and upcalls.
+   *
+   * <B>Default:</B> DISABLED.
+   */
+  class ACE_Export Reference_Counting_Policy : public Policy
+  {
+    /// This policy can only be created by the handler.
+    friend class ACE_Event_Handler;
+
+  public:
+
+    enum Value
+      {
+        /// Perform reference counting.
+        ENABLED,
+        /// Don't perform reference counting.
+        DISABLED
+      };
+
+    /// Current Reference_Counting_Policy.
+    Value value (void) const;
+
+    /// Update Reference_Counting_Policy.
+    void value (Value value);
+
+  private:
+
+    /// Private constructor.
+    Reference_Counting_Policy (Value value);
+
+    /// The value of the policy.
+    Value value_;
+   };
+
+  /// Current Reference_Counting_Policy.
+  Reference_Counting_Policy &reference_counting_policy (void);
+
 protected:
   /// Force ACE_Event_Handler to be an abstract base class.
   ACE_Event_Handler (ACE_Reactor * = 0,
                      int priority = ACE_Event_Handler::LO_PRIORITY);
+
+  /// Typedef for implementation of reference counting.
+  typedef ACE_Atomic_Op<ACE_SYNCH_MUTEX, Reference_Count> Atomic_Reference_Count;
+
+  /// Reference count.
+  Atomic_Reference_Count reference_count_;
 
 private:
 
@@ -205,6 +299,58 @@ private:
 
   /// Pointer to the various event demultiplexors.
   ACE_Reactor *reactor_;
+
+  /// Reference counting requirements.
+  Reference_Counting_Policy reference_counting_policy_;
+};
+
+/**
+ * @class ACE_Event_Handler_var
+ *
+ * @brief Auto pointer like class for Event Handlers.
+ *
+ * Used to manage lifecycle of handlers. This class calls
+ * ACE_Event_Handler::remove_reference() in its destructor.
+ */
+class ACE_Export ACE_Event_Handler_var
+{
+
+public:
+
+  /// Default constructor.
+  ACE_Event_Handler_var (void);
+
+  /// Construct with a handler.
+  ACE_Event_Handler_var (ACE_Event_Handler *p);
+
+  /// Copy constructor.
+  ACE_Event_Handler_var (const ACE_Event_Handler_var &b);
+
+  /// Destructor.
+  ~ACE_Event_Handler_var (void);
+
+  /// Assignment to a handler.
+  ACE_Event_Handler_var &operator= (ACE_Event_Handler *p);
+
+  /// Assignment to a ACE_Event_Handler_var.
+  ACE_Event_Handler_var &operator= (const ACE_Event_Handler_var &b);
+
+  /// Overloaded "->".
+  ACE_Event_Handler *operator-> () const;
+
+  /// Access the handler.
+  ACE_Event_Handler *handler (void) const;
+
+  /// Release the handler.
+  ACE_Event_Handler *release (void);
+
+  /// Reset the handler.
+  void reset (ACE_Event_Handler *p = 0);
+
+private:
+
+  /// Handler.
+  ACE_Event_Handler *ptr_;
 };
 
 /**

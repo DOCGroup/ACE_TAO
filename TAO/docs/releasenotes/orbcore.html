@@ -48,13 +48,6 @@ Point of contact: <a href="mailto: bala@cs.wustl.edu">Balchandran Natarajan</a>
       perfect. There have been reported interoperability
       problems. <p></li>
 
-  <li><p> There is a known race condition with the TP_Reactor. It
-      kicks up when a client running multiple threads, sees a remote
-      server crash or do an abnormal exit . The details of this bug
-      are documented <A
-      HREF="http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1020">
-      here</A>.</p></li>
-
   <li><p> The multi-profile parsing code in TAO hasnt been tested well
       and we have been able to identify some issues with it. The
       details are documented in our  <A
@@ -85,11 +78,6 @@ Point of contact: <a href="mailto: bala@cs.wustl.edu">Balchandran Natarajan</a>
 <a name="ongoing"><h3>Ongoing Work:</h3></a>
 
 <ul>
-  <li><p> Work is on to write a new <A
-      HREF="http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1031">
-      reactor</A> framework for TAO which overcomes some of the
-      problems associated with the new reactor<p></li>
-  </li>
   <li><p>Support new concurrency models, e.g., Thread-per-Request,
       etc..</p>
   </li>
@@ -204,6 +192,24 @@ Point of contact: <a href="mailto: bala@cs.wustl.edu">Balchandran Natarajan</a>
         </p>
     </li>
 
+    <li><p> Several changes were made to utilize the new memory management mechanisms
+	  of Event Handlers in TAO.  Previously, both the connection handlers and
+	  the transports had their own reference counting mechanism and
+	  independent lifetimes.  The reference counting was inadequate
+	  since it was not originated at the Reactor and the independent
+	  lifetimes unnecessarily completed protocol specific transport
+	  code.  <p>
+
+	  The changes couple the lifetime of the connection handler with
+	  that of the transport and utilizes the reference count in the
+	  base ACE_Event_Handler class.  This allowed us to remove several
+	  hacks throughout TAO code which were designed to prevent (or
+	  delay) crashes.  Several extra checks and unnecessary locks were
+	  also removed. <p>
+
+	  All of the following protocols were updated: DIOP, IIOP,
+          SCIOP, SHMIOP, SSLIOP, UIOP, UIPMC.
+    </li>
     
 </ul>
 <!-- --------------------- -->

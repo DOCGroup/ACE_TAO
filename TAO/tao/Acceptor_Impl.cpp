@@ -87,6 +87,9 @@ template <class SVC_HANDLER> int
 TAO_Concurrency_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *sh,
                                                              void *arg)
 {
+  // Here the service handler has been created and the new connection
+  // has been accepted.  #REFCOUNT# is one at this point.
+
   if (this->ACE_Concurrency_Strategy<SVC_HANDLER>::activate_svc_handler (sh,
                                                                          arg) == -1)
     return -1;
@@ -94,31 +97,93 @@ TAO_Concurrency_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *sh,
   // The service handler has been activated. Now cache the handler.
   if (sh->add_transport_to_cache () == -1)
     {
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%P|%t) Could not add the handler to Cache \n")));
+      // Adding to the cache fails, close the handler.
+      sh->close ();
+
+      // #REFCOUNT# is zero at this point.
+
+      if (TAO_debug_level > 0)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("(%P|%t) Could not add the handler to Cache \n")));
+        }
+
+      return -1;
     }
+
+  // Registration with cache is successful, #REFCOUNT# is two at this
+  // point.
 
   TAO_Server_Strategy_Factory *f =
     this->orb_core_->server_factory ();
 
-  // thread-per-connection concurrency model
+  int result = 0;
 
+  // Do we need to create threads?
   if (f->activate_server_connections ())
     {
+      // Thread-per-connection concurrency model
       TAO_Thread_Per_Connection_Handler *tpch = 0;
 
       ACE_NEW_RETURN (tpch,
                       TAO_Thread_Per_Connection_Handler (sh),
                       -1);
 
-      return tpch->activate (f->server_connection_thread_flags (),
-                             f->server_connection_thread_count ());
+      result = tpch->activate (f->server_connection_thread_flags (),
+                               f->server_connection_thread_count ());
+    }
+  else
+    {
+      // Otherwise, it is the reactive concurrency model. We may want
+      // to register ourselves with the reactor. Call the register
+      // handler on the transport.
+      result =
+        sh->transport ()->register_handler ();
     }
 
+  if (result != -1)
+    {
+      // Activation/registration successful: the handler has been
+      // registered with either the Reactor or the
+      // Thread-per-Connection_Handler, and the Transport Cache.
+      // #REFCOUNT# is three at this point.
 
-  // reactive concurrency model. We may want to register ourselves
-  // with the reactor. Call the register handler on the transport.
-  return sh->transport ()->register_handler ();
+      // We can let go of our reference.
+      sh->transport ()->remove_reference ();
+    }
+  else
+    {
+      // Activation/registration failure. #REFCOUNT# is two at this
+      // point.
+
+      // Remove from cache.
+      sh->transport ()->purge_entry ();
+
+      // #REFCOUNT# is one at this point.
+
+      // Close handler.
+      sh->close ();
+
+      // #REFCOUNT# is zero at this point.
+
+      if (TAO_debug_level > 0)
+         {
+           const char *error = 0;
+           if (f->activate_server_connections ())
+             error = "could not activate new connection";
+           else
+             error = "could not register new connection in the reactor";
+
+           ACE_ERROR ((LM_ERROR,
+                       "TAO (%P|%t) - Concurrency_Strategy::activate_svc_handler, "
+                       "%s\n", error));
+         }
+
+      return -1;
+    }
+
+  // Success: #REFCOUNT# is two at this point.
+  return result;
 }
 
 ////////////////////////////////////////////////////////////////////////////////

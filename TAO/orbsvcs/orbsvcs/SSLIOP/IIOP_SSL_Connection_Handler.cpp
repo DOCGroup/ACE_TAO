@@ -61,7 +61,7 @@ TAO_IIOP_SSL_Connection_Handler (ACE_Thread_Manager *t)
   // Creation_Strategy requires a constructor with that signature, we
   // don't use that implementation, but some (most?) compilers
   // instantiate it anyway.
-  ACE_ASSERT (this->orb_core () != 0);
+  ACE_ASSERT (0);
 }
 
 
@@ -85,9 +85,11 @@ TAO_IIOP_SSL_Connection_Handler (TAO_ORB_Core *orb_core,
                                    s->ssliop_current.in (),
                                    0));
 
-  // store this pointer (indirectly increment ref count)
+  // Delete the transport with TAO_IIOP_Connection_Handler.
+  delete this->transport ();
+
+  // store this pointer
   this->transport (specific_transport);
-  TAO_Transport::release (specific_transport);
 }
 
 TAO_IIOP_SSL_Connection_Handler::

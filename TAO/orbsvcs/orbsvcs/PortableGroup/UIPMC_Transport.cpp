@@ -73,14 +73,6 @@ TAO_UIPMC_Transport::TAO_UIPMC_Transport (TAO_UIPMC_Connection_Handler *handler,
   , connection_handler_ (handler)
   , messaging_object_ (0)
 {
-  if (connection_handler_ != 0)
-    {
-      // REFCNT: Matches one of
-      // TAO_Transport::connection_handler_close() or
-      // TAO_Transport::close_connection_shared.
-      this->connection_handler_->incr_refcount();
-    }
-
   // Use the normal GIOP object
   ACE_NEW (this->messaging_object_,
            TAO_GIOP_Message_Base (orb_core,
@@ -274,9 +266,9 @@ TAO_UIPMC_Transport::write_unique_id (TAO_OutputCDR &miop_hdr, unsigned long uni
 }
 
 ssize_t
-TAO_UIPMC_Transport::send_i (iovec *iov, int iovcnt,
-                             size_t &bytes_transferred,
-                             const ACE_Time_Value *)
+TAO_UIPMC_Transport::send (iovec *iov, int iovcnt,
+                           size_t &bytes_transferred,
+                           const ACE_Time_Value *)
 {
   const ACE_INET_Addr &addr = this->connection_handler_->addr ();
   bytes_transferred = 0;
@@ -455,9 +447,9 @@ TAO_UIPMC_Transport::send_i (iovec *iov, int iovcnt,
 
 
 ssize_t
-TAO_UIPMC_Transport::recv_i (char *buf,
-                             size_t len,
-                             const ACE_Time_Value * /*max_wait_time*/)
+TAO_UIPMC_Transport::recv (char *buf,
+                           size_t len,
+                           const ACE_Time_Value * /*max_wait_time*/)
 {
   ACE_INET_Addr from_addr;
 
@@ -558,9 +550,9 @@ TAO_UIPMC_Transport::recv_i (char *buf,
 }
 
 int
-TAO_UIPMC_Transport::handle_input_i (TAO_Resume_Handle &rh,
-                                     ACE_Time_Value *max_wait_time,
-                                     int /*block*/)
+TAO_UIPMC_Transport::handle_input (TAO_Resume_Handle &rh,
+                                   ACE_Time_Value *max_wait_time,
+                                   int /*block*/)
 {
   // If there are no messages then we can go ahead to read from the
   // handle for further reading..
@@ -650,7 +642,7 @@ TAO_UIPMC_Transport::handle_input_i (TAO_Resume_Handle &rh,
 }
 
 int
-TAO_UIPMC_Transport::register_handler_i (void)
+TAO_UIPMC_Transport::register_handler (void)
 {
   // We never register register the handler with the reactor
   // as we never need to be informed about any incoming data,
@@ -726,12 +718,4 @@ TAO_UIPMC_Transport::messaging_init (CORBA::Octet major,
   this->messaging_object_->init (major,
                                  minor);
   return 1;
-}
-
-TAO_Connection_Handler *
-TAO_UIPMC_Transport::invalidate_event_handler_i (void)
-{
-  TAO_Connection_Handler * eh = this->connection_handler_;
-  this->connection_handler_ = 0;
-  return eh;
 }

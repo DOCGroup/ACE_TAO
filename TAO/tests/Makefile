@@ -24,6 +24,7 @@ DIRS  = CDR \
 	Collocation_Tests \
 	CodeSets \
 	Collocation \
+	Connection_Failure \
 	Connection_Timeout \
         IDL_Test \
         OctetSeq \

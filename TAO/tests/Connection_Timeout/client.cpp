@@ -64,8 +64,6 @@ main (int argc, char *argv[])
         CORBA::PolicyCurrent::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-
-
       CORBA::Any timeout_as_any;
       timeout_as_any <<= timeout_period;
 
@@ -76,7 +74,6 @@ main (int argc, char *argv[])
                             timeout_as_any
                             ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-
 
       policy_current->set_policy_overrides (policy_list,
                                             CORBA::ADD_OVERRIDE

@@ -214,7 +214,7 @@ Peer_Handler::nonblk_put (ACE_Message_Block *mb)
                           -1);
       return 0;
     }
-  else 
+  else
     return n;
 }
 
@@ -888,21 +888,11 @@ ACE_SVC_FACTORY_DEFINE (Peer_Factory)
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Acceptor<Peer_Handler, ACE_SOCK_ACCEPTOR>;
 template class ACE_Connector<Peer_Handler, ACE_SOCK_CONNECTOR>;
-template class ACE_Map_Manager<ACE_HANDLE, ACE_Svc_Tuple<Peer_Handler> *, ACE_SYNCH_RW_MUTEX>;
-template class ACE_Map_Iterator<ACE_HANDLE, ACE_Svc_Tuple<Peer_Handler> *, ACE_SYNCH_RW_MUTEX>;
-template class ACE_Map_Reverse_Iterator<ACE_HANDLE, ACE_Svc_Tuple<Peer_Handler> *, ACE_SYNCH_RW_MUTEX>;
-template class ACE_Map_Iterator_Base<ACE_HANDLE, ACE_Svc_Tuple<Peer_Handler> *, ACE_SYNCH_RW_MUTEX>;
-template class ACE_Map_Entry<ACE_HANDLE, ACE_Svc_Tuple<Peer_Handler> *>;
 template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
-template class ACE_Svc_Tuple<Peer_Handler>;
+template class ACE_NonBlocking_Connect_Handler<Peer_Handler>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Acceptor<Peer_Handler, ACE_SOCK_ACCEPTOR>
 #pragma instantiate ACE_Connector<Peer_Handler, ACE_SOCK_CONNECTOR>
-#pragma instantiate ACE_Map_Manager<ACE_HANDLE, ACE_Svc_Tuple<Peer_Handler> *, ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Map_Iterator_Base<ACE_HANDLE, ACE_Svc_Tuple<Peer_Handler> *, ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Map_Iterator<ACE_HANDLE, ACE_Svc_Tuple<Peer_Handler> *, ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Map_Reverse_Iterator<ACE_HANDLE, ACE_Svc_Tuple<Peer_Handler> *, ACE_SYNCH_RW_MUTEX>
-#pragma instantiate ACE_Map_Entry<ACE_HANDLE, ACE_Svc_Tuple<Peer_Handler> *>
 #pragma instantiate ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
-#pragma instantiate ACE_Svc_Tuple<Peer_Handler>
+#pragma instantiate ACE_NonBlocking_Connect_Handler<Peer_Handler>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -174,8 +174,11 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::~ACE_Timer_Heap_T (void)
 
   delete iterator_;
 
+  size_t current_size =
+    this->cur_size_;
+
   // Clean up all the nodes still in the queue
-  for (size_t i = 0; i < this->cur_size_; i++)
+  for (size_t i = 0; i < current_size; i++)
     {
       this->upcall_functor ().deletion (*this,
                                         this->heap_[i]->get_type (),
@@ -374,7 +377,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::remove (size_t slot)
       // parent it needs be moved down the heap.
       size_t parent = ACE_HEAP_PARENT (slot);
 
-      if (moved_node->get_timer_value () 
+      if (moved_node->get_timer_value ()
           >= this->heap_[parent]->get_timer_value ())
         this->reheap_down (moved_node,
                            slot,
@@ -401,13 +404,13 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::reheap_down (ACE_Timer_Node_T<TYPE> *
     {
       // Choose the smaller of the two children.
       if (child + 1 < this->cur_size_
-          && this->heap_[child + 1]->get_timer_value () 
+          && this->heap_[child + 1]->get_timer_value ()
           < this->heap_[child]->get_timer_value ())
         child++;
 
       // Perform a <copy> if the child has a larger timeout value than
       // the <moved_node>.
-      if (this->heap_[child]->get_timer_value () 
+      if (this->heap_[child]->get_timer_value ()
           < moved_node->get_timer_value ())
         {
           this->copy (slot,
@@ -434,7 +437,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::reheap_up (ACE_Timer_Node_T<TYPE> *mo
     {
       // If the parent node is greater than the <moved_node> we need
       // to copy it down.
-      if (moved_node->get_timer_value () 
+      if (moved_node->get_timer_value ()
           < this->heap_[parent]->get_timer_value ())
         {
           this->copy (slot, this->heap_[parent]);
@@ -490,7 +493,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::grow_heap (void)
 
   ssize_t *new_timer_ids = 0;
 
-  ACE_NEW (new_timer_ids, 
+  ACE_NEW (new_timer_ids,
            ssize_t[new_size]);
 
   ACE_OS::memcpy (new_timer_ids,
@@ -594,7 +597,6 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::alloc_node (void)
 template <class TYPE, class FUNCTOR, class ACE_LOCK> void
 ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::free_node (ACE_Timer_Node_T<TYPE> *node)
 {
-
   // Return this timer id to the freelist.
   this->push_freelist (node->get_timer_id ());
 
@@ -612,14 +614,12 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::free_node (ACE_Timer_Node_T<TYPE> *no
 // > 0, the handler will be reinvoked periodically.
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK> long
-ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::schedule (const TYPE &type,
-                                                     const void *act,
-                                                     const ACE_Time_Value &future_time,
-                                                     const ACE_Time_Value &interval)
+ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::schedule_i (const TYPE &type,
+                                                       const void *act,
+                                                       const ACE_Time_Value &future_time,
+                                                       const ACE_Time_Value &interval)
 {
   ACE_TRACE ("ACE_Timer_Heap_T::schedule");
-
-  ACE_MT (ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->mutex_, -1));
 
   if ((this->cur_size_ + this->cur_limbo_) < this->max_size_)
     {
@@ -660,14 +660,14 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::cancel (long timer_id,
   // Locate the ACE_Timer_Node that corresponds to the timer_id.
 
   // Check to see if the timer_id is out of range
-  if (timer_id < 0 
+  if (timer_id < 0
       || (size_t) timer_id > this->max_size_)
     return 0;
 
   ssize_t timer_node_slot = this->timer_ids_[timer_id];
 
   // Check to see if timer_id is still valid.
-  if (timer_node_slot < 0) 
+  if (timer_node_slot < 0)
     return 0;
 
   if (timer_id != this->heap_[timer_node_slot]->get_timer_id ())
@@ -680,10 +680,20 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::cancel (long timer_id,
       ACE_Timer_Node_T<TYPE> *temp =
         this->remove (timer_node_slot);
 
-      if (dont_call == 0)
-        // Call the close hook.
-        this->upcall_functor ().cancellation (*this,
-                                              temp->get_type ());
+      // Call the close hooks.
+      int cookie = 0;
+
+      // cancel_type() called once per <type>.
+      this->upcall_functor ().cancel_type (*this,
+                                           temp->get_type (),
+                                           dont_call,
+                                           cookie);
+
+      // cancel_timer() called once per <timer>.
+      this->upcall_functor ().cancel_timer (*this,
+                                            temp->get_type (),
+                                            dont_call,
+                                            cookie);
 
       if (act != 0)
         *act = temp->get_act ();
@@ -695,8 +705,8 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::cancel (long timer_id,
 
 // Locate and update the inteval on the timer_id
 
-template <class TYPE, class FUNCTOR, class ACE_LOCK> int 
-ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::reset_interval (long timer_id, 
+template <class TYPE, class FUNCTOR, class ACE_LOCK> int
+ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::reset_interval (long timer_id,
                                                            const ACE_Time_Value &interval)
 {
   ACE_TRACE ("ACE_Timer_Heap_T::reset_interval");
@@ -705,14 +715,14 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::reset_interval (long timer_id,
   // Locate the ACE_Timer_Node that corresponds to the timer_id.
 
   // Check to see if the timer_id is out of range
-  if (timer_id < 0 
+  if (timer_id < 0
       || (size_t) timer_id > this->max_size_)
     return -1;
 
   ssize_t timer_node_slot = this->timer_ids_[timer_id];
 
   // Check to see if timer_id is still valid.
-  if (timer_node_slot < 0) 
+  if (timer_node_slot < 0)
     return -1;
 
   if (timer_id != this->heap_[timer_node_slot]->get_timer_id ())
@@ -735,30 +745,45 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::cancel (const TYPE &type,
                                                    int dont_call)
 {
   ACE_TRACE ("ACE_Timer_Heap_T::cancel");
+  ACE_MT (ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->mutex_, -1));
 
   int number_of_cancellations = 0;
 
   // Try to locate the ACE_Timer_Node that matches the timer_id.
-  {
-    ACE_MT (ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->mutex_, -1));
 
-    for (size_t i = 0; i < this->cur_size_; )
-      {
-        if (this->heap_[i]->get_type () == type)
-          {
-            ACE_Timer_Node_T<TYPE> *temp = this->remove (i);
+  for (size_t i = 0; i < this->cur_size_; )
+    {
+      if (this->heap_[i]->get_type () == type)
+        {
+          ACE_Timer_Node_T<TYPE> *temp = this->remove (i);
 
-            number_of_cancellations++;
+          number_of_cancellations++;
 
-            this->free_node (temp);
-          }
-        else
-          i++;
-      }
-  }
+          this->free_node (temp);
+        }
+      else
+        i++;
+    }
 
-  if (dont_call == 0)
-    this->upcall_functor ().cancellation (*this, type);
+  // Call the close hooks.
+  int cookie = 0;
+
+  // cancel_type() called once per <type>.
+  this->upcall_functor ().cancel_type (*this,
+                                       type,
+                                       dont_call,
+                                       cookie);
+
+  for (int j = 0;
+       j < number_of_cancellations;
+       ++j)
+    {
+      // cancel_timer() called once per <timer>.
+      this->upcall_functor ().cancel_timer (*this,
+                                            type,
+                                            dont_call,
+                                            cookie);
+    }
 
   return number_of_cancellations;
 }

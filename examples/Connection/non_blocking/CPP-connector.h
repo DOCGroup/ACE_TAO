@@ -28,6 +28,9 @@ public:
   virtual int open (void * = 0);
   // Activate the handler when connection is established.
 
+  virtual int close (u_long flags = 0);
+  // Called on failed connection attempt.
+
   // = Demultiplexing hooks.
   virtual int handle_output (ACE_HANDLE);
   virtual int handle_input (ACE_HANDLE);
@@ -36,6 +39,8 @@ public:
   virtual int handle_signal (int signum,
                              siginfo_t * = 0,
                              ucontext_t * = 0);
+  virtual int handle_timeout (const ACE_Time_Value &time,
+                              const void *);
 protected:
   // = These methods implement the State pattern.
   int uninitialized (void);
@@ -68,9 +73,6 @@ public:
 
   virtual int svc (void);
   // Run the svc.
-
-  virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask);
-  // Report connection errors.
 
 private:
   typedef ACE_Connector<SVC_HANDLER, ACE_PEER_CONNECTOR_2>

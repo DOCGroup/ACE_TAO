@@ -28,7 +28,6 @@
 #include "Transport_Cache_Manager.h"
 #include "Transport_Timer.h"
 #include "Incoming_Message_Queue.h"
-#include "Synch_Refcountable.h"
 
 class TAO_ORB_Core;
 class TAO_Target_Specification;
@@ -209,7 +208,7 @@ class TAO_Stub;
  * http://deuce.doc.wustl.edu/cvsweb/ace-latest.cgi/ACE_wrappers/TAO/docs/pluggable_protocols/index.html
  *
  */
-class TAO_Export TAO_Transport : private TAO_Synch_Refcountable
+class TAO_Export TAO_Transport
 {
 public:
 
@@ -219,10 +218,6 @@ public:
 
   /// destructor
   virtual ~TAO_Transport (void);
-
-  // Maintain reference counting with these
-  static TAO_Transport* _duplicate (TAO_Transport* transport);
-  static void release (TAO_Transport* transport);
 
   /// Return the protocol tag.
   /**
@@ -289,20 +284,14 @@ public:
    */
   int queue_is_empty (void);
 
-  /// Fill in a handle_set with any associated handler's reactor handle.
+  /// Added event handler to the handlers set.
   /**
-   * Called by the cache when the cache is closing in order to fill
-   * in a handle_set in a thread-safe manner.
+   * Called by the cache when the cache is closing.
    *
-   * @param reactor_registered the ACE_Handle_Set into which the
-   *        transport should place any handle registered with the reactor
-   *
-   * @param unregistered the TAO_EventHandlerSet into which the
-   *        transport should place any event handler that is not registered
-   *        with anyone
+   * @param handlers the TAO_Connection_Handler_Set into which the
+   *        transport should place its handler
    */
-  void provide_handle (ACE_Handle_Set &reactor_registered,
-                       TAO_EventHandlerSet &unregistered);
+  void provide_handler (TAO_Connection_Handler_Set &handlers);
 
 
   /// Remove all messages from the outgoing queue.
@@ -311,13 +300,18 @@ public:
    */
   // void dequeue_all (void);
 
+  /// Register the handler with the reactor.
   /**
    * Register the handler with the reactor. This method is used by the
    * Wait_On_Reactor strategy. The transport must register its event
    * handler with the ORB's Reactor.
+   *
+   * @todo: I think this method is pretty much useless, the
+   * connections are *always* registered with the Reactor, except in
+   * thread-per-connection mode.  In that case putting the connection
+   * in the Reactor would produce unpredictable results anyway.
    */
-  int register_handler (void);
-
+  virtual int register_handler (void);
 
     /// Write the complete Message_Block chain to the connection.
   /**
@@ -357,9 +351,9 @@ public:
    * down).  In that case, it returns -1 and sets errno to
    * <code>ENOENT</code>.
    */
-  ssize_t send (iovec *iov, int iovcnt,
-                size_t &bytes_transferred,
-                const ACE_Time_Value *timeout = 0);
+  virtual ssize_t send (iovec *iov, int iovcnt,
+                        size_t &bytes_transferred,
+                        const ACE_Time_Value *timeout = 0) = 0;
 
   /// Read len bytes from into buf.
   /**
@@ -371,9 +365,9 @@ public:
    * not clear this this is the best place to specify this.  The actual
    * timeout values will be kept in the Policies.
    */
-  ssize_t recv (char *buffer,
-                size_t len,
-                const ACE_Time_Value *timeout = 0);
+  virtual ssize_t recv (char *buffer,
+                        size_t len,
+                        const ACE_Time_Value *timeout = 0) = 0;
 
   /**
    * @name Control connection lifecycle
@@ -411,14 +405,18 @@ public:
   virtual int messaging_init (CORBA::Octet major,
                               CORBA::Octet minor) = 0;
 
-
-
   /// Extracts the list of listen points from the <cdr> stream. The
   /// list would have the protocol specific details of the
   /// ListenPoints
   virtual int tear_listen_point_list (TAO_InputCDR &cdr);
 
-protected:
+  /// Memory management routines.
+  /*
+   * Forwards to event handler.
+   */
+  ACE_Event_Handler::Reference_Count add_reference (void);
+  ACE_Event_Handler::Reference_Count remove_reference (void);
+
   /** @name Template methods
    *
    * The Transport class uses the Template Method Pattern to implement
@@ -445,70 +443,13 @@ protected:
    */
   virtual ACE_Event_Handler * event_handler_i (void) = 0;
 
-  virtual TAO_Connection_Handler * connection_handler_i (void) = 0;
+protected:
 
-  /// Called by <code>connection_handler_closing()</code> to signal
-  /// that the protocol-specific transport should dissociate itself
-  /// with the protocol-specific connection handler.
-  /**
-   * Typically, this just sets the pointer to the associated connection
-   * handler to zero, although it could also clear out any additional
-   * resources associated with the handler association.
-   *
-   * @return The old event handler
-   */
-  virtual TAO_Connection_Handler * invalidate_event_handler_i (void) = 0;
+  virtual TAO_Connection_Handler * connection_handler_i (void) = 0;
 
   /// Return the messaging object that is used to format the data that
   /// needs to be sent.
   virtual TAO_Pluggable_Messaging * messaging_object (void) = 0;
-
-  /// Write the complete iovec chain to the connection.
-  /**
-   * Often the implementation simply forwards the arguments to the
-   * underlying ACE_Svc_Handler class. Using the code factored out
-   * into ACE.
-   *
-   * Be careful with protocols that perform non-trivial
-   * transformations of the data, such as SSLIOP or protocols that
-   * compress the stream.
-   *
-   * @param iov contains the data that must be sent.
-   *
-   * @param iovcnt is the number of iovec structures in the list
-   * where iov points.
-   *
-   * @param bytes_transferred should return the total number of bytes
-   * successfully transferred before the connection blocked.  This is
-   * required because in some platforms and/or protocols multiple
-   * system calls may be required to send the chain of message
-   * blocks.  The first few calls can work successfully, but the final
-   * one can fail or signal a flow control situation (via EAGAIN).
-   * In this case the ORB expects the function to return -1, errno to
-   * be appropriately set and this argument to return the number of
-   * bytes already on the OS I/O subsystem.
-   *
-   * @param timeout is the maximum time that the application is
-   * willing to wait for the data to be sent, useful in platforms that
-   * implement timed writes.
-   * The timeout value is obtained from the policies set by the
-   * application.
-   *
-   */
-  virtual ssize_t send_i (iovec *iov, int iovcnt,
-                          size_t &bytes_transferred,
-                          const ACE_Time_Value *timeout = 0) = 0;
-
-  // Read len bytes from into buf.
-  /**
-   * @param buffer ORB allocated buffer where the data should be
-   * @@ The ACE_Time_Value *s is just a place holder for now.  It is
-   * not clear this this is the best place to specify this.  The actual
-   * timeout values will be kept in the Policies.
-   */
-  virtual ssize_t recv_i (char *buffer,
-                          size_t len,
-                          const ACE_Time_Value *timeout = 0) = 0;
 
 public:
 
@@ -526,10 +467,6 @@ public:
 
   /// recache ourselves in the cache
   int recache_transport (TAO_Transport_Descriptor_Interface* desc);
-
-  /// Method for the connection handler to signify that it
-  /// is being closed and destroyed.
-  virtual void connection_handler_closing (void);
 
   /// Callback to read incoming data
   /**
@@ -550,10 +487,9 @@ public:
    * @param block Is deprecated and ignored.
    *
    */
-  virtual int handle_input_i (TAO_Resume_Handle &rh,
-                              ACE_Time_Value *max_wait_time = 0,
-                              int block = 0);
-
+  virtual int handle_input (TAO_Resume_Handle &rh,
+                            ACE_Time_Value *max_wait_time = 0,
+                            int block = 0);
 
   enum
     {
@@ -561,8 +497,6 @@ public:
       TAO_TWOWAY_REQUEST = 1,
       TAO_REPLY
     };
-
-
 
   /// Prepare the waiting and demuxing strategy to receive a reply for
   /// a new request.
@@ -633,19 +567,7 @@ public:
                                    const ACE_Message_Block *message_block,
                                    ACE_Time_Value *max_wait_time);
 
-
 protected:
-  /// Register the handler with the reactor.
-  /**
-   * This method is used by the Wait_On_Reactor strategy. The
-   * transport must register its event handler with the ORB's Reactor.
-   *
-   * @todo: I think this method is pretty much useless, the
-   * connections are *always* registered with the Reactor, except in
-   * thread-per-connection mode.  In that case putting the connection
-   * in the Reactor would produce unpredictable results anyway.
-   */
-  virtual int register_handler_i (void) = 0;
 
   /// Called by the handle_input_i  (). This method is used to parse
   /// message read by the handle_input_i () call. It also decides
@@ -677,9 +599,7 @@ protected:
   int consolidate_fragments (TAO_Queued_Data *qd,
                              TAO_Resume_Handle &rh);
 
-
-
-  /// First consolidate the message queue.  If the message is still not
+ /// First consolidate the message queue.  If the message is still not
   /// complete, try to read from the handle again to make it
   /// complete. If these dont help put the message back in the queue
   /// and try to check the queue if we have message to process. (the
@@ -703,30 +623,19 @@ protected:
   /// Make a queued data from the <incoming> message block
   TAO_Queued_Data *make_queued_data (ACE_Message_Block &incoming);
 
-    /// Implement send_message_shared() assuming the handler_lock_ is
+  /// Implement send_message_shared() assuming the handler_lock_ is
   /// held.
   int send_message_shared_i (TAO_Stub *stub,
                              int message_semantics,
                              const ACE_Message_Block *message_block,
                              ACE_Time_Value *max_wait_time);
 
-  /// Check if the underlying event handler is still valid.
-  /**
-   * @return Returns -1 if not, 0 if it is.
-   */
-  int check_event_handler_i (const char *caller);
-
 public:
-
-
-
 
   /// Send a message block chain,
   int send_message_block_chain (const ACE_Message_Block *message_block,
                                 size_t &bytes_transferred,
                                 ACE_Time_Value *max_wait_time = 0);
-
-
 
   /// Send a message block chain, assuming the lock is held
   int send_message_block_chain_i (const ACE_Message_Block *message_block,
@@ -787,6 +696,11 @@ public:
 
   /// Set the state of the first_request_ flag to 0
   void first_request_sent();
+
+  /// Notify all the components inside a Transport when the underlying
+  /// connection is closed.
+  void send_connection_closed_notifications (void);
+
 private:
 
   /// Helper method that returns the Transport Cache Manager.
@@ -876,7 +790,6 @@ private:
   /// not pending
   void reset_flush_timer (void);
 
-
   /// Print out error messages if the event handler is not valid
   void report_invalid_event_handler (const char *caller);
 
@@ -893,31 +806,8 @@ private:
    */
   int notify_reactor (void);
 
-  /// Grab the mutex and then call invalidate_event_handler_i()
-  TAO_Connection_Handler * invalidate_event_handler (void);
-
-  /// Notify all the components inside a Transport when the underlying
-  /// connection is closed.
-  void send_connection_closed_notifications (void);
-
   /// Assume the lock is held
   void send_connection_closed_notifications_i (void);
-
-  /// Implement close_connection() assuming the handler_lock_ is held.
-  void close_connection_i (void);
-
-  /// This class needs priviledged access to:
-  /// close_connection_no_purge ()
-  friend class TAO_Transport_Cache_Manager;
-
-  /// Close the underlying connection, do not purge the entry from the
-  /// map (supposedly it was purged already, trust the caller, yuck!)
-  void close_connection_no_purge (void);
-
-  /// Close the underlying connection, implements the code shared by
-  /// all the close_connection_* variants.
-  void close_connection_shared (int purge,
-                                TAO_Connection_Handler * eh);
 
   /// Prohibited
   ACE_UNIMPLEMENTED_FUNC (TAO_Transport (const TAO_Transport&))
@@ -1005,6 +895,7 @@ protected:
   unsigned long purging_order_;
 
 private:
+
   /// @@Phil, I think it would be nice if we could think of a way to
   /// do the following.
   /// We have been trying to use the transport for marking about
