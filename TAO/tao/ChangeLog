@@ -1,31 +1,49 @@
+Tue Jul 16 07:06:33 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Synch_Queued_Message.cpp:
+	* tao/Asynch_Queued_Message.cpp: Removed code that reset stuff
+	  from the destructor.  This caused problems when trying to use
+	  the ACE_DES_FREE macro since it called the destructor first and
+	  then free ().
+
+	* tao/TAO_Server_Request.cpp: All calls to send_message () will
+	  carry an argument mentioning that they are replies.
+
+	* tao/GIOP_Message_Base.cpp: Fixed a problem in dump_msg ()
+	  method. The probelm was that we neved respected the byte-order
+	  of the sending ORB when printing out request id's. Thanks to Kew
+	  Whitney <Whitney.Kew@Invensys.com>
+
+	* tao/Transport.cpp: Cosmetic fixes.
+
 Sun Jul 14 10:49:33 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Queued_Message.h:
 	* tao/Queued_Message.cpp: Added an argument in the constructor to
 	  pass an allocator. Added a pure virtual method, clone () to the
-	  interface. 
-	
+	  interface.
+
 	* tao/Synch_Queued_Message.h:
 	* tao/Synch_Queued_Message.cpp:
 	* tao/Asynch_Queued_Message.h:
-	* tao/Asynch_Queued_Message.cpp: Implemented the method clone (). 
+	* tao/Asynch_Queued_Message.cpp: Implemented the method clone ().
 
 	* tao/Incoming_Mesage_Queue.cpp: Fixed a typo in a print
 	  statement.
 
 Fri Jul 12 14:10:14 2002   Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Transport.h: 
-	* tao/Transport.cpp: 
+	* tao/Transport.h:
+	* tao/Transport.cpp:
 	  - Added a new enum enumerating the different message types
-	    recognised within the ORB. 
+	    recognised within the ORB.
 
 	  - Added two new methods send_reply_message_i () and
 	    send_synch_message_helper_i (). The method
 	    send_reply_message_i () seperates the path of the reply
 	    message from the send_synchronous_message_i () method. The
 	    method send_synch_message_helper_i () is a helper method
-	    containing common code for the request and reply paths. 
+	    containing common code for the request and reply paths.
 
 	  - The methods, send_message (), send_message_shared () and
 	    send_message_shared_i () had a variable named
@@ -37,9 +55,7 @@ Fri Jul 12 14:10:14 2002   Balachandran Natarajan  <bala@cs.wustl.edu>
 	* tao/Strategies/SHMIOP_Transport.cpp:
 	* tao/Strategies/UIOP_Transport.cpp: The variable names
 	  is_synchronous was changed to reflect the usage.
-	
+
 	* tao/Invocation.cpp:
 	* tao/Invocation.h: Instead of calling invoke () with a magic
 	  number, used the enumeration defined in Transport.h.
-
-	

@@ -20,8 +20,7 @@ TAO_Synch_Queued_Message::
 
 TAO_Synch_Queued_Message::~TAO_Synch_Queued_Message (void)
 {
-  this->is_heap_created_ = 0;
-  this->allocator_ = 0;
+
 }
 
 const ACE_Message_Block *
@@ -164,5 +163,10 @@ TAO_Synch_Queued_Message::destroy (void)
         {
           delete this;
         }
+
+      // Are these needed? Cannot have them in the destructor since
+      // the ACE_DES_FREE macro first calls the decstructor :(.
+      // this->is_heap_created_ = 0;
+      // this->allocator_ = 0;
     }
 }
