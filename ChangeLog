@@ -1,3 +1,8 @@
+Thu Jul  8 11:32:31 2004  Steve Huston  <shuston@riverace.com>
+
+	* ace: Renamed config-aix-5.1.h to config-aix-5.x.h since it covers
+	  both AIX 5.1 and 5.2.
+
 Thu Jul  8 08:56:53 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* ACE.mwc:
