@@ -256,7 +256,8 @@ ACE_Logging_Strategy::fini (void)
   delete [] this->logger_key_;
   delete [] this->program_name_;
 
-  if (this->interval_ > 0 && this->max_size_ > 0)
+  if (this->reactor () && 
+      this->interval_ > 0 && this->max_size_ > 0)
     this->reactor ()->cancel_timer (this);
 
   return 0;
