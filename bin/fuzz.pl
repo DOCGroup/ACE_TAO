@@ -1349,8 +1349,8 @@ if ($opt_t) {
 print "--------------------Configuration: Fuzz - Level ",$opt_l,
       "--------------------\n";
 
+check_for_msc_ver_string () if ($opt_l >= 3);
 check_for_empty_inline_files () if ($opt_l >= 1);
-check_for_msc_ver_string () if ($opt_l >= 6);
 check_for_noncvs_files () if ($opt_l >= 1);
 check_for_streams_include () if ($opt_l >= 6);
 check_for_dependency_file () if ($opt_l >= 1);
