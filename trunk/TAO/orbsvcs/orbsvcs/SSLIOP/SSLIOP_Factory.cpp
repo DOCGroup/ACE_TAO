@@ -14,7 +14,8 @@ ACE_RCSID(TAO_SSLIOP, SSLIOP_Factory, "$Id$")
 static const char prefix_[] = "iiop";
 
 TAO_SSLIOP_Protocol_Factory::TAO_SSLIOP_Protocol_Factory (void)
-  :  major_ (TAO_DEF_GIOP_MAJOR),
+  :  TAO_Protocol_Factory (TAO_TAG_IIOP_PROFILE),
+     major_ (TAO_DEF_GIOP_MAJOR),
      minor_ (TAO_DEF_GIOP_MINOR),
      use_ssl_ (1)
 {
