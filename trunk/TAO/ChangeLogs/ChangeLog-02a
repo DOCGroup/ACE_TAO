@@ -1,3 +1,19 @@
+Thu Oct  5 13:48:28 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tao/corbafwd.h: 
+	  Added a new macro TAO_OMG_MINOR_BAD_PARAM_10 
+	  to be used a semi-symbolic name for the standard minor codes.
+	
+	* tao/Exception.h: 
+	* tao/Exception.cpp: 
+	  Added a new case for the above macro.
+
+	* tao/CORBANAME_Parser.cpp: 
+	  Instead of using dynamic requests, used two-way invocation for
+	  making the requests.
+	  
+	  Thanks to Carlos for all this.
+
 Thu Oct 05 15:24:01 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
 	* tao\DynamicAny\DynArray_i.h:
