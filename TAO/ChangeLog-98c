@@ -1,3 +1,9 @@
+Wed Oct 14 20:10:00 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/encode.cpp: 
+	  Fixed encoding for Any when both cdr_ and value_ are zero
+	  (usually when the Any is holding a tk_null).
+
 Wed Oct 14 18:35:26 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* TAO/examples/Callback_Quoter/
