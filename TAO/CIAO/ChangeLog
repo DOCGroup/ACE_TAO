@@ -1,3 +1,12 @@
+Fri Jun 11 12:55:49 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * DnC/Config_Handlers/Process_Element.tpp:
+        * DnC/RepositoryManager/RepositoryManager_Impl.cpp:
+        * DnC/RepositoryManager/Repository_Manager.cpp:
+
+          Made changes to free up memory created by XMLString::
+          transcode operations.
+
 Fri Jun 11 12:07:27 2004  Emre Turkay  <turkaye@dre.vanderbilt.edu>
 
 	* DnC/Config_Handlers/Process_Element.cpp:
@@ -6,7 +15,7 @@ Fri Jun 11 12:07:27 2004  Emre Turkay  <turkaye@dre.vanderbilt.edu>
 	* DnC/Config_Handlers/Utils.cpp:
 	* DnC/Config_Handlers/Utils.h:
 	* DnC/Config_Handlers/RepositoryManager_Impl.cpp:
-	* DnC/RepositoryManager/Repository_Manager.cpp: 
+	* DnC/RepositoryManager/Repository_Manager.cpp:
 
 	Deleted the duplicate definition of create_doc & create_doc is
         replaced with create_parser.
