@@ -21,7 +21,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Interceptor_List.h"
 #include "ace/Service_Object.h"
 #include "ace/CORBA_macros.h"
 
@@ -32,6 +31,8 @@ namespace PortableInterceptor
   class IORInterceptor;
   typedef IORInterceptor *IORInterceptor_ptr;
 };
+
+class TAO_IORInterceptor_List;
 
 /**
  * @class TAO_IORInterceptor_Adapter
@@ -47,27 +48,20 @@ class TAO_Export TAO_IORInterceptor_Adapter : public ACE_Service_Object
 public:
   virtual ~TAO_IORInterceptor_Adapter (void);
 
-  virtual void tao_iorinterceptor_release (
-      PortableInterceptor::IORInterceptor_ptr
-    ) = 0;
-
-  virtual PortableInterceptor::Interceptor_ptr tao_iorinterceptor (
-      TAO_IORInterceptor_List::TYPE & container,
-      size_t index
-    ) = 0;
-
-  virtual void tao_add_iorinterceptor (
-      TAO_IORInterceptor_List * list,
-      TAO_IORInterceptor_List::TYPE & container,
+  virtual void add_interceptor (
       PortableInterceptor::IORInterceptor_ptr interceptor
       ACE_ENV_ARG_DECL
-    ) = 0;
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
 
-  virtual void tao_iorinterceptor_destroy (
-      TAO_IORInterceptor_List::TYPE & container,
-      size_t ilen
+  virtual void destroy_interceptors (
       ACE_ENV_ARG_DECL
-    ) = 0;
+      )
+  ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
+
+  virtual TAO_IORInterceptor_List *interceptor_list (void)
+    ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
+
 };
 
 #include "ace/post.h"

@@ -21,3 +21,16 @@ TAO::Refcounted_ObjectKey::Refcounted_ObjectKey (const TAO::ObjectKey &key)
 TAO::Refcounted_ObjectKey::~Refcounted_ObjectKey (void)
 {
 }
+
+long
+TAO::Refcounted_ObjectKey::decr_refcount (void)
+{
+  if (--this->ref_count_ > 0)
+    return this->ref_count_;
+
+  ACE_ASSERT (this->ref_count_ == 0);
+
+  delete this;
+
+  return 0;
+}

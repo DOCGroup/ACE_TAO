@@ -28,7 +28,7 @@ ACE_RCSID (TAO_PortableServer,
 #include "tao/Stub.h"
 #include "tao/Profile.h"
 #include "tao/debug.h"
-
+#include "tao/IORInterceptor/IORInterceptor_List.h"
 #include "Default_Acceptor_Filter.h"
 
 #include "PortableGroup_Hooks.h"
@@ -1016,8 +1016,14 @@ TAO_POA::adapter_state_changed (
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   /// First get a list of all the interceptors.
+  TAO_IORInterceptor_List *interceptor_list =
+    this->orb_core_.ior_interceptor_list ();
+
+  if (interceptor_list == 0)
+    return;
+
   TAO_IORInterceptor_List::TYPE &interceptors =
-    this->orb_core_.ior_interceptors ();
+    interceptor_list->interceptors ();
 
   const size_t interceptor_count = interceptors.size ();
 
@@ -3721,8 +3727,15 @@ TAO_POA::establish_components (ACE_ENV_SINGLE_ARG_DECL)
   // Iterate over the registered IOR interceptors so that they may be
   // given the opportunity to add tagged components to the profiles
   // for this servant.
+  /// First get a list of all the interceptors.
+  TAO_IORInterceptor_List *interceptor_list =
+    this->orb_core_.ior_interceptor_list ();
+
+  if (interceptor_list == 0)
+    return;
+
   TAO_IORInterceptor_List::TYPE &interceptors =
-    this->orb_core_.ior_interceptors ();
+    interceptor_list->interceptors ();
 
   const size_t interceptor_count = interceptors.size ();
 
@@ -3798,8 +3811,14 @@ TAO_POA::components_established (PortableInterceptor::IORInfo_ptr info
   // Iterate over the registered IOR interceptors so that they may be
   // given the opportunity to add tagged components to the profiles
   // for this servant.
+  TAO_IORInterceptor_List *interceptor_list =
+    this->orb_core_.ior_interceptor_list ();
+
+    if (interceptor_list == 0)
+    return;
+
   TAO_IORInterceptor_List::TYPE &interceptors =
-    this->orb_core_.ior_interceptors ();
+    interceptor_list->interceptors ();
 
   const size_t interceptor_count = interceptors.size ();
 
