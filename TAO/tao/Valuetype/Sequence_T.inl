@@ -1,6 +1,8 @@
 // This may look like C, but it's really -*- C++ -*-
 // $Id$
 
+#include "ace/Log_Msg.h" // for ACE_ASSERT
+
 // *************************************************************
 // Inline operations for class TAO_Valuetype_Manager
 // *************************************************************
