@@ -42,9 +42,9 @@ TAO::Any_Dual_Impl_T<CORBA::WrongTransaction>::demarshal_value (
 {
   CORBA::String_var id;
   
-  if ((cdr >> id.out ()) == 0)
+  if (!(cdr >> id.out ()))
     {
-      return 0;
+      return false;
     }
   
   ACE_TRY_NEW_ENV
@@ -54,11 +54,11 @@ TAO::Any_Dual_Impl_T<CORBA::WrongTransaction>::demarshal_value (
     }
   ACE_CATCHANY
     {
-      return 0;
+      return false;
     }
   ACE_ENDTRY;
   
-  return 1;
+  return true;
 }
 
 // Copying insertion.

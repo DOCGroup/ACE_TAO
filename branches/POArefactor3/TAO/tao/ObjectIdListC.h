@@ -75,7 +75,7 @@ namespace CORBA
 {
   
   // TAO_IDL - Generated from
-  // be\be_visitor_typedef/typedef_ch.cpp:376
+  // be\be_visitor_typedef/typedef_ch.cpp:413
   
   typedef char * ORB_ObjectId;
   typedef CORBA::String_var ORB_ObjectId_var;

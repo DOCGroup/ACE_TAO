@@ -19,6 +19,7 @@ diff -wub orig/OctetSeqC.h OctetSeqC.h > diffs/OctetSeq.diff
 unix2dos diffs\OctetSeq.diff
 
 diff -wub orig/DomainC.cpp DomainC.cpp > diffs/Domain.diff
+diff -wub orig/DomainC.h DomainC.h > diffs/Domain.diff
 unix2dos diffs\Domain.diff
 
 diff -wub orig/GIOPS.cpp GIOPS.cpp > diffs/GIOP.diff
@@ -32,9 +33,6 @@ unix2dos diffs\TimeBase.diff
 diff -wub orig/CONV_FRAMES.cpp CONV_FRAMES.cpp > diffs/CONV_FRAME.diff
 diff -wub orig/CONV_FRAMES.h CONV_FRAMES.h >> diffs/CONV_FRAME.diff
 unix2dos diffs\CONV_FRAME.diff
-
-diff -wub orig/IOPS.h IOPS.h > diffs/IOP.diff
-unix2dos diffs\IOP.diff
 
 diff -wub orig/Object_KeyC.cpp Object_KeyC.cpp > diffs/Object_Key.diff
 diff -wub orig/Object_KeyC.h Object_KeyC.h >> diffs/Object_Key.diff

@@ -26,23 +26,23 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:323
+// be\be_codegen.cpp:302
 
 
 #include "IOP_IORC.h"
 #include "tao/CDR.h"
-#include "tao/Typecode.h"
+#include "tao/ORB_Core.h"
 
 #if defined (__BORLANDC__)
 #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
 #endif /* __BORLANDC__ */
 
 #if !defined (__ACE_INLINE__)
-#include "IOP_IORC.i"
+#include "IOP_IORC.inl"
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be\be_visitor_arg_traits.cpp:64
+// be\be_visitor_arg_traits.cpp:66
 
 // Arg traits specializations.
 namespace TAO
@@ -59,7 +59,7 @@ IOP::TaggedProfile::_tao_any_destructor (
   )
 {
   TaggedProfile *_tao_tmp_pointer =
-    ACE_static_cast (TaggedProfile *, _tao_void_pointer);
+    static_cast<TaggedProfile *> (_tao_void_pointer);
   delete _tao_tmp_pointer;
 }
 
@@ -110,7 +110,7 @@ void IOP::TaggedProfileSeq::_tao_any_destructor (
   )
 {
   TaggedProfileSeq * _tao_tmp_pointer =
-    ACE_static_cast (TaggedProfileSeq *, _tao_void_pointer);
+    static_cast<TaggedProfileSeq *> (_tao_void_pointer);
   delete _tao_tmp_pointer;
 }
 
@@ -125,7 +125,7 @@ IOP::IOR::_tao_any_destructor (
   )
 {
   IOR *_tao_tmp_pointer =
-    ACE_static_cast (IOR *, _tao_void_pointer);
+    static_cast<IOR *> (_tao_void_pointer);
   delete _tao_tmp_pointer;
 }
 
@@ -138,7 +138,7 @@ IOP::TaggedComponent::_tao_any_destructor (
   )
 {
   TaggedComponent *_tao_tmp_pointer =
-    ACE_static_cast (TaggedComponent *, _tao_void_pointer);
+    static_cast<TaggedComponent *> (_tao_void_pointer);
   delete _tao_tmp_pointer;
 }
 
@@ -189,7 +189,7 @@ void IOP::MultipleComponentProfile::_tao_any_destructor (
   )
 {
   MultipleComponentProfile * _tao_tmp_pointer =
-    ACE_static_cast (MultipleComponentProfile *, _tao_void_pointer);
+    static_cast<MultipleComponentProfile *> (_tao_void_pointer);
   delete _tao_tmp_pointer;
 }
 
@@ -242,7 +242,7 @@ void IOP::TaggedComponentList::_tao_any_destructor (
   )
 {
   TaggedComponentList * _tao_tmp_pointer =
-    ACE_static_cast (TaggedComponentList *, _tao_void_pointer);
+    static_cast<TaggedComponentList *> (_tao_void_pointer);
   delete _tao_tmp_pointer;
 }
 
@@ -295,7 +295,7 @@ void IOP::TaggedComponentSeq::_tao_any_destructor (
   )
 {
   TaggedComponentSeq * _tao_tmp_pointer =
-    ACE_static_cast (TaggedComponentSeq *, _tao_void_pointer);
+    static_cast<TaggedComponentSeq *> (_tao_void_pointer);
   delete _tao_tmp_pointer;
 }
 
@@ -310,7 +310,7 @@ IOP::ServiceContext::_tao_any_destructor (
   )
 {
   ServiceContext *_tao_tmp_pointer =
-    ACE_static_cast (ServiceContext *, _tao_void_pointer);
+    static_cast<ServiceContext *> (_tao_void_pointer);
   delete _tao_tmp_pointer;
 }
 
@@ -361,7 +361,7 @@ void IOP::ServiceContextList::_tao_any_destructor (
   )
 {
   ServiceContextList * _tao_tmp_pointer =
-    ACE_static_cast (ServiceContextList *, _tao_void_pointer);
+    static_cast<ServiceContextList *> (_tao_void_pointer);
   delete _tao_tmp_pointer;
 }
 
@@ -401,12 +401,12 @@ CORBA::Boolean operator<< (
     const IOP::TaggedProfileSeq &_tao_sequence
   )
 {
-  CORBA::ULong _tao_seq_len = _tao_sequence.length ();
+  const CORBA::ULong _tao_seq_len = _tao_sequence.length ();
   
   if (strm << _tao_seq_len)
     {
       // Encode all elements.
-      CORBA::Boolean _tao_marshal_flag = 1;
+      CORBA::Boolean _tao_marshal_flag = true;
       
       for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
         {
@@ -416,7 +416,7 @@ CORBA::Boolean operator<< (
       return _tao_marshal_flag;
     }
   
-  return 0;
+  return false;
 }
 
 CORBA::Boolean operator>> (
@@ -433,7 +433,7 @@ CORBA::Boolean operator>> (
       // of the stream. (See bug 58.)
       if (_tao_seq_len > strm.length ())
         {
-          return 0;
+          return false;
         }
       
       // Set the length of the sequence.
@@ -442,11 +442,11 @@ CORBA::Boolean operator>> (
       // If length is 0 we return true.
       if (0 >= _tao_seq_len) 
         {
-          return 1;
+          return true;
         }
       
       // Retrieve all the elements.
-      CORBA::Boolean _tao_marshal_flag = 1;
+      CORBA::Boolean _tao_marshal_flag = true;
       
       for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
         {
@@ -457,7 +457,7 @@ CORBA::Boolean operator>> (
     
     }
   
-  return 0;
+  return false;
 }
 
 #endif /* _TAO_CDR_OP_IOP_TaggedProfileSeq_CPP_ */
@@ -519,12 +519,12 @@ CORBA::Boolean operator<< (
     const IOP::MultipleComponentProfile &_tao_sequence
   )
 {
-  CORBA::ULong _tao_seq_len = _tao_sequence.length ();
+  const CORBA::ULong _tao_seq_len = _tao_sequence.length ();
   
   if (strm << _tao_seq_len)
     {
       // Encode all elements.
-      CORBA::Boolean _tao_marshal_flag = 1;
+      CORBA::Boolean _tao_marshal_flag = true;
       
       for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
         {
@@ -534,7 +534,7 @@ CORBA::Boolean operator<< (
       return _tao_marshal_flag;
     }
   
-  return 0;
+  return false;
 }
 
 CORBA::Boolean operator>> (
@@ -551,7 +551,7 @@ CORBA::Boolean operator>> (
       // of the stream. (See bug 58.)
       if (_tao_seq_len > strm.length ())
         {
-          return 0;
+          return false;
         }
       
       // Set the length of the sequence.
@@ -560,11 +560,11 @@ CORBA::Boolean operator>> (
       // If length is 0 we return true.
       if (0 >= _tao_seq_len) 
         {
-          return 1;
+          return true;
         }
       
       // Retrieve all the elements.
-      CORBA::Boolean _tao_marshal_flag = 1;
+      CORBA::Boolean _tao_marshal_flag = true;
       
       for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
         {
@@ -575,7 +575,7 @@ CORBA::Boolean operator>> (
     
     }
   
-  return 0;
+  return false;
 }
 
 #endif /* _TAO_CDR_OP_IOP_MultipleComponentProfile_CPP_ */
@@ -591,12 +591,12 @@ CORBA::Boolean operator<< (
     const IOP::TaggedComponentList &_tao_sequence
   )
 {
-  CORBA::ULong _tao_seq_len = _tao_sequence.length ();
+  const CORBA::ULong _tao_seq_len = _tao_sequence.length ();
   
   if (strm << _tao_seq_len)
     {
       // Encode all elements.
-      CORBA::Boolean _tao_marshal_flag = 1;
+      CORBA::Boolean _tao_marshal_flag = true;
       
       for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
         {
@@ -606,7 +606,7 @@ CORBA::Boolean operator<< (
       return _tao_marshal_flag;
     }
   
-  return 0;
+  return false;
 }
 
 CORBA::Boolean operator>> (
@@ -623,7 +623,7 @@ CORBA::Boolean operator>> (
       // of the stream. (See bug 58.)
       if (_tao_seq_len > strm.length ())
         {
-          return 0;
+          return false;
         }
       
       // Set the length of the sequence.
@@ -632,11 +632,11 @@ CORBA::Boolean operator>> (
       // If length is 0 we return true.
       if (0 >= _tao_seq_len) 
         {
-          return 1;
+          return true;
         }
       
       // Retrieve all the elements.
-      CORBA::Boolean _tao_marshal_flag = 1;
+      CORBA::Boolean _tao_marshal_flag = true;
       
       for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
         {
@@ -647,7 +647,7 @@ CORBA::Boolean operator>> (
     
     }
   
-  return 0;
+  return false;
 }
 
 #endif /* _TAO_CDR_OP_IOP_TaggedComponentList_CPP_ */
@@ -663,12 +663,12 @@ CORBA::Boolean operator<< (
     const IOP::TaggedComponentSeq &_tao_sequence
   )
 {
-  CORBA::ULong _tao_seq_len = _tao_sequence.length ();
+  const CORBA::ULong _tao_seq_len = _tao_sequence.length ();
   
   if (strm << _tao_seq_len)
     {
       // Encode all elements.
-      CORBA::Boolean _tao_marshal_flag = 1;
+      CORBA::Boolean _tao_marshal_flag = true;
       
       for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
         {
@@ -678,7 +678,7 @@ CORBA::Boolean operator<< (
       return _tao_marshal_flag;
     }
   
-  return 0;
+  return false;
 }
 
 CORBA::Boolean operator>> (
@@ -695,7 +695,7 @@ CORBA::Boolean operator>> (
       // of the stream. (See bug 58.)
       if (_tao_seq_len > strm.length ())
         {
-          return 0;
+          return false;
         }
       
       // Set the length of the sequence.
@@ -704,11 +704,11 @@ CORBA::Boolean operator>> (
       // If length is 0 we return true.
       if (0 >= _tao_seq_len) 
         {
-          return 1;
+          return true;
         }
       
       // Retrieve all the elements.
-      CORBA::Boolean _tao_marshal_flag = 1;
+      CORBA::Boolean _tao_marshal_flag = true;
       
       for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
         {
@@ -719,7 +719,7 @@ CORBA::Boolean operator>> (
     
     }
   
-  return 0;
+  return false;
 }
 
 #endif /* _TAO_CDR_OP_IOP_TaggedComponentSeq_CPP_ */
@@ -758,12 +758,12 @@ CORBA::Boolean operator<< (
     const IOP::ServiceContextList &_tao_sequence
   )
 {
-  CORBA::ULong _tao_seq_len = _tao_sequence.length ();
+  const CORBA::ULong _tao_seq_len = _tao_sequence.length ();
   
   if (strm << _tao_seq_len)
     {
       // Encode all elements.
-      CORBA::Boolean _tao_marshal_flag = 1;
+      CORBA::Boolean _tao_marshal_flag = true;
       
       for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
         {
@@ -773,7 +773,7 @@ CORBA::Boolean operator<< (
       return _tao_marshal_flag;
     }
   
-  return 0;
+  return false;
 }
 
 CORBA::Boolean operator>> (
@@ -790,7 +790,7 @@ CORBA::Boolean operator>> (
       // of the stream. (See bug 58.)
       if (_tao_seq_len > strm.length ())
         {
-          return 0;
+          return false;
         }
       
       // Set the length of the sequence.
@@ -799,11 +799,11 @@ CORBA::Boolean operator>> (
       // If length is 0 we return true.
       if (0 >= _tao_seq_len) 
         {
-          return 1;
+          return true;
         }
       
       // Retrieve all the elements.
-      CORBA::Boolean _tao_marshal_flag = 1;
+      CORBA::Boolean _tao_marshal_flag = true;
       
       for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
         {
@@ -814,13 +814,13 @@ CORBA::Boolean operator>> (
     
     }
   
-  return 0;
+  return false;
 }
 
 #endif /* _TAO_CDR_OP_IOP_ServiceContextList_CPP_ */
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1628
+// be\be_visitor_root/root.cpp:1629
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
@@ -1245,4 +1245,3 @@ CORBA::Boolean operator>> (
 #endif /* end #if !defined */
 
 #endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
-

@@ -71,6 +71,10 @@
 
 namespace CORBA
 {
+
+  // TAO_IDL - Generated from
+  // be\be_interface.cpp:598
+
   // TAO_IDL - Generated from
   // be\be_visitor_enum/enum_ch.cpp:57
 
@@ -142,7 +146,7 @@ TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA::TCKind &);
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA::TCKind &);
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:958
+// be\be_codegen.cpp:961
 
 #if defined (__ACE_INLINE__)
 #include "Typecode_typesC.inl"

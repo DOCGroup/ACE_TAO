@@ -90,7 +90,7 @@ namespace CORBA
 {
   
   // TAO_IDL - Generated from
-  // be\be_visitor_typedef/typedef_ch.cpp:342
+  // be\be_visitor_typedef/typedef_ch.cpp:379
   
   typedef CORBA::Short PolicyErrorCode;
   typedef CORBA::Short_out PolicyErrorCode_out;
@@ -293,7 +293,7 @@ namespace CORBA
     
     static Policy_ptr _nil (void)
     {
-      return (Policy_ptr)0;
+      return static_cast<Policy_ptr> (0);
     }
     
     static void _tao_any_destructor (void *);
@@ -439,7 +439,7 @@ namespace CORBA
     
     static PolicyManager_ptr _nil (void)
     {
-      return (PolicyManager_ptr)0;
+      return static_cast<PolicyManager_ptr> (0);
     }
     
     static void _tao_any_destructor (void *);
@@ -551,7 +551,7 @@ namespace CORBA
     
     static PolicyCurrent_ptr _nil (void)
     {
-      return (PolicyCurrent_ptr)0;
+      return static_cast<PolicyCurrent_ptr> (0);
     }
     
     static void _tao_any_destructor (void *);
@@ -631,27 +631,6 @@ namespace TAO
 
 #endif /* end #if !defined */
 
-#if !defined (_CORBA_POLICYMANAGER__TRAITS_CH_)
-#define _CORBA_POLICYMANAGER__TRAITS_CH_
-  
-  ACE_TEMPLATE_SPECIALIZATION
-  struct TAO_Export Objref_Traits< ::CORBA::PolicyManager>
-  {
-    static ::CORBA::PolicyManager_ptr duplicate (
-        ::CORBA::PolicyManager_ptr
-      );
-    static void release (
-        ::CORBA::PolicyManager_ptr
-      );
-    static ::CORBA::PolicyManager_ptr nil (void);
-    static CORBA::Boolean marshal (
-        ::CORBA::PolicyManager_ptr p,
-        TAO_OutputCDR & cdr
-      );
-  };
-
-#endif /* end #if !defined */
-
 #if !defined (_CORBA_POLICYCURRENT__TRAITS_CH_)
 #define _CORBA_POLICYCURRENT__TRAITS_CH_
   
@@ -667,6 +646,27 @@ namespace TAO
     static ::CORBA::PolicyCurrent_ptr nil (void);
     static CORBA::Boolean marshal (
         ::CORBA::PolicyCurrent_ptr p,
+        TAO_OutputCDR & cdr
+      );
+  };
+
+#endif /* end #if !defined */
+
+#if !defined (_CORBA_POLICYMANAGER__TRAITS_CH_)
+#define _CORBA_POLICYMANAGER__TRAITS_CH_
+  
+  ACE_TEMPLATE_SPECIALIZATION
+  struct TAO_Export Objref_Traits< ::CORBA::PolicyManager>
+  {
+    static ::CORBA::PolicyManager_ptr duplicate (
+        ::CORBA::PolicyManager_ptr
+      );
+    static void release (
+        ::CORBA::PolicyManager_ptr
+      );
+    static ::CORBA::PolicyManager_ptr nil (void);
+    static CORBA::Boolean marshal (
+        ::CORBA::PolicyManager_ptr p,
         TAO_OutputCDR & cdr
       );
   };

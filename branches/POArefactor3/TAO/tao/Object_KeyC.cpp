@@ -46,7 +46,7 @@
 #include "ace/os_include/os_ctype.h"
 
 // TAO_IDL - Generated from
-// be\be_visitor_arg_traits.cpp:65
+// be\be_visitor_arg_traits.cpp:66
 
 // Arg traits specializations.
 namespace TAO
@@ -224,7 +224,7 @@ TAO::ObjectKey::demarshal_key (TAO::ObjectKey &key,
       ACE_Message_Block::DONT_DELETE))
       {
         TAO_Unbounded_Sequence<CORBA::Octet> *oseq =
-          static_cast <TAO_Unbounded_Sequence<CORBA::Octet>*> (&key);
+          ACE_static_cast(TAO_Unbounded_Sequence<CORBA::Octet>*, &key);
         oseq->replace (_tao_seq_len, strm.start ());
         oseq->mb ()->wr_ptr (oseq->mb()->rd_ptr () + _tao_seq_len);
         strm.skip_bytes (_tao_seq_len);
@@ -275,7 +275,7 @@ CORBA::Boolean operator<< (
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES == 0 */
     }
   
-  return 0;
+  return false;
 }
 
 CORBA::Boolean operator>> (
@@ -292,7 +292,7 @@ CORBA::Boolean operator>> (
       // of the stream. (See bug 58.)
       if (_tao_seq_len > strm.length ())
         {
-          return 0;
+          return false;
         }
       
       // Set the length of the sequence.
@@ -301,7 +301,7 @@ CORBA::Boolean operator>> (
       // If length is 0 we return true.
       if (0 >= _tao_seq_len) 
         {
-          return 1;
+          return true;
         }
       
       // Retrieve all the elements.
@@ -331,7 +331,7 @@ CORBA::Boolean operator>> (
     
     }
   
-  return 0;
+  return false;
 }
 
 #endif /* _TAO_CDR_OP_TAO_ObjectKey_CPP_ */

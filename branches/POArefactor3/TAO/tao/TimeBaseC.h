@@ -73,7 +73,7 @@ namespace TimeBase
 {
   
   // TAO_IDL - Generated from
-  // be\be_visitor_typedef/typedef_ch.cpp:342
+  // be\be_visitor_typedef/typedef_ch.cpp:379
   
   typedef CORBA::ULongLong TimeT;
   typedef CORBA::ULongLong_out TimeT_out;
@@ -84,7 +84,7 @@ namespace TimeBase
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_TimeT;
   
   // TAO_IDL - Generated from
-  // be\be_visitor_typedef/typedef_ch.cpp:342
+  // be\be_visitor_typedef/typedef_ch.cpp:379
   
   typedef TimeT InaccuracyT;
   typedef TimeT_out InaccuracyT_out;
@@ -95,7 +95,7 @@ namespace TimeBase
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_InaccuracyT;
   
   // TAO_IDL - Generated from
-  // be\be_visitor_typedef/typedef_ch.cpp:342
+  // be\be_visitor_typedef/typedef_ch.cpp:379
   
   typedef CORBA::Short TdfT;
   typedef CORBA::Short_out TdfT_out;
@@ -213,7 +213,7 @@ TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const TimeBase::IntervalT
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, TimeBase::IntervalT &);
 
 // TAO_IDL - Generated from
-// be\be_codegen.cpp:963
+// be\be_codegen.cpp:961
 
 #if defined (__ACE_INLINE__)
 #include "TimeBaseC.inl"

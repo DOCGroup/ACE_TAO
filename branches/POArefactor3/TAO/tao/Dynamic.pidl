@@ -25,6 +25,7 @@
 
 #include "Dynamic_Parameter.pidl"
 #include "StringSeq.pidl"
+#include "Typecode_types.pidl"
 
 #ifndef _DYNAMIC_IDL_
 #define _DYNAMIC_IDL_

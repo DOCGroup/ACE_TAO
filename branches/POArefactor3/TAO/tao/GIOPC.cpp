@@ -43,7 +43,7 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be\be_visitor_arg_traits.cpp:65
+// be\be_visitor_arg_traits.cpp:66
 
 // Arg traits specializations.
 namespace TAO
@@ -302,10 +302,10 @@ CORBA::Boolean operator<< (
 {
   if ( !(strm << _tao_union._d ()) )
     {
-      return 0;
+      return false;
     }
   
-  CORBA::Boolean result = 1;
+  CORBA::Boolean result = true;
   
   switch (_tao_union._d ())
   {
@@ -339,10 +339,10 @@ CORBA::Boolean operator>> (
   CORBA::Short _tao_discriminant;
   if ( !(strm >> _tao_discriminant) )
     {
-      return 0;
+      return false;
     }
   
-  CORBA::Boolean result = 1;
+  CORBA::Boolean result = true;
   
   switch (_tao_discriminant)
   {

@@ -43,6 +43,8 @@
 #include <Messaging_SyncScope.pidl>
 #include <IOP_Codec.pidl>
 #include <IOP_IOR.pidl>
+#include <orb_types.pidl>
+#include <Policy.pidl>
 
 module PortableInterceptor {
 

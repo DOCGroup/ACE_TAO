@@ -292,14 +292,14 @@ ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
 TAO::Any_Impl_T<TAO::BufferingConstraintPolicy>::marshal_value (TAO_OutputCDR &)
 {
-  return 0;
+  return false;
 }
 
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
 TAO::Any_Impl_T<TAO::BufferingConstraintPolicy>::demarshal_value (TAO_InputCDR &)
 {
-  return 0;
+  return false;
 }
 
 // Copying insertion.
