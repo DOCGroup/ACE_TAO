@@ -324,6 +324,7 @@ public:
   // 'o': print as an octal number
   // 'P': print out the current process id
   // 'p': print out the appropriate errno value from sys_errlist
+  // 'Q': print out the uint64 number
   // 'r': call the function pointed to by the corresponding argument
   // 'R': print return status
   // 'S': print out the appropriate _sys_siglist entry corresponding to var-argument.

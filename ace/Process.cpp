@@ -74,10 +74,26 @@ ACE_Process::spawn (ACE_Process_Options &options)
     this->child_id_ = ACE_OS::execvp (options.command_line_argv ()[0],
 				      options.command_line_argv ());
   else
-    // Command-line args and environment variables
-    this->child_id_ = ACE_OS::execve (options.command_line_argv ()[0],
-                                      options.command_line_argv (),
-                                      options.env_argv ());
+    {
+      // Added the new environment variables.
+      for (char **user_env = options.env_argv ();
+           *user_env != 0;
+           user_env++)
+        ACE_OS::putenv (*user_env);
+
+      // Now the forked process has both inherited variables and the
+      // user's supplied variables.
+      this->child_id_ = ACE_OS::execvp (options.command_line_argv ()[0],
+                                        options.command_line_argv ());
+    }
+
+#if 0
+            // command-line args and environment variables
+            result = ACE_OS::execve (options.command_line_argv ()[0],
+                                     options.command_line_argv (),
+                                     options.env_argv ());
+#endif 
+
   return this->child_id_;
 #else /* ACE_WIN32 */
   // Fork the new process.
@@ -129,10 +145,17 @@ ACE_Process::spawn (ACE_Process_Options &options)
             // anyways.
             ACE_NOTSUP_RETURN (-1);
 #else
-            // command-line args and environment variables
-            result = ACE_OS::execve (options.command_line_argv ()[0],
-                                     options.command_line_argv (),
-                                     options.env_argv ());
+            // Added the new environment variables.
+            for (char **user_env = options.env_argv ();
+                 *user_env != 0;
+                 user_env++)
+              ACE_OS::putenv (*user_env);
+
+            // Now the forked process has both inherited variables and the
+            // user's supplied variables.
+            this->child_id_ = ACE_OS::execvp (options.command_line_argv ()[0],
+                                              options.command_line_argv ());
+          }
 #endif /* ghs */
           }
 
