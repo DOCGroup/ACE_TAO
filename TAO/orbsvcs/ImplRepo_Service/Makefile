@@ -286,6 +286,7 @@ tao_ir: $(addprefix $(VDIR),$(TAO_IR_OBJS))
  $(TAO_ROOT)/tao/MessagingC.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/MessagingS.i \
  $(TAO_ROOT)/tao/Stub.i \
@@ -553,6 +554,7 @@ tao_ir: $(addprefix $(VDIR),$(TAO_IR_OBJS))
  $(TAO_ROOT)/tao/MessagingC.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/MessagingS.i \
  $(TAO_ROOT)/tao/Stub.i \
@@ -660,6 +662,7 @@ tao_ir: $(addprefix $(VDIR),$(TAO_IR_OBJS))
  $(TAO_ROOT)/tao/Acceptor_Impl.h \
  $(TAO_ROOT)/tao/Acceptor_Impl.i \
  $(TAO_ROOT)/tao/Acceptor_Impl.cpp \
+ $(TAO_ROOT)/tao/Connector_Registry.h \
  $(TAO_ROOT)/tao/IIOP_Acceptor.i \
  $(TAO_ROOT)/tao/Acceptor_Registry.h \
  $(TAO_ROOT)/tao/Acceptor_Registry.i \
@@ -1000,6 +1003,7 @@ tao_ir: $(addprefix $(VDIR),$(TAO_IR_OBJS))
  $(TAO_ROOT)/tao/MessagingC.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/MessagingS.i \
  $(TAO_ROOT)/tao/Stub.i \
@@ -1260,6 +1264,7 @@ tao_ir: $(addprefix $(VDIR),$(TAO_IR_OBJS))
  $(TAO_ROOT)/tao/MessagingC.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
+ $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/MessagingS.i \
  $(TAO_ROOT)/tao/Stub.i \

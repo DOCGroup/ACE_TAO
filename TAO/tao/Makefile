@@ -526,12 +526,7 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(TAO_ROOT)/tao/Timeprobe.h \
- $(ACE_ROOT)/ace/Timeprobe.h \
- $(ACE_ROOT)/ace/Timeprobe.i \
- $(ACE_ROOT)/ace/Timeprobe_T.h \
- $(ACE_ROOT)/ace/Timeprobe_T.cpp \
- $(ACE_ROOT)/ace/High_Res_Timer.h \
- $(ACE_ROOT)/ace/High_Res_Timer.i
+ $(ACE_ROOT)/ace/Timeprobe.h
 .obj/Key_Adapters.o .obj/Key_Adapters.so .shobj/Key_Adapters.o .shobj/Key_Adapters.so: Key_Adapters.cpp \
  $(TAO_ROOT)/tao/Key_Adapters.h \
  $(TAO_ROOT)/tao/corbafwd.h \
@@ -1748,14 +1743,6 @@ realclean:
  $(TAO_ROOT)/tao/Servant_Base.i \
  $(TAO_ROOT)/tao/Timeprobe.h \
  $(ACE_ROOT)/ace/Timeprobe.h \
- $(ACE_ROOT)/ace/Timeprobe.i \
- $(ACE_ROOT)/ace/Timeprobe_T.h \
- $(ACE_ROOT)/ace/Timeprobe_T.cpp \
- $(ACE_ROOT)/ace/High_Res_Timer.h \
- $(ACE_ROOT)/ace/High_Res_Timer.i \
- $(ACE_ROOT)/ace/Singleton.h \
- $(ACE_ROOT)/ace/Singleton.i \
- $(ACE_ROOT)/ace/Singleton.cpp \
  $(TAO_ROOT)/tao/Operation_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Functor.h \
@@ -1783,6 +1770,9 @@ realclean:
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+ $(ACE_ROOT)/ace/Singleton.h \
+ $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.cpp \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/Policy_Manager.h \
  $(TAO_ROOT)/tao/POA_CORBA.h \
@@ -3009,13 +2999,38 @@ realclean:
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/Connector_Registry.h \
+ $(TAO_ROOT)/tao/debug.h \
  $(TAO_ROOT)/tao/IIOP_Acceptor.i \
  $(TAO_ROOT)/tao/IIOP_Connector.h \
  $(ACE_ROOT)/ace/Connector.h \
  $(ACE_ROOT)/ace/Connector.i \
  $(ACE_ROOT)/ace/Connector.cpp \
  $(ACE_ROOT)/ace/SOCK_Connector.h \
- $(ACE_ROOT)/ace/SOCK_Connector.i
+ $(ACE_ROOT)/ace/SOCK_Connector.i \
+ $(ACE_ROOT)/ace/Cached_Connect_Strategy_T.h \
+ $(ACE_ROOT)/ace/Hash_Cache_Map_Manager_T.h \
+ $(ACE_ROOT)/ace/Cache_Map_Manager_T.h \
+ $(ACE_ROOT)/ace/Pair_T.h \
+ $(ACE_ROOT)/ace/Pair.h \
+ $(ACE_ROOT)/ace/Pair.i \
+ $(ACE_ROOT)/ace/Pair_T.i \
+ $(ACE_ROOT)/ace/Pair_T.cpp \
+ $(ACE_ROOT)/ace/Cache_Map_Manager_T.i \
+ $(ACE_ROOT)/ace/Cache_Map_Manager_T.cpp \
+ $(ACE_ROOT)/ace/Hash_Cache_Map_Manager_T.i \
+ $(ACE_ROOT)/ace/Hash_Cache_Map_Manager_T.cpp \
+ $(ACE_ROOT)/ace/Caching_Strategies_T.h \
+ $(ACE_ROOT)/ace/Caching_Utility_T.h \
+ $(ACE_ROOT)/ace/Cleanup_Strategies_T.h \
+ $(ACE_ROOT)/ace/Cleanup_Strategies_T.i \
+ $(ACE_ROOT)/ace/Cleanup_Strategies_T.cpp \
+ $(ACE_ROOT)/ace/Caching_Utility_T.i \
+ $(ACE_ROOT)/ace/Caching_Utility_T.cpp \
+ $(ACE_ROOT)/ace/Caching_Strategies_T.i \
+ $(ACE_ROOT)/ace/Caching_Strategies_T.cpp \
+ $(ACE_ROOT)/ace/Cached_Connect_Strategy_T.i \
+ $(ACE_ROOT)/ace/Cached_Connect_Strategy_T.cpp
 .obj/IIOP_Profile.o .obj/IIOP_Profile.so .shobj/IIOP_Profile.o .shobj/IIOP_Profile.so: IIOP_Profile.cpp \
  $(TAO_ROOT)/tao/IIOP_Profile.h \
  $(TAO_ROOT)/tao/ORB.h \
@@ -3494,11 +3509,6 @@ realclean:
  $(TAO_ROOT)/tao/IIOP_Profile.i \
  $(TAO_ROOT)/tao/Timeprobe.h \
  $(ACE_ROOT)/ace/Timeprobe.h \
- $(ACE_ROOT)/ace/Timeprobe.i \
- $(ACE_ROOT)/ace/Timeprobe_T.h \
- $(ACE_ROOT)/ace/Timeprobe_T.cpp \
- $(ACE_ROOT)/ace/High_Res_Timer.h \
- $(ACE_ROOT)/ace/High_Res_Timer.i \
  $(TAO_ROOT)/tao/Transport_Mux_Strategy.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/MessagingC.h \
@@ -3721,6 +3731,31 @@ realclean:
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/GIOP.i \
  $(TAO_ROOT)/tao/IIOP_Connect.i \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
+ $(TAO_ROOT)/tao/Protocol_Factory.h \
+ $(ACE_ROOT)/ace/Cached_Connect_Strategy_T.h \
+ $(ACE_ROOT)/ace/Hash_Cache_Map_Manager_T.h \
+ $(ACE_ROOT)/ace/Cache_Map_Manager_T.h \
+ $(ACE_ROOT)/ace/Pair_T.h \
+ $(ACE_ROOT)/ace/Pair.h \
+ $(ACE_ROOT)/ace/Pair.i \
+ $(ACE_ROOT)/ace/Pair_T.i \
+ $(ACE_ROOT)/ace/Pair_T.cpp \
+ $(ACE_ROOT)/ace/Cache_Map_Manager_T.i \
+ $(ACE_ROOT)/ace/Cache_Map_Manager_T.cpp \
+ $(ACE_ROOT)/ace/Hash_Cache_Map_Manager_T.i \
+ $(ACE_ROOT)/ace/Hash_Cache_Map_Manager_T.cpp \
+ $(ACE_ROOT)/ace/Caching_Strategies_T.h \
+ $(ACE_ROOT)/ace/Caching_Utility_T.h \
+ $(ACE_ROOT)/ace/Cleanup_Strategies_T.h \
+ $(ACE_ROOT)/ace/Cleanup_Strategies_T.i \
+ $(ACE_ROOT)/ace/Cleanup_Strategies_T.cpp \
+ $(ACE_ROOT)/ace/Caching_Utility_T.i \
+ $(ACE_ROOT)/ace/Caching_Utility_T.cpp \
+ $(ACE_ROOT)/ace/Caching_Strategies_T.i \
+ $(ACE_ROOT)/ace/Caching_Strategies_T.cpp \
+ $(ACE_ROOT)/ace/Cached_Connect_Strategy_T.i \
+ $(ACE_ROOT)/ace/Cached_Connect_Strategy_T.cpp \
  $(TAO_ROOT)/tao/IIOP_Profile.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/IOR_LookupTable.h \
@@ -3774,8 +3809,6 @@ realclean:
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/MessagingS.i \
  $(TAO_ROOT)/tao/Policy_Manager.i \
- $(TAO_ROOT)/tao/Resource_Factory.h \
- $(TAO_ROOT)/tao/Protocol_Factory.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/ORB_Core.i \
@@ -4018,6 +4051,8 @@ realclean:
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/Connector_Registry.h \
+ $(TAO_ROOT)/tao/debug.h \
  $(TAO_ROOT)/tao/IIOP_Acceptor.i \
  $(TAO_ROOT)/tao/IIOP_Profile.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
@@ -4028,8 +4063,7 @@ realclean:
  $(TAO_ROOT)/tao/Tagged_Components.i \
  $(TAO_ROOT)/tao/IIOP_Profile.i \
  $(TAO_ROOT)/tao/MProfile.h \
- $(TAO_ROOT)/tao/MProfile.i \
- $(TAO_ROOT)/tao/debug.h
+ $(TAO_ROOT)/tao/MProfile.i
 .obj/IIOP_Connect.o .obj/IIOP_Connect.so .shobj/IIOP_Connect.o .shobj/IIOP_Connect.so: IIOP_Connect.cpp \
  $(TAO_ROOT)/tao/IIOP_Connect.h \
  $(ACE_ROOT)/ace/Reactor.h \
@@ -4209,11 +4243,6 @@ realclean:
  $(TAO_ROOT)/tao/IIOP_Connect.i \
  $(TAO_ROOT)/tao/Timeprobe.h \
  $(ACE_ROOT)/ace/Timeprobe.h \
- $(ACE_ROOT)/ace/Timeprobe.i \
- $(ACE_ROOT)/ace/Timeprobe_T.h \
- $(ACE_ROOT)/ace/Timeprobe_T.cpp \
- $(ACE_ROOT)/ace/High_Res_Timer.h \
- $(ACE_ROOT)/ace/High_Res_Timer.i \
  $(TAO_ROOT)/tao/debug.h \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/Environment.h \
@@ -4514,6 +4543,8 @@ realclean:
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/Connector_Registry.h \
+ $(TAO_ROOT)/tao/debug.h \
  $(TAO_ROOT)/tao/UIOP_Connector.h \
  $(ACE_ROOT)/ace/Connector.h \
  $(ACE_ROOT)/ace/Connector.i \
@@ -4521,7 +4552,30 @@ realclean:
  $(ACE_ROOT)/ace/LSOCK_Connector.h \
  $(ACE_ROOT)/ace/SOCK_Connector.h \
  $(ACE_ROOT)/ace/SOCK_Connector.i \
- $(ACE_ROOT)/ace/LSOCK_Connector.i
+ $(ACE_ROOT)/ace/LSOCK_Connector.i \
+ $(ACE_ROOT)/ace/Cached_Connect_Strategy_T.h \
+ $(ACE_ROOT)/ace/Hash_Cache_Map_Manager_T.h \
+ $(ACE_ROOT)/ace/Cache_Map_Manager_T.h \
+ $(ACE_ROOT)/ace/Pair_T.h \
+ $(ACE_ROOT)/ace/Pair.h \
+ $(ACE_ROOT)/ace/Pair.i \
+ $(ACE_ROOT)/ace/Pair_T.i \
+ $(ACE_ROOT)/ace/Pair_T.cpp \
+ $(ACE_ROOT)/ace/Cache_Map_Manager_T.i \
+ $(ACE_ROOT)/ace/Cache_Map_Manager_T.cpp \
+ $(ACE_ROOT)/ace/Hash_Cache_Map_Manager_T.i \
+ $(ACE_ROOT)/ace/Hash_Cache_Map_Manager_T.cpp \
+ $(ACE_ROOT)/ace/Caching_Strategies_T.h \
+ $(ACE_ROOT)/ace/Caching_Utility_T.h \
+ $(ACE_ROOT)/ace/Cleanup_Strategies_T.h \
+ $(ACE_ROOT)/ace/Cleanup_Strategies_T.i \
+ $(ACE_ROOT)/ace/Cleanup_Strategies_T.cpp \
+ $(ACE_ROOT)/ace/Caching_Utility_T.i \
+ $(ACE_ROOT)/ace/Caching_Utility_T.cpp \
+ $(ACE_ROOT)/ace/Caching_Strategies_T.i \
+ $(ACE_ROOT)/ace/Caching_Strategies_T.cpp \
+ $(ACE_ROOT)/ace/Cached_Connect_Strategy_T.i \
+ $(ACE_ROOT)/ace/Cached_Connect_Strategy_T.cpp
 .obj/UIOP_Profile.o .obj/UIOP_Profile.so .shobj/UIOP_Profile.o .shobj/UIOP_Profile.so: UIOP_Profile.cpp \
  $(TAO_ROOT)/tao/UIOP_Profile.h \
  $(TAO_ROOT)/tao/Pluggable.h \
@@ -4996,11 +5050,6 @@ realclean:
  $(TAO_ROOT)/tao/UIOP_Profile.i \
  $(TAO_ROOT)/tao/Timeprobe.h \
  $(ACE_ROOT)/ace/Timeprobe.h \
- $(ACE_ROOT)/ace/Timeprobe.i \
- $(ACE_ROOT)/ace/Timeprobe_T.h \
- $(ACE_ROOT)/ace/Timeprobe_T.cpp \
- $(ACE_ROOT)/ace/High_Res_Timer.h \
- $(ACE_ROOT)/ace/High_Res_Timer.i \
  $(TAO_ROOT)/tao/Transport_Mux_Strategy.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/MessagingC.h \
@@ -5253,6 +5302,31 @@ realclean:
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/GIOP.i \
  $(TAO_ROOT)/tao/UIOP_Connect.i \
+ $(TAO_ROOT)/tao/Resource_Factory.h \
+ $(TAO_ROOT)/tao/Protocol_Factory.h \
+ $(ACE_ROOT)/ace/Cached_Connect_Strategy_T.h \
+ $(ACE_ROOT)/ace/Hash_Cache_Map_Manager_T.h \
+ $(ACE_ROOT)/ace/Cache_Map_Manager_T.h \
+ $(ACE_ROOT)/ace/Pair_T.h \
+ $(ACE_ROOT)/ace/Pair.h \
+ $(ACE_ROOT)/ace/Pair.i \
+ $(ACE_ROOT)/ace/Pair_T.i \
+ $(ACE_ROOT)/ace/Pair_T.cpp \
+ $(ACE_ROOT)/ace/Cache_Map_Manager_T.i \
+ $(ACE_ROOT)/ace/Cache_Map_Manager_T.cpp \
+ $(ACE_ROOT)/ace/Hash_Cache_Map_Manager_T.i \
+ $(ACE_ROOT)/ace/Hash_Cache_Map_Manager_T.cpp \
+ $(ACE_ROOT)/ace/Caching_Strategies_T.h \
+ $(ACE_ROOT)/ace/Caching_Utility_T.h \
+ $(ACE_ROOT)/ace/Cleanup_Strategies_T.h \
+ $(ACE_ROOT)/ace/Cleanup_Strategies_T.i \
+ $(ACE_ROOT)/ace/Cleanup_Strategies_T.cpp \
+ $(ACE_ROOT)/ace/Caching_Utility_T.i \
+ $(ACE_ROOT)/ace/Caching_Utility_T.cpp \
+ $(ACE_ROOT)/ace/Caching_Strategies_T.i \
+ $(ACE_ROOT)/ace/Caching_Strategies_T.cpp \
+ $(ACE_ROOT)/ace/Cached_Connect_Strategy_T.i \
+ $(ACE_ROOT)/ace/Cached_Connect_Strategy_T.cpp \
  $(TAO_ROOT)/tao/UIOP_Profile.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
@@ -5306,8 +5380,6 @@ realclean:
  $(TAO_ROOT)/tao/MessagingC.i \
  $(TAO_ROOT)/tao/MessagingS.i \
  $(TAO_ROOT)/tao/Policy_Manager.i \
- $(TAO_ROOT)/tao/Resource_Factory.h \
- $(TAO_ROOT)/tao/Protocol_Factory.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/ORB_Core.i \
@@ -5557,6 +5629,8 @@ realclean:
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
+ $(TAO_ROOT)/tao/Connector_Registry.h \
+ $(TAO_ROOT)/tao/debug.h \
  $(TAO_ROOT)/tao/UIOP_Profile.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
@@ -5566,8 +5640,7 @@ realclean:
  $(TAO_ROOT)/tao/Tagged_Components.i \
  $(TAO_ROOT)/tao/UIOP_Profile.i \
  $(TAO_ROOT)/tao/MProfile.h \
- $(TAO_ROOT)/tao/MProfile.i \
- $(TAO_ROOT)/tao/debug.h
+ $(TAO_ROOT)/tao/MProfile.i
 .obj/UIOP_Connect.o .obj/UIOP_Connect.so .shobj/UIOP_Connect.o .shobj/UIOP_Connect.so: UIOP_Connect.cpp \
  $(TAO_ROOT)/tao/UIOP_Connect.h \
  $(ACE_ROOT)/ace/Reactor.h \
@@ -5809,12 +5882,7 @@ realclean:
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  $(TAO_ROOT)/tao/Timeprobe.h \
- $(ACE_ROOT)/ace/Timeprobe.h \
- $(ACE_ROOT)/ace/Timeprobe.i \
- $(ACE_ROOT)/ace/Timeprobe_T.h \
- $(ACE_ROOT)/ace/Timeprobe_T.cpp \
- $(ACE_ROOT)/ace/High_Res_Timer.h \
- $(ACE_ROOT)/ace/High_Res_Timer.i
+ $(ACE_ROOT)/ace/Timeprobe.h
 .obj/IORC.o .obj/IORC.so .shobj/IORC.o .shobj/IORC.so: IORC.cpp \
  $(TAO_ROOT)/tao/IORC.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -8531,11 +8599,6 @@ realclean:
  $(TAO_ROOT)/tao/corbafwd.i \
  $(TAO_ROOT)/tao/Timeprobe.h \
  $(ACE_ROOT)/ace/Timeprobe.h \
- $(ACE_ROOT)/ace/Timeprobe.i \
- $(ACE_ROOT)/ace/Timeprobe_T.h \
- $(ACE_ROOT)/ace/Timeprobe_T.cpp \
- $(ACE_ROOT)/ace/High_Res_Timer.h \
- $(ACE_ROOT)/ace/High_Res_Timer.i \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Exception.h \
  $(TAO_ROOT)/tao/Exception.i \
@@ -11222,12 +11285,7 @@ realclean:
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  $(TAO_ROOT)/tao/Timeprobe.h \
- $(ACE_ROOT)/ace/Timeprobe.h \
- $(ACE_ROOT)/ace/Timeprobe.i \
- $(ACE_ROOT)/ace/Timeprobe_T.h \
- $(ACE_ROOT)/ace/Timeprobe_T.cpp \
- $(ACE_ROOT)/ace/High_Res_Timer.h \
- $(ACE_ROOT)/ace/High_Res_Timer.i
+ $(ACE_ROOT)/ace/Timeprobe.h
 .obj/MProfile.o .obj/MProfile.so .shobj/MProfile.o .shobj/MProfile.so: MProfile.cpp \
  $(TAO_ROOT)/tao/MProfile.h \
  $(TAO_ROOT)/tao/corbafwd.h \
@@ -11525,12 +11583,7 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(TAO_ROOT)/tao/Timeprobe.h \
- $(ACE_ROOT)/ace/Timeprobe.h \
- $(ACE_ROOT)/ace/Timeprobe.i \
- $(ACE_ROOT)/ace/Timeprobe_T.h \
- $(ACE_ROOT)/ace/Timeprobe_T.cpp \
- $(ACE_ROOT)/ace/High_Res_Timer.h \
- $(ACE_ROOT)/ace/High_Res_Timer.i
+ $(ACE_ROOT)/ace/Timeprobe.h
 .obj/Typecode.o .obj/Typecode.so .shobj/Typecode.o .shobj/Typecode.so: Typecode.cpp \
  $(TAO_ROOT)/tao/Typecode.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -12042,15 +12095,12 @@ realclean:
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/Timeprobe.i \
- $(ACE_ROOT)/ace/Timeprobe_T.h \
- $(ACE_ROOT)/ace/Containers.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Containers.i \
- $(ACE_ROOT)/ace/Containers_T.h \
- $(ACE_ROOT)/ace/Containers_T.i \
- $(ACE_ROOT)/ace/Containers_T.cpp \
+ $(TAO_ROOT)/tao/CDR.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Synch.h \
@@ -12074,6 +12124,11 @@ realclean:
  $(ACE_ROOT)/ace/Malloc_T.cpp \
  $(ACE_ROOT)/ace/Memory_Pool.h \
  $(ACE_ROOT)/ace/Signal.h \
+ $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Containers.i \
+ $(ACE_ROOT)/ace/Containers_T.h \
+ $(ACE_ROOT)/ace/Containers_T.i \
+ $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Signal.i \
  $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
@@ -12083,16 +12138,6 @@ realclean:
  $(ACE_ROOT)/ace/Mem_Map.h \
  $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
- $(ACE_ROOT)/ace/Timeprobe_T.cpp \
- $(ACE_ROOT)/ace/High_Res_Timer.h \
- $(ACE_ROOT)/ace/High_Res_Timer.i \
- $(ACE_ROOT)/ace/Singleton.h \
- $(ACE_ROOT)/ace/Singleton.i \
- $(ACE_ROOT)/ace/Singleton.cpp \
- $(TAO_ROOT)/tao/CDR.h \
- $(TAO_ROOT)/tao/corbafwd.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
- $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/Message_Block_T.h \
  $(ACE_ROOT)/ace/Message_Block_T.i \
@@ -12223,6 +12268,9 @@ realclean:
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
+ $(ACE_ROOT)/ace/Singleton.h \
+ $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.cpp \
  $(TAO_ROOT)/tao/ORB_Core.i \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
@@ -12545,14 +12593,6 @@ realclean:
  $(TAO_ROOT)/tao/GIOP.i \
  $(TAO_ROOT)/tao/Timeprobe.h \
  $(ACE_ROOT)/ace/Timeprobe.h \
- $(ACE_ROOT)/ace/Timeprobe.i \
- $(ACE_ROOT)/ace/Timeprobe_T.h \
- $(ACE_ROOT)/ace/Timeprobe_T.cpp \
- $(ACE_ROOT)/ace/High_Res_Timer.h \
- $(ACE_ROOT)/ace/High_Res_Timer.i \
- $(ACE_ROOT)/ace/Singleton.h \
- $(ACE_ROOT)/ace/Singleton.i \
- $(ACE_ROOT)/ace/Singleton.cpp \
  $(TAO_ROOT)/tao/GIOP_Server_Request.h \
  $(TAO_ROOT)/tao/Server_Request.h \
  $(TAO_ROOT)/tao/Object_KeyC.h \
@@ -12662,6 +12702,9 @@ realclean:
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
+ $(ACE_ROOT)/ace/Singleton.h \
+ $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.cpp \
  $(TAO_ROOT)/tao/ORB_Core.i \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
@@ -12898,12 +12941,7 @@ realclean:
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  $(TAO_ROOT)/tao/Timeprobe.h \
- $(ACE_ROOT)/ace/Timeprobe.h \
- $(ACE_ROOT)/ace/Timeprobe.i \
- $(ACE_ROOT)/ace/Timeprobe_T.h \
- $(ACE_ROOT)/ace/Timeprobe_T.cpp \
- $(ACE_ROOT)/ace/High_Res_Timer.h \
- $(ACE_ROOT)/ace/High_Res_Timer.i
+ $(ACE_ROOT)/ace/Timeprobe.h
 .obj/Invocation.o .obj/Invocation.so .shobj/Invocation.o .shobj/Invocation.so: Invocation.cpp \
  $(TAO_ROOT)/tao/Invocation.h \
  $(TAO_ROOT)/tao/CDR.h \
@@ -13109,11 +13147,6 @@ realclean:
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/Timeprobe.h \
  $(ACE_ROOT)/ace/Timeprobe.h \
- $(ACE_ROOT)/ace/Timeprobe.i \
- $(ACE_ROOT)/ace/Timeprobe_T.h \
- $(ACE_ROOT)/ace/Timeprobe_T.cpp \
- $(ACE_ROOT)/ace/High_Res_Timer.h \
- $(ACE_ROOT)/ace/High_Res_Timer.i \
  $(TAO_ROOT)/tao/Object_KeyC.h \
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Connector_Registry.h
