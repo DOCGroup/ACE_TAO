@@ -11,6 +11,7 @@
 
 BIN =	Atomic_Op_Test \
 	Barrier_Test \
+	Basic_Types_Test \
 	Buffer_Stream_Test \
 	Conn_Test \
 	Enum_Interfaces_Test \
@@ -58,7 +59,7 @@ BIN =	Atomic_Op_Test \
 	Timer_Queue_Test \
 	Tokens_Test \
 	TSS_Test \
-	UPIPE_SAP_Test 
+	UPIPE_SAP_Test
 
 LSRC   = $(addsuffix .cpp,$(BIN))
 VLDLIBS = $(LDLIBS:%=%$(VAR))
