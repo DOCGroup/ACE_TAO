@@ -1,3 +1,19 @@
+Thu Feb 27 17:06:12 1997    <harrison@samba.cs.wustl.edu>
+
+	* ace/Profile_Timer.i (start): Changed start and stop methods to
+	  call ACE_High_Res_Timer::gettimeofday.  This should allow
+	  greater timing accurracy.
+
+	* ace/High_Res_Timer.h (global_scale_factor): Added a static
+	  global_scale_factor that allows applications to set one scale
+	  factor for all high res timers.  This is important for platforms
+	  like intel where the scale factor will vary based on the
+	  processor clock speed.
+
+	* ace/High_Res_Timer.i (gettimeofday): This static method calls
+	  ACE_OS::gethrtime and converts to an ACE_Time_Value based on the
+	  global_static_factor.
+
 Tue Feb 25 21:19:57 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/OS.h,config-sunos*.h: default ACE_TIMER_SKEW to 0,
