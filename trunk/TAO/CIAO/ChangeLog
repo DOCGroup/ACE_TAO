@@ -1,3 +1,11 @@
+Mon Mar 29 11:00:00 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * CIDLC/CIDLC.vcproj:
+        
+          Excluded the file RepositoryIdGenerator.cpp from the Release build,
+          as it has already been excluded from the Debug build. Thanks to
+          Marek Brudka <mbrudka@elka.pw.edu.pl> for reporting the problem.
+
 Sun Mar 28 23:51:17 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* TAO/CIAO/tools/RTComponentServer/Makefile.RTComponentServer:
