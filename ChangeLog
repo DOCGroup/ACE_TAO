@@ -1,3 +1,12 @@
+Thu Apr  1 18:03:10 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* bin/make_release: 
+
+	  We now generate static project files for VC6, solution and
+	  vcproj files for VC7 (for the whole of
+	  ACE+TAO+CIAO). Additionally we also generate em3 files for the
+	  whole of ACE. This is for the ACE distribution only. 
+
 Thu Apr  1 10:21:31 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/SLEWorkspaceCreator.pm:
