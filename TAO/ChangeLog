@@ -20,6 +20,10 @@ Mon Aug  4 11:06:55 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tao/IORManipulation/IORC.i: A new operation, remove_primary_tag
 	  ()  on TAO_IOP::TAO_IOR_Property interface. Please see
 	  documentation for details. 
+
+	  Further all operations in TAO_IOP::TAO_IOR_Property interface
+	  that modify parameters have been made inout instead of just
+	  in. This was causing all sorts of confusion for a normal user. 
 	
 	* tao/IORManipulation/IORManipulation.cpp:
 	* tao/IORManipulation/IORManipulation.h: A concrete implementation
