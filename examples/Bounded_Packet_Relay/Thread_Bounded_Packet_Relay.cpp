@@ -101,16 +101,13 @@ Text_Output_Device_Wrapper::write_output_message (void *message)
   if (message)
     {
       if (logging_)
-	  {
-          ACE_DEBUG ((LM_DEBUG, "%s", 
-	      ACE_static_cast (ACE_Message_Block *, message)->
-		    rd_ptr ()));
-	  }
-
-      delete ACE_static_cast (ACE_Message_Block *, message);
-	  return 0;
+        ACE_DEBUG ((LM_DEBUG, "%s", 
+                    ACE_static_cast (ACE_Message_Block *, message)->
+                    rd_ptr ()));
+      delete ACE_static_cast (ACE_Message_Block *,
+                              message);
+      return 0;
     }
-
   ACE_ERROR_RETURN ((LM_ERROR,
                      "Text_Output_Device_Wrapper::"
                      "write_output_message: null argument"), -1);
