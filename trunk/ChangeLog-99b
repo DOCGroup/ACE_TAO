@@ -7,6 +7,8 @@ Fri Apr 30 22:53:01 1999  David L. Levine  <levine@cs.wustl.edu>
           properly destroyed if it's on the stack.  And, it's better
           for subset support if we avoid class ACE calls from OS.h.
 
+        * include/makeinclude/rules.lib.GNU: cleaned up a bit.
+
 Fri Apr 30 17:42:11 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
         * ace/OS.i (pthread_sigmask):
