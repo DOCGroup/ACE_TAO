@@ -1,3 +1,10 @@
+Wed Oct 13 11:18:34 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* performance-tests/Protocols/sender.cpp:
+
+	  Fixed a nagging compiiler error in Win32 platforms.
+
+
 Wed Oct 13 07:08:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/RTPortableServer/RT_Acceptor_Filters.h:
