@@ -1,3 +1,10 @@
+Wed Sep 13 23:13:47 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+	* tao/uiop_endpoints.h
+	* tao/iiop_endpoints.h:
+
+	  Fixed pragma warnings for egcs.
+
 Wed Sep 13 21:37:38 2000  Marina Spivak  <marina@cs.wustl.edu>
 
 	* tao/Invocation.cpp

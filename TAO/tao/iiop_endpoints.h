@@ -12,13 +12,13 @@
 #define _TAO_IDL_IIOP_ENDPOINTSC_H_
 
 #include "ace/pre.h"
+#include "tao/corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Managed_Types.h"
-#include "tao/corbafwd.h"
 #include "tao/Sequence.h"
 #include "tao/Any.h"
 #include "tao/Typecode.h"
@@ -66,18 +66,18 @@ public:
   TAO_IIOP_Endpoint_Info_var (TAO_IIOP_Endpoint_Info *);
   TAO_IIOP_Endpoint_Info_var (const TAO_IIOP_Endpoint_Info_var &); // copy constructor
   ~TAO_IIOP_Endpoint_Info_var (void); // destructor
-  
+
   TAO_IIOP_Endpoint_Info_var &operator= (TAO_IIOP_Endpoint_Info *);
   TAO_IIOP_Endpoint_Info_var &operator= (const TAO_IIOP_Endpoint_Info_var &);
   TAO_IIOP_Endpoint_Info *operator-> (void);
   const TAO_IIOP_Endpoint_Info *operator-> (void) const;
-  
+
   operator const TAO_IIOP_Endpoint_Info &() const;
   operator TAO_IIOP_Endpoint_Info &();
   operator TAO_IIOP_Endpoint_Info &() const;
   operator TAO_IIOP_Endpoint_Info *&(); // variable-size types only
-  
-  // in, inout, out, _retn 
+
+  // in, inout, out, _retn
   const TAO_IIOP_Endpoint_Info &in (void) const;
   TAO_IIOP_Endpoint_Info &inout (void);
   TAO_IIOP_Endpoint_Info *&out (void);
@@ -99,7 +99,7 @@ public:
   operator TAO_IIOP_Endpoint_Info *&();
   TAO_IIOP_Endpoint_Info *&ptr (void);
   TAO_IIOP_Endpoint_Info *operator-> (void);
-  
+
 private:
   TAO_IIOP_Endpoint_Info *&ptr_;
   // assignment from T_var not allowed
@@ -110,7 +110,7 @@ extern TAO_Export CORBA::TypeCode_ptr  _tc_TAO_IIOP_Endpoint_Info;
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_TAO_IIOPENDPOINTSEQUENCE_CH_)
 #define __TAO_UNBOUNDED_SEQUENCE_TAO_IIOPENDPOINTSEQUENCE_CH_
 
@@ -118,9 +118,9 @@ extern TAO_Export CORBA::TypeCode_ptr  _tc_TAO_IIOP_Endpoint_Info;
   {
   public:
     // = Initialization and termination methods.
-    
+
     _TAO_Unbounded_Sequence_TAO_IIOPEndpointSequence (void); // Default constructor.
-    _TAO_Unbounded_Sequence_TAO_IIOPEndpointSequence (CORBA::ULong maximum); 
+    _TAO_Unbounded_Sequence_TAO_IIOPEndpointSequence (CORBA::ULong maximum);
     _TAO_Unbounded_Sequence_TAO_IIOPEndpointSequence (CORBA::ULong maximum,
       CORBA::ULong length,
       TAO_IIOP_Endpoint_Info *data,
@@ -137,7 +137,7 @@ extern TAO_Export CORBA::TypeCode_ptr  _tc_TAO_IIOP_Endpoint_Info;
     virtual void _allocate_buffer (CORBA::ULong length);
     virtual void _deallocate_buffer (void);
     // Implement the TAO_Base_Sequence methods (see Sequence.h)
-    
+
     TAO_IIOP_Endpoint_Info *get_buffer (CORBA::Boolean orphan = 0);
     const TAO_IIOP_Endpoint_Info *get_buffer (void) const;
     void replace (CORBA::ULong max,
@@ -149,7 +149,7 @@ extern TAO_Export CORBA::TypeCode_ptr  _tc_TAO_IIOP_Endpoint_Info;
 #endif /* end #if !defined */
 
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 
 #if !defined (_TAO_IIOPENDPOINTSEQUENCE_CH_)
 #define _TAO_IIOPENDPOINTSEQUENCE_CH_
@@ -161,20 +161,20 @@ class TAO_IIOPEndpointSequence_var;
 // TAO_IIOPEndpointSequence
 // *************************************************************
 
-class TAO_Export TAO_IIOPEndpointSequence : public 
+class TAO_Export TAO_IIOPEndpointSequence : public
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_TAO_IIOPEndpointSequence
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<TAO_IIOP_Endpoint_Info>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 {
 public:
   TAO_IIOPEndpointSequence (void); // default ctor
   TAO_IIOPEndpointSequence (CORBA::ULong max); // uses max size
   TAO_IIOPEndpointSequence (
-    CORBA::ULong max, 
-    CORBA::ULong length, 
-    TAO_IIOP_Endpoint_Info *buffer, 
+    CORBA::ULong max,
+    CORBA::ULong length,
+    TAO_IIOP_Endpoint_Info *buffer,
     CORBA::Boolean release=0
   );
   TAO_IIOPEndpointSequence (const TAO_IIOPEndpointSequence &); // copy ctor
@@ -204,19 +204,19 @@ public:
   TAO_IIOPEndpointSequence_var (TAO_IIOPEndpointSequence *);
   TAO_IIOPEndpointSequence_var (const TAO_IIOPEndpointSequence_var &); // copy constructor
   ~TAO_IIOPEndpointSequence_var (void); // destructor
-  
+
   TAO_IIOPEndpointSequence_var &operator= (TAO_IIOPEndpointSequence *);
   TAO_IIOPEndpointSequence_var &operator= (const TAO_IIOPEndpointSequence_var &);
   TAO_IIOPEndpointSequence *operator-> (void);
   const TAO_IIOPEndpointSequence *operator-> (void) const;
-  
+
   operator const TAO_IIOPEndpointSequence &() const;
   operator TAO_IIOPEndpointSequence &();
   operator TAO_IIOPEndpointSequence &() const;
   operator TAO_IIOPEndpointSequence *&(); // variable-size base types only
-  
+
   TAO_IIOP_Endpoint_Info &operator[] (CORBA::ULong index);
-  // in, inout, out, _retn 
+  // in, inout, out, _retn
   const TAO_IIOPEndpointSequence &in (void) const;
   TAO_IIOPEndpointSequence &inout (void);
   TAO_IIOPEndpointSequence *&out (void);
@@ -246,7 +246,7 @@ public:
   TAO_IIOPEndpointSequence *&ptr (void);
   TAO_IIOPEndpointSequence *operator-> (void);
   TAO_IIOP_Endpoint_Info &operator[] (CORBA::ULong index);
-  
+
 private:
   TAO_IIOPEndpointSequence *&ptr_;
   // assignment from T_var not allowed
