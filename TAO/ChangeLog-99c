@@ -1,3 +1,9 @@
+Fri Dec 24 08:08:03 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * examples/Simulator/Event_Supplier/Event_Con.{h,cpp},
+          DualEC_Sup.{h,cpp}: added missing ACE_THROW_SPECs.
+          Also, removed declaration of an unused ACE_TRY_ENV arg.
+
 Fri Dec 24 07:57:21 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * examples/Makefile: removed Simulator.  It shouldn't
