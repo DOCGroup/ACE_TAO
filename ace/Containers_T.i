@@ -429,6 +429,14 @@ ACE_DLList_Iterator<T>::next (void) const
   return (T *) (temp ? temp->item_ : 0);
 }
 
+template <class T> ACE_INLINE int
+ACE_DLList_Iterator<T>::remove (void)
+{
+  ACE_DLList_Node *temp = ACE_DLList_Iterator_Base::next ();
+  ACE_DLList_Iterator_Base::advance ();
+  return this->dllist_.remove (temp);
+}
+
 template <class T> ACE_INLINE void 
 ACE_DLList_Iterator<T>::dump (void) const
 { 
