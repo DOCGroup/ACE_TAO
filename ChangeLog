@@ -1,3 +1,9 @@
+Thu May 30 10:01:12 2002  Ossama Othman  <ossama@uci.edu>
+
+	* ace/UPIPE_Stream.h (ACE_UPIPE_Stream):
+
+	  Added missing PEER_ADDR trait.
+
 Thu May 30 16:45:10 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 	[Bug 1208]
