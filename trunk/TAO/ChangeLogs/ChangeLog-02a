@@ -1,3 +1,10 @@
+Tue Oct  3 09:47:12 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * tao/TAO.dsp:
+        * tao/TAO_Static.dsp:
+
+          Added the CORBALOC files to the projects.
+
 Tue Oct  3 10:52:07 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/ast/ast_structure.cpp:

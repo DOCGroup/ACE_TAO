@@ -613,6 +613,25 @@ SOURCE=.\corbafwd.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\CORBALOC_Parser.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\CurrentC.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
@@ -3437,6 +3456,10 @@ SOURCE=.\corbafwd.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\CORBALOC_Parser.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\CurrentC.h
 # End Source File
 # Begin Source File
@@ -4066,6 +4089,10 @@ SOURCE=.\CORBA_String.inl
 # Begin Source File
 
 SOURCE=.\corbafwd.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\CORBALOC_Parser.i
 # End Source File
 # Begin Source File
 
