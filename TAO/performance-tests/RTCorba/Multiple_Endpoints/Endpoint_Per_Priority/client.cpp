@@ -10,6 +10,8 @@
 
 ACE_RCSID(Latency, client, "$Id$")
 
+#if (TAO_HAS_CLIENT_PRIORITY_POLICY == 1)
+
 class Client : public ACE_Task_Base
 {
   // = TITLE
@@ -388,3 +390,16 @@ Client::dump_stats (const char* msg, ACE_UINT32 gsf)
 {
   this->throughput_.dump_results (msg, gsf);
 }
+
+#else /* TAO_HAS_CLIENT_PRIORITY_POLICY == 1 */
+
+int
+main (int argc, char *argv[])
+{
+  ACE_UNUSED_ARG (argc);
+  ACE_UNUSED_ARG (argv);
+  ACE_ERROR_RETURN ((LM_ERROR,
+          "\n TAO::ClientPriorityPolicy must be enabled to run this test!\n"),
+                    1);
+}
+#endif /* TAO_HAS_CLIENT_PRIORITY_POLICY == 1 */
