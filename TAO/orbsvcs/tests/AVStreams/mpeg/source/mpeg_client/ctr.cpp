@@ -50,6 +50,7 @@
 #include "../mpeg_shared/filters.h"
 #include "../mpeg_shared/fileio.h"
 #include "../mpeg_shared/com.h"
+#include "Command_Handler.h"
 
 #define SPEEDHIST_SIZE 20
 
@@ -113,7 +114,33 @@ static int fb_startup = 0; /* Indicate the first feedback action. The first feed
 
 static void compute_sendPattern(void);
 
-static void CmdRead(char *buf, int size)
+int
+OurCmdRead(char *buf, int size)
+{
+  int val;
+  if (size == 0) return 0;
+  if (cmdBytes > 0)
+  {
+    memcpy(buf, cmdBuffer, size);
+    cmdBytes -= size;
+    cmdBuffer += size;
+    return 0;
+  }
+  while ((val = read(cmdSocket, (buf), (size))) <= 0)
+    {
+    if (val == -1 && errno == EINTR) return 1;
+    if (!val) {
+      perror("CTR error, EOF reached unexpected within CmdRead()");
+    }
+    else {
+      perror("CTR CmdRead() from UI through CmdSocket");
+    }
+    exit(1);
+  }
+  return 0;
+}
+
+void CmdRead(char *buf, int size)
 {
   int val;
   if (size == 0) return;
@@ -125,7 +152,7 @@ static void CmdRead(char *buf, int size)
     return;
   }
   while ((val = read(cmdSocket, (buf), (size))) <= 0)
-  {
+    {
     if (val == -1 && errno == EINTR) continue;
     if (!val) {
       perror("CTR error, EOF reached unexpected within CmdRead()");
@@ -1667,7 +1694,7 @@ static void loopBack(void)
   cmdAcks = 3;
 }
 
-static void TimerHandler(int sig)
+void TimerHandler(int sig)
 {
   int currentUPF = shared->currentUPF;
   /*
@@ -2372,7 +2399,7 @@ static int PlayAudio(void)
 }
 
 
-static void TimerProcessing(void)
+void TimerProcessing(void)
 {
   if (audioSocket >= 0 && shared->cmd == CmdPLAY)
   {
@@ -2531,7 +2558,7 @@ static void start_timer(void)
   */
   val.it_interval.tv_sec =  val.it_value.tv_sec = timerUPF / 1000000;
   val.it_interval.tv_usec = val.it_value.tv_usec = timerUPF % 1000000;
-  setsignal(SIGALRM, TimerHandler);
+  //  setsignal(SIGALRM, TimerHandler);
   setitimer(ITIMER_REAL, &val, NULL);
 }
 
@@ -2544,7 +2571,7 @@ static void stop_timer(void)
   
   timer_on = 0;
 
-  setsignal(SIGALRM, SIG_IGN);
+  //  setsignal(SIGALRM, SIG_IGN);
   
   val.it_interval.tv_sec =  val.it_value.tv_sec = 0;
   val.it_interval.tv_usec = val.it_value.tv_usec = 0;
@@ -2750,7 +2777,7 @@ static void on_exit_routine(void)
 
 #define EXP_PLAN_FILE "experiment_plan"
 
-void CTRmain(void)
+int CTRmain(void)
 {
   int sv[2];
   extern void set_exit_routine_tag(int tag);
@@ -2758,7 +2785,7 @@ void CTRmain(void)
   FILE * fp = NULL;   /* file pointer for experiment plan */
 
   set_exit_routine_tag(0);
-  setsignal(SIGUSR2, default_usr2_handler);
+  //  setsignal(SIGUSR2, default_usr2_handler);
   
   /* allocate shared data structure and initialize it */
   shared = (SharedData *) creat_shared_mem(sizeof(*shared));
@@ -2854,7 +2881,7 @@ void CTRmain(void)
     UIprocess(sv[1]);
   }
   close(sv[1]);
-  setsignal(SIGUSR1, usr1_handler);
+  //  setsignal(SIGUSR1, usr1_handler);
   
   /* initialize Audio device */
   if (InitAudioDevice() == 0)
@@ -2889,6 +2916,42 @@ void CTRmain(void)
   }
 
   atexit(on_exit_routine);
+
+
+  // instantiate our command handler
+  Command_Handler *command_handler;
+  ACE_NEW_RETURN (command_handler,
+                  Command_Handler (cmdSocket),
+                  -1);
+
+  // .. and register it with the reactor.
+  if (ACE_Reactor::instance ()->register_handler (command_handler,
+                                                  ACE_Event_Handler::READ_MASK) == -1)
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%P|%t) register_handler for command_handler failed\n"),
+                        -1);
+  
+  // and now instantiate the sig_handler
+  Client_Sig_Handler *client_sig_handler;
+  ACE_NEW_RETURN (client_sig_handler,
+                  Client_Sig_Handler (),
+                  -1);
+
+  // .. and ask it to register itself with the reactor
+  if (client_sig_handler->register_handler () < 0)
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%P|%t) register_handler for sig_handler failed\n"),
+                        -1);
+  
+  // and run the event loop
+  ACE_Reactor::instance ()->run_event_loop ();
+
+  ACE_DEBUG ((LM_DEBUG, 
+              "(%P|%t) Exited the client command handler event loop\n"
+              "%p\n",
+              "run_event_loop"));
+  
+  return 0;
   
   for (;;)
   {
