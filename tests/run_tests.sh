@@ -186,30 +186,32 @@ fi # ! procnto
 # Redirection gets confused when rsh is involved (Chorus)
 for i in `cat run_tests.lst | tr "\012" "$IFS"`; do
 
-  case $i in
-    */*)
-       p=`dirname $i | sed 's%/% \&\& test $%g'`;
-       precond="\$$p";
-       test=`basename $i`;
-       ;;
-    *)
-       precond="";
-       test=$i;
-      ;;
-  esac
+  if [ "$i" != "" ]; then
+
+    case $i in
+      */*)
+         p=`dirname $i | sed 's%/% \&\& test $%g'`;
+         precond="\$$p";
+         test=`basename $i`;
+         ;;
+      *)
+         precond="";
+         test=$i;
+        ;;
+    esac
  
 #  echo =****= $precond ===== $test;
 
-  if test -z "$precond"; then
-    run $test
-  elif eval test $precond; then
-    run $test
-  else
-    if echo $precond | egrep '(DISABLED)|(OTHER)' > /dev/null; then :; else
-      echo Skipping $test on this platform
+    if test -z "$precond"; then
+      run $test
+    elif eval test $precond; then
+      run $test
+    else
+      if echo $precond | egrep '(DISABLED)|(OTHER)' > /dev/null; then :; else
+        echo Skipping $test on this platform
+      fi
     fi
   fi
-
 done
 
 echo "Finished ACE version $ace_version tests."
