@@ -618,6 +618,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "INET_Addr_Test_IPV6"=".\INET_Addr_Test_IPV6.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "IOStream_Test"=".\IOStream_Test.dsp" - Package Owner=<4>
 
 Package=<5>
@@ -843,6 +855,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "Max_Default_Port_Test_IPV6"=".\Max_Default_Port_Test_IPV6.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Mem_Map_Test"=".\Mem_Map_Test.dsp" - Package Owner=<4>
 
 Package=<5>
@@ -933,6 +957,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "Multicast_Test_IPV6"=".\Multicast_Test_IPV6.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Multihomed_INET_Addr_Test"=".\Multihomed_INET_Addr_Test.dsp" - Package Owner=<4>
 
 Package=<5>
@@ -944,6 +980,18 @@ Package=<4>
     Begin Project Dependency
     Project_Dep_Name Test_Output DLL
     End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Multihomed_INET_Addr_Test_IPV6"=".\Multihomed_INET_Addr_Test_IPV6.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
 }}}
 
 ###############################################################################
@@ -1154,6 +1202,18 @@ Package=<4>
     Begin Project Dependency
     Project_Dep_Name Test_Output DLL
     End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Proactor_Test_IPV6"=".\Proactor_Test_IPV6.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
 }}}
 
 ###############################################################################
@@ -1485,6 +1545,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "SOCK_Send_Recv_Test_IPV6"=".\SOCK_Send_Recv_Test_IPV6.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "SOCK_Test"=".\SOCK_Test.dsp" - Package Owner=<4>
 
 Package=<5>
@@ -1496,6 +1568,18 @@ Package=<4>
     Begin Project Dependency
     Project_Dep_Name Test_Output DLL
     End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "SOCK_Test_IPv6"=".\SOCK_Test_IPv6.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
 }}}
 
 ###############################################################################
