@@ -14,6 +14,8 @@ public:
   static void dump_properties (const CosTrading::PropertySeq& prop_seq);
   // Dump the contents of this property sequence.
 
+  static void serialize_offer (const CosTrading::Offer& offer);
+  
   enum INTERFACES
   {
     REMOTE_IO,
