@@ -35,7 +35,7 @@ ifeq ($(findstring xlC,$(CXX)),xlC)
   clean realclean:
 	@echo Nothing to clean in IFR_Service.
 else
-MKLIST = Makefile.IFR_Service Makefile.tao_ifr Makefile.IFR_Service_LIB
+MKLIST = Makefile.IFR_Service Makefile.tao_ifr
 
 all debug profile optimize install deinstall clean realclean clobber depend idl_stubs:
 ifeq (Windows,$(findstring Windows,$(OS)))
