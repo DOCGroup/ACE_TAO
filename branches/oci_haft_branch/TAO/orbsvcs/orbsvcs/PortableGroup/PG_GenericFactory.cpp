@@ -240,7 +240,7 @@ TAO_PG_GenericFactory::delete_object (
             oid.in ()
             ACE_ENV_ARG_PARAMETER);
           ACE_CHECK;
-#endif 0
+#endif
         }
     }
   else
@@ -302,9 +302,9 @@ TAO_PG_GenericFactory::delete_object_i (TAO_PG_Factory_Set & factory_set,
 
 void
 TAO_PG_GenericFactory::delete_member (
-  PortableGroup::ObjectGroupId group_id,
-  const PortableGroup::Location & location
-  ACE_ENV_ARG_DECL)
+    PortableGroup::ObjectGroupId ,
+    const PortableGroup::Location &
+    ACE_ENV_ARG_DECL)
 {
 
   //TODO - Fix this code. The original implementation for the load balancer assumed
@@ -594,12 +594,12 @@ TAO_PG_GenericFactory::process_criteria (
 
 void
 TAO_PG_GenericFactory::check_minimum_number_members (
-  PortableGroup::ObjectGroup_ptr object_group,
-  PortableGroup::ObjectGroupId group_id,
+  PortableGroup::ObjectGroup_ptr ,
+  PortableGroup::ObjectGroupId ,
   const char * type_id
   ACE_ENV_ARG_DECL)
 {
- 
+
   //TODO - Fix this code. The original implementation for the load balancer assumed
   //       that the factory-creation-id was the same as the object-group-id. This
   //       is not longer true. The find below is supposed to be a factory-creation-id.

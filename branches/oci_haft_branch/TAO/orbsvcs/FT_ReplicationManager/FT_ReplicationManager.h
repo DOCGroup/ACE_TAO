@@ -15,7 +15,9 @@
 #ifndef FT_REPLICATION_MANAGER_H_
 #define FT_REPLICATION_MANAGER_H_
 
-#include "ace/pre.h"
+// @@ OCI Folks please add /**/ with every pre.h. This would make out
+// documentation from doxygen much cleaner.
+#include /**/ "ace/pre.h"
 
 #include "orbsvcs/FT_ReplicationManagerS.h"
 #include "orbsvcs/FT_NotifierC.h"
@@ -35,6 +37,17 @@
 /////////////////////
 // Forward references
 class TAO_ORB_Manager;
+
+//@@ OCI folks - Could you place the Ft_Replicationmanager in a
+// seperate namespace. This could lead to namespace pollutions. I
+//recommend that you folks place it in namespace TAO like this
+//
+// namespace TAO
+// {
+//   class FT_Replicationmanager {}
+//
+//
+// }
 
 /**
  * Implement the ReplicationManager interfaces.
@@ -89,7 +102,7 @@ private:
   /**
    * Write this factory's IOR to a file
    */
-  int write_IOR ();
+  int write_IOR (void);
 
   /**
    * Extract the value of the InitialNumberReplicas property from

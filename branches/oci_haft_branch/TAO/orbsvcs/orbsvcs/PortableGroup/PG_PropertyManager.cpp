@@ -21,23 +21,21 @@ TAO_PG_PropertyManager::TAO_PG_PropertyManager (
 }
 
 
-void 
-TAO_PG_PropertyManager::init ( 
+void
+TAO_PG_PropertyManager::init (
   TAO_PG_Default_Property_Validator * property_validator )
 {
   if (property_validator)
-  {
-    property_validator_ = property_validator;
-  }
+    {
+      property_validator_ = property_validator;
+    }
   else
-  {
-    ACE_NEW_THROW_EX (
-        property_validator_,
-        TAO_PG_Default_Property_Validator,
-        CORBA::NO_MEMORY ()
-    );
-    ACE_CHECK;
-  }
+    {
+      // @@OCI-folks have an environment variable for throwing
+      // exceptions.
+      ACE_NEW (property_validator_,
+               TAO_PG_Default_Property_Validator);
+    }
 }
 
 
@@ -138,7 +136,7 @@ TAO_PG_PropertyManager::set_type_properties (
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->lock_);
 
   Type_Prop_Table::ENTRY * entry;
-  if (this->type_properties_.find (type_id, entry) == 0) 
+  if (this->type_properties_.find (type_id, entry) == 0)
   {
     PortableGroup::Properties & props = entry->int_id_;
     props = overrides;
@@ -246,10 +244,11 @@ TAO_PG_PropertyManager::set_properties_dynamically (
   PortableGroup::Properties * dynamic_properties =
     this->object_group_manager_.get_dynamic_properties (object_group
                                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  ACE_CHECK;
 
   // Now override the dynamic (object group) properties with the new values
-  TAO_PG::override_properties (overrides, *dynamic_properties);
+  TAO_PG::override_properties (overrides,
+                               *dynamic_properties);
 }
 
 

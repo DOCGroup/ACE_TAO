@@ -1,3 +1,21 @@
+Fri Sep 19 20:02:13 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/FT_ReplicationManager/FT_ReplicationManager.cpp:
+	* orbsvcs/FT_ReplicationManager/FT_ReplicationManager.h:
+	* orbsvcs/Fault_Notifier/FT_Notifier_i.h: Did a 20000 feet level
+	  code review and left comments for OCI folks. More needs to be
+	  done. 
+
+	* orbsvcs/orbsvcs/Makefile.CosLoadBalancing:
+	* orbsvcs/orbsvcs/Makefile.PortableGroup: Added an -I for the IDL
+	  compiler to include orbsvcs
+
+	* orbsvcs/orbsvcs/PortableGroup/PG_GenericFactory.cpp:
+	* orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroup_Map.cpp:
+	* orbsvcs/orbsvcs/PortableGroup/PG_PropertyManager.cpp:
+	* orbsvcs/orbsvcs/PortableGroup/PG_Property_Utils.cpp: Fixed
+	  compilation errors and unused variable warnings with g++. 
+
 Fri Sep 19 19:49:11 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/FaultTolerance/FT_ServerRequest_Interceptor.cpp:
