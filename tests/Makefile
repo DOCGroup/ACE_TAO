@@ -91,6 +91,8 @@ ifeq (Token,$(findstring Token,$(ACE_BUILD_COMPONENTS)))
   BIN += Tokens_Test
 endif # ! Token
 
+PSRC=$(addsuffix .cpp,$(BIN))
+
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
