@@ -1150,19 +1150,11 @@ SOURCE=.\ULongSeqC.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\ULongSeqS.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\UShortSeqA.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=.\UShortSeqC.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\UShortSeqS.cpp
 # End Source File
 # Begin Source File
 
