@@ -11,7 +11,7 @@
 INFO	= 
 LIBS	= -lACE
 DIRS	= driver fe ast util narrow be
-BIN	= tao
+BIN	= tao_idl
 TAOLIBS	= -ldrv -lfe -last -lutil -lnarrow -lbe
 CLONE	= 
 BUILD	= $(VBIN)
@@ -31,7 +31,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.nolocal.GNU
 #----------------------------------------------------------------------------
 
 all:
-	$(PRELINK) $(CXX) -g -o tao $(TAOLIBS) $(LIBS) -lthread
+	$(PRELINK) $(CXX) -g -o $(BIN) $(TAOLIBS) $(LIBS) -lthread
 
 tags:
 	rm -f TAGS
@@ -39,8 +39,8 @@ tags:
 	etags -a ast/*.cpp util/*.cpp narrow/*.cpp \
 		driver/*.cpp fe/*.cpp be/*.cpp
 clean:
-	rm -f tao
+	rm -f tao_idl
 
 realclean:
-	rm -f tao TAGS
+	rm -f tao_idl TAGS
 
