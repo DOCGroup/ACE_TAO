@@ -19,7 +19,7 @@ ifeq (,$(threads))
   threads = 1
 endif
 ifeq ($(threads),0)
-  CFLAGS += -DACE_MT_SAFE=0
+  CPPFLAGS += -DACE_MT_SAFE=0
 endif # threads
 
 PLATFORM_XT_CPPFLAGS=
@@ -59,7 +59,7 @@ endif
 
 CFLAGS  += -W -Wall -Wpointer-arith -pipe
 ifeq ($(threads),1)
-    CFLAGS  += -D_POSIX_THREADS -D_POSIX_THREAD_SAFE_FUNCTIONS -D_REENTRANT \
+    CPPFLAGS  += -D_POSIX_THREADS -D_POSIX_THREAD_SAFE_FUNCTIONS -D_REENTRANT \
                $(PLATFORM_AIO_SUPPORT)
 endif # threads
 
