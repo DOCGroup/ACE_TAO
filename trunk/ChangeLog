@@ -1,3 +1,9 @@
+Tue May 07 21:03:01 2002  Ossama Othman  <ossama@uci.edu>
+
+	* ace/Dev_Poll_Reactor.cpp:
+
+	  Removed vestigial debugging code.
+
 Tue May 07 17:42:16 2002  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/OS.i: Added missing "\".
