@@ -127,8 +127,8 @@ typedef unsigned __int64 ACE_UINT64;
 #define ACE_LACKS_UNIX_DOMAIN_SOCKETS
 
 // Windows NT needs readv() and writev()
-#define ACE_NEEDS_WRITEV
-#define ACE_NEEDS_READV
+#define ACE_LACKS_WRITEV
+#define ACE_LACKS_READV
 
 #define ACE_LACKS_COND_T
 #define ACE_LACKS_RWLOCK_T

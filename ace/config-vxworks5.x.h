@@ -128,7 +128,7 @@
 #if !defined (ACE_MT_SAFE)
 # define ACE_MT_SAFE 1
 #endif
-#define ACE_NEEDS_SYSTIME_H
+#define ACE_LACKS_SYSTIME_H
 #define ACE_PAGE_SIZE 4096
 #define ACE_THR_PRI_FIFO_DEF 101
 

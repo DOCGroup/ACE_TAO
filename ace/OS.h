@@ -506,12 +506,12 @@ private:
 #   define ACE_NOTREACHED(a) a
 # endif /* defined (__sgi) || defined (ghs) || defined (DEC_CXX) || defined(__BORLANDC__) */
 
-# if defined (ACE_REQUIRES_FUNC_DEFINITIONS)
+# if defined (ACE_NEEDS_FUNC_DEFINITIONS)
 // It just evaporated ;-) Not pleasant.
 #   define ACE_UNIMPLEMENTED_FUNC(f)
 # else
 #   define ACE_UNIMPLEMENTED_FUNC(f) f;
-# endif /* ACE_REQUIRES_FUNC_DEFINITIONS */
+# endif /* ACE_NEEDS_FUNC_DEFINITIONS */
 
 // Easy way to designate that a class is used as a pseudo-namespace.
 // Insures that g++ "friendship" anamolies are properly handled.
@@ -1044,7 +1044,7 @@ extern "C" pthread_t pthread_self (void);
 #   endif /* __Lynx__ */
 # endif /* ACE_HAS_WINCE */
 
-# if defined (ACE_NEEDS_SYSTIME_H)
+# if defined (ACE_LACKS_SYSTIME_H)
 // Some platforms may need to include this, but I suspect that most
 // will get it from <time.h>
 #   if defined (VXWORKS)
@@ -1052,7 +1052,7 @@ extern "C" pthread_t pthread_self (void);
 #   else
 #     include /**/ <sys/time.h>
 #   endif /* VXWORKS */
-# endif /* ACE_NEEDS_SYSTIME_H */
+# endif /* ACE_LACKS_SYSTIME_H */
 
 # if !defined (ACE_HAS_POSIX_TIME) && !defined (ACE_PSOS)
 // Definition per POSIX.
@@ -2455,9 +2455,9 @@ protected:
 
 # endif /* ACE_PSOS_SNARFS_HEADER_INFO */
 
-# if defined (ACE_NEEDS_SCHED_H)
+# if defined (ACE_LACKS_SCHED_H)
 #   include /**/ <sched.h>
-# endif /* ACE_NEEDS_SCHED_H */
+# endif /* ACE_LACKS_SCHED_H */
 
 # if defined (ACE_HAS_WINCE)
 #   define islower iswlower
@@ -4417,6 +4417,9 @@ public:
                        size_t size,
                        size_t nelems,
                        FILE *fp);
+  static int fseek (FILE *fp,
+                    long offset,
+                    int ptrname);
   static int fstat (ACE_HANDLE,
                     struct stat *);
   static int ftruncate (ACE_HANDLE,
@@ -4427,7 +4430,16 @@ public:
                         FILE *fp);
   static void rewind (FILE *fp);
 
-  static int fseek (FILE *fp, long offset, int ptrname);
+  // = Wrappers for searching and sorting.
+  static void *bsearch (const void *key,
+                        const void *base,
+                        size_t nel,
+                        size_t size,
+                        int (*compar)(const  void  *,  const  void *));
+  static void qsort (void *base,
+                     size_t nel,
+                     size_t width,
+                     int (*compar) (const void *, const void *));
 
   // = A set of wrappers for file locks.
   static int flock_init (ACE_OS::ace_flock_t *lock,

@@ -250,7 +250,7 @@ ACE_Message_Queue_Vx::wait_not_empty_cond (ACE_Guard<ACE_Null_Mutex> &mon,
   return 0;
 }
 
-#if ! defined (ACE_REQUIRES_FUNC_DEFINITIONS)
+#if ! defined (ACE_NEEDS_FUNC_DEFINITIONS)
 int
 ACE_Message_Queue_Vx::peek_dequeue_head (ACE_Message_Block *&,
                                          ACE_Time_Value *tv)
@@ -258,7 +258,7 @@ ACE_Message_Queue_Vx::peek_dequeue_head (ACE_Message_Block *&,
   ACE_UNUSED_ARG (tv);
   ACE_NOTSUP_RETURN (-1);
 }
-#endif /* ! ACE_REQUIRES_FUNC_DEFINITIONS */
+#endif /* ! ACE_NEEDS_FUNC_DEFINITIONS */
 
 #endif /* VXWORKS */
 

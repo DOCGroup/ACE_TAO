@@ -38,8 +38,8 @@
 
 // OS-specific configuration
 
-# define ACE_NEEDS_WRITEV
-# define ACE_NEEDS_READV
+# define ACE_LACKS_WRITEV
+# define ACE_LACKS_READV
 # define ACE_HAS_BROKEN_READV
 
 // Optimize ACE_Handle_Set for select().

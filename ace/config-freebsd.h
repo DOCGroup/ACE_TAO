@@ -83,7 +83,7 @@ ange */
 // Platform defines struct timespec but not timespec_t
 #define ACE_LACKS_TIMESPEC_T
 
-#define ACE_NEEDS_SYSTIME_H
+#define ACE_LACKS_SYSTIME_H
 
 #define ACE_LACKS_STRRECVFD
 
