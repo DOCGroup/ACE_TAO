@@ -130,7 +130,7 @@ public:
   /// Reclaim reactor resources (e.g. deallocate, etc).
   virtual void reclaim_reactor (ACE_Reactor *reactor);
 
-  /// return a reference to the acceptor registry.
+  /// Return a reference to the acceptor registry.
   virtual TAO_Acceptor_Registry *get_acceptor_registry (void);
 
   /// Return an Connector to be utilized.
@@ -168,7 +168,7 @@ public:
   virtual int init_protocol_factories (void);
 
   /// This accesses the connection caching strategy we use for managing
-  /// purging of unused entries from the connection cache on demnad.
+  /// purging of unused entries from the connection cache on demand.
   virtual Caching_Strategy connection_caching_strategy_type (void) const;
 
   /// This denotes the maximum number of connections that can be cached.
