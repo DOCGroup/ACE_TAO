@@ -24,7 +24,6 @@
 #include "PortableInterceptorC.h"
 #include "LocalObject.h"
 #include "StringSeqC.h"
-#include "CodecFactory.h"
 
 // This is to remove "inherits via dominance" warnings from MSVC.
 // MSVC is being a little too paranoid.
@@ -168,7 +167,7 @@ public:
 
   //@{
   /// Allocate a slot in the ORB's TSS resources.
-  /** 
+  /**
    * TAO uses a single TSS key for these resources, so it is useful to
    * place TSS objects in TAO's TSS resources on platforms where the
    * number of TSS keys is low.  The returned SlotId can be used to
@@ -204,26 +203,26 @@ public:
 #endif /* ! __GNUC__ || g++ >= 2.8 */
 
   static TAO_ORBInitInfo_ptr _duplicate (TAO_ORBInitInfo_ptr obj);
-  
+
   static TAO_ORBInitInfo_ptr _narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
-  
+
   static TAO_ORBInitInfo_ptr _unchecked_narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
-  
+
   static TAO_ORBInitInfo_ptr _nil (void)
     {
       return (TAO_ORBInitInfo_ptr)0;
     }
-  
+
   virtual void *_tao_QueryInterface (ptr_arith_t type);
-  
+
   virtual const char* _interface_repository_id (void) const;
   //@}
 
@@ -258,9 +257,10 @@ private:
   /// The argument vector passed to CORBA::ORB_init().
   char **argv_;
 
-  /// Instance of the IOP::CodecFactory.  Returned by
-  /// ORBInitInfo::codec_factory ().
-  TAO_CodecFactory codec_factory_;
+  /// Reference to the CodecFactory returned by
+  /// ORBInitInfo::codec_factory().
+  IOP::CodecFactory_var codec_factory_;
+
 };
 
 /**
@@ -269,24 +269,25 @@ private:
 class TAO_Export TAO_ORBInitInfo_var : public TAO_Base_var
 {
 public:
+
   TAO_ORBInitInfo_var (void); // default constructor
-  TAO_ORBInitInfo_var (TAO_ORBInitInfo_ptr p) : ptr_ (p) {} 
+  TAO_ORBInitInfo_var (TAO_ORBInitInfo_ptr p) : ptr_ (p) {}
   TAO_ORBInitInfo_var (const TAO_ORBInitInfo_var &); // copy constructor
   ~TAO_ORBInitInfo_var (void); // destructor
-  
+
   TAO_ORBInitInfo_var &operator= (TAO_ORBInitInfo_ptr);
   TAO_ORBInitInfo_var &operator= (const TAO_ORBInitInfo_var &);
   TAO_ORBInitInfo_ptr operator-> (void) const;
-  
+
   operator const TAO_ORBInitInfo_ptr &() const;
   operator TAO_ORBInitInfo_ptr &();
-  // in, inout, out, _retn 
+  // in, inout, out, _retn
   TAO_ORBInitInfo_ptr in (void) const;
   TAO_ORBInitInfo_ptr &inout (void);
   TAO_ORBInitInfo_ptr &out (void);
   TAO_ORBInitInfo_ptr _retn (void);
   TAO_ORBInitInfo_ptr ptr (void) const;
-  
+
   // Hooks used by template sequence and object manager classes
   // for non-defined forward declared interfaces.
   static TAO_ORBInitInfo_ptr duplicate (TAO_ORBInitInfo_ptr);
@@ -299,10 +300,12 @@ public:
   static CORBA::Object * upcast (void *);
 
 private:
+
   TAO_ORBInitInfo_ptr ptr_;
   // Unimplemented - prevents widening assignment.
   TAO_ORBInitInfo_var (const TAO_Base_var &rhs);
   TAO_ORBInitInfo_var &operator= (const TAO_Base_var &rhs);
+
 };
 
 

@@ -76,10 +76,29 @@ IOP::CodecFactory_ptr
 TAO_ORBInitInfo::codec_factory (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->check_validity (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (IOP::CodecFactory::_nil ());
+  // The CodecFactory is stateless and reentrant, so share a single
+  // instance between all ORBs.
 
-  return &(this->codec_factory_);
+  if (CORBA::is_nil (this->codec_factory_.in ()))
+    {
+      // A new instance must be allocated since the application code
+      // may have registered an ORBInitializer that requires a
+      // CodecFactory before the CodecFactory is itself registered
+      // with the ORB.
+      IOP::CodecFactory_ptr codec_factory;
+      ACE_NEW_THROW_EX (codec_factory,
+                        TAO_CodecFactory,
+                          CORBA::NO_MEMORY (
+                            CORBA::SystemException::_tao_minor_code (
+                              TAO_DEFAULT_MINOR_CODE,
+                              ENOMEM),
+                            CORBA::COMPLETED_NO));
+      ACE_CHECK;
+
+      this->codec_factory_ = codec_factory;
+    }
+
+  return IOP::CodecFactory::_duplicate (this->codec_factory_.in ());
 }
 
 void
@@ -92,17 +111,6 @@ TAO_ORBInitInfo::register_initial_reference (
 {
   this->check_validity (ACE_TRY_ENV);
   ACE_CHECK;
-
-  // This method is only valid during pre_init(), i.e. only before
-  // TAO_ORB_Core::init() has been called.  The ORB Core starts out
-  // in the "shutdown" state, so checking if it is in that state
-  // would indicate that the ORB hasn't been initalized yet, at least
-  // partially, meaning that initial reference registration can
-  // proceed.
-  if (!(this->orb_core_->has_shutdown ()))
-    ACE_THROW (CORBA::BAD_INV_ORDER ());  // @@ Throw an exception?
-                                          //    What about the minor
-                                          //    code?
 
   if (id == 0)
     ACE_THROW (PortableInterceptor::ORBInitInfo::InvalidName ());
@@ -124,14 +132,6 @@ TAO_ORBInitInfo::resolve_initial_references (
                    PortableInterceptor::ORBInitInfo::InvalidName))
 {
   this->check_validity (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
-
-  // This method is only valid during post_init(), i.e. only after
-  // TAO_ORB_Core::init() has been called.  The ORB Core starts out
-  // in the "shutdown" state, so checking if it is in that state
-  // would indicate that the ORB hasn't been initalized yet, at least
-  // partially.
-  this->orb_core_->check_shutdown (ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   if (id == 0)
@@ -343,7 +343,7 @@ void *TAO_ORBInitInfo::_tao_QueryInterface (ptr_arith_t type)
   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
-    
+
   if (retv)
     this->_add_ref ();
   return retv;
