@@ -25,6 +25,6 @@ LIBFILES = $(ACE_LIB) $(SSL_LIB)
 CPPDIR = .
 
 INCDIR_NAME = ace\SSL
-INCLUDES = *.h *.i
+INCLUDES = *.h *.i *.inl
 
 !include <$(ACE_ROOT)\include\makeinclude\build_core_library.bor>

@@ -1,13 +1,11 @@
 // -*- C++ -*-
-//
-// $Id$
 
 #include "SSL_Context.h"
 
 #include "sslconf.h"
 
 #if !defined(__ACE_INLINE__)
-#include "SSL_Context.i"
+#include "SSL_Context.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/Synch.h"
@@ -32,7 +30,8 @@ int ACE_SSL_Context::library_init_count_ = 0;
 ACE_SSL_Context::ACE_SSL_Context (void)
   : context_ (0),
     mode_ (-1),
-    default_verify_mode_ (SSL_VERIFY_NONE)
+    default_verify_mode_ (SSL_VERIFY_NONE),
+    have_ca_ (0)
 {
   ACE_SSL_Context::ssl_library_init ();
 }
@@ -213,34 +212,99 @@ ACE_SSL_Context::set_mode (int mode)
 
   this->mode_ = mode;
 
-  const char *cert_file = ACE_OS::getenv (ACE_SSL_CERT_FILE_ENV);
-  if (cert_file == 0)
-    cert_file = ACE_DEFAULT_SSL_CERT_FILE;
-  const char *cert_dir = ACE_OS::getenv (ACE_SSL_CERT_DIR_ENV);
-  if (cert_dir == 0)
-    cert_dir = ACE_DEFAULT_SSL_CERT_DIR;
-
-  // Load the trusted certificate authorities.
-  //
-  // NOTE: SSL_CTX_load_verify_locations() returns 0 on error.
-  if (::SSL_CTX_load_verify_locations (this->context_,
-                                       cert_file,
-                                       cert_dir) <= 0)
-    {
-      if (ACE::debug ())
-        ACE_SSL_Context::report_error ();
-
-      return -1;
-    }
+  // Load the trusted certificate authority (default) certificate
+  // locations. But do not return -1 on error, doing so confuses CTX
+  // allocation (severe error) with the less important loading of CA
+  // certificate location error.  If it is important for your
+  // application then call ACE_SSL_Context::have_trusted_ca(),
+  // immediately following this call to set_mode().
+  (void) this->load_trusted_ca ();
 
   return 0;
 }
 
 int
-ACE_SSL_Context::get_mode (void) const
+ACE_SSL_Context::load_trusted_ca (const char* ca_file, const char* ca_dir)
 {
-  return this->mode_;
+  this->check_context ();
+
+  if (ca_file == 0)
+    {
+      // Use the default environment settings.
+      ca_file = ACE_OS::getenv (ACE_SSL_CERT_FILE_ENV);
+      if (ca_file == 0)
+        ca_file = ACE_DEFAULT_SSL_CERT_FILE;
+    }
+
+  if (ca_dir == 0)
+    {
+      // Use the default environment settings.
+      ca_dir = ACE_OS::getenv (ACE_SSL_CERT_DIR_ENV);
+      if (ca_dir == 0)
+        ca_dir = ACE_DEFAULT_SSL_CERT_DIR;
+    }
+
+  // NOTE: SSL_CTX_load_verify_locations() returns 0 on error.
+  if (::SSL_CTX_load_verify_locations (this->context_,
+                                       ca_file,
+                                       ca_dir) <= 0)
+    {
+      if (ACE::debug ())
+        ACE_SSL_Context::report_error ();
+      return -1;
+    }
+  else
+    {
+      this->have_ca_++;
+
+      // for TLS/SSL servers scan all certificates in ca_file and list
+      // then as acceptable CAs when requesting a client certificate.
+      if (mode_ == SSLv23
+          || mode_ == SSLv23_server
+          || mode_ == TLSv1
+          || mode_ == TLSv1_server
+          || mode_ == SSLv3
+          || mode_ == SSLv3_server
+          || mode_ == SSLv2
+          || mode_ == SSLv2_server)
+        {
+          STACK_OF (X509_NAME) * cert_names;
+          cert_names = ::SSL_CTX_get_client_CA_list(this->context_);
+
+          if (cert_names == 0)
+            {
+              // Set the first certificate authorith list.
+              cert_names = ::SSL_load_client_CA_file (ca_file);
+              if (cert_names != 0 )
+                ::SSL_CTX_set_client_CA_list (this->context_,
+                                              cert_names);
+            }
+          else
+            {
+              // Add new certificate names to the list.
+              if (!::SSL_add_file_cert_subjects_to_stack (cert_names,
+                                                          ca_file))
+                cert_names = 0;
+            }
+
+          if (cert_names == 0)
+            {
+              if (ACE::debug ())
+                ACE_SSL_Context::report_error ();
+              return -1;
+            }
+
+          // @todo
+          // If warranted do the same for ca_dir when the function
+          // SSL_add_dir_cert_subjects_to_stack() is portable to
+          // WIN32, VMS, MAC_OS_pre_X (nb. it is not defined for those
+          // platforms by OpenSSL).
+        }
+    }
+
+  return 0;
 }
+
 
 int
 ACE_SSL_Context::private_key (const char *file_name,
@@ -287,6 +351,29 @@ ACE_SSL_Context::certificate (const char *file_name,
   else
     return 0;
 }
+
+void
+ACE_SSL_Context::set_verify_peer (int strict, int once, int depth)
+{
+  this->check_context ();
+
+  // Setup the peer verififcation mode.
+
+  int verify_mode = SSL_VERIFY_PEER;
+  if (once)
+    verify_mode |= SSL_VERIFY_CLIENT_ONCE;
+  if (strict)
+    verify_mode |= SSL_VERIFY_FAIL_IF_NO_PEER_CERT;
+
+  // set the default verify mode
+  this->default_verify_mode (verify_mode);
+
+  // Set the max certificate depth but later let the verify_callback
+  // catch the depth error by adding one to the required depth.
+  if (depth > 0)
+    ::SSL_CTX_set_verify_depth (this->context_, depth + 1);
+}
+
 
 int
 ACE_SSL_Context::random_seed (const char * seed)
@@ -381,6 +468,8 @@ ACE_SSL_locking_callback (int mode,
     ACE_OS::mutex_unlock (&(ACE_SSL_Context::lock_[type]));
 }
 
+
+
 unsigned long
 ACE_SSL_thread_id (void)
 {
@@ -394,10 +483,10 @@ ACE_SSL_thread_id (void)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class ACE_Singleton<ACE_SSL_Context,ACE_SYNCH_MUTEX>;
+template class ACE_Singleton<ACE_SSL_Context, ACE_SYNCH_MUTEX>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate ACE_Singleton<ACE_SSL_Context,ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Singleton<ACE_SSL_Context, ACE_SYNCH_MUTEX>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
