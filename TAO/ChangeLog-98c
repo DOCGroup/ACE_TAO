@@ -1,3 +1,12 @@
+Fri Jul 24 09:56:27 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tests/Simple/client_impl.cpp: 
+	  On UNIX you close() the handle, not the file name.
+
+	* tests/Makefile: 
+	* tests/Simple/Makefile: 
+	  Added $TAO_ROOT/tests/Simple to the compilation.
+
 Fri Jul 24 01:40:53 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/CDR.cpp: 

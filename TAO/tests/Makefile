@@ -17,7 +17,8 @@ DIRS  = CDR \
 	NestedUpcall \
 	POA \
 	Quoter \
-	Thruput
+	Thruput \
+	Simple
 
 # The following tests have not been updated yet
 # 	Demux_Test
