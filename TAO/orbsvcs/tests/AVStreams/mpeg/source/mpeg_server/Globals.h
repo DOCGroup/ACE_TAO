@@ -279,7 +279,8 @@ public:
   int fast_backward (void);
   int stat_stream (void);
   int stat_sent (void);
-  int init_play (Video_Control::PLAYpara para);
+  int init_play (Video_Control::PLAYpara para,
+                 CORBA::Long_out vts);
   CORBA::Boolean init_fast_play (const Video_Control::FFpara &para);
   int init_video (void);
 };

@@ -194,6 +194,9 @@ Video_Control_Handler::get_handle (void) const
 int
 Video_Control_Handler::handle_input (ACE_HANDLE handle)
 {
+  ACE_DEBUG ((LM_DEBUG, 
+              "(%P|%t)"
+              "Video_Control_Handler::handle_input called!!!\n"));
   if (this->state_->handle_input (handle) != 0)
     {
       ACE_DEBUG ((LM_DEBUG,
