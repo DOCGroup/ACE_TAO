@@ -1299,9 +1299,7 @@ ACE::recv_n_i (ACE_HANDLE handle,
           if (errno == EWOULDBLOCK)
             n = 0;
 
-          //
           // No timeouts in this version.
-          //
 
           // Other errors.
           return -1;
@@ -1388,9 +1386,7 @@ ACE::recv_n_i (ACE_HANDLE handle,
           if (errno == EWOULDBLOCK)
             n = 0;
 
-          //
           // No timeouts in this version.
-          //
 
           // Other errors.
           return -1;
@@ -1539,9 +1535,7 @@ ACE::recvv_n_i (ACE_HANDLE handle,
           if (errno == EWOULDBLOCK)
             n = 0;
 
-          //
           // No timeouts in this version.
-          //
 
           // Other errors.
           return -1;
@@ -1877,9 +1871,7 @@ ACE::send_n_i (ACE_HANDLE handle,
           if (errno == EWOULDBLOCK)
             n = 0;
 
-          //
           // No timeouts in this version.
-          //
 
           // Other errors.
           return -1;
@@ -1966,9 +1958,7 @@ ACE::send_n_i (ACE_HANDLE handle,
           if (errno == EWOULDBLOCK)
             n = 0;
 
-          //
           // No timeouts in this version.
-          //
 
           // Other errors.
           return -1;
@@ -2118,9 +2108,7 @@ ACE::sendv_n_i (ACE_HANDLE handle,
           if (errno == EWOULDBLOCK)
             n = 0;
 
-          //
           // No timeouts in this version.
-          //
 
           // Other errors.
           return -1;
