@@ -1,4 +1,9 @@
-Fri Dec 11 21:51:47 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+Fri Dec 11 23:26:20 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/Message_Queue_Test.cpp: Generalize the test to perform
+	  "platform specific" message queue tests when applicable.
+	  Currently, this only applies to VxWorks and Windows NT 4.0 or
+	  above.
 
 	* tests/DLL_Test.cpp (main): STL's implementation of auto_ptr
 	  doesn't define an assignment operator that takes a pointer of T.
