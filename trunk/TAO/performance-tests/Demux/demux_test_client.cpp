@@ -332,7 +332,8 @@ Demux_Test_Client::run_linear_test (CORBA::Environment &env)
             end = ACE_OS::gethrtime ();
             
             m++;
-            ACE_OS::fprintf (this->result_fp_, "%d %f\n", m, (1.0*end - 1.0*start));
+            ACE_OS::fprintf (this->result_fp_, "%d %f\n", m,
+                             1.0 * ACE_UINT64_DBLCAST_ADAPTER (end - start));
           }
 
   return 0;
@@ -363,7 +364,8 @@ Demux_Test_Client::run_random_test (CORBA::Environment &env)
 
             end = ACE_OS::gethrtime ();
             m++;
-            ACE_OS::fprintf (this->result_fp_, "%d %f\n", m, (1.0*end - 1.0*start));
+            ACE_OS::fprintf (this->result_fp_, "%d %f\n", m,
+                             1.0 * ACE_UINT64_DBLCAST_ADAPTER (end - start));
           }
 
   return 0;
@@ -388,7 +390,8 @@ Demux_Test_Client::run_best_test (CORBA::Environment &env)
 
             end = ACE_OS::gethrtime ();
             m++;
-            ACE_OS::fprintf (this->result_fp_, "%d %f\n", m, (1.0*end - 1.0*start));
+            ACE_OS::fprintf (this->result_fp_, "%d %f\n", m,
+                             1.0 * ACE_UINT64_DBLCAST_ADAPTER (end - start));
           }
 
   return 0;
@@ -415,7 +418,8 @@ Demux_Test_Client::run_worst_test (CORBA::Environment &env)
 
             end = ACE_OS::gethrtime ();
             m++;
-            ACE_OS::fprintf (this->result_fp_, "%d %f\n", m, (1.0*end - 1.0*start));
+            ACE_OS::fprintf (this->result_fp_, "%d %f\n", m,
+                             1.0 * ACE_UINT64_DBLCAST_ADAPTER (end - start));
           }
 
   return 0;
