@@ -155,7 +155,7 @@ PACE_INLINE
 int
 pace_fsync (PACE_HANDLE fildes)
 {
-  return fildes;
+  return fsync (fildes);
 }
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
