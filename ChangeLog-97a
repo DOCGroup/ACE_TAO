@@ -1,3 +1,24 @@
+Tue Apr  8 00:04:22 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/config-hpux-10.x[-g++].h: Added #define
+ 	  ACE_HAS_CLOCK_GETTIME.  Thanks to Neil B. Cohen <nbc@metsci.com>
+ 	  for reporting this.
+
+	* ace/config-hpux-10.x[-g++].h: Added ACE_HAS_IP_MULTICAST and removed
+ 	  ACE_LACKS_STRRECVFD.  Thanks to Neil B. Cohen <nbc@metsci.com>
+ 	  for reporting this.
+
+	* ace/config-hpux-10.x.h: Apparently some HP/UX 10.x C++ compilers
+ 	  don't support volatile, so I #defined it away as a macro.
+  	  Thanks to Neil B. Cohen <nbc@metsci.com> for reporting this.
+
+	* ace/Log_Msg.cpp: Put a #if defined (ACE_MT_SAFE) around the
+ 	  entire Log_Msg destructor.  Thanks to Neil B. Cohen
+ 	  <nbc@metsci.com> for reporting this.
+
+	* ace/config-hpux-10.x[-g++].h: Added #define ACE_HAS_STREAMS on
+ 	  the recommendation of Neil B. Cohen <nbc@metsci.com>.
+
 Mon Apr 07 12:08:21 1997    <harrison@samba.cs.wustl.edu>
 
 	* ace/Set.cpp: For some reason, VC++ 5.0 doesn't like to have the

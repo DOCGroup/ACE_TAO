@@ -17,6 +17,9 @@
 #define ACE_HAS_BROKEN_HPUX_TEMPLATES
 #endif /* __cplusplus < 199707L */
 
+// The HP/UX compiler doesn't support volatile!!!!
+#define volatile
+
 #define _HPUX_SOURCE
 #include /**/ <sys/stdsyms.h>
 #include /**/ <sched.h>                              /*  pthread.h doesn't include this */
@@ -27,8 +30,9 @@
 #define ACE_LACKS_CONST_TIMESPEC_PTR
 
 #define ACE_LACKS_SYSCALL
-#define ACE_LACKS_STRRECVFD
 #define ACE_HAS_POSIX_TIME
+#define ACE_HAS_IP_MULTICAST
+#define ACE_HAS_CLOCK_GETTIME
 
 // Platform supports System V IPC (most versions of UNIX, but not Win32)
 #define ACE_HAS_SYSV_IPC
@@ -77,6 +81,7 @@
 #define ACE_LACKS_THREAD_PROCESS_SCOPING
 #define ACE_LACKS_THREAD_STACK_ADDR
 #define ACE_HAS_THREAD_SPECIFIC_STORAGE
+#define ACE_HAS_STREAMS
 
 // Compiler/platform supports struct strbuf.
 #define ACE_HAS_STRBUF_T
