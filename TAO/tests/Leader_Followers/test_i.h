@@ -26,7 +26,6 @@ public:
 
   // = The test interface methods.
   CORBA::ULong method (CORBA::ULong work,
-                       CORBA::ULong requesting_thread_id,
                        CORBA::Environment &)
     ACE_THROW_SPEC (());
 
