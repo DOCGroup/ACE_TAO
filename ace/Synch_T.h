@@ -406,14 +406,16 @@ class ACE_TSS_Type_Adapter
   //       i->operator int & () = 37;
   //       ACE_OS::fprintf (stderr, "%d\n", i->operator int ());
 public:
-  ACE_TSS_Type_Adapter (const TYPE value = 0) : value_ (value) {}
+  ACE_TSS_Type_Adapter (const TYPE value = 0): value_ (value) {}
   // Constructor.  Inlined here so that it should _always_ be inlined.
 
-  operator TYPE () { return value_; };
-  // TYPE conversion.  Inlined here so that it should _always_ be inlined.
+  operator TYPE () const { return value_; };
+  // TYPE conversion.  Inlined here so that it should _always_ be
+  // inlined.
 
-  operator TYPE & () { return value_; };
-  // TYPE & conversion.  Inlined here so that it should _always_ be inlined.
+  operator TYPE &() { return value_; };
+  // TYPE & conversion.  Inlined here so that it should _always_ be
+  // inlined.
 
 private:
   TYPE value_;

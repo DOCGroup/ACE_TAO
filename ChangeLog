@@ -1,5 +1,9 @@
 Sun Feb 27 16:20:43 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/Synch_T.h: Made the ACE_TSS_Type_Adapter operator TYPE() a const
+	  to avoid overloading ambiguities.  Thanks to Bruce McIntosh
+ 	  <Bruce.McIntosh@australia.boeing.com> for reporting this.
+
 	* ace/TP_Reactor.h: Improved the comments.
 
 Sat Feb 26 19:52:01 2000  Carlos O'Ryan  <coryan@uci.edu>
