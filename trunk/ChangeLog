@@ -1,3 +1,15 @@
+Mon Mar 21 18:19:24 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* ace/Shared_Memory_Pool.cpp:
+
+	  Add "defined(SEGV_MAPPER) || defined(SEGV_MEMERR)" to the
+	  preprocessor conditional that enables the test whether the fault
+	  address falls within the allocated memory blocks --- FreeBSD 5.X
+	  has a siginfo_t struct with a si_addr field, but doesn't provide
+	  SEGV_MAPERR.
+
+	  With this change, the automake build now supports FreeBSD 5.X.
+
 Mon Mar 21 12:54:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-lite.h:
