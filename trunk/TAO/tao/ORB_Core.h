@@ -435,7 +435,7 @@ protected:
   TAO_ProtocolFactorySet *protocol_factories_;
   // Pointer to the list of protocol loaded into this ORB instance.
 
-  CORBA::ORB_ptr orb_;
+  CORBA::ORB_var orb_;
   // @@ Should we keep a single ORB pointer? This is good because
   //    multiple calls to ORB_init() with the same ORBid can use the
   //    same object, but maybe don't want so much coupling.

@@ -12,7 +12,7 @@ TAO_ORB_Core::thr_mgr (void)
 ACE_INLINE CORBA::ORB_ptr
 TAO_ORB_Core::orb (void)
 {
-  return this->orb_;
+  return this->orb_.in ();
 }
 
 ACE_INLINE TAO_POA *
