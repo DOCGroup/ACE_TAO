@@ -44,5 +44,5 @@ IDLDIR = .
 $(IDLDIR)\testS.cpp $(IDLDIR)\testC.cpp: $(IDLDIR)\test.idl
 	$(TAO_IDL) $**
 
-$(IDLDIR)\ServerRequestInterceptorC.cpp: $(IDLDIR)\ServerRequestInteceptor.idl
+$(IDLDIR)\ServerRequestInterceptorC.cpp: $(IDLDIR)\ServerRequestInterceptor.idl
 	$(TAO_IDL) -DCORBA3 -I..\..\.. $**
