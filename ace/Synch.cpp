@@ -130,7 +130,7 @@ ACE_Semaphore::dump (void) const
 // ACE_TRACE ("ACE_Semaphore::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT("\n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
@@ -145,8 +145,8 @@ ACE_Semaphore::ACE_Semaphore (u_int count,
   if (ACE_OS::sema_init (&this->semaphore_, count, type,
                          name, arg, max) != 0)
     ACE_ERROR ((LM_ERROR,
-                ACE_TEXT("%p\n"),
-                ACE_TEXT("ACE_Semaphore::ACE_Semaphore")));
+                ACE_LIB_TEXT ("%p\n"),
+                ACE_LIB_TEXT ("ACE_Semaphore::ACE_Semaphore")));
 }
 
 ACE_Semaphore::~ACE_Semaphore (void)
@@ -165,10 +165,10 @@ ACE_Mutex::dump (void) const
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
 #if defined (CHORUS)
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("lockname_ = %s\n"), this->lockname_));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("process_lock_ = %x\n"), this->process_lock_));
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("lockname_ = %s\n"), this->lockname_));
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("process_lock_ = %x\n"), this->process_lock_));
 #endif /* CHORUS */
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
@@ -241,8 +241,8 @@ ACE_Mutex::ACE_Mutex (int type, const ACE_TCHAR *name, ACE_mutexattr_t *arg)
                           name,
                           arg) != 0)
     ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("ACE_Mutex::ACE_Mutex")));
+                ACE_LIB_TEXT ("%p\n"),
+                ACE_LIB_TEXT ("ACE_Mutex::ACE_Mutex")));
 }
 
 ACE_Mutex::~ACE_Mutex (void)
@@ -265,8 +265,8 @@ ACE_Event::ACE_Event (int manual_reset,
                           name,
                           arg) != 0)
     ACE_ERROR ((LM_ERROR,
-                ACE_TEXT("%p\n"),
-                ACE_TEXT("ACE_Event::ACE_Event")));
+                ACE_LIB_TEXT ("%p\n"),
+                ACE_LIB_TEXT ("ACE_Event::ACE_Event")));
 }
 
 ACE_Event::~ACE_Event (void)
@@ -338,15 +338,29 @@ ACE_Event::dump (void) const
 
 ACE_Manual_Event::ACE_Manual_Event (int initial_state,
                                     int type,
-                                    const ACE_TCHAR *name,
+                                    const char *name,
                                     void *arg)
   : ACE_Event (1,
                initial_state,
                type,
-               name,
+               ACE_TEXT_CHAR_TO_TCHAR (name),
                arg)
 {
 }
+
+#if defined (ACE_HAS_WCHAR)
+ACE_Manual_Event::ACE_Manual_Event (int initial_state,
+                                    int type,
+                                    const wchar_t *name,
+                                    void *arg)
+  : ACE_Event (1,
+               initial_state,
+               type,
+               ACE_TEXT_WCHAR_TO_TCHAR (name),
+               arg)
+{
+}
+#endif /* ACE_HAS_WCHAR */
 
 void
 ACE_Manual_Event::dump (void) const
@@ -414,7 +428,7 @@ ACE_Thread_Mutex_Guard::dump (void) const
 // ACE_TRACE ("ACE_Thread_Mutex_Guard::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT("\n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 #endif /* ACE_USES_OBSOLETE_GUARD_CLASSES */
@@ -433,8 +447,8 @@ ACE_Recursive_Thread_Mutex::ACE_Recursive_Thread_Mutex (const ACE_TCHAR *name,
                                      name,
                                      arg) == -1)
      ACE_ERROR ((LM_ERROR,
-                 ACE_TEXT ("%p\n"),
-                 ACE_TEXT ("recursive_mutex_init")));
+                 ACE_LIB_TEXT ("%p\n"),
+                 ACE_LIB_TEXT ("recursive_mutex_init")));
 }
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Recursive_Thread_Mutex)
@@ -537,10 +551,10 @@ ACE_Condition_Thread_Mutex::dump (void) const
 // ACE_TRACE ("ACE_Condition_Thread_Mutex::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT("\n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\n")));
 #if defined (ACE_WIN32)
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("waiters = %d\n"),
+              ACE_LIB_TEXT ("waiters = %d\n"),
               this->cond_.waiters ()));
 #endif /* ACE_WIN32 */
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
@@ -565,8 +579,8 @@ ACE_Condition_Thread_Mutex::ACE_Condition_Thread_Mutex (const ACE_Thread_Mutex &
                          name,
                          arg) != 0)
     ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("ACE_Condition_Thread_Mutex::ACE_Condition_Thread_Mutex")));
+                ACE_LIB_TEXT ("%p\n"),
+                ACE_LIB_TEXT ("ACE_Condition_Thread_Mutex::ACE_Condition_Thread_Mutex")));
 }
 
 ACE_Condition_Thread_Mutex::
@@ -587,8 +601,8 @@ ACE_Condition_Thread_Mutex (const ACE_Thread_Mutex &m,
 // ACE_TRACE ("ACE_Condition_Thread_Mutex::ACE_Condition_Thread_Mutex");
   if (ACE_OS::cond_init (&this->cond_, attributes.attributes_,
                          name, arg) != 0)
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"),
-                ACE_TEXT ("ACE_Condition_Thread_Mutex::ACE_Condition_Thread_Mutex")));
+    ACE_ERROR ((LM_ERROR, ACE_LIB_TEXT ("%p\n"),
+                ACE_LIB_TEXT ("ACE_Condition_Thread_Mutex::ACE_Condition_Thread_Mutex")));
 }
 
 ACE_Condition_Thread_Mutex::~ACE_Condition_Thread_Mutex (void)
@@ -648,8 +662,8 @@ ACE_Sub_Barrier::dump (void) const
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   this->barrier_finished_.dump ();
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT("running_threads_ = %d"), this->running_threads_));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT("\n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("running_threads_ = %d"), this->running_threads_));
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
@@ -674,8 +688,8 @@ ACE_Barrier::dump (void) const
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   this->lock_.dump ();
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT("current_generation_ = %d"), this->current_generation_));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT("\ncount_ = %d"), this->count_));
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("current_generation_ = %d"), this->current_generation_));
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\ncount_ = %d"), this->count_));
   this->sub_barrier_1_.dump ();
   this->sub_barrier_2_.dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
@@ -784,7 +798,7 @@ ACE_Thread_Mutex::dump (void) const
 // ACE_TRACE ("ACE_Thread_Mutex::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT("\n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
@@ -804,8 +818,8 @@ ACE_Thread_Mutex::ACE_Thread_Mutex (const ACE_TCHAR *name, ACE_mutexattr_t *arg)
                                  name,
                                  arg) != 0)
     ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("ACE_Thread_Mutex::ACE_Thread_Mutex")));
+                ACE_LIB_TEXT ("%p\n"),
+                ACE_LIB_TEXT ("ACE_Thread_Mutex::ACE_Thread_Mutex")));
 }
 
 void
@@ -814,7 +828,7 @@ ACE_RW_Mutex::dump (void) const
 // ACE_TRACE ("ACE_RW_Mutex::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT("\n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
@@ -824,8 +838,8 @@ ACE_RW_Mutex::ACE_RW_Mutex (int type, const ACE_TCHAR *name, void *arg)
 // ACE_TRACE ("ACE_RW_Mutex::ACE_RW_Mutex");
   if (ACE_OS::rwlock_init (&this->lock_, type, name, arg) != 0)
     ACE_ERROR ((LM_ERROR,
-                ACE_TEXT("%p\n"),
-                ACE_TEXT("ACE_RW_Mutex::ACE_RW_Mutex")));
+                ACE_LIB_TEXT ("%p\n"),
+                ACE_LIB_TEXT ("ACE_RW_Mutex::ACE_RW_Mutex")));
 }
 
 ACE_RW_Mutex::~ACE_RW_Mutex (void)

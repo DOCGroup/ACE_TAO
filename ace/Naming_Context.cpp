@@ -47,7 +47,7 @@ ACE_Naming_Context::local (void)
 {
   ACE_TRACE ("ACE_Naming_Context::local");
   return ACE_OS::strcmp (this->netnameserver_host_,
-                         ACE_TEXT ("localhost")) == 0
+                         ACE_LIB_TEXT ("localhost")) == 0
     || ACE_OS::strcmp (this->netnameserver_host_,
                        this->hostname_) == 0;
 }
@@ -101,7 +101,7 @@ ACE_Naming_Context::open (Context_Scope_Type scope_in, int lite)
 
   if (ACE_LOG_MSG->op_status () != 0 || this->name_space_ == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("NAME_SPACE::NAME_SPACE\n")),
+                       ACE_LIB_TEXT ("NAME_SPACE::NAME_SPACE\n")),
                       -1);
   return 0;
 }
@@ -151,8 +151,8 @@ ACE_Naming_Context::ACE_Naming_Context (Context_Scope_Type scope_in,
   // Initialize.
   if (this->open (scope_in, lite) == -1)
     ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("ACE_Naming_Context::ACE_Naming_Context")));
+                ACE_LIB_TEXT ("%p\n"),
+                ACE_LIB_TEXT ("ACE_Naming_Context::ACE_Naming_Context")));
 }
 
 ACE_Name_Options *
@@ -386,7 +386,7 @@ ACE_Naming_Context::init (int argc, ACE_TCHAR *argv[])
 {
   if (ACE::debug ())
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("ACE_Naming_Context::init\n")));
+                ACE_LIB_TEXT ("ACE_Naming_Context::init\n")));
   this->name_options_->parse_args (argc, argv);
   return this->open (this->name_options_->context ());
 }
@@ -396,7 +396,7 @@ ACE_Naming_Context::fini (void)
 {
   if (ACE::debug ())
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("ACE_Naming_Context::fini\n")));
+                ACE_LIB_TEXT ("ACE_Naming_Context::fini\n")));
   this->close_down ();
   return 0;
 }
@@ -422,9 +422,9 @@ ACE_Name_Options::ACE_Name_Options (void)
   if (ACE::get_temp_dir (this->namespace_dir_, MAXPATHLEN) == -1)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("Temporary path too long, ")
-                  ACE_TEXT ("defaulting to current directory\n")));
-      ACE_OS::strcat (this->namespace_dir_, ACE_TEXT ("."));
+                  ACE_LIB_TEXT ("Temporary path too long, ")
+                  ACE_LIB_TEXT ("defaulting to current directory\n")));
+      ACE_OS::strcat (this->namespace_dir_, ACE_LIB_TEXT ("."));
       ACE_OS::strcat (this->namespace_dir_, ACE_DIRECTORY_SEPARATOR_STR);
     }
 #endif /* ACE_DEFAULT_NAMESPACE_DIR */
@@ -593,18 +593,18 @@ ACE_Name_Options::parse_args (int argc, ACE_TCHAR *argv[])
   // clean it up in the destructor).
   this->database (this->process_name ());
 
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("b:c:dh:l:P:p:s:T:vr"));
+  ACE_Get_Opt get_opt (argc, argv, ACE_LIB_TEXT ("b:c:dh:l:P:p:s:T:vr"));
 
   for (int c; (c = get_opt ()) != -1; )
     switch (c)
       {
       case 'c':
         {
-          if (ACE_OS::strcmp (get_opt.optarg, ACE_TEXT ("PROC_LOCAL")) == 0)
+          if (ACE_OS::strcmp (get_opt.optarg, ACE_LIB_TEXT ("PROC_LOCAL")) == 0)
             this->context (ACE_Naming_Context::PROC_LOCAL);
-          else if (ACE_OS::strcmp (get_opt.optarg, ACE_TEXT ("NODE_LOCAL")) == 0)
+          else if (ACE_OS::strcmp (get_opt.optarg, ACE_LIB_TEXT ("NODE_LOCAL")) == 0)
             this->context (ACE_Naming_Context::NODE_LOCAL);
-          else if (ACE_OS::strcmp (get_opt.optarg, ACE_TEXT ("NET_LOCAL")) == 0)
+          else if (ACE_OS::strcmp (get_opt.optarg, ACE_LIB_TEXT ("NET_LOCAL")) == 0)
             this->context (ACE_Naming_Context::NET_LOCAL);
         }
         break;
@@ -633,9 +633,9 @@ ACE_Name_Options::parse_args (int argc, ACE_TCHAR *argv[])
         this->base_address ((char *) ACE_OS::atoi (get_opt.optarg));
         break;
       case 'T':
-        if (ACE_OS::strcasecmp (get_opt.optarg, ACE_TEXT ("ON")) == 0)
+        if (ACE_OS::strcasecmp (get_opt.optarg, ACE_LIB_TEXT ("ON")) == 0)
           ACE_Trace::start_tracing ();
-        else if (ACE_OS::strcasecmp (get_opt.optarg, ACE_TEXT ("OFF")) == 0)
+        else if (ACE_OS::strcasecmp (get_opt.optarg, ACE_LIB_TEXT ("OFF")) == 0)
           ACE_Trace::stop_tracing ();
         break;
       case 'v':

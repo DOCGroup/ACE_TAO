@@ -122,8 +122,8 @@ ACE_Process::spawn (ACE_Process_Options &options)
           && ACE_OS::setpgid (0,
                               options.getgroup ()) < 0)
         ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("%p.\n"),
-                    ACE_TEXT ("ACE_Process::spawn: setpgid failed.")));
+                    ACE_LIB_TEXT ("%p.\n"),
+                    ACE_LIB_TEXT ("ACE_Process::spawn: setpgid failed.")));
   
 #if !defined (ACE_LACKS_SETREUID)
       // Set user and group id's.
@@ -132,8 +132,8 @@ ACE_Process::spawn (ACE_Process_Options &options)
         if (ACE_OS::setreuid (options.getruid (), 
                               options.geteuid ()) == -1)
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("%p.\n"),
-                      ACE_TEXT ("ACE_Process::spawn: setreuid failed.")));
+                      ACE_LIB_TEXT ("%p.\n"),
+                      ACE_LIB_TEXT ("ACE_Process::spawn: setreuid failed.")));
 #endif /* ACE_LACKS_SETREUID */
 
 #if !defined (ACE_LACKS_SETREGID)
@@ -142,8 +142,8 @@ ACE_Process::spawn (ACE_Process_Options &options)
         if (ACE_OS::setregid (options.getrgid (),
                               options.getegid ()) == -1)
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("%p.\n"),
-                      ACE_TEXT ("ACE_Process::spawn: setregid failed.")));
+                      ACE_LIB_TEXT ("%p.\n"),
+                      ACE_LIB_TEXT ("ACE_Process::spawn: setregid failed.")));
 #endif /* ACE_LACKS_SETREGID */
 
       this->child (ACE_OS::getppid ());
@@ -415,8 +415,8 @@ ACE_Process_Options::inherit_environment (void)
       if (this->setenv_i (existing_environment + slot, len) == -1)
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("%p.\n"),
-                      ACE_TEXT ("ACE_Process_Options::ACE_Process_Options")));
+                      ACE_LIB_TEXT ("%p.\n"),
+                      ACE_LIB_TEXT ("ACE_Process_Options::ACE_Process_Options")));
           break;
         }
 
@@ -494,7 +494,7 @@ ACE_Process_Options::setenv (const ACE_TCHAR *variable_name,
 
   // Add in the variable name.
   ACE_OS::sprintf (newformat,
-                   ACE_TEXT ("%s=%s"),
+                   ACE_LIB_TEXT ("%s=%s"),
                    variable_name,
                    format);
 
@@ -642,7 +642,7 @@ ACE_Process_Options::command_line (const ACE_TCHAR *const argv[])
       while (argv[++i])
         {
           ACE_OS::strcat (command_line_buf_,
-                          ACE_TEXT (" "));
+                          ACE_LIB_TEXT (" "));
           ACE_OS::strcat (command_line_buf_,
                           argv[i]);
         }

@@ -35,8 +35,8 @@ ACE_Cached_Connect_Strategy_Ex<ACE_T2>::ACE_Cached_Connect_Strategy_Ex
 {
   if (this->open (cre_s, con_s, rec_s) == -1)
     ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("ACE_Cached_Connect_Strategy_Ex<ACE_T2>\n")));
+                ACE_LIB_TEXT ("%p\n"),
+                ACE_LIB_TEXT ("ACE_Cached_Connect_Strategy_Ex<ACE_T2>\n")));
 }
 
 template <ACE_T1>

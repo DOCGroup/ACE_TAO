@@ -213,7 +213,7 @@ ACE_Service_Config::parse_args (int argc, ACE_TCHAR *argv[])
   ACE_TRACE ("ACE_Service_Config::parse_args");
   ACE_Get_Opt getopt (argc,
                       argv,
-                      ACE_TEXT ("bdf:k:nys:S:"),
+                      ACE_LIB_TEXT ("bdf:k:nys:S:"),
                       1); // Start at argv[1].
 
   if (ACE_Service_Config::init_svc_conf_file_queue () == -1)
@@ -232,7 +232,7 @@ ACE_Service_Config::parse_args (int argc, ACE_TCHAR *argv[])
         if (ACE_Service_Config::svc_conf_file_queue_->enqueue_tail
             (ACE_TString (getopt.optarg)) == -1)
           ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("%p\n"),
+                             ACE_LIB_TEXT ("%p\n"),
                              "enqueue_tail"),
                             -1);
         break;
@@ -257,7 +257,7 @@ ACE_Service_Config::parse_args (int argc, ACE_TCHAR *argv[])
               (ACE_Service_Config::signum_,
                ACE_Service_Config::signal_handler_) == -1)
             ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("cannot obtain signal handler\n")),
+                               ACE_LIB_TEXT ("cannot obtain signal handler\n")),
                               -1);
 #endif /* ACE_LACKS_UNIX_SIGNALS */
           break;
@@ -270,14 +270,14 @@ ACE_Service_Config::parse_args (int argc, ACE_TCHAR *argv[])
         if (ACE_Service_Config::svc_queue_->enqueue_tail
             (ACE_TString (getopt.optarg)) == -1)
           ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("%p\n"),
+                             ACE_LIB_TEXT ("%p\n"),
                              "enqueue_tail"),
                             -1);
         break;
       default:
         if (ACE::debug () > 0)
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("%c is not a ACE_Service_Config option\n"),
+                      ACE_LIB_TEXT ("%c is not a ACE_Service_Config option\n"),
                       c));
       }
 
@@ -296,14 +296,14 @@ ACE_Service_Config::initialize (const ACE_TCHAR svc_name[],
 
   if (ACE::debug ())
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("opening static service %s\n"),
+                ACE_LIB_TEXT ("opening static service %s\n"),
                 svc_name));
 
   if (ACE_Service_Repository::instance ()->find
       (svc_name,
        (const ACE_Service_Type **) &srp) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%s not found\n"),
+                       ACE_LIB_TEXT ("%s not found\n"),
                        svc_name),
                       -1);
   else if (srp->type ()->init (args.argc (),
@@ -311,7 +311,7 @@ ACE_Service_Config::initialize (const ACE_TCHAR svc_name[],
     {
       // Remove this entry.
       ACE_ERROR ((LM_ERROR,
-                         ACE_TEXT ("static initialization failed, %p\n"),
+                         ACE_LIB_TEXT ("static initialization failed, %p\n"),
                          svc_name));
       ACE_Service_Repository::instance ()->remove (svc_name);
       return -1;
@@ -335,19 +335,19 @@ ACE_Service_Config::initialize (const ACE_Service_Type *sr,
 
   if (ACE::debug ())
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("opening dynamic service %s\n"),
+                ACE_LIB_TEXT ("opening dynamic service %s\n"),
                 sr->name ()));
 
   if (ACE_Service_Repository::instance ()->insert (sr) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("insertion failed, %p\n"),
+                       ACE_LIB_TEXT ("insertion failed, %p\n"),
                        sr->name ()),
                       -1);
   else if (sr->type ()->init (args.argc (),
                               args.argv ()) == -1)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("dynamic initialization failed for %s\n"),
+                  ACE_LIB_TEXT ("dynamic initialization failed for %s\n"),
                   sr->name ()));
       ACE_Service_Repository::instance ()->remove (sr->name ());
       return -1;
@@ -431,14 +431,14 @@ ACE_Service_Config::process_directives (void)
            iter.advance ())
         {
           FILE *fp = ACE_OS::fopen (sptr->fast_rep (),
-                                    ACE_TEXT ("r"));
+                                    ACE_LIB_TEXT ("r"));
           if (fp == 0)
             {
               // Invalid svc.conf file.  We'll report it here and
               // break out of the method.
               if (ACE::debug ())
                 ACE_DEBUG ((LM_DEBUG,
-                            ACE_TEXT ("%p\n"),
+                            ACE_LIB_TEXT ("%p\n"),
                             sptr->fast_rep ()));
               errno = ENOENT;
               result = -1;
@@ -476,8 +476,8 @@ ACE_Service_Config::process_commandline_directives (void)
               (sptr->fast_rep ()) == -1)
             {
               ACE_ERROR ((LM_ERROR,
-                          ACE_TEXT ("%p\n"),
-                          ACE_TEXT ("process_directive")));
+                          ACE_LIB_TEXT ("%p\n"),
+                          ACE_LIB_TEXT ("process_directive")));
               result = -1;
             }
         }
@@ -563,7 +563,7 @@ ACE_Service_Config::open_i (const ACE_TCHAR program_name[],
       && ACE_Service_Config::svc_conf_file_queue_->enqueue_tail
            (ACE_TString (ACE_DEFAULT_SVC_CONF)) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
+                       ACE_LIB_TEXT ("%p\n"),
                        "enqueue_tail"),
                       -1);
 
@@ -604,7 +604,7 @@ ACE_Service_Config::open_i (const ACE_TCHAR program_name[],
     {
       if (ACE::debug ())
         ACE_DEBUG ((LM_STARTUP,
-                    ACE_TEXT ("starting up daemon %n\n")));
+                    ACE_LIB_TEXT ("starting up daemon %n\n")));
 
       // Initialize the Service Repository (this will still work if
       // user forgets to define an object of type ACE_Service_Config).
@@ -622,7 +622,7 @@ ACE_Service_Config::open_i (const ACE_TCHAR program_name[],
           (ACE_Service_Config::signum_,
            ACE_Service_Config::signal_handler_) == -1)
         ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("can't register signal handler\n")));
+                    ACE_LIB_TEXT ("can't register signal handler\n")));
 #endif /* ACE_LACKS_UNIX_SIGNALS */
 
       // See if we need to load the static services.
@@ -670,7 +670,7 @@ ACE_Service_Config::ACE_Service_Config (const ACE_TCHAR program_name[],
     // Only print out an error if it wasn't the svc.conf file that was
     // missing.
     ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
+                ACE_LIB_TEXT ("%p\n"),
                 program_name));
 }
 
@@ -706,13 +706,13 @@ ACE_Service_Config::reconfigure (void)
 #endif /* ! ACE_NLOGGING */
       if (ACE::debug ())
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("beginning reconfiguration at %s"),
+                    ACE_LIB_TEXT ("beginning reconfiguration at %s"),
                     ACE_OS::ctime (&t)));
     }
   if (ACE_Service_Config::process_directives () == -1)
     ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("process_directives")));
+                ACE_LIB_TEXT ("%p\n"),
+                ACE_LIB_TEXT ("process_directives")));
 }
 
 // Run the event loop until the <ACE_Reactor::handle_events>

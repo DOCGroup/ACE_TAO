@@ -22,7 +22,7 @@ ACE_RCSID(ace, Registry, "$Id$")
 
 // Separator for components in a name
 /* static */
-const ACE_TCHAR *ACE_Registry::STRING_SEPARATOR = ACE_TEXT ("\\");
+const ACE_TCHAR *ACE_Registry::STRING_SEPARATOR = ACE_LIB_TEXT ("\\");
 
 int
 ACE_Registry::Name_Component::operator== (const Name_Component &rhs) const
@@ -1088,7 +1088,7 @@ ACE_Predefined_Naming_Contexts::connect (ACE_Registry::Naming_Context &naming_co
 {
   long result = -1;
 
-  if (machine_name != 0 && ACE_OS::strcmp (ACE_TEXT ("localhost"), machine_name) == 0)
+  if (machine_name != 0 && ACE_OS::strcmp (ACE_LIB_TEXT ("localhost"), machine_name) == 0)
     machine_name = 0;
 
   if (predefined == HKEY_LOCAL_MACHINE || predefined == HKEY_USERS)

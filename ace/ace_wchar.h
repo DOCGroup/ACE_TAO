@@ -41,7 +41,6 @@
 # define ASYS_MULTIBYTE_STRING ACE_TEXT_CHAR_TO_TCHAR
 # define ASYS_WIDE_STRING ACE_TEXT_CHAR_TO_TCHAR
 # define ACE_WIDE_STRING ACE_TEXT_CHAR_TO_TCHAR
-# define ACE_DIRECTORY_SEPARATOR_CHAR_A ACE_DIRECTORY_SEPARATOR_CHAR
 
 # if defined (ACE_USES_WCHAR)
 #   define ASYS_ONLY_WIDE_STRING(STRING) STRING
@@ -100,22 +99,29 @@ using std::size_t;
 // Define the unicode/wchar related macros correctly
 
 # if !defined (ACE_TEXT_WIDE)
-#  define ACE_TEXT_WIDE(STRING) L##STRING
+#  define ACE_TEXT_WIDE_I(STRING) L##STRING
+#  define ACE_TEXT_WIDE(STRING) ACE_TEXT_WIDE_I (STRING)
 # endif /* ACE_TEXT_WIDE */
 
 #if defined (ACE_USES_WCHAR)
 typedef wchar_t ACE_TCHAR;
-# define ACE_TEXT(STRING) ACE_TEXT_WIDE (STRING)
+# define ACE_LIB_TEXT(STRING) ACE_TEXT_WIDE (STRING)
 # define ACE_TEXT_ALWAYS_CHAR(STRING) ACE_Wide_To_Ascii (STRING).char_rep ()
 # define ACE_TEXT_CHAR_TO_TCHAR(STRING) ACE_Ascii_To_Wide (STRING).wchar_rep ()
 # define ACE_TEXT_WCHAR_TO_TCHAR(STRING) STRING
 #else /* ACE_USES_WCHAR */
 typedef char ACE_TCHAR;
-# define ACE_TEXT(STRING) STRING
+# define ACE_LIB_TEXT(STRING) STRING
 # define ACE_TEXT_ALWAYS_CHAR(STRING) STRING
 # define ACE_TEXT_CHAR_TO_TCHAR(STRING) STRING
 # define ACE_TEXT_WCHAR_TO_TCHAR(STRING) ACE_Wide_To_Ascii (STRING).char_rep ()
 #endif /* ACE_USES_WCHAR */
+
+#if defined (ACE_LEGACY_MODE)
+# define ACE_TEXT TEXT
+#else /* ACE_LEGACY_MODE */
+# define ACE_TEXT ACE_LIB_TEXT
+#endif /* ACE_LEGACY_MODE */
 
 #if defined ACE_HAS_WCHAR
 class ACE_Wide_To_Ascii

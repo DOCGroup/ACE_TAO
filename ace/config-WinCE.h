@@ -17,7 +17,7 @@
 // Need to define LD search path explicitly on CE because
 // CE doesn't have environment variables and we can't get
 // the information using getenv.
-#define ACE_DEFAULT_LD_SEARCH_PATH ACE_TEXT (".\\;\\windows")
+#define ACE_DEFAULT_LD_SEARCH_PATH ACE_LIB_TEXT (".\\;\\windows")
 
 // CE is not NT.
 #if defined (ACE_HAS_WINNT4)

@@ -23,7 +23,7 @@ ACE_RCSID(ace, ACE, "$Id$")
 char ACE::debug_ = 0;
 
 // Hex characters.
-const ACE_TCHAR ACE::hex_chars_[] = ACE_TEXT ("0123456789abcdef");
+const ACE_TCHAR ACE::hex_chars_[] = ACE_LIB_TEXT ("0123456789abcdef");
 
 // Size of a VM page.
 size_t ACE::pagesize_ = 0;
@@ -315,13 +315,13 @@ const ACE_TCHAR *
 ACE::execname (const ACE_TCHAR *old_name)
 {
 #if defined (ACE_WIN32)
-  if (ACE_OS::strstr (old_name, ACE_TEXT (".exe")) == 0)
+  if (ACE_OS::strstr (old_name, ACE_LIB_TEXT (".exe")) == 0)
     {
       ACE_TCHAR *new_name;
 
       size_t size =
         ACE_OS::strlen (old_name)
-        + ACE_OS::strlen (ACE_TEXT (".exe"))
+        + ACE_OS::strlen (ACE_LIB_TEXT (".exe"))
         + 1;
 
       ACE_NEW_RETURN (new_name,
@@ -332,7 +332,7 @@ ACE::execname (const ACE_TCHAR *old_name)
       end = ACE_OS::strecpy (new_name, old_name);
 
       // Concatenate the .exe suffix onto the end of the executable.
-      ACE_OS::strcpy (end, ACE_TEXT (".exe"));
+      ACE_OS::strcpy (end, ACE_LIB_TEXT (".exe"));
 
       return new_name;
     }
@@ -687,8 +687,8 @@ ACE::ldfind (const ACE_TCHAR filename[],
       if (ACE_OS::strcmp (s, dll_suffix) != 0)
         {
           ACE_ERROR ((LM_WARNING,
-                      ACE_TEXT ("Warning: improper suffix for a ")
-                      ACE_TEXT ("shared library on this platform: %s\n"),
+                      ACE_LIB_TEXT ("Warning: improper suffix for a ")
+                      ACE_LIB_TEXT ("shared library on this platform: %s\n"),
                       s));
         }
     }
@@ -738,19 +738,19 @@ ACE::ldfind (const ACE_TCHAR filename[],
               // prefix.
 #if defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS)
               ACE_OS::sprintf (pathname,
-                               ACE_TEXT ("%s%s%s"),
+                               ACE_LIB_TEXT ("%s%s%s"),
                                searchpathname,
                                searchfilename,
                                got_suffix ? ACE_static_cast (ACE_TCHAR *,
-                                                             ACE_TEXT (""))
+                                                             ACE_LIB_TEXT (""))
                                : ACE_static_cast (ACE_TCHAR *,
                                                   dll_suffix));
 #else /* ! defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS) */
               ACE_OS::sprintf (pathname,
-                               ACE_TEXT ("%s%s%s"),
+                               ACE_LIB_TEXT ("%s%s%s"),
                                searchpathname,
                                searchfilename,
-                               got_suffix ? ACE_TEXT ("") : dll_suffix);
+                               got_suffix ? ACE_LIB_TEXT ("") : dll_suffix);
 #endif /* ! defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS) */
               if (ACE_OS::access (pathname, F_OK) == 0)
                 return 0;
@@ -758,21 +758,21 @@ ACE::ldfind (const ACE_TCHAR filename[],
               // Second, try matching the filename *with* adding a prefix.
 #if defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS)
               ACE_OS::sprintf (pathname,
-                               ACE_TEXT ("%s%s%s%s"),
+                               ACE_LIB_TEXT ("%s%s%s%s"),
                                searchpathname,
                                ACE_DLL_PREFIX,
                                searchfilename,
                                got_suffix ? ACE_static_cast (ACE_TCHAR *,
-                                                             ACE_TEXT (""))
+                                                             ACE_LIB_TEXT (""))
                                : ACE_static_cast (ACE_TCHAR *,
                                                   dll_suffix));
 #else /* ! defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS) */
               ACE_OS::sprintf (pathname,
-                               ACE_TEXT ("%s%s%s%s"),
+                               ACE_LIB_TEXT ("%s%s%s%s"),
                                searchpathname,
                                ACE_DLL_PREFIX,
                                searchfilename,
-                               got_suffix ? ACE_TEXT ("") : dll_suffix);
+                               got_suffix ? ACE_LIB_TEXT ("") : dll_suffix);
 #endif /* ! defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS) */
               if (ACE_OS::access (pathname, F_OK) == 0)
                 return 0;
@@ -858,27 +858,27 @@ ACE::ldfind (const ACE_TCHAR filename[],
                   // We need to do it here rather than anywhere else so
                   // that the loop condition will still work.
                   else if (path_entry[0] == '\0')
-                    path_entry = ACE_TEXT (".");
+                    path_entry = ACE_LIB_TEXT (".");
 
                   // First, try matching the filename *without* adding a
                   // prefix.
 #if defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS)
                   ACE_OS::sprintf (pathname,
-                                   ACE_TEXT ("%s%c%s%s"),
+                                   ACE_LIB_TEXT ("%s%c%s%s"),
                                    path_entry,
                                    ACE_DIRECTORY_SEPARATOR_CHAR,
                                    searchfilename,
                                    got_suffix ? ACE_static_cast (ACE_TCHAR *,
-                                                                 ACE_TEXT (""))
+                                                                 ACE_LIB_TEXT (""))
                                    : ACE_static_cast (ACE_TCHAR *,
                                                       dll_suffix));
 #else /* ! defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS) */
                   ACE_OS::sprintf (pathname,
-                                   ACE_TEXT ("%s%c%s%s"),
+                                   ACE_LIB_TEXT ("%s%c%s%s"),
                                    path_entry,
                                    ACE_DIRECTORY_SEPARATOR_CHAR,
                                    searchfilename,
-                                   got_suffix ? ACE_TEXT ("") : dll_suffix);
+                                   got_suffix ? ACE_LIB_TEXT ("") : dll_suffix);
 #endif /* ! defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS) */
                   if (ACE_OS::access (pathname, F_OK) == 0)
                     break;
@@ -887,23 +887,23 @@ ACE::ldfind (const ACE_TCHAR filename[],
                   // prefix.
 #if defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS)
                   ACE_OS::sprintf (pathname,
-                                   ACE_TEXT ("%s%c%s%s%s"),
+                                   ACE_LIB_TEXT ("%s%c%s%s%s"),
                                    path_entry,
                                    ACE_DIRECTORY_SEPARATOR_CHAR,
                                    ACE_DLL_PREFIX,
                                    searchfilename,
                                    got_suffix ? ACE_static_cast (ACE_TCHAR *,
-                                                                 ACE_TEXT (""))
+                                                                 ACE_LIB_TEXT (""))
                                    : ACE_static_cast (ACE_TCHAR *,
                                                       dll_suffix));
 #else /* ! defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS) */
                   ACE_OS::sprintf (pathname,
-                                   ACE_TEXT ("%s%c%s%s%s"),
+                                   ACE_LIB_TEXT ("%s%c%s%s%s"),
                                    path_entry,
                                    ACE_DIRECTORY_SEPARATOR_CHAR,
                                    ACE_DLL_PREFIX,
                                    searchfilename,
-                                   got_suffix ? ACE_TEXT ("") : dll_suffix);
+                                   got_suffix ? ACE_LIB_TEXT ("") : dll_suffix);
 #endif /* ! defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS) */
                   if (ACE_OS::access (pathname, F_OK) == 0)
                     break;
@@ -964,7 +964,7 @@ ACE::ldname (const ACE_TCHAR *entry_point)
                   ACE_TCHAR[size],
                   0);
 
-  ACE_OS::strcpy (new_name, ACE_TEXT ("_"));
+  ACE_OS::strcpy (new_name, ACE_LIB_TEXT ("_"));
   ACE_OS::strcat (new_name, entry_point);
 
   return new_name;
@@ -1000,10 +1000,10 @@ ACE::get_temp_dir (ACE_TCHAR *buffer, size_t buffer_len)
 
   // On non-win32 platforms, check to see what the TMPDIR environment
   // variable is defined to be.  If it doesn't exist, just use /tmp
-  const ACE_TCHAR *tmpdir = ACE_OS::getenv (ACE_TEXT ("TMPDIR"));
+  const ACE_TCHAR *tmpdir = ACE_OS::getenv (ACE_LIB_TEXT ("TMPDIR"));
 
   if (tmpdir == NULL)
-    tmpdir = ACE_TEXT ("/tmp");
+    tmpdir = ACE_LIB_TEXT ("/tmp");
 
   size_t len = ACE_OS::strlen (tmpdir);
 
@@ -2914,13 +2914,13 @@ ACE::format_hexdump (const char *buffer,
         {
           c = (u_char) buffer[(i << 4) + j];
           ACE_OS::sprintf (obuf,
-                           ACE_TEXT ("%02x "),
+                           ACE_LIB_TEXT ("%02x "),
                            c);
           obuf += 3;
           if (j == 7)
             {
               ACE_OS::sprintf (obuf,
-                               ACE_TEXT (" "));
+                               ACE_LIB_TEXT (" "));
               obuf++;
             }
           textver[j] = ACE_OS::ace_isprint (c) ? c : '.';
@@ -2929,7 +2929,7 @@ ACE::format_hexdump (const char *buffer,
       textver[j] = 0;
 
       ACE_OS::sprintf (obuf,
-                       ACE_TEXT ("  %s\n"),
+                       ACE_LIB_TEXT ("  %s\n"),
                        textver);
 
       while (*obuf != '\0')
@@ -2942,13 +2942,13 @@ ACE::format_hexdump (const char *buffer,
         {
           c = (u_char) buffer[size - size % 16 + i];
           ACE_OS::sprintf (obuf,
-                           ACE_TEXT ("%02x "),
+                           ACE_LIB_TEXT ("%02x "),
                            c);
           obuf += 3;
           if (i == 7)
             {
               ACE_OS::sprintf (obuf,
-                               ACE_TEXT (" "));
+                               ACE_LIB_TEXT (" "));
               obuf++;
             }
           textver[i] = ACE_OS::ace_isprint (c) ? c : '.';
@@ -2957,14 +2957,14 @@ ACE::format_hexdump (const char *buffer,
       for (i = size % 16; i < 16; i++)
         {
           ACE_OS::sprintf (obuf,
-                           ACE_TEXT ("   "));
+                           ACE_LIB_TEXT ("   "));
           obuf += 3;
           textver[i] = ' ';
         }
 
       textver[i] = 0;
       ACE_OS::sprintf (obuf,
-                       ACE_TEXT ("  %s\n"),
+                       ACE_LIB_TEXT ("  %s\n"),
                        textver);
     }
   return size;
@@ -2995,7 +2995,7 @@ ACE::timestamp (ACE_TCHAR date_and_time[],
   ::GetLocalTime (&local);
 
   ACE_OS::sprintf (date_and_time,
-                   ACE_TEXT ("%02d/%02d/%04d %02d.%02d.%02d.%06d"),
+                   ACE_LIB_TEXT ("%02d/%02d/%04d %02d.%02d.%02d.%06d"),
                    (int) local.wMonth, // new, also the %02d in sprintf
                    (int) local.wDay,   // new, also the %02d in sprintf
                    (int) local.wYear,  // new, also the %02d in sprintf
@@ -3707,95 +3707,95 @@ ACE::sock_error (int error)
   switch (error)
     {
     case WSAVERNOTSUPPORTED:
-      return ACE_TEXT ("version of WinSock not supported");
+      return ACE_LIB_TEXT ("version of WinSock not supported");
       /* NOTREACHED */
     case WSASYSNOTREADY:
-      return ACE_TEXT ("WinSock not present or not responding");
+      return ACE_LIB_TEXT ("WinSock not present or not responding");
       /* NOTREACHED */
     case WSAEINVAL:
-      return ACE_TEXT ("app version not supported by DLL");
+      return ACE_LIB_TEXT ("app version not supported by DLL");
       /* NOTREACHED */
     case WSAHOST_NOT_FOUND:
-      return ACE_TEXT ("Authoritive: Host not found");
+      return ACE_LIB_TEXT ("Authoritive: Host not found");
       /* NOTREACHED */
     case WSATRY_AGAIN:
-      return ACE_TEXT ("Non-authoritive: host not found or server failure");
+      return ACE_LIB_TEXT ("Non-authoritive: host not found or server failure");
       /* NOTREACHED */
     case WSANO_RECOVERY:
-      return ACE_TEXT ("Non-recoverable: refused or not implemented");
+      return ACE_LIB_TEXT ("Non-recoverable: refused or not implemented");
       /* NOTREACHED */
     case WSANO_DATA:
-      return ACE_TEXT ("Valid name, no data record for type");
+      return ACE_LIB_TEXT ("Valid name, no data record for type");
       /* NOTREACHED */
       /*
         case WSANO_ADDRESS:
         return "Valid name, no MX record";
       */
     case WSANOTINITIALISED:
-      return ACE_TEXT ("WSA Startup not initialized");
+      return ACE_LIB_TEXT ("WSA Startup not initialized");
       /* NOTREACHED */
     case WSAENETDOWN:
-      return ACE_TEXT ("Network subsystem failed");
+      return ACE_LIB_TEXT ("Network subsystem failed");
       /* NOTREACHED */
     case WSAEINPROGRESS:
-      return ACE_TEXT ("Blocking operation in progress");
+      return ACE_LIB_TEXT ("Blocking operation in progress");
       /* NOTREACHED */
     case WSAEINTR:
-      return ACE_TEXT ("Blocking call cancelled");
+      return ACE_LIB_TEXT ("Blocking call cancelled");
       /* NOTREACHED */
     case WSAEAFNOSUPPORT:
-      return ACE_TEXT ("address family not supported");
+      return ACE_LIB_TEXT ("address family not supported");
       /* NOTREACHED */
     case WSAEMFILE:
-      return ACE_TEXT ("no file handles available");
+      return ACE_LIB_TEXT ("no file handles available");
       /* NOTREACHED */
     case WSAENOBUFS:
-      return ACE_TEXT ("no buffer space available");
+      return ACE_LIB_TEXT ("no buffer space available");
       /* NOTREACHED */
     case WSAEPROTONOSUPPORT:
-      return ACE_TEXT ("specified protocol not supported");
+      return ACE_LIB_TEXT ("specified protocol not supported");
       /* NOTREACHED */
     case WSAEPROTOTYPE:
-      return ACE_TEXT ("protocol wrong type for this socket");
+      return ACE_LIB_TEXT ("protocol wrong type for this socket");
       /* NOTREACHED */
     case WSAESOCKTNOSUPPORT:
-      return ACE_TEXT ("socket type not supported for address family");
+      return ACE_LIB_TEXT ("socket type not supported for address family");
       /* NOTREACHED */
     case WSAENOTSOCK:
-      return ACE_TEXT ("handle is not a socket");
+      return ACE_LIB_TEXT ("handle is not a socket");
       /* NOTREACHED */
     case WSAEWOULDBLOCK:
-      return ACE_TEXT ("socket marked as non-blocking and SO_LINGER set not 0");
+      return ACE_LIB_TEXT ("socket marked as non-blocking and SO_LINGER set not 0");
       /* NOTREACHED */
     case WSAEADDRINUSE:
-      return ACE_TEXT ("address already in use");
+      return ACE_LIB_TEXT ("address already in use");
       /* NOTREACHED */
     case WSAECONNABORTED:
-      return ACE_TEXT ("connection aborted");
+      return ACE_LIB_TEXT ("connection aborted");
       /* NOTREACHED */
     case WSAECONNRESET:
-      return ACE_TEXT ("connection reset");
+      return ACE_LIB_TEXT ("connection reset");
       /* NOTREACHED */
     case WSAENOTCONN:
-      return ACE_TEXT ("not connected");
+      return ACE_LIB_TEXT ("not connected");
       /* NOTREACHED */
     case WSAETIMEDOUT:
-      return ACE_TEXT ("connection timed out");
+      return ACE_LIB_TEXT ("connection timed out");
       /* NOTREACHED */
     case WSAECONNREFUSED:
-      return ACE_TEXT ("connection refused");
+      return ACE_LIB_TEXT ("connection refused");
       /* NOTREACHED */
     case WSAEHOSTDOWN:
-      return ACE_TEXT ("host down");
+      return ACE_LIB_TEXT ("host down");
       /* NOTREACHED */
     case WSAEHOSTUNREACH:
-      return ACE_TEXT ("host unreachable");
+      return ACE_LIB_TEXT ("host unreachable");
       /* NOTREACHED */
     case WSAEADDRNOTAVAIL:
-      return ACE_TEXT ("address not available");
+      return ACE_LIB_TEXT ("address not available");
       /* NOTREACHED */
     default:
-      ACE_OS::sprintf (unknown_msg, ACE_TEXT ("unknown error: %d"), error);
+      ACE_OS::sprintf (unknown_msg, ACE_LIB_TEXT ("unknown error: %d"), error);
       return unknown_msg;
       /* NOTREACHED */
     }
@@ -3821,8 +3821,8 @@ ACE::get_bcast_addr (ACE_UINT32 &bcast_addr,
 
   if (s == ACE_INVALID_HANDLE)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("ACE_OS::socket")),
+                       ACE_LIB_TEXT ("%p\n"),
+                       ACE_LIB_TEXT ("ACE_OS::socket")),
                       -1);
 
   struct ifconf ifc;
@@ -3840,9 +3840,9 @@ ACE::get_bcast_addr (ACE_UINT32 &bcast_addr,
 #endif /* AIX */
   if (ACE_OS::ioctl (s, cmd, (char *) &ifc) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("ACE::get_bcast_addr:")
-                       ACE_TEXT ("ioctl (get interface configuration)")),
+                       ACE_LIB_TEXT ("%p\n"),
+                       ACE_LIB_TEXT ("ACE::get_bcast_addr:")
+                       ACE_LIB_TEXT ("ioctl (get interface configuration)")),
                       -1);
 
   struct ifreq *ifr = ifc.ifc_req;
@@ -3907,9 +3907,9 @@ ACE::get_bcast_addr (ACE_UINT32 &bcast_addr,
       if (ifr->ifr_addr.sa_family != AF_INET)
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("%p\n"),
-                      ACE_TEXT ("ACE::get_bcast_addr:")
-                      ACE_TEXT ("Not AF_INET")));
+                      ACE_LIB_TEXT ("%p\n"),
+                      ACE_LIB_TEXT ("ACE::get_bcast_addr:")
+                      ACE_LIB_TEXT ("Not AF_INET")));
           continue;
         }
 
@@ -3919,18 +3919,18 @@ ACE::get_bcast_addr (ACE_UINT32 &bcast_addr,
       if (ACE_OS::ioctl (s, SIOCGIFFLAGS, (char *) &flags) == -1)
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("%p\n"),
-                      ACE_TEXT ("ACE::get_bcast_addr:")
-                      ACE_TEXT (" ioctl (get interface flags)")));
+                      ACE_LIB_TEXT ("%p\n"),
+                      ACE_LIB_TEXT ("ACE::get_bcast_addr:")
+                      ACE_LIB_TEXT (" ioctl (get interface flags)")));
           continue;
         }
 
       if (ACE_BIT_DISABLED (flags.ifr_flags, IFF_UP))
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("%p\n"),
-                      ACE_TEXT ("ACE::get_bcast_addr:")
-                      ACE_TEXT ("Network interface is not up")));
+                      ACE_LIB_TEXT ("%p\n"),
+                      ACE_LIB_TEXT ("ACE::get_bcast_addr:")
+                      ACE_LIB_TEXT ("Network interface is not up")));
           continue;
         }
 
@@ -3943,9 +3943,9 @@ ACE::get_bcast_addr (ACE_UINT32 &bcast_addr,
                              SIOCGIFBRDADDR,
                              (char *) &if_req) == -1)
             ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("%p\n"),
-                        ACE_TEXT ("ACE::get_bcast_addr:")
-                        ACE_TEXT ("ioctl (get broadaddr)")));
+                        ACE_LIB_TEXT ("%p\n"),
+                        ACE_LIB_TEXT ("ACE::get_bcast_addr:")
+                        ACE_LIB_TEXT ("ioctl (get broadaddr)")));
           else
             {
               ACE_OS::memcpy (ACE_reinterpret_cast(sockaddr_in *, &ip_addr),
@@ -3965,9 +3965,9 @@ ACE::get_bcast_addr (ACE_UINT32 &bcast_addr,
         }
       else
         ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("%p\n"),
-                    ACE_TEXT ("ACE::get_bcast_addr:")
-                    ACE_TEXT ("Broadcast is not enable for this interface.")));
+                    ACE_LIB_TEXT ("%p\n"),
+                    ACE_LIB_TEXT ("ACE::get_bcast_addr:")
+                    ACE_LIB_TEXT ("Broadcast is not enable for this interface.")));
 
       if (handle == ACE_INVALID_HANDLE)
         ACE_OS::close (s);
@@ -4000,8 +4000,8 @@ ACE::count_interfaces (ACE_HANDLE handle,
                      SIOCGIFNUM,
                      (caddr_t) &tmp_how_many) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("ACE::get_ip_interfaces:")
-                       ACE_TEXT ("ioctl - SIOCGIFNUM failed")),
+                       ACE_LIB_TEXT ("ACE::get_ip_interfaces:")
+                       ACE_LIB_TEXT ("ioctl - SIOCGIFNUM failed")),
                       -1);
   how_many = (size_t) tmp_how_many;
   return 0;
@@ -4045,8 +4045,8 @@ ACE::count_interfaces (ACE_HANDLE handle,
     {
       ACE_OS::free (ifcfg.ifc_req);
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("count_interfaces:ioctl:")
-                         ACE_TEXT ("SIOCGIFCONF failed")),
+                         ACE_LIB_TEXT ("count_interfaces:ioctl:")
+                         ACE_LIB_TEXT ("SIOCGIFCONF failed")),
                         -1);
     }
 
@@ -4124,7 +4124,7 @@ get_reg_value (const ACE_TCHAR *key,
                                    &hk);
   // 1. open key that defines the interfaces used for TCP/IP?
   if (rc != ERROR_SUCCESS)
-    // print_error_string(ACE_TEXT("RegOpenKeyEx"), rc);
+    // print_error_string(ACE_LIB_TEXT ("RegOpenKeyEx"), rc);
     return -1;
 
   rc = ACE_TEXT_RegQueryValueEx (hk,
@@ -4135,7 +4135,7 @@ get_reg_value (const ACE_TCHAR *key,
                                  &buf_len);
   if (rc != ERROR_SUCCESS)
     {
-      // print_error_string(ACE_TEXT("RegEnumKeyEx"), rc);
+      // print_error_string(ACE_LIB_TEXT ("RegEnumKeyEx"), rc);
       RegCloseKey (hk);
       return -2;
     }
@@ -4314,13 +4314,13 @@ ACE::get_ip_interfaces (size_t &count,
 #  else /* ACE_HAS_PHARLAP */
 
   const ACE_TCHAR *SVCS_KEY1 =
-    ACE_TEXT ("SYSTEM\\CurrentControlSet\\Services\\");
+    ACE_LIB_TEXT ("SYSTEM\\CurrentControlSet\\Services\\");
   const ACE_TCHAR *LINKAGE_KEY1 =
-    ACE_TEXT ("SYSTEM\\CurrentControlSet\\Services\\Tcpip\\Linkage");
-  const ACE_TCHAR *TCP_PARAM_SUBKEY = ACE_TEXT ("\\Parameters\\Tcpip");
-  const ACE_TCHAR *BIND_NAME_ID =  ACE_TEXT ("Bind");
-  const ACE_TCHAR *IPADDR_NAME_ID = ACE_TEXT ("IPAddress");
-  const ACE_TCHAR *INVALID_TCPIP_DEVICE_ADDR = ACE_TEXT ("0.0.0.0");
+    ACE_LIB_TEXT ("SYSTEM\\CurrentControlSet\\Services\\Tcpip\\Linkage");
+  const ACE_TCHAR *TCP_PARAM_SUBKEY = ACE_LIB_TEXT ("\\Parameters\\Tcpip");
+  const ACE_TCHAR *BIND_NAME_ID =  ACE_LIB_TEXT ("Bind");
+  const ACE_TCHAR *IPADDR_NAME_ID = ACE_LIB_TEXT ("IPAddress");
+  const ACE_TCHAR *INVALID_TCPIP_DEVICE_ADDR = ACE_LIB_TEXT ("0.0.0.0");
 
   ACE_TCHAR raw_buffer[ACE_MAX_FULLY_QUALIFIED_NAME_LEN + 1];
   DWORD raw_buflen = ACE_MAX_FULLY_QUALIFIED_NAME_LEN + 1;
@@ -4335,7 +4335,7 @@ ACE::get_ip_interfaces (size_t &count,
   // return buffer contains 0 delimited strings
 
   ACE_Tokenizer dev_names (raw_buffer);
-  dev_names.delimiter (ACE_TEXT('\0'));
+  dev_names.delimiter (ACE_LIB_TEXT ('\0'));
   int n_interfaces = 0;
 
   // Count the number of interfaces
@@ -4398,8 +4398,8 @@ ACE::get_ip_interfaces (size_t &count,
 
   if (handle == ACE_INVALID_HANDLE)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("ACE::get_ip_interfaces:open")),
+                       ACE_LIB_TEXT ("%p\n"),
+                       ACE_LIB_TEXT ("ACE::get_ip_interfaces:open")),
                       -1);
   if (ACE::count_interfaces (handle, num_ifs))
     {
@@ -4442,9 +4442,9 @@ ACE::get_ip_interfaces (size_t &count,
     {
       ACE_OS::close (handle);
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("%p\n"),
-                         ACE_TEXT ("is_address_local:")
-                         ACE_TEXT ("ioctl - SIOCGIFCONF failed")),
+                         ACE_LIB_TEXT ("%p\n"),
+                         ACE_LIB_TEXT ("is_address_local:")
+                         ACE_LIB_TEXT ("ioctl - SIOCGIFCONF failed")),
                         -1);
     }
 

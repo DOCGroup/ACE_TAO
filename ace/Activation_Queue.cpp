@@ -17,13 +17,13 @@ ACE_Activation_Queue::dump (void) const
 {
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG,
-	      ACE_TEXT ("delete_queue_ = %d\n"),
+	      ACE_LIB_TEXT ("delete_queue_ = %d\n"),
 	      this->delete_queue_));
-  ACE_DEBUG ((LM_INFO, ACE_TEXT ("queue_: \n")));
+  ACE_DEBUG ((LM_INFO, ACE_LIB_TEXT ("queue_: \n")));
   if (this->queue_)
     this->queue_->dump();
   else
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(NULL)\n")));
+    ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("(NULL)\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 

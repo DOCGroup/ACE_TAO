@@ -191,8 +191,8 @@ ACE_Module<ACE_SYNCH_USE>::ACE_Module (const ACE_TCHAR *mod_name,
 
   if (this->open (mod_name, writer_q, reader_q, args, flags) == -1)
     ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("ACE_Module")));
+                ACE_LIB_TEXT ("%p\n"),
+                ACE_LIB_TEXT ("ACE_Module")));
 }
 
 template <ACE_SYNCH_DECL> int

@@ -29,7 +29,7 @@ ACE_DLL::ACE_DLL (const ACE_TCHAR *dll_name,
 {
   if (this->handle_ == ACE_SHLIB_INVALID_HANDLE)
     ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("%s\n"),
+                ACE_LIB_TEXT ("%s\n"),
                 this->error ()));
 }
 
@@ -84,7 +84,7 @@ ACE_DLL::open (const ACE_TCHAR *dll_filename,
 
   if (this->handle_ == ACE_SHLIB_INVALID_HANDLE)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%s\n"), this->error ()),
+                       ACE_LIB_TEXT ("%s\n"), this->error ()),
                       -1);
   return 0;
 }
@@ -154,7 +154,7 @@ ACE_DLL::set_handle (ACE_SHLIB_HANDLE handle,
   // Close the handle in use before accepting the next one.
   if (this->close () == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%s\n"), this->error ()),
+                       ACE_LIB_TEXT ("%s\n"), this->error ()),
                       -1);
 
   this->handle_ = handle;

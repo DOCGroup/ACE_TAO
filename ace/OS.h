@@ -66,7 +66,7 @@ enum ACE_Recyclable_State
 #endif /* ACE_DEFAULT_PAGEFILE_POOL_CHUNK */
 
 #if !defined (ACE_DEFAULT_PAGEFILE_POOL_NAME)
-#define ACE_DEFAULT_PAGEFILE_POOL_NAME ACE_TEXT ("Default_ACE_Pagefile_Memory_Pool")
+#define ACE_DEFAULT_PAGEFILE_POOL_NAME ACE_LIB_TEXT ("Default_ACE_Pagefile_Memory_Pool")
 #endif /* ACE_DEFAULT_PAGEFILE_POOL_NAME */
 
 #if !defined (ACE_DEFAULT_MESSAGE_BLOCK_PRIORITY)
@@ -271,16 +271,16 @@ typedef long      id_t;
 # if !defined (ACE_DEFAULT_LOGGER_KEY)
 
 #     if defined (ACE_HAS_STREAM_PIPES)
-#       define ACE_DEFAULT_LOGGER_KEY ACE_TEXT ("/tmp/server_daemon")
+#       define ACE_DEFAULT_LOGGER_KEY ACE_LIB_TEXT ("/tmp/server_daemon")
 #     else
-#       define ACE_DEFAULT_LOGGER_KEY ACE_TEXT ("localhost:10012")
+#       define ACE_DEFAULT_LOGGER_KEY ACE_LIB_TEXT ("localhost:10012")
 #     endif /* ACE_HAS_STREAM_PIPES */
 # endif /* ACE_DEFAULT_LOGGER_KEY */
 
 // The way to specify the local host for loopback IP. This is usually
 // "localhost" but it may need changing on some platforms.
 # if !defined (ACE_LOCALHOST)
-#   define ACE_LOCALHOST ACE_TEXT ("localhost")
+#   define ACE_LOCALHOST ACE_LIB_TEXT ("localhost")
 # endif
 
 # if !defined (ACE_DEFAULT_SERVER_HOST)
@@ -382,8 +382,8 @@ typedef long      id_t;
 // ACE.
 
 // Helpful dump macros.
-# define ACE_BEGIN_DUMP ACE_TEXT ("\n====\n(%P|%t|%x)")
-# define ACE_END_DUMP ACE_TEXT ("====\n")
+# define ACE_BEGIN_DUMP ACE_LIB_TEXT ("\n====\n(%P|%t|%x)")
+# define ACE_END_DUMP ACE_LIB_TEXT ("====\n")
 
 // A free list which create more elements when there aren't enough
 // elements.
@@ -763,11 +763,11 @@ typedef struct
 #   define ACE_PLATFORM_A "pSOS"
 #   define ACE_PLATFORM_EXE_SUFFIX_A ""
 
-#   define ACE_DLL_SUFFIX ACE_TEXT (".so")
-#   define ACE_DLL_PREFIX ACE_TEXT ("lib")
-#   define ACE_LD_SEARCH_PATH ACE_TEXT ("LD_LIBRARY_PATH")
-#   define ACE_LD_SEARCH_PATH_SEPARATOR_STR ACE_TEXT (":")
-#   define ACE_LOGGER_KEY ACE_TEXT ("/tmp/server_daemon")
+#   define ACE_DLL_SUFFIX ACE_LIB_TEXT (".so")
+#   define ACE_DLL_PREFIX ACE_LIB_TEXT ("lib")
+#   define ACE_LD_SEARCH_PATH ACE_LIB_TEXT ("LD_LIBRARY_PATH")
+#   define ACE_LD_SEARCH_PATH_SEPARATOR_STR ACE_LIB_TEXT (":")
+#   define ACE_LOGGER_KEY ACE_LIB_TEXT ("/tmp/server_daemon")
 
 #   define ACE_MAX_DEFAULT_PORT 65535
 
@@ -981,7 +981,7 @@ extern "C" pthread_t pthread_self (void);
 # if (ACE_NTRACE == 1)
 #   define ACE_TRACE(X)
 # else
-#   define ACE_TRACE(X) ACE_Trace ____ (ACE_TEXT (X), __LINE__, ACE_TEXT (__FILE__))
+#   define ACE_TRACE(X) ACE_Trace ____ (ACE_LIB_TEXT (X), __LINE__, ACE_LIB_TEXT (__FILE__))
 # endif /* ACE_NTRACE */
 
 // By default we perform no tracing on the OS layer, otherwise the
@@ -2943,7 +2943,7 @@ typedef void (*ACE_SignalHandlerV)(...);
 
 // Used for dynamic linking
 #   if !defined (ACE_DEFAULT_SVC_CONF)
-#     define ACE_DEFAULT_SVC_CONF ACE_TEXT (".\\svc.conf")
+#     define ACE_DEFAULT_SVC_CONF ACE_LIB_TEXT (".\\svc.conf")
 #   endif /* ACE_DEFAULT_SVC_CONF */
 
 // The following are #defines and #includes that are specific to
@@ -2997,10 +2997,10 @@ typedef void (*ACE_SignalHandlerV)(...);
 // Define the pathname separator characters for Win32 (ugh).
 #   define ACE_DIRECTORY_SEPARATOR_STR_A "\\"
 #   define ACE_DIRECTORY_SEPARATOR_CHAR_A '\\'
-#   define ACE_LD_SEARCH_PATH ACE_TEXT ("PATH")
-#   define ACE_LD_SEARCH_PATH_SEPARATOR_STR ACE_TEXT (";")
-#   define ACE_DLL_SUFFIX ACE_TEXT (".dll")
-#   define ACE_DLL_PREFIX ACE_TEXT ("")
+#   define ACE_LD_SEARCH_PATH ACE_LIB_TEXT ("PATH")
+#   define ACE_LD_SEARCH_PATH_SEPARATOR_STR ACE_LIB_TEXT (";")
+#   define ACE_DLL_SUFFIX ACE_LIB_TEXT (".dll")
+#   define ACE_DLL_PREFIX ACE_LIB_TEXT ("")
 
 // This will help until we figure out everything:
 #   define NFDBITS 32 /* only used in unused functions... */
@@ -3266,7 +3266,7 @@ typedef ACE_UINT64 ACE_hrtime_t;
 
 // Used for dynamic linking.
 #   if !defined (ACE_DEFAULT_SVC_CONF)
-#     define ACE_DEFAULT_SVC_CONF ACE_TEXT ("./svc.conf")
+#     define ACE_DEFAULT_SVC_CONF ACE_LIB_TEXT ("./svc.conf")
 #   endif /* ACE_DEFAULT_SVC_CONF */
 
 // The following are #defines and #includes that are specific to UNIX.
@@ -3713,10 +3713,10 @@ extern "C"
 #     define ACE_PLATFORM_EXE_SUFFIX_W ACE_TEXT_WIDE(ACE_PLATFORM_EXE_SUFFIX_A)
 #   endif /* ACE_HAS_WCHAR */
 
-#   define ACE_DIRECTORY_SEPARATOR_STR ACE_TEXT(ACE_DIRECTORY_SEPARATOR_STR_A)
-#   define ACE_DIRECTORY_SEPARATOR_CHAR ACE_TEXT(ACE_DIRECTORY_SEPARATOR_CHAR_A)
-#   define ACE_PLATFORM ACE_TEXT(ACE_PLATFORM_A)
-#   define ACE_PLATFORM_EXE_SUFFIX ACE_TEXT(ACE_PLATFORM_EXE_SUFFIX_A)
+#   define ACE_DIRECTORY_SEPARATOR_STR ACE_LIB_TEXT (ACE_DIRECTORY_SEPARATOR_STR_A)
+#   define ACE_DIRECTORY_SEPARATOR_CHAR ACE_LIB_TEXT (ACE_DIRECTORY_SEPARATOR_CHAR_A)
+#   define ACE_PLATFORM ACE_LIB_TEXT (ACE_PLATFORM_A)
+#   define ACE_PLATFORM_EXE_SUFFIX ACE_LIB_TEXT (ACE_PLATFORM_EXE_SUFFIX_A)
 
 // Theses defines are used by the ACE Name Server.
 #   if !defined (ACE_DEFAULT_LOCALNAME_A)
@@ -3726,13 +3726,28 @@ extern "C"
 #     define ACE_DEFAULT_GLOBALNAME_A "globalnames"
 #   endif /* ACE_DEFAULT_GLOBALNAME_A */
 
+// ACE_DEFAULT_NAMESPACE_DIR is for legacy mode apps.  A better
+// way of doing this is something like ACE::get_temp_dir, since
+// this directory may not exist
+#   if defined (ACE_LEGACY_MODE)
+#     if defined (ACE_WIN32)
+#       define ACE_DEFAULT_NAMESPACE_DIR_A "C:\\temp"
+#     else /* ACE_WIN32 */
+#       define ACE_DEFAULT_NAMESPACE_DIR_A "/tmp"
+#     endif /* ACE_WIN32 */
+#     if defined (ACE_HAS_WCHAR)
+#       define ACE_DEFAULT_NAMESPACE_DIR_W ACE_TEXT_WIDE(ACE_DEFAULT_NAMESPACE_DIR_A)
+#     endif /* ACE_HAS_WCHAR */
+#     define ACE_DEFAULT_NAMESPACE_DIR ACE_LIB_TEXT(ACE_DEFAULT_NAMESPACE_DIR_A)
+#   endif /* ACE_LEGACY_MODE */
+
 #   if defined (ACE_HAS_WCHAR)
 #     define ACE_DEFAULT_LOCALNAME_W ACE_TEXT_WIDE(ACE_DEFAULT_LOCALNAME_A)
 #     define ACE_DEFAULT_GLOBALNAME_W ACE_TEXT_WIDE(ACE_DEFAULT_GLOBALNAME_A)
 #   endif /* ACE_HAS_WCHAR */
 
-#   define ACE_DEFAULT_LOCALNAME ACE_TEXT(ACE_DEFAULT_LOCALNAME_A)
-#   define ACE_DEFAULT_GLOBALNAME ACE_TEXT(ACE_DEFAULT_GLOBALNAME_A)
+#   define ACE_DEFAULT_LOCALNAME ACE_LIB_TEXT (ACE_DEFAULT_LOCALNAME_A)
+#   define ACE_DEFAULT_GLOBALNAME ACE_LIB_TEXT (ACE_DEFAULT_GLOBALNAME_A)
 
 // defined Win32 specific macros for UNIX platforms
 # if !defined (O_BINARY)
@@ -4877,7 +4892,11 @@ public:
   static double ceil (double x);
   // This method computes the smallest integral value not less than x.
 
-  static ACE_TCHAR *getenv (const ACE_TCHAR *symbol);
+  static char *getenv (const char *symbol);
+# if defined (ACE_HAS_WCHAR) && defined (ACE_WIN32)
+  static wchar_t *getenv (const wchar_t *symbol);
+# endif /* ACE_HAS_WCHAR && ACE_WIN32 */
+
   static int putenv (const ACE_TCHAR *string);
   static ACE_TCHAR *strenvdup (const ACE_TCHAR *str);
   static ACE_TCHAR *getenvstrings (void);
@@ -4923,8 +4942,14 @@ public:
 # endif /* ACE_WIN32 && ACE_HAS_WTHREADS */
 
   // = A set of wrappers for determining config info.
-  static ACE_TCHAR *cuserid (ACE_TCHAR *user,
-                             size_t maxlen = 32);
+  static char *cuserid (char *user,
+                        size_t maxlen = 32);
+
+# if defined (ACE_HAS_WCHAR)
+  static wchar_t *cuserid (wchar_t *user,
+                           size_t maxlen = 32);
+# endif /* ACE_HAS_WCHAR */
+
   static int uname (struct utsname *name);
   static long sysinfo (int cmd,
                        char *buf,
@@ -6779,7 +6804,7 @@ extern "C" ACE_Export void ace_mutex_lock_cleanup_adapter (void *args);
 #   define ACE_DEFAULT_MUTEX_W ACE_TEXT_WIDE(ACE_DEFAULT_MUTEX_A)
 # endif /* ACE_HAS_WCHAR */
 
-# define ACE_DEFAULT_MUTEX ACE_TEXT(ACE_DEFAULT_MUTEX_A)
+# define ACE_DEFAULT_MUTEX ACE_LIB_TEXT (ACE_DEFAULT_MUTEX_A)
 
 # if !defined (ACE_MAIN)
 #   define ACE_MAIN main

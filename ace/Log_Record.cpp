@@ -18,18 +18,18 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Log_Record)
 
 const ACE_TCHAR *ACE_Log_Record::priority_names_[] =
 {
-  ACE_TEXT ("<none>"),
-  ACE_TEXT ("LM_SHUTDOWN"),
-  ACE_TEXT ("LM_TRACE"),
-  ACE_TEXT ("LM_DEBUG"),
-  ACE_TEXT ("LM_INFO"),
-  ACE_TEXT ("LM_NOTICE"),
-  ACE_TEXT ("LM_WARNING"),
-  ACE_TEXT ("LM_STARTUP"),
-  ACE_TEXT ("LM_ERROR"),
-  ACE_TEXT ("LM_CRITICAL"),
-  ACE_TEXT ("LM_ALERT"),
-  ACE_TEXT ("LM_EMERGENCY")};
+  ACE_LIB_TEXT ("<none>"),
+  ACE_LIB_TEXT ("LM_SHUTDOWN"),
+  ACE_LIB_TEXT ("LM_TRACE"),
+  ACE_LIB_TEXT ("LM_DEBUG"),
+  ACE_LIB_TEXT ("LM_INFO"),
+  ACE_LIB_TEXT ("LM_NOTICE"),
+  ACE_LIB_TEXT ("LM_WARNING"),
+  ACE_LIB_TEXT ("LM_STARTUP"),
+  ACE_LIB_TEXT ("LM_ERROR"),
+  ACE_LIB_TEXT ("LM_CRITICAL"),
+  ACE_LIB_TEXT ("LM_ALERT"),
+  ACE_LIB_TEXT ("LM_EMERGENCY")};
 
 const ACE_TCHAR *
 ACE_Log_Record::priority_name (ACE_Log_Priority p)
@@ -57,11 +57,11 @@ ACE_Log_Record::dump (void) const
   // ACE_TRACE ("ACE_Log_Record::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("length_ = %d\n"), this->length_));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\ntype_ = %d\n"), this->type_));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\ntime_stamp_ = (%d, %d)\n"), this->time_stamp_.sec (), this->time_stamp_.usec ()));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\npid_ = %d\n"), this->pid_));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nmsg_data_ = %s\n"), this->msg_data_));
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("length_ = %d\n"), this->length_));
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\ntype_ = %d\n"), this->type_));
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\ntime_stamp_ = (%d, %d)\n"), this->time_stamp_.sec (), this->time_stamp_.usec ()));
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\npid_ = %d\n"), this->pid_));
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nmsg_data_ = %s\n"), this->msg_data_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
@@ -144,7 +144,7 @@ ACE_Log_Record::format_msg (const ACE_TCHAR *host_name,
       ctp[24] = '\0'; // NUL-terminate after the date.
 
       ACE_OS::sprintf (timestamp,
-                       ACE_TEXT ("%s.%03ld %s"),
+                       ACE_LIB_TEXT ("%s.%03ld %s"),
                        ctp + 4,
                        this->time_stamp_.usec () / 1000,
                        ctp + 20);
@@ -155,15 +155,15 @@ ACE_Log_Record::format_msg (const ACE_TCHAR *host_name,
     {
 # if defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS)
       const ACE_TCHAR *lhost_name =  (const ACE_TCHAR *) ((host_name == 0)
-                                                            ? ((char *) ACE_TEXT ("<local_host>"))
+                                                            ? ((char *) ACE_LIB_TEXT ("<local_host>"))
                                                             : ((char *) host_name));
 # else /* ! defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS) */
       const ACE_TCHAR *lhost_name = ((host_name == 0)
-                                      ? ACE_TEXT ("<local_host>")
+                                      ? ACE_LIB_TEXT ("<local_host>")
                                       : host_name);
 # endif /* ! defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS) */
       ACE_OS::sprintf (verbose_msg,
-                       ACE_TEXT ("%s@%s@%ld@%s@%s"),
+                       ACE_LIB_TEXT ("%s@%s@%ld@%s@%s"),
                        timestamp,
                        lhost_name,
                        this->pid_,
@@ -172,13 +172,13 @@ ACE_Log_Record::format_msg (const ACE_TCHAR *host_name,
     }
   else if (ACE_BIT_ENABLED (verbose_flag, ACE_Log_Msg::VERBOSE_LITE))
     ACE_OS::sprintf (verbose_msg,
-                     ACE_TEXT ("%s@%s@%s"),
+                     ACE_LIB_TEXT ("%s@%s@%s"),
                      timestamp,
                      ACE_Log_Record::priority_name (ACE_Log_Priority (this->type_)),
                      this->msg_data_);
   else
     ACE_OS::sprintf (verbose_msg,
-                     ACE_TEXT ("%s"),
+                     ACE_LIB_TEXT ("%s"),
                      this->msg_data_);
   return 0;
 }

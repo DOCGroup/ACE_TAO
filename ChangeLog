@@ -1,3 +1,202 @@
+Sat Oct  7 000:50:02 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/ACE.cpp:
+        * ace/ACE.h:
+        * ace/ACE.i:
+        * ace/ARGV.cpp:
+        * ace/ATM_Acceptor.cpp:
+        * ace/ATM_Acceptor.i:
+        * ace/ATM_Addr.cpp:
+        * ace/ATM_Connector.cpp:
+        * ace/ATM_Connector.i:
+        * ace/ATM_QoS.cpp:
+        * ace/ATM_Stream.cpp:
+        * ace/Acceptor.cpp:
+        * ace/Activation_Queue.cpp:
+        * ace/Addr.cpp:
+        * ace/Arg_Shifter.cpp:
+        * ace/Asynch_Acceptor.cpp:
+        * ace/Asynch_IO.cpp:
+        * ace/Based_Pointer_T.cpp:
+        * ace/Basic_Types.h:
+        * ace/CORBA_Handler.cpp:
+        * ace/Cache_Map_Manager_T.cpp:
+        * ace/Cached_Connect_Strategy_T.cpp:
+        * ace/Caching_Strategies_T.i:
+        * ace/Capabilities.cpp:
+        * ace/Capabilities.h:
+        * ace/Configuration.cpp:
+        * ace/Connector.cpp:
+        * ace/Containers_T.cpp:
+        * ace/DEV_Addr.cpp:
+        * ace/DEV_Connector.i:
+        * ace/DLL.cpp:
+        * ace/Dirent.i:
+        * ace/Dynamic_Service.cpp:
+        * ace/FIFO.cpp:
+        * ace/FIFO_Recv.cpp:
+        * ace/FIFO_Recv_Msg.cpp:
+        * ace/FIFO_Send.cpp:
+        * ace/FIFO_Send_Msg.cpp:
+        * ace/FILE_Addr.cpp:
+        * ace/FILE_Connector.cpp:
+        * ace/FILE_Connector.i:
+        * ace/File_Lock.cpp:
+        * ace/Filecache.cpp:
+        * ace/Filecache.h:
+        * ace/Future.cpp:
+        * ace/Get_Opt.cpp:
+        * ace/Handle_Set.cpp:
+        * ace/Hash_Map_Manager_T.cpp:
+        * ace/Hash_Map_Manager_T.i:
+        * ace/High_Res_Timer.cpp:
+        * ace/High_Res_Timer.h:
+        * ace/INET_Addr.cpp:
+        * ace/INET_Addr.h:
+        * ace/IO_SAP.cpp:
+        * ace/IPC_SAP.cpp:
+        * ace/LSOCK.cpp:
+        * ace/LSOCK_CODgram.cpp:
+        * ace/LSOCK_Connector.cpp:
+        * ace/LSOCK_Dgram.cpp:
+        * ace/Local_Name_Space_T.cpp:
+        * ace/Local_Tokens.cpp:
+        * ace/Local_Tokens.i:
+        * ace/Log_Msg.cpp:
+        * ace/Log_Msg.h:
+        * ace/Log_Record.cpp:
+        * ace/Logging_Strategy.cpp:
+        * ace/MEM_Acceptor.cpp:
+        * ace/MEM_Addr.cpp:
+        * ace/MEM_Connector.cpp:
+        * ace/MEM_SAP.cpp:
+        * ace/Malloc.cpp:
+        * ace/Malloc_T.cpp:
+        * ace/Malloc_T.h:
+        * ace/Map_Manager.cpp:
+        * ace/Map_Manager.i:
+        * ace/Mem_Map.cpp:
+        * ace/Memory_Pool.cpp:
+        * ace/Message_Block.cpp:
+        * ace/Message_Queue.cpp:
+        * ace/Message_Queue_T.cpp:
+        * ace/Module.cpp:
+        * ace/Name_Proxy.cpp:
+        * ace/Name_Request_Reply.cpp:
+        * ace/Naming_Context.cpp:
+        * ace/OS.cpp:
+        * ace/OS.h:
+        * ace/OS.i:
+        * ace/Object_Manager.cpp:
+        * ace/Obstack.cpp:
+        * ace/POSIX_Asynch_IO.cpp:
+        * ace/Parse_Node.cpp:
+        * ace/Pipe.cpp:
+        * ace/Proactor.cpp:
+        * ace/Process.cpp:
+        * ace/Process_Manager.cpp:
+        * ace/QoS_Manager.cpp:
+        * ace/QoS_Session_Factory.cpp:
+        * ace/QoS_Session_Impl.cpp:
+        * ace/RB_Tree.cpp:
+        * ace/RB_Tree.i:
+        * ace/Read_Buffer.cpp:
+        * ace/Registry.cpp:
+        * ace/Registry_Name_Space.cpp:
+        * ace/Remote_Name_Space.cpp:
+        * ace/Remote_Tokens.cpp:
+        * ace/SOCK.cpp:
+        * ace/SOCK_Acceptor.cpp:
+        * ace/SOCK_CODgram.cpp:
+        * ace/SOCK_Connector.cpp:
+        * ace/SOCK_Dgram.cpp:
+        * ace/SOCK_Dgram_Bcast.cpp:
+        * ace/SOCK_Dgram_Mcast.cpp:
+        * ace/SOCK_Dgram_Mcast.h:
+        * ace/SOCK_Dgram_Mcast_QoS.cpp:
+        * ace/SPIPE_Acceptor.cpp:
+        * ace/SPIPE_Addr.cpp:
+        * ace/SPIPE_Connector.cpp:
+        * ace/SV_Message_Queue.cpp:
+        * ace/SV_Semaphore_Complex.cpp:
+        * ace/SV_Semaphore_Simple.cpp:
+        * ace/SV_Shared_Memory.cpp:
+        * ace/Select_Reactor_Base.cpp:
+        * ace/Select_Reactor_T.cpp:
+        * ace/Service_Config.cpp:
+        * ace/Service_Manager.cpp:
+        * ace/Service_Repository.cpp:
+        * ace/Service_Types.cpp:
+        * ace/Singleton.cpp:
+        * ace/Stats.cpp:
+        * ace/Stats.i:
+        * ace/Strategies_T.cpp:
+        * ace/Strategies_T.i:
+        * ace/Stream.cpp:
+        * ace/Svc_Conf.h:
+        * ace/Svc_Conf.l:
+        * ace/Svc_Conf.y:
+        * ace/Svc_Conf_l.cpp:
+        * ace/Svc_Conf_y.cpp:
+        * ace/Svc_Handler.cpp:
+        * ace/Synch.cpp:
+        * ace/Synch.h:
+        * ace/Synch_T.cpp:
+        * ace/System_Time.cpp:
+        * ace/TLI.cpp:
+        * ace/TLI_Acceptor.cpp:
+        * ace/TLI_Connector.i:
+        * ace/TP_Reactor.i:
+        * ace/Task_T.cpp:
+        * ace/Thread_Manager.cpp:
+        * ace/Time_Request_Reply.cpp:
+        * ace/Timeprobe_T.cpp:
+        * ace/Timer_Hash_T.cpp:
+        * ace/Timer_Heap_T.cpp:
+        * ace/Timer_List_T.cpp:
+        * ace/Timer_Queue_Adapters.cpp:
+        * ace/Timer_Queue_T.cpp:
+        * ace/Timer_Wheel_T.cpp:
+        * ace/Token.cpp:
+        * ace/Token_Collection.cpp:
+        * ace/Token_Invariants.cpp:
+        * ace/Token_Manager.cpp:
+        * ace/Token_Request_Reply.cpp:
+        * ace/Token_Request_Reply.i:
+        * ace/Trace.cpp:
+        * ace/Trace.h:
+        * ace/UPIPE_Acceptor.cpp:
+        * ace/UPIPE_Connector.cpp:
+        * ace/UPIPE_Connector.i:
+        * ace/WFMO_Reactor.cpp:
+        * ace/WFMO_Reactor.i:
+        * ace/WIN32_Asynch_IO.cpp:
+        * ace/WIN32_Proactor.cpp:
+        * ace/XTI_ATM_Mcast.i:
+        * ace/ace_wchar.h:
+        * ace/config-WinCE.h:
+        * ace/config-all.h:
+        * ace/config-win32-borland.h:
+        * ace/config-win32-msvc.h:
+        * ace/config-win32-visualage.h:
+
+          Split several methods into char/wchar_t versions:
+          - ACE_OS::getenv
+          - ACE_OS::cuserid
+          - ACE_Allocator_Adapter constructor
+          - ACE_Manual_Event constructor
+
+          Split several string macros into char/wchar_t versions:
+          - ACE_DIRECTORY_SEPARATOR_STR
+          - ACE_DIRECTORY_SEPARATOR_CHAR
+          - ACE_PLATFORM
+          - ACE_PLATFORM_EXE_SUFFIX
+          - ACE_DEFAULT_LOCALNAME
+          - ACE_DEFAULT_GLOBALNAME
+          - ACE_DEFAULT_MUTEX
+
+          Added ACE_DEFAULT_NAMESPACE_DIR back in for ACE_LEGACY_MODE.
+
 Fri Oct 06 11:34:26 2000  Steve Huston  <shuston@riverace.com>
 
         * ace/Based_Pointer_T.cpp:
@@ -1159,9 +1358,9 @@ Thu Sep 07 18:10:00 2000  Darrell Brunsch  <brunsch@uci.edu>
 
           ACE_HAS_WINSOCK2 is turned on by default for all of Win32.
           Windows 98 and Windows ME should have Winsock2, and NT/2000
-          also does.  For Windows 95, this requires that Winsock
-          library be added or ACE_HAS_WINSOCK2 defined to 0 in
-          config.h before including config-win32.h (overriding it).
+          also does.  For Windows 95, this requires that the Winsock 2
+          library for Windows 95 is added or ACE_HAS_WINSOCK2 defined to 
+          0 in config.h before including config-win32.h (overriding it).
 
           Thanks to Giovanni Zito <gzito@mbox.thunder.it> for inquiring
           about this.
