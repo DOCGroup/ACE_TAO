@@ -4,7 +4,7 @@
 #define ACE_BOOL_H
 
 // Define bool out of the std namespace.
-#if defined (WIN32)
+#if (_MSC_VER > 1010)
 #include <yvals.h>
 #else
 #if !defined (bool)
