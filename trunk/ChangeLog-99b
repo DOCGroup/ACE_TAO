@@ -1,3 +1,7 @@
+Wed Mar 17 14:06:24 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* acconfig.h: Some characters got removed so I put them back.
+
 Wed Mar 17 13:59:42 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* configure.in:

@@ -948,7 +948,7 @@
 #undef ACE_HAS_MOSTLY_UNICODE_APIS
 
 /* Compiler supports the C++ typename keyword */
-#undef E_HAS_TYPENAME_KEYWORD
+#undef ACE_HAS_TYPENAME_KEYWORD
 
 /* Compiler supports the new using keyword for C++ namespaces. */
 #undef ACE_HAS_USING_KEYWORD
