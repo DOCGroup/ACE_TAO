@@ -48,8 +48,6 @@ TAO_Requires_POA_Initializer = TAO_POA_Initializer::init ();
 #include "IdAssignmentPolicyC.h"
 #include "IdUniquenessPolicyC.h"
 #include "ImplicitActivationPolicyC.h"
-#include "ImplRepoC.h"
-#include "ImR_LocatorC.h"
 #include "LifespanPolicyC.h"
 #include "POAManagerC.h"
 #include "PS_CurrentC.h"
