@@ -2587,8 +2587,8 @@ ACE_OS::socket_init (int version_high, int version_low)
       ACE_OS::socket_initialized_ = 1;
     }
 #else
-  version_high = version_high;
-  version_low = version_low;
+  ACE_UNUSED_ARG (version_high);
+  ACE_UNUSED_ARG (version_low);
 #endif /* ACE_WIN32 */
   return 0;
 }
