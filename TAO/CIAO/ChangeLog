@@ -1,3 +1,26 @@
+Fri Feb 07 23:35:35 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ciao/Object_Set_T.h:
+	* ciao/Object_Set_T.i:
+	* ciao/Object_Set_T.cpp: Added a naive implementation of an object
+	  reference set.  It is naive because it simply keeps object
+	  references in an objref_var array without checking for
+	  duplication.  More importantly, it takes O(n) to to look for an
+	  object reference and return it.  What we really need is a
+	  thread-safe hash_set<> like class here.  Since this is mostly
+	  used only during setup/assemble time for a CIAO application,
+	  i.e., not on critical path, this class serves as a place holder
+	  for later, more efficient implementation.
+
+	  This new class is needed to support ServerActivator and
+	  ComponentServer interface.
+
+	* docs/ConfigVAlues.html: Added this new document page to record
+	  what configuration values can be used to initialize
+	  ComponentServer's and Container's.
+
+	* docs/todo.html: Documented more future todo tasks and ideas.
+
 Tue Feb 04 23:10:56 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* docs/todo.html: Added a new item descirbing things that need to
