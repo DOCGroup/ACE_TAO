@@ -31,6 +31,7 @@ TAO_Transport_Sync_Strategy::
                                    size_t ,
                                    size_t ,
                                    int &,
+                                   int &,
                                    ACE_Time_Value &)
 {
   return 0;
@@ -52,6 +53,7 @@ TAO_Eager_Buffering_Sync_Strategy::
     buffering_constraints_reached (TAO_Stub *stub,
                                    size_t msg_count,
                                    size_t total_bytes,
+                                   int &must_flush,
                                    int &set_timer,
                                    ACE_Time_Value &interval)
 {
@@ -70,7 +72,10 @@ TAO_Eager_Buffering_Sync_Strategy::
   this->timer_check (buffering_constraint, set_timer, interval);
 
   if (buffering_constraint.mode == TAO::BUFFER_FLUSH)
-    return 1;
+    {
+      must_flush = 1;
+      return 1;
+    }
 
   if (ACE_BIT_ENABLED (buffering_constraint.mode,
                        TAO::BUFFER_MESSAGE_COUNT)

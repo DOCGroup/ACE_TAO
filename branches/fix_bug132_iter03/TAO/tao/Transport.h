@@ -660,7 +660,7 @@ private:
   /// TAO_Queued_Message *copy_message_block (const ACE_Message_Block *mb);
 
   /// Check if the buffering constraints have been reached
-  int must_flush_queue_i (TAO_Stub *stub);
+  int check_buffering_constraints_i (TAO_Stub *stub, int &must_flush);
 
   /// Send a synchronous message, i.e. block until the message is on
   /// the wire

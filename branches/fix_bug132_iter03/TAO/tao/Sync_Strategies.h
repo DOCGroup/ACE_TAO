@@ -64,6 +64,7 @@ public:
   virtual int buffering_constraints_reached (TAO_Stub *stub,
                                              size_t msg_count,
                                              size_t total_bytes,
+                                             int &must_flush,
                                              int &set_timer,
                                              ACE_Time_Value &interval) = 0;
 };
@@ -76,6 +77,7 @@ public:
   virtual int buffering_constraints_reached (TAO_Stub *stub,
                                              size_t msg_count,
                                              size_t total_bytes,
+                                             int &must_flush,
                                              int &set_timer,
                                              ACE_Time_Value &interval);
 };
@@ -90,6 +92,7 @@ public:
   virtual int buffering_constraints_reached (TAO_Stub *stub,
                                              size_t msg_count,
                                              size_t total_bytes,
+                                             int &must_flush,
                                              int &set_timer,
                                              ACE_Time_Value &interval);
 
