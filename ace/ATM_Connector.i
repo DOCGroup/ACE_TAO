@@ -107,6 +107,28 @@ ACE_ATM_Connector::complete (ACE_ATM_Stream &new_stream,
 
 ACE_INLINE
 int
+ACE_ATM_Connector::add_leaf (ACE_ATM_Stream &current_stream,
+                             const ACE_Addr &remote_sap,
+                             ACE_INT32 leaf_id,
+                             ACE_Time_Value *timeout)
+{
+  ACE_TRACE ("ACE_ATM_Connector::add_leaf");
+#if defined (ACE_HAS_FORE_ATM_XTI)
+  return connector_.add_leaf(current_stream.get_stream(),
+                             remote_sap,
+                             leaf_id,
+                             timeout);
+#elif defined (ACE_HAS_FORE_ATM_WS2)
+#else
+  ACE_UNUSED_ARG(new_stream);
+  ACE_UNUSED_ARG(remote_sap);
+  ACE_UNUSED_ARG(tv);
+  return 0;
+#endif
+}
+
+ACE_INLINE
+int
 ACE_ATM_Connector::reset_new_handle (ACE_HANDLE handle)
 {
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
