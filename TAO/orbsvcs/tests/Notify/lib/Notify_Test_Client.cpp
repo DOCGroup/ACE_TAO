@@ -8,6 +8,7 @@ ACE_RCSID(Notify_Tests, Notify_Test_Client, "$Id$")
 #define NAMING_SERVICE_NAME "NameService"
 
 Notify_Test_Client::Notify_Test_Client (void)
+  : done_ (0)
 {
   // @@ Later: accept the inter filter operator as a param.
   ifgop_ = CosNotifyChannelAdmin::OR_OP;
@@ -100,8 +101,9 @@ Notify_Test_Client::resolve_Notify_factory (CORBA::Environment &ACE_TRY_ENV)
 int
 Notify_Test_Client::ORB_run (void)
 {
-  if (this->orb_->run () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "run"), -1);
+  while (!this->done_)
+    if (this->orb_->work_pending ())
+      this->orb_->perform_work ();
 
   return 0;
 }
@@ -109,7 +111,5 @@ Notify_Test_Client::ORB_run (void)
 void
 Notify_Test_Client::shutdown (CORBA::Environment &/*ACE_TRY_ENV*/)
 {
-  // shutdown the ORB.
-  if (!CORBA::is_nil (this->orb_.in ()))
-    this->orb_->shutdown ();
+  this->done_ = 1;
 }

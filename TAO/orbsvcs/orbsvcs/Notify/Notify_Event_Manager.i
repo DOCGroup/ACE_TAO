@@ -9,8 +9,7 @@ ACE_INLINE void
 TAO_Notify_Event_Manager::process_event  (TAO_Notify_Event* event, TAO_Notify_EventSource* event_source, CORBA::Environment &ACE_TRY_ENV)
 {
   if (admin_properties_->reject_new_events () == 1
-      && admin_properties_->queue_length ()->value () >
-      admin_properties_->max_queue_length())
+      && admin_properties_->queue_full ())
     ACE_THROW (CORBA::IMP_LIMIT ());
 
   this->event_processor_->evaluate_source_filter (event, event_source, ACE_TRY_ENV);

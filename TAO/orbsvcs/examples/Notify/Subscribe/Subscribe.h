@@ -43,7 +43,7 @@ class Subscribe
 
   void done (void);
   // Called when all events we are waiting for have occured.
- 
+
  protected:
   void init_ORB (int argc, char *argv [], CORBA::Environment &ACE_TRY_ENV);
   // Initializes the ORB.
@@ -108,6 +108,9 @@ class Subscribe
 
   Subscribe_StructuredPushSupplier* supplier_1_;
   Subscribe_StructuredPushSupplier* supplier_2_;
+
+  CORBA::Boolean done_;
+  // Set this flag to exit the run loop.
 };
 
 /*****************************************************************/
@@ -144,7 +147,7 @@ protected:
   // The proxy_supplier id.
 
   Subscribe* subscribe_;
-  // callback <done> 
+  // callback <done>
 
   // = Methods
   virtual ~Subscribe_StructuredPushConsumer (void);

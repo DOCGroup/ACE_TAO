@@ -68,6 +68,10 @@ public:
   TAO_Notify_Property_Long* consumers (void);
   TAO_Notify_Property_Long* suppliers (void);
 
+  // = Helper method
+  CORBA::Boolean queue_full (void);
+  // Returns true if Queue is full
+
 protected:
   // @@ Pradeep can you explain why there is any maximum for these
   // values? Should they be configurable by the user so the resource

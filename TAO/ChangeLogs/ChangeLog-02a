@@ -1,3 +1,19 @@
+Sat Nov 25 20:59:07 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
+
+	* orbsvcs/tests/Notify/lib/Notify_Test_Client.{h, cpp}:
+	* orbsvcs/tests/Notify/Basic/Events_Test.cpp:
+	* orbsvcs/examples/Notify/Filter/Filter.{h,cpp}:
+	* orbsvcs/examples/Notify/Subscribe/Subscribe.{h,cpp}:
+	* orbsvcs/orbsvcs/Notify/Notify_AdminProperties.{h,cpp}:
+	* orbsvcs/orbsvcs/Notify/Notify_Event_Manager.i:
+	* orbsvcs/orbsvcs/Notify/Notify_MT_Worker_Task.cpp:
+	
+	  Fixed incorrect procedure to destroy event channel.
+	  Thanks to Walt Corey<wcorey@ibm.net> for reporting this problem.
+
+	* orbsvcs/tests/Notify/performance-tests/RedGreen/README:
+	  Fixed typo in instructions.
+
 Sat Nov 25 15:06:16 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp:

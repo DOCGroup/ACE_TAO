@@ -87,7 +87,6 @@ TAO_Notify_MT_Worker_Task::svc (void)
     {
       ACE_TRY_NEW_ENV
         {
-          ACE_OS::sleep (1);
           ACE_Message_Block *mb;
           if (this->getq (mb) == -1)
             if (ACE_OS::last_error () == ESHUTDOWN)

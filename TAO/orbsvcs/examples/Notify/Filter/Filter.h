@@ -118,6 +118,9 @@ class FilterClient
 
   Filter_StructuredPushSupplier* supplier_2;
   // Supplier #2
+
+  CORBA::Boolean done_;
+  // Set this flag to exit the run loop.
 };
 
 /*****************************************************************/
