@@ -1,3 +1,13 @@
+Sun Apr  8 09:49:26 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* bin: Added a new shell script called "make-components" that enables
+	  each ACE component to be built in a simple manner using the
+ 	  following change from Arturo.
+
+	* ace/Makefile: Generalized the libACE.a and libACE.$(SOEXT) targets
+	  to simplify subsettings.  Thanks to Arturo Montes
+ 	  <mitosys@colomsat.net.co> for reporting this.
+
 Sat Apr  7 16:00:48 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* tests: Added a new rtems_init.c file.  Thanks to Joel Sherrill
