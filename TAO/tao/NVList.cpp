@@ -134,7 +134,7 @@ CORBA_NVList::add_value (const char *name,
 	  // The normal behavior for parameters is that the ORB
 	  // "borrows" their memory for the duration of calls.
 	  CORBA::TypeCode_var type = value.type ();
-	  nv->any_.replace (type, value.value_, 0, env);
+	  nv->any_.replace (type.in (), value.value_, 0, env);
 	}
 
       return nv;
