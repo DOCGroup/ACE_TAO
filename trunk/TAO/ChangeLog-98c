@@ -1,3 +1,12 @@
+Mon Feb 23 12:25:21 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Event/Memory_Pools.h: 
+	* orbsvcs/orbsvcs/Event/Memory_Pools.i: 
+	* orbsvcs/orbsvcs/Event/Memory_Pools.cpp:
+ 	  We cannot use TSS memory pools: in some cases the memory is
+	  allocated in one thread and disposed in another. Until we can
+	  clean out that behavior I'm using a singleton.
+
 Mon Feb 23 11:57:16 1998  Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Property/ : Changed the names EXT_ID and INT_ID
