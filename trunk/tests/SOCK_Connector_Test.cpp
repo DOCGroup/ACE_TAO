@@ -57,9 +57,13 @@ find_another_host (char other_host[])
     {
       if (ACE_OS::strcmp (h->h_name, "localhost") == 0)
 	continue;
+      // AIX just _has_ to be different
+      if (ACE_OS::strcmp (h->h_name, "loopback") == 0)
+	continue;
 
       // If not me
-      if (ACE_OS::strcmp (h->h_name, other_host) != 0) 
+      if (ACE_OS::strcmp (h->h_name, other_host) != 0 &&
+	  ACE_OS::strcmp (h->h_name, un.nodename) != 0   )
 	{
 	  ACE_OS::strcpy (other_host, h->h_name);
 	  break;
@@ -82,7 +86,7 @@ fail_no_listener_nonblocking (void)
 
   find_another_host (test_host);
   ACE_DEBUG ((LM_DEBUG, "Testing to host %s\n", test_host));
-  nobody_home.set ((u_short) 4242, test_host);
+  nobody_home.set ((u_short) 42000, test_host);
   status = con.connect (sock, nobody_home, &nonblock);
 
   // Need a port that will fail.
