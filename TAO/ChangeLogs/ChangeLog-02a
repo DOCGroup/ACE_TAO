@@ -1,3 +1,46 @@
+Tue Apr 25 15:05:48 2000  Ossama Othman  <ossama@uci.edu>
+
+	* tao/Profile.h:
+	* tao/IIOP_Profile.h:
+	* tao/IIOP_Profile.i:
+	* tao/IIOP_Profile.cpp:
+	* tao/UIOP_Profile.h:
+	* tao/UIOP_Profile.i:
+	* tao/UIOP_Profile.cpp:
+	* tao/SHMIOP_Profile.h:
+	* tao/SHMIOP_Profile.i:
+	* tao/SHMIOP_Profile.cpp:
+
+	  Removed copy constructor and assignment operator
+	  implementations, and declarad them to be ACE_UNIMPLIMENTED_FUNCs
+	  and private.  TAO_Profile instances should not be copied.
+
+	  (object_key):
+
+	  Removed deprecated method that sets the underlying object key.
+
+	  (hash):
+
+	  Improved the hashing code to provide a more a unique hash by
+	  utilizing the ACE::hash_pjw() method, and the profile tag, in
+	  addition to values that were used before.  [Bug 
+	
+	* tao/IIOP_Profile.cpp (set):
+	* tao/SHMIOP_Profile.cpp (set):
+
+	  If hostname lookup fails, then fallback on the IP address.
+
+	* tao/Object.cpp (_is_a, _key, _non_existent, _create_request,
+	  _request, _get_interface, _set_policy_overrides):
+
+	  Added error (errno) minor codes to some of the exceptions that
+	  potentially get thrown to improve information supplied by the
+	  exception.
+
+	* tao/Connector_Registry.cpp (object_key_delimiter):
+
+	  Set errno to EINVAL if the supplied IOR pointer is null.
+
 Tue Apr 25 15:10:25 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/Exception.h:
