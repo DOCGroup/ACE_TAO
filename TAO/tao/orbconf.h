@@ -341,9 +341,10 @@
 // default can be changed, but then the application developer is
 // responsible for instantiating the templates.
 //
-#if !defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) && \
-    (defined (ACE_HAS_TEMPLATE_SPECIALIZATION) || \
-     (defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA) && defined (_UNICOS)))
+#if defined (AIX) || \
+    (!defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) && \
+     (defined (ACE_HAS_TEMPLATE_SPECIALIZATION) || \
+      (defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA) && defined (_UNICOS))))
 #define TAO_USE_SEQUENCE_TEMPLATES
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 

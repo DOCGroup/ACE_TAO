@@ -1098,7 +1098,7 @@ TAO_NAMESPACE_CLOSE  // end of class (namespace) CORBA
 #define TAO_TIMEOUT_CONNECT_MINOR_CODE             (0x0AU << 7)
 #define TAO_TIMEOUT_SEND_MINOR_CODE                (0x0BU << 7)
 #define TAO_TIMEOUT_RECV_MINOR_CODE                (0x0CU << 7)
-#define TAO_IMPLREPO_SERVER_MANUAL_ACTIVATION      (0x0DU << 7)
+#define TAO_IMPLREPO_MINOR_CODE                    (0x0DU << 7)
 #define TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE   (0x0EU << 7)
 #define TAO_ORB_CORE_INIT_LOCATION_CODE            (0x0FU << 7)
 #define TAO_POLICY_NARROW_CODE                     (0x10U << 7)
