@@ -1,3 +1,23 @@
+Fri Jul 26 11:32:54 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* tao/corbafwd.h: Added a #undef for the IOR macro on HPUX.
+	  Thanks to Torsten Kuepper <torsten.kuepper@nokia.com> for
+ 	  reporting this.
+
+Fri Jul 26 11:22:55 2002  Charles Frasch <cfrasch@spawar.navy.mil>
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_Reactive_ConsumerControl.h
+	* orbsvcs/orbsvcs/CosEvent/CEC_Reactive_ConsumerControl.cpp
+	* orbsvcs/orbsvcs/CosEvent/CEC_Reactive_SupplierControl.h
+	* orbsvcs/orbsvcs/CosEvent/CEC_Reactive_SupplierControl.cpp
+	* orbsvcs/orbsvcs/CosEvent/CEC_Reactive_Pulling_Strategy.h
+	* orbsvcs/orbsvcs/CosEvent/CEC_Reactive_Pulling_Strategy.cpp
+
+	  Corectly cancel timers in the shutdown methods. The timers 
+	  are scheduled in the activate methods but an 
+	  ACE_Reactor::remove_handler() call was being made rather 
+	  than the correct ACE_Reactor::cancel_timer().
+
 Fri Jul 26 09:26:34 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* orbsvcs/examples/PSS/Server_i.cpp (get_status): 
