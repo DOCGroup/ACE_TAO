@@ -1,3 +1,9 @@
+Wed Jul 14 12:05:13 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * include/makeinclude/rules.local.GNU (LN_S): on WIN32
+          hosts, use cp -p instead of ln -s, because symbolic
+          links aren't supported.
+
 Wed Jul 14 11:22:31 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/platform_vxworks5.x_g++.GNU,
