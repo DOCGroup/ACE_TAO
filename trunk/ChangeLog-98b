@@ -1,52 +1,56 @@
+Mon Sep 07 09:52:12 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * docs/ACE-guidelines.html: added general rule to put system
+          call wrappers in ACE_OS, extensions in ACE.
+
 Mon Sep  7 01:02:58 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-	* ace/ACE.i: Changed ACE_INLINE to ASYS_INLINE.
+        * ace/ACE.i: Changed ACE_INLINE to ASYS_INLINE.
 
-	* ace/OS.h: Added a no-op type define for DIR and struct 
-	  dirent so compilation can continue on NT.
+        * ace/OS.h: Added a no-op type define for DIR and struct
+          dirent so compilation can continue on NT.
 
-	* ace/ace_dll.dsp:
-	* ace/ace_lib.dsp:
-	  Added new dirent.* files and removed Array.{cpp,i} files.
-	  
+        * ace/ace_dll.dsp:
+        * ace/ace_lib.dsp:
+          Added new dirent.* files and removed Array.{cpp,i} files.
 
 Sun Sep  6 15:49:46 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/ACE: Added several new helper string functions, which were
- 	  mined from the drwho program.
+        * ace/ACE: Added several new helper string functions, which were
+          mined from the drwho program.
 
-	* ace/OS: Moved strnew() into class ACE, which is where it
- 	  belongs...
+        * ace/OS: Moved strnew() into class ACE, which is where it
+          belongs...
 
-	* ace/Containers: Merged the ACE_Array class entirely into the
- 	  Containers files, which is more consistent with the general
- 	  design of ACE.  Also, removed ace/Array.i and Array.cpp since
- 	  they are no longer needed.  We'll keep Array.h around for a
- 	  while for backwards compatibility, but it just #includes
- 	  "ace/Containers.h" now...
+        * ace/Containers: Merged the ACE_Array class entirely into the
+          Containers files, which is more consistent with the general
+          design of ACE.  Also, removed ace/Array.i and Array.cpp since
+          they are no longer needed.  We'll keep Array.h around for a
+          while for backwards compatibility, but it just #includes
+          "ace/Containers.h" now...
 
         * ace/config-sunos5*.h: Added ACE_HAS_DIRENT.  We'll need help
- 	  figuring this out on the other platforms...
+          figuring this out on the other platforms...
 
-	* ace/OS: Began adding "Dirent" support to ACE_OS.  This will
- 	  provide the UNIX/POSIX directory iterator routines when the
- 	  ACE_HAS_DIRENT macro is enabled.  
+        * ace/OS: Began adding "Dirent" support to ACE_OS.  This will
+          provide the UNIX/POSIX directory iterator routines when the
+          ACE_HAS_DIRENT macro is enabled.
 
-	* ace/OS: Added fputs() to ACE_OS.  I'm not sure why this was
-	  missing...
+        * ace/OS: Added fputs() to ACE_OS.  I'm not sure why this was
+          missing...
 
-	* ace/Makefile (FILES): Moved Priority_Reactor to earlier in
-	  the Makefile to maintain alphabetical order.
+        * ace/Makefile (FILES): Moved Priority_Reactor to earlier in
+          the Makefile to maintain alphabetical order.
 
 Sun Sep  6 14:06:43 1998  Douglas C. Schmidt  <schmidt@cumbia.cs.wustl.edu>
 
         * ace/OS.h: Moved the ACE_NEW_THROW macros that Matt Braun wrote
- 	  into ACE so that we can use these in all applications.
+          into ACE so that we can use these in all applications.
 
 Sun Sep 06 12:28:40 1998 Fred Kuhns <fredk@arl.wustl.edu>
 
-	* Added a simple reactor/acceptor figure to the first tutorial
-	  docs/tutorial/001/simple.*
+        * Added a simple reactor/acceptor figure to the first tutorial
+          docs/tutorial/001/simple.*
 
 Sun Sep 06 08:34:57 1998  David L. Levine  <levine@cs.wustl.edu>
 
