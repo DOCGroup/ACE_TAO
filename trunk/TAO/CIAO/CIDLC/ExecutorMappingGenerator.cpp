@@ -686,7 +686,8 @@ namespace
     virtual void
     inherits_none (Type&)
     {
-      os << " : ::Components::CCMContext";
+      //@@ should be os << " : ::Components::CCMContext";
+      os << " : ::Components::SessionContext";
     }
 
     virtual void
