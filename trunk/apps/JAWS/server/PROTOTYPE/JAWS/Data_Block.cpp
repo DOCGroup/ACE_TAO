@@ -3,7 +3,7 @@
 #include "JAWS/Data_Block.h"
 #include "JAWS/Policy.h"
 
-JAWS_Pipeline_Task *
+JAWS_Pipeline_Handler *
 JAWS_Data_Block::task (void)
 {
   return this->task_;
