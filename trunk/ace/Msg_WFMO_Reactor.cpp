@@ -4,7 +4,7 @@
 
 ACE_RCSID(ace, Msg_WFMO_Reactor, "$Id$")
 
-#if defined (ACE_WIN32) && !defined (ACE_HAS_PHARLAP)
+#if defined (ACE_WIN32) && !defined (ACE_LACKS_MSG_WFMO)
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Msg_WFMO_Reactor.i"
@@ -87,4 +87,4 @@ ACE_Msg_WFMO_Reactor::poll_remaining_handles (size_t slot)
                                       QS_ALLINPUT);
 }
 
-#endif /* ACE_WIN32 && !ACE_HAS_PHARLAP*/
+#endif /* ACE_WIN32 && !ACE_LACKS_MSG_WFMO */

@@ -1,3 +1,17 @@
+Wed May 17 12:03:41 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * Msg_WFMO_Reactor.cpp:
+        * Msg_WFMO_Reactor.h:
+        * Msg_WFMO_Reactor.i:
+        * ace/README:
+        * ace/config-WinCE.h:
+        * ace/config-pharlap.h:
+
+          Added an ACE_LACKS_MSG_WFMO macro that is used when ACE_WIN32
+          is defined but MsgWaitForMultipleOjbects isn't.  This replaces
+          the checking for Pharlap and Windows CE.  Thanks to David Hauck
+          <davidh@realtimeint.com> for this suggestion.
+
 Wed May 17 13:34:22 2000  Steve Huston  <shuston@riverace.com>
 
         * tests/Thread_Pool_Reactor_Test.cpp: Added a little more diagnostic
