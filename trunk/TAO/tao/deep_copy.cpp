@@ -1072,7 +1072,8 @@ TAO_Marshal_Except::deep_copy (CORBA::TypeCode_ptr  tc,
 {
   CORBA::TypeCode::traverse_status retval = CORBA::TypeCode::TRAVERSE_CONTINUE;
   CORBA::TypeCode_ptr param;
-  CORBA::Long size, alignment;
+  CORBA::Long size;
+  
   CDR stream;
 
   if (tc)
@@ -1101,91 +1102,81 @@ TAO_Marshal_Except::deep_copy (CORBA::TypeCode_ptr  tc,
                   size = param->size (env);
                   if (env.exception () == 0)
                     {
-                      // get the alignment of the field
-                      alignment = param->alignment (env);
-                      if (env.exception () == 0)
+                      switch (param->kind_)
                         {
-                          switch (param->kind_)
-                            {
-                            case CORBA::tk_null:
-                            case CORBA::tk_void:
-                              break;
-                            case CORBA::tk_short:
-                            case CORBA::tk_ushort:
-                              *(CORBA::Short *) dest = *(CORBA::Short *) source;
-                              break;
-                            case CORBA::tk_long:
-                            case CORBA::tk_ulong:
-                            case CORBA::tk_float:
-                            case CORBA::tk_enum:
-                              *(CORBA::Long *) dest = *(CORBA::Long *) source;
-                              break;
-                            case CORBA::tk_double:
-                            case CORBA::tk_longlong:
-                            case CORBA::tk_ulonglong:
-                              *(CORBA::LongLong *) dest = *(CORBA::LongLong *) source;
-                              break;
-                            case CORBA::tk_boolean:
-                              *(CORBA::Boolean *) dest = *(CORBA::Boolean *) source;
-                              break;
-                            case CORBA::tk_char:
-                            case CORBA::tk_octet:
-                              *(CORBA::Char *) dest = *(CORBA::Char *) source;
-                              break;
-                            case CORBA::tk_longdouble:
-                              *(CORBA::LongDouble *) dest = *(CORBA::LongDouble *) source;
-                              break;
-                            case CORBA::tk_wchar:
-                              *(CORBA::WChar *) dest = *(CORBA::WChar *) source;
-                              break;
-                            case CORBA::tk_any:
-                              retval = TAO_Marshal_Any::deep_copy (param, source, dest, env);
-                              break;
-                            case CORBA::tk_TypeCode:
-                              retval = TAO_Marshal_TypeCode::deep_copy (param, source, dest, env);
-                              break;
-                            case CORBA::tk_Principal:
-                              retval = TAO_Marshal_Principal::deep_copy (param, source, dest, env);
-                              break;
-                            case CORBA::tk_objref:
-                              retval = TAO_Marshal_ObjRef::deep_copy (param, source, dest, env);
-                              break;
-                            case CORBA::tk_struct:
-                              retval = TAO_Marshal_Struct::deep_copy (param, source, dest, env);
-                              break;
-                            case CORBA::tk_union:
-                              retval = TAO_Marshal_Union::deep_copy (param, source, dest, env);
-                              break;
-                            case CORBA::tk_string:
-                              retval = TAO_Marshal_String::deep_copy (param, source, dest, env);
-                              break;
-                            case CORBA::tk_sequence:
-                              retval = TAO_Marshal_Sequence::deep_copy (param, source, dest, env);
-                              break;
-                            case CORBA::tk_array:
-                              retval = TAO_Marshal_Array::deep_copy (param, source, dest, env);
-                              break;
-                            case CORBA::tk_alias:
-                              retval = TAO_Marshal_Alias::deep_copy (param, source, dest, env);
-                              break;
-                            case CORBA::tk_except:
-                              retval = TAO_Marshal_Except::deep_copy (param, source, dest, env);
-                              break;
-                            case CORBA::tk_wstring:
-                              retval = TAO_Marshal_WString::deep_copy (param, source, dest, env);
-                              break;
-                            default:
-                              retval = CORBA::TypeCode::TRAVERSE_STOP;
-                            } // end of switch
-                          source = (char *) source + size;
-                          dest = (char *) dest + size;
-                        }  
-                      else  // exception computing alignment 
-                        {
-                          dmsg ("TAO_Marshal_Struct::deep_copy detected error");
-                          return CORBA::TypeCode::TRAVERSE_STOP;
-                        }
-                    } 
+                        case CORBA::tk_null:
+                        case CORBA::tk_void:
+                          break;
+                        case CORBA::tk_short:
+                        case CORBA::tk_ushort:
+                          *(CORBA::Short *) dest = *(CORBA::Short *) source;
+                          break;
+                        case CORBA::tk_long:
+                        case CORBA::tk_ulong:
+                        case CORBA::tk_float:
+                        case CORBA::tk_enum:
+                          *(CORBA::Long *) dest = *(CORBA::Long *) source;
+                          break;
+                        case CORBA::tk_double:
+                        case CORBA::tk_longlong:
+                        case CORBA::tk_ulonglong:
+                          *(CORBA::LongLong *) dest = *(CORBA::LongLong *) source;
+                          break;
+                        case CORBA::tk_boolean:
+                          *(CORBA::Boolean *) dest = *(CORBA::Boolean *) source;
+                          break;
+                        case CORBA::tk_char:
+                        case CORBA::tk_octet:
+                          *(CORBA::Char *) dest = *(CORBA::Char *) source;
+                          break;
+                        case CORBA::tk_longdouble:
+                          *(CORBA::LongDouble *) dest = *(CORBA::LongDouble *) source;
+                          break;
+                        case CORBA::tk_wchar:
+                          *(CORBA::WChar *) dest = *(CORBA::WChar *) source;
+                          break;
+                        case CORBA::tk_any:
+                          retval = TAO_Marshal_Any::deep_copy (param, source, dest, env);
+                          break;
+                        case CORBA::tk_TypeCode:
+                          retval = TAO_Marshal_TypeCode::deep_copy (param, source, dest, env);
+                          break;
+                        case CORBA::tk_Principal:
+                          retval = TAO_Marshal_Principal::deep_copy (param, source, dest, env);
+                          break;
+                        case CORBA::tk_objref:
+                          retval = TAO_Marshal_ObjRef::deep_copy (param, source, dest, env);
+                          break;
+                        case CORBA::tk_struct:
+                          retval = TAO_Marshal_Struct::deep_copy (param, source, dest, env);
+                          break;
+                        case CORBA::tk_union:
+                          retval = TAO_Marshal_Union::deep_copy (param, source, dest, env);
+                          break;
+                        case CORBA::tk_string:
+                          retval = TAO_Marshal_String::deep_copy (param, source, dest, env);
+                          break;
+                        case CORBA::tk_sequence:
+                          retval = TAO_Marshal_Sequence::deep_copy (param, source, dest, env);
+                          break;
+                        case CORBA::tk_array:
+                          retval = TAO_Marshal_Array::deep_copy (param, source, dest, env);
+                          break;
+                        case CORBA::tk_alias:
+                          retval = TAO_Marshal_Alias::deep_copy (param, source, dest, env);
+                          break;
+                        case CORBA::tk_except:
+                          retval = TAO_Marshal_Except::deep_copy (param, source, dest, env);
+                          break;
+                        case CORBA::tk_wstring:
+                          retval = TAO_Marshal_WString::deep_copy (param, source, dest, env);
+                          break;
+                        default:
+                          retval = CORBA::TypeCode::TRAVERSE_STOP;
+                        } // end of switch
+                      source = (char *) source + size;
+                      dest = (char *) dest + size;
+                    }
                   else  // exception computing size 
                     {
                       dmsg ("TAO_Marshal_Struct::deep_copy detected error");

@@ -295,7 +295,6 @@ TAO_Marshal_ObjRef::encode (CORBA::TypeCode_ptr,
 			    void *context,
 			    CORBA::Environment &env)
 {
-  CORBA::Boolean continue_encoding = CORBA::B_TRUE;
   CDR *stream = (CDR *) context;  // context is the CDR stream
 
   // Current version:  objref is really an IIOP_Object.
@@ -311,10 +310,6 @@ TAO_Marshal_ObjRef::encode (CORBA::TypeCode_ptr,
 
   if (CORBA::is_nil (obj))
     {
-      continue_encoding =
-        stream->put_ulong (1)   // strlen
-        && stream->put_char (0)         // NUL
-        && stream->put_ulong (0);       // no profiles
       return CORBA::TypeCode::TRAVERSE_CONTINUE;
     }
   else
