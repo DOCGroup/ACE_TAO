@@ -1,3 +1,8 @@
+Wed Apr 17 12:47:41 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/WIN32_Asynch_IO.cpp (set_handle, handle_close): Fixed
+          "unused argument" warnings from C++Builder.
+
 Wed Apr 17 14:30:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-doxygen.h:
