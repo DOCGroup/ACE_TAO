@@ -1,3 +1,17 @@
+Wed Dec  8 20:03:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/DynamicC.{h,cpp,i,inl}:
+        * tao/DynamicA.cpp:
+          Regenerated and replace .i file with .inl variant
+
+        * tao/Makefile.am:
+          Updated because of change above
+
+        * tao/Dynamic.pidl:
+          Removed include of orb.idl, it is not needed and only results in
+          a lot of extra includes which where not also previously not in the
+          generated files
+
 Wed Dec  8 18:23:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PollableC.{h,cpp,i,inl}:
