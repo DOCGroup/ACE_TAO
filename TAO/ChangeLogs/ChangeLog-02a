@@ -1,3 +1,21 @@
+Thu Mar 16 12:34:58 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/InterfaceS.h:
+	* tao/InterfaceS.i:
+	* tao/InterfaceS.cpp:
+	* POA_CORBA.h:
+	* Makefile:
+	* Makefile.am:
+	* makefile.bor:
+	* TAO.dsp:
+	* TAO_static.dsp:
+	  Server-side interface repository files and related
+	  changes. I didn't want to add these to TAO, but the
+	  Interface Repository IDL isn't inside its own 
+	  module - it's all in the CORBA namespace. The added
+	  files are large but, like InterfaceC.*, they will not
+	  build unless TAO_HAS_INTERFACE_REPOSITORY == 1.
+
 Thu Mar 16 11:40:03 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/GIOP_Message_Base.h: Cosmetic changes.
