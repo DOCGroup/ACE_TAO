@@ -15,7 +15,7 @@ ACE::checkForTarget($cwd);
 
 $if_repo_server = $EXEPREFIX."..".$DIR_SEPARATOR."..".$DIR_SEPARATOR.
 		  "..".$DIR_SEPARATOR."IFR_Service".$DIR_SEPARATOR.
-		  "IFR_Service".$EXE_EXT;
+		  "IFR_Service".$EXE_EXT, " -m";
 
 
 $init_ref = 
