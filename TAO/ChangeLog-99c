@@ -1,3 +1,24 @@
+Sun Feb  7 14:32:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
+
+	* TAO/orbsvcs/tests/Simulator/DOVEBrowser/DOVEBrowser.java
+	  TAO/orbsvcs/tests/Simulator/DOVEBrowser/DOVEBrowserApplet.java
+          TAO/orbsvcs/tests/Simulator/DOVEBrowser/DemoCore.java
+          TAO/orbsvcs/tests/Simulator/DOVEBrowser/MTDataHandlerAdapter.java
+          TAO/orbsvcs/tests/Simulator/DOVEBrowser/PushConsumer.java
+          TAO/orbsvcs/tests/Simulator/DOVEBrowser/PushConsumerFactory.java
+          TAO/orbsvcs/tests/Simulator/DOVEBrowser/make.bat : strategized
+	  browser concurrency: can either use direct orb upcalls (default)
+	  or use queueing in active data handler adapter objects
+	  (via the -queue command line switch).
+
+        * TAO/orbsvcs/tests/Simulator/Event_Supplier/DOVE_Supplier
+          TAO/orbsvcs/tests/Simulator/Event_Supplier/DualEC_Sup.{cpp, h}:
+          fixed shutdown to ensure disconnection of the scheduler and EC
+	  servants, deregistration of these from the Naming Service.  Also
+	  added command line switches -n and -w to set the number of
+	  usec slept before generating each navigation or weapons event,
+	  respectively.
+
 Sun Feb  7 11:44:58 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* TAO_IDL/driver/drv_args.cpp: 

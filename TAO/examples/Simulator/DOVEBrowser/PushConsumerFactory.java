@@ -32,14 +32,18 @@ public class PushConsumerFactory {
   private String[] ss_names_ = null;
   private int ss_names_count_ = 0;
 
+  private boolean use_queueing_ = false;
+
   public PushConsumerFactory (DataHandler dataHandler, 
 			      String nameServiceIOR, 
 			      String nameServicePort, 
 			      String[] args,
+                              boolean use_queueing,
 			      java.applet.Applet applet)
     {
       try 
-	{      
+	{
+          use_queueing_ = use_queueing;
 	  dataHandler_ = dataHandler;
 	  
 	  // if the DOVE Browser is running as an Applet
@@ -98,6 +102,14 @@ public class PushConsumerFactory {
                   ec_names_count_ += 2;
                   ss_names_count_ += 2;
                 }
+              else if ((args[arg_index].equals ("-dualECdemo1")) || 
+                       (args[arg_index].equals ("-dualECdemo2"))) 
+                {
+                  System.out.println ("switch [" + args[arg_index] + "]");
+                  ++arg_index;
+                  ++ec_names_count_;
+                  ++ss_names_count_;
+                }
               // Skip over anything else
               else
                 {
@@ -147,6 +159,22 @@ public class PushConsumerFactory {
                   ++arg_index;
                   ec_names_count_ += 2;
                   ss_names_count_ += 2;
+                }
+              else if (args[arg_index].equals ("-dualECdemo1")) 
+                {
+                  ss_names_[ss_names_count_] = "DUAL_SCHED_HI";
+                  ec_names_[ec_names_count_] = "DUAL_EC_HI";
+                  ++arg_index;
+                  ++ec_names_count_;
+                  ++ss_names_count_;
+                }
+              else if (args[arg_index].equals ("-dualECdemo2")) 
+                {
+                  ss_names_[ss_names_count_] = "DUAL_SCHED_LO";
+                  ec_names_[ec_names_count_] = "DUAL_EC_LO";
+                  ++arg_index;
+                  ++ec_names_count_;
+                  ++ss_names_count_;
                 }
               // Skip over anything else.
               else
@@ -264,7 +292,9 @@ public class PushConsumerFactory {
                                   ec_names_[ec_number]  + ": demo_consumer_" +
                                   ec_number + ".");
 
-	      PushConsumer pushConsumer_ = new PushConsumer (orb_, dataHandler_);
+	      PushConsumer pushConsumer_ = new PushConsumer (orb_, 
+                                                             dataHandler_,
+                                                             use_queueing_);
 	      System.out.println ("Initializing the Push Consumer for " +
                                   ec_names_[ec_number] + ": demo_consumer_" +
                                   ec_number + ".");

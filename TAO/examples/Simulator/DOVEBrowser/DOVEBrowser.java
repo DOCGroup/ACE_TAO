@@ -23,9 +23,13 @@ public class DOVEBrowser {
   }
   
   public void init (String nameServiceIOR, String nameServicePort,
-                    String[] args) {
+                    String[] args, boolean use_queueing) {
 
-    demoCore_ = new DemoCore (nameServiceIOR, nameServicePort, args, null); 
+    demoCore_ = new DemoCore (nameServiceIOR, 
+                              nameServicePort, 
+                              args, 
+                              use_queueing, 
+                              null); 
     demoCore_.show ();
     demoCore_.run ();
   }
@@ -33,6 +37,7 @@ public class DOVEBrowser {
   public static void main (String[] args) {      
     String nameServiceIOR = null;
     String nameServicePort = null;
+    boolean use_queueing = false;
     int arg_index = 0;
 
     // Loop through command line arguments, acting on relevant options
@@ -41,7 +46,12 @@ public class DOVEBrowser {
         System.out.println ("args.length [" + args.length + "] arg_index [" +
                             arg_index + "]");
         // Set the name service IOR
-        if ((args[arg_index].equals ("-ORBnameserviceior")) && 
+        if (args[arg_index].equals ("-queue"))
+          {
+            ++arg_index;
+            use_queueing = true;
+          }
+        else if ((args[arg_index].equals ("-ORBnameserviceior")) && 
             (args.length > arg_index + 1)) 
           {
             System.out.println ("switch [" + args[arg_index] + "]");
@@ -69,7 +79,7 @@ public class DOVEBrowser {
       }
     
     DOVEBrowser doveBrowser = new DOVEBrowser();
-    doveBrowser.init (nameServiceIOR, nameServicePort, args);
+    doveBrowser.init (nameServiceIOR, nameServicePort, args, use_queueing);
   }  
 }
   

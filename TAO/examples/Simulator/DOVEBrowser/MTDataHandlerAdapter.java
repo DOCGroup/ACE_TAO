@@ -11,18 +11,37 @@ public class  MTDataHandlerAdapter extends Thread
   // Both the queue and the underlying data handler are private
   private MTQueue queue_ = null;
   private DataHandler dataHandler_ = null;
-  
+  private boolean use_queueing_ = false;
+
   // Constructor.
-  MTDataHandlerAdapter (DataHandler dh)
+  MTDataHandlerAdapter (DataHandler dh, boolean use_queueing)
     {
       dataHandler_ = dh;
-      queue_ = new MTQueue ();
+      use_queueing_ = use_queueing;
+      if (use_queueing_)
+        {
+          queue_ = new MTQueue ();
+        }
     }
 
   // Enqueue an event set for the handler thread.
   public void push (RtecEventComm.Event[] events)
     {
-      queue_.enqueue_tail (events);
+      if (use_queueing_)
+        {
+          queue_.enqueue_tail (events);
+        }
+      else
+        {
+          for (int i = 0; i < events.length; ++i)
+            {
+              if(events[i].header.type == 
+                 PushConsumer.ACE_ES_EVENT_NOTIFICATION)
+                {
+                  dataHandler_.update (events[i]);
+                }
+            }
+        }
     }
 
   // Process enqueued event sets in a separate thread.
