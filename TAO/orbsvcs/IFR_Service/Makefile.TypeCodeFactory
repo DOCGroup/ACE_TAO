@@ -15,9 +15,8 @@ endif # ! TAO_ROOT
 LDLIBS = -lTAO
 
 LIBNAME=libTypeCodeFactory_DLL
-LIB = $(LIBNAME).a
-SHLIB = $(LIBNAME).$(SOEXT)
-CCFLAGS += -DTAO_HAS_INTERFACE_REPOSITORY=1
+LIB_UNCHECKED = $(LIBNAME).a
+SHLIB_UNCHECKED = $(LIBNAME).$(SOEXT)
 
 LSRC= \
 	TypeCodeFactory_skel.cpp \
@@ -34,6 +33,12 @@ include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
 include $(TAO_ROOT)/taoconfig.mk
+
+ifeq ($(interface_repo),1)
+  LIB = $(LIB_UNCHECKED)
+  SHLIB = $(SHLIB_UNCHECKED)
+endif # interface_repo
+
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU
@@ -42,6 +47,8 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 #----------------------------------------------------------------------------
 #       Local targets
 #----------------------------------------------------------------------------
+
+
 
 realclean: clean
 	-$(RM) $(foreach ext, $(IDL_EXT), test$(ext))
