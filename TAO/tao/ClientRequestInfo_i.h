@@ -228,7 +228,6 @@ protected:
   /// Setup thread scope and request scope
   /// PortableInterceptor::Current objects.
   void setup_picurrent (void);
-  
 
   /// Helper method to get the request and response service contexts.
   IOP::ServiceContext *get_service_context_i (
