@@ -1,3 +1,14 @@
+Wed Nov  6 11:32:58 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+        * tests/Bug_1020_Regression/Echo.cpp:
+	* tests/Bug_1020_Regression/Echo.h:
+	* tests/Bug_1020_Regression/Echo_Callback.cpp:
+	* tests/Bug_1020_Regression/Echo_Callback.h:
+	* tests/Bug_1020_Regression/ORB_Task.cpp:
+	* tests/Bug_1020_Regression/ORB_Task.h:
+	* tests/Bug_1020_Regression/Server_Task.cpp:
+	* tests/Bug_1020_Regression/Test.idl: Fixed fuzz errors.
+
 Tue Nov 05 17:32:22 2002  Pradeep Gore  <pradeep@oomworks.com>
 
 	* orbsvcs/orbsvcs/Notify/ConsumerAdmin.cpp:

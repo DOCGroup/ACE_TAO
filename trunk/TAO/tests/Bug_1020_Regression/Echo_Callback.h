@@ -1,7 +1,7 @@
 #ifndef Echo_Callback__h_
 #define Echo_Callback__h_
 /**
- * @file
+ * @file Echo_Callback.h
  *
  * $Id$
  *
