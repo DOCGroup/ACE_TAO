@@ -39,71 +39,22 @@ TAO_FT_Service_Callbacks::~TAO_FT_Service_Callbacks (void)
 
 
 CORBA::Boolean
-TAO_FT_Service_Callbacks::select_profile (TAO_MProfile *mpfile,
-                                          TAO_Profile *&pfile)
+TAO_FT_Service_Callbacks::select_profile (TAO_MProfile * /*mpfile*/,
+                                          TAO_Profile *& /*pfile*/)
 {
-  // Note: We are grabbing the lock very early. We can still delay
-  // that. I will address this when I get around for the next round of
-  // improvements.
+  ACE_DEBUG ((LM_DEBUG,
+              "(%P|%t) This method has been deprecated \n"));
 
-  // Grab the lock
-  ACE_MT (ACE_GUARD_RETURN (ACE_Lock,
-                            guard,
-                            *this->profile_lock_,
-                            0));
-
-  // If we know that the primary has failed just return
-  if (this->primary_failed_)
-    return 0;
-
-  IOP::TaggedComponent tagged_component;
-  tagged_component.tag = IOP::TAG_FT_PRIMARY;
-
-  // Get the current profile
-  TAO_Profile *temp_profile =
-    mpfile->get_current_profile ();
-
-  // While the profile is not null
-  while (temp_profile)
-    {
-      // Get the tagged component from the  profile
-      TAO_Tagged_Components &pfile_tagged =
-        temp_profile->tagged_components ();
-
-      // Search for the TaggedComponent that we want
-      if (pfile_tagged.get_component (tagged_component) == 1)
-        {
-          // Set the profile and return success
-          pfile = ACE_const_cast (TAO_Profile *,
-                                  temp_profile);
-
-          return 1;
-        }
-      temp_profile = mpfile->get_next ();
-    }
-
-
-  // Return failure. We havent found any
-  // @@ Here is where another issue kicks in. Do we flag this
-  //    condition as an error. May be not. Probably the client
-  //    ORB that is FT compliant, has received an IOR from a
-  //    non-compliant ORB. We cannot think this of an error. Rather we
-  //    need to fall back on the default methodology. That would mean
-  //    that we return 0 and allow the ORB to do the rest.
   return 0;
-
-  // @@ All said and done, what if we receive an IOGR from a
-  //    FT-compliant ORB with no primaries?
-  //    Ans: The default usage of the profile in the list
-  //    as the start point would NOT be a mistake. We should
-  //    get a LOCATION_FORWARD or some such thing to get to
-  //    the primary finally.
 }
 
 CORBA::Boolean
-TAO_FT_Service_Callbacks::reselect_profile (TAO_Stub *stub,
-                                            TAO_Profile *&pfile)
+TAO_FT_Service_Callbacks::reselect_profile (TAO_Stub * /*stub*/,
+                                            TAO_Profile *& /*pfile*/)
 {
+#if 0
+
+  // @@todo: This needs to go after sometime..
   // Note: We are grabbing the lock very early. We can still delay
   // that. I will address this when I get around for the next round of
   // improvements.
@@ -150,11 +101,16 @@ TAO_FT_Service_Callbacks::reselect_profile (TAO_Stub *stub,
   this->secondary_set_ = 1;
 
   return 1;
+
+#endif /*if 0*/
+
+  return 0;
 }
 
 void
 TAO_FT_Service_Callbacks::reset_profile_flags (void)
 {
+#if 0
   // Grab the lock
   ACE_MT (ACE_GUARD (ACE_Lock,
                      guard,
@@ -163,6 +119,7 @@ TAO_FT_Service_Callbacks::reset_profile_flags (void)
   // Reset the flags that we may have
   this->primary_failed_ = 0;
   this->secondary_set_ = 0;
+#endif /*if 0*/
 }
 
 
@@ -414,10 +371,20 @@ TAO_FT_Service_Callbacks::raise_comm_failure (
     TAO_Profile *profile,
     CORBA::Environment &ACE_TRY_ENV)
 {
-  if (restart_policy_check (
+  if (this->restart_policy_check (
           invoke->request_service_context ().service_info (),
           profile))
     {
+      TAO_GIOP_Twoway_Invocation *invoc =
+        ACE_dynamic_cast (TAO_GIOP_Twoway_Invocation *,
+                          invoke);
+
+      if (invoc)
+        {
+          // Reset the states to start invocation on a different
+          // target
+          invoc->reset_states ();
+        }
       return TAO_INVOKE_RESTART;
     }
 
@@ -442,6 +409,16 @@ TAO_FT_Service_Callbacks::raise_transient_failure (
         invoke->request_service_context ().service_info (),
         profile))
     {
+      TAO_GIOP_Twoway_Invocation *invoc =
+        ACE_dynamic_cast (TAO_GIOP_Twoway_Invocation *,
+                          invoke);
+
+      if (invoc)
+        {
+          // Reset the states to start invocation on a different
+          // target
+          invoc->reset_states ();
+        }
       return TAO_INVOKE_RESTART;
     }
 

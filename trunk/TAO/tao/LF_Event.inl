@@ -1,5 +1,11 @@
 // $Id$
 
+ACE_INLINE void
+TAO_LF_Event::reset_state (int new_state)
+{
+  this->state_ = new_state;
+}
+
 ACE_INLINE int
 TAO_LF_Event::bind (TAO_LF_Follower *follower)
 {

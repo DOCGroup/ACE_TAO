@@ -417,6 +417,14 @@ public:
               CORBA::ULong except_count,
               CORBA_Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::Exception));
+
+  /**
+   * Special purpose method. This is used by services that restart
+   * invocation  on a different target because of a failure of the
+   * first target like the FT_service. This method is used to clear
+   * off any state that are associated with the previous invocation
+   */
+  void reset_states (void);
 };
 
 // ****************************************************************

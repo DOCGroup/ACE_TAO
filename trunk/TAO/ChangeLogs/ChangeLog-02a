@@ -1,3 +1,60 @@
+Fri Nov  2 07:05:13 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Invocation.h:
+	* tao/Invocation.cpp: Added a new method reset_states () in
+	  TAO_GIOP_Twoway_Invocation class. This method, as the name
+	  indicates, is used to reset the state of the Invocation
+	  object. This is specifically useful for something like the FT
+	  service, which tries connecting to a secondary incase of a
+	  failure using the same invocation object. Using the same object
+	  to make the next invocation could lead to carrying over some of
+	  the states which is not desired.
+
+	* tao/Stub.i: Added comments around code that would no longer be
+	  used. The FT service was using this. Just leaving the code there
+	  for the time being, till 1.2.1 goes out.
+	  
+	* tao/LF_Event.h:
+	* tao/LF_Event.inl: Added a method reset_state (). This method
+	  just resets the state to the said state without caring about the
+	  history of states. This is needed if the same invocation object
+	  is used to connect to a different transport. The history of the
+	  states in the LF_Event, doesnt help. The way LF_Event remembers
+	  the states is needed for the life time of a single invocation
+	  object (read as one invocation). But that will not help if the
+	  same object reconnects to a different target to which the
+	  invocation is *not* forwarded. 
+
+	* orbsvcs/orbsvcs/FaultTolerance/FT_Endpoint_Selector_Factory.cpp:
+	* orbsvcs/orbsvcs/FaultTolerance/FT_Endpoint_Selector_Factory.h:
+	* orbsvcs/orbsvcs/FaultTolerance/FT_Invocation_Endpoint_Selectors.h:
+	* orbsvcs/orbsvcs/FaultTolerance/FT_Invocation_Endpoint_Selectors.cpp:
+	* orbsvcs/orbsvcs/FaultTolerance/FT_Invocation_Endpoint_Selectors.inl:
+	  Added an endpoint selector factory. The factory creates the
+	  endpoint selectors. The endpoint selectors now detect the right
+	  endpoints to be used with every invocation. The implementation
+	  is in line with RTCORBA and ORB core's way of selecting
+	  endpoints. Added a few optimizations, wherein we dont hold any
+	  lock if the primary is the first profile but holds a lock if the
+	  primary is in the subsequent profiles. The holding of a lock is
+	  done only once in the life time of the endpoint. 
+	  
+	* orbsvcs/orbsvcs/FaultTolerance/FT_Service_Activate.cpp: Added
+	  FT_Endpoint_Selector_Factory to the list of services. 
+
+	* orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.h:
+	* orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.cpp: The old
+	  implementations in select_profile () and reselect_profile ()
+	  will be deprecated after 1.2.1. The definition and declaration
+	  just exists for the sake of backward compatibility. Will be gone
+	  anyway. 
+
+	* orbsvcs/orbsvcs/Makefile.FaultTolerance: Added the new files.
+
+	  Thanks to Russ Carter <rcarter@pinyon.org> who by reporting a
+	  bug motivated this whole set of changes. 
+	
+
 Thu Nov  1 12:27:28 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Trader/Trading_Loader.cpp: The parens were
