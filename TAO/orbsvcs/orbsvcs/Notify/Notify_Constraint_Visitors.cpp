@@ -11,7 +11,7 @@
 #include "tao/DynamicAny/DynEnum_i.h"
 #include "tao/DynamicAny/DynAnyFactory.h"
 
-TAO_Notify_Constraint_Visitor::TAO_Notify_Constraint_Visitor (void)
+TAO_NS_Constraint_Visitor::TAO_NS_Constraint_Visitor (void)
   : implicit_id_ (NONE)
 {
   (void) this->implicit_ids_.bind (ACE_CString ("filterable_data",
@@ -53,7 +53,7 @@ TAO_Notify_Constraint_Visitor::TAO_Notify_Constraint_Visitor (void)
 }
 
 int
-TAO_Notify_Constraint_Visitor::bind_structured_event (
+TAO_NS_Constraint_Visitor::bind_structured_event (
     const CosNotification::StructuredEvent &s_event
   )
 {
@@ -99,10 +99,10 @@ TAO_Notify_Constraint_Visitor::bind_structured_event (
         }
     }
 
-  this->domain_name_ = 
+  this->domain_name_ =
     CORBA::string_dup (s_event.header.fixed_header.event_type.domain_name);
 
-  this->type_name_ = 
+  this->type_name_ =
     CORBA::string_dup (s_event.header.fixed_header.event_type.type_name);
 
   this->event_name_ =
@@ -114,7 +114,7 @@ TAO_Notify_Constraint_Visitor::bind_structured_event (
 }
 
 CORBA::Boolean
-TAO_Notify_Constraint_Visitor::evaluate_constraint (
+TAO_NS_Constraint_Visitor::evaluate_constraint (
     TAO_ETCL_Constraint* root
   )
 {
@@ -138,7 +138,7 @@ TAO_Notify_Constraint_Visitor::evaluate_constraint (
 }
 
 int
-TAO_Notify_Constraint_Visitor::visit_literal (
+TAO_NS_Constraint_Visitor::visit_literal (
     TAO_ETCL_Literal_Constraint *literal
   )
 {
@@ -147,7 +147,7 @@ TAO_Notify_Constraint_Visitor::visit_literal (
 }
 
 int
-TAO_Notify_Constraint_Visitor::visit_identifier (TAO_ETCL_Identifier *ident)
+TAO_NS_Constraint_Visitor::visit_identifier (TAO_ETCL_Identifier *ident)
 {
   int return_value = -1;
   const char *name = ident->value ();
@@ -168,7 +168,7 @@ TAO_Notify_Constraint_Visitor::visit_identifier (TAO_ETCL_Identifier *ident)
 }
 
 int
-TAO_Notify_Constraint_Visitor::visit_union_value (
+TAO_NS_Constraint_Visitor::visit_union_value (
     TAO_ETCL_Union_Value *union_value
   )
 {
@@ -191,7 +191,7 @@ TAO_Notify_Constraint_Visitor::visit_union_value (
 }
 
 int
-TAO_Notify_Constraint_Visitor::visit_union_pos (
+TAO_NS_Constraint_Visitor::visit_union_pos (
     TAO_ETCL_Union_Pos *union_pos
   )
 {
@@ -348,7 +348,7 @@ TAO_Notify_Constraint_Visitor::visit_union_pos (
 }
 
 int
-TAO_Notify_Constraint_Visitor::visit_component_pos (
+TAO_NS_Constraint_Visitor::visit_component_pos (
     TAO_ETCL_Component_Pos *pos
   )
 {
@@ -445,13 +445,13 @@ TAO_Notify_Constraint_Visitor::visit_component_pos (
 }
 
 int
-TAO_Notify_Constraint_Visitor::visit_component_assoc (
+TAO_NS_Constraint_Visitor::visit_component_assoc (
     TAO_ETCL_Component_Assoc *assoc
   )
 {
   CORBA::Any *any = 0;
-  ACE_CString name (assoc->identifier ()->value (), 
-                    0, 
+  ACE_CString name (assoc->identifier ()->value (),
+                    0,
                     0);
 
   switch (this->implicit_id_)
@@ -507,7 +507,7 @@ TAO_Notify_Constraint_Visitor::visit_component_assoc (
 }
 
 int
-TAO_Notify_Constraint_Visitor::visit_component_array (
+TAO_NS_Constraint_Visitor::visit_component_array (
     TAO_ETCL_Component_Array *array
   )
 {
@@ -603,7 +603,7 @@ TAO_Notify_Constraint_Visitor::visit_component_array (
 }
 
 int
-TAO_Notify_Constraint_Visitor::visit_special (TAO_ETCL_Special *special)
+TAO_NS_Constraint_Visitor::visit_special (TAO_ETCL_Special *special)
 {
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
@@ -677,7 +677,7 @@ TAO_Notify_Constraint_Visitor::visit_special (TAO_ETCL_Special *special)
 }
 
 int
-TAO_Notify_Constraint_Visitor::visit_component (
+TAO_NS_Constraint_Visitor::visit_component (
     TAO_ETCL_Component *component
   )
 {
@@ -698,8 +698,8 @@ TAO_Notify_Constraint_Visitor::visit_component (
   // the queue to be handled upon returning from this method call.
   // If there is a sub-component, we store the literal's value
   // in our member _var for possible examination at a more
-  // nested level, and visit the sub-component. If the identifier 
-  // matches one of the nested field names in 
+  // nested level, and visit the sub-component. If the identifier
+  // matches one of the nested field names in
   // CosNotification::StructuredEvent, we just visit the nested
   // component, if any.
   if (this->implicit_id_ == NONE)
@@ -765,7 +765,7 @@ TAO_Notify_Constraint_Visitor::visit_component (
             this->queue_.enqueue_head (rob);
             return 0;
           }
-        // The above cases are the leaves of the 
+        // The above cases are the leaves of the
         // CosNotification::StructuredEvent "tree". Anything else and we
         // should have a nested component. otherwise, it's an error.
         default:
@@ -775,7 +775,7 @@ TAO_Notify_Constraint_Visitor::visit_component (
 }
 
 int
-TAO_Notify_Constraint_Visitor::visit_dot (TAO_ETCL_Dot *dot)
+TAO_NS_Constraint_Visitor::visit_dot (TAO_ETCL_Dot *dot)
 {
   // If we are here, we know we're headed for a more nested
   // level, so we just visit it, there's nothing else in this
@@ -784,14 +784,14 @@ TAO_Notify_Constraint_Visitor::visit_dot (TAO_ETCL_Dot *dot)
 }
 
 int
-TAO_Notify_Constraint_Visitor::visit_eval (TAO_ETCL_Eval *eval)
+TAO_NS_Constraint_Visitor::visit_eval (TAO_ETCL_Eval *eval)
 {
   // Nothing to do but visit the contained component.
   return eval->component ()->accept (this);
 }
 
 int
-TAO_Notify_Constraint_Visitor::visit_default (TAO_ETCL_Default *def)
+TAO_NS_Constraint_Visitor::visit_default (TAO_ETCL_Default *def)
 {
   TAO_ETCL_Constraint *comp = def->component ();
 
@@ -840,7 +840,7 @@ TAO_Notify_Constraint_Visitor::visit_default (TAO_ETCL_Default *def)
 }
 
 int
-TAO_Notify_Constraint_Visitor::visit_exist (TAO_ETCL_Exist *exist)
+TAO_NS_Constraint_Visitor::visit_exist (TAO_ETCL_Exist *exist)
 {
   TAO_ETCL_Constraint *component = exist->component ();
 
@@ -865,11 +865,11 @@ TAO_Notify_Constraint_Visitor::visit_exist (TAO_ETCL_Exist *exist)
       switch (this->implicit_id_)
       {
         case FILTERABLE_DATA:
-          result = 
+          result =
             (this->filterable_data_.find (ACE_CString (value, 0, 0)) == 0);
           break;
         case VARIABLE_HEADER:
-          result = 
+          result =
             (this->variable_header_.find (ACE_CString (value, 0, 0)) == 0);
           break;
         case TYPE_NAME:
@@ -895,7 +895,7 @@ TAO_Notify_Constraint_Visitor::visit_exist (TAO_ETCL_Exist *exist)
 }
 
 int
-TAO_Notify_Constraint_Visitor::visit_unary_expr (
+TAO_NS_Constraint_Visitor::visit_unary_expr (
     TAO_ETCL_Unary_Expr *unary_expr
   )
 {
@@ -936,7 +936,7 @@ TAO_Notify_Constraint_Visitor::visit_unary_expr (
 }
 
 int
-TAO_Notify_Constraint_Visitor::visit_binary_expr (
+TAO_NS_Constraint_Visitor::visit_binary_expr (
     TAO_ETCL_Binary_Expr *binary_expr
   )
 {
@@ -970,7 +970,7 @@ TAO_Notify_Constraint_Visitor::visit_binary_expr (
 }
 
 int
-TAO_Notify_Constraint_Visitor::visit_or (
+TAO_NS_Constraint_Visitor::visit_or (
     TAO_ETCL_Binary_Expr *binary
   )
 {
@@ -1012,7 +1012,7 @@ TAO_Notify_Constraint_Visitor::visit_or (
 }
 
 int
-TAO_Notify_Constraint_Visitor::visit_and (
+TAO_NS_Constraint_Visitor::visit_and (
     TAO_ETCL_Binary_Expr *binary
   )
 {
@@ -1054,7 +1054,7 @@ TAO_Notify_Constraint_Visitor::visit_and (
 }
 
 int
-TAO_Notify_Constraint_Visitor::visit_binary_op (
+TAO_NS_Constraint_Visitor::visit_binary_op (
     TAO_ETCL_Binary_Expr *binary,
     int op_type
   )
@@ -1125,7 +1125,7 @@ TAO_Notify_Constraint_Visitor::visit_binary_op (
 }
 
 int
-TAO_Notify_Constraint_Visitor::visit_twiddle (
+TAO_NS_Constraint_Visitor::visit_twiddle (
     TAO_ETCL_Binary_Expr *binary
   )
 {
@@ -1155,7 +1155,7 @@ TAO_Notify_Constraint_Visitor::visit_twiddle (
 }
 
 int
-TAO_Notify_Constraint_Visitor::visit_in (
+TAO_NS_Constraint_Visitor::visit_in (
     TAO_ETCL_Binary_Expr *binary
   )
 {
@@ -1233,7 +1233,7 @@ TAO_Notify_Constraint_Visitor::visit_in (
 }
 
 int
-TAO_Notify_Constraint_Visitor::visit_preference (
+TAO_NS_Constraint_Visitor::visit_preference (
     TAO_ETCL_Preference *
   )
 {
@@ -1245,7 +1245,7 @@ TAO_Notify_Constraint_Visitor::visit_preference (
 }
 
 CORBA::Boolean
-TAO_Notify_Constraint_Visitor::sequence_does_contain (
+TAO_NS_Constraint_Visitor::sequence_does_contain (
     const CORBA::Any *any,
     TAO_ETCL_Literal_Constraint &item
   )
@@ -1299,7 +1299,7 @@ TAO_Notify_Constraint_Visitor::sequence_does_contain (
 }
 
 CORBA::Boolean
-TAO_Notify_Constraint_Visitor::array_does_contain (
+TAO_NS_Constraint_Visitor::array_does_contain (
     const CORBA::Any *any,
     TAO_ETCL_Literal_Constraint &item
   )
@@ -1353,7 +1353,7 @@ TAO_Notify_Constraint_Visitor::array_does_contain (
 }
 
 CORBA::Boolean
-TAO_Notify_Constraint_Visitor::struct_does_contain (
+TAO_NS_Constraint_Visitor::struct_does_contain (
     const CORBA::Any *any,
     TAO_ETCL_Literal_Constraint &item
   )
@@ -1409,7 +1409,7 @@ TAO_Notify_Constraint_Visitor::struct_does_contain (
 }
 
 CORBA::Boolean
-TAO_Notify_Constraint_Visitor::union_does_contain (
+TAO_NS_Constraint_Visitor::union_does_contain (
     const CORBA::Any *any,
     TAO_ETCL_Literal_Constraint &item
   )
@@ -1458,7 +1458,7 @@ TAO_Notify_Constraint_Visitor::union_does_contain (
 }
 
 CORBA::Boolean
-TAO_Notify_Constraint_Visitor::any_does_contain (
+TAO_NS_Constraint_Visitor::any_does_contain (
     const CORBA::Any *any,
     TAO_ETCL_Literal_Constraint &item
   )
@@ -1474,7 +1474,7 @@ TAO_Notify_Constraint_Visitor::any_does_contain (
 }
 
 CORBA::Boolean
-TAO_Notify_Constraint_Visitor::simple_type_match (int expr_type,
+TAO_NS_Constraint_Visitor::simple_type_match (int expr_type,
                                                   CORBA::TCKind tc_kind)
 {
   switch (expr_type)
@@ -1530,14 +1530,14 @@ template class ACE_Unbounded_Queue<TAO_ETCL_Literal_Constraint>;
 template class ACE_Unbounded_Queue_Iterator<TAO_ETCL_Literal_Constraint>;
 
 
-template class ACE_Hash_Map_Manager<ACE_CString, TAO_Notify_Constraint_Visitor::structured_event_field, TAO_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Manager_Ex<ACE_CString, TAO_Notify_Constraint_Visitor::structured_event_field, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, TAO_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Entry <ACE_CString, TAO_Notify_Constraint_Visitor::structured_event_field>;
-template class ACE_Hash_Map_Iterator<ACE_CString, TAO_Notify_Constraint_Visitor::structured_event_field, TAO_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Iterator_Ex<ACE_CString, TAO_Notify_Constraint_Visitor::structured_event_field, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, TAO_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, TAO_Notify_Constraint_Visitor::structured_event_field, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, TAO_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Reverse_Iterator<ACE_CString, TAO_Notify_Constraint_Visitor::structured_event_field, TAO_SYNCH_MUTEX>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, TAO_Notify_Constraint_Visitor::structured_event_field, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, TAO_SYNCH_MUTEX>;
+template class ACE_Hash_Map_Manager<ACE_CString, TAO_NS_Constraint_Visitor::structured_event_field, TAO_SYNCH_MUTEX>;
+template class ACE_Hash_Map_Manager_Ex<ACE_CString, TAO_NS_Constraint_Visitor::structured_event_field, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, TAO_SYNCH_MUTEX>;
+template class ACE_Hash_Map_Entry <ACE_CString, TAO_NS_Constraint_Visitor::structured_event_field>;
+template class ACE_Hash_Map_Iterator<ACE_CString, TAO_NS_Constraint_Visitor::structured_event_field, TAO_SYNCH_MUTEX>;
+template class ACE_Hash_Map_Iterator_Ex<ACE_CString, TAO_NS_Constraint_Visitor::structured_event_field, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, TAO_SYNCH_MUTEX>;
+template class ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, TAO_NS_Constraint_Visitor::structured_event_field, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, TAO_SYNCH_MUTEX>;
+template class ACE_Hash_Map_Reverse_Iterator<ACE_CString, TAO_NS_Constraint_Visitor::structured_event_field, TAO_SYNCH_MUTEX>;
+template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, TAO_NS_Constraint_Visitor::structured_event_field, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, TAO_SYNCH_MUTEX>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate ACE_Hash_Map_Manager<ACE_CString, CORBA::Any*, TAO_SYNCH_MUTEX>
@@ -1552,13 +1552,13 @@ template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, TAO_Notify_Constrai
 #pragma instantiate ACE_Unbounded_Queue<TAO_ETCL_Literal_Constraint>
 #pragma instantiate ACE_Unbounded_Queue_Iterator<TAO_ETCL_Literal_Constraint>
 
-#pragma instantiate ACE_Hash_Map_Manager<ACE_CString, TAO_Notify_Constraint_Visitor::structured_event_field, TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_CString, TAO_Notify_Constraint_Visitor::structured_event_field, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Entry <ACE_CString, TAO_Notify_Constraint_Visitor::structured_event_field>
-#pragma instantiate ACE_Hash_Map_Iterator<ACE_CString, TAO_Notify_Constraint_Visitor::structured_event_field, TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<ACE_CString, TAO_Notify_Constraint_Visitor::structured_event_field, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, TAO_Notify_Constraint_Visitor::structured_event_field, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator<ACE_CString, TAO_Notify_Constraint_Visitor::structured_event_field, TAO_SYNCH_MUTEX>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, TAO_Notify_Constraint_Visitor::structured_event_field, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, TAO_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Manager<ACE_CString, TAO_NS_Constraint_Visitor::structured_event_field, TAO_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_CString, TAO_NS_Constraint_Visitor::structured_event_field, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, TAO_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Entry <ACE_CString, TAO_NS_Constraint_Visitor::structured_event_field>
+#pragma instantiate ACE_Hash_Map_Iterator<ACE_CString, TAO_NS_Constraint_Visitor::structured_event_field, TAO_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Iterator_Ex<ACE_CString, TAO_NS_Constraint_Visitor::structured_event_field, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, TAO_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, TAO_NS_Constraint_Visitor::structured_event_field, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, TAO_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator<ACE_CString, TAO_NS_Constraint_Visitor::structured_event_field, TAO_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, TAO_NS_Constraint_Visitor::structured_event_field, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, TAO_SYNCH_MUTEX>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -24,7 +24,7 @@
 /**
  * @class TAO_NS_EventType
  *
- * @brief 
+ * @brief
  *
  * This type is used to compare different event types.
  * It is used by the Event Manager as a key to find subscription lists.
@@ -44,7 +44,7 @@ public:
 
   /// hash value
   u_long hash (void) const;
-  
+
   /// Assignment from CosNotification::EventType
   TAO_NS_EventType& operator=(const CosNotification::EventType& event_type);
 
@@ -65,6 +65,9 @@ public:
 
   const CosNotification::EventType& native (void) const;
   // Get the type underneath us.
+
+  /// Helper to print contents.
+  void dump (void) const;
 
 protected:
   /// Init this object.

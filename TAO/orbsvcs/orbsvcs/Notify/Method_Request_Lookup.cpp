@@ -1,11 +1,6 @@
 // $Id$
 
 #include "Method_Request_Lookup.h"
-#include "orbsvcs/ESF/ESF_Proxy_Collection.h"
-#include "Event_Map_T.h"
-#include "ProxySupplier.h"
-#include "ProxyConsumer.h"
-#include "tao/debug.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "Method_Request_Lookup.inl"
@@ -13,8 +8,17 @@
 
 ACE_RCSID(RT_Notify, TAO_NS_Method_Request_Lookup, "$Id$")
 
-TAO_NS_Method_Request_Lookup::TAO_NS_Method_Request_Lookup (TAO_NS_Event_var& event, TAO_NS_ProxyConsumer* proxy_consumer, TAO_NS_Consumer_Map* map)
-  : TAO_NS_Method_Request (event), proxy_consumer_ (proxy_consumer), map_ (map)
+#include "tao/debug.h"
+#include "Consumer_Map.h"
+#include "ProxySupplier.h"
+#include "ProxyConsumer.h"
+#include "Proxy.h"
+#include "Admin.h"
+#include "SupplierAdmin.h"
+
+TAO_NS_Method_Request_Lookup::TAO_NS_Method_Request_Lookup (const TAO_NS_Event_var& event, TAO_NS_ProxyConsumer* proxy_consumer, TAO_NS_Consumer_Map* map)
+  : TAO_NS_Method_Request_Event (event), proxy_consumer_ (proxy_consumer), map_ (map),
+    refcountable_guard_ (*proxy_consumer)
 {
 }
 
@@ -30,11 +34,17 @@ TAO_NS_Method_Request_Lookup::copy (void)
 }
 
 int
-TAO_NS_Method_Request_Lookup::call (void)
+TAO_NS_Method_Request_Lookup::execute (ACE_ENV_SINGLE_ARG_DECL)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
+  if (this->proxy_consumer_->has_shutdown ())
+    return 0; // If we were shutdown while waiting in the queue, return with no action.
 
-  CORBA::Boolean val =  this->proxy_consumer_->check_filters (this->event_ ACE_ENV_ARG_PARAMETER);
+  TAO_NS_Admin* parent = this->proxy_consumer_->supplier_admin ();
+
+  CORBA::Boolean val =  this->proxy_consumer_->check_filters (this->event_,
+                                                              parent->filter_admin (),
+                                                              parent->filter_operator ()
+                                                              ACE_ENV_ARG_PARAMETER);
 
   if (TAO_debug_level > 1)
     ACE_DEBUG ((LM_DEBUG, "Proxyconsumer %x filter eval result = %d",this->proxy_consumer_ , val));
@@ -43,10 +53,20 @@ TAO_NS_Method_Request_Lookup::call (void)
   if (val == 0)
     return 0;
 
-  TAO_NS_ProxySupplier_Collection* consumers = map_->find (this->event_->type () ACE_ENV_ARG_PARAMETER);
+  TAO_NS_Consumer_Map::ENTRY* entry = map_->find (this->event_->type () ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
 
-  if (consumers != 0)
-    consumers->for_each (this ACE_ENV_ARG_PARAMETER);
+  TAO_NS_ProxySupplier_Collection* consumers = 0;
+
+  if (entry != 0)
+  {
+    consumers = entry->collection ();
+
+    if (consumers != 0)
+      consumers->for_each (this ACE_ENV_ARG_PARAMETER);
+
+    this->map_->release (entry);
+  }
 
   // Get the default consumers
   consumers = map_->broadcast_collection ();
@@ -58,7 +78,7 @@ TAO_NS_Method_Request_Lookup::call (void)
 }
 
 void
-TAO_NS_Method_Request_Lookup::work (TAO_NS_ProxySupplier* proxy_supplier ACE_ENV_ARG_DECL)
+TAO_NS_Method_Request_Lookup::work (TAO_NS_ProxySupplier* proxy_supplier ACE_ENV_ARG_DECL_NOT_USED)
 {
-  proxy_supplier->push (this->event_ ACE_ENV_ARG_PARAMETER);
+  proxy_supplier->push (this->event_);
 }

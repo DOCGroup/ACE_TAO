@@ -1,5 +1,8 @@
 // $Id$
 
+#ifndef TAO_NS_EVENT_MAP_ENTRY_CPP
+#define TAO_NS_EVENT_MAP_ENTRY_CPP
+
 #include "Event_Map_Entry_T.h"
 
 #if ! defined (__ACE_INLINE__)
@@ -14,7 +17,7 @@ ACE_RCSID(Notify, TAO_NS_Event_Map_Entry_T, "$id$")
 
 template <class PROXY>
 TAO_NS_Event_Map_Entry_T<PROXY>::TAO_NS_Event_Map_Entry_T (void)
-  : collection_ (0), count_ (0)
+  : collection_ (0), count_ (0), usage_count_ (1)
 {
 }
 
@@ -45,3 +48,5 @@ TAO_NS_Event_Map_Entry_T<PROXY>::disconnected (PROXY* proxy ACE_ENV_ARG_DECL)
   this->collection_->disconnected (proxy ACE_ENV_ARG_PARAMETER);
   --count_;
 }
+
+#endif /* TAO_NS_EVENT_MAP_ENTRY_CPP */

@@ -1,7 +1,5 @@
 // $Id$
 
-#include "Admin.h"
-
 ACE_INLINE TAO_NS_FilterAdmin&
 TAO_NS_Admin::filter_admin (void)
 {

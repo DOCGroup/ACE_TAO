@@ -1,9 +1,6 @@
 // $Id$
 
 #include "Method_Request_Dispatch.h"
-#include "ProxySupplier.h"
-#include "Consumer.h"
-#include "tao/debug.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "Method_Request_Dispatch.inl"
@@ -11,8 +8,14 @@
 
 ACE_RCSID(RT_Notify, TAO_NS_Method_Request_Dispatch, "$Id$")
 
-TAO_NS_Method_Request_Dispatch::TAO_NS_Method_Request_Dispatch (TAO_NS_Event_var& event, TAO_NS_ProxySupplier* proxy_supplier)
-  : TAO_NS_Method_Request (event), proxy_supplier_ (proxy_supplier)
+#include "tao/debug.h"
+#include "ProxySupplier.h"
+#include "Consumer.h"
+#include "Admin.h"
+#include "ConsumerAdmin.h"
+
+TAO_NS_Method_Request_Dispatch::TAO_NS_Method_Request_Dispatch (const TAO_NS_Event_var& event, TAO_NS_ProxySupplier* proxy_supplier)
+  : TAO_NS_Method_Request_Event (event), proxy_supplier_ (proxy_supplier), refcountable_guard_ (*proxy_supplier)
 {
 }
 
@@ -28,11 +31,17 @@ TAO_NS_Method_Request_Dispatch::copy (void)
 }
 
 int
-TAO_NS_Method_Request_Dispatch::call (void)
+TAO_NS_Method_Request_Dispatch::execute (ACE_ENV_SINGLE_ARG_DECL)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
+  if (this->proxy_supplier_->has_shutdown ())
+    return 0; // If we were shutdown while waiting in the queue, return with no action.
 
-  CORBA::Boolean val =  this->proxy_supplier_->check_filters (this->event_ ACE_ENV_ARG_PARAMETER);
+  TAO_NS_Admin* parent = this->proxy_supplier_->consumer_admin ();
+
+  CORBA::Boolean val =  this->proxy_supplier_->check_filters (this->event_,
+                                                              parent->filter_admin (),
+                                                              parent->filter_operator ()
+                                                              ACE_ENV_ARG_PARAMETER);
 
   if (TAO_debug_level > 1)
     ACE_DEBUG ((LM_DEBUG, "Proxysupplier %x filter eval result = %d",this->proxy_supplier_ , val));
@@ -43,20 +52,18 @@ TAO_NS_Method_Request_Dispatch::call (void)
 
   ACE_TRY
     {
-      this->proxy_supplier_->consumer ()->push (this->event_ ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      TAO_NS_Consumer* consumer = this->proxy_supplier_->consumer ();
+
+      if (consumer != 0)
+        {
+          consumer->push (this->event_ ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
     }
-  ACE_CATCH (CORBA::UserException, ue)
+  ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ue,
-                           "TAO_NS_Method_Request_Dispatch::: error sending event. ");
-      //ACE_RE_THROW;
-      }
-  ACE_CATCH (CORBA::SystemException, se)
-    {
-      ACE_PRINT_EXCEPTION (se,
-                           "TAO_NS_Method_Request_Dispatch::: error sending event. ");
-      //ACE_RE_THROW;
+      if (TAO_debug_level > 0)
+        ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "TAO_NS_Method_Request_Dispatch::: error sending event. \n ");
     }
   ACE_ENDTRY;
 

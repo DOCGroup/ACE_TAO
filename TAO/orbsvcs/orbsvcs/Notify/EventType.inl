@@ -1,7 +1,5 @@
 // $Id$
 
-#include "EventType.h"
-
 ACE_INLINE u_long
 TAO_NS_EventType::hash (void) const
 {

@@ -25,7 +25,7 @@ TAO_NS_POA_Helper::init (PortableServer::POA_ptr parent_poa, const char* poa_nam
   CORBA::PolicyList policy_list (2);
 
   this->set_policy (parent_poa, policy_list ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  ACE_CHECK;
 
   this->create_i (parent_poa, poa_name, policy_list ACE_ENV_ARG_PARAMETER);
 }
@@ -38,7 +38,6 @@ TAO_NS_POA_Helper::init (PortableServer::POA_ptr parent_poa ACE_ENV_ARG_DECL)
 
   this->init (parent_poa, child_poa_name ACE_ENV_ARG_PARAMETER);
 }
-
 
 void
 TAO_NS_POA_Helper::set_policy (PortableServer::POA_ptr parent_poa, CORBA::PolicyList &policy_list ACE_ENV_ARG_DECL)
@@ -151,7 +150,8 @@ TAO_NS_POA_Helper::id_to_reference (CORBA::Long id ACE_ENV_ARG_DECL) const
 {
   // Convert CORBA::Long to ObjectId
   PortableServer::ObjectId_var oid =
-    this->long_to_ObjectId (id);
+    this->long_to_ObjectId (id ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   return poa_->id_to_reference (oid.in ()
                                 ACE_ENV_ARG_PARAMETER);

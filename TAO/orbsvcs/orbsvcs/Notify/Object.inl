@@ -1,7 +1,5 @@
 // $Id$
 
-#include "Object.h"
-
 ACE_INLINE CORBA::Long
 TAO_NS_Object::id (void)
 {
@@ -18,4 +16,22 @@ ACE_INLINE TAO_NS_POA_Helper*
 TAO_NS_Object::poa (void)
 {
   return this->poa_;
+}
+
+ACE_INLINE TAO_NS_POA_Helper*
+TAO_NS_Object::object_poa (void)
+{
+  return this->object_poa_;
+}
+
+ACE_INLINE TAO_NS_POA_Helper*
+TAO_NS_Object::proxy_poa (void)
+{
+  return this->proxy_poa_;
+}
+
+ACE_INLINE int
+TAO_NS_Object::has_shutdown (void)
+{
+  return this->shutdown_;
 }

@@ -13,14 +13,21 @@
 #define TAO_NS_ETCL_FILTERFACTORY_H
 #include "ace/pre.h"
 
-#include "etcl_notify_filtering_export.h"
+#include "notify_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/orbsvcs/CosNotifyFilterS.h"
+#include "orbsvcs/CosNotifyFilterS.h"
 #include "FilterFactory.h"
+
+#if defined(_MSC_VER)
+#if (_MSC_VER >= 1200)
+#pragma warning(push)
+#endif /* _MSC_VER >= 1200 */
+#pragma warning(disable:4250)
+#endif /* _MSC_VER */
 
 /**
  * @class TAO_NS_ETCL_FilterFactory
@@ -28,7 +35,9 @@
  * @brief
  *
  */
-class ETCL_Notify_Filtering_Export TAO_NS_ETCL_FilterFactory : public POA_CosNotifyFilter::FilterFactory, public TAO_NS_FilterFactory
+class TAO_Notify_Export TAO_NS_ETCL_FilterFactory : public virtual PortableServer::RefCountServantBase
+                                                  , public virtual POA_CosNotifyFilter::FilterFactory
+                                                  , public TAO_NS_FilterFactory
 {
 public:
   /// Constuctor
@@ -39,7 +48,7 @@ public:
 
   ///= TAO_NS_FilterFactory methods.
 
-  virtual CosNotifyFilter::FilterFactory_ptr create (ACE_ENV_SINGLE_ARG_DECL);
+  virtual CosNotifyFilter::FilterFactory_ptr create (PortableServer::POA_var& filter_poa ACE_ENV_ARG_DECL);
 
   ///= CosNotifyFilter::FilterFactory methods
 
@@ -59,9 +68,17 @@ public:
                      CORBA::SystemException,
                      CosNotifyFilter::InvalidGrammar
                      ));
+
+protected:
+  /// The POA in which to activate the Filters.
+  PortableServer::POA_var filter_poa_;
 };
 
-ACE_FACTORY_DECLARE (ETCL_Notify_Filtering, TAO_NS_ETCL_FilterFactory)
+#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#pragma warning(pop)
+#endif /* _MSC_VER */
+
+ACE_FACTORY_DECLARE (TAO_Notify, TAO_NS_ETCL_FilterFactory)
 
 #if defined (__ACE_INLINE__)
 #include "ETCL_FilterFactory.inl"

@@ -21,7 +21,6 @@
 #include "ID_Factory.h"
 #include "Event.h"
 #include "notify_export.h"
-#include "Types.h"
 
 /**
  * @class TAO_NS_FilterAdmin
@@ -41,7 +40,7 @@ class TAO_Notify_Export TAO_NS_FilterAdmin
 
   // = match operation on all the filters
   /// See if any of the filters match.
-  CORBA::Boolean match (TAO_NS_Event_var &event ACE_ENV_ARG_DECL)
+  CORBA::Boolean match (const TAO_NS_Event_var &event ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((
                      CORBA::SystemException,
                      CosNotifyFilter::UnsupportedFilterableData
@@ -73,9 +72,10 @@ class TAO_Notify_Export TAO_NS_FilterAdmin
                      ));
 
  private:
-  typedef ACE_Hash_Map_Manager <CosNotifyFilter::FilterID, CosNotifyFilter::Filter_var, TAO_SYNCH_MUTEX> FILTER_LIST;
-  typedef ACE_Hash_Map_Iterator <CosNotifyFilter::FilterID, CosNotifyFilter::Filter_var, TAO_SYNCH_MUTEX> FILTER_LIST_ITER;
-  typedef ACE_Hash_Map_Entry <CosNotifyFilter::FilterID, CosNotifyFilter::Filter_var> FILTER_LIST_ENTRY;
+  typedef ACE_Hash_Map_Manager <CosNotifyFilter::FilterID, CosNotifyFilter::Filter_var, ACE_SYNCH_NULL_MUTEX> FILTER_LIST;
+
+  /// Mutex to serialize access to data members.
+  TAO_SYNCH_MUTEX lock_;
 
   /// List of filters
   FILTER_LIST filter_list_;
