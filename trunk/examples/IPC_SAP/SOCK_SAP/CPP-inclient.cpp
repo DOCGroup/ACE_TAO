@@ -67,7 +67,7 @@ Options::Options (void)
   : host_ (ACE_DEFAULT_SERVER_HOST),
     port_ (ACE_DEFAULT_SERVER_PORT),
     timeout_ (ACE_DEFAULT_TIMEOUT),
-    threads_ (1),
+    threads_ (10),
     quit_string_ ("quit"),
     io_source_ (ACE_INVALID_HANDLE), // Defaults to using the generator.
     iterations_ (10000)
