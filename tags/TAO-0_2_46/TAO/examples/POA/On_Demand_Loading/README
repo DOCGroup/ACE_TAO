@@ -1,0 +1,48 @@
+$Id$
+
+On_Demand_Loading Example
+-------------------------
+
+This example deals with dynamically loading servants in a POA.
+
+A POA configured with the USE_SERVANT_MANAGER policy value relies on
+an application supplied Servant Manager object to supply object/server
+associations. 
+
+If the POA has the RETAIN value for the servant
+retention, the POA expects the Servant Manager to supply the Servant
+Activator interface. When the POA is created with the NON RETAIN value
+for servant retention, the Servant_Locator interface takes over.
+
+In this example, the Servant Activator as well as the Servant_Loactor
+interfaces are used.  The servant is an dynamically linkable library
+which is loaded on demand. The case of the Servantor Activator once the
+servant is loaded, the Object to Servant association is added to the 
+Active Object Map maintained by the POA. This association becomes
+invalid when the POA is destroyed or/and the Object is deactivated.
+On the other hand, the Servant_Locator is called per operation request
+from the client and the associations too are made per request and the
+servant is destroyed per request too.
+
+Also, the level of granualarity is at the object level. That is, every object
+is associated with an dll which had to be loaded into memory on demand.
+
+Note that the server need not be built with the dll. The dll
+name and the factory method which will be used to obtain the servant
+is known to the server only at runtime. This gives us the flexibility
+of modifying and loading the servant without having to build the
+server along with the dll.
+
+
+Execution:
+---------
+
+        Run the run_test_pl perl script.
+
+example:
+        run_test_pl -f ior_file
+
+
+The output will demonstrate the different actions performed by the 
+Servant_Manager via the Servant_Activator and the Servant_Locator
+interfaces.
