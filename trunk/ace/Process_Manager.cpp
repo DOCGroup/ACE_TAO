@@ -14,6 +14,7 @@
 #include "ace/Object_Manager.h"
 #include "ace/Log_Msg.h"
 #include "ace/Reactor.h"
+#include "ace/Countdown_Time.h"
 #include "ace/OS_NS_sys_wait.h"
 #include "ace/OS_NS_signal.h"
 #include "ace/OS_NS_unistd.h"
