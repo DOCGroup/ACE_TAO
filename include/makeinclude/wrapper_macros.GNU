@@ -201,6 +201,8 @@ ifdef shared_libs
       #### Don't build static libs.
       BUILD         = $(VSHLIB) $(SHLIBA) $(VBIN)
       LIB           =
+      OBJEXT        = so
+      VDIR          = .shobj/
       ifeq ($(BIN),)
         #### No executables are being built, so don't create .obj/.
         OBJDIRS     = .shobj
