@@ -12225,7 +12225,12 @@ ACE_OS::readdir_r (DIR *dirp,
       (!defined (sun) && (defined (ACE_HAS_PTHREADS_STD) || \
                          defined (ACE_HAS_PTHREADS_DRAFT7) || \
                          defined (__USE_POSIX)))
-    return ::readdir_r (dirp, entry, result);
+# if defined (__GNUG__) && defined (DIGITAL_UNIX)
+  return readdir_r (dirp, entry, result);
+# else
+  return ::readdir_r (dirp, entry, result);
+# endif /* defined (__GNUG__) && defined (DIGITAL_UNIX) */
+    return ::readdir_r (dirp, entry, result); 
 # else  /* ! POSIX.1c - this is draft 4 or draft 6 */
 #   if defined (HPUX_10)   /* But HP 10.x doesn't follow the draft either */
     *result = entry;

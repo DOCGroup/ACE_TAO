@@ -476,8 +476,6 @@ protected:
   // delete it, else 0.
 };
 
-#include "ace/Connector.i"
-
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Connector.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */

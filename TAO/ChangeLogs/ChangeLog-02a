@@ -1,3 +1,14 @@
+Wed May  3 00:49:51 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* Updated all the dependencies.
+
+Tue May  2 19:49:40 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* orbsvcs/ImplRepo_Service: Added Makefile support for Borland
+	  C++.  Thanks to Charles Frasch <cfrasch@spawar.navy.mil> and
+ 	  Christopher Kohlhoff <chris@kohlhoff.com> for contributing
+ 	  these.
+
 Tue May  2 16:38:55 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_interface/any_op_cs.cpp: Re-enabled
@@ -6,7 +17,6 @@ Tue May  2 16:38:55 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/InterceptorC.cpp: Regenerated the file to solve the link
 	  error on SunCC 5.0.
-
 
 Tue May  2 12:05:07 2000  Carlos O'Ryan  <coryan@uci.edu>
 
@@ -45,6 +55,12 @@ Tue May  2 10:24:10 2000  Darrell Brunsch <brunsch@uci.edu>
         * tests/NestedUpcall/Simple/server.dsp:
 
           Win32 Release configuration problems.
+
+Tue May  2 11:39:16 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* docs/pluggable_protocols/index.html: Updated this document
+	  to point out that the CORBA spec. explicitly supports ESIOPs.
+  	  Thanks to Jim Melton <Jim.Melton@lmco.com> for motivating this.
 
 Mon May  1 21:12:07 2000  Carlos O'Ryan  <coryan@uci.edu>
 

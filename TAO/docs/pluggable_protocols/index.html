@@ -44,16 +44,19 @@ the communication-layer quality of service (QoS) properties of
 applications end-to-end.  However, the standard CORBA GIOP/IIOP
 interoperability protocols are not well suited for applications that
 cannot tolerate the message footprint size, latency, and jitter
-associated with general-purpose messaging and transport protocols.  It
-is essential, therefore, to develop standard <EM>pluggable protocols
-frameworks</em> that allow custom messaging and transport protocols to
-be configured flexibly and used transparently by applications. 
-This document explains how to develop pluggable protocols using TAO's
-pluggable protocols framework. <P>
+associated with general-purpose messaging and transport protocols.
+Fortunately, the CORBA specification defines the notion of
+"Environmentally-Specific Inter-ORB Protocols" (ESIOPs) that can be
+used to integrate non-GIOP/IIOP protocols beneath an ORB. <P>
 
-Here are some links that describe TAO's pluggable protocols framework,
-though not how to implement one: <BLOCKQUOTE> 
-<A
+To allow end-users and developers to take advantage of ESIOP
+capabilities, it is useful for an ORB to support a <EM>pluggable
+protocols framework</em> that allows custom messaging and transport
+protocols to be configured flexibly and used transparently by
+applications.  This document explains how to develop pluggable
+protocols using TAO's pluggable protocols framework.  Here are some
+links that describe TAO's pluggable protocols framework, though not
+how to implement one: <BLOCKQUOTE> <A
 HREF="../releasenotes/index.html#pp">http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/docs/releasenotes/index.html#pp</A><BR>
 
 <A HREF="http://www.cs.wustl.edu/~schmidt/PfHSN.ps.gz">http://www.cs.wustl.edu/~schmidt/PfHSN.ps.gz</A><BR>
@@ -2983,7 +2986,7 @@ examples of the Layers architecture.
     <ADDRESS><a href="mailto:ossama@uci.edu">Ossama Othman</a></ADDRESS>
 <!-- Created: Tue Dec 14 16:53:58 CST 1999 -->
 <!-- hhmts start -->
-Last modified: Wed Mar  8 13:58:21 PST 2000
+Last modified: Tue May  2 11:35:31 CDT 2000
 <!-- hhmts end -->
 </BODY>
 </HTML>

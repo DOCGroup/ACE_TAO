@@ -269,10 +269,6 @@ protected:
   // Timeout pointer.
 };
 
-#if defined (__ACE_INLINE__)
-#include "ace/Svc_Handler.i"
-#endif /* __ACE_INLINE__ */
-
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Svc_Handler.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */

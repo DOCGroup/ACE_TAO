@@ -295,12 +295,6 @@ protected:
   // Whether the cleanup_strategy should be destroyed or not.
 };
 
-///////////////////////////////////////////////////////////////////////////
-
-#if defined (__ACE_INLINE__)
-#include "ace/Caching_Utility_T.i"
-#endif /* __ACE_INLINE__ */
-
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Caching_Utility_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */

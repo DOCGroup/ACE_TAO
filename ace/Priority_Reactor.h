@@ -87,9 +87,5 @@ private:
   // Deny access since member-wise won't work...
 };
 
-#if defined (__ACE_INLINE__)
-#include "ace/Priority_Reactor.i"
-#endif /* __ACE_INLINE__ */
-
 #include "ace/post.h"
 #endif /* ACE_PRIORITY_REACTOR_H */

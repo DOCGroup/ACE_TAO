@@ -1,7 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-
 // ============================================================================
 //
 // = LIBRARY
@@ -112,8 +111,6 @@ private:
   struct t_discon *disp_;
   // Used for handling disconnects
 };
-
-#include "ace/TLI_Acceptor.i"
 
 #endif /* ACE_HAS_TLI */
 #include "ace/post.h"

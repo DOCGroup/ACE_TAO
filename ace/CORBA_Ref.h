@@ -71,10 +71,6 @@ private:
   CORBA_REF *ref_;
 };
 
-#if defined (__ACE_INLINE__)
-#include "ace/CORBA_Ref.i"
-#endif /* __ACE_INLINE__ */
-
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/CORBA_Ref.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */

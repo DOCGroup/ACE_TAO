@@ -178,10 +178,6 @@ protected:
   // Table that maintains the cache of connected <SVC_HANDLER>s.
 };
 
-#if !defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/Cached_Connect_Strategy_T.i"
-#endif /* ACE_LACKS_INLINE_FUNCTIONS */
-
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Cached_Connect_Strategy_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */

@@ -1205,10 +1205,6 @@ public:
   // Return the underlying proactor.
 };
 
-#if defined (__ACE_INLINE__)
-#include "ace/WIN32_Asynch_IO.i"
-#endif /* __ACE_INLINE__ */
-
 #endif /* ACE_WIN32 && !ACE_HAS_WINCE */
 #include "ace/post.h"
 #endif /* ACE_WIN32_ASYNCH_IO_H */
