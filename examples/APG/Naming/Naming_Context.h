@@ -5,6 +5,7 @@
 #define NAMING_CONTEXT_H
 
 #include "ace/Naming_Context.h"
+#include "ace/OS_NS_stdio.h"
 #include "Name_Binding.h"
 
 // Listing 1 code/ch21
