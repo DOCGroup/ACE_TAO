@@ -1,3 +1,18 @@
+Thu Jan  6 09:18:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/PortableServer_include.pidl:
+        * tao/PortableServer/PortableServer_includeS.h:
+        * tao/PortableServer/PortableServer_includeC.h:
+          Added new files. These will be used soon, we will prevent
+          the including of PortableServerC.h soon, users should include
+          PortableServer.h to make sure the PortableServer library is
+          loaded. Some users include PortableServer.pidl, they should
+          include this new PortableServer_include.pidl instead else they
+          get compile errors in the future
+
+        * tao/Makefile.am:
+          Added new files above
+
 Wed Jan  5 22:06:14 2005  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/UTF16_BOM_Translator.cpp (write_wstring):
