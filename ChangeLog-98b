@@ -15,6 +15,10 @@ Fri Sep 18 13:26:50 1998  David L. Levine  <levine@cs.wustl.edu>
           10 percent on an Linux box, not surprising.  Thanks to
           him for reporting it.
 
+        * ace/SOCK_Dgram_Mcast.cpp (unsubscribe): on other than ACE_WIN32,
+          added ACE_UNUSED_ARGs for protocol_family and protocol.  Thanks
+          to Peter <liqunna@cs.sunysb.edu> for reporting this.
+
         * ace/OS.cpp (ACE_TSS_Emulation_cleanup): added ACE_UNUSED_ARG (ptr).
 
 Fri Sep 18 01:53:38 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
