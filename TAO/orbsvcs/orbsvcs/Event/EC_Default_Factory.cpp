@@ -7,7 +7,8 @@
 #include "EC_SupplierAdmin.h"
 #include "EC_ProxyConsumer.h"
 #include "EC_ProxySupplier.h"
-#include "EC_SupplierFiltering.h"
+#include "EC_Trivial_Supplier_Filter.h"
+#include "EC_Per_Supplier_Filter.h"
 #include "EC_ObserverStrategy.h"
 #include "EC_ProxyPushSupplier_Set_T.h"
 #include "EC_Reactive_Timeout_Generator.h"
@@ -21,8 +22,6 @@ ACE_RCSID(Event, EC_Default_Factory, "$Id$")
 
 TAO_EC_Default_Factory::~TAO_EC_Default_Factory (void)
 {
-  delete this->supplier_filtering_;
-  this->supplier_filtering_ = 0;
 }
 
 int
@@ -82,6 +81,32 @@ TAO_EC_Default_Factory::init (int argc, char* argv[])
                   ACE_ERROR ((LM_ERROR,
                               "EC_Default_Factory - "
                               "unsupported filtering <%s>\n",
+                              opt));
+                }
+              arg_shifter.consume_arg ();
+            }
+        }
+
+      else if (ACE_OS::strcmp (arg, "-ECsupplierfiltering") == 0)
+        {
+          arg_shifter.consume_arg ();
+
+          if (arg_shifter.is_parameter_next ())
+            {
+              char* opt = arg_shifter.get_current ();
+              if (ACE_OS::strcasecmp (opt, "null") == 0)
+                {
+                  this->supplier_filtering_ = 0;
+                }
+              else if (ACE_OS::strcasecmp (opt, "per-supplier") == 0)
+                {
+                  this->supplier_filtering_ = 1;
+                }
+              else
+                {
+                  ACE_ERROR ((LM_ERROR,
+                              "EC_Default_Factory - "
+                              "unsupported supplier filtering <%s>\n",
                               opt));
                 }
               arg_shifter.consume_arg ();
@@ -306,20 +331,6 @@ TAO_EC_Default_Factory::fini (void)
   return 0;
 }
 
-TAO_EC_SupplierFiltering*
-TAO_EC_Default_Factory::supplier_filtering (TAO_EC_Event_Channel *ec)
-{
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, 0);
-
-  // @@ Strategize this...
-  if (this->supplier_filtering_ == 0)
-    ACE_NEW_RETURN (this->supplier_filtering_,
-                    TAO_EC_Null_SupplierFiltering (ec),
-                    0);
-
-  return this->supplier_filtering_;
-}
-
 // ****************************************************************
 
 TAO_EC_Dispatching*
@@ -352,6 +363,22 @@ TAO_EC_Default_Factory::create_filter_builder (TAO_EC_Event_Channel *ec)
 
 void
 TAO_EC_Default_Factory::destroy_filter_builder (TAO_EC_Filter_Builder *x)
+{
+  delete x;
+}
+
+TAO_EC_Supplier_Filter_Builder*
+TAO_EC_Default_Factory::create_supplier_filter_builder (TAO_EC_Event_Channel *ec)
+{
+  if (this->supplier_filtering_ == 0)
+    return new TAO_EC_Trivial_Supplier_Filter_Builder (ec);
+  else if (this->supplier_filtering_ == 1)
+    return new TAO_EC_Per_Supplier_Filter_Builder (ec);
+  return 0;
+}
+
+void
+TAO_EC_Default_Factory::destroy_supplier_filter_builder (TAO_EC_Supplier_Filter_Builder *x)
 {
   delete x;
 }
@@ -395,7 +422,7 @@ TAO_EC_Default_Factory::destroy_proxy_push_supplier (TAO_EC_ProxyPushSupplier *x
 TAO_EC_ProxyPushConsumer*
 TAO_EC_Default_Factory::create_proxy_push_consumer (TAO_EC_Event_Channel *ec)
 {
-  return new TAO_EC_ProxyPushConsumer (ec, this->supplier_filtering (ec));
+  return new TAO_EC_ProxyPushConsumer (ec);
 }
 
 void

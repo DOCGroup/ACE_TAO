@@ -40,6 +40,7 @@ class TAO_EC_Event_Channel;
 
 class TAO_EC_Dispatching;
 class TAO_EC_Filter_Builder;
+class TAO_EC_Supplier_Filter_Builder;
 class TAO_EC_ConsumerAdmin;
 class TAO_EC_SupplierAdmin;
 class TAO_EC_ProxyPushConsumer;
@@ -76,6 +77,12 @@ public:
       create_filter_builder (TAO_EC_Event_Channel*)   = 0;
   virtual void
       destroy_filter_builder (TAO_EC_Filter_Builder*) = 0;
+  // Create and destroy the filter builder.
+
+  virtual TAO_EC_Supplier_Filter_Builder*
+      create_supplier_filter_builder (TAO_EC_Event_Channel*)   = 0;
+  virtual void
+      destroy_supplier_filter_builder (TAO_EC_Supplier_Filter_Builder*) = 0;
   // Create and destroy the filter builder.
 
   virtual TAO_EC_ConsumerAdmin*

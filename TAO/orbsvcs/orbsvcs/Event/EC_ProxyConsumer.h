@@ -60,8 +60,7 @@ class TAO_ORBSVCS_Export TAO_EC_ProxyPushConsumer : public POA_RtecEventChannelA
   //   externally.
   //
 public:
-  TAO_EC_ProxyPushConsumer (TAO_EC_Event_Channel* event_channel,
-                            TAO_EC_SupplierFiltering* filtering);
+  TAO_EC_ProxyPushConsumer (TAO_EC_Event_Channel* event_channel);
   // constructor...
 
   virtual ~TAO_EC_ProxyPushConsumer (void);
@@ -110,7 +109,7 @@ private:
   TAO_EC_Event_Channel* event_channel_;
   // The supplier admin, used for activation and memory managment.
 
-  TAO_EC_SupplierFiltering* supplier_filtering_;
+  TAO_EC_SupplierFiltering* filter_;
   // The strategy to do filtering close to the supplier
 
   RtecEventComm::PushSupplier_var supplier_;

@@ -47,8 +47,6 @@ class TAO_ORBSVCS_Export TAO_EC_Basic_Factory : public TAO_EC_Factory
   //   This object creates a single instance of the Supplier
   //
   // = MEMORY MANAGMENT
-  //   A single event channel instance can be used with an instance of
-  //   this class.
   //
 public:
   TAO_EC_Basic_Factory (void);
@@ -66,6 +64,10 @@ public:
       create_filter_builder (TAO_EC_Event_Channel*);
   virtual void
       destroy_filter_builder (TAO_EC_Filter_Builder*);
+  virtual TAO_EC_Supplier_Filter_Builder*
+      create_supplier_filter_builder (TAO_EC_Event_Channel*);
+  virtual void
+      destroy_supplier_filter_builder (TAO_EC_Supplier_Filter_Builder*);
   virtual TAO_EC_ConsumerAdmin*
       create_consumer_admin (TAO_EC_Event_Channel*);
   virtual void
@@ -104,10 +106,6 @@ public:
   virtual void destroy_consumer_admin_lock (ACE_Lock*);
   virtual ACE_Lock* create_supplier_admin_lock (void);
   virtual void destroy_supplier_admin_lock (ACE_Lock*);
-
-private:
-  TAO_EC_SupplierFiltering* supplier_filtering_;
-  // The filtering strategy
 };
 
 #if defined (__ACE_INLINE__)
