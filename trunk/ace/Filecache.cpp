@@ -426,7 +426,7 @@ ACE_Filecache_Object::ACE_Filecache_Object (void)
     action_ (0),
     error_ (0),
     stale_ (0),
-    sa_ (),
+    // sa_ (),
     junklock_ (),
     lock_ (junklock_)
 {

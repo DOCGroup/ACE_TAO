@@ -1,4 +1,10 @@
-Thu Apr 01 18:44:07 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+Thu Apr 01 19:01:20 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Filecache.cpp (ACE_Filecache_Object):
+	* ace/Signal.i (ACE_Sig_Action):
+	* ace/OS.i (ACE_Time_Value):
+
+	  Removed default contruction of structs. Old g++ is broken.
 
 	* ace/Filecache.cpp (ACE_Filecache_Object): Fixed incorrect
 	  initialization of <mmap_>.
