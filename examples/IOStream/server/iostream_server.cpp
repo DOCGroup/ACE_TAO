@@ -7,6 +7,7 @@
 #include "ace/Acceptor.h"
 #include "ace/SOCK_Acceptor.h"
 #include "ace/Service_Config.h"
+#include "ace/Signal.h"
 
 #include "iostream_server.h"
 

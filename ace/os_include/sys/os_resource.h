@@ -31,6 +31,14 @@
 #  include /**/ <sys/resource.h>
 #endif /* !ACE_LACKS_SYS_RESOURCE_H */
 
+#if defined (ACE_HAS_SYSINFO)
+#  include /**/ <sys/systeminfo.h>
+#endif /* ACE_HAS_SYS_INFO */
+
+#if defined (ACE_HAS_SYSCALL_H)
+#  include /**/ <sys/syscall.h>
+#endif /* ACE_HAS_SYSCALL_H */
+
 // Place all additions (especially function declarations) within extern "C" {}
 #ifdef __cplusplus
 extern "C"
