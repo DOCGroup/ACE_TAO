@@ -1,10 +1,15 @@
+Tue Jun 17 17:28:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/SSL/Makefile:
+          Set ACE_SSL_BUILD_DLL when building a shared lib
+
 Tue Jun 17 11:47:52 2003  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* ace/Future.{h,cpp}: Changed all uses of ACE_Thread_Mutex to
 	  ACE_Recursive_Thread_Mutex and also changed the
  	  ACE_Condition_Thread_Mutex to
  	  ACE_Condition_Recursive_Thread_Mutex.  This should fix bugs with
- 	  deadlock.  Thanks to Thomas Groth <groth.th@nord-com.net> for 
+ 	  deadlock.  Thanks to Thomas Groth <groth.th@nord-com.net> for
 	  providing these patches.
 
 	* ace/DLL_Manager.cpp (symbol): Added missing newlines in
