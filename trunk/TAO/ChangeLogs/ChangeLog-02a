@@ -1,3 +1,7 @@
+Thu Sep  6 20:07:25 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Makefile.bor: Added MCAST_Parser to the Makefile.
+
 Thu Sep  6 12:56:55 2001  Priyanka Gontla  <gontla_p@ociweb.com>
 
 	* orbsvcs/tests/Simple_Naming/run_test.pl (client): 

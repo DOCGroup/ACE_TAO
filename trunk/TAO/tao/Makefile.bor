@@ -122,6 +122,7 @@ OBJFILES = \
 	$(OBJDIR)\LRU_Connection_Purging_Strategy.obj \
 	$(OBJDIR)\Managed_Types.obj \
 	$(OBJDIR)\Marshal.obj \
+	$(OBJDIR)\MCAST_Parser.obj \
 	$(OBJDIR)\Messaging_ORBInitializer.obj \
 	$(OBJDIR)\Messaging_Policy_i.obj \
 	$(OBJDIR)\Messaging_PolicyFactory.obj \
