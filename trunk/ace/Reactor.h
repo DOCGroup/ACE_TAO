@@ -456,7 +456,7 @@ public:
   // Declare the dynamic allocation hooks.
 
   void dump (void) const;
-  // Dump the state of an object.
+  // Dump the state of the object.
 
 protected:
   virtual void implementation (ACE_Reactor_Impl *implementation);
