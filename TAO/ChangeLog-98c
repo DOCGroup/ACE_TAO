@@ -1,3 +1,7 @@
+Mon Feb 16 18:01:23 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* TAO version 0.1.3, released Mon Feb 16 18:01:23 1998.
+
 Mon Feb 16 18:00:15 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* release.pl: Changed C++ comment leaders to Perl comment leaders.
