@@ -10,13 +10,13 @@
 ACE_RCSID(Gateway, Gateway, "$Id$")
 
 class ACE_Svc_Export Gateway : public ACE_Service_Object
+{
   // = TITLE
   //     Integrates the whole Gateway application.
   //
   // = DESCRIPTION
   //     This implementation uses the <Event_Channel> as the basis
   //     for the <Gateway> routing.
-{
 protected:
   // = Service configurator hooks.
   virtual int init (int argc, char *argv[]);
