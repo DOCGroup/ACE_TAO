@@ -668,9 +668,9 @@ ACE_OS::mutex_init (ACE_mutex_t *m,
     {
 #   if defined (ACE_HAS_PTHREADS_DRAFT7) || defined (ACE_HAS_PTHREADS_STD)
 #     if defined (_POSIX_THREAD_PROCESS_SHARED) && !defined (ACE_LACKS_MUTEXATTR_PSHARED)
-      ACE_ADAPT_RETVAL (::pthread_mutexattr_setpshared (attributes,
-                                                        lock_scope),
-                        result);
+      (void) ACE_ADAPT_RETVAL (::pthread_mutexattr_setpshared (attributes,
+                                                               lock_scope),
+                               result);
 #     endif /* _POSIX_THREAD_PROCESS_SHARED && !ACE_LACKS_MUTEXATTR_PSHARED */
 #   else /* Pthreads draft 6 */
 #     if !defined (ACE_LACKS_MUTEXATTR_PSHARED)

@@ -1,3 +1,13 @@
+Wed Sep  1 12:32:31 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/OS_NS_Thread.inl (mutex_init):
+
+          Explicitly cast the unused returned value of an
+          ACE_ADAPT_RETVAL macro call to "void" to address a "right-hand
+          operand of comma has no effect" warning exhibited by GNU g++
+	  3.4.x.  Thanks to Bogdan Jeram <bjeram at eso dot org> for
+	  reporting the warning.
+
 Wed Sep  1 11:35:44 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* m4/config_h.m4:
