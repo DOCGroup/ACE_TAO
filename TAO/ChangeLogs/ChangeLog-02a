@@ -1,3 +1,17 @@
+Wed May 16 20:58:51 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/util/utl_scope.cpp:
+
+          In an IDL file, if the first part of a scoped name is declared
+          in the first opening of a module, the entire scoped name is
+          referenced in a second opening of the module (an error), and the
+          full scoped name is declared in a third opening of the module,
+          the IDL compiler would go into an endless loop instead of
+          reporting the error. Fixed with the addition of a check to
+          lookup_by_nane_local(). Thanks to Russell Mora 
+          <rd.mora@econz.co.nz> for reporting this bug, and for sending
+          in an example IDL file.
+
 Wed May 16 18:38:28 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * performance-tests/AMI_Latency/client.cpp:
