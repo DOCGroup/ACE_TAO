@@ -1,11 +1,7 @@
-// file      : XSCRT/XMLSchema.ipp
+// file      : XMLSchema/TypeInfo.tpp
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
 // cvs-id    : $Id$
 
-
-// ExtendedTypeInfo for XML Schema types
-//
-//
 namespace XMLSchema
 {
   //@@ VC6
