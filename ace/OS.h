@@ -357,7 +357,7 @@ private:
 #define ACE_UNUSED_ARG(a) (a)
 #endif /* ghs */
 
-#if defined(__sgi) || defined(VXWORKS)
+#if defined (__sgi) || defined (ghs) || defined (DEC_CXX)
 #define ACE_NOTREACHED(a)
 #else
 #define ACE_NOTREACHED(a) a
