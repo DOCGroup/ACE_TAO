@@ -1,0 +1,45 @@
+// $Id$
+                        CosEventChannelFactory
+        ======================================================
+
+The CosEventChannelFactory is a factory for creating COS Event
+Channels.  The ChannelFactory interface allows a client to create,
+destroy and locate factories.
+
+IMPLEMENTATION
+==============
+
+The TAO_CosEventChannelFactory_i class implements the C++ servant for
+the ChannelFactory interface.  The FactoryDriver class activates the
+ChannelFactory servant with the ORB.  During initialization the
+ChannelFactory creates a child POA which is used to activate all the
+CosEC servants.The ChannelFactory uses the CosEC_ServantBase class to
+create the CosEvent Channels.
+
+The Makefile in this directory generates 2 executables: factory and
+factoryclient.
+
+FACTORY
+=======
+
+To allow client applications to obtain a reference to the factory, a
+Naming service must be started prior to running the factory.
+
+The factory options are:
+
+        -r <FactoryName> : specifies under what name the factory should be
+
+registered with the Naming Service. The default is "CosEC_Factory"
+
+FACTORYCLIENT
+=============
+
+The factory client is a test driver for the factory. It exercises all
+the features of the factory.  A Naming Service and a factory must be
+running prior to running the factoryclient.  factoryclient does not
+take any command line options.
+
+AUTHOR
+======
+
+Pradeep Gore <pradeep@cs.wustl.edu>
