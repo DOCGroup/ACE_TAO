@@ -172,7 +172,10 @@ struct CORBA_SEQUENCE
   CORBA_Boolean release; // Only here to make it compliant with IDL-generated layout
 
   CORBA_SEQUENCE (void)
-    : maximum (0), length (0), buffer (0), release(CORBA::B_FALSE) { }
+    : maximum (0),
+      length (0),
+      buffer (0),
+      release (CORBA::B_FALSE) { }
 
   // XXX destructor should free buffer, elements!!
   ~CORBA_SEQUENCE (void) { }
