@@ -20,6 +20,7 @@
 
 #include "pace/stdio.h"
 #include "pace/unistd.h"
+#include "pace/string.h"
 
 const char * filename = "temp";
 const char * mode = "w+";
@@ -92,8 +93,7 @@ main (int argc, char **argv)
 
   printf("pace_fgets %s\n", success);
 
-  if (strcmp(buffer,
-             string1) != 0)
+  if (pace_strcmp(buffer, string1) != 0)
     {
       printf("strcmp of pace_fgets %s\n", failure);
       return -1;

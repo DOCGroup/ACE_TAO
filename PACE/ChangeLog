@@ -1,3 +1,10 @@
+Wed Dec 20 16:49:47 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* tests/Stdio_Test.c:
+
+	  An innocent change :-/. Used pace_strcmp (...) instead of
+	  strcmp. Had to include "pace/string.h".
+
 Wed Dec 20 16:42:45 2000  Luther J Baker  <luther@cs.wustl.edu>
 
         * pace/socket.h:
