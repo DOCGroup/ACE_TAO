@@ -37,7 +37,7 @@ $serverargs = "-ORBCollocation no -ORBdebuglevel 10 -ORBLogFile $logfile -ORBEnd
 
 $SV = new PerlACE::Process ("server", $serverargs);
 
-$clientargs = "-ORBCollocation no -ORBdebuglevel 10 -ORBLogFile $logfile -l $corbaloc_str -k file://$iorfile -n $clientthreads -i $clientiterations";
+$clientargs = "-ORBdebuglevel 10 -ORBLogFile $logfile -l $corbaloc_str -k file://$iorfile -n $clientthreads -i $clientiterations";
 
 $CL1 = new PerlACE::Process ("client", $clientargs);
 $CL2 = new PerlACE::Process ("client", $clientargs);
@@ -47,7 +47,7 @@ $CLS = new PerlACE::Process ("client", "-l $corbaloc_str -k file://$iorfile -i 1
 
 #print STDERR $SV->CommandLine(), "\n" if $verbose;
 
-print STDERR "Start the server*** \n" if $verbose;
+print STDERR "***** Start the server*** \n" if $verbose;
 
 $SV->Spawn ();
 
@@ -59,10 +59,10 @@ if (PerlACE::waitforfile_timed ($iorfile, 50) == -1) {
 
 # leave server reap some self abuse before clients start abusing it
 if ($serveriterations > 20) {
-  $server = $SV->TimedWait(20);
+  $server = $SV->TimedWait(10);
 }
 
-print STDERR "Start the clients*** \n" if $verbose;
+print STDERR "****** Start the clients*** \n" if $verbose;
 if ($clients > 0) {
   print STDERR $CL1->CommandLine(), "\n" if $verbose;
   $CL1->Spawn ();
@@ -72,10 +72,10 @@ if ($clients > 2) { $CL3->Spawn (); }
 
 
 if ($clients > 0) {
-  $client = $CL1->WaitKill (120);
+  $client = $CL1->WaitKill (180);
 
   if ($client != 0) {
-    print STDERR "ERROR: client returned $client\n";
+    print STDERR "ERROR: client 1 returned $client\n";
     $status = 1;
   }
 }
@@ -84,7 +84,7 @@ if ($clients > 1) {
   $client = $CL2->WaitKill (5);
   
   if ($client != 0) {
-    print STDERR "ERROR: client returned $client\n";
+    print STDERR "ERROR: client 2 returned $client\n";
     $status = 1;
   }
 }
@@ -93,7 +93,7 @@ if ($clients > 2) {
   $client = $CL3->WaitKill (5);
   
   if ($client != 0) {
-    print STDERR "ERROR: client returned $client\n";
+    print STDERR "ERROR: client 3 returned $client\n";
     $status = 1;
 }
 
@@ -102,7 +102,7 @@ if ($clients > 2) {
 $client = $CLS->SpawnWaitKill (15);
 
 if ($client != 0) {
-    print STDERR "ERROR: client returned $client\n";
+    print STDERR "ERROR: client 4 returned $client\n";
     $status = 1;
 }
 
