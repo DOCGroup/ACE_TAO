@@ -70,13 +70,13 @@ public:
                   size_t n,
                   int flags,
                   const ACE_Time_Value *timeout = 0,
-                  int error_on_eof = 1) const;
+                  size_t *bytes_transferred = 0) const;
   // Send exactly n bytes to the connected socket (uses t_snd(3)).
   ssize_t recv_n (void *buf,
                   size_t n,
                   int *flags,
                   const ACE_Time_Value *timeout = 0,
-                  int error_on_eof = 1) const;
+                  size_t *bytes_transferred = 0) const;
   // Recv exactly n bytes from the connected socket (uses t_rcv(3)).
 
   // = tirdwr bindings
@@ -93,13 +93,13 @@ public:
   ssize_t send_n (const void *buf,
                   size_t n,
                   const ACE_Time_Value *timeout = 0,
-                  int error_on_eof = 1) const;
+                  size_t *bytes_transferred = 0) const;
   // Send n bytes, keep trying until n are sent (uses write(2)).
 
   ssize_t recv_n (void *buf,
                   size_t n,
                   const ACE_Time_Value *timeout = 0,
-                  int error_on_eof = 1) const;
+                  size_t *bytes_transferred = 0) const;
   // Recv n bytes, keep trying until n are received (uses read (2)).
 
   // = Meta-type info

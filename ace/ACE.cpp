@@ -783,7 +783,7 @@ ACE::ldfind (const ACE_TCHAR filename[],
           ACE_TCHAR *ld_path_temp = 0;
           if (ld_path != 0)
             {
-              ld_path_temp = (ACE_TCHAR *) ACE_OS::malloc ((ACE_OS::strlen (ld_path) + 2) 
+              ld_path_temp = (ACE_TCHAR *) ACE_OS::malloc ((ACE_OS::strlen (ld_path) + 2)
                                                            * sizeof (ACE_TCHAR));
               if (ld_path_temp != 0)
                 {
@@ -1193,9 +1193,10 @@ ACE::recv_n_i (ACE_HANDLE handle,
                void *buf,
                size_t len,
                int flags,
-               int error_on_eof)
+               size_t *bt)
 {
-  size_t bytes_transferred;
+  size_t temp;
+  size_t &bytes_transferred = bt == 0 ? temp : *bt;
   ssize_t n;
 
   for (bytes_transferred = 0;
@@ -1206,11 +1207,22 @@ ACE::recv_n_i (ACE_HANDLE handle,
                         (char *) buf + bytes_transferred,
                         len - bytes_transferred,
                         flags);
+      // Check EOF.
+      if (n == 0)
+        return 0;
+
+      // Check for other errors.
       if (n == -1)
         {
           // If blocked, try again.
           if (errno == EWOULDBLOCK)
             {
+              // Make sure we can make progress before continuing,
+              // otherwise we'll just keep spinning.
+              int result = ACE::handle_read_ready (handle, 0);
+              if (result == -1)
+                return -1;
+
               n = 0;
               continue;
             }
@@ -1219,13 +1231,6 @@ ACE::recv_n_i (ACE_HANDLE handle,
 
           // Other errors.
           return -1;
-        }
-      else if (n == 0)
-        {
-          if (error_on_eof)
-            return -1;
-          else
-            break;
         }
     }
 
@@ -1238,30 +1243,28 @@ ACE::recv_n_i (ACE_HANDLE handle,
                size_t len,
                int flags,
                const ACE_Time_Value *timeout,
-               int error_on_eof)
+               size_t *bt)
 {
+  size_t temp;
+  size_t &bytes_transferred = bt == 0 ? temp : *bt;
+  ssize_t n;
+  ssize_t result = 0;
+  int error = 0;
+
   int val = 0;
   ACE::record_and_set_non_blocking_mode (handle, val);
-
-  size_t bytes_transferred;
-  ssize_t n;
-  ssize_t error = 0;
 
   for (bytes_transferred = 0;
        bytes_transferred < len;
        bytes_transferred += n)
     {
-      int result = ACE::handle_read_ready (handle,
-                                           timeout);
+      int rtn = ACE::handle_read_ready (handle,
+                                        timeout);
 
-      if (result == -1)
+      if (rtn == -1)
         {
-          // Timed out; return bytes transferred.
-          if (errno == ETIME)
-            break;
-
-          // Other errors.
           error = 1;
+          result = -1;
           break;
         }
 
@@ -1272,15 +1275,10 @@ ACE::recv_n_i (ACE_HANDLE handle,
 
       // Errors (note that errno cannot be EWOULDBLOCK since select()
       // just told us that data is available to read).
-      if (n == -1)
+      if (n == -1 || n == 0)
         {
           error = 1;
-          break;
-        }
-      else if (n == 0)
-        {
-          if (error_on_eof)
-            error = 1;
+          result = n;
           break;
         }
     }
@@ -1288,7 +1286,7 @@ ACE::recv_n_i (ACE_HANDLE handle,
   ACE::restore_non_blocking_mode (handle, val);
 
   if (error)
-    return -1;
+    return result;
   else
     return bytes_transferred;
 }
@@ -1300,9 +1298,10 @@ ACE::t_rcv_n_i (ACE_HANDLE handle,
                 void *buf,
                 size_t len,
                 int *flags,
-                int error_on_eof)
+                size_t *bt)
 {
-  size_t bytes_transferred;
+  size_t temp;
+  size_t &bytes_transferred = bt == 0 ? temp : *bt;
   ssize_t n;
 
   for (bytes_transferred = 0;
@@ -1313,11 +1312,22 @@ ACE::t_rcv_n_i (ACE_HANDLE handle,
                          (char *) buf + bytes_transferred,
                          len - bytes_transferred,
                          flags);
+      // Check EOF.
+      if (n == 0)
+        return 0;
+
+      // Check for other errors.
       if (n == -1)
         {
           // If blocked, try again.
           if (errno == EWOULDBLOCK)
             {
+              // Make sure we can make progress before continuing,
+              // otherwise we'll just keep spinning.
+              int result = ACE::handle_read_ready (handle, 0);
+              if (result == -1)
+                return -1;
+
               n = 0;
               continue;
             }
@@ -1326,13 +1336,6 @@ ACE::t_rcv_n_i (ACE_HANDLE handle,
 
           // Other errors.
           return -1;
-        }
-      else if (n == 0)
-        {
-          if (error_on_eof)
-            return -1;
-          else
-            break;
         }
     }
 
@@ -1345,30 +1348,28 @@ ACE::t_rcv_n_i (ACE_HANDLE handle,
                 size_t len,
                 int *flags,
                 const ACE_Time_Value *timeout,
-                int error_on_eof)
+                size_t *bt)
 {
+  size_t temp;
+  size_t &bytes_transferred = bt == 0 ? temp : *bt;
+  ssize_t n;
+  ssize_t result = 0;
+  int error = 0;
+
   int val = 0;
   ACE::record_and_set_non_blocking_mode (handle, val);
-
-  size_t bytes_transferred;
-  ssize_t n;
-  ssize_t error = 0;
 
   for (bytes_transferred = 0;
        bytes_transferred < len;
        bytes_transferred += n)
     {
-      int result = ACE::handle_read_ready (handle,
-                                           timeout);
+      int rtn = ACE::handle_read_ready (handle,
+                                        timeout);
 
-      if (result == -1)
+      if (rtn == -1)
         {
-          // Timed out; return bytes transferred.
-          if (errno == ETIME)
-            break;
-
-          // Other errors.
           error = 1;
+          result = -1;
           break;
         }
 
@@ -1379,15 +1380,10 @@ ACE::t_rcv_n_i (ACE_HANDLE handle,
 
       // Errors (note that errno cannot be EWOULDBLOCK since select()
       // just told us that data is available to read).
-      if (n == -1)
+      if (n == -1 || n == 0)
         {
           error = 1;
-          break;
-        }
-      else if (n == 0)
-        {
-          if (error_on_eof)
-            error = 1;
+          result = n;
           break;
         }
     }
@@ -1395,7 +1391,7 @@ ACE::t_rcv_n_i (ACE_HANDLE handle,
   ACE::restore_non_blocking_mode (handle, val);
 
   if (error)
-    return -1;
+    return result;
   else
     return bytes_transferred;
 }
@@ -1406,9 +1402,10 @@ ssize_t
 ACE::recv_n_i (ACE_HANDLE handle,
                void *buf,
                size_t len,
-               int error_on_eof)
+               size_t *bt)
 {
-  size_t bytes_transferred;
+  size_t temp;
+  size_t &bytes_transferred = bt == 0 ? temp : *bt;
   ssize_t n;
 
   for (bytes_transferred = 0;
@@ -1418,11 +1415,22 @@ ACE::recv_n_i (ACE_HANDLE handle,
       n = ACE::recv_i (handle,
                        (char *) buf + bytes_transferred,
                        len - bytes_transferred);
+      // Check EOF.
+      if (n == 0)
+        return 0;
+
+      // Check for other errors.
       if (n == -1)
         {
           // If blocked, try again.
           if (errno == EWOULDBLOCK)
             {
+              // Make sure we can make progress before continuing,
+              // otherwise we'll just keep spinning.
+              int result = ACE::handle_read_ready (handle, 0);
+              if (result == -1)
+                return -1;
+
               n = 0;
               continue;
             }
@@ -1431,13 +1439,6 @@ ACE::recv_n_i (ACE_HANDLE handle,
 
           // Other errors.
           return -1;
-        }
-      else if (n == 0)
-        {
-          if (error_on_eof)
-            return -1;
-          else
-            break;
         }
     }
 
@@ -1449,30 +1450,28 @@ ACE::recv_n_i (ACE_HANDLE handle,
                void *buf,
                size_t len,
                const ACE_Time_Value *timeout,
-               int error_on_eof)
+               size_t *bt)
 {
+  size_t temp;
+  size_t &bytes_transferred = bt == 0 ? temp : *bt;
+  ssize_t n;
+  ssize_t result = 0;
+  int error = 0;
+
   int val = 0;
   ACE::record_and_set_non_blocking_mode (handle, val);
-
-  size_t bytes_transferred;
-  ssize_t n;
-  ssize_t error = 0;
 
   for (bytes_transferred = 0;
        bytes_transferred < len;
        bytes_transferred += n)
     {
-      int result = ACE::handle_read_ready (handle,
+      int rtn = ACE::handle_read_ready (handle,
                                            timeout);
 
-      if (result == -1)
+      if (rtn == -1)
         {
-          // Timed out; return bytes transferred.
-          if (errno == ETIME)
-            break;
-
-          // Other errors.
           error = 1;
+          result = -1;
           break;
         }
 
@@ -1482,15 +1481,10 @@ ACE::recv_n_i (ACE_HANDLE handle,
 
       // Errors (note that errno cannot be EWOULDBLOCK since select()
       // just told us that data is available to read).
-      if (n == -1)
+      if (n == -1 || n == 0)
         {
           error = 1;
-          break;
-        }
-      else if (n == 0)
-        {
-          if (error_on_eof)
-            error = 1;
+          result = n;
           break;
         }
     }
@@ -1498,7 +1492,7 @@ ACE::recv_n_i (ACE_HANDLE handle,
   ACE::restore_non_blocking_mode (handle, val);
 
   if (error)
-    return -1;
+    return result;
   else
     return bytes_transferred;
 }
@@ -1572,9 +1566,11 @@ ssize_t
 ACE::recvv_n_i (ACE_HANDLE handle,
                 iovec *iov,
                 int iovcnt,
-                int error_on_eof)
+                size_t *bt)
 {
-  ssize_t bytes_transferred = 0;
+  size_t temp;
+  size_t &bytes_transferred = bt == 0 ? temp : *bt;
+  bytes_transferred = 0;
 
   for (int s = 0;
        s < iovcnt;
@@ -1583,11 +1579,22 @@ ACE::recvv_n_i (ACE_HANDLE handle,
       ssize_t n = ACE_OS::recvv (handle,
                                  iov + s,
                                  iovcnt - s);
+      // Check EOF.
+      if (n == 0)
+        return 0;
+
+      // Check for other errors.
       if (n == -1)
         {
           // If blocked, try again.
           if (errno == EWOULDBLOCK)
             {
+              // Make sure we can make progress before continuing,
+              // otherwise we'll just keep spinning.
+              int result = ACE::handle_read_ready (handle, 0);
+              if (result == -1)
+                return -1;
+
               n = 0;
               continue;
             }
@@ -1596,13 +1603,6 @@ ACE::recvv_n_i (ACE_HANDLE handle,
 
           // Other errors.
           return -1;
-        }
-      else if (n == 0)
-        {
-          if (error_on_eof)
-            return -1;
-          else
-            break;
         }
 
       for (bytes_transferred += n;
@@ -1629,29 +1629,28 @@ ACE::recvv_n_i (ACE_HANDLE handle,
                 iovec *iov,
                 int iovcnt,
                 const ACE_Time_Value *timeout,
-                int error_on_eof)
+                size_t *bt)
 {
+  size_t temp;
+  size_t &bytes_transferred = bt == 0 ? temp : *bt;
+  bytes_transferred = 0;
+  ssize_t result = 0;
+  int error = 0;
+
   int val = 0;
   ACE::record_and_set_non_blocking_mode (handle, val);
-
-  ssize_t bytes_transferred = 0;
-  ssize_t error = 0;
 
   for (int s = 0;
        s < iovcnt;
        )
     {
-      int result = ACE::handle_read_ready (handle,
-                                           timeout);
+      int rtn = ACE::handle_read_ready (handle,
+                                        timeout);
 
-      if (result == -1)
+      if (rtn == -1)
         {
-          // Timed out; return bytes transferred.
-          if (errno == ETIME)
-            break;
-
-          // Other errors.
           error = 1;
+          result = -1;
           break;
         }
 
@@ -1661,15 +1660,10 @@ ACE::recvv_n_i (ACE_HANDLE handle,
 
       // Errors (note that errno cannot be EWOULDBLOCK since select()
       // just told us that data is available to read).
-      if (n == -1)
+      if (n == -1 || n == 0)
         {
           error = 1;
-          break;
-        }
-      else if (n == 0)
-        {
-          if (error_on_eof)
-            error = 1;
+          result = n;
           break;
         }
 
@@ -1692,7 +1686,7 @@ ACE::recvv_n_i (ACE_HANDLE handle,
   ACE::restore_non_blocking_mode (handle, val);
 
   if (error)
-    return -1;
+    return result;
   else
     return bytes_transferred;
 }
@@ -1701,13 +1695,14 @@ ssize_t
 ACE::recv_n (ACE_HANDLE handle,
              ACE_Message_Block *message_block,
              const ACE_Time_Value *timeout,
-             int error_on_eof)
+             size_t *bt)
 {
+  size_t temp;
+  size_t &bytes_transferred = bt == 0 ? temp : *bt;
+  bytes_transferred = 0;
+
   iovec iov[IOV_MAX];
   int iovcnt = 0;
-  ssize_t n = 0;
-  ssize_t nbytes = 0;
-  ssize_t recv_size = 0;
 
   while (message_block != 0)
     {
@@ -1729,42 +1724,29 @@ ACE::recv_n (ACE_HANDLE handle,
               // Increment iovec counter.
               iovcnt++;
 
-              // Keep track of the number of bytes for this recv.
-              recv_size += current_message_block_length;
-
               // The buffer is full make a OS call.  @@ TODO find a way to
               // find IOV_MAX for platforms that do not define it rather
               // than simply setting IOV_MAX to some arbitrary value such
               // as 16.
               if (iovcnt == IOV_MAX)
                 {
-                  n = ACE::recvv_n (handle,
-                                    iov,
-                                    iovcnt,
-                                    timeout,
-                                    error_on_eof);
+                  size_t current_transfer = 0;
 
-                  // Errors. Make sure that we don't treat a timeout
-                  // as an error.
-                  if (n == -1 ||
-                      (n == 0 &&
-                       errno != ETIME))
-                    return n;
+                  ssize_t result = ACE::recvv_n (handle,
+                                                 iov,
+                                                 iovcnt,
+                                                 timeout,
+                                                 &current_transfer);
 
-                  // Success. Add to total bytes transferred.
-                  nbytes += n;
+                  // Add to total bytes transferred.
+                  bytes_transferred += current_transfer;
+
+                  // Errors.
+                  if (result == -1 || result == 0)
+                    return result;
 
                   // Reset iovec counter.
                   iovcnt = 0;
-
-                  // If we sent everything we had accumulated in the
-                  // last call, then keep going.  If it was a partial
-                  // recv, we won't continue.
-                  if (recv_size == n)
-                    recv_size = 0;
-                  else
-                    // Return total bytes transferred.
-                    return nbytes;
                 }
             }
 
@@ -1780,25 +1762,24 @@ ACE::recv_n (ACE_HANDLE handle,
   // IOV_MAX is not a multiple of the number of message blocks.
   if (iovcnt != 0)
     {
-      n = ACE::recvv_n (handle,
-                        iov,
-                        iovcnt,
-                        timeout,
-                        error_on_eof);
+      size_t current_transfer = 0;
 
-      // Errors. Make sure that we don't treat a timeout
-      // as an error.
-      if (n == -1 ||
-          (n == 0 &&
-           errno != ETIME))
-        return n;
+      ssize_t result = ACE::recvv_n (handle,
+                                     iov,
+                                     iovcnt,
+                                     timeout,
+                                     &current_transfer);
 
-      // Success. Add to total bytes transferred.
-      nbytes += n;
+      // Add to total bytes transferred.
+      bytes_transferred += current_transfer;
+
+      // Errors.
+      if (result == -1 || result == 0)
+        return result;
     }
 
   // Return total bytes transferred.
-  return nbytes;
+  return bytes_transferred;
 }
 
 ssize_t
@@ -1953,9 +1934,10 @@ ACE::send_n_i (ACE_HANDLE handle,
                const void *buf,
                size_t len,
                int flags,
-               int error_on_eof)
+               size_t *bt)
 {
-  size_t bytes_transferred;
+  size_t temp;
+  size_t &bytes_transferred = bt == 0 ? temp : *bt;
   ssize_t n;
 
   for (bytes_transferred = 0;
@@ -1966,29 +1948,30 @@ ACE::send_n_i (ACE_HANDLE handle,
                         (char *) buf + bytes_transferred,
                         len - bytes_transferred,
                         flags);
+      // Check EOF.
+      if (n == 0)
+        return 0;
+
+      // Check for other errors.
       if (n == -1)
         {
           // If blocked, try again.
           if (errno == EWOULDBLOCK)
             {
-              //
-              // No timeouts in this version; just wait for sendable socket.
-              //
+              // Make sure we can make progress before continuing,
+              // otherwise we'll just keep spinning.
+              int result = ACE::handle_write_ready (handle, 0);
+              if (result == -1)
+                return -1;
+
               n = 0;
-              ACE::handle_write_ready (handle, 0);
-              errno = 0;
               continue;
             }
 
+          // No timeouts in this version.
+
           // Other errors.
           return -1;
-        }
-      else if (n == 0)
-        {
-          if (error_on_eof)
-            return -1;
-          else
-            break;
         }
     }
 
@@ -2001,30 +1984,28 @@ ACE::send_n_i (ACE_HANDLE handle,
                size_t len,
                int flags,
                const ACE_Time_Value *timeout,
-               int error_on_eof)
+               size_t *bt)
 {
+  size_t temp;
+  size_t &bytes_transferred = bt == 0 ? temp : *bt;
+  ssize_t n;
+  ssize_t result = 0;
+  int error = 0;
+
   int val = 0;
   ACE::record_and_set_non_blocking_mode (handle, val);
-
-  size_t bytes_transferred;
-  ssize_t n;
-  ssize_t error = 0;
 
   for (bytes_transferred = 0;
        bytes_transferred < len;
        bytes_transferred += n)
     {
-      int result = ACE::handle_write_ready (handle,
-                                            timeout);
+      int rtn = ACE::handle_write_ready (handle,
+                                         timeout);
 
-      if (result == -1)
+      if (rtn == -1)
         {
-          // Timed out; return bytes transferred.
-          if (errno == ETIME)
-            break;
-
-          // Other errors.
           error = 1;
+          result = -1;
           break;
         }
 
@@ -2035,15 +2016,10 @@ ACE::send_n_i (ACE_HANDLE handle,
 
       // Errors (note that errno cannot be EWOULDBLOCK since select()
       // just told us that data can be written).
-      if (n == -1)
+      if (n == -1 || n == 0)
         {
           error = 1;
-          break;
-        }
-      else if (n == 0)
-        {
-          if (error_on_eof)
-            error = 1;
+          result = n;
           break;
         }
     }
@@ -2051,7 +2027,7 @@ ACE::send_n_i (ACE_HANDLE handle,
   ACE::restore_non_blocking_mode (handle, val);
 
   if (error)
-    return -1;
+    return result;
   else
     return bytes_transferred;
 }
@@ -2063,9 +2039,10 @@ ACE::t_snd_n_i (ACE_HANDLE handle,
                 const void *buf,
                 size_t len,
                 int flags,
-                int error_on_eof)
+                size_t *bt)
 {
-  size_t bytes_transferred;
+  size_t temp;
+  size_t &bytes_transferred = bt == 0 ? temp : *bt;
   ssize_t n;
 
   for (bytes_transferred = 0;
@@ -2076,11 +2053,22 @@ ACE::t_snd_n_i (ACE_HANDLE handle,
                          (char *) buf + bytes_transferred,
                          len - bytes_transferred,
                          flags);
+      // Check EOF.
+      if (n == 0)
+        return 0;
+
+      // Check for other errors.
       if (n == -1)
         {
           // If blocked, try again.
           if (errno == EWOULDBLOCK)
             {
+              // Make sure we can make progress before continuing,
+              // otherwise we'll just keep spinning.
+              int result = ACE::handle_write_ready (handle, 0);
+              if (result == -1)
+                return -1;
+
               n = 0;
               continue;
             }
@@ -2089,13 +2077,6 @@ ACE::t_snd_n_i (ACE_HANDLE handle,
 
           // Other errors.
           return -1;
-        }
-      else if (n == 0)
-        {
-          if (error_on_eof)
-            return -1;
-          else
-            break;
         }
     }
 
@@ -2108,30 +2089,28 @@ ACE::t_snd_n_i (ACE_HANDLE handle,
                 size_t len,
                 int flags,
                 const ACE_Time_Value *timeout,
-                int error_on_eof)
+                size_t *bt)
 {
+  size_t temp;
+  size_t &bytes_transferred = bt == 0 ? temp : *bt;
+  ssize_t n;
+  ssize_t result = 0;
+  int error = 0;
+
   int val = 0;
   ACE::record_and_set_non_blocking_mode (handle, val);
-
-  size_t bytes_transferred;
-  ssize_t n;
-  ssize_t error = 0;
 
   for (bytes_transferred = 0;
        bytes_transferred < len;
        bytes_transferred += n)
     {
-      int result = ACE::handle_write_ready (handle,
+      int rtn = ACE::handle_write_ready (handle,
                                             timeout);
 
-      if (result == -1)
+      if (rtn == -1)
         {
-          // Timed out; return bytes transferred.
-          if (errno == ETIME)
-            break;
-
-          // Other errors.
           error = 1;
+          result = -1;
           break;
         }
 
@@ -2142,15 +2121,10 @@ ACE::t_snd_n_i (ACE_HANDLE handle,
 
       // Errors (note that errno cannot be EWOULDBLOCK since select()
       // just told us that data can be written).
-      if (n == -1)
+      if (n == -1 || n == 0)
         {
           error = 1;
-          break;
-        }
-      else if (n == 0)
-        {
-          if (error_on_eof)
-            error = 1;
+          result = n;
           break;
         }
     }
@@ -2158,7 +2132,7 @@ ACE::t_snd_n_i (ACE_HANDLE handle,
   ACE::restore_non_blocking_mode (handle, val);
 
   if (error)
-    return -1;
+    return result;
   else
     return bytes_transferred;
 }
@@ -2169,9 +2143,10 @@ ssize_t
 ACE::send_n_i (ACE_HANDLE handle,
                const void *buf,
                size_t len,
-               int error_on_eof)
+               size_t *bt)
 {
-  size_t bytes_transferred;
+  size_t temp;
+  size_t &bytes_transferred = bt == 0 ? temp : *bt;
   ssize_t n;
 
   for (bytes_transferred = 0;
@@ -2181,17 +2156,23 @@ ACE::send_n_i (ACE_HANDLE handle,
       n = ACE::send_i (handle,
                        (char *) buf + bytes_transferred,
                        len - bytes_transferred);
+      // Check EOF.
+      if (n == 0)
+        return 0;
+
+      // Check for other errors.
       if (n == -1)
         {
           // If blocked, try again.
           if (errno == EWOULDBLOCK)
             {
-              //
-              // No timeouts in this version; just wait for sendable socket.
-              //
+              // Make sure we can make progress before continuing,
+              // otherwise we'll just keep spinning.
+              int result = ACE::handle_write_ready (handle, 0);
+              if (result == -1)
+                return -1;
+
               n = 0;
-              ACE::handle_write_ready (handle, 0);
-              errno = 0;
               continue;
             }
 
@@ -2199,13 +2180,6 @@ ACE::send_n_i (ACE_HANDLE handle,
 
           // Other errors.
           return -1;
-        }
-      else if (n == 0)
-        {
-          if (error_on_eof)
-            return -1;
-          else
-            break;
         }
     }
 
@@ -2217,30 +2191,28 @@ ACE::send_n_i (ACE_HANDLE handle,
                const void *buf,
                size_t len,
                const ACE_Time_Value *timeout,
-               int error_on_eof)
+               size_t *bt)
 {
+  size_t temp;
+  size_t &bytes_transferred = bt == 0 ? temp : *bt;
+  ssize_t n;
+  ssize_t result = 0;
+  int error = 0;
+
   int val = 0;
   ACE::record_and_set_non_blocking_mode (handle, val);
-
-  size_t bytes_transferred;
-  ssize_t n;
-  ssize_t error = 0;
 
   for (bytes_transferred = 0;
        bytes_transferred < len;
        bytes_transferred += n)
     {
-      int result = ACE::handle_write_ready (handle,
-                                            timeout);
+      int rtn = ACE::handle_write_ready (handle,
+                                         timeout);
 
       if (result == -1)
         {
-          // Timed out; return bytes transferred.
-          if (errno == ETIME)
-            break;
-
-          // Other errors.
           error = 1;
+          result = -1;
           break;
         }
 
@@ -2250,15 +2222,10 @@ ACE::send_n_i (ACE_HANDLE handle,
 
       // Errors (note that errno cannot be EWOULDBLOCK since select()
       // just told us that data can be written).
-      if (n == -1)
+      if (n == -1 || n == 0)
         {
           error = 1;
-          break;
-        }
-      else if (n == 0)
-        {
-          if (error_on_eof)
-            error = 1;
+          result = n;
           break;
         }
     }
@@ -2266,7 +2233,7 @@ ACE::send_n_i (ACE_HANDLE handle,
   ACE::restore_non_blocking_mode (handle, val);
 
   if (error)
-    return -1;
+    return result;
   else
     return bytes_transferred;
 }
@@ -2339,11 +2306,13 @@ ssize_t
 ACE::sendv_n_i (ACE_HANDLE handle,
                 const iovec *i,
                 int iovcnt,
-                int error_on_eof)
+                size_t *bt)
 {
-  iovec *iov = ACE_const_cast (iovec *, i);
+  size_t temp;
+  size_t &bytes_transferred = bt == 0 ? temp : *bt;
+  bytes_transferred = 0;
 
-  ssize_t bytes_transferred = 0;
+  iovec *iov = ACE_const_cast (iovec *, i);
 
   for (int s = 0;
        s < iovcnt;
@@ -2352,11 +2321,22 @@ ACE::sendv_n_i (ACE_HANDLE handle,
       ssize_t n = ACE_OS::sendv (handle,
                                  iov + s,
                                  iovcnt - s);
+      // Check EOF.
+      if (n == 0)
+        return 0;
+
+      // Check for other errors.
       if (n == -1)
         {
           // If blocked, try again.
           if (errno == EWOULDBLOCK)
             {
+              // Make sure we can make progress before continuing,
+              // otherwise we'll just keep spinning.
+              int result = ACE::handle_write_ready (handle, 0);
+              if (result == -1)
+                return -1;
+
               n = 0;
               continue;
             }
@@ -2365,13 +2345,6 @@ ACE::sendv_n_i (ACE_HANDLE handle,
 
           // Other errors.
           return -1;
-        }
-      else if (n == 0)
-        {
-          if (error_on_eof)
-            return -1;
-          else
-            break;
         }
 
       for (bytes_transferred += n;
@@ -2398,31 +2371,30 @@ ACE::sendv_n_i (ACE_HANDLE handle,
                 const iovec *i,
                 int iovcnt,
                 const ACE_Time_Value *timeout,
-                int error_on_eof)
+                size_t *bt)
 {
-  iovec *iov = ACE_const_cast (iovec *, i);
+  size_t temp;
+  size_t &bytes_transferred = bt == 0 ? temp : *bt;
+  bytes_transferred = 0;
+  ssize_t result = 0;
+  int error = 0;
 
   int val = 0;
   ACE::record_and_set_non_blocking_mode (handle, val);
 
-  ssize_t bytes_transferred = 0;
-  ssize_t error = 0;
+  iovec *iov = ACE_const_cast (iovec *, i);
 
   for (int s = 0;
        s < iovcnt;
        )
     {
-      int result = ACE::handle_write_ready (handle,
-                                            timeout);
+      int rtn = ACE::handle_write_ready (handle,
+                                         timeout);
 
-      if (result == -1)
+      if (rtn == -1)
         {
-          // Timed out; return bytes transferred.
-          if (errno == ETIME)
-            break;
-
-          // Other errors.
           error = 1;
+          result = -1;
           break;
         }
 
@@ -2432,15 +2404,10 @@ ACE::sendv_n_i (ACE_HANDLE handle,
 
       // Errors (note that errno cannot be EWOULDBLOCK since select()
       // just told us that data can be written).
-      if (n == -1)
+      if (n == -1 || n == 0)
         {
           error = 1;
-          break;
-        }
-      else if (n == 0)
-        {
-          if (error_on_eof)
-            error = 1;
+          result = n;
           break;
         }
 
@@ -2463,7 +2430,7 @@ ACE::sendv_n_i (ACE_HANDLE handle,
   ACE::restore_non_blocking_mode (handle, val);
 
   if (error)
-    return -1;
+    return result;
   else
     return bytes_transferred;
 }
@@ -2472,13 +2439,14 @@ ssize_t
 ACE::send_n (ACE_HANDLE handle,
              const ACE_Message_Block *message_block,
              const ACE_Time_Value *timeout,
-             int error_on_eof)
+             size_t *bt)
 {
+  size_t temp;
+  size_t &bytes_transferred = bt == 0 ? temp : *bt;
+  bytes_transferred = 0;
+
   iovec iov[IOV_MAX];
   int iovcnt = 0;
-  ssize_t n = 0;
-  ssize_t nbytes = 0;
-  ssize_t send_size = 0;
 
   while (message_block != 0)
     {
@@ -2500,42 +2468,29 @@ ACE::send_n (ACE_HANDLE handle,
               // Increment iovec counter.
               iovcnt++;
 
-              // Keep track of the number of bytes for this send.
-              send_size += current_message_block_length;
-
               // The buffer is full make a OS call.  @@ TODO find a way to
               // find IOV_MAX for platforms that do not define it rather
               // than simply setting IOV_MAX to some arbitrary value such
               // as 16.
               if (iovcnt == IOV_MAX)
                 {
-                  n = ACE::sendv_n (handle,
-                                    iov,
-                                    iovcnt,
-                                    timeout,
-                                    error_on_eof);
+                  size_t current_transfer = 0;
 
-                  // Errors. Make sure that we don't treat a timeout
-                  // as an error.
-                  if (n == -1 ||
-                      (n == 0 &&
-                       errno != ETIME))
-                    return n;
+                  ssize_t result = ACE::sendv_n (handle,
+                                                 iov,
+                                                 iovcnt,
+                                                 timeout,
+                                                 &current_transfer);
 
-                  // Success. Add to total bytes transferred.
-                  nbytes += n;
+                  // Add to total bytes transferred.
+                  bytes_transferred += current_transfer;
+
+                  // Errors.
+                  if (result == -1 || result == 0)
+                    return result;
 
                   // Reset iovec counter.
                   iovcnt = 0;
-
-                  // If we sent everything we had accumulated in the last
-                  // call, then keep going.  If it was a partial send, we
-                  // won't continue.
-                  if (send_size == n)
-                    send_size = 0;
-                  else
-                    // Return total bytes transferred.
-                    return nbytes;
                 }
             }
 
@@ -2551,34 +2506,35 @@ ACE::send_n (ACE_HANDLE handle,
   // IOV_MAX is not a multiple of the number of message blocks.
   if (iovcnt != 0)
     {
-      n = ACE::sendv_n (handle,
-                        iov,
-                        iovcnt,
-                        timeout,
-                        error_on_eof);
+      size_t current_transfer = 0;
 
-      // Errors. Make sure that we don't treat a timeout
-      // as an error.
-      if (n == -1 ||
-          (n == 0 &&
-           errno != ETIME))
-        return n;
+      ssize_t result = ACE::sendv_n (handle,
+                                     iov,
+                                     iovcnt,
+                                     timeout,
+                                     &current_transfer);
 
-      // Success. Add to total bytes transferred.
-      nbytes += n;
+      // Add to total bytes transferred.
+      bytes_transferred += current_transfer;
+
+      // Errors.
+      if (result == -1 || result == 0)
+        return result;
     }
 
   // Return total bytes transferred.
-  return nbytes;
+  return bytes_transferred;
 }
 
 ssize_t
 ACE::readv_n (ACE_HANDLE handle,
               iovec *iov,
               int iovcnt,
-              int error_on_eof)
+              size_t *bt)
 {
-  ssize_t bytes_transferred = 0;
+  size_t temp;
+  size_t &bytes_transferred = bt == 0 ? temp : *bt;
+  bytes_transferred = 0;
 
   for (int s = 0;
        s < iovcnt;
@@ -2587,18 +2543,9 @@ ACE::readv_n (ACE_HANDLE handle,
       ssize_t n = ACE_OS::readv (handle,
                                  iov + s,
                                  iovcnt - s);
-      if (n == -1)
-        {
-          // Errors.
-          return -1;
-        }
-      else if (n == 0)
-        {
-          if (error_on_eof)
-            return -1;
-          else
-            break;
-        }
+
+      if (n == -1 || n == 0)
+        return n;
 
       for (bytes_transferred += n;
            s < iovcnt
@@ -2623,11 +2570,13 @@ ssize_t
 ACE::writev_n (ACE_HANDLE handle,
                const iovec *i,
                int iovcnt,
-               int error_on_eof)
+               size_t *bt)
 {
-  iovec *iov = ACE_const_cast (iovec *, i);
+  size_t temp;
+  size_t &bytes_transferred = bt == 0 ? temp : *bt;
+  bytes_transferred = 0;
 
-  ssize_t bytes_transferred = 0;
+  iovec *iov = ACE_const_cast (iovec *, i);
 
   for (int s = 0;
        s < iovcnt;
@@ -2636,18 +2585,8 @@ ACE::writev_n (ACE_HANDLE handle,
       ssize_t n = ACE_OS::writev (handle,
                                   iov + s,
                                   iovcnt - s);
-      if (n == -1)
-        {
-          // Errors.
-          return -1;
-        }
-      else if (n == 0)
-        {
-          if (error_on_eof)
-            return -1;
-          else
-            break;
-        }
+      if (n == -1 || n == 0)
+        return n;
 
       for (bytes_transferred += n;
            s < iovcnt
