@@ -423,8 +423,6 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::create_manager_i (void)
                    dir,
                    length);
 
-  // @@ A guess fix for Unicode builds. Removed teh ACE_LIB_TEXT around
-  // ACE_DIRECTORY_...- Bala
   ACE_OS::strncat (lock_name_for_local_name_space,
                    ACE_DIRECTORY_SEPARATOR_STR,
                    length -  ACE_OS::strlen (lock_name_for_local_name_space));
@@ -440,7 +438,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::create_manager_i (void)
                    dir,
                    length);
   ACE_OS::strncat (lock_name_for_backing_store,
-                   ACE_LIB_TEXT (ACE_DIRECTORY_SEPARATOR_STR),
+                   ACE_DIRECTORY_SEPARATOR_STR,
                    length -  ACE_OS::strlen (lock_name_for_backing_store));
   ACE_OS::strncat (lock_name_for_backing_store,
                    ACE_LIB_TEXT ("backing_store_"),
