@@ -1,9 +1,8 @@
 Sun Feb 08 12:06:30 1998  David L. Levine  <levine@cs.wustl.edu>
 
-        * netsvcs/lib/Makefile,Server_Logging_Handler.cpp: on Linux
-          w/egcs 1.0.1, compile with /usr/bin/g++ because egcs 1.0.1
-          chokes.  Thanks to Jay Kistler <jjk@pa.dec.com> for reporting
-          this.
+        * ACE-INSTALL.html: added Scott Snyder's egcs 1.0.1 patch, which
+          allows netsvcs/lib/Server_Logging_Handler.cpp to build on
+          Linux/RedHat 5.0.
 
 Sun Feb  8 01:45:59 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
