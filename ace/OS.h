@@ -1521,6 +1521,9 @@ struct utsname
 #define ACE_DEFAULT_GLOBALNAME_A "\\globalnames"
 #define ACE_DEFAULT_GLOBALNAME_W L"\\globalnames"
 
+// Need to work around odd glitches with NT.
+#define ACE_MAX_DEFAULT_PORT 65279
+
 // We're on WinNT or Win95
 #define ACE_PLATFORM_A "Win32"
 #define ACE_PLATFORM_EXE_SUFFIX_A ".exe"
@@ -1738,6 +1741,9 @@ typedef char TCHAR;
 #if defined (m88k)
 #define RUSAGE_SELF 1
 #endif  /*  m88k */
+
+// Default port is MAX_SHORT.
+#define ACE_MAX_DEFAULT_PORT 65535
 
 // Default semaphore key
 #define ACE_DEFAULT_SEM_KEY 1234
