@@ -48,8 +48,8 @@ ACE_Sig_Adapter *ACE_Service_Config::signal_handler_ = 0;
 sig_atomic_t ACE_Service_Config::reconfig_occurred_ = 0;
 
   // = Set by command-line options.
-char ACE_Service_Config::be_a_daemon_ = 0;
-char ACE_Service_Config::no_static_svcs_ = 1;
+int ACE_Service_Config::be_a_daemon_ = 0;
+int ACE_Service_Config::no_static_svcs_ = 1;
 
 // Number of the signal used to trigger reconfiguration.
 int ACE_Service_Config::signum_ = SIGHUP;
@@ -186,7 +186,7 @@ ACE_Service_Config::ACE_Service_Config (int ignore_static_svcs,
                                         int signum)
 {
   ACE_TRACE ("ACE_Service_Config::ACE_Service_Config");
-  ACE_Service_Config::no_static_svcs_ = (char) ignore_static_svcs;
+  ACE_Service_Config::no_static_svcs_ = ignore_static_svcs;
   ACE_Service_Config::signum_ = signum;
 
   // Initialize the Service Repository.

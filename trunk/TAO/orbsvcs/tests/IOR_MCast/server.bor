@@ -1,5 +1,5 @@
 #
-# Makefile for building the ior_corbaname test
+# Makefile for building the IOR_MCast test
 #
 
 NAME = server
@@ -7,13 +7,14 @@ NAME = server
 TAO_IDL = $(CORE_BINDIR)\tao_idl -g $(CORE_BINDIR)\gperf.exe -Ge 1
 
 OBJFILES = \
-        $(OBJDIR)\corbanameC.obj \
-        $(OBJDIR)\corbanameS.obj \
-        $(OBJDIR)\status_i.obj \
+        $(OBJDIR)\MCastC.obj \
+        $(OBJDIR)\MCastS.obj \
+        $(OBJDIR)\MCast_Server_i.obj \
+        $(OBJDIR)\server_i.obj \
 	$(OBJDIR)\server.obj
 
 IDLFILES = \
-        $(IDLDIR)\corbaname.idl
+        $(IDLDIR)\MCast.idl
 
 CFLAGS = \
         $(ACE_CFLAGS) \
@@ -39,6 +40,6 @@ IDLDIR = .
 # IDL Build rules
 #
 
-$(IDLDIR)\corbanameC.cpp $(IDLDIR)\corbanameS.cpp: $(IDLDIR)\corbaname.idl
+$(IDLDIR)\MCastC.cpp $(IDLDIR)\MCastS.cpp: $(IDLDIR)\MCast.idl
 	$(TAO_IDL) $**
 

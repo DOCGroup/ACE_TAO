@@ -116,7 +116,7 @@ For information on TAO's platform coverage and support, please also see
     <td>Responsible for continued maintenance and testing of platforms
         to which ACE has been ported, but aren't supported by the
         above groups. These include
-        Windows 95/98/CE using Borland C++ Builder 4.0, IBM VisualAge C++,
+        Windows 95/98/CE using Borland C++ Builder 4.0 and later, IBM VisualAge C++,
         and GNU g++ on MinGW;
         Digital UNIX (Compaq Tru64) 4.0 and 5.0;
         IRIX 6.x; UnixWare 7.1.0; SunOS 4.x and Solaris with SunC++ 4.x;
@@ -168,7 +168,7 @@ supported by the DOC group, Riverace, or OCI. <P>
 
       We've also added some support for
       <A HREF="#mingw">GNU g++ with Mingw</A>,
-      Borland C++ Builder 4.0 and IBM's VisualAge C++ compiler.
+      Borland C++ Builder 4.0/5.0 and IBM's VisualAge C++ compiler.
       Since we don't have these compilers we rely on the ACE+TAO users
       community to maintain these ports.  Therefore, please send email
       to the ACE mailing list if you run into problems. <P>
@@ -765,7 +765,7 @@ make: *** [libACE.so] Error 8
         The Mac OS X port of ACE is very much a work in progress.  Some
         of the examples build and run, some of them don't yet.  Reactors
         seem to work, while Proactors don't (Mac OS X doesn't use aio_*
-        calls for async i/o, it uses the OS X Event Queue instead, and 
+        calls for async i/o, it uses the OS X Event Queue instead, and
         the ACE port doesn't take this into account yet).  Also, on OS X,
         you must set the DYLD_LIBRARY_PATH environment variable to
         $ACE_ROOT/ace i.e. setenv DYLD_LIBRARY_PATH $ACE_ROOT/ace, or else
@@ -777,7 +777,7 @@ a work project, and basically only ported enough of ACE to be able to
         do what we needed to with it on Mac OS X.  If you would like
         to continue the port, please contact John since he as
         interested in seeing ACE run, lean, mean and fully supported,
-        on Mac OS X. 
+        on Mac OS X.
 </UL>
 
 
@@ -1200,7 +1200,7 @@ ACE contains project files for Microsoft Visual C++ 5.0 or later
 Makefile.bor files to compile ACE, the ACE one-button tests, and TAO
 with Borland C++ Builder. <P>
 
-The Borland C++ Builder 4.0 port has been done by <A
+The Borland C++ Builder 4.0/5.0 port has been done by <A
 HREF="mailto:jody@atdesk.com">Jody Hagins</A> and <A
 HREF="mailto:chris@kohlhoff.com">Christopher Kohlhoff</A>.  By
 default, the ACE/TAO libraries built for Borland C++ Builder are
@@ -1589,7 +1589,7 @@ The steps we followed in the build are:
        % make static_libs=1
        </pre></code></blockquote>
 
-       
+
   <LI> <A NAME="mingwrunpath">
        The same rules for Win32 search of DLLs apply for Mingw. If you
        want to run some ACE programs from the cygwin shell, you may
@@ -1599,7 +1599,7 @@ The steps we followed in the build are:
        # export PATH=//c/work/mingw/ACE_wrappers/ace:$PATH
        </pre></code></blockquote>
 
-       
+
 </OL>
 
 <B>ACE TESTS</B><P>
@@ -1614,7 +1614,7 @@ make:
        </pre></code></blockquote>
 
 <p>
-Once you build all the tests, you can run 
+Once you build all the tests, you can run
 <code>run_tests.sh</code> in the
 <code>tests</code> directory to try all the tests:
 
@@ -2210,10 +2210,10 @@ Here's what you need to do:<P>
 <CODE>
 export RTEMS_MAKEFILE_PATH=/opt/rtems/CPU-rtems/BSP
 # setup the build structure
-cd ACE_wrappers 
+cd ACE_wrappers
 
 # create the host (e.g. Linux in this case) build tree
-./bin/create_ace_build Linux_g++ 
+./bin/create_ace_build Linux_g++
 cd build/Linux_g++/ace
 ln -s ../../../ace/config-linux.h config.h
 cd ../include/makeinclude/
@@ -2221,9 +2221,9 @@ ln -s ../../../../include/makeinclude/platform_linux.GNU platform_macros.GNU
 cd ../../../..
 
 # create the target build tree
-./bin/create_ace_build rtems 
-cd build/rtems/TAO 
-/bin/rm -r TAO_IDL 
+./bin/create_ace_build rtems
+cd build/rtems/TAO
+/bin/rm -r TAO_IDL
 ln -s ../../Linux_g++/TAO/TAO_IDL .
 cd ../ace
 ln -s ../../../ace/config-rtems.h config.h
@@ -2232,8 +2232,8 @@ ln -s ../../../../include/makeinclude/platform_rtems.x_g++.GNU platform_macros.G
 cd ../../../..
 
 # build the host side of things
-cd build/Linux_g++ 
-export ACE_ROOT=`pwd`; export LD_LIBRARY_PATH=`pwd`/ace:$LD_LIBRARY_PATH 
+cd build/Linux_g++
+export ACE_ROOT=`pwd`; export LD_LIBRARY_PATH=`pwd`/ace:$LD_LIBRARY_PATH
 cd ace
 make
 
@@ -2245,7 +2245,7 @@ cd ../TAO
 make
 
 # build the target side of things
-cd ../rtems 
+cd ../rtems
 export ACE_ROOT=`pwd`
 cd ace
 make
