@@ -770,3 +770,9 @@ Peer_Acceptor::init (int argc, char *argv[])
 // svc.conf file to dynamically initialize the Peer_Acceptor.
 
 ACE_SVC_FACTORY_DEFINE (Peer_Acceptor)
+
+
+#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+template class ACE_Acceptor<Peer_Handler, ACE_SOCK_ACCEPTOR>;
+#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
+
