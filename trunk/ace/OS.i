@@ -8312,6 +8312,28 @@ ACE_OS::strcpy (wchar_t *s, const wchar_t *t)
 }
 #endif /* ! ACE_HAS_WCHAR_TYPEDEFS_CHAR */
 
+ACE_INLINE u_int
+ACE_OS::wslen (const WChar *s)
+{
+  u_int len = 0;
+
+  while (*s++)
+    len++;
+
+  return len;
+}
+
+ACE_INLINE ACE_OS::WChar *
+ACE_OS::wscpy (WChar *dest, const WChar *src)
+{
+  WChar *original_dest = dest;
+
+  while ((*dest++ = *src++) != 0)
+    continue;
+
+  return original_dest;
+}
+
 #if defined (ACE_HAS_UNICODE)
 
 ACE_INLINE int
