@@ -240,8 +240,8 @@ JAWS_Asynch_IO::receive_file (const char *filename,
       
       int bytes_to_read = entire_length - initial_data_length;
 
-      mb = ACE_NEW (ACE_Message_Block ((char *)handle->address ()
-			               + initial_data_length, bytes_to_read));
+      ACE_NEW (mb, ACE_Message_Block ((char *)handle->address ()
+				      + initial_data_length, bytes_to_read));
   
       if (mb == 0)
 	{
