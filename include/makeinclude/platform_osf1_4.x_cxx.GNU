@@ -137,7 +137,7 @@ TMPINCDIR       = cxx_repository
 # so there is no need for ranlib
 #
 RANLIB          = @true
-SOFLAGS         += -shared $(ACELIB)
+SOFLAGS         += -shared -use_ld_input $(ACELIB)
 
 LIBS            :=  $(LIBS)
 SOBUILD         = $(RM) $@; $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.o $< && \
