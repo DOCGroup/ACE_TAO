@@ -3712,10 +3712,6 @@ operator>> (TAO_InputCDR& cdr, CORBA::TypeCode *&x)
 template class TAO_Pseudo_Object_Manager<CORBA::TypeCode,
                                          CORBA::TypeCode_var>;
 
-template class ACE_Node<CORBA::Long>;
-template class ACE_Unbounded_Queue<CORBA::Long>;
-template class ACE_Unbounded_Queue_Iterator<CORBA::Long>;
-
 template class ACE_Hash_Map_Entry<const char *,
                                   ACE_Unbounded_Queue<CORBA::Long> *>;
 template class ACE_Hash_Map_Manager_Ex<const char *,
@@ -3746,13 +3742,9 @@ template class TAO_Pseudo_Out_T<CORBA::TypeCode, CORBA::TypeCode_var>;
 
 #pragma instantiate TAO_Pseudo_Object_Manager<CORBA::TypeCode, CORBA::TypeCode_var>
 
-#pragma instantiate ACE_Node<CORBA::Long>
-#pragma instantiate ACE_Unbounded_Queue<CORBA::Long>
-#pragma instantiate ACE_Unbounded_Queue_Iterator<CORBA::Long>
-
 #pragma instantiate ACE_Hash_Map_Entry<const char *, ACE_Unbounded_Queue<CORBA::Long> *>
 #pragma instantiate ACE_Hash_Map_Manager_Ex<const char *, ACE_Unbounded_Queue<CORBA::Long> *, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<const char *, ACE_Unbounded_Queue<CORBA::Long> *, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<const char *, ACE_Unbounded_Queue<CORBA::Long> *, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Nullv_Mutex>
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<const char *, ACE_Unbounded_Queue<CORBA::Long> *, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Iterator_Ex<const char *, ACE_Unbounded_Queue<CORBA::Long> *, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Null_Mutex>
 
