@@ -955,8 +955,8 @@ CORBA_ORB::create_dyn_enum      (CORBA_TypeCode_ptr tc,
   return TAO_DynAny_i::create_dyn_enum (tc, env);
 }
 
-// String utility support; this can need to be integrated with the
-// ORB's own memory allocation subsystem.
+// String utility support; this needs to be integrated with the ORB's
+// own memory allocation subsystem.
 
 CORBA::String
 CORBA::string_copy (const CORBA::Char *str)
@@ -964,13 +964,14 @@ CORBA::string_copy (const CORBA::Char *str)
   if (!str)
     return 0;
 
-  CORBA::String retval =
-    CORBA::string_alloc (ACE_OS::strlen (str));
+  size_t len = ACE_OS::strlen (str);
 
-  // clear the contents of the allocated string
-  ACE_OS::memset(retval, '\0', ACE_OS::strlen (str));
+  // This allocates an extra byte for the '\0';
+  CORBA::String copy = CORBA::string_alloc (len);
 
-  return ACE_OS::strcpy (retval, str);
+  ACE_OS::memcpy (copy, str, len);
+  copy[len] = '\0';
+  return copy;
 }
 
 CORBA_String_var &
