@@ -1,3 +1,18 @@
+Mon Feb 10 12:14:35 2003  Ossama Othman  <ossama@uci.edu>
+
+	* bin/ace-install:
+
+	  Fixed problem where all TAO executables were not installed.
+
+	  Fixed installed file permission problem.  Files that should have
+	  global access didn't have it.
+
+	  Fixed problem where the script did not easily flatten the
+	  install directory, requires the ACE_ARCH subdirectory trees be
+	  built.
+
+	  Fixed problem where all binaries were not filtered out.
+
 Mon Feb 10 19:42:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/ATM_Acceptor.h:
@@ -32,8 +47,8 @@ Mon Feb 10 19:42:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
           every object file that references it. The linker then strips out
           all but a single copy of the code. When linking an exe that refers
           to a singleton template in a dll, the linker would choose one
-          of the template code instances in the exe's .obj files, and completely
-          ignore the instance that was exported by the dll.
+          of the template code instances in the exe's .obj files, and
+	  completely ignore the instance that was exported by the dll.
 
           The key to the solution is that it appears that the borland linker
           chooses the first instance of the template symbols that it sees. The

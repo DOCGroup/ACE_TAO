@@ -2,6 +2,7 @@
 
 # $Id$
 
+
 #####################################################################
 # install_ace: distill the minimal stuff out of the ACE+TAO distribution
 # alias cpio 'xargs -i echo {}'; # just for testing the script
@@ -232,10 +233,8 @@ if [ -z "$ACE_ROOT" ]; then
 fi
 
 if [ $install -eq 1 -a -z "$ACE_ARCH" ]; then
-    echo "- Must set target architecture before proceeding..."
-    echo "  The architecture may be set with the ACE_ARCH environment"
-    echo "  variable or the --arch option (`basename $0` -h for help)"
-    die=1
+	# just set it to blank if we want to flatten this level of subdirectory
+	ACE_ARCH=""
 fi
 
 if [ $die -ne 0 ]; then
@@ -442,16 +441,17 @@ if [ $install -ne 0 ]; then
 
     # copy TAO libs
     echo "Copying libraries..."
-    for f in `find . -type f -name "lib?*" -print`; do
+    for f in `find . -type f -name "lib?*" -not -name "*\.dsw" -not -name "*Test*" -print`; do
         echo $f
         cp $f $TAO_DIR/$ACE_ARCH/lib
     done
 
     # copy TAO executables
     echo "Copying executables..."
-    ALL_PROGS=`find orbsvcs -type f -perm -5 -print | grep -v ".*lib.*" | grep -v ".\.pl" | grep -v "/tests/" | grep -v "/examples/"`
-    ALL_PROGS="`find utils  -type f -perm -5 -print` $ALL_PROGS"
-    PROGS=`echo $ALL_PROGS | tr " " "\n" | grep -v tests/ | grep -v default.bld`
+
+    ALL_PROGS=`find orbsvcs -type f -perm +a+x -print | grep -v ".*lib.*" | grep -v ".\.pl" | grep -v test | grep -v example`
+    ALL_PROGS="`find utils  -type f -perm +a+x -print` $ALL_PROGS"
+    PROGS=`echo $ALL_PROGS | tr " " "\n" | grep -v test | grep -v default.bld | grep -v README | grep -v Makefile`
 
     for f in TAO_IDL/tao_idl $PROGS; do
         echo $f
@@ -469,11 +469,12 @@ if [ $install -ne 0 ]; then
     find ace -type f -name "*.h" -print | grep -v "^config\.h" | cpio -p -d -V $ACE_DIR/include
     find ace -type f \( -name "*.i" -o -name "*.inl" \) -print | cpio -p -d -V $ACE_DIR/include
     find ace -type f -name "*.cpp" -print | cpio -p -d -V $ACE_DIR/include
-    cp ace/config.h $ACE_DIR/$ACE_ARCH/include/ace/config.h && rm $ACE_DIR/include/ace/config.h
+    cp ace/config.h $ACE_DIR/$ACE_ARCH/include/ace/config.h
+    chmod -R a+r $ACE_DIR/$ACE_ARCH/include
 
     # copy ACE libs
     echo "Copying libraries..."
-    for f in `find . -type f -name "lib?*" -print`; do
+    for f in `find . -type f -name "lib?*" -not -name "*\.dsw" -not -name "*Test*" -print`; do
         # only copy libs if they're not already in $TAO_DIR/$ACE_ARCH/lib
         maybe_tao_lib=$TAO_DIR/$ACE_ARCH/lib/`basename $f`
         if [ ! -f $maybe_tao_lib ]; then
@@ -495,6 +496,12 @@ if [ $install -ne 0 ]; then
     # copy ACE man pages
     echo "Copying man pages..."
     find man -type f -print | cpio -p -d -V $ACE_DIR
+
+
+   # PERMISSIONS
+   chmod -R a+r $ACE_DEST
+   find $ACE_DEST -type d -exec chmod a+x {} \;
+   find $ACE_DEST -type f -perm +a+x -exec chmod a+x {} \;
 
 fi   # if [ $install -ne 0 ]
 
