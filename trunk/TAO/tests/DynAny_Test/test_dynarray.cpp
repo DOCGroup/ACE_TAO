@@ -1,30 +1,28 @@
-// -*- c++ -*-
-// $Id$
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/DynAny_Test
-//
-// = FILENAME
-//    test_dynarray.cpp
-//
-// = DESCRIPTION
-//    Implementation of the DynArray test
-//
-// = AUTHOR
-//    Jeff Parsons <parsons@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    test_dynarray.cpp
+ *
+ *  $Id$
+ *
+ *  Implementation of the DynArray test
+ *
+ *
+ *  @author Jeff Parsons <parsons@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "test_dynarray.h"
 #include "da_testsC.h"
 #include "data.h"
 #include "tao/DynamicAny/DynamicAny.h"
+#include "analyzer.h"
 
-Test_DynArray::Test_DynArray (CORBA::ORB_var orb)
+Test_DynArray::Test_DynArray (CORBA::ORB_var orb, int debug)
   : orb_ (orb),
     test_name_ (CORBA::string_dup ("test_dynarray")),
-    error_count_ (0)
+    error_count_ (0),
+    debug_ (debug)
 {
 }
 
@@ -72,6 +70,8 @@ Test_DynArray::run_test (void)
                              "Nil dynamic any factory after narrow\n"),
                             -1);
         }
+
+      DynAnyAnalyzer analyzer(this->orb_.in(), dynany_factory.in(), debug_);
 
       CORBA::Any in_any1;
       in_any1 <<= DynAnyTests::test_array_forany (ta);
@@ -130,11 +130,15 @@ Test_DynArray::run_test (void)
       ta[1U] = data.m_long1;
       CORBA::Any in_any2;
       in_any2 <<= DynAnyTests::test_array_forany (ta);
-      
+
       ftc1->from_any (in_any2
                       ACE_ENV_ARG_PARAMETER);
 
       ACE_TRY_CHECK;
+
+      analyzer.analyze(ftc1.in() ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
       CORBA::Any_var out_any1 = ftc1->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 

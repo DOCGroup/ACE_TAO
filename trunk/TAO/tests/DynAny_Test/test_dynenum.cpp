@@ -1,30 +1,27 @@
-// -*- c++ -*-
-// $Id$
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/tests/DynAny_Test
-//
-// = FILENAME
-//    test_dynenum.cpp
-//
-// = DESCRIPTION
-//    Implementation of the simple DynEnum test
-//
-// = AUTHOR
-//    Jeff Parsons <parsons@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file    test_dynenum.cpp
+ *
+ *  $Id$
+ *
+ *  Implementation of the simple DynEnum test
+ *
+ *  @author Jeff Parsons <parsons@cs.wustl.edu>
+ */
+//=============================================================================
+
 
 #include "test_dynenum.h"
 #include "da_testsC.h"
 #include "data.h"
 #include "tao/DynamicAny/DynamicAny.h"
+#include "analyzer.h"
 
-Test_DynEnum::Test_DynEnum (CORBA::ORB_var orb)
+Test_DynEnum::Test_DynEnum (CORBA::ORB_var orb, int debug)
   : orb_ (orb),
     test_name_ (CORBA::string_dup ("test_dynenum")),
-    error_count_ (0)
+    error_count_ (0),
+    debug_ (debug)
 {
 }
 
@@ -65,6 +62,8 @@ Test_DynEnum::run_test (void)
                             -1);
         }
 
+      DynAnyAnalyzer analyzer(this->orb_.in(), dynany_factory.in(), debug_);
+
       DynAnyTests::test_enum te = DynAnyTests::TE_ZEROTH;
       CORBA::Any in_any1;
       in_any1 <<= te;
@@ -79,6 +78,7 @@ Test_DynEnum::run_test (void)
       de1->set_as_string ("TE_FIRST"
                           ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
+
       CORBA::ULong ul_out1 = de1->get_as_ulong (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
@@ -91,6 +91,7 @@ Test_DynEnum::run_test (void)
         {
           ++this->error_count_;
         }
+
 
       ACE_DEBUG ((LM_DEBUG,
                  "testing: set_as_ulong/get_as_string\n"));
@@ -137,6 +138,10 @@ Test_DynEnum::run_test (void)
       de2->from_any (in_any2
                      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
+
+      analyzer.analyze(de2.in() ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
       CORBA::Any_var out_any1 = de2->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
       out_any1.in () >>= te;
