@@ -1,9 +1,16 @@
-Sun Dec  1 19:19:02 1996  Douglas C. Schmidt  <schmidt@lambada.cs.wustl.edu>
+Mon Dec  2 00:23:23 1996  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
 
-	* ace/ReactorEx: Added a new parameter to the Reactor's
- 	  initialization methods so that we can install a subclass of
- 	  ACE_Timer_Queue.  This is in anticipation of Tim's new
- 	  "real-time" implementation of a timer queue.
+	* test/Naming_Test: Changed test to use "lite" implementation to
+	  speed things up. 
+
+	* netsvcs/lib: Fixed multiple type mismatch warnings.
+	
+	* ace/ReactorEx: Fixed syntax errors in recently modified
+	  ReactorEx.* files
+
+	* ace/ace.{mdp.mak}: Added Strategies.cpp to VC++ makefile.
+
+Sun Dec  1 19:19:02 1996  Douglas C. Schmidt  <schmidt@lambada.cs.wustl.edu>
 
 	* ace/Reactor: Added a new parameter to the Reactor's
  	  initialization methods so that we can install a subclass of

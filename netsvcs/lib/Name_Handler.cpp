@@ -458,7 +458,7 @@ ACE_Name_Handler::recv_request (void)
 				length - sizeof (ACE_UINT32));
 
 	// Subtract off the size of the part we skipped over...
-	if (n != (length - sizeof (ACE_UINT32)))
+	if (n != (length - (ssize_t) sizeof (ACE_UINT32)))
 	  {
 	    ACE_ERROR ((LM_ERROR, "%p expected %d, got %d\n", 
 		       "invalid length", length, n));
