@@ -1,3 +1,18 @@
+Mon Apr 12 13:56:32 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/tao.mpc:
+          Added Template_Files to make sure that some extra files are also
+          generated to the install section
+
+        * tao/Object_Proxy_Impl.h:
+        * tao/target_specification.h:
+        * tao/Parser_Registry.h:
+        * tao/ObjectKey_Table.h:
+        * tao/objectid.h:
+        * tao/Default_Collocation_Resolver.h:
+        * tao/Invocation_Base.h:
+          Fixed types and improved doxygen documentation
+
 Mon Apr 12 08:02:54 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* TAO_IDL/be/be_visitor_field/field_ci.cpp:
@@ -22,7 +37,7 @@ Sat Apr 10 23:39:54 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* */*.ds[p,w]:
 
 	  Removed.
-	
+
 Sat Apr 10 17:54:54 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_decl.cpp:
@@ -34,32 +49,32 @@ Sat Apr 10 17:54:54 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/be/be_visitor_union_branch/public_ci.cpp:
         * TAO_IDL/be/be_visitor_valuetype/field_ci.cpp:
         * TAO_IDL/be_include/be_visitor_sequence.h:
-        
+
           - Added check for sequence locality (sequence element type
             is or contains a local interface) before generating CDR
             stream operators. Thanks to Johny Willemsen
             <jwillemsen@remedy.nl> for reporting the bug.
-            
+
           - Removed calls and inclusions of class be_visitor_sequence_ci,
             since its only method, visit_sequence() does nothing.
 
         * TAO_IDL/be_include/be_visitor_sequence/sequence_ci.h:
         * TAO_IDL/be/be_visitor_sequence/sequence_ci.cpp:
-        
+
           Removed files containing class be_visitor_sequence_ci from
           the repository.
 
 Sat Apr 10 14:21:44 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_structure/cdr_op_cs.cpp:
-        
+
           Fixed typos in error messages. Thanks to Johnny Willemsen
           <jwillemsen@remedy.nl> for pointing out the mistakes.
 
 Sat Apr 10 14:07:20 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_structure/cdr_op_ch.cpp:
-        
+
           Added missing check for locality constraint (struct contains a
           local interface at some level) to match the check in
           cdr_op_cs.cpp.
@@ -73,7 +88,7 @@ Fri Apr  9 23:25:04 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 Fri Apr  9 12:33:16 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/driver/drv_args.cpp:
-        
+
           Added usage message for the option to generate debug file/line#
           info for implementation classes. Thanks to Johnny Willemsen
           <jwillemsen@remedy.nl> for pointing out the oversight.
@@ -105,7 +120,7 @@ Fri Apr  9 12:28:48 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/tao_idl.mpc:
 
-          Commented out occurrences of 
+          Commented out occurrences of
 
              optimize = <nothing>
 
