@@ -2419,9 +2419,6 @@ private:
      if (POINTER == 0) { errno = ENOMEM; return; } \
      } while (0)
 
-<<<<<<< OS.h
-=======
-
 #define ACE_DEFAULT_MUTEX_A "ACE_MUTEX"
 
 #if defined (UNICODE)
@@ -2444,7 +2441,6 @@ private:
 
 #endif /* UNICODE */
 
->>>>>>> 4.37
 #if defined (UNICODE)
 #include "ace/SString.h"
 #define ACE_WIDE_STRING(ASCII) \

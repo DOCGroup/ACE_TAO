@@ -27,7 +27,7 @@ static char value[BUFSIZ];
 static char type[BUFSIZ];
 
 static void
-bind (ACE_Naming_Context *ns_context, int result)
+bind (ACE_Naming_Context &ns_context)
 {
   // do the binds
   for (int i = 1; i <= ACE_NS_MAX_ENTRIES; i++) 
@@ -39,12 +39,12 @@ bind (ACE_Naming_Context *ns_context, int result)
       ACE_WString w_value (value);
       
       sprintf (type, "%s%d", "type", i);
-      ACE_ASSERT (ns_context->bind (w_name, w_value, type) == result);
+      ACE_ASSERT (ns_context.bind (w_name, w_value, type) != -1);
     }
 }
 
 static void
-rebind (ACE_Naming_Context *ns_context, int result)
+rebind (ACE_Naming_Context &ns_context)
 {
   // do the rebinds
   for (int i = 1; i <= ACE_NS_MAX_ENTRIES; i++) 
@@ -54,24 +54,24 @@ rebind (ACE_Naming_Context *ns_context, int result)
       sprintf (value, "%s%d", "value", -i);
       ACE_WString w_value (value);
       sprintf (type, "%s%d", "type", -i);
-      ACE_ASSERT (ns_context->rebind (w_name, w_value, type) == result);
+      ACE_ASSERT (ns_context.rebind (w_name, w_value, type) != -1);
     }
 }
 
 static void
-unbind (ACE_Naming_Context *ns_context, int result)
+unbind (ACE_Naming_Context &ns_context)
 {
   // do the unbinds
   for (int i = 1; i <= ACE_NS_MAX_ENTRIES; i++) 
     {
       sprintf (name, "%s%d", "name", i);
       ACE_WString w_name (name);
-      ACE_ASSERT (ns_context->unbind (w_name) == result);
+      ACE_ASSERT (ns_context.unbind (w_name) != -1);
     }
 }
 
 static void
-find (ACE_Naming_Context *ns_context, int sign, int result)
+find (ACE_Naming_Context &ns_context, int sign, int result)
 {
   char temp_val[BUFSIZ];
   char temp_type[BUFSIZ];
@@ -98,7 +98,7 @@ find (ACE_Naming_Context *ns_context, int sign, int result)
 
       ACE_WString val (temp_val);
       
-      ACE_ASSERT (ns_context->resolve (w_name, w_value, type_out) == result);
+      ACE_ASSERT (ns_context.resolve (w_name, w_value, type_out) == result);
 
       if (w_value.char_rep ())
 	{
@@ -118,16 +118,23 @@ find (ACE_Naming_Context *ns_context, int sign, int result)
 int
 main (int argc, char *argv[])
 {
+  TCHAR temp_file [BUFSIZ];
   ACE_START_TEST ("Naming_Test");
 
-  ACE_Naming_Context *ns_context;
-  ACE_NEW_RETURN (ns_context, ACE_Naming_Context, -1);
+  ACE_Naming_Context ns_context;
 
-  ACE_Name_Options *name_options = ns_context->name_options ();
+  ACE_Name_Options *name_options = ns_context.name_options ();
 
   name_options->parse_args (argc, argv);
 
-  TCHAR temp_file [BUFSIZ];
+#if (defined (ACE_WIN32) && defined (UNICODE))  
+
+  name_options->namespace_dir (__TEXT ("Software\\ACE\\Name Service"));
+  name_options->database (__TEXT ("Version 1"));  
+  name_options->use_registry (1);
+
+#else
+
   ACE_OS::strcpy (temp_file, ACE::basename (name_options->process_name (),
 					    ACE_DIRECTORY_SEPARATOR_CHAR));
   ACE_OS::strcat (temp_file, __TEXT ("XXXXXX"));
@@ -135,22 +142,27 @@ main (int argc, char *argv[])
   // Set the database name using mktemp to generate a unique file name
   name_options->database (ACE_OS::mktemp (temp_file));
 
-  ACE_ASSERT (ns_context->open (ACE_Naming_Context::PROC_LOCAL, 1) != -1);
+#endif /* ACE_WIN32 && UNICODE */
+
+  ACE_ASSERT (ns_context.open (ACE_Naming_Context::PROC_LOCAL, 1) != -1);
 
   // Add some bindings to the database
-  bind (ns_context, 0);
-  rebind (ns_context, 1);
-  bind (ns_context, 1);
-  bind (ns_context, 1);
-  rebind (ns_context, 1);
+  bind (ns_context);
+
+  // Should find the entries
+  find (ns_context, 1, 0);
+
+  // Rebind with negative values
+  rebind (ns_context);
+
+  // Should find the entries
+  find (ns_context, -1, 0);
 
   // Remove all bindings from database
-  unbind (ns_context, 0); 
+  unbind (ns_context); 
   
-  rebind (ns_context, 0);
-  unbind (ns_context, 0); 
-
-  // No more bindings in database so find should return -1
+  // Should not find the entries
+  find (ns_context,  1, -1);
   find (ns_context, -1, -1);
 
   ACE_OS::sprintf (temp_file, __TEXT ("%s%s%s"),
@@ -161,9 +173,6 @@ main (int argc, char *argv[])
   // Remove any existing files.  No need to check return value here
   // since we don't care if the file doesn't exist.
   ACE_OS::unlink (temp_file);  
-
-  // Close things down and free up the semaphores.
-  delete ns_context;
 
   ACE_END_TEST;
   return 0;

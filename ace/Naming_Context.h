@@ -278,6 +278,10 @@ public:
   // = Set/Get base address of the underlying allocator
   void base_address (char *address);
   char *base_address (void);
+  
+  // Set/Get use of registry in naming
+  int use_registry (void);
+  void use_registry (int);
 
   int debug (void);
   // Return debug status
@@ -291,6 +295,9 @@ private:
 
   int verbosity_;		
   // Extra verbose messages
+
+  int use_registry_;		
+  // Use Win32 Registry
 
   int nameserver_port_;	
   // Port to connect to nameserver process.
