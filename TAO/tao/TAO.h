@@ -41,8 +41,7 @@ public:
             char *argv[],
             CORBA_Environment &env);
   // Initialize the ORB/root POA, using the supplied command line
-  // arguments or the default ORB components. 
-  // Returns -1 on failure
+  // arguments or the default ORB components.  Returns -1 on failure.
       
   int init_child_poa (int argc,
 		      char *argv[],
@@ -50,7 +49,7 @@ public:
 		      CORBA_Environment &env);
   // Creates a child poa under the root poa with PERSISTENT and
   // USER_ID policies.  Call this if you want a <child_poa> with the
-  // above policies, otherwise call init.
+  // above policies, otherwise call init.  Returns -1 on failure.
 		      
   CORBA::String activate (PortableServer::Servant servant,
                           CORBA_Environment &env);
