@@ -102,9 +102,11 @@ Client::init (int argc,
 int
 Client::run (CORBA::Environment &env)
 {
+  // initialize the in parameters
   AVStreams::streamQoS_var the_qos (new AVStreams::streamQoS);
   AVStreams::flowSpec_var the_flows (new AVStreams::flowSpec);
 
+  // allocate the qos_list
   struct AVStreams::QoS qos_list;
   qos_list.QoSType = CORBA::string_alloc (64);
   qos_list.QoSParams = CORBA::string_alloc (64);
@@ -114,6 +116,7 @@ Client::run (CORBA::Environment &env)
   the_qos->length (1);
   the_qos [0] = qos_list;
 
+  // allocate the flow_list
   const char *flow_list [] =
   {
     "alpha",
@@ -165,6 +168,7 @@ Client::bind_to_remote_mmdevice (int argc,
   int c;
   char *ior = 0;
   
+  // Parse the command line
   while ((c = get_opts ()) != -1)
     switch (c)
       {
@@ -181,6 +185,7 @@ Client::bind_to_remote_mmdevice (int argc,
                            argv [0]),
                           -1);
       }
+  // We didnt get an IOR from the command line!
   if (ior == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s"
@@ -189,11 +194,13 @@ Client::bind_to_remote_mmdevice (int argc,
                            argv [0]),
                           -1);
   
+  // get the object reference
   CORBA::Object_var mmdevice_object = 
     this->manager_.orb ()->string_to_object (ior,
                                              env);
   TAO_CHECK_ENV_RETURN (env, 1);
 
+  // narrow the reference
   this->remote_mmdevice_ = 
     AVStreams::MMDevice::_narrow (mmdevice_object.in (),
                                   env);
