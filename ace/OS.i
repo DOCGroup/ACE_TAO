@@ -712,7 +712,7 @@ ACE_OS::strcasecmp (const char *s, const char *t)
   ACE_UNUSED_ARG (t);
 
   // ACE_TRACE ("ACE_OS::strcasecmp");
-  ACE_NOTSUP_RETURN (0);
+  ACE_NOTSUP_RETURN (-1);
 }
 
 ACE_INLINE int 
@@ -723,7 +723,7 @@ ACE_OS::fcntl (ACE_HANDLE handle, int cmd, int value)
   ACE_UNUSED_ARG (cmd);
   ACE_UNUSED_ARG (value);
 	
-  ACE_NOTSUP_RETURN (0); // We should be able to map this stuff
+  ACE_NOTSUP_RETURN (-1); // We should be able to map this stuff
 }
 
 ACE_INLINE uid_t 
@@ -740,7 +740,7 @@ ACE_OS::getopt (int argc, char *const *argv, const char *optstring)
   ACE_UNUSED_ARG (argv);
   ACE_UNUSED_ARG (optstring);
 
-  //	ACE_TRACE ("ACE_OS::getopt");
+  // ACE_TRACE ("ACE_OS::getopt");
   ACE_NOTSUP_RETURN (-1);
 }
 
@@ -754,12 +754,8 @@ ACE_OS::getuid (void)
 ACE_INLINE int 
 ACE_OS::isatty (ACE_HANDLE fd)
 {
-  //	ACE_TRACE ("ACE_OS::isatty");
-  ACE_UNUSED_ARG (fd);
-	
-  ACE_NOTSUP_RETURN (-1);
-
-  //  ACE_OSCALL_RETURN (::_isatty (fd), int, -1);
+  // ACE_TRACE ("ACE_OS::isatty");
+  ACE_OSCALL_RETURN (::_isatty ((int) fd), int, -1);
 }
 
 ACE_INLINE int 
@@ -768,17 +764,15 @@ ACE_OS::mkfifo (const char *file, mode_t mode)
   ACE_UNUSED_ARG (file);
   ACE_UNUSED_ARG (mode);
 
-  //	ACE_TRACE ("ACE_OS::mkfifo");
+  // ACE_TRACE ("ACE_OS::mkfifo");
   ACE_NOTSUP_RETURN (-1);
 }
 
 ACE_INLINE int 
 ACE_OS::pipe (ACE_HANDLE fds[])
 {
-  ACE_UNUSED_ARG (fds);
-  //	ACE_TRACE ("ACE_OS::pipe");
-  ACE_NOTSUP_RETURN (-1);
-  //  ACE_OSCALL_RETURN (::_pipe (fds, PIPE_BUF, 0), int, -1);   // Use default mode
+  // ACE_TRACE ("ACE_OS::pipe");
+  ACE_OSCALL_RETURN (::_pipe ((int *) fds, PIPE_BUF, 0), int, -1);   // Use default mode
 }
 
 ACE_INLINE int 
@@ -786,7 +780,7 @@ ACE_OS::rand_r (ACE_RANDR_TYPE seed)
 {
   ACE_UNUSED_ARG (seed);
 
-  //	ACE_TRACE ("ACE_OS::rand_r");
+  // ACE_TRACE ("ACE_OS::rand_r");
   ACE_NOTSUP_RETURN (-1);
 }
 
@@ -794,26 +788,21 @@ ACE_INLINE pid_t
 ACE_OS::setsid (void)
 {
   // ACE_TRACE ("ACE_OS::setsid");
-  ACE_NOTSUP_RETURN (0);
+  ACE_NOTSUP_RETURN (-1);
 }
 
 ACE_INLINE mode_t 
 ACE_OS::umask (mode_t cmask)
 {
-  ACE_UNUSED_ARG (cmask);
-
-  //	ACE_TRACE ("ACE_OS::umask");
-  ACE_NOTSUP_RETURN (-1);
+  // ACE_TRACE ("ACE_OS::umask");
+  ACE_OSCALL_RETURN (::_umask (cmask), int, -1);
 }
 
 ACE_INLINE int 
 ACE_OS::fstat (ACE_HANDLE handle, struct stat *stp)
 {
-  ACE_UNUSED_ARG (handle);
-  ACE_UNUSED_ARG (stp);
-
-  //	ACE_TRACE ("ACE_OS::fstat");
-  ACE_NOTSUP_RETURN (-1);
+  // ACE_TRACE ("ACE_OS::fstat");
+  ACE_OSCALL_RETURN (::_fstat ((int) handle, (struct _stat *) stp), int, -1);
 }
 
 #endif /* WIN32 */
@@ -954,9 +943,13 @@ ACE_OS::cuserid (LPTSTR user, size_t maxlen)
       return user;
     }
 #elif defined (ACE_WIN32)
-  // Hackish because of missing buffer size!
-  return ::GetUserName (user, (unsigned long *) &maxlen) ? user : 0;
+  BOOL result = ::GetUserName (user, (unsigned long *) &maxlen); 
+  if (result == FALSE)
+    ACE_FAIL_RETURN (0);
+  else
+    return user;
 #else
+  // Hackish because of missing buffer size!
   ACE_UNUSED_ARG (maxlen);
   ACE_OSCALL_RETURN (::cuserid (user), char *, 0);
 #endif /* VXWORKS */
@@ -1312,7 +1305,7 @@ ACE_OS::mutex_destroy (ACE_mutex_t *m)
   switch (m->type_)
     {
     case USYNC_PROCESS: 
-      ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::CloseHandle (m->proc_mutex_), 
+      ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::CloseHandle (m->proc_mutex_), 
 					   ace_result_), 
 			 int, -1);
     case USYNC_THREAD:
@@ -1537,7 +1530,7 @@ ACE_OS::mutex_unlock (ACE_mutex_t *m)
   switch (m->type_)
     {
     case USYNC_PROCESS: 
-      ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::ReleaseMutex (m->proc_mutex_), 
+      ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::ReleaseMutex (m->proc_mutex_), 
 					   ace_result_), 
 			 int, -1);
     case USYNC_THREAD:
@@ -1634,7 +1627,7 @@ ACE_OS::thread_mutex_trylock (ACE_thread_mutex_t *m)
   return ACE_OS::mutex_trylock (m);
 #elif defined (ACE_HAS_WTHREADS)
 #if defined (ACE_HAS_WIN32_TRYLOCK)
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::TryEnterCriticalSection (m), ace_result_),
+  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::TryEnterCriticalSection (m), ace_result_),
 		     int, -1) ;
 #else
   ACE_UNUSED_ARG (m);
@@ -1896,7 +1889,7 @@ ACE_OS::sema_destroy (ACE_sema_t *s)
   int r2 = ACE_OS::cond_destroy (&s->count_nonzero_);
   return r1 != 0 || r2 != 0 ? -1 : 0;
 #elif defined (ACE_HAS_WTHREADS)
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::CloseHandle (*s), ace_result_), int, -1);
+  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::CloseHandle (*s), ace_result_), int, -1);
 #elif defined (VXWORKS)
   int result;
   ACE_OSCALL (ACE_ADAPT_RETVAL (::semDelete (s->sema_), result), int, -1, result);
@@ -2026,7 +2019,7 @@ ACE_OS::sema_post (ACE_sema_t *s)
     }
   return result;
 #elif defined (ACE_HAS_WTHREADS)
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::ReleaseSemaphore (*s, 1, 0), 
+  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::ReleaseSemaphore (*s, 1, 0), 
 				       ace_result_), 
 		     int, -1);
 #elif defined (VXWORKS)
@@ -2043,7 +2036,7 @@ ACE_OS::sema_post (ACE_sema_t *s, size_t release_count)
 {
 #if defined (ACE_WIN32)
   // Win32 supports this natively.
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::ReleaseSemaphore (*s, release_count, 0),
+  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::ReleaseSemaphore (*s, release_count, 0),
 				       ace_result_), int, -1);
 #else
   // On POSIX platforms we need to emulate this ourselves.
@@ -2374,7 +2367,7 @@ ACE_OS::cond_wait (ACE_cond_t *cv,
 #if defined (ACE_HAS_SIGNAL_OBJECT_AND_WAIT)
   if (external_mutex->type_ == USYNC_PROCESS)
     // This call will automatically release the mutex and wait on the semaphore.
-    ACE_OSCALL (ACE_ADAPT_RETVAL (::SignalObjectAndWait (external_mutex->proc_mutex_,
+    ACE_WIN32CALL (ACE_ADAPT_RETVAL (::SignalObjectAndWait (external_mutex->proc_mutex_,
 							 cv->sema_, INFINITE, FALSE), 
 				  result),
 		int, -1, result);
@@ -2409,7 +2402,7 @@ ACE_OS::cond_wait (ACE_cond_t *cv,
 	// This call atomically signals the waiters_done_ event and waits
 	// until it can acquire the mutex.  This is important to prevent
 	// unfairness.
-	ACE_OSCALL (ACE_ADAPT_RETVAL (::SignalObjectAndWait (cv->waiters_done_,
+	ACE_WIN32CALL (ACE_ADAPT_RETVAL (::SignalObjectAndWait (cv->waiters_done_,
 							     external_mutex->proc_mutex_,
 							     INFINITE, FALSE), 
 				      result),
@@ -2533,7 +2526,7 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
 	// This call atomically signals the waiters_done_ event and waits
 	// until it can acquire the mutex.  This is important to prevent
 	// unfairness.
-	ACE_OSCALL (ACE_ADAPT_RETVAL (::SignalObjectAndWait (cv->waiters_done_,
+	ACE_WIN32CALL (ACE_ADAPT_RETVAL (::SignalObjectAndWait (cv->waiters_done_,
 							     external_mutex->proc_mutex_,
 							     INFINITE, FALSE), 
 				      result),
@@ -3001,7 +2994,7 @@ ACE_INLINE int
 ACE_OS::event_destroy (ACE_event_t *event)
 {
 #if defined (ACE_WIN32)
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::CloseHandle (*event), ace_result_), int, -1);
+  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::CloseHandle (*event), ace_result_), int, -1);
 #elif defined (ACE_HAS_THREADS) 
   int r1 = ACE_OS::mutex_destroy (&event->lock_);
   int r2 = ACE_OS::cond_destroy (&event->condition_);
@@ -3150,7 +3143,7 @@ ACE_INLINE int
 ACE_OS::event_signal (ACE_event_t *event)
 {
 #if defined (ACE_WIN32)
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::SetEvent (*event), ace_result_), int, -1);
+  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::SetEvent (*event), ace_result_), int, -1);
 #elif defined (ACE_HAS_THREADS)
   int result = 0;
   int error = 0;
@@ -3205,7 +3198,7 @@ ACE_INLINE int
 ACE_OS::event_pulse (ACE_event_t *event)
 {
 #if defined (ACE_WIN32)
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::PulseEvent (*event), ace_result_), int, -1);
+  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::PulseEvent (*event), ace_result_), int, -1);
 #elif defined (ACE_HAS_THREADS)
   int result = 0;
   int error = 0;
@@ -3253,7 +3246,7 @@ ACE_INLINE int
 ACE_OS::event_reset (ACE_event_t *event)
 {
 #if defined (ACE_WIN32)
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::ResetEvent (*event), ace_result_), int, -1);
+  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::ResetEvent (*event), ace_result_), int, -1);
 #elif defined (ACE_HAS_THREADS)
   int result = 0;
 
@@ -3639,7 +3632,7 @@ ACE_OS::recvmsg (ACE_HANDLE handle, struct msghdr *msg, int flags)
 {
   // ACE_TRACE ("ACE_OS::recvmsg");
 #if !defined (ACE_LACKS_RECVMSG)
-  ACE_OSCALL_RETURN (::recvmsg (handle, msg, flags), int, -1);
+  ACE_SOCKCALL_RETURN (::recvmsg (handle, msg, flags), int, -1);
 #else
   ACE_UNUSED_ARG (flags);
   ACE_UNUSED_ARG (msg);
@@ -3655,9 +3648,9 @@ ACE_OS::sendmsg (ACE_HANDLE handle, const struct msghdr *msg, int flags)
   // ACE_TRACE ("ACE_OS::sendmsg");
 #if !defined (ACE_LACKS_SENDMSG)
 #if defined (ACE_LACKS_POSIX_PROTOTYPES)
-  ACE_OSCALL_RETURN (::sendmsg (handle, (struct msghdr *) msg, flags), int, -1);
+  ACE_SOCKCALL_RETURN (::sendmsg (handle, (struct msghdr *) msg, flags), int, -1);
 #else
-  ACE_OSCALL_RETURN (::sendmsg (handle, (ACE_SENDMSG_TYPE *) msg, flags), int, -1);
+  ACE_SOCKCALL_RETURN (::sendmsg (handle, (ACE_SENDMSG_TYPE *) msg, flags), int, -1);
 #endif /* ACE_LACKS_POSIX_PROTOTYPES */
 #else
   ACE_UNUSED_ARG (flags);
@@ -4054,7 +4047,11 @@ ACE_OS::thr_continue (ACE_hthread_t target_thread)
   ACE_UNUSED_ARG (target_thread);
   ACE_NOTSUP_RETURN (-1);
 #elif defined (ACE_HAS_WTHREADS)
-  return ::ResumeThread (target_thread) != ACE_SYSCALL_FAILED ? 0 : -1;
+  DWORD result = ::ResumeThread (target_thread);
+  if (result == ACE_SYSCALL_FAILED)
+    ACE_FAIL_RETURN (-1);
+  else
+    return 0;
 #elif defined (VXWORKS)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::taskResume (target_thread), ace_result_), int, -1);
 #endif /* ACE_HAS_STHREADS */
@@ -4149,11 +4146,11 @@ ACE_OS::thr_getprio (ACE_hthread_t thr_id, int &prio)
   return result;
 # endif /* ACE_HAS_DCE_DRAFT4_THREADS */
 #elif defined (ACE_HAS_WTHREADS)
-  ACE_UNUSED_ARG (prio);
-  // why is the thread prio not dropped into prio ?
-
   prio = ::GetThreadPriority (thr_id);
-  return prio == THREAD_PRIORITY_ERROR_RETURN ? -1 : 0;
+  if (prio == THREAD_PRIORITY_ERROR_RETURN)
+    ACE_FAIL_RETURN (-1);
+  else
+    return 0;
 #elif defined (VXWORKS)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::taskPriorityGet (thr_id, &prio), ace_result_), int, -1);
 #else
@@ -4298,6 +4295,11 @@ ACE_OS::thr_getspecific (ACE_thread_key_t key, void **data)
       return 0;
 # elif defined (ACE_HAS_WTHREADS)
     *data = ::TlsGetValue (key);
+    if (*data == 0)
+      {
+        errno = ::GetLastError ();
+        return -1;
+      }
     return 0;
 # endif /* ACE_HAS_STHREADS */
 #else
@@ -4329,8 +4331,7 @@ ACE_OS::thr_join (ACE_thread_t waiter_id,
   ACE_UNUSED_ARG (waiter_id);
   ACE_UNUSED_ARG (thr_id);
   ACE_UNUSED_ARG (status);
-  ACE_NOTSUP_RETURN (-1);
-	
+
   // This could be implemented if the DLL-Main function or the
   // task exit base class some log the threads which have exited
   ACE_NOTSUP_RETURN (-1);
@@ -4804,7 +4805,7 @@ ACE_OS::thr_setprio (ACE_hthread_t thr_id, int prio)
                      int, -1);
 # endif /* ACE_HAS_DCE_DRAFT4_THREADS */
 #elif defined (ACE_HAS_WTHREADS)
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::SetThreadPriority (thr_id, prio), 
+  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::SetThreadPriority (thr_id, prio), 
 				       ace_result_), 
 		     int, -1);
 #elif defined (VXWORKS)
@@ -4891,7 +4892,7 @@ ACE_OS::filesize (ACE_HANDLE handle)
 {
   // ACE_TRACE ("ACE_OS::filesize");
 #if defined (ACE_WIN32)
-  ACE_OSCALL_RETURN (::GetFileSize (handle, NULL), int, ACE_SYSCALL_FAILED);
+  ACE_WIN32CALL_RETURN (::GetFileSize (handle, NULL), long, -1);
 #else /* !ACE_WIN32 */
   struct stat sb;
 
@@ -5325,7 +5326,7 @@ ACE_OS::close (ACE_HANDLE handle)
 {
   // ACE_TRACE ("ACE_OS::close");
 #if defined (ACE_WIN32)  
-  return ::CloseHandle (handle) ? 0 : -1;
+  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::CloseHandle (handle), ace_result_), int, -1);
 #else
   ACE_OSCALL_RETURN (::close (handle), int, -1);
 #endif /* ACE_WIN32 */
@@ -5336,7 +5337,7 @@ ACE_OS::closesocket (ACE_HANDLE handle)
 {
   // ACE_TRACE ("ACE_OS::close");
 #if defined (ACE_WIN32)  
-  return ::closesocket ((u_int) handle) == 0 ? 0 : -1;
+  ACE_SOCKCALL_RETURN (::closesocket ((SOCKET) handle), int, -1);
 #else
   ACE_OSCALL_RETURN (::close (handle), int, -1);
 #endif /* ACE_WIN32 */
@@ -5363,8 +5364,7 @@ ACE_OS::creat (LPCTSTR filename, mode_t mode)
 {
   // ACE_TRACE ("ACE_OS::creat");
 #if defined (ACE_WIN32)  
-  ACE_OSCALL_RETURN (ACE_OS::open (filename, mode), 
-		     ACE_HANDLE, ACE_INVALID_HANDLE);
+  return ACE_OS::open (filename, mode);
 #else
   ACE_OSCALL_RETURN (::creat (filename, mode), 
 		     ACE_HANDLE, ACE_INVALID_HANDLE);
@@ -5388,7 +5388,7 @@ ACE_OS::hostname (char name[], size_t maxnamelen)
 {
   // ACE_TRACE ("ACE_OS::hostname");
 #if defined (ACE_WIN32)
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::GetComputerNameA (name, LPDWORD (&maxnamelen)), 
+  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::GetComputerNameA (name, LPDWORD (&maxnamelen)), 
 				       ace_result_), int, -1);
 #elif defined (VXWORKS)
   ACE_OSCALL_RETURN (::gethostname (name, maxnamelen), int, -1);
@@ -5546,7 +5546,7 @@ ACE_OS::dlclose (ACE_SHLIB_HANDLE handle)
 #endif /* ACE_HAS_AUTOMATIC_INIT_FINI */
   ACE_OSCALL_RETURN (::dlclose (handle), int, -1);
 #elif defined (ACE_WIN32)
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::FreeLibrary (handle), ace_result_), int, -1);
+  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::FreeLibrary (handle), ace_result_), int, -1);
 #elif defined (__hpux)
 # if __cplusplus >= 199707L
   ACE_OSCALL_RETURN (::shl_unload(handle), int, -1);
@@ -5594,7 +5594,7 @@ ACE_OS::dlopen (ACE_DL_TYPE filename, int mode)
 #elif defined (ACE_WIN32)
   ACE_UNUSED_ARG (mode);
 	
-  ACE_OSCALL_RETURN (::LoadLibraryA (filename), ACE_SHLIB_HANDLE, 0);
+  ACE_WIN32CALL_RETURN (::LoadLibraryA (filename), ACE_SHLIB_HANDLE, 0);
 #elif defined (__hpux)
 
 # if __cplusplus >= 199707L
@@ -5632,7 +5632,7 @@ ACE_OS::dlsym (ACE_SHLIB_HANDLE handle, ACE_DL_TYPE symbolname)
   ACE_OSCALL_RETURN (::dlsym (handle, symbolname), void *, 0);
 #endif /* ACE_LACKS_POSIX_PROTOTYPES */
 #elif defined (ACE_WIN32)
-  ACE_OSCALL_RETURN (::GetProcAddress (handle, symbolname), void *, 0);
+  ACE_WIN32CALL_RETURN (::GetProcAddress (handle, symbolname), void *, 0);
 #elif defined (__hpux)
 
   void *value;
@@ -5698,7 +5698,7 @@ ACE_OS::write (ACE_HANDLE handle, const void *buf, size_t nbyte)
   if (::WriteFile (handle, buf, nbyte, &bytes_written, 0))
     return (ssize_t) bytes_written;
   else
-    return -1;
+    ACE_FAIL_RETURN (-1);
 #else
 #if defined (ACE_LACKS_POSIX_PROTOTYPES)
   ACE_OSCALL_RETURN (::write (handle, (const char *) buf, nbyte), ssize_t, -1);
@@ -5734,7 +5734,10 @@ ACE_OS::read (ACE_HANDLE handle, void *buf, size_t len)
   // ACE_TRACE ("ACE_OS::read");
 #if defined (ACE_WIN32)
   DWORD ok_len;
-  return ::ReadFile (handle, buf, len, &ok_len, 0) ? (ssize_t) ok_len : -1;
+  if (::ReadFile (handle, buf, len, &ok_len, 0))
+    return (ssize_t) ok_len;
+  else
+    ACE_FAIL_RETURN (-1);
 #else
 #if defined (ACE_LACKS_POSIX_PROTOTYPES) || defined (ACE_HAS_CHARPTR_SOCKOPT)
   ACE_OSCALL_RETURN (::read (handle, (char *) buf, len), ssize_t, -1);
@@ -5813,7 +5816,7 @@ ACE_OS::getrusage (int who, struct rusage *ru)
   ACE_UNUSED_ARG (who);
 
   FILETIME dummy_1, dummy_2;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::GetProcessTimes (::GetCurrentProcess(),
+  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::GetProcessTimes (::GetCurrentProcess(),
 							  &dummy_1,   // start
 							  &dummy_2,	// exited 
 							  &ru->ru_stime,
@@ -5881,7 +5884,6 @@ ACE_OS::mmap (void *addr,
 					 prot, 0, len, 0);
   if (*file_mapping == 0)
     ACE_FAIL_RETURN (MAP_FAILED);
-  /* NOTREACHED */
 
   void *addr_mapping = ::MapViewOfFileEx (*file_mapping, nt_flags, 0,
 					  off, len, addr);
@@ -5892,7 +5894,7 @@ ACE_OS::mmap (void *addr,
 
   if (addr_mapping == 0)
     ACE_FAIL_RETURN (MAP_FAILED);
-  /* NOTREACHED */
+
   else if (ACE_BIT_ENABLED (flags, MAP_FIXED)
 	   && addr_mapping != addr)
     {
@@ -5949,7 +5951,7 @@ ACE_OS::msync (void *addr, size_t len, int sync)
 #if defined (ACE_WIN32)
   ACE_UNUSED_ARG (sync);
 	
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::FlushViewOfFile (addr, len), ace_result_), int, -1);
+  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::FlushViewOfFile (addr, len), ace_result_), int, -1);
 #elif !defined (ACE_LACKS_MSYNC)
   ACE_OSCALL_RETURN (::msync ((ACE_MMAP_TYPE) addr, len, sync), int, -1);
 #else
@@ -5967,7 +5969,7 @@ ACE_OS::munmap (void *addr, size_t len)
 #if defined (ACE_WIN32)
   ACE_UNUSED_ARG (len);
 	
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::UnmapViewOfFile (addr), ace_result_), int, -1);
+  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::UnmapViewOfFile (addr), ace_result_), int, -1);
 #elif !defined (ACE_LACKS_MMAP)
   ACE_OSCALL_RETURN (::munmap ((ACE_MMAP_TYPE) addr, len), int, -1);
 #else
@@ -6420,7 +6422,7 @@ ACE_OS::flock_wrlock (ACE_OS::ace_flock_t *lock, short whence, off_t start, off_
   lock->overlapped_.Offset = start;
   if (len == 0)
     len = ::GetFileSize (lock->handle_, NULL);
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::LockFileEx (lock->handle_, LOCKFILE_EXCLUSIVE_LOCK, 0, len, 0, &lock->overlapped_), 
+  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::LockFileEx (lock->handle_, LOCKFILE_EXCLUSIVE_LOCK, 0, len, 0, &lock->overlapped_), 
 				       ace_result_), int, -1);
 #elif defined (ACE_LACKS_FILELOCKS)
   ACE_UNUSED_ARG (lock);
@@ -6447,7 +6449,7 @@ ACE_OS::flock_rdlock (ACE_OS::ace_flock_t *lock, short whence, off_t start, off_
   lock->overlapped_.Offset = start;
   if (len == 0)
     len = ::GetFileSize (lock->handle_, NULL);
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::LockFileEx (lock->handle_, 0, 0, len, 0, &lock->overlapped_), 
+  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::LockFileEx (lock->handle_, 0, 0, len, 0, &lock->overlapped_), 
 				       ace_result_), int, -1);
 #elif defined (ACE_LACKS_FILELOCKS)
   ACE_UNUSED_ARG (lock);
@@ -6474,7 +6476,7 @@ ACE_OS::flock_trywrlock (ACE_OS::ace_flock_t *lock, short whence, off_t start, o
   lock->overlapped_.Offset = start;
   if (len == 0)
     len = ::GetFileSize (lock->handle_, NULL);
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::LockFileEx (lock->handle_, LOCKFILE_FAIL_IMMEDIATELY | LOCKFILE_EXCLUSIVE_LOCK, 0, len, 0, &lock->overlapped_), 
+  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::LockFileEx (lock->handle_, LOCKFILE_FAIL_IMMEDIATELY | LOCKFILE_EXCLUSIVE_LOCK, 0, len, 0, &lock->overlapped_), 
 				       ace_result_), int, -1);
 #elif defined (ACE_LACKS_FILELOCKS)
   ACE_UNUSED_ARG (lock);
@@ -6502,7 +6504,7 @@ ACE_OS::flock_tryrdlock (ACE_OS::ace_flock_t *lock, short whence, off_t start, o
   lock->overlapped_.Offset = start;
   if (len == 0)
     len = ::GetFileSize (lock->handle_, NULL);
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::LockFileEx (lock->handle_, LOCKFILE_FAIL_IMMEDIATELY, 0, len, 0, &lock->overlapped_), 
+  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::LockFileEx (lock->handle_, LOCKFILE_FAIL_IMMEDIATELY, 0, len, 0, &lock->overlapped_), 
 				       ace_result_), int, -1);
 #elif defined (ACE_LACKS_FILELOCKS)
   ACE_UNUSED_ARG (lock);
@@ -6530,7 +6532,7 @@ ACE_OS::flock_unlock (ACE_OS::ace_flock_t *lock, short whence, off_t start, off_
   lock->overlapped_.Offset = start;
   if (len == 0)
     len = ::GetFileSize (lock->handle_, NULL);
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::UnlockFileEx (lock->handle_, 0, len, 0, &lock->overlapped_), 
+  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::UnlockFileEx (lock->handle_, 0, len, 0, &lock->overlapped_), 
 				       ace_result_), int, -1);
 #elif defined (ACE_LACKS_FILELOCKS)
   ACE_UNUSED_ARG (lock);
@@ -6571,6 +6573,8 @@ ACE_OS::execv (const char *path, char *const argv[])
   ACE_UNUSED_ARG (argv);
 	
   ACE_NOTSUP_RETURN (-1);
+#elif defined (ACE_WIN32)
+  return ::_execv (path, (const char *const *) argv);
 #elif defined (ACE_LACKS_POSIX_PROTOTYPES)
   ACE_OSCALL_RETURN (::execv (path, (const char **) argv), int, -1);
 #else
@@ -6588,6 +6592,8 @@ ACE_OS::execve (const char *path, char *const argv[], char *const envp[])
   ACE_UNUSED_ARG (envp);
 
   ACE_NOTSUP_RETURN (-1);
+#elif defined (ACE_WIN32)
+  return ::_execve (path, (const char *const *) argv, (const char *const *) envp);
 #elif defined (ACE_LACKS_POSIX_PROTOTYPES)
   ACE_OSCALL_RETURN (::execve (path, (const char **) argv, (char **) envp), int, -1);
 #else
@@ -6604,6 +6610,8 @@ ACE_OS::execvp (const char *file, char *const argv[])
   ACE_UNUSED_ARG (argv);
 
   ACE_NOTSUP_RETURN (-1);
+#elif defined (ACE_WIN32)
+  return ::_execvp (file, (const char *const *) argv);
 #elif defined (ACE_LACKS_POSIX_PROTOTYPES)
   ACE_OSCALL_RETURN (::execvp (file, (const char **) argv), int, -1);
 #else
@@ -6643,7 +6651,7 @@ ACE_OS::ftruncate (ACE_HANDLE handle, off_t offset)
   // ACE_TRACE ("ACE_OS::ftruncate");
 #if defined (ACE_WIN32)
   if (::SetFilePointer (handle, offset, NULL, FILE_BEGIN) != -1)
-    ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::SetEndOfFile (handle), ace_result_), int, -1);
+    ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::SetEndOfFile (handle), ace_result_), int, -1);
   else
     ACE_FAIL_RETURN (-1);
   /* NOTREACHED */
@@ -6990,7 +6998,7 @@ ACE_INLINE pid_t
 ACE_OS::fork (void)
 {
   // ACE_TRACE ("ACE_OS::fork");
-#if defined (ACE_LACKS_EXEC)
+#if defined (ACE_LACKS_FORK)
   ACE_NOTSUP_RETURN (pid_t (-1));
 #else
   ACE_OSCALL_RETURN (::fork (), pid_t, -1);
@@ -7053,7 +7061,11 @@ ACE_OS::lseek (ACE_HANDLE handle, off_t offset, int whence)
       return -1; // rather safe than sorry
     }
 #endif  /* SEEK_SET != FILE_BEGIN || SEEK_CUR != FILE_CURRENT || SEEK_END != FILE_END */
-  return ::SetFilePointer (handle, offset, NULL, whence);
+  DWORD result = ::SetFilePointer (handle, offset, NULL, whence);
+  if (result == ACE_SYSCALL_FAILED)
+    ACE_FAIL_RETURN (-1);
+  else
+    return result;
 #else
   ACE_OSCALL_RETURN (::lseek (handle, offset, whence), int, -1);
 #endif /* ACE_WIN32 */
@@ -7377,7 +7389,7 @@ ACE_INLINE int
 ACE_OS::hostname (wchar_t *name, size_t maxnamelen)
 {
   // ACE_TRACE ("ACE_OS::hostname");
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::GetComputerNameW (name, LPDWORD (&maxnamelen)), 
+  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::GetComputerNameW (name, LPDWORD (&maxnamelen)), 
 				       ace_result_), int, -1);
 }
 
@@ -7457,7 +7469,7 @@ ACE_OS::dlopen (ACE_WIDE_DL_TYPE filename, int mode)
   // ACE_TRACE ("ACE_OS::dlopen");
   ACE_UNUSED_ARG (mode);
 
-  ACE_OSCALL_RETURN (::LoadLibraryW (filename), ACE_SHLIB_HANDLE, 0);
+  ACE_WIN32CALL_RETURN (::LoadLibraryW (filename), ACE_SHLIB_HANDLE, 0);
 }
 
 ACE_INLINE wchar_t *
