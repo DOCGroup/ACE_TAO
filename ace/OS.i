@@ -1141,12 +1141,12 @@ ACE_OS::strtok_r (char *s, const char *tokens, char **lasts)
 #if defined (ACE_HAS_REENTRANT_FUNCTIONS)
   return ::strtok_r (s, tokens, lasts);
 #else
-  if (s == NULL)
+  if (s == 0)
     s = *lasts;
   else
     *lasts = s;
   if (*s == 0)			// We have reached the end
-    return NULL;
+    return 0;
   int l_org = ACE_OS::strlen (s);
   int l_sub = ACE_OS::strlen (s = ::strtok (s, tokens));
   *lasts = s + l_sub;
