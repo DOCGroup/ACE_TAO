@@ -43,9 +43,9 @@ namespace CIAO
   }
 
   // @@ Jai, what is this update map supposed to be doing.
-  void update_map (PortableServer::ObjectId &oid,
-                   Dynamic_Component_Servant_Base* servant
-                   ACE_ENV_ARG_DECL)
+  void update_servant_map (PortableServer::ObjectId &oid,
+                           Dynamic_Component_Servant_Base* servant
+                           ACE_ENV_ARG_DECL)
   {
   }
 
