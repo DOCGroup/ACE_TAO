@@ -35,7 +35,7 @@
 
 #if (TAO_HAS_SMART_PROXIES == 1)
 #include "tao/Smart_Proxies.h"
-#include "ace/Singleton.h"
+#include "tao/TAO_Singleton.h"
 #endif /*TAO_HAS_SMART_PROXIES == 1*/
 
 #if defined (TAO_EXPORT_MACRO)
@@ -2583,7 +2583,7 @@ class TAO_Export TAO_Messaging_ReplyHandler_Proxy_Factory_Adapter
   {
   public:
 
-    friend class ACE_Singleton<TAO_Messaging_ReplyHandler_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
+    friend class TAO_Singleton<TAO_Messaging_ReplyHandler_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
 
     int register_proxy_factory (
         TAO_Messaging_ReplyHandler_Default_Proxy_Factory *df,
@@ -2614,7 +2614,7 @@ class TAO_Export TAO_Messaging_ReplyHandler_Proxy_Factory_Adapter
 
   };
 
-  typedef ACE_Singleton<TAO_Messaging_ReplyHandler_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_Messaging_ReplyHandler_PROXY_FACTORY_ADAPTER;
+  typedef TAO_Singleton<TAO_Messaging_ReplyHandler_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_Messaging_ReplyHandler_PROXY_FACTORY_ADAPTER;
 
   class TAO_Export TAO_Messaging_ReplyHandler_Smart_Proxy_Base
     : public virtual ReplyHandler,

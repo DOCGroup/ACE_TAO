@@ -24,7 +24,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Singleton.h"
+#include "tao/TAO_Singleton.h"
 #include "ace/Synch.h"
 #include "tao/corbafwd.h"
 
@@ -327,13 +327,13 @@ private:
 
 
 // Define a singleton instance of operation table parameters.
-typedef ACE_Singleton<TAO_Operation_Table_Parameters,
+typedef TAO_Singleton<TAO_Operation_Table_Parameters,
                       ACE_SYNCH_RECURSIVE_MUTEX>
         TAO_OP_TABLE_PARAMETERS;
 
 
 // Define a singleton instance of the operation table factory.
-typedef ACE_Singleton<TAO_Operation_Table_Factory,
+typedef TAO_Singleton<TAO_Operation_Table_Factory,
                       ACE_SYNCH_RECURSIVE_MUTEX>
         TAO_OP_TABLE_FACTORY;
 

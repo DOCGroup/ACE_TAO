@@ -29,9 +29,10 @@
 #include "tao/Resource_Factory.h"
 #include "tao/params.h"
 #include "tao/PortableServerC.h"
+#include "tao/TAO_Singleton_Manager.h"
+#include "tao/TAO_Singleton.h"
 
 #include "ace/Map_Manager.h"
-#include "ace/Singleton.h"
 
 // Forward declarations
 class TAO_POA;
@@ -802,7 +803,7 @@ public:
 };
 
 // @@ Must go away....
-typedef ACE_TSS_Singleton<TAO_TSS_Resources, ACE_SYNCH_MUTEX>
+typedef TAO_TSS_Singleton<TAO_TSS_Resources, ACE_SYNCH_MUTEX>
         TAO_TSS_RESOURCES;
 
 // ****************************************************************
@@ -843,7 +844,7 @@ public:
   // Return a unique instance
 
 protected:
-  friend class ACE_Singleton<TAO_ORB_Table,ACE_SYNCH_MUTEX>;
+  friend class TAO_Singleton<TAO_ORB_Table, ACE_SYNCH_MUTEX>;
   TAO_ORB_Table (void);
   // Constructor
 

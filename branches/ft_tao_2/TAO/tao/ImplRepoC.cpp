@@ -425,9 +425,9 @@ void ImplementationRepository::TAO_ImplementationRepository_ServerObject_Smart_P
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \
   defined (ACE_HAS_GNU_REPO)
-template class ACE_Singleton<ImplementationRepository::TAO_ImplementationRepository_ServerObject_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
+template class TAO_Singleton<ImplementationRepository::TAO_ImplementationRepository_ServerObject_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Singleton<ImplementationRepository::TAO_ImplementationRepository_ServerObject_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
+#pragma instantiate TAO_Singleton<ImplementationRepository::TAO_ImplementationRepository_ServerObject_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 static const CORBA::Long _oc_ImplementationRepository_ServerObject[] =
@@ -2662,9 +2662,9 @@ void ImplementationRepository::TAO_ImplementationRepository_Administration_Smart
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \
   defined (ACE_HAS_GNU_REPO)
-template class ACE_Singleton<ImplementationRepository::TAO_ImplementationRepository_Administration_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
+template class TAO_Singleton<ImplementationRepository::TAO_ImplementationRepository_Administration_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Singleton<ImplementationRepository::TAO_ImplementationRepository_Administration_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
+#pragma instantiate TAO_Singleton<ImplementationRepository::TAO_ImplementationRepository_Administration_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 static const CORBA::Long _oc_ImplementationRepository_Administration[] =
@@ -3105,9 +3105,9 @@ void ImplementationRepository::TAO_ImplementationRepository_ServerInformationIte
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \
   defined (ACE_HAS_GNU_REPO)
-template class ACE_Singleton<ImplementationRepository::TAO_ImplementationRepository_ServerInformationIterator_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
+template class TAO_Singleton<ImplementationRepository::TAO_ImplementationRepository_ServerInformationIterator_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Singleton<ImplementationRepository::TAO_ImplementationRepository_ServerInformationIterator_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
+#pragma instantiate TAO_Singleton<ImplementationRepository::TAO_ImplementationRepository_ServerInformationIterator_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 static const CORBA::Long _oc_ImplementationRepository_ServerInformationIterator[] =
