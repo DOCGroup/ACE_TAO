@@ -1,3 +1,9 @@
+Wed Mar 19 12:08:31 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * include/makeinclude/platform_irix6.x_sgic++.GNU:
+
+          Suppress warning numbers 1253,3439,1234 and 3506.
+
 Wed Mar 19 07:27:59 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/NMakeWorkspaceCreator.pm:
