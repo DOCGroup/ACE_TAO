@@ -85,7 +85,7 @@ Worker::svc (void)
     {
       validate_connection(this->controller_.in()
                           ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      ACE_TRY_CHECK;
 
       this->controller_->worker_started (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;

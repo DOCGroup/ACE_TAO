@@ -1,3 +1,9 @@
+Fri Jun 28 16:28:51 2002  Carlos O'Ryan  <coryan@atdesk.com>
+
+	* Manager.cpp:
+	* AMI_Manager.cpp:
+	  Fixed use of ACE_CHECK when ACE_TRY_CHECK was needed.
+
 Fri Jun 28 11:50:10 2002  Carlos O'Ryan  <coryan@atdesk.com>
 
 	* tests/Big_Twoways/Session.h:
