@@ -1,3 +1,10 @@
+Fri Oct 15 13:34:17 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/tao_other_tests.lst:
+
+          The TAO/orbsvcs/examples/ImR/Combined_Service/run_test.pl script
+          should only be run if exceptions are enabled.
+
 Fri Oct 15 10:09:34 2004  Dale Wilson  <wilson_d@ociweb.com>
 
         * tests/TSS_Test.cpp:
