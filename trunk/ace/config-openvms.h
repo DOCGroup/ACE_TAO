@@ -548,8 +548,6 @@ ACE_HAS_RLIMIT_RESOURCE_ENUM            Platform has enum instead of
                                         thrown.  In particular, the
                                         exception specification is not
                                         respected.*/
-#define ACE_HAS_EXPLICIT_KEYWORD 1
-					/*Compiler support explicit constructors.*/
 //#define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION 1
 					/*Compiler's template
                                         instantiation mechanism
@@ -670,8 +668,6 @@ ACE_HAS_RLIMIT_RESOURCE_ENUM            Platform has enum instead of
 					/*Platform supports MT safe
                                         mktime() call (do any of
                                         them?)*/
-//#define ACE_HAS_MUTABLE_KEYWORD
-					/*Compiler supports mutable.*/
 //#define ACE_HAS_MUTEX_TIMEOUTS
 					/*Compiler supports timed mutex
                                         acquisitions

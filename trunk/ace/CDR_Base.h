@@ -171,20 +171,7 @@ public:
   // could be promoted to an int, causing a potential problem where a
   // 4 byte integer (for example) could be selected when attempting to
   // send a boolean over a CDR stream.
-  //
-  // In a different situation, potential ambiguities can occur if some
-  // classes, for example, contain implicit conversion operators whose
-  // return values can themselves be implicitly converted to a bool
-  // even though bool was not the intended type.  If multiple CDR
-  // stream insertion operators (for example) exist, including one
-  // that accepts the ACE_OutputCDR::from_boolean type, the compiler
-  // may be unable to choose the appropriate insertion operator.  As
-  // of yet, this problem does not appear to occur if the
-  // ACE_CDR::Boolean type is an "unsigned char" instead of "bool".
-  // If the C++ "explicit" keyword is unavailable to us, resort to
-  // making ACE_CDR::Boolean an unsigned char, which also happens to
-  // be a valid implementation.
-#if (defined (__GNUC__) && __GNUC__ < 3) || !defined (ACE_HAS_EXPLICIT_KEYWORD)
+#if defined (__GNUC__) && __GNUC__ < 3
   typedef unsigned char Boolean;
 #else
   typedef bool Boolean;

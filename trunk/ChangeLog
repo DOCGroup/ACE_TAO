@@ -1,12 +1,42 @@
-Thu May 13 22:11:56 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+Fri May 14 10:00:22 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* configure.ac:
-	* ace/README (ACE_HAS_MUTABLE_KEYWORD):
-	* ace/config-lite.h (ACE_MUTABLE):
+	* ace/README (ACE_HAS_EXPLICIT_KEYWORD, ACE_HAS_MUTABLE_KEYWORD):
+	* ace/CDR_Base.h:
+	* ace/config-borland-common.h:
+	* ace/config-g++-common.h:
+	* ace/config-icc-common.h:
+	* ace/config-lite.h (ACE_EXPLICIT, ACE_MUTABLE):
+	* ace/config-openvms.h:
+	* ace/config-tandem-nsk-mips-v2.h:
+	* ace/config-win32-ghs.h:
+	* ace/config-win32-msvc-6.h:
+	* ace/config-win32-msvc-7.h:
+	* ace/config-win32-visualage.h:
 	* m4/config_h.m4:
 
-	  ACE now requires C++ "mutable" keyword support.  Document this
-	  macro as being deprecated, and removed all related references.
+	  ACE now requires C++ "explicit" and "mutable" keyword support.
+	  Document these macros as deprecated, and removed all related
+	  references.
+
+	* ace/Auto_Ptr.h:
+	* ace/Bound_Ptr.h:
+	* ace/CDR_Stream.h:
+	* ace/Configuration.h:
+	* ace/DEV_Addr.h:
+	* ace/Date_Time.h:
+	* ace/Dirent.h:
+	* ace/FILE_Addr.h:
+	* ace/INET_Addr.h:
+	* ace/Local_Tokens.h:
+	* ace/MEM_Addr.h:
+	* ace/Parse_Node.h:
+	* ace/SOCK_Dgram_Mcast.h:
+	* ace/SString.h:
+
+	  Replaced all uses of "ACE_EXPLICIT" and "ACE_MUTABLE" with
+	  "explicit" and "mutable", respectively.  These ACE macros are
+	  deprecated.
 
 Thu May 13 21:59:25 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 

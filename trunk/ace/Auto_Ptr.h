@@ -43,7 +43,7 @@ class ACE_Auto_Basic_Ptr
 {
 public:
   // = Initialization and termination methods
-  ACE_EXPLICIT ACE_Auto_Basic_Ptr (X *p = 0) : p_ (p) {}
+  explicit ACE_Auto_Basic_Ptr (X *p = 0) : p_ (p) {}
 
   ACE_Auto_Basic_Ptr (ACE_Auto_Basic_Ptr<X> &ap);
   ACE_Auto_Basic_Ptr<X> &operator= (ACE_Auto_Basic_Ptr<X> &rhs);
@@ -85,7 +85,7 @@ class auto_ptr : public ACE_Auto_Basic_Ptr <X>
 {
 public:
   // = Initialization and termination methods
-  ACE_EXPLICIT auto_ptr (X *p = 0) : ACE_Auto_Basic_Ptr<X> (p) {}
+  explicit auto_ptr (X *p = 0) : ACE_Auto_Basic_Ptr<X> (p) {}
 
   X *operator-> () const;
 };
@@ -105,7 +105,7 @@ class ACE_Auto_Basic_Array_Ptr
 {
 public:
   // = Initialization and termination methods.
-  ACE_EXPLICIT ACE_Auto_Basic_Array_Ptr (X *p = 0) : p_ (p) {}
+  explicit ACE_Auto_Basic_Array_Ptr (X *p = 0) : p_ (p) {}
 
   ACE_Auto_Basic_Array_Ptr (ACE_Auto_Basic_Array_Ptr<X> &ap);
   ACE_Auto_Basic_Array_Ptr<X> &operator= (ACE_Auto_Basic_Array_Ptr<X> &rhs);
@@ -139,7 +139,7 @@ class ACE_Auto_Array_Ptr : public ACE_Auto_Basic_Array_Ptr<X>
 {
 public:
   // = Initialization and termination methods.
-  ACE_EXPLICIT ACE_Auto_Array_Ptr (X *p = 0)
+  explicit ACE_Auto_Array_Ptr (X *p = 0)
     : ACE_Auto_Basic_Array_Ptr<X> (p) {}
 
   X *operator-> () const;

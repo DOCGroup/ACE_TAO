@@ -35,7 +35,7 @@ public:
   ACE_Date_Time (void);
 
   /// Constructor initializes with the given ACE_Time_Value
-  ACE_EXPLICIT ACE_Date_Time (const ACE_Time_Value& timevalue);
+  explicit ACE_Date_Time (const ACE_Time_Value& timevalue);
 
   /// Constructor with init values, no check for validy
   /// Set/get portions of ACE_Date_Time, no check for validity.
