@@ -239,9 +239,8 @@ void TAO_ServantBase::synchronous_upcall_dispatch (TAO_ServerRequest & req,
         {
           req.tao_send_reply ();
         }
-
     }
-  ACE_CATCH (CORBA::Exception, ex)
+  ACE_CATCHANY
     {
       // If an exception was raised we should marshal it and send
       // the appropriate reply to the client
@@ -253,7 +252,7 @@ void TAO_ServantBase::synchronous_upcall_dispatch (TAO_ServerRequest & req,
               ACE_RE_THROW;
             }
           else
-            req.tao_send_reply_exception (ex);
+            req.tao_send_reply_exception (ACE_ANY_EXCEPTION);
         }
     }
   ACE_ENDTRY;
@@ -308,11 +307,11 @@ void TAO_ServantBase::asynchronous_upcall_dispatch (TAO_ServerRequest & req,
       // exception.
 
     }
-  ACE_CATCH (CORBA::Exception, ex)
+  ACE_CATCHANY
     {
       // If an exception was raised we should marshal it and send
       // the appropriate reply to the client
-      req.tao_send_reply_exception (ex);
+      req.tao_send_reply_exception (ACE_ANY_EXCEPTION);
     }
   ACE_ENDTRY;
   ACE_CHECK;
