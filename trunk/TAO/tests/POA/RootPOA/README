@@ -8,10 +8,3 @@ Comments:
 ========
 
 - It prints out the name of the Root POA.
-
-- It prints out two warning messages, since there is no Resource Factory  and Strategy Factory
-  found in the Service Repository.
-
-  So, it takes the default instances of the Resource and Strategy Factories.
-
-  This is ok for this simple application.

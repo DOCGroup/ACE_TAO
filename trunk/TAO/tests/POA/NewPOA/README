@@ -13,10 +13,3 @@ Comments :
         
  - Prints out names of all the POAs.
 
- - It prints out two warning messages, since there is no Resource Factory  
-   and Strategy Factory found in the Service Repository.
-
-   It takes the default instances of the Resource and Strategy Factories.
-
-   These Default factories are ok for this simple application.
-

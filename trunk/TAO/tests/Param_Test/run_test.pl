@@ -1,33 +1,11 @@
 #$Id$
+# -*- perl-mode -*-
 eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
     & eval 'exec perl -S $0 $argv:q'
     if 0;
 
 unshift @INC, '../../../bin';
 require Process;
-
-# Get the userid (or ip on NT)
-
-if ($^O eq "MSWin32")
-{
-  system ("ipconfig | find \"Address\">ipnum");
-
-  open (IPNUM, "ipnum");
-
-  read (IPNUM, $line, 80);
-
-  $ip4 = (split (/: (\d+)\.(\d+)\.(\d+)\.(\d+)/, $line))[4];
-
-  close IPNUM;
-
-  system ("del /q ipnum");
-
-  $uid = $ip4;
-}
-else
-{
-  $uid = getpwnam (getlogin ());
-}
 
 $port = 0;
 $iorfile = "theior";
@@ -55,7 +33,7 @@ sub run_test
   # something that can tell if a server is still alive.  There is kill -0 on
   # Unix, but on NT ???
 
-  $SV->Kill ();
+  $SV->Kill (); $SV->Wait ();
 }
 
 # Parse the arguments
@@ -131,11 +109,4 @@ else
   }
 }
 
-if ($^O eq "MSWin32")
-{
-  system ("del ".$iorfile);
-}
-else
-{
-  system ("rm ".$iorfile);
-}
+unlink $iorfile;
