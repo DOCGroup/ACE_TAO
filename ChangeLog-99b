@@ -1,3 +1,10 @@
+Thu Jan 14 16:18:37 EST 1999  James CE Johnson  <jcej@lads.com>
+
+	* docs/tutorials/ACE_wrappers/001/page02.html:
+	  docs/tutorials/ACE_wrappers/001/page03.html:
+		Included Kirthika Parameswaran's <Kirthika@cs.wustl.edu> abstract and
+		analogy.  Thanks Kirthika!
+
 Thu Jan 14 11:46:25 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/Synch_T.h: Pointed out that we can only parameterize
@@ -50,8 +57,8 @@ Wed Jan 13 18:48:30 EST 1999  James CE Johnson  <jcej@lads.com>
           docs/tutorials/021/mpool.cpp:
           docs/tutorials/021/mpool.h:
           docs/tutorials/021/server.cpp:
-                Fixed many NT issues found by Irfan.  Most are related to the
-                fact that NT doesn't have SysV shared memory.
+          Fixed many NT issues found by Irfan.  Most are related to the
+          fact that NT doesn't have SysV shared memory.
 
 Wed Jan 13 04:45:59 1999  James C Hu  <jxh@cs.wustl.edu>
 

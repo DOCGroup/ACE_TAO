@@ -12,12 +12,30 @@
 
 <CENTER><B><FONT SIZE=+2>A Beginners Guide to Using the ACE Toolkit</FONT></B></CENTER>
 
-
 <P>
 <HR WIDTH="100%">
 
 <P>Now we begin to look at the <A HREF="acceptor.h">acceptor</A> object.
 
+<P>
+Kirthika has this analogy:
+<P>
+<UL>
+Consider an office:
+<P>
+Reactor: Receptionist
+<P>
+Event_Handlers: various Departments catering to specific needs.
+<P>
+SERVER_PORT: door
+<P>
+Acceptor: Doorkeeper
+<P>
+Thus when a needy person (client) enters the open door (port)
+maintained by the doorkeeper (acceptor waiting for connection
+request), the receptionist(reactor) directs the person towards the
+appropriate section (event_handler) which would cater to his needs.
+</UL>
 <P>
 <HR WIDTH="100%">
 <PRE>
