@@ -158,6 +158,22 @@ else
   CPPFLAGS += -DTAO_IDL_PREPROCESSOR=\"$(subst \,\,$(TAO_IDL_PREPROCESSOR))\"
 endif
 <%endif%>
+<%if(dllflags)%>
+ifeq ($(shared_libs),1)
+ifneq ($(SHLIB),)
+CPPFLAGS     +=<%foreach(dllflags)%> -D<%dllflag%><%endfor%>
+endif
+endif
+<%endif%>
+<%if(libflags)%>
+ifeq ($(static_libs),1)
+ifneq ($(LIB),)
+CPPFLAGS     +=<%foreach(libflags)%> -D<%libflag%><%endfor%>
+endif
+endif
+<%endif%>
+
+
 <%if(libpaths)%>
 LDFLAGS      +=<%foreach(libpaths)%> -L<%libpath%><%endfor%>
 <%endif%>
