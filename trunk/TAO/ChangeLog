@@ -7,6 +7,8 @@ Wed Jul 30 16:09:23 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/FT_CORBA_ORB.idl: This missed my last commit. 
 
+	  This should fix compile errors in the core builds.
+
 Wed Jul 30 18:34:34 UTC 2003  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* orbsvcs/orbsvcs/AV/UDP.cpp: 
