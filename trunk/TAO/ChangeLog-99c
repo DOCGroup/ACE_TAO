@@ -1,6 +1,6 @@
 Fri Apr 23 000:39:51 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/Marshal.i:
+	* tao/Marshal.{h,i}:
 	  TAO_Marshal_Any::deep_free() was a no-op! I just forced
 	  the Any's destructor call. This may not be portable, but
 	  the alternative would probably necessitate un-inlining
@@ -13,6 +13,9 @@ Fri Apr 23 000:39:51 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	* tao/skip.cpp:
           TAO_Marshal_Any::skip() was causing server side memory
 	  leaks due to unreleased typecodes.
+
+	  Thanks to Frank Buschmann <Frank.Buschmann@mchp.siemens.de>
+	  for providing a tortuous Any test idea.
 
 Thu Apr 22 20:18:58 1999  Ossama Othman  <othman@cs.wustl.edu>
 
