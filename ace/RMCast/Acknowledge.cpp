@@ -2,9 +2,9 @@
 // author    : Boris Kolpackov <boris@kolpackov.net>
 // cvs-id    : $Id$
 
-#include <ace/OS.h>
-
 #include <ace/RMCast/Acknowledge.h>
+
+#include "ace/OS_NS_unistd.h"
 
 namespace ACE_RMCast
 {

@@ -92,7 +92,7 @@ namespace ACE_RMCast
         size_ = s;
       }
 
-      friend class Profile;
+      friend struct Profile;
 
     private:
       u16 id_;
