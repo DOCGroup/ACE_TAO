@@ -10,8 +10,8 @@ main (int argc, char *argv[])
 {
   ACE_TRY_NEW_ENV
     {
-      const char *loc1 = "MyLocation 1";
-      const char *loc2 = "MyLocation 2";
+      const char *location1 = "MyLocation 1";
+      const char *location2 = "MyLocation 2";
 
       LB_server lb_server (argc, argv);
 
@@ -24,17 +24,17 @@ main (int argc, char *argv[])
       Basic basic_servant1 (lb_server.object_group (),
                             lb_server.load_manager (),
                             lb_server.orb (),
-                            loc1);
+                            location1);
 
       Basic basic_servant2 (lb_server.object_group (),
                             lb_server.load_manager (),
                             lb_server.orb (),
-                            loc2);
+                            location2);
 
-      if (lb_server.register_servant (&basic_servant1, loc1) == -1)
+      if (lb_server.register_servant (&basic_servant1, location1) == -1)
         return 1;
 
-      if (lb_server.register_servant (&basic_servant2, loc2) == -1)
+      if (lb_server.register_servant (&basic_servant2, location2) == -1)
         return 1;
 
       lb_server.orb ()->run (ACE_ENV_SINGLE_ARG_PARAMETER);
