@@ -1,3 +1,10 @@
+Thu Apr 12 20:16:59 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/Blocking_Sync_None/Blocking_Sync_None.dsw:
+        * tests/Blocking_Sync_None/client.dsp:
+        * tests/Blocking_Sync_None/server.dsp:
+          More MSVC project files
+
 Thu Apr 12 15:51:06 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/Oneway_Buffering/Oneway_Buffering.dsw:
