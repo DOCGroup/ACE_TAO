@@ -340,7 +340,6 @@ public:
   virtual int parse_string (const char *string,
                             CORBA::Environment &env);
   virtual CORBA::String to_string (CORBA::Environment &env);
-  virtual const TAO_opaque &body (void) const;
   virtual int decode (TAO_InputCDR& cdr);
   virtual int encode (TAO_OutputCDR &stream) const;
   virtual const TAO_ObjectKey &object_key (void) const;
