@@ -260,7 +260,7 @@ CORBA_Any::_tao_replace (CORBA::TypeCode_ptr tc,
   ACE_CDR::consolidate (this->cdr_, mb);
   // We can save the decode operation if there's no need to extract
   // the object.
- }
+}
 
 void
 CORBA_Any::_tao_replace (CORBA::TypeCode_ptr tc,

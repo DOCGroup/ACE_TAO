@@ -769,6 +769,7 @@ Param_Test_i::test_any (const CORBA::Any &a1,
   Param_Test::Bounded_Short_Seq *bd_short_sequence;
   Param_Test::Fixed_Struct *fixed_structure;
   Param_Test::Big_Union *big_union;
+  Param_Test::Small_Union *small_union;
 
   a2 = a1;
   a3 = new CORBA::Any (a1);
@@ -884,6 +885,32 @@ Param_Test_i::test_any (const CORBA::Any &a1,
                     bu_out->the_long (),
                     bu_ret->the_long () ));
     }
+  else if (a1 >>= small_union)
+    {
+      Param_Test::Small_Union *bu_in, *bu_inout, *bu_out, *bu_ret;
+      a1 >>= bu_in;
+
+      // Insert copies....
+      a2 <<= *bu_in;
+      *a3 <<= *bu_in;
+      *ret <<= *bu_in;
+
+      // Extract the value to compare...
+      a2 >>= bu_inout;
+      *a3 >>= bu_out;
+      *ret >>= bu_ret;
+
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG, "Received Small Union\n"
+                    "  in %d\n"
+                    "  inout %d\n"
+                    "  out %d\n"
+                    "  ret %d\n",
+                    bu_in->the_long (),
+                    bu_inout->the_long (),
+                    bu_out->the_long (),
+                    bu_ret->the_long () ));
+    }
   else
     {
       ACE_DEBUG ((LM_DEBUG, "Received UNKNOWN type\n"));
@@ -964,6 +991,18 @@ Param_Test_i::test_big_union (const Param_Test::Big_Union& u1,
   u2 = u1;
   u3 = new Param_Test::Big_Union (u1);
   return ret._retn ();
+}
+
+Param_Test::Small_Union
+Param_Test_i::test_small_union (const Param_Test::Small_Union& u1,
+                                Param_Test::Small_Union& u2,
+                                Param_Test::Small_Union_out u3,
+                                CORBA::Environment &)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  u2 = u1;
+  u3 = u1;
+  return u1;
 }
 
 Param_Test::Recursive_Union*

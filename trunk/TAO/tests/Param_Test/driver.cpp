@@ -72,8 +72,8 @@ Driver::init (int argc, char **argv)
   ACE_TRY
     {
       ACE_OS::strcpy (exception_string, "ORB Initialization");
-      
-      // Retrieve the underlying ORB      
+
+      // Retrieve the underlying ORB
       this->orb_ = CORBA::ORB_init (argc,
                                     argv,
                                     "internet",
@@ -88,7 +88,7 @@ Driver::init (int argc, char **argv)
                           -1);
       // Retrieve a Param_Test object reference
       ACE_OS::strcpy (exception_string,"ORB::string_to_object() failed.");
- 
+
       CORBA::Object_var temp =
         this->orb_->string_to_object (opt->param_test_ior (), ACE_TRY_ENV);
 
@@ -99,10 +99,10 @@ Driver::init (int argc, char **argv)
                            "ORB::string_to_object() returned null object for IOR <%s>\n",
                            opt->param_test_ior ()),
                           -1);
- 
+
       // Get the object reference
       ACE_OS::strcpy (exception_string,"Param_Test::_narrow () failed.");
- 
+
       this->objref_ = Param_Test::_narrow (temp.in(), ACE_TRY_ENV);
 
       ACE_TRY_CHECK;
@@ -114,7 +114,7 @@ Driver::init (int argc, char **argv)
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (-1);
-  
+
   return 0;
 }
 
@@ -557,6 +557,19 @@ Driver::run (void)
         delete client;
       }
       break;
+    case Options::TEST_SMALL_UNION:
+      {
+        Param_Test_Client<Test_Small_Union> *client = new
+          Param_Test_Client<Test_Small_Union> (this->orb_.in (),
+                                             this->objref_.in(),
+                                             new Test_Small_Union);
+        if (opt->invoke_type () == Options::SII)
+          retstatus = client->run_sii_test ();
+        else
+          retstatus = client->run_dii_test ();
+        delete client;
+      }
+      break;
     case Options::TEST_RECURSIVE_UNION:
       {
         Param_Test_Client<Test_Recursive_Union> *client = new
@@ -654,6 +667,7 @@ template class Param_Test_Client<Test_Fixed_Array>;
 template class Param_Test_Client<Test_Var_Array>;
 template class Param_Test_Client<Test_Exception>;
 template class Param_Test_Client<Test_Big_Union>;
+template class Param_Test_Client<Test_Small_Union>;
 template class Param_Test_Client<Test_Recursive_Union>;
 template class Param_Test_Client<Test_Complex_Any>;
 template class Param_Test_Client<Test_Multdim_Array>;
@@ -693,6 +707,7 @@ template class Param_Test_Client<Test_Multdim_Array>;
 #pragma instantiate Param_Test_Client<Test_Var_Array>
 #pragma instantiate Param_Test_Client<Test_Exception>
 #pragma instantiate Param_Test_Client<Test_Big_Union>
+#pragma instantiate Param_Test_Client<Test_Small_Union>
 #pragma instantiate Param_Test_Client<Test_Recursive_Union>
 #pragma instantiate Param_Test_Client<Test_Complex_Any>
 #pragma instantiate Param_Test_Client<Test_Multdim_Array>

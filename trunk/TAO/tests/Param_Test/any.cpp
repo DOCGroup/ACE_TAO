@@ -216,7 +216,7 @@ Test_Any::reset_parameters (void)
       }
       break;
 
-    case Test_Any::ANY_UNION:
+    case Test_Any::ANY_BIG_UNION:
       {
         CORBA::Long x = gen->gen_long ();
         Param_Test::Big_Union the_union;
@@ -230,7 +230,30 @@ Test_Any::reset_parameters (void)
             this->in_ >>= bu_in;
             this->inout_ >>= bu_inout;
             ACE_DEBUG ((LM_DEBUG,
-                        "Param_Test: ANY_UNION subtest\n"
+                        "Param_Test: ANY_BIG_UNION subtest\n"
+                        "  in %d\n"
+                        "  inout %d\n",
+                        bu_in->the_long (),
+                        bu_inout->the_long ()));
+          }
+      }
+      break;
+
+    case Test_Any::ANY_SMALL_UNION:
+      {
+        CORBA::Long x = gen->gen_long ();
+        Param_Test::Small_Union the_union;
+        the_union.the_long (x);
+        this->in_    <<= the_union;
+        this->inout_ <<= the_union;
+
+        if (TAO_debug_level > 0)
+          {
+            Param_Test::Small_Union *bu_in, *bu_inout;
+            this->in_ >>= bu_in;
+            this->inout_ >>= bu_inout;
+            ACE_DEBUG ((LM_DEBUG,
+                        "Param_Test: ANY_SMALL_UNION subtest\n"
                         "  in %d\n"
                         "  inout %d\n",
                         bu_in->the_long (),
@@ -276,6 +299,7 @@ Test_Any::check_validity (void)
   Param_Test::Short_Seq *ubss_in, *ubss_inout, *ubss_out, *ubss_ret;
   Param_Test::Fixed_Struct *fs_in, *fs_inout, *fs_out, *fs_ret;
   Param_Test::Big_Union *bu_in, *bu_inout, *bu_out, *bu_ret;
+  Param_Test::Small_Union *su_in, *su_inout, *su_out, *su_ret;
 
   if ((this->in_ >>= short_in) &&
       (this->inout_ >>= short_inout) &&
@@ -403,6 +427,39 @@ Test_Any::check_validity (void)
                       bu_inout->the_long (),
                       bu_out->the_long (),
                       bu_ret->the_long () ));
+          return 0;
+        }
+      return 1;
+    }
+  else if ((this->in_ >>= su_in) &&
+           (this->inout_ >>= su_inout) &&
+           (this->out_.in () >>= su_out) &&
+           (this->ret_.in () >>= su_ret))
+    {
+      if (su_in->_d () != Param_Test::A_LONG
+          || su_inout->_d () != Param_Test::A_LONG
+          || su_out->_d () != Param_Test::A_LONG
+          || su_ret->_d () != Param_Test::A_LONG)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "Test_Any - not all unions contain a long\n"));
+          return 0;
+        }
+
+      if (su_in->the_long () != su_inout->the_long ()
+          || su_in->the_long () != su_out->the_long ()
+          || su_in->the_long () != su_ret->the_long ())
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "Test_Any - values mismatch\n"
+                      "  in %d\n"
+                      "  inout %d\n"
+                      "  out %d\n"
+                      "  ret %d\n",
+                      su_in->the_long (),
+                      su_inout->the_long (),
+                      su_out->the_long (),
+                      su_ret->the_long () ));
           return 0;
         }
       return 1;
