@@ -1,3 +1,10 @@
+Wed Aug 26 22:52:14 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/ORB_Core.cpp: 
+	  The ACE_Select_Reactor_Token_T<ACE_Noop_Token> class and the
+	  Select_Reactor_T over this class are used even when threads are
+	  enabled.
+
 Wed Aug 26 22:29:51 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/tao.dsp:
