@@ -1,3 +1,9 @@
+Sun Aug 22 22:23:12 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* DAnCE/Config_Handlers/Config_Handlers.mpc: 
+
+	  Fixed VC6 compilation errors.
+
 Mon Aug 23 01:07:24 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* DAnCE/ciao/StandardConfigurator_Impl.cpp:
