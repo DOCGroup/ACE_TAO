@@ -661,19 +661,28 @@ start_servants (ACE_Barrier &start_barrier)
                               0), //task id 0.
                   -1);
 
-#if defined (VXWORKS)
-  ACE_Sched_Priority priority = ACE_THR_PRI_FIFO_DEF + 50;
-#else
-  ACE_Sched_Priority priority = ACE_THR_PRI_FIFO_DEF + 25;
-#endif /* VXWORKS */
+// #if defined (VXWORKS)
+//   ACE_Sched_Priority priority = ACE_THR_PRI_FIFO_DEF + 50;
+// #else
+//   ACE_Sched_Priority priority = ACE_THR_PRI_FIFO_DEF + 25;
+// #endif /* VXWORKS */
 
+// priority =     ACE_Sched_Params::priority_max (ACE_SCHED_FIFO,
+// 					       ACE_SCOPE_THREAD);
+
+  ACE_Sched_Priority priority = ACE_THR_PRI_FIFO_DEF;
+
+  ACE_DEBUG ((LM_DEBUG,
+	      "Creating servant with high priority %d\n",
+	      priority));
+  
   // Make the high priority task an active object.
   if (high_priority_task->activate (THR_BOUND | ACE_SCHED_FIFO,
                                     1,
                                     0,
                                     priority) == -1)
     {
-      ACE_ERROR ((LM_ERROR, "(%P|%t; %p\n",
+      ACE_ERROR ((LM_ERROR, "(%P|%t) %p\n",
                   "high_priority_task->activate"));
     }
 
@@ -684,16 +693,21 @@ start_servants (ACE_Barrier &start_barrier)
                   Cubit_Task *[num_of_objs],
                   -1);
 
-  // Drop the priority, so that the priority of clients will increase
-  // with increasing client number.
-  for (i = 0; i < num_of_objs; i++)
-    priority = ACE_Sched_Params::previous_priority (ACE_SCHED_FIFO,
-                                                    priority,
-                                                    ACE_SCOPE_THREAD);
+  const ACE_pri_t max_low_servant_priority = 
+    ACE_Sched_Params::previous_priority (
+      ACE_SCHED_FIFO,
+      ACE_Sched_Params::previous_priority (
+        ACE_SCHED_FIFO,
+        priority,
+        ACE_SCOPE_THREAD),
+      ACE_SCOPE_THREAD);
+
+  priority = max_low_servant_priority;
 
   ACE_DEBUG ((LM_DEBUG,
-              "Creating %d servants with low priority\n",
-              num_of_objs - 1));
+              "Creating %d servants with low priority %d\n",
+              num_of_objs - 1,
+	      priority));
 
   // Create the low priority servants.
 
@@ -724,9 +738,6 @@ start_servants (ACE_Barrier &start_barrier)
                       "low_priority_task[i]->activate"));
         }
 
-      priority = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO,
-                                                  priority,
-                                                  ACE_SCOPE_THREAD);
     }
 
   char *args;
@@ -750,7 +761,7 @@ start_servants (ACE_Barrier &start_barrier)
   FILE *ior_f = 0;
 
   if (ior_file != 0)
-    ior_f = ACE_OS::fopen (ior_file, "w");
+    ior_f = ACE_OS::fopen (ior_file, "w+");
 
   for (i = 0; i < num_of_objs; ++i)
     {
