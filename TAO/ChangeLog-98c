@@ -1,64 +1,69 @@
+Mon Feb 16 10:18:25 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/poa.cpp (decode_string_to_sequence): moved declaration of
+          local "i" outside of loop because it is used after the loop.
+
 Mon Feb 16 10:14:34 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* TAO_IDL/be/be_array.cpp: 
-	  The _free method was emitted in the .i file, but it was not
-	  declared inline. Thanks to Michael Kircher (mk1@cs.wustl.edu)
-	  for reporting this one.
+        * TAO_IDL/be/be_array.cpp:
+          The _free method was emitted in the .i file, but it was not
+          declared inline. Thanks to Michael Kircher (mk1@cs.wustl.edu)
+          for reporting this one.
 
 Sun Feb 15 20:12:00 1998  Chris Cleeland  <cleeland@tango.cs.wustl.edu>
 
-	* tao/poa.{h,cpp}: Heavily modified several routines to correct
- 	problems with the notion of what, exactly, an object key really
- 	is.  Some were treating it as simply an octet sequence, others as
- 	a zero-terminated string (C-style), while others as a sequence of
- 	octets which must be terminated by a zero.
+        * tao/poa.{h,cpp}: Heavily modified several routines to correct
+        problems with the notion of what, exactly, an object key really
+        is.  Some were treating it as simply an octet sequence, others as
+        a zero-terminated string (C-style), while others as a sequence of
+        octets which must be terminated by a zero.
 
-	Object keys and IDs are now stored canonically as opaque octet
- 	sequences, and two new conversion routines
- 	(encode_sequence_to_string and decode_string_to_sequence) have
- 	been created to convert between these octet sequences and C-style
- 	strings.
+        Object keys and IDs are now stored canonically as opaque octet
+        sequences, and two new conversion routines
+        (encode_sequence_to_string and decode_string_to_sequence) have
+        been created to convert between these octet sequences and C-style
+        strings.
 
-	* tao/iioporb.cpp (object_to_string): Modified to utilize the new
- 	encoding routines to convert from octet sequences to printable
- 	strings.
+        * tao/iioporb.cpp (object_to_string): Modified to utilize the new
+        encoding routines to convert from octet sequences to printable
+        strings.
 
-	* tao/{tao_internals,orbobj}.cpp: Added explicit inclusion of
- 	Object_Manager.h.
+        * tao/{tao_internals,orbobj}.cpp: Added explicit inclusion of
+        Object_Manager.h.
 
 Sun Feb 15 16:15:49 1998  Nagarajan Surendran  <naga@tango.cs.wustl.edu>
 
-	* tests/Param_Test/options.cpp (parse_args): Changed the -f option to read
-	the servant-IOR from a file.
+        * tests/Param_Test/options.cpp (parse_args): Changed the -f option
+        to read the servant-IOR from a file.
 
-	* tests/Cubit/TAO/IDL_Cubit/clnt.cpp: Changed the -f
- 	<cubit_factory_key> to -f <cubit_factory_ior_file>. Reads the ior
- 	from that file.
+        * tests/Cubit/TAO/IDL_Cubit/clnt.cpp: Changed the -f
+        <cubit_factory_key> to -f <cubit_factory_ior_file>. Reads the ior
+        from that file.
 
-	* tests/Cubit/TAO/IDL_Cubit/svr.cpp : Added -o <ior_output_file> 
-	option to output the cubit factory ior to a file.
+        * tests/Cubit/TAO/IDL_Cubit/svr.cpp : Added -o <ior_output_file>
+        option to output the cubit factory ior to a file.
 
 Sat Feb 14 22:39:46 1998  Sergio Flores  <sergio@tango.cs.wustl.edu>
 
-	* orbsvcs/tests/Logger/clnt.cpp (init): Added negative test case
- 	of name not found when calling the naming service' resolve()
- 	method.
+        * orbsvcs/tests/Logger/clnt.cpp (init): Added negative test case
+        of name not found when calling the naming service' resolve()
+        method.
 
 Fri Feb 13 19:37:01 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
-	* tao/orbobj.cpp (resolve_name_service): Changed char buf[BUFSIZ]
- 	  to char buf[ACE_MAX_DGRAM_SIZE] to make sure we don't overflow
- 	  the buffer!
+        * tao/orbobj.cpp (resolve_name_service): Changed char buf[BUFSIZ]
+          to char buf[ACE_MAX_DGRAM_SIZE] to make sure we don't overflow
+          the buffer!
 
 Fri Feb 13 18:18:54 1998  Sergio Flores  <sergio@polka.cs.wustl.edu>
 
-	* tests/Makefile: 
-	* tests/Thruput/TAO/client.cpp: 
-	* tests/Thruput/TAO/Makefile:
-	* tests/Thruput/TAO/server.cpp:
-	* tests/Thruput/TAO/ttcp_i.cpp:
-	* tests/Thruput/TAO/ttcp_i.h:
-	* tests/Thruput/TAO/utils.cpp: Made changes to use the new POA.
+        * tests/Makefile:
+        * tests/Thruput/TAO/client.cpp:
+        * tests/Thruput/TAO/Makefile:
+        * tests/Thruput/TAO/server.cpp:
+        * tests/Thruput/TAO/ttcp_i.cpp:
+        * tests/Thruput/TAO/ttcp_i.h:
+        * tests/Thruput/TAO/utils.cpp: Made changes to use the new POA.
 
 Fri Feb 13 12:56:01 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -66,15 +71,15 @@ Fri Feb 13 12:56:01 1998  David L. Levine  <levine@cs.wustl.edu>
 
 Fri Feb 13 12:46:26 1998  David L. Levine  <levine@cs.wustl.edu>
 
-	* TAO version 0.1.2, released Fri Feb 13 12:46:26 1998.
+        * TAO version 0.1.2, released Fri Feb 13 12:46:26 1998.
 
 Thu Feb 12 21:09:22 1998  Sumedh Mungee  <sumedh@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/AVStreams_i.{h,cpp}: Updated MMDevice and StreamCtrl
+        * orbsvcs/orbsvcs/AVStreams_i.{h,cpp}: Updated MMDevice and StreamCtrl
 
 Thu Feb 12 20:55:48 1998  Sumedh Mungee  <sumedh@cs.wustl.edu>
 
-	* tests/AVStreams/client,server: Updated to use the new StreamCtrl, MMDevice etc..
+        * tests/AVStreams/client,server: Updated to use the new StreamCtrl, MMDevice etc..
 
 Thu Feb 12 11:06:48 1998  Chris Cleeland  <cleeland@tango.cs.wustl.edu>
 
