@@ -101,6 +101,7 @@ Event_Transceiver::parse_args (int argc, char *argv[])
   if (ACE_OS::strcmp (this->role_, "Supplier") == 0
       && this->port_number_ == ACE_DEFAULT_SERVER_PORT)
     this->port_number_++;
+  return 0;
 }
 
 int
