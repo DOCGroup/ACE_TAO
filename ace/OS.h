@@ -1114,6 +1114,7 @@ private:
 // This needs to go here *first* to avoid problems with AIX.
 # if defined (ACE_HAS_PTHREADS)
 extern "C" {
+#   include /**/ <signal.h>
 #   include /**/ <pthread.h>
 #   if defined (DIGITAL_UNIX)
 #     define pthread_self __pthread_self
@@ -5132,9 +5133,9 @@ public:
   static int memcmp (const void *t,
                      const void *s,
                      size_t len);
-  static void *memchr(const void *s,
-                      int c,
-                      size_t len);
+  static const void *memchr (const void *s,
+                             int c,
+                             size_t len);
   static void *memcpy (void *t,
                        const void *s,
                        size_t len);
