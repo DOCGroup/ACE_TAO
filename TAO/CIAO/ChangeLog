@@ -1,3 +1,10 @@
+Wed Jun 23 16:19:25 2004  Emre Turkay  <turkaye@dre.vanderbilt.edu>
+
+	* DnC/tests/Config_Handlers/RobotAssembly/README.html:
+
+          Committed the README file which desribes how to compile/run the
+          RobotAssembly example.
+
 Wed Jun 23 15:33:06 2004  Gan Deng  <dengg@dre.vanderbilt.edu>
 
         * DnC/DomainApplicationManager/DomainApplicationManager.mpc
