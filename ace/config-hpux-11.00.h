@@ -20,11 +20,6 @@
 
 #  include "ace/config-hpux11.h"
 
-// KCC Specific Section
-#elif defined(__KCC)
-
-#  include "ace/config-kcc-common.h"
-
 #else
 
 // The following configuration section is designed to work for HP
@@ -129,7 +124,14 @@
 // Compiler doesn't handle 'signed char' correctly (used in ace/IOStream.h)
 #  define ACE_LACKS_SIGNED_CHAR
 
-#endif /* __GNUG__, __KCC, HP */
+#endif /* __GNUG__, HP */
+
+// KCC Specific Section
+#if defined(__KCC)
+#  include "ace/config-kcc-common.h"
+#  undef ACE_HAS_STD_TEMPLATE_METHOD_SPECIALIZATION
+#  undef ACE_CC_PREPROCESSOR_ARGS
+#endif
 
 //*********************************************************************
 //
