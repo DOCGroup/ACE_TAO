@@ -1,3 +1,18 @@
+Tue Jun 27 10:45:17 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tao/ior_corbaloc/Makefile: 
+	* tao/ior_corbaloc/ior_corbaloc_export.h: 
+	* tao/ior_corbaloc/CORBALOC_Parser.i : 
+	* tao/ior_corbaloc/CORBALOC_Parser.h: 
+	* tao/ior_corbaloc/CORBALOC_Parser.cpp : 
+
+	  Implement the corbaloc: style parser.
+
+	* tao/ORB.cpp : 
+
+	  Removed the file_string_to_object function as it is no longer
+	  needed.
+	
 Mon Jun 26 14:56:42 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/ORB.cpp:
