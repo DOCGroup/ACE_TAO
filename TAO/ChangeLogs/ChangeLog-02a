@@ -1,3 +1,11 @@
+Thu Sep  7 10:29:40 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/TAO_IDL_FE_LIB.dsp:
+	* TAO_IDL/TAO_IDL_BE_LIB.dsp:
+
+	  Fixed some project settings in the FE and BE static library
+	  projects.
+
 Thu Sep Thu Sep  7 00:46:40 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Notify/Notify_AdminProperties.cpp:
