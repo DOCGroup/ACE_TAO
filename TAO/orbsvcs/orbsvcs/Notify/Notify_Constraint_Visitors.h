@@ -1,7 +1,7 @@
 /* -*- C++ -*- */
 //=============================================================================
 /**
- *  @file   Constraint_Visitors.h
+ *  @file   Notify_Constraint_Visitors.h
  *
  *  $Id$
  *
