@@ -27,8 +27,8 @@
 
 #include "tao/Any.h"
 
-#if !defined (_OCTETSEQ_CS_)
-#define _OCTETSEQ_CS_
+#if !defined (TAO_OCTETSEQ_CS)
+#define TAO_OCTETSEQ_CS
 
 // *************************************************************
 // CORBA_OctetSeq

@@ -52,8 +52,8 @@
 #endif /* _MSC_VER */
 
 
-#if !defined (_OCTETSEQ_CH_)
-#define _OCTETSEQ_CH_
+#if !defined (TAO_OCTETSEQ_CH)
+#define TAO_OCTETSEQ_CH
 
 class CORBA_OctetSeq;
 class CORBA_OctetSeq_var;
@@ -100,8 +100,8 @@ public:
 #endif /* end #if !defined */
 
 
-#if !defined (_OCTETSEQ___VAR_CH_)
-#define _OCTETSEQ___VAR_CH_
+#if !defined (TAO_OCTETSEQ___VAR_CH)
+#define TAO_OCTETSEQ___VAR_CH
 
 // *************************************************************
 // class CORBA_OctetSeq_var
@@ -144,8 +144,8 @@ private:
 #endif /* end #if !defined */
 
 
-#if !defined (_OCTETSEQ___OUT_CH_)
-#define _OCTETSEQ___OUT_CH_
+#if !defined (TAO_OCTETSEQ___OUT_CH)
+#define TAO_OCTETSEQ___OUT_CH
 
 class TAO_Export CORBA_OctetSeq_out
 {
@@ -179,8 +179,8 @@ TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA_OctetSeq 
 #ifndef __ACE_INLINE__
 
 
-#if !defined _TAO_CDR_OP_CORBA_OctetSeq_H_
-#define _TAO_CDR_OP_CORBA_OctetSeq_H_
+#if !defined TAO_TAO_CDR_OP_CORBA_OctetSeq_H
+#define TAO_TAO_CDR_OP_CORBA_OctetSeq_H
 
 TAO_Export CORBA::Boolean operator<< (
     TAO_OutputCDR &,
@@ -191,7 +191,7 @@ TAO_Export CORBA::Boolean operator>> (
     CORBA_OctetSeq &
   );
 
-#endif /* _TAO_CDR_OP_CORBA_OctetSeq_H_ */
+#endif /* TAO_TAO_CDR_OP_CORBA_OctetSeq_H */
 
 
 #endif /* __ACE_INLINE__ */
