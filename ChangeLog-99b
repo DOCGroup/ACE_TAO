@@ -1,19 +1,21 @@
 Tue Jun 15 13:17:01 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* ace/OS.h: 
-	* ace/POSIX_Proactor.h:
-	* ace/POSIX_Proactor.cpp:
+        * ace/OS.h:
+        * ace/POSIX_Proactor.h:
+        * ace/POSIX_Proactor.cpp:
 
- 	Fixed the warning (Anachronism): Assigning
-	void(*)(int,siginfo*,void*) to extern "C"
-	void(*)(int,siginfo*,void*), came from the sunCC 5.0.
+        Fixed the warning (Anachronism): Assigning
+        void(*)(int,siginfo*,void*) to extern "C"
+        void(*)(int,siginfo*,void*), came from the sunCC 5.0.
 
-	Defined the macro ACE_SIGNAL_C_FUNC in the OS.h.
+        Defined the macro ACE_SIGNAL_C_FUNC in the OS.h.
 
 Tue Jun 15 12:41:22 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.h,config-qnx-neutrino.h: moved some #includes from
           config-qnx-neutrino.h to OS.h.
+
+        * include/makeinclude/platform_qnx_neutrino.GNU: enabled -Wall.
 
         * ACE-INSTALL.html: added QNX Neutrino info.
 
