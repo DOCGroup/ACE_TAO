@@ -66,8 +66,8 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       Deployment::NodeApplication_var comserv =
-        Deployment::NodeApplication::_narrow(tmp.in ()
-                                             ACE_ENV_ARG_PARAMETER);
+        Deployment::NodeApplication::_narrow (tmp.in ()
+                                              ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (comserv.in ()))
@@ -136,7 +136,7 @@ main (int argc, char *argv[])
       for (i = 0; i < comp_num; ++i)
         {
           comp_list.push_back (NodeAppTest::NodeAppTest_RoundTrip::_narrow
-                               (comp_info[i].component_ref));
+                               (comp_info[i].component_ref.in ()));
           ACE_TRY_CHECK;
 
           if (CORBA::is_nil (comp_list[i].in ()))
@@ -182,12 +182,13 @@ main (int argc, char *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "Try removing everything\n"));
       comserv->remove ();
-      ACE_CHECK_RETURN (1);
+      ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "Homes removed successfully\n"));
 
       orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
+
       ACE_DEBUG ((LM_DEBUG, "Test success!!\n"));
     }
   ACE_CATCHANY
