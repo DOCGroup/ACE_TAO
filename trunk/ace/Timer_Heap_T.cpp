@@ -645,7 +645,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::cancel (long timer_id,
 // Locate and update the inteval on the timer_id
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK> int 
-ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::reset_interval (const long timer_id, 
+ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::reset_interval (long timer_id, 
                                                            const ACE_Time_Value &interval)
 {
   ACE_TRACE ("ACE_Timer_Heap_T::reset_interval");

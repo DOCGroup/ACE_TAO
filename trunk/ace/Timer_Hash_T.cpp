@@ -379,7 +379,7 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::schedule (const TYPE &type,
 // Locate and update the inteval on the timer_id
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK, class BUCKET> int 
-ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::reset_interval (const long timer_id, 
+ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::reset_interval (long timer_id, 
                                                                    const ACE_Time_Value &interval)
 {
   ACE_TRACE ("ACE_Timer_Hash_T::reset_interval");

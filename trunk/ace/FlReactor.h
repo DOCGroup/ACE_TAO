@@ -58,7 +58,7 @@ public:
                                const void *arg,
                                const ACE_Time_Value &delta_time,
                                const ACE_Time_Value &interval);
-  virtual int reset_timer_interval (const long timer_id, 
+  virtual int reset_timer_interval (long timer_id, 
                                     const ACE_Time_Value &interval);
   virtual int cancel_timer (ACE_Event_Handler *handler,
                             int dont_call_handle_close = 1);
