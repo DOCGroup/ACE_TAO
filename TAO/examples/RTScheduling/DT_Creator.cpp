@@ -615,6 +615,26 @@ DT_Creator::dt_count (void)
   return dt_count_;
 }
 
+DT_Creator::DT_Creator (void)
+ : dt_list_ (0),
+   poa_list_ (0),
+   job_list_ (0),
+   dt_count_ (0),
+   poa_count_ (0),
+   job_count_ (0),
+   state_lock_ (0),
+   shutdown_lock_ (0),
+   active_dt_count_ (0),
+   active_job_count_ (0),
+   log (0),
+   base_time_ (0),
+   file_name_ (0),
+   log_file_name_ (0),
+   gsf_ (0),
+   synch_ (0)
+{
+}
+
 DT_Creator::~DT_Creator (void)
 {
   // for (int i = 0; i < (BUFSIZ * 100); i++)

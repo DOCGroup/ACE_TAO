@@ -351,13 +351,13 @@ TAO_RTScheduler_Current_i::begin_scheduling_segment(
   if (this->guid_.length () == 0)
     {
       //Generate GUID
-      long temp = ++TAO_RTScheduler_Current::guid_counter;
-      this->guid_.length (sizeof(long));
+      size_t temp = ++TAO_RTScheduler_Current::guid_counter;
+      this->guid_.length (sizeof(size_t));
       ACE_OS::memcpy (this->guid_.get_buffer (),
                       &temp,
-                      sizeof(long));
+                      sizeof(size_t));
 
-      int guid;
+      size_t guid;
       ACE_OS::memcpy (&guid,
                       this->guid_.get_buffer (),
                       this->guid_.length ());
@@ -734,7 +734,7 @@ void
 TAO_RTScheduler_Current_i::cancel_thread (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  int guid;
+  size_t guid;
   ACE_OS::memcpy (&guid,
                   this->guid_.get_buffer (),
                   this->guid_.length ());

@@ -52,7 +52,7 @@ class Thread_Task : public ACE_Task <ACE_SYNCH>
   int start_time_;
   int load_;
   int iter_;
-  int count_;
+  size_t count_;
   int importance_;
   DT_Creator *dt_creator_;
   //Task *task_;

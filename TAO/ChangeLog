@@ -1,3 +1,26 @@
+Mon Mar 21 07:58:47 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * examples/RTScheduling/DT_Creator.h:
+        * examples/RTScheduling/DT_Creator.cpp:
+
+          Added a constructor for this class as it has many pointers that
+          need initialization.
+
+        * examples/RTScheduling/Fixed_Priority_Scheduler/FP_Scheduler.cpp:
+        * examples/RTScheduling/Job_i.h:
+        * examples/RTScheduling/MIF_Scheduler/MIF_Scheduler.cpp:
+        * examples/RTScheduling/Thread_Task.h:
+        * tao/RTScheduling/Current.cpp:
+        * tao/RTScheduling/Request_Interceptor.cpp:
+        * tests/RTScheduling/Current/Thread_Task.cpp:
+        * tests/RTScheduling/DT_Spawn/Thread_Action.h:
+        * tests/RTScheduling/DT_Spawn/test.cpp:
+        * tests/RTScheduling/Scheduler.cpp:
+        * tests/RTScheduling/Thread_Cancel/Thread_Task.cpp:
+
+          Use size_t instead of int when doing the memcpy.  sizeof(int) !=
+          sizeof(long) on some 64-bit platforms.
+
 Mon Mar 21 07:56:49 2005  Chad Elliott  <elliott_c@ociweb.com>
 
         * docs/Options.html:

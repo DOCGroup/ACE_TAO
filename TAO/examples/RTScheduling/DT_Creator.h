@@ -22,8 +22,9 @@ typedef Job_i **JOB_LIST;
 class DT_Creator : public ACE_Service_Object
 {
  public:
+  DT_Creator (void);
 
-  ~DT_Creator (void);
+  virtual ~DT_Creator (void);
 
   int init (int argc, char *argv []);
 
