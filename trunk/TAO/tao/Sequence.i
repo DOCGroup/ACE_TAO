@@ -208,14 +208,6 @@ TAO_String_Manager::inout (void)
   return *this->ptr_;
 }
 
-ACE_INLINE char *&
-TAO_String_Manager::out (void)
-{
-  CORBA::string_free (*this->ptr_);
-  *this->ptr_ = 0;
-  return *this->ptr_;
-}
-
 ACE_INLINE char *
 TAO_String_Manager::_retn (void)
 {
