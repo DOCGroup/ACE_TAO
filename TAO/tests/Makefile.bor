@@ -3,6 +3,7 @@
 #
 
 DIRS = \
+        AMH_Exceptions \
         AMI \
         AMI_Buffering \
         AMI_Timeouts \
