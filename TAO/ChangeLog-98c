@@ -1,21 +1,32 @@
+Fri Jul 31 07:58:36 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_union_branch/{public_ci,
+	public_assign_cs}.cpp: The code for string members was using an
+	incorrect, undefined type for a _var variable. We now use
+	CORBA::String_var instead. Thanks to Kirk Ellett <kellet@mdc.com>
+	for reporting this problem.
+
+	* doc/releasenotes/index.html: Updated to indicate that anonymous
+	arrays are suppored inside structs but not inside unions.
+
 Thu Jul 30 17:05:09 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * TAO version 0.2.1 released.
 
 Thu Jul 30 16:40:10 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/tests/EC_Multiple/run_test.pl: 
-	* orbsvcs/tests/EC_Throughput/run_test.pl: 
-	* orbsvcs/tests/Event_Latency/run_test.pl: 
-	* orbsvcs/tests/Simple_Naming/run_test.pl: 
-	* tests/Cubit/TAO/DII_Cubit/run_test.pl: 
-	* tests/Cubit/TAO/IDL_Cubit/run_test.pl: 
-	* tests/Cubit/TAO/MT_Cubit/run_test.pl: 
-	* tests/NestedUpcall/MT_Client_Test/run_test.pl: 
-	* tests/NestedUpcall/Triangle_Test/run_test.pl: 
-	* tests/Param_Test/run_test.pl: 
-	* tests/Quoter/run_test.pl: 
-	* tests/Simple/run_test.pl: 
+	* orbsvcs/tests/EC_Multiple/run_test.pl:
+	* orbsvcs/tests/EC_Throughput/run_test.pl:
+	* orbsvcs/tests/Event_Latency/run_test.pl:
+	* orbsvcs/tests/Simple_Naming/run_test.pl:
+	* tests/Cubit/TAO/DII_Cubit/run_test.pl:
+	* tests/Cubit/TAO/IDL_Cubit/run_test.pl:
+	* tests/Cubit/TAO/MT_Cubit/run_test.pl:
+	* tests/NestedUpcall/MT_Client_Test/run_test.pl:
+	* tests/NestedUpcall/Triangle_Test/run_test.pl:
+	* tests/Param_Test/run_test.pl:
+	* tests/Quoter/run_test.pl:
+	* tests/Simple/run_test.pl:
 	  Removed the last calls to system("del") and minor cosmetic
 	  fixes.
 
@@ -30,22 +41,22 @@ Thu Jul 30 15:38:52 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
 
 Thu Jul 30 13:46:38 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/tests/Concurrency/Makefile: 
+	* orbsvcs/tests/Concurrency/Makefile:
 	  The CC_command.tab.{h,cpp} and lex.CC_command.cpp files are
 	  distributed in the TAO release, there is no need for the users
 	  to generate them. We do include targets to warn of potentially
 	  outdated files, but this is only for our own purposes.
 
-	* orbsvcs/tests/Concurrency/CC_command.y: 
-	* orbsvcs/tests/Concurrency/CC_command.tab.h: 
-	* orbsvcs/tests/Concurrency/CC_command.tab.cpp: 
-	* orbsvcs/tests/Concurrency/CC_command.tab.cpp.diff: 
+	* orbsvcs/tests/Concurrency/CC_command.y:
+	* orbsvcs/tests/Concurrency/CC_command.tab.h:
+	* orbsvcs/tests/Concurrency/CC_command.tab.cpp:
+	* orbsvcs/tests/Concurrency/CC_command.tab.cpp.diff:
 	  Generated using a modified version of yacc, that produces more
 	  portable code.
-	
+
 Thu Jul 30 13:07:00 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
 
-	* orbsvcs/Makefile: 
+	* orbsvcs/Makefile:
 	* orbsvcs/Logging_Service/Makefile: New file. Makefile for the
 	Logging service.
 
@@ -59,18 +70,18 @@ Thu Jul 30 13:07:00 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
 
 	* orbsvcs/tests/Logger/Logging_Test_i.cpp: New file, renamed from
 	tests/Logger/client_i.cpp. Altered includes to reflect transition
-	of server from test server to actual service. 
+	of server from test server to actual service.
 
 	* orbsvcs/tests/Logger/Logging_Test_i.h: New file, renamed from
-	tests/Logger/client_i.h. Added multiple include protection. 
+	tests/Logger/client_i.h. Added multiple include protection.
 
 	* orbsvcs/tests/Logger/Logging_Test.cpp: New file, renamed from
 	tests/Logger/server.cpp. Removed some debugging code.
 
 	* orbsvcs/tests/Logger/Logging_Test.cpp: New file, renamed from
-	tests/Logger/client.cpp. Edited to reflect changed filenames.  
-	
-	
+	tests/Logger/client.cpp. Edited to reflect changed filenames.
+
+
 Thu Jul 30 00:39:10 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* orbsvcs/tests/Concurrency/{CC_command.tab,lex.CC_command}.cpp.diff:
@@ -99,31 +110,31 @@ Wed Jul 29 13:55:20 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 Wed Jul 29 12:32:48 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tests/Param_Test/run_test.pl: 
-	* tests/NestedUpcall/Triangle_Test/run_test.pl: 
-	* tests/NestedUpcall/MT_Client_Test/run_test.pl: 
-	* tests/Simple/run_test.pl: 
-	* tests/Cubit/TAO/IDL_Cubit/run_test.pl: 
-	* tests/Cubit/TAO/DII_Cubit/run_test.pl: 
+	* tests/Param_Test/run_test.pl:
+	* tests/NestedUpcall/Triangle_Test/run_test.pl:
+	* tests/NestedUpcall/MT_Client_Test/run_test.pl:
+	* tests/Simple/run_test.pl:
+	* tests/Cubit/TAO/IDL_Cubit/run_test.pl:
+	* tests/Cubit/TAO/DII_Cubit/run_test.pl:
 	  Use unlink instead of system("rm") or system("del").
 
-	* tests/Cubit/TAO/Makefile: 
-	* tests/Cubit/TAO/DII_Cubit/Makefile: 
+	* tests/Cubit/TAO/Makefile:
+	* tests/Cubit/TAO/DII_Cubit/Makefile:
 	  Added DII_Cubit to the default compilation.
 
-	* tests/Cubit/TAO/MT_Cubit/run_test.pl: 
+	* tests/Cubit/TAO/MT_Cubit/run_test.pl:
 	  Added a one-button test.
 
-	* tests/NestedUpcall/MT_Client_Test/client.h: 
-	* tests/NestedUpcall/MT_Client_Test/client.cpp: 
+	* tests/NestedUpcall/MT_Client_Test/client.h:
+	* tests/NestedUpcall/MT_Client_Test/client.cpp:
 	  Instead of using the thread id to decide which server we use
 	  each client thread is assigned a number, even threads choose the
 	  first server, odd threads the second one.  The thread id
 	  approach was non-portable.
 
-	* tests/POA/RootPOA/README: 
-	* tests/POA/FindPOA/README: 
-	* tests/POA/NewPOA/README: 
+	* tests/POA/RootPOA/README:
+	* tests/POA/FindPOA/README:
+	* tests/POA/NewPOA/README:
 	  Updated this files, the tests don't print warning messages about
 	  the svc.conf file anymore (actually the ORB doesn't).
 

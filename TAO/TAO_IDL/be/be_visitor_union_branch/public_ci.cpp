@@ -728,7 +728,7 @@ be_visitor_union_branch_public_ci::visit_string (be_string *node)
       *os << "// set the value" << be_nl;
       *os << "// store current val in a _var so as to free it on an assignment"
           << be_nl;
-      *os << bt->name () << "_var " << ub->local_name () << "_var (this->u_."
+      *os << "CORBA::String_var " << ub->local_name () << "_var (this->u_."
           << ub->local_name () << "_);" << be_nl;
       *os << "// release old and make a deep copy" << be_nl;
       *os << ub->local_name () << "_var = CORBA::string_dup (val);" << be_nl;
@@ -771,7 +771,7 @@ be_visitor_union_branch_public_ci::visit_string (be_string *node)
             be_nl;
         }
       *os << "// set the value" << be_nl
-          << bt->name () << "_var " << ub->local_name ()
+          << "CORBA::String_var " << ub->local_name ()
           << "_var (val);" << be_nl
           << "this->u_." << ub->local_name () << "_ = "
           << ub->local_name () << "_var._retn ();" << be_uidt_nl;
@@ -811,7 +811,7 @@ be_visitor_union_branch_public_ci::visit_string (be_string *node)
             be_nl;
         }
       *os << "// set the value" << be_nl
-          << bt->name () << "_var " << ub->local_name ()
+          << "CORBA::String_var " << ub->local_name ()
           << "_var = val;" << be_nl
           << "this->u_." << ub->local_name () << "_ = "
           << ub->local_name () << "_var._retn ();" << be_uidt_nl;
