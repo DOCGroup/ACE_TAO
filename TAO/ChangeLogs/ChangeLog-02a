@@ -70,7 +70,7 @@ Sun Apr 14 19:02:16 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* tao/Transport_Connector.h: Consolidated some of the code from
 	  different protocols. All the transports before setting up a
 	  connection look for a connection in cache. That part of the code
-	  that looks for a connection in the cache has been moved in
+	  which looks for a connection in the cache has been moved in
 	  here. If a connection is not found in cache, the control is
 	  transferred to the underlying transports to set up a
 	  connection. 
