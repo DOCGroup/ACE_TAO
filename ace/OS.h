@@ -678,8 +678,8 @@ typedef int key_t;
   #define IFF_LOOPBACK IFF_EXTLOOPBACK
 
   typedef long fd_mask;
-  #define IPPORT_RESERVED	1024
-  #define IPPORT_USERRESERVED	5000
+  #define IPPORT_RESERVED       1024
+  #define IPPORT_USERRESERVED   5000
 
   #define howmany(x, y) (((x)+((y)-1))/(y))
 
@@ -2440,7 +2440,7 @@ protected:
   extern char *tempnam(const char *, const char *);
   extern "C" int fileno(FILE *);
 
-//  #define fileno(stream)	((stream)->_file)
+//  #define fileno(stream)      ((stream)->_file)
 
   // from compiler supplied string.h
   extern char *strdup(const char *);
@@ -4528,10 +4528,10 @@ public:
   static u_int ualarm (const ACE_Time_Value &tv,
                        const ACE_Time_Value &tv_interval = ACE_Time_Value::zero);
   static ACE_hrtime_t gethrtime (const ACE_HRTimer_Op = ACE_HRTIMER_GETTIME);
-# if defined (ACE_HAS_POWERPC) && defined (ghs)
+# if defined (ghs) && defined (ACE_HAS_POWERPC_TIMER)
   static void readPPCTimeBase (u_long &most,
                                u_long &least);
-# endif /* ACE_HAS_POWERPC && ghs */
+# endif /* ghs && ACE_HAS_POWERPC_TIMER */
   static int clock_gettime (clockid_t,
                             struct timespec *);
   static ACE_Time_Value gettimeofday (void);
