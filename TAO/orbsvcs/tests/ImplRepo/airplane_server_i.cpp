@@ -8,7 +8,9 @@
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
 
-ACE_RCSID(ImplRepo, airplane_server_i, "$Id$")
+ACE_RCSID (ImplRepo, 
+           airplane_server_i, 
+           "$Id$")
 
 // The server name of the Aiprlane Server
 const char SERVER_NAME[] = "airplane_server";

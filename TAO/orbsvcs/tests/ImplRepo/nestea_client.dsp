@@ -1,25 +1,26 @@
-# Microsoft Developer Studio Project File - Name="Nestea Client" - Package Owner=<4>
+# Microsoft Developer Studio Project File - Name="nestea_client" - Package Owner=<4>
 # Microsoft Developer Studio Generated Build File, Format Version 6.00
 # ** DO NOT EDIT **
 
 # TARGTYPE "Win32 (x86) Console Application" 0x0103
 
-CFG=Nestea Client - Win32 Debug
+CFG=nestea_client - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
-!MESSAGE use the Export Makefile command and run
-!MESSAGE 
+!MESSAGE run the tool that generated this project file and specify the
+!MESSAGE nmake output type.  You can then use the following command:
+!MESSAGE
 !MESSAGE NMAKE /f "nestea_client.mak".
-!MESSAGE 
+!MESSAGE
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
-!MESSAGE 
-!MESSAGE NMAKE /f "nestea_client.mak" CFG="Nestea Client - Win32 Debug"
-!MESSAGE 
+!MESSAGE
+!MESSAGE NMAKE /f "nestea_client.mak" CFG="nestea_client - Win32 Debug"
+!MESSAGE
 !MESSAGE Possible choices for configuration are:
-!MESSAGE 
-!MESSAGE "Nestea Client - Win32 Release" (based on "Win32 (x86) Console Application")
-!MESSAGE "Nestea Client - Win32 Debug" (based on "Win32 (x86) Console Application")
-!MESSAGE 
+!MESSAGE
+!MESSAGE "nestea_client - Win32 Release" (based on "Win32 (x86) Console Application")
+!MESSAGE "nestea_client - Win32 Debug" (based on "Win32 (x86) Console Application")
+!MESSAGE
 
 # Begin Project
 # PROP AllowPerConfigDependencies 0
@@ -28,176 +29,170 @@ CFG=Nestea Client - Win32 Debug
 CPP=cl.exe
 RSC=rc.exe
 
-!IF  "$(CFG)" == "Nestea Client - Win32 Release"
+!IF  "$(CFG)" == "nestea_client - Win32 Release"
 
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "Release"
-# PROP BASE Intermediate_Dir "Release"
-# PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
 # PROP Output_Dir "Release"
-# PROP Intermediate_Dir "Release"
-# PROP Ignore_Export_Lib 0
+# PROP Intermediate_Dir "Release\nestea_client"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GX /O2 /I "..\..\..\\" /I "..\..\..\..\\" /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /FD /c
+# ADD CPP /nologo /O2 /W3 /GX /MD /GR /I "..\..\..\orbsvcs" /I "..\..\.." /I "..\..\..\tao" /I "..\..\..\.." /D NDEBUG /D WIN32 /D _CONSOLE /FD /c
 # SUBTRACT CPP /YX
-# ADD BASE RSC /l 0x409 /d "NDEBUG"
-# ADD RSC /l 0x409 /d "NDEBUG"
+# ADD RSC /l 0x409 /d NDEBUG /i "..\..\..\orbsvcs" /i "..\..\.." /i "..\..\..\tao" /i "..\..\..\.."
 BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
+# ADD BSC32 /nologo 
 LINK32=link.exe
-# ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
-# ADD LINK32 ace.lib TAO.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\..\tao" /libpath:"..\..\..\..\ace"
+# ADD LINK32 advapi32.lib user32.lib /INCREMENTAL:NO TAO_IORTable.lib TAO_PortableServer.lib TAO_IORInterceptor.lib TAO_Valuetype.lib TAO_ObjRefTemplate.lib TAO.lib ACE.lib /libpath:"..\..\..\..\lib" /nologo /version:1.3.4 /subsystem:console /pdb:"Release\nestea_client.pdb"  /machine:I386 /out:"Release\nestea_client.exe"
 
-!ELSEIF  "$(CFG)" == "Nestea Client - Win32 Debug"
+!ELSEIF  "$(CFG)" == "nestea_client - Win32 Debug"
 
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "Debug"
-# PROP BASE Intermediate_Dir "Debug"
-# PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
-# PROP Output_Dir ""
-# PROP Intermediate_Dir "Debug"
-# PROP Ignore_Export_Lib 0
+# PROP Output_Dir "."
+# PROP Intermediate_Dir "Debug\nestea_client"
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\..\\" /I "..\..\..\..\\" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /FD /c
+# ADD CPP /nologo /Ob0 /W3 /Gm /GX /Zi /MDd /GR /Gy /I "..\..\..\orbsvcs" /I "..\..\.." /I "..\..\..\tao" /I "..\..\..\.." /D _DEBUG /D WIN32 /D _CONSOLE /FD /c
 # SUBTRACT CPP /YX
-# ADD BASE RSC /l 0x409 /d "_DEBUG"
-# ADD RSC /l 0x409 /d "_DEBUG"
+# ADD RSC /l 0x409 /d _DEBUG /i "..\..\..\orbsvcs" /i "..\..\.." /i "..\..\..\tao" /i "..\..\..\.."
 BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
+# ADD BSC32 /nologo 
 LINK32=link.exe
-# ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 aced.lib TAOd.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept /libpath:"..\..\..\tao" /libpath:"..\..\..\..\ace"
+# ADD LINK32 advapi32.lib user32.lib /INCREMENTAL:NO TAO_IORTabled.lib TAO_PortableServerd.lib TAO_IORInterceptord.lib TAO_Valuetyped.lib TAO_ObjRefTemplated.lib TAOd.lib ACEd.lib /libpath:"..\..\..\..\lib" /nologo /version:1.3.4 /subsystem:console /pdb:".\nestea_client.pdb" /debug /machine:I386 /out:".\nestea_client.exe"
 
-!ENDIF 
+!ENDIF
 
 # Begin Target
 
-# Name "Nestea Client - Win32 Release"
-# Name "Nestea Client - Win32 Debug"
+# Name "nestea_client - Win32 Release"
+# Name "nestea_client - Win32 Debug"
 # Begin Group "Source Files"
 
-# PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
+# PROP Default_Filter "cpp;cxx;c"
 # Begin Source File
 
-SOURCE=.\nestea_client.cpp
+SOURCE=".\nestea_client.cpp"
 # End Source File
 # Begin Source File
 
-SOURCE=.\nestea_client_i.cpp
+SOURCE=".\nestea_client_i.cpp"
 # End Source File
-# End Group
-# Begin Group "Generated Source Files"
-
-# PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=.\NesteaC.cpp
-# ADD CPP /GR
+SOURCE=".\NesteaC.cpp"
+# End Source File
+# Begin Source File
+
+SOURCE=".\NesteaS.cpp"
 # End Source File
 # End Group
 # Begin Group "Header Files"
 
-# PROP Default_Filter "h;hpp;hxx;hm;inl"
+# PROP Default_Filter "h;hpp;hxx;hh"
 # Begin Source File
 
-SOURCE=.\nestea_client_i.h
+SOURCE=".\nestea_client_i.h"
+# End Source File
+# Begin Source File
+
+SOURCE=".\NesteaC.h"
+# End Source File
+# Begin Source File
+
+SOURCE=".\NesteaS.h"
 # End Source File
 # End Group
-# Begin Group "IDL Files"
+# Begin Group "Inline Files"
+
+# PROP Default_Filter "i;inl"
+# Begin Source File
+
+SOURCE=".\NesteaC.i"
+# End Source File
+# Begin Source File
+
+SOURCE=".\NesteaS.i"
+# End Source File
+# End Group
+# Begin Group "Documentation"
 
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=.\Nestea.idl
+SOURCE=".\README"
+# End Source File
+# End Group
+# Begin Group "IDL Files"
 
-!IF  "$(CFG)" == "Nestea Client - Win32 Release"
+# PROP Default_Filter "idl"
+# Begin Source File
 
-USERDEP__NESTE="..\..\..\..\bin\Release\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL Compiler
-InputPath=.\Nestea.idl
-InputName=Nestea
+SOURCE=".\Nestea.idl"
 
-BuildCmds= \
-	..\..\..\..\bin\Release\tao_idl -Ge 1 $(InputName).idl
-
-"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-# End Custom Build
-
-!ELSEIF  "$(CFG)" == "Nestea Client - Win32 Debug"
+!IF  "$(CFG)" == "nestea_client - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__NESTE="..\..\..\..\bin\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL Compiler
+# Begin Custom Build - Invoking IDL Compiler on $(InputPath)
 InputPath=.\Nestea.idl
 InputName=Nestea
+InputDir=.
 
 BuildCmds= \
-	..\..\..\..\bin\tao_idl -Ge 1 $(InputName).idl
+	PATH=%PATH%;..\..\..\..\lib \
+	..\..\..\..\bin\tao_idl -o . -Gv -Ge 1 -Sc -Wb,pre_include=ace\pre.h -Wb,post_include=ace\post.h $(InputPath)
 
-"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+".\$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+".\$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+".\$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+".\$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+".\$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+".\$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
 # End Custom Build
 
-!ENDIF 
+!ELSEIF  "$(CFG)" == "nestea_client - Win32 Debug"
+
+# PROP Ignore_Default_Tool 1
+# Begin Custom Build - Invoking IDL Compiler on $(InputPath)
+InputPath=.\Nestea.idl
+InputName=Nestea
+InputDir=.
+
+BuildCmds= \
+	PATH=%PATH%;..\..\..\..\lib \
+	..\..\..\..\bin\tao_idl -o . -Gv -Ge 1 -Sc -Wb,pre_include=ace\pre.h -Wb,post_include=ace\post.h $(InputPath)
+
+".\$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+".\$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+".\$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+".\$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+".\$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+".\$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+# End Custom Build
+
+!ENDIF
 
 # End Source File
 # End Group

@@ -1,3 +1,61 @@
+Mon Oct 13 20:32:22 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/tests/tests.dsw:
+        * orbsvcs/tests/Bug_1393_Regression/client.cpp:
+        * orbsvcs/tests/Bug_1395_Regression/Test_i.h:
+        * orbsvcs/tests/Concurrency/CC_client.dsp:
+        * orbsvcs/tests/Concurrency/CC_client.h:
+        * orbsvcs/tests/Concurrency/CC_naming_service.h:
+        * orbsvcs/tests/Concurrency/CC_tests.h:
+        * orbsvcs/tests/EC_Mcast/EC_Mcast.dsp:
+        * orbsvcs/tests/EC_Multiple/EC_Multiple.dsp:
+        * orbsvcs/tests/EC_Throughput/ECT_Consumer.dsp:
+        * orbsvcs/tests/EC_Throughput/ECT_Driver.h:
+        * orbsvcs/tests/EC_Throughput/ECT_Supplier.dsp:
+        * orbsvcs/tests/EC_Throughput/ECT_Throughput.dsp:
+        * orbsvcs/tests/Event/lib/Driver.cpp:
+        * orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/Server_ORBInitializer.cpp:
+        * orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/Server_ORBInitializer.h:
+        * orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/Server_Request_Interceptor.cpp:
+        * orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/server.cpp:
+        * orbsvcs/tests/FaultTolerance/IOGRManipulation/IOGRTest.cpp:
+        * orbsvcs/tests/FaultTolerance/IOGRManipulation/IOGRTest.dsp:
+        * orbsvcs/tests/IOR_MCast/server_i.cpp:
+        * orbsvcs/tests/ImplRepo/airplane_client.cpp:
+        * orbsvcs/tests/ImplRepo/airplane_client.dsp:
+        * orbsvcs/tests/ImplRepo/airplane_client_i.h:
+        * orbsvcs/tests/ImplRepo/airplane_i.cpp:
+        * orbsvcs/tests/ImplRepo/airplane_server.cpp:
+        * orbsvcs/tests/ImplRepo/airplane_server.dsp:
+        * orbsvcs/tests/ImplRepo/airplane_server_i.cpp:
+        * orbsvcs/tests/ImplRepo/airplane_server_i.h:
+        * orbsvcs/tests/ImplRepo/nestea_client.cpp:
+        * orbsvcs/tests/ImplRepo/nestea_client.dsp:
+        * orbsvcs/tests/ImplRepo/nestea_client_i.h:
+        * orbsvcs/tests/ImplRepo/nestea_i.cpp:
+        * orbsvcs/tests/ImplRepo/nestea_server.dsp:
+        * orbsvcs/tests/ImplRepo/nestea_server_i.h:
+        * orbsvcs/tests/ImplRepo/NameService/test.cpp:
+        * orbsvcs/tests/InterfaceRepo/IFR_Test/Admin_Client.cpp:
+        * orbsvcs/tests/InterfaceRepo/IFR_Test/Admin_Client.h:
+        * orbsvcs/tests/InterfaceRepo/Persistence_Test/Ptest.h:
+        * orbsvcs/tests/Miop/McastHello/client.cpp:
+        * orbsvcs/tests/Notify/Destroy/Notify_Test_Destroy.dsp:
+        * orbsvcs/tests/Notify/Test_Filter/TAO_RT_NotifyTests_Filter.dsp:
+        * orbsvcs/tests/Notify/lib/Activation_Manager.cpp:
+        * orbsvcs/tests/Notify/lib/Command.cpp:
+        * orbsvcs/tests/Notify/lib/Command.h:
+        * orbsvcs/tests/Notify/lib/Driver.h:
+        * orbsvcs/tests/Notify/lib/Priority_Mapping.h:
+        * orbsvcs/tests/Redundant_Naming/client.cpp:
+        * orbsvcs/tests/Sched_Conf/Sched_Conf.cpp:
+        * orbsvcs/tests/Sched_Conf/Sched_Conf.dsp:
+        * orbsvcs/tests/Simple_Naming/client.h:
+        * orbsvcs/tests/tests_svc_loader/tests_svc_loader.cpp:
+
+	  Updated file includes and project settings to match
+	  recent changes to TAO.
+
 Mon Oct 13 18:22:04 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_codegen.cpp:
