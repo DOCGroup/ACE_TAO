@@ -3,8 +3,8 @@
 #ifndef TAO_INTERCEPTORS_H
 #define TAO_INTERCEPTORS_H
 
-//#include "tao/corba.h"
 #include "testC.h"
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -43,29 +43,29 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   // Canonical name of the interceptor.
-  
+
   virtual void send_request (PortableInterceptor::ClientRequestInfo_ptr ri,
-                             CORBA::Environment &ACE_TRY_ENVV = 
+                             CORBA::Environment &ACE_TRY_ENVV =
                              TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ForwardRequest));
 
   virtual void receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri,
-                              CORBA::Environment &ACE_TRY_ENV = 
+                              CORBA::Environment &ACE_TRY_ENV =
                               TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri,
-                                  CORBA::Environment &ACE_TRY_ENV = 
+                                  CORBA::Environment &ACE_TRY_ENV =
                                   TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException, 
+    ACE_THROW_SPEC ((CORBA::SystemException,
                     PortableInterceptor::ForwardRequest));
 
 private:
   const char *myname_;
 
   CORBA::ORB_var orb_;
-  
+
 };
 
 class Vault_Server_Request_Interceptor
@@ -88,21 +88,21 @@ public:
   virtual char * name (CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Canonical name of the interceptor.
-  
+
   virtual void receive_request (PortableInterceptor::ServerRequestInfo_ptr ri,
-                                CORBA::Environment &ACE_TRY_ENV = 
+                                CORBA::Environment &ACE_TRY_ENV =
                                 TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ForwardRequest));
 
   virtual void send_reply (PortableInterceptor::ServerRequestInfo_ptr ri,
-                           CORBA::Environment &ACE_TRY_ENV = 
+                           CORBA::Environment &ACE_TRY_ENV =
                            TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ForwardRequest));
 
   virtual void send_exception (PortableInterceptor::ServerRequestInfo_ptr ri,
-                                CORBA::Environment &ACE_TRY_ENV = 
+                                CORBA::Environment &ACE_TRY_ENV =
                                 TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ForwardRequest));
@@ -134,29 +134,29 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   // Canonical name of the interceptor.
-  
+
   virtual void send_request (PortableInterceptor::ClientRequestInfo_ptr ri,
-                             CORBA::Environment &ACE_TRY_ENVV = 
+                             CORBA::Environment &ACE_TRY_ENVV =
                              TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ForwardRequest));
 
   virtual void receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri,
-                              CORBA::Environment &ACE_TRY_ENV = 
+                              CORBA::Environment &ACE_TRY_ENV =
                               TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri,
-                                  CORBA::Environment &ACE_TRY_ENV = 
+                                  CORBA::Environment &ACE_TRY_ENV =
                                   TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException, 
+    ACE_THROW_SPEC ((CORBA::SystemException,
                     PortableInterceptor::ForwardRequest));
 
 private:
   const char *myname_;
 
   CORBA::ORB_var orb_;
-  
+
 };
 
 class Vault_Server_Request_Context_Interceptor
@@ -179,21 +179,21 @@ public:
   virtual char * name (CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Canonical name of the interceptor.
-  
+
   virtual void receive_request (PortableInterceptor::ServerRequestInfo_ptr ri,
-                                CORBA::Environment &ACE_TRY_ENV = 
+                                CORBA::Environment &ACE_TRY_ENV =
                                 TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ForwardRequest));
 
   virtual void send_reply (PortableInterceptor::ServerRequestInfo_ptr ri,
-                           CORBA::Environment &ACE_TRY_ENV = 
+                           CORBA::Environment &ACE_TRY_ENV =
                            TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ForwardRequest));
 
   virtual void send_exception (PortableInterceptor::ServerRequestInfo_ptr ri,
-                                CORBA::Environment &ACE_TRY_ENV = 
+                                CORBA::Environment &ACE_TRY_ENV =
                                 TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ForwardRequest));
@@ -226,29 +226,29 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   // Canonical name of the interceptor.
-  
+
   virtual void send_request (PortableInterceptor::ClientRequestInfo_ptr ri,
-                             CORBA::Environment &ACE_TRY_ENVV = 
+                             CORBA::Environment &ACE_TRY_ENVV =
                              TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ForwardRequest));
 
   virtual void receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri,
-                              CORBA::Environment &ACE_TRY_ENV = 
+                              CORBA::Environment &ACE_TRY_ENV =
                               TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri,
-                                  CORBA::Environment &ACE_TRY_ENV = 
+                                  CORBA::Environment &ACE_TRY_ENV =
                                   TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException, 
+    ACE_THROW_SPEC ((CORBA::SystemException,
                     PortableInterceptor::ForwardRequest));
 
 private:
   const char *myname_;
 
   CORBA::ORB_var orb_;
-  
+
 };
 
 class Vault_Server_Request_Dynamic_Interceptor
@@ -271,21 +271,21 @@ public:
   virtual char * name (CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Canonical name of the interceptor.
-  
+
   virtual void receive_request (PortableInterceptor::ServerRequestInfo_ptr ri,
-                                CORBA::Environment &ACE_TRY_ENV = 
+                                CORBA::Environment &ACE_TRY_ENV =
                                 TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ForwardRequest));
 
   virtual void send_reply (PortableInterceptor::ServerRequestInfo_ptr ri,
-                           CORBA::Environment &ACE_TRY_ENV = 
+                           CORBA::Environment &ACE_TRY_ENV =
                            TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ForwardRequest));
 
   virtual void send_exception (PortableInterceptor::ServerRequestInfo_ptr ri,
-                                CORBA::Environment &ACE_TRY_ENV = 
+                                CORBA::Environment &ACE_TRY_ENV =
                                 TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ForwardRequest));
@@ -318,29 +318,29 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   // Canonical name of the interceptor.
-  
+
   virtual void send_request (PortableInterceptor::ClientRequestInfo_ptr ri,
-                             CORBA::Environment &ACE_TRY_ENVV = 
+                             CORBA::Environment &ACE_TRY_ENVV =
                              TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ForwardRequest));
 
   virtual void receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri,
-                              CORBA::Environment &ACE_TRY_ENV = 
+                              CORBA::Environment &ACE_TRY_ENV =
                               TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri,
-                                  CORBA::Environment &ACE_TRY_ENV = 
+                                  CORBA::Environment &ACE_TRY_ENV =
                                   TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException, 
+    ACE_THROW_SPEC ((CORBA::SystemException,
                     PortableInterceptor::ForwardRequest));
 
 private:
   const char *myname_;
 
   CORBA::ORB_var orb_;
-  
+
 };
 
 class Vault_Server_Request_NOOP_Interceptor
@@ -363,21 +363,21 @@ public:
   virtual char * name (CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Canonical name of the interceptor.
-  
+
   virtual void receive_request (PortableInterceptor::ServerRequestInfo_ptr ri,
-                                CORBA::Environment &ACE_TRY_ENV = 
+                                CORBA::Environment &ACE_TRY_ENV =
                                 TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ForwardRequest));
 
   virtual void send_reply (PortableInterceptor::ServerRequestInfo_ptr ri,
-                           CORBA::Environment &ACE_TRY_ENV = 
+                           CORBA::Environment &ACE_TRY_ENV =
                            TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ForwardRequest));
 
   virtual void send_exception (PortableInterceptor::ServerRequestInfo_ptr ri,
-                                CORBA::Environment &ACE_TRY_ENV = 
+                                CORBA::Environment &ACE_TRY_ENV =
                                 TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ForwardRequest));

@@ -18,6 +18,36 @@ Package=<4>
 
 ###############################################################################
 
+Project: "Endpoint_per_Priority Client"=".\RTCorba\Multiple_Endpoints\Endpoint_Per_Priority\Client.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name RTCORBA Test Common DLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Endpoint_per_Priority Server"=".\RTCorba\Multiple_Endpoints\Endpoint_Per_Priority\Server.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name RTCORBA Test Common DLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
 Project: "IDL_Cubit Client"=".\Cubit\TAO\IDL_Cubit\client.dsp" - Package Owner=<4>
 
 Package=<5>
@@ -66,6 +96,42 @@ Package=<4>
 
 ###############################################################################
 
+Project: "Latency Tests Deferred Synch Client"=".\Latency\deferred_synch_client.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Latency Tests ST Client"=".\Latency\st_client.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Latency Tests ST Server"=".\Latency\st_server.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Latency Tests Server"=".\Latency\server.dsp" - Package Owner=<4>
 
 Package=<5>
@@ -98,6 +164,36 @@ Package=<5>
 
 Package=<4>
 {{{
+}}}
+
+###############################################################################
+
+Project: "Orb_Per_Priority Client"=".\RTCorba\Multiple_Endpoints\Orb_Per_Priority\Client.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name RTCORBA Test Common DLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Orb_Per_Priority Server"=".\RTCorba\Multiple_Endpoints\Orb_Per_Priority\Server.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name RTCORBA Test Common DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
@@ -138,6 +234,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "RTCORBA Test Common DLL"=".\RTCorba\Multiple_Endpoints\Common\RTCORBA_Common.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Reliable Oneways Client"=".\RTCorba\Oneways\Reliable\client.dsp" - Package Owner=<4>
 
 Package=<5>
@@ -158,6 +266,36 @@ Package=<5>
 
 Package=<4>
 {{{
+}}}
+
+###############################################################################
+
+Project: "Single_Endpoint Client"=".\RTCorba\Multiple_Endpoints\Single_Endpoint\Client.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name RTCORBA Test Common DLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Single_Endpoint Server"=".\RTCorba\Multiple_Endpoints\Single_Endpoint\Server.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name RTCORBA Test Common DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
