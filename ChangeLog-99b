@@ -35,6 +35,11 @@ Tue Mar 02 21:17:19 1999  David L. Levine  <levine@cs.wustl.edu>
           so that ACE_Thread_Adapter::invoke () won't use any
           ACE_Thread_Exit functions.
 
+        * ace/OS.cpp (ACE_Thread_Adapter::invoke): removed
+          ACE_HAS_MINIMAL_ACE_OS conditional compilation, because
+          config-minimal.h now #defines ACE_USE_THREAD_MANAGER_ADAPTER.
+          And, added #else clauses to three TSS-related functions.
+
 Tue Mar 02 14:43:29 1999  Steve Huston  <shuston@riverace.com>
 
        * ace/Map_T.(h i): Qualified types inherited from template base
