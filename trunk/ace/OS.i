@@ -3628,35 +3628,33 @@ ACE_OS::rw_unlock (ACE_rwlock_t *rw)
 
 
   int result = 0;
-  int error = 0;
+  ACE_Errno_Guard error (errno, 0);
 
   if (rw->important_writer_ && rw->ref_count_ == 1)
-    // Only the reader requesting to upgrade its lock is left over.
+    // only the reader requesting to upgrade its lock is left over.
     {
-      result = ACE_OS::cond_signal (&rw->waiting_important_writer_);
+      result = ace_os::cond_signal (&rw->waiting_important_writer_);
       error = errno;
     }
   else if (rw->num_waiting_writers_ > 0 && rw->ref_count_ == 0)
-    // Give preference to writers over readers...
+    // give preference to writers over readers...
     {
-      result = ACE_OS::cond_signal (&rw->waiting_writers_);
+      result = ace_os::cond_signal (&rw->waiting_writers_);
       error = errno;
     }
   else if (rw->num_waiting_readers_ > 0 && rw->num_waiting_writers_ == 0)
     {
-      result = ACE_OS::cond_broadcast (&rw->waiting_readers_);
+      result = ace_os::cond_broadcast (&rw->waiting_readers_);
       error = errno;
     }
 
-
-  ACE_OS::mutex_unlock (&rw->lock_);
-  errno = error;
+  ace_os::mutex_unlock (&rw->lock_);
   return result;
-# endif /* ! ACE_LACKS_RWLOCK_T */
+# endif /* ! ace_lacks_rwlock_t */
 #else
-  ACE_UNUSED_ARG (rw);
-  ACE_NOTSUP_RETURN (-1);
-#endif /* ACE_HAS_THREADS */
+  ace_unused_arg (rw);
+  ace_notsup_return (-1);
+#endif /* ace_has_threads */
 }
 
 // Note that the caller of this method *must* already possess this
@@ -5502,17 +5500,14 @@ ACE_OS::thr_getspecific (ACE_OS_thread_key_t key, void **data)
   // of ACE_Log_Msg may not work correctly, so we're keeping this as
   // it is for now.
 
-  int error = errno;
+  ACE_Errno_Guard error (errno);
   *data = ::TlsGetValue (key);
 #   if !defined (ACE_HAS_WINCE)
-  if (*data == 0 && (errno = ::GetLastError ()) != NO_ERROR)
+  if (*data == 0 && (error = ::GetLastError ()) != NO_ERROR)
     return -1;
   else
 #   endif /* ACE_HAS_WINCE */
-    {
-      errno = error;
-      return 0;
-    }
+    return 0;
 # endif /* ACE_HAS_STHREADS */
 #else
   ACE_UNUSED_ARG (key);
@@ -5650,18 +5645,15 @@ ACE_OS::thr_getspecific (ACE_thread_key_t key, void **data)
   // of ACE_Log_Msg may not work correctly, so we're keeping this as
   // it is for now.
 
-  int error = errno;
+  ACE_Errno_Guard error (errno);
   *data = ::TlsGetValue (key);
 #   if !defined (ACE_HAS_WINCE)
-  if (*data == 0 && (errno = ::GetLastError ()) != NO_ERROR)
+  if (*data == 0 && (error = ::GetLastError ()) != NO_ERROR)
 
     return -1;
   else
 #   endif /* ACE_HAS_WINCE */
-    {
-      errno = error;
-      return 0;
-    }
+    return 0;
 # else
   ACE_UNUSED_ARG (key);
   ACE_UNUSED_ARG (data);
