@@ -104,6 +104,7 @@ Event_Handler::handle_timeout (const ACE_Time_Value &,
                       -1);
       int result = ACE_Thread_Manager::instance ()->spawn (&worker, this);
       ACE_ASSERT (result != -1);
+      ACE_UNUSED_ARG (result);
     }
 
   return 0;

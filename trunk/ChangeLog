@@ -1,3 +1,8 @@
+Sun Mar 14 12:41:52 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Reactor/WFMO_Reactor/Handle_Close.cpp:
+          Fixed warnings in MinGW build
+
 Sun Mar 14 12:28:32 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/IPC_SAP/SPIPE_SAP/NPClient.cpp:
