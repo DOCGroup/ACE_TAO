@@ -678,7 +678,7 @@ TAO_Marshal_Struct::decode (CORBA::TypeCode_ptr  tc,
   CORBA::TypeCode::traverse_status retval = CORBA::TypeCode::TRAVERSE_CONTINUE;
   CORBA::Boolean continue_decoding = CORBA::B_TRUE;
   CORBA::TypeCode_ptr param;
-  CORBA::Long size, alignment;
+  CORBA::Long size, alignment, align_offset;
 
   void *start_addr = (void *)data;
 
@@ -701,9 +701,16 @@ TAO_Marshal_Struct::decode (CORBA::TypeCode_ptr  tc,
 		  alignment = param->alignment (env);
 		  if (env.exception () == 0)
 		    {
-		      data = (const void *)((ptr_arith_t) ptr_align_binary (data, alignment) +
-                        (ptr_arith_t) ptr_align_binary (start_addr, alignment) -
-                        (ptr_arith_t) start_addr);
+                      align_offset =
+                        (ptr_arith_t) ptr_align_binary (data, alignment)
+                        - (ptr_arith_t) data
+                        + (ptr_arith_t) ptr_align_binary (start_addr, alignment)
+                        - (ptr_arith_t) start_addr;
+                      // if both the start_addr and data are not aligned as per
+                      // the alignment, we do not add the offset
+                      data = (const void *) ((ptr_arith_t) data +
+                                             ((align_offset == alignment) ?
+                                              0 : align_offset));
 		      switch (param->kind_)
 			{
 			case CORBA::tk_null:

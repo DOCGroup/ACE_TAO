@@ -1,17 +1,28 @@
-Thu Jan 29 10:29:14 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
-
-	* Makefile: 
-	  Compile <tests> before <orbsvcs>, if the first one fails the
-	  second will sure fail also.
-
-	* tests/Cubit/TAO/MT_Cubit/Makefile: 
-	  Updated comments and reformated some unreadable things.
-
-Thu Jan 29 10:05:53 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+Thu Jan 29 10:34:08 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* TAO_IDL/be/be_operation.cpp: Some bug fixes made in the pre-POA
 	TAO version were accidentally overwritten during the POA to main
 	branch merge. This has been fixed.
+
+	* tao/{encode, decode}.cpp: Fixed the terrible alignment problems
+	that we were having on VxWorks for marshaling structures. At this
+	time, the fix has been made only to "structs". These problems were
+	being caused because the C++ compiler on NT/VxWorks was laying out
+	structures on a 4 byte aligned address. If a "double" is the very
+	first field, it will allocate the double at the 4 byte aligned
+	address even if a double is 8 byte aligned. The fix is to make
+	sure that when we align, we must take into account the start
+	address of the structure as well as the address at which the field
+	is laid out.
+
+Thu Jan 29 10:29:14 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* Makefile:
+	  Compile <tests> before <orbsvcs>, if the first one fails the
+	  second will sure fail also.
+
+	* tests/Cubit/TAO/MT_Cubit/Makefile:
+	  Updated comments and reformated some unreadable things.
 
 Wed Jan 28 15:35:37 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
