@@ -155,6 +155,14 @@ public:
   // See if we have a collocated address, if yes, return the POA
   // associated with the address.
 
+#if defined (TAO_ARL_USES_SAME_CONNECTOR_PORT)
+  CORBA::Boolean arl_same_port_connect (void);
+  // Access function to query whether we want this feature or not.
+  // This is a specialization only for the ARL at Wash U.
+  // This setting this flag will for the connect use the same port
+  // that the server uses.
+#endif /* TAO_ARL_USES_SAME_CONNECTOR_PORT */
+
 private:
   int init (int& argc, char ** argv);
   // Initialize the guts of the ORB Core.  It is intended that this be
@@ -255,6 +263,13 @@ private:
   CORBA::Boolean opt_for_collocation_;
   // TRUE if we want to take advantage of collocation optimization in
   // this ORB.
+
+#if defined (TAO_ARL_USES_SAME_CONNECTOR_PORT)
+  CORBA::Boolean arl_same_port_connect_;
+  // This is a specialization only for the ARL at Wash U.
+  // This setting this flag will for the connect use the same port
+  // that the server uses.
+#endif /* TAO_ARL_USES_SAME_CONNECTOR_PORT */
 
   char *preconnections_;
   // A string of comma-separated <{host}>:<{port}> pairs used to
@@ -454,7 +469,6 @@ private:
   // Flag indicating whether the collocation table should be global
   // thread-specific.  It defaults to TAO_GLOBAL if not set
   // specifically.
-
 
   // = Typedefs for the singleton types used to store our orb core
   // information.
