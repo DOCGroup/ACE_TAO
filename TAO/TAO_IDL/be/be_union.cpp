@@ -465,7 +465,6 @@ be_union::gen_var_defn (void)
 {
   TAO_OutStream *ch; // output stream
   TAO_NL  nl;        // end line
-  be_state *s;       // code gen state
   char namebuf [NAMEBUFSIZE];  // names
 
   ACE_OS::memset (namebuf, '\0', NAMEBUFSIZE);
