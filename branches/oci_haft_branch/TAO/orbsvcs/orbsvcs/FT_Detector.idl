@@ -1,0 +1,138 @@
+//$Id$
+// FT.idl
+#ifndef _FT_DETECTOR_IDL_
+#define _FT_DETECTOR_IDL_
+
+// The OMG FT file has been split into 
+//      FT_CORBA_ORB.idl -- Interface(s) to be implemented in the orb
+//      FT_CORBA.idl  -- Interface(s) to be implemented by the Replication 
+//                       manager
+//      FT_Notifier.idl -- Interface(s) to be implemented by FaultNotifier
+//      FT_Servant.idl -- Interface(s) to be implemented by the servant
+// and new [TAO specific] IDL has been developed in   
+//      FT_Detector.idl -- Interface to the fault detector
+//
+#pragma prefix "omg.org"
+
+#include "orbsvcs/FT_CORBA.idl"
+
+module FT
+{
+  /////////////////////
+  // Forward references
+  interface PullMonitorable;
+  interface FaultNotifier;
+
+  /**
+   * An interface for object that detect failures of monitorable object(s).
+   * At present, this monitoring is done via the is_alive() method of the 
+   * PullMonitorable interface which must be implemented by the object-to-
+   * be-monitored.  Other monitoring techniques may be supported in the future.
+   * In particular heartbeat/watchdog monitoring is anticipated.
+   * Notifications of failing objects are sent to a FaultNotifier which is 
+   * responsible for distributing them to interested parties.
+   */
+  interface FaultDetector
+  {
+    /**
+     * Tell this fault detector where to send notifications.
+     * @param notifier where to send the fault information.
+     */
+    void set_notifier(in FaultNotifier notifier);
+
+    /**
+     * An opaque ID type to be used to identify objects being monitored.
+     * This avoids ambiguous IOR equivalence issues.
+     * MonitorableIds are meaningful only to the FaultDetector that 
+     * generated them.
+     */
+    typedef unsigned long MonitorableId;
+
+    /**
+     * Add a object to be monitored.
+     * Note: domain_id + group_id + object_location uniquely identify the
+     * object for fault notification purposes.
+     * object_type is included in the Fault Notification to enable filtering 
+     * on type, and for use by a Fault Analyzer.
+     *
+     * @param monitorable a reference to the object that implements PullMonitorable.
+     * @param domain_id the Fault Tolerance Domain in which this detector is operating.
+     * @param group_id the object group containing the monitorables watched by this fault detector.
+     * @param object_location the Fault Tolerance location in which this monitorable object runs.
+     * @param object_type the type of this monitorable object.
+     * @returns an opaque ID to be used to identify this object to this FaultDetector.
+     */
+    MonitorableId add_monitorable(
+      in PullMonitorable monitorable,
+      in FTDomainId domain_id,
+      in ObjectGroupId group_id,
+      in Location object_location,
+      in _TypeId object_type
+      );
+
+
+    /**
+     * Remove the monitorable object from the set of object to be monitored.
+     * If the object does not exist, this is not an error
+     * it may have faulted or terminated.
+     * @param monitorable_id is the id assigned by add_monitorable.
+     * @returns the number of objects still being monitored.
+     */
+    unsigned long remove_monitorable(in MonitorableId monitorable_id);
+
+    /**
+     * Adjust properties on-the-fly.
+     * @param property_set is a set of properties that (may) have new values. 
+     */
+    void change_properties(in Properties property_set);
+
+    /**
+     * Ask the Fault Detector to come to an orderly end.
+     */
+    oneway void shutdown();
+  };
+
+  /**
+   * Create FaultDetectors on demand.
+   * A FaultDetectorFactory acts as an agent for a ReplicationManager
+   * which needs to create one or more FaultDetectors at a particular
+   * location.
+   * This factory similar to a GenericFactory, but it it is specific to
+   * FaultDetectors.  This allows it to be simplier, while knowing about
+   * the particular needs of FaultDetectors (i.e. a FaultDetector nees 
+   * a FaultNotifier.)
+   */
+  interface FaultDetectorFactory
+  {
+    /**
+     * An opaque ID type to be used to identify FaultDetectors.
+     * This avoids ambiguous IOR equivalence issues.
+     * FaultDetectorIds are meaningful only to the FaultDetectorFactory 
+     * that generated them.
+     */
+    typedef unsigned long FaultDetectorId;
+
+    /**
+     * Create a FaultDetector attached to a particular notifier.
+     * @param notifier a reference to the FaultNotifier to which notification should be sent.
+     * @param property_set a set of parameters to configure the new FaultDetector.
+     * @param detector returns the reference to the newly created FaultDetector.
+     * @returns a Id to identify the new FaultDetector to this factory.
+     */
+    FaultDetectorId create_detector (
+        in FaultNotifier notifier, 
+        in Properties property_set,
+        out FaultDetector detector)
+      raises (ObjectNotCreated,
+              InvalidProperty);
+
+    /**
+     * Delete a detector previously created by this factory.
+     * @param creation_id
+     */
+    void delete_detector(in FaultDetectorId creation_id)
+      raises (ObjectNotFound); 
+  };
+};
+
+#endif // for #ifndef _FT_DETECTOR_IDL_

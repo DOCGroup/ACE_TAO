@@ -3,9 +3,13 @@
 #ifndef _FT_IDL_
 #define _FT_IDL_
 
-// The OMG file has been split in to two portions.
+// The OMG file has been devided into several portions:
+//  FT_CORBA.idl
+//  FT_CORBA_ORB.idl
+//  FT_Detector.idl
+//  FT_Notifier.idl
+//  FT_Replica.idl
 
-// The next include is TAO specific.
 #include "orbsvcs/FT_CORBA_ORB.idl"
 
 #include "orbsvcs/CosNaming.idl" // 98-10-19.idl
@@ -145,7 +149,8 @@ module FT
       raises(ObjectGroupNotFound, InvalidProperty, UnsupportedProperty);
 
     Properties get_properties(in ObjectGroup object_group)
-      raises(ObjectGroupNotFound); };
+      raises(ObjectGroupNotFound); 
+  };
 
   // Specification of ObjectGroupManager Interface
   // which ReplicationManager Inherits
@@ -191,7 +196,8 @@ module FT
 
     Object get_member_ref(in ObjectGroup object_group,
                           in Location loc)
-      raises(ObjectGroupNotFound, MemberNotFound); };
+      raises(ObjectGroupNotFound, MemberNotFound); 
+  };
 
 
   // Specification of GenericFactory Interface
@@ -208,7 +214,8 @@ module FT
               CannotMeetCriteria);
 
     void delete_object(in FactoryCreationId factory_creation_id)
-      raises (ObjectNotFound); };
+      raises (ObjectNotFound); 
+  };
 
   // Specification of ReplicationManager Interface
   interface ReplicationManager : PropertyManager,
@@ -216,56 +223,12 @@ module FT
     GenericFactory {
     void register_fault_notifier(in FaultNotifier fault_notifier);
     FaultNotifier get_fault_notifier()
-      raises (InterfaceNotFound); };
-
-  // Specifications for Fault Management
-  // Specification of PullMonitorable Interface
-  // which Application Objects Inherit
-  interface PullMonitorable { boolean is_alive(); };
-
-  // Specification of FaultNotifier Interface
-  interface FaultNotifier {
-    typedef unsigned long long ConsumerId;
-    void push_structured_fault( in CosNotification::StructuredEvent
-                                event);
-    void push_sequence_fault( in CosNotification::EventBatch events);
-    CosNotifyFilter::Filter create_subscription_filter (in string
-                                                        constraint_grammar)
-      raises (CosNotifyFilter::InvalidGrammar);
-    ConsumerId connect_structured_fault_consumer(in CosNotifyComm::StructuredPushConsumer push_consumer,
-                                                 in CosNotifyFilter::Filter filter) ;
-
-    ConsumerId connect_sequence_fault_consumer(in
-                                               CosNotifyComm::SequencePushConsumer push_consumer,
-                                               in
-                                               CosNotifyFilter::Filter
-                                               filter);
-
-    void disconnect_consumer( in ConsumerId connection)
-    raises(CosEventComm::Disconnected); };
-
-  // Specifications for Logging and Recovery
-  typedef sequence<octet> State;
-
-  exception NoStateAvailable {};
-  exception InvalidState {};
-
-  exception NoUpdateAvailable {};
-  exception InvalidUpdate {};
-
-  // Specification of Checkpointable Interface
-  // which Updateable and Application Objects Inherit
-  interface Checkpointable { State get_state()
-                               raises(NoStateAvailable);
-  void set_state(in State s) raises(InvalidState); };
-
-  // Specification of Updateable Interface
-  // which Application Objects Inherit
-  interface Updateable : Checkpointable { State get_update()
-                                            raises(NoUpdateAvailable);
-  void set_update(in State s) raises(InvalidUpdate);
+      raises (InterfaceNotFound); 
   };
 
+  // Specifications for Fault Management moved to FT_Replica.idl
+  // Specification of FaultNotifier Interface: moved to FT_Notifier.idl
+  // Specifications for Logging and Recovery: moved to FT_Replica.idl
 };
 
 
