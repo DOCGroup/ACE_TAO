@@ -1,4 +1,6 @@
-Mon Sep 13 18:08:43 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+Mon Sep 13 18:23:44 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/ORB_Core.cpp (init): Removed extra debugging statement.
 
 	* tao/MessagingS.cpp (_dispatch): No need to replicate code.
 	  Forward call to base class.
