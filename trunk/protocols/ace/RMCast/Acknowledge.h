@@ -35,7 +35,10 @@ namespace ACE_RMCast
     virtual void
     send (Message_ptr m);
 
-  private:
+  // Sun C++ 5.4 can't handle private here.
+  //
+  // private:
+  public:
     struct Descr
     {
       //@@ There should be no default c-tor.
@@ -107,6 +110,7 @@ namespace ACE_RMCast
       unsigned long timer_;
     };
 
+  private:
     struct Queue : ACE_Hash_Map_Manager<u64, Descr, ACE_Null_Mutex>
     {
       typedef ACE_Hash_Map_Manager<u64, Descr, ACE_Null_Mutex> Base;
@@ -193,8 +197,6 @@ namespace ACE_RMCast
     private:
       u64 sn_, max_sn_;
     };
-
-    friend struct Acknowledge::Queue;
 
     typedef
     ACE_Hash_Map_Manager_Ex<Address,
