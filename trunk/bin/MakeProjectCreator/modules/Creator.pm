@@ -369,27 +369,35 @@ sub base_directory {
 
 
 sub generate_default_file_list {
-  my($self)  = shift;
-  my($dir)   = shift;
-  my($dh)    = new FileHandle();
-  my(@files) = ();
-
-  if (!defined $dir) {
-    $dir = '.';
-  }
+  my($self)    = shift;
+  my($dir)     = shift;
+  my($exclude) = shift;
+  my($dh)      = new FileHandle();
+  my(@files)   = ();
 
   if (opendir($dh, $dir)) {
-    @files = grep(!/^\.\.?$/, readdir($dh));
-    if ($self->sort_files()) {
-      @files = sort { $self->file_sorter($a, $b) } @files;
+    my($need_dir) = ($dir ne '.');
+    foreach my $file (grep(!/^\.\.?$/, readdir($dh))) {
+      my($skip) = 0;
+      ## Prefix each file name with the directory only if it's not '.'
+      my($full) = ($need_dir ? "$dir/" : '') . $file;
+
+      if (defined $$exclude[0]) {
+        foreach my $exc (@$exclude) {
+          if ($full eq $exc) {
+            $skip = 1;
+            last;
+          }
+        }
+      }
+
+      if (!$skip) {
+        push(@files, $full);
+      }
     }
 
-    ## Prefix each file name with the directory
-    ## only if it's not .
-    if ($dir ne '.') {
-      for(my $i = 0; $i <= $#files; $i++) {
-        $files[$i] = "$dir/$files[$i]";
-      }
+    if ($self->sort_files()) {
+      @files = sort { $self->file_sorter($a, $b) } @files;
     }
 
     closedir($dh);
@@ -448,20 +456,38 @@ sub add_file_written {
 
 
 sub extension_recursive_input_list {
-  my($self)  = shift;
-  my($dir)   = shift;
-  my($ext)   = shift;
-  my($fh)    = new FileHandle();
-  my(@files) = ();
+  my($self)    = shift;
+  my($dir)     = shift;
+  my($exclude) = shift;
+  my($ext)     = shift;
+  my($fh)      = new FileHandle();
+  my(@files)   = ();
 
   if (opendir($fh, $dir)) {
     foreach my $file (grep(!/^\.\.?$/, readdir($fh))) {
+      my($skip) = 0;
       my($full) = ($dir ne '.' ? "$dir/" : '') . $file;
-      if (-d $full) {
-        push(@files, $self->extension_recursive_input_list($full, $ext));
+
+      ## Check for command line exclusions
+      if (defined $$exclude[0]) {
+        foreach my $exc (@$exclude) {
+          if ($full eq $exc) {
+            $skip = 1;
+            last;
+          }
+        }
       }
-      elsif ($full =~ /$ext$/) {
-        push(@files, $full);
+
+      ## If we are not skipping this directory or file, then check it out
+      if (!$skip) {
+        if (-d $full) {
+          push(@files, $self->extension_recursive_input_list($full,
+                                                             $exclude,
+                                                             $ext));
+        }
+        elsif ($full =~ /$ext$/) {
+          push(@files, $full);
+        }
       }
     }
     closedir($fh);

@@ -342,7 +342,9 @@ sub search_for_files {
 
   foreach my $file (@$files) {
     if (-d $file) {
-      my(@f) = $self->generate_default_file_list($file);
+      my(@f) = $self->generate_default_file_list(
+                         $file,
+                         $self->{'exclude'}->{$self->{'wctype'}});
       $self->search_for_files(\@f, $array, $impl);
       if ($impl) {
         unshift(@$array, $file);
@@ -389,7 +391,9 @@ sub generate_default_components {
       if (!$self->excluded($file)) {
         if (-d $file) {
           my(@found) = ();
-          my(@gen)   = $self->generate_default_file_list($file);
+          my(@gen)   = $self->generate_default_file_list(
+                                $file,
+                                $self->{'exclude'}->{$self->{'wctype'}});
           $self->search_for_files(\@gen, \@found, $impl);
           push(@built, @found);
           if ($impl || $self->{'scoped_assign'}->{$file}->{'implicit'}) {
@@ -460,7 +464,9 @@ sub generate_defaults {
     $self->{'workspace_name'} = $self->get_default_workspace_name();
   }
 
-  my(@files) = $self->generate_default_file_list();
+  my(@files) = $self->generate_default_file_list(
+                        '.',
+                        $self->{'exclude'}->{$self->{'wctype'}});
 
   ## Generate default components
   $self->generate_default_components(\@files,
@@ -1364,9 +1370,10 @@ sub get_modified_workspace_name {
 
 
 sub generate_recursive_input_list {
-  my($self) = shift;
-  my($dir)  = shift;
-  return $self->extension_recursive_input_list($dir, $wsext);
+  my($self)    = shift;
+  my($dir)     = shift;
+  my($exclude) = shift;
+  return $self->extension_recursive_input_list($dir, $exclude, $wsext);
 }
 
 
