@@ -1,3 +1,12 @@
+Mon Dec 28 17:57:25 1998  James CE Johnson  <jcej@chiroptera.tragus.org>
+
+	* docs/tutorials/020/*: 
+	Sooner than expected...  A brief and basic intro to using
+	ACE_Shared_Memory_MM.
+	
+	* docs/tutorials/online-tutorials.html: 
+	Linked in 019 and 020
+
 Mon Dec 28 16:32:42 1998  James CE Johnson  <jcej@chiroptera.tragus.org>
 
 	* docs/tutorials/019/*: 
