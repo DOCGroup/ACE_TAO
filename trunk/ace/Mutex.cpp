@@ -1,8 +1,12 @@
 // $Id$
 
+#include "ace/Mutex.h"
+
 #if !defined (__ACE_INLINE__)
 #include "ace/Mutex.inl"
 #endif /* __ACE_INLINE__ */
+
+//#include "ace/Log_Msg.h"
 
 ACE_RCSID(ace, Mutex, "$Id$")
 

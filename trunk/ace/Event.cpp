@@ -1,5 +1,7 @@
 // $Id$
 
+#include "ace/Event.h"
+
 #if !defined (__ACE_INLINE__)
 #include "ace/Event.inl"
 #endif /* __ACE_INLINE__ */

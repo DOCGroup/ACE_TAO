@@ -30,6 +30,8 @@
 
 ACE_RCSID(tests, New_Fail_Test, "$Id$")
 
+#if (!defined (__SUNPRO_CC) && !defined (__GNUG__)) || \
+  defined (ACE_HAS_EXCEPTIONS)
 // This test allocates all of the heap memory, forcing 'new' to fail
 // because of a lack of memory.  The ACE_NEW macros should prevent an
 // exception from being thrown past the ACE_NEW.  If this test doesn't
@@ -67,6 +69,7 @@ try_ace_new_noreturn (void)
   ACE_NEW_NORETURN (p, char[BIG_BLOCK]);
   return p;
 }
+#endif /* (!__SUNPRO_CC && !__GNUG__) || ACE_HAS_EXCEPTIONS */
 
 int
 run_main (int, ACE_TCHAR *[])
@@ -85,21 +88,15 @@ run_main (int, ACE_TCHAR *[])
     ACE_DEBUG ((LM_NOTICE, ACE_TEXT ("Out-of-memory will throw an unhandled exception\n")));
   ACE_DEBUG ((LM_NOTICE, ACE_TEXT ("Rebuild with exceptions=1 to prevent this, but it may impair performance.\n")));
 
-  // Use the static function addresses, to prevent warnings about the
-  // functions not being used.
-  if (&try_ace_new)
-    /* NULL */;
-  if (&try_ace_new_return)
-    /* NULL */;
 #else
 
   char *blocks[MAX_ALLOCS_IN_TEST];
   int i;
 
-#if defined (ACE_HAS_EXCEPTIONS)
+#  if defined (ACE_HAS_EXCEPTIONS)
   try
     {
-#endif /* ACE_HAS_EXCEPTIONS */
+#  endif /* ACE_HAS_EXCEPTIONS */
       // First part: test ACE_NEW
       for (i = 0; i < MAX_ALLOCS_IN_TEST; i++)
         {
@@ -179,7 +176,7 @@ run_main (int, ACE_TCHAR *[])
       while (i >= 0)
         delete [] blocks[i--];
 
-#if defined (ACE_HAS_EXCEPTIONS)
+#  if defined (ACE_HAS_EXCEPTIONS)
     }
 
   catch (...)
@@ -192,7 +189,7 @@ run_main (int, ACE_TCHAR *[])
       // Mark test failure
       status = 1;
     }
-#endif /* ACE_HAS_EXCEPTIONS */
+#  endif /* ACE_HAS_EXCEPTIONS */
 #endif /* __SUNPRO_CC && !ACE_HAS_EXCEPTIONS */
 
   ACE_END_TEST;

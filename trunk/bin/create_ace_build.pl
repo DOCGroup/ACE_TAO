@@ -296,7 +296,6 @@ sub wanted {
         ! /^.*\.opt\z/s &&
         ! /^.*\.bak\z/s &&
         ! /^.*\.ilk\z/s &&
-        ! /^.*\.exp\z/s &&
         ! /^.*\.pdb\z/s &&
         ! /^\.cvsignore\z/s &&
         ! /^\.disable\z/s &&
