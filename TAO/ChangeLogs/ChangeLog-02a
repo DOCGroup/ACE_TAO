@@ -1,3 +1,9 @@
+Tue Jan 25 19:27:24 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* docs/releasenotes/index.html:
+	  Added entry for forward declared interface change to
+	  IDL compiler.
+
 Tue Jan 25 19:01:33 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Event/EC_Event_Channel.cpp:
