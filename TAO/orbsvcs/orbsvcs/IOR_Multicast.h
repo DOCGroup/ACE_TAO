@@ -4,10 +4,10 @@
 // ============================================================================
 //
 // = LIBRARY
-//    TAO/orbsvcs/bin/Naming_Service
+//    TAO/orbsvcs/orbsvcs
 //
 // = FILENAME
-//    svr.h
+//    IOR_Multicast.h
 //
 // = DESCRIPTION
 //    Defines a class that listens to a multicast address for client requests
@@ -34,11 +34,15 @@
 
 class TAO_ORBSVCS_Export TAO_IOR_Multicast : public ACE_Event_Handler
 {
-  // @@ Naga, can you please add the standard comments to this class and
-  // make sure that all the comments for each method go underneath the
-  // method name?
+  // = TITLE
+  //     Event Handler that services multicast requests for IOR of a
+  //     bootstrappable service. 
+  //
+  // = DESCRIPTION
+  //     This class uses the ACE_SOCK_Dgram_Mcast class and should be
+  //     registered with a reactor and should be initialized with the
+  //     ior of the  service to be multicasted.
 public:
-  // = Initialization and termination methods.
   TAO_IOR_Multicast (void);
   // Constructor.
 
@@ -46,7 +50,7 @@ public:
                      u_short port,
                      const char *mcast_addr,
                      TAO_Service_ID service_id);
-  // Constructor.
+  // Constructor taking the ior of the service.
 
   int init (const char *ior,
             u_short port,
@@ -90,7 +94,7 @@ private:
   // socket for response to the multicast
 };
 
-#endif /* NAMING_SERVICE_H */
+#endif /* TAO_IOR_MULTICAST_H */
 
 
 
