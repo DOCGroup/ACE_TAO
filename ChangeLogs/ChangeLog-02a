@@ -1,3 +1,18 @@
+Tue Apr 16 11:49:00 2002  Ossama Othman  <ossama@uci.edu>
+
+	* ace/Service_Templates.cpp:
+	* ace/Thread_Manager.cpp:
+
+	  Only instantiate ACE_Auto_Basic_Ptr templates if
+	  ACE_LACKS_AUTO_PTR is defined or if ACE_HAS_STANDARD_CPP_LIBRARY
+	  is not defined.  In the above cases, they are only used as
+	  base classes for ACE's implementation of the standard auto_ptr
+	  template.  When using the auto_ptr implementation provided by
+	  the standard C++ library in use, the ACE_Auto_Basic_Ptr template
+	  instances aren't needed.  Reduces footprint in cases where the
+	  standard C++ library implementation is used, and explicit
+	  template instantation is required.
+
 Tue Apr 16 14:38:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * etc/ace.doxygen:
