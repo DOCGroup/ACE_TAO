@@ -1,0 +1,69 @@
+# file      : CCF/IDL2/Makefile.archive
+# author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
+# cvs-id    : $Id$
+
+root = ../..
+
+include $(root)/Bootstrap.rules
+
+$(call include, $(root)/Config.rules)
+
+$(call include, $(UTILITY_ROOT)/BuildRules/Archive.pre.rules)
+
+
+cxx_translation_units := LexicalAnalyzer.cpp Parser.cpp
+
+
+translated_units := SemanticGraph/Attribute.o    \
+                    SemanticGraph/Elements.o     \
+                    SemanticGraph/Exception.o    \
+                    SemanticGraph/Fundamental.o  \
+                    SemanticGraph/Interface.o    \
+                    SemanticGraph/Literals.o     \
+                    SemanticGraph/Member.o       \
+                    SemanticGraph/Module.o       \
+                    SemanticGraph/Name.o         \
+                    SemanticGraph/Operation.o    \
+                    SemanticGraph/Sequence.o     \
+                    SemanticGraph/Struct.o       \
+                    SemanticGraph/Translation.o  \
+                    SemanticGraph/TypeId.o       \
+                    SemanticGraph/ValueType.o
+
+
+translated_units += Traversal/Attribute.o    \
+                    Traversal/Elements.o     \
+                    Traversal/Exception.o    \
+                    Traversal/Fundamental.o  \
+                    Traversal/Interface.o    \
+                    Traversal/Member.o       \
+                    Traversal/Module.o       \
+                    Traversal/Operation.o    \
+                    Traversal/Sequence.o     \
+                    Traversal/Struct.o       \
+                    Traversal/Translation.o  \
+                    Traversal/TypeId.o       \
+                    Traversal/ValueType.o
+
+translated_units += SemanticAction/Operation.o
+
+translated_units += SemanticAction/Impl/Attribute.o  \
+                    SemanticAction/Impl/Elements.o   \
+                    SemanticAction/Impl/Exception.o  \
+                    SemanticAction/Impl/Factory.o    \
+                    SemanticAction/Impl/Include.o    \
+                    SemanticAction/Impl/Interface.o  \
+                    SemanticAction/Impl/Member.o     \
+                    SemanticAction/Impl/Module.o     \
+                    SemanticAction/Impl/Operation.o  \
+                    SemanticAction/Impl/Struct.o     \
+                    SemanticAction/Impl/TypeId.o     \
+                    SemanticAction/Impl/Typedef.o
+
+module_base           := IDL2
+module_prefix         :=
+module_suffix         :=
+
+CXX_PREPROCESS_FLAGS  += -I$(root) -I$(UTILITY_ROOT) -I$(BOOST_ROOT)
+
+$(call include, $(UTILITY_ROOT)/BuildRules/Archive.post.rules)

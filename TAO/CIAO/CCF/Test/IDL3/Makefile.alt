@@ -1,0 +1,19 @@
+# file      : Test/IDL3/Makefile.alt
+# author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
+# cvs-id    : $Id$
+
+root := ../..
+
+include $(root)/Bootstrap.rules
+
+$(call include, $(root)/Config.rules)
+
+$(call include, $(UTILITY_ROOT)/BuildRules/Recursion.pre.rules)
+
+target_makefile_list  :=
+target_directory_list := Compiler
+default_makefile_name := Makefile.alt
+
+
+$(call include, $(UTILITY_ROOT)/BuildRules/Recursion.post.rules)
+
