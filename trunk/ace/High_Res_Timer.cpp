@@ -57,7 +57,8 @@ ACE_High_Res_Timer::elapsed_time (struct timespec &elapsed_time)
 
   // Just grab the nanoseconds.  That is, leave off all values above
   // microsecond.  This equation is right!  Don't mess with me!
-  int nseconds = (this->end_ - this->start_) % global_scale_factor_ * 1000 / global_scale_factor_;
+  // The cast avoids a MSVC 4.1 compiler warning about narrowing.
+  u_long nseconds = (u_long) ((this->end_ - this->start_) % global_scale_factor_ * 1000 / global_scale_factor_);
 
   // Get just the microseconds (dropping any left over nanoseconds).
   ACE_hrtime_t useconds; 
@@ -87,7 +88,8 @@ ACE_High_Res_Timer::elapsed_time (ACE_hrtime_t &nanoseconds)
 {
   // Just grab the nanoseconds.  That is, leave off all values above
   // microsecond.  This equation is right!  Don't mess with me!
-  int nseconds = (this->end_ - this->start_) % global_scale_factor_ * 1000 / global_scale_factor_;
+  // The cast avoids a MSVC 4.1 compiler warning about narrowing.
+  u_long nseconds = (u_long) ((this->end_ - this->start_) % global_scale_factor_ * 1000 / global_scale_factor_);
 
   // Get just the microseconds (dropping any left over nanoseconds).
   ACE_hrtime_t useconds; 
