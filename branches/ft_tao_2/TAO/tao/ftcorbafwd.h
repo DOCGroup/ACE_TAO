@@ -322,6 +322,11 @@ TAO_NAMESPACE FT
   typedef FT_FactoryInfos_out FactoryInfos_out;
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_FactoryInfos;
 
+  typedef FactoryInfos FactoriesValue;
+  typedef FactoryInfos_var FactoriesValue_var;
+  typedef FactoryInfos_out FactoriesValue_out;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_FactoriesValue;
+
   typedef CORBA::Long ReplicationStyleValue;
   typedef CORBA::Long_out ReplicationStyleValue_out;
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ReplicationStyleValue;
