@@ -12,8 +12,8 @@ Client_i::Client_i (void)
   : ior_ (0),
     loop_count_ (10),
     shutdown_ (0),
-    server_ (),
-    use_naming_service_ (1)
+    use_naming_service_ (1),
+    server_ ()
 {
 }
 
@@ -61,10 +61,10 @@ Client_i::parse_args (void)
     switch (c)
       {
       case 'd':  // debug flag
-	TAO_debug_level++; //****
+        TAO_debug_level++; //****
         break;
 
-	case 'n':  // loop count
+        case 'n':  // loop count
         this->loop_count_ = (u_int) ACE_OS::atoi (get_opts.optarg);
         break;
 
@@ -81,8 +81,8 @@ Client_i::parse_args (void)
         break;
 
       case 's': // don't use the naming service
-	this->use_naming_service_ = 0;
-	break;
+        this->use_naming_service_ = 0;
+        break;
 
       case 'x':
         this->shutdown_ = 1;
@@ -97,7 +97,7 @@ Client_i::parse_args (void)
                            " [-f ior-file]"
                            " [-k ior]"
                            " [-x]"
-			   " [-s]"
+                           " [-s]"
                            "\n",
                            this->argv_ [0]),
                           -1);
@@ -117,16 +117,16 @@ Client_i::echo (const char *message)
     {
       // Make the RMI.
       CORBA::String_var s = this->server_->echo (message,
-						 TAO_TRY_ENV);
+                                                 TAO_TRY_ENV);
       TAO_CHECK_ENV;
       ACE_DEBUG ((LM_DEBUG,
-		  "%s\n",
-		  s.in ()));
+                  "%s\n",
+                  s.in ()));
     }
   TAO_CATCHANY
     {
       ACE_DEBUG ((LM_DEBUG,
-		  "Exception raised!\n"));
+                  "Exception raised!\n"));
     }
   TAO_ENDTRY;
 }
@@ -146,7 +146,7 @@ Client_i::run (void)
                   "ECHO? "));
 
       if (ACE_OS::fgets (buf, sizeof buf, stdin) == 0)
-	break;
+        break;
 
       // Make a call to the method which will display the input
       // string.
@@ -173,24 +173,24 @@ Client_i::via_naming_service(void)
     {
       // Initialization of the naming service.
       if (naming_services_client_.init (orb_.in ()) != 0)
-	ACE_ERROR_RETURN ((LM_ERROR,
-			   " (%P|%t) Unable to initialize "
-			   "the TAO_Naming_Client. \n"),
-			  -1);
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           " (%P|%t) Unable to initialize "
+                           "the TAO_Naming_Client. \n"),
+                          -1);
       CosNaming::Name echo_ref_name (1);
       echo_ref_name.length (1);
       echo_ref_name[0].id = CORBA::string_dup ("Echo");
 
       CORBA::Object_var echo_obj =
-	this->naming_services_client_->resolve (echo_ref_name,
-						TAO_TRY_ENV);
+        this->naming_services_client_->resolve (echo_ref_name,
+                                                TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       // The CORBA::Object_var object is downcast to Echo_var using
       // the <_narrow> method.
       this->server_ =
         Echo::_narrow (echo_obj.in (),
-		       TAO_TRY_ENV);
+                       TAO_TRY_ENV);
       TAO_CHECK_ENV;
     }
   TAO_CATCHANY
