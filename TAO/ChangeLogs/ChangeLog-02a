@@ -1,3 +1,17 @@
+Fri May 31 13:13:03 2002  Chris Hafey <chafey@stentor.com>
+
+	* utils/NamingViewer/AddNameServerDlg.cpp 
+	  The default IOR is now the CORBALOC format for a name service 
+
+	* utils/NamingViewer/{ViewIORDlg,NamingViewerDlg,BindDialog,NamingTreeCtrl}:
+	  Updated to work with new method to get an exception's repository ID
+
+	* utils/NamingViewer/NamingViewerDlg.cpp
+	  Added a timeout of 500ms for binding to a naming service
+  
+	* utils/NamingViewer/ViewIORDlg.cpp
+	  Added support for viewing multiple endpoints
+  
 Wed May 29 15:25:37 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tao/Strategies/DIOP_Connector.cpp:

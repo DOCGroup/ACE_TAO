@@ -1,5 +1,4 @@
 // $Id$
-// NamingTreeCtrl.cpp : implementation file
 
 #include "stdafx.h"
 #include "NamingViewer.h"
@@ -177,7 +176,7 @@ void CNamingTreeCtrl::ListContext(HTREEITEM hItem)
   }
   catch(CORBA::Exception& ex)
   {
-    MessageBox(ex._id(), "CORBA::Exception");
+    MessageBox(ex._rep_id(), "CORBA::Exception");
   }
 }
 
@@ -227,7 +226,7 @@ void CNamingTreeCtrl::OnContextPopupUnbind()
   }
   catch(CORBA::Exception& ex)
   {
-    MessageBox(ex._id(), "CORBA::Exception");
+    MessageBox(ex._rep_id(), "CORBA::Exception");
   }
 }
 
@@ -275,7 +274,7 @@ void CNamingTreeCtrl::OnContextPopupDestroy()
   }
   catch(CORBA::Exception& ex)
   {
-    MessageBox(ex._id(), "CORBA::Exception");
+    MessageBox(ex._rep_id(), "CORBA::Exception");
   }
 }
 
@@ -306,7 +305,7 @@ void CNamingTreeCtrl::OnContextPopupBindContext()
   }
   catch(CORBA::Exception& ex)
   {
-    MessageBox(ex._id(), "CORBA::Exception");
+    MessageBox(ex._rep_id(), "CORBA::Exception");
   }
 }
 
@@ -332,7 +331,7 @@ void CNamingTreeCtrl::OnContextPopupBindobject()
   }
   catch(CORBA::Exception& ex)
   {
-    MessageBox(ex._id(), "CORBA::Exception");
+    MessageBox(ex._rep_id(), "CORBA::Exception");
   }
 }
 
@@ -370,7 +369,7 @@ void CNamingTreeCtrl::OnContextpopupBindnewcontext()
   }
   catch(CORBA::Exception& ex)
   {
-    MessageBox(ex._id(), "CORBA::Exception");
+    MessageBox(ex._rep_id(), "CORBA::Exception");
   }
 }
 
@@ -407,7 +406,7 @@ void CNamingTreeCtrl::OnCopy()
   }
   catch(CORBA::Exception& ex)
   {
-    MessageBox(ex._id(), "CORBA::Exception");
+    MessageBox(ex._rep_id(), "CORBA::Exception");
   }
 }
 
@@ -449,7 +448,7 @@ void CNamingTreeCtrl::OnObjectpopupUnbind()
   }
   catch(CORBA::Exception& ex)
   {
-    MessageBox(ex._id(), "CORBA::Exception");
+    MessageBox(ex._rep_id(), "CORBA::Exception");
   }	
 }
 
@@ -501,7 +500,7 @@ void CNamingTreeCtrl::ListBindingList(HTREEITEM hItem, CosNaming::NamingContext_
   }
   catch(CORBA::Exception& ex)
   {
-    MessageBox(ex._id(), "CORBA::Exception");
+    MessageBox(ex._rep_id(), "CORBA::Exception");
   }
 }
 

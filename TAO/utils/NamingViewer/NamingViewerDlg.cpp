@@ -1,6 +1,4 @@
 // $Id$
-// NamingViewerDlg.cpp : implementation file
-//
 
 #include "stdafx.h"
 #include "NamingViewer.h"
@@ -131,7 +129,8 @@ BOOL CNamingViewerDlg::OnInitDialog()
   
   // Initialize the naming client and get the root context
   TAO_Naming_Client Client;
-  if(!Client.init(m_pORB))
+  ACE_Time_Value Timeout(0,500000);
+  if(!Client.init(m_pORB, &Timeout))
   {
     m_RootContext = Client.get_context();
     m_Server = "Default";
@@ -225,7 +224,7 @@ void CNamingViewerDlg::OnSelectNs()
   }
   catch(CORBA::Exception& ex)
   {
-    MessageBox(ex._id(), "CORBA::Exception");
+    MessageBox(ex._rep_id(), "CORBA::Exception");
   }
 }
 

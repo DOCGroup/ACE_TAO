@@ -1,5 +1,4 @@
 // $Id$
-// AddNameServerDlg.cpp : implementation file
 
 #include "stdafx.h"
 #include "NamingViewer.h"
@@ -19,7 +18,7 @@ CAddNameServerDlg::CAddNameServerDlg(CWnd* pParent /*=NULL*/)
 	: CDialog(CAddNameServerDlg::IDD, pParent)
 {
 	//{{AFX_DATA_INIT(CAddNameServerDlg)
-	m_IOR = _T("");
+	m_IOR = _T("corbaloc:iiop:1.1@myserver:nsport/NameService");
 	m_Name = _T("");
 	//}}AFX_DATA_INIT
 }
