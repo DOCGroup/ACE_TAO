@@ -1,3 +1,20 @@
+Wed Jan  5 09:25:49 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ace/ace.mpc:
+        * ace/codecs.mpb:
+        * ace/filecache.mpb:
+        * ace/other.mpb:
+        * ace/svcconf.mpb:
+        * ace/token.mpb:
+        * ace/uuid.mpb:
+        
+          Removed the extra nested braces related to ACE_COMPONENTS
+          that create "subdirectories" in VC project files. In makefiles,
+          these "components" can be separately compiled but not linked,
+          so the feature is not used on any platform. In VC projects,
+          the extra level of folders makes source and header files
+          much harder to locate in the GUI environment.
+
 Wed Jan  5 14:34:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Dev_Poll_Reactor.cpp:

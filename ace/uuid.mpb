@@ -3,8 +3,6 @@
 
 feature(ace_uuid) {
   Source_Files(ACE_COMPONENTS) {
-    UUID {
-      UUID.cpp
-    }
+    UUID.cpp
   }
 }
