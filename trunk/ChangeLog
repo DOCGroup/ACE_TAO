@@ -1,3 +1,8 @@
+Fri Mar  11 18:56:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/modules/BorlandWorkspaceCreator.pm:
+          Add -$(MAKEFLAGS) to the makerules
+
 Fri Mar  11 11:58:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/APG/Logging/Use_Multiple_Sinks.cpp:
