@@ -1,6 +1,7 @@
 Sun Aug 30 22:17:06 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Scheduler_Factory.cpp (dump_schedule):
+          orbsvcs/orbsvcs/Sched/DynSched.cpp:
           explicitly convert 64 bit RtecScheduler::Times to
           32 bits with ACE_U64_TO_U32 in ACE_OS::fprintf () call.
 
