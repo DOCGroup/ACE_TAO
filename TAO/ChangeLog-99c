@@ -1,3 +1,15 @@
+Tue Aug 24 11:47:47 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_enum.cpp:
+	  Modified compute_member_count() to work if the enum is
+	  included from another .idl file. This problem was
+	  causing a union with an enum discriminator, where the
+	  enum is declared in an included file, to have a 
+	  _default() function that won't compile. Thanks to
+	  Nick Sawadsky <Nick_Sawadsky@BrooksSoftware.com>
+	  for pointing out the problem and sending in an
+	  example pair if .idl files.
+
 Tue Aug 24 13:20:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
 	* tao/MessagingC.cpp,
