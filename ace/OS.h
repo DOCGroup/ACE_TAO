@@ -296,6 +296,12 @@
 #   define ACE_DEFAULT_SERVER_HOST "localhost"
 # endif /* ACE_DEFAULT_SERVER_HOST */
 
+// The way to specify the local host for loopback IP. This is usually
+// "localhost" but it may need changing on some platforms.
+# if !defined (ACE_LOCALHOST)
+#   define ACE_LOCALHOST ASYS_TEXT("localhost")
+# endif
+
 // Default shared memory key
 # if !defined (ACE_DEFAULT_SHM_KEY)
 #   define ACE_DEFAULT_SHM_KEY 1234
