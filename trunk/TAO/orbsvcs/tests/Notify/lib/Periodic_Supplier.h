@@ -19,10 +19,11 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Task.h"
 #include "Notify_StructuredPushSupplier.h"
 #include "Task_Stats.h"
 #include "StructuredEvent.h"
+#include "ace/Task.h"
+#include "ace/Barrier.h"
 
 class TAO_Notify_Tests_Task_Callback;
 class ACE_Barrier;
