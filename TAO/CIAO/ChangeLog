@@ -1,22 +1,28 @@
+Fri Jun 18 15:49:17 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* CCF/Documentation/Build.html:
+
+	  Cleaned links up a bit.
+
 Fri Jun 18 14:39:39 2004  Emre Turkay  <turkaye@dre.vanderbilt.edu>
 
 	* DnC/tests/NodeApplicationTest/NodeAppTest.mpc: 
 
-	CIAO_Container is added as an "after" dependency for the
-	NodeAppTest_RoundTrip_stub.
+	  CIAO_Container is added as an "after" dependency for the
+	  NodeAppTest_RoundTrip_stub.
 
 Fri Jun 18 14:14:12 2004  Emre Turkay  <turkaye@dre.vanderbilt.edu>
 
 	* examples/OEP/BasicSP/README.html: 
 
-	Moved the file from Display directory to BasicSP directory.
+	  Moved the file from Display directory to BasicSP directory.
 
 Fri Jun 18 14:05:27 2004  Emre Turkay  <turkaye@dre.vanderbilt.edu>
 
 	* examples/OEP/Display/README.html: 
 
-	The file describing how to build and run the example according to
-	the new DnC spec is added.
+	  The file describing how to build and run the example according to
+	  the new DnC spec is added.
 
 Fri Jun 18 13:34:16 2004  Gan Deng  <dengg@dre.vanderbilt.edu>
 
