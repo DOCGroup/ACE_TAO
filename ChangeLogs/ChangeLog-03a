@@ -1,3 +1,12 @@
+Wed Feb 12 12:06:05 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* ace/Strategies.h: Added this file for backward
+	  compatibility. Backward compatibility was broken with the
+	  following checkin
+
+	  "Tue Nov 20 12:48:39 2001  Balachandran Natarajan
+	  <bala@cs.wustl.edu>" 
+
 Wed Feb 12 10:18:21 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* bin/MakeProjectCreator/templates/vc7.mpd: Checked in Chad's
