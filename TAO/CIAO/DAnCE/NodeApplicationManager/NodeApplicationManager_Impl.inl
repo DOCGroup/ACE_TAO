@@ -20,7 +20,7 @@ NodeApplicationManager_Impl (CORBA::ORB_ptr o,
 
 ACE_INLINE
 Deployment::NodeApplicationManager_ptr
-CIAO::NodeApplicationManager_Impl::get_nodeapp_manager (ACE_ENV_SINGLE_ARG_DECL)
+CIAO::NodeApplicationManager_Impl::get_nodeapp_manager (void)
 {
   return this->objref_.in ();
 }
