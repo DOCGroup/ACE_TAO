@@ -256,6 +256,12 @@ TAO_Connection_Cache_Manager::close_i (ACE_Handle_Set &handle_set)
           handle_set.set_bit ((*iter_i).int_id_.handler ()->fetch_handle ());
         }
 
+      // Inform the handler that has a reference to the entry in the
+      // map that we are *gone* now. So, the handler should not use
+      // the reference to the entry that he has, to acces us *at any
+      // time*.
+      (*iter_i).int_id_.handler ()->cache_map_entry (0);
+
       // Then decrement the reference count on the handler
       (*iter_i).int_id_.handler ()->decr_ref_count ();
     }
