@@ -1,0 +1,17 @@
+#
+# Makefile for building the tcp performance-tests
+#
+
+NAME = tcp_test
+
+OBJFILES = \
+        $(OBJDIR)\tcp_test.obj
+
+CPPDIR = .
+
+CFLAGS = $(ACE_CFLAGS)
+
+LIBFILES = $(ACE_LIB)
+
+!include <$(ACE_ROOT)\include\makeinclude\build_exe.bor>
+
