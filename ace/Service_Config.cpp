@@ -343,11 +343,11 @@ ACE_Service_Config::process_directives (void)
       ace_yyerrno = 0;
       ace_yylineno = 1;
 
-      // Use an auto_ptr to make sure that we release this memory
+      // Use an ACE_Auto_Ptr to make sure that we release this memory
       // regardless of how we exit...
       ACE_NEW_RETURN (ace_obstack, ACE_Obstack, -1);
 
-      auto_ptr<ACE_Obstack> holder (ace_obstack);
+      ACE_Auto_Ptr<ACE_Obstack> holder (ace_obstack);
 
       ace_yyparse ();
 
@@ -670,15 +670,15 @@ template class ACE_Unbounded_Set<ACE_Static_Svc_Descriptor *>;
 template class ACE_Unbounded_Set_Iterator<ACE_Static_Svc_Descriptor *>;
 template class ACE_Malloc<ACE_LOCAL_MEMORY_POOL, ACE_Null_Mutex>;
 template class ACE_Allocator_Adapter<ACE_Malloc<ACE_LOCAL_MEMORY_POOL, ACE_Null_Mutex> >;
-template class auto_ptr<ACE_Obstack>;
-template class auto_basic_ptr<ACE_Obstack>;
+template class ACE_Auto_Ptr<ACE_Obstack>;
+template class ACE_Auto_Basic_Ptr<ACE_Obstack>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Node<ACE_Static_Svc_Descriptor *>
 #pragma instantiate ACE_Unbounded_Set<ACE_Static_Svc_Descriptor *>
 #pragma instantiate ACE_Unbounded_Set_Iterator<ACE_Static_Svc_Descriptor *>
 #pragma instantiate ACE_Malloc<ACE_LOCAL_MEMORY_POOL, ACE_Null_Mutex>
 #pragma instantiate ACE_Allocator_Adapter<ACE_Malloc<ACE_LOCAL_MEMORY_POOL, ACE_Null_Mutex> >
-#pragma instantiate auto_ptr<ACE_Obstack>
-#pragma instantiate auto_basic_ptr<ACE_Obstack>
+#pragma instantiate ACE_Auto_Ptr<ACE_Obstack>
+#pragma instantiate ACE_Auto_Basic_Ptr<ACE_Obstack>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
