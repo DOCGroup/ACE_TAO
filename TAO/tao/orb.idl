@@ -97,7 +97,6 @@ module CORBA
   // Portable Interceptor specification adds these types.
   typedef sequence<string> StringSeq;
   typedef sequence<wstring> WStringSeq;
-  typedef sequence<octet> OctetSeq;
 };
 
 #endif /* TAO_ORB_IDL */
