@@ -1,4 +1,7 @@
 # Doxyfile 1.1.5
+#
+# $Id$
+#
 
 PROJECT_NAME          = ACE_SSL
 PROJECT_NUMBER        = Snapshot
@@ -113,7 +116,7 @@ ENABLE_PREPROCESSING  = YES
 MACRO_EXPANSION       = NO
 EXPAND_ONLY_PREDEF    = NO
 SEARCH_INCLUDES       = YES
-INCLUDE_PATH          = ACE_wrappers
+INCLUDE_PATH          = .
 PREDEFINED            = 
 EXPAND_AS_DEFINED     = 
 
@@ -121,8 +124,8 @@ EXPAND_AS_DEFINED     =
 # Configuration::addtions related to external references   
 #---------------------------------------------------------------------------
 
-TAGFILES              = ace_html/ACE.tag=../ace_html
-GENERATE_TAGFILE      = ace_ssl_html/ACE_SSL.tag
+TAGFILES              = html/ace/ACE.tag=..
+GENERATE_TAGFILE      = html/ace/ssl/ACE_SSL.tag
 ALLEXTERNALS          = NO
 PERL_PATH             = /usr/bin/perl
 
