@@ -36,7 +36,7 @@ public:
   virtual int is_nil (TAO_Transport *obj);
   virtual TAO_Transport *_nil (void);
 
-  ACE_HANDLE handle(void); 
+  ACE_HANDLE handle(void);
 
   virtual ssize_t send (const ACE_Message_Block *mblk);
   virtual ssize_t send (const u_char *buf, size_t len);
@@ -46,9 +46,9 @@ public:
   virtual ssize_t receive (char *buf, size_t len, int flags);
   virtual ssize_t receive (iovec *iov, int iovcnt);
 
-  int send_request (TAO_ORB_Core *orb_core, 
-                    TAO_OutputCDR &stream, 
-                    int twoway) {return -1;};
+  int send_request (TAO_ORB_Core * /* orb_core */,
+                    TAO_OutputCDR & /* stream */,
+                    int /* twoway */) { return -1; }
 
 protected:
 
@@ -68,8 +68,8 @@ class TAO_IIOP_Client_Transport : public TAO_IIOP_Transport
 public:
 
   TAO_IIOP_Client_Transport (TAO_Client_Connection_Handler *handler);
-  // constructor.  Note, TAO_IIOP_Handler_Base is the base 
-  // class for both TAO_Client_Connection_Handler and 
+  // constructor.  Note, TAO_IIOP_Handler_Base is the base
+  // class for both TAO_Client_Connection_Handler and
   // TAO_Server_Connection_Handler.
 
   ~TAO_IIOP_Client_Transport();
@@ -77,8 +77,8 @@ public:
 
   TAO_Client_Connection_Handler* client_handler (void);
 
-  int send_request (TAO_ORB_Core *orb_core, 
-                    TAO_OutputCDR &stream, 
+  int send_request (TAO_ORB_Core *orb_core,
+                    TAO_OutputCDR &stream,
                     int twoway);
 private:
   TAO_Client_Connection_Handler *client_handler_;
@@ -102,4 +102,3 @@ private:
 };
 
 #endif  /* IIOP_TRANSPORT_H */
-
