@@ -10,6 +10,8 @@
 #include "orbsvcs/FtRtEvent/Utils/resolve_init.h"
 #include "orbsvcs/FtRtEvent/Utils/Log.h"
 #include "FtRtEvent_Test.h"
+#include "tao/ORB.h"
+#include "tao/ORB_Core.h"
 
 ACE_RCSID (FtRtEvent,
            PushSupplier,
@@ -36,6 +38,7 @@ PushSupplier_impl::PushSupplier_impl()
 : supplier_servant_(this)
 , seq_no_(0)
 , reactor_task_(this)
+, in_timeout_handler_(0)
 {
 }
 
@@ -81,9 +84,15 @@ int PushSupplier_impl::init(CORBA::ORB_ptr orb,
 
   ACE_DEBUG((LM_DEBUG, "connected to proxy_push_consumer, subscription latency = %d\n", time_val.sec () * 10000000 + time_val.usec ()* 10));
 
+  /*
   if (!reactor_task_.thr_count() &&
     reactor_task_.activate (THR_NEW_LWP | THR_JOINABLE, 1) != 0)
     ACE_ERROR_RETURN ((LM_ERROR, "Cannot activate reactor thread\n"), -1);
+  */
+
+  ACE_Reactor* reactor = orb->orb_core()->reactor();
+  if (reactor->schedule_timer(this, 0, ACE_Time_Value::zero, options.timer_interval)== -1)
+    ACE_ERROR_RETURN((LM_ERROR,"Cannot schedule timer\n"),-1);
 
   return 0;
 }
@@ -119,6 +128,9 @@ int PushSupplier_impl::handle_timeout (const ACE_Time_Value &current_time,
   ACE_UNUSED_ARG(act);
   ACE_UNUSED_ARG(current_time);
 
+  if (in_timeout_handler_) return 0;
+  in_timeout_handler_ = 1;
+
   FTRTEC_TRACE("PushSupplier_impl::handle_timeout");
 
   RtecEventComm::EventSet event (1);
@@ -132,10 +144,9 @@ int PushSupplier_impl::handle_timeout (const ACE_Time_Value &current_time,
 
   event[0].header.ec_send_time = time_val.sec () * 10000000 + time_val.usec ()* 10;
   event[0].data.any_value <<= seq_no_;
-  bool final = (num_iterations_ <= (int) seq_no_++);
+  bool final = (num_iterations_ == (int) seq_no_++);
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY {
+  ACE_TRY_NEW_ENV {
     if (!final) {
       consumer_->push(event ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -165,6 +176,6 @@ int PushSupplier_impl::handle_timeout (const ACE_Time_Value &current_time,
     this->reactor(0);
     orb_->shutdown();
   }
-
+  in_timeout_handler_ = 0;
   return 0;
 }
