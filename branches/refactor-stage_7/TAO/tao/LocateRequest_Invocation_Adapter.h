@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file    Invocation_Adapter.h
+ *  @file    LocateRequest_Invocation_Adapter.h
  *
  *  $Id$
  *
@@ -12,7 +12,7 @@
 #ifndef TAO_LOCATEREQUEST_INVOCATION_ADAPTER_H
 #define TAO_LOCATEREQUEST_INVOCATION_ADAPTER_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/Policy_ForwardC.h"
 

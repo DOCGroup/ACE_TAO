@@ -14,7 +14,7 @@
 #ifndef TAO_INVOCATION_BASE_H
 #define TAO_INVOCATION_BASE_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/Object.h"
 
@@ -224,6 +224,6 @@ namespace TAO
 # include "Invocation_Base.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /*TAO_INVOCATION_BASE_H*/

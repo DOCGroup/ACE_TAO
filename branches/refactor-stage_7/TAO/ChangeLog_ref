@@ -1,3 +1,59 @@
+Tue Oct 14 09:45:45 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Any_Unknown_IDL_Type.h:
+	* tao/Arg_Traits_T.h:
+	* tao/Argument.h:
+	* tao/BD_String_Argument_T.h:
+	* tao/BD_String_SArgument_T.h:
+	* tao/Basic_Argument_T.h:
+	* tao/Basic_Arguments.h:
+	* tao/Basic_SArgument_T.h:
+	* tao/Basic_SArguments.h:
+	* tao/Basic_Types.h:
+	* tao/BoundsC.h:
+	* tao/CDR.h:
+	* tao/CONV_FRAMEC.h:
+	* tao/CORBA_methods.h:
+	* tao/Collocated_Invocation.h:
+	* tao/Collocation_Proxy_Broker.h:
+	* tao/Exception_Data.h:
+	* tao/Fixed_Array_Argument_T.h:
+	* tao/Fixed_Array_SArgument_T.h:
+	* tao/Fixed_Size_Argument_T.h:
+	* tao/Fixed_Size_SArgument_T.h:
+	* tao/Invocation_Adapter.h:
+	* tao/Invocation_Base.h:
+	* tao/Invocation_Utils.h:
+	* tao/LocateRequest_Invocation.h:
+	* tao/LocateRequest_Invocation_Adapter.h:
+	* tao/Managed_Types.h:
+	* tao/Messaging_PolicyValueC.h:
+	* tao/Messaging_SyncScopeC.h:
+	* tao/Object_Argument_T.h:
+	* tao/Object_SArgument_T.h:
+	* tao/Profile_Transport_Resolver.h:
+	* tao/Pseudo_VarOut_T.cpp:
+	* tao/Remote_Invocation.h:
+	* tao/Special_Basic_Argument_T.h:
+	* tao/Special_Basic_Arguments.h:
+	* tao/Special_Basic_SArgument_T.h:
+	* tao/Special_Basic_SArguments.h:
+	* tao/Synch_Invocation.h:
+	* tao/UB_String_Argument_T.h:
+	* tao/UB_String_Arguments.h:
+	* tao/UB_String_SArgument_T.h:
+	* tao/UB_String_SArguments.h:
+	* tao/Var_Array_Argument_T.h:
+	* tao/Var_Array_SArgument_T.h:
+	* tao/Var_Size_Argument_T.h:
+	* tao/Var_Size_SArgument_T.h:
+	* tao/DynamicInterface/DII_Arguments.h:
+	* tao/DynamicInterface/DII_Invocation_Adapter.h:
+	* tao/Messaging/Asynch_Invocation.h:
+	* tao/Messaging/Asynch_Invocation_Adapter.h:
+
+	  Fixed fuzz errors.
+
 Tue Oct 14 08:13:37 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Invocation_Adapter.h (TAO): Fixed a typo in the

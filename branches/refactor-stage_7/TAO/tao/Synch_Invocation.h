@@ -116,6 +116,6 @@ namespace TAO
   };
 }
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /*TAO_SYNCH_INVOCATION_H*/

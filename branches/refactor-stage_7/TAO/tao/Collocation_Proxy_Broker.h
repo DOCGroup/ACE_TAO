@@ -14,7 +14,7 @@
 #ifndef TAO_COLLOCATION_PROXY_BROKER_H
 #define TAO_COLLOCATION_PROXY_BROKER_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/CORBA_macros.h"
 
@@ -60,6 +60,6 @@ namespace TAO
   };
 }
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /*TAO_COLLOCATION_PROXY_BROKER_H */

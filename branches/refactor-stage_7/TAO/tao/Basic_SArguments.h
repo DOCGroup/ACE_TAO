@@ -11,7 +11,7 @@
 #ifndef TAO_BASIC_SARGUMENTS_H
 #define TAO_BASIC_SARGUMENTS_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/Basic_SArgument_T.h"
 
@@ -39,7 +39,7 @@ namespace TAO
 
   /**
    *
-   * @brief Specializations for basic skeleton arg types, 
+   * @brief Specializations for basic skeleton arg types,
    *  except (w)char/boolean/octet.
    *
    */
@@ -99,6 +99,6 @@ namespace TAO
   };
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* TAO_BASIC_SARGUMENTS_H */

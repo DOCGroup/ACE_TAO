@@ -67,31 +67,31 @@
 
 namespace Messaging
 {
-  
+
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typedef/typedef_ch.cpp:333
-  
+
   typedef CORBA::Short SyncScope;
   typedef CORBA::Short_out SyncScope_out;
-  
+
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
-  
+
   const Messaging::SyncScope SYNC_NONE = 0;
-  
+
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
-  
+
   const Messaging::SyncScope SYNC_WITH_TRANSPORT = 1;
-  
+
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
-  
+
   const Messaging::SyncScope SYNC_WITH_SERVER = 2;
-  
+
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
-  
+
   const Messaging::SyncScope SYNC_WITH_TARGET = 3;
 
 // TAO_IDL - Generated from
@@ -132,6 +132,5 @@ namespace TAO
 #pragma option pop
 #endif /* __BORLANDC__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ifndef */
-

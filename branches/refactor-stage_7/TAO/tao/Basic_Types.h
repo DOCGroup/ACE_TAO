@@ -14,7 +14,7 @@
 #ifndef TAO_BASIC_TYPES_H
 #define TAO_BASIC_TYPES_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "ace/CDR_Base.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -84,6 +84,6 @@ namespace CORBA
 class TAO_InputCDR;
 class TAO_OutputCDR;
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* TAO_BASIC_TYPES_H */

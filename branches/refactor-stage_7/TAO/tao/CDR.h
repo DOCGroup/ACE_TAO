@@ -41,7 +41,7 @@
 #ifndef TAO_CDR_H
 #define TAO_CDR_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "ace/CORBA_macros.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

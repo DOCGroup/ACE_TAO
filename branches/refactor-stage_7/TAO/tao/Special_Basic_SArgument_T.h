@@ -14,7 +14,7 @@
 #ifndef TAO_SPECIAL_BASIC_SARGUMENT_T_H
 #define TAO_SPECIAL_BASIC_SARGUMENT_T_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -116,7 +116,7 @@ namespace TAO
   /**
    * @struct Special_Basic_Traits_T
    *
-   * @brief Template class for skeleton argument traits 
+   * @brief Template class for skeleton argument traits
    *  of (w)char/boolean/octet.
    *
    */
@@ -147,6 +147,6 @@ namespace TAO
 #pragma implementation ("Special_Basic_SArgument_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* TAO_SPECIAL_BASIC_SARGUMENT_T_H */

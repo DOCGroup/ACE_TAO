@@ -13,7 +13,7 @@
 #ifndef TAO_VAR_ARRAY_SARGUMENT_T_H
 #define TAO_VAR_ARRAY_SARGUMENT_T_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "tao/Argument.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -117,9 +117,9 @@ namespace TAO
    * @brief Argument traits of variable size element array.
    *
    */
-  template<typename T, 
-           typename T_slice, 
-           typename T_var, 
+  template<typename T,
+           typename T_slice,
+           typename T_var,
            typename T_out,
            typename T_forany>
   struct Var_Array_SArg_Traits_T
@@ -152,6 +152,6 @@ namespace TAO
 #pragma implementation ("Var_Array_SArgument_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* TAO_VAR_ARRAY_SARGUMENT_T_H */

@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file    Invocation_Adapter.h
+ *  @file    DII_Invocation_Adapter.h
  *
  *  $Id$
  *
@@ -11,16 +11,16 @@
 //=============================================================================
 #ifndef TAO_DII_INVOCATION_ADAPTER_H
 #define TAO_DII_INVOCATION_ADAPTER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
-#include "tao/Invocation_Adapter.h"
+#include "tao/DynamicInterface/dynamicinterface_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "dynamicinterface_export.h"
 
+#include "tao/Invocation_Adapter.h"
 
 class TAO_Operation_Details;
 class TAO_Stub;
@@ -160,5 +160,5 @@ namespace TAO
 } // End namespace TAO
 
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /*TAO_INVOCATION_ADAPTER_H*/

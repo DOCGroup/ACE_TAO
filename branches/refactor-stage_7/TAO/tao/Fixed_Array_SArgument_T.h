@@ -14,7 +14,7 @@
 #ifndef TAO_FIXED_ARRAY_SARGUMENT_T_H
 #define TAO_FIXED_ARRAY_SARGUMENT_T_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "tao/Argument.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -150,6 +150,6 @@ namespace TAO
 #pragma implementation ("Fixed_Array_SArgument_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* TAO_FIXED_ARRAY_SARGUMENT_T_H */

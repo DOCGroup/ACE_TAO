@@ -1,7 +1,7 @@
 // -*- C++ -*-
 //=============================================================================
 /**
- *  @file    CORBA_String.h
+ *  @file    CORBA_methods.h
  *
  *  $Id$
  *
@@ -57,7 +57,7 @@ namespace CORBA
    * @name ORB Initialization
    *
    * These could be combined into a single version using an environment macro.
-   * 
+   *
    */
   //@{
   extern TAO_Export ORB_ptr ORB_init (int & argc,

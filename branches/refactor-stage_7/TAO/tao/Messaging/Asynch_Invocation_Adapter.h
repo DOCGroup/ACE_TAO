@@ -12,7 +12,7 @@
 //=============================================================================
 #ifndef TAO_MESSAGING_ASYNCH_INVOCATION_ADAPTER_H
 #define TAO_MESSAGING_ASYNCH_INVOCATION_ADAPTER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/Messaging/messaging_export.h"
 
@@ -92,5 +92,5 @@ namespace TAO
 } // End namespace TAO
 
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /*TAO_MESSAGING_ASYNCH_INVOCATION_ADAPTER_H*/

@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file    Basic_Argument_T.h
+ *  @file    Var_Size_Argument_T.h
  *
  *  $Id$
  *
@@ -13,7 +13,7 @@
 #ifndef TAO_VAR_SIZE_ARGUMENT_T_H
 #define TAO_VAR_SIZE_ARGUMENT_T_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "tao/Argument.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -125,7 +125,7 @@ namespace TAO
   /**
    * @struct Basic_Arg_Traits_T
    *
-   * @brief Template class for stub argument traits of 
+   * @brief Template class for stub argument traits of
    *  variable size IDL types.
    *
    */
@@ -158,6 +158,6 @@ namespace TAO
 #pragma implementation ("Var_Size_Argument_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* TAO_VAR_SIZE_ARGUMENT_T_H */

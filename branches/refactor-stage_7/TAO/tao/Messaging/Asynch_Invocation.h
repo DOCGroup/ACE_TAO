@@ -12,15 +12,15 @@
 
 #ifndef TAO_MESSAGING_ASYNCH_INVOCATION_H
 #define TAO_MESSAGING_ASYNCH_INVOCATION_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
-#include "tao/Synch_Invocation.h"
-#include "messaging_export.h"
+#include "tao/Messaging/messaging_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/Synch_Invocation.h"
 #include "ace/Global_Macros.h"
 
 class TAO_Operation_Details;
@@ -57,5 +57,5 @@ namespace TAO
 }
 
 
-#include "ace/post.h"
-#endif /*TAO_SYNCH_INVOCATION_H*/
+#include /**/ "ace/post.h"
+#endif /*TAO_MESSAGING_ASYNCH_INVOCATION_H*/
