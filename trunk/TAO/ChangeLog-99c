@@ -1,3 +1,17 @@
+Wed May 12 15:41:39 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/corbafwd.h:
+	* tao/Context.i:
+	* tao/Environment.{h,i,cpp}:
+	  Added CORBA::is_nil() for Contexts, and both
+	  CORBA::release() and CORBA::is_nil() for 
+	  Environment. In implementing the release()
+	  method, also added refcount_, refcount_lock_,
+	  incr_refcount() and decr_refcount() to 
+	  Environment. All the above methods were declared
+	  in corbafwd.h (CORBA::is_nil (Context_ptr) was
+	  commented out), but not implemented.
+
 Wed May 12 14:47:37 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Event/EC_Event_Channel.cpp:
