@@ -3,6 +3,7 @@
 #include "concrete_classes.h"
 #include "IFR_Service_Utils_T.h"
 #include "ComponentRepository_i.h"
+#include "OperationDef_i.h"
 #include "ace/Auto_Ptr.h"
 
 ACE_RCSID (IFRService,
@@ -74,7 +75,7 @@ TAO_IFR_Generic_Utils<TAO_PublishesDef_i>::set_initializers (
 
 ACE_TEMPLATE_SPECIALIZATION
 void
-TAO_IFR_Generic_Utils<TAO_ComsumesDef_i>::set_initializers (
+TAO_IFR_Generic_Utils<TAO_ConsumesDef_i>::set_initializers (
     const TAO_ComsumesDef_i &,
     ACE_Configuration *,
     ACE_Configuration_Section_Key &
