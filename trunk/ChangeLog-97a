@@ -1,3 +1,8 @@
+Sat May 17 00:06:04 1997    <irfan@TWOSTEP>
+
+	* ace/OS.h: When ACE_LACKS_SIGSET is defined, changed the
+ 	  definition of sigset_t from void * to unsigned int.
+
 Sat May 17 12:25:22 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/{Acceptor,Connector,Strategies_T}: Make sure to either
@@ -18,8 +23,11 @@ Sat May 17 12:25:22 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 Sat May 17 02:19:27 1997  Nanbor Wang  <nw1@number.wustl.edu>
 
 	* ace/config-freebsd.h (ACE_HAS_BROKEN_TIMESPEC_MEMBERS): 
+
 	* ace/OS.i (set, timestruct_t, nanosleep): 
+
 	* ace/High_Res_Timer.cpp (elapsed_time): 
+
 	* ace/README: Added ACE_HAS_BROKEN_TIMESPEC_MEMBERS so that we can
 	  fix that problem FreeBSD 2.1.x brings by defining timespec as {
 	  time_t ts_sec ; long ts_nsec }.  Notice:  This is highly

@@ -2122,7 +2122,7 @@ typedef fd_set ACE_FD_SET_TYPE;
 #endif /* MAXNAMELEN */
 
 #if defined (ACE_LACKS_SIGSET)
-typedef void *sigset_t; 
+typedef unsigned int sigset_t; 
 #endif /* ACE_LACKS_SIGSET */
 
 #if defined (ACE_LACKS_SIGACTION)
