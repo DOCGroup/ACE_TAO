@@ -397,7 +397,7 @@ private:
 #define ACE_CLASS_IS_NAMESPACE(CLASSNAME) \
 private: \
 ACE_UNIMPLEMENTED_FUNC (CLASSNAME (void)) \
-ACE_UNIMPLEMENTED_FUNC (CLASSNAME (const CLASSNAME&)); \
+ACE_UNIMPLEMENTED_FUNC (CLASSNAME (const CLASSNAME&)) \
 class ace_dewarn_gplusplus; \
 friend ace_dewarn_gplusplus
 
@@ -3235,7 +3235,7 @@ class ACE_Export ACE_OS
   //     <ACE_Log_Msg::restart> flag is enabled).
 {
   ACE_CLASS_IS_NAMESPACE (ACE_OS);
-  
+
 public:
   struct ace_flock_t
     // = TITLE
