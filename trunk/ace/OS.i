@@ -5769,6 +5769,14 @@ ACE_OS::fflush (FILE *fp)
   ACE_OSCALL_RETURN (::pace_fflush (fp), int, -1);
 #elif !defined (ACE_HAS_WINCE)
   ACE_OS_TRACE ("ACE_OS::fflush");
+#if defined (VXWORKS)
+  if (fp == 0)
+    {
+      // Do not allow fflush(0) on VxWorks
+      return 0;
+    }
+#endif /* VXWORKS */
+
   ACE_OSCALL_RETURN (::fflush (fp), int, -1);
 #else
   ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL(::FlushFileBuffers (fp),
