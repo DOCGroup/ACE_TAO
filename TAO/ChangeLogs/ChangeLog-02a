@@ -1,3 +1,10 @@
+Thu Mar 16 11:40:03 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/GIOP_Message_Base.h: Cosmetic changes.
+	* tao/GIOP_Utils.h: Fixed a compilation error that arises if
+	  compiled with interface_repo=1. Thanks to Jeff Parsons
+	  <parsons@cs.wustl.edu> for reporting this.
+
 Thu Mar 16 11:23:54 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* docs/pluggable_messaging.html: Documentation for the
