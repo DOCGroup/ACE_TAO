@@ -151,7 +151,8 @@ public:
   int add_follower (ACE_SYNCH_CONDITION *follower_ptr);
   // adds the a follower to the set of followers in the leader-
   // follower model
-  // returns 0 on success, -1 on failure
+  // returns 0 on success, -1 on failure and 1 if the element is
+  // already there.
 
   int follower_available (void) const;
   // checks for the availablity of a follower

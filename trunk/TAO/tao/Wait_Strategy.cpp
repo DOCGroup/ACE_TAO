@@ -199,9 +199,6 @@ TAO_Wait_On_Leader_Follower::wait (ACE_Time_Value *max_wait_time)
     {
       // = Wait as a follower.
 
-      //ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - wait (follower) on <%x>\n",
-      //this->transport_));
-
       // wait until we have input available or there is no leader, in
       // which case we must become the leader anyway....
       // @@ Alex: I am uncertain about how many condition variables
@@ -212,24 +209,44 @@ TAO_Wait_On_Leader_Follower::wait (ACE_Time_Value *max_wait_time)
       ACE_SYNCH_CONDITION* cond =
         this->cond_response_available ();
 
-      // Add ourselves to the list, do it only once because we can
-      // wake up multiple times from the CV loop. And only do it if
-      // the reply has not been received (it could have arrived while
-      // we were preparing to receive it).
-
-      if (!this->reply_received_
-          && leader_follower.leader_available ())
-        {
-          if (leader_follower.add_follower (cond) == -1)
-            ACE_ERROR ((LM_ERROR,
-                        "TAO (%P|%t) TAO_Wait_On_Leader_Follower::wait - "
-                        "add_follower failed for <%x>\n",
-                        cond));
-        }
+#if defined (TAO_DEBUG_LEADER_FOLLOWER)
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO (%P|%t): TAO_Wait_On_LF::wait - "
+                  "(follower) on <%x>\n",
+                  cond));
+#endif /* TAO_DEBUG_LEADER_FOLLOWER */
 
       while (!this->reply_received_
              && leader_follower.leader_available ())
         {
+          // Add to the follower set, that operation will if the
+          // condition variable returns due to an spurious wake up
+          // (i.e. a wait interrupted by the OS) but otherwise we risk
+          // dead-locks:
+          //   Assume that we are the only follower, another thread is
+          //   the leader and it completes its work, it sends us the
+          //   signal and removes us from the set.
+          //   Before waking up another thread becomes the leader, when
+          //   we do wake up we believe that it was a false return from
+          //   the condition variable and go into the loop again.
+          //   But now the follower set is empty and nobody is ever
+          //   going to wake us up, dead-locking the application.
+
+          if (leader_follower.add_follower (cond) == -1)
+            {
+              // -1 indicates a severe problem, like running out of
+              // memory, the comment above does not apply in this
+              // case.
+              return -1;
+            }
+
+#if defined (TAO_DEBUG_LEADER_FOLLOWER)
+          ACE_DEBUG ((LM_DEBUG,
+                      "TAO (%P|%t): TAO_Wait_On_LF::wait - "
+                      "waiting in follower <%x>\n",
+                      cond));
+#endif /* TAO_DEBUG_LEADER_FOLLOWER */
+
           if (max_wait_time == 0)
             {
               if (cond == 0 || cond->wait () == -1)
@@ -246,18 +263,13 @@ TAO_Wait_On_Leader_Follower::wait (ACE_Time_Value *max_wait_time)
         }
 
       countdown.update ();
-#if 0
-      // Cannot remove the follower here, we *must* remove it when we
-      // signal it so the same condition is not signalled for both
-      // wake up as a follower and as the next leader.
-      if (leader_follower.remove_follower (cond) == -1)
-        ACE_ERROR ((LM_ERROR,
-                    "TAO (%P|%t) TAO_Wait_On_Leader_Follower::wait - "
-                    "remove_follower failed for <%x>\n", cond));
-#endif /* 0 */
 
-      //ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - done (follower:%d) on <%x>\n",
-      //this->reply_received_, this->transport_));
+#if defined (TAO_DEBUG_LEADER_FOLLOWER)
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO (%P|%t): TAO_Wait_On_LF::wait - "
+                  "done (follower:%d) on <%x>\n",
+                  this->reply_received_, cond));
+#endif /* TAO_DEBUG_LEADER_FOLLOWER */
 
       // Now somebody woke us up to become a leader or to handle
       // our input. We are already removed from the follower queue.
@@ -269,6 +281,8 @@ TAO_Wait_On_Leader_Follower::wait (ACE_Time_Value *max_wait_time)
           this->expecting_response_ = 0;
           this->calling_thread_ = ACE_OS::NULL_thread;
 
+          leader_follower.reset_client_thread ();
+
           return 0;
         }
       else if (this->reply_received_ == -1)
@@ -278,6 +292,8 @@ TAO_Wait_On_Leader_Follower::wait (ACE_Time_Value *max_wait_time)
           this->reply_received_ = 0;
           this->expecting_response_ = 0;
           this->calling_thread_ = ACE_OS::NULL_thread;
+
+          leader_follower.reset_client_thread ();
 
           return -1;
         }
@@ -310,8 +326,12 @@ TAO_Wait_On_Leader_Follower::wait (ACE_Time_Value *max_wait_time)
 
     // Run the reactor event loop.
 
-    //ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - wait (leader) on <%x>\n",
-    //this->transport_));
+#if defined (TAO_DEBUG_LEADER_FOLLOWER)
+    ACE_DEBUG ((LM_DEBUG,
+                "TAO (%P|%t): TAO_Wait_On_LF::wait - "
+                "wait (leader) on <%x>\n",
+                this->transport_));
+#endif /* TAO_DEBUG_LEADER_FOLLOWER */
 
     while (this->reply_received_ == 0
            && (result > 0
@@ -320,8 +340,12 @@ TAO_Wait_On_Leader_Follower::wait (ACE_Time_Value *max_wait_time)
                    && *max_wait_time != ACE_Time_Value::zero)))
       result = orb_core->reactor ()->handle_events (max_wait_time);
 
-    //ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - done (leader) on <%x>\n",
-    //this->transport_));
+#if defined (TAO_DEBUG_LEADER_FOLLOWER)
+    ACE_DEBUG ((LM_DEBUG,
+                "TAO (%P|%t): TAO_Wait_On_LF::wait - "
+                "done (leader) on <%x>\n",
+                this->transport_));
+#endif /* TAO_DEBUG_LEADER_FOLLOWER */
   }
 
   // Wake up the next leader, we cannot do that in handle_input,
@@ -336,13 +360,14 @@ TAO_Wait_On_Leader_Follower::wait (ACE_Time_Value *max_wait_time)
 
   if (leader_follower.elect_new_leader () == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "TAO:%N:%l:(%P|%t):TAO_Wait_On_Leader_Follower::send_request: "
-                       "Failed to unset the leader and wake up a new follower.\n"),
+                       "TAO (%P|%t): TAO_Wait_On_LF::wait - "
+                       "Failed to unset the leader and wake up a "
+                       "new follower.\n"),
                       -1);
 
   if (result == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "TAO:%N:%l:(%P|%t):TAO_Wait_On_Leader_Follower::wait: "
+                       "TAO (%P|%t): TAO_Wait_On_LF::wait - "
                        "handle_events failed.\n"),
                       -1);
 
@@ -385,7 +410,8 @@ TAO_Wait_On_Leader_Follower::handle_input (void)
                     orb_core->leader_follower ().lock (),
                     -1);
 
-  //  ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - reading reply <%x>\n",
+  //  ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) Wait_On_LF::handle_input - "
+  //              "reading reply <%x>\n",
   //              this->transport_));
 
   // A message is received but not data was sent, flag this as an
@@ -463,6 +489,11 @@ TAO_Wait_On_Leader_Follower::wake_up (void)
 {
   if (ACE_OS::thr_equal (this->calling_thread_, ACE_Thread::self ()))
     {
+#if defined (TAO_DEBUG_LEADER_FOLLOWER)
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO (%P|%t) Wait_On_LF::wake_up - "
+                  "same thread\n"));
+#endif /* TAO_DEBUG_LEADER_FOLLOWER */
       // We are the leader thread, simply return 0, handle_events()
       // will return because there was at least one event (this one!)
       return;
@@ -478,9 +509,12 @@ TAO_Wait_On_Leader_Follower::wake_up (void)
   ACE_SYNCH_CONDITION* cond =
     this->cond_response_available ();
 
-  //if (TAO_debug_level > 0)
-  //ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - wake up follower %x\n",
-  //                cond));
+#if defined (TAO_DEBUG_LEADER_FOLLOWER)
+  ACE_DEBUG ((LM_DEBUG,
+              "TAO (%P|%t) Wait_On_LF::wake_up - "
+              "waking up <%x>\n",
+              cond));
+#endif /* TAO_DEBUG_LEADER_FOLLOWER */
 
   TAO_Leader_Follower& leader_follower =
     this->transport_->orb_core ()->leader_follower ();
