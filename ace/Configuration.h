@@ -206,7 +206,7 @@ public:
                                 u_int& length) = 0;
   // gets the binary value of <name> from <key> and places a copy in
   // <data> and sets <length> to the length of the data.  caller is
-  // responsible for freeing <data>.  Returns non zero on error (if
+  // responsible for deleting <data>.  Returns non zero on error (if
   // value is not binary).
 
   virtual int find_value(const ACE_Configuration_Section_Key& key,
