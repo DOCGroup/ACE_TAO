@@ -186,14 +186,14 @@
 // that can be transferred by the scatter/gather type of I/O
 // functions, e.g., WSASend and WSARecv.  We are arbitrarily setting
 // this to be 1k for now.  The typically use case is to create an I/O
-// vector array of size IOV_MAX on the stack and then filled in.  Note
-// that we probably don't want too big a value for IOV_MAX since it
+// vector array of size ACE_IOV_MAX on the stack and then filled in.  Note
+// that we probably don't want too big a value for ACE_IOV_MAX since it
 // may mostly go to waste or the size of the activation record may
 // become excessively large.
 //
-#if !defined (IOV_MAX)
-# define IOV_MAX 1024
-#endif /* IOV_MAX */
+#if !defined (ACE_IOV_MAX)
+# define ACE_IOV_MAX 1024
+#endif /* ACE_IOV_MAX */
 
 #if !defined (ACE_HAS_WINCE)
 // Platform supports pread() and pwrite()

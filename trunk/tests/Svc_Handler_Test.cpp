@@ -10,7 +10,8 @@
 //
 // = DESCRIPTION
 //    This tests illustrates the "buffering" strategy of the
-//    <ACE_Buffered_Svc_Handler>.
+//    <ACE_Buffered_Svc_Handler>.  This test also illustrates how the
+//    <ACE_FILE_IO> classes work.
 //
 // = AUTHORS
 //    Douglas C. Schmidt <schmidt@cs.wustl.edu>
@@ -28,7 +29,7 @@ typedef ACE_Buffered_Svc_Handler <ACE_FILE_STREAM, ACE_NULL_SYNCH> SVC_HANDLER;
 
 static void
 run_test (SVC_HANDLER &svc_handler,
-               size_t iterations)
+          size_t iterations)
 {
   // Create a whole slew of message blocks and pass them to the
   // <svc_handler>.
@@ -91,8 +92,7 @@ main (int argc, ACE_TCHAR *argv[])
     ACE_FILE_Addr file (ACE_sap_any_cast (ACE_FILE_Addr &));
 
     // Open up the temp file.
-    if (connector.connect (file_io,
-                           file) == -1)
+    if (connector.connect (file_io, file) == -1)
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("connect failed for %p\n"),
                          file.get_path_name ()),
@@ -101,16 +101,6 @@ main (int argc, ACE_TCHAR *argv[])
 #if !defined (ACE_WIN32) \
     || (defined (ACE_HAS_WINNT4) && ACE_HAS_WINNT4 == 1)
 # define TEST_CAN_UNLINK_IN_ADVANCE
-#endif
-
-#if defined(TEST_CAN_UNLINK_IN_ADVANCE)
-    // Unlink this file right away so that it is automatically removed
-    // when the process exits.
-    if (file_io.unlink () == -1)
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("unlink failed for %p\n"),
-                         file.get_path_name ()),
-                        1);
 #endif
 
     // Create the service handler and assign it <file_io> as its data
@@ -125,15 +115,32 @@ main (int argc, ACE_TCHAR *argv[])
     // Run the test.
     run_test (svc_handler, iterations);
 
-#if !defined(TEST_CAN_UNLINK_IN_ADVANCE)
-    file_io.close();
+    file_io.close ();
+
+    // Open up the temp file.
+    if (connector.connect (file_io, file) == -1)
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("connect failed for %p\n"),
+                         file.get_path_name ()),
+                        1);
+    char buf[17];
+    ACE_LOG_MSG->clr_flags (ACE_Log_Msg::VERBOSE_LITE);
+
+    ACE_FILE_Info info;
+    file_io.get_info (info);
+    ACE_DEBUG ((LM_DEBUG, "file size = %d\n", info.size_));
+
+    for (ssize_t n_bytes; (n_bytes = file_io.recv (buf, sizeof buf)) > 0; )
+      ACE_DEBUG ((LM_DEBUG, "%*s", n_bytes, buf));
+
+    ACE_DEBUG ((LM_DEBUG, "\n"));
+
+    file_io.close ();
     if (file_io.unlink () == -1)
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("unlink failed for %p\n"),
                          file.get_path_name ()),
                         1);
-#endif
-
   }
 
   ACE_END_TEST;

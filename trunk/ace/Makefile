@@ -42,6 +42,7 @@ UTILS_FILES = \
   Handle_Set \
   Init_ACE \
   Lib_Find \
+  Message_Block \
   Method_Request \
   Object_Manager \
   Registry \
@@ -187,7 +188,6 @@ STREAMS_FILES = \
   CDR_Base \
   CDR_Stream \
   Codeset_IBM1047 \
-  Message_Block \
   Message_Queue \
   Task
 MEMORY_FILES = \
