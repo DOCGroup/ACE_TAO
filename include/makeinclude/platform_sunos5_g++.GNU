@@ -2,12 +2,14 @@
 #
 # SOBUILD - compile into .so directly
 #
-CXX		= g++ -I. -Wall -Wpointer-arith   # -O2 -Winline
-CC		= $(CXX)
+CC              = gcc
+CXX		= g++
+CFLAGS          += -Wall -Wpointer-arith   # -O2 -Winline
+CCFLAGS         += $(CFLAGS)
 DLD		= $(CXX)
 LD		= $(CXX)
 LDFLAGS		+= -L $(WRAPPER_ROOT)/ace -L ./ # -z muldefs
-LIBS		+= -lsocket -ldl -lstdc++ -lgen -lnsl -lthread -lw -lm
+LIBS		+= -lsocket -ldl -lgen -lnsl -lthread -lw
 PIC		= -fpic
 AR		= ar
 ARFLAGS		= ruv
