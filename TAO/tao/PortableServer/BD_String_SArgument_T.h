@@ -209,7 +209,7 @@ namespace TAO
                                      BOUND>
   {
   };
-};
+}
 
 #if defined (__ACE_INLINE__)
 #include "tao/PortableServer/BD_String_SArgument_T.inl"
