@@ -30,7 +30,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   ACE_TCHAR peerAddress[64];
 
   // Listing 2 code/ch06
-  addr.set ("HAStatus", ACE_LOCALHOST);
+  addr.set (ACE_TEXT("HAStatus"), ACE_LOCALHOST);
   if (addr.addr_to_string (peerAddress,
                            sizeof(peerAddress), 0) == 0)
     {
@@ -50,7 +50,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
                        ACE_TEXT ("status")), 100);
   // Listing 3
 
-  addr.set ("HALog", ACE_LOCALHOST);
+  addr.set (ACE_TEXT("HALog"), ACE_LOCALHOST);
   if (addr.addr_to_string (peerAddress,
                            sizeof(peerAddress), 0) == 0)
     {
