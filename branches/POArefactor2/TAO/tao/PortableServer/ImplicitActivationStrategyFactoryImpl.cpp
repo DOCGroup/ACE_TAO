@@ -9,8 +9,6 @@ ACE_RCSID (PortableServer,
            ImplicitActivationStrategyFactoryImpl,
            "$Id$")
 
-#if (TAO_HAS_MINIMUM_POA == 0)
-
 namespace TAO
 {
   namespace Portable_Server
@@ -75,16 +73,10 @@ namespace TAO
     ACE_FACTORY_DEFINE (TAO_PortableServer, ImplicitActivationStrategyFactoryImpl)
 
     #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
     template class ACE_Dynamic_Service<ImplicitActivationStrategyFactoryImpl>;
-
     #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
     #pragma instantiate ACE_Dynamic_Service<ImplicitActivationStrategyFactoryImpl>
-
     #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
   }
 }
-
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
