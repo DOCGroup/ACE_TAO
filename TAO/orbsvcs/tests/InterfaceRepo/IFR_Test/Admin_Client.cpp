@@ -1517,11 +1517,11 @@ Admin_Client::union_test (ACE_ENV_SINGLE_ARG_DECL)
   u_members[1].type = CORBA::TypeCode::_duplicate (CORBA::_tc_void);
   TAO_OutputCDR maker0;
   maker0.write_ulong (2);  // TWO
+  TAO_InputCDR maker0_in (maker0);
   TAO::Unknown_IDL_Type *impl0 = 0;
   ACE_NEW (impl0,
            TAO::Unknown_IDL_Type (d_type.in (),
-                                  maker0.begin (),
-                                  TAO_ENCAP_BYTE_ORDER));
+                                  maker0_in));
   CORBA::Any any0;
   any0.replace (impl0);
   u_members[1].label = any0;

@@ -1,3 +1,20 @@
+Mon Feb  7 08:49:46 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/Log/LogRecordStore.cpp:
+        * orbsvcs/tests/InterfaceRepo/IFR_Test/Admin_Client.cpp:
+        * tao/Any_Array_Impl_T.cpp:
+        * tao/Any_Basic_Impl_T.cpp:
+        * tao/Any_Special_Impl_T.cpp:
+        * tao/Any_Unknown_IDL_Type.cpp:
+        * tao/DynamicAny/DynArray_i.cpp:
+        * tao/DynamicAny/DynSequence_i.cpp:
+        * tao/DynamicAny/DynStruct_i.cpp:
+        * tao/DynamicAny/DynUnion_i.cpp:
+        
+          Fixed various minor problems overlooked in
+          
+          Sun Feb  6 19:46:23 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
 Mon Feb  7 14:45:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Trading/run_test.pl:
