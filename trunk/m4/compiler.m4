@@ -39,9 +39,7 @@ dnl  AC_BEFORE([$0], [AC_PROG_LIBTOOL])
 
  if test "$GXX" = yes; then
 dnl Temporarily change M4 quotes to prevent "regex []" from being eaten
-changequote(, )dnl
-   if $CXX --version | $EGREP -v '^2\.[0-7]' > /dev/null; then
-changequote([, ])dnl
+   if $CXX --version | $EGREP -v '^2\.[[0-7]]' > /dev/null; then
      :  # Do nothing
    else
      AC_DEFINE([ACE_HAS_GNUG_PRE_2_8])

@@ -130,9 +130,7 @@ AC_DEFUN([ACE_USE_TEMP_FILE],
    test -f ./$1 && mv ./$1 ./$1.conf
    dnl Create all of the sub-directories (assume "mkdir -p" is not portable).
    acetmp="."
-changequote(, )dnl
-   for ace_dir in `echo $1 | sed -e 's,/[^/][^/]*\$,,' -e 's,/, ,g'`; do
-changequote([, ])dnl
+   for ace_dir in `echo $1 | [sed -e 's,/[^/][^/]*\$,,' -e 's,/, ,g']`; do
      acetmp="$acetmp/$ace_dir"
      test -f $acetmp && AC_MSG_ERROR([cannot create directory: $acetmp])
      test -d $acetmp || mkdir $acetmp
@@ -430,14 +428,12 @@ if test "$ac_cv_func_setrlimit" = yes; then
 #include <sys/resource.h>
 EOF
 
-changequote(, )dnl
 dnl Here we attempt to determine the type of the first argument of
 dnl getrusage from its prototype.  It should either be an int or an
 dnl enum.  If it is an enum, determine the enum type.
      ace_setrlimit_enum=`eval "$ac_cpp conftest.$ac_ext" | \
-       $EGREP '[ ]+setrlimit.*\(.*[^,]*enum' | \
-       sed -e 's/^.*setrlimit.*(.*enum//' -e 's/[^ ]*,.*$//'`
-changequote([, ])dnl
+       $EGREP '[[ ]]+setrlimit.*\(.*[[^,]]*enum' | \
+       sed -e 's/^.*setrlimit.*(.*enum//' -e 's/[[^ ]]*,.*$//'`
 
      ace_setrlimit_enum="enum $ace_setrlimit_enum"
 
@@ -473,14 +469,12 @@ if test "$ac_cv_func_getrusage" = yes; then
 #include <sys/resource.h>
 EOF
 
-changequote(, )dnl
 dnl Here we attempt to determine the type of the first argument of
 dnl getrusage from its prototype.  It should either be an int or an
 dnl enum.  If it is an enum, determine the enum type.
      ace_rusage_who=`eval "$ac_cpp conftest.$ac_ext" | \
-       $EGREP '[ ]+getrusage.*\(.*[^,]*enum' | \
-       sed -e 's/^.*getrusage.*(.*enum//' -e 's/[^ ]*,.*$//'`
-changequote([, ])dnl
+       $EGREP '[[ ]]+getrusage.*\(.*[[^,]]*enum' | \
+       sed -e 's/^.*getrusage.*(.*enum//' -e 's/[[^ ]]*,.*$//'`
 
      ace_rusage_who="enum $ace_rusage_who"
 
@@ -590,13 +584,11 @@ AC_DEFUN([ACE_CHECK_OFF64_T],
 #endif
 EOF
 
-changequote(, )dnl
 dnl Here we attempt to determine the type of the second argument of
 dnl lseek64()/llseek() from its prototype.
      ace_off64_t=`eval "$ac_cpp conftest.$ac_ext" | \
-       $EGREP '[ ]+lseek64.*\(.*' | \
-       sed -e 's/^.*(.*,[ ]*\(.*\) .*,.*$/\1/'`
-changequote([, ])dnl
+       $EGREP '[[ ]]+lseek64.*\(.*' | \
+       sed -e 's/^.*(.*,[[ ]]*\(.*\) .*,.*$/\1/'`
 
 
 if test -n "$ace_off64_t"; then

@@ -1,19 +1,29 @@
-dnl
+dnl $Id$
+
 dnl An autoconf script to automatically configure ACE.
 dnl Process this file with autoconf to produce a configure script.
+
+dnl Statically (i.e. at autoconf-time) determine the version of ACE.
+dnl This is necessary since the version argument to AC_INIT is
+dnl supposed to be a static value, not a dynamic (e.g. a shell
+dnl variable).
 dnl
+dnl Note that this macro removes the newline output by the M4
+dnl "esyscmd" built-in.  Unless you understand what you're doing,
+dnl particularly with M4, do not modify this macro definition.
+define([ACE_VERSION], patsubst(esyscmd(grep ACE_VERSION ace/Version.h | sed 's/.*\"\(.*\)\".*/\1/'), [
+]))dnl remove newline ending every `esyscmd' answer
 
-dnl @todo PACKAGE and VERSION should be static, not computed by the
-dnl       shell.  Or M4 should be used to compute if necessary.
-dnl AC_INIT(["$PACKAGE"], ["$ACE_VERSION"], [ace-bugs@cs.wustl.edu],[ace])
-AC_INIT([ACE],[TEST-VERSION],[ace-bugs@cs.wustl.edu],[ace])
-
+AC_INIT([ACE],
+        ACE_VERSION,
+        [ace-bugs@cs.wustl.edu],
+        [ace])
 
 AC_REVISION([$Id$])
 
 AC_COPYRIGHT([ACE(TM) and TAO(TM) are copyrighted by Douglas C. Schmidt and
 his research group at Washington University, University of California,
-Irvine, and Vanderbilt University Copyright (c) 1993-2003, all rights
+Irvine, and Vanderbilt University Copyright (c) 1993-2004, all rights
 reserved.  Since ACE and TAO are open-source, free software, you are
 free to use, modify, and distribute the ACE and TAO source code and
 object code produced from the source, as long as you include this
@@ -37,11 +47,6 @@ AC_CANONICAL_TARGET([])
 
 dnl Initialize GNU Automake, and require Automake 1.7 or better.
 AM_INIT_AUTOMAKE([1.7])
-
-changequote(, )dnl
-ACE_VERSION=`head -1 ${srcdir}/VERSION | sed 's/.*version \([0-9.]*\).*/\1/'`
-changequote([, ])dnl
-
 
 
 dnl Add maintainer mode option to the option list.
@@ -120,44 +125,23 @@ AC_LANG([C++])
 dnl If we are cross compiling disable certain things in the Makefiles.
 AM_CONDITIONAL([ACE_CROSS_COMPILED], [test X$cross_compiling = Xyes])
 
-
-dnl This checks for a binary called gm4, gnum4 or m4, and assigns
-dnl whatever was found (or "gonzo") to the M4 macro.
-dnl AC_CHECK_PROGS(M4, gm4 gnum4 m4, gonzo)
-
 dnl Look for the best awk-style program available.
 AC_PROG_AWK
 
-dnl Set some version information
-ACE_CURRENT=0
-ACE_AGE=0
-ACE_REVISION=0
+dnl Parse the version information argument.
+dnl Note that "ACE_VERSION" is an m4 macro.
+ace_version_temp=ACE_VERSION
+ace_save_ifs="$IFS"; IFS='.'
+set dummy $ace_version_temp 0 0 0
+IFS="$ace_save_ifs"
 
-AS_IF([test -n "$AWK"],
- [
-  ACE_MAJOR=`echo "$ACE_VERSION" | sed 's/\./ /g' | $AWK '{ print \[$]1 }'`
-  ACE_MINOR=`echo "$ACE_VERSION" | sed 's/\./ /g' | $AWK '{ print \[$]2 }'`
-  ACE_BETA=`echo "$ACE_VERSION" | sed 's/\./ /g' | $AWK '{ print \[$]3 }'`
+ACE_MAJOR=$2
+ACE_MINOR=$3
+ACE_BETA=$4
 
-dnl Make sure all of the versions have a legitimate value, i.e. not an
-dnl empty string.
-  test -z "$ACE_MAJOR" && ACE_MAJOR=0
-  test -z "$ACE_MINOR" && ACE_MINOR=0
-  test -z "$ACE_BETA" && ACE_BETA=0
-
-dnl This is a terrible kludge to fool libtool into making it produce a shared
-dnl library with the "right" version information.
-dnl We really should switch to a version scheme that is compatible with
-dnl libtool.
-dnl               -Ossama
-  ACE_CURRENT=`expr $ACE_MAJOR + $ACE_MINOR`
-  ACE_AGE=$ACE_MINOR
-  ACE_REVISION=$ACE_BETA
- ],[])
-
-AC_SUBST([ACE_CURRENT])
-AC_SUBST([ACE_AGE])
-AC_SUBST([ACE_REVISION])
+AC_SUBST([ACE_MAJOR])
+AC_SUBST([ACE_MINOR])
+AC_SUBST([ACE_BETA])
 
 dnl Do the usual install settings; don't forget to include a
 dnl `install-sh' script, in case there is no BSD compatible `install'
@@ -178,7 +162,7 @@ case $host_os in
 esac
 
 
-dnl Check if we support symlinks
+dnl Check if we support symbolic links
 AC_PROG_LN_S
 
 dnl Check if a lexical analyzer exists (lex, flex, etc.)
@@ -6650,9 +6634,9 @@ if test "$ace_user_enable_threads" != yes ||
   dnl Removal of these flags is only performed if the configure script
   dnl added them.
   if test -n "$ACE_THR_CPPFLAGS"; then
-changequote(, )dnl
-  CPPFLAGS=`eval "echo $CPPFLAGS | sed -e 's/$ACE_THR_CPPFLAGS//' -e 's/-D_THREAD_SAFE\(=[0-9]*\)\?//'"`
-changequote([, ])dnl
+dnl changequote(, )dnl
+  CPPFLAGS=`eval "echo $CPPFLAGS | sed -e 's/$ACE_THR_CPPFLAGS//' -e 's/-D_THREAD_SAFE\(=[[0-9]]*\)\?//'"`
+dnl changequote([, ])dnl
   fi
 
   AC_MSG_WARN([It appears that you do NOT have any usable thread libraries])
@@ -7148,7 +7132,7 @@ and the following information:
   [RCS] translit([$Id$], [$"])
 
 
-  ACE Version:        $ACE_VERSION
+  ACE Version:        ACE_VERSION
   C++ Compiler:       $CXX
   C++ Preprocessor:   $CXXCPP
   C++ Flags:          $CXXFLAGS
