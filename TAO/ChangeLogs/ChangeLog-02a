@@ -1,3 +1,9 @@
+Wed Apr 04 13:37:43 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/orbsvcs/Security.dsp:
+          Add missing dependencies, the generated code depends on the IDL
+          compiler
+
 Wed Apr  4 13:52:24 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * examples/AMI/FL_Callback/Makefile:
