@@ -25,6 +25,7 @@ CFG=TAO Static - Win32 Debug
 # PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath "Desktop"
+# PROP WCE_FormatVersion ""
 CPP=cl.exe
 RSC=rc.exe
 
@@ -111,6 +112,10 @@ SOURCE=.\Client_Strategy_Factory.cpp
 # Begin Source File
 
 SOURCE=.\Connect.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Context.cpp
 # End Source File
 # Begin Source File
 
@@ -234,6 +239,14 @@ SOURCE=.\Invocation.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\IOR_LookupTable.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Key_Adapters.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Managed_Types.cpp
 # End Source File
 # Begin Source File
@@ -259,6 +272,10 @@ SOURCE=.\NVList.cpp
 # Begin Source File
 
 SOURCE=.\Object.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Object_Adapter.cpp
 # End Source File
 # Begin Source File
 
