@@ -1,3 +1,8 @@
+Sat Jan 15 22:22:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/HTBP/Send_Large_Msg/Send_Large_Msg.mpc:
+          Also build the client after the Test_Output library
+
 Thu Jan 13 23:32:03 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/Capabilities.cpp:
