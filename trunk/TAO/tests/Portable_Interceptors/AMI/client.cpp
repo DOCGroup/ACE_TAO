@@ -12,7 +12,7 @@ ACE_RCSID (AMI,
 
 const char *ior = "file://test.ior";
 static int exit_status = 0;
-const int ITERATIONS = 100;
+const unsigned long ITERATIONS = 100;
 
 int
 parse_args (int argc, char *argv[])
@@ -135,13 +135,15 @@ static void test_synchronous (Test::Echo_ptr echo
     Echo_Client_Request_Interceptor::request_count;
   unsigned long initial_reply_count =
     Echo_Client_Request_Interceptor::reply_count;
-  for(int i = 0; i != ITERATIONS; ++i)
-  {
-    CORBA::String_var s =
-      echo->echo_operation ("dummy message"
-                            ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
-  }
+
+  for (unsigned long i = 0; i != ITERATIONS; ++i)
+    {
+      CORBA::String_var s =
+        echo->echo_operation ("dummy message"
+                              ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+    }
+
   unsigned long total_request_count =
     Echo_Client_Request_Interceptor::request_count - initial_request_count;
   unsigned long total_reply_count =
@@ -175,7 +177,7 @@ static void test_ami (Test::Echo_ptr echo
   unsigned long initial_other_count =
     Echo_Client_Request_Interceptor::other_count;
 
-  for(int i = 0; i != ITERATIONS; ++i)
+  for (unsigned long i = 0; i != ITERATIONS; ++i)
     {
       echo->sendc_echo_operation(
         echo_handler.in (), "dummy message" ACE_ENV_ARG_PARAMETER);
@@ -250,7 +252,7 @@ static void test_ami_errors (CORBA::ORB_ptr orb,
   unsigned long initial_exception_count =
     Echo_Client_Request_Interceptor::exception_count;
 
-  for (int i = 0; i != ITERATIONS; ++i)
+  for (unsigned long i = 0; i != ITERATIONS; ++i)
     {
       ACE_TRY
         {
