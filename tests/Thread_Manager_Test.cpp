@@ -89,6 +89,7 @@ worker (int iterations)
   ACE_Thread_Manager *thr_mgr = ACE_Thread_Manager::instance ();
 #endif /* ! ACE_LACKS_UNIX_SIGNAL */
 
+ACE_DEBUG((LM_DEBUG, "%T (%t) up, waiting on start barrier\n"));
   // After setting up the signal catcher, block on the start barrier.
   thread_start->wait ();
 
@@ -111,7 +112,9 @@ worker (int iterations)
               break;
             }
 #endif /* ! ACE_LACKS_UNIX_SIGNAL */
+ACE_DEBUG((LM_DEBUG, "%T (%t) going to sleep\n"));
           ACE_OS::sleep (1);
+ACE_DEBUG((LM_DEBUG, "%T (%t) awake again\n"));
         }
     }
 
@@ -199,8 +202,8 @@ main (int, ASYS_TCHAR *[])
   ACE_ASSERT (grp_id != -1);
   thread_start->wait ();
 
-  // Pthreads doesn't do suspend/resume.  Neither do DCEThreads.
-#if !defined (ACE_HAS_PTHREADS) && !defined (ACE_HAS_DCETHREADS)
+  // Pthreads doesn't do suspend/resume.
+#if !defined (ACE_HAS_PTHREADS)
   // Wait for 1 second and then suspend every thread in the group.
   ACE_OS::sleep (1);
   ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%t) suspending group\n")));
@@ -214,7 +217,7 @@ main (int, ASYS_TCHAR *[])
   ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%t) resuming group\n")));
 
   ACE_ASSERT (thr_mgr->resume_grp (grp_id) != -1);
-#endif /* ! ACE_HAS_PTHREADS && ! ACE_HAS_DCETHREADS */
+#endif /* ! ACE_HAS_PTHREADS */
 
   // Wait for 1 more second and then send a SIGINT to every thread in
   // the group.
@@ -224,7 +227,7 @@ main (int, ASYS_TCHAR *[])
 
 #if defined (ACE_HAS_WTHREADS)
   thr_mgr->kill_grp (grp_id, SIGINT);
-#else
+#elif !defined (ACE_HAS_PTHREADS_DRAFT4)
   ACE_ASSERT (thr_mgr->kill_grp (grp_id, SIGINT) != -1);
 #endif /* ACE_HAS_WTHREADS */
 
