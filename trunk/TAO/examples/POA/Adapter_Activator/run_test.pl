@@ -56,19 +56,19 @@ $CL = new PerlACE::Process ("../Generic_Servant/client");
 
 $SV->Spawn ();
 
-if (PerlACE::waitforfile_timed ($iorfile_1, 5) == -1) {
+if (PerlACE::waitforfile_timed ($iorfile_1, 15) == -1) {
     print STDERR "ERROR: cannot find file <$iorfile_1>\n";
     $SV->Kill ();
     exit 1;
 }
 
-if (PerlACE::waitforfile_timed ($iorfile_2, 5) == -1) {
+if (PerlACE::waitforfile_timed ($iorfile_2, 15) == -1) {
     print STDERR "ERROR: cannot find file <$iorfile_2>\n";
     $SV->Kill ();
     exit 1;
 }
 
-if (PerlACE::waitforfile_timed ($iorfile_3, 5) == -1) {
+if (PerlACE::waitforfile_timed ($iorfile_3, 15) == -1) {
     print STDERR "ERROR: cannot find file <$iorfile_3>\n";
     $SV->Kill ();
     exit 1;
