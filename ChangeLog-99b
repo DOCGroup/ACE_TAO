@@ -8,6 +8,9 @@ Tue Mar 09 21:54:39 1999  David L. Levine  <levine@cs.wustl.edu>
         * examples/Naming/Makefile: suppress build if ACE_COMPONENTS
           is defined and doesn't contain Other.
 
+        * performance-tests/Misc/Makefile: don't build test_naming
+          if ACE_COMPONENTS is defined and doesn't contain Other.
+
 Tue Mar  9 20:56:35 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * include/makeinclude/rules.nested.GNU:
