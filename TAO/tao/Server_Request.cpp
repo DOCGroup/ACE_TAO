@@ -28,7 +28,7 @@ static const char *TAO_Server_Request_Timeprobe_Description[] =
 
 enum
 {
-  // Timeprobe description table start key 
+  // Timeprobe description table start key
   TAO_SERVER_REQUEST_START = 400,
   TAO_SERVER_REQUEST_END
 };
@@ -409,7 +409,7 @@ IIOP_ServerRequest::marshal (CORBA::Environment &orb_env,
       CORBA::Exception_ptr exception = skel_env.exception ();
       exception->_incr_refcnt ();
 
-      // The Any does not own the because ultimately it will be owned 
+      // The Any does not own the because ultimately it will be owned
       // by the Server_Request via the call to "set_exception"
       CORBA::Any any (skel_env.exception ()->_type (), exception);
       this->set_exception (any, orb_env);
@@ -590,14 +590,14 @@ IIOP_ServerRequest::dsi_marshal (CORBA::Environment &env)
 }
 
 
-CORBA::Object_ptr 
+CORBA::Object_ptr
 IIOP_ServerRequest::forward_location (void)
 // get the forward_location
 {
   return CORBA::Object::_duplicate (this->forward_location_.in ());
 }
 
-CORBA::ULong 
+CORBA::ULong
 IIOP_ServerRequest::exception_type (void)
 // get the exception type
 {
