@@ -1903,7 +1903,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                   break;
 
                 case 'Q':
-#if defined (ACE_LACKS_LONGLONG_T)
+#if defined (ACE_LACKS_LONGLONG_T) || defined (ACE_LACKS_UNSIGNEDLONGLONG_T)
                   {
                     // This relies on the ACE_U_LongLong storage layout.
                     ACE_UINT32 hi = va_arg (argp, ACE_UINT32);
@@ -1930,7 +1930,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                                                   format,
                                                   va_arg (argp, ACE_UINT64));
                   }
-#endif /* ! ACE_LACKS_LONGLONG_T */
+#endif /* ! ACE_LACKS_LONGLONG_T || ACE_LACKS_UNSIGNEDLONGLONG_T */
                   ACE_UPDATE_COUNT (bspace, this_len);
                   break;
 
