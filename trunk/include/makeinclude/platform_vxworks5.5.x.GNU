@@ -121,8 +121,9 @@ include $(TGT_DIR)/h/tool/$(TOOL_FAMILY)/make.$(CPU)$(TOOL)
 ifeq ("$(VXWORKSLINK)","true")
   override LARGE_PROJECT =
   PRJ_OBJS = $(addprefix $(VDIR), $(OBJS))
-  LD_PARTIAL += -L$(ACE_ROOT)/ace -L./ $(LDLIBPATH) $(LD_LINK_PATH) $(VLDLIBS)
-  PRJ_OBJS_FOR_LD_PARTIAL=$(addprefix $(VDIR), $(OBJS))
+  LD_PARTIAL += -L$(ACE_ROOT)/ace -L./ $(LDLIBPATH) $(LD_LINK_PATH)
+##  LD_PARTIAL_LAST_FLAGS += $(OPTION_PASS_TO_LD)--split-by-reloc
+  PRJ_OBJS_FOR_LD_PARTIAL=$(addprefix $(VDIR), $(OBJS)) $(VLDLIBS)
   PRJ_OBJS_FOR_LD=$(addprefix $(VDIR), $(OBJS))
   PRJ_OBJS_FOR_NM=$(addprefix $(VDIR), $(OBJS))
   PRJ_OBJS_FOR_AR=$(addprefix $(VDIR), $(OBJS))
@@ -133,8 +134,6 @@ ifeq ("$(VXWORKSLINK)","true")
   ## make sure default target stays the ACE/TAO default target
   ##
 default: all
-
-##include $(TGT_DIR)/h/make/rules.$(PRJ_TYPE)
 
   ## dummy target to satify VxWorks dependencies
 $(PRJ_DIR)/$(PRJ_FILE):
