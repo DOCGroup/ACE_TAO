@@ -352,19 +352,19 @@ be_visitor_arg_traits::visit_attribute (be_attribute *node)
     }
 
   AST_String *st = AST_String::narrow_from_decl (node->field_type ());
-  
+
   if (st == 0)
     {
       return 0;
     }
-    
+
   unsigned long bound = st->max_size ()->ev ()->u.ulval;
-  
+
   if (bound == 0)
     {
       return 0;
     }
-    
+
   TAO_OutStream *os = this->ctx_->stream ();
   idl_bool wide = (st->width () != 1);
 
@@ -387,7 +387,7 @@ be_visitor_arg_traits::visit_attribute (be_attribute *node)
       << be_uidt << be_uidt << be_uidt_nl
       << "{" << be_nl
       << "};";
-  
+
   this->generated (node, I_TRUE);
   return 0;
 }
@@ -754,7 +754,7 @@ be_visitor_arg_traits::visit_structure (be_structure *node)
   os->gen_endif ();
 
   /* Set this before visiting the scope so things like
-  
+
       interface foo
       {
         struct bar
@@ -762,13 +762,13 @@ be_visitor_arg_traits::visit_structure (be_structure *node)
           ....
           foo foo_member;
         };
-        
+
         void op (in bar inarg);
       };
-      
+
      will not cause infinite recursion in this visitor.
   */
-  
+
   this->generated (node, I_TRUE);
 
   if (this->visit_scope (node) != 0)
@@ -868,7 +868,7 @@ be_visitor_arg_traits::visit_union (be_union *node)
   os->gen_endif ();
 
   /* Set this before visiting the scope so things like
-  
+
       interface foo
       {
         struct bar
@@ -876,13 +876,13 @@ be_visitor_arg_traits::visit_union (be_union *node)
           ....
           foo foo_member;
         };
-        
+
         void op (in bar inarg);
       };
-      
+
      will not cause infinite recursion in this visitor.
   */
-  
+
   this->generated (node, I_TRUE);
 
   int status = this->visit_scope (node);
@@ -1005,4 +1005,3 @@ be_visitor_arg_traits::visit_home (be_home *node)
 {
   return this->visit_interface (node);
 }
-
