@@ -1,8 +1,0 @@
-project(VoidData) : rtscheduling_client {
- exename = VoidData
- Source_Files {
-    test_client.cpp
-    testC.cpp
-  }
-}
-

@@ -1,4 +1,0 @@
-project : svc_utils, etcl, dynamicany {
-  after      += DsLogAdmin
-  libs       += TAO_DsLogAdmin
-}
