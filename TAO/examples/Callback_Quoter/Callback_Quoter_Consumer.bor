@@ -1,5 +1,5 @@
 #
-# Makefile for building the Callback_Quoter example 
+# Makefile for building the Callback_Quoter example
 #
 
 NAME = Callback_Quoter_Consumer
@@ -18,6 +18,10 @@ OBJFILES = \
 CPPDIR = .
 
 IDLDIR = .
+
+IDLFILES = \
+        Consumer.idl \
+        Notifier.idl
 
 !include <$(ACE_ROOT)\include\makeinclude\build_example.bor>
 

@@ -13,10 +13,14 @@ OBJFILES = \
 	$(OBJDIR)\notifier.obj \
 	$(OBJDIR)\Notifier_i.obj \
 	$(OBJDIR)\Notifier_Input_Handler.obj
-        
+
 CPPDIR = .
 
 IDLDIR = .
+
+IDLFILES = \
+        Consumer.idl \
+        Notifier.idl
 
 !include <$(ACE_ROOT)\include\makeinclude\build_example.bor>
 
