@@ -3,14 +3,16 @@
 #include "CORBALOC_Parser.h"
 #include "ORB_Core.h"
 #include "Stub.h"
+#include "MProfile.h"
 #include "Connector_Registry.h"
 
-#include "tao/IIOP_Endpoint.h"
 #if !defined(__ACE_INLINE__)
 #include "CORBALOC_Parser.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(tao, CORBALOC_Parser, "$Id$")
+ACE_RCSID (TAO,
+           CORBALOC_Parser,
+           "$Id$")
 
 TAO_CORBALOC_Parser::~TAO_CORBALOC_Parser (void)
 {
@@ -54,7 +56,7 @@ TAO_CORBALOC_Parser::parse_string_count_helper (const char * &corbaloc_name,
                          ACE_TEXT ("TAO (%P|%t) Invalid Syntax\n")));
               
               ACE_THROW (CORBA::BAD_PARAM (TAO_OMG_VMCID |
-                            TAO_OMG_MINOR_BAD_PARAM_10,
+                                           TAO_OMG_MINOR_BAD_PARAM_10,
                                            CORBA::COMPLETED_NO));
             }
         }
@@ -81,7 +83,7 @@ TAO_CORBALOC_Parser::assign_key_string (char * &cloc_name_ptr,
                                         ACE_CString &key_string,
                                         CORBA::ULong
                                         &addr_list_length,
-                                        CORBA::ORB_ptr orb_var,
+                                        CORBA::ORB_ptr orb,
                                         TAO_MProfile &mprofile,
                                         CORBA::Environment
                                         &ACE_TRY_ENV)
@@ -106,7 +108,7 @@ TAO_CORBALOC_Parser::assign_key_string (char * &cloc_name_ptr,
 
   if (ACE_OS::strncmp (cloc_name_ptr,
                        protocol_prefix,
-                       sizeof (protocol_prefix)-1) == 0)
+                       sizeof (protocol_prefix) - 1) == 0)
     {
       // If there is no protocol explicitly specified, it defaults
       // down to <iiop:> ... so allocate memory even for that and
@@ -127,8 +129,10 @@ TAO_CORBALOC_Parser::assign_key_string (char * &cloc_name_ptr,
       ACE_OS::strcat (end_point,
                       protocol_suffix_append);
 
-      ACE_CString host_name_port = cloc_name_cstring.substring (pos_colon+1,
-                                                                -1);
+      ACE_CString host_name_port =
+        cloc_name_cstring.substring (pos_colon + 1,
+                                     -1);
+
       ACE_OS::strcat (end_point,
                       host_name_port.c_str ());
 
@@ -163,14 +167,15 @@ TAO_CORBALOC_Parser::assign_key_string (char * &cloc_name_ptr,
 
       // The End_point will now be 'iiop://'
 
-      ACE_CString host_name_port = cloc_name_cstring.substring (pos_colon+1,
-                                                                -1);
+      ACE_CString host_name_port =
+        cloc_name_cstring.substring (pos_colon + 1, -1);
 
       ACE_OS::strcat (end_point,
                       host_name_port.c_str ());
 
       // Example:
-      // The End_point will now be 'iiop://doc.ece.uci.edu:12345'
+      // The End_point will now be of the form
+      // 'iiop://1.0@doc.ece.uci.edu:12345'
       
     }
 
@@ -194,13 +199,13 @@ TAO_CORBALOC_Parser::assign_key_string (char * &cloc_name_ptr,
   ACE_OS::strcat (end_point,
                   key_string.c_str ());
 
-  // Example: The End_point will now be 
-  // 'iiop://doc.ece.uci.edu:12345/object_name'
+  // Example: The End_point will now be of the form:
+  // 'iiop://1.0@doc.ece.uci.edu:12345/object_name'
 
   // Call the mprofile helper which makes an mprofile for this
   // endpoint and adds it to the big mprofile.
-  this->parse_string_mprofile_helper (end_point,
-                                      orb_var,
+  this->parse_string_mprofile_helper (end_point.in (),
+                                      orb,
                                       mprofile,
                                       ACE_TRY_ENV);
   ACE_CHECK;
@@ -210,9 +215,8 @@ void
 TAO_CORBALOC_Parser::parse_string_assign_helper (CORBA::ULong
                                                  &addr_list_length,
                                                  ACE_CString &key_string,
-                                                 ACE_CString
-                                                 &cloc_name,
-                                                 CORBA::ORB_ptr orb_var,
+                                                 ACE_CString &cloc_name,
+                                                 CORBA::ORB_ptr orb,
                                                  TAO_MProfile &mprofile,
                                                  CORBA::Environment
                                                  &ACE_TRY_ENV)
@@ -231,12 +235,12 @@ TAO_CORBALOC_Parser::parse_string_assign_helper (CORBA::ULong
   while (cloc_name_ptr != 0)
     {
       // Forms the endpoint and calls the mprofile_helper.
-      assign_key_string (cloc_name_ptr,
-                         key_string,
-                         addr_list_length,
-                         orb_var,
-                         mprofile,
-                         ACE_TRY_ENV);
+      this->assign_key_string (cloc_name_ptr,
+                               key_string,
+                               addr_list_length,
+                               orb,
+                               mprofile,
+                               ACE_TRY_ENV);
       ACE_CHECK;
 
       // Get the next token.
@@ -248,26 +252,24 @@ TAO_CORBALOC_Parser::parse_string_assign_helper (CORBA::ULong
 
 
 void
-TAO_CORBALOC_Parser::parse_string_mprofile_helper (CORBA::String_var
-                                                   end_point,
-                                                   CORBA::ORB_ptr orb_var,
-                                                   TAO_MProfile &mprofile,
-                                                   CORBA::Environment
-                                                   &ACE_TRY_ENV)
+TAO_CORBALOC_Parser::parse_string_mprofile_helper (
+    const char * end_point,
+    CORBA::ORB_ptr orb,
+    TAO_MProfile &mprofile,
+    CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  /// = new TAO_MProfile;
   TAO_MProfile jth_mprofile;
 
   int retv =
-    orb_var->orb_core ()->connector_registry ()->make_mprofile(
-                                                    end_point.in (),
-                                                    jth_mprofile,
-                                                    ACE_TRY_ENV);
+    orb->orb_core ()->connector_registry ()->make_mprofile (end_point,
+                                                            jth_mprofile,
+                                                            ACE_TRY_ENV);
+  ACE_CHECK;
 
   if (retv != 0)
     {
-      ACE_THROW(CORBA::INV_OBJREF (
+      ACE_THROW (CORBA::INV_OBJREF (
                    CORBA_SystemException::_tao_minor_code (
                       TAO_DEFAULT_MINOR_CODE,
                       EINVAL),
@@ -287,29 +289,27 @@ TAO_CORBALOC_Parser::parse_string_mprofile_helper (CORBA::String_var
 }
 
 CORBA::Object_ptr
-TAO_CORBALOC_Parser::make_stub_from_mprofile (CORBA::ORB_ptr orb_var,
+TAO_CORBALOC_Parser::make_stub_from_mprofile (CORBA::ORB_ptr orb,
                                               TAO_MProfile &mprofile,
                                               CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  CORBA::Object_ptr obj = CORBA::Object::_nil ();
-
-  // Now make the TAO_Stub.
+  // Create a TAO_Stub.
   TAO_Stub *data = 0;
   ACE_NEW_THROW_EX (data,
                     TAO_Stub ((const char *) 0,
                               mprofile,
-                              orb_var->orb_core ()),
-                        CORBA::NO_MEMORY (
-                          CORBA_SystemException::_tao_minor_code (
-                            TAO_DEFAULT_MINOR_CODE,
-                            ENOMEM),
-                          CORBA::COMPLETED_NO));
+                              orb->orb_core ()),
+                    CORBA::NO_MEMORY (
+                      CORBA_SystemException::_tao_minor_code (
+                        TAO_DEFAULT_MINOR_CODE,
+                        ENOMEM),
+                      CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   TAO_Stub_Auto_Ptr safe_data (data);
 
-  obj = orb_var->orb_core ()->create_object (data);
+  CORBA::Object_var obj = orb->orb_core ()->create_object (data);
 
   if (!CORBA::is_nil (obj))
     {
@@ -318,7 +318,7 @@ TAO_CORBALOC_Parser::make_stub_from_mprofile (CORBA::ORB_ptr orb_var,
       (void) safe_data.release ();
 
       /// Return the object reference to the application.
-      return obj;
+      return obj._retn ();
     }
 
   /// Shouldnt come here: if so, return nil reference.
@@ -328,11 +328,11 @@ TAO_CORBALOC_Parser::make_stub_from_mprofile (CORBA::ORB_ptr orb_var,
 CORBA::Object_ptr
 TAO_CORBALOC_Parser::parse_string_rir_helper (const char *
                                               &corbaloc_name,
-                                              CORBA::ORB_ptr orb_var,
+                                              CORBA::ORB_ptr orb,
                                               CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  CORBA::Object_ptr rir_obj = CORBA::Object::_nil ();
+
 
   // "rir" protocol. Pass the key string as an
   // argument to the resolve_initial_references.
@@ -345,11 +345,12 @@ TAO_CORBALOC_Parser::parse_string_rir_helper (const char *
       key_string =  "NameService";
     }
 
-  rir_obj = orb_var->resolve_initial_references (key_string,
-                                             ACE_TRY_ENV);
+  CORBA::Object_var rir_obj =
+    orb->resolve_initial_references (key_string,
+                                     ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
-  return rir_obj;
+  return rir_obj._retn ();
 }
 
 int
@@ -383,19 +384,17 @@ TAO_CORBALOC_Parser::parse_string (const char *ior,
                                    CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  CORBA::ORB_var orb_var = CORBA::ORB::_duplicate (orb);
-
-  /// One big mprofile which consists the profiles of all the endpoints.
+  /// MProfile which consists of the profiles for each endpoint.
   TAO_MProfile mprofile;
 
-  // Skip the prefix, we know it is there because this method in only
-  // called if <match_prefix> returns 1.
+  // Skip the prefix.  We know it is there because this method is only
+  // called if match_prefix() returns 1.
   const char *corbaloc_name =
     ior + sizeof corbaloc_prefix - 1;
 
   CORBA::Object_ptr object = CORBA::Object::_nil ();
 
-  // No of endpoints
+  // Number of endpoints
   CORBA::ULong count_addr = 1;
 
   // Length of obj_addr_list
@@ -412,12 +411,12 @@ TAO_CORBALOC_Parser::parse_string (const char *ior,
                                        ACE_TRY_ENV);
       ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
-      // Convert corbaloc_name as a ACE_CString
+      // Convert corbaloc_name to an ACE_CString
       ACE_CString corbaloc_name_str (corbaloc_name, 0, 1);
 
       // Get the key_string which is a substring of corbaloc_name_str
       ACE_CString key_string =
-        corbaloc_name_str.substring ((addr_list_length+1), -1);
+        corbaloc_name_str.substring ((addr_list_length + 1), -1);
 
       // Copy the <obj_addr_list> to cloc_name.
       ACE_CString cloc_name (corbaloc_name,
@@ -425,20 +424,20 @@ TAO_CORBALOC_Parser::parse_string (const char *ior,
                              0,
                              1);
 
-      // Get each endpoint: For each endpoint, make a mprofile and add
-      // it to the one big mprofile whose reference is passed to the
+      // Get each endpoint: For each endpoint, make a MProfile and add
+      // it to the main MProfile whose reference is passed to the
       // application
       this->parse_string_assign_helper (addr_list_length,
                                         key_string,
                                         cloc_name,
-                                        orb_var.in (),
+                                        orb,
                                         mprofile,
                                         ACE_TRY_ENV);
       ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
       // Create the stub for the mprofile and get the object reference
       // to it which is to be returned to the client application.
-      object = this->make_stub_from_mprofile (orb_var.in (),
+      object = this->make_stub_from_mprofile (orb,
                                               mprofile,
                                               ACE_TRY_ENV);
       ACE_CHECK_RETURN (CORBA::Object::_nil ());
@@ -447,7 +446,7 @@ TAO_CORBALOC_Parser::parse_string (const char *ior,
     {
       // RIR case:
       object = this->parse_string_rir_helper (corbaloc_name,
-                                              orb_var.in (),
+                                              orb,
                                               ACE_TRY_ENV);
       ACE_CHECK_RETURN (CORBA::Object::_nil ());
     }
