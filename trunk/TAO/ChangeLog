@@ -33,6 +33,15 @@ Tue Mar 18 15:31:06 2003  Ossama Othman  <ossama@uci.edu>
 
 	  Removed useless includes.
 
+	* orbsvcs/examples/ORT/Makefile (IDL_FILES):
+
+	  Added new ObjectReferenceFactory IDL source to this Makefile.
+
+	  (TAO_IDLFLAGS):
+
+	  Added "-Gv" TAO_IDL compiler option to enable support for
+	  valuetypes.
+
 Tue Mar 18 16:54:50 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/TAOC.cpp:

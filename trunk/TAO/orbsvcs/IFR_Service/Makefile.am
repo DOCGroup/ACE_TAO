@@ -108,8 +108,6 @@ noinst_HEADERS = \
 	PublishesDef_i.h \
 	Repository_i.h \
 	SequenceDef_i.h \
-	Servant_Factory.h \
-	Servant_Locator.h \
 	StringDef_i.h \
 	StructDef_i.h \
 	TypedefDef_i.h \
