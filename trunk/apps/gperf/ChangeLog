@@ -1,3 +1,8 @@
+Mon Oct  5 18:24:15 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* src/Key_List.cpp (dump): Fixed the unsigned problems with line
+ 	  1502 YET again...  Thanks to David/Darrell for reporting this.
+
 Sun Oct  4 20:42:56 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* src: Fixed yet another problem with switching from array-based
