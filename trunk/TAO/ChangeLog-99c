@@ -1,3 +1,9 @@
+Mon May 03 22:02:34 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * TAO_IDL/include/ast_expression.h: reverted replacement of
+          LongLong with Long for GreenHills/Solaris, because it'll
+          take a lot more than that.
+
 Mon May 03 21:57:56 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * TAO_IDL/tao_idl.cpp,TAO_IDL/be/be_init.cpp,
