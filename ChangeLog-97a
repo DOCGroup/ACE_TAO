@@ -1,3 +1,15 @@
+Fri Jan 31 10:01:25 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/Hash_Map_Manager.h: removed #include of
+	  ace/Hash_Map_Manager.i because it doesn't exist.
+
+	* ace/Map_Manager.cpp (current_size, total_size): cast -1 to
+	  size_t to avoid warning about signed-to-unsigned conversion.
+
+	* bin/create_ace_build: added checks for existing symlinks, so
+	  now the script can be re-run safely at any time on a build
+	  tree to update it.
+
 Fri Jan 31 02:16:30 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/config-aix-*.h: Made the default value for
