@@ -1093,7 +1093,8 @@ ACE::round_to_pagesize (off_t len)
 
 ACE_HANDLE
 ACE::handle_timed_complete (ACE_HANDLE h,
-			    ACE_Time_Value *timeout)
+			    ACE_Time_Value *timeout,
+			    int is_tli)
 {
   ACE_TRACE ("ACE::handle_timed_complete");
   ACE_Handle_Set rd_handles;
@@ -1134,16 +1135,17 @@ ACE::handle_timed_complete (ACE_HANDLE h,
 #if defined (ACE_WIN32)
   else if (rd_handles.is_set (h) || ex_handles.is_set (h))
 #elif defined (ACE_HAS_TLI)
-  else if (rd_handles.is_set (h) && !wr_handles.is_set (h))
+  else if (is_tli && rd_handles.is_set (h) && !wr_handles.is_set (h))
 #else
   else if (rd_handles.is_set (h))
 #endif /* ACE_WIN32 */
     {
       char dummy;
+
       // The following recv() won't block provided that the
       // ACE_NONBLOCK flag has not been turned off .
-
       n = ACE::recv (h, &dummy, 1, MSG_PEEK);
+
       if (n <= 0)
 	{
 	  if (n == 0)

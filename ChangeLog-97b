@@ -1,3 +1,15 @@
+Fri Sep 26 00:54:18 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+        * ace/TLI_Connector.cpp (complete): Changed the call to
+ 	  ACE::handle_timed_complete() to use the new parameter.
+
+	* ace/ACE: Added an extra parameter to the call to
+ 	  ACE::handle_timed_complete() to indicate (at run-time) that this
+ 	  is being called via a TLI interface.  Thanks to the
+ 	  ever-vigilant Steve Huston for suggesting this.
+
+	* tests/SOCK_Connector_Test.cpp: "ACEified" the new test program.
+
 Thu Sep 25 23:27:38 1997    <irfan@TWOSTEP>
 
 	* ace/config-win32.h: Error in directives: it should be "Define

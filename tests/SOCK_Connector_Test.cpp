@@ -22,105 +22,117 @@
 #include "ace/SOCK_Connector.h"
 #include "ace/SOCK_Stream.h"
 #include "test_config.h"
-#if !defined(ACE_WIN32) && !defined(VXWORKS)
-#include <sys/utsname.h>
-#endif
 
+#if !defined (ACE_WIN32) && !defined (VXWORKS)
+#include <sys/utsname.h>
+#endif /* !defined (ACE_WIN32) && !defined (VXWORKS) */
 
 // The original problem this program tested for was incorrectly saying
 // a non-blocking connect completed successfully when it didn't.  The
-// test doesn't always work when done to localhost (platform-dependant)
-// so we look around for another host - any other one will do.
-static void
-find_another_host(char other_host[])
-{
+// test doesn't always work when done to localhost
+// (platform-dependant) so we look around for another host - any other
+// one will do.
 
-  strcpy(other_host, "localhost");	// If all else fails
+static void
+find_another_host (char other_host[])
+{
+  ACE_OS::strcpy (other_host, "localhost");	// If all else fails
 
   // These gethost-type things don't work everywhere.
-#if !defined(ACE_WIN32) && !defined(VXWORKS)
+#if !defined (ACE_WIN32) && !defined (VXWORKS)
   struct hostent *h;
-  struct utsname  un;
+  struct utsname un;
 
-  uname(&un);
-  h = gethostbyname(un.nodename);
-  strcpy(other_host, h->h_name);	// Use me if can't find another
+  ACE_OS::uname (&un);
 
-  sethostent(1);
-  while ((h = gethostent()) != NULL) {
-    if (strcmp(h->h_name, "localhost") == 0)
-      continue;
-    if (strcmp(h->h_name, other_host) != 0) {	// If not me
-      strcpy(other_host, h->h_name);
-      break;
+  h = ACE_OS::gethostbyname (un.nodename);
+
+  // Use me if can't find another
+  ACE_OS::strcpy (other_host, h->h_name);	
+
+  // @@ We really need to add wrappers for these hostent methods.
+  sethostent (1);
+
+  while ((h = gethostent ()) != NULL) 
+    {
+      if (ACE_OS::strcmp (h->h_name, "localhost") == 0)
+	continue;
+
+      // If not me
+      if (ACE_OS::strcmp (h->h_name, other_host) != 0) 
+	{
+	  ACE_OS::strcpy (other_host, h->h_name);
+	  break;
+	}
     }
-  }
-  endhostent();
 
-#endif  // ACE_WIN32, VXWORKS
-
-  return;
-
+  endhostent ();
+#endif /* !defined (ACE_WIN32) && !defined (VXWORKS) */
 }
-
 
 static int
-fail_no_listener_nonblocking(void)
+fail_no_listener_nonblocking (void)
 {
+  char test_host[MAXHOSTNAMELEN];
+  int status;
+  ACE_INET_Addr nobody_home;
+  ACE_SOCK_Connector con;
+  ACE_SOCK_Stream sock;
+  ACE_Time_Value nonblock (0, 0);
 
-char			test_host[256];
-int			status;
-ACE_INET_Addr		nobody_home;
-ACE_SOCK_Connector	con;
-ACE_SOCK_Stream		sock;
-ACE_Time_Value		nonblock(0, 0);
+  find_another_host (test_host);
+  ACE_DEBUG ((LM_DEBUG, "Testing to host %s\n", test_host));
+  nobody_home.set ((u_short) 4242, test_host);
+  status = con.connect (sock, nobody_home, &nonblock);
 
-    find_another_host(test_host);
-    ACE_DEBUG((LM_DEBUG, "Testing to host %s\n", test_host));
-    nobody_home.set((u_short)4242, test_host);
-    status = con.connect(sock, nobody_home, &nonblock);
-    ACE_ASSERT(status == -1);		// Need a port that will fail
+  // Need a port that will fail.
+  ACE_ASSERT (status == -1);		
 
-    if (errno == EWOULDBLOCK) {
-        status = con.complete(sock);
-	if (status != -1) {
-	    ACE_DEBUG((LM_DEBUG, "Connect which should fail didn't\n"));
-	    status = -1;
+  if (errno == EWOULDBLOCK) 
+    {
+      status = con.complete (sock);
+
+      if (status != -1) 
+	{
+	  ACE_DEBUG ((LM_DEBUG,
+		      "Connect which should fail didn't\n"));
+	  status = -1;
 	}
-	else if (errno != ECONNREFUSED) {
-	    ACE_DEBUG((LM_DEBUG, "%p', expected ECONNREFUSED\n",
-		       "Failed with '"));
-	    status = -1;
+      else if (errno != ECONNREFUSED) 
+	{
+	  ACE_DEBUG ((LM_DEBUG, "%p', expected ECONNREFUSED\n",
+		      "Failed with '"));
+	  status = -1;
 	}
-	else {
-	    ACE_DEBUG((LM_DEBUG, "%p\n", "Proper fail"));
-	    status = 0;
+      else 
+	{
+	  ACE_DEBUG ((LM_DEBUG, "%p\n", "Proper fail"));
+	  status = 0;
 	}
     }
-    else {
-        ACE_DEBUG((LM_DEBUG,
-		   "Test not executed fully; expected EWOULDBLOCK, %p\n",
-		   "not"));
-	status = -1;
+  else 
+    {
+      ACE_DEBUG ((LM_DEBUG,
+		  "Test not executed fully; expected EWOULDBLOCK, %p\n",
+		  "not"));
+      status = -1;
     }
 
-    sock.close();    // Just in case
+  // Just in case.
+  sock.close ();    
 
-    return status;
-
+  return status;
 }
-
 
 int
 main (int, char *[])
 {
-
-int status = 0;
-
   ACE_START_TEST ("SOCK_Connector_Test");
 
-  if (fail_no_listener_nonblocking() == -1)
-      status = 1;
+  int status = 0;
+
+  if (fail_no_listener_nonblocking () == -1)
+    status = 1;
 
   ACE_END_TEST;
   return status;
