@@ -1,0 +1,172 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+   <TITLE>ACE Tutorial 001</TITLE>
+   <META NAME="GENERATOR" CONTENT="Mozilla/3.01Gold (Win95; I) [Netscape]">
+   <META NAME="Author" CONTENT="James CE Johnson">
+   <META NAME="Description" CONTENT="A first step towards using ACE productively">
+</HEAD>
+<BODY text = "#000000" link="#000fff" vlink="#ff0f0f" bgcolor="#ffffff">
+
+
+<CENTER><P><B><FONT SIZE=+2>ACE&nbsp;Tutorial 001<BR>
+A Beginners Guide to Using the ACE&nbsp;Toolkit</FONT></B></P></CENTER>
+
+<hr>
+<P>From here, we to move on to the main program loop. In a way, we're
+starting at the final product when we do this, but it is a very simple
+piece of code and a good place to start.
+
+<P>The <A HREF="server.cpp">main</A>
+program is really quite simple. The real work is done in the ACE derived
+classes.
+
+<P>
+Kirthika Parameswaran offers this abstract of Tutorial 1:
+<UL>
+<P>
+This is a simple logging server example.
+The Reactor is used to handle more than one client request using a
+single thread of execution instead of one thread per client. The Reactor
+reactes to events and demultiplexes the events to the appropriate
+Event_Handler registered with it, using the "callback" technique. The
+reactor runs in an infinte event loop handling all the incoming events.
+<P>
+The Logging_Acceptor listens at a SERVER PORT address and passively
+waits for requests to arrive. The Acceptor is also an Event_Handler and
+is registered with the Reactor. This way it is simply yet another
+Event_Handler for the Reactor and hence no special processing is needed
+for it.
+<P>
+Once a connection request occurs, the Acceptor accepts it and
+a connection is established. The reactor instance is passed to the
+handler so that it can register with the Reactor. It does so with an
+ACE_Event_Handler::ACCEPT_MASK.
+<P>
+The Logging_Client is another Event_Handler which actually handles the
+client requests in its handle_input() method. It is also registered
+with the Reactor with the ACE_Event_Handler::READ_MASK.
+<P>
+The Event_Handlers can be unregistered from the Reactor using
+handle_close() methods 
+or explicitly calling the remove_handler() methods. 
+<P>
+This server application builds and executes succesfully waiting for
+client requests to arrive.
+<P>
+</UL>
+FYI (from Doug):
+<UL>
+The ACCEPT_MASK is defined in the ACE_Event_Handler class.  It's used
+to inform the Reactor that you want to register an event handler to
+"accept" a connection passively.  Not surprisingly, the ACE_Acceptor
+component uses this.
+<P>
+The READ_MASK is also defined in the ACE_Event_Handler class.  It's
+used to inform the Reactor that you want to register an event handler
+to "read" data from an established connection.
+</UL>
+<hr>
+<PRE>
+<font color=red>// $Id$</font>
+
+<font color=red>/* Include the header file where our client acceptor is defined.  */</font>
+<font color=blue>#include</font> "<A HREF="../../../ace/Reactor.h">ace/Reactor.h</A>"
+
+<font color=red>/* For simplicity, we create our reactor in the global address space.
+  In later tutorials we will do something more clever and
+  appropriate. However, the purpose of this tutorial is to introduce a
+  connection acceptance and handling, not the full capabilities of a
+  reactor.  */</font>
+ACE_Reactor *g_reactor;
+
+<font color=red>/* Include the header where we define our acceptor object.  An
+  acceptor is an abstraction that allows a server to "<font color=green>accept</font>"
+  connections from clients.  */</font>
+<font color=blue>#include</font> "<font color=green>acceptor.h</font>"
+
+<font color=red>/* A TCP/IP server can listen to only one port for connection
+  requests.  Well-known services can always be found at the same
+  address. Lesser-known services are generally told where to listen by
+  a configuration file or command-line parameter. For this example,
+  we're satisfied with simply hard-coding a random but known value.  */</font>
+static const u_short PORT = ACE_DEFAULT_SERVER_PORT;
+
+int 
+main (int, char *[])
+{
+  <font color=red>/* Create a Reactor instance.  Again, a global pointer isn't exactly
+    the best way to handle this but for the simple example here, it
+    will be OK.  We'll get cute with it later.  Note how we use the
+    ACE_NEW_RETURN macro, which returns 1 if operator new fails. */</font>
+  ACE_NEW_RETURN (g_reactor,
+                  ACE_Reactor,
+                  1);
+
+  <font color=red>/* Like the Reactor, I'm skimming over the details of the ADDR
+    object. What it provides is an abstraction for addressing services
+    in the network. All we need to know at this point is that we are
+    creating an address object which specifies the TCP/IP port on
+    which the server will listen for new connection requests.  */</font>
+  ACE_INET_Addr addr (PORT);
+
+  Logging_Acceptor *peer_acceptor;
+
+  <font color=red>/* We now create an acceptor object.  No connections will yet be
+    established because the object isn't "<font color=green>open for business</font>" at this
+    time. Which brings us to the next line...  */</font>
+  ACE_NEW_RETURN (peer_acceptor,
+                  Logging_Acceptor,
+                  1);
+
+  <font color=red>/* where the acceptor object is opened.  You'll find that most ACE
+    objects have to be open()ed before they're of any use to you.  On
+    this open() call, we're telling the acceptor where to listen for
+    connections via the 'addr' object.  We're also telling it that we
+    want it to be registered with our 'g_reactor' instance.  */</font>
+  if (peer_acceptor->open (addr, g_reactor) == -1 )
+    ACE_ERROR_RETURN ((LM_ERROR, 
+                       "<font color=green>Opening Acceptor\n</font>"),
+                      -1);
+
+  ACE_DEBUG ((LM_DEBUG,
+              "<font color=green>(%P|%t) starting up server logging daemon\n</font>"));
+
+  <font color=red>/* The reactor's handle_events member function is responsible for
+    looking at all registered objects and invoking an appropriate
+    member function when anything of interest occurs. When an event is
+    processed, the handle_events function returns. In order to get all
+    events, we embed this in an infinite loop.
+
+    Since we put ourselves into an infinite loop, you'll need to
+    CTRL-C to exit the program.  */</font>
+
+  for (;;)
+    g_reactor->handle_events ();
+
+  return 0;
+}
+
+</PRE>
+<HR WIDTH="100%">
+
+<P>As I said, the main program is really quite simple:
+<UL>
+<LI>
+Create an address for the <I>port</I> we want to listen to</LI>
+
+<LI>
+Create an acceptor which listens on that address</LI>
+
+<LI>
+Register the acceptor with a reactor to respond to the connection requests</LI>
+
+<LI>
+Enter an infinite loop to let the reactor handle the events</LI>
+</UL>
+On the next page, we will take a look at the acceptor and how it responds
+to new connection requests.
+
+<P>
+<P><HR WIDTH="100%">
+<CENTER>[<A HREF="../online-tutorials.html">Tutorial Index</A>] [<A HREF="page03.html">Continue This Tutorial</A>]</CENTER>
