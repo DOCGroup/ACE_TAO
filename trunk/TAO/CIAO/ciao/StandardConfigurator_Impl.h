@@ -61,7 +61,7 @@ namespace CIAO
         ACE_ENV_ARG_DECL)
         ACE_THROW_SPEC ((CORBA::SystemException));
 
-    void StandardConfigurator_Impl::configure (
+    void configure (
         Components::CCMObject_ptr comp
         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
