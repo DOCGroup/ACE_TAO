@@ -244,8 +244,7 @@ ACE_Thr_Server_Logging_Handler<LMR>::ACE_Thr_Server_Logging_Handler (ACE_Thread_
 {
 }
 
-template<class LMR> 
-int
+template<class LMR> int
 ACE_Thr_Server_Logging_Handler<LMR>::open (void *)
 {
   // call base class open_common
