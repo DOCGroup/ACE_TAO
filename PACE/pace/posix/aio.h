@@ -22,6 +22,12 @@
 extern "C" {
 #endif /* PACE_HAS_CPLUSPLUS */
 
+  /** The aio_cancel() function attempts to  cancel  one  or  more
+     asynchronous I/O requests currently outstanding against file
+     descriptor fildes. The aiocbp argument points to  the  asynchronous
+     I/O  control  block for a particular request to be
+     canceled. If aiocbp is NULL, then all outstanding cancelable
+     asynchronous I/O requests against fildes are canceled. */
   PACE_INLINE int pace_aio_cancel (int fildes, struct aiocb * aiocb);
 
   PACE_INLINE int pace_aio_error (const struct aiocb * aiocbp);

@@ -158,6 +158,21 @@ pace_pthread_cancel (pace_pthread_t thread)
 }
 
 PACE_INLINE
+void
+pace_pthread_cleanup_push (void (*routine)(void*), void * arg)
+{
+  pthread_cleanup_push (routine, arg);
+  return;
+}
+
+PACE_INLINE
+void
+pace_pthread_cleanup_pop (int execute)
+{
+  return pthread_cleanup_pop (execute);
+}
+
+PACE_INLINE
 int
 pace_pthread_cond_broadcast (pace_pthread_cond_t * cond)
 {
@@ -192,7 +207,7 @@ pace_pace_pthread_cond_timedwait (pthread_cond_t * cond,
                              pace_pthread_mutex_t * mutex,
                              const struct timespec * abstime)
 {
-  return pace_pthread_cond_timedwait (cond, mutex, abstime);
+  return pthread_cond_timedwait (cond, mutex, abstime);
 }
 
 PACE_INLINE
@@ -351,9 +366,9 @@ pace_pthread_mutex_setprioceiling (pace_pthread_mutex_t * mutex,
 
 PACE_INLINE
 int
-pace_pace_pthread_mutex_trylock (pthread_mutex_t * mutex)
+pace_pthread_mutex_trylock (pthread_mutex_t * mutex)
 {
-  return pace_pthread_mutex_trylock (mutex);
+  return pthread_mutex_trylock (mutex);
 }
 
 PACE_INLINE
@@ -481,8 +496,8 @@ pace_pthread_sigmask (int how, const sigset_t * set,
 
 PACE_INLINE
 void
-pace_pace_pthread_testcancel ()
+pace_pthread_testcancel ()
 {
-  pace_pthread_testcancel ();
+  pthread_testcancel ();
   return;
 }

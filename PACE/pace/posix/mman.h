@@ -33,7 +33,7 @@ extern "C" {
                                 int fildes,
                                 off_t off);
 
-  PACE_INLINE int pace_mprotect (const void * addr,
+  PACE_INLINE int pace_mprotect (void * addr,
                                  size_t len,
                                  int prot);
 
