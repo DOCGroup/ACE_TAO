@@ -1,3 +1,10 @@
+Mon Oct 19 15:37:30 1998  Chris Gill  <cdgill@cs.wustl.edu>
+
+        * orbsvcs/tests/Simulator/Event_Supplier/Event_Sup.dsp
+          orbsvcs/tests/Simulator/Event_Supplier/Logging_Sup.dsp:
+          Modified custom build step for NavWeap.idl to look for
+	  the TAO IDL compiler in the $ACE_ROOT/bin directory.
+	
 Mon Oct 19 14:28:30 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
 
         * examples/POA/NewPOA/run_test.pl: Runs the test. Not exactly a
