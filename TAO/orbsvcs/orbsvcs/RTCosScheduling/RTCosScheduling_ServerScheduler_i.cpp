@@ -150,7 +150,8 @@ RTCosScheduling_ServerScheduler_i::configure_ORB(TAO_ORB_Core *orb_core)
     PortableServer::POA_ptr parent,
     const char * adapter_name,
     PortableServer::POAManager_ptr a_POAManager,
-    const CORBA::PolicyList & policies)
+    const CORBA::PolicyList & policies
+    ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC (( CORBA::SystemException
     , PortableServer::POA::AdapterAlreadyExists
     , PortableServer::POA::InvalidPolicy))
