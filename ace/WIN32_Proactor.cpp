@@ -19,13 +19,9 @@
 class ACE_Export ACE_WIN32_Wakeup_Completion : public ACE_WIN32_Asynch_Result
 {
   // = TITLE
-  // 
   //     This is result object is used by the <end_event_loop> of the 
   //     ACE_Proactor interface to wake up all the threads blocking
   //     for completions.
-  // 
-  // = DESCRIPTION
-  // 
   
 public:
   ACE_WIN32_Wakeup_Completion (ACE_Handler &handler,
@@ -45,8 +41,6 @@ public:
                          u_long error = 0);
   // This method calls the <handler>'s <handle_wakeup> method.
 };
-
-// *********************************************************************
 
 ACE_WIN32_Proactor::ACE_WIN32_Proactor (size_t number_of_threads,
                                         int used_with_reactor_event_loop)
@@ -96,13 +90,16 @@ ACE_WIN32_Proactor::register_handle (ACE_HANDLE handle,
                                             this->number_of_threads_);
   if (cp == 0)
     {
-      errno = ::GetLastError ();
+      ACE_OS::set_errno_to_last_error ();
       // If errno == ERROR_INVALID_PARAMETER, then this handle was
       // already registered.
       if (errno != ERROR_INVALID_PARAMETER)
+        // @@ Alex, shouldn't this only be printed if ACE_debug is
+        // beyond a certain level?
         ACE_ERROR_RETURN ((LM_ERROR,
                            ASYS_TEXT ("%p\n"),
-                           ASYS_TEXT ("CreateIoCompletionPort")), -1);
+                           ASYS_TEXT ("CreateIoCompletionPort")),
+                          -1);
     }
   return 0;
 }
@@ -357,12 +354,14 @@ ACE_WIN32_Proactor::handle_signal (int, siginfo_t *, ucontext_t *)
   // Perform a non-blocking "poll" for all the I/O events that have
   // completed in the I/O completion queue.
 
-  ACE_Time_Value timeout (0, 0);
   int result = 0;
 
-  while (1)
+  for (ACE_Time_Value timeout (0, 0);
+       ;
+       )
     {
       result = this->handle_events (timeout);
+
       if (result != 0 || errno == ETIME)
         break;
     }
@@ -420,7 +419,7 @@ ACE_WIN32_Proactor::handle_events (unsigned long milli_seconds)
                                              milli_seconds);
   if (result == FALSE && overlapped == 0)
     {
-      errno = ::GetLastError ();
+      ACE_OS::set_errno_to_last_error ();
 
       if (errno == WAIT_TIMEOUT)
         {
@@ -428,6 +427,9 @@ ACE_WIN32_Proactor::handle_events (unsigned long milli_seconds)
           return 0;
         }
       else
+        // @@ Alex, shouldn't this only be printed if ACE_debug is
+        // beyond a certain level?
+
         ACE_ERROR_RETURN ((LM_ERROR,
                            ASYS_TEXT ("%p\n"),
                            ASYS_TEXT ("GetQueuedCompletionStatus")),
@@ -440,7 +442,7 @@ ACE_WIN32_Proactor::handle_events (unsigned long milli_seconds)
 
       // If errors happen, grab the error.
       if (result == FALSE)
-        errno = ::GetLastError ();
+        ACE_OS::set_errno_to_last_error ();
       else
         errno = 0;
 
@@ -494,7 +496,12 @@ ACE_WIN32_Proactor::post_completion (ACE_WIN32_Asynch_Result *result)
                                     ) == FALSE)
     {
       delete result;
-      ACE_ERROR_RETURN ((LM_ERROR, "PostQueuedCompletionStatus failed\n"), -1);
+        // @@ Alex, shouldn't this only be printed if ACE_debug is
+        // beyond a certain level?
+
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "PostQueuedCompletionStatus failed\n"),
+                        -1);
     }
 
   return 0;
@@ -541,8 +548,6 @@ ACE_WIN32_Proactor::number_of_threads (size_t threads)
   this->number_of_threads_ = threads;
 }
 
-// *********************************************************************
-
 ACE_WIN32_Asynch_Timer::ACE_WIN32_Asynch_Timer (ACE_Handler &handler,
                                                 const void *act,
                                                 const ACE_Time_Value &tv,
@@ -569,8 +574,6 @@ ACE_WIN32_Asynch_Timer::complete (u_long bytes_transferred,
 
   this->handler_.handle_time_out (this->time_, this->act ());
 }
-
-// *********************************************************************
 
 ACE_WIN32_Wakeup_Completion::ACE_WIN32_Wakeup_Completion (ACE_Handler &handler,
                                                           const void *act,
