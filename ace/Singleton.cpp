@@ -67,10 +67,12 @@ ACE_Singleton<TYPE, ACE_LOCK>::instance (void)
         }
       else
         {
+          // Obtain a lock from the ACE_Object_Manager.  The pointer
+          // is static, so we only obtain one per ACE_Singleton instantiation.
           static ACE_LOCK *lock = 0;
-          // Obtain the lock from the ACE_Object_Manager.
-          ACE_Object_Manager::get_singleton_lock (lock);
-          if (lock == 0) return 0;  // Failed to allocate the lock!
+          if (ACE_Object_Manager::get_singleton_lock (lock) != 0)
+            // Failed to allocate the lock!
+            return 0;
 
           ACE_GUARD_RETURN (ACE_LOCK, ace_mon, *lock, 0);
 
@@ -157,10 +159,12 @@ ACE_TSS_Singleton<TYPE, ACE_LOCK>::instance (void)
         }
       else
         {
+          // Obtain a lock from the ACE_Object_Manager.  The pointer
+          // is static, so we only obtain one per ACE_Singleton instantiation.
           static ACE_LOCK *lock = 0;
-          // Obtain the lock from the ACE_Object_Manager.
-          ACE_Object_Manager::get_singleton_lock (lock);
-          if (lock == 0) return 0;  // Failed to allocate the lock.
+          if (ACE_Object_Manager::get_singleton_lock (lock) != 0)
+            // Failed to allocate the lock!
+            return 0;
 
           ACE_GUARD_RETURN (ACE_LOCK, ace_mon, *lock, 0);
 
