@@ -1,3 +1,17 @@
+Mon Dec 01 16:01:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/modules/Creator.pm (add_file_written):
+          There was a warning given when something was written with exactly the
+          same name, added an extra warning when things are just different by
+          casing. This is no problem on a Unix box, but on a Windows box it
+          will result in the fact that the second file overwrites the first.
+
+        * bin/MakeProjectCreator/modules/WorkspaceCreator.pm:
+          Do the duplicate check case insensitive by making everything lower
+          case. Thanks to Chris Cleeland <cleeland@ociweb.com> for helping
+          me fixing this. The reason is that VC6 handles project names
+          case insensitive.
+
 Sun Nov 30 10:40:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* bin/MakeProjectCreator/modules/WorkspaceCreator.pm:
