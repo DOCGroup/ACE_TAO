@@ -1760,7 +1760,7 @@ Sender::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
       {
         this->total_rcv_ += result.bytes_transferred ();
 
-        if (duplex != 0)  // full duplex, continue read
+        if (duplex != 0 || this->stop_writing_)  // full duplex, continue read
           this->initiate_read_stream ();
         else  // half-duplex  write, after write we will start read
           this->initiate_write_stream ();
