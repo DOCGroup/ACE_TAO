@@ -1,3 +1,11 @@
+Mon Feb 7 13:18:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_other_tests.lst:
+          After disabling a few test according to the logs already simple tests
+          do hang our system. This can't be true, so for the time being I
+          disabled all performance tests under windows and enabled the other
+          tests again.
+
 Mon Feb 7 12:24:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_other_tests.lst:
