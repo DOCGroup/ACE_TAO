@@ -151,7 +151,7 @@ AST_Module::fe_add_module (AST_Module *t)
   AST_Module *m = 0;
 
   // Already defined and cannot be redefined? Or already used?
-  if ((d = lookup_for_add (t, I_FALSE)) != 0) 
+  if ((d = this->lookup_for_add (t, I_FALSE)) != 0) 
     {
       if (!can_be_redefined (d)) 
         {
@@ -227,7 +227,7 @@ AST_Module::fe_add_interface (AST_Interface *t)
   AST_Interface *fwd = 0;
 
   // Already defined?
-  if ((predef = lookup_for_add (t, I_FALSE)) != 0) 
+  if ((predef = this->lookup_for_add (t, I_FALSE)) != 0) 
     {
       // Treat fwd declared interfaces specially
       if (predef->node_type () == AST_Decl::NT_interface) 
@@ -310,10 +310,15 @@ AST_Module::fe_add_interface_fwd (AST_InterfaceFwd *i)
   AST_Interface *itf = 0;
 
   // Already defined and cannot be redefined? Or already used?
-  if ((d = lookup_for_add (i, I_FALSE)) != 0) 
+  if ((d = this->lookup_for_add (i, I_FALSE)) != 0) 
     {
-      if (d->node_type  () == AST_Decl::NT_interface 
-          && d->defined_in () == this) 
+      // There used to be another check here ANDed with the one below:
+      // d->defined_in () == this. But lookup_for_add calls only
+      // lookup_by_name_local(), which does not bump up the scope,
+      // and look_in_previous() for modules. If look_in_previous()
+      // finds something, the scopes will NOT be the same pointer
+      // value, but the result is what we want.
+      if (d->node_type  () == AST_Decl::NT_interface) 
         {
           itf = AST_Interface::narrow_from_decl (d);
 
@@ -371,7 +376,7 @@ AST_Module::fe_add_constant (AST_Constant *t)
   AST_Decl *d = 0;
 
   // Already defined and cannot be redefined? Or already used?
-  if ((d = lookup_for_add (t, I_FALSE)) != 0) 
+  if ((d = this->lookup_for_add (t, I_FALSE)) != 0) 
     {
       if (!can_be_redefined (d)) 
         {
@@ -417,7 +422,7 @@ AST_Module::fe_add_exception (AST_Exception *t)
   AST_Decl *d = 0;
 
   // Already defined and cannot be redefined? Or already used?
-  if ((d = lookup_for_add (t, I_FALSE)) != 0) 
+  if ((d = this->lookup_for_add (t, I_FALSE)) != 0) 
     {
       if (!can_be_redefined (d)) 
         {
@@ -463,7 +468,7 @@ AST_Module::fe_add_union (AST_Union *t)
   AST_Decl *d = 0;
 
   // Already defined and cannot be redefined? Or already used?
-  if ((d = lookup_for_add (t, I_FALSE)) != 0) 
+  if ((d = this->lookup_for_add (t, I_FALSE)) != 0) 
     {
       if (!can_be_redefined (d)) 
         {
@@ -509,7 +514,7 @@ AST_Module::fe_add_structure (AST_Structure *t)
   AST_Decl *d = 0;
 
   // Already defined and cannot be redefined? Or already used?
-  if ((d = lookup_for_add (t, I_FALSE)) != 0) 
+  if ((d = this->lookup_for_add (t, I_FALSE)) != 0) 
     {
       if (!can_be_redefined (d)) 
         {
@@ -555,7 +560,7 @@ AST_Module::fe_add_enum (AST_Enum *t)
   AST_Decl *d = 0;
 
   // Already defined and cannot be redefined? Or already used?
-  if ((d = lookup_for_add (t, I_FALSE)) != 0) 
+  if ((d = this->lookup_for_add (t, I_FALSE)) != 0) 
     {
       if (!can_be_redefined (d)) 
         {
@@ -604,7 +609,7 @@ AST_Module::fe_add_enum_val (AST_EnumVal *t)
   AST_Decl *d = 0;
 
   // Already defined and cannot be redefined? Or already used?
-  if ((d = lookup_for_add(t, I_FALSE)) != 0) 
+  if ((d = this->lookup_for_add(t, I_FALSE)) != 0) 
     {
       if (!can_be_redefined (d)) 
         {
@@ -650,7 +655,7 @@ AST_Module::fe_add_typedef (AST_Typedef *t)
   AST_Decl *d = 0;
 
   // Already defined and cannot be redefined? Or already used?
-  if ((d = lookup_for_add(t, I_FALSE)) != 0) 
+  if ((d = this->lookup_for_add(t, I_FALSE)) != 0) 
     {
       if (!can_be_redefined (d)) 
         {
@@ -696,7 +701,7 @@ AST_Module::fe_add_native (AST_Native *t)
   AST_Decl *d = 0;
 
   // Already defined and cannot be redefined? Or already used?
-  if ((d = lookup_for_add (t, I_FALSE)) != 0) 
+  if ((d = this->lookup_for_add (t, I_FALSE)) != 0) 
     {
       if (!can_be_redefined (d)) 
         {
@@ -863,28 +868,46 @@ AST_Module::add_to_previous (AST_Module *m)
   // reopenings in its previous_ member.
   this->previous_ = m->previous_;
 
-  UTL_ScopeActiveIterator *i =
+  UTL_ScopeActiveIterator *iter =
     new UTL_ScopeActiveIterator (DeclAsScope (m),
                                  UTL_Scope::IK_decls);
 
   AST_Decl *d = 0;
 
-  while (!i->is_done ())
+  while (!iter->is_done ())
     {
-      d = i->item ();
+      d = iter->item ();
 
       // Add all the previous opening's decls (except
       // for the predefined types) to the 'previous' list
       // of this one.
-      if (d->node_type () != AST_Decl::NT_pre_defined)
+      if (d->node_type () == AST_Decl::NT_pre_defined)
         {
-          this->previous_.insert (d);
+          iter->next ();
+          continue;
+        }
+      else if (d->node_type () == AST_Decl::NT_interface_fwd)
+        {
+          AST_InterfaceFwd *f = AST_InterfaceFwd::narrow_from_decl (d);
+          AST_Interface *i = f->full_definition ();
+
+          // If i is defined, it means that the interface was forward
+          // declared AFTER it was defined, perhaps in a subsequent
+          // opening of the same module - legal, but superfluous.
+          // Adding d to previous_ in that case can only bung up the
+          // results of look_in_previous() later, so we skip it.
+          if (i->is_defined ())
+            {
+              iter->next ();
+              continue;
+            }
         }
 
-      i->next ();
+      this->previous_.insert (d);
+      iter->next ();
     }
 
-  delete i;
+  delete iter;
 }
 
 AST_Decl *
