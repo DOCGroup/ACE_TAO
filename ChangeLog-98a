@@ -1,3 +1,9 @@
+Fri Apr 03 11:57:14 1998  Steve Huston  <shuston@riverace.com>
+
+	* include/makeinclude/rules.lib.GNU: Use VLOBJS for archive lib object
+	  files; using VOBJS gets it confused with VOBJS in rules.bin.GNU and
+	  makes it very difficult to build lib and exe from same Makefile.
+
 Fri Apr  3 10:40:10 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/OS.cpp (invoke): We were using AfxGetThread to determine
