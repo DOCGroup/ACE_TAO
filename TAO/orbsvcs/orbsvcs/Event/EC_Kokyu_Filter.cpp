@@ -254,7 +254,7 @@ TAO_EC_Kokyu_Filter::get_qos_info (TAO_EC_QOS_Info& qos_info
 }
 
 void
-TAO_EC_Kokyu_Filter::init_rt_info (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_EC_Kokyu_Filter::init_rt_info (ACE_ENV_SINGLE_ARG_DECL)
 {
   if (this->rt_info_computed_)
     return;
@@ -273,7 +273,7 @@ TAO_EC_Kokyu_Filter::init_rt_info (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
                          0, // quantum
                          0, // threads
                          this->info_type_
-                          ACE_ENV_ARG_PARAMETER);
+                         ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 #endif  //ifdef'ed by VS
 
