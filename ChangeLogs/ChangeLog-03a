@@ -1,3 +1,10 @@
+Sat May 13 13:01:08 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * tests/SString_Test.cpp:
+
+          So yesterday I changed a type from ACE_USHORT16 to 
+          wchar_t.  Rather, it should have been ACE_WSTRING_TYPE.
+
 Sat May 13 01:06:22 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/Local_Name_Space_T.cpp:
