@@ -8,6 +8,8 @@
 #include "ace/Local_Tokens.i"
 #endif /* __ACE_INLINE__ */
 
+#if defined (ACE_HAS_TOKENS_LIBRARY)
+
 ACE_RCSID(ace, Local_Tokens, "$Id$")
 
 void
@@ -1452,3 +1454,5 @@ template class ACE_Node <ACE_TPQ_Entry *>;
 #pragma instantiate ACE_Unbounded_Stack <ACE_TPQ_Entry *>
 #pragma instantiate ACE_Node <ACE_TPQ_Entry *>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+#endif /* ACE_HAS_TOKENS_LIBRARY */

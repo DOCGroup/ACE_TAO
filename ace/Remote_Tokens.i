@@ -1,7 +1,7 @@
 /* -*- C++ -*- */
 // $Id$
 
-// Remote_Tokens.i
+#if defined (ACE_HAS_TOKENS_LIBRARY)
 
 ACE_INLINE
 ACE_Remote_Mutex::ACE_Remote_Mutex (void)
@@ -94,3 +94,5 @@ ACE_Remote_WLock::clone (void) const
 			       ignore_deadlock_,
 			       debug_);
 }
+
+#endif /* ACE_HAS_TOKENS_LIBRARY */
