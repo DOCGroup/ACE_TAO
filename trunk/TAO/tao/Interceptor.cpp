@@ -1,11 +1,16 @@
 // $Id$
 
+
 #include "tao/corbafwd.h"
 #include "tao/Interceptor.h"
+
+#if (TAO_HAS_INTERCEPTORS == 1)
 
 #if !defined (__ACE_INLINE__)
 #include "tao/Interceptor.i"
 #endif /* defined INLINE */
+
+#endif /* TAO_HAS_INTERCEPTORS == 1 */
 
 // Followings are the defualt no-op implementation of client-side and
 // server-side interceptors.  The sole purpose to to let user

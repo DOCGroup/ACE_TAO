@@ -30,7 +30,9 @@
 #define TAO_INTERCEPTOR_H
 #include "ace/pre.h"
 
+#if (TAO_HAS_INTERCEPTORS == 1)
 #include "tao/InterceptorC.h"
+#endif /* TAO_HAS_INTERCEPTORS == 1 */
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -165,4 +167,5 @@ private:
 #endif /* defined INLINE */
 
 #include "ace/post.h"
+
 #endif /* TAO_INTERCEPTOR_H */
