@@ -90,13 +90,12 @@ ACE_SPIPE_Acceptor::create_new_instance (int perms)
   return 0;
 
 #elif (defined (ACE_WIN32) && defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0))
-
   // Create a new instance of the Named Pipe (WIN32).  A new instance
   // of the named pipe must be created for every client process.  If
   // an instance of the named pipe that is already connected to a
   // client process is reused with a new client process,
   // ::ConnectNamedPipe () would fail.
-
+ 
   ACE_UNUSED_ARG (perms);
   ACE_TRACE ("ACE_SPIPE_Acceptor::create_new_instance");
   int status;
@@ -107,31 +106,30 @@ ACE_SPIPE_Acceptor::create_new_instance (int perms)
     ::CreateNamedPipeW (
 #else /* ACE_USES_WCHAR */
     ::CreateNamedPipeA (
-#endif /* ACE_USES_WCHAR */    
-        this->local_addr_.get_path_name (),
-        PIPE_ACCESS_DUPLEX 
-        | FILE_FLAG_OVERLAPPED,
-        pipe_mode_,
-        PIPE_UNLIMITED_INSTANCES,
-        1024 * 10,
-        1024 * 10,
-        ACE_DEFAULT_TIMEOUT,
-        this->sa_);
-
+#endif /* ACE_USES_WCHAR */
+                        this->local_addr_.get_path_name (),
+                        PIPE_ACCESS_DUPLEX
+                        | FILE_FLAG_OVERLAPPED,
+                        pipe_mode_,
+                        PIPE_UNLIMITED_INSTANCES,
+                        1024 * 10,
+                        1024 * 10,
+                        ACE_DEFAULT_TIMEOUT,
+                        this->sa_);
 
   if (this->pipe_handle_ == ACE_INVALID_HANDLE)
-    {
-      return -1;
-    }
+    return -1;
   else
     {
       // Start the Connect (analogous to listen () for a socket).
       // Completion is noted by the event being signalled.  If a
       // client connects before this call, the error status will be
-      // ERROR_PIPE_CONNECTED, in which case that fact is remembered
-      // via already_connected_ and noted when the user calls accept().
-      // Else the error status should be ERROR_IO_PENDING and the OS
-      // will signal the event when it's done.
+      // ERROR_PIPE_CONNECTED.  If the client also disconnects before
+      // this call, the error status will be ERROR_NO_DATA.  In both
+      // cases, that fact is remembered via already_connected_ and
+      // noted when the user calls accept().  Else the error status
+      // should be ERROR_IO_PENDING and the OS will signal the event
+      // when it's done.
       this->already_connected_ = 0;
       this->set_handle (this->event_.handle ());
       this->overlapped_.hEvent = this->event_.handle ();
@@ -140,14 +138,29 @@ ACE_SPIPE_Acceptor::create_new_instance (int perms)
       BOOL result = ::ConnectNamedPipe (this->pipe_handle_,
                                         &this->overlapped_);
       ACE_UNUSED_ARG (result);
+      // ConnectNamePipe is suppose to always
+      // "fail" when passed in overlapped i/o
+      ACE_ASSERT (!result);
 
       status = ::GetLastError ();
-      if (status == ERROR_PIPE_CONNECTED)
-	this->already_connected_ = 1;
-      else if (status != ERROR_IO_PENDING)
-	this->close ();        // Sets handle to ACE_INVALID_HANDLE
+      switch (status) 
+        {
+        case ERROR_IO_PENDING:
+          break;
+        case ERROR_PIPE_CONNECTED:
+        case ERROR_NO_DATA:
+          this->already_connected_ = 1;
+          // Set the associated event as signaled so any reactors or
+          // proactors waiting for this will respond.
+          this->event_.signal ();
+          break;
+        default:
+          ACE_ASSERT (FALSE);    // An undocumented error was returned.
+          this->close ();        // Sets handle to ACE_INVALID_HANDLE.
+          break;
+        }
     }
-  return (this->get_handle () == ACE_INVALID_HANDLE ? -1 : 0);
+  return this->get_handle () == ACE_INVALID_HANDLE ? -1 : 0;
 #else
   ACE_UNUSED_ARG (perms);
   ACE_NOTSUP_RETURN (-1);
