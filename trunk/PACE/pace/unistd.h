@@ -72,7 +72,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 5.6.5.
      */
 #if (PACE_HAS_POSIX_FA_UOF)
-  PACE_INLINE int pace_chown (const char * path, uid_t owner,
+  PACE_INLINE int pace_chown (const char * path, pace_uid_t owner,
                               pace_gid_t group);
 #endif /* PACE_HAS_POSIX_FA_UOF */
 
