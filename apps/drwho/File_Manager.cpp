@@ -25,8 +25,8 @@ File_Manager::open_file (const char *filename)
 
 // Returns the next LOGIN_NAME and REAL_NAME from the file.
 
-int	
-File_Manager::get_login_and_real_name (char *&login_name, char *&real_name)
+void
+File_Manager::get_login_and_real_name (const char *&login_name, const char *&real_name)
 {
   char *buf_ptr = this->current_ptr;
 
@@ -51,7 +51,9 @@ File_Manager::get_login_and_real_name (char *&login_name, char *&real_name)
   
   // Clear the trailing blanks and junk. 
   
-  for (char *tmp_ptr = buf_ptr - 1; isspace (*tmp_ptr); tmp_ptr--)
+  for (char *tmp_ptr = buf_ptr - 1;
+       isspace (*tmp_ptr);
+       tmp_ptr--)
     *tmp_ptr = '\0';
   
   // Skip over consecutive blank lines. 
@@ -60,7 +62,6 @@ File_Manager::get_login_and_real_name (char *&login_name, char *&real_name)
     buf_ptr++;
 
   this->current_ptr = buf_ptr;
-  return 1;
 }
 
 // Open up the yp passwd file and slurp all the users in!

@@ -40,7 +40,8 @@ Protocol_Record::Protocol_Record (int)
 {
 }
 
-Protocol_Record::Protocol_Record (const char *kn1, Protocol_Record *next)
+Protocol_Record::Protocol_Record (const char *kn1,
+                                  Protocol_Record *next)
   : is_active_ (0),
     drwho_list_ (0),
     key_name2_ (0)

@@ -21,11 +21,12 @@ BS_Client::BS_Client (void)
   
       for (int i = 0; i < this->count_; i++)
         {
-          Protocol_Record *rec_ptr = &this->protocol_record_[i];
+          Protocol_Record *prp = &this->protocol_record_[i];
 
-          this->sorted_record_[i] = rec_ptr;
+          this->sorted_record_[i] = prp;
+
           FILE_MANAGER::instance ()->get_login_and_real_name 
-            (rec_ptr->key_name1_, rec_ptr->key_name2_);
+            (prp->key_name1_, prp->key_name2_);
         }
   
       ACE_OS::qsort (this->sorted_record_,
