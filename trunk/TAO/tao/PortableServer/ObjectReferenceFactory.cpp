@@ -26,7 +26,7 @@ TAO_ObjectReferenceFactory::TAO_ObjectReferenceFactory (TAO_POA *poa)
 CORBA::Object *
 TAO_ObjectReferenceFactory::make_object (const char *intf,
                                          const PortableInterceptor::ObjectId & id
-                                         TAO_ENV_ARG_DECL)
+                                         ACE_ENV_ARG_DECL)
 
 {
   CORBA::OctetSeq object_id = id;
@@ -39,7 +39,7 @@ TAO_ObjectReferenceFactory::make_object (const char *intf,
   CORBA::Object_var object =
     this->poa_->invoke_key_to_object (intf,
                                       *user_id
-                                      TAO_ENV_ARG_PARAMETER);
+                                      ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   return object._retn ();

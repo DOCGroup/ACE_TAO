@@ -9,14 +9,14 @@ ACE_RCSID (IORInterceptor,
 
 char *
 FOO_ClientRequestInterceptor::name (
-    TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+    ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup ("FOO_ClientRequestInterceptor");
 }
 
 void
-FOO_ClientRequestInterceptor::destroy (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+FOO_ClientRequestInterceptor::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
@@ -24,7 +24,7 @@ FOO_ClientRequestInterceptor::destroy (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 void
 FOO_ClientRequestInterceptor::send_request (
       PortableInterceptor::ClientRequestInfo_ptr ri
-      TAO_ENV_ARG_DECL)
+      ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
@@ -33,7 +33,7 @@ FOO_ClientRequestInterceptor::send_request (
   // profile.
   IOP::TaggedComponent_var component =
     ri->get_effective_component (FOO::COMPONENT_ID
-                                 TAO_ENV_ARG_PARAMETER);
+                                 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // The correct tagged component appears to exist.  Display the
@@ -61,7 +61,7 @@ FOO_ClientRequestInterceptor::send_request (
 void
 FOO_ClientRequestInterceptor::send_poll (
     PortableInterceptor::ClientRequestInfo_ptr
-    TAO_ENV_ARG_DECL_NOT_USED)
+    ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
@@ -69,7 +69,7 @@ FOO_ClientRequestInterceptor::send_poll (
 void
 FOO_ClientRequestInterceptor::receive_reply (
     PortableInterceptor::ClientRequestInfo_ptr
-    TAO_ENV_ARG_DECL_NOT_USED)
+    ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
@@ -77,7 +77,7 @@ FOO_ClientRequestInterceptor::receive_reply (
 void
 FOO_ClientRequestInterceptor::receive_exception (
     PortableInterceptor::ClientRequestInfo_ptr
-    TAO_ENV_ARG_DECL_NOT_USED)
+    ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
@@ -86,7 +86,7 @@ FOO_ClientRequestInterceptor::receive_exception (
 void
 FOO_ClientRequestInterceptor::receive_other (
     PortableInterceptor::ClientRequestInfo_ptr
-    TAO_ENV_ARG_DECL_NOT_USED)
+    ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {

@@ -63,29 +63,29 @@ public:
   // = All the spec-required functions below will just throw a
   //   CORBA::NO_IMPLEMENT exception and do nothing else.
 
-  const char *context_name (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS) const;
+  const char *context_name (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS) const;
 
-  CORBA_Context_ptr parent (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS) const;
+  CORBA_Context_ptr parent (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS) const;
 
   void create_child (const char *child_ctx_name,
                      CORBA_Context_out child_ctx
-                     TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+                     ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
   void set_one_value (const char *propname,
                       const CORBA_Any &propvalue
-                      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+                      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
   void set_values (CORBA::NVList_ptr values
-                   TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+                   ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
   void delete_values (const char *propname
-                      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+                      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
   void get_values (const char *start_scope,
                    CORBA::Flags op_flags,
                    const char *pattern,
                    CORBA::NVList_ptr &values
-                   TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+                   ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
   typedef CORBA_Context_ptr _ptr_type;
@@ -206,11 +206,11 @@ public:
   // Add and consume a string to the list.
 
   char *item (CORBA::ULong slot
-              TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+              ACE_ENV_ARG_DECL_WITH_DEFAULTS);
   // Return the typecode at slot i. Raises the "Bounds" exception.
 
   void remove (CORBA::ULong slot
-               TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+               ACE_ENV_ARG_DECL_WITH_DEFAULTS);
   // Remove the typecode at slot i. Raises the "Bounds" exception.
 
   void _incr_refcnt (void);

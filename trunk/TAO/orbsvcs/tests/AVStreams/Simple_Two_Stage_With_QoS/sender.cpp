@@ -16,7 +16,7 @@ ACE_Time_Value inter_frame_time;
 CORBA::Boolean
 Sender_StreamEndPoint::modify_QoS (AVStreams::streamQoS &new_qos,
                                    const AVStreams::flowSpec &the_flows
-                                   TAO_ENV_ARG_DECL)
+                                   ACE_ENV_ARG_DECL)
                                    ACE_THROW_SPEC (( CORBA::SystemException,
                                                      AVStreams::noSuchFlow,
                                                      AVStreams::QoSRequestFailed ))
@@ -24,7 +24,7 @@ Sender_StreamEndPoint::modify_QoS (AVStreams::streamQoS &new_qos,
   ACE_DEBUG ((LM_DEBUG,
               "Sender_StreamEndPoint::modify_QoS\n"));
 
-  int result =  this->change_qos (new_qos, the_flows TAO_ENV_ARG_PARAMETER);
+  int result =  this->change_qos (new_qos, the_flows ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   if (result != 0)
@@ -37,7 +37,7 @@ int
 Sender_StreamEndPoint::get_callback (const char *,
                                      TAO_AV_Callback *&callback)
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   // Create and return the sender application callback to AVStreams
   // for further upcalls.
   callback = &this->callback_;
@@ -47,7 +47,7 @@ Sender_StreamEndPoint::get_callback (const char *,
                   TAO_Negotiator,
                   -1);
   AVStreams::Negotiator_var negotiator_obj =
-    negotiator->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
+    negotiator->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   this->set_negotiator (negotiator_obj.in ());
@@ -170,7 +170,7 @@ Sender::fill_qos (AVStreams::streamQoS &qos)
 
 // Method to get the object reference of the receiver
 int
-Sender::bind_to_receiver (TAO_ENV_SINGLE_ARG_DECL)
+Sender::bind_to_receiver (ACE_ENV_SINGLE_ARG_DECL)
 {
   CosNaming::Name name (1);
   name.length (1);
@@ -180,12 +180,12 @@ Sender::bind_to_receiver (TAO_ENV_SINGLE_ARG_DECL)
   // Resolve the receiver object reference from the Naming Service
   CORBA::Object_var receiver_mmdevice_obj =
     this->naming_client_->resolve (name
-                                   TAO_ENV_ARG_PARAMETER);
+                                   ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   this->receiver_mmdevice_ =
     AVStreams::MMDevice::_narrow (receiver_mmdevice_obj.in ()
-                                  TAO_ENV_ARG_PARAMETER);
+                                  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   if (CORBA::is_nil (this->receiver_mmdevice_.in ()))
@@ -199,7 +199,7 @@ Sender::bind_to_receiver (TAO_ENV_SINGLE_ARG_DECL)
 int
 Sender::init (int argc,
               char **argv
-              TAO_ENV_ARG_DECL)
+              ACE_ENV_ARG_DECL)
 {
   // Initialize the endpoint strategy with the orb and poa.
   int result =
@@ -236,7 +236,7 @@ Sender::init (int argc,
                 "File opened successfully\n"));
 
   // Resolve the object reference of the receiver from the Naming Service.
-  result = this->bind_to_receiver (TAO_ENV_SINGLE_ARG_PARAMETER);
+  result = this->bind_to_receiver (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   if (result != 0)
@@ -269,7 +269,7 @@ Sender::init (int argc,
     this->sender_mmdevice_;
 
   AVStreams::MMDevice_var mmdevice =
-    this->sender_mmdevice_->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
+    this->sender_mmdevice_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   ACE_NEW_RETURN (this->streamctrl_,
@@ -289,7 +289,7 @@ Sender::init (int argc,
                                   this->receiver_mmdevice_.in (),
                                   qos,
                                   flow_spec
-                                  TAO_ENV_ARG_PARAMETER);
+                                  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   if (bind_result == 0)
@@ -302,7 +302,7 @@ Sender::init (int argc,
 
 // Method to send data at the specified rate
 int
-Sender::pace_data (TAO_ENV_SINGLE_ARG_DECL)
+Sender::pace_data (ACE_ENV_SINGLE_ARG_DECL)
 {
 
 
@@ -379,7 +379,7 @@ Sender::pace_data (TAO_ENV_SINGLE_ARG_DECL)
                   // Run the orb for the wait time so the sender can
                   // continue other orb requests.
                   TAO_AV_CORE::instance ()->orb ()->run (wait_time
-                                                         TAO_ENV_ARG_PARAMETER);
+                                                         ACE_ENV_ARG_PARAMETER);
                   ACE_TRY_CHECK;
                 }
             }
@@ -420,7 +420,7 @@ Sender::pace_data (TAO_ENV_SINGLE_ARG_DECL)
               this->fill_qos (qos);
               this->streamctrl_->modify_QoS (qos,
                                              flow_spec
-                                             TAO_ENV_ARG_PARAMETER);
+                                             ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
             }
 
@@ -441,44 +441,44 @@ int
 main (int argc,
       char **argv)
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc,
                          argv,
                          0
-                         TAO_ENV_ARG_PARAMETER);
+                         ACE_ENV_ARG_PARAMETER);
 
       CORBA::Object_var obj
         = orb->resolve_initial_references ("RootPOA"
-                                           TAO_ENV_ARG_PARAMETER);
+                                           ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Get the POA_var object from Object_var
       PortableServer::POA_var root_poa
         = PortableServer::POA::_narrow (obj.in ()
-                                        TAO_ENV_ARG_PARAMETER);
+                                        ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POAManager_var mgr
-        = root_poa->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
+        = root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      mgr->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
+      mgr->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Initialize the AV Stream components.
       TAO_AV_CORE::instance ()->init (orb.in (),
                                       root_poa.in ()
-                                      TAO_ENV_ARG_PARAMETER);
+                                      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Initialize the Sender.
       int result = 0;
       result = SENDER::instance ()->init (argc,
                                           argv
-                                          TAO_ENV_ARG_PARAMETER);
+                                          ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (result < 0)
@@ -487,7 +487,7 @@ main (int argc,
                           -1);
 
       // Start sending data.
-      result = SENDER::instance ()->pace_data (TAO_ENV_SINGLE_ARG_PARAMETER);
+      result = SENDER::instance ()->pace_data (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       orb->run ();

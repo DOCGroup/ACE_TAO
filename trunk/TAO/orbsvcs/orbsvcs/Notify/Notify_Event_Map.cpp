@@ -41,23 +41,23 @@ TAO_Notify_Event_Map::~TAO_Notify_Event_Map ()
 }
 
 void
-TAO_Notify_Event_Map::init (TAO_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Event_Map::init (ACE_ENV_SINGLE_ARG_DECL)
 {
   this->default_subscription_list_ =
-    this->collection_factory_->create_event_listener_list (TAO_ENV_SINGLE_ARG_PARAMETER);
+    this->collection_factory_->create_event_listener_list (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
   // Create the default list of listeners.
 
   this->subscription_change_listeners_
-    = this->collection_factory_->create_update_listener_list (TAO_ENV_SINGLE_ARG_PARAMETER);
+    = this->collection_factory_->create_update_listener_list (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   this->publication_change_listeners_
-    = this->collection_factory_->create_update_listener_list (TAO_ENV_SINGLE_ARG_PARAMETER);
+    = this->collection_factory_->create_update_listener_list (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 void
-TAO_Notify_Event_Map::shutdown (TAO_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Event_Map::shutdown (ACE_ENV_SINGLE_ARG_DECL)
 {
   // Shutdown all event listener lists in the event map.
   EVENT_RECIPIENT_MAP::ITERATOR iterator (this->event_recipient_map_);
@@ -66,21 +66,21 @@ TAO_Notify_Event_Map::shutdown (TAO_ENV_SINGLE_ARG_DECL)
        iterator.next (entry) != 0;
        iterator.advance ())
     {
-      entry->int_id_->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
+      entry->int_id_->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
     }
 
-  default_subscription_list_->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
+  default_subscription_list_->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  subscription_change_listeners_->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
+  subscription_change_listeners_->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  publication_change_listeners_->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
+  publication_change_listeners_->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 void
-TAO_Notify_Event_Map::subscribe_for_events (TAO_Notify_EventListener* event_listener, TAO_Notify_EventType_List& update, const CosNotification::EventTypeSeq & added TAO_ENV_ARG_DECL)
+TAO_Notify_Event_Map::subscribe_for_events (TAO_Notify_EventListener* event_listener, TAO_Notify_EventType_List& update, const CosNotification::EventTypeSeq & added ACE_ENV_ARG_DECL)
 {
   TAO_Notify_EventListener_List* event_listener_list;
   TAO_Notify_EventType event_type;
@@ -101,7 +101,7 @@ TAO_Notify_Event_Map::subscribe_for_events (TAO_Notify_EventListener* event_list
         {
           // create the list.
           TAO_Notify_EventListener_List* new_list =
-            this->collection_factory_->create_event_listener_list (TAO_ENV_SINGLE_ARG_PARAMETER);
+            this->collection_factory_->create_event_listener_list (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_CHECK;
 
           // add the list to the recipient map.
@@ -109,7 +109,7 @@ TAO_Notify_Event_Map::subscribe_for_events (TAO_Notify_EventListener* event_list
           event_listener_list = new_list;
         }
 
-      event_listener_list->connected (event_listener TAO_ENV_ARG_PARAMETER);
+      event_listener_list->connected (event_listener ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       // mirror changes in the subscription list
@@ -119,7 +119,7 @@ TAO_Notify_Event_Map::subscribe_for_events (TAO_Notify_EventListener* event_list
 }
 
 void
-TAO_Notify_Event_Map::unsubscribe_from_events (TAO_Notify_EventListener* event_listener, TAO_Notify_EventType_List &update, const CosNotification::EventTypeSeq & removed TAO_ENV_ARG_DECL)
+TAO_Notify_Event_Map::unsubscribe_from_events (TAO_Notify_EventListener* event_listener, TAO_Notify_EventType_List &update, const CosNotification::EventTypeSeq & removed ACE_ENV_ARG_DECL)
 {
   TAO_Notify_EventListener_List* event_listener_list;
   TAO_Notify_EventType event_type;
@@ -137,7 +137,7 @@ TAO_Notify_Event_Map::unsubscribe_from_events (TAO_Notify_EventListener* event_l
 
       // remove <event_listener> from the list.
 
-      event_listener_list->disconnected (event_listener TAO_ENV_ARG_PARAMETER);
+      event_listener_list->disconnected (event_listener ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       // If this was the last entry in the list then we should remove
@@ -157,27 +157,27 @@ TAO_Notify_Event_Map::unsubscribe_from_events (TAO_Notify_EventListener* event_l
 }
 
 void
-TAO_Notify_Event_Map::register_for_publication_updates (TAO_Notify_UpdateListener* update_listener TAO_ENV_ARG_DECL)
+TAO_Notify_Event_Map::register_for_publication_updates (TAO_Notify_UpdateListener* update_listener ACE_ENV_ARG_DECL)
 {
-  this->publication_change_listeners_->connected (update_listener TAO_ENV_ARG_PARAMETER);
+  this->publication_change_listeners_->connected (update_listener ACE_ENV_ARG_PARAMETER);
 }
 
 void
-TAO_Notify_Event_Map::register_for_subscription_updates (TAO_Notify_UpdateListener* update_listener TAO_ENV_ARG_DECL)
+TAO_Notify_Event_Map::register_for_subscription_updates (TAO_Notify_UpdateListener* update_listener ACE_ENV_ARG_DECL)
 {
-  this->subscription_change_listeners_->connected (update_listener TAO_ENV_ARG_PARAMETER);
+  this->subscription_change_listeners_->connected (update_listener ACE_ENV_ARG_PARAMETER);
 }
 
 void
-TAO_Notify_Event_Map:: unregister_from_subscription_updates (TAO_Notify_UpdateListener* update_listener TAO_ENV_ARG_DECL)
+TAO_Notify_Event_Map:: unregister_from_subscription_updates (TAO_Notify_UpdateListener* update_listener ACE_ENV_ARG_DECL)
 {
-  this->subscription_change_listeners_->disconnected (update_listener TAO_ENV_ARG_PARAMETER);
+  this->subscription_change_listeners_->disconnected (update_listener ACE_ENV_ARG_PARAMETER);
 }
 
 void
-TAO_Notify_Event_Map::unregister_from_publication_updates (TAO_Notify_UpdateListener* update_listener TAO_ENV_ARG_DECL)
+TAO_Notify_Event_Map::unregister_from_publication_updates (TAO_Notify_UpdateListener* update_listener ACE_ENV_ARG_DECL)
 {
-  this->publication_change_listeners_->disconnected (update_listener TAO_ENV_ARG_PARAMETER);
+  this->publication_change_listeners_->disconnected (update_listener ACE_ENV_ARG_PARAMETER);
 }
 
 CosNotification::EventTypeSeq*
@@ -209,7 +209,7 @@ TAO_Notify_Event_Map::obtain_subscription_types (void)
 }
 
 void
-TAO_Notify_Event_Map::update_publication_list (const CosNotification::EventTypeSeq & added, const CosNotification::EventTypeSeq & removed, TAO_Notify_EventType_List &added_list, TAO_Notify_EventType_List &removed_list TAO_ENV_ARG_DECL_NOT_USED/*TAO_ENV_SINGLE_ARG_PARAMETER*/)
+TAO_Notify_Event_Map::update_publication_list (const CosNotification::EventTypeSeq & added, const CosNotification::EventTypeSeq & removed, TAO_Notify_EventType_List &added_list, TAO_Notify_EventType_List &removed_list ACE_ENV_ARG_DECL_NOT_USED/*ACE_ENV_SINGLE_ARG_PARAMETER*/)
 {
   TAO_Notify_EventType event_type;
 

@@ -19,20 +19,20 @@ Receiver_i::~Receiver_i (void)
 
 
 CORBA::Long
-Receiver_i::receive_call (TAO_ENV_SINGLE_ARG_DECL)
+Receiver_i::receive_call (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t)  Doing a ping... \n"));
 
-  this->sender_->ping (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->sender_->ping (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   return this->no_calls_++;
 }
 
 CORBA::Long
-Receiver_i::get_call_count (TAO_ENV_SINGLE_ARG_DECL_NOT_USED /*TAO_ENV_SINGLE_ARG_PARAMETER*/)
+Receiver_i::get_call_count (ACE_ENV_SINGLE_ARG_DECL_NOT_USED /*ACE_ENV_SINGLE_ARG_PARAMETER*/)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->iteration_;

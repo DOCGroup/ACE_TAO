@@ -46,29 +46,29 @@ public:
 
   int init (int argc,
             char *argv[]
-            TAO_ENV_ARG_DECL);
+            ACE_ENV_ARG_DECL);
   // Initialize the IFR service.
 
-  int run (TAO_ENV_SINGLE_ARG_DECL);
+  int run (ACE_ENV_SINGLE_ARG_DECL);
   // Run the IFR service.
 
-  int fini (TAO_ENV_SINGLE_ARG_DECL);
+  int fini (ACE_ENV_SINGLE_ARG_DECL);
   // Shut down the IFR service.
 
 protected:
-  int create_poas (TAO_ENV_SINGLE_ARG_DECL);
+  int create_poas (ACE_ENV_SINGLE_ARG_DECL);
   // Two persistent POAs, one using a servant locator.
 
-  int create_locator (TAO_ENV_SINGLE_ARG_DECL);
+  int create_locator (ACE_ENV_SINGLE_ARG_DECL);
   // Create a servant locator and register it with its POA.
 
-  int open_config (TAO_ENV_SINGLE_ARG_DECL);
+  int open_config (ACE_ENV_SINGLE_ARG_DECL);
   // Open an ACE_Configuration of the appropriate type.
 
-  int create_repository (TAO_ENV_SINGLE_ARG_DECL);
+  int create_repository (ACE_ENV_SINGLE_ARG_DECL);
   // Create and initialize the repository.
 
-  int init_multicast_server (TAO_ENV_SINGLE_ARG_DECL);
+  int init_multicast_server (ACE_ENV_SINGLE_ARG_DECL);
   // Enable the Interface Repository to answer multicast requests
   // for its IOR.
 

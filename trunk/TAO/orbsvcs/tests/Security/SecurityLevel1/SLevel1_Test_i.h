@@ -27,10 +27,10 @@ class SLevel1_Server_i : public POA_SLevel1_Server
                     SecurityLevel1::Current_ptr ss_current);
 
   /// Simple method invoked to test if the client reached server etc.
-  CORBA::Boolean authorize_level1 (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+  CORBA::Boolean authorize_level1 (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void shutdown (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  void shutdown (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   X509 *create_check_cert ();

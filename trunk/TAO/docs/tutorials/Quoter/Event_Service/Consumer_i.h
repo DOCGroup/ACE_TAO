@@ -14,8 +14,8 @@ public:
 
   void connect (CosEventChanneAdmin::ConsumerAdmin_ptr consumer_admin);
 
-  void push (const CORBA::Any& data TAO_ENV_ARG_DECL_NOT_USED);
-  void disconnect_push_consumer (TAO_ENV_SINGLE_ARG_DECL_NOT_USED);
+  void push (const CORBA::Any& data ACE_ENV_ARG_DECL_NOT_USED);
+  void disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
 
 private:
 };

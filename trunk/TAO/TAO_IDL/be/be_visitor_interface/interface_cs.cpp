@@ -101,11 +101,11 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       << "tao_" << node->flat_name ()
       << "_narrow (" << be_idt << be_idt_nl
       << "CORBA::Object *p" << be_nl
-      << "TAO_ENV_ARG_DECL" << be_uidt_nl
+      << "ACE_ENV_ARG_DECL" << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl
       << "return " << node->full_name ()
-      << "::_narrow (p TAO_ENV_ARG_PARAMETER);"
+      << "::_narrow (p ACE_ENV_ARG_PARAMETER);"
       << be_uidt_nl
       << "}" << be_nl << be_nl;
 
@@ -127,7 +127,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_interface_cs::"
                          "visit_interface - "
-                         "codegen for _var failed\n"), 
+                         "codegen for _var failed\n"),
                         -1);
     }
 
@@ -137,7 +137,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_interface_cs::"
                          "visit_interface - "
-                         "codegen for _out failed\n"), 
+                         "codegen for _out failed\n"),
                         -1);
     }
 
@@ -301,7 +301,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
   *os << node->full_name () << "_ptr " << node->full_name ()
       << "::_narrow (" << be_idt << be_idt_nl
       << "CORBA::Object_ptr obj" << be_nl
-      << "TAO_ENV_ARG_DECL" << be_uidt_nl
+      << "ACE_ENV_ARG_DECL" << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl;
 
@@ -316,7 +316,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       *os << "if (! obj->_is_local ())" << be_idt_nl
           << "{" << be_idt_nl
           << "CORBA::Boolean is_a = obj->_is_a (\""
-          << node->repoID () << "\" TAO_ENV_ARG_PARAMETER);" << be_nl
+          << node->repoID () << "\" ACE_ENV_ARG_PARAMETER);" << be_nl
           << "ACE_CHECK_RETURN (" << bt->nested_type_name (this->ctx_->scope ())
           << "::_nil ());" << be_nl
           << "if (is_a == 0)" << be_idt_nl
@@ -326,7 +326,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
     }
 
   *os << "return " << bt->nested_type_name (this->ctx_->scope ())
-      << "::_unchecked_narrow (obj TAO_ENV_ARG_PARAMETER);" << be_uidt_nl
+      << "::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
   // The _unchecked_narrow method
@@ -335,7 +335,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       << node->full_name () << "::_unchecked_narrow ("
       << be_idt << be_idt_nl
       << "CORBA::Object_ptr obj" << be_nl
-      << "TAO_ENV_ARG_DECL_NOT_USED" << be_uidt_nl
+      << "ACE_ENV_ARG_DECL_NOT_USED" << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl
       << "if (CORBA::is_nil (obj))" << be_idt_nl
@@ -452,7 +452,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       os->indent ();
       *os << "CORBA::Boolean " << node->full_name ()
           << "::_is_a ("
-          << "const CORBA::Char *value TAO_ENV_ARG_DECL)"
+          << "const CORBA::Char *value ACE_ENV_ARG_DECL)"
           << be_nl
           << "{\n";
 
@@ -475,7 +475,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       *os << "  return 1; // success using local knowledge\n";
       os->decr_indent ();
       *os << "else" << be_nl;
-      *os << "  return this->CORBA_Object::_is_a (value TAO_ENV_ARG_PARAMETER);\n";
+      *os << "  return this->CORBA_Object::_is_a (value ACE_ENV_ARG_PARAMETER);\n";
       os->decr_indent ();
       *os << "}\n\n";
     }
@@ -493,7 +493,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_interface_cs::"
                          "visit_interface - "
-                         "_tao_QueryInterface method codegen failed\n"), 
+                         "_tao_QueryInterface method codegen failed\n"),
                         -1);
     }
 
@@ -522,7 +522,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_interface_cs::"
                          "visit_interface - "
-                         "codegen for scope failed\n"), 
+                         "codegen for scope failed\n"),
                         -1);
     }
 

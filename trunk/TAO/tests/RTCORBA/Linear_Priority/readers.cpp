@@ -10,7 +10,7 @@ get_priority_bands (const char *test_type,
                     const char *bands_file,
                     RTCORBA::RTORB_ptr rt_orb,
                     CORBA::PolicyList &policies
-                    TAO_ENV_ARG_DECL)
+                    ACE_ENV_ARG_DECL)
 {
   //
   // Read bands from a file.
@@ -90,7 +90,7 @@ get_priority_bands (const char *test_type,
 
   CORBA::Policy_var banded_connection_policy =
     rt_orb->create_priority_banded_connection_policy (bands
-                                                      TAO_ENV_ARG_PARAMETER);
+                                                      ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   policies.length (policies.length () + 1);
@@ -188,7 +188,7 @@ get_priority_lanes (const char *test_type,
                     CORBA::ULong max_request_buffer_size,
                     CORBA::Boolean allow_borrowing,
                     CORBA::PolicyList &policies
-                    TAO_ENV_ARG_DECL)
+                    ACE_ENV_ARG_DECL)
 {
   Short_Array priorities;
   int result =
@@ -219,12 +219,12 @@ get_priority_lanes (const char *test_type,
                                           allow_request_buffering,
                                           max_buffered_requests,
                                           max_request_buffer_size
-                                          TAO_ENV_ARG_PARAMETER);
+                                          ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   CORBA::Policy_var threadpool_policy =
     rt_orb->create_threadpool_policy (threadpool_id
-                                      TAO_ENV_ARG_PARAMETER);
+                                      ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   policies.length (policies.length () + 1);
@@ -245,7 +245,7 @@ get_auto_priority_lanes_and_bands (CORBA::ULong number_of_lanes,
                                    CORBA::ULong max_request_buffer_size,
                                    CORBA::Boolean allow_borrowing,
                                    CORBA::PolicyList &policies
-                                   TAO_ENV_ARG_DECL)
+                                   ACE_ENV_ARG_DECL)
 {
   RTCORBA::ThreadpoolLanes lanes;
   lanes.length (number_of_lanes);
@@ -300,19 +300,19 @@ get_auto_priority_lanes_and_bands (CORBA::ULong number_of_lanes,
                                           allow_request_buffering,
                                           max_buffered_requests,
                                           max_request_buffer_size
-                                          TAO_ENV_ARG_PARAMETER);
+                                          ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   policies.length (policies.length () + 1);
   policies[policies.length () - 1] =
     rt_orb->create_priority_banded_connection_policy (bands
-                                                      TAO_ENV_ARG_PARAMETER);
+                                                      ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   policies.length (policies.length () + 1);
   policies[policies.length () - 1] =
     rt_orb->create_threadpool_policy (threadpool_id
-                                      TAO_ENV_ARG_PARAMETER);
+                                      ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 

@@ -12,12 +12,12 @@ main (int argc, char *argv[])
   ACE_TRY_NEW_ENV
     {
       int check =
-        trader.init (argc, argv TAO_ENV_ARG_PARAMETER);
+        trader.init (argc, argv ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (check != -1)
         {
-          trader.run (TAO_ENV_SINGLE_ARG_PARAMETER);
+          trader.run (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
       else

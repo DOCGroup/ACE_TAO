@@ -11,7 +11,7 @@ public:
 
   // Simple method just to see that the client contacted the
   // server. If does contact, a '0' is returned.
-  CORBA::Boolean connect_server (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+  CORBA::Boolean connect_server (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 };
 

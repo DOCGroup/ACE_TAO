@@ -25,7 +25,7 @@ TAO_EC_Filter*
 TAO_EC_Basic_Filter_Builder::build (
     TAO_EC_ProxyPushSupplier *supplier,
     RtecEventChannelAdmin::ConsumerQOS& qos
-    TAO_ENV_ARG_DECL_NOT_USED) const
+    ACE_ENV_ARG_DECL_NOT_USED) const
 {
   CORBA::ULong pos = 0;
   return this->recursive_build (supplier, qos, pos);

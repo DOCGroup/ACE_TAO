@@ -18,26 +18,26 @@ TAO_POA_Default_Policy_Validator::~TAO_POA_Default_Policy_Validator (void)
 
 void
 TAO_POA_Default_Policy_Validator::validate_impl (TAO_Policy_Set &policies
-                                                 TAO_ENV_ARG_DECL)
+                                                 ACE_ENV_ARG_DECL)
 {
 #if (TAO_HAS_MINIMUM_POA == 0)
   CORBA::Policy_var policy =
     policies.get_cached_policy (TAO_CACHED_POLICY_SERVANT_RETENTION);
   PortableServer::ServantRetentionPolicy_var srp =
     PortableServer::ServantRetentionPolicy::_narrow (policy.in ()
-                                                     TAO_ENV_ARG_PARAMETER);
+                                                     ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   PortableServer::ServantRetentionPolicyValue servant_retention =
-    srp->value (TAO_ENV_SINGLE_ARG_PARAMETER);
+    srp->value (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   policy = policies.get_cached_policy (TAO_CACHED_POLICY_REQUEST_PROCESSING);
   PortableServer::RequestProcessingPolicy_var rpp =
     PortableServer::RequestProcessingPolicy::_narrow (policy.in ()
-                                                      TAO_ENV_ARG_PARAMETER);
+                                                      ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   PortableServer::RequestProcessingPolicyValue request_processing =
-    rpp->value (TAO_ENV_SINGLE_ARG_PARAMETER);
+    rpp->value (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   // The NON_RETAIN policy requires either the USE_DEFAULT_SERVANT or
@@ -56,29 +56,29 @@ TAO_POA_Default_Policy_Validator::validate_impl (TAO_Policy_Set &policies
   policy = policies.get_cached_policy (TAO_CACHED_POLICY_ID_UNIQUENESS);
   PortableServer::IdUniquenessPolicy_var iup =
     PortableServer::IdUniquenessPolicy::_narrow (policy.in ()
-                                                 TAO_ENV_ARG_PARAMETER);
+                                                 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   PortableServer::IdUniquenessPolicyValue id_uniqueness =
-    iup->value (TAO_ENV_SINGLE_ARG_PARAMETER);
+    iup->value (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
 
   policy = policies.get_cached_policy (TAO_CACHED_POLICY_IMPLICIT_ACTIVATION);
   PortableServer::ImplicitActivationPolicy_var iap =
     PortableServer::ImplicitActivationPolicy::_narrow (policy.in ()
-                                                       TAO_ENV_ARG_PARAMETER);
+                                                       ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   PortableServer::ImplicitActivationPolicyValue implicit_activation =
-    iap->value (TAO_ENV_SINGLE_ARG_PARAMETER);
+    iap->value (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   policy = policies.get_cached_policy (TAO_CACHED_POLICY_ID_ASSIGNMENT);
   PortableServer::IdAssignmentPolicy_var idap =
     PortableServer::IdAssignmentPolicy::_narrow (policy.in ()
-                                                 TAO_ENV_ARG_PARAMETER);
+                                                 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   PortableServer::IdAssignmentPolicyValue id_assignment =
-    idap->value (TAO_ENV_SINGLE_ARG_PARAMETER);
+    idap->value (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
 
@@ -94,7 +94,7 @@ TAO_POA_Default_Policy_Validator::validate_impl (TAO_Policy_Set &policies
       ACE_THROW (PortableServer::POA::InvalidPolicy ());
 #else /* TAO_HAS_MINIMUM_POA == 0 */
   ACE_UNUSED_ARG (policies);
-  TAO_ENV_ARG_NOT_USED; // FUZZ: ignore check_for_ace_check
+  ACE_ENV_ARG_NOT_USED; // FUZZ: ignore check_for_ace_check
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 }
 
@@ -113,6 +113,6 @@ TAO_POA_Default_Policy_Validator::legal_policy_impl (CORBA::PolicyType type)
 
 void
 TAO_POA_Default_Policy_Validator::merge_policies_impl (TAO_Policy_Set &
-                                                       TAO_ENV_ARG_DECL_NOT_USED)
+                                                       ACE_ENV_ARG_DECL_NOT_USED)
 {
 }

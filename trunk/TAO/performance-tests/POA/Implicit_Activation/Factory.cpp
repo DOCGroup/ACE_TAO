@@ -12,7 +12,7 @@ Factory::Factory (CORBA::ORB_ptr orb)
 }
 
 Test::Simple_ptr
-Factory::create_simple_object (TAO_ENV_SINGLE_ARG_DECL)
+Factory::create_simple_object (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Simple *simple_impl;
@@ -23,12 +23,12 @@ Factory::create_simple_object (TAO_ENV_SINGLE_ARG_DECL)
 
   PortableServer::ServantBase_var owner_transfer(simple_impl);
 
-  return simple_impl->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
+  return simple_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 void
-Factory::shutdown (TAO_ENV_SINGLE_ARG_DECL)
+Factory::shutdown (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->orb_->shutdown (0 TAO_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
 }

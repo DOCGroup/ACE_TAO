@@ -22,7 +22,7 @@ PortableServer::ObjectId *
 TAO_POA_Hooks::create_id_for_reference (
     TAO_POA &the_poa,
     CORBA::Object_ptr the_ref
-    TAO_ENV_ARG_DECL)
+    ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((
       CORBA::SystemException,
       PortableServer::NotAGroupObject
@@ -36,18 +36,18 @@ TAO_POA_Hooks::create_id_for_reference (
   // Create a temporary object reference and then get the
   // ObjectId out of it.
   CORBA::Object_var obj_ref = the_poa.create_reference (repository_id
-                                                        TAO_ENV_ARG_PARAMETER);
+                                                        ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   PortableServer::ObjectId_var obj_id = the_poa.reference_to_id (obj_ref.in ()
-                                                                 TAO_ENV_ARG_PARAMETER);
+                                                                 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   // Associate the object reference with the group reference.
   this->associate_group_with_ref (the_poa,
                                   the_ref,
                                   obj_ref.in ()
-                                  TAO_ENV_ARG_PARAMETER);
+                                  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   return obj_id._retn ();
@@ -114,7 +114,7 @@ int
 TAO_POA_Hooks::create_group_acceptors (CORBA::Object_ptr the_ref,
                                        TAO_PortableGroup_Acceptor_Registry &acceptor_registry,
                                        TAO_ORB_Core &orb_core
-                                       TAO_ENV_ARG_DECL)
+                                       ACE_ENV_ARG_DECL)
 {
   const TAO_MProfile& profiles = the_ref->_stubobj ()->base_profiles ();
   const TAO_Profile* profile;
@@ -130,7 +130,7 @@ TAO_POA_Hooks::create_group_acceptors (CORBA::Object_ptr the_ref,
         {
           acceptor_registry.open (profile,
                                   orb_core
-                                  TAO_ENV_ARG_PARAMETER);
+                                  ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (0);
           ++num;
         }
@@ -147,7 +147,7 @@ PortableServer::IDs *
 TAO_POA_Hooks::reference_to_ids (
   TAO_POA &/*the_poa*/,
   CORBA::Object_ptr /*the_ref*/
-    TAO_ENV_ARG_DECL_NOT_USED)
+    ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((
       CORBA::SystemException,
       PortableServer::NotAGroupObject
@@ -162,7 +162,7 @@ TAO_POA_Hooks::associate_group_with_ref (
       TAO_POA &the_poa,
       CORBA::Object_ptr group_ref,
       CORBA::Object_ptr obj_ref
-      TAO_ENV_ARG_DECL)
+      ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableServer::NotAGroupObject))
 {
@@ -191,7 +191,7 @@ TAO_POA_Hooks::associate_group_with_ref (
   this->create_group_acceptors (group_ref,
                                 this->request_dispatcher_.acceptor_registry_,
                                 the_poa.orb_core ()
-                                TAO_ENV_ARG_PARAMETER);
+                                ACE_ENV_ARG_PARAMETER);
 
   ACE_CHECK;
 
@@ -201,7 +201,7 @@ TAO_POA_Hooks::associate_group_with_ref (
   this->request_dispatcher_.group_map_.add_groupid_objectkey_pair (
                                    group_id._retn (),
                                    key
-                                   TAO_ENV_ARG_PARAMETER);
+                                   ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
 }
@@ -211,7 +211,7 @@ TAO_POA_Hooks::associate_reference_with_id (
       TAO_POA &the_poa,
       CORBA::Object_ptr ref,
       const PortableServer::ObjectId & oid
-      TAO_ENV_ARG_DECL)
+      ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((
       CORBA::SystemException,
       PortableServer::NotAGroupObject
@@ -222,14 +222,14 @@ TAO_POA_Hooks::associate_reference_with_id (
   // it is much easier to extract the object key from the
   // reference.
   CORBA::Object_var obj_ref = the_poa.id_to_reference (oid
-                                                       TAO_ENV_ARG_PARAMETER);
+                                                       ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // Associate the object reference with the group reference.
   this->associate_group_with_ref (the_poa,
                                   ref,
                                   obj_ref.in ()
-                                  TAO_ENV_ARG_PARAMETER);
+                                  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
@@ -238,7 +238,7 @@ TAO_POA_Hooks::disassociate_reference_with_id (
       TAO_POA &/*the_poa*/,
       CORBA::Object_ptr /*ref*/,
       const PortableServer::ObjectId & /*oid*/
-      TAO_ENV_ARG_DECL_NOT_USED)
+      ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((
       CORBA::SystemException,
       PortableServer::NotAGroupObject

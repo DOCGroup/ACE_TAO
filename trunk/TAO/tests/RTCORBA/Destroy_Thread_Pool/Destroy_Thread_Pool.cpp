@@ -44,7 +44,7 @@ parse_args (int argc, char *argv[])
 
 RTCORBA::ThreadpoolId
 create_threadpool (RTCORBA::RTORB_ptr rt_orb
-                   TAO_ENV_ARG_DECL)
+                   ACE_ENV_ARG_DECL)
 {
   RTCORBA::ThreadpoolId id =
     rt_orb->create_threadpool (stacksize,
@@ -54,7 +54,7 @@ create_threadpool (RTCORBA::RTORB_ptr rt_orb
                                allow_request_buffering,
                                max_buffered_requests,
                                max_request_buffer_size
-                               TAO_ENV_ARG_PARAMETER);
+                               ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   return id;
@@ -62,7 +62,7 @@ create_threadpool (RTCORBA::RTORB_ptr rt_orb
 
 RTCORBA::ThreadpoolId
 create_threadpool_with_lanes (RTCORBA::RTORB_ptr rt_orb
-                              TAO_ENV_ARG_DECL)
+                              ACE_ENV_ARG_DECL)
 {
   RTCORBA::ThreadpoolLanes lanes (2);
   lanes.length (2);
@@ -82,7 +82,7 @@ create_threadpool_with_lanes (RTCORBA::RTORB_ptr rt_orb
                                           allow_request_buffering,
                                           max_buffered_requests,
                                           max_request_buffer_size
-                                          TAO_ENV_ARG_PARAMETER);
+                                          ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   return id;
@@ -97,31 +97,31 @@ main (int argc, char *argv[])
         CORBA::ORB_init (argc,
                          argv,
                          ""
-                         TAO_ENV_ARG_PARAMETER);
+                         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Object_var object =
         orb->resolve_initial_references ("RTORB"
-                                         TAO_ENV_ARG_PARAMETER);
+                                         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       RTCORBA::RTORB_var rt_orb =
         RTCORBA::RTORB::_narrow (object.in ()
-                                 TAO_ENV_ARG_PARAMETER);
+                                 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       object =
         orb->resolve_initial_references ("RTCurrent"
-                                         TAO_ENV_ARG_PARAMETER);
+                                         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       RTCORBA::Current_var current =
         RTCORBA::Current::_narrow (object.in ()
-                                   TAO_ENV_ARG_PARAMETER);
+                                   ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       default_thread_priority =
-        current->the_priority (TAO_ENV_SINGLE_ARG_PARAMETER);
+        current->the_priority (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       int result =
@@ -136,24 +136,24 @@ main (int argc, char *argv[])
         {
           RTCORBA::ThreadpoolId id =
             create_threadpool (rt_orb.in ()
-                               TAO_ENV_ARG_PARAMETER);
+                               ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           rt_orb->destroy_threadpool (id
-                                      TAO_ENV_ARG_PARAMETER);
+                                      ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           id =
             create_threadpool_with_lanes (rt_orb.in ()
-                                          TAO_ENV_ARG_PARAMETER);
+                                          ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           rt_orb->destroy_threadpool (id
-                                      TAO_ENV_ARG_PARAMETER);
+                                      ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
 
-      orb->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
+      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

@@ -23,7 +23,7 @@ class test_i
 public:
   // = The skeleton methods
   virtual void send_stuff (const char* string
-                           TAO_ENV_ARG_DECL)
+                           ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

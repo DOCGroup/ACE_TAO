@@ -24,7 +24,7 @@ Controller::dump_results ()
 }
 
 void
-Controller::worker_started (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+Controller::worker_started (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
@@ -34,7 +34,7 @@ Controller::worker_started (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 void
-Controller::worker_finished (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+Controller::worker_finished (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);

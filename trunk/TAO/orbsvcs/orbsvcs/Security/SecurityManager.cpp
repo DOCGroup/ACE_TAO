@@ -21,7 +21,7 @@ TAO_SecurityManager::~TAO_SecurityManager (void)
 }
 
 Security::MechandOptionsList *
-TAO_SecurityManager::supported_mechanisms (TAO_ENV_SINGLE_ARG_DECL)
+TAO_SecurityManager::supported_mechanisms (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (
@@ -33,7 +33,7 @@ TAO_SecurityManager::supported_mechanisms (TAO_ENV_SINGLE_ARG_DECL)
 }
 
 SecurityLevel2::CredentialsList *
-TAO_SecurityManager::own_credentials (TAO_ENV_SINGLE_ARG_DECL)
+TAO_SecurityManager::own_credentials (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
@@ -55,7 +55,7 @@ TAO_SecurityManager::own_credentials (TAO_ENV_SINGLE_ARG_DECL)
 }
 
 SecurityLevel2::RequiredRights_ptr
-TAO_SecurityManager::required_rights_object (TAO_ENV_SINGLE_ARG_DECL)
+TAO_SecurityManager::required_rights_object (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (
@@ -67,7 +67,7 @@ TAO_SecurityManager::required_rights_object (TAO_ENV_SINGLE_ARG_DECL)
 }
 
 SecurityLevel2::PrincipalAuthenticator_ptr
-TAO_SecurityManager::principal_authenticator (TAO_ENV_SINGLE_ARG_DECL)
+TAO_SecurityManager::principal_authenticator (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   {
@@ -98,7 +98,7 @@ TAO_SecurityManager::principal_authenticator (TAO_ENV_SINGLE_ARG_DECL)
 }
 
 SecurityLevel2::AccessDecision_ptr
-TAO_SecurityManager::access_decision (TAO_ENV_SINGLE_ARG_DECL)
+TAO_SecurityManager::access_decision (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (
@@ -110,7 +110,7 @@ TAO_SecurityManager::access_decision (TAO_ENV_SINGLE_ARG_DECL)
 }
 
 SecurityLevel2::AuditDecision_ptr
-TAO_SecurityManager::audit_decision (TAO_ENV_SINGLE_ARG_DECL)
+TAO_SecurityManager::audit_decision (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (
@@ -123,7 +123,7 @@ TAO_SecurityManager::audit_decision (TAO_ENV_SINGLE_ARG_DECL)
 
 SecurityLevel2::TargetCredentials_ptr
 TAO_SecurityManager::get_target_credentials (CORBA::Object_ptr /* obj_ref */
-                                             TAO_ENV_ARG_DECL)
+                                             ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (
@@ -137,7 +137,7 @@ TAO_SecurityManager::get_target_credentials (CORBA::Object_ptr /* obj_ref */
 void
 TAO_SecurityManager::remove_own_credentials (
     SecurityLevel2::Credentials_ptr creds
-    TAO_ENV_ARG_DECL)
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, monitor, this->lock_);
@@ -172,7 +172,7 @@ TAO_SecurityManager::remove_own_credentials (
 
 CORBA::Policy_ptr
 TAO_SecurityManager::get_security_policy (CORBA::PolicyType /* policy_type */
-                                          TAO_ENV_ARG_DECL)
+                                          ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (
@@ -185,7 +185,7 @@ TAO_SecurityManager::get_security_policy (CORBA::PolicyType /* policy_type */
 
 void
 TAO_SecurityManager::add_own_credentials (SecurityLevel2::Credentials_ptr creds
-                                          TAO_ENV_ARG_DECL)
+                                          ACE_ENV_ARG_DECL)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, monitor, this->lock_);
 

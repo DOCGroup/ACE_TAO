@@ -38,11 +38,11 @@ public:
   ~test_i (void);
 
   /// Return the number assigned to this object.
-  virtual void invoke_me (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual void invoke_me (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Shutdown the ORB.
-  virtual void shutdown (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

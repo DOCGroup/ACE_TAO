@@ -14,7 +14,7 @@ TAO_Notify_FilterAdmin_i::~TAO_Notify_FilterAdmin_i (void)
 }
 
 CORBA::Boolean
-TAO_Notify_FilterAdmin_i::match (TAO_Notify_Event &event TAO_ENV_ARG_DECL)
+TAO_Notify_FilterAdmin_i::match (TAO_Notify_Event &event ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException,
                    CosNotifyFilter::UnsupportedFilterableData
@@ -32,7 +32,7 @@ TAO_Notify_FilterAdmin_i::match (TAO_Notify_Event &event TAO_ENV_ARG_DECL)
 
   for (; iter.next (entry); iter.advance ())
     {
-      ret_val = event.do_match (entry->int_id_.in () TAO_ENV_ARG_PARAMETER);
+      ret_val = event.do_match (entry->int_id_.in () ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       if (ret_val == 1)
@@ -45,7 +45,7 @@ TAO_Notify_FilterAdmin_i::match (TAO_Notify_Event &event TAO_ENV_ARG_DECL)
 CosNotifyFilter::FilterID
 TAO_Notify_FilterAdmin_i::add_filter (
     CosNotifyFilter::Filter_ptr new_filter
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -69,7 +69,7 @@ TAO_Notify_FilterAdmin_i::add_filter (
     }
 }
 
-void TAO_Notify_FilterAdmin_i::remove_filter (CosNotifyFilter::FilterID filter_id TAO_ENV_ARG_DECL)
+void TAO_Notify_FilterAdmin_i::remove_filter (CosNotifyFilter::FilterID filter_id ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException,
                    CosNotifyFilter::FilterNotFound
@@ -84,7 +84,7 @@ void TAO_Notify_FilterAdmin_i::remove_filter (CosNotifyFilter::FilterID filter_i
 CosNotifyFilter::Filter_ptr
 TAO_Notify_FilterAdmin_i::get_filter (
     CosNotifyFilter::FilterID filter
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException,
@@ -102,28 +102,28 @@ TAO_Notify_FilterAdmin_i::get_filter (
 }
 
 CosNotifyFilter::FilterIDSeq*
-TAO_Notify_FilterAdmin_i::get_all_filters (TAO_ENV_SINGLE_ARG_DECL)
+TAO_Notify_FilterAdmin_i::get_all_filters (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
 {
-  return this->filter_ids_.get_sequence(TAO_ENV_SINGLE_ARG_PARAMETER);
+  return this->filter_ids_.get_sequence(ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 void
-TAO_Notify_FilterAdmin_i::remove_all_filters (TAO_ENV_SINGLE_ARG_DECL)
+TAO_Notify_FilterAdmin_i::remove_all_filters (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
 {
   CosNotifyFilter::FilterIDSeq* id_list =
-    this->get_all_filters (TAO_ENV_SINGLE_ARG_PARAMETER);
+    this->get_all_filters (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   for (CORBA::ULong i = 0; i < id_list->length (); ++i)
     {
       CosNotifyFilter::FilterID id = (*id_list)[i];
-      this->remove_filter (id TAO_ENV_ARG_PARAMETER);
+      this->remove_filter (id ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
 

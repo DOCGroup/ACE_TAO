@@ -26,7 +26,7 @@ TAO_Security_Current::~TAO_Security_Current (void)
 Security::AttributeList *
 TAO_Security_Current::get_attributes (
     const Security::AttributeTypeList &attributes
-    TAO_ENV_ARG_DECL)
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_Security_Current_Impl *impl = this->implementation ();
@@ -37,12 +37,12 @@ TAO_Security_Current::get_attributes (
   if (impl == 0)
     ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (), 0);
 
-  return impl->get_attributes (attributes TAO_ENV_ARG_PARAMETER);
+  return impl->get_attributes (attributes ACE_ENV_ARG_PARAMETER);
 }
 
 SecurityLevel2::ReceivedCredentials_ptr
 TAO_Security_Current::received_credentials (
-    TAO_ENV_SINGLE_ARG_DECL)
+    ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_Security_Current_Impl *impl = this->implementation ();
@@ -53,7 +53,7 @@ TAO_Security_Current::received_credentials (
   if (impl == 0)
     ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (), 0);
 
-  return impl->received_credentials (TAO_ENV_SINGLE_ARG_PARAMETER);
+  return impl->received_credentials (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 int
@@ -61,7 +61,7 @@ TAO_Security_Current::init (void)
 {
   int result = 0;
 
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       int argc = 0;
@@ -69,7 +69,7 @@ TAO_Security_Current::init (void)
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
                                             this->orb_id_.in ()
-                                            TAO_ENV_ARG_PARAMETER);
+                                            ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       this->orb_core_ = orb.in ()->orb_core ();

@@ -65,12 +65,12 @@ Load_Balancing_Service::init (int argc,
   int result;
   CORBA::String_var ior;
 
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       result = this->orb_manager_.init (argc,
                                         argv
-                                        TAO_ENV_ARG_PARAMETER);
+                                        ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       if (result == -1)
         return result;
@@ -87,7 +87,7 @@ Load_Balancing_Service::init (int argc,
                       -1);
       PortableServer::ServantBase_var s = factory_servant;
       ior = orb_manager_.activate (factory_servant
-                                   TAO_ENV_ARG_PARAMETER);
+                                   ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (ior.in () == 0)
@@ -118,14 +118,14 @@ Load_Balancing_Service::init (int argc,
 
 
 int
-Load_Balancing_Service::run (TAO_ENV_SINGLE_ARG_DECL)
+Load_Balancing_Service::run (ACE_ENV_SINGLE_ARG_DECL)
 {
   ACE_DEBUG ((LM_DEBUG,
               "Load_Balancer: Initialized \n"));
 
   int result;
 
-  result = this->orb_manager_.run (TAO_ENV_SINGLE_ARG_PARAMETER);
+  result = this->orb_manager_.run (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   return result;
@@ -144,10 +144,10 @@ main (int argc, char *argv[])
   if (factory.init (argc, argv) == -1)
     return 1;
 
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      result = factory.run (TAO_ENV_SINGLE_ARG_PARAMETER);
+      result = factory.run (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

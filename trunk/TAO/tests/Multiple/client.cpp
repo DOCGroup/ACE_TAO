@@ -6,18 +6,18 @@ ACE_RCSID (tests, client, "$Id$")
 
 int main (int argc, char *argv[])
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
 
   ACE_TRY
     {
       // ORB Initialization
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, "TAO" TAO_ENV_ARG_PARAMETER);
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, "TAO" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Object_var object;
 
       // Get The IOR from a file
-      object = orb->string_to_object ("file://s.ior" TAO_ENV_ARG_PARAMETER);
+      object = orb->string_to_object ("file://s.ior" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (object.in ()))
@@ -27,7 +27,7 @@ int main (int argc, char *argv[])
         }
 
       Collocation_Tester tester (object.in ());
-      tester.run (TAO_ENV_SINGLE_ARG_PARAMETER);
+      tester.run (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

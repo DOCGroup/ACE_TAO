@@ -76,7 +76,7 @@ TAO_NAMESPACE  POA_Messaging
 
     virtual CORBA::Boolean _is_a (
         const char* logical_type_id
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
     virtual void* _downcast (
@@ -87,31 +87,31 @@ TAO_NAMESPACE  POA_Messaging
         TAO_ServerRequest &req,
         void *obj,
         void *servant_upcall
-        TAO_ENV_ARG_DECL
+        ACE_ENV_ARG_DECL
       );
 
     static void _non_existent_skel (
         TAO_ServerRequest &req,
         void *obj,
         void *servant_upcall
-        TAO_ENV_ARG_DECL
+        ACE_ENV_ARG_DECL
       );
 
     static void _interface_skel (
         TAO_ServerRequest &req,
         void *obj,
         void *servant_upcall
-        TAO_ENV_ARG_DECL
+        ACE_ENV_ARG_DECL
       );
 
     virtual void _dispatch (
         TAO_ServerRequest &req,
         void *_servant_upcall
-        TAO_ENV_ARG_DECL
+        ACE_ENV_ARG_DECL
       );
 
     ::Messaging::ReplyHandler *_this (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
 
     virtual const char* _interface_repository_id (void) const;
@@ -133,7 +133,7 @@ TAO_NAMESPACE  POA_Messaging
 
     virtual ::Messaging::_TAO_ReplyHandler_Proxy_Impl &select_proxy (
       ::Messaging::ReplyHandler *object
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     );
 
   private:
@@ -142,7 +142,7 @@ TAO_NAMESPACE  POA_Messaging
     // as soon as their use is necessary.
     void create_proxy (
       int collocation_strategy
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     );
 
   private:

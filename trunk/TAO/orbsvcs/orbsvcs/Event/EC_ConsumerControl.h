@@ -56,12 +56,12 @@ public:
    * reclaim all the resources attached to that object.
    */
   virtual void consumer_not_exist (TAO_EC_ProxyPushSupplier *proxy
-                                   TAO_ENV_ARG_DECL_NOT_USED);
+                                   ACE_ENV_ARG_DECL_NOT_USED);
 
   /// Some system exception was rasied while trying to push an event.
   virtual void system_exception (TAO_EC_ProxyPushSupplier *proxy,
                                  CORBA::SystemException &
-                                 TAO_ENV_ARG_DECL_NOT_USED);
+                                 ACE_ENV_ARG_DECL_NOT_USED);
 };
 
 #if defined (__ACE_INLINE__)

@@ -61,7 +61,7 @@ void
 TAO_ECG_UDP_Sender::init (RtecEventChannelAdmin::EventChannel_ptr lcl_ec,
                           RtecUDPAdmin::AddrServer_ptr addr_server,
                           TAO_ECG_UDP_Out_Endpoint* endpoint
-                          TAO_ENV_ARG_DECL_NOT_USED)
+                          ACE_ENV_ARG_DECL_NOT_USED)
 {
   this->lcl_ec_ =
     RtecEventChannelAdmin::EventChannel::_duplicate (lcl_ec);
@@ -83,23 +83,23 @@ TAO_ECG_UDP_Sender::mtu (CORBA::ULong new_mtu)
 }
 
 void
-TAO_ECG_UDP_Sender::shutdown (TAO_ENV_SINGLE_ARG_DECL)
+TAO_ECG_UDP_Sender::shutdown (ACE_ENV_SINGLE_ARG_DECL)
 {
-  this->close (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->close (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
   this->lcl_ec_ = RtecEventChannelAdmin::EventChannel::_nil ();
 }
 
 void
 TAO_ECG_UDP_Sender::open (RtecEventChannelAdmin::ConsumerQOS& sub
-                          TAO_ENV_ARG_DECL)
+                          ACE_ENV_ARG_DECL)
 {
   // ACE_DEBUG ((LM_DEBUG, "ECG (%t) Open gateway\n"));
   if (CORBA::is_nil (this->lcl_ec_.in ()))
     return;
 
   if (!CORBA::is_nil (this->supplier_proxy_.in ()))
-    this->close (TAO_ENV_SINGLE_ARG_PARAMETER);
+    this->close (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   if (sub.dependencies.length () == 0)
@@ -109,15 +109,15 @@ TAO_ECG_UDP_Sender::open (RtecEventChannelAdmin::ConsumerQOS& sub
   //ACE_SupplierQOS_Factory::debug (pub);
 
   RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin =
-    this->lcl_ec_->for_consumers (TAO_ENV_SINGLE_ARG_PARAMETER);
+    this->lcl_ec_->for_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   this->supplier_proxy_ =
-    consumer_admin->obtain_push_supplier (TAO_ENV_SINGLE_ARG_PARAMETER);
+    consumer_admin->obtain_push_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   RtecEventComm::PushConsumer_var consumer_ref =
-    this->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
+    this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   //ACE_DEBUG ((LM_DEBUG, "ECG (%t) Gateway/Consumer "));
@@ -125,35 +125,35 @@ TAO_ECG_UDP_Sender::open (RtecEventChannelAdmin::ConsumerQOS& sub
 
   this->supplier_proxy_->connect_push_consumer (consumer_ref.in (),
                                                 sub
-                                                 TAO_ENV_ARG_PARAMETER);
+                                                 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
-TAO_ECG_UDP_Sender::close (TAO_ENV_SINGLE_ARG_DECL)
+TAO_ECG_UDP_Sender::close (ACE_ENV_SINGLE_ARG_DECL)
 {
   // ACE_DEBUG ((LM_DEBUG, "ECG (%t) Closing gateway\n"));
   if (CORBA::is_nil (this->supplier_proxy_.in ()))
     return;
 
-  this->supplier_proxy_->disconnect_push_supplier (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->supplier_proxy_->disconnect_push_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   this->supplier_proxy_ =
     RtecEventChannelAdmin::ProxyPushSupplier::_nil ();
 
   PortableServer::POA_var poa =
-    this->_default_POA (TAO_ENV_SINGLE_ARG_PARAMETER);
+    this->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
   PortableServer::ObjectId_var id =
-    poa->servant_to_id (this TAO_ENV_ARG_PARAMETER);
+    poa->servant_to_id (this ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
-  poa->deactivate_object (id.in () TAO_ENV_ARG_PARAMETER);
+  poa->deactivate_object (id.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
-TAO_ECG_UDP_Sender::disconnect_push_consumer (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_ECG_UDP_Sender::disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -163,7 +163,7 @@ TAO_ECG_UDP_Sender::disconnect_push_consumer (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 
 void
 TAO_ECG_UDP_Sender::push (const RtecEventComm::EventSet &events
-                          TAO_ENV_ARG_DECL)
+                          ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // ACE_DEBUG ((LM_DEBUG, "ECG_UDP_Sender::push - \n"));
@@ -192,11 +192,11 @@ TAO_ECG_UDP_Sender::push (const RtecEventComm::EventSet &events
 
       RtecUDPAdmin::UDP_Addr udp_addr;
       this->addr_server_->get_addr (header, udp_addr
-                                    TAO_ENV_ARG_PARAMETER);
+                                    ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       this->send_event (udp_addr, e
-                        TAO_ENV_ARG_PARAMETER);
+                        ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       // That's it, no need to continue...
@@ -219,7 +219,7 @@ TAO_ECG_UDP_Sender::push (const RtecEventComm::EventSet &events
       // Grab the right mcast group for this event...
       RtecUDPAdmin::UDP_Addr udp_addr;
       this->addr_server_->get_addr (e.header, udp_addr
-                                    TAO_ENV_ARG_PARAMETER);
+                                    ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       Destination_Map::ENTRY *entry;
@@ -249,11 +249,11 @@ TAO_ECG_UDP_Sender::push (const RtecEventComm::EventSet &events
                ++k)
             {
               this->marshal_one_event (events[(*k)], cdr
-                                       TAO_ENV_ARG_PARAMETER);
+                                       ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
             }
           this->send_cdr_stream ((*j).ext_id_, cdr
-                                 TAO_ENV_ARG_PARAMETER);
+                                 ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
       ACE_CATCHANY
@@ -269,7 +269,7 @@ TAO_ECG_UDP_Sender::push (const RtecEventComm::EventSet &events
 void
 TAO_ECG_UDP_Sender::marshal_one_event (const RtecEventComm::Event& e,
                                        TAO_OutputCDR &cdr
-                                       TAO_ENV_ARG_DECL)
+                                       ACE_ENV_ARG_DECL)
 {
   // We need to modify the TTL field, but copying the entire event
   // would be wasteful; instead we create a new header and only
@@ -285,7 +285,7 @@ TAO_ECG_UDP_Sender::marshal_one_event (const RtecEventComm::Event& e,
 void
 TAO_ECG_UDP_Sender::send_event (const RtecUDPAdmin::UDP_Addr& udp_addr,
                                 const RtecEventComm::Event& e
-                                TAO_ENV_ARG_DECL)
+                                ACE_ENV_ARG_DECL)
 {
   // This is the CDR stream used to marshal the event...
   TAO_OutputCDR cdr;
@@ -295,17 +295,17 @@ TAO_ECG_UDP_Sender::send_event (const RtecUDPAdmin::UDP_Addr& udp_addr,
   // marshal without any extra copies.
   cdr.write_ulong (1);
 
-  this->marshal_one_event (e, cdr TAO_ENV_ARG_PARAMETER);
+  this->marshal_one_event (e, cdr ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   this->send_cdr_stream (udp_addr, cdr
-                         TAO_ENV_ARG_PARAMETER);
+                         ACE_ENV_ARG_PARAMETER);
 }
 
 void
 TAO_ECG_UDP_Sender::send_cdr_stream (const RtecUDPAdmin::UDP_Addr& udp_addr,
                                      TAO_OutputCDR &cdr
-                                     TAO_ENV_ARG_DECL)
+                                     ACE_ENV_ARG_DECL)
 {
   // @@ TODO precompute this when the MTU changes...
   CORBA::ULong max_fragment_payload = this->mtu () -
@@ -364,7 +364,7 @@ TAO_ECG_UDP_Sender::send_cdr_stream (const RtecUDPAdmin::UDP_Addr& udp_addr,
                                fragment_count,
                                iov,
                                iovcnt
-                               TAO_ENV_ARG_PARAMETER);
+                               ACE_ENV_ARG_PARAMETER);
           ACE_CHECK;
           fragment_id++;
           fragment_offset += max_fragment_payload;
@@ -392,7 +392,7 @@ TAO_ECG_UDP_Sender::send_cdr_stream (const RtecUDPAdmin::UDP_Addr& udp_addr,
                                fragment_count,
                                iov,
                                iovcnt
-                               TAO_ENV_ARG_PARAMETER);
+                               ACE_ENV_ARG_PARAMETER);
           ACE_CHECK;
           fragment_id++;
           fragment_offset += max_fragment_payload;
@@ -413,7 +413,7 @@ TAO_ECG_UDP_Sender::send_cdr_stream (const RtecUDPAdmin::UDP_Addr& udp_addr,
                                fragment_count,
                                iov,
                                iovcnt
-                               TAO_ENV_ARG_PARAMETER);
+                               ACE_ENV_ARG_PARAMETER);
           ACE_CHECK;
           fragment_id++;
           fragment_offset += fragment_size;
@@ -437,7 +437,7 @@ TAO_ECG_UDP_Sender::send_cdr_stream (const RtecUDPAdmin::UDP_Addr& udp_addr,
                            fragment_count,
                            iov,
                            iovcnt
-                           TAO_ENV_ARG_PARAMETER);
+                           ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
       fragment_id++;
       fragment_offset += fragment_size;
@@ -460,7 +460,7 @@ TAO_ECG_UDP_Sender::send_fragment (const RtecUDPAdmin::UDP_Addr& udp_addr,
                                    CORBA::ULong fragment_count,
                                    iovec iov[],
                                    int iovcnt
-                                   TAO_ENV_ARG_DECL)
+                                   ACE_ENV_ARG_DECL)
 {
   CORBA::ULong header[TAO_ECG_UDP_Protocol::ECG_HEADER_SIZE
                      / sizeof(CORBA::ULong)

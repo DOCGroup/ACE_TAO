@@ -16,7 +16,7 @@ TAO_EC_Simple_AddrServer::~TAO_EC_Simple_AddrServer (void)
 void
 TAO_EC_Simple_AddrServer::get_addr (const RtecEventComm::EventHeader& header,
                                     RtecUDPAdmin::UDP_Addr_out addr
-                                    TAO_ENV_ARG_DECL_NOT_USED)
+                                    ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   addr.ipaddr = header.type;

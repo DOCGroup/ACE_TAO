@@ -46,11 +46,11 @@ class TAO_Notify_Export TAO_Notify_Lookup_Command : public TAO_Notify_Command, p
 
   ~TAO_Notify_Lookup_Command ();
 
-  virtual int execute (TAO_ENV_SINGLE_ARG_DECL_NOT_USED);
+  virtual int execute (ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
   // Command callback
 
   // = TAO_ESF_Worker method
-  void work (TAO_Notify_EventListener* listener TAO_ENV_ARG_DECL);
+  void work (TAO_Notify_EventListener* listener ACE_ENV_ARG_DECL);
  protected:
   // = Data member
   TAO_Notify_Event_Map* event_map_;

@@ -26,7 +26,7 @@
 class Time_impl : public virtual POA_Time
 {
 public:
-  virtual TimeOfDay get_gmt (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+  virtual TimeOfDay get_gmt (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 };
 

@@ -30,12 +30,12 @@ Client_Task::svc (void)
 
   ACE_TRY
     {
-      this->validate_connection (TAO_ENV_SINGLE_ARG_PARAMETER);
+      this->validate_connection (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       for (int i = 0; i != this->iterations_; ++i)
         {
-          int retval = this->one_iteration (TAO_ENV_SINGLE_ARG_PARAMETER);
+          int retval = this->one_iteration (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           if (retval != 0)
@@ -65,13 +65,13 @@ Client_Task::svc (void)
 }
 
 void
-Client_Task::validate_connection (TAO_ENV_SINGLE_ARG_DECL)
+Client_Task::validate_connection (ACE_ENV_SINGLE_ARG_DECL)
 {
   ACE_TRY
     {
       for (int i = 0; i != 100; ++i)
         {
-          (void) this->process_factory_->noop (TAO_ENV_SINGLE_ARG_PARAMETER);
+          (void) this->process_factory_->noop (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
     }
@@ -84,18 +84,18 @@ Client_Task::validate_connection (TAO_ENV_SINGLE_ARG_DECL)
 }
 
 int
-Client_Task::one_iteration (TAO_ENV_SINGLE_ARG_DECL)
+Client_Task::one_iteration (ACE_ENV_SINGLE_ARG_DECL)
 {
   ACE_TRY
     {
       Test::Process_var process =
-        this->process_factory_->create_new_process (TAO_ENV_SINGLE_ARG_PARAMETER);
+        this->process_factory_->create_new_process (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      (void) process->get_process_id (TAO_ENV_SINGLE_ARG_PARAMETER);
+      (void) process->get_process_id (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      process->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
+      process->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       return 1;

@@ -44,7 +44,7 @@ public:
   // Execute the test.
 
   virtual void shutdown_consumer (void* consumer_cookie
-                                  TAO_ENV_ARG_DECL_NOT_USED);
+                                  ACE_ENV_ARG_DECL_NOT_USED);
   // Callback method for consumers, each consumer will call this
   // method once it receives all the shutdown events from the
   // suppliers.
@@ -55,17 +55,17 @@ private:
 
   void connect_consumers (RtecScheduler::Scheduler_ptr scheduler,
                           RtecEventChannelAdmin::EventChannel_ptr local_ec
-                          TAO_ENV_ARG_DECL);
-  void disconnect_consumers (TAO_ENV_SINGLE_ARG_DECL);
+                          ACE_ENV_ARG_DECL);
+  void disconnect_consumers (ACE_ENV_SINGLE_ARG_DECL);
   // Connect and disconnect the consumers.
 
   void connect_suppliers (RtecScheduler::Scheduler_ptr scheduler,
                           RtecEventChannelAdmin::EventChannel_ptr local_ec
-                          TAO_ENV_ARG_DECL);
-  void disconnect_suppliers (TAO_ENV_SINGLE_ARG_DECL);
+                          ACE_ENV_ARG_DECL);
+  void disconnect_suppliers (ACE_ENV_SINGLE_ARG_DECL);
   // Connect the suppliers.
 
-  void activate_suppliers (TAO_ENV_SINGLE_ARG_DECL);
+  void activate_suppliers (ACE_ENV_SINGLE_ARG_DECL);
   // Activate the suppliers, i.e. they start generating events.
 
   void dump_results (void);

@@ -22,7 +22,7 @@ Notifier::run (void)
 {
   ACE_TRY_NEW_ENV
     {
-      ns_.run (TAO_ENV_SINGLE_ARG_PARAMETER);
+      ns_.run (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -36,7 +36,7 @@ Notifier::Notifier (int argc, char *argv[])
 {
   ACE_TRY_NEW_ENV
     {
-      ns_.init (argc, argv TAO_ENV_ARG_PARAMETER);
+      ns_.init (argc, argv ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

@@ -79,13 +79,13 @@ Consumer_Client::parse_args (int argc, char *argv[])
 
 static CosNotifyChannelAdmin::ConsumerAdmin_ptr
 create_consumeradmin (CosNotifyChannelAdmin::EventChannel_ptr ec
-                      TAO_ENV_ARG_DECL)
+                      ACE_ENV_ARG_DECL)
 {
   CosNotifyChannelAdmin::AdminID adminid = 0;
   CosNotifyChannelAdmin::ConsumerAdmin_var admin =
     ec->new_for_consumers (CosNotifyChannelAdmin::AND_OP,
                            adminid
-                           TAO_ENV_ARG_PARAMETER);
+                           ACE_ENV_ARG_PARAMETER);
 
   ACE_CHECK_RETURN (0);
 
@@ -93,12 +93,12 @@ create_consumeradmin (CosNotifyChannelAdmin::EventChannel_ptr ec
     {
       // Filter Section
       CosNotifyFilter::FilterFactory_var ffact =
-          ec->default_filter_factory (TAO_ENV_SINGLE_ARG_PARAMETER);
+          ec->default_filter_factory (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       // One Filter
       CosNotifyFilter::Filter_var filter =
-          ffact->create_filter (GRAMMAR TAO_ENV_ARG_PARAMETER);
+          ffact->create_filter (GRAMMAR ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       CosNotifyFilter::ConstraintExpSeq constraint_list (1);
@@ -108,10 +108,10 @@ create_consumeradmin (CosNotifyChannelAdmin::EventChannel_ptr ec
       constraint_list[0].constraint_expr =
                                  CORBA::string_dup ("count < 6");
 
-      filter->add_constraints (constraint_list TAO_ENV_ARG_PARAMETER);
+      filter->add_constraints (constraint_list ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
-      admin->add_filter (filter.in () TAO_ENV_ARG_PARAMETER);
+      admin->add_filter (filter.in () ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
       // End One Filter
     }
@@ -125,7 +125,7 @@ create_consumeradmin (CosNotifyChannelAdmin::EventChannel_ptr ec
   added[0].domain_name =  CORBA::string_dup ("*");
   added[0].type_name = CORBA::string_dup ("*");
 
-  admin->subscription_change (added, removed TAO_ENV_ARG_PARAMETER);
+  admin->subscription_change (added, removed ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   return CosNotifyChannelAdmin::ConsumerAdmin::_duplicate (admin.in ());
@@ -135,7 +135,7 @@ create_consumeradmin (CosNotifyChannelAdmin::EventChannel_ptr ec
 static void
 create_consumers (CosNotifyChannelAdmin::ConsumerAdmin_ptr admin,
                   Notify_Test_Client* client
-                  TAO_ENV_ARG_DECL)
+                  ACE_ENV_ARG_DECL)
 {
   for (unsigned int i = 0; i < consumers; i++)
     {
@@ -151,10 +151,10 @@ create_consumers (CosNotifyChannelAdmin::ConsumerAdmin_ptr admin,
                                                   client->done () : dummy)),
                         CORBA::NO_MEMORY ());
 
-      consumer->init (client->root_poa () TAO_ENV_ARG_PARAMETER);
+      consumer->init (client->root_poa () ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
-      consumer->connect (admin TAO_ENV_ARG_PARAMETER);
+      consumer->connect (admin ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
 }
@@ -170,7 +170,7 @@ int main (int argc, char* argv[])
     {
       Consumer_Client client;
 
-      status = client.init (argc, argv TAO_ENV_ARG_PARAMETER);
+      status = client.init (argc, argv ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (status == 0)
@@ -183,14 +183,14 @@ int main (int argc, char* argv[])
             }
 
           CosNotifyChannelAdmin::EventChannel_var ec =
-            client.create_event_channel ("MyEventChannel", 1 TAO_ENV_ARG_PARAMETER);
+            client.create_event_channel ("MyEventChannel", 1 ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           CORBA::Object_var object =
-                               client.orb ()->string_to_object (ior TAO_ENV_ARG_PARAMETER);
+                               client.orb ()->string_to_object (ior ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
-          sig_var sig = sig::_narrow (object.in () TAO_ENV_ARG_PARAMETER);
+          sig_var sig = sig::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           if (CORBA::is_nil (sig.in ()))
@@ -202,16 +202,16 @@ int main (int argc, char* argv[])
             }
 
           CosNotifyChannelAdmin::ConsumerAdmin_var admin =
-            create_consumeradmin (ec.in () TAO_ENV_ARG_PARAMETER);
+            create_consumeradmin (ec.in () ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           if (!CORBA::is_nil (admin.in ()))
             {
-              create_consumers (admin.in (), &client TAO_ENV_ARG_PARAMETER);
+              create_consumers (admin.in (), &client ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
 
               // Tell the supplier to go
-              sig->go (TAO_ENV_SINGLE_ARG_PARAMETER);
+              sig->go (ACE_ENV_SINGLE_ARG_PARAMETER);
               ACE_TRY_CHECK;
 
               ACE_Time_Value now = ACE_OS::gettimeofday ();

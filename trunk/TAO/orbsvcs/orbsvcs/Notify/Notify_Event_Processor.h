@@ -58,34 +58,34 @@ class TAO_Notify_Export TAO_Notify_Event_Processor
   virtual ~TAO_Notify_Event_Processor ();
 
   void init (TAO_Notify_QoSAdmin_i* qos_properties
-             TAO_ENV_ARG_DECL);
+             ACE_ENV_ARG_DECL);
   // Init
 
-  void shutdown (TAO_ENV_SINGLE_ARG_DECL);
+  void shutdown (ACE_ENV_SINGLE_ARG_DECL);
   // Shutdown operations.
 
   void evaluate_source_filter (TAO_Notify_Event* event,
                                TAO_Notify_EventSource* event_source
-                               TAO_ENV_ARG_DECL);
+                               ACE_ENV_ARG_DECL);
   // Event processing entry point.
 
   // = Callbacks for Source/Event Listeners.
   void lookup_subscriptions (TAO_Notify_Event* event,
                              TAO_Notify_EventSource* event_source
-                             TAO_ENV_ARG_DECL);
+                             ACE_ENV_ARG_DECL);
   // This method is called by an Event_Source after it has
   // successfully evaluated its filter.
 
   void evaluate_listener_filter (TAO_Notify_Event* event,
                                  TAO_Notify_EventListener* event_listener,
                                  CORBA::Boolean eval_parent
-                                 TAO_ENV_ARG_DECL);
+                                 ACE_ENV_ARG_DECL);
   // This method is called by the subscription lookup command asking
   // that <event> be delivered to <event_listener>.
 
   void dispatch_event (TAO_Notify_Event* event,
                        TAO_Notify_EventListener* event_listener
-                       TAO_ENV_ARG_DECL);
+                       ACE_ENV_ARG_DECL);
   // This method is called by an Event_Listener after it has
   // successfully evaluated its filter.
 

@@ -37,15 +37,15 @@ public:
   virtual ~ACE_Config_Scheduler (void);
 
   virtual RtecScheduler::handle_t create (const char * entry_point
-                                          TAO_ENV_ARG_DECL)
+                                          ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException, RtecScheduler::DUPLICATE_NAME));
 
   virtual RtecScheduler::handle_t lookup (const char * entry_point
-                                          TAO_ENV_ARG_DECL)
+                                          ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC((CORBA::SystemException));
 
   virtual RtecScheduler::RT_Info* get (RtecScheduler::handle_t handle
-                                       TAO_ENV_ARG_DECL)
+                                       ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException, RtecScheduler::UNKNOWN_TASK));
 
   virtual void set (RtecScheduler::handle_t handle,
@@ -58,14 +58,14 @@ public:
                     RtecScheduler::Quantum_t quantum,
                     CORBA::Long threads,
                     RtecScheduler::Info_Type_t info_type
-                    TAO_ENV_ARG_DECL)
+                    ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException, RtecScheduler::UNKNOWN_TASK));
 
   virtual void priority (RtecScheduler::handle_t handle,
                          RtecScheduler::OS_Priority& priority,
                          RtecScheduler::Preemption_Subpriority_t& p_subpriority,
                          RtecScheduler::Preemption_Priority_t& p_priority
-                         TAO_ENV_ARG_DECL)
+                         ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      RtecScheduler::UNKNOWN_TASK,
                      RtecScheduler::NOT_SCHEDULED));
@@ -74,7 +74,7 @@ public:
                                      RtecScheduler::OS_Priority& priority,
                                      RtecScheduler::Preemption_Subpriority_t& p_subpriority,
                                      RtecScheduler::Preemption_Priority_t& p_priority
-                                     TAO_ENV_ARG_DECL)
+                                     ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      RtecScheduler::UNKNOWN_TASK,
                      RtecScheduler::NOT_SCHEDULED));
@@ -83,7 +83,7 @@ public:
                                RtecScheduler::handle_t dependency,
                                CORBA::Long number_of_calls,
                                RtecScheduler::Dependency_Type_t dependency_type
-                               TAO_ENV_ARG_DECL)
+                               ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      RtecScheduler::UNKNOWN_TASK));
 
@@ -92,7 +92,7 @@ public:
                                    RtecScheduler::RT_Info_Set_out infos,
                                    RtecScheduler::Config_Info_Set_out configs,
                                    RtecScheduler::Scheduling_Anomaly_Set_out anomalies
-                                   TAO_ENV_ARG_DECL)
+                                   ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC((CORBA::SystemException,
                     RtecScheduler::UTILIZATION_BOUND_EXCEEDED,
                     RtecScheduler::INSUFFICIENT_THREAD_PRIORITY_LEVELS,
@@ -101,14 +101,14 @@ public:
   virtual void dispatch_configuration (RtecScheduler::Preemption_Priority_t p_priority,
                                        RtecScheduler::OS_Priority& priority,
                                        RtecScheduler::Dispatching_Type_t & d_type
-                                       TAO_ENV_ARG_DECL)
+                                       ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                     RtecScheduler::NOT_SCHEDULED,
                     RtecScheduler::UNKNOWN_PRIORITY_LEVEL));
   // provide the thread priority and queue type for the given priority level
 
   virtual RtecScheduler::Preemption_Priority_t
-      last_scheduled_priority (TAO_ENV_SINGLE_ARG_DECL)
+      last_scheduled_priority (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                     RtecScheduler::NOT_SCHEDULED));
   // Returns the last priority number assigned to an operation in the

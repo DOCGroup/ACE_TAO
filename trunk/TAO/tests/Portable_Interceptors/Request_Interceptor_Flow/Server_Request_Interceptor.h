@@ -63,30 +63,30 @@ public:
   //@{
   virtual void receive_request_service_contexts (
       PortableInterceptor::ServerRequestInfo_ptr ri
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ForwardRequest));
 
   virtual void receive_request (
       PortableInterceptor::ServerRequestInfo_ptr ri
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ForwardRequest));
 
   virtual void send_reply (
       PortableInterceptor::ServerRequestInfo_ptr ri
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void send_exception (
       PortableInterceptor::ServerRequestInfo_ptr ri
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ForwardRequest));
 
   virtual void send_other (
       PortableInterceptor::ServerRequestInfo_ptr ri
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ForwardRequest));
   //@}
@@ -97,7 +97,7 @@ private:
   /// otherwise.
   CORBA::Boolean server_side_test (
     PortableInterceptor::ServerRequestInfo_ptr info
-    TAO_ENV_ARG_DECL);
+    ACE_ENV_ARG_DECL);
 
 private:
 

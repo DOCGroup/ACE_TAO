@@ -88,7 +88,7 @@ TAO_UIPMC_Connector::close (void)
 int
 TAO_UIPMC_Connector::connect (TAO_GIOP_Invocation *invocation,
                               TAO_Transport_Descriptor_Interface *desc
-                              TAO_ENV_ARG_DECL_NOT_USED)
+                              ACE_ENV_ARG_DECL_NOT_USED)
 {
   TAO_Transport *&transport = invocation->transport ();
   // ACE_Time_Value *max_wait_time = invocation->max_wait_time ();
@@ -182,7 +182,7 @@ TAO_UIPMC_Connector::create_profile (TAO_InputCDR& cdr)
 }
 
 TAO_Profile *
-TAO_UIPMC_Connector::make_profile (TAO_ENV_SINGLE_ARG_DECL)
+TAO_UIPMC_Connector::make_profile (ACE_ENV_SINGLE_ARG_DECL)
 {
   // The endpoint should be of the form:
   //    N.n@host:port/object_key

@@ -58,7 +58,7 @@ private:
 
 class Notify_Throughput;
 
-class Throughput_StructuredPushConsumer 
+class Throughput_StructuredPushConsumer
   : public TAO_Notify_StructuredPushConsumer
 {
 public:
@@ -68,7 +68,7 @@ public:
   // = StructuredPushSupplier methods
   virtual void push_structured_event (
         const CosNotification::StructuredEvent & notification
-        TAO_ENV_ARG_DECL
+        ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -99,8 +99,8 @@ protected:
 
 /***************************************************************************/
 
-class Throughput_StructuredPushSupplier 
-  : public TAO_Notify_StructuredPushSupplier, 
+class Throughput_StructuredPushSupplier
+  : public TAO_Notify_StructuredPushSupplier,
     public ACE_Task_Base
 {
 public:
@@ -143,10 +143,10 @@ public:
 
   int parse_args(int argc, char *argv[]) ;
 
-  int init (int argc, char *argv [] TAO_ENV_ARG_DECL);
+  int init (int argc, char *argv [] ACE_ENV_ARG_DECL);
   // initialization.
 
-  void run_test (TAO_ENV_SINGLE_ARG_DECL);
+  void run_test (ACE_ENV_SINGLE_ARG_DECL);
   // Run the test.
 
   void peer_done (void);
@@ -157,7 +157,7 @@ public:
 
   Worker worker_;
 protected:
-  void create_EC (TAO_ENV_SINGLE_ARG_DECL);
+  void create_EC (ACE_ENV_SINGLE_ARG_DECL);
   // Create participants.
 
   CORBA::Boolean colocated_ec_;

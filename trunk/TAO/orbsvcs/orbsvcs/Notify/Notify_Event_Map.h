@@ -57,35 +57,35 @@ public:
   virtual ~TAO_Notify_Event_Map ();
   // Destructor.
 
-  void init (TAO_ENV_SINGLE_ARG_DECL);
+  void init (ACE_ENV_SINGLE_ARG_DECL);
   // Init
 
-  void shutdown (TAO_ENV_SINGLE_ARG_DECL);
+  void shutdown (ACE_ENV_SINGLE_ARG_DECL);
   // Shutdown releases all listeners.
 
   // = Subscribe and Unsubscribe methods.
-  void subscribe_for_events (TAO_Notify_EventListener* event_listener, TAO_Notify_EventType_List& update, const CosNotification::EventTypeSeq & added TAO_ENV_ARG_DECL);
+  void subscribe_for_events (TAO_Notify_EventListener* event_listener, TAO_Notify_EventType_List& update, const CosNotification::EventTypeSeq & added ACE_ENV_ARG_DECL);
 
-  void unsubscribe_from_events (TAO_Notify_EventListener* event_listener, TAO_Notify_EventType_List &update, const CosNotification::EventTypeSeq & removed TAO_ENV_ARG_DECL);
+  void unsubscribe_from_events (TAO_Notify_EventListener* event_listener, TAO_Notify_EventType_List &update, const CosNotification::EventTypeSeq & removed ACE_ENV_ARG_DECL);
 
   // = Publish and Unpublish methods
   // Later:
-  void update_publication_list (const CosNotification::EventTypeSeq & added, const CosNotification::EventTypeSeq & removed, TAO_Notify_EventType_List &added_list, TAO_Notify_EventType_List &removed_list TAO_ENV_ARG_DECL);
+  void update_publication_list (const CosNotification::EventTypeSeq & added, const CosNotification::EventTypeSeq & removed, TAO_Notify_EventType_List &added_list, TAO_Notify_EventType_List &removed_list ACE_ENV_ARG_DECL);
   // Suppliers can send anonymous requests to the Event Manager to indicate
   // what kind of events they expect to produce.
 
   // = Subscription Updates
-  void register_for_subscription_updates (TAO_Notify_UpdateListener* update_listener TAO_ENV_ARG_DECL);
+  void register_for_subscription_updates (TAO_Notify_UpdateListener* update_listener ACE_ENV_ARG_DECL);
   // Registers the subscription update listener with the Event Manager.
 
-  void unregister_from_subscription_updates (TAO_Notify_UpdateListener* update_listener TAO_ENV_ARG_DECL);
+  void unregister_from_subscription_updates (TAO_Notify_UpdateListener* update_listener ACE_ENV_ARG_DECL);
   // Unregister from subscription updates.
 
   // = Publication Updates
-  void register_for_publication_updates (TAO_Notify_UpdateListener* update_listener TAO_ENV_ARG_DECL);
+  void register_for_publication_updates (TAO_Notify_UpdateListener* update_listener ACE_ENV_ARG_DECL);
   // Registers the publication update listener with the Event Manager.
 
-  void unregister_from_publication_updates (TAO_Notify_UpdateListener* update_listener TAO_ENV_ARG_DECL);
+  void unregister_from_publication_updates (TAO_Notify_UpdateListener* update_listener ACE_ENV_ARG_DECL);
   // Unregister from publication updates.
 
   // = Subscription list lookup

@@ -51,7 +51,7 @@ TAO_Scheduling_Service::init (int argc, char *argv[])
   ACE_TRY_NEW_ENV
     {
       // Initialize ORB manager.
-      this->orb_manager_.init (argc, argv TAO_ENV_ARG_PARAMETER);
+      this->orb_manager_.init (argc, argv ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       orb = this->orb_manager_.orb ();
@@ -60,7 +60,7 @@ TAO_Scheduling_Service::init (int argc, char *argv[])
       poa_manager = this->orb_manager_.poa_manager ();
       ACE_TRY_CHECK;
 
-      poa_manager->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
+      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Check the non-ORB arguments.  this needs to come before we
@@ -104,7 +104,7 @@ TAO_Scheduling_Service::init (int argc, char *argv[])
 
       // Locate the naming service.
       CORBA::Object_var naming_obj =
-        orb->resolve_initial_references ("NameService" TAO_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("NameService" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (naming_obj.in ()))
@@ -112,15 +112,15 @@ TAO_Scheduling_Service::init (int argc, char *argv[])
                            " (%P|%t) Unable to locate the Naming Service.\n"),
                           -1);
       CosNaming::NamingContext_var naming_context =
-        CosNaming::NamingContext::_narrow (naming_obj.in () TAO_ENV_ARG_PARAMETER);
+        CosNaming::NamingContext::_narrow (naming_obj.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       RtecScheduler::Scheduler_var scheduler =
-        this->scheduler_impl_->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
+        this->scheduler_impl_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::String_var scheduler_ior_string =
-        orb->object_to_string (scheduler.in () TAO_ENV_ARG_PARAMETER);
+        orb->object_to_string (scheduler.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "The scheduler IOR is <%s>\n",
@@ -130,7 +130,7 @@ TAO_Scheduling_Service::init (int argc, char *argv[])
       CosNaming::Name schedule_name (1);
       schedule_name.length (1);
       schedule_name[0].id = CORBA::string_dup (this->service_name_);
-      naming_context->rebind (schedule_name, scheduler.in () TAO_ENV_ARG_PARAMETER);
+      naming_context->rebind (schedule_name, scheduler.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (this->ior_file_name_ != 0)
@@ -171,10 +171,10 @@ TAO_Scheduling_Service::init (int argc, char *argv[])
 // Runs the TAO_Scheduling_Service.
 
 int
-TAO_Scheduling_Service::run (TAO_ENV_SINGLE_ARG_DECL)
+TAO_Scheduling_Service::run (ACE_ENV_SINGLE_ARG_DECL)
 {
   // Run the ORB manager.
-  return this->orb_manager_.run (TAO_ENV_SINGLE_ARG_PARAMETER);
+  return this->orb_manager_.run (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 
@@ -284,7 +284,7 @@ int main (int argc, char *argv[])
       ACE_DEBUG ((LM_DEBUG,
                   "%s; running scheduling service\n", __FILE__));
 
-      scheduling_service.run (TAO_ENV_SINGLE_ARG_PARAMETER);
+      scheduling_service.run (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

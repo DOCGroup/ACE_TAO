@@ -37,27 +37,27 @@ public:
 
   /// Local implementation of the CORBA::Object::_is_a method.
   virtual CORBA::Boolean _is_a (const char* logical_type_id
-                                TAO_ENV_ARG_DECL_WITH_DEFAULTS) = 0;
+                                ACE_ENV_ARG_DECL_WITH_DEFAULTS) = 0;
 
   /// Default <_non_existent>: always returns false.
-  virtual CORBA::Boolean _non_existent (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS) = 0;
+  virtual CORBA::Boolean _non_existent (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS) = 0;
 
   /// Query the Interface Repository.
   virtual CORBA_InterfaceDef_ptr _get_interface (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
     ) = 0;
 
   //@{
   /// @name Reference counting hooks: no-ops by default.
-  virtual void _add_ref (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
-  virtual void _remove_ref (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  virtual void _add_ref (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  virtual void _remove_ref (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
   //@}
 
   /// Get the correct vtable.
   virtual void *_downcast (const char *repository_id) = 0;
 
   /// This is an auxiliary method for _this() and _narrow().
-  virtual TAO_Stub *_create_stub (TAO_ENV_SINGLE_ARG_DECL) = 0;
+  virtual TAO_Stub *_create_stub (ACE_ENV_SINGLE_ARG_DECL) = 0;
 
 protected:
   /// Default constructor, only derived classes can be created.
@@ -78,12 +78,12 @@ protected:
    */
   virtual void _dispatch (TAO_ServerRequest &request,
                           void *servant_upcall
-                          TAO_ENV_ARG_DECL) = 0;
+                          ACE_ENV_ARG_DECL) = 0;
 
   virtual void synchronous_upcall_dispatch (TAO_ServerRequest &req,
                                             void *servant_upcall,
                                             void *derived_this
-                                            TAO_ENV_ARG_DECL) = 0;
+                                            ACE_ENV_ARG_DECL) = 0;
 
   /// Find an operation in the operation table.
   virtual int _find (const char *opname,

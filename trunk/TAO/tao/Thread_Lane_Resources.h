@@ -50,7 +50,7 @@ public:
 
   /// Open the acceptor registry.
   int open_acceptor_registry (int ignore_address
-                              TAO_ENV_ARG_DECL);
+                              ACE_ENV_ARG_DECL);
 
   /// Finalize resources.
   void finalize (void);

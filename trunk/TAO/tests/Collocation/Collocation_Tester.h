@@ -29,19 +29,19 @@ class Collocation_Test
 public:
   Collocation_Test (void);
 
-  void shutdown (TAO_ENV_SINGLE_ARG_DECL);
+  void shutdown (ACE_ENV_SINGLE_ARG_DECL);
 
-  int init (int argc, char *argv[] TAO_ENV_ARG_DECL_NOT_USED);
+  int init (int argc, char *argv[] ACE_ENV_ARG_DECL_NOT_USED);
   // Initializing the Collocation_Test object.
 
   int parse_args (int argc, char *argv[]);
   // Parse the test specific arguments.
 
-  int test_narrow (TAO_ENV_SINGLE_ARG_DECL_NOT_USED);
+  int test_narrow (ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
   // This test narrow an object reference to its base class and see
   // if it works correctly.
 
-  int run (TAO_ENV_SINGLE_ARG_DECL_NOT_USED);
+  int run (ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
   // Run the test.
 
 private:

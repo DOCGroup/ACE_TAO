@@ -32,7 +32,7 @@ public:
   virtual ~client_i (void);
 
   virtual void test_reply (const char *msg
-                           TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+                           ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

@@ -87,25 +87,25 @@ public:
 
   // = CosConcurrencyControl methods
   virtual void lock (CosConcurrencyControl::lock_mode mode
-                     TAO_ENV_ARG_DECL)
+                     ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Acquires this lock. Blocks until lock is obtained
 
   virtual CORBA::Boolean try_lock (CosConcurrencyControl::lock_mode mode
-                                   TAO_ENV_ARG_DECL)
+                                   ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Tries to acquire this lock. If it is not possible to acquire the
   // lock, false is returned
 
   virtual void unlock (CosConcurrencyControl::lock_mode mode
-                       TAO_ENV_ARG_DECL)
+                       ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosConcurrencyControl::LockNotHeld));
   // Releases this lock.
 
   virtual void change_mode (CosConcurrencyControl::lock_mode held_mode,
                             CosConcurrencyControl::lock_mode new_mode
-                            TAO_ENV_ARG_DECL)
+                            ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosConcurrencyControl::LockNotHeld));
   // Changes the mode of this lock.
@@ -119,7 +119,7 @@ private:
   // Converts the CORBA specification's lock mode to the internal
   // representation
 
-  void Init (TAO_ENV_SINGLE_ARG_DECL);
+  void Init (ACE_ENV_SINGLE_ARG_DECL);
   // Initiatlizes the lock set array and acquires the initial
   // semaphore.
 

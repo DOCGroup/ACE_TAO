@@ -176,7 +176,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
           << "static " << node->local_name () << "_ptr "
           << "_narrow (" << be_idt << be_idt_nl
           << "CORBA::Object_ptr obj" << be_nl
-          << "TAO_ENV_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
+          << "ACE_ENV_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
           << ");" << be_uidt_nl << be_nl;
 
       // There's no need for an _unchecked_narrow for locality
@@ -184,7 +184,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
       *os << "static " << node->local_name () << "_ptr "
           << "_unchecked_narrow (" << be_idt << be_idt_nl
           << "CORBA::Object_ptr obj" << be_nl
-          << "TAO_ENV_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
+          << "ACE_ENV_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
           << ");" << be_uidt_nl << be_nl;
 
       // This method is defined in the header file to workaround old
@@ -218,7 +218,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
         {
           *os << "virtual CORBA::Boolean _is_a (" << be_idt << be_idt_nl
               << "const CORBA::Char *type_id" << be_nl
-              << "TAO_ENV_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
+              << "ACE_ENV_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
               << ");" << be_uidt_nl << be_nl;
         }
 

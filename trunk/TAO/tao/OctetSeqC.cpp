@@ -145,7 +145,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const CORBA_OctetSeq *&_
   {
     CORBA::TypeCode_var type = _tao_any.type ();
     CORBA::Boolean result =
-      type->equivalent (CORBA::_tc_OctetSeq TAO_ENV_ARG_PARAMETER);
+      type->equivalent (CORBA::_tc_OctetSeq ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
     if (!result)

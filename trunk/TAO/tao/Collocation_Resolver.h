@@ -39,7 +39,7 @@ public:
 
   /// Is <object> collocated?
   virtual CORBA::Boolean is_collocated (CORBA::Object_ptr object
-                                        TAO_ENV_ARG_DECL) const = 0;
+                                        ACE_ENV_ARG_DECL) const = 0;
 };
 
 #if defined (__ACE_INLINE__)

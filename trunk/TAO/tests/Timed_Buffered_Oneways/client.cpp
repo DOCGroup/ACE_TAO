@@ -116,7 +116,7 @@ parse_args (int argc, char **argv)
 
 void
 setup_timeouts (CORBA::ORB_ptr orb
-                TAO_ENV_ARG_DECL)
+                ACE_ENV_ARG_DECL)
 {
   // Escape value.
   if (timeout == -1)
@@ -124,13 +124,13 @@ setup_timeouts (CORBA::ORB_ptr orb
 
   // Obtain PolicyCurrent.
   CORBA::Object_var object = orb->resolve_initial_references ("PolicyCurrent"
-                                                              TAO_ENV_ARG_PARAMETER);
+                                                              ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // Narrow down to correct type.
   CORBA::PolicyCurrent_var policy_current =
     CORBA::PolicyCurrent::_narrow (object.in ()
-                                   TAO_ENV_ARG_PARAMETER);
+                                   ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   TimeBase::TimeT rt_timeout = 10000 * timeout;
@@ -144,31 +144,31 @@ setup_timeouts (CORBA::ORB_ptr orb
   rt_timeout_policy_list[0] =
     orb->create_policy (Messaging::RELATIVE_RT_TIMEOUT_POLICY_TYPE,
                         rt_timeout_any
-                        TAO_ENV_ARG_PARAMETER);
+                        ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   policy_current->set_policy_overrides (rt_timeout_policy_list,
                                         CORBA::ADD_OVERRIDE
-                                        TAO_ENV_ARG_PARAMETER);
+                                        ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  rt_timeout_policy_list[0]->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
+  rt_timeout_policy_list[0]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
 setup_buffering_constraints (CORBA::ORB_ptr orb
-                             TAO_ENV_ARG_DECL)
+                             ACE_ENV_ARG_DECL)
 {
   // Obtain PolicyCurrent.
   CORBA::Object_var object = orb->resolve_initial_references ("PolicyCurrent"
-                                                              TAO_ENV_ARG_PARAMETER);
+                                                              ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // Narrow down to correct type.
   CORBA::PolicyCurrent_var policy_current =
     CORBA::PolicyCurrent::_narrow (object.in ()
-                                   TAO_ENV_ARG_PARAMETER);
+                                   ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // Setup the sync scope policy, i.e., the ORB will buffer oneways.
@@ -187,17 +187,17 @@ setup_buffering_constraints (CORBA::ORB_ptr orb
   sync_policy_list[0] =
     orb->create_policy (Messaging::SYNC_SCOPE_POLICY_TYPE,
                         sync_any
-                        TAO_ENV_ARG_PARAMETER);
+                        ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // Setup the sync scope.
   policy_current->set_policy_overrides (sync_policy_list,
                                         CORBA::ADD_OVERRIDE
-                                        TAO_ENV_ARG_PARAMETER);
+                                        ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // We are now done with this policy.
-  sync_policy_list[0]->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
+  sync_policy_list[0]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   // Flush buffers.
@@ -219,24 +219,24 @@ setup_buffering_constraints (CORBA::ORB_ptr orb
   buffering_constraint_policy_list[0] =
     orb->create_policy (TAO::BUFFERING_CONSTRAINT_POLICY_TYPE,
                         buffering_constraint_any
-                        TAO_ENV_ARG_PARAMETER);
+                        ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // Setup the constraints.
   policy_current->set_policy_overrides (buffering_constraint_policy_list,
                                         CORBA::ADD_OVERRIDE
-                                        TAO_ENV_ARG_PARAMETER);
+                                        ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // We are done with the policy.
-  buffering_constraint_policy_list[0]->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
+  buffering_constraint_policy_list[0]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 int
 main (int argc, char **argv)
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
 
   ACE_TRY
     {
@@ -245,7 +245,7 @@ main (int argc, char **argv)
         CORBA::ORB_init (argc,
                          argv,
                          0
-                         TAO_ENV_ARG_PARAMETER);
+                         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Initialize options based on command-line arguments.
@@ -256,22 +256,22 @@ main (int argc, char **argv)
       // Get an object reference from the argument string.
       CORBA::Object_var object =
         orb->string_to_object (IOR
-                               TAO_ENV_ARG_PARAMETER);
+                               ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Try to narrow the object reference to a <test> reference.
       test_var test_object = test::_narrow (object.in ()
-                                            TAO_ENV_ARG_PARAMETER);
+                                            ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Setup buffering.
       setup_buffering_constraints (orb.in ()
-                                   TAO_ENV_ARG_PARAMETER);
+                                   ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Setup timeout.
       setup_timeouts (orb.in ()
-                      TAO_ENV_ARG_PARAMETER);
+                      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       test::data the_data (data_bytes);
@@ -287,7 +287,7 @@ main (int argc, char **argv)
           test_object->method (i,
                                the_data,
                                work
-                               TAO_ENV_ARG_PARAMETER);
+                               ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           // Interval between successive calls.
@@ -300,7 +300,7 @@ main (int argc, char **argv)
       // Shutdown server.
       if (shutdown_server)
         {
-          test_object->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
+          test_object->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
 
@@ -310,7 +310,7 @@ main (int argc, char **argv)
       // static destructors to flush the queues, it will be too late.
       // Therefore, we use explicit destruction here and flush the
       // queues before main() ends.
-      orb->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
+      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

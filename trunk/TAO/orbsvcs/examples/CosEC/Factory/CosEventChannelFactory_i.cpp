@@ -25,7 +25,7 @@ int
 TAO_CosEventChannelFactory_i::init (PortableServer::POA_ptr poa,
                                     const char* child_poa_name,
                                     CosNaming::NamingContext_ptr naming
-                                    TAO_ENV_ARG_DECL)
+                                    ACE_ENV_ARG_DECL)
 {
   // Check if we have a parent poa.
   if (CORBA::is_nil (poa))
@@ -38,12 +38,12 @@ TAO_CosEventChannelFactory_i::init (PortableServer::POA_ptr poa,
   // to detect duplicates for us.
   PortableServer::IdUniquenessPolicy_var idpolicy =
     poa->create_id_uniqueness_policy (PortableServer::UNIQUE_ID
-                                      TAO_ENV_ARG_PARAMETER);
+                                      ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   PortableServer::IdAssignmentPolicy_var assignpolicy =
     poa->create_id_assignment_policy (PortableServer::USER_ID
-                                      TAO_ENV_ARG_PARAMETER);
+                                      ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   // Create a PolicyList
@@ -55,7 +55,7 @@ TAO_CosEventChannelFactory_i::init (PortableServer::POA_ptr poa,
     PortableServer::IdAssignmentPolicy::_duplicate (assignpolicy.in ());
 
   PortableServer::POAManager_ptr manager =
-    poa->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
+    poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
   // @@ Pradeep : TODO - find a way to destroy the policy_list if we return here.
 
@@ -63,14 +63,14 @@ TAO_CosEventChannelFactory_i::init (PortableServer::POA_ptr poa,
   this->poa_ = poa->create_POA (child_poa_name,
                                 manager,
                                 policy_list
-                                TAO_ENV_ARG_PARAMETER);
+                                ACE_ENV_ARG_PARAMETER);
 
   ACE_CHECK_RETURN (-1);
 
-  idpolicy->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
+  idpolicy->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
-  assignpolicy->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
+  assignpolicy->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   //this->poa_ =  PortableServer::POA::_duplicate (poa);
@@ -81,7 +81,7 @@ TAO_CosEventChannelFactory_i::init (PortableServer::POA_ptr poa,
 CosEventChannelAdmin::EventChannel_ptr
 TAO_CosEventChannelFactory_i::create (const char * channel_id,
                                       CORBA::Boolean store_in_naming_service
-                                      TAO_ENV_ARG_DECL)
+                                      ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
         CORBA::SystemException,
         CosEventChannelFactory::DuplicateChannel,
@@ -99,7 +99,7 @@ TAO_CosEventChannelFactory_i::create (const char * channel_id,
 
       // let all those contained in FactoryEC use the default POA.
       // We only need the FactoryEC's to be unique!
-      PortableServer::POA_ptr defPOA = this->_default_POA (TAO_ENV_SINGLE_ARG_PARAMETER);
+      PortableServer::POA_ptr defPOA = this->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       TAO_CEC_EventChannel_Attributes attr (defPOA, defPOA);
@@ -112,18 +112,18 @@ TAO_CosEventChannelFactory_i::create (const char * channel_id,
 
       auto_ptr <TAO_CEC_EventChannel> ec (impl);
 
-      impl->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
+      impl->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       this->poa_->activate_object_with_id (oid.in (),
                                            ec.get ()
-                                           TAO_ENV_ARG_PARAMETER);
+                                           ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ec.release ();
 
       CORBA::Object_var obj =
-        this->poa_->id_to_reference (oid.in () TAO_ENV_ARG_PARAMETER);
+        this->poa_->id_to_reference (oid.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (store_in_naming_service &&
@@ -135,7 +135,7 @@ TAO_CosEventChannelFactory_i::create (const char * channel_id,
 
           this->naming_->rebind (name,
                                  obj.in ()
-                                 TAO_ENV_ARG_PARAMETER);
+                                 ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
 
@@ -192,7 +192,7 @@ TAO_CosEventChannelFactory_i::destroy
 (
  const char * channel_id,
  CORBA::Boolean unbind_from_naming_service
- TAO_ENV_ARG_DECL
+ ACE_ENV_ARG_DECL
  )
  ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -209,15 +209,15 @@ TAO_CosEventChannelFactory_i::destroy
 
       CORBA::Object_var obj =
         this->poa_->id_to_reference (oid.in ()
-                                     TAO_ENV_ARG_PARAMETER);
+                                     ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CosEventChannelAdmin::EventChannel_var fact_ec =
         CosEventChannelAdmin::EventChannel::_narrow (obj.in ()
-                                                     TAO_ENV_ARG_PARAMETER);
+                                                     ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      fact_ec->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
+      fact_ec->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Remove from the naming service.
@@ -229,7 +229,7 @@ TAO_CosEventChannelFactory_i::destroy
           name[0].id = CORBA::string_dup (channel_id);
 
           this->naming_->unbind (name
-                                 TAO_ENV_ARG_PARAMETER);
+                                 ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
     }
@@ -257,7 +257,7 @@ CosEventChannelAdmin::EventChannel_ptr
 TAO_CosEventChannelFactory_i::find
 (
  const char * channel_id
- TAO_ENV_ARG_DECL
+ ACE_ENV_ARG_DECL
  )
   ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -275,7 +275,7 @@ TAO_CosEventChannelFactory_i::find
 
       CORBA::Object_var obj =
         this->poa_->id_to_reference (oid.in ()
-                                     TAO_ENV_ARG_PARAMETER);
+                                     ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ec_return = CosEventChannelAdmin::EventChannel::_narrow (obj.in ());
@@ -295,7 +295,7 @@ char*
 TAO_CosEventChannelFactory_i::find_channel_id
 (
  CosEventChannelAdmin::EventChannel_ptr channel
- TAO_ENV_ARG_DECL
+ ACE_ENV_ARG_DECL
  )
   ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -309,7 +309,7 @@ TAO_CosEventChannelFactory_i::find_channel_id
     {
       PortableServer::ObjectId_var oid =
         this->poa_->reference_to_id (channel
-                                     TAO_ENV_ARG_PARAMETER);
+                                     ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       str_return = PortableServer::ObjectId_to_string (oid.in ());

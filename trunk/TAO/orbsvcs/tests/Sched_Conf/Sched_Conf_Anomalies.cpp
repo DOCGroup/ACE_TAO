@@ -194,11 +194,11 @@ main (int argc, char *argv[])
     {
       // Initialize ORB.
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "internet" TAO_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "internet" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA" TAO_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil(poa_object.in ()))
@@ -207,11 +207,11 @@ main (int argc, char *argv[])
                           1);
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in() TAO_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (poa_object.in() ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
+        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Initialize the naming services
@@ -238,7 +238,7 @@ main (int argc, char *argv[])
           // create the RT_Info
           config_infos[i].handle =
             ACE_Scheduler_Factory::server ()->create (config_infos[i].entry_point
-                                                      TAO_ENV_ARG_PARAMETER);
+                                                      ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           // initialize the RT_Info
@@ -256,7 +256,7 @@ main (int argc, char *argv[])
                  config_infos[i].threads,
                  ACE_static_cast (RtecScheduler::Info_Type_t,
                                   config_infos[i].info_type)
-                 TAO_ENV_ARG_PARAMETER);
+                 ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
 
@@ -267,7 +267,7 @@ main (int argc, char *argv[])
                         config_infos[0].handle,
                         1,                            // number of calls
                         RtecBase::ONE_WAY_CALL  // type of dependency
-                        TAO_ENV_ARG_PARAMETER);
+                        ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // register dependency of consumer that will have unresolved remote
@@ -277,7 +277,7 @@ main (int argc, char *argv[])
                         config_infos[2].handle,
                         1,                            // number of calls
                         RtecBase::ONE_WAY_CALL  // type of dependency
-                        TAO_ENV_ARG_PARAMETER);
+                        ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
 
@@ -288,7 +288,7 @@ main (int argc, char *argv[])
                         config_infos[4].handle,
                         1,                            // number of calls
                         RtecBase::ONE_WAY_CALL  // type of dependency
-                        TAO_ENV_ARG_PARAMETER);
+                        ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
 
@@ -299,7 +299,7 @@ main (int argc, char *argv[])
                         config_infos[0].handle,
                         1,                            // number of calls
                         RtecBase::ONE_WAY_CALL  // type of dependency
-                        TAO_ENV_ARG_PARAMETER);
+                        ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_Scheduler_Factory::server ()->
@@ -307,7 +307,7 @@ main (int argc, char *argv[])
                         config_infos[2].handle,
                         1,                            // number of calls
                         RtecBase::ONE_WAY_CALL  // type of dependency
-                        TAO_ENV_ARG_PARAMETER);
+                        ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_Scheduler_Factory::server ()->
@@ -315,7 +315,7 @@ main (int argc, char *argv[])
                         config_infos[4].handle,
                         1,                            // number of calls
                         RtecBase::ONE_WAY_CALL  // type of dependency
-                        TAO_ENV_ARG_PARAMETER);
+                        ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Register dependencies on each of the other consumers by second
@@ -326,7 +326,7 @@ main (int argc, char *argv[])
                         config_infos[1].handle,
                         1,                            // number of calls
                         RtecBase::ONE_WAY_CALL  // type of dependency
-                        TAO_ENV_ARG_PARAMETER);
+                        ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_Scheduler_Factory::server ()->
@@ -334,7 +334,7 @@ main (int argc, char *argv[])
                         config_infos[3].handle,
                         1,                            // number of calls
                         RtecBase::ONE_WAY_CALL  // type of dependency
-                        TAO_ENV_ARG_PARAMETER);
+                        ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_Scheduler_Factory::server ()->
@@ -342,7 +342,7 @@ main (int argc, char *argv[])
                         config_infos[5].handle,
                         1,                            // number of calls
                         RtecBase::ONE_WAY_CALL  // type of dependency
-                        TAO_ENV_ARG_PARAMETER);
+                        ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_Scheduler_Factory::server ()->
@@ -350,7 +350,7 @@ main (int argc, char *argv[])
                         config_infos[6].handle,
                         1,                            // number of calls
                         RtecBase::ONE_WAY_CALL  // type of dependency
-                        TAO_ENV_ARG_PARAMETER);
+                        ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       RtecScheduler::RT_Info_Set_var infos;
@@ -376,14 +376,14 @@ main (int argc, char *argv[])
                                          ACE_SCOPE_THREAD),
          ACE_Sched_Params::priority_max (ACE_SCHED_FIFO,
                                          ACE_SCOPE_THREAD),
-         infos_out, configs_out, anomalies_out TAO_ENV_ARG_PARAMETER); // FUZZ: ignore check_for_ace_check
+         infos_out, configs_out, anomalies_out ACE_ENV_ARG_PARAMETER); // FUZZ: ignore check_for_ace_check
 #else  /* ! __SUNPRO_CC */
       ACE_Scheduler_Factory::server ()->compute_scheduling
         (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO,
                                          ACE_SCOPE_THREAD),
          ACE_Sched_Params::priority_max (ACE_SCHED_FIFO,
                                          ACE_SCOPE_THREAD),
-         infos.out (), configs.out (), anomalies.out () TAO_ENV_ARG_PARAMETER); // FUZZ: ignore check_for_ace_check
+         infos.out (), configs.out (), anomalies.out () ACE_ENV_ARG_PARAMETER); // FUZZ: ignore check_for_ace_check
 #endif /* ! __SUNPRO_CC */
 
       ACE_TRY_CHECK;

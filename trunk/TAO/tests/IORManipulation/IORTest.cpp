@@ -32,14 +32,14 @@ main (int argc, char *argv[])
   ACE_DEBUG ((LM_DEBUG, "---------------------------------------------\n"));
   ACE_DEBUG ((LM_DEBUG, "Running the IORManipulation Tests.\n"));
 
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       // Retrieve the ORB.
       CORBA::ORB_var orb_ = CORBA::ORB_init (argc,
                                              argv,
                                              ""
-                                             TAO_ENV_ARG_PARAMETER);
+                                             ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // **********************************************************************
@@ -47,12 +47,12 @@ main (int argc, char *argv[])
       // Get an object reference for the ORBs IORManipulation object!
       CORBA::Object_var IORM =
         orb_->resolve_initial_references ("IORManipulation"
-                                          TAO_ENV_ARG_PARAMETER);
+                                          ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       TAO_IOP::TAO_IOR_Manipulation_var iorm =
         TAO_IOP::TAO_IOR_Manipulation::_narrow (IORM.in ()
-                                                TAO_ENV_ARG_PARAMETER);
+                                                ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // **********************************************************************
@@ -60,22 +60,22 @@ main (int argc, char *argv[])
       // Create a few fictitious IORs
       CORBA::Object_var name1 =
         orb_->string_to_object ("corbaloc:iiop:macarena.cs.wustl.edu:6060/xyz"
-                                TAO_ENV_ARG_PARAMETER);
+                                ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       CORBA::Object_var name2 =
         orb_->string_to_object ("corbaloc:iiop:tango.cs.wustl.edu:7070/xyz"
-                                TAO_ENV_ARG_PARAMETER);
+                                ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // **********************************************************************
 
       CORBA::String_var name1_ior =
-        orb_->object_to_string (name1.in () TAO_ENV_ARG_PARAMETER);
+        orb_->object_to_string (name1.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       ACE_DEBUG ((LM_DEBUG, "\tFirst made up IOR = %s\n", name1_ior.in ()));
 
       CORBA::String_var name2_ior =
-        orb_->object_to_string (name2.in () TAO_ENV_ARG_PARAMETER);
+        orb_->object_to_string (name2.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       ACE_DEBUG ((LM_DEBUG, "\tSecond made up IOR = %s\n", name2_ior.in ()));
 
@@ -87,21 +87,21 @@ main (int argc, char *argv[])
       iors [0] = name1;
       iors [1] = name2;
 
-      CORBA::Object_var merged = iorm->merge_iors (iors TAO_ENV_ARG_PARAMETER);
+      CORBA::Object_var merged = iorm->merge_iors (iors ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::String_var merged_ior =
-        orb_->object_to_string (merged.in () TAO_ENV_ARG_PARAMETER);
+        orb_->object_to_string (merged.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      CORBA::ULong count1 = iorm->get_profile_count (iors [0] TAO_ENV_ARG_PARAMETER);
+      CORBA::ULong count1 = iorm->get_profile_count (iors [0] ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      CORBA::ULong count2 = iorm->get_profile_count (iors [1] TAO_ENV_ARG_PARAMETER);
+      CORBA::ULong count2 = iorm->get_profile_count (iors [1] ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::ULong count = iorm->get_profile_count (merged.in ()
-                                                    TAO_ENV_ARG_PARAMETER);
+                                                    ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (count != (count1 + count2))
@@ -117,7 +117,7 @@ main (int argc, char *argv[])
       // IORs is NULL.
       CORBA::ULong in_count = iorm->is_in_ior (merged.in (),
                                                name1.in ()
-                                               TAO_ENV_ARG_PARAMETER);
+                                               ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (count1 != in_count)
@@ -128,7 +128,7 @@ main (int argc, char *argv[])
 
       in_count = iorm->is_in_ior (merged.in (),
                                   name2.in ()
-                                  TAO_ENV_ARG_PARAMETER);
+                                  ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (count2 != in_count)
@@ -142,14 +142,14 @@ main (int argc, char *argv[])
       // Verify ability to remove profiles from an IOR
       // First remove the second IOR from the merged IOR
       CORBA::Object_var just1 =
-        iorm->remove_profiles (merged.in (), name2.in () TAO_ENV_ARG_PARAMETER);
+        iorm->remove_profiles (merged.in (), name2.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::String_var just1_ior =
-        orb_->object_to_string (just1.in () TAO_ENV_ARG_PARAMETER);
+        orb_->object_to_string (just1.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      count = iorm->get_profile_count (just1.in () TAO_ENV_ARG_PARAMETER);
+      count = iorm->get_profile_count (just1.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (count1 != count)
@@ -162,7 +162,7 @@ main (int argc, char *argv[])
                   count,
                   just1_ior.in ()));
 
-      in_count = iorm->is_in_ior (just1.in (), name1.in () TAO_ENV_ARG_PARAMETER);
+      in_count = iorm->is_in_ior (just1.in (), name1.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (count1 != in_count)
@@ -175,10 +175,10 @@ main (int argc, char *argv[])
 
       // Now try the add_profiles interface.
       CORBA::Object_var merged2 =
-        iorm->add_profiles (just1.in (), name2.in () TAO_ENV_ARG_PARAMETER);
+        iorm->add_profiles (just1.in (), name2.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      count = iorm->get_profile_count (merged2.in () TAO_ENV_ARG_PARAMETER);
+      count = iorm->get_profile_count (merged2.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (count != (count1 + count2))
@@ -186,7 +186,7 @@ main (int argc, char *argv[])
                     "**ERROR: add_profile failed profile count test!\n"));
 
       CORBA::String_var merged2_ior =
-        orb_->object_to_string (merged2.in () TAO_ENV_ARG_PARAMETER);
+        orb_->object_to_string (merged2.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,
@@ -196,7 +196,7 @@ main (int argc, char *argv[])
 
       // is_in_ior throws an exception if the intersection of the two
       // IORs is NULL.
-      in_count = iorm->is_in_ior (merged2.in (), name1. in () TAO_ENV_ARG_PARAMETER);
+      in_count = iorm->is_in_ior (merged2.in (), name1. in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (count1 != in_count)
@@ -205,7 +205,7 @@ main (int argc, char *argv[])
                     "count bad (%d)!\n",
                     in_count));
 
-      in_count = iorm->is_in_ior (merged2.in (), name2.in () TAO_ENV_ARG_PARAMETER);
+      in_count = iorm->is_in_ior (merged2.in (), name2.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (count2 != in_count)
@@ -216,14 +216,14 @@ main (int argc, char *argv[])
       // **********************************************************************
 
       CORBA::Object_var just2 =
-        iorm->remove_profiles (merged2.in (), name1.in () TAO_ENV_ARG_PARAMETER);
+        iorm->remove_profiles (merged2.in (), name1.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::String_var just2_ior =
-        orb_->object_to_string (just2.in () TAO_ENV_ARG_PARAMETER);
+        orb_->object_to_string (just2.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      count = iorm->get_profile_count (just2.in () TAO_ENV_ARG_PARAMETER);
+      count = iorm->get_profile_count (just2.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (count2 != count)
@@ -234,7 +234,7 @@ main (int argc, char *argv[])
                   count,
                   just2_ior.in ()));
 
-      in_count = iorm->is_in_ior (just2.in (), name2.in () TAO_ENV_ARG_PARAMETER);
+      in_count = iorm->is_in_ior (just2.in (), name2.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (count2 != in_count)
@@ -247,7 +247,7 @@ main (int argc, char *argv[])
       Status = 1;
       // Finally generate an exception and quit.
       // This will generate a NotFound exception.
-      in_count = iorm->is_in_ior (just2.in (), name1.in () TAO_ENV_ARG_PARAMETER);
+      in_count = iorm->is_in_ior (just2.in (), name1.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
     }

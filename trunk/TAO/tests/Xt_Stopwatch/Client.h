@@ -49,7 +49,7 @@ public:
   // Adds the callbacks to the GUI underneath.....
 
   void parse_args (int argc, char *argv[]
-                   TAO_ENV_ARG_DECL);
+                   ACE_ENV_ARG_DECL);
 private:
 
   CORBA::ORB_var orb_;

@@ -177,7 +177,7 @@ TAO_NAMESPACE  Messaging
     static RebindPolicy_ptr tao_duplicate (RebindPolicy_ptr);
     static void tao_release (RebindPolicy_ptr);
     static RebindPolicy_ptr tao_nil (void);
-    static RebindPolicy_ptr tao_narrow (CORBA::Object * TAO_ENV_ARG_DECL_NOT_USED);
+    static RebindPolicy_ptr tao_narrow (CORBA::Object * ACE_ENV_ARG_DECL_NOT_USED);
     static CORBA::Object * tao_upcast (void *);
 
   private:
@@ -232,11 +232,11 @@ TAO_NAMESPACE  Messaging
     static RebindPolicy_ptr _duplicate (RebindPolicy_ptr obj);
     static RebindPolicy_ptr _narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     static RebindPolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     static RebindPolicy_ptr _nil (void)
       {
@@ -244,7 +244,7 @@ TAO_NAMESPACE  Messaging
       }
 
     virtual Messaging::RebindMode rebind_mode (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -311,7 +311,7 @@ TAO_NAMESPACE  Messaging
     static SyncScopePolicy_ptr tao_duplicate (SyncScopePolicy_ptr);
     static void tao_release (SyncScopePolicy_ptr);
     static SyncScopePolicy_ptr tao_nil (void);
-    static SyncScopePolicy_ptr tao_narrow (CORBA::Object * TAO_ENV_ARG_DECL_NOT_USED);
+    static SyncScopePolicy_ptr tao_narrow (CORBA::Object * ACE_ENV_ARG_DECL_NOT_USED);
     static CORBA::Object * tao_upcast (void *);
 
   private:
@@ -366,11 +366,11 @@ TAO_NAMESPACE  Messaging
     static SyncScopePolicy_ptr _duplicate (SyncScopePolicy_ptr obj);
     static SyncScopePolicy_ptr _narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     static SyncScopePolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     static SyncScopePolicy_ptr _nil (void)
       {
@@ -378,7 +378,7 @@ TAO_NAMESPACE  Messaging
       }
 
     virtual Messaging::SyncScope synchronization (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -495,7 +495,7 @@ TAO_NAMESPACE  Messaging
     static RequestPriorityPolicy_ptr tao_duplicate (RequestPriorityPolicy_ptr);
     static void tao_release (RequestPriorityPolicy_ptr);
     static RequestPriorityPolicy_ptr tao_nil (void);
-    static RequestPriorityPolicy_ptr tao_narrow (CORBA::Object * TAO_ENV_ARG_DECL_NOT_USED);
+    static RequestPriorityPolicy_ptr tao_narrow (CORBA::Object * ACE_ENV_ARG_DECL_NOT_USED);
     static CORBA::Object * tao_upcast (void *);
 
   private:
@@ -550,11 +550,11 @@ TAO_NAMESPACE  Messaging
     static RequestPriorityPolicy_ptr _duplicate (RequestPriorityPolicy_ptr obj);
     static RequestPriorityPolicy_ptr _narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     static RequestPriorityPolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     static RequestPriorityPolicy_ptr _nil (void)
       {
@@ -562,7 +562,7 @@ TAO_NAMESPACE  Messaging
       }
 
     virtual Messaging::PriorityRange priority_range (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -625,7 +625,7 @@ TAO_NAMESPACE  Messaging
     static ReplyPriorityPolicy_ptr tao_duplicate (ReplyPriorityPolicy_ptr);
     static void tao_release (ReplyPriorityPolicy_ptr);
     static ReplyPriorityPolicy_ptr tao_nil (void);
-    static ReplyPriorityPolicy_ptr tao_narrow (CORBA::Object * TAO_ENV_ARG_DECL_NOT_USED);
+    static ReplyPriorityPolicy_ptr tao_narrow (CORBA::Object * ACE_ENV_ARG_DECL_NOT_USED);
     static CORBA::Object * tao_upcast (void *);
 
   private:
@@ -680,11 +680,11 @@ TAO_NAMESPACE  Messaging
     static ReplyPriorityPolicy_ptr _duplicate (ReplyPriorityPolicy_ptr obj);
     static ReplyPriorityPolicy_ptr _narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     static ReplyPriorityPolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     static ReplyPriorityPolicy_ptr _nil (void)
       {
@@ -692,7 +692,7 @@ TAO_NAMESPACE  Messaging
       }
 
     virtual Messaging::PriorityRange priority_range (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -759,7 +759,7 @@ TAO_NAMESPACE  Messaging
     static RequestStartTimePolicy_ptr tao_duplicate (RequestStartTimePolicy_ptr);
     static void tao_release (RequestStartTimePolicy_ptr);
     static RequestStartTimePolicy_ptr tao_nil (void);
-    static RequestStartTimePolicy_ptr tao_narrow (CORBA::Object * TAO_ENV_ARG_DECL_NOT_USED);
+    static RequestStartTimePolicy_ptr tao_narrow (CORBA::Object * ACE_ENV_ARG_DECL_NOT_USED);
     static CORBA::Object * tao_upcast (void *);
 
   private:
@@ -814,11 +814,11 @@ TAO_NAMESPACE  Messaging
     static RequestStartTimePolicy_ptr _duplicate (RequestStartTimePolicy_ptr obj);
     static RequestStartTimePolicy_ptr _narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     static RequestStartTimePolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     static RequestStartTimePolicy_ptr _nil (void)
       {
@@ -826,7 +826,7 @@ TAO_NAMESPACE  Messaging
       }
 
     virtual TimeBase::UtcT start_time (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -893,7 +893,7 @@ TAO_NAMESPACE  Messaging
     static RequestEndTimePolicy_ptr tao_duplicate (RequestEndTimePolicy_ptr);
     static void tao_release (RequestEndTimePolicy_ptr);
     static RequestEndTimePolicy_ptr tao_nil (void);
-    static RequestEndTimePolicy_ptr tao_narrow (CORBA::Object * TAO_ENV_ARG_DECL_NOT_USED);
+    static RequestEndTimePolicy_ptr tao_narrow (CORBA::Object * ACE_ENV_ARG_DECL_NOT_USED);
     static CORBA::Object * tao_upcast (void *);
 
   private:
@@ -948,11 +948,11 @@ TAO_NAMESPACE  Messaging
     static RequestEndTimePolicy_ptr _duplicate (RequestEndTimePolicy_ptr obj);
     static RequestEndTimePolicy_ptr _narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     static RequestEndTimePolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     static RequestEndTimePolicy_ptr _nil (void)
       {
@@ -960,7 +960,7 @@ TAO_NAMESPACE  Messaging
       }
 
     virtual TimeBase::UtcT end_time (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -1027,7 +1027,7 @@ TAO_NAMESPACE  Messaging
     static ReplyStartTimePolicy_ptr tao_duplicate (ReplyStartTimePolicy_ptr);
     static void tao_release (ReplyStartTimePolicy_ptr);
     static ReplyStartTimePolicy_ptr tao_nil (void);
-    static ReplyStartTimePolicy_ptr tao_narrow (CORBA::Object * TAO_ENV_ARG_DECL_NOT_USED);
+    static ReplyStartTimePolicy_ptr tao_narrow (CORBA::Object * ACE_ENV_ARG_DECL_NOT_USED);
     static CORBA::Object * tao_upcast (void *);
 
   private:
@@ -1082,11 +1082,11 @@ TAO_NAMESPACE  Messaging
     static ReplyStartTimePolicy_ptr _duplicate (ReplyStartTimePolicy_ptr obj);
     static ReplyStartTimePolicy_ptr _narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     static ReplyStartTimePolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     static ReplyStartTimePolicy_ptr _nil (void)
       {
@@ -1094,7 +1094,7 @@ TAO_NAMESPACE  Messaging
       }
 
     virtual TimeBase::UtcT start_time (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -1161,7 +1161,7 @@ TAO_NAMESPACE  Messaging
     static ReplyEndTimePolicy_ptr tao_duplicate (ReplyEndTimePolicy_ptr);
     static void tao_release (ReplyEndTimePolicy_ptr);
     static ReplyEndTimePolicy_ptr tao_nil (void);
-    static ReplyEndTimePolicy_ptr tao_narrow (CORBA::Object * TAO_ENV_ARG_DECL_NOT_USED);
+    static ReplyEndTimePolicy_ptr tao_narrow (CORBA::Object * ACE_ENV_ARG_DECL_NOT_USED);
     static CORBA::Object * tao_upcast (void *);
 
   private:
@@ -1216,11 +1216,11 @@ TAO_NAMESPACE  Messaging
     static ReplyEndTimePolicy_ptr _duplicate (ReplyEndTimePolicy_ptr obj);
     static ReplyEndTimePolicy_ptr _narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     static ReplyEndTimePolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     static ReplyEndTimePolicy_ptr _nil (void)
       {
@@ -1228,7 +1228,7 @@ TAO_NAMESPACE  Messaging
       }
 
     virtual TimeBase::UtcT end_time (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -1295,7 +1295,7 @@ TAO_NAMESPACE  Messaging
     static RelativeRequestTimeoutPolicy_ptr tao_duplicate (RelativeRequestTimeoutPolicy_ptr);
     static void tao_release (RelativeRequestTimeoutPolicy_ptr);
     static RelativeRequestTimeoutPolicy_ptr tao_nil (void);
-    static RelativeRequestTimeoutPolicy_ptr tao_narrow (CORBA::Object * TAO_ENV_ARG_DECL_NOT_USED);
+    static RelativeRequestTimeoutPolicy_ptr tao_narrow (CORBA::Object * ACE_ENV_ARG_DECL_NOT_USED);
     static CORBA::Object * tao_upcast (void *);
 
   private:
@@ -1350,11 +1350,11 @@ TAO_NAMESPACE  Messaging
     static RelativeRequestTimeoutPolicy_ptr _duplicate (RelativeRequestTimeoutPolicy_ptr obj);
     static RelativeRequestTimeoutPolicy_ptr _narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     static RelativeRequestTimeoutPolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     static RelativeRequestTimeoutPolicy_ptr _nil (void)
       {
@@ -1362,7 +1362,7 @@ TAO_NAMESPACE  Messaging
       }
 
     virtual TimeBase::TimeT relative_expiry (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -1429,7 +1429,7 @@ TAO_NAMESPACE  Messaging
     static RelativeRoundtripTimeoutPolicy_ptr tao_duplicate (RelativeRoundtripTimeoutPolicy_ptr);
     static void tao_release (RelativeRoundtripTimeoutPolicy_ptr);
     static RelativeRoundtripTimeoutPolicy_ptr tao_nil (void);
-    static RelativeRoundtripTimeoutPolicy_ptr tao_narrow (CORBA::Object * TAO_ENV_ARG_DECL_NOT_USED);
+    static RelativeRoundtripTimeoutPolicy_ptr tao_narrow (CORBA::Object * ACE_ENV_ARG_DECL_NOT_USED);
     static CORBA::Object * tao_upcast (void *);
 
   private:
@@ -1484,11 +1484,11 @@ TAO_NAMESPACE  Messaging
     static RelativeRoundtripTimeoutPolicy_ptr _duplicate (RelativeRoundtripTimeoutPolicy_ptr obj);
     static RelativeRoundtripTimeoutPolicy_ptr _narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     static RelativeRoundtripTimeoutPolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     static RelativeRoundtripTimeoutPolicy_ptr _nil (void)
       {
@@ -1496,7 +1496,7 @@ TAO_NAMESPACE  Messaging
       }
 
     virtual TimeBase::TimeT relative_expiry (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -1613,7 +1613,7 @@ TAO_NAMESPACE  Messaging
     static RoutingPolicy_ptr tao_duplicate (RoutingPolicy_ptr);
     static void tao_release (RoutingPolicy_ptr);
     static RoutingPolicy_ptr tao_nil (void);
-    static RoutingPolicy_ptr tao_narrow (CORBA::Object * TAO_ENV_ARG_DECL_NOT_USED);
+    static RoutingPolicy_ptr tao_narrow (CORBA::Object * ACE_ENV_ARG_DECL_NOT_USED);
     static CORBA::Object * tao_upcast (void *);
 
   private:
@@ -1668,11 +1668,11 @@ TAO_NAMESPACE  Messaging
     static RoutingPolicy_ptr _duplicate (RoutingPolicy_ptr obj);
     static RoutingPolicy_ptr _narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     static RoutingPolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     static RoutingPolicy_ptr _nil (void)
       {
@@ -1680,7 +1680,7 @@ TAO_NAMESPACE  Messaging
       }
 
     virtual Messaging::RoutingTypeRange routing_range (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -1747,7 +1747,7 @@ TAO_NAMESPACE  Messaging
     static MaxHopsPolicy_ptr tao_duplicate (MaxHopsPolicy_ptr);
     static void tao_release (MaxHopsPolicy_ptr);
     static MaxHopsPolicy_ptr tao_nil (void);
-    static MaxHopsPolicy_ptr tao_narrow (CORBA::Object * TAO_ENV_ARG_DECL_NOT_USED);
+    static MaxHopsPolicy_ptr tao_narrow (CORBA::Object * ACE_ENV_ARG_DECL_NOT_USED);
     static CORBA::Object * tao_upcast (void *);
 
   private:
@@ -1802,11 +1802,11 @@ TAO_NAMESPACE  Messaging
     static MaxHopsPolicy_ptr _duplicate (MaxHopsPolicy_ptr obj);
     static MaxHopsPolicy_ptr _narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     static MaxHopsPolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     static MaxHopsPolicy_ptr _nil (void)
       {
@@ -1814,7 +1814,7 @@ TAO_NAMESPACE  Messaging
       }
 
     virtual CORBA::UShort max_hops (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -1881,7 +1881,7 @@ TAO_NAMESPACE  Messaging
     static QueueOrderPolicy_ptr tao_duplicate (QueueOrderPolicy_ptr);
     static void tao_release (QueueOrderPolicy_ptr);
     static QueueOrderPolicy_ptr tao_nil (void);
-    static QueueOrderPolicy_ptr tao_narrow (CORBA::Object * TAO_ENV_ARG_DECL_NOT_USED);
+    static QueueOrderPolicy_ptr tao_narrow (CORBA::Object * ACE_ENV_ARG_DECL_NOT_USED);
     static CORBA::Object * tao_upcast (void *);
 
   private:
@@ -1936,11 +1936,11 @@ TAO_NAMESPACE  Messaging
     static QueueOrderPolicy_ptr _duplicate (QueueOrderPolicy_ptr obj);
     static QueueOrderPolicy_ptr _narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     static QueueOrderPolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     static QueueOrderPolicy_ptr _nil (void)
       {
@@ -1948,7 +1948,7 @@ TAO_NAMESPACE  Messaging
       }
 
     virtual Messaging::Ordering allowed_orders (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -2466,7 +2466,7 @@ TAO_NAMESPACE  Messaging
     static ReplyHandler_ptr tao_duplicate (ReplyHandler_ptr);
     static void tao_release (ReplyHandler_ptr);
     static ReplyHandler_ptr tao_nil (void);
-    static ReplyHandler_ptr tao_narrow (CORBA::Object * TAO_ENV_ARG_DECL_NOT_USED);
+    static ReplyHandler_ptr tao_narrow (CORBA::Object * ACE_ENV_ARG_DECL_NOT_USED);
     static CORBA::Object * tao_upcast (void *);
 
   private:
@@ -2527,11 +2527,11 @@ TAO_NAMESPACE  Messaging
     static ReplyHandler_ptr _duplicate (ReplyHandler_ptr obj);
     static ReplyHandler_ptr _narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     static ReplyHandler_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     static ReplyHandler_ptr _nil (void)
       {
@@ -2542,7 +2542,7 @@ TAO_NAMESPACE  Messaging
 
     virtual CORBA::Boolean _is_a (
         const CORBA::Char *type_id
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     virtual void *_tao_QueryInterface (ptr_arith_t type);
 
@@ -2636,7 +2636,7 @@ public:
   virtual ~_TAO_ReplyHandler_Proxy_Broker (void);
   virtual _TAO_ReplyHandler_Proxy_Impl &select_proxy (
     ReplyHandler *object
-    TAO_ENV_ARG_DECL_WITH_DEFAULTS
+    ACE_ENV_ARG_DECL_WITH_DEFAULTS
   ) = 0;
 
 protected:
@@ -2662,7 +2662,7 @@ public:
 
   virtual _TAO_ReplyHandler_Proxy_Impl &select_proxy (
     ReplyHandler *object
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   );
 
 private:

@@ -80,7 +80,7 @@ be_visitor_operation_ami_handler_reply_stub_operation_ch::visit_operation (be_op
           << "CORBA::ULong reply_status";
 
       *os << be_nl
-          << "TAO_ENV_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
+          << "ACE_ENV_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
           << ");" << be_uidt_nl << be_nl;
     }
   return 0;

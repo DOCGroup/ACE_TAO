@@ -8,14 +8,14 @@ main (int argc, char *argv[])
 {
   int i = 0;
 
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       // Retrieve a reference to the ORB.
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
                                             0
-                                            TAO_ENV_ARG_PARAMETER);
+                                            ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (argc < 2)
@@ -33,7 +33,7 @@ main (int argc, char *argv[])
             {
               // List initial services
               CORBA::ORB::ObjectIdList_var list =
-                orb->list_initial_services (TAO_ENV_SINGLE_ARG_PARAMETER);
+                orb->list_initial_services (ACE_ENV_SINGLE_ARG_PARAMETER);
               ACE_TRY_CHECK;
 
               size_t length = list->length ();
@@ -64,7 +64,7 @@ main (int argc, char *argv[])
             }
           else
             {
-              objref = orb->resolve_initial_references (argv[i] TAO_ENV_ARG_PARAMETER);
+              objref = orb->resolve_initial_references (argv[i] ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
 
               if (CORBA::is_nil (objref.in ()))
@@ -74,7 +74,7 @@ main (int argc, char *argv[])
                                   -1);
 
               INS_var server = INS::_narrow (objref.in ()
-                                                 TAO_ENV_ARG_PARAMETER);
+                                                 ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
 
               ACE_DEBUG ((LM_DEBUG,
@@ -83,7 +83,7 @@ main (int argc, char *argv[])
                           orb->object_to_string (server.in ())));
 
               CORBA::String_var test_ins_result =
-                server->test_ins (TAO_ENV_SINGLE_ARG_PARAMETER);
+                server->test_ins (ACE_ENV_SINGLE_ARG_PARAMETER);
               ACE_TRY_CHECK;
 
               ACE_DEBUG ((LM_DEBUG,

@@ -29,10 +29,10 @@ public:
 
 private:
   /// Run one iteration of the test
-  int one_iteration (TAO_ENV_SINGLE_ARG_DECL);
+  int one_iteration (ACE_ENV_SINGLE_ARG_DECL);
 
   /// Make sure that the thread has a connection available
-  void validate_connection (TAO_ENV_SINGLE_ARG_DECL);
+  void validate_connection (ACE_ENV_SINGLE_ARG_DECL);
 
 private:
   /// Reference to the test interface

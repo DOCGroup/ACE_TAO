@@ -29,14 +29,14 @@
 int
 main (int argc, char *argv[])
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       // Initialize orb
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
                                             ""
-                                            TAO_ENV_ARG_PARAMETER);
+                                            ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Check arguments.
@@ -49,7 +49,7 @@ main (int argc, char *argv[])
 
       // Destringify argv[1].
       CORBA::Object_var obj = orb->string_to_object (argv[1]
-                                                     TAO_ENV_ARG_PARAMETER);
+                                                     ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if  (CORBA::is_nil (obj.in ()))
@@ -61,7 +61,7 @@ main (int argc, char *argv[])
 
       // Narrow.
       Time_var tm = Time::_narrow (obj.in ()
-                                   TAO_ENV_ARG_PARAMETER);
+                                   ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if  (CORBA::is_nil (tm.in ()))
@@ -72,7 +72,7 @@ main (int argc, char *argv[])
         }
 
       // Get time.
-      TimeOfDay tod = tm->get_gmt (TAO_ENV_SINGLE_ARG_PARAMETER);
+      TimeOfDay tod = tm->get_gmt (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,

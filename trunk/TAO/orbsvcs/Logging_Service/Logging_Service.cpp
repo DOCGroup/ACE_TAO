@@ -17,58 +17,58 @@ Logging_Service::~Logging_Service (void)
 
 void
 Logging_Service::init_ORB  (int& argc, char *argv []
-                             TAO_ENV_ARG_DECL)
+                             ACE_ENV_ARG_DECL)
 {
   this->orb_ = CORBA::ORB_init (argc,
                                 argv,
                                 ""
-                                TAO_ENV_ARG_PARAMETER);
+                                ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   CORBA::Object_var poa_object  =
     this->orb_->resolve_initial_references("RootPOA"
-                                           TAO_ENV_ARG_PARAMETER);
+                                           ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   this->poa_ =
     PortableServer::POA::_narrow (poa_object.in ()
-                                  TAO_ENV_ARG_PARAMETER);
+                                  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   PortableServer::POAManager_var poa_manager =
-    this->poa_->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
+    this->poa_->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  poa_manager->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
+  poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
 Logging_Service::startup (int argc, char *argv[]
-                          TAO_ENV_ARG_DECL)
+                          ACE_ENV_ARG_DECL)
 {
   ACE_DEBUG ((LM_DEBUG,
               "\nStarting up the Telecom Log Service...\n"));
 
   // initalize the ORB.
   this->init_ORB (argc, argv
-                  TAO_ENV_ARG_PARAMETER);
+                  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // Resolve the naming service.
-  this->resolve_naming_service (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->resolve_naming_service (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   // Activate the basic log factory
   // CORBA::Object_var obj =
   DsLogAdmin::BasicLogFactory_var obj =
     this->basic_log_factory_.activate (this->poa_.in ()
-                                       TAO_ENV_ARG_PARAMETER);
+                                       ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   ACE_ASSERT (!CORBA::is_nil (obj.in ()));
 
   CORBA::String_var str =
-    this->orb_->object_to_string (obj.in () TAO_ENV_ARG_PARAMETER);
+    this->orb_->object_to_string (obj.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   ACE_DEBUG ((LM_DEBUG,
@@ -83,7 +83,7 @@ Logging_Service::startup (int argc, char *argv[]
 
   this->naming_->rebind (name,
                          obj.in ()
-                         TAO_ENV_ARG_PARAMETER);
+                         ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   ACE_DEBUG ((LM_DEBUG,
@@ -92,11 +92,11 @@ Logging_Service::startup (int argc, char *argv[]
 }
 
 void
-Logging_Service::resolve_naming_service (TAO_ENV_SINGLE_ARG_DECL)
+Logging_Service::resolve_naming_service (ACE_ENV_SINGLE_ARG_DECL)
 {
   CORBA::Object_var naming_obj =
     this->orb_->resolve_initial_references ("NameService"
-                                            TAO_ENV_ARG_PARAMETER);
+                                            ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // Need to check return value for errors.
@@ -105,7 +105,7 @@ Logging_Service::resolve_naming_service (TAO_ENV_SINGLE_ARG_DECL)
 
   this->naming_ =
     CosNaming::NamingContext::_narrow (naming_obj.in ()
-                                       TAO_ENV_ARG_PARAMETER);
+                                       ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
@@ -114,10 +114,10 @@ Logging_Service::run (void)
 {
   ACE_DEBUG ((LM_DEBUG, "%s: Running the Telecom Log Service\n", __FILE__));
 
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      this->orb_->run (TAO_ENV_SINGLE_ARG_PARAMETER);
+      this->orb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -130,17 +130,17 @@ Logging_Service::run (void)
 }
 
 void
-Logging_Service::shutdown (TAO_ENV_SINGLE_ARG_DECL)
+Logging_Service::shutdown (ACE_ENV_SINGLE_ARG_DECL)
 {
   // Deactivate.
   PortableServer::ObjectId_var oid =
     this->poa_->servant_to_id (&this->basic_log_factory_
-                               TAO_ENV_ARG_PARAMETER);
+                               ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // deactivate from the poa.
   this->poa_->deactivate_object (oid.in ()
-                                 TAO_ENV_ARG_PARAMETER);
+                                 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // Unbind from the naming service.
@@ -149,7 +149,7 @@ Logging_Service::shutdown (TAO_ENV_SINGLE_ARG_DECL)
   name[0].id = CORBA::string_dup (this->basic_log_factory_name_);
 
   this->naming_->unbind (name
-                         TAO_ENV_ARG_PARAMETER);
+                         ACE_ENV_ARG_PARAMETER);
 
   // shutdown the ORB.
   if (!CORBA::is_nil (this->orb_.in ()))
@@ -165,7 +165,7 @@ main (int argc, char *argv[])
     {
       service.startup (argc,
                        argv
-                       TAO_ENV_ARG_PARAMETER);
+                       ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (service.run () == -1)

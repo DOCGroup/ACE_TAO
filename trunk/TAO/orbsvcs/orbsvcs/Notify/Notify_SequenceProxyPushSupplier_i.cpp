@@ -28,7 +28,7 @@ TAO_Notify_SequenceProxyPushSupplier_i::~TAO_Notify_SequenceProxyPushSupplier_i 
 }
 
 void
-TAO_Notify_SequenceProxyPushSupplier_i::connect_sequence_push_consumer (CosNotifyComm::SequencePushConsumer_ptr push_consumer TAO_ENV_ARG_DECL)
+TAO_Notify_SequenceProxyPushSupplier_i::connect_sequence_push_consumer (CosNotifyComm::SequencePushConsumer_ptr push_consumer ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException,
                    CosEventChannelAdmin::AlreadyConnected,
@@ -60,7 +60,7 @@ TAO_Notify_SequenceProxyPushSupplier_i::connect_sequence_push_consumer (CosNotif
                             CORBA::INTERNAL ());
         ACE_CHECK;
 
-        this->on_connected (TAO_ENV_SINGLE_ARG_PARAMETER);
+        this->on_connected (ACE_ENV_SINGLE_ARG_PARAMETER);
         ACE_TRY_CHECK;
       }
     }
@@ -75,7 +75,7 @@ TAO_Notify_SequenceProxyPushSupplier_i::connect_sequence_push_consumer (CosNotif
 
 void
 TAO_Notify_SequenceProxyPushSupplier_i::dispatch_event_i (TAO_Notify_Event& events
-                                                          TAO_ENV_ARG_DECL)
+                                                          ACE_ENV_ARG_DECL)
 {
   // If we are in this method then we are a SequenceProxyPushSupplier
   // connected up to a SequenceProxyPushConsumer and the only thing
@@ -102,7 +102,7 @@ TAO_Notify_SequenceProxyPushSupplier_i::dispatch_event_i (TAO_Notify_Event& even
                           this->qos_admin (),
                           this->event_cache_,
                           this->from_timeout_
-                          TAO_ENV_ARG_PARAMETER);
+                          ACE_ENV_ARG_PARAMETER);
         }
       else
         {
@@ -110,7 +110,7 @@ TAO_Notify_SequenceProxyPushSupplier_i::dispatch_event_i (TAO_Notify_Event& even
                           this->qos_admin (),
                           this->event_cache_,
                           this->from_timeout_
-                          TAO_ENV_ARG_PARAMETER);
+                          ACE_ENV_ARG_PARAMETER);
         }
       ACE_TRY_CHECK;
     }
@@ -123,11 +123,11 @@ TAO_Notify_SequenceProxyPushSupplier_i::dispatch_event_i (TAO_Notify_Event& even
 }
 
 void
-TAO_Notify_SequenceProxyPushSupplier_i::dispatch_update_i (CosNotification::EventTypeSeq added, CosNotification::EventTypeSeq removed TAO_ENV_ARG_DECL)
+TAO_Notify_SequenceProxyPushSupplier_i::dispatch_update_i (CosNotification::EventTypeSeq added, CosNotification::EventTypeSeq removed ACE_ENV_ARG_DECL)
 {
   ACE_TRY
     {
-      this->push_consumer_->offer_change (added, removed TAO_ENV_ARG_PARAMETER);
+      this->push_consumer_->offer_change (added, removed ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHALL
@@ -138,22 +138,22 @@ TAO_Notify_SequenceProxyPushSupplier_i::dispatch_update_i (CosNotification::Even
 }
 
 void
-TAO_Notify_SequenceProxyPushSupplier_i::disconnect_sequence_push_supplier(TAO_ENV_SINGLE_ARG_DECL)
+TAO_Notify_SequenceProxyPushSupplier_i::disconnect_sequence_push_supplier(ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
 {
-  this->on_disconnected (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->on_disconnected (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   // ask our parent to deactivate us.
   this->consumer_admin_->
-    deactivate_proxy_pushsupplier (this TAO_ENV_ARG_PARAMETER);
+    deactivate_proxy_pushsupplier (this ACE_ENV_ARG_PARAMETER);
 }
 
 
 void
-TAO_Notify_SequenceProxyPushSupplier_i::shutdown (TAO_ENV_SINGLE_ARG_DECL)
+TAO_Notify_SequenceProxyPushSupplier_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
 {
   // Tell the consumer that we're going away ...
   // @@ Later, lookup a "notify_on_disconnect" option.
@@ -165,12 +165,12 @@ TAO_Notify_SequenceProxyPushSupplier_i::shutdown (TAO_ENV_SINGLE_ARG_DECL)
       return;
   }
 
-  this->disconnect_sequence_push_supplier (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->disconnect_sequence_push_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   ACE_TRY
     {
-      this->push_consumer_->disconnect_sequence_push_consumer (TAO_ENV_SINGLE_ARG_PARAMETER);
+      this->push_consumer_->disconnect_sequence_push_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHALL
@@ -183,7 +183,7 @@ TAO_Notify_SequenceProxyPushSupplier_i::shutdown (TAO_ENV_SINGLE_ARG_DECL)
 
 void
 TAO_Notify_SequenceProxyPushSupplier_i::setup_qos_policies (
-                                          TAO_ENV_SINGLE_ARG_DECL)
+                                          ACE_ENV_SINGLE_ARG_DECL)
 {
 # if defined (ACE_CONFIG_WIN32_H)
   ACE_Time_Value interval (
@@ -198,7 +198,7 @@ TAO_Notify_SequenceProxyPushSupplier_i::setup_qos_policies (
       TAO_Notify_CO_Factory* cof =
         TAO_Notify_Factory::get_channel_objects_factory ();
 
-      this->batch_lock_ = cof->create_proxy_supplier_lock (TAO_ENV_SINGLE_ARG_PARAMETER);
+      this->batch_lock_ = cof->create_proxy_supplier_lock (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       // Get back to the reactor to schedule the timer
@@ -243,7 +243,7 @@ TAO_Notify_SequenceProxyPushSupplier_i::handle_timeout (
           // the event cache will be flushed a split second before it
           // normally would.
           this->from_timeout_ = 1;
-          this->dispatch_event (dummy_events TAO_ENV_ARG_PARAMETER);
+          this->dispatch_event (dummy_events ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
     }

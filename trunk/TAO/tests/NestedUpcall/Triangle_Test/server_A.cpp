@@ -64,14 +64,14 @@ Object_A_Server::parse_args (void)
 int
 Object_A_Server::init (int argc,
                        char** argv
-                       TAO_ENV_ARG_DECL)
+                       ACE_ENV_ARG_DECL)
 {
   // Call the init of TAO_ORB_Manager to create a child POA
   // under the root POA.
   this->orb_manager_.init_child_poa (argc,
                                      argv,
                                      "child_poa"
-                                     TAO_ENV_ARG_PARAMETER);
+                                     ACE_ENV_ARG_PARAMETER);
 
   ACE_CHECK_RETURN (-1);
   this->argc_ = argc;
@@ -83,7 +83,7 @@ Object_A_Server::init (int argc,
   CORBA::String_var str  =
     this->orb_manager_.activate_under_child_poa ("object_A",
                                                  &this->object_A_i_
-                                                 TAO_ENV_ARG_PARAMETER);
+                                                 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   ACE_DEBUG ((LM_DEBUG,
@@ -104,9 +104,9 @@ Object_A_Server::init (int argc,
 
 
 int
-Object_A_Server::run (TAO_ENV_SINGLE_ARG_DECL)
+Object_A_Server::run (ACE_ENV_SINGLE_ARG_DECL)
 {
-  int r = this->orb_manager_.run (TAO_ENV_SINGLE_ARG_PARAMETER);
+  int r = this->orb_manager_.run (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   if (r == -1)
@@ -128,18 +128,18 @@ main (int argc, char *argv[])
   ACE_DEBUG ((LM_DEBUG,
               "\n \t NestedUpCalls.Triangle_Test: Object A Server \n \n"));
 
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       int retval =
-        object_A_Server.init (argc,argv TAO_ENV_ARG_PARAMETER);
+        object_A_Server.init (argc,argv ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (retval == -1)
         return 1;
       else
         {
-          object_A_Server.run (TAO_ENV_SINGLE_ARG_PARAMETER);
+          object_A_Server.run (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
     }

@@ -62,21 +62,21 @@ public:
   TAO_IORInfo (TAO_ORB_Core *orb_core,
                TAO_POA *poa);
 
-  /*	       TAO_MProfile &mp,
-	       CORBA::PolicyList *policy_list);
+  /*           TAO_MProfile &mp,
+               CORBA::PolicyList *policy_list);
   */
 
   /// Return the policy matching the given policy type that is in
   /// effect for the object whose IOR is being created.
   virtual CORBA::Policy_ptr get_effective_policy (
       CORBA::PolicyType type
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Add the given tagged component to all profiles.
   virtual void add_ior_component (
       const IOP::TaggedComponent & component
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Add the given tagged component to all profiles matching the given
@@ -84,28 +84,28 @@ public:
   virtual void add_ior_component_to_profile (
       const IOP::TaggedComponent & component,
       IOP::ProfileId profile_id
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual PortableInterceptor::AdapterManagerId manager_id (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual PortableInterceptor::AdapterState state (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual PortableInterceptor::ObjectReferenceTemplate * adapter_template (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual PortableInterceptor::ObjectReferenceFactory * current_factory (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void current_factory (
       PortableInterceptor::ObjectReferenceFactory * current_factory
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
 protected:

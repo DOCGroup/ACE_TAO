@@ -117,14 +117,14 @@ int
 TAO_GIOP_Message_Generator_Parser_10::write_reply_header (
     TAO_OutputCDR &output,
     TAO_Pluggable_Reply_Params_Base &reply
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Write the service context list.
 #if (TAO_HAS_MINIMUM_CORBA == 1)
   output << reply.service_context_notowned ();
-  TAO_ENV_ARG_NOT_USED; // FUZZ: ignore check_for_ace_check
+  ACE_ENV_ARG_NOT_USED; // FUZZ: ignore check_for_ace_check
 #else
   if (reply.is_dsi_ == 0)
     {
@@ -321,7 +321,7 @@ TAO_GIOP_Message_Generator_Parser_10::parse_request_header (
   // the reference count on the CDR message block, because this key
   // will not outlive the request (or the message block).
 
-  hdr_status = 
+  hdr_status =
     hdr_status && request.profile ().unmarshall_object_key (input);
 
   if (input.char_translator () == 0)
@@ -397,7 +397,7 @@ TAO_GIOP_Message_Generator_Parser_10::parse_locate_header (
   request.request_id (req_id);
 
   // Get the object key
-  hdr_status = 
+  hdr_status =
     hdr_status && request.profile ().unmarshall_object_key (msg);
 
   return hdr_status ? 0 : -1;

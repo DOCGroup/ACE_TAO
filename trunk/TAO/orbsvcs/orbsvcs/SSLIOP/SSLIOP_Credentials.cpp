@@ -40,7 +40,7 @@ TAO_SSLIOP_Credentials::~TAO_SSLIOP_Credentials (void)
 }
 
 SecurityLevel2::Credentials_ptr
-TAO_SSLIOP_Credentials::copy (TAO_ENV_SINGLE_ARG_DECL)
+TAO_SSLIOP_Credentials::copy (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_SSLIOP_Credentials *c = 0;
@@ -58,20 +58,20 @@ TAO_SSLIOP_Credentials::copy (TAO_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO_SSLIOP_Credentials::destroy (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_SSLIOP_Credentials::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 Security::InvocationCredentialsType
-TAO_SSLIOP_Credentials::credentials_type (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_SSLIOP_Credentials::credentials_type (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return Security::SecOwnCredentials;
 }
 
 Security::AuthenticationStatus
-TAO_SSLIOP_Credentials::authentication_state (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_SSLIOP_Credentials::authentication_state (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // @@ Is the following statement correct?
@@ -83,7 +83,7 @@ TAO_SSLIOP_Credentials::authentication_state (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 char *
-TAO_SSLIOP_Credentials::mechanism (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_SSLIOP_Credentials::mechanism (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // @todo Is the following correct?
@@ -97,7 +97,7 @@ TAO_SSLIOP_Credentials::mechanism (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 
 Security::AssociationOptions
 TAO_SSLIOP_Credentials::accepting_options_supported (
-    TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+    ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->accepting_options_supported_;
@@ -106,7 +106,7 @@ TAO_SSLIOP_Credentials::accepting_options_supported (
 void
 TAO_SSLIOP_Credentials::accepting_options_supported (
     Security::AssociationOptions accepting_options_supported
-    TAO_ENV_ARG_DECL)
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // @todo Verify that the given accepting options are valid
@@ -130,7 +130,7 @@ TAO_SSLIOP_Credentials::accepting_options_supported (
 
 Security::AssociationOptions
 TAO_SSLIOP_Credentials::accepting_options_required (
-    TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+    ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->accepting_options_required_;
@@ -139,7 +139,7 @@ TAO_SSLIOP_Credentials::accepting_options_required (
 void
 TAO_SSLIOP_Credentials::accepting_options_required (
     Security::AssociationOptions accepting_options_required
-    TAO_ENV_ARG_DECL)
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // "accepting_options_required" should not have "more" capability
@@ -158,7 +158,7 @@ TAO_SSLIOP_Credentials::accepting_options_required (
 
 Security::AssociationOptions
 TAO_SSLIOP_Credentials::invocation_options_supported (
-    TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+    ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->invocation_options_supported_;
@@ -167,7 +167,7 @@ TAO_SSLIOP_Credentials::invocation_options_supported (
 void
 TAO_SSLIOP_Credentials::invocation_options_supported (
     Security::AssociationOptions invocation_options_supported
-    TAO_ENV_ARG_DECL)
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if ((invocation_options_supported & ::TAO_SSLIOP_DISALLOWED_ASSOCIATIONS)
@@ -183,7 +183,7 @@ TAO_SSLIOP_Credentials::invocation_options_supported (
 
 Security::AssociationOptions
 TAO_SSLIOP_Credentials::invocation_options_required (
-    TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+    ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->invocation_options_required_;
@@ -192,7 +192,7 @@ TAO_SSLIOP_Credentials::invocation_options_required (
 void
 TAO_SSLIOP_Credentials::invocation_options_required (
     Security::AssociationOptions invocation_options_required
-    TAO_ENV_ARG_DECL)
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if ((invocation_options_required & ::TAO_SSLIOP_DISALLOWED_ASSOCIATIONS)
@@ -210,7 +210,7 @@ CORBA::Boolean
 TAO_SSLIOP_Credentials::get_security_feature (
     Security::CommunicationDirection /* direction */,
     Security::SecurityFeature /* feature */
-    TAO_ENV_ARG_DECL)
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (
@@ -225,7 +225,7 @@ CORBA::Boolean
 TAO_SSLIOP_Credentials::set_attributes (
     const Security::AttributeList & /* requested_attributes */,
     Security::AttributeList_out /* actual_attributes */
-    TAO_ENV_ARG_DECL)
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (
@@ -239,7 +239,7 @@ TAO_SSLIOP_Credentials::set_attributes (
 Security::AttributeList *
 TAO_SSLIOP_Credentials::get_attributes (
     const Security::AttributeTypeList & /* attributes */
-    TAO_ENV_ARG_DECL)
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (
@@ -253,7 +253,7 @@ TAO_SSLIOP_Credentials::get_attributes (
 CORBA::Boolean
 TAO_SSLIOP_Credentials::is_valid (
     Security::UtcT_out expiry_time
-    TAO_ENV_ARG_DECL)
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   X509 *x = this->x509_.in ();
@@ -301,7 +301,7 @@ TAO_SSLIOP_Credentials::is_valid (
 
 CORBA::Boolean
 TAO_SSLIOP_Credentials::refresh (const CORBA::Any & /* refresh_data */
-                                 TAO_ENV_ARG_DECL)
+                                 ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Until it is clear the code below is correct, throw a
@@ -416,15 +416,15 @@ TAO_SSLIOP_Credentials::hash (void) const
 
 TAO_SSLIOP_Credentials_ptr
 TAO_SSLIOP_Credentials::_narrow (CORBA::Object_ptr obj
-                                 TAO_ENV_ARG_DECL)
+                                 ACE_ENV_ARG_DECL)
 {
   return TAO_SSLIOP_Credentials::_unchecked_narrow (obj
-                                                    TAO_ENV_ARG_PARAMETER);
+                                                    ACE_ENV_ARG_PARAMETER);
 }
 
 TAO_SSLIOP_Credentials_ptr
 TAO_SSLIOP_Credentials::_unchecked_narrow (CORBA::Object_ptr obj
-                                           TAO_ENV_ARG_DECL_NOT_USED)
+                                           ACE_ENV_ARG_DECL_NOT_USED)
 {
   if (CORBA::is_nil (obj))
     return TAO_SSLIOP_Credentials::_nil ();
@@ -512,10 +512,10 @@ tao_TAO_SSLIOP_Credentials_nil (
 TAO_SSLIOP_Credentials_ptr
 tao_TAO_SSLIOP_Credentials_narrow (
     CORBA::Object *p
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return TAO_SSLIOP_Credentials::_narrow (p TAO_ENV_ARG_PARAMETER);
+  return TAO_SSLIOP_Credentials::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -637,10 +637,10 @@ TAO_SSLIOP_Credentials_var::tao_nil (void)
 ::TAO_SSLIOP_Credentials_ptr
 TAO_SSLIOP_Credentials_var::tao_narrow (
     CORBA::Object *p
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return ::TAO_SSLIOP_Credentials::_narrow (p TAO_ENV_ARG_PARAMETER);
+  return ::TAO_SSLIOP_Credentials::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *

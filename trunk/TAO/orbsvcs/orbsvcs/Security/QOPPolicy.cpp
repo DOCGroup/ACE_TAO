@@ -16,14 +16,14 @@ TAO_QOPPolicy::~TAO_QOPPolicy (void)
 }
 
 CORBA::PolicyType
-TAO_QOPPolicy::policy_type (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_QOPPolicy::policy_type (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return Security::SecQOPPolicy;
 }
 
 CORBA::Policy_ptr
-TAO_QOPPolicy::copy (TAO_ENV_SINGLE_ARG_DECL)
+TAO_QOPPolicy::copy (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_QOPPolicy *policy = 0;
@@ -40,13 +40,13 @@ TAO_QOPPolicy::copy (TAO_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO_QOPPolicy::destroy (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_QOPPolicy::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 Security::QOP
-TAO_QOPPolicy::qop (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_QOPPolicy::qop (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->qop_;

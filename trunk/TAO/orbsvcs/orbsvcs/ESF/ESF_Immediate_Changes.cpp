@@ -31,14 +31,14 @@ TAO_ESF_Immediate_Changes<PROXY,C,ITERATOR,ACE_LOCK>::
 template<class PROXY, class C, class ITERATOR, class ACE_LOCK> void
 TAO_ESF_Immediate_Changes<PROXY,C,ITERATOR,ACE_LOCK>::
     for_each (TAO_ESF_Worker<PROXY> *worker
-              TAO_ENV_ARG_DECL)
+              ACE_ENV_ARG_DECL)
 {
   ACE_GUARD (ACE_LOCK, ace_mon, this->lock_);
 
   ITERATOR end = this->collection_.end ();
   for (ITERATOR i = this->collection_.begin (); i != end; ++i)
     {
-      worker->work ((*i) TAO_ENV_ARG_PARAMETER);
+      worker->work ((*i) ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
 }

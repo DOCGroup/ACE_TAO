@@ -46,7 +46,7 @@ class TAO_Notify_Export TAO_Notify_Update_Dispatch_Command : public TAO_Notify_C
 
   ~TAO_Notify_Update_Dispatch_Command ();
 
-  virtual int execute (TAO_ENV_SINGLE_ARG_DECL);
+  virtual int execute (ACE_ENV_SINGLE_ARG_DECL);
   // Command callback
 
 protected:

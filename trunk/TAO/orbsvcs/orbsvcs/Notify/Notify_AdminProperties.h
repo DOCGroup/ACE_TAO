@@ -46,7 +46,7 @@ public:
   virtual ~TAO_Notify_AdminProperties ();
 
   virtual CosNotification::AdminProperties * get_admin (
-    TAO_ENV_SINGLE_ARG_DECL
+    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -54,7 +54,7 @@ public:
 
   virtual void set_admin (
     const CosNotification::AdminProperties & admin
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException,

@@ -35,17 +35,17 @@ public:
                            const Structure& the_in_structure,
                            Structure_out the_out_structure,
                            char *&name
-                           TAO_ENV_ARG_DECL_NOT_USED)
+                           ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void raise_user_exception (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+  void raise_user_exception (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      test_exception));
 
-  void raise_system_exception (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+  void raise_system_exception (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void shutdown (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+  void shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

@@ -59,7 +59,7 @@ public:
   virtual void push (TAO_EC_ProxyPushSupplier *proxy,
                      RtecEventComm::PushConsumer_ptr consumer,
                      RtecEventComm::EventSet& event
-                     TAO_ENV_ARG_DECL);
+                     ACE_ENV_ARG_DECL);
 
 private:
   /// An per-task allocator
@@ -88,7 +88,7 @@ public:
   virtual ~TAO_EC_Dispatch_Command (void);
 
   /// Command callback
-  virtual int execute (TAO_ENV_SINGLE_ARG_DECL_NOT_USED) = 0;
+  virtual int execute (ACE_ENV_SINGLE_ARG_DECL_NOT_USED) = 0;
 };
 
 // ****************************************************************
@@ -100,7 +100,7 @@ public:
   TAO_EC_Shutdown_Task_Command (ACE_Allocator *mb_allocator = 0);
 
   /// Command callback
-  virtual int execute (TAO_ENV_SINGLE_ARG_DECL_NOT_USED);
+  virtual int execute (ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
 };
 
 // ****************************************************************
@@ -119,7 +119,7 @@ public:
   virtual ~TAO_EC_Push_Command (void);
 
   /// Command callback
-  virtual int execute (TAO_ENV_SINGLE_ARG_DECL_NOT_USED);
+  virtual int execute (ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
 
 private:
   /// The proxy

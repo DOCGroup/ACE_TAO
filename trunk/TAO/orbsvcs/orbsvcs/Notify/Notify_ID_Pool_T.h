@@ -78,7 +78,7 @@ class TAO_Notify_ID_Pool_Ex : public TAO_Notify_ID_Pool <ID_TYPE>
   TAO_Notify_ID_Pool_Ex (void);
   ~TAO_Notify_ID_Pool_Ex ();
 
-  ID_TYPE_SEQ* get_sequence (TAO_ENV_SINGLE_ARG_DECL);
+  ID_TYPE_SEQ* get_sequence (ACE_ENV_SINGLE_ARG_DECL);
   // Get a list of all ids in use.
   // Essentially converts the <active_list_> to a Sequence.
 };

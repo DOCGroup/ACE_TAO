@@ -57,17 +57,17 @@ public:
    * types.
    */
   CORBA::Policy_ptr get_policy (CORBA::PolicyType type
-                                TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+                                ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
 
   CORBA::Policy_ptr get_client_policy (CORBA::PolicyType type
-                                       TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+                                       ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
   virtual TAO_Stub* set_policy_overrides (const CORBA::PolicyList & policies,
                                              CORBA::SetOverrideType set_add
-                                             TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+                                             ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 #endif /* TAO_HAS_CORBA_MESSAGING */
 
@@ -76,17 +76,17 @@ public:
   /// Returns the CORBA::Policy (which will be narrowed to be
   /// used as RTCORBA::PriorityModelPolicy) exported
   /// in object's IOR.
-  CORBA::Policy_ptr exposed_priority_model (TAO_ENV_SINGLE_ARG_DECL);
+  CORBA::Policy_ptr exposed_priority_model (ACE_ENV_SINGLE_ARG_DECL);
 
   /// Returns the CORBA::Policy (which will be narrowed and used
   /// as RTCORBA::PriorityBandedConnectionPolicy) exported
   /// in object's IOR.
-  CORBA::Policy_ptr exposed_priority_banded_connection (TAO_ENV_SINGLE_ARG_DECL);
+  CORBA::Policy_ptr exposed_priority_banded_connection (ACE_ENV_SINGLE_ARG_DECL);
 
   /// Returns the CORBA::Policy (which will be narrowed and used
   /// as RTCORBA::ClientProtocolPolicy) exported
   /// in object's IOR.
-  CORBA::Policy_ptr exposed_client_protocol (TAO_ENV_SINGLE_ARG_DECL);
+  CORBA::Policy_ptr exposed_client_protocol (ACE_ENV_SINGLE_ARG_DECL);
 
 
   CORBA::Policy *private_connection (void);
@@ -103,16 +103,16 @@ public:
   //   the policy value exported in the Object's IOR.
 
   CORBA::Policy *
-  effective_priority_banded_connection (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  effective_priority_banded_connection (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
   CORBA::Policy *
-  effective_client_protocol (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  effective_client_protocol (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
 
 
 private:
 
   /// Helper method used to parse the policies.
-  void parse_policies (TAO_ENV_SINGLE_ARG_DECL);
+  void parse_policies (ACE_ENV_SINGLE_ARG_DECL);
 
   void exposed_priority_model (CORBA::Policy_ptr policy);
 

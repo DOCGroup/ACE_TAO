@@ -45,14 +45,14 @@ public:
 
   virtual CORBA::Boolean is_special_event_type (void) const;
   virtual const TAO_Notify_EventType& event_type (void) const;
-  virtual CORBA::Boolean do_match (CosNotifyFilter::Filter_ptr filter TAO_ENV_ARG_DECL);
-  virtual void do_push (CosEventComm::PushConsumer_ptr consumer TAO_ENV_ARG_DECL) const;
-  virtual void do_push (CosNotifyComm::StructuredPushConsumer_ptr consumer TAO_ENV_ARG_DECL) const;
+  virtual CORBA::Boolean do_match (CosNotifyFilter::Filter_ptr filter ACE_ENV_ARG_DECL);
+  virtual void do_push (CosEventComm::PushConsumer_ptr consumer ACE_ENV_ARG_DECL) const;
+  virtual void do_push (CosNotifyComm::StructuredPushConsumer_ptr consumer ACE_ENV_ARG_DECL) const;
   virtual void do_push (CosNotifyComm::SequencePushConsumer_ptr consumer,
                         const TAO_Notify_QoSAdmin_i& qos_admin,
                         CosNotification::EventBatch& unsent,
                         int flush_queue
-                        TAO_ENV_ARG_DECL) const;
+                        ACE_ENV_ARG_DECL) const;
 
 protected:
 

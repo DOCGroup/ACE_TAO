@@ -9,7 +9,7 @@ Smart_Diamond_Top_Factory::Smart_Diamond_Top_Factory (void)
 
 Diamond::Top_ptr
 Smart_Diamond_Top_Factory::create_proxy (Diamond::Top_ptr proxy
-                                                 TAO_ENV_ARG_DECL_NOT_USED
+                                                 ACE_ENV_ARG_DECL_NOT_USED
                                                     )
  {
    ACE_DEBUG ((LM_DEBUG, "create_smart_proxy\n"));
@@ -28,7 +28,7 @@ Smart_Diamond_Top_Proxy::Smart_Diamond_Top_Proxy (Diamond::Top_ptr proxy)
 
 char *
 Smart_Diamond_Top_Proxy::shape (
-                                                                TAO_ENV_SINGLE_ARG_DECL
+                                                                ACE_ENV_SINGLE_ARG_DECL
                                                                 )
   ACE_THROW_SPEC ((
                    CORBA::SystemException
@@ -40,7 +40,7 @@ Smart_Diamond_Top_Proxy::shape (
   char *ans= 0;
   ACE_TRY
     {
-          ans = ACE_OS::strdup (TAO_Diamond_Top_Smart_Proxy_Base::shape(TAO_ENV_SINGLE_ARG_PARAMETER));
+          ans = ACE_OS::strdup (TAO_Diamond_Top_Smart_Proxy_Base::shape(ACE_ENV_SINGLE_ARG_PARAMETER));
 
           ACE_TRY_CHECK;
 

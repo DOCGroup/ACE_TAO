@@ -23,25 +23,25 @@ TAO_EC_Filter*
 TAO_EC_Sched_Filter_Builder::build (
     TAO_EC_ProxyPushSupplier *supplier,
     RtecEventChannelAdmin::ConsumerQOS& qos
-    TAO_ENV_ARG_DECL) const
+    ACE_ENV_ARG_DECL) const
 {
   CORBA::ULong pos = 0;
   CORBA::Object_var tmp =
     this->event_channel_->scheduler ();
 
   RtecScheduler::Scheduler_var scheduler =
-    RtecScheduler::Scheduler::_narrow (tmp.in () TAO_ENV_ARG_PARAMETER);
+    RtecScheduler::Scheduler::_narrow (tmp.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   // @@ How do we figure out which parent???
   RtecScheduler::handle_t parent_info =
-    scheduler->lookup ("Dispatching_Task-250000.us" TAO_ENV_ARG_PARAMETER);
+    scheduler->lookup ("Dispatching_Task-250000.us" ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   return this->recursive_build (supplier, qos, pos,
                                 scheduler.in (),
                                 parent_info
-                                 TAO_ENV_ARG_PARAMETER);
+                                 ACE_ENV_ARG_PARAMETER);
 }
 
 TAO_EC_Filter*
@@ -51,7 +51,7 @@ TAO_EC_Sched_Filter_Builder::recursive_build (
     CORBA::ULong& pos,
     RtecScheduler::Scheduler_ptr scheduler,
     RtecScheduler::handle_t parent_info
-    TAO_ENV_ARG_DECL) const
+    ACE_ENV_ARG_DECL) const
 {
   const RtecEventComm::Event& e = qos.dependencies[pos].event;
 
@@ -61,11 +61,11 @@ TAO_EC_Sched_Filter_Builder::recursive_build (
       ACE_CString name;
       this->recursive_name (qos, npos,
                             scheduler, name
-                             TAO_ENV_ARG_PARAMETER);
+                             ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       RtecScheduler::handle_t rt_info =
-        scheduler->create (name.c_str () TAO_ENV_ARG_PARAMETER);
+        scheduler->create (name.c_str () ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       pos++; // Consume the designator
@@ -78,7 +78,7 @@ TAO_EC_Sched_Filter_Builder::recursive_build (
           children[i] = this->recursive_build (supplier, qos, pos,
                                                scheduler,
                                                rt_info
-                                                TAO_ENV_ARG_PARAMETER);
+                                                ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (0);
         }
 
@@ -94,7 +94,7 @@ TAO_EC_Sched_Filter_Builder::recursive_build (
                                            RtecScheduler::CONJUNCTION),
                       0);
       TAO_EC_QOS_Info qos_info;
-      filter->get_qos_info (qos_info TAO_ENV_ARG_PARAMETER);
+      filter->get_qos_info (qos_info ACE_ENV_ARG_PARAMETER);
       // @@
       ACE_CHECK_RETURN (0);
       return filter;
@@ -106,11 +106,11 @@ TAO_EC_Sched_Filter_Builder::recursive_build (
       ACE_CString name;
       this->recursive_name (qos, npos,
                             scheduler, name
-                             TAO_ENV_ARG_PARAMETER);
+                             ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       RtecScheduler::handle_t rt_info =
-        scheduler->create (name.c_str () TAO_ENV_ARG_PARAMETER);
+        scheduler->create (name.c_str () ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       pos++; // Consume the designator
@@ -123,7 +123,7 @@ TAO_EC_Sched_Filter_Builder::recursive_build (
           children[i] = this->recursive_build (supplier, qos, pos,
                                                scheduler,
                                                rt_info
-                                                TAO_ENV_ARG_PARAMETER);
+                                                ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (0);
         }
       TAO_EC_Sched_Filter *filter;
@@ -139,7 +139,7 @@ TAO_EC_Sched_Filter_Builder::recursive_build (
                       0);
 
       TAO_EC_QOS_Info qos_info;
-      filter->get_qos_info (qos_info TAO_ENV_ARG_PARAMETER);
+      filter->get_qos_info (qos_info ACE_ENV_ARG_PARAMETER);
       // @@
       ACE_CHECK_RETURN (0);
       return filter;
@@ -161,7 +161,7 @@ TAO_EC_Sched_Filter_Builder::recursive_build (
 
       TAO_EC_QOS_Info qos_info;
       qos_info.rt_info =
-        scheduler->create (name.c_str () TAO_ENV_ARG_PARAMETER);
+        scheduler->create (name.c_str () ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       // Convert the time to the proper units....
@@ -179,14 +179,14 @@ TAO_EC_Sched_Filter_Builder::recursive_build (
                       0, // quantum
                       1, // threads
                       RtecScheduler::OPERATION
-                       TAO_ENV_ARG_PARAMETER);
+                       ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       scheduler->add_dependency (qos_info.rt_info,
                                  parent_info,
                                  1,
                                  RtecBase::TWO_WAY_CALL
-                                  TAO_ENV_ARG_PARAMETER);
+                                  ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       return new TAO_EC_Timeout_Filter (this->event_channel_,
@@ -199,14 +199,14 @@ TAO_EC_Sched_Filter_Builder::recursive_build (
   RtecScheduler::handle_t body_info = qos.dependencies[pos].rt_info;
 
   RtecScheduler::RT_Info_var info =
-    scheduler->get (body_info TAO_ENV_ARG_PARAMETER);
+    scheduler->get (body_info ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   ACE_CString name = info->entry_point.in ();
   name += "#rep";
 
   RtecScheduler::handle_t rt_info =
-    scheduler->create (name.c_str () TAO_ENV_ARG_PARAMETER);
+    scheduler->create (name.c_str () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   pos++;
@@ -222,7 +222,7 @@ TAO_EC_Sched_Filter_Builder::recursive_build (
                   0);
 
   TAO_EC_QOS_Info qos_info;
-  filter->get_qos_info (qos_info TAO_ENV_ARG_PARAMETER);
+  filter->get_qos_info (qos_info ACE_ENV_ARG_PARAMETER);
   // @@
   ACE_CHECK_RETURN (0);
   return filter;
@@ -234,7 +234,7 @@ TAO_EC_Sched_Filter_Builder:: recursive_name (
     CORBA::ULong& pos,
     RtecScheduler::Scheduler_ptr scheduler,
     ACE_CString& name
-    TAO_ENV_ARG_DECL) const
+    ACE_ENV_ARG_DECL) const
 {
   const RtecEventComm::Event& e = qos.dependencies[pos].event;
 
@@ -249,7 +249,7 @@ TAO_EC_Sched_Filter_Builder:: recursive_name (
           this->recursive_name (qos, pos,
                                 scheduler,
                                 child_name
-                                 TAO_ENV_ARG_PARAMETER);
+                                 ACE_ENV_ARG_PARAMETER);
           ACE_CHECK;
 
           if (i == 0)
@@ -274,7 +274,7 @@ TAO_EC_Sched_Filter_Builder:: recursive_name (
           this->recursive_name (qos, pos,
                                 scheduler,
                                 child_name
-                                 TAO_ENV_ARG_PARAMETER);
+                                 ACE_ENV_ARG_PARAMETER);
           ACE_CHECK;
 
           if (i == 0)
@@ -305,7 +305,7 @@ TAO_EC_Sched_Filter_Builder:: recursive_name (
   RtecScheduler::handle_t body_info = qos.dependencies[pos].rt_info;
 
   RtecScheduler::RT_Info_var info =
-    scheduler->get (body_info TAO_ENV_ARG_PARAMETER);
+    scheduler->get (body_info ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   name = info->entry_point.in ();

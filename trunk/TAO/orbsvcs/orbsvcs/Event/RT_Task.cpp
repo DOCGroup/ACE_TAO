@@ -96,7 +96,7 @@ ACE_RT_Task::~ACE_RT_Task (void)
 int
 ACE_RT_Task::svc (void)
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       // @@ TODO It may be necessary to pass the options to this class
@@ -107,7 +107,7 @@ ACE_RT_Task::svc (void)
       };
       int argc = sizeof (argv)/sizeof (argv[0]);
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" TAO_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 #endif
 
@@ -120,14 +120,14 @@ ACE_RT_Task::svc (void)
         (this->rt_info_,
          thread_priority,
          subpriority,
-         preemption_priority TAO_ENV_ARG_PARAMETER);
+         preemption_priority ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 #else
       ACE_Scheduler_Factory::server ()->priority
         (this->rt_info_,
          thread_priority,
          subpriority,
-         preemption_priority TAO_ENV_ARG_PARAMETER);
+         preemption_priority ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 #endif
       if (ACE_OS::thr_setprio (thread_priority) == -1)
@@ -257,17 +257,17 @@ ACE_RT_Task::open_task (const char* name)
       tempname = tempbuffer;
     }
 
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
 #if 1
       rt_info_ =
-        this->scheduler_->create (tempname TAO_ENV_ARG_PARAMETER);
+        this->scheduler_->create (tempname ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 #else
       rt_info_ =
         ACE_Scheduler_Factory::server()->create (tempname
-                                                  TAO_ENV_ARG_PARAMETER);
+                                                  ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 #endif
       // @@ TODO: We do no initialization of the new rt_info, the
@@ -314,7 +314,7 @@ ACE_RT_Task::synch_threads (size_t threads)
       RtecScheduler::Preemption_Subpriority_t subpriority;
       RtecScheduler::Preemption_Priority_t preemption_priority;
 
-      TAO_ENV_DECLARE_NEW_ENV;
+      ACE_DECLARE_NEW_CORBA_ENV;
       ACE_TRY
         {
           {
@@ -325,14 +325,14 @@ ACE_RT_Task::synch_threads (size_t threads)
               (rt_info_,
                thread_priority,
                subpriority,
-               preemption_priority TAO_ENV_ARG_PARAMETER);
+               preemption_priority ACE_ENV_ARG_PARAMETER);
             ACE_TRY_CHECK;
 #else
             ACE_Scheduler_Factory::server ()->priority
               (rt_info_,
                thread_priority,
                subpriority,
-               preemption_priority TAO_ENV_ARG_PARAMETER);
+               preemption_priority ACE_ENV_ARG_PARAMETER);
             ACE_TRY_CHECK;
 #endif
           }

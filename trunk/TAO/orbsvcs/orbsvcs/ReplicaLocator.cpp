@@ -19,7 +19,7 @@ TAO_LB_ReplicaLocator::preinvoke (
       PortableServer::POA_ptr /* adapter */,
       const char * /* operation */,
       PortableServer::ServantLocator::Cookie & /* the_cookie */
-      TAO_ENV_ARG_DECL)
+      ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::ForwardRequest))
 {
@@ -27,7 +27,7 @@ TAO_LB_ReplicaLocator::preinvoke (
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 
   CORBA::Object_var replica =
-    this->load_balancer_->replica (TAO_ENV_SINGLE_ARG_PARAMETER);
+    this->load_balancer_->replica (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   // Throw a forward exception to force the client to redirect its
@@ -44,7 +44,7 @@ TAO_LB_ReplicaLocator::postinvoke (
     const char * /* operation */,
     PortableServer::ServantLocator::Cookie /* the_cookie */,
     PortableServer::Servant /* the_servant */
-    TAO_ENV_ARG_DECL_NOT_USED)
+    ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // No-op

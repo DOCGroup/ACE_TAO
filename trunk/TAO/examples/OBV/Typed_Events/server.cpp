@@ -12,18 +12,18 @@ main (int argc, char *argv[])
   ACE_DEBUG ((LM_DEBUG,
               "\n\tCheckpoint Event_Types server\n\n"));
 
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
 
   ACE_TRY
     {
       if (server.init ("Event_Types_Checkpoint",
                        argc,
                        argv
-                       TAO_ENV_ARG_PARAMETER) == -1)
+                       ACE_ENV_ARG_PARAMETER) == -1)
         return 1;
       else
         {
-          server.run (TAO_ENV_SINGLE_ARG_PARAMETER);
+          server.run (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
     }

@@ -190,7 +190,7 @@ public:
              PortableServer::POA_ptr          poa,
              const char *                     operation,
              void * &                         cookie
-             TAO_ENV_ARG_DECL)
+             ACE_ENV_ARG_DECL)
     throw (CORBA::SystemException,
            PortableServer::ForwardRequest);
   virtual void
@@ -199,7 +199,7 @@ public:
               const char *                     /*operation*/,
               void *                           /*cookie*/,
               PortableServer::Servant          /*servant*/
-              TAO_ENV_ARG_DECL)
+              ACE_ENV_ARG_DECL)
     throw (CORBA::SystemException) {}
 private:
   Controller_impl *                   m_ctrl;

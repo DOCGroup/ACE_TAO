@@ -195,10 +195,10 @@ BiDirPolicy::BidirectionalPolicy_var::tao_nil (void)
 ::BiDirPolicy::BidirectionalPolicy_ptr
 BiDirPolicy::BidirectionalPolicy_var::tao_narrow (
     CORBA::Object *p
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return ::BiDirPolicy::BidirectionalPolicy::_narrow (p TAO_ENV_ARG_PARAMETER);
+  return ::BiDirPolicy::BidirectionalPolicy::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -280,15 +280,15 @@ BiDirPolicy::BidirectionalPolicy::~BidirectionalPolicy (void)
 
 BiDirPolicy::BidirectionalPolicy_ptr BiDirPolicy::BidirectionalPolicy::_narrow (
     CORBA::Object_ptr obj
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return BidirectionalPolicy::_unchecked_narrow (obj TAO_ENV_ARG_PARAMETER);
+  return BidirectionalPolicy::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
 }
 
 BiDirPolicy::BidirectionalPolicy_ptr BiDirPolicy::BidirectionalPolicy::_unchecked_narrow (
     CORBA::Object_ptr obj
-    TAO_ENV_ARG_DECL_NOT_USED
+    ACE_ENV_ARG_DECL_NOT_USED
   )
 {
   if (CORBA::is_nil (obj))

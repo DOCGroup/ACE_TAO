@@ -70,8 +70,8 @@ TAO_Persistent_Bindings_Map::find (const char *id,
     return -1;
   else
     {
-      TAO_ENV_DECLARE_NEW_ENV;
-      obj = orb_->string_to_object (entry.ref_ TAO_ENV_ARG_PARAMETER);
+      ACE_DECLARE_NEW_CORBA_ENV;
+      obj = orb_->string_to_object (entry.ref_ ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
       type = entry.type_;
 
@@ -163,8 +163,8 @@ TAO_Persistent_Bindings_Map::shared_bind (const char * id,
                                           int rebind)
 {
   // Obtain a stringified ior of <obj> (i.e., the representation we can store).
-  TAO_ENV_DECLARE_NEW_ENV;
-  CORBA::String_var ref = orb_->object_to_string (obj TAO_ENV_ARG_PARAMETER);
+  ACE_DECLARE_NEW_CORBA_ENV;
+  CORBA::String_var ref = orb_->object_to_string (obj ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   // Calculate and allocate the memory we need to store this name to
@@ -323,7 +323,7 @@ TAO_Persistent_Naming_Context::make_new_context (PortableServer::POA_ptr poa,
                                                  const char *poa_id,
                                                  size_t context_size,
                                                  TAO_Persistent_Context_Index * ind
-                                                 TAO_ENV_ARG_DECL)
+                                                 ACE_ENV_ARG_DECL)
 {
   // Store the stub we will return here.
   CosNaming::NamingContext_var result;
@@ -377,10 +377,10 @@ TAO_Persistent_Naming_Context::make_new_context (PortableServer::POA_ptr poa,
 
   poa->activate_object_with_id (id.in (),
                                 context
-                                TAO_ENV_ARG_PARAMETER);
+                                ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (result._retn ());
 
-  result = context->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
+  result = context->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (CosNaming::NamingContext::_nil ());
 
   // Everything went smoothly, without errors - we don't need any cleanup.
@@ -390,7 +390,7 @@ TAO_Persistent_Naming_Context::make_new_context (PortableServer::POA_ptr poa,
 }
 
 CosNaming::NamingContext_ptr
-TAO_Persistent_Naming_Context::new_context (TAO_ENV_SINGLE_ARG_DECL)
+TAO_Persistent_Naming_Context::new_context (ACE_ENV_SINGLE_ARG_DECL)
 {
   ACE_GUARD_THROW_EX (TAO_SYNCH_RECURSIVE_MUTEX,
                       ace_mon,
@@ -416,7 +416,7 @@ TAO_Persistent_Naming_Context::new_context (TAO_ENV_SINGLE_ARG_DECL)
                       poa_id,
                       this->persistent_context_->total_size (),
                       this->index_
-                      TAO_ENV_ARG_PARAMETER);
+                      ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CosNaming::NamingContext::_nil ());
 
   return result._retn ();
@@ -426,7 +426,7 @@ void
 TAO_Persistent_Naming_Context::list (CORBA::ULong how_many,
                                      CosNaming::BindingList_out &bl,
                                      CosNaming::BindingIterator_out &bi
-                                     TAO_ENV_ARG_DECL)
+                                     ACE_ENV_ARG_DECL)
 {
   // Allocate nil out parameters in case we won't be able to complete
   // the operation.
@@ -515,7 +515,7 @@ TAO_Persistent_Naming_Context::list (CORBA::ULong how_many,
 
       // Increment reference count on this Naming Context, so it doesn't get
       // deleted before the BindingIterator servant gets deleted.
-      interface_->_add_ref (TAO_ENV_SINGLE_ARG_PARAMETER);
+      interface_->_add_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       // Register with the POA.
@@ -529,10 +529,10 @@ TAO_Persistent_Naming_Context::list (CORBA::ULong how_many,
 
       this->poa_->activate_object_with_id (id.in (),
                                            bind_iter
-                                           TAO_ENV_ARG_PARAMETER);
+                                           ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
-      bi = bind_iter->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
+      bi = bind_iter->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
     }
 }

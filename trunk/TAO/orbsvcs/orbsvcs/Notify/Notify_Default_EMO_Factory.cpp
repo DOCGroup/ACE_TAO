@@ -129,7 +129,7 @@ TAO_Notify_Default_EMO_Factory::init (int argc, char* argv[])
 }
 
 TAO_Notify_Worker_Task*
-TAO_Notify_Default_EMO_Factory::create_task (int mt, int tp_size TAO_ENV_ARG_DECL)
+TAO_Notify_Default_EMO_Factory::create_task (int mt, int tp_size ACE_ENV_ARG_DECL)
 {
   TAO_Notify_Worker_Task* task;
 
@@ -166,21 +166,21 @@ TAO_Notify_Default_EMO_Factory::init_instance (void)
 int
 TAO_Notify_Default_EMO_Factory::preallocate_tasks (void)
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
 
   this->prealloc_source_eval_task_ =
     create_task (EMO_OPTIONS::instance ()->mt_source_eval_, EMO_OPTIONS::instance ()->source_threads_
-                 TAO_ENV_ARG_PARAMETER);
+                 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   this->prealloc_listener_eval_task_ =
     create_task (EMO_OPTIONS::instance ()->mt_listener_eval_, EMO_OPTIONS::instance ()->listener_threads_
-                 TAO_ENV_ARG_PARAMETER);
+                 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   this->prealloc_dispatching_task_ =
     create_task (EMO_OPTIONS::instance ()->mt_dispatching_, EMO_OPTIONS::instance ()->dispatching_threads_
-                 TAO_ENV_ARG_PARAMETER);
+                 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   return 0;
@@ -194,7 +194,7 @@ TAO_Notify_Default_EMO_Factory::fini (void)
 }
 
 TAO_Notify_Event_Manager*
-TAO_Notify_Default_EMO_Factory::create_event_manager (TAO_Notify_EventChannel_i* channel TAO_ENV_ARG_DECL)
+TAO_Notify_Default_EMO_Factory::create_event_manager (TAO_Notify_EventChannel_i* channel ACE_ENV_ARG_DECL)
 {
   TAO_Notify_Event_Manager* event_manager;
   ACE_NEW_THROW_EX (event_manager,
@@ -204,7 +204,7 @@ TAO_Notify_Default_EMO_Factory::create_event_manager (TAO_Notify_EventChannel_i*
 }
 
 TAO_Notify_Event_Map*
-TAO_Notify_Default_EMO_Factory::create_event_map (TAO_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Default_EMO_Factory::create_event_map (ACE_ENV_SINGLE_ARG_DECL)
 {
   TAO_Notify_Event_Map* event_map;
   ACE_NEW_THROW_EX (event_map,
@@ -214,7 +214,7 @@ TAO_Notify_Default_EMO_Factory::create_event_map (TAO_ENV_SINGLE_ARG_DECL)
 }
 
 TAO_Notify_Event_Processor*
-TAO_Notify_Default_EMO_Factory::create_event_processor (TAO_Notify_Event_Manager* event_manager TAO_ENV_ARG_DECL)
+TAO_Notify_Default_EMO_Factory::create_event_processor (TAO_Notify_Event_Manager* event_manager ACE_ENV_ARG_DECL)
 {
   TAO_Notify_Event_Processor* event_processor;
   ACE_NEW_THROW_EX (event_processor,
@@ -225,49 +225,49 @@ TAO_Notify_Default_EMO_Factory::create_event_processor (TAO_Notify_Event_Manager
 
 
 TAO_Notify_Worker_Task*
-TAO_Notify_Default_EMO_Factory::create_source_eval_task (TAO_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Default_EMO_Factory::create_source_eval_task (ACE_ENV_SINGLE_ARG_DECL)
 {
   if (EMO_OPTIONS::instance ()->alloc_task_per_proxy_ == 1)
     return create_task (EMO_OPTIONS::instance ()->mt_source_eval_,
                         EMO_OPTIONS::instance ()->source_threads_
-                        TAO_ENV_ARG_PARAMETER);
+                        ACE_ENV_ARG_PARAMETER);
   else
     return prealloc_source_eval_task_;
 }
 
 TAO_Notify_Worker_Task*
-TAO_Notify_Default_EMO_Factory::create_lookup_task (TAO_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Default_EMO_Factory::create_lookup_task (ACE_ENV_SINGLE_ARG_DECL)
 {
   return create_task (EMO_OPTIONS::instance ()->mt_lookup_,
-                      EMO_OPTIONS::instance ()->lookup_threads_ TAO_ENV_ARG_PARAMETER);
+                      EMO_OPTIONS::instance ()->lookup_threads_ ACE_ENV_ARG_PARAMETER);
 }
 
 TAO_Notify_Worker_Task*
-TAO_Notify_Default_EMO_Factory::create_listener_eval_task (TAO_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Default_EMO_Factory::create_listener_eval_task (ACE_ENV_SINGLE_ARG_DECL)
 {
   if (EMO_OPTIONS::instance ()->alloc_task_per_proxy_ == 1)
     return create_task (EMO_OPTIONS::instance ()->mt_listener_eval_,
                         EMO_OPTIONS::instance ()->listener_threads_
-                        TAO_ENV_ARG_PARAMETER);
+                        ACE_ENV_ARG_PARAMETER);
   else
     return prealloc_listener_eval_task_;
 }
 
 TAO_Notify_Worker_Task*
-TAO_Notify_Default_EMO_Factory::create_dispatching_task (TAO_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Default_EMO_Factory::create_dispatching_task (ACE_ENV_SINGLE_ARG_DECL)
 {
   if (EMO_OPTIONS::instance ()->alloc_task_per_proxy_ == 1)
     return create_task (EMO_OPTIONS::instance ()->mt_dispatching_,
                         EMO_OPTIONS::instance ()->dispatching_threads_
-                        TAO_ENV_ARG_PARAMETER);
+                        ACE_ENV_ARG_PARAMETER);
   else
     return prealloc_dispatching_task_;
 }
 
 TAO_Notify_Worker_Task*
-TAO_Notify_Default_EMO_Factory::create_updates_task (TAO_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Default_EMO_Factory::create_updates_task (ACE_ENV_SINGLE_ARG_DECL)
 {
-  return create_task (EMO_OPTIONS::instance ()->asynch_updates_, ASYNCH_UPDATES_THREADS TAO_ENV_ARG_PARAMETER);
+  return create_task (EMO_OPTIONS::instance ()->asynch_updates_, ASYNCH_UPDATES_THREADS ACE_ENV_ARG_PARAMETER);
 }
 
 void

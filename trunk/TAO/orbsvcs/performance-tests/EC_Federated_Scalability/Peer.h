@@ -33,31 +33,31 @@ public:
 
   /// Initialize the peer
   void init (PortableServer::POA_ptr poa
-             TAO_ENV_ARG_DECL);
+             ACE_ENV_ARG_DECL);
 
   //@{
   /** @name The Control::Peer methods
    */
   virtual RtecEventChannelAdmin::EventChannel_ptr
-      channel (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+      channel (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
         ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void connect (RtecEventChannelAdmin::EventChannel_ptr remote_ec
-                        TAO_ENV_ARG_DECL_NOT_USED)
+                        ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   Control::Loopback_ptr setup_loopback (CORBA::Long experiment_id
-                                        TAO_ENV_ARG_DECL_NOT_USED)
+                                        ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual Control::Samples* run_experiment (CORBA::Long consumer_count,
                                             CORBA::Long experiment_id,
                                             CORBA::Long iterations,
                                             CORBA::Long_out gsf
-                                            TAO_ENV_ARG_DECL_NOT_USED)
+                                            ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void shutdown (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
   //@}
 

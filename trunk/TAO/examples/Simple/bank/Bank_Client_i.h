@@ -13,9 +13,9 @@
 //    This class implements the  interface calls for RMI.
 //
 // = AUTHOR
-//    
+//
 //   Balachandran Natarajan <bala@cs.wustl.edu>
-//    
+//
 // ============================================================================
 
 #ifndef BANK_CLIENT_I_H
@@ -50,15 +50,15 @@ private:
   int check_accounts (void);
   // Method that calls all the test functions
 
-  void test_for_different_name (TAO_ENV_SINGLE_ARG_DECL);
+  void test_for_different_name (ACE_ENV_SINGLE_ARG_DECL);
   // Tests if accounts opened with different names return a different account
   // reference.
 
-  void test_for_same_name (TAO_ENV_SINGLE_ARG_DECL);
-  // Tests if accounts opened with the same name return the same 
+  void test_for_same_name (ACE_ENV_SINGLE_ARG_DECL);
+  // Tests if accounts opened with the same name return the same
   // object reference.
-  
-  void test_for_overdraft (TAO_ENV_SINGLE_ARG_DECL);
+
+  void test_for_overdraft (ACE_ENV_SINGLE_ARG_DECL);
   // Tests for the Overdraft Exception when the client tries to
   // withdraw more money than the current balance.
 };

@@ -65,14 +65,14 @@ public:
   // Execute the test.
 
   virtual void run_init (int& argc, char* argv[]
-                         TAO_ENV_ARG_DECL);
+                         ACE_ENV_ARG_DECL);
   // The initialization section
 
-  virtual void run_cleanup (TAO_ENV_SINGLE_ARG_DECL);
+  virtual void run_cleanup (ACE_ENV_SINGLE_ARG_DECL);
   // The cleanup section
 
   virtual void initialize_orb_and_poa (int& argc, char* argv[]
-                                       TAO_ENV_ARG_DECL);
+                                       ACE_ENV_ARG_DECL);
   // Initialize the ORB and obtain the RootPOA object
 
   virtual int parse_args (int& argc, char* argv[]);
@@ -87,57 +87,57 @@ public:
   virtual int move_to_rt_class (void);
   // Run the test in the real-time class, return -1 on error.
 
-  virtual void initialize_ec_impl (TAO_ENV_SINGLE_ARG_DECL);
+  virtual void initialize_ec_impl (ACE_ENV_SINGLE_ARG_DECL);
   // Construct the EC and its helper objects, also activates the EC in
   // the RootPOA.
 
-  virtual void connect_clients (TAO_ENV_SINGLE_ARG_DECL);
+  virtual void connect_clients (ACE_ENV_SINGLE_ARG_DECL);
   // By default connect the consumers and then the suppliers, other
   // orders should work too.
 
-  virtual void disconnect_clients (TAO_ENV_SINGLE_ARG_DECL);
+  virtual void disconnect_clients (ACE_ENV_SINGLE_ARG_DECL);
   // By default disconnect the suppliers and then the consumers, other
   // orders should work too.
 
-  virtual void shutdown_clients (TAO_ENV_SINGLE_ARG_DECL);
+  virtual void shutdown_clients (ACE_ENV_SINGLE_ARG_DECL);
   // By default deactivate the suppliers and then the consumers, other
   // orders should work too.
 
-  virtual void connect_consumers (TAO_ENV_SINGLE_ARG_DECL);
+  virtual void connect_consumers (ACE_ENV_SINGLE_ARG_DECL);
   // Connect all the consumers, by default it lets each consumer
   // connect itself.
 
   virtual void connect_consumer (
     RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin,
     int i
-    TAO_ENV_ARG_DECL);
+    ACE_ENV_ARG_DECL);
   // Connect consumer number <i> using the consumer_admin provided.
 
   virtual void build_consumer_qos (
       int i,
       RtecEventChannelAdmin::ConsumerQOS& qos,
       int& shutdown_event_type
-      TAO_ENV_ARG_DECL_NOT_USED);
+      ACE_ENV_ARG_DECL_NOT_USED);
   // Build the QoS requirements for consumer <i>
 
-  virtual void connect_suppliers (TAO_ENV_SINGLE_ARG_DECL);
+  virtual void connect_suppliers (ACE_ENV_SINGLE_ARG_DECL);
   // Connect all the suppliers, by default it lets each supplier
   // connect itself.
 
   virtual void connect_supplier (
     RtecEventChannelAdmin::SupplierAdmin_ptr supplier_admin,
     int i
-    TAO_ENV_ARG_DECL);
+    ACE_ENV_ARG_DECL);
   // Connect supplier number <i> using the supplier_admin provided.
 
   virtual void build_supplier_qos (
       int i,
       RtecEventChannelAdmin::SupplierQOS& qos,
       int& shutdown_event_type
-      TAO_ENV_ARG_DECL_NOT_USED);
+      ACE_ENV_ARG_DECL_NOT_USED);
   // Build the QoS requirements for supplier <i>
 
-  virtual void execute_test (TAO_ENV_SINGLE_ARG_DECL);
+  virtual void execute_test (ACE_ENV_SINGLE_ARG_DECL);
   // Execute the test, by default simply call activate_suppliers()
 
   virtual void dump_results (void);
@@ -145,22 +145,22 @@ public:
   // and consumers, collect the latency and throughput results for
   // each and print the totals too.
 
-  virtual void disconnect_consumers (TAO_ENV_SINGLE_ARG_DECL);
+  virtual void disconnect_consumers (ACE_ENV_SINGLE_ARG_DECL);
   // Disconnect all the consumers.
 
-  virtual void disconnect_suppliers (TAO_ENV_SINGLE_ARG_DECL);
+  virtual void disconnect_suppliers (ACE_ENV_SINGLE_ARG_DECL);
   // Disconnect all the suppliers.
 
-  virtual void shutdown_consumers (TAO_ENV_SINGLE_ARG_DECL);
+  virtual void shutdown_consumers (ACE_ENV_SINGLE_ARG_DECL);
   // Deactivate all the consumers.
 
-  virtual void shutdown_suppliers (TAO_ENV_SINGLE_ARG_DECL);
+  virtual void shutdown_suppliers (ACE_ENV_SINGLE_ARG_DECL);
   // Deactivate all the suppliers.
 
-  virtual void destroy_ec (TAO_ENV_SINGLE_ARG_DECL);
+  virtual void destroy_ec (ACE_ENV_SINGLE_ARG_DECL);
   // Call EC->destroy
 
-  virtual void deactivate_ec (TAO_ENV_SINGLE_ARG_DECL);
+  virtual void deactivate_ec (ACE_ENV_SINGLE_ARG_DECL);
   // De-activate the EC (and its helper classes).
 
   virtual void cleanup_ec (void);
@@ -180,35 +180,35 @@ public:
 
   virtual void consumer_push (void* consumer_cookie,
                               const RtecEventComm::EventSet& event
-                              TAO_ENV_ARG_DECL);
+                              ACE_ENV_ARG_DECL);
   // One of the consumers in the test has received an event
 
   virtual void consumer_shutdown (void* consumer_cookie
-                                  TAO_ENV_ARG_DECL);
+                                  ACE_ENV_ARG_DECL);
   // One of the consumers has received a shutdown event
 
   virtual void consumer_disconnect (void* consumer_cookie
-                                    TAO_ENV_ARG_DECL);
+                                    ACE_ENV_ARG_DECL);
   // One of the consumers in the test has been disconnected from the EC
 
   virtual void supplier_disconnect (void* supplier_cookie
-                                    TAO_ENV_ARG_DECL);
+                                    ACE_ENV_ARG_DECL);
   // One of the suppliers in the test has been disconnected from the EC
 
 #if !defined(EC_DISABLE_REMOTE_EC)
-  virtual void obtain_remote_ec (TAO_ENV_SINGLE_ARG_DECL);
+  virtual void obtain_remote_ec (ACE_ENV_SINGLE_ARG_DECL);
   // Obtain the EC from the Naming service
 
   virtual CosNaming::NamingContext_ptr
-       get_naming_context (TAO_ENV_SINGLE_ARG_DECL);
+       get_naming_context (ACE_ENV_SINGLE_ARG_DECL);
 #endif
 
 #if !defined(EC_DISABLE_OLD_EC)
-  virtual void initialize_old_ec (TAO_ENV_SINGLE_ARG_DECL);
+  virtual void initialize_old_ec (ACE_ENV_SINGLE_ARG_DECL);
   // Initialize the EC using the old implementation
 #endif
 
-  virtual void initialize_new_ec (TAO_ENV_SINGLE_ARG_DECL);
+  virtual void initialize_new_ec (ACE_ENV_SINGLE_ARG_DECL);
   // Initialize the EC using the old implementation
 
   virtual int allocate_consumers (void);
@@ -223,7 +223,7 @@ public:
   virtual ACE_Task_Base* allocate_task (int i);
   // Allocate one task for supplier number <i>
 
-  virtual void activate_tasks (TAO_ENV_SINGLE_ARG_DECL);
+  virtual void activate_tasks (ACE_ENV_SINGLE_ARG_DECL);
   // Activate all the tasks, by default runs each supplier on its
   // own thread.
 

@@ -57,7 +57,7 @@ class TAO_PortableServer_Export TAO_ObjectReferenceFactory
   virtual CORBA::Object_ptr make_object (
       const char * repository_id,
       const PortableInterceptor::ObjectId & id
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
   void set_servant (PortableServer::Servant servant);
 

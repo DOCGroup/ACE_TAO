@@ -32,7 +32,7 @@ TAO_PrincipalAuthenticator::~TAO_PrincipalAuthenticator (void)
 Security::AuthenticationMethodList *
 TAO_PrincipalAuthenticator::get_supported_authen_methods (
     const char * /* mechanism */
-    TAO_ENV_ARG_DECL)
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 #if 0
@@ -77,7 +77,7 @@ TAO_PrincipalAuthenticator::authenticate (
     SecurityLevel2::Credentials_out creds,
     CORBA::Any_out continuation_data,
     CORBA::Any_out auth_specific_data
-    TAO_ENV_ARG_DECL)
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Security::AuthenticationStatus status = Security::SecAuthFailure;
@@ -100,7 +100,7 @@ TAO_PrincipalAuthenticator::authenticate (
                                            creds,
                                            continuation_data,
                                            auth_specific_data
-                                           TAO_ENV_ARG_PARAMETER);
+                                           ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (Security::SecAuthFailure);
 
       if (status == Security::SecAuthSuccess
@@ -111,7 +111,7 @@ TAO_PrincipalAuthenticator::authenticate (
   if (status == Security::SecAuthSuccess)
     {
       this->security_manager_->add_own_credentials (creds
-                                                    TAO_ENV_ARG_PARAMETER);
+                                                    ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (Security::SecAuthFailure);
     }
 
@@ -124,7 +124,7 @@ TAO_PrincipalAuthenticator::continue_authentication (
     SecurityLevel2::Credentials_ptr creds,
     CORBA::Any_out continuation_data,
     CORBA::Any_out auth_specific_data
-    TAO_ENV_ARG_DECL)
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Security::AuthenticationStatus status = Security::SecAuthFailure;
@@ -144,7 +144,7 @@ TAO_PrincipalAuthenticator::continue_authentication (
                                                  creds,
                                                  continuation_data,
                                                  auth_specific_data
-                                                 TAO_ENV_ARG_PARAMETER);
+                                                 ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (Security::SecAuthFailure);
 
       if (status == Security::SecAuthSuccess
@@ -155,7 +155,7 @@ TAO_PrincipalAuthenticator::continue_authentication (
   if (status == Security::SecAuthSuccess)
     {
       this->security_manager_->add_own_credentials (creds
-                                                    TAO_ENV_ARG_PARAMETER);
+                                                    ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (Security::SecAuthFailure);
     }
 
@@ -165,7 +165,7 @@ TAO_PrincipalAuthenticator::continue_authentication (
 void
 TAO_PrincipalAuthenticator::register_vault (
   SecurityReplaceable::Vault_ptr vault
-  TAO_ENV_ARG_DECL)
+  ACE_ENV_ARG_DECL)
 {
   if (!CORBA::is_nil (vault))
     {
@@ -207,10 +207,10 @@ tao_TAO_PrincipalAuthenticator_nil (
 TAO_PrincipalAuthenticator_ptr
 tao_TAO_PrincipalAuthenticator_narrow (
     CORBA::Object *p
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return TAO_PrincipalAuthenticator::_narrow (p TAO_ENV_ARG_PARAMETER);
+  return TAO_PrincipalAuthenticator::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -333,10 +333,10 @@ TAO_PrincipalAuthenticator_var::tao_nil (void)
 ::TAO_PrincipalAuthenticator_ptr
 TAO_PrincipalAuthenticator_var::tao_narrow (
     CORBA::Object *p
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return ::TAO_PrincipalAuthenticator::_narrow (p TAO_ENV_ARG_PARAMETER);
+  return ::TAO_PrincipalAuthenticator::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -410,17 +410,17 @@ TAO_PrincipalAuthenticator_out::operator-> (void)
 TAO_PrincipalAuthenticator_ptr
 TAO_PrincipalAuthenticator::_narrow (
     CORBA::Object_ptr obj
-    TAO_ENV_ARG_DECL)
+    ACE_ENV_ARG_DECL)
 {
   return
     TAO_PrincipalAuthenticator::_unchecked_narrow (obj
-                                                   TAO_ENV_ARG_PARAMETER);
+                                                   ACE_ENV_ARG_PARAMETER);
 }
 
 TAO_PrincipalAuthenticator_ptr
 TAO_PrincipalAuthenticator::_unchecked_narrow (
       CORBA::Object_ptr obj
-      TAO_ENV_ARG_DECL_NOT_USED
+      ACE_ENV_ARG_DECL_NOT_USED
     )
 {
   if (CORBA::is_nil (obj))

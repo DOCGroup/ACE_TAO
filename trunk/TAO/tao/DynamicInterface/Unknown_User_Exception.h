@@ -74,9 +74,9 @@ public:
   virtual void _raise (void);
 
   virtual void _tao_encode (TAO_OutputCDR &cdr
-                            TAO_ENV_ARG_DECL) const;
+                            ACE_ENV_ARG_DECL) const;
   virtual void _tao_decode (TAO_InputCDR &cdr
-                            TAO_ENV_ARG_DECL);
+                            ACE_ENV_ARG_DECL);
 
   /// Narrow to an UnknowUserException.
   static CORBA_UnknownUserException *_downcast (CORBA_Exception *ex);

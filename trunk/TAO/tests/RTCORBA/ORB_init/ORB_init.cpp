@@ -31,19 +31,19 @@ test_multiple_orbs (const char *test_name,
             CORBA::ORB_init (argc,
                              argv,
                              name
-                             TAO_ENV_ARG_PARAMETER);
+                             ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           if (rt_orb)
             {
               CORBA::Object_var object =
                 orbs[i]->resolve_initial_references ("RTORB"
-                                                     TAO_ENV_ARG_PARAMETER);
+                                                     ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
 
               rt_orbs[i] =
                 RTCORBA::RTORB::_narrow (object.in ()
-                                         TAO_ENV_ARG_PARAMETER);
+                                         ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
 
               ACE_ASSERT (rt_orbs[i].in () != RTCORBA::RTORB::_nil ());
@@ -56,7 +56,7 @@ test_multiple_orbs (const char *test_name,
                i < iterations;
                ++i)
             {
-              orbs[i]->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
+              orbs[i]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
               ACE_TRY_CHECK;
             }
         }

@@ -9,7 +9,7 @@ public:
   Smart_Test_Factory (int one_shot_factory = 1);
 
   virtual Test_ptr create_proxy (Test_ptr proxy
-                                 TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+                                 ACE_ENV_ARG_DECL_WITH_DEFAULTS);
   // This method will create the smart_proxy.
 };
 
@@ -19,7 +19,7 @@ public:
   Smart_Test_Proxy (Test_ptr proxy);
 
   virtual CORBA::Short method (CORBA::Short boo
-                               TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+                               ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Test::Oops));
   // "Smartify" the method call!

@@ -14,7 +14,7 @@ TAO_SSLIOP_ReceivedCredentials::TAO_SSLIOP_ReceivedCredentials (X509 *cert,
 }
 
 SecurityLevel2::Credentials_ptr
-TAO_SSLIOP_ReceivedCredentials::copy (TAO_ENV_SINGLE_ARG_DECL)
+TAO_SSLIOP_ReceivedCredentials::copy (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_SSLIOP_ReceivedCredentials *c = 0;
@@ -33,7 +33,7 @@ TAO_SSLIOP_ReceivedCredentials::copy (TAO_ENV_SINGLE_ARG_DECL)
 
 Security::InvocationCredentialsType
 TAO_SSLIOP_ReceivedCredentials::credentials_type (
-    TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+    ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return Security::SecReceivedCredentials;
@@ -41,7 +41,7 @@ TAO_SSLIOP_ReceivedCredentials::credentials_type (
 
 SecurityLevel2::Credentials_ptr
 TAO_SSLIOP_ReceivedCredentials::accepting_credentials (
-    TAO_ENV_SINGLE_ARG_DECL)
+    ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (
@@ -54,7 +54,7 @@ TAO_SSLIOP_ReceivedCredentials::accepting_credentials (
 
 Security::AssociationOptions
 TAO_SSLIOP_ReceivedCredentials::association_options_used (
-    TAO_ENV_SINGLE_ARG_DECL)
+    ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (
@@ -69,7 +69,7 @@ TAO_SSLIOP_ReceivedCredentials::association_options_used (
 
 Security::DelegationState
 TAO_SSLIOP_ReceivedCredentials::delegation_state (
-  TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+  ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // It is not possible to perform credentials delegation with SSLIOP,
@@ -80,7 +80,7 @@ TAO_SSLIOP_ReceivedCredentials::delegation_state (
 
 Security::DelegationMode
 TAO_SSLIOP_ReceivedCredentials::delegation_mode (
-    TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+    ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // SSLIOP does not support delegation.
@@ -91,16 +91,16 @@ TAO_SSLIOP_ReceivedCredentials::delegation_mode (
 
 TAO_SSLIOP_ReceivedCredentials_ptr
 TAO_SSLIOP_ReceivedCredentials::_narrow (CORBA::Object_ptr obj
-                                         TAO_ENV_ARG_DECL)
+                                         ACE_ENV_ARG_DECL)
 {
   return
     TAO_SSLIOP_ReceivedCredentials::_unchecked_narrow (obj
-                                                       TAO_ENV_ARG_PARAMETER);
+                                                       ACE_ENV_ARG_PARAMETER);
 }
 
 TAO_SSLIOP_ReceivedCredentials_ptr
 TAO_SSLIOP_ReceivedCredentials::_unchecked_narrow (CORBA::Object_ptr obj
-                                                   TAO_ENV_ARG_DECL_NOT_USED)
+                                                   ACE_ENV_ARG_DECL_NOT_USED)
 {
   if (CORBA::is_nil (obj))
     return TAO_SSLIOP_ReceivedCredentials::_nil ();

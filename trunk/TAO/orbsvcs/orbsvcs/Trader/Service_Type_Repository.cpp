@@ -37,7 +37,7 @@ TAO_Service_Type_Repository::~TAO_Service_Type_Repository (void)
 }
 
 CosTradingRepos::ServiceTypeRepository::IncarnationNumber
-TAO_Service_Type_Repository::incarnation (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Service_Type_Repository::incarnation (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CosTradingRepos::ServiceTypeRepository::IncarnationNumber inc_num;
@@ -63,7 +63,7 @@ add_type (const char *name,
           const char *if_name,
           const CosTradingRepos::ServiceTypeRepository::PropStructSeq &props,
           const CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq &super_types
-          TAO_ENV_ARG_DECL)
+          ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    CosTrading::IllegalServiceType,
                    CosTradingRepos::ServiceTypeRepository::ServiceTypeExists,
@@ -101,13 +101,13 @@ add_type (const char *name,
   // Make sure all property names are valid and appear only once.
   this->validate_properties (prop_map,
                              props
-                             TAO_ENV_ARG_PARAMETER);
+                             ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (this->incarnation_);
 
   // Check that all super_types exist, and none are duplicated.
   this->validate_supertypes (super_map,
                              super_types
-                             TAO_ENV_ARG_PARAMETER);
+                             ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (this->incarnation_);
 
   // NOTE: I don't really know a way to do this without an Interface
@@ -115,7 +115,7 @@ add_type (const char *name,
   // information about supertypes.
   //
   // make sure interface name is legal.
-  //  this->validate_interface (if_name, super_types TAO_ENV_ARG_PARAMETER);
+  //  this->validate_interface (if_name, super_types ACE_ENV_ARG_PARAMETER);
   //  ACE_CHECK_RETURN (this->incarnation);
   //
   // Instead, we do this:
@@ -129,7 +129,7 @@ add_type (const char *name,
   // the job.
   this->validate_inheritance (prop_map,
                               super_types
-                              TAO_ENV_ARG_PARAMETER);
+                              ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (this->incarnation_);
 
   // We can now use prop_map to construct a sequence of all properties
@@ -156,7 +156,7 @@ add_type (const char *name,
 
 void
 TAO_Service_Type_Repository::remove_type (const char *name
-                                          TAO_ENV_ARG_DECL)
+                                          ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    CosTrading::IllegalServiceType,
                    CosTrading::UnknownServiceType,
@@ -187,7 +187,7 @@ TAO_Service_Type_Repository::remove_type (const char *name
 CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq *
 TAO_Service_Type_Repository::
 list_types (const CosTradingRepos::ServiceTypeRepository::SpecifiedServiceTypes &which_types
-            TAO_ENV_ARG_DECL)
+            ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_READ_GUARD_THROW_EX (ACE_Lock, ace_mon, *this->lock_, CORBA::INTERNAL ());
@@ -233,7 +233,7 @@ list_types (const CosTradingRepos::ServiceTypeRepository::SpecifiedServiceTypes 
 CosTradingRepos::ServiceTypeRepository::TypeStruct *
 TAO_Service_Type_Repository::
 describe_type (const char * name
-               TAO_ENV_ARG_DECL)
+               ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    CosTrading::IllegalServiceType,
                    CosTrading::UnknownServiceType))
@@ -283,7 +283,7 @@ describe_type (const char * name
 CosTradingRepos::ServiceTypeRepository::TypeStruct *
 TAO_Service_Type_Repository::
 fully_describe_type (const char *name
-                     TAO_ENV_ARG_DECL)
+                     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    CosTrading::IllegalServiceType,
                    CosTrading::UnknownServiceType))
@@ -329,7 +329,7 @@ fully_describe_type (const char *name
 void
 TAO_Service_Type_Repository::
 mask_type (const char *name
-           TAO_ENV_ARG_DECL)
+           ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    CosTrading::IllegalServiceType,
                    CosTrading::UnknownServiceType,
@@ -360,7 +360,7 @@ mask_type (const char *name
 void
 TAO_Service_Type_Repository::
 unmask_type (const char *name
-             TAO_ENV_ARG_DECL)
+             ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                   CosTrading::IllegalServiceType,
                   CosTrading::UnknownServiceType,
@@ -497,7 +497,7 @@ void
 TAO_Service_Type_Repository::
 validate_properties (Prop_Map &prop_map,
                      const CosTradingRepos::ServiceTypeRepository::PropStructSeq &props
-                     TAO_ENV_ARG_DECL)
+                     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CosTrading::IllegalPropertyName,
                    CosTrading::DuplicatePropertyName))
 {
@@ -526,7 +526,7 @@ void
 TAO_Service_Type_Repository::
 validate_supertypes (Service_Type_Map &super_map,
                      const CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq &super_types
-                     TAO_ENV_ARG_DECL)
+                     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CosTrading::IllegalServiceType,
                    CosTrading::UnknownServiceType,
                    CosTradingRepos::ServiceTypeRepository::DuplicateServiceTypeName))
@@ -562,7 +562,7 @@ void
 TAO_Service_Type_Repository::
 validate_inheritance (Prop_Map &prop_map,
                       const CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq &super_types
-                      TAO_ENV_ARG_DECL)
+                      ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CosTradingRepos::ServiceTypeRepository::ValueTypeRedefinition))
 {
   CORBA::ULong num_super_types = super_types.length ();
@@ -611,7 +611,7 @@ validate_inheritance (Prop_Map &prop_map,
                 {
                   compare =
                     super_props[j].value_type->equal (prop_type
-                                                      TAO_ENV_ARG_PARAMETER);
+                                                      ACE_ENV_ARG_PARAMETER);
                   ACE_TRY_CHECK;
                 }
               ACE_CATCHANY

@@ -62,7 +62,7 @@ public:
   /// mechanism.
   virtual Security::AuthenticationMethodList * get_supported_authen_methods (
       const char * mechanism
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Authenticate the principal, request privileges and create
@@ -85,7 +85,7 @@ public:
       SecurityLevel2::Credentials_out creds,
       CORBA::Any_out continuation_data,
       CORBA::Any_out auth_specific_data
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Continue partially completed authentication process.
@@ -94,7 +94,7 @@ public:
       SecurityLevel2::Credentials_ptr creds,
       CORBA::Any_out continuation_data,
       CORBA::Any_out auth_specific_data
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
   //@}
 
@@ -105,7 +105,7 @@ public:
    * @note This is a TAO-specific extension.
    */
   void register_vault (SecurityReplaceable::Vault_ptr vault
-                       TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+                       ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
   /**
    * @name Downcast Related Methods
@@ -126,12 +126,12 @@ public:
 
   static TAO_PrincipalAuthenticator_ptr _narrow (
       CORBA::Object_ptr obj
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
     );
 
   static TAO_PrincipalAuthenticator_ptr _unchecked_narrow (
       CORBA::Object_ptr obj
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
     );
 
   static TAO_PrincipalAuthenticator_ptr _nil (void)
@@ -193,7 +193,7 @@ public:
   static TAO_PrincipalAuthenticator_ptr tao_nil (void);
   static TAO_PrincipalAuthenticator_ptr tao_narrow (
       CORBA::Object *
-      TAO_ENV_ARG_DECL_NOT_USED
+      ACE_ENV_ARG_DECL_NOT_USED
     );
   static CORBA::Object * tao_upcast (void *);
 

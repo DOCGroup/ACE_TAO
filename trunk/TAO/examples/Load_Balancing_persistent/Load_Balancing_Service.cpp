@@ -70,7 +70,7 @@ Load_Balancing_Service::init (int argc,
     {
       result = this->orb_manager_.init (argc,
                                         argv
-                                        TAO_ENV_ARG_PARAMETER);
+                                        ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       if (result == -1)
         return result;
@@ -87,19 +87,19 @@ Load_Balancing_Service::init (int argc,
       // Lifespan policy
       policies[0] =
         this->orb_manager_.root_poa()->create_lifespan_policy (PortableServer::PERSISTENT
-                                                               TAO_ENV_ARG_PARAMETER);
+                                                               ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       policies[1] =
         this->orb_manager_.root_poa()->create_implicit_activation_policy (PortableServer::IMPLICIT_ACTIVATION
-                                                                          TAO_ENV_ARG_PARAMETER);
+                                                                          ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POA_var persistent_POA =
         this->orb_manager_.root_poa()->create_POA ("persistent",
                                                    this->orb_manager_.poa_manager (),
                                                    policies
-                                                   TAO_ENV_ARG_PARAMETER);
+                                                   ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
 
@@ -108,7 +108,7 @@ Load_Balancing_Service::init (int argc,
            i < policies.length ();
            ++i)
         {
-          policies[i]->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
+          policies[i]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
 
@@ -121,13 +121,13 @@ Load_Balancing_Service::init (int argc,
 
       // Activate the POA manager
       //PortableServer::ServantBase_var s = factory_servant;
-      this->orb_manager_.activate_poa_manager (TAO_ENV_SINGLE_ARG_PARAMETER);
+      this->orb_manager_.activate_poa_manager (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Object_var objref = factory_servant->_this ();
 
       ior = this->orb_manager_.orb ()->object_to_string (objref.in ()
-                                                         TAO_ENV_ARG_PARAMETER);
+                                                         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (ior.in () == 0)
@@ -158,11 +158,11 @@ Load_Balancing_Service::init (int argc,
 
 
 int
-Load_Balancing_Service::run (TAO_ENV_SINGLE_ARG_DECL)
+Load_Balancing_Service::run (ACE_ENV_SINGLE_ARG_DECL)
 {
   int result;
 
-  result = this->orb_manager_.run (TAO_ENV_SINGLE_ARG_PARAMETER);
+  result = this->orb_manager_.run (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   return result;
@@ -184,7 +184,7 @@ main (int argc, char *argv[])
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      result = factory.run (TAO_ENV_SINGLE_ARG_PARAMETER);
+      result = factory.run (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

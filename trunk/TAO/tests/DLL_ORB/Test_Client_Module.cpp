@@ -63,7 +63,7 @@ Test_Client_Module::init (int argc, ACE_TCHAR *argv[])
   // -----------------------------------------------------------------
   // Boilerplate CORBA/TAO client-side ORB initialization code.
   // -----------------------------------------------------------------
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       // Prepend a "dummy" program name argument to the Service
@@ -88,7 +88,7 @@ Test_Client_Module::init (int argc, ACE_TCHAR *argv[])
       this->orb_ = CORBA::ORB_init (new_argc,
                                     new_argv.get_buffer (),
                                     ""
-                                    TAO_ENV_ARG_PARAMETER);
+                                    ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (this->orb_.in ()))
@@ -98,11 +98,11 @@ Test_Client_Module::init (int argc, ACE_TCHAR *argv[])
         return 1;
 
       CORBA::Object_var obj =
-        this->orb_->string_to_object (ior TAO_ENV_ARG_PARAMETER);
+        this->orb_->string_to_object (ior ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       this->test_ =
-        Test::_narrow (obj.in () TAO_ENV_ARG_PARAMETER);
+        Test::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (this->test_.in ()))
@@ -139,13 +139,13 @@ Test_Client_Module::init (int argc, ACE_TCHAR *argv[])
 int
 Test_Client_Module::fini (void)
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       // Make sure the ORB is destroyed.
       if (!CORBA::is_nil (this->orb_.in ()))
         {
-          this->orb_->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
+          this->orb_->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
     }
@@ -184,15 +184,15 @@ Test_Client_Module::fini (void)
 int
 Test_Client_Module::svc (void)
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       // Invoke an operation on the Test object.
-      this->test_->invoke_me (TAO_ENV_SINGLE_ARG_PARAMETER);
+      this->test_->invoke_me (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       /// Shutdown the remote ORB.
-      this->test_->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
+      this->test_->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

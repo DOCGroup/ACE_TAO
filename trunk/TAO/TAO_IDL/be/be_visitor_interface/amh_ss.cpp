@@ -70,9 +70,9 @@ be_visitor_amh_interface_ss::this_method (be_interface *node)
 
   *os << non_amh_name.c_str() << "*" << be_nl
       << full_skel_name
-      << "::_this (TAO_ENV_SINGLE_ARG_DECL)" << be_nl
+      << "::_this (ACE_ENV_SINGLE_ARG_DECL)" << be_nl
       << "{" << be_idt_nl // idt = 1
-      << "TAO_Stub *stub = this->_create_stub (TAO_ENV_SINGLE_ARG_PARAMETER);"
+      << "TAO_Stub *stub = this->_create_stub (ACE_ENV_SINGLE_ARG_PARAMETER);"
       << be_nl
       << "ACE_CHECK_RETURN (0);" << be_nl << be_nl;
 
@@ -109,14 +109,14 @@ be_visitor_amh_interface_ss::dispatch_method (be_interface *node)
       << full_skel_name << "::_dispatch (" << be_idt << be_idt_nl
       << "TAO_ServerRequest &req," << be_nl
       << "void *context" << be_nl
-      << "TAO_ENV_ARG_DECL" << be_uidt_nl
+      << "ACE_ENV_ARG_DECL" << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl
       << "this->asynchronous_upcall_dispatch (" << be_idt << be_idt_nl
       << "req," << be_nl
       << "context," << be_nl
       << "this" << be_nl
-      << "TAO_ENV_ARG_PARAMETER" << be_uidt_nl
+      << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
       << ");" << be_uidt << be_uidt_nl
       << "}" << be_nl;
 }

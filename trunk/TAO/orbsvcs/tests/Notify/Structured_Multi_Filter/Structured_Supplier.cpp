@@ -35,7 +35,7 @@ class supplier_ctrl_i : public POA_supplier_ctrl
 public:
   void ctrl (CORBA::Boolean flag,
              CORBA::Short num_events
-             TAO_ENV_ARG_DECL)
+             ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 };
 
@@ -43,7 +43,7 @@ public:
 void
 supplier_ctrl_i::ctrl (CORBA::Boolean flag,
                        CORBA::Short num_events
-                       TAO_ENV_ARG_DECL_NOT_USED /*TAO_ENV_SINGLE_ARG_PARAMETER*/)
+                       ACE_ENV_ARG_DECL_NOT_USED /*ACE_ENV_SINGLE_ARG_PARAMETER*/)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   go = flag;
@@ -92,14 +92,14 @@ Supplier_Client::parse_args (int argc, char *argv[])
 
 static CosNotifyChannelAdmin::SupplierAdmin_ptr
 create_supplieradmin (CosNotifyChannelAdmin::EventChannel_ptr ec
-                      TAO_ENV_ARG_DECL)
+                      ACE_ENV_ARG_DECL)
 {
   CosNotifyChannelAdmin::AdminID adminid = 0;
   CosNotifyChannelAdmin::SupplierAdmin_var admin =
     ec->new_for_suppliers ((op ? CosNotifyChannelAdmin::OR_OP :
                                  CosNotifyChannelAdmin::AND_OP),
                            adminid
-                           TAO_ENV_ARG_PARAMETER);
+                           ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   return CosNotifyChannelAdmin::SupplierAdmin::_duplicate (admin.in ());
@@ -189,7 +189,7 @@ setup_event ()
   ACE_TRY_NEW_ENV
     {
       ACE_DEBUG ((LM_DEBUG, "%d sent \n", count));
-      supplier->send_event (event TAO_ENV_ARG_PARAMETER);
+      supplier->send_event (event ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCH (CORBA::Exception, e)
@@ -204,30 +204,30 @@ setup_event ()
 static void create_supplier (CosNotifyChannelAdmin::SupplierAdmin_ptr admin,
                              CosNotifyChannelAdmin::EventChannel_ptr ec,
                              PortableServer::POA_ptr poa
-                             TAO_ENV_ARG_DECL)
+                             ACE_ENV_ARG_DECL)
 {
   ACE_NEW_THROW_EX (supplier,
                     Notify_Push_Supplier (),
                     CORBA::NO_MEMORY ());
 
-  supplier->init (poa TAO_ENV_ARG_PARAMETER);
+  supplier->init (poa ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  supplier->connect (admin, ec, isFilter TAO_ENV_ARG_PARAMETER);
+  supplier->connect (admin, ec, isFilter ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void add_filter (CosNotifyChannelAdmin::SupplierAdmin_ptr admin,
                  CosNotifyChannelAdmin::EventChannel_ptr notify_channel
-                 TAO_ENV_ARG_DECL)
+                 ACE_ENV_ARG_DECL)
 {
     // add supplier side filtering
   CosNotifyFilter::FilterFactory_var ffact =
-    notify_channel->default_filter_factory (TAO_ENV_SINGLE_ARG_PARAMETER);
+    notify_channel->default_filter_factory (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   CosNotifyFilter::Filter_var filter =
-    ffact->create_filter (GRAMMAR TAO_ENV_ARG_PARAMETER);
+    ffact->create_filter (GRAMMAR ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (CORBA::is_nil (filter.in ()))
@@ -243,11 +243,11 @@ void add_filter (CosNotifyChannelAdmin::SupplierAdmin_ptr admin,
   constraint_list[0].event_types.length (0);
   constraint_list[0].constraint_expr = CORBA::string_dup ("String == 'Fifty'");
 
-  filter->add_constraints (constraint_list TAO_ENV_ARG_PARAMETER);
+  filter->add_constraints (constraint_list ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // apply filter
-  admin->add_filter (filter.in () TAO_ENV_ARG_PARAMETER);
+  admin->add_filter (filter.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
@@ -262,7 +262,7 @@ int main (int argc, char * argv[])
   ACE_TRY_NEW_ENV;
     {
       Supplier_Client client;
-      status = client.init (argc, argv TAO_ENV_ARG_PARAMETER);
+      status = client.init (argc, argv ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (status == 0)
@@ -272,7 +272,7 @@ int main (int argc, char * argv[])
           CosNotifyChannelAdmin::EventChannel_var ec =
                    client.create_event_channel ("NotifyEventChannelFactory",
                                                 0
-                                                TAO_ENV_ARG_PARAMETER);
+                                                ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           // register control with naming service
@@ -294,11 +294,11 @@ int main (int argc, char * argv[])
           int done = 0;
 
           CosNotifyChannelAdmin::SupplierAdmin_var admin =
-            create_supplieradmin (ec.in () TAO_ENV_ARG_PARAMETER);
+            create_supplieradmin (ec.in () ACE_ENV_ARG_PARAMETER);
 
           if (isFilter)
             {
-              add_filter (admin.in (), ec.in () TAO_ENV_ARG_PARAMETER);
+              add_filter (admin.in (), ec.in () ACE_ENV_ARG_PARAMETER);
             }
 
           if (!CORBA::is_nil (admin.in ()))
@@ -306,7 +306,7 @@ int main (int argc, char * argv[])
               create_supplier (admin.in (),
                                ec.in (),
                                 client.root_poa ()
-                               TAO_ENV_ARG_PARAMETER);
+                               ACE_ENV_ARG_PARAMETER);
 
               // Ready. So Write ior to file
               CORBA::ORB_ptr orb = client.orb ();

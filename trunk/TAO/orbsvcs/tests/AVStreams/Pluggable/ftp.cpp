@@ -124,7 +124,7 @@ Client::frame_rate (void)
 
 // Method to get the object reference of the server
 int
-Client::bind_to_server (TAO_ENV_SINGLE_ARG_DECL)
+Client::bind_to_server (ACE_ENV_SINGLE_ARG_DECL)
 {
   // Initialize the naming services
   if (my_naming_client_.init (TAO_AV_CORE::instance ()->orb ()) != 0)
@@ -140,12 +140,12 @@ Client::bind_to_server (TAO_ENV_SINGLE_ARG_DECL)
   // Resolve the server object reference from the Naming Service
   CORBA::Object_var server_mmdevice_obj =
     my_naming_client_->resolve (server_mmdevice_name
-                                TAO_ENV_ARG_PARAMETER);
+                                ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   this->server_mmdevice_ =
     AVStreams::MMDevice::_narrow (server_mmdevice_obj.in ()
-                                  TAO_ENV_ARG_PARAMETER);
+                                  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   if (CORBA::is_nil (this->server_mmdevice_.in ()))
@@ -159,7 +159,7 @@ Client::bind_to_server (TAO_ENV_SINGLE_ARG_DECL)
 int
 Client::init (int argc,
               char **argv
-              TAO_ENV_ARG_DECL)
+              ACE_ENV_ARG_DECL)
 {
   this->argc_ = argc;
   this->argv_ = argv;
@@ -187,7 +187,7 @@ Client::init (int argc,
                       -1);
 
   result
-    = this->bind_to_server (TAO_ENV_SINGLE_ARG_PARAMETER);
+    = this->bind_to_server (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   // Resolve the object reference of the server from the Naming Service.
@@ -233,7 +233,7 @@ Client::init (int argc,
   flow_spec.length (1);
 
   AVStreams::MMDevice_var client_mmdevice =
-    this->client_mmdevice_._this (TAO_ENV_SINGLE_ARG_PARAMETER);
+    this->client_mmdevice_._this (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   // Bind/Connect  the client and server MMDevices.
@@ -242,7 +242,7 @@ Client::init (int argc,
                                  this->server_mmdevice_.in (),
                                  the_qos.inout (),
                                  flow_spec
-                                 TAO_ENV_ARG_PARAMETER);
+                                 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   if (bind_result == 0)
@@ -253,7 +253,7 @@ Client::init (int argc,
 
 // Method to send data at the specified rate
 int
-Client::pace_data (TAO_ENV_SINGLE_ARG_DECL)
+Client::pace_data (ACE_ENV_SINGLE_ARG_DECL)
 {
 
   // Rate at which frames of data need to be sent.
@@ -341,7 +341,7 @@ Client::pace_data (TAO_ENV_SINGLE_ARG_DECL)
 
                   // run the orb for the wait time so the client can continue other orb requests.
                   TAO_AV_CORE::instance ()->orb ()->run (wait_time
-                                                         TAO_ENV_ARG_PARAMETER);
+                                                         ACE_ENV_ARG_PARAMETER);
                   ACE_TRY_CHECK;
                 }
             }
@@ -365,7 +365,7 @@ Client::pace_data (TAO_ENV_SINGLE_ARG_DECL)
       // Since the file is read stop the stream.
       AVStreams::flowSpec stop_spec (1);
       CLIENT::instance ()->streamctrl ()->destroy (stop_spec
-                                                   TAO_ENV_ARG_PARAMETER);
+                                                   ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Shut the orb down.
@@ -387,52 +387,52 @@ int
 main (int argc,
       char **argv)
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
                                             0
-                                            TAO_ENV_ARG_PARAMETER);
+                                            ACE_ENV_ARG_PARAMETER);
       CORBA::Object_var obj
         = orb->resolve_initial_references ("RootPOA"
-                                           TAO_ENV_ARG_PARAMETER);
+                                           ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
 
       //Get the POA_var object from Object_var
       PortableServer::POA_var root_poa
         = PortableServer::POA::_narrow (obj.in ()
-                                        TAO_ENV_ARG_PARAMETER);
+                                        ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POAManager_var mgr
-        = root_poa->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
+        = root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      mgr->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
+      mgr->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Initialize the AV STream components.
       TAO_AV_CORE::instance ()->init (orb.in (),
                                       root_poa.in ()
-                                      TAO_ENV_ARG_PARAMETER);
+                                      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // INitialize the Client.
       int result = 0;
       result = CLIENT::instance ()->init (argc,
                                           argv
-                                          TAO_ENV_ARG_PARAMETER);
+                                          ACE_ENV_ARG_PARAMETER);
       if (result < 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "client::init failed\n"),1);
 
       // Start sending data.
-      result = CLIENT::instance ()->pace_data (TAO_ENV_SINGLE_ARG_PARAMETER);
+      result = CLIENT::instance ()->pace_data (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      orb->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
+      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
     }
   ACE_CATCHANY

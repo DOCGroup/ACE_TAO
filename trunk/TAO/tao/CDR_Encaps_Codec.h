@@ -62,21 +62,21 @@ public:
   /// Encode the given data, including the TypeCode, into an octet
   /// sequence.
   virtual CORBA::OctetSeq * encode (const CORBA::Any & data
-                                    TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+                                    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      IOP::Codec::InvalidTypeForEncoding));
 
   /// Extract the TypeCode and the value from the octet sequence and
   /// place them into an Any.
   virtual CORBA::Any * decode (const CORBA::OctetSeq & data
-                               TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+                               ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      IOP::Codec::FormatMismatch));
 
   /// Encode the given data, excluding the TypeCode, into an octet
   /// sequence.
   virtual CORBA::OctetSeq * encode_value (const CORBA::Any & data
-                                          TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+                                          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      IOP::Codec::InvalidTypeForEncoding));
 
@@ -84,7 +84,7 @@ public:
   /// TypeCode,  and place it into an Any.
   virtual CORBA::Any * decode_value (const CORBA::OctetSeq & data,
                                      CORBA::TypeCode_ptr tc
-                                     TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+                                     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      IOP::Codec::FormatMismatch,
                      IOP::Codec::TypeMismatch));
@@ -106,7 +106,7 @@ protected:
    * Codec.
    */
   void check_type_for_encoding (const CORBA::Any & data
-                                TAO_ENV_ARG_DECL);
+                                ACE_ENV_ARG_DECL);
 
 private:
 

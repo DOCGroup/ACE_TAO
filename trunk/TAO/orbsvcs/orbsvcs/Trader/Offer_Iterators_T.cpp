@@ -39,7 +39,7 @@ add_offer (CosTrading::OfferId id,
 
 template <class MAP_LOCK_TYPE> CORBA::ULong
 TAO_Register_Offer_Iterator<MAP_LOCK_TYPE>::
-max_left (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+max_left (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                   CosTrading::UnknownMaxLeft))
 {
@@ -50,7 +50,7 @@ template <class MAP_LOCK_TYPE> CORBA::Boolean
 TAO_Register_Offer_Iterator<MAP_LOCK_TYPE>::
 next_n (CORBA::ULong n,
         CosTrading::OfferSeq_out offers
-        TAO_ENV_ARG_DECL)
+        ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::ULong ret_offers = 0;
@@ -77,7 +77,7 @@ next_n (CORBA::ULong n,
       this->offer_ids_.dequeue_head (id);
 
       CosTrading::OfferId_var offerid_var (id);
-      CosTrading::Offer* offer = this->db_.lookup_offer (id TAO_ENV_ARG_PARAMETER);
+      CosTrading::Offer* offer = this->db_.lookup_offer (id ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       if (offer != 0)

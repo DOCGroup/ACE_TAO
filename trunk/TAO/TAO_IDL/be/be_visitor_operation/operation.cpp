@@ -161,11 +161,11 @@ be_visitor_operation::gen_environment_decl (int argument_emitted,
   if (be_global->exception_support ())
     return 0;
 
-  // Use TAO_ENV_SINGLE_ARG_DECL or TAO_ENV_ARG_DECL depending on
+  // Use ACE_ENV_SINGLE_ARG_DECL or ACE_ENV_ARG_DECL depending on
   // whether the operation node has parameters.
-  const char *env_decl = "TAO_ENV_SINGLE_ARG_DECL";
+  const char *env_decl = "ACE_ENV_SINGLE_ARG_DECL";
   if (argument_emitted || node->argument_count () > 0)
-    env_decl = "TAO_ENV_ARG_DECL";
+    env_decl = "ACE_ENV_ARG_DECL";
 
   *os << be_nl;
   switch (this->ctx_->state ())
@@ -180,7 +180,7 @@ be_visitor_operation::gen_environment_decl (int argument_emitted,
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_IH:
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_PROXY_IMPL_XH:
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_BASE_PROXY_IMPL_CH:
-      // last argument - is always TAO_ENV_ARG_DECL
+      // last argument - is always ACE_ENV_ARG_DECL
       *os << env_decl;
       break;
     default:

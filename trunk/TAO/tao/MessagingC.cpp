@@ -445,10 +445,10 @@ Messaging::RebindPolicy_var::tao_nil (void)
 ::Messaging::RebindPolicy_ptr
 Messaging::RebindPolicy_var::tao_narrow (
     CORBA::Object *p
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return ::Messaging::RebindPolicy::_narrow (p TAO_ENV_ARG_PARAMETER);
+  return ::Messaging::RebindPolicy::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -529,15 +529,15 @@ Messaging::RebindPolicy::~RebindPolicy (void)
 
 Messaging::RebindPolicy_ptr Messaging::RebindPolicy::_narrow (
     CORBA::Object_ptr obj
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return RebindPolicy::_unchecked_narrow (obj TAO_ENV_ARG_PARAMETER);
+  return RebindPolicy::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
 }
 
 Messaging::RebindPolicy_ptr Messaging::RebindPolicy::_unchecked_narrow (
     CORBA::Object_ptr obj
-    TAO_ENV_ARG_DECL_NOT_USED
+    ACE_ENV_ARG_DECL_NOT_USED
   )
 {
   if (CORBA::is_nil (obj))
@@ -719,10 +719,10 @@ Messaging::SyncScopePolicy_var::tao_nil (void)
 ::Messaging::SyncScopePolicy_ptr
 Messaging::SyncScopePolicy_var::tao_narrow (
     CORBA::Object *p
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return ::Messaging::SyncScopePolicy::_narrow (p TAO_ENV_ARG_PARAMETER);
+  return ::Messaging::SyncScopePolicy::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -802,15 +802,15 @@ Messaging::SyncScopePolicy::~SyncScopePolicy (void)
 
 Messaging::SyncScopePolicy_ptr Messaging::SyncScopePolicy::_narrow (
     CORBA::Object_ptr obj
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return SyncScopePolicy::_unchecked_narrow (obj TAO_ENV_ARG_PARAMETER);
+  return SyncScopePolicy::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
 }
 
 Messaging::SyncScopePolicy_ptr Messaging::SyncScopePolicy::_unchecked_narrow (
     CORBA::Object_ptr obj
-    TAO_ENV_ARG_DECL_NOT_USED
+    ACE_ENV_ARG_DECL_NOT_USED
   )
 {
   if (CORBA::is_nil (obj))
@@ -1077,10 +1077,10 @@ Messaging::RequestPriorityPolicy_var::tao_nil (void)
 ::Messaging::RequestPriorityPolicy_ptr
 Messaging::RequestPriorityPolicy_var::tao_narrow (
     CORBA::Object *p
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return ::Messaging::RequestPriorityPolicy::_narrow (p TAO_ENV_ARG_PARAMETER);
+  return ::Messaging::RequestPriorityPolicy::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -1161,15 +1161,15 @@ Messaging::RequestPriorityPolicy::~RequestPriorityPolicy (void)
 
 Messaging::RequestPriorityPolicy_ptr Messaging::RequestPriorityPolicy::_narrow (
     CORBA::Object_ptr obj
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return RequestPriorityPolicy::_unchecked_narrow (obj TAO_ENV_ARG_PARAMETER);
+  return RequestPriorityPolicy::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
 }
 
 Messaging::RequestPriorityPolicy_ptr Messaging::RequestPriorityPolicy::_unchecked_narrow (
     CORBA::Object_ptr obj
-    TAO_ENV_ARG_DECL_NOT_USED
+    ACE_ENV_ARG_DECL_NOT_USED
   )
 {
   if (CORBA::is_nil (obj))
@@ -1347,10 +1347,10 @@ Messaging::ReplyPriorityPolicy_var::tao_nil (void)
 ::Messaging::ReplyPriorityPolicy_ptr
 Messaging::ReplyPriorityPolicy_var::tao_narrow (
     CORBA::Object *p
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return ::Messaging::ReplyPriorityPolicy::_narrow (p TAO_ENV_ARG_PARAMETER);
+  return ::Messaging::ReplyPriorityPolicy::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -1431,15 +1431,15 @@ Messaging::ReplyPriorityPolicy::~ReplyPriorityPolicy (void)
 
 Messaging::ReplyPriorityPolicy_ptr Messaging::ReplyPriorityPolicy::_narrow (
     CORBA::Object_ptr obj
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return ReplyPriorityPolicy::_unchecked_narrow (obj TAO_ENV_ARG_PARAMETER);
+  return ReplyPriorityPolicy::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
 }
 
 Messaging::ReplyPriorityPolicy_ptr Messaging::ReplyPriorityPolicy::_unchecked_narrow (
     CORBA::Object_ptr obj
-    TAO_ENV_ARG_DECL_NOT_USED
+    ACE_ENV_ARG_DECL_NOT_USED
   )
 {
   if (CORBA::is_nil (obj))
@@ -1621,10 +1621,10 @@ Messaging::RequestStartTimePolicy_var::tao_nil (void)
 ::Messaging::RequestStartTimePolicy_ptr
 Messaging::RequestStartTimePolicy_var::tao_narrow (
     CORBA::Object *p
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return ::Messaging::RequestStartTimePolicy::_narrow (p TAO_ENV_ARG_PARAMETER);
+  return ::Messaging::RequestStartTimePolicy::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -1705,15 +1705,15 @@ Messaging::RequestStartTimePolicy::~RequestStartTimePolicy (void)
 
 Messaging::RequestStartTimePolicy_ptr Messaging::RequestStartTimePolicy::_narrow (
     CORBA::Object_ptr obj
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return RequestStartTimePolicy::_unchecked_narrow (obj TAO_ENV_ARG_PARAMETER);
+  return RequestStartTimePolicy::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
 }
 
 Messaging::RequestStartTimePolicy_ptr Messaging::RequestStartTimePolicy::_unchecked_narrow (
     CORBA::Object_ptr obj
-    TAO_ENV_ARG_DECL_NOT_USED
+    ACE_ENV_ARG_DECL_NOT_USED
   )
 {
   if (CORBA::is_nil (obj))
@@ -1895,10 +1895,10 @@ Messaging::RequestEndTimePolicy_var::tao_nil (void)
 ::Messaging::RequestEndTimePolicy_ptr
 Messaging::RequestEndTimePolicy_var::tao_narrow (
     CORBA::Object *p
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return ::Messaging::RequestEndTimePolicy::_narrow (p TAO_ENV_ARG_PARAMETER);
+  return ::Messaging::RequestEndTimePolicy::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -1979,15 +1979,15 @@ Messaging::RequestEndTimePolicy::~RequestEndTimePolicy (void)
 
 Messaging::RequestEndTimePolicy_ptr Messaging::RequestEndTimePolicy::_narrow (
     CORBA::Object_ptr obj
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return RequestEndTimePolicy::_unchecked_narrow (obj TAO_ENV_ARG_PARAMETER);
+  return RequestEndTimePolicy::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
 }
 
 Messaging::RequestEndTimePolicy_ptr Messaging::RequestEndTimePolicy::_unchecked_narrow (
     CORBA::Object_ptr obj
-    TAO_ENV_ARG_DECL_NOT_USED
+    ACE_ENV_ARG_DECL_NOT_USED
   )
 {
   if (CORBA::is_nil (obj))
@@ -2169,10 +2169,10 @@ Messaging::ReplyStartTimePolicy_var::tao_nil (void)
 ::Messaging::ReplyStartTimePolicy_ptr
 Messaging::ReplyStartTimePolicy_var::tao_narrow (
     CORBA::Object *p
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return ::Messaging::ReplyStartTimePolicy::_narrow (p TAO_ENV_ARG_PARAMETER);
+  return ::Messaging::ReplyStartTimePolicy::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -2253,15 +2253,15 @@ Messaging::ReplyStartTimePolicy::~ReplyStartTimePolicy (void)
 
 Messaging::ReplyStartTimePolicy_ptr Messaging::ReplyStartTimePolicy::_narrow (
     CORBA::Object_ptr obj
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return ReplyStartTimePolicy::_unchecked_narrow (obj TAO_ENV_ARG_PARAMETER);
+  return ReplyStartTimePolicy::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
 }
 
 Messaging::ReplyStartTimePolicy_ptr Messaging::ReplyStartTimePolicy::_unchecked_narrow (
     CORBA::Object_ptr obj
-    TAO_ENV_ARG_DECL_NOT_USED
+    ACE_ENV_ARG_DECL_NOT_USED
   )
 {
   if (CORBA::is_nil (obj))
@@ -2443,10 +2443,10 @@ Messaging::ReplyEndTimePolicy_var::tao_nil (void)
 ::Messaging::ReplyEndTimePolicy_ptr
 Messaging::ReplyEndTimePolicy_var::tao_narrow (
     CORBA::Object *p
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return ::Messaging::ReplyEndTimePolicy::_narrow (p TAO_ENV_ARG_PARAMETER);
+  return ::Messaging::ReplyEndTimePolicy::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -2527,15 +2527,15 @@ Messaging::ReplyEndTimePolicy::~ReplyEndTimePolicy (void)
 
 Messaging::ReplyEndTimePolicy_ptr Messaging::ReplyEndTimePolicy::_narrow (
     CORBA::Object_ptr obj
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return ReplyEndTimePolicy::_unchecked_narrow (obj TAO_ENV_ARG_PARAMETER);
+  return ReplyEndTimePolicy::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
 }
 
 Messaging::ReplyEndTimePolicy_ptr Messaging::ReplyEndTimePolicy::_unchecked_narrow (
     CORBA::Object_ptr obj
-    TAO_ENV_ARG_DECL_NOT_USED
+    ACE_ENV_ARG_DECL_NOT_USED
   )
 {
   if (CORBA::is_nil (obj))
@@ -2717,10 +2717,10 @@ Messaging::RelativeRequestTimeoutPolicy_var::tao_nil (void)
 ::Messaging::RelativeRequestTimeoutPolicy_ptr
 Messaging::RelativeRequestTimeoutPolicy_var::tao_narrow (
     CORBA::Object *p
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return ::Messaging::RelativeRequestTimeoutPolicy::_narrow (p TAO_ENV_ARG_PARAMETER);
+  return ::Messaging::RelativeRequestTimeoutPolicy::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -2801,15 +2801,15 @@ Messaging::RelativeRequestTimeoutPolicy::~RelativeRequestTimeoutPolicy (void)
 
 Messaging::RelativeRequestTimeoutPolicy_ptr Messaging::RelativeRequestTimeoutPolicy::_narrow (
     CORBA::Object_ptr obj
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return RelativeRequestTimeoutPolicy::_unchecked_narrow (obj TAO_ENV_ARG_PARAMETER);
+  return RelativeRequestTimeoutPolicy::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
 }
 
 Messaging::RelativeRequestTimeoutPolicy_ptr Messaging::RelativeRequestTimeoutPolicy::_unchecked_narrow (
     CORBA::Object_ptr obj
-    TAO_ENV_ARG_DECL_NOT_USED
+    ACE_ENV_ARG_DECL_NOT_USED
   )
 {
   if (CORBA::is_nil (obj))
@@ -2991,10 +2991,10 @@ Messaging::RelativeRoundtripTimeoutPolicy_var::tao_nil (void)
 ::Messaging::RelativeRoundtripTimeoutPolicy_ptr
 Messaging::RelativeRoundtripTimeoutPolicy_var::tao_narrow (
     CORBA::Object *p
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return ::Messaging::RelativeRoundtripTimeoutPolicy::_narrow (p TAO_ENV_ARG_PARAMETER);
+  return ::Messaging::RelativeRoundtripTimeoutPolicy::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -3075,15 +3075,15 @@ Messaging::RelativeRoundtripTimeoutPolicy::~RelativeRoundtripTimeoutPolicy (void
 
 Messaging::RelativeRoundtripTimeoutPolicy_ptr Messaging::RelativeRoundtripTimeoutPolicy::_narrow (
     CORBA::Object_ptr obj
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return RelativeRoundtripTimeoutPolicy::_unchecked_narrow (obj TAO_ENV_ARG_PARAMETER);
+  return RelativeRoundtripTimeoutPolicy::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
 }
 
 Messaging::RelativeRoundtripTimeoutPolicy_ptr Messaging::RelativeRoundtripTimeoutPolicy::_unchecked_narrow (
     CORBA::Object_ptr obj
-    TAO_ENV_ARG_DECL_NOT_USED
+    ACE_ENV_ARG_DECL_NOT_USED
   )
 {
   if (CORBA::is_nil (obj))
@@ -3354,10 +3354,10 @@ Messaging::RoutingPolicy_var::tao_nil (void)
 ::Messaging::RoutingPolicy_ptr
 Messaging::RoutingPolicy_var::tao_narrow (
     CORBA::Object *p
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return ::Messaging::RoutingPolicy::_narrow (p TAO_ENV_ARG_PARAMETER);
+  return ::Messaging::RoutingPolicy::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -3438,15 +3438,15 @@ Messaging::RoutingPolicy::~RoutingPolicy (void)
 
 Messaging::RoutingPolicy_ptr Messaging::RoutingPolicy::_narrow (
     CORBA::Object_ptr obj
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return RoutingPolicy::_unchecked_narrow (obj TAO_ENV_ARG_PARAMETER);
+  return RoutingPolicy::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
 }
 
 Messaging::RoutingPolicy_ptr Messaging::RoutingPolicy::_unchecked_narrow (
     CORBA::Object_ptr obj
-    TAO_ENV_ARG_DECL_NOT_USED
+    ACE_ENV_ARG_DECL_NOT_USED
   )
 {
   if (CORBA::is_nil (obj))
@@ -3628,10 +3628,10 @@ Messaging::MaxHopsPolicy_var::tao_nil (void)
 ::Messaging::MaxHopsPolicy_ptr
 Messaging::MaxHopsPolicy_var::tao_narrow (
     CORBA::Object *p
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return ::Messaging::MaxHopsPolicy::_narrow (p TAO_ENV_ARG_PARAMETER);
+  return ::Messaging::MaxHopsPolicy::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -3712,15 +3712,15 @@ Messaging::MaxHopsPolicy::~MaxHopsPolicy (void)
 
 Messaging::MaxHopsPolicy_ptr Messaging::MaxHopsPolicy::_narrow (
     CORBA::Object_ptr obj
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return MaxHopsPolicy::_unchecked_narrow (obj TAO_ENV_ARG_PARAMETER);
+  return MaxHopsPolicy::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
 }
 
 Messaging::MaxHopsPolicy_ptr Messaging::MaxHopsPolicy::_unchecked_narrow (
     CORBA::Object_ptr obj
-    TAO_ENV_ARG_DECL_NOT_USED
+    ACE_ENV_ARG_DECL_NOT_USED
   )
 {
   if (CORBA::is_nil (obj))
@@ -3902,10 +3902,10 @@ Messaging::QueueOrderPolicy_var::tao_nil (void)
 ::Messaging::QueueOrderPolicy_ptr
 Messaging::QueueOrderPolicy_var::tao_narrow (
     CORBA::Object *p
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return ::Messaging::QueueOrderPolicy::_narrow (p TAO_ENV_ARG_PARAMETER);
+  return ::Messaging::QueueOrderPolicy::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -3986,15 +3986,15 @@ Messaging::QueueOrderPolicy::~QueueOrderPolicy (void)
 
 Messaging::QueueOrderPolicy_ptr Messaging::QueueOrderPolicy::_narrow (
     CORBA::Object_ptr obj
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return QueueOrderPolicy::_unchecked_narrow (obj TAO_ENV_ARG_PARAMETER);
+  return QueueOrderPolicy::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
 }
 
 Messaging::QueueOrderPolicy_ptr Messaging::QueueOrderPolicy::_unchecked_narrow (
     CORBA::Object_ptr obj
-    TAO_ENV_ARG_DECL_NOT_USED
+    ACE_ENV_ARG_DECL_NOT_USED
   )
 {
   if (CORBA::is_nil (obj))
@@ -4564,10 +4564,10 @@ Messaging::ReplyHandler_var::tao_nil (void)
 ::Messaging::ReplyHandler_ptr
 Messaging::ReplyHandler_var::tao_narrow (
     CORBA::Object *p
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return ::Messaging::ReplyHandler::_narrow (p TAO_ENV_ARG_PARAMETER);
+  return ::Messaging::ReplyHandler::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -4693,7 +4693,7 @@ Messaging::_TAO_ReplyHandler_Remote_Proxy_Broker::~_TAO_ReplyHandler_Remote_Prox
 Messaging::_TAO_ReplyHandler_Proxy_Impl&
 Messaging::_TAO_ReplyHandler_Remote_Proxy_Broker::select_proxy (
   ::Messaging::ReplyHandler *
-  TAO_ENV_ARG_DECL_NOT_USED
+  ACE_ENV_ARG_DECL_NOT_USED
 )
 {
   return this->remote_proxy_impl_;
@@ -4734,24 +4734,24 @@ void Messaging::ReplyHandler::_tao_any_destructor (void *x)
 
 Messaging::ReplyHandler_ptr Messaging::ReplyHandler::_narrow (
     CORBA::Object_ptr obj
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
   if (CORBA::is_nil (obj))
     return ReplyHandler::_nil ();
   if (! obj->_is_local ())
     {
-      CORBA::Boolean is_a = obj->_is_a ("IDL:omg.org/Messaging/ReplyHandler:1.0" TAO_ENV_ARG_PARAMETER);
+      CORBA::Boolean is_a = obj->_is_a ("IDL:omg.org/Messaging/ReplyHandler:1.0" ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (ReplyHandler::_nil ());
       if (is_a == 0)
         return ReplyHandler::_nil ();
     }
-  return ReplyHandler::_unchecked_narrow (obj TAO_ENV_ARG_PARAMETER);
+  return ReplyHandler::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
 }
 
 Messaging::ReplyHandler_ptr Messaging::ReplyHandler::_unchecked_narrow (
     CORBA::Object_ptr obj
-    TAO_ENV_ARG_DECL_NOT_USED
+    ACE_ENV_ARG_DECL_NOT_USED
   )
 {
   if (CORBA::is_nil (obj))
@@ -4808,14 +4808,14 @@ Messaging::ReplyHandler::_duplicate (ReplyHandler_ptr obj)
   return obj;
 }
 
-CORBA::Boolean Messaging::ReplyHandler::_is_a (const CORBA::Char *value TAO_ENV_ARG_DECL)
+CORBA::Boolean Messaging::ReplyHandler::_is_a (const CORBA::Char *value ACE_ENV_ARG_DECL)
 {
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/Messaging/ReplyHandler:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Object:1.0")))
   return 1; // success using local knowledge
   else
-    return this->CORBA_Object::_is_a (value TAO_ENV_ARG_PARAMETER);
+    return this->CORBA_Object::_is_a (value ACE_ENV_ARG_PARAMETER);
 }
 
 void *Messaging::ReplyHandler::_tao_QueryInterface (ptr_arith_t type)
@@ -5039,7 +5039,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const Messaging::Priorit
   {
     CORBA::TypeCode_var type = _tao_any.type ();
 
-    CORBA::Boolean result = type->equivalent (Messaging::_tc_PriorityRange TAO_ENV_ARG_PARAMETER);
+    CORBA::Boolean result = type->equivalent (Messaging::_tc_PriorityRange ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
     if (!result)
@@ -5207,7 +5207,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const Messaging::Routing
   {
     CORBA::TypeCode_var type = _tao_any.type ();
 
-    CORBA::Boolean result = type->equivalent (Messaging::_tc_RoutingTypeRange TAO_ENV_ARG_PARAMETER);
+    CORBA::Boolean result = type->equivalent (Messaging::_tc_RoutingTypeRange ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
     if (!result)
@@ -5321,7 +5321,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const Messaging::PolicyV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
 
-    CORBA::Boolean result = type->equivalent (Messaging::_tc_PolicyValue TAO_ENV_ARG_PARAMETER);
+    CORBA::Boolean result = type->equivalent (Messaging::_tc_PolicyValue ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
     if (!result)
@@ -5412,7 +5412,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const Messaging::PolicyV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
 
-    CORBA::Boolean result = type->equivalent (Messaging::_tc_PolicyValueSeq TAO_ENV_ARG_PARAMETER);
+    CORBA::Boolean result = type->equivalent (Messaging::_tc_PolicyValueSeq ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
     if (!result)
@@ -5483,7 +5483,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::ReplyHandler_
     _tao_elem = Messaging::ReplyHandler::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
 
-    CORBA::Boolean result = type->equivalent (Messaging::_tc_ReplyHandler TAO_ENV_ARG_PARAMETER);
+    CORBA::Boolean result = type->equivalent (Messaging::_tc_ReplyHandler ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
     if (!result)
@@ -5665,7 +5665,7 @@ CORBA::Boolean operator>> (
     _tao_objref =
       Messaging::ReplyHandler::_unchecked_narrow (
           obj.in ()
-           TAO_ENV_ARG_PARAMETER
+           ACE_ENV_ARG_PARAMETER
         );
     ACE_TRY_CHECK;
     return 1;

@@ -32,11 +32,11 @@ public:
 
   // = The Test methods.
   void test_method (CORBA::Long id
-                    TAO_ENV_ARG_DECL_NOT_USED)
+                    ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void shutdown (const char *orb_id
-                 TAO_ENV_ARG_DECL_NOT_USED)
+                 ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 };
 

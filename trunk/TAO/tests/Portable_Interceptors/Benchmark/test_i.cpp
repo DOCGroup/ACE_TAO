@@ -12,7 +12,7 @@ Secure_Vault_i::Secure_Vault_i (CORBA::ORB_ptr orb)
 // ctor
 
 CORBA::Short
-Secure_Vault_i::ready (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+Secure_Vault_i::ready (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return 1;
@@ -20,7 +20,7 @@ Secure_Vault_i::ready (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 
 void
 Secure_Vault_i::authenticate (const char * user
-              TAO_ENV_ARG_DECL)
+              ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Test_Interceptors::Invalid))
 {
@@ -32,15 +32,15 @@ Secure_Vault_i::authenticate (const char * user
 CORBA::Long
 Secure_Vault_i::update_records (CORBA::Long,
                 const Test_Interceptors::Secure_Vault::Record &
-                TAO_ENV_ARG_DECL_NOT_USED)
+                ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 return 1;
 }
 
 void
-Secure_Vault_i::shutdown (TAO_ENV_SINGLE_ARG_DECL)
+Secure_Vault_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->orb_->shutdown (0 TAO_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
 }

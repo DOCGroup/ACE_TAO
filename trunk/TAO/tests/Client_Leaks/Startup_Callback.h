@@ -33,7 +33,7 @@ public:
 
   // = The skeleton methods
   virtual void started (Test::Process_ptr the_process
-                        TAO_ENV_ARG_DECL)
+                        ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

@@ -43,15 +43,15 @@ public:
 
   virtual Grid_ptr make_grid (CORBA::Short,
                               CORBA::Short
-                              TAO_ENV_ARG_DECL)
+                              ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // This function creates and returns a <Grid>.
 
-  virtual void shutdown (TAO_ENV_SINGLE_ARG_DECL)
+  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Shutdown the server.
 
-  virtual void cleanup (TAO_ENV_SINGLE_ARG_DECL_NOT_USED )
+  virtual void cleanup (ACE_ENV_SINGLE_ARG_DECL_NOT_USED )
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Do a clean up of the memory map
 
@@ -98,40 +98,40 @@ public:
   ~Grid_i (void);
   // Destructor
 
-  virtual CORBA::Short width (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+  virtual CORBA::Short width (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Returns the width of the grid
 
-  virtual CORBA::Short height (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+  virtual CORBA::Short height (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Returns the height of the grid
 
   virtual void width (CORBA::Short
-                      TAO_ENV_ARG_DECL_NOT_USED)
+                      ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Sets the width of the grid.
 
   virtual void height (CORBA::Short
-                       TAO_ENV_ARG_DECL_NOT_USED)
+                       ACE_ENV_ARG_DECL_NOT_USED)
      ACE_THROW_SPEC ((CORBA::SystemException));
   // Sets the height of the grid.
 
   virtual void set (CORBA::Short,
                     CORBA::Short,
                     CORBA::Long
-                    TAO_ENV_ARG_DECL_NOT_USED)
+                    ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Grid::RANGE_ERROR));
   // Sets the grid value.
 
   virtual CORBA::Long get (CORBA::Short,
                            CORBA::Short
-                           TAO_ENV_ARG_DECL_NOT_USED)
+                           ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Grid::RANGE_ERROR));
   // Gets the grid value.
 
-  virtual void destroy (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Destroy the grid.
 

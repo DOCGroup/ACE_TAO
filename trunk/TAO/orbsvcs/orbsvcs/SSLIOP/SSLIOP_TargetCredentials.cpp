@@ -15,7 +15,7 @@ TAO_SSLIOP_TargetCredentials::TAO_SSLIOP_TargetCredentials (X509 *cert,
 }
 
 SecurityLevel2::Credentials_ptr
-TAO_SSLIOP_TargetCredentials::copy (TAO_ENV_SINGLE_ARG_DECL)
+TAO_SSLIOP_TargetCredentials::copy (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_SSLIOP_TargetCredentials *c = 0;
@@ -34,7 +34,7 @@ TAO_SSLIOP_TargetCredentials::copy (TAO_ENV_SINGLE_ARG_DECL)
 
 Security::InvocationCredentialsType
 TAO_SSLIOP_TargetCredentials::credentials_type (
-    TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+    ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return Security::SecTargetCredentials;
@@ -42,7 +42,7 @@ TAO_SSLIOP_TargetCredentials::credentials_type (
 
 SecurityLevel2::Credentials_ptr
 TAO_SSLIOP_TargetCredentials::initiating_credentials (
-    TAO_ENV_SINGLE_ARG_DECL)
+    ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (
@@ -55,7 +55,7 @@ TAO_SSLIOP_TargetCredentials::initiating_credentials (
 
 Security::AssociationOptions
 TAO_SSLIOP_TargetCredentials::association_options_used (
-    TAO_ENV_SINGLE_ARG_DECL)
+    ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (
@@ -70,16 +70,16 @@ TAO_SSLIOP_TargetCredentials::association_options_used (
 
 TAO_SSLIOP_TargetCredentials_ptr
 TAO_SSLIOP_TargetCredentials::_narrow (CORBA::Object_ptr obj
-                                       TAO_ENV_ARG_DECL)
+                                       ACE_ENV_ARG_DECL)
 {
   return
     TAO_SSLIOP_TargetCredentials::_unchecked_narrow (obj
-                                                     TAO_ENV_ARG_PARAMETER);
+                                                     ACE_ENV_ARG_PARAMETER);
 }
 
 TAO_SSLIOP_TargetCredentials_ptr
 TAO_SSLIOP_TargetCredentials::_unchecked_narrow (CORBA::Object_ptr obj
-                                                 TAO_ENV_ARG_DECL_NOT_USED)
+                                                 ACE_ENV_ARG_DECL_NOT_USED)
 {
   if (CORBA::is_nil (obj))
     return TAO_SSLIOP_TargetCredentials::_nil ();

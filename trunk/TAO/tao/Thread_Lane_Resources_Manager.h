@@ -48,7 +48,7 @@ public:
   virtual void finalize (void) = 0;
 
   /// Open default resources.
-  virtual int open_default_resources (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS) = 0;
+  virtual int open_default_resources (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS) = 0;
 
   /// Shutdown reactor.
   virtual void shutdown_reactor (void) = 0;

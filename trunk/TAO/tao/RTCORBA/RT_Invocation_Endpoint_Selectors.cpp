@@ -24,7 +24,7 @@ ACE_RCSID(tao, RT_Invocation_Endpoint_Selectors, "$Id$")
 
 void
 TAO_RT_Default_Endpoint_Selector::select_endpoint (TAO_GIOP_Invocation *invocation
-                                                   TAO_ENV_ARG_DECL)
+                                                   ACE_ENV_ARG_DECL)
 {
   TAO_RT_Stub *rt_stub =
     ACE_dynamic_cast (TAO_RT_Stub *,
@@ -44,14 +44,14 @@ TAO_RT_Default_Endpoint_Selector::select_endpoint (TAO_GIOP_Invocation *invocati
               TAO_Private_Transport_Descriptor private_desc (invocation->endpoint (),
                                                              ACE_reinterpret_cast (long, invocation->stub ()));
 
-              status = invocation->perform_call (private_desc TAO_ENV_ARG_PARAMETER);
+              status = invocation->perform_call (private_desc ACE_ENV_ARG_PARAMETER);
               ACE_CHECK;
             }
           else
             {
               TAO_Base_Transport_Property default_desc (invocation->endpoint ());
 
-              status = invocation->perform_call (default_desc TAO_ENV_ARG_PARAMETER);
+              status = invocation->perform_call (default_desc ACE_ENV_ARG_PARAMETER);
               ACE_CHECK;
             }
 
@@ -76,18 +76,18 @@ TAO_Priority_Endpoint_Selector::~TAO_Priority_Endpoint_Selector (void)
 
 void
 TAO_Priority_Endpoint_Selector::select_endpoint (TAO_GIOP_Invocation *invocation
-                                                 TAO_ENV_ARG_DECL)
+                                                 ACE_ENV_ARG_DECL)
 {
   TAO_RT_Stub *rt_stub = ACE_dynamic_cast (TAO_RT_Stub *,
                                            invocation->stub ());
   CORBA::Short client_priority;
 
   // Get client priority.
-  TAO_Protocols_Hooks *tph = invocation->orb_core ()->get_protocols_hooks (TAO_ENV_SINGLE_ARG_PARAMETER);
+  TAO_Protocols_Hooks *tph = invocation->orb_core ()->get_protocols_hooks (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   if (tph->get_thread_CORBA_priority (client_priority
-                                      TAO_ENV_ARG_PARAMETER)
+                                      ACE_ENV_ARG_PARAMETER)
       == -1)
     ACE_THROW (CORBA::DATA_CONVERSION (1,
                CORBA::COMPLETED_NO));
@@ -158,7 +158,7 @@ TAO_Priority_Endpoint_Selector::select_endpoint (TAO_GIOP_Invocation *invocation
                 {
                   if (invocation->inconsistent_policies ().ptr ())
                     {
-                      CORBA::Policy_var priority_model_policy = rt_stub->exposed_priority_model (TAO_ENV_SINGLE_ARG_PARAMETER);
+                      CORBA::Policy_var priority_model_policy = rt_stub->exposed_priority_model (ACE_ENV_SINGLE_ARG_PARAMETER);
                       ACE_CHECK;
 
                       invocation->inconsistent_policies ()->length (1);
@@ -177,14 +177,14 @@ TAO_Priority_Endpoint_Selector::select_endpoint (TAO_GIOP_Invocation *invocation
           TAO_Private_Transport_Descriptor private_desc (invocation->endpoint (),
                                                          ACE_reinterpret_cast (long, invocation->stub ()));
 
-          status = invocation->perform_call (private_desc TAO_ENV_ARG_PARAMETER);
+          status = invocation->perform_call (private_desc ACE_ENV_ARG_PARAMETER);
           ACE_CHECK;
         }
       else
         {
           TAO_Base_Transport_Property default_desc (invocation->endpoint ());
 
-          status = invocation->perform_call (default_desc TAO_ENV_ARG_PARAMETER);
+          status = invocation->perform_call (default_desc ACE_ENV_ARG_PARAMETER);
           ACE_CHECK;
         }
 
@@ -223,21 +223,21 @@ TAO_Bands_Endpoint_Selector::~TAO_Bands_Endpoint_Selector (void)
 
 void
 TAO_Bands_Endpoint_Selector::select_endpoint (TAO_GIOP_Invocation *invocation
-                                              TAO_ENV_ARG_DECL)
+                                              ACE_ENV_ARG_DECL)
 {
   TAO_RT_Stub *rt_stub = ACE_dynamic_cast (TAO_RT_Stub *,
                                            invocation->stub ());
   TAO_Protocols_Hooks *protocol_hooks =
-    invocation->orb_core ()->get_protocols_hooks (TAO_ENV_SINGLE_ARG_PARAMETER);
+    invocation->orb_core ()->get_protocols_hooks (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   CORBA::Policy_var bands_policy = TAO_RT_Endpoint_Utils::priority_bands_policy (invocation
-                                                                              TAO_ENV_ARG_PARAMETER);
+                                                                              ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // Figure out target priority.
   CORBA::Policy_var priority_model_policy =
-    rt_stub->exposed_priority_model (TAO_ENV_SINGLE_ARG_PARAMETER);
+    rt_stub->exposed_priority_model (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   CORBA::Short server_priority = 0;
@@ -255,7 +255,7 @@ TAO_Bands_Endpoint_Selector::select_endpoint (TAO_GIOP_Invocation *invocation
 
       int status =
         protocol_hooks->get_thread_CORBA_priority (p  // side effect
-                                                   TAO_ENV_ARG_PARAMETER);
+                                                   ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
       if (status == -1)
         {
@@ -366,14 +366,14 @@ TAO_Bands_Endpoint_Selector::select_endpoint (TAO_GIOP_Invocation *invocation
           TAO_Private_Transport_Descriptor private_desc (invocation->endpoint (),
                                                          ACE_reinterpret_cast (long, invocation->stub ()));
 
-          status = invocation->perform_call (private_desc TAO_ENV_ARG_PARAMETER);
+          status = invocation->perform_call (private_desc ACE_ENV_ARG_PARAMETER);
           ACE_CHECK;
         }
       else
         {
           TAO_Base_Transport_Property default_desc (invocation->endpoint ());
 
-          status = invocation->perform_call (default_desc TAO_ENV_ARG_PARAMETER);
+          status = invocation->perform_call (default_desc ACE_ENV_ARG_PARAMETER);
           ACE_CHECK;
         }
 
@@ -400,15 +400,15 @@ TAO_Protocol_Endpoint_Selector::~TAO_Protocol_Endpoint_Selector (void)
 void
 TAO_Protocol_Endpoint_Selector::select_endpoint (TAO_GIOP_Invocation
                                                  *invocation
-                                                 TAO_ENV_ARG_DECL)
+                                                 ACE_ENV_ARG_DECL)
 {
   /// Narrow down to the right policy.
   CORBA::Policy_var cp =
-    TAO_RT_Endpoint_Utils::client_protocol_policy (invocation TAO_ENV_ARG_PARAMETER);
+    TAO_RT_Endpoint_Utils::client_protocol_policy (invocation ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   RTCORBA::ClientProtocolPolicy_var cp_policy =
-    RTCORBA::ClientProtocolPolicy::_narrow (cp.in () TAO_ENV_ARG_PARAMETER);
+    RTCORBA::ClientProtocolPolicy::_narrow (cp.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   /// Cast to TAO_ClientProtocolPolicy
@@ -454,14 +454,14 @@ TAO_Protocol_Endpoint_Selector::select_endpoint (TAO_GIOP_Invocation
                   TAO_Private_Transport_Descriptor private_desc (invocation->endpoint (),
                                                                  ACE_reinterpret_cast (long, invocation->stub ()));
 
-                  status = invocation->perform_call (private_desc TAO_ENV_ARG_PARAMETER);
+                  status = invocation->perform_call (private_desc ACE_ENV_ARG_PARAMETER);
                   ACE_CHECK;
                 }
               else
                 {
                   TAO_Base_Transport_Property default_desc (invocation->endpoint ());
 
-                  status = invocation->perform_call (default_desc TAO_ENV_ARG_PARAMETER);
+                  status = invocation->perform_call (default_desc ACE_ENV_ARG_PARAMETER);
                   ACE_CHECK;
                 }
 
@@ -498,7 +498,7 @@ TAO_Protocol_Endpoint_Selector::select_endpoint (TAO_GIOP_Invocation
 void
 TAO_Protocol_Endpoint_Selector::next (TAO_GIOP_Invocation
                                      *
-                                     TAO_ENV_ARG_DECL_NOT_USED)
+                                     ACE_ENV_ARG_DECL_NOT_USED)
 {
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("You Are not Suppesed to call: TAO_Protocol_Endpoint_Selector::next!!!\n")));
   //  invocation->profile_index ()++;
@@ -510,7 +510,7 @@ void
 TAO_Protocol_Endpoint_Selector::forward (TAO_GIOP_Invocation
                                         *invocation,
                                          const TAO_MProfile& /* mprofile */
-                                        TAO_ENV_ARG_DECL)
+                                        ACE_ENV_ARG_DECL)
 {
   // Location forwarding is currently not supported when using
   // RTCORBA::ClientProtocolPolicy.  With the current profile
@@ -522,7 +522,7 @@ TAO_Protocol_Endpoint_Selector::forward (TAO_GIOP_Invocation
   // a location forward reply, we act as if the profile we used
   // didn't work, and we try the next one.  Should we throw not
   // supported exception instead?
-  this->next (invocation TAO_ENV_ARG_PARAMETER);
+  this->next (invocation ACE_ENV_ARG_PARAMETER);
 }
 
 void

@@ -64,7 +64,7 @@
 
     virtual CORBA::Boolean _is_a (
         const char* logical_type_id
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
     virtual void* _downcast (
@@ -75,37 +75,37 @@
         TAO_ServerRequest &req,
         void *obj,
         void *servant_upcall
-        TAO_ENV_ARG_DECL
+        ACE_ENV_ARG_DECL
       );
 
     static void _non_existent_skel (
         TAO_ServerRequest &req,
         void *obj,
         void *servant_upcall
-        TAO_ENV_ARG_DECL
+        ACE_ENV_ARG_DECL
       );
 
     static void _interface_skel (
         TAO_ServerRequest &req,
         void *obj,
         void *servant_upcall
-        TAO_ENV_ARG_DECL
+        ACE_ENV_ARG_DECL
       );
 
     virtual void _dispatch (
         TAO_ServerRequest &req,
         void *_servant_upcall
-        TAO_ENV_ARG_DECL
+        ACE_ENV_ARG_DECL
       );
 
     ::CORBA::Policy *_this (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
 
     virtual const char* _interface_repository_id (void) const;
 
     virtual CORBA::PolicyType policy_type (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -115,11 +115,11 @@
         TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_servant_upcall
-        TAO_ENV_ARG_DECL
+        ACE_ENV_ARG_DECL
       );
 
     virtual CORBA::Policy_ptr copy (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -129,11 +129,11 @@
         TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_servant_upcall
-        TAO_ENV_ARG_DECL
+        ACE_ENV_ARG_DECL
       );
 
     virtual void destroy (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -143,7 +143,7 @@
         TAO_ServerRequest &_tao_req,
         void *_tao_obj,
         void *_tao_servant_upcall
-        TAO_ENV_ARG_DECL
+        ACE_ENV_ARG_DECL
       );
 
 
@@ -163,7 +163,7 @@
 
     virtual CORBA_TAO_Policy_Proxy_Impl &select_proxy (
       ::CORBA::Policy *object
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     );
 
   private:
@@ -171,7 +171,7 @@
     // as soon as their use is necessary.
     void create_proxy (
       int collocation_strategy
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     );
 
     // Caches the proxy implementations. The proxy implementation
@@ -210,7 +210,7 @@
 
     virtual CORBA::PolicyType policy_type (
         CORBA::Object_ptr _collocated_tao_target_
-        TAO_ENV_ARG_DECL
+        ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -218,7 +218,7 @@
 
 virtual CORBA::Policy_ptr copy (
         CORBA::Object_ptr _collocated_tao_target_
-        TAO_ENV_ARG_DECL
+        ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -226,7 +226,7 @@ virtual CORBA::Policy_ptr copy (
 
 virtual void destroy (
         CORBA::Object_ptr _collocated_tao_target_
-        TAO_ENV_ARG_DECL
+        ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -254,7 +254,7 @@ public:
 
   virtual CORBA::PolicyType policy_type (
     CORBA::Object_ptr _collocated_tao_target_
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
     ACE_THROW_SPEC ((
                      CORBA::SystemException
@@ -262,7 +262,7 @@ public:
 
   virtual CORBA_Policy_ptr copy (
                                  CORBA::Object_ptr _collocated_tao_target_
-                                 TAO_ENV_ARG_DECL
+                                 ACE_ENV_ARG_DECL
                                  )
     ACE_THROW_SPEC ((
                      CORBA::SystemException
@@ -270,7 +270,7 @@ public:
 
     virtual void destroy (
                           CORBA::Object_ptr _collocated_tao_target_
-                          TAO_ENV_ARG_DECL
+                          ACE_ENV_ARG_DECL
                           )
       ACE_THROW_SPEC ((
                        CORBA::SystemException

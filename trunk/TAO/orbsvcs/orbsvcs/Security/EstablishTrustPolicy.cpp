@@ -17,14 +17,14 @@ TAO_EstablishTrustPolicy::~TAO_EstablishTrustPolicy (void)
 }
 
 CORBA::PolicyType
-TAO_EstablishTrustPolicy::policy_type (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_EstablishTrustPolicy::policy_type (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return Security::SecEstablishTrustPolicy;
 }
 
 CORBA::Policy_ptr
-TAO_EstablishTrustPolicy::copy (TAO_ENV_SINGLE_ARG_DECL)
+TAO_EstablishTrustPolicy::copy (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_EstablishTrustPolicy *policy = 0;
@@ -41,13 +41,13 @@ TAO_EstablishTrustPolicy::copy (TAO_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO_EstablishTrustPolicy::destroy (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_EstablishTrustPolicy::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 Security::EstablishTrust
-TAO_EstablishTrustPolicy::trust (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_EstablishTrustPolicy::trust (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->trust_;

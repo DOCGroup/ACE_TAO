@@ -110,27 +110,27 @@ class Test
 public:
   static void run (CORBA::ORB_ptr orb,
                    char *IOR
-                   TAO_ENV_ARG_DECL)
+                   ACE_ENV_ARG_DECL)
   {
     if (IOR != 0)
       {
         // Get an object reference from the argument string.
-        CORBA::Object_var object = orb->string_to_object (IOR TAO_ENV_ARG_PARAMETER);
+        CORBA::Object_var object = orb->string_to_object (IOR ACE_ENV_ARG_PARAMETER);
         ACE_CHECK;
 
-        /*if (TAO_ENV_SINGLE_ARG_PARAMETER.exception () != 0)
+        /*if (ACE_ENV_SINGLE_ARG_PARAMETER.exception () != 0)
           {
-            TAO_ENV_ARG_PARAMETER.print_exception ("CORBA::ORB::string_to_object");
+            ACE_ENV_ARG_PARAMETER.print_exception ("CORBA::ORB::string_to_object");
             return;
           }
         */
         // Try to narrow the object reference to a reference.
-        T_var foo = T::_narrow (object.in () TAO_ENV_ARG_PARAMETER);
+        T_var foo = T::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
         ACE_CHECK;
 
-        /*if (TAO_ENV_SINGLE_ARG_PARAMETER.exception () != 0)
+        /*if (ACE_ENV_SINGLE_ARG_PARAMETER.exception () != 0)
           {
-            TAO_ENV_ARG_PARAMETER.print_exception ("_narrow");
+            ACE_ENV_ARG_PARAMETER.print_exception ("_narrow");
             return;
           }
         */
@@ -145,7 +145,7 @@ public:
         for (i = 0; i < iterations ; i++)
           {
             // Invoke the doit() method on the reference.
-            result = foo->doit (TAO_ENV_SINGLE_ARG_PARAMETER);
+            result = foo->doit (ACE_ENV_SINGLE_ARG_PARAMETER);
             ACE_CHECK;
           }
 
@@ -156,9 +156,9 @@ public:
         // compute average time.
         print_stats (elapsed_time, i);
 
-        /*if (TAO_ENV_SINGLE_ARG_PARAMETER.exception () != 0)
+        /*if (ACE_ENV_SINGLE_ARG_PARAMETER.exception () != 0)
           {
-            TAO_ENV_ARG_PARAMETER.print_exception ("doit");
+            ACE_ENV_ARG_PARAMETER.print_exception ("doit");
             return;
           }
         */
@@ -173,11 +173,11 @@ public:
 int
 main (int argc, char **argv)
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
         // Initialize the ORB
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, 0 TAO_ENV_ARG_PARAMETER);
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, 0 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Initialize options based on command-line arguments.
@@ -189,32 +189,32 @@ main (int argc, char **argv)
 
       Test<A, A_var>::run (orb.in (),
                            IOR[i++]
-                           TAO_ENV_ARG_PARAMETER);
+                           ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       Test<Outer::B, Outer::B_var>::run (orb.in (),
                                          IOR[i++]
-                                         TAO_ENV_ARG_PARAMETER);
+                                         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       Test<Outer::Inner::C, Outer::Inner::C_var>::run (orb.in (),
                                                        IOR[i++]
-                                                       TAO_ENV_ARG_PARAMETER);
+                                                       ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       Test<A, A_var>::run (orb.in (),
                            IOR[i++]
-                           TAO_ENV_ARG_PARAMETER);
+                           ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       Test<Outer::B, Outer::B_var>::run (orb.in (),
                                          IOR[i++]
-                                         TAO_ENV_ARG_PARAMETER);
+                                         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       Test<Outer::Inner::C, Outer::Inner::C_var>::run (orb.in (),
                                                        IOR[i++]
-                                                       TAO_ENV_ARG_PARAMETER);
+                                                       ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

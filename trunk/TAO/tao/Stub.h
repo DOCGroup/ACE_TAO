@@ -107,21 +107,21 @@ public:
    * types.
    */
   virtual CORBA::Policy_ptr get_policy (CORBA::PolicyType type
-                                        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+                                        ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
   virtual CORBA::Policy_ptr get_client_policy (CORBA::PolicyType type
-                                               TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+                                               ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
   virtual TAO_Stub* set_policy_overrides (const CORBA::PolicyList & policies,
                                           CORBA::SetOverrideType set_add
-                                          TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+                                          ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
   virtual CORBA::PolicyList * get_policy_overrides (const CORBA::PolicyTypeSeq & types
-                                                    TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+                                                    ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
   CORBA::Boolean validate_connection (CORBA::PolicyList_out inconsistent_policies
-                                      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+                                      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
@@ -161,7 +161,7 @@ public:
    * equivalent).
    */
   CORBA::ULong hash (CORBA::ULong maximum
-                     TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+                     ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
   /// Implement the is_equivalent() method for the CORBA::Object
   CORBA::Boolean is_equivalent (CORBA::Object_ptr other_obj);
@@ -283,7 +283,7 @@ public:
    */
   int create_ior_info (IOP::IOR *&ior_info,
                        CORBA::ULong &index
-                       TAO_ENV_ARG_DECL)
+                       ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 protected:
@@ -313,7 +313,7 @@ private:
   /// THREAD-SAFE Create the IOR info
   int get_profile_ior_info (TAO_MProfile &profile,
                             IOP::IOR *&ior_info
-                            TAO_ENV_ARG_DECL)
+                            ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
 

@@ -16,7 +16,7 @@ Event_StructuredPushConsumer::Event_StructuredPushConsumer (Events_Test *test_cl
 void
 Event_StructuredPushConsumer::push_structured_event (
     const CosNotification::StructuredEvent & notification
-    TAO_ENV_ARG_DECL_NOT_USED
+    ACE_ENV_ARG_DECL_NOT_USED
   )
   ACE_THROW_SPEC ((CORBA::SystemException,
                    CosEventComm::Disconnected))
@@ -24,8 +24,8 @@ Event_StructuredPushConsumer::push_structured_event (
   int event_num;
   notification.filterable_data[0].value >>= event_num;
 
-  ACE_DEBUG((LM_DEBUG, 
-             "Received event# %d\n", 
+  ACE_DEBUG((LM_DEBUG,
+             "Received event# %d\n",
              event_num));
 
   this->test_client_->on_event_received ();
@@ -55,34 +55,34 @@ Events_Test::~Events_Test (void)
 }
 
 int
-Events_Test::init (int argc, 
-                   char* argv [] 
-                   TAO_ENV_ARG_DECL)
+Events_Test::init (int argc,
+                   char* argv []
+                   ACE_ENV_ARG_DECL)
 {
   // Initialize the base class.
-  Notify_Test_Client::init (argc, 
-                            argv 
-                            TAO_ENV_ARG_PARAMETER);
+  Notify_Test_Client::init (argc,
+                            argv
+                            ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   // Create all participents.
-  this->create_EC (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->create_EC (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   CosNotifyChannelAdmin::AdminID adminid;
 
   this->supplier_admin_ =
-    this->ec_->new_for_suppliers (this->ifgop_, 
-                                  adminid 
-                                  TAO_ENV_ARG_PARAMETER);
+    this->ec_->new_for_suppliers (this->ifgop_,
+                                  adminid
+                                  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   ACE_ASSERT (!CORBA::is_nil (supplier_admin_.in ()));
 
   this->consumer_admin_ =
-    this->ec_->new_for_consumers (this->ifgop_, 
-                                  adminid 
-                                  TAO_ENV_ARG_PARAMETER);
+    this->ec_->new_for_consumers (this->ifgop_,
+                                  adminid
+                                  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   ACE_ASSERT (!CORBA::is_nil (consumer_admin_.in ()));
@@ -90,33 +90,33 @@ Events_Test::init (int argc,
   ACE_NEW_RETURN (this->consumer_,
                   Event_StructuredPushConsumer (this),
                   -1);
-  this->consumer_->init (root_poa_.in () 
-                         TAO_ENV_ARG_PARAMETER);
+  this->consumer_->init (root_poa_.in ()
+                         ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
-  this->consumer_->connect (this->consumer_admin_.in () 
-                            TAO_ENV_ARG_PARAMETER);
+  this->consumer_->connect (this->consumer_admin_.in ()
+                            ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   Event_StructuredPushConsumer* consumer2 = 0;
   ACE_NEW_RETURN (consumer2,
                   Event_StructuredPushConsumer (this),
                   -1);
-  consumer2->init (root_poa_.in () 
-                   TAO_ENV_ARG_PARAMETER);
+  consumer2->init (root_poa_.in ()
+                   ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
-  consumer2->connect (this->consumer_admin_.in () 
-                      TAO_ENV_ARG_PARAMETER);
+  consumer2->connect (this->consumer_admin_.in ()
+                      ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   ACE_NEW_RETURN (this->supplier_,
                   Event_StructuredPushSupplier (this),
                   -1);
-  this->supplier_->init (root_poa_.in () 
-                         TAO_ENV_ARG_PARAMETER);
+  this->supplier_->init (root_poa_.in ()
+                         ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
-  this->supplier_->connect (this->supplier_admin_.in () 
-                            TAO_ENV_ARG_PARAMETER);
+  this->supplier_->connect (this->supplier_admin_.in ()
+                            ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   // Setup the CA to receive all type of events
@@ -128,19 +128,19 @@ Events_Test::init (int argc,
   added[0].domain_name =  CORBA::string_dup ("*");
   added[0].type_name = CORBA::string_dup ("*");
 
-  this->consumer_admin_->subscription_change (added, 
-                                              removed 
-                                              TAO_ENV_ARG_PARAMETER);
+  this->consumer_admin_->subscription_change (added,
+                                              removed
+                                              ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   return 0;
 }
 
 int
-Events_Test::parse_args (int argc, 
+Events_Test::parse_args (int argc,
                          char *argv[])
 {
-    ACE_Arg_Shifter arg_shifter (argc, 
+    ACE_Arg_Shifter arg_shifter (argc,
                                  argv);
     const char *current_arg = 0;
 
@@ -173,14 +173,14 @@ Events_Test::parse_args (int argc,
 }
 
 void
-Events_Test::create_EC (TAO_ENV_SINGLE_ARG_DECL)
+Events_Test::create_EC (ACE_ENV_SINGLE_ARG_DECL)
 {
   CosNotifyChannelAdmin::ChannelID id;
 
   this->ec_ = notify_factory_->create_channel (this->initial_qos_,
                                                this->initial_admin_,
                                                id
-                                               TAO_ENV_ARG_PARAMETER);
+                                               ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   /****************************************************************/
@@ -198,7 +198,7 @@ Events_Test::create_EC (TAO_ENV_SINGLE_ARG_DECL)
 
   admin[1].value <<= (CORBA::Long)2;
 
-  ec_->set_admin (admin TAO_ENV_ARG_PARAMETER);
+  ec_->set_admin (admin ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;*/
 
   /****************************************************************/
@@ -210,20 +210,20 @@ Events_Test::on_event_received (void)
 {
   ++this->result_count_;
 
-  ACE_DEBUG ((LM_DEBUG, 
-              "event count = #%d\n", 
+  ACE_DEBUG ((LM_DEBUG,
+              "event count = #%d\n",
               this->result_count_.value ()));
 
   if (this->result_count_ == 2 * this->event_count_)
     {
-      TAO_ENV_DECLARE_NEW_ENV;
-      this->end_test (TAO_ENV_SINGLE_ARG_PARAMETER);
+      ACE_DECLARE_NEW_CORBA_ENV;
+      this->end_test (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
     }
 }
 
 void
-Events_Test::run_test (TAO_ENV_SINGLE_ARG_DECL)
+Events_Test::run_test (ACE_ENV_SINGLE_ARG_DECL)
 {
   // operations:
   CosNotification::StructuredEvent event;
@@ -269,35 +269,35 @@ Events_Test::run_test (TAO_ENV_SINGLE_ARG_DECL)
       qos[0].name = CORBA::string_dup (CosNotification::Priority);
       qos[0].value <<= (CORBA::Short)prio++;
 
-      this->supplier_->send_event (event 
-                                   TAO_ENV_ARG_PARAMETER);
+      this->supplier_->send_event (event
+                                   ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
 }
 
 void
-Events_Test::end_test (TAO_ENV_SINGLE_ARG_DECL)
+Events_Test::end_test (ACE_ENV_SINGLE_ARG_DECL)
 {
-  this->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 int
 Events_Test::check_results (void)
 {
   // Destroy the channel.
-  TAO_ENV_DECLARE_NEW_ENV;
-  this->ec_->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
+  ACE_DECLARE_NEW_CORBA_ENV;
+  this->ec_->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   if (this->result_count_ == 2 * this->event_count_)
     {
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
                   "Events test success\n"));
       return 0;
     }
   else
     {
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
                   "Events test failed!\n"));
       return 1;
     }
@@ -317,12 +317,12 @@ main (int argc, char* argv[])
 
   ACE_TRY_NEW_ENV
     {
-      events.init (argc, 
+      events.init (argc,
                    argv
-                   TAO_ENV_ARG_PARAMETER);
+                   ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      events.run_test (TAO_ENV_SINGLE_ARG_PARAMETER);
+      events.run_test (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       events.ORB_run ();

@@ -152,7 +152,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA_ORB_ObjectIdList *
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equal (CORBA::ORB::_tc_ObjectIdList TAO_ENV_ARG_PARAMETER)) return 0; // not equal
+    if (!type->equal (CORBA::ORB::_tc_ObjectIdList ACE_ENV_ARG_PARAMETER)) return 0; // not equal
     ACE_TRY_CHECK;
     if (_tao_any.any_owns_data ())
     {

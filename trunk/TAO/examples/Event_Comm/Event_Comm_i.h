@@ -57,12 +57,12 @@ public:
   // set the <ACE_Reactor> to use when quitting.
 
   virtual void push (const Event_Comm::Event & event
-                     TAO_ENV_ARG_DECL)
+                     ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Pass the <event> to the <Consumer>.
 
   virtual void disconnect (const char * reason
-                           TAO_ENV_ARG_DECL)
+                           ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   // Disconnect the <Consumer> from the <Notifier>, giving it the
@@ -94,19 +94,19 @@ public:
   // Initialize a Notifier_i object with the specified size hint.
 
   virtual void disconnect (const char *reason
-                           TAO_ENV_ARG_DECL)
+                           ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Disconnect all the receivers, giving them the <reason>.
 
   virtual void push (const Event_Comm::Event &event
-                     TAO_ENV_ARG_DECL)
+                     ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Send the <event> to all the consumers who have subscribed and who
   // match the filtering criteria.
 
    virtual void subscribe (Event_Comm::Consumer_ptr Consumer,
                            const char * filtering_criteria
-                           TAO_ENV_ARG_DECL)
+                           ACE_ENV_ARG_DECL)
      ACE_THROW_SPEC ((
                       CORBA::SystemException,
                       Event_Comm::Notifier::CannotSubscribe
@@ -116,7 +116,7 @@ public:
 
  void unsubscribe (Event_Comm::Consumer *consumer,
                     const char *filtering_criteria
-                    TAO_ENV_ARG_DECL)
+                    ACE_ENV_ARG_DECL)
    ACE_THROW_SPEC ((
                     CORBA::SystemException,
                     Event_Comm::Notifier::CannotUnsubscribe

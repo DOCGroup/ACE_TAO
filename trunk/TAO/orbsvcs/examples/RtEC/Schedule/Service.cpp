@@ -30,12 +30,12 @@ main (int argc, char* argv[])
 {
   TAO_EC_Default_Factory::init_svcs ();
 
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       // ORB initialization boiler plate...
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" TAO_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) == -1)
@@ -46,15 +46,15 @@ main (int argc, char* argv[])
         }
 
       CORBA::Object_var object =
-        orb->resolve_initial_references ("RootPOA" TAO_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       PortableServer::POA_var poa =
-        PortableServer::POA::_narrow (object.in () TAO_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       PortableServer::POAManager_var poa_manager =
-        poa->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
+        poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      poa_manager->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
+      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // ****************************************************************
@@ -62,11 +62,11 @@ main (int argc, char* argv[])
 #if 0
       // Obtain a reference to the naming service...
       CORBA::Object_var naming_obj =
-        orb->resolve_initial_references ("NameService" TAO_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("NameService" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CosNaming::NamingContext_var naming_context =
-        CosNaming::NamingContext::_narrow (naming_obj.in () TAO_ENV_ARG_PARAMETER);
+        CosNaming::NamingContext::_narrow (naming_obj.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 #endif /* 0 */
 
@@ -93,7 +93,7 @@ main (int argc, char* argv[])
         }
 
       RtecScheduler::Scheduler_var scheduler =
-        sched_impl->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
+        sched_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
 #if 0
@@ -106,7 +106,7 @@ main (int argc, char* argv[])
       schedule_name[0].id = CORBA::string_dup ("ScheduleService");
       // Register the servant with the Naming Context....
       naming_context->rebind (schedule_name, scheduler.in ()
-                              TAO_ENV_ARG_PARAMETER);
+                              ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 #endif /* 0 */
 
@@ -121,7 +121,7 @@ main (int argc, char* argv[])
                                            &module_factory);
 
       RtecEventChannelAdmin::EventChannel_var event_channel =
-        event_channel_impl._this (TAO_ENV_SINGLE_ARG_PARAMETER);
+        event_channel_impl._this (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 #else
 
@@ -131,12 +131,12 @@ main (int argc, char* argv[])
 
       TAO_EC_Event_Channel ec_impl (attributes);
       ACE_DEBUG ((LM_DEBUG, "activating EC\n"));
-      ec_impl.activate (TAO_ENV_SINGLE_ARG_PARAMETER);
+      ec_impl.activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
       ACE_DEBUG ((LM_DEBUG, "EC activated\n"));
 
       RtecEventChannelAdmin::EventChannel_var event_channel =
-        ec_impl._this (TAO_ENV_SINGLE_ARG_PARAMETER);
+        ec_impl._this (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 #endif /* 0 */
 
@@ -148,7 +148,7 @@ main (int argc, char* argv[])
       Consumer consumer_impl;
 
       RtecScheduler::handle_t consumer_rt_info1 =
-        scheduler->create ("consumer_event_1" TAO_ENV_ARG_PARAMETER);
+        scheduler->create ("consumer_event_1" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Let's say that the execution time for event 1 is 2
@@ -164,11 +164,11 @@ main (int argc, char* argv[])
                       time,
                       0,
                       RtecScheduler::OPERATION
-                      TAO_ENV_ARG_PARAMETER);
+                      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       RtecScheduler::handle_t consumer_rt_info2 =
-        scheduler->create ("consumer_event_2" TAO_ENV_ARG_PARAMETER);
+        scheduler->create ("consumer_event_2" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Let's say that the execution time for event 2 is 1
@@ -183,7 +183,7 @@ main (int argc, char* argv[])
                       time,
                       0,
                       RtecScheduler::OPERATION
-                      TAO_ENV_ARG_PARAMETER);
+                      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_ConsumerQOS_Factory consumer_qos;
@@ -197,21 +197,21 @@ main (int argc, char* argv[])
 
       // The canonical protocol to connect to the EC
       RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin =
-        event_channel->for_consumers (TAO_ENV_SINGLE_ARG_PARAMETER);
+        event_channel->for_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       RtecEventChannelAdmin::ProxyPushSupplier_var supplier_proxy =
-        consumer_admin->obtain_push_supplier (TAO_ENV_SINGLE_ARG_PARAMETER);
+        consumer_admin->obtain_push_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       RtecEventComm::PushConsumer_var consumer =
-        consumer_impl._this (TAO_ENV_SINGLE_ARG_PARAMETER);
+        consumer_impl._this (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "connecting consumer\n"));
       supplier_proxy->connect_push_consumer (consumer.in (),
                                              consumer_qos.get_ConsumerQOS ()
-                                             TAO_ENV_ARG_PARAMETER);
+                                             ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       ACE_DEBUG ((LM_DEBUG, "consumer connected\n"));
 
@@ -220,7 +220,7 @@ main (int argc, char* argv[])
       Supplier supplier_impl;
 
       RtecScheduler::handle_t supplier_rt_info1 =
-        scheduler->create ("supplier_event_1" TAO_ENV_ARG_PARAMETER);
+        scheduler->create ("supplier_event_1" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // The execution times are set to reasonable values, but
@@ -240,11 +240,11 @@ main (int argc, char* argv[])
                       0,
                       1,
                       RtecScheduler::OPERATION
-                      TAO_ENV_ARG_PARAMETER);
+                      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       RtecScheduler::handle_t supplier_rt_info2 =
-        scheduler->create ("supplier_event_2" TAO_ENV_ARG_PARAMETER);
+        scheduler->create ("supplier_event_2" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // The execution times are set to reasonable values, but
@@ -263,7 +263,7 @@ main (int argc, char* argv[])
                       0,
                       1,
                       RtecScheduler::OPERATION
-                      TAO_ENV_ARG_PARAMETER);
+                      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       RtecEventComm::EventSourceID supplier_id = 1;
@@ -279,21 +279,21 @@ main (int argc, char* argv[])
 
       // The canonical protocol to connect to the EC
       RtecEventChannelAdmin::SupplierAdmin_var supplier_admin =
-        event_channel->for_suppliers (TAO_ENV_SINGLE_ARG_PARAMETER);
+        event_channel->for_suppliers (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       RtecEventChannelAdmin::ProxyPushConsumer_var consumer_proxy =
-        supplier_admin->obtain_push_consumer (TAO_ENV_SINGLE_ARG_PARAMETER);
+        supplier_admin->obtain_push_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       RtecEventComm::PushSupplier_var supplier =
-        supplier_impl._this (TAO_ENV_SINGLE_ARG_PARAMETER);
+        supplier_impl._this (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "connecting supplier\n"));
       consumer_proxy->connect_push_supplier (supplier.in (),
                                              supplier_qos.get_SupplierQOS ()
-                                             TAO_ENV_ARG_PARAMETER);
+                                             ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       ACE_DEBUG ((LM_DEBUG, "supplier connected\n"));
 
@@ -330,7 +330,7 @@ main (int argc, char* argv[])
                                          infos.out (),
                                          configs.out (),
                                          anomalies.out ()
-                                         TAO_ENV_ARG_PARAMETER);
+                                         ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           // Dump the schedule to a file..
@@ -362,12 +362,12 @@ main (int argc, char* argv[])
         {
           if (i % 2 == 0)
             {
-              consumer_proxy->push (event1 TAO_ENV_ARG_PARAMETER);
+              consumer_proxy->push (event1 ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
             }
           else
             {
-              consumer_proxy->push (event2 TAO_ENV_ARG_PARAMETER);
+              consumer_proxy->push (event2 ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
             }
 

@@ -33,89 +33,89 @@ TAO_CEC_ConsumerAdmin::~TAO_CEC_ConsumerAdmin (void)
 
 void
 TAO_CEC_ConsumerAdmin::push (const CORBA::Any &event
-                             TAO_ENV_ARG_DECL)
+                             ACE_ENV_ARG_DECL)
 {
   TAO_CEC_Propagate_Event_Push push_worker (event);
 
   this->push_admin_.for_each (&push_worker
-                              TAO_ENV_ARG_PARAMETER);
+                              ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   TAO_CEC_Propagate_Event_Pull pull_worker (event);
 
   this->pull_admin_.for_each (&pull_worker
-                              TAO_ENV_ARG_PARAMETER);
+                              ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
 TAO_CEC_ConsumerAdmin::connected (TAO_CEC_ProxyPushSupplier *supplier
-                                  TAO_ENV_ARG_DECL)
+                                  ACE_ENV_ARG_DECL)
 {
-  this->push_admin_.connected (supplier TAO_ENV_ARG_PARAMETER);
+  this->push_admin_.connected (supplier ACE_ENV_ARG_PARAMETER);
 }
 
 void
 TAO_CEC_ConsumerAdmin::reconnected (TAO_CEC_ProxyPushSupplier *supplier
-                                    TAO_ENV_ARG_DECL)
+                                    ACE_ENV_ARG_DECL)
 {
-  this->push_admin_.reconnected (supplier TAO_ENV_ARG_PARAMETER);
+  this->push_admin_.reconnected (supplier ACE_ENV_ARG_PARAMETER);
 }
 
 void
 TAO_CEC_ConsumerAdmin::disconnected (TAO_CEC_ProxyPushSupplier *supplier
-                                     TAO_ENV_ARG_DECL)
+                                     ACE_ENV_ARG_DECL)
 {
-  this->push_admin_.disconnected (supplier TAO_ENV_ARG_PARAMETER);
+  this->push_admin_.disconnected (supplier ACE_ENV_ARG_PARAMETER);
 }
 
 void
 TAO_CEC_ConsumerAdmin::connected (TAO_CEC_ProxyPullSupplier *supplier
-                                  TAO_ENV_ARG_DECL)
+                                  ACE_ENV_ARG_DECL)
 {
-  this->pull_admin_.connected (supplier TAO_ENV_ARG_PARAMETER);
+  this->pull_admin_.connected (supplier ACE_ENV_ARG_PARAMETER);
 }
 
 void
 TAO_CEC_ConsumerAdmin::reconnected (TAO_CEC_ProxyPullSupplier *supplier
-                                   TAO_ENV_ARG_DECL)
+                                   ACE_ENV_ARG_DECL)
 {
-  this->pull_admin_.reconnected (supplier TAO_ENV_ARG_PARAMETER);
+  this->pull_admin_.reconnected (supplier ACE_ENV_ARG_PARAMETER);
 }
 
 void
 TAO_CEC_ConsumerAdmin::disconnected (TAO_CEC_ProxyPullSupplier *supplier
-                                    TAO_ENV_ARG_DECL)
+                                    ACE_ENV_ARG_DECL)
 {
-  this->pull_admin_.disconnected (supplier TAO_ENV_ARG_PARAMETER);
+  this->pull_admin_.disconnected (supplier ACE_ENV_ARG_PARAMETER);
 }
 
 void
-TAO_CEC_ConsumerAdmin::shutdown (TAO_ENV_SINGLE_ARG_DECL)
+TAO_CEC_ConsumerAdmin::shutdown (ACE_ENV_SINGLE_ARG_DECL)
 {
-  this->push_admin_.shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->push_admin_.shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  this->pull_admin_.shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->pull_admin_.shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 CosEventChannelAdmin::ProxyPushSupplier_ptr
-TAO_CEC_ConsumerAdmin::obtain_push_supplier (TAO_ENV_SINGLE_ARG_DECL)
+TAO_CEC_ConsumerAdmin::obtain_push_supplier (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return this->push_admin_.obtain (TAO_ENV_SINGLE_ARG_PARAMETER);
+  return this->push_admin_.obtain (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 CosEventChannelAdmin::ProxyPullSupplier_ptr
-TAO_CEC_ConsumerAdmin::obtain_pull_supplier (TAO_ENV_SINGLE_ARG_DECL)
+TAO_CEC_ConsumerAdmin::obtain_pull_supplier (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return this->pull_admin_.obtain (TAO_ENV_SINGLE_ARG_PARAMETER);
+  return this->pull_admin_.obtain (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 PortableServer::POA_ptr
-TAO_CEC_ConsumerAdmin::_default_POA (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_CEC_ConsumerAdmin::_default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   return PortableServer::POA::_duplicate (this->default_POA_.in ());
 }
@@ -124,18 +124,18 @@ TAO_CEC_ConsumerAdmin::_default_POA (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 
 void
 TAO_CEC_Propagate_Event_Push::work (TAO_CEC_ProxyPushSupplier *supplier
-                                    TAO_ENV_ARG_DECL)
+                                    ACE_ENV_ARG_DECL)
 {
-  supplier->push (this->event_ TAO_ENV_ARG_PARAMETER);
+  supplier->push (this->event_ ACE_ENV_ARG_PARAMETER);
 }
 
 // ****************************************************************
 
 void
 TAO_CEC_Propagate_Event_Pull::work (TAO_CEC_ProxyPullSupplier *supplier
-                                    TAO_ENV_ARG_DECL)
+                                    ACE_ENV_ARG_DECL)
 {
-  supplier->push (this->event_ TAO_ENV_ARG_PARAMETER);
+  supplier->push (this->event_ ACE_ENV_ARG_PARAMETER);
 }
 
 // ****************************************************************

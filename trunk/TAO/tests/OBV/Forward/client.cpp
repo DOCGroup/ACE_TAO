@@ -37,7 +37,7 @@ parse_args (int argc, char *argv[])
   return 0;
 }
 
-void 
+void
 dump_node (BaseNode_ptr bn, int indent)
 {
   if (bn == 0) return;
@@ -51,29 +51,29 @@ dump_node (BaseNode_ptr bn, int indent)
   {
     ACE_DEBUG ((LM_DEBUG, "%x <StringNode> %s\n",
                bn,
-               sn->name ())); 
+               sn->name ()));
   }
   else
   {
-    ACE_DEBUG ((LM_DEBUG, 
+    ACE_DEBUG ((LM_DEBUG,
                 "%x <BaseNode> \n",
-                bn)); 
+                bn));
   }
 
   dump_node (bn->left (), indent + 1);
   dump_node (bn->right (), indent + 1);
 }
 
-void 
+void
 dump_tree (TreeController_ptr tc)
 {
-  ACE_DEBUG ((LM_DEBUG, 
+  ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) start tree dump <%x>\n",
               tc));
 
   dump_node (tc->root (), 1);
 
-  ACE_DEBUG ((LM_DEBUG, 
+  ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) end tree dump <%x>\n",
               tc));
 }
@@ -85,7 +85,7 @@ main (int argc, char *argv[])
   ACE_TRY_NEW_ENV
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" TAO_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
@@ -95,38 +95,38 @@ main (int argc, char *argv[])
       // compiler so we just to put everything in a right order.
 
       // Create and register factory for BaseNode.
-      BaseNode_init *bn_factory = 0; 
-      ACE_NEW_RETURN (bn_factory, 
+      BaseNode_init *bn_factory = 0;
+      ACE_NEW_RETURN (bn_factory,
                       BaseNode_init,
                       1);
 
       orb->register_value_factory (bn_factory->tao_repository_id (),
-                                   bn_factory 
-                                   TAO_ENV_ARG_PARAMETER);
+                                   bn_factory
+                                   ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       bn_factory->_remove_ref (); // release ownership
 
       // Create and register factory for TreeController.
-      TreeController_init *tc_factory = 0; 
-      ACE_NEW_RETURN (tc_factory, 
+      TreeController_init *tc_factory = 0;
+      ACE_NEW_RETURN (tc_factory,
                       TreeController_init,
                       1);
 
       orb->register_value_factory (tc_factory->tao_repository_id (),
-                                   tc_factory 
-                                   TAO_ENV_ARG_PARAMETER);
+                                   tc_factory
+                                   ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       tc_factory->_remove_ref (); // release ownership
 
       // Create and register factory for StringNode.
-      StringNode_init *sn_factory = 0; 
-      ACE_NEW_RETURN (sn_factory, 
+      StringNode_init *sn_factory = 0;
+      ACE_NEW_RETURN (sn_factory,
                       StringNode_init,
                       1);
 
       orb->register_value_factory (sn_factory->tao_repository_id (),
-                                   sn_factory 
-                                   TAO_ENV_ARG_PARAMETER);
+                                   sn_factory
+                                   ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       sn_factory->_remove_ref (); // release ownership
 
@@ -134,10 +134,10 @@ main (int argc, char *argv[])
 
       // Obtain reference to the object.
       CORBA::Object_var tmp =
-        orb->string_to_object(ior TAO_ENV_ARG_PARAMETER);
+        orb->string_to_object(ior ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      Test_var test = Test::_narrow(tmp.in () TAO_ENV_ARG_PARAMETER);
+      Test_var test = Test::_narrow(tmp.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (test.in ()))
@@ -149,16 +149,16 @@ main (int argc, char *argv[])
       }
 
       // Now build simple graph (tree in our case).
-      
+
       TreeController_var tc;
-      ACE_NEW_RETURN (tc, 
+      ACE_NEW_RETURN (tc,
                       OBV_TreeController,
                       1);
 
       // Create the root node.
       {
         StringNode_var sn;
-        ACE_NEW_RETURN (sn, 
+        ACE_NEW_RETURN (sn,
                         OBV_StringNode,
                         1);
         sn->name ((const char*)("RootNode"));
@@ -167,17 +167,17 @@ main (int argc, char *argv[])
         // Create the left leaf.
         {
           StringNode_var dummy;
-          ACE_NEW_RETURN (dummy, 
+          ACE_NEW_RETURN (dummy,
                           OBV_StringNode,
                           1);
           dummy->name ((const char*)("LeftNode"));
-          sn->left (dummy);          
+          sn->left (dummy);
         }
 
         // Create the right leaf.
         {
           StringNode_var dummy;
-          ACE_NEW_RETURN (dummy, 
+          ACE_NEW_RETURN (dummy,
                           OBV_StringNode,
                           1);
           dummy->name ((const char*)("RightNode"));
@@ -186,23 +186,23 @@ main (int argc, char *argv[])
           // dummy->right (sn); // ;-)
         }
       }
-      
+
       // Dump the tree.
       dump_tree (tc.in ());
 
-      TreeController_var result_tc = 
-        test->reflect (tc.in () TAO_ENV_ARG_PARAMETER);
+      TreeController_var result_tc =
+        test->reflect (tc.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Dump the resulting tree.
       dump_tree (result_tc.in ());
 
-      test->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
+      test->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) client - test finished\n"));
 
-      orb->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
+      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
     }

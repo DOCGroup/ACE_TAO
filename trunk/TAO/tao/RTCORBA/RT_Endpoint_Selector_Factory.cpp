@@ -43,7 +43,7 @@ RT_Endpoint_Selector_Factory::~RT_Endpoint_Selector_Factory (void)
 
 TAO_Invocation_Endpoint_Selector *
 RT_Endpoint_Selector_Factory::get_selector (TAO_GIOP_Invocation *invocation
-                                             TAO_ENV_ARG_DECL)
+                                             ACE_ENV_ARG_DECL)
 {
   // Initialize selection state with all RTCORBA policies affecting
   // endpoint selection.
@@ -64,17 +64,17 @@ RT_Endpoint_Selector_Factory::get_selector (TAO_GIOP_Invocation *invocation
     }
 
   CORBA::Policy_var priority_model_policy =
-    rt_stub->exposed_priority_model (TAO_ENV_SINGLE_ARG_PARAMETER);
+    rt_stub->exposed_priority_model (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   //  state.private_connection_ =
   //   rt_stub->private_connection ();
 
   CORBA::Policy_var client_protocol_policy =
-    TAO_RT_Endpoint_Utils::client_protocol_policy (invocation TAO_ENV_ARG_PARAMETER);
+    TAO_RT_Endpoint_Utils::client_protocol_policy (invocation ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  CORBA::Policy_var bands_policy = TAO_RT_Endpoint_Utils::priority_bands_policy (invocation TAO_ENV_ARG_PARAMETER);
+  CORBA::Policy_var bands_policy = TAO_RT_Endpoint_Utils::priority_bands_policy (invocation ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   //
@@ -106,7 +106,7 @@ RT_Endpoint_Selector_Factory::get_selector (TAO_GIOP_Invocation *invocation
   CORBA::Short server_priority = 0;
   CORBA::Boolean is_client_propagated = 0;
 
-  TAO_Protocols_Hooks *tph = invocation->orb_core ()->get_protocols_hooks (TAO_ENV_SINGLE_ARG_PARAMETER);
+  TAO_Protocols_Hooks *tph = invocation->orb_core ()->get_protocols_hooks (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   tph->get_selector_hook (priority_model_policy.in (),
@@ -145,7 +145,7 @@ RT_Endpoint_Selector_Factory::get_selector (TAO_GIOP_Invocation *invocation
 void
 RT_Endpoint_Selector_Factory::
 init_client_protocol (TAO_GIOP_Invocation *
-                      TAO_ENV_ARG_DECL_NOT_USED)
+                      ACE_ENV_ARG_DECL_NOT_USED)
 {
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("RT_Endpoint_Selector_Factory:init_client_protocol - Is deprecated!")));
   /*
@@ -155,7 +155,7 @@ init_client_protocol (TAO_GIOP_Invocation *
   ACE_TRY
     {
       invocation->endpoint_selection_state_.client_protocol_policy_ =
-        rt_stub->effective_client_protocol (TAO_ENV_SINGLE_ARG_PARAMETER);
+        rt_stub->effective_client_protocol (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCH (CORBA::INV_POLICY, ex)

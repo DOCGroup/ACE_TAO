@@ -74,7 +74,7 @@ Driver::init (int argc, char* argv[])
       this->orb_ = CORBA::ORB_init (argc,
                                     argv,
                                     "local"
-                                    TAO_ENV_ARG_PARAMETER);
+                                    ACE_ENV_ARG_PARAMETER);
 
       ACE_TRY_CHECK;
 

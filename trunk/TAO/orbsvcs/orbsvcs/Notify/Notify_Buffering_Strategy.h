@@ -47,7 +47,7 @@ public:
 
   virtual ~TAO_Notify_Buffering_Strategy ();
 
-  virtual void execute (ACE_Message_Queue<ACE_SYNCH>* msg_queue, TAO_Notify_Command *mb TAO_ENV_ARG_DECL, ACE_Time_Value *tv);
+  virtual void execute (ACE_Message_Queue<ACE_SYNCH>* msg_queue, TAO_Notify_Command *mb ACE_ENV_ARG_DECL, ACE_Time_Value *tv);
   // Execute this strategy.
 
   void max_queue_length (CORBA::Long max_queue_length);

@@ -19,7 +19,7 @@ public:
   First_i (CORBA::ORB_ptr orb, ACE_Auto_Event &two_way_done);
 
   /// Interface methods..
-  void oneway_method (TAO_ENV_SINGLE_ARG_DECL)
+  void oneway_method (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

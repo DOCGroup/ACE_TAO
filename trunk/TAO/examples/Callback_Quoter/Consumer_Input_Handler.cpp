@@ -102,7 +102,7 @@ Consumer_Input_Handler::register_consumer ()
   this->consumer_handler_->threshold_value_ =
     ACE_OS::atoi (needed_stock_value);
 
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
 
   ACE_TRY
     {
@@ -111,7 +111,7 @@ Consumer_Input_Handler::register_consumer ()
       this->consumer_handler_->server_->register_callback (this->consumer_handler_->stock_name_,
                                                            this->consumer_handler_->threshold_value_,
                                                            this->consumer_handler_->consumer_var_.in ()
-                                                           TAO_ENV_ARG_PARAMETER);
+                                                           ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Note the registration.
@@ -165,7 +165,7 @@ Consumer_Input_Handler::quit_consumer_process ()
   // Only if the consumer is registered and wants to shut
   // down, its necessary to unregister and then shutdown.
 
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
 
   ACE_TRY
     {
@@ -173,9 +173,9 @@ Consumer_Input_Handler::quit_consumer_process ()
         {
           // If the notifier has exited and the consumer tries to call
           // the unregister_callback method tehn an execption will be
-          // raised. Hence check for this case using TAO_ENV_SINGLE_ARG_PARAMETER.
+          // raised. Hence check for this case using ACE_ENV_SINGLE_ARG_PARAMETER.
           this->consumer_handler_->server_->unregister_callback (this->consumer_handler_->consumer_var_.in ()
-                                                                 TAO_ENV_ARG_PARAMETER);
+                                                                 ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           ACE_DEBUG ((LM_DEBUG,
@@ -183,7 +183,7 @@ Consumer_Input_Handler::quit_consumer_process ()
           consumer_handler_->unregistered_ = 0;
           consumer_handler_->registered_ = 0;
         }
-      this->consumer_handler_->consumer_servant_->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
+      this->consumer_handler_->consumer_servant_->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -196,7 +196,7 @@ Consumer_Input_Handler::quit_consumer_process ()
 
       ACE_TRY_EX (block1)
         {
-          this->consumer_handler_->consumer_servant_->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
+          this->consumer_handler_->consumer_servant_->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK_EX (block1);
         }
       ACE_CATCHANY

@@ -35,16 +35,16 @@ public:
 
   // = Counter Interface Methods Overloading.
 
-  virtual void increment (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual void increment (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA::Long get_count (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual CORBA::Long get_count (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
-  virtual void reset (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
+  virtual void reset (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  
-  virtual void shutdown (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
+  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 protected:

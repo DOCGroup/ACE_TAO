@@ -16,11 +16,11 @@ TAO_Notify_FilterFactory_i::~TAO_Notify_FilterFactory_i (void)
 }
 
 CosNotifyFilter::FilterFactory_ptr
-TAO_Notify_FilterFactory_i::get_ref (TAO_ENV_SINGLE_ARG_DECL)
+TAO_Notify_FilterFactory_i::get_ref (ACE_ENV_SINGLE_ARG_DECL)
 {
   CosNotifyFilter::FilterFactory_var filterfactory;
 
-  filterfactory = _this (TAO_ENV_SINGLE_ARG_PARAMETER);
+  filterfactory = _this (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (CosNotifyFilter::FilterFactory::_nil ());
 
   return filterfactory._retn ();
@@ -29,7 +29,7 @@ TAO_Notify_FilterFactory_i::get_ref (TAO_ENV_SINGLE_ARG_DECL)
 CosNotifyFilter::Filter_ptr
 TAO_Notify_FilterFactory_i::create_filter (
     const char *constraint_grammar
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException,
@@ -47,14 +47,14 @@ TAO_Notify_FilterFactory_i::create_filter (
                     TAO_Notify_Filter_i (constraint_grammar),
                     CORBA::NO_MEMORY ());
 
-  return filter->get_ref (TAO_ENV_SINGLE_ARG_PARAMETER);
+  return filter->get_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 CosNotifyFilter::MappingFilter_ptr
 TAO_Notify_FilterFactory_i::create_mapping_filter (
                                                    const char * /*constraint_grammar*/,
                                                    const CORBA::Any & /*default_value*/
-                                                   TAO_ENV_ARG_DECL_NOT_USED //TAO_ENV_SINGLE_ARG_PARAMETER
+                                                   ACE_ENV_ARG_DECL_NOT_USED //ACE_ENV_SINGLE_ARG_PARAMETER
                                                    )
   ACE_THROW_SPEC ((
                    CORBA::SystemException,

@@ -20,7 +20,7 @@ int
 TAO_CosEC_EventChannel_i::init (const RtecEventChannelAdmin::ConsumerQOS &consumerqos,
                                 const RtecEventChannelAdmin::SupplierQOS &supplierqos,
                                 RtecEventChannelAdmin::EventChannel_ptr rtec
-                                TAO_ENV_ARG_DECL)
+                                ACE_ENV_ARG_DECL)
 {
   // Allocate the admins..
   TAO_CosEC_ConsumerAdmin_i *consumer_;
@@ -38,7 +38,7 @@ TAO_CosEC_EventChannel_i::init (const RtecEventChannelAdmin::ConsumerQOS &consum
   auto_ptr <TAO_CosEC_SupplierAdmin_i> auto_supplier_ (supplier_);
 
   RtecEventChannelAdmin::ConsumerAdmin_ptr rtec_consumeradmin =
-    rtec->for_consumers (TAO_ENV_SINGLE_ARG_PARAMETER);
+    rtec->for_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   if (auto_consumer_.get ()->init (consumerqos,
@@ -46,15 +46,15 @@ TAO_CosEC_EventChannel_i::init (const RtecEventChannelAdmin::ConsumerQOS &consum
     return -1;
 
   this->consumeradmin_ =
-    auto_consumer_.get ()->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
+    auto_consumer_.get ()->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   // give the ownership to the POA.
-  auto_consumer_.get ()->_remove_ref (TAO_ENV_SINGLE_ARG_PARAMETER);
+  auto_consumer_.get ()->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   RtecEventChannelAdmin::SupplierAdmin_ptr rtec_supplieradmin =
-    rtec->for_suppliers (TAO_ENV_SINGLE_ARG_PARAMETER);
+    rtec->for_suppliers (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   if (auto_supplier_.get ()->init (supplierqos,
@@ -62,11 +62,11 @@ TAO_CosEC_EventChannel_i::init (const RtecEventChannelAdmin::ConsumerQOS &consum
     return -1;
 
   this->supplieradmin_ =
-    auto_supplier_.get ()->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
+    auto_supplier_.get ()->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   // give the ownership to the POA.
-  auto_supplier_.get ()->_remove_ref (TAO_ENV_SINGLE_ARG_PARAMETER);
+  auto_supplier_.get ()->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   this->consumer_admin_ = auto_consumer_.release ();
@@ -76,7 +76,7 @@ TAO_CosEC_EventChannel_i::init (const RtecEventChannelAdmin::ConsumerQOS &consum
 }
 
 CosEventChannelAdmin::ConsumerAdmin_ptr
-TAO_CosEC_EventChannel_i::for_consumers (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_CosEC_EventChannel_i::for_consumers (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // @@ Pradeep: you must make a copy here, because the caller is
@@ -86,7 +86,7 @@ TAO_CosEC_EventChannel_i::for_consumers (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 CosEventChannelAdmin::SupplierAdmin_ptr
-TAO_CosEC_EventChannel_i::for_suppliers (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_CosEC_EventChannel_i::for_suppliers (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // @@ Pradeep: you must make a copy here, because the caller is
@@ -96,20 +96,20 @@ TAO_CosEC_EventChannel_i::for_suppliers (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 void
-TAO_CosEC_EventChannel_i::destroy (TAO_ENV_SINGLE_ARG_DECL)
+TAO_CosEC_EventChannel_i::destroy (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Deactivate the CosEventChannel
   PortableServer::POA_var poa =
-    this->_default_POA (TAO_ENV_SINGLE_ARG_PARAMETER);
+    this->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   PortableServer::ObjectId_var id = poa->servant_to_id (this
-                                                        TAO_ENV_ARG_PARAMETER);
+                                                        ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   poa->deactivate_object (id.in ()
-                          TAO_ENV_ARG_PARAMETER);
+                          ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   this->supplieradmin_ =  CosEventChannelAdmin::SupplierAdmin::_nil ();
@@ -117,9 +117,9 @@ TAO_CosEC_EventChannel_i::destroy (TAO_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO_CosEC_EventChannel_i::shutdown (TAO_ENV_SINGLE_ARG_DECL)
+TAO_CosEC_EventChannel_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
 {
-  this->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

@@ -27,13 +27,13 @@ main (int argc, char *argv[])
     {
       Server_i server_i;
 
-      int ret = server_i.init (argc, argv TAO_ENV_ARG_PARAMETER);
+      int ret = server_i.init (argc, argv ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       if (ret != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "\n error in init.\n"),
                           1);
-      ret = server_i.run (TAO_ENV_SINGLE_ARG_PARAMETER);
+      ret = server_i.run (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
       if (ret != 0)
         ACE_ERROR_RETURN ((LM_ERROR,

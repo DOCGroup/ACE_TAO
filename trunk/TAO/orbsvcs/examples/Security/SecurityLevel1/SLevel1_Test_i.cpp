@@ -14,13 +14,13 @@ static int authorize_1 = 1;
 static int authorize_2 = 1;
 
 CORBA::Boolean
-SLevel1_Server_i::authorize_level1 (TAO_ENV_SINGLE_ARG_DECL)
+SLevel1_Server_i::authorize_level1 (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
   /// Get a reference to the SecurityCurrent object.
   CORBA::Object_var obj =
-    orb->resolve_initial_references ("SecurityCurrent" TAO_ENV_ARG_PARAMETER);
+    orb->resolve_initial_references ("SecurityCurrent" ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
     /// Narrow it down correctly.
@@ -110,7 +110,7 @@ SLevel1_Server_i::authorize_level1 (TAO_ENV_SINGLE_ARG_DECL)
 
 
 CORBA::Boolean
-SLevel1_Server_i::authorize_level2 (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+SLevel1_Server_i::authorize_level2 (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   /// If the owner of this invocation is authorized to invoke this

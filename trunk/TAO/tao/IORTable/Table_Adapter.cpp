@@ -26,7 +26,7 @@ TAO_Table_Adapter::~TAO_Table_Adapter (void)
 }
 
 void
-TAO_Table_Adapter::open (TAO_ENV_SINGLE_ARG_DECL)
+TAO_Table_Adapter::open (ACE_ENV_SINGLE_ARG_DECL)
 {
   ACE_NEW_THROW_EX (this->root_,
                     TAO_IOR_Table_Impl (),
@@ -35,14 +35,14 @@ TAO_Table_Adapter::open (TAO_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO_Table_Adapter::close (int  TAO_ENV_ARG_DECL_NOT_USED)
+TAO_Table_Adapter::close (int  ACE_ENV_ARG_DECL_NOT_USED)
 {
   CORBA::release (this->root_);
   this->root_ = 0;
 }
 
 void
-TAO_Table_Adapter::check_close (int  TAO_ENV_ARG_DECL_NOT_USED)
+TAO_Table_Adapter::check_close (int  ACE_ENV_ARG_DECL_NOT_USED)
 {
 }
 
@@ -56,7 +56,7 @@ int
 TAO_Table_Adapter::dispatch (TAO_ObjectKey &key,
                              TAO_ServerRequest &,
                              CORBA::Object_out forward_to
-                             TAO_ENV_ARG_DECL)
+                             ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::String_var object_key;
@@ -65,12 +65,12 @@ TAO_Table_Adapter::dispatch (TAO_ObjectKey &key,
   ACE_TRY
     {
       CORBA::String_var ior =
-        this->root_->find (object_key.in () TAO_ENV_ARG_PARAMETER);
+        this->root_->find (object_key.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       forward_to =
         this->orb_core_->orb ()->string_to_object (ior.in ()
-                                                   TAO_ENV_ARG_PARAMETER);
+                                                   ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCH (IORTable::NotFound, nf_ex)

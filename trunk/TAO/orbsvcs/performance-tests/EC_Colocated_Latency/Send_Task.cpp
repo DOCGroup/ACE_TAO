@@ -59,7 +59,7 @@ ECCL_Send_Task::svc (void)
       ORBSVCS_Time::hrtime_to_TimeT (event[0].header.creation_time,
                                      creation);
       // push one event...
-      this->supplier_->push (event TAO_ENV_ARG_PARAMETER);
+      this->supplier_->push (event ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   return 0;

@@ -36,19 +36,19 @@ public:
 
   /// Connect to the event channel
   void connect (RtecEventChannelAdmin::EventChannel_ptr ec
-                TAO_ENV_ARG_DECL);
+                ACE_ENV_ARG_DECL);
 
   /// Disconnect from the event channel
-  void disconnect (TAO_ENV_SINGLE_ARG_DECL);
+  void disconnect (ACE_ENV_SINGLE_ARG_DECL);
 
   void push (const RtecEventComm::EventSet &events
-             TAO_ENV_ARG_DECL_NOT_USED)
+             ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   //@{
   /** @name The RtecEventComm::PushSupplier methods
    */
-  virtual void disconnect_push_supplier (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+  virtual void disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
   //@}
 

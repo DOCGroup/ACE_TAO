@@ -80,7 +80,7 @@ class TAO_Notify_Export TAO_Notify_Shutdown_Worker : public TAO_ESF_Worker<TAO_N
   TAO_Notify_Shutdown_Worker (void);
 
   // = TAO_ESF_Worker method
-  void work (TAO_Notify_EventListener* listener TAO_ENV_ARG_DECL);
+  void work (TAO_Notify_EventListener* listener ACE_ENV_ARG_DECL);
 };
 
 // ****************************************************************

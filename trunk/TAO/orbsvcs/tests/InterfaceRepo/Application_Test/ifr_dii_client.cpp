@@ -21,12 +21,12 @@ IFR_DII_Client::~IFR_DII_Client (void)
 int
 IFR_DII_Client::init (int argc,
                       char *argv[]
-                      TAO_ENV_ARG_DECL)
+                      ACE_ENV_ARG_DECL)
 {
   this->orb_ = CORBA::ORB_init (argc,
                                 argv,
                                 0
-                                TAO_ENV_ARG_PARAMETER);
+                                ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   // In a reall application, we would get the scoped or
@@ -36,7 +36,7 @@ IFR_DII_Client::init (int argc,
   // we just use the IOR which is stored in a file by the server.
   this->target_ =
     this->orb_->string_to_object ("file://iorfile"
-                                  TAO_ENV_ARG_PARAMETER);
+                                  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   if (this->parse_args (argc, argv) == -1)
@@ -48,26 +48,26 @@ IFR_DII_Client::init (int argc,
 }
 
 int
-IFR_DII_Client::run (TAO_ENV_SINGLE_ARG_DECL)
+IFR_DII_Client::run (ACE_ENV_SINGLE_ARG_DECL)
 {
   if (this->lookup_by_name_)
     {
-      this->lookup_interface_def (TAO_ENV_SINGLE_ARG_PARAMETER);
+      this->lookup_interface_def (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
     }
   else
     {
-      this->find_interface_def (TAO_ENV_SINGLE_ARG_PARAMETER);
+      this->find_interface_def (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
     }
 
-  this->get_operation_def (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->get_operation_def (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
-  this->create_dii_request (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->create_dii_request (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
-  this->invoke_and_display (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->invoke_and_display (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   return 0;
@@ -100,22 +100,22 @@ IFR_DII_Client::parse_args (int argc,
 }
 
 void
-IFR_DII_Client::find_interface_def (TAO_ENV_SINGLE_ARG_DECL)
+IFR_DII_Client::find_interface_def (ACE_ENV_SINGLE_ARG_DECL)
 {
-  this->target_def_ = 
-    this->target_->_get_interface (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->target_def_ =
+    this->target_->_get_interface (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 void
-IFR_DII_Client::lookup_interface_def (TAO_ENV_SINGLE_ARG_DECL)
+IFR_DII_Client::lookup_interface_def (ACE_ENV_SINGLE_ARG_DECL)
 {
   CORBA::Object_var obj =
     this->orb_->resolve_initial_references ("InterfaceRepository"
-                                            TAO_ENV_ARG_PARAMETER);
+                                            ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   this->repo_ = CORBA::Repository::_narrow (obj.in ()
-                                            TAO_ENV_ARG_PARAMETER);
+                                            ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // Is there a contained object of some kind at any level in the
@@ -125,7 +125,7 @@ IFR_DII_Client::lookup_interface_def (TAO_ENV_SINGLE_ARG_DECL)
                               -1,               // Unlimited level recursion.
                               CORBA::dk_all,    // Any type of contained object.
                               1                 // Exclude parents of interfaces.
-                              TAO_ENV_ARG_PARAMETER);
+                              ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   CORBA::ULong length = candidates->length ();
@@ -140,7 +140,7 @@ IFR_DII_Client::lookup_interface_def (TAO_ENV_SINGLE_ARG_DECL)
     {
       candidate =
         CORBA::Container::_narrow (candidates[i].in ()
-                                   TAO_ENV_ARG_PARAMETER);
+                                   ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       // Is this contained item itself a container?
@@ -149,7 +149,7 @@ IFR_DII_Client::lookup_interface_def (TAO_ENV_SINGLE_ARG_DECL)
           // Does this container contain any interfaces?
           interfaces = candidate->contents (CORBA::dk_Interface,
                                             1     // Exclude parents.
-                                            TAO_ENV_ARG_PARAMETER);
+                                            ACE_ENV_ARG_PARAMETER);
           ACE_CHECK;
 
           n_interfaces = interfaces->length ();
@@ -170,27 +170,27 @@ IFR_DII_Client::lookup_interface_def (TAO_ENV_SINGLE_ARG_DECL)
   // be any length.
   for (CORBA::ULong j = 0; j < n_interfaces; ++j)
     {
-      name = interfaces[j]->name (TAO_ENV_SINGLE_ARG_PARAMETER);
+      name = interfaces[j]->name (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       if (!ACE_OS::strcmp (name.in (), this->interface_name.in ()))
         {
           this->target_def_ =
             CORBA::InterfaceDef::_narrow (interfaces[j].in ()
-                                          TAO_ENV_ARG_PARAMETER);
+                                          ACE_ENV_ARG_PARAMETER);
           ACE_CHECK;
         }
     }
 }
 
 void
-IFR_DII_Client::get_operation_def (TAO_ENV_SINGLE_ARG_DECL)
+IFR_DII_Client::get_operation_def (ACE_ENV_SINGLE_ARG_DECL)
 {
   // What operation(s) does this interface contain?
   CORBA::ContainedSeq_var operations =
     this->target_def_->contents (CORBA::dk_Operation,
                                  0  // Do not exclude inherited operations.
-                                 TAO_ENV_ARG_PARAMETER);
+                                 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   CORBA::ULong n_operations = operations->length ();
@@ -200,14 +200,14 @@ IFR_DII_Client::get_operation_def (TAO_ENV_SINGLE_ARG_DECL)
   // be any length.
   for (CORBA::ULong i = 0; i < n_operations; ++i)
     {
-      operation_name = operations[i]->name (TAO_ENV_SINGLE_ARG_PARAMETER);
+      operation_name = operations[i]->name (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       if (!ACE_OS::strcmp (operation_name.in (), this->op_name.in ()))
         {
           this->op_ =
             CORBA::OperationDef::_narrow (operations[i].in ()
-                                          TAO_ENV_ARG_PARAMETER);
+                                          ACE_ENV_ARG_PARAMETER);
           ACE_CHECK;
 
           break;
@@ -216,18 +216,18 @@ IFR_DII_Client::get_operation_def (TAO_ENV_SINGLE_ARG_DECL)
 }
 
 void
-IFR_DII_Client::create_dii_request (TAO_ENV_SINGLE_ARG_DECL)
+IFR_DII_Client::create_dii_request (ACE_ENV_SINGLE_ARG_DECL)
 {
   this->req_ = this->target_->_request (this->op_name.in ()
-                                        TAO_ENV_ARG_PARAMETER);
+                                        ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  this->result_ = this->op_->result (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->result_ = this->op_->result (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   this->req_->set_return_type (this->result_.in ());
 
-  CORBA::ParDescriptionSeq_var params = this->op_->params (TAO_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::ParDescriptionSeq_var params = this->op_->params (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   CORBA::ULong length = params->length ();
@@ -273,7 +273,7 @@ IFR_DII_Client::create_dii_request (TAO_ENV_SINGLE_ARG_DECL)
                 this->req_->arguments ()->add_value (params[i].name.in (),
                                                      any,
                                                      CORBA::ARG_OUT
-                                                     TAO_ENV_ARG_PARAMETER);
+                                                     ACE_ENV_ARG_PARAMETER);
                 ACE_CHECK;
               }
 
@@ -284,9 +284,9 @@ IFR_DII_Client::create_dii_request (TAO_ENV_SINGLE_ARG_DECL)
 }
 
 void
-IFR_DII_Client::invoke_and_display (TAO_ENV_SINGLE_ARG_DECL)
+IFR_DII_Client::invoke_and_display (ACE_ENV_SINGLE_ARG_DECL)
 {
-  this->req_->invoke (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->req_->invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   CORBA::TypeCode_var tc = this->req_->return_value ().type ();

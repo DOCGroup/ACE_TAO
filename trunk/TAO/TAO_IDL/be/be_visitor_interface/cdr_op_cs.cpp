@@ -91,7 +91,7 @@ be_visitor_interface_cdr_op_cs::visit_interface (be_interface *node)
       << node->full_name () << "::_unchecked_narrow ("
       << be_idt << be_idt_nl
       << "obj.in ()" << be_nl
-      << "TAO_ENV_ARG_PARAMETER" << be_uidt_nl
+      << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
       << ");" << be_uidt << be_uidt_nl;
   *os << "ACE_TRY_CHECK;" << be_nl;
   *os << "return 1;" << be_uidt_nl;

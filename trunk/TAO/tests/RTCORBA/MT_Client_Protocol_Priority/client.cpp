@@ -151,7 +151,7 @@ main (int argc, char *argv[])
 
       // ORB.
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" TAO_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Parse arguments.
@@ -161,11 +161,11 @@ main (int argc, char *argv[])
       // Priority Mapping Manager.
       CORBA::Object_var object =
         orb->resolve_initial_references ("PriorityMappingManager"
-                                         TAO_ENV_ARG_PARAMETER);
+                                         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       RTCORBA::PriorityMappingManager_var mapping_manager =
         RTCORBA::PriorityMappingManager::_narrow (object.in ()
-                                              TAO_ENV_ARG_PARAMETER);
+                                              ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       if (check_for_nil (mapping_manager.in (), "Mapping Manager") == -1)
         return 1;
@@ -175,19 +175,19 @@ main (int argc, char *argv[])
 
       // RTCurrent.
       object =
-        orb->resolve_initial_references ("RTCurrent" TAO_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("RTCurrent" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       RTCORBA::Current_var current =
-        RTCORBA::Current::_narrow (object.in () TAO_ENV_ARG_PARAMETER);
+        RTCORBA::Current::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       if (check_for_nil (current.in (), "RTCurrent") == -1)
         return 1;
 
       // Obtain Test object reference.
       object =
-        orb->string_to_object (ior TAO_ENV_ARG_PARAMETER);
+        orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      Test_var server = Test::_narrow (object.in () TAO_ENV_ARG_PARAMETER);
+      Test_var server = Test::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       if (check_for_nil (server.in (), "Test object") == -1)
         return 1;
@@ -196,18 +196,18 @@ main (int argc, char *argv[])
       // PriorityModelPolicy.
       CORBA::Policy_var policy =
         server->_get_policy (RTCORBA::PRIORITY_MODEL_POLICY_TYPE
-                             TAO_ENV_ARG_PARAMETER);
+                             ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       RTCORBA::PriorityModelPolicy_var priority_policy =
-        RTCORBA::PriorityModelPolicy::_narrow (policy.in () TAO_ENV_ARG_PARAMETER);
+        RTCORBA::PriorityModelPolicy::_narrow (policy.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (check_for_nil (priority_policy.in (), "PriorityModelPolicy") == -1)
         return 1;
 
       RTCORBA::PriorityModel priority_model =
-        priority_policy->priority_model (TAO_ENV_SINGLE_ARG_PARAMETER);
+        priority_policy->priority_model (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
       if (priority_model != RTCORBA::CLIENT_PROPAGATED)
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -264,9 +264,9 @@ main (int argc, char *argv[])
 
       // Testing over.  Shut down the server.
       ACE_DEBUG ((LM_DEBUG, "Client threads finished\n"));
-      current->the_priority (priority1 TAO_ENV_ARG_PARAMETER);
+      current->the_priority (priority1 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      server->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
+      server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -299,10 +299,10 @@ Worker_Thread::svc (void)
     {
       // RTORB.
       CORBA::Object_var object =
-        this->orb_->resolve_initial_references ("RTORB" TAO_ENV_ARG_PARAMETER);
+        this->orb_->resolve_initial_references ("RTORB" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       RTCORBA::RTORB_var rt_orb = RTCORBA::RTORB::_narrow (object.in ()
-                                                           TAO_ENV_ARG_PARAMETER);
+                                                           ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       if (check_for_nil (rt_orb.in (), "RTORB") == -1)
         return 0;
@@ -310,10 +310,10 @@ Worker_Thread::svc (void)
       // PolicyCurrent.
       object =
         this->orb_->resolve_initial_references ("PolicyCurrent"
-                                                TAO_ENV_ARG_PARAMETER);
+                                                ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       CORBA::PolicyCurrent_var policy_current =
-        CORBA::PolicyCurrent::_narrow (object.in () TAO_ENV_ARG_PARAMETER);
+        CORBA::PolicyCurrent::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       if (check_for_nil (policy_current.in (), "PolicyCurrent")
           == -1)
@@ -332,12 +332,12 @@ Worker_Thread::svc (void)
       policy_list.length (1);
       policy_list[0] =
         rt_orb->create_client_protocol_policy (protocols
-                                               TAO_ENV_ARG_PARAMETER);
+                                               ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       policy_current->set_policy_overrides (policy_list,
                                             CORBA::SET_OVERRIDE
-                                            TAO_ENV_ARG_PARAMETER);
+                                            ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Wait for other threads.
@@ -346,7 +346,7 @@ Worker_Thread::svc (void)
       for (int i = 0; i < iterations; ++i)
         {
           // Invoke method.
-          this->server_->test_method (TAO_ENV_SINGLE_ARG_PARAMETER);
+          this->server_->test_method (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
     }

@@ -42,7 +42,7 @@ public:
   virtual PortableServer::ObjectId * create_id_for_reference (
       TAO_POA &the_poa,
       CORBA::Object_ptr the_ref
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException,
@@ -52,7 +52,7 @@ public:
   virtual PortableServer::IDs * reference_to_ids (
       TAO_POA &the_poa,
       CORBA::Object_ptr the_ref
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException,
@@ -63,7 +63,7 @@ public:
       TAO_POA &the_poa,
       CORBA::Object_ptr ref,
       const PortableServer::ObjectId & oid
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException,
@@ -74,7 +74,7 @@ public:
       TAO_POA &the_poa,
       CORBA::Object_ptr ref,
       const PortableServer::ObjectId & oid
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException,

@@ -62,24 +62,24 @@ be_visitor_obv_operation_arglist::visit_operation (be_operation *node)
                         -1);
     }
 
-  // Generate the TAO_ENV_ARG_DECL parameter for the alternative mapping.
+  // Generate the ACE_ENV_ARG_DECL parameter for the alternative mapping.
   if (!be_global->exception_support ())
     {
-      // Use TAO_ENV_SINGLE_ARG_DECL or TAO_ENV_ARG_DECL depending on
+      // Use ACE_ENV_SINGLE_ARG_DECL or ACE_ENV_ARG_DECL depending on
       // whether the operation node has parameters.
       const char *env_decl = (node->argument_count () > 0 ?
-                              " TAO_ENV_ARG_DECL" : "TAO_ENV_SINGLE_ARG_DECL");
+                              " ACE_ENV_ARG_DECL" : "ACE_ENV_SINGLE_ARG_DECL");
 
       switch (this->ctx_->state ())
         {
         case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_CH:
         case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_OBV_CH:
         case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_IMPL_CH:
-          // Last argument - is always TAO_ENV_ARG_DECL.
+          // Last argument - is always ACE_ENV_ARG_DECL.
           *os << env_decl << "_WITH_DEFAULTS" << be_uidt_nl;
           break;
         case TAO_CodeGen::TAO_OBV_OPERATION_ARGLIST_IMPL_CS:
-          // Last argument - is always TAO_ENV_ARG_DECL.
+          // Last argument - is always ACE_ENV_ARG_DECL.
           *os << env_decl << be_uidt_nl;
           break;
         default:

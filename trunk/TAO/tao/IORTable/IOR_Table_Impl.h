@@ -40,7 +40,7 @@ public:
   /// Find the object, using the locator if it is not on the table.
   char *find (
       const char *object_key
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException,
@@ -52,7 +52,7 @@ public:
     virtual void bind (
         const char * object_key,
         const char * IOR
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -62,7 +62,7 @@ public:
     virtual void rebind (
         const char * object_key,
         const char * IOR
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -70,7 +70,7 @@ public:
 
     virtual void unbind (
         const char * object_key
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -79,7 +79,7 @@ public:
 
     virtual void set_locator (
         IORTable::Locator_ptr the_locator
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
       ACE_THROW_SPEC ((
         CORBA::SystemException

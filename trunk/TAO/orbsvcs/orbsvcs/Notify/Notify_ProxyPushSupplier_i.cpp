@@ -20,24 +20,24 @@ TAO_Notify_ProxyPushSupplier_i::~TAO_Notify_ProxyPushSupplier_i (void)
 }
 
 void
-TAO_Notify_ProxyPushSupplier_i::dispatch_event_i (TAO_Notify_Event &event TAO_ENV_ARG_DECL)
+TAO_Notify_ProxyPushSupplier_i::dispatch_event_i (TAO_Notify_Event &event ACE_ENV_ARG_DECL)
 {
   ACE_TRY
     {
-      event.do_push (this->cosec_push_consumer_.in () TAO_ENV_ARG_PARAMETER);
+      event.do_push (this->cosec_push_consumer_.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHALL
     {
       ACE_DEBUG ((LM_DEBUG, "Exception dispatching any event\n"));
       // misbehaving client,
-      this->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
+      this->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
     }
   ACE_ENDTRY;
 }
 
 void
-TAO_Notify_ProxyPushSupplier_i::dispatch_update_i (CosNotification::EventTypeSeq added, CosNotification::EventTypeSeq removed TAO_ENV_ARG_DECL)
+TAO_Notify_ProxyPushSupplier_i::dispatch_update_i (CosNotification::EventTypeSeq added, CosNotification::EventTypeSeq removed ACE_ENV_ARG_DECL)
 {
   {
     ACE_GUARD (ACE_Lock, ace_mon, *this->lock_);
@@ -47,7 +47,7 @@ TAO_Notify_ProxyPushSupplier_i::dispatch_update_i (CosNotification::EventTypeSeq
 
   ACE_TRY
     {
-      this->notify_push_consumer_->offer_change (added, removed TAO_ENV_ARG_PARAMETER);
+      this->notify_push_consumer_->offer_change (added, removed ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHALL
@@ -58,7 +58,7 @@ TAO_Notify_ProxyPushSupplier_i::dispatch_update_i (CosNotification::EventTypeSeq
 }
 
 void
-TAO_Notify_ProxyPushSupplier_i::connect_any_push_consumer (CosEventComm::PushConsumer_ptr push_consumer TAO_ENV_ARG_DECL)
+TAO_Notify_ProxyPushSupplier_i::connect_any_push_consumer (CosEventComm::PushConsumer_ptr push_consumer ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException,
                    CosEventChannelAdmin::AlreadyConnected,
@@ -79,7 +79,7 @@ TAO_Notify_ProxyPushSupplier_i::connect_any_push_consumer (CosEventComm::PushCon
         CosEventComm::PushConsumer::_duplicate (push_consumer);
 
       this->notify_push_consumer_ =
-        CosNotifyComm::PushConsumer::_narrow (push_consumer TAO_ENV_ARG_PARAMETER);
+        CosNotifyComm::PushConsumer::_narrow (push_consumer ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       if (!CORBA::is_nil (this->notify_push_consumer_.in ()))
@@ -101,7 +101,7 @@ TAO_Notify_ProxyPushSupplier_i::connect_any_push_consumer (CosEventComm::PushCon
                             CORBA::INTERNAL ());
         ACE_CHECK;
 
-        this->on_connected (TAO_ENV_SINGLE_ARG_PARAMETER);
+        this->on_connected (ACE_ENV_SINGLE_ARG_PARAMETER);
         ACE_TRY_CHECK;
       }
     }
@@ -117,31 +117,31 @@ TAO_Notify_ProxyPushSupplier_i::connect_any_push_consumer (CosEventComm::PushCon
 }
 
 void
-TAO_Notify_ProxyPushSupplier_i::shutdown_i (TAO_ENV_SINGLE_ARG_DECL)
+TAO_Notify_ProxyPushSupplier_i::shutdown_i (ACE_ENV_SINGLE_ARG_DECL)
 {
-  this->on_disconnected (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->on_disconnected (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   // ask our parent to deactivate us.
   this->consumer_admin_->
-    deactivate_proxy_pushsupplier (this TAO_ENV_ARG_PARAMETER);
+    deactivate_proxy_pushsupplier (this ACE_ENV_ARG_PARAMETER);
 }
 
 void
-TAO_Notify_ProxyPushSupplier_i::disconnect_push_supplier (TAO_ENV_SINGLE_ARG_DECL)
+TAO_Notify_ProxyPushSupplier_i::disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
 {
   // unregister with CA
-  this->consumer_admin_->unregister_listener (this TAO_ENV_ARG_PARAMETER);
+  this->consumer_admin_->unregister_listener (this ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  this->shutdown_i (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->shutdown_i (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 void
-TAO_Notify_ProxyPushSupplier_i::shutdown (TAO_ENV_SINGLE_ARG_DECL)
+TAO_Notify_ProxyPushSupplier_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
 {
   // Tell the consumer that we're going away ...
   // @@ Later, lookup a "notify_on_disconnect" option.
@@ -153,12 +153,12 @@ TAO_Notify_ProxyPushSupplier_i::shutdown (TAO_ENV_SINGLE_ARG_DECL)
       return;
   }
 
-  this->shutdown_i (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->shutdown_i (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   ACE_TRY
     {
-      this->cosec_push_consumer_->disconnect_push_consumer (TAO_ENV_SINGLE_ARG_PARAMETER);
+      this->cosec_push_consumer_->disconnect_push_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHALL
@@ -181,25 +181,25 @@ TAO_Notify_CosEC_ProxyPushSupplier_i::~TAO_Notify_CosEC_ProxyPushSupplier_i (voi
 }
 
 void
-TAO_Notify_CosEC_ProxyPushSupplier_i::init (TAO_ENV_SINGLE_ARG_DECL)
+TAO_Notify_CosEC_ProxyPushSupplier_i::init (ACE_ENV_SINGLE_ARG_DECL)
 {
-  this->notify_proxy_.init (0 TAO_ENV_ARG_PARAMETER);
+  this->notify_proxy_.init (0 ACE_ENV_ARG_PARAMETER);
 }
 
 void
-TAO_Notify_CosEC_ProxyPushSupplier_i::disconnect_push_supplier (TAO_ENV_SINGLE_ARG_DECL)
+TAO_Notify_CosEC_ProxyPushSupplier_i::disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->notify_proxy_.disconnect_push_supplier (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->notify_proxy_.disconnect_push_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 void
-TAO_Notify_CosEC_ProxyPushSupplier_i::connect_push_consumer(CosEventComm::PushConsumer_ptr push_consumer TAO_ENV_ARG_DECL)
+TAO_Notify_CosEC_ProxyPushSupplier_i::connect_push_consumer(CosEventComm::PushConsumer_ptr push_consumer ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosEventChannelAdmin::AlreadyConnected,
                      CosEventChannelAdmin::TypeError))
 {
-  this->notify_proxy_.connect_any_push_consumer (push_consumer TAO_ENV_ARG_PARAMETER);
+  this->notify_proxy_.connect_any_push_consumer (push_consumer ACE_ENV_ARG_PARAMETER);
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

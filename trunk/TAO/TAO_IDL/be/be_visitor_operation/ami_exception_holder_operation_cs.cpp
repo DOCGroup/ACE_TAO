@@ -104,7 +104,7 @@ be_visitor_operation_ami_exception_holder_operation_cs::visit_operation (be_oper
   *os << node->local_name () << "(";
 
   if (!be_global->exception_support ())
-    *os << "TAO_ENV_SINGLE_ARG_DECL";
+    *os << "ACE_ENV_SINGLE_ARG_DECL";
 
   *os << ")" << be_uidt;
 
@@ -176,7 +176,7 @@ be_visitor_operation_ami_exception_holder_operation_cs::visit_operation (be_oper
       << "this->marshaled_exception ().length ()," << be_nl
       << "this->byte_order ()," << be_nl
       << "this->is_system_exception ()" << be_nl
-      << "TAO_ENV_ARG_PARAMETER);" << be_uidt << be_uidt_nl;
+      << "ACE_ENV_ARG_PARAMETER);" << be_uidt << be_uidt_nl;
 
   *os << "}\n\n";
   return 0;

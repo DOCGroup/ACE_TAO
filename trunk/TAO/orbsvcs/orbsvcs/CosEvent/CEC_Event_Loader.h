@@ -49,7 +49,7 @@ public:
    */
   CORBA::Object_ptr create_object (CORBA::ORB_ptr orb,
                                    int argc, char *argv[]
-                                   TAO_ENV_ARG_DECL)
+                                   ACE_ENV_ARG_DECL)
      ACE_THROW_SPEC ((CORBA::SystemException));
   //@}
 

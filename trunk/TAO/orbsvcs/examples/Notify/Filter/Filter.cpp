@@ -28,37 +28,37 @@ FilterClient::~FilterClient ()
 }
 
 void
-FilterClient::init (int argc, char *argv [] TAO_ENV_ARG_DECL)
+FilterClient::init (int argc, char *argv [] ACE_ENV_ARG_DECL)
 {
-  init_ORB (argc, argv TAO_ENV_ARG_PARAMETER);
+  init_ORB (argc, argv ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  resolve_naming_service (TAO_ENV_SINGLE_ARG_PARAMETER);
+  resolve_naming_service (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  resolve_Notify_factory (TAO_ENV_SINGLE_ARG_PARAMETER);
+  resolve_Notify_factory (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  create_EC (TAO_ENV_SINGLE_ARG_PARAMETER);
+  create_EC (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  create_supplieradmin (TAO_ENV_SINGLE_ARG_PARAMETER);
+  create_supplieradmin (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  create_consumeradmin (TAO_ENV_SINGLE_ARG_PARAMETER);
+  create_consumeradmin (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  create_consumers (TAO_ENV_SINGLE_ARG_PARAMETER);
+  create_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  create_suppliers (TAO_ENV_SINGLE_ARG_PARAMETER);
+  create_suppliers (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
-FilterClient::run (TAO_ENV_SINGLE_ARG_DECL)
+FilterClient::run (ACE_ENV_SINGLE_ARG_DECL)
 {
-  send_events (TAO_ENV_SINGLE_ARG_PARAMETER);
+  send_events (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   if (g_result_count != EVENTS_EXPECTED_TO_RECEIVE)
@@ -78,17 +78,17 @@ FilterClient::done (void)
 void
 FilterClient::init_ORB (int argc,
                       char *argv []
-                      TAO_ENV_ARG_DECL)
+                      ACE_ENV_ARG_DECL)
 {
   this->orb_ = CORBA::ORB_init (argc,
                                 argv,
                                 ""
-                                TAO_ENV_ARG_PARAMETER);
+                                ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   CORBA::Object_ptr poa_object  =
     this->orb_->resolve_initial_references("RootPOA"
-                                           TAO_ENV_ARG_PARAMETER);
+                                           ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (CORBA::is_nil (poa_object))
@@ -99,23 +99,23 @@ FilterClient::init_ORB (int argc,
     }
   this->root_poa_ =
     PortableServer::POA::_narrow (poa_object
-                                  TAO_ENV_ARG_PARAMETER);
+                                  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   PortableServer::POAManager_var poa_manager =
-    root_poa_->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
+    root_poa_->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  poa_manager->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
+  poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
-FilterClient::resolve_naming_service (TAO_ENV_SINGLE_ARG_DECL)
+FilterClient::resolve_naming_service (ACE_ENV_SINGLE_ARG_DECL)
 {
   CORBA::Object_var naming_obj =
     this->orb_->resolve_initial_references (NAMING_SERVICE_NAME
-                                            TAO_ENV_ARG_PARAMETER);
+                                            ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // Need to check return value for errors.
@@ -123,12 +123,12 @@ FilterClient::resolve_naming_service (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW (CORBA::UNKNOWN ());
 
   this->naming_context_ =
-    CosNaming::NamingContext::_narrow (naming_obj.in () TAO_ENV_ARG_PARAMETER);
+    CosNaming::NamingContext::_narrow (naming_obj.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
-FilterClient::resolve_Notify_factory (TAO_ENV_SINGLE_ARG_DECL)
+FilterClient::resolve_Notify_factory (ACE_ENV_SINGLE_ARG_DECL)
 {
   CosNaming::Name name (1);
   name.length (1);
@@ -136,47 +136,47 @@ FilterClient::resolve_Notify_factory (TAO_ENV_SINGLE_ARG_DECL)
 
   CORBA::Object_var obj =
     this->naming_context_->resolve (name
-                                   TAO_ENV_ARG_PARAMETER);
+                                   ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   this->notify_factory_ =
     CosNotifyChannelAdmin::EventChannelFactory::_narrow (obj.in ()
-                                                         TAO_ENV_ARG_PARAMETER);
+                                                         ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
-FilterClient::create_EC (TAO_ENV_SINGLE_ARG_DECL)
+FilterClient::create_EC (ACE_ENV_SINGLE_ARG_DECL)
 {
   CosNotifyChannelAdmin::ChannelID id;
 
   ec_ = notify_factory_->create_channel (initial_qos_,
                                          initial_admin_,
                                          id
-                                         TAO_ENV_ARG_PARAMETER);
+                                         ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   ACE_ASSERT (!CORBA::is_nil (ec_.in ()));
 }
 
 void
-FilterClient::create_supplieradmin (TAO_ENV_SINGLE_ARG_DECL)
+FilterClient::create_supplieradmin (ACE_ENV_SINGLE_ARG_DECL)
 {
   CosNotifyChannelAdmin::AdminID adminid = 0;
 
   supplier_admin_ =
-    ec_->new_for_suppliers (this->ifgop_, adminid TAO_ENV_ARG_PARAMETER);
+    ec_->new_for_suppliers (this->ifgop_, adminid ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   ACE_ASSERT (!CORBA::is_nil (supplier_admin_.in ()));
 
   CosNotifyFilter::FilterFactory_var ffact =
-    ec_->default_filter_factory (TAO_ENV_SINGLE_ARG_PARAMETER);
+    ec_->default_filter_factory (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   // setup a filter at the consumer admin
   CosNotifyFilter::Filter_var sa_filter =
-    ffact->create_filter (TCL_GRAMMAR TAO_ENV_ARG_PARAMETER);
+    ffact->create_filter (TCL_GRAMMAR ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   ACE_ASSERT (!CORBA::is_nil (sa_filter.in ()));
@@ -187,31 +187,31 @@ FilterClient::create_supplieradmin (TAO_ENV_SINGLE_ARG_DECL)
   constraint_list[0].event_types.length (0);
   constraint_list[0].constraint_expr = CORBA::string_dup (SA_FILTER);
 
-  sa_filter->add_constraints (constraint_list TAO_ENV_ARG_PARAMETER);
+  sa_filter->add_constraints (constraint_list ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  supplier_admin_->add_filter (sa_filter.in () TAO_ENV_ARG_PARAMETER);
+  supplier_admin_->add_filter (sa_filter.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
-FilterClient:: create_consumeradmin (TAO_ENV_SINGLE_ARG_DECL)
+FilterClient:: create_consumeradmin (ACE_ENV_SINGLE_ARG_DECL)
 {
   CosNotifyChannelAdmin::AdminID adminid = 0;
 
   consumer_admin_ =
-    ec_->new_for_consumers (this->ifgop_, adminid TAO_ENV_ARG_PARAMETER);
+    ec_->new_for_consumers (this->ifgop_, adminid ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   ACE_ASSERT (!CORBA::is_nil (consumer_admin_.in ()));
 
   CosNotifyFilter::FilterFactory_var ffact =
-    ec_->default_filter_factory (TAO_ENV_SINGLE_ARG_PARAMETER);
+    ec_->default_filter_factory (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   // setup a filter at the consumer admin
   CosNotifyFilter::Filter_var ca_filter =
-    ffact->create_filter (TCL_GRAMMAR TAO_ENV_ARG_PARAMETER);
+    ffact->create_filter (TCL_GRAMMAR ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   ACE_ASSERT (!CORBA::is_nil (ca_filter.in ()));
@@ -227,10 +227,10 @@ FilterClient:: create_consumeradmin (TAO_ENV_SINGLE_ARG_DECL)
   constraint_list[0].event_types.length (0);
   constraint_list[0].constraint_expr = CORBA::string_dup (CA_FILTER);
 
-  ca_filter->add_constraints (constraint_list TAO_ENV_ARG_PARAMETER);
+  ca_filter->add_constraints (constraint_list ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  consumer_admin_->add_filter (ca_filter.in () TAO_ENV_ARG_PARAMETER);
+  consumer_admin_->add_filter (ca_filter.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // Setup the CA to receive all type of events
@@ -242,19 +242,19 @@ FilterClient:: create_consumeradmin (TAO_ENV_SINGLE_ARG_DECL)
   added[0].domain_name =  CORBA::string_dup ("*");
   added[0].type_name = CORBA::string_dup ("*");
 
-  this->consumer_admin_->subscription_change (added, removed TAO_ENV_ARG_PARAMETER);
+  this->consumer_admin_->subscription_change (added, removed ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
-FilterClient::create_consumers (TAO_ENV_SINGLE_ARG_DECL)
+FilterClient::create_consumers (ACE_ENV_SINGLE_ARG_DECL)
 {
   // startup the first consumer.
   ACE_NEW_THROW_EX (consumer_1,
                     Filter_StructuredPushConsumer (this, "consumer1"),
                     CORBA::NO_MEMORY ());
 
-  consumer_1->connect (consumer_admin_.in () TAO_ENV_ARG_PARAMETER);
+  consumer_1->connect (consumer_admin_.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // startup the second consumer.
@@ -262,19 +262,19 @@ FilterClient::create_consumers (TAO_ENV_SINGLE_ARG_DECL)
                     Filter_StructuredPushConsumer (this, "consumer2"),
                     CORBA::NO_MEMORY ());
 
-  consumer_2->connect (consumer_admin_.in () TAO_ENV_ARG_PARAMETER);
+  consumer_2->connect (consumer_admin_.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
-FilterClient::create_suppliers (TAO_ENV_SINGLE_ARG_DECL)
+FilterClient::create_suppliers (ACE_ENV_SINGLE_ARG_DECL)
 {
   // startup the first supplier
   ACE_NEW_THROW_EX (supplier_1,
                     Filter_StructuredPushSupplier ("supplier1"),
                     CORBA::NO_MEMORY ());
 
-  supplier_1->connect (supplier_admin_.in () TAO_ENV_ARG_PARAMETER);
+  supplier_1->connect (supplier_admin_.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // startup the second supplier
@@ -282,12 +282,12 @@ FilterClient::create_suppliers (TAO_ENV_SINGLE_ARG_DECL)
                     Filter_StructuredPushSupplier ("supplier2"),
                     CORBA::NO_MEMORY ());
 
-  supplier_2->connect (supplier_admin_.in () TAO_ENV_ARG_PARAMETER);
+  supplier_2->connect (supplier_admin_.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
-FilterClient::send_events (TAO_ENV_SINGLE_ARG_DECL)
+FilterClient::send_events (ACE_ENV_SINGLE_ARG_DECL)
 {
   // operations:
   CosNotification::StructuredEvent event;
@@ -332,10 +332,10 @@ FilterClient::send_events (TAO_ENV_SINGLE_ARG_DECL)
       // any
       event.remainder_of_body <<= (CORBA::Long)i;
 
-      supplier_1->send_event (event TAO_ENV_ARG_PARAMETER);
+      supplier_1->send_event (event ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
-      supplier_2->send_event (event TAO_ENV_ARG_PARAMETER);
+      supplier_2->send_event (event ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
 }
@@ -352,15 +352,15 @@ Filter_StructuredPushConsumer::~Filter_StructuredPushConsumer (void)
 }
 
 void
-Filter_StructuredPushConsumer::connect (CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin TAO_ENV_ARG_DECL)
+Filter_StructuredPushConsumer::connect (CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin ACE_ENV_ARG_DECL)
 {
   // Activate the consumer with the default_POA_
   CosNotifyComm::StructuredPushConsumer_var objref =
-    this->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
+    this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   CosNotifyChannelAdmin::ProxySupplier_var proxysupplier =
-    consumer_admin->obtain_notification_push_supplier (CosNotifyChannelAdmin::STRUCTURED_EVENT, proxy_supplier_id_ TAO_ENV_ARG_PARAMETER);
+    consumer_admin->obtain_notification_push_supplier (CosNotifyChannelAdmin::STRUCTURED_EVENT, proxy_supplier_id_ ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   ACE_ASSERT (!CORBA::is_nil (proxysupplier.in ()));
@@ -368,21 +368,21 @@ Filter_StructuredPushConsumer::connect (CosNotifyChannelAdmin::ConsumerAdmin_ptr
   // narrow
   this->proxy_supplier_ =
     CosNotifyChannelAdmin::StructuredProxyPushSupplier::
-    _narrow (proxysupplier.in () TAO_ENV_ARG_PARAMETER);
+    _narrow (proxysupplier.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   ACE_ASSERT (!CORBA::is_nil (proxy_supplier_.in ()));
 
   proxy_supplier_->connect_structured_push_consumer (objref.in ()
-                                                     TAO_ENV_ARG_PARAMETER);
+                                                     ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
-Filter_StructuredPushConsumer::disconnect (TAO_ENV_SINGLE_ARG_DECL)
+Filter_StructuredPushConsumer::disconnect (ACE_ENV_SINGLE_ARG_DECL)
 {
   this->proxy_supplier_->
-    disconnect_structured_push_supplier(TAO_ENV_SINGLE_ARG_PARAMETER);
+    disconnect_structured_push_supplier(ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 }
 
@@ -390,7 +390,7 @@ void
 Filter_StructuredPushConsumer::offer_change
    (const CosNotification::EventTypeSeq & /*added*/,
     const CosNotification::EventTypeSeq & /*removed*/
-    TAO_ENV_ARG_DECL_NOT_USED)
+    ACE_ENV_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((
         CORBA::SystemException,
         CosNotifyComm::InvalidEventType
@@ -402,7 +402,7 @@ Filter_StructuredPushConsumer::offer_change
 void
 Filter_StructuredPushConsumer::push_structured_event
    (const CosNotification::StructuredEvent & notification
-    TAO_ENV_ARG_DECL_NOT_USED)
+    ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((
                    CORBA::SystemException,
                    CosEventComm::Disconnected
@@ -428,7 +428,7 @@ Filter_StructuredPushConsumer::push_structured_event
 
 void
 Filter_StructuredPushConsumer::disconnect_structured_push_consumer
-   (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+   (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
@@ -449,43 +449,43 @@ Filter_StructuredPushSupplier::~Filter_StructuredPushSupplier ()
 }
 
 void
-Filter_StructuredPushSupplier::connect (CosNotifyChannelAdmin::SupplierAdmin_ptr supplier_admin TAO_ENV_ARG_DECL)
+Filter_StructuredPushSupplier::connect (CosNotifyChannelAdmin::SupplierAdmin_ptr supplier_admin ACE_ENV_ARG_DECL)
 {
   CosNotifyComm::StructuredPushSupplier_var objref =
-    this->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
+    this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   CosNotifyChannelAdmin::ProxyConsumer_var proxyconsumer =
-    supplier_admin->obtain_notification_push_consumer (CosNotifyChannelAdmin::STRUCTURED_EVENT, proxy_consumer_id_ TAO_ENV_ARG_PARAMETER);
+    supplier_admin->obtain_notification_push_consumer (CosNotifyChannelAdmin::STRUCTURED_EVENT, proxy_consumer_id_ ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   ACE_ASSERT (!CORBA::is_nil (proxyconsumer.in ()));
 
   // narrow
   this->proxy_consumer_ =
-    CosNotifyChannelAdmin::StructuredProxyPushConsumer::_narrow (proxyconsumer.in () TAO_ENV_ARG_PARAMETER);
+    CosNotifyChannelAdmin::StructuredProxyPushConsumer::_narrow (proxyconsumer.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   ACE_ASSERT (!CORBA::is_nil (proxy_consumer_.in ()));
 
   proxy_consumer_->connect_structured_push_supplier (objref.in ()
-                                                     TAO_ENV_ARG_PARAMETER);
+                                                     ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
-Filter_StructuredPushSupplier::disconnect (TAO_ENV_SINGLE_ARG_DECL)
+Filter_StructuredPushSupplier::disconnect (ACE_ENV_SINGLE_ARG_DECL)
 {
   ACE_ASSERT (!CORBA::is_nil (this->proxy_consumer_.in ()));
 
-  this->proxy_consumer_->disconnect_structured_push_consumer(TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->proxy_consumer_->disconnect_structured_push_consumer(ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 void
 Filter_StructuredPushSupplier::subscription_change
    (const CosNotification::EventTypeSeq & /*added*/,
     const CosNotification::EventTypeSeq & /*removed */
-    TAO_ENV_ARG_DECL_NOT_USED)
+    ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((
                    CORBA::SystemException,
                    CosNotifyComm::InvalidEventType
@@ -496,20 +496,20 @@ Filter_StructuredPushSupplier::subscription_change
 
 void
 Filter_StructuredPushSupplier::send_event
-   (const CosNotification::StructuredEvent& event TAO_ENV_ARG_DECL)
+   (const CosNotification::StructuredEvent& event ACE_ENV_ARG_DECL)
 {
   ACE_ASSERT (!CORBA::is_nil (this->proxy_consumer_.in ()));
 
   ACE_DEBUG ((LM_DEBUG,
               "%s is sending an event \n", my_name_.fast_rep ()));
 
-  proxy_consumer_->push_structured_event (event TAO_ENV_ARG_PARAMETER);
+  proxy_consumer_->push_structured_event (event ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
 Filter_StructuredPushSupplier::disconnect_structured_push_supplier
-   (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+   (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))

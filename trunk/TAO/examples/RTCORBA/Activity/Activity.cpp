@@ -67,63 +67,63 @@ Activity::current (void)
 
 int
 Activity::init (int& argc, char *argv []
-                TAO_ENV_ARG_DECL)
+                ACE_ENV_ARG_DECL)
 {
   this->orb_ =
     CORBA::ORB_init (argc,
                      argv,
                      ""
-                     TAO_ENV_ARG_PARAMETER);
+                     ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   this->init_sched ();
 
   CORBA::Object_var object =
     orb_->resolve_initial_references ("RootPOA"
-                                      TAO_ENV_ARG_PARAMETER);
+                                      ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   root_poa_ =
     PortableServer::POA::_narrow (object.in ()
-                                  TAO_ENV_ARG_PARAMETER);
+                                  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   PortableServer::POAManager_var poa_manager =
-    root_poa_->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
+    root_poa_->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   object =
     orb_->resolve_initial_references ("RTORB"
-                                     TAO_ENV_ARG_PARAMETER);
+                                     ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   this->rt_orb_ =
     RTCORBA::RTORB::_narrow (object.in ()
-                             TAO_ENV_ARG_PARAMETER);
+                             ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   object =
     orb_->resolve_initial_references ("RTCurrent"
-                                      TAO_ENV_ARG_PARAMETER);
+                                      ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   current_ =
     RTCORBA::Current::_narrow (object.in ()
-                               TAO_ENV_ARG_PARAMETER);
+                               ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
-  poa_manager->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
+  poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   return 0;
 }
 
 int
-Activity::resolve_naming_service (TAO_ENV_SINGLE_ARG_DECL)
+Activity::resolve_naming_service (ACE_ENV_SINGLE_ARG_DECL)
 {
   CORBA::Object_var naming_obj =
     this->orb_->resolve_initial_references ("NameService"
-                                            TAO_ENV_ARG_PARAMETER);
+                                            ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   // Need to check return value for errors.
@@ -134,7 +134,7 @@ Activity::resolve_naming_service (TAO_ENV_SINGLE_ARG_DECL)
 
   this->naming_ =
     CosNaming::NamingContextExt::_narrow (naming_obj.in ()
-                                          TAO_ENV_ARG_PARAMETER);
+                                          ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   //@@tmp hack, otherwise crashes on exit!..??
@@ -143,7 +143,7 @@ Activity::resolve_naming_service (TAO_ENV_SINGLE_ARG_DECL)
 }
 
 void
-Activity::activate_poa_list (TAO_ENV_SINGLE_ARG_DECL)
+Activity::activate_poa_list (ACE_ENV_SINGLE_ARG_DECL)
 {
   POA_LIST list;
   int count = builder_->poa_list (list);
@@ -151,13 +151,13 @@ Activity::activate_poa_list (TAO_ENV_SINGLE_ARG_DECL)
   for (int i = 0; i < count; ++i)
     {
       list[i]->activate (this->rt_orb_.in(), this->root_poa_.in ()
-                         TAO_ENV_ARG_PARAMETER);
+                         ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
 }
 
 void
-Activity::activate_job_list (TAO_ENV_SINGLE_ARG_DECL)
+Activity::activate_job_list (ACE_ENV_SINGLE_ARG_DECL)
 {
   JOB_LIST list;
   int count = builder_->job_list (list);
@@ -173,7 +173,7 @@ Activity::activate_job_list (TAO_ENV_SINGLE_ARG_DECL)
       // find your poa
       PortableServer::POA_var host_poa =
         root_poa_->find_POA (job->poa ().c_str (), 0
-                             TAO_ENV_ARG_PARAMETER);
+                             ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       PortableServer::ServantBase_var servant_var (job);
@@ -182,29 +182,29 @@ Activity::activate_job_list (TAO_ENV_SINGLE_ARG_DECL)
       PortableServer::ObjectId_var id;
 
       id = host_poa->activate_object (job
-                                      TAO_ENV_ARG_PARAMETER);
+                                      ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       CORBA::Object_var server =
         host_poa->id_to_reference (id.in ()
-                                   TAO_ENV_ARG_PARAMETER);
+                                   ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       CORBA::String_var ior =
         orb_->object_to_string (server.in ()
-                                TAO_ENV_ARG_PARAMETER);
+                                ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       const ACE_CString &job_name = job->name ();
 
       CosNaming::Name_var name =
         this->naming_->to_name (job_name.c_str ()
-                                TAO_ENV_ARG_PARAMETER);
+                                ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       this->naming_->rebind (name.in (),
                              server.in ()
-                             TAO_ENV_ARG_PARAMETER);
+                             ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,
@@ -217,7 +217,7 @@ Activity::activate_job_list (TAO_ENV_SINGLE_ARG_DECL)
 }
 
 void
-Activity::activate_schedule (TAO_ENV_SINGLE_ARG_DECL)
+Activity::activate_schedule (ACE_ENV_SINGLE_ARG_DECL)
 {
   TASK_LIST list;
   int count = builder_->task_list (list);
@@ -240,10 +240,10 @@ Activity::activate_schedule (TAO_ENV_SINGLE_ARG_DECL)
       name[0].id = CORBA::string_dup (task->job ());
 
       CORBA::Object_var obj =
-                this->naming_->resolve (name TAO_ENV_ARG_PARAMETER);
+                this->naming_->resolve (name ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
-      Job_var job = Job::_narrow (obj.in () TAO_ENV_ARG_PARAMETER);
+      Job_var job = Job::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       if (TAO_debug_level > 0)
@@ -252,12 +252,12 @@ Activity::activate_schedule (TAO_ENV_SINGLE_ARG_DECL)
           // PriorityModelPolicy.
           CORBA::Policy_var policy =
             job->_get_policy (RTCORBA::PRIORITY_MODEL_POLICY_TYPE
-                              TAO_ENV_ARG_PARAMETER);
+                              ACE_ENV_ARG_PARAMETER);
           ACE_CHECK;
 
           RTCORBA::PriorityModelPolicy_var priority_policy =
             RTCORBA::PriorityModelPolicy::_narrow (policy.in ()
-                                                   TAO_ENV_ARG_PARAMETER);
+                                                   ACE_ENV_ARG_PARAMETER);
           ACE_CHECK;
 
           if (CORBA::is_nil (priority_policy.in ()))
@@ -266,7 +266,7 @@ Activity::activate_schedule (TAO_ENV_SINGLE_ARG_DECL)
           else
             {
               RTCORBA::PriorityModel priority_model =
-                priority_policy->priority_model (TAO_ENV_SINGLE_ARG_PARAMETER);
+                priority_policy->priority_model (ACE_ENV_SINGLE_ARG_PARAMETER);
               ACE_CHECK;
 
               if (priority_model == RTCORBA::CLIENT_PROPAGATED)
@@ -341,28 +341,28 @@ Activity::check_ifexit (void)
 
 CORBA::Short
 Activity::get_server_priority (CORBA::Object_ptr server
-                               TAO_ENV_ARG_DECL)
+                               ACE_ENV_ARG_DECL)
 {
   // Get the Priority Model Policy from the stub.
   CORBA::Policy_var policy =
     server->_get_policy (RTCORBA::PRIORITY_MODEL_POLICY_TYPE
-                         TAO_ENV_ARG_PARAMETER);
+                         ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   // Narrow down to correct type.
   RTCORBA::PriorityModelPolicy_var priority_policy =
-    RTCORBA::PriorityModelPolicy::_narrow (policy.in () TAO_ENV_ARG_PARAMETER);
+    RTCORBA::PriorityModelPolicy::_narrow (policy.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   // Make sure that we have the SERVER_DECLARED priority model.
   RTCORBA::PriorityModel priority_model =
-    priority_policy->priority_model (TAO_ENV_SINGLE_ARG_PARAMETER);
+    priority_policy->priority_model (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
   if (priority_model != RTCORBA::SERVER_DECLARED)
     return -1;
 
   // Return the server priority.
-  return priority_policy->server_priority (TAO_ENV_SINGLE_ARG_PARAMETER);
+  return priority_policy->server_priority (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 int
@@ -429,25 +429,25 @@ Activity::init_sched (void)
 }
 
 void
-Activity::run (int argc, char *argv[] TAO_ENV_ARG_DECL)
+Activity::run (int argc, char *argv[] ACE_ENV_ARG_DECL)
 {
-  this->init (argc, argv TAO_ENV_ARG_PARAMETER);
+  this->init (argc, argv ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  if (this->resolve_naming_service (TAO_ENV_SINGLE_ARG_PARAMETER) == -1)
+  if (this->resolve_naming_service (ACE_ENV_SINGLE_ARG_PARAMETER) == -1)
           return;
   ACE_CHECK;
 
-  this->activate_poa_list (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->activate_poa_list (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  this->activate_job_list (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->activate_job_list (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-   this->activate_schedule (TAO_ENV_SINGLE_ARG_PARAMETER);
+   this->activate_schedule (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  orb_->run (TAO_ENV_SINGLE_ARG_PARAMETER);
+  orb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   orb_->destroy ();
@@ -467,7 +467,7 @@ main (int argc, char *argv[])
 
   ACE_TRY_NEW_ENV
     {
-      ACTIVITY::instance()->run (argc, argv TAO_ENV_ARG_PARAMETER);
+      ACTIVITY::instance()->run (argc, argv ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

@@ -31,16 +31,16 @@ public:
   // ctor
 
   // = The Simple_Server methods.
-  void sendCharSeq (const Char_Seq & charSeq TAO_ENV_ARG_DECL_NOT_USED)
+  void sendCharSeq (const Char_Seq & charSeq ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void sendOctetSeq (const Octet_Seq & octetSeq TAO_ENV_ARG_DECL_NOT_USED)
+  void sendOctetSeq (const Octet_Seq & octetSeq ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::Long get_number (CORBA::Long num TAO_ENV_ARG_DECL_NOT_USED)
+  CORBA::Long get_number (CORBA::Long num ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void shutdown (TAO_ENV_SINGLE_ARG_DECL)
+  void shutdown (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

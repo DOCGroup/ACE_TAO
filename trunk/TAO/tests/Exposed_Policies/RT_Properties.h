@@ -30,7 +30,7 @@ public:
   ~RT_Properties (void);
 
   static RT_Properties * read_from (const char *file_name
-                                    TAO_ENV_ARG_DECL);
+                                    ACE_ENV_ARG_DECL);
 
   // -- Accessor Methods --
   void priority (RTCORBA::Priority priority);

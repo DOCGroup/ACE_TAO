@@ -13,29 +13,29 @@ Notify_Push_Consumer::connect (
        CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin,
        CosNotifyChannelAdmin::EventChannel_ptr notify_channel,
        CORBA::Boolean isFilter
-       TAO_ENV_ARG_DECL)
+       ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CosNotifyComm::StructuredPushConsumer_var objref =
-    this->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
+    this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   CosNotifyChannelAdmin::ProxySupplier_var proxysupplier =
     consumer_admin->obtain_notification_push_supplier (
       CosNotifyChannelAdmin::STRUCTURED_EVENT,
       proxy_supplier_id_
-      TAO_ENV_ARG_PARAMETER);
+      ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   //add filter
   if (isFilter)
     {
       CosNotifyFilter::FilterFactory_var ffact =
-        notify_channel->default_filter_factory (TAO_ENV_SINGLE_ARG_PARAMETER);
+        notify_channel->default_filter_factory (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       CosNotifyFilter::Filter_var filter =
-        ffact->create_filter ("TCL" TAO_ENV_ARG_PARAMETER);
+        ffact->create_filter ("TCL" ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       if (CORBA::is_nil (filter.in ()))
@@ -51,7 +51,7 @@ Notify_Push_Consumer::connect (
       constraint_list[0].event_types.length (0);
       constraint_list[0].constraint_expr = CORBA::string_dup ("Number != 100");
 
-      filter->add_constraints (constraint_list TAO_ENV_ARG_PARAMETER);
+      filter->add_constraints (constraint_list ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       // apply filter
@@ -61,11 +61,11 @@ Notify_Push_Consumer::connect (
 
   this->proxy_supplier_ =
     CosNotifyChannelAdmin::StructuredProxyPushSupplier::_narrow (
-      proxysupplier.in () TAO_ENV_ARG_PARAMETER);
+      proxysupplier.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   this->proxy_supplier_->connect_structured_push_consumer (objref.in ()
-                                                           TAO_ENV_ARG_PARAMETER);
+                                                           ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // give ownership to POA
@@ -140,7 +140,7 @@ Any_String (const CORBA::Any& any)
 void
 Notify_Push_Consumer::push_structured_event (
                           const CosNotification::StructuredEvent& event
-                          TAO_ENV_ARG_DECL_NOT_USED /*TAO_ENV_SINGLE_ARG_PARAMETER*/)
+                          ACE_ENV_ARG_DECL_NOT_USED /*ACE_ENV_SINGLE_ARG_PARAMETER*/)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,

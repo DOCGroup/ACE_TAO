@@ -18,11 +18,11 @@ main (int argc, char *argv[])
     {
       // Initialize ORB.
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "internet" TAO_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "internet" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Object_var naming_obj =
-        orb->resolve_initial_references ("NameService" TAO_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("NameService" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil(naming_obj.in ()))
@@ -31,7 +31,7 @@ main (int argc, char *argv[])
                           1);
 
       CosNaming::NamingContext_var naming_context =
-        CosNaming::NamingContext::_narrow (naming_obj.in () TAO_ENV_ARG_PARAMETER);
+        CosNaming::NamingContext::_narrow (naming_obj.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       const char *name = 0;
@@ -65,7 +65,7 @@ main (int argc, char *argv[])
          ACE_Sched_Params::priority_max (ACE_SCHED_FIFO,
                                          ACE_SCOPE_THREAD),
          infos_out, configs_out, anomalies_out
-         TAO_ENV_ARG_PARAMETER); // FUZZ: ignore check_for_ace_check
+         ACE_ENV_ARG_PARAMETER); // FUZZ: ignore check_for_ace_check
 #else  /* ! __SUNPRO_CC */
       ACE_Scheduler_Factory::server ()->compute_scheduling
         (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO,
@@ -73,7 +73,7 @@ main (int argc, char *argv[])
          ACE_Sched_Params::priority_max (ACE_SCHED_FIFO,
                                          ACE_SCOPE_THREAD),
          infos.out (), configs.out (), anomalies.out ()
-         TAO_ENV_ARG_PARAMETER); // FUZZ: ignore check_for_ace_check
+         ACE_ENV_ARG_PARAMETER); // FUZZ: ignore check_for_ace_check
 #endif /* ! __SUNPRO_CC */
 
       ACE_TRY_CHECK;

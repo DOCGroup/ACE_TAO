@@ -553,7 +553,7 @@ Client::find_frequency (void)
 }
 
 CORBA::ORB_ptr
-Client::init_orb (TAO_ENV_SINGLE_ARG_DECL)
+Client::init_orb (ACE_ENV_SINGLE_ARG_DECL)
 {
   ACE_DEBUG ((LM_DEBUG,
               "I'm thread %t\n"));
@@ -583,7 +583,7 @@ Client::init_orb (TAO_ENV_SINGLE_ARG_DECL)
   CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                         argv,
                                         orbid
-                                        TAO_ENV_ARG_PARAMETER);
+                                        ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::ORB::_nil ());
 
   if (this->id_ == 0)
@@ -613,7 +613,7 @@ Client::init_orb (TAO_ENV_SINGLE_ARG_DECL)
 }
 
 int
-Client::get_cubit (CORBA::ORB_ptr orb TAO_ENV_ARG_DECL)
+Client::get_cubit (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
 {
   char *my_ior =
     this->ts_->use_utilization_test_ == 1
@@ -633,7 +633,7 @@ Client::get_cubit (CORBA::ORB_ptr orb TAO_ENV_ARG_DECL)
 
   CORBA::Object_var objref =
     orb->string_to_object (my_ior
-                           TAO_ENV_ARG_PARAMETER);
+                           ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   if (CORBA::is_nil (objref.in ()))
@@ -644,7 +644,7 @@ Client::get_cubit (CORBA::ORB_ptr orb TAO_ENV_ARG_DECL)
   // Narrow the CORBA::Object reference to the stub object,
   // checking the type along the way using _is_a.
   this->cubit_ = Cubit::_narrow (objref.in ()
-                                 TAO_ENV_ARG_PARAMETER);
+                                 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   if (CORBA::is_nil (this->cubit_))
@@ -657,7 +657,7 @@ Client::get_cubit (CORBA::ORB_ptr orb TAO_ENV_ARG_DECL)
 
   CORBA::String_var str =
     orb->object_to_string (this->cubit_
-                           TAO_ENV_ARG_PARAMETER);
+                           ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   ACE_DEBUG ((LM_DEBUG,
@@ -670,18 +670,18 @@ Client::get_cubit (CORBA::ORB_ptr orb TAO_ENV_ARG_DECL)
 int
 Client::svc (void)
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       // Initialize the ORB.
-      CORBA::ORB_var orb = this->init_orb (TAO_ENV_SINGLE_ARG_PARAMETER);
+      CORBA::ORB_var orb = this->init_orb (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Find the frequency of CORBA requests based on thread id.
       this->find_frequency ();
 
       // Get the cubit object from the file.
-      int r = this->get_cubit (orb.in () TAO_ENV_ARG_PARAMETER);
+      int r = this->get_cubit (orb.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       if (r != 0)
         return r;
@@ -716,14 +716,14 @@ Client::svc (void)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "(%t) CALLING SHUTDOWN() ON THE SERVANT\n"));
-          this->cubit_->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
+          this->cubit_->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
 
       CORBA::release (this->cubit_);
       this->cubit_ = 0;
 
-      orb->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
+      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -746,7 +746,7 @@ Client::svc (void)
 int
 Client::cube_octet (void)
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       this->call_count_++;
@@ -758,10 +758,10 @@ Client::cube_octet (void)
 
       if (this->ts_->use_utilization_test_ == 1 && this->ts_->remote_invocations_ == 0)
         ret_octet = this->cubit_impl_.cube_octet (arg_octet
-                                                  TAO_ENV_ARG_PARAMETER);
+                                                  ACE_ENV_ARG_PARAMETER);
       else
         ret_octet = this->cubit_->cube_octet (arg_octet
-                                              TAO_ENV_ARG_PARAMETER);
+                                              ACE_ENV_ARG_PARAMETER);
 
       STOP_QUANTIFY;
       ACE_TRY_CHECK;
@@ -792,7 +792,7 @@ Client::cube_octet (void)
 int
 Client::cube_short (void)
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       this->call_count_++;
@@ -802,7 +802,7 @@ Client::cube_short (void)
 
       START_QUANTIFY;
       ret_short = this->cubit_->cube_short (arg_short
-                                            TAO_ENV_ARG_PARAMETER);
+                                            ACE_ENV_ARG_PARAMETER);
       STOP_QUANTIFY;
       ACE_TRY_CHECK;
       arg_short = arg_short * arg_short * arg_short;
@@ -829,7 +829,7 @@ Client::cube_short (void)
 int
 Client::cube_long (void)
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       this->call_count_++;
@@ -839,7 +839,7 @@ Client::cube_long (void)
 
       START_QUANTIFY;
       ret_long = this->cubit_->cube_long (arg_long
-                                          TAO_ENV_ARG_PARAMETER);
+                                          ACE_ENV_ARG_PARAMETER);
       STOP_QUANTIFY;
       ACE_TRY_CHECK;
 
@@ -866,7 +866,7 @@ Client::cube_long (void)
 int
 Client::cube_struct (void)
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       Cubit::Many arg_struct;
@@ -880,7 +880,7 @@ Client::cube_struct (void)
 
       START_QUANTIFY;
       ret_struct = this->cubit_->cube_struct (arg_struct
-                                              TAO_ENV_ARG_PARAMETER);
+                                              ACE_ENV_ARG_PARAMETER);
       STOP_QUANTIFY;
       ACE_TRY_CHECK;
 
@@ -940,12 +940,12 @@ Client::make_request (void)
     }
   else
     {
-      TAO_ENV_DECLARE_NEW_ENV;
+      ACE_DECLARE_NEW_CORBA_ENV;
       ACE_TRY
         {
           this->call_count_++;
           START_QUANTIFY;
-          this->cubit_->noop (TAO_ENV_SINGLE_ARG_PARAMETER);
+          this->cubit_->noop (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
           STOP_QUANTIFY;
         }

@@ -42,7 +42,7 @@ void CORBA_TypeCode::Bounds::_raise (void)
 
 void CORBA_TypeCode::Bounds::_tao_encode (
     TAO_OutputCDR &cdr
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   ) const
 {
   if (cdr << this->_id ())
@@ -51,7 +51,7 @@ void CORBA_TypeCode::Bounds::_tao_encode (
 }
 
 void CORBA_TypeCode::Bounds::_tao_decode (TAO_InputCDR &
-                                          TAO_ENV_ARG_DECL_NOT_USED)
+                                          ACE_ENV_ARG_DECL_NOT_USED)
 {
 }
 
@@ -84,7 +84,7 @@ void CORBA_TypeCode::BadKind::_raise (void)
 
 void CORBA_TypeCode::BadKind::_tao_encode (
     TAO_OutputCDR &cdr
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   ) const
 {
   if (cdr << this->_id ())
@@ -93,7 +93,7 @@ void CORBA_TypeCode::BadKind::_tao_encode (
 }
 
 void CORBA_TypeCode::BadKind::_tao_decode (TAO_InputCDR &
-                                           TAO_ENV_ARG_DECL_NOT_USED)
+                                           ACE_ENV_ARG_DECL_NOT_USED)
 {
 }
 
@@ -261,7 +261,7 @@ CORBA_TypeCode::~CORBA_TypeCode (void)
 
 CORBA::TypeCode_ptr
 CORBA_TypeCode::member_type (CORBA::ULong slot
-                             TAO_ENV_ARG_DECL) const
+                             ACE_ENV_ARG_DECL) const
 {
   CORBA::TypeCode_ptr typecode = 0;
 
@@ -279,7 +279,7 @@ CORBA_TypeCode::member_type (CORBA::ULong slot
     {
       typecode = CORBA::TypeCode::_duplicate (
                      this->private_member_type (slot
-                                                 TAO_ENV_ARG_PARAMETER)
+                                                 ACE_ENV_ARG_PARAMETER)
                    );
     }
 
@@ -290,7 +290,7 @@ CORBA_TypeCode::member_type (CORBA::ULong slot
 
 const char *
 CORBA_TypeCode::member_name (CORBA::ULong slot
-                             TAO_ENV_ARG_DECL) const
+                             ACE_ENV_ARG_DECL) const
 {
   if (this->private_state_->tc_member_count_known_
       && this->private_state_->tc_member_name_list_known_)
@@ -308,14 +308,14 @@ CORBA_TypeCode::member_name (CORBA::ULong slot
   else
     {
       return this->private_member_name (slot
-                                         TAO_ENV_ARG_PARAMETER);
+                                         ACE_ENV_ARG_PARAMETER);
     }
 }
 
 // Return the label of the i-th member.  Applicable only to CORBA::tk_union
 CORBA::Any_ptr
 CORBA_TypeCode::member_label (CORBA::ULong slot
-                              TAO_ENV_ARG_DECL) const
+                              ACE_ENV_ARG_DECL) const
 {
   CORBA::Any_ptr retval = 0;
 
@@ -339,7 +339,7 @@ CORBA_TypeCode::member_label (CORBA::ULong slot
   else
     {
       CORBA::Any_ptr label = this->private_member_label (slot
-                                                          TAO_ENV_ARG_PARAMETER);
+                                                          ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       ACE_NEW_RETURN (retval,
@@ -352,7 +352,7 @@ CORBA_TypeCode::member_label (CORBA::ULong slot
 
 // only applicable to CORBA::tk_unions
 CORBA::TypeCode_ptr
-CORBA_TypeCode::discriminator_type (TAO_ENV_SINGLE_ARG_DECL) const
+CORBA_TypeCode::discriminator_type (ACE_ENV_SINGLE_ARG_DECL) const
 {
   if (this->kind_ != CORBA::tk_union)
     ACE_THROW_RETURN (CORBA::TypeCode::BadKind (), (CORBA::TypeCode_ptr)0);
@@ -363,7 +363,7 @@ CORBA_TypeCode::discriminator_type (TAO_ENV_SINGLE_ARG_DECL) const
              );
 
   CORBA::TypeCode_ptr type =
-    this->private_discriminator_type (TAO_ENV_SINGLE_ARG_PARAMETER);
+    this->private_discriminator_type (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
 
   return CORBA_TypeCode::_duplicate (type);
@@ -371,7 +371,7 @@ CORBA_TypeCode::discriminator_type (TAO_ENV_SINGLE_ARG_DECL) const
 
 // only applicable to CORBA::tk_unions
 CORBA::Long
-CORBA_TypeCode::default_index (TAO_ENV_SINGLE_ARG_DECL) const
+CORBA_TypeCode::default_index (ACE_ENV_SINGLE_ARG_DECL) const
 {
   if (this->kind_ != CORBA::tk_union)
     ACE_THROW_RETURN (CORBA::TypeCode::BadKind (), 0);
@@ -379,12 +379,12 @@ CORBA_TypeCode::default_index (TAO_ENV_SINGLE_ARG_DECL) const
   if (this->private_state_->tc_default_index_used_known_)
     return this->private_state_->tc_default_index_used_;
   else
-    return this->private_default_index (TAO_ENV_SINGLE_ARG_PARAMETER);
+    return this->private_default_index (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 // returns the length. Applicable only to string, sequence, and arrays
 CORBA::ULong
-CORBA_TypeCode::length (TAO_ENV_SINGLE_ARG_DECL) const
+CORBA_TypeCode::length (ACE_ENV_SINGLE_ARG_DECL) const
 {
   // a switch stmt, unfortunately, doesn't get inlined
   if (this->kind_ == CORBA::tk_sequence
@@ -395,7 +395,7 @@ CORBA_TypeCode::length (TAO_ENV_SINGLE_ARG_DECL) const
       if (this->private_state_->tc_length_known_)
         return this->private_state_->tc_length_;
       else
-        return this->private_length (TAO_ENV_SINGLE_ARG_PARAMETER);
+        return this->private_length (ACE_ENV_SINGLE_ARG_PARAMETER);
     }
   else
     ACE_THROW_RETURN (CORBA::TypeCode::BadKind (), 0);
@@ -403,7 +403,7 @@ CORBA_TypeCode::length (TAO_ENV_SINGLE_ARG_DECL) const
 
 // returns the typecode. Applicable only to string, sequence, and arrays
 CORBA::TypeCode_ptr
-CORBA_TypeCode::content_type (TAO_ENV_SINGLE_ARG_DECL) const
+CORBA_TypeCode::content_type (ACE_ENV_SINGLE_ARG_DECL) const
 {
   if (this->kind_ == CORBA::tk_sequence
       || this->kind_ == CORBA::tk_array
@@ -416,7 +416,7 @@ CORBA_TypeCode::content_type (TAO_ENV_SINGLE_ARG_DECL) const
       else
         {
           CORBA::TypeCode_ptr tmp =
-            this->private_content_type (TAO_ENV_SINGLE_ARG_PARAMETER);
+            this->private_content_type (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
 
           return CORBA_TypeCode::_duplicate (tmp);
@@ -428,7 +428,7 @@ CORBA_TypeCode::content_type (TAO_ENV_SINGLE_ARG_DECL) const
 }
 
 CORBA::TypeCode_ptr
-CORBA_TypeCode::concrete_base_type (TAO_ENV_SINGLE_ARG_DECL) const
+CORBA_TypeCode::concrete_base_type (ACE_ENV_SINGLE_ARG_DECL) const
 {
   if (this->private_state_->tc_concrete_base_type_known_)
     {
@@ -439,9 +439,9 @@ CORBA_TypeCode::concrete_base_type (TAO_ENV_SINGLE_ARG_DECL) const
   else
     {
       CORBA::TypeCode_ptr tmp =
-        this->private_concrete_base_type (TAO_ENV_SINGLE_ARG_PARAMETER);
+        this->private_concrete_base_type (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
-      
+
       return CORBA_TypeCode::_duplicate (tmp);
     }
 }
@@ -666,7 +666,7 @@ TC_Private_State::~TC_Private_State (void)
                   CORBA::string_free (this->tc_member_name_list_ [i]);
                   this->tc_member_name_list_ [i] = 0;
                 }
-              
+
               delete [] this->tc_member_name_list_;
               this->tc_member_name_list_ = 0;
             }
@@ -680,13 +680,13 @@ TC_Private_State::~TC_Private_State (void)
                 {
                   CORBA::release (this->tc_member_type_list_[i]);
                 }
-              
+
               // Now free up the array.
               delete [] this->tc_member_type_list_;
               this->tc_member_type_list_ = 0;
             }
           this->tc_member_count_ = 0;
-          
+
           // free up concrete base value typecode
           if (this->tc_concrete_base_type_known_)
             {
@@ -696,7 +696,7 @@ TC_Private_State::~TC_Private_State (void)
             }
           break;
       }
-      
+
       default:
         // nothing to do
         break;
@@ -707,7 +707,7 @@ TC_Private_State::~TC_Private_State (void)
 CORBA::Boolean
 CORBA_TypeCode::equ_common (CORBA::TypeCode_ptr tc,
                             CORBA::Boolean equiv_only
-                            TAO_ENV_ARG_DECL) const
+                            ACE_ENV_ARG_DECL) const
 {
   // This will catch applications that haven't initialized an ORB.
   if (CORBA::is_nil (tc))
@@ -731,14 +731,14 @@ CORBA_TypeCode::equ_common (CORBA::TypeCode_ptr tc,
 
       while (status)
         {
-          rcvr = rcvr->content_type (TAO_ENV_SINGLE_ARG_PARAMETER);
+          rcvr = rcvr->content_type (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_CHECK_RETURN (0);
 
-          status = (rcvr->kind (TAO_ENV_SINGLE_ARG_PARAMETER) == CORBA::tk_alias);
+          status = (rcvr->kind (ACE_ENV_SINGLE_ARG_PARAMETER) == CORBA::tk_alias);
           ACE_CHECK_RETURN (0);
         }
 
-      CORBA::TCKind kind = tc->kind (TAO_ENV_SINGLE_ARG_PARAMETER);
+      CORBA::TCKind kind = tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
       status = (kind == CORBA::tk_alias);
 
@@ -750,17 +750,17 @@ CORBA_TypeCode::equ_common (CORBA::TypeCode_ptr tc,
 
       while (status)
         {
-          tcvar = tcvar->content_type (TAO_ENV_SINGLE_ARG_PARAMETER);
+          tcvar = tcvar->content_type (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_CHECK_RETURN (0);
 
-          kind = tcvar->kind (TAO_ENV_SINGLE_ARG_PARAMETER);
+          kind = tcvar->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_CHECK_RETURN (0);
           status = (kind == CORBA::tk_alias);
         }
 
-      kind = rcvr->kind (TAO_ENV_SINGLE_ARG_PARAMETER);
+      kind = rcvr->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
-      CORBA::TCKind other_kind = tcvar->kind (TAO_ENV_SINGLE_ARG_PARAMETER);
+      CORBA::TCKind other_kind = tcvar->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       if (kind != other_kind)
@@ -770,10 +770,10 @@ CORBA_TypeCode::equ_common (CORBA::TypeCode_ptr tc,
       // typecode kinds are same
       return rcvr->private_equal (tcvar.in (),
                                   equiv_only
-                                   TAO_ENV_ARG_PARAMETER);
+                                   ACE_ENV_ARG_PARAMETER);
     }
 
-  CORBA::TCKind kind = tc->kind (TAO_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::TCKind kind = tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
   if (this->kind_ != kind)
     // simple case
@@ -782,7 +782,7 @@ CORBA_TypeCode::equ_common (CORBA::TypeCode_ptr tc,
   // typecode kinds are same
   return this->private_equal (tc,
                               equiv_only
-                               TAO_ENV_ARG_PARAMETER);
+                               ACE_ENV_ARG_PARAMETER);
 }
 
 // check if typecodes are equal. Equality is based on a mix of structural
@@ -791,7 +791,7 @@ CORBA_TypeCode::equ_common (CORBA::TypeCode_ptr tc,
 CORBA::Boolean
 CORBA_TypeCode::private_equal (CORBA::TypeCode_ptr tc,
                                CORBA::Boolean equiv_only
-                               TAO_ENV_ARG_DECL) const
+                               ACE_ENV_ARG_DECL) const
 {
   // We come in here only if the typecode kinds of both are same
   // Handle each complex typecode separately.
@@ -821,48 +821,48 @@ CORBA_TypeCode::private_equal (CORBA::TypeCode_ptr tc,
     case CORBA::tk_objref:
       return this->private_equal_objref (tc,
                                          equiv_only
-                                          TAO_ENV_ARG_PARAMETER);
+                                          ACE_ENV_ARG_PARAMETER);
     case CORBA::tk_struct:
       return this->private_equal_struct (tc,
                                          equiv_only
-                                          TAO_ENV_ARG_PARAMETER);
+                                          ACE_ENV_ARG_PARAMETER);
     case CORBA::tk_union:
       return this->private_equal_union (tc,
                                         equiv_only
-                                         TAO_ENV_ARG_PARAMETER);
+                                         ACE_ENV_ARG_PARAMETER);
     case CORBA::tk_enum:
       return this->private_equal_enum (tc,
                                        equiv_only
-                                        TAO_ENV_ARG_PARAMETER);
+                                        ACE_ENV_ARG_PARAMETER);
     case CORBA::tk_string:
       return this->private_equal_string (tc,
                                          equiv_only
-                                          TAO_ENV_ARG_PARAMETER);
+                                          ACE_ENV_ARG_PARAMETER);
     case CORBA::tk_wstring:
       return this->private_equal_wstring (tc,
                                           equiv_only
-                                           TAO_ENV_ARG_PARAMETER);
+                                           ACE_ENV_ARG_PARAMETER);
     case CORBA::tk_sequence:
       return this->private_equal_sequence (tc,
                                            equiv_only
-                                            TAO_ENV_ARG_PARAMETER);
+                                            ACE_ENV_ARG_PARAMETER);
     case CORBA::tk_array:
       return this->private_equal_array (tc,
                                         equiv_only
-                                         TAO_ENV_ARG_PARAMETER);
+                                         ACE_ENV_ARG_PARAMETER);
     case CORBA::tk_alias:
       return this->private_equal_alias (tc,
                                         equiv_only
-                                         TAO_ENV_ARG_PARAMETER);
+                                         ACE_ENV_ARG_PARAMETER);
     case CORBA::tk_except:
       return this->private_equal_except (tc,
                                          equiv_only
-                                          TAO_ENV_ARG_PARAMETER);
+                                          ACE_ENV_ARG_PARAMETER);
     case CORBA::tk_value:
       return this->private_equal_valuetype (tc,
                                             equiv_only
-                                            TAO_ENV_ARG_PARAMETER);
-                         
+                                            ACE_ENV_ARG_PARAMETER);
+
     case ~0u: // indirection
       {
         // indirection offset must be same
@@ -878,15 +878,15 @@ CORBA::Boolean
 CORBA_TypeCode::private_equal_objref (
     CORBA::TypeCode_ptr tc,
     CORBA::Boolean equiv_only
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   ) const
 {
   // compare the repoID and name, of which the name is optional as per GIOP
   // spec. However, the repoID is mandatory.
-  const char *my_id = this->id (TAO_ENV_SINGLE_ARG_PARAMETER);
+  const char *my_id = this->id (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  const char *tc_id = tc->id (TAO_ENV_SINGLE_ARG_PARAMETER);
+  const char *tc_id = tc->id (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   if (!ACE_OS::strcmp (my_id, tc_id))
@@ -900,10 +900,10 @@ CORBA_TypeCode::private_equal_objref (
       else
         {
           // same repository IDs. Now check their names
-          const char *myname = this->name (TAO_ENV_SINGLE_ARG_PARAMETER);
+          const char *myname = this->name (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_CHECK_RETURN (0);
 
-          const char *tcname = tc->name (TAO_ENV_SINGLE_ARG_PARAMETER);
+          const char *tcname = tc->name (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_CHECK_RETURN (0);
 
           if ((ACE_OS::strlen (myname) > 1) &&
@@ -925,15 +925,15 @@ CORBA::Boolean
 CORBA_TypeCode::private_equal_struct (
     CORBA::TypeCode_ptr tc,
     CORBA::Boolean equiv_only
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   ) const
 {
   // For structs the repoID and names are optional. However, if provided,
   // we must compare them
-  const char *my_id = this->id (TAO_ENV_SINGLE_ARG_PARAMETER);
+  const char *my_id = this->id (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  const char *tc_id = tc->id (TAO_ENV_SINGLE_ARG_PARAMETER);
+  const char *tc_id = tc->id (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   // compare repoIDs if they exist
@@ -954,10 +954,10 @@ CORBA_TypeCode::private_equal_struct (
   // Skipped by equivalent().
   if (!equiv_only)
     {
-      const char *my_name = this->name (TAO_ENV_SINGLE_ARG_PARAMETER);
+      const char *my_name = this->name (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
-      const char *tc_name = tc->name (TAO_ENV_SINGLE_ARG_PARAMETER);
+      const char *tc_name = tc->name (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       // Compare names if they exist.
@@ -968,10 +968,10 @@ CORBA_TypeCode::private_equal_struct (
     }
 
   // Check if the member count is same.
-  CORBA::ULong my_count = this->member_count (TAO_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::ULong my_count = this->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  CORBA::ULong tc_count = tc->member_count (TAO_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::ULong tc_count = tc->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   if (my_count != tc_count)
@@ -1003,11 +1003,11 @@ CORBA_TypeCode::private_equal_struct (
       if (!equiv_only)
         {
           const char *my_member_name =
-            this->member_name (i TAO_ENV_ARG_PARAMETER);
+            this->member_name (i ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (0);
 
           const char *tc_member_name =
-            tc->member_name (i TAO_ENV_ARG_PARAMETER);
+            tc->member_name (i ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (0);
 
           if (ACE_OS::strlen (my_member_name) > 1
@@ -1019,11 +1019,11 @@ CORBA_TypeCode::private_equal_struct (
 
       // now compare the typecodes of the members
       CORBA::TypeCode_var my_member_tc = this->member_type (i
-                                                             TAO_ENV_ARG_PARAMETER);
+                                                             ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       CORBA::TypeCode_var tc_member_tc = tc->member_type (i
-                                                           TAO_ENV_ARG_PARAMETER);
+                                                           ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       // One of our members may be recursive, but not through us.
@@ -1036,7 +1036,7 @@ CORBA_TypeCode::private_equal_struct (
       CORBA::Boolean flag =
         my_member_tc->equ_common (tc_member_tc.in (),
                                   equiv_only
-                                   TAO_ENV_ARG_PARAMETER);
+                                   ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       if (!flag)
@@ -1049,14 +1049,14 @@ CORBA_TypeCode::private_equal_struct (
 CORBA::Boolean
 CORBA_TypeCode::private_equal_union (CORBA::TypeCode_ptr tc,
                                      CORBA::Boolean equiv_only
-                                     TAO_ENV_ARG_DECL) const
+                                     ACE_ENV_ARG_DECL) const
 {
   // For unions the repoID and names are optional. However, if provided, we
   // must compare them
-  const char *my_id = this->id (TAO_ENV_SINGLE_ARG_PARAMETER);
+  const char *my_id = this->id (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  const char *tc_id = tc->id (TAO_ENV_SINGLE_ARG_PARAMETER);
+  const char *tc_id = tc->id (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   // compare repoIDs if they exist
@@ -1077,10 +1077,10 @@ CORBA_TypeCode::private_equal_union (CORBA::TypeCode_ptr tc,
   // Skipped by equivalent().
   if (!equiv_only)
     {
-      const char *my_name = this->name (TAO_ENV_SINGLE_ARG_PARAMETER);
+      const char *my_name = this->name (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
-      const char *tc_name = tc->name (TAO_ENV_SINGLE_ARG_PARAMETER);
+      const char *tc_name = tc->name (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       // Compare names if they exist.
@@ -1093,36 +1093,36 @@ CORBA_TypeCode::private_equal_union (CORBA::TypeCode_ptr tc,
 
   // check if the discriminant type is same
   CORBA::TypeCode_var my_discrim =
-    this->discriminator_type (TAO_ENV_SINGLE_ARG_PARAMETER);
+    this->discriminator_type (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   CORBA::TypeCode_var tc_discrim =
-    tc->discriminator_type (TAO_ENV_SINGLE_ARG_PARAMETER);
+    tc->discriminator_type (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   CORBA::Boolean status = my_discrim->equ_common (tc_discrim.in (),
                                                   equiv_only
-                                                   TAO_ENV_ARG_PARAMETER);
+                                                   ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   if (!status)
     return 0;
 
   // check the default used
-  CORBA::Long my_default = this->default_index (TAO_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::Long my_default = this->default_index (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  CORBA::Long tc_default = tc->default_index (TAO_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::Long tc_default = tc->default_index (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   if (my_default != tc_default)
     return 0;
 
   // check if the member count is same
-  CORBA::ULong my_count = this->member_count (TAO_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::ULong my_count = this->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  CORBA::ULong tc_count = tc->member_count (TAO_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::ULong tc_count = tc->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   if (my_count != tc_count)
@@ -1156,11 +1156,11 @@ CORBA_TypeCode::private_equal_union (CORBA::TypeCode_ptr tc,
       if (!equiv_only)
         {
           const char *my_member_name = this->member_name (i
-                                                           TAO_ENV_ARG_PARAMETER);
+                                                           ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (0);
 
           const char *tc_member_name = tc->member_name (i
-                                                         TAO_ENV_ARG_PARAMETER);
+                                                         ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (0);
 
           if (ACE_OS::strlen (my_member_name) > 1
@@ -1172,11 +1172,11 @@ CORBA_TypeCode::private_equal_union (CORBA::TypeCode_ptr tc,
 
       // now compare the typecodes of the members
       CORBA::TypeCode_var my_member_tc = this->member_type (i
-                                                             TAO_ENV_ARG_PARAMETER);
+                                                             ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       CORBA::TypeCode_var tc_member_tc = tc->member_type (i
-                                                           TAO_ENV_ARG_PARAMETER);
+                                                           ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       // One of our members may be recursive, but not through us.
@@ -1188,7 +1188,7 @@ CORBA_TypeCode::private_equal_union (CORBA::TypeCode_ptr tc,
 
       CORBA::Boolean flag = my_member_tc->equ_common (tc_member_tc.in (),
                                                       equiv_only
-                                                       TAO_ENV_ARG_PARAMETER);
+                                                       ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       if (!flag)
@@ -1201,14 +1201,14 @@ CORBA_TypeCode::private_equal_union (CORBA::TypeCode_ptr tc,
 CORBA::Boolean
 CORBA_TypeCode::private_equal_enum (CORBA::TypeCode_ptr tc,
                                     CORBA::Boolean equiv_only
-                                    TAO_ENV_ARG_DECL) const
+                                    ACE_ENV_ARG_DECL) const
 {
   // For enums the repoID and names are optional. However, if provided, we
   // must compare them
-  const char *my_id = this->id (TAO_ENV_SINGLE_ARG_PARAMETER);
+  const char *my_id = this->id (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  const char *tc_id = tc->id (TAO_ENV_SINGLE_ARG_PARAMETER);
+  const char *tc_id = tc->id (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   // compare repoIDs if they exist
@@ -1229,10 +1229,10 @@ CORBA_TypeCode::private_equal_enum (CORBA::TypeCode_ptr tc,
   // Skipped by equivalent().
   if (!equiv_only)
     {
-      const char *my_name = this->name (TAO_ENV_SINGLE_ARG_PARAMETER);
+      const char *my_name = this->name (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
-      const char *tc_name = tc->name (TAO_ENV_SINGLE_ARG_PARAMETER);
+      const char *tc_name = tc->name (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       // Compare names if they exist.
@@ -1244,10 +1244,10 @@ CORBA_TypeCode::private_equal_enum (CORBA::TypeCode_ptr tc,
     }
 
   // check if the member count is same
-  CORBA::ULong my_count = this->member_count (TAO_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::ULong my_count = this->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  CORBA::ULong tc_count = tc->member_count (TAO_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::ULong tc_count = tc->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   if (my_count != tc_count)
@@ -1259,11 +1259,11 @@ CORBA_TypeCode::private_equal_enum (CORBA::TypeCode_ptr tc,
       if (!equiv_only)
         {
           const char *my_member_name = this->member_name (i
-                                                           TAO_ENV_ARG_PARAMETER);
+                                                           ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (0);
 
           const char *tc_member_name = tc->member_name (i
-                                                         TAO_ENV_ARG_PARAMETER);
+                                                         ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (0);
 
           if (ACE_OS::strlen (my_member_name) > 1
@@ -1281,14 +1281,14 @@ CORBA::Boolean
 CORBA_TypeCode::private_equal_string (
     CORBA::TypeCode_ptr tc,
     CORBA::Boolean /* equiv_only */
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   ) const
 {
   // compare the lengths
-  CORBA::ULong my_len = this->length (TAO_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::ULong my_len = this->length (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  CORBA::ULong tc_len = tc->length (TAO_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::ULong tc_len = tc->length (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   return (my_len == tc_len);
@@ -1298,14 +1298,14 @@ CORBA::Boolean
 CORBA_TypeCode::private_equal_wstring (
     CORBA::TypeCode_ptr tc,
     CORBA::Boolean /* equiv_only */
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   ) const
 {
   // compare the lengths
-  CORBA::ULong my_len = this->length (TAO_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::ULong my_len = this->length (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  CORBA::ULong tc_len = tc->length (TAO_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::ULong tc_len = tc->length (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   return (my_len == tc_len);
@@ -1315,30 +1315,30 @@ CORBA::Boolean
 CORBA_TypeCode::private_equal_sequence (
     CORBA::TypeCode_ptr tc,
     CORBA::Boolean equiv_only
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   ) const
 {
   // this involves comparing the typecodes of the element type as well
   // as the bounds
-  CORBA::TypeCode_var my_elem = this->content_type (TAO_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::TypeCode_var my_elem = this->content_type (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  CORBA::TypeCode_var tc_elem = tc->content_type (TAO_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::TypeCode_var tc_elem = tc->content_type (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   CORBA::Boolean status = my_elem->equ_common (tc_elem.in (),
                                                equiv_only
-                                                TAO_ENV_ARG_PARAMETER);
+                                                ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   if (!status)
     return 0;
 
   // now check if bounds are same
-  CORBA::ULong my_len = this->length (TAO_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::ULong my_len = this->length (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  CORBA::ULong tc_len = tc->length (TAO_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::ULong tc_len = tc->length (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   return (my_len == tc_len);
@@ -1347,31 +1347,31 @@ CORBA_TypeCode::private_equal_sequence (
 CORBA::Boolean
 CORBA_TypeCode::private_equal_array (CORBA::TypeCode_ptr tc,
                                      CORBA::Boolean equiv_only
-                                     TAO_ENV_ARG_DECL) const
+                                     ACE_ENV_ARG_DECL) const
 {
   // exactly like sequence
   return this->private_equal_sequence (tc,
                                        equiv_only
-                                        TAO_ENV_ARG_PARAMETER);
+                                        ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::Boolean
 CORBA_TypeCode::private_equal_alias (CORBA::TypeCode_ptr tc,
                                      CORBA::Boolean equiv_only
-                                     TAO_ENV_ARG_DECL) const
+                                     ACE_ENV_ARG_DECL) const
 {
   // for structs the repoID and names are optional. However, if provided,
   // we must compare them
-  const char *my_id = this->id (TAO_ENV_SINGLE_ARG_PARAMETER);
+  const char *my_id = this->id (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  const char *tc_id = tc->id (TAO_ENV_SINGLE_ARG_PARAMETER);
+  const char *tc_id = tc->id (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  const char *my_name = this->name (TAO_ENV_SINGLE_ARG_PARAMETER);
+  const char *my_name = this->name (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  const char *tc_name = tc->name (TAO_ENV_SINGLE_ARG_PARAMETER);
+  const char *tc_name = tc->name (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   // compare repoIDs if they exist
@@ -1385,28 +1385,28 @@ CORBA_TypeCode::private_equal_alias (CORBA::TypeCode_ptr tc,
       return 0;
 
   // now compare element typecodes
-  CORBA::TypeCode_var my_elem = this->content_type (TAO_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::TypeCode_var my_elem = this->content_type (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  CORBA::TypeCode_var tc_elem = tc->content_type (TAO_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::TypeCode_var tc_elem = tc->content_type (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   return my_elem->equ_common (tc_elem.in (),
                               equiv_only
-                               TAO_ENV_ARG_PARAMETER);
+                               ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::Boolean
 CORBA_TypeCode::private_equal_except (CORBA::TypeCode_ptr tc,
                                       CORBA::Boolean equiv_only
-                                      TAO_ENV_ARG_DECL) const
+                                      ACE_ENV_ARG_DECL) const
 {
   // exactly similar to structs, except that the repository ID is mandatory
 
-  const char *my_id = this->id (TAO_ENV_SINGLE_ARG_PARAMETER);
+  const char *my_id = this->id (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  const char *tc_id = tc->id (TAO_ENV_SINGLE_ARG_PARAMETER);
+  const char *tc_id = tc->id (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   if (ACE_OS::strcmp (my_id, tc_id))
@@ -1423,10 +1423,10 @@ CORBA_TypeCode::private_equal_except (CORBA::TypeCode_ptr tc,
   // Now compare names. They may be optional - skipped by equivalent().
   if (!equiv_only)
     {
-      const char *my_name = this->name (TAO_ENV_SINGLE_ARG_PARAMETER);
+      const char *my_name = this->name (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
-      const char *tc_name = tc->name (TAO_ENV_SINGLE_ARG_PARAMETER);
+      const char *tc_name = tc->name (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       // Compare names if they exist.
@@ -1438,10 +1438,10 @@ CORBA_TypeCode::private_equal_except (CORBA::TypeCode_ptr tc,
     }
 
   // check if the member count is same
-  CORBA::ULong my_count = this->member_count (TAO_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::ULong my_count = this->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  CORBA::ULong tc_count = tc->member_count (TAO_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::ULong tc_count = tc->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   if (my_count != tc_count)
@@ -1453,11 +1453,11 @@ CORBA_TypeCode::private_equal_except (CORBA::TypeCode_ptr tc,
       if (!equiv_only)
         {
           const char *my_member_name = this->member_name (i
-                                                           TAO_ENV_ARG_PARAMETER);
+                                                           ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (0);
 
           const char *tc_member_name = tc->member_name (i
-                                                         TAO_ENV_ARG_PARAMETER);
+                                                         ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (0);
 
           if (ACE_OS::strlen (my_member_name) > 1
@@ -1468,15 +1468,15 @@ CORBA_TypeCode::private_equal_except (CORBA::TypeCode_ptr tc,
         }
 
       // now compare the typecodes of the members
-      CORBA::TypeCode_var my_member_tc = this->member_type (i TAO_ENV_ARG_PARAMETER);
+      CORBA::TypeCode_var my_member_tc = this->member_type (i ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
-      CORBA::TypeCode_var tc_member_tc = tc->member_type (i TAO_ENV_ARG_PARAMETER);
+      CORBA::TypeCode_var tc_member_tc = tc->member_type (i ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       CORBA::Boolean flag = my_member_tc->equ_common (tc_member_tc.in (),
                                                       equiv_only
-                                                       TAO_ENV_ARG_PARAMETER);
+                                                       ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       if (!flag)
@@ -1492,15 +1492,15 @@ CORBA::Boolean
 CORBA_TypeCode::private_equal_valuetype (
     CORBA::TypeCode_ptr tc,
     CORBA::Boolean equiv_only
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   ) const
 {
   // compare the repoID and name, of which the name is optional as per GIOP
   // spec. However, the repoID is mandatory.
-  const char *my_id = this->id (TAO_ENV_SINGLE_ARG_PARAMETER);
+  const char *my_id = this->id (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  const char *tc_id = tc->id (TAO_ENV_SINGLE_ARG_PARAMETER);
+  const char *tc_id = tc->id (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   if (!ACE_OS::strcmp (my_id, tc_id))
@@ -1514,10 +1514,10 @@ CORBA_TypeCode::private_equal_valuetype (
       else
         {
           // same repository IDs. Now check their names
-          const char *myname = this->name (TAO_ENV_SINGLE_ARG_PARAMETER);
+          const char *myname = this->name (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_CHECK_RETURN (0);
 
-          const char *tcname = tc->name (TAO_ENV_SINGLE_ARG_PARAMETER);
+          const char *tcname = tc->name (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_CHECK_RETURN (0);
 
           if ((ACE_OS::strlen (myname) > 1) &&
@@ -1543,7 +1543,7 @@ CORBA_TypeCode::private_equal_valuetype (
 // Valid only for objref, struct, union, enum, alias, and except. Raises
 // BadKind exception for the rest of the cases.
 const char *
-CORBA_TypeCode::private_id (TAO_ENV_SINGLE_ARG_DECL) const
+CORBA_TypeCode::private_id (ACE_ENV_SINGLE_ARG_DECL) const
 {
   switch (this->kind_)
     {
@@ -1583,7 +1583,7 @@ CORBA_TypeCode::private_id (TAO_ENV_SINGLE_ARG_DECL) const
 
 // return the name. The string is owned by the typecode
 const char *
-CORBA_TypeCode::private_name (TAO_ENV_SINGLE_ARG_DECL) const
+CORBA_TypeCode::private_name (ACE_ENV_SINGLE_ARG_DECL) const
 {
   switch (this->kind_)
     {
@@ -1637,7 +1637,7 @@ CORBA_TypeCode::private_name (TAO_ENV_SINGLE_ARG_DECL) const
 // For the rest of the cases, raises the BadKind exception.
 
 CORBA::ULong
-CORBA_TypeCode::private_member_count (TAO_ENV_SINGLE_ARG_DECL) const
+CORBA_TypeCode::private_member_count (ACE_ENV_SINGLE_ARG_DECL) const
 {
   switch (kind_)
     {
@@ -1757,7 +1757,7 @@ CORBA_TypeCode::private_member_count (TAO_ENV_SINGLE_ARG_DECL) const
 
 CORBA::TypeCode_ptr
 CORBA_TypeCode::private_member_type (CORBA::ULong slot
-                                     TAO_ENV_ARG_DECL) const
+                                     ACE_ENV_ARG_DECL) const
 {
   CORBA::ULong temp, mcount;
 
@@ -1772,7 +1772,7 @@ CORBA_TypeCode::private_member_type (CORBA::ULong slot
     {
     case CORBA::tk_except:
     case CORBA::tk_struct:              // index from 0
-      mcount = this->member_count (TAO_ENV_SINGLE_ARG_PARAMETER);
+      mcount = this->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN ((CORBA::TypeCode_ptr)0);
 
       {
@@ -1813,7 +1813,7 @@ CORBA_TypeCode::private_member_type (CORBA::ULong slot
             CORBA_TypeCode::_tao_decode (this,
                                          stream,
                                          member_type
-                                          TAO_ENV_ARG_PARAMETER);
+                                          ACE_ENV_ARG_PARAMETER);
             ACE_CHECK_RETURN (0);
           }
 
@@ -1828,7 +1828,7 @@ CORBA_TypeCode::private_member_type (CORBA::ULong slot
       ACE_NOTREACHED (break;)
 
     case CORBA::tk_union:            // index from 0
-      mcount = this->member_count (TAO_ENV_SINGLE_ARG_PARAMETER);
+      mcount = this->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN ((CORBA::TypeCode_ptr)0);
 
       {
@@ -1859,7 +1859,7 @@ CORBA_TypeCode::private_member_type (CORBA::ULong slot
 
         // get the typecode for the discriminator
         CORBA::TypeCode_ptr disc_tc =
-          this->private_discriminator_type_i (TAO_ENV_SINGLE_ARG_PARAMETER);
+          this->private_discriminator_type_i (ACE_ENV_SINGLE_ARG_PARAMETER);
         // compute the typecodes for all the members and return the
         // required one
         ACE_CHECK_RETURN (0);
@@ -1871,7 +1871,7 @@ CORBA_TypeCode::private_member_type (CORBA::ULong slot
             CORBA::TypeCode::traverse_status status =
               TAO_Marshal_Object::perform_skip (disc_tc,
                                                 &stream
-                                                 TAO_ENV_ARG_PARAMETER);
+                                                 ACE_ENV_ARG_PARAMETER);
             ACE_CHECK_RETURN (0);
 
             if (status != CORBA::TypeCode::TRAVERSE_CONTINUE
@@ -1883,7 +1883,7 @@ CORBA_TypeCode::private_member_type (CORBA::ULong slot
             CORBA_TypeCode::_tao_decode (this,
                                          stream,
                                          member_type
-                                          TAO_ENV_ARG_PARAMETER);
+                                          ACE_ENV_ARG_PARAMETER);
             ACE_CHECK_RETURN (0);
           }
         this->private_state_->tc_member_type_list_known_ = 1;
@@ -1896,7 +1896,7 @@ CORBA_TypeCode::private_member_type (CORBA::ULong slot
       ACE_NOTREACHED (break);
 
     case CORBA::tk_value:
-      mcount = this->member_count (TAO_ENV_SINGLE_ARG_PARAMETER);
+      mcount = this->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN ((CORBA::TypeCode_ptr)0);
 
       {
@@ -1968,12 +1968,12 @@ CORBA_TypeCode::private_member_type (CORBA::ULong slot
             CORBA_TypeCode::_tao_decode (this,
                                          stream,
                                          member_type
-                                          TAO_ENV_ARG_PARAMETER);
+                                          ACE_ENV_ARG_PARAMETER);
             ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
 
             if (!stream.skip_ulong ())  // skip member visibility
               ACE_THROW_RETURN (CORBA::BAD_TYPECODE (),
-                                CORBA::TypeCode::_nil ());            
+                                CORBA::TypeCode::_nil ());
           }
 
         this->private_state_->tc_member_type_list_known_ = 1;
@@ -1998,7 +1998,7 @@ CORBA_TypeCode::private_member_type (CORBA::ULong slot
 // CORBA::tk_except
 const char *
 CORBA_TypeCode::private_member_name (CORBA::ULong slot
-                                     TAO_ENV_ARG_DECL) const
+                                     ACE_ENV_ARG_DECL) const
 {
   CORBA::ULong temp, mcount;
 
@@ -2009,7 +2009,7 @@ CORBA_TypeCode::private_member_name (CORBA::ULong slot
                        this->byte_order_);
   CORBA::TypeCode_var tc = 0;
 
-  mcount = this->member_count (TAO_ENV_SINGLE_ARG_PARAMETER);
+  mcount = this->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
   // out of bounds
   ACE_CHECK_RETURN ((char *)0);
 
@@ -2107,7 +2107,7 @@ CORBA_TypeCode::private_member_name (CORBA::ULong slot
           {
             // get the typecode for the discriminator
             CORBA::TypeCode_ptr disc_tc =
-              this->private_discriminator_type_i (TAO_ENV_SINGLE_ARG_PARAMETER);
+              this->private_discriminator_type_i (ACE_ENV_SINGLE_ARG_PARAMETER);
             // compute the name for all the members and return the
             // required one
             ACE_CHECK_RETURN (0);
@@ -2118,7 +2118,7 @@ CORBA_TypeCode::private_member_name (CORBA::ULong slot
                 CORBA::TypeCode::traverse_status status =
                   TAO_Marshal_Object::perform_skip (disc_tc,
                                                     &stream
-                                                     TAO_ENV_ARG_PARAMETER);
+                                                     ACE_ENV_ARG_PARAMETER);
                 ACE_CHECK_RETURN (0);
 
                 if (status != CORBA::TypeCode::TRAVERSE_CONTINUE)
@@ -2153,7 +2153,7 @@ CORBA_TypeCode::private_member_name (CORBA::ULong slot
 // Return member labels for CORBA::tk_union typecodes.
 CORBA::Any_ptr
 CORBA_TypeCode::private_member_label (CORBA::ULong n
-                                      TAO_ENV_ARG_DECL) const
+                                      ACE_ENV_ARG_DECL) const
 {
   // this function is only applicable to the CORBA::tk_union TC
   if (this->kind_ != CORBA::tk_union)
@@ -2204,7 +2204,7 @@ CORBA_TypeCode::private_member_label (CORBA::ULong n
 
   // get the discriminant TC
   CORBA::TypeCode_ptr disc_tc =
-    this->private_discriminator_type_i (TAO_ENV_SINGLE_ARG_PARAMETER);
+    this->private_discriminator_type_i (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   for (CORBA::ULong i = 0; i < member_count; i++)
@@ -2222,7 +2222,7 @@ CORBA_TypeCode::private_member_label (CORBA::ULong n
       int retval =
         TAO_Marshal_Object::perform_skip (disc_tc,
                                           &temp
-                                           TAO_ENV_ARG_PARAMETER);
+                                           ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       if (retval != CORBA::TypeCode::TRAVERSE_CONTINUE)
@@ -2260,7 +2260,7 @@ CORBA_TypeCode::private_member_label (CORBA::ULong n
           retval =
             TAO_Marshal_Object::perform_skip (disc_tc,
                                               &stream
-                                               TAO_ENV_ARG_PARAMETER);
+                                               ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (0);
 
           if (retval != CORBA::TypeCode::TRAVERSE_CONTINUE)
@@ -2276,7 +2276,7 @@ CORBA_TypeCode::private_member_label (CORBA::ULong n
             TAO_Marshal_Object::perform_append (label_tc,
                                                 &stream,
                                                 &out
-                                                 TAO_ENV_ARG_PARAMETER);
+                                                 ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (0);
 
           if (retval != CORBA::TypeCode::TRAVERSE_CONTINUE)
@@ -2319,19 +2319,19 @@ CORBA_TypeCode::private_member_label (CORBA::ULong n
 
 CORBA::TypeCode_ptr
 CORBA_TypeCode::private_discriminator_type (
-    TAO_ENV_SINGLE_ARG_DECL
+    ACE_ENV_SINGLE_ARG_DECL
   ) const
 {
   // Double checked locking...
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard,
                     this->private_state_->mutex_, 0);
 
-  return this->private_discriminator_type_i (TAO_ENV_SINGLE_ARG_PARAMETER);
+  return this->private_discriminator_type_i (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 CORBA::TypeCode_ptr
 CORBA_TypeCode::private_discriminator_type_i (
-    TAO_ENV_SINGLE_ARG_DECL
+    ACE_ENV_SINGLE_ARG_DECL
   ) const
 {
   if (this->private_state_->tc_discriminator_type_known_)
@@ -2349,7 +2349,7 @@ CORBA_TypeCode::private_discriminator_type_i (
   CORBA_TypeCode::_tao_decode (this,
                                stream,
                                this->private_state_->tc_discriminator_type_
-                                TAO_ENV_ARG_PARAMETER);
+                                ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   this->private_state_->tc_discriminator_type_known_ = 1;
@@ -2358,19 +2358,19 @@ CORBA_TypeCode::private_discriminator_type_i (
 
 CORBA::Long
 CORBA_TypeCode::private_default_index (
-    TAO_ENV_SINGLE_ARG_DECL
+    ACE_ENV_SINGLE_ARG_DECL
   ) const
 {
   // Double checked locking...
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard,
                     this->private_state_->mutex_, 0);
 
-  return this->private_default_index_i (TAO_ENV_SINGLE_ARG_PARAMETER);
+  return this->private_default_index_i (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 CORBA::Long
 CORBA_TypeCode::private_default_index_i (
-    TAO_ENV_SINGLE_ARG_DECL
+    ACE_ENV_SINGLE_ARG_DECL
   ) const
 {
   if (this->private_state_->tc_default_index_used_known_)
@@ -2392,7 +2392,7 @@ CORBA_TypeCode::private_default_index_i (
 }
 
 CORBA::Long
-CORBA_TypeCode::private_length (TAO_ENV_SINGLE_ARG_DECL) const
+CORBA_TypeCode::private_length (ACE_ENV_SINGLE_ARG_DECL) const
 {
   TAO_InputCDR stream (this->buffer_+4, this->length_-4,
                        this->byte_order_);
@@ -2445,7 +2445,7 @@ CORBA_TypeCode::private_length (TAO_ENV_SINGLE_ARG_DECL) const
 }
 
 CORBA::TypeCode_ptr
-CORBA_TypeCode::private_content_type (TAO_ENV_SINGLE_ARG_DECL) const
+CORBA_TypeCode::private_content_type (ACE_ENV_SINGLE_ARG_DECL) const
 {
   TAO_InputCDR stream (this->buffer_+4, this->length_-4,
                        this->byte_order_);
@@ -2464,7 +2464,7 @@ CORBA_TypeCode::private_content_type (TAO_ENV_SINGLE_ARG_DECL) const
         CORBA_TypeCode::_tao_decode (this,
                                      stream,
                                      this->private_state_->tc_content_type_
-                                      TAO_ENV_ARG_PARAMETER);
+                                      ACE_ENV_ARG_PARAMETER);
         ACE_CHECK_RETURN (0);
 
         this->private_state_->tc_content_type_known_ = 1;
@@ -2487,7 +2487,7 @@ CORBA_TypeCode::private_content_type (TAO_ENV_SINGLE_ARG_DECL) const
         CORBA_TypeCode::_tao_decode (this,
                                      stream,
                                      this->private_state_->tc_content_type_
-                                      TAO_ENV_ARG_PARAMETER);
+                                      ACE_ENV_ARG_PARAMETER);
         ACE_CHECK_RETURN (0);
 
         this->private_state_->tc_content_type_known_ = 1;
@@ -2502,7 +2502,7 @@ CORBA_TypeCode::private_content_type (TAO_ENV_SINGLE_ARG_DECL) const
 }
 
 CORBA::TypeCode_ptr
-CORBA_TypeCode::private_concrete_base_type (TAO_ENV_SINGLE_ARG_DECL) const
+CORBA_TypeCode::private_concrete_base_type (ACE_ENV_SINGLE_ARG_DECL) const
 {
   if (kind_ != CORBA::tk_value)
     ACE_THROW_RETURN (CORBA::TypeCode::BadKind (), 0);
@@ -2528,9 +2528,9 @@ CORBA_TypeCode::private_concrete_base_type (TAO_ENV_SINGLE_ARG_DECL) const
   CORBA_TypeCode::_tao_decode (this,
                                stream,
                                this->private_state_->tc_concrete_base_type_
-                               TAO_ENV_ARG_PARAMETER);
+                               ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
-  
+
   this->private_state_->tc_concrete_base_type_known_ = 1;
   return this->private_state_->tc_concrete_base_type_;
 }
@@ -2541,7 +2541,7 @@ void
 CORBA_TypeCode::_tao_decode (const CORBA_TypeCode *parent,
                              TAO_InputCDR &cdr,
                              CORBA_TypeCode *&x
-                             TAO_ENV_ARG_DECL)
+                             ACE_ENV_ARG_DECL)
 {
   x = 0;
   CORBA::ULong kind;
@@ -2793,7 +2793,7 @@ CORBA_TypeCode::_tao_decode (const CORBA_TypeCode *parent,
 // provides.
 
 CORBA::ULong
-CORBA_TypeCode::param_count (TAO_ENV_SINGLE_ARG_DECL) const
+CORBA_TypeCode::param_count (ACE_ENV_SINGLE_ARG_DECL) const
 {
   switch (this->kind_)
     {
@@ -2867,7 +2867,7 @@ CORBA_TypeCode::param_count (TAO_ENV_SINGLE_ARG_DECL) const
 
 CORBA::Any_ptr
 CORBA_TypeCode::parameter (const CORBA::Long /* slot */
-                           TAO_ENV_ARG_DECL)
+                           ACE_ENV_ARG_DECL)
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
                                          CORBA::COMPLETED_NO),
@@ -2881,7 +2881,7 @@ operator<< (TAO_OutputCDR& cdr, const CORBA::TypeCode *x)
 {
   if (x == 0)
     {
-      TAO_ENV_DECLARE_NEW_ENV;
+      ACE_DECLARE_NEW_CORBA_ENV;
       ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
                                         CORBA::COMPLETED_MAYBE),
                         0);
@@ -2913,7 +2913,7 @@ operator<< (TAO_OutputCDR& cdr, const CORBA::TypeCode *x)
         ACE_TRY_NEW_ENV
           {
             CORBA::ULong length =
-              x->length (TAO_ENV_SINGLE_ARG_PARAMETER);
+              x->length (ACE_ENV_SINGLE_ARG_PARAMETER);
             ACE_TRY_CHECK;
 
             if (!cdr.write_ulong (length))
@@ -2956,7 +2956,7 @@ operator>> (TAO_InputCDR& cdr, CORBA::TypeCode *&x)
 {
   ACE_TRY_NEW_ENV
     {
-      CORBA_TypeCode::_tao_decode (0, cdr, x TAO_ENV_ARG_PARAMETER);
+      CORBA_TypeCode::_tao_decode (0, cdr, x ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

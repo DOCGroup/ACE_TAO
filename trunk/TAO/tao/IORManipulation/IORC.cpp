@@ -84,7 +84,7 @@ void TAO_IOP::EmptyProfileList::_raise ()
 
 void TAO_IOP::EmptyProfileList::_tao_encode (
     TAO_OutputCDR &cdr
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   ) const
 {
   if (cdr << *this)
@@ -97,7 +97,7 @@ void TAO_IOP::EmptyProfileList::_tao_encode (
 
 void TAO_IOP::EmptyProfileList::_tao_decode (
     TAO_InputCDR &cdr
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
   if (cdr >> *this)
@@ -210,7 +210,7 @@ void TAO_IOP::NotFound::_raise ()
 
 void TAO_IOP::NotFound::_tao_encode (
     TAO_OutputCDR &cdr
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   ) const
 {
   if (cdr << *this)
@@ -223,7 +223,7 @@ void TAO_IOP::NotFound::_tao_encode (
 
 void TAO_IOP::NotFound::_tao_decode (
     TAO_InputCDR &cdr
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
   if (cdr >> *this)
@@ -332,7 +332,7 @@ void TAO_IOP::Duplicate::_raise ()
 
 void TAO_IOP::Duplicate::_tao_encode (
     TAO_OutputCDR &cdr
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   ) const
 {
   if (cdr << *this)
@@ -345,7 +345,7 @@ void TAO_IOP::Duplicate::_tao_encode (
 
 void TAO_IOP::Duplicate::_tao_decode (
     TAO_InputCDR &cdr
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
   if (cdr >> *this)
@@ -454,7 +454,7 @@ void TAO_IOP::Invalid_IOR::_raise ()
 
 void TAO_IOP::Invalid_IOR::_tao_encode (
     TAO_OutputCDR &cdr
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   ) const
 {
   if (cdr << *this)
@@ -467,7 +467,7 @@ void TAO_IOP::Invalid_IOR::_tao_encode (
 
 void TAO_IOP::Invalid_IOR::_tao_decode (
     TAO_InputCDR &cdr
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
   if (cdr >> *this)
@@ -576,7 +576,7 @@ void TAO_IOP::MultiProfileList::_raise ()
 
 void TAO_IOP::MultiProfileList::_tao_encode (
     TAO_OutputCDR &cdr
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   ) const
 {
   if (cdr << *this)
@@ -589,7 +589,7 @@ void TAO_IOP::MultiProfileList::_tao_encode (
 
 void TAO_IOP::MultiProfileList::_tao_decode (
     TAO_InputCDR &cdr
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
   if (cdr >> *this)
@@ -761,10 +761,10 @@ TAO_IOP::TAO_IOR_Property_var::tao_nil (void)
 ::TAO_IOP::TAO_IOR_Property_ptr
 TAO_IOP::TAO_IOR_Property_var::tao_narrow (
     CORBA::Object *p
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return ::TAO_IOP::TAO_IOR_Property::_narrow (p TAO_ENV_ARG_PARAMETER);
+  return ::TAO_IOP::TAO_IOR_Property::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -846,15 +846,15 @@ TAO_IOP::TAO_IOR_Property::~TAO_IOR_Property (void)
 
 TAO_IOP::TAO_IOR_Property_ptr TAO_IOP::TAO_IOR_Property::_narrow (
     CORBA::Object_ptr obj
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return TAO_IOR_Property::_unchecked_narrow (obj TAO_ENV_ARG_PARAMETER);
+  return TAO_IOR_Property::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
 }
 
 TAO_IOP::TAO_IOR_Property_ptr TAO_IOP::TAO_IOR_Property::_unchecked_narrow (
     CORBA::Object_ptr obj
-    TAO_ENV_ARG_DECL_NOT_USED
+    ACE_ENV_ARG_DECL_NOT_USED
   )
 {
   if (CORBA::is_nil (obj))
@@ -1014,10 +1014,10 @@ TAO_IOP::TAO_IOR_Manipulation_var::tao_nil (void)
 ::TAO_IOP::TAO_IOR_Manipulation_ptr
 TAO_IOP::TAO_IOR_Manipulation_var::tao_narrow (
     CORBA::Object *p
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return ::TAO_IOP::TAO_IOR_Manipulation::_narrow (p TAO_ENV_ARG_PARAMETER);
+  return ::TAO_IOP::TAO_IOR_Manipulation::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -1099,15 +1099,15 @@ TAO_IOP::TAO_IOR_Manipulation::~TAO_IOR_Manipulation (void)
 
 TAO_IOP::TAO_IOR_Manipulation_ptr TAO_IOP::TAO_IOR_Manipulation::_narrow (
     CORBA::Object_ptr obj
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return TAO_IOR_Manipulation::_unchecked_narrow (obj TAO_ENV_ARG_PARAMETER);
+  return TAO_IOR_Manipulation::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
 }
 
 TAO_IOP::TAO_IOR_Manipulation_ptr TAO_IOP::TAO_IOR_Manipulation::_unchecked_narrow (
     CORBA::Object_ptr obj
-    TAO_ENV_ARG_DECL_NOT_USED
+    ACE_ENV_ARG_DECL_NOT_USED
   )
 {
   if (CORBA::is_nil (obj))
@@ -1230,11 +1230,11 @@ const char* TAO_IOP::TAO_IOR_Manipulation::_interface_repository_id (void) const
   TAO_IOP::TAO_IOR_Manipulation::_TAO_Unbounded_Object_Sequence_TAO_IOP_TAO_IOR_Manipulation_IORList::_downcast (
       void* target,
       CORBA_Object *src
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     )
   {
     CORBA::Object **tmp = ACE_static_cast (CORBA::Object**, target);
-    *tmp = CORBA::Object::_narrow (src TAO_ENV_ARG_PARAMETER);
+    *tmp = CORBA::Object::_narrow (src ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
   }
 
@@ -1337,7 +1337,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const TAO_IOP::EmptyProf
   {
     CORBA::TypeCode_var type = _tao_any.type ();
 
-    CORBA::Boolean result = type->equivalent (TAO_IOP::_tc_EmptyProfileList TAO_ENV_ARG_PARAMETER);
+    CORBA::Boolean result = type->equivalent (TAO_IOP::_tc_EmptyProfileList ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
     if (!result)
@@ -1427,7 +1427,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const TAO_IOP::NotFound 
   {
     CORBA::TypeCode_var type = _tao_any.type ();
 
-    CORBA::Boolean result = type->equivalent (TAO_IOP::_tc_NotFound TAO_ENV_ARG_PARAMETER);
+    CORBA::Boolean result = type->equivalent (TAO_IOP::_tc_NotFound ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
     if (!result)
@@ -1517,7 +1517,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const TAO_IOP::Duplicate
   {
     CORBA::TypeCode_var type = _tao_any.type ();
 
-    CORBA::Boolean result = type->equivalent (TAO_IOP::_tc_Duplicate TAO_ENV_ARG_PARAMETER);
+    CORBA::Boolean result = type->equivalent (TAO_IOP::_tc_Duplicate ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
     if (!result)
@@ -1607,7 +1607,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const TAO_IOP::Invalid_I
   {
     CORBA::TypeCode_var type = _tao_any.type ();
 
-    CORBA::Boolean result = type->equivalent (TAO_IOP::_tc_Invalid_IOR TAO_ENV_ARG_PARAMETER);
+    CORBA::Boolean result = type->equivalent (TAO_IOP::_tc_Invalid_IOR ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
     if (!result)
@@ -1697,7 +1697,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const TAO_IOP::MultiProf
   {
     CORBA::TypeCode_var type = _tao_any.type ();
 
-    CORBA::Boolean result = type->equivalent (TAO_IOP::_tc_MultiProfileList TAO_ENV_ARG_PARAMETER);
+    CORBA::Boolean result = type->equivalent (TAO_IOP::_tc_MultiProfileList ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
     if (!result)

@@ -15,7 +15,7 @@ ACE_RCSID (Request_Interceptor_Flow,
 void
 Server_ORBInitializer::pre_init (
     PortableInterceptor::ORBInitInfo_ptr
-    TAO_ENV_ARG_DECL_NOT_USED)
+    ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
@@ -23,7 +23,7 @@ Server_ORBInitializer::pre_init (
 void
 Server_ORBInitializer::post_init (
     PortableInterceptor::ORBInitInfo_ptr info
-    TAO_ENV_ARG_DECL)
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
@@ -43,7 +43,7 @@ Server_ORBInitializer::post_init (
     si;
 
   info->add_server_request_interceptor (si_interceptor.in ()
-                                        TAO_ENV_ARG_PARAMETER);
+                                        ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   ACE_NEW_THROW_EX (si,
@@ -58,7 +58,7 @@ Server_ORBInitializer::post_init (
   si_interceptor = si;
 
   info->add_server_request_interceptor (si_interceptor.in ()
-                                        TAO_ENV_ARG_PARAMETER);
+                                        ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   ACE_NEW_THROW_EX (si,
@@ -73,6 +73,6 @@ Server_ORBInitializer::post_init (
   si_interceptor = si;
 
   info->add_server_request_interceptor (si_interceptor.in ()
-                                        TAO_ENV_ARG_PARAMETER);
+                                        ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }

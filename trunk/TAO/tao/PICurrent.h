@@ -70,14 +70,14 @@ public:
   /// Retrieve information stored in the slot table at the given
   /// SlotId.
   virtual CORBA::Any * get_slot (PortableInterceptor::SlotId id
-                                 TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+                                 ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::InvalidSlot));
 
   /// Set information in the slot table at the given SlotId.
   virtual void set_slot (PortableInterceptor::SlotId id,
                          const CORBA::Any & data
-                         TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+                         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::InvalidSlot));
   //@}
@@ -98,7 +98,7 @@ public:
 
   /// Verify the validity of the given SlotId.
   void check_validity (const PortableInterceptor::SlotId &id
-                       TAO_ENV_ARG_DECL);
+                       ACE_ENV_ARG_DECL);
 
 protected:
 
@@ -165,14 +165,14 @@ public:
   /// Retrieve information stored in the slot table at the given
   /// SlotId.
   CORBA::Any * get_slot (PortableInterceptor::SlotId id
-                         TAO_ENV_ARG_DECL)
+                         ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::InvalidSlot));
 
   /// Set information in the slot table at the given SlotId.
   void set_slot (PortableInterceptor::SlotId id,
                  const CORBA::Any & data
-                 TAO_ENV_ARG_DECL)
+                 ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::InvalidSlot));
 

@@ -1,3 +1,15 @@
+Tue Jan 29 21:09:12 2002  Oliver Kellogg <oliver.kellogg@sysde.eads.net>
+
+	* tao/orbconf.h (TAO_ENV_*):
+	  Deprecated. Instead, use the equivalent ACE_ENV_ macros from
+	  $ACE_ROOT/ace/CORBA_macros.h.
+
+	* (many source files):
+	  Corresponding to the above change, changed all relevant source
+	  files to use the new ACE_ENV_ARG macros instead of the TAO_ENV_ARG
+	  macros. All exception related macros are now defined in
+	  $ACE_ROOT/ace/CORBA_macros.h.
+
 Tue Jan 29 09:01:41 2002  Carlos O'Ryan  <coryan@uci.edu>
 
 	* TAO_IDL/be/be_interface.cpp:

@@ -9,12 +9,12 @@
 int
 main (int argc, char *argv[])
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       // Initialize ORB.
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" TAO_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       const char *balancer_ior = "file://test.ior";
@@ -43,7 +43,7 @@ main (int argc, char *argv[])
           }
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references ("RootPOA" TAO_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (poa_object.in ()))
@@ -52,23 +52,23 @@ main (int argc, char *argv[])
                           1);
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in () TAO_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
+        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      poa_manager->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
+      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Object_var obj =
-        orb->string_to_object (balancer_ior TAO_ENV_ARG_PARAMETER);
+        orb->string_to_object (balancer_ior ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       LoadBalancing::LoadBalancer_var load_balancer =
         LoadBalancing::LoadBalancer::_narrow (obj.in ()
-                                              TAO_ENV_ARG_PARAMETER);
+                                              ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (load_balancer.in ()))
@@ -77,11 +77,11 @@ main (int argc, char *argv[])
                           -1);
 
       CORBA::Object_var group =
-        load_balancer->group_identity (TAO_ENV_SINGLE_ARG_PARAMETER);
+        load_balancer->group_identity (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::String_var str =
-        orb->object_to_string (group.in () TAO_ENV_ARG_PARAMETER);
+        orb->object_to_string (group.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       FILE *ior = ACE_OS::fopen (ior_output, "w");
@@ -91,26 +91,26 @@ main (int argc, char *argv[])
       Hash_ReplicaControl control;
       control.init (orb.in (),
                     load_balancer.in ()
-                    TAO_ENV_ARG_PARAMETER);
+                    ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
 #ifndef ACE_WIN32
-      orb->run (TAO_ENV_SINGLE_ARG_PARAMETER);
+      orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 #else
       while (1)
         {
           ACE_Time_Value tv (1, 0);
-          orb->run (tv TAO_ENV_ARG_PARAMETER);
+          orb->run (tv ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
           control.handle_timeout (tv, 0);
         }
 #endif
 
-      root_poa->destroy (1, 1 TAO_ENV_ARG_PARAMETER);
+      root_poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      orb->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
+      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

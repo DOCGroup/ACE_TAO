@@ -19,39 +19,39 @@ TAO_EmitsDef_i::~TAO_EmitsDef_i (void)
 }
 
 CORBA::DefinitionKind
-TAO_EmitsDef_i::def_kind (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_EmitsDef_i::def_kind (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::dk_Emits;
 }
 
-void 
-TAO_EmitsDef_i::destroy (TAO_ENV_SINGLE_ARG_DECL)
+void
+TAO_EmitsDef_i::destroy (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD;
 
-  this->destroy_i (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->destroy_i (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
-void 
-TAO_EmitsDef_i::destroy_i (TAO_ENV_SINGLE_ARG_DECL_NOT_USED /* TAO_ENV_SINGLE_ARG_PARAMETER */)
+void
+TAO_EmitsDef_i::destroy_i (ACE_ENV_SINGLE_ARG_DECL_NOT_USED /* ACE_ENV_SINGLE_ARG_PARAMETER */)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // TODO
 }
 
 CORBA_Contained::Description *
-TAO_EmitsDef_i::describe (TAO_ENV_SINGLE_ARG_DECL)
+TAO_EmitsDef_i::describe (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
-  return this->describe_i (TAO_ENV_SINGLE_ARG_PARAMETER);
+  return this->describe_i (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 CORBA_Contained::Description *
-TAO_EmitsDef_i::describe_i (TAO_ENV_SINGLE_ARG_DECL_NOT_USED /* TAO_ENV_SINGLE_ARG_PARAMETER */)
+TAO_EmitsDef_i::describe_i (ACE_ENV_SINGLE_ARG_DECL_NOT_USED /* ACE_ENV_SINGLE_ARG_PARAMETER */)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // TODO

@@ -25,10 +25,10 @@ public:
   // Constructor
 
   // = The skeleton methods
-  virtual void start_workers (TAO_ENV_SINGLE_ARG_DECL)
+  virtual void start_workers (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   virtual void start_workers_excep (Test::AMI_ManagerExceptionHolder*
-                                    TAO_ENV_ARG_DECL)
+                                    ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

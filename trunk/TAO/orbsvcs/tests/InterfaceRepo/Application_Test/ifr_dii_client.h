@@ -20,10 +20,10 @@ public:
 
   int init (int argc,
             char *argv[]
-            TAO_ENV_ARG_DECL);
+            ACE_ENV_ARG_DECL);
   // Initialize the client.
 
-  int run (TAO_ENV_SINGLE_ARG_DECL);
+  int run (ACE_ENV_SINGLE_ARG_DECL);
   // Run the client.
 
 private:
@@ -31,20 +31,20 @@ private:
                   char *argv[]);
   // Process the command line arguments.
 
-  void find_interface_def (TAO_ENV_SINGLE_ARG_DECL);
+  void find_interface_def (ACE_ENV_SINGLE_ARG_DECL);
   // Query the object reference to get its InterfaceDef in the IFR.
 
-  void lookup_interface_def (TAO_ENV_SINGLE_ARG_DECL);
+  void lookup_interface_def (ACE_ENV_SINGLE_ARG_DECL);
   // Look up the InterfaceDef by name in the IFR.
 
-  void get_operation_def (TAO_ENV_SINGLE_ARG_DECL);
+  void get_operation_def (ACE_ENV_SINGLE_ARG_DECL);
   // Find the desired operation in the interface definition.
 
-  void create_dii_request (TAO_ENV_SINGLE_ARG_DECL);
+  void create_dii_request (ACE_ENV_SINGLE_ARG_DECL);
   // Query the interface definition to get the info needed
   // to construct a CORBA::Request.
 
-  void invoke_and_display (TAO_ENV_SINGLE_ARG_DECL);
+  void invoke_and_display (ACE_ENV_SINGLE_ARG_DECL);
   // Do the invocation and display the results.
 
   CORBA::ORB_var orb_;

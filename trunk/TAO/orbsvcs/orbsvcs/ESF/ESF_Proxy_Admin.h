@@ -53,7 +53,7 @@
  * // The T_var for the IDL interface implemented by the PROXY.
  *
  * PROXY::_ptr_type
- * PROXY::activate (TAO_ENV_SINGLE_ARG_DECL_NOT_USED) throw ();
+ * PROXY::activate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED) throw ();
  * // activate the proxy and return the object reference
  * @endverbatim
  *
@@ -70,7 +70,7 @@ public:
 
   /// Iterate over its internal collection.
   void for_each (TAO_ESF_Worker<PROXY> *worker
-                 TAO_ENV_ARG_DECL)
+                 ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   // @TODO We should use INTERFACE::_ptr_type or PROXY::_ptr_type, but
@@ -80,7 +80,7 @@ public:
   // code is supposed to run under TAO only.
   /// Create a new PROXY and activate it.
   virtual INTERFACE*
-      obtain (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+      obtain (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
           ACE_THROW_SPEC ((CORBA::SystemException));
 
   /**
@@ -88,7 +88,7 @@ public:
    * down. Invoke <shutdown> on all the proxies, cleanup the
    * collection and prepare to terminate.
    */
-  virtual void shutdown (TAO_ENV_SINGLE_ARG_DECL)
+  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   /**
@@ -97,7 +97,7 @@ public:
    * The default implementation is a no-op.
    */
   virtual void connected (PROXY *proxy
-                          TAO_ENV_ARG_DECL)
+                          ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   /**
@@ -107,7 +107,7 @@ public:
    * <reconnected> method
    */
   virtual void reconnected (PROXY *proxy
-                            TAO_ENV_ARG_DECL)
+                            ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   /**
@@ -116,7 +116,7 @@ public:
    * proxy.
    */
   virtual void disconnected (PROXY *proxy
-                             TAO_ENV_ARG_DECL)
+                             ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
 protected:

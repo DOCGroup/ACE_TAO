@@ -24,7 +24,7 @@ EC_Supplier::EC_Supplier (EC_Driver *driver,
 
 void
 EC_Supplier::send_event (int event_number
-                         TAO_ENV_ARG_DECL)
+                         ACE_ENV_ARG_DECL)
 {
   if (CORBA::is_nil (this->consumer_proxy_.in ()))
     return;
@@ -45,12 +45,12 @@ EC_Supplier::send_event (int event_number
 
   this->event_type (event_number, event[0]);
 
-  this->send_event (event TAO_ENV_ARG_PARAMETER);
+  this->send_event (event ACE_ENV_ARG_PARAMETER);
 }
 
 void
 EC_Supplier::send_event (const RtecEventComm::EventSet& event
-                         TAO_ENV_ARG_DECL)
+                         ACE_ENV_ARG_DECL)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 
@@ -69,7 +69,7 @@ EC_Supplier::send_event (const RtecEventComm::EventSet& event
 
   ACE_hrtime_t start = ACE_OS::gethrtime ();
 
-  this->consumer_proxy_->push (event TAO_ENV_ARG_PARAMETER);
+  this->consumer_proxy_->push (event ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   ACE_hrtime_t end = ACE_OS::gethrtime ();
@@ -107,20 +107,20 @@ void
 EC_Supplier::connect (RtecEventChannelAdmin::SupplierAdmin_ptr supplier_admin,
                       const RtecEventChannelAdmin::SupplierQOS& qos,
                       int shutdown_event_type
-                      TAO_ENV_ARG_DECL)
+                      ACE_ENV_ARG_DECL)
 {
   this->consumer_proxy_ =
-    supplier_admin->obtain_push_consumer (TAO_ENV_SINGLE_ARG_PARAMETER);
+    supplier_admin->obtain_push_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  this->connect (qos, shutdown_event_type TAO_ENV_ARG_PARAMETER);
+  this->connect (qos, shutdown_event_type ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
 EC_Supplier::connect (const RtecEventChannelAdmin::SupplierQOS& qos,
                       int shutdown_event_type
-                      TAO_ENV_ARG_DECL)
+                      ACE_ENV_ARG_DECL)
 {
   if (CORBA::is_nil (this->consumer_proxy_.in ()))
     return; // @@ Throw?
@@ -130,24 +130,24 @@ EC_Supplier::connect (const RtecEventChannelAdmin::SupplierQOS& qos,
 
   if (CORBA::is_nil (this->myself_.in ()))
     {
-      this->myself_ = this->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
+      this->myself_ = this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
     }
   this->is_active_ = 1;
 
   this->consumer_proxy_->connect_push_supplier (this->myself_.in (),
                                                 qos
-                                                TAO_ENV_ARG_PARAMETER);
+                                                ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
-EC_Supplier::disconnect (TAO_ENV_SINGLE_ARG_DECL)
+EC_Supplier::disconnect (ACE_ENV_SINGLE_ARG_DECL)
 {
   if (CORBA::is_nil (this->consumer_proxy_.in ()))
     return;
 
-  this->consumer_proxy_->disconnect_push_consumer (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->consumer_proxy_->disconnect_push_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   this->consumer_proxy_ =
@@ -155,29 +155,29 @@ EC_Supplier::disconnect (TAO_ENV_SINGLE_ARG_DECL)
 }
 
 void
-EC_Supplier::shutdown (TAO_ENV_SINGLE_ARG_DECL)
+EC_Supplier::shutdown (ACE_ENV_SINGLE_ARG_DECL)
 {
   if (!this->is_active_)
     return;
 
   // Deactivate the servant
   PortableServer::POA_var poa =
-    this->_default_POA (TAO_ENV_SINGLE_ARG_PARAMETER);
+    this->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
   PortableServer::ObjectId_var id =
-    poa->servant_to_id (this TAO_ENV_ARG_PARAMETER);
+    poa->servant_to_id (this ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
-  poa->deactivate_object (id.in () TAO_ENV_ARG_PARAMETER);
+  poa->deactivate_object (id.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   this->is_active_ = 0;
   this->myself_ = RtecEventComm::PushSupplier::_nil ();
 }
 
 void
-EC_Supplier::disconnect_push_supplier (TAO_ENV_SINGLE_ARG_DECL)
+EC_Supplier::disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->driver_->supplier_disconnect (this->cookie_ TAO_ENV_ARG_PARAMETER);
+  this->driver_->supplier_disconnect (this->cookie_ ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   this->consumer_proxy_ =
     RtecEventChannelAdmin::ProxyPushConsumer::_nil ();
@@ -222,7 +222,7 @@ EC_Supplier_Task::EC_Supplier_Task (EC_Supplier* supplier,
 int
 EC_Supplier_Task::svc (void)
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
 
   // Initialize a time value to pace the test
   ACE_Time_Value tv (0, this->burst_pause_);
@@ -252,7 +252,7 @@ EC_Supplier_Task::svc (void)
                                              now);
               // ACE_DEBUG ((LM_DEBUG, "(%t) supplier push event\n"));
 
-              this->supplier_->send_event (event TAO_ENV_ARG_PARAMETER);
+              this->supplier_->send_event (event ACE_ENV_ARG_PARAMETER);
 
               ACE_TRY_CHECK;
             }
@@ -276,7 +276,7 @@ EC_Supplier_Task::svc (void)
       ACE_hrtime_t now = ACE_OS::gethrtime ();
       ORBSVCS_Time::hrtime_to_TimeT (event[0].header.creation_time,
                                      now);
-      this->supplier_->send_event (event TAO_ENV_ARG_PARAMETER);
+      this->supplier_->send_event (event ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK_EX (SHUTDOWN);
     }
   ACE_CATCH (CORBA::SystemException, sys_ex)

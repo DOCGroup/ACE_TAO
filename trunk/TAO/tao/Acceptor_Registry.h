@@ -66,7 +66,7 @@ public:
   int open (TAO_ORB_Core *orb_core,
             ACE_Reactor *reactor,
             int ignore_address
-            TAO_ENV_ARG_DECL)
+            ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Close all open acceptors.
@@ -119,7 +119,7 @@ private:
               ACE_CString &address,
               TAO_ProtocolFactorySetItor &factory,
               int ignore_address
-              TAO_ENV_ARG_DECL);
+              ACE_ENV_ARG_DECL);
 
 private:
   // The acceptor registry should not be copied.

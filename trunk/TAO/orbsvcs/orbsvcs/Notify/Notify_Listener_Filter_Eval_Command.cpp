@@ -26,15 +26,15 @@ TAO_Notify_Listener_Filter_Eval_Command::~TAO_Notify_Listener_Filter_Eval_Comman
 }
 
 int
-TAO_Notify_Listener_Filter_Eval_Command::execute (TAO_ENV_SINGLE_ARG_DECL)
+TAO_Notify_Listener_Filter_Eval_Command::execute (ACE_ENV_SINGLE_ARG_DECL)
 {
   CORBA::Boolean result =
-    this->event_listener_->evaluate_filter (*this->event_, this->eval_parent_ TAO_ENV_ARG_PARAMETER);
+    this->event_listener_->evaluate_filter (*this->event_, this->eval_parent_ ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   if (result == 1)
     {
-      this->event_processor_->dispatch_event (this->event_, this->event_listener_ TAO_ENV_ARG_PARAMETER);
+      this->event_processor_->dispatch_event (this->event_, this->event_listener_ ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
 
       return 0;

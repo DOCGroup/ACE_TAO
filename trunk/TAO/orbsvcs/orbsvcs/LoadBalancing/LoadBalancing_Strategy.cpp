@@ -18,7 +18,7 @@ TAO_LB_LoadBalancing_Strategy::~TAO_LB_LoadBalancing_Strategy (void)
 
 void
 TAO_LB_LoadBalancing_Strategy::load_changed (TAO_LB_ReplicaProxy *
-                                              TAO_ENV_ARG_DECL_NOT_USED)
+                                              ACE_ENV_ARG_DECL_NOT_USED)
 {
 }
 

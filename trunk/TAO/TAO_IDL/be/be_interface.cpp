@@ -593,7 +593,7 @@ be_interface::gen_var_defn (char *interface_name)
       << "static " << interface_name
       << "_ptr tao_narrow (" << be_idt << be_idt_nl
       << "CORBA::Object *" << be_nl
-      << "TAO_ENV_ARG_DECL_NOT_USED" << be_uidt_nl
+      << "ACE_ENV_ARG_DECL_NOT_USED" << be_uidt_nl
       << ");" << be_uidt_nl
       << "static CORBA::Object * tao_upcast (void *);"
       << be_uidt_nl << be_nl;
@@ -808,11 +808,11 @@ be_interface::gen_var_impl (char *interface_local_name,
   *cs << "::" << interface_full_name << "_ptr" << be_nl
       << fname << "::tao_narrow (" << be_idt << be_idt_nl
       << "CORBA::Object *p" << be_nl
-      << "TAO_ENV_ARG_DECL" << be_uidt_nl
+      << "ACE_ENV_ARG_DECL" << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl
       << "return ::" << interface_full_name
-      << "::_narrow (p TAO_ENV_ARG_PARAMETER);"
+      << "::_narrow (p ACE_ENV_ARG_PARAMETER);"
       << be_uidt_nl
       << "}" << be_nl << be_nl;
 
@@ -2102,7 +2102,7 @@ be_interface::gen_skel_helper (be_interface *derived,
                       << "TAO_ServerRequest &req, " << be_nl
                       << "void *obj," << be_nl
                       << "void *context" << be_nl
-                      << "TAO_ENV_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
+                      << "ACE_ENV_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
                       << ");" << be_uidt << "\n\n";
                 }
               else
@@ -2115,7 +2115,7 @@ be_interface::gen_skel_helper (be_interface *derived,
                       << "TAO_ServerRequest &req," << be_nl
                       << "void *obj," << be_nl
                       << "void *context" << be_nl
-                      << "TAO_ENV_ARG_DECL" << be_uidt_nl
+                      << "ACE_ENV_ARG_DECL" << be_uidt_nl
                       << ")" << be_uidt_nl
                       << "{" << be_idt_nl;
                   *os << ancestor->full_skel_name ()
@@ -2129,7 +2129,7 @@ be_interface::gen_skel_helper (be_interface *derived,
                       << "(" << ancestor->full_skel_name ()
                       << "_ptr) impl," << be_nl
                       << "context" << be_nl
-                      << "TAO_ENV_ARG_PARAMETER" << be_uidt_nl
+                      << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
                       << ");" << be_uidt << be_uidt_nl
                       << "}\n";
                 }
@@ -2153,7 +2153,7 @@ be_interface::gen_skel_helper (be_interface *derived,
                       << "TAO_ServerRequest &req," << be_nl
                       << "void *obj," << be_nl
                       << "void *context" << be_nl
-                      << "TAO_ENV_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
+                      << "ACE_ENV_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
                       << ");" << be_uidt << "\n\n";
                 }
               else
@@ -2166,7 +2166,7 @@ be_interface::gen_skel_helper (be_interface *derived,
                       << "TAO_ServerRequest &req," << be_nl
                       << "void *obj," << be_nl
                       << "void *context" << be_nl
-                      << "TAO_ENV_ARG_DECL" << be_uidt_nl
+                      << "ACE_ENV_ARG_DECL" << be_uidt_nl
                       << ")" << be_uidt_nl
                       << "{" << be_idt_nl
                       << ancestor->full_skel_name ()
@@ -2180,7 +2180,7 @@ be_interface::gen_skel_helper (be_interface *derived,
                       << "(" << ancestor->full_skel_name ()
                       << "_ptr) impl," << be_nl
                       << "context" << be_nl
-                      << "TAO_ENV_ARG_PARAMETER" << be_uidt_nl
+                      << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
                       << ");" << be_uidt << be_uidt_nl
                       << "}\n";
                 }
@@ -2200,7 +2200,7 @@ be_interface::gen_skel_helper (be_interface *derived,
                           << "TAO_ServerRequest &req," << be_nl
                           << "void *obj," << be_nl
                           << "void *context" << be_nl
-                          << "TAO_ENV_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
+                          << "ACE_ENV_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
                           << ");" << be_uidt << "\n\n";
                     }
                   else
@@ -2214,7 +2214,7 @@ be_interface::gen_skel_helper (be_interface *derived,
                           << "TAO_ServerRequest &req," << be_nl
                           << "void *obj," << be_nl
                           << "void *context" << be_nl
-                          << "TAO_ENV_ARG_DECL" << be_uidt_nl
+                          << "ACE_ENV_ARG_DECL" << be_uidt_nl
                           << ")" << be_uidt_nl
                           << "{" << be_idt_nl
                           << ancestor->full_skel_name ()
@@ -2228,7 +2228,7 @@ be_interface::gen_skel_helper (be_interface *derived,
                           << "(" << ancestor->full_skel_name ()
                           << "_ptr) impl," << be_nl
                           << "context" << be_nl
-                          << "TAO_ENV_ARG_PARAMETER" << be_uidt_nl
+                          << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
                           << ");" << be_uidt << be_uidt_nl
                           << "}\n";
                     }

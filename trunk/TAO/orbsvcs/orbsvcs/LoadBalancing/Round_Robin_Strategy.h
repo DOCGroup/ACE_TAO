@@ -60,7 +60,7 @@ public:
   // Destructor
 
   // = The Load_Balancing_Strategy methods
-  virtual CORBA::Object_ptr replica (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual CORBA::Object_ptr replica (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
   virtual int insert (TAO_LB_ReplicaProxy *);
   virtual int remove (TAO_LB_ReplicaProxy *);

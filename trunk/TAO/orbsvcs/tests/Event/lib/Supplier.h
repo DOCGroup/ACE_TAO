@@ -54,39 +54,39 @@ public:
   // publications, this is useful for filtering tests.
 
   void send_event (int event_number
-                   TAO_ENV_ARG_DECL);
+                   ACE_ENV_ARG_DECL);
   // The types of the event is chosen by the driver, based on the
   // cookie and the <event_number>
 
   void send_event (const RtecEventComm::EventSet& event
-                   TAO_ENV_ARG_DECL);
+                   ACE_ENV_ARG_DECL);
   // Send <event> to the EC.
 
   void send_event (int event_number,
                    const RtecEventComm::Event& event);
   // Set the event type and source in <event>
 
-  void send_shutdown (TAO_ENV_SINGLE_ARG_DECL);
+  void send_shutdown (ACE_ENV_SINGLE_ARG_DECL);
   // Send a shutdown event.
 
   virtual void connect (
         RtecEventChannelAdmin::SupplierAdmin_ptr supplier_admin,
         const RtecEventChannelAdmin::SupplierQOS& qos,
         int shutdown_event_type
-        TAO_ENV_ARG_DECL);
+        ACE_ENV_ARG_DECL);
   // Connect using a <supplier_admin> and publications (<qos>)
   // computed by the user
 
   virtual void connect (
         const RtecEventChannelAdmin::SupplierQOS& qos,
         int shutdown_event_type
-        TAO_ENV_ARG_DECL);
+        ACE_ENV_ARG_DECL);
   // Connect using the current consumer_proxy (useful for reconnect test)
 
-  void disconnect (TAO_ENV_SINGLE_ARG_DECL);
+  void disconnect (ACE_ENV_SINGLE_ARG_DECL);
   // Disconnect from the EC, also deactivates the object
 
-  void shutdown (TAO_ENV_SINGLE_ARG_DECL);
+  void shutdown (ACE_ENV_SINGLE_ARG_DECL);
   // Disconnect from the EC, also deactivates the object
 
   virtual void dump_results (const char* name,
@@ -101,7 +101,7 @@ public:
   // Return an event type to push....
 
   // = The PushSupplier methods
-  virtual void disconnect_push_supplier (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+  virtual void disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

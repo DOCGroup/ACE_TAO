@@ -11,13 +11,13 @@ ACE_RCSID(DynamicInterface, Dynamic_Implementation, "$Id$")
 #include "tao/PortableServer/Collocated_Object.h"
 
 CORBA::Object_ptr
-TAO_DynamicImplementation::_this (TAO_ENV_SINGLE_ARG_DECL)
+TAO_DynamicImplementation::_this (ACE_ENV_SINGLE_ARG_DECL)
 {
   // The _this() function returns a CORBA::Object_ptr for the target
   // object. Unlike _this() for static skeletons, its return type is
   // not interface-specific because a DSI servant may very well
   // incarnate multiple CORBA objects of different types.
-  TAO_Stub *stub = this->_create_stub (TAO_ENV_SINGLE_ARG_PARAMETER);
+  TAO_Stub *stub = this->_create_stub (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   // Create a object.
@@ -48,7 +48,7 @@ TAO_DynamicImplementation::_downcast (const char *repository_id)
 }
 
 TAO_Stub *
-TAO_DynamicImplementation::_create_stub (TAO_ENV_SINGLE_ARG_DECL)
+TAO_DynamicImplementation::_create_stub (ACE_ENV_SINGLE_ARG_DECL)
 {
   // If DynamicImplementation::_this() is invoked outside of the
   // context of a request invocation on a target object being served
@@ -65,30 +65,30 @@ TAO_DynamicImplementation::_create_stub (TAO_ENV_SINGLE_ARG_DECL)
                         0);
     }
 
-  PortableServer::POA_var poa = poa_current_impl->get_POA (TAO_ENV_SINGLE_ARG_PARAMETER);
+  PortableServer::POA_var poa = poa_current_impl->get_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   CORBA::RepositoryId pinterface =
     this->_primary_interface (poa_current_impl->object_id (),
                               poa.in ()
-                              TAO_ENV_ARG_PARAMETER);
+                              ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   CORBA::PolicyList_var client_exposed_policies =
     poa_current_impl->poa ()->client_exposed_policies
-      (poa_current_impl->priority () TAO_ENV_ARG_PARAMETER);
+      (poa_current_impl->priority () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   return poa_current_impl->poa ()->key_to_stub (poa_current_impl->object_key (),
                                                 pinterface,
                                                 poa_current_impl->priority ()
-                                                TAO_ENV_ARG_PARAMETER);
+                                                ACE_ENV_ARG_PARAMETER);
 }
 
 void
 TAO_DynamicImplementation::_dispatch (TAO_ServerRequest &request,
                                       void * /* context */
-                                      TAO_ENV_ARG_DECL)
+                                      ACE_ENV_ARG_DECL)
 {
   // No need to do any of this if the client isn't waiting.
   if (request.response_expected ())
@@ -121,13 +121,13 @@ TAO_DynamicImplementation::_dispatch (TAO_ServerRequest &request,
     {
       // Delegate to user.
       this->invoke (dsi_request
-                    TAO_ENV_ARG_PARAMETER);
+                    ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Only if the client is waiting.
       if (request.response_expected () && !request.sync_with_server ())
         {
-          dsi_request->dsi_marshal (TAO_ENV_SINGLE_ARG_PARAMETER);
+          dsi_request->dsi_marshal (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
     }

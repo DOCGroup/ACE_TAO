@@ -17,13 +17,13 @@ Server_Request_Interceptor::Server_Request_Interceptor (const char *name)
 void
 Server_Request_Interceptor::receive_request_service_contexts (
     PortableInterceptor::ServerRequestInfo_ptr ri
-    TAO_ENV_ARG_DECL)
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
 
   CORBA::Boolean server_side =
-    this->server_side_test (ri TAO_ENV_ARG_PARAMETER);
+    this->server_side_test (ri ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (!server_side)
@@ -64,13 +64,13 @@ Server_Request_Interceptor::receive_request_service_contexts (
 void
 Server_Request_Interceptor::receive_request (
     PortableInterceptor::ServerRequestInfo_ptr ri
-    TAO_ENV_ARG_DECL)
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
 
   CORBA::Boolean server_side =
-    this->server_side_test (ri TAO_ENV_ARG_PARAMETER);
+    this->server_side_test (ri ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (!server_side)
@@ -84,12 +84,12 @@ Server_Request_Interceptor::receive_request (
 void
 Server_Request_Interceptor::send_reply (
     PortableInterceptor::ServerRequestInfo_ptr ri
-    TAO_ENV_ARG_DECL)
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
   CORBA::Boolean server_side =
-    this->server_side_test (ri TAO_ENV_ARG_PARAMETER);
+    this->server_side_test (ri ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (!server_side)
@@ -105,7 +105,7 @@ Server_Request_Interceptor::send_reply (
     {
       // Determine which test scenario we are in
       Dynamic::ParameterList_var paramlist =
-        ri->arguments (TAO_ENV_SINGLE_ARG_PARAMETER);
+        ri->arguments (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       Test::TestScenario scenario;
@@ -143,13 +143,13 @@ Server_Request_Interceptor::send_reply (
 void
 Server_Request_Interceptor::send_exception (
     PortableInterceptor::ServerRequestInfo_ptr ri
-    TAO_ENV_ARG_DECL)
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
 
   CORBA::Boolean server_side =
-    this->server_side_test (ri TAO_ENV_ARG_PARAMETER);
+    this->server_side_test (ri ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (!server_side)
@@ -165,7 +165,7 @@ Server_Request_Interceptor::send_exception (
     {
       // Determine which test scenario we are in
       Dynamic::ParameterList_var paramlist =
-        ri->arguments (TAO_ENV_SINGLE_ARG_PARAMETER);
+        ri->arguments (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       Test::TestScenario scenario;
@@ -180,12 +180,12 @@ Server_Request_Interceptor::send_exception (
           switch (scenario)
             {
             case 4:
-              exception = ri->sending_exception (TAO_ENV_SINGLE_ARG_PARAMETER);
+              exception = ri->sending_exception (ACE_ENV_SINGLE_ARG_PARAMETER);
               ACE_CHECK;
 
               tc = exception->type ();
 
-              id = tc->id (TAO_ENV_SINGLE_ARG_PARAMETER);
+              id = tc->id (ACE_ENV_SINGLE_ARG_PARAMETER);
               ACE_CHECK;
 
               if (ACE_OS_String::strcmp (id, "IDL:Test/X:1.0") == 0)
@@ -227,13 +227,13 @@ Server_Request_Interceptor::send_exception (
 void
 Server_Request_Interceptor::send_other (
     PortableInterceptor::ServerRequestInfo_ptr ri
-    TAO_ENV_ARG_DECL)
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
 
   CORBA::Boolean server_side =
-    this->server_side_test (ri TAO_ENV_ARG_PARAMETER);
+    this->server_side_test (ri ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (!server_side)
@@ -249,9 +249,9 @@ Server_Request_Interceptor::send_other (
 CORBA::Boolean
 Server_Request_Interceptor::server_side_test (
   PortableInterceptor::ServerRequestInfo_ptr info
-  TAO_ENV_ARG_DECL)
+  ACE_ENV_ARG_DECL)
 {
-  CORBA::String_var op = info->operation (TAO_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::String_var op = info->operation (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   return ACE_OS_String::strcmp (op.in (), "server_test") == 0 ? 1 : 0;

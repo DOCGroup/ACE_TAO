@@ -51,18 +51,18 @@ public:
   virtual void bind (TAO_EC_ProxyPushConsumer* consumer);
   virtual void unbind (TAO_EC_ProxyPushConsumer* consumer);
   virtual void connected (TAO_EC_ProxyPushSupplier* supplier
-                          TAO_ENV_ARG_DECL);
+                          ACE_ENV_ARG_DECL);
   virtual void reconnected (TAO_EC_ProxyPushSupplier* supplier
-                            TAO_ENV_ARG_DECL);
+                            ACE_ENV_ARG_DECL);
   virtual void disconnected (TAO_EC_ProxyPushSupplier* supplier
-                             TAO_ENV_ARG_DECL);
-  virtual void shutdown (TAO_ENV_SINGLE_ARG_DECL);
+                             ACE_ENV_ARG_DECL);
+  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL);
   virtual void push (const RtecEventComm::EventSet& event,
                      TAO_EC_ProxyPushConsumer *consumer
-                     TAO_ENV_ARG_DECL_NOT_USED);
+                     ACE_ENV_ARG_DECL_NOT_USED);
   virtual void push_scheduled_event (RtecEventComm::EventSet &event,
                                      const TAO_EC_QOS_Info &event_info
-                                     TAO_ENV_ARG_DECL);
+                                     ACE_ENV_ARG_DECL);
   virtual CORBA::ULong _decr_refcnt (void);
   virtual CORBA::ULong _incr_refcnt (void);
 

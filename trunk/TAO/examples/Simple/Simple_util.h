@@ -48,7 +48,7 @@ public:
   int init (const char *servant_name,
             int argc,
             char *argv[]
-            TAO_ENV_ARG_DECL);
+            ACE_ENV_ARG_DECL);
   // Initialize the Server state - parsing arguments and waiting.
   // interface_name is the name used to register the Servant.
 
@@ -56,7 +56,7 @@ public:
   // After calling <init>, this method will register the server with
   // the TAO Naming Service using the servant_name passed to <init>.
 
-  int run (TAO_ENV_SINGLE_ARG_DECL);
+  int run (ACE_ENV_SINGLE_ARG_DECL);
   // Run the orb.
 
   int test_for_ins (CORBA::String_var ior);
@@ -127,7 +127,7 @@ public:
   void shutdown (int);
   // Fills in the shutdwon flag.
 
-  int obtain_initial_references (TAO_ENV_SINGLE_ARG_DECL);
+  int obtain_initial_references (ACE_ENV_SINGLE_ARG_DECL);
   // Initialize naming service
 
 protected:

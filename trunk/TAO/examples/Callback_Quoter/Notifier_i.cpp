@@ -38,7 +38,7 @@ void
 Notifier_i::register_callback (const char *stock_name,
                                CORBA::Long threshold_value,
                                Callback_Quoter::Consumer_ptr consumer_handler
-                               TAO_ENV_ARG_DECL)
+                               ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Callback_Quoter::Invalid_Stock))
 {
@@ -107,7 +107,7 @@ Notifier_i::orb (CORBA::ORB_ptr orb)
 
 void
 Notifier_i::unregister_callback (Callback_Quoter::Consumer_ptr consumer
-                                 TAO_ENV_ARG_DECL)
+                                 ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Callback_Quoter::Invalid_Handle))
 {
@@ -154,7 +154,7 @@ Notifier_i::unregister_callback (Callback_Quoter::Consumer_ptr consumer
 void
 Notifier_i::market_status (const char *stock_name,
                            CORBA::Long stock_value
-                           TAO_ENV_ARG_DECL_NOT_USED)
+                           ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -202,7 +202,7 @@ Notifier_i::market_status (const char *stock_name,
 }
 
 void
-Notifier_i::shutdown (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+Notifier_i::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if ( this->consumer_map_.close () > 0)

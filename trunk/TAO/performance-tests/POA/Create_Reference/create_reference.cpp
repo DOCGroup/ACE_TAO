@@ -75,7 +75,7 @@ set_rt_scheduling (void)
 void
 object_creation_test (PortableServer::POA_ptr poa,
                       int create_reference_with_id
-                      TAO_ENV_ARG_DECL)
+                      ACE_ENV_ARG_DECL)
 {
   ACE_DEBUG ((LM_DEBUG,
               "\nCreating %d object references with %s\n",
@@ -102,14 +102,14 @@ object_creation_test (PortableServer::POA_ptr poa,
           object =
             poa->create_reference_with_id (oid.in (),
                                            "IDL:Test/Simple:1.0"
-                                           TAO_ENV_ARG_PARAMETER);
+                                           ACE_ENV_ARG_PARAMETER);
           ACE_CHECK;
         }
       else
         {
           object =
             poa->create_reference ("IDL:Test/Simple:1.0"
-                                   TAO_ENV_ARG_PARAMETER);
+                                   ACE_ENV_ARG_PARAMETER);
           ACE_CHECK;
         }
 
@@ -136,12 +136,12 @@ main (int argc, char *argv[])
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, ""
-                         TAO_ENV_ARG_PARAMETER);
+                         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Object_var poa_object =
         orb->resolve_initial_references ("RootPOA"
-                                         TAO_ENV_ARG_PARAMETER);
+                                         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (poa_object.in ()))
@@ -151,14 +151,14 @@ main (int argc, char *argv[])
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (poa_object.in ()
-                                      TAO_ENV_ARG_PARAMETER);
+                                      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
+        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      poa_manager->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
+      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
@@ -168,32 +168,32 @@ main (int argc, char *argv[])
 
       policies[0] =
         root_poa->create_id_assignment_policy (PortableServer::USER_ID
-                                               TAO_ENV_ARG_PARAMETER);
+                                               ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POA_var child_poa =
         root_poa->create_POA ("TestPOA",
                               poa_manager.in (),
                               policies
-                              TAO_ENV_ARG_PARAMETER);
+                              ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       gsf = ACE_High_Res_Timer::global_scale_factor ();
 
       object_creation_test (root_poa.in (),
                             0  // POA::create_reference
-                            TAO_ENV_ARG_PARAMETER);
+                            ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       object_creation_test (child_poa.in (),
                             1  // POA::create_reference_with_id
-                            TAO_ENV_ARG_PARAMETER);
+                            ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      root_poa->destroy (1, 1 TAO_ENV_ARG_PARAMETER);
+      root_poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      orb->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
+      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

@@ -29,9 +29,9 @@ public:
 
   // = The skeleton methods
   virtual void more_data (const Test::Payload &payload
-                          TAO_ENV_ARG_DECL)
+                          ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual CORBA::Long get_message_count (TAO_ENV_SINGLE_ARG_DECL)
+  virtual CORBA::Long get_message_count (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

@@ -25,11 +25,11 @@ int showNSonly = 0;
 int
 main (int argc, char *argv[])
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" TAO_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       char *pname = argv[0];
@@ -86,15 +86,15 @@ main (int argc, char *argv[])
         }
 
       CORBA::Object_var obj =
-        orb->string_to_object (ior TAO_ENV_ARG_PARAMETER);
+        orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Object_var nc_obj =
-        orb->resolve_initial_references ("NameService" TAO_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("NameService" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CosNaming::NamingContext_var root_nc =
-        CosNaming::NamingContext::_narrow (nc_obj.in () TAO_ENV_ARG_PARAMETER);
+        CosNaming::NamingContext::_narrow (nc_obj.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       if (CORBA::is_nil (root_nc.in ()))
         {
@@ -108,12 +108,12 @@ main (int argc, char *argv[])
       the_name[0].id = CORBA::string_dup (name);
       if (rebind)
         {
-          root_nc->rebind (the_name, obj.in () TAO_ENV_ARG_PARAMETER);
+          root_nc->rebind (the_name, obj.in () ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
       else
         {
-          root_nc->bind (the_name, obj.in () TAO_ENV_ARG_PARAMETER);
+          root_nc->bind (the_name, obj.in () ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
     }

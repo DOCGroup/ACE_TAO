@@ -55,7 +55,7 @@ Consumer_Input_Handler::close (void)
           if (notifier != 0)
             notifier->unsubscribe (receiver,
                                    ""
-                                   TAO_ENV_ARG_PARAMETER);
+                                   ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
       ACE_CATCHANY
@@ -138,7 +138,7 @@ Consumer_Input_Handler::handle_input (ACE_HANDLE h)
 
           event.tag_ = ACE_OS::strdup (buf);
 
-          notifier->push (event TAO_ENV_ARG_PARAMETER);
+          notifier->push (event ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
       ACE_CATCHANY

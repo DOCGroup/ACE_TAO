@@ -35,14 +35,14 @@ public:
 
   // = The PingObject interface methods
   void ping (PingObject_ptr callback
-             TAO_ENV_ARG_DECL)
+             ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  void pong (TAO_ENV_SINGLE_ARG_DECL)
+  void pong (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  void shutdown (TAO_ENV_SINGLE_ARG_DECL)
+  void shutdown (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  PortableServer::POA_ptr _default_POA (TAO_ENV_SINGLE_ARG_DECL)
+  PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

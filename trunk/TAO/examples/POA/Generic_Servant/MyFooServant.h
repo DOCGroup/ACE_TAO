@@ -29,23 +29,23 @@ public:
   virtual ~MyFooServant (void);
   // Destructor
 
-  virtual PortableServer::POA_ptr _default_POA (TAO_ENV_SINGLE_ARG_DECL);
+  virtual PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL);
   // Returns the Default POA of this Servant object
 
-  virtual CORBA::Long doit (TAO_ENV_SINGLE_ARG_DECL)
+  virtual CORBA::Long doit (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Simple doit method
 
-  virtual void simply_doit (TAO_ENV_SINGLE_ARG_DECL)
+  virtual void simply_doit (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Even simpler doit method
 
   virtual void timed_operation (CORBA::ULong timeout
-                                TAO_ENV_ARG_DECL)
+                                ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Timed operation.
 
-  virtual void shutdown (TAO_ENV_SINGLE_ARG_DECL)
+  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Shutdown the ORB
 

@@ -15,14 +15,14 @@ TAO_Priority_Mapping_Manager::~TAO_Priority_Mapping_Manager (void)
 
 TAO_Priority_Mapping_Manager_ptr
 TAO_Priority_Mapping_Manager::_narrow (CORBA::Object_ptr obj
-                                       TAO_ENV_ARG_DECL)
+                                       ACE_ENV_ARG_DECL)
 {
-  return TAO_Priority_Mapping_Manager::_unchecked_narrow (obj TAO_ENV_ARG_PARAMETER);
+  return TAO_Priority_Mapping_Manager::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
 }
 
 TAO_Priority_Mapping_Manager_ptr
 TAO_Priority_Mapping_Manager::_unchecked_narrow (CORBA::Object_ptr obj
-                                                 TAO_ENV_ARG_DECL_NOT_USED)
+                                                 ACE_ENV_ARG_DECL_NOT_USED)
 {
   if (CORBA::is_nil (obj))
     return TAO_Priority_Mapping_Manager::_nil ();

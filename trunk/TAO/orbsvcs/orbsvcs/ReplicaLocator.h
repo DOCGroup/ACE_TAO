@@ -50,7 +50,7 @@ public:
       PortableServer::POA_ptr adapter,
       const char *operation,
       PortableServer::ServantLocator::Cookie & the_cookie
-      TAO_ENV_ARG_DECL)
+      ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableServer::ForwardRequest));
 
@@ -60,7 +60,7 @@ public:
       const char *operation,
       PortableServer::ServantLocator::Cookie the_cookie,
       PortableServer::Servant the_servant
-      TAO_ENV_ARG_DECL)
+      ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

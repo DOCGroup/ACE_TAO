@@ -37,7 +37,7 @@ public:
   ~TAO_Service_Type_Repository (void);
 
   virtual CosTradingRepos::ServiceTypeRepository::IncarnationNumber
-    incarnation (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+    incarnation (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CosTradingRepos::ServiceTypeRepository::IncarnationNumber
@@ -45,7 +45,7 @@ public:
             const char *if_name,
             const CosTradingRepos::ServiceTypeRepository::PropStructSeq &props,
             const CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq &super_types
-            TAO_ENV_ARG_DECL_NOT_USED)
+            ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosTrading::IllegalServiceType,
                      CosTradingRepos::ServiceTypeRepository::ServiceTypeExists,
@@ -99,7 +99,7 @@ public:
   // END SPEC
 
   virtual void remove_type (const char  *name
-                            TAO_ENV_ARG_DECL_NOT_USED)
+                            ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosTrading::IllegalServiceType,
                      CosTrading::UnknownServiceType,
@@ -115,7 +115,7 @@ public:
 
   virtual CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq *
   list_types (const CosTradingRepos::ServiceTypeRepository::SpecifiedServiceTypes &which_types
-              TAO_ENV_ARG_DECL_NOT_USED)
+              ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   // BEGIN SPEC
@@ -131,7 +131,7 @@ public:
 
   virtual CosTradingRepos::ServiceTypeRepository::TypeStruct *
   describe_type (const char *name
-                 TAO_ENV_ARG_DECL_NOT_USED)
+                 ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosTrading::IllegalServiceType,
                      CosTrading::UnknownServiceType));
@@ -145,7 +145,7 @@ public:
 
   virtual CosTradingRepos::ServiceTypeRepository::TypeStruct *
   fully_describe_type (const char *name
-                       TAO_ENV_ARG_DECL_NOT_USED)
+                       ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosTrading::IllegalServiceType,
                      CosTrading::UnknownServiceType));
@@ -162,7 +162,7 @@ public:
   // END SPEC
 
   virtual void mask_type (const char *name
-                          TAO_ENV_ARG_DECL_NOT_USED)
+                          ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosTrading::IllegalServiceType,
                      CosTrading::UnknownServiceType,
@@ -181,7 +181,7 @@ public:
   // END SPEC
 
   virtual void unmask_type (const char  *name
-                            TAO_ENV_ARG_DECL_NOT_USED)
+                            ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosTrading::IllegalServiceType,
                      CosTrading::UnknownServiceType,
@@ -244,7 +244,7 @@ public:
 
   void validate_properties (Prop_Map &prop_map,
                             const CosTradingRepos::ServiceTypeRepository::PropStructSeq &props
-                            TAO_ENV_ARG_DECL_NOT_USED)
+                            ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CosTrading::IllegalPropertyName,
                      CosTrading::DuplicatePropertyName));
   // Confirm that the properties in props have valid names, and aren't
@@ -252,7 +252,7 @@ public:
 
   void validate_supertypes (Service_Type_Map &super_map,
                             const CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq &super_types
-                            TAO_ENV_ARG_DECL_NOT_USED)
+                            ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CosTrading::IllegalServiceType,
                      CosTrading::UnknownServiceType,
                      CosTradingRepos::ServiceTypeRepository::DuplicateServiceTypeName));
@@ -260,14 +260,14 @@ public:
 
   void validate_inheritance (Prop_Map &prop_map,
                              const CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq &super_types
-                             TAO_ENV_ARG_DECL_NOT_USED)
+                             ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CosTradingRepos::ServiceTypeRepository::ValueTypeRedefinition));
   // Ensure that properties of a super_type aren't having their types
   // or retstrictions redefined.
 
   //  void validate_interface (const char *if_name,
   //                       Service_Type_Map &super_map,
-  //                       TAO_ENV_SINGLE_ARG_DECL)
+  //                       ACE_ENV_SINGLE_ARG_DECL)
   //    ACE_THROW_SPEC ((CosTradingRepos::ServiceTypeRepository::InterfaceTypeMismatch));
   // Ensure that the interface type derives from its superclasses'.
 

@@ -13,7 +13,7 @@ ACE_RCSID (Dynamic, Echo_Server_ORBInitializer, "$Id$")
 void
 Echo_Server_ORBInitializer::pre_init (
     PortableInterceptor::ORBInitInfo_ptr
-    TAO_ENV_ARG_DECL_NOT_USED)
+    ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
@@ -21,7 +21,7 @@ Echo_Server_ORBInitializer::pre_init (
 void
 Echo_Server_ORBInitializer::post_init (
     PortableInterceptor::ORBInitInfo_ptr info
-    TAO_ENV_ARG_DECL)
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
@@ -38,7 +38,7 @@ Echo_Server_ORBInitializer::post_init (
     server_interceptor = interceptor;
 
   info->add_server_request_interceptor (server_interceptor.in ()
-                                        TAO_ENV_ARG_PARAMETER);
+                                        ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
 }

@@ -75,41 +75,41 @@ parse_args (int argc, char **argv)
 static void *
 MTTEST (void *args)
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_CString& ior = *(ACE_CString*)args;
   ACE_TRY
     {
     CORBA::Object_var object = orb->string_to_object (ior.c_str ()
-                                                      TAO_ENV_ARG_PARAMETER);
+                                                      ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
     // Narrow the object reference to a File::System
     File::System_var file_system = File::System::_narrow (object.in ()
-                                                          TAO_ENV_ARG_PARAMETER);
+                                                          ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
     // Creat the file filename i.e "test"
     File::Descriptor_var fd = file_system->open (filename,
                                                  O_RDONLY
-                                                 TAO_ENV_ARG_PARAMETER);
+                                                 ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
     for( int i=0; i<loops; ++i)
     {
       //seek to the beginning of the file
       ACE_DEBUG((LM_DEBUG,"Making request number %d\n",i));
-      fd->lseek (0, SEEK_SET TAO_ENV_ARG_PARAMETER);
+      fd->lseek (0, SEEK_SET ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Read back the written message
       // Twice the size of the socket buffer
       File::Descriptor::DataBuffer_var data_received = fd->read (128*1024
-                                                                 TAO_ENV_ARG_PARAMETER);
+                                                                 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
 
     // close the file
-    fd->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
+    fd->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -125,12 +125,12 @@ MTTEST (void *args)
 int
 main (int argc, char **argv)
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
 
   ACE_TRY
     {
       // Initialize the ORB
-      orb = CORBA::ORB_init (argc, argv, 0 TAO_ENV_ARG_PARAMETER);
+      orb = CORBA::ORB_init (argc, argv, 0 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Parse the command-line arguments to get the IOR

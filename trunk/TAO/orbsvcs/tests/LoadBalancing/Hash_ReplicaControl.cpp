@@ -18,7 +18,7 @@ Hash_ReplicaControl::Hash_ReplicaControl (void)
 void
 Hash_ReplicaControl::init (CORBA::ORB_ptr orb,
                            LoadBalancing::LoadBalancer_ptr balancer
-                           TAO_ENV_ARG_DECL)
+                           ACE_ENV_ARG_DECL)
 {
   ACE_DEBUG ((LM_DEBUG,
               "Hash_ReplicaControl::init\n"));
@@ -28,21 +28,21 @@ Hash_ReplicaControl::init (CORBA::ORB_ptr orb,
   reactor->schedule_timer (&this->adapter_, 0, interval, restart);
 
   LoadBalancing::ReplicaControl_var control =
-    this->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
+    this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   CORBA::Object_var replica =
-    this->replica_._this (TAO_ENV_SINGLE_ARG_PARAMETER);
+    this->replica_._this (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   this->group_ =
-    balancer->group_identity (TAO_ENV_SINGLE_ARG_PARAMETER);
+    balancer->group_identity (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   this->proxy_ =
     balancer->connect (control.in (),
                        replica.in ()
-                       TAO_ENV_ARG_PARAMETER);
+                       ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
@@ -67,7 +67,7 @@ Hash_ReplicaControl::handle_timeout (const ACE_Time_Value &,
   ACE_TRY_NEW_ENV
     {
       this->proxy_->current_load (this->current_load_
-                                  TAO_ENV_ARG_PARAMETER);
+                                  ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       ACE_DEBUG ((LM_DEBUG, "Current_Load = %f\n", this->current_load_));
     }
@@ -86,7 +86,7 @@ Hash_ReplicaControl::request_received (void)
 
 
 void
-Hash_ReplicaControl::request_rejected (TAO_ENV_SINGLE_ARG_DECL)
+Hash_ReplicaControl::request_rejected (ACE_ENV_SINGLE_ARG_DECL)
 {
   // @@ Ossama: notice how we reject a single request.  Maybe the
   // advisory should include how many are we supposed to shed?
@@ -97,8 +97,8 @@ Hash_ReplicaControl::request_rejected (TAO_ENV_SINGLE_ARG_DECL)
 }
 
 void
-Hash_ReplicaControl::high_load_advisory (TAO_ENV_SINGLE_ARG_DECL_NOT_USED
-                                         /* TAO_ENV_SINGLE_ARG_PARAMETER */)
+Hash_ReplicaControl::high_load_advisory (ACE_ENV_SINGLE_ARG_DECL_NOT_USED
+                                         /* ACE_ENV_SINGLE_ARG_PARAMETER */)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Notify the replica that it should reject all requests.
@@ -107,8 +107,8 @@ Hash_ReplicaControl::high_load_advisory (TAO_ENV_SINGLE_ARG_DECL_NOT_USED
 }
 
 void
-Hash_ReplicaControl::nominal_load_advisory (TAO_ENV_SINGLE_ARG_DECL_NOT_USED
-                                            /* TAO_ENV_SINGLE_ARG_PARAMETER */)
+Hash_ReplicaControl::nominal_load_advisory (ACE_ENV_SINGLE_ARG_DECL_NOT_USED
+                                            /* ACE_ENV_SINGLE_ARG_PARAMETER */)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Notify the replica that it should once again accept requests.

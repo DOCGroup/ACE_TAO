@@ -37,7 +37,7 @@ UDP_Client_i::svc (void)
   client_name += "_";
   client_name += pid;
 
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
 
   ACE_TRY
     {
@@ -51,7 +51,7 @@ UDP_Client_i::svc (void)
           udp_->invoke (corba_client_name.in (),
                         udpHandler_.inout (),
                         i
-                        TAO_ENV_ARG_PARAMETER);
+                        ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           ACE_DEBUG ((LM_DEBUG,
@@ -64,7 +64,7 @@ UDP_Client_i::svc (void)
         }
 
       // shut down remote ORB
-      udp_->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
+      udp_->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_Time_Value tv (0, 500); // 50ms

@@ -53,7 +53,7 @@ public:
   int close (void);
   int connect (TAO_GIOP_Invocation *invocation,
                TAO_Transport_Descriptor_Interface *desc
-               TAO_ENV_ARG_DECL);
+               ACE_ENV_ARG_DECL);
 
 public:
 

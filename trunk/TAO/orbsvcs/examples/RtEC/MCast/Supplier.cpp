@@ -12,14 +12,14 @@ Supplier::Supplier (void)
 
 void
 Supplier::connect (RtecEventChannelAdmin::SupplierAdmin_ptr supplier_admin
-                   TAO_ENV_ARG_DECL)
+                   ACE_ENV_ARG_DECL)
 {
   this->proxy_ =
-    supplier_admin->obtain_push_consumer (TAO_ENV_SINGLE_ARG_PARAMETER);
+    supplier_admin->obtain_push_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   RtecEventComm::PushSupplier_var me =
-    this->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
+    this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   // Simple publication, but usually the helper classes in
@@ -34,17 +34,17 @@ Supplier::connect (RtecEventChannelAdmin::SupplierAdmin_ptr supplier_admin
   h0.source = 1;                      // first free event source
 
   this->proxy_->connect_push_supplier (me.in (), qos
-                                       TAO_ENV_ARG_PARAMETER);
+                                       ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
-Supplier::disconnect (TAO_ENV_SINGLE_ARG_DECL)
+Supplier::disconnect (ACE_ENV_SINGLE_ARG_DECL)
 {
   // Disconnect from the EC
   ACE_TRY
     {
-      this->proxy_->disconnect_push_consumer (TAO_ENV_SINGLE_ARG_PARAMETER);
+      this->proxy_->disconnect_push_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -53,17 +53,17 @@ Supplier::disconnect (TAO_ENV_SINGLE_ARG_DECL)
   ACE_ENDTRY;
 
   PortableServer::POA_var poa =
-    this->_default_POA (TAO_ENV_SINGLE_ARG_PARAMETER);
+    this->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
   PortableServer::ObjectId_var id =
-    poa->servant_to_id (this TAO_ENV_ARG_PARAMETER);
+    poa->servant_to_id (this ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
-  poa->deactivate_object (id.in () TAO_ENV_ARG_PARAMETER);
+  poa->deactivate_object (id.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
-Supplier::perform_push (TAO_ENV_SINGLE_ARG_DECL)
+Supplier::perform_push (ACE_ENV_SINGLE_ARG_DECL)
 {
   ACE_TRY
     {
@@ -75,7 +75,7 @@ Supplier::perform_push (TAO_ENV_SINGLE_ARG_DECL)
       // Avoid loops throught the event channel federations
       event[0].header.ttl    = 1;
 
-      this->proxy_->push (event TAO_ENV_ARG_PARAMETER);
+      this->proxy_->push (event ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -85,7 +85,7 @@ Supplier::perform_push (TAO_ENV_SINGLE_ARG_DECL)
 }
 
 void
-Supplier::disconnect_push_supplier (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+Supplier::disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }

@@ -58,43 +58,43 @@ public:
 
   /// For each elements call <worker->work()>.
   void for_each (TAO_ESF_Worker<TAO_CEC_ProxyPushSupplier> *worker
-                 TAO_ENV_ARG_DECL);
+                 ACE_ENV_ARG_DECL);
   void for_each (TAO_ESF_Worker<TAO_CEC_ProxyPullSupplier> *worker
-                 TAO_ENV_ARG_DECL);
+                 ACE_ENV_ARG_DECL);
 
   /// Push the event to all the consumers
   void push (const CORBA::Any &event
-             TAO_ENV_ARG_DECL);
+             ACE_ENV_ARG_DECL);
 
   /// Used to inform the EC that a Supplier has connected or
   /// disconnected from it.
   virtual void connected (TAO_CEC_ProxyPushSupplier*
-                          TAO_ENV_ARG_DECL_NOT_USED);
+                          ACE_ENV_ARG_DECL_NOT_USED);
   virtual void reconnected (TAO_CEC_ProxyPushSupplier*
-                            TAO_ENV_ARG_DECL_NOT_USED);
+                            ACE_ENV_ARG_DECL_NOT_USED);
   virtual void disconnected (TAO_CEC_ProxyPushSupplier*
-                             TAO_ENV_ARG_DECL_NOT_USED);
+                             ACE_ENV_ARG_DECL_NOT_USED);
   virtual void connected (TAO_CEC_ProxyPullSupplier*
-                          TAO_ENV_ARG_DECL_NOT_USED);
+                          ACE_ENV_ARG_DECL_NOT_USED);
   virtual void reconnected (TAO_CEC_ProxyPullSupplier*
-                            TAO_ENV_ARG_DECL_NOT_USED);
+                            ACE_ENV_ARG_DECL_NOT_USED);
   virtual void disconnected (TAO_CEC_ProxyPullSupplier*
-                             TAO_ENV_ARG_DECL_NOT_USED);
+                             ACE_ENV_ARG_DECL_NOT_USED);
 
   /// The event channel is shutting down, inform all the consumers of
   /// this
-  virtual void shutdown (TAO_ENV_SINGLE_ARG_DECL_NOT_USED);
+  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
 
   // = The CosEventChannelAdmin::ConsumerAdmin methods...
   virtual CosEventChannelAdmin::ProxyPushSupplier_ptr
-      obtain_push_supplier (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+      obtain_push_supplier (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
           ACE_THROW_SPEC ((CORBA::SystemException));
   virtual CosEventChannelAdmin::ProxyPullSupplier_ptr
-      obtain_pull_supplier (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+      obtain_pull_supplier (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
           ACE_THROW_SPEC ((CORBA::SystemException));
 
   // = The PortableServer::ServantBase methods
-  virtual PortableServer::POA_ptr _default_POA (TAO_ENV_SINGLE_ARG_DECL);
+  virtual PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL);
 
 private:
   /// The Event Channel we belong to
@@ -119,7 +119,7 @@ public:
   TAO_CEC_Propagate_Event_Push (const CORBA::Any& event);
 
   void work (TAO_CEC_ProxyPushSupplier *supplier
-             TAO_ENV_ARG_DECL);
+             ACE_ENV_ARG_DECL);
 
 private:
   /// The event
@@ -134,7 +134,7 @@ public:
   TAO_CEC_Propagate_Event_Pull (const CORBA::Any& event);
 
   void work (TAO_CEC_ProxyPullSupplier *supplier
-             TAO_ENV_ARG_DECL);
+             ACE_ENV_ARG_DECL);
 
 private:
   /// The event

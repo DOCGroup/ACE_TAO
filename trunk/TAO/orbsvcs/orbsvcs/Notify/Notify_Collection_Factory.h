@@ -40,10 +40,10 @@ class TAO_Notify_Export TAO_Notify_Collection_Factory : public ACE_Service_Objec
   //
 public:
   // = Methods to create listener collections.
-  virtual TAO_Notify_EventListener_List* create_event_listener_list (TAO_ENV_SINGLE_ARG_DECL) = 0;
+  virtual TAO_Notify_EventListener_List* create_event_listener_list (ACE_ENV_SINGLE_ARG_DECL) = 0;
   // Create the event listener list.
 
- virtual TAO_Notify_UpdateListener_List* create_update_listener_list (TAO_ENV_SINGLE_ARG_DECL) = 0;
+ virtual TAO_Notify_UpdateListener_List* create_update_listener_list (ACE_ENV_SINGLE_ARG_DECL) = 0;
   // create update listener list.
 };
 

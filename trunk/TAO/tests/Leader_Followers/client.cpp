@@ -109,7 +109,7 @@ public:
 
   int svc (void)
     {
-      TAO_ENV_DECLARE_NEW_ENV;
+      ACE_DECLARE_NEW_CORBA_ENV;
 
       ACE_TRY
         {
@@ -135,7 +135,7 @@ public:
                       work_from_this_thread));
 
           CORBA::ULong result = this->test_->method (work_from_this_thread
-                                                     TAO_ENV_ARG_PARAMETER);
+                                                     ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           if (work_from_this_thread != result)
@@ -185,7 +185,7 @@ public:
 
   int svc (void)
     {
-      TAO_ENV_DECLARE_NEW_ENV;
+      ACE_DECLARE_NEW_CORBA_ENV;
 
       ACE_TRY
         {
@@ -205,7 +205,7 @@ public:
           ACE_Time_Value timeout (0,
                                   event_loop_timeout_for_this_thread * 1000);
 
-          this->orb_->run (timeout TAO_ENV_ARG_PARAMETER);
+          this->orb_->run (timeout ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           ACE_DEBUG ((LM_DEBUG, "Client: Event loop finished for thread %t @ %T\n"));
@@ -237,7 +237,7 @@ private:
 int
 main (int argc, char **argv)
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
 
   ACE_TRY
     {
@@ -246,7 +246,7 @@ main (int argc, char **argv)
         CORBA::ORB_init (argc,
                          argv,
                          0
-                         TAO_ENV_ARG_PARAMETER);
+                         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Initialize options based on command-line arguments.
@@ -256,12 +256,12 @@ main (int argc, char **argv)
 
       // Get an object reference from the argument string.
       CORBA::Object_var object =
-        orb->string_to_object (IOR TAO_ENV_ARG_PARAMETER);
+        orb->string_to_object (IOR ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Try to narrow the object reference to a <server> reference.
       test_var server = test::_narrow (object.in ()
-                                       TAO_ENV_ARG_PARAMETER);
+                                       ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       Client_Task client_task (server.in ());
@@ -292,7 +292,7 @@ main (int argc, char **argv)
       // Shutdown server.
       if (shutdown_server)
         {
-          server->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
+          server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
     }

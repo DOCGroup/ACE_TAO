@@ -14,13 +14,13 @@ public:
   test_i (CORBA::ORB_ptr orb,
           PortableServer::POA_ptr poa);
 
-  void method (TAO_ENV_SINGLE_ARG_DECL)
+  void method (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void shutdown (TAO_ENV_SINGLE_ARG_DECL)
+  void shutdown (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  PortableServer::POA_ptr _default_POA (TAO_ENV_SINGLE_ARG_DECL);
+  PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL);
 
 private:
 
@@ -36,7 +36,7 @@ test_i::test_i (CORBA::ORB_ptr orb,
 }
 
 void
-test_i::method (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+test_i::method (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -44,19 +44,19 @@ test_i::method (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 void
-test_i::shutdown (TAO_ENV_SINGLE_ARG_DECL)
+test_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
               "test_i::shutdown\n"));
 
   this->orb_->shutdown (0
-                        TAO_ENV_ARG_PARAMETER);
+                        ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 PortableServer::POA_ptr
-test_i::_default_POA (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+test_i::_default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
@@ -109,7 +109,7 @@ static void
 write_iors_to_file (CORBA::Object_ptr object,
                     CORBA::ORB_ptr orb,
                     const char *filename
-                    TAO_ENV_ARG_DECL)
+                    ACE_ENV_ARG_DECL)
 {
   FILE *file =
     ACE_OS::fopen (filename, "w");
@@ -117,7 +117,7 @@ write_iors_to_file (CORBA::Object_ptr object,
 
   CORBA::String_var ior =
     orb->object_to_string (object
-                           TAO_ENV_ARG_PARAMETER);
+                           ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   u_int result = 0;
@@ -145,17 +145,17 @@ main (int argc, char **argv)
         CORBA::ORB_init (argc,
                          argv,
                          0
-                         TAO_ENV_ARG_PARAMETER);
+                         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Object_var object =
         orb->resolve_initial_references ("RTORB"
-                                         TAO_ENV_ARG_PARAMETER);
+                                         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       RTCORBA::RTORB_var rt_orb =
         RTCORBA::RTORB::_narrow (object.in ()
-                                 TAO_ENV_ARG_PARAMETER);
+                                 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       int result =
@@ -165,16 +165,16 @@ main (int argc, char **argv)
 
       object =
         orb->resolve_initial_references ("RootPOA"
-                                         TAO_ENV_ARG_PARAMETER);
+                                         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (object.in ()
-                                      TAO_ENV_ARG_PARAMETER);
+                                      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
+        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::PolicyList policies;
@@ -184,7 +184,7 @@ main (int argc, char **argv)
                             bands_file,
                             rt_orb.in (),
                             policies
-                            TAO_ENV_ARG_PARAMETER);
+                            ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       if (result != 0)
         return result;
@@ -201,7 +201,7 @@ main (int argc, char **argv)
                             max_request_buffer_size,
                             allow_borrowing,
                             policies
-                            TAO_ENV_ARG_PARAMETER);
+                            ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       if (result != 0)
         return result;
@@ -209,13 +209,13 @@ main (int argc, char **argv)
       CORBA::Policy_var priority_model_policy =
         rt_orb->create_priority_model_policy (RTCORBA::CLIENT_PROPAGATED,
                                               0
-                                              TAO_ENV_ARG_PARAMETER);
+                                              ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Implicit_activation policy.
       CORBA::Policy_var implicit_activation_policy =
         root_poa->create_implicit_activation_policy (PortableServer::IMPLICIT_ACTIVATION
-                                                     TAO_ENV_ARG_PARAMETER);
+                                                     ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       policies.length (policies.length () + 1);
@@ -230,7 +230,7 @@ main (int argc, char **argv)
         root_poa->create_POA ("child",
                               poa_manager.in (),
                               policies
-                              TAO_ENV_ARG_PARAMETER);
+                              ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       test_i *servant = 0;
@@ -243,22 +243,22 @@ main (int argc, char **argv)
       PortableServer::ServantBase_var safe_servant (servant);
 
       test_var test =
-        servant->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
+        servant->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       write_iors_to_file (test.in (),
                           orb.in (),
                           ior
-                          TAO_ENV_ARG_PARAMETER);
+                          ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      poa_manager->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
+      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      orb->run (TAO_ENV_SINGLE_ARG_PARAMETER);
+      orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      orb->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
+      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

@@ -48,11 +48,11 @@ UDP_PerformanceClient::svc ()
       CORBA::String_var corba_client_name =
         CORBA::string_dup (client_name.c_str ());
 
-      UDP_var udpHandler_var = udpHandler_->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
+      UDP_var udpHandler_var = udpHandler_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       udp_->setResponseHandler (udpHandler_var.in ()
-                                TAO_ENV_ARG_PARAMETER);
+                                ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_High_Res_Timer timer;
@@ -71,7 +71,7 @@ UDP_PerformanceClient::svc ()
             {
               udp_->invoke (corba_client_name.in (),
                             j
-                            TAO_ENV_ARG_PARAMETER);
+                            ACE_ENV_ARG_PARAMETER);
 
               ACE_TRY_CHECK;
 
@@ -93,7 +93,7 @@ UDP_PerformanceClient::svc ()
 
           // Reset expected request ID
           udp_->reset (corba_client_name.in ()
-                       TAO_ENV_ARG_PARAMETER);
+                       ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           // Give the reset a chance to propagate back to us
@@ -155,7 +155,7 @@ UDP_PerformanceClient::svc ()
         }
 
       // shut down remote ORB
-      udp_->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
+      udp_->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_Time_Value tv (0, 50); // 50ms
@@ -163,7 +163,7 @@ UDP_PerformanceClient::svc ()
 
       // Shut down local ORB, trigger the end of the ORB event loop
             // in the main thread.
-      orb_->shutdown (0 TAO_ENV_ARG_PARAMETER);
+      orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

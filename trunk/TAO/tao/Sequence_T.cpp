@@ -608,11 +608,11 @@ TAO_Unbounded_Object_Sequence<T,T_var>::_shrink_buffer (CORBA::ULong nl,
 template <class T, class T_var> void
 TAO_Unbounded_Object_Sequence<T,T_var>::_downcast (void* target,
                                                    CORBA_Object* src
-                                                   TAO_ENV_ARG_DECL)
+                                                   ACE_ENV_ARG_DECL)
 {
   T **tmp = ACE_static_cast (T**, target);
 
-  *tmp = T_var::tao_narrow (src TAO_ENV_ARG_PARAMETER);
+  *tmp = T_var::tao_narrow (src ACE_ENV_ARG_PARAMETER);
 
   ACE_CHECK;
 }
@@ -777,11 +777,11 @@ TAO_Bounded_Object_Sequence<T,T_var, MAX>::_shrink_buffer (CORBA::ULong nl,
 template <class T, class T_var, size_t MAX> void
 TAO_Bounded_Object_Sequence<T, T_var,MAX>::_downcast (void* target,
                                                       CORBA_Object* src
-                                                      TAO_ENV_ARG_DECL)
+                                                      ACE_ENV_ARG_DECL)
 {
   T **tmp = ACE_static_cast (T**, target);
 
-  *tmp = T_var::tao_narrow (src TAO_ENV_ARG_PARAMETER);
+  *tmp = T_var::tao_narrow (src ACE_ENV_ARG_PARAMETER);
 
   ACE_CHECK;
 }

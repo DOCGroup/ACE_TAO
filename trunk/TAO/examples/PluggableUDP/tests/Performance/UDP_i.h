@@ -39,20 +39,20 @@ public:
   // Destructor
 
   virtual void setResponseHandler (UDP_ptr udpHandler
-                                   TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+                                   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void invoke (const char *client_name,
                        CORBA::Long request_id
-                       TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+                       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void reset (const char * client_name
-                      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+                      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 
-  virtual void shutdown (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   // Shutdown the server.

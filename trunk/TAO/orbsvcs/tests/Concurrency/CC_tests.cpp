@@ -37,11 +37,11 @@ CC_Test::create_lock_set (void)
   // Create the lock set and return an obj ref corresponding to the
   // key.
   CosConcurrencyControl::LockSet_ptr lock_set(0);
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       lock_set =
-        this->naming_service_->get_lock_set_factory ()->create (TAO_ENV_SINGLE_ARG_PARAMETER);
+        this->naming_service_->get_lock_set_factory ()->create (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (lock_set))
@@ -101,10 +101,10 @@ Test_Single_Lock_With_Mode::run (int /* times_to_run */)
 
   CosConcurrencyControl::LockSet_ptr cc_lock_set_ = create_lock_set ();
 
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      cc_lock_set_->lock (mode_ TAO_ENV_ARG_PARAMETER);
+      cc_lock_set_->lock (mode_ ACE_ENV_ARG_PARAMETER);
 
       ACE_TRY_CHECK;
       ACE_DEBUG ((LM_DEBUG,
@@ -112,7 +112,7 @@ Test_Single_Lock_With_Mode::run (int /* times_to_run */)
                   get_lock_mode_name (mode_)));
 
       lock_not_held = cc_lock_set_->try_lock (mode_
-                                              TAO_ENV_ARG_PARAMETER);
+                                              ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (lock_not_held)
@@ -128,13 +128,13 @@ Test_Single_Lock_With_Mode::run (int /* times_to_run */)
                     get_lock_mode_name (mode_)));
 
       cc_lock_set_->unlock (mode_
-                            TAO_ENV_ARG_PARAMETER);
+                            ACE_ENV_ARG_PARAMETER);
       ACE_DEBUG ((LM_DEBUG,
                   "%s lock released\n",
                   get_lock_mode_name (mode_)));
 
       lock_not_held = cc_lock_set_->try_lock (mode_
-                                              TAO_ENV_ARG_PARAMETER);
+                                              ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (lock_not_held)
@@ -179,20 +179,20 @@ Test_Setup_LockSet::~Test_Setup_LockSet (void)
 int
 Test_Setup_LockSet::run (int /* times_to_run */)
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       CosConcurrencyControl::LockSet_ptr cc_lock_set_ =
         create_lock_set ();
       this->naming_service_->bind_name (my_name_, cc_lock_set_
-                                        TAO_ENV_ARG_PARAMETER);
+                                        ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,
                   "Name bound\n"));
 
       cc_lock_set_->lock (CosConcurrencyControl::read
-                          TAO_ENV_ARG_PARAMETER);
+                          ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,
@@ -226,22 +226,22 @@ Test_Use_Already_Created_LockSet::~Test_Use_Already_Created_LockSet (void)
 int
 Test_Use_Already_Created_LockSet::run (int /* times_to_run */)
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       CORBA::Object_var ccls_obj =
         this->naming_service_->get_obj_from_name (ACE_const_cast (char *, ""),
                                                   my_name_
-                                                  TAO_ENV_ARG_PARAMETER);
+                                                  ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CosConcurrencyControl::LockSet_var ccls =
         CosConcurrencyControl::LockSet::_narrow (ccls_obj.in ()
-                                                 TAO_ENV_ARG_PARAMETER);
+                                                 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ccls->lock (CosConcurrencyControl::read
-                  TAO_ENV_ARG_PARAMETER);
+                  ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
     }
@@ -273,21 +273,21 @@ Test_Unlock_Already_Created_LockSet::~Test_Unlock_Already_Created_LockSet (void)
 int
 Test_Unlock_Already_Created_LockSet::run (int /* times_to_run */)
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       CORBA::Object_var ccls_obj =
         this->naming_service_->get_obj_from_name (ACE_const_cast (char *, ""), my_name_
-                                                 TAO_ENV_ARG_PARAMETER);
+                                                 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CosConcurrencyControl::LockSet_var ccls =
         CosConcurrencyControl::LockSet::_narrow (ccls_obj.in ()
-                                                 TAO_ENV_ARG_PARAMETER);
+                                                 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ccls->unlock (CosConcurrencyControl::read
-                    TAO_ENV_ARG_PARAMETER);
+                    ACE_ENV_ARG_PARAMETER);
     }
   ACE_CATCHANY
     {
@@ -320,11 +320,11 @@ Test_Release_Not_Held_Lock::run (int /* times_to_run */)
 
   // Create the lock set
   CosConcurrencyControl::LockSet_ptr cc_lock_set_ = create_lock_set ();
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       // lock the lock
-      cc_lock_set_->lock (mode_ TAO_ENV_ARG_PARAMETER);
+      cc_lock_set_->lock (mode_ ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,
@@ -333,7 +333,7 @@ Test_Release_Not_Held_Lock::run (int /* times_to_run */)
 
       // check to see if the lock is held
       lock_not_held = cc_lock_set_->try_lock (mode_
-                                              TAO_ENV_ARG_PARAMETER);
+                                              ACE_ENV_ARG_PARAMETER);
 
       if (lock_not_held)
         {
@@ -349,14 +349,14 @@ Test_Release_Not_Held_Lock::run (int /* times_to_run */)
 
       // release the lock
       cc_lock_set_->unlock (mode_
-                            TAO_ENV_ARG_PARAMETER);
+                            ACE_ENV_ARG_PARAMETER);
       ACE_DEBUG ((LM_DEBUG,
                   "%s lock released\n",
                   get_lock_mode_name (mode_)));
 
       // release the lock again. this should raise an exception
       cc_lock_set_->unlock (mode_
-                            TAO_ENV_ARG_PARAMETER);
+                            ACE_ENV_ARG_PARAMETER);
 
       ACE_DEBUG ((LM_DEBUG,
                   "attemptet to release %s lock\n",

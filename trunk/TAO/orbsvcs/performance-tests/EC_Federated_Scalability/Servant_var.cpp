@@ -23,7 +23,7 @@ Servant_var<SERVANT>::~Servant_var ()
 
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY {
-    this->ptr_->_remove_ref (TAO_ENV_SINGLE_ARG_PARAMETER);
+    this->ptr_->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_TRY_CHECK;
   } ACE_CATCHANY {
     // @@ This event should be logged...

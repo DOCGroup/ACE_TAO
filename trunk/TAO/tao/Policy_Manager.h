@@ -49,20 +49,20 @@ public:
 
   /// Obtain a single policy.
   CORBA::Policy_ptr get_policy (CORBA::PolicyType policy
-                                TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+                                ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
   // = The CORBA::PolicyManager operations
 
   virtual CORBA::PolicyList * get_policy_overrides (
         const CORBA::PolicyTypeSeq & ts
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void set_policy_overrides (const CORBA::PolicyList & policies,
                                      CORBA::SetOverrideType set_add
-                                     TAO_ENV_ARG_DECL_WITH_DEFAULTS
+                                     ACE_ENV_ARG_DECL_WITH_DEFAULTS
                                      )
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CORBA_InvalidPolicies));
@@ -88,18 +88,18 @@ public:
 
   /// Obtain a single policy.
   CORBA::Policy_ptr get_policy (CORBA::PolicyType policy
-                                TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+                                ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
   // = The CORBA::PolicyManager operations
 
   CORBA::PolicyList * get_policy_overrides (
         const CORBA::PolicyTypeSeq & ts
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
   void set_policy_overrides (const CORBA::PolicyList & policies,
                              CORBA::SetOverrideType set_add
-                             TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+                             ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
   /// Obtain a single cached policy.
   CORBA::Policy_ptr get_cached_policy (TAO_Cached_Policy_Type type);
@@ -122,21 +122,21 @@ public:
   /// Obtain a single policy.
   CORBA::Policy_ptr get_policy (
       CORBA::PolicyType policy
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
   // = The CORBA::PolicyManager operations
 
   virtual CORBA::PolicyList * get_policy_overrides (
         const CORBA::PolicyTypeSeq & ts
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void set_policy_overrides (
         const CORBA::PolicyList & policies,
         CORBA::SetOverrideType set_add
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CORBA_InvalidPolicies));

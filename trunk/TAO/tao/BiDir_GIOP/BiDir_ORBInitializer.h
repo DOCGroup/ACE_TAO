@@ -42,11 +42,11 @@ class TAO_BiDirGIOP_Export TAO_BiDir_ORBInitializer :
 public:
 
   virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info
-                         TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+                         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info
-                          TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+                          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
@@ -54,7 +54,7 @@ private:
   ///< Register Messaging policy factories.
   void register_policy_factories (
          PortableInterceptor::ORBInitInfo_ptr info
-         TAO_ENV_ARG_DECL);
+         ACE_ENV_ARG_DECL);
 
 };
 

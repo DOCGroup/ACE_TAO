@@ -13,7 +13,7 @@ Test_impl::Test_impl (CORBA::ORB_ptr orb)
 CORBA::Any*
 Test_impl::get_something (
     CORBA::Boolean need_vb
-    TAO_ENV_ARG_DECL_NOT_USED)
+    ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Any_var ret_val;
@@ -47,8 +47,8 @@ Test_impl::get_something (
 }
 
 void
-Test_impl::shutdown (TAO_ENV_SINGLE_ARG_DECL)
+Test_impl::shutdown (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->orb_->shutdown (0 TAO_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
 }

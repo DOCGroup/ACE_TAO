@@ -58,12 +58,12 @@ public:
 
   DsLogAdmin::RecordList* get (CORBA::ULong position,
                                CORBA::ULong how_many
-                               TAO_ENV_ARG_DECL)
+                               ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      DsLogAdmin::InvalidParam));
   // Gets a list of LogRecords.
 
-  void destroy (TAO_ENV_SINGLE_ARG_DECL)
+  void destroy (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // This destroys the iterator.
 

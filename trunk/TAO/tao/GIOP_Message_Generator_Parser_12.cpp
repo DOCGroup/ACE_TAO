@@ -131,7 +131,7 @@ int
 TAO_GIOP_Message_Generator_Parser_12::write_reply_header (
     TAO_OutputCDR & output,
     TAO_Pluggable_Reply_Params_Base &reply
-    TAO_ENV_ARG_DECL_NOT_USED /* TAO_ENV_SINGLE_ARG_PARAMETER */
+    ACE_ENV_ARG_DECL_NOT_USED /* ACE_ENV_SINGLE_ARG_PARAMETER */
   )
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -288,7 +288,7 @@ TAO_GIOP_Message_Generator_Parser_12::parse_request_header (
   input.skip_bytes (3);
 
   // Unmarshal the target address field.
-  hdr_status = 
+  hdr_status =
     hdr_status && request.profile ().unmarshall_target_address(input);
 
   if (input.char_translator () == 0)
@@ -371,7 +371,7 @@ TAO_GIOP_Message_Generator_Parser_12::parse_locate_header (
   request.request_id (req_id);
 
   // Unmarshal the target address field.
-  hdr_status = 
+  hdr_status =
     hdr_status && request.profile ().unmarshall_target_address(msg);
 
   // Reset the pointer to an 8-byte bouns]dary

@@ -46,7 +46,7 @@ Quoter_Stock_i::set_price (CORBA::Double new_price)
 }
 
 void
-Quoter_Stock_i::disconnect_push_supplier (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+Quoter_Stock_i::disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   throw (CORBA::SystemException)
 {
   // Forget about the consumer it is not there anymore

@@ -37,13 +37,13 @@ public:
   Test_i (PortableServer::POA_ptr poa);
   // ctor
 
-  CORBA::Long instance_count (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+  CORBA::Long instance_count (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void destroy (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+  void destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  PortableServer::POA_ptr _default_POA (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+  PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

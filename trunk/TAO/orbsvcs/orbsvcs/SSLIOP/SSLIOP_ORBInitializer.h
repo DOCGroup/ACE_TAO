@@ -53,11 +53,11 @@ public:
   TAO_SSLIOP_ORBInitializer (Security::QOP qop);
 
   virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info
-                         TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+                         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info
-                          TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+                          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
@@ -65,7 +65,7 @@ private:
   // Obtain the TSS slot ID assigned to the "SSLIOPCurrent" object.
   size_t get_tss_slot_id (
     PortableInterceptor::ORBInitInfo_ptr info
-    TAO_ENV_ARG_DECL);
+    ACE_ENV_ARG_DECL);
 
 private:
 

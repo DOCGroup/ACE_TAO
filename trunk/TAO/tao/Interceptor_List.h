@@ -48,7 +48,7 @@ protected:
   /// Register an in interceptor with interceptor list.
   size_t add_interceptor_i (
       PortableInterceptor::Interceptor_ptr interceptor
-      TAO_ENV_ARG_DECL)
+      ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ORBInitInfo::DuplicateName));
 
@@ -89,7 +89,7 @@ public:
 
   /// Register a client request interceptor.
   void add_interceptor (PortableInterceptor::ClientRequestInterceptor_ptr i
-                        TAO_ENV_ARG_DECL);
+                        ACE_ENV_ARG_DECL);
 
   /// Return reference to the underlying Portable Interceptor array.
   TYPE &interceptors (void);
@@ -137,7 +137,7 @@ public:
 
   /// Register a server request interceptor.
   void add_interceptor (PortableInterceptor::ServerRequestInterceptor_ptr i
-                        TAO_ENV_ARG_DECL);
+                        ACE_ENV_ARG_DECL);
 
   /// Return reference to the underlying Portable Interceptor array.
   TYPE &interceptors (void);
@@ -186,7 +186,7 @@ public:
 
   /// Register an IOR interceptor.
   void add_interceptor (PortableInterceptor::IORInterceptor_ptr i
-                        TAO_ENV_ARG_DECL);
+                        ACE_ENV_ARG_DECL);
 
   /// Return reference to the underlying Portable Interceptor array.
   TYPE &interceptors (void);

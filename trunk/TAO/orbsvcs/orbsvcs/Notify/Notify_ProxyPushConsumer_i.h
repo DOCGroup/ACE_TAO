@@ -55,7 +55,7 @@ public:
   // Destructor
 
   // = Interface methods
-  void push (const CORBA::Any & data TAO_ENV_ARG_DECL)
+  void push (const CORBA::Any & data ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException,
                    CosEventComm::Disconnected
@@ -63,7 +63,7 @@ public:
 
   virtual void connect_any_push_supplier (
     CosEventComm::PushSupplier_ptr push_supplier
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException,
@@ -71,7 +71,7 @@ public:
   ));
 
 virtual void disconnect_push_consumer (
-    TAO_ENV_SINGLE_ARG_DECL
+    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -79,7 +79,7 @@ virtual void disconnect_push_consumer (
 
  protected:
 // = Helper methods
- virtual void dispatch_update_i (CosNotification::EventTypeSeq added, CosNotification::EventTypeSeq removed TAO_ENV_ARG_DECL);
+ virtual void dispatch_update_i (CosNotification::EventTypeSeq added, CosNotification::EventTypeSeq removed ACE_ENV_ARG_DECL);
 
  // = Data members
  CORBA::Boolean notify_style_supplier_;
@@ -113,20 +113,20 @@ public:
   virtual ~TAO_Notify_CosEC_ProxyPushConsumer_i (void);
   // Destructor.
 
-  void init (TAO_ENV_SINGLE_ARG_DECL);
+  void init (ACE_ENV_SINGLE_ARG_DECL);
     // init.
 
   virtual void push (const CORBA::Any &data
-                     TAO_ENV_ARG_DECL)
+                     ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
   // Suppliers call this method to pass data to connected consumers.
 
-  virtual void disconnect_push_consumer (TAO_ENV_SINGLE_ARG_DECL)
+  virtual void disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
   // Disconnects the supplier from the event communication.
 
   virtual void connect_push_supplier(CosEventComm::PushSupplier_ptr push_supplier
-                                     TAO_ENV_ARG_DECL)
+                                     ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        CosEventChannelAdmin::AlreadyConnected));
   // Connects a push supplier.

@@ -122,7 +122,7 @@ TAO_SSLIOP_Connector::close (void)
 int
 TAO_SSLIOP_Connector::connect (TAO_GIOP_Invocation *invocation,
                                TAO_Transport_Descriptor_Interface *desc
-                               TAO_ENV_ARG_DECL)
+                               ACE_ENV_ARG_DECL)
 {
   if (TAO_debug_level > 0)
       ACE_DEBUG ((LM_DEBUG,
@@ -149,12 +149,12 @@ TAO_SSLIOP_Connector::connect (TAO_GIOP_Invocation *invocation,
   // policy for the current object.
   CORBA::Policy_var policy =
     invocation->stub ()->get_policy (Security::SecEstablishTrustPolicy
-                                     TAO_ENV_ARG_PARAMETER);
+                                     ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   SecurityLevel2::EstablishTrustPolicy_var trust_policy =
     SecurityLevel2::EstablishTrustPolicy::_narrow (policy.in ()
-                                                   TAO_ENV_ARG_PARAMETER);
+                                                   ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   // We use a pointer and temporary to make it obvious to determine
@@ -164,7 +164,7 @@ TAO_SSLIOP_Connector::connect (TAO_GIOP_Invocation *invocation,
   Security::EstablishTrust trust = { 0 , 0 };
   if (!CORBA::is_nil (trust_policy.in ()))
     {
-      trust = trust_policy->trust (TAO_ENV_SINGLE_ARG_PARAMETER);
+      trust = trust_policy->trust (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
     }
 
@@ -197,12 +197,12 @@ TAO_SSLIOP_Connector::connect (TAO_GIOP_Invocation *invocation,
   // Check if the user overrode the default Quality-of-Protection for
   // the current object.
   policy = invocation->stub ()->get_policy (Security::SecQOPPolicy
-                                            TAO_ENV_ARG_PARAMETER);
+                                            ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   SecurityLevel2::QOPPolicy_var qop_policy =
     SecurityLevel2::QOPPolicy::_narrow (policy.in ()
-                                        TAO_ENV_ARG_PARAMETER);
+                                        ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   // Temporary variable used to avoid overwriting the default value
@@ -211,7 +211,7 @@ TAO_SSLIOP_Connector::connect (TAO_GIOP_Invocation *invocation,
 
   if (!CORBA::is_nil (qop_policy.in ()))
     {
-      qop = qop_policy->qop (TAO_ENV_SINGLE_ARG_PARAMETER);
+      qop = qop_policy->qop (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
     }
 
@@ -239,7 +239,7 @@ TAO_SSLIOP_Connector::connect (TAO_GIOP_Invocation *invocation,
     {
       return this->iiop_connect (ssl_endpoint,
                                  invocation
-                                 TAO_ENV_ARG_PARAMETER);
+                                 ACE_ENV_ARG_PARAMETER);
     }
 
   return this->ssliop_connect (ssl_endpoint,
@@ -247,7 +247,7 @@ TAO_SSLIOP_Connector::connect (TAO_GIOP_Invocation *invocation,
                                trust,
                                invocation,
                                desc
-                               TAO_ENV_ARG_PARAMETER);
+                               ACE_ENV_ARG_PARAMETER);
 }
 
 
@@ -270,7 +270,7 @@ TAO_SSLIOP_Connector::create_profile (TAO_InputCDR& cdr)
 }
 
 TAO_Profile *
-TAO_SSLIOP_Connector::make_profile (TAO_ENV_SINGLE_ARG_DECL)
+TAO_SSLIOP_Connector::make_profile (ACE_ENV_SINGLE_ARG_DECL)
 {
   // The endpoint should be of the form:
   //    N.n@host:port/object_key
@@ -294,7 +294,7 @@ TAO_SSLIOP_Connector::make_profile (TAO_ENV_SINGLE_ARG_DECL)
 int
 TAO_SSLIOP_Connector::iiop_connect (TAO_SSLIOP_Endpoint *ssl_endpoint,
                                     TAO_GIOP_Invocation *invocation
-                                    TAO_ENV_ARG_DECL)
+                                    ACE_ENV_ARG_DECL)
 {
   const SSLIOP::SSL &ssl_component = ssl_endpoint->ssl_component ();
 
@@ -329,7 +329,7 @@ TAO_SSLIOP_Connector::iiop_connect (TAO_SSLIOP_Endpoint *ssl_endpoint,
   // Note that the IIOP-only transport descriptor is used!
   return this->TAO_IIOP_SSL_Connector::connect (invocation,
                                                 &iiop_desc
-                                                TAO_ENV_ARG_PARAMETER);
+                                                ACE_ENV_ARG_PARAMETER);
 }
 
 int
@@ -338,7 +338,7 @@ TAO_SSLIOP_Connector::ssliop_connect (TAO_SSLIOP_Endpoint *ssl_endpoint,
                                       const Security::EstablishTrust &trust,
                                       TAO_GIOP_Invocation *invocation,
                                       TAO_Transport_Descriptor_Interface *desc
-                                      TAO_ENV_ARG_DECL)
+                                      ACE_ENV_ARG_DECL)
 {
   TAO_Transport *&transport = invocation->transport ();
   ACE_Time_Value *max_wait_time = invocation->max_wait_time ();
@@ -486,7 +486,7 @@ TAO_SSLIOP_Connector::ssliop_connect (TAO_SSLIOP_Endpoint *ssl_endpoint,
       TAO_SSLIOP_Credentials_var credentials =
         this->retrieve_credentials (invocation->stub (),
                                     svc_handler->peer ().ssl ()
-                                    TAO_ENV_ARG_PARAMETER);
+                                    ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
 
       svc_handler = safe_handler.release ();
@@ -569,18 +569,18 @@ TAO_SSLIOP_Connector::ssliop_connect (TAO_SSLIOP_Endpoint *ssl_endpoint,
 TAO_SSLIOP_Credentials *
 TAO_SSLIOP_Connector::retrieve_credentials (TAO_Stub *stub,
                                             SSL *ssl
-                                            TAO_ENV_ARG_DECL)
+                                            ACE_ENV_ARG_DECL)
 {
   // Check if the user overrode the default invocation credentials.
   CORBA::Policy_var policy =
     stub->get_policy (Security::SecInvocationCredentialsPolicy
-                      TAO_ENV_ARG_PARAMETER);
+                      ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (TAO_SSLIOP_Credentials::_nil ());
 
   SecurityLevel2::InvocationCredentialsPolicy_var creds_policy =
     SecurityLevel2::InvocationCredentialsPolicy::_narrow (
       policy.in ()
-      TAO_ENV_ARG_PARAMETER);
+      ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (TAO_SSLIOP_Credentials::_nil ());
 
   TAO_SSLIOP_Credentials_var ssliop_credentials;
@@ -590,7 +590,7 @@ TAO_SSLIOP_Connector::retrieve_credentials (TAO_Stub *stub,
   if (!CORBA::is_nil (creds_policy.in ()))
     {
       SecurityLevel2::CredentialsList_var creds_list =
-        creds_policy->creds (TAO_ENV_SINGLE_ARG_PARAMETER);
+        creds_policy->creds (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (TAO_SSLIOP_Credentials::_nil ());
 
       if (creds_list->length () > 0)
@@ -603,7 +603,7 @@ TAO_SSLIOP_Connector::retrieve_credentials (TAO_Stub *stub,
 
           ssliop_credentials =
             TAO_SSLIOP_Credentials::_narrow (credentials
-                                             TAO_ENV_ARG_PARAMETER);
+                                             ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (TAO_SSLIOP_Credentials::_nil ());
 
           if (!CORBA::is_nil (ssliop_credentials.in ()))

@@ -48,7 +48,7 @@ Test_Exception::opname (void) const
 
 void
 Test_Exception::dii_req_invoke (CORBA::Request_ptr req
-                                TAO_ENV_ARG_DECL)
+                                ACE_ENV_ARG_DECL)
 {
   ACE_TRY
     {
@@ -61,18 +61,18 @@ Test_Exception::dii_req_invoke (CORBA::Request_ptr req
 
       req->exceptions ()->add (CORBA::TypeCode::_duplicate (Param_Test::_tc_Ooops));
 
-      req->invoke (TAO_ENV_SINGLE_ARG_PARAMETER);
+      req->invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       req->return_value () >>= this->ret_;
 
       CORBA::NamedValue_ptr o2 =
-        req->arguments ()->item (1 TAO_ENV_ARG_PARAMETER);
+        req->arguments ()->item (1 ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
       *o2->value () >>= this->inout_;
 
       CORBA::NamedValue_ptr o3 =
-        req->arguments ()->item (2 TAO_ENV_ARG_PARAMETER);
+        req->arguments ()->item (2 ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
       *o3->value () >>= this->out_;
     }
@@ -132,7 +132,7 @@ Test_Exception::dii_req_invoke (CORBA::Request_ptr req
 
 int
 Test_Exception::init_parameters (Param_Test_ptr
-                                 TAO_ENV_ARG_DECL_NOT_USED)
+                                 ACE_ENV_ARG_DECL_NOT_USED)
 {
   Generator *gen = GENERATOR::instance (); // value generator
 
@@ -152,7 +152,7 @@ Test_Exception::reset_parameters (void)
 
 int
 Test_Exception::run_sii_test (Param_Test_ptr objref
-                              TAO_ENV_ARG_DECL)
+                              ACE_ENV_ARG_DECL)
 {
   ACE_TRY
     {
@@ -160,7 +160,7 @@ Test_Exception::run_sii_test (Param_Test_ptr objref
       this->ret_ = objref->test_exception (this->in_,
                                            this->inout_,
                                            this->out_
-                                           TAO_ENV_ARG_PARAMETER);
+                                           ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCH (Param_Test::Ooops, ex)

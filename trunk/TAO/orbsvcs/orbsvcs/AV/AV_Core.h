@@ -86,7 +86,7 @@ public:
 
   int init (CORBA::ORB_ptr orb,
             PortableServer::POA_ptr poa
-            TAO_ENV_ARG_DECL);
+            ACE_ENV_ARG_DECL);
   int run (void);
   int stop_run (void);
   int init_forward_flows (TAO_Base_StreamEndPoint *endpoint,

@@ -40,9 +40,9 @@ public:
 
   void connect (RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin,
                 const RtecEventChannelAdmin::ConsumerQOS &qos
-                TAO_ENV_ARG_DECL);
-  void disconnect (TAO_ENV_SINGLE_ARG_DECL);
-  void deactivate (TAO_ENV_SINGLE_ARG_DECL);
+                ACE_ENV_ARG_DECL);
+  void disconnect (ACE_ENV_SINGLE_ARG_DECL);
+  void deactivate (ACE_ENV_SINGLE_ARG_DECL);
   // Simple connect/disconnect methods..
 
   void dump_results (int expected_count, int tolerance);
@@ -52,9 +52,9 @@ public:
   // = The RtecEventComm::PushConsumer methods
 
   virtual void push (const RtecEventComm::EventSet& events
-                     TAO_ENV_ARG_DECL)
+                     ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void disconnect_push_consumer (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+  virtual void disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // The skeleton methods.
 

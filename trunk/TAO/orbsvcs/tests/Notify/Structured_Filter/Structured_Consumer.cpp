@@ -71,17 +71,17 @@ Consumer_Client::parse_args (int argc, char *argv[])
 static void
 create_consumers (CosNotifyChannelAdmin::ConsumerAdmin_ptr admin,
                   Notify_Test_Client* client
-                  TAO_ENV_ARG_DECL)
+                  ACE_ENV_ARG_DECL)
 {
   Notify_Push_Consumer* consumer = 0;
   ACE_NEW_THROW_EX (consumer,
                     Notify_Push_Consumer ("Consumer"),
                     CORBA::NO_MEMORY ());
 
-  consumer->init (client->root_poa () TAO_ENV_ARG_PARAMETER);
+  consumer->init (client->root_poa () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  consumer->connect (admin TAO_ENV_ARG_PARAMETER);
+  consumer->connect (admin ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
@@ -97,7 +97,7 @@ int main (int argc, char * argv[])
   {
     Consumer_Client client;
 
-    status = client.init (argc, argv TAO_ENV_ARG_PARAMETER);
+    status = client.init (argc, argv ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
     if (status == 0)
@@ -105,14 +105,14 @@ int main (int argc, char * argv[])
         CosNotifyChannelAdmin::EventChannel_var ec =
           client.create_event_channel ("NotifyEventChannelFactory",
                                        1
-                                       TAO_ENV_ARG_PARAMETER);
+                                       ACE_ENV_ARG_PARAMETER);
 
 
         CosNotifyChannelAdmin::AdminID adminid = 0;
         CosNotifyChannelAdmin::ConsumerAdmin_var consumer_admin =
           ec->new_for_consumers (CosNotifyChannelAdmin::AND_OP,
                                  adminid
-                                 TAO_ENV_ARG_PARAMETER);
+                                 ACE_ENV_ARG_PARAMETER);
 
         ACE_TRY_CHECK;
 
@@ -121,11 +121,11 @@ int main (int argc, char * argv[])
         if (filter)
           {
             CosNotifyFilter::FilterFactory_var ffact =
-              ec->default_filter_factory (TAO_ENV_SINGLE_ARG_PARAMETER);
+              ec->default_filter_factory (ACE_ENV_SINGLE_ARG_PARAMETER);
             ACE_TRY_CHECK;
 
             CosNotifyFilter::Filter_var filter =
-              ffact->create_filter (GRAMMAR TAO_ENV_ARG_PARAMETER);
+              ffact->create_filter (GRAMMAR ACE_ENV_ARG_PARAMETER);
             ACE_TRY_CHECK;
 
             if (CORBA::is_nil (filter.in ()))
@@ -141,7 +141,7 @@ int main (int argc, char * argv[])
             constraint_list[0].event_types.length (0);
             constraint_list[0].constraint_expr = CORBA::string_dup ("Number == 100");
 
-            filter->add_constraints (constraint_list TAO_ENV_ARG_PARAMETER);
+            filter->add_constraints (constraint_list ACE_ENV_ARG_PARAMETER);
             ACE_TRY_CHECK;
 
             // apply filter
@@ -158,7 +158,7 @@ int main (int argc, char * argv[])
         added[0].domain_name = CORBA::string_dup ("*");
         added[0].type_name = CORBA::string_dup ("*");
 
-        consumer_admin->subscription_change (added, removed TAO_ENV_ARG_PARAMETER);
+        consumer_admin->subscription_change (added, removed ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
 
         // End Filter Section
@@ -170,7 +170,7 @@ int main (int argc, char * argv[])
 
         CosNaming::NamingContext_ptr naming_context = client.naming_context ();
         CORBA::Object_var ctrl_obj = naming_context->resolve (ctrl_name
-                                                              TAO_ENV_ARG_PARAMETER);
+                                                              ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
 
         if (CORBA::is_nil (ctrl_obj.in ()))
@@ -186,7 +186,7 @@ int main (int argc, char * argv[])
         if (!CORBA::is_nil (consumer_admin.in ()))
           {
             for ( int ctr = 0; ctr < num_consumers; ctr ++)
-              create_consumers (consumer_admin.in (), &client TAO_ENV_ARG_PARAMETER);
+              create_consumers (consumer_admin.in (), &client ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
 
             // Start Supplier

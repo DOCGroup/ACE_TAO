@@ -9,16 +9,16 @@ main (int argc, char *argv [])
 {
   Basic basic;
 
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      basic.init (argc, argv TAO_ENV_ARG_PARAMETER);
+      basic.init (argc, argv ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      basic.run (TAO_ENV_SINGLE_ARG_PARAMETER);
+      basic.run (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      basic.shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
+      basic.shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCH (CORBA::UserException, ue)
@@ -51,28 +51,28 @@ Basic::~Basic (void)
 
 void
 Basic::init (int argc, char *argv[]
-                   TAO_ENV_ARG_DECL)
+                   ACE_ENV_ARG_DECL)
 {
-  this->init_ORB (argc, argv TAO_ENV_ARG_PARAMETER);
+  this->init_ORB (argc, argv ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  this->init_CosEC (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->init_CosEC (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
 Basic::init_ORB  (int argc, char *argv []
-                        TAO_ENV_ARG_DECL)
+                        ACE_ENV_ARG_DECL)
 {
   this->orb_ = CORBA::ORB_init (argc,
                                 argv,
                                 ""
-                                TAO_ENV_ARG_PARAMETER);
+                                ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   CORBA::Object_var poa_object  =
     this->orb_->resolve_initial_references("RootPOA"
-                                           TAO_ENV_ARG_PARAMETER);
+                                           ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (CORBA::is_nil (poa_object.in ()))
@@ -81,19 +81,19 @@ Basic::init_ORB  (int argc, char *argv []
 
   root_poa_ =
     PortableServer::POA::_narrow (poa_object.in ()
-                                  TAO_ENV_ARG_PARAMETER);
+                                  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   PortableServer::POAManager_var poa_manager =
-    root_poa_->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
+    root_poa_->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  poa_manager->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
+  poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
-Basic::init_CosEC (TAO_ENV_SINGLE_ARG_DECL)
+Basic::init_CosEC (ACE_ENV_SINGLE_ARG_DECL)
 {
   CosEC_ServantBase *ec = 0;
 
@@ -107,10 +107,10 @@ Basic::init_CosEC (TAO_ENV_SINGLE_ARG_DECL)
   ec->init (this->root_poa_.in(),
             this->root_poa_.in(),
             0,0,0
-            TAO_ENV_ARG_PARAMETER);
+            ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  int retval = ec->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
+  int retval = ec->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   if (retval == -1)
@@ -118,17 +118,17 @@ Basic::init_CosEC (TAO_ENV_SINGLE_ARG_DECL)
   // @@ look for more descriptive exception to throw here
 
   CORBA::Object_var obj =
-    this->root_poa_->servant_to_reference (ec TAO_ENV_ARG_PARAMETER);
+    this->root_poa_->servant_to_reference (ec ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   this->cos_ec_ =
     CosEventChannelAdmin::EventChannel::_narrow (obj._retn ()
-                                                 TAO_ENV_ARG_PARAMETER);
+                                                 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
-Basic::run (TAO_ENV_SINGLE_ARG_DECL)
+Basic::run (ACE_ENV_SINGLE_ARG_DECL)
 {
   // Create an Any type to pass to the Cos EC.
   CORBA::Any any;
@@ -136,21 +136,21 @@ Basic::run (TAO_ENV_SINGLE_ARG_DECL)
 
   this->consumer_.open (this->cos_ec_.in (),
                         this->orb_.in ()
-                        TAO_ENV_ARG_PARAMETER);
+                        ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  this->consumer_.connect (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->consumer_.connect (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   this->supplier_.open (this->cos_ec_.in ()
-                        TAO_ENV_ARG_PARAMETER);
+                        ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  this->supplier_.connect (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->supplier_.connect (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   this->supplier_.send_event (any
-                              TAO_ENV_ARG_PARAMETER);
+                              ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // this->orb_->run ();
@@ -163,14 +163,14 @@ Basic::run (TAO_ENV_SINGLE_ARG_DECL)
 }
 
 void
-Basic::shutdown (TAO_ENV_SINGLE_ARG_DECL)
+Basic::shutdown (ACE_ENV_SINGLE_ARG_DECL)
 {
-  this->supplier_.close (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->supplier_.close (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  this->consumer_.close (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->consumer_.close (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  this->cos_ec_->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->cos_ec_->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 }

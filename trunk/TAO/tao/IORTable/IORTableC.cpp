@@ -81,7 +81,7 @@ void IORTable::AlreadyBound::_raise ()
 
 void IORTable::AlreadyBound::_tao_encode (
     TAO_OutputCDR &
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   ) const
 {
   ACE_THROW (CORBA::MARSHAL ());
@@ -89,7 +89,7 @@ void IORTable::AlreadyBound::_tao_encode (
 
 void IORTable::AlreadyBound::_tao_decode (
     TAO_InputCDR &
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
   ACE_THROW (CORBA::MARSHAL ());
@@ -155,7 +155,7 @@ void IORTable::NotFound::_raise ()
 
 void IORTable::NotFound::_tao_encode (
     TAO_OutputCDR &
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   ) const
 {
   ACE_THROW (CORBA::MARSHAL ());
@@ -163,7 +163,7 @@ void IORTable::NotFound::_tao_encode (
 
 void IORTable::NotFound::_tao_decode (
     TAO_InputCDR &
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
   ACE_THROW (CORBA::MARSHAL ());
@@ -288,10 +288,10 @@ IORTable::Table_var::tao_nil (void)
 ::IORTable::Table_ptr
 IORTable::Table_var::tao_narrow (
     CORBA::Object *p
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return ::IORTable::Table::_narrow (p TAO_ENV_ARG_PARAMETER);
+  return ::IORTable::Table::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -373,15 +373,15 @@ IORTable::Table::~Table (void)
 
 IORTable::Table_ptr IORTable::Table::_narrow (
     CORBA::Object_ptr obj
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return Table::_unchecked_narrow (obj TAO_ENV_ARG_PARAMETER);
+  return Table::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
 }
 
 IORTable::Table_ptr IORTable::Table::_unchecked_narrow (
     CORBA::Object_ptr obj
-    TAO_ENV_ARG_DECL_NOT_USED
+    ACE_ENV_ARG_DECL_NOT_USED
   )
 {
   if (CORBA::is_nil (obj))
@@ -541,10 +541,10 @@ IORTable::Locator_var::tao_nil (void)
 ::IORTable::Locator_ptr
 IORTable::Locator_var::tao_narrow (
     CORBA::Object *p
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return ::IORTable::Locator::_narrow (p TAO_ENV_ARG_PARAMETER);
+  return ::IORTable::Locator::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -626,15 +626,15 @@ IORTable::Locator::~Locator (void)
 
 IORTable::Locator_ptr IORTable::Locator::_narrow (
     CORBA::Object_ptr obj
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return Locator::_unchecked_narrow (obj TAO_ENV_ARG_PARAMETER);
+  return Locator::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
 }
 
 IORTable::Locator_ptr IORTable::Locator::_unchecked_narrow (
     CORBA::Object_ptr obj
-    TAO_ENV_ARG_DECL_NOT_USED
+    ACE_ENV_ARG_DECL_NOT_USED
   )
 {
   if (CORBA::is_nil (obj))

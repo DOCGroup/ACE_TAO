@@ -32,7 +32,7 @@ simple_i::~simple_i (void)
   }
 
 void simple_i::test (
-    TAO_ENV_SINGLE_ARG_DECL
+    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException

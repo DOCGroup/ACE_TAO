@@ -32,15 +32,15 @@ TAO_CEC_Reactive_Dispatching::shutdown (void)
 void
 TAO_CEC_Reactive_Dispatching::push (TAO_CEC_ProxyPushSupplier* proxy,
                                     const CORBA::Any& event
-                                    TAO_ENV_ARG_DECL)
+                                    ACE_ENV_ARG_DECL)
 {
-  proxy->reactive_push_to_consumer (event TAO_ENV_ARG_PARAMETER);
+  proxy->reactive_push_to_consumer (event ACE_ENV_ARG_PARAMETER);
 }
 
 void
 TAO_CEC_Reactive_Dispatching::push_nocopy (TAO_CEC_ProxyPushSupplier* proxy,
                                            CORBA::Any& event
-                                           TAO_ENV_ARG_DECL)
+                                           ACE_ENV_ARG_DECL)
 {
-  proxy->reactive_push_to_consumer (event TAO_ENV_ARG_PARAMETER);
+  proxy->reactive_push_to_consumer (event ACE_ENV_ARG_PARAMETER);
 }

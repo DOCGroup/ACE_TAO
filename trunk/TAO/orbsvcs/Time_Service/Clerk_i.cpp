@@ -53,7 +53,7 @@ Clerk_i::read_ior (const char *filename)
 
   int result = 0;
 
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       for (char *str = ACE_OS::strtok (data, "\n");
@@ -66,7 +66,7 @@ Clerk_i::read_ior (const char *filename)
 
           CORBA::Object_var objref =
             this->orb_->string_to_object (str
-                                          TAO_ENV_ARG_PARAMETER);
+                                          ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           // Return if the server reference is nil.
@@ -80,7 +80,7 @@ Clerk_i::read_ior (const char *filename)
 
           CosTime::TimeService_ptr server =
             CosTime::TimeService::_narrow (objref.in ()
-                                           TAO_ENV_ARG_PARAMETER);
+                                           ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           this->insert_server (server);
@@ -170,7 +170,7 @@ Clerk_i::parse_args (void)
 int
 Clerk_i::get_first_IOR (void)
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       char host_name[MAXHOSTNAMELEN];
@@ -188,13 +188,13 @@ Clerk_i::get_first_IOR (void)
       // Resolve name.
       CORBA::Object_var temp_object =
         this->my_name_server_->resolve (server_context_name
-                                        TAO_ENV_ARG_PARAMETER);
+                                        ACE_ENV_ARG_PARAMETER);
 
       ACE_TRY_CHECK;
 
       CosNaming::NamingContext_var server_context =
         CosNaming::NamingContext::_narrow (temp_object.in ()
-                                           TAO_ENV_ARG_PARAMETER);
+                                           ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (server_context.in ()))
@@ -213,12 +213,12 @@ Clerk_i::get_first_IOR (void)
 
       temp_object =
         server_context->resolve (server_name
-                                 TAO_ENV_ARG_PARAMETER);
+                                 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CosTime::TimeService_var obj =
         CosTime::TimeService::_narrow (temp_object.in ()
-                                       TAO_ENV_ARG_PARAMETER);
+                                       ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (obj.in ()))
@@ -257,7 +257,7 @@ int
 Clerk_i::next_n_IORs (CosNaming::BindingIterator_var iter,
                       CosNaming::NamingContext_var server_context)
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       CosNaming::Binding_var binding;
@@ -265,7 +265,7 @@ Clerk_i::next_n_IORs (CosNaming::BindingIterator_var iter,
       if (!CORBA::is_nil (iter.in ()))
         {
           while (iter->next_one (binding.out ()
-                                 TAO_ENV_ARG_PARAMETER))
+                                 ACE_ENV_ARG_PARAMETER))
             {
               ACE_TRY_CHECK;
 
@@ -279,12 +279,12 @@ Clerk_i::next_n_IORs (CosNaming::BindingIterator_var iter,
 
               CORBA::Object_var temp_object =
                 server_context->resolve (server_name
-                                         TAO_ENV_ARG_PARAMETER);
+                                         ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
 
               CosTime::TimeService_ptr server =
                 CosTime::TimeService::_narrow (temp_object.in ()
-                                               TAO_ENV_ARG_PARAMETER);
+                                               ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
 
               this->insert_server (server);
@@ -311,7 +311,7 @@ Clerk_i::next_n_IORs (CosNaming::BindingIterator_var iter,
 int
 Clerk_i::init_naming_service (void)
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
 
   ACE_TRY
     {
@@ -319,7 +319,7 @@ Clerk_i::init_naming_service (void)
       this->orb_manager_.init_child_poa (this->argc_,
                                          this->argv_,
                                          "my_child_poa"
-                                         TAO_ENV_ARG_PARAMETER);
+                                         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POA_ptr child_poa
@@ -350,7 +350,7 @@ Clerk_i::init_naming_service (void)
 int
 Clerk_i::create_clerk (void)
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
 
@@ -369,7 +369,7 @@ Clerk_i::create_clerk (void)
       // Convert the clerk reference to a string.
       CORBA::String_var objref_clerk =
         this->orb_->object_to_string (this->time_service_clerk_.in ()
-                                      TAO_ENV_ARG_PARAMETER);
+                                      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Print the clerk IOR on the console.
@@ -405,11 +405,11 @@ Clerk_i::create_clerk (void)
 int
 Clerk_i::if_first_clerk (CosNaming::Name clerk_context_name)
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       this->my_name_server_->resolve
-        (clerk_context_name TAO_ENV_ARG_PARAMETER);
+        (clerk_context_name ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCH (CORBA::UserException, userex)
@@ -427,7 +427,7 @@ Clerk_i::if_first_clerk (CosNaming::Name clerk_context_name)
 int
 Clerk_i::register_clerk (void)
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       // Bind the Clerk in its appropriate Context.
@@ -440,12 +440,12 @@ Clerk_i::register_clerk (void)
 
       if (if_first_clerk (clerk_context_name))
         {
-          clerk_context = this->my_name_server_->new_context (TAO_ENV_SINGLE_ARG_PARAMETER);
+          clerk_context = this->my_name_server_->new_context (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           this->my_name_server_->rebind_context (clerk_context_name,
                                                  clerk_context.in ()
-                                                 TAO_ENV_ARG_PARAMETER);
+                                                 ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
 
@@ -467,7 +467,7 @@ Clerk_i::register_clerk (void)
 
       this->my_name_server_->rebind (clerk_name,
                                      this->time_service_clerk_.in ()
-                                     TAO_ENV_ARG_PARAMETER);
+                                     ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
     }
@@ -486,7 +486,7 @@ Clerk_i::register_clerk (void)
 int
 Clerk_i::init (int argc,
                char *argv[]
-               TAO_ENV_ARG_DECL)
+               ACE_ENV_ARG_DECL)
 {
   ACE_TRY
     {
@@ -503,14 +503,14 @@ Clerk_i::init (int argc,
 
       this->orb_manager_.init (argc,
                                argv
-                               TAO_ENV_ARG_PARAMETER);
+                               ACE_ENV_ARG_PARAMETER);
 
       ACE_TRY_CHECK;
 
       if (this->orb_manager_.init_child_poa (argc,
                                              argv,
                                              "child_poa"
-                                             TAO_ENV_ARG_PARAMETER) == -1)
+                                             ACE_ENV_ARG_PARAMETER) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "%p\n",
                            "init_child_poa"),
@@ -570,12 +570,12 @@ Clerk_i::init (int argc,
 }
 
 int
-Clerk_i::run (TAO_ENV_SINGLE_ARG_DECL)
+Clerk_i::run (ACE_ENV_SINGLE_ARG_DECL)
 {
   ACE_TRY
     {
       // Run the main event loop for the ORB.
-      int r = this->orb_manager_.run (TAO_ENV_SINGLE_ARG_PARAMETER);
+      int r = this->orb_manager_.run (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (r == -1)

@@ -12,17 +12,17 @@
 static void run_test (int iterations,
                       int timeout,
                       Hash_Replica_ptr hasher
-                      TAO_ENV_ARG_DECL);
+                      ACE_ENV_ARG_DECL);
 
 int
 main (int argc, char *argv[])
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       // Initialize ORB.
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" TAO_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       const char *ior = "file://test.ior";
@@ -61,12 +61,12 @@ main (int argc, char *argv[])
           }
 
       CORBA::Object_var obj =
-        orb->string_to_object (ior TAO_ENV_ARG_PARAMETER);
+        orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       Hash_Replica_var hasher =
         Hash_Replica::_unchecked_narrow (obj.in ()
-                                         TAO_ENV_ARG_PARAMETER);
+                                         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (hasher.in ()))
@@ -74,10 +74,10 @@ main (int argc, char *argv[])
                            ACE_TEXT ("Invalid replica IOR.\n")),
                           -1);
 
-      run_test (iterations, timeout, hasher.in () TAO_ENV_ARG_PARAMETER);
+      run_test (iterations, timeout, hasher.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      orb->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
+      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -93,7 +93,7 @@ void
 run_test (int iterations,
           int timeout,
           Hash_Replica_ptr hasher
-          TAO_ENV_ARG_DECL)
+          ACE_ENV_ARG_DECL)
 {
   ACE_Time_Value tv (0, timeout * 1000);
   ACE_Throughput_Stats stats;
@@ -103,7 +103,7 @@ run_test (int iterations,
     {
       ACE_UINT64 call_start = ACE_OS::gethrtime ();
 
-      hasher->do_hash ("This is a silly test" TAO_ENV_ARG_PARAMETER);
+      hasher->do_hash ("This is a silly test" ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
       ACE_UINT64 end = ACE_OS::gethrtime ();
 

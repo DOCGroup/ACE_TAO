@@ -46,22 +46,22 @@ Client_Task::too_big_difference_calls (void) const
 int
 Client_Task::svc (void)
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
 
   int successful_calls = 0;
   int timed_out_calls = 0;
 
   ACE_TRY
     {
-      this->validate_connection (TAO_ENV_SINGLE_ARG_PARAMETER);
+      this->validate_connection (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Object_var object =
         this->orb_->resolve_initial_references ("PolicyCurrent"
-                                                TAO_ENV_ARG_PARAMETER);
+                                                ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       CORBA::PolicyCurrent_var policy_current =
-        CORBA::PolicyCurrent::_narrow (object.in () TAO_ENV_ARG_PARAMETER);
+        CORBA::PolicyCurrent::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       TimeBase::TimeT timeout_period = 10 * this->timeout_;
@@ -74,17 +74,17 @@ Client_Task::svc (void)
       policy_list[0] =
         this->orb_->create_policy (Messaging::RELATIVE_RT_TIMEOUT_POLICY_TYPE,
                                    timeout_as_any
-                                   TAO_ENV_ARG_PARAMETER);
+                                   ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       policy_current->set_policy_overrides (policy_list,
                                             CORBA::ADD_OVERRIDE
-                                            TAO_ENV_ARG_PARAMETER);
+                                            ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       for (int i = 0; i != this->iterations_; ++i)
         {
-          int retval = this->one_iteration (TAO_ENV_SINGLE_ARG_PARAMETER);
+          int retval = this->one_iteration (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           if (retval == 1)
@@ -118,13 +118,13 @@ Client_Task::svc (void)
 }
 
 void
-Client_Task::validate_connection (TAO_ENV_SINGLE_ARG_DECL)
+Client_Task::validate_connection (ACE_ENV_SINGLE_ARG_DECL)
 {
   ACE_TRY
     {
       for (int i = 0; i != 100; ++i)
         {
-          (void) this->sleep_service_->go_to_sleep (0 TAO_ENV_ARG_PARAMETER);
+          (void) this->sleep_service_->go_to_sleep (0 ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
     }
@@ -137,14 +137,14 @@ Client_Task::validate_connection (TAO_ENV_SINGLE_ARG_DECL)
 }
 
 int
-Client_Task::one_iteration (TAO_ENV_SINGLE_ARG_DECL)
+Client_Task::one_iteration (ACE_ENV_SINGLE_ARG_DECL)
 {
   ACE_TRY
     {
       ACE_Time_Value start = ACE_OS::gettimeofday ();
 
       this->sleep_service_->go_to_sleep (this->sleep_time_
-                                         TAO_ENV_ARG_PARAMETER);
+                                         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_Time_Value end = ACE_OS::gettimeofday ();

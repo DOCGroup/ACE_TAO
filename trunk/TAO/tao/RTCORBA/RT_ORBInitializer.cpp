@@ -44,7 +44,7 @@ TAO_RT_ORBInitializer::TAO_RT_ORBInitializer (int priority_mapping_type,
 void
 TAO_RT_ORBInitializer::pre_init (
     PortableInterceptor::ORBInitInfo_ptr info
-    TAO_ENV_ARG_DECL)
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   //
@@ -121,7 +121,7 @@ TAO_RT_ORBInitializer::pre_init (
 
   info->register_initial_reference ("PriorityMappingManager",
                                     manager
-                                    TAO_ENV_ARG_PARAMETER);
+                                    ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // @@ This is busted.  TAO_ORBInitInfo should do proper reference
@@ -129,7 +129,7 @@ TAO_RT_ORBInitializer::pre_init (
   // Narrow to a TAO_ORBInitInfo object to get access to the
   // orb_core() TAO extension.
   TAO_ORBInitInfo_var tao_info = TAO_ORBInitInfo::_narrow (info
-                                                           TAO_ENV_ARG_PARAMETER);
+                                                           ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (CORBA::is_nil (tao_info.in ()))
@@ -158,7 +158,7 @@ TAO_RT_ORBInitializer::pre_init (
 
   info->register_initial_reference (TAO_OBJID_RTORB,
                                     rt_orb
-                                    TAO_ENV_ARG_PARAMETER);
+                                    ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // Create the RT_Current.
@@ -175,7 +175,7 @@ TAO_RT_ORBInitializer::pre_init (
 
   info->register_initial_reference (TAO_OBJID_RTCURRENT,
                                     current
-                                    TAO_ENV_ARG_PARAMETER);
+                                    ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   tao_info->orb_core ()->orb_params ()->scope_policy (this->scope_policy_);
@@ -185,11 +185,11 @@ TAO_RT_ORBInitializer::pre_init (
 void
 TAO_RT_ORBInitializer::post_init (
     PortableInterceptor::ORBInitInfo_ptr info
-    TAO_ENV_ARG_DECL)
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->register_policy_factories (info
-                                   TAO_ENV_ARG_PARAMETER);
+                                   ACE_ENV_ARG_PARAMETER);
 
   ACE_CHECK;
 }
@@ -197,7 +197,7 @@ TAO_RT_ORBInitializer::post_init (
 void
 TAO_RT_ORBInitializer::register_policy_factories (
   PortableInterceptor::ORBInitInfo_ptr info
-  TAO_ENV_ARG_DECL)
+  ACE_ENV_ARG_DECL)
 {
   // Register the RTCORBA policy factories.
 
@@ -213,18 +213,18 @@ TAO_RT_ORBInitializer::register_policy_factories (
   CORBA::PolicyType type = RTCORBA::PRIORITY_MODEL_POLICY_TYPE;
   info->register_policy_factory (type,
                                  policy_factory
-                                 TAO_ENV_ARG_PARAMETER);
+                                 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   type = RTCORBA::PRIORITY_BANDED_CONNECTION_POLICY_TYPE;
   info->register_policy_factory (type,
                                  policy_factory
-                                 TAO_ENV_ARG_PARAMETER);
+                                 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   type = RTCORBA::CLIENT_PROTOCOL_POLICY_TYPE;
   info->register_policy_factory (type,
                                  policy_factory
-                                 TAO_ENV_ARG_PARAMETER);
+                                 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }

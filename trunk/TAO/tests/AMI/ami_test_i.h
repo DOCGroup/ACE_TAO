@@ -38,18 +38,18 @@ public:
   CORBA::Long foo (CORBA::Long_out out_l,
                    CORBA::Long in_l,
                    const char* in_str
-                   TAO_ENV_ARG_DECL)
+                   ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      A::DidTheRightThing));
 
-  void shutdown (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+  void shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  CORBA::Long yadda (TAO_ENV_SINGLE_ARG_DECL)
+  CORBA::Long yadda (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   void yadda (CORBA::Long yadda
-              TAO_ENV_ARG_DECL)
+              ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

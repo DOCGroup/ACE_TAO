@@ -18,42 +18,42 @@ MyFooServant::MyFooServant (CORBA::ORB_ptr orb,
 }
 
 CORBA::Long
-MyFooServant::doit (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+MyFooServant::doit (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->value_++;
 }
 
 void
-MyFooServant::forward (TAO_ENV_SINGLE_ARG_DECL)
+MyFooServant::forward (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Foo::Cannot_Forward))
 {
-  this->activator_.forward_requests (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->activator_.forward_requests (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   PortableServer::ObjectId_var id =
     this->poa_->servant_to_id (this
-                               TAO_ENV_ARG_PARAMETER);
+                               ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   this->poa_->deactivate_object (id.in ()
-                                 TAO_ENV_ARG_PARAMETER);
+                                 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 
 void
-MyFooServant::shutdown (TAO_ENV_SINGLE_ARG_DECL)
+MyFooServant::shutdown (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0
-                        TAO_ENV_ARG_PARAMETER);
+                        ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 PortableServer::POA_ptr
-MyFooServant::_default_POA (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+MyFooServant::_default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }

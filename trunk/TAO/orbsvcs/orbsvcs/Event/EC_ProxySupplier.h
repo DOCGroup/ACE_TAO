@@ -62,10 +62,10 @@ public:
   virtual ~TAO_EC_ProxyPushSupplier (void);
 
   /// Activate in the POA
-  virtual RtecEventChannelAdmin::ProxyPushSupplier_ptr activate (TAO_ENV_SINGLE_ARG_DECL) ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual RtecEventChannelAdmin::ProxyPushSupplier_ptr activate (ACE_ENV_SINGLE_ARG_DECL) ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Deactivate from the POA
-  virtual void deactivate (TAO_ENV_SINGLE_ARG_DECL) ACE_THROW_SPEC (());
+  virtual void deactivate (ACE_ENV_SINGLE_ARG_DECL) ACE_THROW_SPEC (());
 
   /// Return 0 if no consumer is connected...
   CORBA::Boolean is_connected (void) const;
@@ -85,32 +85,32 @@ public:
   /// Concrete implementations can use this methods to keep track of
   /// the suppliers that publish its events.
   virtual void connected (TAO_EC_ProxyPushConsumer *consumer
-                          TAO_ENV_ARG_DECL);
+                          ACE_ENV_ARG_DECL);
   virtual void reconnected (TAO_EC_ProxyPushConsumer *consumer
-                            TAO_ENV_ARG_DECL);
+                            ACE_ENV_ARG_DECL);
   virtual void disconnected (TAO_EC_ProxyPushConsumer *consumer
-                            TAO_ENV_ARG_DECL);
+                            ACE_ENV_ARG_DECL);
 
   /// Usually implemented as no-ops, but some configurations may
   /// require this methods.
   virtual void connected (TAO_EC_ProxyPushSupplier *supplier
-                          TAO_ENV_ARG_DECL);
+                          ACE_ENV_ARG_DECL);
   virtual void reconnected (TAO_EC_ProxyPushSupplier *supplier
-                            TAO_ENV_ARG_DECL);
+                            ACE_ENV_ARG_DECL);
   virtual void disconnected (TAO_EC_ProxyPushSupplier *supplier
-                             TAO_ENV_ARG_DECL);
+                             ACE_ENV_ARG_DECL);
 
   /// The event channel is shutting down
-  virtual void shutdown (TAO_ENV_SINGLE_ARG_DECL);
+  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL);
 
   /// Pushes to the consumer, verifies that it is connected and that it
   /// is not suspended.
   void push_to_consumer (RtecEventComm::PushConsumer_ptr consumer,
                          const RtecEventComm::EventSet &event
-                         TAO_ENV_ARG_DECL);
+                         ACE_ENV_ARG_DECL);
   void reactive_push_to_consumer (RtecEventComm::PushConsumer_ptr consumer,
                                   const RtecEventComm::EventSet &event
-                                  TAO_ENV_ARG_DECL);
+                                  ACE_ENV_ARG_DECL);
 
   /**
    * Invoke the _non_existent() pseudo-operation on the consumer. If
@@ -118,21 +118,21 @@ public:
    * <disconnected> flag.
    */
   CORBA::Boolean consumer_non_existent (CORBA::Boolean_out disconnected
-                                        TAO_ENV_ARG_DECL);
+                                        ACE_ENV_ARG_DECL);
 
   // = The RtecEventChannelAdmin::ProxyPushSupplier methods...
   virtual void connect_push_consumer (
                 RtecEventComm::PushConsumer_ptr push_consumer,
                 const RtecEventChannelAdmin::ConsumerQOS &qos
-                TAO_ENV_ARG_DECL_NOT_USED)
+                ACE_ENV_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        RtecEventChannelAdmin::AlreadyConnected,
                        RtecEventChannelAdmin::TypeError));
-  virtual void disconnect_push_supplier (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+  virtual void disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void suspend_connection (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+  virtual void suspend_connection (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void resume_connection (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+  virtual void resume_connection (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Increment and decrement the reference count.
@@ -142,27 +142,27 @@ public:
   // = The TAO_EC_Filter methods, only push() is implemented...
   virtual int filter (const RtecEventComm::EventSet &event,
                       TAO_EC_QOS_Info& qos_info
-                      TAO_ENV_ARG_DECL);
+                      ACE_ENV_ARG_DECL);
   virtual int filter_nocopy (RtecEventComm::EventSet &event,
                              TAO_EC_QOS_Info &qos_info
-                             TAO_ENV_ARG_DECL);
+                             ACE_ENV_ARG_DECL);
   virtual void push (const RtecEventComm::EventSet &event,
                      TAO_EC_QOS_Info& qos_info
-                     TAO_ENV_ARG_DECL);
+                     ACE_ENV_ARG_DECL);
   virtual void push_nocopy (RtecEventComm::EventSet &event,
                             TAO_EC_QOS_Info &qos_info
-                            TAO_ENV_ARG_DECL);
+                            ACE_ENV_ARG_DECL);
   virtual void clear (void);
   virtual CORBA::ULong max_event_size (void) const;
   virtual int can_match (const RtecEventComm::EventHeader &header) const;
   virtual int add_dependencies (const RtecEventComm::EventHeader &header,
                                 const TAO_EC_QOS_Info &qos_info
-                                TAO_ENV_ARG_DECL);
+                                ACE_ENV_ARG_DECL);
 
   // = The Servant methods
-  virtual PortableServer::POA_ptr _default_POA (TAO_ENV_SINGLE_ARG_DECL);
-  virtual void _add_ref (TAO_ENV_SINGLE_ARG_DECL);
-  virtual void _remove_ref (TAO_ENV_SINGLE_ARG_DECL);
+  virtual PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void _add_ref (ACE_ENV_SINGLE_ARG_DECL);
+  virtual void _remove_ref (ACE_ENV_SINGLE_ARG_DECL);
 
 protected:
   /// Set the consumer, used by some implementations to change the

@@ -171,7 +171,7 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
 
   *os << intf->base_proxy_impl_name () << " &proxy = " << be_idt_nl
       << "this->the" << intf->base_proxy_broker_name ()
-      << "_->select_proxy (this TAO_ENV_ARG_PARAMETER);" << be_uidt_nl;
+      << "_->select_proxy (this ACE_ENV_ARG_PARAMETER);" << be_uidt_nl;
 
   if (!this->void_return_type (bt))
     {
@@ -249,7 +249,7 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
 
   if (!be_global->exception_support ())
     {
-      *os << " TAO_ENV_ARG_PARAMETER";
+      *os << " ACE_ENV_ARG_PARAMETER";
     }
 
   *os << be_uidt_nl << ");" << be_uidt << be_uidt_nl << "}\n\n";

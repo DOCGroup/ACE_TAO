@@ -46,22 +46,22 @@ main (int argc, char * argv[])
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, "" TAO_ENV_ARG_PARAMETER);
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Object_var poaObj =
-        orb->resolve_initial_references ("RootPOA" TAO_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POA_var rootPoa =
-        PortableServer::POA::_narrow (poaObj.in () TAO_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (poaObj.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POAManager_var poa_manager =
-        rootPoa->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
+        rootPoa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      poa_manager->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
+      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (::parse_args (argc, argv) != 0)
@@ -69,11 +69,11 @@ main (int argc, char * argv[])
 
       TX_Object_i implObject (orb.in ());
 
-      TX_Object_var txObject = implObject._this (TAO_ENV_SINGLE_ARG_PARAMETER);
+      TX_Object_var txObject = implObject._this (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::String_var ior =
-        orb->object_to_string (txObject.in () TAO_ENV_ARG_PARAMETER);
+        orb->object_to_string (txObject.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "Activated as <%s>\n", ior.in ()));
@@ -91,17 +91,17 @@ main (int argc, char * argv[])
           ACE_OS::fclose (output_file);
         }
 
-      orb->run (TAO_ENV_SINGLE_ARG_PARAMETER);
+      orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,
                   "\n"
                   "Event loop finished.\n"));
 
-      rootPoa->destroy (1, 1 TAO_ENV_ARG_PARAMETER);
+      rootPoa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      orb->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
+      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

@@ -27,12 +27,12 @@ TAO_SSLIOP_ORBInitializer::TAO_SSLIOP_ORBInitializer (Security::QOP qop)
 void
 TAO_SSLIOP_ORBInitializer::pre_init (
     PortableInterceptor::ORBInitInfo_ptr info
-    TAO_ENV_ARG_DECL)
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_ORBInitInfo_var tao_info =
     TAO_ORBInitInfo::_narrow (info
-                              TAO_ENV_ARG_PARAMETER);
+                              ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (CORBA::is_nil (tao_info.in ()))
@@ -63,14 +63,14 @@ TAO_SSLIOP_ORBInitializer::pre_init (
   // Register the SSLIOP::Current object reference with the ORB.
   info->register_initial_reference ("SSLIOPCurrent",
                                     ssliop_current.in ()
-                                    TAO_ENV_ARG_PARAMETER);
+                                    ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
 TAO_SSLIOP_ORBInitializer::post_init (
     PortableInterceptor::ORBInitInfo_ptr info
-    TAO_ENV_ARG_DECL)
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Note we do not store the SSLIOP::Current as a class member since
@@ -84,11 +84,11 @@ TAO_SSLIOP_ORBInitializer::post_init (
   // pre_init() method.
 
   CORBA::Object_var obj =
-    info->resolve_initial_references ("SSLIOPCurrent" TAO_ENV_ARG_PARAMETER);
+    info->resolve_initial_references ("SSLIOPCurrent" ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   SSLIOP::Current_var ssliop_current =
-    SSLIOP::Current::_narrow (obj.in () TAO_ENV_ARG_PARAMETER);
+    SSLIOP::Current::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (!CORBA::is_nil (ssliop_current.in ()))
@@ -99,7 +99,7 @@ TAO_SSLIOP_ORBInitializer::post_init (
 
       if (tao_current != 0)
         {
-          size_t slot = this->get_tss_slot_id (info TAO_ENV_ARG_PARAMETER);
+          size_t slot = this->get_tss_slot_id (info ACE_ENV_ARG_PARAMETER);
           ACE_CHECK;
 
           tao_current->tss_slot (slot);
@@ -128,27 +128,27 @@ TAO_SSLIOP_ORBInitializer::post_init (
   // Register the SSLIOP secure invocation server request interceptor
   // with the ORB.
   info->add_server_request_interceptor (si_interceptor.in ()
-                                        TAO_ENV_ARG_PARAMETER);
+                                        ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // Register the SSLIOP-specific vault with the
   // PrincipalAuthenticator.
   obj = info->resolve_initial_references ("SecurityManager"
-                                          TAO_ENV_ARG_PARAMETER);
+                                          ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   SecurityLevel2::SecurityManager_var manager =
     SecurityLevel2::SecurityManager::_narrow (obj.in ()
-                                              TAO_ENV_ARG_PARAMETER);
+                                              ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   SecurityLevel2::PrincipalAuthenticator_var pa =
-    manager->principal_authenticator (TAO_ENV_SINGLE_ARG_PARAMETER);
+    manager->principal_authenticator (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   TAO_PrincipalAuthenticator_var tao_pa =
     TAO_PrincipalAuthenticator::_narrow (pa.in ()
-                                         TAO_ENV_ARG_PARAMETER);
+                                         ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   SecurityReplaceable::Vault_ptr vault;
@@ -160,25 +160,25 @@ TAO_SSLIOP_ORBInitializer::post_init (
   SecurityReplaceable::Vault_var safe_vault = vault;       // :-)
 
   tao_pa->register_vault (vault
-                          TAO_ENV_ARG_PARAMETER);
+                          ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 size_t
 TAO_SSLIOP_ORBInitializer::get_tss_slot_id (
   PortableInterceptor::ORBInitInfo_ptr info
-  TAO_ENV_ARG_DECL)
+  ACE_ENV_ARG_DECL)
 {
   // Obtain the Security Service TSS slot ID from the SecurityCurrent
   // object.
   CORBA::Object_var obj =
     info->resolve_initial_references ("SecurityCurrent"
-                                      TAO_ENV_ARG_PARAMETER);
+                                      ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   SecurityLevel2::Current_var current =
     SecurityLevel2::Current::_narrow (obj.in ()
-                                      TAO_ENV_ARG_PARAMETER);
+                                      ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   TAO_Security_Current *security_current =

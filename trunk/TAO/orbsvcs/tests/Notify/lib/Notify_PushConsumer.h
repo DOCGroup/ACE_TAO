@@ -51,21 +51,21 @@ class TAO_NOTIFY_TEST_Export TAO_Notify_PushConsumer : public POA_CosNotifyComm:
   TAO_Notify_PushConsumer (void);
   // Constructor.
 
-  void init (PortableServer::POA_ptr poa TAO_ENV_ARG_DECL);
+  void init (PortableServer::POA_ptr poa ACE_ENV_ARG_DECL);
   // Init
 
-  void connect (CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin TAO_ENV_ARG_DECL);
+  void connect (CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin ACE_ENV_ARG_DECL);
   // Activates this object with the <default_POA_>
   // Creates a new proxy supplier and connects to it.
 
-  void disconnect (TAO_ENV_SINGLE_ARG_DECL);
+  void disconnect (ACE_ENV_SINGLE_ARG_DECL);
   // Disconnect from the supplier.
 
-  void deactivate (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  void deactivate (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
   // Deactivate the object from the POA.
 
   // = ServantBase operations
-  virtual PortableServer::POA_ptr _default_POA (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  virtual PortableServer::POA_ptr _default_POA (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
 protected:
   virtual ~TAO_Notify_PushConsumer ();
@@ -75,7 +75,7 @@ protected:
    void offer_change (
         const CosNotification::EventTypeSeq & added,
         const CosNotification::EventTypeSeq & removed
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -84,7 +84,7 @@ protected:
 
     void push (
         const CORBA::Any & data
-        TAO_ENV_ARG_DECL
+        ACE_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
@@ -93,7 +93,7 @@ protected:
   // The default operation is no op.
 
     void disconnect_push_consumer (
-        TAO_ENV_SINGLE_ARG_DECL
+        ACE_ENV_SINGLE_ARG_DECL
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException

@@ -45,18 +45,18 @@ Consumer::parse_args (int argc, char *argv [])
 
 void
 Consumer::open (CosEventChannelAdmin::EventChannel_ptr event_channel
-                     TAO_ENV_ARG_DECL)
+                     ACE_ENV_ARG_DECL)
 {
   // = Connect as a consumer.
   this->consumer_admin_ =
-    event_channel->for_consumers (TAO_ENV_SINGLE_ARG_PARAMETER);
+    event_channel->for_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
-Consumer::close (TAO_ENV_SINGLE_ARG_DECL)
+Consumer::close (ACE_ENV_SINGLE_ARG_DECL)
 {
-  this->disconnect (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->disconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   this->consumer_admin_ =
@@ -64,32 +64,32 @@ Consumer::close (TAO_ENV_SINGLE_ARG_DECL)
 }
 
 void
-Consumer::connect (TAO_ENV_SINGLE_ARG_DECL)
+Consumer::connect (ACE_ENV_SINGLE_ARG_DECL)
 {
   if (CORBA::is_nil (this->consumer_admin_.in ()))
     return;
 
   CosEventComm::PushConsumer_var objref =
-    this->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
+    this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   this->supplier_proxy_ =
-    this->consumer_admin_->obtain_push_supplier (TAO_ENV_SINGLE_ARG_PARAMETER);
+    this->consumer_admin_->obtain_push_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   this->supplier_proxy_->connect_push_consumer (objref.in ()
-                                                TAO_ENV_ARG_PARAMETER);
+                                                ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
-Consumer::disconnect (TAO_ENV_SINGLE_ARG_DECL)
+Consumer::disconnect (ACE_ENV_SINGLE_ARG_DECL)
 {
   if (CORBA::is_nil (this->supplier_proxy_.in ())
       || CORBA::is_nil (this->consumer_admin_.in ()))
     return;
 
-  this->supplier_proxy_->disconnect_push_supplier (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->supplier_proxy_->disconnect_push_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   this->supplier_proxy_ =
@@ -98,7 +98,7 @@ Consumer::disconnect (TAO_ENV_SINGLE_ARG_DECL)
 
 void
 Consumer::push (const CORBA::Any &
-                     TAO_ENV_ARG_DECL)
+                     ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         CosEventComm::Disconnected
@@ -121,7 +121,7 @@ Consumer::push (const CORBA::Any &
                   "(%P):%s\n",
                   "exiting the consumer."));
 
-      this->close (TAO_ENV_SINGLE_ARG_PARAMETER);
+      this->close (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       this->shutdown ();
@@ -129,7 +129,7 @@ Consumer::push (const CORBA::Any &
 }
 
 void
-Consumer::disconnect_push_consumer (TAO_ENV_SINGLE_ARG_DECL)
+Consumer::disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
  ACE_THROW_SPEC ((
         CORBA::SystemException
       ))
@@ -137,30 +137,30 @@ Consumer::disconnect_push_consumer (TAO_ENV_SINGLE_ARG_DECL)
   // Deactivate this object.
 
   PortableServer::POA_var poa =
-    this->_default_POA (TAO_ENV_SINGLE_ARG_PARAMETER);
+    this->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   PortableServer::ObjectId_var id =
     poa->servant_to_id (this
-                        TAO_ENV_ARG_PARAMETER);
+                        ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   poa->deactivate_object (id.in ()
-                          TAO_ENV_ARG_PARAMETER);
+                          ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 int
 Consumer::init_Consumer (void)
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
    {
       this->open (this->cos_ec_
-                  TAO_ENV_ARG_PARAMETER);
+                  ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      this->connect (TAO_ENV_SINGLE_ARG_PARAMETER);
+      this->connect (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

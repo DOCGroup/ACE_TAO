@@ -140,10 +140,10 @@ DynamicAny::DynAny_var::tao_nil (void)
 ::DynamicAny::DynAny_ptr
 DynamicAny::DynAny_var::tao_narrow (
     CORBA::Object *p
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return ::DynamicAny::DynAny::_narrow (p TAO_ENV_ARG_PARAMETER);
+  return ::DynamicAny::DynAny::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -225,15 +225,15 @@ DynamicAny::DynAny::~DynAny (void)
 
 DynamicAny::DynAny_ptr DynamicAny::DynAny::_narrow (
     CORBA::Object_ptr obj
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return DynAny::_unchecked_narrow (obj TAO_ENV_ARG_PARAMETER);
+  return DynAny::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
 }
 
 DynamicAny::DynAny_ptr DynamicAny::DynAny::_unchecked_narrow (
     CORBA::Object_ptr obj
-    TAO_ENV_ARG_DECL_NOT_USED
+    ACE_ENV_ARG_DECL_NOT_USED
   )
 {
   if (CORBA::is_nil (obj))
@@ -328,7 +328,7 @@ void DynamicAny::DynAny::InvalidValue::_raise ()
 
 void DynamicAny::DynAny::InvalidValue::_tao_encode (
     TAO_OutputCDR &
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   ) const
 {
   ACE_THROW (CORBA::MARSHAL ());
@@ -336,7 +336,7 @@ void DynamicAny::DynAny::InvalidValue::_tao_encode (
 
 void DynamicAny::DynAny::InvalidValue::_tao_decode (
     TAO_InputCDR &
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
   ACE_THROW (CORBA::MARSHAL ());
@@ -396,7 +396,7 @@ void DynamicAny::DynAny::TypeMismatch::_raise ()
 
 void DynamicAny::DynAny::TypeMismatch::_tao_encode (
     TAO_OutputCDR &
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   ) const
 {
   ACE_THROW (CORBA::MARSHAL ());
@@ -404,7 +404,7 @@ void DynamicAny::DynAny::TypeMismatch::_tao_encode (
 
 void DynamicAny::DynAny::TypeMismatch::_tao_decode (
     TAO_InputCDR &
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
   ACE_THROW (CORBA::MARSHAL ());
@@ -529,10 +529,10 @@ DynamicAny::DynFixed_var::tao_nil (void)
 ::DynamicAny::DynFixed_ptr
 DynamicAny::DynFixed_var::tao_narrow (
     CORBA::Object *p
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return ::DynamicAny::DynFixed::_narrow (p TAO_ENV_ARG_PARAMETER);
+  return ::DynamicAny::DynFixed::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -614,15 +614,15 @@ DynamicAny::DynFixed::~DynFixed (void)
 
 DynamicAny::DynFixed_ptr DynamicAny::DynFixed::_narrow (
     CORBA::Object_ptr obj
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return DynFixed::_unchecked_narrow (obj TAO_ENV_ARG_PARAMETER);
+  return DynFixed::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
 }
 
 DynamicAny::DynFixed_ptr DynamicAny::DynFixed::_unchecked_narrow (
     CORBA::Object_ptr obj
-    TAO_ENV_ARG_DECL_NOT_USED
+    ACE_ENV_ARG_DECL_NOT_USED
   )
 {
   if (CORBA::is_nil (obj))
@@ -794,10 +794,10 @@ DynamicAny::DynEnum_var::tao_nil (void)
 ::DynamicAny::DynEnum_ptr
 DynamicAny::DynEnum_var::tao_narrow (
     CORBA::Object *p
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return ::DynamicAny::DynEnum::_narrow (p TAO_ENV_ARG_PARAMETER);
+  return ::DynamicAny::DynEnum::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -879,15 +879,15 @@ DynamicAny::DynEnum::~DynEnum (void)
 
 DynamicAny::DynEnum_ptr DynamicAny::DynEnum::_narrow (
     CORBA::Object_ptr obj
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return DynEnum::_unchecked_narrow (obj TAO_ENV_ARG_PARAMETER);
+  return DynEnum::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
 }
 
 DynamicAny::DynEnum_ptr DynamicAny::DynEnum::_unchecked_narrow (
     CORBA::Object_ptr obj
-    TAO_ENV_ARG_DECL_NOT_USED
+    ACE_ENV_ARG_DECL_NOT_USED
   )
 {
   if (CORBA::is_nil (obj))
@@ -1435,10 +1435,10 @@ DynamicAny::DynStruct_var::tao_nil (void)
 ::DynamicAny::DynStruct_ptr
 DynamicAny::DynStruct_var::tao_narrow (
     CORBA::Object *p
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return ::DynamicAny::DynStruct::_narrow (p TAO_ENV_ARG_PARAMETER);
+  return ::DynamicAny::DynStruct::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -1520,15 +1520,15 @@ DynamicAny::DynStruct::~DynStruct (void)
 
 DynamicAny::DynStruct_ptr DynamicAny::DynStruct::_narrow (
     CORBA::Object_ptr obj
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return DynStruct::_unchecked_narrow (obj TAO_ENV_ARG_PARAMETER);
+  return DynStruct::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
 }
 
 DynamicAny::DynStruct_ptr DynamicAny::DynStruct::_unchecked_narrow (
     CORBA::Object_ptr obj
-    TAO_ENV_ARG_DECL_NOT_USED
+    ACE_ENV_ARG_DECL_NOT_USED
   )
 {
   if (CORBA::is_nil (obj))
@@ -1700,10 +1700,10 @@ DynamicAny::DynUnion_var::tao_nil (void)
 ::DynamicAny::DynUnion_ptr
 DynamicAny::DynUnion_var::tao_narrow (
     CORBA::Object *p
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return ::DynamicAny::DynUnion::_narrow (p TAO_ENV_ARG_PARAMETER);
+  return ::DynamicAny::DynUnion::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -1785,15 +1785,15 @@ DynamicAny::DynUnion::~DynUnion (void)
 
 DynamicAny::DynUnion_ptr DynamicAny::DynUnion::_narrow (
     CORBA::Object_ptr obj
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return DynUnion::_unchecked_narrow (obj TAO_ENV_ARG_PARAMETER);
+  return DynUnion::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
 }
 
 DynamicAny::DynUnion_ptr DynamicAny::DynUnion::_unchecked_narrow (
     CORBA::Object_ptr obj
-    TAO_ENV_ARG_DECL_NOT_USED
+    ACE_ENV_ARG_DECL_NOT_USED
   )
 {
   if (CORBA::is_nil (obj))
@@ -2060,11 +2060,11 @@ TAO_NAMESPACE_END
   DynamicAny::_TAO_Unbounded_Object_Sequence_DynamicAny_DynAnySeq::_downcast (
       void* target,
       CORBA_Object *src
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     )
   {
     DynamicAny::DynAny **tmp = ACE_static_cast (DynamicAny::DynAny**, target);
-    *tmp = DynamicAny::DynAny::_narrow (src TAO_ENV_ARG_PARAMETER);
+    *tmp = DynamicAny::DynAny::_narrow (src ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
   }
 
@@ -2238,10 +2238,10 @@ DynamicAny::DynSequence_var::tao_nil (void)
 ::DynamicAny::DynSequence_ptr
 DynamicAny::DynSequence_var::tao_narrow (
     CORBA::Object *p
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return ::DynamicAny::DynSequence::_narrow (p TAO_ENV_ARG_PARAMETER);
+  return ::DynamicAny::DynSequence::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -2323,15 +2323,15 @@ DynamicAny::DynSequence::~DynSequence (void)
 
 DynamicAny::DynSequence_ptr DynamicAny::DynSequence::_narrow (
     CORBA::Object_ptr obj
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return DynSequence::_unchecked_narrow (obj TAO_ENV_ARG_PARAMETER);
+  return DynSequence::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
 }
 
 DynamicAny::DynSequence_ptr DynamicAny::DynSequence::_unchecked_narrow (
     CORBA::Object_ptr obj
-    TAO_ENV_ARG_DECL_NOT_USED
+    ACE_ENV_ARG_DECL_NOT_USED
   )
 {
   if (CORBA::is_nil (obj))
@@ -2503,10 +2503,10 @@ DynamicAny::DynArray_var::tao_nil (void)
 ::DynamicAny::DynArray_ptr
 DynamicAny::DynArray_var::tao_narrow (
     CORBA::Object *p
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return ::DynamicAny::DynArray::_narrow (p TAO_ENV_ARG_PARAMETER);
+  return ::DynamicAny::DynArray::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -2588,15 +2588,15 @@ DynamicAny::DynArray::~DynArray (void)
 
 DynamicAny::DynArray_ptr DynamicAny::DynArray::_narrow (
     CORBA::Object_ptr obj
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return DynArray::_unchecked_narrow (obj TAO_ENV_ARG_PARAMETER);
+  return DynArray::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
 }
 
 DynamicAny::DynArray_ptr DynamicAny::DynArray::_unchecked_narrow (
     CORBA::Object_ptr obj
-    TAO_ENV_ARG_DECL_NOT_USED
+    ACE_ENV_ARG_DECL_NOT_USED
   )
 {
   if (CORBA::is_nil (obj))
@@ -2768,10 +2768,10 @@ DynamicAny::DynValue_var::tao_nil (void)
 ::DynamicAny::DynValue_ptr
 DynamicAny::DynValue_var::tao_narrow (
     CORBA::Object *p
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return ::DynamicAny::DynValue::_narrow (p TAO_ENV_ARG_PARAMETER);
+  return ::DynamicAny::DynValue::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -2853,15 +2853,15 @@ DynamicAny::DynValue::~DynValue (void)
 
 DynamicAny::DynValue_ptr DynamicAny::DynValue::_narrow (
     CORBA::Object_ptr obj
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return DynValue::_unchecked_narrow (obj TAO_ENV_ARG_PARAMETER);
+  return DynValue::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
 }
 
 DynamicAny::DynValue_ptr DynamicAny::DynValue::_unchecked_narrow (
     CORBA::Object_ptr obj
-    TAO_ENV_ARG_DECL_NOT_USED
+    ACE_ENV_ARG_DECL_NOT_USED
   )
 {
   if (CORBA::is_nil (obj))
@@ -3033,10 +3033,10 @@ DynamicAny::DynAnyFactory_var::tao_nil (void)
 ::DynamicAny::DynAnyFactory_ptr
 DynamicAny::DynAnyFactory_var::tao_narrow (
     CORBA::Object *p
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return ::DynamicAny::DynAnyFactory::_narrow (p TAO_ENV_ARG_PARAMETER);
+  return ::DynamicAny::DynAnyFactory::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -3118,15 +3118,15 @@ DynamicAny::DynAnyFactory::~DynAnyFactory (void)
 
 DynamicAny::DynAnyFactory_ptr DynamicAny::DynAnyFactory::_narrow (
     CORBA::Object_ptr obj
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return DynAnyFactory::_unchecked_narrow (obj TAO_ENV_ARG_PARAMETER);
+  return DynAnyFactory::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
 }
 
 DynamicAny::DynAnyFactory_ptr DynamicAny::DynAnyFactory::_unchecked_narrow (
     CORBA::Object_ptr obj
-    TAO_ENV_ARG_DECL_NOT_USED
+    ACE_ENV_ARG_DECL_NOT_USED
   )
 {
   if (CORBA::is_nil (obj))
@@ -3221,7 +3221,7 @@ void DynamicAny::DynAnyFactory::InconsistentTypeCode::_raise ()
 
 void DynamicAny::DynAnyFactory::InconsistentTypeCode::_tao_encode (
     TAO_OutputCDR &
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   ) const
 {
   ACE_THROW (CORBA::MARSHAL ());
@@ -3229,7 +3229,7 @@ void DynamicAny::DynAnyFactory::InconsistentTypeCode::_tao_encode (
 
 void DynamicAny::DynAnyFactory::InconsistentTypeCode::_tao_decode (
     TAO_InputCDR &
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
   ACE_THROW (CORBA::MARSHAL ());
@@ -3301,7 +3301,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const DynamicAny::NameVa
   {
     CORBA::TypeCode_var type = _tao_any.type ();
 
-    CORBA::Boolean result = type->equivalent (DynamicAny::_tc_NameValuePair TAO_ENV_ARG_PARAMETER);
+    CORBA::Boolean result = type->equivalent (DynamicAny::_tc_NameValuePair ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
     if (!result)
@@ -3392,7 +3392,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const DynamicAny::NameVa
   {
     CORBA::TypeCode_var type = _tao_any.type ();
 
-    CORBA::Boolean result = type->equivalent (DynamicAny::_tc_NameValuePairSeq TAO_ENV_ARG_PARAMETER);
+    CORBA::Boolean result = type->equivalent (DynamicAny::_tc_NameValuePairSeq ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
     if (!result)
@@ -3497,7 +3497,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const DynamicAny::AnySeq
   {
     CORBA::TypeCode_var type = _tao_any.type ();
 
-    CORBA::Boolean result = type->equivalent (DynamicAny::_tc_AnySeq TAO_ENV_ARG_PARAMETER);
+    CORBA::Boolean result = type->equivalent (DynamicAny::_tc_AnySeq ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
     if (!result)

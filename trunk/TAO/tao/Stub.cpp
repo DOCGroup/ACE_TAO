@@ -162,7 +162,7 @@ TAO_Stub::add_forward_profiles (const TAO_MProfile &mprofiles)
 int
 TAO_Stub::create_ior_info (IOP::IOR *&ior_info,
                            CORBA::ULong &index
-                           TAO_ENV_ARG_DECL)
+                           ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // We are creating the IOR info. Let us not be disturbed. So grab a
@@ -180,7 +180,7 @@ TAO_Stub::create_ior_info (IOP::IOR *&ior_info,
         {
           this->get_profile_ior_info (*this->forward_profiles_,
                                       tmp_info
-                                       TAO_ENV_ARG_PARAMETER);
+                                       ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (-1);
 
           this->forwarded_ior_info_ = tmp_info;
@@ -207,7 +207,7 @@ TAO_Stub::create_ior_info (IOP::IOR *&ior_info,
     {
       this->get_profile_ior_info (this->base_profiles_,
                                   tmp_info
-                                   TAO_ENV_ARG_PARAMETER);
+                                   ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
 
       this->ior_info_ = tmp_info;
@@ -235,7 +235,7 @@ TAO_Stub::create_ior_info (IOP::IOR *&ior_info,
 int
 TAO_Stub::get_profile_ior_info (TAO_MProfile &profiles,
                                 IOP::IOR *&ior_info
-                                TAO_ENV_ARG_DECL)
+                                ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
@@ -273,10 +273,10 @@ TAO_Stub::get_profile_ior_info (TAO_MProfile &profiles,
 
 CORBA::ULong
 TAO_Stub::hash (CORBA::ULong max
-                TAO_ENV_ARG_DECL)
+                ACE_ENV_ARG_DECL)
 {
   // we rely on the profile objects that its address info
-  return this->base_profiles_.hash (max TAO_ENV_ARG_PARAMETER);
+  return this->base_profiles_.hash (max ACE_ENV_ARG_PARAMETER);
 }
 
 // Expensive comparison of objref data, to see if two objrefs
@@ -398,7 +398,7 @@ private:
 
 CORBA::Policy_ptr
 TAO_Stub::get_policy (CORBA::PolicyType type
-                      TAO_ENV_ARG_DECL)
+                      ACE_ENV_ARG_DECL)
 {
 
   if (this->policies_ == 0)
@@ -420,12 +420,12 @@ TAO_Stub::get_policy (CORBA::PolicyType type
   // e.g., to add methods for policy specific reconciliation, etc.
 
   return this->get_client_policy (type
-                                   TAO_ENV_ARG_PARAMETER);
+                                   ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::Policy_ptr
 TAO_Stub::get_client_policy (CORBA::PolicyType type
-                             TAO_ENV_ARG_DECL)
+                             ACE_ENV_ARG_DECL)
 {
   // No need to lock, the stub only changes its policies at
   // construction time...
@@ -435,7 +435,7 @@ TAO_Stub::get_client_policy (CORBA::PolicyType type
   if (this->policies_ != 0)
     {
       result = this->policies_->get_policy (type
-                                             TAO_ENV_ARG_PARAMETER);
+                                             ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (CORBA::Policy::_nil ());
     }
 
@@ -443,7 +443,7 @@ TAO_Stub::get_client_policy (CORBA::PolicyType type
     {
       TAO_Policy_Current &policy_current = this->orb_core_->policy_current ();
       result = policy_current.get_policy (type
-                                           TAO_ENV_ARG_PARAMETER);
+                                           ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (CORBA::Policy::_nil ());
     }
 
@@ -457,7 +457,7 @@ TAO_Stub::get_client_policy (CORBA::PolicyType type
       if (policy_manager != 0)
         {
           result = policy_manager->get_policy (type
-                                                TAO_ENV_ARG_PARAMETER);
+                                                ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (CORBA::Policy::_nil ());
         }
     }
@@ -466,7 +466,7 @@ TAO_Stub::get_client_policy (CORBA::PolicyType type
     {
       result = this->orb_core_->
               get_default_policies ()->get_policy (type
-                                                    TAO_ENV_ARG_PARAMETER);
+                                                    ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (CORBA::Policy::_nil ());
     }
 
@@ -476,7 +476,7 @@ TAO_Stub::get_client_policy (CORBA::PolicyType type
 TAO_Stub *
 TAO_Stub::set_policy_overrides (const CORBA::PolicyList & policies,
                                 CORBA::SetOverrideType set_add
-                                TAO_ENV_ARG_DECL)
+                                ACE_ENV_ARG_DECL)
 {
   // Notice the use of an explicit constructor....
   auto_ptr<TAO_Policy_Set> policy_manager (
@@ -486,31 +486,31 @@ TAO_Stub::set_policy_overrides (const CORBA::PolicyList & policies,
     {
       policy_manager->set_policy_overrides (policies,
                                             set_add
-                                             TAO_ENV_ARG_PARAMETER);
+                                             ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
     }
   else if (this->policies_ == 0)
     {
       policy_manager->set_policy_overrides (policies,
                                             CORBA::SET_OVERRIDE
-                                             TAO_ENV_ARG_PARAMETER);
+                                             ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
     }
   else
     {
       policy_manager->copy_from (this->policies_
-                                  TAO_ENV_ARG_PARAMETER);
+                                  ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       policy_manager->set_policy_overrides (policies,
                                             set_add
-                                             TAO_ENV_ARG_PARAMETER);
+                                             ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
     }
 
   TAO_Stub* stub = this->orb_core_->create_stub (this->type_id.in (),
                                                  this->base_profiles_
-                                                  TAO_ENV_ARG_PARAMETER);
+                                                  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   stub->policies_ = policy_manager.release ();
@@ -523,25 +523,25 @@ TAO_Stub::set_policy_overrides (const CORBA::PolicyList & policies,
 
 CORBA::PolicyList *
 TAO_Stub::get_policy_overrides (const CORBA::PolicyTypeSeq &types
-                                TAO_ENV_ARG_DECL)
+                                ACE_ENV_ARG_DECL)
 {
   if (this->policies_ == 0)
     return 0;
 
   return this->policies_->get_policy_overrides (types
-                                                 TAO_ENV_ARG_PARAMETER);
+                                                 ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::Boolean
 TAO_Stub::validate_connection (CORBA::PolicyList_out inconsistent_policies
-                               TAO_ENV_ARG_DECL)
+                               ACE_ENV_ARG_DECL)
 {
   // Use Locate Request to establish connection/make sure the object
   // is there ...
   TAO_GIOP_Locate_Request_Invocation locate_request (this,
                                                      this->orb_core_.get ());
 
-  locate_request.init_inconsistent_policies (TAO_ENV_SINGLE_ARG_PARAMETER);
+  locate_request.init_inconsistent_policies (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   // @@ For some combinations of RTCORBA policies, location forwarding
@@ -552,10 +552,10 @@ TAO_Stub::validate_connection (CORBA::PolicyList_out inconsistent_policies
     {
       for (;;)
         {
-          locate_request.start (TAO_ENV_SINGLE_ARG_PARAMETER);
+          locate_request.start (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
-          int status = locate_request.invoke (TAO_ENV_SINGLE_ARG_PARAMETER);
+          int status = locate_request.invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           // We'll get this only if the object was, in fact, forwarded.

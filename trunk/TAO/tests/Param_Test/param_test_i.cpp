@@ -35,7 +35,7 @@ Coffee_i::~Coffee_i (void)
 
 // get attribute
 Coffee::Desc *
-Coffee_i::description (TAO_ENV_SINGLE_ARG_DECL_NOT_USED /*env*/)
+Coffee_i::description (ACE_ENV_SINGLE_ARG_DECL_NOT_USED /*env*/)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Coffee::Desc *desc = new Coffee::Desc;
@@ -46,7 +46,7 @@ Coffee_i::description (TAO_ENV_SINGLE_ARG_DECL_NOT_USED /*env*/)
 // set attribute
 void
 Coffee_i::description (const Coffee::Desc &description
-                       TAO_ENV_ARG_DECL_NOT_USED /*env*/)
+                       ACE_ENV_ARG_DECL_NOT_USED /*env*/)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->name_ = CORBA::string_dup (description.name);
@@ -75,7 +75,7 @@ CORBA::Short
 Param_Test_i::test_short (CORBA::Short s1,
                           CORBA::Short &s2,
                           CORBA::Short_out s3
-                          TAO_ENV_ARG_DECL_NOT_USED)
+                          ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   s2 = (CORBA::Short) (s1 * 2);
@@ -94,7 +94,7 @@ CORBA::ULongLong
 Param_Test_i::test_ulonglong (CORBA::ULongLong s1,
                               CORBA::ULongLong &s2,
                               CORBA::ULongLong_out s3
-                              TAO_ENV_ARG_DECL_NOT_USED)
+                              ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   s2 = s1 * 2;
@@ -109,7 +109,7 @@ char *
 Param_Test_i::test_unbounded_string (const char *s1,
                                      char *&s2,
                                      CORBA::String_out s3
-                                     TAO_ENV_ARG_DECL_NOT_USED)
+                                     ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   char *retstr = CORBA::string_dup (s1);
@@ -128,7 +128,7 @@ char *
 Param_Test_i::test_bounded_string (const char *s1,
                                    char *&s2,
                                    CORBA::String_out s3
-                                   TAO_ENV_ARG_DECL_NOT_USED)
+                                   ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   char *retstr = CORBA::string_dup (s1);
@@ -147,7 +147,7 @@ CORBA::WChar *
 Param_Test_i::test_unbounded_wstring (const CORBA::WChar *ws1,
                                       CORBA::WChar *&ws2,
                                       CORBA::WString_out ws3
-                                      TAO_ENV_ARG_DECL_NOT_USED)
+                                      ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::WChar *retwstr = CORBA::wstring_dup (ws1);
@@ -170,7 +170,7 @@ CORBA::WChar *
 Param_Test_i::test_bounded_wstring (const CORBA::WChar *ws1,
                                     CORBA::WChar *&ws2,
                                     CORBA::WString_out ws3
-                                    TAO_ENV_ARG_DECL_NOT_USED)
+                                    ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::WChar *retwstr = CORBA::wstring_dup (ws1);
@@ -191,7 +191,7 @@ Param_Test::Fixed_Struct
 Param_Test_i::test_fixed_struct (const Param_Test::Fixed_Struct &s1,
                                  Param_Test::Fixed_Struct &s2,
                                  Param_Test::Fixed_Struct_out s3
-                                 TAO_ENV_ARG_DECL_NOT_USED)
+                                 ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   s2 = s1;
@@ -205,7 +205,7 @@ Param_Test::Long_Seq *
 Param_Test_i::test_long_sequence (const Param_Test::Long_Seq & s1,
                                   Param_Test::Long_Seq & s2,
                                   Param_Test::Long_Seq_out s3
-                                  TAO_ENV_ARG_DECL_NOT_USED)
+                                  ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Param_Test::Long_Seq
@@ -223,7 +223,7 @@ Param_Test::Short_Seq *
 Param_Test_i::test_short_sequence (const Param_Test::Short_Seq & s1,
                                    Param_Test::Short_Seq & s2,
                                    Param_Test::Short_Seq_out s3
-                                   TAO_ENV_ARG_DECL_NOT_USED)
+                                   ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Param_Test::Short_Seq
@@ -241,7 +241,7 @@ Param_Test::Bounded_Short_Seq *
 Param_Test_i::test_bounded_short_sequence (const Param_Test::Bounded_Short_Seq & s1,
                                            Param_Test::Bounded_Short_Seq & s2,
                                            Param_Test::Bounded_Short_Seq_out s3
-                                           TAO_ENV_ARG_DECL_NOT_USED)
+                                           ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Param_Test::Bounded_Short_Seq
@@ -259,7 +259,7 @@ Param_Test::Bounded_Long_Seq *
 Param_Test_i::test_bounded_long_sequence (const Param_Test::Bounded_Long_Seq & s1,
                                           Param_Test::Bounded_Long_Seq & s2,
                                           Param_Test::Bounded_Long_Seq_out s3
-                                          TAO_ENV_ARG_DECL_NOT_USED)
+                                          ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Param_Test::Bounded_Long_Seq
@@ -277,7 +277,7 @@ Param_Test::StrSeq *
 Param_Test_i::test_strseq (const Param_Test::StrSeq &s1,
                            Param_Test::StrSeq &s2,
                            Param_Test::StrSeq_out s3
-                           TAO_ENV_ARG_DECL_NOT_USED)
+                           ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // we copy the "in" sequences into all the inout, out and return sequences.
@@ -313,7 +313,7 @@ Param_Test::Bounded_StrSeq *
 Param_Test_i::test_bounded_strseq (const Param_Test::Bounded_StrSeq & s1,
                                    Param_Test::Bounded_StrSeq & s2,
                                    Param_Test::Bounded_StrSeq_out s3
-                                   TAO_ENV_ARG_DECL_NOT_USED)
+                                   ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // we copy the "in" sequences into all the inout, out and return sequences.
@@ -334,7 +334,7 @@ Param_Test::WStrSeq *
 Param_Test_i::test_wstrseq (const Param_Test::WStrSeq &ws1,
                             Param_Test::WStrSeq &ws2,
                             Param_Test::WStrSeq_out ws3
-                            TAO_ENV_ARG_DECL_NOT_USED)
+                            ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // we copy the "in" sequences into all the inout, out and return sequences.
@@ -355,7 +355,7 @@ Param_Test::Bounded_WStrSeq *
 Param_Test_i::test_bounded_wstrseq (const Param_Test::Bounded_WStrSeq & ws1,
                                     Param_Test::Bounded_WStrSeq & ws2,
                                     Param_Test::Bounded_WStrSeq_out ws3
-                                    TAO_ENV_ARG_DECL_NOT_USED)
+                                    ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // we copy the "in" sequences into all the inout, out and return sequences.
@@ -377,7 +377,7 @@ Param_Test::StructSeq *
 Param_Test_i::test_struct_sequence (const Param_Test::StructSeq &s1,
                                     Param_Test::StructSeq &s2,
                                     Param_Test::StructSeq_out s3
-                                    TAO_ENV_ARG_DECL_NOT_USED)
+                                    ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // we copy the "in" sequences into all the inout, out and return sequences.
@@ -400,7 +400,7 @@ Param_Test::Bounded_StructSeq *
 Param_Test_i::test_bounded_struct_sequence (const Param_Test::Bounded_StructSeq & s1,
                                             Param_Test::Bounded_StructSeq & s2,
                                             Param_Test::Bounded_StructSeq_out s3
-                                            TAO_ENV_ARG_DECL_NOT_USED)
+                                            ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Param_Test::Bounded_StructSeq
@@ -419,7 +419,7 @@ Param_Test::PathSpec *
 Param_Test_i::test_unbounded_struct_sequence (const Param_Test::PathSpec & s1,
                                               Param_Test::PathSpec & s2,
                                               Param_Test::PathSpec_out s3
-                                              TAO_ENV_ARG_DECL_NOT_USED)
+                                              ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Param_Test::PathSpec
@@ -452,7 +452,7 @@ Param_Test::ArraySeq *
 Param_Test_i::test_array_sequence (const Param_Test::ArraySeq &s1,
                                    Param_Test::ArraySeq &s2,
                                    Param_Test::ArraySeq_out s3
-                                   TAO_ENV_ARG_DECL_NOT_USED)
+                                   ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // we copy the "in" sequences into all the inout, out and return sequences.
@@ -475,7 +475,7 @@ Param_Test::Bounded_ArraySeq *
 Param_Test_i::test_bounded_array_sequence (const Param_Test::Bounded_ArraySeq & s1,
                                            Param_Test::Bounded_ArraySeq & s2,
                                            Param_Test::Bounded_ArraySeq_out s3
-                                           TAO_ENV_ARG_DECL_NOT_USED)
+                                           ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Param_Test::Bounded_ArraySeq
@@ -493,7 +493,7 @@ Param_Test::Coffee_Mix *
 Param_Test_i::test_coffe_mix (const Param_Test::Coffee_Mix & s1,
                               Param_Test::Coffee_Mix & s2,
                               Param_Test::Coffee_Mix_out s3
-                              TAO_ENV_ARG_DECL_NOT_USED)
+                              ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Param_Test::Coffee_Mix
@@ -536,7 +536,7 @@ Param_Test::Bounded_Coffee_Mix *
 Param_Test_i::test_bounded_coffe_mix (const Param_Test::Bounded_Coffee_Mix & s1,
                                       Param_Test::Bounded_Coffee_Mix & s2,
                                       Param_Test::Bounded_Coffee_Mix_out s3
-                                      TAO_ENV_ARG_DECL_NOT_USED)
+                                      ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Param_Test::Bounded_Coffee_Mix
@@ -579,7 +579,7 @@ Param_Test::AnySeq *
 Param_Test_i::test_anyseq (const Param_Test::AnySeq &s1,
                            Param_Test::AnySeq &s2,
                            Param_Test::AnySeq_out s3
-                           TAO_ENV_ARG_DECL_NOT_USED)
+                           ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // we copy the "in" sequences into all the inout, out and return sequences.
@@ -603,7 +603,7 @@ Param_Test::Var_Struct *
 Param_Test_i::test_var_struct (const Param_Test::Var_Struct &s1,
                                Param_Test::Var_Struct &s2,
                                Param_Test::Var_Struct_out s3
-                               TAO_ENV_ARG_DECL_NOT_USED)
+                               ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // we copy the "in" sequences into all the inout, out and return sequences.
@@ -625,7 +625,7 @@ Param_Test::Nested_Struct *
 Param_Test_i::test_nested_struct (const Param_Test::Nested_Struct &s1,
                                   Param_Test::Nested_Struct &s2,
                                   Param_Test::Nested_Struct_out s3
-                                  TAO_ENV_ARG_DECL_NOT_USED)
+                                  ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // we copy the "in" sequences into all the inout, out and return sequences.
@@ -647,7 +647,7 @@ Param_Test::Recursive_Struct *
 Param_Test_i::test_recursive_struct (const Param_Test::Recursive_Struct &s1,
                                      Param_Test::Recursive_Struct &s2,
                                      Param_Test::Recursive_Struct_out s3
-                                     TAO_ENV_ARG_DECL_NOT_USED)
+                                     ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // we copy the "in" structs into all the inout, out and return sequences.
@@ -668,7 +668,7 @@ Param_Test::Objref_Struct *
 Param_Test_i::test_objref_struct (const Param_Test::Objref_Struct &s1,
                                   Param_Test::Objref_Struct &s2,
                                   Param_Test::Objref_Struct_out s3
-                                  TAO_ENV_ARG_DECL_NOT_USED)
+                                  ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // we copy the "in" sequences into all the inout, out and return sequences.
@@ -687,10 +687,10 @@ Param_Test_i::test_objref_struct (const Param_Test::Objref_Struct &s1,
 
 // make a Coffee object
 Coffee_ptr
-Param_Test_i::make_coffee (TAO_ENV_SINGLE_ARG_DECL)
+Param_Test_i::make_coffee (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return this->obj_._this (TAO_ENV_SINGLE_ARG_PARAMETER);
+  return this->obj_._this (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 // test for object references
@@ -698,21 +698,21 @@ Coffee_ptr
 Param_Test_i::test_objref (Coffee_ptr o1,
                            Coffee_ptr &o2,
                            Coffee_out o3
-                           TAO_ENV_ARG_DECL)
+                           ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Coffee_ptr ret = Coffee::_nil ();
 
   ACE_TRY
     {
-      Coffee_var myobj = obj_._this (TAO_ENV_SINGLE_ARG_PARAMETER);
+      Coffee_var myobj = obj_._this (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (!CORBA::is_nil (o2))
         CORBA::release (o2);
 
       CORBA::Boolean equiv = myobj->_is_equivalent (o1
-                                                    TAO_ENV_ARG_PARAMETER);
+                                                    ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (equiv)
@@ -747,7 +747,7 @@ CORBA::TypeCode_ptr
 Param_Test_i::test_typecode (CORBA::TypeCode_ptr t1,
                              CORBA::TypeCode_ptr &t2,
                              CORBA::TypeCode_out t3
-                             TAO_ENV_ARG_DECL_NOT_USED/*env*/)
+                             ACE_ENV_ARG_DECL_NOT_USED/*env*/)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // we simply assign t1 to the others
@@ -762,7 +762,7 @@ CORBA::Any *
 Param_Test_i::test_any (const CORBA::Any &a1,
                         CORBA::Any &a2,
                         CORBA::Any_out a3
-                        TAO_ENV_ARG_DECL)
+                        ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Any *ret;
@@ -784,7 +784,7 @@ Param_Test_i::test_any (const CORBA::Any &a1,
   if (TAO_debug_level > 0)
     {
       CORBA::TypeCode_var tc = a1.type ();
-      int kind = tc->kind (TAO_ENV_SINGLE_ARG_PARAMETER);
+      int kind = tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
 
       ACE_DEBUG ((LM_DEBUG,
@@ -929,7 +929,7 @@ Param_Test::Fixed_Array_slice *
 Param_Test_i::test_fixed_array (const Param_Test::Fixed_Array a1,
                                 Param_Test::Fixed_Array a2,
                                 Param_Test::Fixed_Array_out a3
-                                TAO_ENV_ARG_DECL_NOT_USED)
+                                ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Param_Test::Fixed_Array_slice *ret;
@@ -945,7 +945,7 @@ Param_Test::Var_Array_slice *
 Param_Test_i::test_var_array (const Param_Test::Var_Array a1,
                               Param_Test::Var_Array a2,
                               Param_Test::Var_Array_out a3
-                              TAO_ENV_ARG_DECL_NOT_USED)
+                              ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Param_Test::Var_Array_slice *ret;
@@ -960,7 +960,7 @@ CORBA::ULong
 Param_Test_i::test_exception (CORBA::ULong s1,
                               CORBA::ULong& s2,
                               CORBA::ULong_out s3
-                              TAO_ENV_ARG_DECL)
+                              ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Param_Test::Ooops))
 {
@@ -981,7 +981,7 @@ Param_Test_i::test_exception (CORBA::ULong s1,
   // warning that test_exception is throwing an exception
   // not in its THROW_SPEC, but still test TAO's
   // conversion of such an exception to UNKNOWN.
-  this->throw_badboy (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->throw_badboy (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   return 0;
@@ -991,7 +991,7 @@ Param_Test::Big_Union*
 Param_Test_i::test_big_union (const Param_Test::Big_Union& u1,
                               Param_Test::Big_Union& u2,
                               Param_Test::Big_Union_out u3
-                              TAO_ENV_ARG_DECL_NOT_USED)
+                              ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Param_Test::Big_Union_var ret (new Param_Test::Big_Union (u1));
@@ -1004,7 +1004,7 @@ Param_Test::Small_Union
 Param_Test_i::test_small_union (const Param_Test::Small_Union& u1,
                                 Param_Test::Small_Union& u2,
                                 Param_Test::Small_Union_out u3
-                                TAO_ENV_ARG_DECL_NOT_USED)
+                                ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   u2 = u1;
@@ -1016,7 +1016,7 @@ Param_Test::Recursive_Union*
 Param_Test_i::test_recursive_union (const Param_Test::Recursive_Union& ru1,
                                     Param_Test::Recursive_Union& ru2,
                                     Param_Test::Recursive_Union_out ru3
-                                    TAO_ENV_ARG_DECL_NOT_USED)
+                                    ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Param_Test::Recursive_Union_var ret (new Param_Test::Recursive_Union (ru1));
@@ -1029,7 +1029,7 @@ CORBA::Any*
 Param_Test_i::test_complex_any (const CORBA::Any &a1,
                                 CORBA::Any &a2,
                                 CORBA::Any_out a3
-                                TAO_ENV_ARG_DECL_NOT_USED)
+                                ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Any_var ret (new CORBA::Any (a1));
@@ -1042,7 +1042,7 @@ Param_Test::Multdim_Array_slice *
 Param_Test_i::test_multdim_array (const Param_Test::Multdim_Array a1,
                                   Param_Test::Multdim_Array a2,
                                   Param_Test::Multdim_Array_out a3
-                                  TAO_ENV_ARG_DECL_NOT_USED)
+                                  ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Param_Test::Multdim_Array_slice *ret;
@@ -1054,14 +1054,14 @@ Param_Test_i::test_multdim_array (const Param_Test::Multdim_Array a1,
 }
 
 void
-Param_Test_i::shutdown (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+Param_Test_i::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown ();
 }
 
 void
-Param_Test_i::throw_badboy (TAO_ENV_SINGLE_ARG_DECL)
+Param_Test_i::throw_badboy (ACE_ENV_SINGLE_ARG_DECL)
 {
   ACE_THROW (Param_Test::BadBoy ());
 }

@@ -18,12 +18,12 @@ protected:
       ref_count_(0) {}
 
 public:
-  virtual void _add_ref (TAO_ENV_SINGLE_ARG_DECL)
+  virtual void _add_ref (ACE_ENV_SINGLE_ARG_DECL)
   {
     ++this->ref_count_;
   }
 
-  virtual void _remove_ref (TAO_ENV_SINGLE_ARG_DECL)
+  virtual void _remove_ref (ACE_ENV_SINGLE_ARG_DECL)
   {
     CORBA::ULong new_count = --this->ref_count_;
 
@@ -95,7 +95,7 @@ Quoter_Stock_i::set_price (CORBA::Double new_price)
 }
 
 void
-Quoter_Stock_i::disconnect_push_supplier (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+Quoter_Stock_i::disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   throw (CORBA::SystemException)
 {
   // Forget about the consumer it is not there anymore

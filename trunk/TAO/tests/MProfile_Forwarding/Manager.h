@@ -14,19 +14,19 @@ class Manager
 
   int init (int argc,
             char *argv[]
-            TAO_ENV_ARG_DECL);
+            ACE_ENV_ARG_DECL);
 
   // Initialize the ORB, POA etc.
 
-  int init_register_name_service (TAO_ENV_SINGLE_ARG_DECL);
+  int init_register_name_service (ACE_ENV_SINGLE_ARG_DECL);
   // Initialize the Name service, tegister the combined IOR with it
 
-  int activate_servant (TAO_ENV_SINGLE_ARG_DECL);
+  int activate_servant (ACE_ENV_SINGLE_ARG_DECL);
   // Activate the servant etc.
 
-  int make_iors_register (TAO_ENV_SINGLE_ARG_DECL_NOT_USED);
+  int make_iors_register (ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
 
-  int run (TAO_ENV_SINGLE_ARG_DECL);
+  int run (ACE_ENV_SINGLE_ARG_DECL);
   // Run the  ORB event loop..
  private:
   CORBA::ORB_var orb_;

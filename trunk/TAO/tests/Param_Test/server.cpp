@@ -61,12 +61,12 @@ main (int argc, char *argv[])
   PortableServer::POA_var oa_ptr;
   Param_Test_i *param_test = 0;
 
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       const char *orb_name = "";
       CORBA::ORB_var orb_ptr =
-        CORBA::ORB_init (argc, argv, orb_name TAO_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, orb_name ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Object_var temp; // holder for the myriad of times we get
@@ -75,7 +75,7 @@ main (int argc, char *argv[])
       // Get the Root POA
 
       temp = orb_ptr->resolve_initial_references ("RootPOA"
-                                                  TAO_ENV_ARG_PARAMETER);
+                                                  ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (temp.in()))
@@ -83,21 +83,21 @@ main (int argc, char *argv[])
                            "(%P|%t) Unable to get root poa reference.\n"),
                           1);
 
-      oa_ptr = PortableServer::POA::_narrow (temp.in() TAO_ENV_ARG_PARAMETER);
+      oa_ptr = PortableServer::POA::_narrow (temp.in() ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POAManager_var poa_manager =
-        oa_ptr->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
+        oa_ptr->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::PolicyList policies (2);
       policies.length (2);
       policies[0] =
         oa_ptr->create_id_assignment_policy (PortableServer::USER_ID
-                                             TAO_ENV_ARG_PARAMETER);
+                                             ACE_ENV_ARG_PARAMETER);
       policies[1] =
         oa_ptr->create_lifespan_policy (PortableServer::PERSISTENT
-                                        TAO_ENV_ARG_PARAMETER);
+                                        ACE_ENV_ARG_PARAMETER);
 
       // We use a different POA, otherwise the user would have to
       // change the object key each time it invokes the server.
@@ -105,7 +105,7 @@ main (int argc, char *argv[])
         oa_ptr->create_POA ("child_poa",
                             poa_manager.in (),
                             policies
-                            TAO_ENV_ARG_PARAMETER);
+                            ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Parse remaining command line and verify parameters.
@@ -124,19 +124,19 @@ main (int argc, char *argv[])
         PortableServer::string_to_ObjectId ("param_test");
       good_poa->activate_object_with_id (id.in (),
                                          param_test
-                                         TAO_ENV_ARG_PARAMETER);
+                                         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Stringify the objref we'll be implementing, and print it to
       // stdout.  Someone will take that string and give it to a
       // client.  Then release the object.
 
-      temp = good_poa->id_to_reference (id.in () TAO_ENV_ARG_PARAMETER);
+      temp = good_poa->id_to_reference (id.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::String_var str =
         orb_ptr->object_to_string (temp.in ()
-                                   TAO_ENV_ARG_PARAMETER);
+                                   ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (TAO_debug_level > 0)
@@ -149,20 +149,20 @@ main (int argc, char *argv[])
 
 
       // Make the POAs controlled by this manager active
-      poa_manager->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
+      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      orb_ptr->run (TAO_ENV_SINGLE_ARG_PARAMETER);
+      orb_ptr->run (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       good_poa->destroy (1,
                          1
-                         TAO_ENV_ARG_PARAMETER);
+                         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       oa_ptr->destroy (1,
                        1
-                       TAO_ENV_ARG_PARAMETER);
+                       ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCH (CORBA::SystemException, sysex)

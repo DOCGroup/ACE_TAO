@@ -40,15 +40,15 @@ public:
 
   void init (int argc,
              char *argv[]
-             TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+             ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
-  void run (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  void run (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
 private:
   // -- Helper methods --
   void verify_reference (Counter_ptr counter,
                          RT_Properties *rt_properties
-                         TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+                         ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
   CORBA::Boolean check_reference (CORBA::Object_ptr object,
                                   const char *msg);

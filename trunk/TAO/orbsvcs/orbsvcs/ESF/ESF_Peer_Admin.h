@@ -38,17 +38,17 @@
  * the PROXY interface must implement:
  *
  * @verbatim
- * void connected (PEER *peer TAO_ENV_ARG_DECL_NOT_USED) throw ();
- * void reconnected (PEER *peer TAO_ENV_ARG_DECL_NOT_USED) throw ();
- * void disconnected (PEER *peer TAO_ENV_ARG_DECL_NOT_USED) throw ();
+ * void connected (PEER *peer ACE_ENV_ARG_DECL_NOT_USED) throw ();
+ * void reconnected (PEER *peer ACE_ENV_ARG_DECL_NOT_USED) throw ();
+ * void disconnected (PEER *peer ACE_ENV_ARG_DECL_NOT_USED) throw ();
  * @endverbatim
  *
  * Similarly, the PEER interface must implement:
  *
  * @verbatim
- * void connected (PROXY *proxy TAO_ENV_ARG_DECL_NOT_USED) throw ();
- * void reconnected (PROXY *proxy TAO_ENV_ARG_DECL_NOT_USED) throw ();
- * void disconnected (PROXY *proxy TAO_ENV_ARG_DECL_NOT_USED) throw ();
+ * void connected (PROXY *proxy ACE_ENV_ARG_DECL_NOT_USED) throw ();
+ * void reconnected (PROXY *proxy ACE_ENV_ARG_DECL_NOT_USED) throw ();
+ * void disconnected (PROXY *proxy ACE_ENV_ARG_DECL_NOT_USED) throw ();
  * @endverbatim
  */
 template<class EVENT_CHANNEL, class PROXY, class INTERFACE, class PEER>
@@ -67,7 +67,7 @@ public:
    * The default implementation is a no-op.
    */
   virtual void peer_connected (PEER *peer
-                               TAO_ENV_ARG_DECL)
+                               ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   /**
@@ -77,7 +77,7 @@ public:
    * <reconnected> method
    */
   virtual void peer_reconnected (PEER *peer
-                                 TAO_ENV_ARG_DECL)
+                                 ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   /**
@@ -86,7 +86,7 @@ public:
    * proxy.
    */
   virtual void peer_disconnected (PEER *peer
-                                  TAO_ENV_ARG_DECL)
+                                  ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 };
 

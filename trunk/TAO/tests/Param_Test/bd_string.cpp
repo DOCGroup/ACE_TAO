@@ -56,7 +56,7 @@ Test_Bounded_String::opname (void) const
 
 void
 Test_Bounded_String::dii_req_invoke (CORBA::Request *req
-                                     TAO_ENV_ARG_DECL)
+                                     ACE_ENV_ARG_DECL)
 {
   req->add_in_arg ("s1") <<= CORBA::Any::from_string (this->in_, 128);
   req->add_inout_arg ("s2") <<= CORBA::Any::from_string (this->inout_, 128);
@@ -67,7 +67,7 @@ Test_Bounded_String::dii_req_invoke (CORBA::Request *req
 
   req->set_return_type (Param_Test::_tc_short_string);
 
-  req->invoke (TAO_ENV_SINGLE_ARG_PARAMETER);
+  req->invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   char *tmp;
@@ -75,13 +75,13 @@ Test_Bounded_String::dii_req_invoke (CORBA::Request *req
   this->ret_ = CORBA::string_dup (tmp);
 
   CORBA::NamedValue_ptr arg2 =
-    req->arguments ()->item (1 TAO_ENV_ARG_PARAMETER);
+    req->arguments ()->item (1 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   *arg2->value () >>= CORBA::Any::to_string (tmp, 128);
   this->inout_ = CORBA::string_dup (tmp);
 
   CORBA::NamedValue_ptr arg3 =
-    req->arguments ()->item (2 TAO_ENV_ARG_PARAMETER);
+    req->arguments ()->item (2 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   *arg3->value () >>= CORBA::Any::to_string (tmp, 128);
   this->out_ = CORBA::string_dup (tmp);
@@ -89,7 +89,7 @@ Test_Bounded_String::dii_req_invoke (CORBA::Request *req
 
 int
 Test_Bounded_String::init_parameters (Param_Test_ptr
-                                                              TAO_ENV_ARG_DECL_NOT_USED)
+                                                              ACE_ENV_ARG_DECL_NOT_USED)
 {
   Generator *gen = GENERATOR::instance (); // value generator
 
@@ -125,7 +125,7 @@ Test_Bounded_String::reset_parameters (void)
 
 int
 Test_Bounded_String::run_sii_test (Param_Test_ptr objref
-                                   TAO_ENV_ARG_DECL)
+                                   ACE_ENV_ARG_DECL)
 {
   ACE_TRY
     {
@@ -134,7 +134,7 @@ Test_Bounded_String::run_sii_test (Param_Test_ptr objref
       this->ret_ = objref->test_bounded_string (this->in_,
                                                 this->inout_,
                                                 str_out
-                                                TAO_ENV_ARG_PARAMETER);
+                                                ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       return 0;

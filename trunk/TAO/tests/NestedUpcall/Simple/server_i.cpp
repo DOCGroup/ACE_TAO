@@ -12,12 +12,12 @@ server_i::server_i (int quiet,
 void
 server_i::start (client_ptr c,
                  CORBA::UShort time_to_live
-                 TAO_ENV_ARG_DECL)
+                 ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->client_ = client::_duplicate (c);
   this->ping (time_to_live
-              TAO_ENV_ARG_PARAMETER);
+              ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   return;
@@ -25,7 +25,7 @@ server_i::start (client_ptr c,
 
 void
 server_i::ping (CORBA::UShort time_to_live
-                TAO_ENV_ARG_DECL)
+                ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (!this->quiet_)
@@ -38,16 +38,16 @@ server_i::ping (CORBA::UShort time_to_live
   if (time_to_live > 0)
     {
       this->client_->ping (time_to_live
-                           TAO_ENV_ARG_PARAMETER);
+                           ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
 }
 
 void
-server_i::shutdown (TAO_ENV_SINGLE_ARG_DECL)
+server_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0
-                        TAO_ENV_ARG_PARAMETER);
+                        ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }

@@ -65,7 +65,7 @@ public:
 
   virtual CORBA::Boolean _is_a (
       const char* logical_type_id
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
   virtual void* _downcast (
@@ -76,37 +76,37 @@ public:
       TAO_ServerRequest &req,
       void *obj,
       void *servant_upcall
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     );
 
   static void _non_existent_skel (
       TAO_ServerRequest &req,
       void *obj,
       void *servant_upcall
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     );
 
   static void _interface_skel (
       TAO_ServerRequest &req,
       void *obj,
       void *servant_upcall
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     );
 
   virtual void _dispatch (
       TAO_ServerRequest &req,
       void *_servant_upcall
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     );
 
   ::CORBA_FixedDef *_this (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
 
   virtual const char* _interface_repository_id (void) const;
 
   virtual CORBA::UShort digits (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -116,12 +116,12 @@ public:
       TAO_ServerRequest &_tao_req,
       void *_tao_obj,
       void *_tao_servant_upcall
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     );
 
   virtual void digits (
       CORBA::UShort digits
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -131,11 +131,11 @@ public:
       TAO_ServerRequest &_tao_req,
       void *_tao_obj,
       void *_tao_servant_upcall
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     );
 
   virtual CORBA::Short scale (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -145,12 +145,12 @@ public:
       TAO_ServerRequest &_tao_req,
       void *_tao_obj,
       void *_tao_servant_upcall
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     );
 
   virtual void scale (
       CORBA::Short scale
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -160,28 +160,28 @@ public:
       TAO_ServerRequest &_tao_req,
       void *_tao_obj,
       void *_tao_servant_upcall
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     );
 
   static void _get_type_skel (
       TAO_ServerRequest &req,
       void *obj,
       void *context
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
   static void _get_def_kind_skel (
       TAO_ServerRequest &req,
       void *obj,
       void *context
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
   static void destroy_skel (
       TAO_ServerRequest &req,
       void *obj,
       void *context
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
 
@@ -201,7 +201,7 @@ public:
 
   virtual ::_TAO_CORBA_FixedDef_Proxy_Impl &select_proxy (
     ::CORBA_FixedDef *object
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   );
 
 private:
@@ -210,7 +210,7 @@ private:
   // as soon as their use is necessary.
   void create_proxy (
     int collocation_strategy
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   );
 
 private:
@@ -253,7 +253,7 @@ public:
 
   virtual CORBA::UShort digits (
       CORBA_Object *_collocated_tao_target_
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -262,7 +262,7 @@ public:
   virtual void digits (
       CORBA_Object *_collocated_tao_target_,
       CORBA::UShort digits
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -270,7 +270,7 @@ public:
 
   virtual CORBA::Short scale (
       CORBA_Object *_collocated_tao_target_
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -279,7 +279,7 @@ public:
   virtual void scale (
       CORBA_Object *_collocated_tao_target_,
       CORBA::Short scale
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -311,7 +311,7 @@ public:
 
   virtual CORBA::Boolean _is_a (
       const char* logical_type_id
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
   virtual void* _downcast (
@@ -322,37 +322,37 @@ public:
       TAO_ServerRequest &req,
       void *obj,
       void *servant_upcall
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     );
 
   static void _non_existent_skel (
       TAO_ServerRequest &req,
       void *obj,
       void *servant_upcall
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     );
 
   static void _interface_skel (
       TAO_ServerRequest &req,
       void *obj,
       void *servant_upcall
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     );
 
   virtual void _dispatch (
       TAO_ServerRequest &req,
       void *_servant_upcall
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     );
 
   ::CORBA_ValueMemberDef *_this (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
 
   virtual const char* _interface_repository_id (void) const;
 
   virtual CORBA::TypeCode_ptr type (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -362,11 +362,11 @@ public:
       TAO_ServerRequest &_tao_req,
       void *_tao_obj,
       void *_tao_servant_upcall
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     );
 
   virtual CORBA_IDLType_ptr type_def (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -376,12 +376,12 @@ public:
       TAO_ServerRequest &_tao_req,
       void *_tao_obj,
       void *_tao_servant_upcall
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     );
 
   virtual void type_def (
       CORBA_IDLType_ptr type_def
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -391,11 +391,11 @@ public:
       TAO_ServerRequest &_tao_req,
       void *_tao_obj,
       void *_tao_servant_upcall
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     );
 
   virtual CORBA::Visibility access (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -405,12 +405,12 @@ public:
       TAO_ServerRequest &_tao_req,
       void *_tao_obj,
       void *_tao_servant_upcall
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     );
 
   virtual void access (
       CORBA::Visibility access
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -420,98 +420,98 @@ public:
       TAO_ServerRequest &_tao_req,
       void *_tao_obj,
       void *_tao_servant_upcall
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     );
 
   static void _get_id_skel (
       TAO_ServerRequest &req,
       void *obj,
       void *context
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
   static void _set_id_skel (
       TAO_ServerRequest &req,
       void *obj,
       void *context
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
   static void _get_name_skel (
       TAO_ServerRequest &req,
       void *obj,
       void *context
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
   static void _set_name_skel (
       TAO_ServerRequest &req,
       void *obj,
       void *context
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
   static void _get_version_skel (
       TAO_ServerRequest &req,
       void *obj,
       void *context
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
   static void _set_version_skel (
       TAO_ServerRequest &req,
       void *obj,
       void *context
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
   static void _get_defined_in_skel (
       TAO_ServerRequest &req,
       void *obj,
       void *context
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
   static void _get_absolute_name_skel (
       TAO_ServerRequest &req,
       void *obj,
       void *context
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
   static void _get_containing_repository_skel (
       TAO_ServerRequest &req,
       void *obj,
       void *context
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
   static void describe_skel (
       TAO_ServerRequest &req,
       void *obj,
       void *context
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
   static void move_skel (
       TAO_ServerRequest &req,
       void *obj,
       void *context
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
   static void _get_def_kind_skel (
       TAO_ServerRequest &req,
       void *obj,
       void *context
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
   static void destroy_skel (
       TAO_ServerRequest &req,
       void *obj,
       void *context
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
 
@@ -531,7 +531,7 @@ public:
 
   virtual ::_TAO_CORBA_ValueMemberDef_Proxy_Impl &select_proxy (
     ::CORBA_ValueMemberDef *object
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   );
 
 private:
@@ -540,7 +540,7 @@ private:
   // as soon as their use is necessary.
   void create_proxy (
     int collocation_strategy
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   );
 
 private:
@@ -583,7 +583,7 @@ public:
 
   virtual CORBA::TypeCode_ptr type (
       CORBA_Object *_collocated_tao_target_
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -591,7 +591,7 @@ public:
 
   virtual CORBA_IDLType_ptr type_def (
       CORBA_Object *_collocated_tao_target_
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -600,7 +600,7 @@ public:
   virtual void type_def (
       CORBA_Object *_collocated_tao_target_,
       CORBA_IDLType_ptr type_def
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -608,7 +608,7 @@ public:
 
   virtual CORBA::Visibility access (
       CORBA_Object *_collocated_tao_target_
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -617,7 +617,7 @@ public:
   virtual void access (
       CORBA_Object *_collocated_tao_target_,
       CORBA::Visibility access
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -649,7 +649,7 @@ public:
 
   virtual CORBA::Boolean _is_a (
       const char* logical_type_id
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
   virtual void* _downcast (
@@ -660,37 +660,37 @@ public:
       TAO_ServerRequest &req,
       void *obj,
       void *servant_upcall
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     );
 
   static void _non_existent_skel (
       TAO_ServerRequest &req,
       void *obj,
       void *servant_upcall
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     );
 
   static void _interface_skel (
       TAO_ServerRequest &req,
       void *obj,
       void *servant_upcall
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     );
 
   virtual void _dispatch (
       TAO_ServerRequest &req,
       void *_servant_upcall
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     );
 
   ::CORBA_ValueDef *_this (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
 
   virtual const char* _interface_repository_id (void) const;
 
   virtual CORBA_InterfaceDefSeq * supported_interfaces (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -700,12 +700,12 @@ public:
       TAO_ServerRequest &_tao_req,
       void *_tao_obj,
       void *_tao_servant_upcall
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     );
 
   virtual void supported_interfaces (
       const CORBA_InterfaceDefSeq & supported_interfaces
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -715,11 +715,11 @@ public:
       TAO_ServerRequest &_tao_req,
       void *_tao_obj,
       void *_tao_servant_upcall
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     );
 
   virtual CORBA_InitializerSeq * initializers (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -729,12 +729,12 @@ public:
       TAO_ServerRequest &_tao_req,
       void *_tao_obj,
       void *_tao_servant_upcall
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     );
 
   virtual void initializers (
       const CORBA_InitializerSeq & initializers
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -744,11 +744,11 @@ public:
       TAO_ServerRequest &_tao_req,
       void *_tao_obj,
       void *_tao_servant_upcall
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     );
 
   virtual CORBA_ValueDef_ptr base_value (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -758,12 +758,12 @@ public:
       TAO_ServerRequest &_tao_req,
       void *_tao_obj,
       void *_tao_servant_upcall
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     );
 
   virtual void base_value (
       CORBA_ValueDef_ptr base_value
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -773,11 +773,11 @@ public:
       TAO_ServerRequest &_tao_req,
       void *_tao_obj,
       void *_tao_servant_upcall
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     );
 
   virtual CORBA_ValueDefSeq * abstract_base_values (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -787,12 +787,12 @@ public:
       TAO_ServerRequest &_tao_req,
       void *_tao_obj,
       void *_tao_servant_upcall
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     );
 
   virtual void abstract_base_values (
       const CORBA_ValueDefSeq & abstract_base_values
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -802,11 +802,11 @@ public:
       TAO_ServerRequest &_tao_req,
       void *_tao_obj,
       void *_tao_servant_upcall
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     );
 
   virtual CORBA::Boolean is_abstract (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -816,12 +816,12 @@ public:
       TAO_ServerRequest &_tao_req,
       void *_tao_obj,
       void *_tao_servant_upcall
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     );
 
   virtual void is_abstract (
       CORBA::Boolean is_abstract
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -831,11 +831,11 @@ public:
       TAO_ServerRequest &_tao_req,
       void *_tao_obj,
       void *_tao_servant_upcall
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     );
 
   virtual CORBA::Boolean is_custom (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -845,12 +845,12 @@ public:
       TAO_ServerRequest &_tao_req,
       void *_tao_obj,
       void *_tao_servant_upcall
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     );
 
   virtual void is_custom (
       CORBA::Boolean is_custom
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -860,11 +860,11 @@ public:
       TAO_ServerRequest &_tao_req,
       void *_tao_obj,
       void *_tao_servant_upcall
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     );
 
   virtual CORBA::Boolean is_truncatable (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -874,12 +874,12 @@ public:
       TAO_ServerRequest &_tao_req,
       void *_tao_obj,
       void *_tao_servant_upcall
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     );
 
   virtual void is_truncatable (
       CORBA::Boolean is_truncatable
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -889,12 +889,12 @@ public:
       TAO_ServerRequest &_tao_req,
       void *_tao_obj,
       void *_tao_servant_upcall
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     );
 
   virtual CORBA::Boolean is_a (
       const char * id
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -904,11 +904,11 @@ public:
       TAO_ServerRequest &_tao_req,
       void *_tao_obj,
       void *_tao_servant_upcall
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     );
 
   virtual CORBA_ValueDef::FullValueDescription * describe_value (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -918,7 +918,7 @@ public:
       TAO_ServerRequest &_tao_req,
       void *_tao_obj,
       void *_tao_servant_upcall
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     );
 
   virtual CORBA_ValueMemberDef_ptr create_value_member (
@@ -927,7 +927,7 @@ public:
       const char * version,
       CORBA_IDLType_ptr type,
       CORBA::Visibility access
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -937,7 +937,7 @@ public:
       TAO_ServerRequest &_tao_req,
       void *_tao_obj,
       void *_tao_servant_upcall
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     );
 
   virtual CORBA_AttributeDef_ptr create_attribute (
@@ -946,7 +946,7 @@ public:
       const char * version,
       CORBA_IDLType_ptr type,
       CORBA::AttributeMode mode
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -956,7 +956,7 @@ public:
       TAO_ServerRequest &_tao_req,
       void *_tao_obj,
       void *_tao_servant_upcall
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     );
 
   virtual CORBA_OperationDef_ptr create_operation (
@@ -968,7 +968,7 @@ public:
       const CORBA_ParDescriptionSeq & params,
       const CORBA_ExceptionDefSeq & exceptions,
       const CORBA_ContextIdSeq & contexts
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -978,224 +978,224 @@ public:
       TAO_ServerRequest &_tao_req,
       void *_tao_obj,
       void *_tao_servant_upcall
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     );
 
   static void lookup_skel (
       TAO_ServerRequest &req,
       void *obj,
       void *context
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
   static void contents_skel (
       TAO_ServerRequest &req,
       void *obj,
       void *context
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
   static void lookup_name_skel (
       TAO_ServerRequest &req,
       void *obj,
       void *context
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
   static void describe_contents_skel (
       TAO_ServerRequest &req,
       void *obj,
       void *context
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
   static void create_module_skel (
       TAO_ServerRequest &req,
       void *obj,
       void *context
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
   static void create_constant_skel (
       TAO_ServerRequest &req,
       void *obj,
       void *context
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
   static void create_struct_skel (
       TAO_ServerRequest &req,
       void *obj,
       void *context
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
   static void create_union_skel (
       TAO_ServerRequest &req,
       void *obj,
       void *context
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
   static void create_enum_skel (
       TAO_ServerRequest &req,
       void *obj,
       void *context
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
   static void create_alias_skel (
       TAO_ServerRequest &req,
       void *obj,
       void *context
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
   static void create_interface_skel (
       TAO_ServerRequest &req,
       void *obj,
       void *context
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
   static void create_value_skel (
       TAO_ServerRequest &req,
       void *obj,
       void *context
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
   static void create_value_box_skel (
       TAO_ServerRequest &req,
       void *obj,
       void *context
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
   static void create_exception_skel (
       TAO_ServerRequest &req,
       void *obj,
       void *context
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
   static void create_native_skel (
       TAO_ServerRequest &req,
       void *obj,
       void *context
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
   static void create_abstract_interface_skel (
       TAO_ServerRequest &req,
       void *obj,
       void *context
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
   static void create_local_interface_skel (
       TAO_ServerRequest &req,
       void *obj,
       void *context
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
   static void _get_id_skel (
       TAO_ServerRequest &req,
       void *obj,
       void *context
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
   static void _set_id_skel (
       TAO_ServerRequest &req,
       void *obj,
       void *context
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
   static void _get_name_skel (
       TAO_ServerRequest &req,
       void *obj,
       void *context
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
   static void _set_name_skel (
       TAO_ServerRequest &req,
       void *obj,
       void *context
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
   static void _get_version_skel (
       TAO_ServerRequest &req,
       void *obj,
       void *context
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
   static void _set_version_skel (
       TAO_ServerRequest &req,
       void *obj,
       void *context
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
   static void _get_defined_in_skel (
       TAO_ServerRequest &req,
       void *obj,
       void *context
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
   static void _get_absolute_name_skel (
       TAO_ServerRequest &req,
       void *obj,
       void *context
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
   static void _get_containing_repository_skel (
       TAO_ServerRequest &req,
       void *obj,
       void *context
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
   static void describe_skel (
       TAO_ServerRequest &req,
       void *obj,
       void *context
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
   static void move_skel (
       TAO_ServerRequest &req,
       void *obj,
       void *context
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
   static void _get_type_skel (
       TAO_ServerRequest &req,
       void *obj,
       void *context
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
   static void _get_def_kind_skel (
       TAO_ServerRequest &req,
       void *obj,
       void *context
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
   static void destroy_skel (
       TAO_ServerRequest &req,
       void *obj,
       void *context
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
 
@@ -1215,7 +1215,7 @@ public:
 
   virtual ::_TAO_CORBA_ValueDef_Proxy_Impl &select_proxy (
     ::CORBA_ValueDef *object
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   );
 
 private:
@@ -1224,7 +1224,7 @@ private:
   // as soon as their use is necessary.
   void create_proxy (
     int collocation_strategy
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   );
 
 private:
@@ -1269,7 +1269,7 @@ public:
 
   virtual CORBA_InterfaceDefSeq * supported_interfaces (
       CORBA_Object *_collocated_tao_target_
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -1278,7 +1278,7 @@ public:
   virtual void supported_interfaces (
       CORBA_Object *_collocated_tao_target_,
       const CORBA_InterfaceDefSeq & supported_interfaces
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -1286,7 +1286,7 @@ public:
 
   virtual CORBA_InitializerSeq * initializers (
       CORBA_Object *_collocated_tao_target_
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -1295,7 +1295,7 @@ public:
   virtual void initializers (
       CORBA_Object *_collocated_tao_target_,
       const CORBA_InitializerSeq & initializers
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -1303,7 +1303,7 @@ public:
 
   virtual CORBA_ValueDef_ptr base_value (
       CORBA_Object *_collocated_tao_target_
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -1312,7 +1312,7 @@ public:
   virtual void base_value (
       CORBA_Object *_collocated_tao_target_,
       CORBA_ValueDef_ptr base_value
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -1320,7 +1320,7 @@ public:
 
   virtual CORBA_ValueDefSeq * abstract_base_values (
       CORBA_Object *_collocated_tao_target_
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -1329,7 +1329,7 @@ public:
   virtual void abstract_base_values (
       CORBA_Object *_collocated_tao_target_,
       const CORBA_ValueDefSeq & abstract_base_values
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -1337,7 +1337,7 @@ public:
 
   virtual CORBA::Boolean is_abstract (
       CORBA_Object *_collocated_tao_target_
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -1346,7 +1346,7 @@ public:
   virtual void is_abstract (
       CORBA_Object *_collocated_tao_target_,
       CORBA::Boolean is_abstract
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -1354,7 +1354,7 @@ public:
 
   virtual CORBA::Boolean is_custom (
       CORBA_Object *_collocated_tao_target_
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -1363,7 +1363,7 @@ public:
   virtual void is_custom (
       CORBA_Object *_collocated_tao_target_,
       CORBA::Boolean is_custom
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -1371,7 +1371,7 @@ public:
 
   virtual CORBA::Boolean is_truncatable (
       CORBA_Object *_collocated_tao_target_
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -1380,7 +1380,7 @@ public:
   virtual void is_truncatable (
       CORBA_Object *_collocated_tao_target_,
       CORBA::Boolean is_truncatable
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -1389,7 +1389,7 @@ public:
   virtual CORBA::Boolean is_a (
       CORBA_Object *_collocated_tao_target_,
       const char * id
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -1397,7 +1397,7 @@ public:
 
   virtual CORBA_ValueDef::FullValueDescription * describe_value (
       CORBA_Object *_collocated_tao_target_
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -1410,7 +1410,7 @@ public:
       const char * version,
       CORBA_IDLType_ptr type,
       CORBA::Visibility access
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -1423,7 +1423,7 @@ public:
       const char * version,
       CORBA_IDLType_ptr type,
       CORBA::AttributeMode mode
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -1439,7 +1439,7 @@ public:
       const CORBA_ParDescriptionSeq & params,
       const CORBA_ExceptionDefSeq & exceptions,
       const CORBA_ContextIdSeq & contexts
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -1471,7 +1471,7 @@ public:
 
   virtual CORBA::Boolean _is_a (
       const char* logical_type_id
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
   virtual void* _downcast (
@@ -1482,37 +1482,37 @@ public:
       TAO_ServerRequest &req,
       void *obj,
       void *servant_upcall
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     );
 
   static void _non_existent_skel (
       TAO_ServerRequest &req,
       void *obj,
       void *servant_upcall
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     );
 
   static void _interface_skel (
       TAO_ServerRequest &req,
       void *obj,
       void *servant_upcall
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     );
 
   virtual void _dispatch (
       TAO_ServerRequest &req,
       void *_servant_upcall
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     );
 
   ::CORBA_ValueBoxDef *_this (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
 
   virtual const char* _interface_repository_id (void) const;
 
   virtual CORBA_IDLType_ptr original_type_def (
-      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -1522,12 +1522,12 @@ public:
       TAO_ServerRequest &_tao_req,
       void *_tao_obj,
       void *_tao_servant_upcall
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     );
 
   virtual void original_type_def (
       CORBA_IDLType_ptr original_type_def
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -1537,105 +1537,105 @@ public:
       TAO_ServerRequest &_tao_req,
       void *_tao_obj,
       void *_tao_servant_upcall
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     );
 
   static void _get_id_skel (
       TAO_ServerRequest &req,
       void *obj,
       void *context
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
   static void _set_id_skel (
       TAO_ServerRequest &req,
       void *obj,
       void *context
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
   static void _get_name_skel (
       TAO_ServerRequest &req,
       void *obj,
       void *context
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
   static void _set_name_skel (
       TAO_ServerRequest &req,
       void *obj,
       void *context
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
   static void _get_version_skel (
       TAO_ServerRequest &req,
       void *obj,
       void *context
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
   static void _set_version_skel (
       TAO_ServerRequest &req,
       void *obj,
       void *context
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
   static void _get_defined_in_skel (
       TAO_ServerRequest &req,
       void *obj,
       void *context
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
   static void _get_absolute_name_skel (
       TAO_ServerRequest &req,
       void *obj,
       void *context
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
   static void _get_containing_repository_skel (
       TAO_ServerRequest &req,
       void *obj,
       void *context
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
   static void describe_skel (
       TAO_ServerRequest &req,
       void *obj,
       void *context
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
   static void move_skel (
       TAO_ServerRequest &req,
       void *obj,
       void *context
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
   static void _get_type_skel (
       TAO_ServerRequest &req,
       void *obj,
       void *context
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
   static void _get_def_kind_skel (
       TAO_ServerRequest &req,
       void *obj,
       void *context
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
   static void destroy_skel (
       TAO_ServerRequest &req,
       void *obj,
       void *context
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
 
@@ -1655,7 +1655,7 @@ public:
 
   virtual ::_TAO_CORBA_ValueBoxDef_Proxy_Impl &select_proxy (
     ::CORBA_ValueBoxDef *object
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   );
 
 private:
@@ -1664,7 +1664,7 @@ private:
   // as soon as their use is necessary.
   void create_proxy (
     int collocation_strategy
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   );
 
 private:
@@ -1707,7 +1707,7 @@ public:
 
   virtual CORBA_IDLType_ptr original_type_def (
       CORBA_Object *_collocated_tao_target_
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException
@@ -1716,7 +1716,7 @@ public:
   virtual void original_type_def (
       CORBA_Object *_collocated_tao_target_,
       CORBA_IDLType_ptr original_type_def
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException

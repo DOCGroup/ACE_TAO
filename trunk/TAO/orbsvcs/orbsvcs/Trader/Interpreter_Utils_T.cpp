@@ -17,11 +17,11 @@ TAO_find (const CORBA::Any& sequence, const OPERAND_TYPE& element)
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      dyn_seq.init (sequence TAO_ENV_ARG_PARAMETER);
+      dyn_seq.init (sequence ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::ULong length =
-        dyn_seq.get_length (TAO_ENV_SINGLE_ARG_PARAMETER);
+        dyn_seq.get_length (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       for (CORBA::ULong i = 0; i < length && ! return_value; i++)

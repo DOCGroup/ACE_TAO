@@ -47,23 +47,23 @@ class TAO_Notify_Export TAO_Notify_EMO_Factory : public ACE_Service_Object
  public:
   virtual ~TAO_Notify_EMO_Factory (){};
 
-  virtual TAO_Notify_Event_Manager* create_event_manager (TAO_Notify_EventChannel_i* channel TAO_ENV_ARG_DECL)= 0;
+  virtual TAO_Notify_Event_Manager* create_event_manager (TAO_Notify_EventChannel_i* channel ACE_ENV_ARG_DECL)= 0;
   // Create an event manager.
 
-  virtual TAO_Notify_Event_Map* create_event_map (TAO_ENV_SINGLE_ARG_DECL)= 0;
+  virtual TAO_Notify_Event_Map* create_event_map (ACE_ENV_SINGLE_ARG_DECL)= 0;
   // Create the event map.
 
-  virtual TAO_Notify_Event_Processor* create_event_processor (TAO_Notify_Event_Manager* event_manager TAO_ENV_ARG_DECL)= 0;
+  virtual TAO_Notify_Event_Processor* create_event_processor (TAO_Notify_Event_Manager* event_manager ACE_ENV_ARG_DECL)= 0;
   // Create event processor.
 
   // = Create processing tasks.
-  virtual TAO_Notify_Worker_Task* create_source_eval_task (TAO_ENV_SINGLE_ARG_DECL)= 0;
-  virtual TAO_Notify_Worker_Task* create_lookup_task (TAO_ENV_SINGLE_ARG_DECL)= 0;
-  virtual TAO_Notify_Worker_Task* create_listener_eval_task (TAO_ENV_SINGLE_ARG_DECL)= 0;
+  virtual TAO_Notify_Worker_Task* create_source_eval_task (ACE_ENV_SINGLE_ARG_DECL)= 0;
+  virtual TAO_Notify_Worker_Task* create_lookup_task (ACE_ENV_SINGLE_ARG_DECL)= 0;
+  virtual TAO_Notify_Worker_Task* create_listener_eval_task (ACE_ENV_SINGLE_ARG_DECL)= 0;
 
-  virtual TAO_Notify_Worker_Task* create_dispatching_task (TAO_ENV_SINGLE_ARG_DECL)= 0;
+  virtual TAO_Notify_Worker_Task* create_dispatching_task (ACE_ENV_SINGLE_ARG_DECL)= 0;
   // Task that dispatches events.
-  virtual TAO_Notify_Worker_Task* create_updates_task (TAO_ENV_SINGLE_ARG_DECL)= 0;
+  virtual TAO_Notify_Worker_Task* create_updates_task (ACE_ENV_SINGLE_ARG_DECL)= 0;
   // Task that dispatches updates.
 
   // Destroy processing tasks.

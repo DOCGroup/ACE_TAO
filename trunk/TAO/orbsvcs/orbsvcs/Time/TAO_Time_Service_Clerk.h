@@ -57,13 +57,13 @@ public:
   ~TAO_Time_Service_Clerk (void);
   // Destructor.
 
-  virtual CosTime::UTO_ptr universal_time (TAO_ENV_SINGLE_ARG_DECL)
+  virtual CosTime::UTO_ptr universal_time (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosTime::TimeUnavailable));
   // This operation returns the global time and an estimate of
   // inaccuracy in a UTO.
 
-  virtual CosTime::UTO_ptr secure_universal_time (TAO_ENV_SINGLE_ARG_DECL)
+  virtual CosTime::UTO_ptr secure_universal_time (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosTime::TimeUnavailable));
   // This operation returns the global time in a UTO only if the time
@@ -74,18 +74,18 @@ public:
   virtual CosTime::UTO_ptr new_universal_time (TimeBase::TimeT time,
                                                TimeBase::InaccuracyT inaccuracy,
                                                TimeBase::TdfT tdf
-                                               TAO_ENV_ARG_DECL)
+                                               ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // This creates a new UTO based on the given parameters.
 
   virtual CosTime::UTO_ptr uto_from_utc (const TimeBase::UtcT &utc
-                                         TAO_ENV_ARG_DECL)
+                                         ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // This creates a new UTO given a time in the UtcT form.
 
   virtual CosTime::TIO_ptr new_interval (TimeBase::TimeT lower,
                                          TimeBase::TimeT upper
-                                         TAO_ENV_ARG_DECL)
+                                         ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // This creates a new TIO with the given parameters.
 

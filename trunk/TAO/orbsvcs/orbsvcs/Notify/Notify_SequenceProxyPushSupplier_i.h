@@ -50,7 +50,7 @@ public:
 
   virtual void connect_sequence_push_consumer (
     CosNotifyComm::SequencePushConsumer_ptr push_consumer
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException,
@@ -60,24 +60,24 @@ public:
 
   // @@ Pradeep: more indentation problems....
   virtual void disconnect_sequence_push_supplier (
-    TAO_ENV_SINGLE_ARG_DECL
+    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ));
 
 
-  virtual void shutdown (TAO_ENV_SINGLE_ARG_DECL);
+  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL);
   // Shutdown.
 
 protected:
-  virtual void dispatch_event_i (TAO_Notify_Event &event TAO_ENV_ARG_DECL);
+  virtual void dispatch_event_i (TAO_Notify_Event &event ACE_ENV_ARG_DECL);
   // Deliver the event to the consumer.
 
-  virtual void dispatch_update_i (CosNotification::EventTypeSeq added, CosNotification::EventTypeSeq removed TAO_ENV_ARG_DECL);
+  virtual void dispatch_update_i (CosNotification::EventTypeSeq added, CosNotification::EventTypeSeq removed ACE_ENV_ARG_DECL);
   // Deliver the update to the consumer.
 
-  void setup_qos_policies (TAO_ENV_SINGLE_ARG_DECL);
+  void setup_qos_policies (ACE_ENV_SINGLE_ARG_DECL);
   // Do what we need to do after the qos policies are set.
 
   virtual int handle_timeout (const ACE_Time_Value& current_time,

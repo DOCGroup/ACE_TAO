@@ -22,7 +22,7 @@ Server_Task::svc (void)
     {
       // run the test for at most 120 seconds...
       // ACE_Time_Value tv (120, 0);
-      this->orb_->run ( /* tv, */ TAO_ENV_SINGLE_ARG_PARAMETER);
+      this->orb_->run ( /* tv, */ ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

@@ -63,7 +63,7 @@ Server_i::parse_args (void)
 // with it.
 
 int
-Server_i::init_naming_service (TAO_ENV_SINGLE_ARG_DECL)
+Server_i::init_naming_service (ACE_ENV_SINGLE_ARG_DECL)
 {
   ACE_TRY
     {
@@ -71,7 +71,7 @@ Server_i::init_naming_service (TAO_ENV_SINGLE_ARG_DECL)
       this->orb_manager_.init_child_poa (this->argc_,
                                          this->argv_,
                                          "child_poa"
-                                         TAO_ENV_ARG_PARAMETER);
+                                         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POA_ptr child_poa
@@ -105,7 +105,7 @@ Server_i::init_naming_service (TAO_ENV_SINGLE_ARG_DECL)
 int
 Server_i::create_server (void)
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
 
@@ -118,7 +118,7 @@ Server_i::create_server (void)
       CORBA::String_var server_str =
         this->orb_manager_.activate_under_child_poa ("server",
                                                      this->time_service_server_impl_
-                                                     TAO_ENV_ARG_PARAMETER);
+                                                     ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::ObjectId_var id =
@@ -126,10 +126,10 @@ Server_i::create_server (void)
 
       CORBA::Object_var server_ref =
         this->orb_manager_.child_poa ()->id_to_reference (id.in ()
-                                                          TAO_ENV_ARG_PARAMETER);
+                                                          ACE_ENV_ARG_PARAMETER);
 
       this->time_service_server_ = CosTime::TimeService::_narrow (server_ref.in ()
-                                                                  TAO_ENV_ARG_PARAMETER);
+                                                                  ACE_ENV_ARG_PARAMETER);
 
 
       ACE_TRY_CHECK;
@@ -141,7 +141,7 @@ Server_i::create_server (void)
 
       CORBA::String_var objref_server =
         this->orb_->object_to_string (server_ref.in ()
-                                      TAO_ENV_ARG_PARAMETER);
+                                      ACE_ENV_ARG_PARAMETER);
 
       // Print the server IOR on the console.
       ACE_DEBUG ((LM_DEBUG,
@@ -178,11 +178,11 @@ Server_i::create_server (void)
 int
 Server_i::if_first_server (CosNaming::Name &server_context_name)
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       this->my_name_server_->resolve
-        (server_context_name TAO_ENV_ARG_PARAMETER);
+        (server_context_name ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCH (CORBA::UserException, userex)
@@ -200,7 +200,7 @@ Server_i::if_first_server (CosNaming::Name &server_context_name)
 int
 Server_i::register_server (void)
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       CosNaming::Name server_context_name;
@@ -216,13 +216,13 @@ Server_i::register_server (void)
         {
           // Get context.
           server_context =
-            this->my_name_server_->new_context (TAO_ENV_SINGLE_ARG_PARAMETER);
+            this->my_name_server_->new_context (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           // Bind.
           this->my_name_server_->rebind_context (server_context_name,
                                                  server_context.in ()
-                                                 TAO_ENV_ARG_PARAMETER);
+                                                 ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
 
@@ -242,7 +242,7 @@ Server_i::register_server (void)
 
       this->my_name_server_->rebind (server_name,
                                      this->time_service_server_.in ()
-                                     TAO_ENV_ARG_PARAMETER);
+                                     ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,
@@ -267,7 +267,7 @@ Server_i::register_server (void)
 int
 Server_i::init (int argc,
                 char *argv[]
-                TAO_ENV_ARG_DECL)
+                ACE_ENV_ARG_DECL)
 {
   this->argc_ = argc;
   this->argv_ = argv;
@@ -281,7 +281,7 @@ Server_i::init (int argc,
       if (this->orb_manager_.init_child_poa (argc,
                                              argv,
                                              "time_server"
-                                             TAO_ENV_ARG_PARAMETER) == -1)
+                                             ACE_ENV_ARG_PARAMETER) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
                                  "%p\n",
                                  "init_child_poa"),
@@ -289,7 +289,7 @@ Server_i::init (int argc,
       ACE_TRY_CHECK;
 
       // Activate the POA Manager.
-      this->orb_manager_.activate_poa_manager (TAO_ENV_SINGLE_ARG_PARAMETER);
+      this->orb_manager_.activate_poa_manager (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       int result = this->parse_args ();
@@ -301,7 +301,7 @@ Server_i::init (int argc,
       this->orb_ = this->orb_manager_.orb ();
 
       // Use the Naming Service Register the above implementation with the Naming Service.
-      this->init_naming_service (TAO_ENV_SINGLE_ARG_PARAMETER);
+      this->init_naming_service (ACE_ENV_SINGLE_ARG_PARAMETER);
 
       ACE_TRY_CHECK;
 
@@ -326,9 +326,9 @@ Server_i::init (int argc,
 // Run the event loop for ORB.
 
 int
-Server_i::run (TAO_ENV_SINGLE_ARG_DECL)
+Server_i::run (ACE_ENV_SINGLE_ARG_DECL)
 {
-  int retval = this->orb_manager_.run (TAO_ENV_SINGLE_ARG_PARAMETER);
+  int retval = this->orb_manager_.run (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   if (retval == -1)

@@ -149,7 +149,7 @@ TAO_AV_Core::reactor (void)
 int
 TAO_AV_Core::init (CORBA::ORB_ptr orb,
                    PortableServer::POA_ptr poa
-                   TAO_ENV_ARG_DECL_NOT_USED)
+                   ACE_ENV_ARG_DECL_NOT_USED)
 {
   if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"TAO_AV_Core::init "));
   this->orb_ = CORBA::ORB::_duplicate (orb);
@@ -1016,18 +1016,18 @@ TAO_AV_Core::deactivate_servant (PortableServer::Servant servant)
   // the servant when all pending requests on this servant are
   // complete.
 
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      PortableServer::POA_var poa = servant->_default_POA (TAO_ENV_SINGLE_ARG_PARAMETER);
+      PortableServer::POA_var poa = servant->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::ObjectId_var id = poa->servant_to_id (servant
-                                                            TAO_ENV_ARG_PARAMETER);
+                                                            ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       poa->deactivate_object (id.in ()
-                              TAO_ENV_ARG_PARAMETER);
+                              ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

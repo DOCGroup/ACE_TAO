@@ -53,7 +53,7 @@ public:
   /// given attribute type list associated with the current request.
   virtual Security::AttributeList * get_attributes (
       const Security::AttributeTypeList & attributes
-      TAO_ENV_ARG_DECL)
+      ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
   //@}
 
@@ -67,7 +67,7 @@ public:
   /// Return the Credentials received from the client associate with
   /// the current request.
   virtual SecurityLevel2::ReceivedCredentials_ptr received_credentials (
-      TAO_ENV_SINGLE_ARG_DECL)
+      ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
   //@}
 

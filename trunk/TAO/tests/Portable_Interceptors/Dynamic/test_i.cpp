@@ -12,7 +12,7 @@ Visual_i::Visual_i (CORBA::ORB_ptr orb)
 
 void
 Visual_i::normal (CORBA::Long arg
-                  TAO_ENV_ARG_DECL_NOT_USED)
+                  ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG, "Visual::normal called with %d\n", arg));
@@ -21,7 +21,7 @@ Visual_i::normal (CORBA::Long arg
 CORBA::Long
 Visual_i::calculate (CORBA::Long one,
                      CORBA::Long two
-                     TAO_ENV_ARG_DECL_NOT_USED)
+                     ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG, "Visual::calculate\n"));
@@ -29,7 +29,7 @@ Visual_i::calculate (CORBA::Long one,
 }
 
 void
-Visual_i::user (TAO_ENV_SINGLE_ARG_DECL)
+Visual_i::user (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,Test_Interceptors::Silly))
 {
   ACE_DEBUG ((LM_DEBUG, "Visual::user, throwning Silly\n"));
@@ -37,7 +37,7 @@ Visual_i::user (TAO_ENV_SINGLE_ARG_DECL)
 }
 
 void
-Visual_i::system (TAO_ENV_SINGLE_ARG_DECL)
+Visual_i::system (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG, "Visual::user, throwing INV_OBJREF\n"));
@@ -45,7 +45,7 @@ Visual_i::system (TAO_ENV_SINGLE_ARG_DECL)
 }
 
 void
-Visual_i::shutdown (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+Visual_i::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown ();

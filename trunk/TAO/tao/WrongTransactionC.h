@@ -66,8 +66,8 @@ public:
   virtual void _raise (void);
 
   virtual void _tao_encode (TAO_OutputCDR &cdr
-                            TAO_ENV_ARG_DECL_NOT_USED) const;
-  virtual void _tao_decode (TAO_InputCDR &cdr TAO_ENV_ARG_DECL_NOT_USED);
+                            ACE_ENV_ARG_DECL_NOT_USED) const;
+  virtual void _tao_decode (TAO_InputCDR &cdr ACE_ENV_ARG_DECL_NOT_USED);
 
   static CORBA_WrongTransaction *_downcast (CORBA::Exception *);
 

@@ -54,12 +54,12 @@ public:
   virtual CORBA_InterfaceDef_ptr get_interface (
       CORBA::ORB_ptr orb,
       const char *repo_id
-      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 
   virtual CORBA_InterfaceDef_ptr get_interface_remote (
       const CORBA::Object_ptr target
-      TAO_ENV_ARG_DECL
+      ACE_ENV_ARG_DECL
     );
 };
 

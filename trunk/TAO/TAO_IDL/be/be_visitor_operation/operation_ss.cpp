@@ -127,7 +127,7 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
       << "TAO_ServerRequest &_tao_server_request," << be_nl
       << "void *_tao_object_reference," << be_nl
       << "void *_tao_servant_upcall" << be_nl
-      << "TAO_ENV_ARG_DECL" << be_uidt_nl
+      << "ACE_ENV_ARG_DECL" << be_uidt_nl
       << ")" << be_uidt_nl;
 
   // Generate the actual code for the skeleton. However, if any of the argument
@@ -295,7 +295,7 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
       << be_nl << be_nl;
 
   // Invoke the receive_request() interception point.
-  *os << "_tao_vfr.receive_request (&_tao_ri TAO_ENV_ARG_PARAMETER);" << be_nl
+  *os << "_tao_vfr.receive_request (&_tao_ri ACE_ENV_ARG_PARAMETER);" << be_nl
       << "ACE_TRY_CHECK;" << be_nl;
 
   *os << "\n#endif /* TAO_HAS_INTERCEPTORS */\n";
@@ -404,7 +404,7 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
     }
 
   *os << "_tao_ri.reply_status (PortableInterceptor::SUCCESSFUL);" << be_nl
-      << "_tao_vfr.send_reply (&_tao_ri TAO_ENV_ARG_PARAMETER);"<< be_nl
+      << "_tao_vfr.send_reply (&_tao_ri ACE_ENV_ARG_PARAMETER);"<< be_nl
           << "ACE_TRY_CHECK;" << be_uidt_nl;
 
   *os << "}" << be_uidt_nl
@@ -414,7 +414,7 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
   *os << "_tao_ri.exception (&ACE_ANY_EXCEPTION);"<< be_nl
       << "_tao_vfr.send_exception (" << be_idt << be_idt_nl
       << "&_tao_ri" << be_nl
-      << "TAO_ENV_ARG_PARAMETER" << be_uidt_nl
+      << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
       << ");" << be_uidt_nl
       << "ACE_TRY_CHECK;" << be_nl;
 
@@ -423,7 +423,7 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
   // exception.
   *os << be_nl
       << "PortableInterceptor::ReplyStatus _tao_status =" << be_idt_nl
-      << "_tao_ri.reply_status (TAO_ENV_SINGLE_ARG_PARAMETER);" << be_uidt_nl
+      << "_tao_ri.reply_status (ACE_ENV_SINGLE_ARG_PARAMETER);" << be_uidt_nl
       << "ACE_TRY_CHECK;" << be_nl;
 
   *os << be_nl

@@ -59,54 +59,54 @@ class TAO_RTEC_COSEC_Export CosEC_ServantBase :
                      char *eventTypeIds,
                      char *eventSourceIds,
                      char *source_type_pairs
-                     TAO_ENV_ARG_DECL);
+                     ACE_ENV_ARG_DECL);
   // This method creates a local scheduler, rtec and cosec.
   // The POA <poa> specified here is used when <activate> is called to
   // activate the contained servants.
   // The POA <thispoa> is used to activate this.
 
-  int activate (TAO_ENV_SINGLE_ARG_DECL);
+  int activate (ACE_ENV_SINGLE_ARG_DECL);
   // Activates the CosEC with <thispoa_> and friends with the <poa_>
 
-  int activate (const char* servant_id TAO_ENV_ARG_DECL);
+  int activate (const char* servant_id ACE_ENV_ARG_DECL);
   // If the servant_id is not nil then it is used to supply the object id
   // for <this> servant.
 
-  void deactivate (TAO_ENV_SINGLE_ARG_DECL);
+  void deactivate (ACE_ENV_SINGLE_ARG_DECL);
   // Deactivates the CosEC and friends with the POA.
 
   // =  POA_CosEventChannelAdmin::EventChannel methods.
-  virtual CosEventChannelAdmin::ConsumerAdmin_ptr for_consumers (TAO_ENV_SINGLE_ARG_DECL)
+  virtual CosEventChannelAdmin::ConsumerAdmin_ptr for_consumers (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CosEventChannelAdmin::SupplierAdmin_ptr for_suppliers (TAO_ENV_SINGLE_ARG_DECL)
+  virtual CosEventChannelAdmin::SupplierAdmin_ptr for_suppliers (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void destroy (TAO_ENV_SINGLE_ARG_DECL)
+  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
   // Destroys this Event Channel object.
 
  protected:
   // = RtEC creation, activation and deactivation methods.
   virtual POA_RtecEventChannelAdmin::EventChannel_ptr
-  create_rtec (TAO_ENV_SINGLE_ARG_DECL);
+  create_rtec (ACE_ENV_SINGLE_ARG_DECL);
   // Create a local rtec.
 
-  virtual void activate_rtec (TAO_ENV_SINGLE_ARG_DECL);
+  virtual void activate_rtec (ACE_ENV_SINGLE_ARG_DECL);
   // Activates the rtec.
 
-  virtual void deactivate_rtec (TAO_ENV_SINGLE_ARG_DECL);
+  virtual void deactivate_rtec (ACE_ENV_SINGLE_ARG_DECL);
   // Deactivates the rtec.
 
   // = CosEC creation, activation and deactivation methods.
   TAO_CosEC_EventChannel_i*
-  create_cosec (TAO_ENV_SINGLE_ARG_DECL);
+  create_cosec (ACE_ENV_SINGLE_ARG_DECL);
   // Create a local cosec.
 
-  int activate_cosec (TAO_ENV_SINGLE_ARG_DECL);
+  int activate_cosec (ACE_ENV_SINGLE_ARG_DECL);
   // Activates the cosec.
 
-  void deactivate_cosec (TAO_ENV_SINGLE_ARG_DECL);
+  void deactivate_cosec (ACE_ENV_SINGLE_ARG_DECL);
   // Deactivates the cosec.
 
   void init_SupplierQOS (RtecBase::handle_t supp_handle,

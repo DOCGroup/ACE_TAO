@@ -30,7 +30,7 @@ UDP_i::orb (CORBA::ORB_ptr orb)
 
 void
 UDP_i::setResponseHandler (UDP_ptr udpHandler
-                           TAO_ENV_ARG_DECL_NOT_USED)
+                           ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (CORBA::is_nil (udpHandler))
@@ -43,7 +43,7 @@ UDP_i::setResponseHandler (UDP_ptr udpHandler
 void
 UDP_i::invoke (const char * client_name,
                CORBA::Long request_id
-               TAO_ENV_ARG_DECL)
+               ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TRY
@@ -80,7 +80,7 @@ UDP_i::invoke (const char * client_name,
         {
           responseHandler_->invoke (client_name,
                                     request_id
-                                    TAO_ENV_ARG_PARAMETER);
+                                    ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
 
@@ -96,7 +96,7 @@ UDP_i::invoke (const char * client_name,
 
 void
 UDP_i::reset (const char * client_name
-              TAO_ENV_ARG_DECL)
+              ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TRY
@@ -109,7 +109,7 @@ UDP_i::reset (const char * client_name
       if (!CORBA::is_nil (responseHandler_.in ()))
         {
           responseHandler_->reset (client_name
-                                   TAO_ENV_ARG_PARAMETER);
+                                   ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
     }
@@ -124,7 +124,7 @@ UDP_i::reset (const char * client_name
 // Shutdown.
 
 void
-UDP_i::shutdown (TAO_ENV_SINGLE_ARG_DECL)
+UDP_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -134,7 +134,7 @@ UDP_i::shutdown (TAO_ENV_SINGLE_ARG_DECL)
   ACE_TRY
     {
       // Instruct the ORB to shutdown.
-      this->orb_->shutdown (0 TAO_ENV_ARG_PARAMETER);
+      this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

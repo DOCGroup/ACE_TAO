@@ -69,7 +69,7 @@ CORBA_UnknownUserException::_raise (void)
 void
 CORBA_UnknownUserException::_tao_encode (
     TAO_OutputCDR &
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   ) const
 {
   ACE_THROW (CORBA::MARSHAL ());
@@ -77,7 +77,7 @@ CORBA_UnknownUserException::_tao_encode (
 
 void
 CORBA_UnknownUserException::_tao_decode (TAO_InputCDR &
-                                         TAO_ENV_ARG_DECL)
+                                         ACE_ENV_ARG_DECL)
 {
   ACE_THROW (CORBA::MARSHAL ());
 }

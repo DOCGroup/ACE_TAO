@@ -25,7 +25,7 @@ TAO_Collocated_Object::_servant (void) const
 */
 TAO_Collocated_Object *
 TAO_Collocated_Object::_narrow (CORBA::Object_ptr object
-                                TAO_ENV_ARG_DECL_NOT_USED)
+                                ACE_ENV_ARG_DECL_NOT_USED)
 {
   if (object == 0)
     return 0;
@@ -40,11 +40,11 @@ TAO_Collocated_Object::_narrow (CORBA::Object_ptr object
 
 CORBA::Boolean
 TAO_Collocated_Object::_is_a (const CORBA::Char *logical_type_id
-                              TAO_ENV_ARG_DECL)
+                              ACE_ENV_ARG_DECL)
 {
   // If the object is collocated then try locally....
   if (!this->_is_collocated ())
-    return this->CORBA_Object::_is_a (logical_type_id TAO_ENV_ARG_PARAMETER);
+    return this->CORBA_Object::_is_a (logical_type_id ACE_ENV_ARG_PARAMETER);
 
   if (this->_stubobj ()->type_id.in () != 0
       && ACE_OS::strcmp (logical_type_id,
@@ -65,14 +65,14 @@ TAO_Collocated_Object::_is_a (const CORBA::Char *logical_type_id
       servant_upcall.prepare_for_upcall (this->_object_key (),
                                          "_is_a",
                                          forward_to.out ()
-                                         TAO_ENV_ARG_PARAMETER);
+                                         ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
-      return servant_upcall.servant ()->_is_a (logical_type_id TAO_ENV_ARG_PARAMETER);
+      return servant_upcall.servant ()->_is_a (logical_type_id ACE_ENV_ARG_PARAMETER);
     }
 
   // Direct collocation strategy is used.
   if (this->servant_ != 0)
-    return this->servant_->_is_a (logical_type_id TAO_ENV_ARG_PARAMETER);
+    return this->servant_->_is_a (logical_type_id ACE_ENV_ARG_PARAMETER);
 
   // @@ Maybe we want to change this exception...
   ACE_THROW_RETURN (CORBA::INV_OBJREF (), 0);
@@ -80,11 +80,11 @@ TAO_Collocated_Object::_is_a (const CORBA::Char *logical_type_id
 
 CORBA::Boolean
 TAO_Collocated_Object::_is_equivalent (CORBA_Object_ptr other_obj
-                                       TAO_ENV_ARG_DECL)
+                                       ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC (())
 {
   CORBA::Boolean equivalent =
-    this->CORBA_Object::_is_equivalent (other_obj TAO_ENV_ARG_PARAMETER);
+    this->CORBA_Object::_is_equivalent (other_obj ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   if (equivalent)
@@ -106,7 +106,7 @@ TAO_Collocated_Object::_is_equivalent (CORBA_Object_ptr other_obj
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
 CORBA::Boolean
-TAO_Collocated_Object::_non_existent (TAO_ENV_SINGLE_ARG_DECL)
+TAO_Collocated_Object::_non_existent (ACE_ENV_SINGLE_ARG_DECL)
 {
   CORBA::Boolean _tao_retval = 0;
 
@@ -114,7 +114,7 @@ TAO_Collocated_Object::_non_existent (TAO_ENV_SINGLE_ARG_DECL)
     {
       // If the object is collocated then try locally....
       if (!this->_is_collocated ())
-        return this->CORBA_Object::_non_existent (TAO_ENV_SINGLE_ARG_PARAMETER);
+        return this->CORBA_Object::_non_existent (ACE_ENV_SINGLE_ARG_PARAMETER);
 
       TAO_Stub *stub = this->_stubobj ();
 
@@ -131,14 +131,14 @@ TAO_Collocated_Object::_non_existent (TAO_ENV_SINGLE_ARG_DECL)
           servant_upcall.prepare_for_upcall (this->_object_key (),
                                              "_non_existent",
                                              forward_to.out ()
-                                             TAO_ENV_ARG_PARAMETER);
+                                             ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
-          return servant_upcall.servant ()->_non_existent (TAO_ENV_SINGLE_ARG_PARAMETER);
+          return servant_upcall.servant ()->_non_existent (ACE_ENV_SINGLE_ARG_PARAMETER);
         }
 
       // Direct collocation strategy is used.
       if (this->servant_ != 0)
-        return this->servant_->_non_existent (TAO_ENV_SINGLE_ARG_PARAMETER);
+        return this->servant_->_non_existent (ACE_ENV_SINGLE_ARG_PARAMETER);
 
       // @@ Maybe we want to change this exception...
       ACE_THROW_RETURN (CORBA::INV_OBJREF (), 0);

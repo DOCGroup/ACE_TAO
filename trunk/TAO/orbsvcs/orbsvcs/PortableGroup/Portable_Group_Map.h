@@ -83,13 +83,13 @@ public:
   /// This function takes ownership of the memory pointed to be group_id
   void add_groupid_objectkey_pair (PortableGroup::TagGroupTaggedComponent *group_id,
                                    const TAO_ObjectKey &key
-                                   TAO_ENV_ARG_DECL);
+                                   ACE_ENV_ARG_DECL);
 
 
   /// Remove a GroupId->ObjectKey mapping from the map.
   void remove_groupid_objectkey_pair (const PortableGroup::TagGroupTaggedComponent* group_id,
                                       const TAO_ObjectKey &key
-                                      TAO_ENV_ARG_DECL);
+                                      ACE_ENV_ARG_DECL);
 
   /// Dispatch a request to all of the ObjectIds that belong to
   /// the specified group.
@@ -97,7 +97,7 @@ public:
                                     TAO_ORB_Core *orb_core,
                                     TAO_ServerRequest &request,
                                     CORBA::Object_out forward_to
-                                    TAO_ENV_ARG_DECL);
+                                    ACE_ENV_ARG_DECL);
 
   /// Id hash map.
   typedef ACE_Hash_Map_Manager_Ex<

@@ -120,7 +120,7 @@ main (int argc, char *argv[])
       int argc_ = argc;
       for (int i = 0; i < argc; ++i)
         argv_[i] = argv[i];
-      orb = CORBA::ORB_init (argc_, argv_, "" TAO_ENV_ARG_PARAMETER);
+      orb = CORBA::ORB_init (argc_, argv_, "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Parse the arguments.
@@ -130,12 +130,12 @@ main (int argc, char *argv[])
       // Obtain Priority Mapping used by the ORB.
       CORBA::Object_var object =
         orb->resolve_initial_references ("PriorityMappingManager"
-                                         TAO_ENV_ARG_PARAMETER);
+                                         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       RTCORBA::PriorityMappingManager_var mapping_manager =
         RTCORBA::PriorityMappingManager::_narrow (object.in ()
-                                              TAO_ENV_ARG_PARAMETER);
+                                              ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (mapping_manager.in ()))
@@ -214,11 +214,11 @@ Server::svc (void)
       char orb_name[64];
       ACE_OS::sprintf (orb_name, "%d", this->priority_);
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc_, argv_, orb_name TAO_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc_, argv_, orb_name ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA" TAO_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (poa_object.in ()))
@@ -227,23 +227,23 @@ Server::svc (void)
                           1);
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in () TAO_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
+        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::ObjectId_var oid =
-        root_poa->activate_object (this->server_ TAO_ENV_ARG_PARAMETER);
+        root_poa->activate_object (this->server_ ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Object_var obj =
-        root_poa->id_to_reference (oid.in () TAO_ENV_ARG_PARAMETER);
+        root_poa->id_to_reference (oid.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::String_var ior =
-        orb->object_to_string (obj.in () TAO_ENV_ARG_PARAMETER);
+        orb->object_to_string (obj.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "Activated as <%s>\n", ior.in ()));
@@ -266,10 +266,10 @@ Server::svc (void)
       ACE_OS::fclose (output_file);
 
       // Start orb event loop.
-      poa_manager->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
+      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      orb->run (TAO_ENV_SINGLE_ARG_PARAMETER);
+      orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
     }

@@ -14,16 +14,16 @@ ACE_RCSID(tao, client, "$Id$")
 int
 main (int argc, char *argv[])
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
 
   ACE_TRY
     {
       Policy_Verifier policy_verifier;
 
-      policy_verifier.init (argc, argv TAO_ENV_ARG_PARAMETER);
+      policy_verifier.init (argc, argv ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      policy_verifier.run (TAO_ENV_SINGLE_ARG_PARAMETER);
+      policy_verifier.run (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

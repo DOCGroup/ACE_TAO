@@ -38,9 +38,9 @@ TAO_Marshal_Object::~TAO_Marshal_Object (void)
 CORBA::TypeCode::traverse_status
 TAO_Marshal_Object::perform_skip (CORBA::TypeCode_ptr tc,
                                   TAO_InputCDR *stream
-                                  TAO_ENV_ARG_DECL)
+                                  ACE_ENV_ARG_DECL)
 {
-  CORBA::ULong kind = tc->kind (TAO_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::ULong kind = tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
 
   switch (kind)
@@ -73,73 +73,73 @@ TAO_Marshal_Object::perform_skip (CORBA::TypeCode_ptr tc,
     case CORBA::tk_enum:
       {
         TAO_Marshal_Primitive marshal;
-        return marshal.skip (tc, stream TAO_ENV_ARG_PARAMETER);
+        return marshal.skip (tc, stream ACE_ENV_ARG_PARAMETER);
       }
 
     case CORBA::tk_any:
       {
         TAO_Marshal_Any marshal;
-        return marshal.skip (tc, stream TAO_ENV_ARG_PARAMETER);
+        return marshal.skip (tc, stream ACE_ENV_ARG_PARAMETER);
       }
     case CORBA::tk_TypeCode:
       {
         TAO_Marshal_TypeCode marshal;
-        return marshal.skip (tc, stream TAO_ENV_ARG_PARAMETER);
+        return marshal.skip (tc, stream ACE_ENV_ARG_PARAMETER);
       }
     case CORBA::tk_Principal:
       {
         TAO_Marshal_Principal marshal;
-        return marshal.skip (tc, stream TAO_ENV_ARG_PARAMETER);
+        return marshal.skip (tc, stream ACE_ENV_ARG_PARAMETER);
       }
     case CORBA::tk_objref:
       {
         TAO_Marshal_ObjRef marshal;
-        return marshal.skip (tc, stream TAO_ENV_ARG_PARAMETER);
+        return marshal.skip (tc, stream ACE_ENV_ARG_PARAMETER);
       }
     case CORBA::tk_struct:
       {
         TAO_Marshal_Struct marshal;
-        return marshal.skip (tc, stream TAO_ENV_ARG_PARAMETER);
+        return marshal.skip (tc, stream ACE_ENV_ARG_PARAMETER);
       }
     case CORBA::tk_union:
       {
         TAO_Marshal_Union marshal;
-        return marshal.skip (tc, stream TAO_ENV_ARG_PARAMETER);
+        return marshal.skip (tc, stream ACE_ENV_ARG_PARAMETER);
       }
     case CORBA::tk_string:
       {
         TAO_Marshal_String marshal;
-        return marshal.skip (tc, stream TAO_ENV_ARG_PARAMETER);
+        return marshal.skip (tc, stream ACE_ENV_ARG_PARAMETER);
       }
     case CORBA::tk_sequence:
       {
         TAO_Marshal_Sequence marshal;
-        return marshal.skip (tc, stream TAO_ENV_ARG_PARAMETER);
+        return marshal.skip (tc, stream ACE_ENV_ARG_PARAMETER);
       }
     case CORBA::tk_array:
       {
         TAO_Marshal_Array marshal;
-        return marshal.skip (tc, stream TAO_ENV_ARG_PARAMETER);
+        return marshal.skip (tc, stream ACE_ENV_ARG_PARAMETER);
       }
     case CORBA::tk_alias:
       {
         TAO_Marshal_Alias marshal;
-        return marshal.skip (tc, stream TAO_ENV_ARG_PARAMETER);
+        return marshal.skip (tc, stream ACE_ENV_ARG_PARAMETER);
       }
     case CORBA::tk_except:
       {
         TAO_Marshal_Except marshal;
-        return marshal.skip (tc, stream TAO_ENV_ARG_PARAMETER);
+        return marshal.skip (tc, stream ACE_ENV_ARG_PARAMETER);
       }
     case CORBA::tk_wstring:
       {
         TAO_Marshal_WString marshal;
-        return marshal.skip (tc, stream TAO_ENV_ARG_PARAMETER);
+        return marshal.skip (tc, stream ACE_ENV_ARG_PARAMETER);
       }
     case CORBA::tk_value:
       {
         TAO_Marshal_Value marshal;
-        return marshal.skip (tc, stream TAO_ENV_ARG_PARAMETER);
+        return marshal.skip (tc, stream ACE_ENV_ARG_PARAMETER);
       }
     }
 }
@@ -148,9 +148,9 @@ CORBA::TypeCode::traverse_status
 TAO_Marshal_Object::perform_append (CORBA::TypeCode_ptr tc,
                                     TAO_InputCDR *src,
                                     TAO_OutputCDR *dest
-                                    TAO_ENV_ARG_DECL)
+                                    ACE_ENV_ARG_DECL)
 {
-  CORBA::ULong kind = tc->kind (TAO_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::ULong kind = tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
 
   switch (kind)
@@ -183,73 +183,73 @@ TAO_Marshal_Object::perform_append (CORBA::TypeCode_ptr tc,
     case CORBA::tk_enum:
       {
         TAO_Marshal_Primitive marshal;
-        return marshal.append (tc, src, dest TAO_ENV_ARG_PARAMETER);
+        return marshal.append (tc, src, dest ACE_ENV_ARG_PARAMETER);
       }
 
     case CORBA::tk_any:
       {
         TAO_Marshal_Any marshal;
-        return marshal.append (tc, src, dest TAO_ENV_ARG_PARAMETER);
+        return marshal.append (tc, src, dest ACE_ENV_ARG_PARAMETER);
       }
     case CORBA::tk_TypeCode:
       {
         TAO_Marshal_TypeCode marshal;
-        return marshal.append (tc, src, dest TAO_ENV_ARG_PARAMETER);
+        return marshal.append (tc, src, dest ACE_ENV_ARG_PARAMETER);
       }
     case CORBA::tk_Principal:
       {
         TAO_Marshal_Principal marshal;
-        return marshal.append (tc, src, dest TAO_ENV_ARG_PARAMETER);
+        return marshal.append (tc, src, dest ACE_ENV_ARG_PARAMETER);
       }
     case CORBA::tk_objref:
       {
         TAO_Marshal_ObjRef marshal;
-        return marshal.append (tc, src, dest TAO_ENV_ARG_PARAMETER);
+        return marshal.append (tc, src, dest ACE_ENV_ARG_PARAMETER);
       }
     case CORBA::tk_struct:
       {
         TAO_Marshal_Struct marshal;
-        return marshal.append (tc, src, dest TAO_ENV_ARG_PARAMETER);
+        return marshal.append (tc, src, dest ACE_ENV_ARG_PARAMETER);
       }
     case CORBA::tk_union:
       {
         TAO_Marshal_Union marshal;
-        return marshal.append (tc, src, dest TAO_ENV_ARG_PARAMETER);
+        return marshal.append (tc, src, dest ACE_ENV_ARG_PARAMETER);
       }
     case CORBA::tk_string:
       {
         TAO_Marshal_String marshal;
-        return marshal.append (tc, src, dest TAO_ENV_ARG_PARAMETER);
+        return marshal.append (tc, src, dest ACE_ENV_ARG_PARAMETER);
       }
     case CORBA::tk_sequence:
       {
         TAO_Marshal_Sequence marshal;
-        return marshal.append (tc, src, dest TAO_ENV_ARG_PARAMETER);
+        return marshal.append (tc, src, dest ACE_ENV_ARG_PARAMETER);
       }
     case CORBA::tk_array:
       {
         TAO_Marshal_Array marshal;
-        return marshal.append (tc, src, dest TAO_ENV_ARG_PARAMETER);
+        return marshal.append (tc, src, dest ACE_ENV_ARG_PARAMETER);
       }
     case CORBA::tk_alias:
       {
         TAO_Marshal_Alias marshal;
-        return marshal.append (tc, src, dest TAO_ENV_ARG_PARAMETER);
+        return marshal.append (tc, src, dest ACE_ENV_ARG_PARAMETER);
       }
     case CORBA::tk_except:
       {
         TAO_Marshal_Except marshal;
-        return marshal.append (tc, src, dest TAO_ENV_ARG_PARAMETER);
+        return marshal.append (tc, src, dest ACE_ENV_ARG_PARAMETER);
       }
     case CORBA::tk_wstring:
       {
         TAO_Marshal_WString marshal;
-        return marshal.append (tc, src, dest TAO_ENV_ARG_PARAMETER);
+        return marshal.append (tc, src, dest ACE_ENV_ARG_PARAMETER);
       }
     case CORBA::tk_value:
       {
         TAO_Marshal_Value marshal;
-        return marshal.append (tc, src, dest TAO_ENV_ARG_PARAMETER);
+        return marshal.append (tc, src, dest ACE_ENV_ARG_PARAMETER);
       }
     }
 }

@@ -22,7 +22,7 @@ TAO_ClientRequestInterceptor_Adapter::
 void
 TAO_ClientRequestInterceptor_Adapter::
 send_request (TAO_ClientRequestInfo_i *ri
-              TAO_ENV_ARG_DECL)
+              ACE_ENV_ARG_DECL)
 {
   // This method implements one of the "starting" client side
   // interception point.
@@ -41,7 +41,7 @@ send_request (TAO_ClientRequestInfo_i *ri
       for (size_t i = 0 ; i < this->len_; ++i)
         {
           this->interceptors_[i]->send_request (this->info_
-                                                TAO_ENV_ARG_PARAMETER);
+                                                ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           // The starting interception point completed successfully.
@@ -51,7 +51,7 @@ send_request (TAO_ClientRequestInfo_i *ri
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      this->process_forward_request (ri, exc TAO_ENV_ARG_PARAMETER);
+      this->process_forward_request (ri, exc ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_ENDTRY;
@@ -61,7 +61,7 @@ send_request (TAO_ClientRequestInfo_i *ri
 void
 TAO_ClientRequestInterceptor_Adapter::
 receive_reply (TAO_ClientRequestInfo_i *ri
-               TAO_ENV_ARG_DECL)
+               ACE_ENV_ARG_DECL)
 {
   // This is an "ending" interception point so we only process the
   // interceptors pushed on to the flow stack.
@@ -84,7 +84,7 @@ receive_reply (TAO_ClientRequestInfo_i *ri
 
       this->interceptors_[this->stack_size_]->receive_reply (
         this->info_
-        TAO_ENV_ARG_PARAMETER);
+        ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
 
@@ -96,7 +96,7 @@ receive_reply (TAO_ClientRequestInfo_i *ri
 void
 TAO_ClientRequestInterceptor_Adapter::
 receive_exception (TAO_ClientRequestInfo_i *ri
-                   TAO_ENV_ARG_DECL)
+                   ACE_ENV_ARG_DECL)
 {
   // This is an "ending" interception point so we only process the
   // interceptors pushed on to the flow stack.
@@ -121,13 +121,13 @@ receive_exception (TAO_ClientRequestInfo_i *ri
 
           this->interceptors_[this->stack_size_]->receive_exception (
             this->info_
-            TAO_ENV_ARG_PARAMETER);
+            ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      this->process_forward_request (ri, exc TAO_ENV_ARG_PARAMETER);
+      this->process_forward_request (ri, exc ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -144,11 +144,11 @@ receive_exception (TAO_ClientRequestInfo_i *ri
 
       ri->exception (&ACE_ANY_EXCEPTION);
 
-      this->receive_exception (ri TAO_ENV_ARG_PARAMETER);
+      this->receive_exception (ri ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableInterceptor::ReplyStatus status =
-        ri->reply_status (TAO_ENV_SINGLE_ARG_PARAMETER);
+        ri->reply_status (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Only re-throw the exception if it hasn't been transformed by
@@ -165,7 +165,7 @@ receive_exception (TAO_ClientRequestInfo_i *ri
 void
 TAO_ClientRequestInterceptor_Adapter::
 receive_other (TAO_ClientRequestInfo_i *ri
-               TAO_ENV_ARG_DECL)
+               ACE_ENV_ARG_DECL)
 {
   // This is an "ending" interception point so we only process the
   // interceptors pushed on to the flow stack.
@@ -190,13 +190,13 @@ receive_other (TAO_ClientRequestInfo_i *ri
 
           this->interceptors_[this->stack_size_]->receive_other (
             this->info_
-            TAO_ENV_ARG_PARAMETER);
+            ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
     }
   ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
     {
-      this->process_forward_request (ri, exc TAO_ENV_ARG_PARAMETER);
+      this->process_forward_request (ri, exc ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_ENDTRY;
@@ -207,18 +207,18 @@ void
 TAO_ClientRequestInterceptor_Adapter::process_forward_request (
   TAO_ClientRequestInfo_i *ri,
   PortableInterceptor::ForwardRequest &exc
-  TAO_ENV_ARG_DECL)
+  ACE_ENV_ARG_DECL)
 {
   ri->forward_reference (exc);
 
   this->invoke_status_ =
     this->invocation_->location_forward (exc.forward.in ()
-                                         TAO_ENV_ARG_PARAMETER);
+                                         ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // receive_other() is potentially invoked recursively.
   this->receive_other (ri
-                       TAO_ENV_ARG_PARAMETER);
+                       ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 

@@ -37,7 +37,7 @@ ECFL_Coordinator::~ECFL_Coordinator (void)
 
 void
 ECFL_Coordinator::join (Control::Peer_ptr peer
-                        TAO_ENV_ARG_DECL)
+                        ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   {
@@ -59,14 +59,14 @@ ECFL_Coordinator::join (Control::Peer_ptr peer
   for (i = 0; i != this->peers_count_; ++i)
     {
       RtecEventChannelAdmin::EventChannel_var channel =
-        this->peers_[i]->channel (TAO_ENV_SINGLE_ARG_PARAMETER);
+        this->peers_[i]->channel (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       for (size_t j = 0; j != this->peers_count_; ++j)
         {
           if (i != j)
             {
-              this->peers_[j]->connect (channel.in () TAO_ENV_ARG_PARAMETER);
+              this->peers_[j]->connect (channel.in () ACE_ENV_ARG_PARAMETER);
               ACE_CHECK;
             }
         }
@@ -92,7 +92,7 @@ ECFL_Coordinator::join (Control::Peer_ptr peer
             {
               loopbacks[lcount++] =
                 this->peers_[j]->setup_loopback (experiment_id
-                                                 TAO_ENV_ARG_PARAMETER);
+                                                 ACE_ENV_ARG_PARAMETER);
               ACE_CHECK;
             }
         }
@@ -101,12 +101,12 @@ ECFL_Coordinator::join (Control::Peer_ptr peer
         this->peers_[i]->run_experiment (experiment_id,
                                          this->iterations_,
                                          gsf
-                                         TAO_ENV_ARG_PARAMETER);
+                                         ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       for (j = 0; j != lcount; ++j)
         {
-          loopbacks[j]->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
+          loopbacks[j]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_CHECK;
         }
 
@@ -127,10 +127,10 @@ ECFL_Coordinator::join (Control::Peer_ptr peer
 
   for (i = 0; i != this->peers_count_; ++i)
     {
-      this->peers_[i]->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
+      this->peers_[i]->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
     }
 
-  this->orb_->shutdown (0 TAO_ENV_ARG_PARAMETER);
+  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }

@@ -256,7 +256,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const IIOP::ListenPoint 
   {
     CORBA::TypeCode_var type = _tao_any.type ();
     CORBA::Boolean result =
-      type->equivalent (IIOP::_tc_ListenPoint TAO_ENV_ARG_PARAMETER);
+      type->equivalent (IIOP::_tc_ListenPoint ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
     if (!result)
@@ -349,7 +349,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const IIOP::ListenPointL
   {
     CORBA::TypeCode_var type = _tao_any.type ();
     CORBA::Boolean result =
-      type->equivalent (IIOP::_tc_ListenPointList TAO_ENV_ARG_PARAMETER);
+      type->equivalent (IIOP::_tc_ListenPointList ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
     if (!result)
@@ -435,7 +435,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const IIOP::BiDirIIOPSer
     CORBA::TypeCode_var type = _tao_any.type ();
     CORBA::Boolean result =
       type->equivalent (IIOP::_tc_BiDirIIOPServiceContext
-                         TAO_ENV_ARG_PARAMETER);
+                         ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
     if (!result)

@@ -41,15 +41,15 @@ Driver::Driver (void)
 int
 Driver::run (int argc, char* argv[])
 {
-  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" TAO_ENV_ARG_PARAMETER);
+        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA" TAO_ENV_ARG_PARAMETER);
+        orb->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (poa_object.in ()))
@@ -58,11 +58,11 @@ Driver::run (int argc, char* argv[])
                           1);
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in () TAO_ENV_ARG_PARAMETER);
+        PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
+        root_poa->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (this->parse_args (argc, argv))
@@ -119,7 +119,7 @@ Driver::run (int argc, char* argv[])
 
       CORBA::Object_var naming_obj =
         orb->resolve_initial_references ("NameService"
-                                         TAO_ENV_ARG_PARAMETER);
+                                         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (naming_obj.in ()))
@@ -128,7 +128,7 @@ Driver::run (int argc, char* argv[])
                           1);
 
       CosNaming::NamingContext_var naming_context =
-        CosNaming::NamingContext::_narrow (naming_obj.in () TAO_ENV_ARG_PARAMETER);
+        CosNaming::NamingContext::_narrow (naming_obj.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CosNaming::Name name (1);
@@ -136,7 +136,7 @@ Driver::run (int argc, char* argv[])
       name[0].id = CORBA::string_dup ("EventService");
 
       CORBA::Object_var ec_obj =
-        naming_context->resolve (name TAO_ENV_ARG_PARAMETER);
+        naming_context->resolve (name ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       RtecEventChannelAdmin::EventChannel_var channel;
@@ -144,27 +144,27 @@ Driver::run (int argc, char* argv[])
         channel = RtecEventChannelAdmin::EventChannel::_nil ();
       else
         channel = RtecEventChannelAdmin::EventChannel::_narrow (ec_obj.in ()
-                                                                TAO_ENV_ARG_PARAMETER);
+                                                                ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      poa_manager->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
+      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      this->connect_consumers (channel.in () TAO_ENV_ARG_PARAMETER);
+      this->connect_consumers (channel.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "connected consumer(s)\n"));
 
       ACE_DEBUG ((LM_DEBUG, "running the test\n"));
-      orb->run (TAO_ENV_SINGLE_ARG_PARAMETER);
+      orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
 
-      this->disconnect_consumers (TAO_ENV_SINGLE_ARG_PARAMETER);
+      this->disconnect_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      channel->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
+      channel->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCH (CORBA::SystemException, sys_ex)
@@ -183,7 +183,7 @@ void
 Driver::push_consumer (void* /* consumer_cookie */,
                        ACE_hrtime_t /* arrival */,
                        const RtecEventComm::EventSet& events
-                       TAO_ENV_ARG_DECL_NOT_USED)
+                       ACE_ENV_ARG_DECL_NOT_USED)
 {
   // int ID =
   //   (ACE_reinterpret_cast(Test_Consumer**,consumer_cookie)
@@ -274,7 +274,7 @@ Driver::push_consumer (void* /* consumer_cookie */,
 
 void
 Driver::connect_consumers (RtecEventChannelAdmin::EventChannel_ptr channel
-                           TAO_ENV_ARG_DECL)
+                           ACE_ENV_ARG_DECL)
 {
   for (int i = 0; i < this->n_consumers_; ++i)
     {
@@ -287,17 +287,17 @@ Driver::connect_consumers (RtecEventChannelAdmin::EventChannel_ptr channel
       this->consumers_[i]->connect (this->event_a_,
                                     this->event_b_,
                                     channel
-                                    TAO_ENV_ARG_PARAMETER);
+                                    ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
 }
 
 void
-Driver::disconnect_consumers (TAO_ENV_SINGLE_ARG_DECL)
+Driver::disconnect_consumers (ACE_ENV_SINGLE_ARG_DECL)
 {
   for (int i = 0; i < this->n_consumers_; ++i)
     {
-      this->consumers_[i]->disconnect (TAO_ENV_SINGLE_ARG_PARAMETER);
+      this->consumers_[i]->disconnect (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
     }
 }
@@ -382,7 +382,7 @@ void
 Test_Consumer::connect (int event_a,
                         int event_b,
                         RtecEventChannelAdmin::EventChannel_ptr ec
-                        TAO_ENV_ARG_DECL)
+                        ACE_ENV_ARG_DECL)
 {
   ACE_ConsumerQOS_Factory qos;
   qos.start_disjunction_group ();
@@ -392,25 +392,25 @@ Test_Consumer::connect (int event_a,
 
   // = Connect as a consumer.
   RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin =
-    ec->for_consumers (TAO_ENV_SINGLE_ARG_PARAMETER);
+    ec->for_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   this->supplier_proxy_ =
-    consumer_admin->obtain_push_supplier (TAO_ENV_SINGLE_ARG_PARAMETER);
+    consumer_admin->obtain_push_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  RtecEventComm::PushConsumer_var objref = this->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
+  RtecEventComm::PushConsumer_var objref = this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   this->supplier_proxy_->connect_push_consumer (objref.in (),
                                                 qos.get_ConsumerQOS ()
-                                                TAO_ENV_ARG_PARAMETER);
+                                                ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
 }
 
 void
-Test_Consumer::disconnect (TAO_ENV_SINGLE_ARG_DECL)
+Test_Consumer::disconnect (ACE_ENV_SINGLE_ARG_DECL)
 {
   if (CORBA::is_nil (this->supplier_proxy_.in ()))
     return;
@@ -418,20 +418,20 @@ Test_Consumer::disconnect (TAO_ENV_SINGLE_ARG_DECL)
   RtecEventChannelAdmin::ProxyPushSupplier_var proxy =
     this->supplier_proxy_._retn ();
 
-  proxy->disconnect_push_supplier (TAO_ENV_SINGLE_ARG_PARAMETER);
+  proxy->disconnect_push_supplier (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 void
 Test_Consumer::push (const RtecEventComm::EventSet& events
-                     TAO_ENV_ARG_DECL)
+                     ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_hrtime_t arrival = ACE_OS::gethrtime ();
-  this->driver_->push_consumer (this->cookie_, arrival, events TAO_ENV_ARG_PARAMETER);
+  this->driver_->push_consumer (this->cookie_, arrival, events ACE_ENV_ARG_PARAMETER);
 }
 
 void
-Test_Consumer::disconnect_push_consumer (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+Test_Consumer::disconnect_push_consumer (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }

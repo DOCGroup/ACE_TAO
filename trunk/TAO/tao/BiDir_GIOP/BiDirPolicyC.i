@@ -50,10 +50,10 @@ tao_BiDirPolicy_BidirectionalPolicy_nil (
 ACE_INLINE BiDirPolicy::BidirectionalPolicy_ptr
 tao_BiDirPolicy_BidirectionalPolicy_narrow (
     CORBA::Object *p
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return BiDirPolicy::BidirectionalPolicy::_narrow (p TAO_ENV_ARG_PARAMETER);
+  return BiDirPolicy::BidirectionalPolicy::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 ACE_INLINE CORBA::Object *

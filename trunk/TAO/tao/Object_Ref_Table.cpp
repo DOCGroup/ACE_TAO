@@ -33,7 +33,7 @@ void
 TAO_Object_Ref_Table::register_initial_reference (
   const char *id,
   CORBA::Object_ptr obj
-  TAO_ENV_ARG_DECL)
+  ACE_ENV_ARG_DECL)
 {
   if (id == 0)
     ACE_THROW (CORBA::BAD_PARAM (TAO_OMG_VMCID | 27,
@@ -76,7 +76,7 @@ TAO_Object_Ref_Table::register_initial_reference (
 CORBA::Object_ptr
 TAO_Object_Ref_Table::resolve_initial_references (
   const char *id
-  TAO_ENV_ARG_DECL_NOT_USED)
+  ACE_ENV_ARG_DECL_NOT_USED)
 {
   return this->find (id);  // Returns a duplicate.
 }

@@ -26,14 +26,14 @@ TAO_EC_SupplierAdmin::~TAO_EC_SupplierAdmin (void)
 }
 
 RtecEventChannelAdmin::ProxyPushConsumer_ptr
-TAO_EC_SupplierAdmin::obtain_push_consumer (TAO_ENV_SINGLE_ARG_DECL)
+TAO_EC_SupplierAdmin::obtain_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return this->obtain (TAO_ENV_SINGLE_ARG_PARAMETER);
+  return this->obtain (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 PortableServer::POA_ptr
-TAO_EC_SupplierAdmin::_default_POA (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_EC_SupplierAdmin::_default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   return PortableServer::POA::_duplicate (this->default_POA_.in ());
 }

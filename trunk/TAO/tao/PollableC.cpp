@@ -144,10 +144,10 @@ CORBA_Pollable_var::tao_nil (void)
 ::CORBA_Pollable_ptr
 CORBA_Pollable_var::tao_narrow (
     CORBA::Object *p
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return ::CORBA_Pollable::_narrow (p TAO_ENV_ARG_PARAMETER);
+  return ::CORBA_Pollable::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -228,15 +228,15 @@ CORBA_Pollable::~CORBA_Pollable (void)
 
 CORBA_Pollable_ptr CORBA_Pollable::_narrow (
     CORBA::Object_ptr obj
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return CORBA_Pollable::_unchecked_narrow (obj TAO_ENV_ARG_PARAMETER);
+  return CORBA_Pollable::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA_Pollable_ptr CORBA_Pollable::_unchecked_narrow (
     CORBA::Object_ptr obj
-    TAO_ENV_ARG_DECL_NOT_USED
+    ACE_ENV_ARG_DECL_NOT_USED
   )
 {
   if (CORBA::is_nil (obj))
@@ -396,10 +396,10 @@ CORBA_DIIPollable_var::tao_nil (void)
 ::CORBA_DIIPollable_ptr
 CORBA_DIIPollable_var::tao_narrow (
     CORBA::Object *p
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return ::CORBA_DIIPollable::_narrow (p TAO_ENV_ARG_PARAMETER);
+  return ::CORBA_DIIPollable::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -480,15 +480,15 @@ CORBA_DIIPollable::~CORBA_DIIPollable (void)
 
 CORBA_DIIPollable_ptr CORBA_DIIPollable::_narrow (
     CORBA::Object_ptr obj
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return CORBA_DIIPollable::_unchecked_narrow (obj TAO_ENV_ARG_PARAMETER);
+  return CORBA_DIIPollable::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA_DIIPollable_ptr CORBA_DIIPollable::_unchecked_narrow (
     CORBA::Object_ptr obj
-    TAO_ENV_ARG_DECL_NOT_USED
+    ACE_ENV_ARG_DECL_NOT_USED
   )
 {
   if (CORBA::is_nil (obj))
@@ -660,10 +660,10 @@ CORBA_PollableSet_var::tao_nil (void)
 ::CORBA_PollableSet_ptr
 CORBA_PollableSet_var::tao_narrow (
     CORBA::Object *p
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return ::CORBA_PollableSet::_narrow (p TAO_ENV_ARG_PARAMETER);
+  return ::CORBA_PollableSet::_narrow (p ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -744,15 +744,15 @@ CORBA_PollableSet::~CORBA_PollableSet (void)
 
 CORBA_PollableSet_ptr CORBA_PollableSet::_narrow (
     CORBA::Object_ptr obj
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
-  return CORBA_PollableSet::_unchecked_narrow (obj TAO_ENV_ARG_PARAMETER);
+  return CORBA_PollableSet::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA_PollableSet_ptr CORBA_PollableSet::_unchecked_narrow (
     CORBA::Object_ptr obj
-    TAO_ENV_ARG_DECL_NOT_USED
+    ACE_ENV_ARG_DECL_NOT_USED
   )
 {
   if (CORBA::is_nil (obj))
@@ -847,7 +847,7 @@ void CORBA_PollableSet::NoPossiblePollable::_raise ()
 
 void CORBA_PollableSet::NoPossiblePollable::_tao_encode (
     TAO_OutputCDR &
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   ) const
 {
   ACE_THROW (CORBA::MARSHAL ());
@@ -855,7 +855,7 @@ void CORBA_PollableSet::NoPossiblePollable::_tao_encode (
 
 void CORBA_PollableSet::NoPossiblePollable::_tao_decode (
     TAO_InputCDR &
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
   ACE_THROW (CORBA::MARSHAL ());
@@ -915,7 +915,7 @@ void CORBA_PollableSet::UnknownPollable::_raise ()
 
 void CORBA_PollableSet::UnknownPollable::_tao_encode (
     TAO_OutputCDR &
-    TAO_ENV_ARG_DECL) const
+    ACE_ENV_ARG_DECL) const
 {
   ACE_THROW (CORBA::MARSHAL ());
 }
@@ -923,7 +923,7 @@ void CORBA_PollableSet::UnknownPollable::_tao_encode (
 
 void CORBA_PollableSet::UnknownPollable::_tao_decode (
     TAO_InputCDR &
-    TAO_ENV_ARG_DECL
+    ACE_ENV_ARG_DECL
   )
 {
   ACE_THROW (CORBA::MARSHAL ());

@@ -24,13 +24,13 @@ TAO_Profile::~TAO_Profile (void)
 
 void
 TAO_Profile::add_tagged_component (const IOP::TaggedComponent &component
-                                   TAO_ENV_ARG_DECL)
+                                   ACE_ENV_ARG_DECL)
 {
   // Sanity checks.
-  this->verify_orb_configuration (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->verify_orb_configuration (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  this->verify_profile_version (TAO_ENV_SINGLE_ARG_PARAMETER);
+  this->verify_profile_version (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   // ----------------------------------------------------------------
@@ -41,7 +41,7 @@ TAO_Profile::add_tagged_component (const IOP::TaggedComponent &component
 
 void
 TAO_Profile::policies (CORBA::PolicyList *policy_list
-                       TAO_ENV_ARG_DECL)
+                       ACE_ENV_ARG_DECL)
 {
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
@@ -67,7 +67,7 @@ TAO_Profile::policies (CORBA::PolicyList *policy_list
     {
       TAO_OutputCDR out_CDR;
       policy_value_seq[i].ptype =
-        (*policy_list)[i]->policy_type (TAO_ENV_SINGLE_ARG_PARAMETER);
+        (*policy_list)[i]->policy_type (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       out_CDR << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER);
@@ -122,14 +122,14 @@ TAO_Profile::policies (CORBA::PolicyList *policy_list
 #else /* TAO_HAS_CORBA_MESSAGING == 1 */
 
   ACE_UNUSED_ARG (policy_list);
-  TAO_ENV_ARG_NOT_USED;  // FUZZ: ignore check_for_ace_check
+  ACE_ENV_ARG_NOT_USED;  // FUZZ: ignore check_for_ace_check
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 }
 
 
 CORBA::PolicyList&
-TAO_Profile::policies (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Profile::policies (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
@@ -189,7 +189,7 @@ TAO_Profile::policies (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
                     this->orb_core_->orb ()->create_policy (
                       policy_value_seq[i].ptype,
                       dummy_any
-                       TAO_ENV_ARG_PARAMETER);
+                       ACE_ENV_ARG_PARAMETER);
                   ACE_TRY_CHECK;
 
                   if (!CORBA::is_nil (policy.in ()))
@@ -255,7 +255,7 @@ TAO_Profile::the_stub (void)
 }
 
 void
-TAO_Profile::verify_orb_configuration (TAO_ENV_SINGLE_ARG_DECL)
+TAO_Profile::verify_orb_configuration (ACE_ENV_SINGLE_ARG_DECL)
 {
   // If the ORB isn't configured to support tagged components, then
   // throw an exception.
@@ -286,7 +286,7 @@ TAO_Profile::verify_orb_configuration (TAO_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO_Profile::verify_profile_version (TAO_ENV_SINGLE_ARG_DECL)
+TAO_Profile::verify_profile_version (ACE_ENV_SINGLE_ARG_DECL)
 {
   // GIOP 1.0 does not support tagged components.  Throw an exception
   // if the profile is a GIOP 1.0 profile.
@@ -324,10 +324,10 @@ TAO_Profile::supports_multicast (void) const
 
 void
 TAO_Profile::addressing_mode (CORBA::Short addr
-                              TAO_ENV_ARG_DECL)
+                              ACE_ENV_ARG_DECL)
 {
   // ** See race condition note about addressing mode in Profile.h **
-  switch (addr) 
+  switch (addr)
     {
     case TAO_Target_Specification::Key_Addr:
     case TAO_Target_Specification::Profile_Addr:
@@ -370,7 +370,7 @@ TAO_Unknown_Profile::endpoint_count (void)
 
 void
 TAO_Unknown_Profile::parse_string (const char *
-                                   TAO_ENV_ARG_DECL_NOT_USED)
+                                   ACE_ENV_ARG_DECL_NOT_USED)
 {
   // @@ THROW something????
 }
@@ -382,7 +382,7 @@ TAO_Unknown_Profile::object_key_delimiter (void) const
 }
 
 char *
-TAO_Unknown_Profile::to_string (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_Unknown_Profile::to_string (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   // @@ THROW something?
   return 0;
@@ -437,7 +437,7 @@ TAO_Unknown_Profile::is_equivalent (const TAO_Profile* other_profile)
 
 CORBA::ULong
 TAO_Unknown_Profile::hash (CORBA::ULong max
-                           TAO_ENV_ARG_DECL_NOT_USED)
+                           ACE_ENV_ARG_DECL_NOT_USED)
 {
   return (ACE::hash_pjw (ACE_reinterpret_cast (const char*,
                                                this->body_.get_buffer ()),

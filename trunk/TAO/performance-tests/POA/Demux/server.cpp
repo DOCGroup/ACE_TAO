@@ -34,13 +34,13 @@ int main (int argc, char *argv [])
   ACE_TRY_NEW_ENV
     {
       int r =
-        demux_test_server.init (argc, argv TAO_ENV_ARG_PARAMETER);
+        demux_test_server.init (argc, argv ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (r == -1)
         return -1;
 
-      demux_test_server.run (TAO_ENV_SINGLE_ARG_PARAMETER);
+      demux_test_server.run (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCH (CORBA::SystemException, sysex)

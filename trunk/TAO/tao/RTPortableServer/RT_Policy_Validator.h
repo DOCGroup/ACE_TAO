@@ -40,7 +40,7 @@ public:
 
   static TAO_Thread_Pool *extract_thread_pool (TAO_ORB_Core &orb_core,
                                                TAO_Policy_Set &policies
-                                               TAO_ENV_ARG_DECL);
+                                               ACE_ENV_ARG_DECL);
 
   static TAO_Acceptor_Registry *extract_acceptor_registry (TAO_ORB_Core &orb_core,
                                                            TAO_Thread_Pool *thread_pool);
@@ -53,11 +53,11 @@ protected:
    * if that is not the case.
    */
   void validate_impl (TAO_Policy_Set &policies
-                      TAO_ENV_ARG_DECL);
+                      ACE_ENV_ARG_DECL);
 
   /// Add/merge policies.
   void merge_policies_impl (TAO_Policy_Set &policies
-                            TAO_ENV_ARG_DECL);
+                            ACE_ENV_ARG_DECL);
 
   /**
    * Return whether the specified policy type is legal for the
@@ -69,16 +69,16 @@ protected:
 
 private:
   void validate_server_protocol (TAO_Policy_Set &policies
-                                 TAO_ENV_ARG_DECL);
+                                 ACE_ENV_ARG_DECL);
 
   void validate_priorities (TAO_Policy_Set &policies
-                            TAO_ENV_ARG_DECL);
+                            ACE_ENV_ARG_DECL);
 
   void validate_thread_pool (TAO_Policy_Set &policies
-                             TAO_ENV_ARG_DECL);
+                             ACE_ENV_ARG_DECL);
 
   void validate_lifespan (TAO_Policy_Set &policies
-                          TAO_ENV_ARG_DECL);
+                          ACE_ENV_ARG_DECL);
 
   TAO_Acceptor_Registry *acceptor_registry (void);
 
