@@ -8,6 +8,9 @@ Mon Dec 16 12:56:43 1996  David L. Levine  <levine@cs.wustl.edu>
 	  and commented out a few "break"s after "return"s in switch
 	  statements to prevent compiler warnings.
 
+	* ace/Typed_SV_Message.i: reordered initializations in ctor to 
+	  match declaration order.
+
 	* examples/Threads/Makefile, performance-tests/Misc/Makefile,
 	  tests/Makefile, include/makeinclude/platform_*.GNU (except for
 	  platform_vxworks*.GNU):
