@@ -5,74 +5,72 @@
    <META NAME="Template" CONTENT="C:\PROGRAM FILES\MICROSOFT OFFICE\OFFICE\html
 .dot">
    <META NAME="GENERATOR" CONTENT="Mozilla/4.05 [en] (Win95; I) [Netscape]">
-   <TITLE>ACE-Porting</TITLE>
+   <TITLE>Porting ACE to a New OS Platform</TITLE>
 </HEAD>
 <BODY TEXT="#000000" BGCOLOR="#FFFFFF" LINK="#0000FF" VLINK="#FF0000">
 
-<HR>
-<H3>
-Porting ACE to a new Platform</H3>
-Following is a suggestion of a logical step-by-step process that can be
-used when porting the ADAPTIVE Communication Environment to a new platform.
-<UL>
-<LI>
-<B>Make a config header file for the target platform</B></LI>
-</UL>
+<HR><P>
+<H3>Porting ACE to a New OS Platform</H3><P>
 
-<DIR>
-<DIR>There exists a different config header file in ACE_Wrappers/ace for
-each platform to which ACE has been ported (like config-sunos5.5.h, config-sco-
-4.2-nothread.h,
-config-win32-borland.h and so on). It is in that file that the portability
-macros for each particular configuration of ACE is set. A complete description
-of the existent macros can be found in the ACE_Wrappers/ace/Readme file.
-It would possibly be a good idea to look at the config-files for platforms
-with similar characteristics as examples.</DIR>
-</DIR>
+The <A HREF="http://www.cs.wustl.edu/~schmidt/ACE.html">ACE</A>
+framework has been ported to <A
+HREF="http://www.cs.wustl.edu/~schmidt/ACE-versions-i.html">many OS
+platforms</A>.  Porting ACE to new platforms is fairly
+straightforward.  The following document describes the step-by-step
+process to use when porting the various <A
+HREF="http://www.cs.wustl.edu/~schmidt/ACE-overview.html">components
+and layers</A> in ACE to a new OS platform. <P>
 
-<UL>
-<LI>
-<B>Porting the ACE_OS class</B></LI>
-</UL>
+<H4>Make a config header file for the target platform</H4>
 
-<DIR>
-<DIR>The ACE_OS encapsulates most of the differences between all different
-implementations for Unix and Win32. It is the base class of the ACE OS
-abstraction layer. Most of the work implied in porting of ACE to a new
-environment resides in this class.</DIR>
-</DIR>
+There exists a different <CODE>config-*.h</CODE> header file in <A
+HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/ace/">$ACE_ROOT/ace</A>
+for each platform to which ACE has been ported.  This file contains
+the portability macros for each particular configuration of ACE.  A
+complete description of the existent macros can be found in the <A
+HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/ace/README">$ACE_ROOT/ace/README</A>
+file. <P>
 
-<UL>
-<LI>
-<B>Porting the different components of the OS abstraction layer</B></LI>
-</UL>
+Currently, you must edit this file by hand to port it to new OS
+platforms.  It's a good idea to use the config-files for platforms
+with similar characteristics as examples.  Ultimately, we plan to <A
+HREF="http://squall.tn.cornell.edu/aceconf">auto configure</A> these
+files. <P>
 
-<DIR>
-<DIR>The next logical step after porting the ACE_OS class, would be to
-port all of the lower level components of the ACE OS abstraction layer
-(System V IPC, Unix FIFO, Sockets classes and so on). A full list of the
-categories and classes can be found in the ACE_Wrappers/ace/ACE_Categories
-file. It is recommended to concentrate the work on one category at the
-time, instead of going for the big-bang-port-all-at-once approach. The
-ACE distribution comes with several test programs, which resides in the
-ACE_Wrappers/ace/tests folder. They can be used to test the different component
-s
-as they are ported.</DIR>
-</DIR>
+<H4>Porting the ACE_OS Class</H4>
 
-<UL>
-<LI>
-<B>Porting the higher level components of ACE</B></LI>
-</UL>
+The <CODE>ACE_OS</CODE> class encapsulates most of variation between
+the different OS implementations, e.g., UNIX, Win32, and various
+real-time operating systems.  It is the core class of the ACE OS
+abstraction layer.  Most work required to port ACE to a new OS
+platform resides in this class.  There are <EM>many</EM> examples of
+how ACE has been ported to other operating systems in the
+<CODE>ACE_OS</CODE> class in the
+<CODE>$ACE_ROOT/ace/OS.{h,i,cpp}</CODE> files. <P>
 
-<DIR>
-<DIR>Having ported (and tested) all the components of the ACE OS abstraction
-layer, one can proceed to port the higher components of ACE (Reactor, Service
-Configurator, Acceptor and so on). In fact, having reached this far in
-the porting, it should be relatively easy to port the rest of ACE, as most
-of the platform code tweaking should be localized in the OS abstraction
-layer.</DIR>
-</DIR>
+<H4>Porting the C++ Wrapper Components</H4>
+
+After porting the <CODE>ACE_OS</CODE> class, the next step is to port
+all of the ACE C++ wrapper components, such as sockets, threads,
+synchronization mechanisms.  A full list of the categories and classes
+can be found in the <A
+HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/ACE-categories">$ACE_ROOT/ACE-categories</a>
+file.  It is easiest to concentrate on porting one category at the
+time.  The ACE release contain a <A
+HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/tests/README">one-button
+test suite</A> in the <A
+HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/tests/">$ACE_ROOT/tests/</A>
+directory.  These tests can be used to validate the correctness of the
+various ACE C++ wrappers as they are ported. <P>
+
+<H4>Porting the higher level components of ACE</H4>
+
+Having ported (and tested) all the components of the ACE OS
+adapptation layer and C++ wrappers, you can proceed to port the higher
+level components of ACE, such as the Reactor, Service Configurator,
+Connector, Acceptor, and Streams frameworks.  At this point, it should
+be relatively easy to port the rest of ACE because most of the
+platform-dependent code is localized in the lower layers of ACE. <P>
 
 </BODY>
 </HTML>

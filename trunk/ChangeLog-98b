@@ -1,3 +1,13 @@
+Mon Aug 17 14:59:13 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* etc: Added a new file, ACE-porting.html, which explains how to
+ 	  port ACE to new OS platforms.  Thanks to Gabriel Lima
+ 	  <gali@enea.se> for submitting this.
+
+	* ace/FILE_Connector.h: Changed ACE_FILE_Connector so that it no
+ 	  longer inherits from ACE_FILE.  This relationship is unnecessary
+ 	  and was not used.  Thanks to Byron Harris for reporting this.
+
 Mon Aug 17 12:14:13 1998  Steve Huston  <shuston@riverace.com>
 
 	Large number of small changes (all listed below) to begin aligning

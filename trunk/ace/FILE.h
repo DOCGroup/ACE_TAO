@@ -87,6 +87,6 @@ protected:
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/FILE.i"
-#endif
+#endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
 #endif /* ACE_FILE_H */
