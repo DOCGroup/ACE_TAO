@@ -48,7 +48,7 @@ module CORBA
 
     void add_pollable (in Pollable potential);
 
-    Pollable poll (in unsigned long timeout)
+    Pollable get_ready_pollable (in unsigned long timeout)
       raises (NoPossiblePollable);
 
     void remove (in Pollable potential)
