@@ -52,7 +52,7 @@ TAO_NAMESPACE  TAO_IOP
 #if !defined (_TAO_IOP_TAO_IOR_MANIPULATION___VAR_CH_)
 #define _TAO_IOP_TAO_IOR_MANIPULATION___VAR_CH_
 
-  class TAO_Export TAO_IOR_Manipulation_var
+  class TAO_Export TAO_IOR_Manipulation_var : public TAO_Base_var
   {
   public:
     TAO_IOR_Manipulation_var (void); // default constructor
@@ -75,6 +75,9 @@ TAO_NAMESPACE  TAO_IOP
 
   private:
     TAO_IOR_Manipulation_ptr ptr_;
+    // Unimplemented - prevents widening assignment.
+    TAO_IOR_Manipulation_var (const TAO_Base_var &rhs);
+    TAO_IOR_Manipulation_var &operator= (const TAO_Base_var &rhs);
   };
 
 

@@ -1255,6 +1255,10 @@ SOURCE=.\ValueFactory_Map.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\varbase.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Wait_Strategy.h
 # End Source File
 # Begin Source File

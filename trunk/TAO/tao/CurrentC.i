@@ -46,7 +46,8 @@ CORBA_Current_var::ptr (void) const
 
 ACE_INLINE
 CORBA_Current_var::CORBA_Current_var (const CORBA_Current_var &p) // copy constructor
-  : ptr_ (CORBA_Current::_duplicate (p.ptr ()))
+  : TAO_Base_var (),
+    ptr_ (CORBA_Current::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE

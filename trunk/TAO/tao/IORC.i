@@ -53,7 +53,8 @@ TAO_IOP::TAO_IOR_Manipulation_var::ptr (void) const
 
 ACE_INLINE
 TAO_IOP::TAO_IOR_Manipulation_var::TAO_IOR_Manipulation_var (const TAO_IOP::TAO_IOR_Manipulation_var &p) // copy constructor
-  : ptr_ (TAO_IOP::TAO_IOR_Manipulation::_duplicate (p.ptr ()))
+  : TAO_Base_var (),
+    ptr_ (TAO_IOP::TAO_IOR_Manipulation::_duplicate (p.ptr ()))
 {}
 
 ACE_INLINE

@@ -56,7 +56,7 @@ typedef CORBA_Current *CORBA_Current_ptr;
 #if !defined (_CORBA_CURRENT___VAR_CH_)
 #define _CORBA_CURRENT___VAR_CH_
 
-class  CORBA_Current_var
+class  CORBA_Current_var : public TAO_Base_var
 {
 public:
   CORBA_Current_var (void); // default constructor
@@ -79,6 +79,9 @@ public:
 
 private:
   CORBA_Current_ptr ptr_;
+  // Unimplemented - prevents widening assignment.
+  CORBA_Current_var (const TAO_Base_var &rhs);
+  CORBA_Current_var &operator= (const TAO_Base_var &rhs);
 };
 
 

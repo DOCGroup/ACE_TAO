@@ -104,7 +104,7 @@ public:
 class CORBA_Policy;
 typedef CORBA_Policy *CORBA_Policy_ptr;
 
-class TAO_Export  CORBA_Policy_var
+class TAO_Export  CORBA_Policy_var : public TAO_Base_var
 {
 public:
   CORBA_Policy_var (void); // default constructor
@@ -127,6 +127,9 @@ public:
 
 private:
   CORBA_Policy_ptr ptr_;
+  // Unimplemented - prevents widening assignment.
+  CORBA_Policy_var (const TAO_Base_var &rhs);
+  CORBA_Policy_var &operator= (const TAO_Base_var &rhs);
 };
 
 class TAO_Export  CORBA_Policy_out
@@ -359,7 +362,7 @@ private:
   void operator= (const CORBA_PolicyTypeSeq_var &);
 };
 
-class TAO_Export CORBA_PolicyManager_var
+class TAO_Export CORBA_PolicyManager_var : public TAO_Base_var
 {
 public:
   CORBA_PolicyManager_var (void); // default constructor
@@ -382,6 +385,9 @@ public:
 
 private:
   CORBA_PolicyManager_ptr ptr_;
+  // Unimplemented - prevents widening assignment.
+  CORBA_PolicyManager_var (const TAO_Base_var &rhs);
+  CORBA_PolicyManager_var &operator= (const TAO_Base_var &rhs);
 };
 
 class TAO_Export CORBA_PolicyManager_out
@@ -450,7 +456,7 @@ private:
 
 // ****************************************************************
 
-class TAO_Export CORBA_PolicyCurrent_var
+class TAO_Export CORBA_PolicyCurrent_var : public TAO_Base_var
 {
 public:
   CORBA_PolicyCurrent_var (void); // default constructor
@@ -473,6 +479,9 @@ public:
 
 private:
   CORBA_PolicyCurrent_ptr ptr_;
+  // Unimplemented - prevents widening assignment.
+  CORBA_PolicyCurrent_var (const TAO_Base_var &rhs);
+  CORBA_PolicyCurrent_var &operator= (const TAO_Base_var &rhs);
 };
 
 class TAO_Export CORBA_PolicyCurrent_out
