@@ -504,21 +504,6 @@ ACE_Stream<ACE_SYNCH_USE>::ACE_Stream (void * a,
 	       head->name (), tail->name ()));
 }
 
-#if 0
-ACE_Stream<ACE_SYNCH_USE>::ACE_Stream (void *a, 
-                                       ACE_Multiplexor &muxer, 
-                                       ACE_Module<ACE_SYNCH_USE> *head)
-  : linked_us_ (0),
-    final_close_ (this->lock_)
-{
-  ACE_TRACE ("ACE_Stream<ACE_SYNCH_USE>::ACE_Stream");
-  if (this->open (a, muxer, head) == -1)
-    ACE_ERROR ((LM_ERROR,
-                ASYS_TEXT ("ACE_Stream<ACE_SYNCH_USE>::open (%s, %s)\n"), 
-		head->name ()));
-}
-#endif 
-
 template <ACE_SYNCH_DECL>
 ACE_Stream<ACE_SYNCH_USE>::~ACE_Stream (void)
 {

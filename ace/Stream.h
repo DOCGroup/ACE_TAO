@@ -30,7 +30,6 @@
 
 // Forward decls.
 template<ACE_SYNCH_DECL> class ACE_Stream_Iterator;
-//template<ACE_SYNCH_DECL> class ACE_Module;
 
 template <ACE_SYNCH_DECL>
 class ACE_Stream
@@ -41,7 +40,12 @@ class ACE_Stream
   //
   // = DESCRIPTION
   //    A Stream consists of a stack of <ACE_Modules>, each of which
-  //    contains two <ACE_Tasks>.
+  //    contains two <ACE_Tasks>.  Even though the methods in this
+  //    class are virtual, this class isn't really intended for
+  //    subclassing unless you know what you are doing.  In
+  //    particular, the <ACE_Stream> destructor calls <close>, which
+  //    won't be overridden properly unless you call it in a subclass
+  //    destructor.
 public:
   friend class ACE_Stream_Iterator<ACE_SYNCH_USE>;
 
