@@ -1,3 +1,12 @@
+Wed Dec  4 21:11:41 2002  Steve Huston  <shuston@riverace.com>
+
+        * tests/Proactor_Test.cpp: Set all the default options and values
+          before parsing command line options to make it easy to predictably
+          vary things by hand. Also, rather than run for a determined number
+          of seconds, run a specific number of bytes around the loop. This
+          limits the size of the log, especially nice for fast processors.
+          Thanks to Johnny Willemsen <jwillemsen@remedy.nl> for this idea.
+
 Wed Dec  4 18:37:10 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* bin/auto_run_tests.lst: Added a Server_Connection_Purging to the
