@@ -10,7 +10,7 @@
 #include "tao/GIOP.pidl" // from 98-03-01.idl
 #include "tao/Policy.pidl"
 
-#include "PortableGroup.idl"
+#include "PortableGroup_Simple_DS.idl"
 
 
 #pragma prefix "omg.org"

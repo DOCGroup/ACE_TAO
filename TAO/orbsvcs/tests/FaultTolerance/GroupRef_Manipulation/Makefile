@@ -58,13 +58,13 @@ include $(TAO_ROOT)/taoconfig.mk
 
 .PRECIOUS: $(foreach ext, $(IDL_EXT), test$(ext))
 
-TAO_FT_LIBS = -lTAO_FTORB -lTAO_IORManip -lTAO_Messaging
+TAO_FT_LIBS = -lTAO_FTORB -lTAO_IORManip 
 
 server: $(addprefix $(VDIR),$(SERVER_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(TAO_FT_LIBS) $(TAO_SRVR_LIBS) $(POSTLINK)
 
 client: $(addprefix $(VDIR),$(CLIENT_OBJS))
-	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(TAO_FT_LIBS) $(TAO_SRVR_LIBS) $(POSTLINK)
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(TAO_FT_LIBS) $(TAO_CLNT_LIBS) $(POSTLINK)
 
 realclean: clean
 	-$(RM) $(foreach ext, $(IDL_EXT), test$(ext))
