@@ -410,30 +410,6 @@ ACE_Thread_Mutex::remove (void)
   return ACE_OS::thread_mutex_destroy (&this->lock_);
 }
 
-// Implicitly and automatically acquire the lock.
-
-ACE_INLINE
-ACE_Thread_Mutex_Guard::ACE_Thread_Mutex_Guard (ACE_Thread_Mutex &m,
-						int block)
-  : lock_ (m) 
-{ 
-// ACE_TRACE ("ACE_Thread_Mutex_Guard::ACE_Thread_Mutex_Guard");
-  if (block)
-    this->acquire ();
-  else
-    this->tryacquire ();
-}
-
-// Implicitly release the lock.
-
-ACE_INLINE
-ACE_Thread_Mutex_Guard::~ACE_Thread_Mutex_Guard (void) 
-{ 
-// ACE_TRACE ("ACE_Thread_Mutex_Guard::~ACE_Thread_Mutex_Guard");
-  if (this->owner_ != -1)
-    this->lock_.release (); 
-}
-
 ACE_INLINE int 
 ACE_Thread_Mutex_Guard::locked (void) 
 { 
@@ -459,6 +435,20 @@ ACE_Thread_Mutex_Guard::tryacquire (void)
   return this->owner_ = this->lock_.tryacquire (); 
 }
 
+// Implicitly and automatically acquire the lock.
+
+ACE_INLINE
+ACE_Thread_Mutex_Guard::ACE_Thread_Mutex_Guard (ACE_Thread_Mutex &m,
+						int block)
+  : lock_ (m) 
+{ 
+// ACE_TRACE ("ACE_Thread_Mutex_Guard::ACE_Thread_Mutex_Guard");
+  if (block)
+    this->acquire ();
+  else
+    this->tryacquire ();
+}
+
 // Explicitly release the lock.
 
 ACE_INLINE int 
@@ -472,6 +462,15 @@ ACE_Thread_Mutex_Guard::release (void)
     }
   else
     return 0;
+}
+
+// Implicitly release the lock.
+
+ACE_INLINE
+ACE_Thread_Mutex_Guard::~ACE_Thread_Mutex_Guard (void) 
+{ 
+// ACE_TRACE ("ACE_Thread_Mutex_Guard::~ACE_Thread_Mutex_Guard");
+  this->release ();
 }
 
 // Explicitly release the lock.

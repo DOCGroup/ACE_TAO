@@ -3122,7 +3122,8 @@ public:
 			int = 0);
 
   // = A set of wrappers for timers and resource stats.
-  static u_int alarm (u_int delay);
+  static u_int alarm (u_int secs);
+  static u_int ualarm (u_int usecs, u_int interval);
   static ACE_hrtime_t gethrtime (void);
 #if defined (ACE_HAS_POWERPC) && defined (ghs)
   static void readPPCTimeBase (u_long &most,

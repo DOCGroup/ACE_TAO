@@ -13,12 +13,19 @@
 // like an iostream.  The new type (ACE_SOCK_IOStream) can be used
 // anywhere an ACE_SOCK_Stream is used.
 
-typedef ACE_IOStream<ACE_SOCK_Stream> ACE_SOCK_IOStream ;
+typedef ACE_IOStream<ACE_SOCK_Stream> ACE_SOCK_IOStream;
+
+// Need to handle brain-dead C++ compilers.
+#if defined (ACE_HAS_TYPENAME_KEYWORD)
+#define ACE_SOCK_IOSTREAM ACE_SOCK_IOStream
+#else
+#define ACE_SOCK_IOSTREAM ACE_SOCK_IOStream, ACE_INET_Addr
+#endif /* ACE_HAS_TYPENAME_KEYWORD */
 
 // Create a service handler object based on our new
 // iostream/SOCK_Stream hybrid.
 
-typedef ACE_Svc_Handler<ACE_SOCK_IOStream, ACE_INET_Addr, ACE_NULL_SYNCH>
+typedef ACE_Svc_Handler<ACE_SOCK_IOSTREAM, ACE_NULL_SYNCH>
 	Service_Handler;
 
 class Handler : public Service_Handler
@@ -37,7 +44,7 @@ public:
 	(this, ACE_Event_Handler::READ_MASK) == - 1)
       ACE_ERROR_RETURN ((LM_ERROR,
 			 "registering connection handler with ACE_Reactor\n"),
-			- 1);
+			-1);
 
     return 0;
   }
