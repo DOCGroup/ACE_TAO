@@ -21,7 +21,7 @@
 // ----------------------------------------------------------------------
 
 TAO_Basic_StreamCtrl::TAO_Basic_StreamCtrl (CORBA::ORB_var orb)
-: orb_ (orb)
+  : orb_ (orb)
 {
 }
 
@@ -29,15 +29,19 @@ TAO_Basic_StreamCtrl::~TAO_Basic_StreamCtrl (void)
 {
 }
 
+// Stop the transfer of data of the stream
+// Empty the_spec means apply operation to all flows
 void 
 TAO_Basic_StreamCtrl::stop (const AVStreams::flowSpec &the_spec,  
                             CORBA::Environment &env)
 {
-   if (CORBA::is_nil (stream_endpoint_a_.in ()))
-     return;
-   this->stream_endpoint_a_->stop (the_spec, env);
+  if (CORBA::is_nil (stream_endpoint_a_.in ()))
+    return;
+  this->stream_endpoint_a_->stop (the_spec, env);
 }
 
+// Start the transfer of data in the stream. 
+// Empty the_spec means apply operation to all flows
 void
 TAO_Basic_StreamCtrl::start (const AVStreams::flowSpec &the_spec,  
                              CORBA::Environment &env)
@@ -47,6 +51,9 @@ TAO_Basic_StreamCtrl::start (const AVStreams::flowSpec &the_spec,
   this->stream_endpoint_a_->start (the_spec, env);
 }
 
+// Tears down the stream. This will close the connection, and delete 
+// the streamendpoint and vdev associated with this stream
+// Empty the_spec means apply operation to all flows
 void
 TAO_Basic_StreamCtrl::destroy (const AVStreams::flowSpec &the_spec,  
                                CORBA::Environment &env)
@@ -56,17 +63,21 @@ TAO_Basic_StreamCtrl::destroy (const AVStreams::flowSpec &the_spec,
   this->stream_endpoint_a_->destroy (the_spec, env);
 }
 
+// Changes the QoS associated with the stream
+// Empty the_spec means apply operation to all flows
 CORBA::Boolean 
 TAO_Basic_StreamCtrl::modify_QoS (AVStreams::streamQoS &new_qos, 
                                   const AVStreams::flowSpec &the_spec,  
                                   CORBA::Environment &env)
 {
-   ACE_UNUSED_ARG (new_qos);
-   ACE_UNUSED_ARG (the_spec);
-   ACE_UNUSED_ARG (env);
-   return 0;
+  ACE_UNUSED_ARG (new_qos);
+  ACE_UNUSED_ARG (the_spec);
+  ACE_UNUSED_ARG (env);
+  return 0;
 }
 
+// Used by StreamEndPoint and VDev to inform StreamCtrl of events.
+// E.g., loss of flow, reestablishment of flow, etc..
 void
 TAO_Basic_StreamCtrl::push_event (const char *the_event,  
                                   CORBA::Environment &env)
@@ -77,6 +88,7 @@ TAO_Basic_StreamCtrl::push_event (const char *the_event,
   ACE_UNUSED_ARG (env);
 }
 
+// Used to control the flow protocol parameters.
 void
 TAO_Basic_StreamCtrl::set_FPStatus (const AVStreams::flowSpec &the_spec, 
                                     const char *fp_name, 
@@ -92,7 +104,7 @@ TAO_Basic_StreamCtrl::set_FPStatus (const AVStreams::flowSpec &the_spec,
 // @@ Need to throw not-supported exception here
 CORBA::Object_ptr 
 TAO_Basic_StreamCtrl::get_flow_connection (const char *flow_name,  
-                                                 CORBA::Environment &env)
+                                           CORBA::Environment &env)
 {
   ACE_UNUSED_ARG (flow_name);
   ACE_UNUSED_ARG (env);
@@ -123,7 +135,7 @@ TAO_StreamCtrl::~TAO_StreamCtrl (void)
 {
 }
 
-// request the two MMDevices to create vdev and stream endpoints. save
+// request the two MMDevices to create vdev and stream endpoints. save 
 // the references returned.
 
 // The interaction diagram for this method is on page 13 of the spec
@@ -140,11 +152,11 @@ TAO_StreamCtrl::bind_devs (AVStreams::MMDevice_ptr a_party,
     ACE_ERROR_RETURN ((LM_ERROR, 
                        "\n(%P|%t) TAO_StreamCtrl::bind_devs: "
                        "a_party or b_party is null!\n"),
-                      0);
+                      1);
   
   // Request a_party to create the endpoint and vdev
   CORBA::Boolean met_qos;
-  CORBA::String_var named_vdev (CORBA::string_alloc (1024));
+  CORBA::String_var named_vdev;
 
   this->stream_endpoint_a_ =
     a_party-> create_A (this->_this (env),
@@ -154,7 +166,7 @@ TAO_StreamCtrl::bind_devs (AVStreams::MMDevice_ptr a_party,
                         named_vdev.inout (),
                         the_flows,
                         env);
-  TAO_CHECK_ENV_RETURN (env, 0);
+  TAO_CHECK_ENV_RETURN (env, 1);
   
   ACE_DEBUG ((LM_DEBUG,
               "\n(%P|%t) TAO_StreamCtrl::create_A: succeeded"));
@@ -162,32 +174,35 @@ TAO_StreamCtrl::bind_devs (AVStreams::MMDevice_ptr a_party,
   // Request b_party to create the endpoint and vdev
 
   this->stream_endpoint_b_ =
-     b_party-> create_B (this->_this (env),
-			 this->vdev_b_.out (),
-			 the_qos,
-			 met_qos,
-			 named_vdev.inout (),
-			 the_flows,
-			 env);
-   TAO_CHECK_ENV_RETURN (env, 0);
+    b_party-> create_B (this->_this (env),
+                        this->vdev_b_.out (),
+                        the_qos,
+                        met_qos,
+                        named_vdev.inout (),
+                        the_flows,
+                        env);
+  TAO_CHECK_ENV_RETURN (env, 1);
   
-   ACE_DEBUG ((LM_DEBUG,
-	       "\n(%P|%t) TAO_StreamCtrl::create_B: succeeded"));
+  ACE_DEBUG ((LM_DEBUG,
+              "\n(%P|%t) TAO_StreamCtrl::create_B: succeeded"));
   
-   ACE_DEBUG ((LM_DEBUG, 
-	       "\nstream_endpoint_b_ = %s",
+  ACE_DEBUG ((LM_DEBUG, 
+              "\nstream_endpoint_b_ = %s",
               this->orb_->object_to_string (this->stream_endpoint_b_,
                                             env)));
-  TAO_CHECK_ENV_RETURN (env, 0);
-  // Now connect the streams together
+  TAO_CHECK_ENV_RETURN (env, 1);
+  // Now connect the streams together. This will
+  // establish the connection
   this->stream_endpoint_a_->connect (this->stream_endpoint_b_,
                                      the_qos,
                                      the_flows,
                                      env);
-  TAO_CHECK_ENV_RETURN (env, 0);
-  return 1;
+  TAO_CHECK_ENV_RETURN (env, 1);
+  return 0;
 }
   
+// Used to establish a connection between two endpoints
+// directly, i.e. without a MMDevice
 CORBA::Boolean 
 TAO_StreamCtrl::bind (AVStreams::StreamEndPoint_A_ptr a_party, 
                       AVStreams::StreamEndPoint_B_ptr b_party, 
@@ -195,6 +210,13 @@ TAO_StreamCtrl::bind (AVStreams::StreamEndPoint_A_ptr a_party,
                       const AVStreams::flowSpec &the_flows,  
                       CORBA::Environment &env)
 {
+  if (CORBA::is_nil (a_party) || 
+      CORBA::is_nil (b_party))
+    ACE_ERROR_RETURN ((LM_ERROR, 
+                       "(%P|%t) TAO_StreamCtrl::bind:"
+                       "a_party or b_party null!"),
+                      1);
+
   this->stream_endpoint_a_ = a_party;
   this->stream_endpoint_b_ = b_party;
   // Now connect the streams together
@@ -202,13 +224,14 @@ TAO_StreamCtrl::bind (AVStreams::StreamEndPoint_A_ptr a_party,
                                      the_qos,
                                      the_flows,
                                      env);
-  TAO_CHECK_ENV_RETURN (env, 0);
-  return 1;
+  TAO_CHECK_ENV_RETURN (env, 1);
+  return 0;
 }
 
 void 
 TAO_StreamCtrl::unbind (CORBA::Environment &env)
 {
+  ACE_UNUSED_ARG (env);
 }
 
 void 
@@ -216,6 +239,9 @@ TAO_StreamCtrl::unbind_party (AVStreams::StreamEndPoint_ptr the_ep,
                               const AVStreams::flowSpec &the_spec,  
                               CORBA::Environment &env)
 {
+  ACE_UNUSED_ARG (the_ep);
+  ACE_UNUSED_ARG (the_spec);
+  ACE_UNUSED_ARG (env);
 }
 
 // ----------------------------------------------------------------------
@@ -226,25 +252,31 @@ TAO_StreamEndPoint::TAO_StreamEndPoint (void)
 {
 }
 
+// Stop the physical flow of data on the stream
+// Empty the_spec --> apply to all flows
 void 
 TAO_StreamEndPoint::stop (const AVStreams::flowSpec &the_spec,  
                           CORBA::Environment &env)
 {
 }
 
+// Start the physical flow of data on the stream
+// Empty the_spec --> apply to all flows
 void 
 TAO_StreamEndPoint::start (const AVStreams::flowSpec &the_spec,  
                            CORBA::Environment &env)
 {
 }
 
+// Close the connection
 void 
 TAO_StreamEndPoint::destroy (const AVStreams::flowSpec &the_spec,  
                              CORBA::Environment &env)
 {
 }
 
-// Call request_connection on the responder
+// Called by streamctrl, requesting us to call request_connection 
+// on the responder (to initiate a connection)
 CORBA::Boolean 
 TAO_StreamEndPoint::connect (AVStreams::StreamEndPoint_ptr responder, 
                              AVStreams::streamQoS &qos_spec, 
@@ -261,6 +293,8 @@ TAO_StreamEndPoint::connect (AVStreams::StreamEndPoint_ptr responder,
   return 0;
 }
   
+// Called by our peer endpoint, requesting us to establish
+// a connection
 CORBA::Boolean 
 TAO_StreamEndPoint::request_connection (AVStreams::StreamEndPoint_ptr initiator, 
                                         CORBA::Boolean is_mcast, 
@@ -311,14 +345,14 @@ TAO_StreamEndPoint::set_FPStatus (const AVStreams::flowSpec &the_spec,
 
 CORBA::Object_ptr 
 TAO_StreamEndPoint::get_fep (const char *flow_name,  
-                                   CORBA::Environment &env)
+                             CORBA::Environment &env)
 {
   return 0;
 }
   
 char * 
 TAO_StreamEndPoint::add_fep (CORBA::Object_ptr the_fep,  
-                        CORBA::Environment &env)
+                             CORBA::Environment &env)
 {
   return 0;
 }
@@ -402,8 +436,8 @@ TAO_StreamEndPoint_B::TAO_StreamEndPoint_B (void)
 
 CORBA::Boolean 
 TAO_StreamEndPoint_B::multiconnect (AVStreams::streamQoS &the_qos, 
-                                       AVStreams::flowSpec &the_spec,  
-                                       CORBA::Environment &env)
+                                    AVStreams::flowSpec &the_spec,  
+                                    CORBA::Environment &env)
 {
   return 0;
 }
