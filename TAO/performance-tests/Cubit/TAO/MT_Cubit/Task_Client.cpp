@@ -843,11 +843,11 @@ Client::cube_long (void)
 
       if (arg_long != ret_long)
         {
+          this->error_count_++;
           ACE_ERROR ((LM_ERROR,
                       "** cube_long(%d)  (--> %d)\n",
                       arg_long,
                       ret_long));
-          this->error_count_++;
         }
     }
   TAO_CATCHANY
@@ -890,8 +890,8 @@ Client::cube_struct (void)
           || arg_struct.s  != ret_struct.s
           || arg_struct.o  != ret_struct.o )
         {
-          ACE_ERROR ((LM_ERROR, "**cube_struct error!\n"));
           this->error_count_++;
+          ACE_ERROR ((LM_ERROR, "**cube_struct error!\n"));
         }
     }
   TAO_CATCHANY
@@ -934,7 +934,6 @@ Client::make_calls (void)
         }
       if (result < 0)
         return result;
-
     }
   else
     {
@@ -955,6 +954,8 @@ Client::make_calls (void)
         }
       TAO_ENDTRY;
     }
+
+  // return success.
   return 0;
 }
 
@@ -1155,3 +1156,5 @@ template class ACE_Condition<ACE_SYNCH_MUTEX>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 # pragma instantiate ACE_Condition<ACE_SYNCH_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+
