@@ -278,9 +278,7 @@ ACE::log2 (u_long num)
 {
   u_long log = 0;
 
-  for (;
-       num > 0;
-       log++)
+  for (; num > 0; ++log)
     num >>= 1;
 
   return log;

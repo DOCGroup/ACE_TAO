@@ -109,7 +109,7 @@ ACE_Asynch_Acceptor<HANDLER>::open (const ACE_INET_Addr &address,
   static ACE_INET_Addr sa (ACE_sap_any_cast (const ACE_INET_Addr &));
 
   if (address == sa &&
-      ACE_Sock_Connect::bind_port (this->listen_handle_,
+      ACE::bind_port (this->listen_handle_,
 	                           INADDR_ANY,
 				   address.get_type()) == -1)
     {

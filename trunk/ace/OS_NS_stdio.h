@@ -252,7 +252,7 @@ namespace ACE_OS {
   ACE_NAMESPACE_INLINE_FUNCTION
   LPSECURITY_ATTRIBUTES default_win32_security_attributes (LPSECURITY_ATTRIBUTES);
   ACE_NAMESPACE_INLINE_FUNCTION
-  LPSECURITY_ATTRIBUTES default_win32_security_attributes_r (LPSECURITY_ATTRIBUTES, 
+  LPSECURITY_ATTRIBUTES default_win32_security_attributes_r (LPSECURITY_ATTRIBUTES,
                                              LPSECURITY_ATTRIBUTES,
                                              SECURITY_DESCRIPTOR*);
 

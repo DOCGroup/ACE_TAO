@@ -91,7 +91,7 @@ ACE_DLL_Handle::open (const ACE_TCHAR *dll_name,
 
           // Transform the pathname into the appropriate dynamic link library
           // by searching the ACE_LD_SEARCH_PATH.
-          ACE_Lib_Find::ldfind (dll_name,
+          ACE::ldfind (dll_name,
                                 dll_pathname,
                                 (sizeof dll_pathname / sizeof (ACE_TCHAR)));
 
@@ -193,7 +193,7 @@ ACE_DLL_Handle::symbol (const ACE_TCHAR *sym_name, int ignore_errors)
   ACE_TRACE ("ACE_DLL_Handle::symbol");
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, 0));
 
-  ACE_Auto_Array_Ptr <ACE_TCHAR> auto_name (ACE_Lib_Find::ldname (sym_name));
+  ACE_Auto_Array_Ptr <ACE_TCHAR> auto_name (ACE::ldname (sym_name));
     // handle_ can be invalid especially when ACE_DLL_Handle resigned ownership
     // BTW. Handle lifecycle management is a little crazy in ACE
   if ( this->handle_ != ACE_SHLIB_INVALID_HANDLE )

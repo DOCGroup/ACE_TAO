@@ -194,7 +194,7 @@ test_fifo_msg (void)
   // Reader side opens first - it may fail if fifo not supported on this
   // platform.
   ACE_TCHAR fifo_path[MAXPATHLEN];
-  if (ACE_Lib_Find::get_temp_dir (fifo_path, MAXPATHLEN) == -1)
+  if (ACE::get_temp_dir (fifo_path, MAXPATHLEN) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
                        ACE_TEXT ("get_temp_dir")), 1);
   ACE_OS::strcat (fifo_path, ACE_TEXT ("FIFO_Test"));

@@ -1529,14 +1529,14 @@ ACE_POSIX_Asynch_Connect::connect_i (ACE_POSIX_Asynch_Connect_Result *result,
     }
 
   // set non blocking mode
-  if (ACE_Flag_Manip::set_flags (handle, ACE_NONBLOCK) != 0)
+  if (ACE::set_flags (handle, ACE_NONBLOCK) != 0)
     {
       result->set_error (errno);
 
       ACE_ERROR_RETURN
         ((LM_ERROR,
           ACE_LIB_TEXT("ACE_POSIX_Asynch_Connect::connect_i, %p\n")
-          ACE_LIB_TEXT("ACE_Flag_Manip::set_flags failed")),
+          ACE_LIB_TEXT("ACE::set_flags failed")),
          -1);
     }
 

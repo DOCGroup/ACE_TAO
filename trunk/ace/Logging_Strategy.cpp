@@ -232,7 +232,7 @@ ACE_Logging_Strategy::ACE_Logging_Strategy (void)
            ACE_TCHAR[MAXPATHLEN + 1]);
 
   // Get the temporary directory
-  if (ACE_Lib_Find::get_temp_dir
+  if (ACE::get_temp_dir
       (this->filename_,
        MAXPATHLEN - 7) == -1) // 7 for "logfile"
     {

@@ -90,9 +90,9 @@
 # define ACE_HAS_PENTIUM
 #endif /* i386 */
 
-// GNU g++ 3.4.x implements "#pragma once".
+// // GNU g++ 3.4.x implements "#pragma once".
 // #if (__GNUC__ < 3 || (__GNUC__ == 3 && __GNUC_MINOR__ < 4)) && !defined (ACE_LACKS_PRAGMA_ONCE)
-//   // We define it with a -D with make depend.
+// // We define it with a -D with make depend.
 // # define ACE_LACKS_PRAGMA_ONCE
 // #endif /* ! ACE_LACKS_PRAGMA_ONCE */
 

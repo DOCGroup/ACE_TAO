@@ -179,7 +179,7 @@ ACE_SOCK_Dgram::open (const ACE_Addr &local,
   else if (protocol_family == PF_UNSPEC)
     {
 #if defined (ACE_HAS_IPV6)
-      protocol_family = ACE_Sock_Connect::ipv6_enabled () ? PF_INET6 : PF_INET;
+      protocol_family = ACE::ipv6_enabled () ? PF_INET6 : PF_INET;
 #else
       protocol_family = PF_INET;
 #endif /* ACE_HAS_IPV6 */

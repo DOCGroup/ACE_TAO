@@ -86,7 +86,7 @@ ACE_IPC_SAP::enable (int value) const
       if (ACE_OS::fcntl (this->handle_,
                          F_SETOWN,
                          ACE_IPC_SAP::pid_) == -1
-          || ACE_Flag_Manip::set_flags (this->handle_,
+          || ACE::set_flags (this->handle_,
                                         FASYNC) == -1)
         return -1;
       break;
@@ -104,7 +104,7 @@ ACE_IPC_SAP::enable (int value) const
       break;
 #endif /* F_SETFD */
     case ACE_NONBLOCK:
-      if (ACE_Flag_Manip::set_flags (this->handle_,
+      if (ACE::set_flags (this->handle_,
                                      ACE_NONBLOCK) == ACE_INVALID_HANDLE)
         return -1;
       break;
@@ -158,7 +158,7 @@ ACE_IPC_SAP::disable (int value) const
       if (ACE_OS::fcntl (this->handle_,
                          F_SETOWN,
                          0) == -1
-          || ACE_Flag_Manip::clr_flags (this->handle_,
+          || ACE::clr_flags (this->handle_,
                                         FASYNC) == -1)
         return -1;
       break;
@@ -176,7 +176,7 @@ ACE_IPC_SAP::disable (int value) const
       break;
 #endif /* F_SETFD */
     case ACE_NONBLOCK:
-      if (ACE_Flag_Manip::clr_flags (this->handle_,
+      if (ACE::clr_flags (this->handle_,
                                      ACE_NONBLOCK) == -1)
         return -1;
       break;

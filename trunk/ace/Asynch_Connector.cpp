@@ -96,7 +96,7 @@ ACE_Asynch_Connector<HANDLER>::handle_connect (const ACE_Asynch_Connect::Result 
 
   // set blocking mode
   if (!error &&
-      ACE_Flag_Manip::clr_flags
+      ACE::clr_flags
         (result.connect_handle (), ACE_NONBLOCK) != 0)
     {
       error = 1;

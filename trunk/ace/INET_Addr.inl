@@ -30,7 +30,7 @@ ACE_INET_Addr::determine_type (void) const
 {
 #if defined (ACE_HAS_IPV6)
 #  if defined (ACE_USES_IPV4_IPV6_MIGRATION)
-  return ACE_Sock_Connect::ipv6_enabled () ? AF_INET6 : AF_INET;
+  return ACE::ipv6_enabled () ? AF_INET6 : AF_INET;
 #  else
   return AF_INET6;
 #  endif /* ACE_USES_IPV4_IPV6_MIGRATION */

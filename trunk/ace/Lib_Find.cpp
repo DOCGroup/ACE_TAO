@@ -27,11 +27,11 @@ ACE_RCSID(ace, Lib_Find, "$Id$")
 
 #if ! defined (ACE_PSOS_DIAB_MIPS)
 int
-ACE_Lib_Find::ldfind (const ACE_TCHAR* filename,
-                      ACE_TCHAR pathname[],
-                      size_t maxpathnamelen)
+ACE::ldfind (const ACE_TCHAR* filename,
+             ACE_TCHAR pathname[],
+             size_t maxpathnamelen)
 {
-  ACE_TRACE ("ACE_Lib_Find::ldfind");
+  ACE_TRACE ("ACE::ldfind");
 #if defined (ACE_OPENVMS)
   if (strlen(filename) >= maxpathnamelen)
   {
@@ -138,7 +138,7 @@ ACE_Lib_Find::ldfind (const ACE_TCHAR* filename,
 #if (ACE_DIRECTORY_SEPARATOR_CHAR != '/')
   // Make all the directory separators "canonical" to simplify
   // subsequent code.
-  ACE_Lib_Find::strrepl (tempcopy, ACE_DIRECTORY_SEPARATOR_CHAR, '/');
+  ACE::strrepl (tempcopy, ACE_DIRECTORY_SEPARATOR_CHAR, '/');
 #endif /* ACE_DIRECTORY_SEPARATOR_CHAR */
 
   // Separate filename from pathname.
@@ -222,9 +222,9 @@ ACE_Lib_Find::ldfind (const ACE_TCHAR* filename,
             {
 #if (ACE_DIRECTORY_SEPARATOR_CHAR != '/')
               // Revert to native path name separators.
-              ACE_Lib_Find::strrepl (searchpathname,
-                                     '/',
-                                     ACE_DIRECTORY_SEPARATOR_CHAR);
+              ACE::strrepl (searchpathname,
+                            '/',
+                            ACE_DIRECTORY_SEPARATOR_CHAR);
 #endif /* ACE_DIRECTORY_SEPARATOR_CHAR */
               // First, try matching the filename *without* adding a
               // prefix.
@@ -359,9 +359,9 @@ ACE_Lib_Find::ldfind (const ACE_TCHAR* filename,
 
               ACE_TCHAR *nextholder = 0;
               const ACE_TCHAR *path_entry =
-                ACE_Lib_Find::strsplit_r (ld_path,
-                                          ACE_LD_SEARCH_PATH_SEPARATOR_STR,
-                                          nextholder);
+                ACE::strsplit_r (ld_path,
+                                 ACE_LD_SEARCH_PATH_SEPARATOR_STR,
+                                 nextholder);
               int result = 0;
 
               for (;;)
@@ -436,9 +436,10 @@ ACE_Lib_Find::ldfind (const ACE_TCHAR* filename,
                     break;
 
                   // Fetch the next item in the path
-                  path_entry = ACE_Lib_Find::strsplit_r (0,
-                                                         ACE_LD_SEARCH_PATH_SEPARATOR_STR,
-                                                         nextholder);
+                  path_entry =
+                    ACE::strsplit_r (0,
+                                     ACE_LD_SEARCH_PATH_SEPARATOR_STR,
+                                     nextholder);
                 }
 
 #if defined (ACE_HAS_WINCE)
@@ -463,13 +464,13 @@ ACE_Lib_Find::ldfind (const ACE_TCHAR* filename,
 }
 
 FILE *
-ACE_Lib_Find::ldopen (const ACE_TCHAR *filename,
+ACE::ldopen (const ACE_TCHAR *filename,
              const ACE_TCHAR *type)
 {
-  ACE_TRACE ("ACE_Lib_Find::ldopen");
+  ACE_TRACE ("ACE::ldopen");
 
   ACE_TCHAR buf[MAXPATHLEN + 1];
-  if (ACE_Lib_Find::ldfind (filename,
+  if (ACE::ldfind (filename,
                    buf,
                    sizeof (buf) /sizeof (ACE_TCHAR)) == -1)
     return 0;
@@ -478,9 +479,9 @@ ACE_Lib_Find::ldopen (const ACE_TCHAR *filename,
 }
 
 ACE_TCHAR *
-ACE_Lib_Find::ldname (const ACE_TCHAR *entry_point)
+ACE::ldname (const ACE_TCHAR *entry_point)
 {
-  ACE_TRACE ("ACE_Lib_Find::ldname");
+  ACE_TRACE ("ACE::ldname");
 
 #if defined(ACE_NEEDS_DL_UNDERSCORE)
   size_t size =
@@ -517,7 +518,7 @@ ACE_Lib_Find::ldname (const ACE_TCHAR *entry_point)
 }
 
 int
-ACE_Lib_Find::get_temp_dir (ACE_TCHAR *buffer, size_t buffer_len)
+ACE::get_temp_dir (ACE_TCHAR *buffer, size_t buffer_len)
 {
   int result;
 #if defined (ACE_WIN32)
@@ -561,7 +562,7 @@ ACE_Lib_Find::get_temp_dir (ACE_TCHAR *buffer, size_t buffer_len)
 }
 
 ACE_HANDLE
-ACE_Lib_Find::open_temp_file (const ACE_TCHAR *name, int mode, int perm)
+ACE::open_temp_file (const ACE_TCHAR *name, int mode, int perm)
 {
 #if defined (ACE_WIN32)
   ACE_UNUSED_ARG(perm);
@@ -586,9 +587,9 @@ ACE_Lib_Find::open_temp_file (const ACE_TCHAR *name, int mode, int perm)
 #endif /* ! ACE_PSOS_DIAB_MIPS */
 
 size_t
-ACE_Lib_Find::strrepl (char *s, char search, char replace)
+ACE::strrepl (char *s, char search, char replace)
 {
-  ACE_TRACE ("ACE_Lib_Find::strrepl");
+  ACE_TRACE ("ACE::strrepl");
 
   size_t replaced = 0;
 
@@ -607,9 +608,9 @@ ACE_Lib_Find::strrepl (char *s, char search, char replace)
 // "split".
 
 char *
-ACE_Lib_Find::strsplit_r (char *str,
-                          const char *token,
-                          char *&next_start)
+ACE::strsplit_r (char *str,
+                 const char *token,
+                 char *&next_start)
 {
   char *result = 0;
 
@@ -641,9 +642,9 @@ ACE_Lib_Find::strsplit_r (char *str,
 
 #if defined (ACE_HAS_WCHAR)
 wchar_t *
-ACE_Lib_Find::strsplit_r (wchar_t *str,
-                          const wchar_t *token,
-                          wchar_t *&next_start)
+ACE::strsplit_r (wchar_t *str,
+                 const wchar_t *token,
+                 wchar_t *&next_start)
 {
   wchar_t *result = 0;
 
@@ -674,9 +675,9 @@ ACE_Lib_Find::strsplit_r (wchar_t *str,
 }
 
 size_t
-ACE_Lib_Find::strrepl (wchar_t *s, wchar_t search, wchar_t replace)
+ACE::strrepl (wchar_t *s, wchar_t search, wchar_t replace)
 {
-  ACE_TRACE ("ACE_Lib_Find::strrepl");
+  ACE_TRACE ("ACE::strrepl");
 
   size_t replaced = 0;
 
