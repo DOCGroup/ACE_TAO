@@ -149,7 +149,7 @@ const char*
 be_interface::full_coll_name (void) const
 {
   if (this->full_coll_name_ == 0)
-    ACE_const_cast(be_interface*, this)->compute_coll_name ();
+    ACE_const_cast (be_interface*, this)->compute_coll_name ();
 
   return this->full_coll_name_;
 }
@@ -158,7 +158,7 @@ const char*
 be_interface::local_coll_name (void) const
 {
   if (this->local_coll_name_ == 0)
-    ACE_const_cast(be_interface*, this)->compute_coll_name ();
+    ACE_const_cast (be_interface*, this)->compute_coll_name ();
 
   return this->local_coll_name_;
 }
@@ -172,9 +172,9 @@ be_interface::compute_fullskelname (void)
   else
     {
       long namelen;
-      UTL_IdListActiveIterator  *i;
-      long                              first = I_TRUE;
-      long                              second = I_FALSE;
+      UTL_IdListActiveIterator *i;
+      long first = I_TRUE;
+      long second = I_FALSE;
 
       // in the first loop compute the total length
       namelen = 4;
