@@ -1356,7 +1356,7 @@ ACE_Reactor::wait_for_multiple_events (ACE_Reactor_Handle_Set &dispatch_set,
     {
       do
 	{
-	  max_wait_time = this->timer_queue_->calculate_timeout (max_wait_time);
+	  (void) this->timer_queue_->calculate_timeout (max_wait_time, max_wait_time);
       
 	  width = (u_long) this->handler_rep_.max_handlep1 ();
 
