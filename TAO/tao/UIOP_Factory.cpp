@@ -69,6 +69,7 @@ TAO_UIOP_Protocol_Factory::make_connector (void)
   ACE_NEW_RETURN (connector,
                   TAO_UIOP_Connector,
                   0);
+
   return connector;
 }
 
