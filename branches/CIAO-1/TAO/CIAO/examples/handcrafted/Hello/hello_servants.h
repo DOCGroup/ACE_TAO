@@ -23,6 +23,7 @@
 
 #include "helloS.h"
 #include "helloEC.h"
+#include "ciao/Container_Base.h"
 
 class HELLO_SERVANT_Export CIAO_HelloWorld_Context :
   public virtual CCM_HelloWorld_Context
@@ -219,7 +220,8 @@ class HELLO_SERVANT_Export CIAO_HelloHome_Servant :
 {
 public:
   // Ctor.
-  CIAO_HelloHome_Servant (CCM_HelloHome_ptr exe);
+  CIAO_HelloHome_Servant (CCM_HelloHome_ptr exe,
+                          CIAO::Session_Container *c);
 
   // Dtor.
   ~CIAO_HelloHome_Servant (void);
@@ -250,4 +252,7 @@ public:
 protected:
   // My Executor.
   CCM_HelloHome_var executor_;
+
+  // My Container
+  CIAO::Session_Container *container_;
 };
