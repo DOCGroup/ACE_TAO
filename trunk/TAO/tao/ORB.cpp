@@ -574,9 +574,9 @@ CORBA_ORB::resolve_service (CORBA::String service_name,
             }
 
           this->name_service_ =
-            this->multicast_to_service(service_name,
-                                       port,
-                                       timeout);
+            this->multicast_to_service (service_name,
+                                        port,
+                                        timeout);
         }
     }
 
@@ -674,7 +674,8 @@ CORBA_ORB::multicast_query (char *buf,
   // Open the datagram.
   if (dgram.open (ACE_Addr::sap_any) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-		       "Unable to open the Datagram!\n"),
+		       "%p\n",
+                       "unable to open the datagram"),
 		      -1);
 
   // Convert the port that we are listening at to Network Byte Order.
@@ -713,7 +714,7 @@ CORBA_ORB::multicast_query (char *buf,
   if (result == -1)
     ACE_ERROR ((LM_ERROR,
                 "%p\n",
-                "error sending IIOP multicast!"));
+                "error sending IIOP multicast"));
   else
     {
       if (TAO_debug_level > 0)
@@ -741,11 +742,13 @@ CORBA_ORB::multicast_query (char *buf,
         }
       else
         {
+          stream.disable (ACE_NONBLOCK);
+
           // Receive the IOR.
           result = stream.recv (buf,
-                                 BUFSIZ,
-                                 0,
-                                 timeout);
+                                BUFSIZ,
+                                0,
+                                timeout);
           // Close socket now.
           stream.close ();
   
@@ -753,7 +756,7 @@ CORBA_ORB::multicast_query (char *buf,
           if (result == -1)
             ACE_ERROR ((LM_ERROR,
                         "%p\n",
-                        "error reading IIOP multicast response!"));
+                        "error reading IIOP multicast response"));
           else
             {
               // Null terminate message.
@@ -829,7 +832,8 @@ CORBA_ORB::resolve_initial_references (CORBA::String name,
                                        ACE_Time_Value *timeout,
                                        CORBA_Environment &TAO_IN_ENV)
 {
-  // Get the table of initial references specified through -ORBInitRef.
+  // Get the table of initial references specified through
+  // -ORBInitRef.
   TAO_IOR_LookupTable *table =
     this->orb_core_->orb_params ()->ior_lookup_table ();
 
@@ -843,7 +847,7 @@ CORBA_ORB::resolve_initial_references (CORBA::String name,
     {
       // Get the list of initial reference prefixes specified through
       // -ORBDefaultInitRef.
-      char * default_init_ref =
+      char *default_init_ref =
 	this->orb_core_->orb_params ()->default_init_ref ();
 
       // Check if a DefaultInitRef was specified.
@@ -1322,10 +1326,9 @@ CORBA_ORB::object_to_string (CORBA::Object_ptr obj,
     }
 }
 
-// ****************************************************************
+// Destringify arbitrary objrefs.  This method is called from
+// <resolve_name_service> with an IOR <multicast_to_service>.
 
-// Destringify arbitrary objrefs.  called from resolve_name_service ()
-// with an IOR multicast_to_service ().
 CORBA::Object_ptr
 CORBA_ORB::string_to_object (const char *str,
                              CORBA::Environment &ACE_TRY_ENV)
