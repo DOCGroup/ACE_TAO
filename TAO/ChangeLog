@@ -1,3 +1,9 @@
+Tue Sep 16 12:23:45 2003  Chris Cleeland  <cleeland_c@ociweb.com>
+
+	* tao/Utils/Utils.mpc:
+
+	  Corrected dependency on PortableServer library.
+
 Mon Sep 15 16:03:25 MST 2003 Trevor Fields <fields_t@ociweb.com>
 
         * tao/Utils/Utils.mpc:
