@@ -1,3 +1,17 @@
+Wed Nov 19 00:37:22 1997    <nw1@COYOTE>
+
+	* ace/stdcpp.h: Changed to use "ace/OS.h" instead of using
+ 	  "ace/config.h" directly to avoid redefinition of user defined
+ 	  macros.
+
+	* ace/Log_Msg.cpp (close): Disable Win32 to delete
+ 	  ACE_Log_Msg::instance ().  On Win32, this should be done by
+ 	  ACE_TSS_Cleanup.
+
+	* ace/OS.cpp (cleanup_tss): Enabled Win32 to call
+ 	  ACE_Log_Msg::close.  This is required to properly release
+ 	  resourses held by ACE_Log_Msg_Manager.
+
 Tue Nov 18 19:28:36 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/Select_Reactor.cpp (unbind),
