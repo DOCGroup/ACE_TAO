@@ -52,6 +52,7 @@ namespace TAO
                          PortableServer::POA::ServantNotActive,
                          PortableServer::POA::WrongPolicy))
     {
+      return 0;
     }
 
     PortableServer::Servant
