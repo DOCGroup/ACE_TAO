@@ -110,8 +110,6 @@ ETCL/ETCL_y: ETCL/ETCL.yy
 .obj/ETCL_Constraint.o .obj/ETCL_Constraint.so .shobj/ETCL_Constraint.o .shobj/ETCL_Constraint.so: ETCL/ETCL_Constraint.cpp ETCL/ETCL_Constraint.h \
  ETCL/etcl_export.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -240,8 +238,6 @@ ETCL/ETCL_y: ETCL/ETCL.yy
 .obj/ETCL_Interpreter.o .obj/ETCL_Interpreter.so .shobj/ETCL_Interpreter.o .shobj/ETCL_Interpreter.so: ETCL/ETCL_Interpreter.cpp ETCL/ETCL_Interpreter.h \
  $(ACE_ROOT)/ace/pre.h \
  ETCL/etcl_export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -353,8 +349,6 @@ ETCL/ETCL_y: ETCL/ETCL.yy
 .obj/ETCL_l.o .obj/ETCL_l.so .shobj/ETCL_l.o .shobj/ETCL_l.so: ETCL/ETCL_l.cpp \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -466,8 +460,6 @@ ETCL/ETCL_y: ETCL/ETCL.yy
 .obj/ETCL_y.o .obj/ETCL_y.so .shobj/ETCL_y.o .shobj/ETCL_y.so: ETCL/ETCL_y.cpp ETCL/ETCL_y.h ETCL/ETCL_Constraint.h \
  ETCL/etcl_export.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \

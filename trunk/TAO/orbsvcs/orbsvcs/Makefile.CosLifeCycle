@@ -69,8 +69,8 @@ realclean: clean
 
 
 .obj/CosLifeCycleS.o .obj/CosLifeCycleS.so .shobj/CosLifeCycleS.o .shobj/CosLifeCycleS.so: CosLifeCycleS.cpp CosLifeCycleS.h \
- $(ACE_ROOT)/ace/pre.h \
- CosNamingS.h CosNamingC.h \
+ $(ACE_ROOT)/ace/pre.h CosNamingS.h \
+ CosNamingC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -95,6 +95,8 @@ realclean: clean
  $(ACE_ROOT)/ace/OS_Memory.inl \
  $(ACE_ROOT)/ace/OS_TLI.h \
  $(ACE_ROOT)/ace/OS_TLI.inl \
+ $(ACE_ROOT)/ace/Default_Constants.h \
+ $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
@@ -260,6 +262,8 @@ realclean: clean
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  Naming/naming_export.h CosNamingC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
@@ -334,7 +338,7 @@ realclean: clean
  $(TAO_ROOT)/tao/Adapter.h \
  $(TAO_ROOT)/tao/Adapter.i \
  $(TAO_ROOT)/tao/PortableServer/Default_Policy_Validator.h \
- $(TAO_ROOT)/tao/PortableServer/Policy_Validator.h \
+ $(TAO_ROOT)/tao/Policy_Validator.h \
  $(TAO_ROOT)/tao/PortableServer/POA_Policy_Set.h \
  $(TAO_ROOT)/tao/PortableServer/POA_Policies.h \
  $(TAO_ROOT)/tao/PortableServer/POA_Policies.i \
@@ -355,6 +359,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/PICurrent.inl \
+ $(TAO_ROOT)/tao/TAO_AMH_Response_Handler.h \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/Policy_Manager.h \
@@ -415,8 +420,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Dynamic_Service.cpp
 
 .obj/LifeCycleServiceS.o .obj/LifeCycleServiceS.so .shobj/LifeCycleServiceS.o .shobj/LifeCycleServiceS.so: LifeCycleServiceS.cpp LifeCycleServiceS.h \
- $(ACE_ROOT)/ace/pre.h \
- CosLifeCycleS.h CosNamingS.h CosNamingC.h \
+ $(ACE_ROOT)/ace/pre.h CosLifeCycleS.h \
+ CosNamingS.h CosNamingC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -441,6 +446,8 @@ realclean: clean
  $(ACE_ROOT)/ace/OS_Memory.inl \
  $(ACE_ROOT)/ace/OS_TLI.h \
  $(ACE_ROOT)/ace/OS_TLI.inl \
+ $(ACE_ROOT)/ace/Default_Constants.h \
+ $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
@@ -606,6 +613,8 @@ realclean: clean
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  Naming/naming_export.h CosNamingC.i \
  $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
@@ -682,7 +691,7 @@ realclean: clean
  $(TAO_ROOT)/tao/Adapter.h \
  $(TAO_ROOT)/tao/Adapter.i \
  $(TAO_ROOT)/tao/PortableServer/Default_Policy_Validator.h \
- $(TAO_ROOT)/tao/PortableServer/Policy_Validator.h \
+ $(TAO_ROOT)/tao/Policy_Validator.h \
  $(TAO_ROOT)/tao/PortableServer/POA_Policy_Set.h \
  $(TAO_ROOT)/tao/PortableServer/POA_Policies.h \
  $(TAO_ROOT)/tao/PortableServer/POA_Policies.i \
@@ -703,6 +712,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Array_Base.inl \
  $(ACE_ROOT)/ace/Array_Base.cpp \
  $(TAO_ROOT)/tao/PICurrent.inl \
+ $(TAO_ROOT)/tao/TAO_AMH_Response_Handler.h \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
  $(TAO_ROOT)/tao/ORB_Core.h \
  $(TAO_ROOT)/tao/Policy_Manager.h \
@@ -788,6 +798,8 @@ realclean: clean
  $(ACE_ROOT)/ace/OS_Memory.inl \
  $(ACE_ROOT)/ace/OS_TLI.h \
  $(ACE_ROOT)/ace/OS_TLI.inl \
+ $(ACE_ROOT)/ace/Default_Constants.h \
+ $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
@@ -953,6 +965,8 @@ realclean: clean
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  LifeCycle/lifecycle_export.h CosNamingC.h Naming/naming_export.h \
  CosNamingC.i CosLifeCycleC.i \
@@ -1092,6 +1106,8 @@ realclean: clean
  $(ACE_ROOT)/ace/OS_Memory.inl \
  $(ACE_ROOT)/ace/OS_TLI.h \
  $(ACE_ROOT)/ace/OS_TLI.inl \
+ $(ACE_ROOT)/ace/Default_Constants.h \
+ $(ACE_ROOT)/ace/Global_Macros.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Trace.h \
@@ -1257,6 +1273,8 @@ realclean: clean
  $(TAO_ROOT)/tao/PollableC.h \
  $(TAO_ROOT)/tao/PollableC.i \
  $(TAO_ROOT)/tao/MessagingC.i \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+ $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
  LifeCycle/lifecycle_export.h CosLifeCycleC.h CosNamingC.h \
  Naming/naming_export.h CosNamingC.i CosLifeCycleC.i \
