@@ -4,6 +4,9 @@ Thu Nov 13 05:47:42 1997  David L. Levine  <levine@cs.wustl.edu>
           ACE_Null_Mutex> instantiation, for the recent Svc_Handler
           change.
 
+        * ace/Object_Manager.h (default_mask): moved out of ACE_MT_SAFE
+          protection.
+
 Thu Nov 13 02:06:58 1997  Chris Cleeland  <cleeland@macarena.cs.wustl.edu>
 
 	* ace/Signal.i: Changed to use new Object Manager member.
