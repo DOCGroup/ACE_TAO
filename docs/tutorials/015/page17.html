@@ -12,10 +12,8 @@
 
 <P>
 <HR WIDTH="100%">
-The Recv implementation is nearly as simple as Xmit.  There's
-opportunity for error when we get the message size and we have to
-manage the lifetime of the tickler but other than that it's pretty
-basic stuff.
+This and the next three pages present the protocol objects that
+provide compression and encryption.  If you were hoping to 
 <HR>
 <PRE>
 
@@ -28,7 +26,7 @@ basic stuff.
    initializations.
 */</font>
 <font color=#008888>Recv::Recv</font>( ACE_SOCK_Stream & _peer )
-        : inherited(0), peer_(_peer), error_(0)
+        : Protocol_Task(0), peer_(_peer), error_(0)
 {
      <font color=red>// Create the tickler that get() will use to trigger recv()</font>
      <font color=red>// through the baseclass.  Since we're single-threaded this is</font>
@@ -82,7 +80,7 @@ int <font color=#008888>Recv::recv</font>(ACE_Message_Block * message, ACE_Time_
     }
     while( msize[b++] != 0 );
 
-    int size = atoi(msize);
+    int size = <font color=#008888>ACE_OS::atoi</font>(msize);
 
         <font color=red>// Make a block big enough to contain the data we'll read</font>
     message = new ACE_Message_Block( size );

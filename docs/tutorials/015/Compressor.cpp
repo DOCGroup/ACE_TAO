@@ -8,7 +8,7 @@
    should remove this option...
  */
 Compressor::Compressor( int _thr_count )
-        : inherited(_thr_count)
+        : Protocol_Task(_thr_count)
 {
     ;
 }
