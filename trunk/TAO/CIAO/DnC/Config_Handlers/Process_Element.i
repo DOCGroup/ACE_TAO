@@ -162,16 +162,22 @@ process_refs(DOMNode*& node,
              int& index,
              IDREF_MAP& idref_map);
 
+void
+process_ref(DOMNode*& node,
+            CORBA::ULong& ref,
+            int& index,
+            IDREF_MAP& idref_map);
+
 /*
  *  Process function for references
  */
 
 inline bool
-process_reference(DOMNode* node,
-                  XStr& node_name, const char* name,
-                  CORBA::ULongSeq& seq,
-                  int& index,
-                  IDREF_MAP& idref_map)
+process_reference_seq(DOMNode* node,
+                      XStr& node_name, const char* name,
+                      CORBA::ULongSeq& seq,
+                      int& index,
+                      IDREF_MAP& idref_map)
 {
   bool result = (node_name == XStr (ACE_TEXT (name)));
 
@@ -180,6 +186,23 @@ process_reference(DOMNode* node,
 
   return result;
 }
+
+// Process reference
+inline bool
+process_reference (DOMNode* node,
+                   XStr& node_name, const char* name,
+                   CORBA::ULong& ref,
+                   int& index,
+                   IDREF_MAP& idref_map)
+{
+  bool result = (node_name == XStr (ACE_TEXT (name)));
+  
+  if (result == true)
+    process_ref (node, ref, index, idref_map);
+
+  return result;
+}
+
 
 /*
  *  Process function for non-sequential elements

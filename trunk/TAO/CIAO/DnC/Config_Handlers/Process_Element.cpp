@@ -78,28 +78,52 @@ process_refs(DOMNode*& node,
              int& index,
              IDREF_MAP& idref_map)
 {
+  CORBA::ULong i (seq.length ());
+  seq.length (i + 1);
+  seq[i] = 0;
   if (node->hasAttributes())
     {
-      CORBA::ULong i (seq.length ());
-      seq.length (i + 1);
-      seq[i] = 0;
-      if (node->hasAttributes ())
+      DOMNamedNodeMap* named_node_map = node->getAttributes ();
+      
+      int length = named_node_map->getLength ();
+      
+      for (int j = 0; j < length; j++)
         {
-          DOMNamedNodeMap* named_node_map = node->getAttributes ();
-          
-          int length = named_node_map->getLength ();
-          
-          for (int j = 0; j < length; j++)
+          DOMNode* attribute_node = named_node_map->item (j);
+          XStr strattrnodename (attribute_node->getNodeName ());
+          ACE_TString aceattrnodevalue = XMLString::transcode
+            (attribute_node->getNodeValue ());
+          if (strattrnodename == XStr (ACE_TEXT ("xmi:idref")))
             {
-              DOMNode* attribute_node = named_node_map->item (j);
-              XStr strattrnodename (attribute_node->getNodeName ());
-              ACE_TString aceattrnodevalue = XMLString::transcode
-                (attribute_node->getNodeValue ());
-              if (strattrnodename == XStr (ACE_TEXT ("xmi:idref")))
-                {
-                  index = index + 1;
-                  idref_map.bind (index, aceattrnodevalue);
-                }
+              index = index + 1;
+              idref_map.bind (index, aceattrnodevalue);
+            }
+        }
+    }
+}
+
+void
+process_ref(DOMNode*& node,
+            CORBA::ULong& ref,
+            int& index,
+            IDREF_MAP& idref_map)
+{
+  if (node->hasAttributes ())
+    {
+      DOMNamedNodeMap* named_node_map = node->getAttributes ();
+      
+      int length = named_node_map->getLength ();
+      
+      for (int j = 0; j < length; j++)
+        {
+          DOMNode* attribute_node = named_node_map->item (j);
+          XStr strattrnodename (attribute_node->getNodeName ());
+          ACE_TString aceattrnodevalue = XMLString::transcode
+            (attribute_node->getNodeValue ());
+          if (strattrnodename == XStr (ACE_TEXT ("xmi:idref")))
+            {
+              index = index + 1;
+              idref_map.bind (index, aceattrnodevalue);
             }
         }
     }
