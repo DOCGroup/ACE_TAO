@@ -1,3 +1,17 @@
+Mon Jun  4 11:00:28 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tao/orb.idl:
+
+          Removed forward declarations of CORBA::Request and
+          CORBA::NVList, as well as the typedef for
+          CORBA::RequestSeq. CORBA::Request and CORBA::NVList
+          may not be used in any way in an application IDL
+          file. Their presence in orb.idl only creates a
+          headache for the IDL compiler when processing any
+          IDL file that contains orb.idl. Thanks to Heping He 
+          <heping@research.bell-labs.com> for pointing out
+          the problem
+
 Mon Jun  4 10:32:56 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be/be_sequence.cpp:
