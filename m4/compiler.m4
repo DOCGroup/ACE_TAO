@@ -72,7 +72,7 @@ changequote([, ])dnl
  dnl    ACE_CPPFLAGS
  dnl              - General C++ preprocessor flags the configure
  dnl                script should set before CPPFLAGS to allow the
- dnl                user override them.
+ dnl                user to override them.
  dnl    WERROR    - Compiler flag that converts warnings to errors
 
  if test "$GXX" = yes; then
@@ -317,7 +317,12 @@ changequote([, ])dnl
 
          dnl Sun C++ 5.0 weirdness
          if (CC -V 2>&1 | $EGREP 'Compilers 5\.0' > /dev/null); then
-           CXXFLAGS="$CXXFLAGS -library=iostream,no%Cstd -instances=explicit"
+           if test "$ace_user_enable_stdcpplib" = yes; then
+             CXXFLAGS="$CXXFLAGS -library=Cstd"
+           else
+             CXXFLAGS="$CXXFLAGS -library=iostream,no%Cstd"
+             AC_DEFINE([ACE_USES_OLD_IOSTREAMS])
+           fi
 
            dnl Inlining appears to cause link problems with early
            dnl releases of CC 5.0.
@@ -327,6 +332,11 @@ changequote([, ])dnl
              dnl See /opt/SUNWspro_5.0/SC5.0/include/CC/stdcomp.h.
              ACE_CPPFLAGS="$ACE_CPPFLAGS -D_RWSTD_NO_EXCEPTIONS"
            fi
+
+	   CXXFLAGS="$CXXFLAGS -instances=explicit"
+	 else
+           CXXFLAGS="$CXXFLAGS -library=iostream"
+           AC_DEFINE([ACE_USES_OLD_IOSTREAMS])           
          fi
 
          CXXFLAGS="$CXXFLAGS"

@@ -23,8 +23,8 @@ Please see the file `COPYING' in the top level ACE directory for
 additional details.])
 
 
-dnl Require GNU Autoconf 2.57g or better.
-AC_PREREQ([2.57g])
+dnl Require GNU Autoconf 2.58 or better.
+AC_PREREQ([2.58])
 
 AC_CONFIG_SRCDIR([ace/ACE.cpp])
 
@@ -3845,7 +3845,35 @@ dnl End check for SYSV IPC functions
 AC_CHECK_FUNC([read_real_time],
   [AC_DEFINE([ACE_HAS_AIX_HI_RES_TIMER])],)
 
-AC_CHECK_FUNC([shm_open], [AC_DEFINE([ACE_HAS_SHM_OPEN])],)
+dnl See shm_open() test after this one ...
+dnl AC_CHECK_FUNC([shm_open], [AC_DEFINE([ACE_HAS_SHM_OPEN])],)
+
+dnl Use a more comprehensive test for shm_open() since the prototype
+dnl may not be visible on all platforms without enabling POSIX.1b
+dnl support (e.g. when the user defines _POSIX_C_SOURCE > 2).
+AC_MSG_CHECKING([for shm_open])
+AC_LINK_IFELSE([AC_LANG_PROGRAM(
+          [[
+#ifndef ACE_LACKS_SYS_TYPES_H
+# include <sys/types.h>
+#endif
+#include <fcntl.h>
+#include <sys/stat.h>
+#include <sys/mman.h>
+          ]],
+          [[
+           const char name[] = "Foo";
+           const int oflag = O_RDONLY;
+	   const mode_t mode = 0400;  /* Whatever */
+           const int fd = shm_open (name, oflag, mode);
+          ]])],
+          [
+           AC_DEFINE([ACE_HAS_SHM_OPEN])
+           AC_MSG_RESULT([yes])
+          ],
+          [
+           AC_MSG_RESULT([no])
+          ])
 
 AC_CHECK_FUNC([snprintf],
   [AC_DEFINE([ACE_HAS_SNPRINTF])],)
@@ -7165,55 +7193,6 @@ ACE_CACHE_CHECK([for ACE_IOStream support],
         ])
      ])
   ], , [AC_DEFINE([ACE_LACKS_ACE_IOSTREAM])])
-
-dnl Check if ACE needs minimum iostream header inclusion
-ACE_CACHE_CHECK([if ACE needs minimum iostream header inclusion],
-  [ace_cv_lib_minimum_iostream],
-  [
-   dnl We want an empty ace/config.h to prevent multiple defines
-   dnl with Autoconf's confdefs.h
-   ACE_USE_TEMP_FILE([ace/config.h],
-     [
-      dnl Now run the compilation test
-      ACE_TRY_COMPILE([-I. -I${srcdir}],
-        [
-#if defined(ACE_UINT64_TYPEDEF)
-  typedef ACE_UINT64_TYPEDEF ACE_UINT64;
-#endif /* ACE_UINT64_TYPEDEF */
-
-#include "ace/OS.cpp"
-        ],
-        [
-         int a=0; a += 1;
-        ],
-        [
-         ace_cv_lib_minimum_iostream=no
-        ],
-        [
-         dnl Now check if ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION makes
-         dnl compilation work!
-         ACE_TRY_COMPILE([-I. -I${srcdir}],
-           [
-#if defined(ACE_UINT64_TYPEDEF)
-  typedef ACE_UINT64_TYPEDEF ACE_UINT64;
-#endif /* ACE_UINT64_TYPEDEF */
-
-#define ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION
-#include "ace/OS.cpp"
-           ],
-           [
-            int a=0; a += 1;
-           ],
-           [
-            ace_cv_lib_minimum_iostream=yes
-           ],
-           [
-            dnl If we get here, then we have no idea what is wrong!
-            ace_cv_lib_minimum_iostream=no
-           ])
-        ])
-     ])
-  ], [AC_DEFINE([ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION])],)
 
 dnl @@ I don't think that this test is correct.  The only way I could
 dnl    get ACE_Addr::sap_any to work was to explicitly cast it to the
