@@ -1,3 +1,9 @@
+Fri May 29 23:06:02 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/RB_Tree.{h,i}: moved enum RB_Tree_Node_Color out of the
+          (template) class declaration because g++ 2.7.2.3 couldn't
+          find it there.
+
 Fri May 29 21:59:01 1998  James C Hu  <jxh@cs.wustl.edu>
 
         * RB_Tree.h:
