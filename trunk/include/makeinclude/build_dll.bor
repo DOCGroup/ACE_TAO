@@ -10,6 +10,7 @@
 # LIBFILES - list of (non-system) libraries
 # PASCAL - if defined means link dll against pascal run-time library
 # DEBUG	- if defined means building with debug information
+# UNICODE - if defined when building a unicode dll
 #
 
 # All DLLs are copied into the common bin directory so that they always

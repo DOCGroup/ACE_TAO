@@ -1,11 +1,12 @@
 #
 # Creates output object and binary file directories
 #
-# Inputs: 
-# ~~~~~~~ 
+# Inputs:
+# ~~~~~~~
 # NAME - undecorated name of target
 # DEBUG - defined if building a debug library/executable
 # STATIC - defined if building a static library
+# UNICODE - defined if building with unicode enabled
 #
 # Outputs:
 # ~~~~~~~~
@@ -14,12 +15,12 @@
 # OBJDIR - name of directory where object fils are placed
 # MAKE_OBJDIR - command to be used for creating OBJDIR
 #
-     
+
 !ifdef STATIC
 STATIC_DIR=Static
 !else
 STATIC_DIR=Dynamic
-!endif 
+!endif
 
 !ifdef DEBUG
 DEBUG_DIR=Debug
@@ -32,7 +33,13 @@ PASCAL_DIR=Pascal
 !else
 PASCAL_DIR=.
 !endif
-     
+
+!ifdef UNICODE
+UNICODE_DIR=Unicode
+!else
+UNICODE_DIR=.
+!endif
+
 # By default binaries are built underneath the current build directory
 !ifndef BASE_BINDIR
 BASE_BINDIR=.
@@ -44,11 +51,11 @@ BASE_OBJDIR=.\obj
 !endif
 
 !ifndef BINDIR
-BINDIR=$(BASE_BINDIR)\$(STATIC_DIR)\$(DEBUG_DIR)\$(PASCAL_DIR)
+BINDIR=$(BASE_BINDIR)\$(STATIC_DIR)\$(DEBUG_DIR)\$(PASCAL_DIR)\$(UNICODE_DIR)
 !endif
 
 !ifndef CORE_BINDIR
-CORE_BINDIR=$(ACE_ROOT)\bin\$(STATIC_DIR)\$(DEBUG_DIR)\$(PASCAL_DIR)
+CORE_BINDIR=$(ACE_ROOT)\bin\$(STATIC_DIR)\$(DEBUG_DIR)\$(PASCAL_DIR)\$(UNICODE_DIR)
 !endif
 
 !ifdef MKDIR
@@ -59,7 +66,7 @@ MAKE_BINDIR=if not exist "$(BINDIR)" mkdir "$(BINDIR)"
 !endif
 
 !ifndef OBJDIR
-OBJDIR=$(BASE_OBJDIR)\$(NAME)\$(STATIC_DIR)\$(DEBUG_DIR)\$(PASCAL_DIR)
+OBJDIR=$(BASE_OBJDIR)\$(NAME)\$(STATIC_DIR)\$(DEBUG_DIR)\$(PASCAL_DIR)\$(UNICODE_DIR)
 !endif
 
 !ifdef MKDIR
@@ -72,12 +79,16 @@ MAKE_OBJDIR=if not exist "$(OBJDIR)" mkdir "$(OBJDIR)"
 !ifndef INSTALL_EXEDIR
 !ifndef STATIC
 !ifndef DEBUG
+!ifndef UNICODE
 INSTALL_EXEDIR=$(INSTALL_DIR)\bin
 !else
-INSTALL_EXEDIR=$(INSTALL_DIR)\bin\$(STATIC_DIR)\$(DEBUG_DIR)
+INSTALL_EXEDIR=$(INSTALL_DIR)\bin\$(STATIC_DIR)\$(DEBUG_DIR)\$(UNICODE_DIR)
 !endif
 !else
-INSTALL_EXEDIR=$(INSTALL_DIR)\bin\$(STATIC_DIR)\$(DEBUG_DIR)
+INSTALL_EXEDIR=$(INSTALL_DIR)\bin\$(STATIC_DIR)\$(DEBUG_DIR)\$(UNICODE_DIR)
+!endif
+!else
+INSTALL_EXEDIR=$(INSTALL_DIR)\bin\$(STATIC_DIR)\$(DEBUG_DIR)\$(UNICODE_DIR)
 !endif
 !endif
 
