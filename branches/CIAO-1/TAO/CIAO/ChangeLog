@@ -13,6 +13,7 @@ Sun Feb 09 20:39:05 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 	  test code in the file and explained how to create an Assembly
 	  object.
 
+	* ciao/CIAO_Core.mpc:
 	* ciao/CIAO_Client.dsp:
 	* ciao/CIAO_Server.dsp:
 	* ciao/CIAO_Value.idl: Added a CIAO internal cookie valuetype so
