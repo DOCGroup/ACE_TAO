@@ -39,9 +39,7 @@ TAO_Service_Type_Exporter::remove_all_types (ACE_ENV_SINGLE_ARG_DECL)
     {
       ACE_TRY
         {
-          this->repos_->remove_type (ACE_const_cast (const CosTrading::ServiceTypeName,
-                                                     TT_Info::INTERFACE_NAMES[i])
-                                     ACE_ENV_ARG_PARAMETER);
+          this->repos_->remove_type (TT_Info::INTERFACE_NAMES[i] ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
       ACE_CATCH (CosTrading::UnknownServiceType, excp)
@@ -116,9 +114,7 @@ TAO_Service_Type_Exporter::add_all_types_to_all (ACE_ENV_SINGLE_ARG_DECL)
           ACE_DEBUG ((LM_DEBUG, "Getting link information for %s\n",
                       ACE_static_cast (const char*, link_name_seq[i])));
           CosTrading::Link::LinkInfo_var link_info =
-            link_if->describe_link (ACE_const_cast (const CosTrading::LinkName,
-                                                    link_name_seq[i].in ())
-                                    ACE_ENV_ARG_PARAMETER);
+            link_if->describe_link (link_name_seq[i] ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           ACE_DEBUG ((LM_DEBUG, "Adding service types to %s\n",
@@ -165,10 +161,8 @@ add_all_types_to (CosTradingRepos::ServiceTypeRepository_ptr repos
     {
       ACE_TRY
         {
-          repos->add_type (ACE_const_cast (const CosTrading::ServiceTypeName,
-                                           TT_Info::INTERFACE_NAMES[i]),
-                           ACE_const_cast (const CosTradingRepos::ServiceTypeRepository::Identifier,
-                                           this->type_structs_[i].if_name.in ()),
+          repos->add_type (TT_Info::INTERFACE_NAMES[i],
+                           this->type_structs_[i].if_name,
                            this->type_structs_[i].props,
                            this->type_structs_[i].super_types
                            ACE_ENV_ARG_PARAMETER);
@@ -259,8 +253,7 @@ TAO_Service_Type_Exporter::describe_all_types (ACE_ENV_SINGLE_ARG_DECL)
       for (int i = 0; i < NUM_TYPES; i++)
         {
           CosTradingRepos::ServiceTypeRepository::TypeStruct_var type_struct =
-            this->repos_->describe_type (ACE_const_cast (const CosTrading::ServiceTypeName,
-                                                         TT_Info::INTERFACE_NAMES[i])
+            this->repos_->describe_type (TT_Info::INTERFACE_NAMES[i]
                                          ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
@@ -294,8 +287,7 @@ TAO_Service_Type_Exporter::fully_describe_all_types (ACE_ENV_SINGLE_ARG_DECL)
       for (int i = 0; i < NUM_TYPES; i++)
         {
           CosTradingRepos::ServiceTypeRepository::TypeStruct_var type_struct =
-            this->repos_->fully_describe_type (ACE_const_cast (const CosTrading::ServiceTypeName,
-                                                               TT_Info::INTERFACE_NAMES[i])
+            this->repos_->fully_describe_type (TT_Info::INTERFACE_NAMES[i]
                                                ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 

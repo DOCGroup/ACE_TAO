@@ -87,7 +87,7 @@ public:
   /// Set properties associated with a given Member type.  These
   /// properties override the default properties.
   virtual void set_type_properties (
-      const PortableGroup::TypeId type_id,
+      const char * type_id,
       const PortableGroup::Properties & overrides
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException,
@@ -100,13 +100,13 @@ public:
    * addition to the default properties that were not overridden.
    */
   virtual PortableGroup::Properties * get_type_properties (
-      const PortableGroup::TypeId type_id
+      const char * type_id
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Remove the given properties associated with the Replica type ID.
   virtual void remove_type_properties (
-      const PortableGroup::TypeId type_id,
+      const char * type_id,
       const PortableGroup::Properties & props
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException,
