@@ -1,198 +1,203 @@
+Thu Aug 13 15:20:06 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Sched/Scheduler.cpp (dispatch_configuration):
+          made int return type explicit.
+
 Thu Aug 13 15:16:38 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-	* TAOACE.dsw:  When I changed the name of TAO_IDL's project 
-	  file, the dependencies got messed up.  Now they should be
-	  back to normal.
+        * TAOACE.dsw:  When I changed the name of TAO_IDL's project
+          file, the dependencies got messed up.  Now they should be
+          back to normal.
 
 Thu Aug 13 15:03:01 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* TAO_IDL/fe/idl.ll: 	
-	* TAO_IDL/fe/lex.yy.cpp: 
-	* TAO_IDL/fe/lex.yy.cpp.diff: 
-	  The scanner was looking for wchar_t and wstring_t but the IDL
-	  types are called wchar and wstring.
-	  The patch is not needed when using a modern flex, like 2.5.4
-	  (available in /pkg/gnu/bin/flex for the DOC group).
+        * TAO_IDL/fe/idl.ll:
+        * TAO_IDL/fe/lex.yy.cpp:
+        * TAO_IDL/fe/lex.yy.cpp.diff:
+          The scanner was looking for wchar_t and wstring_t but the IDL
+          types are called wchar and wstring.
+          The patch is not needed when using a modern flex, like 2.5.4
+          (available in /pkg/gnu/bin/flex for the DOC group).
 
-	* TAO_IDL/Makefile: 
-	  Added a rule to generate (upon the user *explicit* request) the
-	  lex.yy.cpp file.
+        * TAO_IDL/Makefile:
+          Added a rule to generate (upon the user *explicit* request) the
+          lex.yy.cpp file.
 
 Thu Aug 13 09:14:12 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tests/Param_Test/Makefile: 
-	* tests/Param_Test/README: 
-	* tests/Param_Test/driver.cpp: 
-	* tests/Param_Test/options.cpp: 
-	* tests/Param_Test/options.h: 
-	* tests/Param_Test/param_test.idl: 
-	* tests/Param_Test/param_test_i.cpp: 
-	* tests/Param_Test/param_test_i.h: 
-	* tests/Param_Test/run_test.pl: 
-	* tests/Param_Test/run_test.sh: 
-	* tests/Param_Test/tests.h: 
-	* tests/Param_Test/longlong.h: 
-	* tests/Param_Test/longlong.cpp: 
-	  Added a new test to check if <long long> works.
+        * tests/Param_Test/Makefile:
+        * tests/Param_Test/README:
+        * tests/Param_Test/driver.cpp:
+        * tests/Param_Test/options.cpp:
+        * tests/Param_Test/options.h:
+        * tests/Param_Test/param_test.idl:
+        * tests/Param_Test/param_test_i.cpp:
+        * tests/Param_Test/param_test_i.h:
+        * tests/Param_Test/run_test.pl:
+        * tests/Param_Test/run_test.sh:
+        * tests/Param_Test/tests.h:
+        * tests/Param_Test/longlong.h:
+        * tests/Param_Test/longlong.cpp:
+          Added a new test to check if <long long> works.
 
-	* orbsvcs/orbsvcs/CosTimeBase.idl: 
-	* orbsvcs/orbsvcs/Event_Service_Constants.h: 
-	* orbsvcs/orbsvcs/Runtime_Scheduler.cpp: 
-	* orbsvcs/orbsvcs/Runtime_Scheduler.h: 
-	* orbsvcs/orbsvcs/Scheduler_Factory.cpp: 
-	* orbsvcs/orbsvcs/Time_Utilities.cpp: 
-	* orbsvcs/orbsvcs/Time_Utilities.h: 
-	* orbsvcs/orbsvcs/Time_Utilities.i: 
-	* orbsvcs/orbsvcs/Sched/Config_Scheduler.cpp: 
-	* orbsvcs/orbsvcs/Sched/Config_Scheduler.h: 
-	* orbsvcs/orbsvcs/Sched/DynSched.cpp: 
-	* orbsvcs/orbsvcs/Sched/SchedEntry.cpp: 
-	* orbsvcs/orbsvcs/Sched/SchedEntry.i: 
-	* orbsvcs/orbsvcs/Sched/Strategy_Scheduler.cpp: 
-	* orbsvcs/tests/EC_Multiple/Scheduler_Runtime1.h: 
-	* orbsvcs/tests/EC_Multiple/Scheduler_Runtime2.h: 
-	* orbsvcs/tests/EC_Multiple/Scheduler_Runtime_Dynamic.h: 
-	* orbsvcs/tests/Event_Latency/Event_Latency.cpp: 
-	  Modified CosTimeBase.idl to use <long long> instead of a
-	  structure.
+        * orbsvcs/orbsvcs/CosTimeBase.idl:
+        * orbsvcs/orbsvcs/Event_Service_Constants.h:
+        * orbsvcs/orbsvcs/Runtime_Scheduler.cpp:
+        * orbsvcs/orbsvcs/Runtime_Scheduler.h:
+        * orbsvcs/orbsvcs/Scheduler_Factory.cpp:
+        * orbsvcs/orbsvcs/Time_Utilities.cpp:
+        * orbsvcs/orbsvcs/Time_Utilities.h:
+        * orbsvcs/orbsvcs/Time_Utilities.i:
+        * orbsvcs/orbsvcs/Sched/Config_Scheduler.cpp:
+        * orbsvcs/orbsvcs/Sched/Config_Scheduler.h:
+        * orbsvcs/orbsvcs/Sched/DynSched.cpp:
+        * orbsvcs/orbsvcs/Sched/SchedEntry.cpp:
+        * orbsvcs/orbsvcs/Sched/SchedEntry.i:
+        * orbsvcs/orbsvcs/Sched/Strategy_Scheduler.cpp:
+        * orbsvcs/tests/EC_Multiple/Scheduler_Runtime1.h:
+        * orbsvcs/tests/EC_Multiple/Scheduler_Runtime2.h:
+        * orbsvcs/tests/EC_Multiple/Scheduler_Runtime_Dynamic.h:
+        * orbsvcs/tests/Event_Latency/Event_Latency.cpp:
+          Modified CosTimeBase.idl to use <long long> instead of a
+          structure.
 
-	* TAO_IDL/fe/fe_init.cpp: 
-	  The IDL name for wchar_t is just wchar, ditto for wstring.
+        * TAO_IDL/fe/fe_init.cpp:
+          The IDL name for wchar_t is just wchar, ditto for wstring.
 
-	* docs/releasenotes/index.html: 
-	  Documented the fact that 64bit longs are working.
+        * docs/releasenotes/index.html:
+          Documented the fact that 64bit longs are working.
 
-	* docs/releasenotes/ec.html: 
-	  Fixed minor syntax error.
+        * docs/releasenotes/ec.html:
+          Fixed minor syntax error.
 
 Wed Aug 12 14:40:00 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
-	* orbsvcs/Dump_Schedule/Dump_Schedule.cpp
-	  orbsvcs/tests/EC_Mcast/EC_Mcast.cpp
-	  orbsvcs/tests/Sched_Conf/Sched_Conf.cpp:
+        * orbsvcs/Dump_Schedule/Dump_Schedule.cpp
+          orbsvcs/tests/EC_Mcast/EC_Mcast.cpp
+          orbsvcs/tests/Sched_Conf/Sched_Conf.cpp:
 
-	  Added config info to calls to compute_scheduling and dump_schedule
+          Added config info to calls to compute_scheduling and dump_schedule
 
         * orbsvcs/tests/EC_Multiple/EC_Multiple.cpp
 
-	  Added config info to calls to compute_scheduling, dump_schedule,
-	  use_runtime, and ACE_Runtime_Scheduler::ACE_Runtime_Scheduler
+          Added config info to calls to compute_scheduling, dump_schedule,
+          use_runtime, and ACE_Runtime_Scheduler::ACE_Runtime_Scheduler
 
-	* orbsvcs/tests/EC_Multiple/Scheduler_Runtime1.h
-	  orbsvcs/tests/EC_Multiple/Scheduler_Runtime2.h
-	  orbsvcs/tests/EC_Multiple/Scheduler_Runtime_Dynamic.h:
+        * orbsvcs/tests/EC_Multiple/Scheduler_Runtime1.h
+          orbsvcs/tests/EC_Multiple/Scheduler_Runtime2.h
+          orbsvcs/tests/EC_Multiple/Scheduler_Runtime_Dynamic.h:
 
-	  Added config info array and size value
-	
-	* orbsvcs/orbsvcs/Scheduler_Factory.cpp: 
+          Added config info array and size value
 
-	  Added missing ;'s to output
+        * orbsvcs/orbsvcs/Scheduler_Factory.cpp:
+
+          Added missing ;'s to output
 
 Wed Aug 12 14:39:40 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/Stub.h: 
-	* tao/IIOP_Object.h: 
-	* tao/IIOP_Object.cpp: 
-	  The do_static_call() method uses argc/argv style to receive all
-	  the arguments (actually an array of void*) instead of the
-	  varargs style used before. This is simpler, more efficient and
-	  easier to debug.
+        * tao/Stub.h:
+        * tao/IIOP_Object.h:
+        * tao/IIOP_Object.cpp:
+          The do_static_call() method uses argc/argv style to receive all
+          the arguments (actually an array of void*) instead of the
+          varargs style used before. This is simpler, more efficient and
+          easier to debug.
 
-	* TAO_IDL/be/be_visitor_operation/operation_cs.cpp: 
-	* TAO_IDL/be/be_visitor_operation/argument.cpp: 
-	* TAO_IDL/be/be_visitor_argument/docall_cs.cpp: 
-	  The generate code to use the new do_static_call() interface.
+        * TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/argument.cpp:
+        * TAO_IDL/be/be_visitor_argument/docall_cs.cpp:
+          The generate code to use the new do_static_call() interface.
 
-	* tao/Object.cpp: 
-	* tao/POAC.cpp: 
-	* tao/PolicyC.cpp: 
-	  Change the calls to do_static_call()
+        * tao/Object.cpp:
+        * tao/POAC.cpp:
+        * tao/PolicyC.cpp:
+          Change the calls to do_static_call()
 
-	* orbsvcs/orbsvcs/Runtime_Scheduler.h: 
-	* orbsvcs/orbsvcs/Runtime_Scheduler.cpp: 
-	* orbsvcs/orbsvcs/Sched/Scheduler.h: 
-	* orbsvcs/orbsvcs/Sched/Config_Scheduler.h: 
-	* orbsvcs/orbsvcs/Sched/Config_Scheduler.cpp: 
-	  Removed some extra "enum" keywords accompanying
-	  RtecScheduler::Dispatching_Type declarations that were choking
-	  Sun/CC.
+        * orbsvcs/orbsvcs/Runtime_Scheduler.h:
+        * orbsvcs/orbsvcs/Runtime_Scheduler.cpp:
+        * orbsvcs/orbsvcs/Sched/Scheduler.h:
+        * orbsvcs/orbsvcs/Sched/Config_Scheduler.h:
+        * orbsvcs/orbsvcs/Sched/Config_Scheduler.cpp:
+          Removed some extra "enum" keywords accompanying
+          RtecScheduler::Dispatching_Type declarations that were choking
+          Sun/CC.
 
 Wed Aug 12 12:05:31 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/POA.cpp: 
-	  Added several missing template instantiations for the new
-	  Hash_Map_Manager.
+        * tao/POA.cpp:
+          Added several missing template instantiations for the new
+          Hash_Map_Manager.
 
 Wed Aug 12 12:00:00 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Runtime_Scheduler.{h, cpp}
-	  orbsvcs/orbsvcs/Sched/Scheduler.{h, cpp}
-	  orbsvcs/orbsvcs/Sched/DynSched.{h, cpp}
-	  orbsvcs/orbsvcs/Sched/Strategy_Scheduler.{h, cpp}:
+        * orbsvcs/orbsvcs/Runtime_Scheduler.{h, cpp}
+          orbsvcs/orbsvcs/Sched/Scheduler.{h, cpp}
+          orbsvcs/orbsvcs/Sched/DynSched.{h, cpp}
+          orbsvcs/orbsvcs/Sched/Strategy_Scheduler.{h, cpp}:
 
-	  Added methods and data members to generate dispatching
-	  queue configuration information.
-	
+          Added methods and data members to generate dispatching
+          queue configuration information.
+
 Tue Aug 11 18:24:13 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/POA.h (POA): Changed the children POA map from a Map_Manager
- 	  to a Hash_Map_Manager.  This should improve the time it takes to
- 	  find child POAs.
+        * tao/POA.h (POA): Changed the children POA map from a Map_Manager
+          to a Hash_Map_Manager.  This should improve the time it takes to
+          find child POAs.
 
 Tue Aug 11 17:27:58 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* docs/compiler.html : Updated the documentation.
+        * docs/compiler.html : Updated the documentation.
 
 Tue Aug 11 16:18:53 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* be/be_codegen.cpp
- 	* be/be_visitor_root/root_sh.cpp
-	* driver/drv_args.cpp
-	* include/idl_global.h
-	* util/utl_global.cpp
-	
-	Added options to <tao_idl> to make the file names of the
-	IDL-generated stubs and skeletons optional.
+        * be/be_codegen.cpp
+        * be/be_visitor_root/root_sh.cpp
+        * driver/drv_args.cpp
+        * include/idl_global.h
+        * util/utl_global.cpp
 
-	The following optins have been added.
-		
-	= File name endings for all the IDL generated header files,
-	  stub files, skeleton files and inline files. 
+        Added options to <tao_idl> to make the file names of the
+        IDL-generated stubs and skeletons optional.
 
-	= Various 'h'eader_file_name_endings.
-        
-	[-hc <Client's header file name ending>]
-	     Default is "C.h".
-	[-hs <Server's header file name ending>]
-	     Default is "S.h".
-	[-hT <Server's template hdr file name ending>]
-	     Default is "S_T.h".
+        The following optins have been added.
 
-	= Various 'c'lient side stub file_name_endings.
+        = File name endings for all the IDL generated header files,
+          stub files, skeleton files and inline files.
 
-	[-cs <Client stub's file name ending>]
-	     Default is "C.cpp".
-	[-ci <Client inline file name ending>]
-	     Default is "C.i".
-	
-	= Various 's'erver side skeleton file name endings. 
+        = Various 'h'eader_file_name_endings.
 
-	[-ss <Server's skeleton file name ending>]
-	     Default is "S.cpp".
-	[-sT <Server's template skeleton file name ending>]
-	     Default is "S_T.cpp".
-	[-si <Server's inline file name ending>]
-	     Default is "S.i".
-	[-st <Server's template inline file name ending>]
-	     Default is "S_T.i".
+        [-hc <Client's header file name ending>]
+             Default is "C.h".
+        [-hs <Server's header file name ending>]
+             Default is "S.h".
+        [-hT <Server's template hdr file name ending>]
+             Default is "S_T.h".
+
+        = Various 'c'lient side stub file_name_endings.
+
+        [-cs <Client stub's file name ending>]
+             Default is "C.cpp".
+        [-ci <Client inline file name ending>]
+             Default is "C.i".
+
+        = Various 's'erver side skeleton file name endings.
+
+        [-ss <Server's skeleton file name ending>]
+             Default is "S.cpp".
+        [-sT <Server's template skeleton file name ending>]
+             Default is "S_T.cpp".
+        [-si <Server's inline file name ending>]
+             Default is "S.i".
+        [-st <Server's template inline file name ending>]
+             Default is "S_T.i".
 
 Tue Aug 11 13:51:00 1998  Carlos O'Ryan  <coryan@CHA-CHA>
 
-	* TAO_IDL/driver/drv_preproc.cpp:
-	   Under Win32 we need to convert backslashes into double
-	   backslashes before printing the file name in the #line
-	   directive, otherwise the C++ preprocessor gets confused. Thanks
-	   to John Geiss <jtgb@eci-esyst.com> for reporting this problem.
+        * TAO_IDL/driver/drv_preproc.cpp:
+           Under Win32 we need to convert backslashes into double
+           backslashes before printing the file name in the #line
+           directive, otherwise the C++ preprocessor gets confused. Thanks
+           to John Geiss <jtgb@eci-esyst.com> for reporting this problem.
 
 Tue Aug 11 13:47:53 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -282,12 +287,12 @@ Mon Aug 10 16:46:50 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 Mon Aug 10 15:56:42 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Event/Memory_Pools.h:
-	  The memory pools are global from some time now, but they did not
-	  have the right kind of lock; this lead to memory corruption
-	  problems when sending events at a very high rate. Thanks to
-	  Mark L. Boriack <mboriack@std.saic.com> for reporting this
-	  problem.
+        * orbsvcs/orbsvcs/Event/Memory_Pools.h:
+          The memory pools are global from some time now, but they did not
+          have the right kind of lock; this lead to memory corruption
+          problems when sending events at a very high rate. Thanks to
+          Mark L. Boriack <mboriack@std.saic.com> for reporting this
+          problem.
 
 Mon Aug 10 13:59:24 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
