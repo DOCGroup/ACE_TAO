@@ -3211,7 +3211,8 @@ public:
 		     int flags,
                      ACE_HANDLE handle, 
 		     off_t off = 0,
-                     ACE_HANDLE *file_mapping = 0);
+                     ACE_HANDLE *file_mapping = 0,
+		     LPSECURITY_ATTRIBUTES sa = 0);
   static int mprotect (void *addr,
 		       size_t len,
 		       int prot);
@@ -3225,7 +3226,8 @@ public:
   static int mutex_init (ACE_mutex_t *m,
 			 int type = USYNC_THREAD,
                          LPCTSTR name = 0,
-			 void *arg = 0);
+			 void *arg = 0,
+			 LPSECURITY_ATTRIBUTES sa = 0);
   static int mutex_destroy (ACE_mutex_t *m);
 
   static int mutex_lock (ACE_mutex_t *m);
@@ -3283,7 +3285,8 @@ public:
 		      int whence);
   static ACE_HANDLE open (const char *filename,
 			  int mode,
-			  int perms = 0);
+			  int perms = 0,
+			  LPSECURITY_ATTRIBUTES sa = 0);
   static int putmsg (ACE_HANDLE handle,
 		     const struct strbuf *ctl,
 		     const struct strbuf *data,
@@ -3384,7 +3387,8 @@ public:
                          int initial_state = 0,
                          int type = USYNC_THREAD, 
                          LPCTSTR name = 0,
-                         void *arg = 0);
+                         void *arg = 0,
+			 LPSECURITY_ATTRIBUTES sa = 0);
   static int event_destroy (ACE_event_t *event);
   static int event_wait (ACE_event_t *event);
   static int event_timedwait (ACE_event_t *event, 
@@ -3399,7 +3403,8 @@ public:
 			u_int count, int type = USYNC_THREAD,
                         LPCTSTR name = 0,
 			void *arg = 0,
-                        int max = 0x7fffffff);
+                        int max = 0x7fffffff,
+			LPSECURITY_ATTRIBUTES sa = 0);
   static int sema_post (ACE_sema_t *s);
   static int sema_post (ACE_sema_t *s,
 			size_t release_count);
@@ -3664,7 +3669,8 @@ public:
 		       size_t maxnamelen);
   static ACE_HANDLE open (const wchar_t *filename,
 			  int mode,
-			  int perms = 0);
+			  int perms = 0,
+			  LPSECURITY_ATTRIBUTES sa = 0);
   static int unlink (const wchar_t *path);
   static ACE_SHLIB_HANDLE dlopen (ACE_WIDE_DL_TYPE filename,
 				  
