@@ -1273,14 +1273,14 @@ these compilers but probably not without a bit of effort. <P>
       in your PATH whenever you run programs that uses ACE.  Otherwise
       you may experience problems finding ace.dll or aced.dll.<BR>
       <BR>
-  <LI>If you are building for Windows NT then you can start building
+  <LI>If you are building for Windows NT or Windows 2K then you can start building
       without anymore changes.  If you are building on Windows 9x/Me,
       then you should add the line <BR>
       <BR>
       <CODE>#define ACE_HAS_WINNT4 0</CODE><BR>
       <BR>
       before the #include statement in ACE_ROOT\ace\config.h and it
-      will turn off some Windows NT specific code in ACE.<BR>
+      will turn off some WinNT/Win2K-specific code in ACE.<BR>
       <BR>
   <li>If you want to use the standard C++ headers (iostream, cstdio, ...
       as defined by the C++ Standard Draft 2) that comes with MSVC,
@@ -1520,8 +1520,8 @@ The steps we followed in the build are:
        #include "ace/config-win32.h"
        </pre></code></blockquote>
 
-       If you are building for Windows 9X/Me (ie, <EM>not</EM> NT or
-       2000), you will need to add:
+       If you are building for Windows 9X/Me (ie, <EM>not</EM> WinNT or
+       Win2K), you will need to add:
 
        <blockquote><code><pre>
        #define ACE_HAS_WINNT4 0
