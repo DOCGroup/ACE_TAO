@@ -3,6 +3,7 @@
 #include "ace/Stats.h"
 #include "ace/Sample_History.h"
 #include "ace/High_Res_Timer.h"
+#include "CIAO_common.h"
 
 #include "RoundTripClient_exec.h"
 
