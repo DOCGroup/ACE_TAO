@@ -34,6 +34,9 @@ Tue Nov 24 09:34:58 1998  David L. Levine  <levine@cs.wustl.edu>
           std dev calculation overflows, retry with smaller scale
           factor, until 0 is reached.
 
+        * tests/Conn_Test.cpp: replaced #include of ace/Auto_Ptr.h,
+          because ACE_Auto_Basic_Array_Ptr is used.
+
 Mon Nov 24 03:30:36 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
         * tests/DLL_Wrapper_Test.cpp: Added a test example for the DLL
