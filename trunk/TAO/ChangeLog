@@ -1,8 +1,21 @@
+Mon Jan 27 23:01:43 2003  Frank Hunleth  <frank@hunleth.com>
+
+	* orbsvcs\orbsvcs\PortableGroup\UIPMC_Transport.cpp:  Fixed code
+	  that was supposed to fake out a good error return when the call
+	  to send() fails.  This fixes an exception break on WinXP when
+	  the network cable is unplugged and a program makes a MIOP
+	  request.  The justification behide ignoring the error is
+	  explained further in the code, but basically, it takes advantage
+	  of the fact that MIOP is unreliable by specification, and hopes
+	  that the source of the error will be corrected.  Thanks to
+	  Antonio Leonforte <a.leonforte@mclink.it> for pointing out the
+	  exception break.
+
 Mon Jan 27 19:16:33 2003  Pradeep Gore  <pradeep@oomworks.com>
 
 	Made the following changes to fix the race related crashes of
 	Notify seen in orbsvcs/tests/Notify/performance-tests/RedGreen -
-	
+
 	* orbsvcs\orbsvcs\Notify\Builder.cpp:
 	  Added a refcount on each parent object per child object.
 	  This way the parent is always alive when the child is destroyed.
@@ -18,24 +31,24 @@ Mon Jan 27 19:16:33 2003  Pradeep Gore  <pradeep@oomworks.com>
 	  derived classes should consult the TAO_NS_Object::shutdown
 	  method's return value to determine if the shutdown should
 	  proceed in case of multiple calls to shutdown.
-	
+
 	* orbsvcs\orbsvcs\Notify\Object_T.cpp:
 	* orbsvcs\orbsvcs\Notify\Object_T.h:
 	  Decrement the count on this Objects parent in the destructor.
 	  Changed the signature of destroy similar to <shutdown> to avoid
 	  multiple destoy's.
-	
+
 	* orbsvcs\orbsvcs\Notify\Container_T.cpp:
 	* orbsvcs\orbsvcs\Notify\Container_T.h:
 	  The <collection_> owned by the Container is destroyed in the
 	  <shutdown> method now. The releases the reference count on child
 	  objects.
-	
+
 	* orbsvcs\orbsvcs\Notify\EventChannel.cpp:
 	* orbsvcs\orbsvcs\Notify\EventChannelFactory.cpp:
 	  The <destroy> method checks the return value of base destroy
 	  method before proceeding.
-	
+
 	* orbsvcs\orbsvcs\Notify\Event_Map_Entry_T.cpp:
 	* orbsvcs\orbsvcs\Notify\Event_Map_Entry_T.h:
 	* orbsvcs\orbsvcs\Notify\Event_Map_Entry_T.inl:
@@ -44,7 +57,7 @@ Mon Jan 27 19:16:33 2003  Pradeep Gore  <pradeep@oomworks.com>
 	  returns a suitable entry.
 	  The caller is responsible for decrementing the count when it no
 	  longer needs the entry.
-	
+
 	* orbsvcs\orbsvcs\Notify\Event_Map_T.cpp:
 	* orbsvcs\orbsvcs\Notify\Event_Map_T.h:
 	* orbsvcs\orbsvcs\Notify\Event_Map_T.inl:
@@ -52,7 +65,7 @@ Mon Jan 27 19:16:33 2003  Pradeep Gore  <pradeep@oomworks.com>
 	  can be obtained).
 	  The <remove> method decrements the count on the entry instead of
 	  deleteting it.
-	
+
 	* orbsvcs\orbsvcs\Notify\Method_Request_Lookup.cpp:
 	  Obtains the correct map entry and uses the collection in that
 	  entry. The map is released when it is done using it.
@@ -60,12 +73,12 @@ Mon Jan 27 19:16:33 2003  Pradeep Gore  <pradeep@oomworks.com>
 	  Lookup object holds a reference count to the proxy that holds a
 	  count on its parent and so on up to the EventChannel. The
 	  EventChannel only destroys the Event_manager in its destructor.
-	
+
 	* orbsvcs\orbsvcs\Notify\Notify_Service.cpp:
 	* orbsvcs\orbsvcs\Notify\Notify_Service.h:
 	  Added a fake <_decr_refcnt> to satisfy the template requirements
 	  from TAO_NS_Object_T. This will be rectified in future revisions.
-	
+
 	* orbsvcs\orbsvcs\Notify\ProxyConsumer.cpp:
 	* orbsvcs\orbsvcs\Notify\ProxyConsumer.h:
 	* orbsvcs\orbsvcs\Notify\ProxySupplier.cpp:
@@ -77,19 +90,19 @@ Mon Jan 27 19:16:33 2003  Pradeep Gore  <pradeep@oomworks.com>
 	* orbsvcs\orbsvcs\Notify\Timer_Reactor.cpp:
 	* orbsvcs\orbsvcs\Notify\Timer_Reactor.h:
 	  Made the Timer a refcounted object.
-	
+
 	* orbsvcs\orbsvcs\Notify\Timer_Queue.cpp:
 	* orbsvcs\orbsvcs\Notify\Timer_Queue.h:
 	  Added an <impl> method to obtain the timer implementation.
 
 	* orbsvcs\orbsvcs\Notify\Worker_Task.h:
 	  Removed the <init> method which is not required here.
-	
+
 	* orbsvcs\orbsvcs\Notify\Reactive_Task.cpp:
 	* orbsvcs\orbsvcs\Notify\Reactive_Task.h:
 	  Added an <init> method in which the Reactor based timer is
 	  allocated.
-	
+
 	* orbsvcs\orbsvcs\Notify\ThreadPool_Task.cpp:
 	* orbsvcs\orbsvcs\Notify\ThreadPool_Task.h:
 	  The Timer Queue is allocated in the <init> method.
@@ -104,7 +117,7 @@ Mon Jan 27 17:36:51 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
           Added missing switch case that prevented tao_ifr from
           recognizing the element type of sequence<Object> in
-          an IDL file. Thanks to Andrey Nechypurenko@mchp 
+          an IDL file. Thanks to Andrey Nechypurenko@mchp
           <Andrey.Nechypurenko@mchp.siemens.de> for sending in
           the example IDL file that uncovered the problem.
 
