@@ -12,6 +12,45 @@
 size_t ACE::pagesize_ = 0;
 
 int
+ACE::is_process_active (pid_t pid)
+{
+#if !defined(ACE_WIN32)
+  int retval = ACE_OS::kill (pid, 0);
+  if (retval == 0)
+    {
+      return 1;
+    }
+  else
+    {
+      if (errno == ESRCH)
+	return 0;
+      else
+	return retval;
+    }
+#else
+  // Create a handle for the given process id.
+  ACE_HANDLE process_handle = ::OpenProcess (PROCESS_QUERY_INFORMATION,
+					     FALSE,
+					     pid);
+  if (process_handle == ACE_INVALID_HANDLE || process_handle == NULL)
+    return 0;
+  else
+    {
+      DWORD status;
+      if (GetExitCodeProcess (process_handle, &status) == 0)
+	return 0;
+      else
+        {
+	  if(status == STILL_ACTIVE)
+	    return 1;
+	  else
+	    return 0;
+        }
+    }
+#endif /* ACE_WIN32 */
+}
+
+int
 ACE::register_stdin_handler (ACE_Event_Handler *eh,
 			     ACE_Reactor *reactor,
 			     ACE_Thread_Manager *thr_mgr,
