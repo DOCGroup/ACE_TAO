@@ -1,6 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project : orbsvcsexe, core, event, rtevent, rtoldevent, rtschedevent, bidir_giop {
-  exename  = Event_Service
-}
