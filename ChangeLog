@@ -1,3 +1,31 @@
+Thu Jun 28 13:44:52 2001  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/config-sunos5.5.h:
+
+          Add include of sys/feature_tests.h to ensure that certain macros
+          are set up correctly.  This is mainly important to SunOS 5.7 and
+          later, but may be useful to the earlier versions.
+
+          Also, added a check for the correct value of _POSIX_C_SOURCE to
+          set ACE_HAS_POSIX_GETPWNAM_R.  This use to be a conditional in
+          config-sunos5.7.h based on gcc 3.0, but it is not specific to gcc.
+
+        * ace/config-sunos5.6.h:
+
+          Added a check for _XPG4_2 before defining
+          ACE_HAS_4_4BSD_SENDMSG_RECVMSG.  This used to be a conditional in
+          config-sunos5.7.h based on gcc 3.0, but it is not specific to gcc.
+
+        * ace/config-sunos5.7.h:
+
+          Removed the gcc 3.0 specific section and dispersed the macro
+          definitions to the correct config files (based on os version and
+          other macros).
+
+          Added a definition of ACE_HAS_SOCKLEN_T since SunOS has had
+          socklen_t since 5.7.  This use to be a conditional based on gcc
+          3.0, but it is not specific to gcc.
+
 Thu Jun 28 13:05:12 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * ace/CDR_Stream.{h,i,cpp}:
