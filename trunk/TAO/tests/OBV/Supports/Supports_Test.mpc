@@ -1,12 +1,10 @@
 // $Id$
 
-project(*Server): taoserver, valuetype {
+project(*Server): taoserver, valuetype, strategies {
   exename = server
   // This is just a dummy_lable to prevent the test from being compiled
   // in MPC builds
   requires += dummy_label
-  libs += TAO_Strategies
-  libpaths += ../../../../ace,../../../tao,../../../tao/PortableServer,../../../tao/Valuetype,../../../tao/IORInterceptor,../../../tao/ObjRefTemplate,../../../tao/Strategies
   Source_Files {
     server.cpp
     Supports_Test_impl.cpp
@@ -25,7 +23,6 @@ project(*Client): taoclient, taoserver, valuetype {
   // This is just a dummy_lable to prevent the test from being compiled
   // in MPC builds
   requires += dummy_label
-  libpaths += ../../../../ace,../../../tao,../../../tao/PortableServer,../../../tao/Valuetype,../../../tao/IORInterceptor,../../../tao/ObjRefTemplate,../../../tao/Strategies
   Source_Files {
     client.cpp
     Supports_Test_impl.cpp
