@@ -327,10 +327,11 @@ CORBA::Object_ptr TAO::Object_Group_Creator::create_group (
 
         if (this->have_replication_manager_)
         {
-          group = this->replication_manager_->add_member (group,
-                            info.the_location,
-                            created_obj.in ()
-                            ACE_ENV_ARG_PARAMETER);
+          group = this->replication_manager_->add_member (
+            group.in (),
+            info.the_location,
+            created_obj.in ()
+            ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (CORBA::Object::_nil ());
         }
       }
@@ -351,9 +352,6 @@ CORBA::Object_ptr TAO::Object_Group_Creator::create_group (
       "%T %n (%P|%t) Object_Group_Creator:  Successfully created group of %s\n",
       role
       ));
-
-    const char * group_iogr = orb_->object_to_string (group.in () ACE_ENV_ARG_PARAMETER );
-    ACE_CHECK_RETURN (CORBA::Object::_nil ());
   }
 
   return group._retn ();

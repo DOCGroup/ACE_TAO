@@ -67,11 +67,11 @@ class TAO_PortableGroup_Export TAO_Portable_Group_Map
 {
 public:
 
-	/**
-	 * @struct Map_Entry
-	 *
-	 * @brief Value field of the portable group map.
-	 */
+  /**
+   * @struct Map_Entry
+   *
+   * @brief Value field of the portable group map.
+   */
   struct Map_Entry
   {
     /// The key.
