@@ -2,16 +2,15 @@
 
 #include "tao/Tagged_Components.h"
 #include "tao/Profile.h"
+#include "tao/ORB_Core.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Tagged_Components.i"
 #endif /* ! __ACE_INLINE__ */
 
-
 ACE_RCSID (tao,
            Tagged_Components,
            "$Id$")
-
 
 void
 TAO_Tagged_Components::set_orb_type (CORBA::ULong orb_type)
@@ -205,53 +204,6 @@ TAO_Tagged_Components::add_component_i (const IOP::TaggedComponent& component)
   CORBA::ULong l = this->components_.length ();
   this->components_.length (l + 1);
   this->components_[l] = component;
-}
-
-int
-TAO_Tagged_Components::remove_component (IOP::ComponentId id)
-{
-  if (this->known_tag (id))
-    return this->remove_known_component_i (id);
-  else
-    return this->remove_component_i (id);
-}
-
-int
-TAO_Tagged_Components::remove_known_component_i (
-    IOP::ComponentId tag)
-{
-  if (tag == IOP::TAG_ORB_TYPE)
-    {
-      this->orb_type_ = 0;
-      this->orb_type_set_ = 0;
-      return 1;
-    }
-  else if (tag == IOP::TAG_CODE_SETS)
-    {
-      this->code_sets_set_ = 0;
-      return 1;
-    }
-  else
-    return 0;
-}
-
-int
-TAO_Tagged_Components::remove_component_i (IOP::ComponentId tag)
-{
-  CORBA::ULong src = 0, dest = 0;
-  CORBA::ULong len = this->components_.length ();
-
-  for (;src != len;++src)
-    {
-      if ( tag != this->components_[src].tag)
-        {
-          this->components_[dest] = this->components_[src];
-          ++dest;
-        }
-    }
-
-  this->components_.length (dest);
-  return src - dest;
 }
 
 int

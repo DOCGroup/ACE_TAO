@@ -3,10 +3,6 @@
 #include "CEC_Reactive_ConsumerControl.h"
 #include "CEC_EventChannel.h"
 #include "CEC_ConsumerAdmin.h"
-#if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
-#include "CEC_TypedEventChannel.h"
-#include "CEC_TypedConsumerAdmin.h"
-#endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 #include "CEC_ProxyPushSupplier.h"
 #include "CEC_ProxyPullSupplier.h"
 #include "tao/Messaging/Messaging.h"
@@ -40,29 +36,6 @@ TAO_CEC_Reactive_ConsumerControl::
 #endif /* TAO_HAS_CORBA_MESSAGING */
 }
 
-#if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
-TAO_CEC_Reactive_ConsumerControl::
-     TAO_CEC_Reactive_ConsumerControl (const ACE_Time_Value &rate,
-                                       const ACE_Time_Value &timeout,
-                                       TAO_CEC_TypedEventChannel *ec,
-                                       CORBA::ORB_ptr orb)
-  : rate_ (rate),
-    timeout_ (timeout),
-    adapter_ (this),
-    typed_event_channel_ (ec),
-    orb_ (CORBA::ORB::_duplicate (orb))
-{
-  this->reactor_ =
-    this->orb_->orb_core ()->reactor ();
-
-#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
-   // Initialise timer_id_ to an invalid timer id, so that in case we don't
-   // schedule a timer, we don't cancel a random timer at shutdown
-   timer_id_ = -1;
-#endif /* TAO_HAS_CORBA_MESSAGING */
-}
-#endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
-
 TAO_CEC_Reactive_ConsumerControl::~TAO_CEC_Reactive_ConsumerControl (void)
 {
 }
@@ -72,18 +45,6 @@ TAO_CEC_Reactive_ConsumerControl::query_consumers (
       ACE_ENV_SINGLE_ARG_DECL)
 {
   TAO_CEC_Ping_Push_Consumer push_worker (this);
-
-#if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
-  if (this->typed_event_channel_)
-    {
-      this->typed_event_channel_->typed_consumer_admin ()->for_each (&push_worker
-                                                                     ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
-    }
-  else
-    {
-#endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
-
   this->event_channel_->consumer_admin ()->for_each (&push_worker
                                                      ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
@@ -92,10 +53,6 @@ TAO_CEC_Reactive_ConsumerControl::query_consumers (
   this->event_channel_->consumer_admin ()->for_each (&pull_worker
                                                      ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
-
-#if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
-    }
-#endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 }
 
 void

@@ -32,8 +32,6 @@
 #include "ace/Hash_Map_Manager.h"
 #include "ace/OS.h"
 #include "ace/ACE.h"
-#include "ace/SString.h"
-#include "ace/Null_Mutex.h"
 
 class AccountManager_i : public POA_Bank::AccountManager
 {
@@ -48,6 +46,9 @@ public:
   // = Initialization and termination methods.
   AccountManager_i (void);
   // Constructor.
+
+  AccountManager_i (AccountManager_i&);
+  // Copy constructor for old g++.
 
   ~AccountManager_i (void);
   // Destructor.

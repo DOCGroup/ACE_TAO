@@ -75,7 +75,7 @@ be_visitor_operation_interceptors_cs::generate_class_declaration (
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
-  *os << be_nl << be_nl
+  *os << be_nl << be_nl 
       << "class TAO_ClientRequestInfo_" << node->flat_name ();
 
   // We need the interface node in which this operation was defined. However,
@@ -552,7 +552,7 @@ be_visitor_operation_interceptors_cs::generate_class_definition (
           // Now make sure that we have some in and inout
           // parameters. Otherwise, there is nothing to be put into
           // the Dyanmic::Paramlist.
-          || (!(this->has_param_type (node, AST_Argument::dir_IN))
+          || (!(this->has_param_type (node, AST_Argument::dir_IN)) 
               && !(this->has_param_type (node, AST_Argument::dir_INOUT))))
         {
           *os << "return parameter_list;";
@@ -756,7 +756,7 @@ be_visitor_operation_interceptors_cs::generate_class_definition (
       if (this->void_return_type (bt))
         {
           // Return an Any with tk_void TypeCode.
-          *os << "const CORBA::Boolean tk_void_any = 1;" << be_nl
+          *os << "CORBA::Boolean tk_void_any = 1;" << be_nl
               << "CORBA::Any *result_any ="  << be_idt_nl
               << "TAO_RequestInfo_Util::make_any "
               << "(tk_void_any ACE_ENV_ARG_PARAMETER);"
@@ -767,7 +767,7 @@ be_visitor_operation_interceptors_cs::generate_class_definition (
         }
       else
         {
-          *os << "const CORBA::Boolean tk_void_any = 0;" << be_nl
+          *os << "CORBA::Boolean tk_void_any = 0;" << be_nl
               << "CORBA::Any *result_any ="  << be_idt_nl
               << "TAO_RequestInfo_Util::make_any "
               << "(tk_void_any ACE_ENV_ARG_PARAMETER);"

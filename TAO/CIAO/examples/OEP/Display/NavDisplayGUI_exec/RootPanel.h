@@ -3,13 +3,11 @@
 #ifndef __ROOTPANEL_H
 #define __ROOTPANEL_H
 
-#define QT_GENUINE_STR
-
-#include "ace/Hash_Map_Manager.h"
-#include "ace/Null_Mutex.h"
 #include "MapView.h"
 #include "DetailView.h"
 #include <qmainwindow.h>
+#include "ace/Hash_Map_Manager.h"
+
 
 class NodeItem;
 class QMouseEvent;

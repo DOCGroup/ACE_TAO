@@ -21,7 +21,7 @@
 #include "HTTP_URL.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+#define ACE_LACKS_PRAGMA_ONCE 
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 // Forward declaration.

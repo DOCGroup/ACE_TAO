@@ -123,8 +123,6 @@ my(%genext) = ('idl_files' => {'automatic'     => 1,
                               },
               );
 
-my($grouped_key) = 'grouped_';
-
 # ************************************************************
 # Subroutine Section
 # ************************************************************
@@ -145,14 +143,11 @@ sub new {
   my($baseprojs) = shift;
   my($gfeature)  = shift;
   my($feature)   = shift;
-  my($hierarchy) = shift;
-  my($exclude)   = shift;
-  my($makeco)    = shift;
   my($self)      = Creator::new($class, $global, $inc,
                                 $template, $ti, $dynamic, $static,
                                 $relative, $addtemp, $addproj,
                                 $progress, $toplevel, $baseprojs,
-                                $feature, $hierarchy, 'project');
+                                $feature, 'project');
 
   $self->{$self->{'type_check'}}   = 0;
   $self->{'feature_defined'}       = 0;
@@ -539,7 +534,6 @@ sub parse_components {
   my($set)     = 0;
   my(%flags)   = ();
   my($custom)  = defined $self->{'generated_exts'}->{$tag};
-  my($grtag)   = $grouped_key . $tag;
 
   if ($custom) {
     ## For the custom scoped assignments, we want to put a copy of
@@ -590,7 +584,6 @@ sub parse_components {
         $set = 1;
         if (!defined $$comps{$current}) {
           $$comps{$current} = [];
-          $self->process_assignment_add($grtag, $current);
         }
       }
       else {
@@ -1155,7 +1148,7 @@ sub generate_default_pch_filenames {
     my($matching) = undef;
     foreach my $file (@$files) {
       foreach my $ext (@{$self->{'valid_components'}->{'header_files'}}) {
-        if ($file =~ /(.*_pch$ext)$/) {
+        if ($file =~ /(.*_pch$ext)/) {
           $self->process_assignment('pch_header', $1);
           ++$count;
           if ($file =~ /$pname/) {
@@ -1175,7 +1168,7 @@ sub generate_default_pch_filenames {
     my($matching) = undef;
     foreach my $file (@$files) {
       foreach my $ext (@{$self->{'valid_components'}->{'source_files'}}) {
-        if ($file =~ /(.*_pch$ext)$/) {
+        if ($file =~ /(.*_pch$ext)/) {
           $self->process_assignment('pch_source', $1);
           ++$count;
           if ($file =~ /$pname/) {
@@ -1823,65 +1816,6 @@ sub check_custom_output {
 }
 
 
-sub get_special_value {
-  my($self)  = shift;
-  my($type)  = shift;
-  my($cmd)   = shift;
-  my($based) = shift;
-
-  if ($type =~ /^custom_type/) {
-    return $self->get_custom_value($cmd, $based);
-  }
-  elsif ($type =~ /^grouped_/) {
-    return $self->get_grouped_value($type, $cmd, $based);
-  }
-
-  return undef;
-}
-
-
-sub get_grouped_value {
-  my($self)  = shift;
-  my($type)  = shift;
-  my($cmd)   = shift;
-  my($based) = shift;
-  my($value) = undef;
-
-  ## Remove the grouped_ part
-  $type =~ s/^$grouped_key//;
-
-  ## Add the s if it isn't there
-  if ($type !~ /s$/i) {
-    $type .= 's';
-  }
-
-  ## Make it all lowercase
-  $type = lc($type);
-
-  my($names) = $self->{$type};
-  if ($cmd eq 'files') {
-    foreach my $name (keys %$names) {
-      my($comps) = $$names{$name};
-      foreach my $comp (keys %$comps) {
-        if ($comp eq $based) {
-          $value = $$comps{$comp};
-          last;
-        }
-      }
-    }
-  }
-  elsif ($cmd eq 'component_name') {
-    ## If there is more than one name, then we will need
-    ## to deal with that at a later time.
-    foreach my $name (keys %$names) {
-      $value = $name;
-    }
-  }
-
-  return $value;
-}
-
-
 sub get_custom_value {
   my($self)  = shift;
   my($cmd)   = shift;
@@ -2078,7 +2012,7 @@ sub write_project {
   my($self)     = shift;
   my($status)   = 1;
   my($error)    = '';
-  my($file_name)     = $self->transform_file_name($self->project_file_name());
+  my($name)     = $self->transform_file_name($self->project_file_name());
   my($progress) = $self->get_progress_callback();
 
   if (defined $progress) {
@@ -2091,17 +2025,17 @@ sub write_project {
       ## Writing the non-static file so set it to 0
       if ($self->get_dynamic()) {
         $self->{'writing_type'} = 0;
-        ($status, $error) = $self->write_output_file($file_name);
+        ($status, $error) = $self->write_output_file($name);
       }
 
       if ($status &&
           $self->get_static() && $self->separate_static_project()) {
-        $file_name = $self->transform_file_name(
+        $name = $self->transform_file_name(
                           $self->static_project_file_name());
 
         ## Writing the static file so set it to 1
         $self->{'writing_type'} = 1;
-        ($status, $error) = $self->write_output_file($file_name);
+        ($status, $error) = $self->write_output_file($name);
       }
     }
   }
@@ -2227,7 +2161,7 @@ sub update_project_info {
   ## If we haven't seen this value yet, put it on the array
   if (!defined $self->{'project_info_hash_table'}->{"@narr $value"}) {
     $self->{'project_info_hash_table'}->{"@narr $value"} = 1;
-    #$self->save_project_value("@narr", $value);
+    $self->save_project_value("@narr", $value);
     push(@$arr, $value);
   }
 
@@ -2354,6 +2288,20 @@ sub get_default_element_name {
 # ************************************************************
 # Virtual Methods To Be Overridden
 # ************************************************************
+
+sub specific_lookup {
+  #my($self) = shift;
+  #my($key)  = shift;
+  return undef;
+}
+
+
+sub save_project_value {
+  #my($self)  = shift;
+  #my($name)  = shift;
+  #my($value) = shift;
+}
+
 
 sub translate_value {
   my($self) = shift;

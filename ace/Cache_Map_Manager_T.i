@@ -149,12 +149,11 @@ ACE_Cache_Map_Iterator<ACE_T2>::operator-- (int)
   return retn;
 }
 
+
 template <ACE_T1> ACE_INLINE void
 ACE_Cache_Map_Iterator<ACE_T2>::dump (void) const
 {
-#if defined (ACE_HAS_DUMP)
   this->iterator_implementation_.dump ();
-#endif /* ACE_HAS_DUMP */
 }
 
 template <ACE_T1> ACE_INLINE
@@ -253,9 +252,7 @@ ACE_Cache_Map_Reverse_Iterator<ACE_T2>::operator-- (int)
 template <ACE_T1> ACE_INLINE void
 ACE_Cache_Map_Reverse_Iterator<ACE_T2>::dump (void) const
 {
-#if defined (ACE_HAS_DUMP)
   this->reverse_iterator_implementation_.dump ();
-#endif /* ACE_HAS_DUMP */
 }
 
 template <ACE_T1> ACE_INLINE

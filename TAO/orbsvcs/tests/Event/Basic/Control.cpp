@@ -80,9 +80,9 @@ main (int argc, char* argv[])
 
       // ****************************************************************
 
+      Consumer consumer0 ("Consumer/0", 100);
       // Create a consumer, intialize its RT_Info structures, and
       // connnect to the event channel....
-      Consumer consumer0 ("Consumer/0", 100);
 
       ACE_ConsumerQOS_Factory consumer_qos0;
       consumer_qos0.start_disjunction_group ();
@@ -93,9 +93,9 @@ main (int argc, char* argv[])
                          ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
+      Consumer consumer1 ("Consumer/1", 200);
       // Create a consumer, intialize its RT_Info structures, and
       // connnect to the event channel....
-      Consumer consumer1 ("Consumer/1", 200);
 
       consumer1.connect (consumer_admin.in (),
                          consumer_qos0.get_ConsumerQOS ()
@@ -116,6 +116,7 @@ main (int argc, char* argv[])
       task0.stop ();
 
       ACE_Thread_Manager::instance ()->wait ();
+
 
       // ****************************************************************
 
@@ -141,11 +142,6 @@ main (int argc, char* argv[])
       // ****************************************************************
 
       poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      // ****************************************************************
-
-      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // ****************************************************************

@@ -5,12 +5,7 @@
 int ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACEXML_NamespaceSupport xmlns;
-  if (xmlns.init() == -1)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("Error in initializing namespace support.")));
-      return 1;
-    }
+
   xmlns.pushContext();
   xmlns.declarePrefix(ACE_TEXT (""),
                       ACE_TEXT ("http://www.w3.org/1999/xhtml"));

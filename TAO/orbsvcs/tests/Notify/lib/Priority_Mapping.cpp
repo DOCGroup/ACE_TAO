@@ -2,7 +2,7 @@
 
 #include "Priority_Mapping.h"
 
-ACE_RCSID(lib, Priority_Mapping, "$Id$")
+ACE_RCSID(lib, Priority_Mapping, "$id$")
 
 TAO_Notify_Tests_Priority_Mapping::~TAO_Notify_Tests_Priority_Mapping (void)
 {

@@ -13,7 +13,7 @@
 
 #ifndef ACE_CAPABILITIES_H
 #define ACE_CAPABILITIES_H
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -21,7 +21,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Null_Mutex.h"
+#include "ace/Synch.h"
 #include "ace/Hash_Map_Manager_T.h"
 #include "ace/Containers.h"
 #include "ace/SString.h"
@@ -207,5 +207,5 @@ is_line (const ACE_TCHAR *line)
 #include "ace/Capabilities.i"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 #endif /* __ACE_CAPABILITIES_H__ */

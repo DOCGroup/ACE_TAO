@@ -17,7 +17,7 @@
 
 #ifndef TAO_CEC_SUPPLIERCONTROL_H
 #define TAO_CEC_SUPPLIERCONTROL_H
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #include "orbsvcs/CosEvent/event_export.h"
 
@@ -30,9 +30,6 @@
 class TAO_CEC_EventChannel;
 class TAO_CEC_ProxyPushConsumer;
 class TAO_CEC_ProxyPullConsumer;
-#if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
-class TAO_CEC_TypedProxyPushConsumer;
-#endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
 /**
  * @class TAO_CEC_SupplierControl
@@ -68,11 +65,6 @@ public:
   virtual void supplier_not_exist (TAO_CEC_ProxyPushConsumer *proxy
                                    ACE_ENV_ARG_DECL_NOT_USED);
 
-#if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
-  virtual void supplier_not_exist (TAO_CEC_TypedProxyPushConsumer *proxy
-                                   ACE_ENV_ARG_DECL_NOT_USED);
-#endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
-
   /**
    * Invoked by helper classes when they detect that a supplier does
    * not exists (i.e. _non_existent() returns true and/or the
@@ -91,5 +83,5 @@ public:
 #include "CEC_SupplierControl.i"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 #endif /* TAO_CEC_SUPPLIERCONTROL_H */

@@ -14,7 +14,7 @@ void
 Connection_Manager::load_ep_addr (const char* file_name)
 {
   FILE* addr_file = ACE_OS::fopen (file_name, "r");
-  
+
   if (addr_file == 0)
     {
       ACE_ERROR ((LM_DEBUG,
@@ -29,10 +29,10 @@ Connection_Manager::load_ep_addr (const char* file_name)
   while (1)
     {
       char buf [BUFSIZ];
-      
+
       // Read from the file into a buffer
 
-      
+
       /*
       int n = ACE_OS::fread (buf,
 			     1,
@@ -47,7 +47,7 @@ Connection_Manager::load_ep_addr (const char* file_name)
 	    ACE_DEBUG ((LM_DEBUG,"End of Addr file\n"));
 	  break;
 	}
-	
+
 
       if (TAO_debug_level > 0)
 	ACE_DEBUG ((LM_DEBUG,
@@ -70,43 +70,13 @@ Connection_Manager::load_ep_addr (const char* file_name)
 	}
       else
 	flowname += addr_tokenizer [0];
-      
+
       if (addr_tokenizer [1] != 0)
-	{
-	  ACE_CString token (addr_tokenizer [1]);
-
-	  int pos = token.find ('\r');
-	  if (pos != ACE_CString::npos)
-	    {
-	      addr->sender_addr = CORBA::string_dup ((token.substr (0, pos)).c_str ());
-	    }
-	  else addr->sender_addr = CORBA::string_dup (token.c_str());
-
-	  pos = addr->sender_addr.find ('\n');
-	  if (pos != ACE_CString::npos)
-	    {
-	      addr->sender_addr = (addr->sender_addr.substr (0, pos)).c_str ();
-	    }
-	}
+	addr->sender_addr += CORBA::string_dup (addr_tokenizer [1]);
 
       if (addr_tokenizer [2] != 0)
-	{
-	  ACE_CString token (addr_tokenizer [2]);
+	addr->receiver_addr += CORBA::string_dup (addr_tokenizer [2]);
 
-	  int pos = token.find ('\r');
-	  if (pos != ACE_CString::npos)
-	    {
-	      addr->receiver_addr = CORBA::string_dup ((token.substr (0, pos)).c_str ());
-	    }
-	  else addr->receiver_addr = CORBA::string_dup (token.c_str());
-
-	  pos = addr->receiver_addr.find ('\n');
-	  if (pos != ACE_CString::npos)
-	    {
-	      addr->receiver_addr = (addr->receiver_addr.substr (0, pos)).c_str ();
-	    }
-	}
-      
       int result = ep_addr_.bind (flowname,
 				  addr);
       if (result == 0)
@@ -124,7 +94,7 @@ Connection_Manager::load_ep_addr (const char* file_name)
 		       "Flowname %s Bound Failed\n",
 		       flowname.c_str ()));
 
-      
+
     }
 
 }
@@ -149,7 +119,7 @@ Connection_Manager::bind_to_receivers (const ACE_CString &sender_name,
   this->sender_name_ =
     sender_name;
 
-  /* 
+  /*
   this->sender_ =
     AVStreams::MMDevice::_duplicate (sender);
   */
@@ -319,29 +289,26 @@ Connection_Manager::connect_to_receivers (AVStreams::MMDevice_ptr sender
       ACE_CString flowname =
         (*iterator).ext_id_;
 
+
       Endpoint_Addresses* addr = 0;
-      ep_addr_.find (flowname,
-		     addr);
+      int result = ep_addr_.find (flowname,
+			       addr);
 
       ACE_CString sender_addr_str;
       ACE_CString receiver_addr_str;
 
-      if (addr != 0)
+      if (result != -1)
 	{
 	  sender_addr_str = addr->sender_addr;
 	  receiver_addr_str = addr->receiver_addr;
-	  ACE_DEBUG ((LM_DEBUG,
-		      "Address Strings %s %s\n",
-		      sender_addr_str.c_str (),
-		      receiver_addr_str.c_str ()));
-	  
 	}
       else ACE_DEBUG ((LM_DEBUG,
 		       "No endpoint address for flowname %s\n",
 		       flowname.c_str ()));
-      
-      ACE_INET_Addr receiver_addr (receiver_addr_str.c_str ());      
+
+      ACE_INET_Addr receiver_addr (receiver_addr_str.c_str ());
       ACE_INET_Addr sender_addr (sender_addr_str.c_str ());
+
 
       // Create the forward flow specification to describe the flow.
       TAO_Forward_FlowSpec_Entry sender_entry (flowname.c_str (),
@@ -353,17 +320,13 @@ Connection_Manager::connect_to_receivers (AVStreams::MMDevice_ptr sender
 
       sender_entry.set_peer_addr (&receiver_addr);
 
+
       // Set the flow specification for the stream between receiver
       // and distributer
       AVStreams::flowSpec flow_spec (1);
       flow_spec.length (1);
       flow_spec [0] =
         CORBA::string_dup (sender_entry.entry_to_string ());
-
-      if (TAO_debug_level > 0)
-	ACE_DEBUG ((LM_DEBUG,
-		    "Connection_Manager::connect_to_receivers Flow Spec Entry %s\n",
-		    sender_entry.entry_to_string ()));
 
       // Create the stream control for this stream.
       TAO_StreamCtrl *streamctrl;
@@ -523,14 +486,15 @@ Connection_Manager::connect_to_sender (ACE_ENV_SINGLE_ARG_DECL)
     "_" +
     this->receiver_name_;
 
+
   Endpoint_Addresses* addr = 0;
-  ep_addr_.find (flowname,
-		 addr);
-  
+  int ret = ep_addr_.find (flowname,
+			      addr);
+
   ACE_CString sender_addr_str;
   ACE_CString receiver_addr_str;
-  
-  if (addr != 0)
+
+  if (ret != -1)
     {
       sender_addr_str = addr->sender_addr;
       receiver_addr_str = addr->receiver_addr;
@@ -541,9 +505,9 @@ Connection_Manager::connect_to_sender (ACE_ENV_SINGLE_ARG_DECL)
 		  receiver_addr_str.c_str ()));
     }
 
-  ACE_INET_Addr receiver_addr (receiver_addr_str.c_str ());  
   ACE_INET_Addr sender_addr (sender_addr_str.c_str ());
-  
+  ACE_INET_Addr receiver_addr (receiver_addr_str.c_str ());
+
   // Create the forward flow specification to describe the flow.
   TAO_Forward_FlowSpec_Entry sender_entry (flowname.c_str (),
                                            "IN",
@@ -561,12 +525,7 @@ Connection_Manager::connect_to_sender (ACE_ENV_SINGLE_ARG_DECL)
   flow_spec.length (1);
   flow_spec [0] =
     CORBA::string_dup (sender_entry.entry_to_string ());
-  
-  if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-		"Connection_Manager::connect_to_sender Flow Spec Entry %s\n",
-		sender_entry.entry_to_string ()));
-  
+
   // Create the stream control for this stream
   TAO_StreamCtrl* streamctrl;
   ACE_NEW (streamctrl,
@@ -693,13 +652,6 @@ template class ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, AVStreams::StreamCtrl_
 template class ACE_Hash_Map_Iterator_Ex<ACE_CString, AVStreams::StreamCtrl_var, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, AVStreams::StreamCtrl_var, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
 
-template class ACE_Hash_Map_Entry<ACE_CString, Endpoint_Addresses*>;
-template class ACE_Hash_Map_Manager<ACE_CString, Endpoint_Addresses*, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Manager_Ex<ACE_CString, Endpoint_Addresses*, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, Endpoint_Addresses*, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Ex<ACE_CString, Endpoint_Addresses*, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, Endpoint_Addresses*, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
-
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate ACE_Hash_Map_Entry<ACE_CString, AVStreams::MMDevice_var>
@@ -729,12 +681,5 @@ template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, Endpoint_Addresses*
 #pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, AVStreams::StreamCtrl_var, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Iterator_Ex<ACE_CString, AVStreams::StreamCtrl_var, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, AVStreams::StreamCtrl_var, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
-
-#pragma instantiate ACE_Hash_Map_Entry<ACE_CString, Endpoint_Addresses*>
-#pragma instantiate ACE_Hash_Map_Manager<ACE_CString, Endpoint_Addresses*, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_CString, Endpoint_Addresses*, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, Endpoint_Addresses*, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<ACE_CString, Endpoint_Addresses*, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, Endpoint_Addresses*, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

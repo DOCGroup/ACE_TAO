@@ -14,7 +14,7 @@ $iorfile = "if_repo.ior";
 
 $status = 0;
 
-$nice = "";
+$nice = "-ORBDottedDecimalAddresses 1";
 $debug = "";
 $test = "";
 $iterations = "";

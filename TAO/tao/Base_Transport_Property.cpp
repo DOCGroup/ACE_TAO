@@ -1,7 +1,7 @@
 //$Id$
 
 #include "tao/Base_Transport_Property.h"
-#include "ace/OS_Memory.h"
+
 
 
 #if !defined (__ACE_INLINE__)

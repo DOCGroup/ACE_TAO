@@ -11,18 +11,15 @@
 //    interceptors_result.cpp
 //
 // = DESCRIPTION
-//    Visitor that generates the operation-specific
-//    PortableInterceptor::RequestInfo::result() method
-//    implementation.
+//    Visitor that generates the Dyanmic::ParameterList
 //
 // = AUTHOR
 //    Kirthika Parameswaran  <kirthika@cs.wustl.edu>
-//    Ossama Othman <ossama@dre.vanderbilt.edu>
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_argument,
-           interceptors_result,
+ACE_RCSID (be_visitor_argument, 
+           interceptors_result, 
            "$Id$")
 
 // ************************************************************
@@ -166,8 +163,7 @@ be_visitor_operation_interceptors_result::visit_sequence (be_sequence *)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  // Force copying when inserting into the Any.
-  *os << "(*result_any) <<= *this->_result;" << be_nl;
+  *os << "(*result_any) <<= this->_result;" << be_nl;
 
   return 0;
 }
@@ -205,34 +201,22 @@ return 0;
 }
 
 int
-be_visitor_operation_interceptors_result::visit_structure (be_structure * node)
+be_visitor_operation_interceptors_result::visit_structure (be_structure *)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << "(*result_any) <<= ";
-
-  if (node->size_type () == AST_Type::VARIABLE)
-    *os << "*this->_result;" << be_nl;  // Force copying when
-                                        // inserting into the Any.
-  else
-    *os << "this->_result;" << be_nl;
+  *os << "(*result_any) <<= this->_result;" << be_nl;
 
   return 0;
 
 }
 
 int
-be_visitor_operation_interceptors_result::visit_union (be_union * node)
+be_visitor_operation_interceptors_result::visit_union (be_union *)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << "(*result_any) <<= ";
-
-  if (node->size_type () == AST_Type::VARIABLE)
-    *os << "*this->_result;" << be_nl;  // Force copying when
-                                        // inserting into the Any.
-  else
-    *os << "this->_result;" << be_nl;
+  *os << "(*result_any) <<= this->_result;" << be_nl;
 
   return 0;
 }
@@ -280,3 +264,5 @@ be_visitor_operation_interceptors_result::visit_home (
 {
   return this->visit_interface (node);
 }
+
+

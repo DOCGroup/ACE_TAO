@@ -222,7 +222,6 @@ SmiUINT32 IpAddress::get_syntax()
 
 //-----[ IP Address copy constructor ]---------------------------------
 IpAddress::IpAddress(const IpAddress &ipaddr)
-  : Address (ipaddr)
 {
   // always initialize what type this object is
   smival.syntax = sNMP_SYNTAX_IPADDR;
@@ -411,7 +410,7 @@ SnmpSyntax *IpAddress::clone() const
 }
 
 //-------[ return the Fully Qualified Domain Name ]----------------------
-const char *IpAddress::resolve_hostname(int &status)
+char *IpAddress::resolve_hostname(int &status)
 {
   if ((iv_friendly_name_[0] == 0) && valid_flag)
     addr_to_friendly();
@@ -609,7 +608,7 @@ IpAddress::operator const char *() const
 }
 
 //----[ IP address get char representation ]--------------------------
-const char * IpAddress::to_string()
+char * IpAddress::to_string()
 {
   return (char *)output_buffer;
 }
@@ -656,7 +655,7 @@ Address_Iter::Address_Iter(const char *hostname): valid_(0), count_(0),
 {
    ACE_OS::memset(&buffer_, 0, sizeof(ACE_HOSTENT_DATA));
    ACE_OS::memset(&lookupResult_, 0, sizeof(struct hostent));
-   if (ACE_OS::inet_addr(hostname) == (in_addr_t) -1)
+   if (ACE_OS::inet_addr(hostname) == -1)
      valid_ = query_dns(hostname);
    else {
      ACE_ASSERT(0);             // don't support dot-quad lookup yet
@@ -934,7 +933,7 @@ UdpAddress::operator const char *() const
 }
 
 //----[ UDP address get char representation ]--------------------------
-const char * UdpAddress::to_string()
+char * UdpAddress::to_string()
 {
   return (char *)output_buffer;
 }
@@ -1025,7 +1024,6 @@ int NetbiosAddress::parse_address(const char *address)
 }
 
 NetbiosAddress::NetbiosAddress( const NetbiosAddress& nbaddr)
-  : Address (nbaddr)
 {
   // always initialize SMI info
   smival.syntax = sNMP_SYNTAX_OCTETS;
@@ -1062,7 +1060,7 @@ NetbiosAddress::~NetbiosAddress()
 {
 }
 
-const char *NetbiosAddress::to_string()
+char *NetbiosAddress::to_string()
 {
   return (char *)output_buffer;
 }
@@ -1183,7 +1181,6 @@ IpxAddress::IpxAddress( const char  *inaddr):Address( )
 
 //-----[ IPX Address copy constructor ]----------------------------------
 IpxAddress::IpxAddress(const IpxAddress &ipxaddr)
-  : Address (ipxaddr)
 {
   // always initialize SMI info
   smival.syntax = sNMP_SYNTAX_OCTETS;
@@ -1429,7 +1426,7 @@ IpxAddress::operator const char *() const
 }
 
 //----[ IPX address get char representation ]--------------------------
-const char * IpxAddress::to_string()
+char * IpxAddress::to_string()
 {
   return (char *)output_buffer;
 }
@@ -1650,7 +1647,7 @@ IpxSockAddress::operator const char *() const
 }
 
 //----[ IPXSock address get char representation ]--------------------------
-const char * IpxSockAddress::to_string()
+char * IpxSockAddress::to_string()
 {
   return (char *)output_buffer;
 }
@@ -1738,7 +1735,6 @@ SmiUINT32 MacAddress::get_syntax()
 
 //-----[ MAC Address copy constructor ]---------------------------------
 MacAddress::MacAddress(const MacAddress &macaddr)
-  : Address (macaddr)
 {
   // always initialize SMI info
   smival.syntax = sNMP_SYNTAX_OCTETS;
@@ -1939,7 +1935,7 @@ MacAddress::operator const char *() const
   return (char *)output_buffer;
 }
 //----[ MAC address get char representation ]--------------------------
-const char * MacAddress::to_string()
+char * MacAddress::to_string()
 {
   return (char *)output_buffer;
 }
@@ -2065,9 +2061,7 @@ GenAddress::GenAddress( const Address &addr): address(0)
 }
 
 //-----------------[ constructor with another GenAddress object ]-------------
-GenAddress::GenAddress( const GenAddress &addr)
-  : Address (addr),
-    address(0)
+GenAddress::GenAddress( const GenAddress &addr): address(0)
 {
   valid_flag = 0;
 
@@ -2367,7 +2361,7 @@ GenAddress::operator const char *() const
 }
 
 // to_string form of the contained address
-const char * GenAddress::to_string()
+char * GenAddress::to_string()
 {
   if ( address != 0)
     return address->to_string();        // pass thru
@@ -2425,8 +2419,7 @@ DecNetAddress::DecNetAddress( const char *inaddr): Address()
   DecNetAddress::format_output();
 }
 
-DecNetAddress::DecNetAddress( const DecNetAddress& addr)
-  : Address (addr)
+DecNetAddress::DecNetAddress( const DecNetAddress&)
 {
 }
 
@@ -2453,7 +2446,7 @@ DecNetAddress::~DecNetAddress()
 {
 }
 
-const char *DecNetAddress::to_string()
+char *DecNetAddress::to_string()
 {
   return (char *)output_buffer;
 }
@@ -2561,8 +2554,7 @@ AppleTalkAddress::AppleTalkAddress( const char *inaddr): Address()
   valid_flag = parse_address( (char *) inaddr);
   AppleTalkAddress::format_output();
 }
-AppleTalkAddress::AppleTalkAddress( const AppleTalkAddress& addr)
-  : Address (addr)
+AppleTalkAddress::AppleTalkAddress( const AppleTalkAddress&)
 {
 }
 
@@ -2589,7 +2581,7 @@ AppleTalkAddress::~AppleTalkAddress()
 {
 }
 
-const char *AppleTalkAddress::to_string()
+char *AppleTalkAddress::to_string()
 {
   return (char *)output_buffer;
 }

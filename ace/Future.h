@@ -15,9 +15,10 @@
 
 #ifndef ACE_FUTURE_H
 #define ACE_FUTURE_H
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #include "ace/Unbounded_Set.h"
+#include "ace/Synch.h"
 #include "ace/Strategies_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -35,7 +36,7 @@ template <class T> class ACE_Future;
 /**
  * @class ACE_Future_Holder
  *
- * @brief Implementation of object that holds an ACE_Future.
+ * @brief Implementation of object which has holds ACE_Future.
  */
 template <class T>
 class ACE_Future_Holder
@@ -59,9 +60,10 @@ protected:
  * @brief ACE_Future_Observer<T>
  *
  * An ACE_Future_Observer object implements an object that is
- * subscribed with an ACE_Future object so that it may be notified
- * when the value of the ACE_Future object is written to by a writer
- * thread.  It uses the Observer pattern. 
+ * subscribed with an ACE_Future object so that it may be
+ * notified when the value of the ACE_Future object is
+ * written to by a writer thread.
+ * It uses the Observer pattern
  */
 template <class T>
 class ACE_Future_Observer
@@ -355,6 +357,14 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
+  /// Do not allow new operator.
+  void *operator new (size_t nbytes);
+
+  /// Do not allow delete operator
+  void operator delete (void *);
+
+  /// Do not allow address-of operator.
+  void operator & ();
 
   // the ACE_Future_Rep
   /// Protect operations on the <Future>.
@@ -371,5 +381,5 @@ private:
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #endif /* ACE_HAS_THREADS */
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 #endif /* ACE_FUTURE_H */

@@ -20,7 +20,6 @@ module DynAnyTests
   };
 
   typedef sequence<string<8> > test_seq;
-  typedef sequence<short> SeqShort;
 
   const unsigned long DIM = 2;
   typedef long test_array [DIM];

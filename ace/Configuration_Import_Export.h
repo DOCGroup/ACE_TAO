@@ -23,7 +23,7 @@
 
 #ifndef ACE_CONFIGURATION_IMPORT_EXPORT_H
 #define ACE_CONFIGURATION_IMPORT_EXPORT_H
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #include "ace/Configuration.h"
 #include "ace/SString.h"
@@ -81,7 +81,7 @@ private:
  *        using the Win32 Registry file export format.  This format looks like
  *        [Section]
  *        "key"="String Data"
- *        "key"=dword: numeric data in hexidecimal format
+ *        "key"=dword: numeric data
  *        "key"=hex: binary data
  *
  * @todo
@@ -207,5 +207,5 @@ private:
   ACE_Ini_ImpExp& operator= (const ACE_Ini_ImpExp&);
 };
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 #endif /* ACE_CONFIGURATION_IMPORT_EXPORT_H */

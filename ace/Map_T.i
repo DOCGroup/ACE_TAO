@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 // $Id$
 
 template <class T> ACE_INLINE int
@@ -502,9 +501,7 @@ ACE_Map_Impl<KEY, VALUE, IMPLEMENTATION, ITERATOR, REVERSE_ITERATOR, ENTRY>::tot
 template <class KEY, class VALUE, class IMPLEMENTATION, class ITERATOR, class REVERSE_ITERATOR, class ENTRY> ACE_INLINE void
 ACE_Map_Impl<KEY, VALUE, IMPLEMENTATION, ITERATOR, REVERSE_ITERATOR, ENTRY>::dump (void) const
 {
-#if defined (ACE_HAS_DUMP)
   this->implementation_.dump ();
-#endif /* ACE_HAS_DUMP */
 }
 
 template <class KEY, class VALUE, class IMPLEMENTATION, class ITERATOR, class REVERSE_ITERATOR, class ENTRY> ACE_INLINE ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *
@@ -988,9 +985,7 @@ ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER>::total_size (void) const
 template <class KEY, class VALUE, class KEY_ADAPTER> ACE_INLINE void
 ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER>::dump (void) const
 {
-#if defined (ACE_HAS_DUMP)
   this->implementation_.dump ();
-#endif /* ACE_HAS_DUMP */
 }
 
 template <class KEY, class VALUE, class KEY_ADAPTER> ACE_INLINE ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *
@@ -1331,9 +1326,7 @@ ACE_Hash_Map_Manager_Ex_Adapter<KEY, VALUE, HASH_KEY, COMPARE_KEYS, KEY_GENERATO
 template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class KEY_GENERATOR> ACE_INLINE void
 ACE_Hash_Map_Manager_Ex_Adapter<KEY, VALUE, HASH_KEY, COMPARE_KEYS, KEY_GENERATOR>::dump (void) const
 {
-#if defined (ACE_HAS_DUMP)
   this->implementation_.dump ();
-#endif /* ACE_HAS_DUMP */
 }
 
 template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class KEY_GENERATOR> ACE_INLINE ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *
@@ -1674,9 +1667,7 @@ ACE_Map_Manager_Adapter<KEY, VALUE, KEY_GENERATOR>::total_size (void) const
 template <class KEY, class VALUE, class KEY_GENERATOR> ACE_INLINE void
 ACE_Map_Manager_Adapter<KEY, VALUE, KEY_GENERATOR>::dump (void) const
 {
-#if defined (ACE_HAS_DUMP)
   this->implementation_.dump ();
-#endif /* ACE_HAS_DUMP */
 }
 
 template <class KEY, class VALUE, class KEY_GENERATOR> ACE_INLINE ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *

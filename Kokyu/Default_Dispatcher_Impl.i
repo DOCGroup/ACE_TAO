@@ -3,6 +3,11 @@
 namespace Kokyu
 {
 ACE_INLINE
+Default_Dispatcher_Impl::~Default_Dispatcher_Impl()
+{
+}
+
+ACE_INLINE
 Shutdown_Task_Command::Shutdown_Task_Command (ACE_Allocator *mb_allocator)
 {
   ACE_UNUSED_ARG ((mb_allocator));

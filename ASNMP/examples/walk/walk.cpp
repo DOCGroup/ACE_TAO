@@ -35,7 +35,6 @@
 
 #include "asnmp/snmp.h"
 #include "ace/Get_Opt.h"
-#include "ace/streams.h"
 
 ACE_RCSID(walk, walk, "$Id$")
 
@@ -190,13 +189,13 @@ int MibIter::next(Vb& vb, char *& reason)
   }
 
   if (rc != SNMP_CLASS_SUCCESS) {
-       reason = const_cast <char*> (snmp_->error_string());
+       reason = snmp_->error_string();
        return 0;
   }
 
   // 2. check for problems
   if (pdu_.get_error_status()) {
-     reason = const_cast <char*> (pdu_.agent_error_reason());
+     reason = pdu_.agent_error_reason();
      return 0;
   }
 
@@ -231,10 +230,11 @@ int walkapp::run()
        " WALK SAMPLE PROGRAM \nOID: " << oid_.to_string() << "\n";
    target_.get_address(address_); // target updates port used
    int rc;
-   const char *name = address_.resolve_hostname(rc);
+   char *name = address_.resolve_hostname(rc);
+   if (rc)
+      name = "<< did not resolve via gethostbyname() >>";
 
-   cout << "Device: " << address_ << " ";
-   cout << (rc ? "<< did not resolve via gethostbyname() >>" : name) << "\n"; 
+   cout << "Device: " << address_ << " " << name << "\n"; 
    cout << "[ Retries=" << target_.get_retry() << " \
         Timeout=" << target_.get_timeout() <<" ms " << "Community=" << \
          community_.to_string() << " ]"<< endl;

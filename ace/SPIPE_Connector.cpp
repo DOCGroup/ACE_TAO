@@ -35,9 +35,7 @@ ACE_SPIPE_Connector::ACE_SPIPE_Connector (ACE_SPIPE_Stream &new_io,
 void
 ACE_SPIPE_Connector::dump (void) const
 {
-#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_SPIPE_Connector::dump");
-#endif /* ACE_HAS_DUMP */
 }
 
 ACE_SPIPE_Connector::ACE_SPIPE_Connector (void)

@@ -55,11 +55,9 @@ ACE_INLINE
 void
 ACE_Stats_Value::dump (void) const
 {
-#if defined (ACE_HAS_DUMP)
   ACE_DEBUG ((LM_DEBUG,
               ACE_LIB_TEXT ("precision: %u digits; whole: %u, fractional: %u\n"),
               precision_, whole_, fractional_));
-#endif /* ACE_HAS_DUMP */
 }
 
 ACE_INLINE
@@ -93,7 +91,5 @@ ACE_INLINE
 void
 ACE_Stats::dump (void) const
 {
-#if defined (ACE_HAS_DUMP)
   print_summary (3u);
-#endif /* ACE_HAS_DUMP */
 }

@@ -124,39 +124,41 @@ TAO_ORB_Core::object_is_nil (CORBA::Object_ptr obj)
 }
 
 
-ACE_INLINE CORBA::Boolean
-TAO_ORB_Core::is_profile_equivalent (const TAO_Profile *this_p,
-                                     const TAO_Profile *that_p)
+
+ACE_INLINE void
+TAO_ORB_Core:: services_log_msg_rcv (TAO_Message_State_Factory &state)
 {
-  CORBA::Boolean retval = 1;
-
-  if (this->ft_service_.service_callback ())
-    {
-      retval =
-        this->ft_service_.service_callback ()->is_profile_equivalent (this_p,
-                                                                      that_p);
-    }
-
-  return retval;
+    if (this->ft_service_.service_callback ())
+      {
+        this->ft_service_.service_callback ()->service_log_msg_rcv (state);
+      }
 }
 
-ACE_INLINE CORBA::ULong
-TAO_ORB_Core::hash_service (TAO_Profile *p,
-                            CORBA::ULong m)
+ACE_INLINE void
+TAO_ORB_Core:: services_log_msg_pre_upcall (TAO_ServerRequest &req)
 {
-  if (this->ft_service_.service_callback ())
-    {
-      return this->ft_service_.service_callback ()->hash_ft (p, m);
-    }
-
-  return 0;
+    if (this->ft_service_.service_callback ())
+      {
+        this->ft_service_.service_callback ()->service_log_msg_pre_upcall (req);
+      }
 }
+
+ACE_INLINE void
+TAO_ORB_Core:: services_log_msg_post_upcall (TAO_ServerRequest &req)
+{
+    if (this->ft_service_.service_callback ())
+      {
+        this->ft_service_.service_callback ()->service_log_msg_post_upcall (req);
+      }
+}
+
 
 ACE_INLINE TAO_Fault_Tolerance_Service &
 TAO_ORB_Core::fault_tolerance_service (void)
 {
   return this->ft_service_;
 }
+
 
 ACE_INLINE ACE_Thread_Manager *
 TAO_ORB_Core::thr_mgr (void)
@@ -167,7 +169,7 @@ TAO_ORB_Core::thr_mgr (void)
 ACE_INLINE CORBA::ORB_ptr
 TAO_ORB_Core::orb (void)
 {
-  return this->orb_;
+  return this->orb_.in ();
 }
 
 ACE_INLINE TAO_Adapter_Registry *
@@ -498,6 +500,18 @@ TAO_ORB_Core::get_default_policies (void)
 }
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
+
+ACE_INLINE CORBA::Environment *
+TAO_ORB_Core::default_environment (void) const
+{
+  return TAO_TSS_RESOURCES::instance ()->default_environment_;
+}
+
+ACE_INLINE void
+TAO_ORB_Core::default_environment (CORBA::Environment *env)
+{
+  TAO_TSS_RESOURCES::instance ()->default_environment_ = env;
+}
 
 ACE_INLINE CORBA::Object_ptr
 TAO_ORB_Core::resolve_rt_orb (ACE_ENV_SINGLE_ARG_DECL)

@@ -15,9 +15,7 @@ ACE_ALLOC_HOOK_DEFINE(ACE_SOCK_SEQPACK_Association)
 void
 ACE_SOCK_SEQPACK_Association::dump (void) const
 {
-#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_SOCK_SEQPACK_Association::dump");
-#endif /* ACE_HAS_DUMP */
 }
 
 int
@@ -35,74 +33,6 @@ ACE_SOCK_SEQPACK_Association::close (void)
   // Close down the socket.
   return ACE_SOCK::close ();
 }
-
-#if defined (ACE_HAS_LKSCTP)
-int
-ACE_SOCK_SEQPACK_Association::get_local_addrs (ACE_INET_Addr *addrs, size_t &size) const
-{
-  ACE_TRACE ("ACE_SOCK_SEQPACK_Association::get_local_addrs");
-  /* 
-    The size of ACE_INET_Addr must be large enough to hold the number of
-    local addresses on the machine.  If the array is too small, the function
-    will only return the number of addresses that will fit.  If the array is 
-    too large, the 'size' parameter will be modified to indicate the number
-    of addrs.  
-
-    We will call sctp_getladdrs() which accepts 3 parameters
-    1. a socket fd
-    2. a sctp association_id which will be ignored since we are using 
-       tcp sockets    
-    3. a pointer to a sockaddr_storage
-
-    lksctp/draft will allocate memory and we are responsible for freeing
-    it by calling sctp_freeladdrs().  
-  */
-
-  sockaddr_in *si = 0;
-  sockaddr_storage *laddrs = 0;
-  int err = 0;
-  size_t len = 0;
-  
-  err = sctp_getladdrs(this->get_handle(), 0, &laddrs);
-  if (err > 0)
-  {
-    len = err;
-    // check to see if we have more addresses than we have 
-    // space in our ACE_INET_Addr array
-    if (len > size)
-    {
-      // since our array is too small, we will only copy the first
-      // few that fit
-      len = size;
-    }
-      
-    for (size_t i = 0; i < len; i++)
-    {
-      // first we cast the sockaddr_storage to sockaddr_in
-      // since we only support ipv4 at this time.
-      si = (sockaddr_in *) (&(laddrs[i]));
-
-      // now we fillup the ace_inet_addr array
-      addrs[i].set_addr(si, sizeof(sockaddr_in));
-      addrs[i].set_type(si->sin_family);
-      addrs[i].set_size(sizeof(sockaddr_in));
-    }
-  }
-  else /* err < 0 */
-  {
-    // sctp_getladdrs will return -1 on error
-    return -1;
-  }
-
-  // indicate the num of addrs returned to the calling function
-  size = len;
-
-  // make sure we free the struct using the system function
-  sctp_freeladdrs(laddrs);
-  return 0;
-}
-
-#else
 
 int
 ACE_SOCK_SEQPACK_Association::get_local_addrs (ACE_INET_Addr *addrs, size_t &size) const
@@ -172,76 +102,6 @@ ACE_SOCK_SEQPACK_Association::get_local_addrs (ACE_INET_Addr *addrs, size_t &siz
 
   return 0;
 }
-#endif
-
-
-#if defined (ACE_HAS_LKSCTP)
-int 
-ACE_SOCK_SEQPACK_Association::get_remote_addrs (ACE_INET_Addr *addrs, size_t &size) const
-{
-  ACE_TRACE ("ACE_SOCK_SEQPACK_Association::get_remote_addrs");
-  /*
-    The size of ACE_INET_Addr must be large enough to hold the number of
-    remotes addresses in the association.  If the array is too small, the 
-    function will only return the number of addresses that will fit.  If the 
-    array is too large, the 'size' parameter will be modified to indicate
-    the number of addrs.
-
-    We will call sctp_getpaddrs() which accepts 3 parameters
-    1. a socket fd
-    2. a sctp association_id which will be ignored since we are using
-       tcp sockets
-    3. a pointer to a sockaddr_storage
-
-    lksctp/draft will allocate memory and we are responsible for freeing
-    it by calling sctp_freepaddrs().
-  */
-
-  sockaddr_in *si = 0;
-  sockaddr_storage *paddrs = 0;
-  int err = 0;
-  size_t len = 0;
-
-  err = sctp_getpaddrs(this->get_handle(), 0, &paddrs);
-  if (err > 0)
-  {
-    len = err;
-    // check to see if we have more addresses than we have
-    // space in our ACE_INET_Addr array
-    if (len > size)
-    {
-      // since our array is too small, we will only copy the first
-      // few that fit
-      len = size;
-    }
-
-    for (size_t i = 0; i < len; i++)
-    {
-      // first we cast the sockaddr_storage to sockaddr_in
-      // since we only support ipv4 at this time.
-      si = (sockaddr_in *) (&(paddrs[i]));
-
-      // now we fillup the ace_inet_addr array
-      addrs[i].set_addr(si, sizeof(sockaddr_in));
-      addrs[i].set_type(si->sin_family);
-      addrs[i].set_size(sizeof(sockaddr_in));
-    }
-  }
-  else /* err < 0 */
-  {
-    // sctp_getpaddrs will return -1 on error
-    return -1;
-  }
-
-  // indicate the num of addrs returned to the calling function
-  size = len;
-
-  // make sure we free the struct using the system function
-  sctp_freepaddrs(paddrs);
-  return 0;
-}
-
-#else
 
 int
 ACE_SOCK_SEQPACK_Association::get_remote_addrs (ACE_INET_Addr *addrs, size_t &size) const
@@ -311,7 +171,6 @@ ACE_SOCK_SEQPACK_Association::get_remote_addrs (ACE_INET_Addr *addrs, size_t &si
 
   return 0;
 }
-#endif
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Auto_Array_Ptr<sockaddr_in>;

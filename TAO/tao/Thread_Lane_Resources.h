@@ -13,7 +13,7 @@
 #ifndef TAO_THREAD_LANE_RESOURCES_H
 #define TAO_THREAD_LANE_RESOURCES_H
 
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #include "tao/corbafwd.h"
 
@@ -23,7 +23,7 @@
 
 #include "tao/orbconf.h"
 
-#include "ace/Thread_Mutex.h"
+#include "ace/Synch_T.h"
 #include "ace/CORBA_macros.h"
 
 class ACE_Allocator;
@@ -153,6 +153,6 @@ private:
 # include "tao/Thread_Lane_Resources.i"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 
 #endif /* TAO_THREAD_LANE_RESOURCES_H */

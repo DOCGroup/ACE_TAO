@@ -12,7 +12,7 @@
 
 #ifndef ACE_STRATEGIES_H
 #define ACE_STRATEGIES_H
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -29,5 +29,5 @@
 #include "ace/Refcountable.h"
 
 
-#include /**/ "ace/post.h"
+#include"ace/post.h"
 #endif /*ACE_STRATEGIES_H*/

@@ -20,7 +20,7 @@
 #ifndef TAO_CORBA_LOCALOBJECT_H
 #define TAO_CORBA_LOCALOBJECT_H
 
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #include "Object.h"
 
@@ -28,8 +28,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-
-#include "ace/Thread_Mutex.h"
+#include "Object_KeyC.h"
 
 namespace CORBA
 {
@@ -259,5 +258,5 @@ protected:
 # include "LocalObject.i"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 #endif /* TAO_CORBA_LOCALOBJECT_H */

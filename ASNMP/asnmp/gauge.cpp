@@ -44,7 +44,6 @@ Gauge32::Gauge32( const unsigned long i):SnmpUInt32(i)
 
 // copy constructor
 Gauge32::Gauge32 ( const Gauge32 &g)
-  : SnmpUInt32 (g)
 { this->smival.value.uNumber = g.smival.value.uNumber;
      smival.syntax = sNMP_SYNTAX_GAUGE32;
      valid_flag = 1;

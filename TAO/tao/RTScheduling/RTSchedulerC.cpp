@@ -29,7 +29,7 @@
 // be/be_codegen.cpp:314
 
 
-#include "RTScheduler.h"
+#include "RTSchedulerC.h"
 #include "tao/Stub.h"
 #include "tao/Invocation.h"
 #include "tao/PortableInterceptor.h"
@@ -130,7 +130,7 @@ RTScheduling::tao_ThreadAction_cast::tao_upcast (
       >
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // be/be_visitor_interface/interface_cs.cpp:239
 
 RTScheduling::ThreadAction::ThreadAction (void)
@@ -139,7 +139,7 @@ RTScheduling::ThreadAction::ThreadAction (void)
 RTScheduling::ThreadAction::~ThreadAction (void)
 {}
 
-void
+void 
 RTScheduling::ThreadAction::_tao_any_destructor (void *_tao_void_pointer)
 {
   ThreadAction *tmp = ACE_static_cast (ThreadAction *, _tao_void_pointer);
@@ -155,7 +155,7 @@ RTScheduling::ThreadAction::_narrow (
   return ThreadAction::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
 }
 
-RTScheduling::ThreadAction_ptr
+RTScheduling::ThreadAction_ptr 
 RTScheduling::ThreadAction::_unchecked_narrow (
     CORBA::Object_ptr obj
     ACE_ENV_ARG_DECL_NOT_USED
@@ -165,7 +165,7 @@ RTScheduling::ThreadAction::_unchecked_narrow (
     {
       return ThreadAction::_nil ();
     }
-
+  
   return
       ACE_reinterpret_cast (
           ThreadAction_ptr,
@@ -185,14 +185,14 @@ RTScheduling::ThreadAction::_duplicate (ThreadAction_ptr obj)
     {
       obj->_add_ref ();
     }
-
+  
   return obj;
 }
 
 void *RTScheduling::ThreadAction::_tao_QueryInterface (ptrdiff_t type)
 {
   void *retv = 0;
-
+  
   if (type == ACE_reinterpret_cast (
               ptrdiff_t,
               &ACE_NESTED_CLASS (::RTScheduling, ThreadAction)::_tao_class_id)
@@ -211,12 +211,12 @@ void *RTScheduling::ThreadAction::_tao_QueryInterface (ptrdiff_t type)
             ACE_static_cast (CORBA::Object_ptr, this)
           );
     }
-
+  
   if (retv != 0)
     {
       this->_add_ref ();
     }
-
+  
   return retv;
 }
 
@@ -238,19 +238,19 @@ static const CORBA::Long _oc_RTScheduling_ThreadAction[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   34,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x52545363),
-  ACE_NTOHL (0x68656475),
-  ACE_NTOHL (0x6c696e67),
-  ACE_NTOHL (0x2f546872),
-  ACE_NTOHL (0x65616441),
-  ACE_NTOHL (0x6374696f),
-  ACE_NTOHL (0x6e3a312e),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x52545363), 
+  ACE_NTOHL (0x68656475), 
+  ACE_NTOHL (0x6c696e67), 
+  ACE_NTOHL (0x2f546872), 
+  ACE_NTOHL (0x65616441), 
+  ACE_NTOHL (0x6374696f), 
+  ACE_NTOHL (0x6e3a312e), 
   ACE_NTOHL (0x30000000),  // repository ID = IDL:RTScheduling/ThreadAction:1.0
     13,
-  ACE_NTOHL (0x54687265),
-  ACE_NTOHL (0x61644163),
-  ACE_NTOHL (0x74696f6e),
+  ACE_NTOHL (0x54687265), 
+  ACE_NTOHL (0x61644163), 
+  ACE_NTOHL (0x74696f6e), 
   ACE_NTOHL (0x0),  // name = ThreadAction
   };
 
@@ -352,7 +352,7 @@ RTScheduling::tao_DistributableThread_cast::tao_upcast (
       >
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // be/be_visitor_interface/interface_cs.cpp:239
 
 RTScheduling::DistributableThread::DistributableThread (void)
@@ -361,7 +361,7 @@ RTScheduling::DistributableThread::DistributableThread (void)
 RTScheduling::DistributableThread::~DistributableThread (void)
 {}
 
-void
+void 
 RTScheduling::DistributableThread::_tao_any_destructor (void *_tao_void_pointer)
 {
   DistributableThread *tmp = ACE_static_cast (DistributableThread *, _tao_void_pointer);
@@ -377,7 +377,7 @@ RTScheduling::DistributableThread::_narrow (
   return DistributableThread::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
 }
 
-RTScheduling::DistributableThread_ptr
+RTScheduling::DistributableThread_ptr 
 RTScheduling::DistributableThread::_unchecked_narrow (
     CORBA::Object_ptr obj
     ACE_ENV_ARG_DECL_NOT_USED
@@ -387,7 +387,7 @@ RTScheduling::DistributableThread::_unchecked_narrow (
     {
       return DistributableThread::_nil ();
     }
-
+  
   return
       ACE_reinterpret_cast (
           DistributableThread_ptr,
@@ -407,14 +407,14 @@ RTScheduling::DistributableThread::_duplicate (DistributableThread_ptr obj)
     {
       obj->_add_ref ();
     }
-
+  
   return obj;
 }
 
 void *RTScheduling::DistributableThread::_tao_QueryInterface (ptrdiff_t type)
 {
   void *retv = 0;
-
+  
   if (type == ACE_reinterpret_cast (
               ptrdiff_t,
               &ACE_NESTED_CLASS (::RTScheduling, DistributableThread)::_tao_class_id)
@@ -433,12 +433,12 @@ void *RTScheduling::DistributableThread::_tao_QueryInterface (ptrdiff_t type)
             ACE_static_cast (CORBA::Object_ptr, this)
           );
     }
-
+  
   if (retv != 0)
     {
       this->_add_ref ();
     }
-
+  
   return retv;
 }
 
@@ -460,22 +460,22 @@ static const CORBA::Long _oc_RTScheduling_DistributableThread[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   41,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x52545363),
-  ACE_NTOHL (0x68656475),
-  ACE_NTOHL (0x6c696e67),
-  ACE_NTOHL (0x2f446973),
-  ACE_NTOHL (0x74726962),
-  ACE_NTOHL (0x75746162),
-  ACE_NTOHL (0x6c655468),
-  ACE_NTOHL (0x72656164),
-  ACE_NTOHL (0x3a312e30),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x52545363), 
+  ACE_NTOHL (0x68656475), 
+  ACE_NTOHL (0x6c696e67), 
+  ACE_NTOHL (0x2f446973), 
+  ACE_NTOHL (0x74726962), 
+  ACE_NTOHL (0x75746162), 
+  ACE_NTOHL (0x6c655468), 
+  ACE_NTOHL (0x72656164), 
+  ACE_NTOHL (0x3a312e30), 
   ACE_NTOHL (0x0),  // repository ID = IDL:RTScheduling/DistributableThread:1.0
     20,
-  ACE_NTOHL (0x44697374),
-  ACE_NTOHL (0x72696275),
-  ACE_NTOHL (0x7461626c),
-  ACE_NTOHL (0x65546872),
+  ACE_NTOHL (0x44697374), 
+  ACE_NTOHL (0x72696275), 
+  ACE_NTOHL (0x7461626c), 
+  ACE_NTOHL (0x65546872), 
   ACE_NTOHL (0x65616400),  // name = DistributableThread
   };
 
@@ -577,7 +577,7 @@ RTScheduling::tao_Current_cast::tao_upcast (
       >
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // be/be_visitor_interface/interface_cs.cpp:239
 
 RTScheduling::Current::Current (void)
@@ -586,7 +586,7 @@ RTScheduling::Current::Current (void)
 RTScheduling::Current::~Current (void)
 {}
 
-void
+void 
 RTScheduling::Current::_tao_any_destructor (void *_tao_void_pointer)
 {
   Current *tmp = ACE_static_cast (Current *, _tao_void_pointer);
@@ -602,7 +602,7 @@ RTScheduling::Current::_narrow (
   return Current::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
 }
 
-RTScheduling::Current_ptr
+RTScheduling::Current_ptr 
 RTScheduling::Current::_unchecked_narrow (
     CORBA::Object_ptr obj
     ACE_ENV_ARG_DECL_NOT_USED
@@ -612,7 +612,7 @@ RTScheduling::Current::_unchecked_narrow (
     {
       return Current::_nil ();
     }
-
+  
   return
       ACE_reinterpret_cast (
           Current_ptr,
@@ -632,14 +632,14 @@ RTScheduling::Current::_duplicate (Current_ptr obj)
     {
       obj->_add_ref ();
     }
-
+  
   return obj;
 }
 
 void *RTScheduling::Current::_tao_QueryInterface (ptrdiff_t type)
 {
   void *retv = 0;
-
+  
   if (type == ACE_reinterpret_cast (
               ptrdiff_t,
               &ACE_NESTED_CLASS (::RTScheduling, Current)::_tao_class_id)
@@ -686,12 +686,12 @@ void *RTScheduling::Current::_tao_QueryInterface (ptrdiff_t type)
             ACE_static_cast (CORBA::Object_ptr, this)
           );
     }
-
+  
   if (retv != 0)
     {
       this->_add_ref ();
     }
-
+  
   return retv;
 }
 
@@ -706,7 +706,7 @@ RTScheduling::Current::marshal (TAO_OutputCDR &)
   return 0;
 }
 
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // be/be_visitor_exception/exception_cs.cpp:63
 
 RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE::UNSUPPORTED_SCHEDULING_DISCIPLINE (void)
@@ -774,7 +774,7 @@ RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE::_tao_duplicate (void) 
   return result;
 }
 
-void RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE::_raise (void) const
+void RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE::_raise (void)
 {
   TAO_RAISE (*this);
 }
@@ -808,31 +808,31 @@ static const CORBA::Long _oc_RTScheduling_Current_UNSUPPORTED_SCHEDULING_DISCIPL
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   63,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x52545363),
-  ACE_NTOHL (0x68656475),
-  ACE_NTOHL (0x6c696e67),
-  ACE_NTOHL (0x2f437572),
-  ACE_NTOHL (0x72656e74),
-  ACE_NTOHL (0x2f554e53),
-  ACE_NTOHL (0x5550504f),
-  ACE_NTOHL (0x52544544),
-  ACE_NTOHL (0x5f534348),
-  ACE_NTOHL (0x4544554c),
-  ACE_NTOHL (0x494e475f),
-  ACE_NTOHL (0x44495343),
-  ACE_NTOHL (0x49504c49),
-  ACE_NTOHL (0x4e453a31),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x52545363), 
+  ACE_NTOHL (0x68656475), 
+  ACE_NTOHL (0x6c696e67), 
+  ACE_NTOHL (0x2f437572), 
+  ACE_NTOHL (0x72656e74), 
+  ACE_NTOHL (0x2f554e53), 
+  ACE_NTOHL (0x5550504f), 
+  ACE_NTOHL (0x52544544), 
+  ACE_NTOHL (0x5f534348), 
+  ACE_NTOHL (0x4544554c), 
+  ACE_NTOHL (0x494e475f), 
+  ACE_NTOHL (0x44495343), 
+  ACE_NTOHL (0x49504c49), 
+  ACE_NTOHL (0x4e453a31), 
   ACE_NTOHL (0x2e300000),  // repository ID = IDL:RTScheduling/Current/UNSUPPORTED_SCHEDULING_DISCIPLINE:1.0
     34,
-  ACE_NTOHL (0x554e5355),
-  ACE_NTOHL (0x50504f52),
-  ACE_NTOHL (0x5445445f),
-  ACE_NTOHL (0x53434845),
-  ACE_NTOHL (0x44554c49),
-  ACE_NTOHL (0x4e475f44),
-  ACE_NTOHL (0x49534349),
-  ACE_NTOHL (0x504c494e),
+  ACE_NTOHL (0x554e5355), 
+  ACE_NTOHL (0x50504f52), 
+  ACE_NTOHL (0x5445445f), 
+  ACE_NTOHL (0x53434845), 
+  ACE_NTOHL (0x44554c49), 
+  ACE_NTOHL (0x4e475f44), 
+  ACE_NTOHL (0x49534349), 
+  ACE_NTOHL (0x504c494e), 
   ACE_NTOHL (0x45000000),  // name = UNSUPPORTED_SCHEDULING_DISCIPLINE
   0, // member count
   };
@@ -848,7 +848,7 @@ static CORBA::TypeCode _tc_TAO_tc_RTScheduling_Current_UNSUPPORTED_SCHEDULING_DI
 ::CORBA::TypeCode_ptr RTScheduling::Current::_tc_UNSUPPORTED_SCHEDULING_DISCIPLINE =
   &_tc_TAO_tc_RTScheduling_Current_UNSUPPORTED_SCHEDULING_DISCIPLINE;
 
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // be/be_visitor_sequence/sequence_cs.cpp:72
 
 #if !defined (_RTSCHEDULING_CURRENT_IDTYPE_CS_)
@@ -944,7 +944,7 @@ template class
       CORBA::Octet \
     >
 
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
 
 #endif /* end #if !defined */
 
@@ -955,17 +955,17 @@ static const CORBA::Long _oc_RTScheduling_Current_IdType[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   36,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x52545363),
-  ACE_NTOHL (0x68656475),
-  ACE_NTOHL (0x6c696e67),
-  ACE_NTOHL (0x2f437572),
-  ACE_NTOHL (0x72656e74),
-  ACE_NTOHL (0x2f496454),
-  ACE_NTOHL (0x7970653a),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x52545363), 
+  ACE_NTOHL (0x68656475), 
+  ACE_NTOHL (0x6c696e67), 
+  ACE_NTOHL (0x2f437572), 
+  ACE_NTOHL (0x72656e74), 
+  ACE_NTOHL (0x2f496454), 
+  ACE_NTOHL (0x7970653a), 
   ACE_NTOHL (0x312e3000),  // repository ID = IDL:RTScheduling/Current/IdType:1.0
     7,
-  ACE_NTOHL (0x49645479),
+  ACE_NTOHL (0x49645479), 
   ACE_NTOHL (0x70650000),  // name = IdType
     CORBA::tk_sequence, // typecode kind
   12, // encapsulation length
@@ -987,7 +987,7 @@ static CORBA::TypeCode _tc_TAO_tc_RTScheduling_Current_IdType (
 ::CORBA::TypeCode_ptr RTScheduling::Current::_tc_IdType =
   &_tc_TAO_tc_RTScheduling_Current_IdType;
 
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // be/be_visitor_sequence/sequence_cs.cpp:72
 
 #if !defined (_RTSCHEDULING_CURRENT_NAMELIST_CS_)
@@ -1077,7 +1077,7 @@ template class
       TAO_SeqElem_String_Manager \
     >
 
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
 
 #endif /* end #if !defined */
 
@@ -1088,24 +1088,24 @@ static const CORBA::Long _oc_RTScheduling_Current_NameList[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   38,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x52545363),
-  ACE_NTOHL (0x68656475),
-  ACE_NTOHL (0x6c696e67),
-  ACE_NTOHL (0x2f437572),
-  ACE_NTOHL (0x72656e74),
-  ACE_NTOHL (0x2f4e616d),
-  ACE_NTOHL (0x654c6973),
-  ACE_NTOHL (0x743a312e),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x52545363), 
+  ACE_NTOHL (0x68656475), 
+  ACE_NTOHL (0x6c696e67), 
+  ACE_NTOHL (0x2f437572), 
+  ACE_NTOHL (0x72656e74), 
+  ACE_NTOHL (0x2f4e616d), 
+  ACE_NTOHL (0x654c6973), 
+  ACE_NTOHL (0x743a312e), 
   ACE_NTOHL (0x30000000),  // repository ID = IDL:RTScheduling/Current/NameList:1.0
     9,
-  ACE_NTOHL (0x4e616d65),
-  ACE_NTOHL (0x4c697374),
+  ACE_NTOHL (0x4e616d65), 
+  ACE_NTOHL (0x4c697374), 
   ACE_NTOHL (0x0),  // name = NameList
     CORBA::tk_sequence, // typecode kind
   16, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
-    CORBA::tk_string,
+    CORBA::tk_string, 
     0U, // string length
     0U,
 
@@ -1129,16 +1129,16 @@ static const CORBA::Long _oc_RTScheduling_Current[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   29,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x52545363),
-  ACE_NTOHL (0x68656475),
-  ACE_NTOHL (0x6c696e67),
-  ACE_NTOHL (0x2f437572),
-  ACE_NTOHL (0x72656e74),
-  ACE_NTOHL (0x3a312e30),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x52545363), 
+  ACE_NTOHL (0x68656475), 
+  ACE_NTOHL (0x6c696e67), 
+  ACE_NTOHL (0x2f437572), 
+  ACE_NTOHL (0x72656e74), 
+  ACE_NTOHL (0x3a312e30), 
   ACE_NTOHL (0x0),  // repository ID = IDL:RTScheduling/Current:1.0
     8,
-  ACE_NTOHL (0x43757272),
+  ACE_NTOHL (0x43757272), 
   ACE_NTOHL (0x656e7400),  // name = Current
   };
 
@@ -1240,7 +1240,7 @@ RTScheduling::tao_ResourceManager_cast::tao_upcast (
       >
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // be/be_visitor_interface/interface_cs.cpp:239
 
 RTScheduling::ResourceManager::ResourceManager (void)
@@ -1249,7 +1249,7 @@ RTScheduling::ResourceManager::ResourceManager (void)
 RTScheduling::ResourceManager::~ResourceManager (void)
 {}
 
-void
+void 
 RTScheduling::ResourceManager::_tao_any_destructor (void *_tao_void_pointer)
 {
   ResourceManager *tmp = ACE_static_cast (ResourceManager *, _tao_void_pointer);
@@ -1265,7 +1265,7 @@ RTScheduling::ResourceManager::_narrow (
   return ResourceManager::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
 }
 
-RTScheduling::ResourceManager_ptr
+RTScheduling::ResourceManager_ptr 
 RTScheduling::ResourceManager::_unchecked_narrow (
     CORBA::Object_ptr obj
     ACE_ENV_ARG_DECL_NOT_USED
@@ -1275,7 +1275,7 @@ RTScheduling::ResourceManager::_unchecked_narrow (
     {
       return ResourceManager::_nil ();
     }
-
+  
   return
       ACE_reinterpret_cast (
           ResourceManager_ptr,
@@ -1295,14 +1295,14 @@ RTScheduling::ResourceManager::_duplicate (ResourceManager_ptr obj)
     {
       obj->_add_ref ();
     }
-
+  
   return obj;
 }
 
 void *RTScheduling::ResourceManager::_tao_QueryInterface (ptrdiff_t type)
 {
   void *retv = 0;
-
+  
   if (type == ACE_reinterpret_cast (
               ptrdiff_t,
               &ACE_NESTED_CLASS (::RTScheduling, ResourceManager)::_tao_class_id)
@@ -1335,12 +1335,12 @@ void *RTScheduling::ResourceManager::_tao_QueryInterface (ptrdiff_t type)
             ACE_static_cast (CORBA::Object_ptr, this)
           );
     }
-
+  
   if (retv != 0)
     {
       this->_add_ref ();
     }
-
+  
   return retv;
 }
 
@@ -1362,20 +1362,20 @@ static const CORBA::Long _oc_RTScheduling_ResourceManager[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   37,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x52545363),
-  ACE_NTOHL (0x68656475),
-  ACE_NTOHL (0x6c696e67),
-  ACE_NTOHL (0x2f526573),
-  ACE_NTOHL (0x6f757263),
-  ACE_NTOHL (0x654d616e),
-  ACE_NTOHL (0x61676572),
-  ACE_NTOHL (0x3a312e30),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x52545363), 
+  ACE_NTOHL (0x68656475), 
+  ACE_NTOHL (0x6c696e67), 
+  ACE_NTOHL (0x2f526573), 
+  ACE_NTOHL (0x6f757263), 
+  ACE_NTOHL (0x654d616e), 
+  ACE_NTOHL (0x61676572), 
+  ACE_NTOHL (0x3a312e30), 
   ACE_NTOHL (0x0),  // repository ID = IDL:RTScheduling/ResourceManager:1.0
     16,
-  ACE_NTOHL (0x5265736f),
-  ACE_NTOHL (0x75726365),
-  ACE_NTOHL (0x4d616e61),
+  ACE_NTOHL (0x5265736f), 
+  ACE_NTOHL (0x75726365), 
+  ACE_NTOHL (0x4d616e61), 
   ACE_NTOHL (0x67657200),  // name = ResourceManager
   };
 
@@ -1477,7 +1477,7 @@ RTScheduling::tao_Scheduler_cast::tao_upcast (
       >
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // be/be_visitor_interface/interface_cs.cpp:239
 
 RTScheduling::Scheduler::Scheduler (void)
@@ -1486,7 +1486,7 @@ RTScheduling::Scheduler::Scheduler (void)
 RTScheduling::Scheduler::~Scheduler (void)
 {}
 
-void
+void 
 RTScheduling::Scheduler::_tao_any_destructor (void *_tao_void_pointer)
 {
   Scheduler *tmp = ACE_static_cast (Scheduler *, _tao_void_pointer);
@@ -1502,7 +1502,7 @@ RTScheduling::Scheduler::_narrow (
   return Scheduler::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
 }
 
-RTScheduling::Scheduler_ptr
+RTScheduling::Scheduler_ptr 
 RTScheduling::Scheduler::_unchecked_narrow (
     CORBA::Object_ptr obj
     ACE_ENV_ARG_DECL_NOT_USED
@@ -1512,7 +1512,7 @@ RTScheduling::Scheduler::_unchecked_narrow (
     {
       return Scheduler::_nil ();
     }
-
+  
   return
       ACE_reinterpret_cast (
           Scheduler_ptr,
@@ -1532,14 +1532,14 @@ RTScheduling::Scheduler::_duplicate (Scheduler_ptr obj)
     {
       obj->_add_ref ();
     }
-
+  
   return obj;
 }
 
 void *RTScheduling::Scheduler::_tao_QueryInterface (ptrdiff_t type)
 {
   void *retv = 0;
-
+  
   if (type == ACE_reinterpret_cast (
               ptrdiff_t,
               &ACE_NESTED_CLASS (::RTScheduling, Scheduler)::_tao_class_id)
@@ -1558,12 +1558,12 @@ void *RTScheduling::Scheduler::_tao_QueryInterface (ptrdiff_t type)
             ACE_static_cast (CORBA::Object_ptr, this)
           );
     }
-
+  
   if (retv != 0)
     {
       this->_add_ref ();
     }
-
+  
   return retv;
 }
 
@@ -1578,7 +1578,7 @@ RTScheduling::Scheduler::marshal (TAO_OutputCDR &)
   return 0;
 }
 
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // be/be_visitor_exception/exception_cs.cpp:63
 
 RTScheduling::Scheduler::INCOMPATIBLE_SCHEDULING_DISCIPLINES::INCOMPATIBLE_SCHEDULING_DISCIPLINES (void)
@@ -1646,7 +1646,7 @@ RTScheduling::Scheduler::INCOMPATIBLE_SCHEDULING_DISCIPLINES::_tao_duplicate (vo
   return result;
 }
 
-void RTScheduling::Scheduler::INCOMPATIBLE_SCHEDULING_DISCIPLINES::_raise (void) const
+void RTScheduling::Scheduler::INCOMPATIBLE_SCHEDULING_DISCIPLINES::_raise (void)
 {
   TAO_RAISE (*this);
 }
@@ -1680,32 +1680,32 @@ static const CORBA::Long _oc_RTScheduling_Scheduler_INCOMPATIBLE_SCHEDULING_DISC
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   67,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x52545363),
-  ACE_NTOHL (0x68656475),
-  ACE_NTOHL (0x6c696e67),
-  ACE_NTOHL (0x2f536368),
-  ACE_NTOHL (0x6564756c),
-  ACE_NTOHL (0x65722f49),
-  ACE_NTOHL (0x4e434f4d),
-  ACE_NTOHL (0x50415449),
-  ACE_NTOHL (0x424c455f),
-  ACE_NTOHL (0x53434845),
-  ACE_NTOHL (0x44554c49),
-  ACE_NTOHL (0x4e475f44),
-  ACE_NTOHL (0x49534349),
-  ACE_NTOHL (0x504c494e),
-  ACE_NTOHL (0x45533a31),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x52545363), 
+  ACE_NTOHL (0x68656475), 
+  ACE_NTOHL (0x6c696e67), 
+  ACE_NTOHL (0x2f536368), 
+  ACE_NTOHL (0x6564756c), 
+  ACE_NTOHL (0x65722f49), 
+  ACE_NTOHL (0x4e434f4d), 
+  ACE_NTOHL (0x50415449), 
+  ACE_NTOHL (0x424c455f), 
+  ACE_NTOHL (0x53434845), 
+  ACE_NTOHL (0x44554c49), 
+  ACE_NTOHL (0x4e475f44), 
+  ACE_NTOHL (0x49534349), 
+  ACE_NTOHL (0x504c494e), 
+  ACE_NTOHL (0x45533a31), 
   ACE_NTOHL (0x2e300000),  // repository ID = IDL:RTScheduling/Scheduler/INCOMPATIBLE_SCHEDULING_DISCIPLINES:1.0
     36,
-  ACE_NTOHL (0x494e434f),
-  ACE_NTOHL (0x4d504154),
-  ACE_NTOHL (0x49424c45),
-  ACE_NTOHL (0x5f534348),
-  ACE_NTOHL (0x4544554c),
-  ACE_NTOHL (0x494e475f),
-  ACE_NTOHL (0x44495343),
-  ACE_NTOHL (0x49504c49),
+  ACE_NTOHL (0x494e434f), 
+  ACE_NTOHL (0x4d504154), 
+  ACE_NTOHL (0x49424c45), 
+  ACE_NTOHL (0x5f534348), 
+  ACE_NTOHL (0x4544554c), 
+  ACE_NTOHL (0x494e475f), 
+  ACE_NTOHL (0x44495343), 
+  ACE_NTOHL (0x49504c49), 
   ACE_NTOHL (0x4e455300),  // name = INCOMPATIBLE_SCHEDULING_DISCIPLINES
   0, // member count
   };
@@ -1728,17 +1728,17 @@ static const CORBA::Long _oc_RTScheduling_Scheduler[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   31,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x52545363),
-  ACE_NTOHL (0x68656475),
-  ACE_NTOHL (0x6c696e67),
-  ACE_NTOHL (0x2f536368),
-  ACE_NTOHL (0x6564756c),
-  ACE_NTOHL (0x65723a31),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x52545363), 
+  ACE_NTOHL (0x68656475), 
+  ACE_NTOHL (0x6c696e67), 
+  ACE_NTOHL (0x2f536368), 
+  ACE_NTOHL (0x6564756c), 
+  ACE_NTOHL (0x65723a31), 
   ACE_NTOHL (0x2e300000),  // repository ID = IDL:RTScheduling/Scheduler:1.0
     10,
-  ACE_NTOHL (0x53636865),
-  ACE_NTOHL (0x64756c65),
+  ACE_NTOHL (0x53636865), 
+  ACE_NTOHL (0x64756c65), 
   ACE_NTOHL (0x72000000),  // name = Scheduler
   };
 
@@ -2018,3 +2018,4 @@ operator>>= (
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 # pragma instantiate TAO::Any_Impl_T<RTScheduling::Scheduler>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+

@@ -1,30 +1,10 @@
-Release 1.1 - June 2003
-
-Overview of SCTP sockets
-------------------------
-
-In order to support multiple implementations of SCTP, we had to standardize 
-on a set of semantics.  
-
-The IETF sockets draft states that service type SOCK_SEQPACKET indicates a UDP
-style socket (i.e. connection-less), while service type SOCK_STREAM indicates
-a TCP style socket.  However, this conflicts with the POSIX definition for 
-SOCK_SEQPACKET as connection-oriented. 
-
-In ACE we choose to support the standard POSIX definition. In doing so, certain 
-socket semantics will be guaranteed regardless of implementation.   
- 
-	[1] SOCK_SEQPACKET sockets will always be message-based, 
-            connection-oriented, and reliable.
-
-	[2] SOCK_STREAM sockets will be message-based or byte-stream based,
-            connection-oriented, and reliable.  
-	
+Release 1.0 - April 2003
+Last Updated - April 2003
 
 SCTP Features Accessible Within ACE
 -----------------------------------
 
- * SOCK_STREAM (byte stream oriented or msg oriented) data transport service
+ * SOCK_STREAM (byte stream oriented) data transport service
 
  * SOCK_SEQPACKET (message oriented) data transport service (this is
    the service used by TAO's SCIOP pluggable protocol)
@@ -38,7 +18,7 @@ SCTP Features Accessible Within ACE
  * Setting and getting of all parameters exposed by SCTP 
    (e.g. retransmission timeout (RTO)) via ACE_SOCK::set_option(...)
    and ACE_SOCK::get_option(...) for both SOCK_STREAM and
-   SOCK_SEQPACKET sockets.  You must set the socket level appropriately.  
+   SOCK_SEQPACKET sockets
 
  * Multiplexing of lightweight "SCTP Streams" (over the SOCK_STREAM
    and SOCK_SEQPACKET services) via ACE_SOCK::set_option(...)
@@ -53,13 +33,8 @@ Supported SCTP Implementations
 ------------------------------
 
  * OpenSS7's Linux Implementation (Berkeley UNIX Network API) 
-   Linux 2.4.18 patch available at: http://www.openss7.org/linux-sctp-0.2.14.tgz
+   Available for free at http://www.openss7.org/linux-sctp-0.2.14.tgz
    (as of April 2003)
-
- * The LKSCTP Linux Kernel Implementation (IETF Sockets Draft API compliant)
-   Available in the Linux 2.5 kernels (http://www.kernel.org/)
-   Tools/Libs available at http://lksctp.sourceforge.net/
-     (All socket interfaces are message-based -- please see README.LKSCTP)
 
 
 BUGS
@@ -68,14 +43,8 @@ BUGS
  * OpenSS7 BUGS 
 
     - protocol crashes when transmitting message sizes greater than
-      PATH MTU in the presence of network failures (message size
+      PATH MTU in the pressence of network failures (message size
       includes SCTP and IP headers and data.)
-
- * LKSCTP BUGS
-
-    - certain combinations of SCTP parameters will cause a kernel panic
-      (ie. setting rto_initial, rto_max, or rto_min to 0)
-
 
 TO-DO
 ----
@@ -91,14 +60,15 @@ TO-DO
    ACE_SOCK_SEQPACK_* wrapper-facade. (currently they can only be
    accessed indirectly through ACE_SOCK::set_option(...))
 
- * Support SOCK_RDM service (connection-less) within ACE for OpenSS7.
+ * Support the Draft-API Standard for SCTP. Current implementation is
+   written to the Berkeley Unix Networking API that is used by the
+   OpenSS7 implementation for Linux. 
+
+ * Support SOCK_RDM service within ACE.
 
  * Convert ATL's histogram utility (located under
    performance-tests/SCTP) into a ACE utility and integrate with other
    ACE provided statistics classes.
-
- * Support Draft API msg notifications via sendmsg() and recvmsg().  
-
 
 USAGE
 -----
@@ -113,8 +83,9 @@ USAGE
                as shown in SOCK_STREAM_srv.cpp.
 
                You must include the file sctp.h in order for
-               IPPROTO_SCTP to be defined.  This file should be under
-               /usr/include/netinet
+               IPPROTO_SCTP to be defined.  The OpenSS7 implementation
+               for Linux places this file in
+               /usr/include/netinet.
 
                Aside from these changes, the classes can be used as
                they are under TCP (the protocol they use by
@@ -202,6 +173,13 @@ the SOCK_SEQPACK wrapper facade.
 All SCTP socket options can be read and written from the current
 socket options methods provided by ACE_SOCK. 
 
+Finally, the current implementation of the SOCK_SEQPACK wrapper facade
+uses the Berkely Unix Networking API that is preserved for the OpenSS7
+SCTP implementation. SOCK_SEQPACK will not function properly with
+other SCTP implementations that provide only the draft SCTP API. In
+the future we hope to modify either OS.{c,h} or the SOCK_SEQPACK
+wrapper facade to handle both API variants.
+
 Finally, our SOCK_SEQPACK wrapper facade does not yet support SCTP
 stream multiplexing.
 
@@ -250,8 +228,6 @@ $(ACE_ROOT)/performance-tests/SCTP/README                  ADDED
 $(ACE_ROOT)/performance-tests/SCTP/README.SCTP             ADDED
 $(ACE_ROOT)/performance-tests/SCTP/README.SCTP_in_ACE      ADDED
 $(ACE_ROOT)/performance-tests/SCTP/README.SCTP_PERF_TEST   ADDED
-$(ACE_ROOT)/performance-tests/SCTP/README.OpenSS7          ADDED
-$(ACE_ROOT)/performance-tests/SCTP/README.LKSCTP           ADDED
 
 $(ACE_ROOT)/performance-tests/SCTP/Makefile                ADDED
 $(ACE_ROOT)/performance-tests/SCTP/run_spectrum.pl         ADDED

@@ -36,7 +36,7 @@
 #include "asnmp/asn1.h"                       // ASN.1 header file
 
 //--------------[ well known trap ids ]-----------------------------------
-class ASNMP_Export snmpTrapsOid: public Oid
+class ACE_Export snmpTrapsOid: public Oid
   // = TITLE
   //     Defines the member functions for the snmpTrapsOid base class
   //     to implement the traps defined in RFC 1215
@@ -45,7 +45,7 @@ class ASNMP_Export snmpTrapsOid: public Oid
    snmpTrapsOid (void):Oid("1.3.6.1.6.3.1.1.5"){}
 };
 
-class ASNMP_Export snmpTrapEnterpriseOid: public Oid
+class ACE_Export snmpTrapEnterpriseOid: public Oid
   // = TITLE
   //     Defines the default Enterprise Oid for this software package
 {
@@ -53,7 +53,7 @@ class ASNMP_Export snmpTrapEnterpriseOid: public Oid
    snmpTrapEnterpriseOid(void): Oid("1.3.6.1.6.3.1.1.4.3.0") { }
 };
 
-class ASNMP_Export coldStartOid: public snmpTrapsOid
+class ACE_Export coldStartOid: public snmpTrapsOid
   // = TITLE
   //     Defines the RFC 1215 agent cold start generic trap  (system reboot)
 {
@@ -61,7 +61,7 @@ class ASNMP_Export coldStartOid: public snmpTrapsOid
    coldStartOid( void){*this+=".1";}
 };
 
-class ASNMP_Export warmStartOid: public snmpTrapsOid
+class ACE_Export warmStartOid: public snmpTrapsOid
   // = TITLE
   //     Defines the RFC 1215 agent warm start generic trap  (agent reboot)
 {
@@ -69,7 +69,7 @@ class ASNMP_Export warmStartOid: public snmpTrapsOid
    warmStartOid( void){*this+=".2";}
 };
 
-class ASNMP_Export linkDownOid: public snmpTrapsOid
+class ACE_Export linkDownOid: public snmpTrapsOid
   // = TITLE
   //     Defines the RFC 1215 interface (link) down trap
 {
@@ -79,7 +79,7 @@ class ASNMP_Export linkDownOid: public snmpTrapsOid
 
 
 // SMI LinkUp Oid
-class ASNMP_Export linkUpOid: public snmpTrapsOid
+class ACE_Export linkUpOid: public snmpTrapsOid
   // = TITLE
   //     Defines the RFC 1215 interface (link) up trap
 {
@@ -87,7 +87,7 @@ class ASNMP_Export linkUpOid: public snmpTrapsOid
    linkUpOid( void){*this+=".4";}
 };
 
-class ASNMP_Export authenticationFailureOid: public snmpTrapsOid
+class ACE_Export authenticationFailureOid: public snmpTrapsOid
   // = TITLE
   //     Defines the RFC 1215 device/agent invalid access trap
 {
@@ -95,7 +95,7 @@ class ASNMP_Export authenticationFailureOid: public snmpTrapsOid
    authenticationFailureOid( void){*this+=".5";}
 };
 
-class ASNMP_Export egpNeighborLossOid: public snmpTrapsOid
+class ACE_Export egpNeighborLossOid: public snmpTrapsOid
   // = TITLE
   //     Defines the RFC 1215 Exterior Gateway Protocol neighbor loss trap
 {

@@ -1,6 +1,6 @@
 #include "tao/PortableServer/POA.h"
 
-ACE_RCSID (PortableServer,
+ACE_RCSID (TAO_PortableServer,
            POA,
            "$Id$")
 
@@ -27,7 +27,6 @@ ACE_RCSID (PortableServer,
 #include "tao/Exception.h"
 #include "tao/Stub.h"
 #include "tao/Profile.h"
-#include "tao/TSS_Resources.h"
 #include "tao/debug.h"
 #include "tao/IORInterceptor/IORInterceptor_List.h"
 #include "Default_Acceptor_Filter.h"
@@ -356,6 +355,12 @@ TAO_POA::TAO_POA (const TAO_POA::String &name,
   // descrease it upon destruction.
   CORBA::add_ref (this->ort_template_.in ());
   this->obj_ref_factory_ = this->ort_template_;
+
+  // Iterate over the registered IOR interceptors so that they may be
+  // given the opportunity to add tagged components to the profiles
+  // for this servant.
+  this->establish_components (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
 }
 
 TAO_POA::~TAO_POA (void)
@@ -572,12 +577,6 @@ TAO_POA::create_POA_i (const TAO_POA::String &adapter_name,
       ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
                         0);
     }
-
-  // Iterate over the registered IOR interceptors so that they may be
-  // given the opportunity to add tagged components to the profiles
-  // for this servant.
-  poa->establish_components (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
 
   // Note: Creating a POA using a POA manager that is in the active
   // state can lead to race conditions if the POA supports preexisting
@@ -1017,13 +1016,13 @@ TAO_POA::adapter_state_changed (
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   /// First get a list of all the interceptors.
-  TAO_IORInterceptor_List * interceptor_list =
+  TAO_IORInterceptor_List *interceptor_list =
     this->orb_core_.ior_interceptor_list ();
 
   if (interceptor_list == 0)
     return;
 
-  TAO_IORInterceptor_List::TYPE & interceptors =
+  TAO_IORInterceptor_List::TYPE &interceptors =
     interceptor_list->interceptors ();
 
   const size_t interceptor_count = interceptors.size ();
@@ -2967,7 +2966,7 @@ TAO_POA::locate_servant_i (const char *operation,
           // for later use.
           servant_upcall.state (TAO_Object_Adapter::Servant_Upcall::OBJECT_ADAPTER_LOCK_RELEASED);
 
-          PortableServer::ServantLocator::Cookie cookie = 0;
+          PortableServer::ServantLocator::Cookie cookie;
           PortableServer::Servant servant =
             this->servant_locator_->preinvoke (poa_current_impl.object_id (),
                                                this,
@@ -3729,13 +3728,13 @@ TAO_POA::establish_components (ACE_ENV_SINGLE_ARG_DECL)
   // given the opportunity to add tagged components to the profiles
   // for this servant.
   /// First get a list of all the interceptors.
-  TAO_IORInterceptor_List * interceptor_list =
+  TAO_IORInterceptor_List *interceptor_list =
     this->orb_core_.ior_interceptor_list ();
 
   if (interceptor_list == 0)
     return;
 
-  TAO_IORInterceptor_List::TYPE & interceptors =
+  TAO_IORInterceptor_List::TYPE &interceptors =
     interceptor_list->interceptors ();
 
   const size_t interceptor_count = interceptors.size ();
@@ -3754,11 +3753,6 @@ TAO_POA::establish_components (ACE_ENV_SINGLE_ARG_DECL)
   ACE_CHECK;
 
   PortableInterceptor::IORInfo_var info = tao_info;
-
-  // Release the POA during IORInterceptor calls to avoid potential
-  // deadlocks.
-  TAO_Object_Adapter::Non_Servant_Upcall non_servant_upcall (*this);
-  ACE_UNUSED_ARG (non_servant_upcall);
 
   for (size_t i = 0; i < interceptor_count; ++i)
     {
@@ -3817,13 +3811,13 @@ TAO_POA::components_established (PortableInterceptor::IORInfo_ptr info
   // Iterate over the registered IOR interceptors so that they may be
   // given the opportunity to add tagged components to the profiles
   // for this servant.
-  TAO_IORInterceptor_List * interceptor_list =
+  TAO_IORInterceptor_List *interceptor_list =
     this->orb_core_.ior_interceptor_list ();
 
     if (interceptor_list == 0)
     return;
 
-  TAO_IORInterceptor_List::TYPE & interceptors =
+  TAO_IORInterceptor_List::TYPE &interceptors =
     interceptor_list->interceptors ();
 
   const size_t interceptor_count = interceptors.size ();

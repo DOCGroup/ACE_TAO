@@ -45,7 +45,7 @@ Peer_Handler::open (void *)
     }
   else // If iterations_ has been set, send iterations_ buffers.
     {
-      const char *buffer =
+      char *buffer =
         "Oh give me a home\n"
         "Where the buffalo roam,\n"
         "And the deer and the antelope play.\n"
@@ -201,7 +201,7 @@ IPC_Client::parse_args (int argc, char *argv[])
         case 'r':
           ACE_OS::strncpy (rendezvous_,
                            ACE_TEXT_CHAR_TO_TCHAR (get_opt.opt_arg ()),
-                           sizeof (rendezvous_) / sizeof (ACE_TCHAR));
+                           sizeof rendezvous_ / sizeof ACE_TCHAR);
           break;
         case 'i':
           iterations_ = ACE_OS::atoi (get_opt.opt_arg ());
@@ -224,12 +224,10 @@ IPC_Client::parse_args (int argc, char *argv[])
 
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Connector_Base<Peer_Handler>;
 template class ACE_Connector<Peer_Handler, ACE_SPIPE_CONNECTOR>;
 template class ACE_Svc_Handler<ACE_SPIPE_STREAM, ACE_NULL_SYNCH>;
 template class ACE_NonBlocking_Connect_Handler<Peer_Handler>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Connector_Base<Peer_Handler>
 #pragma instantiate ACE_Connector<Peer_Handler, ACE_SPIPE_CONNECTOR>
 #pragma instantiate ACE_Svc_Handler<ACE_SPIPE_STREAM, ACE_NULL_SYNCH>
 #pragma instantiate ACE_NonBlocking_Connect_Handler<Peer_Handler>

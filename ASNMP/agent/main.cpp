@@ -5,7 +5,6 @@
 
 #include "ace/config-all.h"
 #include "snmp_agent.h"
-#include "ace/ACE.h"
 
 ACE_RCSID(agent, main, "$Id$")
 

@@ -25,7 +25,7 @@
 
 #ifndef ACE_ASYNCH_IO_H
 #define ACE_ASYNCH_IO_H
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #include "ace/ACE_export.h"
 
@@ -183,7 +183,7 @@ class ACE_Asynch_Operation_Impl;
  * @brief This is an interface base class for all asynch
  * operations. The resposiblility of this class is to forward
  * all methods to its delegation/implementation class, e.g.,
- * ACE_WIN32_Asynch_Operation or ACE_POSIX_Asynch_Operation.
+ * <ACE_WIN32_Asynch_Operation> or <ACE_POSIX_Asynch_Operation>.
  *
  * There are some attributes and functionality which is common
  * to all asychronous operations. The delegation classes of this
@@ -1636,5 +1636,5 @@ public:
 };
 
 #endif /* ACE_WIN32 || ACE_HAS_AIO_CALLS*/
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 #endif /* ACE_ASYNCH_IO_H */

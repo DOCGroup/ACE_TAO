@@ -22,7 +22,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/High_Res_Timer.h"
-#include "ace/Condition_Thread_Mutex.h"
 #include "orbsvcs/RtecEventChannelAdminC.h"
 #include "orbsvcs/RtecEventCommS.h"
 #include "orbsvcs/Channel_Clients_T.h"

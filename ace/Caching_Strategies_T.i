@@ -101,12 +101,10 @@ ACE_Caching_Strategy_Adapter<ATTRIBUTES, CACHING_UTILITY, IMPLEMENTATION>::cachi
 template<class ATTRIBUTES, class CACHING_UTILITY, class IMPLEMENTATION> ACE_INLINE void
 ACE_Caching_Strategy_Adapter<ATTRIBUTES, CACHING_UTILITY, IMPLEMENTATION>::dump (void) const
 {
-#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Caching_Strategy_Adapter::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
-#endif /* ACE_HAS_DUMP */
 }
 
 //////////////////////////////////////////////////////////////////////////////////
@@ -192,13 +190,11 @@ ACE_LRU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::caching_utility (void)
 template<class ATTRIBUTES, class CACHING_UTILITY> ACE_INLINE void
 ACE_LRU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::dump (void) const
 {
-#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_LRU_Caching_Strategy::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("timer_ = %d "), this->timer_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
-#endif /* ACE_HAS_DUMP */
 }
 
 //////////////////////////////////////////////////////////////////////////////////
@@ -276,12 +272,10 @@ ACE_LFU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::caching_utility (void)
 template<class ATTRIBUTES, class CACHING_UTILITY> ACE_INLINE void
 ACE_LFU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::dump (void) const
 {
-#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_LFU_Caching_Strategy::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
-#endif /* ACE_HAS_DUMP */
 }
 
 //////////////////////////////////////////////////////////////////////////////////////
@@ -364,13 +358,11 @@ ACE_FIFO_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::caching_utility (void)
 template<class ATTRIBUTES, class CACHING_UTILITY> ACE_INLINE void
 ACE_FIFO_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::dump (void) const
 {
-#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_FIFO_Caching_Strategy::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("order_ = %d "), this->order_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
-#endif /* ACE_HAS_DUMP */
 }
 
 //////////////////////////////////////////////////////////////////////////////////
@@ -447,12 +439,10 @@ ACE_Null_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::caching_utility (void)
 template<class ATTRIBUTES, class CACHING_UTILITY> ACE_INLINE void
 ACE_Null_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::dump (void) const
 {
-#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Null_Caching_Strategy::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
-#endif /* ACE_HAS_DUMP */
 }
 
 //////////////////////////////////////////////////////////////////////////////////

@@ -17,11 +17,9 @@
 #ifndef TAO_TYPECODE_H
 #define TAO_TYPECODE_H
 
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #include "ace/Hash_Map_Manager_T.h"
-#include "ace/Unbounded_Queue.h"
-#include "ace/Thread_Mutex.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -92,7 +90,7 @@ namespace CORBA
 
       virtual CORBA::Exception *_tao_duplicate (void) const;
 
-      virtual void _raise (void) const;
+      virtual void _raise (void);
 
       virtual void _tao_encode (TAO_OutputCDR &cdr
                                 ACE_ENV_ARG_DECL_NOT_USED) const;
@@ -110,7 +108,7 @@ namespace CORBA
 
       virtual CORBA::Exception *_tao_duplicate (void) const;
 
-      virtual void _raise (void) const;
+      virtual void _raise (void);
 
       virtual void _tao_encode (TAO_OutputCDR &cdr
                                 ACE_ENV_ARG_DECL_NOT_USED) const;
@@ -638,6 +636,6 @@ TAO_Export CORBA::Boolean operator>> (TAO_InputCDR& cdr,
 # include "tao/Typecode.i"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 
 #endif /* TAO_TYPECODE_H */

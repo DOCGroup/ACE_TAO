@@ -19,7 +19,7 @@
 #ifndef TAO_CORBA_OBJECT_H
 #define TAO_CORBA_OBJECT_H
 
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #include "tao/Policy_ForwardC.h"
 
@@ -27,25 +27,27 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/Object_KeyC.h"
 #include "tao/Pseudo_VarOut_T.h"
+#include "ace/Synch.h"
 #include "tao/IOP_IORC.h"
+
 
 class TAO_Stub;
 class TAO_Abstract_ServantBase;
 class TAO_Object_Proxy_Broker;
+class TAO_ObjectKey;
 class TAO_ORB_Core;
-
-class ACE_Lock;
-
-namespace TAO
-{
-  class ObjectKey;
-}
 
 namespace CORBA
 {
   class InterfaceDef;
   typedef InterfaceDef *InterfaceDef_ptr;
+
+  class Object;
+
+  typedef TAO_Pseudo_Var_T<Object> Object_var;
+  typedef TAO_Pseudo_Out_T<Object, Object_var> Object_out;
 
   /**
    * @class Object
@@ -397,5 +399,5 @@ operator>> (TAO_InputCDR&, CORBA::Object *&);
 # include "tao/Object.i"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 #endif /* TAO_CORBA_OBJECT_H */

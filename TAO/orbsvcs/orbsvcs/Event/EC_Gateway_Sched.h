@@ -16,9 +16,9 @@
 
 #ifndef TAO_EC_GATEWAY_SCHED_H
 #define TAO_EC_GATEWAY_SCHED_H
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
-#include "EC_Gateway_IIOP.h"
+#include "EC_Gateway.h"
 #include "orbsvcs/RtecSchedulerC.h"
 #include "sched_event_export.h"
 
@@ -42,14 +42,14 @@ public:
    * @todo part of the RT_Info is hardcoded, we need to make it
    * parametric.
    */
-  void init (RtecEventChannelAdmin::EventChannel_ptr supplier_ec,
-             RtecEventChannelAdmin::EventChannel_ptr consumer_ec,
-             RtecScheduler::Scheduler_ptr supplier_sched,
-             RtecScheduler::Scheduler_ptr consumer_sched,
-             const char* consumer_name,
-             const char* supplier_name
+  void init (RtecEventChannelAdmin::EventChannel_ptr rmt_ec,
+             RtecEventChannelAdmin::EventChannel_ptr lcl_ec,
+             RtecScheduler::Scheduler_ptr rmt_sched,
+             RtecScheduler::Scheduler_ptr lcl_sched,
+             const char* lcl_name,
+             const char* rmt_name
              ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 };
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 #endif /* ACE_EC_GATEWAY_SCHED_H */

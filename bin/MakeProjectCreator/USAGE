@@ -10,27 +10,23 @@ projects for each one found.
 
 
 Usage: mwc.pl [-global <file>] [-include <directory>] [-recurse]
-              [-ti <dll | lib | dll_exe | lib_exe>:<file>] [-hierarchy]
+              [-ti <dll | lib | dll_exe | lib_exe>:<file>]
               [-template <file>] [-relative NAME=VAR] [-base <project>]
               [-noreldefs] [-notoplevel] [-static] [-static_only]
               [-value_template <NAME+=VAL | NAME=VAL | NAME-=VAL>]
               [-value_project <NAME+=VAL | NAME=VAL | NAME-=VAL>]
-              [-feature_file <file name>] [-make_coexistence]
-              [-exclude <directories>]
-              [-type <automake | borland | em3 | ghs | gnuace | make |
-                      nmake | va4 | vc6 | vc7 | vc71>]
+              [-feature_file <file name>]
+              [-type <borland | em3 | ghs | gnuace | make | nmake |
+                      va4 | vc6 | vc7 | vc71>]
               [files]
 
        -base           Add <project> as a base project to each generated
                        project file.
-       -exclude        Use this option to exclude directories when searching
-                       for input files.
        -feature_file   Specifies the feature file to read before processing.
                        The default feature file is default.features under the
                        config directory.
        -global         Specifies the global input file.  Values stored
                        within this file are applied to all projects.
-       -hierarchy      Generate a workspace in a hierarchical fashion.
        -include        Specifies a directory to search when looking for base
                        projects, template input files and templates.  This
                        option can be used multiple times to add directories.
@@ -46,8 +42,6 @@ Usage: mwc.pl [-global <file>] [-include <directory>] [-recurse]
        -relative       Any $() variable in an mpc that is matched to NAME
                        is replaced by VAR only if VAR can be made into a
                        relative path based on the current working directory.
-       -make_coexistence If multiple 'make' based project types are
-                       generated, they will be named such that they can coexist.
        -noreldefs      Do not try to generate default relative definitions.
        -notoplevel     Do not generate the top level target file.  Files
                        are still process, but no top level file is created.
@@ -82,14 +76,6 @@ and must reside within the include search directories.  NOTE: the 'lib' and
 the 'lib_exe' template input files are only used if the project creator makes
 a separate project file for dynamic libraries and static libraries.
 
-The -exclude option is used to exclude directories when searching for input
-files.  NOTE: This option has no effect when used with mpc.pl.
-
-The -hierarchy option is used to force the generation of a hierarchical
-workspace at each directory level in between the toplevel directory and the
-location of the mpc file that is being processed.  NOTE: This option only
-has an effect when passed to mwc.pl.
-
 The -template option is used to override the default template name.  This
 file should have a .mpd extension and sit in one of the include search
 directories.  NOTE: The -template option overrides the template file for all
@@ -107,12 +93,6 @@ ACE_ROOT and TAO_ROOT (which would come from environment variables).
 The -notoplevel option tells mwc.pl to generate all projects for a
 workspace, but do not generate the top level workspace file.  For mpc.pl, it
 says process the mpc files, but do not generate the project files.
-
-The -recurse option is used to search for all files that could be processed
-from the current directory and its sub-directories.  If directories are
-passed in a comma separated list (e.g -recurse=examples,apps,TAO), then
-those directories will be excluded when searching for project or workspace
-files.
 
 The -type option can be used multiple times on the same command line to
 generate projects of different types per mpc file.  The default type is
@@ -136,27 +116,23 @@ project in the directory from which the script was started.
 
 
 Usage: mpc.pl [-global <file>] [-include <directory>] [-recurse]
-              [-ti <dll | lib | dll_exe | lib_exe>:<file>] [-hierarchy]
+              [-ti <dll | lib | dll_exe | lib_exe>:<file>]
               [-template <file>] [-relative NAME=VAR] [-base <project>]
               [-noreldefs] [-notoplevel] [-static] [-static_only]
               [-value_template <NAME+=VAL | NAME=VAL | NAME-=VAL>]
               [-value_project <NAME+=VAL | NAME=VAL | NAME-=VAL>]
-              [-feature_file <file name>] [-make_coexistence]
-              [-exclude <directories>]
-              [-type <automake | borland | em3 | ghs | gnuace | make |
-                      nmake | va4 | vc6 | vc7 | vc71>]
+              [-feature_file <file name>]
+              [-type <borland | em3 | ghs | gnuace | make | nmake |
+                      va4 | vc6 | vc7 | vc71>]
               [files]
 
        -base           Add <project> as a base project to each generated
                        project file.
-       -exclude        Use this option to exclude directories when searching
-                       for input files.
        -feature_file   Specifies the feature file to read before processing.
                        The default feature file is default.features under the
                        config directory.
        -global         Specifies the global input file.  Values stored
                        within this file are applied to all projects.
-       -hierarchy      Generate a workspace in a hierarchical fashion.
        -include        Specifies a directory to search when looking for base
                        projects, template input files and templates.  This
                        option can be used multiple times to add directories.
@@ -172,8 +148,6 @@ Usage: mpc.pl [-global <file>] [-include <directory>] [-recurse]
        -relative       Any $() variable in an mpc that is matched to NAME
                        is replaced by VAR only if VAR can be made into a
                        relative path based on the current working directory.
-       -make_coexistence If multiple 'make' based project types are
-                       generated, they will be named such that they can coexist.
        -noreldefs      Do not try to generate default relative definitions.
        -notoplevel     Do not generate the top level target file.  Files
                        are still process, but no top level file is created.

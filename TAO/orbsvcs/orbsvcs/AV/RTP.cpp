@@ -84,12 +84,6 @@ RTP_Packet::RTP_Packet(char* buffer, int length)
           index+=2;
         }
     }
-  else
-    for (int i=0; i<this->payload_size_; i++)
-      {
-        this->host_byte_order_payload_[i] = this->packet_[index];
-        index++;
-      }
 }
 
 RTP_Packet::RTP_Packet(unsigned char padding,
@@ -468,7 +462,6 @@ TAO_AV_RTP_Object::send_frame (ACE_Message_Block *frame,
   char *data_ptr;
   ACE_UINT16 data_length;
   rtp_packet->get_packet_data (&data_ptr, data_length);
-
   ACE_Message_Block mb (data_ptr, data_length);
   mb.wr_ptr (data_length);
 

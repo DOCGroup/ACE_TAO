@@ -188,11 +188,7 @@ SOURCE=.\Priority_Mapping_Manager.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\RT_Transport_Descriptor_Property.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\RT_Transport_Descriptor.cpp
+SOURCE=.\Private_Transport_Descriptor.cpp
 # End Source File
 # Begin Source File
 
@@ -301,11 +297,7 @@ SOURCE=.\Priority_Mapping_Manager.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\RT_Transport_Descriptor_Property.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\RT_Transport_Descriptor.h
+SOURCE=.\Private_Transport_Descriptor.h
 # End Source File
 # Begin Source File
 
@@ -417,11 +409,7 @@ SOURCE=.\Priority_Mapping_Manager.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\RT_Transport_Descriptor_Property.inl
-# End Source File
-# Begin Source File
-
-SOURCE=.\RT_Transport_Descriptor.inl
+SOURCE=.\Private_Transport_Descriptor.inl
 # End Source File
 # Begin Source File
 

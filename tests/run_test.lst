@@ -24,7 +24,6 @@ Barrier_Test
 Basic_Types_Test
 Bound_Ptr_Test
 Buffer_Stream_Test
-Bug_1576_Regression_Test
 CDR_Array_Test
 CDR_File_Test
 CDR_Test
@@ -44,7 +43,7 @@ Dirent_Test
 Dynamic_Priority_Test
 Enum_Interfaces_Test
 Env_Value_Test: !chorus !WinCE
-FIFO_Test: !Win32 !Cygwin
+FIFO_Test: !Win32
 Framework_Component_Test: !STATIC
 Future_Set_Test
 Future_Test

@@ -8,8 +8,10 @@ optimize = 1
 CC		= gcc
 CXX             = g++
 
+include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
 
 CFLAGS		+= -w
+CCFLAGS		+= $(CFLAGS) -D__m88k__ $(TEMPLATES_FLAG) -fno-strict-prototypes
 DCFLAGS		+= -g
 DLD		= $(CXX)
 LD		= $(CXX)
@@ -28,10 +30,3 @@ SOFLAGS		+= -G $(CPPFLAGS)
 SOBUILD		= $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.o $<; \
 		  $(SOLINK.cc) -o $@ -h $@ $(LDFLAGS) $(VSHDIR)$*.o
 PRELIB	= @true
-
-# Test for template instantiation, add to SOFLAGS if SONAME set, 
-# add -E to LDFLAGS if using GNU ld
-#
-include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
-
-CCFLAGS		+= $(CFLAGS) -D__m88k__ $(TEMPLATES_FLAG) -fno-strict-prototypes

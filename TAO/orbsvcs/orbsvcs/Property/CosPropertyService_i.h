@@ -1,30 +1,33 @@
-// -*- C++ -*-
+/* -*- C++ -*- */
+// $Id$
 
-//=============================================================================
-/**
- *  @file    CosPropertyService_i.h
- *
- *  $Id$
- *
- *  @author Alexander Babu Arulanthu <alex@cs.wustl.edu>
- */
-//=============================================================================
+// ============================================================================
+//
+// = LIBRARY
+//    cos
+//
+// = FILENAME
+//   CosPropertyService_i.h
+//
+// = AUTHOR
+//     Alexander Babu Arulanthu <alex@cs.wustl.edu>
+//
+// ============================================================================
 
-#ifndef TAO_COSPROPERTYSERVICE_I_H
-#define TAO_COSPROPERTYSERVICE_I_H
+#ifndef COSPROPERTYSERVICE_I_H
+#define COSPROPERTYSERVICE_I_H
+#include "ace/pre.h"
 
-#include /**/ "ace/pre.h"
-
-#include "orbsvcs/Property/property_export.h"
+#include "ace/OS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "orbsvcs/Property/property_export.h"
 #include "orbsvcs/CosPropertyServiceS.h"
 
 #include "ace/Hash_Map_Manager.h"
-#include "ace/Null_Mutex.h"
 
 // This is to remove "inherits via dominance" warnings from MSVC.
 // MSVC is being a little too paranoid.
@@ -610,6 +613,5 @@ private:
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
-#include /**/ "ace/post.h"
-
-#endif  /* TAO_COSPROPERTYSERVICE_I_H */
+#include "ace/post.h"
+#endif /* COSPROPERTYSERVICE_I_H */

@@ -16,7 +16,7 @@
 #ifndef ACE_OS_INCLUDE_SYS_OS_SOCKET_H
 #define ACE_OS_INCLUDE_SYS_OS_SOCKET_H
 
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -141,16 +141,9 @@ extern "C"
 #  define ACE_PROTOCOL_FAMILY_INET PF_INET
 #endif /* ACE_HAS_IPV6 */
 
-#if defined (ACE_HAS_LKSCTP)
-extern "C"
-{
-#include /**/ <netinet/sctp.h>
-}
-#endif /* ACE_HAS_LKSCTP */
-
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 #endif /* ACE_OS_INCLUDE_SYS_OS_SOCKET_H */

@@ -22,8 +22,7 @@ DIRS    = ace \
           apps \
           examples \
           performance-tests \
-          websvcs \
-	  Kokyu
+          websvcs
 
 CLONE   = Makefile \
           ace \
@@ -37,8 +36,7 @@ CLONE   = Makefile \
           TAO \
           tests \
           websvcs \
-	  ACEXML \
-	  Kokyu
+	  ACEXML
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
@@ -69,7 +67,6 @@ CORE_DIRS= \
 	apps/gperf/src \
 	TAO/tao \
 	TAO/TAO_IDL \
-	Kokyu \
 	TAO/orbsvcs/orbsvcs \
 	TAO/orbsvcs/Naming_Service
 

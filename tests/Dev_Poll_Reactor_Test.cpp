@@ -555,7 +555,6 @@ run_main (int, ACE_TCHAR *[])
 
 template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
 template class ACE_Acceptor<Server, ACE_SOCK_ACCEPTOR>;
-template class ACE_Connector_Base<Client>;
 template class ACE_Connector<Client, ACE_SOCK_CONNECTOR>;
 template class ACE_NonBlocking_Connect_Handler<Client>;
 
@@ -563,7 +562,6 @@ template class ACE_NonBlocking_Connect_Handler<Client>;
 
 #pragma instantiate ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 #pragma instantiate ACE_Acceptor<Server, ACE_SOCK_ACCEPTOR>
-#pragma instantiate ACE_Connector_Base<Client>
 #pragma instantiate ACE_Connector<Client, ACE_SOCK_CONNECTOR>
 #pragma instantiate ACE_NonBlocking_Connect_Handler<Client>
 

@@ -317,6 +317,9 @@ Package=<4>
     Begin Project Dependency
     Project_Dep_Name ObjRefTemplate_Static
     End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO LIB
+    End Project Dependency
 }}}
 
 ###############################################################################
@@ -346,21 +349,6 @@ Package=<4>
 {{{
     Begin Project Dependency
     Project_Dep_Name TAO LIB
-    End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "Kokyu_Static"=..\Kokyu\Kokyu_Static.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name ACE LIB
     End Project Dependency
 }}}
 
@@ -459,6 +447,9 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
+    Project_Dep_Name TAO LIB
+    End Project Dependency
+    Begin Project Dependency
     Project_Dep_Name Valuetype_Static
     End Project Dependency
 }}}
@@ -489,7 +480,16 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
+    Project_Dep_Name TAO LIB
+    End Project Dependency
+    Begin Project Dependency
     Project_Dep_Name IORInterceptor_Static
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ObjRefTemplate_Static
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Valuetype_Static
     End Project Dependency
 }}}
 
@@ -538,36 +538,6 @@ Package=<4>
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name Svc_Utils_Static
-    End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "RTKokyuEvent_Static"=.\orbsvcs\orbsvcs\RTKokyuEvent_Static.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name CosNaming_Static
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name PortableServer_Static
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name RTEvent_Static
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name RTSched_Static
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name Svc_Utils_Static
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name TAO_IDL Compiler Static
     End Project Dependency
 }}}
 

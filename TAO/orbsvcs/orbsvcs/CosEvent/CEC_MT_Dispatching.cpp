@@ -80,26 +80,3 @@ TAO_CEC_MT_Dispatching::push_nocopy (TAO_CEC_ProxyPushSupplier* proxy,
 
   this->task_.push (proxy, event ACE_ENV_ARG_PARAMETER);
 }
-
-#if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
-void
-TAO_CEC_MT_Dispatching::invoke (TAO_CEC_ProxyPushSupplier* proxy,
-                                const TAO_CEC_TypedEvent& typed_event
-                                ACE_ENV_ARG_DECL)
-{
-  TAO_CEC_TypedEvent typed_event_copy = typed_event;
-  this->invoke_nocopy (proxy, typed_event_copy ACE_ENV_ARG_PARAMETER);
-}
-
-void
-TAO_CEC_MT_Dispatching::invoke_nocopy (TAO_CEC_ProxyPushSupplier* proxy,
-                                       TAO_CEC_TypedEvent& typed_event
-                                       ACE_ENV_ARG_DECL)
-{
-  // Double checked locking....
-  if (this->active_ == 0)
-    this->activate ();
-
-  this->task_.invoke (proxy, typed_event ACE_ENV_ARG_PARAMETER);
-}
-#endif /* TAO_HAS_TYPED_EVENT_CHANNEL */

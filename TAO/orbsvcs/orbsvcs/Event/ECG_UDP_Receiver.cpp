@@ -2,7 +2,7 @@
 
 #include "orbsvcs/Event/ECG_UDP_Receiver.h"
 #include "orbsvcs/Event_Utilities.h"
-#include "ace/SString.h"
+#include "CRC.h"
 
 #if !defined(__ACE_INLINE__)
 #include "ECG_UDP_Receiver.i"

@@ -1,6 +1,0 @@
-project: taoexe, ifr_client {
-  exename  = IDL3_Test
-
-  IDL_Files {
-  }
-}

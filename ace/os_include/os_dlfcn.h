@@ -16,7 +16,7 @@
 #ifndef ACE_OS_INCLUDE_OS_DLFCN_H
 #define ACE_OS_INCLUDE_OS_DLFCN_H
 
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -41,13 +41,6 @@
 #    include /**/ <cxxdl.h>
 #  endif /* (g++ || HP aC++) vs. HP C++ */
 #endif /* __hpux */
-
-#if defined (VXWORKS)
-#  include /**/ <loadLib.h> /* for module load */
-#  include /**/ <unldLib.h> /* for module unload */
-#  include /**/ <symLib.h> /* for findSymbol  */
-#  include /**/ <sysSymTbl.h> /* for global symbol table */
-#endif /* VXWORKS */
 
 // Place all additions (especially function declarations) within extern "C" {}
 #ifdef __cplusplus
@@ -74,9 +67,7 @@ extern "C"
 #  if defined (__KCC) && defined(RTLD_GROUP) && defined(RTLD_NODELETE)
 #    define ACE_DEFAULT_SHLIB_MODE RTLD_LAZY | RTLD_GROUP | RTLD_NODELETE
 #  else
-     // This is needed to for dynamic_cast to work properly on objects passed to
-     // libraries.
-#    define ACE_DEFAULT_SHLIB_MODE RTLD_LAZY | RTLD_GLOBAL
+#    define ACE_DEFAULT_SHLIB_MODE RTLD_LAZY
 #  endif /* KCC */
 #elif defined (__hpux)
    typedef shl_t ACE_SHLIB_HANDLE;
@@ -104,5 +95,5 @@ extern "C"
 }
 #endif /* __cplusplus */
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 #endif /* ACE_OS_INCLUDE_OS_DLFCN_H */

@@ -63,7 +63,7 @@
 // The vb class keeps its own memory for objects and does not
 // utilize pointers to external data structures.
 //
-class ASNMP_Export Vb
+class ACE_Export Vb
   // = TITLE
   //      Implement the concrete Variable Bindings aka Varbind
   //      composite type. Varbinds hold 1 Oid and 1 Value (Any SMI value)
@@ -175,13 +175,13 @@ public:
   friend void set_exception_status( Vb *vb, const SmiUINT32 status);
   // set the exception status
 
-  const char *to_string();
+  char *to_string();
   // return fomatted version of this object
 
-  const char *to_string_value();
+  char *to_string_value();
   // returns a formatted version of the value
 
-  const char *to_string_oid();
+  char *to_string_oid();
   // returns a formatted version of the value
 
 protected:

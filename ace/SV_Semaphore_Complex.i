@@ -3,6 +3,8 @@
 
 // SV_Semaphore_Complex.i
 
+#include "ace/Trace.h"
+
 ASYS_INLINE int 
 ACE_SV_Semaphore_Complex::acquire (u_short n, int flags) const
 {

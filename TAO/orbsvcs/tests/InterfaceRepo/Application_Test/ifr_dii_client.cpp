@@ -41,14 +41,6 @@ IFR_DII_Client::init (int argc,
                                   ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
-
-  if (CORBA::is_nil (this->target_.in ()))
-  {
-     ACE_ERROR_RETURN ((LM_ERROR,
-                        "Unable to find interface repository in: file://iorfile\n"),
-                       -1);
-  }
-
   if (this->parse_args (argc, argv) == -1)
     {
       return -1;
@@ -66,13 +58,11 @@ IFR_DII_Client::run (ACE_ENV_SINGLE_ARG_DECL)
          {
             return -1;
          }
-      ACE_CHECK_RETURN (-1);
+       ACE_CHECK_RETURN (-1);
     }
   else
     {
-       if (this->find_interface_def (ACE_ENV_SINGLE_ARG_PARAMETER))
-          return (-1);      
-
+       this->find_interface_def (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
     }
 
@@ -114,21 +104,11 @@ IFR_DII_Client::parse_args (int argc,
   return 0;
 }
 
-int 
+void
 IFR_DII_Client::find_interface_def (ACE_ENV_SINGLE_ARG_DECL)
 {
   this->target_def_ =
     this->target_->_get_interface (ACE_ENV_SINGLE_ARG_PARAMETER);
-
-
-  if (CORBA::is_nil (this->target_def_.in ()))
-  {
-     ACE_ERROR_RETURN ((LM_ERROR,
-                        "Unable to find interface def\n"),
-                       -1);
-  }
-
-  return 0;
 }
 
 int
@@ -293,12 +273,14 @@ IFR_DII_Client::create_dii_request (ACE_ENV_SINGLE_ARG_DECL)
           break;
         case CORBA::PARAM_OUT:
           {
+            // It doesn't matter for basic types, like float, but for
+            // cases where it does, this is an alternative method of
+            // adding an OUT argument without initializing it.
             if (params[i].type->kind () == CORBA::tk_float
                 && ACE_OS::strcmp (params[i].name.in (), "price") == 0)
               {
-                CORBA::Float tmp = -1.0f;
-                CORBA::Any any;
-                any <<= tmp;
+                CORBA::Any any (CORBA::_tc_float,
+                                0);
 
                 // The servant will return 0.0 if the title is not found.
                 this->req_->arguments ()->add_value (params[i].name.in (),

@@ -225,18 +225,15 @@ Sender::init (int argc,
   if (result != 0)
     return result;
 
-  /*
   ACE_Reactor *reactor =
     TAO_AV_CORE::instance ()->reactor ();
 
-  
   if (reactor->register_handler (SIGINT,
                                  &this->signal_handler_) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Error in handler register\n"),
                       -1);
   /// Register the signal handler for clean termination of the process.
-  */
 
   /// Open file to read.
   this->input_file_ =

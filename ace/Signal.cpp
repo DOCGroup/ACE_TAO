@@ -1,6 +1,6 @@
 // $Id$
 
-#include "ace/Recursive_Thread_Mutex.h"
+#include "ace/Synch_T.h"
 #include "ace/Signal.h"
 #include "ace/Object_Manager.h"
 #include "ace/Log_Msg.h"
@@ -55,9 +55,7 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Sig_Action)
 void
 ACE_Sig_Action::dump (void) const
 {
-#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Sig_Action::dump");
-#endif /* ACE_HAS_DUMP */
 }
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Sig_Set)
@@ -65,9 +63,7 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Sig_Set)
 void
 ACE_Sig_Set::dump (void) const
 {
-#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Sig_Set::dump");
-#endif /* ACE_HAS_DUMP */
 }
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Sig_Guard)
@@ -75,9 +71,7 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Sig_Guard)
 void
 ACE_Sig_Guard::dump (void) const
 {
-#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Sig_Guard::dump");
-#endif /* ACE_HAS_DUMP */
 }
 
 ACE_Sig_Action::ACE_Sig_Action (void)
@@ -229,9 +223,7 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Sig_Handler)
 void
 ACE_Sig_Handler::dump (void) const
 {
-#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Sig_Handler::dump");
-#endif /* ACE_HAS_DUMP */
 }
 
 int
@@ -568,9 +560,7 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Sig_Handlers)
 void
 ACE_Sig_Handlers::dump (void) const
 {
-#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Sig_Handlers::dump");
-#endif /* ACE_HAS_DUMP */
 }
 
 // This is the method that does all the dirty work...  The basic

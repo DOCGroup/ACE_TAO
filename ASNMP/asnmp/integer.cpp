@@ -46,7 +46,6 @@ SnmpUInt32::SnmpUInt32 (const u_long i)
 
 // copy constructor
 SnmpUInt32::SnmpUInt32( const SnmpUInt32 &c)
-  : SnmpSyntax (c)
 {
   smival.value.uNumber=c.smival.value.uNumber;
   smival.syntax = sNMP_SYNTAX_UINT32;
@@ -122,7 +121,7 @@ SnmpSyntax* SnmpUInt32::clone() const
 }
 
 // ASCII format return
-const char * SnmpUInt32::to_string()
+char * SnmpUInt32::to_string()
 {
   sprintf(output_buffer, "%d", (int) (this->smival.value.uNumber));
      return output_buffer;
@@ -143,7 +142,6 @@ SnmpInt32::SnmpInt32 (const long i)
 
 // constructor with value
 SnmpInt32::SnmpInt32 (const SnmpInt32 &c)
-  : SnmpSyntax (c)
 {
   smival.value.sNumber=c.smival.value.sNumber;
   smival.syntax = sNMP_SYNTAX_INT32;
@@ -222,7 +220,7 @@ SnmpSyntax* SnmpInt32::clone() const
 
 // ASCII format return
 
-const char *SnmpInt32::to_string()
+char *SnmpInt32::to_string()
 {
   sprintf(output_buffer, "%d", (int) (long) this->smival.value.sNumber);
   return output_buffer;

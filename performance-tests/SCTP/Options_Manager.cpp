@@ -3,18 +3,17 @@
 // $Id$
 
 extern "C" {
-#include "ace/os_include/sys/os_types.h"
+#include <sys/types.h>
 };
 
 #include "ace/Get_Opt.h"
-#include "ace/os_include/netinet/os_in.h"
-#include "ace/OS.h"
 
 // make sure that the code compiles cleanly even if SCTP is not
 // available. If SCTP is not installed, program will exit early in
 // main() with an error message.
 #ifdef ACE_HAS_SCTP
 extern "C" {
+#include <netinet/in.h>
 #include <netinet/sctp.h>
 };
 #else
@@ -24,7 +23,6 @@ extern "C" {
 #endif
 
 #include "Options_Manager.h"
-#include "ace/streams.h"
 
 // Set default values
 ACE_CDR::ULong Options_Manager::test_iterations=1000000;
@@ -411,11 +409,11 @@ Options_Manager::Options_Manager(int argc, ACE_TCHAR **argv, ACE_TCHAR const * c
         _error_message = "histogram_bin_count must be no less than 1";
       }
 
-    if ((server_port < 1010 ||
-        server_port > 65000) && server_port != 0)
+    if (server_port < 1010 ||
+        server_port > 65000)
       {
         _error = 1;
-        _error_message = "server_port must be between 1010 and 65000 inclusive, or zero.";
+        _error_message = "server_port must be between 1010 and 65000 inclusive";
       }
 
     if ((!ACE_OS::strcmp("client-opts", opts_set)) && payload_size_power_of_2 > 17)

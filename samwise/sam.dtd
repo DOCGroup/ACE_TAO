@@ -1,0 +1,42 @@
+<!-- $Id$   -->
+<!-- Document Type Definition for SAMWISE -->
+
+<!-- A sam file has one workspace and 0 or more projects -->
+<!ELEMENT sam (workspace, (project)*)>
+
+<!-- A workspace can contain projectlinks -->
+<!ELEMENT workspace (projectlink)*>
+
+<!ELEMENT projectlink (#PCDATA)>
+
+<!-- and can contain subdirs -->
+<!ELEMENT workspace (subdir)*>
+
+<!ELEMENT subdir (#PCDATA)>
+
+<!ELEMENT project (description, target, source, library)>
+<!-- A project must have a name that can be referred to using 'projectlink' -->
+<!ATTLIST project name IDREF #REQUIRED>
+
+<!-- No surprise here. -->
+<!ELEMENT description (#PCDATA)>
+
+<!-- target name -->
+<!ELEMENT target (#PCDATA)>
+
+<!ATTLIST target type (executable|library) #REQUIRED>
+
+<!-- Don't think it makes sense to not have source files -->
+<!ELEMENT source (file|idlfile)+>
+
+<!-- Specify filenames -->
+<!ELEMENT file (#PCDATA)>
+<!ATTLIST file template (true|false)>
+<!ELEMENT idlfile (#PCDATA)>
+<!ATTLIST idlfile type (client|server) #REQUIRED
+                  opts CDATA "">
+
+<!-- Libraries -->
+<!ELEMENT library (lib)*>
+<!ELEMENT lib (#PCDATA)>
+<!ATTLIST lib namespace (ACE|TAO)>

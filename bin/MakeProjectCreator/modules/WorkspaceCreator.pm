@@ -61,14 +61,11 @@ sub new {
   my($baseprojs) = shift;
   my($gfeature)  = shift;
   my($feature)   = shift;
-  my($hierarchy) = shift;
-  my($exclude)   = shift;
-  my($makeco)    = shift;
   my($self)      = Creator::new($class, $global, $inc,
                                 $template, $ti, $dynamic, $static,
                                 $relative, $addtemp, $addproj,
                                 $progress, $toplevel, $baseprojs,
-                                $feature, $hierarchy, 'workspace');
+                                $feature, 'workspace');
   my($typecheck) = $self->{'type_check'};
 
   $self->{'workspace_name'}      = undef;
@@ -83,15 +80,6 @@ sub new {
   $self->{'wctype'}              = $self->extractType("$self");
   $self->{'modified_count'}      = 0;
   $self->{'global_feature_file'} = $gfeature;
-  $self->{'coexistence'}         = $makeco;
-
-  if (defined $$exclude[0]) {
-    my($type) = $self->{'wctype'};
-    if (!defined $self->{'exclude'}->{$type}) {
-      $self->{'exclude'}->{$type} = [];
-    }
-    push(@{$self->{'exclude'}->{$type}}, @$exclude);
-  }
 
   ## Add a hash reference for our workspace type
   if (!defined $previous_workspace_name{$self->{'wctype'}}) {
@@ -478,43 +466,13 @@ sub write_workspace {
   my($addfile)   = shift;
   my($status)    = 1;
   my($error)     = '';
-  my($duplicates) = 0;
 
   if ($self->get_toplevel()) {
-    if ($addfile) {
-      ## VC6 is the only tool that currently cannot work with duplicate names, but
-      ## duplicates really don't make sense for anything but Makefile-style projects.
-      my(%names) = ();
-      foreach my $project (@{$self->{'projects'}}) { 
-        my($name) = $self->{'project_info'}->{$project}->[0];
-        if (defined $names{$name}) {
-          ++$duplicates;
-          print "WARNING: Duplicate project '$name'.\n";
-        }
-        else {
-          $names{$name} = 1;
-        }
-      }
-    }
-    else {
+    if (!$addfile) {
       $self->{'per_project_workspace_name'} = 1;
     }
-
     my($name) = $self->transform_file_name($self->workspace_file_name());
-
-    my($abort_creation) = 0;
-
-    if ($duplicates > 0 && ! $self->allow_duplicates()) {
-      print "WARNING: Duplicates not allowed.\n";
-      $abort_creation = 1;
-    } else {
-      if (! defined $self->{'projects'}->[0]) {
-          print "WARNING: No projects were created.\n";
-          $abort_creation = 1;
-      }
-    }
-
-    if (! $abort_creation) {
+    if (defined $self->{'projects'}->[0]) {
       my($fh)   = new FileHandle();
       my($dir)  = dirname($name);
 
@@ -568,8 +526,10 @@ sub write_workspace {
           }
         }
       }
-    } else {
-      print "         Workspace $name has not been created.\n";
+    }
+    else {
+      print "WARNING: No projects were created.\n" .
+            "         Workspace $name has not been created.\n";
     }
     if (!$addfile) {
       $self->{'per_project_workspace_name'} = undef;
@@ -599,83 +559,6 @@ sub save_project_info {
     ## in the hash map keyed on the full project file name
     $$pi{$full} = $$gpi[$c];
     $c++;
-  }
-}
-
-
-sub topname {
-  my($self) = shift;
-  my($file) = shift;
-  my($dir)  = '.';
-  my($rest) = $file;
-  if ($file =~ /^([^\/\\]+)[\/\\](.*)/) {
-    $dir  = $1;
-    $rest = $2;
-  }
-  return $dir, $rest;
-}
-
-
-sub generate_hierarchy {
-  my($self)      = shift;
-  my($generator) = shift;
-  my($origproj)  = shift;
-  my($originfo)  = shift;
-  my($current)   = undef;
-  my(@saved)     = ();
-  my(%sinfo)     = ();
-  my($cwd)       = $self->getcwd();
-
-  ## Make a copy of these.  We will be modifying them.
-  my(@projects)  = sort @{$origproj};
-  my(%projinfo)  = %{$originfo};
-
-  foreach my $prj (@projects) {
-    my($top, $rest) = $self->topname($prj);
-
-
-    if (!defined $current) {
-      $current = $top;
-      push(@saved, $rest);
-      $sinfo{$rest} = $projinfo{$prj};
-    }
-    elsif ($top ne $current) {
-      ## Write out the hierachical workspace
-      $self->cd($current);
-      $self->generate_hierarchy($generator, \@saved, \%sinfo);
-
-      $self->{'projects'}       = \@saved;
-      $self->{'project_info'}   = \%sinfo;
-      $self->{'workspace_name'} = $self->base_directory();
-      my($status, $error) = $self->write_workspace($generator);
-      if (!$status) {
-        print STDERR "$error\n";
-      }
-      $self->cd($cwd);
-
-      ## Start the next one
-      $current = $top;
-      @saved = ($rest);
-      %sinfo = ();
-      $sinfo{$rest} = $projinfo{$prj};
-    }
-    else {
-      push(@saved, $rest);
-      $sinfo{$rest} = $projinfo{$prj};
-    }
-  }
-  if (defined $current && $current ne '.') {
-    $self->cd($current);
-    $self->generate_hierarchy($generator, \@saved, \%sinfo);
-
-    $self->{'projects'}       = \@saved;
-    $self->{'project_info'}   = \%sinfo;
-    $self->{'workspace_name'} = $self->base_directory();
-    my($status, $error) = $self->write_workspace($generator);
-    if (!$status) {
-      print STDERR "$error\n";
-    }
-    $self->cd($cwd);
   }
 }
 
@@ -732,15 +615,6 @@ sub generate_project_files {
       if ($impl && -d $file) {
         $dir  = $file;
         $file = '';
-
-        ## If the implicit assignment value was not a number, then
-        ## we will add this value to our base projects.
-        if ($impl !~ /^\d+$/) {
-          my($bps) = $generator->get_baseprojs();
-          push(@$bps, split(/\s+/, $impl));
-          $restore = 1;
-          $self->{'cacheok'} = 0;  
-        }
       }
 
       ## Generate the key for this project file
@@ -776,8 +650,7 @@ sub generate_project_files {
           ## If we need to generate a workspace file per project
           ## then we generate a temporary project info and projects
           ## array and call write_project().
-          if ($dir ne '.' && defined $$gen[0] &&
-              $self->workspace_per_project() && !$self->get_hierarchy()) {
+          if ($dir ne '.' && defined $$gen[0] && $self->workspace_per_project()) {
             my(%perpi)       = ();
             my(@perprojects) = ();
             $self->save_project_info($gen, $gpi, '.', \@perprojects, \%perpi);
@@ -816,22 +689,17 @@ sub generate_project_files {
       ## Return things to the way they were
       if (defined $self->{'scoped_assign'}->{$ofile}) {
         $impl = $previmpl;
-      }
-      if ($restore) {
-        $self->{'cacheok'} = $prevcache;
-        $generator->restore_state(\%gstate);
+
+        if ($restore) {
+          $self->{'cacheok'} = $prevcache;
+          $generator->restore_state(\%gstate);
+        }
       }
     }
     else {
       ## This one was excluded, so status is ok
       $status = 1;
     }
-  }
-
-  if ($self->get_hierarchy()) {
-    my($orig) = $self->{'workspace_name'};
-    $self->generate_hierarchy($generator, \@projects, \%pi);
-    $self->{'workspace_name'} = $orig;
   }
 
   $self->{'projects'}     = \@projects;
@@ -885,15 +753,9 @@ sub sort_dependencies {
           ## See if the dependency is listed after this project
           for(my $j = $i; $j <= $#list; $j++) {
             if ($list[$j] eq $full && $i != $j) {
-              ## If so, move it in front of the current project.
-              ## The original code, which had splices, didn't always
-              ## work correctly (especially on AIX for some reason).
-              for(my $k = $j; $k > $i; --$k) {
-                $list[$k] = $list[$k - 1];
-              }
-              $list[$i] = $full;
-
-              ## Mark that an entry has been moved
+              ## If so, move it in front of the current project
+              splice(@list, $i, 0, $full);
+              splice(@list, $j + 1, 1);
               $moved = 1;
               $j--;
             }
@@ -970,9 +832,6 @@ sub process_cmdline {
       if (defined $options->{'reldefs'}) {
         $self->optionError('-noreldefs is ignored');
       }
-      if (defined $options->{'coexistence'}) {
-        $self->optionError('-make_coexistence is ignored');
-      }
       if (defined $options->{'input'}->[0]) {
         $self->optionError('Command line files ' .
                            'specified in a workspace are ignored');
@@ -981,7 +840,7 @@ sub process_cmdline {
       ## Determine if it's ok to use the cache
       my(@cacheInvalidating) = ('global', 'include', 'baseprojs',
                                 'template', 'ti', 'relative',
-                                'addtemp', 'addproj', 'feature_file');
+                                'addtemp', 'addproj');
       foreach my $key (@cacheInvalidating) {
         if ($self->is_set($key, $options)) {
           $self->{'cacheok'} = 0;
@@ -1036,22 +895,13 @@ sub project_creator {
                    $parameters{'toplevel'},
                    $parameters{'baseprojs'},
                    $self->{'global_feature_file'},
-                   $parameters{'feature_file'},
-                   $parameters{'hierarchy'},
-                   $self->{'exclude'}->{$self->{'wctype'}},
-                   $self->make_coexistence());
+                   $parameters{'feature_file'});
 }
 
 
 sub sort_files {
   #my($self) = shift;
   return 0;
-}
-
-
-sub make_coexistence {
-  my($self) = shift;
-  return $self->{'coexistence'};
 }
 
 
@@ -1105,7 +955,7 @@ sub verify_build_ordering {
   my($projects) = $self->get_projects();
 
   foreach my $project (@$projects) {
-    $self->get_validated_ordering($project, 1);
+    $self->get_validated_ordering($project);
   }
 }
 
@@ -1113,7 +963,6 @@ sub verify_build_ordering {
 sub get_validated_ordering {
   my($self)     = shift;
   my($project)  = shift;
-  my($warn)     = shift;
   my($pjs)      = $self->get_project_info();
 
   my($name, $deps) = @{$$pjs{$project}};
@@ -1131,7 +980,7 @@ sub get_validated_ordering {
           }
         }
         if (!$found) {
-          if ($warn && defined $ENV{MPC_VERBOSE_ORDERING}) {
+          if (defined $ENV{MPC_VERBOSE_ORDERING}) {
             print "WARNING: '$name' references '$dep' which has " .
                   "not been processed\n";
           }
@@ -1150,11 +999,6 @@ sub get_validated_ordering {
 # ************************************************************
 # Virtual Methods To Be Overridden
 # ************************************************************
-
-sub allow_duplicates {
-  my($self) = shift;
-  return 1;
-}
 
 sub workspace_file_name {
   #my($self) = shift;

@@ -40,7 +40,7 @@
 #define MAX_VBS 25
 #include "asnmp/vb.h"         // include Vb class definition
 
-class ASNMP_Export Pdu
+class ACE_Export Pdu
   // = TITLE
   //      Protocol Data Unit (PDU) concrete class. An abstraction of the
   //      data packet used to by two SNMP sessions to communicate.
@@ -86,7 +86,7 @@ public:
   int get_error_status() const;
   // return the error status
 
-  const char *agent_error_reason();
+  char *agent_error_reason();
   // return the complete error info from this pdu
 
   friend void set_error_status( Pdu *pdu, const int status);
@@ -146,7 +146,7 @@ public:
   void get_notify_enterprise( Oid & enterprise) const;
   // get the notify enterprise
 
-  const char *to_string();
+  char *to_string();
   // return fomatted version of this object
 
 

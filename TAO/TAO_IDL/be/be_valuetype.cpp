@@ -471,12 +471,6 @@ be_valuetype::in_recursion (AST_Type *node)
           return 1;
         }
 
-      if (type->node_type () == AST_Decl::NT_typedef)
-        {
-          AST_Typedef *td = AST_Typedef::narrow_from_decl (type);
-          type = td->primitive_base_type ();
-        }
-
       // Now hand over to our field type.
       if (type->in_recursion (node))
         {

@@ -5,8 +5,6 @@
 
 #include "ace/Containers.h"
 #include "ace/Timer_Queue.h"
-#include "ace/Synch_Traits.h"
-#include "ace/Recursive_Thread_Mutex.h"
 
 ACE_RCSID(ace, Timer_Queue, "$Id$")
 

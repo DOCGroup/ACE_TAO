@@ -115,8 +115,9 @@ Server_i::init (int &argc,
 
 int
 Server_i::enable_multicast (const char *ior
-                            ACE_ENV_ARG_DECL)
+                            ACE_ENV_ARG_DECL_NOT_USED)
 {
+
   ACE_TRY
     {
       this->parse_args (this->argc_, this->argv_);

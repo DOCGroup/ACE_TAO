@@ -4,17 +4,12 @@
 #include "tao/Services_Activate.h"
 #include "tao/ORB_Core.h"
 #include "tao/Client_Strategy_Factory.h"
-#include "ace/Lock.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Fault_Tolerance_Service.i"
 #endif /* __ACE_INLINE__ */
 
-
-ACE_RCSID (tao,
-           Fault_Tolerance_Service,
-           "$Id$")
-
+ACE_RCSID(tao, Fault_Tolerance_Service, "$Id$")
 
 TAO_Fault_Tolerance_Service::~TAO_Fault_Tolerance_Service (void)
 {

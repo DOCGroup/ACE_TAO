@@ -16,7 +16,7 @@
 
 #ifndef TAO_EC_EVENT_CHANNEL_H
 #define TAO_EC_EVENT_CHANNEL_H
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #include "EC_Event_Channel_Base.h"
 
@@ -42,9 +42,9 @@ class TAO_RTEvent_Export TAO_EC_Event_Channel :
 public:
   /**
    * constructor
-   * If @a own_factory is not 0 it assumes ownership of the factory.
-   * If the @a factory is nil it uses the Service_Configurator to load
-   * the Factory, if not found it uses TAO_EC_Default_Factory
+   * If <own_factory> is not 0 it assumes ownership of the factory.
+   * If the factory is <nil> it uses the Service_Configurator to load
+   * the Factory, if not found it uses TAO_EC_Default_Resource_Factory
    */
   TAO_EC_Event_Channel (const TAO_EC_Event_Channel_Attributes& attributes,
                         TAO_EC_Factory* factory = 0,
@@ -55,5 +55,5 @@ public:
 #include "EC_Event_Channel.i"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 #endif /* TAO_EC_EVENT_CHANNEL_H */

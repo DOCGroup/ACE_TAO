@@ -26,8 +26,7 @@ ACE_ALLOC_HOOK_DEFINE(ACE_High_Res_Timer)
      defined (ACE_HAS_PENTIUM) || defined (ACE_HAS_ALPHA_TIMER)) && \
     !defined (ACE_HAS_HI_RES_TIMER)
 
-# include "ace/Guard_T.h"
-# include "ace/Recursive_Thread_Mutex.h"
+# include "ace/Synch.h"
 # include "ace/Object_Manager.h"
 
   // Initialize the global_scale_factor_ to 1.  The first
@@ -288,7 +287,6 @@ ACE_High_Res_Timer::calibrate (const ACE_UINT32 usec,
 void
 ACE_High_Res_Timer::dump (void) const
 {
-#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_High_Res_Timer::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
@@ -320,7 +318,6 @@ ACE_High_Res_Timer::dump (void) const
              ACE_CU64_TO_CU32 (start_incr_ & 0xfffffffful)));
 #endif /* ! ACE_LACKS_LONGLONG_T */
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
-#endif /* ACE_HAS_DUMP */
 }
 
 void

@@ -36,7 +36,6 @@
 
 #include "asnmp/snmp.h"
 #include "ace/Get_Opt.h"
-#include "ace/streams.h"
 
 ACE_RCSID(get, get, "$Id$")
 
@@ -161,10 +160,11 @@ int getapp::run()
        " GET SAMPLE PROGRAM \nOID: " << oid_.to_string() << "\n";
    target_.get_address(address_); // target updates port used
    int rc;
-   const char *name = address_.resolve_hostname(rc);
+   char *name = address_.resolve_hostname(rc);
+   if (rc)
+      name = "<< did not resolve via gethostbyname() >>";
 
-   cout << "Device: " << address_ << " ";
-   cout << (rc ? "<< did not resolve via gethostbyname() >>" : name) << "\n"; 
+   cout << "Device: " << address_ << " " << name << "\n"; 
    cout << "[ Retries=" << target_.get_retry() << " \
         Timeout=" << target_.get_timeout() <<" ms " << "Community=" << \
          community_.to_string() << " ]"<< endl;
@@ -185,7 +185,7 @@ int getapp::run()
      }
    }
    else {
-    const char *ptr = snmp_.error_string();
+    char *ptr = snmp_.error_string();
     cout << "ASNMP:ERROR: get command failed reason: " << ptr << endl;
   }
 

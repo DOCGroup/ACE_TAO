@@ -100,8 +100,8 @@ Gateway_i::invoke (CORBA::ServerRequest_ptr request
 
   for (i = 0; i != length; ++i)
     {
-      CORBA::Any any;
-      any._tao_set_typecode (parameters[i].type.in ());
+      CORBA::Any any (parameters[i].type.in (),
+                      0);
 
       arguments->add_value (parameters[i].name,
                             any,

@@ -9,7 +9,7 @@
  *  Header file for the TAO_DLL_ORB helper class.
  *
  *
- *  @author  Ossama Othman <ossama@dre.vanderbilt.edu>
+ *  @author  Ossama Othman <ossama@uci.edu>
  */
 //=============================================================================
 
@@ -17,7 +17,7 @@
 #ifndef TAO_DLL_ORB_H
 #define TAO_DLL_ORB_H
 
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #include "ace/Task.h"
 
@@ -31,20 +31,19 @@
 /**
  * @class TAO_DLL_ORB
  *
- * @brief @e Deprecated helper class that initializes an ORB when an
- *        instance of this class is dynamically loaded.
+ * @brief Helper class that initializes an ORB when an instance of
+ *        this class is dynamically loaded.
  *
- * @deprecated This class is deprecated.  While it does demonstrate
- * how to initialize an ORB in a dynamically loaded object, the fact
- * that it is located in the TAO library forces the TAO library to be
- * linked to the application binary.  This prevents TAO from being
- * completely decoupled from an application when dynamic loading is
- * used, hence defeating the purpose of dynamically loading the
- * object!
+ * This class is deprecated.  While it does demonstrate how to
+ * initialize an ORB in a dynamically loaded object, the fact that it
+ * is located in the TAO library forces the TAO library to be linked
+ * to the application binary.  This prevents TAO from being completely
+ * decoupled from an application when dynamic loading is used, hence
+ * defeating the purpose of dynamically loading the object!
  * @par
  * For an example of how to dynamically load an ORB (actually initialize
  * an ORB inside a dynamically loaded object) that is completely
- * decoupled from an application binary see the @c TAO/tests/DLL_ORB
+ * decoupled from an application binary see the TAO/tests/DLL_ORB
  * test.
  */
 class TAO_Export TAO_DLL_ORB : public ACE_Task_Base
@@ -84,6 +83,6 @@ private:
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO, TAO_DLL_ORB)
 ACE_FACTORY_DECLARE (TAO, TAO_DLL_ORB)
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 
 #endif  /* TAO_DLL_ORB_H */

@@ -12,7 +12,7 @@
 
 #ifndef TAO_CEC_FACTORY_H
 #define TAO_CEC_FACTORY_H
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #include "event_export.h"
 
@@ -39,17 +39,7 @@ template<class PROXY> class TAO_ESF_Proxy_Collection;
 class TAO_CEC_ConsumerControl;
 class TAO_CEC_SupplierControl;
 
-#if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
-class TAO_CEC_TypedEventChannel;
-class TAO_CEC_TypedProxyPushConsumer;
-class TAO_CEC_TypedConsumerAdmin;
-class TAO_CEC_TypedSupplierAdmin;
-#endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
-
 typedef TAO_ESF_Proxy_Collection<TAO_CEC_ProxyPushConsumer> TAO_CEC_ProxyPushConsumer_Collection;
-#if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
-typedef TAO_ESF_Proxy_Collection<TAO_CEC_TypedProxyPushConsumer> TAO_CEC_TypedProxyPushConsumer_Collection;
-#endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 typedef TAO_ESF_Proxy_Collection<TAO_CEC_ProxyPullConsumer> TAO_CEC_ProxyPullConsumer_Collection;
 typedef TAO_ESF_Proxy_Collection<TAO_CEC_ProxyPushSupplier> TAO_CEC_ProxyPushSupplier_Collection;
 typedef TAO_ESF_Proxy_Collection<TAO_CEC_ProxyPullSupplier> TAO_CEC_ProxyPullSupplier_Collection;
@@ -78,10 +68,6 @@ public:
   /// Create and destroy the dispatching module.
   virtual TAO_CEC_Dispatching*
       create_dispatching (TAO_CEC_EventChannel*) = 0;
-#if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
-  virtual TAO_CEC_Dispatching*
-      create_dispatching (TAO_CEC_TypedEventChannel*) = 0;
-#endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
   virtual void
       destroy_dispatching (TAO_CEC_Dispatching*)  = 0;
 
@@ -96,32 +82,16 @@ public:
       create_consumer_admin (TAO_CEC_EventChannel*)  = 0;
   virtual void
       destroy_consumer_admin (TAO_CEC_ConsumerAdmin*) = 0;
-#if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
-  virtual TAO_CEC_TypedConsumerAdmin*
-      create_consumer_admin (TAO_CEC_TypedEventChannel*)  = 0;
-  virtual void
-      destroy_consumer_admin (TAO_CEC_TypedConsumerAdmin*) = 0;
-#endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
   /// Create and destroy the supplier admin implementation.
   virtual TAO_CEC_SupplierAdmin*
       create_supplier_admin (TAO_CEC_EventChannel*)  = 0;
   virtual void
       destroy_supplier_admin (TAO_CEC_SupplierAdmin*) = 0;
-#if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
-  virtual TAO_CEC_TypedSupplierAdmin*
-      create_supplier_admin (TAO_CEC_TypedEventChannel*)  = 0;
-  virtual void
-      destroy_supplier_admin (TAO_CEC_TypedSupplierAdmin*) = 0;
-#endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
   /// Create and destroy a ProxyPushSupplier
   virtual TAO_CEC_ProxyPushSupplier*
       create_proxy_push_supplier (TAO_CEC_EventChannel*) = 0;
-#if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
-  virtual TAO_CEC_ProxyPushSupplier*
-      create_proxy_push_supplier (TAO_CEC_TypedEventChannel*) = 0;
-#endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
   virtual void
       destroy_proxy_push_supplier (TAO_CEC_ProxyPushSupplier*) = 0;
 
@@ -137,14 +107,6 @@ public:
   virtual void
       destroy_proxy_push_consumer (TAO_CEC_ProxyPushConsumer*) = 0;
 
-#if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
-  /// Create and destroy a TypedProxyPushConsumer
-  virtual TAO_CEC_TypedProxyPushConsumer*
-      create_proxy_push_consumer (TAO_CEC_TypedEventChannel*) = 0;
-  virtual void
-      destroy_proxy_push_consumer (TAO_CEC_TypedProxyPushConsumer*) = 0;
-#endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
-
   /// Create and destroy a ProxyPullConsumer
   virtual TAO_CEC_ProxyPullConsumer*
       create_proxy_pull_consumer (TAO_CEC_EventChannel*) = 0;
@@ -157,14 +119,6 @@ public:
   virtual void
       destroy_proxy_push_consumer_collection (TAO_CEC_ProxyPushConsumer_Collection*) = 0;
 
-#if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
-  /// Create and destroy a collection of TAO_CEC_TypedProxyPushConsumers
-  virtual TAO_CEC_TypedProxyPushConsumer_Collection*
-      create_proxy_push_consumer_collection (TAO_CEC_TypedEventChannel*) = 0;
-  virtual void
-      destroy_proxy_push_consumer_collection (TAO_CEC_TypedProxyPushConsumer_Collection*) = 0;
-#endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
-
   /// Create and destroy a collection of TAO_CEC_ProxyPullConsumers
   virtual TAO_CEC_ProxyPullConsumer_Collection*
       create_proxy_pull_consumer_collection (TAO_CEC_EventChannel*) = 0;
@@ -174,10 +128,6 @@ public:
   /// Create and destroy a collection of TAO_CEC_ProxyPushSuppliers
   virtual TAO_CEC_ProxyPushSupplier_Collection*
       create_proxy_push_supplier_collection (TAO_CEC_EventChannel*) = 0;
-#if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
-  virtual TAO_CEC_ProxyPushSupplier_Collection*
-      create_proxy_push_supplier_collection (TAO_CEC_TypedEventChannel*) = 0;
-#endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
   virtual void
       destroy_proxy_push_supplier_collection (TAO_CEC_ProxyPushSupplier_Collection*) = 0;
 
@@ -198,18 +148,10 @@ public:
   /// discard non-existent consumers and suppliers
   virtual TAO_CEC_ConsumerControl*
       create_consumer_control (TAO_CEC_EventChannel*) = 0;
-#if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
-  virtual TAO_CEC_ConsumerControl*
-      create_consumer_control (TAO_CEC_TypedEventChannel*) = 0;
-#endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
   virtual void
       destroy_consumer_control (TAO_CEC_ConsumerControl*) = 0;
   virtual TAO_CEC_SupplierControl*
       create_supplier_control (TAO_CEC_EventChannel*) = 0;
-#if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
-  virtual TAO_CEC_SupplierControl*
-      create_supplier_control (TAO_CEC_TypedEventChannel*) = 0;
-#endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
   virtual void
       destroy_supplier_control (TAO_CEC_SupplierControl*) = 0;
 };
@@ -218,5 +160,5 @@ public:
 #include "CEC_Factory.i"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 #endif /* TAO_CEC_FACTORY_H */

@@ -20,7 +20,6 @@ IDL_SRC = da_testsC.cpp
 
 BASIC_TEST_FILES = 	da_testsC		\
 			data			\
-			analyzer		\
 			driver			\
 			test_dynany		\
 			test_dynarray		\

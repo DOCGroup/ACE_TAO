@@ -16,6 +16,11 @@ LDLIBS		+= -lm -L $(ACE_ROOT)/ace
 CXX		= g++
 CFLAGS		+= -melf -w
 
+# Test for template instantiation.
+#
+include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
+
+CCFLAGS		+= -melf $(TEMPLATES_FLAG)
 # -g option not supported for C++ on systems using the DWARF debugging format
 #DCFLAGS		+= -g
 DCCFLAGS	+= $(DCFLAGS)
@@ -31,10 +36,3 @@ RANLIB          = /bin/true
 SOFLAGS += $(CPPFLAGS) -melf -fPIC -G
 SOBUILD = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<
 PRELIB  = @true
-
-# Test for template instantiation, add to SOFLAGS if SONAME set, 
-# add -E to LDFLAGS if using GNU ld
-#
-include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
-
-CCFLAGS += -melf $(TEMPLATES_FLAG)

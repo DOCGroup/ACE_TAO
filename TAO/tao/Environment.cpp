@@ -214,3 +214,4 @@ CORBA::Environment::print_exception (const char *info,
 # pragma instantiate TAO_Pseudo_Out_T<CORBA::Environment, CORBA::Environment_var>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+

@@ -16,7 +16,7 @@
 
 #ifndef TAO_CEC_REACTIVE_CONSUMERCONTROL_H
 #define TAO_CEC_REACTIVE_CONSUMERCONTROL_H
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #include "CEC_ConsumerControl.h"
 #include "orbsvcs/ESF/ESF_Worker.h"
@@ -31,10 +31,6 @@
 class TAO_CEC_EventChannel;
 
 class TAO_CEC_Reactive_ConsumerControl;
-
-#if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
-class TAO_CEC_TypedEventChannel;
-#endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
 /**
  * @class TAO_CEC_ConsumerControl_Adapter
@@ -81,14 +77,6 @@ public:
                                     TAO_CEC_EventChannel *event_channel,
                                     CORBA::ORB_ptr orb);
 
-  /// Constructor for the typed ec.
-#if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
-  TAO_CEC_Reactive_ConsumerControl (const ACE_Time_Value &rate,
-                                    const ACE_Time_Value &timeout,
-                                    TAO_CEC_TypedEventChannel *typed_event_channel,
-                                    CORBA::ORB_ptr orb);
-#endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
-
   /// destructor...
   virtual ~TAO_CEC_Reactive_ConsumerControl (void);
 
@@ -124,11 +112,6 @@ private:
 
   /// The event channel
   TAO_CEC_EventChannel *event_channel_;
-
-  /// The typed event channel
-#if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
-  TAO_CEC_TypedEventChannel *typed_event_channel_;
-#endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
   /// The ORB
   CORBA::ORB_var orb_;
@@ -180,5 +163,5 @@ private:
 #include "CEC_Reactive_ConsumerControl.i"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 #endif /* TAO_CEC_CONSUMERCONTROL_H */

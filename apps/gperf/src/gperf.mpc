@@ -1,4 +1,4 @@
-project(gperf) : aceexe, core {
+project(gperf_exe) : aceexe, core {
   install = $(ACE_ROOT)/bin
   exename = gperf
   Source_Files {

@@ -279,7 +279,7 @@ module CosNaming
       
       
       Object resolve_str (in StringName n)
-        raises (NotFound, CannotProceed, InvalidName);
+        raises (NotFound, CannotProceed, InvalidName, AlreadyBound);
       //
       // This is similar to <resolve> as in the
       // CosNaming::NamingContext interface, except that it accepts

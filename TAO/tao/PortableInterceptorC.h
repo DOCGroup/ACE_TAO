@@ -31,20 +31,17 @@
 #ifndef _TAO_IDL_ORIG_PORTABLEINTERCEPTORC_H_
 #define _TAO_IDL_ORIG_PORTABLEINTERCEPTORC_H_
 
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 #include "PI_ForwardC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "Object.h"
-#include "Objref_VarOut_T.h"
 #include "DynamicC.h"
 #include "Messaging_SyncScopeC.h"
 #include "IOPC.h"
 #include "PolicyC.h"
-
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
@@ -74,31 +71,31 @@
 
 TAO_NAMESPACE  PortableInterceptor
 {
-
+  
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:576
 
 #if !defined (_PORTABLEINTERCEPTOR_INTERCEPTOR__ODDS_N_ENDS_CH_)
 #define _PORTABLEINTERCEPTOR_INTERCEPTOR__ODDS_N_ENDS_CH_
-
+  
   class Interceptor;
   typedef Interceptor *Interceptor_ptr;
   struct tao_Interceptor_life;
-
+  
   typedef
     TAO_Objref_Var_T<
         Interceptor,
         tao_Interceptor_life
       >
     Interceptor_var;
-
+  
   typedef
     TAO_Objref_Out_T<
         Interceptor,
         tao_Interceptor_life
       >
     Interceptor_out;
-
+  
   struct TAO_Export tao_Interceptor_life
   {
     static Interceptor_ptr tao_duplicate (Interceptor_ptr);
@@ -109,7 +106,7 @@ TAO_NAMESPACE  PortableInterceptor
         TAO_OutputCDR &
       );
   };
-
+  
   struct TAO_Export tao_Interceptor_cast
   {
     static Interceptor_ptr tao_narrow (
@@ -120,13 +117,13 @@ TAO_NAMESPACE  PortableInterceptor
   };
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:53
 
 #if !defined (_PORTABLEINTERCEPTOR_INTERCEPTOR_CH_)
 #define _PORTABLEINTERCEPTOR_INTERCEPTOR_CH_
-
+  
   class TAO_Export Interceptor
     : public virtual CORBA::Object
   {
@@ -134,81 +131,81 @@ TAO_NAMESPACE  PortableInterceptor
     typedef Interceptor_ptr _ptr_type;
     typedef Interceptor_var _var_type;
     static int _tao_class_id;
-
+    
     // The static operations.
     static Interceptor_ptr _duplicate (Interceptor_ptr obj);
-
+    
     static Interceptor_ptr _narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     static Interceptor_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     static Interceptor_ptr _nil (void)
       {
         return (Interceptor_ptr)0;
       }
-
+    
     static void _tao_any_destructor (void *);
-
+    
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual char * name (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual void destroy (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:210
-
+    
     virtual void *_tao_QueryInterface (ptrdiff_t type);
-
+    
     virtual const char* _interface_repository_id (void) const;
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-
+  
   protected:
     Interceptor (void);
     virtual ~Interceptor (void);
-
+  
   private:
     Interceptor (const Interceptor &);
     void operator= (const Interceptor &);
   };
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
-
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_Interceptor;
-
+  
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/exception_ch.cpp:51
 
 #if !defined (_PORTABLEINTERCEPTOR_FORWARDREQUEST_CH_)
 #define _PORTABLEINTERCEPTOR_FORWARDREQUEST_CH_
-
+  
   class TAO_Export ForwardRequest : public CORBA::UserException
   {
   public:
-
+    
     CORBA::Object_var forward;
     CORBA::Boolean permanent;
     ForwardRequest (void);
@@ -216,176 +213,176 @@ TAO_NAMESPACE  PortableInterceptor
     ~ForwardRequest (void);
 
     ForwardRequest &operator= (const ForwardRequest &);
-
+    
     static void _tao_any_destructor (void *);
-
+    
     static ForwardRequest *_downcast (CORBA::Exception *);
     static CORBA::Exception *_alloc (void);
 
     virtual CORBA::Exception *_tao_duplicate (void) const;
 
-    virtual void _raise (void) const;
+    virtual void _raise (void);
 
     virtual void _tao_encode (
         TAO_OutputCDR &
         ACE_ENV_ARG_DECL_NOT_USED
       ) const;
-
+    
     virtual void _tao_decode (
         TAO_InputCDR &
         ACE_ENV_ARG_DECL_NOT_USED
       );
-
+    
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/exception_ctor.cpp:66
-
+    
     ForwardRequest (
         const CORBA::Object_ptr  _tao_forward,
         CORBA::Boolean _tao_permanent
       );
-
+    
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/exception_ch.cpp:125
-
+    
     virtual CORBA::TypeCode_ptr _type (void) const;
   };
-
+  
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
-
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ForwardRequest;
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typedef/typedef_ch.cpp:343
-
+  
   typedef CORBA::Short ReplyStatus;
   typedef CORBA::Short_out ReplyStatus_out;
-
+  
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
-
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ReplyStatus;
-
+  
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
-
+  
   const PortableInterceptor::ReplyStatus SUCCESSFUL = 0;
-
+  
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
-
+  
   const PortableInterceptor::ReplyStatus SYSTEM_EXCEPTION = 1;
-
+  
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
-
+  
   const PortableInterceptor::ReplyStatus USER_EXCEPTION = 2;
-
+  
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
-
+  
   const PortableInterceptor::ReplyStatus LOCATION_FORWARD = 3;
-
+  
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
-
+  
   const PortableInterceptor::ReplyStatus LOCATION_FORWARD_PERMANENT = 4;
-
+  
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
-
+  
   const PortableInterceptor::ReplyStatus TRANSPORT_RETRY = 5;
-
+  
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
-
+  
   const PortableInterceptor::ReplyStatus UNKNOWN = 6;
-
+  
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typedef/typedef_ch.cpp:343
-
+  
   typedef CORBA::ULong SlotId;
   typedef CORBA::ULong_out SlotId_out;
-
+  
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
-
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_SlotId;
-
+  
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/exception_ch.cpp:51
 
 #if !defined (_PORTABLEINTERCEPTOR_INVALIDSLOT_CH_)
 #define _PORTABLEINTERCEPTOR_INVALIDSLOT_CH_
-
+  
   class TAO_Export InvalidSlot : public CORBA::UserException
   {
   public:
-
+    
     InvalidSlot (void);
     InvalidSlot (const InvalidSlot &);
     ~InvalidSlot (void);
 
     InvalidSlot &operator= (const InvalidSlot &);
-
+    
     static void _tao_any_destructor (void *);
-
+    
     static InvalidSlot *_downcast (CORBA::Exception *);
     static CORBA::Exception *_alloc (void);
 
     virtual CORBA::Exception *_tao_duplicate (void) const;
 
-    virtual void _raise (void) const;
+    virtual void _raise (void);
 
     virtual void _tao_encode (
         TAO_OutputCDR &
         ACE_ENV_ARG_DECL_NOT_USED
       ) const;
-
+    
     virtual void _tao_decode (
         TAO_InputCDR &
         ACE_ENV_ARG_DECL_NOT_USED
       );
-
+    
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/exception_ch.cpp:125
-
+    
     virtual CORBA::TypeCode_ptr _type (void) const;
   };
-
+  
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
-
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_InvalidSlot;
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:576
 
 #if !defined (_PORTABLEINTERCEPTOR_CURRENT__ODDS_N_ENDS_CH_)
 #define _PORTABLEINTERCEPTOR_CURRENT__ODDS_N_ENDS_CH_
-
+  
   class Current;
   typedef Current *Current_ptr;
   struct tao_Current_life;
-
+  
   typedef
     TAO_Objref_Var_T<
         Current,
         tao_Current_life
       >
     Current_var;
-
+  
   typedef
     TAO_Objref_Out_T<
         Current,
         tao_Current_life
       >
     Current_out;
-
+  
   struct TAO_Export tao_Current_life
   {
     static Current_ptr tao_duplicate (Current_ptr);
@@ -396,7 +393,7 @@ TAO_NAMESPACE  PortableInterceptor
         TAO_OutputCDR &
       );
   };
-
+  
   struct TAO_Export tao_Current_cast
   {
     static Current_ptr tao_narrow (
@@ -407,13 +404,13 @@ TAO_NAMESPACE  PortableInterceptor
   };
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:53
 
 #if !defined (_PORTABLEINTERCEPTOR_CURRENT_CH_)
 #define _PORTABLEINTERCEPTOR_CURRENT_CH_
-
+  
   class TAO_Export Current
     : public virtual CORBA::Current
   {
@@ -421,30 +418,30 @@ TAO_NAMESPACE  PortableInterceptor
     typedef Current_ptr _ptr_type;
     typedef Current_var _var_type;
     static int _tao_class_id;
-
+    
     // The static operations.
     static Current_ptr _duplicate (Current_ptr obj);
-
+    
     static Current_ptr _narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     static Current_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     static Current_ptr _nil (void)
       {
         return (Current_ptr)0;
       }
-
+    
     static void _tao_any_destructor (void *);
-
+    
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual CORBA::Any * get_slot (
         PortableInterceptor::SlotId id
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -453,10 +450,10 @@ TAO_NAMESPACE  PortableInterceptor
         CORBA::SystemException
         , PortableInterceptor::InvalidSlot
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual void set_slot (
         PortableInterceptor::SlotId id,
         const CORBA::Any & data
@@ -466,55 +463,55 @@ TAO_NAMESPACE  PortableInterceptor
         CORBA::SystemException
         , PortableInterceptor::InvalidSlot
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:210
-
+    
     virtual void *_tao_QueryInterface (ptrdiff_t type);
-
+    
     virtual const char* _interface_repository_id (void) const;
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-
+  
   protected:
     Current (void);
     virtual ~Current (void);
-
+  
   private:
     Current (const Current &);
     void operator= (const Current &);
   };
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
-
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_Current;
-
+  
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:576
 
 #if !defined (_PORTABLEINTERCEPTOR_REQUESTINFO__ODDS_N_ENDS_CH_)
 #define _PORTABLEINTERCEPTOR_REQUESTINFO__ODDS_N_ENDS_CH_
-
+  
   class RequestInfo;
   typedef RequestInfo *RequestInfo_ptr;
   struct tao_RequestInfo_life;
-
+  
   typedef
     TAO_Objref_Var_T<
         RequestInfo,
         tao_RequestInfo_life
       >
     RequestInfo_var;
-
+  
   typedef
     TAO_Objref_Out_T<
         RequestInfo,
         tao_RequestInfo_life
       >
     RequestInfo_out;
-
+  
   struct TAO_Export tao_RequestInfo_life
   {
     static RequestInfo_ptr tao_duplicate (RequestInfo_ptr);
@@ -525,7 +522,7 @@ TAO_NAMESPACE  PortableInterceptor
         TAO_OutputCDR &
       );
   };
-
+  
   struct TAO_Export tao_RequestInfo_cast
   {
     static RequestInfo_ptr tao_narrow (
@@ -536,13 +533,13 @@ TAO_NAMESPACE  PortableInterceptor
   };
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:53
 
 #if !defined (_PORTABLEINTERCEPTOR_REQUESTINFO_CH_)
 #define _PORTABLEINTERCEPTOR_REQUESTINFO_CH_
-
+  
   class TAO_Export RequestInfo
     : public virtual CORBA::Object
   {
@@ -550,140 +547,140 @@ TAO_NAMESPACE  PortableInterceptor
     typedef RequestInfo_ptr _ptr_type;
     typedef RequestInfo_var _var_type;
     static int _tao_class_id;
-
+    
     // The static operations.
     static RequestInfo_ptr _duplicate (RequestInfo_ptr obj);
-
+    
     static RequestInfo_ptr _narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     static RequestInfo_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     static RequestInfo_ptr _nil (void)
       {
         return (RequestInfo_ptr)0;
       }
-
+    
     static void _tao_any_destructor (void *);
-
+    
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual CORBA::ULong request_id (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual char * operation (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual ::Dynamic::ParameterList * arguments (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual ::Dynamic::ExceptionList * exceptions (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual ::Dynamic::ContextList * contexts (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual ::Dynamic::RequestContext * operation_context (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual CORBA::Any * result (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual CORBA::Boolean response_expected (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual Messaging::SyncScope sync_scope (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual PortableInterceptor::ReplyStatus reply_status (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual CORBA::Object_ptr forward_reference (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual CORBA::Any * get_slot (
         PortableInterceptor::SlotId id
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -692,10 +689,10 @@ TAO_NAMESPACE  PortableInterceptor
         CORBA::SystemException
         , PortableInterceptor::InvalidSlot
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual ::IOP::ServiceContext * get_request_service_context (
         IOP::ServiceId id
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -703,10 +700,10 @@ TAO_NAMESPACE  PortableInterceptor
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual ::IOP::ServiceContext * get_reply_service_context (
         IOP::ServiceId id
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -714,55 +711,55 @@ TAO_NAMESPACE  PortableInterceptor
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:210
-
+    
     virtual void *_tao_QueryInterface (ptrdiff_t type);
-
+    
     virtual const char* _interface_repository_id (void) const;
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-
+  
   protected:
     RequestInfo (void);
     virtual ~RequestInfo (void);
-
+  
   private:
     RequestInfo (const RequestInfo &);
     void operator= (const RequestInfo &);
   };
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
-
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_RequestInfo;
-
+  
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:576
 
 #if !defined (_PORTABLEINTERCEPTOR_CLIENTREQUESTINFO__ODDS_N_ENDS_CH_)
 #define _PORTABLEINTERCEPTOR_CLIENTREQUESTINFO__ODDS_N_ENDS_CH_
-
+  
   class ClientRequestInfo;
   typedef ClientRequestInfo *ClientRequestInfo_ptr;
   struct tao_ClientRequestInfo_life;
-
+  
   typedef
     TAO_Objref_Var_T<
         ClientRequestInfo,
         tao_ClientRequestInfo_life
       >
     ClientRequestInfo_var;
-
+  
   typedef
     TAO_Objref_Out_T<
         ClientRequestInfo,
         tao_ClientRequestInfo_life
       >
     ClientRequestInfo_out;
-
+  
   struct TAO_Export tao_ClientRequestInfo_life
   {
     static ClientRequestInfo_ptr tao_duplicate (ClientRequestInfo_ptr);
@@ -773,7 +770,7 @@ TAO_NAMESPACE  PortableInterceptor
         TAO_OutputCDR &
       );
   };
-
+  
   struct TAO_Export tao_ClientRequestInfo_cast
   {
     static ClientRequestInfo_ptr tao_narrow (
@@ -784,13 +781,13 @@ TAO_NAMESPACE  PortableInterceptor
   };
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:53
 
 #if !defined (_PORTABLEINTERCEPTOR_CLIENTREQUESTINFO_CH_)
 #define _PORTABLEINTERCEPTOR_CLIENTREQUESTINFO_CH_
-
+  
   class TAO_Export ClientRequestInfo
     : public virtual PortableInterceptor::RequestInfo
   {
@@ -798,80 +795,80 @@ TAO_NAMESPACE  PortableInterceptor
     typedef ClientRequestInfo_ptr _ptr_type;
     typedef ClientRequestInfo_var _var_type;
     static int _tao_class_id;
-
+    
     // The static operations.
     static ClientRequestInfo_ptr _duplicate (ClientRequestInfo_ptr obj);
-
+    
     static ClientRequestInfo_ptr _narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     static ClientRequestInfo_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     static ClientRequestInfo_ptr _nil (void)
       {
         return (ClientRequestInfo_ptr)0;
       }
-
+    
     static void _tao_any_destructor (void *);
-
+    
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual CORBA::Object_ptr target (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual CORBA::Object_ptr effective_target (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual ::IOP::TaggedProfile * effective_profile (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual CORBA::Any * received_exception (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual char * received_exception_id (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual ::IOP::TaggedComponent * get_effective_component (
         IOP::ComponentId id
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -879,10 +876,10 @@ TAO_NAMESPACE  PortableInterceptor
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual ::IOP::TaggedComponentSeq * get_effective_components (
         IOP::ComponentId id
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -890,10 +887,10 @@ TAO_NAMESPACE  PortableInterceptor
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual ::CORBA::Policy_ptr get_request_policy (
         CORBA::PolicyType type
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -901,10 +898,10 @@ TAO_NAMESPACE  PortableInterceptor
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual void add_request_service_context (
         const IOP::ServiceContext & service_context,
         CORBA::Boolean replace
@@ -913,55 +910,55 @@ TAO_NAMESPACE  PortableInterceptor
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:210
-
+    
     virtual void *_tao_QueryInterface (ptrdiff_t type);
-
+    
     virtual const char* _interface_repository_id (void) const;
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-
+  
   protected:
     ClientRequestInfo (void);
     virtual ~ClientRequestInfo (void);
-
+  
   private:
     ClientRequestInfo (const ClientRequestInfo &);
     void operator= (const ClientRequestInfo &);
   };
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
-
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ClientRequestInfo;
-
+  
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:576
 
 #if !defined (_PORTABLEINTERCEPTOR_SERVERREQUESTINFO__ODDS_N_ENDS_CH_)
 #define _PORTABLEINTERCEPTOR_SERVERREQUESTINFO__ODDS_N_ENDS_CH_
-
+  
   class ServerRequestInfo;
   typedef ServerRequestInfo *ServerRequestInfo_ptr;
   struct tao_ServerRequestInfo_life;
-
+  
   typedef
     TAO_Objref_Var_T<
         ServerRequestInfo,
         tao_ServerRequestInfo_life
       >
     ServerRequestInfo_var;
-
+  
   typedef
     TAO_Objref_Out_T<
         ServerRequestInfo,
         tao_ServerRequestInfo_life
       >
     ServerRequestInfo_out;
-
+  
   struct TAO_Export tao_ServerRequestInfo_life
   {
     static ServerRequestInfo_ptr tao_duplicate (ServerRequestInfo_ptr);
@@ -972,7 +969,7 @@ TAO_NAMESPACE  PortableInterceptor
         TAO_OutputCDR &
       );
   };
-
+  
   struct TAO_Export tao_ServerRequestInfo_cast
   {
     static ServerRequestInfo_ptr tao_narrow (
@@ -983,13 +980,13 @@ TAO_NAMESPACE  PortableInterceptor
   };
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:53
 
 #if !defined (_PORTABLEINTERCEPTOR_SERVERREQUESTINFO_CH_)
 #define _PORTABLEINTERCEPTOR_SERVERREQUESTINFO_CH_
-
+  
   class TAO_Export ServerRequestInfo
     : public virtual PortableInterceptor::RequestInfo
   {
@@ -997,100 +994,100 @@ TAO_NAMESPACE  PortableInterceptor
     typedef ServerRequestInfo_ptr _ptr_type;
     typedef ServerRequestInfo_var _var_type;
     static int _tao_class_id;
-
+    
     // The static operations.
     static ServerRequestInfo_ptr _duplicate (ServerRequestInfo_ptr obj);
-
+    
     static ServerRequestInfo_ptr _narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     static ServerRequestInfo_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     static ServerRequestInfo_ptr _nil (void)
       {
         return (ServerRequestInfo_ptr)0;
       }
-
+    
     static void _tao_any_destructor (void *);
-
+    
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual CORBA::Any * sending_exception (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual char * server_id (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual char * orb_id (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual ::PortableInterceptor::AdapterName * adapter_name (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual ::CORBA::OctetSeq * object_id (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual ::CORBA::OctetSeq * adapter_id (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual char * target_most_derived_interface (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual ::CORBA::Policy_ptr get_server_policy (
         CORBA::PolicyType type
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -1098,10 +1095,10 @@ TAO_NAMESPACE  PortableInterceptor
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual void set_slot (
         PortableInterceptor::SlotId id,
         const CORBA::Any & data
@@ -1111,10 +1108,10 @@ TAO_NAMESPACE  PortableInterceptor
         CORBA::SystemException
         , PortableInterceptor::InvalidSlot
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual CORBA::Boolean target_is_a (
         const char * id
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -1122,10 +1119,10 @@ TAO_NAMESPACE  PortableInterceptor
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual void add_reply_service_context (
         const IOP::ServiceContext & service_context,
         CORBA::Boolean replace
@@ -1134,55 +1131,55 @@ TAO_NAMESPACE  PortableInterceptor
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:210
-
+    
     virtual void *_tao_QueryInterface (ptrdiff_t type);
-
+    
     virtual const char* _interface_repository_id (void) const;
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-
+  
   protected:
     ServerRequestInfo (void);
     virtual ~ServerRequestInfo (void);
-
+  
   private:
     ServerRequestInfo (const ServerRequestInfo &);
     void operator= (const ServerRequestInfo &);
   };
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
-
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ServerRequestInfo;
-
+  
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:576
 
 #if !defined (_PORTABLEINTERCEPTOR_CLIENTREQUESTINTERCEPTOR__ODDS_N_ENDS_CH_)
 #define _PORTABLEINTERCEPTOR_CLIENTREQUESTINTERCEPTOR__ODDS_N_ENDS_CH_
-
+  
   class ClientRequestInterceptor;
   typedef ClientRequestInterceptor *ClientRequestInterceptor_ptr;
   struct tao_ClientRequestInterceptor_life;
-
+  
   typedef
     TAO_Objref_Var_T<
         ClientRequestInterceptor,
         tao_ClientRequestInterceptor_life
       >
     ClientRequestInterceptor_var;
-
+  
   typedef
     TAO_Objref_Out_T<
         ClientRequestInterceptor,
         tao_ClientRequestInterceptor_life
       >
     ClientRequestInterceptor_out;
-
+  
   struct TAO_Export tao_ClientRequestInterceptor_life
   {
     static ClientRequestInterceptor_ptr tao_duplicate (ClientRequestInterceptor_ptr);
@@ -1193,7 +1190,7 @@ TAO_NAMESPACE  PortableInterceptor
         TAO_OutputCDR &
       );
   };
-
+  
   struct TAO_Export tao_ClientRequestInterceptor_cast
   {
     static ClientRequestInterceptor_ptr tao_narrow (
@@ -1204,13 +1201,13 @@ TAO_NAMESPACE  PortableInterceptor
   };
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:53
 
 #if !defined (_PORTABLEINTERCEPTOR_CLIENTREQUESTINTERCEPTOR_CH_)
 #define _PORTABLEINTERCEPTOR_CLIENTREQUESTINTERCEPTOR_CH_
-
+  
   class TAO_Export ClientRequestInterceptor
     : public virtual PortableInterceptor::Interceptor
   {
@@ -1218,30 +1215,30 @@ TAO_NAMESPACE  PortableInterceptor
     typedef ClientRequestInterceptor_ptr _ptr_type;
     typedef ClientRequestInterceptor_var _var_type;
     static int _tao_class_id;
-
+    
     // The static operations.
     static ClientRequestInterceptor_ptr _duplicate (ClientRequestInterceptor_ptr obj);
-
+    
     static ClientRequestInterceptor_ptr _narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     static ClientRequestInterceptor_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     static ClientRequestInterceptor_ptr _nil (void)
       {
         return (ClientRequestInterceptor_ptr)0;
       }
-
+    
     static void _tao_any_destructor (void *);
-
+    
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual void send_request (
         PortableInterceptor::ClientRequestInfo_ptr ri
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -1250,10 +1247,10 @@ TAO_NAMESPACE  PortableInterceptor
         CORBA::SystemException
         , PortableInterceptor::ForwardRequest
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual void send_poll (
         PortableInterceptor::ClientRequestInfo_ptr ri
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -1261,10 +1258,10 @@ TAO_NAMESPACE  PortableInterceptor
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual void receive_reply (
         PortableInterceptor::ClientRequestInfo_ptr ri
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -1272,10 +1269,10 @@ TAO_NAMESPACE  PortableInterceptor
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual void receive_exception (
         PortableInterceptor::ClientRequestInfo_ptr ri
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -1284,10 +1281,10 @@ TAO_NAMESPACE  PortableInterceptor
         CORBA::SystemException
         , PortableInterceptor::ForwardRequest
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual void receive_other (
         PortableInterceptor::ClientRequestInfo_ptr ri
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -1296,55 +1293,55 @@ TAO_NAMESPACE  PortableInterceptor
         CORBA::SystemException
         , PortableInterceptor::ForwardRequest
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:210
-
+    
     virtual void *_tao_QueryInterface (ptrdiff_t type);
-
+    
     virtual const char* _interface_repository_id (void) const;
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-
+  
   protected:
     ClientRequestInterceptor (void);
     virtual ~ClientRequestInterceptor (void);
-
+  
   private:
     ClientRequestInterceptor (const ClientRequestInterceptor &);
     void operator= (const ClientRequestInterceptor &);
   };
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
-
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ClientRequestInterceptor;
-
+  
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:576
 
 #if !defined (_PORTABLEINTERCEPTOR_SERVERREQUESTINTERCEPTOR__ODDS_N_ENDS_CH_)
 #define _PORTABLEINTERCEPTOR_SERVERREQUESTINTERCEPTOR__ODDS_N_ENDS_CH_
-
+  
   class ServerRequestInterceptor;
   typedef ServerRequestInterceptor *ServerRequestInterceptor_ptr;
   struct tao_ServerRequestInterceptor_life;
-
+  
   typedef
     TAO_Objref_Var_T<
         ServerRequestInterceptor,
         tao_ServerRequestInterceptor_life
       >
     ServerRequestInterceptor_var;
-
+  
   typedef
     TAO_Objref_Out_T<
         ServerRequestInterceptor,
         tao_ServerRequestInterceptor_life
       >
     ServerRequestInterceptor_out;
-
+  
   struct TAO_Export tao_ServerRequestInterceptor_life
   {
     static ServerRequestInterceptor_ptr tao_duplicate (ServerRequestInterceptor_ptr);
@@ -1355,7 +1352,7 @@ TAO_NAMESPACE  PortableInterceptor
         TAO_OutputCDR &
       );
   };
-
+  
   struct TAO_Export tao_ServerRequestInterceptor_cast
   {
     static ServerRequestInterceptor_ptr tao_narrow (
@@ -1366,13 +1363,13 @@ TAO_NAMESPACE  PortableInterceptor
   };
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:53
 
 #if !defined (_PORTABLEINTERCEPTOR_SERVERREQUESTINTERCEPTOR_CH_)
 #define _PORTABLEINTERCEPTOR_SERVERREQUESTINTERCEPTOR_CH_
-
+  
   class TAO_Export ServerRequestInterceptor
     : public virtual PortableInterceptor::Interceptor
   {
@@ -1380,30 +1377,30 @@ TAO_NAMESPACE  PortableInterceptor
     typedef ServerRequestInterceptor_ptr _ptr_type;
     typedef ServerRequestInterceptor_var _var_type;
     static int _tao_class_id;
-
+    
     // The static operations.
     static ServerRequestInterceptor_ptr _duplicate (ServerRequestInterceptor_ptr obj);
-
+    
     static ServerRequestInterceptor_ptr _narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     static ServerRequestInterceptor_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     static ServerRequestInterceptor_ptr _nil (void)
       {
         return (ServerRequestInterceptor_ptr)0;
       }
-
+    
     static void _tao_any_destructor (void *);
-
+    
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual void receive_request_service_contexts (
         PortableInterceptor::ServerRequestInfo_ptr ri
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -1412,10 +1409,10 @@ TAO_NAMESPACE  PortableInterceptor
         CORBA::SystemException
         , PortableInterceptor::ForwardRequest
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual void receive_request (
         PortableInterceptor::ServerRequestInfo_ptr ri
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -1424,10 +1421,10 @@ TAO_NAMESPACE  PortableInterceptor
         CORBA::SystemException
         , PortableInterceptor::ForwardRequest
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual void send_reply (
         PortableInterceptor::ServerRequestInfo_ptr ri
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -1435,10 +1432,10 @@ TAO_NAMESPACE  PortableInterceptor
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual void send_exception (
         PortableInterceptor::ServerRequestInfo_ptr ri
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -1447,10 +1444,10 @@ TAO_NAMESPACE  PortableInterceptor
         CORBA::SystemException
         , PortableInterceptor::ForwardRequest
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual void send_other (
         PortableInterceptor::ServerRequestInfo_ptr ri
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -1459,55 +1456,55 @@ TAO_NAMESPACE  PortableInterceptor
         CORBA::SystemException
         , PortableInterceptor::ForwardRequest
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:210
-
+    
     virtual void *_tao_QueryInterface (ptrdiff_t type);
-
+    
     virtual const char* _interface_repository_id (void) const;
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-
+  
   protected:
     ServerRequestInterceptor (void);
     virtual ~ServerRequestInterceptor (void);
-
+  
   private:
     ServerRequestInterceptor (const ServerRequestInterceptor &);
     void operator= (const ServerRequestInterceptor &);
   };
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
-
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ServerRequestInterceptor;
-
+  
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:576
 
 #if !defined (_PORTABLEINTERCEPTOR_POLICYFACTORY__ODDS_N_ENDS_CH_)
 #define _PORTABLEINTERCEPTOR_POLICYFACTORY__ODDS_N_ENDS_CH_
-
+  
   class PolicyFactory;
   typedef PolicyFactory *PolicyFactory_ptr;
   struct tao_PolicyFactory_life;
-
+  
   typedef
     TAO_Objref_Var_T<
         PolicyFactory,
         tao_PolicyFactory_life
       >
     PolicyFactory_var;
-
+  
   typedef
     TAO_Objref_Out_T<
         PolicyFactory,
         tao_PolicyFactory_life
       >
     PolicyFactory_out;
-
+  
   struct TAO_Export tao_PolicyFactory_life
   {
     static PolicyFactory_ptr tao_duplicate (PolicyFactory_ptr);
@@ -1518,7 +1515,7 @@ TAO_NAMESPACE  PortableInterceptor
         TAO_OutputCDR &
       );
   };
-
+  
   struct TAO_Export tao_PolicyFactory_cast
   {
     static PolicyFactory_ptr tao_narrow (
@@ -1529,13 +1526,13 @@ TAO_NAMESPACE  PortableInterceptor
   };
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:53
 
 #if !defined (_PORTABLEINTERCEPTOR_POLICYFACTORY_CH_)
 #define _PORTABLEINTERCEPTOR_POLICYFACTORY_CH_
-
+  
   class TAO_Export PolicyFactory
     : public virtual CORBA::Object
   {
@@ -1543,30 +1540,30 @@ TAO_NAMESPACE  PortableInterceptor
     typedef PolicyFactory_ptr _ptr_type;
     typedef PolicyFactory_var _var_type;
     static int _tao_class_id;
-
+    
     // The static operations.
     static PolicyFactory_ptr _duplicate (PolicyFactory_ptr obj);
-
+    
     static PolicyFactory_ptr _narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     static PolicyFactory_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     static PolicyFactory_ptr _nil (void)
       {
         return (PolicyFactory_ptr)0;
       }
-
+    
     static void _tao_any_destructor (void *);
-
+    
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual ::CORBA::Policy_ptr create_policy (
         CORBA::PolicyType type,
         const CORBA::Any & value
@@ -1576,9 +1573,9 @@ TAO_NAMESPACE  PortableInterceptor
         CORBA::SystemException
         , CORBA::PolicyError
       )) = 0;
-
+    
     // Hand-crafted addition.
-
+    
     virtual ::CORBA::Policy_ptr _create_policy (
         CORBA::PolicyType type
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -1590,26 +1587,26 @@ TAO_NAMESPACE  PortableInterceptor
 
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:210
-
+    
     virtual void *_tao_QueryInterface (ptrdiff_t type);
-
+    
     virtual const char* _interface_repository_id (void) const;
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-
+  
   protected:
     PolicyFactory (void);
     virtual ~PolicyFactory (void);
-
+  
   private:
     PolicyFactory (const PolicyFactory &);
     void operator= (const PolicyFactory &);
   };
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
-
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_PolicyFactory;
 
   // The #if defined guard and the rest of the declarations and typedefs
@@ -1623,25 +1620,25 @@ TAO_NAMESPACE  PortableInterceptor
 
 #if !defined (_PORTABLEINTERCEPTOR_ORBINITINFO__ODDS_N_ENDS_CH_)
 #define _PORTABLEINTERCEPTOR_ORBINITINFO__ODDS_N_ENDS_CH_
-
+  
   class ORBInitInfo;
   typedef ORBInitInfo *ORBInitInfo_ptr;
   struct tao_ORBInitInfo_life;
-
+  
   typedef
     TAO_Objref_Var_T<
         ORBInitInfo,
         tao_ORBInitInfo_life
       >
     ORBInitInfo_var;
-
+  
   typedef
     TAO_Objref_Out_T<
         ORBInitInfo,
         tao_ORBInitInfo_life
       >
     ORBInitInfo_out;
-
+  
   struct TAO_Export tao_ORBInitInfo_life
   {
     static ORBInitInfo_ptr tao_duplicate (ORBInitInfo_ptr);
@@ -1652,7 +1649,7 @@ TAO_NAMESPACE  PortableInterceptor
         TAO_OutputCDR &
       );
   };
-
+  
   struct TAO_Export tao_ORBInitInfo_cast
   {
     static ORBInitInfo_ptr tao_narrow (
@@ -1663,13 +1660,13 @@ TAO_NAMESPACE  PortableInterceptor
   };
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:53
 
 #if !defined (_PORTABLEINTERCEPTOR_ORBINITINFO_CH_)
 #define _PORTABLEINTERCEPTOR_ORBINITINFO_CH_
-
+  
   class TAO_Export ORBInitInfo
     : public virtual CORBA::Object
   {
@@ -1677,176 +1674,176 @@ TAO_NAMESPACE  PortableInterceptor
     typedef ORBInitInfo_ptr _ptr_type;
     typedef ORBInitInfo_var _var_type;
     static int _tao_class_id;
-
+    
     // The static operations.
     static ORBInitInfo_ptr _duplicate (ORBInitInfo_ptr obj);
-
+    
     static ORBInitInfo_ptr _narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     static ORBInitInfo_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     static ORBInitInfo_ptr _nil (void)
       {
         return (ORBInitInfo_ptr)0;
       }
-
+    
     static void _tao_any_destructor (void *);
-
+    
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typedef/typedef_ch.cpp:377
-
+    
     typedef char * ObjectId;
     typedef CORBA::String_var ObjectId_var;
     typedef CORBA::String_out ObjectId_out;
-
+    
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
-
+    
     static ::CORBA::TypeCode_ptr _tc_ObjectId;
-
+    
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/exception_ch.cpp:51
 
 #if !defined (_PORTABLEINTERCEPTOR_ORBINITINFO_DUPLICATENAME_CH_)
 #define _PORTABLEINTERCEPTOR_ORBINITINFO_DUPLICATENAME_CH_
-
+    
     class TAO_Export DuplicateName : public CORBA::UserException
     {
     public:
-
+      
       TAO_String_Manager name;
       DuplicateName (void);
       DuplicateName (const DuplicateName &);
       ~DuplicateName (void);
 
       DuplicateName &operator= (const DuplicateName &);
-
+      
       static void _tao_any_destructor (void *);
-
+      
       static DuplicateName *_downcast (CORBA::Exception *);
       static CORBA::Exception *_alloc (void);
 
       virtual CORBA::Exception *_tao_duplicate (void) const;
 
-      virtual void _raise (void) const;
+      virtual void _raise (void);
 
       virtual void _tao_encode (
           TAO_OutputCDR &
           ACE_ENV_ARG_DECL_NOT_USED
         ) const;
-
+      
       virtual void _tao_decode (
           TAO_InputCDR &
           ACE_ENV_ARG_DECL_NOT_USED
         );
-
+      
       // TAO_IDL - Generated from
       // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/exception_ctor.cpp:66
-
+      
       DuplicateName (
           const char * _tao_name
         );
-
+      
       // TAO_IDL - Generated from
       // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/exception_ch.cpp:125
-
+      
       virtual CORBA::TypeCode_ptr _type (void) const;
     };
-
+    
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
-
+    
     static ::CORBA::TypeCode_ptr _tc_DuplicateName;
 
 #endif /* end #if !defined */
-
+    
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/exception_ch.cpp:51
 
 #if !defined (_PORTABLEINTERCEPTOR_ORBINITINFO_INVALIDNAME_CH_)
 #define _PORTABLEINTERCEPTOR_ORBINITINFO_INVALIDNAME_CH_
-
+    
     class TAO_Export InvalidName : public CORBA::UserException
     {
     public:
-
+      
       InvalidName (void);
       InvalidName (const InvalidName &);
       ~InvalidName (void);
 
       InvalidName &operator= (const InvalidName &);
-
+      
       static void _tao_any_destructor (void *);
-
+      
       static InvalidName *_downcast (CORBA::Exception *);
       static CORBA::Exception *_alloc (void);
 
       virtual CORBA::Exception *_tao_duplicate (void) const;
 
-      virtual void _raise (void) const;
+      virtual void _raise (void);
 
       virtual void _tao_encode (
           TAO_OutputCDR &
           ACE_ENV_ARG_DECL_NOT_USED
         ) const;
-
+      
       virtual void _tao_decode (
           TAO_InputCDR &
           ACE_ENV_ARG_DECL_NOT_USED
         );
-
+      
       // TAO_IDL - Generated from
       // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/exception_ch.cpp:125
-
+      
       virtual CORBA::TypeCode_ptr _type (void) const;
     };
-
+    
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
-
+    
     static ::CORBA::TypeCode_ptr _tc_InvalidName;
 
 #endif /* end #if !defined */
-
+    
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual ::CORBA::StringSeq * arguments (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual char * orb_id (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual ::IOP::CodecFactory_ptr codec_factory (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual void register_initial_reference (
         const char * id,
         CORBA::Object_ptr obj
@@ -1856,10 +1853,10 @@ TAO_NAMESPACE  PortableInterceptor
         CORBA::SystemException
         , PortableInterceptor::ORBInitInfo::InvalidName
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual CORBA::Object_ptr resolve_initial_references (
         const char * id
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -1868,10 +1865,10 @@ TAO_NAMESPACE  PortableInterceptor
         CORBA::SystemException
         , PortableInterceptor::ORBInitInfo::InvalidName
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual void add_client_request_interceptor (
         PortableInterceptor::ClientRequestInterceptor_ptr interceptor
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -1880,10 +1877,10 @@ TAO_NAMESPACE  PortableInterceptor
         CORBA::SystemException
         , PortableInterceptor::ORBInitInfo::DuplicateName
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual void add_server_request_interceptor (
         PortableInterceptor::ServerRequestInterceptor_ptr interceptor
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -1892,10 +1889,10 @@ TAO_NAMESPACE  PortableInterceptor
         CORBA::SystemException
         , PortableInterceptor::ORBInitInfo::DuplicateName
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual void add_ior_interceptor (
         PortableInterceptor::IORInterceptor_ptr interceptor
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -1904,20 +1901,20 @@ TAO_NAMESPACE  PortableInterceptor
         CORBA::SystemException
         , PortableInterceptor::ORBInitInfo::DuplicateName
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual PortableInterceptor::SlotId allocate_slot_id (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual void register_policy_factory (
         CORBA::PolicyType type,
         PortableInterceptor::PolicyFactory_ptr policy_factory
@@ -1926,55 +1923,55 @@ TAO_NAMESPACE  PortableInterceptor
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:210
-
+    
     virtual void *_tao_QueryInterface (ptrdiff_t type);
-
+    
     virtual const char* _interface_repository_id (void) const;
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-
+  
   protected:
     ORBInitInfo (void);
     virtual ~ORBInitInfo (void);
-
+  
   private:
     ORBInitInfo (const ORBInitInfo &);
     void operator= (const ORBInitInfo &);
   };
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
-
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ORBInitInfo;
-
+  
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:576
 
 #if !defined (_PORTABLEINTERCEPTOR_ORBINITIALIZER__ODDS_N_ENDS_CH_)
 #define _PORTABLEINTERCEPTOR_ORBINITIALIZER__ODDS_N_ENDS_CH_
-
+  
   class ORBInitializer;
   typedef ORBInitializer *ORBInitializer_ptr;
   struct tao_ORBInitializer_life;
-
+  
   typedef
     TAO_Objref_Var_T<
         ORBInitializer,
         tao_ORBInitializer_life
       >
     ORBInitializer_var;
-
+  
   typedef
     TAO_Objref_Out_T<
         ORBInitializer,
         tao_ORBInitializer_life
       >
     ORBInitializer_out;
-
+  
   struct TAO_Export tao_ORBInitializer_life
   {
     static ORBInitializer_ptr tao_duplicate (ORBInitializer_ptr);
@@ -1985,7 +1982,7 @@ TAO_NAMESPACE  PortableInterceptor
         TAO_OutputCDR &
       );
   };
-
+  
   struct TAO_Export tao_ORBInitializer_cast
   {
     static ORBInitializer_ptr tao_narrow (
@@ -1996,13 +1993,13 @@ TAO_NAMESPACE  PortableInterceptor
   };
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:53
 
 #if !defined (_PORTABLEINTERCEPTOR_ORBINITIALIZER_CH_)
 #define _PORTABLEINTERCEPTOR_ORBINITIALIZER_CH_
-
+  
   class TAO_Export ORBInitializer
     : public virtual CORBA::Object
   {
@@ -2010,30 +2007,30 @@ TAO_NAMESPACE  PortableInterceptor
     typedef ORBInitializer_ptr _ptr_type;
     typedef ORBInitializer_var _var_type;
     static int _tao_class_id;
-
+    
     // The static operations.
     static ORBInitializer_ptr _duplicate (ORBInitializer_ptr obj);
-
+    
     static ORBInitializer_ptr _narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     static ORBInitializer_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     static ORBInitializer_ptr _nil (void)
       {
         return (ORBInitializer_ptr)0;
       }
-
+    
     static void _tao_any_destructor (void *);
-
+    
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual void pre_init (
         PortableInterceptor::ORBInitInfo_ptr info
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -2041,10 +2038,10 @@ TAO_NAMESPACE  PortableInterceptor
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
-
+    
     virtual void post_init (
         PortableInterceptor::ORBInitInfo_ptr info
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -2052,32 +2049,32 @@ TAO_NAMESPACE  PortableInterceptor
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:210
-
+    
     virtual void *_tao_QueryInterface (ptrdiff_t type);
-
+    
     virtual const char* _interface_repository_id (void) const;
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-
+  
   protected:
     ORBInitializer (void);
     virtual ~ORBInitializer (void);
-
+  
   private:
     ORBInitializer (const ORBInitializer &);
     void operator= (const ORBInitializer &);
   };
 
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
-
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ORBInitializer;
 
-  /// Hand-crafted addition.
+  /// Hand-crafted addition.   
   /// Register an ORBInitializer with the global ORBInitializer
   /// table.
   TAO_NAMESPACE_STORAGE_CLASS void register_orb_initializer (
@@ -2244,5 +2241,6 @@ TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, PortableInterceptor::IORIn
 #pragma option pop
 #endif /* __BORLANDC__ */
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 #endif /* ifndef */
+

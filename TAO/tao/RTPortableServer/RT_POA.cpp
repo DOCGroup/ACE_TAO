@@ -2,17 +2,15 @@
 
 #include "RT_POA.h"
 
+#include "tao/ORB_Core.h"
+
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
-#include "RT_Acceptor_Filters.h"
-
-#include "tao/ORB_Core.h"
 #include "tao/ORB.h"
 #include "tao/Server_Strategy_Factory.h"
 #include "tao/Environment.h"
 #include "tao/Exception.h"
 #include "tao/Stub.h"
-#include "tao/Policy_Manager.h"
 #include "tao/debug.h"
 #include "tao/RTCORBA/Thread_Pool.h"
 #include "tao/Thread_Lane_Resources.h"
@@ -22,18 +20,16 @@
 
 #include "tao/PortableServer/Default_Acceptor_Filter.h"
 #include "tao/RTPortableServer/RT_Policy_Validator.h"
+#include "RT_Acceptor_Filters.h"
 
+// auto_ptr class
 #include "ace/Auto_Ptr.h"
 
 #if !defined (__ACE_INLINE__)
 # include "RT_POA.i"
 #endif /* ! __ACE_INLINE__ */
 
-
-ACE_RCSID (RTPortableServer,
-           RT_POA,
-           "$Id$")
-
+ACE_RCSID(tao, POA, "$Id$")
 
 TAO_RT_POA::TAO_RT_POA (const TAO_POA::String &name,
                         TAO_POA_Manager &poa_manager,

@@ -89,7 +89,7 @@ static ACE_CDR::WChar   idl_wchar_escape_reader (char *);
 static char             idl_escape_reader (char *);
 static double           idl_atof (char *);
 static long             idl_atoi (char *, long);
-static ACE_UINT64	idl_atoui (char *, long);
+static unsigned long	idl_atoui (char *, long);
 static void		idl_parse_line_and_file (char *);
 static void		idl_store_pragma (char *);
 static char *           idl_get_pragma_string (char *);
@@ -266,12 +266,11 @@ oneway		return IDL_ONEWAY;
 (\"([^\\\"]*|\\[ntvbrfax\\\?\'\"])*\"[ \t]*)+	{
 		  /* Skip the quotes */
 		  char *tmp = ace_yytext;
-                  for(int i = strlen(tmp) - 1; i >= 0; --i) {
-                    if (isspace(tmp[i])) {
-                      tmp[i] = '\0';
-                    }
-                  }
+#if defined (__SUNPRO_CC)
+		  tmp[strlen (tmp) - 2] = '\0';
+#else
 		  tmp[strlen (tmp) - 1] = '\0';
+#endif
 		  ACE_NEW_RETURN (yylval.sval,
                                   UTL_String (tmp + 1),
                                   IDL_STRING_LITERAL);
@@ -409,7 +408,7 @@ idl_parse_line_and_file (char *buf)
     }
 
   *r++ = 0;
-  idl_global->set_lineno ((long) idl_atoui (h, 10));
+  idl_global->set_lineno (idl_atoui (h, 10));
 
   // Find file name, if present.
   for (; *r != '"'; r++)
@@ -688,10 +687,10 @@ idl_atoi(char *s, long b)
 /*
  * idl_atoui - Convert a string of digits into an unsigned integer according to base b
  */
-static ACE_UINT64
+static unsigned long
 idl_atoui(char *s, long b)
 {
-	ACE_UINT64	r = 0;
+	long	r = 0;
 
 	if (b == 8 && *s == '0')
 	  s++;

@@ -40,6 +40,8 @@ ifeq ($(threads),1)
   #### Don't use g7 register with threading.
   CFLAGS += -Xleaveg7
   LIBS += -lthread
+else  # ! threads
+  CFLAGS += -DACE_MT_SAFE=0
 endif # ! threads
 
 ifeq (1,$(exceptions))

@@ -20,7 +20,6 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Obstack_T)
 template <class CHAR> void
 ACE_Obstack_T<CHAR>::dump (void) const
 {
-#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Obstack_T<CHAR>::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
@@ -28,7 +27,6 @@ ACE_Obstack_T<CHAR>::dump (void) const
   ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("head_ = %x\n"), this->head_));
   ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("curr_ = %x\n"), this->curr_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
-#endif /* ACE_HAS_DUMP */
 }
 
 template <class CHAR> int

@@ -3,7 +3,6 @@
 #include "PG_PropertyManager.h"
 #include "PG_ObjectGroupManager.h"
 #include "PG_Property_Utils.h"
-#include "ace/SString.h"
 
 ACE_RCSID (PortableGroup,
            PG_PropertyManager,

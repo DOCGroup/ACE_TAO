@@ -5,14 +5,14 @@
  *
  *  $Id$
  *
- *  @author Balachandran Natarajan <bala@cs.wustl.edu>
+ *  @author Bala Natarajan <bala@cs.wustl.edu>
  */
 //=============================================================================
 
 
 #ifndef TAO_FT_POLICY_I_H
 #define TAO_FT_POLICY_I_H
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #include "orbsvcs/FT_CORBA_ORBC.h"
 
@@ -22,6 +22,10 @@
 #endif /* _MSC_VER >= 1200 */
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
+
+// @@ This class inherits from TAO_Local_RefCounted_Object as the
+// functionality outlined in the spec seems to indicate that. I could
+// very well be wrong - Bala
 
 /**
  * @class TAO_FT_Request_Duration_Policy
@@ -38,9 +42,9 @@
  * to keep trying to connect to server object groups under certain
  * conditions.
  */
-class TAO_FT_Export TAO_FT_Request_Duration_Policy 
-  : public FT::RequestDurationPolicy,
-    public TAO_Local_RefCounted_Object
+class TAO_FT_Export TAO_FT_Request_Duration_Policy:
+  public FT::RequestDurationPolicy,
+  public TAO_Local_RefCounted_Object
 {
 public:
 
@@ -59,7 +63,7 @@ public:
   virtual TAO_FT_Request_Duration_Policy *clone (void) const;
 
   // = The FT::RequestDurationPolicy methods
-  virtual TimeBase::TimeT request_duration_policy_value (ACE_ENV_SINGLE_ARG_DECL)
+  virtual TimeBase::TimeT request_duration_value (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::PolicyType policy_type (
@@ -91,9 +95,9 @@ private:
  * If this  policy is set, it enables the client ORB to send
  * heartbeats to the server ORB over the open connections.
  */
-class TAO_FT_Export TAO_FT_Heart_Beat_Policy
-  : public FT::HeartbeatPolicy,
-    public TAO_Local_RefCounted_Object
+class TAO_FT_Export TAO_FT_Heart_Beat_Policy:
+  public FT::HeartbeatPolicy,
+  public TAO_Local_RefCounted_Object
 {
 public:
 
@@ -155,9 +159,9 @@ private:
  * the TAG_FT_HEARTBEAT_ENABLED component in the IOP profile of
  * the IOR that it exposes
  */
-class TAO_FT_Export TAO_FT_Heart_Beat_Enabled_Policy
-  : public FT::HeartbeatEnabledPolicy,
-    public TAO_Local_RefCounted_Object
+class TAO_FT_Export TAO_FT_Heart_Beat_Enabled_Policy:
+  public FT::HeartbeatEnabledPolicy,
+  public TAO_Local_RefCounted_Object
 {
 public:
 
@@ -205,9 +209,9 @@ private:
 #endif /* _MSC_VER */
 
 #if defined (__ACE_INLINE__)
-#include "FT_Policy_i.inl"
+#include "FT_Policy_i.i"
 #endif /* __ACE_INLINE__ */
 
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 #endif /* TAO_FT_POLICY_I_H */

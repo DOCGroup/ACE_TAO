@@ -17,7 +17,6 @@
 // ============================================================================
 
 #include "SchedEntry.h"
-#include "ace/SString.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "SchedEntry.i"

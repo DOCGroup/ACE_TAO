@@ -25,7 +25,6 @@
 
 #include "DomainC.h"
 #include "tao/Stub.h"
-#include "tao/ORB_Core.h"
 #include "tao/Invocation.h"
 #include "tao/PortableInterceptor.h"
 

@@ -100,7 +100,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_visitor.h"
 #include "nr_extern.h"
 #include "global_extern.h"
-#include "ace/streams.h"
 
 ACE_RCSID (util, 
            utl_scope, 

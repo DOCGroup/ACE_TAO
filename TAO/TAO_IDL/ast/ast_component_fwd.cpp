@@ -3,7 +3,6 @@
 #include "ast_component_fwd.h"
 #include "ast_visitor.h"
 #include "utl_identifier.h"
-#include "ace/streams.h"
 
 ACE_RCSID( ast, 
            ast_component_fwd, 

@@ -14,6 +14,12 @@ ACE_RCSID(ace, ATM_Connector, "$Id$")
 
 ACE_ALLOC_HOOK_DEFINE(ACE_ATM_Connector)
 
+void
+ACE_ATM_Connector::dump (void) const
+{
+  ACE_TRACE ("ACE_ATM_Connector::dump");
+}
+
 ACE_ATM_Connector::ACE_ATM_Connector (void)
 {
   ACE_TRACE ("ACE_ATM_Connector::ACE_ATM_Connector");

@@ -3,23 +3,19 @@
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
 #include "tao/PortableServer/PortableServerC.h"
-#include "tao/PortableServer/POA_Cached_Policies.h"
+#include "tao/ORB_Core.h"
 #include "tao/RTCORBA/RT_Policy_i.h"
 #include "tao/RTCORBA/Thread_Pool.h"
 #include "tao/RTCORBA/RT_ORB.h"
 #include "tao/Thread_Lane_Resources_Manager.h"
 #include "tao/Thread_Lane_Resources.h"
 #include "tao/Acceptor_Registry.h"
-#include "tao/ORB_Core.h"
-#include "tao/Policy_Set.h"
 #include "tao/Transport_Acceptor.h"
+#include "tao/PortableServer/POA_Cached_Policies.h"
 
-
-
-ACE_RCSID (RTPortableServer,
-           RT_Policy_Validator,
+ACE_RCSID (tao,
+           POA,
            "$Id$")
-
 
 TAO_POA_RT_Policy_Validator::TAO_POA_RT_Policy_Validator (TAO_ORB_Core &orb_core)
   : TAO_Policy_Validator (orb_core),
@@ -146,7 +142,7 @@ TAO_POA_RT_Policy_Validator::validate_priorities (TAO_Policy_Set &policies
       ACE_CHECK;
 
       // Check that the priority is in bounds.
-      if (priority < RTCORBA::minPriority
+      if (priority < RTCORBA::minPriority 
                // The line below will always be false unless the value of
                // RTCORBA::maxPriority, which is now assigned the value of
                // 32767, is changed in RTCORBA.pidl.
@@ -207,7 +203,7 @@ TAO_POA_RT_Policy_Validator::validate_priorities (TAO_Policy_Set &policies
           //  2a. low is not < RTCORBA::minPriority
           //  2b. low is not > high
           //  2c. high is not > RTCORBA::maxPriority
-          if (bands[i].low < RTCORBA::minPriority
+          if (bands[i].low < RTCORBA::minPriority 
               || bands[i].low > bands[i].high
                    // The line below will always be false unless the value of
                    // RTCORBA::maxPriority, which is now assigned the value of

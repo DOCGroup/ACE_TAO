@@ -12,8 +12,8 @@ ACE_RCSID (IFRService,
 
 TAO_UnionDef_i::TAO_UnionDef_i (TAO_Repository_i *repo)
   : TAO_IRObject_i (repo),
-    TAO_Contained_i (repo),
     TAO_IDLType_i (repo),
+    TAO_Contained_i (repo),
     TAO_TypedefDef_i (repo),
     TAO_Container_i (repo)
 {
@@ -432,9 +432,10 @@ TAO_UnionDef_i::fetch_label (const ACE_Configuration_Section_Key member_key,
       cdr.write_ulong (ACE_static_cast (CORBA::ULong, value));
       TAO::Unknown_IDL_Type *impl = 0;
       ACE_NEW (impl,
-               TAO::Unknown_IDL_Type (tc.in (),
+               TAO::Unknown_IDL_Type (tc._retn (),
                                       cdr.begin (),
-                                      TAO_ENCAP_BYTE_ORDER));
+                                      TAO_ENCAP_BYTE_ORDER,
+                                      1));
       member.label.replace (impl);
       break;
     }

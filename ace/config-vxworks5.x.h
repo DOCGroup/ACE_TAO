@@ -8,7 +8,7 @@
 
 #ifndef ACE_CONFIG_H
 #define ACE_CONFIG_H
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #if ! defined (VXWORKS)
 # define VXWORKS
@@ -32,6 +32,16 @@
   // (Tornado 1.0.1) supports long long, Wind River tech support says
   // that it doesn't.  It causes undefined symbols for math functions.
 # define ACE_LACKS_LONGLONG_T
+
+  // On g++/VxWorks, iostream.h defines a static instance (yes, instance)
+  // of the Iostream_init class.  That causes all files that #include it
+  // to put in the global constructor/destructor hooks.  For files that
+  // don't have any static instances of non-class (built-in) types, the
+  // hooks refer to the file name, e.g., "foo.cpp".  That file name gets
+  // embedded in a variable name by munch.  The output from munch won't
+  // compile, though, because of the period!  So, let g++/VxWorks users
+  // include iostream.h only where they need it.
+# define ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION
 
 # define ACE_LACKS_LINEBUFFERED_STREAMBUF
 # define ACE_LACKS_SIGNED_CHAR
@@ -92,7 +102,6 @@
 #define ACE_HAS_BROKEN_ACCEPT_ADDR
 #define ACE_HAS_BROKEN_SENDMSG
 #define ACE_HAS_BROKEN_WRITEV
-#define ACE_HAS_CHARPTR_DL
 #define ACE_HAS_CHARPTR_SOCKOPT
 #define ACE_HAS_CLOCK_GETTIME
 #define ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES
@@ -229,5 +238,5 @@
 #define ACE_USE_RCSID 0
 #endif /* #if !defined (ACE_USE_RCSID) */
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 #endif /* ACE_CONFIG_H */

@@ -16,11 +16,7 @@
 #include "ace/RB_Tree.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/Log_Msg.h"
-
-ACE_RCSID (ace,
-           RB_Tree,
-           "$Id$")
+ACE_RCSID(ace, RB_Tree, "$Id$")
 
 // Constructor.
 
@@ -815,7 +811,6 @@ template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK> void
 ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::
 dump_i (ACE_RB_Tree_Node<EXT_ID, INT_ID> *node) const
 {
-#if defined (ACE_HAS_DUMP)
   if (node)
     {
       dump_node_i (*node);
@@ -832,10 +827,8 @@ dump_i (ACE_RB_Tree_Node<EXT_ID, INT_ID> *node) const
     {
       ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("\nNULL POINTER (BLACK)\n")));
     }
-#else /* !ACE_HAS_DUMP */
-  ACE_UNUSED_ARG (node);
-#endif /* ACE_HAS_DUMP */
 }
+
 
 /// Function to dump node itself.  Does not show parameterized node contents
 /// in its basic form, but template specialization can be used to
@@ -845,14 +838,10 @@ template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK> void
 ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::
 dump_node_i (ACE_RB_Tree_Node<EXT_ID, INT_ID> &node) const
 {
-#if defined (ACE_HAS_DUMP)
   const char * color_str = (node.color () == ACE_RB_Tree_Node_Base::RED)
                            ? "RED" : "BLACK";
 
   ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT (" color=[%s]\n"), color_str));
-#else /* !ACE_HAS_DUMP */
-  ACE_UNUSED_ARG (node);
-#endif /* ACE_HAS_DUMP */
 }
 
 /// Tests the red-black invariant(s) throughout the whole tree.
@@ -1065,20 +1054,6 @@ ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::~ACE_RB_Tree_
   ACE_TRACE ("ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::~ACE_RB_Tree_Iterator_Base");
 }
 
-// Dump the state of an object.
-
-template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
-void
-ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::dump_i (void) const
-{
-  ACE_TRACE ("ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::dump_i");
-
-  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("\nnode_ = %x\n"), this->node_));
-  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
-}
-
-
 ACE_ALLOC_HOOK_DEFINE(ACE_RB_Tree_Iterator)
 
 // Constructor.
@@ -1126,7 +1101,7 @@ ACE_RB_Tree_Reverse_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::ACE_RB_Tre
 }
 
 template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
-ACE_RB_Tree_Reverse_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::ACE_RB_Tree_Reverse_Iterator (const ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &tree, ACE_RB_Tree_Node<EXT_ID, INT_ID>* entry)
+ACE_RB_Tree_Reverse_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::ACE_RB_Tree_Reverse_Iterator (const ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &tree, ACE_RB_Tree_Node<EXT_ID, INT_ID>* entry) 
   : ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> (tree,entry)
 {
   ACE_TRACE ("ACE_RB_Tree_Reverse_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::ACE_RB_Tree_Reverse_Iterator");

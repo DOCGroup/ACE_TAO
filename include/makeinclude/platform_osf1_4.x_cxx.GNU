@@ -48,6 +48,8 @@ endif # ! CXX_VERSION
 ####       instead, change "-pthread" to "-threads".
 ifeq ($(threads),1)
 	CFLAGS          += -pthread
+else
+	CFLAGS          += -DACE_MT_SAFE=0
 endif
 
 

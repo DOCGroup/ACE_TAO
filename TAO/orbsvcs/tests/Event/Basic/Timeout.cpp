@@ -136,7 +136,7 @@ main (int argc, char* argv[])
       EC_Counting_Consumer deadline_consumer ("Consumer/deadline");
 
       {
-        ACE_Time_Value tv (0, 80000);
+        ACE_Time_Value tv (0, 40000);
         TimeBase::TimeT time;
         ORBSVCS_Time::Time_Value_to_TimeT (time, tv);
 
@@ -191,7 +191,7 @@ main (int argc, char* argv[])
 
       interval_consumer.dump_results (50, 5);
       conjunction_consumer.dump_results (25, 5);
-      deadline_consumer.dump_results (100, 5);
+      deadline_consumer.dump_results (200, 5);
     }
   ACE_CATCHANY
     {

@@ -1,19 +1,22 @@
 /* -*- C++ -*- */
+// $Id$
 
-//=============================================================================
-/**
- *  @file    DynCommon.h
- *
- *  $Id$
- *
- *  @author Jeff Parsons <parsons@cs.wustl.edu>
- */
-//=============================================================================
+// =========================================================================
+//
+// = LIBRARY
+//    TAO_DynamicAny
+//
+// = FILENAME
+//    DynCommon_i.h
+//
+// = AUTHOR
+//    Jeff Parsons <parsons@cs.wustl.edu>
+//
+// =========================================================================
 
-
-#ifndef TAO_DYNCOMMON_H
-#define TAO_DYNCOMMON_H
-#include /**/ "ace/pre.h"
+#ifndef TAO_DYNCOMMON_I_H
+#define TAO_DYNCOMMON_I_H
+#include "ace/pre.h"
 
 #include "DynamicAny.h"
 
@@ -28,21 +31,21 @@
 # pragma warning (disable:4250)
 #endif /* _MSC_VER */
 
-/**
- * @class TAO_DynCommon
- *
- * Contains most of the functionality common to all the
- * Dynamic Any implementation classes.
- */
 class TAO_DynamicAny_Export TAO_DynCommon
   : public virtual DynamicAny::DynAny
 {
+  // = TITLE
+  //    TAO_DynCommon
+  //
+  // = DESCRIPTION
+  //    Contains most of the functionality common to all the
+  //    Dynamic Any implementation classes.
 public:
-  /// Constructor.
   TAO_DynCommon (void);
+  // Constructor.
 
-  /// Destructor.
   virtual ~TAO_DynCommon (void);
+  // Destructor.
 
   // = Some functions common to all Dynamic Any types.
 
@@ -479,15 +482,15 @@ public:
       ));
 
 protected:
-  /// This sets one of two flags in this base class. CORBA 2.4.2
-  /// requires that destroy() do nothing if it is called on
-  /// the result of current_component(), the only non-deep-copying
-  /// method in the Dynamic Any API. If the boolean arg below is 0,
-  /// the call is from inside current_component(), and the flag
-  /// ref_to_component_ is set. If the boolean arg is 1, the call
-  /// is from inside destroy(), and the container_is_destroying_
-  /// flag is set, overriding the first flag in the component's
-  /// destroy() method.
+  // This sets one of two flags in this base class. CORBA 2.4.2
+  // requires that destroy() do nothing if it is called on
+  // the result of current_component(), the only non-deep-copying
+  // method in the Dynamic Any API. If the boolean arg below is 0,
+  // the call is from inside current_component(), and the flag
+  // ref_to_component_ is set. If the boolean arg is 1, the call
+  // is from inside destroy(), and the container_is_destroying_
+  // flag is set, overriding the first flag in the component's
+  // destroy() method.
   void set_flag (
       DynamicAny::DynAny_ptr component,
       CORBA::Boolean destroying
@@ -498,30 +501,30 @@ protected:
       ));
 
 protected:
-  /// Were we created by current_component()?
   CORBA::Boolean ref_to_component_;
+  // Were we created by current_component()?
 
-  /// Flag to let destroy() call by container override the flag above.
   CORBA::Boolean container_is_destroying_;
+  // Flag to let destroy() call by container override the flag above.
 
-  /// Do we contain other Dynamic Anys?
   CORBA::Boolean has_components_;
+  // Do we contain other Dynamic Anys?
 
-  /// Has destroy() been called on us yet?
   CORBA::Boolean destroyed_;
+  // Has destroy() been called on us yet?
 
-  /// Slot of the current component (if any).
   CORBA::Long current_position_;
+  // Slot of the current component (if any).
 
-  /// Number of components, as defined by CORBA 2.4.2.
   CORBA::ULong component_count_;
+  // Number of components, as defined by CORBA 2.4.2.
 
-  /// Holder for our type code.
   CORBA::TypeCode_var type_;
+  // Holder for our type code.
 
-  /// Gets a value only for basic types, but used in insert_*
-  /// and get_*, defined in this base class.
   CORBA::Any any_;
+  // Gets a value only for basic types, but used in insert_*
+  // and get_*, defined in this base class.
 
 private:
   // Utility functions used by insert_* and get_*.
@@ -552,5 +555,5 @@ private:
 # pragma warning(pop)
 #endif /* _MSC_VER */
 
-#include /**/ "ace/post.h"
-#endif /* TAO_DYNCOMMON_H */
+#include "ace/post.h"
+#endif /* TAO_DYNCOMMON_I_H */

@@ -44,7 +44,7 @@
 #ifndef ACE_BASIC_TYPES_H
 # define ACE_BASIC_TYPES_H
 
-# include /**/ "ace/pre.h"
+# include "ace/pre.h"
 
 # include "ace/config-all.h"
 
@@ -316,8 +316,13 @@ typedef ptrdiff_t ptr_arith_t;
 
 // If the platform lacks a long long, define one.
 # if defined (ACE_LACKS_LONGLONG_T)
+# if defined (ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION)
 // Forward declaration for streams
 #   include "ace/iosfwd.h"
+# else /* ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION */
+// Else they will get all the stream header files
+#   include "ace/streams.h"
+# endif /* ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION */
 
 /**
  * @class ACE_U_LongLong
@@ -632,5 +637,5 @@ typedef ptrdiff_t ptr_arith_t;
 #   include "ace/Basic_Types.i"
 # endif /* __ACE_INLINE__ */
 
-# include /**/ "ace/post.h"
+# include "ace/post.h"
 #endif /* ACE_BASIC_TYPES_H */

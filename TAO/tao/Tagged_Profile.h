@@ -13,7 +13,7 @@
 
 #ifndef TAO_TAGGED_PROFILE_H
 #define TAO_TAGGED_PROFILE_H
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #include "tao/IOPC.h"
 
@@ -22,7 +22,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/GIOPC.h"
-#include "tao/Object_KeyC.h"
 #include "ace/SString.h"
 
 /**
@@ -133,5 +132,5 @@ private:
 # include "tao/Tagged_Profile.i"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 #endif /*TAO_TAGGED_PROFILE_H*/

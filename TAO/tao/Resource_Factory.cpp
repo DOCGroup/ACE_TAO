@@ -6,13 +6,12 @@
 
 #include "tao/Resource_Factory.h"
 #include "tao/Protocol_Factory.h"
+#include "tao/ORB_Core.h"
 #include "tao/Client_Strategy_Factory.h"
-
 
 ACE_RCSID (tao,
            Resource_Factory,
            "$Id$")
-
 
 // ****************************************************************
 

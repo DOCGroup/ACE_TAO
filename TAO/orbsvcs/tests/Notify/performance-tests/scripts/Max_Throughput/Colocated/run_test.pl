@@ -19,7 +19,7 @@ $Naming = new PerlACE::Process ("../../../../../../Naming_Service/Naming_Service
 
 $Collocated = new PerlACE::Process ("../../../../Driver/Notify_Tests_Driver");
 
-$Collocated_Args = "-ORBInitRef NameService=file://$naming_ior -ORBSvcConf $collocated_conf -Skip_Priority_Levels_Check";
+$Collocated_Args = "-ORBInitRef NameService=file://$naming_ior -ORBSvcConf $collocated_conf";
 
 unlink $naming_ior;
 $Naming->Spawn ();
@@ -33,7 +33,7 @@ if (PerlACE::waitforfile_timed ($naming_ior, $startup_timeout) == -1) {
 $Collocated->Arguments ($Collocated_Args);
 $args = $Collocated->Arguments ();
 print STDERR "Running Collocated with arguments: $args\n";
-$status = $Collocated->SpawnWaitKill ($experiment_timeout);
+$status = $Colocated->SpawnWaitKill ($experiment_timeout);
 
 if ($status != 0)
   {

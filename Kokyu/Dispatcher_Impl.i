@@ -2,11 +2,10 @@
 
 namespace Kokyu
 {
-
 ACE_INLINE
-int Dispatcher_Impl::init (const Dispatcher_Attributes& attr)
+int Dispatcher_Impl::init (const ConfigInfoSet& config_info)
 {
-  return init_i (attr);
+  return init_i (config_info);
 }
 
 ACE_INLINE
@@ -23,9 +22,7 @@ int Dispatcher_Impl::shutdown ()
 }
 
 ACE_INLINE
-int Dispatcher_Impl::activate ()
+Dispatcher_Impl::~Dispatcher_Impl()
 {
-  return activate_i ();
 }
-
 }

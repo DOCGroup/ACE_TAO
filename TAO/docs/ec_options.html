@@ -219,9 +219,7 @@ static EC_Factory "-ECFiltering basic ....."
             The user can disable this feature by selecting the
             <EM>null</EM> strategy;
             whereas the <EM>basic</EM> strategy provides a simple, yet
-            efficient implementation. <EM>reactive</EM> provides a 
-            strategy in which an observer that is unreachable is removed
-            from the observer list.
+            efficient implementation.
             <BR><B>NOTE:<B> The default is to have the feature disabled.
           </TD>
         </TR>
@@ -300,10 +298,8 @@ static EC_Factory "-ECFiltering basic ....."
             <EM>period</EM>
           </TD>
           <TD>Set the period (in microseconds) used by the reactive
-            consumer control policy (set <EM>ECConsumerControl</EM> to 
-            <EM>reactive</EM>) to poll the state of the consumers. 
-            When set to 0 there is no polling but the
-            reactive strategy is in place.
+            consumer control policy to poll the state of the
+            consumers.
           </TD>
         </TR>
 
@@ -313,10 +309,8 @@ static EC_Factory "-ECFiltering basic ....."
             <EM>period</EM>
           </TD>
           <TD>Set the period (in microseconds) used by the reactive
-            supplier control policy (set <EM>ECSupplierControl</EM> to 
-            <EM>reactive</EM>) to poll the state of the suppliers.
-            When set to 0 there is no polling but the
-            reactive strategy is in place.
+            supplier control policy to poll the state of the
+            suppliers.
           </TD>
         </TR>
 
@@ -326,9 +320,8 @@ static EC_Factory "-ECFiltering basic ....."
             <EM>timeout</EM>
           </TD>
           <TD>Set the timeout period (in microseconds) used by the reactive
-            consumer control policy (set <EM>ECConsumerControl</EM> to 
-            <EM>reactive</EM>) to detect a timeout when polling the state
-            of the consumers.
+            consumer control policy to detect a timeout when polling the state
+						of the consumers.
           </TD>
         </TR>
 
@@ -338,9 +331,8 @@ static EC_Factory "-ECFiltering basic ....."
             <EM>timeout</EM>
           </TD>
           <TD>Set the timeout period (in microseconds) used by the reactive
-            supplier control policy (set <EM>ECSupplierControl</EM> to 
-            <EM>reactive</EM>) to detect a timeout when polling the state 
-            of the suppliers.
+            supplier control policy to detect a timeout when polling the state
+						of the suppliers.
           </TD>
         </TR>
 
@@ -604,111 +596,6 @@ static EC_Factory "-ECFiltering basic ....."
       </TABLE>
     </P>
 
-    <H3>Configuring the IIOP Gateway</H3>
-
-    <P>The <CODE>TAO_EC_Gateway_IIOP_Factory</CODE> is the factory for 
-      the <CODE>TAO_EC_Gateway_IIOP</CODE> class. This factory can be 
-      used to configure the settings of the IIOP Gateway using the 
-      svc.conf file. The contents looks like this:
-    </P>
-
-<PRE>
-# Comments go here...
-# More comments if you want to...
-static EC_Gateway_IIOP_Factory "-ECGIIOPConsumerECControl null ....."
-</PRE>
-
-    <P>All the IIOP Gateway factory options start with
-      <CODE>-ECGIIOP</CODE></P>
-
-	    <P><TABLE BORDER="2" CELLSPACING="2" CELLPADDING="0">
-        <TR>
-          <TH>Option</TH>
-          <TH>Description</TH>
-        </TR>
-
-        <!-- <TR NAME="ECGIIOPConsumerECControl"> -->
-        <TR>
-          <TD><CODE>-ECGIIOPConsumerECControl</CODE>
-            <EM>policy</EM>
-          </TD>
-          <TD>Select the consumer ec control policy (<EM>null</EM> or
-            <EM>reactive</EM> or <EM>reconnect</EM>) to detect and handle 
-             broken consumer ec's.
-          </TD>
-        </TR>
-        <!-- <TR NAME="ECGIIOPConsumerECControlPeriod"> -->
-        <TR>
-          <TD><CODE>-ECGIIOPConsumerECControlPeriod</CODE>
-            <EM>period</EM>
-          </TD>
-          <TD>Set the period (in microseconds) used by the reactive and reconnect
-            consumer ec control policy (set <EM>ECGIIOPConsumerECControl</EM> to 
-            <EM>reactive</EM> or <EM>reconnect</EM>) to poll the state of the consumer ec.
-            When set to 0 there is no polling but the
-            reactive strategy is in place.
-          </TD>
-        </TR>
-
-        <!-- <TR NAME="ECGIIOPConsumerECControlTimeout"> -->
-        <TR>
-          <TD><CODE>-ECGIIOPConsumerECControlTimeout</CODE>
-            <EM>timeout</EM>
-          </TD>
-          <TD>Set the timeout period (in microseconds) used by the reactive and reconnect
-            consumer ec control policy (set <EM>ECGIIOPConsumerECControl</EM> to 
-            <EM>reactive</EM> or <EM>reconnect</EM>) to detect a timeout when polling the state
-            of the consumer ec.
-          </TD>
-        </TR>
-
-        <!-- <TR NAME="ECGIIOPUseORBId"> -->
-        <TR>
-          <TD><CODE>-ECGIIOPUseORBId</CODE>
-            <EM>orbid</EM>
-          </TD>
-          <TD>Set the name of the ORB used by the event gateway, only
-            useful in applications that create multiple ORBs and
-            activate the gateway in one of them.
-          </TD>
-        </TR>
-
-        <!-- <TR NAME="ECGIIOPUseTTL"> -->
-        <TR>
-          <TD><CODE>-ECGIIOPUseTTL</CODE>
-            <EM>use_ttl: 0 | 1</EM>
-          </TD>
-          <TD>Set whether the IIOP Gateway uses the TTL or not. 
-            This is 1 by default. When set to 0 make sure that 
-            no recursive structure is build between ec's, else an 
-            event can keep looping for ever. Useful when there are no
-            recursive structures and we want the gateway to 
-            transfer all events independent of their TTL because suppliers
-            can be unaware about the maximum number of hops. In case
-            this option is 0, the TTL in the event isn't decremented
-            by the gateway also.
-          </TD>
-        </TR>
-
-        <!-- <TR NAME="ECGIIOPUseConsumerProxyMap"> -->
-        <TR>
-          <TD><CODE>-ECGIIOPUseConsumerProxyMap</CODE>
-            <EM>use_consumer_proxy_map: 0 | 1</EM>
-          </TD>
-          <TD>Set whether the IIOP Gateway uses a map with a proxy 
-            push consumer for each unique source id or not. This is 1
-            by default meaning that a map is used. When set to 0 the 
-            gateway will just use one proxy push consumer to push
-            events to the consumer ec. This options is useful when 
-            a lot of different source id's are used but there is no 
-            need for a different proxy push consumer for each source id.
-            Setting this option to 0 then improves the performance.
-          </TD>
-        </TR>
-      </TABLE>
-    </P>
-
-
     <P><HR><P>
 
       Back to the TAO <A HREF="index.html">components documentation</A>.
@@ -718,7 +605,7 @@ static EC_Gateway_IIOP_Factory "-ECGIIOPConsumerECControl null ....."
     <address><a href="mailto:coryan@cs.wustl.edu">Carlos O'Ryan</a></address>
 <!-- Created: Thu Jul  1 21:44:28 CDT 1999 -->
 <!-- hhmts start -->
-Last modified: Fri Aug 08 08:39:42 CDT 2003
+Last modified: Fri Apr 20 15:30:42 CDT 2001
 <!-- hhmts end -->
   </body>
 </html>

@@ -18,8 +18,7 @@
 #include "ace/Malloc_Allocator.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/Guard_T.h"
-#include "ace/Recursive_Thread_Mutex.h"
+#include "ace/Synch_T.h"
 
 ACE_RCSID (ace, Malloc_Allocator, "$Id$")
 
@@ -149,7 +148,6 @@ ACE_New_Allocator::free (void *ptr)
 void
 ACE_Static_Allocator_Base::dump (void) const
 {
-#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Static_Allocator_Base::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
@@ -159,7 +157,6 @@ ACE_Static_Allocator_Base::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\n")));
 
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
-#endif /* ACE_HAS_DUMP */
 }
 
 

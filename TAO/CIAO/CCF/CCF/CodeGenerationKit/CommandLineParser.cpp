@@ -1,12 +1,10 @@
-// file      : CCF/CodeGenerationKit/CommandLineParser.cpp
-// author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
-// cvs-id    : $Id$
+// File   : CommandLineParser.cpp
+// Author : Boris Kolpackov <boris@dre.vanderbilt.edu>
+// $Id$
 
 #include "CCF/CodeGenerationKit/CommandLineParser.hpp"
 #include "CCF/CodeGenerationKit/CommandLineGrammar.hpp"
 
-#include <vector>
-#include <string>
 #include <iostream>
 
 using std::cerr;
@@ -14,9 +12,7 @@ using std::endl;
 
 bool parse (int argc, char* argv[], CommandLine& cl) throw ()
 {
-  typedef
-  std::vector<std::string>
-  Argv;
+  typedef vector<string> Argv;
 
   Argv v;
 

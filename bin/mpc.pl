@@ -35,7 +35,6 @@ my(@creators) = ('GNUACEProjectCreator',
                  'EM3ProjectCreator',
                  'VA4ProjectCreator',
                  'MakeProjectCreator',
-                 'AutomakeProjectCreator',
                 );
 
 # ************************************************************

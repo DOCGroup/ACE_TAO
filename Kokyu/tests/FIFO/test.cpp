@@ -61,11 +61,8 @@ int main (int,char**)
   config_info[2].thread_priority_ = 0;
   config_info[2].dispatching_type_ = Kokyu::FIFO_DISPATCHING;
 
-  Kokyu::Dispatcher_Attributes attrs;
-  attrs.config_info_set_ = config_info;
   ACE_DEBUG ((LM_DEBUG, "before create_dispatcher\n" ));
-  auto_ptr<Kokyu::Dispatcher> 
-    disp (Kokyu::Dispatcher_Factory::create_dispatcher (attrs));
+  auto_ptr<Kokyu::Dispatcher> disp (Kokyu::Dispatcher_Factory::create_dispatcher (config_info));
 
   ACE_ASSERT (disp.get() != 0);
 

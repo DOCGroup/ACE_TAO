@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 // $Id$
 
 #include "ace/OS.h"
@@ -88,8 +87,6 @@ ACE_New_Allocator::print_stats (void) const
 ACE_INLINE void
 ACE_New_Allocator::dump (void) const
 {
-#if defined (ACE_HAS_DUMP)
-#endif /* ACE_HAS_DUMP */
 }
 
 ACE_INLINE void *

@@ -14,9 +14,9 @@
  * recompilations.
  *
  *  @author Carlos O'Ryan
- *  @author Ossama Othman
  *  @author Chris Cleeland
  *  @author Douglas C. Schmidt
+ *  @author Ossama Othman
  */
 //=============================================================================
 
@@ -24,9 +24,19 @@
 #ifndef TAO_CORBAFWD_H
 #define TAO_CORBAFWD_H
 
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #include "ace/CDR_Base.h"
+
+// @@ Why is this here?  It should be moved to IOPC.h.
+//       -Ossama
+#if defined (HPUX)
+#  if defined (IOR)
+   /* HP-UX 11.11 defines IOR in /usr/include/pa/inline.h
+      and we don't want that definition, see IOPC.h */
+#  undef IOR
+#  endif /* IOR */
+#endif /* HPUX */
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -35,11 +45,8 @@
 #include "tao/orbconf.h"
 #include "tao/TAO_Export.h"
 
-#if defined (HPUX) && defined (IOR)
-   /* HP-UX 11.11 defines IOR in /usr/include/pa/inline.h
-      and we don't want that definition.  See IOP_IORC.h. */
-# undef IOR
-#endif /* HPUX && IOR */
+#include "ace/OS_Memory.h"
+
 
 #if defined (_MSC_VER) || defined (__BORLANDC__)
 # ifdef   _DEBUG                  /* convert from VC++ convention ... */
@@ -79,11 +86,8 @@ namespace TAO_Collocation_Strategies
   };
 }
 
-// Forward declarations in the global namespace.
+// forward declare sequences.
 template <class T> class TAO_Unbounded_Sequence;
-template <typename T> class TAO_Pseudo_Var_T;
-template <typename T, typename T_var> class TAO_Pseudo_Out_T;
-
 /**
  * @class CORBA
  *
@@ -153,8 +157,8 @@ namespace CORBA
    * CORBA string memory management functions.
    */
   //@{
-  extern TAO_Export char * string_alloc (ULong len);
-  extern TAO_Export char * string_dup (const char *);
+  TAO_NAMESPACE_INLINE_FUNCTION char * string_alloc (ULong len);
+  extern TAO_Export  char * string_dup (const char *);
   TAO_NAMESPACE_INLINE_FUNCTION void string_free (char *);
   //@}
 
@@ -167,8 +171,8 @@ namespace CORBA
    * CORBA wide string memory management functions.
    */
   //@{
-  extern TAO_Export WChar * wstring_alloc (ULong len);
-  extern TAO_Export WChar * wstring_dup (const WChar * const);
+  TAO_NAMESPACE_INLINE_FUNCTION WChar * wstring_alloc (ULong len);
+  extern TAO_Export  WChar * wstring_dup (const WChar * const);
   TAO_NAMESPACE_INLINE_FUNCTION void wstring_free (WChar * const);
   //@}
 
@@ -215,9 +219,6 @@ namespace CORBA
   class Object;
   typedef Object *Object_ptr;
 
-  typedef TAO_Pseudo_Var_T<Object> Object_var;
-  typedef TAO_Pseudo_Out_T<Object, Object_var> Object_out;
-
   class LocalObject;
   typedef LocalObject *LocalObject_ptr;
 
@@ -249,12 +250,14 @@ namespace CORBA
 
   typedef CORBA::Short Visibility;
   typedef CORBA::Short_out Visibility_out;
+  extern TAO_Export CORBA::TypeCode_ptr _tc_Visibility;
 
   extern TAO_Export const CORBA::Short PRIVATE_MEMBER;
   extern TAO_Export const CORBA::Short PUBLIC_MEMBER;
 
   typedef CORBA::Short ValueModifier;
   typedef CORBA::Short_out ValueModifier_out;
+  extern TAO_Export CORBA::TypeCode_ptr _tc_ValueModifier;
 
   extern TAO_Export const CORBA::Short VM_NONE;
   extern TAO_Export const CORBA::Short VM_CUSTOM;
@@ -870,6 +873,6 @@ operator>> (TAO_InputCDR &, CORBA::TCKind &);
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 
 #endif /* TAO_CORBAFWD_H */

@@ -5,15 +5,11 @@
 #include "EC_Supplier_Filter.h"
 #include "EC_Supplier_Filter_Builder.h"
 
-#include "ace/Reverse_Lock_T.h"
-
 #if ! defined (__ACE_INLINE__)
 #include "EC_ProxyConsumer.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (Event,
-           EC_ProxyConsumer,
-           "$Id$")
+ACE_RCSID(Event, EC_ProxyConsumer, "$Id$")
 
 typedef ACE_Reverse_Lock<ACE_Lock> TAO_EC_Unlock;
 

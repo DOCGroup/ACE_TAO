@@ -12,7 +12,7 @@ namespace Kokyu
 {
 
 int
-Dispatcher_Task::initialize ()
+Dispatcher_Task::init ()
 {
   switch(curr_config_info_.dispatching_type_)
     {
@@ -53,28 +53,6 @@ int
 Dispatcher_Task::svc (void)
 {
   int done = 0;
-
-    ACE_hthread_t thr_handle;
-    ACE_Thread::self (thr_handle);
-    int prio;
-
-    if (ACE_Thread::getprio (thr_handle, prio) == -1)
-      {
-        if (errno == ENOTSUP)
-          {
-            ACE_DEBUG((LM_DEBUG,
-                       ACE_TEXT ("getprio not supported on this platform\n")
-                       ));
-            return 0;
-          }
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%p\n"),
-                           ACE_TEXT ("getprio failed")),
-                          -1);
-      }
-
-    ACE_DEBUG ((LM_DEBUG, "(%t) Dispatcher Thread started prio=%d\n", prio));
-
   while (!done)
     {
       ACE_Message_Block *mb;
@@ -168,9 +146,10 @@ void Dispatch_Queue_Item::init_i (const QoSDescriptor& qos_info)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class ACE_Locked_Data_Block<ACE_Lock_Adapter<ACE_SYNCH_MUTEX> >;
-template class ACE_Lock_Adapter<ACE_Thread_Mutex>;
+template class ACE_Locked_Data_Block<ACE_Lock_Adapter<TAO_SYNCH_MUTEX> >;
+
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Locked_Data_Block<ACE_Lock_Adapter<ACE_SYNCH_MUTEX> >
-#pragma instantiate ACE_Lock_Adapter<ACE_Thread_Mutex>
+
+#pragma instantiate ACE_Locked_Data_Block<ACE_Lock_Adapter<TAO_SYNCH_MUTEX> >
+
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

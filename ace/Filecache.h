@@ -14,7 +14,7 @@
 #ifndef ACE_FILECACHE_H
 #define ACE_FILECACHE_H
 
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #include "ace/Mem_Map.h"
 
@@ -22,11 +22,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/Synch_T.h"
 #include "ace/Hash_Map_Manager_T.h"
 #include "ace/SString.h"
-#include "ace/Null_Mutex.h"
-#include "ace/Synch_Traits.h"
-#include "ace/RW_Thread_Mutex.h"
 
 enum ACE_Filecache_Flag
 {
@@ -357,6 +355,6 @@ private:
 };
 
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 
 #endif /* ACE_FILECACHE_H */

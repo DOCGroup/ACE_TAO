@@ -5,7 +5,7 @@
 
 #include "ace/Hash_Map_Manager_T.h"
 #include "rtscheduler_export.h"
-#include "RTScheduler.h"
+#include "RTSchedulerC.h"
 #include "ace/Task.h"
 #include "ace/Atomic_Op.h"
 
@@ -39,32 +39,18 @@ public:
 };
 
 
-typedef ACE_Hash_Map_Manager_Ex<IdType, 
-                                RTScheduling::DistributableThread_var, 
-                                TAO_DTId_Hash, 
-                                ACE_Equal_To<IdType>, 
-                                TAO_SYNCH_MUTEX> 
-  DT_Hash_Map;
-
-typedef ACE_Hash_Map_Iterator_Ex<IdType, 
-                                 RTScheduling::DistributableThread_var, 
-                                 TAO_DTId_Hash, 
-                                 ACE_Equal_To<IdType>, 
-                                 TAO_SYNCH_MUTEX> 
-  DT_Hash_Map_Iterator;
-
-typedef ACE_Hash_Map_Entry<IdType,
-                           RTScheduling::DistributableThread_var> 
-  DT_Hash_Map_Entry;
+typedef ACE_Hash_Map_Manager_Ex<IdType, RTScheduling::DistributableThread_var, TAO_DTId_Hash, ACE_Equal_To<IdType>, TAO_SYNCH_MUTEX> DT_Hash_Map;
+typedef ACE_Hash_Map_Iterator_Ex<IdType, RTScheduling::DistributableThread_var, TAO_DTId_Hash, ACE_Equal_To<IdType>, TAO_SYNCH_MUTEX> DT_Hash_Map_Iterator;
+typedef ACE_Hash_Map_Entry <IdType,RTScheduling::DistributableThread_var> DT_Hash_Map_Entry;
 
 class TAO_RTScheduler_Current;
 class TAO_RTScheduler_Current_var;
 
 typedef TAO_RTScheduler_Current* TAO_RTScheduler_Current_ptr;
 
-class TAO_RTScheduler_Export TAO_RTScheduler_Current
-  : public RTScheduling::Current,
-    public TAO_Local_RefCounted_Object
+class TAO_RTScheduler_Export TAO_RTScheduler_Current: 
+public RTScheduling::Current,
+  public TAO_Local_RefCounted_Object
 {
  public:
   
@@ -173,7 +159,7 @@ class TAO_RTScheduler_Export TAO_RTScheduler_Current
       return (TAO_RTScheduler_Current_ptr)0;
     }
 
-  virtual void *_tao_QueryInterface (ptrdiff_t type);
+  virtual void *_tao_QueryInterface (ptr_arith_t type);
 
   virtual const char* _interface_repository_id (void) const;
   //@}

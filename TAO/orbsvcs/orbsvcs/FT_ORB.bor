@@ -27,7 +27,6 @@ OBJFILES = \
         $(OBJDIR)\FT_PolicyFactory.obj \
 	$(OBJDIR)\FT_Service_Activate.obj \
         $(OBJDIR)\FT_Service_Callbacks.obj \
-        $(OBJDIR)\FT_ClientRequest_Interceptor.obj \
         $(OBJDIR)\FT_ORBInitializer.obj
 
 RESOURCE = $(OBJDIR)\FaultTolerance.res
@@ -38,7 +37,10 @@ CFLAGS = \
 	$(TAO_PORTABLESERVER_CFLAGS) \
 	$(TAO_IORMANIP_CFLAGS) \
 	$(TAO_SVC_UTILS_CFLAGS)	\
-   $(TAO_FTORB_CFLAGS) \
+	$(TAO_NAMING_CFLAGS) \
+	$(TAO_EVENT_CFLAGS) \
+	$(TAO_NOTIFY_CFLAGS) \
+        $(TAO_FTORB_CFLAGS) \
 	-DTAO_FT_BUILD_DLL
 
 CPPDIR = .;FaultTolerance
@@ -53,7 +55,10 @@ LIBFILES = \
 	$(TAO_LIB) \
 	$(TAO_PORTABLESERVER_LIB) \
 	$(TAO_IORMANIP_LIB) \
-   $(TAO_SVC_UTILS_LIB)
+	$(TAO_SVC_UTILS_LIB) \
+	$(TAO_NAMING_LIB) \
+	$(TAO_EVENT_LIB) \
+	$(TAO_NOTIFY_LIB)
 
 all: idl_src_files
 

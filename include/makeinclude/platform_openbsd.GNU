@@ -23,7 +23,15 @@ endif
 CC              = gcc
 CXX		= g++
 
+# Setting the internal name and version of shared libraries isn't supported
+# by OpenBSD.  In fact, the -h option gives an error and interestingly
+# enough, the -soname option doesn't but just ignores its parameter.
+SONAME =
+
+include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
+
 CFLAGS          += -W -Wall -Wpointer-arith -pipe
+CCFLAGS         += $(CFLAGS) $(TEMPLATES_FLAG)
 DCFLAGS         += -g
 LDFLAGS		+= -Wl,-rpath $(ACE_ROOT)/ace
 DLD             = $(CXX)
@@ -44,16 +52,3 @@ ifeq ($(threads),1)
 LDFLAGS         += -pthread
 CFLAGS          += -D_THREAD_SAFE -DACE_HAS_THREADS
 endif # threads
-
-# Setting the internal name and version of shared libraries isn't supported
-# by OpenBSD.  In fact, the -h option gives an error and interestingly
-# enough, the -soname option doesn't but just ignores its parameter.
-SONAME =
-
-# Test for template instantiation, add to SOFLAGS if SONAME set, 
-# add -E to LDFLAGS if using GNU ld
-#
-include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
-
-CCFLAGS         += $(CFLAGS) $(TEMPLATES_FLAG)
-

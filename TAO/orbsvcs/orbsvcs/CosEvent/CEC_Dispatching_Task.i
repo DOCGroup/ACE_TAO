@@ -53,27 +53,3 @@ TAO_CEC_Push_Command::TAO_CEC_Push_Command (TAO_CEC_ProxyPushSupplier* proxy,
 
   this->proxy_->_incr_refcnt ();
 }
-
-// ****************************************************************
-
-#if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
-ACE_INLINE
-TAO_CEC_Invoke_Command::TAO_CEC_Invoke_Command (TAO_CEC_ProxyPushSupplier* proxy,
-                                                TAO_CEC_TypedEvent& typed_event,
-                                                ACE_Data_Block* data_block,
-                                                ACE_Allocator *mb_allocator)
-  :  TAO_CEC_Dispatch_Command (data_block, mb_allocator),
-     proxy_ (proxy)
-{
-  //
-  // Efficient copy, steal the buffer from <event>
-  // We cannot do this on the initialization because get_buffer()
-  // could get called first, effectively setting maximum() and
-  // length() to 0!
-  //
-  // @@ TODO
-  this->typed_event_ = typed_event;
-
-  this->proxy_->_incr_refcnt ();
-}
-#endif /* TAO_HAS_TYPED_EVENT_CHANNEL */

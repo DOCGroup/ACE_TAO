@@ -13,7 +13,7 @@
 #ifndef TAO_CDR_ENCAPS_CODEC_H
 #define TAO_CDR_ENCAPS_CODEC_H
 
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #include "TAO_Export.h"
 
@@ -21,7 +21,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "IOP_CodecC.h"
+#include "IOPC.h"
 #include "LocalObject.h"
 
 // This is to remove "inherits via dominance" warnings from MSVC.
@@ -136,6 +136,6 @@ private:
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 
 #endif  /* TAO_CDR_ENCAPS_CODEC_H */

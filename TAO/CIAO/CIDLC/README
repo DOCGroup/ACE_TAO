@@ -1,27 +1,17 @@
+
 The C++ source files in this directory are compiled into the
 code generators and driver for the CIAO CIDL compiler.
 
 The CIDL compiler's front end is built from files in the
 $CIAO_ROOT/CCF directory.
 
-The CIAO CIDL compiler requires two libraries:
+The CIAO CIDL compiler uses the Boost library, which may be
+downloaded from:
 
-* the Boost library, which may be downloaded from:
+http://www.boost.org
 
-  http://www.boost.org
-
-* the Utility library, which can be downloaded from:
-
-  ftp://ftp.kolpackov.net/pub/Utility/Utility-1.2.1.tar.bz2
-
-
-Once compiled and installed, you have to define two environment
-variables for them:
-
-BOOST_ROOT
-UTILITY_ROOT
-
-indicating where these libraries have been installed.
+See documentation files in $(CIAO_ROOT)/CCF/External/Utility/Documentation
+for more information on installation, supported platforms, design, etc.
 
 Binary executables for the CIDL compiler are available at
 
@@ -57,5 +47,3 @@ installations like /usr/bin/ciao_cidl are non-conformant the decision was
 made to call CIAO's CIDLC execuatable ciao_cidlc.
 
 -boris
-
-$Id$

@@ -366,8 +366,8 @@ CORBA::Any_out::operator-> (void)
 ACE_INLINE void
 TAO::Any_Impl::free_value (void)
 {
-  // We always have to do this.
-  CORBA::release (this->type_);
+  // Does nothing so that subclasses for basic types don't have to
+  // override it.
 }
 
 ACE_INLINE CORBA::TypeCode_ptr
@@ -385,8 +385,7 @@ TAO::Any_Impl::_tao_get_typecode (void) const
 ACE_INLINE void
 TAO::Any_Impl::type (CORBA::TypeCode_ptr tc)
 {
-  CORBA::release (this->type_);
-  this->type_ = CORBA::TypeCode::_duplicate (tc);
+  this->type_ = tc;
 }
 
 ACE_INLINE ACE_Message_Block *

@@ -32,22 +32,5 @@
 
 ACE_RCSID(Sched, Reconfig_Scheduler, "$Id$")
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template void maintain_scheduling_array <> (TAO_Reconfig_Scheduler_Entry **&,
-                                            long&, RtecScheduler::handle_t ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException));
-
-template void maintain_scheduling_array <> (TAO_RT_Info_Tuple **&, long&,
-                                   RtecScheduler::handle_t ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException));
-#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-template void maintain_scheduling_array <> (TAO_Reconfig_Scheduler_Entry **&,
-                                            long&, RtecScheduler::handle_t ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException));
-
-template void maintain_scheduling_array <> (TAO_RT_Info_Tuple **&, long&,
-                                   RtecScheduler::handle_t ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException));
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 #endif /* TAO_RECONFIG_SCHEDULER_C */

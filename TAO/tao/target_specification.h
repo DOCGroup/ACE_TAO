@@ -1,4 +1,4 @@
-// -*- C++ -*-
+//-*- C++ -*-
 
 //=============================================================================
 /**
@@ -8,6 +8,8 @@
  *
  *  A class that encapsulates the target identification details.
  *
+ *
+ *
  *  @author  Balachandran  Natarajan <bala@cs.wustl.edu>
  */
 //=============================================================================
@@ -15,21 +17,11 @@
 
 #ifndef TAO_TARGET_SPECIFICATION_H
 #define TAO_TARGET_SPECIFICATION_H
+#include "ace/pre.h"
 
-#include /**/ "ace/pre.h"
+#include "tao/Object_KeyC.h"
+#include "tao/IOPC.h"
 
-#include "tao/corbafwd.h"
-
-namespace IOP
-{
-  struct IOR;
-  struct TaggedProfile;
-}
-
-namespace TAO
-{
-  class ObjectKey;
-}
 
 /**
  * @class TAO_Target_Specification
@@ -149,5 +141,5 @@ private:
 #include "target_specification.i"
 #endif /* defined INLINE */
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 #endif /*TAO_TARGET_SPECIFICATION_H*/

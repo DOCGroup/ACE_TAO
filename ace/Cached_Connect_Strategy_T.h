@@ -13,7 +13,7 @@
 #ifndef CACHED_CONNECT_STRATEGY_T_H
 #define CACHED_CONNECT_STRATEGY_T_H
 
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -26,6 +26,7 @@
 #include "ace/Caching_Strategies_T.h"
 #include "ace/Functor_T.h"
 #include "ace/Pair_T.h"
+#include "ace/Synch.h"
 
 // For linkers which cant grok long names...
 #define ACE_Cached_Connect_Strategy_Ex ACCSE
@@ -255,5 +256,5 @@ protected:
 #pragma implementation ("Cached_Connect_Strategy_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 #endif /* CACHED_CONNECT_STRATEGY_T_H */

@@ -14,7 +14,7 @@
 //=============================================================================
 #ifndef PERF_TEST_RT_CORBA_LEADER_FOLLOWER_H
 #define PERF_TEST_RT_CORBA_LEADER_FOLLOWER_H
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 #include "ace/Task.h"
 
 
@@ -25,7 +25,6 @@
 #if defined (ACE_HAS_THREADS)
 
 #include "ace/Synch_T.h"
-#include "ace/Manual_Event.h"
 
 enum DEBUGGING_RANGE
 {
@@ -106,5 +105,5 @@ private:
 
 #endif /*ACE_HAS_THREADS*/
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 #endif /*PERF_TEST_RT_CORBA_LEADER_FOLLOWER*/

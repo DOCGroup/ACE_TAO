@@ -11,12 +11,11 @@
 
 #ifndef TAO_Notify_SUPPLIER_CLIENT_H
 #define TAO_Notify_SUPPLIER_CLIENT_H
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #include "ORB_Objects.h"
 #include "ace/Task.h"
 #include "tao/corba.h"
-#include "ace/SString.h"
 
 class TAO_Notify_Lanes_Supplier;
 
@@ -67,5 +66,5 @@ protected:
   ACE_CString ior_file_name_;
 };
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 #endif /* TAO_Notify_SUPPLIER_CLIENT_H */

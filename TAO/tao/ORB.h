@@ -16,7 +16,7 @@
 #ifndef TAO_ORB_H
 #define TAO_ORB_H
 
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #include "corbafwd.h"
 
@@ -33,7 +33,7 @@
 // IRIX needs this for the throw specs
 #include "PolicyC.h"
 
-#include "ace/Thread_Mutex.h"
+#include "ace/Synch.h"
 
 typedef enum
 {
@@ -105,7 +105,7 @@ namespace CORBA
 
       virtual CORBA::Exception *_tao_duplicate (void) const;
 
-      virtual void _raise (void) const;
+      virtual void _raise (void);
 
       virtual void _tao_encode (TAO_OutputCDR &
                                 ACE_ENV_ARG_DECL_NOT_USED) const;
@@ -608,6 +608,12 @@ namespace CORBA
     TAO_ValueFactory_Map *valuetype_factory_map_;
 #endif /**/
 
+    /// Pointer to the adapter..
+    /// @@ NOTE this should have ideally been in the ORB_core like the
+    /// others. Continuing on the earlier mistake we are adding it to
+    /// the ORB.
+    TAO_Valuetype_Adapter *valuetype_adapter_;
+
     /// Decides whether to use the URL notation or to use IOR notation.
     CORBA::Boolean use_omg_ior_format_;
 
@@ -625,5 +631,5 @@ namespace CORBA
 # include "tao/ORB.i"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 #endif /* TAO_ORB_H */

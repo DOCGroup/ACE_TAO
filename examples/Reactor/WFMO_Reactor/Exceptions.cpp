@@ -23,10 +23,6 @@
 //
 // ============================================================================
 
-#include "ace/OS.h"
-
-#if defined (ACE_WIN32)
-
 #include "ace/WFMO_Reactor.h"
 
 ACE_RCSID(WFMO_Reactor, Exceptions, "$Id$")
@@ -99,10 +95,3 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 
   return 0;
 }
-#else /* !ACE_WIN32 */
-int
-ACE_TMAIN (int, ACE_TCHAR *[])
-{
-  return 0;
-}
-#endif /* ACE_WIN32 */

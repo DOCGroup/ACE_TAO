@@ -35,7 +35,6 @@
 #include "ace/Task.h"
 #include "ace/SOCK_Acceptor.h"
 #include "ace/SOCK_Connector.h"
-#include "ace/Auto_Event.h"
 
 ACE_RCSID(tests, MT_Reference_Counted_Event_Handler_Test, "$Id$")
 
@@ -1377,7 +1376,7 @@ template class test<ACE_WFMO_Reactor>;
 int
 run_main (int, ACE_TCHAR *[])
 {
-  ACE_START_TEST (ACE_TEXT ("MT_Reference_Counted_Event_Handler_Test"));
+  ACE_START_TEST (ACE_TEXT ("Timer_Cancellation_Test"));
 
   ACE_ERROR ((LM_INFO,
               ACE_TEXT ("threads not supported on this platform\n")));

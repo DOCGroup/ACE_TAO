@@ -19,7 +19,6 @@
 // =====================================================================
 
 #include "test_config.h"
-#include "ace/OS.h"
 
 ACE_RCSID(tests, Aio_Platform_Test, "$Id$")
 

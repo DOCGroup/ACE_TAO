@@ -6,7 +6,6 @@
 #include "JAWS/Cache_Manager_T.h"
 #include "JAWS/Cache_Hash_T.h"
 #include "JAWS/Cache_List_T.h"
-#include "ace/streams.h"
 
 class Cache_Manager;
 
@@ -231,7 +230,7 @@ JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
   if (result == -1)
     {
       if (size/1024 <= this->maxobjsize_)
-        std::cerr << "MAKE failed.  Bummer!" << std::endl;
+        cerr << "MAKE failed.  Bummer!" << endl;
       else
         this->DROP_i (obj);
       return -1;
@@ -245,7 +244,7 @@ JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
   result = this->hash_->rebind (key, obj, old_key, old_obj);
   if (result == -1)
     {
-      std::cerr << "*** hash bind error: " << key << std::endl;
+      cerr << "*** hash bind error: " << key << endl;
       obj->release ();
       this->DROP_i (obj);
       return -1;
@@ -261,7 +260,7 @@ JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
   result = this->heap_->insert (key, obj);
   if (result == -1)
     {
-      std::cerr << "*** heap insertion error: " << key << std::endl;
+      cerr << "*** heap insertion error: " << key << endl;
       this->hash_->unbind (key);
       obj->release ();
       this->DROP_i (obj);
@@ -283,19 +282,19 @@ JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
   JAWS_Cache_Object *temp_object;
 
 #ifdef ENTERA_VERBOSE_TRACE
-  std::cerr << "*** flush key unbinding: " << key << std::endl;
+  cerr << "*** flush key unbinding: " << key << endl;
 #endif
   int result = this->hash_->unbind (key, temp_object);
   if (result == 0)
     {
       this->waterlevel_ -= temp_object->size ();
       if (this->heap_->remove (temp_object->heap_item ()) == -1)
-        std::cerr << "*** flush key heap remove failed: " << std::endl;
+        cerr << "*** flush key heap remove failed: " << endl;
       temp_object->release ();
       this->DROP_i (temp_object);
     }
   else
-    std::cerr << "*** flush key hash unbind failed: " << key << std::endl;
+    cerr << "*** flush key hash unbind failed: " << key << endl;
 
   return result;
 }
@@ -311,11 +310,11 @@ JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
   if (result == 0)
     {
 #ifdef ENTERA_VERBOSE_TRACE
-      std::cerr << "*** flush unbinding: " << temp_key << std::endl;
+      cerr << "*** flush unbinding: " << temp_key << endl;
 #endif
       result = this->hash_->unbind (temp_key);
       if (result == -1)
-        std::cerr << "*** flush hash unbind failed: " << temp_key << std::endl;
+        cerr << "*** flush hash unbind failed: " << temp_key << endl;
       result = 0;
       this->waterlevel_ -= temp_object->size ();
       temp_object->release ();
@@ -392,7 +391,7 @@ JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
 
     {
       // Don't bother to cache this.
-      std::cerr << "*** " << size << " is too small to cache" << std::endl;
+      cerr << "*** " << size << " is too small to cache" << endl;
       return -1;
     }
 
@@ -403,7 +402,7 @@ JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
         {
           if (this->FLUSH_i () == -1)
             {
-              std::cerr << "*** cache flooded, flush error" << endl;
+              cerr << "*** cache flooded, flush error" << endl;
               return -1;
             }
         }
@@ -413,10 +412,10 @@ JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
   // make sure heap has enough room
   if (this->heap_->is_full ())
     {
-      std::cerr << "*** heap full, flushing" << std::endl;
+      cerr << "*** heap full, flushing" << endl;
       if (this->FLUSH_i () == -1)
         {
-          std::cerr << "*** heap full, flush error" << std::endl;
+          cerr << "*** heap full, flush error" << endl;
           return -1;
         }
     }
@@ -424,7 +423,7 @@ JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
   obj = this->factory_->create (data, size);
   if (this->TAKE (obj) == -1)
     {
-      std::cerr << "*** take error" << std::endl;
+      cerr << "*** take error" << endl;
       this->factory_->destroy (obj);
       obj = 0;
       return -1;
@@ -462,20 +461,20 @@ JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
             {
               KEY *key = (KEY *) obj->internal ();
 #ifdef ENTERA_VERBOSE_TRACE
-              std::cerr << "*** drop large unbinding: " << key << std::endl;
+              cerr << "*** drop large unbinding: " << key << endl;
 #endif
               result = this->hash_->unbind (*key);
               if (result == 0)
                 {
                   if (this->heap_->remove (obj->heap_item ()) == -1)
-                    std::cerr << "*** drop large heap remove failed: " << std::endl;
+                    cerr << "*** drop large heap remove failed: " << endl;
                   this->factory_->destroy (obj);
                   delete key;
                   obj = 0;
                   result = 1;
                 }
               else
-                std::cerr << "*** drop large hash unbind failed: " << key << std::endl;
+                cerr << "*** drop large hash unbind failed: " << key << endl;
             }
         }
       return result;

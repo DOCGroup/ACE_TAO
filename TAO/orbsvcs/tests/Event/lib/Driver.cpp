@@ -158,7 +158,7 @@ EC_Driver::run_cleanup (ACE_ENV_SINGLE_ARG_DECL)
   this->cleanup_consumers ();
   this->cleanup_ec ();
 
-  this->root_poa_->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
+  this->root_poa_->destroy (0, 0 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   this->root_poa_ = PortableServer::POA::_nil ();
 

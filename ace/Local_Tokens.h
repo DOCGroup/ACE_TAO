@@ -32,10 +32,10 @@
  *  Note that the locking classes defined in this file are *not*
  *  intended to be used as general-purpose synchronization
  *  mechanisms, such as mutexes or semaphores.  Instead, you should
- *  use the ACE_Recursive_Thread_Mutex, ACE_Thread_Mutex,
- *  ACE_Thread_Semaphore, etc., that are defined in
+ *  use the <ACE_Recursive_Thread_Mutex>, <ACE_Thread_Mutex>,
+ *  <ACE_Thread_Semaphore>, etc., that are defined in
  *  $ACE_ROOT/ace/Synch.h and $ACE_ROOT/ace/Synch_T.h or the
- *  ACE_Token that's defined in $ACE_ROOT/ace/Token.h.
+ *  <ACE_Token> that's defined in $ACE_ROOT/ace/Token.h.
  *
  *
  */
@@ -43,7 +43,7 @@
 
 #ifndef ACE_LOCAL_MUTEX_H
 #define ACE_LOCAL_MUTEX_H
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -1110,5 +1110,5 @@ protected:
 #if defined (__ACE_INLINE__)
 #include "ace/Local_Tokens.i"
 #endif /* __ACE_INLINE__ */
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 #endif /* ACE_LOCAL_MUTEX_H */

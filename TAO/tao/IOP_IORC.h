@@ -31,7 +31,7 @@
 #ifndef _TAO_IDL_ORIG_IOP_IORC_H_
 #define _TAO_IDL_ORIG_IOP_IORC_H_
 
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #include "tao/corbafwd.h"
 
@@ -132,11 +132,11 @@ TAO_NAMESPACE  IOP
   // TAO_IDL - Generated from
   // be/be_type.cpp:249
 
-#if defined (HPUX) && defined (IOR)
-   /* HP-UX 11.11 defines IOR in /usr/include/pa/inline.h
-      and we don't want that definition.  See IOP_IORC.h. */
-# undef IOR
-#endif /* HPUX && IOR */
+#ifdef HPUX_11
+  // Remove clash with /usr/include/machine/inline.h and
+  // /usr/include/pa/inline.h
+#undef IOR
+#endif
   struct IOR;
 
   typedef
@@ -921,5 +921,5 @@ TAO_Export CORBA::Boolean operator>> (
 #pragma option pop
 #endif /* __BORLANDC__ */
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 #endif /* ifndef */

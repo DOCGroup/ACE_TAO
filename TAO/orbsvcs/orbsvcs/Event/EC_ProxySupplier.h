@@ -14,10 +14,10 @@
 
 #ifndef TAO_EC_PROXYSUPPLIER_H
 #define TAO_EC_PROXYSUPPLIER_H
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #include "orbsvcs/RtecEventChannelAdminS.h"
-#include "EC_Filter.h"
+#include "orbsvcs/Event/EC_Filter.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -115,7 +115,7 @@ public:
   /// Pushes to the consumer, verifies that it is connected and that it
   /// is not suspended.
   /**
-   * These methods take @a consumer argument  because during the time
+   * These methods take <consumer> argument  because during the time
    * the filters have been processing the event, this proxy's consumer
    * may have changed.
    */
@@ -220,5 +220,5 @@ private:
 #include "EC_ProxySupplier.i"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 #endif /* TAO_EC_PROXYSUPPLIER_H */

@@ -20,8 +20,6 @@
 #include "Sync_Strategies.h"
 #include "Buffering_Constraint_Policy.h"
 #include "debug.h"
-#include "Policy_Set.h"
-#include "Policy_Manager.h"
 
 #include "ace/Auto_Ptr.h"
 
@@ -148,23 +146,6 @@ TAO_Stub::add_forward_profiles (const TAO_MProfile &mprofiles)
   this->orb_core_->reset_service_profile_flags ();
 }
 
-CORBA::Boolean
-TAO_Stub::service_profile_selection (void)
-{
-  // @@todo: This method is deprecated. Needs to be removed after
-  //         1.2.1 goes out.
-  TAO_Profile *profile = 0;
-
-  this->orb_core_->service_profile_selection (this->base_profiles_,
-                                              profile);
-  if (profile)
-    {
-      this->set_profile_in_use_i (profile);
-      return 1;
-    }
-
-  return 0;
-}
 
 int
 TAO_Stub::create_ior_info (IOP::IOR *&ior_info,
@@ -237,6 +218,7 @@ TAO_Stub::create_ior_info (IOP::IOR *&ior_info,
   // Error, there was no match
   return -1;
 }
+
 
 const TAO::ObjectKey &
 TAO_Stub::object_key (void) const
@@ -477,6 +459,10 @@ CORBA::Policy_ptr
 TAO_Stub::get_policy (CORBA::PolicyType type
                       ACE_ENV_ARG_DECL)
 {
+
+  if (this->policies_ == 0)
+    return CORBA::Policy::_nil ();
+
   // Some policies can only be set locally on the client, while others
   // can only be exported in the IOR by the server, and yet others can
   // be set by both by client and server.  Furthermore, reconciliation

@@ -40,7 +40,7 @@ sub new {
 
   $self->{'path'}     = $path;
   $self->{'name'}     = $name;
-  $self->{'version'}  = "2.1";
+  $self->{'version'}  = 1.9;
   $self->{'types'}    = {};
   $self->{'creators'} = \@creators;
   $self->{'default'}  = $creators[0];
@@ -91,18 +91,17 @@ sub optionError {
   my($base) = $self->{'name'};
 
   if (defined $line) {
-    print STDERR "ERROR: $line\n";
+    print STDERR "$line\n";
   }
   my($spaces) = (' ' x (length($base) + 8));
   print STDERR "$base v$self->{'version'}\n" .
-               "Usage: $base [-global <file>] [-include <directory>] [-recurse]]\n" .
-               $spaces . "[-ti <dll | lib | dll_exe | lib_exe>:<file>] [-hierarchy]\n" .
+               "Usage: $base [-global <file>] [-include <directory>] [-recurse]\n" .
+               $spaces . "[-ti <dll | lib | dll_exe | lib_exe>:<file>]\n" .
                $spaces . "[-template <file>] [-relative NAME=VAR] [-base <project>]\n" .
                $spaces . "[-noreldefs] [-notoplevel] [-static] [-static_only]\n" .
                $spaces . "[-value_template <NAME+=VAL | NAME=VAL | NAME-=VAL>]\n" .
                $spaces . "[-value_project <NAME+=VAL | NAME=VAL | NAME-=VAL>]\n" .
-               $spaces . "[-feature_file <file name>] [-make_coexistence]\n" .
-               $spaces . "[-exclude <directories>]\n" .
+               $spaces . "[-feature_file <file name>]\n" .
                $spaces . "[-type <";
 
   my(@keys) = sort keys %{$self->{'types'}};
@@ -122,14 +121,11 @@ sub optionError {
   print STDERR
 "       -base           Add <project> as a base project to each generated\n" .
 "                       project file.\n" .
-"       -exclude        Use this option to exclude directories when searching\n" .
-"                       for input files.\n" .
 "       -feature_file   Specifies the feature file to read before processing.\n" .
 "                       The default feature file is default.features under the\n" .
 "                       config directory.\n" .
 "       -global         Specifies the global input file.  Values stored\n" .
 "                       within this file are applied to all projects.\n" .
-"       -hierarchy      Generate a workspace in a hierarchical fashion.\n" .
 "       -include        Specifies a directory to search when looking for base\n" .
 "                       projects, template input files and templates.  This\n" .
 "                       option can be used multiple times to add directories.\n" .
@@ -145,8 +141,6 @@ sub optionError {
 "       -relative       Any \$() variable in an mpc that is matched to NAME\n" .
 "                       is replaced by VAR only if VAR can be made into a\n" .
 "                       relative path based on the current working directory.\n" .
-"       -make_coexistence If multiple 'make' based project types are\n" .
-"                       generated, they will be named such that they can coexist.\n" .
 "       -noreldefs      Do not try to generate default relative definitions.\n" .
 "       -notoplevel     Do not generate the top level target file.  Files\n" .
 "                       are still process, but no top level file is created.\n" .
@@ -331,10 +325,7 @@ sub run {
                                   $options->{'toplevel'},
                                   $options->{'baseprojs'},
                                   $global_feature_file,
-                                  $options->{'feature_file'},
-                                  $options->{'hierarchy'},
-                                  $options->{'exclude'},
-                                  $options->{'coexistence'});
+                                  $options->{'feature_file'});
       if ($base ne $file) {
         my($dir) = ($base eq '' ? $file : dirname($file));
         if (!$generator->cd($dir)) {

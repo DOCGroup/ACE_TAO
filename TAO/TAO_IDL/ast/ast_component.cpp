@@ -7,7 +7,6 @@
 #include "utl_indenter.h"
 #include "utl_err.h"
 #include "global_extern.h"
-#include "ace/streams.h"
 
 ACE_RCSID (ast, 
            ast_component, 

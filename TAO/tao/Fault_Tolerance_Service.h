@@ -17,7 +17,7 @@
 
 #ifndef TAO_FAULT_TOLERANCE_SERVICE_H
 #define TAO_FAULT_TOLERANCE_SERVICE_H
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #include "ace/SString.h"
 
@@ -25,10 +25,9 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
 #include "tao/corbafwd.h"
 
-class ACE_Lock;
+
 class TAO_Service_Callbacks;
 class TAO_ORB_Core;
 
@@ -99,5 +98,5 @@ private:
 # include "tao/Fault_Tolerance_Service.i"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 #endif /*TAO_FAULT_TOLERANCE_SERVICE_H*/

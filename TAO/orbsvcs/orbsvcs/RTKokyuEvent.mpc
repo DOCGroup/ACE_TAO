@@ -1,4 +1,4 @@
-project(RTKokyuEvent) : orbsvcslib, core, rtevent, rtsched, naming, svc_utils, portableserver, kokyu {
+project : orbsvcslib, core, rtevent, rtsched, kokyu {
   sharedname   = TAO_RTKokyuEvent
   dynamicflags = TAO_RTKOKYUEVENT_BUILD_DLL
   tagchecks    = RTKokyuEvent

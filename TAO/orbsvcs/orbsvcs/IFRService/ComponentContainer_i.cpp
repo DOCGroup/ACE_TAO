@@ -5,9 +5,7 @@
 #include "Repository_i.h"
 #include "InterfaceDef_i.h"
 #include "ComponentDef_i.h"
-#include "ValueDef_i.h"
 #include "IFR_Service_Utils.h"
-#include "ace/SString.h"
 
 ACE_RCSID (IFRService, 
            ComponentContainer_i, 
@@ -100,10 +98,7 @@ TAO_ComponentContainer_i::create_component_i (
       ACE_CHECK_RETURN (CORBA::ComponentIR::ComponentDef::_nil ());
           
       // Store the id for this - that's what ComponentDescription takes.
-      ACE_TString base_id;
-      this->repo_->config ()->get_string_value (TAO_IFR_Service_Utils::tmp_key_,
-                                                "id",
-                                                base_id);
+      const char *base_id = base_component->_interface_repository_id ();
       this->repo_->config ()->set_string_value (new_key,
                                                 "base_component",
                                                 base_id);
@@ -124,19 +119,17 @@ TAO_ComponentContainer_i::create_component_i (
                                                  "count",
                                                  count);
 
-      const char *supported_path = 0;
+      const char *supported_id = 0;
       char *stringified = 0;
 
       for (i = 0; i < count; ++i)
         {
           stringified = TAO_IFR_Service_Utils::int_to_string (i);
-          supported_path = 
-            TAO_IFR_Service_Utils::reference_to_path (
-                supports_interfaces[i].in ()
-              );
+          supported_id = 
+            supports_interfaces[i]->_interface_repository_id ();
           this->repo_->config ()->set_string_value (supports_key,
                                                     stringified,
-                                                    supported_path);
+                                                    supported_id);
         }
     }
 
@@ -260,11 +253,13 @@ TAO_ComponentContainer_i::create_home_i (
         }
     }
 
+  char *primary_key_path = 0;
+
   if (! CORBA::is_nil (primary_key))
     {
-      char *primary_key_path = 
+      primary_key_path = 
         TAO_IFR_Service_Utils::reference_to_path (primary_key);
-        this->repo_->config ()->set_string_value (new_key,
+        this->repo_->config ()->set_string_value (this->section_key_,
                                                   "primary_key",
                                                   primary_key_path);
     }
@@ -363,33 +358,11 @@ TAO_ComponentContainer_i::create_event_i (
 
   if (!CORBA::is_nil (base_value))
     {
-      const char *base_path = 
+      char *base_value_path = 
         TAO_IFR_Service_Utils::reference_to_path (base_value);
-          
-      // Get the servant's key into the temporary key holder, because
-      // the name clash checker for base valuetypes is static, and has
-      // no other way to know about a specific key.
-      this->repo_->config ()->expand_path (
-                                  this->repo_->root_key (),
-                                  base_path,
-                                  TAO_IFR_Service_Utils::tmp_key_,
-                                  0
-                                );
-      TAO_IFR_Service_Utils::name_exists (&TAO_ValueDef_i::name_clash,
-                                          new_key,
-                                          this->repo_,
-                                          CORBA::dk_Value
-                                          ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (CORBA::ComponentIR::EventDef::_nil ());
-          
-      ACE_TString base_value_id;
-      this->repo_->config ()->get_string_value (TAO_IFR_Service_Utils::tmp_key_,
-                                                "id",
-                                                base_value_id);
-
       this->repo_->config ()->set_string_value (new_key,
                                                 "base_value",
-                                                base_value_id);
+                                                base_value_path);
     }
 
   CORBA::ULong length = abstract_base_values.length ();
@@ -428,9 +401,6 @@ TAO_ComponentContainer_i::create_event_i (
                                             1,
                                             supported_key);
 
-      this->repo_->config ()->set_integer_value (supported_key,
-                                                 "count",
-                                                 length);
       char *supported_path = 0;
 
       for (i = 0; i < length; ++i)

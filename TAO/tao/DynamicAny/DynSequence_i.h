@@ -1,19 +1,22 @@
 /* -*- C++ -*- */
+// $Id$
 
-//=============================================================================
-/**
- *  @file    DynSequence_i.h
- *
- *  $Id$
- *
- *  @author Jeff Parsons <parsons@cs.wustl.edu>
- */
-//=============================================================================
-
+// ===================================================================
+//
+// = LIBRARY
+//    TAO_DynamicAny
+//
+// = FILENAME
+//    DynSequence_i.h
+//
+// = AUTHOR
+//    Jeff Parsons <parsons@cs.wustl.edu>
+//
+// ===================================================================
 
 #ifndef TAO_DYNSEQUENCE_I_H
 #define TAO_DYNSEQUENCE_I_H
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #include "DynamicAny.h"
 
@@ -31,30 +34,31 @@
 # pragma warning (disable:4250)
 #endif /* _MSC_VER */
 
-/**
- * @class TAO_DynSequence_i
- *
- * Implementation of Dynamic Any type for Sequences.
- */
 class TAO_DynamicAny_Export TAO_DynSequence_i
   : public virtual DynamicAny::DynSequence,
     public virtual TAO_DynCommon,
     public virtual TAO_Local_RefCounted_Object
 {
+  // = TITLE
+  //    TAO_DynSequence_i
+  //
+  // = DESCRIPTION
+  //    Implementation of Dynamic Any type for Sequences.
+  //
 public:
-  /// Constructor.
   TAO_DynSequence_i (void);
+  // Constructor.
 
-  /// Destructor.
   ~TAO_DynSequence_i (void);
+  // Destructor.
 
-  /// Initialize using just a TypeCode.
   void init (CORBA::TypeCode_ptr tc
              ACE_ENV_ARG_DECL);
+  // Initialize using just a TypeCode.
 
-  /// Initialize using an Any.
   void init (const CORBA::Any& any
              ACE_ENV_ARG_DECL);
+  // Initialize using an Any.
 
   // = LocalObject methods.
   static TAO_DynSequence_i *_narrow (
@@ -170,13 +174,13 @@ private:
   TAO_DynSequence_i &operator= (const TAO_DynSequence_i &src);
 
 private:
-  /// Each component is also a DynAny.
   ACE_Array_Base<DynamicAny::DynAny_var> da_members_;
+  // Each component is also a DynAny.
 };
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
 # pragma warning(pop)
 #endif /* _MSC_VER */
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 #endif /* TAO_DYNSEQUENCE_I_H */

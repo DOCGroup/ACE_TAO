@@ -18,7 +18,10 @@ endif # ! repo
 CC      = i386-nto-gcc
 CXX     = i386-nto-g++
 
+include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
+
 CFLAGS  += -pipe -W -Wall -Wpointer-arith
+CCFLAGS += $(CFLAGS) $(TEMPLATES_FLAG)
 DCFLAGS += -g
 DLD     = $(CXX)
 LD      = $(CXX)
@@ -32,10 +35,3 @@ RANLIB  = i386-nto-ranlib
 SOFLAGS += -G $(CPPFLAGS) -shared
 SOBUILD = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<
 PRELIB  = @true
-
-# Test for template instantiation, add to SOFLAGS if SONAME set, 
-# add -E to LDFLAGS if using GNU ld
-#
-include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
-
-CCFLAGS += $(CFLAGS) $(TEMPLATES_FLAG)

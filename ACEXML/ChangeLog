@@ -1,34 +1,3 @@
-Sat Jul 19 18:38:50 UTC 2003  Don Hinton  <dhinton@dresystems.com>
-
-        * ACEXML/apps/svcconf/Svcconf.h:
-        * ACEXML/common/*.h:
-        * ACEXML/parser/*.h:
-        * ACEXML/parser/parser/*.h:
-          Added "/**/" between the #include and filename for pre.h and
-          post.h so Doxygen won't include them in the file reference tree
-          graphs.
-
-Fri Jul 18 10:29:55 2003  Krishnakumar B  <kitty@nospam.invalid.domain>
-
-        * tests/NamespaceSupport_Test.cpp (ACE_TMAIN): Added
-          initialization of ACEXML_NamespaceSupport so that we don't
-          crash.
-
-        * tests/ContentHandler_Test.cpp: Removed "</xml>" at the end of
-          the ACEXML_StrCharStream. XML is not HTML. Added a print
-          statement to the catch clause so that we know what is happening
-          when exception occurs.
-
-Mon Jul 14 18:49:01 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
-
-        * apps/svcconf/Makefile:
-        * common/Makefile:
-        * examples/SAXPrint/Makefile:
-        * parser/parser/Makefile:
-        * tests/Makefile:
-          Removed windows specific rules. They are not needed and only
-          cause problems when using a different command shell then cmd
-          like msys. This solves errors in the MinGW build.
 Sat Jul 5 13:33:36 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * Makefile:

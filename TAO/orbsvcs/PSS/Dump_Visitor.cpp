@@ -1,7 +1,6 @@
 // $Id$
 
 #include "Dump_Visitor.h"
-#include "ace/streams.h"
 
 Dump_Visitor::Dump_Visitor (int depth)
   : depth_ (depth)

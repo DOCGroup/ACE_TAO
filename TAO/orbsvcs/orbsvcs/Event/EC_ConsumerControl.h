@@ -14,9 +14,9 @@
 
 #ifndef TAO_EC_CONSUMERCONTROL_H
 #define TAO_EC_CONSUMERCONTROL_H
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
-#include /**/ "event_export.h"
+#include "orbsvcs/Event/event_export.h"
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -37,10 +37,11 @@ class TAO_EC_ProxyPushSupplier;
 class TAO_RTEvent_Export TAO_EC_ConsumerControl
 {
 public:
-  /// Constructor.
+  /// Constructor.  It does not assume ownership of the <event_channel>
+  /// parameter.
   TAO_EC_ConsumerControl (void);
 
-  /// Destructor.
+  /// Destructor...
   virtual ~TAO_EC_ConsumerControl (void);
 
   /// Activate any internal threads or timers used to poll the state of
@@ -68,5 +69,5 @@ public:
 #include "EC_ConsumerControl.i"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 #endif /* TAO_EC_CONSUMERCONTROL_H */

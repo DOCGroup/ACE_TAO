@@ -12,7 +12,10 @@ versioned_so = 1
 CC              = gcc
 CXX		= g++
 
+include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
+
 CFLAGS          += -w -fno-strict-prototypes
+CCFLAGS         += $(CFLAGS) $(TEMPLATES_FLAG)
 DCFLAGS         += -g
 DLD             = ld
 LD		= $(CXX)
@@ -26,9 +29,3 @@ RANLIB          = ranlib
 SOFLAGS += -Bshareable -x /usr/lib/c++rt0.o
 SOBUILD = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so  $<
 PRELIB = @echo
-
-# Test for template instantiation, add to SOFLAGS if SONAME set, 
-# add -E to LDFLAGS if using GNU ld
-#
-include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
-CCFLAGS         += $(CFLAGS) $(TEMPLATES_FLAG)

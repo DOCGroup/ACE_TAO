@@ -12,6 +12,8 @@
 #include "ace/SOCK_Acceptor.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
+#include "ace/Synch.h"
+
 ACE_RCSID(ace, SOCK_Acceptor, "$Id$")
 
 ACE_ALLOC_HOOK_DEFINE(ACE_SOCK_Acceptor)
@@ -205,9 +207,7 @@ ACE_SOCK_Acceptor::accept (ACE_SOCK_Stream &new_stream,
 void
 ACE_SOCK_Acceptor::dump (void) const
 {
-#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_SOCK_Acceptor::dump");
-#endif /* ACE_HAS_DUMP */
 }
 
 int

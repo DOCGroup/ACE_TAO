@@ -27,6 +27,7 @@
 // ============================================================================
 
 #include "tao/Typecode.h"
+#include "tao/ORB.h"
 #include "tao/Object.h"
 #include "tao/Object_KeyC.h"
 #include "tao/PolicyC.h"
@@ -35,14 +36,13 @@
 #include "tao/WrongTransactionC.h"
 #include "tao/NVList.h"
 #include "tao/BoundsC.h"
-#include "tao/CORBA_String.h"
 
 #if (TAO_HAS_AMI_POLLER == 1)
 #include "tao/PollableC.h"
 #endif /* TAO_HAS_AMI_POLLER == 1 */
 
-ACE_RCSID (tao,
-           Typecode_Constants,
+ACE_RCSID (tao, 
+           Typecode_Constants, 
            "$Id$")
 
 // Declare all the standard typecodes owned by the ORB

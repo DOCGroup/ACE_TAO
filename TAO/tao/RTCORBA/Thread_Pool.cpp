@@ -7,14 +7,13 @@ ACE_RCSID (RTCORBA,
            "$Id$")
 
 #include "tao/Exception.h"
+#include "ace/Auto_Ptr.h"
 #include "tao/ORB_Core.h"
-#include "tao/ORB.h"
 #include "tao/Acceptor_Registry.h"
 #include "tao/Transport_Cache_Manager.h"
 #include "tao/debug.h"
 #include "tao/RTCORBA/Priority_Mapping_Manager.h"
 #include "tao/Leader_Follower.h"
-#include "ace/Auto_Ptr.h"
 
 #if !defined (__ACE_INLINE__)
 # include "Thread_Pool.i"

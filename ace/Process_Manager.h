@@ -12,8 +12,9 @@
 
 #ifndef ACE_PROCESS_MANAGER_H
 #define ACE_PROCESS_MANAGER_H
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
+#include "ace/Synch.h"
 #include "ace/Reactor.h"
 #include "ace/Event_Handler.h"
 
@@ -22,10 +23,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Process.h"
-
-#if defined (ACE_HAS_THREADS)
-#  include "ace/Recursive_Thread_Mutex.h"
-#endif /* ACE_HAS_THREADS */
 
 /**
  * @class ACE_Process_Descriptor
@@ -396,5 +393,5 @@ private:
 #include "ace/Process_Manager.i"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 #endif /* ACE_PROCESS_MANAGER_H */

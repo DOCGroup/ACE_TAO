@@ -28,7 +28,6 @@ CFLAGS = \
         $(TAO_NOTIFYTESTS_CFLAGS) \
         $(TAO_NOTIFY_CFLAGS) \
         $(TAO_ETCL_CFLAGS) \
-        $(TAO_DYNAMICANY_CFLAGS) \
         $(TAO_MESSAGING_CFLAGS)
 
 CPPDIR = .
@@ -44,7 +43,6 @@ LIBFILES = \
         $(TAO_NOTIFYTESTS_LIB) \
         $(TAO_NOTIFY_LIB) \
         $(TAO_ETCL_LIB) \
-        $(TAO_DYNAMICANY_LIB) \
         $(TAO_MESSAGING_LIB)
 
 !include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

@@ -43,7 +43,7 @@
 #include "IORTableC.i"
 #endif /* !defined INLINE */
 
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/exception_cs.cpp:63
 
 IORTable::AlreadyBound::AlreadyBound (void)
@@ -105,7 +105,7 @@ IORTable::AlreadyBound::_tao_duplicate (void) const
   return result;
 }
 
-void IORTable::AlreadyBound::_raise (void) const
+void IORTable::AlreadyBound::_raise (void)
 {
   TAO_RAISE (*this);
 }
@@ -119,7 +119,7 @@ void IORTable::AlreadyBound::_tao_encode (
     {
       return;
     }
-
+  
   ACE_THROW (CORBA::MARSHAL ());
 }
 
@@ -132,13 +132,13 @@ void IORTable::AlreadyBound::_tao_decode (
     {
       return;
     }
-
+  
   ACE_THROW (CORBA::MARSHAL ());
 }
 
 
 
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/exception_cs.cpp:63
 
 IORTable::NotFound::NotFound (void)
@@ -200,7 +200,7 @@ IORTable::NotFound::_tao_duplicate (void) const
   return result;
 }
 
-void IORTable::NotFound::_raise (void) const
+void IORTable::NotFound::_raise (void)
 {
   TAO_RAISE (*this);
 }
@@ -214,7 +214,7 @@ void IORTable::NotFound::_tao_encode (
     {
       return;
     }
-
+  
   ACE_THROW (CORBA::MARSHAL ());
 }
 
@@ -227,7 +227,7 @@ void IORTable::NotFound::_tao_decode (
     {
       return;
     }
-
+  
   ACE_THROW (CORBA::MARSHAL ());
 }
 
@@ -314,7 +314,7 @@ IORTable::tao_Table_cast::tao_upcast (
       >
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:232
 
 IORTable::Table::Table (void)
@@ -332,7 +332,7 @@ IORTable::Table::_narrow (
   return Table::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
 }
 
-IORTable::Table_ptr
+IORTable::Table_ptr 
 IORTable::Table::_unchecked_narrow (
     CORBA::Object_ptr obj
     ACE_ENV_ARG_DECL_NOT_USED
@@ -342,7 +342,7 @@ IORTable::Table::_unchecked_narrow (
     {
       return Table::_nil ();
     }
-
+  
   return
       ACE_reinterpret_cast (
           Table_ptr,
@@ -362,14 +362,14 @@ IORTable::Table::_duplicate (Table_ptr obj)
     {
       obj->_add_ref ();
     }
-
+  
   return obj;
 }
 
 void *IORTable::Table::_tao_QueryInterface (ptrdiff_t type)
 {
   void *retv = 0;
-
+  
   if (type == ACE_reinterpret_cast (
               ptrdiff_t,
               &ACE_NESTED_CLASS (::IORTable, Table)::_tao_class_id)
@@ -388,12 +388,12 @@ void *IORTable::Table::_tao_QueryInterface (ptrdiff_t type)
             ACE_static_cast (CORBA::Object_ptr, this)
           );
     }
-
+  
   if (retv != 0)
     {
       this->_add_ref ();
     }
-
+  
   return retv;
 }
 
@@ -489,7 +489,7 @@ IORTable::tao_Locator_cast::tao_upcast (
       >
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:232
 
 IORTable::Locator::Locator (void)
@@ -507,7 +507,7 @@ IORTable::Locator::_narrow (
   return Locator::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
 }
 
-IORTable::Locator_ptr
+IORTable::Locator_ptr 
 IORTable::Locator::_unchecked_narrow (
     CORBA::Object_ptr obj
     ACE_ENV_ARG_DECL_NOT_USED
@@ -517,7 +517,7 @@ IORTable::Locator::_unchecked_narrow (
     {
       return Locator::_nil ();
     }
-
+  
   return
       ACE_reinterpret_cast (
           Locator_ptr,
@@ -537,14 +537,14 @@ IORTable::Locator::_duplicate (Locator_ptr obj)
     {
       obj->_add_ref ();
     }
-
+  
   return obj;
 }
 
 void *IORTable::Locator::_tao_QueryInterface (ptrdiff_t type)
 {
   void *retv = 0;
-
+  
   if (type == ACE_reinterpret_cast (
               ptrdiff_t,
               &ACE_NESTED_CLASS (::IORTable, Locator)::_tao_class_id)
@@ -563,12 +563,12 @@ void *IORTable::Locator::_tao_QueryInterface (ptrdiff_t type)
             ACE_static_cast (CORBA::Object_ptr, this)
           );
     }
-
+  
   if (retv != 0)
     {
       this->_add_ref ();
     }
-
+  
   return retv;
 }
 
@@ -582,3 +582,4 @@ IORTable::Locator::marshal (TAO_OutputCDR &)
 {
   return 0;
 }
+

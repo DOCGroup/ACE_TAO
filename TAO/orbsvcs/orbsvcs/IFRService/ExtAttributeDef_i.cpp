@@ -11,9 +11,9 @@ ACE_RCSID (IFRService,
            "$Id$")
 
 TAO_ExtAttributeDef_i::TAO_ExtAttributeDef_i (TAO_Repository_i *repo)
-  : TAO_IRObject_i (repo),
+  : TAO_AttributeDef_i (repo),
     TAO_Contained_i (repo),
-    TAO_AttributeDef_i (repo)
+    TAO_IRObject_i (repo)
 {
 }
 
@@ -109,7 +109,7 @@ TAO_ExtAttributeDef_i::set_exceptions_i (
   CORBA::ExcDescriptionSeq_var safe_retval = retval;
 
   this->fill_exceptions (*retval,
-                         "put_excepts"
+                         "set_excepts"
                          ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
@@ -139,7 +139,7 @@ TAO_ExtAttributeDef_i::set_exceptions_i (
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->exceptions ("put_excepts",
+  this->exceptions ("set_excepts",
                     set_exceptions);
 }
 
@@ -212,6 +212,38 @@ TAO_ExtAttributeDef_i::fill_description (
   this->fill_exceptions (desc.put_exceptions,
                          "put_excepts"
                          ACE_ENV_ARG_PARAMETER);
+}
+
+void
+TAO_ExtAttributeDef_i::exceptions (const char *sub_section,
+                                   const CORBA::ExceptionDefSeq &exceptions)
+{
+  CORBA::ULong length = exceptions.length ();
+
+  if (length == 0)
+    {
+      return;
+    }
+
+  // Create new subsection because this function should be called
+  // only on a new TAO_ExtAttributeDef_i.
+  ACE_Configuration_Section_Key excepts_key;
+  this->repo_->config ()->open_section (this->section_key_,
+                                        sub_section,
+                                        1,
+                                        excepts_key);
+  char *type_path = 0;
+
+  for (CORBA::ULong i = 0; i < length; ++i)
+    {
+      type_path = 
+        TAO_IFR_Service_Utils::reference_to_path (exceptions[i].in ());
+
+      char *stringified = TAO_IFR_Service_Utils::int_to_string (i);
+      this->repo_->config ()->set_string_value (excepts_key,
+                                                stringified,
+                                                type_path);
+    }
 }
 
 void

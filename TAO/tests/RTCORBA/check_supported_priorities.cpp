@@ -2,7 +2,6 @@
 
 #include "ace/Sched_Params.h"
 #include "tao/ORB_Core.h"
-#include "tao/ORB.h"
 
 const char *
 sched_policy_name (int sched_policy)

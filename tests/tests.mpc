@@ -131,13 +131,6 @@ project(Buffer Stream Test) : acetest {
   }
 }
 
-project(Bug_1576_Regression_Test) : acetest {
-  exename = Bug_1576_Regression_Test
-  Source_Files {
-    Bug_1576_Regression_Test.cpp
-  }
-}
-
 project(Cache Map Manager Test) : acetest {
   exename = Cache_Map_Manager_Test
   Source_Files {
@@ -451,13 +444,6 @@ project(Multicast Test) : acetest {
   }
 }
 
-project(Multihomed INET Addr Test) : acetest {
-  exename = Multihomed_INET_Addr_Test
-  Source_Files {
-    Multihomed_INET_Addr_Test.cpp
-  }
-}
-
 project(New Fail Test) : acetest {
   exename = New_Fail_Test
   Source_Files {
@@ -630,13 +616,6 @@ project(Reader Writer Test) : acetest {
   exename = Reader_Writer_Test
   Source_Files {
     Reader_Writer_Test.cpp
-  }
-}
-
-project(Recursive Condition Bug Test) : acetest {
-  exename = Recursive_Condition_Bug_Test
-  Source_Files {
-    Recursive_Condition_Bug_Test.cpp
   }
 }
 
@@ -836,13 +815,6 @@ project(UPIPE SAP Test) : acetest {
   }
 }
 
-project(Unbounded Set Test Ex) : acetest {
-  exename = Unbounded_Set_Test_Ex
-  Source_Files {
-    Unbounded_Set_Test_Ex.cpp
-  }
-}
-
 project(Upgradable RW Test) : acetest {
   exename = Upgradable_RW_Test
   Source_Files {
@@ -959,7 +931,7 @@ project(FIFO Test) : acetest {
   }
 }
 
-project(WFMO Reactor Test) : acetest {
+project(WFMO Reactor Test) : aceexe {
   exename = WFMO_Reactor_Test
   Source_Files {
     WFMO_Reactor_Test.cpp
@@ -968,7 +940,7 @@ project(WFMO Reactor Test) : acetest {
   }
 }
 
-project(NonBlocking Conn Test) : acetest {
+project(NonBlocking Conn Test) : aceexe {
   exename = NonBlocking_Conn_Test
   Source_Files {
     NonBlocking_Conn_Test.cpp
@@ -977,7 +949,7 @@ project(NonBlocking Conn Test) : acetest {
   }
 }
 
-project(Reference Counted Event Handler Test) : acetest {
+project(Reference Counted Event Handler Test) : aceexe {
   exename = Reference_Counted_Event_Handler_Test
   Source_Files {
     Reference_Counted_Event_Handler_Test.cpp
@@ -986,7 +958,7 @@ project(Reference Counted Event Handler Test) : acetest {
   }
 }
 
-project(MT Reference Counted Event Handler Test) : acetest {
+project(MT Reference Counted Event Handler Test) : aceexe {
   exename = MT_Reference_Counted_Event_Handler_Test
   Source_Files {
     MT_Reference_Counted_Event_Handler_Test.cpp
@@ -995,7 +967,7 @@ project(MT Reference Counted Event Handler Test) : acetest {
   }
 }
 
-project(MT Reference Counted Notify Test) : acetest {
+project(MT Reference Counted Notify Test) : aceexe {
   exename = MT_Reference_Counted_Notify_Test
   Source_Files {
     MT_Reference_Counted_Notify_Test.cpp
@@ -1004,7 +976,7 @@ project(MT Reference Counted Notify Test) : acetest {
   }
 }
 
-project(Timer Cancellation Test) : acetest {
+project(Timer Cancellation Test) : aceexe {
   exename = Timer_Cancellation_Test
   Source_Files {
     Timer_Cancellation_Test.cpp
@@ -1013,7 +985,7 @@ project(Timer Cancellation Test) : acetest {
   }
 }
 
-project(Timer Queue Reference Counting Test) : acetest {
+project(Timer Queue Reference Counting Test) : aceexe {
   exename = Timer_Queue_Reference_Counting_Test
   Source_Files {
     Timer_Queue_Reference_Counting_Test.cpp
@@ -1022,18 +994,11 @@ project(Timer Queue Reference Counting Test) : acetest {
   }
 }
 
-project(Reactor Registration Test) : acetest {
+project(Reactor Registration Test) : aceexe {
   exename = Reactor_Registration_Test
   Source_Files {
     Reactor_Registration_Test.cpp
   }
   Header_Files {
-  }
-}
-
-project(UUID Test) : acetest {
-  exename = UUIDTest
-  Source_Files {
-    UUIDTest.cpp
   }
 }

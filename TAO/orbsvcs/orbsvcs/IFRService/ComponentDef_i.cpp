@@ -84,8 +84,8 @@ TAO_ComponentDef_i::TAO_ComponentDef_i (
     TAO_Contained_i (repo),
     TAO_IDLType_i (repo),
     TAO_InterfaceDef_i (repo),
-    TAO_InterfaceAttrExtension_i (repo),
-    TAO_ExtInterfaceDef_i (repo)
+    TAO_ExtInterfaceDef_i (repo),
+    TAO_InterfaceAttrExtension_i (repo)
 {
 }
 
@@ -773,7 +773,7 @@ TAO_ComponentDef_i::create_consumes_i (const char *id,
       >::create_entry (id,
                        name,
                        version,
-                       "consumes",
+                       "comsumes",
                        value,
                        0,
                        this->repo_,

@@ -14,9 +14,9 @@
 
 #ifndef TAO_EC_BUSY_LOCK_H
 #define TAO_EC_BUSY_LOCK_H
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
-#include "ace/config-all.h"
+#include "ace/OS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -57,5 +57,5 @@ private:
 #pragma implementation ("EC_Busy_Lock.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 #endif /* TAO_EC_BUSY_LOCK_H */

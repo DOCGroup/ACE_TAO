@@ -16,7 +16,7 @@
 #ifndef ACE_OS_INCLUDE_OS_PTHREAD_H
 #define ACE_OS_INCLUDE_OS_PTHREAD_H
 
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -314,28 +314,25 @@ extern "C" pthread_t pthread_self (void);
 #  endif /* ACE_HAS_PTHREADS_DRAFT4 */
 
    /* MM-Graz:  prevent warnings */
-#  if !defined (UNIXWARE_7_1)
-#    undef THR_BOUND
-#    undef THR_NEW_LWP
-#    undef THR_DETACHED
-#    undef THR_SUSPENDED
-#    undef THR_DAEMON
+#  undef THR_BOUND
+#  undef THR_NEW_LWP
+#  undef THR_DETACHED
+#  undef THR_SUSPENDED
+#  undef THR_DAEMON
 
-#    define THR_BOUND               0x00000001
-#    if defined (CHORUS)
-#      define THR_NEW_LWP             0x00000000
-#    else
-#      define THR_NEW_LWP             0x00000002
-#    endif /* CHORUS */
-#    define THR_DETACHED            0x00000040
-#    define THR_SUSPENDED           0x00000080
-#    define THR_DAEMON              0x00000100
-#    define THR_SCHED_FIFO          0x00020000
-#    define THR_SCHED_RR            0x00040000
-#    define THR_SCHED_DEFAULT       0x00080000
-#  endif /* UNIXWARE_7_1 */
-
+#  define THR_BOUND               0x00000001
+#  if defined (CHORUS)
+#    define THR_NEW_LWP             0x00000000
+#  else
+#    define THR_NEW_LWP             0x00000002
+#  endif /* CHORUS */
+#  define THR_DETACHED            0x00000040
+#  define THR_SUSPENDED           0x00000080
+#  define THR_DAEMON              0x00000100
 #  define THR_JOINABLE            0x00010000
+#  define THR_SCHED_FIFO          0x00020000
+#  define THR_SCHED_RR            0x00040000
+#  define THR_SCHED_DEFAULT       0x00080000
 
 #  if defined (ACE_HAS_IRIX62_THREADS)
 #    define THR_SCOPE_SYSTEM        0x00100000
@@ -420,5 +417,5 @@ protected:
 
 #endif /* ACE_HAS_PTHREADS */
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 #endif /* ACE_OS_INCLUDE_OS_PTHREAD_H */

@@ -31,7 +31,7 @@
 #ifndef _TAO_IDL_ORIG_OBJECT_KEYC_H_
 #define _TAO_IDL_ORIG_OBJECT_KEYC_H_
 
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #include "tao/corbafwd.h"
 
@@ -131,7 +131,6 @@ TAO_NAMESPACE  TAO
         TAO_Unbounded_Sequence<CORBA::Octet> &seq,
         const char *str
       );
-    static int is_legal (u_char & c);
 
   };
 
@@ -196,5 +195,5 @@ TAO_Export CORBA::Boolean operator>> (
 #pragma option pop
 #endif /* __BORLANDC__ */
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 #endif /* ifndef */

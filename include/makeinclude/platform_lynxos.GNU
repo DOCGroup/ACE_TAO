@@ -99,6 +99,11 @@ ifeq (2.5.0,$(VERSION))
   CFLAGS += -Wall
 endif # VERSION
 
+# Test for template instantiation.
+#
+include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
+
+CCFLAGS         += $(CFLAGS) $(TEMPLATES_FLAG)
 DCFLAGS         += -g
 DLD             = $(CXX)
 LD              = $(CXX)
@@ -108,13 +113,6 @@ AR              = ar
 ARFLAGS         = ruv
 RANLIB          = @true
 PRELIB          = @true
-
-# Test for template instantiation, add to SOFLAGS if SONAME set, 
-# add -E to LDFLAGS if using GNU ld
-#
-include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
-
-CCFLAGS         += $(CFLAGS) $(TEMPLATES_FLAG)
 
 # To save much disk space, strip all executables.  Comment the
 # following line out if you want to debug.  Or, add "POSTLINK="

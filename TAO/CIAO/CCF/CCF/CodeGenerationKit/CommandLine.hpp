@@ -1,9 +1,11 @@
-// file      : CCF/CodeGenerationKit/CommandLine.hpp
-// author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
-// cvs-id    : $Id$
+// File   : CommandLine.hpp
+// Author : Boris Kolpackov <boris@dre.vanderbilt.edu>
+// $Id$
 
-#ifndef COMMAND_LINE_HPP
-#define COMMAND_LINE_HPP
+#ifndef COMMAND_LINE_H
+#define COMMAND_LINE_H
+
+#include "MSVC_Pragmas.hpp"
 
 #include <algorithm>
 #include <vector>
@@ -187,13 +189,8 @@ public:
     std::string const name_;
   };
 
-  typedef
-  std::vector<Option>
-  Options;
-
-  typedef
-  std::vector<std::string>
-  Arguments;
+  typedef std::vector<Option> Options;
+  typedef std::vector<std::string> Arguments;
 
   std::string command;
   Options     options;
@@ -202,4 +199,4 @@ public:
   bool        separator;
 };
 
-#endif  // COMMAND_LINE_HPP
+#endif  // COMMAND_LINE_H

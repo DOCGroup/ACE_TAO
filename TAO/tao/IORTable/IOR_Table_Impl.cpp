@@ -6,14 +6,9 @@
  * @author Carlos O'Ryan <coryan@uci.edu>
  *
  */
-
 #include "IOR_Table_Impl.h"
 
-
-ACE_RCSID (IORTable,
-           IOR_Table_Impl,
-           "$Id$")
-
+ACE_RCSID(IORTable, IOR_Table_Impl, "$Id$")
 
 TAO_IOR_Table_Impl::TAO_IOR_Table_Impl (void)
 {

@@ -13,35 +13,31 @@
 #ifndef DEFAULT_DISPATCHER_IMPL_H
 #define DEFAULT_DISPATCHER_IMPL_H
 #include "ace/pre.h"
-#include "ace/Task.h"
-#include "ace/Auto_Ptr.h"
+#include "ace/OS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/Task.h"
+#include "ace/Message_Block.h"
+#include "ace/Auto_Ptr.h"
+
 #include "kokyu_export.h"
-#include "Kokyu_defs.h"
+#include "Kokyu.h"
 #include "Dispatcher_Impl.h"
 #include "Dispatcher_Task.h"
 
 namespace Kokyu
 {
-  /**
-   * @class Default_Dispatcher_Impl
-   *
-   * @brief Default implementation class for EC dispatcher
-   * implementations
-   *
-   */
   class Default_Dispatcher_Impl : public Dispatcher_Impl
   {
   public:
-    Default_Dispatcher_Impl ();
+    virtual ~Default_Dispatcher_Impl ();
+    int activate ();
 
   private:
-    int activate_i ();
-    int init_i (const Dispatcher_Attributes&);
+    int init_i (const ConfigInfoSet&);
     int dispatch_i (const Dispatch_Command*,
                   const QoSDescriptor&);
     int shutdown_i ();
@@ -52,8 +48,9 @@ namespace Kokyu
     ACE_Auto_Array_Ptr<Dispatcher_Task_Auto_Ptr> tasks_;
     int ntasks_;
     ConfigInfoSet curr_config_info_;
-    int activated_;
   };
+
+  // ****************************************************************
 
   class Shutdown_Task_Command : public Dispatch_Command
   {
@@ -64,6 +61,8 @@ namespace Kokyu
     /// Command callback
     int execute ();
   };
+
+  // ****************************************************************
 
 } //end of namespace
 

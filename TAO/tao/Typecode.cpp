@@ -15,17 +15,11 @@
 #include "tao/Typecode.h"
 #include "tao/Environment.h"
 #include "tao/Any.h"
-#include "tao/CDR.h"
 #include "tao/Exception.h"
 #include "tao/Marshal.h"
 #include "tao/CORBA_String.h"
 #include "tao/debug.h"
 #include "ace/Malloc_Base.h"
-#include "ace/Null_Mutex.h"
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#  include "tao/Sequence_T.h"
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION || ACE_HAS_TEMPLATE_INSTANTIATION_PRAGM */
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Typecode.i"
@@ -74,7 +68,7 @@ CORBA::TypeCode::Bounds::_tao_duplicate (void) const
 }
 
 void
-CORBA::TypeCode::Bounds::_raise (void) const
+CORBA::TypeCode::Bounds::_raise (void)
 {
   TAO_RAISE(*this);
 }
@@ -124,7 +118,7 @@ CORBA::TypeCode::BadKind::_tao_duplicate (void) const
 }
 
 void
-CORBA::TypeCode::BadKind::_raise (void) const
+CORBA::TypeCode::BadKind::_raise (void)
 {
   TAO_RAISE(*this);
 }
@@ -2784,7 +2778,8 @@ CORBA::TypeCode::private_member_label (CORBA::ULong n
                         TAO::Unknown_IDL_Type (
                             CORBA::TypeCode::_duplicate (label_tc),
                             out.begin (),
-                            ACE_CDR_BYTE_ORDER
+                            ACE_CDR_BYTE_ORDER,
+                            1
                           ),
                         CORBA::NO_MEMORY ());
       ACE_CHECK_RETURN (0);
@@ -3215,9 +3210,9 @@ CORBA::TypeCode::private_concrete_base_type (ACE_ENV_SINGLE_ARG_DECL) const
 
 void
 CORBA::TypeCode::_tao_decode (const CORBA::TypeCode *parent,
-                              TAO_InputCDR &cdr,
-                              CORBA::TypeCode *&x
-                              ACE_ENV_ARG_DECL)
+                             TAO_InputCDR &cdr,
+                             CORBA::TypeCode *&x
+                             ACE_ENV_ARG_DECL)
 {
   x = 0;
   CORBA::ULong kind;
@@ -3260,17 +3255,9 @@ CORBA::TypeCode::_tao_decode (const CORBA::TypeCode *parent,
     CORBA::_tc_ulonglong,
     CORBA::_tc_longdouble,
     CORBA::_tc_wchar,
-
     0,  // CORBA::_tc_wstring ... unbounded
-    0,  // CORBA::tk_fixed
+    0,  // CORBA::tk_fixed @@ boris: This is unsupported but I need next value
     0,  // CORBA::tk_value
-    0,  // CORBA::tk_value_box:
-    0,  // CORBA::tk_native:
-    0,  // CORBA::tk_abstract_interface:
-    0,  // CORBA::tk_local_interface:
-    0,  // CORBA::tk_component:
-    0,  // CORBA::tk_home:
-    0   // CORBA::tk_event:
   };
 
   if (kind < CORBA::TC_KIND_COUNT && tc_consts [kind] != 0)
@@ -3447,13 +3434,6 @@ CORBA::TypeCode::_tao_decode (const CORBA::TypeCode *parent,
     case CORBA::tk_alias:
     case CORBA::tk_except:
     case CORBA::tk_value:
-    case CORBA::tk_value_box:
-    case CORBA::tk_native:
-    case CORBA::tk_abstract_interface:
-    case CORBA::tk_local_interface:
-    case CORBA::tk_component:
-    case CORBA::tk_home:
-    case CORBA::tk_event:
       {
         CORBA::ULong length;
 
@@ -3693,13 +3673,6 @@ operator<< (TAO_OutputCDR& cdr, const CORBA::TypeCode *x)
     case CORBA::tk_alias:
     case CORBA::tk_except:
     case CORBA::tk_value:
-    case CORBA::tk_value_box:
-    case CORBA::tk_native:
-    case CORBA::tk_abstract_interface:
-    case CORBA::tk_local_interface:
-    case CORBA::tk_component:
-    case CORBA::tk_home:
-    case CORBA::tk_event:
       {
         CORBA::ULong xlen = ACE_static_cast (CORBA::ULong, x->length_);
         if (!cdr.write_ulong (xlen)

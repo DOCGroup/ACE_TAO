@@ -35,7 +35,6 @@ my(@creators) = ('GNUACEWorkspaceCreator',
                  'EM3WorkspaceCreator',
                  'VA4WorkspaceCreator',
                  'MakeWorkspaceCreator',
-                 'AutomakeWorkspaceCreator',
                 );
 
 # ************************************************************

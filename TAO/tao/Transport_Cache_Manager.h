@@ -1,4 +1,4 @@
-// -*- C++ -*-
+/* -*- C++ -*- */
 
 //=============================================================================
 /**
@@ -13,17 +13,15 @@
 
 #ifndef TAO_CONNECTION_CACHE_MANAGER_H
 #define TAO_CONNECTION_CACHE_MANAGER_H
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #include "tao/Cache_Entries.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #define  ACE_LACKS_PRAGMA_ONCE
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
 #include "ace/Hash_Map_Manager_T.h"
-#include "ace/Thread_Mutex.h"
-#include "ace/Null_Mutex.h"
+#include "ace/Synch_T.h"
 
 class ACE_Handle_Set;
 class TAO_Connection_Handler;
@@ -248,5 +246,5 @@ private:
 # include "tao/Transport_Cache_Manager.inl"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 #endif /*TAO_CONNECTION_CACHE_MANAGER_H*/

@@ -52,10 +52,9 @@
 #include "asnmp/snmperrs.h"           // error macros and strings
 #include "asnmp/address.h"            // snmp++ address class defs
 #include "asnmp/transaction_result.h"
-#include "asnmp/ASNMP_Export.h"
 
 class Snmp;
-class ASNMP_Export Snmp_Result
+class ACE_Export Snmp_Result
 {
   public:
     virtual ~Snmp_Result();
@@ -63,53 +62,53 @@ class ASNMP_Export Snmp_Result
 };
 
 // Snmp session class - supports Version 1 operations in blocking mode
-class ASNMP_Export Snmp : public transaction_result
+class ACE_Export Snmp : public transaction_result
   // = TITLE
   //      Concrete class Snmp defined the session and interface to
   //      communicate with another SNMP Version 1 agent
 {
-  Snmp_Result * result_;
-  Pdu * pdu_;
-  unsigned hold_req_id_;
-public:
-  Snmp(unsigned short port = INADDR_ANY);
-  virtual ~Snmp();
+   Snmp_Result * result_;
+   Pdu * pdu_;
+   unsigned hold_req_id_;
+ public:
+   Snmp(unsigned short port = INADDR_ANY);
+   virtual ~Snmp();
 
-  int get( Pdu &pdu, UdpTarget &target, Snmp_Result * cb = 0);
-  // retrieve data from a peer agent for a given list of oid values
-  // default port 161
+    int get( Pdu &pdu, UdpTarget &target, Snmp_Result * cb = 0);
+    // retrieve data from a peer agent for a given list of oid values
+    // default port 161
 
-  int get_next( Pdu &pdu, UdpTarget &target, Snmp_Result * cb = 0);
-  // retrieve data lexically adjacent to the oids specified in the pdu
-  // from the peer agent
-  // default port 161
+    int get_next( Pdu &pdu, UdpTarget &target, Snmp_Result * cb = 0);
+    // retrieve data lexically adjacent to the oids specified in the pdu
+    // from the peer agent
+    // default port 161
 
-  int set( Pdu &pdu, UdpTarget &target, Snmp_Result * cb = 0);
-  // set data in the agent from the list of oids in the pdu
-  // default port 161
+    int set( Pdu &pdu, UdpTarget &target, Snmp_Result * cb = 0);
+    // set data in the agent from the list of oids in the pdu
+    // default port 161
 
-  int trap( Pdu &pdu, UdpTarget &target);
-  // send an SNMPv1 trap (unreliable) to a remote system (def port 162)
+    int trap( Pdu &pdu, UdpTarget &target);
+    // send an SNMPv1 trap (unreliable) to a remote system (def port 162)
 
-  int valid() const;
-  // status of object after construction
+    int valid() const;
+    // status of object after construction
 
-  static const char * error_string(int code);
-  // given error code, return string reason
+    static char * error_string(int code);
+    // given error code, return string reason
 
-  const char * error_string();
-  // retrieve a reason string if any of the above commands fail
+    char * error_string();
+    // retrieve a reason string if any of the above commands fail
 
-  void result(transaction * t, int rc);
-  // for async transaction results
+    void result(transaction * t, int rc);
+    // for async transaction results
 
-  static void override_host_name(const char* name);
-  // allow the host name to be overriden
+        static void override_host_name(const char* name);
+        // allow the host name to be overriden
 
-  static void get_host_name(char* name, int len);
-  // returns the overriden host name
+        static void get_host_name(char* name, int len);
+        // returns the overriden host name
 
-protected:
+ protected:
   void check_default_port(UdpTarget& target,unsigned short port=DEF_AGENT_PORT);
   int run_transaction(Pdu& pdu, UdpTarget& target);
   int run_transaction(Pdu& pdu, UdpTarget& target, Snmp_Result * cb);

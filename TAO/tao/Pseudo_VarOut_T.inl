@@ -1,5 +1,3 @@
-// -*- C++ -*-
-//
 // $Id$
 
 template <typename T>

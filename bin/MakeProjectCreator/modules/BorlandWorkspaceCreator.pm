@@ -25,12 +25,7 @@ use vars qw(@ISA);
 
 sub workspace_file_name {
   my($self) = shift;
-  if ($self->make_coexistence()) {
-    return $self->get_modified_workspace_name('Makefile', '.bor');
-  }
-  else {
-    return $self->get_modified_workspace_name('Makefile', '');
-  }
+  return $self->get_modified_workspace_name('Makefile', '.bor');
 }
 
 

@@ -98,10 +98,6 @@ SOURCE=.\data.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\analyzer.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\driver.cpp
 # End Source File
 # Begin Source File
@@ -143,10 +139,6 @@ SOURCE=.\da_testsC.h
 # Begin Source File
 
 SOURCE=.\data.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\analyzer.h
 # End Source File
 # Begin Source File
 

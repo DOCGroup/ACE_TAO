@@ -13,7 +13,6 @@
 #define ECM_DATA_H
 
 #include "ace/Map_Manager.h"
-#include "ace/Null_Mutex.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -23,12 +22,12 @@
 
 struct ECM_Data
 {
+  typedef ACE_Map_Manager<CORBA::ULong,CORBA::Double,ACE_Null_Mutex> Inventory;
   // Yes, an STL type could be used here and yes, we could write
   // generic algorithms for marshalling and demarshalling using
   // iterators.
   // But ACE (and TAO) must be ported to platforms whose C++ compilers
   // will crash and burn when faced with an STL construct.
-  typedef ACE_Map_Manager<CORBA::ULong,CORBA::Double,ACE_Null_Mutex> Inventory;
 
   CORBA::String_var description;
   Inventory inventory;

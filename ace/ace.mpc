@@ -62,7 +62,6 @@ project(ACE) : acedefaults, aceversion, core, qt_moc, qt_reactor {
       String_Base_Const.cpp
       SString.cpp
       Stats.cpp
-      Container_Instantiations.cpp
       Sample_History.cpp
     }
 
@@ -281,10 +280,6 @@ project(ACE) : acedefaults, aceversion, core, qt_moc, qt_reactor {
       Codecs.cpp
     }
 
-    UUID {
-      UUID.cpp
-    }
-
     Other {
       Local_Name_Space.cpp
       Name_Proxy.cpp
@@ -294,10 +289,6 @@ project(ACE) : acedefaults, aceversion, core, qt_moc, qt_reactor {
       Registry_Name_Space.cpp
       Remote_Name_Space.cpp
       NT_Service.cpp
-    }
-
-    Metrics {
-      Metrics_Cache.cpp
     }
   }
 

@@ -157,7 +157,6 @@ ACE_Time_Request::decode (void)
 void
 ACE_Time_Request::dump (void) const
 {
-#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Time_Request::dump");
   ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("*******\nlength = %d\n"),
               this->size ()));
@@ -186,5 +185,4 @@ ACE_Time_Request::dump (void) const
   ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("*******\ntime = %d\n"),
               this->time ()));
   ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("+++++++\n")));
-#endif /* ACE_HAS_DUMP */
 }

@@ -1,7 +1,6 @@
 // $Id$
 
 #include "Key_Adapters.h"
-#include "ace/ACE.h"
 
 #if !defined (__ACE_INLINE__)
 # include "Key_Adapters.i"

@@ -21,11 +21,9 @@ DIRS  = CDR \
 	Bug_1361_Regression \
 	Bug_1020_Basic_Regression \
 	Bug_1482_Regression \
-	Bug_1551_Regression \
 	Collocation_Tests \
 	CodeSets \
 	Collocation \
-	Collocation_Opportunities \
 	Connection_Failure \
 	Connection_Timeout \
         IDL_Test \
@@ -98,8 +96,7 @@ DIRS  = CDR \
 	DLL_ORB \
         ORB_shutdown \
 	Two_Objects \
-	Nested_Upcall_Crash \
-	RTScheduling
+	Nested_Upcall_Crash
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO

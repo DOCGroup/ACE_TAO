@@ -20,23 +20,18 @@ SHLIB         = lib<%sharedname%>.$(SOEXT)
 SOEXT         = <%soext%>
 <%endfor%>
 <%foreach(configurations)%>
-<%if(pic)%>
-CPPFLAGS     += <%pic%>
-<%endif%>
-<%endfor%>
-<%foreach(platforms)%>
-<%if(shflags)%>
-SHFLAGS       = <%shflags%>
-<%endif%>
-<%endfor%>
-<%endif%>
-<%foreach(configurations)%>
 <%if(cppflags)%>
 CPPFLAGS     += <%cppflags%>
 <%endif%>
+<%if(zzip)%>
+CPPFLAGS     += -I$(ZZIP_ROOT)/include
+CPPFLAGS     += <%foreach(zzip_defines)%> -D<%zzip_define%><%endfor%>
+<%endif%>
 <%endfor%>
-<%if(pch_header)%>
-CPPFLAGS     +=<%foreach(pch_defines)%> -D<%pch_define%><%endfor%>
+<%foreach(configurations)%>
+CPPFLAGS     += <%pic%>
+SHFLAGS       = <%shflags%>
+<%endfor%>
 <%endif%>
 <%if(idl_files)%>
 IDL_FILES     =<%foreach(idl_files)%> <%noextension(idl_file)%><%endfor%>
@@ -57,6 +52,9 @@ LDFLAGS      +=<%foreach(libpaths)%> -L<%libpath%><%endfor%>
 <%if(linkflags)%>
 LDFLAGS      += <%linkflags%>
 <%endif%>
+<%if(zzip)%>
+LDFLAGS     += -L$(ZZIP_ROOT)/lib
+<%endif%>
 <%endfor%>
 <%foreach(platforms)%>
 LDLIBS       += <%ldlibs%>
@@ -69,6 +67,12 @@ LDLIBS       +=<%foreach(defaultlibs)%> -l<%defaultlib%><%endfor%>
 <%endif%>
 <%if(lit_libs)%>
 LDLIBS       +=<%foreach(lit_libs)%> -l<%lit_lib%><%endfor%>
+<%endif%>
+<%if(ssl)%>
+LDLIBS       +=<%foreach(ssl_libs)%> -l<%ssl_lib%><%endfor%>
+<%endif%>
+<%if(zzip)%>
+LDLIBS       +=<%foreach(zzip_libs)%> -l<%zzip_lib%><%endfor%>
 <%endif%>
 OUTPUT_OPTION = -o $@
 <%marker(macros)%>
@@ -100,7 +104,6 @@ GENERATED_DIRTY +=<%foreach(custom_type->input_file->output_files)%> <%if(flag_o
 <%endfor%>
 .PRECIOUS: $(GENERATED_DIRTY)
 all: $(GENERATED_DIRTY)
-<%source_files%>: $(GENERATED_DIRTY)
 
 <%endif%>
 <%if(exename)%>
@@ -111,18 +114,8 @@ $(BIN): $(OBJS)
 
 <%endif%>
 <%if(sharedname)%>
-INSTARGET = $(SHLIB)
+all: $(SHLIB) <%if(install)%>install<%else%><%if(!exename)%>install<%endif%><%endif%>
 
-all: $(INSTARGET) <%if(install)%>install<%else%><%if(!exename)%>install<%endif%><%endif%>
-<%else%>
-<%if(staticname)%>
-INSTARGET = $(LIB)
-
-all: $(INSTARGET) <%if(install)%>install<%else%><%if(!exename)%>install<%endif%><%endif%>
-<%endif%>
-<%endif%>
-
-<%if(sharedname)%>
 $(SHLIB): $(OBJS)
 	$(LINK.cc) $(SHFLAGS) $(OUTPUT_OPTION) $(OBJS) $(LDLIBS)
 
@@ -147,6 +140,13 @@ install:
 <%endif%>
 <%else%>
 <%if(!exename)%>
+<%if(sharedname)%>
+INSTARGET = $(SHLIB)
+<%else%>
+<%if(staticname)%>
+INSTARGET = $(LIB)
+<%endif%>
+<%endif%>
 install:
 	@mkdir -p "<%if(dllout)%><%dllout%><%else%><%libout%><%endif%>"
 	@[ -f "<%if(dllout)%><%dllout%><%else%><%libout%><%endif%>/$(INSTARGET)" ] || ln -s "$(PWD)/$(INSTARGET)" "<%if(dllout)%><%dllout%><%else%><%libout%><%endif%>"
@@ -154,11 +154,6 @@ install:
 <%endif%>
 clean:
 	-$(RM) $(OBJS)
-<%foreach(configurations)%>
-<%if(clean)%>
-	-$(RM) -r <%clean%>
-<%endif%>
-<%endfor%>
 
 realclean: clean
 	-$(RM) <%if(exename)%>$(BIN)<%else%>$(SHLIB) $(LIB)<%endif%><%if(install)%> <%install%>/$(INSTARGET)<%endif%>
@@ -174,7 +169,7 @@ $(DEPENDENCIES):
 	touch $(DEPENDENCIES)
 
 depend:
-	<%depgen("depgen.pl")%> -t gnu $(CFLAGS) $(CCFLAGS) $(CPPFLAGS) -f $(DEPENDENCIES)<%foreach(source_files)%> <%source_file%><%endfor%>
+	perl <%depgen("$(ACE_ROOT)/bin/depgen.pl")%> -t gnu<%foreach(includes)%> -I<%include%><%endfor%><%foreach(macros)%> -D<%macro%><%endfor%><%if(pch_header)%><%foreach(pch_defines)%> -D<%pch_define%><%endfor%><%endif%> -f $(DEPENDENCIES)<%foreach(source_files)%> <%source_file%><%endfor%>
 
 include $(DEPENDENCIES)
 <%marker(bottom)%>

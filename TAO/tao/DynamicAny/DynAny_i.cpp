@@ -62,7 +62,8 @@ TAO_DynAny_i::set_to_default_value (CORBA::TypeCode_ptr tc
     case CORBA::tk_null:
       break;
     case CORBA::tk_void:
-      this->any_._tao_set_typecode (CORBA::_tc_void);
+      this->any_ = CORBA::Any (CORBA::_tc_void,
+                               0);
       break;
     case CORBA::tk_short:
       this->any_ <<= ACE_static_cast (CORBA::Short, 0);
@@ -103,7 +104,8 @@ TAO_DynAny_i::set_to_default_value (CORBA::TypeCode_ptr tc
       this->any_ <<= ACE_static_cast (CORBA::Double, 0);
       break;
     case CORBA::tk_any:
-      this->any_._tao_set_typecode (CORBA::_tc_null);
+      this->any_ <<= CORBA::Any (CORBA::_tc_null,
+                                 0);
       break;
     case CORBA::tk_TypeCode:
       this->any_ <<= CORBA::_tc_null;
@@ -304,8 +306,7 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs
       return 0;
     }
 
-  CORBA::TCKind tk = TAO_DynAnyFactory::unalias (this->type_.in ()
-                                                 ACE_ENV_ARG_PARAMETER);
+  int tk = this->type_->kind ();
   ACE_CHECK_RETURN (0);
 
   switch (tk)
@@ -467,31 +468,18 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs
         CORBA::ULong bound = unaliased_tc->length (ACE_ENV_SINGLE_ARG_PARAMETER);
         ACE_CHECK_RETURN (0);
 
-        const char *rhs_v, *lhs_v;
-        CORBA::Boolean rstatus, lstatus;
+        const char* rhs_v;
+        rhs_n->any_ >>= CORBA::Any::to_string (rhs_v,
+                                               bound);
 
-        if (bound == 0)
-          {
-            rstatus = rhs_n->any_ >>= rhs_v;
-            lstatus = this->any_ >>= lhs_v;
-
-            if ((rstatus && lstatus) == 0)
-              {
-                return 0;
-              }
-          }
-        else
-          {
-            rstatus = rhs_n->any_ >>= CORBA::Any::to_string (rhs_v,
-                                                             bound);
-            lstatus = this->any_ >>= CORBA::Any::to_string (lhs_v,
-                                                            bound);
-
-            if ((rstatus && lstatus) == 0)
-              {
-                return 0;
-              }
-          }
+        // @@@ (JP) On Windows (only), this any does not get the bound
+        // set in its type code when copied from another DynAny. So we
+        // dispense with the to_string here, since the type codes have
+        // already been checked for equivalence above (done with this
+        // DynAny's type_ member, which does have the bound set correctly).
+        const char* lhs_v;
+        this->any_ >>= CORBA::Any::to_string (lhs_v,
+                                              bound);
 
         return ACE_OS::strcmp (rhs_v, lhs_v) == 0;
       }
@@ -505,32 +493,12 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs
         CORBA::ULong bound = unaliased_tc->length (ACE_ENV_SINGLE_ARG_PARAMETER);
         ACE_CHECK_RETURN (0);
 
-        const CORBA::WChar *rhs_v, *lhs_v;
-        CORBA::Boolean rstatus, lstatus;
-
-        if (bound == 0)
-          {
-            rstatus = rhs_n->any_ >>= rhs_v;
-            lstatus = this->any_ >>= lhs_v;
-
-            if ((rstatus && lstatus) == 0)
-              {
-                return 0;
-              }
-          }
-        else
-          {
-            rstatus = rhs_n->any_ >>= CORBA::Any::to_wstring (rhs_v,
-                                                              bound);
-            lstatus = this->any_ >>= CORBA::Any::to_wstring (lhs_v,
-                                                             bound);
-
-            if ((rstatus && lstatus) == 0)
-              {
-                return 0;
-              }
-          }
-
+        CORBA::WChar * rhs_v;
+        rhs_n->any_ >>= CORBA::Any::to_wstring (rhs_v,
+                                                bound);
+        CORBA::WChar * lhs_v;
+        this->any_ >>= CORBA::Any::to_wstring (lhs_v,
+                                               bound);
         return ACE_OS::wscmp (rhs_v, lhs_v) == 0;
       }
     default:

@@ -1,13 +1,10 @@
-// -*- C++ -*-
-
+/* -*- C++ -*- */
 /**
  *  @file   EC_ObserverStrategy.h
  *
  *  $Id$
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
- *  @author Johnny Willemsen (jwillemsen@remedy.nl)
- *  @author Kees van Marle (kvmarle@remedy.nl)
  *
  * Based on previous work by Tim Harrison (harrison@cs.wustl.edu) and
  * other members of the DOC group. More details can be found in:
@@ -17,8 +14,7 @@
 
 #ifndef TAO_EC_OBSERVERSTRATEGY_H
 #define TAO_EC_OBSERVERSTRATEGY_H
-
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #include "orbsvcs/ESF/ESF_Worker.h"
 
@@ -26,11 +22,10 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Null_Mutex.h"
 #include "ace/RB_Tree.h"
 #include "ace/Map_Manager.h"
 #include "orbsvcs/RtecEventChannelAdminC.h"
-#include /**/ "event_export.h"
+#include "event_export.h"
 
 class ACE_Lock;
 class TAO_EC_Event_Channel_Base;
@@ -40,14 +35,16 @@ class TAO_EC_ProxyPushSupplier;
 /**
  * @class TAO_EC_ObserverStrategy
  *
- * @brief The strategy to handle observers for the Event Channel subscriptions
- * and publication.
+ * @brief The strategy to handle observers for the Event Channel
+ * subscriptions and publication.
  *
- * The Event Channel supports Observers for the set of subscriptions and
- * publications. This is used to implement federations of event channels,
- * either through UDP (multicast and unicast) and/or regular CORBA calls.
- * This behavior of the EC is strategized to avoid overhead when no gateways
- * are needed.
+ * The Event Channel supports Observers for the set of
+ * subscriptions and publications.
+ * This is used to implement federations of event channels,
+ * either through UDP (multicast and unicast) and/or regular CORBA
+ * calls.
+ * This behavior of the EC is strategized to avoid overhead when
+ * no gateways are needed.
  */
 class TAO_RTEvent_Export TAO_EC_ObserverStrategy
 {
@@ -80,7 +77,7 @@ public:
   virtual void disconnected (TAO_EC_ProxyPushConsumer*
                              ACE_ENV_ARG_DECL_NOT_USED) = 0;
 
-  /// Used by the EC to inform the ObserverStrategy that a Supplier has
+  /// Used by the EC to inform the ObserverStrategy that a Consumer has
   /// connected or disconnected from it.
   virtual void connected (TAO_EC_ProxyPushSupplier*
                           ACE_ENV_ARG_DECL_NOT_USED) = 0;
@@ -143,7 +140,7 @@ public:
  * observers.
  *
  * <H2>Memory Management</H2>
- * It assumes ownership of the @a lock, but not of the
+ * It assumes ownership of the <lock>, but not of the
  * Event_Channel.
  */
 class TAO_RTEvent_Export TAO_EC_Basic_ObserverStrategy :
@@ -195,9 +192,13 @@ public:
    */
   struct Observer_Entry
   {
-    Observer_Entry (void);
-    Observer_Entry (RtecEventChannelAdmin::Observer_Handle h,
-                    RtecEventChannelAdmin::Observer_ptr o);
+    // The ACE_INLINE macros here are to keep g++ 2.7.X happy,
+    // otherwise it thinks they are used as inline functions before
+    // beign used as such.... Apparently in the template code for the
+    // Hash_Map_Manager.
+    ACE_INLINE Observer_Entry (void);
+    ACE_INLINE Observer_Entry (RtecEventChannelAdmin::Observer_Handle h,
+                               RtecEventChannelAdmin::Observer_ptr o);
 
     /// The handle
     RtecEventChannelAdmin::Observer_Handle handle;
@@ -223,12 +224,12 @@ protected:
   /// Helpers.
   //@{
   /// Recompute EC consumer subscriptions and send them out to all observers.
-  virtual void consumer_qos_update (TAO_EC_ProxyPushSupplier *supplier
-                                    ACE_ENV_ARG_DECL);
+  void consumer_qos_update (TAO_EC_ProxyPushSupplier *supplier
+                            ACE_ENV_ARG_DECL);
 
   /// Recompute EC supplier publications and send them out to all observers.
-  virtual void supplier_qos_update (TAO_EC_ProxyPushConsumer *consumer
-                                    ACE_ENV_ARG_DECL);
+  void supplier_qos_update (TAO_EC_ProxyPushConsumer *consumer
+                            ACE_ENV_ARG_DECL);
 
   /// Compute consumer QOS.
   void fill_qos (RtecEventChannelAdmin::ConsumerQOS &qos
@@ -238,7 +239,7 @@ protected:
                  ACE_ENV_ARG_DECL);
 
   /// Copies all current observers into an array and passes it
-  /// back to the caller through @a lst.  Returns the size of the array.
+  /// back to the caller through <lst>.  Returns the size of the array.
   int create_observer_list (RtecEventChannelAdmin::Observer_var *&lst
                             ACE_ENV_ARG_DECL);
   //@}
@@ -256,60 +257,6 @@ protected:
 
   /// Keep the set of Observers
   Observer_Map observers_;
-};
-
-// ****************************************************************
-
-/**
- * @class TAO_EC_Reactive_ObserverStrategy
- *
- * @brief A reactive observer strategy.
- *
- * This class simply keeps the information about the current list
- * of observers, whenever the list of consumers and/or suppliers
- * changes in queries the EC, computes the global subscription
- * and/or publication list and sends the update message to all the
- * observers. When an observer isn't reachable it is removed from
- * the observer list.
- *
- * <H2>Memory Management</H2>
- * It assumes ownership of the <lock>, but not of the
- * Event_Channel.
- */
-class TAO_RTEvent_Export TAO_EC_Reactive_ObserverStrategy :
-  public TAO_EC_Basic_ObserverStrategy
-{
-public:
-  /// Constructor
-  TAO_EC_Reactive_ObserverStrategy (TAO_EC_Event_Channel_Base* ec,
-                                    ACE_Lock* lock);
-
-  /// Destructor
-  virtual ~TAO_EC_Reactive_ObserverStrategy (void);
-
-protected:
-  /// Helpers.
-  //@{
-  /// Recompute EC consumer subscriptions and send them out to all observers.
-  virtual void consumer_qos_update (TAO_EC_ProxyPushSupplier *supplier
-                                    ACE_ENV_ARG_DECL);
-
-  /// Recompute EC supplier publications and send them out to all observers.
-  virtual void supplier_qos_update (TAO_EC_ProxyPushConsumer *consumer
-                                    ACE_ENV_ARG_DECL);
-
-  /**
-   * Copies all current observers into a map and passes it
-   * back to the caller through @a map.
-   * @return Returns the size of the map.
-   */
-  int create_observer_map (Observer_Map &map
-                           ACE_ENV_ARG_DECL);
-
-  /// The observer doesn't exist anymore
-  void observer_not_exists (Observer_Entry& observer
-                            ACE_ENV_ARG_DECL);
-  //@}
 };
 
 // ****************************************************************
@@ -350,6 +297,5 @@ private:
 #include "EC_ObserverStrategy.i"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
-
+#include "ace/post.h"
 #endif /* TAO_EC_OBSERVERSTRATEGY_H */

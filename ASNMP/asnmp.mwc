@@ -1,4 +1,7 @@
-// $Id$
-
 workspace {
+  agent
+  asnmp
+  examples
+  mibs
+  tests
 }

@@ -1,7 +1,7 @@
 #include "ace/Name_Request_Reply.h"
 #include "ace/Log_Msg.h"
 #include "ace/Time_Value.h"
-#include "ace/OS.h"
+
 
 ACE_RCSID (ace,
            Name_Request_Reply,
@@ -321,7 +321,6 @@ ACE_Name_Request::decode (void)
 void
 ACE_Name_Request::dump (void) const
 {
-#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Name_Request::dump");
   ACE_DEBUG ((LM_DEBUG,
               ACE_LIB_TEXT ("*******\nlength = %d\n"),
@@ -400,7 +399,6 @@ ACE_Name_Request::dump (void) const
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_LIB_TEXT ("+++++++\n")));
-#endif /* ACE_HAS_DUMP */
 }
 
 // Default constructor.
@@ -536,7 +534,6 @@ ACE_Name_Reply::decode (void)
 void
 ACE_Name_Reply::dump (void) const
 {
-#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Name_Reply::dump");
   ACE_DEBUG ((LM_DEBUG,
               ACE_LIB_TEXT ("*******\nlength = %d\nerrnum = %d"),
@@ -560,5 +557,4 @@ ACE_Name_Reply::dump (void) const
                   this->msg_type ()));
       break;
     }
-#endif /* ACE_HAS_DUMP */
 }

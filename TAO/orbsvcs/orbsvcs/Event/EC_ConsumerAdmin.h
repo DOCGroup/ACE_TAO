@@ -14,7 +14,7 @@
 
 #ifndef TAO_EC_CONSUMERADMIN_H
 #define TAO_EC_CONSUMERADMIN_H
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #include "EC_ProxySupplier.h"
 
@@ -23,7 +23,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/ESF/ESF_Peer_Admin.h"
-#include /**/ "event_export.h"
+#include "event_export.h"
 
 class TAO_EC_Event_Channel_Base;
 class TAO_EC_ProxyPushConsumer;
@@ -49,12 +49,13 @@ class TAO_RTEvent_Export TAO_EC_ConsumerAdmin
 {
 public:
   /**
-   * Constructor. Builds one using the @a event_channel argument.
+   * constructor. If <supplier_set> is nil then it builds one using
+   * the <event_channel> argument.
    * In any case it assumes ownership.
    */
   TAO_EC_ConsumerAdmin (TAO_EC_Event_Channel_Base* event_channel);
 
-  /// Destructor...
+  /// destructor...
   virtual ~TAO_EC_ConsumerAdmin (void);
 
   // = The RtecEventChannelAdmin::ConsumerAdmin methods...
@@ -74,5 +75,5 @@ private:
 #include "EC_ConsumerAdmin.i"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 #endif /* TAO_EC_CONSUMERADMIN_H */

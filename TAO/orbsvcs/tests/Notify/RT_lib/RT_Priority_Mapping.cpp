@@ -2,7 +2,7 @@
 
 #include "RT_Priority_Mapping.h"
 
-ACE_RCSID(lib, RT_Priority_Mapping, "$Id$")
+ACE_RCSID(lib, RT_Priority_Mapping, "$id$")
 
 #include "../lib/LookupManager.h"
 

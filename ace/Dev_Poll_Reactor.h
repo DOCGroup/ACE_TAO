@@ -17,7 +17,7 @@
 #ifndef ACE_DEV_POLL_REACTOR_H
 #define ACE_DEV_POLL_REACTOR_H
 
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #include "ace/Reactor_Impl.h"
 
@@ -34,7 +34,6 @@
 #if defined (ACE_HAS_EVENT_POLL) || defined (ACE_HAS_DEV_POLL)
 
 #include "ace/Pipe.h"
-#include "ace/Lock_Adapter_T.h"
 
 // Forward declarations
 class ACE_Sig_Handler;
@@ -840,12 +839,6 @@ public:
                                            ACE_Reactor_Mask    = ACE_Event_Handler::ALL_EVENTS_MASK);
 
   /**
-   * Return the Event_Handler associated with <handle>.  Return 0 if
-   * <handle> is not registered.
-   */
-  virtual ACE_Event_Handler *find_handler (ACE_HANDLE handle);
-
-  /**
    * Check to see if <handle> is associated with a valid Event_Handler
    * bound to <mask>.  Return the <event_handler> associated with this
    * <handler> if <event_handler> != 0.
@@ -1177,6 +1170,6 @@ private:
 
 #endif  /* ACE_HAS_EVENT_POLL || ACE_HAS_DEV_POLL */
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 
 #endif  /* ACE_DEV_POLL_REACTOR_H */

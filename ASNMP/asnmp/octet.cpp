@@ -122,7 +122,7 @@ void OctetStr::set_data( const SmiBYTE* string, long size)
 
 //============[ constructor using another octet object ]==============
 OctetStr::OctetStr ( const OctetStr &octet):
-  SnmpSyntax (octet), output_buffer(0), validity(1)
+  output_buffer(0), validity(1)
 {
   init_octet_smi(smival);
    // check for zero len case
@@ -472,7 +472,7 @@ SnmpSyntax * OctetStr::clone() const
 }
 
 //================[ ASCII format return ]=============================
-const char  * OctetStr::to_string()
+char  * OctetStr::to_string()
 {
   for ( unsigned long i=0; i < smival.value.string.len; i++) {
     if (( smival.value.string.ptr[i] != '\r')&&
@@ -519,7 +519,7 @@ SnmpSyntax& OctetStr::operator=( SnmpSyntax &val)
 }
 
 //================[ format the output into hex ]========================
-const char *OctetStr::to_string_hex()
+char *OctetStr::to_string_hex()
 {
   int cnt;
   char char_buf[80];              // holds ASCII representation of data
@@ -579,11 +579,11 @@ const char *OctetStr::to_string_hex()
 
 // TODO: verify ACE_OS:: on NT works like this or not
 #if defined(__unix)
-    const char *fmt = "   %s\n";
+    char *fmt = "   %s\n";
 #endif // __unix
 
 #if defined(_WIN32)
-    const char *fmt = "   %s\r\n";
+    char *fmt = "   %s\r\n";
 #endif // _WIN32
 
     ACE_OS::sprintf(line_ptr, fmt, char_buf);

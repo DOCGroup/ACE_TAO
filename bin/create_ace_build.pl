@@ -36,16 +36,13 @@ use File::Find ();
 use File::Basename;
 use FileHandle;
 use File::stat;
-use File::Copy;
 
-
-$usage = "usage: $0 -? | [-a] [-d <directory mode>] [-v] [-nompc] <build name>\n";
+$usage = "usage: $0 -? | [-d <directory mode>] [-v] [-nompc] <build name>\n";
 $directory_mode = 0777;   #### Will be modified by umask, also.
 $verbose = 0;
 $mpc = 1;   #### When using mpc, we don't want links created for mpc-generated files.
 $update_all = 1;
 $source='.';
-$absolute = 0;
 
 ####
 #### Check that we're in an ACE "top level" directory.
@@ -87,8 +84,10 @@ print "Creating or updating builds in $starting_dir\n";
 
 sub backup_and_copy_changed {
   my($real, $linked) = @_;
-
   my($status_real) = stat($real);
+  if (! $status_real) {
+    die "ERROR: is_changed() real $real not exist.\n";
+  }
   my($status_linked) = stat($linked);
 
   if ($status_linked->mtime > $status_real->mtime) {
@@ -107,7 +106,7 @@ sub backup_and_copy_changed {
   }
   return 0;
 }
-
+  
 sub cab_link {
   my($real,$linked,$build_regex) = @_;
 
@@ -118,26 +117,12 @@ sub cab_link {
     push(@nlinks, $fixed);
 
     my($curdir) = "$starting_dir/" . dirname($linked);
-    if (! -d $curdir) {
-      die "ERROR: Dir not found: $curdir\n";
-    }
     $status = chdir($curdir);
     if (! $status) {
        die "ERROR: cab_link() chdir " . $curdir . " failed.\n";
     }
     
     my($base_linked) = basename($linked);
-
-    if (! -e $real) {
-       ## This should never happen, but there appears to be a bug
-       ## with the underlying win32 apis on Windows Server 2003.
-       ## Long paths will cause an error which perl will ignore.
-       ## Unicode versions of the apis seem to work fine. 
-       ## To experiment try Win32 _fullpath() and CreateHardLink with
-       ## long paths. 
-       print "ERROR : Skipping $real.\n";
-       return;
-    }
 
     if (-e $base_linked) {
       if (! backup_and_copy_changed($real, $base_linked)) {
@@ -147,11 +132,6 @@ sub cab_link {
 
     print "link $real $linked\n" if $verbose;
     $status = link ($real, $base_linked);
-    if (! $status) {
-      ## Once again, this happens for long paths on Win2003
-      print "ERROR: Can't link $real\n";
-      return;
-    }
     chdir($starting_dir);
   } else {
     print "$symlink $real $linked\n" if $verbose;
@@ -175,9 +155,6 @@ while ($#ARGV >= 0  &&  $ARGV[0] =~ /^-/) {
       warn "$0:  must provide argument for -d option\n";
       die $usage;
     }
-  } elsif ($ARGV[0] eq '-a' && ! ($^O eq 'MSWin32')) {
-    $source = &cwd ();
-    $absolute = 1;
   } elsif ($ARGV[0] =~ /-[?hH]$/) {
     die "$usage";
   } elsif ($ARGV[0] eq '-nompc') {
@@ -240,23 +217,29 @@ foreach $build (@builds) {
 sub wanted {
     my ($dev,$ino,$mode,$nlink,$uid,$gid);
 
-    $matches = ! (
-    /^CVS\z/s && ($File::Find::prune = 1)
+    $matches = ! (/^CVS\z/s &&
+    ($File::Find::prune = 1)
     ||
-    /^build\z/s && ($File::Find::prune = 1)
+    /^build\z/s &&
+    ($File::Find::prune = 1)
     ||
-    /^\..*obj\z/s && ($File::Find::prune = 1)
+    /^\..*obj\z/s &&
+    ($File::Find::prune = 1)
     ||
-    /^Templates\.DB\z/s && ($File::Find::prune = 1)
+    /^Templates\.DB\z/s &&
+    ($File::Find::prune = 1)
     ||
-    /^Debug\z/s && ($File::Find::prune = 1)
+    /^Debug\z/s &&
+    ($File::Find::prune = 1)
     ||
-    /^Release\z/s && ($File::Find::prune = 1)
+    /^Release\z/s &&
+    ($File::Find::prune = 1)
     ||
-    /^Static_Debug\z/s && ($File::Find::prune = 1)
+    /^Static_Debug\z/s &&
+    ($File::Find::prune = 1)
     ||
-    /^Static_Release\z/s && ($File::Find::prune = 1)
-    );
+    /^Static_Release\z/s &&
+    ($File::Find::prune = 1));
 
     $matches = $matches &&
     ( 
@@ -276,9 +259,7 @@ sub wanted {
     );
 
     if ($mpc && $matches) {
-      $matches = 
-        ($File::Find::dir =~ /include\/makeinclude*/) ||
-        (
+      $matches = (
         ! /^.*\.dsp\z/s && 
         ! /^.*\.vcproj\z/s && 
         ! /^.*\.bor\z/s && 
@@ -295,11 +276,7 @@ sub wanted {
         ! /^.*\.ncb\z/s &&
         ! /^.*\.opt\z/s &&
         ! /^.*\.bak\z/s &&
-        ! /^.*\.ilk\z/s &&
-        ! /^.*\.exp\z/s &&
-        ! /^.*\.pdb\z/s &&
         ! /^\.cvsignore\z/s &&
-        ! /^\.disable\z/s &&
         ! /^Makefile.*\z/s
       );
     }
@@ -328,17 +305,11 @@ foreach $file (@files) {
       }
     } else {
       unless (($^O ne 'MSWin32') && (-e "$build/$file")) {
-        if (!$absolute) { 
-          $up = '../..';
-          while ($file =~ m%/%g) {
-            $up .= '/..';
-          }
-          cab_link("$up/$file", "$build/$file", $build_re[$idx]);
-        } else {
-          $path = $source . '/' . $file;
-          cab_link("$path", "$build/$file", $build_re[$idx]);
+        $up = '../..';
+        while ($file =~ m%/%g) {
+          $up .= '/..';
         }
-
+        cab_link("$up/$file", "$build/$file", $build_re[$idx]);
       }
     }
   }

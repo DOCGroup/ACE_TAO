@@ -104,8 +104,6 @@ install_homes (CIAO::Session_Container &container,
                CORBA::ORB_ptr orb
                ACE_ENV_ARG_DECL)
 {
-  ACE_UNUSED_ARG (orb);
-
   if (component_list_ == 0)
     ACE_THROW (CORBA::BAD_PARAM ());
 
@@ -154,7 +152,7 @@ install_homes (CIAO::Session_Container &container,
                                          ACE_ENV_ARG_PARAMETER);
           ACE_CHECK;
 
-          if (CORBA::is_nil (home.in ()))
+          if (CORBA::is_nil (home))
             {
               ACE_DEBUG ((LM_DEBUG, "Fail to create home\n"));
               ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
@@ -201,14 +199,14 @@ main (int argc, char *argv[])
 
       // Start Deployment part
 
-      CIAO::Session_Container container (orb.in ());
+      CIAO::Session_Container container (orb);
       container.init ();
 
       // install component
 
       Components::CCMHome_var home =
         install_homes (container,
-                       orb.in ()
+                       orb
                        ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 

@@ -18,6 +18,13 @@ threads = 1
 CC              = gcc
 CXX             = g++
 
+# Test for template instantiation.
+#
+include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
+
+CFLAGS          += -W -Wall -Wpointer-arith -pipe #### -Winline
+CCFLAGS         += $(CFLAGS) $(TEMPLATES_FLAG)
+
 ACE_GNUG_ON_UNIXWARE = 1
 
 #ifeq ($(exceptions),1)
@@ -42,11 +49,3 @@ SOFLAGS         += -shared
 SOBUILD         = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<
 # SOLINK        = $(SOLINK.cc) -o $@ $(LDFLAGS) $<
 PRELIB          = @true
-
-# Test for template instantiation, add to SOFLAGS if SONAME set, 
-# add -E to LDFLAGS if using GNU ld
-#
-include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
-
-CFLAGS          += -W -Wall -Wpointer-arith -pipe #### -Winline
-CCFLAGS         += $(CFLAGS) $(TEMPLATES_FLAG)

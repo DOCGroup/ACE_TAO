@@ -34,6 +34,10 @@ CC		= gcc
 CXX		= g++
 CFLAGS		+= -w
 
+# Test for template instantiation.
+#
+include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
+
 #
 # Set the appropriate preprocessor defs for threading based on OS version.
 # If the user has requested building without threads, then don't set any.
@@ -46,9 +50,10 @@ ifeq ($(threads),1)
     THR_DEFS += -DACE_HAS_THREADS -D_POSIX_C_SOURCE=199506L
   else
     THR_DEFS += -DACE_HAS_THREADS -D_REENTRANT
-  endif
+endif
 endif
 
+CCFLAGS		+= $(CFLAGS) $(TEMPLATES_FLAG) -DHPUX_VERS=$(HPUX_VERS) $(THR_DEFS)
 # On HP-UX 11, there's a conflict with pthread_atfork in sys/unistd.h and
 # sys/pthread.h - both define the function, but slightly differently.
 # -fstrict-prototype resolves the issue.
@@ -75,26 +80,19 @@ PRELIB = @true
 #
 ifeq ($(word 2,$(HPVERS_WORDS)), 11)
 
-  #11.x:
-  ifeq ($(threads),1)
-    LIBS		+= -lxti -lpthread -lrt -ldld
-  else
-    LIBS		+= -lxti -lrt -ldld
-  endif
+#11.x:
+ifeq ($(threads),1)
+LIBS		+= -lxti -lpthread -lrt -ldld
+else
+LIBS		+= -lxti -lrt -ldld
+endif
 
 else
 
-  # 10.x:
-  LIBS		+= -lxti -ldld
-  ifeq ($(threads),1)
-    LIBS		+= -lcma
-  endif
-
+# 10.x:
+LIBS		+= -lxti -ldld
+ifeq ($(threads),1)
+LIBS		+= -lcma
 endif
 
-# Test for template instantiation, add to SOFLAGS if SONAME set, 
-# add -E to LDFLAGS if using GNU ld
-#
-include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
-
-CCFLAGS		+= $(CFLAGS) $(TEMPLATES_FLAG) -DHPUX_VERS=$(HPUX_VERS) $(THR_DEFS)
+endif

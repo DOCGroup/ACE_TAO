@@ -10,7 +10,6 @@
 #include "utl_indenter.h"
 #include "global_extern.h"
 #include "nr_extern.h"
-#include "ace/streams.h"
 
 ACE_RCSID (ast, 
            ast_valuetype, 

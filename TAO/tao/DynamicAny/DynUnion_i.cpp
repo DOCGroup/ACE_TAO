@@ -174,9 +174,10 @@ TAO_DynUnion_i::set_from_any (const CORBA::Any & any,
   CORBA::Any disc_any;
   TAO::Unknown_IDL_Type *unk = 0;
   ACE_NEW (unk,
-           TAO::Unknown_IDL_Type (disc_tc.in (),
+           TAO::Unknown_IDL_Type (CORBA::TypeCode::_duplicate (disc_tc.in ()),
                                   cdr.start (),
-                                  cdr.byte_order ()));
+                                  cdr.byte_order (),
+                                  1));
   disc_any.replace (unk);
 
   // Need this here because we might have been called from init().

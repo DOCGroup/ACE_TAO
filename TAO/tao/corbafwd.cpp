@@ -13,19 +13,6 @@ ACE_RCSID (tao,
            "$Id$")
 
 char *
-CORBA::string_alloc (CORBA::ULong len)
-{
-  // Allocate 1 + strlen to accomodate the null terminating character.
-
-  char * s = 0;
-  ACE_NEW_RETURN (s,
-                  char[size_t (len + 1)],
-                  0);
-
-  return s;
-}
-
-char *
 CORBA::string_dup (const char *str)
 {
   if (!str)
@@ -55,17 +42,6 @@ CORBA::string_dup (const char *str)
 // Wide strings
 // ----------------------------------------------------------------------
 
-CORBA::WChar *
-CORBA::wstring_alloc (CORBA::ULong len)
-{
-  CORBA::WChar * s = 0;
-  ACE_NEW_RETURN (s,
-                  CORBA::WChar [(size_t) (len + 1)],
-                  0);
-
-  return s;
-}
-
 CORBA::WChar*
 CORBA::wstring_dup (const WChar *const str)
 {
@@ -75,7 +51,7 @@ CORBA::wstring_dup (const WChar *const str)
       return 0;
     }
 
-  CORBA::WChar * retval = CORBA::wstring_alloc (ACE_OS::wslen (str));
+  CORBA::WChar* retval = CORBA::wstring_alloc (ACE_OS::wslen (str));
 
   // The wscpy() below assumes that the destination is a valid buffer.
   if (retval == 0)
@@ -89,8 +65,18 @@ CORBA::wstring_dup (const WChar *const str)
 
 namespace CORBA
 {
+  // ****************************************************************
+
+//  const CORBA::ServiceType Security = 1;
+
+  // ****************************************************************
+
+  CORBA::TypeCode_ptr _tc_Visibility = 0;
+
   const CORBA::Visibility PRIVATE_MEMBER = 0;
   const CORBA::Visibility PUBLIC_MEMBER  = 1;
+
+  CORBA::TypeCode_ptr _tc_ValueModifier = 0;
 
   const CORBA::ValueModifier VM_NONE        = 0;
   const CORBA::ValueModifier VM_CUSTOM      = 1;

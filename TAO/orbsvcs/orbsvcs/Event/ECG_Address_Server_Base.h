@@ -10,9 +10,9 @@
 
 #ifndef TAO_ECG_ADDRESS_SERVER_BASE_H
 #define TAO_ECG_ADDRESS_SERVER_BASE_H
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
-#include /**/ "event_export.h"
+#include "orbsvcs/Event/event_export.h"
 #include "orbsvcs/RtecUDPAdminS.h"
 #include "EC_Lifetime_Utils.h"
 #include "ace/Auto_Ptr.h"
@@ -40,5 +40,5 @@ public:
 #include "ECG_Address_Server_Base.i"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 #endif /* TAO_ECG_ADDRESS_SERVER_BASE_H */

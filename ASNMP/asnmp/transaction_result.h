@@ -19,7 +19,7 @@
 // ============================================================================
 
 class transaction;
-class ASNMP_Export transaction_result
+class ACE_Export transaction_result
 {
   public:
     virtual ~transaction_result();

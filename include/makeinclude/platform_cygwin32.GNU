@@ -17,6 +17,10 @@ TCPU = pentiumpro
 
 cygwin32 = 1
 
+ifeq (,$(threads))
+  threads = 0
+endif
+
 # Cygwin doesn't allow to add the version number of ACE to the dll name
 # because fe ace.dll.5.2.3 isn't a valid dll name
 SONAME=

@@ -25,7 +25,6 @@
 
 #include "Messaging.h"
 #include "tao/Stub.h"
-#include "tao/ORB_Core.h"
 #include "tao/Invocation.h"
 #include "tao/PortableInterceptor.h"
 
@@ -190,7 +189,7 @@ Messaging::ExceptionHolder::_downcast (CORBA::ValueBase *v)
     {
       return 0;
     }
-
+  
   return (ExceptionHolder *) v->_tao_obv_narrow ((ptrdiff_t) &_downcast);
 }
 

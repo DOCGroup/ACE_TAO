@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 /**
  * @file ORB_Shutdown.inl
  *
@@ -13,5 +11,5 @@ ORB_Shutdown::operator () (CORBA::ORB_ptr orb
                            ACE_ENV_ARG_DECL)
 {
   orb->shutdown (0
-                 ACE_ENV_ARG_PARAMETER);
+                 ACE_ENV_SINGLE_ARG_PARAMETER);
 }

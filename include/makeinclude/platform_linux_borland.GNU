@@ -23,7 +23,9 @@ endif
 PLATFORM_AIO_SUPPORT := \
        $(shell test -e /usr/lib/librt.so && echo -DACE_HAS_AIO_CALLS)
 
-ifeq ($(threads),1)
+ifeq ($(threads),0)
+  CPPFLAGS += -DACE_MT_SAFE=0
+else
   LIBS += libpthread.so
   ifeq (-DACE_HAS_AIO_CALLS,$(PLATFORM_AIO_SUPPORT))
     CPPFLAGS += -DACE_HAS_AIO_CALLS

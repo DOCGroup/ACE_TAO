@@ -1,7 +1,6 @@
 // $Id$
 
 #include "interceptors.h"
-#include "testC.h"
 
 ACE_RCSID (Dynamic,
            interceptors,
@@ -9,8 +8,8 @@ ACE_RCSID (Dynamic,
 
   //const CORBA::ULong request_ctx_id = 0xdead;
   //const CORBA::ULong reply_ctx_id = 0xbeef;
-static const char request_msg[] = "The Echo_Request_Interceptor request message";
-static const char reply_msg[] = "The Echo_Request_Interceptor reply message";
+const char *request_msg = "The Echo_Request_Interceptor request message";
+const char *reply_msg = "The Echo_Request_Interceptor reply message";
 
 Echo_Client_Request_Interceptor::Echo_Client_Request_Interceptor (void)
   : myname_ ("Echo_Client_Interceptor")
@@ -124,7 +123,6 @@ Echo_Client_Request_Interceptor::receive_reply (
                   "The arg is %d\n",
                   param));
     }
-
   if (ACE_OS::strcmp (op.in (), "calculate") == 0)
     {
       Dynamic::ParameterList_var paramlist =
@@ -143,27 +141,10 @@ Echo_Client_Request_Interceptor::receive_reply (
       (result_any.in ()) >>= result;
 
       ACE_DEBUG ((LM_DEBUG,
-                  "The result of calculate() is %d + %d = %d\n",
+                  "The result of calculate is %d + %d = %d\n",
                   param1,
                   param2,
                   result));
-    }
-
-  if (ACE_OS::strcmp (op.in (), "_get_the_structure") == 0)
-    {
-      CORBA::Any_var a = ri->result (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
-
-      Test_Interceptors::Visual::VarLenStruct * v;
-
-      (a.in ()) >>= v;
-
-      ACE_DEBUG ((LM_DEBUG,
-                  "The result of the_structure() is:\n"
-                  "  flag    = %d\n"
-                  "  message = %s\n",
-                  v->flag,
-                  v->message.in ()));
     }
 }
 

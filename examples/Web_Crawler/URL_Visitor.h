@@ -18,7 +18,7 @@
 #define _URL_VISITOR_H
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+#define ACE_LACKS_PRAGMA_ONCE 
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Strategies_T.h"

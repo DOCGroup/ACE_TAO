@@ -12,7 +12,7 @@
 
 #ifndef ACE_ATOMIC_OP_H
 #define ACE_ATOMIC_OP_H
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -20,7 +20,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Thread_Mutex.h"
+#include "ace/Synch.h"
+
 
 // Include the templates here.
 #include "ace/Atomic_Op_T.h"
@@ -158,5 +159,5 @@ private:
 #include "ace/Atomic_Op.i"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 #endif /*ACE_ATOMIC_OP_H*/

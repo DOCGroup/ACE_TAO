@@ -16,7 +16,7 @@
 #ifndef TAO_CLIENT_REQUEST_INFO_H
 #define TAO_CLIENT_REQUEST_INFO_H
 
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #include "tao/orbconf.h"
 
@@ -116,12 +116,10 @@ public:
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  /// Return the reply status for the current request.
-  /**
-   * Statuses can be PortableInterceptor::SUCCESSFUL,
-   * SYSTEM_EXCEPTION, USER_EXCEPTION, LOCATION_FORWARD,
-   * LOCATION_FORWARD_PERMANENT, TRANSPORT_RETRY, UNKNOWN.
-   */
+  /// Return the reply status for the current request.  Statuses can
+  /// be PortableInterceptor::SUCCESSFUL, SYSTEM_EXCEPTION,
+  /// USER_EXCEPTION, LOCATION_FORWARD, LOCATION_FORWARD_PERMANENT,
+  /// TRANSPORT_RETRY.
   virtual PortableInterceptor::ReplyStatus reply_status (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -285,6 +283,6 @@ private:
 
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 
 #endif /* TAO_CLIENT_REQUEST_INFO_H */

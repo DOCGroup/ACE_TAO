@@ -14,7 +14,7 @@
 
 #ifndef TAO_EC_SCHED_FILTER_H
 #define TAO_EC_SCHED_FILTER_H
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #include "EC_Filter.h"
 
@@ -24,7 +24,6 @@
 
 #include "orbsvcs/RtecSchedulerC.h"
 #include "sched_event_export.h"
-#include "ace/SString.h"
 
 /**
  * @class TAO_EC_Sched_Filter
@@ -127,5 +126,5 @@ private:
 #include "EC_Sched_Filter.i"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 #endif /* TAO_EC_SCHED_FILTER_H */

@@ -989,16 +989,6 @@ ImR_Locator_i::list (CORBA::ULong how_many,
   if (this->table_.current_size () != 1)
     {
       Table_Entry *next_entry = 0;
-      
-      // Temporary fix for the seg fault that occurs when the skel tries to
-      // handle the unitialised sequence when this method is called and
-      // no activator has been registered yet.
-      // @todo A full rework of this method is needed - see bug #1543. 
-      server_iterator =
-      ImplementationRepository::ServerInformationIterator::_nil (); 
-      ACE_NEW_THROW_EX (server_list,
-                        ImplementationRepository::ServerInformationList (0),
-                        CORBA::NO_MEMORY ());
 
       for (Table_Iterator iterator (this->table_);
            iterator.next (next_entry) != 0;

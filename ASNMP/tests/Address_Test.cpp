@@ -262,7 +262,8 @@ static void TestNetbiosAddress()
   ACE_ASSERT(strcmp((const char *)n1, (const char *)n4) == 0);
 
   n1.set_service_type(nb_server);
-  ACE_ASSERT(nb_server == n1.get_service_type());
+  nb_service x = n1.get_service_type();
+  ACE_ASSERT(x == nb_server);
 }
 
 // --------------- IPX ---------------

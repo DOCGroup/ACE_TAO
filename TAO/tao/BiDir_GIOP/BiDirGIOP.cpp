@@ -2,7 +2,6 @@
 #include "BiDir_ORBInitializer.h"
 #include "BiDirPolicy_Validator.h"
 #include "tao/ORB_Core.h"
-#include "tao/ORB.h"
 
 
 ACE_RCSID (BiDir_GIOP,

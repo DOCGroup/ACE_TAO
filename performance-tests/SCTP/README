@@ -1,7 +1,7 @@
 This directory provides programs that measure the round trip latency
 of synchronous octet messaging using ACE wrapper-facades for the SCTP
 protocol. Currently these programs provide the only example code on
-how to use ACE's wrapper-facades for SCTP. In the future additional
+how to use ACE's wrapper-facades for SCTP. In the future additonal
 code will be placed in the ACE_wrappers/examples/IPC_SAP/SOCK_SAP
 directory.
 

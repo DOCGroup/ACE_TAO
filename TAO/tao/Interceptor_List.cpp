@@ -4,6 +4,7 @@
 
 #include "tao/Interceptor_List.h"
 #include "tao/CORBA_String.h"
+#include "tao/ORB_Core.h"
 
 #include "ace/Dynamic_Service.h"
 
@@ -41,7 +42,7 @@ TAO_Interceptor_List::add_interceptor_i (
         );
       ACE_CHECK_RETURN (0);
 
-      const size_t old_len = this->length ();
+      size_t old_len = this->length ();
 
       if (ACE_OS_String::strlen (name.in ()) != 0)
         {
@@ -76,7 +77,7 @@ TAO_Interceptor_List::add_interceptor_i (
         }
 
       /// Increase the length of the Interceptor sequence by one.
-      const size_t new_len = old_len + 1;
+      size_t new_len = old_len + 1;
       this->length (new_len);
       return old_len;
     }
@@ -107,7 +108,7 @@ TAO_ClientRequestInterceptor_List::TAO_ClientRequestInterceptor_List (void)
 
 TAO_ClientRequestInterceptor_List::~TAO_ClientRequestInterceptor_List (void)
 {
-  const size_t len = this->interceptors_.size ();
+  size_t len = this->interceptors_.size ();
 
   for (size_t i = 0; i < len; ++i)
     CORBA::release (this->interceptors_[i]);

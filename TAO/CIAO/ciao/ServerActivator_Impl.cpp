@@ -118,7 +118,7 @@ CIAO::ServerActivator_Impl::init (const char *server_location,
 
   // And cache the object reference.
   this->objref_ = Components::Deployment::ServerActivator::_narrow (obj.in ()
-                                                                    ACE_ENV_ARG_PARAMETER);
+                                                                      ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   this->ior_ = this->orb_->object_to_string (this->objref_.in ()
@@ -231,13 +231,6 @@ CIAO::ServerActivator_Impl::parse_config_value (const Components::ConfigValues &
               config_info.svcconf_hint_ = CORBA::string_dup (str_in);
           ACE_CHECK;
         }
-      else if (ACE_OS::strcmp (options[l]->name (), "CIAO-rtcad-filename") == 0)
-        {
-          const char *str_in = 0;
-          if (options[l]->value () >>= str_in)
-              config_info.rtcad_filename_ = CORBA::string_dup (str_in);
-          ACE_CHECK;
-        }
       else
         {
           Components::InvalidConfiguration exc;
@@ -309,32 +302,23 @@ CIAO::ServerActivator_Impl::create_component_server (const Components::ConfigVal
       const char *svcconf_path =
         this->lookup_svcconf_pathname (config_info.svcconf_hint_.in ());
 
-      // spawn the new ComponentServer.
-      ACE_CString additional_options;
-
-      if (svcconf_path != 0)
+        // spawn the new ComponentServer.
+      if (svcconf_path == 0)
+        options.command_line ("%s -k %s -ORBInitRef ComponentInstallation=%s",
+                              this->server_path_.in (),
+                              cb_ior.in (),
+                              this->installation_ior_.in ());
+      else
         {
           ACE_DEBUG((LM_DEBUG, "Using svcconf file: %s\n",
                      svcconf_path));
-          additional_options += ACE_CString (" -ORBSvcConf ");
-          additional_options += ACE_CString (svcconf_path);
+        options.command_line ("%s -k %s -ORBInitRef ComponentInstallation=%s "
+                              "-ORBSvcConf %s",
+                              this->server_path_.in (),
+                              cb_ior.in (),
+                              this->installation_ior_.in (),
+                              svcconf_path);
         }
-
-      if (config_info.rtcad_filename_.in () != 0)
-        {
-          ACE_DEBUG((LM_DEBUG, "Using RTCAD file: %s\n",
-                     config_info.rtcad_filename_.in ()));
-          additional_options += ACE_CString (" -r ");
-          additional_options += ACE_CString (config_info.rtcad_filename_.in ());
-        }
-
-      options.command_line ("%s -k %s -ORBInitRef ComponentInstallation=%s "
-                            "%s",
-                            this->server_path_.in (),
-                            cb_ior.in (),
-                            this->installation_ior_.in (),
-                            additional_options.c_str ());
-
       options.avoid_zombies (1);
 
       if (component_server.spawn (options) == -1)

@@ -24,7 +24,7 @@
 
 #ifndef ACE_WIN32_ASYNCH_IO_H
 #define ACE_WIN32_ASYNCH_IO_H
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -38,9 +38,8 @@
 #include "ace/Asynch_IO_Impl.h"
 #include "ace/Addr.h"
 #include "ace/Event_Handler.h"
-#include "ace/Handle_Set.h"
+
 #include "ace/Map_Manager.h"
-#include "ace/Null_Mutex.h"
 
 // Forward declaration
 class ACE_WIN32_Proactor;
@@ -1942,5 +1941,5 @@ protected:
 };
 
 #endif /* ACE_WIN32 && !ACE_HAS_WINCE */
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 #endif /* ACE_WIN32_ASYNCH_IO_H */

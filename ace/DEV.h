@@ -13,7 +13,7 @@
 
 #ifndef ACE_DEV_H
 #define ACE_DEV_H
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #include "ace/IO_SAP.h"
 
@@ -30,10 +30,10 @@
 
 #if defined (ACE_HAS_TEMPLATE_TYPEDEFS)
 #define ACE_DEV_CONNECTOR ACE_DEV_Connector
-#define ACE_DEV_STREAM ACE_DEV_IO
+#define ACE_DEV_STREAM ACE_DEV_Stream
 #else /* TEMPLATES are broken (must be a cfront-based compiler...) */
 #define ACE_DEV_CONNECTOR ACE_DEV_Connector, ACE_DEV_Addr
-#define ACE_DEV_STREAM ACE_DEV_IO, ACE_DEV_Addr
+#define ACE_DEV_STREAM ACE_DEV_Stream, ACE_DEV_Addr
 #endif /* ACE_TEMPLATE_TYPEDEFS */
 
 /**
@@ -70,5 +70,5 @@ protected:
 #include "ace/DEV.i"
 #endif
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 #endif /* ACE_DEV_H */

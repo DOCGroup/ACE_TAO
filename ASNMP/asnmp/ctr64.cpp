@@ -61,7 +61,6 @@ Counter64::Counter64( unsigned long long llw )
 
 //------------------[ copy constructor ]---------------------------------
 Counter64::Counter64( const Counter64 &ctr64 )
-  : SnmpSyntax (ctr64)
 {
   smival.syntax = sNMP_SYNTAX_CNTR64;
   smival.value.hNumber.hipart = ctr64.high();
@@ -201,7 +200,7 @@ int Counter64::valid() const
 //----------[ return ASCII format ]-------------------------
 // TODO:  Fix up to do real 64bit decimal value printing...
 //        For now, print > 32-bit values in hex
-const char * Counter64::to_string()
+char * Counter64::to_string()
 {
   if ( high() != 0 )
     sprintf(output_buffer, "0x%X%08X",

@@ -14,7 +14,7 @@
 
 #ifndef TAO_OFFER_ITERATORS_H
 #define TAO_OFFER_ITERATORS_H
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #include "Trader_Utils.h"
 
@@ -99,6 +99,9 @@ public:
                                  ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
  protected:
+
+  /// To satisfy g++'s insane lust for copy constructors...
+  TAO_Offer_Iterator (TAO_Offer_Iterator &) {}
 
   TAO_Offer_Iterator& operator=(const TAO_Offer_Iterator&);
 
@@ -295,5 +298,5 @@ class TAO_Offer_Id_Iterator :
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 #endif /* TAO_OFFER_ITERATOR */

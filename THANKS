@@ -7,8 +7,8 @@ University of California at Irvine.
 Everett Anderson <eea1@cec.wustl.edu>
 Alexander Babu Arulanthu <alex@cs.wustl.edu>
 Shawn Atkins <sma1@cs.wustl.edu>
-Jaiganesh Balasubramanian <jai@dre.vanderbilt.edu>
-Krishnakumar Balasubramanian <kitty@dre.vanderbilt.edu>
+Jaiganesh Balasubramanian <jai@doc.ece.uci.edu>
+Krishnakumar Balasubramanian <kitty@cs.wustl.edu>
 Matt Braun <mjb2@cs.wustl.edu>
 Darrell Brunsch <brunsch@uci.edu>
 Dante J. Cannarozzi <djc2@cs.wustl.edu>
@@ -48,7 +48,7 @@ Balachandran Natarajan <bala@dre.vanderbilt.edu>
 Kirthika Parameswaran <kirthika@cs.wustl.edu>
 Krishnakumar Pathayapura <krish@cs.wustl.edu>
 Carlos O'Ryan <coryan@uci.edu>
-Ossama Othman <ossama@dre.vanderbilt.edu>
+Ossama Othman <ossama@uci.edu>
 Jeff Parsons <j.parsons@vanderbilt.edu>
 Irfan Pyarali <irfan@cs.wustl.edu>
 Diego Sevilla Ruiz <dsevilla@ditec.um.es>
@@ -1524,7 +1524,7 @@ Alexander Maack <Alexander.Maack@MaaTec.com>
 Timothy Culp <timothy.culp@computer.org>
 Oleg Terletsky <oterletsky@comcast.net>
 Bill Tonseth <wtonseth@yahoo.com>
-Frank Pilhofer <fpilhofe@mc.com>
+Frank Pilhofer <fp@fpx.de>
 Eric Quere <Eric.Quere@med.ge.com>
 Keith Thornton <keith.thornton.kt@germany.agfa.com>
 Nathan Krasney <natan-k@actcom.co.il>
@@ -1703,7 +1703,7 @@ Nick Lewycky <nicholas@fresco.org>
 Ira Burton <imburton@micron.com>
 Thomas Wiegert <wiegert@schlund.de>
 Craig Watcham <craigw@ananzi.co.za>
-Roland Meub <roland.meub@gmx.de>
+Roland Meub <Roland.Meub@tenovis.com>
 Pit Linnartz <Pit.Linnartz@t-mobile.de>
 Peder Norgaard <pcn@pogt.dk>
 David Ohlemacher <ohlemacher@bbn.com>
@@ -1730,33 +1730,9 @@ Raymond Hoofman <raymond@charm.nl>
 Jason Smith <jason@atdesk.com>
 Danta Cannarozzi <djc2@cse.wustl.edu>
 Valery Salamakha <ccapstan@bigpond.net.au>
-Karim Fodil-Lemelin <kfl@xiphos.ca>
-Wenlong Tang <tang_long@hotmail.com>
 Marek Brudka <M.Brudka@elka.pw.edu.pl>
-Manish Jain <majain@hss.hns.com>
 Robin Farine <robin.farine@acn-group.ch>
 Roland Schimmack <SC@ProCom.de>
-Roy Pollock <rpollock@ghs.com>
-Eric Held <Eric.Held@harris.com>
-Kees van Marle <kvmarle@remedy.nl>
-Dieter Knueppel <dknueppel@datus.com>
-Amol Tambe <Amol.Tambe@ideas.com>
-Emiliano Berenbaum <eberenb@yahoo.com>
-Scott Clarke <sclarke@ideorlando.org>
-Sunil Rottoo <srottoo@adacelcanada.com>
-Martin Habets <mhabets@il0015mhabets1.ih.lucent.com>
-Todd Cooper <todd@DO11073.com>
-Serkan Unsal <serkan_u2000@yahoo.com>
-Milan Cvetkovic <mcvetkovic@mpathix.com>
-Didier Becu <didier.becu@fr.thalesgroup.com>
-Dan Halbert <halbert@bbn.com>
-Jerome Waibel <schrom@schlund.de>
-Stephan Frenzel <stephan.frenzel@realtech.de>
-Bruce Jones <BRUCE.JONES@cubic.com>
-Tim Hawes <thawes@althusius.net>
-Philip Leishman <leishman@rheinmetall-de.com>
-Alexander Jasper <alexander.jasper@gmx.net>
-
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson in the early 1990's.  Paul devised the recursive Makefile
@@ -1782,4 +1758,4 @@ for instructions on submitting suggestions or fixes.
         Thanks,
 
                 Douglas C. Schmidt
-                d.schmidt@vanderbilt.edu
+                schmidt@uci.edu

@@ -18,6 +18,24 @@ TAO_Stub::profile_lock (void) const
   return this->profile_lock_ptr_;
 }
 
+ACE_INLINE CORBA::Boolean
+TAO_Stub::service_profile_selection (void)
+{
+  // @@todo: This method is depreacted. Needs to be removed after
+  // 1.2.1 goes out.
+  TAO_Profile *profile = 0;
+
+  this->orb_core_->service_profile_selection (this->base_profiles_,
+                                              profile);
+  if (profile)
+    {
+      this->set_profile_in_use_i (profile);
+      return 1;
+    }
+
+  return 0;
+}
+
 ACE_INLINE void
 TAO_Stub::reset_forward (void)
 {

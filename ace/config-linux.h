@@ -7,13 +7,12 @@
 
 #ifndef ACE_CONFIG_LINUX_H
 #define ACE_CONFIG_LINUX_H
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #include "ace/config-linux-common.h"
 
 #define ACE_HAS_SVR4_DYNAMIC_LINKING
 #define ACE_HAS_AUTOMATIC_INIT_FINI
-#define ACE_HAS_DLSYM_SEGFAULT_ON_INVALID_HANDLE
 
 #if !defined (ACE_MT_SAFE)
 #define ACE_MT_SAFE 1                           // JCEJ 12/22/96        #1
@@ -55,6 +54,6 @@
 #endif  /* ACE_MT_SAFE */
 
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 
 #endif /* ACE_CONFIG_LINUX_H */

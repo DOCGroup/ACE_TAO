@@ -23,6 +23,9 @@ endif
 ifeq (,$(threads))
   threads = 1
 endif
+ifeq ($(threads),0)
+  CPPFLAGS += -DACE_MT_SAFE=0
+endif # threads
 
 PLATFORM_XT_CPPFLAGS=
 PLATFORM_XT_LIBS=-lXt

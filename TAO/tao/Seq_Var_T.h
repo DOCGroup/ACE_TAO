@@ -14,13 +14,11 @@
 #ifndef TAO_SEQ_VAR_T_H
 #define TAO_SEQ_VAR_T_H
 
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#include "ace/OS_Memory.h"
 
 /**
  * @class TAO_Seq_Var_Base_T
@@ -55,7 +53,7 @@ public:
   _inout_type   inout (void);
   _out_type     out (void);
   _retn_type    _retn (void);
-
+    
   // TAO extension.
   _retn_type    ptr (void) const;
 
@@ -154,6 +152,6 @@ public:
 #pragma implementation ("Seq_Var_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 
 #endif /* TAO_SEQ_VAROUT_T_H */

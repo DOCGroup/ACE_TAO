@@ -29,8 +29,8 @@ Roundtrip::invoke (CORBA::ServerRequest_ptr request
       this->orb_->create_list (0, list ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
-      CORBA::Any type_id;
-      type_id._tao_set_typecode (CORBA::_tc_string);
+      CORBA::Any type_id (CORBA::_tc_string,
+                          0);
       list->add_value ("type_id", type_id, CORBA::ARG_IN
                        ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
@@ -65,8 +65,8 @@ Roundtrip::invoke (CORBA::ServerRequest_ptr request
       this->orb_->create_list (0, list ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
-      CORBA::Any send_time;
-      send_time._tao_set_typecode (CORBA::_tc_ulonglong);
+      CORBA::Any send_time (CORBA::_tc_ulonglong,
+                            0);
       list->add_value ("send_time", send_time, CORBA::ARG_IN
                        ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;

@@ -12,7 +12,7 @@
 
 #ifndef ACE_ASYNCH_PSEUDO_TASK_H
 #define ACE_ASYNCH_PSEUDO_TASK_H
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -23,7 +23,6 @@
 #include "ace/Reactor.h"
 #include "ace/Select_Reactor.h"
 #include "ace/Task.h"
-#include "ace/Manual_Event.h"
 
 
 /**
@@ -76,5 +75,5 @@ protected:
   ACE_Manual_Event finish_event_;
 };
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 #endif /* ACE_ASYNCH_PSEUDO_TASK_H */

@@ -1,6 +1,6 @@
 # $Id$
 
-        This directory contains possibly the most simple example of
+	This directory containts possibly the most simple example of
 the real-time event service.  It contains three executables; a
 consumer, supplier and a program to create the event channel itself.
 
@@ -12,4 +12,4 @@ $ ./Consumer
 $ ./Supplier
 
 	more advanced tests are available in
-$TAO_ROOT/orbsvcs/tests/Event and $TAO_ROOT/orbsvcs/tests/EC_*
+$TAO_ROOT/orbsvcs/tests/Event and $TAO_ROOT/orbsvcs/EC_*

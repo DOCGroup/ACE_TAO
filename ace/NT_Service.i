@@ -18,7 +18,6 @@ ACE_NT_Service::ACE_NT_Service (DWORD start_timeout,
   svc_status_.dwWin32ExitCode = NO_ERROR;
   svc_status_.dwServiceSpecificExitCode = 0;
   svc_status_.dwCheckPoint = 0;
-  svc_status_.dwWaitHint = 0;
 }
 
 

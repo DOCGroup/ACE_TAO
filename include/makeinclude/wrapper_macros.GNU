@@ -201,12 +201,6 @@ endif
 # platform_macros.GNU to set default values for them.
 include $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
 
-ifeq ($(threads),0)
-  ifneq ($(findstring -DACE_MT_SAFE=0,$(CPPFLAGS)),-DACE_MT_SAFE=0)
-    CPPFLAGS += -DACE_MT_SAFE=0
-  endif # -DACE_MT_SAFE=0
-endif # threads
-
 ####
 #### Defaults are exceptions off (0), fast off (0), and rtti off (0)
 ####
@@ -524,12 +518,12 @@ else  # exceptions
     #### Enable exception handling with g++ < 2.8.0.  Not recommended,
     #### but provided here for completeness.
     CCFLAGS += -fhandle-exceptions
-#  else  # ! ACE_HAS_GNUG_PRE_2_8
-#  ifeq ($(ACE_HAS_GNUG_PRE_2_8),0)
-#    #### Disable this warning on g++ >= 2.8.0 if exceptions are enabled,
-#    #### it gets confused and reports too many bogus warnings.
-#    CCFLAGS += -Wno-uninitialized
-#  endif # g++ > 2.8.0
+  else  # ! ACE_HAS_GNUG_PRE_2_8
+  ifeq ($(ACE_HAS_GNUG_PRE_2_8),0)
+    #### Disable this warning on g++ >= 2.8.0 if exceptions are enabled,
+    #### it gets confused and reports too many bogus warnings.
+    CFLAGS += -Wno-uninitialized
+  endif # g++ > 2.8.0
   endif # ! ACE_HAS_GNUG_PRE_2_8
 endif # exceptions
 

@@ -1,17 +1,21 @@
+// -*- c++ -*-
+// $Id$
 
-//=============================================================================
-/**
- *  @file    test_wrapper.h
- *
- *  $Id$
- *
- *  Header file for the DynAny basic test manager
- *
- *
- *  @author Jeff Parsons <parsons@cs.wustl.edu>
- */
-//=============================================================================
-
+// ============================================================================
+//
+// = LIBRARY
+//    TAO/tests/DynAny_Test
+//
+// = FILENAME
+//    test_wrapper.h
+//
+// = DESCRIPTION
+//    Header file for the DynAny basic test manager
+//
+// = AUTHOR
+//    Jeff Parsons <parsons@cs.wustl.edu>
+//
+// ============================================================================
 
 #if !defined (TEST_WRAPPER_H)
 #define TEST_WRAPPER_H

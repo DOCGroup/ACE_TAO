@@ -99,7 +99,7 @@ class SIPAddress; // aka ipv6
 //--------------------------------------------------------------------
 //----[ Address class ]-----------------------------------------------
 //--------------------------------------------------------------------
-class  ASNMP_Export Address: public  SnmpSyntax
+class  ACE_Export Address: public  SnmpSyntax
   // = TITLE
   //     Defines the member functions for the abstract base class
   //     Address. An Address is a unique network endpoint.
@@ -160,7 +160,7 @@ public:
   unsigned char& operator[]( const int position);
   // for non const [], allows reading and writing
 
-  virtual const char *to_string() = 0;
+  virtual char *to_string() = 0;
   // get a printable ASCII value
 
   virtual SnmpSyntax *clone() const = 0;
@@ -198,7 +198,7 @@ protected:
 //-----------------------------------------------------------------------
 //---------[ IPv4 Address Class ]----------------------------------------
 //-----------------------------------------------------------------------
-class ASNMP_Export IpAddress : public Address
+class ACE_Export IpAddress : public Address
   // = TITLE
   //     Defines the member functions for the concrete class IpAddress
   //     An IP Version 4 Address is 4 bytes long and consists of a
@@ -228,11 +228,11 @@ public:
   SnmpSyntax *clone() const;
   // create a new instance of this Value
 
-  const char *resolve_hostname(int& was_found);
+  char *resolve_hostname(int& was_found);
   // return the DNS Fully Qualified Domain Name (host.domain)
   // on failure returns dotted_quad string
 
-  virtual const char *to_string() ;
+  virtual char *to_string() ;
   // return string representation of object (dotted quad returned)
 
   virtual operator const char *() const;
@@ -301,7 +301,7 @@ protected:
 //--------------[ DNS Iterator Class ]------------------------------------
 //------------------------------------------------------------------------
 
-class ASNMP_Export Address_Iter
+class ACE_Export Address_Iter
   // = TITLE
   //     Defines routines to obtain information on a hostname/FQDN
   //     such as multiple addresses
@@ -331,7 +331,7 @@ private:
 //------------------------------------------------------------------------
 //---------[ UDP/IPv4 Address Class ]-------------------------------------
 //------------------------------------------------------------------------
-class  ASNMP_Export UdpAddress : public IpAddress
+class  ACE_Export UdpAddress : public IpAddress
   // = TITLE
   //     Defines the member functions for the concrete class UdpAddress
   //     A Udp Address consists of an IP Version 4 Address (IpAddress)
@@ -367,7 +367,7 @@ public:
   SnmpSyntax *clone() const;
   // create a new instance of this Value
 
-  virtual const char *to_string() ;
+  virtual char *to_string() ;
   // output in the form of address:port
 
   virtual operator const char *() const;
@@ -399,7 +399,7 @@ protected:
 //-------------------------------------------------------------------------
 //---------[ 802.3 MAC Address Class ]-------------------------------------
 //-------------------------------------------------------------------------
-class  ASNMP_Export MacAddress : public Address
+class  ACE_Export MacAddress : public Address
   // = TITLE
   //     Defines the member functions for the concrete class MacAddress.
   //     A Media Access Control Address consists of 48 bits as defined
@@ -430,7 +430,7 @@ public:
   SnmpSyntax *clone() const;
   // create a new instance of this Value
 
-  virtual const char *to_string();
+  virtual char *to_string();
   // create a string to internal class storage representing object
 
   virtual operator const char *() const;
@@ -459,7 +459,7 @@ protected:
 //------------------------------------------------------------------------
 //---------[ Netbios Address Class ]--------------------------------------
 //------------------------------------------------------------------------
-class  ASNMP_Export NetbiosAddress : public Address
+class  ACE_Export NetbiosAddress : public Address
   // = TITLE
   //     Defines the member functions for the concrete class NetbiosAddress.
   //     The IBM/Microsoft address for NETBIOS, NETBEUI protocol transport.
@@ -480,7 +480,7 @@ public:
 
    ~NetbiosAddress();
 
-   virtual const char *to_string();
+   virtual char *to_string();
 
    NetbiosAddress& operator=( const NetbiosAddress &nbaddr);
 
@@ -518,7 +518,7 @@ protected:
 //------------------------------------------------------------------------
 //---------[ DecNet Address Class ]---------------------------------------
 //------------------------------------------------------------------------
-class  ASNMP_Export DecNetAddress : public Address
+class  ACE_Export DecNetAddress : public Address
   // = TITLE
   //     Defines the member functions for the concrete class DecNetAddress.
   //     DecNet Phase ? address consists of two octets (CISCO-TC.my)
@@ -535,7 +535,7 @@ class  ASNMP_Export DecNetAddress : public Address
 
    ~DecNetAddress();
 
-   virtual const char *to_string();
+   virtual char *to_string();
 
    DecNetAddress& operator=( const DecNetAddress &decaddr);
 
@@ -564,7 +564,7 @@ class  ASNMP_Export DecNetAddress : public Address
 //------------------------------------------------------------------------
 //---------[ AppleTalk Address Class ]------------------------------------
 //------------------------------------------------------------------------
-class  ASNMP_Export AppleTalkAddress :  public Address
+class  ACE_Export AppleTalkAddress :  public Address
   // = TITLE
   //     Defines the member functions for the concrete class DecNetAddress.
   //     DecNet Phase ? address consists of two octets (CISCO-TC.my)
@@ -581,7 +581,7 @@ class  ASNMP_Export AppleTalkAddress :  public Address
 
    ~AppleTalkAddress();
 
-   virtual const char *to_string();
+   virtual char *to_string();
 
    AppleTalkAddress& operator=( const AppleTalkAddress &atkaddr);
 
@@ -622,7 +622,7 @@ class  ASNMP_Export AppleTalkAddress :  public Address
 //------------------------------------------------------------------------
 //---------[ IPX Address Class ]------------------------------------------
 //------------------------------------------------------------------------
-class ASNMP_Export IpxAddress : public Address
+class ACE_Export IpxAddress : public Address
   // = TITLE
   //     Defines the member functions for the concrete class IpxAddress.
   //     Novell's IPX (version ?) network protocol endpoint
@@ -655,7 +655,7 @@ public:
   SnmpSyntax *clone() const;
   // create a new instance of this Value
 
-  virtual const char *to_string();
+  virtual char *to_string();
   // create string represtation of object value
 
   virtual operator const char *() const;
@@ -687,7 +687,7 @@ protected:
 //------------------------------------------------------------------------
 //---------[ IpxSock Address Class ]--------------------------------------
 //------------------------------------------------------------------------
-class ASNMP_Export IpxSockAddress : public IpxAddress
+class ACE_Export IpxSockAddress : public IpxAddress
   // = TITLE
   //     Defines the member functions for the concrete class IpxAddress.
   //     Novell's IPX (version ?) network protocol endpoint
@@ -727,7 +727,7 @@ public:
   unsigned short get_socket() const;
   // get the socket number
 
-  virtual const char *to_string();
+  virtual char *to_string();
   // create string representation of object value
 
   virtual operator const char *() const;
@@ -751,7 +751,7 @@ protected:
 //-------------------------------------------------------------------------
 //--------[ Generic Address ]----------------------------------------------
 //-------------------------------------------------------------------------
-class ASNMP_Export GenAddress : public Address
+class ACE_Export GenAddress : public Address
   // = TITLE
   //     Defines the member functions for the concrete class GenAddress.
   //     This class attempts to determine an address type given a char string.
@@ -781,7 +781,7 @@ public:
   SnmpSyntax& operator=( SnmpSyntax &val);
   // copy an instance of this Value
 
-  virtual const char *to_string();
+  virtual char *to_string();
   // string representation of object value
 
   virtual operator const char *() const;

@@ -145,10 +145,6 @@ LINK32=link.exe
 
 SOURCE=.\MT_Reference_Counted_Event_Handler_Test.cpp
 # End Source File
-# Begin Source File
-
-SOURCE=.\Main.cpp
-# End Source File
 # End Group
 # Begin Group "Header Files"
 

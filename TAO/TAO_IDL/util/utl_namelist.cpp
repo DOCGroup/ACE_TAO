@@ -80,9 +80,8 @@ ACE_RCSID (util,
 
 UTL_NameList::UTL_NameList (UTL_ScopedName *s, 
                             UTL_NameList *cdr)
-	: UTL_List (cdr),
-	  pd_car_data (s),
-    pd_truncatable (I_FALSE)
+	: UTL_List(cdr),
+	  pd_car_data(s)
 {
 }
 
@@ -91,18 +90,6 @@ UTL_ScopedName *
 UTL_NameList::head (void)
 {
   return this->pd_car_data;
-}
-
-idl_bool
-UTL_NameList::truncatable (void) const
-{
-  return this->pd_truncatable;
-}
-
-void
-UTL_NameList::truncatable (idl_bool val)
-{
-  this->pd_truncatable = val;
 }
 
 UTL_NamelistActiveIterator::UTL_NamelistActiveIterator (UTL_NameList *s)

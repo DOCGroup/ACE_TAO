@@ -27,6 +27,8 @@ public:
 
   Echo_Client_Request_Interceptor (void);
   // ctor.
+  virtual ~Echo_Client_Request_Interceptor ();
+  // dtor.
 
   virtual char * name (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -67,11 +69,6 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ForwardRequest));
 
-protected:
-
-  virtual ~Echo_Client_Request_Interceptor (void);
-  // dtor.
-
 private:
   const char *myname_;
 
@@ -85,6 +82,8 @@ class Echo_Server_Request_Interceptor
 public:
   Echo_Server_Request_Interceptor (void);
   // cotr.
+  ~Echo_Server_Request_Interceptor ();
+  // dotr.
 
   virtual char * name (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -124,11 +123,6 @@ public:
       CORBA::SystemException,
       PortableInterceptor::ForwardRequest
       ));
-
-protected:
-
-  virtual ~Echo_Server_Request_Interceptor (void);
-  // dotr.
 
 private:
   const char *myname_;

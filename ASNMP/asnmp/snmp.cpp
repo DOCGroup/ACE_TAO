@@ -88,7 +88,7 @@ int Snmp::valid() const
 // given error code, return string definition
 // class version
 // static
-const char * Snmp::error_string(int last_transaction_status_)
+char * Snmp::error_string(int last_transaction_status_)
 {
   ACE_TRACE("Snmp::error_string");
 
@@ -100,7 +100,7 @@ const char * Snmp::error_string(int last_transaction_status_)
 }
 
 // instance version
-const char * Snmp::error_string()
+char * Snmp::error_string()
 {
    return Snmp::error_string(last_transaction_status_);
 }

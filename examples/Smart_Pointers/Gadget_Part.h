@@ -13,8 +13,6 @@
 #define GADGET_PART_H
 
 #include "ace/Bound_Ptr.h"
-#include "ace/Synch_Traits.h"
-#include "ace/Thread_Mutex.h"
 
 /**
  * @class Gadget_Part

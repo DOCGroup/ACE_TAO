@@ -74,7 +74,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_scope.h"
 #include "utl_string.h"
 #include "nr_extern.h"
-#include "ace/streams.h"
 
 ACE_RCSID (ast,
            ast_expression,
@@ -232,25 +231,6 @@ AST_Expression::AST_Expression (unsigned long ulv)
 
   this->pd_ev->et = EV_ulong;
   this->pd_ev->u.ulval = ulv;
-}
-
-// An AST_Expression denoting an unsigned long integer.
-AST_Expression::AST_Expression (ACE_UINT64 ulv,
-                                ExprType t)
-  : pd_ec (EC_none),
-    pd_ev (0),
-    pd_v1 (0),
-    pd_v2 (0),
-    pd_n (0),
-    tdef (0)
-{
-  this->fill_definition_details ();
-
-  ACE_NEW (this->pd_ev,
-           AST_ExprValue);
-
-  this->pd_ev->et = t;
-  this->pd_ev->u.ullval = ulv;
 }
 
 // An AST_Expression denoting a 32-bit floating point number.

@@ -37,7 +37,6 @@
 #define DEFINE_TRAP_CONSTANTS_
 #include "asnmp/enttraps.h" // enterprise standard traps
 #include "ace/Get_Opt.h"
-#include "ace/streams.h"
 
 ACE_RCSID(trap, trap, "$Id$")
 
@@ -162,17 +161,18 @@ int trapapp::run()
        " TRAP GENERATOR SAMPLE PROGRAM \nOID: " << oid_.to_string() << "\n";
    target_.get_address(address_); // target updates port used
    int rc;
-   const char *name = address_.resolve_hostname(rc);
+   char *name = address_.resolve_hostname(rc);
+   if (rc)
+      name = "<< did not resolve via gethostbyname() >>";
 
-   cout << "Device: " << address_ << " ";
-   cout << (rc ? "<< did not resolve via gethostbyname() >>" : name) << "\n"; 
+   cout << "Device: " << address_ << " " << name << "\n"; 
    cout << "[ Community=" <<  community_.to_string() << " ]"<< endl;
 
    if (snmp_.trap( pdu_, target_) == SNMP_CLASS_SUCCESS) {
      cout << "Trap was written to network...\n";
    }
    else {
-    const char *ptr = snmp_.error_string();
+    char *ptr = snmp_.error_string();
     cout << "ASNMP:ERROR: trap command failed reason: " << ptr << endl;
   }
 

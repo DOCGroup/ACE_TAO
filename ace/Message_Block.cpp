@@ -1,7 +1,7 @@
 #include "ace/Message_Block.h"
 #include "ace/Log_Msg.h"
 #include "ace/Malloc_Base.h"
-#include "ace/Guard_T.h"
+#include "ace/Synch_T.h"
 
 //#define ACE_ENABLE_TIMEPROBES
 #include "ace/Timeprobe.h"
@@ -133,7 +133,6 @@ ACE_Message_Block::crunch (void)
 void
 ACE_Data_Block::dump (void) const
 {
-#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Data_Block::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG,
@@ -155,13 +154,11 @@ ACE_Data_Block::dump (void) const
               this->reference_count_));
   this->allocator_strategy_->dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
-#endif /* ACE_HAS_DUMP */
 }
 
 void
 ACE_Message_Block::dump (void) const
 {
-#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Message_Block::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG,
@@ -181,7 +178,6 @@ ACE_Message_Block::dump (void) const
               this->wr_ptr_));
   this->data_block ()->dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
-#endif /* ACE_HAS_DUMP */
 }
 
 int
@@ -1219,7 +1215,6 @@ ACE_Dynamic_Message_Strategy::~ACE_Dynamic_Message_Strategy (void)
 void
 ACE_Dynamic_Message_Strategy::dump (void) const
 {
-#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Dynamic_Message_Strategy::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
@@ -1244,7 +1239,6 @@ ACE_Dynamic_Message_Strategy::dump (void) const
               this->pending_shift_.usec ()));
 
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
-#endif /* ACE_HAS_DUMP */
 }
 
 ACE_Deadline_Message_Strategy:: ACE_Deadline_Message_Strategy (unsigned long static_bit_field_mask,
@@ -1265,7 +1259,6 @@ ACE_Deadline_Message_Strategy::~ACE_Deadline_Message_Strategy (void)
 void
 ACE_Deadline_Message_Strategy::dump (void) const
 {
-#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Deadline_Message_Strategy::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
@@ -1276,7 +1269,6 @@ ACE_Deadline_Message_Strategy::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nderived class: ACE_Deadline_Message_Strategy\n")));
 
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
-#endif /* ACE_HAS_DUMP */
 }
 
 ACE_Laxity_Message_Strategy::ACE_Laxity_Message_Strategy (unsigned long static_bit_field_mask,
@@ -1297,7 +1289,6 @@ ACE_Laxity_Message_Strategy::~ACE_Laxity_Message_Strategy (void)
 void
 ACE_Laxity_Message_Strategy::dump (void) const
 {
-#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Laxity_Message_Strategy::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
@@ -1308,7 +1299,6 @@ ACE_Laxity_Message_Strategy::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nderived class: ACE_Laxity_Message_Strategy\n")));
 
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
-#endif /* ACE_HAS_DUMP */
 }
   // Dump the state of the strategy.
 

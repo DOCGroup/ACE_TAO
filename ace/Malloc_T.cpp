@@ -136,16 +136,13 @@ ACE_Allocator_Adapter<MALLOC>::print_stats (void) const
 template <class MALLOC> void
 ACE_Allocator_Adapter<MALLOC>::dump (void) const
 {
-#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Allocator_Adapter<MALLOC>::dump");
   this->allocator_.dump ();
-#endif /* ACE_HAS_DUMP */
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB> void
 ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::dump (void) const
 {
-#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
@@ -157,7 +154,6 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::dump (void) const
     this->cb_ptr_->malloc_stats_.dump ();
 #endif /* ACE_HAS_MALLOC_STATS */
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
-#endif /* ACE_HAS_DUMP */
 }
 
 #if defined (ACE_HAS_MALLOC_STATS)
@@ -833,7 +829,6 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::unbind (const char *name)
 template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB> void
 ACE_Malloc_LIFO_Iterator_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::dump (void) const
 {
-#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Malloc_LIFO_Iterator_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
@@ -842,7 +837,6 @@ ACE_Malloc_LIFO_Iterator_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("name_ = %s"), this->name_));
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
-#endif /* ACE_HAS_DUMP */
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB>
@@ -928,7 +922,6 @@ ACE_Malloc_LIFO_Iterator_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::advance (void)
 template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB> void
 ACE_Malloc_FIFO_Iterator_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::dump (void) const
 {
-#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Malloc_FIFO_Iterator_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
@@ -937,7 +930,6 @@ ACE_Malloc_FIFO_Iterator_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("name_ = %s"), this->name_));
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
-#endif /* ACE_HAS_DUMP */
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB>

@@ -13,7 +13,7 @@
 //      Implement wrappers useful to IFR Service clients and servers.
 //
 // = AUTHORS
-//    Jeff Parsons <parsons@isis.vanderbilt.edu>
+//    Jeff Parsons <parsons@cs.wustl.edu>
 //    Jaiganesh Balasubramanian <jai@doc.ece.uci.edu>
 //    Priyanka Gontla <pgontla@doc.ece.uci.edu>
 //
@@ -21,17 +21,17 @@
 
 #ifndef TAO_IFR_SERVICE_UTILS_H
 #define TAO_IFR_SERVICE_UTILS_H
-
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #include "tao/PortableServer/PortableServerC.h"
 #include "tao/ORB.h"
-#include "tao/IFR_Client/IFR_BasicC.h"
+#include "tao/IFR_Client/IFR_BaseC.h"
 #include "ifr_service_export.h"
 
 #include "ace/Configuration.h"
 
 // Forward decl;
+class IFR_ServantLocator;
 class TAO_IOR_Multicast;
 class ACE_Configuration;
 class TAO_Repository_i;
@@ -154,20 +154,25 @@ public:
   /// Top-level method which calls all the above error-checking methods.
 
   static ACE_TString create_common (
-      CORBA::DefinitionKind container_kind,
-      CORBA::DefinitionKind contained_kind,
-      ACE_Configuration_Section_Key container_key,
-      ACE_Configuration_Section_Key &new_key,
-      TAO_Repository_i *repo,
-      const char *id,
-      const char *name,
-      name_clash_checker checker,
-      const char *version,
-      const char *sub_section_name
-      ACE_ENV_ARG_DECL
-    );
+    CORBA::DefinitionKind container_kind,
+    CORBA::DefinitionKind contained_kind,
+    ACE_Configuration_Section_Key container_key,
+    ACE_Configuration_Section_Key &new_key,
+    TAO_Repository_i *repo,
+    const char *id,
+    const char *name,
+    name_clash_checker checker,
+    const char *version,
+    const char *sub_section_name
+    ACE_ENV_ARG_DECL
+  );
   /// Code common to the creation of an entry for any non-anonymous type.
   
+  static void set_initializers (const CORBA::InitializerSeq &initializers,
+                                ACE_Configuration *config,
+                                ACE_Configuration_Section_Key &key);
+  /// Common to Container::create_value() and ValueDef::initializers().
+
   static void set_supported_interfaces (
       const CORBA::InterfaceDefSeq &supported_interfaces,
       ACE_Configuration *config,
@@ -175,25 +180,6 @@ public:
     );
   /// Common to Container::create_value() and ValueDef::supported_interfaces(),
   /// Container::create_component() and Component::supported_interfaces().
-
-  static void set_exceptions (ACE_Configuration *config,
-                              ACE_Configuration_Section_Key &key,
-                              const char *sub_section,
-                              const CORBA::ExceptionDefSeq &exceptions);
-  /// Common code for operations, attributes, and valuetype initializers.
-
-  static CORBA::TypeCode_ptr gen_valuetype_tc_r (
-      ACE_Configuration_Section_Key &,
-      TAO_Repository_i *
-      ACE_ENV_ARG_DECL
-    );
-  /// Implemented here to avoid recursion in the servant classes.
-
-  static void fill_valuemember_seq (CORBA::ValueMemberSeq &,
-                                    ACE_Configuration_Section_Key &,
-                                    TAO_Repository_i *
-                                    ACE_ENV_ARG_DECL);
-  /// Called from the above function.
 
   static char *reference_to_path (CORBA::IRObject_ptr obj);
   /// Converison from IR Object reference to key location path.
@@ -246,5 +232,5 @@ public:
   /// all over the place now that it's here.
 };
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 #endif /* TAO_IFR_SERVICE_UTILS_H */

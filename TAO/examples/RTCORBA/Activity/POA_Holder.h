@@ -16,7 +16,6 @@
 #include "tao/RTCORBA/RTCORBA.h"
 #include "tao/PortableServer/PortableServer.h"
 #include "activity_export.h"
-#include "ace/SString.h"
 
 class ACE_Arg_Shifter;
 

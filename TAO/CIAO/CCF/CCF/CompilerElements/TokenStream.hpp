@@ -1,7 +1,3 @@
-// file      : CCF/CompilerElements/TokenStream.hpp
-// author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
-// cvs-id    : $Id$
-
 #ifndef TOKEN_STREAM_HPP
 #define TOKEN_STREAM_HPP
 
@@ -23,17 +19,10 @@ namespace CCF
   class TokenStream<char>
   {
   public:
-    typedef
-    std::char_traits<char>
-    traits;
+    typedef std::char_traits<char> traits;
 
-    typedef
-    traits::int_type
-    int_type;
-
-    typedef
-    traits::char_type
-    char_type;
+    typedef traits::int_type int_type;
+    typedef traits::char_type char_type;
 
   public:
     virtual int_type

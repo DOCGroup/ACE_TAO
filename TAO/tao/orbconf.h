@@ -16,13 +16,12 @@
 
 #ifndef TAO_ORBCONF_H
 #define TAO_ORBCONF_H
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 // "ace/OS.h" is overkill.  "ace/Basic_Types.h" is enough.  In
 // particular, it is needed for the definition of ACE_LITTLE_ENDIAN.
 #include "ace/Basic_Types.h"
 #include "ace/Global_Macros.h"
-#include "ace/Synch_Traits.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -849,5 +848,5 @@ enum TAO_Policy_Scope
 #  define TAO_USE_LAZY_RESOURCE_USAGE_STRATEGY 0
 #endif /* TAO_USE_LAZY_RESOURCE_USAGE_STRATEGY*/
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 #endif  /* TAO_ORBCONF_H */

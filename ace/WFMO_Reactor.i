@@ -74,7 +74,6 @@ ACE_WFMO_Reactor_Handler_Repository::Common_Info::set (Common_Info &common_info)
 ACE_INLINE void
 ACE_WFMO_Reactor_Handler_Repository::Common_Info::dump (void) const
 {
-#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_WFMO_Reactor_Handler_Repository::Common_Info::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
@@ -108,7 +107,6 @@ ACE_WFMO_Reactor_Handler_Repository::Common_Info::dump (void) const
               this->close_masks_));
 
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
-#endif /* ACE_HAS_DUMP */
 }
 
 /************************************************************/
@@ -157,7 +155,6 @@ ACE_WFMO_Reactor_Handler_Repository::Current_Info::reset (void)
 ACE_INLINE void
 ACE_WFMO_Reactor_Handler_Repository::Current_Info::dump (ACE_HANDLE event_handle) const
 {
-#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_WFMO_Reactor_Handler_Repository::Current_Info::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
@@ -173,9 +170,6 @@ ACE_WFMO_Reactor_Handler_Repository::Current_Info::dump (ACE_HANDLE event_handle
               this->suspend_entry_));
 
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
-#else /* !ACE_HAS_DUMP */
-  ACE_UNUSED_ARG (event_handle);
-#endif /* ACE_HAS_DUMP */
 }
 
 /************************************************************/
@@ -230,7 +224,6 @@ ACE_WFMO_Reactor_Handler_Repository::To_Be_Added_Info::reset (void)
 ACE_INLINE void
 ACE_WFMO_Reactor_Handler_Repository::To_Be_Added_Info::dump (void) const
 {
-#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_WFMO_Reactor_Handler_Repository::To_Be_Added_Info::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
@@ -246,7 +239,6 @@ ACE_WFMO_Reactor_Handler_Repository::To_Be_Added_Info::dump (void) const
               this->suspend_entry_));
 
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
-#endif /* ACE_HAS_DUMP */
 }
 
 /************************************************************/
@@ -301,7 +293,6 @@ ACE_WFMO_Reactor_Handler_Repository::Suspended_Info::set (ACE_HANDLE event_handl
 ACE_INLINE void
 ACE_WFMO_Reactor_Handler_Repository::Suspended_Info::dump (void) const
 {
-#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_WFMO_Reactor_Handler_Repository::Suspended_Info::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
@@ -317,7 +308,6 @@ ACE_WFMO_Reactor_Handler_Repository::Suspended_Info::dump (void) const
               this->resume_entry_));
 
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
-#endif /* ACE_HAS_DUMP */
 }
 
 /************************************************************/

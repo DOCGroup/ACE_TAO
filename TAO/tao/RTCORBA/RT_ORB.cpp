@@ -8,7 +8,6 @@
 #include "RT_Mutex.h"
 #include "Priority_Mapping_Manager.h"
 #include "tao/ORB_Core.h"
-#include "tao/ORB.h"
 #include "tao/RTCORBA/Thread_Pool.h"
 #include "tao/RTCORBA/RT_Thread_Lane_Resources_Manager.h"
 #include "ace/Sched_Params.h"

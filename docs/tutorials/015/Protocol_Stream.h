@@ -33,8 +33,7 @@ public:
   // reader task just below the stream head so that it can process
   // data read from the peer.
   int open (ACE_SOCK_Stream &peer,
-            Protocol_Task *reader,
-            bool isOriginator);
+            Protocol_Task *reader = 0);
 
   // Close the stream.  All of the tasks & modules will also be
   // closed.
@@ -65,32 +64,6 @@ public:
   }
 
 private:
-    enum ProtocolVersion
-    {
-        PROTOCOL_VERSION_1 = 1
-    };
-
-    enum CompressionNegotiationErrorCode
-    {
-        NEGOTIATE_OK = 0
-      , NEGOTIATE_UNSUPPORTED_VERSION = -1
-      , NEGOTIATE_UNSUPPORTED_ALGORITHM = -2
-    };
-
-    struct CompressionNegotiation
-    {
-        unsigned char protocolVersion;
-        unsigned char algorithmCount;
-        unsigned char algorithm[5]; // as of protocol version 1.
-    };
-
-    struct CompressionNegotiationReply
-    {
-        signed char errorCode;
-        unsigned char protocolVersion;
-        unsigned char algorithm;
-    };
-
   // Our peer connection
   ACE_SOCK_Stream peer_;
 
@@ -98,10 +71,8 @@ private:
   Stream stream_;
 
   // A task which is capable of receiving data on a socket.
-  // Note that this is only useful by client-side applications.
+  // Note that this is only useful by server-side applications.
   Recv *recv_;
-
-  bool isHandshakeComplete_;
 
   Stream &stream (void)
   {
@@ -109,7 +80,7 @@ private:
   }
 
   // Install the protocol tasks into the stream.
-  int open (bool isOriginator);
+  int open (void);
 };
 
 #endif /* PROTOCOL_STREAM_H */

@@ -44,6 +44,9 @@ endif
 ifeq (,$(threads))
   threads = 1
 endif
+ifeq ($(threads),0)
+  CFLAGS += -DACE_MT_SAFE=0
+endif # threads
 ifeq (,$(pipes))
   pipes = 1
 endif
@@ -72,8 +75,13 @@ endif # threads
 
 CFLAGS += $(MODEL_FLAGS)
 
+# Test for template instantiation.
+#
+include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
+
 EXEEXT = .exe
 
+CCFLAGS += $(CFLAGS) $(TEMPLATES_FLAG)
 DCFLAGS += -g
 DLD     = $(CXX)
 LD      = $(CXX)
@@ -82,7 +90,7 @@ ifeq ($(mingw32),1)
 ifeq ($(winsock2),1)
 LIBS    += -lws2_32 -lmswsock
 endif
-LIBS    += -lwsock32 -lnetapi32
+LIBS    += -lwsock32
 endif
 
 OCFLAGS += -O3
@@ -114,10 +122,3 @@ ifneq ($(GNUWIN32_DLL_ALLOW_EXECP), 1)
 endif
 
 PRELIB  = @true
-
-# Test for template instantiation, add to SOFLAGS if SONAME set, 
-# add -E to LDFLAGS if using GNU ld
-#
-include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
-
-CCFLAGS += $(CFLAGS) $(TEMPLATES_FLAG)

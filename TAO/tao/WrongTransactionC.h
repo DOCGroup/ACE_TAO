@@ -25,7 +25,7 @@
 #ifndef _TAO_IDL_ORIG_WRONGTRANSACTIONC_H_
 #define _TAO_IDL_ORIG_WRONGTRANSACTIONC_H_
 
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 #include "tao/corbafwd.h"
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
@@ -91,7 +91,7 @@ TAO_NAMESPACE  CORBA
 
     virtual CORBA::Exception *_tao_duplicate (void) const;
 
-    virtual void _raise (void) const;
+    virtual void _raise (void);
 
     virtual void _tao_encode (
         TAO_OutputCDR &
@@ -163,6 +163,6 @@ TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA::WrongTransaction &)
 
 #endif /* TAO_HAS_MINIMUM_CORBA == 0 */
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 #endif /* ifndef */
 

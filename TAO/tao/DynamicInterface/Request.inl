@@ -114,7 +114,9 @@ CORBA::Request::add_out_arg (const CORBA::Char *name)
 ACE_INLINE void
 CORBA::Request::set_return_type (CORBA::TypeCode_ptr tc)
 {
-  this->result_->any_._tao_set_typecode (tc);
+  CORBA::Any newtype (CORBA::TypeCode::_duplicate (tc),
+                      0);
+  this->result_->any_ = newtype;
 }
 
 ACE_INLINE CORBA::Any &

@@ -7,7 +7,6 @@
 #include "test_export.h"
 
 #include "ace/Singleton.h"
-#include "ace/Null_Mutex.h"
 
 #define RETVAL 42
 

@@ -9,7 +9,7 @@
 
 #ifndef TAO_ECG_MCAST_GATEWAY_H
 #define TAO_ECG_MCAST_GATEWAY_H
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #include "ECG_UDP_Sender.h"
 
@@ -18,13 +18,10 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ECG_Defaults.h"
-#include /**/ "event_export.h"
+#include "orbsvcs/Event/event_export.h"
 #include "ECG_UDP_Receiver.h"
 #include "ECG_UDP_Out_Endpoint.h"
 #include "ace/Service_Object.h"
-#include "ace/Service_Config.h"
-#include "ace/SString.h"
-#include "ace/os_include/os_stdint.h"
 
 class ACE_Event_Handler;
 
@@ -279,5 +276,5 @@ private:
 ACE_STATIC_SVC_DECLARE (TAO_ECG_Mcast_Gateway)
 ACE_FACTORY_DECLARE (TAO_RTEvent, TAO_ECG_Mcast_Gateway)
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 #endif /* TAO_ECG_MCAST_GATEWAY_H */

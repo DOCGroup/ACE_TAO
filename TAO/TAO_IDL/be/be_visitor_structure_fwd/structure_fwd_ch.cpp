@@ -33,7 +33,7 @@ be_visitor_structure_fwd_ch::~be_visitor_structure_fwd_ch (void)
 {
 }
 
-// Visit the interface_fwd_ch node.
+// Visit the interface_fwd_ch node and its scope.
 int
 be_visitor_structure_fwd_ch::visit_structure_fwd (be_structure_fwd *node)
 {

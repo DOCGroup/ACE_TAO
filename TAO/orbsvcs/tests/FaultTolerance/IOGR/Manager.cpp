@@ -7,7 +7,7 @@
 #include "tao/IORManipulation/IORManip_Loader.h"
 #include "tao/PortableServer/PortableServer.h"
 #include "orbsvcs/FaultTolerance/FT_Service_Activate.h"
-#include "orbsvcs/FaultTolerance/FT_IOGR_Property.h"
+
 
 
 
@@ -21,7 +21,7 @@ CORBA::Object_var object_primary = 0;
 CORBA::Object_var object_secondary = 0;
 
 // Reference to the IOR manipulator
-TAO_IOP::TAO_IOR_Manipulation_var iorm = 0;
+TAO_IOP::TAO_IOR_Manipulation_ptr iorm = 0;
 
 int
 parse_args (int argc, char *argv[])
@@ -81,10 +81,12 @@ main (int argc,
       manager.make_merged_iors (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
+      cout << "Merged IORS" <<endl;
       // Set properties. This is the most important portion of the
       // test
       manager.set_properties (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
+      cout << "Set prop" <<endl;
 
       // Write IOR to file
       manager.write_to_file ();
@@ -160,14 +162,14 @@ Manager::make_merged_iors (ACE_ENV_SINGLE_ARG_DECL)
   ACE_CHECK_RETURN (-1);
 
   // Get an object reference for the ORBs IORManipultion object!
-  CORBA::Object_var IORM =
+  CORBA::Object_ptr IORM =
     this->orb_->resolve_initial_references (TAO_OBJID_IORMANIPULATION,
                                             0
                                             ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   iorm =
-    TAO_IOP::TAO_IOR_Manipulation::_narrow (IORM.in() ACE_ENV_ARG_PARAMETER);
+    TAO_IOP::TAO_IOR_Manipulation::_narrow (IORM ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
 

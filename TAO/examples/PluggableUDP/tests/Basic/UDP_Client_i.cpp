@@ -1,7 +1,6 @@
 // $Id$
 
 #include "UDP_Client_i.h"
-#include "ace/SString.h"
 
 // This is the interface program that accesses the remote object
 

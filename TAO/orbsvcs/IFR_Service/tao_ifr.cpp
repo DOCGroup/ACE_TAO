@@ -11,7 +11,6 @@
 #include "drv_extern_ifr.h"
 #include "be_extern.h"
 #include "ace/Process.h"
-#include "ace/streams.h"
 
 ACE_RCSID (IFR_Service, 
            tao_ifr, 

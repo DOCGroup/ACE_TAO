@@ -20,6 +20,10 @@ ifeq (,$(threads))
   threads = 1
 endif
 
+ifeq ($(threads),0)
+  CPPFLAGS += -DACE_MT_SAFE=0
+endif # threads
+
 PLATFORM_XT_CPPFLAGS=
 PLATFORM_XT_LIBS=-lXt
 PLATFORM_XT_LDFLAGS=
@@ -69,17 +73,24 @@ CC  = gcc
 CXX = g++
 endif
 
+# Test for template instantiation.
+#
+include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
+
 CFLAGS  += -W -Wall -Wpointer-arith -pipe
 ifeq ($(threads),1)
     CPPFLAGS  += -D_REENTRANT $(PLATFORM_AIO_SUPPORT)
 endif # threads
 
 # 
-# Rely on _GNU_SOURCE to set these defaults defined in /usr/include/features.h 
-# instead of setting them directly here (older versions of gcc don't set it
-# for you): _SVID_SOURCE _BSD_SOURCE _POSIX_SOURCE _POSIX_C_SOURCE=199506L, etc...
-CPPFLAGS += -D_GNU_SOURCE
+# /usr/include/features.h says all of the below are default.
+# To ensure that they are always set, regardless of #include file order,
+# we'll set them here explicitly.
+#
+CPPFLAGS += -D_SVID_SOURCE -D_BSD_SOURCE -D_POSIX_SOURCE -D_POSIX_C_SOURCE=199506L
 
+
+CCFLAGS += $(CFLAGS) $(TEMPLATES_FLAG)
 DCFLAGS += -g
 DLD     = $(CXX)
 LD      = $(CXX)
@@ -104,13 +115,6 @@ SOBUILD = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<; \
           $(SOLINK.cc) -o $@ $(LDFLAGS) $(VSHDIR)$*.o
 PRELIB  = @true
 
-# Test for template instantiation, add to SOFLAGS if SONAME set, 
-# add -E to LDFLAGS if using GNU ld
-#
-include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
-
-CCFLAGS += $(CFLAGS) $(TEMPLATES_FLAG)
-
 # Added line below to support "Executable Shared Object" files (as
 # needed by the service configurator).
 # Marius Kjeldahl <mariusk@sn.no, marius@funcom.com>
@@ -128,12 +132,7 @@ ifeq ($(sctp),openss7)
   PLATFORM_SCTP_LIBS= 
 endif
 
-# support for LKSCTP (Linux Kernel 2.5)
-ifeq ($(sctp),lksctp)
-  PLATFORM_SCTP_CPPFLAGS= -DACE_HAS_LKSCTP
-  PLATFORM_SCTP_LDFLAGS=
-  PLATFORM_SCTP_LIBS= /usr/local/lib/libsctp.a
-endif
+# Eventually Other SCTP implementations will go here
 
 #### GNU gas has a string limit of 4096 characters.  On Alphas,
 #### builds will fail due to running over that limit.  There are

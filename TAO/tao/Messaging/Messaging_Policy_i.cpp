@@ -2,7 +2,6 @@
 
 #include "tao/Messaging/Messaging_Policy_i.h"
 #include "tao/Stub.h"
-#include "tao/ORB_Core.h"
 #include "tao/debug.h"
 
 #if ! defined (__ACE_INLINE__)

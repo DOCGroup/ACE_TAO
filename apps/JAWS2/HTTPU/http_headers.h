@@ -7,7 +7,6 @@
 #define HTTPU_HTTP_HEADERS_H
 
 #include "ace/RB_Tree.h"
-#include "ace/Null_Mutex.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

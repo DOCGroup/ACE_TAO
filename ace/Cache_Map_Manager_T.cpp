@@ -9,7 +9,7 @@
 #define ACE_LACKS_PRAGMA_ONCE
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Malloc_Base.h"
+#include "ace/Malloc.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Cache_Map_Manager_T.i"
@@ -405,14 +405,13 @@ ACE_Cache_Map_Manager<ACE_T2>::unbind (const KEY &key,
   return unbind_result;
 }
 
+
 template <ACE_T1> void
 ACE_Cache_Map_Manager<ACE_T2>::dump (void) const
 {
-#if defined (ACE_HAS_DUMP)
   this->map_.dump ();
 
   this->caching_strategy_.dump ();
-#endif /* ACE_HAS_DUMP */
 }
 
 #undef ACE_T1

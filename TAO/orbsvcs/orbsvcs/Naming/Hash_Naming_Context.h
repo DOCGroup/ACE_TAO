@@ -1,5 +1,4 @@
-// -*- C++ -*-
-
+/* -*- C++ -*- */
 //=============================================================================
 /**
  *  @file   Hash_Naming_Context.h
@@ -13,13 +12,11 @@
 
 #ifndef TAO_HASH_NAMING_CONTEXT_H
 #define TAO_HASH_NAMING_CONTEXT_H
-
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #include "Naming_Context_Interface.h"
 #include "naming_export.h"
 
-#include "ace/Recursive_Thread_Mutex.h"
 #include "ace/SString.h"
 
 // This is to remove "inherits via dominance" warnings from MSVC.
@@ -271,6 +268,5 @@ protected:
   ACE_CString poa_id_;
 };
 
-#include /**/ "ace/post.h"
-
+#include "ace/post.h"
 #endif /* TAO_HASH_NAMING_CONTEXT_H */

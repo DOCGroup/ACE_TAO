@@ -21,13 +21,11 @@ DIRS = \
         Bug_1269_Regression \
         Bug_1270_Regression \
         Bug_1482_Regression \
-	Bug_1551_Regression \
 	CDR \
 	Client_Leaks \
 	Codec \
 	CodeSets \
 	Collocation \
-	Collocation_Opportunities \
 	Collocation_Tests \
 	Connect_Strategy_Test \
 	Connection_Purging \

@@ -36,7 +36,7 @@ const char *LS_PATH = "ls";
 const char *SLEEP_PATH = "sleep";
 #endif /* ACE_WIN32 */
 
-static const char *executable = EXEC_NAME;
+static char *executable = EXEC_NAME;
 static char *print_file = 0;
 static char *environment_string = 0;
 static int get_env = 0;

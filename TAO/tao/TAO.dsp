@@ -180,11 +180,6 @@ SOURCE=.\Any.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Any_SystemException.cpp
-# ADD CPP /GR
-# End Source File
-# Begin Source File
-
 SOURCE=.\append.cpp
 # End Source File
 # Begin Source File
@@ -549,10 +544,6 @@ SOURCE=.\IOR_Parser.cpp
 # Begin Source File
 
 SOURCE=.\IORInterceptor_Adapter.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\IORInterceptor_Adapter_Factory.cpp
 # End Source File
 # Begin Source File
 
@@ -976,10 +967,6 @@ SOURCE=.\Transport_Timer.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\TSS_Resources.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\Typecode.cpp
 # End Source File
 # Begin Source File
@@ -1062,10 +1049,6 @@ SOURCE=.\Any_Special_Basic_Impl_T.h
 # Begin Source File
 
 SOURCE=.\Any_Special_Impl_T.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Any_SystemException.h
 # End Source File
 # Begin Source File
 
@@ -1450,10 +1433,6 @@ SOURCE=.\IOR_Parser.h
 # Begin Source File
 
 SOURCE=.\IORInterceptor_Adapter.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\IORInterceptor_Adapter_Factory.h
 # End Source File
 # Begin Source File
 
@@ -1914,10 +1893,6 @@ SOURCE=.\Transport_Timer.h
 # Begin Source File
 
 SOURCE=.\try_macros.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\TSS_Resources.h
 # End Source File
 # Begin Source File
 

@@ -26,15 +26,15 @@ $Naming = new PerlACE::Process ("../../../../../../Naming_Service/Naming_Service
 
 $Supplier = new PerlACE::Process ("../../../../Driver/Notify_Tests_Driver");
 
-$Supplier_Args = "-ORBInitRef NameService=file://$naming_ior -IORinput file://$relay_ior -ORBSvcConf $supplier_conf -Skip_Priority_Levels_Check";
+$Supplier_Args = "-ORBInitRef NameService=file://$naming_ior -IORinput file://$relay_ior -ORBSvcConf $supplier_conf";
 
 $Consumer = new PerlACE::Process ("../../../../Driver/Notify_Tests_Driver");
 
-$Consumer_Args = "-ORBInitRef NameService=file://$naming_ior -IORoutput $consumer_ior -ORBSvcConf $consumer_conf -Skip_Priority_Levels_Check";
+$Consumer_Args = "-ORBInitRef NameService=file://$naming_ior -IORoutput $consumer_ior -ORBSvcConf $consumer_conf";
 
 $Relay = new PerlACE::Process ("../../../../Driver/Notify_Tests_Driver");
 
-$Relay_Args = "-ORBInitRef NameService=file://$naming_ior -IORoutput $relay_ior -IORinput file://$consumer_ior -ORBSvcConf $relay_conf -Skip_Priority_Levels_Check";
+$Relay_Args = "-ORBInitRef NameService=file://$naming_ior -IORoutput $relay_ior -IORinput file://$consumer_ior -ORBSvcConf $relay_conf";
 
 unlink $naming_ior;
 $Naming->Spawn ();

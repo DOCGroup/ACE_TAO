@@ -13,7 +13,7 @@
 
 #ifndef TAO_PSDL_DATASTORE_H
 #define TAO_PSDL_DATASTORE_H
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #include "PSDL_Code_Gen.h"
 
@@ -27,7 +27,6 @@
 #  define TAO_PERSISTENT_NAME_OBJ_MAP "Persistent_Name_Obj_Map"
 #endif /* ! TAO_PERSISTENT_NAME_OBJ_MAP */
 
-#include "ace/Malloc.h"
 #include "ace/Hash_Map_With_Allocator_T.h"
 
 /**
@@ -131,5 +130,5 @@ private:
   void *base_address_;
 };
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 #endif /* TAO_PSDL_DATASTORE_H */

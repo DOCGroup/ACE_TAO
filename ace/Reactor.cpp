@@ -302,11 +302,9 @@ ACE_Reactor::resumable_handler (void)
 void
 ACE_Reactor::dump (void) const
 {
-#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Reactor::dump");
 
   implementation_->dump ();
-#endif /* ACE_HAS_DUMP */
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

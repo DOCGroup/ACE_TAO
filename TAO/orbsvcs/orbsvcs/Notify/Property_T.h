@@ -11,7 +11,7 @@
 
 #ifndef TAO_Notify_PROPERTY_T_H
 #define TAO_Notify_PROPERTY_T_H
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #include "notify_export.h"
 
@@ -46,6 +46,12 @@ public:
   /// Destructor
   ~TAO_Notify_PropertyBase_T ();
 
+  /// Assignment from TAO_Notify_PropertyBase_T
+  // TAO_Notify_PropertyBase_T& operator= (const TAO_Notify_PropertyBase_T& rhs);
+
+  /// Assignment from TYPE
+  TAO_Notify_PropertyBase_T& operator= (const TYPE& rhs);
+
   /// Equality comparison operator.
   int operator== (const TYPE &rhs) const;
 
@@ -73,6 +79,9 @@ protected:
 
   /// Is the value valid
   CORBA::Boolean valid_;
+
+private:
+  ACE_UNIMPLEMENTED_FUNC (TAO_Notify_PropertyBase_T& operator= (const TAO_Notify_PropertyBase_T& rhs))
 };
 
 
@@ -92,6 +101,9 @@ public:
 
   /// Constuctor
   TAO_Notify_Property_T (const char* name);
+
+  /// Assignment from TYPE
+  TAO_Notify_Property_T& operator= (const TYPE& rhs);
 
   /// Init this Property from the sequence.
   /// Returns 0 on success, -1 on error
@@ -152,5 +164,5 @@ protected:
 #pragma implementation ("Property_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 #endif /* TAO_Notify_PROPERTY_T_H */

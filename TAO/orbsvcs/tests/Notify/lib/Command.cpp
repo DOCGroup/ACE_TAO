@@ -5,7 +5,7 @@
 #include "ace/Log_Msg.h"
 #include "tao/corba.h"
 
-ACE_RCSID(lib, TAO_Command, "$Id$")
+ACE_RCSID(lib, TAO_Command, "$id$")
 
 TAO_Notify_Tests_Command::TAO_Notify_Tests_Command (void)
   :next_ (0), command_ (INVALID)

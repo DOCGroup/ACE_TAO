@@ -16,7 +16,6 @@
 
 #include "Stock_Factory_i.h"
 #include "tao/IORTable/IORTable.h"
-#include "ace/streams.h"
 
 int main (int argc, char* argv[])
 {

@@ -5,10 +5,9 @@ ACE_RCSID (DynamicInterface,
            Context,
            "$Id$")
 
-
 #include "tao/Typecode.h"
 #include "tao/NVList.h"
-#include "tao/Environment.h"
+
 
 #if !defined (__ACE_INLINE__)
 # include "Context.inl"
@@ -228,3 +227,4 @@ CORBA::ContextList::_decr_refcnt (void)
 # pragma instantiate TAO_Pseudo_Out_T<CORBA::ContextList, CORBA::ContextList_var>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+

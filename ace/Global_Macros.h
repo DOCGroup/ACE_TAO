@@ -16,7 +16,7 @@
 #ifndef ACE_GLOBAL_MACROS_H
 #define ACE_GLOBAL_MACROS_H
 
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 // Included just keep compilers that see #pragma dierctive first
 // happy.
@@ -144,9 +144,6 @@ friend class ace_dewarn_gplusplus
 # if (ACE_NTRACE == 1)
 #   define ACE_TRACE(X)
 # else
-#   if !defined (ACE_HAS_TRACE)
-#     define ACE_HAS_TRACE
-#   endif /* ACE_HAS_TRACE */
 #   define ACE_TRACE(X) ACE_TRACE_IMPL(X)
 #   include "ace/Trace.h"
 # endif /* ACE_NTRACE */
@@ -447,10 +444,11 @@ typedef void (*ACE_Service_Object_Exterminator)(void *);
 /** @name Service Configurator macros
  *
  * The following macros are used to define helper objects used in
- * ACE's Service Configurator framework, which is described in
- * Chapter 5 of C++NPv2 <www.cs.wustl.edu/~schmidt/ACE/book2/>.  This
- * framework implements the Component Configurator pattern, which is
- * described in Chapter 2 of POSA2 <www.cs.wustl.edu/~schmidt/POSA/>.
+ * ACE's Service Configurator.  This is an implementation of the
+ * Service Configurator pattern:
+ *
+ * http://www.cs.wustl.edu/~schmidt/PDF/SvcConf.pdf
+ *
  * The intent of this pattern is to allow developers to dynamically
  * load and configure services into a system.  With a little help from
  * this macros statically linked services can also be dynamically
@@ -727,20 +725,8 @@ _make_##SERVICE_CLASS (ACE_Service_Object_Exterminator *gobbler) \
      else { new (POINTER) CONSTRUCTOR; } \
    } while (0)
 
-// This is being placed here temporarily to help stablelize the builds, but will
-// be moved out along with the above macros as part of the subsetting.  dhinton
-# if !defined (ACE_HAS_WINCE)
-#   if !defined (ACE_LACKS_NEW_H)
-#     if defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB)
-#       include /**/ <new>
-#     else
-#       include /**/ <new.h>
-#     endif /* ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB */
-#   endif /* ! ACE_LACKS_NEW_H */
-# endif /* !ACE_HAS_WINCE */
-
 # define ACE_NOOP(x)
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 
 #endif /*ACE_GLOBAL_MACROS_H*/

@@ -1,31 +1,25 @@
 // $Id$
-
 #include "RT_Stub.h"
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
 #include "RT_Policy_i.h"
-#include "tao/ORB_Core.h"
-#include "tao/Policy_Set.h"
-#include "tao/Policy_Manager.h"
 
+ACE_RCSID(tao, TAO_RT_Stub, "$Id$")
 
-ACE_RCSID (RTCORBA,
-           RT_Stub,
-           "$Id$")
+  TAO_RT_Stub::TAO_RT_Stub (const char *repository_id,
+                            const TAO_MProfile &profiles,
+                            TAO_ORB_Core *orb_core)
+    : TAO_Stub (repository_id,
+                profiles,
+                orb_core),
+      priority_model_policy_ (0),
+      priority_banded_connection_policy_ (0),
+      client_protocol_policy_ (0),
+      are_policies_parsed_ (0)
 
-
-TAO_RT_Stub::TAO_RT_Stub (const char *repository_id,
-                          const TAO_MProfile &profiles,
-                          TAO_ORB_Core *orb_core)
-  : TAO_Stub (repository_id,
-              profiles,
-              orb_core),
-    priority_model_policy_ (0),
-    priority_banded_connection_policy_ (0),
-    client_protocol_policy_ (0),
-    are_policies_parsed_ (0)
 {
+
 }
 
 TAO_RT_Stub::~TAO_RT_Stub (void)

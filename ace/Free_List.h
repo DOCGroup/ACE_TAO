@@ -12,7 +12,7 @@
 
 #ifndef ACE_FREE_LIST_H
 #define ACE_FREE_LIST_H
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -20,9 +20,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Global_Macros.h"
-#include "ace/Default_Constants.h"
-#include "ace/os_include/os_stddef.h"
+#include "ace/Synch_T.h"
 
 /**
  * @class ACE_Free_List
@@ -146,5 +144,5 @@ private:
 #pragma implementation ("Free_List.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 #endif /* ACE_FREE_LIST_H */

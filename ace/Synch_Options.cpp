@@ -4,7 +4,7 @@
 #include "ace/Synch_Options.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/Global_Macros.h"
+#include "ace/Trace.h"
 
 ACE_RCSID (ace,
            Synch_Options,
@@ -16,9 +16,7 @@ ACE_ALLOC_HOOK_DEFINE (ACE_Synch_Options)
 void
 ACE_Synch_Options::dump (void) const
 {
-#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Synch_Options::dump");
-#endif /* ACE_HAS_DUMP */
 }
 
 // Static initialization.

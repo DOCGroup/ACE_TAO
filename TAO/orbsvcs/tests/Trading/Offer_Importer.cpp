@@ -136,10 +136,9 @@ TAO_Offer_Importer::perform_directed_queries (ACE_ENV_SINGLE_ARG_DECL)
 
 
 void
-TAO_Offer_Importer::perform_queries_with_policies (
-    const TAO_Policy_Creator& policies
-    ACE_ENV_ARG_DECL
-  )
+TAO_Offer_Importer::
+perform_queries_with_policies (const TAO_Policy_Creator& policies
+                               ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    CosTrading::IllegalServiceType,
                    CosTrading::UnknownServiceType,
@@ -165,7 +164,8 @@ TAO_Offer_Importer::perform_queries_with_policies (
       };
 
       CosTrading::PropertyNameSeq prop_name_seq (4, 4, props, 0);
-      desired_props.prop_names (prop_name_seq);
+      //desired_props.prop_names (prop_name_seq);
+      desired_props.all_ (1);
 
       for (int i = 0; i < TT_Info::NUM_QUERIES; i++)
         {

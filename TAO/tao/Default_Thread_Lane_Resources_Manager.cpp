@@ -2,12 +2,9 @@
 
 #include "tao/Default_Thread_Lane_Resources_Manager.h"
 
+ACE_RCSID(tao, Default_Thread_Lane_Resources_Manager, "$Id$")
 
-ACE_RCSID (tao,
-           Default_Thread_Lane_Resources_Manager,
-           "$Id$")
-
-
+#include "tao/ORB_Core.h"
 #include "tao/Acceptor_Registry.h"
 #include "tao/Thread_Lane_Resources.h"
 #include "tao/Leader_Follower.h"
@@ -15,7 +12,6 @@ ACE_RCSID (tao,
 #if !defined (__ACE_INLINE__)
 # include "tao/Default_Thread_Lane_Resources_Manager.i"
 #endif /* ! __ACE_INLINE__ */
-
 
 TAO_Default_Thread_Lane_Resources_Manager::TAO_Default_Thread_Lane_Resources_Manager (TAO_ORB_Core &orb_core)
   : TAO_Thread_Lane_Resources_Manager (orb_core),

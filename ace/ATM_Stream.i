@@ -1,15 +1,8 @@
-/* -*- C++ -*- */
 // $Id$
 
 // ATM_Stream.i
 
-ACE_INLINE void
-ACE_ATM_Stream::dump (void) const
-{
-#if defined (ACE_HAS_DUMP)
-  ACE_TRACE ("ACE_ATM_Stream::dump");
-#endif /* ACE_HAS_DUMP */
-}
+#include "ace/ATM_Stream.h"
 
 ACE_INLINE
 ACE_ATM_Stream::ACE_ATM_Stream (void)

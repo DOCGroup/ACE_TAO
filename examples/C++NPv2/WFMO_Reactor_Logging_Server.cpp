@@ -4,10 +4,6 @@
 ** Copyright 2002 Addison Wesley. All Rights Reserved.
 */
 
-#include "ace/config-all.h"
-
-#if defined (ACE_WIN32)
-
 #include "ace/Reactor.h"
 #include "ace/Synch.h"
 #include "ace/WFMO_Reactor.h"
@@ -137,10 +133,3 @@ int main (int argc, char *argv[])
     (N_THREADS, event_loop, &reactor);
   return ACE_Thread_Manager::instance ()->wait ();
 }
-
-#else /* !ACE_WIN32 */
-int main (int, char *[])
-{
-  return 0;
-}
-#endif /* ACE_WIN32 */

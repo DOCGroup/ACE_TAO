@@ -158,6 +158,15 @@ Grid_Factory_i::Grid_Factory_i (void)
   // no-op
 }
 
+// Copy Constructor
+
+Grid_Factory_i::Grid_Factory_i (Grid_Factory_i &grid)
+  : POA_Grid_Factory (grid),
+    pool_t_ (0)
+{
+  // no-op
+}
+
 // Destructor
 
 Grid_Factory_i::~Grid_Factory_i (void)

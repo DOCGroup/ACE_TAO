@@ -17,7 +17,7 @@
 
 #ifndef TAO_LOG_RECORD_STORE_H
 #define TAO_LOG_RECORD_STORE_H
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #include "orbsvcs/DsLogAdminS.h"
 
@@ -28,7 +28,6 @@
 #include "orbsvcs/DsLogAdminC.h"
 #include "ace/Containers.h"
 #include "ace/Hash_Map_Manager.h"
-#include "ace/Null_Mutex.h"
 #include "log_export.h"
 
 #define LOG_DEFAULT_MAX_REC_LIST_LEN 30
@@ -142,5 +141,5 @@ class TAO_Log_Export TAO_LogRecordStore
   TAO_LogRecordStore::LOG_RECORD_HASH_MAP rec_hash_;
 };
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 #endif /*TAO_LOG_RECORD_STORE_H*/

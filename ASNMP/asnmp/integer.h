@@ -46,7 +46,7 @@
 //
 
 // 32 bit unsigned integer class
-class ASNMP_Export SnmpUInt32: public SnmpSyntax
+class ACE_Export SnmpUInt32: public SnmpSyntax
   // = TITLE
   //      Implement RFC 1920 Unsigned Integer SMI datatype
 {
@@ -73,7 +73,7 @@ class ASNMP_Export SnmpUInt32: public SnmpSyntax
      operator unsigned long();
      // otherwise, behave like an unsigned long int
 
-     virtual const char *to_string();
+     virtual char *to_string();
      // get a printable ASCII value
 
      virtual SnmpSyntax *clone() const;
@@ -93,7 +93,7 @@ class ASNMP_Export SnmpUInt32: public SnmpSyntax
 
 
 // 32 bit signed integer class
-class ASNMP_Export SnmpInt32: public SnmpSyntax
+class ACE_Export SnmpInt32: public SnmpSyntax
 {
   // = TITLE
   //      Implement RFC 1902 32 bit Integer SMI data object
@@ -125,7 +125,7 @@ class ASNMP_Export SnmpInt32: public SnmpSyntax
      SnmpSyntax& operator=( SnmpSyntax &val);
      // copy an instance of this Value
 
-     const char *to_string();
+     char *to_string();
      // get a printable ASCII value
 
      int valid() const;

@@ -8,7 +8,7 @@
 #include "Consumer_T.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Notify, TAO_Notify_Tests_Consumer_T, "$Id$")
+ACE_RCSID(Notify, TAO_Notify_Tests_Consumer_T, "$id$")
 
 template <class Consumer_Traits>
 TAO_Notify_Tests_Consumer_T<Consumer_Traits>::TAO_Notify_Tests_Consumer_T (void)

@@ -9,7 +9,6 @@
 #include "ace/INET_Addr.h"
 #include "ace/Log_Record.h"
 #include "ace/Message_Block.h"
-#include "ace/streams.h"
 
 #include "Logging_Handler.h"
 

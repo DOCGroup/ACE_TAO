@@ -19,9 +19,7 @@
 #include "helper.h"
 #include "nested_struct.h"
 
-ACE_RCSID (Param_Test,
-           nested_struct, 
-           "$Id$")
+ACE_RCSID(Param_Test, nested_struct, "$Id$")
 
 // ************************************************************************
 //               Test_Nested_Struct

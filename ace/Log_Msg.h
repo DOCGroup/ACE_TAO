@@ -12,18 +12,17 @@
 
 #ifndef ACE_LOG_MSG_H
 #define ACE_LOG_MSG_H
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 // This stuff must come first to avoid problems with circular
 // headers...
 // ... but ACE_NDEBUG and ACE_NLOGGING can come from the config.h file, so
 // pull that one early.
 #include "ace/config-all.h"
-#include "ace/ACE_export.h"
 #include "ace/Global_Macros.h"
 #include "ace/Default_Constants.h"
 #include "ace/Log_Priority.h"
-#include "ace/os_include/os_limits.h"
+#include "ace/OS.h"
 
 // The following ASSERT macro is courtesy of Alexandre Karev
 // <akg@na47sun05.cern.ch>.
@@ -673,6 +672,10 @@ private:
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   static int key_created_;
+# if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || \
+    defined (ACE_HAS_TSS_EMULATION)
+  static ACE_thread_key_t log_msg_tss_key_;
+# endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE || ACE_HAS_TSS_EMULATION */
 #endif /* ACE_MT_SAFE */
 
   /// For cleanup, at program termination.
@@ -715,5 +718,5 @@ ACE_TSS_cleanup (void *ptr);
 #include "ace/Log_Msg_Callback.h"
 #endif /* ACE_LEGACY_MODE */
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 #endif /* ACE_LOG_MSG_H */

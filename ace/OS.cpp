@@ -1,6 +1,5 @@
 // $Id$
 
-
 #include "ace/OS.h"
 #include "ace/Sched_Params.h"
 #include "ace/OS_Thread_Adapter.h"
@@ -905,7 +904,6 @@ ACE_OS::thr_join (ACE_thread_t waiter_id,
 void
 ACE_OS::ace_flock_t::dump (void) const
 {
-#if defined (ACE_HAS_DUMP)
   ACE_OS_TRACE ("ACE_OS::ace_flock_t::dump");
 
 #if 0
@@ -924,7 +922,6 @@ ACE_OS::ace_flock_t::dump (void) const
 #endif /* ACE_WIN32 */
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* 0 */
-#endif /* ACE_HAS_DUMP */
 }
 
 void
@@ -1554,8 +1551,7 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params,
   // Set the priority class of this process to the REALTIME process class
   // _if_ the policy is ACE_SCHED_FIFO.  Otherwise, set to NORMAL.
   if (!::SetPriorityClass (::GetCurrentProcess (),
-                           (sched_params.policy () == ACE_SCHED_FIFO ||
-			   sched_params.policy () == ACE_SCHED_RR)
+                           sched_params.policy () == ACE_SCHED_FIFO
                            ? REALTIME_PRIORITY_CLASS
                            : NORMAL_PRIORITY_CLASS))
     {
@@ -1715,7 +1711,6 @@ ACE_TSS_Info::operator != (const ACE_TSS_Info &info) const
 void
 ACE_TSS_Info::dump (void)
 {
-#if defined (ACE_HAS_DUMP)
   //  ACE_OS_TRACE ("ACE_TSS_Info::dump");
 
 #if 0
@@ -1725,7 +1720,6 @@ ACE_TSS_Info::dump (void)
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("tss_obj_ = %u\n"), this->tss_obj_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* 0 */
-#endif /* ACE_HAS_DUMP */
 }
 
 // Moved class ACE_TSS_Keys declaration to OS.h so it can be visible
@@ -2166,7 +2160,6 @@ ACE_TSS_Cleanup::key_used (ACE_thread_key_t key)
 void
 ACE_TSS_Cleanup::dump (void)
 {
-#if defined (ACE_HAS_DUMP)
   // Iterate through all the thread-specific items and dump them all.
 
   ACE_TSS_TABLE_ITERATOR key_info = table_;
@@ -2174,7 +2167,6 @@ ACE_TSS_Cleanup::dump (void)
        i < ACE_DEFAULT_THREAD_KEYS;
        ++key_info, ++i)
     key_info->dump ();
-#endif /* ACE_HAS_DUMP */
 }
 
 ACE_TSS_Keys *
@@ -4810,72 +4802,6 @@ ACE_Thread_ID::handle (ACE_hthread_t thread_handle)
   this->thread_handle_ = thread_handle;
 }
 
-void
-ACE_Thread_ID::to_string (char* thr_id)
-{
-
-  char format[128]; // Converted format string
-  char *fp;         // Current format pointer
-  fp = format;
-  *fp++ = '%';   // Copy in the %
-
-#if defined (ACE_WIN32)
-  ACE_OS::strcpy (fp, "u");
-  ACE_OS::sprintf (thr_id,
-		   format,
-		   ACE_static_cast(unsigned,
-				   ACE_OS::thr_self ()));
-#elif defined (ACE_AIX_VERS) && (ACE_AIX_VERS <= 402)
-                  // AIX's pthread_t (ACE_hthread_t) is a pointer, and it's
-                  // a little ugly to send that through a %u format.  So,
-                  // get the kernel thread ID (tid_t) via thread_self() and
-                  // display that instead.
-                  // This isn't conditionalized on ACE_HAS_THREAD_SELF because
-                  // 1. AIX 4.2 doesn't have that def anymore (it messes up
-                  //    other things)
-                  // 2. OSF/1 V3.2 has that def, and I'm not sure what affect
-                  //   this would have on that.
-                  // -Steve Huston, 19-Aug-97
-                  ACE_OS::strcpy (fp, "u");
-                  ACE_OS::sprintf (thr_id, format, thread_self());
-#elif defined (DIGITAL_UNIX)
-                  ACE_OS::strcpy (fp, "u");
-                  ACE_OS::sprintf (thr_id, format,
-#  if defined (ACE_HAS_THREADS)
-                                   pthread_getselfseq_np ()
-#  else
-                                   ACE_Thread::self ()
-#  endif /* ACE_HAS_THREADS */
-                                          );
-#else
-                  ACE_hthread_t t_id;
-                  ACE_OS::thr_self (t_id);
-
-#  if defined (ACE_HAS_PTHREADS_DRAFT4) && defined (HPUX_10)
-                  ACE_OS::strcpy (fp, "u");
-                  // HP-UX 10.x DCE's thread ID is a pointer.  Grab the
-                  // more meaningful, readable, thread ID.  This will match
-                  // the one seen in the debugger as well.
-                  ACE_OS::sprintf (thr_id, format,
-                                   pthread_getunique_np(&t_id));
-#  elif defined (ACE_MVS)
-                  // MVS's pthread_t is a struct... yuck. So use the ACE 5.0
-                  // code for it.
-                  ACE_OS::strcpy (fp, "u");
-                  ACE_OS::sprintf (thr_id, format, t_id);
-#  else
-                  // Yes, this is an ugly C-style cast, but the correct
-                  // C++ cast is different depending on whether the t_id
-                  // is an integral type or a pointer type. FreeBSD uses
-                  // a pointer type, but doesn't have a _np function to
-                  // get an integral type, like the OSes above.
-                  ACE_OS::strcpy (fp, "lu");
-                  ACE_OS::sprintf (thr_id, format, (unsigned long)t_id);
-#  endif /* ACE_HAS_PTHREADS_DRAFT4 && HPUX_10 */
-
-#endif /* ACE_WIN32 */
-}
-
 int
 ACE_Thread_ID::operator== (const ACE_Thread_ID &rhs) const
 {
@@ -4926,12 +4852,9 @@ ACE_OS::inet_aton (const char *host_name, struct in_addr *addr)
       return 1;
     }
 #elif defined (VXWORKS)
-  // inet_aton() returns OK (0) on success and ERROR (-1) on failure.
-  // Must reset errno first. Refer to WindRiver SPR# 34949, SPR# 36026
-  ::errnoSet(0);
-  int result = ERROR;
-  ACE_OSCALL (::inet_aton ((char*)host_name, addr), int, ERROR, result);
-  return (result == ERROR) ? 0 : 1;
+  // inet_aton() returns 0 upon failure, not -1 since -1 is a valid
+  // address (255.255.255.255).
+  ACE_OSCALL_RETURN (::inet_aton ((char*)host_name, addr), int, 0);
 #else
   // inet_aton() returns 0 upon failure, not -1 since -1 is a valid
   // address (255.255.255.255).
@@ -4968,9 +4891,9 @@ ACE_OS::localtime_r (const time_t *t, struct tm *res)
   // This is really stupid, converting FILETIME to timeval back and
   // forth.  It assumes FILETIME and DWORDLONG are the same structure
   // internally.
-
+ 
   TIME_ZONE_INFORMATION pTz;
-
+ 
   const unsigned short int __mon_yday[2][13] =
   {
     /* Normal years.  */
@@ -4978,10 +4901,10 @@ ACE_OS::localtime_r (const time_t *t, struct tm *res)
     /* Leap years.  */
     { 0, 31, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335, 366 }
   };
-
+ 
   ULARGE_INTEGER _100ns;
   ::GetTimeZoneInformation (&pTz);
-
+ 
   _100ns.QuadPart = (DWORDLONG) *t * 10000 * 1000 + ACE_Time_Value::FILETIME_to_timval_skew;
   FILETIME file_time;
   file_time.dwLowDateTime = _100ns.LowPart;
@@ -4993,16 +4916,16 @@ ACE_OS::localtime_r (const time_t *t, struct tm *res)
   FileTimeToSystemTime (&localtime, &systime);
 
   res->tm_hour = systime.wHour;
-
+ 
   if(pTz.DaylightBias!=0)
     res->tm_isdst = 1;
   else
     res->tm_isdst = 1;
-
+ 
    int iLeap;
    iLeap = (res->tm_year % 4 == 0 && (res->tm_year% 100 != 0 || res->tm_year % 400 == 0));
    // based on leap select which group to use
-
+   
    res->tm_mday = systime.wDay;
    res->tm_min = systime.wMinute;
    res->tm_mon = systime.wMonth;
@@ -5011,7 +4934,7 @@ ACE_OS::localtime_r (const time_t *t, struct tm *res)
    res->tm_yday = __mon_yday[iLeap][systime.wMonth] + systime.wDay;
    res->tm_year = systime.wYear;// this the correct year but bias the value to start at the 1900
    res->tm_year = res->tm_year - 1900;
-
+ 
    return res;
 #else
   // @@ Same as ACE_OS::localtime (), you need to implement it
@@ -7710,164 +7633,6 @@ ACE_OS::num_processors_online (void)
   else
     return -1;
 #else
-  ACE_NOTSUP_RETURN (-1);
-#endif
-}
-
-// Include if_arp so that getmacaddr can use the
-// arp structure.
-#if defined (sun)
-# include /**/ <net/if_arp.h>
-#endif
-
-int
-ACE_OS::getmacaddress (struct macaddr_node_t *node)
-{
-  ACE_OS_TRACE ("ACE_OS::getmacaddress");
-
-#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
-
-  /** Define a structure for use with the netbios routine */
-  struct ADAPTERSTAT
-  {
-    ADAPTER_STATUS adapt;
-    NAME_BUFFER    NameBuff [30];
-  };
-
-  NCB         ncb;
-  LANA_ENUM   lenum;
-  unsigned char result;
-
-  ACE_OS::memset (&ncb, 0, sizeof(ncb));
-  ncb.ncb_command = NCBENUM;
-  ncb.ncb_buffer  = ACE_reinterpret_cast (unsigned char*,&lenum);
-  ncb.ncb_length  = sizeof(lenum);
-
-  result = Netbios (&ncb);
-
-  for(int i = 0; i < lenum.length; i++)
-    {
-      ACE_OS::memset (&ncb, 0, sizeof(ncb));
-      ncb.ncb_command  = NCBRESET;
-      ncb.ncb_lana_num = lenum.lana [i];
-
-      /** Reset the netbios */
-      result = Netbios (&ncb);
-
-      if (ncb.ncb_retcode != NRC_GOODRET)
-	{
-	  return -1;
-	}
-
-      ADAPTERSTAT adapter;
-      ACE_OS::memset (&ncb, 0, sizeof (ncb));
-# if defined (__BORLANDC__) || defined (__MINGW32__)
-      ACE_OS::strcpy (ACE_reinterpret_cast (char*, ncb.ncb_callname), "*");
-# else
-      ACE_OS::strcpy (ACE_static_cast (char*, ncb.ncb_callname), "*");
-# endif /* __BORLANDC__ || __MINGW32__ */
-      ncb.ncb_command     = NCBASTAT;
-      ncb.ncb_lana_num    = lenum.lana[i];
-      ncb.ncb_buffer      = ACE_reinterpret_cast (unsigned char*, &adapter);
-      ncb.ncb_length      = sizeof (adapter);
-
-      result = Netbios (&ncb);
-
-      if (result == 0)
-	{
-	  ACE_OS::memcpy (node->node,
-			  adapter.adapt.adapter_address,
-			  6);
-	  return 0;
-	}
-    }
-  return 0;
-#elif defined (sun)
-
-  /** obtain the local host name */
-  char hostname [MAXHOSTNAMELEN];
-  ACE_OS::hostname (hostname, sizeof (hostname));
-
-  /** Get the hostent to use with ioctl */
-  struct hostent *phost =
-    ACE_OS::gethostbyname (hostname);
-
-  if (phost == 0)
-    {
-      return -1;
-    }
-
-  ACE_HANDLE handle =
-    ACE_OS::socket (PF_INET, SOCK_DGRAM, IPPROTO_UDP);
-
-  if (handle == ACE_INVALID_HANDLE)
-    {
-      return -1;
-    }
-
-  char **paddrs = phost->h_addr_list;
-
-  struct arpreq ar;
-
-  struct sockaddr_in *psa =
-    (struct sockaddr_in *)&(ar.arp_pa);
-
-  ACE_OS::memset (&ar,
-		  0,
-		  sizeof (struct arpreq));
-
-  psa->sin_family = AF_INET;
-
-  ACE_OS::memcpy (&(psa->sin_addr),
-		  *paddrs,
-		  sizeof (struct in_addr));
-
-  if (ACE_OS::ioctl (handle,
-                     SIOCGARP,
-                     &ar) == -1)
-    {
-      return -1;
-    }
-
-  ACE_OS::close (handle);
-
-  ACE_OS::memcpy (node->node,
-		  ar.arp_ha.sa_data,
-		  6);
-
-  return 0;
-
-#elif defined (linux)
-
-  struct ifreq ifr;
-
-  ACE_HANDLE handle =
-    ACE_OS::socket (PF_INET, SOCK_DGRAM, 0);
-
-  if (handle == ACE_INVALID_HANDLE)
-    {
-      return -1;
-    }
-
-  ACE_OS::strcpy (ifr.ifr_name, "eth0");
-
-  if (ACE_OS::ioctl (handle/*s*/, SIOCGIFHWADDR, &ifr) < 0)
-    {
-      ACE_OS::close (handle);
-      return -1;
-    }
-
-  struct sockaddr* sa =
-    (struct sockaddr *) &ifr.ifr_addr;
-
-  ACE_OS::memcpy (node->node,
-		  sa->sa_data,
-                  6);
-
-  return 0;
-
-#else
-  ACE_UNUSED_ARG (node);
   ACE_NOTSUP_RETURN (-1);
 #endif
 }

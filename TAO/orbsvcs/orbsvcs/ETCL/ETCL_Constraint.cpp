@@ -7,7 +7,6 @@
 #include "tao/Any.h"
 #include "tao/Managed_Types.h"
 #include "tao/Environment.h"
-#include "tao/CDR.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "ETCL_Constraint.inl"

@@ -3,7 +3,6 @@
 #include "tao/Remote_Object_Proxy_Impl.h"
 #include "tao/Exception.h"
 #include "tao/Stub.h"
-#include "tao/ORB_Core.h"
 #include "tao/Invocation.h"
 #include "tao/IFR_Client_Adapter.h"
 

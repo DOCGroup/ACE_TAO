@@ -14,8 +14,7 @@
 
 #ifndef ACE_CONFIG_ALL_H
 #define ACE_CONFIG_ALL_H
-
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #include "ace/config.h"
 
@@ -502,16 +501,6 @@ extern "C"
   typedef void (*ACE_EXIT_HOOK) (void);
 }
 
-// Signature for registering a cleanup function that is used by the
-// <ACE_Object_Manager> and the <ACE_Thread_Manager>.
-# if defined (ACE_HAS_SIG_C_FUNC)
-extern "C" {
-# endif /* ACE_HAS_SIG_C_FUNC */
-typedef void (*ACE_CLEANUP_FUNC)(void *object, void *param) /* throw () */;
-# if defined (ACE_HAS_SIG_C_FUNC)
-}
-# endif /* ACE_HAS_SIG_C_FUNC */
-
 // ============================================================================
 // log_msg declarations
 // ============================================================================
@@ -692,6 +681,5 @@ extern "C" u_long CLS##_Export _get_dll_unload_policy (void) \
 # define ACE_NOTSUP do { errno = ENOTSUP; return; } while (0)
 #endif /* ! ACE_HAS_VERBOSE_NOTSUP */
 
-#include /**/ "ace/post.h"
-
+#include "ace/post.h"
 #endif /* ACE_CONFIG_ALL_H */

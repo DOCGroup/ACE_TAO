@@ -15,7 +15,6 @@ ACE_RCSID (DynamicInterface,
 #include "DII_ClientRequestInfo.h"
 #include "tao/ClientInterceptorAdapter.h"
 #include "tao/Stub.h"
-#include "tao/ORB_Core.h"
 #endif /* TAO_HAS_INTERCEPTORS */
 
 

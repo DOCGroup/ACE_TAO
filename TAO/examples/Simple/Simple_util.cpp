@@ -282,7 +282,7 @@ Client<INTERFACE_OBJECT, Var>::Client (void)
 // Reads the Server ior from a file
 
 template <class INTERFACE_OBJECT, class Var> int
-Client<INTERFACE_OBJECT, Var>::read_ior (char *filename)
+Client<INTERFACE_OBJECT, Var>::read_ior (const char *filename)
 {
   // Open the file for reading.
   ACE_HANDLE f_handle = ACE_OS::open (filename, 0);
@@ -328,16 +328,27 @@ Client<INTERFACE_OBJECT, Var>::parse_args (void)
         this->ior_ = ACE_OS::strdup (get_opts.opt_arg ());
         break;
       case 'n': // Use naming service
-        this->naming_ = 1;
+        // ignore this.
+        // In the original design you had to specify 
+        // an explicit ior via -k or -f or else you had to
+        // specify -n to use the name service.
+        // if none of -k, -f, or -n were specified, it complained and exited.
+        // With this change, -n happens automatically if you omit -k and -f.
+        // Any use which worked before still works.
+        // Uses which previously failed, now work.
+        // this->naming_ = 1;
         break;
       case 'f': // read the IOR from the file.
-        result = this->read_ior (get_opts.opt_arg ());
+      {
+        char * name = get_opts.opt_arg ();
+        result = this->read_ior (name);
         if (result < 0)
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "Unable to read ior from %s : %p\n",
-                             get_opts.opt_arg ()),
+                             "Unable to read ior from %s\n",
+                             name),
                             -1);
         break;
+      }
       case 'x': // read the flag for shutting down
         this->shutdown_ = 1;
         break;
@@ -365,14 +376,86 @@ Client<INTERFACE_OBJECT, Var>::~Client (void)
   ACE_OS::free (this->ior_);
 }
 
+template <class INTERFACE_OBJECT, class Var>
+int
+Client<INTERFACE_OBJECT, Var>::reconnect_ior (const char * ior)
+{
+  ACE_OS::free (this->ior_);
+  this->ior_ = ACE_OS::strdup (ior);
+  return bind();
+}
+
+template <class INTERFACE_OBJECT, class Var>
+int
+Client<INTERFACE_OBJECT, Var>::reconnect_file (const char * file)
+{
+  ACE_OS::free (this->ior_);
+  this->ior_ = 0;
+  int result = read_ior (file);
+  if (result == 0)
+  {
+    result =  bind();
+  }  
+  return result;
+}
+
+template <class INTERFACE_OBJECT, class Var>
+int
+Client<INTERFACE_OBJECT, Var>::reconnect_name (const char * name)
+{
+  ACE_OS::free (this->ior_);
+  this->ior_ = 0;
+  this->name_ = ACE_const_cast (char *, name);
+  return bind();
+}
+
+
+template <class INTERFACE_OBJECT, class Var>
+int
+Client<INTERFACE_OBJECT, Var>::bind ()
+{
+  if(this->ior_ != 0)
+    {
+      CORBA::Object_var server_object =
+        this->orb_->string_to_object (this->ior_ ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+
+      if (CORBA::is_nil (server_object.in ()))
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "invalid ior <%s>\n",
+                           this->ior_),
+                          -1);
+      this->server_ = INTERFACE_OBJECT::_narrow (server_object.in ()
+                                             ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+    }
+  else if (this->name_ != 0 && this->name_[0] != '\0')
+    {
+      // No IOR specified. Use the Naming Service
+      ACE_DEBUG((LM_DEBUG,
+                 "Using the Naming Service \n"));
+      int retv = this->obtain_initial_references (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+      if (retv ==-1)
+        return -1;
+    }
+  else
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "no ior or naming options  specified\n"),
+                      -1);
+
+  return 0;
+}
+
 template <class INTERFACE_OBJECT, class Var> int
 Client<INTERFACE_OBJECT, Var>::init (const char *name,
                                  int argc,
                                  char **argv)
 {
+  this->name_ = ACE_const_cast (char *, name);
   this->argc_ = argc;
   this->argv_ = argv;
-
 
   ACE_DECLARE_NEW_CORBA_ENV;
 
@@ -386,43 +469,14 @@ Client<INTERFACE_OBJECT, Var>::init (const char *name,
       ACE_TRY_CHECK;
 
       // Parse command line and verify parameters.
-      if (this->parse_args () == -1)
+      if (this->parse_args () == -1){
         return -1;
+      }
 
-      if(this->ior_ != 0)
-        {
-          CORBA::Object_var server_object =
-            this->orb_->string_to_object (this->ior_ ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-
-
-          if (CORBA::is_nil (server_object.in ()))
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "invalid ior <%s>\n",
-                               this->ior_),
-                              -1);
-          this->server_ = INTERFACE_OBJECT::_narrow (server_object.in ()
-                                                 ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-        }
-      else if (this->naming_ == 1)
-        {
-          // No IOR specified. Use the Naming Service
-          ACE_DEBUG((LM_DEBUG,
-                     "Using the Naming Service \n"));
-          this->name_ = ACE_const_cast (char *, name);
-          int retv = this->obtain_initial_references (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-          if (retv ==-1)
-            return -1;
-        }
-      else
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "no ior or naming options  specified\n"),
-                          -1);
-
-
-    }
+      if (bind() != 0){
+        return -1;
+      }
+  }
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Client_i::init");

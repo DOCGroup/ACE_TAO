@@ -1,10 +1,14 @@
 // $Id$
 
+
+// Implementation of the Dynamic Server Skeleton Interface  (for GIOP)
+
 #include "TAO_Server_Request.h"
 #include "CDR.h"
 #include "Environment.h"
 #include "Principal.h"
 #include "ORB_Core.h"
+#include "ORB.h"
 #include "Timeprobe.h"
 #include "debug.h"
 #include "Pluggable_Messaging_Utils.h"

@@ -124,10 +124,7 @@ private:
   TAO_AV_Protocol_Object *protocol_object_;
   // Protocol object corresponding to the transport protocol selected.
 
-  char* address_;
-  // Destination Address.
-
-  char* peer_addr_;
+  ACE_CString address_;
   // Destination Address.
 
   ACE_CString flowname_;

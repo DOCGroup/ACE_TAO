@@ -942,7 +942,6 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_type_entries (
 template <ACE_MEM_POOL_1, class ACE_LOCK> void
 ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::dump (void) const
 {
-#if defined (ACE_HAS_DUMP)
   // Note that we *must* use structured exception handling here
   // because (1) we may need to commit virtual memory pages and (2)
   // C++ exception handling doesn't support resumption.
@@ -959,7 +958,6 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::dump (void) const
   ACE_SEH_EXCEPT (fake_this->remap (GetExceptionInformation ()))
     {
     }
-#endif /* ACE_HAS_DUMP */
 }
 
 #endif /* ACE_LOCAL_NAME_SPACE_T_CPP */

@@ -26,7 +26,13 @@ endif
 CC              = gcc
 CXX             = g++
 
+# Test for template instantiation.
+#
+include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
+
+
 CFLAGS          += -W -Wall -Wpointer-arith -pipe
+CCFLAGS         += $(CFLAGS) $(TEMPLATES_FLAG)
 DCFLAGS         += -g
 ifneq ($(VERSION),3)
   LDFLAGS       += -Wl,-rpath $(ACE_ROOT)/ace
@@ -48,9 +54,3 @@ LDFLAGS         += -pthread
 CFLAGS          += -D_THREAD_SAFE
 endif # threads
 
-# Test for template instantiation, add to SOFLAGS if SONAME set, 
-# add -E to LDFLAGS if using GNU ld
-#
-include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
-
-CCFLAGS         += $(CFLAGS) $(TEMPLATES_FLAG)

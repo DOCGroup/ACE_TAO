@@ -143,7 +143,6 @@ ACE_Priority_Reactor::dispatch_io_set (int number_of_active_handles,
 void
 ACE_Priority_Reactor::dump (void) const
 {
-#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Priority_Reactor::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
@@ -151,7 +150,6 @@ ACE_Priority_Reactor::dump (void) const
   ACE_Select_Reactor::dump ();
 
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
-#endif /* ACE_HAS_DUMP */
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

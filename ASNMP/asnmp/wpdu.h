@@ -34,7 +34,7 @@
 // PDU / Target -> iovec buffer
 // iovec buffer -> PDU / Target
 struct snmp_pdu;
-class ASNMP_Export wpdu
+class ACE_Export wpdu
   // = TITLE
   //      Implement an Adapter pattern between CMU SNMP and HP SNMP++
   //

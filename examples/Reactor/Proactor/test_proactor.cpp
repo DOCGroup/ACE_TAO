@@ -44,10 +44,10 @@ static ACE_TCHAR *host = 0;
 static u_short port = ACE_DEFAULT_SERVER_PORT;
 
 // File that we're sending.
-static const ACE_TCHAR *file = ACE_TEXT("test_proactor.cpp");
+static ACE_TCHAR *file = ACE_TEXT("test_proactor.cpp");
 
 // Name of the output file.
-static const ACE_TCHAR *dump_file = ACE_TEXT("output");
+static ACE_TCHAR *dump_file = ACE_TEXT("output");
 
 // Keep track of when we're done.
 static int done = 0;
@@ -377,7 +377,7 @@ Sender::Sender (void)
     transmit_file_done_ (0)
 {
   // Moment of inspiration... :-)
-  static const char *data = "Welcome to Irfan World! Irfan RULES here !!\n";
+  static char *data = "Welcome to Irfan World! Irfan RULES here !!\n";
   this->welcome_message_.init (data,
                                ACE_OS::strlen (data));
   this->welcome_message_.wr_ptr (ACE_OS::strlen (data));
@@ -707,15 +707,5 @@ template class ACE_Asynch_Acceptor<Receiver>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Asynch_Acceptor<Receiver>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
-#else /* ACE_WIN32 && !ACE_HAS_WINCE || ACE_HAS_AIO_CALLS*/
-
-int
-ACE_TMAIN (int, ACE_TCHAR *[])
-{
-  ACE_DEBUG ((LM_DEBUG,
-              "This example does not work on this platform.\n"));
-  return 1;
-}
 
 #endif /* ACE_WIN32 && !ACE_HAS_WINCE || ACE_HAS_AIO_CALLS*/

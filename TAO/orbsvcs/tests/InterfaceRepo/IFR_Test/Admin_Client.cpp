@@ -3,7 +3,6 @@
 
 #include "Admin_Client.h"
 #include "ace/Get_Opt.h"
-#include "ace/SString.h"
 
 ACE_RCSID(IFR_Test, Admin_Client, "$Id$")
 

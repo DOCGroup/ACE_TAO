@@ -39,7 +39,7 @@
 //------------------------------------------------------------------------
 #include "asnmp/smival.h"
 
-class ASNMP_Export OctetStr: public  SnmpSyntax
+class ACE_Export OctetStr: public  SnmpSyntax
   // = TITLE
   //      Implement RFC1155 Octet SMI data object
 
@@ -129,10 +129,10 @@ public:
   SmiBYTE *data() const;
   // returns pointer to internal data
 
-  const char *to_string();
+  char *to_string();
   // get a printable ASCII value
 
-  const char *to_string_hex();
+  char *to_string_hex();
   // get an ASCII formattted hex dump of the contents
 
   SnmpSyntax  *clone() const;

@@ -3,7 +3,6 @@
 //
 
 #include "Handler_i.h"
-#include "ace/streams.h"
 
 Single_Query_Stock_Handler_i::
     Single_Query_Stock_Handler_i (int *response_count)

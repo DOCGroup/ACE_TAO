@@ -7,8 +7,6 @@
 #include "ace/Handle_Set.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/OS.h"
-
 ACE_RCSID(ace, Handle_Set, "$Id$")
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Handle_Set)
@@ -28,7 +26,6 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Handle_Set)
 void
 ACE_Handle_Set::dump (void) const
 {
-#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Handle_Set::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
@@ -48,7 +45,6 @@ ACE_Handle_Set::dump (void) const
 
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT (" ]\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
-#endif /* ACE_HAS_DUMP */
 }
 
 // Table that maps bytes to counts of the enabled bits in each value
@@ -253,7 +249,6 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Handle_Set_Iterator)
 void
 ACE_Handle_Set_Iterator::dump (void) const
 {
-#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Handle_Set_Iterator::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
@@ -265,7 +260,6 @@ ACE_Handle_Set_Iterator::dump (void) const
 #endif
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nword_num_ = %d"), this->word_num_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
-#endif /* ACE_HAS_DUMP */
 }
 
 ACE_HANDLE
@@ -378,7 +372,7 @@ ACE_Handle_Set_Iterator::operator () (void)
        while (lsb == 0);
 
        // Set index to word boundary.
-       this->handle_index_ = ACE_MULT_BY_WORDSIZE (this->word_num_);
+       this->handle_index_ = ACE_MULT_BY_WORDSIZE(this->word_num_);
 
        // Put new word_val.
        this->word_val_ = lsb;

@@ -1,16 +1,11 @@
-// $Id$
+// @(#) $Id$
 
 #include "Policy_Validator.h"
 #include "Environment.h"
+#include "ORB_Core.h"
 #include "debug.h"
 
-#include "ace/Log_Msg.h"
-
-
-ACE_RCSID (tao,
-           Policy_Validator,
-           "$Id$")
-
+ACE_RCSID(tao, Policy_Validator, "$Id$")
 
 TAO_Policy_Validator *TAO_Policy_Validator::last_ = 0;
 

@@ -31,7 +31,6 @@ class JAWS_IO_Acceptor;
 #include "ace/Asynch_IO.h"
 #include "ace/SOCK_Stream.h"
 #include "ace/Singleton.h"
-#include "ace/Synch_Traits.h"
 
 #include "JAWS/Export.h"
 

@@ -14,7 +14,7 @@
 
 #ifndef TAO_EC_REACTIVE_SUPPLIERCONTROL_H
 #define TAO_EC_REACTIVE_SUPPLIERCONTROL_H
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #include "EC_SupplierControl.h"
 #include "orbsvcs/ESF/ESF_Worker.h"
@@ -75,14 +75,14 @@ private:
 class TAO_RTEvent_Export TAO_EC_Reactive_SupplierControl : public TAO_EC_SupplierControl
 {
 public:
-  /// Constructor.  It does not assume ownership of the @a event_channel
+  /// Constructor.  It does not assume ownership of the <event_channel>
   /// parameter.
   TAO_EC_Reactive_SupplierControl (const ACE_Time_Value &rate,
                                    const ACE_Time_Value &timeout,
                                    TAO_EC_Event_Channel_Base *event_channel,
                                    CORBA::ORB_ptr orb);
 
-  /// Destructor.
+  /// destructor...
   virtual ~TAO_EC_Reactive_SupplierControl (void);
 
   /// Receive the timeout from the adapter
@@ -147,5 +147,5 @@ private:
 #include "EC_Reactive_SupplierControl.i"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 #endif /* TAO_EC_SUPPLIERCONTROL_H */

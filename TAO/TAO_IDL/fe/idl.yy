@@ -152,7 +152,7 @@ AST_Decl *tao_enum_constant_decl = 0;
   FE_Declarator                 *deval;         /* Declarator value     */
   idl_bool                      bval;           /* Boolean value        */
   long                          ival;           /* Long value           */
-  ACE_UINT64                    uival;          /* Unsigned long value  */
+  unsigned long                 uival;          /* Unsigned long value  */
   double                        dval;           /* Double value         */
   float                         fval;           /* Float value          */
   char                          cval;           /* Char value           */
@@ -584,13 +584,6 @@ interface_header :
 // interface_header : interface_decl inheritance_spec
           idl_global->set_parse_state (IDL_GlobalData::PS_InheritSpecSeen);
 
-          if ($2 != 0 && $2->truncatable ())
-            {
-              idl_global->err ()->syntax_error (
-                                      IDL_GlobalData::PS_InheritColonSeen
-                                    );
-            }
-
           /*
            * Create an AST representation of the information in the header
            * part of an interface - this representation contains a computed
@@ -654,16 +647,15 @@ interface_header :
         ;
 
 inheritance_spec
-        : ':' opt_truncatable
+        : ':'
         {
-// inheritance_spec : ':' opt_truncatable
+// inheritance_spec : ':'
           idl_global->set_parse_state (IDL_GlobalData::PS_InheritColonSeen);
         }
           at_least_one_scoped_name
         {
 //      at_least_one_scoped_name
-          $4->truncatable ($2);
-          $$ = $4;
+          $$ = $3;
         }
         | /* EMPTY */
         {
@@ -821,21 +813,11 @@ value_abs_decl :
 
 value_header :
         value_decl
+        opt_truncatable
         inheritance_spec
         {
-// value_header : value_decl inheritance_spec 
+// value_header : value_decl opt_truncatable inheritance_spec 
           idl_global->set_parse_state (IDL_GlobalData::PS_InheritSpecSeen);
-
-          if ($2 != 0 && $2->truncatable ())
-            {
-              ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("warning in %s line %d\n"),
-                          idl_global->filename ()->get_string (),
-                          idl_global->lineno ()));
-              ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("truncatable modifier not supported ")
-                          ACE_TEXT ("and is ignored\n")));
-            }
         }
         supports_spec
         {
@@ -849,9 +831,9 @@ value_header :
                           1);
           ACE_NEW_RETURN ($$,
                           FE_OBVHeader (sn,
-                                        $2,
-                                        $4,
-                                        $2 ? $2->truncatable () : I_FALSE),
+                                        $3,
+                                        $5,
+                                        $2),
                           1);      
         }
         ;
@@ -874,7 +856,14 @@ opt_truncatable :
         IDL_TRUNCATABLE
         {
 // opt_truncatable : IDL_TRUNCATABLE
-          $$ = I_TRUE;
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("warning in %s line %d\n"),
+                      idl_global->filename ()->get_string (),
+                      idl_global->lineno ()));
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("truncatable modifier not supported ")
+                      ACE_TEXT ("and is ignored\n")));
+          $$ = I_FALSE;
         }
         | /* EMPTY */
         {
@@ -1632,9 +1621,7 @@ literal
         | IDL_UINTEGER_LITERAL
         {
 //      | IDL_UINTEGER_LITERAL
-          $$ = 
-            idl_global->gen ()->create_expr ($1,
-                                             AST_Expression::EV_ulonglong);
+          $$ = idl_global->gen ()->create_expr ($1);
         }
         | IDL_STRING_LITERAL
         {
@@ -2217,8 +2204,6 @@ struct_type
                                         s->is_local (),
                                         s->is_abstract ()
                                       );
-              AST_Structure::fwd_redefinition_helper (d,
-                                                      s);
               (void) s->fe_add_structure (d);
             }
 
@@ -2407,10 +2392,7 @@ union_type
                                                         s->is_abstract ());
                 }
 
-              AST_Structure *st = AST_Structure::narrow_from_decl (u);
-              AST_Structure::fwd_redefinition_helper (st,
-                                                      s);
-              (void) s->fe_add_union (u);
+                (void) s->fe_add_union (u);
             }
 
           /*
@@ -3023,10 +3005,7 @@ sequence_type_spec
 
                   $$ =
                     idl_global->gen ()->create_sequence (
-                        idl_global->gen ()->create_expr (
-                                                (ACE_UINT64) 0,
-                                                AST_Expression::EV_ulong
-                                              ),
+                        idl_global->gen ()->create_expr ((unsigned long) 0),
                         tp,
                         &sn,
                         s->is_local (),
@@ -3110,8 +3089,7 @@ string_type_spec
            */
           $$ =
             idl_global->gen ()->create_string (
-                idl_global->gen ()->create_expr ((ACE_UINT64) 0,
-                                                 AST_Expression::EV_ulong)
+                idl_global->gen ()->create_expr ((unsigned long) 0)
               );
           /*
            * Add this AST_String to the types defined in the global scope.
@@ -3180,8 +3158,7 @@ wstring_type_spec
            */
           $$ =
             idl_global->gen ()->create_wstring (
-                idl_global->gen ()->create_expr ((ACE_UINT64) 0,
-                                                 AST_Expression::EV_ulong)
+                idl_global->gen ()->create_expr ((unsigned long) 0)
               );
           /*
            * Add this AST_String to the types defined in the global scope.
@@ -3452,7 +3429,7 @@ attribute_readwrite :
 
                   if ($7 != 0)
                     {
-                      (void) a->fe_add_get_exceptions ($7);
+                      (void) a->fe_add_get_exceptions ($9);
                     }
 
                   if ($9 != 0)
@@ -5082,21 +5059,11 @@ event_plain_header :
         ;   
         
 event_rest_of_header :     
+        opt_truncatable
         inheritance_spec
         {
-// event_rest_of_header : inheritance_spec
+// event_rest_of_header : opt_truncatable inheritance_spec
           idl_global->set_parse_state (IDL_GlobalData::PS_InheritSpecSeen);
-
-          if ($1 != 0 && $1->truncatable ())
-            {
-              ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("warning in %s line %d\n"),
-                          idl_global->filename ()->get_string (),
-                          idl_global->lineno ()));
-              ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("truncatable modifier not supported ")
-                          ACE_TEXT ("and is ignored\n")));
-            }
         }
         supports_spec
         {
@@ -5105,9 +5072,9 @@ event_rest_of_header :
 
           ACE_NEW_RETURN ($$,
                           FE_EventHeader (0,
-                                          $1,
-                                          $3,
-                                          $1 ? $1->truncatable () : I_FALSE),
+                                          $2,
+                                          $4,
+                                          $1),
                           1);
         }
         ;

@@ -13,7 +13,7 @@
 #ifndef TAO_OBJECT_ADAPTER_H
 #define TAO_OBJECT_ADAPTER_H
 
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #include "portableserver_export.h"
 
@@ -34,8 +34,6 @@
 #include "tao/LocalObject.h"
 
 #include "ace/Service_Config.h"
-#include "ace/Reverse_Lock_T.h"
-#include "ace/Condition_Thread_Mutex.h"
 
 // Policy Validators
 #include "Default_Policy_Validator.h"
@@ -179,9 +177,6 @@ public:
 
   /// Convenience constructor combining construction & initialization.
   TAO_POA_Current_Impl (void);
-
-  /// Return the previous current implementation.
-  TAO_POA_Current_Impl *previous (void) const;
 
   /// Teardown the current for this request.
   void teardown (void);
@@ -693,7 +688,7 @@ public:
       CORBA::Short original_CORBA_priority_;
     };
 
-    // @@ POA: Servant_Upcall (TAO_Object_Adapter &object_adapter);
+    // @@ PPOA: Servant_Upcall (TAO_Object_Adapter &object_adapter);
     /// Constructor.
     Servant_Upcall (TAO_ORB_Core *orb_core);
 
@@ -793,11 +788,6 @@ public:
     void servant_cleanup (void);
     void poa_cleanup (void);
 
-    /// Clean-up / reset state of this Servant_Upcall object.
-    void upcall_cleanup (void);
-
-  protected:
-
     TAO_Object_Adapter *object_adapter_;
 
     TAO_POA *poa_;
@@ -848,7 +838,8 @@ public:
 private:
 
   /// Helper method to get collocated servant
-  TAO_ServantBase *get_collocated_servant (const TAO_MProfile &mp
+  TAO_ServantBase *get_collocated_servant (TAO_Stub *stub,
+                                           const TAO_MProfile &mp
                                            ACE_ENV_ARG_DECL);
 
 private:
@@ -907,6 +898,6 @@ ACE_FACTORY_DECLARE (TAO_PortableServer, TAO_Object_Adapter_Factory)
 # include "Object_Adapter.i"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 
 #endif /* TAO_OBJECT_ADAPTER_H */

@@ -43,7 +43,6 @@ TimeTicks::TimeTicks( const unsigned long i):SnmpUInt32(i)
 
 // copy constructor
 TimeTicks::TimeTicks( const TimeTicks &t)
-  : SnmpUInt32 (t)
 {
   smival.value.uNumber = t.smival.value.uNumber;
   smival.syntax = sNMP_SYNTAX_TIMETICKS;
@@ -109,7 +108,7 @@ TimeTicks::operator unsigned long()
 
 
 // ASCII format return
-const char * TimeTicks::to_string()
+char * TimeTicks::to_string()
      /* Should do something nicer like days:hours:minutes... */
 {
   unsigned long tt, hseconds, seconds, minutes, hours, days;

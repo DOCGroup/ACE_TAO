@@ -21,7 +21,6 @@ ACE_RCSID(misc, test_upipe, "$Id$")
 template class ACE_Accept_Strategy<Server_Service, ACE_UPIPE_ACCEPTOR>;
 template class ACE_Acceptor<Server_Service, ACE_UPIPE_ACCEPTOR>;
 template class ACE_Concurrency_Strategy<Server_Service>;
-template class ACE_Connector_Base<Client_Service>;
 template class ACE_Connector<Client_Service, ACE_UPIPE_CONNECTOR>;
 template class ACE_Creation_Strategy<Server_Service>;
 template class ACE_Scheduling_Strategy<Server_Service>;
@@ -33,7 +32,6 @@ template class ACE_Thread_Strategy<Server_Service>;
 #pragma instantiate ACE_Accept_Strategy<Server_Service, ACE_UPIPE_ACCEPTOR>
 #pragma instantiate ACE_Acceptor<Server_Service, ACE_UPIPE_ACCEPTOR>
 #pragma instantiate ACE_Concurrency_Strategy<Server_Service>
-#pragma instantiate ACE_Connector_Base<Client_Service>
 #pragma instantiate ACE_Connector<Client_Service, ACE_UPIPE_CONNECTOR>
 #pragma instantiate ACE_Creation_Strategy<Server_Service>
 #pragma instantiate ACE_Scheduling_Strategy<Server_Service>

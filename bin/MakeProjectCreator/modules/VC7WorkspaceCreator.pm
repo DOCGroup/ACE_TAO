@@ -22,10 +22,6 @@ use vars qw(@ISA);
 # Subroutine Section
 # ************************************************************
 
-sub allow_duplicates {
-  my($self) = shift;
-  return 0;
-}
 
 sub crlf {
   my($self) = shift;
@@ -55,7 +51,6 @@ sub print_inner_project {
   #my($gen)   = shift;
   #my($pguid) = shift;
   #my($deps)  = shift;
-  #my($name)  = shift;
 }
 
 
@@ -81,26 +76,18 @@ sub print_dependencies {
   my($pjs)  = shift;
   my($crlf) = $self->crlf();
 
-  ## I hate to add yet another loop through all the projects, but 
-  ## we must have some way to map plain project names to guids.
-  my(%name_to_guid_map) = ();
-  foreach my $project(@$list) {
-    my($name, $deps, $guid) = @{$$pjs{$project}};
-    $name_to_guid_map{$name} = $guid;
-  }
-
   ## Project Dependencies
   print $fh "\tGlobalSection(ProjectDependencies) = postSolution$crlf";
   foreach my $project (@$list) {
-    my($name, $rawdeps, $project_guid) = @{$$pjs{$project}};
+    my($name, $rawdeps, $pguid) = @{$$pjs{$project}};
     my($deps) = $self->get_validated_ordering($project);
     if (defined $deps && $deps ne '') {
       my($darr) = $self->create_array($deps);
       my($i)    = 0;
       foreach my $dep (@$darr) {
-        my($guid) = $name_to_guid_map{$dep};
-        if (defined $guid && $guid ne $project_guid) {
-          print $fh "\t\t{$project_guid}.$i = {$guid}$crlf";
+        my($val) = $gen->specific_lookup($dep);
+        if (defined $val && $pguid ne $val) {
+          print $fh "\t\t{$pguid}.$i = {$val}$crlf";
           $i++;
         }
       }
@@ -115,27 +102,22 @@ sub write_comps {
   my($fh)       = shift;
   my($gen)      = shift;
   my($projects) = $self->get_projects();
-  my($vc7guid)     = '8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942';
+  my($guid)     = '8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942';
   my($pjs)      = $self->get_project_info();
   my(@list)     = $self->sort_dependencies($projects, $pjs);
   my($crlf)     = $self->crlf();
 
-  ## I hate to add yet another loop through all the projects, but 
-  ## we must have some way to map plain project names to guids.
-  my(%name_to_guid_map) = ();
-  foreach my $project(sort @list) {
-    my($name, $deps, $guid) = @{$$pjs{$project}};
-    $name_to_guid_map{$name} = $guid;
-  }
+  ## $guid above is the VC7 Project GUID.  It should not change.
 
   ## Project Information
   foreach my $project (sort @list) {
-    my($name, $rawdeps, $guid) = @{$$pjs{$project}};
+    my($name, $rawdeps, $pguid) = @{$$pjs{$project}};
     my($deps) = $self->get_validated_ordering($project);
+
     ## Convert all /'s to \
     my($cpy) = $self->slash_to_backslash($project);
-    print $fh "Project(\"{$vc7guid}\") = \"$name\", \"$cpy\", \"{$guid}\"$crlf";
-    $self->print_inner_project($fh, $gen, $guid, $deps, $name, \%name_to_guid_map);
+    print $fh "Project(\"{$guid}\") = \"$name\", \"$cpy\", \"{$pguid}\"$crlf";
+    $self->print_inner_project($fh, $gen, $pguid, $deps);
     print $fh "EndProject$crlf";
   }
 

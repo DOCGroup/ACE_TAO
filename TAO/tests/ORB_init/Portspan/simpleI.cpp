@@ -32,11 +32,13 @@ simple_i::~simple_i (void)
   }
 
 void simple_i::test (
-    ACE_ENV_SINGLE_ARG_DECL_NOT_USED
+    ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ))
+
   {
     //Add your implementation here
   }
+

@@ -1,8 +1,7 @@
 // $Id$
 
+#include "ace/Synch_T.h"
 #include "ace/Dump.h"
-#include "ace/Guard_T.h"
-#include "ace/Thread_Mutex.h"
 #include "ace/Object_Manager.h"
 #include "ace/Log_Msg.h"
 

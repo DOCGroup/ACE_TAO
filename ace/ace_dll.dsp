@@ -582,10 +582,6 @@ SOURCE=.\Method_Request.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Metrics_Cache.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\Msg_WFMO_Reactor.cpp
 # End Source File
 # Begin Source File
@@ -1091,10 +1087,6 @@ SOURCE=.\UPIPE_Connector.cpp
 # Begin Source File
 
 SOURCE=.\UPIPE_Stream.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\UUID.cpp
 # End Source File
 # Begin Source File
 
@@ -1699,14 +1691,6 @@ SOURCE=.\Message_Queue_T.h
 # Begin Source File
 
 SOURCE=.\Method_Request.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Metrics_Cache.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Metrics_Cache_T.h
 # End Source File
 # Begin Source File
 
@@ -2350,10 +2334,6 @@ SOURCE=.\UPIPE_Stream.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\UUID.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Version.h
 # End Source File
 # Begin Source File
@@ -2787,14 +2767,6 @@ SOURCE=.\Message_Queue.i
 # Begin Source File
 
 SOURCE=.\Message_Queue_T.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Metrics_Cache.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Metrics_Cache_T.i
 # End Source File
 # Begin Source File
 
@@ -3251,10 +3223,6 @@ SOURCE=.\UPIPE_Connector.i
 # Begin Source File
 
 SOURCE=.\UPIPE_Stream.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\UUID.i
 # End Source File
 # Begin Source File
 

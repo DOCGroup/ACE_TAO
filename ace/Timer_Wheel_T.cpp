@@ -387,7 +387,7 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK>::schedule_i (const TYPE& type,
                                                         const ACE_Time_Value& future_time,
                                                         const ACE_Time_Value& interval)
 {
-  ACE_TRACE ("ACE_Timer_Wheel_T::schedule_i");
+  ACE_TRACE ("ACE_Timer_Wheel_T::schedule");
 
   ACE_Timer_Node_T<TYPE>* n = this->alloc_node ();
 
@@ -685,7 +685,6 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK>::recalc_earliest
 template <class TYPE, class FUNCTOR, class ACE_LOCK> void
 ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK>::dump (void) const
 {
-#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Timer_Wheel_T::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
 
@@ -709,7 +708,6 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK>::dump (void) const
     }
 
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
-#endif /* ACE_HAS_DUMP */
 }
 
 

@@ -9,7 +9,6 @@
 #include "Cubit_Server.h"
 #include "tao/Timeprobe.h"
 #include "ace/Sched_Params.h"
-#include "ace/streams.h"
 
 #include "tao/Strategies/advanced_resource.h"
 

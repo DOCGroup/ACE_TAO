@@ -3,8 +3,8 @@
 #include "JAWS/Parse_Headers.h"
 
 #define ACCESSOR(T,C,x) \
-T C :: x (void) const { return this-> x##_; }\
-void C :: x (T t) { this-> x##_ = t; }
+T C##::##x (void) const { return this->##x##_; }\
+void C##::##x (T t) { this->##x##_ = t; }
 
 int
 JAWS_Parse_Headers::parse_headers (JAWS_Header_Info *info,

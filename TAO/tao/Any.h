@@ -14,7 +14,7 @@
 #ifndef TAO_ANY_H
 #define TAO_ANY_H
 
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #include "ace/CDR_Stream.h"
 
@@ -22,6 +22,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/Object.h"
 #include "tao/Typecode.h"
 
 namespace TAO
@@ -48,6 +49,15 @@ namespace CORBA
 
     Any (void);
     Any (const Any &);
+
+    /// This signature is required by the C++ mapping, but allows
+    /// obvious type safety dangers. TAO's implementation will
+    /// accept only 0 for the void*. This constructor is
+    /// used with interceptors, where an Any may need to be
+    /// created that contains a void type.
+    Any (TypeCode_ptr,
+         void *,
+         Boolean release = 0);
 
     ~Any (void);
 
@@ -122,6 +132,11 @@ namespace CORBA
     Boolean operator>>= (to_abstract_base) const;
     Boolean operator>>= (to_value) const;
 
+    /// Spec-defined signature.
+    void replace (TypeCode_ptr,
+                  void *value,
+                  Boolean release = 0);
+
     /// TAO-specific signature.
     void replace (TAO::Any_Impl *);
 
@@ -135,9 +150,6 @@ namespace CORBA
 
     /// TAO extension, does not return a duplicate.
     CORBA::TypeCode_ptr _tao_get_typecode (void) const;
-
-    /// TAO extension.
-    void _tao_set_typecode (const CORBA::TypeCode_ptr);
 
     ACE_Message_Block *_tao_get_cdr (void) const;
     int _tao_byte_order (void) const;
@@ -287,8 +299,7 @@ namespace TAO
     static void _tao_any_wstring_destructor (void *);
 
     virtual void _tao_decode (TAO_InputCDR &
-                              ACE_ENV_ARG_DECL);
-
+                              ACE_ENV_ARG_DECL_NOT_USED) = 0;
     virtual void assign_translator (CORBA::TCKind,
                                     TAO_InputCDR *cdr);
 
@@ -313,8 +324,9 @@ namespace TAO
   {
   public:
     Unknown_IDL_Type (CORBA::TypeCode_ptr,
-                      const ACE_Message_Block *mb = 0,
-                      int byte_order = TAO_ENCAP_BYTE_ORDER,
+                      const ACE_Message_Block *,
+                      int byte_order,
+                      CORBA::Boolean release_tc = 0,
                       ACE_Char_Codeset_Translator *ctrans = 0,
                       ACE_WChar_Codeset_Translator *wtrans = 0);
     virtual ~Unknown_IDL_Type (void);
@@ -331,13 +343,10 @@ namespace TAO
     virtual void assign_translator (CORBA::TCKind,
                                     TAO_InputCDR *cdr);
 
-    virtual CORBA::Boolean to_object (CORBA::Object_ptr &) const;
-    virtual CORBA::Boolean to_value (CORBA::ValueBase *&) const;
-    virtual CORBA::Boolean to_abstract_base (CORBA::AbstractBase_ptr &) const;
-
   private:
     ACE_Message_Block *cdr_;
     int byte_order_;
+    CORBA::Boolean release_tc_;
     ACE_Char_Codeset_Translator *char_translator_;
     ACE_WChar_Codeset_Translator *wchar_translator_;
   };
@@ -467,6 +476,6 @@ TAO_Export CORBA::Boolean operator>>= (const CORBA::Any_var &,
 
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 
 #endif /* TAO_ANY_H */

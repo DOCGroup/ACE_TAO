@@ -4,12 +4,9 @@ workspace {
   ../ACEXML/common
   ../ACEXML/parser/parser
   ../ACEXML/apps/svcconf
-  ../Kokyu/Kokyu.mpc
+  ../Kokyu
   tao
-  options {
-    cmdline += -value_template optimize=
-    TAO_IDL
-  }
+  TAO_IDL
   utils
   orbsvcs
   exclude {

@@ -1,6 +1,5 @@
 // $Id$
-#include "Adapter.h"
-#include "Object.h"
+#include "tao/Adapter.h"
 #include "ace/Dynamic_Service.h"
 #include "debug.h"
 

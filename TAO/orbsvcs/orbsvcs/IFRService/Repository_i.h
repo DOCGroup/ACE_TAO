@@ -53,6 +53,7 @@ class TAO_ExceptionDef_i;
 class TAO_FixedDef_i;
 class TAO_InterfaceDef_i;
 class TAO_LocalInterfaceDef_i;
+class TAO_ModuleDef_i;
 class TAO_NativeDef_i;
 class TAO_OperationDef_i;
 class TAO_PrimitiveDef_i;
@@ -61,7 +62,7 @@ class TAO_StringDef_i;
 class TAO_StructDef_i;
 class TAO_UnionDef_i;
 class TAO_ValueBoxDef_i;
-class TAO_ExtValueDef_i;
+class TAO_ValueDef_i;
 class TAO_ValueMemberDef_i;
 class TAO_WstringDef_i;
 
@@ -343,6 +344,7 @@ protected:
   GEN_IR_OBJECT (FixedDef) \
   GEN_IR_OBJECT (InterfaceDef) \
   GEN_IR_OBJECT (LocalInterfaceDef) \
+  GEN_IR_OBJECT (ModuleDef) \
   GEN_IR_OBJECT (NativeDef) \
   GEN_IR_OBJECT (OperationDef) \
   GEN_IR_OBJECT (PrimitiveDef) \
@@ -351,7 +353,7 @@ protected:
   GEN_IR_OBJECT (StructDef) \
   GEN_IR_OBJECT (UnionDef) \
   GEN_IR_OBJECT (ValueBoxDef) \
-  GEN_IR_OBJECT (ExtValueDef) \
+  GEN_IR_OBJECT (ValueDef) \
   GEN_IR_OBJECT (ValueMemberDef) \
   GEN_IR_OBJECT (WstringDef)
 

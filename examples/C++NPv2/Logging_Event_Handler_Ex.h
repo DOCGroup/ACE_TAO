@@ -9,7 +9,6 @@
 
 #include "ace/Reactor.h"
 #include "ace/Time_Value.h"
-#include "ace/Recursive_Thread_Mutex.h"
 
 #include "Logging_Event_Handler.h"
 

@@ -13,7 +13,7 @@
 #ifndef TAO_NAMING_CONTEXT_INTERFACE_H
 #define TAO_NAMING_CONTEXT_INTERFACE_H
 
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #include "orbsvcs/CosNamingS.h"
 
@@ -237,7 +237,8 @@ public:
                      CORBA::SystemException,
                      CosNaming::NamingContext::NotFound,
                      CosNaming::NamingContext::CannotProceed,
-                     CosNaming::NamingContext::InvalidName
+                     CosNaming::NamingContext::InvalidName,
+                     CosNaming::NamingContext::AlreadyBound
                      ));
 
   /// Returns the Default POA of this Servant object
@@ -413,6 +414,6 @@ public:
   virtual PortableServer::POA_ptr _default_POA (void) = 0;
 };
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 
 #endif /* TAO_NAMING_CONTEXT_INTERFACE_H */

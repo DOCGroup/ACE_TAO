@@ -5,6 +5,8 @@
 #ifndef CCF_RUNTIME_REGEX_HPP
 #define CCF_RUNTIME_REGEX_HPP
 
+#include "MSVC_Pragmas.hpp"
+
 #include <string>
 #include <boost/regex.hpp>
 
@@ -14,8 +16,10 @@ namespace regex
   using boost::regex_merge;
 
   inline std::string
-  perl_s (std::string src, std::string e, char delimiter = '/')
+  perl_s (std::string src, std::string e)
   {
+    char delimiter = '/';
+
     std::string::size_type first = e.find (delimiter);
     std::string::size_type middle = e.find (delimiter, first + 1);
     std::string::size_type last = e.find (delimiter, middle + 1);

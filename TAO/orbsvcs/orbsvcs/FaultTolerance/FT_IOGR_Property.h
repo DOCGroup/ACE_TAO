@@ -16,7 +16,12 @@
 
 #ifndef TAO_FT_IOGR_PROPERTY_H
 #define TAO_FT_IOGR_PROPERTY_H
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
+
+#ifndef TAO_FT_SERVICE_SAFE_INCLUDE
+#error "You should not include FT_IOGR_Property.h use FT_Service_Activate.h"
+#endif /* !TAO_FT_SERVICE_SAFE_INCLUDE */
+
 
 #include "tao/LocalObject.h"
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -64,7 +69,7 @@ public:
 
   /// Set the property for the IOGR
   virtual CORBA::Boolean set_property (
-      CORBA::Object_ptr &ior
+      CORBA::Object_ptr ior
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((
       CORBA::SystemException,
@@ -73,7 +78,7 @@ public:
 
   /// Set <ior1> as  primary which is a part of <ior2>
   virtual CORBA::Boolean set_primary (
-      CORBA::Object_ptr &ior1,
+      CORBA::Object_ptr ior1,
       CORBA::Object_ptr ior2
       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((
@@ -98,11 +103,6 @@ public:
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-
-  virtual CORBA::Boolean remove_primary_tag (
-      CORBA::Object_ptr &iogr
-      ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Reset the underlying tagged components held by the class
   CORBA::Boolean reset_tagged_components (
@@ -131,5 +131,5 @@ private:
 # include "FT_IOGR_Property.i"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 #endif /* TAO_FT_IOGR_PROPERTY_H */

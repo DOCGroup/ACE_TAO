@@ -50,36 +50,10 @@ ifneq ($(SONAME),)
   ifeq ($(with_ld),hpux)
     SOFLAGS += -Wl,+h -Wl,$(SONAME)
   else
-    SOFLAGS += -Wl,-h -Wl,$(SONAME)
+    ifneq ($(with_ld),vxworks)
+      ifneq ($(with_ld),aix)
+        SOFLAGS += -Wl,-h -Wl,$(SONAME)
+      endif
+    endif
   endif
 endif
-
-# Add all symbols to the dynamic symbol table.  Needed to enable dynamic_cast
-# for shared libraries. (see http://gcc.gnu.org/faq.html#dso)
-ifeq ($(shared_libs), 1)
-  ifneq ($(static_libs_only), 1)
-
-    # Only modify LDFLAGS if DLD has been set.
-    ifneq ($(DLD),)
-      ifeq ($(DLD),$(CXX_FOR_VERSION_TEST)) # only try this is we are using ld through gcc
-        LD_FOR_VERSION_TEST = $(shell $(CXX_FOR_VERSION_TEST) -print-prog-name=ld)
-      else
-        LD_FOR_VERSION_TEST = $(DLD)
-      endif # DLD = CXX_FOR_VERSION_TEST
-
-      # The -E option is GNU ld specific 
-      GNU_LD := $(shell sh -c '$(LD_FOR_VERSION_TEST) -v 2>&1 | grep -c "GNU ld"')
-      ifeq ($(GNU_LD),1)
-
-        # Make sure this version of ld supports the -E option.
-        LD_EXPORT_DEFINED := $(shell sh -c '$(LD_FOR_VERSION_TEST) -E 2>&1 | grep -i -e "(option|flag)" /dev/null; echo $$?')
-        ifeq ($(LD_EXPORT_DEFINED),1)
-          LDFLAGS += -Wl,-E
-        endif # LD_EXPORT_DEFINED = 1
-
-      endif # GNU ld
-
-    endif # DLD
-
-  endif # static_libs_only
-endif # shared_libs

@@ -14,10 +14,10 @@
 
 #ifndef TAO_EC_DISPATCHING_H
 #define TAO_EC_DISPATCHING_H
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #include "orbsvcs/RtecEventCommC.h"
-#include /**/ "event_export.h"
+#include "event_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -57,7 +57,7 @@ public:
 
   /**
    * The consumer represented by @a proxy should receive @a event.
-   * It can use the information in @a qos_info to determine the event
+   * It can use the information in @a qos_info   to determine the event
    * priority (among other things).
    */
   virtual void push (TAO_EC_ProxyPushSupplier *proxy,
@@ -76,5 +76,5 @@ public:
 #include "EC_Dispatching.i"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 #endif /* TAO_EC_DISPATCHING_H */

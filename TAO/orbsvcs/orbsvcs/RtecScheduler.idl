@@ -15,10 +15,6 @@ module RtecScheduler
 
   typedef long Period_t; // 100 nanoseconds
 
-  typedef long Threads_t; 
-
-  typedef sequence<Period_t> Period_Set;
-
   enum Criticality_t
   // Defines the criticality of the operation.
   // For use with Dynamic Scheduler.
@@ -52,30 +48,8 @@ module RtecScheduler
     REMOTE_DEPENDANT
   };
 
-  typedef RtecBase::Dependency_Enabled_Type_t Dependency_Enabled_Type_t;
   typedef RtecBase::Dependency_Type_t Dependency_Type_t;
-
-  enum RT_Info_Enabled_Type_t
-  // Specify whether an RT_Info is enabled, disabled, or
-  // non-volatile (enabled + cannot be disabled automatically).
-  {
-    RT_INFO_DISABLED,
-    RT_INFO_ENABLED,
-    RT_INFO_NON_VOLATILE
-  };
-
   typedef RtecBase::handle_t handle_t;
-  // RT_Info's are assigned per-application
-  // unique identifiers.
-
-  struct RT_Info_Enable_State_Pair
-  {
-    handle_t handle;
-    RT_Info_Enabled_Type_t enabled;
-  };
-
-  typedef sequence<RT_Info_Enable_State_Pair> RT_Info_Enable_State_Pair_Set;
-
   typedef RtecBase::Dependency_Info Dependency_Info;
 
   typedef sequence<Dependency_Info> Dependency_Set;
@@ -125,7 +99,7 @@ module RtecScheduler
 
     // The number of internal threads contained by
     // the operation.
-    Threads_t threads;
+    long threads;
 
     // The following attributes are defined by
     // the Scheduler once the off-line schedule
@@ -146,8 +120,6 @@ module RtecScheduler
 
     // Info_Type
     Info_Type_t info_type;
-    // Whether or not the RT_Info is enabled.
-    RT_Info_Enabled_Type_t enabled;
 
     // Token reserved for the scheduler's internal use:
     // information placed here from outside the scheduler
@@ -182,9 +154,6 @@ module RtecScheduler
 
     // type of dispatching queue
     Dispatching_Type_t dispatching_type;
-
-    // Set of timer periods associated with the priority level
-    Period_Set timer_periods;
   };
 
   typedef sequence<Config_Info> Config_Info_Set;
@@ -303,52 +272,12 @@ module RtecScheduler
               in Period_t period,
               in Importance_t importance,
               in Quantum_t quantum,
-              in Threads_t threads,
+              in long threads,
               in Info_Type_t info_type)
       raises (UNKNOWN_TASK, INTERNAL, SYNCHRONIZATION_FAILURE);
-    // Set the input attributes of an RT_Info.  Multiple calls
-    // to set with the same handle will result in registration
-    // of different tuples for the same RT_Info, e.g., for multi-rate
-    // admission control.
+    // Set the attributes of an RT_Info.
     // Notice that some values may not be modified (like priority).
     // Criticality and Info_Type are only used with the Dynamic Scheduler.
-
-    void reset (in handle_t handle,
-                in Criticality_t criticality,
-                in Time wc_time,
-                in Time typical_time,
-                in Time cached_time,
-                in Period_t period,
-                in Importance_t importance,
-                in Quantum_t quantum,
-                in Threads_t threads,
-                in Info_Type_t info_type)
-      raises (UNKNOWN_TASK, INTERNAL, SYNCHRONIZATION_FAILURE);
-    // Removes previous tuples and resets the attributes of an RT_Info.
-    // Notice that some values may not be modified (like priority).
-    // Criticality and Info_Type are only used with the Dynamic Scheduler.
-
-
-    void set_seq (in RT_Info_Set infos)
-      raises (UNKNOWN_TASK, INTERNAL, SYNCHRONIZATION_FAILURE);
-    // Set the input attributes of an RT_Info.  Tuples for the passed
-    // sequence elements will be concatenated with the previous
-    // tuples for the same RT_Infos, e.g., for multi-rate admission control.
-    // Notice that some values may not be modified (like priority).
-
-    void reset_seq (in RT_Info_Set infos)
-      raises (UNKNOWN_TASK, INTERNAL, SYNCHRONIZATION_FAILURE);
-    // Reset the input attributes of an RT_Info.  Tuples for the passed
-    // sequence elements will be replace the previous
-    // tuples for the same RT_Infos, e.g., for multi-rate admission control.
-    // Notice that some values may not be modified (like priority).
-
-    void replace_seq (in RT_Info_Set infos)
-      raises (UNKNOWN_TASK, INTERNAL, SYNCHRONIZATION_FAILURE);
-    // Replace all RT_Infos, setting characteristics of the RT_Infos
-    // corresponding to the passed handles.  All other RT_Infos are reset
-    // to their uninitialized values, i.e., the same they have just after
-    // the create call.
 
     void add_dependency (in handle_t handle,
                          in handle_t dependency,
@@ -357,39 +286,6 @@ module RtecScheduler
       raises (SYNCHRONIZATION_FAILURE, UNKNOWN_TASK);
     // Adds <dependency> to <handle>.
     // Dependency_Type_t is only used with the Dynamic Scheduler.
-
-    void remove_dependency (in handle_t handle,
-                            in handle_t dependency,
-                            in long number_of_calls,
-                            in Dependency_Type_t dependency_type)
-      raises (SYNCHRONIZATION_FAILURE, UNKNOWN_TASK);
-    // Removes <dependency> from <handle>.  Raises UNKNOWN_TASK
-    // if no matching dependency is found.
-
-    void set_dependency_enable_state (in handle_t handle,
-                                      in handle_t dependency,
-                                      in long number_of_calls,
-                                      in Dependency_Type_t dependency_type,
-                                      in Dependency_Enabled_Type_t enabled)
-      raises (SYNCHRONIZATION_FAILURE, UNKNOWN_TASK);
-    // Enables or disables <dependency> on <handle>.  Raises UNKNOWN_TASK
-    // if no matching dependency is found.
-
-    void set_dependency_enable_state_seq (in Dependency_Set dependencies)
-      raises (SYNCHRONIZATION_FAILURE, UNKNOWN_TASK);
-    // Sets the enable state of each dependency in the sequence.  Raises
-    // UNKNOWN_TASK if no matching dependency is found.
-
-    void set_rt_info_enable_state (in handle_t handle,
-                                   in RT_Info_Enabled_Type_t enabled)
-      raises (SYNCHRONIZATION_FAILURE, INTERNAL, UNKNOWN_TASK);
-    // Enables or disables the RT_Info.  Raises UNKNOWN_TASK
-    // if no matching RT_Info is found.
-
-    void set_rt_info_enable_state_seq (in RT_Info_Enable_State_Pair_Set pair_set)
-      raises (SYNCHRONIZATION_FAILURE, INTERNAL, UNKNOWN_TASK);
-    // Enables or disables each rt_info in the passed set.  Raises UNKNOWN_TASK
-    // if no matching dependency is found.
 
     void priority (in handle_t handle,
                    out OS_Priority o_priority,
@@ -411,7 +307,6 @@ module RtecScheduler
     void compute_scheduling (in long minimum_priority,
                              in long maximum_priority,
                              out RT_Info_Set infos,
-                             out Dependency_Set dependencies,
                              out Config_Info_Set configs,
                              out Scheduling_Anomaly_Set anomalies)
       raises (UTILIZATION_BOUND_EXCEEDED,
@@ -426,35 +321,24 @@ module RtecScheduler
     // dumped into a C++ file for compilation and even faster (static)
     // lookup.
 
-
-    void recompute_scheduling (in long minimum_priority,
-                               in long maximum_priority,
-                               out Scheduling_Anomaly_Set anomalies)
-      raises (UTILIZATION_BOUND_EXCEEDED,
-              SYNCHRONIZATION_FAILURE,
-              INSUFFICIENT_THREAD_PRIORITY_LEVELS,
-              TASK_COUNT_MISMATCH,
-              INTERNAL,
-              DUPLICATE_NAME);
-    // Recomputes the scheduling priorities, etc.
-
-    void get_rt_info_set (out RT_Info_Set infos)
-      raises (SYNCHRONIZATION_FAILURE,
-              INTERNAL);
-    // Returns the set of rt_infos, with their assigned priorities (as
-    // of the last schedule re-computation).
-
-    void get_dependency_set (out Dependency_Set dependencies)
-      raises (SYNCHRONIZATION_FAILURE,
-              INTERNAL);
-    // Returns the set of rt_infos, with their assigned priorities (as
-    // of the last schedule re-computation).
-
-    void get_config_info_set (out Config_Info_Set configs)
-      raises (SYNCHRONIZATION_FAILURE,
-              INTERNAL);
-    // Returns the set of config_infos, describing the appropriate
-    // number, types, and priority levels for the dispatching lanes.
+    // TODO: The dependencies field can be removed from the RT_Info
+    // and made part of the secrets of "Application", adding the
+    // following to satisfy curious clients:
+    //
+    // struct Dependency {
+    //   long number_of_calls;
+    //   Dependency_Type_t dependency_type;
+    //   handle_t dependency;
+    // };
+    // typedef sequence<Dependency> Dependency_Set;
+    //
+    // Dependency_Set dependencies (in handle_t handle)
+    //    raises (UNKNOWN_TASK);
+    // Returns the list of dependencies
+    //
+    // long number_of_dependencies (in handle_t handle)
+    //    raises (UNKNOWN_TASK);
+    // Returns the number of dependencies.
 
     void dispatch_configuration (in Preemption_Priority_t p_priority,
                                  out OS_Priority o_priority,
@@ -464,7 +348,7 @@ module RtecScheduler
               UNKNOWN_PRIORITY_LEVEL);
     // Returns the thread priority and dispatching type assigned
     // to the dispatching priority level that was passed in.  This
-    // information can be used to configure the queues through which
+    // information is used to configure the queues through wich
     // the scheduled operations are to be dispatched.
     //
     // If the schedule has not been computed:

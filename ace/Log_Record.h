@@ -12,24 +12,17 @@
 
 // These need to go outside of the #ifdef to avoid problems with
 // circular dependencies...
+#include "ace/OS.h"
 
 #include "ace/Log_Priority.h"
 
 #ifndef ACE_LOG_RECORD_H
 #define ACE_LOG_RECORD_H
-#include /**/ "ace/pre.h"
-
-#include "ace/ACE_export.h"
+#include "ace/pre.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#include "ace/Default_Constants.h"
-#include "ace/Basic_Types.h"
-#include "ace/iosfwd.h"
-
-class ACE_Time_Value;
 
 /// Defines the structure of an ACE logging record.
 class ACE_Export ACE_Log_Record
@@ -197,5 +190,5 @@ private:
 #include "ace/Log_Record.i"
 #endif
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 #endif /* ACE_LOG_RECORD_H */

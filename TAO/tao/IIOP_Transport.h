@@ -14,7 +14,7 @@
 #ifndef TAO_IIOP_TRANSPORT_H
 #define TAO_IIOP_TRANSPORT_H
 
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #include "tao/Transport.h"
 
@@ -24,6 +24,7 @@
 
 #include "tao/IIOPC.h"
 #include "ace/SOCK_Stream.h"
+#include "ace/Synch.h"
 
 
 // Forward decls.
@@ -149,6 +150,6 @@ private:
 #include "tao/IIOP_Transport.i"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 
 #endif  /* TAO_IIOP_TRANSPORT_H */

@@ -5,15 +5,14 @@
 #include "tao/Pluggable_Messaging_Utils.h"
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
+#include "tao/ORB_Core.h"
 #include "tao/Transport.h"
 
 #if !defined (__ACE_INLINE__)
 #include "tao/Asynch_Reply_Dispatcher_Base.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (tao,
-           Asynch_Reply_Dispatcher_Base,
-           "$Id$")
+ACE_RCSID(tao, Asynch_Reply_Dispatcher_Base, "$Id$")
 
 // Constructor.
 TAO_Asynch_Reply_Dispatcher_Base::TAO_Asynch_Reply_Dispatcher_Base (TAO_ORB_Core *orb_core)

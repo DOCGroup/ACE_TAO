@@ -2,7 +2,6 @@
 
 #include "ace/Lib_Find.h"
 #include "ace/Log_Msg.h"
-#include "ace/OS.h"
 
 ACE_RCSID(ace, Lib_Find, "$Id$")
 

@@ -156,12 +156,10 @@ Performance_Test_Options::parse_args (int argc, char *argv[])
         this->sleep_time (ACE_OS::atoi (get_opt.opt_arg ()));
         break;
       case 'T':                 // Enable/disable tracing.
-#if defined (ACE_HAS_TRACE)
         if (ACE_OS::strcasecmp (get_opt.opt_arg (), "ON") == 0)
           ACE_Trace::start_tracing ();
         else if (ACE_OS::strcasecmp (get_opt.opt_arg (), "OFF") == 0)
           ACE_Trace::stop_tracing ();
-#endif /* ACE_HAS_TRACE */
         break;
       case 't':                 // Set # of threads contending the lock.
         this->thr_count (ACE_OS::atoi (get_opt.opt_arg ()));

@@ -12,7 +12,7 @@
 
 #ifndef TAO_ECG_UDP_EH_H
 #define TAO_ECG_UDP_EH_H
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #include "ace/Event_Handler.h"
 
@@ -20,8 +20,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include /**/ "event_export.h"
-#include "ECG_Adapters.h"
+#include "orbsvcs/Event/event_export.h"
+#include "orbsvcs/Event/ECG_Adapters.h"
 #include "ace/SOCK_Dgram.h"
 
 class TAO_ECG_UDP_Receiver;
@@ -102,5 +102,5 @@ private:
 #include "ECG_UDP_EH.i"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 #endif /* TAO_ECG_UDP_EH_H */

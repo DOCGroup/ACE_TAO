@@ -13,7 +13,7 @@
 
 #ifndef TAO_SCIOP_CONNECTION_HANDLER_H
 #define TAO_SCIOP_CONNECTION_HANDLER_H
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #include "tao/corbafwd.h"
 #include "tao/TimeBaseC.h"
@@ -122,10 +122,6 @@ public:
   virtual int open_handler (void *);
   //@}
 
-  /// Called by the <Strategy_Acceptor> when the handler is completely
-  /// connected.  Argument is unused.
-  virtual int open (void *);
-
   /// Close called by the Acceptor or Connector when connection
   /// establishment fails.
   int close (u_long = 0);
@@ -198,5 +194,5 @@ private:
 
 #endif /* TAO_HAS_SCIOP == 1 */
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 #endif /* TAO_SCIOP_CONNECTION_HANDLER_H */

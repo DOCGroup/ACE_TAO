@@ -14,10 +14,10 @@
 
 #ifndef TAO_EC_SUPPLIER_FILTER_BUILDER_H
 #define TAO_EC_SUPPLIER_FILTER_BUILDER_H
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #include "orbsvcs/RtecEventChannelAdminC.h"
-#include /**/ "event_export.h"
+#include "event_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -41,8 +41,8 @@ public:
   virtual ~TAO_EC_Supplier_Filter_Builder (void);
 
   /**
-   * Create the filter. The consumer is bound to the returned
-   * Supplier_Filter, it must be unbound upon destruction and/or
+   * Create the filter. The <consumer> is bound to the returned
+   * Supplier_Filter, it must be <unbound> upon destruction and/or
    * disconnection.
    */
   virtual TAO_EC_Supplier_Filter*
@@ -59,5 +59,5 @@ public:
 #include "EC_Supplier_Filter_Builder.i"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 #endif /* TAO_EC_FILTER_BUILDER_H */

@@ -11,7 +11,7 @@
 
 #ifndef AVSTREAMS_I_H
 #define AVSTREAMS_I_H
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #include "ace/OS.h"
 #include "ace/SOCK_Dgram_Mcast.h"
@@ -238,8 +238,14 @@ public:
   /// Default Constructor
   TAO_StreamCtrl (void);
 
+  /// Copy  Constructor to fool g++
+  TAO_StreamCtrl (TAO_StreamCtrl const &);
+
   /// virtual destructor.
   virtual ~TAO_StreamCtrl (void);
+
+  /// Fooling g++
+  void operator= (TAO_StreamCtrl const &);
 
   /// Stop the transfer of data of the stream
   /// Empty the_spec means apply operation to all flows
@@ -1551,5 +1557,5 @@ public:
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 #endif /* AVSTREAMS_I_H */

@@ -19,9 +19,7 @@
 #include "helper.h"
 #include "ub_short_seq.h"
 
-ACE_RCSID (Param_Test,
-           ub_short_seq, 
-           "$Id$")
+ACE_RCSID(Param_Test, ub_short_seq, "$Id$")
 
 // ************************************************************************
 //               Test_Short_Sequence

@@ -5,7 +5,7 @@
 
 #include "tao/Any_Special_Impl_T.h"
 #include "tao/Marshal.h"
-#include "tao/Environment.h"
+#include "tao/debug.h"
 #include "ace/CORBA_macros.h"
 
 #if !defined (__ACE_INLINE__)
@@ -48,7 +48,7 @@ TAO::Any_Special_Impl_T<T, from_T, to_T>::insert (CORBA::Any & any,
 
   if (bound > 0)
     {
-      CORBA::TCKind kind = ACE_static_cast (CORBA::TCKind,
+      CORBA::TCKind kind = ACE_static_cast (CORBA::TCKind, 
                                             tc->kind_);
       static CORBA::Long _oc_buffer [] =
         {
@@ -91,11 +91,11 @@ TAO::Any_Special_Impl_T<T, from_T, to_T>::extract (const CORBA::Any & any,
   ACE_TRY_NEW_ENV
     {
       CORBA::TypeCode_ptr any_type = any._tao_get_typecode ();
-      CORBA::TypeCode_var unaliased_any_type =
+      CORBA::TypeCode_var unaliased_any_type = 
         any_type->unalias (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      CORBA::TCKind any_kind =
+      CORBA::TCKind any_kind = 
         unaliased_any_type->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
@@ -107,7 +107,7 @@ TAO::Any_Special_Impl_T<T, from_T, to_T>::extract (const CORBA::Any & any,
           return 0;
         }
 
-      CORBA::ULong length =
+      CORBA::ULong length = 
         unaliased_any_type->length (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
@@ -118,36 +118,33 @@ TAO::Any_Special_Impl_T<T, from_T, to_T>::extract (const CORBA::Any & any,
 
       TAO::Any_Impl *impl = any.impl ();
 
-      ACE_Message_Block *mb = impl->_tao_get_cdr ();
-
-      typedef TAO::Any_Special_Impl_T<T, from_T, to_T>
+      typedef TAO::Any_Special_Impl_T<T, from_T, to_T> 
         BOUNDED_TSTRING_ANY_IMPL;
 
-      if (mb == 0)
+      TAO::Any_Special_Impl_T<T, from_T, to_T> *narrow_impl =
+        dynamic_cast <BOUNDED_TSTRING_ANY_IMPL *> (impl);
+
+      if (narrow_impl != 0)
         {
-          TAO::Any_Special_Impl_T<T, from_T, to_T> *narrow_impl =
-            dynamic_cast <BOUNDED_TSTRING_ANY_IMPL *> (impl);
-
-          if (narrow_impl == 0)
-            {
-              return 0;
-            }
-
-          _tao_elem = (T *) narrow_impl->value_;
+          _tao_elem = narrow_impl->value_;
           return 1;
         }
 
-      CORBA::TCKind kind = tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      ACE_Message_Block *mb = impl->_tao_get_cdr ();
+
+      if (mb == 0)
+        {
+          return 0;
+        }
 
       TAO::Any_Special_Impl_T<T, from_T, to_T> *replacement = 0;
       ACE_NEW_RETURN (replacement,
                       BOUNDED_TSTRING_ANY_IMPL (destructor,
-                                                tc,
+                                                CORBA::TypeCode::_duplicate (tc),
                                                 0,
                                                 bound),
                       0);
-
+                      
       auto_ptr<TAO::Any_Special_Impl_T<T, from_T, to_T> > replacement_safety (
           replacement
         );
@@ -160,7 +157,11 @@ TAO::Any_Special_Impl_T<T, from_T, to_T>::extract (const CORBA::Any & any,
 						            TAO_DEF_GIOP_MAJOR,
 						            TAO_DEF_GIOP_MINOR);
 
-      impl->assign_translator (kind, &cdr);
+      CORBA::TCKind kind = tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      impl->assign_translator (kind,
+                               &cdr);
       CORBA::Boolean result = replacement->demarshal_value (cdr);
 
       if (result == 1)
@@ -170,15 +171,12 @@ TAO::Any_Special_Impl_T<T, from_T, to_T>::extract (const CORBA::Any & any,
           replacement_safety.release ();
           return 1;
         }
-
-      // Duplicated by Any_Impl base class constructor.
-      CORBA::release (tc);
     }
   ACE_CATCHANY
     {
     }
   ACE_ENDTRY;
-
+  
   return 0;
 }
 
@@ -193,11 +191,12 @@ TAO::Any_Special_Impl_T<T, from_T, to_T>::free_value (void)
     }
 
   CORBA::release (this->type_);
+  this->type_ = CORBA::TypeCode::_nil ();
   this->value_ = 0;
 }
 
-template<typename T, typename from_T, typename to_T>
-void
+template<typename T, typename from_T, typename to_T> 
+void 
 TAO::Any_Special_Impl_T<T, from_T, to_T>::_tao_decode (
     TAO_InputCDR &cdr
     ACE_ENV_ARG_DECL
@@ -210,3 +209,4 @@ TAO::Any_Special_Impl_T<T, from_T, to_T>::_tao_decode (
 }
 
 #endif /* TAO_ANY_T_C */
+

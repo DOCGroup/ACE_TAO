@@ -9,8 +9,7 @@
 #----------------------------------------------------------------------------
 
 DIRS  = IOGR \
-	IOGRManipulation \
-	GroupRef_Manipulation
+	IOGRManipulation
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO

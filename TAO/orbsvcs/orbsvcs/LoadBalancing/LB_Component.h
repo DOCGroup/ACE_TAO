@@ -13,7 +13,7 @@
 #ifndef TAO_LB_COMPONENT_H
 #define TAO_LB_COMPONENT_H
 
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #include "orbsvcs/LoadBalancing/LoadBalancing_export.h"
 
@@ -58,10 +58,10 @@ protected:
 
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_LoadBalancing, TAO_LB_Component)
-ACE_STATIC_SVC_REQUIRE (TAO_LB_Component)
+  //ACE_STATIC_SVC_REQUIRE (TAO_LB_Component)
 ACE_FACTORY_DECLARE (TAO_LoadBalancing, TAO_LB_Component)
 
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 
 #endif  /* TAO_LB_COMPONENT_H */

@@ -13,7 +13,7 @@
 
 #ifndef TAO_VALUETYPE_ADAPTER_H
 #define TAO_VALUETYPE_ADAPTER_H
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #include "ace/Service_Object.h"
 
@@ -41,14 +41,6 @@ public:
       CORBA::AbstractBase_ptr p
     ) = 0;
 
-  virtual CORBA::Boolean stream_to_value (TAO_InputCDR &,
-                                          CORBA::ValueBase *&) = 0;
-
-  virtual CORBA::Boolean stream_to_abstract_base (
-      TAO_InputCDR &,
-      CORBA::AbstractBase_ptr &
-    ) = 0;
-
   virtual CORBA::ULong type_info_single (void) const = 0;
 
   virtual int vf_map_rebind (const char *,
@@ -60,5 +52,5 @@ public:
   virtual CORBA::ValueFactory vf_map_find (const char *) = 0;
 };
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 #endif /* TAO_VALUETYPE_ADAPTER_H */

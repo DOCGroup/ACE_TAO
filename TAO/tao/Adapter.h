@@ -1,4 +1,4 @@
-// -*- C++ -*-
+/* -*- C++ -*- */
 
 //=============================================================================
 /**
@@ -12,16 +12,15 @@
 
 #ifndef TAO_ADAPTER_H
 #define TAO_ADAPTER_H
+#include "ace/pre.h"
 
-#include /**/ "ace/pre.h"
-
-#include "ace/Service_Object.h"
+#include "tao/Object.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Exception.h"
+#include "ace/Service_Object.h"
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
@@ -29,11 +28,6 @@
 #endif /* _MSC_VER >= 1200 */
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
-
-namespace TAO
-{
-  class ObjectKey;
-}
 
 class TAO_ORB_Core;
 class TAO_Stub;
@@ -46,17 +40,17 @@ public:
   virtual ~TAO_Adapter (void);
 
   /// Initialize the Adapter
-  virtual void open (ACE_ENV_SINGLE_ARG_DECL) = 0;
+  virtual void open (ACE_ENV_SINGLE_ARG_DECL_NOT_USED) = 0;
 
   /// The ORB is shutting down, destroy any resources attached to this
   /// adapter.
   virtual void close (int wait_for_completion
-                      ACE_ENV_ARG_DECL) = 0;
+                      ACE_ENV_ARG_DECL_NOT_USED) = 0;
 
   /// Check if the adapter can be closed in the current context, raise
   /// an exception if not.
   virtual void check_close (int wait_for_completion
-                            ACE_ENV_ARG_DECL) = 0;
+                            ACE_ENV_ARG_DECL_NOT_USED) = 0;
 
   /**
    * Return the priority assigned to this adapter.
@@ -197,6 +191,5 @@ public:
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
-#include /**/ "ace/post.h"
-
+#include "ace/post.h"
 #endif /* TAO_OBJECT_ADAPTER_H */

@@ -15,7 +15,7 @@
 
 #ifndef CIAO_CONTAINER_BASE_H
 #define CIAO_CONTAINER_BASE_H
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #include "tao/ORB.h"
 #include "tao/PortableServer/PortableServer.h"
@@ -46,14 +46,10 @@ namespace CIAO
 
     /// Get the containing POA.  This operation does *NOT*
     /// increase the reference count of the POA.
-    virtual PortableServer::POA_ptr _ciao_the_POA (void);
-
-    /// Get a reference to the underlying ORB.
-    virtual CORBA::ORB_ptr _ciao_the_ORB (void);
+    virtual PortableServer::POA_ptr the_POA (void);
 
     /// Initialize the container with a name.
-    virtual int init (const char *name = 0,
-                      const CORBA::PolicyList *more_policies = 0
+    virtual int init (const char *name = 0
                       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
 
@@ -88,9 +84,8 @@ namespace CIAO
     virtual ~Session_Container (void);
 
     /// Initialize the container with a name.
-    virtual int init (const char *name = 0,
-                      const CORBA::PolicyList *more_policies = 0
-                      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    virtual int init (const char *name = 0
+                       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     /**
@@ -170,5 +165,5 @@ namespace CIAO
 # include "Container_Base.inl"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 #endif /* CIAO_CONTAINER_BASE_H */

@@ -78,7 +78,7 @@ TAO_EC_Default_ProxyPushConsumer::connect_push_supplier (
 
 #if TAO_EC_ENABLE_DEBUG_MESSAGES
     ACE_DEBUG ((LM_DEBUG,
-                 "Building filter for supplier <%x>.\n",
+                 "Building filter for supplier <%x>.",
                 this));
 #endif /* TAO_EC_ENABLED_DEBUG_MESSAGES */
     this->filter_ =

@@ -11,7 +11,7 @@
 
 #ifndef TAO_Notify_POA_Helper_H
 #define TAO_Notify_POA_Helper_H
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #include "notify_export.h"
 
@@ -21,6 +21,7 @@
 
 #include "ace/Copy_Disabled.h"
 #include "tao/PortableServer/PortableServer.h"
+#include "ID_Factory.h"
 
 /**
  * @class TAO_Notify_POA_Helper
@@ -71,6 +72,9 @@ protected:
   /// POA
   PortableServer::POA_var poa_;
 
+  /// ID Factory for objects.
+  TAO_Notify_ID_Factory id_factory_;
+
   /// Convert id to ObjectID
   PortableServer::ObjectId* long_to_ObjectId (CORBA::Long id ACE_ENV_ARG_DECL) const;
 };
@@ -79,5 +83,5 @@ protected:
 #include "POA_Helper.inl"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 #endif /* TAO_Notify_POA_Helper_H */

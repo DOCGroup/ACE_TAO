@@ -8,9 +8,8 @@
  * copy of this file, with the registry_db_ array properly initialized.
  */
 
-#include "ace/streams.h"
-#include "ace/Codeset_Registry.h"
-#include "ace/Log_Msg.h"
+#include <ace/streams.h>
+#include <ace/Codeset_Registry.h>
 
 class csdb_generator : public ACE_Codeset_Registry
 {

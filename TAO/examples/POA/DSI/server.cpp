@@ -17,7 +17,6 @@
 
 #include "Database_i.h"
 #include "ace/Get_Opt.h"
-#include "ace/SString.h"
 
 ACE_RCSID(DSI, server, "$Id$")
 

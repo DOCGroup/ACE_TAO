@@ -43,12 +43,6 @@ SCTP as simple as changing one socket call.
 
 	Please see README.OpenSS7 for more details.   
 
-        LKSCTP
-        ------
-        The LKSCTP implementation is based on the TSVWG's sockets draft.  
-        It is included with the Linux 2.5 series development kernels.  
-
-        Please see README.LKSCTP for more details.  
 
 Resources
 ===========
@@ -73,8 +67,6 @@ Resources
 		http://www.ietf.org/html.charters/tsvwg-charter.html
 
 	The OpenSS7 Project: http://www.openss7.org/sctp.html
-
-        The LKSCTP Project: http://lksctp.sourceforge.net/
 
 --
 

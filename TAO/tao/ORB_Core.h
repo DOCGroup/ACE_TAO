@@ -13,7 +13,7 @@
 
 #ifndef TAO_ORB_CORE_H
 #define TAO_ORB_CORE_H
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #include "corbafwd.h"
 
@@ -21,9 +21,13 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-//#include "ORB.h"
+#include "ORB.h"
+#include "Environment.h"
+#include "Policy_Manager.h"
 #include "Resource_Factory.h"
 #include "params.h"
+#include "TAO_Singleton_Manager.h"
+#include "TAO_Singleton.h"
 #include "Adapter.h"
 #include "PolicyFactory_Registry.h"
 #include "Parser_Registry.h"
@@ -40,7 +44,6 @@
 
 #include "ace/Hash_Map_Manager_T.h"
 #include "ace/Thread_Manager.h"
-#include "ace/Lock_Adapter_T.h"
 
 // Forward declarations
 class TAO_Acceptor;
@@ -77,14 +80,10 @@ class TAO_Endpoint_Selector_Factory;
 class TAO_Service_Context;
 class TAO_POA_PortableGroup_Hooks;
 class TAO_Request_Dispatcher;
-class TAO_Policy_Set;
-class TAO_Policy_Manager;
-class TAO_Policy_Current;
 
 class TAO_Codeset_Manager;
 class TAO_IORInterceptor_List;
 class TAO_IORInterceptor_Adapter;
-class TAO_Valuetype_Adapter;
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
@@ -102,11 +101,6 @@ class TAO_ClientRequestInfo;
 class TAO_Transport_Sync_Strategy;
 class TAO_Sync_Strategy;
 class TAO_Policy_Validator;
-
-namespace CORBA
-{
-  class ORB_ObjectIdList;  // CORBA::ORB::ObjectIdList
-}
 
 // ****************************************************************
 
@@ -437,11 +431,11 @@ public:
   /// Gets the value of TAO_ORB_Core::typecodefactory_adapter_name_.
   static const char *typecodefactory_adapter_name (void);
 
-  /// Sets the value of TAO_ORB_Core::iorinterceptor_adapter_factory_name_.
-  static void iorinterceptor_adapter_factory_name (const char *name);
+  /// Sets the value of TAO_ORB_Core::iorinterceptor_adapter_name_.
+  static void iorinterceptor_adapter_name (const char *name);
 
-  /// Gets the value of TAO_ORB_Core::iorinterceptor_adapter_factory_name_.
-  static const char *iorinterceptor_adapter_factory_name (void);
+  /// Gets the value of TAO_ORB_Core::iorinterceptor_adapter_name_.
+  static const char *iorinterceptor_adapter_name (void);
 
   /// Sets the value of TAO_ORB_Core::valuetype_adapter_name.
   static void valuetype_adapter_name (const char *name);
@@ -831,27 +825,11 @@ public:
   void reset_service_profile_flags (void);
 
   /**
-   * The loaded service would determine if the CORBA::Object_ptr is
-   * actually nil or not. This would be useful to accomodate new
+   * The loaded service would determineif the CORBA::Object_ptr is
+   * actually nill or not. This would be useful to accomodate new
    * enhanced definitions as defined by the service specification.
    */
   CORBA::Boolean object_is_nil (CORBA::Object_ptr object);
-
-  /// Hook for the services to determine whether the profiles are
-  /// equivalent or not.
-  /**
-   * For details on how this is used please see the FT service
-   */
-  CORBA::Boolean is_profile_equivalent (const TAO_Profile *this_p,
-                                        const TAO_Profile *that_p);
-
-  /// Hook for the services to determine the <hash> value of a
-  /// profile.
-  /**
-   * For details on how this is used please see the FT service
-   */
-  CORBA::ULong hash_service (TAO_Profile *this_p,
-                             CORBA::ULong max);
 
   /// Call the service layers with the Service Context to check
   /// whether they would like to add something to the list.
@@ -876,6 +854,18 @@ public:
   int service_raise_transient_failure (TAO_GIOP_Invocation *invoke,
                                        TAO_Profile *profile
                                        ACE_ENV_ARG_DECL);
+
+  /// Hook for logging of messages by the Logging & Recovery service
+  /// of an FT service.
+  void services_log_msg_rcv (TAO_Message_State_Factory &state);
+
+  /// Hook for logging of messages by the Logging & Recovery service
+  /// of an FT service.
+  void services_log_msg_pre_upcall (TAO_ServerRequest &req);
+
+  /// Hook for logging of messages by the Logging & Recovery service
+  /// of an FT service.
+  void services_log_msg_post_upcall (TAO_ServerRequest &req);
   //@}
 
   /**
@@ -929,9 +919,6 @@ public:
 
   TAO_IORInterceptor_List *ior_interceptor_list (void);
   //@}
-
-  /// Return the valuetype adapter
-  TAO_Valuetype_Adapter *& valuetype_adapter (void);
 
   /// Return the underlying transport cache
   TAO_Transport_Cache_Manager *transport_cache (void);
@@ -1108,7 +1095,7 @@ protected:
    *
    * Pointer to the ORB.
    */
-  CORBA::ORB_ptr orb_;
+  CORBA::ORB_var orb_;
 
   /// Object reference to the root POA.  It will eventually be the
   /// object reference returned by calls to
@@ -1281,11 +1268,8 @@ protected:
   TAO_ServerRequestInterceptor_List server_request_interceptors_;
 #endif /* TAO_HAS_INTERCEPTORS */
 
-  /// IORInterceptor adapter.
+  /// IORInterceptor adapter factory.
   TAO_IORInterceptor_Adapter *ior_interceptor_adapter_;
-
-  /// Pointer to the valuetype adapter.
-  TAO_Valuetype_Adapter *valuetype_adapter_;
 
   /// The IOR parser registry.
   TAO_Parser_Registry parser_registry_;
@@ -1395,13 +1379,13 @@ public:
   // the value to "Concrete_TypeCodeFactory_Adapter".
   ACE_CString typecodefactory_adapter_name_;
 
-  // Name of the factory object used to adapt function calls on
+  // Name of the service object used to adapt function calls on
   // the PortableInterceptor interfaces IORInfo and IORInterceptor.
-  // The default value is "IORInterceptor_Adapter_Factory". If the
+  // The default value is "IORInterceptor_Adapter". If the
   // IORInterceptor library is linked, the corresponding accessor
-  // function iorinterceptor_adapter_factory_name() will be called to set
-  // the value to "Concrete_IORInterceptor_Adapter_Factory".
-  ACE_CString iorinterceptor_adapter_factory_name_;
+  // function iorinterceptor_adapter_name() will be called to set
+  // the value to "Concrete_IORInterceptor_Adapter".
+  ACE_CString iorinterceptor_adapter_name_;
 
   // Name of the service object used to adapt function calls on
   // the valuetype-related interfaces.
@@ -1439,15 +1423,89 @@ private:
 
 // ****************************************************************
 
-/// Obtain an instance of the first ORB core registered in the ORB
-/// table.
-TAO_Export TAO_ORB_Core * TAO_ORB_Core_instance (void);
+/**
+ * @class TAO_TSS_Resources
+ *
+ * @brief The TSS resoures shared by all the ORBs
+ *
+ * This class is used by TAO to store the resources that are
+ * thread-specific but are *not* ORB specific. The members are public
+ * because only the ORB Core is expected to access them.
+ */
+class TAO_Export TAO_TSS_Resources
+{
+public:
+
+  /// Constructor
+  TAO_TSS_Resources (void);
+
+  /// Destructor
+  ~TAO_TSS_Resources (void);
+
+private:
+
+  /// Do not copy TSS resources
+  //@{
+  ACE_UNIMPLEMENTED_FUNC (TAO_TSS_Resources(const TAO_TSS_Resources&))
+  ACE_UNIMPLEMENTED_FUNC (void operator=(const TAO_TSS_Resources&))
+  //@}
+
+public:
+
+  /**
+   * Points to structure containing state for the current upcall
+   * context in this thread.  Note that it does not come from the
+   * resource factory because it must always be held in
+   * thread-specific storage.  For now, since TAO_ORB_Core instances
+   * are TSS singletons, we simply ride along and don't allocate
+   * occupy another TSS slot since there are some platforms where
+   * those are precious commodities (e.g., NT).
+   */
+  void *poa_current_impl_;
+
+  void *rtscheduler_current_impl_;
+
+  void *rtscheduler_previous_current_impl_;
+
+  /// The default environment for the thread.
+  CORBA::Environment *default_environment_;
+
+  /// If the user (or library) provides no environment the ORB_Core
+  /// still holds one.
+  CORBA::Environment tss_environment_;
+
+#if (TAO_HAS_CORBA_MESSAGING == 1)
+
+  /// The initial PolicyCurrent for this thread. Should be a TSS
+  /// resource.
+  TAO_Policy_Current_Impl initial_policy_current_;
+
+  /// This pointer is reset by the POA on each upcall.
+  TAO_Policy_Current_Impl *policy_current_;
+
+#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
+
+};
+
+/**
+ * @todo TAO_TSS_RESOURCES singleton typedef should go away.
+ */
+typedef TAO_TSS_Singleton<TAO_TSS_Resources, TAO_SYNCH_MUTEX>
+        TAO_TSS_RESOURCES;
+
+TAO_SINGLETON_DECLARE (TAO_TSS_Singleton,
+                       TAO_TSS_Resources,
+                       TAO_SYNCH_MUTEX)
 
 // ****************************************************************
+
+/// Obtain an instance of the first ORB core registered in the ORB
+/// table.
+TAO_Export TAO_ORB_Core *TAO_ORB_Core_instance (void);
 
 #if defined (__ACE_INLINE__)
 # include "ORB_Core.i"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 #endif /* TAO_ORB_CORE_H */

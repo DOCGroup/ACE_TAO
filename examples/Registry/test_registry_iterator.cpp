@@ -7,10 +7,6 @@
 //
 // This examples points the cool iterators in ACE_Registry
 
-#include "ace/OS.h"
-
-#if defined (ACE_WIN32)
-
 #include "ace/Registry.h"
 #include "ace/streams.h"
 
@@ -135,10 +131,3 @@ indent (u_long indentation)
   for (; indentation > 0; indentation--)
     cout << " ";
 }
-#else /* !ACE_WIN32 */
-int
-ACE_TMAIN (int , ACE_TCHAR *[])
-{
-  return 0;
-}
-#endif /* ACE_WIN32 */

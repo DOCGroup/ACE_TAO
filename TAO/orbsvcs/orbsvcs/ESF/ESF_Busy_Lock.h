@@ -12,7 +12,7 @@
 #ifndef TAO_ESF_BUSY_LOCK_H
 #define TAO_ESF_BUSY_LOCK_H
 
-#include "ace/config-all.h"
+#include "ace/OS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

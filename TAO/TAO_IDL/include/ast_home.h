@@ -31,10 +31,6 @@ public:
 
   AST_Home *base_home (void) const;
 
-  AST_Interface **supports (void) const;
-  
-  long n_supports (void) const;
-
   AST_Component *managed_component (void) const;
 
   AST_ValueType *primary_key (void) const;

@@ -12,15 +12,13 @@
 
 #ifndef ACE_SELECT_REACTOR_T_H
 #define ACE_SELECT_REACTOR_T_H
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #include "ace/Select_Reactor_Base.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#include "ace/Lock_Adapter_T.h"
 
 /**
  * @class ACE_Select_Reactor_Token_T
@@ -786,5 +784,5 @@ private:
 #pragma implementation ("Select_Reactor_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 #endif /* ACE_SELECT_REACTOR_T_H */

@@ -9,7 +9,7 @@
    more when we talk about the stream in detail.  For now it's enough
    to know that Handler_Task::recv() will be invoked by the stream
    after data from the client has been received and processed (eg --
-   uncompressed and whatever else the protocol requires.)
+   decrypted, uncompressed, and whatever else the protocol requires.)
 */
 class Handler_Task : public Protocol_Task
 {
@@ -66,7 +66,7 @@ int Handler::open (void *)
         // read client requests and send our responses.  We also
         // provide a Handler_Task instance that will ultimately be
         // responsible for processing any client data we receive.
-    int rval = stream().open( this->peer(), new Handler_Task(), false );
+    int rval = stream().open( this->peer(), new Handler_Task() );
 
         // Of course, we have to account for the chance that the
         // stream's open() may fail.
@@ -161,7 +161,7 @@ int Handler_Task::recv(ACE_Message_Block * message,
     ACE_DEBUG ((LM_INFO, "(%P|%t) Handler_Task::recv() got (%s)\n", message->rd_ptr() ));
 
         // Create a response message to send to the client
-    ACE_Message_Block * response = new ACE_Message_Block( 1024 );
+    ACE_Message_Block * response = new ACE_Message_Block( 128 );
 
         // Nothing very original about this I'm afraid...
     ACE_OS::sprintf( response->wr_ptr(), "You Said:  (%s)", message->rd_ptr() );

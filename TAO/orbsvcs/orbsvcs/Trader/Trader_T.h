@@ -15,16 +15,15 @@
 
 #ifndef TAO_TRADER_H
 #define TAO_TRADER_H
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #include "Trader.h"
 #include "Offer_Database.h"
 #include "ace/Containers.h"
-#include "ace/Lock_Adapter_T.h"
 
-// *************************************************************
-// TAO_Trader
-// *************************************************************
+  // *************************************************************
+  // TAO_Trader
+  // *************************************************************
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
@@ -273,5 +272,5 @@ public:
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 #endif /* ACE_TRADER_H */

@@ -17,7 +17,6 @@
 #define ACE_TESTS_DLL_TEST_IMPL_H
 
 #include "DLL_Test.h"
-#include "ace/OS_Memory.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

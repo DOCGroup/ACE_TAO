@@ -21,9 +21,7 @@
 #include "ace/Read_Buffer.h"
 #include "ace/Get_Opt.h"
 
-ACE_RCSID (Param_Test,
-           options, 
-           "$Id$")
+ACE_RCSID(Param_Test, options, "$Id$")
 
 // Constructor.p
 Options::Options (void)

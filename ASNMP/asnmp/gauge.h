@@ -43,7 +43,7 @@
 // objects may be set or get into Vb objects.
 //
 
-class ASNMP_Export Gauge32: public SnmpUInt32
+class ACE_Export Gauge32: public SnmpUInt32
   // = TITLE
   //     Define RFC1902 Gauge datatype from RFC 1155 section 3.2.3.4
   //     Note that this datatype does not behave exactly (acts like a long)

@@ -5,7 +5,7 @@
 
 #ifndef ACE_CONFIG_WIN32_GHS_H
 #define ACE_CONFIG_WIN32_GHS_H
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #ifndef ACE_CONFIG_WIN32_H
 #error Use config-win32.h in config.h instead of this header
@@ -59,6 +59,7 @@
 //# define ACE_HAS_EXCEPTIONS 1
 # define ACE_HAS_EXPLICIT_KEYWORD 1
 # define ACE_HAS_GNU_CSTRING_H 1
+# define ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION 1
 # define ACE_HAS_MUTABLE_KEYWORD 1
 # define ACE_HAS_NONCONST_SELECT_TIMEVAL 1
 # define ACE_HAS_SIG_ATOMIC_T 1
@@ -105,5 +106,5 @@
 #  define ACE_LD_DECORATOR_STR ACE_LIB_TEXT ("d")
 # endif
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 #endif /* ACE_CONFIG_WIN32_GHS_H */

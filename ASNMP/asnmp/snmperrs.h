@@ -105,7 +105,7 @@
 #define MAX_POS_ERROR                    SNMP_ERROR_INCONSIS_NAME
 #define MAX_NEG_ERROR                    SNMP_CLASS_SHUTDOWN
 
-static const char * pErrs[] = {
+static char * pErrs[] = {
   "Success",                                                  // 0
   "SNMP: Response PDU Too Big",                               // 1
   "SNMP: Variable does not exist",                            // 2
@@ -128,7 +128,7 @@ static const char * pErrs[] = {
 };
 
 
-static const char * nErrs[] = {
+static char * nErrs[] = {
   // General:
   // 0  SNMP_CLASS_SUCCESS
   "ASNMP: Success",

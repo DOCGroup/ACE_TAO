@@ -8,7 +8,6 @@
 #include "utl_identifier.h"
 #include "utl_indenter.h"
 #include "global_extern.h"
-#include "ace/streams.h"
 
 ACE_RCSID (ast, 
            ast_home, 
@@ -62,21 +61,6 @@ AST_Home *
 AST_Home::base_home (void) const
 {
   return this->pd_base_home;
-}
-
-// These next two look ugly, but it is to keep from having to
-// create separate visitors for homes in the back end.
-
-AST_Interface **
-AST_Home::supports (void) const
-{
-  return this->pd_base_home ? this->inherits () + 1 : this->inherits ();
-}
-
-long 
-AST_Home::n_supports (void) const
-{
-  return this->pd_base_home ? this->n_inherits () - 1 : this->n_inherits ();
 }
 
 AST_Component *

@@ -23,7 +23,6 @@ DIRS  = \
 	Persistent_IOR \
 	Policies \
 	Policy_Combinations \
-	Priority_Inversion_With_Bands \
 	Private_Connection \
         Profile_And_Endpoint_Selection \
 	RTMutex \

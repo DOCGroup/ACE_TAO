@@ -44,7 +44,7 @@
 // This class does not behave as defined by the abstract model
 // in RFC 1155 section 3.2.3.3
 
-class ASNMP_Export Counter32: public SnmpUInt32
+class ACE_Export Counter32: public SnmpUInt32
   // = TITLE
   //     Defines the member functions for the Counter32 concrete class
   //     This class implements RFC 1155 Counter Object and is named

@@ -1,4 +1,4 @@
-// -*- C++ -*-
+/* -*- C++ -*- */
 
 //=============================================================================
 /**
@@ -12,16 +12,14 @@
 
 #ifndef TAO_CONDITION_H
 #define TAO_CONDITION_H
-
-#include /**/ "ace/pre.h"
-
+#include "ace/pre.h"
 #include "orbconf.h"
+#include "ace/Synch_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#include "ace/Condition_T.h"
+#include "ace/Synch_T.h"
 #include "ace/Global_Macros.h"
 
 class ACE_Time_Value;
@@ -118,5 +116,5 @@ private:
 #pragma implementation ("Condition.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 #endif /*TAO_CONDITION_H*/

@@ -24,7 +24,6 @@
 #include "ace/Stats.h"
 #include "tests/test_config.h"
 #include "ace/ACE.h"
-#include "ace/Barrier.h"
 
 ACE_RCSID(tests, Token_Strategy_Test, "$Id$")
 

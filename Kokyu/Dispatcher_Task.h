@@ -10,17 +10,19 @@
  * Chris Gill, Carlos O'Ryan and other members of the DOC group.
  */
 
-#ifndef DISPATCHER_TASK_H
-#define DISPATCHER_TASK_H
+#ifndef TAO_DISPATCHER_TASK_H
+#define TAO_DISPATCHER_TASK_H
 #include "ace/pre.h"
-#include "ace/Task.h"
-#include "ace/Lock_Adapter_T.h"
+#include "ace/OS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "Kokyu_defs.h"
+#include "ace/Task.h"
+
+#include "kokyu_export.h"
+#include "Kokyu.h"
 
 namespace Kokyu
 {
@@ -30,12 +32,12 @@ class Dispatch_Queue_Item : public ACE_Message_Block
 public:
   Dispatch_Queue_Item (const Dispatch_Command* , const QoSDescriptor&);
 
-  Dispatch_Queue_Item (
+  Dispatch_Queue_Item::Dispatch_Queue_Item (
         const Dispatch_Command* cmd,
         const QoSDescriptor& qos_info,
         ACE_Allocator* mb_allocator =0);
 
-  Dispatch_Queue_Item (
+  Dispatch_Queue_Item::Dispatch_Queue_Item (
         const Dispatch_Command* cmd,
         const QoSDescriptor& qos_info,
         ACE_Data_Block* data_block,
@@ -65,7 +67,7 @@ public:
   Dispatcher_Task (const ConfigInfo& config_info,
                    ACE_Thread_Manager* thr_manager = 0);
 
-  int initialize();
+  int init();
 
   int enqueue (const Dispatch_Command* cmd,
            const QoSDescriptor& qos_info);

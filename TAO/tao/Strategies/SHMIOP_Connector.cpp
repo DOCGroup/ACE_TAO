@@ -28,7 +28,6 @@ template class TAO_Connect_Concurrency_Strategy<TAO_SHMIOP_Connection_Handler>;
 template class TAO_Connect_Creation_Strategy<TAO_SHMIOP_Connection_Handler>;
 template class ACE_Strategy_Connector<TAO_SHMIOP_Connection_Handler, ACE_MEM_CONNECTOR>;
 template class ACE_Connect_Strategy<TAO_SHMIOP_Connection_Handler, ACE_MEM_CONNECTOR>;
-template class ACE_Connector_Base<TAO_SHMIOP_Connection_Handler>;
 template class ACE_Connector<TAO_SHMIOP_Connection_Handler, ACE_MEM_CONNECTOR>;
 template class ACE_NonBlocking_Connect_Handler<TAO_SHMIOP_Connection_Handler>;
 
@@ -38,7 +37,6 @@ template class ACE_NonBlocking_Connect_Handler<TAO_SHMIOP_Connection_Handler>;
 #pragma instantiate TAO_Connect_Creation_Strategy<TAO_SHMIOP_Connection_Handler>
 #pragma instantiate ACE_Strategy_Connector<TAO_SHMIOP_Connection_Handler, ACE_MEM_CONNECTOR>
 #pragma instantiate ACE_Connect_Strategy<TAO_SHMIOP_Connection_Handler, ACE_MEM_CONNECTOR>
-#pragma instantiate ACE_Connector_Base<TAO_SHMIOP_Connection_Handler>
 #pragma instantiate ACE_Connector<TAO_SHMIOP_Connection_Handler, ACE_MEM_CONNECTOR>
 #pragma instantiate ACE_NonBlocking_Connect_Handler<TAO_SHMIOP_Connection_Handler>
 

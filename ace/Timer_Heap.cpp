@@ -4,8 +4,6 @@
 #define ACE_TIMER_HEAP_C
 
 #include "ace/Timer_Heap.h"
-#include "ace/Synch_Traits.h"
-#include "ace/Recursive_Thread_Mutex.h"
 
 ACE_RCSID(ace, Timer_Heap, "$Id$")
 

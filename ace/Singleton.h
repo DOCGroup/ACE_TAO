@@ -19,11 +19,9 @@
 
 #ifndef ACE_SINGLETON_H
 #define ACE_SINGLETON_H
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
-#include "ace/config-all.h"
-#include "ace/TSS_T.h"  
-#include "ace/OS.h"  // for ACE_Cleanup
+#include "ace/Synch.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -320,5 +318,5 @@ public:
 #pragma implementation ("Singleton.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 #endif /* ACE_SINGLETON_H */

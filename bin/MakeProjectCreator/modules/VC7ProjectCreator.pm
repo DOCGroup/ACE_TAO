@@ -29,20 +29,32 @@ sub file_sorter {
   return lc($left) cmp lc($right);
 }
 
-sub translate_value {
-  my($self) = shift;
-  my($key)  = shift;
-  my($val)  = shift;
 
-  if ($key eq 'after' && $val ne '') {
-    my($arr) = $self->create_array($val);
-    $val = '';
-    foreach my $entry (@$arr) {
-      $val .= '"' . $entry . '" ';
-    }
-    $val =~ s/\s+$//;
+sub specific_lookup {
+  my($self) = shift;
+  my($tag)  = shift;
+  my($val)  = undef;
+
+  if (defined $self->{'guid_names'} &&
+      defined $self->{'guid_names'}->{$tag}) {
+    $val = $self->{'guid_names'}->{$tag};
   }
+
   return $val;
+}
+
+
+sub save_project_value {
+  my($self)  = shift;
+  my($name)  = shift;
+  my($value) = shift;
+
+  if ($name eq 'guid') {
+    if (!defined $self->{'guid_names'}) {
+      $self->{'guid_names'} = {};
+    }
+    $self->{'guid_names'}->{$self->project_file_name()} = $value;
+  }
 }
 
 

@@ -416,6 +416,12 @@ ACE_ATM_QoS::set_cbr_rate (int rate,
 }
 
 void
+ACE_ATM_QoS::dump (void) const
+{
+  ACE_TRACE ("ACE_ATM_QoS::dump");
+}
+
+void
 ACE_ATM_QoS::set_rate (ACE_HANDLE fd,
                        int rate,
                        int flags)

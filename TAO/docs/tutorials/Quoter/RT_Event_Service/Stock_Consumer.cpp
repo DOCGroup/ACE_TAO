@@ -4,7 +4,6 @@
 
 #include "Stock_Consumer.h"
 #include "QuoterC.h"
-#include "ace/streams.h"
 
 Stock_Consumer::Stock_Consumer ()
 {

@@ -47,7 +47,7 @@
 
 #include "asnmp/smival.h"                // derived class for all values
 
-class ASNMP_Export Oid: public  SnmpSyntax
+class ACE_Export Oid: public  SnmpSyntax
   // = TITLE
   //      Implement RFC 1155 Object Identifier (OID) datatype
 {
@@ -134,7 +134,7 @@ public:
   int valid() const;
   // is the Oid object valid
 
-  const char *to_string();
+  char *to_string();
   // return dotted string value from the right
   // where the user specifies how many positions to print
 

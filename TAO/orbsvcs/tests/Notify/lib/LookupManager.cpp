@@ -2,7 +2,7 @@
 
 #include "LookupManager.h"
 
-ACE_RCSID(lib, TAO_LookupManager, "$Id$")
+ACE_RCSID(lib, TAO_LookupManager, "$id$")
 
 #include "Name.h"
 

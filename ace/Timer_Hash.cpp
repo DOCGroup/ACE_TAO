@@ -6,8 +6,6 @@
 #define ACE_TIMER_HASH_C
 
 #include "ace/Timer_Hash.h"
-#include "ace/Synch_Traits.h"
-#include "ace/Recursive_Thread_Mutex.h"
 
 #if defined (ACE_HAS_BROKEN_HPUX_TEMPLATES)
 #include "ace/Timer_Hash_T.cpp"

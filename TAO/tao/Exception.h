@@ -15,8 +15,8 @@
 
 #ifndef TAO_EXCEPTION_H
 #define TAO_EXCEPTION_H
-#include /**/"ace/pre.h"
 
+#include "ace/pre.h"
 
 #include "tao/corbafwd.h"
 
@@ -56,20 +56,6 @@ namespace CORBA
    * available through the Interface Repositories.  Think of it as a
    * "globally scoped" name distinguishing each exception.
    */
-
-  /* NOTE:
-     According to the OMG CORBA C++ Mapping version 1.1, all
-	 constructors, copy constructors and assignment operators
-	 should be moved to "protected" section in class declarations
-
-	 Since the current MS Visual C++ 6.0 compiler will cause some
-	 problems to TAO's exception mechanism, so we defer doing this until
-	 we full migrate from VC 6.0 to VC 7.0 and higher version.
-
-     This later change only affect the "Exception.h" file and won't
-	 affect the "Exception.cpp" file.
-  */
-
   class TAO_Export Exception
   {
   public:
@@ -84,18 +70,18 @@ namespace CORBA
     virtual ~Exception (void);
 
     // = To throw the exception (when using the standard mapping).
-    virtual void _raise (void) const = 0;
+    virtual void _raise (void) = 0;
 
     // = The static narrow operation.
     static Exception *_downcast (Exception *x);
 
+    // = These are TAO-specific extensions.
+
     /// Return the repository ID of the Exception.
-    virtual const char *_rep_id (void) const;
+    const char *_rep_id (void) const;
 
     /// Return the name of the Exception.
-    virtual const char *_name (void) const;
-
-    // = These are TAO-specific extensions.
+    const char *_name (void) const;
 
     /// Will be overridden in the concrete derived classes.
     virtual CORBA::TypeCode_ptr _type (void) const;
@@ -181,16 +167,11 @@ namespace CORBA
     /// The narrow operation.
     static UserException *_downcast (CORBA::Exception *exception);
 
-	/// The const version of narrow operation
-    static const UserException *_downcast (const CORBA::Exception *exception);
-
-    virtual void _raise (void) const = 0;
-
     // = TAO specific extension.
 
     /// Constructor from a repository id.
     UserException (const char *repository_id,
-                   const char *local_name);
+                         const char *local_name);
 
     virtual int _is_a (const char *interface_id) const;
 
@@ -244,11 +225,6 @@ namespace CORBA
     /// Narrow to a SystemException.
     static SystemException *_downcast (CORBA::Exception *exception);
 
-	/// The const version of narrow operation to a SystemException
-    static const SystemException *_downcast(const CORBA::Exception *exception);
-
-    virtual void _raise (void) const = 0;
-
     // = TAO-specific extension.
 
     /// Helper for the _downcast operation.
@@ -257,9 +233,6 @@ namespace CORBA
     /// Print the system exception @c ex to output determined by @c f.
     /// This function is not CORBA compliant.
     void _tao_print_system_exception (FILE *f = stdout) const;
-
-    /// Create an exception from the available exception
-    /// virtual CORBA::Exception *_tao_duplicate (void) const;
 
     /// Returns a string containing information about the exception. This
     /// function is not CORBA compliant.
@@ -278,15 +251,7 @@ namespace CORBA
     /// value.
     static CORBA::ULong _tao_errno (int errno_value);
 
-    /// Overridden base class method to help compilers that use
-    /// explicit template instantiations going
-    virtual CORBA::Exception *_tao_duplicate (void) const {return 0;}
-
   protected:
-
-    /// Constructor using a repository id.
-    SystemException (CORBA::ULong code,
-                     CORBA::CompletionStatus completed);
 
     /// Constructor using a repository id.
     SystemException (const char *repository_id,
@@ -322,11 +287,11 @@ namespace CORBA
     name (CORBA::ULong code, \
           CORBA::CompletionStatus completed); \
     static name * _downcast (CORBA::Exception* exception); \
-    virtual void _raise (void) const; \
+    virtual int _is_a (const char* type_id) const; \
+    virtual void _raise (void); \
     virtual CORBA::TypeCode_ptr _type (void) const; \
     static void _tao_any_destructor (void*); \
     virtual CORBA::Exception *_tao_duplicate (void) const; \
-    static CORBA::SystemException *_tao_create (void); \
   }; \
 TAO_Export void operator<<= (CORBA::Any &, const CORBA::name &); \
 TAO_Export void operator<<= (CORBA::Any &, CORBA::name *); \
@@ -424,6 +389,7 @@ public:
       ACE_ENV_ARG_DECL
     );
 
+
   /**
    * This global allocator is used to initialize system exception
    * typecodes.  Since at the time, the ORB is mostly still not
@@ -456,5 +422,6 @@ public:
 # include "tao/Exception.i"
 #endif /* __ACE_INLINE__ */
 
-#include /**/"ace/post.h"
+#include "ace/post.h"
+
 #endif /* TAO_EXCEPTION_H */

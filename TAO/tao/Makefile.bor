@@ -30,7 +30,6 @@ OBJFILES = \
 	$(OBJDIR)\Acceptor_Registry.obj \
 	$(OBJDIR)\Adapter.obj \
 	$(OBJDIR)\Any.obj \
-	$(OBJDIR)\Any_SystemException.obj \
 	$(OBJDIR)\Asynch_Invocation.obj \
 	$(OBJDIR)\Asynch_Queued_Message.obj \
    $(OBJDIR)\Asynch_Reply_Dispatcher_Base.obj \
@@ -110,7 +109,6 @@ OBJFILES = \
 	$(OBJDIR)\IIOP_Transport.obj \
 	$(OBJDIR)\IOPC.obj \
 	$(OBJDIR)\IORInterceptor_Adapter.obj \
-  $(OBJDIR)\IORInterceptor_Adapter_Factory.obj \
 	$(OBJDIR)\IOR_Parser.obj \
 	$(OBJDIR)\Incoming_Message_Queue.obj \
 	$(OBJDIR)\Interceptor_List.obj \
@@ -201,7 +199,6 @@ OBJFILES = \
 	$(OBJDIR)\TAO_Internal.obj \
 	$(OBJDIR)\TAO_Server_Request.obj \
 	$(OBJDIR)\TAO_Singleton_Manager.obj \
-	$(OBJDIR)\TSS_Resources.obj \
 	$(OBJDIR)\Tagged_Components.obj \
 	$(OBJDIR)\Tagged_Profile.obj \
 	$(OBJDIR)\Thread_Lane_Resources.obj \
@@ -246,7 +243,6 @@ INCDIR_NAME = tao
 INCLUDES = \
 	*.h *.i *.inl *_T.cpp *.pidl \
 	TAO_Singleton.cpp \
-   Condition.cpp \
 	orb.idl
 
 LIBFILES = $(ACE_LIB)

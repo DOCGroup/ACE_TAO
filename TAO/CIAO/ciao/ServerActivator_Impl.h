@@ -16,7 +16,7 @@
 
 #ifndef CIAO_SERVERACTIVATOR_IMPL_H
 #define CIAO_SERVERACTIVATOR_IMPL_H
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -175,11 +175,7 @@ namespace CIAO
      */
     typedef struct CS_config
     {
-      // ConfigValue::name: CIAO-svcconf-id
-      CORBA::String_var svcconf_hint_;
-
-      // ConfigValue::Name: CIAO-rtcad-filename
-      CORBA::String_var rtcad_filename_;
+      CORBA::String_var svcconf_hint_; // ConfigValue::name: CIAO-svcconf-id
     } CompServ_Config_Info;
 
     /**
@@ -255,5 +251,5 @@ namespace CIAO
 # include "ServerActivator_Impl.inl"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 #endif /* CIAO_SERVERACTIVATOR_IMPL_H */

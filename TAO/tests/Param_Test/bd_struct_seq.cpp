@@ -19,9 +19,7 @@
 #include "helper.h"
 #include "bd_struct_seq.h"
 
-ACE_RCSID (Param_Test, 
-           bd_struct_seq, 
-           "$Id$")
+ACE_RCSID(Param_Test, bd_struct_seq, "$Id$")
 
 const CORBA::ULong MAX_STRUCTSEQ_LEN = 1;
 

@@ -17,10 +17,6 @@ http://www.cs.wustl.edu/~othman/aceconf/.
 Macro                                   Description
 -----                                   -----------
 
-ACE_HAS_DUMP                            Used to enable the dump() method bodies.
-                                        If not defined, the bodies are ifdef out
-                                        in order to reduce footprint.  By default,
-                                        it is not defined.
 ACE_CAST_CONST                          Used to work around broken
                                         SunCC ANSI casts that require
                                         an extra const.
@@ -54,13 +50,7 @@ ACE_NEW_THROWS_EXCEPTIONS               Compiler's 'new' throws exception on
                                         failure (ANSI C++ behavior).
 ACE_NLOGGING                            Turns off the LM_DEBUG and
                                         LM_ERROR logging macros...
-ACE_NTRACE                              Turns off the tracing feature when = 1.
-ACE_HAS_TRACE                           Defined when ACE_NTRACE=0 to help support
-                                        tracing.  Can also be defined by users who
-                                        implement their own tracing macros based on
-                                        ACE_TRACE_IMPL.  Not defining it helps reduce
-                                        footprint by not requiring applications to
-                                        link in Trace.o.
+ACE_NTRACE                              Turns off the tracing feature.
 ACE_PAGE_SIZE                           Defines the page size of the
                                         system (not used on Win32 or
                                         with ACE_HAS_GETPAGESIZE).
@@ -385,6 +375,19 @@ ACE_HAS_MALLOC_STATS                    Enabled malloc statistics
                                         collection.
 ACE_HAS_MEMCHR                          Use native implementation of memchr.
 ACE_HAS_MINIMAL_ACE_OS                  Disables some #includes in ace/OS.*.
+ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION     Avoid #including ace/streams.h
+                                        in OS.h.  Users must include
+                                        ace/streams.h, <iostream>, or
+                                        <iostream.h> explicitly in
+                                        their code.  Some platforms,
+                                        such as g++/VxWorks, have
+                                        trouble compiling templates
+                                        and iostreams header because
+                                        of static variables in the
+                                        stream headers.  This flag
+                                        will also avoid extra
+                                        compilation and runtime
+                                        overheads on some platforms.
 ACE_HAS_MFC                             Platform supports Microsoft
                                         Foundation Classes
 ACE_HAS_MSG                             Platform supports recvmsg and

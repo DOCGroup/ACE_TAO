@@ -29,8 +29,7 @@ sub completion_command {
   my($str)   = "complete $name " .
                "'c/-/(global include type template relative " .
                "ti static noreldefs notoplevel feature_file " .
-               "value_template value_project make_coexistence " .
-               "hierarchy exclude)/' " .
+               "value_template value_project)/' " .
                "'c/dll:/f/' 'c/dll_exe:/f/' 'c/lib_exe:/f/' 'c/lib:/f/' " .
                "'n/-ti/(dll lib dll_exe lib_exe)/:' 'n/-type/(";
 
@@ -60,17 +59,14 @@ sub options {
   my(%relative)   = ();
   my(%addtemp)    = ();
   my(%addproj)    = ();
-  my(@exclude)    = ();
   my($global)     = undef;
   my($template)   = undef;
   my($feature_f)  = undef;
-  my($hierarchy)  = 0;
   my($dynamic)    = ($defaults ? 1 : undef);
   my($reldefs)    = ($defaults ? 1 : undef);
   my($toplevel)   = ($defaults ? 1 : undef);
   my($static)     = ($defaults ? 0 : undef);
   my($recurse)    = ($defaults ? 0 : undef);
-  my($makeco)     = ($defaults ? 0 : undef);
 
   ## Process the command line arguments
   for(my $i = 0; $i <= $#args; $i++) {
@@ -113,16 +109,6 @@ sub options {
         }
       }
     }
-    elsif ($arg eq '-exclude') {
-      $i++;
-      if (defined $args[$i]) {
-        @exclude = split(',', $args[$i]);
-      }
-      else {
-        $self->optionError('-exclude requires a ' .
-                           'comma separated list argument');
-      }
-    }
     elsif ($arg eq '-feature_file') {
       $i++;
       $feature_f = $args[$i];
@@ -137,9 +123,6 @@ sub options {
         $self->optionError('-global requires a file name argument');
       }
     }
-    elsif ($arg eq '-hierarchy') {
-      $hierarchy = 1;
-    }
     elsif ($arg eq '-include') {
       $i++;
       my($include) = $args[$i];
@@ -149,9 +132,6 @@ sub options {
       else {
         push(@include, $include);
       }
-    }
-    elsif ($arg eq '-make_coexistence') {
-      $makeco = 1;
     }
     elsif ($arg eq '-noreldefs') {
       $reldefs = 0;
@@ -294,9 +274,6 @@ sub options {
                   'recurse'      => $recurse,
                   'addtemp'      => \%addtemp,
                   'addproj'      => \%addproj,
-                  'coexistence'  => $makeco,
-                  'hierarchy'    => $hierarchy,
-                  'exclude'      => \@exclude,
                  );
 
   return \%options;

@@ -25,7 +25,7 @@
 #ifndef _TAO_IDL_ORIG_TIMEBASEC_H_
 #define _TAO_IDL_ORIG_TIMEBASEC_H_
 
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 #include "tao/Any_Dual_Impl_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -33,7 +33,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/VarOut_T.h"
-#include "tao/CDR.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
@@ -63,104 +62,104 @@
 
 TAO_NAMESPACE  TimeBase
 {
-
+  
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typedef/typedef_ch.cpp:333
-
+  
   typedef CORBA::ULongLong TimeT;
   typedef CORBA::ULongLong_out TimeT_out;
-
+  
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
-
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_TimeT;
-
+  
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typedef/typedef_ch.cpp:333
-
+  
   typedef TimeT InaccuracyT;
   typedef TimeT_out InaccuracyT_out;
-
+  
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
-
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_InaccuracyT;
-
+  
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typedef/typedef_ch.cpp:333
-
+  
   typedef CORBA::Short TdfT;
   typedef CORBA::Short_out TdfT_out;
-
+  
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
-
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_TdfT;
-
+  
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_type.cpp:231
-
+  
   struct UtcT;
-
+  
   typedef
     TAO_Fixed_Var_T<
         UtcT
       >
     UtcT_var;
-
+  
   typedef
     UtcT &
     UtcT_out;
-
+  
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_ch.cpp:52
-
+  
   struct TAO_Export UtcT
   {
     typedef UtcT_var _var_type;
-
+    
     static void _tao_any_destructor (void *);
     TimeBase::TimeT time;
     CORBA::ULong inacclo;
     CORBA::UShort inacchi;
     TimeBase::TdfT tdf;
   };
-
+  
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
-
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_UtcT;
-
+  
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_type.cpp:231
-
+  
   struct IntervalT;
-
+  
   typedef
     TAO_Fixed_Var_T<
         IntervalT
       >
     IntervalT_var;
-
+  
   typedef
     IntervalT &
     IntervalT_out;
-
+  
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_ch.cpp:52
-
+  
   struct TAO_Export IntervalT
   {
     typedef IntervalT_var _var_type;
-
+    
     static void _tao_any_destructor (void *);
     TimeBase::TimeT lower_bound;
     TimeBase::TimeT upper_bound;
   };
-
+  
   // TAO_IDL - Generated from
   // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
-
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_IntervalT;
 
 // TAO_IDL - Generated from
@@ -222,5 +221,6 @@ TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, TimeBase::IntervalT &);
 #pragma option pop
 #endif /* __BORLANDC__ */
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 #endif /* ifndef */
+

@@ -341,6 +341,10 @@ public:
 
   void fill_value_description (CORBA::ValueDescription &desc
                                ACE_ENV_ARG_DECL);
+    
+private:
+  void fill_vm_seq (CORBA::ValueMemberSeq &vm_seq
+                    ACE_ENV_ARG_DECL);
 };
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)

@@ -12,7 +12,7 @@
 
 #ifndef ACE_MESSAGE_QUEUE_H
 #define ACE_MESSAGE_QUEUE_H
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #include "ace/Message_Block.h"
 
@@ -21,6 +21,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/IO_Cntl_Msg.h"
+#include "ace/Synch.h"
 
 // Forward decls.
 class ACE_Notification_Strategy;
@@ -220,9 +221,7 @@ private:
 
 #if defined (VXWORKS)
 # include /**/ <msgQLib.h>
-# include "ace/Null_Mutex.h"
-# include "ace/Null_Condition.h"
- 
+
 /**
  * @class ACE_Message_Queue_Vx
  *
@@ -601,5 +600,5 @@ private:
 #include "ace/Message_Queue.i"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 #endif /* ACE_MESSAGE_QUEUE_H */

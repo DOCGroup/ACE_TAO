@@ -105,11 +105,7 @@ main (int argc, char *argv[])
       // But it's not sure to me where exactly we can get the
       // ConfigValues needed by the init method at this moment.
 
-      Components::ConfigValues configs;
-
-      comserv_servant->init (configs
-                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      // comserv_servant->init (config ACE_ENV_ARG_PARAMETER);
 
       // Configuring ComponentServer.
       PortableServer::ObjectId_var cs_oid

@@ -21,7 +21,6 @@ ACE_RCSID(ace, Message_Queue, "$Id$")
 void
 ACE_Message_Queue_Vx::dump (void) const
 {
-#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Message_Queue_Vx::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   switch (this->state_)
@@ -55,7 +54,6 @@ ACE_Message_Queue_Vx::dump (void) const
               this->head_,
               this->tail_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
-#endif /* ACE_HAS_DUMP */
 }
 
 ACE_Message_Queue_Vx::ACE_Message_Queue_Vx (size_t max_messages,
@@ -472,7 +470,6 @@ ACE_Message_Queue_NT::pulse (void)
 void
 ACE_Message_Queue_NT::dump (void) const
 {
-#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Message_Queue_NT::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
@@ -506,7 +503,6 @@ ACE_Message_Queue_NT::dump (void) const
               this->cur_count_,
               this->completion_port_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
-#endif /* ACE_HAS_DUMP */
 }
 
 #endif /* ACE_WIN32 && ACE_HAS_WINNT4 != 0 */

@@ -45,18 +45,14 @@ TAO_Service_Callbacks::reset_profile_flags (void)
 }
 
 
-CORBA::Boolean
-TAO_Service_Callbacks::is_profile_equivalent (const TAO_Profile *,
-                                              const TAO_Profile *)
+void
+TAO_Service_Callbacks::service_context_list (
+  TAO_Stub *& /*stub*/ ,
+  IOP::ServiceContextList & /*service_list*/,
+  CORBA::Boolean
+  ACE_ENV_ARG_DECL_NOT_USED)
 {
-  return 0;
-}
-
-CORBA::ULong
-TAO_Service_Callbacks::hash_ft (TAO_Profile *,
-                                CORBA::ULong )
-{
-  return 0;
+  return;
 }
 
 int
@@ -85,4 +81,27 @@ TAO_Service_Callbacks::raise_transient_failure (
           errno),
       CORBA::COMPLETED_MAYBE),
       2);
+}
+
+void
+TAO_Service_Callbacks::service_log_msg_rcv (
+    TAO_Message_State_Factory & /*state*/)
+{
+  return;
+}
+
+
+void
+TAO_Service_Callbacks::service_log_msg_pre_upcall (
+    TAO_ServerRequest & /*req*/)
+{
+  return;
+}
+
+
+void
+TAO_Service_Callbacks::service_log_msg_post_upcall (
+    TAO_ServerRequest & /*req*/)
+{
+  return;
 }

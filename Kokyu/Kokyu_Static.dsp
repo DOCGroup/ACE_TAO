@@ -8,12 +8,12 @@ CFG=Kokyu_Static - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
 !MESSAGE 
-!MESSAGE NMAKE /f "Kokyu_Static.mak".
+!MESSAGE NMAKE /f "Kokyu_static.mak".
 !MESSAGE 
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "Kokyu_Static.mak" CFG="Kokyu_Static - Win32 Debug"
+!MESSAGE NMAKE /f "Kokyu_static.mak" CFG="Kokyu_Static - Win32 Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
@@ -99,11 +99,15 @@ SOURCE=.\Dispatcher_Task.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Kokyu.cpp
+SOURCE=.\DSRT_Dispatcher_Impl.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Kokyu_defs.cpp
+SOURCE=.\DSRT_Schedulers.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Kokyu.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -123,11 +127,15 @@ SOURCE=.\Dispatcher_Task.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Kokyu.h
+SOURCE=.\DSRT_Dispatcher_Impl.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Kokyu_defs.h
+SOURCE=.\DSRT_Schedulers.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Kokyu.h
 # End Source File
 # Begin Source File
 
@@ -178,20 +186,7 @@ SOURCE=.\Dispatcher_Task.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\DSRT_Dispatch_Item_T.i
-
-!IF  "$(CFG)" == "Kokyu_Static - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "Kokyu_Static - Win32 Debug"
-
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\DSRT_Dispatcher_Impl_T.i
+SOURCE=.\DSRT_Dispatcher_Impl.i
 
 !IF  "$(CFG)" == "Kokyu_Static - Win32 Release"
 
@@ -205,101 +200,6 @@ SOURCE=.\DSRT_Dispatcher_Impl_T.i
 # Begin Source File
 
 SOURCE=.\Kokyu.i
-
-!IF  "$(CFG)" == "Kokyu_Static - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "Kokyu_Static - Win32 Debug"
-
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\Kokyu_defs.i
-
-!IF  "$(CFG)" == "Kokyu_Static - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "Kokyu_Static - Win32 Debug"
-
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\Kokyu_dsrt.i
-
-!IF  "$(CFG)" == "Kokyu_Static - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "Kokyu_Static - Win32 Debug"
-
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
-# End Source File
-# End Group
-# Begin Group "Template Files"
-
-# PROP Default_Filter ""
-# Begin Source File
-
-SOURCE=.\DSRT_Direct_Dispatcher_Impl_T.cpp
-
-!IF  "$(CFG)" == "Kokyu_Static - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "Kokyu_Static - Win32 Debug"
-
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\DSRT_Dispatch_Item_T.cpp
-
-!IF  "$(CFG)" == "Kokyu_Static - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "Kokyu_Static - Win32 Debug"
-
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\DSRT_Dispatcher_Impl_T.cpp
-
-!IF  "$(CFG)" == "Kokyu_Static - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "Kokyu_Static - Win32 Debug"
-
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\DSRT_Sched_Queue_T.cpp
-
-!IF  "$(CFG)" == "Kokyu_Static - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "Kokyu_Static - Win32 Debug"
-
-# PROP Exclude_From_Build 1
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\Kokyu_dsrt.cpp
 
 !IF  "$(CFG)" == "Kokyu_Static - Win32 Release"
 

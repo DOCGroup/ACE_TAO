@@ -37,7 +37,6 @@
 
 //----[ includes ]-----------------------------------------------------
 #include "asnmp/smi.h"
-#include "asnmp/ASNMP_Export.h"
 
 //----[ macros ]-------------------------------------------------------
 
@@ -70,10 +69,10 @@ typedef struct {                /* smiVALUE portion of VarBind */
 // An "abstract" (pure virtual) class that serves as the base class
 // for all specific SNMP syntax types.
 //
-class ASNMP_Export SnmpSyntax {
+class ACE_Export SnmpSyntax {
 
 public:
-  virtual const char * to_string() = 0;
+  virtual char * to_string() = 0;
   // virtual function for getting a printable ASCII value for any SNMP Value
 
   virtual SmiUINT32 get_syntax() = 0;

@@ -8,7 +8,6 @@ ACE_RCSID (DynamicInterface,
 
 #include "Server_Request.h"
 #include "tao/ORB_Core.h"
-#include "tao/TSS_Resources.h"
 #include "tao/IFR_Client_Adapter.h"
 #include "tao/PortableServer/POA.h"
 #include "tao/PortableServer/Collocated_Object.h"

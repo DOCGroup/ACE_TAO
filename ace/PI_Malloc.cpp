@@ -21,20 +21,17 @@ ACE_RCSID (ace,
 void
 ACE_PI_Control_Block::ACE_Malloc_Header::dump (void) const
 {
-#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_PI_Control_Block::ACE_Malloc_Header::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nnext_block = %x"), (ACE_Malloc_Header *) this->next_block_));
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nsize = %d\n"), this->size_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
-#endif /* ACE_HAS_DUMP */
 }
 
 void
 ACE_PI_Control_Block::print_alignment_info (void)
 {
-#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_PI_Control_Block::ACE_Control_Block::print_alignment_info");
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("Start ---> ACE_PI_Control_Block::print_alignment_info:\n")));
   ACE_DEBUG ((LM_DEBUG,
@@ -64,13 +61,11 @@ ACE_PI_Control_Block::print_alignment_info (void)
               sizeof (ACE_PI_Control_Block)
               ));
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("End <--- ACE_PI_Control_Block::print_alignment_info:\n")));
-#endif /* ACE_HAS_DUMP */
 }
 
 void
 ACE_PI_Control_Block::dump (void) const
 {
-#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_PI_Control_Block::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
@@ -91,7 +86,6 @@ ACE_PI_Control_Block::dump (void) const
 
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
-#endif /* ACE_HAS_DUMP */
 }
 
 ACE_PI_Control_Block::ACE_Name_Node::ACE_Name_Node (void)
@@ -143,7 +137,6 @@ ACE_PI_Control_Block::ACE_Malloc_Header::ACE_Malloc_Header (void)
 void
 ACE_PI_Control_Block::ACE_Name_Node::dump (void) const
 {
-#if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_PI_Control_Block::ACE_Name_Node::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
@@ -155,7 +148,6 @@ ACE_PI_Control_Block::ACE_Name_Node::dump (void) const
               (const char *) this->name_));
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT("\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
-#endif /* ACE_HAS_DUMP */
 }
 
 

@@ -42,7 +42,7 @@
 // integers but is recognized as a distinct SMI type. TimeTicks
 // objects may be get or set into Vb objects.
 //
-class ASNMP_Export TimeTicks: public SnmpUInt32
+class ACE_Export TimeTicks: public SnmpUInt32
   // = TITLE
   //      Define RFC1155 TimeTicks Data object
 
@@ -60,7 +60,7 @@ class ASNMP_Export TimeTicks: public SnmpUInt32
      SmiUINT32 get_syntax();
      // syntax type
 
-     const char *to_string();
+     char *to_string();
      // get a printable ASCII value
 
      SnmpSyntax *clone() const;

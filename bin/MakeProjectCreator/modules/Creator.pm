@@ -26,7 +26,7 @@ use vars qw(@ISA);
 my(@statekeys) = ('global', 'include', 'template', 'ti',
                   'dynamic', 'static', 'relative', 'addtemp',
                   'addproj', 'progress', 'toplevel', 'baseprojs',
-                  'feature_file', 'hierarchy',
+                  'feature_file',
                  );
 
 my(%all_written) = ();
@@ -50,7 +50,6 @@ sub new {
   my($toplevel)  = shift;
   my($baseprojs) = shift;
   my($feature)   = shift;
-  my($hierarchy) = shift;
   my($type)      = shift;
   my($self)      = Parser::new($class, $inc);
 
@@ -74,7 +73,6 @@ sub new {
   $self->{'dynamic'}        = $dynamic;
   $self->{'static'}         = $static;
   $self->{'feature_file'}   = $feature;
-  $self->{'hierarchy'}      = $hierarchy;
 
   return $self;
 }
@@ -619,20 +617,9 @@ sub restore_state {
   my($self)  = shift;
   my($state) = shift;
 
-  ## Make a deep copy of each state value.  That way our array
-  ## references and hash references do not get accidentally modified.
+  ## Overwrite each state value
   foreach my $skey (@statekeys) {
-    if (UNIVERSAL::isa($state->{$skey}, 'ARRAY')) {
-      my(@arr) = @{$state->{$skey}};
-      $self->{$skey} = \@arr;
-    }
-    elsif (UNIVERSAL::isa($state->{$skey}, 'HASH')) {
-      my(%hash) = %{$state->{$skey}};
-      $self->{$skey} = \%hash;
-    }
-    else {
-      $self->{$skey} = $state->{$skey};
-    }
+    $self->{$skey} = $$state{$skey};
   }
 }
 
@@ -733,12 +720,6 @@ sub get_static {
 sub get_default_component_name {
   #my($self) = shift;
   return 'default';
-}
-
-
-sub get_hierarchy {
-  my($self) = shift;
-  return $self->{'hierarchy'};
 }
 
 # ************************************************************

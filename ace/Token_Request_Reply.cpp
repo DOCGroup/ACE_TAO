@@ -91,7 +91,6 @@ ACE_Token_Request::decode (void)
 void
 ACE_Token_Request::dump (void) const
 {
-#if defined (ACE_HAS_DUMP)
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("*******\nlength = %d\ntoken name = %s\nclient id = %s\n"),
 	     this->length (), this->token_name (), this->client_id ()));
@@ -132,7 +131,6 @@ ACE_Token_Request::dump (void) const
 		 this->options ().timeout ().sec (), this->options ().timeout ().usec ()));
     }
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
-#endif /* ACE_HAS_DUMP */
 }
 
 // ************************************************************
@@ -172,11 +170,9 @@ ACE_Token_Reply::decode (void)
 void
 ACE_Token_Reply::dump (void) const
 {
-#if defined (ACE_HAS_DUMP)
   ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("*******\nlength = %d\nerrnum = %d"),
 	     this->length (), this->errnum ()));
   ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("arg = %d"), this->arg ()));
-#endif /* ACE_HAS_DUMP */
 }
 
 #endif /* ACE_HAS_TOKENS_LIBRARY */

@@ -17,6 +17,11 @@ LDLIBS	+= -L $(ACE_ROOT)/ace -L ./ -lACE # -z muldefs
 CXX		= g++
 CFLAGS		+= -melf -w
 
+# Test for template instantiation.
+#
+include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
+
+CCFLAGS		+= -melf -fPIC -Xpg4plus $(TEMPLATES_FLAG) -I ${MIT_PTHREADS_DIR}/include -I /usr/progressive/lib/g++-include
 DCFLAGS		+= -gstabs
 DCCFLAGS	+= $(DCFLAGS)
 DLD             = $(CXX)
@@ -33,10 +38,3 @@ SOFLAGS += $(CPPFLAGS) -melf -fPIC -G
 SOBUILD = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<
 # SOLINK	= $(SOLINK.cc) -o $@ $(LDFLAGS) $<
 PRELIB  = @true
-
-# Test for template instantiation, add to SOFLAGS if SONAME set, 
-# add -E to LDFLAGS if using GNU ld
-#
-include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
-
-CCFLAGS		+= -melf -fPIC -Xpg4plus $(TEMPLATES_FLAG) -I ${MIT_PTHREADS_DIR}/include -I /usr/progressive/lib/g++-include

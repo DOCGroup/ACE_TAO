@@ -30,7 +30,15 @@
 
 
 #include "Object_KeyC.h"
-#include "tao/ORB_Core.h"
+#include "tao/Stub.h"
+#include "tao/Invocation.h"
+#include "tao/PortableInterceptor.h"
+
+#if TAO_HAS_INTERCEPTORS == 1
+#include "tao/RequestInfo_Util.h"
+#include "tao/ClientRequestInfo_i.h"
+#include "tao/ClientInterceptorAdapter.h"
+#endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
 
 #if defined (__BORLANDC__)
@@ -110,34 +118,18 @@ TAO::ObjectKey::encode_sequence_to_string (char * &str,
       // here.
 #undef byte
       u_char byte = seq[i];
-      if (is_legal (byte))
+      if (isprint (byte) && byte != '\\')
         {
           *cp++ = (char) byte;
           continue;
         }
 
-      *cp++ = '%';
+      *cp++ = '\\';
       *cp++ = ACE::nibble2hex ((byte >> 4) & 0x0f);
       *cp++ = ACE::nibble2hex (byte & 0x0f);
     }
   // Zero terminate
   *cp = '\0';
-}
-
-int TAO::ObjectKey::is_legal (u_char & c)
-{
-  if (isalnum(c))
-  {
-    return 1;
-  }
-  else
-  {
-    return ( c == ';' || c == '/' ||c == ':' || c == '?' ||
-             c == '@' || c == '&' ||c == '=' || c == '+' ||
-             c == '$' || c == ',' ||c == '_' || c == '.' ||
-             c == '!' || c == '~' ||c == '*' || c == '\'' ||
-             c == '-' || c == '(' || c == ')' );
-  }
 }
 
 void
@@ -164,7 +156,7 @@ TAO::ObjectKey::decode_string_to_sequence (TAO_Unbounded_Sequence<CORBA::Octet> 
        cp < eos && i < seq.length ();
        i++)
     {
-      if (*cp == '%')
+      if (*cp == '\\')
         {
           // This is an escaped non-printable,
           // so we decode the hex values into

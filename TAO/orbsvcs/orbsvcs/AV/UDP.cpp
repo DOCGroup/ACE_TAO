@@ -1,5 +1,6 @@
 // $Id$
 
+
 #include "UDP.h"
 #include "AVStreams_i.h"
 #include "MCast.h"
@@ -9,10 +10,6 @@
 #if !defined (__ACE_INLINE__)
 #include "UDP.i"
 #endif /* __ACE_INLINE__ */
-
-ACE_RCSID (AV,
-           UDP,
-           "$Id$")
 
 //------------------------------------------------------------
 // TAO_AV_UDP_Flow_Handler
@@ -195,7 +192,7 @@ TAO_AV_UDP_Transport::close (void)
 int
 TAO_AV_UDP_Transport::mtu (void)
 {
-  return 65535;
+  return ACE_MAX_DGRAM_SIZE;
 }
 
 ACE_Addr*
@@ -429,8 +426,8 @@ TAO_AV_UDP_Acceptor::open_i (ACE_INET_Addr *inet_addr,
                              int is_default_addr)
 {
   int result = -1;
-  ACE_INET_Addr *local_addr = 0;
 
+  ACE_INET_Addr *local_addr = 0;
   TAO_AV_Flow_Handler *flow_handler = 0;
 
   // if using a default address and this is the control flow component, the
@@ -533,7 +530,7 @@ TAO_AV_UDP_Acceptor::open_i (ACE_INET_Addr *inet_addr,
       this->entry_->set_local_addr (local_addr);
       this->entry_->handler (flow_handler);
       //this->entry_->address (inet_addr);
-      this->entry_->address (local_addr);
+	  this->entry_->address (local_addr);
     }
   else
     {
@@ -556,7 +553,7 @@ TAO_AV_UDP_Acceptor::open_i (ACE_INET_Addr *inet_addr,
 }
 
 int
-	TAO_AV_UDP_Acceptor::close (void)
+TAO_AV_UDP_Acceptor::close (void)
 {
   return 0;
 }
@@ -598,7 +595,7 @@ TAO_AV_UDP_Connector::connect (TAO_FlowSpec_Entry *entry,
                                TAO_AV_Core::Flow_Component flow_component)
 {
   ACE_INET_Addr *local_addr = 0;
-  ACE_INET_Addr *control_inet_addr = 0;
+  ACE_INET_Addr *control_inet_addr;
 
   this->entry_ = entry;
   this->flow_component_ = flow_component;
@@ -648,8 +645,10 @@ TAO_AV_UDP_Connector::connect (TAO_FlowSpec_Entry *entry,
 	      local_addr = ACE_dynamic_cast (ACE_INET_Addr*,addr);
 	      char buf [BUFSIZ];
 	      local_addr->addr_to_string (buf, BUFSIZ);
+	      ACE_DEBUG ((LM_DEBUG,
+			  "local_addr %s\n",
+			  buf));
 	    }
-
           TAO_AV_UDP_Connection_Setup::setup (flow_handler,
                                               inet_addr,
                                               local_addr,
@@ -673,37 +672,22 @@ TAO_AV_UDP_Connector::connect (TAO_FlowSpec_Entry *entry,
                   TAO_AV_Flow_Handler *control_flow_handler = 0;
 
                   if (entry->is_multicast ())
-                    control_inet_addr =  ACE_dynamic_cast (ACE_INET_Addr*,
-                                                           entry->control_address ()) ;
+                      control_inet_addr =  ACE_dynamic_cast (ACE_INET_Addr*,
+                                                             entry->control_address ()) ;
+
                   else
                     {
-
-                      if (local_addr != 0)
-                        {
-                          char buf [BUFSIZ];
-                          ACE_CString addr_str (local_addr->get_host_name ());
-                          addr_str += ":";
-                          addr_str += ACE_OS_String::itoa (local_addr->get_port_number () + 1, buf, 10);
-                          ACE_NEW_RETURN (local_control_addr,
-                                          ACE_INET_Addr (addr_str.c_str ()),
-                                          -1);
-                          local_control_addr->addr_to_string (buf, BUFSIZ);
-                        }
-
-
-                      if (entry->control_address () == 0)
-                        ACE_NEW_RETURN (this->control_inet_address_,
-                                        ACE_INET_Addr ("0"),
-                                        -1);
-                      else
-                        control_inet_address_ = ACE_dynamic_cast (ACE_INET_Addr*,entry->control_address ());
+                      ACE_NEW_RETURN (this->control_inet_address_,
+                                      ACE_INET_Addr ("0"),
+                                      -1);
+                      control_inet_addr = this->control_inet_address_;
                     }
 
-                  TAO_AV_UDP_Connection_Setup::setup (control_flow_handler,
-                                                      control_inet_addr,
-                                                      local_control_addr,
-                                                      entry->is_multicast (),
-                                                      TAO_AV_UDP_Connection_Setup::CONNECTOR);
+                  TAO_AV_UDP_Connection_Setup::setup(control_flow_handler,
+                                                     control_inet_addr,
+                                                     local_control_addr,
+                                                     entry->is_multicast (),
+                                                     TAO_AV_UDP_Connection_Setup::CONNECTOR);
 
                   if (local_control_addr->get_port_number () !=
                       local_addr->get_port_number () +1)
@@ -851,6 +835,12 @@ TAO_AV_UDP_Connection_Setup::setup (TAO_AV_Flow_Handler *&flow_handler,
 			ACE_INET_Addr ("0"),
 			-1);
 
+      char buf [BUFSIZ];
+      local_addr->addr_to_string (buf, BUFSIZ);
+      ACE_DEBUG ((LM_DEBUG,
+		  "Local Address %s\n",
+		  buf));
+
       TAO_AV_UDP_Flow_Handler *handler;
       ACE_NEW_RETURN (handler,
                       TAO_AV_UDP_Flow_Handler,
@@ -887,10 +877,10 @@ TAO_AV_UDP_Connection_Setup::setup (TAO_AV_Flow_Handler *&flow_handler,
 
       result = handler->get_socket ()->get_local_addr (*local_addr);
 
+
       local_addr->set (local_addr->get_port_number (),
 		       local_addr->get_host_name ());
 
-      char buf [BUFSIZ];
       local_addr->addr_to_string (buf, BUFSIZ);
 
       if (result < 0)
@@ -984,10 +974,7 @@ TAO_AV_UDP_Object::send_frame (const iovec *iov,
                                int iovcnt,
                                TAO_AV_frame_info * /*frame_info*/)
 {
-  int result = this->transport_->send (iov,iovcnt);
-  if (result < 0)
-    return result;
-  return 0;
+  return this->transport_->send (iov,iovcnt);
 }
 
 int
@@ -1004,7 +991,7 @@ TAO_AV_UDP_Object::TAO_AV_UDP_Object (TAO_AV_Callback *callback,
                                       TAO_AV_Transport *transport)
   :TAO_AV_Protocol_Object (callback,transport)
 {
-  this->frame_.size (this->transport_->mtu ());
+  this->frame_.size (2 * this->transport_->mtu ());
 }
 
 TAO_AV_UDP_Object::~TAO_AV_UDP_Object (void)

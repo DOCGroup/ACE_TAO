@@ -14,6 +14,7 @@
 #include "TAO_Server_Request.h"
 #include "GIOP_Message_State.h"
 #include "CORBA_String.h"
+#include "ORB_Core.h"
 
 #if !defined (__ACE_INLINE__)
 # include "GIOP_Message_Generator_Parser_10.inl"

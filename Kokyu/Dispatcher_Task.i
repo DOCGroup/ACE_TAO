@@ -16,7 +16,7 @@ Dispatcher_Task::Dispatcher_Task (const ConfigInfo& config_info,
         //1/16th part of the range.
         laxity_msg_strategy_ (0, 0, 0x7FFFFFFFUL, 0x08000000UL )
 {
-   this->initialize();
+   this->init();
 }
 
 ACE_INLINE

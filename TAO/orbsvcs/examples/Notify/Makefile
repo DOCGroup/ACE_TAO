@@ -10,8 +10,7 @@
 
 DIRS  =	Subscribe \
 	Filter \
-	Lanes \
-	ThreadPool
+	Lanes
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO

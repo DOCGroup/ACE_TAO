@@ -16,7 +16,7 @@
 #ifndef ACE_OS_INCLUDE_OS_ERRNO_H
 #define ACE_OS_INCLUDE_OS_ERRNO_H
 
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -27,11 +27,6 @@
 #if !defined (ACE_LACKS_ERRNO_H)
 # include /**/ <errno.h>
 #endif /* !ACE_LACKS_ERRNO_H */
-
-// Needed for VxWorks to pickup errnoSet()
-#if defined (VXWORKS)
-#include <errnoLib.h>
-#endif /* VXWORKS */
 
 // Place all additions (especially function declarations) within extern "C" {}
 #ifdef __cplusplus
@@ -174,49 +169,9 @@ extern int t_errno;
 # define ENOTSUP ENOSYS  /* Operation not supported. */
 #endif /* !ENOTSUP */
 
-#if !defined (ESUCCESS)
-#  define ESUCCESS 0
-#endif /* !ESUCCESS */
-
-#if !defined (EIDRM)
-#  define EIDRM 0
-#endif /* !EIDRM */
-
-#if !defined (ENFILE)
-#  define ENFILE EMFILE /* No more socket descriptors are available. */
-#endif /* !ENFILE */
-
-#if !defined (ECOMM)
-   // Not the same, but ECONNABORTED is provided on NT.
-#  define ECOMM ECONNABORTED
-#endif /* ECOMM */
-
-#if !defined (EDEADLK)
-#  define EDEADLK 1000 /* Some large number.... */
-#endif /* !EDEADLK */
-
-#if !defined (ENXIO)     /* Needed in SOCK_Dgram_Mcast */
-#   define ENXIO  6
-#endif /* ENXIO */
-
-#define LOCALNAME 0
-#define REMOTENAME 1
-
-#if !defined (ETIMEDOUT) && defined (ETIME)
-#  define ETIMEDOUT ETIME
-#endif /* ETIMEDOUT */
-
-#if !defined (ETIME) && defined (ETIMEDOUT)
-#  define ETIME ETIMEDOUT
-#endif /* ETIMED */
-
-#if !defined (EBUSY)
-#  define EBUSY ETIME
-#endif /* EBUSY */
-
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 #endif /* ACE_OS_INCLUDE_OS_ERRNO_H */

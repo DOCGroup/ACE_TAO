@@ -8,7 +8,6 @@
 #include /**/ "Notify_Service.h"
 #include "tao/ORB_Core.h"
 #include "ace/ARGV.h"
-#include "ace/Reactor.h"
 
 #define REGISTRY_KEY_ROOT HKEY_LOCAL_MACHINE
 #define TAO_REGISTRY_SUBKEY "SOFTWARE\\ACE\\TAO"

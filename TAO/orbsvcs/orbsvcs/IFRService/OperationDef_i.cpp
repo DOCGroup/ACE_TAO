@@ -601,10 +601,29 @@ TAO_OperationDef_i::exceptions_i (const CORBA::ExceptionDefSeq &exceptions
                                           "excepts",
                                           0);
 
-  TAO_IFR_Service_Utils::set_exceptions (this->repo_->config (),
-                                         this->section_key_,
-                                         "excepts",
-                                         exceptions);
+  CORBA::ULong length = exceptions.length ();
+
+  if (length == 0)
+    {
+      return;
+    }
+
+  ACE_Configuration_Section_Key excepts_key;
+  this->repo_->config ()->open_section (this->section_key_,
+                                        "excepts",
+                                        1,
+                                        excepts_key);
+  char *type_path = 0;
+
+  for (CORBA::ULong i = 0; i < length; ++i)
+    {
+      type_path = TAO_IFR_Service_Utils::reference_to_path (exceptions[i]);
+      char *stringified = TAO_IFR_Service_Utils::int_to_string (i);
+      this->repo_->config ()->set_string_value (excepts_key,
+                                                stringified,
+                                                type_path);
+    }
+
 }
 
 void

@@ -14,7 +14,7 @@
 
 #ifndef ACE_UPIPE_STREAM_H
 #define ACE_UPIPE_STREAM_H
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #include "ace/Stream.h"
 
@@ -22,6 +22,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/Synch.h"
 #include "ace/SPIPE.h"
 #include "ace/Message_Queue.h"
 #include "ace/UPIPE_Addr.h"
@@ -132,5 +133,5 @@ private:
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_HAS_THREADS */
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 #endif /*ACE_UPIPE_STREAM_H */

@@ -19,9 +19,7 @@
 #include "helper.h"
 #include "ub_wstr_seq.h"
 
-ACE_RCSID (Param_Test,
-           ub_wstr_seq, 
-           "$Id$")
+ACE_RCSID(Param_Test, ub_wstr_seq, "$Id$")
 
 // ************************************************************************
 //               Test_WString_Sequence

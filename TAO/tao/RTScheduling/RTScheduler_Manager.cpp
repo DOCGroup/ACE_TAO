@@ -36,7 +36,7 @@ TAO_RTScheduler_Manager::_unchecked_narrow (CORBA::Object_ptr obj
           TAO_RTScheduler_Manager_ptr,
             obj->_tao_QueryInterface
               (
-                ACE_reinterpret_cast (ptrdiff_t,
+                ACE_reinterpret_cast (ptr_arith_t,
                                       &TAO_RTScheduler_Manager::_narrow)
               )
         );
@@ -51,14 +51,14 @@ TAO_RTScheduler_Manager::_duplicate (TAO_RTScheduler_Manager_ptr obj)
 }
 
 void *
-TAO_RTScheduler_Manager::_tao_QueryInterface (ptrdiff_t type)
+TAO_RTScheduler_Manager::_tao_QueryInterface (ptr_arith_t type)
 {
   void *retv = 0;
   if (type == ACE_reinterpret_cast
-    (ptrdiff_t,
+    (ptr_arith_t,
       &TAO_RTScheduler_Manager::_narrow))
     retv = ACE_reinterpret_cast (void*, this);
-  else if (type == ACE_reinterpret_cast (ptrdiff_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
 

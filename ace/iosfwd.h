@@ -23,7 +23,7 @@
 #ifndef ACE_IOSFWD_H
 #define ACE_IOSFWD_H
 
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -31,14 +31,11 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if defined (__APPLE_CC__)
-# include "ace/streams.h"
-#endif
-
 #if defined (ACE_HAS_STANDARD_CPP_LIBRARY)  && \
     (ACE_HAS_STANDARD_CPP_LIBRARY != 0)
 
-# if !defined (ACE_USES_OLD_IOSTREAMS) 
+# if !defined (ACE_USES_OLD_IOSTREAMS)  || \
+    defined (ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION)
 #   include /**/ <iosfwd>
 # else
   // NOTE: If these forward declarations don't work (e.g. aren't
@@ -54,7 +51,7 @@
   class ifstream;
   class ofstream;
   class fstream;
-# endif /* ! ACE_USES_OLD_IOSTREAMS */
+# endif /* ! ACE_USES_OLD_IOSTREAMS  ||  ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION */
 
 # if defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB) && \
              (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB != 0)
@@ -88,6 +85,6 @@
 
 # endif /* ! ACE_HAS_STANDARD_CPP_LIBRARY */
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 
 #endif /* ACE_IOSFWD_H */

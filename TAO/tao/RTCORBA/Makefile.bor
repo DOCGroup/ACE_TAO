@@ -18,8 +18,7 @@ OBJFILES = \
 	$(OBJDIR)\Linear_Network_Priority_Mapping.obj \
 	$(OBJDIR)\Network_Priority_Mapping.obj \
 	$(OBJDIR)\Network_Priority_Mapping_Manager.obj \
-	$(OBJDIR)\RT_Transport_Descriptor.obj \
-	$(OBJDIR)\RT_Transport_Descriptor_Property.obj \
+	$(OBJDIR)\Private_Transport_Descriptor.obj \
 	$(OBJDIR)\RTCORBA.obj \
 	$(OBJDIR)\RTCORBAC.obj \
 	$(OBJDIR)\RT_Current.obj \

@@ -152,7 +152,6 @@ ACE_Time_Value::operator FILETIME () const
 void
 ACE_Time_Value::dump (void) const
 {
-#if defined (ACE_HAS_DUMP)
   // ACE_OS_TRACE ("ACE_Time_Value::dump");
 #if 0
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
@@ -160,7 +159,6 @@ ACE_Time_Value::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\ntv_usec_ = %d\n"), this->tv_.tv_usec));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* 0 */
-#endif /* ACE_HAS_DUMP */
 }
 
 void
