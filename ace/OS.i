@@ -1081,6 +1081,12 @@ ACE_OS::strcpy (char *s, const char *t)
 }
 
 ACE_INLINE char *
+ACE_OS::strpbrk (const char *s1, const char *s2)
+{
+  return ::strpbrk (s1, s2);  
+}
+
+ACE_INLINE char *
 ACE_OS::strdup (const char *s)
 {
   // ACE_TRACE ("ACE_OS::strdup");
