@@ -1,3 +1,8 @@
+Wed Jul 15 18:00:00 1998  Michael Kircher  <mk1@cs.wustl.edu>
+
+        * tao/Invocation.cpp: Made sure, that all control paths
+	  resume the handler - checking invoke methods.
+
 Wed Jul 15 16:27:01 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 	* tests/Simple: Added a new test that is just a simple test
