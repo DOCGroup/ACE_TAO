@@ -1,3 +1,15 @@
+Wed May 16 11:28:39 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_visitor_field/field_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/field_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_obv_ch.cpp:
+
+          Restored generation of 'public:' in OBV class declaration
+          inadvertently removed in a previous checkin, and cosmetic
+          changes to valuetype and OBV generated code.
+
 Wed May 16 11:12:29 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/*/Makefile: Updated dependencies.
