@@ -272,7 +272,7 @@ private:
   ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Lookup<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &))
   ACE_UNIMPLEMENTED_FUNC (TAO_Lookup (const TAO_Lookup<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &))
 
-  const int IDS_SAVED;
+  const unsigned int IDS_SAVED;
     
   TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader_;
   // A reference to the trader for obtaining offer maps.

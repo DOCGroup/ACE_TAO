@@ -852,7 +852,7 @@ seen_request_id (TAO_Policies& policies,
     {
       CosTrading::Admin::OctetSeq** old_seq = 0;
       riter.next (old_seq);
-
+      
       if (**old_seq == *seq)
         {
           return_value = CORBA::B_TRUE;
