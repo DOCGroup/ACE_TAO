@@ -2466,8 +2466,8 @@ public:
   static long filesize (ACE_HANDLE handle);
   static int getmsg (ACE_HANDLE handle, struct strbuf *ctl, struct strbuf
                      *data, int *flags); 
-  static getpmsg (ACE_HANDLE handle, struct strbuf *ctl, struct strbuf
-                  *data, int *band, int *flags); 
+  static int getpmsg (ACE_HANDLE handle, struct strbuf *ctl, struct strbuf
+		      *data, int *band, int *flags); 
   static int ioctl (ACE_HANDLE handle, int cmd, void * = 0);
   static int isastream (ACE_HANDLE handle);
   static int isatty (ACE_HANDLE handle);
@@ -2475,8 +2475,8 @@ public:
   static ACE_HANDLE open (const char *filename, int mode, int perms = 0);
   static int putmsg (ACE_HANDLE handle, const struct strbuf *ctl, const
                      struct strbuf *data, int flags); 
-  static putpmsg (ACE_HANDLE handle, const struct strbuf *ctl, const
-                  struct strbuf *data, int band, int flags); 
+  static int putpmsg (ACE_HANDLE handle, const struct strbuf *ctl, const
+		      struct strbuf *data, int band, int flags); 
   static ssize_t read (ACE_HANDLE handle, void *buf, size_t len); 
   static ssize_t read (ACE_HANDLE handle, void *buf, size_t len, ACE_OVERLAPPED *); 
   static ssize_t readv (ACE_HANDLE handle, struct iovec *iov, int iovlen); 

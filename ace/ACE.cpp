@@ -370,7 +370,7 @@ ACE::send_n (ACE_HANDLE handle, const void *buf, size_t len)
 {
   ACE_TRACE ("ACE::send_n");
   size_t bytes_written;
-  ssize_t n;
+  ssize_t n = 0;
 
   for (bytes_written = 0; bytes_written < len; bytes_written += n)
     {
@@ -396,7 +396,7 @@ ACE::send_n (ACE_HANDLE handle,
 {
   ACE_TRACE ("ACE::send_n");
   size_t bytes_written;
-  ssize_t n;
+  ssize_t n = 0;
 
   for (bytes_written = 0; bytes_written < len; bytes_written += n)
     {
@@ -426,7 +426,7 @@ ACE::write_n (ACE_HANDLE handle,
   ACE_TRACE ("ACE::write_n");
 
   size_t bytes_written;
-  ssize_t n;
+  ssize_t n = 0;
 
   for (bytes_written = 0; bytes_written < len; bytes_written += n)
     {
@@ -449,7 +449,7 @@ ACE::recv_n (ACE_HANDLE handle, void *buf, size_t len)
 {
   ACE_TRACE ("ACE::recv_n");
   size_t bytes_read;
-  ssize_t n;
+  ssize_t n = 0;
 
   for (bytes_read = 0; bytes_read < len; bytes_read += n)
     {
@@ -473,7 +473,7 @@ ACE::recv_n (ACE_HANDLE handle, void *buf, size_t len, int flags)
 {
   ACE_TRACE ("ACE::recv_n");
   size_t bytes_read;
-  ssize_t n;
+  ssize_t n = 0;
 
   for (bytes_read = 0; bytes_read < len; bytes_read += n)
     {
@@ -504,7 +504,7 @@ ACE::read_n (ACE_HANDLE handle,
   ACE_TRACE ("ACE::read_n");
 
   size_t bytes_read;
-  ssize_t n;
+  ssize_t n = 0;
 
   for (bytes_read = 0; bytes_read < len; bytes_read += n)
     {

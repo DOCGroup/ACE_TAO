@@ -92,16 +92,16 @@ endif
 ifeq ($(PWD),/home/cs/faculty/schmidt/adaptive/ACE_wrappers)
   TIMESTAMP = perl -pi -e 'BEGIN {chop ($$date=`/usr/bin/date`);} \
                            s/(, released ).*/$$1$$date./' VERSION; \
+              cvs commit -m'make release: updated timestamp' VERSION; \
 	      chmod 644 VERSION; \
-              cvs commit -m'make release: updated timestamp' VERSION; 
 else
   TIMESTAMP =
 endif
 
 cleanrelease:
-	($(TIMESTAMP)make realclean; cd ..; /bin/rm -f ACE.tar.gz; tar cvf ACE.tar $(RELEASE_FILES); gzip -9 ACE.tar; chmod a+r ACE.tar.gz)
+	($(TIMESTAMP)make realclean; cd ..; /bin/rm -f ACE.tar.gz; tar cvf ACE.tar $(RELEASE_FILES); gzip -9 ACE.tar; chmod a+r ACE.tar.gz; mv ACE.tar.gz ./ACE_wrappers/)
 
 release:
-	($(TIMESTAMP)cd ..; /bin/rm -f ACE.tar.gz; tar cvf ACE.tar $(RELEASE_FILES); gzip -9 ACE.tar; chmod a+r ACE.tar.gz)
-	(cd ..; /bin/rm -f ACE-lib.tar.gz; tar cvf ACE-lib.tar $(RELEASE_LIB_FILES); gzip -9 ACE-lib.tar; chmod a+r ACE-lib.tar.gz)
+	($(TIMESTAMP)cd ..; /bin/rm -f ACE.tar.gz; tar cvf ACE.tar $(RELEASE_FILES); gzip -9 ACE.tar; chmod a+r ACE.tar.gz; mv ACE.tar.gz ./ACE_wrappers/)
+	(cd ..; /bin/rm -f ACE-lib.tar.gz; tar cvf ACE-lib.tar $(RELEASE_LIB_FILES); gzip -9 ACE-lib.tar; chmod a+r ACE-lib.tar.gz; mv ACE-lib.tar.gz ./ACE_wrappers/)
 
