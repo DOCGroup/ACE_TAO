@@ -1,8 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-// Mem_Map.i
-
 ACE_INLINE ACE_HANDLE
 ACE_Mem_Map::handle (void) const
 {
@@ -15,16 +13,16 @@ ACE_Mem_Map::handle (void) const
 ACE_INLINE const TCHAR *
 ACE_Mem_Map::filename (void) const
 {
-  return this->filename_;	
+  return this->filename_;
 }
 
 ACE_INLINE int
-ACE_Mem_Map::map (ACE_HANDLE handle, 
-		  int len, 
-		  int prot, 
-		  int share, 
-		  void *addr, 
-		  off_t pos,
+ACE_Mem_Map::map (ACE_HANDLE handle,
+                  int len,
+                  int prot,
+                  int share,
+                  void *addr,
+                  off_t pos,
                   LPSECURITY_ATTRIBUTES sa)
 {
   ACE_TRACE ("ACE_Mem_Map::map");
@@ -34,16 +32,16 @@ ACE_Mem_Map::map (ACE_HANDLE handle,
 // Remap the file associated with <this->handle_>.
 
 ACE_INLINE int
-ACE_Mem_Map::map (int len, 
-		  int prot, 
-		  int share, 
-		  void *addr, 
-		  off_t pos,
+ACE_Mem_Map::map (int len,
+                  int prot,
+                  int share,
+                  void *addr,
+                  off_t pos,
                   LPSECURITY_ATTRIBUTES sa)
 {
   ACE_TRACE ("ACE_Mem_Map::map");
-  return this->map_it (this->handle (), len, prot, 
-		       share, addr, pos, sa);
+  return this->map_it (this->handle (), len, prot,
+                       share, addr, pos, sa);
 }
 
 // This operator passes back the starting address of the mapped file.
@@ -90,6 +88,8 @@ ACE_Mem_Map::close_filemapping_handle (void)
   if (this->file_mapping_ != this->handle_
       && this->file_mapping_ != ACE_INVALID_HANDLE)
     {
+      // On LynxOS, this will result in unlinking of the (hidden)
+      // shared memory file if there are no more references to it.
       result = ACE_OS::close (this->file_mapping_);
       this->file_mapping_ = ACE_INVALID_HANDLE;
     }
@@ -153,7 +153,7 @@ ACE_Mem_Map::sync (void *addr, size_t len, int flags)
 // starting at <this->base_addr_> up to <len> bytes.  If <len> == -1
 // then change protection of all pages in the mapped region.
 
-ACE_INLINE int 
+ACE_INLINE int
 ACE_Mem_Map::protect (ssize_t len, int prot)
 {
   ACE_TRACE ("ACE_Mem_Map::protect");
@@ -165,7 +165,7 @@ ACE_Mem_Map::protect (ssize_t len, int prot)
 // Change the protection of the pages of the mapped region to <prot>
 // starting at <addr> up to <len> bytes.
 
-ACE_INLINE int 
+ACE_INLINE int
 ACE_Mem_Map::protect (void *addr, size_t len, int prot)
 {
   ACE_TRACE ("ACE_Mem_Map::protect");
@@ -194,8 +194,6 @@ ACE_Mem_Map::close_handle (void)
       result = ACE_OS::close (this->handle_);
       this->handle_ = ACE_INVALID_HANDLE;
     }
-  
+
   return result;
 }
-
-
