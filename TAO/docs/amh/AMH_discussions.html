@@ -1,30 +1,41 @@
-<html xmlns:o="urn:schemas-microsoft-com:office:office"
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
 xmlns:w="urn:schemas-microsoft-com:office:word"
 xmlns="http://www.w3.org/TR/REC-html40">
-<!-- $Id$ -->
 
 <head>
+<!-- $Id$ -->
 <meta http-equiv=Content-Type content="text/html; charset=windows-1252">
 <meta name=ProgId content=Word.Document>
 <meta name=Generator content="Microsoft Word 9">
 <meta name=Originator content="Microsoft Word 9">
 <link rel=File-List href="./AMH_discussions_files/filelist.xml">
+<link rel=Edit-Time-Data href="./AMH_discussions_files/editdata.mso">
+<link rel=OLE-Object-Data href="./AMH_discussions_files/oledata.mso">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
 <title>AMH design and Interface synopsis</title>
 <!--[if gte mso 9]><xml>
  <o:DocumentProperties>
   <o:Author>mayur</o:Author>
   <o:LastAuthor>mayur</o:LastAuthor>
-  <o:Revision>2</o:Revision>
-  <o:TotalTime>205</o:TotalTime>
+  <o:Revision>26</o:Revision>
+  <o:TotalTime>606</o:TotalTime>
   <o:Created>2001-07-05T20:28:00Z</o:Created>
-  <o:LastSaved>2001-07-05T20:28:00Z</o:LastSaved>
+  <o:LastSaved>2001-07-17T21:48:00Z</o:LastSaved>
   <o:Pages>4</o:Pages>
-  <o:Words>1178</o:Words>
-  <o:Characters>6717</o:Characters>
+  <o:Words>1291</o:Words>
+  <o:Characters>7362</o:Characters>
   <o:Company>UCI</o:Company>
-  <o:Lines>55</o:Lines>
-  <o:Paragraphs>13</o:Paragraphs>
-  <o:CharactersWithSpaces>8248</o:CharactersWithSpaces>
+  <o:Lines>61</o:Lines>
+  <o:Paragraphs>14</o:Paragraphs>
+  <o:CharactersWithSpaces>9041</o:CharactersWithSpaces>
   <o:Version>9.2720</o:Version>
  </o:DocumentProperties>
 </xml><![endif]-->
@@ -38,13 +49,6 @@ xmlns="http://www.w3.org/TR/REC-html40">
 	mso-generic-font-family:auto;
 	mso-font-pitch:variable;
 	mso-font-signature:0 268435456 0 0 -2147483648 0;}
-@font-face
-	{font-family:Tahoma;
-	panose-1:2 11 6 4 3 5 4 4 2 4;
-	mso-font-charset:0;
-	mso-generic-font-family:swiss;
-	mso-font-pitch:variable;
-	mso-font-signature:553679495 -2147483648 8 0 66047 0;}
  /* Style Definitions */
 p.MsoNormal, li.MsoNormal, div.MsoNormal
 	{mso-style-parent:"";
@@ -54,6 +58,38 @@ p.MsoNormal, li.MsoNormal, div.MsoNormal
 	font-size:12.0pt;
 	font-family:"Times New Roman";
 	mso-fareast-font-family:"Times New Roman";}
+h1
+	{mso-style-next:Normal;
+	margin:0cm;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-outline-level:1;
+	font-size:14.0pt;
+	mso-bidi-font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-font-kerning:0pt;
+	mso-ansi-language:EN-US;}
+h2
+	{mso-style-next:Normal;
+	margin:0cm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-outline-level:2;
+	font-size:12.0pt;
+	font-family:"Times New Roman";}
+p.MsoCaption, li.MsoCaption, div.MsoCaption
+	{mso-style-next:Normal;
+	margin:0cm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";
+	font-weight:bold;}
 p.MsoBodyText, li.MsoBodyText, div.MsoBodyText
 	{margin:0cm;
 	margin-bottom:.0001pt;
@@ -93,6 +129,17 @@ p.MsoBodyText3, li.MsoBodyText3, div.MsoBodyText3
 	mso-fareast-font-family:"Times New Roman";
 	color:red;
 	mso-ansi-language:EN-US;}
+p.MsoBodyTextIndent2, li.MsoBodyTextIndent2, div.MsoBodyTextIndent2
+	{margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:54.0pt;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";
+	mso-ansi-language:EN-US;}
 @page Section1
 	{size:595.3pt 841.9pt;
 	margin:72.0pt 90.0pt 72.0pt 90.0pt;
@@ -103,15 +150,14 @@ div.Section1
 	{page:Section1;}
  /* List Definitions */
 @list l0
-	{mso-list-id:1190602294;
+	{mso-list-id:547112131;
 	mso-list-type:hybrid;
-	mso-list-template-ids:1696125780 67698705 67698713 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
-@list l0:level1
-	{mso-level-text:"%1\)";
-	mso-level-tab-stop:36.0pt;
+	mso-list-template-ids:1287798962 67698703 67698713 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
+@list l0:level2
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:72.0pt;
 	mso-level-number-position:left;
-	text-indent:-18.0pt;
-	color:windowtext;}
+	text-indent:-18.0pt;}
 @list l1
 	{mso-list-id:1365448158;
 	mso-list-type:hybrid;
@@ -120,29 +166,59 @@ div.Section1
 	{mso-level-start-at:0;
 	mso-level-number-format:bullet;
 	mso-level-text:-;
-	mso-level-tab-stop:54.0pt;
+	mso-level-tab-stop:72.0pt;
 	mso-level-number-position:left;
-	margin-left:54.0pt;
+	margin-left:72.0pt;
 	text-indent:-18.0pt;
 	font-family:"Times New Roman";
 	mso-fareast-font-family:"Times New Roman";}
 @list l1:level2
 	{mso-level-number-format:bullet;
 	mso-level-text:o;
-	mso-level-tab-stop:90.0pt;
+	mso-level-tab-stop:108.0pt;
 	mso-level-number-position:left;
-	margin-left:90.0pt;
+	margin-left:108.0pt;
 	text-indent:-18.0pt;
 	font-family:"Courier New";
 	mso-bidi-font-family:"Times New Roman";}
 @list l1:level3
 	{mso-level-number-format:bullet;
 	mso-level-text:\F0A7;
-	mso-level-tab-stop:126.0pt;
+	mso-level-tab-stop:144.0pt;
 	mso-level-number-position:left;
-	margin-left:126.0pt;
+	margin-left:144.0pt;
 	text-indent:-18.0pt;
 	font-family:Wingdings;}
+@list l1:level4
+	{mso-level-tab-stop:162.0pt;
+	mso-level-number-position:left;
+	margin-left:162.0pt;
+	text-indent:-18.0pt;}
+@list l1:level5
+	{mso-level-tab-stop:198.0pt;
+	mso-level-number-position:left;
+	margin-left:198.0pt;
+	text-indent:-18.0pt;}
+@list l1:level6
+	{mso-level-tab-stop:234.0pt;
+	mso-level-number-position:left;
+	margin-left:234.0pt;
+	text-indent:-18.0pt;}
+@list l1:level7
+	{mso-level-tab-stop:270.0pt;
+	mso-level-number-position:left;
+	margin-left:270.0pt;
+	text-indent:-18.0pt;}
+@list l1:level8
+	{mso-level-tab-stop:306.0pt;
+	mso-level-number-position:left;
+	margin-left:306.0pt;
+	text-indent:-18.0pt;}
+@list l1:level9
+	{mso-level-tab-stop:342.0pt;
+	mso-level-number-position:left;
+	margin-left:342.0pt;
+	text-indent:-18.0pt;}
 @list l2
 	{mso-list-id:1449811671;
 	mso-list-type:hybrid;
@@ -169,31 +245,247 @@ ul
 	{margin-bottom:0cm;}
 -->
 </style>
+<!--[if gte mso 9]><xml>
+ <o:shapedefaults v:ext="edit" spidmax="1031"/>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <o:shapelayout v:ext="edit">
+  <o:idmap v:ext="edit" data="1"/>
+ </o:shapelayout></xml><![endif]-->
 </head>
 
 <body lang=EN-GB style='tab-interval:36.0pt'>
 
 <div class=Section1>
 
-<p class=MsoNormal align=center style='text-align:center'><b><span lang=EN-US
-style='mso-ansi-language:EN-US'>AMH Interface and Design Synopsis.<o:p></o:p></span></b></p>
+<p class=MsoNormal><b><span lang=EN-US style='font-size:16.0pt;mso-bidi-font-size:
+12.0pt;mso-ansi-language:EN-US'>TAO’s Asynchronous Method Handling (AMH) <o:p></o:p></span></b></p>
 
-<p class=MsoNormal><span lang=EN-US style='mso-ansi-language:EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+<div style='border:none;border-bottom:solid windowtext .75pt;padding:0cm 0cm 1.0pt 0cm'>
+
+<p class=MsoNormal align=center style='text-align:center;border:none;
+mso-border-bottom-alt:solid windowtext .75pt;padding:0cm;mso-padding-alt:0cm 0cm 1.0pt 0cm'><b><span
+lang=EN-US style='font-size:14.0pt;mso-bidi-font-size:12.0pt;mso-ansi-language:
+EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></b></p>
+
+</div>
+
+<p class=MsoNormal align=center style='text-align:center'><b><span lang=EN-US
+style='font-size:14.0pt;mso-bidi-font-size:12.0pt;mso-ansi-language:EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></b></p>
+
+<h1><u><span lang=EN-US>Table of Contents<o:p></o:p></span></u></h1>
+
+<p class=MsoNormal><b><span lang=EN-US style='font-size:14.0pt;mso-bidi-font-size:
+12.0pt;mso-ansi-language:EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></b></p>
+
+<ol style='margin-top:0cm' start=1 type=1>
+ <li class=MsoNormal style='mso-list:l0 level1 lfo3;tab-stops:list 36.0pt'><b><span
+     lang=EN-US style='mso-ansi-language:EN-US'>Motivation<o:p></o:p></span></b></li>
+ <li class=MsoNormal style='mso-list:l0 level1 lfo3;tab-stops:list 36.0pt'><b><span
+     lang=EN-US style='mso-ansi-language:EN-US'>Design<o:p></o:p></span></b></li>
+ <li class=MsoNormal style='mso-list:l0 level1 lfo3;tab-stops:list 36.0pt'><b><span
+     lang=EN-US style='mso-ansi-language:EN-US'>Proposed Implementation<o:p></o:p></span></b></li>
+ <ol style='margin-top:0cm' start=1 type=a>
+  <li class=MsoNormal style='mso-list:l0 level2 lfo3;tab-stops:list 72.0pt'><b><span
+      lang=EN-US style='mso-ansi-language:EN-US'>Implied-IDL<o:p></o:p></span></b></li>
+  <li class=MsoNormal style='mso-list:l0 level2 lfo3;tab-stops:list 72.0pt'><b><span
+      lang=EN-US style='mso-ansi-language:EN-US'>Issues <o:p></o:p></span></b></li>
+  <ol style='margin-top:0cm' start=1 type=1>
+   <li class=MsoNormal style='mso-list:l0 level3 lfo3;tab-stops:list 108.0pt'><b><span
+       lang=EN-US style='font-size:10.0pt;mso-bidi-font-size:12.0pt;mso-ansi-language:
+       EN-US'>General<o:p></o:p></span></b></li>
+   <li class=MsoNormal style='mso-list:l0 level3 lfo3;tab-stops:list 108.0pt'><b><span
+       lang=EN-US style='font-size:10.0pt;mso-bidi-font-size:12.0pt;mso-ansi-language:
+       EN-US'>Exceptions<o:p></o:p></span></b></li>
+   <li class=MsoNormal style='mso-list:l0 level3 lfo3;tab-stops:list 108.0pt'><b><span
+       lang=EN-US style='font-size:10.0pt;mso-bidi-font-size:12.0pt;mso-ansi-language:
+       EN-US'>AMH_</span></b><b><span style='font-size:10.0pt;mso-bidi-font-size:
+       8.0pt;color:black'>QuoterResponseHandler implied IDL</span></b><b><span
+       lang=EN-US style='font-size:10.0pt;mso-bidi-font-size:12.0pt;mso-ansi-language:
+       EN-US'><o:p></o:p></span></b></li>
+   <li class=MsoNormal style='mso-list:l0 level3 lfo3;tab-stops:list 108.0pt'><b><span
+       lang=EN-US style='font-size:10.0pt;mso-bidi-font-size:12.0pt;mso-ansi-language:
+       EN-US'>Specifying AMH Skeletons<o:p></o:p></span></b></li>
+   <li class=MsoNormal style='mso-list:l0 level3 lfo3;tab-stops:list 108.0pt'><b><span
+       lang=EN-US style='font-size:10.0pt;mso-bidi-font-size:12.0pt;mso-ansi-language:
+       EN-US'>Design Trade-offs<o:p></o:p></span></b></li>
+   <ol style='margin-top:0cm' start=1 type=1>
+    <li class=MsoNormal style='mso-list:l0 level4 lfo3;tab-stops:list 144.0pt'><b><span
+        lang=EN-US style='font-size:10.0pt;mso-bidi-font-size:12.0pt;
+        mso-ansi-language:EN-US'>Static / Runtime<o:p></o:p></span></b></li>
+    <li class=MsoNormal style='mso-list:l0 level4 lfo3;tab-stops:list 144.0pt'><b><span
+        lang=EN-US style='font-size:10.0pt;mso-bidi-font-size:12.0pt;
+        mso-ansi-language:EN-US'>Per-POA / Per-Object<o:p></o:p></span></b></li>
+   </ol>
+  </ol>
+ </ol>
+ <li class=MsoNormal style='mso-list:l0 level1 lfo3;tab-stops:list 36.0pt'><b><span
+     lang=EN-US style='mso-ansi-language:EN-US'>Implementation Considerations<o:p></o:p></span></b></li>
+</ol>
+
+<div style='border:none;border-bottom:solid windowtext .75pt;padding:0cm 0cm 1.0pt 0cm'>
+
+<p class=MsoNormal style='border:none;mso-border-bottom-alt:solid windowtext .75pt;
+padding:0cm;mso-padding-alt:0cm 0cm 1.0pt 0cm'><b><span lang=EN-US
+style='font-size:14.0pt;mso-bidi-font-size:12.0pt;mso-ansi-language:EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></b></p>
+
+</div>
+
+<p class=MsoNormal><b><span lang=EN-US style='font-size:14.0pt;mso-bidi-font-size:
+12.0pt;mso-ansi-language:EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></b></p>
+
+<p class=MsoNormal><b><u><span lang=EN-US style='font-size:14.0pt;mso-bidi-font-size:
+12.0pt;mso-ansi-language:EN-US'>Motivation:<o:p></o:p></span></u></b></p>
+
+<p class=MsoNormal><b><span lang=EN-US style='font-size:14.0pt;mso-bidi-font-size:
+12.0pt;mso-ansi-language:EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></b></p>
+
+<p class=MsoNormal style='tab-stops:18.0pt'>For many types of systems, CORBA
+AMI improves concurrency, scalability, and responsiveness significantly.<span
+style="mso-spacerun: yes">  </span>Since AMI allows a client to invoke multiple
+two-way requests without waiting for responses, the client can use the time
+normally spent waiting for replies to perform other useful work. A similar
+capability on the server side would be quite useful for many classes of
+applications, for example, a multi-tier system. In a multi-tier system, one or
+more “middle-tier” servers are placed between a <i>source client</i> and a <i>sink
+server</i>. A source client’s two-way request may visit multiple middle-tier
+servers before it reaches its sink server; the result then flows in reverse
+through these intermediary servers before arriving back at the source client
+(Fig 1). </p>
+
+<p class=MsoNormal style='tab-stops:18.0pt'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><!--[if gte vml 1]><v:shapetype id="_x0000_t75" coordsize="21600,21600"
+ o:spt="75" o:preferrelative="t" path="m@4@5l@4@11@9@11@9@5xe" filled="f"
+ stroked="f">
+ <v:stroke joinstyle="miter"/>
+ <v:formulas>
+  <v:f eqn="if lineDrawn pixelLineWidth 0"/>
+  <v:f eqn="sum @0 1 0"/>
+  <v:f eqn="sum 0 0 @1"/>
+  <v:f eqn="prod @2 1 2"/>
+  <v:f eqn="prod @3 21600 pixelWidth"/>
+  <v:f eqn="prod @3 21600 pixelHeight"/>
+  <v:f eqn="sum @0 0 1"/>
+  <v:f eqn="prod @6 1 2"/>
+  <v:f eqn="prod @7 21600 pixelWidth"/>
+  <v:f eqn="sum @8 21600 0"/>
+  <v:f eqn="prod @7 21600 pixelHeight"/>
+  <v:f eqn="sum @10 21600 0"/>
+ </v:formulas>
+ <v:path o:extrusionok="f" gradientshapeok="t" o:connecttype="rect"/>
+ <o:lock v:ext="edit" aspectratio="t"/>
+</v:shapetype><v:shape id="_x0000_i1025" type="#_x0000_t75" style='width:234pt;
+ height:133.8pt' o:ole="">
+ <v:imagedata src="./AMH_discussions_files/image001.wmz" o:title=""/>
+</v:shape><![endif]--><![if !vml]><img width=312 height=178
+src="./AMH_discussions_files/image002.gif" v:shapes="_x0000_i1025"><![endif]><!--[if gte mso 9]><xml>
+ <o:OLEObject Type="Embed" ProgID="Visio.Drawing.6" ShapeID="_x0000_i1025"
+  DrawAspect="Content" ObjectID="_1056886498">
+ </o:OLEObject>
+</xml><![endif]--></p>
+
+<p class=MsoNormal><span style="mso-spacerun: yes"> </span></p>
+
+<h2>Fig 1</h2>
+
+<p class=MsoNormal style='text-align:justify'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='text-align:justify'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='text-align:justify'>Without AMH capability, the
+general behaviour of the system is as in Fig 2.<span style="mso-spacerun:
+yes">  </span>The middle tier server is blocked waiting for the reply to come
+back from the sink-server. To improve the throughput of the middle-tier server,
+it could be made multi-threaded so that it can handle multiple requests; but
+threading is not a very scalable option. For further discussions on various
+other options possible and their trade-offs please refer to [AMH.doc] Thus a
+capability similar to AMI, where the (middle-tier) server could process new
+incoming requests without having to wait for responses from sink-servers, could
+prove to be of great benefit. </p>
+
+<p class=MsoNormal style='text-align:justify'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='text-align:justify'><!--[if gte vml 1]><v:shape id="_x0000_i1026"
+ type="#_x0000_t75" style='width:219.6pt;height:228pt' o:ole="">
+ <v:imagedata src="./AMH_discussions_files/image003.wmz" o:title=""/>
+</v:shape><![endif]--><![if !vml]><img width=293 height=304
+src="./AMH_discussions_files/image004.gif" v:shapes="_x0000_i1026"><![endif]><!--[if gte mso 9]><xml>
+ <o:OLEObject Type="Embed" ProgID="Visio.Drawing.6" ShapeID="_x0000_i1026"
+  DrawAspect="Content" ObjectID="_1056886499">
+ </o:OLEObject>
+</xml><![endif]--></p>
+
+<p class=MsoCaption><span style="mso-spacerun: yes"> </span>Fig 2</p>
+
+<div style='border:none;border-bottom:solid windowtext .75pt;padding:0cm 0cm 1.0pt 0cm'>
+
+<p class=MsoNormal style='text-align:justify;border:none;mso-border-bottom-alt:
+solid windowtext .75pt;padding:0cm;mso-padding-alt:0cm 0cm 1.0pt 0cm'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+</div>
+
+<p class=MsoNormal style='text-align:justify'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal style='text-align:justify'><b><u><span style='font-size:
+14.0pt;mso-bidi-font-size:12.0pt'>Design:<o:p></o:p></span></u></b></p>
+
+<p class=MsoNormal style='text-align:justify'><b><u><span style='font-size:
+14.0pt;mso-bidi-font-size:12.0pt'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></u></b></p>
+
+<p class=MsoNormal style='text-align:justify'><span lang=EN-US
+style='mso-ansi-language:EN-US'>The proposed design for AMH follows quite
+closely to AMI. When a new request comes into the server, the underlying ORB
+creates a ResponseHandler (RH) object. The RH object and other ‘in’ parameters
+are then passed to the servant. The RH object is such that, the servant can now
+use it to fill in the appropriate ‘out’ or return values and the ORB takes care
+of sending them back to the client. The servant is now free to do as it pleases
+with the RH. It can either block waiting for a response to come back from the
+sink-server and then use the RH to send back the response or it can store the
+RH (somewhere in a queue) and return control immediately back to the ORB.
+Later, when the response arrives from the sink-server, the middle-tier server
+can extract the right RH (from the queue) and send back the response to the
+client. An even more sophisticated approach would be to store the RH in an AMI
+ReplyHandler object so that the response is sent back auto-magically. This is
+illustrated in Fig-3.<span style="mso-spacerun: yes">  </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><!--[if gte vml 1]><v:shape id="_x0000_i1027" type="#_x0000_t75"
+ style='width:220.2pt;height:255pt' o:ole="">
+ <v:imagedata src="./AMH_discussions_files/image005.wmz" o:title=""/>
+</v:shape><![endif]--><![if !vml]><img width=294 height=340
+src="./AMH_discussions_files/image006.gif" v:shapes="_x0000_i1027"><![endif]><!--[if gte mso 9]><xml>
+ <o:OLEObject Type="Embed" ProgID="Visio.Drawing.6" ShapeID="_x0000_i1027"
+  DrawAspect="Content" ObjectID="_1056886501">
+ </o:OLEObject>
+</xml><![endif]--><span lang=EN-US style='mso-ansi-language:EN-US'><o:p></o:p></span></p>
+
+<p class=MsoNormal><b><span lang=EN-US style='mso-ansi-language:EN-US'><span
+style="mso-spacerun: yes"> </span>Fig-3<o:p></o:p></span></b></p>
+
+<div style='border:none;border-bottom:solid windowtext .75pt;padding:0cm 0cm 1.0pt 0cm'>
+
+<p class=MsoNormal style='border:none;mso-border-bottom-alt:solid windowtext .75pt;
+padding:0cm;mso-padding-alt:0cm 0cm 1.0pt 0cm'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+</div>
+
+<p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
+
+<p class=MsoNormal><b><u><span style='font-size:14.0pt;mso-bidi-font-size:12.0pt'>Proposed
+Implementation:<o:p></o:p></span></u></b></p>
 
 <p class=MsoNormal><b><span lang=EN-US style='mso-ansi-language:EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></b></p>
 
-<p class=MsoNormal><b><span lang=EN-US style='mso-ansi-language:EN-US'>C++
-Mapping:<o:p></o:p></span></b></p>
-
-<p class=MsoNormal><span lang=EN-US style='mso-ansi-language:EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+<p class=MsoNormal><b><span lang=EN-US style='mso-ansi-language:EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></b></p>
 
 <p class=MsoNormal><span lang=EN-US style='mso-ansi-language:EN-US'>Consider
-canonical example of IDL:<o:p></o:p></span></p>
+the canonical example:<o:p></o:p></span></p>
 
 <p class=MsoNormal><span lang=EN-US style='mso-ansi-language:EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
 
 <p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;mso-bidi-font-size:
-12.0pt;font-family:"Courier New";mso-ansi-language:EN-US'>Interface <b>Stock</b><o:p></o:p></span></p>
+12.0pt;font-family:"Courier New";color:black;mso-ansi-language:EN-US'>module</span><span
+lang=EN-US style='font-size:10.0pt;mso-bidi-font-size:12.0pt;font-family:"Courier New";
+mso-ansi-language:EN-US'> <b>Stock</b><o:p></o:p></span></p>
 
 <p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;mso-bidi-font-size:
 12.0pt;font-family:"Courier New";mso-ansi-language:EN-US'>{<o:p></o:p></span></p>
@@ -204,7 +496,11 @@ style='mso-tab-count:1'>      </span>exception <b>Invalid_Stock_Symbol</b> {};<o
 
 <p class=MsoNormal style='text-indent:36.0pt'><span lang=EN-US
 style='font-size:10.0pt;mso-bidi-font-size:12.0pt;font-family:"Courier New";
-mso-ansi-language:EN-US'>module <b>Quoter</b><o:p></o:p></span></p>
+mso-ansi-language:EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-indent:36.0pt'><span lang=EN-US
+style='font-size:10.0pt;mso-bidi-font-size:12.0pt;font-family:"Courier New";
+mso-ansi-language:EN-US'>Interface <b>Quoter</b><o:p></o:p></span></p>
 
 <p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;mso-bidi-font-size:
 12.0pt;font-family:"Courier New";mso-ansi-language:EN-US'><span
@@ -212,8 +508,8 @@ style='mso-tab-count:1'>      </span>{<o:p></o:p></span></p>
 
 <p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;mso-bidi-font-size:
 12.0pt;font-family:"Courier New";mso-ansi-language:EN-US'><span
-style='mso-tab-count:1'>      </span><span style='mso-tab-count:1'>      </span>long
-<b>get_quote</b>( in string stock_name ) <o:p></o:p></span></p>
+style='mso-tab-count:2'>            </span>long <b>get_quote</b>( in string
+stock_name ) <o:p></o:p></span></p>
 
 <p class=MsoNormal style='margin-left:72.0pt;text-indent:36.0pt'><span
 lang=EN-US style='font-size:10.0pt;mso-bidi-font-size:12.0pt;font-family:"Courier New";
@@ -228,578 +524,375 @@ style='mso-tab-count:1'>      </span>};<o:p></o:p></span></p>
 
 <p class=MsoNormal><span lang=EN-US style='mso-ansi-language:EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
 
-<p class=MsoNormal><span lang=EN-US style='mso-ansi-language:EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
-
-<p class=MsoNormal><span lang=EN-US style='mso-ansi-language:EN-US'>This IDL is
-then compiled using a special flag in the IDL compiler. The proposed one is
-–GH. The IDL compiler then generates special AMH enabled skeletons. The
-implementation header file would then look like this:<o:p></o:p></span></p>
+<p class=MsoNormal><span lang=EN-US style='mso-ansi-language:EN-US'>Our
+proposed Implied IDL is then, something like this:<o:p></o:p></span></p>
 
 <p class=MsoNormal><span lang=EN-US style='mso-ansi-language:EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
-
-<p class=MsoNormal><span lang=EN-US style='font-size:9.0pt;mso-bidi-font-size:
-12.0pt;font-family:Tahoma;color:blue;mso-ansi-language:EN-US'>// .h file :<o:p></o:p></span></p>
-
-<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
-font-family:"Courier New";color:black'>class <b>My_AMH_Quoter : public
-POA_Stock</b>::<b>AMH_Quoter</b> <o:p></o:p></span></p>
-
-<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
-font-family:"Courier New";color:black'>{<o:p></o:p></span></p>
-
-<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
-font-family:"Courier New";color:black'><span style="mso-spacerun:
-yes"> </span>public: <o:p></o:p></span></p>
-
-<p class=MsoNormal><span style='font-size:9.0pt;mso-bidi-font-size:8.0pt;
-font-family:"Courier New";color:black'><span style="mso-spacerun: yes"> </span><span
-style='mso-tab-count:1'>      </span></span><span style='font-size:9.0pt;
-mso-bidi-font-size:8.0pt;font-family:Tahoma;color:#3333CC'>// ORB invokes this
-method, apps<o:p></o:p></span></p>
-
-<p class=MsoNormal><span style='font-size:9.0pt;mso-bidi-font-size:8.0pt;
-font-family:Tahoma;color:#3333CC'><span style="mso-spacerun: yes"> </span><span
-style='mso-tab-count:1'>           </span>// implement Object behavior here<o:p></o:p></span></p>
-
-<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
-font-family:"Courier New";color:black'><span style="mso-spacerun: yes"> </span><span
-style='mso-tab-count:1'>      </span>virtual void <b>get_quote</b> (<o:p></o:p></span></p>
-
-<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
-font-family:"Courier New";color:black'><span style="mso-spacerun: yes">    
-</span><span style='mso-tab-count:1'> </span><span style='mso-tab-count:1'>      </span></span><span
-style='font-size:9.0pt;mso-bidi-font-size:8.0pt;font-family:Tahoma;color:#3333CC'>//
-... the </span><span style='font-size:9.0pt;mso-bidi-font-size:8.0pt;
-font-family:Tahoma;color:red'>&lt;RH&gt;</span><span style='font-size:9.0pt;
-mso-bidi-font-size:8.0pt;font-family:Tahoma;color:#3333CC'> argument is used to
-send response. <o:p></o:p></span></p>
-
-<p class=MsoNormal style='margin-left:36.0pt;text-indent:36.0pt'><span
-style='font-size:9.0pt;mso-bidi-font-size:8.0pt;font-family:Tahoma;color:#3333CC'>//
-It can be stored for later use.<o:p></o:p></span></p>
-
-<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
-font-family:"Courier New";color:black'><span style="mso-spacerun: yes">    
-</span><span style='mso-tab-count:1'> </span><span style='mso-tab-count:1'>      </span><b>AMH_QuoterResponseHandler_ptr</b>
-rh,<o:p></o:p></span></p>
-
-<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
-font-family:"Courier New";color:black'><span style="mso-spacerun: yes">  
-</span><span style="mso-spacerun: yes">  </span><span style='mso-tab-count:
-1'> </span><span style='mso-tab-count:1'>      </span>const char *stock_name);<o:p></o:p></span></p>
-
-<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
-font-family:"Courier New";color:black'>};<o:p></o:p></span></p>
-
-<p class=MsoNormal><span lang=EN-US style='mso-ansi-language:EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
-
-<p class=MsoNormal><b><span lang=EN-US style='mso-ansi-language:EN-US'>Notes:<o:p></o:p></span></b></p>
-
-<p class=MsoNormal style='margin-left:54.0pt;text-indent:-18.0pt;mso-list:l1 level1 lfo1;
-tab-stops:list 54.0pt'><![if !supportLists]><span lang=EN-US style='mso-ansi-language:
-EN-US'>-<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span><![endif]><span lang=EN-US style='mso-ansi-language:EN-US'>Normal
-skeletons that are POA_* are also generated by the IDL (?)<o:p></o:p></span></p>
-
-<p class=MsoNormal style='margin-left:54.0pt;text-indent:-18.0pt;mso-list:l1 level1 lfo1;
-tab-stops:list 54.0pt'><![if !supportLists]><span lang=EN-US style='mso-ansi-language:
-EN-US'>-<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span><![endif]><span lang=EN-US style='mso-ansi-language:EN-US'>The
-memory management rules for the ResponseHandler (RH) are yet to be fully
-concretized but right now it is assumed that the application will be responsible
-for deallocating the RH after it is done with it.<o:p></o:p></span></p>
-
-<p class=MsoNormal style='margin-left:54.0pt;text-indent:-18.0pt;mso-list:l1 level1 lfo1;
-tab-stops:list 54.0pt'><![if !supportLists]><span lang=EN-US style='mso-ansi-language:
-EN-US'>-<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span><![endif]><span lang=EN-US style='mso-ansi-language:EN-US'>Also,
-the RH has special semantics. It can be ‘invoked’ only once. Once it has been
-invoked, invoking it again will raise a ‘suitable’ exception on the server side
-(Operation_Not_Possible?). <o:p></o:p></span></p>
-
-<p class=MsoNormal><span lang=EN-US style='mso-ansi-language:EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
-
-<p class=MsoNormal><span lang=EN-US style='mso-ansi-language:EN-US'>The </span><b><span
-lang=EN-US style='font-family:"Courier New";mso-ansi-language:EN-US'>AMH_</span></b><b><span
-style='mso-bidi-font-size:8.0pt;font-family:"Courier New";color:black'>QuoterResponseHandler
-</span></b><span style='mso-bidi-font-size:8.0pt;color:black'>class is
-generated by the IDL compiler:<o:p></o:p></span></p>
-
-<p class=MsoNormal><span lang=EN-US style='mso-ansi-language:EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
-
-<p class=MsoNormal><span style='font-size:9.0pt;mso-bidi-font-size:8.0pt;
-font-family:Tahoma;color:#3333CC'>// This class is implemented by the ORB</span><span
-style='font-size:9.0pt;mso-bidi-font-size:8.0pt;font-family:Tahoma;color:black'>
-<o:p></o:p></span></p>
-
-<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
-font-family:"Courier New";color:black'>class <b>AMH_QuoterResponseHandler <o:p></o:p></b></span></p>
-
-<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
-font-family:"Courier New";color:black'>{<o:p></o:p></span></p>
-
-<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
-font-family:"Courier New";color:black'><span style="mso-spacerun:
-yes"> </span>public:<o:p></o:p></span></p>
-
-<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
-font-family:"Courier New";color:black'><span style="mso-spacerun: yes"> </span></span><span
-style='font-size:9.0pt;mso-bidi-font-size:8.0pt;font-family:Tahoma;color:#3333CC'>//
-Servers use this method to send their responses back to clients<o:p></o:p></span></p>
-
-<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
-font-family:"Courier New";color:black'><span style="mso-spacerun:
-yes"> </span>void <b>get_quote</b> (CORBA::Long return_value);<o:p></o:p></span></p>
-
-<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
-font-family:"Courier New";color:black'><span style="mso-spacerun: yes"> </span><o:p></o:p></span></p>
-
-<p class=MsoNormal><span style='font-size:10.0pt;mso-bidi-font-size:8.0pt;
-font-family:"Courier New";color:black'>};<o:p></o:p></span></p>
-
-<p class=MsoNormal><span lang=EN-US style='mso-ansi-language:EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
-
-<p class=MsoNormal><b><span lang=EN-US style='mso-ansi-language:EN-US'>Exceptions:<o:p></o:p></span></b></p>
-
-<p class=MsoNormal><b><span lang=EN-US style='mso-ansi-language:EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></b></p>
-
-<p class=MsoNormal><span lang=EN-US style='mso-ansi-language:EN-US'>Follow a
-similar path as in AMI: create an implied IDL skeleton such as:<o:p></o:p></span></p>
 
 <p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;mso-bidi-font-size:
-12.0pt;font-family:"Courier New";mso-ansi-language:EN-US'>namespace <b>POA_Stock<o:p></o:p></b></span></p>
+12.0pt;font-family:"Courier New";mso-ansi-language:EN-US'>module <b>Stock</b> <o:p></o:p></span></p>
 
 <p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;mso-bidi-font-size:
 12.0pt;font-family:"Courier New";mso-ansi-language:EN-US'>{<o:p></o:p></span></p>
 
-<p class=MsoBodyTextIndent style='margin-left:0cm'><span lang=EN-US><span
-style='mso-tab-count:1'>      </span>class <b>AMH_QuoterResponseHandler <o:p></o:p></b></span></p>
+<p class=MsoNormal style='text-indent:36.0pt'><span lang=EN-US
+style='font-size:10.0pt;mso-bidi-font-size:12.0pt;font-family:"Courier New";
+mso-ansi-language:EN-US'>interface <b>AMH_QuoterResponseHandler</b>;<o:p></o:p></span></p>
 
-<p class=MsoBodyTextIndent style='margin-left:0cm;text-indent:36.0pt'><span
-lang=EN-US style='font-size:9.0pt;mso-bidi-font-size:12.0pt;font-family:Tahoma;
-color:blue'>// or just AMH_QuoterHandler ?<o:p></o:p></span></p>
+<p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:"Courier New";mso-ansi-language:EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-indent:36.0pt'><span lang=EN-US
+style='font-size:10.0pt;mso-bidi-font-size:12.0pt;font-family:"Courier New";
+mso-ansi-language:EN-US'>// Only the skeleton class is generated!!!!<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-indent:36.0pt'><span lang=EN-US
+style='font-size:10.0pt;mso-bidi-font-size:12.0pt;font-family:"Courier New";
+mso-ansi-language:EN-US'>interface <b>AMH_Quoter</b> <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-indent:36.0pt'><span lang=EN-US
+style='font-size:10.0pt;mso-bidi-font-size:12.0pt;font-family:"Courier New";
+mso-ansi-language:EN-US'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-left:36.0pt;text-indent:36.0pt'><span
+lang=EN-US style='font-size:10.0pt;mso-bidi-font-size:12.0pt;font-family:"Courier New";
+mso-ansi-language:EN-US'>void <b>get_quote</b> (in AMH_QuoterResponseHandler
+handler,<o:p></o:p></span></p>
 
 <p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;mso-bidi-font-size:
 12.0pt;font-family:"Courier New";mso-ansi-language:EN-US'><span
-style='mso-tab-count:1'>      </span><span style='mso-tab-count:1'>      </span>:
-public POA_Messaging::ResponseHandler <o:p></o:p></span></p>
+style="mso-spacerun: yes">                            </span>in string
+stock_name);<o:p></o:p></span></p>
 
 <p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;mso-bidi-font-size:
 12.0pt;font-family:"Courier New";mso-ansi-language:EN-US'><span
-style="mso-spacerun: yes">            </span></span><span lang=EN-US
-style='font-size:9.0pt;mso-bidi-font-size:12.0pt;font-family:Tahoma;mso-ansi-language:
-EN-US'><span style="mso-spacerun: yes">               </span><span
-style="mso-spacerun:
-yes">                                                </span><span
-style='color:blue'>// ------------------------- OK? <o:p></o:p></span></span></p>
+style="mso-spacerun: yes">  </span><span style='mso-tab-count:1'>    </span>};<o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:"Courier New";mso-ansi-language:EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-indent:36.0pt'><span lang=EN-US
+style='font-size:10.0pt;mso-bidi-font-size:12.0pt;font-family:"Courier New";
+mso-ansi-language:EN-US'>valuetype <b>AMH_QuoterExceptionHolder<span
+style="mso-spacerun: yes">  </span></b>/* : ??? some base valuetype?? */ <o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-indent:36.0pt'><span lang=EN-US
+style='font-size:10.0pt;mso-bidi-font-size:12.0pt;font-family:"Courier New";
+mso-ansi-language:EN-US'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-left:36.0pt;text-indent:36.0pt'><span
+lang=EN-US style='font-size:10.0pt;mso-bidi-font-size:12.0pt;font-family:"Courier New";
+mso-ansi-language:EN-US'>void <b>raise_get_quote</b> () raises
+(Invalid_Stock_Symbol);<o:p></o:p></span></p>
 
 <p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;mso-bidi-font-size:
 12.0pt;font-family:"Courier New";mso-ansi-language:EN-US'><span
-style='mso-tab-count:1'>      </span>{<o:p></o:p></span></p>
+style="mso-spacerun: yes">  </span><span style='mso-tab-count:1'>    </span>};<o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:"Courier New";mso-ansi-language:EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-indent:36.0pt'><span lang=EN-US
+style='font-size:10.0pt;mso-bidi-font-size:12.0pt;font-family:"Courier New";
+mso-ansi-language:EN-US'>interface <b>AMH_QuoterResponseHandler </b><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-indent:36.0pt'><span lang=EN-US
+style='font-size:10.0pt;mso-bidi-font-size:12.0pt;font-family:"Courier New";
+mso-ansi-language:EN-US'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-left:36.0pt;text-indent:36.0pt'><span
+lang=EN-US style='font-size:10.0pt;mso-bidi-font-size:12.0pt;font-family:"Courier New";
+mso-ansi-language:EN-US'>void <b>get_quote </b>(in long return_value);<o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-left:36.0pt;text-indent:36.0pt'><span
+lang=EN-US style='font-size:10.0pt;mso-bidi-font-size:12.0pt;font-family:"Courier New";
+mso-ansi-language:EN-US'>void <b>get_quote_excep </b>(in
+AMH_QuoterExceptionHolder holder);<o:p></o:p></span></p>
 
 <p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;mso-bidi-font-size:
 12.0pt;font-family:"Courier New";mso-ansi-language:EN-US'><span
-style='mso-tab-count:1'>      </span><span style="mso-spacerun: yes"> 
-</span>public:<o:p></o:p></span></p>
+style="mso-spacerun: yes">  </span><span style='mso-tab-count:1'>    </span>};<o:p></o:p></span></p>
 
 <p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;mso-bidi-font-size:
-12.0pt;font-family:"Courier New";mso-ansi-language:EN-US'><span
-style='mso-tab-count:1'>      </span><span style='mso-tab-count:1'>      </span>virtual
-void <b>get_quote </b>(CORBA::Long l) = 0;<o:p></o:p></span></p>
+12.0pt;font-family:"Courier New";mso-ansi-language:EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-indent:36.0pt'><span lang=EN-US
+style='font-size:10.0pt;mso-bidi-font-size:12.0pt;font-family:"Courier New";
+mso-ansi-language:EN-US'>/* <b>OR:</b><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-indent:36.0pt'><span lang=EN-US
+style='font-size:10.0pt;mso-bidi-font-size:12.0pt;font-family:"Courier New";
+mso-ansi-language:EN-US'>interface <b>AMH_QuoterResponseHandler :
+AMI_QuoterReplyHandler </b>{};<o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-indent:36.0pt'><span lang=EN-US
+style='font-size:10.0pt;mso-bidi-font-size:12.0pt;font-family:"Courier New";
+mso-ansi-language:EN-US'>*/<o:p></o:p></span></p>
 
 <p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;mso-bidi-font-size:
-12.0pt;font-family:"Courier New";mso-ansi-language:EN-US'><span
-style='mso-tab-count:1'>      </span><span style='mso-tab-count:1'>      </span>virtual
-void <b>get_quote_excep </b>(<o:p></o:p></span></p>
+12.0pt;font-family:"Courier New";mso-ansi-language:EN-US'>};<o:p></o:p></span></p>
 
 <p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;mso-bidi-font-size:
-12.0pt;font-family:"Courier New";mso-ansi-language:EN-US'><span
-style='mso-tab-count:2'>            </span><span style='mso-tab-count:1'>      </span><b>Stock::AMH_QuoterExceptionHolder</b>
-*excep) = 0<o:p></o:p></span></p>
-
-<p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;mso-bidi-font-size:
-12.0pt;font-family:"Courier New";mso-ansi-language:EN-US'><span
-style='mso-tab-count:1'>      </span>};<o:p></o:p></span></p>
-
-<p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;mso-bidi-font-size:
-12.0pt;font-family:"Courier New";mso-ansi-language:EN-US'>}<o:p></o:p></span></p>
+12.0pt;font-family:"Courier New";mso-ansi-language:EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
 
 <p class=MsoNormal><span lang=EN-US style='mso-ansi-language:EN-US'>The
+ResponseHandler is thus responsible for marshalling any out or return values
+and it collaborates with the ORB in this task (in above example, the response
+is sent back to the client when the method </span><b><span lang=EN-US
+style='font-size:10.0pt;mso-bidi-font-size:12.0pt;font-family:"Courier New";
+mso-ansi-language:EN-US'>get_quote</span></b><span lang=EN-US style='font-size:
+10.0pt;mso-bidi-font-size:12.0pt;font-family:"Courier New";mso-ansi-language:
+EN-US'> </span><span lang=EN-US style='mso-ansi-language:EN-US'>of</span><span
+lang=EN-US style='font-size:10.0pt;mso-bidi-font-size:12.0pt;font-family:"Courier New";
+mso-ansi-language:EN-US'> <b>AMH_Quoter</b> </span><span lang=EN-US
+style='mso-ansi-language:EN-US'>is called). When the ORB creates the
+ResponseHandler for an incoming request it stores state such as request ID, the
+connection used to receive the request, and possibly, some state related to the
+interceptors. This state is then used by the ORB to send back the reply to the
+client. <span style='color:black'>The ResponseHandler also has the required
+interface so that a servant can access (at any time) any information that it
+would have had in a normal upcall.<span style="mso-spacerun: yes">  </span><o:p></o:p></span></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:"Courier New";mso-ansi-language:EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;mso-bidi-font-size:
+12.0pt;font-family:"Courier New";mso-ansi-language:EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal><b><span lang=EN-US style='mso-ansi-language:EN-US'>Issues:<o:p></o:p></span></b></p>
+
+<p class=MsoNormal style='text-indent:36.0pt'><b><span lang=EN-US
+style='mso-ansi-language:EN-US'>General:<o:p></o:p></span></b></p>
+
+<p class=MsoNormal style='margin-left:72.0pt;text-indent:-18.0pt;mso-list:l1 level1 lfo5;
+tab-stops:list 72.0pt'><![if !supportLists]><span lang=EN-US style='mso-ansi-language:
+EN-US'>-<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><![endif]><span lang=EN-US style='mso-ansi-language:EN-US'>The
+memory management rules for the ResponseHandler (RH) are yet to be fully
+concretized but right now it is assumed that the application will be
+responsible for deallocating the RH after it is done with it.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-left:72.0pt;text-indent:-18.0pt;mso-list:l1 level1 lfo5;
+tab-stops:list 72.0pt'><![if !supportLists]><span lang=EN-US style='mso-ansi-language:
+EN-US'>-<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><![endif]><span lang=EN-US style='mso-ansi-language:EN-US'>Also,
+the RH has special semantics. It can be ‘invoked’ only once. Once it has been
+invoked, invoking it again will raise a ‘suitable’ exception on the server side
+(like an “Operation_Not_Possible” ). <o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-left:54.0pt'><span lang=EN-US
+style='mso-ansi-language:EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+
+<p class=MsoNormal style='text-indent:36.0pt'><b><span lang=EN-US
+style='mso-ansi-language:EN-US'>Exceptions:<o:p></o:p></span></b></p>
+
+<p class=MsoNormal style='text-indent:36.0pt'><span lang=EN-US
+style='mso-ansi-language:EN-US'><span style="mso-spacerun: yes">  </span>The
 benefits of using a valuetype to hold an exception are:<o:p></o:p></span></p>
 
-<p class=MsoNormal style='margin-left:18.0pt;text-indent:-18.0pt;mso-list:l1 level1 lfo1;
-tab-stops:list 18.0pt'><![if !supportLists]>-<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<p class=MsoNormal style='margin-left:72.0pt;text-indent:-18.0pt;mso-list:l1 level1 lfo5;
+tab-stops:list 72.0pt'><![if !supportLists]>-<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span><![endif]>It is similar to the existing AMI stuff</p>
 
-<p class=MsoNormal style='margin-left:18.0pt;text-indent:-18.0pt;mso-list:l1 level1 lfo1;
-tab-stops:list 18.0pt'><![if !supportLists]><span lang=EN-US style='mso-ansi-language:
+<p class=MsoNormal style='margin-left:72.0pt;text-indent:-18.0pt;mso-list:l1 level1 lfo5;
+tab-stops:list 72.0pt'><![if !supportLists]><span lang=EN-US style='mso-ansi-language:
 EN-US'>-<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span></span><![endif]>It works with the standard mapping as well as with the
-&quot;alternative<br>
-mapping for dialects without native exceptions&quot; and<span lang=EN-US
-style='mso-ansi-language:EN-US'><o:p></o:p></span></p>
+&quot;alternative mapping for dialects without native exceptions&quot; and<span
+lang=EN-US style='mso-ansi-language:EN-US'><o:p></o:p></span></p>
 
-<p class=MsoNormal style='margin-left:18.0pt;text-indent:-18.0pt;mso-list:l1 level1 lfo1;
-tab-stops:list 18.0pt'><![if !supportLists]><span lang=EN-US style='mso-ansi-language:
+<p class=MsoNormal style='margin-left:72.0pt;text-indent:-18.0pt;mso-list:l1 level1 lfo5;
+tab-stops:list 72.0pt'><![if !supportLists]><span lang=EN-US style='mso-ansi-language:
 EN-US'>-<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span><![endif]>It is illegal to pass exceptions as arguments in IDL,
-using a valuetype<br>
-might keep the language lawyers at bay.<span lang=EN-US style='mso-ansi-language:
-EN-US'><o:p></o:p></span></p>
+</span></span><![endif]>It is illegal to pass exceptions as arguments in IDL;
+using a valuetype might keep the language lawyers at bay.<span lang=EN-US
+style='mso-ansi-language:EN-US'><o:p></o:p></span></p>
 
 <p class=MsoNormal><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></p>
 
-<p class=MsoNormal><span lang=EN-US style='mso-ansi-language:EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+<p class=MsoNormal style='text-indent:36.0pt'><b><span lang=EN-US
+style='mso-ansi-language:EN-US'>AMH_</span></b><b><span style='mso-bidi-font-size:
+8.0pt;color:black'>QuoterResponseHandler implied IDL:</span></b><span
+style='font-size:10.0pt;mso-bidi-font-size:8.0pt;color:black'><o:p></o:p></span></p>
 
-<p class=MsoNormal><span lang=EN-US style='mso-ansi-language:EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+<p class=MsoNormal style='margin-left:72.0pt;text-indent:-18.0pt;mso-list:l1 level1 lfo5;
+tab-stops:list 72.0pt'><![if !supportLists]><span style='mso-bidi-font-size:
+8.0pt;color:black'>-<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><![endif]><span style='mso-bidi-font-size:8.0pt;color:black'>As
+enumerated above, the ResponeHandler could either be a new class or derive from
+the already existing AMI ReplyHandler class. Making the RH sub-class from the
+ReplyHandler has certain advantages, namely, that it will remain interface
+compatible with the AMI class and involve less work from the IDL compiler. But,
+the disadvantage would be that having the interface could be potentially
+confusing because what happens inside the </span><b><span style='font-size:
+10.0pt;mso-bidi-font-size:8.0pt;font-family:"Courier New";color:black'>get_quote</span></b><span
+style='mso-bidi-font-size:8.0pt;color:black'> methods differs quite radically
+in the two classes; in the ReplyHandler, it is an upcall while in the
+ResponseHandler it is a ‘downcall’ .<o:p></o:p></span></p>
 
-<p class=MsoNormal><b><span lang=EN-US style='mso-ansi-language:EN-US'>Implementation
-and design discussions:<o:p></o:p></span></b></p>
+<p class=MsoNormal style='margin-left:54.0pt'><span style='mso-bidi-font-size:
+8.0pt;color:black'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
 
-<p class=MsoNormal><span lang=EN-US style='mso-ansi-language:EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+<p class=MsoNormal style='text-indent:36.0pt'><b><span lang=EN-US
+style='mso-ansi-language:EN-US'>Specifying AMH skeletons: <o:p></o:p></span></b></p>
 
-<p class=MsoNormal><b><span lang=EN-US style='mso-ansi-language:EN-US'>Specifying
-and Implementing AMH skeletons:<o:p></o:p></span></b></p>
-
-<p class=MsoNormal><span lang=EN-US style='mso-ansi-language:EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
-
-<p class=MsoNormal><b><span lang=EN-US style='mso-ansi-language:EN-US'>Doug: <o:p></o:p></span></b></p>
-
-<p class=MsoNormal><span lang=EN-US style='mso-ansi-language:EN-US'>Do we have
-a scheme for allowing server developers to specify whether they want AMH
-skeletons vs. Non-AMH skeletons?<o:p></o:p></span></p>
-
-<p class=MsoNormal><b><span lang=EN-US style='color:#3366FF;mso-ansi-language:
-EN-US'>Carlos:<o:p></o:p></span></b></p>
-
-<p class=MsoBodyText><span lang=EN-US>Well, the usual flags for the IDL
-compiler, I guess it will be something like -GH (compare to -GC for AMI
-callbacks). The developer derives from either the POA class or the POA_AMH
-class to choose between each one.</span></p>
-
-<p class=MsoNormal><span lang=EN-US style='mso-ansi-language:EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
-
-<p class=MsoNormal><span lang=EN-US style='mso-ansi-language:EN-US'>Do you
-think it would make sense to have a couple of options here, e.g.:<o:p></o:p></span></p>
-
-<p class=MsoNormal style='margin-left:18.0pt;text-indent:-18.0pt;mso-list:l3 level1 lfo3;
-tab-stops:list 18.0pt'><![if !supportLists]><span lang=EN-US style='mso-ansi-language:
-EN-US'>0.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]><span
-lang=EN-US style='mso-ansi-language:EN-US'>The default option would be to have
-this stuff determined completely at compile time, as you mention above. <o:p></o:p></span></p>
-
-<p class=MsoBodyText><span lang=EN-US>Wouldn't the application developer have
-to work double for that? She would have to implement twice as many methods,
-right?</span></p>
-
-<p class=MsoBodyText><span lang=EN-US><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
-
-<p class=MsoNormal style='margin-left:18.0pt;text-indent:-18.0pt;mso-list:l3 level1 lfo3;
-tab-stops:list 18.0pt'><![if !supportLists]><span lang=EN-US style='mso-ansi-language:
-EN-US'>1.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]><span
-lang=EN-US style='mso-ansi-language:EN-US'>Another option could be to have a
-single POA class that supported both AMH and SMH interfaces.<span
-style="mso-spacerun: yes">  </span>We could also have a POA policy that<span
-style="mso-spacerun: yes">  </span>would allow a server app to select between
-AMH and SMH on a per-object basis.<o:p></o:p></span></p>
-
-<p class=MsoNormal><span lang=EN-US style='mso-ansi-language:EN-US'>The purpose
-for the latter approach would be to allow application developers to get a
-wide-range of options that could be deferred until run-time.<o:p></o:p></span></p>
-
-<p class=MsoNormal><span lang=EN-US style='mso-ansi-language:EN-US'>Does that
-make sense?<o:p></o:p></span></p>
-
-<p class=MsoBodyText><span lang=EN-US>Well, late binding is always good, but in
-this case the user application developer can implement it by herself if she
-needs to:</span></p>
-
-<p class=MsoNormal><span lang=EN-US style='color:#3366FF;mso-ansi-language:
-EN-US'>Instead of one class with twice as many methods they can implement the
-regular POA and the POA_AMH classes.<span style="mso-spacerun: yes">  </span>At
-run-time they instantiate whatever they want to use for the given
-configuration, maybe even using a Servant Locator to change the decision on the
-fly?<o:p></o:p></span></p>
-
-<p class=MsoNormal><b><span lang=EN-US style='color:#339966;mso-ansi-language:
-EN-US'>Jeff:<o:p></o:p></span></b></p>
-
-<p class=MsoNormal><span lang=EN-US style='color:#339966;mso-ansi-language:
-EN-US'>Or if the developer wants only AMH, the POA class may not need to be<o:p></o:p></span></p>
-
-<p class=MsoNormal><span lang=EN-US style='color:#339966;mso-ansi-language:
-EN-US'>implemented at all. I would say vice versa as well, but in that case,
-the<o:p></o:p></span></p>
-
-<p class=MsoNormal><span lang=EN-US style='color:#339966;mso-ansi-language:
-EN-US'>-GH option wouldn't be used, I guess.<o:p></o:p></span></p>
-
-<p class=MsoNormal><span lang=EN-US style='color:#3366FF;mso-ansi-language:
-EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
-
-<p class=MsoNormal><span lang=EN-US style='color:#3366FF;mso-ansi-language:
-EN-US'><span style="mso-spacerun: yes"> </span>I don't know, maybe it is too
-early to tell if any idea like this one would work.<span style="mso-spacerun:
-yes">  </span>For example, it should be possible to automatically generate
-adapters to convert from AMH and regular servants, is it useful?<span
-style="mso-spacerun: yes">  </span>Other crazy ideas include:<o:p></o:p></span></p>
-
-<p class=MsoNormal style='margin-left:18.0pt;text-indent:-18.0pt;mso-list:l2 level1 lfo4;
-tab-stops:list 18.0pt'><![if !supportLists]><b><span lang=EN-US
-style='color:#3366FF;mso-ansi-language:EN-US'>1)<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span></b><![endif]><span lang=EN-US style='color:#3366FF;mso-ansi-language:
-EN-US'>The code we show for AMH/AMI gateways is sort of repetitive, could we
-use a *ReplyHandler* (instead of ResponseHandler) as the extra argument for the
-AMH servant?<span style="mso-spacerun: yes">  </span>Then we wouldn't need the
-helper AMI adapter.<b><o:p></o:p></b></span></p>
-
-<p class=MsoBodyText2><span lang=EN-US>I like this one. Or, as I mentioned to
-Mayur in an earlier email, I'm thinking that we may be able to get away with
-skeleton-only code generation for the AMH, since we don't have an OMG spec to
-constrain us - yet ;-). We have stub and skeleton generated code for AMI, but
-it seems that's because the messaging spec requires the creation of a reply
-handler object which is passed to the request target in a special method call
-(at</span></p>
-
-<p class=MsoNormal><span lang=EN-US style='color:#339966;mso-ansi-language:
-EN-US'>least with the callback model). If not for that, the difference between
-our heap-created TAO_Asynch_Reply_Dispatcher and our stack-created
-TAO_Synch_Reply_Dispatcher would be all we would need (I think) to make AMI
-work.<o:p></o:p></span></p>
-
-<p class=MsoNormal><b><span lang=EN-US style='color:#339966;mso-ansi-language:
-EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></b></p>
-
-<p class=MsoNormal style='margin-left:18.0pt;text-indent:-18.0pt;mso-list:l2 level1 lfo4;
-tab-stops:list 18.0pt'><![if !supportLists]><b><span lang=EN-US
-style='color:#3366FF;mso-ansi-language:EN-US'>2)<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span></b><![endif]><span lang=EN-US style='color:#3366FF;mso-ansi-language:
-EN-US'>What if the client is using AMI callback?<span style="mso-spacerun:
-yes">  </span>Why don't we send the AMI ReplyHandler object reference as a
-service context entry or something like that, then the server could send the
-reply directly to it, and with a little more magic we can eliminate the Reply
-message, and maybe event send the reply directly to a third party without
-involving the client anymore (useless but kind of cool :-)<b><o:p></o:p></b></span></p>
-
-<p class=MsoNormal><span lang=EN-US style='mso-ansi-language:EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
-
-<p class=MsoNormal><span lang=EN-US style='mso-ansi-language:EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
-
-<p class=MsoNormal><b><span lang=EN-US style='mso-ansi-language:EN-US'>Responsibilities
-of ORB/Skeleton/Servant :<o:p></o:p></span></b></p>
+<p class=MsoNormal style='margin-left:72.0pt;text-indent:-18.0pt;mso-list:l1 level1 lfo5;
+tab-stops:list 72.0pt'><![if !supportLists]>-<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><![endif]>It should be possible to generate only skeleton-side specific
+files for AMH. The question then is how to allow <span lang=EN-US
+style='mso-ansi-language:EN-US'>server developers to specify whether they want
+AMH skeletons vs. Non-AMH skeletons? The solution is to have </span>flags for
+the IDL compiler, like -GH (compare to -GC for AMI callbacks). The developer
+then derives from either the POA class or the POA_AMH class to choose between
+each one.</p>
 
 <p class=MsoNormal><b><span lang=EN-US style='mso-ansi-language:EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></b></p>
 
-<p class=MsoNormal><b><span lang=EN-US style='color:red;mso-ansi-language:EN-US'>Mayur:<o:p></o:p></span></b></p>
+<p class=MsoNormal style='margin-left:36.0pt'><b><span lang=EN-US
+style='mso-ansi-language:EN-US'>Design Tradeoffs<o:p></o:p></span></b></p>
 
-<p class=MsoNormal><span lang=EN-US style='color:red;mso-ansi-language:EN-US'>Here
-is how AMH is planned to be used. When the request arrives for an AMH enabled
-servant, the ORB creates a ResponseHandler object (RH). RH now contains enough
-state in it so that the appropriate reply can be sent back to the client. This
-RH along with the 'IN' parameters are passed in to the AMH enabled servant. The
-servant then, depending upon certain criteria, either handles the request
-immediately or puts it into a 'queue' along with the parameters and returns
-control back to the ORB. Later at some point, some method in the app looks at
-the queue and decides to handle some RH in it.<o:p></o:p></span></p>
+<p class=MsoNormal style='margin-left:72.0pt;text-indent:-18.0pt;mso-list:l1 level1 lfo5;
+tab-stops:list 72.0pt'><![if !supportLists]><span lang=EN-US style='mso-ansi-language:
+EN-US;mso-bidi-font-weight:bold'>-<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><![endif]><b><span lang=EN-US style='mso-ansi-language:EN-US'>Static
+/ Runtime Selection:<o:p></o:p></span></b></p>
 
-<p class=MsoNormal><span lang=EN-US style='color:red;mso-ansi-language:EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+<p class=MsoNormal style='margin-left:108.0pt;text-indent:-18.0pt;mso-list:
+l1 level2 lfo5;tab-stops:list 108.0pt'><![if !supportLists]><span lang=EN-US
+style='font-family:"Courier New";mso-bidi-font-family:"Times New Roman";
+mso-ansi-language:EN-US;mso-bidi-font-weight:bold'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><![endif]><span lang=EN-US style='mso-ansi-language:EN-US'>Determine
+completely at run-time if application developer wants AMH or not. This would
+involve the app-developer implementing twice the number of methods. Need to
+discuss if this option makes sense and what are the benefits of doing this. <b><o:p></o:p></b></span></p>
 
-<p class=MsoNormal><span lang=EN-US style='color:red;mso-ansi-language:EN-US'>How
-and who marshalls (any of the) out parameters?<o:p></o:p></span></p>
+<p class=MsoNormal style='margin-left:108.0pt;text-indent:-18.0pt;mso-list:
+l1 level2 lfo5;tab-stops:list 108.0pt'><![if !supportLists]><span lang=EN-US
+style='font-family:"Courier New";mso-bidi-font-family:"Times New Roman";
+mso-ansi-language:EN-US;mso-bidi-font-weight:bold'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><![endif]><span lang=EN-US style='mso-ansi-language:EN-US'>The
+app-developer can select the ‘right’ (AMH-enabled or not) servant to
+instantiate at run-time with the POA. The servant implementation must, then,
+derive from the appropriate POA_* or POA_AMH_* class. <b><o:p></o:p></b></span></p>
 
-<p class=MsoNormal><span lang=EN-US style='color:#99CC00;mso-ansi-language:
-EN-US'><span style="mso-spacerun: yes">    </span></span><span lang=EN-US
-style='color:blue;mso-ansi-language:EN-US'>The Response Handler.<o:p></o:p></span></p>
+<p class=MsoNormal style='margin-left:72.0pt;text-indent:-18.0pt;mso-list:l1 level1 lfo5;
+tab-stops:list 72.0pt'><![if !supportLists]><span lang=EN-US style='mso-ansi-language:
+EN-US;mso-bidi-font-weight:bold'>-<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><![endif]><b><span lang=EN-US style='mso-ansi-language:EN-US'>Activation
+Granularity: Per POA / Per Object<o:p></o:p></span></b></p>
 
-<p class=MsoNormal><span lang=EN-US style='color:red;mso-ansi-language:EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+<p class=MsoNormal style='margin-left:108.0pt;text-indent:-18.0pt;mso-list:
+l1 level2 lfo5;tab-stops:list 108.0pt'><![if !supportLists]><span lang=EN-US
+style='font-family:"Courier New";mso-bidi-font-family:"Times New Roman";
+mso-ansi-language:EN-US;mso-bidi-font-weight:bold'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><![endif]><span lang=EN-US style='mso-ansi-language:EN-US'>One
+approach is to activate all AMH-enabled servants in a separate POA that has
+explicitly been set up with a Policy to handle AMH. In this case, the
+granularity is per-POA<b><o:p></o:p></b></span></p>
 
-<p class=MsoNormal><span lang=EN-US style='color:red;mso-ansi-language:EN-US'>Who
-sends the response back to the client?<o:p></o:p></span></p>
+<p class=MsoNormal style='margin-left:108.0pt;text-indent:-18.0pt;mso-list:
+l1 level2 lfo5;tab-stops:list 108.0pt'><![if !supportLists]><span lang=EN-US
+style='font-family:"Courier New";mso-bidi-font-family:"Times New Roman";
+mso-ansi-language:EN-US;mso-bidi-font-weight:bold'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><![endif]><span lang=EN-US style='mso-ansi-language:EN-US'>The
+other approach is to inherently have AMH capability in the POA so that both AMH-enabled
+and non-AMH servants can exist in the same POA. This would be harder to
+implement and the gains from this are not too apparent. Programmatically, the
+per-POA approach can achieve any functionality needed, since servants can be
+instantiated across multiple POAs.<b><o:p></o:p></b></span></p>
 
-<p class=MsoNormal><span lang=EN-US style='color:blue;mso-ansi-language:EN-US'><span
-style="mso-spacerun: yes">    </span>The Response Handler and the ORB
-collaborate for that, as soon as you invoke the callback method on it, well,
-maybe it gets queued in the I/O subsystem and stuff.</span><span lang=EN-US
-style='color:red;mso-ansi-language:EN-US'> </span><span lang=EN-US
-style='color:blue;mso-ansi-language:EN-US'>The ORB does the work, behind the
-scenes, using the response handler to hide all the details.<o:p></o:p></span></p>
+<p class=MsoNormal style='margin-left:54.0pt'><b><span lang=EN-US
+style='mso-ansi-language:EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></b></p>
 
-<p class=MsoNormal><span lang=EN-US style='color:blue;mso-ansi-language:EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+<div style='border:none;border-bottom:solid windowtext .75pt;padding:0cm 0cm 1.0pt 0cm'>
 
-<p class=MsoNormal><span lang=EN-US style='color:red;mso-ansi-language:EN-US'>Is
-there any ORB-specific state in the RH?<o:p></o:p></span></p>
+<p class=MsoNormal style='border:none;mso-border-bottom-alt:solid windowtext .75pt;
+padding:0cm;mso-padding-alt:0cm 0cm 1.0pt 0cm'><span lang=EN-US
+style='mso-ansi-language:EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
 
-<p class=MsoNormal><span lang=EN-US style='color:blue;mso-ansi-language:EN-US'><span
-style="mso-spacerun: yes">    </span>Yes, the request ID, the connection used
-to receive the request, and possibly, some state related to the interceptors.<o:p></o:p></span></p>
+</div>
 
-<p class=MsoNormal><span lang=EN-US style='color:blue;mso-ansi-language:EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+<p class=MsoNormal><span lang=EN-US style='mso-ansi-language:EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
 
-<p class=MsoBodyText3><span lang=EN-US>I can guess that there should be, but if
-the app needs to manipulate it, what interfaces do we provide for the app to
-safely modify it?</span></p>
+<p class=MsoNormal><b><u><span lang=EN-US style='font-size:14.0pt;mso-bidi-font-size:
+12.0pt;mso-ansi-language:EN-US'>Implementation Considerations:<o:p></o:p></span></u></b></p>
 
-<p class=MsoNormal><span lang=EN-US style='color:blue;mso-ansi-language:EN-US'><span
-style="mso-spacerun: yes">    </span>The application never modifies that state,
-it only invokes the callback methods to (implicitly) send the response, that
-may change the state.<span style="mso-spacerun: yes">  </span>For example, a RH
-should be used only once (there is one response per request), so there probably
-would be a &quot;fired&quot; state, once set any attempt to invoke the callback
-methods again should raise an exception.<span style="mso-spacerun: yes"> 
-</span>As far as I can see today,<span style="mso-spacerun: yes">  </span>the
-app should not need nor have access to any of the RH state, the RH is an opaque
-handle provided to send back responses.<o:p></o:p></span></p>
+<p class=MsoNormal><b><u><span lang=EN-US style='font-size:14.0pt;mso-bidi-font-size:
+12.0pt;mso-ansi-language:EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></u></b></p>
 
-<p class=MsoNormal><span lang=EN-US style='color:blue;mso-ansi-language:EN-US'><span
-style="mso-spacerun: yes">  </span></span><span lang=EN-US style='color:black;
-mso-ansi-language:EN-US'>The RH should be able to give the same information as
-a servant in an upcall would have had. <o:p></o:p></span></p>
+<p class=MsoNormal style='margin-left:72.0pt;text-indent:-18.0pt;mso-list:l1 level1 lfo5;
+tab-stops:list 72.0pt'><![if !supportLists]><span lang=EN-US style='color:black;
+mso-ansi-language:EN-US'>-<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><![endif]><span lang=EN-US style='mso-ansi-language:EN-US'>Many
+optimizations currently in place in TAO are based on assumptions of a single
+activation record for handling of a request (receiving a request and sending
+back a reply). AMH breaks this basic assumption. The request could be received
+in one thread and the reply could possibly be sent in another thread. <span
+style='color:black'><o:p></o:p></span></span></p>
 
-<p class=MsoNormal><span lang=EN-US style='color:black;mso-ansi-language:EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
+<p class=MsoNormal style='margin-left:72.0pt;text-indent:-18.0pt;mso-list:l1 level1 lfo5;
+tab-stops:list 72.0pt'><![if !supportLists]><span lang=EN-US style='color:black;
+mso-ansi-language:EN-US'>-<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><![endif]><span lang=EN-US style='mso-ansi-language:EN-US'>Some
+CORBA specs also implicitly assume a single activation record; thus introducing
+AMH requires a rethinking of most of the ORB’s functionality and how it is
+implemented. An example is the <span style='color:black'>Interceptors spec.
+Details are yet to be worked out on how the current implementation of
+Interceptors may break and in what scenario (in request path or reply path) and
+how it could be avoided.<o:p></o:p></span></span></p>
 
-<p class=MsoNormal><span lang=EN-US style='color:black;mso-ansi-language:EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
-
-<p class=MsoNormal><b><span lang=EN-US style='color:black;mso-ansi-language:
-EN-US'>Discussions from Meeting 07/05: (Doug, Russ, Mayur)<o:p></o:p></span></b></p>
-
-<p class=MsoNormal><span lang=EN-US style='color:black;mso-ansi-language:EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
-
-<p class=MsoNormal><span lang=EN-US style='color:black;mso-ansi-language:EN-US'>Design
-Issues with design:<o:p></o:p></span></p>
-
-<p class=MsoNormal style='margin-left:54.0pt;text-indent:-18.0pt;mso-list:l1 level1 lfo1;
-tab-stops:list 54.0pt'><![if !supportLists]><span lang=EN-US style='color:black;
+<p class=MsoNormal style='margin-left:72.0pt;text-indent:-18.0pt;mso-list:l1 level1 lfo5;
+tab-stops:list 72.0pt'><![if !supportLists]><span lang=EN-US style='color:black;
 mso-ansi-language:EN-US'>-<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span></span><![endif]><span lang=EN-US style='color:black;mso-ansi-language:
-EN-US'>Interceptors<o:p></o:p></span></p>
+EN-US'>All the interactions between the POA, Skeleton and Servant need to be
+analyzed carefully regarding scope and lifetime, since, now,<span
+style="mso-spacerun: yes">  </span>(C++) objects now could exist on the heap.
+Reference counting of the objects could be a potential solution.<o:p></o:p></span></p>
 
-<p class=MsoNormal style='margin-left:90.0pt;text-indent:-18.0pt;mso-list:l1 level2 lfo1;
-tab-stops:list 90.0pt'><![if !supportLists]><span lang=EN-US style='font-family:
-"Courier New";mso-bidi-font-family:"Times New Roman";color:black;mso-ansi-language:
-EN-US'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span><![endif]><span lang=EN-US style='color:black;mso-ansi-language:
-EN-US'>What will break<o:p></o:p></span></p>
-
-<p class=MsoNormal style='margin-left:90.0pt;text-indent:-18.0pt;mso-list:l1 level2 lfo1;
-tab-stops:list 90.0pt'><![if !supportLists]><span lang=EN-US style='font-family:
-"Courier New";mso-bidi-font-family:"Times New Roman";color:black;mso-ansi-language:
-EN-US'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span><![endif]><span lang=EN-US style='color:black;mso-ansi-language:
-EN-US'>What won’t<o:p></o:p></span></p>
-
-<p class=MsoNormal style='margin-left:90.0pt;text-indent:-18.0pt;mso-list:l1 level2 lfo1;
-tab-stops:list 90.0pt'><![if !supportLists]><span lang=EN-US style='font-family:
-"Courier New";mso-bidi-font-family:"Times New Roman";color:black;mso-ansi-language:
-EN-US'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span><![endif]><span lang=EN-US style='color:black;mso-ansi-language:
-EN-US'>Solutions?<o:p></o:p></span></p>
-
-<p class=MsoNormal style='margin-left:54.0pt;text-indent:-18.0pt;mso-list:l1 level1 lfo1;
-tab-stops:list 54.0pt'><![if !supportLists]><span lang=EN-US style='color:black;
+<p class=MsoNormal style='margin-left:72.0pt;text-indent:-18.0pt;mso-list:l1 level1 lfo5;
+tab-stops:list 72.0pt'><![if !supportLists]><span lang=EN-US style='color:black;
 mso-ansi-language:EN-US'>-<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span></span><![endif]><span lang=EN-US style='color:black;mso-ansi-language:
-EN-US'>Servant Manager/Locator/Activator<o:p></o:p></span></p>
+EN-US'>TAO also supports many concurrency models such as Single-Threaded,
+Thread-Pools, Leader-Follower, etc. Again, there is need for analysis if AMH
+will work with all these concurrency models. But due to the way TAO has been
+built making use of design patterns such as Factory and Strategy, it is
+foreseen that AMH could work seamlessly with the many concurrency models and
+that AMH could actually be an issue that is orthogonal to concurrency<o:p></o:p></span></p>
 
-<p class=MsoNormal style='margin-left:54.0pt;text-indent:-18.0pt;mso-list:l1 level1 lfo1;
-tab-stops:list 54.0pt'><![if !supportLists]><span lang=EN-US style='color:black;
+<p class=MsoNormal style='margin-left:72.0pt;text-indent:-18.0pt;mso-list:l1 level1 lfo5;
+tab-stops:list 72.0pt'><![if !supportLists]><span lang=EN-US style='color:black;
 mso-ansi-language:EN-US'>-<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span></span><![endif]><span lang=EN-US style='color:black;mso-ansi-language:
-EN-US'>POA_Current<o:p></o:p></span></p>
+EN-US'>Other misc. issues include interaction of AMH with Servant
+Managers/Locators/Activators and with POA_Current<o:p></o:p></span></p>
 
-<p class=MsoNormal style='margin-left:54.0pt;text-indent:-18.0pt;mso-list:l1 level1 lfo1;
-tab-stops:list 54.0pt'><![if !supportLists]><span lang=EN-US style='color:black;
+<p class=MsoNormal style='margin-left:72.0pt;text-indent:-18.0pt;mso-list:l1 level1 lfo5;
+tab-stops:list 72.0pt'><![if !supportLists]><span lang=EN-US style='color:black;
 mso-ansi-language:EN-US'>-<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span></span><![endif]><span lang=EN-US style='color:black;mso-ansi-language:
-EN-US'>Interaction between POA, Skeleton, Servant:<o:p></o:p></span></p>
+EN-US'>In an ideal implementation, there should be no penalty for not using AMH
+while still being able to enable AMH at run-time. A possible way to do this
+would be subset AMH (similar to RT-CORBA) into a library and load it as needed.
+<span style="mso-spacerun: yes"> </span><o:p></o:p></span></p>
 
-<p class=MsoNormal style='margin-left:90.0pt;text-indent:-18.0pt;mso-list:l1 level2 lfo1;
-tab-stops:list 90.0pt'><![if !supportLists]><span lang=EN-US style='font-family:
-"Courier New";mso-bidi-font-family:"Times New Roman";color:black;mso-ansi-language:
-EN-US'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span><![endif]><span lang=EN-US style='color:black;mso-ansi-language:
-EN-US'>Scope<o:p></o:p></span></p>
+<p class=MsoNormal style='margin-left:54.0pt'><span lang=EN-US
+style='color:black;mso-ansi-language:EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
 
-<p class=MsoNormal style='margin-left:90.0pt;text-indent:-18.0pt;mso-list:l1 level2 lfo1;
-tab-stops:list 90.0pt'><![if !supportLists]><span lang=EN-US style='font-family:
-"Courier New";mso-bidi-font-family:"Times New Roman";color:black;mso-ansi-language:
-EN-US'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span><![endif]><span lang=EN-US style='color:black;mso-ansi-language:
-EN-US'>Lifetime<o:p></o:p></span></p>
+<div style='border:none;border-bottom:solid windowtext .75pt;padding:0cm 0cm 1.0pt 0cm'>
 
-<p class=MsoNormal style='margin-left:90.0pt;text-indent:-18.0pt;mso-list:l1 level2 lfo1;
-tab-stops:list 90.0pt'><![if !supportLists]><span lang=EN-US style='font-family:
-"Courier New";mso-bidi-font-family:"Times New Roman";color:black;mso-ansi-language:
-EN-US'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span><![endif]><span lang=EN-US style='color:black;mso-ansi-language:
-EN-US'>Reference-Counting to the rescue?<o:p></o:p></span></p>
+<p class=MsoNormal style='border:none;mso-border-bottom-alt:solid windowtext .75pt;
+padding:0cm;mso-padding-alt:0cm 0cm 1.0pt 0cm'><span lang=EN-US
+style='mso-ansi-language:EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
 
-<p class=MsoNormal style='margin-left:54.0pt;text-indent:-18.0pt;mso-list:l1 level1 lfo1;
-tab-stops:list 54.0pt'><![if !supportLists]><span lang=EN-US style='color:black;
-mso-ansi-language:EN-US'>-<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span><![endif]><span lang=EN-US style='color:black;mso-ansi-language:
-EN-US'>Interactions with concurrency models<o:p></o:p></span></p>
+</div>
 
-<p class=MsoNormal style='margin-left:90.0pt;text-indent:-18.0pt;mso-list:l1 level2 lfo1;
-tab-stops:list 90.0pt'><![if !supportLists]><span lang=EN-US style='font-family:
-"Courier New";mso-bidi-font-family:"Times New Roman";color:black;mso-ansi-language:
-EN-US'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span><![endif]><span lang=EN-US style='color:black;mso-ansi-language:
-EN-US'>Orthogonal?<o:p></o:p></span></p>
+<p class=MsoNormal><span lang=EN-US style='mso-ansi-language:EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
 
-<p class=MsoNormal style='margin-left:54.0pt;text-indent:-18.0pt;mso-list:l1 level1 lfo1;
-tab-stops:list 54.0pt'><![if !supportLists]><span lang=EN-US style='color:black;
-mso-ansi-language:EN-US'>-<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span><![endif]><span lang=EN-US style='color:black;mso-ansi-language:
-EN-US'>Separate library for AMH? <o:p></o:p></span></p>
+<p class=MsoNormal><span lang=EN-US style='mso-ansi-language:EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
 
-<p class=MsoNormal style='margin-left:90.0pt;text-indent:-18.0pt;mso-list:l1 level2 lfo1;
-tab-stops:list 90.0pt'><![if !supportLists]><span lang=EN-US style='font-family:
-"Courier New";mso-bidi-font-family:"Times New Roman";color:black;mso-ansi-language:
-EN-US'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span><![endif]><span lang=EN-US style='color:black;mso-ansi-language:
-EN-US'>Following sub-setting trend as in RT-CORBA<o:p></o:p></span></p>
-
-<p class=MsoNormal style='margin-left:90.0pt;text-indent:-18.0pt;mso-list:l1 level2 lfo1;
-tab-stops:list 90.0pt'><![if !supportLists]><span lang=EN-US style='font-family:
-"Courier New";mso-bidi-font-family:"Times New Roman";color:black;mso-ansi-language:
-EN-US'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span><![endif]><span lang=EN-US style='color:black;mso-ansi-language:
-EN-US'>How to defer to run-time as far as possible<o:p></o:p></span></p>
-
-<p class=MsoNormal style='margin-left:90.0pt;text-indent:-18.0pt;mso-list:l1 level2 lfo1;
-tab-stops:list 90.0pt'><![if !supportLists]><span lang=EN-US style='font-family:
-"Courier New";mso-bidi-font-family:"Times New Roman";color:black;mso-ansi-language:
-EN-US'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span><![endif]><span lang=EN-US style='color:black;mso-ansi-language:
-EN-US'>No penalty for non-usage of AMH but still be able to enable AMH as
-needed. <o:p></o:p></span></p>
-
-<p class=MsoNormal style='margin-left:54.0pt;text-indent:-18.0pt;mso-list:l1 level1 lfo1;
-tab-stops:list 54.0pt'><![if !supportLists]><span lang=EN-US style='color:black;
-mso-ansi-language:EN-US'>-<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span><![endif]><span lang=EN-US style='color:black;mso-ansi-language:
-EN-US'>Granularity of activation<o:p></o:p></span></p>
-
-<p class=MsoNormal style='margin-left:90.0pt;text-indent:-18.0pt;mso-list:l1 level2 lfo1;
-tab-stops:list 90.0pt'><![if !supportLists]><span lang=EN-US style='font-family:
-"Courier New";mso-bidi-font-family:"Times New Roman";color:black;mso-ansi-language:
-EN-US'>o<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></span><![endif]><span lang=EN-US style='color:black;mso-ansi-language:
-EN-US'>Currently only per-POA<o:p></o:p></span></p>
-
-<p class=MsoNormal style='margin-left:126.0pt;text-indent:-18.0pt;mso-list:
-l1 level3 lfo1;tab-stops:list 126.0pt'><![if !supportLists]><span lang=EN-US
-style='font-family:Wingdings;color:black;mso-ansi-language:EN-US'>§<span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]><span
-lang=EN-US style='color:black;mso-ansi-language:EN-US'>Activate ‘right’
-skeleton (generated by IDL) in ‘right’ POA.<o:p></o:p></span></p>
-
-<p class=MsoNormal style='margin-left:126.0pt;text-indent:-18.0pt;mso-list:
-l1 level3 lfo1;tab-stops:list 126.0pt'><![if !supportLists]><span lang=EN-US
-style='font-family:Wingdings;color:black;mso-ansi-language:EN-US'>§<span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><![endif]><span
-lang=EN-US style='color:black;mso-ansi-language:EN-US'>AMH/non-AMH skeleton.
-AMH/non-AMH POA.<o:p></o:p></span></p>
+<p class=MsoNormal><span lang=EN-US style='mso-ansi-language:EN-US'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
 
 </div>
 
