@@ -25,7 +25,6 @@ ACE_RCSID (TAO_SSLIOP,
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-
 template class TAO_Connect_Concurrency_Strategy<TAO_SSLIOP_Connection_Handler>;
 template class TAO_Connect_Creation_Strategy<TAO_SSLIOP_Connection_Handler>;
 template class ACE_Strategy_Connector<TAO_SSLIOP_Connection_Handler, ACE_SSL_SOCK_CONNECTOR>;
@@ -47,11 +46,10 @@ template class ACE_Auto_Basic_Ptr<TAO_SSLIOP_Connection_Handler>;
 #pragma instantiate ACE_Strategy_Connector<TAO_SSLIOP_Connection_Handler, ACE_SSL_SOCK_CONNECTOR>
 #pragma instantiate ACE_Connect_Strategy<TAO_SSLIOP_Connection_Handler, ACE_SSL_SOCK_CONNECTOR>
 #pragma instantiate ACE_Connector<TAO_SSLIOP_Connection_Handler, ACE_SSL_SOCK_CONNECTOR>
-#pragma instantiate ACE_Svc_Tuple<TAO_SSLIOP_Connection_Handler>
 
-#pragma instantiate ACE_Connector<TAO_SSLIOP_Connection_Handler, ACE_SOCK_CONNECTOR>
 #pragma instantiate ACE_Creation_Strategy<TAO_SSLIOP_Connection_Handler>
 #pragma instantiate ACE_Svc_Tuple<TAO_SSLIOP_Connection_Handler>
+
 #pragma instantiate ACE_Map_Manager<int, ACE_Svc_Tuple<TAO_SSLIOP_Connection_Handler> *, TAO_SYNCH_RW_MUTEX>
 #pragma instantiate ACE_Map_Iterator_Base<int, ACE_Svc_Tuple<TAO_SSLIOP_Connection_Handler> *, TAO_SYNCH_RW_MUTEX>
 #pragma instantiate ACE_Map_Entry<int,ACE_Svc_Tuple<TAO_SSLIOP_Connection_Handler>*>
