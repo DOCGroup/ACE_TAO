@@ -1361,7 +1361,7 @@ ACE_ALLOC_HOOK_DEFINE(ACE_DNode)
 
 template <class T>
 ACE_DNode<T>::ACE_DNode (const T &i, ACE_DNode<T> *n, ACE_DNode<T> *p)
-  : item_ (i), next_ (n), prev_ (p)
+  : next_ (n), prev_ (p), item_ (i)
 {
 }
 
@@ -1954,8 +1954,8 @@ ACE_Ordered_MultiSet<T>::insert_from (const T &item, ACE_DNode<T> *position,
     this->tail_ = temp;
   }
 
-
   this->cur_size_++;
+  *new_position = temp;
   return 0;
 }
 

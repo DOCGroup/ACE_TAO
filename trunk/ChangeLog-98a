@@ -1,3 +1,9 @@
+Tue Feb 03 15:11:00 1998  Chris Gill  <cdgill@cs.wustl.edu>
+
+        * ace/Containers.cpp : fixed order of member initialization list
+          in ACE_DNode ctor, added update of new_position pointer in
+          ACE_Ordered_MultiSet::find_from ()
+
 Mon Feb 02 21:26:30 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Map_Manager_Test.cpp (test_map_manager): print out
