@@ -18,7 +18,6 @@ static ACE_Malloc<ACE_SHARED_MEMORY_POOL, ACE_SV_Semaphore_Simple> my_alloc;
 
 const int SEM_KEY_1 = ACE_DEFAULT_SEM_KEY + 1;
 const int SEM_KEY_2 = ACE_DEFAULT_SEM_KEY + 2;
-const int SHMSZ = 27;
 
 static int
 parent (char *shm)
@@ -90,7 +89,7 @@ main (int, char *[])
 int main (int, char *[])
 {
   ACE_ERROR ((LM_ERROR,
-	      "SYSV IPC is not supported on this platform\n"));
+              "SYSV IPC is not supported on this platform\n"));
   return 0;
 }
 #endif /* ACE_HAS_SYSV_IPC */
