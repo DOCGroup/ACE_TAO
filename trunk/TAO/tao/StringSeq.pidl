@@ -14,8 +14,6 @@
 //          -Wb,post_include="ace/post.h"
 //          StringSeq.pidl
 //
-//   Patches for changes to the generated code are available in the
-//   `diffs' directory.
 // ================================================================
 
 
