@@ -555,6 +555,13 @@ template <class MUTEX>
 class ACE_Process_Condition : public ACE_Condition<MUTEX>
   // = TITLE
   //     ACE_Condition variable wrapper that works across processes.
+  //
+  // = DESCRIPTION
+  //     Note that this implementation only works on OS platforms
+  //     (e.g., Solaris and some implementations of POSIX pthreads)
+  //     that natively implement condition variables and mutexes with
+  //     USYNC_PROCESS scope.  In particular, this won't work on
+  //     Win32, where these synchronization mechanisms are emulated.
 {
 public:
   ACE_Process_Condition (MUTEX &m, LPCTSTR name = 0, void *arg = 0);
