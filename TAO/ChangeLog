@@ -1,3 +1,13 @@
+Thu Nov  4 12:35:02 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/IFR_Service_Utils.cpp:
+        
+          Fixed potential memory leak in the Interface Repository which
+          happens when open() is called on a just-allocated 
+          ACE_Configuration pointer. If the call fails, the method
+          was returning without deleting the pointer. Thanks to
+          Gary Maxey <gary.maxey@hp.com> for reporting the problem.
+
 Thu Nov  4 12:09:00 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/IFR_Service/ifr_adding_visitor.cpp:
