@@ -2,6 +2,8 @@
 // $Id$
 //
 
+#include <sys/lwp.h>
+
 #include "ace/OS.h"
 
 #include "Timeprobe.h"
@@ -27,9 +29,10 @@ ACE_Timeprobe::instance ()
 void
 ACE_Timeprobe::timeprobe (const char *id)
 {
+  ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->mutex_);
   timeprobes [current_slot_].id_ = id;
   timeprobes [current_slot_].time_ = ACE_OS::gethrtime ();
-  timeprobes [current_slot_].thread_ = ACE_OS::thr_self ();
+  timeprobes [current_slot_].thread_ = _lwp_self (); // ACE_OS::thr_self ();
 
   ++current_slot_;
 

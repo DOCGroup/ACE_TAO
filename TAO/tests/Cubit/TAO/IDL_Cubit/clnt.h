@@ -71,6 +71,9 @@ private:
   void cube_short (int i);
   // Cube a short.
 
+  void cube_sequence (int i);
+  // Cube a sequence.
+
   void cube_struct_dii (void);
   // Cube the numbers in a struct
 

@@ -41,6 +41,7 @@
 // reported.
 
 #include "tao/corba.h"
+#include "tao/Timeprobe.h"
 
 static const char digits [] = "0123456789ABCD";
 static const char *names [] =
@@ -77,6 +78,8 @@ CORBA::Boolean
 TAO_GIOP::send_request (TAO_SVC_HANDLER *&handler,
                         CDR &stream)
 {
+  ACE_TIMEPROBE ("  -> GIOP::send_request - start");
+
   char *buf = (char *) stream.buffer;
   size_t buflen = stream.next - stream.buffer;
 
@@ -109,6 +112,7 @@ TAO_GIOP::send_request (TAO_SVC_HANDLER *&handler,
 	{
 	  ACE_DEBUG ((LM_DEBUG, "(%P|%t) ?? writebuf, buflen %u > length %u\n",
                       buflen, stream.length));
+	  ACE_TIMEPROBE ("  -> GIOP::send_request - fail");
 	  return CORBA::B_FALSE;
 	}
 
@@ -140,6 +144,7 @@ TAO_GIOP::send_request (TAO_SVC_HANDLER *&handler,
 		      "(%P|%t) closing conn %d after fault\n", peer.get_handle ()));
           handler->close ();
           handler = 0;
+	  ACE_TIMEPROBE ("  -> GIOP::send_request - fail");
 	  return CORBA::B_FALSE;
 	}
       else if (writelen == 0)
@@ -149,6 +154,7 @@ TAO_GIOP::send_request (TAO_SVC_HANDLER *&handler,
 		      peer.get_handle ()));
           handler->close ();
           handler = 0;
+	  ACE_TIMEPROBE ("  -> GIOP::send_request - fail");
 	  return CORBA::B_FALSE;
 	}
       if ((buflen -= writelen) != 0)
@@ -163,6 +169,7 @@ TAO_GIOP::send_request (TAO_SVC_HANDLER *&handler,
 	dmsg_filter (8, "%u more bytes to write...\n", buflen);
 #endif /* DEBUG */
     }
+  ACE_TIMEPROBE ("  -> GIOP::send_request - done");
   return CORBA::B_TRUE;
 }
 
@@ -283,6 +290,7 @@ TAO_GIOP::recv_request (TAO_SVC_HANDLER *&handler,
                         CDR &msg,
                         CORBA::Environment &env)
 {
+  ACE_TIMEPROBE ("  -> GIOP::recv_request - start");
   TAO_GIOP_MsgType	retval;
   CORBA::ULong message_size;
   ACE_SOCK_Stream &connection = handler->peer ();
@@ -314,6 +322,7 @@ TAO_GIOP::recv_request (TAO_SVC_HANDLER *&handler,
           ACE_DEBUG ((LM_DEBUG,
                       "(%P|%t) Header EOF ... peer probably aborted connection %d\n",
                       connection.get_handle ()));
+	  ACE_TIMEPROBE ("  -> GIOP::recv_request - EOF");
           return TAO_GIOP_EndOfFile;
           // XXX should probably find some way to report this without
           // an exception, since for most servers it's not an error.
@@ -334,6 +343,7 @@ TAO_GIOP::recv_request (TAO_SVC_HANDLER *&handler,
         }
 
       env.exception (new CORBA::COMM_FAILURE (CORBA::COMPLETED_MAYBE));
+      ACE_TIMEPROBE ("  -> GIOP::recv_request - fail");
       return TAO_GIOP_MessageError;
     }
 
@@ -350,6 +360,7 @@ TAO_GIOP::recv_request (TAO_SVC_HANDLER *&handler,
     {
       env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));	// header
       ACE_DEBUG ((LM_DEBUG, "bad header, magic word\n"));
+      ACE_TIMEPROBE ("  -> GIOP::recv_request - fail");
       return TAO_GIOP_MessageError;
     }
 
@@ -360,6 +371,7 @@ TAO_GIOP::recv_request (TAO_SVC_HANDLER *&handler,
     {
       env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));	// header
       ACE_DEBUG ((LM_DEBUG, "bad header, version\n"));
+      ACE_TIMEPROBE ("  -> GIOP::recv_request - fail");
       return TAO_GIOP_MessageError;
     }
 
@@ -419,10 +431,12 @@ TAO_GIOP::recv_request (TAO_SVC_HANDLER *&handler,
       // clean up, and ...
       env.exception (new CORBA::COMM_FAILURE (CORBA::COMPLETED_MAYBE));	// body
       ACE_DEBUG ((LM_DEBUG, "couldn't read rest of message\n"));
+      ACE_TIMEPROBE ("  -> GIOP::recv_request - fail");
       return TAO_GIOP_MessageError;
     }
 
   dump_msg ("recv", msg.buffer, (size_t) (message_size + TAO_GIOP_HEADER_LEN));
+  ACE_TIMEPROBE ("  -> GIOP::recv_request - done");
   return retval;
 }
 

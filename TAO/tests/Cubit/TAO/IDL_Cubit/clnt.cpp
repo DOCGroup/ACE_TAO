@@ -378,6 +378,60 @@ Cubit_Client::cube_struct (int i)
     }
 }
 
+// Cube the numbers in a sequence
+
+void
+Cubit_Client::cube_sequence (int i)
+{
+  this->call_count_++;
+
+  Cubit::vector input (i + 1);
+  input.length (i+1);
+
+  // Fill in the input sequence...
+  for (int j = 0; j < i + 1; ++j)
+    {
+      input[j] = j;
+    }
+
+  Cubit::vector* output_ptr;
+  // Cube the sequence
+  this->cubit_->cube_sequence (input, output_ptr, this->env_);
+
+  Cubit::vector& output = *output_ptr;
+
+  if (this->env_.exception () != 0)
+    {
+      this->env_.print_exception ("from cube_struct");
+      this->error_count_++;
+    }
+  else
+    {
+      if (output.length () != input.length ())
+	{
+	  ACE_ERROR ((LM_ERROR, "** cube sequence, wrong length\n"));
+	  this->error_count_++;
+	}
+
+      int l = output.length ();
+      if (input.length () < l)
+	{
+	  l = input.length ();
+	}
+      for (int j = 0; j < l; ++j)
+	{
+	  int x = input[j];
+	  if (x*x*x != output[j])
+	    {
+	      ACE_ERROR ((LM_ERROR, "** cube_sequence ERROR\n"));
+	      this->error_count_++;
+	    }
+	}
+    }
+}
+
+
+
 // Cube the numbers in a struct
 
 void
@@ -510,6 +564,7 @@ Cubit_Client::run (void)
       this->cube_octet (i);
       this->cube_long (i);
       this->cube_struct (i);
+      this->cube_sequence (i);
     }
 
   // stop the timer.
@@ -574,6 +629,24 @@ Cubit_Client::run (void)
   timer.elapsed_time (elapsed_time);
   // compute call average call time.
   this->print_stats ("cube_union_dii call", elapsed_time);
+
+  // Sequences
+  timer.start ();
+  this->call_count_ = 0;
+  this->error_count_ = 0;
+  // Make the calls in a loop.
+  for (i = 0; i < this->loop_count_; i++)
+    {
+      this->cube_sequence (this->loop_count_);
+    }
+
+  timer.stop ();
+
+  timer.elapsed_time (elapsed_time);
+  // compute call average call time.
+  this->print_stats ("cube_sequence", elapsed_time);
+
+  
 
   if (this->exit_later_)
     {
