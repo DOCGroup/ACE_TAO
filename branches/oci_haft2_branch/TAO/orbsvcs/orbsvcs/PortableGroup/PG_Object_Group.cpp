@@ -3,6 +3,7 @@
 // $Id$
 
 #include "PG_Object_Group.h"
+#include "PG_conf.h"
 
 #include <ace/Get_Opt.h>
 #include <ace/Vector_T.h>
@@ -56,85 +57,31 @@ TAO::PG_Object_Group::MemberInfo::~MemberInfo ()
 
 
 TAO::PG_Object_Group::PG_Object_Group (
-    CORBA::ORB_ptr orb,
-    TAO::PG_Object_Group_Manipulator & manipulator,
-    CORBA::Object_ptr empty_group,
-    const PortableGroup::TagGroupTaggedComponent & tagged_component,
-    const char * type_id,
-    const PortableGroup::Criteria & the_criteria,
-    TAO_PG::Properties_Decoder * type_properties)
-    : internals_()
-    , orb_ (CORBA::ORB::_duplicate (orb))
-    , manipulator_ (manipulator)
-    , empty_ (1)
-    , role_ (type_id)
-    , tagged_component_ (tagged_component)
-    , reference_ (CORBA::Object::_duplicate(empty_group))
-//      MemberMap members_ self initialized
-    , primary_location_(0)
-    , properties_ (the_criteria, type_properties)
-    , membership_style_ (0)
-    , initial_number_members_ (0)
-    , minimum_number_members_ (0)
-//    group_specific_factories_ self initialized
-{
-}
-
-#if 0
-//static
-TAO::PG_Object_Group * TAO::PG_Object_Group::create (
   CORBA::ORB_ptr orb,
-  PortableServer::POA_ptr poa,
-  CORBA::Object_ptr empty_group, // empty group as created by ObjectManager
+  PortableGroup::FactoryRegistry_ptr factory_registry,
+  TAO::PG_Object_Group_Manipulator & manipulator,
+  CORBA::Object_ptr empty_group,
+  const PortableGroup::TagGroupTaggedComponent & tagged_component,
   const char * type_id,
   const PortableGroup::Criteria & the_criteria,
-  TAO_PG::Properties_Decoder * type_properties
-  ACE_ENV_ARG_DECL)
+  TAO_PG::Properties_Decoder * type_properties)
+  : internals_()
+  , orb_ (CORBA::ORB::_duplicate (orb))
+  , factory_registry_ (PortableGroup::FactoryRegistry::_duplicate (factory_registry))
+  , manipulator_ (manipulator)
+  , empty_ (1)
+  , role_ (type_id)
+  , type_id_ (CORBA::string_dup (type_id))
+  , tagged_component_ (tagged_component)
+  , reference_ (CORBA::Object::_duplicate(empty_group))
+  , members_ ()
+  , primary_location_(0)
+  , properties_ (the_criteria, type_properties)
+  , initial_number_members_ (0)
+  , minimum_number_members_ (0)
+  , group_specific_factories_ ()
 {
-  TAO::PG_Object_Group_Manipulator * manipulator = 0;
-  ACE_NEW_THROW_EX (manipulator,
-    TAO::PG_Object_Group_Manipulator (),
-    CORBA::NO_MEMORY ());
-  int init_ok = manipulator->init (orb, poa ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
-  if(init_ok)
-  {
-    if (TAO_debug_level > 3)
-    {
-      ACE_ERROR ( (LM_ERROR,
-        ACE_TEXT (
-          "%T %n (%P|%t) - "
-          "Could not find an IOR Manipulator.\n")));
-    }
-    return 0;
-  }
-
-  // pick up the object group information as assigned by
-  // ObjectGroupManager
-
-  PortableGroup::TagGroupTaggedComponent tagged_component;
-
-  if (! TAO::PG_Utils::get_tagged_component (empty_group, tagged_component))
-  {
-    ACE_THROW_RETURN (PortableGroup::ObjectGroupNotFound(), 0);
-  }
-
-  TAO::PG_Object_Group * objectGroup = 0;
-  ACE_NEW_THROW_EX (
-    objectGroup,
-    TAO::PG_Object_Group (
-      orb,
-      manipulator,
-      empty_group,
-      tagged_component,
-      type_id,
-      the_criteria,
-      type_properties
-      ),
-    CORBA::NO_MEMORY());
-  return objectGroup;
 }
-#endif
 
 TAO::PG_Object_Group::~PG_Object_Group ()
 {
@@ -147,8 +94,6 @@ TAO::PG_Object_Group::~PG_Object_Group ()
     this->members_.unbind((*it).ext_id_);
   }
 }
-
-
 
 #if 0   // may want this again someday
 /////////////////////
@@ -171,52 +116,6 @@ PortableGroup::ObjectGroup_ptr TAO::PG_Object_Group::reference()const
   return PortableGroup::ObjectGroup::_duplicate (this->reference_);
 }
 
-void TAO::PG_Object_Group::set_membership_style (PortableGroup::MembershipStyleValue style)
-{
-  InternalGuard guard(this->internals_);
-  this->membership_style_ = style;
-}
-
-PortableGroup::MembershipStyleValue TAO::PG_Object_Group::get_membership_style () const
-{
-  // const cast to simulate mutable
-  InternalGuard guard(ACE_const_cast (TAO::PG_Object_Group *, this)->internals_);
-  return this->membership_style_;
-}
-
-void TAO::PG_Object_Group::set_initial_number_members (PortableGroup::InitialNumberMembersValue count)
-{
-  InternalGuard guard(this->internals_);
-  this->initial_number_members_ = count;
-}
-
-PortableGroup::InitialNumberMembersValue TAO::PG_Object_Group::get_initial_number_members () const
-{
-  // const cast to simulate mutable
-  InternalGuard guard(ACE_const_cast (TAO::PG_Object_Group *, this)->internals_);
-  return this->initial_number_members_;
-}
-
-void TAO::PG_Object_Group::set_minimum_number_members (PortableGroup::MinimumNumberMembersValue count)
-{
-  InternalGuard guard(this->internals_);
-  this->minimum_number_members_ = count;
-}
-
-PortableGroup::MinimumNumberMembersValue TAO::PG_Object_Group::get_minimum_number_members ()const
-{
-  // const cast to simulate mutable
-  InternalGuard guard(ACE_const_cast (TAO::PG_Object_Group *, this)->internals_);
-  return this->minimum_number_members_;
-}
-
-void TAO::PG_Object_Group::set_group_specific_factories (const PortableGroup::FactoryInfos & infos)
-{
-  InternalGuard guard(this->internals_);
-  this->group_specific_factories_ = infos;
-}
-
-
 void TAO::PG_Object_Group::get_group_specific_factories (PortableGroup::FactoryInfos & result) const
 {
   // const cast to simulate mutable
@@ -226,8 +125,7 @@ void TAO::PG_Object_Group::get_group_specific_factories (PortableGroup::FactoryI
   result = this->group_specific_factories_;
 }
 
-
-const PortableGroup::Location & TAO::PG_Object_Group::primary_location() const
+const PortableGroup::Location & TAO::PG_Object_Group::get_primary_location() const
 {
   // const cast to simulate mutable
   InternalGuard guard(ACE_const_cast (TAO::PG_Object_Group *, this)->internals_);
@@ -560,6 +458,88 @@ void TAO::PG_Object_Group::distribute_iogr (ACE_ENV_ARG_DECL)
   }
 }
 
+PortableGroup::Locations * TAO::PG_Object_Group::locations_of_members (ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  InternalGuard guard(this->internals_);
+  PortableGroup::Locations * result = 0;
+
+  size_t count = this->members_.current_size ();
+
+  ACE_NEW_THROW_EX (
+    result,
+    PortableGroup::Locations (count),
+    CORBA::NO_MEMORY() );
+  ACE_CHECK_RETURN (0);
+
+  result->length (count);
+
+  size_t pos = 0;
+  for (MemberMap_Iterator it = this->members_.begin();
+      it != this->members_.end();
+      this->members_.begin())
+  {
+    const PortableGroup::Location & location = (*it).ext_id_;
+    PortableGroup::Location & out = (*result)[pos];
+    out = location;
+  }
+  return result;
+}
+
+CORBA::Object_ptr TAO::PG_Object_Group::get_member_reference (
+    const PortableGroup::Location & the_location
+    ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((
+    CORBA::SystemException,
+    PortableGroup::MemberNotFound))
+{
+  InternalGuard guard(this->internals_);
+  CORBA::Object_var result = CORBA::Object::_nil ();
+
+  MemberInfo * info;
+  if (this->members_.find (the_location, info) == 0)
+  {
+    result = CORBA::Object::_duplicate(info->member_.in ());
+  }
+  else
+  {
+    ACE_THROW_RETURN (PortableGroup::MemberNotFound(), result._retn ());
+  }
+  return result._retn ();
+}
+
+
+PortableGroup::MembershipStyleValue TAO::PG_Object_Group::get_membership_style () const
+{
+  PortableGroup::MembershipStyleValue membership_style = 0;
+  if (! TAO_PG::find (properties_, PortableGroup::PG_MEMBERSHIP_STYLE, membership_style))
+  {
+    membership_style = TAO_PG_MEMBERSHIP_STYLE;
+  }
+  return membership_style;
+}
+
+
+PortableGroup::MinimumNumberMembersValue TAO::PG_Object_Group::get_minimum_number_members () const
+{
+  PortableGroup::MinimumNumberMembersValue minimum_number_members = 0;
+  if (! TAO_PG::find (properties_, PortableGroup::PG_MINIMUM_NUMBER_MEMBERS, minimum_number_members))
+  {
+    minimum_number_members = TAO_PG_MINIMUM_NUMBER_MEMBERS;
+  }
+  return minimum_number_members;
+}
+
+PortableGroup::InitialNumberMembersValue TAO::PG_Object_Group::get_initial_number_members () const
+{
+  PortableGroup::InitialNumberMembersValue initial_number_members = 0;
+  if (! TAO_PG::find (properties_, PortableGroup::PG_INITIAL_NUMBER_MEMBERS, initial_number_members))
+  {
+    initial_number_members = TAO_PG_INITIAL_NUMBER_MEMBERS;
+  }
+  return initial_number_members;
+}
+
 void TAO::PG_Object_Group::create_member (
     const PortableGroup::Location & the_location,
     const char * type_id,
@@ -572,29 +552,104 @@ void TAO::PG_Object_Group::create_member (
     PortableGroup::InvalidCriteria,
     PortableGroup::CannotMeetCriteria))
 {
+  InternalGuard guard(this->internals_);
+
+ACE_UNUSED_ARG (the_location);
+ACE_UNUSED_ARG (type_id);
+ACE_UNUSED_ARG (the_criteria);
   TODO
 }
 
-PortableGroup::Locations * TAO::PG_Object_Group::locations_of_members (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  PortableGroup::Locations * result = 0;
-  TODO
-  return result;
-}
-
-CORBA::Object_ptr TAO::PG_Object_Group::get_member_reference (
-    const PortableGroup::Location & the_location
-    ACE_ENV_ARG_DECL)
+void TAO::PG_Object_Group::create_members (size_t count ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
     CORBA::SystemException,
-    PortableGroup::ObjectGroupNotFound,
-    PortableGroup::MemberNotFound))
+    PortableGroup::NoFactory
+    ))
 {
-  CORBA::Object_var result = CORBA::Object::_nil ();
-  TODO
-  return result._retn ();
+  // assume internals is locked
+  // @@ what if factories were passed as criteria?
+
+  CORBA::String_var factory_type;
+  PortableGroup::FactoryInfos_var factories =
+  this->factory_registry_->list_factories_by_role (
+        role_.c_str(),
+        factory_type.out ()
+        ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  ACE_ASSERT (!CORBA::_nil (factories.in ()));
+
+  CORBA::ULong factory_count = factories->length ();
+  if (factory_count > 0)
+  {
+    CORBA::ULong factory_pos = 0;
+    while (members_.current_size () < count && factory_pos < factory_count)
+    {
+      const PortableGroup::FactoryInfo & factory_info = (*factories)[factory_pos];
+      const PortableGroup::Location & factory_location = factory_info.the_location;
+      if (0 != this->members_.find (factory_location))
+      {
+        ///////////////////////////////////////////
+        // If a factory refuses to create a replica
+        // it's not fatal.
+        ACE_TRY_NEW_ENV
+        {
+          PortableGroup::GenericFactory::FactoryCreationId_var fcid;
+          factory_info.the_factory->create_object (
+            this->type_id_.in (),
+            factory_info.the_criteria,
+            fcid. out()
+            ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
+        ACE_CATCHANY
+        {
+          // log, but otherwise ignore the errorf
+          if (TAO_debug_level > 0)
+          {
+            ACE_ERROR ((LM_ERROR,
+              ACE_TEXT ("PG (%P|%t) Replica Factory @ %s refused create_object request for type %s\n"),
+              ACE_static_cast (const char *, factory_info.the_location[0].id),
+              ACE_static_cast (const char *, this->type_id_.in ())
+              ));
+          }
+        }
+        ACE_ENDTRY;
+      }
+    }
+  }
+  else
+  {
+    ACE_THROW (PortableGroup::NoFactory());
+  }
 }
+
+void TAO::PG_Object_Group::initial_populate (ACE_ENV_SINGLE_ARG_DECL)
+{
+  InternalGuard guard(this->internals_);
+  if ( this->get_membership_style() == PortableGroup::MEMB_INF_CTRL )
+  {
+    PortableGroup::InitialNumberMembersValue initial_number_members = this->get_initial_number_members ();
+    if (members_.current_size () < initial_number_members)
+    {
+      this->create_members (initial_number_members);
+    }
+  }
+}
+
+void TAO::PG_Object_Group::minimum_populate (ACE_ENV_SINGLE_ARG_DECL)
+{
+  InternalGuard guard(this->internals_);
+  if ( this->get_membership_style() == PortableGroup::MEMB_INF_CTRL )
+  {
+    PortableGroup::MinimumNumberMembersValue minimum_number_members = this->get_minimum_number_members ();
+    if (members_.current_size () < minimum_number_members)
+    {
+      this->create_members (minimum_number_members);
+    }
+  }
+}
+
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

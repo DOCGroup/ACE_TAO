@@ -43,16 +43,22 @@ TAO::PG_Group_Factory::~PG_Group_Factory (void)
 
 void TAO::PG_Group_Factory::init (
   CORBA::ORB_ptr orb,
-  PortableServer::POA_ptr poa ACE_ENV_ARG_DECL)
+  PortableServer::POA_ptr poa,
+  PortableGroup::FactoryRegistry_ptr factory_registry
+  ACE_ENV_ARG_DECL)
 {
   ACE_ASSERT (CORBA::is_nil (this->orb_.in ()));
   ACE_ASSERT (CORBA::is_nil (this->poa_.in ()));
+  ACE_ASSERT (CORBA::is_nil (this->factory_registry_.in ()));
 
   this->orb_ = CORBA::ORB::_duplicate(orb);
   this->poa_ = PortableServer::POA::_duplicate (poa);
+  this->factory_registry_ = PortableGroup::FactoryRegistry::_duplicate (factory_registry);
+
 
   ACE_ASSERT (!CORBA::is_nil (this->orb_.in ()));
   ACE_ASSERT (!CORBA::is_nil (this->poa_.in ()));
+  ACE_ASSERT (!CORBA::is_nil (this->factory_registry_.in ()));
 
   this->manipulator_.init (orb, poa ACE_ENV_ARG_PARAMETER);
 //  ACE_CHECK;
@@ -98,7 +104,7 @@ TAO::PG_Object_Group * TAO::PG_Group_Factory::create_group (
     objectGroup,
     TAO::PG_Object_Group (
       this->orb_.in (),
-//      this->poa_.in (),
+      this->factory_registry_.in (),
       this->manipulator_,
       empty_group.in (),
       tagged_component,
@@ -115,115 +121,6 @@ TAO::PG_Object_Group * TAO::PG_Group_Factory::create_group (
   }
   return objectGroup;
 }
-
-
-#if 0
-Initialize object group
-
-  PortableGroup::ObjectGroup_var object_group = PortableGroup::ObjectGroup::_nil();
-
-  PortableGroup::Properties_var properties =
-    this->property_manager_.get_type_properties (type_id
-                                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
-
-  PortableGroup::MembershipStyleValue membership_style =
-    TAO_PG_MEMBERSHIP_STYLE;
-  PortableGroup::FactoriesValue factory_infos(0);
-
-  PortableGroup::InitialNumberMembersValue initial_number_members =
-    TAO_PG_INITIAL_NUMBER_MEMBERS;
-  PortableGroup::MinimumNumberMembersValue minimum_number_members =
-    TAO_PG_MINIMUM_NUMBER_MEMBERS;
-
-  // Make sure the criteria for the object group being created are
-  // valid.
-  this->process_criteria (type_id,
-                          the_criteria,
-                          membership_style,
-                          factory_infos,
-                          initial_number_members,
-                          minimum_number_members
-                          ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
-
-
-  PortableGroup::ObjectGroupId group_id;
-//  PortableGroup::ObjectGroup_var
-  object_group =
-    this->object_group_manager_.create_object_group (type_id,               // in
-                                                     this->domain_id_,      // in
-                                                     the_criteria,          // in
-                                                     group_id               // out
-                                                     ACE_ENV_ARG_PARAMETER);
-
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
-
-  // Allocate a new FactoryCreationId for use as an "out" parameter.
-  PortableGroup::GenericFactory::FactoryCreationId_var factory_id = 0;
-  ACE_NEW_THROW_EX (factory_id,
-                    PortableGroup::GenericFactory::FactoryCreationId,
-                    CORBA::NO_MEMORY (
-                      CORBA::SystemException::_tao_minor_code (
-                        TAO_DEFAULT_MINOR_CODE,
-                        ENOMEM),
-                      CORBA::COMPLETED_NO));
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
-  *factory_id <<= group_id;
-
-
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
-
-
-  TAO_PG_Factory_Set factory_set;
-
-  const CORBA::ULong factory_infos_count = factory_infos.length ();
-
-  ACE_TRY
-    {
-      if (factory_infos_count > 0
-          && membership_style == PortableGroup::MEMB_INF_CTRL)
-        {
-          this->populate_object_group (object_group.in (),
-                                       type_id,
-                                       factory_infos,
-                                       minimum_number_members,
-                                       factory_set
-                                       ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-
-
-          ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
-                            guard,
-                            this->lock_,
-                            CORBA::Object::_nil ());
-
-
-          if (this->factory_map_.bind (group_id, factory_set) != 0)
-             ACE_TRY_THROW (PortableGroup::ObjectNotCreated ());
-        }
-    }
-  ACE_CATCHANY
-    {
-      this->delete_object_i (factory_set,
-                             1 /* Ignore exceptions */
-                             ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      this->object_group_manager_.destroy_object_group (group_id
-                                                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
-
-  factory_creation_id = factory_id._retn();
-  return result;
-}
-#endif
-
 
 void TAO::PG_Group_Factory::delete_group (PortableGroup::ObjectGroup_ptr object_group
     ACE_ENV_ARG_DECL)

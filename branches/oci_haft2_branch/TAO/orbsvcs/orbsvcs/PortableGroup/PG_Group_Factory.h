@@ -71,7 +71,11 @@ namespace TAO
     /// Destructor.
     ~PG_Group_Factory ();
 
-    void init (CORBA::ORB_ptr orb, PortableServer::POA_ptr poa ACE_ENV_ARG_DECL);
+    void init (
+      CORBA::ORB_ptr orb,
+      PortableServer::POA_ptr poa,
+      PortableGroup::FactoryRegistry_ptr factory_registry
+      ACE_ENV_ARG_DECL);
 
 
     TAO::PG_Object_Group * create_group (
@@ -165,6 +169,9 @@ namespace TAO
 
     /// Reference to the POA used to create object group references.
     PortableServer::POA_var poa_;
+
+    /// The factory registry for replica factories
+    PortableGroup::FactoryRegistry_var factory_registry_;
 
     ::TAO::PG_Object_Group_Manipulator manipulator_;
 

@@ -163,8 +163,15 @@ int TAO::FT_ReplicationManager::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
   this->factory_registry_.init (this->orb_.in (), this->poa_.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
+  PortableGroup::FactoryRegistry_var factory_registry = this->factory_registry_.reference ();
+
   // @@: do we want to use the same poa to create object groups?
-  this->group_factory_.init (this->orb_.in (), this->poa_.in ());
+  this->group_factory_.init (
+    this->orb_.in (),
+    this->poa_.in (),
+    factory_registry.in ()
+    ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
 
   // Activate ourself in the POA.
   PortableServer::ObjectId_var oid = this->poa_->activate_object (
@@ -700,7 +707,7 @@ TAO::FT_ReplicationManager::create_member (
     if (TAO_debug_level > 0)
     {
       ACE_ERROR ( (LM_ERROR,
-        ACE_TEXT ("%T %n (%P|%t) - FT_ReplicationManager::create_member in unknown group\n")
+        ACE_TEXT ("%T %n (%P|%t) - FT_ReplicationManager::create_member: unknown group\n")
         ));
     }
     ACE_THROW_RETURN (PortableGroup::ObjectGroupNotFound (), result._retn ());
@@ -764,8 +771,15 @@ TAO::FT_ReplicationManager::remove_member (
   TAO::PG_Object_Group * group = 0;
   if (this->group_factory_.find_group (object_group, group))
   {
-    group->remove_member(the_location ACE_ENV_ARG_PARAMETER);
+    group->remove_member (the_location ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (result._retn ());
+
+    group->minimum_populate (ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_CHECK_RETURN (result._retn ());
+      //@@ how about the case where the member was removed successfully,
+      // but for one reason or another we were unable to bring the group
+      // back up to minimum_number_of_replicas?
+
     result = group->reference ();
   }
   else
@@ -961,13 +975,19 @@ TAO::FT_ReplicationManager::create_object (
       ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
-  TAO::PG_Object_Group * objectGroup
+  TAO::PG_Object_Group * group
     = this->group_factory_.create_group (
       type_id,
       the_criteria,
       typeid_properties
       ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
+
+  group->initial_populate (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (CORBA::Object::_nil ());
+    //@@ on error we should remove the group from the Group_Factory
+    // doing this "right" will require a var-type pointer to the object group
+    // that knows about the factory, too.
 
  // Allocate a new FactoryCreationId for use as an "out" parameter.
   PortableGroup::GenericFactory::FactoryCreationId_var factory_id = 0;
@@ -979,11 +999,11 @@ TAO::FT_ReplicationManager::create_object (
                         ENOMEM),
                       CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
-  PortableGroup::ObjectGroupId group_id = objectGroup->get_object_group_id ();
+  PortableGroup::ObjectGroupId group_id = group->get_object_group_id ();
   *factory_id <<= group_id;
   factory_creation_id = factory_id._retn();
 
-  METHOD_RETURN (TAO::FT_ReplicationManager::create_object) objectGroup->reference ();
+  METHOD_RETURN (TAO::FT_ReplicationManager::create_object) group->reference ();
 }
 
 void
