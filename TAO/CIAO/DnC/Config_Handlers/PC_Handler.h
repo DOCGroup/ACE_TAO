@@ -71,6 +71,10 @@ public:
   PC_Handler (DOMNodeIterator* iter, bool release = false)
     : Basic_Handler (iter, release) { }
 
+  /// constructor
+  PC_Handler (DOMDocument* doc, DOMNodeIterator* iter, bool release = false)
+    : Basic_Handler (doc, iter, release) { }
+
   /// Process the package configuration
   void process_PackageConfiguration (::Deployment::PackageConfiguration &pc);
 

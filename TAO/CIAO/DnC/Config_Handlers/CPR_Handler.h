@@ -71,6 +71,10 @@ public:
   CPR_Handler (DOMNodeIterator* iter, bool release = false)
     : Basic_Handler (iter, release) { }
 
+  /// constructor
+  CPR_Handler (DOMDocument* doc, DOMNodeIterator* iter, bool release = false)
+    : Basic_Handler (doc, iter, release) { }
+
   /// Process the component package reference
   void process_ComponentPackageReference (::Deployment::ComponentPackageReference &cpr);
 

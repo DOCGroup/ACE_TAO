@@ -71,6 +71,10 @@ public:
   PCI_Handler (DOMNodeIterator* iter, bool release = false)
     : Basic_Handler (iter, release) { }
 
+  /// constructor
+  PCI_Handler (DOMDocument* doc, DOMNodeIterator* iter, bool release = false)
+    : Basic_Handler (doc, iter, release) { }
+
   /// Process the package configuration
   void process_PackagedComponentImplementation (::Deployment::PackagedComponentImplementation &pci);
 

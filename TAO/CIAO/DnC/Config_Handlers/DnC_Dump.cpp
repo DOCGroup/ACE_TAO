@@ -936,6 +936,7 @@ namespace Deployment
             ACE_DEBUG ((LM_DEBUG, "     ExecParameter: %d: \n", j + 1));
             ACE_DEBUG ((LM_DEBUG, "       Name: %s \n",
                         plan.implementation[i].execParameter[j].name.in ()));
+            ACE_DEBUG ((LM_DEBUG, "       "));
             dump (plan.implementation[i].execParameter[j].value);
           }
       }
@@ -962,6 +963,7 @@ namespace Deployment
             ACE_DEBUG ((LM_DEBUG, "     ConfigProperty: %d: \n", j + 1));
             ACE_DEBUG ((LM_DEBUG, "       Name: %s \n",
                         plan.instance[i].configProperty[j].name.in ()));
+            ACE_DEBUG ((LM_DEBUG, "       "));
             dump (plan.instance[i].configProperty[j].value);
           }
       }
@@ -1045,6 +1047,7 @@ namespace Deployment
             ACE_DEBUG ((LM_DEBUG, "     ExecParameter: %d: \n", j + 1));
             ACE_DEBUG ((LM_DEBUG, "       Name: %s \n",
                         plan.artifact[i].execParameter[j].name.in ()));
+            ACE_DEBUG ((LM_DEBUG, "       "));
             dump (plan.artifact[i].execParameter[j].value);
           }
       }

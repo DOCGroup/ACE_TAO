@@ -61,6 +61,9 @@ public:
   MID_Handler (DOMNodeIterator* iter, bool release = false)
     : Basic_Handler (iter, release) { }
 
+  MID_Handler (DOMDocument* doc, DOMNodeIterator* iter, bool release = false)
+    : Basic_Handler (doc, iter, release) { }
+
   void process_MonolithicImplementationDescription (::Deployment::MonolithicImplementationDescription &mid);
 
 protected:

@@ -77,6 +77,10 @@ public:
   Plan_Handler (DOMNodeIterator* iter, bool release = false)
     : Basic_Handler (iter, release) { }
 
+  /// constructor
+  Plan_Handler (DOMDocument* doc, DOMNodeIterator* iter, bool release = false)
+    : Basic_Handler (doc, iter, release) { }
+
   /// Process the plan type
   void process_plan (Deployment::DeploymentPlan& plan);
 

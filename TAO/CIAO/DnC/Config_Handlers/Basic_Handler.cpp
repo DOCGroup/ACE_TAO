@@ -24,6 +24,13 @@ Basic_Handler::Basic_Handler (DOMNodeIterator* iter, bool release)
 {
 }
 
+Basic_Handler::Basic_Handler (DOMDocument* doc, DOMNodeIterator* iter, 
+                              bool release)
+  : traverse_ (0), doc_ (doc), root_ (0), filter_ (0), iter_ (iter),
+    release_ (release)
+{
+}
+
 Basic_Handler::~Basic_Handler()
 {
   if (this->release_)

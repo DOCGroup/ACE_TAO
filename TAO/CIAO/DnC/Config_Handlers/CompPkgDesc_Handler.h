@@ -71,6 +71,11 @@ public:
   CompPkgDesc_Handler (DOMNodeIterator* iter, bool release = false)
     : Basic_Handler (iter, release) { }
 
+  /// constructor
+  CompPkgDesc_Handler (DOMDocument* doc, 
+                       DOMNodeIterator* iter, bool release = false)
+    : Basic_Handler (doc, iter, release) { }
+
   /// Process the component package description
   void process_ComponentPackageDescription (::Deployment::ComponentPackageDescription &comppkgdesc);
 
