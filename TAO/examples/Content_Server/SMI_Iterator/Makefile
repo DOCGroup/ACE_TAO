@@ -22,8 +22,6 @@ SERVER_FILES = \
 	server
 
 CLIENT_FILES = \
-	Content_Iterator_i \
-	Iterator_Factory_i \
 	client
 
 IDL_FILES = Web_Server
@@ -45,8 +43,7 @@ SERVER_OBJS = \
 
 CLIENT_OBJS = \
 	$(addsuffix .o, $(CLIENT_FILES)) \
-	Web_ServerC.o Web_ServerS.o
-
+	Web_ServerC.o
 
 BIN = client server
 

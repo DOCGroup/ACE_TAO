@@ -1,10 +1,10 @@
-# Microsoft Developer Studio Project File - Name="Web Server Server" - Package Owner=<4>
+# Microsoft Developer Studio Project File - Name="SMI_Iterator Server" - Package Owner=<4>
 # Microsoft Developer Studio Generated Build File, Format Version 6.00
 # ** DO NOT EDIT **
 
 # TARGTYPE "Win32 (x86) Console Application" 0x0103
 
-CFG=Web Server Server - Win32 Debug
+CFG=SMI_Iterator Server - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
 !MESSAGE 
@@ -13,12 +13,12 @@ CFG=Web Server Server - Win32 Debug
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "server.mak" CFG="Web Server Server - Win32 Debug"
+!MESSAGE NMAKE /f "server.mak" CFG="SMI_Iterator Server - Win32 Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "Web Server Server - Win32 Release" (based on "Win32 (x86) Console Application")
-!MESSAGE "Web Server Server - Win32 Debug" (based on "Win32 (x86) Console Application")
+!MESSAGE "SMI_Iterator Server - Win32 Release" (based on "Win32 (x86) Console Application")
+!MESSAGE "SMI_Iterator Server - Win32 Debug" (based on "Win32 (x86) Console Application")
 !MESSAGE 
 
 # Begin Project
@@ -28,7 +28,7 @@ CFG=Web Server Server - Win32 Debug
 CPP=cl.exe
 RSC=rc.exe
 
-!IF  "$(CFG)" == "Web Server Server - Win32 Release"
+!IF  "$(CFG)" == "SMI_Iterator Server - Win32 Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
@@ -53,7 +53,7 @@ LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
 # ADD LINK32 ace.lib TAO.lib TAO_CosNaming.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\..\tao" /libpath:"..\..\..\..\ace" /libpath:"..\..\orbsvcs"
 
-!ELSEIF  "$(CFG)" == "Web Server Server - Win32 Debug"
+!ELSEIF  "$(CFG)" == "SMI_Iterator Server - Win32 Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -67,7 +67,7 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\..\ACE_wrappers" /I "..\..\..\ACE_wrappers\TAO\\" /I "..\..\\" /I "..\..\..\\" /I "..\..\..\..\\" /I "..\..\..\ACE_wrappers\TAO\orbsvcs" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /D TAO_ORBSVCS_HAS_DLL=1 /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\..\ACE_wrappers" /I "..\..\..\ACE_wrappers\TAO\\" /I "..\..\\" /I "..\..\..\\" /I "..\..\..\..\\" /I "..\..\..\orbsvcs" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
@@ -76,14 +76,14 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 aced.lib TAOd.lib TAO_CosNamingd.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept /libpath:"..\..\orbsvcs" /libpath:"..\..\..\tao" /libpath:"..\..\..\..\ace" /libpath:"..\..\..\ACE_wrappers\ace" /libpath:"..\..\..\ACE_wrappers\TAO\tao" /libpath:"..\..\..\ACE_wrappers\TAO\orbsvcs\orbsvcs"
+# ADD LINK32 aced.lib TAOd.lib TAO_CosNamingd.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept /libpath:"..\..\..\orbsvcs\orbsvcs" /libpath:"..\..\..\tao" /libpath:"..\..\..\..\ace" /libpath:"..\..\..\ACE_wrappers\ace" /libpath:"..\..\..\ACE_wrappers\TAO\tao" /libpath:"..\..\..\ACE_wrappers\TAO\orbsvcs\orbsvcs"
 
 !ENDIF 
 
 # Begin Target
 
-# Name "Web Server Server - Win32 Release"
-# Name "Web Server Server - Win32 Debug"
+# Name "SMI_Iterator Server - Win32 Release"
+# Name "SMI_Iterator Server - Win32 Debug"
 # Begin Group "Source Files"
 
 # PROP Default_Filter ".cpp"
@@ -139,7 +139,7 @@ SOURCE=.\Web_ServerS_T.h
 
 SOURCE=.\Web_Server.idl
 
-!IF  "$(CFG)" == "Web Server Server - Win32 Release"
+!IF  "$(CFG)" == "SMI_Iterator Server - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
 USERDEP__WEB_S="..\..\..\..\bin\Release\tao_idl.exe"	
@@ -178,7 +178,7 @@ BuildCmds= \
    $(BuildCmds)
 # End Custom Build
 
-!ELSEIF  "$(CFG)" == "Web Server Server - Win32 Debug"
+!ELSEIF  "$(CFG)" == "SMI_Iterator Server - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
 USERDEP__WEB_S="..\..\..\..\bin\tao_idl.exe"	
