@@ -76,7 +76,6 @@ TAO/examples/POA/On_Demand_Loading/run_test.pl: !MINIMUM !STATIC
 TAO/examples/POA/Reference_Counted_Servant/run_test.pl
 TAO/examples/POA/Loader/run_test.pl: !MINIMUM !STATIC
 TAO/examples/POA/RootPOA/run_test.pl
-TAO/examples/POA/Adapter_Activator/run_test.pl: !MINIMUM
 TAO/examples/Simple/bank/run_test.pl
 TAO/examples/Simple/grid/run_test.pl
 TAO/examples/Simple/time-date/run_test.pl: !ST !STATIC
