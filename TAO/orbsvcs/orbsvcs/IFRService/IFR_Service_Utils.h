@@ -182,6 +182,19 @@ public:
                               const CORBA::ExceptionDefSeq &exceptions);
   /// Common code for operations, attributes, and valuetype initializers.
 
+  static CORBA::TypeCode_ptr gen_valuetype_tc_r (
+      ACE_Configuration_Section_Key &,
+      TAO_Repository_i *
+      ACE_ENV_ARG_DECL
+    );
+  /// Implemented here to avoid recursion in the servant classes.
+
+  static void fill_valuemember_seq (CORBA::ValueMemberSeq &,
+                                    ACE_Configuration_Section_Key &,
+                                    TAO_Repository_i *
+                                    ACE_ENV_ARG_DECL);
+  /// Called from the above function.
+
   static char *reference_to_path (CORBA::IRObject_ptr obj);
   /// Converison from IR Object reference to key location path.
 

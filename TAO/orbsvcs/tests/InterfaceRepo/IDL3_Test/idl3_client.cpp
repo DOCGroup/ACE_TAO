@@ -19,6 +19,7 @@ const char *VALUETYPE_SCOPED_NAME = "::mod::test_valuetype";
 const char *VT_BASE_ID = "IDL:help/v_base:1.0";
 
 const CORBA::ULong ATTRS_LEN = 1;
+const CORBA::ULong OPS_LEN = 1;
 
 const char *ATTR_LOCAL_NAMES[] = 
   {
@@ -36,6 +37,33 @@ const CORBA::ULong GET_EXCEP_LEN[] =
   };
 
 const CORBA::ULong PUT_EXCEP_LEN[] =
+  {
+    2
+  };
+
+const char *OP_NAMES[] =
+  {
+    "v_op"
+  };
+
+const CORBA::TCKind OP_RET_KINDS[] =
+  {
+    CORBA::tk_string
+  };
+
+const CORBA::ULong PARAMS_LEN[] =
+  {
+    3
+  };
+
+const char *PARAM_NAMES[] =
+  {
+    "inoutarg",
+    "inarg",
+    "outarg"
+  };
+
+const CORBA::ULong OP_EXCEP_LEN[] = 
   {
     2
   };
@@ -118,6 +146,20 @@ const char *VT_SUPPORTED_IDS[] =
   {
     "IDL:help/v_supp1:1.0",
     "IDL:help/v_supp2:1.0"
+  };
+
+const CORBA::ULong MEM_LEN = 2;
+
+const CORBA::Visibility MEM_VIS[] =
+  {
+    CORBA::PUBLIC_MEMBER,
+    CORBA::PRIVATE_MEMBER
+  };
+
+const char *MEM_IDS[] =
+  {
+    "IDL:mod/test_valuetype/test_mem1:1.0",
+    "IDL:mod/test_valuetype/test_mem2:1.0",
   };
 
 IDL3_Client::IDL3_Client (void)
@@ -406,6 +448,24 @@ IDL3_Client::valuetype_test (ACE_ENV_SINGLE_ARG_DECL)
 
   status = this->valuetype_inheritance_test (evd
                                              ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
+
+  if (status != 0)
+    {
+      return -1;
+    }
+
+  status = this->valuetype_operation_test (desc
+                                           ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
+
+  if (status != 0)
+    {
+      return -1;
+    }
+
+  status = this->valuetype_member_test (desc
+                                        ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   if (status != 0)
@@ -1016,3 +1076,169 @@ IDL3_Client::valuetype_attribute_test (
   return 0;
 }
 
+int
+IDL3_Client::valuetype_operation_test (
+    CORBA::ExtValueDef::ExtFullValueDescription_var &desc
+    ACE_ENV_ARG_DECL
+  )
+{
+  CORBA::ULong ops_length = desc->operations.length ();
+
+  if (ops_length != OPS_LEN)
+    {
+      if (this->debug_)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "valuetype_operation_test: "
+                      "wrong number of operations\n"));
+        }
+
+      return -1;
+    }
+
+  const char *tmp = 0;
+  CORBA::ULong j = 0;
+  CORBA::ULong length = 0;
+
+  for (CORBA::ULong i = 0; i < ops_length; ++i)
+    {
+      tmp = desc->operations[i].name.in ();
+
+      if (tmp == 0 || ACE_OS::strcmp (tmp, OP_NAMES[i]) != 0)
+        {
+          if (this->debug_)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "valuetype_operation_test: "
+                          "wrong name for operation #%d\n",
+                          i + 1));
+            }
+
+          return -1;
+        }
+
+      CORBA::TCKind ret_kind = 
+        desc->operations[i].result.in ()->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK_RETURN (-1);
+
+      if (ret_kind != OP_RET_KINDS[i])
+        {
+          if (this->debug_)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "valuetype_operation_test: "
+                          "wrong return type\n"));
+            }
+
+          return -1;
+        }
+
+      length = desc->operations[i].parameters.length ();
+
+      if (length != PARAMS_LEN[i])
+        {
+          if (this->debug_)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "valuetype_operation_test: "
+                          "wrong number of parameters in operation #%d\n",
+                          i + 1));
+            }
+
+          return -1;
+        }
+
+      for (j = 0; j < length; ++j)
+        {
+          tmp = desc->operations[i].parameters[j].name.in ();
+
+          if (tmp == 0 || ACE_OS::strcmp (tmp, PARAM_NAMES[j]) != 0)
+            {
+              if (this->debug_)
+                {
+                  ACE_DEBUG ((LM_DEBUG,
+                              "valuetype_operation_test: "
+                              "wrong name for operation #%d,"
+                              "parameter #%d\n",
+                              i + 1, 
+                              j + 1));
+                }
+
+              return -1;
+            }
+        }
+
+      length = desc->operations[i].exceptions.length ();
+
+      if (length != OP_EXCEP_LEN[i])
+        {
+          if (this->debug_)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "valuetype_operation_test: "
+                          "wrong number of exceptions in operation #%d\n",
+                          i + 1));
+            }
+
+          return -1;
+        }
+    }
+
+  return 0;
+}
+
+int
+IDL3_Client::valuetype_member_test (
+    CORBA::ExtValueDef::ExtFullValueDescription_var &desc
+    ACE_ENV_ARG_DECL
+  )
+{
+  CORBA::ULong length = desc->members.length ();
+
+  if (length != MEM_LEN)
+    {
+      if (this->debug_)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "valuetype_member_test: "
+                      "wrong number of members\n"));
+        }
+
+      return -1;
+    }
+
+  const char *tmp = 0;
+
+  for (CORBA::ULong i = 0; i < length; ++i)
+    {
+      if (desc->members[i].access != MEM_VIS[i])
+        {
+          if (this->debug_)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "valuetype_member_test: "
+                          "wrong access value in member #%d\n",
+                          i + 1));
+            }
+
+          return -1;
+        }
+
+      tmp = desc->members[i].id.in ();
+
+      if (tmp == 0 || ACE_OS::strcmp (tmp, MEM_IDS[i]) != 0)
+        {
+          if (this->debug_)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "valuetype_member_test: "
+                          "wrong repo id for member #%d\n",
+                          i + 1));
+            }
+
+          return -1;
+        }
+    }
+
+  return 0;
+}
