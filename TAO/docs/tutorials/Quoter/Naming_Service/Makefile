@@ -12,7 +12,7 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # ! TAO_ROOT
 
-LDLIBS = -lQuoter_Common -lTAO_PortableServer -lTAO_CosNaming -lTAO
+LDLIBS = -lQuoter_Common -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_IORTable -lTAO_PortableServer -lTAO
 CPPFLAGS += -I$(TAO_ROOT)/orbsvcs
 CPPFLAGS += -I../idl
 BIN2 = client server

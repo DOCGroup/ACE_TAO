@@ -56,7 +56,7 @@ main (int argc, char *argv[])
       if (CORBA::is_nil (hello.in ()))
         {
           ACE_ERROR_RETURN ((LM_DEBUG,
-                             "Nil process reference <%s>\n",
+                             "Nil Test::Hello reference <%s>\n",
                              ior),
                             1);
         }
