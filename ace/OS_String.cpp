@@ -399,3 +399,104 @@ ACE_OS_String::memchr_emulation (const void *s, int c, size_t len)
   return 0;
 }
 
+char *
+ACE_OS_String::itoa_emulation (int value, char *string, int radix)
+{
+  char *e = string;
+  char *b = string;
+
+  // Short circuit if 0
+
+  if (value == 0)
+    {
+      string[0] = '0';
+      string[1] = 0;
+      return string;
+    }
+
+  // If negative and base 10, print a - and then do the
+  // number. 
+
+  if (value < 0 && radix == 10)
+    {
+      string[0] = '-';
+      b++;
+    }
+
+  // Convert to base <radix>, but in reverse order
+
+  while (value != 0)
+    {
+      int mod = value % radix;
+      value = value / radix;
+
+      *e++ = (mod < 10) ? '0' + mod : 'a' + mod - 10;
+    }
+
+  *e-- = 0;
+
+  // Now reverse the string to get the correct result
+  
+  while (e > b)
+  {
+    char temp = *e;
+    *e = *b;
+    *b = temp;
+    ++b; 
+    --e;
+  }
+
+  return string;
+}
+
+#if defined (ACE_HAS_WCHAR)
+wchar_t *
+ACE_OS_String::itoa_emulation (int value, wchar_t *string, int radix)
+{
+  wchar_t *e = string;
+  wchar_t *b = string;
+
+  // Short circuit if 0
+
+  if (value == 0)
+    {
+      string[0] = '0';
+      string[1] = 0;
+      return string;
+    }
+
+  // If negative and base 10, print a - and then do the
+  // number. 
+
+  if (value < 0 && radix == 10)
+    {
+      string[0] = '-';
+      b++;
+    }
+
+  // Convert to base <radix>, but in reverse order
+
+  while (value != 0)
+    {
+      int mod = value % radix;
+      value = value / radix;
+
+      *e++ = (mod < 10) ? '0' + mod : 'a' + mod - 10;
+    }
+
+  *e-- = 0;
+
+  // Now reverse the string to get the correct result
+  
+  while (e > b)
+  {
+    wchar_t temp = *e;
+    *e = *b;
+    *b = temp;
+    ++b; 
+    --e;
+  }
+
+  return string;
+}
+#endif /* ACE_HAS_WCHAR */
