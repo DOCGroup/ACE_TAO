@@ -1133,7 +1133,7 @@ public:
 #if !defined (__TAO_UNBOUNDED_OBJECT_SEQUENCE_CORBA_CONTAINEDSEQ_CH_)
 #define __TAO_UNBOUNDED_OBJECT_SEQUENCE_CORBA_CONTAINEDSEQ_CH_
 
-    class _TAO_Unbounded_Object_Sequence_CORBA_ContainedSeq
+    class TAO_EXPORT_MACRO _TAO_Unbounded_Object_Sequence_CORBA_ContainedSeq
       : public TAO_Unbounded_Base_Sequence
     {
     public:
@@ -1930,7 +1930,7 @@ public:
 #if !defined (__TAO_UNBOUNDED_OBJECT_SEQUENCE_CORBA_INTERFACEDEFSEQ_CH_)
 #define __TAO_UNBOUNDED_OBJECT_SEQUENCE_CORBA_INTERFACEDEFSEQ_CH_
 
-    class _TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq
+    class TAO_EXPORT_MACRO _TAO_Unbounded_Object_Sequence_CORBA_InterfaceDefSeq
       : public TAO_Unbounded_Base_Sequence
     {
     public:
@@ -2332,7 +2332,7 @@ public:
 #if !defined (__TAO_UNBOUNDED_OBJECT_SEQUENCE_CORBA_VALUEDEFSEQ_CH_)
 #define __TAO_UNBOUNDED_OBJECT_SEQUENCE_CORBA_VALUEDEFSEQ_CH_
 
-    class _TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq
+    class TAO_EXPORT_MACRO _TAO_Unbounded_Object_Sequence_CORBA_ValueDefSeq
       : public TAO_Unbounded_Base_Sequence
     {
     public:
@@ -2655,7 +2655,7 @@ public:
 #if !defined (__TAO_UNBOUNDED_OBJECT_SEQUENCE_CORBA_ABSTRACTINTERFACEDEFSEQ_CH_)
 #define __TAO_UNBOUNDED_OBJECT_SEQUENCE_CORBA_ABSTRACTINTERFACEDEFSEQ_CH_
 
-    class _TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq
+    class TAO_EXPORT_MACRO _TAO_Unbounded_Object_Sequence_CORBA_AbstractInterfaceDefSeq
       : public TAO_Unbounded_Base_Sequence
     {
     public:
@@ -2899,7 +2899,7 @@ public:
 #if !defined (__TAO_UNBOUNDED_OBJECT_SEQUENCE_CORBA_LOCALINTERFACEDEFSEQ_CH_)
 #define __TAO_UNBOUNDED_OBJECT_SEQUENCE_CORBA_LOCALINTERFACEDEFSEQ_CH_
 
-    class _TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq
+    class TAO_EXPORT_MACRO _TAO_Unbounded_Object_Sequence_CORBA_LocalInterfaceDefSeq
       : public TAO_Unbounded_Base_Sequence
     {
     public:

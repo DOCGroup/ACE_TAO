@@ -1,3 +1,8 @@
+Fri Jul  6 11:27:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
+
+        * tao/IFR_Client/IFR_BaseC.h:
+          Export more classes to appease Borland C++.
+
 Fri Jul  6 08:27:06 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Incoming_Message_Queue.h:
