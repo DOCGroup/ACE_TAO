@@ -17,28 +17,27 @@ Mon Jul  5 19:47:04 1999  Marina Spivak  <marina@cs.wustl.edu>
 	* orbsvcs/orbsvcs/Naming/Transient_Naming_Context.cpp
 	* orbsvcs/orbsvcs/Naming/Transient_Naming_Context.h :
 	  Fixed several memory leaks that were due to superclass
-	  destructors not being virtual.
-	  Updated the implementation to reflect several
-	  changes/clarifications from the INS specification (mostly
-	  regarding exception conditions).
-	  Added comments, cleaned up the code, etc. in the remaining
-	  files, which brings my 'review' of Naming implementation files
-	  to a close.
+ 	  destructors not being virtual.  Updated the implementation to
+ 	  reflect several changes/clarifications from the INS
+ 	  specification (mostly regarding exception conditions).  Added
+ 	  comments, cleaned up the code, etc. in the remaining files,
+ 	  which brings my 'review' of Naming implementation files to a
+ 	  close.
 
 	* orbsvcs/orbsvcs/Naming/README
 	  Added a short description about the structure of implementation
-	  files.
+ 	  files.
 
 	* orbsvcs/Naming_Service/Naming_Service.cpp:
 	  Destroy the POA on shutdown.
 
 	* orbsvcs/Naming_Service/README
 	  Updated the file and added description of
-	  implementation-specific policies.
+ 	  implementation-specific policies.
 
 	* orbsvcs/tests/Simple_Naming/client.cpp
 	  Updated test to reflect changes in the behaviour of the Naming
-	  Service (due to clarifications in the INS spec).
+ 	  Service (due to clarifications in the INS spec).
 
 Mon Jul  5 17:10:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
