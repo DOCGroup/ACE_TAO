@@ -1,3 +1,8 @@
+Thu Oct 16 07:34:53 UTC  2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/FtRtEvent/ClientORB/FTRT_ClientORB_Initializer.cpp:
+          Fixed warning in emulated exception build
+
 Thu Oct 16 07:23:17 UTC  2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/FtRtEvent/ClientORB/FTRT_ClientORB_Interceptor.h:
