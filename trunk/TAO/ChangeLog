@@ -1,3 +1,9 @@
+Fri Dec 12 19:10:53 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/OBV/Collocated/Forward/Makefile:
+
+	  Added a makefile for this test.
+
 Fri Dec 12 14:15:04 2003  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Synch_Invocation.cpp:
