@@ -253,7 +253,6 @@ TAO_Connector::make_mprofile (const char *string,
       // an appropriate connector.
     }
 
-
   if (TAO_debug_level > 0)
     {
       ACE_DEBUG ((LM_DEBUG,
@@ -289,7 +288,7 @@ TAO_Connector::make_mprofile (const char *string,
   CORBA::ULong profile_count = 1;
   // Number of endpoints in the IOR  (initialized to 1)
 
-  for (size_t j = 0; j != ior.length (); ++j)
+  for (size_t j = 0; j < ior.length (); ++j)
     {
       if (ior[j] == endpoint_delimiter)
         profile_count++;
@@ -297,7 +296,7 @@ TAO_Connector::make_mprofile (const char *string,
 
   // Tell the MProfile object how many Profiles it should hold.
   // Mprofile::set(size) returns the number profiles it can hold.
-  if (mprofile.set (profile_count) != ACE_static_cast (int,profile_count))
+  if (mprofile.set (profile_count) != ACE_static_cast (int, profile_count))
     {
       ACE_THROW_RETURN (CORBA::INITIALIZE (), -1);
       // Error while setting the MProfile size!
@@ -313,13 +312,13 @@ TAO_Connector::make_mprofile (const char *string,
     {
       version_index = 0;
       // No version provided
-      // `iiop://'
+      // `protocol://'
     }
   else if (ior.find ("//") == ior_index + 3)
     {
       version_index = ior_index;
       // Version provided
-      // `iiop:N.n//'
+      // `protocol:N.n//'
 
       ior_index += 5;
       // Skip over the `N.n//'
@@ -342,24 +341,29 @@ TAO_Connector::make_mprofile (const char *string,
   // If no version is provided then the string will be of the form:
   //    `//moo/arf'
 
-  int objkey_index = ior.rfind ('/');
+  int objkey_index = ior.find (this->object_key_delimiter (), ior_index);
   // Find the object key
   //
-  // @@ Doing an rfind() prevents the object key from having a '/' in it.
-  //    This is correct for endpoints that use filesystem paths but
-  //    endpoints that use a hostname and port, for example, need not
-  //    have this restriction.  This issue should be addressed.
-  //              -Ossama
+  // Typically, a forward slash '/' is used to delimit endpoints from the
+  // object key.  However, some protocols may use forward slashes in
+  // the endpoints themselves.  To prevent ambiguities from arising, a
+  // protocol specific object key delimiter can be used.
+
+  if (objkey_index == 0 || objkey_index == ACE_CString::npos)
+    {
+      ACE_THROW_RETURN (CORBA::INITIALIZE (), -1);
+      // Failure: No endpoints specified or no object key specified.
+    }
 
   int begin = 0;
   int end = ior_index - 1;
   // Initialize the end of the endpoint index
 
-  for (CORBA::ULong i = 0; i < profile_count; ++i)
+  for (CORBA::ULong j = 0; j < profile_count; ++j)
     {
       begin += end + 1;
 
-      if (i < profile_count - 1)
+      if (j < profile_count - 1)
         end = ior.find (endpoint_delimiter, begin);
       else
         end = objkey_index - begin;  // Handle last endpoint differently

@@ -269,11 +269,11 @@ TAO_UIOP_Connector::make_profile (const char *endpoint,
 {
   // The endpoint should be of the form:
   //
-  //    N.n//rendezvous_point/object_key
+  //    N.n//rendezvous_point|object_key
   //
   // or:
   //
-  //    //rendezvous_point/object_key
+  //    //rendezvous_point|object_key
 
   ACE_NEW_RETURN (profile,
                   TAO_UIOP_Profile (endpoint, ACE_TRY_ENV),
@@ -297,7 +297,9 @@ TAO_UIOP_Connector::check_prefix (const char *endpoint)
 
   // Check for the proper prefix in the IOR.  If the proper prefix isn't
   // in the IOR then it is not an IOR we can use.
-  if (ACE_OS::strcasecmp (endpoint, protocol) == 0)
+  if (ACE_OS::strncasecmp (endpoint,
+                           protocol,
+                           ACE_OS::strlen (protocol)) == 0)
     {
       return 0;  // Success
     }
@@ -307,6 +309,11 @@ TAO_UIOP_Connector::check_prefix (const char *endpoint)
   // DO NOT throw an exception here.
 }
 
+const char
+TAO_UIOP_Connector::object_key_delimiter (void) const
+{
+  return TAO_UIOP_Profile::object_key_delimiter;
+}
 
 #define TAO_UIOP_SVC_TUPLE ACE_Svc_Tuple<TAO_UIOP_Client_Connection_Handler>
 #define UIOP_REFCOUNTED_HASH_RECYCLABLE_ADDR ACE_Refcounted_Hash_Recyclable<ACE_UNIX_Addr>

@@ -84,7 +84,10 @@ protected:
   virtual int make_profile (const char *endpoint,
                             TAO_Profile *&,
                             CORBA::Environment &ACE_TRY_ENV);
+
   virtual int check_prefix (const char *endpoint);
+
+  virtual const char object_key_delimiter (void) const;
 
   typedef ACE_NOOP_Creation_Strategy<TAO_UIOP_Client_Connection_Handler>
         TAO_NULL_CREATION_STRATEGY;

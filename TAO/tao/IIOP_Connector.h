@@ -61,7 +61,10 @@ protected:
   virtual int make_profile (const char *endpoint,
                             TAO_Profile *&,
                             CORBA::Environment &ACE_TRY_ENV);
+
   virtual int check_prefix (const char *endpoint);
+
+  virtual const char object_key_delimiter (void) const;
 
 private:
   TAO_NULL_ACTIVATION_STRATEGY null_activation_strategy_;

@@ -287,8 +287,12 @@ TAO_IIOP_Connector::check_prefix (const char *endpoint)
 
   // Check for the proper prefix in the IOR.  If the proper prefix isn't
   // in the IOR then it is not an IOR we can use.
-  if (ACE_OS::strcasecmp (endpoint, protocol[0]) == 0 ||
-      ACE_OS::strcasecmp (endpoint, protocol[1]) == 0)
+  if (ACE_OS::strncasecmp (endpoint,
+                           protocol[0],
+                           ACE_OS::strlen (protocol[0])) == 0 ||
+      ACE_OS::strncasecmp (endpoint,
+                           protocol[1],
+                           ACE_OS::strlen (protocol[1])) == 0)
     {
       return 0;  // Success
     }
@@ -296,6 +300,12 @@ TAO_IIOP_Connector::check_prefix (const char *endpoint)
   return -1;
   // Failure: not an IIOP IOR
   // DO NOT throw an exception here.
+}
+
+const char
+TAO_IIOP_Connector::object_key_delimiter (void) const
+{
+  return TAO_IIOP_Profile::object_key_delimiter;
 }
 
 

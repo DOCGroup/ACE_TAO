@@ -8,7 +8,7 @@
 //
 // = FILENAME
 //     orb_core.h
-//a
+//
 // = AUTHOR
 //     Chris Cleeland
 //
