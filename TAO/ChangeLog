@@ -5,52 +5,51 @@ Wed Oct  8 22:30:20 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 Wed Oct 08 21:31:19 2003  Huang-Ming Huang  <hh1@cse.wustl.edu>
 
-    * orbsvcs/orbsvcs/Makefile.FTORB
-    * orbsvcs/orbsvcs/FT_ORB.bor
-    * orbsvcs/orbsvcs/FT_ORB.dsp
-    * orbsvcs/orbsvcs/FTORB.mpc
-    * orbsvcs/orbsvcs/FaultTolerance/FT_ClientORBInitializer.cpp
-    * orbsvcs/orbsvcs/FaultTolerance/FT_ClientORBInitializer.h
-    * orbsvcs/orbsvcs/FaultTolerance/FT_ClientPolicyFactory.cpp
-    * orbsvcs/orbsvcs/FaultTolerance/FT_ClientPolicyFactory.h
-    * orbsvcs/orbsvcs/FaultTolerance/FT_ClientPolicy_i.cpp
-    * orbsvcs/orbsvcs/FaultTolerance/FT_ClientPolicy_i.h
-    * orbsvcs/orbsvcs/FaultTolerance/FT_ClientPolicy_i.inl
-    * orbsvcs/orbsvcs/FaultTolerance/FT_ClientService_Activate.cpp
-    * orbsvcs/orbsvcs/FaultTolerance/FT_ClientService_Activate.h
-    * orbsvcs/orbsvcs/FaultTolerance/FT_Endpoint_Selector_Factory.cpp
-    * orbsvcs/orbsvcs/FaultTolerance/FT_Endpoint_Selector_Factory.h
-    * orbsvcs/orbsvcs/FaultTolerance/FT_ServerORBInitializer.cpp
-    * orbsvcs/orbsvcs/FaultTolerance/FT_ServerORBInitializer.h
-    * orbsvcs/orbsvcs/FaultTolerance/FT_ServerPolicyFactory.cpp
-    * orbsvcs/orbsvcs/FaultTolerance/FT_ServerPolicyFactory.h
-    * orbsvcs/orbsvcs/FaultTolerance/FT_ServerPolicy_i.cpp
-    * orbsvcs/orbsvcs/FaultTolerance/FT_ServerPolicy_i.h
-    * orbsvcs/orbsvcs/FaultTolerance/FT_ServerPolicy_i.inl
-    * orbsvcs/orbsvcs/FaultTolerance/FT_ServerService_Activate.cpp
-    * orbsvcs/orbsvcs/FaultTolerance/FT_ServerService_Activate.h
-    * orbsvcs/orbsvcs/FaultTolerance/FT_Service_Activate.cpp
-    * orbsvcs/orbsvcs/FaultTolerance/FT_Service_Activate.h
-    * orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.inl
+        * orbsvcs/orbsvcs/Makefile.FTORB:
+	* orbsvcs/orbsvcs/FT_ORB.bor:
+	* orbsvcs/orbsvcs/FT_ORB.dsp:
+	* orbsvcs/orbsvcs/FTORB.mpc:
+	* orbsvcs/orbsvcs/FaultTolerance/FT_ClientORBInitializer.cpp:
+	* orbsvcs/orbsvcs/FaultTolerance/FT_ClientORBInitializer.h:
+	* orbsvcs/orbsvcs/FaultTolerance/FT_ClientPolicyFactory.cpp:
+	* orbsvcs/orbsvcs/FaultTolerance/FT_ClientPolicyFactory.h:
+	* orbsvcs/orbsvcs/FaultTolerance/FT_ClientPolicy_i.cpp:
+	* orbsvcs/orbsvcs/FaultTolerance/FT_ClientPolicy_i.h:
+	* orbsvcs/orbsvcs/FaultTolerance/FT_ClientPolicy_i.inl:
+	* orbsvcs/orbsvcs/FaultTolerance/FT_ClientService_Activate.cpp:
+	* orbsvcs/orbsvcs/FaultTolerance/FT_ClientService_Activate.h:
+	* orbsvcs/orbsvcs/FaultTolerance/FT_Endpoint_Selector_Factory.cpp:
+	* orbsvcs/orbsvcs/FaultTolerance/FT_Endpoint_Selector_Factory.h:
+	* orbsvcs/orbsvcs/FaultTolerance/FT_ServerORBInitializer.cpp:
+	* orbsvcs/orbsvcs/FaultTolerance/FT_ServerORBInitializer.h
+	* orbsvcs/orbsvcs/FaultTolerance/FT_ServerPolicyFactory.cpp
+	* orbsvcs/orbsvcs/FaultTolerance/FT_ServerPolicyFactory.h
+	* orbsvcs/orbsvcs/FaultTolerance/FT_ServerPolicy_i.cpp
+	* orbsvcs/orbsvcs/FaultTolerance/FT_ServerPolicy_i.h
+	* orbsvcs/orbsvcs/FaultTolerance/FT_ServerPolicy_i.inl
+	* orbsvcs/orbsvcs/FaultTolerance/FT_ServerService_Activate.cpp
+	* orbsvcs/orbsvcs/FaultTolerance/FT_ServerService_Activate.h
+	* orbsvcs/orbsvcs/FaultTolerance/FT_Service_Activate.cpp:
+	* orbsvcs/orbsvcs/FaultTolerance/FT_Service_Activate.h:
+	* orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.inl:
 
-    Changed for the seperation of FT framework.
+          Changed for the seperation of FT framework.
 
 
 Wed Oct  8 20:05:20 2003  Huang-Ming Huang  <hh1@cse.wustl.edu>
 
-    * orbsvcs/orbsvcs/CosEvent.mpc
-    * orbsvcs/orbsvcs/ec_typed_events.mpb
+        * orbsvcs/orbsvcs/CosEvent.mpc
+        * orbsvcs/orbsvcs/ec_typed_events.mpb
 
-      Fixed the need for specifying ec_typed_event=1 during make.
+          Fixed the need for specifying ec_typed_event=1 during make.
 
-    * orbsvcs/orbsvcs/CosEvent.mpb
+	* orbsvcs/orbsvcs/CosEvent.mpb
 
-      Removed due to the above change.
+          Removed due to the above change.
 
-    * tao/CORBALOC_Parser.cpp:
+	* tao/CORBALOC_Parser.cpp:
 
-      Fixed the unused variable warning.
-
+          Fixed the unused variable warning.
 
 Wed Oct  8 14:45:22 2003  Steve Totten  <totten_s@ociweb.com>
 
