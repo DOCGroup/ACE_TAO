@@ -19,9 +19,10 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
+#if (TAO_HAS_INTERCEPTORS == 1)
 #include "tao/DynamicC.h"
 #include "tao/MessagingC.h"
+#if (TAO_HAS_INTERCEPTORS == 1)
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
