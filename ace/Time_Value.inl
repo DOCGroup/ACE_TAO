@@ -72,7 +72,7 @@ ACE_Time_Value::set (const timeval &tv)
 }
 
 ACE_INLINE
-ACE_Time_Value::ACE_Time_Value (const timeval &tv)
+ACE_Time_Value::ACE_Time_Value (const struct timeval &tv)
   // : tv_ ()
 {
   // ACE_OS_TRACE ("ACE_Time_Value::ACE_Time_Value");

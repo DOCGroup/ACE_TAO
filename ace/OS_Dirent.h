@@ -98,18 +98,18 @@ public:
   static void closedir (ACE_DIR *);
   static dirent *readdir (ACE_DIR *);
   static int readdir_r (ACE_DIR *dirp,
-                        dirent *entry,
-                        dirent **result);
+                        struct dirent *entry,
+                        struct dirent **result);
   static long telldir (ACE_DIR *);
   static void seekdir (ACE_DIR *,
                        long loc);
   static void rewinddir (ACE_DIR *);
 
   static int scandir (const ACE_TCHAR *dirname,
-                      dirent **namelist[],
-                      int (*selector) (const dirent *filename),
-                      int (*comparator) (const dirent **f1,
-                                         const dirent **f2));
+                      struct dirent **namelist[],
+                      int (*selector) (const struct dirent *filename),
+                      int (*comparator) (const struct dirent **f1,
+                                         const struct dirent **f2));
 private:
   // Win32 emulation functions
   static ACE_DIR *opendir_emulation (const ACE_TCHAR *filename);
