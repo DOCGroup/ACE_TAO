@@ -1,3 +1,13 @@
+Thu Apr  3 11:20:03 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/Bug_1482_Regression/Makefile.bor:
+	* tests/Bug_1482_Regression/client.bor:
+	* tests/Bug_1482_Regression/server.bor: Borland Makefiles for the
+	  new test.
+
+	* tests/Makefile.bor:
+	* tests/Makefile: Added the new file to our daily build.
+
 Thu Apr  3 10:57:23 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/Bug_1482_Regression: A regression test for bug 
