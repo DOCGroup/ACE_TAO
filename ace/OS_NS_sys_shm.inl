@@ -11,7 +11,7 @@ ACE_OS::shmat (int int_id, void *shmaddr, int shmflg)
 # if defined (ACE_LACKS_POSIX_PROTOTYPES) || defined (ACE_LACKS_SOME_POSIX_PROTOTYPES)
   ACE_OSCALL_RETURN (::shmat (int_id, (char *)shmaddr, shmflg), void *, (void *) -1);
 # else
-  ACE_OSCALL_RETURN (::shmat (int_id, shmaddr, shmflg), void *, (void *) -1);
+  ACE_OSCALL_RETURN (::shmat (int_id, static_cast <char *> (shmaddr), shmflg), void *, (void *) -1);
 # endif /* ACE_LACKS_POSIX_PROTOTYPES */
 #else
   ACE_UNUSED_ARG (int_id);

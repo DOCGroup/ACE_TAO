@@ -3,7 +3,7 @@
 
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_sys_mman.h"
-
+#include "ace/OS_NS_sys_stat.h"
 ACE_INLINE ACE_HANDLE
 ACE_Mem_Map::handle (void) const
 {
@@ -125,7 +125,7 @@ ACE_Mem_Map::unmap (int len)
       // file.
       const off_t filesize = ACE_OS::filesize (handle_);
       writeback_result =
-        ACE_OS::lseek (handle_, 0, 0) != -1  
+        ACE_OS::lseek (handle_, 0, 0) != -1
         && ACE_OS::write (handle_,
                           base_addr_,
                           (int) filesize) == filesize ? 0 : -1;
@@ -162,7 +162,7 @@ ACE_Mem_Map::unmap (void *addr, int len)
       // Write back the contents of the shared memory object to the file.
       const off_t filesize = ACE_OS::filesize (handle_);
       writeback_result =
-        ACE_OS::lseek (handle_, 0, 0) != -1 
+        ACE_OS::lseek (handle_, 0, 0) != -1
         && ACE_OS::write (handle_,
                           base_addr_,
                           (int) filesize) == filesize ? 0 : -1;
@@ -171,7 +171,7 @@ ACE_Mem_Map::unmap (void *addr, int len)
 
 #if defined (__Lynx__)
   return ACE_OS::munmap (addr,
-                         len < 0 ? this->length_ : len) 
+                         len < 0 ? this->length_ : len)
     | writeback_result;;
 #else  /* ! __Lynx__ */
   return ACE_OS::munmap (addr,
