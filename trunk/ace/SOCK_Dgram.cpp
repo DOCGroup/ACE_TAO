@@ -422,7 +422,7 @@ ACE_SOCK_Dgram::recv (void *buf,
 ssize_t
 ACE_SOCK_Dgram::send (const void *buf,
                       size_t n,
-                      ACE_Addr &addr,
+                      const ACE_Addr &addr,
                       int flags,
                       const ACE_Time_Value *timeout) const
 {
@@ -445,7 +445,7 @@ ACE_SOCK_Dgram::send (const void *buf,
       return -1;
       /* NOTREACHED */
     default:
-      // Goes fine, call <send> to get data
+      // Goes fine, call <send> to transmit the data.
       return this->send (buf, n, addr, flags);
     }
 }
