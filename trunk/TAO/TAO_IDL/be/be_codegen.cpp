@@ -1169,7 +1169,10 @@ TAO_CodeGen::end_server_skeletons (void)
 int
 TAO_CodeGen::end_anyop_source (void)
 {
-  *this->anyop_source_ << "\n\n";
+  if (!be_global->gen_tmplinst ())
+    {
+      *this->anyop_source_ << "\n";
+    }
 
   return 0;
 }
