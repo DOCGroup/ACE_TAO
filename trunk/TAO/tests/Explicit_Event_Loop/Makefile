@@ -12,8 +12,6 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # ! TAO_ROOT
 
-
-
 LDLIBS = -lTAO
 IDL_SRC	= timeC.cpp timeS.cpp
 IDL_HDR = timeC.h timeS.h
@@ -39,6 +37,8 @@ BIN = server \
       client
 BUILD = $(BIN)
 
+
+TAO_IDLFLAGS += -Ge 1
 #----------------------------------------------------------------------------
 #	Include macros and targets
 #----------------------------------------------------------------------------
@@ -58,11 +58,6 @@ include $(TAO_ROOT)/taoconfig.mk
 .PRECIOUS: timeS.cpp timeS.i timeS.h
 .PRECIOUS: timeS_T.cpp timeS_T.i timeS_T.h
 
-#$(IDL_SRC): time.idl
-#$(TAO_ROOT)/TAO_IDL/tao_idl time.idl  -hc .h -hs S.h -hT S_T.h \
-#	-cs C.cpp  \
-#	-ss S.cpp -sT S_T.cpp 
-
 server:	$(addprefix $(VDIR),$(SIMPLE_SVR_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
@@ -70,17 +65,7 @@ client:	$(addprefix $(VDIR),$(SIMPLE_CLT_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 realclean: clean
-	$(RM) -rf timeC.* timeS.* timeS_T.* time.h
+	-/bin/$(RM) -rf timeC.* timeS.* timeS_T.* time.h
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
-
-
-
-
-
-
-
-
-
-
