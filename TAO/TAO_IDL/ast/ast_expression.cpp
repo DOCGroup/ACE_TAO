@@ -62,8 +62,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
  */
 
-/*
- * ast_expression.cc - Implementation of class AST_Expression
+/* * ast_expression.cc - Implementation of class AST_Expression
  *
  * AST_Expression nodes denote IDL expressions used in the IDL input.
  */
@@ -84,7 +83,7 @@ AST_Expression::fill_definition_details()
 {
   pd_defined_in = idl_global->scopes()->depth() > 0 
     ? idl_global->scopes()->top()
-    : NULL;
+    : 0 ;
   pd_line       = idl_global->lineno();
   pd_file_name	= idl_global->filename();
 }
@@ -1036,9 +1035,9 @@ AST_Expression::eval_un_op(AST_Expression::EvalKind ek)
 AST_Expression::AST_ExprValue *
 AST_Expression::eval_symbol(AST_Expression::EvalKind ek)
 {
-  UTL_Scope		*s;
-  AST_Decl		*d;
-  AST_Constant		*c;
+  UTL_Scope		*s = 0;
+  AST_Decl		*d = 0;
+  AST_Constant		*c = 0;
 
   /*
    * Is there a symbol stored?
@@ -1285,7 +1284,7 @@ AST_Expression::operator==(AST_Expression *vc)
   case EV_none:
     return I_FALSE;
   }
-  return NULL;
+  return I_FALSE;
 }
 
 long
@@ -1338,7 +1337,7 @@ AST_Expression::compare(AST_Expression *vc)
   case EV_none:
     return I_FALSE;
   }
-  return NULL;
+  return I_FALSE;
 }
 
 /*

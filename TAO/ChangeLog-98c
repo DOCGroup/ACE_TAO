@@ -1,3 +1,24 @@
+Sat Oct 25 22:05:43 1997  Sergio Flores  <sergio@macarena.cs.wustl.edu>
+
+	* TAO_IDL/ast/ast_constant.cpp (exprtype_to_string): 
+	Added case statements to handle the rest of un-handled
+	enumerations from AST_Expression::ExprType.  These will
+	handle a default value (i.e. the same case as
+	AST_Expression::EV_none).  
+	
+	* TAO_IDL/ast/ast_expression.cpp (operator==): 
+	* TAO_IDL/ast/ast_expression.cpp (compare): 
+	Make the default return value I_FALSE instead of NULL which 
+	was  giving "lacks a cast" warning.
+	
+	* TAO_IDL/ast/ast_expression.cpp (fill_definition_details): 
+	Use 0 instead of NULL to initialize pointers in the
+	member initialization list, again to avoid ANSI C++ forbids
+	implicit (void *) conversions warnings.
+
+	* TAO_IDL/ast/ast_expression.cpp (eval_symbol): 
+	Initialized pointers to 0.
+
 Sat Oct 25 17:45:17 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* TAO_IDL/driver/drv_preproc.cpp: Fixed the same bug that Sumedh
