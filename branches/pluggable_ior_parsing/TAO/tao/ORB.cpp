@@ -63,6 +63,9 @@ using std::set_unexpected;
 ACE_RCSID(tao, ORB, "$Id$")
 
 static const char ior_prefix [] = "IOR:";
+
+// @@ Priyanka: don't forget to remove this stuff once you add the
+// file: parser to the Parser Registry.
 static const char file_prefix[] = "file://";
 
 // = Static initialization.
@@ -1530,6 +1533,8 @@ CORBA_ORB::string_to_object (const char *str,
                                        ACE_TRY_ENV);
     }
 
+  // @@ Priyanka: once you have the file: parser into the Parser
+  // Registry we should remove the code below.
   if (ACE_OS::strncmp (str,
                        file_prefix,
                        sizeof file_prefix - 1) == 0)
@@ -1673,6 +1678,8 @@ CORBA_ORB::ior_string_to_object (const char *str,
   return objref;
 }
 
+// @@ Priyanka: once you have the file: parser into the Parser
+// Registry we should remove the code below.
 CORBA::Object_ptr
 CORBA_ORB::file_string_to_object (const char* filename,
                                   CORBA::Environment& ACE_TRY_ENV)

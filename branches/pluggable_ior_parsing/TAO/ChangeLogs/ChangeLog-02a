@@ -1,3 +1,8 @@
+Mon Jun 26 14:56:42 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/ORB.cpp:
+          Minor code review.
+
 Wed Jun 21 20:01:37 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/TAO.dsp:
