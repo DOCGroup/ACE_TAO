@@ -576,9 +576,13 @@ public:
   // Resume all threads in an ACE_Task.
   int kill_task (ACE_Task_Base *task,
                  int signum);
-  // Kill all threads in an ACE_Task.
+  // Send a signal <signum> to all threads in an <ACE_Task>.
+
   int cancel_task (ACE_Task_Base *task, int async_cancel = 0);
-  // Cancel all threads in an ACE_Task.
+  // Cancel all threads in an <ACE_Task>.  If <async_cancel> is non-0,
+  // then asynchronously cancel these threads if the OS platform
+  // supports cancellation.  Otherwise, perform a "cooperative"
+  // cancellation.
 
   // = The following method provide new functionality. They do not
   // follow the same design as current methods. They provide new
