@@ -18,7 +18,8 @@ TAO::TypeCode::Sequence<RefCountPolicy>::~Sequence (void)
 
 template <class RefCountPolicy>
 bool
-TAO::TypeCode::Sequence<RefCountPolicy>::tao_marshal (TAO_OutputCDR & cdr) const
+TAO::TypeCode::Sequence<RefCountPolicy>::tao_marshal (
+  TAO_OutputCDR & cdr) const
 {
   // A tk_array or tk_sequence TypeCode has a "complex" parameter list
   // type (see Table 15-2 in Section 15.3.5.1 "TypeCode" in the CDR
@@ -107,9 +108,9 @@ CORBA::TypeCode_ptr
 TAO::TypeCode::Sequence<RefCountPolicy>::get_compact_typecode_i (
   ACE_ENV_SINGLE_ARG_DECL_NOT_USED) const
 {
-  // Already compact since tk_sequence TypeCodes have no name or member
-  // names, meaning that we can simply call _duplicate() on this
-  // TypeCode.
+  // Already compact since tk_sequence and tk_array TypeCodes have no
+  // name or member names, meaning that we can simply call
+  // _duplicate() on this TypeCode.
   return CORBA::TypeCode::_duplicate (this);
 }
 
