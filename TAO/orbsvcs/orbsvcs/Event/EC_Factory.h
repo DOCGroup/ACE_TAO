@@ -14,7 +14,7 @@
 
 #ifndef TAO_EC_FACTORY_H
 #define TAO_EC_FACTORY_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "orbsvcs/Event/event_export.h"
 
@@ -160,5 +160,5 @@ public:
 #include "EC_Factory.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_EC_FACTORY_H */

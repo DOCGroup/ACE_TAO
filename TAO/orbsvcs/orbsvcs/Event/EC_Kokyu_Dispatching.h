@@ -15,7 +15,7 @@
 
 #ifndef TAO_EC_KOKYU_DISPATCHING_H
 #define TAO_EC_KOKYU_DISPATCHING_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "EC_Dispatching.h"
 #include "EC_ProxySupplier.h"
@@ -126,5 +126,5 @@ private:
 #include "EC_Kokyu_Dispatching.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_EC_KOKYU_DISPATCHING_H */

@@ -14,7 +14,7 @@
 
 #ifndef TAO_EC_SUPPLIERCONTROL_H
 #define TAO_EC_SUPPLIERCONTROL_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "orbsvcs/Event/event_export.h"
 
@@ -67,5 +67,5 @@ public:
 #include "EC_SupplierControl.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_EC_SUPPLIERCONTROL_H */

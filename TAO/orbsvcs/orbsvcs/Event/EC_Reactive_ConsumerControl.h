@@ -14,7 +14,7 @@
 
 #ifndef TAO_EC_REACTIVE_CONSUMERCONTROL_H
 #define TAO_EC_REACTIVE_CONSUMERCONTROL_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "EC_ConsumerControl.h"
 #include "orbsvcs/ESF/ESF_Worker.h"
@@ -137,5 +137,5 @@ private:
 #include "EC_Reactive_ConsumerControl.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_EC_CONSUMERCONTROL_H */

@@ -10,7 +10,7 @@
 
 #ifndef TAO_ECG_CDR_MESSAGE_SENDER_H
 #define TAO_ECG_CDR_MESSAGE_SENDER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ECG_UDP_Out_Endpoint.h"
 
@@ -178,5 +178,5 @@ private:
 #include "ECG_CDR_Message_Sender.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_ECG_CDR_MESSAGE_SENDER_H */

@@ -14,7 +14,7 @@
 
 #ifndef TAO_EC_OBSERVERSTRATEGY_H
 #define TAO_EC_OBSERVERSTRATEGY_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "orbsvcs/ESF/ESF_Worker.h"
 
@@ -291,5 +291,5 @@ private:
 #include "EC_ObserverStrategy.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_EC_OBSERVERSTRATEGY_H */
