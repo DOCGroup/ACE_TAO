@@ -3,6 +3,7 @@
 #include "ace/Timer_Heap.h"
 #include "ace/Timer_List.h"
 #include "ace/Timer_Queue.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID(Misc, test_timer_queue, "$Id$")
 

@@ -29,6 +29,7 @@
 #include "ace/SOCK_CODgram.h"
 #include "ace/INET_Addr.h"
 #include "ace/Process.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID(Dgram, CODgram, "$Id$")
 

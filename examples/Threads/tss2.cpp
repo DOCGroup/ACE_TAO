@@ -18,6 +18,7 @@
 // ============================================================================
 
 #include "ace/Thread.h"
+#include "ace/Log_Msg.h"
 #include "TSS_Data.h"
 #include "TSS_Obj.h"
 #include "TSS_Task.h"

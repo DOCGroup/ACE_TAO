@@ -20,6 +20,7 @@
 #include "ace/SString.h"
 #include "ace/Naming_Context.h"
 #include "ace/Profile_Timer.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID(Misc, test_naming, "$Id$")
 

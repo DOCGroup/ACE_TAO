@@ -15,6 +15,7 @@
 
 #include "ace/Service_Types.h"
 #include "ace/FIFO_Recv_Msg.h"
+#include "ace/Log_Msg.h"
 
 class Handle_L_FIFO : public ACE_Service_Object, public ACE_FIFO_Recv_Msg
 {

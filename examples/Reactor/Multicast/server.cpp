@@ -1,6 +1,6 @@
 // $Id$
 
-// server.C (written by Tim Harrison)
+// server.cpp (written by Tim Harrison)
 
 // Listens to multicast address for client log messages.  Prints
 // Mbits/sec received from client.
@@ -9,6 +9,7 @@
 #include "ace/INET_Addr.h"
 #include "ace/SOCK_Dgram_Mcast.h"
 #include "ace/Reactor.h"
+#include "ace/Log_Msg.h"
 #include "Log_Wrapper.h"
 
 ACE_RCSID(Multicast, server, "$Id$")

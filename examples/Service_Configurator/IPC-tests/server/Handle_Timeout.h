@@ -13,6 +13,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Service_Types.h"
+#include "ace/Log_Msg.h"
 
 class Handle_Timeout : public ACE_Service_Object
 {

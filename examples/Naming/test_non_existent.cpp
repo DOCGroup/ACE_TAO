@@ -1,6 +1,7 @@
 // $Id$
 
 #include "ace/Naming_Context.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID(Naming, test_non_existent, "$Id$")
 
