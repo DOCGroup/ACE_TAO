@@ -2,11 +2,11 @@
 //
 // $Id$
 
-#include "tao/BiDir_PolicyFactory.h"
-#include "tao/BiDirPolicyC.h"
-#include "tao/BiDir_Policy_i.h"
+#include "BiDir_PolicyFactory.h"
+#include "BiDirGIOP.h"
+#include "BiDir_Policy_i.h"
 
-ACE_RCSID (tao, BiDir_PolicyFactory, "$Id$")
+ACE_RCSID (BiDir_GIOP, BiDir_PolicyFactory, "$Id$")
 
 
 

@@ -1,3 +1,54 @@
+Fri Mar 30 13:43:56 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+        * tao/BiDirPolicy.pidl:
+	* tao/BiDirPolicyC.cpp:
+	* tao/BiDirPolicyC.h:
+	* tao/BiDirPolicyC.i:
+	* tao/BiDir_ORBInitializer.cpp:
+	* tao/BiDir_ORBInitializer.h:
+	* tao/BiDir_PolicyFactory.cpp:
+	* tao/BiDir_PolicyFactory.h:
+	* tao/BiDir_Policy_i.h:
+	* tao/BiDir_Policy_i.inl: Moved the files for BiDirecctional GIOP
+	  to a seperate library.  
+
+	* tao/BiDir_Adapter.cpp:
+	* tao/BiDir_Adapter.h: The interface which is used by the ORB to
+	  load the library.
+
+	* tao/ORB.cpp: Moved the ORB initialization for the Bidirectional
+	  stuff to the new library.
+
+	* tao/ORB_Core.cpp
+	* tao/ORB_Core.h
+	* tao/ORB_Core.i: Added hooks to load the BiDirectional GIOP
+	  library.  
+	  
+	* tao/Makefile: Removed the BiDirectional GIOP files.
+	
+	* tao/*/Makefiles: Updated dependencies.
+	
+	* tao/PortableServer/POA.cpp: Removed parsing of the BiDirectional
+	  policy from here to the new library.
+
+	* tao/BiDir_GIOP/BiDirGIOP.cpp:
+        * tao/BiDir_GIOP/BiDirGIOP.h:
+	* tao/BiDir_GIOP/BiDir_ORBInitializer.h:
+	* tao/BiDir_GIOP/BiDir_ORBInitializer.cpp:
+	* tao/BiDir_GIOP/BiDir_PolicyFactory.cpp  
+	* tao/BiDir_GIOP/BiDirPolicy.pidl:
+        * tao/BiDir_GIOP/BiDir_PolicyFactory.h:
+	* tao/BiDir_GIOP/BiDirPolicyC.cpp:
+        * tao/BiDir_GIOP/BiDirPolicyC.h:
+	* tao/BiDir_GIOP/BiDirPolicyC.i:
+	* tao/BiDir_GIOP/BiDir_Policy_i.cpp:
+	* tao/BiDir_GIOP/BiDir_Policy_i.h:
+	* tao/BiDir_GIOP/BiDir_Policy_i.inl:
+	* tao/BiDir_GIOP/bidirgiop_export.h:
+	* tao/BiDir_GIOP/Makefile:
+	* tao/BiDir_GIOP/TAO_BiDir_GIOP_Static.dsp:
+	* tao/BiDir_GIOP/TAO_BiDir_GIOP.dsp: Files for the new library.
+
 Fri Mar 30 11:20:25 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * examples/AMI/FL_Callback/Makefile:
@@ -421,6 +472,7 @@ Fri Mar 30 10:32:06 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
           - CORBA::Object::_get_interface() method implemented.
 
+>>>>>>> 1.3035
 Thu Mar 29 19:17:56 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 
         * orbsvcs/tests/Security/SecurityLevel1/README:

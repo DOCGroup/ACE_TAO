@@ -131,19 +131,7 @@ SOURCE=.\Base_Transport_Property.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\BiDir_ORBInitializer.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\BiDir_Policy_i.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\BiDir_PolicyFactory.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\BiDirPolicyC.h
+SOURCE=.\BiDir_Adapter.h
 # End Source File
 # Begin Source File
 
@@ -911,14 +899,6 @@ SOURCE=.\Base_Transport_Property.inl
 # End Source File
 # Begin Source File
 
-SOURCE=.\BiDir_Policy_i.inl
-# End Source File
-# Begin Source File
-
-SOURCE=.\BiDirPolicyC.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\Bind_Dispatcher_Guard.i
 # End Source File
 # Begin Source File
@@ -1527,19 +1507,7 @@ SOURCE=.\Base_Transport_Property.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\BiDir_ORBInitializer.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\BiDir_Policy_i.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\BiDir_PolicyFactory.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\BiDirPolicyC.cpp
+SOURCE=.\BiDir_Adapter.cpp
 # End Source File
 # Begin Source File
 
