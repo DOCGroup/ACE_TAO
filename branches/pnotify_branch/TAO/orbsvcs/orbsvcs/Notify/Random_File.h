@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file    Persistent_File.h
+ *  @file    Random_File.h
  *
  *  $Id$
  *
@@ -13,8 +13,8 @@
  */
 //=============================================================================
 
-#ifndef PERSISTENT_FILE_H
-#define PERSISTENT_FILE_H
+#ifndef RANDOM_FILE_H
+#define RANDOM_FILE_H
 #include /**/ "ace/pre.h"
 #include /**/ "ace/config-all.h"
 
@@ -22,7 +22,7 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "notify_export.h"
+#include "notify_serv_export.h"
 #include "ace/FILE.h"
 #include "ace/streams.h"
 #include "ace/Synch_T.h"
@@ -31,20 +31,20 @@ namespace TAO_NOTIFY
 {
 
 /**
- * \brief A persistent file class.
+ * \brief A random file class.
  *
  * Derived from ACE_FILE, this class provides access to a
  * file of fixed-size blocks.
  *
  */
-class TAO_Notify_Export Persistent_File : public ACE_FILE
+class TAO_Notify_Serv_Export Random_File : public ACE_FILE
 {
 public:
   /// The constructor.
-  Persistent_File();
+  Random_File();
 
   /// The destructor, which closes the open file.
-  ~Persistent_File();
+  ~Random_File();
 
   /// Open a file with default permissions.
   bool open(const char* filename, size_t block_size = 512);
@@ -86,4 +86,4 @@ private:
 } /* namespace TAO_NOTIFY */
 
 #include /**/ "ace/post.h"
-#endif /* PERSISTENT_FILE_H */
+#endif /* RANDOM_FILE_H */

@@ -1,3 +1,26 @@
+Tue Oct 12 14:10:43 2004  Dale Wilson  <wilson_d@ociweb.com>
+
+        * orbsvcs/orbsvcs/Notify/Delivery_Request.inl:
+        * orbsvcs/orbsvcs/Notify/Routing_Slip.inl:
+          Pick up Event Persistence files missed during
+          previous merge.
+
+        * orbsvcs/orbsvcs/Notify/Random_File.h:
+        * orbsvcs/orbsvcs/Notify/Random_File.cpp:
+          Rename Persistent_File->Random_File
+
+        * orbsvcs/orbsvcs/Notify/Delivery_Method.h:
+        * orbsvcs/orbsvcs/Notify/Delivery_Method.cpp:
+        * orbsvcs/orbsvcs/Notify/Delivery_Method_Dispatch.h:
+        * orbsvcs/orbsvcs/Notify/Delivery_Method_Dispatch.cpp:
+        * orbsvcs/orbsvcs/Notify/Delivery_Method_Lookup.h:
+        * orbsvcs/orbsvcs/Notify/Delivery_Method_Lookup.cpp:
+        * orbsvcs/orbsvcs/Notify/Persistent_File.h:
+        * orbsvcs/orbsvcs/Notify/Persistent_File.cpp:
+
+          Removed these files.
+
+
 Mon Oct 11 14:39:15 2004  Dale Wilson  <wilson_d@ociweb.com>
 
         * orbsvcs/tests/Notify/Unit/Notify_Unit.mpc:
