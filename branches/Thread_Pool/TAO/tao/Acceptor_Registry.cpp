@@ -94,7 +94,7 @@ TAO_Acceptor_Registry::get_acceptor (CORBA::ULong tag)
 
   for (;
        acceptor != end ;
-       acceptor++)
+       ++acceptor)
     {
       if ((*acceptor)->tag () == tag)
         return *acceptor;

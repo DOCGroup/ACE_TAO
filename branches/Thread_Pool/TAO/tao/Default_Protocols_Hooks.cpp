@@ -24,31 +24,28 @@ TAO_Default_Protocols_Hooks::init_hooks (TAO_ORB_Core *,
 }
 
 int
-TAO_Default_Protocols_Hooks::call_client_protocols_hook (
-                                int &,
-                                int &,
-                                int &,
-                                const char *)
+TAO_Default_Protocols_Hooks::call_client_protocols_hook (int &,
+                                                         int &,
+                                                         int &,
+                                                         const char *)
 {
   return 0;
 }
 
 int
-TAO_Default_Protocols_Hooks::call_server_protocols_hook (
-                                int &,
-                                int &,
-                                int &,
-                                const char *)
+TAO_Default_Protocols_Hooks::call_server_protocols_hook (int &,
+                                                         int &,
+                                                         int &,
+                                                         const char *)
 {
   return 0;
 }
 
 void
-TAO_Default_Protocols_Hooks::add_rt_service_context_hook (
-                                TAO_Service_Context &,
-                                CORBA::Policy *,
-                                CORBA::Short &,
-                                CORBA::Environment &)
+TAO_Default_Protocols_Hooks::add_rt_service_context_hook (TAO_Service_Context &,
+                                                          CORBA::Policy *,
+                                                          CORBA::Short &,
+                                                          CORBA::Environment &)
 {
 }
 
@@ -60,12 +57,11 @@ TAO_Default_Protocols_Hooks::get_selector_hook (CORBA::Policy *,
 }
 
 void
-TAO_Default_Protocols_Hooks::get_selector_bands_policy_hook (
-                                          CORBA::Policy *,
-                                          CORBA::Short &,
-                                          CORBA::Short &,
-                                          CORBA::Short &,
-                                          int &)
+TAO_Default_Protocols_Hooks::get_selector_bands_policy_hook (CORBA::Policy *,
+                                                             CORBA::Short &,
+                                                             CORBA::Short &,
+                                                             CORBA::Short &,
+                                                             int &)
 {
 }
 
@@ -89,11 +85,18 @@ TAO_Default_Protocols_Hooks::set_default_policies (CORBA::Environment &)
   return 0;
 }
 
+int
+TAO_Default_Protocols_Hooks::set_default_server_protocol_policy (TAO_Acceptor_Registry &,
+                                                                 CORBA::Environment &ACE_TRY_ENV)
+{
+  return 0;
+}
+
 void
 TAO_Default_Protocols_Hooks::rt_service_context (TAO_Stub *,
-                                   TAO_Service_Context &,
-                                   CORBA::Boolean ,
-                                   CORBA::Environment &)
+                                                 TAO_Service_Context &,
+                                                 CORBA::Boolean ,
+                                                 CORBA::Environment &)
 {
 }
 

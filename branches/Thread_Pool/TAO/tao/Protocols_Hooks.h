@@ -27,6 +27,7 @@ class TAO_ORB_Core;
 class TAO_GIOP_Invocation;
 class TAO_Resource_Factory;
 class TAO_Service_Context;
+class TAO_Acceptor_Registry;
 
 class TAO_Export TAO_Protocols_Hooks : public ACE_Service_Object
 {
@@ -87,9 +88,13 @@ public:
 
   /// Sets the default_policies for ORB.
   /// 1. Sets ORB-level policy defaults for this ORB.  Currently sets
-  /// default RTCORBA policies: ServerProtocolPolicy and
-  /// ClientProtocolPolicy.
+  /// default RTCORBA policies: ClientProtocolPolicy.
   virtual int set_default_policies (CORBA::Environment &ACE_TRY_ENV) = 0;
+
+  /// Sets the default ServerProtocolPolicy.
+  virtual int set_default_server_protocol_policy (TAO_Acceptor_Registry &acceptor_registry,
+                                                  CORBA::Environment &ACE_TRY_ENV) = 0;
+
 };
 
 #include "ace/post.h"

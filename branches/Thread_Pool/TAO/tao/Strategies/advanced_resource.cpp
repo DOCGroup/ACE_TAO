@@ -65,7 +65,17 @@ TAO_Advanced_Resource_Factory::init (int argc, char **argv)
 
   for (curarg = 0; curarg < argc; curarg++)
     if (ACE_OS::strcasecmp (argv[curarg],
-                            "-ORBReactorLock") == 0)
+                            "-ORBReactorRegistry") == 0)
+      {
+        curarg++;
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("TAO_Advanced_Resource_Factory::init - ")
+                           ACE_TEXT ("-ORBReactorRegistry no longer supported\n")),
+                          -1);
+      }
+
+    else if (ACE_OS::strcasecmp (argv[curarg],
+                                 "-ORBReactorLock") == 0)
       {
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO_Default_Resource obsolete -ORBReactorLock ")
