@@ -1,3 +1,8 @@
+Thu Mar 31 08:33:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/append.cpp:
+          Fixed compile problem in emulated exceptions build
+
 Wed Mar 30 15:10:53 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/Strategies/UIOP_Profile.cpp:
