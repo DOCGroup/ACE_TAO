@@ -12,6 +12,13 @@ ACE_RCSID (tao,
 # include "TypeCode.inl"
 #endif /* ! __ACE_INLINE__ */
 
+#include "SystemException.h"
+#include "CDR.h"
+#include "ORB_Constants.h"
+#include "Struct_TypeCode.h"
+
+#include "ace/OS_NS_string.h"
+
 
 CORBA::Boolean
 CORBA::TypeCode::equal (TypeCode_ptr tc
@@ -136,7 +143,7 @@ CORBA::TypeCode::fixed_digits_i (ACE_ENV_SINGLE_ARG_DECL) const
   ACE_THROW_RETURN (CORBA::TypeCode::BadKind (), 0);
 }
 
-CORBA::Short
+CORBA::UShort
 CORBA::TypeCode::fixed_scale_i (ACE_ENV_SINGLE_ARG_DECL) const
 {
   ACE_THROW_RETURN (CORBA::TypeCode::BadKind (), 0);
@@ -174,12 +181,13 @@ TAO::operator<< (TAO_OutputCDR & cdr,
 
   if (tc == 0)
     {
-      ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
+      ACE_THROW_RETURN (CORBA::MARSHAL (0,
                                         CORBA::COMPLETED_MAYBE),
                         false);
     }
 
-  CORBA::ULong const kind = tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::ULong const kind =
+    static_cast<CORBA::ULong> (tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER));
   ACE_CHECK_RETURN (false);
 
   return (cdr << kind) && tc->tao_marshal (cdr);
@@ -197,7 +205,7 @@ TAO::unaliased_typecode (CORBA::TypeCode_ptr tc
     }
 
   CORBA::TCKind tc_kind = tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (tc_kind);
+  ACE_CHECK_RETURN (tc);
 
   if (tc_kind == CORBA::tk_alias)
     {
@@ -219,4 +227,52 @@ TAO::unaliased_typecode (CORBA::TypeCode_ptr tc
     }
 
   return CORBA::TypeCode::_duplicate (tc);
+}
+
+// --------------------------------------------------------------
+
+namespace TAO
+{
+  namespace TypeCode
+  {
+    // Notice that these are all statically instantiated and not
+    // exported.
+
+    char const tc_bounds_id[]   = "IDL:omg.org/CORBA/TypeCode/Bounds:1.0";
+    char const tc_bounds_name[] = "Bounds";
+    Struct_TypeCode<char const *,
+                    Struct_Field<char const *>,
+                    CORBA::tk_except,
+                    TAO::Null_RefCount_Policy> tc_Bounds (tc_bounds_id,
+                                                          tc_bounds_name,
+                                                          0,
+                                                          0);
+
+    char const tc_bad_kind_id[]   = "IDL:omg.org/CORBA/TypeCode/BadKind:1.0";
+    char const tc_bad_kind_name[] = "BadKind";
+    Struct_TypeCode<char const *,
+                    Struct_Field<char const *>,
+                    CORBA::tk_except,
+                    TAO::Null_RefCount_Policy> tc_BadKind (tc_bad_kind_id,
+                                                           tc_bad_kind_name,
+                                                           0,
+                                                           0);
+  }
+}
+
+
+// ------------------------------------------------------------------
+// OMG defined TypeCode constants
+// ------------------------------------------------------------------
+
+namespace CORBA
+{
+
+  // Notice that these are constant TypeCode references/pointers, not
+  // constant TypeCodes.  TypeCodes are effectively read-only since
+  // all non-static TypeCode operations are const.
+
+  TypeCode_ptr const TypeCode::_tc_Bounds  = &TAO::TypeCode::tc_Bounds;
+  TypeCode_ptr const TypeCode::_tc_BadKind = &TAO::TypeCode::tc_BadKind;
+
 }
