@@ -1163,7 +1163,7 @@ TAO_Resource_Factory::TAO_Resource_Factory (void)
     poa_source_ (TAO_GLOBAL),
     collocation_table_source_ (TAO_GLOBAL),
     reactor_lock_ (TAO_TOKEN),
-    cdr_allocator_source_ (TAO_TSS)
+    cdr_allocator_source_ (TAO_GLOBAL)
 {
 }
 

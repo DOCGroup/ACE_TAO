@@ -4,20 +4,25 @@
 #include "orbsvcs/Event_Utilities.h"
 #include "orbsvcs/Time_Utilities.h"
 
+#if !defined(__ACE_INLINE__)
+#include "EC_Gateway_UDP.i"
+#endif /* __ACE_INLINE__ */
+
 ACE_RCSID(Event, EC_Gateway_UDP, "$Id$")
 
 // ****************************************************************
 
 TAO_ECG_UDP_Sender::TAO_ECG_UDP_Sender (void)
+  :  mtu_ (TAO_ECG_UDP_Sender::ECG_DEFAULT_MTU)
 {
 }
 
 int
 TAO_ECG_UDP_Sender::get_local_addr (ACE_INET_Addr& addr)
 {
-  if (this->dgram_ == 0)
+  if (this->endpoint_ == 0)
     return -1;
-  return this->dgram_->get_local_addr (addr);
+  return this->dgram ().get_local_addr (addr);
 }
 
 void
@@ -25,7 +30,7 @@ TAO_ECG_UDP_Sender::init (RtecEventChannelAdmin::EventChannel_ptr lcl_ec,
                           RtecScheduler::Scheduler_ptr lcl_sched,
                           const char* lcl_name,
                           RtecUDPAdmin::AddrServer_ptr addr_server,
-                          ACE_SOCK_Dgram *dgram,
+                          TAO_ECG_UDP_Out_Endpoint* endpoint,
                           CORBA::Environment &_env)
 {
   this->lcl_ec_ =
@@ -34,7 +39,7 @@ TAO_ECG_UDP_Sender::init (RtecEventChannelAdmin::EventChannel_ptr lcl_ec,
   this->addr_server_ =
     RtecUDPAdmin::AddrServer::_duplicate (addr_server);
 
-  this->dgram_ = dgram;
+  this->endpoint_ = endpoint;
 
   this->lcl_info_ = lcl_sched->lookup (lcl_name, _env);
   TAO_CHECK_ENV_RETURN_VOID (_env);
@@ -58,6 +63,15 @@ TAO_ECG_UDP_Sender::init (RtecEventChannelAdmin::EventChannel_ptr lcl_ec,
                       _env);
       TAO_CHECK_ENV_RETURN_VOID (_env);
     }
+}
+
+int
+TAO_ECG_UDP_Sender::mtu (CORBA::ULong new_mtu)
+{
+  if (new_mtu < TAO_ECG_UDP_Sender::ECG_MIN_MTU
+      || new_mtu >= TAO_ECG_UDP_Sender::ECG_MAX_MTU)
+    return -1;
+  this->mtu_ = new_mtu;
 }
 
 void
@@ -136,7 +150,7 @@ void
 TAO_ECG_UDP_Sender::push (const RtecEventComm::EventSet &events,
                           CORBA::Environment & _env)
 {
-  // ACE_DEBUG ((LM_DEBUG, "ECG_UDP_Sender::push - "));
+  // ACE_DEBUG ((LM_DEBUG, "ECG_UDP_Sender::push - \n"));
 
   if (events.length () == 0)
     {
@@ -144,6 +158,11 @@ TAO_ECG_UDP_Sender::push (const RtecEventComm::EventSet &events,
       return;
     }
 
+  // @@ TODO precompute this when the MTU changes...
+  CORBA::ULong max_fragment_payload = this->mtu () -
+    TAO_ECG_UDP_Sender::ECG_HEADER_SIZE;
+  // ACE_ASSERT (max_fragment_payload != 0);
+  
   // ACE_DEBUG ((LM_DEBUG, "%d event(s) - ", events.length ()));
 
   // Send each event in a separate message.
@@ -171,8 +190,6 @@ TAO_ECG_UDP_Sender::push (const RtecEventComm::EventSet &events,
 
       // Start building the message
       TAO_OutputCDR cdr;
-      cdr.write_boolean (TAO_ENCAP_BYTE_ORDER);
-      cdr.write_ulong (0); // Place holder for size...
 
       // Marshal as if it was a sequence of one element, notice how we
       // marshal a modified version of the header, but the payload is
@@ -184,68 +201,414 @@ TAO_ECG_UDP_Sender::push (const RtecEventComm::EventSet &events,
       cdr.encode (RtecEventComm::_tc_EventData, &e.data, 0, _env);
       TAO_CHECK_ENV_RETURN_VOID(_env);
 
-      // Now fill up the <size> field on the header.
-      CORBA::ULong bodylen = cdr.total_length ();
-      char* buf = ACE_const_cast(char*,cdr.buffer ());
-      buf += 4;
-#if !defined (TAO_ENABLE_SWAP_ON_WRITE)
-      *ACE_reinterpret_cast(CORBA::ULong*,buf) = bodylen;
-#else
-      if (!cdr.do_byte_swap ())
-        {
-          *ACE_reinterpret_cast(CORBA::ULong*, buf) = bodylen;
-        }
-      else
-        {
-          CDR::swap_4 (ACE_reinterpret_cast(char*,&bodylen), buf);
-        }
-#endif
-
-      // This is a good maximum, because Dgrams cannot be longer than
-      // 64K and the usual size for a CDR fragment is 512 bytes.
-      // @@ TODO In the future we may need to allocate some memory
-      // from the heap.
-      const int TAO_WRITEV_MAX = 128;
+      const int TAO_WRITEV_MAX = IOV_MAX;
       iovec iov[TAO_WRITEV_MAX];
 
-      int iovcnt = 0;
+      CORBA::ULong total_length;
+      CORBA::ULong fragment_count = 
+        this->compute_fragment_count (cdr.begin (),
+                                      cdr.end (),
+                                      TAO_WRITEV_MAX,
+                                      max_fragment_payload,
+                                      total_length);
+
+      CORBA::ULong request_id = this->endpoint_->next_request_id ();
+
+      // Reserve the first iovec for the header...
+      int iovcnt = 1;
+      CORBA::ULong fragment_id = 0;
+      CORBA::ULong fragment_offset = 0;
+      CORBA::ULong fragment_size = 0;
       for (const ACE_Message_Block* b = cdr.begin ();
-           b != cdr.end () && iovcnt < TAO_WRITEV_MAX;
+           b != cdr.end ();
            b = b->cont ())
         {
+          CORBA::ULong l = b->length ();
+
           iov[iovcnt].iov_base = b->rd_ptr ();
-          iov[iovcnt].iov_len =  b->length ();
+          iov[iovcnt].iov_len  = l;
+          fragment_size += l;
           iovcnt++;
-        }
+          while (fragment_size > max_fragment_payload)
+            {
+              // This fragment is full, we have to send it...
 
-      ACE_INET_Addr inet_addr (udp_addr.port,
-                               udp_addr.ipaddr);
-      // ACE_DEBUG ((LM_DEBUG, "sending to (%d,%u)\n",
-      // udp_addr.port, udp_addr.ipaddr));
+              // First adjust the last iov entry:
+              CORBA::ULong last_mb_length =
+                max_fragment_payload - (fragment_size - l);
+              iov[iovcnt - 1].iov_len = last_mb_length;
+              
+              this->send_fragment (udp_addr,
+                                   request_id,
+                                   total_length,
+                                   max_fragment_payload,
+                                   fragment_offset,
+                                   fragment_id,
+                                   fragment_count,
+                                   iov,
+                                   iovcnt,
+                                   _env);
+              TAO_CHECK_ENV_RETURN_VOID(_env);
+              fragment_id++;
+              fragment_offset += max_fragment_payload;
 
-      ssize_t n = this->dgram_->send (iov,
-                                      iovcnt,
-                                      inet_addr);
-      if (n == -1)
-        {
-          // @@ TODO Use a Event Channel specific exception
-          ACE_DEBUG ((LM_DEBUG,
-                      "ECG_UDP (%t) send failed %p\n", ""));
-          TAO_THROW(CORBA::COMM_FAILURE (CORBA::COMPLETED_NO));
+              // Reset, but don't forget that the last Message_Block
+              // may need to be sent in multiple fragments..
+              l -= last_mb_length;
+              iov[1].iov_base = b->rd_ptr () + last_mb_length;
+              iov[1].iov_len = l;
+              fragment_size = l;
+              iovcnt = 2;
+            }
+          if (fragment_size == max_fragment_payload)
+            {
+              // We filled a fragment, but this time it was filled
+              // exactly, the treatment is a little different from the
+              // loop above...
+              this->send_fragment (udp_addr,
+                                   request_id,
+                                   total_length,
+                                   max_fragment_payload,
+                                   fragment_offset,
+                                   fragment_id,
+                                   fragment_count,
+                                   iov,
+                                   iovcnt,
+                                   _env);
+              TAO_CHECK_ENV_RETURN_VOID(_env);
+              fragment_id++;
+              fragment_offset += max_fragment_payload;
+
+              iovcnt = 1;
+              fragment_size = 0;
+            }
+          if (iovcnt == TAO_WRITEV_MAX)
+            {
+              // Now we ran out of space in the iovec, we must send a
+              // fragment to work around that....
+              this->send_fragment (udp_addr,
+                                   request_id,
+                                   total_length,
+                                   fragment_size,
+                                   fragment_offset,
+                                   fragment_id,
+                                   fragment_count,
+                                   iov,
+                                   iovcnt,
+                                   _env);
+              TAO_CHECK_ENV_RETURN_VOID(_env);
+              fragment_id++;
+              fragment_offset += fragment_size;
+
+              iovcnt = 1;
+              fragment_size = 0;
+           }
         }
-      else if (n == 0)
+      // There is something left in the iovvec that we must send
+      // also...
+      if (iovcnt != 1)
         {
-          // @@ TODO Use a Event Channel specific exception
-          ACE_DEBUG ((LM_DEBUG,
-                      "ECG_UDP (%t) EOF on send \n"));
-          TAO_THROW(CORBA::COMM_FAILURE (CORBA::COMPLETED_NO));
+          // Now we ran out of space in the iovec, we must send a
+          // fragment to work around that....
+          this->send_fragment (udp_addr,
+                               request_id,
+                               total_length,
+                               fragment_size,
+                               fragment_offset,
+                               fragment_id,
+                               fragment_count,
+                               iov,
+                               iovcnt,
+                               _env);
+          TAO_CHECK_ENV_RETURN_VOID(_env);
+          fragment_id++;
+          fragment_offset += fragment_size;
+
+          // reset, not needed here...
+          // iovcnt = 1;
+          // fragment_size = 0;
+        }
+      // ACE_ASSERT (total_length == fragment_offset);
+      // ACE_ASSERT (fragment_id == fragment_count);
+     
+    }
+}
+
+void
+TAO_ECG_UDP_Sender::send_fragment (const RtecUDPAdmin::UDP_Addr& udp_addr,
+                                   CORBA::ULong request_id,
+                                   CORBA::ULong request_size,
+                                   CORBA::ULong fragment_size,
+                                   CORBA::ULong fragment_offset,
+                                   CORBA::ULong fragment_id,
+                                   CORBA::ULong fragment_count,
+                                   iovec iov[],
+                                   int iovcnt,
+                                   CORBA::Environment& _env)
+{
+  CORBA::ULong header[TAO_ECG_UDP_Sender::ECG_HEADER_SIZE
+                     / sizeof(CORBA::ULong)
+                     + CDR::MAX_ALIGNMENT];
+  char* buf = ACE_reinterpret_cast(char*,header);
+  TAO_OutputCDR cdr (buf, sizeof(header));
+  cdr.write_boolean (TAO_ENCAP_BYTE_ORDER);
+  cdr.write_ulong (request_id);
+  cdr.write_ulong (request_size);
+  cdr.write_ulong (fragment_size);
+  cdr.write_ulong (fragment_offset);
+  cdr.write_ulong (fragment_id);
+  cdr.write_ulong (fragment_count);
+  CORBA::Octet padding[4];
+  cdr.write_octet_array (padding, 4);
+                   
+  iov[0].iov_base = cdr.begin ()->rd_ptr ();
+  iov[0].iov_len  = cdr.begin ()->length ();
+
+  ACE_INET_Addr inet_addr (udp_addr.port,
+                           udp_addr.ipaddr);
+
+  //  ACE_DEBUG ((LM_DEBUG,
+  //              "ECG_UDP_Sender (%P|%t): msg = %d, fragment %d/%d, "
+  //               "dest = (%u:%d)\n",
+  //              request_id,
+  //              fragment_id, fragment_count,
+  //              udp_addr.ipaddr, udp_addr.port));
+
+  ssize_t n = this->dgram ().send (iov,
+                                   iovcnt,
+                                   inet_addr);
+  if (n == -1)
+    {
+      // @@ TODO Use a Event Channel specific exception
+      ACE_DEBUG ((LM_DEBUG,
+                  "ECG_UDP (%t) send failed %p\n", ""));
+      TAO_THROW(CORBA::COMM_FAILURE (CORBA::COMPLETED_NO));
+    }
+  else if (n == 0)
+    {
+      // @@ TODO Use a Event Channel specific exception
+      ACE_DEBUG ((LM_DEBUG,
+                  "ECG_UDP (%t) EOF on send \n"));
+      TAO_THROW(CORBA::COMM_FAILURE (CORBA::COMPLETED_NO));
+    }
+}
+
+
+CORBA::ULong
+TAO_ECG_UDP_Sender::compute_fragment_count (const ACE_Message_Block* begin,
+                                            const ACE_Message_Block* end,
+                                            int iov_size,
+                                            CORBA::ULong max_fragment_payload,
+                                            CORBA::ULong& total_length)
+{
+  CORBA::ULong fragment_count = 0;
+  total_length = 0;
+
+  CORBA::ULong fragment_size = 0;
+  // Reserve the first iovec for the header...
+  CORBA::ULong iovcnt = 1;
+  for (const ACE_Message_Block* b = begin;
+       b != end;
+       b = b->cont ())
+    {
+      CORBA::ULong l = b->length ();
+      total_length += l;
+      fragment_size += l;
+      iovcnt++;
+      while (fragment_size > max_fragment_payload)
+        {
+          // Ran out of space, must create a fragment...
+          fragment_count++;
+
+          // The next iovector will contain what remains of this
+          // buffer, but also consider 
+          iovcnt = 2;
+          l -= max_fragment_payload - (fragment_size - l);
+          fragment_size = l;
+        }
+      if (fragment_size == max_fragment_payload)
+        {
+          fragment_count++;
+          iovcnt = 1;
+          fragment_size = 0;
+        }
+      if (iovcnt >= iov_size)
+        {
+          // Ran out of space in the iovector....
+          fragment_count++;
+          iovcnt = 1;
+          fragment_size = 0;
         }
     }
+  if (iovcnt != 1)
+    {
+      // Send the remaining data in another fragment
+      fragment_count++;
+    }
+  return fragment_count;
+}
+
+// ****************************************************************
+
+#if 0
+TAO_ECG_UDP_Request_Entry::TAO_ECG_UDP_Request_Entry (void)
+  : request_size_ (0),
+    fragment_count_ (0),
+    timeout_counter_ (0),
+    payload_ (0),
+    received_fragments_ (default_received_fragments_),
+    own_received_fragments_ (0)
+{
+}
+
+TAO_ECG_UDP_Request_Entry::
+TAO_ECG_UDP_Request_Entry (const TAO_ECG_UDP_Request_Entry& rhs)
+  :  byte_order_ (rhs.byte_order_),
+     request_id_ (rhs.request_id_),
+     request_size_ (rhs.request_size_),
+     fragment_count_ (rhs.fragment_count_),
+     timeout_counter_ (rhs.timeout_counter_),
+     payload_ (ACE_Message_Block::duplicate (rhs.payload_)),
+     received_fragments_ (default_received_fragments_),
+     own_received_fragments_ (0)
+{
+}
+#endif 
+
+TAO_ECG_UDP_Request_Entry::~TAO_ECG_UDP_Request_Entry (void)
+{
+  if (this->own_received_fragments_)
+    {
+      this->own_received_fragments_ = 0;
+      delete[] this->received_fragments_;
+    }
+}
+
+TAO_ECG_UDP_Request_Entry::
+TAO_ECG_UDP_Request_Entry (CORBA::Boolean byte_order,
+                           CORBA::ULong request_id,
+                           CORBA::ULong request_size,
+                           CORBA::ULong fragment_count)
+  :  byte_order_ (byte_order),
+     request_id_ (request_id),
+     request_size_ (request_size),
+     fragment_count_ (fragment_count)
+{
+  CDR::grow (&this->payload_, this->request_size_);
+  this->payload_.wr_ptr (request_size_);
+
+  this->received_fragments_ = this->default_received_fragments_;
+  this->own_received_fragments_ = 0;
+  const int bits_per_ulong = sizeof(CORBA::ULong) * CHAR_BIT;
+  this->received_fragments_size_ =
+    this->fragment_count_ / bits_per_ulong + 1;
+  if (this->received_fragments_size_ > ECG_DEFAULT_FRAGMENT_BUFSIZ)
+    {
+      ACE_NEW (this->received_fragments_,
+               CORBA::ULong[this->received_fragments_size_]);
+      this->own_received_fragments_ = 1;
+    }
+
+  for (int i = 0; i < this->received_fragments_size_; ++i)
+    this->received_fragments_[i] = 0;
+  CORBA::ULong idx = this->fragment_count_ / bits_per_ulong;
+  CORBA::ULong bit = this->fragment_count_ % bits_per_ulong;
+  this->received_fragments_[idx] = (0xFFFFFFFF << bit);
+}
+
+int
+TAO_ECG_UDP_Request_Entry::validate_fragment (CORBA::Boolean byte_order,
+                                              CORBA::ULong request_size,
+                                              CORBA::ULong fragment_size,
+                                              CORBA::ULong fragment_offset,
+                                              CORBA::ULong /* fragment_id */,
+                                              CORBA::ULong fragment_count) const
+{
+  if (byte_order != this->byte_order_
+      || request_size != this->request_size_
+      || fragment_count != this->fragment_count_)
+    return 0;
+
+  if (fragment_offset >= request_size
+      || fragment_offset + fragment_size > request_size)
+    return 0;
+
+  return 1;
+}
+
+int
+TAO_ECG_UDP_Request_Entry::test_received (CORBA::ULong fragment_id) const
+{
+  // Assume out-of-range fragments as received, so they are dropped...
+  if (fragment_id > this->fragment_count_)
+    return 1;
+
+  const int bits_per_ulong = sizeof(CORBA::ULong) * CHAR_BIT;
+  CORBA::ULong idx = fragment_id / bits_per_ulong;
+  CORBA::ULong bit = fragment_id % bits_per_ulong;
+  return ACE_BIT_ENABLED (this->received_fragments_[idx], 1<<bit);
+}
+
+void
+TAO_ECG_UDP_Request_Entry::mark_received (CORBA::ULong fragment_id)
+{
+  // Assume out-of-range fragments as received, so they are dropped...
+  if (fragment_id > this->fragment_count_)
+    return;
+
+  const int bits_per_ulong = sizeof(CORBA::ULong) * CHAR_BIT;
+  CORBA::ULong idx = fragment_id / bits_per_ulong;
+  CORBA::ULong bit = fragment_id % bits_per_ulong;
+  ACE_SET_BITS (this->received_fragments_[idx], 1<<bit);
+}
+
+int
+TAO_ECG_UDP_Request_Entry::complete (void) const
+{
+  for (CORBA::ULong i = 0;
+       i < this->received_fragments_size_;
+       ++i)
+    {
+      if (this->received_fragments_[i] != 0xFFFFFFFF)
+        return 0;
+    }
+  return 1;
+}
+
+char*
+TAO_ECG_UDP_Request_Entry::fragment_buffer (CORBA::ULong fragment_offset)
+{
+  return this->payload_.rd_ptr () + fragment_offset;
+}
+
+void
+TAO_ECG_UDP_Request_Entry::decode (RtecEventComm::EventSet& event,
+                                   CORBA::Environment& _env)
+{
+  TAO_InputCDR cdr (&this->payload_,
+                    this->byte_order_);
+  cdr.decode (RtecEventComm::_tc_EventSet, &event, 0, _env);
+}
+
+// ****************************************************************
+
+TAO_ECG_UDP_TH::TAO_ECG_UDP_TH (TAO_ECG_UDP_Receiver* r)
+  :  receiver_ (r)
+{
+}
+
+int
+TAO_ECG_UDP_TH::handle_timeout (const ACE_Time_Value& tv,
+                                const void* act)
+{
+  return this->receiver_->handle_timeout (tv, act);
 }
 
 // ****************************************************************
 
 TAO_ECG_UDP_Receiver::TAO_ECG_UDP_Receiver (void)
+  : timeout_handler_ (this),
+    reactor_ (0)
 {
 }
 
@@ -255,6 +618,9 @@ TAO_ECG_UDP_Receiver::init (RtecEventChannelAdmin::EventChannel_ptr lcl_ec,
                             const char* lcl_name,
                             const ACE_INET_Addr& ignore_from,
 			    RtecUDPAdmin::AddrServer_ptr addr_server,
+                            ACE_Reactor *reactor,
+                            const ACE_Time_Value &expire_interval,
+                            CORBA::ULong max_timeout, 
                             CORBA::Environment &_env)
 {
   this->ignore_from_ = ignore_from;
@@ -281,7 +647,18 @@ TAO_ECG_UDP_Receiver::init (RtecEventChannelAdmin::EventChannel_ptr lcl_ec,
                   1,
                   RtecScheduler::REMOTE_DEPENDANT,
                   _env);
-  if (_env.exception () != 0) return;
+  TAO_CHECK_ENV_RETURN_VOID (_env);
+
+  this->reactor_ = reactor;
+  this->max_timeout_ = max_timeout;
+  // @@ TODO throw an exception....
+  if (this->reactor_ == 0
+      || this->reactor_->schedule_timer (&this->timeout_handler_, 0,
+                                         expire_interval,
+                                         expire_interval) == -1)
+    ACE_ERROR ((LM_ERROR,
+                "TAO_ECG_UDP_Receiver::init - "
+                "cannot schedule timer\n"));
 }
 
 void
@@ -354,13 +731,17 @@ TAO_ECG_UDP_Receiver::shutdown (CORBA::Environment& _env)
   if (_env.exception () == 0) return;
 
   this->lcl_ec_ = RtecEventChannelAdmin::EventChannel::_nil ();
+
+  this->reactor_->cancel_timer (&this->timeout_handler_);
 }
 
 int
 TAO_ECG_UDP_Receiver::handle_input (ACE_SOCK_Dgram& dgram)
 {
   // Use ULong so the alignment is right.
-  CORBA::ULong header[2];
+  CORBA::ULong header[TAO_ECG_UDP_Sender::ECG_HEADER_SIZE
+                     / sizeof(CORBA::ULong)
+                     + CDR::MAX_ALIGNMENT];
   ACE_INET_Addr from;
   ssize_t n = dgram.recv (header, sizeof(header), from, MSG_PEEK);
   if (n == -1)
@@ -371,21 +752,145 @@ TAO_ECG_UDP_Receiver::handle_input (ACE_SOCK_Dgram& dgram)
                        "ECG_UDP_Receive_EH::handle_input - peek 0\n"),
                       0);
 
-  char* buf = ACE_reinterpret_cast(char*,header);
-  int byte_order = buf[0];
-  CORBA::ULong length = header[1];
-
-  if (byte_order != TAO_ENCAP_BYTE_ORDER)
+  // This is to avoid receiving the events we send; notice that we
+  // must read the message to drop it...
+  if (from == this->ignore_from_)
     {
-      CDR::swap_4 (buf + 4,
-                   ACE_reinterpret_cast(char*,&length));
+      n = dgram.recv (header, sizeof(header), from);
+      // ACE_DEBUG ((LM_DEBUG,
+      //            "ECG_UDP_Receiver (%P|%t): cycle dropped\n"));
+      return 0;
     }
 
-  ACE_Message_Block mb (length + CDR::MAX_ALIGNMENT);
-  CDR::mb_align (&mb);
-  mb.wr_ptr (length);
+  char* buf = ACE_reinterpret_cast(char*,header);
+  int byte_order = buf[0];
+  TAO_InputCDR header_cdr (buf, sizeof(header), byte_order);
+  CORBA::Boolean unused;
+  CORBA::ULong request_id;
+  CORBA::ULong request_size;
+  CORBA::ULong fragment_size;
+  CORBA::ULong fragment_offset;
+  CORBA::ULong fragment_id;
+  CORBA::ULong fragment_count;
+  header_cdr.read_boolean (unused);
+  header_cdr.read_ulong (request_id);
+  header_cdr.read_ulong (request_size);
+  header_cdr.read_ulong (fragment_size);
+  header_cdr.read_ulong (fragment_offset);
+  header_cdr.read_ulong (fragment_id);
+  header_cdr.read_ulong (fragment_count);
 
-  n = dgram.recv (mb.rd_ptr (), length, from);
+  if (request_size < fragment_size
+      || fragment_offset >= request_size
+      || fragment_id >= fragment_count)
+    {
+      // Drop the packet...
+      n = dgram.recv (header, sizeof(header), from);
+      return 0;
+      // ACE_DEBUG ((LM_DEBUG,
+      //             "ECG_UDP_Receiver (%P|%t): invalid fragment dropped"
+      //             ", from = (%u:%d)\n",
+      //             from.get_ip_address (), from.get_port_number ()));
+    }
+
+  //  ACE_DEBUG ((LM_DEBUG,
+  //              "ECG_UDP_Receiver (%P|%t): msg = %d, from = (%u:%d)"
+  //              "fragment = %d/%d\n",
+  //              request_id,
+  //              from.get_ip_address (), from.get_port_number (),
+  //              fragment_id, fragment_count));
+
+  TAO_ECG_UDP_Request_Index index (from, request_id);
+  Request_Map_Entry* entry;
+
+  if (this->request_map_.find (index, entry) == -1)
+    {
+      //      ACE_DEBUG ((LM_DEBUG,
+      //                  "ECG_UDP_Receiver (%P|%t): new entry\n"
+      //                  "    byte_order = %d\n"
+      //                  "    request_id = %d\n"
+      //                  "    request_size = %d\n"
+      //                  "    fragment_size = %d\n"
+      //                  "    fragment_offset = %d\n"
+      //                  "    fragment_id = %d\n"
+      //                  "    fragment_count = %d\n",
+      //                  byte_order,
+      //                  request_id,
+      //                  request_size,
+      //                  fragment_size,
+      //                  fragment_offset,
+      //                  fragment_id,
+      //                  fragment_count));
+
+      // Create an entry and insert it....
+      TAO_ECG_UDP_Request_Entry* request_entry = 
+        new TAO_ECG_UDP_Request_Entry(byte_order,
+                                      request_id,
+                                      request_size,
+                                      fragment_count);
+      if (request_entry == 0
+          || this->request_map_.bind (index,
+                                      request_entry,
+                                      entry) == -1)
+        {
+          // Drop the packet...
+          n = dgram.recv (header, sizeof(header), from);
+          return 0;
+        }
+    }
+
+  // Validate the message...
+  if (entry->int_id_->validate_fragment (byte_order,
+                                         request_size,
+                                         fragment_size,
+                                         fragment_offset,
+                                          fragment_id,
+                                         fragment_count) == 0)
+    {
+      //      ACE_DEBUG ((LM_DEBUG,
+      //                  "ECG_UDP_Receiver (%P|%t): fragment rejected:"
+      //                  "    byte_order = %d\n"
+      //                  "    request_id = %d\n"
+      //                  "    request_size = %d\n"
+      //                  "    fragment_size = %d\n"
+      //                  "    fragment_offset = %d\n"
+      //                  "    fragment_id = %d\n"
+      //                  "    fragment_count = %d\n",
+      //                  byte_order,
+      //                  request_id,
+      //                  request_size,
+      //                  fragment_size,
+      //                  fragment_offset,
+      //                  fragment_id,
+      //                  fragment_count));
+
+      // Drop the fragment if it is invalid...
+      n = dgram.recv (header, sizeof(header), from);
+      return 0;
+    }
+
+  // Was this fragment received already?
+  if (entry->int_id_->test_received (fragment_id) == 1)
+    {
+      //      ACE_DEBUG ((LM_DEBUG,
+      //                  "ECG_UDP_Receiver (%P|%t): fragment duplicate\n"));
+
+      // Drop the fragment...
+      n = dgram.recv (header, sizeof(header), from);
+      return 0;
+    }
+
+  // Now we should read the fragment, use an iovec to drop the header
+  // into the bit bucket and the payload into the entry's buffer:
+  const int iovcnt = 2;
+  iovec iov[iovcnt];
+  char drop_header[TAO_ECG_UDP_Sender::ECG_HEADER_SIZE];
+  iov[0].iov_base = drop_header;
+  iov[0].iov_len  = sizeof(drop_header);
+  iov[1].iov_base = entry->int_id_->fragment_buffer (fragment_offset);
+  iov[1].iov_len  = fragment_size;
+
+  n = dgram.recv (iov, iovcnt, from);
 
   if (n == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -394,23 +899,29 @@ TAO_ECG_UDP_Receiver::handle_input (ACE_SOCK_Dgram& dgram)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "ECG_UDP_Receive_EH::handle_input - read 0\n"),
                       0);
-  // This is to avoid receiving the events we send; notice that we
-  // drop the message after reading it.
-  if (from == this->ignore_from_)
-    return 0;
 
+  entry->int_id_->mark_received (fragment_id);
+  // If the message is not complete we must return...
+  if (!entry->int_id_->complete ())
+    {
+      //      ACE_DEBUG ((LM_DEBUG,
+      //                  "ECG_UDP_Receiver (%P|%t): incomplete message\n"));
+
+      return 0;
+    }
+    
   TAO_TRY
     {
-      TAO_InputCDR cdr (&mb, byte_order);
-      cdr.skip_bytes (8); // skip the header...
-
-      RtecEventComm::EventSet events;
-      cdr.decode (RtecEventComm::_tc_EventSet, &events, 0,
-                  TAO_TRY_ENV);
+      RtecEventComm::EventSet event;
+      entry->int_id_->decode (event, TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      this->consumer_proxy_->push (events, TAO_TRY_ENV);
+      this->consumer_proxy_->push (event, TAO_TRY_ENV);
       TAO_CHECK_ENV;
+
+      //      ACE_DEBUG ((LM_DEBUG,
+      //                  "TAO_ECG_UDP_Received (%P|%t): push %d\n",
+      //                  request_id));
     }
   TAO_CATCHANY
     {
@@ -426,6 +937,41 @@ TAO_ECG_UDP_Receiver::get_addr (const RtecEventComm::EventHeader& header,
 				CORBA::Environment& env)
 {
   this->addr_server_->get_addr (header, addr, env);
+}
+
+int
+TAO_ECG_UDP_Receiver::handle_timeout (const ACE_Time_Value& /* tv */,
+                                      const void* /* act */)
+{
+  Request_Map::iterator begin = this->request_map_.begin ();
+  Request_Map::iterator end = this->request_map_.end ();
+  {
+    for (Request_Map::iterator i = begin;
+         i != end;
+         ++i)
+      {
+        (*i).int_id_->inc_timeout ();
+      }
+  }
+  for (Request_Map::iterator j = begin;
+       j != end;
+       )
+    {
+      if ((*j).int_id_->get_timeout () > this->max_timeout_)
+        {
+          Request_Map_Entry& entry = *j;
+          ++j;
+          {
+            delete entry.int_id_;
+            this->request_map_.unbind (&entry);
+          }
+        }
+      else
+        {
+          ++j;
+        }
+    }
+  return 0;
 }
 
 // ****************************************************************

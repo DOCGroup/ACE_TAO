@@ -64,6 +64,8 @@
 #include "orbsvcs/RtecUDPAdminS.h"
 #include "orbsvcs/orbsvcs_export.h"
 
+class TAO_ECG_UDP_Out_Endpoint;
+
 class TAO_ORBSVCS_Export TAO_ECG_UDP_Sender : public POA_RtecEventComm::PushConsumer
 {
   //
@@ -77,10 +79,53 @@ class TAO_ORBSVCS_Export TAO_ECG_UDP_Sender : public POA_RtecEventComm::PushCons
   //   The UDP address is obtained from a RtecUDPAdmin::AddrServer
   //   class.
   //   It marshalls the events using TAO CDR classes.
-  //   No provisions are taken for message fragmentation.
+  //
+  // = MESSAGE FORMAT
+  //
+  //   The messages header are encapsulated using CDR, with the
+  //   following format:
+  //
+  //   struct Header {
+  //     octet byte_order_flags;
+  //     // bit 0 represents the byte order as in GIOP 1.1
+  //     // bit 1 is set if this is the last fragment
+  //
+  //     unsigned long request_id;
+  //     // The request ID, senders must not send two requests with
+  //     // the same ID, senders can be distinguished using recvfrom..
+  //
+  //     unsigned long request_size;
+  //     // The size of this request, this can be used to pre-allocate
+  //     // the request buffer.
+  //
+  //     unsgined long fragment_size;
+  //     // The size of this fragment, excluding the header...
+  //
+  //     unsigned long fragment_offset;
+  //     // Where does this fragment fit in the complete message...
+  //
+  //     unsigned long fragment_id;
+  //     // The ID of this fragment...
+  //
+  //     unsigned long fragment_count;
+  //     // The total number of fragments to expect in this request
+  //     // @@ TODO This could be eliminated if efficient reassembly
+  //     // could be implemented without it.
+  //
+  //     octet padding[4];
+  //     // Ensures the header ends at an 8-byte boundary.
+  //   }; // size (in CDR stream) = 32
+  //
   //
 public:
   TAO_ECG_UDP_Sender (void);
+
+  enum {
+    ECG_HEADER_SIZE = 32,
+    ECG_MIN_MTU = 32 + 8,
+    ECG_MAX_MTU = 65536, // Really optimistic...
+    ECG_DEFAULT_MTU = 1024
+  };
 
   int get_local_addr (ACE_INET_Addr& addr);
   // Get the local endpoint used to send the events.
@@ -89,7 +134,7 @@ public:
              RtecScheduler::Scheduler_ptr lcl_sched,
              const char* lcl_name,
              RtecUDPAdmin::AddrServer_ptr addr_server,
-             ACE_SOCK_Dgram* dgram,
+             TAO_ECG_UDP_Out_Endpoint* endpoint,
              CORBA::Environment &_env);
   // To do its job this class requires to know the local EC it will
   // connect to; it also requires to build an RT_Info for the local
@@ -98,6 +143,13 @@ public:
   // connection and disconnections.
   // @@ TODO part of the RT_Info is hardcoded, we need to make it
   // parametric.
+
+  int mtu (CORBA::ULong mtu);
+  CORBA::ULong mtu (void) const;
+  // The sender may need to fragment the message, otherwise the
+  // network may drop the packets.
+  // Setting the MTU can fail if the value is too small (at least the
+  // header + 8 bytes must fit).
 
   void shutdown (CORBA::Environment&);
   // Disconnect and shutdown the sender, no further connections will
@@ -116,6 +168,34 @@ public:
   // The PushConsumer methods.
 
 private:
+  ACE_SOCK_Dgram& dgram (void);
+  // Return the datagram...
+
+  void send_fragment (const RtecUDPAdmin::UDP_Addr& udp_addr,
+                      CORBA::ULong request_id,
+                      CORBA::ULong request_size,
+                      CORBA::ULong fragment_size,
+                      CORBA::ULong fragment_offset,
+                      CORBA::ULong fragment_id,
+                      CORBA::ULong fragment_count,
+                      iovec iov[],
+                      int iovcnt,
+                      CORBA::Environment& _env);
+  // Send one fragment, the first entry in the iovec is used to send
+  // the header, the rest of the iovec array should contain pointers
+  // to the actual data.
+
+  CORBA::ULong compute_fragment_count (const ACE_Message_Block* begin,
+                                       const ACE_Message_Block* end,
+                                       int iov_size,
+                                       CORBA::ULong max_fragment_payload,
+                                       CORBA::ULong& total_length);
+  // Count the number of fragments that will be required to send the
+  // message blocks in the range [begin,end)
+  // The maximum fragment payload (i.e. the size without the header is
+  // also required); <total_length> returns the total message size.
+
+private:
   RtecEventChannelAdmin::EventChannel_var lcl_ec_;
   // The remote and the local EC, so we can reconnect when the
   // subscription list changes.
@@ -129,10 +209,179 @@ private:
   RtecUDPAdmin::AddrServer_var addr_server_;
   // We query this object to determine where are the events sent.
 
-  ACE_SOCK_Dgram *dgram_;
+  TAO_ECG_UDP_Out_Endpoint *endpoint_;
   // The datagram used to sendto(), this object is *not* owned by the
   // UDP_Sender.
+
+  CORBA::ULong mtu_;
+  // The MTU for this sender...
 };
+
+// ****************************************************************
+
+class TAO_ORBSVCS_Export TAO_ECG_UDP_Out_Endpoint
+{
+  //
+  // = TITLE
+  //   Maintains information about an outgoing endpoint.
+  //
+  // = DESCRIPTION
+  //   UDP senders can share a single endpoint to send UDP packets,
+  //   but there is more state associated with this endpoint than its
+  //   datagram SAP; for instance we need to keep track of the request
+  //   id.
+public:
+  TAO_ECG_UDP_Out_Endpoint (void);
+  // Constructor
+
+  ACE_SOCK_Dgram& dgram (void);
+  // Obtain the datagram associated with this endpoint. Clients of
+  // this class must open, and register (if necessary) this datagram.
+
+  CORBA::ULong next_request_id (void);
+  // Obtain the next request id.
+
+private:
+  ACE_Atomic_Op<ACE_SYNCH_MUTEX,CORBA::ULong> request_id_generator_;
+  // The request id....
+
+  ACE_SOCK_Dgram dgram_;
+  // The datagram....
+};
+
+// ****************************************************************
+
+class TAO_ORBSVCS_Export TAO_ECG_UDP_Request_Index
+{
+  // = TITLE
+  //   Index to the request map.
+  //
+  // = DESCRIPTION
+  //   This object is used to index the map of incomplete (due to
+  //   fragmentation) requests.
+  //
+public:
+  TAO_ECG_UDP_Request_Index (void);
+  TAO_ECG_UDP_Request_Index (const ACE_INET_Addr& from,
+                             CORBA::ULong request_id);
+  // default copy ctor, dtor and operator=
+
+  u_long hash(void) const;
+  // Return a hash value...
+
+  friend int operator==(const TAO_ECG_UDP_Request_Index& lhs,
+                        const TAO_ECG_UDP_Request_Index& rhs);
+  friend int operator!=(const TAO_ECG_UDP_Request_Index& lhs,
+                        const TAO_ECG_UDP_Request_Index& rhs);
+  // Compare
+  
+  ACE_INET_Addr from;
+  CORBA::ULong request_id;
+};
+
+// ****************************************************************
+
+class TAO_ORBSVCS_Export TAO_ECG_UDP_Request_Entry
+{
+  // = TITLE
+  //   Keeps information about an incomplete request.
+  //
+  // = DESCRIPTION
+  //   When a request arrives in fragments this object is used to
+  //   keep track of the incoming data.
+  //
+public:
+  enum {
+    ECG_DEFAULT_FRAGMENT_BUFSIZ = 8
+  };
+
+  // TAO_ECG_UDP_Request_Entry (void);
+  // TAO_ECG_UDP_Request_Entry (const TAO_ECG_UDP_Request_Entry& rhs);
+  // TAO_ECG_UDP_Request_Entry& operator=(const TAO_ECG_UDP_Request_Entry& rhs);
+  ~TAO_ECG_UDP_Request_Entry (void);
+  
+  TAO_ECG_UDP_Request_Entry (CORBA::Boolean byte_order,
+                             CORBA::ULong request_id,
+                             CORBA::ULong request_size,
+                             CORBA::ULong fragment_count);
+  // Initialize the fragment, allocating memory, etc.
+
+  int validate_fragment (CORBA::Boolean byte_order,
+                         CORBA::ULong request_size,
+                         CORBA::ULong fragment_size,
+                         CORBA::ULong fragment_offset,
+                         CORBA::ULong fragment_id,
+                         CORBA::ULong fragment_count) const;
+  // Validate a fragment, it should be rejected if it is invalid.. 
+
+  int test_received (CORBA::ULong fragment_id) const;
+  // Has <fragment_id> been received?
+
+  void mark_received (CORBA::ULong fragment_id);
+  // Mark <fragment_id> as received, reset timeout counter...
+
+  int complete (void) const;
+  // Is the message complete?
+
+  char* fragment_buffer (CORBA::ULong fragment_offset);
+  // Return a buffer for the fragment at offset <fragment_offset>
+
+  void decode (RtecEventComm::EventSet& event,
+               CORBA::Environment& _env);
+  // Decode the events, the message must be complete.
+
+  void inc_timeout (void);
+  // Increment the timeout counter...
+
+  int get_timeout (void) const;
+  // Get the timeout counter....
+  
+private:
+  CORBA::Boolean byte_order_;
+  CORBA::Boolean request_id_;
+  CORBA::Boolean request_size_;
+  CORBA::Boolean fragment_count_;
+  // This attributes should remain constant in all the fragments, used
+  // for validation....
+
+  CORBA::ULong timeout_counter_;
+  ACE_Message_Block payload_;
+
+  CORBA::ULong* received_fragments_;
+  int own_received_fragments_;
+  CORBA::ULong received_fragments_size_;
+  CORBA::ULong default_received_fragments_[ECG_DEFAULT_FRAGMENT_BUFSIZ];
+  // This is a bit vector, used to keep track of the received buffers.
+};
+
+// ****************************************************************
+
+class TAO_ECG_UDP_Receiver;
+
+class TAO_ORBSVCS_Export TAO_ECG_UDP_TH : public ACE_Event_Handler
+{
+  //
+  // = TITLE
+  //   Timer Handler for the UDP Receivers.
+  //
+  // = DESCRIPTION
+  //   This object receives timer events from the reactor and forwards
+  //   them to the UDP_Receiver; which uses those events to expire old
+  //   messages that did not receive all their fragments.
+  //
+public:
+  TAO_ECG_UDP_TH (TAO_ECG_UDP_Receiver *recv);
+
+  // Reactor callbacks
+  virtual int handle_timeout (const ACE_Time_Value& tv,
+                              const void* act);
+
+private:
+  TAO_ECG_UDP_Receiver* receiver_;
+  // We callback to this object when a message arrives.
+};
+
+// ****************************************************************
 
 class TAO_ORBSVCS_Export TAO_ECG_UDP_Receiver : public POA_RtecEventComm::PushSupplier
 {
@@ -145,7 +394,20 @@ class TAO_ORBSVCS_Export TAO_ECG_UDP_Receiver : public POA_RtecEventComm::PushSu
   //   This supplier receives events from an ACE_SOCK_Dgram, either
   //   from a UDP socket or a Mcast group, decodes them and push them
   //   to the EC.
-  //   No provisions are taken for message reassembly.
+  //
+  // = REASSEMBLY
+  //
+  //   Whenever an incomplete fragment is received (one with
+  //   fragment_count > 1) we allocate an entry for the message in an
+  //   map indexed by (host,port,request_id).  The entry contains the
+  //   buffer, a bit vector to keep track of the fragments received
+  //   so far, and a timeout counter.  This timeout counter is set to
+  //   0 on each (new) fragment arrival, and incremented on a regular
+  //   basis.  If the counter reaches a maximum value the message is
+  //   dropped.
+  //   Once all the fragments have been received the message is sent
+  //   up, and the memory reclaimed. The entry is *not* removed until
+  //   the timer expires (to handle re-transmitions).
   //
 public:
   TAO_ECG_UDP_Receiver (void);
@@ -155,10 +417,14 @@ public:
              const char* lcl_name,
              const ACE_INET_Addr& ignore_from,
              RtecUDPAdmin::AddrServer_ptr addr_server,
+             ACE_Reactor *reactor,
+             const ACE_Time_Value &expire_interval,
+             CORBA::ULong max_timeout,
              CORBA::Environment &_env);
   // To do its job this class requires to know the local EC it will
   // connect to; it also requires to build an RT_Info for the local
   // scheduler.
+  // The <reactor> is used to receive timeout events..
   // @@ TODO part of the RT_Info is hardcoded, we need to make it
   // parametric.
 
@@ -176,6 +442,11 @@ public:
   // The Event_Handlers call this method when data is available at the
   // socket, the <dgram> must be ready for reading and contain a full
   // event.
+
+  int handle_timeout (const ACE_Time_Value& tv,
+                      const void* act);
+  // The timer has expired, must update all the unreceived
+  // messages...
 
   // The PushSupplier method.
   virtual void disconnect_push_supplier (CORBA::Environment &);
@@ -200,7 +471,29 @@ private:
   // Ignore any events coming from this IP addres.
 
   RtecUDPAdmin::AddrServer_var addr_server_;
+  // The server used to map event types into multicast groups.
+
+  typedef ACE_Hash_Map_Manager<TAO_ECG_UDP_Request_Index,
+                               TAO_ECG_UDP_Request_Entry*,
+                               ACE_SYNCH_MUTEX> Request_Map;
+  typedef ACE_Hash_Map_Entry<TAO_ECG_UDP_Request_Index,
+                             TAO_ECG_UDP_Request_Entry*> Request_Map_Entry;
+
+  Request_Map request_map_;
+  // The map containing all the incoming requests which have been
+  // partially received.
+
+  TAO_ECG_UDP_TH timeout_handler_;
+  // To receive the timeouts..
+
+  ACE_Reactor* reactor_;
+  // The reactor we are using for the timeout handler...
+
+  CORBA::ULong max_timeout_;
+  // How many timeouts before we expire a message...
 };
+
+// ****************************************************************
 
 class TAO_ORBSVCS_Export TAO_ECG_UDP_EH : public ACE_Event_Handler
 {
@@ -212,6 +505,7 @@ class TAO_ORBSVCS_Export TAO_ECG_UDP_EH : public ACE_Event_Handler
   //   This object receives callbacks from the Reactor when data is
   //   available on a UDP socket, it forwards to the ECG_UDP_Receiver
   //   which reads the events and transform it into an event.
+  //
 public:
   TAO_ECG_UDP_EH (TAO_ECG_UDP_Receiver *recv);
 
@@ -232,6 +526,8 @@ private:
   TAO_ECG_UDP_Receiver* receiver_;
   // We callback to this object when a message arrives.
 };
+
+// ****************************************************************
 
 class TAO_ORBSVCS_Export TAO_ECG_Mcast_EH : public ACE_Event_Handler
 {
@@ -319,5 +615,8 @@ private:
   // The Event Channel.
 };
 
+#if defined(__ACE_INLINE__)
+#include "EC_Gateway_UDP.i"
+#endif /* __ACE_INLINE__ */
 
 #endif /* ACE_EVENT_CHANNEL_UDP_H */
