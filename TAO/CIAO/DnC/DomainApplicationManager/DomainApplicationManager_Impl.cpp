@@ -25,8 +25,6 @@ DomainApplicationManager_Impl (CORBA::ORB_ptr orb,
 
 CIAO::DomainApplicationManager_Impl::~DomainApplicationManager_Impl ()
 {
-  // Delete the uuid
-  CORBA::string_free (this->uuid_);
 }
 
 
@@ -78,6 +76,7 @@ init (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
         ACE_TRY_CHECK;
 
         // Cache the node_application_manager reference
+        this->node_application_manager_set_.add (my_nam.in ());
       }
     }
   ACE_CATCHANY
@@ -256,19 +255,41 @@ startLaunch (const ::Deployment::Properties & configProperty,
                    ::Deployment::StartError,
                    ::Deployment::InvalidProperty))
 {
-  /**
-   *  1. First Map properties to TAO/CIAO specific property/configurations
-   *  2. Necessary property checking (needed?)
-   *  3. Call create_nade_application to spawn new process.
-   *  4. Initialize the NodeApplication.
-   *  5. get the provided connection endpoints back and return them.
-   */
   ACE_TRY
     {
+      // Invoke startLaunch() operations on each cached NodeApplicationManager
+      CORBA::ULong len = this->node_application_manager_set_.size ();
+      for (CORBA::ULong i = 0; i < len; ++i)
+        {
+          ::Deployment::NodeApplicationManager_var my_nam = 
+            this->node_application_manager_set_.at (i);
 
+          ::Deployment::Connections_var out_connections;
+
+          // Obtained the returned NodeApplication object reference
+          ::Deployment::Application_var temp =
+            my_nam->startLaunch (configProperty, 
+                                 out_connections.out (),
+                                 start);
+
+          // Narrow down to NodeApplication object reference
+          ::Deployment::NodeApplication_var my_na =
+            ::Deployment::NodeApplication::_narrow (temp.in ()
+                                                    ACE_ENV_ARG_PARAMETER);
+
+          // Cache the NodeApplication object reference and Connections pair
+          Node_Application_Para node_app;
+          node_app.node_application_ = my_na;
+          node_app.connections_ = out_connections;
+          this->node_application_vec_.push_back (node_app);
+        }
     }
   ACE_CATCHANY
     {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "DomainApplicationManager_Impl::startLaunch\t\n");
+      ACE_RE_THROW;
+      return;
     }
   ACE_ENDTRY;
 

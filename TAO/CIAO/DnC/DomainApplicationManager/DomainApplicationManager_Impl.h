@@ -24,6 +24,7 @@
 
 
 #include "Object_Set_T.h"
+#include "ace/Vector_T.h"
 #include "DeploymentS.h"
 
 #include "tao/Valuetype/ValueBase.h"
@@ -47,6 +48,14 @@ namespace CIAO
       public virtual PortableServer::RefCountServantBase
   {
   public:
+    /// Define the type which contains a pair of NodeApplication object
+    /// reference and Connections_var type variable. 
+    typedef struct _node_application_para
+    {
+      ::Deployment::NodeApplication_var node_application_;
+      ::Deployment::Connections_var connections_;
+    } Node_Application_Para;
+
     /// Constructor
     DomainApplicationManager_Impl (CORBA::ORB_ptr orb,
                                    PortableServer::POA_ptr poa,
@@ -232,12 +241,15 @@ namespace CIAO
     /// Maintain a list of NodeApplicationManager references, each of which
     /// is returned by calling the preparePlan() method on the corresponding
     /// NodeManager object.
-    /// @@ Use Object_Set_T help class?
-    //NodeApplication
+    Object_Set<::Deployment::NodeApplicationManager, 
+               ::Deployment::NodeApplicationManager_var>
+      node_application_manager_set_;
 
-    /// Maintain a list of NodeApplication references, each of which
-    /// is returned by calling the startLaunch () method on the corresponding
-    /// NodeApplicationManager object.
+    /// Maintain a list of NodeApplication references paired with the
+    /// Deployment::Connections_var type variable. 
+    /// Each pair is obtained by calling the startLaunch () method on
+    /// the corresponding NodeApplicationManager object.
+    ACE_Vector<Node_Application_Para> node_application_vec_;
   };
 }
 
