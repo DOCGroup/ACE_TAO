@@ -467,9 +467,9 @@ User_Input_Task::clear_all_timers (void)
 {
   // loop through the timers in the queue, cancelling each one
   for (ACE_Timer_Node_T <ACE_Event_Handler *> *node;
-       (node = queue_->timer_queue ().get_first ()) != 0;
+       (node = queue_->timer_queue ()->get_first ()) != 0;
        )
-    queue_->timer_queue ().cancel (node->get_timer_id (), 0, 0);
+    queue_->timer_queue ()->cancel (node->get_timer_id (), 0, 0);
 
   return 0;
 }
@@ -497,9 +497,9 @@ BPR_Handler_Base::clear_all_timers (void *)
   // Loop through the timers in the queue, cancelling each one.
 
   for (ACE_Timer_Node_T <ACE_Event_Handler *> *node;
-       (node = queue_.timer_queue ().get_first ()) != 0;
+       (node = queue_.timer_queue ()->get_first ()) != 0;
        )
-    queue_.timer_queue ().cancel (node->get_timer_id (), 0, 0);
+    queue_.timer_queue ()->cancel (node->get_timer_id (), 0, 0);
   //    queue_.cancel (node->get_timer_id (), 0);
 
   // Invoke the handler's (virtual) destructor
