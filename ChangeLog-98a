@@ -1,3 +1,7 @@
+Thu Apr  2 15:14:35 1998  Sumedh Mungee  <sumedh@lindy.cs.wustl.edu>
+
+	* ace/WFMO_Reactor.h (dump): Renamed HANDLE to ACE_HANDLE.
+
 Thu Apr 02 14:23:11 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Reactor_Notify_Test.cpp (Supplier_Task::handle_output):
