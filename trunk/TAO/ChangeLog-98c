@@ -1,40 +1,40 @@
 Thu Jul  2 19:41:46 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* tests/Param_Test/Makefile: 
-	* tests/Cubit/TAO/IDL_Cubit/Makefile: Added TAO_IDLFLAGS -P to enable
-	Perfect-hashed-operation-lookup strategy for the idl compiler.
+        * tests/Param_Test/Makefile:
+        * tests/Cubit/TAO/IDL_Cubit/Makefile: Added TAO_IDLFLAGS -P to enable
+        Perfect-hashed-operation-lookup strategy for the idl compiler.
 
 Thu Jul  2 19:22:24 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/tests/Makefile: 
-	* orbsvcs/tests/EC_Throughput/Makefile: 
-	* orbsvcs/tests/EC_Throughput/svc.conf: 
-	* orbsvcs/tests/EC_Throughput/data.idl: 
-	* orbsvcs/tests/EC_Throughput/ECT_Consumer.h: 
-	* orbsvcs/tests/EC_Throughput/ECT_Consumer.cpp: 
-	* orbsvcs/tests/EC_Throughput/ECT_Supplier.h: 
-	* orbsvcs/tests/EC_Throughput/ECT_Supplier.cpp: 
-	  This test shows how to use the EC for custom marshalling, later
-	  it will be adapted to measure throughput in the EC.
+        * orbsvcs/tests/Makefile:
+        * orbsvcs/tests/EC_Throughput/Makefile:
+        * orbsvcs/tests/EC_Throughput/svc.conf:
+        * orbsvcs/tests/EC_Throughput/data.idl:
+        * orbsvcs/tests/EC_Throughput/ECT_Consumer.h:
+        * orbsvcs/tests/EC_Throughput/ECT_Consumer.cpp:
+        * orbsvcs/tests/EC_Throughput/ECT_Supplier.h:
+        * orbsvcs/tests/EC_Throughput/ECT_Supplier.cpp:
+          This test shows how to use the EC for custom marshalling, later
+          it will be adapted to measure throughput in the EC.
 
-	* orbsvcs/orbsvcs/RtecEventComm.idl: 
-	  Added some padding so the payload (an encapsulated CDR) is
-	  always properly aligned.
+        * orbsvcs/orbsvcs/RtecEventComm.idl:
+          Added some padding so the payload (an encapsulated CDR) is
+          always properly aligned.
 
-	* orbsvcs/tests/EC_Throughput/README: 
-	* docs/releasenotes/ec.html: 
-	  Included some info about this new test.
+        * orbsvcs/tests/EC_Throughput/README:
+        * docs/releasenotes/ec.html:
+          Included some info about this new test.
 
 Thu Jul  2 14:28:01 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
-	* TAO_IDL/be/be_array.cpp: We were generating incorrect code for
-	the out () and _retn () methods of the Array_var class.
+        * TAO_IDL/be/be_array.cpp: We were generating incorrect code for
+        the out () and _retn () methods of the Array_var class.
 
-	* TAO_IDL/be_include/be.h" Missing #include for Process.h added.
+        * TAO_IDL/be_include/be.h" Missing #include for Process.h added.
 
-	* TAO_IDL/Makefile: Ran make depend
-	
-	* tests/Param_Test/README: Added description for the array tests.
+        * TAO_IDL/Makefile: Ran make depend
+
+        * tests/Param_Test/README: Added description for the array tests.
 
 Thu Jul  2 12:36:28 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 
@@ -81,6 +81,9 @@ Thu Jul 02 09:17:57 1998  David L. Levine  <levine@cs.wustl.edu>
         * tests/Cubit/TAO/MT_Cubit/Task_Client (run_tests): use
           ACE_OS::fprintf instead of fprintf, and fixed the format
           specifier to match the argument type.
+
+        * Makefile (release): use $(MAKE) instead of make for
+          recursive make.
 
 Thu Jul 02 01:50:58 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
