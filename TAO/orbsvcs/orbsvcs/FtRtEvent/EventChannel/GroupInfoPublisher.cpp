@@ -91,7 +91,7 @@ GroupInfoPublisherBase::setup_info(const FTRT::ManagerInfoList & info_list,
   /// check if sucessor changed
   size_t successors_length = info_list.length() - my_position -1;
 
-  if (successors_length != info_->backups.length())  {
+  if (successors_length /*!= info_->backups.length() */)  {
     // successor changed, update successor
     iors.length(successors_length);
     for (i = 0; i < successors_length; ++i) {
@@ -107,16 +107,18 @@ GroupInfoPublisherBase::setup_info(const FTRT::ManagerInfoList & info_list,
       ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN(0);
   }
+  /*
   else {
     result->successor = info_->successor;
   }
-
+  
   if (!CORBA::is_nil(result->successor.in()))
   {
     CORBA::PolicyList_var pols;
     result->successor->_validate_connection (pols.out ());
   }
-
+  */
+ 
   // update backups
   result->backups.length(successors_length);
   for (i = 0; i < successors_length; ++i)  {
@@ -124,8 +126,8 @@ GroupInfoPublisherBase::setup_info(const FTRT::ManagerInfoList & info_list,
       FtRtecEventChannelAdmin::EventChannel::_narrow(
       info_list[i+ my_position+1].ior.in()
       ACE_ENV_ARG_PARAMETER);
-    CORBA::PolicyList_var pols;
-    result->backups[i]->_validate_connection (pols.out ());
+    //CORBA::PolicyList_var pols;
+    //result->backups[i]->_validate_connection (pols.out ());
     ACE_CHECK_RETURN(0);
   }
   return result.release();
