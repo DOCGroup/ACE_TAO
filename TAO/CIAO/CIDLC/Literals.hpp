@@ -51,6 +51,9 @@ namespace StringLiterals
     VAR_SIZE,
     EXTRACT,
     EXTRACT_TMP,
+	ACE_UA,
+	ACE_CR,
+	ACE_TR,
     SIZE
   };
 
