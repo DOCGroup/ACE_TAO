@@ -313,7 +313,7 @@ ACE_Registry_ImpExp::process_previous_line_format (ACE_TCHAR* buffer,
       else if (*end == '#')
         {
           // number type
-          u_int value = atoi((end + 1));
+          u_int value = ACE_OS::atoi (end + 1);
           if (config_.set_integer_value (section, buffer, value))
             return -4;
         }
