@@ -1,3 +1,16 @@
+Fri Sep 24 11:07:03 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* ace/ACE.h:
+	* ace/ACE_crc32.cpp:
+	* ace/ACE_crc_ccitt.cpp:
+
+	  Changed the buffer and iovec versions of ACE::crc32() and
+	  ACE_crc_ccitt() family of functions to take an additional
+	  initial/partial crc argument.  This allows CRCs to be computed
+	  over multiple buffers/iovecs by passing the result as input to
+	  the next call.  The default value allows callers to omit the
+	  argument on the first call.
+
 Fri Sep 24 12:39:31 2004  Carlos O'Ryan  <coryan@atdesk.com>
 
 	* build/Linux/include/makeinclude/platform_linux.GNU:
@@ -11,7 +24,7 @@ Fri Sep 24 12:39:31 2004  Carlos O'Ryan  <coryan@atdesk.com>
 Fri Sep 24 10:21:38 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * performance-tests/Server_Concurrrency/Leader_Follower/RT_CORBA_Leader_Follower.cpp:
-        
+
           Replaced ACE_UINT64_DBLCAST_ADAPTER, which doesn't satisfy
           the stricter MSVC 7.1, with static_cast<double>.
 
@@ -44,18 +57,18 @@ Fri Sep 24 10:34:26 2004  Steve Huston  <shuston@riverace.com>
 
 Fri Sep 24 07:04:29 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* Makefile.am:
-	* ace.mpc:
+	* ace/Makefile.am:
+	* ace/ace.mpc:
 
 	  Add new files.
 
-	* ACE.h:
-	* ACE_crc_ccitt.cpp:
+	* ace/ACE.h:
+	* ace/ACE_crc_ccitt.cpp:
 
 	  Added ACE::crc_ccitt() family of functions in new file
 	  ACE_crc_ccitt.cpp.
 
-	* ACE_crc32.cpp:
+	* ace/ACE_crc32.cpp:
 
 	  Changed table and shift expression so the special case with
 	  additional masking for systems where ACE_UINT32 is more than 32
@@ -63,8 +76,8 @@ Fri Sep 24 07:04:29 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 	  Guide to CRC Error Detection Algorithms" by Ross Williams for
 	  details.
 
-	* ACE.cpp:
-	* ACE_crc32.cpp:
+	* ace/ACE.cpp:
+	* ace/ACE_crc32.cpp:
 
 	  Split out ACE::crc32() family of functions out of ACE.cpp into
 	  new file ACE_crc32.cpp.

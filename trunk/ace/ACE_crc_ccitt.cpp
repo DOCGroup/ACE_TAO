@@ -87,9 +87,9 @@ ACE::crc_ccitt (const char *string)
 }
 
 ACE_UINT16
-ACE::crc_ccitt (const void *buffer, size_t len)
+ACE::crc_ccitt (const void *buffer, size_t len, ACE_UINT16 crc)
 {
-  ACE_UINT16 crc = 0xFFFF;
+  crc = ~crc;
 
   for (const char *p = (const char *) buffer,
                   *e = (const char *) buffer + len;
@@ -103,9 +103,9 @@ ACE::crc_ccitt (const void *buffer, size_t len)
 }
 
 ACE_UINT16
-ACE::crc_ccitt (const iovec *iov, int len)
+ACE::crc_ccitt (const iovec *iov, int len, ACE_UINT16 crc)
 {
-  ACE_UINT16 crc = 0xFFFF;
+  crc = ~crc;
 
   for (int i = 0; i < len; ++i)
     {

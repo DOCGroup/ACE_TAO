@@ -540,20 +540,24 @@ namespace ACE
   extern ACE_Export ACE_UINT16 crc_ccitt(const char *str);
 
   /// Computes CRC-CCITT for the buffer.
-  extern ACE_Export ACE_UINT16 crc_ccitt(const void *buf, size_t len);
+  extern ACE_Export ACE_UINT16 crc_ccitt(const void *buf, size_t len,
+					 ACE_UINT16 crc = 0);
 
   /// Computes CRC-CCITT for the @ len iovec buffers.
-  extern ACE_Export ACE_UINT16 crc_ccitt(const iovec *iov, int len);
+  extern ACE_Export ACE_UINT16 crc_ccitt(const iovec *iov, int len,
+					 ACE_UINT16 crc = 0);
 
   /// Computes the ISO 8802-3 standard 32 bits CRC for the string.
   extern ACE_Export ACE_UINT32 crc32 (const char *str);
 
   /// Computes the ISO 8802-3 standard 32 bits CRC for the buffer.
-  extern ACE_Export ACE_UINT32 crc32 (const void *buf, size_t len);
+  extern ACE_Export ACE_UINT32 crc32 (const void *buf, size_t len,
+				      ACE_UINT32 crc = 0);
 
   /// Computes the ISO 8802-3 standard 32 bits CRC for the
   /// @ len iovec buffers.
-  extern ACE_Export ACE_UINT32 crc32 (const iovec *iov, int len);
+  extern ACE_Export ACE_UINT32 crc32 (const iovec *iov, int len,
+				      ACE_UINT32 crc = 0);
 
   /// Euclid's greatest common divisor algorithm.
   extern ACE_Export u_long gcd (u_long x, u_long y);
