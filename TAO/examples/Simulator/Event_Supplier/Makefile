@@ -14,12 +14,12 @@ IDL_HDR = \
 	NavWeapC.h 
 
 EVENT_TEST_SRCS= \
-	Event_Sup.cpp Event_Con.cpp 
+	Event_Sup.cpp Event_Con.cpp DOVE_Supplier.cpp
 
 LSRC= \
 	$(IDL_SRC) $(EVENT_TEST_SRCS) 
 
-EVENT_SUP_OBJS = NavWeapC.o Event_Sup.o
+EVENT_SUP_OBJS = NavWeapC.o Event_Sup.o DOVE_Supplier.o
 EVENT_CON_OBJS = NavWeapC.o Event_Con.o
 
 LDLIBS= -lorbsvcs -lTAO
