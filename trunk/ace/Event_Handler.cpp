@@ -24,7 +24,7 @@ ACE_Event_Handler::ACE_Event_Handler (ACE_Reactor *r,
   // ACE_TRACE ("ACE_Event_Handler::ACE_Event_Handler");
 }
 
-ACE_Event_Handler::~ACE_Event_Handler (void) 
+ACE_Event_Handler::~ACE_Event_Handler (void)
 {
   // ACE_TRACE ("ACE_Event_Handler::~ACE_Event_Handler");
   if (this->reactor_ != 0)
@@ -34,7 +34,7 @@ ACE_Event_Handler::~ACE_Event_Handler (void)
     }
 }
 
-// Gets the file descriptor associated with this I/O device. 
+// Gets the file descriptor associated with this I/O device.
 
 ACE_HANDLE
 ACE_Event_Handler::get_handle (void) const
@@ -51,7 +51,7 @@ ACE_Event_Handler::set_handle (ACE_HANDLE)
   ACE_TRACE ("ACE_Event_Handler::set_handle");
 }
 
-// Gets the priority of this handler. 
+// Gets the priority of this handler.
 
 int
 ACE_Event_Handler::priority (void) const
@@ -60,7 +60,7 @@ ACE_Event_Handler::priority (void) const
   return this->priority_;
 }
 
-// Sets the priority 
+// Sets the priority
 
 void
 ACE_Event_Handler::priority (int priority)
@@ -79,7 +79,7 @@ ACE_Event_Handler::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
   return -1;
 }
 
-// Called when input becomes available on fd. 
+// Called when input becomes available on fd.
 
 int
 ACE_Event_Handler::handle_input (ACE_HANDLE)
@@ -90,16 +90,16 @@ ACE_Event_Handler::handle_input (ACE_HANDLE)
 
 // Called when output is possible on fd.
 
-int 
+int
 ACE_Event_Handler::handle_output (ACE_HANDLE)
 {
   ACE_TRACE ("ACE_Event_Handler::handle_output");
   return -1;
 }
 
-// Called when urgent data is available on fd. 
+// Called when urgent data is available on fd.
 
-int 
+int
 ACE_Event_Handler::handle_exception (ACE_HANDLE)
 {
   ACE_TRACE ("ACE_Event_Handler::handle_exception");
@@ -126,12 +126,23 @@ ACE_Event_Handler::handle_exit (ACE_Process *)
 
 // Called when a registered signal occurs.
 
-int 
+int
 ACE_Event_Handler::handle_signal (int, siginfo_t *, ucontext_t *)
 {
   ACE_TRACE ("ACE_Event_Handler::handle_signal");
   return -1;
 }
+
+int
+ACE_Event_Handler::resume_handler (void)
+{
+  ACE_TRACE ("ACE_Event_Handler::resume_handler");
+
+  // Return a default value and allow the reactor to take care of
+  // resuming the handler
+  return 0;
+}
+
 
 int
 ACE_Event_Handler::handle_qos (ACE_HANDLE)
@@ -147,7 +158,7 @@ ACE_Event_Handler::handle_group_qos (ACE_HANDLE)
   return -1;
 }
 
-void 
+void
 ACE_Event_Handler::reactor (ACE_Reactor *reactor)
 {
   ACE_TRACE ("ACE_Event_Handler::reactor");
@@ -229,14 +240,14 @@ ACE_Event_Handler::remove_stdin_handler (ACE_Reactor *reactor,
 
 #endif /* ACE_HAS_WINCE */
 
-ACE_Notification_Buffer::ACE_Notification_Buffer (void) 
+ACE_Notification_Buffer::ACE_Notification_Buffer (void)
 {
   ACE_TRACE ("ACE_Notification_Buffer::ACE_Notification_Buffer");
 }
 
 ACE_Notification_Buffer::ACE_Notification_Buffer (ACE_Event_Handler *eh,
 						  ACE_Reactor_Mask mask)
-  : eh_ (eh), 
+  : eh_ (eh),
     mask_ (mask)
 {
   ACE_TRACE ("ACE_Notification_Buffer::ACE_Notification_Buffer");

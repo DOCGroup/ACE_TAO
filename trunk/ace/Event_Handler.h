@@ -116,7 +116,7 @@ public:
   /// Called when a process exits.
   virtual int handle_exit (ACE_Process *);
 
-  /// Called when a <handle_*()> method returns -1 or when the 
+  /// Called when a <handle_*()> method returns -1 or when the
   /// <remove_handler> method is called on an <ACE_Reactor>.  The
   /// <close_mask> indicates which event has triggered the
   /// <handle_close> method callback on a particular <handle>.
@@ -126,6 +126,14 @@ public:
   /// Called when object is signaled by OS (either via UNIX signals or
   /// when a Win32 object becomes signaled).
   virtual int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0);
+
+  /// Called to figure out whether the handler needs to resumed by the
+  /// reactor or the application can take care of it. The default
+  /// value of 0 would be returned which would allow the reactor to
+  /// take care of resumption of the handler. The application can
+  /// return a value more than zero and decide to resume the handler
+  /// themseleves.
+  virtual int resume_handler (void);
 
   virtual int handle_qos (ACE_HANDLE = ACE_INVALID_HANDLE);
   virtual int handle_group_qos (ACE_HANDLE = ACE_INVALID_HANDLE);
