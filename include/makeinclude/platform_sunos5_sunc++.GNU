@@ -3,6 +3,7 @@
 CC		= cc
 CXX		= CC +w -mt -pta -noex # This option should solve some evil problems with Solaris
 DLD		= $(CXX) 
+LD		= $(CXX)
 LDFLAGS		+= -R $(WRAPPER_ROOT)/ace 
 LIBS		+= -lsocket -ldl -lnsl -lgen # -lposix4
 PIC		= -PIC

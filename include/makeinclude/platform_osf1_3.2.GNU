@@ -4,6 +4,7 @@ CC		= cxx -non_shared
 CXX		= cxx -x cxx -w0 -non_shared
 #DLD		= ld -non_shared
 DLD		= ld -shared
+LD		= $(CXX)
 LIBS		+= -lpthreads -lmach -lsys5 -lxti -ltli -lcxx -lexc -lc
 PIC		= -pic
 ARFLAGS		= ruv

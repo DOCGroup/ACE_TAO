@@ -3,6 +3,7 @@
 CC              = gcc
 CXX             = gcc
 DLD             = $(CXX)
+LD		= $(CXX) 
 LDFLAGS         += -L$(WRAPPER_ROOT)/ace
 LIBS            += -lstdc++
 PIC             = -fpic

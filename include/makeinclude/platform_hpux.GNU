@@ -1,6 +1,7 @@
 CC		= /bin/cc
 CXX		= /usr/bin/CC
 DLD		= $(CXX)
+LD		= $(CXX) 
 PIC		= 
 ARFLAGS		= ruv
 RANLIB		= echo

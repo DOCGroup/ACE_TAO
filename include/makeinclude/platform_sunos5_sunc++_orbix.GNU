@@ -3,6 +3,7 @@
 CC		= cc
 CXX		= CC -mt -pta -noex
 DLD		= $(CXX)
+LD		= $(CXX)
 INCLDIRS	= -I$(ORBIX_ROOT)/include
 PIC		= -PIC
 LDFLAGS		+= $(PIC) -L$(ORBIX_ROOT)/lib -R $(WRAPPER_ROOT)/ace -R $(ORBIX_ROOT)/lib

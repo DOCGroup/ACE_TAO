@@ -4,6 +4,7 @@ CXX		= lcc
 CFLAGS		= -Xa       # use ANSI c complier
 CCFLAGS		= -XF -Xpt- # use c++ ARM compiler with auto templates turned off
 DLD		= /bin/ld
+LD		= $(CXX)
 LIBS		+= 
 PIC		= -pic
 ARFLAGS		= ruv

@@ -1,7 +1,7 @@
 # VxWorks 5.2 with GNU g++ 2.7.2
 # *not* using Orbix
 
-TOOL_DIR	= /appl/wind
+TOOL_DIR	= /opt/wind
 TARGET_DIR	= $(TOOL_DIR)/target
 HOST_DIR	= $(TOOL_DIR)/host/sun4-solaris2
 BIN_DIR		= $(HOST_DIR)/bin

@@ -2,6 +2,7 @@
 CC              = cc
 CXX             = CC
 DLD             = $(CXX)
+LD		= $(CXX)
 LIBS            += 
 AR              = CC
 ARFLAGS         = -xar -o

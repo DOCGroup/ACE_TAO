@@ -2,6 +2,7 @@
 CC		= /bin/cc
 CXX		= /usr/bin/CC
 DLD		= $(CXX)
+LD		= $(CXX) 
 INCLDIRS        = -I$(ORBIX_ROOT)/include
 PIC		= 
 ARFLAGS		= ruv

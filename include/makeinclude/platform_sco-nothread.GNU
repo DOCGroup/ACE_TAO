@@ -6,6 +6,7 @@ CC              = gcc -w
 # for no threads
 CXX		= gcc -fno-implicit-templates -w -I. -fno-strict-prototypes -D__ACE_INLINE__
 DLD             = $(CXX)
+LD		= $(CXX)
 LIBS            = -lstdc++ -lsocket
 PIC             =
 AR              = ar
