@@ -3,6 +3,7 @@
 #include "FT_Endpoint_Selector_Factory.h"
 #include "FT_Invocation_Endpoint_Selectors.h"
 #include "tao/Exception.h"
+#include "tao/Environment.h"
 
 ACE_RCSID(FaultTolerance, FT_Endpoint_Selector_Factory, "$Id$")
 

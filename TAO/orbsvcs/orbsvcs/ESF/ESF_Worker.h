@@ -20,6 +20,10 @@
 
 class Object;
 
+namespace CORBA
+{
+  class Environment;
+}
 /// Define the interface for the Worker objects
 /**
  * The Event Service Framework uses Worker classes to iterate over

@@ -1,3 +1,21 @@
+Wed Oct 29 19:41:14 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/ESF/ESF_Worker.h:
+	* orbsvcs/orbsvcs/Event/ECG_ConsumerEC_Control.h:
+	* orbsvcs/orbsvcs/Event/EC_ConsumerControl.h:
+	* orbsvcs/orbsvcs/Event/EC_SupplierControl.h:
+	* orbsvcs/orbsvcs/Notify/Factory.h:
+
+	  Forward declared CORBA::Environment in all these header files. 
+	
+	* orbsvcs/orbsvcs/FaultTolerance/FT_Endpoint_Selector_Factory.cpp:
+	* orbsvcs/orbsvcs/FaultTolerance/FT_Invocation_Endpoint_Selectors.cpp:
+         
+	  #included Environment.h. 
+
+	  The above fixes should take care of the build problems with
+	  SuSE static builds.
+
 Wed Oct 29 17:31:16 2003  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * orbsvcs/examples/LoadBalancing/Makefile:
