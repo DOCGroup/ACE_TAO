@@ -41,7 +41,7 @@ Options::~Options (void)
 int
 Options::parse_args (int argc, char **argv)
 {
-  ACE_Get_Opt get_opts (argc, argv, "dn:f:i:t:");
+  ACE_Get_Opt get_opts (argc, argv, "dn:f:i:t:k:");
   int c;
   char temp_buf[MAX_IOR_SIZE];
   char *result;
@@ -71,8 +71,10 @@ Options::parse_args (int argc, char **argv)
 	this->ior_ = ACE_OS::strdup (temp_buf);
 	ACE_OS::fclose (ior_file);
 	break;
-	//        CORBA::string_free (this->ior_);
-	//        this->ior_ = CORBA::string_copy (get_opts.optarg);
+     case 'k':
+	CORBA::string_free (this->ior_);
+	this->ior_ = CORBA::string_copy (get_opts.optarg);
+	break;
       case 'i':  // invocation
         if (!ACE_OS::strcmp (get_opts.optarg, "dii"))
           this->invoke_type_ = Options::DII;
