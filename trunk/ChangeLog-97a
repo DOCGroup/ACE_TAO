@@ -1,3 +1,26 @@
+Tue Jan 28 09:13:00 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/ACE.cpp (ACE::ldfind),
+	  ace/Local_Name_Space_T.cpp,
+	  ace/Local_Token.cpp (ACE_TPQ_Entry::ACE_TPQ_Entry),
+	  ace/Log_Msg.cpp (ACE_Log_Msg::msg, ACE_Log_Msg::find),
+	  Memory_Pool.cpp (ACE_MMAP_Memory_Pool::ACE_MMAP_Memory_Pool),
+	  ace/Naming_Context.cpp (ACE_Naming_Context::open),
+	  ace/Parse_Node.cpp (ACE_Location_Node::open_handle),
+	  Registry.cpp (ACE_Predefined_Naming_Contexts::is_local_host, 
+                ACE_Registry::Binding_Iterator::Object_Iteration::next_n,
+		ACE_Registry::Binding_Iterator::Context_Iteration::next_n)
+	  changed "sizeof char" to "sizeof (char)" because g++ and Sun C++
+	  (properly) choked on it.
+
+	* ace/Local_Name_Space_T.cpp (create_manager_i):
+	  -- ::strncat () instead of ACE_OS::strcat ()
+          -- "lock_name_for_backing_store" instead of
+	     "lock_name_for_local_name_space"
+
+	* ace/Naming_Context.cpp (both constructors): reordered
+	  initializers to match declaration order.
+
 Mon Jan 27 21:33:00 1997  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
 
 	* tests/Naming_Test.cpp (main): Made modifications to the test to
@@ -19,8 +42,8 @@ Mon Jan 27 21:33:00 1997  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
 	  Naming_Context.cpp (ACE_Naming_Context::open)
 	  Parse_Node.cpp (ACE_Location_Node::open_handle)
 	  Registry.cpp (ACE_Predefined_Naming_Contexts::is_local_host, 
-	                ACE_Registry::Binding_Iterator::Object_Iteration::next_n,
-			ACE_Registry::Binding_Iterator::Context_Iteration::next_n)
+                ACE_Registry::Binding_Iterator::Object_Iteration::next_n,
+		ACE_Registry::Binding_Iterator::Context_Iteration::next_n)
 			
 	* ace/OS.h: Added UNICODE support for ACE_DEFAULT_LOCALNAME.
 
