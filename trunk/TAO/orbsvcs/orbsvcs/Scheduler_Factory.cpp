@@ -17,35 +17,6 @@ ACE_Scheduler_Factory::Factory_Status ACE_Scheduler_Factory::status_ =
 static int entry_count = -1;
 static ACE_Scheduler_Factory::POD_RT_Info* rt_info = 0;
 
-// Wrapper for builtin-type RtecScheduler::Preemption_Priority.
-// For unknown reasons, Sunc C++ 4.2 refuses to compile ACE_TSS<TYPE>
-// if TYPE is a built-in type:
-// "ace/Synch_T.h", line 267: Error: Cannot have a return type of int* for ACE_TSS<int>::operator->() const.
-//   Where: While specializing "ACE_TSS<int>".
-//   Where: Specialized in non-template code.
-struct ACE_Scheduler_Factory_Int {
-  ACE_Scheduler_Factory_Int (const RtecScheduler::Preemption_Priority i = 0)
-    : i_ (i)
-  {
-  }
-  // Constructor.
-
-  ACE_Scheduler_Factory_Int &
-  operator= (const RtecScheduler::Preemption_Priority i)
-  {
-    i_ = i;
-    return *this;
-  }
-  // Assignment operator.
-
-  operator RtecScheduler::Preemption_Priority () { return i_; };
-  // RtecScheduler::Preemption_Priority conversion.
-
-private:
-  RtecScheduler::Preemption_Priority i_;
-  // The wrapped value.
-};
-
 // Helper struct, to encapsulate the singleton static server and
 // ACE_TSS objects.  We can't use ACE_Singleton directly, because
 // construction of ACE_Runbtime_Scheduler takes arguments.
@@ -54,7 +25,8 @@ struct ACE_Scheduler_Factory_Data
   ACE_Runtime_Scheduler scheduler_;
   // The static runtime scheduler.
 
-  ACE_TSS<ACE_Scheduler_Factory_Int> preemption_priority_;
+  ACE_TSS<ACE_TSS_Type_Adapter<RtecScheduler::Preemption_Priority> >
+    preemption_priority_;
   // The dispatch queue number of the calling thread.  For access by
   // applications; must be set by either the application or Event
   // Channel.
@@ -273,10 +245,19 @@ ACE_Scheduler_Factory::preemption_priority ()
 {
   // Return whatever we've got.  The application or Event Channel is
   // responsible for making sure that it was set.
-  return ace_scheduler_factory_data->preemption_priority_.ts_object () == 0  ?
-    ACE_static_cast (RtecScheduler::Preemption_Priority, -1)  :
-    ACE_static_cast (RtecScheduler::Preemption_Priority,
-                     *ace_scheduler_factory_data->preemption_priority_);
+  if (ace_scheduler_factory_data->preemption_priority_.ts_object ())
+    {
+      ACE_TSS_Type_Adapter<RtecScheduler::Preemption_Priority> *tss =
+        ace_scheduler_factory_data->preemption_priority_;
+      // egcs 1.0.1 raises an internal compiler error if we implicitly
+      // call the type conversion operator.  So, call it explcitly.
+      const RtecScheduler::Preemption_Priority preemption_priority =
+        ACE_static_cast (RtecScheduler::Preemption_Priority,
+                         tss->operator RtecScheduler::Preemption_Priority ());
+      return preemption_priority;
+    }
+  else
+    return ACE_static_cast (RtecScheduler::Preemption_Priority, -1);
 }
 
 void
@@ -292,13 +273,16 @@ ACE_Scheduler_Factory::set_preemption_priority
                        ACE_Null_Mutex>::instance ()) == 0)
         return;
 
-  *ace_scheduler_factory_data->preemption_priority_ = preemption_priority;
+  ace_scheduler_factory_data->preemption_priority_->
+    operator RtecScheduler::Preemption_Priority & () = preemption_priority;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Singleton<ACE_Scheduler_Factory_Data, ACE_Null_Mutex>;
-template class ACE_TSS<ACE_Scheduler_Factory_Int>;
+template class ACE_TSS<ACE_TSS_Type_Adapter<RtecScheduler::Preemption_Priority> >;
+template class ACE_TSS_Type_Adapter<RtecScheduler::Preemption_Priority>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Singleton<ACE_Scheduler_Factory_Data, ACE_Null_Mutex>
-#pragma instantiate ACE_TSS<ACE_Scheduler_Factory_Int>
+#pragma instantiate ACE_TSS<ACE_TSS_Type_Adapter<RtecScheduler::Preemption_Priority> >
+#pragma instantiate ACE_TSS_Type_Adapter<RtecScheduler::Preemption_Priority>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
