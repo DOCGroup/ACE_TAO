@@ -1,3 +1,8 @@
+Wed Sep  1 11:36:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Policy_Set.h:
+          Replaced html style with doxygen style
+
 Wed Sep  1 06:20:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Transport.cpp (dump_iov):
