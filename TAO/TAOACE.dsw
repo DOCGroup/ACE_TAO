@@ -53,6 +53,9 @@ Package=<4>
     Begin Project Dependency
     Project_Dep_Name CosTrading
     End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name IORTable
+    End Project Dependency
 }}}
 
 ###############################################################################
@@ -187,6 +190,9 @@ Package=<4>
 {{{
     Begin Project Dependency
     Project_Dep_Name Svc Utils
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name IORTable
     End Project Dependency
 }}}
 
@@ -382,6 +388,36 @@ Package=<4>
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name Svc Utils
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "IORManip"=.\tao\IORManipulation\TAO_IORManip.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "IORTable"=.\tao\IORTable\TAO_IORTable.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
     End Project Dependency
 }}}
 
