@@ -943,7 +943,7 @@ TAO_Bounded_String_Sequence<MAX>::freebuf (char* *buffer)
 }
 
 template<CORBA::ULong MAX> void
-TAO_Bounded_String_Sequence<MAX>::_allocate_buffer (CORBA::ULong length)
+TAO_Bounded_String_Sequence<MAX>::_allocate_buffer (CORBA::ULong /* length */)
 {
   // For this class memory is never reallocated so the implementation
   // is *really* simple.

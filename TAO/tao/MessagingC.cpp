@@ -184,6 +184,7 @@ Messaging::RebindPolicy_ptr Messaging::RebindPolicy::_unchecked_narrow (
     CORBA::Environment &ACE_TRY_ENV
   )
 {
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
   if (CORBA::is_nil (obj))
     return Messaging::RebindPolicy::_nil ();
   TAO_Stub* stub = obj->_stubobj ();
@@ -248,6 +249,7 @@ Messaging::SyncScopePolicy_ptr Messaging::SyncScopePolicy::_unchecked_narrow (
     CORBA::Environment &ACE_TRY_ENV
   )
 {
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
   if (CORBA::is_nil (obj))
     return Messaging::SyncScopePolicy::_nil ();
   TAO_Stub* stub = obj->_stubobj ();
@@ -340,6 +342,7 @@ Messaging::RequestPriorityPolicy_ptr Messaging::RequestPriorityPolicy::_unchecke
     CORBA::Environment &ACE_TRY_ENV
   )
 {
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
   if (CORBA::is_nil (obj))
     return Messaging::RequestPriorityPolicy::_nil ();
   TAO_Stub* stub = obj->_stubobj ();
@@ -404,6 +407,7 @@ Messaging::ReplyPriorityPolicy_ptr Messaging::ReplyPriorityPolicy::_unchecked_na
     CORBA::Environment &ACE_TRY_ENV
   )
 {
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
   if (CORBA::is_nil (obj))
     return Messaging::ReplyPriorityPolicy::_nil ();
   TAO_Stub* stub = obj->_stubobj ();
@@ -468,6 +472,7 @@ Messaging::RequestStartTimePolicy_ptr Messaging::RequestStartTimePolicy::_unchec
     CORBA::Environment &ACE_TRY_ENV
   )
 {
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
   if (CORBA::is_nil (obj))
     return Messaging::RequestStartTimePolicy::_nil ();
   TAO_Stub* stub = obj->_stubobj ();
@@ -532,6 +537,7 @@ Messaging::RequestEndTimePolicy_ptr Messaging::RequestEndTimePolicy::_unchecked_
     CORBA::Environment &ACE_TRY_ENV
   )
 {
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
   if (CORBA::is_nil (obj))
     return Messaging::RequestEndTimePolicy::_nil ();
   TAO_Stub* stub = obj->_stubobj ();
@@ -596,6 +602,7 @@ Messaging::ReplyStartTimePolicy_ptr Messaging::ReplyStartTimePolicy::_unchecked_
     CORBA::Environment &ACE_TRY_ENV
   )
 {
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
   if (CORBA::is_nil (obj))
     return Messaging::ReplyStartTimePolicy::_nil ();
   TAO_Stub* stub = obj->_stubobj ();
@@ -660,6 +667,7 @@ Messaging::ReplyEndTimePolicy_ptr Messaging::ReplyEndTimePolicy::_unchecked_narr
     CORBA::Environment &ACE_TRY_ENV
   )
 {
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
   if (CORBA::is_nil (obj))
     return Messaging::ReplyEndTimePolicy::_nil ();
   TAO_Stub* stub = obj->_stubobj ();
@@ -724,6 +732,7 @@ Messaging::RelativeRequestTimeoutPolicy_ptr Messaging::RelativeRequestTimeoutPol
     CORBA::Environment &ACE_TRY_ENV
   )
 {
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
   if (CORBA::is_nil (obj))
     return Messaging::RelativeRequestTimeoutPolicy::_nil ();
   TAO_Stub* stub = obj->_stubobj ();
@@ -788,6 +797,7 @@ Messaging::RelativeRoundtripTimeoutPolicy_ptr Messaging::RelativeRoundtripTimeou
     CORBA::Environment &ACE_TRY_ENV
   )
 {
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
   if (CORBA::is_nil (obj))
     return Messaging::RelativeRoundtripTimeoutPolicy::_nil ();
   TAO_Stub* stub = obj->_stubobj ();
@@ -880,6 +890,7 @@ Messaging::RoutingPolicy_ptr Messaging::RoutingPolicy::_unchecked_narrow (
     CORBA::Environment &ACE_TRY_ENV
   )
 {
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
   if (CORBA::is_nil (obj))
     return Messaging::RoutingPolicy::_nil ();
   TAO_Stub* stub = obj->_stubobj ();
@@ -944,6 +955,7 @@ Messaging::MaxHopsPolicy_ptr Messaging::MaxHopsPolicy::_unchecked_narrow (
     CORBA::Environment &ACE_TRY_ENV
   )
 {
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
   if (CORBA::is_nil (obj))
     return Messaging::MaxHopsPolicy::_nil ();
   TAO_Stub* stub = obj->_stubobj ();
@@ -1008,6 +1020,7 @@ Messaging::QueueOrderPolicy_ptr Messaging::QueueOrderPolicy::_unchecked_narrow (
     CORBA::Environment &ACE_TRY_ENV
   )
 {
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
   if (CORBA::is_nil (obj))
     return Messaging::QueueOrderPolicy::_nil ();
   TAO_Stub* stub = obj->_stubobj ();
@@ -1251,6 +1264,7 @@ Messaging::ReplyHandler_ptr Messaging::ReplyHandler::_unchecked_narrow (
     CORBA::Environment &ACE_TRY_ENV
   )
 {
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
   if (CORBA::is_nil (obj))
     return Messaging::ReplyHandler::_nil ();
   TAO_Stub* stub = obj->_stubobj ();
@@ -1311,6 +1325,7 @@ Messaging::Poller_ptr Messaging::Poller::_unchecked_narrow (
     CORBA::Environment &ACE_TRY_ENV
   )
 {
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
   if (CORBA::is_nil (obj))
     return Messaging::Poller::_nil ();
   TAO_Stub* stub = obj->_stubobj ();

@@ -34,21 +34,22 @@ CORBA_DomainManager::_nil (void)
 
 CORBA_DomainManager_ptr CORBA_DomainManager::_narrow (
     CORBA::Object_ptr obj,
-    CORBA::Environment &env
+    CORBA::Environment &ACE_TRY_ENV
   )
 {
   if (CORBA::is_nil (obj))
     return CORBA_DomainManager::_nil ();
-  if (!obj->_is_a ("IDL:omg.org/CORBA/DomainManager:1.0", env))
+  if (!obj->_is_a ("IDL:omg.org/CORBA/DomainManager:1.0", ACE_TRY_ENV))
     return CORBA_DomainManager::_nil ();
-  return CORBA_DomainManager::_unchecked_narrow (obj, env);
+  return CORBA_DomainManager::_unchecked_narrow (obj, ACE_TRY_ENV);
 }
 
 CORBA_DomainManager_ptr CORBA_DomainManager::_unchecked_narrow (
     CORBA::Object_ptr obj,
-    CORBA::Environment &env
+    CORBA::Environment &ACE_TRY_ENV
   )
 {
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
   if (CORBA::is_nil (obj))
     return CORBA_DomainManager::_nil ();
   TAO_Stub* stub = obj->_stubobj ();
@@ -127,14 +128,14 @@ CORBA::Policy_ptr CORBA_DomainManager::get_domain_policy (
   return _tao_retval;
 }
 
-CORBA::Boolean CORBA_DomainManager::_is_a (const CORBA::Char *value, CORBA::Environment &env)
+CORBA::Boolean CORBA_DomainManager::_is_a (const CORBA::Char *value, CORBA::Environment &ACE_TRY_ENV)
 {
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/DomainManager:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (env))))
+    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (ACE_TRY_ENV))))
   return 1; // success using local knowledge
   else
-    return this->CORBA_Object::_is_a (value, env);
+    return this->CORBA_Object::_is_a (value, ACE_TRY_ENV);
 }
 
 const char* CORBA_DomainManager::_interface_repository_id (void) const
@@ -146,21 +147,22 @@ const char* CORBA_DomainManager::_interface_repository_id (void) const
 
 CORBA::ConstructionPolicy_ptr CORBA::ConstructionPolicy::_narrow (
     CORBA::Object_ptr obj,
-    CORBA::Environment &env
+    CORBA::Environment &ACE_TRY_ENV
   )
 {
   if (CORBA::is_nil (obj))
     return CORBA::ConstructionPolicy::_nil ();
-  if (!obj->_is_a ("IDL:omg.org/CORBA/ConstructionPolicy:1.0", env))
+  if (!obj->_is_a ("IDL:omg.org/CORBA/ConstructionPolicy:1.0", ACE_TRY_ENV))
     return CORBA::ConstructionPolicy::_nil ();
-  return CORBA::ConstructionPolicy::_unchecked_narrow (obj, env);
+  return CORBA::ConstructionPolicy::_unchecked_narrow (obj, ACE_TRY_ENV);
 }
 
 CORBA::ConstructionPolicy_ptr CORBA::ConstructionPolicy::_unchecked_narrow (
     CORBA::Object_ptr obj,
-    CORBA::Environment &env
+    CORBA::Environment &ACE_TRY_ENV
   )
 {
+  ACE_UNUSED_ARG (ACE_TRY_ENV);
   if (CORBA::is_nil (obj))
     return CORBA::ConstructionPolicy::_nil ();
   TAO_Stub* stub = obj->_stubobj ();
@@ -221,6 +223,9 @@ void CORBA::ConstructionPolicy::make_domain_manager (
           (_tao_out << CORBA::Any::from_boolean (constr_policy))
       ))
       ACE_THROW (CORBA::MARSHAL ());
+#else
+    ACE_UNUSED_ARG (object_type);
+    ACE_UNUSED_ARG (constr_policy);
 #endif /* 0 */
 
     int _invoke_status =
@@ -242,15 +247,15 @@ void CORBA::ConstructionPolicy::make_domain_manager (
 
 }
 
-CORBA::Boolean CORBA::ConstructionPolicy::_is_a (const CORBA::Char *value, CORBA::Environment &env)
+CORBA::Boolean CORBA::ConstructionPolicy::_is_a (const CORBA::Char *value, CORBA::Environment &ACE_TRY_ENV)
 {
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/ConstructionPolicy:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Policy:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (env))))
+    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (ACE_TRY_ENV))))
   return 1; // success using local knowledge
   else
-    return this->CORBA_Object::_is_a (value, env);
+    return this->CORBA_Object::_is_a (value, ACE_TRY_ENV);
 }
 
 const char* CORBA::ConstructionPolicy::_interface_repository_id (void) const

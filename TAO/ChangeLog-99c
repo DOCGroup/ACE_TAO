@@ -1,3 +1,24 @@
+Wed Jun 16 21:08:58 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_operation/operation_ss.cpp
+	  (visit_operation): If the operation is oneway and has no "in"
+	  parameters, don't generate the <_tao_server_request> argument
+	  since it will not be used.
+
+	* tao: The following files were updated to remove "unused
+	  argument" warnings.  Thanks to Steve Huston for reporting these
+	  warnings.
+
+	  - Active_Object_Map.cpp
+	  - DomainC.cpp
+	  - Key_Adapters.cpp
+	  - MessagingC.cpp
+	  - MessagingS.cpp
+	  - POA.cpp
+	  - PolicyC.cpp
+	  - Sequence_T.cpp
+	  - Servant_Base.cpp
+
 Wed Jun 16 21:15:31 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Event/EC_ObserverStrategy.h:
@@ -10,8 +31,8 @@ Wed Jun 16 20:14:28 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* tao/ORB_Core.cpp:
 	  Added missing initializations
 
-	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp: 
-	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Server.cpp: 
+	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp:
+	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Server.cpp:
 	  Fixed error messages, they were crashing the application
 	  (incorrect usage of %p), they were misleading and hard to read.
 
