@@ -162,7 +162,9 @@ sender: $(addprefix $(VDIR),$(CLT_OBJS))
  $(ACE_ROOT)/ace/IPC_SAP.i \
  $(ACE_ROOT)/ace/SOCK.i \
  $(ACE_ROOT)/ace/SOCK_Dgram.i \
- $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.i \
+ $(ACE_ROOT)/ace/SOCK_Dgram_Mcast_T.h \
+ $(ACE_ROOT)/ace/SOCK_Dgram_Mcast_T.i \
+ $(ACE_ROOT)/ace/SOCK_Dgram_Mcast_T.cpp \
  $(ACE_ROOT)/ace/QoS/QoS_Manager.h \
  $(ACE_ROOT)/ace/QoS/SOCK_Dgram_Mcast_QoS.i \
  QoS_Util.h Fill_ACE_QoS.h \
@@ -313,7 +315,9 @@ sender: $(addprefix $(VDIR),$(CLT_OBJS))
  $(ACE_ROOT)/ace/IPC_SAP.i \
  $(ACE_ROOT)/ace/SOCK.i \
  $(ACE_ROOT)/ace/SOCK_Dgram.i \
- $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.i \
+ $(ACE_ROOT)/ace/SOCK_Dgram_Mcast_T.h \
+ $(ACE_ROOT)/ace/SOCK_Dgram_Mcast_T.i \
+ $(ACE_ROOT)/ace/SOCK_Dgram_Mcast_T.cpp \
  $(ACE_ROOT)/ace/QoS/QoS_Manager.h \
  $(ACE_ROOT)/ace/QoS/SOCK_Dgram_Mcast_QoS.i \
  QoS_Util.h Fill_ACE_QoS.h \

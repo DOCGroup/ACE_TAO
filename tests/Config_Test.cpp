@@ -25,6 +25,35 @@
 
 ACE_RCSID(tests, Config_Test, "$Id$")
 
+static int 
+test_subkey_path (void)
+{
+  ACE_Configuration_Win32Registry config (HKEY_LOCAL_MACHINE);
+
+  ACE_Configuration_Section_Key root = config.root_section ();
+
+  ACE_Configuration_Section_Key testsection;
+
+  if (config.open_section (root,
+                           ACE_TEXT ("Software\\ACE\\test"),
+                           1,
+                           testsection))
+    return -26;
+
+  if (config.open_section (root,
+                           ACE_TEXT ("Software"),
+                           0,
+                           testsection))
+    return -27;
+
+  if (config.remove_section (testsection,
+                             ACE_TEXT ("ACE"),
+                             1))
+    return -28;
+
+  return 0;
+}
+
 static int
 test (ACE_Configuration *config)
 {
@@ -272,7 +301,15 @@ static int
 run_tests (void)
 {
 #if defined (ACE_WIN32)
-  // test win32 registry implementation.
+  {
+    int result = test_subkey_path ();
+    if (result)
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Win32 registry test failed (%d)\n", result),
+                        -1);
+  }
+
+  // Test win32 registry implementation.
   HKEY root =
     ACE_Configuration_Win32Registry::resolve_key (HKEY_LOCAL_MACHINE,
                                                   ACE_TEXT ("Software\\ACE\\test"));

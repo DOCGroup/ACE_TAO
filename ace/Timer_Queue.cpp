@@ -56,5 +56,4 @@ template class ACE_Event_Handler_Handle_Timeout_Upcall<ACE_SYNCH_RECURSIVE_MUTEX
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-
 #endif /* ACE_TIMER_QUEUE_C */
