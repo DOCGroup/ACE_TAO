@@ -81,18 +81,6 @@ TAO_IDLFLAGS += -Ge 1
 
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 
-ifneq (,$(LYNXTARGET))
-
-  # To avoid this behavior with LynxOS' old g++:
-  # POA.cpp: multiple definition of
-  #  `ACE_Hash<ACE_CString>::operator()(ACE_CString const &) const'
-  # .obj/Notifier_i.o:$(ACE_ROOT)/ace/Functor_T.i:38: first defined here
-
-  all clean realclean:
-	@echo examples/Callback_Quoter is not built on LynxOS
-
-else  # ! LYNXTARGET
-
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
@@ -126,8 +114,6 @@ consumer:$(addprefix $(VDIR),$(CONSUMER_CLT_OBJS))
 realclean: clean
 	-$(RM) NotifierC.* NotifierS.* NotifierS_T.* \
                ConsumerC.* ConsumerS.* ConsumerS_T.*
-
-endif # ! LYNXTARGET
 
 #----------------------------------------------------------------------------
 #       Dependencies
