@@ -1,6 +1,8 @@
 // $Id$
 
 #include "IORInterceptor_Adapter_Factory_Impl.h"
+#include "IORInterceptor_Adapter_Impl.h"
+
 #include "tao/ORB_Core.h"
 
 ACE_RCSID (IORInterceptor,
@@ -11,16 +13,16 @@ TAO_IORInterceptor_Adapter_Factory_Impl::~TAO_IORInterceptor_Adapter_Factory_Imp
 {
 }
 
-TAO_IORInterceptor_Adapter * TAO_IORInterceptor_Adapter_Factory_Impl::create (
-    ACE_ENV_SINGLE_ARG_DECL_NOT_USED
-  )
+TAO_IORInterceptor_Adapter *
+TAO_IORInterceptor_Adapter_Factory_Impl::create (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_IORInterceptor_Adapter_Impl * new_iorinterceptor_adapter = 0;
-  ACE_NEW_RETURN (new_iorinterceptor_adapter,
-                  TAO_IORInterceptor_Adapter_Impl,
-                  0);
-  return new_iorinterceptor_adapter;
+  TAO_IORInterceptor_Adapter_Impl *nia = 0;
+  ACE_NEW_THROW_EX (nia,
+                    TAO_IORInterceptor_Adapter_Impl (),
+                    CORBA::NO_MEMORY ());
+
+  return nia;
 }
 
 

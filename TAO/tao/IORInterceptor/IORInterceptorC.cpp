@@ -26,10 +26,10 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// C:\ACE\develop\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:303
+// be/be_codegen.cpp:301
 
 
-#include "IORInterceptorC.h"
+#include "IORInterceptor.h"
 #include "tao/CDR.h"
 #include "ace/OS_NS_string.h"
 
@@ -42,7 +42,7 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// C:\ACE\develop\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_arg_traits.cpp:64
+// be/be_visitor_arg_traits.cpp:65
 
 // Arg traits specializations.
 namespace TAO
@@ -51,7 +51,7 @@ namespace TAO
 
 
 // TAO_IDL - Generated from
-// C:\ACE\develop\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:60
+// be/be_visitor_interface/interface_cs.cpp:60
 
 // Traits specializations for PortableInterceptor::IORInterceptor.
 
@@ -89,12 +89,6 @@ TAO::Objref_Traits<PortableInterceptor::IORInterceptor>::marshal (
 {
   return CORBA::Object::marshal (p, cdr);
 }
-
-// Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker *
-(*PortableInterceptor__TAO_IORInterceptor_Proxy_Broker_Factory_function_pointer) (
-    CORBA::Object_ptr obj
-  ) = 0;
 
 PortableInterceptor::IORInterceptor::IORInterceptor (void)
 {}
@@ -192,7 +186,7 @@ PortableInterceptor::IORInterceptor::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// C:\ACE\develop\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/root.cpp:1628
+// be/be_visitor_root/root.cpp:1629
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
