@@ -684,3 +684,69 @@ ACE_WString::hash (void) const
 {
   return ACE::hash_pjw (this->rep_);
 }
+
+// ****************************************************************
+
+ACE_INLINE
+ACE_Auto_String_Free::ACE_Auto_String_Free (char* p)
+  :  p_ (p)
+{
+}
+
+ACE_INLINE
+ACE_Auto_String_Free::ACE_Auto_String_Free (ACE_Auto_String_Free& rhs)
+  :  p_ (rhs.p_)
+{
+  rhs.p_ = 0;
+}
+
+ACE_INLINE void
+ACE_Auto_String_Free::reset (char* p)
+{
+  if (this->p_ != 0)
+    ACE_OS::free (this->p_);
+  this->p_ = p;
+}
+
+ACE_INLINE ACE_Auto_String_Free&
+ACE_Auto_String_Free::operator= (ACE_Auto_String_Free& rhs)
+{
+  if (this != &rhs)
+    {
+      this->reset (rhs.p_);
+      rhs.p_ = 0;
+    }
+  return *this;
+}
+
+ACE_INLINE
+ACE_Auto_String_Free::~ACE_Auto_String_Free (void)
+{
+  this->reset (0);
+}
+
+ACE_INLINE char*
+ACE_Auto_String_Free::operator* (void) const
+{
+  return this->p_;
+}
+
+ACE_INLINE char
+ACE_Auto_String_Free::operator[] (int i) const
+{
+  return this->p_[i];
+}
+
+ACE_INLINE char*
+ACE_Auto_String_Free::get (void) const
+{
+  return this->p_;
+}
+
+ACE_INLINE char*
+ACE_Auto_String_Free::release (void)
+{
+  char* p = this->p_;
+  this->p_ = 0;
+  return p;
+}

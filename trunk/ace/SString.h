@@ -588,6 +588,36 @@ private:
   // Pointer to the next free space in delimiters_.
 };
 
+// ****************************************************************
+
+class ACE_Auto_String_Free
+{
+  // = TITLE
+  //   Simple class to automatically de-allocate strings
+  //
+  // = DESCRIPTION
+  //   Keeps a pointer to a string and deallocates it (using
+  //   ACE_OS::free()) on its destructor.
+  //   If you need to delete using "delete[]" the
+  //   ACE_Auto_Array_Ptr<char*> is your choice.
+  //   The class plays the same role as auto_ptr<>
+  //
+public:
+  /* explicit */ ACE_Auto_String_Free (char* p = 0);
+  ACE_Auto_String_Free (ACE_Auto_String_Free &rhs);
+  ACE_Auto_String_Free& operator= (ACE_Auto_String_Free &rhs);
+  ~ACE_Auto_String_Free (void);
+
+  char* operator* () const;
+  char operator[] (int i) const;
+  char* get (void) const;
+  char* release (void);
+  void reset (char* p = 0);
+
+private:
+  char* p_;
+};
+
 #if defined (__ACE_INLINE__)
 #include "ace/SString.i"
 #endif /* __ACE_INLINE__ */

@@ -1,3 +1,12 @@
+Fri May 14 11:36:05 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* ace/SString.h:
+	* ace/SString.i:
+	  Added new class to auto destroy dynamically allocated strings, 
+	  sort of a mixing between auto_ptr and CString.  Auto_Ptr_Array
+	  was not useful because we need to free using ACE_OS::free() (and 
+	  in the future allocators).
+
 Fri May 14 10:37:49 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/OS.i: Fixed a deadlock in cond_timedwait()/cond_broadcast().
