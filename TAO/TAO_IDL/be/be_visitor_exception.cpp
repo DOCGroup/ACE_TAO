@@ -52,6 +52,6 @@
 #include "be_visitor_exception/cdr_op_ch.cpp"
 #include "be_visitor_exception/cdr_op_cs.cpp"
 
-ACE_RCSID (be, 
-           be_visitor_exception, 
+ACE_RCSID (be,
+           be_visitor_exception,
            "$Id$")

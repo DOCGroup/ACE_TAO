@@ -1,7 +1,6 @@
-/* -*- c++ -*- */
+// -*- C++ -*-
 //
 // $Id$
-//
 
 // ============================================================================
 //
@@ -95,7 +94,7 @@ public:
 
   virtual int visit_valuetype (be_valuetype *node);
   // visit a valuetype
-  
+
   virtual int visit_eventtype (be_eventtype *node);
   // visit a valuetype
 
