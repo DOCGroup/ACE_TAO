@@ -1363,24 +1363,25 @@ TAO_DynStruct_i::get_longlong (CORBA::Environment &ACE_TRY_ENV)
 #else  /* ! ACE_LACKS_LONGLONG_T */
   CORBA::LongLong val = 0;
 #endif /* ! ACE_LACKS_LONGLONG_T */
+
   CORBA_DynAny_ptr dp = this->da_members_[this->current_index_].in ();
 
   if (dp)
     {
       CORBA_TypeCode_ptr tc = dp->type (ACE_TRY_ENV);
-      ACE_CHECK_RETURN (0);
+      ACE_CHECK_RETURN (val);
 
       CORBA::TCKind kind = TAO_DynAny_i::unalias (tc,
                                                   ACE_TRY_ENV);
-      ACE_CHECK_RETURN (0);
+      ACE_CHECK_RETURN (val);
 
       if (kind == CORBA::tk_longlong)
         {
           val = dp->get_longlong (ACE_TRY_ENV);
-          ACE_CHECK_RETURN (0);
+          ACE_CHECK_RETURN (val);
 
          this->next (ACE_TRY_ENV);
-          ACE_CHECK_RETURN (0);
+          ACE_CHECK_RETURN (val);
         }
       else
         {

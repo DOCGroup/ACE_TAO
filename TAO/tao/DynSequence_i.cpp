@@ -1378,6 +1378,7 @@ TAO_DynSequence_i::get_longlong (CORBA::Environment &ACE_TRY_ENV)
 #else  /* ! ACE_LACKS_LONGLONG_T */
   CORBA::LongLong val = 0;
 #endif /* ! ACE_LACKS_LONGLONG_T */
+
   CORBA_DynAny_ptr dp =
     this->da_members_[this->current_index_].in ();
 

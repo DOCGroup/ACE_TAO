@@ -473,7 +473,13 @@ TAO_DynEnum_i::get_typecode (CORBA::Environment &ACE_TRY_ENV)
 CORBA::LongLong
 TAO_DynEnum_i::get_longlong (CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_THROW_RETURN (CORBA::BAD_OPERATION (), 0);
+#if defined (ACE_LACKS_LONGLONG_T)
+  CORBA::LongLong val = {0, 0};
+#else  /* ! ACE_LACKS_LONGLONG_T */
+  CORBA::LongLong val = 0;
+#endif /* ! ACE_LACKS_LONGLONG_T */
+
+  ACE_THROW_RETURN (CORBA::BAD_OPERATION (), val;);
 }
 
 CORBA::ULongLong
