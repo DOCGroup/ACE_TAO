@@ -53,10 +53,6 @@ template class ACE_Node<AST_Interface *>;
 template class ACE_Unbounded_Queue<AST_Interface *>;
 template class ACE_Unbounded_Queue_Iterator<AST_Interface *>;
 
-template class ACE_Node<AST_Component::uses_description>;
-template class ACE_Unbounded_Queue<AST_Component::uses_description>;
-template class ACE_Unbounded_Queue_Iterator<AST_Component::uses_description>;
-
 template class ACE_Node<AST_Component::port_description>;
 template class ACE_Unbounded_Queue<AST_Component::port_description>;
 template class ACE_Unbounded_Queue_Iterator<AST_Component::port_description>;
@@ -109,10 +105,6 @@ template class ACE_Unbounded_Stack_Iterator<char *>;
 #pragma instantiate ACE_Node<AST_Field *>
 #pragma instantiate ACE_Unbounded_Queue<AST_Field *>
 #pragma instantiate ACE_Unbounded_Queue_Iterator<AST_Field *>
-
-#pragma instantiate ACE_Node<AST_Component::uses_description>
-#pragma instantiate ACE_Unbounded_Queue<AST_Component::uses_description>
-#pragma instantiate ACE_Unbounded_Queue_Iterator<AST_Component::uses_description>
 
 #pragma instantiate ACE_Node<AST_Component::port_description>
 #pragma instantiate ACE_Unbounded_Queue<AST_Component::port_description>
