@@ -1028,7 +1028,7 @@ ACE_Sock_Connect::get_ip_interfaces (size_t &count,
       ACE_OS::close (handle);
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_LIB_TEXT ("%p\n"),
-                         ACE_LIB_TEXT ("get_ip_interfaces:")
+                         ACE_LIB_TEXT ("ACE_Sock_Connect::get_ip_interfaces:")
                          ACE_LIB_TEXT ("ioctl - SIOCGIFCONF failed")),
                         -1);
     }
@@ -1168,6 +1168,7 @@ ACE_Sock_Connect::count_interfaces (ACE_HANDLE handle, size_t &how_many)
                      SIOCGIFNUM,
                      (caddr_t) &tmp_how_many) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_LIB_TEXT ("%p\n"),
                        ACE_LIB_TEXT ("ACE_Sock_Connect::count_interfaces:")
                        ACE_LIB_TEXT ("ioctl - SIOCGIFNUM failed")),
                       -1);
@@ -1231,6 +1232,7 @@ ACE_Sock_Connect::count_interfaces (ACE_HANDLE handle, size_t &how_many)
     {
       ACE_OS::free (ifcfg.ifc_req);
       ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_LIB_TEXT ("%p\n"),
                          ACE_LIB_TEXT ("ACE_Sock_Connect::count_interfaces:")
                          ACE_LIB_TEXT ("ioctl - SIOCGIFCONF failed")),
                         -1);
