@@ -1,3 +1,33 @@
+Fri Sep  3 23:31:11 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/deep_free.cpp:
+	* tao/DynStruct_i.cpp:
+	* tao/DynUnion_i.cpp:
+	* tao/DynArray_i.cpp:
+	* tao/DynAny_i.cpp:
+	* tao/append.cpp:
+	* tao/decode.cpp:
+	* tao/deep_free.cpp:
+	* tao/encode.cpp:
+	* tao/skip.cpp:
+	* tao/TypeCode.cpp:
+	* orbsvcs/orbsvcs/Trader/Constrain_Nodes.cpp:
+	* orbsvcs/orbsvcs/Trader/Trader.cpp:
+	  CORBA::TypeCode::content_type(),
+	  CORBA::TypeCode::discriminator_type(),
+	  CORBA::TypeCode::member_type() were the methods in which the
+	  returned TypeCode's were not duplicated. Thanks to Phillippe
+	  Merle <Philippe.Merle@lifl.fr> for reporting this.  
+
+	  The actual fix involved only duplicating the returned typecodes
+	  in the implementation of the above three methods in
+	  Typecode.cpp. The other files where checked to find whether the
+	  above methods were used. If used then the Typcode variable need
+	  t realease memory to avoid memory leak. So in the places where
+	  the calls were made the the return value from these methods were
+	  held in T_var to avoid leaks. At the point of checkin
+	  compilation on Sun_EGCS went without any problems. 
+
 Fri Sep  3 22:52:25 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* TAO_IDL/Makefile:
