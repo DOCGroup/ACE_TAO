@@ -11,11 +11,14 @@ OBJFILES = \
 	$(OBJDIR)\testC.obj \
 	$(OBJDIR)\test_i.obj \
 	$(OBJDIR)\interceptors.obj \
+        $(OBJDIR)\Server_ORBInitializer.obj \
+        $(OBJDIR)\Marker.obj \
+        $(OBJDIR)\Interceptor_Type.obj \
 	$(OBJDIR)\server.obj
 
 CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS)
 
-LIBFILES = $(ACE_LIB) $(TAO_LIB)
+LIBFILES = $(ACE_LIB) $(TAO_LIB) $(TAO_PORTABLESERVER_LIB)
 
 CPPDIR = .
 
