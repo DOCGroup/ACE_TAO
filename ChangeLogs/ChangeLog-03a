@@ -1,3 +1,8 @@
+Thu Aug 01 13:40:59 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/Malloc_Test.cpp: Changed the usage of ASYS_TEXT to
+	  ACE_TEXT.  Should fix most of the compile errors with g++.
+
 Thu Aug  1 12:14:21 2002  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/templates/gnu.mpd:
