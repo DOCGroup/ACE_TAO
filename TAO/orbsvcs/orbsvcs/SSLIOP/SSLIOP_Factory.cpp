@@ -3,21 +3,17 @@
 #include "SSLIOP_Factory.h"
 #include "SSLIOP_Acceptor.h"
 #include "SSLIOP_Connector.h"
+#include "SSL_Context.h"
 #include "ace/Dynamic_Service.h"
 
 ACE_RCSID(tao, SSLIOP_Factory, "$Id$")
 
 static const char prefix_[] = "iiop";
 
-// @@ Very temporary hack that allows us to specify if the client
-//    should use SSLIOP with SSL or SSLIOP without SSL.
-//    This is set in the TAO_SSLIOP_Protocol_Factory::init().
-//         -Ossama
-int using_ssl = 0;
-
 TAO_SSLIOP_Protocol_Factory::TAO_SSLIOP_Protocol_Factory (void)
   :  major_ (TAO_DEF_GIOP_MAJOR),
-     minor_ (TAO_DEF_GIOP_MINOR)
+     minor_ (TAO_DEF_GIOP_MINOR),
+     use_ssl_ (0)
 {
 }
 
@@ -50,7 +46,7 @@ TAO_SSLIOP_Protocol_Factory::make_acceptor (void)
   TAO_Acceptor *acceptor = 0;
 
   ACE_NEW_RETURN (acceptor,
-                  TAO_SSLIOP_Acceptor,
+                  TAO_SSLIOP_Acceptor (),
                   0);
 
   return acceptor;
@@ -60,17 +56,61 @@ int
 TAO_SSLIOP_Protocol_Factory::init (int argc,
                                    char* argv[])
 {
-// @@ Very temporary hack that allows us to specify if the client
-//    should use SSLIOP with SSL or SSLIOP without SSL.
-  if (argc > 0)
-    {
-      if (ACE_OS::strcasecmp (argv[0], "-UseSSL") == 0)
-        {
-          ::using_ssl = 1;
 
-          ACE_OS::printf ("********************************************\n"
-                          "Using SSL in SSLIOP protocol\n"
-                          "********************************************\n");
+  for (int curarg = 0; curarg != argc; ++curarg)
+    {
+      if (ACE_OS::strcasecmp (argv[curarg],
+                              "-UseSSL") == 0)
+        {
+          this->use_ssl_ = 1;
+        }
+
+      else if (ACE_OS::strcasecmp (argv[curarg],
+                                   "-SSLCertificate") == 0)
+        {
+          curarg++;
+          if (curarg < argc)
+            {
+              char *lasts = 0;
+              const char *type_name =
+                ACE_OS::strtok_r (argv[curarg], ":", &lasts);
+              const char *path =
+                ACE_OS::strtok_r (0, ":", &lasts);
+              int type = -1;
+              if (ACE_OS::strcasecmp (type_name, "ASN1") == 0)
+                {
+                  type = SSL_FILETYPE_ASN1;
+                }
+              else if (ACE_OS::strcasecmp (type_name, "PEM") == 0)
+                {
+                  type = SSL_FILETYPE_PEM;
+                }
+              ACE_SSL_Context::instance ()->certificate (path, type);
+            }
+        }
+
+      else if (ACE_OS::strcasecmp (argv[curarg],
+                                   "-SSLPrivateKey") == 0)
+        {
+          curarg++;
+          if (curarg < argc)
+            {
+              char *lasts = 0;
+              const char *type_name =
+                ACE_OS::strtok_r (argv[curarg], ":", &lasts);
+              const char *path =
+                ACE_OS::strtok_r (0, ":", &lasts);
+              int type = -1;
+              if (ACE_OS::strcasecmp (type_name, "ASN1") == 0)
+                {
+                  type = SSL_FILETYPE_ASN1;
+                }
+              else if (ACE_OS::strcasecmp (type_name, "PEM") == 0)
+                {
+                  type = SSL_FILETYPE_PEM;
+                }
+              ACE_SSL_Context::instance ()->private_key (path, type);
+            }
         }
     }
 
@@ -83,7 +123,7 @@ TAO_SSLIOP_Protocol_Factory::make_connector (void)
   TAO_Connector *connector = 0;
 
   ACE_NEW_RETURN (connector,
-                  TAO_SSLIOP_Connector,
+                  TAO_SSLIOP_Connector (this->use_ssl_),
                   0);
   return connector;
 }

@@ -81,7 +81,7 @@ class TAO_Export TAO_SSLIOP_Connector : public TAO_IIOP_Connector
   //
 public:
   // = Initialization and termination methods.
-  TAO_SSLIOP_Connector (void);
+  TAO_SSLIOP_Connector (int default_is_ssl = 0);
   // Constructor.
 
   // = The TAO_Connector methods, please check the documentation on
@@ -177,6 +177,9 @@ public:
         TAO_NULL_CREATION_STRATEGY;
 
 private:
+  int default_is_ssl_;
+  // If not zero it tries to use SSL by default.
+
   TAO_NULL_ACTIVATION_STRATEGY null_activation_strategy_;
   TAO_NULL_CREATION_STRATEGY null_creation_strategy_;
 

@@ -2,14 +2,14 @@
 // $Id$
 
 
-#define ACE_BUILD_DLL
-
 #include "SSL_SOCK_Connector.h"
-#include "SSL.h"
+
+#if defined (ACE_HAS_SSL)
+
 #include "ace/Handle_Set.h"
 #include "ace/INET_Addr.h"
 
-#if defined (ACE_HAS_SSL)
+#include <openssl/err.h>
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "SSL_SOCK_Connector.i"

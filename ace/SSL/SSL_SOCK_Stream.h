@@ -22,7 +22,6 @@
 #if defined (ACE_HAS_SSL)
 
 #include "ace/SOCK_Stream.h"
-#include <openssl/ssl.h>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
