@@ -121,9 +121,6 @@ void
 TAO_DIOP_Profile::parse_string_i (const char *ior
                                   ACE_ENV_ARG_DECL)
 {
-  // Skip over the "N.n@"
-  ior += 4;
-
   // Pull off the "hostname:port/" part of the objref
   // Copy the string because we are going to modify it...
   const char *okd =

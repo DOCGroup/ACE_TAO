@@ -98,9 +98,6 @@ void
 TAO_UIOP_Profile::parse_string_i (const char *string
                                 ACE_ENV_ARG_DECL)
 {
-  // Skip over the "N.n@"
-  string += 4;
-
   // Pull off the "rendezvous point" part of the objref
   // Copy the string because we are going to modify it...
   CORBA::String_var copy (string);
