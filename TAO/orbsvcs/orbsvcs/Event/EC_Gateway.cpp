@@ -32,6 +32,8 @@ TAO_EC_Gateway::observer_handle (void) const
 TAO_EC_Gateway_IIOP::TAO_EC_Gateway_IIOP (void)
   :  busy_count_ (0),
      update_posted_ (0),
+     rmt_info_ (0),
+     lcl_info_ (0),
      consumer_ (this),
      consumer_is_active_ (0),
      supplier_ (this),
