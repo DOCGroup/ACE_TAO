@@ -4038,16 +4038,15 @@ extern "C" ssize_t writev_timedwait (ACE_HANDLE handle,
 #include "ace/Object_Manager.h"
 
 #define main \
-ace_internal_main (int, char *[]);               /* forward declaration */ \
+ace_main_i (int, char *[]);                      /* forward declaration */ \
 int \
-ACE_MAIN (int argc, char *argv[])       /* user's entry point, \
-                                                         e.g., ace_main */ \
+ACE_MAIN (int argc, char *argv[])   /* user's entry point, e.g., "main" */ \
 { \
   ACE_Object_Manager ace_object_manager;        /* has program lifetime */ \
-  return ace_internal_main (argc, argv);  /* what the user calls "main" */ \
+  return ace_main_i (argc, argv);         /* what the user calls "main" */ \
 } \
 int \
-ace_internal_main
+ace_main_i
 #endif /* ACE_HAS_NONSTATIC_OBJECT_MANAGER */
 
 #if defined (UNICODE)
