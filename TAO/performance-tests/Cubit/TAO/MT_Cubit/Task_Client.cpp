@@ -650,17 +650,11 @@ Client::get_cubit (void)
                            " (%t) string_to_object Failed!\n"),
                           -1);
 
-      ACE_DEBUG ((LM_DEBUG,
-                  "(%P|%t)  String_to_object success\n"));
-
       // Narrow the CORBA::Object reference to the stub object,
       // checking the type along the way using _is_a.
       this->cubit_ = Cubit::_narrow (objref.in (),
                                      TAO_TRY_ENV);
       TAO_CHECK_ENV;
-
-      ACE_DEBUG ((LM_DEBUG,
-                  "(%t) _narrow done\n"));
 
       if (CORBA::is_nil (this->cubit_))
         ACE_ERROR_RETURN ((LM_ERROR,
