@@ -54,6 +54,7 @@
 #define TAO_OBJID_RTORB               "RTORB"
 #define TAO_OBJID_RTCURRENT               "RTCurrent"
 #define TAO_OBJID_PRIORITYMAPPINGMANAGER  "PriorityMappingManager"
+#define TAO_OBJID_NETWORKPRIORITYMAPPINGMANAGER  "NetworkPriorityMappingManager"
 #define TAO_OBJID_SECURITYCURRENT     "SecurityCurrent"
 #define TAO_OBJID_SECURITYMANAGER     "SecurityManager"
 #define TAO_OBJID_TRANSACTIONCURRENT  "TransactionCurrent"
