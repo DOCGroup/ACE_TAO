@@ -56,6 +56,9 @@ private:
 
   const char *filename_;
   // File name we're logging to.
+
+  int wipeout_logfile_;
+  // If non-0 then wipeout the logfile, otherwise append to it.
 };
 
 ACE_SVC_FACTORY_DECLARE (ACE_Logging_Strategy)
