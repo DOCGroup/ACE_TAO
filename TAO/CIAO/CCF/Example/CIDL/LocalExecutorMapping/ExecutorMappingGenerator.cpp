@@ -325,6 +325,56 @@ namespace
     }
   };
 
+  struct AttributeEmitter : Traversal::ReadAttribute,
+                            Traversal::ReadWriteAttribute,
+                            Emitter
+  {
+    AttributeEmitter (Context& c, ostream& os)
+        : Emitter (c, os)
+    {
+    }
+
+    // ReadAttribute
+    //
+    virtual void
+    pre (SemanticGraph::ReadAttribute& )
+    {
+      os << "readonly attribute ";
+    }
+
+    virtual void
+    name (SemanticGraph::ReadAttribute& a)
+    {
+      os << " " << a.name ();
+    }
+
+    virtual void
+    post (SemanticGraph::ReadAttribute&)
+    {
+      os << ";";
+    }
+
+    // ReadWriteAttribute
+    //
+    virtual void
+    pre (SemanticGraph::ReadWriteAttribute& )
+    {
+      os << "attribute ";
+    }
+
+    virtual void
+    name (SemanticGraph::ReadWriteAttribute& a)
+    {
+      os << " " << a.name ();
+    }
+
+    virtual void
+    post (SemanticGraph::ReadWriteAttribute&)
+    {
+      os << ";";
+    }
+  };
+
 
   // MonolithEmitter generates what spec calls 'Monolithic Component
   // Executor'.
@@ -411,33 +461,6 @@ namespace
     }
 
   private:
-    struct Attribute : Traversal::Attribute, Emitter
-    {
-      Attribute (Context& c, ostream& os)
-          : Emitter (c, os)
-      {
-      }
-
-      virtual void
-      pre (Type& )
-      {
-        os << "attribute ";
-      }
-
-      virtual void
-      name (Type& a)
-      {
-        os << " " << a.name ();
-      }
-
-      virtual void
-      post (Type&)
-      {
-        os << ";";
-      }
-    };
-
-
     struct Consumer : Traversal::ConsumerSet, Emitter
     {
       Consumer (Context& c, ostream& os)
@@ -514,7 +537,7 @@ namespace
 
     NameMangler monolith_name_emitter;
 
-    Attribute attribute;
+    AttributeEmitter attribute;
     Consumer consumer;
     Provider provider;
 
@@ -717,38 +740,15 @@ namespace
   // HomeExplicitEmitter generates home explicit interface
   //
   //
-  struct ExplicitPortEmitter : Traversal::Attribute,
+  struct ExplicitPortEmitter : AttributeEmitter,
                                Traversal::Operation,
                                Traversal::HomeFactory,
-                               Traversal::HomeFinder,
-                               Emitter
+                               Traversal::HomeFinder
   {
     ExplicitPortEmitter (Context& c, ostream& os)
-        : Emitter (c, os)
+        : AttributeEmitter (c, os)
     {
     }
-
-    // Attribute.
-    //
-
-    virtual void
-    pre (SemanticGraph::Attribute&)
-    {
-      os << "attribute ";
-    }
-
-    virtual void
-    name (SemanticGraph::Attribute& a)
-    {
-      os << " " << a.name ();
-    }
-
-    virtual void
-    post (SemanticGraph::Attribute&)
-    {
-      os << ";";
-    }
-
 
     // Operation.
     //
@@ -912,37 +912,37 @@ namespace
     virtual void
     pre (InParameter& p)
     {
-      os << " in ";
+      os << "in ";
     }
 
     virtual void
     pre (OutParameter& p)
     {
-      os << " out ";
+      os << "out ";
     }
 
     virtual void
     pre (InOutParameter& p)
     {
-      os << " inout ";
+      os << "inout ";
     }
 
     virtual void
     name (InParameter& p)
     {
-      os << p.name ();
+      os << " " << p.name ();
     }
 
     virtual void
     name (OutParameter& p)
     {
-      os << p.name ();
+      os << " " << p.name ();
     }
 
     virtual void
     name (InOutParameter& p)
     {
-      os << p.name ();
+      os << " " << p.name ();
     }
   };
 
@@ -1440,47 +1440,86 @@ generate (CommandLine const& cl, TranslationUnit& tu, fs::path file_path)
     ? static_cast<ostream&> (ofs)
     : static_cast<ostream&> (std::cout);
 
-  // Set auto-indentation for os
+  // Set auto-indentation for os.
+  //
   Indentation::Implanter<Indentation::IDL> guard (os);
 
   Context ctx (tu);
 
   if (cl.get_value ("lem-force-all", false))
   {
-    /*
-    InterfaceCollector iface (declarations);
-    Traversal::ProvidesDecl provides (&iface);
-
-    ComponentCollector component (declarations);
-    component.add_scope_delegate (&provides);
-
-    HomeCollector home (declarations);
-
-    // Note the trick. interface is of type InterfaceDecl but I only
-    // want to traverse InterfaceDef's. So I use original InterfaceDef but
-    // delegate to InterfaceDecl.
-    //
-    Traversal::UnconstrainedInterfaceDef interface_def;
-    interface_def.add_delegate (&iface);
-
-    Traversal::Module module;
-    module.add_scope_delegate (&home);
-    module.add_scope_delegate (&component);
-    module.add_scope_delegate (&interface_def);
-
-    Traversal::FileScope file_scope;
-    file_scope.add_scope_delegate (&module);
-    file_scope.add_scope_delegate (&home);
-    file_scope.add_scope_delegate (&component);
-    file_scope.add_scope_delegate (&interface_def);
-
-    Traversal::PrincipalTranslationRegion region (&file_scope);
-
     Traversal::TranslationUnit unit;
-    unit.add_content_delegate (&region);
 
-    unit.dispatch (u);
-    */
+    // Layer 1
+    //
+    Traversal::ContainsPrincipal contains_principal;
+
+    unit.edge_traverser (contains_principal);
+
+    //--
+    Traversal::TranslationRegion region;
+
+    contains_principal.node_traverser (region);
+
+
+    // Layer 2
+    //
+    Traversal::ContainsRoot contains_root;
+    region.edge_traverser (contains_root);
+
+    //--
+    Traversal::Root root;
+    contains_root.node_traverser (root);
+
+
+    // Layer 3
+    //
+    Traversal::Defines defines;
+    root.edge_traverser (defines);
+
+    //--
+    Traversal::Module module;
+    HomeCollector home (ctx);
+    ComponentCollector component (ctx);
+    InterfaceCollector interface_ (ctx);
+
+    defines.node_traverser (module);
+    defines.node_traverser (home);
+    defines.node_traverser (component);
+    defines.node_traverser (interface_);
+
+    // Layer 4
+    //
+    Traversal::Defines component_defines;
+    Traversal::Inherits component_inherits;
+    Traversal::Inherits home_inherits;
+
+    module.edge_traverser (defines);
+
+    home.edge_traverser (home_inherits);
+    component.edge_traverser (component_defines);
+    component.edge_traverser (component_inherits);
+
+    //--
+
+    Traversal::Provider provider;
+
+    component_defines.node_traverser (provider);
+    component_inherits.node_traverser (component);
+    home_inherits.node_traverser (home);
+
+
+    // Layer 5
+    //
+    Traversal::Belongs provider_belongs;
+    provider.edge_traverser (provider_belongs);
+
+    //
+    provider_belongs.node_traverser (interface_);
+
+    // end
+
+    unit.traverse (tu);
   }
   else
   {
@@ -1732,11 +1771,6 @@ generate (CommandLine const& cl, TranslationUnit& tu, fs::path file_path)
 
 
     // end
-
-    //@@ this hack is needed to support special Components.idl
-    //   handling.
-    //
-    os << "#include <Components.idl>" << endl;
 
     unit.traverse (tu);
   }

@@ -1,4 +1,3 @@
-#include <Components.idl>
 #include "test-2.idl"
 module M
 {
@@ -11,6 +10,7 @@ module M1
   local interface CCM_C1 : ::Components::EnterpriseComponent
   {
     ::M::CCM_I get_i ();
+    readonly attribute long l;
   };
   local interface CCM_C1_Context : ::Components::SessionContext
   {
@@ -49,8 +49,8 @@ module M2
   };
   local interface CCM_H2Explicit : ::M1::CCM_H1Explicit, ::M2::I, ::M2::J
   {
-    attribute long l;
-    attribute ::M::I ai;
+    readonly attribute long rl;
+    readonly attribute ::M::I rai;
     attribute ::M2::OctetSeq seq;
     attribute ::M2::S_Seq a_s_seq;
     void foo (in long l, inout boolean b, out long ol, in ::M::I i, out unsigned long long ull, inout ::M2::S_Seq s_seq, in ::M2::V v) raises (::M2::Ex1, ::M2::Ex2);

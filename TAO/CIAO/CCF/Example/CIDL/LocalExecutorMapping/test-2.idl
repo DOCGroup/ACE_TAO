@@ -54,8 +54,8 @@ module M2
   
   home H2 : M1::H1 supports I, J manages C2
   {
-    attribute long l;
-    attribute M::I ai;
+    readonly attribute long rl;
+    readonly attribute M::I rai;
     attribute OctetSeq seq;
     attribute S_Seq a_s_seq;
     

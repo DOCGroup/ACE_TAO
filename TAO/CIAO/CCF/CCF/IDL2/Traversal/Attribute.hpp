@@ -38,10 +38,6 @@ namespace CCF
         post (Type&);
       };
 
-      /*
-
-      This is just a concept. Any comments?
-
       //
       //
       //
@@ -62,6 +58,7 @@ namespace CCF
         virtual void
         name (Type&);
 
+        /*
         virtual void
         get_raises (Type&, EdgeDispatcherBase&);
 
@@ -73,6 +70,7 @@ namespace CCF
 
         virtual void
         get_raises_post (Type&);
+        */
 
         virtual void
         post (Type&);
@@ -99,6 +97,7 @@ namespace CCF
         virtual void
         name (Type&);
 
+        /*
         virtual void
         get_raises (Type&, EdgeDispatcherBase&);
 
@@ -122,12 +121,11 @@ namespace CCF
 
         virtual void
         set_raises_post (Type&);
+        */
 
         virtual void
         post (Type&);
       };
-
-      */
     }
   }
 }

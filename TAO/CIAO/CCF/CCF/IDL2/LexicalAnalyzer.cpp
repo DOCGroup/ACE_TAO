@@ -184,18 +184,21 @@ namespace CCF
 
         if (integer_literal (c, token)) return token;
 
-        if (operator_ (c, token)) return token;
-
-        if (punctuation (c, token)) return token;
-
-        // Check for identifier last because it can be triggered by
-        // wide string prefix (L"...").
+        // Check for identifier after literals  because it can be
+        // triggered by wide string prefix (L"...").
         //
         if (is_alpha (c) || c == '_' || (c == ':' && peek () == ':'))
         {
           return identifier (c);
         }
 
+        // Check for punctuation after identifier because ':' in
+        // scoped name will trigger.
+        //
+        if (operator_ (c, token)) return token;
+
+        if (punctuation (c, token)) return token;
+        
         cerr << c.line () << ": error: unable to derive any token "
              << "from \'" << c << "\'" << endl;
 
