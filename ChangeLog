@@ -1,3 +1,8 @@
+Thu Jan 22 19:02:31 2004  Steve Huston  <shuston@riverace.com>
+
+	* examples/APG/ThreadPools/Task_ThreadPool.cpp: Use 0, not NULL, to
+	  initialize a pointer.
+
 Thu Jan 22 18:08:31 2004  Steve Huston  <shuston@riverace.com>
 
 	* examples/APG/ThreadPools/ThreadPool.cpp: Don't ACE_ASSERT action
