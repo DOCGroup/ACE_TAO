@@ -1122,6 +1122,10 @@ SOURCE=.\Basic_Types.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Bound_Ptr.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Cache_Map_Manager_T.h
 # End Source File
 # Begin Source File
@@ -2243,6 +2247,10 @@ SOURCE=.\Basic_Stats.inl
 # Begin Source File
 
 SOURCE=.\Basic_Types.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Bound_Ptr.i
 # End Source File
 # Begin Source File
 

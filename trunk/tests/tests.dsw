@@ -75,6 +75,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "Bound_Ptr_Test"=.\Bound_Ptr_Test.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Buffer_Stream_Test"=.\Buffer_Stream_Test.dsp - Package Owner=<4>
 
 Package=<5>
