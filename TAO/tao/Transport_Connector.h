@@ -74,9 +74,9 @@ public:
    * connect ()  method so it can be called from the invocation code
    * independent of the actual transport protocol in use.
    */
-  int connect (TAO_GIOP_Invocation *invocation,
-               TAO_Transport_Descriptor_Interface *desc
-               ACE_ENV_ARG_DECL);
+  virtual int connect (TAO_GIOP_Invocation *invocation,
+                       TAO_Transport_Descriptor_Interface *desc
+                       ACE_ENV_ARG_DECL);
 
   /// Initial set of connections to be established.
   /*
