@@ -1,3 +1,8 @@
+Sat Feb  9 09:36:08 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* docs/releasenotes/amh.html (href): Removed some wizard generated
+	  stuff. Still a lot more remains. 
+	
 Sat Feb  9 08:24:08 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* docs/releasenotes/amh.html: Removed references to pages in the
