@@ -1,3 +1,96 @@
+Sat Aug  9 23:17:09 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/ClientRequestInterceptor_Adapter.cpp:
+	* tao/ClientRequestInterceptor_Adapter.h:
+	* tao/ClientRequestInterceptor_Adapter.inl: A new adapter class
+	  for the client request interceptors. This is based on the
+	  original implementation in ClientInterceptorAdapter.{h,cpp,inl}
+	  files with suitable modifications to indicate the latest trends.
+
+	* tao/Invocation_Utils.h: A new header file that has the requisite
+	  enum information. This header allows us the flexibility of using
+	  the enum information without any baggage.
+	
+	* tao/ClientRequestInfo_i.cpp (reply_status):
+	* tao/ClientRequestInfo_i.h:
+	* tao/ClientRequestInfo_i.inl: Added an argument to the
+	  constructor to indicate whether a response is expected from the
+	  server or not. This would be utilized by the new Interception
+	  points that have been implemented.
+
+	  Further changed the implementation of the reply_status ()
+	  method. This sets the status based on the Invocation_Status that
+	  would be passed to it.
+	
+	* tao/Collocated_Invocation.cpp:
+	* tao/Collocated_Invocation.h (invoke): Changed the exception
+	  specification to allwo user exceptions from the servant to be
+	  propagated back.
+
+	* tao/Exception.cpp:
+	* tao/Exception.h: #included corbafwd.h and removed include of
+	  Basic_Types.h. 
+
+	* tao/Invocation.cpp: Use a bool instead of an int while trying to
+	  access the sync_scope policies. 
+
+	* tao/Invocation_Adapter.h: Removed exception specification for
+	  invoke (). Adding the exception specification requires an
+	  include of Exception.h which gets a whole slew of
+	  stuff. Since this is only the adapter class, we allow all
+	  the exception specifications to be in the concrete classes
+	  that does the actual work. 
+
+	* tao/Invocation_Adapter.cpp: Added some debug
+          statements. Fixed a small problem with oneways with no
+          sync_scope policies set. Further, handled the locate forward
+          exception with oneways. It is pretty much possible that a
+          client side interceptor is throwing a forward exception when
+          sending oneway messages and needs to be handled anyways.
+
+        * tao/Invocation_Base.cpp:
+        * tao/Invocation_Base.h: Added support for client side
+        * interceptors. They have not been tested yet. 
+        
+        * tao/Makefile.tao: Added new files for the builds.
+
+        * tao/ORB_Core.cpp:
+        * tao/ORB_Core.h: Cosmetic fixes with call_sync_scope_hook
+          (). 
+
+        * tao/Profile_Transport_Resolver.h: #included Exception.h
+
+        * tao/Remote_Invocation.cpp:
+        * tao/Remote_Invocation.h: Pass the target object to the base
+          class while constructing the base class. 
+
+        * tao/Sequence_T.cpp: #included Array_VarOut_T.h
+
+        * tao/Stub.cpp: The methid sync_strategy () will now use a
+          bool instead of an int.
+
+        * tao/Synch_Invocation.cpp:
+        * tao/Synch_Invocation.h: Added and changed exception
+          specification for a bunch of methods. Fixed bugs that showed
+          up while testing support for system and user exception from
+          the server.
+
+          Added a new class Reply_Guard which will be used for setting
+          the reply status for the PortableInterceptor.
+
+
+        * tao/WrongTransactionC.cpp: Cosmetic fix.
+
+        * tao/operation_details.cpp:
+        * tao/operation_details.h: Added support for colelcting the
+          result and querying about the exceptions for
+          PortableInterceptors. 
+
+        * tao/Messaging/Messaging_Policy_i.cpp: Used bool instead of
+          an int.
+
+        * tao/*/Makefile*: Updated dependencies.  
+
 Sat Aug  9 17:22:59 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* TAO_IDL/be/be_visitor_interface/strategized_proxy_broker_sh.cpp: 
