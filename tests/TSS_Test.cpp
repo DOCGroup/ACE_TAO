@@ -91,9 +91,7 @@ cleanup (void *ptr)
 static void *
 worker (void *c)
 {
-  // Cast the arg to a long, first, because a pointer is the same
-  // size as a long on all current ACE platforms.
-  int count = ACE_reinterpret_cast (int, c);
+  int count = *(ACE_static_cast (int*, c));
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) worker, iterations = %d\n"), count));
 
@@ -279,10 +277,11 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   // Similarly, dynamically allocate u.
   ACE_NEW_RETURN (u, ACE_TSS<ACE_TSS_Type_Adapter<u_int> >, 1);
 
+  int iterations = ITERATIONS;
   if (ACE_Thread_Manager::instance ()->spawn_n
       (threads,
        ACE_THR_FUNC (worker),
-       ACE_reinterpret_cast (void *, (int) ITERATIONS),
+       &iterations,
        THR_BOUND) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"), ACE_TEXT ("spawn_n")), 1);
