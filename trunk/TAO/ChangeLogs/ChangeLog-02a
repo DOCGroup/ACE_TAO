@@ -9,7 +9,7 @@ Sat Jan 22 17:11:30 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 	  is indirectly included by the line #include "fooS.h", it does 
 	  not need to be there at all. The block that generates this line 
 	  in be_codegen.cpp is commented out for now, to see if some use
-	  case arises where it is needed.
+	  case arises where it is needed. This closes out bug 410.
 
 Fri Jan 21 21:19:26 2000  Carlos O'Ryan  <coryan@uci.edu>
 
