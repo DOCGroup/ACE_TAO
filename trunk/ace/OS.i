@@ -7682,7 +7682,7 @@ ACE_OS::tzset (void)
 # if defined (ACE_WIN32)
   ::_tzset ();  // For Win32.
 # else
-  ::tzset ();   // For UNIX platforms. 
+  ::tzset ();   // For UNIX platforms.
 # endif
 }
 
@@ -7691,6 +7691,12 @@ ACE_OS::timezone (void)
 {
 #if defined (ACE_WIN32)
   return ::_timezone;  // For Win32.
+# elif defined(__Lynx__)
+  long result = 0;
+  struct timeval time;
+  struct timezone zone;
+  ACE_OSCALL (::gettimeofday (&time, &zone), int, -1, result);
+  return zone.tz_minuteswest * 60;
 # else
   return ::timezone;   // For UNIX platforms.
 #endif
