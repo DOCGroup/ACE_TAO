@@ -6,6 +6,9 @@ Mon Apr 28 19:54:05 1997  David L. Levine  <levine@cs.wustl.edu>
 	* examples/ASX/Event_Server/Transceiver/transceiver.cpp: protected
 	  the ACE_*Guard template instantiations with #ifdef ACE_HAS_THREADS.
 
+	* apps/JAWS/stress_testing/benchd.cpp (serve): added return -1 if
+	  the strcmp () fails so that the function always returns a value.
+
 Mon Apr 28 18:53:58 1997  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 	* ace/OS.h: Added ACE_DEFAULT_TIMER_WHEEL_SIZE and 
