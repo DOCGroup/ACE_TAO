@@ -454,12 +454,6 @@
 	</P>
       </LI>
 
-      <LI><P><P><B>IDL Compiler:</B> In some platforms it may be
-	  necessary to add an extra value to an enum to force it to be
-	  32-bits wide.
-	</P>
-      </LI>
-
       <LI><P><CODE>$TAO_ROOT/orbsvcs/tests</CODE> may require the same
 	  hierarchy changes that were done in
 	  <CODE>$TAO_ROOT/tests</CODE>.
@@ -821,6 +815,14 @@ encapsulation format.
 	<BR>[DONE] Andy has completed the implementation of recursive
 	types.
         </P>
+      </LI>
+
+      <LI><P><P><B>IDL Compiler:</B> In some platforms it may be
+	  necessary to add an extra value to an enum to force it to be
+	  32-bits wide.
+	  <BR>[DONE] This extra value is now genrerated by default on
+	  all platforms.
+	</P>
       </LI>
 
       <LI><P><B>ORB:</B>
