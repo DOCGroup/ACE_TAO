@@ -85,11 +85,9 @@ ifndef TAO_ORBSVCS
 
   endif # minimum_corba
 
-  ifeq ($(rtcorba),1)
-     ifeq ($(interceptors),1)
-	TAO_ORBSVCS += RTCosScheduling
+  ifeq ($(interceptors),1)
+      TAO_ORBSVCS += RTCosScheduling
      endif
-  endif
 
   ifeq ($(ssl),1)
     ifeq ($(corba_messaging),1)
