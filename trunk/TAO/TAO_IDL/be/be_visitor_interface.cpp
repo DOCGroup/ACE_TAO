@@ -16,9 +16,9 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
+#include "idl.h"
+#include "idl_extern.h"
+#include "be.h"
 
 #include "be_visitor_interface.h"
 
@@ -992,7 +992,7 @@ int
 be_visitor_interface_sh::visit_interface (be_interface *node)
 {
   TAO_OutStream *os; // output stream
-  unsigned long i; // loop index
+  long i; // loop index
   static char namebuf [NAMEBUFSIZE]; // holds the class name
 
   if (node->srv_hdr_gen () || node->imported ())
@@ -1450,13 +1450,13 @@ int be_visitor_interface_collocated_sh::visit_interface (be_interface *node)
   if (node->n_inherits () > 0)
     {
       for (int i = 0; i < node->n_inherits (); ++i)
-	{
-	  *os << "," << be_nl;
-	  be_interface* parent =
-	    be_interface::narrow_from_decl (node->inherits()[i]);
-	  *os << "  public virtual "
-	      << parent->relative_coll_name (node->full_coll_name ());
-	}
+        {
+          *os << "," << be_nl;
+          be_interface* parent =
+            be_interface::narrow_from_decl (node->inherits()[i]);
+          *os << "  public virtual "
+              << parent->relative_coll_name (node->full_coll_name ());
+        }
     }
   *os << "\n";
   os->decr_indent ();
@@ -1629,18 +1629,18 @@ int be_visitor_interface_collocated_sh::visit_attribute (be_attribute *node)
     {
       os->indent ();
       *os << "virtual void " << node->local_name ()
-	  << " (" << be_idt << be_idt;
+          << " (" << be_idt << be_idt;
 
       // XXXASG - TODO
       be_visitor_args_decl vdecl (os);
       vdecl.current_type_name (bt->name ());
       vdecl.argument_direction (AST_Argument::dir_IN);
       if (bt->accept (&vdecl) == -1)
-	return -1;
+        return -1;
 
       *os << " _tao_value," << be_nl
-	  << "CORBA::Environment &_tao_environment" << be_uidt_nl
-	  << ");\n" << be_uidt;
+          << "CORBA::Environment &_tao_environment" << be_uidt_nl
+          << ");\n" << be_uidt;
     }
   return 0;
 }
@@ -1702,22 +1702,22 @@ int be_visitor_interface_collocated_ss::visit_interface (be_interface *node)
   if (node->n_inherits () > 0)
     {
       for (i = 0; i < node->n_inherits (); ++i)
-	{
-	  be_interface* parent =
-	    be_interface::narrow_from_decl (node->inherits()[i]);
+        {
+          be_interface* parent =
+            be_interface::narrow_from_decl (node->inherits()[i]);
 #if defined (ACE_WIN32)
-	  // @@ TODO MSVC++ compiler has some kind of issue (read
-	  // *bug*) wrt nested classes in constructors, if the fully
-	  // qualified name is used it gets all confused. Quite to my
-	  // dismay the work around is to use a non-qualified name for
-	  // the base class!
-	  // I wish I never have to know why the symbol table for
-	  // MSVC++ can get so confused ;-) (coryan)
-	  *os << "  " << parent->local_coll_name () << " (servant, stub),"
-	      << be_nl;
+          // @@ TODO MSVC++ compiler has some kind of issue (read
+          // *bug*) wrt nested classes in constructors, if the fully
+          // qualified name is used it gets all confused. Quite to my
+          // dismay the work around is to use a non-qualified name for
+          // the base class!
+          // I wish I never have to know why the symbol table for
+          // MSVC++ can get so confused ;-) (coryan)
+          *os << "  " << parent->local_coll_name () << " (servant, stub),"
+              << be_nl;
 #else
-	  *os << "  " << parent->full_coll_name () << " (servant, stub),"
-	      << be_nl;
+          *os << "  " << parent->full_coll_name () << " (servant, stub),"
+              << be_nl;
 #endif /* ACE_WIN32 */
         }
     }
@@ -1880,27 +1880,27 @@ int be_visitor_interface_collocated_ss::visit_attribute (be_attribute *node)
   if (!node->readonly ())
     {
       *os << be_nl
-	  << "void "
-	  << intf->full_coll_name ()
-	  << "::" << node->local_name ()
-	  << " (" << be_idt << be_idt_nl;
+          << "void "
+          << intf->full_coll_name ()
+          << "::" << node->local_name ()
+          << " (" << be_idt << be_idt_nl;
       // XXXASG - TODO
       be_visitor_args_decl vdecl (os);
       vdecl.current_type_name (bt->name ());
       vdecl.argument_direction (AST_Argument::dir_IN);
       if (bt->accept (&vdecl) == -1)
-	return -1;
+        return -1;
 
       *os << " _tao_value," << be_nl
-	  << "CORBA::Environment &_tao_environment" << be_uidt_nl
-	  << ")" << be_uidt_nl
-	  << "{" << be_idt_nl
-	  << "this->servant_->" << node->local_name ()
-	  << " (" << be_idt << be_idt_nl
-	  << "_tao_value," << be_nl
-	  << "_tao_environment" << be_uidt_nl
-	  << ");" << be_uidt << be_uidt_nl
-	  << "}\n\n";
+          << "CORBA::Environment &_tao_environment" << be_uidt_nl
+          << ")" << be_uidt_nl
+          << "{" << be_idt_nl
+          << "this->servant_->" << node->local_name ()
+          << " (" << be_idt << be_idt_nl
+          << "_tao_value," << be_nl
+          << "_tao_environment" << be_uidt_nl
+          << ");" << be_uidt << be_uidt_nl
+          << "}\n\n";
     }
   return 0;
 }
