@@ -1,5 +1,5 @@
-#ifndef TAO_unbounded_string_sequence_hpp
-#define TAO_unbounded_string_sequence_hpp
+#ifndef guard_unbounded_string_sequence_hpp
+#define guard_unbounded_string_sequence_hpp
 /**
  * @file
  *
@@ -22,6 +22,8 @@ class unbounded_string_sequence
 {
 public:
   typedef char * value_type;
+  typedef char const * const_value_type;
+
   typedef details::string_traits<char,true> element_traits;
   typedef details::unbounded_reference_allocation_traits<char*,element_traits,true> allocation_traits;
 
@@ -39,7 +41,7 @@ public:
   inline unbounded_string_sequence(
       CORBA::ULong maximum,
       CORBA::ULong length,
-      char * * data,
+      value_type * data,
       CORBA::Boolean release = false)
     : impl_(maximum, length, data, release)
   {}
@@ -58,7 +60,7 @@ public:
   inline void length(CORBA::ULong length) {
     impl_.length(length);
   }
-  inline char const * operator[](CORBA::ULong i) const {
+  inline const_value_type operator[](CORBA::ULong i) const {
     return impl_[i];
   }
   inline element_type operator[](CORBA::ULong i) {
@@ -68,14 +70,14 @@ public:
   inline void replace(
       CORBA::ULong maximum,
       CORBA::ULong length,
-      char * * data,
+      value_type * data,
       CORBA::Boolean release = false) {
     impl_.replace(maximum, length, data, release);
   }
-  inline char const * const * get_buffer() const {
+  inline const_value_type const * get_buffer() const {
     return impl_.get_buffer();
   }
-  inline char * * get_buffer(CORBA::Boolean orphan = false) {
+  inline value_type * get_buffer(CORBA::Boolean orphan = false) {
     return impl_.get_buffer(orphan);
   }
   inline void swap(unbounded_string_sequence & rhs) throw() {
@@ -83,11 +85,11 @@ public:
   }
 #endif /* 0 */
 
-  static char * * allocbuf(CORBA::ULong maximum)
+  static value_type * allocbuf(CORBA::ULong maximum)
   {
     return implementation_type::allocbuf(maximum);
   }
-  static void freebuf(char * * buffer)
+  static void freebuf(value_type * buffer)
   {
     implementation_type::freebuf(buffer);
   }
@@ -100,4 +102,4 @@ private:
 
 } // namespace TAO
 
-#endif // TAO_unbounded_string_sequence_hpp
+#endif // guard_unbounded_string_sequence_hpp
