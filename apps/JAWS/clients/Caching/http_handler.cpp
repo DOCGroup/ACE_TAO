@@ -56,11 +56,11 @@ HTTP_Handler::open (void *)
     {
       ACE_ERROR_RETURN ((LM_ERROR, "HTTP_Handler::open, whups!\n"), -1);
     }
+
+  return 0;
 #else
   return this->svc ();
 #endif /* 0 */
-
-  return 0;
 }
 
 int
@@ -69,17 +69,9 @@ HTTP_Handler::svc (void)
   static char buf[BUFSIZ];
   int count = 0;
 
-  // First check the cache.
-  if (ACE_Filecache::instance ()->find (this->filename_))
-    {
-      ACE_OS::fprintf (stdout, "  ``%s'' is already cached.\n",
-                       this->filename_);
-      return 0;
-    }
-
   ACE_DEBUG ((LM_DEBUG, "[%t] sending request --\n%s", this->request_));
 
-  this->send_n (this->request_, this->request_size_);
+  this->peer ().send_n (this->request_, this->request_size_);
 
   // Read in characters until encounter \r\n\r\n
   int done = 0;
@@ -87,7 +79,7 @@ HTTP_Handler::svc (void)
 
   do
     {
-      while (((count += this->recv_n (buf+count, 1)) > 0)
+      while (((count += this->peer ().recv_n (buf+count, 1)) > 0)
              && ((u_int) count < sizeof (buf)))
         {
           buf[count] = '\0';
@@ -137,7 +129,7 @@ HTTP_Handler::svc (void)
       ACE_Filecache_Handle afh (this->filename_,
 				this->response_size_);
 
-      this->recv_n (afh.address (), this->response_size_);
+      this->peer ().recv_n (afh.address (), this->response_size_);
 
       ACE_OS::fprintf (stdout, "  ``%s'' is now cached.\n",
                        this->filename_);
@@ -160,47 +152,10 @@ HTTP_Handler::svc (void)
   return 0;
 }
 
-int
-HTTP_Handler::send_n (const void *buf, size_t n)
+const char *
+HTTP_Handler::filename (void) const
 {
-  int count = 0;
-  const char *p = (const char *) buf;
-  do
-    {
-      int result = this->peer ().send (p + count, n - count);
-      if (result <= 0)
-        {
-          if (result < 0)
-            ACE_DEBUG ((LM_DEBUG, "HTTP_Handler::send_n, error %p\n"));
-          break;
-        }
-      count += result;
-    }
-  while ((u_int) count < n);
-
-  return count;
-}
-
-int
-HTTP_Handler::recv_n (void *buf, size_t n)
-{
-  int count = 0;
-  char *p = (char *) buf;
-
-  do
-    {
-      int result = this->peer ().recv (p+count, n - count);
-      if (result <= 0)
-        {
-          if (result < 0)
-            ACE_DEBUG ((LM_DEBUG, "HTTP_Handler::recv_n, error %p\n"));
-          break;
-        }
-      count += result;
-    }
-  while ((u_int) count < n);
-
-  return count;
+  return this->filename_;
 }
 
 int
@@ -218,6 +173,15 @@ HTTP_Connector::connect (const char * url)
 
   HTTP_Handler hh (path);
   HTTP_Handler *hhptr = &hh;
+
+  // First check the cache.
+  if (ACE_Filecache::instance ()->find (hh.filename ()))
+    {
+      ACE_OS::fprintf (stdout, "  ``%s'' is already cached.\n",
+                       hh.filename ());
+      return 0;
+    }
+
   return this->connector_.connect (hhptr, ACE_INET_Addr (port, host));
 }
 

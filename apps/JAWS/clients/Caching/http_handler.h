@@ -1,10 +1,32 @@
 /* -*- c++ -*- */
+// Hey, Emacs!  This is a C++ file.
+// $Id$
+
+// ============================================================================
+//
+// = LIBRARY
+//    apps/JAWS/clients/Caching
+// 
+// = FILENAME
+//    http_handler.h
+//
+// = AUTHOR
+//    James Hu
+// 
+// ============================================================================
 
 #include "ace/Connector.h"
 #include "ace/SOCK_Connector.h"
 
 class HTTP_Handler
   : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
+  // = TITLE
+  //     A simple HTTP protocol handler for clients.
+  // 
+  // = DESCRIPTION
+  //     Checks to see if the requested file is already cached.  If so,
+  //     it says so.  If not, the request is issued to the connection.
+  //     The fetched file is cached.
 {
 public:
   HTTP_Handler (void);
@@ -12,10 +34,10 @@ public:
 
   virtual int open (void *);
   virtual int svc (void);
+  // Entry points defined by the abstract Svc_Handler.
 
-private:
-  int send_n (const void *, size_t);
-  int recv_n (void *, size_t);
+  const char * filename (void) const;
+  // Accessor to the file being fetched.
 
 private:
   char request_[BUFSIZ];
@@ -26,9 +48,16 @@ private:
 };
 
 class HTTP_Connector
+  // = TITLE
+  //     A simple HTTP connector.
+  // 
+  // = DESCRIPTION
+  //     Creates an HTTP Handler based on the URL, and then delegates to
+  //     to the SOCK_CONNECTOR.  Adapter pattern.
 {
 public:
   int connect (const char * url);
+  // User entry point into the HTTP connector.
 
 private:
   int parseurl (const char *url,
