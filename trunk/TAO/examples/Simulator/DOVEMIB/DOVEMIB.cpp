@@ -170,7 +170,6 @@ MIB_Consumer::push (const RtecEventComm::EventSet &events,
  
       TAO_TRY
       {
-
         if (events[i].data_.any_value.any_owns_data ())
         { 
           void * void_ptr = ACE_OS::malloc (events[i].data_.any_value.type()->size(TAO_TRY_ENV));
@@ -186,6 +185,7 @@ MIB_Consumer::push (const RtecEventComm::EventSet &events,
             ACE_OS::free(void_ptr);
             return;
           }
+	  TAO_CHECK_ENV;
 
           // invoke the AnyAnalyser
           anyAnalyser_.printAny (events[i].data_.any_value.type(), void_ptr);               
