@@ -22,6 +22,10 @@
 #include "ace/Svc_Handler.h"
 #include "ace/Strategies.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1>
 class ACE_Acceptor : public ACE_Service_Object
 {

@@ -24,6 +24,10 @@
 #include "ace/Reactor_Impl.h"
 #include "ace/Message_Queue.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 // Forward decl.
 class ACE_WFMO_Reactor;
 class ACE_Handle_Set;
@@ -574,9 +578,9 @@ public:
   //
   // <WaitForMultipleObjects> is used as the demultiplexing call
   //
-  // Returns the total number of <ACE_Event_Handler>s that were
-  // dispatched, 0 if the <max_wait_time> elapsed without dispatching
-  // any handlers, or -1 if an error occurs.
+  // Returns the total number of I/O and timer <ACE_Event_Handler>s
+  // that were dispatched, 0 if the <max_wait_time> elapsed without
+  // dispatching any handlers, or -1 if an error occurs.
   //
   // The only difference between <alertable_handle_events> and
   // <handle_events> is that in the alertable case, TRUE is passed to

@@ -20,6 +20,10 @@
 #include "ace/FILE.h"
 #include "ace/FILE_Addr.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 class ACE_Export ACE_FILE_IO : public ACE_FILE
 {
   // = TITLE

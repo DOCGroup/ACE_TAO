@@ -22,6 +22,10 @@
 #include "ace/Time_Value.h"
 #include "ace/TLI_Stream.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #if defined (ACE_HAS_TLI)
 
 // Forward reference...

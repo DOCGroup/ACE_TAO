@@ -17,6 +17,10 @@
 #if !defined (ACE_IO_CNTL_MSG_H)
 #define ACE_IO_CNTL_MSG_H
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 class ACE_Export ACE_IO_Cntl_Msg
 {
   // = TITLE

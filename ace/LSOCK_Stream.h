@@ -21,6 +21,10 @@
 #include "ace/UNIX_Addr.h"
 #include "ace/LSOCK.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 
 class ACE_Export ACE_LSOCK_Stream : public ACE_SOCK_Stream, public ACE_LSOCK

@@ -20,6 +20,10 @@
 #include "ace/IO_SAP.h"
 #include "ace/FILE_Addr.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 // The following is necessary since many C++ compilers don't support
 // typedef'd types inside of classes used as formal template
 // arguments... ;-(.  Luckily, using the C++ preprocessor I can hide

@@ -20,6 +20,10 @@
 #include "ace/ACE.h"
 #include "ace/SV_Message.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 class ACE_Export ACE_SV_Message_Queue
 {
   // = TITLE

@@ -31,6 +31,10 @@
 #include "ace/Free_List.h"
 #include "ace/Pipe.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) || \
     (defined (ACE_HAS_AIO_CALLS))
 // This only works on Win32 platforms and on Unix platforms supporting

@@ -23,6 +23,10 @@
 #include "ace/Message_Queue.h"
 #include "ace/UPIPE_Addr.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #if defined (ACE_HAS_THREADS)
 
 // Use a typedef to make life easier later on.

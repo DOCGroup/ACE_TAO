@@ -20,6 +20,10 @@
 #include "ace/Message_Block.h"
 #include "ace/IO_Cntl_Msg.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 // Forward decls.
 class ACE_Notification_Strategy;
 template <ACE_SYNCH_DECL> class ACE_Message_Queue_Iterator;

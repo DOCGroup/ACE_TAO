@@ -1,7 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-
 // ============================================================================
 //
 // = LIBRARY
@@ -31,6 +30,10 @@
 #include "ace/Map_Manager.h"
 #include "ace/Local_Tokens.h"
 #include "ace/SString.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 class ACE_Export ACE_Token_Collection : public ACE_Token_Proxy
 {

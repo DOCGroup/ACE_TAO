@@ -89,9 +89,13 @@
 
 #include "ace/Log_Record.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #if defined (__Lynx__)
 # undef STDERR
-#endif
+#endif /* __Lynx__ */
 
 #define ACE_LOG_MSG ACE_Log_Msg::instance ()
 

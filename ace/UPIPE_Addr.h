@@ -20,6 +20,10 @@
 
 #include "ace/SPIPE_Addr.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 typedef ACE_SPIPE_Addr ACE_UPIPE_Addr;
 
 #if 0

@@ -24,6 +24,10 @@
 #include "ace/SString.h"
 #include "ace/Local_Name_Space.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 // A short-hand name for our set of name/value/type tuples passed back
 // to callers.
 typedef ACE_Unbounded_Set<ACE_WString> ACE_WSTRING_SET;

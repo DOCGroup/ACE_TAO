@@ -19,6 +19,10 @@
 
 #include "ace/Select_Reactor_T.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
 #if defined (ACE_SELECT_REACTOR_HAS_DEADLOCK_DETECTION)
 #include "ace/Local_Tokens.h"

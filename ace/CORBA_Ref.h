@@ -1,7 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-
 // ============================================================================
 //
 // = LIBRARY
@@ -23,6 +22,10 @@
 #define ACE_CORBA_REF_H
 
 #include "ace/ACE.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 template <class CORBA_REF>
 class ACE_CORBA_Ref

@@ -20,6 +20,10 @@
 
 #include "ace/Free_List.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 template <class TYPE>
 class ACE_Timer_Node_T
 {

@@ -20,6 +20,10 @@
 #include "ace/Shared_Memory.h"
 #include "ace/Mem_Map.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 class ACE_Export ACE_Shared_Memory_MM : public ACE_Shared_Memory
 {
   // = TITLE

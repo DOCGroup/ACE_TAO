@@ -19,6 +19,10 @@
 
 #include "ace/FIFO_Recv.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 class ACE_Export ACE_FIFO_Recv_Msg : public ACE_FIFO_Recv
 {
   // = TITLE
