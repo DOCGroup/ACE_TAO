@@ -99,6 +99,10 @@ public:
   /// Create a collocated object using the given profile and stub.
   virtual CORBA::Object_ptr create_collocated_object (TAO_Stub *,
                                                       const TAO_MProfile &) = 0;
+  /// Initialize a collocated object using the given stub and object
+  /// pointer for lazily evaluated object references.
+  virtual CORBA::Long initialize_collocated_object (TAO_Stub *,
+                                                    CORBA::Object_ptr) = 0;
 };
 
 // ****************************************************************
@@ -150,6 +154,11 @@ public:
   /// Create a collocated object using the given profile and stub.
   CORBA::Object_ptr create_collocated_object (TAO_Stub *,
                                               const TAO_MProfile &);
+
+  /// Initialize a collocated object using the given stub and object
+  /// pointer for lazily evaluated object references.
+  CORBA::Long initialize_collocated_object (TAO_Stub *,
+                                            CORBA::Object_ptr o);
 
   /// Fetch the adapter named <name>
   TAO_Adapter *find_adapter (const char *name) const;

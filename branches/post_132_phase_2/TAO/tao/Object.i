@@ -98,6 +98,30 @@ CORBA::Object::is_evaluated (void) const
   return this->is_evaluated_;
 }
 
+ACE_INLINE void
+CORBA::Object::set_collocated_servant (TAO_Abstract_ServantBase *b)
+{
+  this->servant_ = b;
+  this->is_collocated_ = 1;
+}
+
+ACE_INLINE TAO_ORB_Core *
+CORBA::Object::orb_core (void) const
+{
+  return this->orb_core_;
+}
+
+ACE_INLINE IOP::IOR *
+CORBA::Object::steal_ior (void)
+{
+  return this->ior_._retn ();
+}
+ACE_INLINE const IOP::IOR &
+CORBA::Object::ior (void) const
+{
+  return this->ior_.in ();
+}
+
 // *************************************************************
 // Inline operations for class CORBA::Object_var
 // *************************************************************

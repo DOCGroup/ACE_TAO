@@ -1715,10 +1715,8 @@ TAO_ORB_Core::initialize_collocated_object (TAO_Stub *stub,
 
   // OK, the target ORB and the mprofile match, use the Adapter
   // Registry of each ORB to find the right one.
-
-  return -1;
-    /*orb_core->adapter_registry ()->create_collocated_object (stub,
-      mprofile);*/
+  return orb_core->adapter_registry ()->initialize_collocated_object (stub,
+                                                                      obj);
 }
 
 int

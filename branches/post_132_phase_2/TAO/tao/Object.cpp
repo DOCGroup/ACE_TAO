@@ -66,9 +66,11 @@ CORBA::Object::Object (TAO_Stub * protocol_proxy,
   // factory otherwise use the remote proxy broker.
   if (this->is_collocated_ &&
       _TAO_collocation_Object_Proxy_Broker_Factory_function_pointer != 0)
-    this->proxy_broker_ = _TAO_collocation_Object_Proxy_Broker_Factory_function_pointer (this);
+    this->proxy_broker_ =
+      _TAO_collocation_Object_Proxy_Broker_Factory_function_pointer (this);
   else
-    this->proxy_broker_ = the_tao_remote_object_proxy_broker ();
+    this->proxy_broker_ =
+      the_tao_remote_object_proxy_broker ();
 }
 
 CORBA::Object::Object (IOP::IOR *ior,
@@ -87,13 +89,7 @@ CORBA::Object::Object (IOP::IOR *ior,
   this->refcount_lock_ =
     this->orb_core_->resource_factory ()->create_corba_object_lock ();
 
-  // If the object is collocated then set the broker using the
-  // factory otherwise use the remote proxy broker.
-  /*if (this->is_collocated_ &&
-      _TAO_collocation_Object_Proxy_Broker_Factory_function_pointer != 0)
-    this->proxy_broker_ = _TAO_collocation_Object_Proxy_Broker_Factory_function_pointer (this);
-  else
-  this->proxy_broker_ = the_tao_remote_object_proxy_broker ();*/
+
 }
 
 // Too tired to do this check in every method properly!
@@ -673,6 +669,10 @@ operator<< (TAO_OutputCDR& cdr, const CORBA::Object* x)
 /*static*/ void
 CORBA::Object::tao_object_initialize (CORBA::Object *obj)
 {
+  // Check if already evaluated..
+  if (obj->is_evaluated_)
+    return;
+
   CORBA::ULong profile_count =
     obj->ior_->profiles.length ();
 
@@ -772,10 +772,22 @@ CORBA::Object::tao_object_initialize (CORBA::Object *obj)
   if (retval == 0)
     obj->protocol_proxy_ = objdata;
 
-  // Transfer ownership to the CORBA::Object
-  (void) safe_objdata.release ();
+  // If the object is collocated then set the broker using the
+  // factory otherwise use the remote proxy broker.
+  if (obj->is_collocated_ &&
+    _TAO_collocation_Object_Proxy_Broker_Factory_function_pointer != 0)
+    obj->proxy_broker_ =
+      _TAO_collocation_Object_Proxy_Broker_Factory_function_pointer (obj);
+    else
+      obj->proxy_broker_ = the_tao_remote_object_proxy_broker ();
 
   obj->is_evaluated_ = 1;
+
+  // Release the contents of the ior to keep memory consumption down.
+  obj->ior_ = 0;
+
+  // Transfer ownership to the CORBA::Object
+  (void) safe_objdata.release ();
   return;
 }
 
