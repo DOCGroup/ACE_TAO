@@ -33,7 +33,7 @@ ACE_High_Res_Timer::reset (void)
 }
 
 #if defined (ACE_HAS_POSIX_TIME)
-timespec_t &
+const timespec_t &
 ACE_High_Res_Timer::elapsed_time (void)
 {
   elapsed_time_.tv_sec = (this->end_ - this->start_) / (1000 * 1000 * 1000);
