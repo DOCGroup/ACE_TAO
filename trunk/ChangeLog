@@ -1,3 +1,13 @@
+Mon Jun 28 16:42:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * etc/ciao.doxygen:
+        * etc/ciao_assembly_deployer.doxygen:
+        * etc/ciao_componentserver.doxygen:
+        * etc/ciao_daemon.doxygen:
+        * etc/ciao_serveractivator.doxygen:
+        * etc/ciao_xml_helpers.doxygen:
+          Fixed errors in the listing of the tagfiles
+
 Mon Jun 28 16:31:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * os-patches/linux-patches.html:
