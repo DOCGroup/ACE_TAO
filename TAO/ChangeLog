@@ -1,3 +1,9 @@
+Tue Oct  1 14:47:42 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
+
+        * docs/releasenotes/index.html:
+
+	  Updated IDL compiler section.
+
 Tue Oct  1 13:20:31 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
 
 	* TAO_IDL/be/be_visitor_valuetype/valuetype_obv_ch.cpp:
