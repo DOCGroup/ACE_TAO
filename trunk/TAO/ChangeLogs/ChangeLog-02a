@@ -1,3 +1,10 @@
+Tue Dec 11 18:40:33 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* TAO/orbsvcs/tests/Interoperable_Naming/client.cpp (main):
+	  Fixed a bug that was causing a core dump if there was no
+ 	  reachable Name Server.  Thanks to Charles Meidinger
+ 	  <Charles.Meidinger@MSFC.NASA.GOV> for reporting this.
+
 Tue Dec 11 15:06:00 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 	* tao/orbconf.h:

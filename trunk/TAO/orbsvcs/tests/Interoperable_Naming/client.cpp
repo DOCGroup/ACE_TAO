@@ -30,7 +30,7 @@ int main (int argc, char *argv [])
 
       NContextExt_Client_i client;
 
-      if (client.init (argc, argv) == -1)
+      if (client.init (argc, argv) != 0)
         return 1;
 
       result = client.run (TAO_ENV_SINGLE_ARG_PARAMETER);
