@@ -1,3 +1,8 @@
+Sat Mar 10 19:28:30 PST 2001 Mayur Deshpande <mayur@ics.uci.edu>
+        * include/makeinclude/platform_qnx_rtp_gcc.GNU:
+          Fixes to enable debugging on QNX without ACE crashing.
+          Thanks to Andy Olson for the suggestions.
+
 Sat Mar 10 19:05:38 2001  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/config-win32.h:
