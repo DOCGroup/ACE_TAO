@@ -1,3 +1,10 @@
+Tue Mar 08 09:10:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Portable_Interceptors/Collocated/Dynamic/Server_Task.cpp:
+          In case we have detect a problem, print out the number of times the
+          server interceptor has been called and how much times we expect that
+          it is called.
+
 Tue Mar 08 08:50:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/TAO_Server_Request.{h,cpp,i}:
