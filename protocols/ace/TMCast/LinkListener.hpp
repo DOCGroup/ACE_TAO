@@ -3,6 +3,7 @@
 // cvs-id    : $Id$
 
 // OS primitives
+#include <ace/OS_NS_string.h>
 #include <ace/Synch.h>
 #include <ace/SOCK_Dgram_Mcast.h>
 #include <ace/Refcounted_Auto_Ptr.h>
