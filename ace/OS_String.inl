@@ -546,7 +546,7 @@ ACE_OS_String::to_lower (int c)
 ACE_INLINE wint_t
 ACE_OS_String::to_lower (wint_t c)
 {
-  return ::towlower (c);
+  return towlower (c);
 }
 #endif /* ACE_HAS_WCHAR && !ACE_LACKS_TOWLOWER */
 

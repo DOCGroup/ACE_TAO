@@ -1,3 +1,9 @@
+Tue Nov 21 10:15:15 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/OS_String.inl:
+
+          Changed ::towlower to towlower since it can be a macro.
+
 Tue Nov 21 09:57:53 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * tests/Reactor_Exceptions_Test.cpp:
