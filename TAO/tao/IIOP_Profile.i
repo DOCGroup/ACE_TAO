@@ -61,15 +61,3 @@ TAO_IIOP_Profile::hint(void)
 {
   return this->hint_;
 }
-
-ACE_INLINE const TAO_Tagged_Components&
-TAO_IIOP_Profile::tagged_components (void) const
-{
-  return this->tagged_components_;
-}
-
-ACE_INLINE TAO_Tagged_Components&
-TAO_IIOP_Profile::tagged_components (void)
-{
-  return this->tagged_components_;
-}

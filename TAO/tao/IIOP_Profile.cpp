@@ -466,7 +466,7 @@ TAO_IIOP_Profile::encode (TAO_OutputCDR &stream) const
 
   if (this->version_.major > 1
       || this->version_.minor > 0)
-    this->tagged_components_.encode (encap);
+    this->tagged_components ().encode (encap);
 
   // write the encapsulation as an octet sequence...
   stream << CORBA::ULong (encap.total_length ());

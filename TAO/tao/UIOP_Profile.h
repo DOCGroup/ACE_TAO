@@ -21,7 +21,7 @@
 #ifndef TAO_UIOP_PROFILE_H
 #define TAO_UIOP_PROFILE_H
 
-#include "tao/Pluggable.h"
+#include "tao/Profile.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -31,7 +31,6 @@
 
 #include "tao/Object_KeyC.h"
 #include "tao/UIOP_Connect.h"
-#include "tao/Tagged_Components.h"
 
 #include "ace/UNIX_Addr.h"
 #include "ace/Synch.h"
@@ -137,11 +136,6 @@ public:
   void reset_hint (void);
   // Reset the hint's value.
 
-  const TAO_Tagged_Components& tagged_components (void) const;
-  TAO_Tagged_Components& tagged_components (void);
-  // Access the tagged components, notice that they are empty and
-  // ignored for GIOP 1.0.
-
 private:
 
   TAO_GIOP_Version version_;
@@ -163,9 +157,6 @@ private:
 
   TAO_ORB_Core *orb_core_;
   // ORB Core.
-
-  TAO_Tagged_Components tagged_components_;
-  // The tagged components
 };
 
 #if defined (__ACE_INLINE__)

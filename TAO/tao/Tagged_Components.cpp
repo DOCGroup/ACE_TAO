@@ -133,14 +133,14 @@ TAO_Tagged_Components::set_known_component_i (
                                           component.component_data.get_buffer ()),
                     component.component_data.length ());
   CORBA::Boolean byte_order;
-  if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) != 0)
+  if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
     return;
   cdr.reset_byte_order (ACE_static_cast(int,byte_order));
 
   if (component.tag == IOP::TAG_ORB_TYPE)
     {
       CORBA::ULong orb_type;
-      if ((cdr >> orb_type) != 0)
+      if ((cdr >> orb_type) == 0)
         return;
 
       this->orb_type_ = orb_type;
@@ -149,7 +149,7 @@ TAO_Tagged_Components::set_known_component_i (
   else if (component.tag == IOP::TAG_CODE_SETS)
     {
       CONV_FRAME::CodeSetComponentInfo ci;
-      if ((cdr >> ci) != 0)
+      if ((cdr >> ci) == 0)
         return;
 
       this->set_code_sets_i (this->code_sets_.ForCharData,
@@ -162,7 +162,7 @@ TAO_Tagged_Components::set_known_component_i (
     {
       CORBA::Short p;
 
-      if ((cdr >> p) != 0)
+      if ((cdr >> p) == 0)
         return;
 
       this->tao_priority_ = p;

@@ -26,7 +26,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Pluggable.h"
+#include "tao/Profile.h"
 
 typedef CORBA::ULong TAO_PHandle;
 

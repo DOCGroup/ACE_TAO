@@ -1,60 +1,15 @@
 // $Id$
 
+#include "testC.h"
+#include "tao/rtcorbafwd.h"
+#include "tao/Priority_Mapping.h"
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
 #include "ace/Stats.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/Sched_Params.h"
-#include "testC.h"
 
 ACE_RCSID(Latency, client, "$Id$")
-
-const char *ior = "file://test.ior";
-int nthreads = 5;
-int niterations = 5;
-int period = -1;
-int do_shutdown = 1;
-
-int
-parse_args (int argc, char *argv[])
-{
-  ACE_Get_Opt get_opts (argc, argv, "k:n:i:p:x");
-  int c;
-
-  while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'k':
-        ior = get_opts.optarg;
-        break;
-      case 'n':
-        nthreads = ACE_OS::atoi (get_opts.optarg);
-        break;
-      case 'i':
-        niterations = ACE_OS::atoi (get_opts.optarg);
-        break;
-      case 'p':
-        period = ACE_OS::atoi (get_opts.optarg);
-        break;
-      case 'x':
-        do_shutdown = 0;
-        break;
-      case '?':
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-k <ior> "
-                           "-n <nthreads> "
-                           "-i <niterations> "
-                           "-p <period> "
-                           "-x (disable shutdown) "
-                           "\n",
-                           argv [0]),
-                          -1);
-      }
-  // Indicates sucessful parsing of the command line
-  return 0;
-}
 
 class Client : public ACE_Task_Base
 {
@@ -68,7 +23,7 @@ public:
   Client (void);
   // ctor
 
-  void set (Test_ptr server, int niterations);
+  void set (Test_ptr server, int niterations, int id);
   // Set the test attributes.
 
   void accumulate_into (ACE_Throughput_Stats &throughput) const;
@@ -87,19 +42,80 @@ private:
   int niterations_;
   // The number of iterations on each client thread.
 
+  int id_;
+  // The application ID for this thread...
+
   ACE_Throughput_Stats throughput_;
   // Keep throughput statistics on a per-thread basis
 };
 
+// ****************************************************************
+
+const char *ior = "file://test.ior";
+int nthreads = 0;
+int niterations = 5;
+int period = -1;
+int do_shutdown = 1;
+const int MAX_THREADS = 128;
+Client client[MAX_THREADS];
+int priorities[MAX_THREADS];
+
+int
+parse_args (int argc, char *argv[])
+{
+  ACE_Get_Opt get_opts (argc, argv, "k:t:i:p:x");
+  int c;
+
+  while ((c = get_opts ()) != -1)
+    switch (c)
+      {
+      case 'k':
+        ior = get_opts.optarg;
+        break;
+      case 't':
+        if (nthreads < MAX_THREADS)
+          {
+            priorities[nthreads] = ACE_OS::atoi (get_opts.optarg);
+            nthreads++;
+          }
+        break;
+      case 'i':
+        niterations = ACE_OS::atoi (get_opts.optarg);
+        break;
+      case 'p':
+        period = ACE_OS::atoi (get_opts.optarg);
+        break;
+      case 'x':
+        do_shutdown = 0;
+        break;
+      case '?':
+      default:
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "usage:  %s "
+                           "-k <ior> "
+                           "-t <priority> "
+                           "-i <niterations> "
+                           "-p <period> "
+                           "-x (disable shutdown) "
+                           "\n",
+                           argv [0]),
+                          -1);
+      }
+  // Indicates sucessful parsing of the command line
+  return 0;
+}
+
 int
 main (int argc, char *argv[])
 {
+  int policy = ACE_SCHED_FIFO;
+  int flags  = THR_SCHED_FIFO|THR_NEW_LWP|THR_JOINABLE;
   int priority =
-    (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO)
-     + ACE_Sched_Params::priority_max (ACE_SCHED_FIFO)) / 2;
+    (ACE_Sched_Params::priority_min (policy)
+     + ACE_Sched_Params::priority_max (policy)) / 2;
   // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
 
-  if (ACE_OS::sched_params (ACE_Sched_Params (ACE_SCHED_FIFO,
+  if (ACE_OS::sched_params (ACE_Sched_Params (policy,
                                               priority,
                                               ACE_SCOPE_PROCESS)) != 0)
     {
@@ -108,6 +124,8 @@ main (int argc, char *argv[])
           ACE_DEBUG ((LM_DEBUG,
                       "server (%P|%t): user is not superuser, "
                       "test runs in time-shared class\n"));
+          policy = ACE_SCHED_OTHER;
+          flags = THR_NEW_LWP|THR_JOINABLE;
         }
       else
         ACE_ERROR ((LM_ERROR,
@@ -117,7 +135,7 @@ main (int argc, char *argv[])
   ACE_TRY_NEW_ENV
     {
       ACE_DEBUG ((LM_DEBUG, "High res. timer calibration...."));
-      ACE_High_Res_Timer::calibrate ();
+      ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
       ACE_DEBUG ((LM_DEBUG, "done\n"));
 
       CORBA::ORB_var orb =
@@ -143,12 +161,21 @@ main (int argc, char *argv[])
                             1);
         }
 
-      Client* client;
-      ACE_NEW_RETURN (client, Client[nthreads], 1);
+      RTCORBA::PriorityMapping *pm =
+        orb->orb_core ()->priority_mapping ();
       for (int i = 0; i != nthreads; ++i)
         {
-          client[i].set (server.in (), niterations);
-          if (client[i].activate (THR_NEW_LWP | THR_JOINABLE) != 0)
+          client[i].set (server.in (), niterations, i);
+
+          CORBA::Short native_priority = 0;
+          pm->to_native (priorities[i], native_priority);
+
+          ACE_DEBUG ((LM_DEBUG,
+                      "Activating thread id = %d at priority = %d\n",
+                      i, native_priority));
+          if (client[i].activate (flags,
+                                  1, 1,
+                                  native_priority) != 0)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "Cannot activate client threads\n"),
                               1);
@@ -160,7 +187,6 @@ main (int argc, char *argv[])
 
       ACE_Throughput_Stats throughput;
 
-      ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
       for (int j = 0; j != nthreads; ++j)
         {
           client[j].accumulate_into (throughput);
@@ -170,6 +196,12 @@ main (int argc, char *argv[])
           client[j].dump_stats (buf, gsf);
         }
       throughput.dump_results ("Aggregated", gsf);
+
+      CORBA::Short native_priority = 0;
+      pm->to_native (priorities[0], native_priority);
+      ACE_OS::sched_params (ACE_Sched_Params (policy,
+                                              native_priority,
+                                              ACE_SCOPE_PROCESS));
 
       if (do_shutdown)
         {
@@ -195,15 +227,21 @@ Client::Client (void)
 }
 
 void
-Client::set (Test_ptr server, int niterations)
+Client::set (Test_ptr server,
+             int niterations,
+             int id)
 {
   this->server_ = Test::_duplicate (server);
   this->niterations_ = niterations;
+  this->id_ = id;
 }
 
 int
 Client::svc (void)
 {
+  ACE_DEBUG ((LM_DEBUG,
+              "Thread (%t) has id = %d\n", this->id_));
+
   ACE_TRY_NEW_ENV
     {
       // @@ We should use "validate_connection" for this
@@ -221,7 +259,7 @@ Client::svc (void)
           ACE_hrtime_t latency_base = ACE_OS::gethrtime ();
 
           // Invoke method.
-          server_->test_method (latency_base,
+          server_->test_method (this->id_,
                                 ACE_TRY_ENV);
 
           // Grab timestamp again.
