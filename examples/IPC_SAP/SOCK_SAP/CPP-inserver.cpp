@@ -2,7 +2,7 @@
 
 // This example tests the features of the ACE_SOCK_Acceptor and
 // ACE_SOCK_Stream classes.  If the platform supports threads it uses
-// a thread-per-request concurrency model.
+// a thread-per-connection concurrency model.
 
 #include "ace/SOCK_Acceptor.h"
 #include "ace/Thread_Manager.h"
@@ -106,6 +106,8 @@ run_event_loop (u_short port)
 	}          
 
 #if defined (ACE_HAS_THREADS)
+      // Spawn a new thread and run the new connection in that thread of
+      // control using the <server> function as the entry point.
       if (ACE_Thread_Manager::instance ()->spawn ((ACE_THR_FUNC) server,
                                                   (void *) new_stream.get_handle (),
                                                   THR_DETACHED) == -1)
