@@ -369,11 +369,12 @@ ACE_Service_Config::process_directives_i (ACE_Svc_Conf_Param *param)
 
   ace_yyparse (param);
 
-  if (param->yyerrno > 0)
+  if (param->yyerrno > 0 || ace_yyerrno > 0)
     {
       // This is a hack, better errors should be provided...
       errno = EINVAL;
-      return param->yyerrno;
+      return param->yyerrno + ace_yyerrno;  // @@ Ugly.  ace_yyerrno
+                                            //    is global!
     }
   else
     return 0;
