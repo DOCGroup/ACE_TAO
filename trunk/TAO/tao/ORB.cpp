@@ -1049,6 +1049,18 @@ void CORBA_ORB::_tao_unexpected_exception (void)
 #endif /* ACE_HAS_EXCEPTIONS */
 }
 
+ACE_INLINE const ACE_CString &
+CORBA_ORB::_tao_ft_client_id (void)
+{
+  return this->orb_core ()->fault_tolerance_service ().client_id ();
+}
+
+ACE_INLINE void
+CORBA_ORB::_tao_ft_client_id (const char *id)
+{
+  this->orb_core ()->fault_tolerance_service ().client_id (id);
+}
+
 // ****************************************************************
 
 // ORB initialization, per OMG document 98-12-01.
@@ -1425,8 +1437,12 @@ CORBA_ORB::create_policy (CORBA::PolicyType type,
     default:
       break;
     }
-  ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY),
-                    CORBA::Policy::_nil ());
+
+  // Call up the loaded services through the ORB_Core to see whether
+  // they can create the Policy object for the type we have.
+  return this->orb_core_->service_create_policy (type,
+                                                 val,
+                                                 ACE_TRY_ENV);
 }
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */

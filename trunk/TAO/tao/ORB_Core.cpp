@@ -38,6 +38,7 @@
 #include "tao/Services_Activate.h"
 
 
+
 #if defined(ACE_MVS)
 #include "ace/Codeset_IBM1047.h"
 #endif /* ACE_MVS */
@@ -85,7 +86,6 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     server_factory_from_service_config_ (0),
     // @@ This is not needed since the default server factory, fredk
     //    is statically added to the service configurator.
-    ft_service_callbacks_ (0),
     opt_for_collocation_ (1),
     use_global_collocation_ (1),
     collocation_strategy_ (THRU_POA),
@@ -1201,7 +1201,7 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
 
   // Now that we have a complete list of available protocols and their
   // related factory objects, set default policies and initialize the
-  // registries! 
+  // registries!
 
   // Set ORB-level policy defaults.
   if (this->set_default_policies () != 0)
@@ -1253,9 +1253,6 @@ TAO_ORB_Core::fini (void)
   CORBA::release (this->ior_manip_factory_);
 
   CORBA::release (this->ior_table_);
-
-  if (ft_service_callbacks_ != 0)
-    delete ft_service_callbacks_;
 
   if (TAO_debug_level >= 3)
     {
@@ -1370,22 +1367,12 @@ TAO_ORB_Core::services_callbacks_init (void)
   // We (should) know what are the services that would need
   // callbacks. So, what we do is go through the Service Configurator
   // list for looking at the services that we want to load.
+  this->ft_service_.init (this);
 
-  // @@ At this point of time, we have hard coded the names of services
-  // @@ callbacks that we are looking at. But this needs to change
-  // @@ once we have some more understanding of the other services
-  // @@ that have specs similar to FT.
-  if (this->ft_service_callbacks_ == 0)
-    {
-      TAO_Services_Activate *service =
-        ACE_Dynamic_Service <TAO_Services_Activate>::instance ("FT_Service_Activate");
-
-      // Activate the callback
-      if (service)
-        this->ft_service_callbacks_ = service->activate_services (this);
-    }
   // @@ Other service callbacks can be added here
 }
+
+
 
 TAO_Client_Strategy_Factory *
 TAO_ORB_Core::client_factory (void)
@@ -1465,6 +1452,8 @@ TAO_ORB_Core::server_factory (void)
 
   return this->server_factory_;
 }
+
+
 
 int
 TAO_ORB_Core::inherit_from_parent_thread (
@@ -1913,8 +1902,8 @@ TAO_ORB_Core::set_default_policies (void)
   // Set RTCORBA::ServerProtocolPolicy and
   // RTCORBA::ClientProtocolPolicy defaults to include all protocols
   // that were loaded into this ORB.
-
   // First, create a protocol list.
+
   TAO_ProtocolFactorySet *pfs = this->protocol_factories ();
 
   RTCORBA::ProtocolList protocols;
@@ -1987,7 +1976,7 @@ TAO_ORB_Core::set_default_policies (void)
                   TAO_ClientProtocolPolicy (protocols),
                   -1);
   this->default_policies_->client_protocol (client_protocol_policy);
-  
+
 #endif /* TAO_HAS_RT_CORBA == 1 */
   return 0;
 }
