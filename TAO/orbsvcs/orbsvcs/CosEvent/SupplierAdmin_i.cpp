@@ -37,9 +37,7 @@ SupplierAdmin_i::obtain_push_consumer (CORBA::Environment &TAO_TRY_ENV)
                   ProxyPushConsumer_i (this->qos_,
                                        rtecproxypushconsumer.in ()),
                   CosEventChannelAdmin::ProxyPushConsumer::_nil ());
-
   return ppc->_this (TAO_TRY_ENV);
-
 }
 
 CosEventChannelAdmin::ProxyPullConsumer_ptr

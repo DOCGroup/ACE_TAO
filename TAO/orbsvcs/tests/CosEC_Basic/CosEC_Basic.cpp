@@ -33,6 +33,9 @@ CosEC_Basic::~CosEC_Basic (void)
 int
 CosEC_Basic::init  (int argc, char *argv [])
 {
+  // @@ Pradeep, this method is too long!  Please split it into
+  // several smaller methods, each of which handles a particular
+  // aspect of the initialization process.
   TAO_TRY
     {
       this->orb_ = CORBA::ORB_init (argc,
@@ -91,7 +94,8 @@ CosEC_Basic::init  (int argc, char *argv [])
 
       this->supplier_qos_.insert (1,
                                   ACE_ES_EVENT_ANY,
-                                  scheduler->create ("supplier", TAO_TRY_ENV),
+                                  scheduler->create ("supplier",
+                                                     TAO_TRY_ENV),
                                   1);
 
       this->consumer_qos_.start_disjunction_group ();
@@ -105,7 +109,6 @@ CosEC_Basic::init  (int argc, char *argv [])
 
       const RtecEventChannelAdmin::SupplierQOS &supplierqos =
         this->supplier_qos_.get_SupplierQOS ();
-
 
       if (this->ec_i_.init (consumerqos,
                             supplierqos,
@@ -174,7 +177,6 @@ CosEC_Basic::run (void)
       this->supplier_.send_event (any,
                                   TAO_TRY_ENV);
       TAO_CHECK_ENV_RETURN_VOID (TAO_TRY_ENV);
-
     }
   TAO_CATCHANY
     {

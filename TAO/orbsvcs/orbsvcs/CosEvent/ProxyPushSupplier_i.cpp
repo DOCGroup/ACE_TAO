@@ -52,7 +52,9 @@ void
 PushConsumerWrapper::push (const RtecEventComm::EventSet& set,
                            CORBA::Environment &_env)
 {
-  for (CORBA::ULong i = 0; i < set.length (); ++i)
+  for (CORBA::ULong i = 0;
+       i < set.length ();
+       ++i)
     this->consumer_->push (set[i].data.any_value,
                            _env);
 }
@@ -125,13 +127,11 @@ void ProxyPushSupplier_i::connect_push_consumer (CosEventComm::PushConsumer_ptr 
   if (this->connected ())
     TAO_THROW_ENV (CosEventChannelAdmin::AlreadyConnected (),
                    TAO_TRY_ENV);
-
   if (push_consumer == CosEventComm::PushConsumer::_nil())
     TAO_THROW_ENV (CORBA::BAD_PARAM (CORBA::COMPLETED_NO),
                    TAO_TRY_ENV);
-
-  ACE_NEW (this->wrapper_,  PushConsumerWrapper (push_consumer));
-
+  ACE_NEW (this->wrapper_,
+           PushConsumerWrapper (push_consumer));
   this->pps_->connect_push_consumer (this->wrapper_->_this (TAO_TRY_ENV),
                                      this->qos_,
                                      TAO_TRY_ENV);
