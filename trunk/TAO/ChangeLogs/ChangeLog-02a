@@ -24,7 +24,8 @@ Thu Feb 14 15:20:19 2002  Carlos O'Ryan  <coryan@uci.edu>
 	  Do not hold the mutex while checking if the peer stil exists.
 	  Doing so can result in dead-locks whenever there is a nested
 	  upcall as part of the request.
-	  Thanks to mhoffm1060 <mhoffm1060@aol.com> for reporting this one.
+	  Thanks to Mark Hoffmann <Mark.Hoffmann@Axcelis.com> for
+	  reporting this one.
 
 	* orbsvcs/orbsvcs/CosEvent/CEC_Reactive_ConsumerControl.cpp:
 	* orbsvcs/orbsvcs/CosEvent/CEC_Reactive_SupplierControl.cpp:
