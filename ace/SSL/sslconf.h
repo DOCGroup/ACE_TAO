@@ -1,17 +1,14 @@
 // -*- C++ -*-
-// $Id$
-// ============================================================================
-//
-// = LIBRARY
-//     ACE_SSL
-//
-// = FILENAME
-//     sslconf.h
-//
-// = AUTHOR
-//     Carlos O'Ryan <coryan@ece.uci.edu>
-//
-// ============================================================================
+
+//=============================================================================
+/**
+ *  @file     sslconf.h
+ *
+ *  $Id$
+ *
+ *  @author   Carlos O'Ryan <coryan@ece.uci.edu>
+ */
+//=============================================================================
 
 
 #ifndef ACE_SSLCONF_H
@@ -19,12 +16,22 @@
 
 #include "ace/pre.h"
 
+#include "ace/config-all.h"
+
 #if !defined (ACE_DEFAULT_SSL_CERT_FILE)
-#define ACE_DEFAULT_SSL_CERT_FILE "/etc/ssl/cert.pem"
+#  ifdef WIN32
+#    define ACE_DEFAULT_SSL_CERT_FILE "cert.pem"
+#  else
+#    define ACE_DEFAULT_SSL_CERT_FILE "/etc/ssl/cert.pem"
+#  endif  /* WIN32 */
 #endif /* ACE_DEFAULT_SSL_CERT_FILE */
 
 #if !defined (ACE_DEFAULT_SSL_CERT_DIR)
-#define ACE_DEFAULT_SSL_CERT_DIR "/etc/ssl/certs"
+#  ifdef WIN32
+#    define ACE_DEFAULT_SSL_CERT_DIR "certs"
+#  else
+#    define ACE_DEFAULT_SSL_CERT_DIR "/etc/ssl/certs"
+#  endif  /* WIN32 */
 #endif /* ACE_DEFAULT_SSL_CERT_DIR */
 
 #if !defined (ACE_SSL_CERT_FILE_ENV)
@@ -46,4 +53,3 @@
 #include "ace/post.h"
 
 #endif /* ACE_SSLCONF_H */
-
