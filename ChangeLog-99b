@@ -1,3 +1,19 @@
+Fri Dec 24 16:33:48 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* acconfig.h:
+
+	  Added ACE_HAS_RECURSIVE_MUTEXES to list of macros.
+
+	* configure.in:
+
+	  Fixed ACE_LACKS_SETSCHED test.  It previously didn't check that
+	  sched_setscheduler() existed.  Both sched_setscheduler() and
+	  either pthread_attr_setschedpolicy() or pthread_attr_setsched()
+	  must be defined.  This was an AIX related fix.
+
+	  Initialized variables in all compile-time tests.  This fixes
+	  compile-time test warnings on AIX.
+
 Fri Dec 24 13:06:59 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	The following fixes were motivated by problems discovered in a
