@@ -461,7 +461,8 @@ Test_Supplier::svc ()
     {
       ACE_Time_Value tv (0, this->burst_pause_);
 
-      const ACE_Message_Block mb (this->event_size_);
+      ACE_Message_Block mb (this->event_size_);
+      mb.wr_ptr (this->event_size_);
 
       RtecEventComm::EventSet event (1);
       event.length (1);
@@ -492,7 +493,9 @@ Test_Supplier::svc ()
                 event[0].header.type = this->event_b_;
 
               // ACE_DEBUG ((LM_DEBUG, "(%t) supplier push event\n"));
-              this->consumer_proxy ()->push(event, TAO_TRY_ENV);
+              this->consumer_proxy ()->push (event, TAO_TRY_ENV);
+
+              TAO_CHECK_ENV;
             }
           ACE_OS::sleep (tv);
         }

@@ -80,6 +80,9 @@ ACE_Mem_Map::map_it (ACE_HANDLE handle,
   // Flag to indicate if we need to extend the back store
   int extend_backing_store = 0;
 
+  // File length requested by user
+  size_t requested_file_length = 0;
+
   // Check <length_request>
   if (length_request == -1)
     // Set length to file_request
@@ -87,10 +90,10 @@ ACE_Mem_Map::map_it (ACE_HANDLE handle,
   else
     {
       // File length implicitly requested by user
-      size_t requested_file_length = length_request + offset;
+      requested_file_length = length_request + offset;
         
       // Check to see if we need to extend the backing store
-      if (requested_file_length < current_file_length)
+      if (requested_file_length > current_file_length)
         {
           // If the length of the mapped region is less than the
           // length of the file then we force a complete new remapping
@@ -106,20 +109,39 @@ ACE_Mem_Map::map_it (ACE_HANDLE handle,
       this->length_ = length_request;
     }
 
-  if (extend_backing_store
-      // Extend the backing store.
+  // Check if we need to extend the backing store.
+  if (extend_backing_store)
+    {
 #if !defined (CHORUS)
-      && ACE_OS::pwrite (this->handle_,
-                         "",
-                         1,
-                         this->length_ > 0 
-                         ? this->length_ - 1 
-                         : 0) == -1)
+      // Remember than write increases the size by one.
+      size_t null_byte_position;
+      if (requested_file_length > 0)
+        // This will make the file size <requested_file_length>
+        null_byte_position = requested_file_length - 1;
+      else 
+        // This will make the file size 1
+        null_byte_position = 0;
+      
+      if (ACE_OS::pwrite (this->handle_,
+                          "",
+                          1,
+                          null_byte_position) == -1)
+        return -1;
 #else
-      && ACE_OS::ftruncate (this->handle_,
-                            this->length_) == -1)
+      // This nonsense is to make this code similar to the above code.
+      size_t actual_file_length;
+      if (requested_file_length > 0)
+        // This will make the file size <requested_file_length>
+        actual_file_length = requested_file_length;
+      else 
+        // This will make the file size 1
+        actual_file_length = 1;
+      
+      if (ACE_OS::ftruncate (this->handle_,
+                             actual_file_length) == -1)
+        return -1;
 #endif /* !CHORUS */
-    return -1;
+    }
   
 #if defined (__Lynx__)
   // Set flag that indicates whether PROT_WRITE has been enabled.
@@ -134,6 +156,7 @@ ACE_Mem_Map::map_it (ACE_HANDLE handle,
                                    offset,
                                    &this->file_mapping_,
                                    sa);
+
   return this->base_addr_ == MAP_FAILED ? -1 : 0;
 }
 

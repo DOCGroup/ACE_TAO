@@ -34,7 +34,8 @@ TAO_EC_Event_Set*
 TAO_EC_Event_Set::_create (RtecEventComm::EventSet& event_set)
 {
   // Orphan the buffer....
-  return new TAO_EC_Event_Set (event_set.length (),
+  CORBA::ULong length = event_set.length ();
+  return new TAO_EC_Event_Set (length,
                                event_set.get_buffer (1));
 }
 
