@@ -41,7 +41,6 @@
 
 #include "tao/ORB_Core.h"
 #include "tao/IFR_Client_Adapter.h"
-#include "tao/DynamicC.h"
 #include "ace/Dynamic_Service.h"
 
 #if defined (__BORLANDC__)
@@ -93,15 +92,13 @@ TAO::In_Object_Argument_T<CORBA::InterfaceDef_ptr>::marshal (TAO_OutputCDR & cdr
   return adapter->interfacedef_cdr_insert (cdr, this->x_);
 }
 
-
-
 // Arg traits specializations.
 namespace TAO
 {
 
 #if !defined (_CORBA_POLICY__ARG_TRAITS_CS_)
 #define _CORBA_POLICY__ARG_TRAITS_CS_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   class TAO_Export Arg_Traits<CORBA::Policy>
     : public
@@ -118,7 +115,7 @@ namespace TAO
 
 #if !defined (_CORBA_INTERFACEDEF__ARG_TRAITS_CS_)
 #define _CORBA_INTERFACEDEF__ARG_TRAITS_CS_
-  
+
   ACE_TEMPLATE_SPECIALIZATION
   class TAO_Export Arg_Traits<CORBA::InterfaceDef>
     : public
@@ -176,7 +173,7 @@ TAO::Objref_Traits<CORBA::DomainManager>::marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker * 
+TAO::Collocation_Proxy_Broker *
 (*CORBA__TAO_DomainManager_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
@@ -196,21 +193,21 @@ TAO::Collocation_Proxy_Broker *
     {
       ACE_NESTED_CLASS (CORBA, Object)::tao_object_initialize (this);
     }
-  
+
   if (this->the_TAO_DomainManager_Proxy_Broker_ == 0)
     {
       CORBA_DomainManager_setup_collocation ();
     }
-  
+
   TAO::Arg_Traits< CORBA::Policy>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::PolicyType>::in_arg_val _tao_policy_type (policy_type);
-  
+
   TAO::Argument *_the_tao_operation_signature [] =
     {
       &_tao_retval,
       &_tao_policy_type
     };
-  
+
   TAO::Invocation_Adapter _tao_call (
       this,
       _the_tao_operation_signature,
@@ -219,10 +216,10 @@ TAO::Collocation_Proxy_Broker *
       17,
       this->the_TAO_DomainManager_Proxy_Broker_
     );
-  
+
   _tao_call.invoke (0, 0 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (_tao_retval.excp ());
-  
+
   return _tao_retval.retn ();
 }
 
@@ -311,7 +308,7 @@ CORBA::DomainManager::_is_a (
         )
     )
     {
-      return 1; // success using local knowledge
+      return true; // success using local knowledge
     }
   else
     {
@@ -516,7 +513,7 @@ CORBA::ConstructionPolicy::_is_a (
         )
     )
     {
-      return 1; // success using local knowledge
+      return true; // success using local knowledge
     }
   else
     {
@@ -742,7 +739,7 @@ CORBA::Boolean operator>> (
 #endif /* _TAO_CDR_OP_CORBA_DomainManagerList_CPP_ */
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1629
+// be\be_visitor_root/root.cpp:1509
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

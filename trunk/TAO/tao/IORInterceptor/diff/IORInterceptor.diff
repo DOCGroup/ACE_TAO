@@ -1,5 +1,5 @@
---- orig/IORInterceptorC.h	2005-02-11 14:57:02.053824000 +0100
-+++ IORInterceptorC.h	2005-02-11 14:57:02.734803200 +0100
+--- orig/IORInterceptorC.h	2005-02-18 12:20:12.583740800 +0100
++++ IORInterceptorC.h	2005-02-18 12:20:13.304777600 +0100
 @@ -34,6 +34,9 @@
  #include /**/ "ace/pre.h"
  
@@ -10,8 +10,8 @@
  #include "ace/config-all.h"
  
  #if !defined (ACE_LACKS_PRAGMA_ONCE)
---- orig/IORInterceptorC.cpp	2005-02-11 14:57:02.053824000 +0100
-+++ IORInterceptorC.cpp	2005-02-11 14:57:02.854976000 +0100
+--- orig/IORInterceptorC.cpp	2005-02-18 12:20:12.583740800 +0100
++++ IORInterceptorC.cpp	2005-02-18 12:20:13.304777600 +0100
 @@ -29,7 +29,7 @@
  // be\be_codegen.cpp:302
  

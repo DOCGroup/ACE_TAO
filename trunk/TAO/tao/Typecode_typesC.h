@@ -71,13 +71,13 @@
 
 namespace CORBA
 {
-
+  
   // TAO_IDL - Generated from
   // be\be_interface.cpp:598
 
   // TAO_IDL - Generated from
   // be\be_visitor_enum/enum_ch.cpp:57
-
+  
   enum TCKind
   {
     tk_null,
@@ -123,7 +123,7 @@ namespace CORBA
     // just be table lookups.  It must always be the last enum value!!
     , TC_KIND_COUNT
   };
-
+  
   typedef TCKind &TCKind_out;
 
 // TAO_IDL - Generated from

@@ -172,11 +172,11 @@ PortableInterceptor::Interceptor::_is_a (
         )
     )
     {
-      return 1; // success using local knowledge
+      return true; // success using local knowledge
     }
   else
     {
-      return 0;
+      return false;
     }
 }
 
@@ -188,7 +188,7 @@ const char* PortableInterceptor::Interceptor::_interface_repository_id (void) co
 CORBA::Boolean
 PortableInterceptor::Interceptor::marshal (TAO_OutputCDR &)
 {
-  return 0;
+  return false;
 }
 
 // TAO_IDL - Generated from 
@@ -254,7 +254,7 @@ CORBA::Exception *PortableInterceptor::ForwardRequest::_alloc (void)
 CORBA::Exception *
 PortableInterceptor::ForwardRequest::_tao_duplicate (void) const
 {
-  CORBA::Exception *result;
+  CORBA::Exception *result = 0;
   ACE_NEW_RETURN (
       result,
       ::PortableInterceptor::ForwardRequest (*this),
@@ -444,7 +444,7 @@ CORBA::Exception *PortableInterceptor::InvalidSlot::_alloc (void)
 CORBA::Exception *
 PortableInterceptor::InvalidSlot::_tao_duplicate (void) const
 {
-  CORBA::Exception *result;
+  CORBA::Exception *result = 0;
   ACE_NEW_RETURN (
       result,
       ::PortableInterceptor::InvalidSlot (*this),
@@ -654,11 +654,11 @@ PortableInterceptor::Current::_is_a (
         )
     )
     {
-      return 1; // success using local knowledge
+      return true; // success using local knowledge
     }
   else
     {
-      return 0;
+      return false;
     }
 }
 
@@ -670,7 +670,7 @@ const char* PortableInterceptor::Current::_interface_repository_id (void) const
 CORBA::Boolean
 PortableInterceptor::Current::marshal (TAO_OutputCDR &)
 {
-  return 0;
+  return false;
 }
 
 // TAO_IDL - Generated from
@@ -793,11 +793,11 @@ PortableInterceptor::RequestInfo::_is_a (
         )
     )
     {
-      return 1; // success using local knowledge
+      return true; // success using local knowledge
     }
   else
     {
-      return 0;
+      return false;
     }
 }
 
@@ -809,7 +809,7 @@ const char* PortableInterceptor::RequestInfo::_interface_repository_id (void) co
 CORBA::Boolean
 PortableInterceptor::RequestInfo::marshal (TAO_OutputCDR &)
 {
-  return 0;
+  return false;
 }
 
 // TAO_IDL - Generated from
@@ -936,11 +936,11 @@ PortableInterceptor::ClientRequestInfo::_is_a (
         )
     )
     {
-      return 1; // success using local knowledge
+      return true; // success using local knowledge
     }
   else
     {
-      return 0;
+      return false;
     }
 }
 
@@ -952,7 +952,7 @@ const char* PortableInterceptor::ClientRequestInfo::_interface_repository_id (vo
 CORBA::Boolean
 PortableInterceptor::ClientRequestInfo::marshal (TAO_OutputCDR &)
 {
-  return 0;
+  return false;
 }
 
 // TAO_IDL - Generated from
@@ -1079,11 +1079,11 @@ PortableInterceptor::ServerRequestInfo::_is_a (
         )
     )
     {
-      return 1; // success using local knowledge
+      return true; // success using local knowledge
     }
   else
     {
-      return 0;
+      return false;
     }
 }
 
@@ -1095,7 +1095,7 @@ const char* PortableInterceptor::ServerRequestInfo::_interface_repository_id (vo
 CORBA::Boolean
 PortableInterceptor::ServerRequestInfo::marshal (TAO_OutputCDR &)
 {
-  return 0;
+  return false;
 }
 
 // TAO_IDL - Generated from
@@ -1222,11 +1222,11 @@ PortableInterceptor::ClientRequestInterceptor::_is_a (
         )
     )
     {
-      return 1; // success using local knowledge
+      return true; // success using local knowledge
     }
   else
     {
-      return 0;
+      return false;
     }
 }
 
@@ -1238,7 +1238,7 @@ const char* PortableInterceptor::ClientRequestInterceptor::_interface_repository
 CORBA::Boolean
 PortableInterceptor::ClientRequestInterceptor::marshal (TAO_OutputCDR &)
 {
-  return 0;
+  return false;
 }
 
 // TAO_IDL - Generated from
@@ -1365,11 +1365,11 @@ PortableInterceptor::ServerRequestInterceptor::_is_a (
         )
     )
     {
-      return 1; // success using local knowledge
+      return true; // success using local knowledge
     }
   else
     {
-      return 0;
+      return false;
     }
 }
 
@@ -1381,7 +1381,7 @@ const char* PortableInterceptor::ServerRequestInterceptor::_interface_repository
 CORBA::Boolean
 PortableInterceptor::ServerRequestInterceptor::marshal (TAO_OutputCDR &)
 {
-  return 0;
+  return false;
 }
 
 // TAO_IDL - Generated from
@@ -1504,11 +1504,11 @@ PortableInterceptor::PolicyFactory::_is_a (
         )
     )
     {
-      return 1; // success using local knowledge
+      return true; // success using local knowledge
     }
   else
     {
-      return 0;
+      return false;
     }
 }
 
@@ -1520,7 +1520,7 @@ const char* PortableInterceptor::PolicyFactory::_interface_repository_id (void) 
 CORBA::Boolean
 PortableInterceptor::PolicyFactory::marshal (TAO_OutputCDR &)
 {
-  return 0;
+  return false;
 }
 
 // TAO_IDL - Generated from
@@ -1624,7 +1624,7 @@ CORBA::Exception *PortableInterceptor::ORBInitInfo::DuplicateName::_alloc (void)
 CORBA::Exception *
 PortableInterceptor::ORBInitInfo::DuplicateName::_tao_duplicate (void) const
 {
-  CORBA::Exception *result;
+  CORBA::Exception *result = 0;
   ACE_NEW_RETURN (
       result,
       ::PortableInterceptor::ORBInitInfo::DuplicateName (*this),
@@ -1782,7 +1782,7 @@ CORBA::Exception *PortableInterceptor::ORBInitInfo::InvalidName::_alloc (void)
 CORBA::Exception *
 PortableInterceptor::ORBInitInfo::InvalidName::_tao_duplicate (void) const
 {
-  CORBA::Exception *result;
+  CORBA::Exception *result = 0;
   ACE_NEW_RETURN (
       result,
       ::PortableInterceptor::ORBInitInfo::InvalidName (*this),
@@ -1938,11 +1938,11 @@ PortableInterceptor::ORBInitInfo::_is_a (
         )
     )
     {
-      return 1; // success using local knowledge
+      return true; // success using local knowledge
     }
   else
     {
-      return 0;
+      return false;
     }
 }
 
@@ -1954,7 +1954,7 @@ const char* PortableInterceptor::ORBInitInfo::_interface_repository_id (void) co
 CORBA::Boolean
 PortableInterceptor::ORBInitInfo::marshal (TAO_OutputCDR &)
 {
-  return 0;
+  return false;
 }
 
 // Hand-crafted.
@@ -2089,11 +2089,11 @@ PortableInterceptor::ORBInitializer::_is_a (
         )
     )
     {
-      return 1; // success using local knowledge
+      return true; // success using local knowledge
     }
   else
     {
-      return 0;
+      return false;
     }
 }
 
@@ -2105,7 +2105,7 @@ const char* PortableInterceptor::ORBInitializer::_interface_repository_id (void)
 CORBA::Boolean
 PortableInterceptor::ORBInitializer::marshal (TAO_OutputCDR &)
 {
-  return 0;
+  return false;
 }
 
 // TAO_IDL - Generated from
@@ -2164,7 +2164,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1629
+// be\be_visitor_root/root.cpp:1509
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

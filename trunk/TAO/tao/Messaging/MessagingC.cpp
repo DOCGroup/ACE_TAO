@@ -324,7 +324,7 @@ Messaging::ReplyHandler::_is_a (
         )
     )
     {
-      return 1; // success using local knowledge
+      return true; // success using local knowledge
     }
   else
     {
@@ -368,7 +368,7 @@ OBV_Messaging::ExceptionHolder::_tao_unmarshal__Messaging_ExceptionHolder (TAO_I
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_valuetype/field_cs.cpp:568
+// be\be_visitor_valuetype/field_cs.cpp:580
 
 // Accessor to set the member.
 void
@@ -386,7 +386,7 @@ OBV_Messaging::ExceptionHolder::is_system_exception (void) const
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_valuetype/field_cs.cpp:568
+// be\be_visitor_valuetype/field_cs.cpp:580
 
 // Accessor to set the member.
 void
@@ -404,7 +404,7 @@ OBV_Messaging::ExceptionHolder::byte_order (void) const
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_valuetype/field_cs.cpp:743
+// be\be_visitor_valuetype/field_cs.cpp:755
 
 // Accessor to set the member.
 void
@@ -534,7 +534,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_root/root.cpp:1629
+// be\be_visitor_root/root.cpp:1509
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

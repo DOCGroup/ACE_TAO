@@ -35,19 +35,19 @@ static const CORBA::Long _oc_RTScheduling_ThreadAction[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   34,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x52545363),
-  ACE_NTOHL (0x68656475),
-  ACE_NTOHL (0x6c696e67),
-  ACE_NTOHL (0x2f546872),
-  ACE_NTOHL (0x65616441),
-  ACE_NTOHL (0x6374696f),
-  ACE_NTOHL (0x6e3a312e),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x52545363), 
+  ACE_NTOHL (0x68656475), 
+  ACE_NTOHL (0x6c696e67), 
+  ACE_NTOHL (0x2f546872), 
+  ACE_NTOHL (0x65616441), 
+  ACE_NTOHL (0x6374696f), 
+  ACE_NTOHL (0x6e3a312e), 
   ACE_NTOHL (0x30000000),  // repository ID = IDL:RTScheduling/ThreadAction:1.0
     13,
-  ACE_NTOHL (0x54687265),
-  ACE_NTOHL (0x61644163),
-  ACE_NTOHL (0x74696f6e),
+  ACE_NTOHL (0x54687265), 
+  ACE_NTOHL (0x61644163), 
+  ACE_NTOHL (0x74696f6e), 
   ACE_NTOHL (0x0),  // name = ThreadAction
   };
 
@@ -72,30 +72,30 @@ static const CORBA::Long _oc_RTScheduling_DistributableThread_DT_State[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   50,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x52545363),
-  ACE_NTOHL (0x68656475),
-  ACE_NTOHL (0x6c696e67),
-  ACE_NTOHL (0x2f446973),
-  ACE_NTOHL (0x74726962),
-  ACE_NTOHL (0x75746162),
-  ACE_NTOHL (0x6c655468),
-  ACE_NTOHL (0x72656164),
-  ACE_NTOHL (0x2f44545f),
-  ACE_NTOHL (0x53746174),
-  ACE_NTOHL (0x653a312e),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x52545363), 
+  ACE_NTOHL (0x68656475), 
+  ACE_NTOHL (0x6c696e67), 
+  ACE_NTOHL (0x2f446973), 
+  ACE_NTOHL (0x74726962), 
+  ACE_NTOHL (0x75746162), 
+  ACE_NTOHL (0x6c655468), 
+  ACE_NTOHL (0x72656164), 
+  ACE_NTOHL (0x2f44545f), 
+  ACE_NTOHL (0x53746174), 
+  ACE_NTOHL (0x653a312e), 
   ACE_NTOHL (0x30000000),  // repository ID = IDL:RTScheduling/DistributableThread/DT_State:1.0
   9,
-  ACE_NTOHL (0x44545f53),
-  ACE_NTOHL (0x74617465),
+  ACE_NTOHL (0x44545f53), 
+  ACE_NTOHL (0x74617465), 
   ACE_NTOHL (0x0),  // name = DT_State
   2, // member count
   7,
-  ACE_NTOHL (0x41435449),
+  ACE_NTOHL (0x41435449), 
   ACE_NTOHL (0x56450000),  // name = ACTIVE
   10,
-  ACE_NTOHL (0x43414e43),
-  ACE_NTOHL (0x454c4c45),
+  ACE_NTOHL (0x43414e43), 
+  ACE_NTOHL (0x454c4c45), 
   ACE_NTOHL (0x44000000),  // name = CANCELLED
   };
 
@@ -117,22 +117,22 @@ static const CORBA::Long _oc_RTScheduling_DistributableThread[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   41,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x52545363),
-  ACE_NTOHL (0x68656475),
-  ACE_NTOHL (0x6c696e67),
-  ACE_NTOHL (0x2f446973),
-  ACE_NTOHL (0x74726962),
-  ACE_NTOHL (0x75746162),
-  ACE_NTOHL (0x6c655468),
-  ACE_NTOHL (0x72656164),
-  ACE_NTOHL (0x3a312e30),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x52545363), 
+  ACE_NTOHL (0x68656475), 
+  ACE_NTOHL (0x6c696e67), 
+  ACE_NTOHL (0x2f446973), 
+  ACE_NTOHL (0x74726962), 
+  ACE_NTOHL (0x75746162), 
+  ACE_NTOHL (0x6c655468), 
+  ACE_NTOHL (0x72656164), 
+  ACE_NTOHL (0x3a312e30), 
   ACE_NTOHL (0x0),  // repository ID = IDL:RTScheduling/DistributableThread:1.0
     20,
-  ACE_NTOHL (0x44697374),
-  ACE_NTOHL (0x72696275),
-  ACE_NTOHL (0x7461626c),
-  ACE_NTOHL (0x65546872),
+  ACE_NTOHL (0x44697374), 
+  ACE_NTOHL (0x72696275), 
+  ACE_NTOHL (0x7461626c), 
+  ACE_NTOHL (0x65546872), 
   ACE_NTOHL (0x65616400),  // name = DistributableThread
   };
 
@@ -157,17 +157,17 @@ static const CORBA::Long _oc_RTScheduling_Current_IdType[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   36,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x52545363),
-  ACE_NTOHL (0x68656475),
-  ACE_NTOHL (0x6c696e67),
-  ACE_NTOHL (0x2f437572),
-  ACE_NTOHL (0x72656e74),
-  ACE_NTOHL (0x2f496454),
-  ACE_NTOHL (0x7970653a),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x52545363), 
+  ACE_NTOHL (0x68656475), 
+  ACE_NTOHL (0x6c696e67), 
+  ACE_NTOHL (0x2f437572), 
+  ACE_NTOHL (0x72656e74), 
+  ACE_NTOHL (0x2f496454), 
+  ACE_NTOHL (0x7970653a), 
   ACE_NTOHL (0x312e3000),  // repository ID = IDL:RTScheduling/Current/IdType:1.0
     7,
-  ACE_NTOHL (0x49645479),
+  ACE_NTOHL (0x49645479), 
   ACE_NTOHL (0x70650000),  // name = IdType
     CORBA::tk_sequence, // typecode kind
   12, // encapsulation length
@@ -196,8 +196,8 @@ static const CORBA::Long _oc_RTScheduling_Current_NameList[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   38,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x52545363),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x52545363), 
   ACE_NTOHL (0x68656475), 
   ACE_NTOHL (0x6c696e67), 
   ACE_NTOHL (0x2f437572), 
