@@ -1,11 +1,15 @@
 Thu Dec 11 13:13:17 1997  David L. Levine  <levine@cs.wustl.edu>
 
-        * LSOCK.cpp (recv_handle): fixed to remove compile errors and
+        * ace/LSOCK.cpp (recv_handle): fixed to remove compile errors and
           warnings on platforms with both ACE_HAS_4_4BSD_SENDMSG_RECVMSG
           and ACE_HAS_THREADS.  The delta from version 4.3 of this file
           is very small.  Thanks to Kirill Rybaltchenko
           <Kirill.Rybaltchenko@cern.ch> for reporting this problem and
           verifying the fix on LynxOS, the only affected platform.
+
+        * ace/IOStream_T.cpp: restored ACE_HAS_IOSTREAMH_INCLUSION
+          protection around the old g++ munch hack.  There's no need
+          to trouble all (g++) platforms with its (4 byte) space penalty.
 
         * examples/IOStream/server/iostream_server.cpp (handle_input):
           removed unused local "addr".
