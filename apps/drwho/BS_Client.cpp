@@ -1,4 +1,5 @@
 // $Id$
+
 #include "Options.h"
 #include "new.h"
 #include "File_Manager.h"
@@ -9,17 +10,20 @@ BS_Client::BS_Client (void)
   this->count_ = File_Manager::open_file (Options::friend_file);
 
   if (this->count_ < 0)
-    ACE_ERROR ((LM_ERROR, "%p\n"n, Options::program_name));
+    ACE_ERROR ((LM_ERROR,
+                "%p\n"n,
+                Options::program_name));
   else
     {
-      this->protocol_record_ =
-        new (PRIVATE_POOL) Protocol_Record[this->count_];
-      this->sorted_record_ = 
-        new (PRIVATE_POOL) Protocol_Record *[this->count_];
+      ACE_NEW (this->protocol_record_,
+               Protocol_Record[this->count_]);
+      ACE_NEW (this->sorted_record_,
+               Protocol_Record *[this->count_]);
   
       for (int i = 0; i < this->count_; i++)
         {
           Protocol_Record *rec_ptr = &this->protocol_record_[i];
+
           this->sorted_record_[i] = rec_ptr;
           File_Manager::get_login_and_real_name (rec_ptr->key_name1_, 
                                                  rec_ptr->key_name2_);
@@ -28,7 +32,7 @@ BS_Client::BS_Client (void)
       ACE_OS::qsort (this->sorted_record_,
                      this->count_,
                      sizeof *this->sorted_record_,
-                     (int (*)(const void *, const void *)) Binary_Search::name_compare);
+                     Binary_Search::name_compare);
     }
 }
 
@@ -40,6 +44,15 @@ BS_Client::BS_Client (void)
 Protocol_Record *
 BS_Client::insert (char *key_name, int)
 {
+#if 0
+  Protocol_Record *pr = (Protocol_Record *) 
+    ACE_OS::bsearch ((const void *) key_name,
+                     (const void *) this->sorted_record_,
+                     this->count_,
+                     sizeof ...,
+                     int (*compar)(const void *, const void *) ACE_OS::strcmp);
+  return pr;
+#else                   
   int lo = 0;
   int hi = this->count_ - 1;
   Protocol_Record **sorted_buffer = this->sorted_record_;
@@ -50,7 +63,6 @@ BS_Client::insert (char *key_name, int)
       Protocol_Record *frp = sorted_buffer[mid];
       int cmp = ACE_OS::strcmp (key_name,
                                 frp->get_login ());
-      
       if (cmp == 0)
 	return frp;
       else if (cmp < 0)
@@ -60,14 +72,15 @@ BS_Client::insert (char *key_name, int)
     }
 
   return 0;
+#endif /* 0 */
 }
 
 Protocol_Record *
 BS_Client::get_each_entry (void)
 {
-  Protocol_Record *frp;
-
-  while ((frp = Binary_Search::get_each_entry ()) != 0)
+  for (Protocol_Record *frp = Binary_Search::get_each_entry ();
+       frp != 0;
+       frp = Binary_Search::get_each_entry ())
     if (frp->get_drwho_list () != 0)
       return frp;
 
