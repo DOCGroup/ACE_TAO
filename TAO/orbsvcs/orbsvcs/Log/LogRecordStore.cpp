@@ -1,8 +1,10 @@
 // $Id$
 
+#include "orbsvcs/Time_Utilities.h"
 #include "orbsvcs/Log/LogRecordStore.h"
 #include "orbsvcs/Log/Log_Constraint_Interpreter.h"
 #include "orbsvcs/Log/Log_Constraint_Visitors.h"
+
 
 LogRecordStore::LogRecordStore (CORBA::ULongLong max_size,
                                 CORBA::ULong max_rec_list_len)
@@ -71,9 +73,8 @@ LogRecordStore::log (DsLogAdmin::LogRecord &rec)
   rec.id = maxid_++;
   // TODO: Reuse ids by keeping a list.
 
-  ACE_Time_Value tv (ACE_OS::gettimeofday ());
-  rec.time =
-    ACE_static_cast (DsLogAdmin::TimeT, tv.usec ());
+  ORBSVCS_Time::Time_Value_to_TimeT(rec.time,ACE_OS::gettimeofday());
+
 
   // First, bind the id to the LogRecord in the hash_map
   if (this->rec_hash_.bind (rec.id, rec) != 0)
