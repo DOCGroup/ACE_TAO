@@ -1,3 +1,25 @@
+Mon Mar 02 17:06:46 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Thread_Manager.cpp (exit): Added Win32 thread exit
+	  functionality. When a thread function falls out of scope, this
+	  functions is called by ACE_Thread_Control::exit and it will not
+	  call ACE_OS::thr_exit from here.  Under this scenario, the
+	  ACE_Thread_Manager::exit simply falls thru the end.  If a user
+	  call this function directly, this function will delete
+	  ACE_Thread_Exit::instance() first, which simulate the cleanup
+	  routine executed when a thread fall out of end by calling
+	  ACE_Thread_Manager::exit recursively.  After this is done
+	  (returned from the second call,) this function will then call
+	  ACE_OS::exit, which clean up the TSS objects and then really
+	  exit the thread.
+
+	* ace/OS.cpp (thr_exit): Added Win32 thread exit functionality.
+	  ACE_OS::thr_exit now will try to clean up TSS objects by calling
+	  ACE_OS::cleanup_tss.  You really should _not_ calling this
+	  function directly.  Esp. from the main thread because I don't
+	  know how to tell if you are calling it from main thread thread
+	  or not and thus memory leak might occur.
+
 Mon Mar  2 12:59:19 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
         * netsvcs/lib/Log_Message_Receiver.cpp
