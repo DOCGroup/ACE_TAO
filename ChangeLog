@@ -1,3 +1,8 @@
+Thu Apr 11 18:21:25 UTC 2002  Don Hinton  <dhinton@ieee.org>
+
+	* ace/Basic_Types.h:  Added include of <sys/param.h>
+	  to pickup MAXPATHLEN if available and get rid of warning.
+	
 Thu Apr 11 17:37:20 UTC 2002  Don Hinton  <dhinton@ieee.org>
 
 	* ace/Basic_Types.h: Added missing typedefs for pid_t and
