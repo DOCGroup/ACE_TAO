@@ -58,10 +58,13 @@ TAO_default_environment ()
 
 TAO_ORB_Core::Timeout_Hook TAO_ORB_Core::timeout_hook_ = 0;
 TAO_ORB_Core::Sync_Scope_Hook TAO_ORB_Core::sync_scope_hook_ = 0;
-CORBA::Object_ptr TAO_ORB_Core::priority_mapping_manager_ = 0;
 const char * TAO_ORB_Core::resource_factory_name_ = "Resource_Factory";
 const char *TAO_ORB_Core::protocols_hooks_name_ = "Protocols_Hooks";
 const char * TAO_ORB_Core::dynamic_adapter_name_ = "Dynamic_Adapter";
+
+#if (TAO_HAS_RT_CORBA == 1)
+CORBA::Object_ptr TAO_ORB_Core::priority_mapping_manager_ = 0;
+#endif /* TAO_HAS_RT_CORBA == 1 */
 
 TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
   : protocols_hooks_ (0),
@@ -1932,7 +1935,7 @@ void
 TAO_ORB_Core::resolve_rt_orb_i (CORBA::Environment &ACE_TRY_ENV)
 {
   // @@
-  TAO_Object_Loader *loader = 
+  TAO_Object_Loader *loader =
     ACE_Dynamic_Service<TAO_Object_Loader>::instance ("RT_ORB_Loader");
 
   if (loader == 0)
@@ -1953,7 +1956,7 @@ TAO_ORB_Core::resolve_rt_orb_i (CORBA::Environment &ACE_TRY_ENV)
   /// Create RT_ORB object.
   this->rt_orb_ =
     loader->create_object (this->orb_.in (), 0, 0, ACE_TRY_ENV);
-  
+
 }
 
 #endif /* TAO_HAS_RT_CORBA == 1 */
@@ -2555,7 +2558,7 @@ TAO_ORB_Core::priority_mapping_manager (void)
 void
 TAO_ORB_Core::priority_mapping_manager (CORBA::Object_ptr manager)
 {
-  TAO_ORB_Core::priority_mapping_manager_ = 
+  TAO_ORB_Core::priority_mapping_manager_ =
     CORBA::Object::_duplicate (manager);
 }
 

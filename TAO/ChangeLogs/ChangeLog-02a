@@ -1,3 +1,8 @@
+Fri Dec 22 15:11:00 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tao/ORB_Core.cpp: 
+	  Added TAO_HAS_RT_CORBA guard.
+	
 Fri Dec 22 15:02:00 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* tao/ORB_Core.h : 
