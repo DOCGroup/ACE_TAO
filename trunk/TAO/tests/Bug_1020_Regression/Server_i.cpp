@@ -11,7 +11,7 @@ Server::Server(CORBA::ORB_ptr orb)
 
 void
 Server::start_task(Test::Echo_ptr client
-                   TAO_ENV_ARG_DECL_NOT_USED)
+                   ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC((CORBA::SystemException))
 {
   Server_Task * task =
