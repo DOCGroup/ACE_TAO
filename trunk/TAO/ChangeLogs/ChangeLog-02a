@@ -1,3 +1,55 @@
+Mon Apr  3 05:20:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* TAO_IDL/driver/drv_args.cpp: Added -Gsp option to generate smart
+  	  proxy classes.
+	* TAO_IDL/include/idl_global.h: Added <gen_smart_proxies_> member
+	  and declared its accessor and mutator methods.
+	* TAO_IDL/util/utl_global.cpp: Defined the accessor and mutator
+	  methods for <gen_smart_proxies_> and also set it to I_FALSE in
+	  the constructor of IDL_GlobalData.
+	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp: Modified
+	  <_unchecked_narrow> to return the default proxy when the smart
+	  proxy framework doesnt exist.
+	* TAO_IDL/be/be_visitor_interface/smart_proxy_c{h,s}.cpp:
+	* TAO_IDL/be/be_visitor_operation/smart_proxy_c{h,s}.cpp:
+	  Added a check for the smart proxy generation flag.
+	* tao/orbconf.h: Added a flag called TAO_HAS_SMART_PROXIES which
+	  is 0 by default and disabled for MINIMUM_CORBA and can be
+	  enabled by setting it to 1.
+	* tao/corba.h: Added a check for TAO_HAS_SMART_PROXIES before
+	  inclusion of the Smart Proxies header file.
+	* tao/corbafwd.h: Added forward class declarations for
+	  TAO_Smart_Proxy_Base.
+	* MessagingC.{h,cpp}: Added the ReplyHandler related smart proxy
+	  classes under the TAO_HAS_SMART_PROXIES check. This is needed
+	  because the AMI handlers inherit from the abstract base class 
+	  Messaging:ReplyHandler and so its necessary to generate its
+	  Smart_Proxy_Base to fit into the design of the Smart Proxies.
+	  Thanks to Carlos O'Ryan <coryan@cs.wustl.edu> for reporting this
+	  bug.
+	* rules.tao.GNU: Added $(smart_proxies) to be able to check the 
+	  TAO_HAS_SMART_PROXIES flag and thus enable the Smart Proxies
+	  test into the build/test suite.
+	* tests/Smart_Proxies/Makefile:
+	* tests/Smart_Proxies/On_Demand/Makefile: 
+	  Added the -Gsp option to generate the smart proxy classes.
+	* tests/Smart_Proxies/test.idl: Filled in some comments about the
+	  interface.
+	* docs/compiler.html: Added an entry for the -Gsp option.
+	* docs/Smart_Proxies.html: updated the documentation with usage
+	  options.
+	* tao/orbconf.h: Added TAO_HAS_MINIMUM_CONNECTION_CACHING_STRATEGY
+	  flag which is enabled for MINIMUM_CORBA. Note this flag is kept 
+	  separate from ACE_HAS_BROKEN_EXTENDED_TEMPLATES because when we 
+	  (if ever) stop supporting compilers which dont support templates
+	  this flag could be removed and one wouldnt have to worryabout
+	  its dependencies on other flags.
+	* tao/IIOP_connector.{h,cpp}:
+	* tao/UIOP_Connector.{h,cpp}:
+	* tao/SHMIOP_Connector.{h,cpp}:
+	  Added check for TAO_HAS_MINIMUM_CONNECTION_CACHING_STRATEGY.
+	  Thanks to Irfan <irfan@cs.wustl.edu> for brainstorming on this issue.
+			
 Sun Apr  2 16:10:20 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/orbsvcs/Makefile:
