@@ -28,8 +28,8 @@
 #include "idl_defines.h"
 #include "nr_extern.h"
 
-ACE_RCSID (be, 
-           be_type, 
+ACE_RCSID (be,
+           be_type,
            "$Id$")
 
 be_type::be_type (void)
@@ -51,7 +51,7 @@ be_type::be_type (AST_Decl::NodeType nt,
     common_varout_gen_ (I_FALSE),
     seen_in_sequence_ (I_FALSE)
 {
-  if (n != 0) 
+  if (n != 0)
     {
       this->gen_fwd_helper_name ();
     }
@@ -301,6 +301,12 @@ be_type::gen_common_tmplinst (TAO_OutStream *os)
       << this->name () << be_uidt_nl
       << ">;" << be_uidt << be_uidt;
 
+  *os << be_nl << be_nl
+      << "template class TAO_Var_Base_T<"
+      << be_idt << be_idt_nl
+      << this->name () << be_uidt_nl
+      << ">;" << be_uidt << be_uidt;
+
   if (st == AST_Type::VARIABLE)
     {
       *os << be_nl<< be_nl
@@ -319,6 +325,12 @@ be_type::gen_common_tmplinst (TAO_OutStream *os)
                                 : "TAO_Var_Var_T< \\")
       << be_idt << be_idt_nl
       << this->name () << " \\" << be_uidt_nl
+      << ">" << be_uidt << be_uidt;
+
+  *os << be_nl << be_nl
+      << "#pragma instantiate TAO_Var_Base_T<"
+      << be_idt << be_idt_nl
+      << this->name () << be_uidt_nl
       << ">" << be_uidt << be_uidt;
 
   if (st == AST_Type::VARIABLE)
