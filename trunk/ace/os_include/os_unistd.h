@@ -45,8 +45,8 @@
 #endif /* !ACE_LACKS_UNISTD_H */
 
 #if defined (VXWORKS)
-// for unlink(), close(), read(), write(), lseek(), chdir(), getcwd(), getwd(), 
-// and isatty()
+// for unlink(), close(), read(), write(), lseek(), chdir(), getcwd(),
+// getwd(), and isatty()
 #  include /**/ <ioLib.h>
 // for gethostname()
 #  include /**/ <hostLib.h>
@@ -72,9 +72,9 @@ extern "C"
 #endif  /* !_BSD_SOURCE && !_XOPEN_SOURCE && !_XOPEN_SOURCE_EXTENDED
            || _XOPEN_SOURCE && __GNUC__ */
 
-# if !defined (_SC_TIMER_MAX)
-#   define _SC_TIMER_MAX 44
-# endif /* _SC_TIMER_MAX */
+# if !defined (_POSIX_TIMER_MAX)
+#   define _POSIX_TIMER_MAX 44
+# endif /* _POSIX_TIMER_MAX */
 
 // Default number of <ACE_Event_Handler>s supported by
 // <ACE_Timer_Heap>.
@@ -142,10 +142,6 @@ extern "C"
      ACE_LOFF_T llseek (int fd, ACE_LOFF_T offset, int whence);
 #  endif
 #endif  /* _LARGEFILE64_SOURCE */
-
-#if !defined (_SC_AIO_MAX)
-#  define _SC_AIO_MAX 1
-#endif /* _SC_AIO_MAX */
 
 #if defined (__BORLANDC__)
 #  define _chdir chdir
