@@ -20,16 +20,20 @@ IDLFILES = \
 OBJFILES = \
         $(OBJDIR)\FT_CORBA_ORBC.obj \
         $(OBJDIR)\FT_CORBA_ORBS.obj \
-	$(OBJDIR)\FT_IOGR_Property.obj \
-	$(OBJDIR)\FT_Policy_i.obj \
-	$(OBJDIR)\FT_Endpoint_Selector_Factory.obj \
-	$(OBJDIR)\FT_Invocation_Endpoint_Selectors.obj \
-        $(OBJDIR)\FT_PolicyFactory.obj \
-	$(OBJDIR)\FT_Service_Activate.obj \
-        $(OBJDIR)\FT_Service_Callbacks.obj \
+	    $(OBJDIR)\FT_IOGR_Property.obj \
         $(OBJDIR)\FT_ClientRequest_Interceptor.obj \
+        $(OBJDIR)\FT_ClientORBInitializer.obj \
+        $(OBJDIR)\FT_ClientPolicyFactory.obj \
+        $(OBJDIR)\FT_ClientPolicy_i.obj \
+        $(OBJDIR)\FT_ClientService_Activate.obj \
+        $(OBJDIR)\FT_Endpoint_Selector_Factory.obj \
+        $(OBJDIR)\FT_Invocation_Endpoint_Selectors.obj \
+        $(OBJDIR)\FT_Service_Callbacks.obj \
+        $(OBJDIR)\FT_ServerORBInitializer.obj \
+        $(OBJDIR)\FT_ServerPolicyFactory.obj \
+        $(OBJDIR)\FT_ServerPolicy_i.obj \
         $(OBJDIR)\FT_ServerRequest_Interceptor.obj \
-        $(OBJDIR)\FT_ORBInitializer.obj
+        $(OBJDIR)\FT_ServerService_Activate.obj \
 
 RESOURCE = $(OBJDIR)\FaultTolerance.res
 

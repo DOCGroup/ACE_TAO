@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file     FT_PolicyFactory.h
+ *  @file     FT_ServerPolicyFactory.h
  *
  *  $Id$
  *
@@ -11,8 +11,8 @@
 //=============================================================================
 
 
-#ifndef TAO_FT_POLICY_FACTORY_H
-#define TAO_FT_POLICY_FACTORY_H
+#ifndef TAO_FT_SERVERPOLICY_FACTORY_H
+#define TAO_FT_SERVERPOLICY_FACTORY_H
 
 #include /**/ "ace/pre.h"
 
@@ -38,7 +38,7 @@
 #include "fault_tol_export.h"
 
 /// Policy factory for all FTCORBA related policies.
-class TAO_FT_Export TAO_FT_PolicyFactory :
+class TAO_FT_Export TAO_FT_ServerPolicyFactory :
   public PortableInterceptor::PolicyFactory,
   public TAO_Local_RefCounted_Object
 {

@@ -25,8 +25,8 @@ CFG=FT ORB - Win32 MFC Debug
 
 # Begin Project
 # PROP AllowPerConfigDependencies 0
-# PROP Scc_ProjName ""
-# PROP Scc_LocalPath ""
+# PROP Scc_ProjName "FT_ORB"
+# PROP Scc_LocalPath "."
 CPP=cl.exe
 MTL=midl.exe
 RSC=rc.exe
@@ -157,7 +157,23 @@ LINK32=link.exe
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 # Begin Source File
 
+SOURCE=.\FaultTolerance\FT_ClientORBInitializer.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\FaultTolerance\FT_ClientPolicy_i.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\FaultTolerance\FT_ClientPolicyFactory.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\FaultTolerance\FT_ClientRequest_Interceptor.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\FaultTolerance\FT_ClientService_Activate.cpp
 # End Source File
 # Begin Source File
 
@@ -182,15 +198,15 @@ SOURCE=.\FaultTolerance\FT_IOGR_Property.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\FaultTolerance\FT_ORBInitializer.cpp
+SOURCE=.\FaultTolerance\FT_ServerORBInitializer.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\FaultTolerance\FT_Policy_i.cpp
+SOURCE=.\FaultTolerance\FT_ServerPolicy_i.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\FaultTolerance\FT_PolicyFactory.cpp
+SOURCE=.\FaultTolerance\FT_ServerPolicyFactory.cpp
 # End Source File
 # Begin Source File
 
@@ -198,7 +214,7 @@ SOURCE=.\FaultTolerance\FT_ServerRequest_Interceptor.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\FaultTolerance\FT_Service_Activate.cpp
+SOURCE=.\FaultTolerance\FT_ServerService_Activate.cpp
 # End Source File
 # Begin Source File
 
@@ -210,7 +226,27 @@ SOURCE=.\FaultTolerance\FT_Service_Callbacks.cpp
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
 # Begin Source File
 
+SOURCE=.\FaultTolerance\FT_ClientORBInitializer.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\FaultTolerance\FT_ClientPolicy_i.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\FaultTolerance\FT_ClientPolicy_i.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\FaultTolerance\FT_ClientPolicyFactory.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\FaultTolerance\FT_ClientRequest_Interceptor.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\FaultTolerance\FT_ClientService_Activate.h
 # End Source File
 # Begin Source File
 
@@ -246,7 +282,27 @@ SOURCE=.\FaultTolerance\FT_PolicyFactory.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\FaultTolerance\FT_ServerORBInitializer.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\FaultTolerance\FT_ServerPolicy_i.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\FaultTolerance\FT_ServerPolicy_i.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\FaultTolerance\FT_ServerPolicyFactory.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\FaultTolerance\FT_ServerRequest_Interceptor.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\FaultTolerance\FT_ServerService_Activate.h
 # End Source File
 # Begin Source File
 
@@ -278,11 +334,7 @@ SOURCE=.\FaultTolerance\FT_Invocation_Endpoint_Selectors.inl
 # End Source File
 # Begin Source File
 
-SOURCE=.\FaultTolerance\FT_IOGR_Property.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\FaultTolerance\FT_Policy_i.i
+SOURCE=.\FaultTolerance\FT_IOGR_Property.inl
 # End Source File
 # Begin Source File
 
@@ -290,7 +342,7 @@ SOURCE=.\FaultTolerance\FT_Policy_i.inl
 # End Source File
 # Begin Source File
 
-SOURCE=.\FaultTolerance\FT_Service_Callbacks.i
+SOURCE=.\FaultTolerance\FT_Service_Callbacks.inl
 # End Source File
 # End Group
 # Begin Group "IDL Files"
