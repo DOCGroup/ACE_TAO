@@ -95,8 +95,19 @@ public:
   ACE_NT_Service (DWORD start_timeout = ACE_NT_SERVICE_START_TIMEOUT,
                   DWORD service_type = SERVICE_WIN32_OWN_PROCESS,
                   DWORD controls_mask = SERVICE_ACCEPT_STOP);
+  // Constructor primarily for use when running the service.
+
+  ACE_NT_Service (LPCTSTR name,
+                  LPCTSTR desc = 0,
+                  DWORD start_timeout = ACE_NT_SERVICE_START_TIMEOUT,
+                  DWORD service_type = SERVICE_WIN32_OWN_PROCESS,
+                  DWORD controls_mask = SERVICE_ACCEPT_STOP);
+  // Constructor primarily for use when inserting/removing/controlling
+  // the service.
 
   virtual ~ACE_NT_Service (void);
+
+  // = Functions to operate the service
 
   virtual int open (void *args = 0);
   // Hook called to open the service.  By default, will set the status to
@@ -119,7 +130,109 @@ public:
   //    SERVICE_CONTROL_SHUTDOWN: same as SERVICE_CONTROL_STOP.
 
   void svc_handle (const SERVICE_STATUS_HANDLE new_svc_handle);
-  // Set the svc_handle_ member.
+  // Set the svc_handle_ member.  This is only a public function because
+  // the macro-generated service function calls it.
+
+
+  // = Methods which can be used to do SCP-like functions. The first group
+  // are used to register/insert and remove the service's definition in the
+  // SCM registry.
+
+  void name (LPCTSTR name, LPCTSTR desc = 0);
+  // Sets the name and description for the service.
+  // If desc is 0, it takes the same value as name.
+
+  LPCTSTR name (void) const;
+  // Get the service name.
+
+  LPCTSTR desc (void) const;
+  // Get the service description.
+
+  int insert (DWORD start_type = SERVICE_DEMAND_START,
+              DWORD error_control = SERVICE_ERROR_IGNORE,
+              LPCTSTR exe_path = 0,
+              LPCTSTR group_name = 0,
+              LPDWORD tag_id = 0,
+              LPCTSTR dependencies = 0,
+              LPCTSTR account_name = 0,
+              LPCTSTR password = 0);
+  // Insert (create) the service in the NT Service Control Manager,
+  // with the given creation values.  exe_path defaults to the path name
+  // of the program that calls the function.  All other 0-defaulted arguments
+  // pass 0 into the service creation, taking NT_specified defaults.
+  // Returns -1 on error, 0 on success.
+
+  int remove (void);
+  // Remove the service from the NT Service Control Manager.  Returns -1 on
+  // error, 0 on success.  This just affects the SCM and registry - the
+  // can and will keep running fine if it is already running.
+
+  int startup (DWORD startup);
+  // Sets the startup type for the service.  Returns -1 on error, 0 on success.
+
+  DWORD startup (void);
+  // Returns the current startup type.
+
+
+  // = Methods which control the service's execution.
+  // These methods to start/pause/resume/stop/check the service all have the
+  // following common behavior with respect to <wait_time> and return value.
+  //   <wait_time> is a pointer to an ACE_Time_Value object.  If not supplied
+  //   (a zero pointer) the function will wait indefinitely for the action
+  //   to be finalized (service reach running state, completely shut down,
+  //   etc.) or get "stuck" before returning.  If the time is supplied, it
+  //   specifies how long to wait for the service to reach a steady state,
+  //   and on return, it is updated to the service's last reported wait hint.
+  //   So, if you want to control the waiting yourself (for example, you want
+  //   to react to UI events during the wait) specify a <wait_time> of (0, 0)
+  //   and use the updated time to know when to check the service's state
+  //   again.
+  //   NOTE!!!! The wait_time things don't work yet.  The calls always
+  //   check status once, and do not wait for it to change.
+  //
+  //   The return value from start_svc, stop_svc, pause_svc, continue_svc is
+  //   0 if the request to NT to effect the change was made successfully.  The
+  //   service may refuse to change, or not do what you wanted; so if you
+  //   need to know, supply a <svc_state> pointer to receive the service's
+  //   reported last state on return and check it to see if it's what you
+  //   want.  The functions only return -1 when the actual request to the
+  //   service is refused - this would include privilege restrictions and
+  //   if the service is not configured to receive the request (this is most
+  //   likely to happen in the case of pause and continue).
+
+  int start_svc (ACE_Time_Value *wait_time = 0,
+                 DWORD *svc_state = 0,
+                 DWORD argc = 0, LPCTSTR *argv = 0);
+  // Start the service (must have been inserted before).  wait_time is the
+  // time to wait for the service to reach a steady state before returning.
+  // If it is 0, the function waits as long as it takes for the service to
+  // reach the 'running' state, or gets stuck in some other state, or exits.
+  // If <wait_time> is supplied, it is updated on return to hold the service's
+  // last reported wait hint.
+  // svc_state can be used to receive the state which the service settled in.
+  // If the value is 0, the service never ran.  argc/argv are passed
+  // to the service's ServiceMain function when it starts.  Returns 0 for
+  // success, -1 for error.
+
+  int stop_svc (ACE_Time_Value *wait_time = 0, DWORD *svc_state = 0);
+  // Requests the service to stop.  Will wait up to <wait_time> for the service
+  // to actually stop.  If not specified, the function waits until the service
+  // either stops or gets stuck in some other state before it stops.
+  // If <svc_state> is specified, it receives the last reported state of the
+  // service.  Returns 0 if the request was made successfully, -1 if not.
+
+  int pause_svc (ACE_Time_Value *wait_time = 0, DWORD *svc_state = 0);
+  // Pause the service.
+
+  int continue_svc (ACE_Time_Value *wait_time = 0, DWORD *svc_state = 0);
+  // Continue the service.
+
+  DWORD state (ACE_Time_Value *wait_hint = 0);
+  // Get the current state for the service.  If <wait_hint> is not 0, it
+  // receives the service's reported wait hint.
+  // Note that this function doesn't return anything that's guaranteed
+  // noticeable on a failure.  It'll return 0 on failure, but that may not
+  // be guaranteed to avoid conflict with any other value now or in the future.
 
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
@@ -127,10 +240,30 @@ public:
 protected:
   int report_status (DWORD new_status, DWORD time_hint = 0);
 
+  SC_HANDLE svc_sc_handle (void);
+  // Return the svc_sc_handle_ member. If the member is null,
+  // it retrieves the handle from the Service Control Manager and caches it.
+
+  void wait_for_service_state (DWORD desired_state, ACE_Time_Value *wait_time);
+  // Waits for the service to reach <desired_state> or get (apparently) stuck
+  // before it reaches that state.  Will wait at most <wait_time> to get to
+  // the desired state.  If <wait_time> is 0, then the function keeps waiting
+  // until the desired state is reached or the service doesn't update its
+  // state any further.
+  // The svc_status_ class member is updated upon return.
+  // NOTE - the timeout doesn't currently work - it always acts like
+  // ACE_Time_Value::zero is passed - it checks the state once but doesn't
+  // wait after that.
+
 protected:
   DWORD                  start_time_;   // Estimate of init time needed
   SERVICE_STATUS_HANDLE  svc_handle_;   // Service handle - doesn't need close.
   SERVICE_STATUS         svc_status_;
+
+  SC_HANDLE              svc_sc_handle_;// Service's SCM handle
+  LPTSTR                 name_;
+  LPTSTR                 desc_;
+
 };
 
 // These macros help to get things set up correctly at compile time
@@ -173,6 +306,16 @@ extern VOID WINAPI ace_nt_svc_main_##SVCNAME (DWORD dwArgc, LPTSTR *lpszArgv);
 
 #define ACE_NT_SERVICE_ENTRY(SVCDESC, SVCNAME)                             \
                       { SVCDESC, &ace_nt_svc_main_##SVCNAME }
+
+#define ACE_NT_SERVICE_RUN(SVCNAME, SVCINSTANCE, RET)                      \
+  SERVICE_TABLE_ENTRY _ace_nt_svc_table[2] =                               \
+  {                                                                        \
+    ACE_NT_SERVICE_ENTRY(#SVCNAME, SVCNAME),                               \
+    { 0, 0 }                                                               \
+  };                                                                       \
+  _ace_nt_svc_obj_##SVCNAME = SVCINSTANCE;                                 \
+  ACE_OS::last_error (0);                                                  \
+  int RET = StartServiceCtrlDispatcher(_ace_nt_svc_table);
 
 #if defined (__ACE_INLINE__)
 #include "ace/NT_Service.i"

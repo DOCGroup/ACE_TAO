@@ -6,7 +6,10 @@ ACE_NT_Service::ACE_NT_Service (DWORD start_timeout,
                                 DWORD service_type,
                                 DWORD controls_mask) :
                                  start_time_(start_timeout),
-				 svc_handle_(0)
+				 svc_handle_(0),
+                                 svc_sc_handle_(0),
+                                 name_(0),
+                                 desc_(0)
 {
   svc_status_.dwServiceType = service_type;
   svc_status_.dwCurrentState = 0;
@@ -17,8 +20,17 @@ ACE_NT_Service::ACE_NT_Service (DWORD start_timeout,
 }
 
 ACE_INLINE
-ACE_NT_Service::~ACE_NT_Service (void)
+LPCTSTR
+ACE_NT_Service::name (void) const
 {
+  return name_;
+}
+
+ACE_INLINE
+LPCTSTR
+ACE_NT_Service::desc (void) const
+{
+  return desc_;
 }
 
 ACE_INLINE void
