@@ -18,7 +18,7 @@
 // ============================================================================
 
 // ***************************************************
-// operations on the generic unbounded sequence class
+// Operations on the generic unbounded sequence class.
 // ***************************************************
 
 template <class T> ACE_INLINE
@@ -66,6 +66,12 @@ TAO_Unbounded_Sequence<T>::replace (CORBA::ULong max,
                                     T *data,
                                     CORBA::Boolean release)
 {
+  this->maximum_ = maximum;
+  this->length_ = length;
+  if (this->buffer_ && this->release_ == CORBA::B_TRUE)
+    TAO_Unbounded_Sequence<T>::freebuf (this->buffer_);
+  this->buffer_ = buffer;
+  this->release_ = release;
 }
 
 template <class T> ACE_INLINE
@@ -156,6 +162,12 @@ TAO_Bounded_Sequence<T, MAX>::replace (CORBA::ULong max,
                                        T *data,
                                        CORBA::Boolean release)
 {
+  this->maximum_ = maximum;
+  this->length_ = length;
+  if (this->buffer_ && this->release_ == CORBA::B_TRUE)
+    TAO_Bounded_Sequence<T, MAX>::freebuf (this->buffer_);
+  this->buffer_ = buffer;
+  this->release_ = release;
 }
 
 template <class T, CORBA::ULong MAX> ACE_INLINE
