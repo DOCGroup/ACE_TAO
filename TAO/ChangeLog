@@ -86,7 +86,8 @@ Thu Feb 24 17:34:52 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	  Fixed order of "servant_upcall" and "servant" arguments passed
 	  to "_skel" function corresponding to virtual base class.  The
-	  order was inadvertently swapped during skeleton-refactor merge.
+	  order was inadvertently swapped during the skeleton-refactor
+	  merge.
 
 Thu Feb 24 16:07:15 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
