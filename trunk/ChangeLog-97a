@@ -1,5 +1,15 @@
 Mon Feb 10 15:27:02 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/Timer_Queue: Added a virtual destructor so that subclasses
+ 	  deleted via ACE_Timer_Queue *'s will call the right destructor.
+  	  Thanks to Stuart Powell <stuartp@in.ot.com.au> for reporting
+ 	  this.
+
+	* ace/Timer_Heap.cpp: Added support for automatically growing
+ 	  ACE_Timer_Heaps.  This allows heaps to grow automatically as new
+ 	  ACE_Event_Handlers are added dynamically.  Thanks to Stuart
+ 	  Powell <stuartp@in.ot.com.au> for this enhancement.
+
 	* ace/Memory_Pool: Added support that allows flags to be passed in
  	  to the MMAP_Memory_Pool.  This can be used to set the
  	  appropriate type of backing store semantics (e.g., MAP_PRIVATE

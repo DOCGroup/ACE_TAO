@@ -95,7 +95,7 @@ public:
 };
 
 class ACE_Export ACE_Timer_Queue
-  // = TITLE
+  // = TITLE 
   //      Provides an interface to timers.
   //
   // = DESCRIPTION
@@ -115,6 +115,10 @@ public:
   // = Initialization and termination methods.
   ACE_Timer_Queue (void);
   // Default constructor.
+
+  virtual ~ACE_Timer_Queue (void);
+  // Destructor - make virtual for proper destruction of inherited
+  // classes.
 
   virtual int is_empty (void) const = 0;
   // True if queue is empty, else false.

@@ -35,7 +35,7 @@ public:
   // Constructor.
 
   virtual int next (ACE_Timer_Node *&timer_node, 
-		    const ACE_Time_Value &cur_time);
+                    const ACE_Time_Value &cur_time);
   // Pass back the next <timer_node> that hasn't been seen yet, if its
   // <time_value_> <= <cur_time>.  In addition, moves the timer queue
   // forward by one node.  Returns 0 when all <timer_nodes> have been
@@ -47,7 +47,7 @@ protected:
 };
 
 class ACE_Export ACE_Timer_List : public ACE_Timer_Queue
-  // = TITLE
+  // = TITLE 
   //      Provides a simple implementation of timers.
   //
   // = DESCRIPTION
@@ -81,9 +81,9 @@ public:
   // Returns the time of the earlier node in the <ACE_Timer_List>.
 
   virtual int schedule (ACE_Event_Handler *event_handler, 
-		        const void *arg, 
-		        const ACE_Time_Value &delay,
-		        const ACE_Time_Value &interval = ACE_Time_Value::zero);
+                        const void *arg, 
+                        const ACE_Time_Value &delay,
+                        const ACE_Time_Value &interval = ACE_Time_Value::zero);
   // Schedule an <event_handler> that will expire after <delay> amount
   // of time.  If it expires then <arg> is passed in as the value to
   // the <event_handler>'s <handle_timeout> callback method.  If
