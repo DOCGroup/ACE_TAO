@@ -3,12 +3,17 @@ Fri Jul 02 22:22:12 1999  Steve Huston  <shuston@riverace.com>
         * ace/config-hpux-11.x-hpc++.h: Added
           ACE_HAS_STD_TEMPLATE_METHOD_SPECIALIZATION for aC++.
 
+        * include/makeinclude/platform_hpux_aCC.GNU: Removed the suppression
+          of warning 829 (auto convert of string literal to char * deprecated).
+          With the exception of some JAWS code, all of ACE has been rid of the
+          offenders.
+
         * websvcs/tests/Makefile: Replace VLDLIBS with correct LDLIBS. Now
           works on AIX.
 
 Fri Jul  2 19:50:29 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/config-win32-borland.h: Clarified the fact that this file
+        * ace/config-win32-borland.h: Clarified the fact that this file
 	  shouldn't be #included directly.  Thanks to Thaddeus Olczyk
  	  <olczyk@interaccess.com> for motivating this.
 
