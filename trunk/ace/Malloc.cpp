@@ -77,6 +77,11 @@ ACE_Malloc_Stats::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
+ACE_Allocator::~ACE_Allocator (void)
+{
+}
+
+
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
 template class ACE_Atomic_Op<ACE_PROCESS_MUTEX, int>;
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */

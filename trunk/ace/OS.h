@@ -192,7 +192,10 @@ typedef int key_t;
 
 #if defined (__ACE_INLINE__)
 #define ACE_INLINE inline
-#else
+#if !defined (ACE_HAS_INLINED_OSCALLS)
+#define ACE_HAS_INLINED_OSCALLS
+#endif /* !ACE_HAS_INLINED_OSCALLS */
+#else 
 #define ACE_INLINE
 #endif /* __ACE_INLINE__ */
 
