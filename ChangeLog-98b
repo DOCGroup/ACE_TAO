@@ -1,3 +1,8 @@
+Sun Sep  6 15:49:46 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Makefile (FILES): Moved Priority_Reactor to earlier in
+	  the Makefile to maintain alphabetical order.
+
 Sun Sep  6 14:06:43 1998  Douglas C. Schmidt  <schmidt@cumbia.cs.wustl.edu>
 
         * ace/OS.h: Moved the ACE_NEW_THROW macros that Matt Braun wrote
