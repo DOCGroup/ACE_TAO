@@ -5073,7 +5073,7 @@ typedef WSAPROTOCOL_INFO ACE_Protocol_Info;
 #else
 typedef u_long ACE_SERVICE_TYPE;
 typedef u_long ACE_SOCK_GROUP;
-typedef struct ACE_Protocol_Info
+struct ACE_Protocol_Info
 {
   u_long dwServiceFlags1;
   int iAddressFamily;
