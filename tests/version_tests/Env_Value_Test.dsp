@@ -65,7 +65,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
-# ADD LINK32 aceu.lib /nologo /subsystem:console /machine:I386 /out:".\DLL Unicode Release\Env_Value_Test.exe" /libpath:"..\..\ace"
+# ADD LINK32 aceu.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\ace"
 
 !ELSEIF  "$(CFG)" == "Env_Value_Test - Win32 DLL Release"
 
@@ -90,7 +90,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
-# ADD LINK32 ace.lib /nologo /subsystem:console /machine:I386 /out:".\DLL Release\Env_Value_Test.exe" /libpath:"..\..\ace"
+# ADD LINK32 ace.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\ace"
 
 !ELSEIF  "$(CFG)" == "Env_Value_Test - Win32 static Unicode Release"
 
@@ -115,7 +115,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
-# ADD LINK32 aceus.lib acesu.lib advapi32.lib user32.lib /nologo /subsystem:console /machine:I386 /out:".\static Unicode Release\Env_Value_Test.exe" /libpath:"..\..\ace"
+# ADD LINK32 acesu.lib user32.lib advapi32.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\ace"
 
 !ELSEIF  "$(CFG)" == "Env_Value_Test - Win32 static Release"
 
@@ -140,7 +140,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
-# ADD LINK32 aces.lib advapi32.lib user32.lib /nologo /subsystem:console /machine:I386 /out:".\static Release\Env_Value_Test.exe" /libpath:"..\..\ace"
+# ADD LINK32 aces.lib advapi32.lib user32.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\ace"
 
 !ELSEIF  "$(CFG)" == "Env_Value_Test - Win32 DLL Debug"
 
@@ -165,7 +165,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386 /out:".\DLL Debug\Env_Value_Test.exe" /libpath:"..\..\ace"
+# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386 /libpath:"..\..\ace"
 
 !ELSEIF  "$(CFG)" == "Env_Value_Test - Win32 static Debug"
 
@@ -190,7 +190,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 acesd.lib advapi32.lib user32.lib /nologo /subsystem:console /debug /machine:I386 /out:".\static Debug\Env_Value_Test.exe" /libpath:"..\..\ace"
+# ADD LINK32 acesd.lib advapi32.lib user32.lib /nologo /subsystem:console /debug /machine:I386 /libpath:"..\..\ace"
 
 !ELSEIF  "$(CFG)" == "Env_Value_Test - Win32 static Unicode Debug"
 
@@ -215,7 +215,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 aceusd.lib acesud.lib advapi32.lib user32.lib /nologo /subsystem:console /debug /machine:I386 /out:".\static Unicode Debug\Env_Value_Test.exe" /libpath:"..\..\ace"
+# ADD LINK32 acesud.lib user32.lib advapi32.lib /nologo /subsystem:console /debug /machine:I386 /libpath:"..\..\ace"
 
 !ELSEIF  "$(CFG)" == "Env_Value_Test - Win32 DLL Unicode Debug"
 
@@ -240,7 +240,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 aceud.lib /nologo /subsystem:console /debug /machine:I386 /out:".\DLL Unicode Debug\Env_Value_Test.exe" /libpath:"..\..\ace"
+# ADD LINK32 aceud.lib /nologo /subsystem:console /debug /machine:I386 /libpath:"..\..\ace"
 
 !ENDIF 
 
