@@ -53,6 +53,7 @@ $report_success = 0;
 $debug = 0;
 $sandbox = '';
 $sandbox_timeout = 600;
+$sendreport = 0;
 @BUILD_LIST= ();
 @CONFIGURATION_OPTIONS = ();
 
@@ -108,6 +109,8 @@ while ($#ARGV >= 0) {
     $report_success = 1;
   } elsif ($ARGV[0] eq "-debug") {
     $debug = 1;
+  } elsif ($ARGV[0] eq "-sendreport") {
+    $sendreport = 1;
   } else {
     print "Ignoring option $ARGV[0]\n";
   }
@@ -228,27 +231,29 @@ sub report_errors {
   # First clear the lock, so the next execution works...
   unlink $disable_file; # Ignore errors!
 
-  # Now send a summary of the errors to the ADMIN account, if there are any.
+  if ($sendreport) {
+	# Now send a summary of the errors to the ADMIN account, if there are any.
 
-  if ($#_ >= 0) {
-    local $to = $ADMIN;
+	if ($#_ >= 0) {
+	  local $to = $ADMIN;
 
-    open (MAIL, "|".$MAIL.' -s "[AUTO_COMPILE] '.$HOST.' '.$BUILD.'" '.$to)
-      || mydie "Cannot open mail pipe for: $_\n";
+	  open (MAIL, "|".$MAIL.' -s "[AUTO_COMPILE] '.$HOST.' '.$BUILD.'" '.$to)
+	    || mydie "Cannot open mail pipe for: $_\n";
 
-    print MAIL 'The following message is brought to you by: ', "\n";
-    print MAIL $CMD, ' [', $REVISION, "] for $BUILD on $HOST\n\n";
+	  print MAIL 'The following message is brought to you by: ', "\n";
+	  print MAIL $CMD, ' [', $REVISION, "] for $BUILD on $HOST\n\n";
 
-    print MAIL "\nPlease check the following log for more info:\n\n";
-    print MAIL $LOG_URL, '?', $HOST, '_', $BUILD, "\n\n";
+	  print MAIL "\nPlease check the following log for more info:\n\n";
+	  print MAIL $LOG_URL, '?', $HOST, '_', $BUILD, "\n\n";
 
-    local $m;
-    foreach $m (@_) {
-      print MAIL $m, "\n";
-    }
-    close (MAIL); # Ignore errors....
+	  local $m;
+	  foreach $m (@_) {
+	    print MAIL $m, "\n";
+	  }
+	  close (MAIL); # Ignore errors....
+	}
   }
-
+  
   # Now send the complete log to bugzilla...
   if ($copy_logs) {
     copy_logs ();
