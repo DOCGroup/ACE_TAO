@@ -171,8 +171,8 @@ project(TAO) : acelib, taoversion, core, tao_output, taodefaults, pidl, extra_co
     OctetSeqC.cpp
     operation_details.cpp
     ORB.cpp
-    ORB_typesA.cpp
-    ORB_typesC.cpp
+    orb_typesA.cpp
+    orb_typesC.cpp
     ORB_Core.cpp
     ORB_Core_Auto_Ptr.cpp
     ORB_Table.cpp
