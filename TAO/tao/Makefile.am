@@ -1688,7 +1688,7 @@ nobase_include_HEADERS += \
   RTCORBA/Network_Priority_Mapping_Manager.i \
   RTCORBA/Priority_Mapping.i \
   RTCORBA/Priority_Mapping_Manager.i \
-  RTCORBA/RTCORBAC.i \
+  RTCORBA/RTCORBAC.inl \
   RTCORBA/RT_Current.i \
   RTCORBA/RT_Invocation_Endpoint_Selectors.i \
   RTCORBA/RT_Mutex.i \
