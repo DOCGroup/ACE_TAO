@@ -50,6 +50,7 @@ public :
 
   /// Default destructor.
   ~ACE_QoS_Session_Factory (void);
+  
 
   /// Types of sessions for this factory to manage.
   enum ACE_QoS_Session_Type
@@ -58,8 +59,15 @@ public :
     ACE_GQOS_SESSION
   };
 
+  /**  The default QoS type supported on this platform.
+    *
+    *       ACE_DEFAULT_QOS_SESSION = ACE_RAPI_SESSION on Unix platforms with RAPI support
+    *                               = ACE_GQOS_SESSION on Windows platforms with GQOS support
+    */
+  const static enum ACE_QoS_Session_Type ACE_DEFAULT_QOS_SESSION;
+
   /// Create a QoS session of the given type (RAPI or GQoS).
-  ACE_QoS_Session * create_session (ACE_QoS_Session_Type qos_session_type);
+  ACE_QoS_Session * create_session (ACE_QoS_Session_Type qos_session_type = ACE_DEFAULT_QOS_SESSION );
 
   /// Destroy the QoS Session.
   int destroy_session (ACE_QoS_Session *qos_session);

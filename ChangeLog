@@ -1,3 +1,27 @@
+Mon Feb 18 10:45:00 2002  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* ace/QoS/QoS_Session_Factory.h:
+	  Add new constant ACE_QoS_Session_Factory::ACE_DEFAULT_QOS_SESSION.
+	  Give ACE_QoS_Session_Factory::create_session() a default argument
+	  of ACE_DEFAULT_QOS_SESSION.
+
+	* ace/QoS/QoS_Session_Factory.cpp:
+	  Set the value of ACE_DEFAULT_QOS_SESSION to ACE_RAPI_SESSION on 
+	  platforms with RAPI RSVP support.  Set it to
+	  ACE_GQOS_SESSION on Win32 platforms with GQoS support.
+	  Otherwise, issue a compilation error, since these are the only
+	  two QoS types supported currently.
+
+	* examples/QOS/Change_Receiver_FlowSpec/receiver.cpp:
+	* examples/QOS/Change_Receiver_FlowSpec/sender.cpp:
+	* examples/QOS/Change_Sender_TSpec/receiver.cpp:
+	* examples/QOS/Change_Sender_TSpec/sender.cpp:
+	* examples/QOS/Simple/receiver.cpp:
+	* examples/QOS/Simple/sender.cpp:
+	Remove reference to ACE_RAPI_SESSION from invocations of
+	create_session(), leave it empty and choose default argument instead.
+	This will allow the examples to compile and run on Win32.
+
 Mon Feb 18 08:07:59 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* ace/String_Base.{h,i}: Added two new overloaded operators that
