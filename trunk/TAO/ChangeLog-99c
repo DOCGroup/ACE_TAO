@@ -1,3 +1,20 @@
+Thu Dec  2 22:01:25 1999  Marina Spivak  <marina@cs.wustl.edu>
+
+	* performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/Client.dsp
+	* performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/Endpoint_Per_Priority_Scenario.dsw
+	* performance-tests/RTCorba/Multiple_Endpoints/Endpoint_Per_Priority/Server.dsp
+	* performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/Client.dsp
+	* performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/ORB_Per_Priority.dsw
+	* performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/Server.dsp
+	* performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/Client.dsp
+	* performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/Server.dsp
+	* performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/Single_Endpoint.dsw
+	  Added the above workspace and project files for compiling tests on NT.
+
+	* performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/server.cpp
+	  Use corba priority instead of native priority in the server to
+	  generate ior file names.
+
 Thu Dec  2 19:19:18 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* performance-tests/RTCorba/Oneways/Reliable/Makefile:
