@@ -40,6 +40,7 @@
 #include "orbsvcs/AVStreamsS.h"
 #include "orbsvcs/Property/CosPropertyService_i.h"
 #include "orbsvcs/CosNamingC.h"
+#include "orbsvcs/AV/AV_Core.h"
 #include "orbsvcs/AV/Endpoint_Strategy.h"
 #include "orbsvcs/Null_MediaCtrlS.h"
 
@@ -312,8 +313,8 @@ public:
 
   virtual CORBA::Boolean bind_devs (AVStreams::MMDevice_ptr a_party,
                                     AVStreams::MMDevice_ptr b_party,
-                                    AVStreams::streamQoS &the_qos,
-                                    const AVStreams::flowSpec &the_flows,
+                                    AVStreams::streamQoS& the_qos,
+                                    const AVStreams::flowSpec& the_flows,
                                     CORBA::Environment &env = CORBA::Environment::default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
                      AVStreams::streamOpFailed,
@@ -564,8 +565,8 @@ public:
   // Destroy the stream, Empty the_spec means, for all the flows
 
   virtual CORBA::Boolean connect (AVStreams::StreamEndPoint_ptr responder,
-                                  AVStreams::streamQoS &qos_spec,
-                                  const AVStreams::flowSpec &the_spec,
+                                  AVStreams::streamQoS& qos_spec,
+                                  const AVStreams::flowSpec& the_spec,
                                   CORBA::Environment &env = CORBA::Environment::default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
                      AVStreams::noSuchFlow,
