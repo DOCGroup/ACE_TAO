@@ -1,6 +1,11 @@
+Fri Sep 03 17:48:49 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* docs/releasenotes/index.html:
+	* docs/interceptors.html: Added interceptor related information.
+
 Fri Sep  3 14:40:13 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-        * rules.tao.GNU:  
+        * rules.tao.GNU:
         * TAO_IDL/Makefile:
         * TAO_IDL/Makefile.bor:
         * TAO_IDL/idl_make_vars:
@@ -10,11 +15,11 @@ Fri Sep  3 14:40:13 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * TAO_IDL/driver/drv_init.cpp:
         * TAO_IDL/driver/drv_preproc.cpp:
-          Cleaned up the way TAO_IDL picks the external preprocessor.  
-          It now checks for TAO_IDL_PREPROCESSOR and TAO_IDL_PREPROCESSOR_ARGS 
+          Cleaned up the way TAO_IDL picks the external preprocessor.
+          It now checks for TAO_IDL_PREPROCESSOR and TAO_IDL_PREPROCESSOR_ARGS
           environment variables at run time (it will still use CPP_LOCATION and
           TAO_IDL_DEFAULT_CPP_FLAGS, but displays a warning message).
-          
+
           Otherwise, it will use its default, which is set to one of
           the following:
           1. TAO_IDL_PREPROCESSOR/_ARGS macros, if defined
@@ -23,10 +28,10 @@ Fri Sep  3 14:40:13 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * docs/compiler.html:
         * TAO-INSTALL.html:
-          Cleaned up documentation and added information about the 
+          Cleaned up documentation and added information about the
           TAO_IDL_PREPROCESSOR* environment variables.
 
-          Thanks to Christopher Kohlhoff <chris@kohlhoff.com> and 
+          Thanks to Christopher Kohlhoff <chris@kohlhoff.com> and
           Adrian Mercieca <adrian@anvil.co.uk> for first reporting this.
 
 Fri Sep  3 13:34:17 1999  Jeff Parsons  <parsons@cs.wustl.edu>
@@ -35,7 +40,7 @@ Fri Sep  3 13:34:17 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	* tao/DynSequence_i.cpp:
 	* tao/DynStruct_i.cpp:
 	* tao/DynUnion_i.cpp:
-	  In each current_component() method, added a 
+	  In each current_component() method, added a
 	  CORBA_DynAny::_duplicate before returning the
 	  member, so it can be used in a _var. Thanks to
 	  Phillippe Merle <Philippe.Merle@lifl.fr> for pointing
