@@ -1,3 +1,15 @@
+Thu Mar 28 10:12:13 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/Malloc_T.{h,i,cpp}: Added support for ACE_Dynamic_Cached_Allocator. 
+	  Thanks to Jaroslaw Nozderko <jareknz@polbox.com> for
+ 	  contributing this.
+  
+	* tests: Added Cached_Allocator_Test.cpp.  Thanks to
+	  Jaroslaw Nozderko <jareknz@polbox.com> for contributing this.
+
+	* tests/Makefile (BIN): 
+	* tests/run_test.lst: Added Cached_Allocator_Test.
+
 Thu Mar 28 06:15:22 2002  Alex Libman <AlexL@rumblegroup.com>
 
         * ace/POSIX_Asynch_IO.cpp,

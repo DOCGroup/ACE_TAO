@@ -1,5 +1,8 @@
 Thu Mar 28 06:46:55 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
+	* docs/configurations.html: Fixed a broken link.  Thanks to
+	  Eric Eide for reporting this.
+
 	* orbsvcs/Naming_Service/README: Corrected the README to say
 	  that SERVICE_DEMAND_START is the proper default option if only
  	  -i is specified.  Thanks to Whitney Kew
