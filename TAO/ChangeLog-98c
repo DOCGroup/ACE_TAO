@@ -1,3 +1,14 @@
+Sun Sep 20 23:30:20 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tao/ORB: It is now possible to give an ACE_Time_Value to the
+ 	  ORB's resolve_initial_references() method in order to bound the
+ 	  amount of time spent waiting for a service to be resolved via
+ 	  multicast.
+
+	* tao/orbconf.h: Renamed TAO_DEFAULT_NAME_SERVER_TIMEOUT to
+ 	  TAO_DEFAULT_SERVICE_RESOLUTION_TIMEOUT, which is more
+ 	  descriptive.
+
 Sun Sep 20 22:57:28 1998  Marina Igorevna Spivak  <marina@mambo.cs.wustl.edu>
 
 	* TAO/orbsvcs/orbsvcs/Naming/CosNaming_i.h,
@@ -9,7 +20,6 @@ Sun Sep 20 22:41:02 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* examples/Simple/echo/Echo_i.cpp:
 	  changes in Echo::echo() made.
-	
 
 Sun Sep 20 22:39:52 1998  Douglas C. Schmidt  <schmidt@waltz.cs.wustl.edu>
 
