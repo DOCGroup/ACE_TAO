@@ -1,3 +1,9 @@
+Tue Aug 17 08:49:00 UTC 2004  Martin Corino <mcorino@remedy.nl>
+
+        * ace/OS_NS_String.cpp:
+
+          Removed some hidden characters causing compile problems.
+
 Tue Aug 17 08:00:00 UTC 2004  Simon Massey  <simon.massey@prismtechnologies.com>
         * ace/Asynch_Connector.h
         * tests/Proactor_Test.cpp
@@ -5,18 +11,18 @@ Tue Aug 17 08:00:00 UTC 2004  Simon Massey  <simon.massey@prismtechnologies.com>
           Solaris -> Lynxos cross development environment.
           (LynxOS gcc 2.95.3 cross compiler)
 
-Tue Aug 17 08:00:00 2004  Martin Corino <mcorino@remedy.nl>
+Tue Aug 17 08:00:00 UTC 2004  Martin Corino <mcorino@remedy.nl>
 
-    * ace/ACE.h:
-      ace/ACE.cpp:
-      
-      Added ACE::is_sock_error() to be able to test if errorcode is
-      WinSock error *before* converting to error string.
-      
-    * ace/OS_NS_String.cpp:
-    
-      Fixed WCHAR bug in ACE_OS::strerror().
-      Introduced use of ACE::is_sock_error().
+        * ace/ACE.h:
+          ace/ACE.cpp:
+
+          Added ACE::is_sock_error() to be able to test if errorcode is
+          WinSock error *before* converting to error string.
+
+        * ace/OS_NS_String.cpp:
+
+          Fixed WCHAR bug in ACE_OS::strerror().
+          Introduced use of ACE::is_sock_error().
 
 Mon Aug 16 22:53:53 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 

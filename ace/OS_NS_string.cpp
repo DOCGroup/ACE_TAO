@@ -155,13 +155,13 @@ ACE_OS::strecpy (wchar_t *s, const wchar_t *t)
 char *
 ACE_OS::strerror (int errnum)
 {
-  if (ACE::is_sock_error (errnum)) 
-    {
-      const ACE_TCHAR *errortext = ACE::sock_error (errnum);
+  if (ACE::is_sock_error (errnum))
+    {
+      const ACE_TCHAR *errortext = ACE::sock_error (errnum);
       static char ret_errortext[128];
       ACE_OS::strncpy (ret_errortext, ACE_TEXT_ALWAYS_CHAR(errortext), sizeof(ret_errortext));
       return ret_errortext;
-    }
+    }
 #if defined (ACE_LACKS_STRERROR)
   return ACE_OS::strerror_emulation (errnum);
 #else /* ACE_LACKS_STRERROR */
