@@ -1,3 +1,21 @@
+Fri Jan  5 15:17:12 2002  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * ace/OS.{h,cpp}:
+          Added ACE_TSS_Emulation::release_key() method to release a
+          thread_key within the TSS_Emulation when a thread is stopped.
+          Added ACE_TSS_Emulation::tss_keys_used_ member to administrate which
+          thread_keys are used and which not.
+          Added ACE_TSS_Keys::is_set() method to test whether a specific
+          thread_key is marked as used.
+          Changed ACE_TSS_Emulation::next_key() method to return a thread_key
+          that is not used yet, this key is then marked as used at the same
+          time.
+          Changed ACE_OS::thr_keyfree() method to release the key in the
+          TSS_Emulation when ACE_HAS_TSS_EMULATION is defined.
+
+          These changes fix the bugzilla bugs 223 and 657. The ACE_TSS_Emulation
+          now recycles keys that are released earlier.
+
 Fri Jan  4 19:59:03 2002  John Aughey  <jha@cs.wustl.edu>
 
         * ace/INET_Addr.cpp: Fixed the new set_host_name method
