@@ -1,3 +1,11 @@
+Thu May 11 09:36:27 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/driver/drv_args.cpp:
+	  Suppress generation of Any operators automatically when
+	  typecode generation is suppressed with -St, since the
+	  >>= operator uses the typecode. The use of -St along was
+	  generating incompilable code.
+
 Thu May 11 09:00:00 2000  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
 	* tests/AMI/ami_test_i.cpp,
