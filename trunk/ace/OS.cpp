@@ -2113,7 +2113,7 @@ ACE_OS::cleanup_tss (const u_int main_thread)
       // thread.
 
       // Remove all TSS_Info table entries.
-      ACE_TSS_Cleanup::instance ()->free_all_keys_left ();
+      // ACE_TSS_Cleanup::instance ()->free_all_keys_left ();
 #endif /* ACE_WIN32 */
 
       // Finally, free up the ACE_TSS_Cleanup instance.  This method gets

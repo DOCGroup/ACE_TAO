@@ -49,6 +49,11 @@ realclean: clean
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
-
+testC.o: testC.cpp testC.h testC.i testS.h testS_T.h testS_T.i \
+ testS_T.cpp testS.i
+testS.o: testS.cpp testS.h testC.h testC.i testS_T.h testS_T.i \
+ testS_T.cpp testS.i
+Identity.o: Identity.cpp testS.h testC.h testC.i testS_T.h testS_T.i \
+ testS_T.cpp testS.i
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

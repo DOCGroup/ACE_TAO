@@ -68,7 +68,7 @@ ACE_Singleton<TYPE, ACE_LOCK>::instance (void)
           ACE_NEW_RETURN (singleton, (ACE_Singleton<TYPE, ACE_LOCK>), 0);
 
           // Register for destruction with ACE_Object_Manager.
-          ACE_Object_Manager::at_exit (singleton);
+          // ACE_Object_Manager::at_exit (singleton);
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
         }
       else
