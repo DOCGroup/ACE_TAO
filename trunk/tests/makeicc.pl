@@ -9,7 +9,7 @@ foreach $tmp (@ls)
 	$tmp2 = "$a1\icc";
 
 open(T,"> $a1\icc");
-	print T "// $Id$\n";
+	print T "// \$Id\$\n";
 	print T "\n";
 	print T "include \"vacpp_setup.icc\"\n";
 	print T "option\n";
