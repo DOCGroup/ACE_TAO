@@ -1,3 +1,8 @@
+Sat May 25 01:15:02 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* bin/nightlybuilds/builds.lst: Move Debian_Minimum bulid to
+	  new scoreboard.
+
 Fri May 24 20:51:25 2002  Christopher Kohlhoff  <chris@kohlhoff.com>
 
         * ace/Log_Msg_NT_Event_Log.cpp (open):

@@ -58,11 +58,6 @@ LIST   = http://tao.doc.wustl.edu/bugzilla/wchar/
 WEB    = http://tao.doc.wustl.edu/bugzilla/cgi/show_log_dir.pl?wchar
 STATUS = http://tao.doc.wustl.edu/bugzilla/wchar/status.txt
 
-[Debian_Minimum]
-LIST   = http://doc.ece.uci.edu/~bugzilla/auto_compile_logs/balar_Minimum/
-WEB    = http://doc.ece.uci.edu/cgi-bin/show_log_dir.pl?balar_Minimum
-STATUS = http://doc.ece.uci.edu/~bugzilla/auto_compile_logs/balar_Minimum/status.txt
-
 [Debian_Core]
 LIST   = http://doc.ece.uci.edu/~bugzilla/auto_compile_logs/balar_Core/
 WEB    = http://doc.ece.uci.edu/cgi-bin/show_log_dir.pl?balar_Core
