@@ -1,3 +1,117 @@
+Fri Aug 24 16:10:20 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	Merged in changes from the reactor_deadlock branch. This set of
+	changes actually fixes a long standing problem with the
+	TP_Reactor. The TP_Reactor was holding the token too long  and
+	this created all sorts of problems for TAO. The changes have been
+	merged from the branch <reactor_deadlock> and here are the relevant
+        ChangeLog entries.
+
+	Fri Aug 24 14:59:52 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+        * ace/TP_Reactor.cpp (dispatch_socket_events): Cosmetic changes. 
+
+	Fri Aug 24 14:19:02 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/Timer_Queue_T.i:
+	* ace/Timer_Queue_T.h:Removed the default constructor and
+	  destructor for ACE_Timer_Node_Dispatch_Info_T allowing the
+	  compiler to do the job.
+
+	  Fri Aug 24 12:05:25 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/Timer_Queue_T.cpp: Removed some vague debug statements.
+
+	Fri Aug 24 11:34:11 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/Timer_Queue_T.h:
+	* ace/Timer_Queue_T.cpp:
+	* ace/Timer_Queue_T.i: Added a new class
+	  ACE_Timer_Node_Dispatch_Info_T that has the dispatch information
+	  needed to make the upcall. Added methods, dispatch_info () and
+	  dispatch_info_i () in ACE_Timer_Queue_T. These methods return
+	  the dispatch information if there is a node in the queue whose
+	  timer value <= current time. Changed the expire () method to use
+	  this method to get dispatch information.
+
+	* ace/Timer_Queue.h: Added a template specialisation for 
+	  ACE_Timer_Node_Dispatch_Info_T. 
+
+	* ace/Timer_Queue.cpp: Added template instantiations for the
+	  specialisation. 
+	  
+	* ace/TP_Reactor.h:
+	* ace/TP_Reactor.cpp: Added a new method handle_timer_events ()
+	  that would handles timer events.
+
+	Thu Aug 23 11:50:18 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/Reactor_Impl.h: Added two new methods notify_handle () and
+	  dispatch_notify () to the ACE_Reactor_Impl class.
+
+	* ace/Select_Reactor_Base.h:
+	* ace/Select_Reactor_Base.cpp: Implemented the above two
+	  methods in the ACE_Select_Reactor_Notify class. The
+	  notify_handle () method returns the handle of the pipe on which
+	  it is listening. The dispatch_notify () call does a dispatch of
+	  just one notify () call in the notify pipe. The handle_input ()
+	  call that used to process all the notify calls now calls the
+	  dispatch_notify () in a loop.  The change essentially allows
+	  some extrenal client of this class to just process one notify at
+	  a time if needed.
+
+	* ace/TP_Reactor.h:
+	* ace/TP_Reactor.i:
+	* ace/TP_Reactor.cpp (handle_events): Fixed a bug with
+	  handle_events (ACE_Time_Value &). This should be calling the
+	  handle_events () of the TP_Reactor and not the select reactor. 
+	 
+	  Added a whole slew of new methods that basically allows us to do
+	  this 
+	    - handle one event at a time
+	   
+	    - once the thread knows the event that needs handling it should
+	      release the token before dispatching the events
+	   
+	  The new methods that have been added are
+	  
+	    - handle_signals (), which handle signals that interrupted the
+	      select (). The implementation of this method is busted. The
+	      implementation has been copied from the existing setup
+	    
+	    - handle_notify_events (), which handles one notify on the
+	      notify_pipe at a time
+
+	    - handle_socket_events (), which handles socket events.
+
+	  Quite a few helper methods have also been added. They are
+	  get_notify_handle (), get_socket_event_info (), and
+	  dispatch_socket_events (). Removed the methods dispatch_i (),
+	  dispatch_i_protected () and notify_handle (). This checkin fixes
+	  the problem in 1002. But we still have to add handling timeouts
+	  into the TP_Reactor.
+
+
+	Tue Aug 21 17:21:07 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/TP_Reactor.i:
+	* ace/TP_Reactor.h:
+	* ace/TP_Reactor.cpp: Made lots of changes which havent been
+	  compiled yet.  Added a new class ACE_TP_Token_Guard that helps
+	  in obtaining and releasing tokens. Moved the grab_token () from
+	  the ACE_TP_Reactor class to the TP_Token_Guard class. Added a
+	  new method for handling signals. They havent been compiled yet
+	  and this checkin is to put files from work to my home box.
+
+	Tue Aug 21 07:58:42 2001 Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/TP_Reactor.i:
+	* ace/TP_Reactor.h:
+	* ace/TP_Reactor.cpp (handle_events): Started refactoring some of
+	  the code to help with this bug.  This change has not been
+	  compiled. This is just being done to transfer files from home
+	  to work.
+
 Fri Aug 24 14:25:31 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* THANKS: Added Massimo Pichini <massimo@webbridges.it> to the

@@ -45,6 +45,8 @@ ACE_Timer_Node_T<TYPE>::~ACE_Timer_Node_T (void)
   ACE_TRACE ("ACE_Timer_Node_T::~ACE_Timer_Node_T");
 }
 
+
+
 template <class TYPE, class FUNCTOR, class ACE_LOCK>
 ACE_Timer_Queue_Iterator_T<TYPE, FUNCTOR, ACE_LOCK>::ACE_Timer_Queue_Iterator_T (void)
 {
@@ -197,18 +199,14 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::mutex (void)
   return this->mutex_;
 }
 
+
 // Run the <handle_timeout> method for all Timers whose values are <=
 // <cur_time>.
-
 template <class TYPE, class FUNCTOR, class ACE_LOCK> int
 ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::expire (const ACE_Time_Value &cur_time)
 {
   ACE_TRACE ("ACE_Timer_Queue_T::expire");
   ACE_MT (ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->mutex_, -1));
-
-  int number_of_timers_expired = 0;
-
-  ACE_Timer_Node_T<TYPE> *expired;
 
   // Keep looping while there are timers remaining and the earliest
   // timer is <= the <cur_time> passed in to the method.
@@ -216,11 +214,42 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::expire (const ACE_Time_Value &cur_ti
   if (this->is_empty ())
     return 0;
 
-  while (this->earliest_time () <= cur_time)
+  int number_of_timers_expired = 0;
+  int result = 0;
+
+  ACE_Timer_Node_Dispatch_Info_T<TYPE> info;
+
+  while ((result = this->dispatch_info_i (cur_time,
+                                          info)) != 0)
+    {
+      // call the functor
+      this->upcall (info.type_, info.act_, cur_time);
+
+      number_of_timers_expired++;
+
+    }
+
+  return number_of_timers_expired;
+}
+
+
+template <class TYPE, class FUNCTOR, class ACE_LOCK> int
+ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::dispatch_info_i (const ACE_Time_Value &cur_time,
+                                                             ACE_Timer_Node_Dispatch_Info_T<TYPE> &info)
+{
+  ACE_TRACE ("ACE_Timer_Queue_T::dispatch_info_i");
+
+  if (this->is_empty ())
+    return 0;
+
+  ACE_Timer_Node_T<TYPE> *expired = 0;
+
+  if (this->earliest_time () <= cur_time)
     {
       expired = this->remove_first ();
-      TYPE type = expired->get_type ();    // Need a copy, not a reference!
-      const void *act = expired->get_act ();
+
+      // Get the dispatch info
+      expired->get_dispatch_info (info);
 
       // Check if this is an interval timer.
       if (expired->get_interval () > ACE_Time_Value::zero)
@@ -241,16 +270,10 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::expire (const ACE_Time_Value &cur_ti
           this->free_node (expired);
         }
 
-      // call the functor
-      this->upcall (type, act, cur_time);
-
-      number_of_timers_expired++;
-
-      if (this->is_empty ())
-        break;
+      return 1;
     }
 
-  return number_of_timers_expired;
+  return 0;
 }
 
 
