@@ -126,15 +126,14 @@ Server::Server (void)
 int
 Server::init (int argc,
               char *argv[],
-              CORBA::Environment& env)
+              CORBA::Environment& ACE_TRY_ENV)
 {
   // Initialize the orb_manager
   this->orb_manager_.init_child_poa (argc,
                                      argv,
                                      "child_poa",
-                                     env);
-  TAO_CHECK_ENV_RETURN (env,
-                        -1);
+                                     ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
 
   CORBA::ORB_var orb =
     this->orb_manager_.orb ();
@@ -174,8 +173,8 @@ Server::init (int argc,
   // create the video server mmdevice with the naming service pointer.
   this->orb_manager_.activate_under_child_poa ("Bench_Server_MMDevice",
                                                this->mmdevice_,
-                                               env);
-  TAO_CHECK_ENV_RETURN (env,-1);
+                                               ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
 
   // Register the mmdevice with the naming service.
   CosNaming::Name server_mmdevice_name (1);
@@ -183,18 +182,12 @@ Server::init (int argc,
   server_mmdevice_name [0].id = CORBA::string_dup ("Bench_Server_MMDevice");
 
   // Register the video control object with the naming server.
-  this->my_name_client_->bind (server_mmdevice_name,
-                               this->mmdevice_->_this (env),
-                               env);
+  this->my_name_client_->rebind (server_mmdevice_name,
+                                 this->mmdevice_->_this (),
+                                 ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
 
-  if (env.exception () != 0)
-    {
-      env.clear ();
-      this->my_name_client_->rebind (server_mmdevice_name,
-                              this->mmdevice_->_this (env),
-                              env);
-      TAO_CHECK_ENV_RETURN (env,-1);
-    }
+  
 //   result = this->signal_handler_.register_handler ();
 
 //   if (result < 0)
@@ -238,12 +231,13 @@ Server::parse_args (int argc,char **argv)
 
 // Runs the server
 int
-Server::run (CORBA::Environment& env)
+Server::run (CORBA::Environment& ACE_TRY_ENV)
 {
   // Run the ORB event loop
   while (1)
     {
-      this->orb_manager_.run (env);
+      this->orb_manager_.run (ACE_TRY_ENV);
+      ACE_CHECK_RETURN (-1);
       if (errno== EINTR)
         continue;
       else
@@ -273,21 +267,23 @@ int
 main (int argc, char **argv)
 {
   Server server;
-  TAO_TRY
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
     {
-      if (server.init (argc, argv, TAO_TRY_ENV) == -1)
+      if (server.init (argc, argv, ACE_TRY_ENV) == -1)
         return 1;
-      TAO_CHECK_ENV;
+      ACE_TRY_CHECK;
 
-      server.run (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+      server.run (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
     }
-  TAO_CATCHANY
+  ACE_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("Bench_Server::Exception");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"Bench_Server::Exception \n");
       return -1;
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
 
   return 0;
 }
