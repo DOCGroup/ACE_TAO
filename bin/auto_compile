@@ -478,6 +478,7 @@ if ($dont_run == 0) {
       if ($STATUS eq "OK") {
         $STATUS = "RUNTIME ERROR";
       }
+      print LOG "ERROR, non-zero status returned by test script\n";
       push @failures, "Error when closing pipe for $program in $directory";
       next;
     }
