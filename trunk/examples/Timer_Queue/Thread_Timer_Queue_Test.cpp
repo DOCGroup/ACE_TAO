@@ -106,7 +106,7 @@ Input_Task::svc (void)
 int
 Input_Task::add_timer (void *argument)
 {
-  u_long useconds = *(int *)argument;
+  u_long useconds = *(int *) argument;
   ACE_Time_Value interval (useconds / usecs_, useconds % usecs_);
   ACE_Time_Value expire_at = ACE_OS::gettimeofday () + interval;
 
@@ -117,11 +117,12 @@ Input_Task::add_timer (void *argument)
   int id = queue_->schedule (h, 0, expire_at);
 
   if (id == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "schedule failed"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "schedule failed"),
+                      -1);
 
   // We store the id into the handler, this is only used to produce
   // nicer messages.
-  // @@ Should this be something that a user can extract?
   h->set_id (id);
 
   ACE_OS::printf ("scheduling timer %d\n", id);

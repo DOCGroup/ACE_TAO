@@ -233,8 +233,8 @@ ACE_FlReactor::remove_handler_i (const ACE_Handle_Set &handles,
 					       mask);
 }
 
-// The following functions ensure that there is an Fl timeout for the
-// first timeout in the Reactor's Timer_Queue.
+// The following function ensures there's an Fl timeout for the first
+// timeout in the Reactor's Timer_Queue.
 
 void
 ACE_FlReactor::reset_timeout (void)
@@ -246,7 +246,30 @@ ACE_FlReactor::reset_timeout (void)
     {
       float t = max_wait_time->sec ()
         + max_wait_time->usec () / 1000000.0F;
-      Fl::add_timeout (t, ACE_FlReactor::fl_timeout_proc, this);
+      Fl::add_timeout (t, 
+                       ACE_FlReactor::fl_timeout_proc,
+                       this);
+    }
+}
+
+int
+ACE_FlReactor::reset_timer_interval
+  (const long timer_id, 
+   const ACE_Time_Value &interval)
+{
+  ACE_TRACE ("ACE_FlReactor::reset_timer_interval");
+  ACE_MT (ACE_GUARD_RETURN (ACE_SELECT_REACTOR_TOKEN, ace_mon, this->token_, -1));
+
+  int result = ACE_Select_Reactor::reset_interval
+    (timer_id,
+     interval);
+
+  if (result == -1)
+    return -1;
+  else
+    {
+      this->reset_timeout ();
+      return result;
     }
 }
 

@@ -57,8 +57,9 @@ ACE_TP_Reactor::notify_handle (ACE_EH_Dispatch_Info &dispatch_info)
 
   // If positive, reschedule in Reactor
   else if (status > 0)
-    this->ready_ops (handle, mask, ACE_Reactor::SET_MASK);
-
+    this->ready_ops (handle,
+                     mask,
+                     ACE_Reactor::SET_MASK);
   // assert (status >= 0);
   // resume in Reactor
   return (event_handler != this->notify_handler_ ?

@@ -356,6 +356,18 @@ ACE_Reactor::resume_handlers (void)
 }
 
 
+ACE_INLINE int
+ACE_Reactor::reset_timer_interval
+  (const long timer_id, 
+   const ACE_Time_Value &interval)
+{
+  ACE_TRACE ("ACE_Reactor::reset_timer_interval");
+
+  return this->implementation ()->reset_timer_interval
+    (timer_id,
+     interval);
+}
+
 ACE_INLINE long
 ACE_Reactor::schedule_timer (ACE_Event_Handler *event_handler,
                              const void *arg,

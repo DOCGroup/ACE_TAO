@@ -10,12 +10,13 @@
 //
 // = DESCRIPTION
 //      This is a simple test that illustrates the timer mechanism of
-//      the reactor. Scheduling timers, handling expired timers and
-//      cancelling scheduled timers are all tested in this test. No
-//      command line arguments are needed to run the test.
+//      the reactor.  Scheduling timers, resetting timer intervals,
+//      handling expired timers and cancelling scheduled timers are
+//      all exercised in this test. 
 //
 // = AUTHOR
-//    Prashant Jain and Douglas C. Schmidt
+//    Prashant Jain <pjain@cs.wustl.edu> and Douglas C. Schmidt
+//    <schmidt@cs.wustl.edu>
 //
 // ============================================================================
 

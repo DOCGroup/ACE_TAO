@@ -668,8 +668,6 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::remove_handler
   return result;
 }
 
-// Note the queue handles its own locking.
-
 template <class ACE_SELECT_REACTOR_TOKEN> long
 ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::schedule_timer
   (ACE_Event_Handler *handler,
@@ -681,7 +679,23 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::schedule_timer
   ACE_MT (ACE_GUARD_RETURN (ACE_SELECT_REACTOR_TOKEN, ace_mon, this->token_, -1));
 
   return this->timer_queue_->schedule
-    (handler, arg, timer_queue_->gettimeofday () + delta_time, interval);
+    (handler,
+     arg,
+     timer_queue_->gettimeofday () + delta_time,
+     interval);
+}
+
+template <class ACE_SELECT_REACTOR_TOKEN> int
+ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::reset_timer_interval
+  (const long timer_id, 
+   const ACE_Time_Value &interval)
+{
+  ACE_TRACE ("ACE_Select_Reactor_T::reset_timer_interval");
+  ACE_MT (ACE_GUARD_RETURN (ACE_SELECT_REACTOR_TOKEN, ace_mon, this->token_, -1));
+
+  return this->timer_queue_->reset_interval
+    (timer_id,
+     interval);
 }
 
 // Main event loop driver that blocks for <max_wait_time> before

@@ -58,10 +58,10 @@ public:
                                const void *arg,
                                const ACE_Time_Value &delta_time,
                                const ACE_Time_Value &interval);
-
+  virtual int reset_timer_interval (const long timer_id, 
+                                    const ACE_Time_Value &interval);
   virtual int cancel_timer (ACE_Event_Handler *handler,
                             int dont_call_handle_close = 1);
-
   virtual int cancel_timer (long timer_id,
                             const void **arg = 0,
                             int dont_call_handle_close = 1);
@@ -92,6 +92,8 @@ protected:
 
 private:
   void reset_timeout (void);
+  // This method ensures there's an Fl timeout for the first timeout
+  // in the Reactor's Timer_Queue.
 
   // = Integrate with the FL callback function mechanism.
   static void fl_io_proc (int fd, void*);
