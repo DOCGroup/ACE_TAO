@@ -1,3 +1,20 @@
+Sat May 29 17:56:53 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Wait_Strategy.cpp:
+	  If an error is received while waiting for a reply we must wakeup 
+	  the follower thread (unless we are the leader).
+	  After waking up we should check if it was because of an error or 
+	  actually all the data arrived.
+
+	* tao/Invocation.cpp:
+	  Errors while receiving a reply where not handled correctly.
+
+	* tao/ORB_Core.cpp:
+	  Use ACE_GUARD instead of ACE_Guard<>.
+
+	* tests/MT_Client/test_i.cpp:
+	  Remove excessive debugging messages.
+
 Sat May 29 16:56:05 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/Connect.h:
