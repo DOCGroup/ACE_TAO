@@ -146,7 +146,10 @@ public:
 
   /// Set the request target specifier to point to a tagged profile
   /// containing the GroupId associated with this profile.
-  virtual void request_target_specifier (TAO_Target_Specification &target_spec);
+  virtual void request_target_specifier (
+                      TAO_Target_Specification &target_spec,
+                      TAO_Target_Specification::TAO_Target_Address required_type,
+                      CORBA::Environment &ACE_TRY_ENV);
 
   /// Returns true since this profile can specify multicast endpoints.
   virtual int supports_multicast (void) const;
@@ -155,14 +158,19 @@ public:
                                       PortableGroup::TagGroupTaggedComponent &group);
 
   /// Add the mandatory group component to this profile.
-  int add_group_component (const char *domain_id,
-                           PortableGroup::ObjectGroupId group_id,
-                           PortableGroup::ObjectGroupRefVersion ref_version);
+  void set_group_info (const char *domain_id,
+                       PortableGroup::ObjectGroupId group_id,
+                       PortableGroup::ObjectGroupRefVersion ref_version);
 
 private:
 
   /// Creates an encapsulation of the ProfileBody struct in the <cdr>
   void create_profile_body (TAO_OutputCDR &cdr) const;
+
+  /// Update the group component in the cached list of tagged
+  /// components.  This needs to be called whenever the group_domain_id,
+  /// group_id, or ref_version changes.
+  void update_cached_group_component (void);
 
 protected:
 
@@ -193,8 +201,18 @@ private:
   /// some of the API calls.
   TAO_ObjectKey object_key_;
 
-  /// Our tagged profile
+  /// Cached version of our tagged profile.
   IOP::TaggedProfile tagged_profile_;
+
+  /// Group Domain ID.
+  ACE_CString group_domain_id_;
+
+  /// Our group ID within the group domain.
+  PortableGroup::ObjectGroupId group_id_;
+
+  /// The group reference's version.
+  PortableGroup::ObjectGroupRefVersion ref_version_;
+
 };
 
 #if defined (__ACE_INLINE__)

@@ -38,19 +38,19 @@
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-
+  
 #if !defined (__TAO_BOUNDED_SEQUENCE_MIOP_UNIQUEID_252_CS_)
 #define __TAO_BOUNDED_SEQUENCE_MIOP_UNIQUEID_252_CS_
 
-  void
+  void 
   MIOP::_TAO_Bounded_Sequence_MIOP_UniqueId_252::_allocate_buffer (CORBA::ULong /* length */)
   // allocate a buffer of the requested length. The buffer is allocated for the
   // right type
   {
     this->buffer_ = _TAO_Bounded_Sequence_MIOP_UniqueId_252::allocbuf (252U);
   }
-
-  void
+  
+  void 
   MIOP::_TAO_Bounded_Sequence_MIOP_UniqueId_252::_deallocate_buffer (void)
   // deallocate the buffer
   {
@@ -60,17 +60,17 @@
     _TAO_Bounded_Sequence_MIOP_UniqueId_252::freebuf (tmp);
     this->buffer_ = 0;
   }
-
+  
   MIOP::_TAO_Bounded_Sequence_MIOP_UniqueId_252::~_TAO_Bounded_Sequence_MIOP_UniqueId_252 (void) // Dtor.
   {
     this->_deallocate_buffer ();
   }
-
-
+  
+  
 #endif /* end #if !defined */
 
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
 
 #if !defined (_MIOP_UNIQUEID_CS_)
 #define _MIOP_UNIQUEID_CS_
@@ -82,21 +82,21 @@
 MIOP::UniqueId::UniqueId (void)
 {}
 MIOP::UniqueId::UniqueId (CORBA::ULong length, CORBA::Octet *buffer, CORBA::Boolean release)
-  :
+  : 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Bounded_Sequence_MIOP_UniqueId_252
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Bounded_Sequence<CORBA::Octet, 252U>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
  (length, buffer, release)
 {}
 MIOP::UniqueId::UniqueId (const UniqueId &seq) // copy ctor
-  :
+  : 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Bounded_Sequence_MIOP_UniqueId_252
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Bounded_Sequence<CORBA::Octet, 252U>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
  (seq)
 {}
 MIOP::UniqueId::~UniqueId (void) // dtor
@@ -114,17 +114,17 @@ static const CORBA::Long _oc_MIOP_UniqueId[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   30,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x4d494f50),
-  ACE_NTOHL (0x2f556e69),
-  ACE_NTOHL (0x71756549),
-  ACE_NTOHL (0x643a312e),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x4d494f50), 
+  ACE_NTOHL (0x2f556e69), 
+  ACE_NTOHL (0x71756549), 
+  ACE_NTOHL (0x643a312e), 
   ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/MIOP/UniqueId:1.0
   9,
-  ACE_NTOHL (0x556e6971),
-  ACE_NTOHL (0x75654964),
+  ACE_NTOHL (0x556e6971), 
+  ACE_NTOHL (0x75654964), 
   ACE_NTOHL (0x0),  // name = UniqueId
   CORBA::tk_sequence, // typecode kind
   12, // encapsulation length
@@ -152,25 +152,25 @@ static const CORBA::Long _oc_MIOP_PacketHeader_1_0[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   38,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x4d494f50),
-  ACE_NTOHL (0x2f506163),
-  ACE_NTOHL (0x6b657448),
-  ACE_NTOHL (0x65616465),
-  ACE_NTOHL (0x725f315f),
-  ACE_NTOHL (0x303a312e),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x4d494f50), 
+  ACE_NTOHL (0x2f506163), 
+  ACE_NTOHL (0x6b657448), 
+  ACE_NTOHL (0x65616465), 
+  ACE_NTOHL (0x725f315f), 
+  ACE_NTOHL (0x303a312e), 
   ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/MIOP/PacketHeader_1_0:1.0
   17,
-  ACE_NTOHL (0x5061636b),
-  ACE_NTOHL (0x65744865),
-  ACE_NTOHL (0x61646572),
-  ACE_NTOHL (0x5f315f30),
+  ACE_NTOHL (0x5061636b), 
+  ACE_NTOHL (0x65744865), 
+  ACE_NTOHL (0x61646572), 
+  ACE_NTOHL (0x5f315f30), 
   ACE_NTOHL (0x0),  // name = PacketHeader_1_0
   7, // member count
   6,
-  ACE_NTOHL (0x6d616769),
+  ACE_NTOHL (0x6d616769), 
   ACE_NTOHL (0x63000000),  // name = magic
   CORBA::tk_array, // typecode kind
   12, // encapsulation length
@@ -180,35 +180,35 @@ static const CORBA::Long _oc_MIOP_PacketHeader_1_0[] =
     4U,
 
   12,
-  ACE_NTOHL (0x6864725f),
-  ACE_NTOHL (0x76657273),
+  ACE_NTOHL (0x6864725f), 
+  ACE_NTOHL (0x76657273), 
   ACE_NTOHL (0x696f6e00),  // name = hdr_version
   CORBA::tk_octet,
 
   6,
-  ACE_NTOHL (0x666c6167),
+  ACE_NTOHL (0x666c6167), 
   ACE_NTOHL (0x73000000),  // name = flags
   CORBA::tk_octet,
 
   14,
-  ACE_NTOHL (0x7061636b),
-  ACE_NTOHL (0x65745f6c),
-  ACE_NTOHL (0x656e6774),
+  ACE_NTOHL (0x7061636b), 
+  ACE_NTOHL (0x65745f6c), 
+  ACE_NTOHL (0x656e6774), 
   ACE_NTOHL (0x68000000),  // name = packet_length
   CORBA::tk_ushort,
 
   14,
-  ACE_NTOHL (0x7061636b),
-  ACE_NTOHL (0x65745f6e),
-  ACE_NTOHL (0x756d6265),
+  ACE_NTOHL (0x7061636b), 
+  ACE_NTOHL (0x65745f6e), 
+  ACE_NTOHL (0x756d6265), 
   ACE_NTOHL (0x72000000),  // name = packet_number
   CORBA::tk_ulong,
 
   18,
-  ACE_NTOHL (0x6e756d62),
-  ACE_NTOHL (0x65725f6f),
-  ACE_NTOHL (0x665f7061),
-  ACE_NTOHL (0x636b6574),
+  ACE_NTOHL (0x6e756d62), 
+  ACE_NTOHL (0x65725f6f), 
+  ACE_NTOHL (0x665f7061), 
+  ACE_NTOHL (0x636b6574), 
   ACE_NTOHL (0x73000000),  // name = number_of_packets
   CORBA::tk_ulong,
 
@@ -218,17 +218,17 @@ static const CORBA::Long _oc_MIOP_PacketHeader_1_0[] =
   76, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     30,
-    ACE_NTOHL (0x49444c3a),
-    ACE_NTOHL (0x6f6d672e),
-    ACE_NTOHL (0x6f72672f),
-    ACE_NTOHL (0x4d494f50),
-    ACE_NTOHL (0x2f556e69),
-    ACE_NTOHL (0x71756549),
-    ACE_NTOHL (0x643a312e),
+    ACE_NTOHL (0x49444c3a), 
+    ACE_NTOHL (0x6f6d672e), 
+    ACE_NTOHL (0x6f72672f), 
+    ACE_NTOHL (0x4d494f50), 
+    ACE_NTOHL (0x2f556e69), 
+    ACE_NTOHL (0x71756549), 
+    ACE_NTOHL (0x643a312e), 
     ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/MIOP/UniqueId:1.0
     9,
-    ACE_NTOHL (0x556e6971),
-    ACE_NTOHL (0x75654964),
+    ACE_NTOHL (0x556e6971), 
+    ACE_NTOHL (0x75654964), 
     ACE_NTOHL (0x0),  // name = UniqueId
     CORBA::tk_sequence, // typecode kind
     12, // encapsulation length
@@ -288,7 +288,7 @@ MIOP::PacketHeader_1_0::_magic_free (MIOP::PacketHeader_1_0::_magic_slice *_tao_
   delete [] _tao_slice;
 }
 
-void
+void 
 MIOP::PacketHeader_1_0::_magic_copy (MIOP::PacketHeader_1_0::_magic_slice * _tao_to, const MIOP::PacketHeader_1_0::_magic_slice *_tao_from)
 {
   // copy each individual element
@@ -300,32 +300,48 @@ static const CORBA::Long _oc_MIOP_Version[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   29,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x4d494f50),
-  ACE_NTOHL (0x2f566572),
-  ACE_NTOHL (0x73696f6e),
-  ACE_NTOHL (0x3a312e30),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x4d494f50), 
+  ACE_NTOHL (0x2f566572), 
+  ACE_NTOHL (0x73696f6e), 
+  ACE_NTOHL (0x3a312e30), 
   ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/MIOP/Version:1.0
   8,
-  ACE_NTOHL (0x56657273),
+  ACE_NTOHL (0x56657273), 
   ACE_NTOHL (0x696f6e00),  // name = Version
-  2, // member count
-  6,
-  ACE_NTOHL (0x6d616a6f),
-  ACE_NTOHL (0x72000000),  // name = major
-  CORBA::tk_octet,
+  CORBA::tk_struct, // typecode kind
+  88, // encapsulation length
+    TAO_ENCAP_BYTE_ORDER, // byte order
+    29,
+    ACE_NTOHL (0x49444c3a), 
+    ACE_NTOHL (0x6f6d672e), 
+    ACE_NTOHL (0x6f72672f), 
+    ACE_NTOHL (0x47494f50), 
+    ACE_NTOHL (0x2f566572), 
+    ACE_NTOHL (0x73696f6e), 
+    ACE_NTOHL (0x3a312e30), 
+    ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/GIOP/Version:1.0
+    8,
+    ACE_NTOHL (0x56657273), 
+    ACE_NTOHL (0x696f6e00),  // name = Version
+    2, // member count
+    6,
+    ACE_NTOHL (0x6d616a6f), 
+    ACE_NTOHL (0x72000000),  // name = major
+    CORBA::tk_octet,
 
-  6,
-  ACE_NTOHL (0x6d696e6f),
-  ACE_NTOHL (0x72000000),  // name = minor
-  CORBA::tk_octet,
+    6,
+    ACE_NTOHL (0x6d696e6f), 
+    ACE_NTOHL (0x72000000),  // name = minor
+    CORBA::tk_octet,
+
 
 };
 
 static CORBA::TypeCode _tc_TAO_tc_MIOP_Version (
-    CORBA::tk_struct,
+    CORBA::tk_alias,
     sizeof (_oc_MIOP_Version),
     (char *) &_oc_MIOP_Version,
     0,
@@ -337,575 +353,138 @@ TAO_NAMESPACE_BEGIN (MIOP)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_Version, &_tc_TAO_tc_MIOP_Version)
 TAO_NAMESPACE_END
 
-void MIOP::Version::_tao_any_destructor (void *x)
-{
-  Version *tmp = ACE_static_cast (Version*,x);
-  delete tmp;
-}
-
-static const CORBA::Long _oc_MIOP_IPVersion[] =
+static const CORBA::Long _oc_MIOP_Address[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
-  31,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x4d494f50),
-  ACE_NTOHL (0x2f495056),
-  ACE_NTOHL (0x65727369),
-  ACE_NTOHL (0x6f6e3a31),
-  ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/MIOP/IPVersion:1.0
-  10,
-  ACE_NTOHL (0x49505665),
-  ACE_NTOHL (0x7273696f),
-  ACE_NTOHL (0x6e000000),  // name = IPVersion
-  CORBA::tk_short,
-
-};
-
-static CORBA::TypeCode _tc_TAO_tc_MIOP_IPVersion (
-    CORBA::tk_alias,
-    sizeof (_oc_MIOP_IPVersion),
-    (char *) &_oc_MIOP_IPVersion,
-    0,
-    sizeof (MIOP::IPVersion)
-  );
-
-TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-TAO_NAMESPACE_BEGIN (MIOP)
-TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_IPVersion, &_tc_TAO_tc_MIOP_IPVersion)
-TAO_NAMESPACE_END
-
-TAO_NAMESPACE_TYPE (const CORBA::Short)
-TAO_NAMESPACE_BEGIN (MIOP)
-TAO_NAMESPACE_DEFINE (const CORBA::Short, IPv4, 0)
-TAO_NAMESPACE_END
-TAO_NAMESPACE_TYPE (const CORBA::Short)
-TAO_NAMESPACE_BEGIN (MIOP)
-TAO_NAMESPACE_DEFINE (const CORBA::Short, IPv6, 1)
-TAO_NAMESPACE_END
-static const CORBA::Long _oc_MIOP_UsingIpv4[] =
-{
-  TAO_ENCAP_BYTE_ORDER, // byte order
-  31,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x4d494f50),
-  ACE_NTOHL (0x2f557369),
-  ACE_NTOHL (0x6e674970),
-  ACE_NTOHL (0x76343a31),
-  ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/MIOP/UsingIpv4:1.0
-  10,
-  ACE_NTOHL (0x5573696e),
-  ACE_NTOHL (0x67497076),
-  ACE_NTOHL (0x34000000),  // name = UsingIpv4
-  2, // member count
-  5,
-  ACE_NTOHL (0x706f7274),
-  ACE_NTOHL (0x0),  // name = port
-  CORBA::tk_ushort,
-
-  16,
-  ACE_NTOHL (0x636c6173),
-  ACE_NTOHL (0x735f645f),
-  ACE_NTOHL (0x61646472),
-  ACE_NTOHL (0x65737300),  // name = class_d_address
-  CORBA::tk_array, // typecode kind
-  12, // encapsulation length
-    TAO_ENCAP_BYTE_ORDER, // byte order
-    CORBA::tk_octet,
-
-    4U,
-
-};
-
-static CORBA::TypeCode _tc_TAO_tc_MIOP_UsingIpv4 (
-    CORBA::tk_struct,
-    sizeof (_oc_MIOP_UsingIpv4),
-    (char *) &_oc_MIOP_UsingIpv4,
-    0,
-    sizeof (MIOP::UsingIpv4)
-  );
-
-TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-TAO_NAMESPACE_BEGIN (MIOP)
-TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_UsingIpv4, &_tc_TAO_tc_MIOP_UsingIpv4)
-TAO_NAMESPACE_END
-
-void MIOP::UsingIpv4::_tao_any_destructor (void *x)
-{
-  UsingIpv4 *tmp = ACE_static_cast (UsingIpv4*,x);
-  delete tmp;
-}
-
-void MIOP::UsingIpv4::_class_d_address_forany::_tao_any_destructor (void *x)
-{
-  _class_d_address_slice *tmp = ACE_static_cast (_class_d_address_slice*,x);
-  _class_d_address_free (tmp);
-}
-
-MIOP::UsingIpv4::_class_d_address_slice *
-MIOP::UsingIpv4::_class_d_address_dup (const MIOP::UsingIpv4::_class_d_address_slice *_tao_src_array)
-{
-  MIOP::UsingIpv4::_class_d_address_slice *_tao_dup_array = MIOP::UsingIpv4::_class_d_address_alloc ();
-  if (!_tao_dup_array) return (MIOP::UsingIpv4::_class_d_address_slice *)0;
-  MIOP::UsingIpv4::_class_d_address_copy (_tao_dup_array, _tao_src_array);
-  return _tao_dup_array;
-}
-
-MIOP::UsingIpv4::_class_d_address_slice *
-MIOP::UsingIpv4::_class_d_address_alloc (void)
-{
-  MIOP::UsingIpv4::_class_d_address_slice *retval = 0;
-  ACE_NEW_RETURN (retval, CORBA::Octet[4], 0);
-  return retval;
-}
-
-void
-MIOP::UsingIpv4::_class_d_address_free (MIOP::UsingIpv4::_class_d_address_slice *_tao_slice)
-{
-  delete [] _tao_slice;
-}
-
-void
-MIOP::UsingIpv4::_class_d_address_copy (MIOP::UsingIpv4::_class_d_address_slice * _tao_to, const MIOP::UsingIpv4::_class_d_address_slice *_tao_from)
-{
-  // copy each individual element
-  for (CORBA::ULong i0 = 0; i0 < 4; i0++)
-    _tao_to[i0] = _tao_from[i0];
-}
-
-static const CORBA::Long _oc_MIOP_UsingIpv6[] =
-{
-  TAO_ENCAP_BYTE_ORDER, // byte order
-  31,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x4d494f50),
-  ACE_NTOHL (0x2f557369),
-  ACE_NTOHL (0x6e674970),
-  ACE_NTOHL (0x76363a31),
-  ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/MIOP/UsingIpv6:1.0
-  10,
-  ACE_NTOHL (0x5573696e),
-  ACE_NTOHL (0x67497076),
-  ACE_NTOHL (0x36000000),  // name = UsingIpv6
-  2, // member count
-  5,
-  ACE_NTOHL (0x706f7274),
-  ACE_NTOHL (0x0),  // name = port
-  CORBA::tk_ulong,
-
+  29,
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x4d494f50), 
+  ACE_NTOHL (0x2f416464), 
+  ACE_NTOHL (0x72657373), 
+  ACE_NTOHL (0x3a312e30), 
+  ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/MIOP/Address:1.0
   8,
-  ACE_NTOHL (0x61646472),
-  ACE_NTOHL (0x65737300),  // name = address
-  CORBA::tk_string,
+  ACE_NTOHL (0x41646472), 
+  ACE_NTOHL (0x65737300),  // name = Address
+  CORBA::tk_string, 
   0U, // string length
 };
 
-static CORBA::TypeCode _tc_TAO_tc_MIOP_UsingIpv6 (
-    CORBA::tk_struct,
-    sizeof (_oc_MIOP_UsingIpv6),
-    (char *) &_oc_MIOP_UsingIpv6,
+static CORBA::TypeCode _tc_TAO_tc_MIOP_Address (
+    CORBA::tk_alias,
+    sizeof (_oc_MIOP_Address),
+    (char *) &_oc_MIOP_Address,
     0,
-    sizeof (MIOP::UsingIpv6)
+    sizeof (MIOP::Address)
   );
 
 TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (MIOP)
-TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_UsingIpv6, &_tc_TAO_tc_MIOP_UsingIpv6)
-TAO_NAMESPACE_END
-
-void MIOP::UsingIpv6::_tao_any_destructor (void *x)
-{
-  UsingIpv6 *tmp = ACE_static_cast (UsingIpv6*,x);
-  delete tmp;
-}
-
-// *************************************************************
-// Operations for union MIOP::IPEndpoints
-// *************************************************************
-
-// default constructor
-MIOP::IPEndpoints::IPEndpoints (void)
-{
-  ACE_OS::memset (&this->disc_, 0, sizeof (this->disc_));
-  ACE_OS::memset (&this->u_, 0, sizeof (this->u_));
-  this->disc_ = 0;
-}
-
-// copy constructor
-MIOP::IPEndpoints::IPEndpoints (const ::MIOP::IPEndpoints &u)
-{
-  this->disc_ = u.disc_;
-  switch (this->disc_)
-  {
-case 0:
-    {
-      this->u_.ipv4_endpoints_ = u.u_.ipv4_endpoints_;
-    }
-    break;
-    case 1:
-    {
-      if (u.u_.ipv6_endpoints_ == 0)
-        {
-          this->u_.ipv6_endpoints_ = 0;
-        }
-      else
-        {
-          ACE_NEW (
-              this->u_.ipv6_endpoints_,
-              MIOP::UsingIpv6 (*u.u_.ipv6_endpoints_)
-            );
-        }
-    }
-    break;
-        default:
-    break;
-  }
-}
-
-// destructor
-MIOP::IPEndpoints::~IPEndpoints (void)
-{
-  // finalize
-  this->_reset (this->disc_, 1);
-}
-
-void MIOP::IPEndpoints::_tao_any_destructor (void *x)
-{
-  IPEndpoints *tmp = ACE_static_cast (IPEndpoints*,x);
-  delete tmp;
-}
-
-// assignment operator
-MIOP::IPEndpoints &
-MIOP::IPEndpoints::operator= (const ::MIOP::IPEndpoints &u)
-{
-  if (&u == this)
-    {
-      return *this;
-    }
-
-  this->_reset (u.disc_, 0);
-  this->disc_ = u.disc_;
-
-  switch (this->disc_)
-  {
-    case 0:
-    {
-      this->u_.ipv4_endpoints_ = u.u_.ipv4_endpoints_;
-    }
-    break;
-    case 1:
-    {
-      if (u.u_.ipv6_endpoints_ == 0)
-        {
-          this->u_.ipv6_endpoints_ = 0;
-        }
-      else
-        {
-          ACE_NEW_RETURN (
-              this->u_.ipv6_endpoints_,
-              MIOP::UsingIpv6 (*u.u_.ipv6_endpoints_),
-              *this
-            );
-        }
-    }
-    break;
-    default:
-    break;
-  }
-
-  return *this;
-}
-
-// reset method to reset old values of a union
-void MIOP::IPEndpoints::_reset (CORBA::Short, CORBA::Boolean /*finalize*/)
-{
-  switch (this->disc_)
-  {
-    case 0:
-      break;
-    case 1:
-      delete this->u_.ipv6_endpoints_;
-      this->u_.ipv6_endpoints_ = 0;
-      break;
-    default:
-      break;
-  }
-}
-
-static const CORBA::Long _oc_MIOP_IPEndpoints[] =
-{
-  TAO_ENCAP_BYTE_ORDER, // byte order
-  33,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x4d494f50),
-  ACE_NTOHL (0x2f495045),
-  ACE_NTOHL (0x6e64706f),
-  ACE_NTOHL (0x696e7473),
-  ACE_NTOHL (0x3a312e30),
-  ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/MIOP/IPEndpoints:1.0
-  12,
-  ACE_NTOHL (0x4950456e),
-  ACE_NTOHL (0x64706f69),
-  ACE_NTOHL (0x6e747300),  // name = IPEndpoints
-  CORBA::tk_short,
-
-  -1, // default used index
-  2, // member count
-  ACE_IDL_NSTOHL (0x0000), // union case label (evaluated value)
-  15,
-  ACE_NTOHL (0x69707634),
-  ACE_NTOHL (0x5f656e64),
-  ACE_NTOHL (0x706f696e),
-  ACE_NTOHL (0x74730000),  // name = ipv4_endpoints
-  CORBA::tk_struct, // typecode kind
-  116, // encapsulation length
-    TAO_ENCAP_BYTE_ORDER, // byte order
-    31,
-    ACE_NTOHL (0x49444c3a),
-    ACE_NTOHL (0x6f6d672e),
-    ACE_NTOHL (0x6f72672f),
-    ACE_NTOHL (0x4d494f50),
-    ACE_NTOHL (0x2f557369),
-    ACE_NTOHL (0x6e674970),
-    ACE_NTOHL (0x76343a31),
-    ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/MIOP/UsingIpv4:1.0
-    10,
-    ACE_NTOHL (0x5573696e),
-    ACE_NTOHL (0x67497076),
-    ACE_NTOHL (0x34000000),  // name = UsingIpv4
-    2, // member count
-    5,
-    ACE_NTOHL (0x706f7274),
-    ACE_NTOHL (0x0),  // name = port
-    CORBA::tk_ushort,
-
-    16,
-    ACE_NTOHL (0x636c6173),
-    ACE_NTOHL (0x735f645f),
-    ACE_NTOHL (0x61646472),
-    ACE_NTOHL (0x65737300),  // name = class_d_address
-    CORBA::tk_array, // typecode kind
-    12, // encapsulation length
-      TAO_ENCAP_BYTE_ORDER, // byte order
-      CORBA::tk_octet,
-
-      4U,
-
-
-  ACE_IDL_NSTOHL (0x0001), // union case label (evaluated value)
-  15,
-  ACE_NTOHL (0x69707636),
-  ACE_NTOHL (0x5f656e64),
-  ACE_NTOHL (0x706f696e),
-  ACE_NTOHL (0x74730000),  // name = ipv6_endpoints
-  CORBA::tk_struct, // typecode kind
-  96, // encapsulation length
-    TAO_ENCAP_BYTE_ORDER, // byte order
-    31,
-    ACE_NTOHL (0x49444c3a),
-    ACE_NTOHL (0x6f6d672e),
-    ACE_NTOHL (0x6f72672f),
-    ACE_NTOHL (0x4d494f50),
-    ACE_NTOHL (0x2f557369),
-    ACE_NTOHL (0x6e674970),
-    ACE_NTOHL (0x76363a31),
-    ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/MIOP/UsingIpv6:1.0
-    10,
-    ACE_NTOHL (0x5573696e),
-    ACE_NTOHL (0x67497076),
-    ACE_NTOHL (0x36000000),  // name = UsingIpv6
-    2, // member count
-    5,
-    ACE_NTOHL (0x706f7274),
-    ACE_NTOHL (0x0),  // name = port
-    CORBA::tk_ulong,
-
-    8,
-    ACE_NTOHL (0x61646472),
-    ACE_NTOHL (0x65737300),  // name = address
-    CORBA::tk_string,
-    0U, // string length
-
-};
-
-static CORBA::TypeCode _tc_TAO_tc_MIOP_IPEndpoints (
-    CORBA::tk_union,
-    sizeof (_oc_MIOP_IPEndpoints),
-    (char *) &_oc_MIOP_IPEndpoints,
-    0,
-    sizeof (MIOP::IPEndpoints)
-  );
-
-TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-TAO_NAMESPACE_BEGIN (MIOP)
-TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_IPEndpoints, &_tc_TAO_tc_MIOP_IPEndpoints)
+TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_Address, &_tc_TAO_tc_MIOP_Address)
 TAO_NAMESPACE_END
 
 static const CORBA::Long _oc_MIOP_UIPMC_ProfileBody[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   39,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x4d494f50),
-  ACE_NTOHL (0x2f554950),
-  ACE_NTOHL (0x4d435f50),
-  ACE_NTOHL (0x726f6669),
-  ACE_NTOHL (0x6c65426f),
-  ACE_NTOHL (0x64793a31),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x4d494f50), 
+  ACE_NTOHL (0x2f554950), 
+  ACE_NTOHL (0x4d435f50), 
+  ACE_NTOHL (0x726f6669), 
+  ACE_NTOHL (0x6c65426f), 
+  ACE_NTOHL (0x64793a31), 
   ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/MIOP/UIPMC_ProfileBody:1.0
   18,
-  ACE_NTOHL (0x5549504d),
-  ACE_NTOHL (0x435f5072),
-  ACE_NTOHL (0x6f66696c),
-  ACE_NTOHL (0x65426f64),
+  ACE_NTOHL (0x5549504d), 
+  ACE_NTOHL (0x435f5072), 
+  ACE_NTOHL (0x6f66696c), 
+  ACE_NTOHL (0x65426f64), 
   ACE_NTOHL (0x79000000),  // name = UIPMC_ProfileBody
-  3, // member count
+  4, // member count
   13,
-  ACE_NTOHL (0x6d696f70),
-  ACE_NTOHL (0x5f766572),
-  ACE_NTOHL (0x73696f6e),
+  ACE_NTOHL (0x6d696f70), 
+  ACE_NTOHL (0x5f766572), 
+  ACE_NTOHL (0x73696f6e), 
   ACE_NTOHL (0x0),  // name = miop_version
-  CORBA::tk_struct, // typecode kind
-  88, // encapsulation length
+  CORBA::tk_alias, // typecode kind for typedefs
+  148, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     29,
-    ACE_NTOHL (0x49444c3a),
-    ACE_NTOHL (0x6f6d672e),
-    ACE_NTOHL (0x6f72672f),
-    ACE_NTOHL (0x4d494f50),
-    ACE_NTOHL (0x2f566572),
-    ACE_NTOHL (0x73696f6e),
-    ACE_NTOHL (0x3a312e30),
+    ACE_NTOHL (0x49444c3a), 
+    ACE_NTOHL (0x6f6d672e), 
+    ACE_NTOHL (0x6f72672f), 
+    ACE_NTOHL (0x4d494f50), 
+    ACE_NTOHL (0x2f566572), 
+    ACE_NTOHL (0x73696f6e), 
+    ACE_NTOHL (0x3a312e30), 
     ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/MIOP/Version:1.0
     8,
-    ACE_NTOHL (0x56657273),
+    ACE_NTOHL (0x56657273), 
     ACE_NTOHL (0x696f6e00),  // name = Version
-    2, // member count
-    6,
-    ACE_NTOHL (0x6d616a6f),
-    ACE_NTOHL (0x72000000),  // name = major
-    CORBA::tk_octet,
-
-    6,
-    ACE_NTOHL (0x6d696e6f),
-    ACE_NTOHL (0x72000000),  // name = minor
-    CORBA::tk_octet,
-
-
-  10,
-  ACE_NTOHL (0x656e6470),
-  ACE_NTOHL (0x6f696e74),
-  ACE_NTOHL (0x73000000),  // name = endpoints
-  CORBA::tk_union, // typecode kind
-  348, // encapsulation length
-    TAO_ENCAP_BYTE_ORDER, // byte order
-    33,
-    ACE_NTOHL (0x49444c3a),
-    ACE_NTOHL (0x6f6d672e),
-    ACE_NTOHL (0x6f72672f),
-    ACE_NTOHL (0x4d494f50),
-    ACE_NTOHL (0x2f495045),
-    ACE_NTOHL (0x6e64706f),
-    ACE_NTOHL (0x696e7473),
-    ACE_NTOHL (0x3a312e30),
-    ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/MIOP/IPEndpoints:1.0
-    12,
-    ACE_NTOHL (0x4950456e),
-    ACE_NTOHL (0x64706f69),
-    ACE_NTOHL (0x6e747300),  // name = IPEndpoints
-    CORBA::tk_short,
-
-    -1, // default used index
-    2, // member count
-    ACE_IDL_NSTOHL (0x0000), // union case label (evaluated value)
-    15,
-    ACE_NTOHL (0x69707634),
-    ACE_NTOHL (0x5f656e64),
-    ACE_NTOHL (0x706f696e),
-    ACE_NTOHL (0x74730000),  // name = ipv4_endpoints
     CORBA::tk_struct, // typecode kind
-    116, // encapsulation length
+    88, // encapsulation length
       TAO_ENCAP_BYTE_ORDER, // byte order
-      31,
-      ACE_NTOHL (0x49444c3a),
-      ACE_NTOHL (0x6f6d672e),
-      ACE_NTOHL (0x6f72672f),
-      ACE_NTOHL (0x4d494f50),
-      ACE_NTOHL (0x2f557369),
-      ACE_NTOHL (0x6e674970),
-      ACE_NTOHL (0x76343a31),
-      ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/MIOP/UsingIpv4:1.0
-      10,
-      ACE_NTOHL (0x5573696e),
-      ACE_NTOHL (0x67497076),
-      ACE_NTOHL (0x34000000),  // name = UsingIpv4
-      2, // member count
-      5,
-      ACE_NTOHL (0x706f7274),
-      ACE_NTOHL (0x0),  // name = port
-      CORBA::tk_ushort,
-
-      16,
-      ACE_NTOHL (0x636c6173),
-      ACE_NTOHL (0x735f645f),
-      ACE_NTOHL (0x61646472),
-      ACE_NTOHL (0x65737300),  // name = class_d_address
-      CORBA::tk_array, // typecode kind
-      12, // encapsulation length
-        TAO_ENCAP_BYTE_ORDER, // byte order
-        CORBA::tk_octet,
-
-        4U,
-
-
-    ACE_IDL_NSTOHL (0x0001), // union case label (evaluated value)
-    15,
-    ACE_NTOHL (0x69707636),
-    ACE_NTOHL (0x5f656e64),
-    ACE_NTOHL (0x706f696e),
-    ACE_NTOHL (0x74730000),  // name = ipv6_endpoints
-    CORBA::tk_struct, // typecode kind
-    96, // encapsulation length
-      TAO_ENCAP_BYTE_ORDER, // byte order
-      31,
-      ACE_NTOHL (0x49444c3a),
-      ACE_NTOHL (0x6f6d672e),
-      ACE_NTOHL (0x6f72672f),
-      ACE_NTOHL (0x4d494f50),
-      ACE_NTOHL (0x2f557369),
-      ACE_NTOHL (0x6e674970),
-      ACE_NTOHL (0x76363a31),
-      ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/MIOP/UsingIpv6:1.0
-      10,
-      ACE_NTOHL (0x5573696e),
-      ACE_NTOHL (0x67497076),
-      ACE_NTOHL (0x36000000),  // name = UsingIpv6
-      2, // member count
-      5,
-      ACE_NTOHL (0x706f7274),
-      ACE_NTOHL (0x0),  // name = port
-      CORBA::tk_ulong,
-
+      29,
+      ACE_NTOHL (0x49444c3a), 
+      ACE_NTOHL (0x6f6d672e), 
+      ACE_NTOHL (0x6f72672f), 
+      ACE_NTOHL (0x47494f50), 
+      ACE_NTOHL (0x2f566572), 
+      ACE_NTOHL (0x73696f6e), 
+      ACE_NTOHL (0x3a312e30), 
+      ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/GIOP/Version:1.0
       8,
-      ACE_NTOHL (0x61646472),
-      ACE_NTOHL (0x65737300),  // name = address
-      CORBA::tk_string,
-      0U, // string length
+      ACE_NTOHL (0x56657273), 
+      ACE_NTOHL (0x696f6e00),  // name = Version
+      2, // member count
+      6,
+      ACE_NTOHL (0x6d616a6f), 
+      ACE_NTOHL (0x72000000),  // name = major
+      CORBA::tk_octet,
 
+      6,
+      ACE_NTOHL (0x6d696e6f), 
+      ACE_NTOHL (0x72000000),  // name = minor
+      CORBA::tk_octet,
+
+
+
+  12,
+  ACE_NTOHL (0x7468655f), 
+  ACE_NTOHL (0x61646472), 
+  ACE_NTOHL (0x65737300),  // name = the_address
+  CORBA::tk_alias, // typecode kind for typedefs
+  60, // encapsulation length
+    TAO_ENCAP_BYTE_ORDER, // byte order
+    29,
+    ACE_NTOHL (0x49444c3a), 
+    ACE_NTOHL (0x6f6d672e), 
+    ACE_NTOHL (0x6f72672f), 
+    ACE_NTOHL (0x4d494f50), 
+    ACE_NTOHL (0x2f416464), 
+    ACE_NTOHL (0x72657373), 
+    ACE_NTOHL (0x3a312e30), 
+    ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/MIOP/Address:1.0
+    8,
+    ACE_NTOHL (0x41646472), 
+    ACE_NTOHL (0x65737300),  // name = Address
+    CORBA::tk_string, 
+    0U, // string length
+
+  9,
+  ACE_NTOHL (0x7468655f), 
+  ACE_NTOHL (0x706f7274), 
+  ACE_NTOHL (0x0),  // name = the_port
+  CORBA::tk_short,
 
   11,
-  ACE_NTOHL (0x636f6d70),
-  ACE_NTOHL (0x6f6e656e),
+  ACE_NTOHL (0x636f6d70), 
+  ACE_NTOHL (0x6f6e656e), 
   ACE_NTOHL (0x74730000),  // name = components
   CORBA::tk_sequence, // typecode kind
   200, // encapsulation length
@@ -914,19 +493,19 @@ static const CORBA::Long _oc_MIOP_UIPMC_ProfileBody[] =
     184, // encapsulation length
       TAO_ENCAP_BYTE_ORDER, // byte order
       36,
-      ACE_NTOHL (0x49444c3a),
-      ACE_NTOHL (0x6f6d672e),
-      ACE_NTOHL (0x6f72672f),
-      ACE_NTOHL (0x494f502f),
-      ACE_NTOHL (0x54616767),
-      ACE_NTOHL (0x6564436f),
-      ACE_NTOHL (0x6d706f6e),
-      ACE_NTOHL (0x656e743a),
+      ACE_NTOHL (0x49444c3a), 
+      ACE_NTOHL (0x6f6d672e), 
+      ACE_NTOHL (0x6f72672f), 
+      ACE_NTOHL (0x494f502f), 
+      ACE_NTOHL (0x54616767), 
+      ACE_NTOHL (0x6564436f), 
+      ACE_NTOHL (0x6d706f6e), 
+      ACE_NTOHL (0x656e743a), 
       ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/IOP/TaggedComponent:1.0
       16,
-      ACE_NTOHL (0x54616767),
-      ACE_NTOHL (0x6564436f),
-      ACE_NTOHL (0x6d706f6e),
+      ACE_NTOHL (0x54616767), 
+      ACE_NTOHL (0x6564436f), 
+      ACE_NTOHL (0x6d706f6e), 
       ACE_NTOHL (0x656e7400),  // name = TaggedComponent
       2, // member count
       4,
@@ -935,25 +514,25 @@ static const CORBA::Long _oc_MIOP_UIPMC_ProfileBody[] =
       60, // encapsulation length
         TAO_ENCAP_BYTE_ORDER, // byte order
         32,
-        ACE_NTOHL (0x49444c3a),
-        ACE_NTOHL (0x6f6d672e),
-        ACE_NTOHL (0x6f72672f),
-        ACE_NTOHL (0x494f502f),
-        ACE_NTOHL (0x436f6d70),
-        ACE_NTOHL (0x6f6e656e),
-        ACE_NTOHL (0x7449643a),
+        ACE_NTOHL (0x49444c3a), 
+        ACE_NTOHL (0x6f6d672e), 
+        ACE_NTOHL (0x6f72672f), 
+        ACE_NTOHL (0x494f502f), 
+        ACE_NTOHL (0x436f6d70), 
+        ACE_NTOHL (0x6f6e656e), 
+        ACE_NTOHL (0x7449643a), 
         ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/IOP/ComponentId:1.0
         12,
-        ACE_NTOHL (0x436f6d70),
-        ACE_NTOHL (0x6f6e656e),
+        ACE_NTOHL (0x436f6d70), 
+        ACE_NTOHL (0x6f6e656e), 
         ACE_NTOHL (0x74496400),  // name = ComponentId
         CORBA::tk_ulong,
 
 
       15,
-      ACE_NTOHL (0x636f6d70),
-      ACE_NTOHL (0x6f6e656e),
-      ACE_NTOHL (0x745f6461),
+      ACE_NTOHL (0x636f6d70), 
+      ACE_NTOHL (0x6f6e656e), 
+      ACE_NTOHL (0x745f6461), 
       ACE_NTOHL (0x74610000),  // name = component_data
       CORBA::tk_sequence, // typecode kind
       12, // encapsulation length
@@ -988,7 +567,7 @@ void MIOP::UIPMC_ProfileBody::_tao_any_destructor (void *x)
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-
+  
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_MIOP_UIPMC_PROFILEBODY__TAO_SEQ_TAGGEDCOMPONENT_CS_)
 #define __TAO_UNBOUNDED_SEQUENCE_MIOP_UIPMC_PROFILEBODY__TAO_SEQ_TAGGEDCOMPONENT_CS_
 
@@ -997,43 +576,43 @@ void MIOP::UIPMC_ProfileBody::_tao_any_destructor (void *x)
   {
     IOP::TaggedComponent* tmp = 0;
     tmp = _TAO_Unbounded_Sequence_MIOP_UIPMC_ProfileBody__tao_seq_TaggedComponent::allocbuf (length);
-
+    
     if (this->buffer_ != 0)
     {
       IOP::TaggedComponent *old = ACE_reinterpret_cast (IOP::TaggedComponent *,this->buffer_);
-
+      
       for (CORBA::ULong i = 0; i < this->length_; ++i)
         tmp[i] = old[i];
-
+      
       if (this->release_)
         _TAO_Unbounded_Sequence_MIOP_UIPMC_ProfileBody__tao_seq_TaggedComponent::freebuf (old);
-
+      
     }
     this->buffer_ = tmp;
   }
-
+  
   void
   MIOP::UIPMC_ProfileBody::_TAO_Unbounded_Sequence_MIOP_UIPMC_ProfileBody__tao_seq_TaggedComponent::_deallocate_buffer (void)
   {
     if (this->buffer_ == 0 || this->release_ == 0)
       return;
-
+    
     IOP::TaggedComponent *tmp = ACE_reinterpret_cast (IOP::TaggedComponent *,this->buffer_);
-
+    
     _TAO_Unbounded_Sequence_MIOP_UIPMC_ProfileBody__tao_seq_TaggedComponent::freebuf (tmp);
     this->buffer_ = 0;
-  }
-
+  } 
+  
   MIOP::UIPMC_ProfileBody::_TAO_Unbounded_Sequence_MIOP_UIPMC_ProfileBody__tao_seq_TaggedComponent::~_TAO_Unbounded_Sequence_MIOP_UIPMC_ProfileBody__tao_seq_TaggedComponent (void) // Dtor.
   {
     this->_deallocate_buffer ();
   }
-
-
+  
+  
 #endif /* end #if !defined */
 
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
 
 #if !defined (_MIOP_UIPMC_PROFILEBODY__TAO_SEQ_TAGGEDCOMPONENT_CS_)
 #define _MIOP_UIPMC_PROFILEBODY__TAO_SEQ_TAGGEDCOMPONENT_CS_
@@ -1045,30 +624,30 @@ void MIOP::UIPMC_ProfileBody::_tao_any_destructor (void *x)
 MIOP::UIPMC_ProfileBody::_tao_seq_TaggedComponent::_tao_seq_TaggedComponent (void)
 {}
 MIOP::UIPMC_ProfileBody::_tao_seq_TaggedComponent::_tao_seq_TaggedComponent (CORBA::ULong max) // uses max size
-  :
+  : 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_MIOP_UIPMC_ProfileBody__tao_seq_TaggedComponent
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<IOP::TaggedComponent>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
  (max)
 {}
 MIOP::UIPMC_ProfileBody::_tao_seq_TaggedComponent::_tao_seq_TaggedComponent (CORBA::ULong max, CORBA::ULong length, IOP::TaggedComponent *buffer, CORBA::Boolean release)
-  :
+  : 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_MIOP_UIPMC_ProfileBody__tao_seq_TaggedComponent
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<IOP::TaggedComponent>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
  (max, length, buffer, release)
 {}
 MIOP::UIPMC_ProfileBody::_tao_seq_TaggedComponent::_tao_seq_TaggedComponent (const _tao_seq_TaggedComponent &seq) // copy ctor
-  :
+  : 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_MIOP_UIPMC_ProfileBody__tao_seq_TaggedComponent
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<IOP::TaggedComponent>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
  (seq)
 {}
 MIOP::UIPMC_ProfileBody::_tao_seq_TaggedComponent::~_tao_seq_TaggedComponent (void) // dtor
@@ -1173,7 +752,7 @@ MIOP::MulticastObjectGroupFactory_var::operator const ::MIOP::MulticastObjectGro
   return this->ptr_;
 }
 
-MIOP::MulticastObjectGroupFactory_var::operator ::MIOP::MulticastObjectGroupFactory_ptr &() // cast
+MIOP::MulticastObjectGroupFactory_var::operator ::MIOP::MulticastObjectGroupFactory_ptr &() // cast 
 {
   return this->ptr_;
 }
@@ -1365,7 +944,7 @@ void *MIOP::MulticastObjectGroupFactory::_tao_QueryInterface (ptr_arith_t type)
   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
-
+    
   if (retv)
     this->_add_ref ();
   return retv;
@@ -1405,7 +984,7 @@ MIOP::MulticastObjectGroupFactory::ipaddr_free (MIOP::MulticastObjectGroupFactor
   delete [] _tao_slice;
 }
 
-void
+void 
 MIOP::MulticastObjectGroupFactory::ipaddr_copy (MIOP::MulticastObjectGroupFactory::ipaddr_slice * _tao_to, const MIOP::MulticastObjectGroupFactory::ipaddr_slice *_tao_from)
 {
   // copy each individual element
@@ -1457,13 +1036,13 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const MIOP::UniqueId *&_
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-
+    
     CORBA::Boolean result = type->equivalent (MIOP::_tc_UniqueId, ACE_TRY_ENV);
     ACE_TRY_CHECK;
-
+    
     if (!result)
       return 0; // not equivalent
-
+    
     if (_tao_any.any_owns_data ())
     {
       _tao_elem = ACE_static_cast(
@@ -1540,13 +1119,13 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const MIOP::PacketHeader
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-
+    
     CORBA::Boolean result = type->equivalent (MIOP::_tc_PacketHeader_1_0, ACE_TRY_ENV);
     ACE_TRY_CHECK;
-
+    
     if (!result)
       return 0; // not equivalent
-
+    
     if (_tao_any.any_owns_data ())
     {
       _tao_elem = ACE_static_cast(
@@ -1577,358 +1156,6 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const MIOP::PacketHeader
       else
       {
         delete tmp;
-      }
-    }
-  }
-  ACE_CATCHANY
-  {
-  }
-  ACE_ENDTRY;
-  return 0;
-}
-
-void operator<<= (CORBA::Any &_tao_any, const MIOP::Version &_tao_elem) // copying
-{
-  TAO_OutputCDR stream;
-  stream << _tao_elem;
-  _tao_any._tao_replace (
-      MIOP::_tc_Version,
-      TAO_ENCAP_BYTE_ORDER,
-      stream.begin ()
-    );
-}
-
-void operator<<= (CORBA::Any &_tao_any, MIOP::Version *_tao_elem) // non copying
-{
-  TAO_OutputCDR stream;
-  stream << *_tao_elem;
-  _tao_any._tao_replace (
-      MIOP::_tc_Version,
-      TAO_ENCAP_BYTE_ORDER,
-      stream.begin (),
-      1,
-      _tao_elem,
-      MIOP::Version::_tao_any_destructor
-    );
-}
-
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, MIOP::Version *&_tao_elem)
-{
-  return _tao_any >>= ACE_const_cast(const MIOP::Version*&,_tao_elem);
-}
-
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const MIOP::Version *&_tao_elem)
-{
-  _tao_elem = 0;
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::TypeCode_var type = _tao_any.type ();
-
-    CORBA::Boolean result = type->equivalent (MIOP::_tc_Version, ACE_TRY_ENV);
-    ACE_TRY_CHECK;
-
-    if (!result)
-      return 0; // not equivalent
-
-    if (_tao_any.any_owns_data ())
-    {
-      _tao_elem = ACE_static_cast(
-          const MIOP::Version*,
-          _tao_any.value ()
-        );
-      return 1;
-    }
-    else
-    {
-      MIOP::Version *tmp;
-      ACE_NEW_RETURN (tmp, MIOP::Version, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      if (stream >> *tmp)
-      {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            MIOP::_tc_Version,
-            1,
-            ACE_static_cast (void *, tmp),
-            MIOP::Version::_tao_any_destructor
-          );
-        _tao_elem = tmp;
-        return 1;
-      }
-      else
-      {
-        delete tmp;
-      }
-    }
-  }
-  ACE_CATCHANY
-  {
-  }
-  ACE_ENDTRY;
-  return 0;
-}
-
-void operator<<= (CORBA::Any &_tao_any, const MIOP::UsingIpv4 &_tao_elem) // copying
-{
-  TAO_OutputCDR stream;
-  stream << _tao_elem;
-  _tao_any._tao_replace (
-      MIOP::_tc_UsingIpv4,
-      TAO_ENCAP_BYTE_ORDER,
-      stream.begin ()
-    );
-}
-
-void operator<<= (CORBA::Any &_tao_any, MIOP::UsingIpv4 *_tao_elem) // non copying
-{
-  TAO_OutputCDR stream;
-  stream << *_tao_elem;
-  _tao_any._tao_replace (
-      MIOP::_tc_UsingIpv4,
-      TAO_ENCAP_BYTE_ORDER,
-      stream.begin (),
-      1,
-      _tao_elem,
-      MIOP::UsingIpv4::_tao_any_destructor
-    );
-}
-
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, MIOP::UsingIpv4 *&_tao_elem)
-{
-  return _tao_any >>= ACE_const_cast(const MIOP::UsingIpv4*&,_tao_elem);
-}
-
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const MIOP::UsingIpv4 *&_tao_elem)
-{
-  _tao_elem = 0;
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::TypeCode_var type = _tao_any.type ();
-
-    CORBA::Boolean result = type->equivalent (MIOP::_tc_UsingIpv4, ACE_TRY_ENV);
-    ACE_TRY_CHECK;
-
-    if (!result)
-      return 0; // not equivalent
-
-    if (_tao_any.any_owns_data ())
-    {
-      _tao_elem = ACE_static_cast(
-          const MIOP::UsingIpv4*,
-          _tao_any.value ()
-        );
-      return 1;
-    }
-    else
-    {
-      MIOP::UsingIpv4 *tmp;
-      ACE_NEW_RETURN (tmp, MIOP::UsingIpv4, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      if (stream >> *tmp)
-      {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            MIOP::_tc_UsingIpv4,
-            1,
-            ACE_static_cast (void *, tmp),
-            MIOP::UsingIpv4::_tao_any_destructor
-          );
-        _tao_elem = tmp;
-        return 1;
-      }
-      else
-      {
-        delete tmp;
-      }
-    }
-  }
-  ACE_CATCHANY
-  {
-  }
-  ACE_ENDTRY;
-  return 0;
-}
-
-void operator<<= (CORBA::Any &_tao_any, const MIOP::UsingIpv6 &_tao_elem) // copying
-{
-  TAO_OutputCDR stream;
-  stream << _tao_elem;
-  _tao_any._tao_replace (
-      MIOP::_tc_UsingIpv6,
-      TAO_ENCAP_BYTE_ORDER,
-      stream.begin ()
-    );
-}
-
-void operator<<= (CORBA::Any &_tao_any, MIOP::UsingIpv6 *_tao_elem) // non copying
-{
-  TAO_OutputCDR stream;
-  stream << *_tao_elem;
-  _tao_any._tao_replace (
-      MIOP::_tc_UsingIpv6,
-      TAO_ENCAP_BYTE_ORDER,
-      stream.begin (),
-      1,
-      _tao_elem,
-      MIOP::UsingIpv6::_tao_any_destructor
-    );
-}
-
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, MIOP::UsingIpv6 *&_tao_elem)
-{
-  return _tao_any >>= ACE_const_cast(const MIOP::UsingIpv6*&,_tao_elem);
-}
-
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const MIOP::UsingIpv6 *&_tao_elem)
-{
-  _tao_elem = 0;
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::TypeCode_var type = _tao_any.type ();
-
-    CORBA::Boolean result = type->equivalent (MIOP::_tc_UsingIpv6, ACE_TRY_ENV);
-    ACE_TRY_CHECK;
-
-    if (!result)
-      return 0; // not equivalent
-
-    if (_tao_any.any_owns_data ())
-    {
-      _tao_elem = ACE_static_cast(
-          const MIOP::UsingIpv6*,
-          _tao_any.value ()
-        );
-      return 1;
-    }
-    else
-    {
-      MIOP::UsingIpv6 *tmp;
-      ACE_NEW_RETURN (tmp, MIOP::UsingIpv6, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      if (stream >> *tmp)
-      {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            MIOP::_tc_UsingIpv6,
-            1,
-            ACE_static_cast (void *, tmp),
-            MIOP::UsingIpv6::_tao_any_destructor
-          );
-        _tao_elem = tmp;
-        return 1;
-      }
-      else
-      {
-        delete tmp;
-      }
-    }
-  }
-  ACE_CATCHANY
-  {
-  }
-  ACE_ENDTRY;
-  return 0;
-}
-
-void operator<<= (
-    CORBA::Any &_tao_any,
-    const MIOP::IPEndpoints &_tao_elem
-  )
-{
-  TAO_OutputCDR stream;
-  if (stream << _tao_elem)
-  {
-    _tao_any._tao_replace (
-        MIOP::_tc_IPEndpoints,
-        TAO_ENCAP_BYTE_ORDER,
-        stream.begin ()
-      );
-  }
-}
-
-void operator<<= (
-    CORBA::Any &_tao_any,
-    MIOP::IPEndpoints *_tao_elem
-  )
-{
-  TAO_OutputCDR stream;
-  if (stream << *_tao_elem)
-  {
-    _tao_any._tao_replace (
-        MIOP::_tc_IPEndpoints,
-        TAO_ENCAP_BYTE_ORDER,
-        stream.begin (),
-        1,
-        _tao_elem,
-        MIOP::IPEndpoints::_tao_any_destructor
-      );
-  }
-}
-
-CORBA::Boolean operator>>= (
-    const CORBA::Any &_tao_any,
-    MIOP::IPEndpoints *&_tao_elem
-  )
-{
-  return _tao_any >>= ACE_const_cast(
-      const MIOP::IPEndpoints*&,
-      _tao_elem
-    );
-}
-
-CORBA::Boolean operator>>= (
-    const CORBA::Any &_tao_any,
-    const MIOP::IPEndpoints *&_tao_elem
-  )
-{
-  _tao_elem = 0;
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::TypeCode_var type = _tao_any.type ();
-
-    CORBA::Boolean result = type->equivalent (MIOP::_tc_IPEndpoints, ACE_TRY_ENV);
-    ACE_TRY_CHECK;
-
-    if (!result)
-      return 0; // not equivalent
-
-    if (_tao_any.any_owns_data ())
-    {
-      _tao_elem = ACE_static_cast(
-          const MIOP::IPEndpoints*,
-          _tao_any.value ()
-        );
-      return 1;
-    }
-    else
-    {
-      MIOP::IPEndpoints *tmp;
-      ACE_NEW_RETURN (tmp, MIOP::IPEndpoints, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-
-      if (stream >> *tmp)
-      {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            MIOP::_tc_IPEndpoints,
-            1,
-            ACE_static_cast (void *, tmp),
-            MIOP::IPEndpoints::_tao_any_destructor
-          );
-        _tao_elem = tmp;
-        return 1;
-      }
-      else
-      {
-        delete  tmp;
       }
     }
   }
@@ -1975,13 +1202,13 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const MIOP::UIPMC_Profil
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
-
+    
     CORBA::Boolean result = type->equivalent (MIOP::_tc_UIPMC_ProfileBody, ACE_TRY_ENV);
     ACE_TRY_CHECK;
-
+    
     if (!result)
       return 0; // not equivalent
-
+    
     if (_tao_any.any_owns_data ())
     {
       _tao_elem = ACE_static_cast(
@@ -2055,7 +1282,7 @@ CORBA::Boolean operator>> (
       // set the length of the sequence
       _tao_sequence.length (_tao_seq_len);
       // If length is 0 we return true.
-      if (0 >= _tao_seq_len)
+      if (0 >= _tao_seq_len) 
         return 1;
       // Add a check to the length of the sequence
       // to make sure it does not exceed the length
@@ -2102,7 +1329,7 @@ CORBA::Boolean operator>> (
     // set the length of the sequence
     _tao_sequence.length (_tao_seq_len);
     // If length is 0 we return true.
-    if (0 >= _tao_seq_len)
+    if (0 >= _tao_seq_len) 
       return 1;
     // Add a check to the length of the sequence
     // to make sure it does not exceed the length

@@ -69,15 +69,10 @@ TAO_MOGF_impl::create_group (
                                       CORBA::COMPLETED_MAYBE));
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
-  // Add the group component to the UIPMC profile.
-  if (uipmc_profile->add_group_component (this->domain_id_.c_str (),
-                                          this->next_group_id (),
-                                          0) != 0)
-    {
-      delete uipmc_profile;
-      ACE_THROW_RETURN (CORBA::INTERNAL (),
-                        CORBA::Object::_nil ());
-    }
+  // Set the group component to the UIPMC profile.
+  uipmc_profile->set_group_info (this->domain_id_.c_str (),
+                                 this->next_group_id (),
+                                 0);
 
 
   // Relinquish ownership of the UIPMC profile to mp.

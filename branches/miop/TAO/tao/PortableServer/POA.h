@@ -627,23 +627,46 @@ public:
 #if (TAO_HAS_MIOP == 1)
   virtual PortableServer::ObjectId * create_id_for_reference (
       CORBA::Object_ptr the_ref,
-      CORBA::Environment &ACE_TRY_ENV =
+      CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException,
-      PortableServer::POA::WrongAdapter
+      PortableServer::NotAGroupObject
     ));
 
   virtual PortableServer::IDs * reference_to_ids (
       CORBA::Object_ptr the_ref,
-      CORBA::Environment &ACE_TRY_ENV =
+      CORBA::Environment &ACE_TRY_ENV = 
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
       CORBA::SystemException,
-      PortableServer::POA::WrongAdapter
+      PortableServer::NotAGroupObject
     ));
+
+  virtual void associate_reference_with_id (
+      CORBA::Object_ptr ref,
+      const PortableServer::ObjectId & oid,
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((
+      CORBA::SystemException,
+      PortableServer::NotAGroupObject
+    ));
+
+  virtual void disassociate_reference_with_id (
+      CORBA::Object_ptr ref,
+      const PortableServer::ObjectId & oid,
+      CORBA::Environment &ACE_TRY_ENV = 
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((
+      CORBA::SystemException,
+      PortableServer::NotAGroupObject
+    ));
+
 #endif /* TAO_HAS_MIOP == 1 */
 
   TAO_POA_Policies &policies (void);

@@ -24,6 +24,7 @@
 
 #include "ace/pre.h"
 #include "IOPS.h"
+#include "GIOPS.h"
 #include "miopC.h"
 
 

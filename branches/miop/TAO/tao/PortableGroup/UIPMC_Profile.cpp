@@ -126,26 +126,16 @@ TAO_UIPMC_Profile::decode (TAO_InputCDR& cdr)
   if (minor <= TAO_DEF_MIOP_MINOR)
     this->version_.minor = minor;
 
-  // Decode endpoint.
-  CORBA::Short ip_version;
-  if (!(cdr.read_short (ip_version)
-        && ip_version == MIOP::IPv4))
+  // Decode the endpoint.
+  ACE_CString address;
+  CORBA::UShort port;
+  
+  if (!(cdr.read_string (address)
+        && cdr.read_ushort (port)))
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO (%P|%t) UIPMC_Profile::decode - Unexpected IP version %d\n"),
-                    ip_version));
-      return -1;
-    }
-
-  /* Read in the IPv4 port and address */
-  if (cdr.read_ushort (this->endpoint_.port_) == 0
-      || cdr.read_octet_array (this->endpoint_.class_d_address_, 4) == 0)
-    {
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO (%P|%t) UIPMC_Profile::decode - ")
-                    ACE_TEXT ("error while decoding host/port")));
+                    ACE_TEXT ("TAO (%P|%t) UIPMC_Profile::decode - Couldn't unmarshal address and port!\n")));
       return -1;
     }
 
@@ -162,8 +152,12 @@ TAO_UIPMC_Profile::decode (TAO_InputCDR& cdr)
 
   if (cdr.good_bit ())
     {
-      // Tell the endpoint to update its cached address.  @@ Frank: Fix this smelly piece of code!
-      this->endpoint_.update_object_addr ();
+      // If everything was successful, update the endpoint's address
+      // and port with the new data.
+
+      ACE_INET_Addr addr (port, address.c_str ());
+
+      this->endpoint_.object_addr (addr);
 
       return 1;
     }
@@ -173,16 +167,9 @@ TAO_UIPMC_Profile::decode (TAO_InputCDR& cdr)
 
 
 void
-TAO_UIPMC_Profile::parse_string (const char * /*string*/,
+TAO_UIPMC_Profile::parse_string (const char *string,
                                  CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_THROW (CORBA::INV_OBJREF (
-    CORBA_SystemException::_tao_minor_code (
-      TAO_DEFAULT_MINOR_CODE,
-      EINVAL),
-    CORBA::COMPLETED_NO));
-
-/*
   // Remove the "N.n@" version prefix, if it exists, and verify the
   // version is one that we accept.
 
@@ -203,143 +190,187 @@ TAO_UIPMC_Profile::parse_string (const char * /*string*/,
   if (this->version_.major != TAO_DEF_GIOP_MAJOR ||
       this->version_.minor >  TAO_DEF_GIOP_MINOR)
     {
-      ACE_THROW_RETURN (CORBA::INV_OBJREF (
+      ACE_THROW (CORBA::INV_OBJREF (
+                      CORBA_SystemException::_tao_minor_code (
+                        TAO_DEFAULT_MINOR_CODE,
+                        EINVAL),
+                      CORBA::COMPLETED_NO));
+    }
+
+  //
+  // Parse the group_id.
+  //
+  
+  // Parse the group component version.
+  if (isdigit (string [0]) &&
+      string[1] == '.' &&
+      isdigit (string [2]) &&
+      string[3] == '-')
+    {
+      CORBA::Char major;
+      CORBA::Char minor;
+
+      major = (char) (string [0] - '0');
+      minor = (char) (string [2] - '0');
+
+      // Verify that a supported version of MIOP is specified.
+      if (major != TAO_DEF_MIOP_MAJOR ||
+          minor >  TAO_DEF_MIOP_MINOR)
+        {
+          ACE_THROW (CORBA::INV_OBJREF (
                           CORBA_SystemException::_tao_minor_code (
                             TAO_DEFAULT_MINOR_CODE,
                             EINVAL),
-                          CORBA::COMPLETED_NO),
-                        -1);
-    }
+                          CORBA::COMPLETED_NO));
+        }
 
-  // Pull off the "hostname:port/" part of the objref
-  // Copy the string because we are going to modify it...
-  CORBA::String_var copy (string);
-
-  char *start = copy.inout ();
-  char *cp_pos = ACE_OS::strchr (start, ':');  // Look for a port
-
-  char *okd = ACE_OS::strchr (start, this->object_key_delimiter_);
-
-  if (okd == 0)
-    {
-      // No object key delimiter!
-      ACE_THROW_RETURN (CORBA::INV_OBJREF (
-        CORBA_SystemException::_tao_minor_code (
-          TAO_DEFAULT_MINOR_CODE,
-          EINVAL),
-        CORBA::COMPLETED_NO),
-        -1);
-    }
-
-  // The default port number.
-  const char def_port [] = ":683";
-
-  // Length of port.
-  CORBA::ULong length = 0;
-
-  // Length of host string.
-  CORBA::ULong length_host = 0;
-
-  // Length of <cp>
-  CORBA::ULong length_cp =
-    ACE_OS::strlen ((const char *)okd) + sizeof (def_port);
-
-  CORBA::String_var cp = CORBA::string_alloc (length_cp);
-
-  if (cp_pos == 0)
-    {
-      // No host/port delimiter! Dont raise an exception. Use the
-      // default port No. 683
-      ACE_OS::strcpy (cp, def_port);
-      ACE_OS::strcat (cp, okd);
-
-      length =
-        ACE_OS::strlen (cp.in ()) -
-        ACE_OS::strlen ((const char *)okd) -
-        1;
-
-      length_host =
-        ACE_OS::strlen (start) +
-        sizeof (def_port) -
-        ACE_OS::strlen (cp.in ()) -1;
+      // Skip over "N.n-"
+      string += 4;
     }
   else
     {
-      // The port is specified:
-      cp = (const char *)cp_pos;
-
-      length =
-        ACE_OS::strlen (cp.in ())
-        - ACE_OS::strlen ((const char *)okd) + 1;
-
-      length_host =
-        ACE_OS::strlen ((const char *)start)
-        - ACE_OS::strlen (cp.in ());
+      // The group component version is mandatory.
+      ACE_THROW (CORBA::INV_OBJREF (
+                      CORBA_SystemException::_tao_minor_code (
+                        TAO_DEFAULT_MINOR_CODE,
+                        EINVAL),
+                      CORBA::COMPLETED_NO));
     }
 
-  CORBA::String_var tmp = CORBA::string_alloc (length);
+  // Parse the group_domain_id.
+  // The Domain ID is terminated with a '-'.
 
-  ACE_OS::strncpy (tmp.inout (), cp.in () + 1, length);
-  tmp[length] = '\0';
+  // Wrap the string in a ACE_CString
+  ACE_CString ace_str (string, 0, 0);
 
-  this->endpoint_.port_ = (CORBA::UShort) ACE_OS::atoi (tmp.in ());
+  // Look for the group domain delimitor.
+  int pos = ace_str.find ('-');
 
-  tmp = CORBA::string_alloc (length_host);
-
-  ACE_OS::strncpy (tmp.inout (), start, length_host);
-  tmp[length_host] = '\0';
-
-  this->endpoint_.host_ = tmp._retn ();
-
-  ACE_INET_Addr host_addr;
-
-  if (ACE_OS::strcmp (this->endpoint_.host_.in (), "") == 0)
+  if (pos == ACE_CString::npos)
     {
-      char tmp_host [MAXHOSTNAMELEN + 1];
-
-      // If no host is specified: assign the default host : the local host.
-      if (host_addr.get_host_name (tmp_host,
-                                   sizeof (tmp_host)) != 0)
-        {
-          const char *tmp = host_addr.get_host_addr ();
-          if (tmp == 0)
-            {
-              if (TAO_debug_level > 0)
-                ACE_DEBUG ((LM_DEBUG,
-                            ACE_TEXT ("\n\nTAO (%P|%t) ")
-                            ACE_TEXT ("UIPMC_Profile::parse_string ")
-                            ACE_TEXT ("- %p\n\n"),
-                            ACE_TEXT ("cannot determine hostname")));
-              return -1;
-            }
-          this->endpoint_.host_ = tmp;
-        }
-      else
-        {
-          this->endpoint_.host_ = (const char *) tmp_host;
-        }
+      // The group_domain_id is mandatory, so throw an 
+      // exception if it isn't found.
+      ACE_THROW (CORBA::INV_OBJREF (
+                      CORBA_SystemException::_tao_minor_code (
+                        TAO_DEFAULT_MINOR_CODE,
+                        EINVAL),
+                      CORBA::COMPLETED_NO));
     }
 
-  if (this->endpoint_.object_addr_.set (this->endpoint_.port_,
-                                        this->endpoint_.host_.in ()) == -1)
+  // Save the group_domain_id.
+  ACE_CString group_domain_id = ace_str.substring (0, pos);
+
+  // Parse the group_id.
+  // The group_id is terminated with a '-' or a '/'.
+  
+  // Skip past the last '-'.
+  pos++;  
+  int end_pos = ace_str.find ('-',pos);
+
+  CORBA::Boolean parse_group_ref_version_flag = 0;
+
+  if (end_pos != ACE_CString::npos)
     {
-      if (TAO_debug_level > 0)
+      // String was terminated by a '-', so there's a group
+      // reference version to be parsed.
+      parse_group_ref_version_flag = 1;
+    }
+  else
+    {
+      // Look for a slash as the separator.
+      end_pos = ace_str.find ('/', pos);
+
+      if (end_pos == ACE_CString::npos)
         {
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("%p\n"),
-                      ACE_TEXT ("Error Occured !")
-                      ACE_TEXT ("TAO (%P|%t) UIPMC_Profile::parse_string - \n")
-                      ACE_TEXT ("TAO (%P|%t) ACE_INET_Addr::set () failed")));
+          // The Group ID is mandatory, so throw an exception.
+          ACE_THROW (CORBA::INV_OBJREF (
+                          CORBA_SystemException::_tao_minor_code (
+                            TAO_DEFAULT_MINOR_CODE,
+                            EINVAL),
+                          CORBA::COMPLETED_NO));
         }
-      return -1;
     }
 
-  start = ++okd;  // increment past the object key separator
+  // Get the domain_id.
+  ACE_CString str_domain_id = ace_str.substring (pos, end_pos - pos);
 
-  TAO_ObjectKey::decode_string_to_sequence (this->object_key_, start);
+  // Convert the domain_id into numerical form.
+  // @@ group_id is actually 64 bits, but strtoul only can parse 32 bits.
+  // @@ Need a 64 bit strtoul...
+  PortableGroup::ObjectGroupId group_id = 
+    ACE_OS::strtoul (str_domain_id.c_str (), 0, 10);
 
-  return 1;
-*/
+  PortableGroup::ObjectGroupRefVersion ref_version = 0;
+  if (parse_group_ref_version_flag)
+    {
+      // Try to find the group version.  It is terminated by a '/'.
+      pos = end_pos + 1;
+      end_pos = ace_str.find ('/', pos);
+      if (end_pos == ACE_CString::npos)
+        {
+          // The group version was expected but not found,
+          // so throw an exception.
+          ACE_THROW (CORBA::INV_OBJREF (
+                          CORBA_SystemException::_tao_minor_code (
+                            TAO_DEFAULT_MINOR_CODE,
+                            EINVAL),
+                          CORBA::COMPLETED_NO));
+        }
+
+      ACE_CString str_group_ref_ver = ace_str.substring (pos, end_pos - pos);
+
+      ref_version = 
+        ACE_OS::strtoul (str_group_ref_ver.c_str (), 0, 10);
+    }
+
+  // Parse the group multicast address.
+  // The multicast address is terminated by a ':'.
+  pos = end_pos + 1;
+  end_pos = ace_str.find (':', pos);
+
+  if (end_pos == ACE_CString::npos)
+    {
+      // The multicast address is mandatory, so throw an exception,
+      // since it wasn't found.
+      ACE_THROW (CORBA::INV_OBJREF (
+                      CORBA_SystemException::_tao_minor_code (
+                        TAO_DEFAULT_MINOR_CODE,
+                        EINVAL),
+                      CORBA::COMPLETED_NO));
+    }
+
+  ACE_CString mcast_addr = ace_str.substring (pos, end_pos - pos);
+
+  // Parse the multicast port number.
+
+  // First check that there's something left in the string.
+  pos = end_pos + 1;
+  if (ace_str[pos] == '\0')
+    {
+      // The multicast port is mandatory, so throw an exception,
+      // since it wasn't found.
+      ACE_THROW (CORBA::INV_OBJREF (
+                      CORBA_SystemException::_tao_minor_code (
+                        TAO_DEFAULT_MINOR_CODE,
+                        EINVAL),
+                      CORBA::COMPLETED_NO));
+    }
+
+  CORBA::UShort mcast_port = 
+      ACE_static_cast (CORBA::UShort,
+        ACE_OS::strtoul (ace_str.c_str () + pos, 0, 10));
+
+  //
+  // Finally, set all of the fields of the profile.
+  //
+
+  ACE_INET_Addr addr (mcast_port, mcast_addr.c_str ());
+  this->endpoint_.object_addr (addr);
+
+  this->set_group_info (group_domain_id.c_str (),
+                        group_id,
+                        ref_version);
+
 }
 
 CORBA::Boolean
@@ -412,14 +443,11 @@ TAO_UIPMC_Profile::to_string (CORBA::Environment &)
   static const char digits [] = "0123456789";
 
   ACE_OS::sprintf (buf,
-                   "%sloc://%c.%c@%d.%d.%d.%d:%d%c%s",
+                   "%sloc://%c.%c@%s:%d%c%s",
                    ::prefix_,
                    digits [this->version_.major],
                    digits [this->version_.minor],
-                   this->endpoint_.class_d_address_[0],
-                   this->endpoint_.class_d_address_[1],
-                   this->endpoint_.class_d_address_[2],
-                   this->endpoint_.class_d_address_[3],
+                   this->endpoint_.get_host_addr (),
                    this->endpoint_.port ());
   return buf;
 }
@@ -514,14 +542,11 @@ TAO_UIPMC_Profile::create_profile_body (TAO_OutputCDR &encap) const
   encap.write_octet (this->version_.major);
   encap.write_octet (this->version_.minor);
 
-  // IP Version.
-  encap.write_short (MIOP::IPv4);
+  // Address.
+  encap.write_string (this->endpoint_.get_host_addr ());
 
-  // The IPv4 port number.
+  // Port number.
   encap.write_ushort (this->endpoint_.port ());
-
-  // The IPv4 multicast address (MSB first).
-  encap.write_octet_array (this->endpoint_.class_d_address_, 4);
 
   // UIPMC is only supported by versions of GIOP that have tagged components,
   // so unconditionally encode the components.
@@ -585,24 +610,41 @@ TAO_UIPMC_Profile::decode_endpoints (void)
 }
 */
 
-int
-TAO_UIPMC_Profile::add_group_component (const char *domain_id,
-                                        PortableGroup::ObjectGroupId group_id,
-                                        PortableGroup::ObjectGroupRefVersion ref_version)
+void
+TAO_UIPMC_Profile::set_group_info (const char *domain_id,
+                                   PortableGroup::ObjectGroupId group_id,
+                                   PortableGroup::ObjectGroupRefVersion ref_version)
+{
+  // First, record the group information.
+  this->group_domain_id_.set (domain_id);
+  this->group_id_ = group_id;
+  this->ref_version_ = ref_version;
+
+  // Update the cached version of the group component.
+  this->update_cached_group_component ();
+}
+
+void 
+TAO_UIPMC_Profile::update_cached_group_component (void)
 {
   PortableGroup::TagGroupTaggedComponent group;
 
   // Encode the data structure.
-  group.version.major = TAO_DEF_MIOP_MAJOR;
-  group.version.minor = TAO_DEF_MIOP_MINOR;
+  group.component_version.major = TAO_DEF_MIOP_MAJOR;
+  group.component_version.minor = TAO_DEF_MIOP_MINOR;
 
-  group.group_domain_id = CORBA::string_dup (domain_id);
-  group.object_group_id = group_id;
-  group.object_group_ref_version = ref_version;
+  group.group_domain_id = CORBA::string_dup (this->group_domain_id_.c_str ());
+  group.object_group_id = this->group_id_;
+  group.object_group_ref_version = this->ref_version_;
 
   TAO_OutputCDR out_cdr;
   if ((out_cdr << group) == 0)
-    return -1;
+    {
+      ACE_DEBUG ((LM_DEBUG, 
+                  "Error marshaling group component!"));
+      return;
+    }
+
   CORBA::ULong length = out_cdr.total_length ();
 
   IOP::TaggedComponent tagged_component;
@@ -624,14 +666,33 @@ TAO_UIPMC_Profile::add_group_component (const char *domain_id,
   // Add component with encoded endpoint data to this profile's
   // TaggedComponents.
   this->tagged_components_.set_component (tagged_component);
-  return 0;
 }
 
-void
-TAO_UIPMC_Profile::request_target_specifier (TAO_Target_Specification &target_spec)
+void 
+TAO_UIPMC_Profile::request_target_specifier (
+                      TAO_Target_Specification &target_spec,
+                      TAO_Target_Specification::TAO_Target_Address required_type,
+                      CORBA::Environment &ACE_TRY_ENV)
 {
-  // Point the target specifier to our Tagged Profile
-  target_spec.target_specifier (this->create_tagged_profile ());
+  // Fill out the target specifier based on the required type.
+  switch (required_type)
+    {
+    case TAO_Target_Specification::Default_Addr:
+    case TAO_Target_Specification::Profile_Addr:
+
+      // Only using a profile as the target specifier is supported
+      // at this time.  Object keys are strictly not supported since
+      // UIPMC profiles do not have object keys.
+      target_spec.target_specifier (
+            this->create_tagged_profile ());
+      break;
+    
+    case TAO_Target_Specification::Key_Addr:
+    case TAO_Target_Specification::Reference_Addr:
+    default:
+      // Unsupported or unknown required type.  Throw an exception.
+      ACE_THROW (CORBA::MARSHAL ());
+    }
 }
 
 int
@@ -673,36 +734,23 @@ TAO_UIPMC_Profile::extract_group_component (IOP::TaggedProfile &profile,
     if (TAO_debug_level > 0)
       {
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO (%P|%t) UIPMC_Profile::decode - v%d.%d\n"),
+                    ACE_TEXT ("TAO (%P|%t) UIPMC_Profile::extract_group_component - v%d.%d\n"),
                     major,
                     minor));
       }
     return -1;
   }
 
-  // Decode endpoint.
-  CORBA::Short ip_version;
-  if (!(cdr.read_short (ip_version)
-        && ip_version == MIOP::IPv4))
+  // Decode the endpoint.
+  ACE_CString address;
+  CORBA::UShort port;
+  
+  if (!(cdr.read_string (address)
+        && cdr.read_ushort (port)))
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO (%P|%t) UIPMC_Profile::decode - Unexpected IP version %d\n"),
-                    ip_version));
-      return -1;
-    }
-
-  CORBA::Octet class_d_address_[4];
-  CORBA::UShort port_;
-
-  /* Read in the IPv4 port and address */
-  if (cdr.read_ushort (port_) == 0
-      || cdr.read_octet_array (class_d_address_, 4) == 0)
-    {
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO (%P|%t) UIPMC_Profile::decode - ")
-                    ACE_TEXT ("error while decoding host/port")));
+                    ACE_TEXT ("TAO (%P|%t) UIPMC_Profile::extract_group_component - Couldn't unmarshal address and port!\n")));
       return -1;
     }
 
