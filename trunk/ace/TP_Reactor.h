@@ -9,8 +9,24 @@
 // = FILENAME
 //    TP_Reactor.h
 //
+// = DESCRIPTION
+//    TP_Reactor (ala, Thread Pool Reactor) uses the leader-follower
+//    model to demultiplex requests among a bunch of threads.
+//    Basically, when using thread pool reactor, one will pre-spawn a
+//    _fixed_ number of threads.  When you issue the run_event_loop ()
+//    method, one of the thread will become the leader thread and wait
+//    for an event.  The other threads (followers) will be lined up
+//    and waiting for their turns to become the leader.  When an event
+//    occurs, the leader will pick a follower to become the leader and
+//    go on to handle the event.  The consequence of using TP_Reactor
+//    is the amortization of the costs used to creating threads.  The
+//    context switching cost will also reduce.  More over, the total
+//    resources used by threads are bounded (because there are only so
+//    many threads.)
+//
 // = AUTHOR
 //    Irfan Pyarali
+//    Nanbor Wang
 //
 // ============================================================================
 
