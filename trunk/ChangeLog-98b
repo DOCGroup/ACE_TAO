@@ -1,12 +1,12 @@
 Thu Nov  5 14:42:59 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ACE-INSTALL.html: Cleaned up a typo in the ACE-INSTALL.html
- 	  file.  Thanks to James Megquier <jmegq@bbn.com> for reporting
- 	  this.
+        * ACE-INSTALL.html: Cleaned up a typo in the ACE-INSTALL.html
+          file.  Thanks to James Megquier <jmegq@bbn.com> for reporting
+          this.
 
-	* ace/config-sunos5.5.h: Cleaned up the comments a bit to make it
- 	  more clear how to enable/disable threads.  Thanks to Russ
- 	  Noseworthy <rnosewor@objectsciences.com> for reporting this.
+        * ace/config-sunos5.5.h: Cleaned up the comments a bit to make it
+          more clear how to enable/disable threads.  Thanks to Russ
+          Noseworthy <rnosewor@objectsciences.com> for reporting this.
 
 Thu Nov 05 13:23:29 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -15,7 +15,8 @@ Thu Nov 05 13:23:29 1998  David L. Levine  <levine@cs.wustl.edu>
           usage comments.
 
         * ACE-INSTALL.html: for LynxOS, added link to platform_lynxos.GNU
-          file, for usage information.
+          file, for usage information.  Replaced some absolute paths in
+          URLs with relative paths.
 
 Thu Nov  5 07:02:19 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
