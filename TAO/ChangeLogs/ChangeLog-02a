@@ -1,3 +1,34 @@
+Fri Nov  3 14:53:08 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao_idl/ast/ast_exception.cpp:
+	* tao_idl/ast/ast_structure.cpp:
+	* tao_idl/ast/ast_union.cpp:
+	* tao_idl/include/ast_structure.h:
+
+	  Added ACE_Unbounded_Queue member that contains only 
+	  fields, code to populate the container, and accessor
+	  function. Existing member count and scope iterator
+	  functions include things like enum values of an enum
+	  declared inside the scope, which the spec requires
+	  to be declared in the enum's enclosing scope. Extra
+	  'members' like these are used in typecode creation,
+	  so the behavior of these existing functions could
+	  not be changed. For IfR administration, something was
+	  needed that would act on the 'fields' of the data type
+	  only. Simply ignoring the extra members makes it very
+	  difficult to correctly process something like:
+		struct foo
+		{
+		  enum bar {ONE, TWO} member1;
+		  bar member2;
+		};
+	  which is legal IDL, thus the dedicated container member
+	  and associated methods. The new member and accessor method
+	  are declared in AST_Structure only, since AST_Exception and
+	  AST_Union inherit from it. The populating method had to be
+	  added in each class, since the method from which it is
+	  called is private in each class.
+
 Fri Nov  3 10:48:56 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tests/DSI_Gateway/DSI_Gateway_Client.dsp:
