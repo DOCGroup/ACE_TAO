@@ -50,7 +50,8 @@ Tue Jul 20 15:08:09 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
           New files, .pidl files containing sequences of basic types 
           that were not already added to TAO, and the associated generated
           files. Thanks to Frank Pilhofer <fp@mc.com> for urging us to
-          add the remaining sequences of basic types to TAO.
+          add the remaining sequences of basic types to TAO. This closes
+          [BUGID:1888].
 
         * tao/OctetSeqC.inl:
 
