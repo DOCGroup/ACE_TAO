@@ -367,8 +367,6 @@ module PortableInterceptor
       to create the <CODE>octet</CODE> sequence that is part of an
       <CODE>IOP::TaggedComponent</CODE>.  This means that it could
       compliment the IOR interceptor support.
-  <li>Add interception points for AMI requests.
-  <li>Add interception points for DII/DSI invocations.
   <li>The <CODE>send_poll</CODE> request interception point
       implementation will most likely be deferred until TII is
       supported in TAO.
@@ -380,6 +378,8 @@ module PortableInterceptor
   <li>The current implementation does not go through the interceptor chain
       when using collocation optimizations such as <CODE>direct</CODE> or
       <CODE>ThruPOA</CODE>.
+  <li>Add interception points for AMI requests.
+  <li>Add interception points for DII/DSI invocations.
 </ul>
 
 <hr><P>
