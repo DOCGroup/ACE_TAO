@@ -61,6 +61,10 @@
         #define ACE_HAS_STANDARD_CPP_LIBRARY 0
 #endif
 
+#if defined (_MSC_VER) && (_MSC_VER >= 1200)
+#define ACE_HAS_WINSOCK2_GQOS 1
+#endif /* _MSC_VER >= 1200 */
+
 // The STL that comes with ACE uses the std namespace. Note however, it is not
 // part of the standard C++ library
 #if !defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB)

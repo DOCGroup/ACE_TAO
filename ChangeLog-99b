@@ -1,3 +1,13 @@
+Wed Jun 16 15:54:08 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* ace/OS.h:
+	* ace/OS.i:
+	* ace/config-win32.h:
+	  Auto-detect if we are using MSVC5.0 or MSVC6.0 and define the
+	  ACE_HAS_WINSOCK_GQOS macro in that case. This macro is used in
+	  the places where the QoS data structure of both compilers are
+	  different.
+
 Wed Jun 16 14:40:01 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.h fixed ACE_Object_Manager_Base comments, and removed
