@@ -175,10 +175,8 @@ CONTROLLED_FILES = \
         ace-config.in \
         aceConf.sh.in \
         apps \
-	aux \
         bin \
 	configure.ac \
-	configure \
         lib \
         docs \
         etc \
@@ -194,6 +192,8 @@ CONTROLLED_FILES = \
 
 RELEASE_FILES = \
         $(addprefix ACE_wrappers/,$(CONTROLLED_FILES)) \
+	ACE_wrappers/configure \
+	ACE_wrappers/aux \
         ACE_wrappers/ACE-INSTALL \
         ACE_wrappers/man
 
