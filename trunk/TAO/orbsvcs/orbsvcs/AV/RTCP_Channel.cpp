@@ -1,6 +1,8 @@
 // $Id$
 #include "ace/OS.h"
 
+#include "tao/debug.h"
+
 #include "RTCP_Channel.h"
 #include "RTP.h"
 
@@ -196,6 +198,7 @@ RTCP_Channel_In::update_seq(ACE_UINT16 seq)
           // (i.e., pretend this was the first packet).
           this->init_seq (seq);
 
+          if (TAO_debug_level > 0)
           ACE_DEBUG ((LM_DEBUG,
                       "RTCP_Channel_In: large jump in sequence number",
                       "; init seq\n"));
