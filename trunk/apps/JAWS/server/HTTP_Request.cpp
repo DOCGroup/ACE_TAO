@@ -525,7 +525,6 @@ HTTP_Request::cgi (char *uri_string)
 	      *ptr = ' ';
 	    else if (*ptr == '&' || *ptr == '=') 
 	      count++;
-            }
           while (*++ptr);
 
           count++;
