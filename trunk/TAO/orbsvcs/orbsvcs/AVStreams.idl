@@ -119,7 +119,7 @@ module AVStreams
                        in string fp_name,		// Only SFP1.0 currently 
                                                         // specified
                        in any fp_settings)		// Currently SFP accepts 
-      // SFPStatus structure
+                                                        // SFPStatus structure
       raises (noSuchFlow, 
               FPError);
     
