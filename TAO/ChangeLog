@@ -1,3 +1,8 @@
+Thr Jan 27 07:35:05 2005  Huang-Ming Huang  <hh1@cse.wustul.edu>
+
+        * orbsvcs/orbsvcs/FtRtEvent/EventChanel/GroupInfoPublisher.cpp      
+        Removed dependancy on log_obj_endpoints.h.
+
 Wed Jan 26 17:20:05 2005  Huang-Ming Huang  <hh1@cse.wustul.edu>
 
         * orbsvcs/orbsvcs/FtRtEvent/EventChanel/FTEC_Group_Manager.cpp

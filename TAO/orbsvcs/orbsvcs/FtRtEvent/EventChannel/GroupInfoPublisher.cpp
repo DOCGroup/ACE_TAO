@@ -7,7 +7,7 @@
 #include "FTEC_Become_Primary_Listener.h"
 #include "../Utils/Log.h"
 
-#include "../Utils/log_obj_endpoints.h"
+//#include "../Utils/log_obj_endpoints.h"
 
 ACE_RCSID (EventChannel,
            GroupInfoPublisher,
@@ -94,7 +94,7 @@ GroupInfoPublisherBase::setup_info(const FTRT::ManagerInfoList & info_list,
   ACE_CHECK_RETURN(0);
 
   ACE_DEBUG((LM_DEBUG, "In setup_info\n"));
-  log_obj_endpoints(result->iogr.in());
+  //log_obj_endpoints(result->iogr.in());
 
   /// check if sucessor changed
   size_t successors_length = info_list.length() - my_position -1;
