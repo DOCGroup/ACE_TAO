@@ -49,15 +49,6 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
 
-  // = The following two methods are no-ops to keep the
-  // <ACE_Connector> happy.
-  int get_local_addr (ACE_DEV_Addr &) const;
-  // Return the local endpoint address.
-
-  int get_remote_addr (ACE_DEV_Addr &) const;
-  // Return the address of the remotely connected peer (if there is
-  // one).
-
   int disable (int signum) const ;
   // Disable signal <signum>
   // This is here to prevent Win32 from
@@ -66,9 +57,6 @@ public:
 protected:
   ACE_DEV (void);
   // Ensure that this class is an abstract base class 
-
-  ACE_DEV_Addr addr_;
-  // Address of device we are connected to.
 };
 
 #include "ace/DEV.i"

@@ -1,7 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-
 // ============================================================================
 //
 // = LIBRARY
@@ -35,6 +34,8 @@
 #endif /* ACE_TEMPLATE_TYPEDEFS */
 
 struct ACE_FILE_Info
+  // = TITLE
+  //     Abstracts basic OS FILE information.
 {
   mode_t mode_;	
   // mode of file

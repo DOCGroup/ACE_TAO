@@ -80,6 +80,10 @@ public:
 
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
+
+  // = Meta-type info
+  typedef ACE_FILE_Addr PEER_ADDR;
+  typedef ACE_FILE_IO   PEER_STREAM;
 };
 
 #include "ace/FILE_Connector.i"

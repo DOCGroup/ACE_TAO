@@ -12,7 +12,7 @@ ACE_FILE_IO::dump (void) const
   ACE_TRACE ("ACE_FILE_IO::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  remote_addr_.dump ();
+  this->addr_.dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
@@ -92,3 +92,24 @@ ACE_FILE_IO::recv (size_t n, ...) const
   return result;
 }
 
+// Return the local endpoint address.
+
+int 
+ACE_FILE_IO::get_local_addr (ACE_FILE_Addr &addr) const
+{
+  ACE_TRACE ("ACE_FILE_IO::get_local_addr");
+
+  addr = this->addr_;
+  return 0;
+}
+
+// Return the address of the remotely connected peer (if there is
+// one).
+
+int 
+ACE_FILE_IO::get_remote_addr (ACE_FILE_Addr &addr) const
+{
+  ACE_TRACE ("ACE_FILE_IO::get_remote_addr");
+  addr = this->addr_;
+  return 0;
+}

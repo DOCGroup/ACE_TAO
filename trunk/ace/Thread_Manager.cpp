@@ -4,6 +4,7 @@
 #define ACE_BUILD_DLL
 #include "ace/Synch_T.h"
 #include "ace/Thread_Manager.h"
+#include "ace/Dynamic.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Thread_Manager.i"
@@ -316,7 +317,7 @@ ACE_Thread_Exit::thr_mgr (ACE_Thread_Manager *tm)
   ACE_TRACE ("ACE_Thread_Exit::set_task");
 
   if (tm != 0)
-    this->tc_.insert (tm->thr_mgr ());
+    this->thread_control_.insert (tm);
 }
 
 // Set the thread exit status value.
@@ -408,8 +409,8 @@ ace_thread_manager_adapter (void *args)
   exit_hook.thr_mgr (thread_args->thr_mgr ());
 
   // Invoke the user-supplied function with the args.
-  return thread_args->invoke ();
-}
+  void *status = thread_args->invoke ();
+
   return exit_hook.status (status);
   /* NOTREACHED */
 }
@@ -1384,5 +1385,16 @@ ACE_Thread_Control::exit (void *exit_status, int do_thr_exit)
     }
 }
 
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+#if (defined (ACE_HAS_THREADS) && defined (ACE_HAS_THREAD_SPECIFIC_STORAGE))
+  // This doesn't necessarily belong here, but it's a convenient place for it.
+  template class ACE_TSS<ACE_Dynamic>;
+#endif /* ACE_HAS_THREADS && ACE_HAS_THREAD_SPECIFIC_STORAGE */
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#if (defined (ACE_HAS_THREADS) && defined (ACE_HAS_THREAD_SPECIFIC_STORAGE))
+  // This doesn't necessarily belong here, but it's a convenient place for it.
+  #pragma instantiate ACE_TSS<ACE_Dynamic>
+#endif /* ACE_HAS_THREADS && ACE_HAS_THREAD_SPECIFIC_STORAGE */
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 

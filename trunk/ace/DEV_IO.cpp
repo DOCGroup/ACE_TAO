@@ -6,6 +6,28 @@
 
 ACE_ALLOC_HOOK_DEFINE(ACE_DEV_IO)
 
+// Return the local endpoint address.
+
+int 
+ACE_DEV_IO::get_local_addr (ACE_DEV_Addr &addr) const
+{
+  ACE_TRACE ("ACE_DEV_IO::get_local_addr");
+
+  addr = this->addr_;
+  return 0;
+}
+
+// Return the address of the remotely connected peer (if there is
+// one).
+
+int 
+ACE_DEV_IO::get_remote_addr (ACE_DEV_Addr &addr) const
+{
+  ACE_TRACE ("ACE_DEV_IO::get_remote_addr");
+  addr = this->addr_;
+  return 0;
+}
+
 void
 ACE_DEV_IO::dump (void) const
 {
