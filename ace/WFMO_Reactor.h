@@ -93,7 +93,7 @@ public:
 
     ACE_Reactor_Mask close_masks_;
     // These are the masks related to <handle_close> for the
-    // <Event_Handler>.  This is only valid when >delete_entry_> is
+    // <Event_Handler>.  This is only valid when <delete_entry_> is
     // set.
 
     Common_Info (void);
@@ -345,6 +345,13 @@ public:
   int remove_to_be_added_handler_i (size_t slot,
                                     ACE_Reactor_Mask to_be_removed_masks);
   // Removes the <ACE_Event_Handler> at <slot> from the table.
+
+  int handler (ACE_HANDLE handle,
+               ACE_Reactor_Mask mask,
+               ACE_Event_Handler **event_handler = 0);
+  // Check to see if <handle> is associated with a valid Event_Handler
+  // bound to <mask>.  Return the <event_handler> associated with this
+  // <handler> if <event_handler> != 0.
 
   void dump (void) const;
   // Dump the state of an object.
@@ -780,7 +787,7 @@ public:
   // with accidentally deleting the wrong timer.  Returns -1 on
   // failure (which is guaranteed never to be a valid <timer_id>.
 
-  virtual int reset_timer_interval (long timer_id, 
+  virtual int reset_timer_interval (long timer_id,
                                     const ACE_Time_Value &interval);
   // Resets the interval of the timer represented by <timer_id> to
   // <interval>, which is specified in relative time to the current
@@ -865,7 +872,9 @@ public:
   virtual int handler (ACE_HANDLE handle,
                        ACE_Reactor_Mask mask,
                        ACE_Event_Handler **event_handler = 0);
-  // Not implemented.
+  // Check to see if <handle> is associated with a valid Event_Handler
+  // bound to <mask>.  Return the <event_handler> associated with this
+  // <handler> if <event_handler> != 0.
 
   virtual int handler (int signum,
                        ACE_Event_Handler ** = 0);
@@ -898,7 +907,7 @@ public:
 
   virtual int restart (void);
   // Get the existing restart value.
-  
+
   virtual int restart (int r);
   // Set a new value for restart and return the original value.
 
