@@ -11,39 +11,41 @@ vt_graph_impl::vt_graph_impl (void)
 
 // Creates a vt_graph_impl with the given number of nodes. There will be one
 // root node and the rest will be children of it.
-vt_graph_impl::vt_graph_impl (int num_nodes)
+vt_graph_impl::vt_graph_impl (int num_nodes ACE_ENV_ARG_DECL)
 {
-	nodes_ ().length (0);
+  nodes_ ().length (0);
   add_node ("ROOT" ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
-	for (int i = 1; i < num_nodes; i++)
-		{
-			add_node ("CHILD" ACE_ENV_ARG_PARAMETER);
+  for (int i = 1; i < num_nodes; i++)
+    {
+      add_node ("CHILD" ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
-			nodes_ ()[0]->add_edge (nodes_ ()[i] ACE_ENV_ARG_PARAMETER);
+      nodes_ ()[0]->add_edge (nodes_ ()[i] ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
-		}
+    }
 }
 
 // Get the number of nodes in the vt_graph.
 CORBA::Long vt_graph_impl::size (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-	return nodes_ ().length ();
+  return nodes_ ().length ();
 }
 
 // Add a node to the graph with no edges.
-void vt_graph_impl::add_node (const char * name ACE_ENV_ARG_DECL)
+void
+vt_graph_impl::add_node (const char * name ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-	Supports_Test::Node * new_node = 0;
+  Supports_Test::Node * new_node = 0;
   ACE_NEW (new_node, node_impl (name));
-	nodes_ ().length (nodes_ ().length () + 1);
-	nodes_ ()[nodes_ ().length () - 1] = new_node;
+  nodes_ ().length (nodes_ ().length () + 1);
+  nodes_ ()[nodes_ ().length () - 1] = new_node;
 }
 
 // Print out information about each node.
-void vt_graph_impl::print (ACE_ENV_SINGLE_ARG_DECL)
+void
+vt_graph_impl::print (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   cout << "Printing graph data..." << endl;
@@ -56,18 +58,20 @@ void vt_graph_impl::print (ACE_ENV_SINGLE_ARG_DECL)
 
 /* vt_graph_init_impl - factory operations */
 
-Supports_Test::vt_graph * vt_graph_init_impl::create (ACE_ENV_SINGLE_ARG_DECL)
+Supports_Test::vt_graph *
+vt_graph_init_impl::create (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-	vt_graph_impl * ret_val = 0;
+  vt_graph_impl * ret_val = 0;
   ACE_NEW_RETURN (ret_val, vt_graph_impl, 0);
   return ret_val;
 }
 
-CORBA::ValueBase * vt_graph_init_impl::create_for_unmarshal (ACE_ENV_SINGLE_ARG_DECL)
+CORBA::ValueBase *
+vt_graph_init_impl::create_for_unmarshal (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-	vt_graph_impl * ret_val = 0;
+  vt_graph_impl * ret_val = 0;
   ACE_NEW_RETURN (ret_val, vt_graph_impl, 0);
   return ret_val;
 }
@@ -85,54 +89,52 @@ test_impl::~test_impl (void)
   ACE_CHECK;
 }
 
-void test_impl::pass_obj_graph_in (
-    Supports_Test::graph * graph_param
-    ACE_ENV_ARG_DECL)
+void
+test_impl::pass_obj_graph_in (
+  Supports_Test::graph * graph_param
+  ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
     CORBA::SystemException))
 {
-
   ACE_ASSERT (graph_param->size (ACE_ENV_SINGLE_ARG_PARAMETER) == 3);
   graph_param->add_node ("NEW1" ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
-	ACE_ASSERT (graph_param->size (ACE_ENV_SINGLE_ARG_PARAMETER) == 4);
-
+  ACE_ASSERT (graph_param->size (ACE_ENV_SINGLE_ARG_PARAMETER) == 4);
 }
 
-void test_impl::pass_vt_graph_in (
-    Supports_Test::vt_graph * vt_graph_param
-    ACE_ENV_ARG_DECL)
+void
+test_impl::pass_vt_graph_in (
+  Supports_Test::vt_graph * vt_graph_param
+  ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
     CORBA::SystemException))
 {
-
-	ACE_ASSERT (vt_graph_param->size (ACE_ENV_SINGLE_ARG_PARAMETER) == 3);
-	vt_graph_param->add_node ("NEW1" ACE_ENV_ARG_PARAMETER);
+  ACE_ASSERT (vt_graph_param->size (ACE_ENV_SINGLE_ARG_PARAMETER) == 3);
+  vt_graph_param->add_node ("NEW1" ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
-	ACE_ASSERT (vt_graph_param->size (ACE_ENV_SINGLE_ARG_PARAMETER) == 4);
-
+  ACE_ASSERT (vt_graph_param->size (ACE_ENV_SINGLE_ARG_PARAMETER) == 4);
 }
 
-void test_impl::pass_obj_graph_out (
-    Supports_Test::graph_out graph_param
-    ACE_ENV_ARG_DECL)
+void
+test_impl::pass_obj_graph_out (
+  Supports_Test::graph_out graph_param
+  ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
     CORBA::SystemException))
 {
-
   vt_graph_impl * the_vt_graph = 0;
   ACE_NEW (the_vt_graph, vt_graph_impl (4));
   graph_param = the_vt_graph->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
-	ACE_CHECK;
+  ACE_CHECK;
 
   ACE_ASSERT (graph_param->size (ACE_ENV_SINGLE_ARG_PARAMETER) == 4);
-	graph_param->add_node ("NEW1" ACE_ENV_ARG_PARAMETER);
+  graph_param->add_node ("NEW1" ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
-	ACE_ASSERT (graph_param->size (ACE_ENV_SINGLE_ARG_PARAMETER) == 5);
-
+  ACE_ASSERT (graph_param->size (ACE_ENV_SINGLE_ARG_PARAMETER) == 5);
 }
 
-void test_impl::pass_vt_graph_out (
+void
+test_impl::pass_vt_graph_out (
     Supports_Test::vt_graph_out vt_graph_param
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
@@ -140,17 +142,18 @@ void test_impl::pass_vt_graph_out (
 {
 
   vt_graph_impl * the_vt_graph = 0;
-	ACE_NEW (the_vt_graph, vt_graph_impl (4));
-	vt_graph_param = the_vt_graph;
+  ACE_NEW (the_vt_graph, vt_graph_impl (4));
+  vt_graph_param = the_vt_graph;
 
-	ACE_ASSERT (vt_graph_param->size (ACE_ENV_SINGLE_ARG_PARAMETER) == 4);
-	vt_graph_param->add_node ("NEW1" ACE_ENV_ARG_PARAMETER);
+  ACE_ASSERT (vt_graph_param->size (ACE_ENV_SINGLE_ARG_PARAMETER) == 4);
+  vt_graph_param->add_node ("NEW1" ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
-	ACE_ASSERT (vt_graph_param->size (ACE_ENV_SINGLE_ARG_PARAMETER) == 5);
+  ACE_ASSERT (vt_graph_param->size (ACE_ENV_SINGLE_ARG_PARAMETER) == 5);
 
 }
 
-void test_impl::pass_obj_graph_inout (
+void
+test_impl::pass_obj_graph_inout (
     Supports_Test::graph * &graph_param
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
@@ -158,31 +161,34 @@ void test_impl::pass_obj_graph_inout (
 {
 
   ACE_ASSERT (graph_param->size (ACE_ENV_SINGLE_ARG_PARAMETER) == 6);
-	graph_param->add_node ("NEW3" ACE_ENV_ARG_PARAMETER);
+  graph_param->add_node ("NEW3" ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
-	ACE_ASSERT (graph_param->size (ACE_ENV_SINGLE_ARG_PARAMETER) == 7);
+  ACE_ASSERT (graph_param->size (ACE_ENV_SINGLE_ARG_PARAMETER) == 7);
 
 }
 
-void test_impl::pass_vt_graph_inout (
+void
+test_impl::pass_vt_graph_inout (
     Supports_Test::vt_graph * &vt_graph_param
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
     CORBA::SystemException))
 {
 
-	ACE_ASSERT (vt_graph_param->size (ACE_ENV_SINGLE_ARG_PARAMETER) == 6);
-	vt_graph_param->add_node ("NEW3" ACE_ENV_ARG_PARAMETER);
+  ACE_ASSERT (vt_graph_param->size (ACE_ENV_SINGLE_ARG_PARAMETER) == 6);
+  vt_graph_param->add_node ("NEW3" ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
-	ACE_ASSERT (vt_graph_param->size (ACE_ENV_SINGLE_ARG_PARAMETER) == 7);
+  ACE_ASSERT (vt_graph_param->size (ACE_ENV_SINGLE_ARG_PARAMETER) == 7);
 
 }
 
-void test_impl::start (ACE_ENV_SINGLE_ARG_DECL) ACE_THROW_SPEC ((CORBA::SystemException))
+void
+test_impl::start (ACE_ENV_SINGLE_ARG_DECL) ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
-void test_impl::finish (ACE_ENV_SINGLE_ARG_DECL) ACE_THROW_SPEC ((CORBA::SystemException))
+void
+test_impl::finish (ACE_ENV_SINGLE_ARG_DECL) ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->_remove_ref ();
 }
@@ -204,18 +210,20 @@ node_impl::node_impl (const char * name)
 }
 
 // Add an edge from this node to neighbor.
-void node_impl::add_edge (Supports_Test::Node * neighbor ACE_ENV_ARG_DECL)
+void
+node_impl::add_edge (Supports_Test::Node * neighbor ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-	degree_ (degree_ () + 1);
-	neighbors_ ().length (neighbors_ ().length () + 1);
-	neighbors_ ()[neighbors_ ().length () - 1] = neighbor;
+  degree_ (degree_ () + 1);
+  neighbors_ ().length (neighbors_ ().length () + 1);
+  neighbors_ ()[neighbors_ ().length () - 1] = neighbor;
   neighbor->_add_ref ();
-	return;
+  return;
 }
 
 // Remove the edge from this node to neighbor.
-void node_impl::remove_edge (Supports_Test::Node * neighbor ACE_ENV_ARG_DECL)
+void
+node_impl::remove_edge (Supports_Test::Node * neighbor ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   for (unsigned int i = 0; i < neighbors_ ().length (); i++)
@@ -227,13 +235,15 @@ void node_impl::remove_edge (Supports_Test::Node * neighbor ACE_ENV_ARG_DECL)
       }
 }
 
-void node_impl::change_weight (CORBA::Long new_weight ACE_ENV_ARG_DECL)
+void
+node_impl::change_weight (CORBA::Long new_weight ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-	weight_ (new_weight);
+  weight_ (new_weight);
 }
 
-void node_impl::print (ACE_ENV_SINGLE_ARG_DECL)
+void
+node_impl::print (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   cout << "  Name: " << name_ () << endl;
@@ -246,18 +256,20 @@ void node_impl::print (ACE_ENV_SINGLE_ARG_DECL)
 
 /* node_init_impl - factory operations */
 
-Supports_Test::Node * node_init_impl::create (ACE_ENV_SINGLE_ARG_DECL)
+Supports_Test::Node *
+node_init_impl::create (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-	node_impl * ret_val = 0;
+  node_impl * ret_val = 0;
   ACE_NEW_RETURN (ret_val, node_impl, 0);
   return ret_val;
 }
 
-CORBA::ValueBase * node_init_impl::create_for_unmarshal (ACE_ENV_SINGLE_ARG_DECL)
+CORBA::ValueBase *
+node_init_impl::create_for_unmarshal (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-	node_impl * ret_val = 0;
+  node_impl * ret_val = 0;
   ACE_NEW_RETURN (ret_val, node_impl, 0);
   return ret_val;
 }
