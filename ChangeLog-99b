@@ -1,3 +1,8 @@
+Wed Feb 10 10:53:59 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* examples/IPC_SAP/TLI_SAP/ftp-server.cpp: 
+	  Fixed several minor syntax errors.
+
 Tue Feb 09 16:54:10 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
         * ace/CDR_Stream.cpp:
