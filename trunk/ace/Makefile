@@ -75,6 +75,7 @@ DEMUX_FILES = \
   Reactor \
   Select_Reactor \
   Select_Reactor_Base \
+  SUN_Proactor \
   TP_Reactor \
   TkReactor \
   WFMO_Reactor \
