@@ -97,12 +97,6 @@ public:
       TAO_ATTRIBUTE_IH,                         // in implementation header
       TAO_ATTRIBUTE_SS,                         // in server skeletons
       TAO_ATTRIBUTE_IS,                         // in implementation skeletons
-      TAO_ATTRIBUTE_THRU_POA_COLLOCATED_SH,     // in server header for collocated
-      TAO_ATTRIBUTE_THRU_POA_COLLOCATED_SS,     // in server skeletons for
-      // collocated
-      TAO_ATTRIBUTE_DIRECT_COLLOCATED_SH,       // in server header for collocated
-      TAO_ATTRIBUTE_DIRECT_COLLOCATED_SS,       // in server skeletons for
-      // collocated
 
       TAO_ATTRIBUTE_BASE_PROXY_IMPL_CH,         // Proxy Impl Related Attribute visitors.
 
@@ -177,10 +171,6 @@ public:
       TAO_INTERFACE_SI,
       TAO_INTERFACE_SS,
       TAO_INTERFACE_IS,
-      TAO_INTERFACE_THRU_POA_COLLOCATED_SH,
-      TAO_INTERFACE_THRU_POA_COLLOCATED_SS,
-      TAO_INTERFACE_DIRECT_COLLOCATED_SH,
-      TAO_INTERFACE_DIRECT_COLLOCATED_SS,
       TAO_INTERFACE_ANY_OP_CH,
       TAO_INTERFACE_ANY_OP_CS,
       TAO_INTERFACE_CDR_OP_CH,
@@ -292,10 +282,6 @@ public:
       TAO_OPERATION_IH,                       // in implementation header
       TAO_OPERATION_SS,                       // in server skeletons
       TAO_OPERATION_IS,                       // in server skeletons
-      TAO_OPERATION_THRU_POA_COLLOCATED_SH,   // in collocated server header
-      TAO_OPERATION_THRU_POA_COLLOCATED_SS,   // in collocated server skel
-      TAO_OPERATION_DIRECT_COLLOCATED_SH,     // in collocated server header
-      TAO_OPERATION_DIRECT_COLLOCATED_SS,     // in collocated server skel
 
       TAO_OPERATION_BASE_PROXY_IMPL_CH,       // Proxy_Impl operation gen.
       // in client header

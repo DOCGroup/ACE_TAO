@@ -153,6 +153,14 @@ be_visitor_amh_interface_sh::visit_interface (be_interface *node)
       << "ACE_ENV_ARG_DECL" << be_uidt_nl
       << ");\n" << be_uidt_nl;
 
+  // Add a skeleton for our _component method.
+  *os << "static void _component_skel (" << be_idt << be_idt_nl
+      << "TAO_ServerRequest &req," << be_nl
+      << "void *obj," << be_nl
+      << "void *servant_upcall" << be_nl
+      << "ACE_ENV_ARG_DECL" << be_uidt_nl
+      << ");\n" << be_uidt_nl;
+
   // Add the dispatch method.
   *os << "virtual void _dispatch (" << be_idt << be_idt_nl
       << "TAO_ServerRequest &req," << be_nl
@@ -297,7 +305,7 @@ be_visitor_amh_interface_sh::add_amh_operation (be_operation *node,
                 );
 
   UTL_ScopedName *op_name =
-    ACE_static_cast (UTL_ScopedName *, 
+    ACE_static_cast (UTL_ScopedName *,
                      amh_node->name ()->copy ());
 
   ACE_NEW_RETURN (id,
@@ -383,7 +391,7 @@ be_visitor_amh_interface_sh::create_amh_class (ACE_CString name)
 
   UTL_ScopedName *amh_class_name = 0;
   ACE_NEW_RETURN (amh_class_name,
-                  UTL_ScopedName (id, 
+                  UTL_ScopedName (id,
                                   0),
                   0);
 

@@ -416,6 +416,19 @@ CORBA_Object::_get_implementation (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   return 0;
 }
 
+CORBA::Object_ptr
+CORBA_Object::_get_component (ACE_ENV_SINGLE_ARG_DECL)
+{
+  // Get the right Proxy.
+  TAO_Object_Proxy_Impl &the_proxy =
+    this->proxy_broker_->select_proxy (this ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  // Perform the Call.
+  return the_proxy._get_component (this ACE_ENV_ARG_PARAMETER);
+}
+
+
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
 // ****************************************************************
