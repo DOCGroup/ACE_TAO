@@ -1,3 +1,21 @@
+Wed Mar  7 08:20:01 2001  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/ARGV.cpp:
+
+          Removed a warning about possible use of uninitialized variable.
+
+        * bin/ace_ld:
+
+          Added new functionality to filter out the harmless symbol size
+          change warnings for VxWorks 5.4.
+
+        * examples/Shared_Malloc/test_multiple_mallocs.cpp:
+        * examples/Shared_Malloc/test_persistence.cpp:
+        * examples/Shared_Malloc/test_position_independent_malloc.cpp:
+
+          Renamed the typedef MALLOC to TEST_MALLOC.  A MALLOC macro is
+          defined by a VxWorks system header.
+
 Wed Mar  7 06:11:52 2001  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Asynch_IO.h: Removed the unnecessary/improver ';' at the

@@ -21,7 +21,7 @@ typedef ACE_PI_Control_Block CONTROL_BLOCK;
 typedef ACE_Control_Block CONTROL_BLOCK;
 #endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */
 
-typedef ACE_Malloc_T <ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex, CONTROL_BLOCK> MALLOC;
+typedef ACE_Malloc_T <ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex, CONTROL_BLOCK> TEST_MALLOC;
 
 // Default address for memory-mapped files.
 static void *base_addr = ACE_DEFAULT_BASE_ADDR;
@@ -44,7 +44,7 @@ print (Test_Data *data)
 }
 
 static void *
-initialize (MALLOC *allocator)
+initialize (TEST_MALLOC *allocator)
 {
   void *ptr;
   ACE_ALLOCATOR_RETURN (ptr,
@@ -145,13 +145,13 @@ main (int argc, char *argv[])
   ACE_MMAP_Memory_Pool_Options options (base_addr);
 
   // Create an allocator.
-  MALLOC *ptr;
+  TEST_MALLOC *ptr;
   ACE_NEW_RETURN (ptr,
-                  MALLOC ("test_file",
-                          "test_lock",
-                          &options),
+                  TEST_MALLOC ("test_file",
+                               "test_lock",
+                               &options),
                   1);
-  auto_ptr <MALLOC> allocator (ptr);
+  auto_ptr <TEST_MALLOC> allocator (ptr);
   void *data = 0;
 
   // This is the first time in, so we allocate the memory and bind it
@@ -191,8 +191,8 @@ template class ACE_Based_Pointer_Basic<Test_Data>;
 template class ACE_Based_Pointer_Basic<long>;
 template class ACE_Based_Pointer_Basic<Long_Test>;
 template class ACE_Based_Pointer<Long_Test>;
-template class auto_ptr <MALLOC>;
-template class ACE_Auto_Basic_Ptr<MALLOC>;
+template class auto_ptr <TEST_MALLOC>;
+template class ACE_Auto_Basic_Ptr<TEST_MALLOC>;
 #if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
 
 #endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */
@@ -202,8 +202,8 @@ template class ACE_Auto_Basic_Ptr<MALLOC>;
 #pragma instantiate ACE_Based_Pointer_Basic<long>
 #pragma instantiate ACE_Based_Pointer_Basic<Long_Test>
 #pragma instantiate ACE_Based_Pointer_Basic<Long>
-#pragma instantiate auto_ptr <MALLOC>
-#pragma instantiate ACE_Auto_Basic_Ptr<MALLOC>
+#pragma instantiate auto_ptr <TEST_MALLOC>
+#pragma instantiate ACE_Auto_Basic_Ptr<TEST_MALLOC>
 #if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
 
 #endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */
