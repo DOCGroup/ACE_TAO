@@ -64,10 +64,10 @@ TAO_Internal::open_services (int &argc,
       // name of the shared library that implements the protocol.
       ACE_Service_Config::static_svcs ()->
         insert (&ace_svc_desc_TAO_IIOP_Protocol_Factory);
-#if defined (TAO_HAS_UIOP)
+#if TAO_HAS_UIOP == 1
       ACE_Service_Config::static_svcs ()->
         insert (&ace_svc_desc_TAO_UIOP_Protocol_Factory);
-#endif /* TAO_HAS_UIOP */
+#endif /* TAO_HAS_UIOP == 1 */
       // add descriptor to list of static objects.
 
       int result = 0;

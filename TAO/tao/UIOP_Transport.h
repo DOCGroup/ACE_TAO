@@ -29,7 +29,7 @@
 
 #include "tao/GIOP.h"
 
-# if defined (TAO_HAS_UIOP)
+# if TAO_HAS_UIOP == 1
 
 // Forward decls.
 class TAO_UIOP_Handler_Base;
@@ -169,6 +169,6 @@ public:
   // non-blocking reads, fragment reassembly, etc.
 };
 
-# endif  /* TAO_HAS_UIOP */
+# endif  /* TAO_HAS_UIOP == 1 */
 
 #endif  /* TAO_UIOP_TRANSPORT_H */

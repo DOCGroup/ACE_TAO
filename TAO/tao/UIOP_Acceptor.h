@@ -27,7 +27,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-# if defined (TAO_HAS_UIOP)
+# if TAO_HAS_UIOP == 1
 
 #include "ace/Acceptor.h"
 #include "ace/LSOCK_Acceptor.h"
@@ -105,6 +105,6 @@ private:
   // occurs.
 };
 
-# endif /* TAO_HAS_UIOP */
+# endif /* TAO_HAS_UIOP == 1 */
 
 #endif  /* TAO_UIOP_ACCEPTOR_H */

@@ -3,7 +3,7 @@
 
 #include "tao/UIOP_Transport.h"
 
-#if defined (TAO_HAS_UIOP)
+#if TAO_HAS_UIOP == 1
 
 #include "tao/UIOP_Connect.h"
 #include "tao/UIOP_Profile.h"
@@ -382,4 +382,4 @@ TAO_UIOP_Transport::send_request (TAO_Stub *,
   return -1;
 }
 
-#endif  /* TAO_HAS_UIOP */
+#endif  /* TAO_HAS_UIOP == 1 */
