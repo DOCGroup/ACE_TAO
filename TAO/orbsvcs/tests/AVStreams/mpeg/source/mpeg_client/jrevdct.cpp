@@ -31,6 +31,7 @@
 #include <string.h>
 #include "video.h"
 #include "proto.h"
+#include "ace/OS.h"
 
 ACE_RCSID(mpeg_client, jrevdct, "$Id$")
 

@@ -24,7 +24,7 @@
  *         Department of Computer Science and Engineering
  *         email: scen@cse.ogi.edu
  */
-
+#include "ace/OS.h"
 
 // ============================================================================
 //
@@ -60,6 +60,7 @@
 #include "orbsvcs/AV/AVStreams_i.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/Acceptor.h"
+#include "orbsvcs/Naming/Naming_Utils.h"
 
 
 
@@ -286,7 +287,7 @@ public:
   // Destructor
 
   int init (int argc,char **argv);
-  // initialize the ORB
+  // initialize the ORB and NamingService
 
   int run (void);
   // Run the ORB event loop
@@ -302,7 +303,6 @@ public:
   int handle_timeout (const ACE_Time_Value &,
                                   const void *arg);
   // handle the timeout 
-
 
   void stop_timer (void);
   // stop the internal timer
@@ -420,6 +420,9 @@ private:
   TAO_ORB_Manager orb_manager_;
   // the ORB manager
 
+  TAO_Naming_Client my_name_client_;
+  // A Name_Client used to resolve the video_server_mmdevice
+  
   Video_Control_ptr video_control_;
   // Video Control CORBA object
 

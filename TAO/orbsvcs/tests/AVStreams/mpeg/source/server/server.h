@@ -1,5 +1,5 @@
 /* -*- c++ -*- */
-/* $Id$ */
+// $Id$
 
 // ============================================================================
 //
@@ -35,7 +35,7 @@
 #include "mpeg_shared/routine.h"        
 #include "mpeg_shared/com.h"            
 #include "mpeg_server/Video_Control_i.h"
-#include "orbsvcs/orbsvcs/Naming/Naming_Utils.h"
+#include "orbsvcs/Naming/Naming_Utils.h"
 
 #if defined (NATIVE_ATM)
 #include "atmcom.h"
@@ -109,6 +109,10 @@ private:
   ACE_HANDLE handle_;
   // dummy handle for the sig handler.
   ACE_Sig_Set sig_set;
+
+  TAO_Naming_Client my_name_client_;
+  // Name_Client used for unregistering the audio and video 
+  
 };
 
 class AV_Server
@@ -152,8 +156,8 @@ private:
   TAO_ORB_Manager orb_manager_;
   // the TAO ORB manager.
 
-  CosNaming::NamingContext_var naming_context_;
-  // The root naming context of the naming service
+  TAO_Naming_Client my_name_client_;
+  // Name_Server used to bind audio and video controls
 
   AV_Server_Sig_Handler signal_handler_;
   // Signal handler for SIGCHLD,SIGINT,SIGTERM,SIGBUS
