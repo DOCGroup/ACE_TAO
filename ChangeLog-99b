@@ -1,3 +1,8 @@
+Thu Jan 21 14:25:58 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/SString.h: changed !ACE_HAS_WINCE wrap of ostream
+          operators to !ACE_LACKS_IOSTREAM_TOTALLY.
+
 Thu Jan 21 15:19:26 1999  James CE Johnson  <jcej@lads.com>
 
         * docs/tutorials/001/Makefile:
@@ -18,8 +23,8 @@ Thu Jan 21 15:19:26 1999  James CE Johnson  <jcej@lads.com>
         * docs/tutorials/006/page03.html:
         * docs/tutorials/006/page04.html:
         * docs/tutorials/006/page05.html:
-	  Incorporated new comments from Vishal, Yamuna and Pradeep.
-	
+          Incorporated new comments from Vishal, Yamuna and Pradeep.
+
 Thu Jan 21 13:05:31 1999  Steve Huston  <shuston@riverace.com>
 
         * docs/tutorials/Makefile:  Removed include .depend to allow the
@@ -28,16 +33,16 @@ Thu Jan 21 13:05:31 1999  Steve Huston  <shuston@riverace.com>
 
 Wed Jan 20 19:47:16 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/OS.{h,i,cpp} (fopen): Reimplement fopen using Win32 APIs so
-	  ACE_OS::unlink behaves the same as it does on UNIX platforms.
-	  Both ACE_OS::open and ACE_OS::fopen have been corrected.
-	  There's also a ACE::open_temp_file which should be the prefered
-	  method to open temp files when ACE_HANDLE is used.  That's
-	  because Win32 tries to map the file opened by
-	  ACE::open_temp_file to memory.
+        * ace/OS.{h,i,cpp} (fopen): Reimplement fopen using Win32 APIs so
+          ACE_OS::unlink behaves the same as it does on UNIX platforms.
+          Both ACE_OS::open and ACE_OS::fopen have been corrected.
+          There's also a ACE::open_temp_file which should be the prefered
+          method to open temp files when ACE_HANDLE is used.  That's
+          because Win32 tries to map the file opened by
+          ACE::open_temp_file to memory.
 
-	* ace/Parse_Node.cpp (symbol): <func> need to be initialized.
-	  Thanks to David for reporting the bug.
+        * ace/Parse_Node.cpp (symbol): <func> need to be initialized.
+          Thanks to David for reporting the bug.
 
 Wed Jan 20 17:37:21 1999  Steve Huston  <shuston@riverace.com>
 
