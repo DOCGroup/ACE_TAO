@@ -83,7 +83,7 @@ ACEXML_URL_Addr::string_to_addr (const ACEXML_Char *s)
   if (s == 0)
     return -1;
 
-  const char* http = "http://";
+  const ACEXML_Char* http = ACE_TEXT("http://");
   int http_len = ACE_OS::strlen (http);
 
   // Check validity of URL
@@ -118,7 +118,7 @@ ACEXML_URL_Addr::string_to_addr (const ACEXML_Char *s)
   // Get the path name
   const ACEXML_Char* path_name = 0;
   if (*url == '\0')
-    path_name = "/";
+    path_name = ACE_TEXT("/");
   else
     path_name = url;
 
@@ -144,10 +144,10 @@ int
 ACEXML_URL_Addr::set (const ACEXML_URL_Addr &addr)
 {
   ACE_OS::free (ACE_reinterpret_cast (void *,
-                                      ACE_const_cast (char *,
+                                      ACE_const_cast (ACEXML_Char *,
                                                       this->path_name_)));
   ACE_OS::free (ACE_reinterpret_cast (void *,
-                                      ACE_const_cast (char *,
+                                      ACE_const_cast (ACEXML_Char *,
                                                       this->addr_string_)));
   if (this->ACE_INET_Addr::set (addr) == -1)
     return -1;
