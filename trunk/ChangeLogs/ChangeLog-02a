@@ -1,3 +1,8 @@
+Sun Mar 31 22:08:00 2002  Si Mong Park  <spark@ociweb.com>
+
+        * ChangeLog:
+          Fixed incorrect path for FaCE related files on prior change log items.
+
 Sat Mar 30 08:58:57 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* ace/Asynch_Acceptor.cpp: (handle_accept): Removed a stray ACE_DEBUG() call.
@@ -5,9 +10,9 @@ Sat Mar 30 08:58:57 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 Sun Mar 31 01:18:00 2002  Si Mong Park  <spark@ociweb.com>
 
-        * apps/FaCE_OS.h:
-        * apps/FaCE.cpp:
-        * apps/Main.cpp:
+        * apps/FaCE/FaCE_OS.h:
+        * apps/FaCE/FaCE.cpp:
+        * apps/FaCE/Main.cpp:
           Added "// FUZZ: disable check_for_tchar" as the code is only and
           specifically for the WinCE.  Thanks to Nanbor Wang for help.
 
@@ -22,10 +27,10 @@ Sat Mar 30 22:19:00 2002  Si Mong Park  <spark@ociweb.com>
           and moved to FaCE_OS.h in the FaCE package since it is FaCE
           specific macro.
 
-        * apps/Face_OS.h:
+        * apps/FaCE/Face_OS.h:
           Contains FaCE_MAIN macro definition to set entry point on WinCE.
 
-        * apps/ReadMe.txt:
+        * apps/FaCE/ReadMe.txt:
           Updated installation part for FacE_OS.h.
 
 Fri Mar 29 17:35:39 2002  Steve Huston  <shuston@riverace.com>
