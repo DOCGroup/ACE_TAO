@@ -160,6 +160,9 @@ private:
   /// The message state. It represents the status of the messages that
   /// have been read from the current_buffer_
   TAO_GIOP_Message_State message_state_;
+
+  /// Our copy the ORB_Core
+  TAO_ORB_Core *orb_core_;
 };
 
 

@@ -1,3 +1,11 @@
+Wed Mar 14 15:36:14 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/GIOP_Message_Handler.h:
+	* tao/GIOP_Message_Handler.cpp: The high drama involved with BCB
+	  not working with TAO 1.1.13 should be finally over. Thanks a lot
+	  to Chris Kohlhoff and Johnny Willemsen for working on this and
+	  providing patches.
+
 Wed Mar 14 14:50:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
 	* tests/AMI_Timeouts/AMI_Timeouts.dsw
