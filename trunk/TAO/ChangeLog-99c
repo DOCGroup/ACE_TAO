@@ -1,5 +1,13 @@
 Sat Jun 19 12:59:28 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
+	* rules.tao.GNU : Added the default argument ie. -Ge 1 to be used
+	  with the IDL compiler. This will take care of most of the
+	  flavours of UNIX. Also added a command line rule called
+	  tao_native_exception to override the default from the command
+	  line. If the application developer wants to change the default
+	  through his make file he can override them by using the rule
+	  TAO_IDLFLAGS.
+	
 	* TAO_IDL/util/utl_global.cpp : 
 	* TAO_IDL/driver/drv_args.cpp: Made changes to generate code
 	  according to the following rules.
