@@ -1544,7 +1544,7 @@ typedef DWORD nlink_t;
 #if !defined (_MSC_VER) /* Borland? */
 typedef uint64 ACE_QWORD;
 typedef ACE_QWORD ACE_hrtime_t;
-inline ACE_QWORD ACE_MAKE_QWORD (DWORD lo, DWORD hi) { return unit64 (lo, hi); }
+inline ACE_QWORD ACE_MAKE_QWORD (DWORD lo, DWORD hi) { return uint64 (lo, hi); }
 inline DWORD ACE_LOW_DWORD  (ACE_QWORD q) { return q.LowPart; }
 inline DWORD ACE_HIGH_DWORD (ACE_QWORD q) { return q.HighPart; }
 #else
