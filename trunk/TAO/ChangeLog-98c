@@ -1,3 +1,7 @@
+Wed Nov 26 23:24:57 1997    <cleeland@cs.wustl.edu>
+
+	* TAO version 0.0.41, released Wed Nov 26 23:24:57 1997.
+
 Wed Nov 26 16:40:29 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* tests/Cubit/TAO/IDL_Cubit/clnt.cpp: Changed release calls to use
