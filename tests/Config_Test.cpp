@@ -799,7 +799,8 @@ Config_Test::testIniFormat ()
   int rc = 0;
   if (!this->equality_tested_)
     {
-      if ((rc = this->testEquality ()) != 0)
+      rc = this->testEquality ();
+      if (rc != 0)
         {
           ACE_DEBUG ((LM_DEBUG, "Equality Test Failed\n"));
           return rc;
@@ -811,10 +812,12 @@ Config_Test::testIniFormat ()
   //  1. Creates an ACE_Configuration_Heap object
   ACE_Configuration_Heap original;
 
-  if ((rc = original.open ()) == 0)
+  rc = original.open ();
+  if (rc == 0)
     {
+      rc = build_config_object (original);
       //  2. Calls build_config_object to populate
-      if ((rc = build_config_object (original)) != 0)
+      if (rc != 0)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Error populating original config object (%d)\n",
@@ -825,7 +828,8 @@ Config_Test::testIniFormat ()
       //  3. Export
       ACE_Ini_ImpExp importExport (original);
 
-      if ((rc = importExport.export_config ("testConfig.ini")) != 0)
+      rc = importExport.export_config (ACE_TEXT ("testConfig.ini"));
+      if (rc != 0)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Error Exporting (%d)\n",
@@ -846,12 +850,14 @@ Config_Test::testIniFormat ()
   // At this point we've successfully created, populated and written
   // the configuration object
   //  5. Creates a new ACE_Configuration_Heap object
-  if ((rc = fromFile.open ()) == 0)
+  rc = fromFile.open ();
+  if (rc == 0)
     {
       //  6. Imports
       ACE_Ini_ImpExp importExport (fromFile);
 
-      if ((rc = importExport.import_config ("testConfig.ini")) != 0)
+      rc = importExport.import_config (ACE_TEXT ("testConfig.ini"));
+      if (rc != 0)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Error Exporting (%d)\n",
@@ -986,7 +992,8 @@ Config_Test::testRegFormat ()
   int rc = 0;
   if (!this->equality_tested_)
     {
-      if ((rc = this->testEquality ()) != 0)
+      rc = this->testEquality ();
+      if (rc != 0)
         {
           ACE_DEBUG ((LM_DEBUG, "Equality Test Failed\n"));
           return rc;
@@ -999,10 +1006,12 @@ Config_Test::testRegFormat ()
   //  1. Creates an ACE_Configuration_Heap object
   ACE_Configuration_Heap original;
 
-  if ((rc = original.open ()) == 0)
+  rc = original.open ();
+  if (rc == 0)
     {
       //  2. Calls build_config_object to populate
-      if ((rc = build_config_object (original)) != 0)
+      rc = build_config_object (original);
+      if (rc != 0)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Error populating original config object (%d)\n",
@@ -1013,7 +1022,8 @@ Config_Test::testRegFormat ()
       //  3. Export
       ACE_Registry_ImpExp importExport (original);
 
-      if ((rc = importExport.export_config ("testConfig.ini")) != 0)
+      rc = importExport.export_config (ACE_TEXT ("testConfig.ini"));
+      if (rc != 0)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Error Exporting (%d)\n",
@@ -1034,12 +1044,14 @@ Config_Test::testRegFormat ()
   // At this point we've successfully created, populated and written
   // the configuration object
   //  5. Creates a new ACE_Configuration_Heap object
-  if ((rc = fromFile.open ()) == 0)
+  rc = fromFile.open ();
+  if (rc == 0)
     {
       //  6. Imports
       ACE_Registry_ImpExp importExport (fromFile);
 
-      if ((rc = importExport.import_config ("testConfig.ini")) != 0)
+      rc = importExport.import_config (ACE_TEXT ("testConfig.ini"));
+      if (rc != 0)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Error Exporting (%d)\n",
