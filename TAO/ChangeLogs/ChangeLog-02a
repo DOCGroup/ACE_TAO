@@ -1,3 +1,9 @@
+Thu Sep 14 17:52:55 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/PortableServer/FT_CORBAS.cpp:
+	* tao/PortableServer/FT_CORBAS.h: Fixed compile errors. Thanks to
+	  Andy for reporting this.
+
 Thu Sep 14 11:40:46 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/Forwarding/client.cpp:

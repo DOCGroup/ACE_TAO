@@ -329,7 +329,7 @@ FT_POA_RequestDurationPolicy::_this (CORBA_Environment &ACE_TRY_ENV)
 FT_POA_tao_thru_poa_collocated_RequestDurationPolicy::FT_POA_tao_thru_poa_collocated_RequestDurationPolicy (
   TAO_Stub *stub
 )
-  :  ACE_NESTED_CLASS (POA_CORBA,_tao_thru_poa_collocated_CORBA_Policy) (stub),
+  :  ACE_NESTED_CLASS (POA_CORBA,_tao_thru_poa_collocated_Policy) (stub),
     CORBA_Object (stub, 1)
 {
 }
@@ -720,7 +720,7 @@ FT_POA_HeartbeatPolicy::_this (CORBA_Environment &ACE_TRY_ENV)
 FT_POA_tao_thru_poa_collocated_HeartbeatPolicy::FT_POA_tao_thru_poa_collocated_HeartbeatPolicy (
   TAO_Stub *stub
 )
-  :  ACE_NESTED_CLASS (POA_CORBA,_tao_thru_poa_collocated_CORBA_Policy) (stub),
+  :  ACE_NESTED_CLASS (POA_CORBA,_tao_thru_poa_collocated_Policy) (stub),
     CORBA_Object (stub, 1)
 {
 }
@@ -1111,7 +1111,7 @@ FT_POA_HeartbeatEnabledPolicy::_this (CORBA_Environment &ACE_TRY_ENV)
 FT_POA_tao_thru_poa_collocated_HeartbeatEnabledPolicy::FT_POA_tao_thru_poa_collocated_HeartbeatEnabledPolicy (
   TAO_Stub *stub
 )
-  :  ACE_NESTED_CLASS (POA_CORBA,_tao_thru_poa_collocated_CORBA_Policy) (stub),
+  :  ACE_NESTED_CLASS (POA_CORBA,_tao_thru_poa_collocated_Policy) (stub),
     CORBA_Object (stub, 1)
 {
 }
