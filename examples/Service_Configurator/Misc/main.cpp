@@ -11,10 +11,11 @@ ACE_STATIC_SVC_REQUIRE(Timer_Service)
 int
 main (int argc, char *argv[])
 {
-  ACE_Service_Config daemon;
-
-  if (daemon.open (argc, argv) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), 1);
+  if (ACE_Service_Config::open (argc, argv) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p\n",
+                       "open"),
+                      1);
 
   // Run forever, performing the configured services until we receive
   // a SIGINT.
