@@ -135,15 +135,15 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
                                    ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
-          // To make NS locatable through iioploc.  Right now not
-          // checking the return value.
-          orb->_tao_add_to_IOR_table ("NameService",
-                                      obj.in ());
-
           this->naming_context_ =
             CosNaming::NamingContext::_narrow (obj.in (),
                                                ACE_TRY_ENV);
           ACE_TRY_CHECK;
+
+          // To make NS locatable through iioploc.  Right now not
+          // checking the return value.
+          orb->_tao_add_to_IOR_table ("NameService",
+                                      obj.in ());
         }
       else
         {
