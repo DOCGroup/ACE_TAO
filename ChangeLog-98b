@@ -1,6 +1,6 @@
 Tue May 12 13:45:45 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
-        * orbsvcs/orbsvcs/Sched/Config_Scheduler.cpp:
+        * orbsvcs/orbsvcs/Sched/Config_Scheduler.{cpp,h}:
           Fixed compile problem when using ACE_Scheduler
           instead of ACE_DynScheduler
 	
