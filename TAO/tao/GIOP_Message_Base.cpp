@@ -262,8 +262,8 @@ TAO_GIOP_Message_Base::
         {
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG,
-                        "TAO (%P|%t) -\n"
-                        "TAO_GIOP_Message_Base::handle_input, parse_magic_bytes"));
+                        "TAO (%P|%t) -"
+                        "TAO_GIOP_Message_Base::handle_input, parse_magic_bytes \n"));
           return -1;
         }
       
