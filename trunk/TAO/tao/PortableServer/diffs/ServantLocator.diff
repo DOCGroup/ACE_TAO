@@ -1,0 +1,11 @@
+--- orig/ServantLocatorC.h	2004-09-08 11:28:02.199699800 +0200
++++ ServantLocatorC.h	2004-09-08 11:31:47.083066200 +0200
+@@ -141,6 +141,8 @@
+     : public virtual ::PortableServer::ServantManager
+   {
+   public:
++    typedef void *Cookie;
++
+     typedef ServantLocator_ptr _ptr_type;
+     typedef ServantLocator_var _var_type;
+     
