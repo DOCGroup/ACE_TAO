@@ -70,7 +70,9 @@ Tue Nov 23 11:04:20 1999  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
 	* orbsvcs/tests/AVStreams/benchmark/client.cpp:
 	* orbsvcs/tests/AVStreams/benchmark/child.cpp:
-	  Fixed the tests to run with the pluggable protocols framework
+	  Fixed the tests so they run with the pluggable protocols framework
+	  Thanks to Thomas Huang <Thomas.Huang@jpl.nasa.gov> for pointing
+	  this out.
 
 Tue Nov 23 00:59:23 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 

@@ -836,6 +836,7 @@ R Seshardi <rseshadri@lucent.com>
 Alexander Belopolsky <belopolsky@my-deja.com>
 Ben Bourner <ben@orion.no> 
 Lalitha Chinthamani <lchinthamani@oresis.com>
+Thomas Huang <Thomas.Huang@jpl.nasa.gov>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson.  Paul devised the recursive Makefile scheme that
