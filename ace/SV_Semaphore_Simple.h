@@ -132,7 +132,8 @@ protected:
   int sem_number_;
   // Number of semaphores we're creating.
 
-  int init (key_t k = ACE_INVALID_SEM_KEY, int i = -1);
+  int init (key_t k = ACE_static_cast (key_t, ACE_INVALID_SEM_KEY),
+            int i = -1);
   key_t name_2_key (const char *name);
   // Convert name to key This function is used internally to create
   // keys for the semaphores. A valid name contains letters and
