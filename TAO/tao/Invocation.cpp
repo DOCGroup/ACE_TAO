@@ -684,8 +684,11 @@ TAO_GIOP_Twoway_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
   if (reply_error == -1)
     {
       this->close_connection ();
-      ACE_THROW_RETURN (CORBA::COMM_FAILURE (TAO_DEFAULT_MINOR_CODE,
-                                             CORBA::COMPLETED_MAYBE),
+      ACE_THROW_RETURN (CORBA::COMM_FAILURE (
+        CORBA_SystemException::minor_code_tao_ (
+          TAO_INVOCATION_RECV_REQUEST_MINOR_CODE,
+          errno),
+        CORBA::COMPLETED_MAYBE),
                         TAO_INVOKE_EXCEPTION);
     }
 
