@@ -1,3 +1,8 @@
+Wed Apr 30 17:47:11 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/OS.i: Added a new special case for getpwnam_r() on AIX.
+  	  Thanks to Chris Lahey for reporting this.
+
 Wed Apr 30 16:01:04 1997  James C Hu  <jxh@polka.cs.wustl.edu>
 
 	* ace/OS.i, ace/OS.h: added mktime().

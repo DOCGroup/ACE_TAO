@@ -3104,15 +3104,13 @@ ACE_OS::getpwnam_r (const char *name, struct passwd *pwent,
   ::getpwnam_r (name, pwent, buffer, buflen, &result);
 #endif /* (DIGITAL_UNIX) */
   return result;
-#else
-#if !defined (AIX)
-  return ::getpwnam_r (name, pwent, buffer, buflen);
-#else
-  if (::getpwnam_r (name, pwent, buffer, buflen) == 0)
-    return pwent;
-  else
+#elif defined (AIX)
+  if (::getpwnam_r (name, pwent, buffer, buflen))
     return 0;
-#endif
+  else
+    return pwent;
+#else
+  return ::getpwnam_r (name, pwent, buffer, buflen);
 #endif /* ACE_HAS_PTHREADS_1003_DOT_1C */
 #else 
   ACE_UNUSED_ARG (name);
