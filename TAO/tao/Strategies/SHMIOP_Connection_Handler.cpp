@@ -117,7 +117,6 @@ TAO_SHMIOP_Connection_Handler::open (void*)
     return -1;
 
 #if !defined (ACE_LACKS_TCP_NODELAY)
-
   if (this->peer ().set_option (ACE_IPPROTO_TCP,
                                 TCP_NODELAY,
                                 (void *) &protocol_properties.no_delay_,
