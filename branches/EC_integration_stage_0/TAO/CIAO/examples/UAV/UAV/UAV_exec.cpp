@@ -22,9 +22,14 @@ MyImpl::UAV_exec_i::push_start_capture (BBN_UAV::StartCapture *ev
                                           ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  // Notify others
+  BBN_UAV::UAVReady_var event = new OBV_BBN_UAV::UAVReady;
 
-  ACE_DEBUG ((LM_DEBUG,
-              "UAV, received a StartCapture from UAV_GS \n"));
+  //ACE_DEBUG ((LM_DEBUG,
+  //            "UAV, received a StartCapture from UAV_GS \n"));
+
+  this->context_->push_uav_ready (event
+                                       ACE_ENV_ARG_PARAMETER);
 }
 
 // Operations from Components::SessionComponent

@@ -22,8 +22,14 @@ MyImpl::UCAV_exec_i::push_start_move (BBN_UAV::StartMove *ev
                                           ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_DEBUG ((LM_DEBUG,
-              "UCAV, received a StartMove from UCAV_GS \n"));
+  // Notify others
+  BBN_UAV::UCAVReady_var event = new OBV_BBN_UAV::UCAVReady;
+
+  //ACE_DEBUG ((LM_DEBUG,
+  //            "UCAV, received a StartMove from UCAV_GS \n"));
+
+  this->context_->push_ucav_ready (event
+                                       ACE_ENV_ARG_PARAMETER);
 }
 
 // Operations from Components::SessionComponent

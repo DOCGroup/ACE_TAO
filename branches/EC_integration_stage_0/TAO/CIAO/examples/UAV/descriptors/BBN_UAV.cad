@@ -234,7 +234,40 @@
         <publishesidentifier>start_move</publishesidentifier>
         <componentinstantiationref idref="a_UCAV_GS"/>
       </publishesport>
-    </connectevent>                    
+    </connectevent>     
+    
+    <connectevent>
+      <consumesport>
+        <consumesidentifier>uav_ready</consumesidentifier>
+        <componentinstantiationref idref="a_Satellite"/>
+      </consumesport>
+      <publishesport>
+        <publishesidentifier>uav_ready</publishesidentifier>
+        <componentinstantiationref idref="a_UAV"/>
+      </publishesport>
+    </connectevent>    
+    
+    <connectevent>
+      <consumesport>
+        <consumesidentifier>ucav_ready</consumesidentifier>
+        <componentinstantiationref idref="a_Satellite"/>
+      </consumesport>
+      <publishesport>
+        <publishesidentifier>ucav_ready</publishesidentifier>
+        <componentinstantiationref idref="a_UCAV"/>
+      </publishesport>
+    </connectevent>       
+    
+    <connectevent>
+      <consumesport>
+        <consumesidentifier>battle_ready</consumesidentifier>
+        <componentinstantiationref idref="a_Satellite"/>
+      </consumesport>
+      <publishesport>
+        <publishesidentifier>battle_ready</publishesidentifier>
+        <componentinstantiationref idref="a_Battle"/>
+      </publishesport>
+    </connectevent>       
 
   </connections>
 

@@ -26,8 +26,8 @@ MyImpl::Engagement_exec_i::push_prepare_engage (BBN_UAV::PrepareEngage *ev
   BBN_UAV::StartEngage_var event1 = new OBV_BBN_UAV::StartEngage;
   BBN_UAV::PrepareMove_var event2 = new OBV_BBN_UAV::PrepareMove;
 
-  ACE_DEBUG ((LM_DEBUG,
-              "Engagement, received a PrepareEngage from CAOC \n"));
+  //ACE_DEBUG ((LM_DEBUG,
+  //            "Engagement, received a PrepareEngage from CAOC \n"));
   
   this->context_->push_start_engage (event1
                                      ACE_ENV_ARG_PARAMETER);

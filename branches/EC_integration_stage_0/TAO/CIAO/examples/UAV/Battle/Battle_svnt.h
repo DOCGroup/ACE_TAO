@@ -106,6 +106,12 @@ namespace Battle_Impl
       // Operations for Battle receptacles and event sources,
       // defined in ::BBN_UAV::CCM_Battle_Context.
 
+      virtual void
+      push_battle_ready (
+      ::BBN_UAV::BattleReady *ev
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
       // CIAO-specific.
 
       ::CIAO::Session_Container *
@@ -119,7 +125,27 @@ namespace Battle_Impl
       protected:
       // Methods that manage this component's connections and consumers.
 
+      virtual ::Components::Cookie *
+      subscribe_battle_ready (
+      ::BBN_UAV::BattleReadyConsumer_ptr c
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((
+      ::CORBA::SystemException,
+      ::Components::ExceededConnectionLimit));
+
+      virtual ::BBN_UAV::BattleReadyConsumer_ptr
+      unsubscribe_battle_ready (
+      ::Components::Cookie *ck
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((
+      ::CORBA::SystemException,
+      ::Components::InvalidConnection));
+
       protected:
+      ACE_Active_Map_Manager<
+      ::BBN_UAV::BattleReadyConsumer_var>
+      ciao_publishes_battle_ready_map_;
+
       ::Components::CCMHome_var home_;
 
       ::CIAO::Session_Container *container_;
@@ -147,6 +173,22 @@ namespace Battle_Impl
       // Supported operations.
 
       // Public port operations.
+
+      virtual ::Components::Cookie *
+      subscribe_battle_ready (
+      ::BBN_UAV::BattleReadyConsumer_ptr c
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((
+      ::CORBA::SystemException,
+      ::Components::ExceededConnectionLimit));
+
+      virtual ::BBN_UAV::BattleReadyConsumer_ptr
+      unsubscribe_battle_ready (
+      ::Components::Cookie *ck
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((
+      ::CORBA::SystemException,
+      ::Components::InvalidConnection));
 
       // Servant class for the start_engage consumer.
       class BATTLE_SVNT_Export StartEngageConsumer_start_engage_Servant

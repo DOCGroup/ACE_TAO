@@ -18,6 +18,7 @@ module BBN_UAV
 {
   component Battle
     {
+      publishes BattleReady battle_ready;
       consumes StartEngage start_engage;
     };
 

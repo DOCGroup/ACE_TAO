@@ -22,8 +22,14 @@ MyImpl::Battle_exec_i::push_start_engage (BBN_UAV::StartEngage *ev
                                           ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_DEBUG ((LM_DEBUG,
-              "Battle, received a StartEngage from Engagement \n"));
+  // Notify others
+  BBN_UAV::BattleReady_var event = new OBV_BBN_UAV::BattleReady;
+
+  //ACE_DEBUG ((LM_DEBUG,
+  //            "Battle, received a StartEngage from Engagement \n"));
+
+  this->context_->push_battle_ready (event
+                                       ACE_ENV_ARG_PARAMETER);
 }
 
 // Operations from Components::SessionComponent

@@ -138,6 +138,102 @@ namespace UCAV_Impl
     // Operations for UCAV receptacles and event sources,
     // defined in ::BBN_UAV::CCM_UCAV_Context.
 
+    void
+    UCAV_Context::push_ucav_ready (
+    ::BBN_UAV::UCAVReady *ev
+    ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+    {
+      ACE_CString my_uuid = this->servant_->component_UUID (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK;
+      my_uuid += "_ucav_ready_publisher";
+
+      this->container_->push_event (ev,
+                                    my_uuid.c_str ()
+                                    ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+
+      /*
+      ACE_Active_Map_Manager<
+      ::BBN_UAV::TargetLocatedConsumer_var>::iterator end =
+      this->ciao_publishes_target_located_map_.end ();
+
+      for (ACE_Active_Map_Manager<
+      ::BBN_UAV::TargetLocatedConsumer_var>::iterator iter =
+      this->ciao_publishes_target_located_map_.begin ();
+      iter != end;
+      ++iter)
+      {
+        ACE_Active_Map_Manager<
+        ::BBN_UAV::TargetLocatedConsumer_var>::ENTRY &entry = *iter;
+
+        ::BBN_UAV::TargetLocatedConsumer_var c =
+        ::BBN_UAV::TargetLocatedConsumer::_narrow (
+        entry.int_id_.in ()
+        ACE_ENV_ARG_PARAMETER);
+        ACE_CHECK;
+
+        entry.int_id_->push_TargetLocated (
+        ev
+        ACE_ENV_ARG_PARAMETER);
+        ACE_CHECK;
+      }
+      */
+    }
+
+    ::Components::Cookie *
+    UCAV_Context::subscribe_ucav_ready (
+    ::BBN_UAV::UCAVReadyConsumer_ptr c
+    ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((
+    ::CORBA::SystemException,
+    ::Components::ExceededConnectionLimit))
+    {
+      if (CORBA::is_nil (c))
+      {
+        ACE_THROW_RETURN (CORBA::BAD_PARAM (), 0);
+      }
+
+      ::BBN_UAV::UCAVReadyConsumer_var sub =
+      ::BBN_UAV::UCAVReadyConsumer::_duplicate (c);
+
+      ACE_Active_Map_Manager_Key key;
+      this->ciao_publishes_ucav_ready_map_.bind (sub.in (), key);
+      sub._retn ();
+
+      ::Components::Cookie_var retv = new ::CIAO::Map_Key_Cookie (key);
+      return retv._retn ();
+    }
+
+    ::BBN_UAV::UCAVReadyConsumer_ptr
+    UCAV_Context::unsubscribe_ucav_ready (
+    ::Components::Cookie *ck
+    ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((
+    ::CORBA::SystemException,
+    ::Components::InvalidConnection))
+    {
+      ::BBN_UAV::UCAVReadyConsumer_var retv;
+      ACE_Active_Map_Manager_Key key;
+
+      if (ck == 0 || ::CIAO::Map_Key_Cookie::extract (ck, key) == -1)
+      {
+        ACE_THROW_RETURN (
+        ::Components::InvalidConnection (),
+        ::BBN_UAV::UCAVReadyConsumer::_nil ());
+      }
+
+
+      if (this->ciao_publishes_ucav_ready_map_.unbind (key, retv) != 0)
+      {
+        ACE_THROW_RETURN (
+        ::Components::InvalidConnection (),
+        ::BBN_UAV::UCAVReadyConsumer::_nil ());
+      }
+
+      return retv._retn ();
+    }
+
     // CIAO-specific.
 
     ::CIAO::Session_Container *
@@ -292,6 +388,32 @@ namespace UCAV_Impl
     ::Components::InvalidName))
     {
       ACE_THROW_RETURN (::CORBA::NO_IMPLEMENT (), 0);
+    }
+
+    ::Components::Cookie *
+    UCAV_Servant::subscribe_ucav_ready (
+    ::BBN_UAV::UCAVReadyConsumer_ptr c
+    ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((
+    ::CORBA::SystemException,
+    ::Components::ExceededConnectionLimit))
+    {
+      return this->context_->subscribe_ucav_ready (
+      c
+      ACE_ENV_ARG_PARAMETER);
+    }
+
+    ::BBN_UAV::UCAVReadyConsumer_ptr
+    UCAV_Servant::unsubscribe_ucav_ready (
+    ::Components::Cookie *ck
+    ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((
+    ::CORBA::SystemException,
+    ::Components::InvalidConnection))
+    {
+      return this->context_->unsubscribe_ucav_ready (
+      ck
+      ACE_ENV_ARG_PARAMETER);
     }
 
     UCAV_Servant::StartMoveConsumer_start_move_Servant::StartMoveConsumer_start_move_Servant (
@@ -546,6 +668,24 @@ namespace UCAV_Impl
         ACE_THROW_RETURN (::Components::InvalidName (), 0);
       }
 
+      if (ACE_OS::strcmp (publisher_name, "ucav_ready") == 0)
+      {
+        ::BBN_UAV::UCAVReadyConsumer_var _ciao_consumer =
+        ::BBN_UAV::UCAVReadyConsumer::_narrow (
+        subscribe
+        ACE_ENV_ARG_PARAMETER);
+        ACE_CHECK_RETURN (0);
+
+        if (::CORBA::is_nil (_ciao_consumer.in ()))
+        {
+          ACE_THROW_RETURN (::Components::InvalidConnection (), 0);
+        }
+
+        return this->subscribe_ucav_ready (
+        _ciao_consumer.in ()
+        ACE_ENV_ARG_PARAMETER);
+      }
+
       ACE_THROW_RETURN (::Components::InvalidName (), 0);
     }
 
@@ -567,6 +707,13 @@ namespace UCAV_Impl
         ACE_THROW_RETURN (
         ::Components::InvalidName (),
         ::Components::EventConsumerBase::_nil ());
+      }
+
+      if (ACE_OS::strcmp (publisher_name, "ucav_ready") == 0)
+      {
+        return this->unsubscribe_ucav_ready (
+        ck
+        ACE_ENV_ARG_PARAMETER);
       }
 
       ACE_THROW_RETURN (
@@ -594,7 +741,6 @@ namespace UCAV_Impl
     }
 
     // Operations for CCMObject interface.
-
 
     void
     UCAV_Servant::component_UUID (

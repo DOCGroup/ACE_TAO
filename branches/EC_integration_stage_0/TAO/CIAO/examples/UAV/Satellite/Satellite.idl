@@ -23,6 +23,9 @@ module BBN_UAV
   component Satellite supports trigger
     {
       publishes TargetLocated target_located;
+      consumes UAVReady uav_ready;
+      consumes UCAVReady ucav_ready;
+      consumes BattleReady battle_ready;
     };
 
   home SatelliteHome manages Satellite

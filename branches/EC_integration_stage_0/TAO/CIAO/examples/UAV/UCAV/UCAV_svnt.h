@@ -106,6 +106,12 @@ namespace UCAV_Impl
       // Operations for UCAV receptacles and event sources,
       // defined in ::BBN_UAV::CCM_UCAV_Context.
 
+      virtual void
+      push_ucav_ready (
+      ::BBN_UAV::UCAVReady *ev
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
       // CIAO-specific.
 
       ::CIAO::Session_Container *
@@ -119,7 +125,27 @@ namespace UCAV_Impl
       protected:
       // Methods that manage this component's connections and consumers.
 
+      virtual ::Components::Cookie *
+      subscribe_ucav_ready (
+      ::BBN_UAV::UCAVReadyConsumer_ptr c
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((
+      ::CORBA::SystemException,
+      ::Components::ExceededConnectionLimit));
+
+      virtual ::BBN_UAV::UCAVReadyConsumer_ptr
+      unsubscribe_ucav_ready (
+      ::Components::Cookie *ck
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((
+      ::CORBA::SystemException,
+      ::Components::InvalidConnection));
+
       protected:
+      ACE_Active_Map_Manager<
+      ::BBN_UAV::UCAVReadyConsumer_var>
+      ciao_publishes_ucav_ready_map_;
+
       ::Components::CCMHome_var home_;
 
       ::CIAO::Session_Container *container_;
@@ -147,6 +173,22 @@ namespace UCAV_Impl
       // Supported operations.
 
       // Public port operations.
+
+      virtual ::Components::Cookie *
+      subscribe_ucav_ready (
+      ::BBN_UAV::UCAVReadyConsumer_ptr c
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((
+      ::CORBA::SystemException,
+      ::Components::ExceededConnectionLimit));
+
+      virtual ::BBN_UAV::UCAVReadyConsumer_ptr
+      unsubscribe_ucav_ready (
+      ::Components::Cookie *ck
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((
+      ::CORBA::SystemException,
+      ::Components::InvalidConnection));
 
       // Servant class for the start_move consumer.
       class UCAV_SVNT_Export StartMoveConsumer_start_move_Servant

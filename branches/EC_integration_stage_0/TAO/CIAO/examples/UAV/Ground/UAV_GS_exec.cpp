@@ -25,8 +25,8 @@ MyImpl::UAV_GS_exec_i::push_prepare_capture (BBN_UAV::PrepareCapture *ev
   // Notify others
   BBN_UAV::StartCapture_var event = new OBV_BBN_UAV::StartCapture;
 
-  ACE_DEBUG ((LM_DEBUG,
-              "UAV_GS, received a PrepareCapture from CAOC \n"));
+  //ACE_DEBUG ((LM_DEBUG,
+  //            "UAV_GS, received a PrepareCapture from CAOC \n"));
 
   this->context_->push_start_capture (event
                                       ACE_ENV_ARG_PARAMETER);

@@ -25,8 +25,8 @@ MyImpl::UCAV_GS_exec_i::push_prepare_move (BBN_UAV::PrepareMove *ev
   // Notify others
   BBN_UAV::StartMove_var event = new OBV_BBN_UAV::StartMove;
 
-  ACE_DEBUG ((LM_DEBUG,
-              "UCAV_GS, received a PrepareMove from Engagement \n"));
+  //ACE_DEBUG ((LM_DEBUG,
+  //            "UCAV_GS, received a PrepareMove from Engagement \n"));
 
   this->context_->push_start_move (event
                                    ACE_ENV_ARG_PARAMETER);

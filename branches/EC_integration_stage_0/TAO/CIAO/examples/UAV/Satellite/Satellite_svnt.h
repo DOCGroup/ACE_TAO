@@ -195,6 +195,141 @@ namespace Satellite_Impl
       ::CORBA::SystemException,
       ::Components::InvalidConnection));
 
+      // Servant class for the uav_ready consumer.
+      class SATELLITE_SVNT_Export UAVReadyConsumer_uav_ready_Servant
+      : public virtual POA_BBN_UAV::UAVReadyConsumer,
+      public virtual PortableServer::RefCountServantBase
+      {
+        public:
+        UAVReadyConsumer_uav_ready_Servant (
+        ::BBN_UAV::CCM_Satellite_ptr executor,
+        ::BBN_UAV::CCM_Satellite_Context_ptr c);
+
+        virtual ~UAVReadyConsumer_uav_ready_Servant (void);
+
+        virtual void
+        push_UAVReady (
+        ::BBN_UAV::UAVReady *evt
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+        // Inherited from ::Components::EventConsumerBase.
+        virtual void
+        push_event (::Components::EventBase *ev
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_THROW_SPEC ((
+        ::CORBA::SystemException,
+        ::Components::BadEventType));
+
+        // Get component implementation.
+        virtual CORBA::Object_ptr
+        _get_component (
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+        protected:
+        ::BBN_UAV::CCM_Satellite_var
+        executor_;
+
+        ::BBN_UAV::CCM_Satellite_Context_var
+        ctx_;
+      };
+
+      virtual ::BBN_UAV::UAVReadyConsumer_ptr
+      get_consumer_uav_ready (
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+      // Servant class for the ucav_ready consumer.
+      class SATELLITE_SVNT_Export UCAVReadyConsumer_ucav_ready_Servant
+      : public virtual POA_BBN_UAV::UCAVReadyConsumer,
+      public virtual PortableServer::RefCountServantBase
+      {
+        public:
+        UCAVReadyConsumer_ucav_ready_Servant (
+        ::BBN_UAV::CCM_Satellite_ptr executor,
+        ::BBN_UAV::CCM_Satellite_Context_ptr c);
+
+        virtual ~UCAVReadyConsumer_ucav_ready_Servant (void);
+
+        virtual void
+        push_UCAVReady (
+        ::BBN_UAV::UCAVReady *evt
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+        // Inherited from ::Components::EventConsumerBase.
+        virtual void
+        push_event (::Components::EventBase *ev
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_THROW_SPEC ((
+        ::CORBA::SystemException,
+        ::Components::BadEventType));
+
+        // Get component implementation.
+        virtual CORBA::Object_ptr
+        _get_component (
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+        protected:
+        ::BBN_UAV::CCM_Satellite_var
+        executor_;
+
+        ::BBN_UAV::CCM_Satellite_Context_var
+        ctx_;
+      };
+
+      virtual ::BBN_UAV::UCAVReadyConsumer_ptr
+      get_consumer_ucav_ready (
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+      // Servant class for the battle_ready consumer.
+      class SATELLITE_SVNT_Export BattleReadyConsumer_battle_ready_Servant
+      : public virtual POA_BBN_UAV::BattleReadyConsumer,
+      public virtual PortableServer::RefCountServantBase
+      {
+        public:
+        BattleReadyConsumer_battle_ready_Servant (
+        ::BBN_UAV::CCM_Satellite_ptr executor,
+        ::BBN_UAV::CCM_Satellite_Context_ptr c);
+
+        virtual ~BattleReadyConsumer_battle_ready_Servant (void);
+
+        virtual void
+        push_BattleReady (
+        ::BBN_UAV::BattleReady *evt
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+        // Inherited from ::Components::EventConsumerBase.
+        virtual void
+        push_event (::Components::EventBase *ev
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_THROW_SPEC ((
+        ::CORBA::SystemException,
+        ::Components::BadEventType));
+
+        // Get component implementation.
+        virtual CORBA::Object_ptr
+        _get_component (
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_THROW_SPEC ((CORBA::SystemException));
+
+        protected:
+        ::BBN_UAV::CCM_Satellite_var
+        executor_;
+
+        ::BBN_UAV::CCM_Satellite_Context_var
+        ctx_;
+      };
+
+      virtual ::BBN_UAV::BattleReadyConsumer_ptr
+      get_consumer_battle_ready (
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
       // Component attribute operations.
 
       // Operations for Navigation interface.
@@ -439,6 +574,12 @@ namespace Satellite_Impl
 
       ::CIAO::Session_Container *
       container_;
+      ::BBN_UAV::UAVReadyConsumer_var
+      consumes_uav_ready_;
+      ::BBN_UAV::UCAVReadyConsumer_var
+      consumes_ucav_ready_;
+      ::BBN_UAV::BattleReadyConsumer_var
+      consumes_battle_ready_;
 
       ACE_CString component_UUID_;
     };
