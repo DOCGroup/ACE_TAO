@@ -33,8 +33,10 @@ TAO_Notify_EventTypeSeq::operator = (const TAO_Notify_EventTypeSeq & rhs)
 }
 
 TAO_Notify_EventTypeSeq::TAO_Notify_EventTypeSeq (const TAO_Notify_EventTypeSeq & rhs)
-  : ACE_Unbounded_Set <TAO_Notify_EventType> (rhs)
-    , TAO_Notify::Topology_Object ()
+  : TAO_Notify_Object ()
+  , TAO_Notify::Topology_Savable ()
+  , ACE_Unbounded_Set <TAO_Notify_EventType> (rhs)
+  , TAO_Notify::Topology_Object ()
 {
 }
 
