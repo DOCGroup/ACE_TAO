@@ -1,3 +1,11 @@
+Fri Jul 26 20:08:41 2002  Steve Huston  <shuston@riverace.com>
+
+        * include/makeinclude/platform_aix4_g++.GNU: Corrected option for
+          using threads from -mthreads to -pthread. This may not work with
+          pre-gcc 3 compilers, but those compilers are busted on AIX anyway.
+          Added support for buildbits=32 and buildbits=64. Moved in the new
+          AIX library-building setup from platform_aix_ibm.GNU.
+
 Fri Jul 26 15:52:12 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/TP_Reactor.cpp: Fixed a problem with handle_event
