@@ -262,4 +262,173 @@ ACE_Message_Queue_Vx::peek_dequeue_head (ACE_Message_Block *&,
 
 #endif /* VXWORKS */
 
+#if defined (ACE_WIN32) && (ACE_HAS_WINNT4 != 0)
+
+ACE_Message_Queue_NT::ACE_Message_Queue_NT (size_t max_threads)
+  : max_cthrs_ (max_threads),
+    cur_thrs_ (0),
+    cur_bytes_ (0),
+    cur_count_ (0),
+    deactivated_ (0),
+    completion_port_ (ACE_INVALID_HANDLE)
+{
+  ACE_TRACE ("ACE_Message_Queue_NT::ACE_Message_Queue_NT");
+  this->open (max_threads);
+}
+
+int
+ACE_Message_Queue_NT::open (size_t max_threads)
+{
+  ACE_TRACE ("ACE_Message_Queue_NT::open");
+  this->max_cthrs_ = max_threads;
+  this->completion_port_ = ::CreateIoCompletionPort (ACE_INVALID_HANDLE,
+                                                     NULL,
+                                                     ACE_Message_Queue_Base::WAS_ACTIVE,
+                                                     max_threads);
+  return (this->completion_port_ == NULL ? -1 : 0);
+}
+
+int
+ACE_Message_Queue_NT::close (void)
+{
+  ACE_TRACE ("ACE_Message_Queue_NT::close");
+  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1);
+  this->deactivate ();
+  return (::CloseHandle (this->completion_port_) ? 0 : -1 );
+}
+
+ACE_Message_Queue_NT::~ACE_Message_Queue_NT (void)
+{
+  ACE_TRACE ("ACE_Message_Queue_NT::~ACE_Message_Queue_NT");
+  this->close ();
+}
+
+int
+ACE_Message_Queue_NT::enqueue (ACE_Message_Block *new_item,
+                               ACE_Time_Value *)
+{
+  ACE_TRACE ("ACE_Message_Queue_NT::enqueue");
+  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1);
+  if (!this->deactivated_)
+    {
+      size_t msize = new_item->size ();
+      if (::PostQueuedCompletionStatus (this->completion_port_,
+                                        msize,
+                                        this->deactivated_,
+                                        ACE_reinterpret_cast (LPOVERLAPPED, new_item)))
+        {
+          // Update the states once I succeed.
+          this->cur_bytes_ += msize;
+          return ++this->cur_count_;
+        }
+    }
+  else
+    errno = ESHUTDOWN;
+
+  // Fail to enqueue the message.
+  return -1;
+}
+
+int
+ACE_Message_Queue_NT::dequeue (ACE_Message_Block *&first_item,
+                               ACE_Time_Value *timeout)
+{
+  ACE_TRACE ("ACE_Message_Queue_NT::dequeue_head");
+
+  {
+    ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1);
+    if (this->deactivated_)   // Make sure the MQ is not deactivated before
+      {                         // I proceed.
+        errno = ESHUTDOWN;      // Operation on deactivated MQ not allowed.
+        return -1;
+      }
+    else
+      ++this->cur_thrs_;        // Increase the waiting thread count.
+  }
+
+  DWORD shutdown;
+  DWORD msize;
+  // Get a message from the completion port.
+  int retv = ::GetQueuedCompletionStatus (this->completion_port_,
+                                          &msize,
+                                          &shutdown,
+                                          ACE_reinterpret_cast (LPOVERLAPPED *, &first_item),
+                                          (timeout == 0 ? INFINITE : timeout->msec ()));
+  {
+    ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1);
+    --this->cur_thrs_;          // Decrease waiting thread count.
+    if (retv)
+      {
+        if (!shutdown)
+          {                     // Really get a valid MB from the queue.
+            --this->cur_count_;
+            this->cur_bytes_ -= msize;
+            return this->cur_count_;
+          }
+        else                    // I am woken up by deactivate ().
+            errno = ESHUTDOWN;
+      }
+  }
+  return -1;
+}
+
+int
+ACE_Message_Queue_NT::deactivate (void)
+{
+  ACE_TRACE ("ACE_Message_Queue_NT::deactivate");
+  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1);
+
+  if (this->deactivated_)       // Check if I have been deactivated already.
+    return ACE_Message_Queue_Base::WAS_INACTIVE;
+
+  this->deactivated_ = 1;
+
+  // Get the number of shutdown messages necessary to wake up
+  // all waiting threads.
+
+  for (size_t cntr = this->cur_thrs_ - this->cur_count_;
+       cntr > 0; cntr++)
+    ::PostQueuedCompletionStatus (this->completion_port_,
+                                  0,
+                                  this->deactivated_,
+                                  NULL);
+  return ACE_Message_Queue_Base::WAS_ACTIVE;
+}
+
+int
+ACE_Message_Queue_NT::activate (void)
+{
+  ACE_TRACE ("ACE_Message_Queue_NT::activate");
+  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1);
+  if (!this->deactivated_)
+    return ACE_Message_Queue_Base::WAS_ACTIVE;
+
+  this->deactivated_ = 0;
+  return ACE_Message_Queue_Base::WAS_INACTIVE;
+}
+
+void
+ACE_Message_Queue_NT::dump (void) const
+{
+  ACE_TRACE ("ACE_Message_Queue_NT::dump");
+
+  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+  ACE_DEBUG ((LM_DEBUG,
+              ASYS_TEXT ("deactivated = %d\n")
+              ASYS_TEXT ("max_cthrs_ = %d\n")
+              ASYS_TEXT ("cur_thrs_ = %d\n")
+              ASYS_TEXT ("cur_bytes = %d\n")
+              ASYS_TEXT ("cur_count = %d\n")
+              ASYS_TEXT ("completion_port_ = %x\n"),
+              this->deactivated_,
+              this->max_cthrs_,
+              this->cur_thrs_,
+              this->cur_bytes_,
+              this->cur_count_,
+              this->completion_port_));
+  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+}
+
+#endif /* ACE_WIN32 && ACE_HAS_WINNT4 != 0 */
+
 #endif /* ACE_MESSAGE_QUEUE_C */
