@@ -1,37 +1,46 @@
+Fri Apr 30 22:53:01 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.h: put Object_Manager back on the stack of main,
+          instead of using ACE::init () and ACE::fini ().  It
+          should be functionally equivalent, and then some:  if
+          the user's main () returns, the Object_Manager will get
+          properly destroyed if it's on the stack.  And, it's better
+          for subset support if we avoid class ACE calls from OS.h.
+
 Fri Apr 30 17:42:11 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* ace/OS.i (pthread_sigmask): 
-	* ace/OS.h (ACE_OS): Added wrapper for <pthread_sigmask> to get
-	the Proactor code compile on LynxOS.
-	
-	* ace/config-lynxos.h (ACE_HAS_AIO_CALLS): 
-	 Enabled ACE_HAS_AIO_CALLS for LynxOS. Also enabled
-	 ACE_HAS_AIOCB_PROACTOR since LynxOS 3.0.0 has not got
-	 <pthread_sigmask> yet, so signal proactor cannot work correctly.
+        * ace/OS.i (pthread_sigmask):
+        * ace/OS.h (ACE_OS): Added wrapper for <pthread_sigmask> to get
+        the Proactor code compile on LynxOS.
 
-	* ace/POSIX_Proactor.cpp: 
-	* examples/Reactor/Proactor/test_aiosig_ace.cpp
-	(setup_signal_delivery): Added ACE_OS:: scope to pthread_sigmask
-	so that it works (fails!!) correctly on LynxOS. 
-	
-	* examples/Reactor/Proactor/post_completions.cpp: 
-	* examples/Reactor/Proactor/test_timeout.cpp: Added 'main'
-	function for platforms where only AIOCB_Proactor is enabled so
-	that the test prints out a message. 
+        * ace/config-lynxos.h (ACE_HAS_AIO_CALLS):
+         Enabled ACE_HAS_AIO_CALLS for LynxOS. Also enabled
+         ACE_HAS_AIOCB_PROACTOR since LynxOS 3.0.0 has not got
+         <pthread_sigmask> yet, so signal proactor cannot work correctly.
 
-	* examples/Reactor/Proactor/Makefile: 
+        * ace/POSIX_Proactor.cpp:
+        * examples/Reactor/Proactor/test_aiosig_ace.cpp
+        (setup_signal_delivery): Added ACE_OS:: scope to pthread_sigmask
+        so that it works (fails!!) correctly on LynxOS.
+
+        * examples/Reactor/Proactor/post_completions.cpp:
+        * examples/Reactor/Proactor/test_timeout.cpp: Added 'main'
+        function for platforms where only AIOCB_Proactor is enabled so
+        that the test prints out a message.
+
+        * examples/Reactor/Proactor/Makefile:
 
 Fri Apr 30 14:44:12 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * ACE-INSTALL.html: Added a note about manually cleaning out the
           ACE_wrappers directories on Win32, which could be required for a
-          true start from scratch build.  Thanks to David Hooker 
+          true start from scratch build.  Thanks to David Hooker
           <DHooker@uniview.net> for this insight.
 
 Fri Apr 30 14:06:41 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* COPYING: Updated the COPYING file to reflect the use new of
- 	  ACE(TM) and TAO(TM).
+        * COPYING: Updated the COPYING file to reflect the use new of
+          ACE(TM) and TAO(TM).
 
 Fri Apr 30 13:23:22 1999  Steve Huston  <shuston@riverace.com>
 
@@ -41,16 +50,16 @@ Fri Apr 30 13:23:22 1999  Steve Huston  <shuston@riverace.com>
 
 Fri Apr 30 12:11:36 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* ace/OS.i (gethostbyname2): 
+        * ace/OS.i (gethostbyname2):
 
-	  Added an IPv4-only implementation.  If ACE_HAS_IP6 is not defined,
-	  the IPv4-only implementation will be used.
+          Added an IPv4-only implementation.  If ACE_HAS_IP6 is not defined,
+          the IPv4-only implementation will be used.
 
 Fri Apr 30 12:11:50 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tests/Basic_Types_Test.cpp: Added checks for sizeof(long) ==
-	  sizeof(void*) and sizeof(long) >= sizeof (a_function_pointer).
-	  Certain code in ACE depends on the assumptions.
+        * tests/Basic_Types_Test.cpp: Added checks for sizeof(long) ==
+          sizeof(void*) and sizeof(long) >= sizeof (a_function_pointer).
+          Certain code in ACE depends on the assumptions.
 
 Fri Apr 30 11:24:26 1999  Steve Huston  <shuston@riverace.com>
 
@@ -61,74 +70,74 @@ Fri Apr 30 11:24:26 1999  Steve Huston  <shuston@riverace.com>
 
 Fri Apr 30 02:06:53 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Parse_Node.cpp (symbol): According to the new ANSI C++
-	  specification, casting a void* pointer to a function pointer is
-	  not allowed.  However, casting a void* pointer to an integer
-	  type that is large enough to hold the pointer value is legal.  I
-	  chose to cast the return value to long since it should be large
-	  enough to hold the void* pointer's value on most platforms. I am
-	  not sure if casting a long value to a function pointer is legal
-	  or not (can't find a good explanation in spec) but it prevent
-	  SunC++ 5.0 compilers from complaining about illegal pointer
-	  conversion.
+        * ace/Parse_Node.cpp (symbol): According to the new ANSI C++
+          specification, casting a void* pointer to a function pointer is
+          not allowed.  However, casting a void* pointer to an integer
+          type that is large enough to hold the pointer value is legal.  I
+          chose to cast the return value to long since it should be large
+          enough to hold the void* pointer's value on most platforms. I am
+          not sure if casting a long value to a function pointer is legal
+          or not (can't find a good explanation in spec) but it prevent
+          SunC++ 5.0 compilers from complaining about illegal pointer
+          conversion.
 
-	* ace/OS.h: Removed ACE_non_function_ptr_to_function_ptr_cast,
-	  it is no longer needed.
+        * ace/OS.h: Removed ACE_non_function_ptr_to_function_ptr_cast,
+          it is no longer needed.
 
 Fri Apr 30 00:36:23 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 
-	* ace/Get_Opt.cpp:
-	* ace/TLI_Acceptor.cpp:
-	* ace/TLI_Connector.cpp:
+        * ace/Get_Opt.cpp:
+        * ace/TLI_Acceptor.cpp:
+        * ace/TLI_Connector.cpp:
 
-	  Cast away const from string literals using ACE_const_cast to make
-	  Sun C++ 5.0 happier.
+          Cast away const from string literals using ACE_const_cast to make
+          Sun C++ 5.0 happier.
 
 Thu Apr 29 18:32:43 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/OS.h: Removed ghs from the list of compilers for which
-	  ACE_NOTREACHED disappears.  It was causing warnings for
-	  TAO/orbsvcs/orbsvcs/Naming/Persistent_Context_Index_T.cpp.
+        * ace/OS.h: Removed ghs from the list of compilers for which
+          ACE_NOTREACHED disappears.  It was causing warnings for
+          TAO/orbsvcs/orbsvcs/Naming/Persistent_Context_Index_T.cpp.
 
 Thu Apr 29 19:48:25 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* ace/OS.{h,i} (ACE_OS):
+        * ace/OS.{h,i} (ACE_OS):
 
-	  More IPv6 support.  Added support for the new IPv4/IPv6
-	  inet_ntop() and inet_pton() calls.  If ACE_HAS_IP6 is not
-	  defined, these calls will use IPv4 implementations (see
-	  Stevens' book "UNIX Network Programming - Volume I") and
-	  return an error if a family other than AF_INET is passed to
-	  them.
+          More IPv6 support.  Added support for the new IPv4/IPv6
+          inet_ntop() and inet_pton() calls.  If ACE_HAS_IP6 is not
+          defined, these calls will use IPv4 implementations (see
+          Stevens' book "UNIX Network Programming - Volume I") and
+          return an error if a family other than AF_INET is passed to
+          them.
 
-	* ace/OS.h:
+        * ace/OS.h:
 
-	  Define INET_ADDRSTRLEN and INET6_ADDRSTRLEN if they don't
-	  get defined after including <netinet/in.h>.
+          Define INET_ADDRSTRLEN and INET6_ADDRSTRLEN if they don't
+          get defined after including <netinet/in.h>.
 
 Thu Apr 29 18:32:43 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* ace/README:
-	* ace/OS.h (ACE_OS):
-	* ace/OS.i (gethostbyname2):
+        * ace/README:
+        * ace/OS.h (ACE_OS):
+        * ace/OS.i (gethostbyname2):
 
-	  Added support for the gethostbyname2() system call.  It is only
-	  enabled if ACE_HAS_IP6 is defined.  When I have time, I'll add
-	  more IPv6 support.
+          Added support for the gethostbyname2() system call.  It is only
+          enabled if ACE_HAS_IP6 is defined.  When I have time, I'll add
+          more IPv6 support.
 
 Thu Apr 29 15:30:04 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/INET_Addr.cpp (string_to_addr): Added support to check for
- 	  both "port numbers" and "port names".  Thanks to Jerry D. De
- 	  Master <jdemaste@ipdinc.com> for suggesting this.
+        * ace/INET_Addr.cpp (string_to_addr): Added support to check for
+          both "port numbers" and "port names".  Thanks to Jerry D. De
+          Master <jdemaste@ipdinc.com> for suggesting this.
 
-	* ace/Select_Reactor_T.h,
-	  ace/Reactor.h,
-	  ace/Select_Reactor_T.h,
-	  ace/TP_Reactor.h (ACE_TP_Reactor): Updated the documentation to
- 	  clarify the purpose of the <restart> flag.  Thanks to Susan
- 	  Liebeskind <shl@cc.gatech.edu> for reporting this.
+        * ace/Select_Reactor_T.h,
+          ace/Reactor.h,
+          ace/Select_Reactor_T.h,
+          ace/TP_Reactor.h (ACE_TP_Reactor): Updated the documentation to
+          clarify the purpose of the <restart> flag.  Thanks to Susan
+          Liebeskind <shl@cc.gatech.edu> for reporting this.
 
 Thu Apr 29 13:41:52 1999  Steve Huston  <shuston@riverace.com>
 
@@ -142,36 +151,36 @@ Thu Apr 29 13:41:52 1999  Steve Huston  <shuston@riverace.com>
 
 Wed Apr 28 20:21:12 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/Synch_T.h (class ACE_Anti_*_Guard): I had accidentally
-	  checked in the anti guard classes.  These are not needed since
-	  we decided to stick with the reverse lock class rather than the
-	  anti guard classes.
+        * ace/Synch_T.h (class ACE_Anti_*_Guard): I had accidentally
+          checked in the anti guard classes.  These are not needed since
+          we decided to stick with the reverse lock class rather than the
+          anti guard classes.
 
 Wed Apr 28 18:02:36 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/OS.h: Added a new macro called
-	  ACE_non_function_ptr_to_function_ptr_cast to get around some
-	  compiler constrain.  In face, ANSI C++ standard prevents casting
-	  from a non-function pointer (e.g., void *) to a function
-	  pointer.  Currently, only egcs check for this condition.
+        * ace/OS.h: Added a new macro called
+          ACE_non_function_ptr_to_function_ptr_cast to get around some
+          compiler constrain.  In face, ANSI C++ standard prevents casting
+          from a non-function pointer (e.g., void *) to a function
+          pointer.  Currently, only egcs check for this condition.
 
-	* ace/Parse_Node.cpp (symbol): Changed to use the new
-	  ACE_non_function_ptr_to_function_ptr_cast.
+        * ace/Parse_Node.cpp (symbol): Changed to use the new
+          ACE_non_function_ptr_to_function_ptr_cast.
 
 Wed Apr 28 16:53:16 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* examples/Reactor/Proactor/Aio_Platform_Test_C.cpp: Added this
-	file, a simple C version of the
-	$ACE_ROOT/tests/Aio_Platforms_Test.cpp. Useful for submitting bug
-	reports etc.
+        * examples/Reactor/Proactor/Aio_Platform_Test_C.cpp: Added this
+        file, a simple C version of the
+        $ACE_ROOT/tests/Aio_Platforms_Test.cpp. Useful for submitting bug
+        reports etc.
 
-	* ace/Proactor.cpp:
-	* ace/POSIX_Asynch_IO.cpp: Fixed old g++ warnings
+        * ace/Proactor.cpp:
+        * ace/POSIX_Asynch_IO.cpp: Fixed old g++ warnings
 
 Wed Apr 28 15:39:14 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Parse_Node.cpp (symbol): Use reinterpret_cast to cast
-	  dlsym's return value.
+        * ace/Parse_Node.cpp (symbol): Use reinterpret_cast to cast
+          dlsym's return value.
 
 Wed Apr 28 12:40:26 1999  David L. Levine  <levine@cs.wustl.edu>
 
@@ -522,9 +531,9 @@ Thu Apr 22 21:39:44 1999  Ossama Othman  <othman@cs.wustl.edu>
 Thu Apr 22 20:50:30 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
         * ace/CDR_Stream.i: Modified reset() to reset all the message
- 	  blocks, instead of just the first one as it had previously done.
-  	  Thanks to Jerry D. De Master <jdemaste@ipdinc.com> for pointing
- 	  out the problem and suggesting a fix.
+          blocks, instead of just the first one as it had previously done.
+          Thanks to Jerry D. De Master <jdemaste@ipdinc.com> for pointing
+          out the problem and suggesting a fix.
 
 Thu Apr 22 19:40:52 1999  Steve Huston  <shuston@riverace.com>
 
