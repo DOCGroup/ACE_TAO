@@ -25,6 +25,7 @@ OBJFILES = \
 	$(OBJDIR)\CosNotifyFilterC.obj \
 	$(OBJDIR)\CosNotifyFilterS.obj \
 	$(OBJDIR)\Notify_Collection.obj	\
+	$(OBJDIR)\Notify_Command.obj	\
 	$(OBJDIR)\Notify_Constraint_Interpreter.obj \
 	$(OBJDIR)\Notify_Constraint_Visitors.obj \
 	$(OBJDIR)\Notify_ConsumerAdmin_i.obj \
@@ -59,14 +60,15 @@ OBJFILES = \
 
 RESOURCE = $(OBJDIR)\orbsvcs.res
 
-!ifdef STATIC
-CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS) $(TAO_SVC_UTILS_CFLAGS) \
-	$(TAO_EVENT_CFLAGS) $(TAO_TRADING_CFLAGS) $(TAO_NOTIFY_CFLAGS)
-!else
-CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS) $(TAO_SVC_UTILS_CFLAGS) \
-	$(TAO_EVENT_CFLAGS) $(TAO_TRADING_CFLAGS) $(TAO_NOTIFY_CFLAGS) \
+CFLAGS = \
+	$(ACE_CFLAGS) \
+	$(TAO_CFLAGS) \
+	$(TAO_PORTABLESERVER_CFLAGS) \
+	$(TAO_SVC_UTILS_CFLAGS) \
+	$(TAO_EVENT_CFLAGS) \
+	$(TAO_TRADING_CFLAGS) \
+	$(TAO_NOTIFY_CFLAGS) \
 	-DTAO_NOTIFY_BUILD_DLL
-!endif
 
 CPPDIR = .;Notify
 
@@ -75,14 +77,17 @@ IDLDIR = .
 INCDIR_NAME = orbsvcs\Notify
 INCLUDES = Notify\*.h Notify\*.i Notify\*_T.cpp
 
-LIBFILES = $(ACE_LIB) $(TAO_LIB) $(TAO_SVC_UTILS_LIB) $(TAO_EVENT_LIB) \
+LIBFILES = \
+	$(ACE_LIB) \
+	$(TAO_LIB) \
+	$(TAO_PORTABLESERVER_LIB) \
+	$(TAO_SVC_UTILS_LIB) \
+	$(TAO_EVENT_LIB) \
 	$(TAO_TRADING_LIB)
 
-all: idl_src_files notify_lib
+all: idl_src_files
 
 !include <$(ACE_ROOT)\include\makeinclude\build_core_library.bor>
-
-notify_lib: $(TARGET)
 
 
 #

@@ -658,4 +658,6 @@ private:
 #endif /* _MSC_VER */
 
 #endif /*TAO_HAS_FT_CORBA == 1*/
+
+#include "ace/post.h"
 #endif /*TAO_FT_CORBAS_H */

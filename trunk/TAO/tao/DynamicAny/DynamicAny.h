@@ -65,4 +65,5 @@ TAO_Requires_DynamicAny_Initializer = TAO_DynamicAny_Loader::Initializer ();
 #include "DynamicAnyC.h"
 #undef TAO_DYNAMICANY_SAFE_INCLUDE
 
+#include "ace/post.h"
 #endif /* TAO_DYNAMICANY_H */

@@ -70,14 +70,15 @@ OBJFILES = \
 
 RESOURCE = $(OBJDIR)\orbsvcs.res
 
-!ifdef STATIC
-CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS) $(TAO_SVC_UTILS_CFLAGS) \
-	$(TAO_NAMING_CFLAGS) $(TAO_RTSCHED_CFLAGS) $(TAO_RTEVENT_CFLAGS)
-!else
-CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS) $(TAO_SVC_UTILS_CFLAGS) \
-	$(TAO_NAMING_CFLAGS) $(TAO_RTSCHED_CFLAGS) $(TAO_RTEVENT_CFLAGS) \
+CFLAGS = \
+	$(ACE_CFLAGS) \
+	$(TAO_CFLAGS) \
+	$(TAO_PORTABLESERVER_CFLAGS) \
+	$(TAO_SVC_UTILS_CFLAGS) \
+	$(TAO_NAMING_CFLAGS) \
+	$(TAO_RTSCHED_CFLAGS) \
+	$(TAO_RTEVENT_CFLAGS) \
 	-DTAO_RTEVENT_BUILD_DLL
-!endif
 
 CPPDIR = .;Event
 
@@ -86,14 +87,17 @@ IDLDIR = .
 INCDIR_NAME = orbsvcs\Event
 INCLUDES = Event\*.h Event\*.i
 
-LIBFILES = $(ACE_LIB) $(TAO_LIB) $(TAO_SVC_UTILS_LIB) $(TAO_NAMING_LIB) \
+LIBFILES = \
+	$(ACE_LIB) \
+	$(TAO_LIB) \
+	$(TAO_PORTABLESERVER_LIB) \
+	$(TAO_SVC_UTILS_LIB) \
+	$(TAO_NAMING_LIB) \
 	$(TAO_RTSCHED_LIB)
 
-all: idl_src_files rtevent_lib
+all: idl_src_files
 
 !include <$(ACE_ROOT)\include\makeinclude\build_core_library.bor>
-
-rtevent_lib: $(TARGET)
 
 
 #

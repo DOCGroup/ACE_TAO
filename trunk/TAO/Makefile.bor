@@ -10,7 +10,6 @@ BUILD =	typical
 
 DIRS = \
 	..\ace \
-	..\ace\SSL \
 	..\apps\gperf\src \
 	tao \
 	TAO_IDL	\
@@ -20,7 +19,6 @@ DIRS = \
 
 DIRS = \
 	..\ace \
-	..\ace\SSL \
 	..\apps\gperf\src \
 	tao \
 	TAO_IDL	\
@@ -31,7 +29,6 @@ DIRS = \
 
 DIRS = \
 	..\ace \
-	..\ace\SSL \
 	..\apps	\
 	..\netsvcs \
 	..\tests \

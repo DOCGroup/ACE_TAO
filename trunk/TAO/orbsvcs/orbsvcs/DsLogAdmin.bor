@@ -26,13 +26,14 @@ OBJFILES = \
 
 RESOURCE = $(OBJDIR)\orbsvcs.res
 
-!ifdef STATIC
-CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS) $(TAO_SVC_UTILS_CFLAGS) \
-  $(TAO_TRADING_CFLAGS) $(TAO_LOG_CFLAGS)
-!else
-CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS) $(TAO_SVC_UTILS_CFLAGS) \
-  $(TAO_TRADING_CFLAGS) $(TAO_LOG_CFLAGS) -DTAO_LOG_BUILD_DLL
-!endif
+CFLAGS = \
+	$(ACE_CFLAGS) \
+	$(TAO_CFLAGS) \
+	$(TAO_PORTABLESERVER_CFLAGS) \
+	$(TAO_SVC_UTILS_CFLAGS) \
+  $(TAO_TRADING_CFLAGS) \
+	$(TAO_LOG_CFLAGS) \
+	-DTAO_LOG_BUILD_DLL
 
 CPPDIR = .;Log
 
@@ -41,13 +42,16 @@ IDLDIR = .
 INCDIR_NAME = orbsvcs\Log
 INCLUDES = Log\*.h
 
-LIBFILES = $(ACE_LIB) $(TAO_LIB) $(TAO_SVC_UTILS_LIB) $(TAO_TRADING_LIB)
+LIBFILES = \
+	$(ACE_LIB) \
+	$(TAO_LIB) \
+	$(TAO_PORTABLESERVER_LIB) \
+	$(TAO_SVC_UTILS_LIB) \
+	$(TAO_TRADING_LIB)
 
-all: idl_src_files log_lib
+all: idl_src_files
 
 !include <$(ACE_ROOT)\include\makeinclude\build_core_library.bor>
-
-log_lib: $(TARGET)
 
 
 #

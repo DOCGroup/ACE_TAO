@@ -4,14 +4,16 @@
 
 NAME = TAO
 
+DIRS = DynamicAny PortableServer
+
 OBJFILES = \
+	$(OBJDIR)\Acceptor_Filter.obj \
 	$(OBJDIR)\Acceptor_Registry.obj \
-        $(OBJDIR)\Acceptor_Filter.obj \
-        $(OBJDIR)\Adapter.obj \
+	$(OBJDIR)\Adapter.obj \
 	$(OBJDIR)\Any.obj \
 	$(OBJDIR)\append.obj \
 	$(OBJDIR)\Asynch_Invocation.obj \
-	$(OBJDIR)\DII_Invocation.obj \
+	$(OBJDIR)\Asynch_Reply_Dispatcher.obj \
 	$(OBJDIR)\BoundsC.obj \
 	$(OBJDIR)\Buffering_Constraint_Policy.obj \
 	$(OBJDIR)\CDR.obj \
@@ -27,13 +29,17 @@ OBJFILES = \
 	$(OBJDIR)\default_client.obj \
 	$(OBJDIR)\default_resource.obj \
 	$(OBJDIR)\default_server.obj \
+	$(OBJDIR)\DII_Invocation.obj \
+	$(OBJDIR)\DII_Reply_Dispatcher.obj \
 	$(OBJDIR)\Direct_Priority_Mapping.obj \
 	$(OBJDIR)\DLL_ORB.obj \
 	$(OBJDIR)\DomainC.obj \
-        $(OBJDIR)\DynamicC.obj \
+	$(OBJDIR)\DynamicC.obj \
 	$(OBJDIR)\Encodable.obj \
 	$(OBJDIR)\Environment.obj \
 	$(OBJDIR)\Exception.obj \
+	$(OBJDIR)\Exclusive_TMS.obj \
+	$(OBJDIR)\FT_CORBAC.obj \
 	$(OBJDIR)\GIOP_Message_Accept_State.obj \
 	$(OBJDIR)\GIOP_Message_Acceptors.obj \
 	$(OBJDIR)\GIOP_Message_Base.obj \
@@ -66,6 +72,7 @@ OBJFILES = \
 	$(OBJDIR)\Messaging_Policy_i.obj \
 	$(OBJDIR)\MessagingC.obj \
 	$(OBJDIR)\MProfile.obj \
+	$(OBJDIR)\Muxed_TMS.obj \
 	$(OBJDIR)\NVList.obj \
 	$(OBJDIR)\Object.obj \
 	$(OBJDIR)\Object_KeyC.obj \
@@ -78,14 +85,14 @@ OBJFILES = \
 	$(OBJDIR)\Pluggable.obj \
 	$(OBJDIR)\Pluggable_Messaging.obj \
 	$(OBJDIR)\Pluggable_Messaging_Utils.obj \
-        $(OBJDIR)\Policy_Factory.obj \
+	$(OBJDIR)\Policy_Factory.obj \
 	$(OBJDIR)\Policy_Manager.obj \
 	$(OBJDIR)\PolicyC.obj \
 	$(OBJDIR)\PollableC.obj \
 	$(OBJDIR)\PollableS.obj \
 	$(OBJDIR)\Pool_Per_Endpoint.obj \
-        $(OBJDIR)\PortableInterceptor.obj \
-        $(OBJDIR)\PortableInterceptorC.obj \
+	$(OBJDIR)\PortableInterceptor.obj \
+	$(OBJDIR)\PortableInterceptorC.obj \
 	$(OBJDIR)\Principal.obj \
 	$(OBJDIR)\Priority_Mapping.obj \
 	$(OBJDIR)\Priority_Mapping_Manager.obj \
@@ -94,11 +101,8 @@ OBJFILES = \
 	$(OBJDIR)\Reactor_Per_Priority.obj \
 	$(OBJDIR)\Reactor_Registry.obj \
 	$(OBJDIR)\Reply_Dispatcher.obj \
-	$(OBJDIR)\Synch_Reply_Dispatcher.obj \
-	$(OBJDIR)\Asynch_Reply_Dispatcher.obj \
-	$(OBJDIR)\DII_Reply_Dispatcher.obj \
 	$(OBJDIR)\Request.obj \
-        $(OBJDIR)\Request_info.obj \
+	$(OBJDIR)\Request_Info.obj \
 	$(OBJDIR)\Resource_Factory.obj \
 	$(OBJDIR)\RT_Current.obj \
 	$(OBJDIR)\RT_Mutex.obj \
@@ -121,6 +125,7 @@ OBJFILES = \
 	$(OBJDIR)\Smart_Proxies.obj \
 	$(OBJDIR)\Stub.obj \
 	$(OBJDIR)\Sync_Strategies.obj \
+	$(OBJDIR)\Synch_Reply_Dispatcher.obj \
 	$(OBJDIR)\Tagged_Components.obj \
 	$(OBJDIR)\Tagged_Profile.obj \
 	$(OBJDIR)\TAO_Internal.obj \
@@ -131,8 +136,6 @@ OBJFILES = \
 	$(OBJDIR)\TimeBaseC.obj \
 	$(OBJDIR)\TimeBaseS.obj \
 	$(OBJDIR)\Transport_Mux_Strategy.obj \
-	$(OBJDIR)\Muxed_TMS.obj \
-	$(OBJDIR)\Exclusive_TMS.obj \
 	$(OBJDIR)\Typecode.obj \
 	$(OBJDIR)\Typecode_Constants.obj \
 	$(OBJDIR)\UIOP_Acceptor.obj \
@@ -145,19 +148,15 @@ OBJFILES = \
 	$(OBJDIR)\ValueBase.obj \
 	$(OBJDIR)\ValueFactory.obj \
 	$(OBJDIR)\ValueFactory_Map.obj \
-	$(OBJDIR)\Wait_Strategy.obj \
-	$(OBJDIR)\Wait_On_Read.obj \
-	$(OBJDIR)\Wait_On_Reactor.obj \
 	$(OBJDIR)\Wait_On_Leader_Follower.obj \
+	$(OBJDIR)\Wait_On_Reactor.obj \
+	$(OBJDIR)\Wait_On_Read.obj \
+	$(OBJDIR)\Wait_Strategy.obj \
 	$(OBJDIR)\WrongTransactionC.obj
 
 RESOURCE = $(OBJDIR)\tao.res
 
-!ifdef STATIC
-CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS)
-!else
 CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS) -DTAO_BUILD_DLL
-!endif
 
 CPPDIR = .
 
@@ -171,3 +170,4 @@ INCLUDES = \
 LIBFILES = $(ACE_LIB)
 
 !include <$(ACE_ROOT)\include\makeinclude\build_core_library.bor>
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
