@@ -356,7 +356,6 @@ TAO_POA_Manager::check_state (ACE_ENV_SINGLE_ARG_DECL)
       // is not a temporary state. When a POA manager is in the
       // inactive state, the associated POAs will reject new
       // requests. The rejection mechanism used is specific to the
-
       // vendor. The GIOP location forwarding mechanism and
       // CloseConnection message are examples of mechanisms that could
       // be used to indicate the rejection. If the client is

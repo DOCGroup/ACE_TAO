@@ -511,7 +511,7 @@ CORBA::SystemException::_tao_get_omg_exception_description (
     {
       "Unlisted user exception received by client.",    // 1
       "Non-standard SystemException not supported.",    // 2
-      "An unkown user exception received by a portable interceptor." // 3
+      "An unknown user exception received by a portable interceptor." // 3
     };
 
   static const char *BAD_PARAM_TABLE[] =
@@ -660,7 +660,9 @@ CORBA::SystemException::_tao_get_omg_exception_description (
   static const char *OBJECT_NOT_EXIST_TABLE[] =
     {
       "Attempt to pass an unactivated (unregistered) value as an object reference.", // 1
-      "POAManager::incarnate failed to create POA." // 2
+      "Failed to create or locate Object Adapter.", // 2
+      "Biomolecular Sequence Analysis Service is no longer available.", // 3
+      "Object Adapter inactive." // 4
     };
 
   static const char *INV_POLICY_TABLE[] =

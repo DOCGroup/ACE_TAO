@@ -1,5 +1,6 @@
 // -*- C++ -*-
 
+#include "tao/ORB_Constants.h"
 #include "tao/PortableServer/RequestProcessingStrategyAOMOnly.h"
 #include "tao/PortableServer/ServantManagerC.h"
 #include "tao/PortableServer/Non_Servant_Upcall.h"
@@ -94,7 +95,8 @@ namespace TAO
 
       if (servant == 0)
         {
-          ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
+          ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (CORBA::OMGVMCID | 2,
+                                                     CORBA::COMPLETED_NO),
                             0);
         }
 
