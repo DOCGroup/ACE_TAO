@@ -6,8 +6,6 @@
 #	Requires GNU make
 #----------------------------------------------------------------------------
 
-VBIN    = $(BIN:%=%$(VAR))
-
 ifndef OBJEXT
 OBJEXT=o
 endif
