@@ -1,3 +1,18 @@
+2001-04-01  Yamuna Krishnamurthy  <yamuna@ace.cs.wustl.edu>
+
+	* orbsvcs/tests/AVStreams/Full_Profile/ftp.cpp: 
+	* orbsvcs/tests/AVStreams/Pluggable/ftp.cpp: 
+	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/ftp.cpp: 
+	* orbsvcs/tests/AVStreams/Multicast/server.cpp: 
+	* orbsvcs/tests/AVStreams/Multicast/ftp.cpp: 
+	* orbsvcs/tests/AVStreams/Simple_Two_Stage/sender.cpp: 
+
+	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp: 
+	* orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.cpp: 		
+	* orbsvcs/orbsvcs/AV/Flows_T.cpp: 	
+	
+	  Fixed Fuzz errors.
+	
 Sun Apr  1 14:56:14 2001  Mayur Deshpande  <mayur@balar.ece.uci.edu>
 
 	* docs/tutorials/Quoter/Simple/Client/index.html: 
