@@ -40,8 +40,8 @@ RSC=rc.exe
 # PROP Output_Dir ""
 # PROP Intermediate_Dir "LIB\Release"
 # PROP Target_Dir ""
-MTL=midl.exe
 LINK32=link.exe -lib
+MTL=midl.exe
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /YX /FD /c
 # ADD CPP /nologo /MD /W3 /GX /O2 /I "../../" /I "../" /D "_WINDOWS" /D "_CONSOLE" /D "NDEBUG" /D "WIN32" /D "TAO_AS_STATIC_LIBS" /D "ACE_AS_STATIC_LIBS" /FD /c
 # SUBTRACT CPP /YX
@@ -66,8 +66,8 @@ LIB32=link.exe -lib
 # PROP Output_Dir ""
 # PROP Intermediate_Dir "LIB\Debug"
 # PROP Target_Dir ""
-MTL=midl.exe
 LINK32=link.exe -lib
+MTL=midl.exe
 # ADD BASE CPP /nologo /W3 /GX /Z7 /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /YX /FD /c
 # ADD CPP /nologo /MDd /W3 /GX /Zi /Od /I "../../" /I "../" /D "_WINDOWS" /D "_CONSOLE" /D "_DEBUG" /D "WIN32" /D "ACE_AS_STATIC_LIBS" /D "TAO_AS_STATIC_LIBS" /FD /c
 # SUBTRACT CPP /YX
@@ -135,19 +135,7 @@ SOURCE=.\Base_Transport_Property.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\BiDir_ORBInitializer.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\BiDir_Policy_i.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\BiDir_PolicyFactory.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\BiDirPolicyC.h
+SOURCE=.\BiDir_Adapter.h
 # End Source File
 # Begin Source File
 
@@ -468,10 +456,6 @@ SOURCE=.\Managed_Types.h
 # Begin Source File
 
 SOURCE=.\marshal.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Message_Sent_Callback.h
 # End Source File
 # Begin Source File
 
@@ -863,6 +847,10 @@ SOURCE=.\Transport_Mux_Strategy.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Transport_Timer.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\try_macros.h
 # End Source File
 # Begin Source File
@@ -936,14 +924,6 @@ SOURCE=.\Asynch_Reply_Dispatcher.i
 # Begin Source File
 
 SOURCE=.\Base_Transport_Property.inl
-# End Source File
-# Begin Source File
-
-SOURCE=.\BiDir_Policy_i.inl
-# End Source File
-# Begin Source File
-
-SOURCE=.\BiDirPolicyC.i
 # End Source File
 # Begin Source File
 
@@ -1196,10 +1176,6 @@ SOURCE=.\Managed_Types.i
 # Begin Source File
 
 SOURCE=.\marshal.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Message_Sent_Callback.inl
 # End Source File
 # Begin Source File
 
@@ -1567,19 +1543,7 @@ SOURCE=.\Base_Transport_Property.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\BiDir_ORBInitializer.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\BiDir_Policy_i.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\BiDir_PolicyFactory.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\BiDirPolicyC.cpp
+SOURCE=.\BiDir_Adapter.cpp
 # End Source File
 # Begin Source File
 
@@ -1876,10 +1840,6 @@ SOURCE=.\Managed_Types.cpp
 # Begin Source File
 
 SOURCE=.\Marshal.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Message_Sent_Callback.cpp
 # End Source File
 # Begin Source File
 
@@ -2216,6 +2176,10 @@ SOURCE=.\Transport_Descriptor_Interface.cpp
 # Begin Source File
 
 SOURCE=.\Transport_Mux_Strategy.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Transport_Timer.cpp
 # End Source File
 # Begin Source File
 
