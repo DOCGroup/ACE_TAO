@@ -7,7 +7,7 @@ Thu Nov  4 12:50:23 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
         * tao/params.i:
         * docs/Options.html:
           Removed the -ORBMulticast 0/1 option, since this option should
-          be replaced with a more complete solution that deals with 
+          be replaced with a more complete solution that deals with
           different discovery methods.  Plus, I realized that I didn't
           necessarily need it for the IR.
 
