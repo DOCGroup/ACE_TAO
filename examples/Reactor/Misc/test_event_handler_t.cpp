@@ -1,4 +1,3 @@
-
 // $Id$
 
 #include "ace/Event_Handler_T.h"
@@ -13,29 +12,34 @@ public:
   virtual void set_handle (ACE_HANDLE) {}
   virtual int handle_async_io (ACE_HANDLE) { return 0; }
   virtual int shutdown (ACE_HANDLE, ACE_Reactor_Mask) { return 0; }
-  virtual int signal_handler (ACE_HANDLE signum
-#if defined (ACE_HAS_SIGINFO_T)
-    , siginfo_t * = 0, ucontext_t * = 0
-#endif /* ACE_HAS_SIGINFO_T */
-    )
+  virtual int signal_handler (ACE_HANDLE signum,
+                              siginfo_t * = 0,
+                              ucontext_t * = 0)
   {
     return 0;
   }
 };
 
-int 
+int
 main (int, char *[])
 {
   typedef ACE_Event_Handler_T<ACE_Sig_Handler> EH_SH;
 
   // Tie the ACE_Event_Handler_T together with the methods from ACE_Sig_Handler.
   EH_SH tied_sh (new ACE_Sig_Handler, 1,
-		 &ACE_Sig_Handler::get_handle,
-		 &ACE_Sig_Handler::handle_async_io,
-		 &ACE_Sig_Handler::shutdown,
-		 &ACE_Sig_Handler::signal_handler);
+                 &ACE_Sig_Handler::get_handle,
+                 &ACE_Sig_Handler::handle_async_io,
+                 &ACE_Sig_Handler::shutdown,
+                 &ACE_Sig_Handler::signal_handler);
   return 0;
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Event_Handler_T<ACE_Sig_Handler>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Event_Handler_T<ACE_Sig_Handler>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
 #else
 int
 main (int, char *[])
