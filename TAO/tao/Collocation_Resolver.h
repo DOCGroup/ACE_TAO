@@ -38,7 +38,8 @@ public:
   virtual ~TAO_Collocation_Resolver (void);
 
   /// Is <object> collocated?
-  virtual CORBA::Boolean is_collocated (CORBA::Object_ptr object) const = 0;
+  virtual CORBA::Boolean is_collocated (CORBA::Object_ptr object,
+                                        CORBA::Environment &ACE_TRY_ENV) const = 0;
 };
 
 #if defined (__ACE_INLINE__)

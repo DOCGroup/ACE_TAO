@@ -46,6 +46,8 @@ PUB_HDRS = \
   Server_Strategy_Factory \
   Client_Strategy_Factory \
   ORB_Core \
+  Collocation_Resolver \
+  Default_Collocation_Resolver \
   ORB_Table \
   LF_Follower \
   LF_Follower_Auto_Adder \
@@ -191,6 +193,8 @@ ORB_CORE_FILES = \
   OctetSeqC \
   StringSeqC \
   ORB_Core \
+  Collocation_Resolver \
+  Default_Collocation_Resolver \
   Stub_Factory \
   ORB_Table \
   LF_Follower \

@@ -27,6 +27,7 @@ CPP_SRCS += \
   RTPortableServer \
   RTPortableServerC \
   RT_Acceptor_Filters \
+  RT_Collocation_Resolver \
   RT_Object_Adapter_Factory \
   RT_POA \
   RT_Policy_Validator \

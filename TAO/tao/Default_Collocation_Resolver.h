@@ -36,7 +36,8 @@ class TAO_Export TAO_Default_Collocation_Resolver :
 public:
 
   /// Is <object> collocated?
-  virtual CORBA::Boolean is_collocated (CORBA::Object_ptr object) const;
+  virtual CORBA::Boolean is_collocated (CORBA::Object_ptr object,
+                                        CORBA::Environment &ACE_TRY_ENV) const;
 };
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO, TAO_Default_Collocation_Resolver)

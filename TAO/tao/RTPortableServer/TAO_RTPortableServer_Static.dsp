@@ -99,6 +99,10 @@ SOURCE=.\RT_Acceptor_Filters.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\RT_Collocation_Resolver.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\RT_POA.i
 # End Source File
 # Begin Source File
@@ -112,6 +116,10 @@ SOURCE=.\RTPortableServerC.i
 # Begin Source File
 
 SOURCE=.\RT_Acceptor_Filters.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\RT_Collocation_Resolver.h
 # End Source File
 # Begin Source File
 
@@ -148,6 +156,10 @@ SOURCE=.\RTPortableServerC.h
 # Begin Source File
 
 SOURCE=.\RT_Acceptor_Filters.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\RT_Collocation_Resolver.cpp
 # End Source File
 # Begin Source File
 

@@ -260,8 +260,8 @@ public:
    * @note
    * No-Collocation is a special case of collocation.
    */
-  static int collocation_strategy (
-    CORBA::Object_ptr object);
+  static int collocation_strategy (CORBA::Object_ptr object,
+                                   CORBA::Environment &ACE_TRY_ENV);
   //@}
 
   /**
