@@ -1,3 +1,11 @@
+Tue Mar 14 17:48:04 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/POAC.h:
+	* tao/POAC.i:
+	  #if !defined guards around PortableServer::ForwardRequest
+	  and its Any and CDR operators were not consistent. Thanks
+	  to Darrell for pointing this out.
+
 Tue Mar 14 16:26:27 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/POAC.cpp: The typecode for _tc_Current was not properly
