@@ -51,20 +51,10 @@ public:
   char *data (void);
   int data_length (void);
   int content_length (void);
-  char *filename (void);
   int status (void);
-  char *status_string (void);
+  const char *status_string (void);
   void dump (void);
   // Dump the state of the request.
-
-  enum 
-  {
-    OK = 1, 
-    NO_REQUEST,
-    NO_FILENAME, 
-    NO_CONTENT_LENGTH, 
-    NO_HEADER
-  };
 
   enum
   {

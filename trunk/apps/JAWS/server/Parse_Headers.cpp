@@ -64,8 +64,9 @@ Headers::complete_header_line (char * const header_line)
   if (! this->end_of_line (ptr, offset)) return 0;
 
   if (ptr == header_line) {
-    ACE_OS::memmove(ptr, ptr+offset, strlen(ptr+offset) + 1);
+    ACE_OS::memmove (ptr, ptr+offset, strlen(ptr+offset) + 1);
     this->done_ = 1;
+    ACE_DEBUG ((LM_DEBUG, "  (%t) no more headers\n"));
     return 0;
   }
 
@@ -73,9 +74,15 @@ Headers::complete_header_line (char * const header_line)
     switch (ptr[offset]) {
     case ' ':
     case '\t':
-      ACE_OS::memmove(ptr, ptr+offset, strlen(ptr+offset) + 1);
+      ACE_OS::memmove (ptr, ptr+offset, strlen(ptr+offset) + 1);
+      break;
+
+    case '\n':
+    case '\r':
+      return 1;
+
     default:
-      if (isprint(ptr[offset])) return 1;
+      if (isalpha (ptr[offset])) return 1;
       else return 0;
     }
   } while (this->end_of_line (ptr, offset));

@@ -38,13 +38,27 @@ public:
   ~HTTP_Response (void);
 
   void process_request (void);
+  // This is called by the handler to initiate a response.
+
   void error_response (int status, const char *log_message);
+  // This returns an error response for cases where there is
+  // a problem with the request, logging the log_message.
+
+private:
+
+  void normal_response (void);
+  // Called by process_request when the request is a normal request.
+
+  void cgi_response (void);
+  // Called by process_request when the request is a cgi request.
 
 private:
 
   static void process_request (HTTP_Response &response);
+  // static version of process_request, just in case.
 
   void build_headers (void);
+  // creates the appropriate header information for responses.
 
 private:
 

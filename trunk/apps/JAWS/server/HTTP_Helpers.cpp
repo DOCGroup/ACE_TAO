@@ -99,11 +99,14 @@ HTTP_Helper::HTTP_date (char * const date_string, int date_length)
   time_t tloc;
   struct tm tms;
 
-  if (date_string != 0) {
-    if (ACE_OS::time(&tloc) != -1 && ACE_OS::gmtime_r(&tloc, &tms) != NULL)
-      ::strftime (date_string, date_length, "%a, %d %b %Y %T %Z", &tms);
-    else return 0;
-  }
+  if (date_string != 0)
+    {
+      if (ACE_OS::time (&tloc) != (time_t)-1
+          && ACE_OS::gmtime_r (&tloc, &tms) != NULL)
+        ACE_OS::strftime (date_string, date_length,
+                          "%a, %d %b %Y %T GMT", &tms);
+      else return 0;
+    }
 
   return date_string;
 }
@@ -158,7 +161,7 @@ HTTP_Helper::fixyear (int year)
     struct tm tms;
     time_t tloc;
 
-    if (ACE_OS::time(&tloc) != -1) {
+    if (ACE_OS::time(&tloc) != (time_t)-1) {
       ACE_OS::gmtime_r(&tloc, &tms);
 
       if (tms.tm_year%100 == year) year = tms.tm_year;

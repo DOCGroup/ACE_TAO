@@ -9,7 +9,7 @@ class JAWS_VFS_Node_Bucket
 public:
   JAWS_VFS_Node_Bucket (int size = 1);
 
-  JAWS_VFS_Node * find (char *URI);
+  JAWS_VFS_Node * find (const char *URI);
   
 private:
   JAWS_VFS_Node_List bucket_;

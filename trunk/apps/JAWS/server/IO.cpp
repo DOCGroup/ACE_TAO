@@ -60,7 +60,7 @@ JAWS_Synch_IO::read (ACE_Message_Block& mb, int size)
 }
 
 void
-JAWS_Synch_IO::receive_file (char *filename,
+JAWS_Synch_IO::receive_file (const char *filename,
 			     void *initial_data,
 			     int initial_data_length,
 			     int entire_length)
@@ -97,7 +97,7 @@ JAWS_Synch_IO::receive_file (char *filename,
 }
 
 void
-JAWS_Synch_IO::transmit_file (char *filename,
+JAWS_Synch_IO::transmit_file (const char *filename,
 			      const char *header, 
 			      int header_size,
 			      const char *trailer, 
@@ -222,7 +222,7 @@ JAWS_Asynch_IO::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result
 }
 
 void
-JAWS_Asynch_IO::receive_file (char *filename,
+JAWS_Asynch_IO::receive_file (const char *filename,
 			      void *initial_data,
 			      int initial_data_length,
 			      int entire_length)
@@ -259,7 +259,7 @@ JAWS_Asynch_IO::receive_file (char *filename,
 }
 
 void
-JAWS_Asynch_IO::transmit_file (char *filename,
+JAWS_Asynch_IO::transmit_file (const char *filename,
 			       const char *header, 
 			       int header_size,
 			       const char *trailer, 
