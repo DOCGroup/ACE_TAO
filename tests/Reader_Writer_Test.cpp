@@ -1,6 +1,6 @@
-// ============================================================================
 // $Id$
 
+// ============================================================================
 //
 // = LIBRARY
 //    tests
@@ -40,7 +40,7 @@ static size_t n_readers = 6;
 static size_t n_writers = 4;
 
 // Thread id of last writer.
-volatile static int shared_data;  
+static volatile int shared_data;  
 
 // Lock for shared_data.
 static ACE_RW_Mutex rw_mutex;     
@@ -55,36 +55,6 @@ print_usage_and_die (void)
   ACE_DEBUG ((LM_DEBUG, 
 	      "usage: %n [-r n_readers] [-w n_writers] [-n iteration_count]\n"));
   ACE_OS::exit (1);
-}
-
-// Parse the command-line arguments and set options.
-
-static void
-parse_args (int argc, char *argv[])
-{
-  ACE_Get_Opt get_opt (argc, argv, "r:w:n:l:");
-
-  int c; 
-
-  while ((c = get_opt ()) != -1)
-    switch (c)
-    {
-    case 'r':
-      n_readers = ACE_OS::atoi (get_opt.optarg);
-      break;
-    case 'w':
-      n_writers = ACE_OS::atoi (get_opt.optarg);
-      break;
-    case 'n':
-      n_iterations = ACE_OS::atoi (get_opt.optarg);
-      break;
-    case 'l':
-      n_loops = ACE_OS::atoi (get_opt.optarg);
-      break;
-    default:
-      print_usage_and_die ();
-      break;
-  }
 }
 
 // Iterate <n_iterations> each time checking that nobody modifies the data
@@ -176,7 +146,7 @@ template class ACE_Atomic_Op<ACE_Thread_Mutex, int>;
 
 // Spawn off threads.
 
-int main (int, char *argv[])
+int main (int, char *[])
 {
   ACE_START_TEST ("Reader_Writer_Test");
 

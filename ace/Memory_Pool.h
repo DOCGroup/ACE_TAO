@@ -295,11 +295,11 @@ class ACE_Export ACE_MMAP_Memory_Pool_Options
 {
 public:
   // = Initialization method.
-  ACE_MMAP_Memory_Pool_Options (char *base_addr = ACE_DEFAULT_BASE_ADDR,
+  ACE_MMAP_Memory_Pool_Options (void *base_addr = ACE_DEFAULT_BASE_ADDR,
 				int use_fixed_addr = 1,
 				int write_each_page = 1);
 
-  char *base_addr_;
+  void *base_addr_;
   // Base address of the memory-mapped backing store.
 
   int use_fixed_addr_;

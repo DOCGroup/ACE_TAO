@@ -2399,6 +2399,14 @@ private:
      if (POINTER == 0) { errno = ENOMEM; return; } \
      } while (0)
 
+#if defined (ACE_HAS_INLINED_OSCALLS)
+#if defined (ACE_INLINE)
+#undef ACE_INLINE
+#endif /* ACE_INLINE */
+#define ACE_INLINE inline
+#include "ace/OS.i"
+#endif /* ACE_HAS_INLINED_OSCALLS */
+
 #include "ace/SString.h"
 
 #if defined (UNICODE)
@@ -2407,13 +2415,5 @@ ACE_WString (ASCII).fast_rep ()
 #else
 #define ACE_WIDE_STRING(ASCII) ASCII
 #endif /* UNICODE */
-
-#if defined (ACE_HAS_INLINED_OSCALLS)
-#if defined (ACE_INLINE)
-#undef ACE_INLINE
-#endif /* ACE_INLINE */
-#define ACE_INLINE inline
-#include "ace/OS.i"
-#endif /* ACE_HAS_INLINED_OSCALLS */
 
 #endif  /* ACE_OS_H */

@@ -114,7 +114,7 @@ ACE_MMAP_Memory_Pool::ACE_MMAP_Memory_Pool (LPCTSTR backing_store_name,
     {
       if (options->use_fixed_addr_)
 	{
-	  this->base_addr_ = (void *) options->base_addr_;
+	  this->base_addr_ = options->base_addr_;
 	  ACE_SET_BITS (flags_, MAP_FIXED);
 	}
       this->write_each_page_ = options->write_each_page_;
@@ -275,7 +275,7 @@ ACE_MMAP_Memory_Pool::remap (void *addr)
   return this->map_file (current_file_offset);
 }
 
-ACE_MMAP_Memory_Pool_Options::ACE_MMAP_Memory_Pool_Options (char *base_addr,
+ACE_MMAP_Memory_Pool_Options::ACE_MMAP_Memory_Pool_Options (void *base_addr,
 							    int use_fixed_addr,
 							    int write_each_page)
   : base_addr_ (base_addr),

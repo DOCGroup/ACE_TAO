@@ -62,7 +62,7 @@ static const int DEFAULT_ITERATIONS = 100000;
 #endif /* ACE_HAS_THREADS */
 
 int
-main (int argc, char *argv[])
+main (int, char *[])
 {
   ACE_START_TEST ("Thread_Manager_Test");
 
@@ -72,8 +72,8 @@ main (int argc, char *argv[])
   // Register a signal handler.
   ACE_Sig_Action sa ((ACE_SignalHandler) handler, SIGINT);
 
-  int n_threads = argc > 1 ? ACE_OS::atoi (argv[1]) : DEFAULT_THREADS;
-  int n_iterations = argc > 2 ? ACE_OS::atoi (argv[2]) : DEFAULT_ITERATIONS;
+  int n_threads = DEFAULT_THREADS;
+  int n_iterations = DEFAULT_ITERATIONS;
 
   ACE_Thread_Manager *thr_mgr = ACE_Service_Config::thr_mgr ();
 

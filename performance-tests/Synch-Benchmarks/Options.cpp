@@ -1,7 +1,6 @@
 #include "Options.h"
 // $Id$
 
-
 #if defined (ACE_HAS_THREADS)
 // Manages the options.
 Options options;
@@ -11,7 +10,7 @@ Options::count (void)
 {
   size_t total = 0;
 
-  for (size_t i = 0; i < options.thr_wc_size; i++)
+  for (int i = 0; i < options.thr_wc_size; i++)
     {
       if (options.thr_work_count[i] != 0)
 	{
