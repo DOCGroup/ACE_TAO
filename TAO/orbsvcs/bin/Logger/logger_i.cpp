@@ -1,4 +1,5 @@
 #include <iostream.h>
+#include "ace/ACE.h"
 #include "loggerC.h"
 #include "logger_i.h"
 
@@ -7,6 +8,8 @@ Logger_ptr
 Logger_Factory_i::make_logger (const char* name, 
 				 CORBA::Environment &IT_env) 
 {
+  ACE_UNUSED_ARG (IT_env);
+
   Logger_i* l = new Logger_i (name);
   return (l->_duplicate (l));
 }
@@ -34,5 +37,7 @@ Logger_i::~Logger_i (void)
 void 
 Logger_i::log (const char* message, CORBA::Environment &IT_env)
 {
+  ACE_UNUSED_ARG (IT_env);
+
   cout << name_ << ": " << message << endl;
 }
