@@ -184,6 +184,8 @@ public class NavWeapDataHandler implements DataHandler {
 			   weapons_.arrival_time);
 	received_events_++;
       }
+	else 
+	System.out.println ("Received wrong type information"+any_value.type());
   }
   
   NavWeapDataHandler () {
