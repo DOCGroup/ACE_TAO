@@ -26,7 +26,7 @@ const ACE_TCHAR *
 ACE_Process_Mutex::unique_name (void)
 {
   // For all platforms other than Win32, we are going to create a
-  // machine wide unquie name if one is not provided by the user.  On
+  // machine-wide unique name if one is not provided by the user.  On
   // Win32, unnamed synchronization objects are acceptable.
   ACE::unique_name (this, this->name_, ACE_UNIQUE_NAME_LEN);
   return this->name_;
@@ -35,7 +35,7 @@ ACE_Process_Mutex::unique_name (void)
 
 ACE_Process_Mutex::ACE_Process_Mutex (const char *name, void *arg)
 #if defined (_ACE_USE_SV_SEM)
-  : lock_ (name ? ACE_TEXT_CHAR_TO_TCHAR (name) : ACE_Process_Mutex::unique_name ())
+  : lock_ (name ? ACE_TEXT_CHAR_TO_TCHAR (name) :this->unique_name ())
 #else
   : lock_ (USYNC_PROCESS, ACE_TEXT_CHAR_TO_TCHAR (name), (ACE_mutexattr_t *) arg)
 #endif /* _ACE_USE_SV_SEM */
@@ -48,7 +48,7 @@ ACE_Process_Mutex::ACE_Process_Mutex (const char *name, void *arg)
 #if defined (ACE_HAS_WCHAR)
 ACE_Process_Mutex::ACE_Process_Mutex (const wchar_t *name, void *arg)
 #if defined (_ACE_USE_SV_SEM)
-  : lock_ (name ? ACE_TEXT_WCHAR_TO_TCHAR (name): ACE_Process_Mutex::unique_name ())
+  : lock_ (name ? ACE_TEXT_WCHAR_TO_TCHAR (name): this->unique_name ())
 #else
   : lock_ (USYNC_PROCESS, ACE_TEXT_WCHAR_TO_TCHAR (name), (ACE_mutexattr_t *) arg)
 #endif /* _ACE_USE_SV_SEM */

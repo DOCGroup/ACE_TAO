@@ -94,12 +94,12 @@ TAO_Naming_Service::parse_args (int argc,
 
           // Decrement the value of this->argc_ to reflect the removal
           // of '-t' option.
-          argc = argc-2;
+          argc = argc - 2;
           break;
 
         case '?':
         default:
-          // Donot do anything. The TAO_Naming_Server::parse_args ()
+          // Don't do anything. The TAO_Naming_Server::parse_args ()
           // takes care of indicating an error in case of error.
           break;
         }

@@ -6,8 +6,7 @@
  *
  *  $Id$
  *
- *   Wrappers for various synchronization routines.
- *
+ *   Wrapper Facades for various synchronization mechanisms.
  *
  *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  */
@@ -199,7 +198,8 @@ public:
    * Therefore, if you're running on Solaris you might want to
    * consider using the ACE POSIX pthreads implementation instead,
    * which can be enabled by compiling ACE with
-   * -DACE_HAS_PTHREADS rather than -DACE_HAS_STHREADS.  */
+   * -DACE_HAS_PTHREADS, rather than -DACE_HAS_STHREADS or
+   * -DACE_HAS_POSIX_SEM. */  
   int acquire (ACE_Time_Value &tv);
 
   /**
@@ -215,7 +215,8 @@ public:
    * Therefore, if you're running on Solaris you might want to
    * consider using the ACE POSIX pthreads implementation instead,
    * which can be enabled by compiling ACE with
-   * -DACE_HAS_PTHREADS rather than -DACE_HAS_STHREADS.  */
+   * -DACE_HAS_PTHREADS, rather than -DACE_HAS_STHREADS or 
+   * -DACE_HAS_POSIX_SEM.  */
   int acquire (ACE_Time_Value *tv);
 
   /**
