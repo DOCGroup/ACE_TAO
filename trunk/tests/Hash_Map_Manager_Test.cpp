@@ -168,17 +168,17 @@ struct String_Table
 
 static String_Table string_table[] =
 {
-  { "hello", 
-    "guten Tag" 
+  { "hello",
+    "guten Tag"
   },
   { "goodbye",
-    "auf wiedersehen" 
+    "auf wiedersehen"
   },
   { "funny",
-    "lustig" 
+    "lustig"
   },
   { 0,
-    0 
+    0
   }
 };
 
@@ -188,7 +188,7 @@ static const int MAX_HASH = 6;
 // @@ The following requires too much internal implementation
 // information about the <ACE_Hash_Map_Manager>.  We need to figure
 // out how to simplify this.
-static const String_Table_size = sizeof (HASH_STRING_ENTRY) * (STRING_TABLE_SIZE + MAX_HASH);
+static const size_t String_Table_size = sizeof (HASH_STRING_ENTRY) * (STRING_TABLE_SIZE + MAX_HASH);
 static ACE_Static_Allocator<String_Table_size> allocator;
 
 static int
@@ -214,15 +214,15 @@ run_test (void)
     if (hash.find (string_table[i].key_,
                    entry) == 0)
       ACE_DEBUG ((LM_DEBUG,
-                  "`%s' found `%s'\n", 
+                  "`%s' found `%s'\n",
                   string_table[i].key_,
                   ENTRY));
     else
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "`%s' not found\n", 
-                         string_table[i].key_), 
+                         "`%s' not found\n",
+                         string_table[i].key_),
                         -1);
-      
+
   // Let's test the iterator while we are at it.
   {
     HASH_STRING_ENTRY *entry;
@@ -243,13 +243,13 @@ run_test (void)
     if (hash.find (string_table[i].key_,
                    entry) == 0)
       ACE_DEBUG ((LM_DEBUG,
-                  "`%s' found `%s'\n", 
+                  "`%s' found `%s'\n",
                   string_table[i].key_,
                   ENTRY));
     else if (i != 2)
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "`%s' not found\n", 
-                         string_table[i].key_), 
+                         "`%s' not found\n",
+                         string_table[i].key_),
                         -1);
 
   // Let's test the iterator backwards.
