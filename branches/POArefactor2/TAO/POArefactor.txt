@@ -1,3 +1,20 @@
+Thu Nov 11 15:52:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/POA_Current_Impl.cpp (orb_core):
+          Use the orb_core() method from the POA instead of using the
+          orb_core_ member
+
+        * tao/PortableServer/POA.h:
+          Because of the change above POA_Current_Impl doesn't need to be a
+          friend of POA anymore
+
+Thu Nov 11 15:26:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/PS_Current.pidl
+        * tao/PortableServer/POA_Current.{h,cpp}:
+        * tao/PortableSErver/POA_Current_Impl.{h,cpp}:
+          Added get_servant
+
 Thu Nov 11 14:04:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/*:
