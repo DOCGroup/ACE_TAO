@@ -3,7 +3,7 @@
 // ==========================================================================
 //
 // = FILENAME
-//   Events_Test.h
+//   Events.h
 //
 // = DESCRIPTION
 //   Test to check if events are received by all 3 types of consumers.
@@ -28,12 +28,12 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-class Events_Test;
+class Events;
 
 class Event_StructuredPushConsumer : public TAO_Notify_StructuredPushConsumer
 {
 public:
-  Event_StructuredPushConsumer (Events_Test *test_client);
+  Event_StructuredPushConsumer (Events *test_client);
   // Contructor.
 
   // = StructuredPushSupplier methods.
@@ -45,7 +45,7 @@ public:
                      CosEventComm::Disconnected));
 
 protected:
-  Events_Test * test_client_;
+  Events * test_client_;
 };
 
 /***************************************************************************/
@@ -53,24 +53,24 @@ protected:
 class Event_StructuredPushSupplier : public TAO_Notify_StructuredPushSupplier
 {
 public:
-  Event_StructuredPushSupplier (Events_Test * test_client);
+  Event_StructuredPushSupplier (Events * test_client);
   // Constructor.
 
   virtual ~Event_StructuredPushSupplier (void);
   // Destructor.
 
 protected:
-  Events_Test* test_client_;
+  Events* test_client_;
 };
 
 /***************************************************************************/
 
-class Events_Test : public Notify_Test_Client
+class Events : public Notify_Test_Client
 {
 public:
   // Initialization and termination code.
-  Events_Test (void);
-  virtual ~Events_Test (void);
+  Events (void);
+  virtual ~Events (void);
 
   int parse_args (int argc,
                   char *argv[]) ;

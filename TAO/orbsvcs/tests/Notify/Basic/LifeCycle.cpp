@@ -2,25 +2,26 @@
 
 #include "ace/Arg_Shifter.h"
 #include "ace/Get_Opt.h"
+#include "tao/debug.h"
 #include <orbsvcs/CosNamingC.h>
 #include <orbsvcs/CosNotifyCommC.h>
 #include <orbsvcs/CosNotifyChannelAdminC.h>
 
-#include "LifeCycleTest.h"
+#include "LifeCycle.h"
 
-ACE_RCSID (Notify_Tests, LifeCycleTest, "$Id$")
+ACE_RCSID (Notify_Tests, LifeCycle, "$Id$")
 
-LifeCycleTest::LifeCycleTest (void)
+LifeCycle::LifeCycle (void)
   : count_ (10)
 {
 }
 
-LifeCycleTest::~LifeCycleTest (void)
+LifeCycle::~LifeCycle (void)
 {
 }
 
 int
-LifeCycleTest::parse_args (int argc,
+LifeCycle::parse_args (int argc,
                            char *argv[])
 {
     ACE_Arg_Shifter arg_shifter (argc,
@@ -58,7 +59,7 @@ LifeCycleTest::parse_args (int argc,
 }
 
 void
-LifeCycleTest::init (int argc,
+LifeCycle::init (int argc,
                      char* argv[]
                      ACE_ENV_ARG_DECL)
 {
@@ -110,7 +111,7 @@ LifeCycleTest::init (int argc,
 }
 
 void
-LifeCycleTest::run_test(ACE_ENV_SINGLE_ARG_DECL)
+LifeCycle::run_test(ACE_ENV_SINGLE_ARG_DECL)
 {
   for (int i = 0; i < this->count_; ++i)
     {
@@ -135,30 +136,31 @@ LifeCycleTest::run_test(ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-LifeCycleTest::create_ec (ACE_ENV_SINGLE_ARG_DECL)
+LifeCycle::create_ec (ACE_ENV_SINGLE_ARG_DECL)
 {
-    CosNotifyChannelAdmin::ChannelID id;
-    CosNotification::QoSProperties initial_qos;
-    CosNotification::AdminProperties initial_admin;
+  CosNotifyChannelAdmin::ChannelID id;
+  CosNotification::QoSProperties initial_qos;
+  CosNotification::AdminProperties initial_admin;
 
-    this->ec_ = notify_factory_->create_channel (initial_qos,
-                                                 initial_admin,
-                                                 id
-                                                 ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
+  this->ec_ = notify_factory_->create_channel (initial_qos,
+                                               initial_admin,
+                                               id
+                                               ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 
-    if (CORBA::is_nil (ec_.in ())) {
-      ACE_ERROR ((LM_ERROR,
-                  " (%P|%t) Unable to create event channel\n"));
-      return;
-    }
+  if (CORBA::is_nil (ec_.in ())) {
+    ACE_ERROR ((LM_ERROR,
+                " (%P|%t) Unable to create event channel\n"));
+    return;
+  }
 
+  if (TAO_debug_level)
     ACE_DEBUG ((LM_DEBUG,
                 "created event channel\n"));
 }
 
 void
-LifeCycleTest::create_supplier_admin (ACE_ENV_SINGLE_ARG_DECL)
+LifeCycle::create_supplier_admin (ACE_ENV_SINGLE_ARG_DECL)
 {
   CosNotifyChannelAdmin::AdminID adminid;
   CosNotifyChannelAdmin::InterFilterGroupOperator ifgop =
@@ -176,12 +178,13 @@ LifeCycleTest::create_supplier_admin (ACE_ENV_SINGLE_ARG_DECL)
       return;
     }
 
-  ACE_DEBUG ((LM_DEBUG,
-              "created supplier admin\n"));
+  if (TAO_debug_level)
+    ACE_DEBUG ((LM_DEBUG,
+                "created supplier admin\n"));
 }
 
 void
-LifeCycleTest::create_consumer_admin (ACE_ENV_SINGLE_ARG_DECL)
+LifeCycle::create_consumer_admin (ACE_ENV_SINGLE_ARG_DECL)
 {
   CosNotifyChannelAdmin::AdminID adminid;
   CosNotifyChannelAdmin::InterFilterGroupOperator ifgop =
@@ -197,37 +200,42 @@ LifeCycleTest::create_consumer_admin (ACE_ENV_SINGLE_ARG_DECL)
       return;
     }
 
+  if (TAO_debug_level)
    ACE_DEBUG ((LM_DEBUG,
                "created consumer admin\n"));
 }
 
 void
-LifeCycleTest::destroy_supplier_admin (ACE_ENV_SINGLE_ARG_DECL)
+LifeCycle::destroy_supplier_admin (ACE_ENV_SINGLE_ARG_DECL)
 {
   this->supplier_admin_->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  ACE_DEBUG ((LM_DEBUG,
-              "destroyed supplier admin\n"));
+  if (TAO_debug_level)
+    ACE_DEBUG ((LM_DEBUG,
+                "destroyed supplier admin\n"));
 }
 
 void
-LifeCycleTest::destroy_consumer_admin (ACE_ENV_SINGLE_ARG_DECL)
+LifeCycle::destroy_consumer_admin (ACE_ENV_SINGLE_ARG_DECL)
 {
   this->consumer_admin_->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  ACE_DEBUG ((LM_DEBUG,
-              "destroyed consumer admin\n"));
+  if (TAO_debug_level)
+    ACE_DEBUG ((LM_DEBUG,
+                "destroyed consumer admin\n"));
 }
 
 void
-LifeCycleTest::destroy_ec (ACE_ENV_SINGLE_ARG_DECL)
+LifeCycle::destroy_ec (ACE_ENV_SINGLE_ARG_DECL)
 {
   this->ec_->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
-  ACE_DEBUG ((LM_DEBUG,
-              "destroyed event channel\n"));
+
+  if (TAO_debug_level)
+    ACE_DEBUG ((LM_DEBUG,
+                "destroyed event channel\n"));
 }
 
 
@@ -237,7 +245,7 @@ main (int argc, char *argv[])
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      LifeCycleTest test;
+      LifeCycle test;
 
       test.parse_args (argc,
                        argv);

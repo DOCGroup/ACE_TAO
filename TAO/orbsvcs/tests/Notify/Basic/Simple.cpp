@@ -2,6 +2,7 @@
 
 #include "ace/Arg_Shifter.h"
 #include "ace/Get_Opt.h"
+#include "tao/debug.h"
 #include "Simple.h"
 
 ACE_RCSID (Notify_Tests, Simple, "$Id$")
@@ -22,9 +23,10 @@ Event_AnyPushConsumer::push (const CORBA::Any & data
   int event_num;
   data >>= event_num;
 
-  ACE_DEBUG ((LM_DEBUG,
-              "Received event# %d\n",
-              event_num));
+  if (TAO_debug_level)
+    ACE_DEBUG ((LM_DEBUG,
+                "Received event# %d\n",
+                event_num));
 
   this->test_client_->on_event_received ();
 }
@@ -177,9 +179,10 @@ Simple_Test::on_event_received (void)
 {
   ++this->result_count_;
 
-  ACE_DEBUG ((LM_DEBUG,
-              "event count = #%d\n",
-              this->result_count_.value ()));
+  if (TAO_debug_level)
+    ACE_DEBUG ((LM_DEBUG,
+                "event count = #%d\n",
+                this->result_count_.value ()));
 
   if (this->result_count_ == 2 * this->event_count_)
     {

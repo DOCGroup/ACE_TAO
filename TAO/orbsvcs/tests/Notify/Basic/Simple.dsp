@@ -1,10 +1,10 @@
-# Microsoft Developer Studio Project File - Name="Simple" - Package Owner=<4>
+# Microsoft Developer Studio Project File - Name="Basic Simple" - Package Owner=<4>
 # Microsoft Developer Studio Generated Build File, Format Version 6.00
 # ** DO NOT EDIT **
 
 # TARGTYPE "Win32 (x86) Console Application" 0x0103
 
-CFG=Simple - Win32 Debug
+CFG=Basic Simple - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
 !MESSAGE 
@@ -13,12 +13,12 @@ CFG=Simple - Win32 Debug
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "Simple.mak" CFG="Simple - Win32 Debug"
+!MESSAGE NMAKE /f "Simple.mak" CFG="Basic Simple - Win32 Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "Simple - Win32 Release" (based on "Win32 (x86) Console Application")
-!MESSAGE "Simple - Win32 Debug" (based on "Win32 (x86) Console Application")
+!MESSAGE "Basic Simple - Win32 Release" (based on "Win32 (x86) Console Application")
+!MESSAGE "Basic Simple - Win32 Debug" (based on "Win32 (x86) Console Application")
 !MESSAGE 
 
 # Begin Project
@@ -28,7 +28,7 @@ CFG=Simple - Win32 Debug
 CPP=cl.exe
 RSC=rc.exe
 
-!IF  "$(CFG)" == "Simple - Win32 Release"
+!IF  "$(CFG)" == "Basic Simple - Win32 Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
@@ -54,7 +54,7 @@ LINK32=link.exe
 # ADD LINK32 ace.lib TAO.lib TAO_PortableServer.lib TAO_ETCL.lib TAO_CosNotification.lib TAO_CosNaming.lib TAO_NotifyTests.lib TAO_CosEvent.lib /nologo /subsystem:console /pdb:"Simple.pdb" /machine:I386 /pdbtype:sept /libpath:"..\lib" /libpath:"..\..\..\orbsvcs" /libpath:"..\..\..\orbsvcs\ETCL" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\tao\PortableServer" /libpath:"..\..\..\..\..\ace"
 # SUBTRACT LINK32 /pdb:none /incremental:yes /map /debug
 
-!ELSEIF  "$(CFG)" == "Simple - Win32 Debug"
+!ELSEIF  "$(CFG)" == "Basic Simple - Win32 Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -83,8 +83,8 @@ LINK32=link.exe
 
 # Begin Target
 
-# Name "Simple - Win32 Release"
-# Name "Simple - Win32 Debug"
+# Name "Basic Simple - Win32 Release"
+# Name "Basic Simple - Win32 Debug"
 # Begin Group "Source Files"
 
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"

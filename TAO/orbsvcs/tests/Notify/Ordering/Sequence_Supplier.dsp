@@ -1,10 +1,10 @@
-# Microsoft Developer Studio Project File - Name="Sequence_Supplier" - Package Owner=<4>
+# Microsoft Developer Studio Project File - Name="Ordering Sequence Supplier" - Package Owner=<4>
 # Microsoft Developer Studio Generated Build File, Format Version 6.00
 # ** DO NOT EDIT **
 
 # TARGTYPE "Win32 (x86) Console Application" 0x0103
 
-CFG=Sequence_Supplier - Win32 Debug
+CFG=Ordering Sequence Supplier - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
 !MESSAGE 
@@ -13,12 +13,12 @@ CFG=Sequence_Supplier - Win32 Debug
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "Sequence_Supplier.mak" CFG="Sequence_Supplier - Win32 Debug"
+!MESSAGE NMAKE /f "Sequence_Supplier.mak" CFG="Ordering Sequence Supplier - Win32 Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "Sequence_Supplier - Win32 Release" (based on "Win32 (x86) Console Application")
-!MESSAGE "Sequence_Supplier - Win32 Debug" (based on "Win32 (x86) Console Application")
+!MESSAGE "Ordering Sequence Supplier - Win32 Release" (based on "Win32 (x86) Console Application")
+!MESSAGE "Ordering Sequence Supplier - Win32 Debug" (based on "Win32 (x86) Console Application")
 !MESSAGE 
 
 # Begin Project
@@ -28,7 +28,7 @@ CFG=Sequence_Supplier - Win32 Debug
 CPP=cl.exe
 RSC=rc.exe
 
-!IF  "$(CFG)" == "Sequence_Supplier - Win32 Release"
+!IF  "$(CFG)" == "Ordering Sequence Supplier - Win32 Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
@@ -52,7 +52,7 @@ LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
 # ADD LINK32 TAO_NotifyTests.lib TAO_ETCL.lib TAO_CosNotification.lib TAO_CosNaming.lib TAO_Svc_Utils.lib TAO_PortableServer.lib TAO.lib ace.lib /nologo /subsystem:console /machine:I386 /out:"Release/Sequence_Supplier.exe" /libpath:"..\lib" /libpath:"..\..\..\orbsvcs" /libpath:"..\..\..\orbsvcs\ETCL" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\tao\PortableServer" /libpath:"..\..\..\..\..\ace"
 
-!ELSEIF  "$(CFG)" == "Sequence_Supplier - Win32 Debug"
+!ELSEIF  "$(CFG)" == "Ordering Sequence Supplier - Win32 Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -80,8 +80,8 @@ LINK32=link.exe
 
 # Begin Target
 
-# Name "Sequence_Supplier - Win32 Release"
-# Name "Sequence_Supplier - Win32 Debug"
+# Name "Ordering Sequence Supplier - Win32 Release"
+# Name "Ordering Sequence Supplier - Win32 Debug"
 # Begin Group "Source Files"
 
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
@@ -137,7 +137,7 @@ SOURCE=.\goS.i
 
 SOURCE=.\go.idl
 
-!IF  "$(CFG)" == "Sequence_Supplier - Win32 Release"
+!IF  "$(CFG)" == "Ordering Sequence Supplier - Win32 Release"
 
 # Begin Custom Build
 InputPath=.\go.idl
@@ -148,7 +148,7 @@ InputName=go
 
 # End Custom Build
 
-!ELSEIF  "$(CFG)" == "Sequence_Supplier - Win32 Debug"
+!ELSEIF  "$(CFG)" == "Ordering Sequence Supplier - Win32 Debug"
 
 # Begin Custom Build
 InputPath=.\go.idl

@@ -1,10 +1,10 @@
-# Microsoft Developer Studio Project File - Name="RedGreen" - Package Owner=<4>
+# Microsoft Developer Studio Project File - Name="Performance RedGreen" - Package Owner=<4>
 # Microsoft Developer Studio Generated Build File, Format Version 6.00
 # ** DO NOT EDIT **
 
 # TARGTYPE "Win32 (x86) Console Application" 0x0103
 
-CFG=RedGreen - Win32 Debug
+CFG=Performance RedGreen - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
 !MESSAGE 
@@ -13,12 +13,12 @@ CFG=RedGreen - Win32 Debug
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "RedGreen.mak" CFG="RedGreen - Win32 Debug"
+!MESSAGE NMAKE /f "RedGreen.mak" CFG="Performance RedGreen - Win32 Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "RedGreen - Win32 Release" (based on "Win32 (x86) Console Application")
-!MESSAGE "RedGreen - Win32 Debug" (based on "Win32 (x86) Console Application")
+!MESSAGE "Performance RedGreen - Win32 Release" (based on "Win32 (x86) Console Application")
+!MESSAGE "Performance RedGreen - Win32 Debug" (based on "Win32 (x86) Console Application")
 !MESSAGE 
 
 # Begin Project
@@ -28,7 +28,7 @@ CFG=RedGreen - Win32 Debug
 CPP=cl.exe
 RSC=rc.exe
 
-!IF  "$(CFG)" == "RedGreen - Win32 Release"
+!IF  "$(CFG)" == "Performance RedGreen - Win32 Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
@@ -54,7 +54,7 @@ LINK32=link.exe
 # ADD LINK32 ace.lib TAO.lib TAO_PortableServer.lib TAO_ETCL.lib TAO_CosNotification.lib TAO_CosNaming.lib TAO_Svc_Utils.lib /nologo /subsystem:console /incremental:yes /map /debug /machine:I386 /pdbtype:sept /libpath:"..\..\..\..\orbsvcs" /libpath:"..\..\..\..\orbsvcs\ETCL" /libpath:"..\..\..\..\..\tao" /libpath:"..\..\..\..\..\tao\PortableServer" /libpath:"..\..\..\..\..\..\ace"
 # SUBTRACT LINK32 /pdb:none
 
-!ELSEIF  "$(CFG)" == "RedGreen - Win32 Debug"
+!ELSEIF  "$(CFG)" == "Performance RedGreen - Win32 Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -84,8 +84,8 @@ LINK32=link.exe
 
 # Begin Target
 
-# Name "RedGreen - Win32 Release"
-# Name "RedGreen - Win32 Debug"
+# Name "Performance RedGreen - Win32 Release"
+# Name "Performance RedGreen - Win32 Debug"
 # Begin Group "Source Files"
 
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"

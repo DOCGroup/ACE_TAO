@@ -1,10 +1,10 @@
-# Microsoft Developer Studio Project File - Name="Updates" - Package Owner=<4>
+# Microsoft Developer Studio Project File - Name="Basic Updates" - Package Owner=<4>
 # Microsoft Developer Studio Generated Build File, Format Version 6.00
 # ** DO NOT EDIT **
 
 # TARGTYPE "Win32 (x86) Console Application" 0x0103
 
-CFG=Updates - Win32 Debug
+CFG=Basic Updates - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
 !MESSAGE 
@@ -13,12 +13,12 @@ CFG=Updates - Win32 Debug
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "Updates.mak" CFG="Updates - Win32 Debug"
+!MESSAGE NMAKE /f "Updates.mak" CFG="Basic Updates - Win32 Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "Updates - Win32 Release" (based on "Win32 (x86) Console Application")
-!MESSAGE "Updates - Win32 Debug" (based on "Win32 (x86) Console Application")
+!MESSAGE "Basic Updates - Win32 Release" (based on "Win32 (x86) Console Application")
+!MESSAGE "Basic Updates - Win32 Debug" (based on "Win32 (x86) Console Application")
 !MESSAGE 
 
 # Begin Project
@@ -28,7 +28,7 @@ CFG=Updates - Win32 Debug
 CPP=cl.exe
 RSC=rc.exe
 
-!IF  "$(CFG)" == "Updates - Win32 Release"
+!IF  "$(CFG)" == "Basic Updates - Win32 Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
@@ -53,12 +53,12 @@ LINK32=link.exe
 # ADD LINK32 ace.lib TAO.lib TAO_PortableServer.lib TAO_ETCL.lib TAO_CosNotification.lib TAO_CosNaming.lib TAO_NotifyTests.lib TAO_CosEvent.lib ace.lib TAO.lib TAO_PortableServer.lib TAO_ETCL.lib TAO_CosNotification.lib TAO_CosNaming.lib TAO_NotifyTests.lib /nologo /subsystem:console /machine:I386 /pdbtype:sept /libpath:"..\lib" /libpath:"..\..\..\orbsvcs" /libpath:"..\..\..\orbsvcs\ETCL" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\tao\PortableServer" /libpath:"..\..\..\..\..\ace"
 # SUBTRACT LINK32 /pdb:none /incremental:yes /map /debug
 
-!ELSEIF  "$(CFG)" == "Updates - Win32 Debug"
+!ELSEIF  "$(CFG)" == "Basic Updates - Win32 Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "Updates___Win32_Debug"
-# PROP BASE Intermediate_Dir "Updates___Win32_Debug"
+# PROP BASE Output_Dir "Basic Updates___Win32_Debug"
+# PROP BASE Intermediate_Dir "Basic Updates___Win32_Debug"
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
@@ -82,8 +82,8 @@ LINK32=link.exe
 
 # Begin Target
 
-# Name "Updates - Win32 Release"
-# Name "Updates - Win32 Debug"
+# Name "Basic Updates - Win32 Release"
+# Name "Basic Updates - Win32 Debug"
 # Begin Group "Source Files"
 
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"

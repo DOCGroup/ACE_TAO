@@ -2,6 +2,7 @@
 
 #include "ace/Arg_Shifter.h"
 #include "ace/Get_Opt.h"
+#include "tao/debug.h"
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/CosNotifyCommC.h"
 #include "IdAssignment.h"
@@ -196,8 +197,9 @@ IdAssignment::create_supplier_admin (CosNotifyChannelAdmin::ChannelID channel_id
     ACE_ERROR_RETURN ((LM_ERROR,
                        " (%P|%t) Unable to create supplier admin\n"),0);
 
-  ACE_DEBUG ((LM_DEBUG,
-              "created supplier admin\n"));
+  if (TAO_debug_level)
+    ACE_DEBUG ((LM_DEBUG,
+                "created supplier admin\n"));
 
   return adminid;
 }
@@ -233,8 +235,9 @@ IdAssignment::create_consumer_admin (CosNotifyChannelAdmin::ChannelID channel_id
     ACE_ERROR_RETURN ((LM_ERROR,
                        " (%P|%t) Unable to create consumer admin\n"),0);
 
-  ACE_DEBUG ((LM_DEBUG,
-              "created consumer admin\n"));
+  if (TAO_debug_level)
+    ACE_DEBUG ((LM_DEBUG,
+                "created consumer admin\n"));
 
   return adminid;
 }
@@ -274,8 +277,9 @@ IdAssignment::destroy_consumer_admin (
   consumer_admin->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  ACE_DEBUG ((LM_DEBUG,
-              "destroyed consumer admin\n"));
+  if (TAO_debug_level)
+    ACE_DEBUG ((LM_DEBUG,
+                "destroyed consumer admin\n"));
 }
 
 
@@ -310,8 +314,9 @@ IdAssignment::destroy_supplier_admin (
   supplier_admin->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  ACE_DEBUG ((LM_DEBUG,
-              "destroyed supplier admin\n"));
+  if (TAO_debug_level)
+    ACE_DEBUG ((LM_DEBUG,
+                "destroyed supplier admin\n"));
 }
 
 void
