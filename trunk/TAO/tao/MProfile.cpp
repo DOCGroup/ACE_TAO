@@ -43,42 +43,42 @@ TAO_MProfile::set (CORBA::ULong sz)
 {
   // first release all of our profiles.
   if (this->pfiles_)
-  {
-    for (int i=0 ; i < this->size_ ; i++ )
     {
-      if (this->pfiles_[i]) {
-        this->pfiles_[i]->_decr_refcnt ();
-        this->pfiles_[i] = 0;
-      }
-    }
-
-    // next see if we can reuse our profile list memory
-    // Since this->pfiles_ != 0, size_ > 0!  So if 
-    // sz == 0 then memory is deallocated.
-    if (this->size_ != sz)
-    {
-      // we cant!
-      delete [] this->pfiles_;
-
-      if (this->size_ = sz)
+      for (PHandle h = 0 ; h < this->size_ ; h++ )
       {
-        this->pfiles_ = new TAO_Profile_ptr [this->size_];
-        ACE_OS::memset (this->pfiles_,0, sizeof(TAO_Profile_ptr)*this->size_);
+        if (this->pfiles_[h]) {
+          this->pfiles_[h]->_decr_refcnt ();
+          this->pfiles_[h] = 0;
+        }
       }
-      else // do not allocate any memory!
-        this->pfiles_ = 0;
+  
+      // next see if we can reuse our profile list memory
+      // Since this->pfiles_ != 0, size_ > 0!  So if 
+      // sz == 0 then memory is deallocated.
+      if (this->size_ != sz)
+      {
+        // we cant!
+        delete [] this->pfiles_;
+  
+        if (this->size_ == sz)
+        {
+          this->pfiles_ = new TAO_Profile_ptr [this->size_];
+          ACE_OS::memset (this->pfiles_,0, sizeof(TAO_Profile_ptr)*this->size_);
+        }
+        else // do not allocate any memory!
+          this->pfiles_ = 0;
+      }
     }
-  }
   else
-  {
-    if (this->size_ = sz)
     {
-      pfiles_ = new TAO_Profile_ptr [this->size_];
-      ACE_OS::memset (this->pfiles_,0, sizeof(TAO_Profile_ptr)*this->size_);
-    }
-    else
-      pfiles_ = 0;
-  }
+      if (this->size_ == sz)
+        {
+          pfiles_ = new TAO_Profile_ptr [this->size_];
+          ACE_OS::memset (this->pfiles_,0, sizeof(TAO_Profile_ptr)*this->size_);
+        }
+      else
+        pfiles_ = 0;
+    } // this->pfiles_
 
   this->last_ = 0;
   this->current_ = 0;
@@ -107,19 +107,19 @@ TAO_MProfile::set (TAO_MProfile *mprofile)
   // this->fwded_mprofile_ = 0;
 
   // now reference all profiles.
-  for (int i=0 ; i < this->size_ ; i++ )
-  {
-    if (mprofile->pfiles_[i]) 
+  for (PHandle h = 0 ; h < this->size_ ; h++ )
     {
-      this->pfiles_[i] = mprofile->pfiles_[i];
-      this->pfiles_[i]->_incr_refcnt ();
-    }
-  }
+      if (mprofile->pfiles_[h]) 
+        {
+          this->pfiles_[h] = mprofile->pfiles_[h];
+          this->pfiles_[h]->_incr_refcnt ();
+        }
+    } // for (PHandle ...)
 
   if (mprofile->fwded_mprofile_)
-  {
-    this->fwded_mprofile_ = mprofile->fwded_mprofile_;
-  }
+    {
+      this->fwded_mprofile_ = mprofile->fwded_mprofile_;
+    }
 
   return 1;
 }
@@ -127,13 +127,13 @@ TAO_MProfile::set (TAO_MProfile *mprofile)
 TAO_MProfile::~TAO_MProfile (void)
 {
   if (this->pfiles_)
-  {
-    for ( int i=0 ; i < size_ ; i++ )
     {
-      if (this->pfiles_[i])
-        this->pfiles_[i]->_decr_refcnt ();
+      for ( PHandle h = 0 ; h < size_ ; h++ )
+        {
+          if (this->pfiles_[h])
+            this->pfiles_[h]->_decr_refcnt ();
+        }
     }
-  }
 
   delete [] pfiles_;
   pfiles_ = 0;
@@ -211,11 +211,11 @@ TAO_MProfile::add_profile (TAO_Profile *pfile)
   pfiles_ [last_++] = pfile;
 
   if (pfile && pfile->_incr_refcnt () == 0) 
-  {
-    ACE_ERROR_RETURN ((LM_ERROR, 
-           "(%P|%t) Unable to increment reference count in add_profile!\n"), 
-           -1);
-  }
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, 
+             "(%P|%t) Unable to increment reference count in add_profile!\n"), 
+             -1);
+    }
 
   return last_ - 1;
 }
@@ -257,14 +257,14 @@ TAO_MProfile::is_equivalent (TAO_MProfile *first,
   int first_cnt = first->profile_count ();
   int second_cnt = second->profile_count ();
   
-  for (int i = 0; i < first_cnt;i++)
-  {
-    for (int j = 0; j < second_cnt; j++ )
+  for (PHandle h1 = 0; h1 < first_cnt;h1++)
     {
-      if (pfiles1[i]->is_equivalent (pfiles2[j], env))
-        return 1;
+      for (PHandle h2 = 0; h2 < second_cnt; h2++ )
+        {
+          if (pfiles1[h1]->is_equivalent (pfiles2[h2], env))
+            return 1;
+        }
     }
-  }
   
   return 0;
 }
@@ -277,10 +277,10 @@ TAO_MProfile::hash (CORBA::ULong max, CORBA::Environment &env)
 
   if (last_ == 0) return 0;
 
-  for (int i=0; i < last_ ; i++) 
-  {
-    hashval += pfiles_[i]->hash (max, env);
-  }
+  for (PHandle h=0; h < last_ ; h++) 
+    {
+      hashval += pfiles_[h]->hash (max, env);
+    }
 
   // the above hash function return an ULong between 0 and max
   // here we simply take the average value and round
