@@ -1,3 +1,14 @@
+Thu Aug 16 10:04:33 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_interface.cpp:
+
+          Removed an unecessary "::" added to code generation
+          in
+
+          Tue Aug 14 10:56:01 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+          caught by Sun Forte, which has a problem with "(::".
+
 Wed Aug 15 11:37:24 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tao/GIOP_Message_Lite.cpp (process_request):
