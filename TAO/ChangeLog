@@ -57,7 +57,7 @@ Wed Jul 23 15:26:41 2003  Chris Cleeland  <cleeland_c@ociweb.com>
 
 	  Changed to use proper ACE_CHECK macro rather than
 	  ACE_TRY_CHECK.  This should get rid of compilation problems on
-	  non-expception builds.
+	  non-exception builds.
 
 Wed Jul 23 19:35:27 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 

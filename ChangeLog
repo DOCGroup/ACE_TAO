@@ -11,9 +11,10 @@ Wed Jul 23 12:43:48 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	  (ACE_UUID):
 
-	  Corrected format specifier mismatch warnings exhibited by G++
-	  3.2.2.  Hexadecimal format specifiers ("%x") expect the
-	  corresponding argument to be an unsigned int, not a signed int.
+	  Corrected format specifier mismatch warnings in sscanf() call
+	  exhibited by G++ 3.2.2.  Hexadecimal format specifiers ("%x")
+	  expect the corresponding argument to be an unsigned int, not a
+	  signed int.
 
 Wed Jul 23 19:35:27 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
