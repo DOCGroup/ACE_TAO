@@ -3,6 +3,13 @@ Fri May 01 10:01:09 1998  David L. Levine  <levine@cs.wustl.edu>
         * ace/config-sunos5.6.h: replaced config-sunos5.6-sunc++-4.x.h
           with this config file, which supports both Sun C++ and g++.
 
+        * ace/OS.i (gethrtime): for the default (::gettimeofday) case,
+          use 64-bit instead of 32-bit arithmetic by casting to ACE_hrtime_t.
+
+        * ace/Basic_Types.{h,i}: added ACE_U_LongLong::operator *.
+
+        * ace/Env_Value_T.cpp: added #include of Env_Value_T.h.
+
 Fri May  1 00:35:40 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * include/makeinclude/wrapper_macros.GNU
