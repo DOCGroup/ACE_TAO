@@ -10470,13 +10470,15 @@ ACE_OS::fseek (FILE *fp, long offset, int whence)
 ACE_INLINE pid_t
 ACE_OS::waitpid (pid_t pid,
                  ACE_exitcode *status,
-                 int wait_options)
+                 int wait_options,
+                 ACE_HANDLE handle)
 {
   ACE_TRACE ("ACE_OS::waitpid");
 #if defined (VXWORKS) || defined (ACE_PSOS)
   ACE_UNUSED_ARG (pid);
   ACE_UNUSED_ARG (status);
   ACE_UNUSED_ARG (wait_options);
+  ACE_UNUSED_ARG (handle);
 
   ACE_NOTSUP_RETURN (0);
 #elif defined (ACE_WIN32)
@@ -10484,27 +10486,33 @@ ACE_OS::waitpid (pid_t pid,
     ? 0 /* don't hang */
     : INFINITE;
 
-  ACE_HANDLE handle = ::OpenProcess (SYNCHRONIZE,
-                                     FALSE,
-                                     pid);
-  if (handle == 0)
+  ACE_HANDLE phandle = handle;
+
+  if (phandle == 0)
     {
-      ACE_OS::set_errno_to_last_error ();
-      return -1;
+      phandle = ::OpenProcess (SYNCHRONIZE,
+                               FALSE,
+                               pid);
+
+      if (phandle == 0)
+        {
+          ACE_OS::set_errno_to_last_error ();
+          return -1;
+        }
     }
 
   pid_t result = pid;
 
   // Don't try to get the process exit status if wait failed so we can
   // keep the original error code intact.
-  switch (::WaitForSingleObject (handle,
+  switch (::WaitForSingleObject (phandle,
                                  blocking_period))
     {
     case WAIT_OBJECT_0:
       if (status != 0)
         // The error status of <GetExitCodeProcess> is nonetheless
         // not tested because we don't know how to return the value.
-        ::GetExitCodeProcess (handle,
+        ::GetExitCodeProcess (phandle,
                               status);
       break;
     case WAIT_TIMEOUT:
@@ -10515,14 +10523,17 @@ ACE_OS::waitpid (pid_t pid,
       ACE_OS::set_errno_to_last_error ();
       result = -1;
     }
-  ::CloseHandle (handle);
+  if (handle == 0)
+    ::CloseHandle (phandle);
   return result;
 #elif defined (CHORUS)
   ACE_UNUSED_ARG (status);
   ACE_UNUSED_ARG (wait_options);
+  ACE_UNUSED_ARG (handle);
   ACE_OSCALL_RETURN (::await (&ACE_OS::actorcaps_[pid]),
                      pid_t, -1);
 #else
+  ACE_UNUSED_ARG (handle);
   ACE_OSCALL_RETURN (::waitpid (pid, status, wait_options),
                      pid_t, -1);
 #endif /* ACE_WIN32 */
@@ -10531,12 +10542,14 @@ ACE_OS::waitpid (pid_t pid,
 ACE_INLINE pid_t
 ACE_OS::wait (pid_t pid,
               ACE_exitcode *status,
-              int wait_options)
+              int wait_options,
+              ACE_HANDLE handle)
 {
   ACE_TRACE ("ACE_OS::wait");
   return ACE_OS::waitpid (pid,
                           status,
-                          wait_options);
+                          wait_options,
+                          handle);
 }
 
 ACE_INLINE pid_t

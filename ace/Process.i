@@ -37,7 +37,11 @@ ACE_Process::wait (ACE_exitcode *status,
 {
   return ACE_OS::wait (this->getpid (),
                        status,
-                       wait_options);
+                       wait_options
+#if defined (ACE_WIN32)
+                       , process_info_.hProcess
+#endif /* ACE_WIN32 */
+                       );
 }
 
 ACE_INLINE int
@@ -250,15 +254,15 @@ ACE_Process_Options::setenv (LPCTSTR format, ...)
 
 ACE_INLINE int
 ACE_Process_Options::setenv (LPCTSTR variable_name,
-			     LPCTSTR format, ...)
+                             LPCTSTR format, ...)
 {
   return -1;
 }
 
 ACE_INLINE int
 ACE_Process_Options::set_handles (ACE_HANDLE std_in,
-				  ACE_HANDLE std_out,
-				  ACE_HANDLE std_err)
+                                  ACE_HANDLE std_out,
+                                  ACE_HANDLE std_err)
 {
   ACE_UNUSED_ARG (std_in);
   ACE_UNUSED_ARG (std_out);
