@@ -13,6 +13,7 @@ Type 'client' with one or more of the following args:
 -t test type    -- runs only one type of oneway test.
 -i iterations   -- number of calls in each test.
 -m buffer size	-- queue size for buffered oneways.
+-w servant work -- number of loops of 1000 done by servant
 -x		-- shuts down server after testing.
 
 test types:
@@ -54,6 +55,13 @@ client.
 If the test type is 'twoway', the tests will be run with standard
 twoways requests, in order to compare the data with the results
 from the various SyncScope policy values of oneway requests.
+
+The -w option sets the number of empty loops of 1000 performed by
+the servant. To test the advantage of SYNC_WITH_SERVER over
+SYNC_WITH_TARGET and twoway requests, the servant must perform
+some 'significant' work that a oneway request with a SyncScope
+policy value of SYNC_WITH_SERVER does not wait on, while the 
+other two types of requests mentioned above do.
 
 
 All the above command line options except -x may be used with the
