@@ -3,7 +3,7 @@
 # SOBUILD - compile into .so directly
 #
 CC	= gcc 
-CXX	= g++ -I. -fno-strict-prototypes # -D__ACE_INLINE__ # -frepo 
+CXX	= g++ -I. -fno-strict-prototypes   # -frepo 
 DLD	= /bin/ld
 LD	= $(CXX)
 #
