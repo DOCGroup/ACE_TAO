@@ -254,19 +254,18 @@ ACE_WIN32_Asynch_Read_Stream_Result::complete (u_long bytes_transferred,
     this->message_block_.wr_ptr (bytes_transferred);
   else
   {
-    for (ACE_Message_Block* mb = &this->message_block_; (mb != 0) && (bytes_transferred > 0); mb = mb->cont ())
+    for (ACE_Message_Block* mb = &this->message_block_; 
+         (mb != 0) && (bytes_transferred > 0); 
+         mb = mb->cont ())
     {
-      if (mb->space () >= bytes_transferred)
-      {
-        mb->wr_ptr (bytes_transferred);
-        bytes_transferred = 0;
-      }
-      else
-      {
-        size_t len = mb->space ();
-        mb->wr_ptr (len);
-        bytes_transferred -= len;
-      }
+      size_t len_part = mb->space ();
+
+      if (len_part > bytes_transferred)
+        len_part = bytes_transferred;
+
+      mb->wr_ptr (len_part);
+
+      bytes_transferred -= len_part;
     }
   }
 
@@ -370,6 +369,18 @@ ACE_WIN32_Asynch_Read_Stream::read (ACE_Message_Block &message_block,
                                     int priority,
                                     int signal_number)
 {
+  u_long space = message_block.space ();
+  if ( bytes_to_read > space )
+    bytes_to_read = space;
+
+  if ( bytes_to_read == 0 )
+    ACE_ERROR_RETURN 
+      ((LM_ERROR,
+        ACE_LIB_TEXT ("ACE_WIN32_Asynch_Read_Stream::read:")
+        ACE_LIB_TEXT ("Attempt to read 0 bytes or no space in the message block\n")),
+       -1);
+
+
   // Create the Asynch_Result.
   ACE_WIN32_Asynch_Read_Stream_Result *result = 0;
   ACE_NEW_RETURN (result,
@@ -400,6 +411,48 @@ ACE_WIN32_Asynch_Read_Stream::readv (ACE_Message_Block &message_block,
                                      int priority,
                                      int signal_number)
 {
+
+  iovec  iov[ACE_IOV_MAX];
+  int    iovcnt = 0;
+
+  // We should not read more than user requested,
+  // but it is allowed to read less
+
+  for (const ACE_Message_Block* msg = &message_block;
+       msg != 0 && bytes_to_read > 0 && iovcnt < ACE_IOV_MAX;
+       msg = msg->cont () , ++iovcnt )
+  {
+    size_t msg_space = msg->space ();
+
+    // OS should correctly process zero length buffers
+    // if ( msg_space == 0 )
+    //   ACE_ERROR_RETURN ((LM_ERROR,
+    //                      ACE_LIB_TEXT ("ACE_WIN32_Asynch_Read_Stream::readv:")
+    //                      ACE_LIB_TEXT ("No space in the message block\n")),
+    //                     -1);
+
+    if ( msg_space > bytes_to_read )  
+      msg_space = bytes_to_read;
+
+    iov[iovcnt].iov_base  = msg->wr_ptr ();
+    iov[iovcnt].iov_len   = msg_space; 
+
+    bytes_to_read -= msg_space;
+  }
+
+  // Re-calculate number bytes to read
+  bytes_to_read = 0;
+
+  for ( int i=0; i < iovcnt ; ++i )
+    bytes_to_read += iov[i].iov_len;
+
+  if ( bytes_to_read == 0 )
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_LIB_TEXT ("ACE_WIN32_Asynch_Read_Stream::readv:")
+                         ACE_LIB_TEXT ("Attempt to read 0 bytes\n")),
+                        -1);
+
+
   // Create the Asynch_Result.
   ACE_WIN32_Asynch_Read_Stream_Result *result = 0;
   ACE_NEW_RETURN (result,
@@ -415,19 +468,6 @@ ACE_WIN32_Asynch_Read_Stream::readv (ACE_Message_Block &message_block,
                   -1);
 
   // do the scatter recv
-  iovec iov[ACE_IOV_MAX];
-  int iovcnt = 0;
-  for (const ACE_Message_Block* msg = &message_block; msg != 0; msg = msg->cont ())
-  {
-    iov[iovcnt].iov_base  = msg->wr_ptr ();
-    iov[iovcnt].iov_len   = msg->space ();
-    ++iovcnt;
-    if (iovcnt > ACE_IOV_MAX)
-    {
-      delete result;
-      return -1;
-    }
-  }
 
   result->set_error (0); // Clear error before starting IO.
 
@@ -604,19 +644,18 @@ ACE_WIN32_Asynch_Write_Stream_Result::complete (u_long bytes_transferred,
     this->message_block_.rd_ptr (bytes_transferred);
   else
   {
-    for (ACE_Message_Block* mb = &this->message_block_; (mb != 0) && (bytes_transferred > 0); mb = mb->cont ())
+    for (ACE_Message_Block* mb = &this->message_block_; 
+         (mb != 0) && (bytes_transferred > 0); 
+         mb = mb->cont ())
     {
-      if (mb->length () >= bytes_transferred)
-      {
-        mb->rd_ptr (bytes_transferred);
-        bytes_transferred = 0;
-      }
-      else
-      {
-        size_t len = mb->length ();
-        mb->rd_ptr (len);
-        bytes_transferred -= len;
-      }
+      size_t len_part = mb->length ();
+
+      if ( len_part > bytes_transferred)
+        len_part = bytes_transferred;
+
+      mb->rd_ptr (len_part);
+
+      bytes_transferred -= len_part;
     }
   }
 
@@ -720,6 +759,18 @@ ACE_WIN32_Asynch_Write_Stream::write (ACE_Message_Block &message_block,
                                       int priority,
                                       int signal_number)
 {
+  u_long len = message_block.length();
+  
+  if ( bytes_to_write > len )
+     bytes_to_write = len ;
+
+  if ( bytes_to_write == 0 )
+    ACE_ERROR_RETURN 
+      ((LM_ERROR,
+        ACE_LIB_TEXT ("ACE_WIN32_Asynch_Write_Stream::write:")
+        ACE_LIB_TEXT ("Attempt to write 0 bytes\n")),
+       -1);
+
   ACE_WIN32_Asynch_Write_Stream_Result *result = 0;
   ACE_NEW_RETURN (result,
                   ACE_WIN32_Asynch_Write_Stream_Result (*this->handler_,
@@ -749,6 +800,47 @@ ACE_WIN32_Asynch_Write_Stream::writev (ACE_Message_Block &message_block,
                                        int priority,
                                        int signal_number)
 {
+  iovec  iov[ACE_IOV_MAX];
+  int    iovcnt = 0;
+
+  // We should not write more than user requested,
+  // but it is allowed to write less
+
+  for (const ACE_Message_Block* msg = &message_block;
+       msg != 0 && bytes_to_write > 0 && iovcnt < ACE_IOV_MAX;
+       msg = msg->cont () , ++iovcnt )
+  {
+    size_t msg_len = msg->length ();
+
+    // OS should process zero length block correctly
+    // if ( msg_len == 0 )
+    //   ACE_ERROR_RETURN ((LM_ERROR,
+    //                      ACE_LIB_TEXT ("ACE_WIN32_Asynch_Write_Stream::writev:")
+    //                      ACE_LIB_TEXT ("Zero-length message block\n")),
+    //                     -1);
+
+    if ( msg_len > bytes_to_write)  
+      msg_len = bytes_to_write;
+
+    iov[iovcnt].iov_base  = msg->rd_ptr ();
+    iov[iovcnt].iov_len   = msg_len; 
+
+    bytes_to_write -= msg_len;
+  }
+
+  // Re-calculate number bytes to write
+  bytes_to_write = 0;
+
+  for ( int i=0; i < iovcnt ; ++i )
+    bytes_to_write += iov[i].iov_len;
+
+  if ( bytes_to_write == 0 )
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_LIB_TEXT ("ACE_WIN32_Asynch_Write_Stream::writev:")
+                         ACE_LIB_TEXT ("Attempt to write 0 bytes\n")),
+                        -1);
+
+
   ACE_WIN32_Asynch_Write_Stream_Result *result = 0;
   ACE_NEW_RETURN (result,
                   ACE_WIN32_Asynch_Write_Stream_Result (*this->handler_,
@@ -763,19 +855,6 @@ ACE_WIN32_Asynch_Write_Stream::writev (ACE_Message_Block &message_block,
                   -1);
 
   // do the gather send
-  iovec iov[ACE_IOV_MAX];
-  int iovcnt = 0;
-  for (const ACE_Message_Block* msg = &message_block; msg != 0; msg = msg->cont ())
-  {
-    iov[iovcnt].iov_base  = msg->rd_ptr ();
-    iov[iovcnt].iov_len   = msg->length ();
-    ++iovcnt;
-    if (iovcnt > ACE_IOV_MAX)
-    {
-      delete result;
-      return -1;
-    }
-  }
 
   u_long bytes_sent = 0;
 
@@ -939,19 +1018,24 @@ ACE_WIN32_Asynch_Read_File_Result::complete (u_long bytes_transferred,
     this->message_block_.wr_ptr (bytes_transferred);
   else
   {
-    for (ACE_Message_Block* mb = &this->message_block_; (mb != 0) && (bytes_transferred > 0); mb = mb->cont ())
+    static const size_t page_size = ACE_OS::getpagesize();
+
+    for (ACE_Message_Block* mb = &this->message_block_; 
+         (mb != 0) && (bytes_transferred > 0); 
+         mb = mb->cont ())
     {
-      if (mb->space () >= bytes_transferred)
-      {
-        mb->wr_ptr (bytes_transferred);
-        bytes_transferred = 0;
-      }
-      else
-      {
-        size_t len = mb->space ();
-        mb->wr_ptr (len);
-        bytes_transferred -= len;
-      }
+      // mb->space () is ought to be >= page_size.
+      // this is verified in the readv method
+      // ACE_ASSERT (mb->space () >= page_size);
+      
+      size_t len_part = page_size ;    
+      
+      if ( len_part > bytes_transferred)
+        len_part = bytes_transferred;
+
+      mb->wr_ptr (len_part);
+
+      bytes_transferred -= len_part;
     }
   }
 
@@ -1077,6 +1161,18 @@ ACE_WIN32_Asynch_Read_File::read (ACE_Message_Block &message_block,
                                   int priority,
                                   int signal_number)
 {
+  u_long space = message_block.space ();
+  if ( bytes_to_read > space )
+    bytes_to_read = space;
+
+  if ( bytes_to_read == 0 )
+    ACE_ERROR_RETURN 
+      ((LM_ERROR,
+        ACE_LIB_TEXT ("ACE_WIN32_Asynch_Read_File::read:")
+        ACE_LIB_TEXT ("Attempt to read 0 bytes or no space in the message block\n")),
+       -1);
+
+
   ACE_WIN32_Asynch_Read_File_Result *result = 0;
   ACE_NEW_RETURN (result,
                   ACE_WIN32_Asynch_Read_File_Result (*this->handler_,
@@ -1110,6 +1206,56 @@ ACE_WIN32_Asynch_Read_File::readv (ACE_Message_Block &message_block,
                                    int priority,
                                    int signal_number)
 {
+  static const size_t page_size = ACE_OS::getpagesize();
+
+  FILE_SEGMENT_ELEMENT buffer_pointers[ACE_IOV_MAX + 1];
+  int buffer_pointers_count = 0;
+
+  // Each buffer must be at least the size of a system memory page
+  // and must be aligned on a system memory page size boundary
+
+  // We should not read more than user requested,
+  // but it is allowed to read less
+
+  u_long total_space = 0;
+
+  for (const ACE_Message_Block* msg = &message_block;
+       msg != 0 && buffer_pointers_count < ACE_IOV_MAX && total_space < bytes_to_read;
+       msg = msg->cont(), ++buffer_pointers_count )
+  {
+    size_t msg_space = msg->space ();
+
+    if ( msg_space < page_size )
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_LIB_TEXT ("ACE_WIN32_Asynch_Read_File::readv:")
+                         ACE_LIB_TEXT ("Invalid message block size\n")),
+                        -1);
+
+    *ACE_reinterpret_cast (size_t *, &buffer_pointers[buffer_pointers_count])
+      = ACE_reinterpret_cast (size_t, msg->wr_ptr ());
+
+    *ACE_reinterpret_cast (size_t *,
+                           ACE_reinterpret_cast (char *,
+                                                 &buffer_pointers[buffer_pointers_count]) + 4)
+      = 0;
+    
+    total_space += page_size;
+  }
+
+  // not read more than buffers space
+  if ( bytes_to_read > total_space )
+    bytes_to_read = total_space;
+
+  // last one should be completely 0
+  *ACE_reinterpret_cast (size_t *, &buffer_pointers[buffer_pointers_count])
+    = 0;
+  *ACE_reinterpret_cast (size_t *,
+                         ACE_reinterpret_cast (char *,
+                                               &buffer_pointers[buffer_pointers_count]) + 4)
+    = 0;
+
+
+
   ACE_WIN32_Asynch_Read_File_Result *result = 0;
   ACE_NEW_RETURN (result,
                   ACE_WIN32_Asynch_Read_File_Result (*this->handler_,
@@ -1126,36 +1272,6 @@ ACE_WIN32_Asynch_Read_File::readv (ACE_Message_Block &message_block,
                   -1);
 
   // do the scatter read
-  FILE_SEGMENT_ELEMENT buffer_pointers[ACE_IOV_MAX + 1];
-  int buffer_pointers_count = 0;
-
-  // Each buffer must be at least the size of a system memory page
-  // and must be aligned on a system memory page size boundary
-
-  for (const ACE_Message_Block* msg = &message_block; msg != 0; msg = msg->cont ())
-  {
-    *ACE_reinterpret_cast (size_t *, &buffer_pointers[buffer_pointers_count])
-      = ACE_reinterpret_cast (size_t, msg->wr_ptr ());
-    *ACE_reinterpret_cast (size_t *,
-                           ACE_reinterpret_cast (char *,
-                                                 &buffer_pointers[buffer_pointers_count]) + 4)
-      = 0;
-    ++buffer_pointers_count;
-    if (buffer_pointers_count > ACE_IOV_MAX)
-    {
-      delete result;
-      return -1;
-    }
-  }
-
-  // last one should be completely 0
-  *ACE_reinterpret_cast (size_t *, &buffer_pointers[buffer_pointers_count])
-    = 0;
-  *ACE_reinterpret_cast (size_t *,
-                         ACE_reinterpret_cast (char *,
-                                               &buffer_pointers[buffer_pointers_count]) + 4)
-    = 0;
-
   result->set_error (0); // Clear error before starting IO.
 
   int initiate_result = ::ReadFileScatter (result->handle (),
@@ -1302,20 +1418,26 @@ ACE_WIN32_Asynch_Write_File_Result::complete (u_long bytes_transferred,
     this->message_block_.rd_ptr (bytes_transferred);
   else
   {
-    for (ACE_Message_Block* mb = &this->message_block_; (mb != 0) && (bytes_transferred > 0); mb = mb->cont ())
+    static const size_t page_size = ACE_OS::getpagesize();
+
+    for (ACE_Message_Block* mb = &this->message_block_;
+         (mb != 0) && (bytes_transferred > 0);
+         mb = mb->cont ())
     {
-      if (mb->length () >= bytes_transferred)
-      {
-        mb->rd_ptr (bytes_transferred);
-        bytes_transferred = 0;
-      }
-      else
-      {
-        size_t len = mb->length ();
-        mb->rd_ptr (len);
-        bytes_transferred -= len;
-      }
+      // mb->length () is ought to be >= page_size.
+      // this is verified in the writev method
+      // ACE_ASSERT (mb->length () >= page_size);
+
+      size_t len_part = page_size;
+
+      if ( len_part > bytes_transferred)
+        len_part = bytes_transferred;
+
+      mb->rd_ptr (len_part);
+
+      bytes_transferred -= len_part;
     }
+
   }
 
   // Create the interface result class.
@@ -1438,6 +1560,17 @@ ACE_WIN32_Asynch_Write_File::write (ACE_Message_Block &message_block,
                                     int priority,
                                     int signal_number)
 {
+  u_long len = message_block.length ();
+  if ( bytes_to_write > len )
+     bytes_to_write = len;
+
+  if ( bytes_to_write == 0 )
+    ACE_ERROR_RETURN 
+      ((LM_ERROR,
+        ACE_LIB_TEXT ("ACE_WIN32_Asynch_Write_File::write:")
+        ACE_LIB_TEXT ("Attempt to read 0 bytes\n")),
+       -1);
+
   ACE_WIN32_Asynch_Write_File_Result *result = 0;
   ACE_NEW_RETURN (result,
                   ACE_WIN32_Asynch_Write_File_Result (*this->handler_,
@@ -1471,6 +1604,61 @@ ACE_WIN32_Asynch_Write_File::writev (ACE_Message_Block &message_block,
                                      int priority,
                                      int signal_number)
 {
+  static const size_t page_size = ACE_OS::getpagesize();
+
+  FILE_SEGMENT_ELEMENT buffer_pointers[ACE_IOV_MAX + 1];
+  int buffer_pointers_count = 0;
+
+  // Each buffer must be at least the size of a system memory page
+  // and must be aligned on a system memory page size boundary
+
+  // We should not read more than user requested,
+  // but it is allowed to read less
+
+  u_long total_len = 0;
+
+  for (const ACE_Message_Block* msg = &message_block;
+       msg != 0 && buffer_pointers_count < ACE_IOV_MAX && total_len < bytes_to_write;
+       msg = msg->cont (), ++buffer_pointers_count )
+  {
+    size_t msg_len = msg->length ();
+
+    // Don't allow writing less than page_size, unless 
+    // the size of the message block is big enough (so we don't write from memory which
+    // does not belong to the message block), and the message block is the last in the chain
+    if ( msg_len < page_size &&
+         (msg->size () - (msg->rd_ptr () - msg->base ()) < page_size || // message block too small
+          bytes_to_write - total_len > page_size ))// NOT last chunk
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_LIB_TEXT ("ACE_WIN32_Asynch_Write_File::writev:")
+                         ACE_LIB_TEXT ("Invalid message block length\n")),
+                        -1);
+
+    *ACE_reinterpret_cast (size_t *, &buffer_pointers[buffer_pointers_count])
+      = ACE_reinterpret_cast (size_t, msg->rd_ptr ());
+
+    *ACE_reinterpret_cast (size_t *,
+                           ACE_reinterpret_cast (char *,
+                                                 &buffer_pointers[buffer_pointers_count]) + 4)
+      = 0;
+    
+    total_len += page_size;
+  }
+
+  // not write more than we have in buffers
+  if ( bytes_to_write > total_len )
+    bytes_to_write = total_len;
+
+  // last one should be completely 0
+  *ACE_reinterpret_cast (size_t *, &buffer_pointers[buffer_pointers_count])
+    = 0;
+  *ACE_reinterpret_cast (size_t *,
+                         ACE_reinterpret_cast (char *,
+                                               &buffer_pointers[buffer_pointers_count]) + 4)
+    = 0;
+
+
+
   ACE_WIN32_Asynch_Write_File_Result *result = 0;
   ACE_NEW_RETURN (result,
                   ACE_WIN32_Asynch_Write_File_Result (*this->handler_,
@@ -1486,37 +1674,9 @@ ACE_WIN32_Asynch_Write_File::writev (ACE_Message_Block &message_block,
                                                       1), // gather write enabled
                   -1);
 
+  result->set_error(0);
+
   // do the gather write
-  FILE_SEGMENT_ELEMENT buffer_pointers[ACE_IOV_MAX + 1];
-  int buffer_pointers_count = 0;
-
-  // Each buffer must be at least the size of a system memory page
-  // and must be aligned on a system memory page size boundary
-
-  for (const ACE_Message_Block* msg = &message_block; msg != 0; msg = msg->cont ())
-  {
-    *ACE_reinterpret_cast (size_t *, &buffer_pointers[buffer_pointers_count])
-      = ACE_reinterpret_cast (size_t, msg->rd_ptr ());
-    *ACE_reinterpret_cast (size_t *,
-                           ACE_reinterpret_cast (char *,
-                                                 &buffer_pointers[buffer_pointers_count]) + 4)
-      = 0;
-    ++buffer_pointers_count;
-    if (buffer_pointers_count > ACE_IOV_MAX)
-    {
-      delete result;
-      return -1;
-    }
-  }
-
-  // last one should be completely 0
-  *ACE_reinterpret_cast (size_t *, &buffer_pointers[buffer_pointers_count])
-    = 0;
-  *ACE_reinterpret_cast (size_t *,
-                         ACE_reinterpret_cast (char *,
-                                               &buffer_pointers[buffer_pointers_count]) + 4)
-    = 0;
-
   int initiate_result = ::WriteFileGather (result->handle (),
                                            buffer_pointers,
                                            bytes_to_write,
@@ -2113,7 +2273,7 @@ ACE_WIN32_Asynch_Connect::connect (ACE_HANDLE connect_handle,
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_LIB_TEXT ("%N:%l:ACE_WIN32_Asynch_Connect::connect")
                          ACE_LIB_TEXT ("connector was not opened before\n")),
-                      -1);
+                        -1);
 
     // Common code for both WIN and WIN32.
     // Create future Asynch_Connect_Result
@@ -2995,19 +3155,19 @@ ACE_WIN32_Asynch_Read_Dgram_Result::complete (u_long bytes_transferred,
   this->error_ = error;
 
   // Appropriately move the pointers in the message block.
-  for (ACE_Message_Block* mb = this->message_block_; (mb != 0) && (bytes_transferred > 0); mb = mb->cont ())
-  {
-    if (mb->size () >= bytes_transferred)
+  for (ACE_Message_Block* mb = this->message_block_; 
+       (mb != 0) && (bytes_transferred > 0); 
+       mb = mb->cont ())
     {
-      mb->wr_ptr (bytes_transferred);
-      bytes_transferred = 0;
+      size_t len_part = mb->space ();
+
+      if ( len_part > bytes_transferred)
+        len_part = bytes_transferred;
+
+      mb->wr_ptr (len_part);
+
+      bytes_transferred -= len_part;
     }
-    else
-    {
-      mb->wr_ptr (mb->size ());
-      bytes_transferred -= mb->size ();
-    }
-  }
 
   // Adjust the address length
   this->remote_address_->set_size (this->addr_len_);
@@ -3032,7 +3192,7 @@ ACE_WIN32_Asynch_Read_Dgram::~ACE_WIN32_Asynch_Read_Dgram (void)
 
 ssize_t
 ACE_WIN32_Asynch_Read_Dgram::recv (ACE_Message_Block *message_block,
-                                   size_t &number_of_bytes_recvd,
+                                   size_t & number_of_bytes_recvd,
                                    int flags,
                                    int protocol_family,
                                    const void *act,
@@ -3041,13 +3201,43 @@ ACE_WIN32_Asynch_Read_Dgram::recv (ACE_Message_Block *message_block,
 {
   number_of_bytes_recvd = 0;
 
+  u_long bytes_to_read = 0;
+
+  iovec  iov[ACE_IOV_MAX];
+  int    iovcnt = 0;
+
+  for (const ACE_Message_Block* msg = message_block;
+       msg != 0 && iovcnt < ACE_IOV_MAX;
+       msg = msg->cont () , ++iovcnt )
+  {
+    size_t msg_space = msg->space ();
+
+    // OS should correctly process zero length buffers
+    // if ( msg_space == 0 )
+    //   ACE_ERROR_RETURN ((LM_ERROR,
+    //                      ACE_LIB_TEXT ("ACE_WIN32_Asynch_Read_Dgram::recv:")
+    //                      ACE_LIB_TEXT ("No space in the message block\n")),
+    //                     -1);
+
+    iov[iovcnt].iov_base  = msg->wr_ptr ();
+    iov[iovcnt].iov_len   = msg_space; 
+
+    bytes_to_read += msg_space;
+  }
+
+  if ( bytes_to_read == 0 )
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_LIB_TEXT ("ACE_WIN32_Asynch_Read_Dgram::recv:")
+                         ACE_LIB_TEXT ("Attempt to read 0 bytes\n")),
+                        -1);
+
   // Create the Asynch_Result.
   ACE_WIN32_Asynch_Read_Dgram_Result *result = 0;
   ACE_NEW_RETURN (result,
                   ACE_WIN32_Asynch_Read_Dgram_Result (*this->handler_,
                                                       this->handle_,
                                                       message_block,
-                                                      message_block->total_size(),
+                                                      bytes_to_read,
                                                       flags,
                                                       protocol_family,
                                                       act,
@@ -3057,25 +3247,10 @@ ACE_WIN32_Asynch_Read_Dgram::recv (ACE_Message_Block *message_block,
                   -1);
 
   // do the scatter/gather recv
-  iovec iov[ACE_IOV_MAX];
-  int iovcnt = 0;
-  for (const ACE_Message_Block* msg = message_block; msg != 0; msg = msg->cont ())
-  {
-    iov[iovcnt].iov_base  = msg->wr_ptr ();
-    iov[iovcnt].iov_len   = msg->size ();
-    ++iovcnt;
-    if (iovcnt > ACE_IOV_MAX)
-    {
-      delete result;
-      return -1;
-    }
-  }
-
-  size_t bytes_recvd = 0;
   int initiate_result = ACE_OS::recvfrom (result->handle (),
                                           iov,
                                           iovcnt,
-                                          bytes_recvd,
+                                          number_of_bytes_recvd,
                                           result->flags_,
                                           result->saddr (),
                                           &(result->addr_len_),
@@ -3116,7 +3291,8 @@ ACE_WIN32_Asynch_Read_Dgram::recv (ACE_Message_Block *message_block,
     // number_of_bytes_recvd contains the number of bytes recvd
     // addr contains the peer address
     // flags was updated
-    number_of_bytes_recvd = bytes_recvd;
+
+    // number_of_bytes_recvd = bytes_recvd;
     initiate_result = 1;
   }
 
@@ -3278,21 +3454,20 @@ ACE_WIN32_Asynch_Write_Dgram_Result::complete (u_long bytes_transferred,
   this->error_ = error;
 
   // Appropriately move the pointers in the message block.
-  for (ACE_Message_Block* mb = this->message_block_; (mb != 0) && (bytes_transferred > 0); mb = mb->cont ())
-  {
-    if (mb->length () >= bytes_transferred)
+  for (ACE_Message_Block* mb = this->message_block_; 
+       (mb != 0) && (bytes_transferred > 0); 
+       mb = mb->cont ())
     {
-      mb->rd_ptr (bytes_transferred);
-      bytes_transferred = 0;
-    }
-    else
-    {
-      size_t len = mb->length ();
-      mb->rd_ptr (len);
-      bytes_transferred -= len;
-    }
-  }
+      size_t len_part = mb->length ();
 
+      if ( len_part > bytes_transferred)
+        len_part = bytes_transferred;
+
+      mb->rd_ptr (len_part);
+
+      bytes_transferred -= len_part;
+    }
+  
   // Create the interface result class.
   ACE_Asynch_Write_Dgram::Result result (this);
 
@@ -3322,13 +3497,44 @@ ACE_WIN32_Asynch_Write_Dgram::send (ACE_Message_Block *message_block,
 {
   number_of_bytes_sent = 0;
 
+  u_long bytes_to_write = 0;
+
+  iovec  iov[ACE_IOV_MAX];
+  int    iovcnt = 0;
+
+  for (const ACE_Message_Block* msg = message_block;
+       msg != 0 && iovcnt < ACE_IOV_MAX;
+       msg = msg->cont () , ++iovcnt )
+  {
+    size_t msg_len = msg->length ();
+
+    // OS should process zero length block correctly
+    // if ( msg_len == 0 )
+    //   ACE_ERROR_RETURN ((LM_ERROR,
+    //                      ACE_LIB_TEXT ("ACE_WIN32_Asynch_Write_Dgram::send:")
+    //                      ACE_LIB_TEXT ("Zero-length message block\n")),
+    //                     -1);
+
+    
+    iov[iovcnt].iov_base  = msg->rd_ptr ();
+    iov[iovcnt].iov_len   = msg_len; 
+
+    bytes_to_write += msg_len;
+  }
+
+  if ( bytes_to_write == 0 )
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_LIB_TEXT ("ACE_WIN32_Asynch_Write_Dgram::send:")
+                         ACE_LIB_TEXT ("Attempt to write 0 bytes\n")),
+                        -1);
+
   // Create the Asynch_Result.
   ACE_WIN32_Asynch_Write_Dgram_Result *result = 0;
   ACE_NEW_RETURN (result,
                   ACE_WIN32_Asynch_Write_Dgram_Result (*this->handler_,
                                                        this->handle_,
                                                        message_block,
-                                                       message_block->total_length(),
+                                                       bytes_to_write,
                                                        flags,
                                                        act,
                                                        this->win32_proactor_->get_handle (),
@@ -3336,26 +3542,12 @@ ACE_WIN32_Asynch_Write_Dgram::send (ACE_Message_Block *message_block,
                                                        signal_number),
                   -1);
 
-  // do the scatter/gather recv
-  iovec iov[ACE_IOV_MAX];
-  int iovcnt = 0;
-  for (const ACE_Message_Block* msg = message_block; msg != 0; msg = msg->cont ())
-  {
-    iov[iovcnt].iov_base  = msg->rd_ptr ();
-    iov[iovcnt].iov_len   = msg->length ();
-    ++iovcnt;
-    if (iovcnt > ACE_IOV_MAX)
-    {
-      delete result;
-      return -1;
-    }
-  }
+  // do the scatter/gather send
 
-  size_t bytes_sent = 0;
   int initiate_result = ACE_OS::sendto (result->handle (),
                                         iov,
                                         iovcnt,
-                                        bytes_sent,
+                                        number_of_bytes_sent,
                                         result->flags_,
                                         (sockaddr *) addr.get_addr (),
                                         addr.get_size(),
@@ -3398,7 +3590,8 @@ ACE_WIN32_Asynch_Write_Dgram::send (ACE_Message_Block *message_block,
     // number_of_bytes_recvd contains the number of bytes recvd
     // addr contains the peer address
     // flags was updated
-    number_of_bytes_sent = bytes_sent;
+
+    // number_of_bytes_sent = bytes_sent;
     initiate_result = 1;
   }
 
