@@ -4,22 +4,20 @@ Thu Nov 27 10:55:48 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* orbsvcs/examples/Security/Send_File/server.cpp
 	* orbsvcs/performance-tests/RTEvent/Federated_Roundtrip/client.dsp:
 	* orbsvcs/performance-tests/RTEvent/Federated_Roundtrip/server.dsp:
-M orbsvcs/performance-tests/RTEvent/Roundtrip/client.dsp:
+	* orbsvcs/performance-tests/RTEvent/Roundtrip/client.dsp:
+	* orbsvcs/performance-tests/RTEvent/Roundtrip/server.dsp:
+	* orbsvcs/performance-tests/RTEvent/lib/TAO_RTEC_Perf.dsp:
+	* orbsvcs/tests/Bug_1334_Regression/Bug_1334_client.dsp:
+	* orbsvcs/tests/Bug_1334_Regression/client.cpp:
+	* tests/ICMG_Any_Bug/client.dsp:
+	* tests/ICMG_Any_Bug/server.dsp:
+	* tests/Nested_Upcall_Crash/client.dsp:
+	* tests/Nested_Upcall_Crash/scavenger.dsp:
+	* tests/Nested_Upcall_Crash/server.dsp:
+	* tests/Portable_Interceptors/IORInterceptor/server.dsp:
+
+	  Fixed linking errors in Win32 builds.
 	
-M orbsvcs/performance-tests/RTEvent/Roundtrip/server.dsp
-M orbsvcs/performance-tests/RTEvent/lib/TAO_RTEC_Perf.dsp
-M orbsvcs/tests/Bug_1334_Regression/Bug_1334_client.dsp
-M orbsvcs/tests/Bug_1334_Regression/client.cpp
-P performance-tests/Latency/DII/client.bor
-P performance-tests/Latency/Deferred/client.bor
-M tests/ICMG_Any_Bug/client.dsp
-M tests/ICMG_Any_Bug/server.dsp
-M tests/Nested_Upcall_Crash/client.dsp
-M tests/Nested_Upcall_Crash/scavenger.dsp
-M tests/Nested_Upcall_Crash/server.dsp
-M tests/Portable_Interceptors/IORInterceptor/server.dsp
-
-
 Thu Nov 27 16:22:51 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* examples/RTScheduling/MIF_Scheduler/MIF_Scheduler_Starter.bor:
