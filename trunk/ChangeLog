@@ -1,3 +1,10 @@
+Thu Oct 16 09:02:24 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/DependencyGenerator/DependencyGenerator.pm:
+
+          Escape regular expression special characters from strings
+          before they are used as regular expressions.
+
 Thu Oct 16 08:37:54 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * apps/gperf/tests/tests.mpc:
