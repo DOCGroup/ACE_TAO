@@ -1,6 +1,20 @@
+Tue May 27 18:26:51 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/config-hpux-10.x-decthreads.h: Added support for HP/UX 10.10
+ 	  with DCE threads.  Thanks to Shankar Krishnamoorthy
+ 	  <kshankar@lucent.com> for these fixes.
+
+	* ace/Local_Tokens_T.h: #if def'd out all of this file since it
+ 	  doesn't seem to be used anymore.  Thanks to Shankar
+ 	  Krishnamoorthy <kshankar@lucent.com> for reporting this.
+
+	* ace/Makefile (TEMPLATE_FILES): Removed Local_Tokens_T since it
+ 	  doesn't appear to be used anywhere.
+
 Tue May 27 18:47:34 1997  James C Hu  <jxh@lambada.cs.wustl.edu>
 
 	* tests/*.cpp: Various changes for EBCIDIC compatibility.
+	  Thanks to Chuck Gehr for pointing out the need for this!
 
 	* tests/test_config.h: Added ACE_ALPHABET to aid a-z sending and
 	  comparing.
