@@ -276,14 +276,23 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::RB_delete_fixup (ACE_RB_Tre
             (!w->right () ||
              w->right ()->color () == ACE_RB_Tree_Node_Base::BLACK))
         {
-          w->left ()->color (ACE_RB_Tree_Node_Base::BLACK);
+          if (w->left ())
+            {
+              w->left ()->color (ACE_RB_Tree_Node_Base::BLACK);
+            }
           w->color (ACE_RB_Tree_Node_Base::RED);
           RB_rotate_right (w);
           w = x->parent ()->right ();
         }
-        w->color (x->parent ()->color ());
+        if (w)
+          {
+            w->color (x->parent ()->color ());
+            if (w->right ())
+              {
+                w->right ()->color (ACE_RB_Tree_Node_Base::BLACK);
+              }
+          }
         x->parent ()->color (ACE_RB_Tree_Node_Base::BLACK);
-        w->right ()->color (ACE_RB_Tree_Node_Base::BLACK);
         RB_rotate_left (x->parent ());
         x = root_;
       }
@@ -299,7 +308,8 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::RB_delete_fixup (ACE_RB_Tre
         w = x->parent ()->left ();
       }
       // CLR pp. 263 says that nil nodes are implicitly colored BLACK
-      if ((!w->left () ||
+      if (w && 
+          (!w->left () ||
            w->left ()->color () == ACE_RB_Tree_Node_Base::BLACK) &&
           (!w->right () ||
            w->right ()->color () == ACE_RB_Tree_Node_Base::BLACK))
@@ -310,17 +320,27 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::RB_delete_fixup (ACE_RB_Tre
       else
       {
         // CLR pp. 263 says that nil nodes are implicitly colored BLACK
-        if (!w->left () ||
-            w->left ()->color () == ACE_RB_Tree_Node_Base::BLACK)
+        if (w && 
+            (!w->left () ||
+             w->left ()->color () == ACE_RB_Tree_Node_Base::BLACK))
         {
-          w->right ()->color (ACE_RB_Tree_Node_Base::BLACK);
           w->color (ACE_RB_Tree_Node_Base::RED);
+          if (w->right ())
+            {
+              w->right ()->color (ACE_RB_Tree_Node_Base::BLACK);
+            }
           RB_rotate_left (w);
           w = x->parent ()->left ();
         }
-        w->color (x->parent ()->color ());
+        if (w)
+          {
+            w->color (x->parent ()->color ());
+            if (w->left ())
+              {
+                w->left ()->color (ACE_RB_Tree_Node_Base::BLACK);
+              }
+          }
         x->parent ()->color (ACE_RB_Tree_Node_Base::BLACK);
-        w->left ()->color (ACE_RB_Tree_Node_Base::BLACK);
         RB_rotate_right (x->parent ());
         x = root_;
       }
