@@ -69,14 +69,14 @@ schedulerserviceport=0
 eventserviceport=0
 
 cd $TAO_ROOT/orbsvcs/Naming_Service
-echo $ ./Naming_Service -ORBport $nameserviceport \
+echo $ ./Naming_Service -ORBport $nameserviceport -ORBobjrefstyle url \
        -o /tmp/nameserviceior_$login \
        -p /tmp/nameservicepid_$login >> /tmp/logfile_$login
-./Naming_Service -ORBport $nameserviceport \
+./Naming_Service -ORBport $nameserviceport -ORBobjrefstyle url \
        -o /tmp/nameserviceior_$login \
-       -p /tmp/nameservicepid_$login >> /tmp/logfile_$login 2>&1  &
+       -p /tmp/nameservicepid_$login > /tmp/logfile_Naming_Service_$login 2>&1  &
 
-sleep 1
+sleep 5
 
 IOR=`cat /tmp/nameserviceior_$login`
 
@@ -86,17 +86,23 @@ echo // Started Naming Service on port $nameserviceport
 
 cd $TAO_ROOT/orbsvcs/Scheduling_Service
 echo $ ./Scheduling_Service -ORBnameserviceior $IOR -ORBport $schedulerserviceport  >> /tmp/logfile_$login
-./Scheduling_Service -ORBnameserviceior $IOR -ORBport $schedulerserviceport  >> /tmp/logfile_$login  2>&1 &
+./Scheduling_Service -ORBnameserviceior $IOR -ORBport $schedulerserviceport  > /tmp/logfile_Scheduling_Service_$login  2>&1 &
 
-sleep 1
+sleep 5
 
 echo // Started Scheduling Service on port $schedulerserviceport
 
 cd $TAO_ROOT/orbsvcs/Event_Service
 echo $ ./Event_Service -ORBnameserviceior $IOR -ORBport $eventserviceport >> /tmp/logfile_$login
-./Event_Service -ORBnameserviceior $IOR -ORBport $eventserviceport >> /tmp/logfile_$login 2>&1 &
+./Event_Service -ORBnameserviceior $IOR -ORBport $eventserviceport > /tmp/logfile_Event_Service_$login 2>&1 &
 
 echo // Started Event Service on port $eventserviceport
 
 echo "// Enjoy the use ;-)"
 ps $ps_opts | grep Service | grep -v grep
+
+echo
+echo Note: if you will be running an application that uses the Naming Service,
+echo you might want to set the NameService environment variable, like this:
+echo 't/csh: % setenv NameService `cat /tmp/nameserviceior_$login`'
+echo 'bash:  $ export NameService=`cat /tmp/nameserviceior_$login`'
