@@ -251,17 +251,10 @@ main (int argc, char *argv[])
                   "\n     Testing over\n"));
       server2->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      
-      ACE_TRY_EX (SHM)
-	{
-	  server2->ping (ACE_ENV_SINGLE_ARG_PARAMETER);
-	  ACE_TRY_CHECK_EX (SHM);
-	}
-      ACE_CATCHANY
-	{
-	  // No op
-	}
-      ACE_ENDTRY;
+
+      // Needed for SHMIOP to work fine. Please dont remove. Please
+      // see Bug 1197  for details.
+      ACE_OS::sleep (5);
     }
   ACE_CATCHANY
     {

@@ -1,3 +1,13 @@
+Fri Apr 26 10:07:45 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/RTCORBA/Client_Protocol/server.cpp:
+	* tests/RTCORBA/Client_Protocol/test.idl:
+	* tests/RTCORBA/Client_Protocol/client.cpp (main): Instead of
+	  making a remote call make teh client to sleep for 5
+	  seconds. This would make the server go away completely and stop
+	  the race seen in [Bug 1197]. This change seems better than the
+	  previous change made to this test.
+
 Thu Apr 25 21:45:46 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Transport_Connector.cpp: Fixed a typo in a debug statement
@@ -27,7 +37,6 @@ Thu Apr 25 16:36:41 2002  Ossama Othman  <ossama@uci.edu>
 	  TAO_PI_Current object to zero.  Obviously, it should no longer
 	  be used after this point.
 
->>>>>>> 1.5442
 Thu Apr 25 16:42:04 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be/be_visitor_exception/cdr_op_ci.cpp:
@@ -69,7 +78,6 @@ Thu Apr 25 16:42:04 2002  Jeff Parsons <parsons@cs.wustl.edu>
           for pointing out the lack of these spec-required methods. 
 
 Thu Apr 25 16:37:28 2002 Balachandran Natarajan  <bala@cs.wustl.edu>
->>>>>>> 1.5440
 
 	* tests/RTCORBA/Server_Protocol/run_test.pl: For a change the hack
 	  in this test to get around bug 1197 is to disable SHMIOP at
