@@ -31,7 +31,7 @@
 
 #include "tao/Transport.h"
 #include "tao/operation_details.h"
-#include "tao/GIOP_Message_State.h"
+#include "tao/GIOP_Message_Version.h"
 #include "tao/Pluggable_Messaging_Utils.h"
 #include "tao/IIOPC.h"
 

@@ -28,7 +28,7 @@
 #include "DIOP_Connection_Handler.h"
 #include "tao/Acceptor_Impl.h"
 
-#include "tao/GIOP_Message_State.h"
+#include "tao/GIOP_Message_Version.h"
 #include "diop_export.h"
 
 // TAO DIOP_Acceptor concrete call defination
@@ -158,7 +158,7 @@ protected:
    * @@ Theoretically they shouldn't be here!! We need to look at a
    * way to move this out
    */
-  TAO_GIOP_Version version_;
+  TAO_GIOP_Message_Version version_;
 
   /// ORB Core.
   TAO_ORB_Core *orb_core_;
