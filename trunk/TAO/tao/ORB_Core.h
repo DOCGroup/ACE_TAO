@@ -339,20 +339,32 @@ public:
   TAO_Leader_Follower &leader_follower (void);
   // Get access to the leader_follower class.
 
-  int run (ACE_Time_Value *tv, int break_on_timeouts);
+  int run (ACE_Time_Value *tv,
+           int break_on_timeouts,
+           CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException));
   // Run the event loop
 
   void shutdown (CORBA::Boolean wait_for_completion,
                  CORBA::Environment &ACE_TRY_ENV =
-                     TAO_default_environment ());
+                     TAO_default_environment ())
+    ACE_THROW_SPEC ((CORBA::SystemException));
   // End the event loop
 
   int has_shutdown (void);
   // Get the shutdown flag value
 
   void destroy (CORBA::Environment &ACE_TRY_ENV =
-                    TAO_default_environment ());
+                    TAO_default_environment ())
+    ACE_THROW_SPEC ((CORBA::SystemException));
   // Shutdown the ORB and free resources
+
+  int destroyed (void);
+  // Get the destroyed flag value
+
+  void check_shutdown (CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  // Check if ORB has shutdown.  If it has, throw an exception.
 
   int thread_per_connection_timeout (ACE_Time_Value &timeout) const;
   // Returns the <timeout> value used by the server threads to poll
@@ -531,8 +543,10 @@ protected:
   // reactor_registry
 
   int has_shutdown_;
-  // Flag which denotes that the ORB should shut down and <run> should
-  // return.
+  // Flag which denotes that the ORB has been shutdown.
+
+  int destroyed_;
+  // Flag which denotes that the ORB has been shutdown and destroyed.
 
   int thread_per_connection_use_timeout_;
   ACE_Time_Value thread_per_connection_timeout_;

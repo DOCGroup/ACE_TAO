@@ -51,10 +51,13 @@ TAO_default_environment ()
 // ****************************************************************
 
 TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
-  : connector_registry_ (0),
+  : lock_ (),
+    connector_registry_ (0),
     acceptor_registry_ (0),
     protocol_factories_ (0),
+    orb_ (CORBA::ORB::_nil()),
     root_poa_ (0),
+    root_poa_reference_ (),
     orb_params_ (),
     orbid_ (ACE_OS::strdup (orbid?orbid:"")),
     resource_factory_ (0),
@@ -72,6 +75,11 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     opt_for_collocation_ (1),
     use_global_collocation_ (1),
     collocation_strategy_ (THRU_POA),
+#if defined (TAO_HAS_CORBA_MESSAGING)
+    policy_manager_ (),
+    default_policies_ (),
+    policy_current_ (),
+#endif /* TAO_HAS_CORBA_MESSAGING */
     poa_current_ (0),
     object_adapter_ (0),
     tm_ (),
@@ -80,15 +88,18 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     from_unicode_ (0),
     to_unicode_ (0),
     use_tss_resources_ (0),
+    tss_resources_ (),
+    orb_resources_ (),
     reactor_registry_ (0),
     reactor_ (0),
     has_shutdown_ (1),
-    // Start the ORB in a  "shutdown" state.  The only way to
-    // (re)start the ORB is to call CORBA::ORB_init(), which calls
-    // TAO_ORB_Core::init().  For that reason, only
-    // TAO_ORB_Core::init() should change the ORB shutdown state to
-    // has_shutdown_ = 0, i.e. not shutdown.
+    destroyed_ (1),
+    // Start the ORB in a  "shutdown" and "destroyed" state.  Only
+    // after CORBA::ORB_init() is called will the ORB no longer be
+    // shutdown.  This does not mean that the ORB can be
+    // reinitialized.  It can only be initialized once.
     thread_per_connection_use_timeout_ (1),
+    open_lock_ (),
     open_called_ (0),
     priority_mapping_ (0)
 {
@@ -181,16 +192,9 @@ TAO_ORB_Core::init (int &argc, char *argv[])
   // The following things should be changed to use the ACE_Env_Value<>
   // template sometime.
 
-  // Name Service IOR string.
-  ACE_CString ns_ior;
-
-  // New <ObjectID>:<IOR> mapping that is used by the
-  // resolve_initial_references ()
-  ACE_CString init_ref;
-
   // Table for <ObjectID>:<IOR> mapping specified on commandline
   // using ORBInitRef.
-  TAO_IOR_LookupTable *ior_lookup_table;
+  TAO_IOR_LookupTable *ior_lookup_table = 0;
 
   ACE_NEW_RETURN (ior_lookup_table,
                   TAO_IOR_LookupTable,
@@ -202,14 +206,8 @@ TAO_ORB_Core::init (int &argc, char *argv[])
   // Name Service port use for Multicast
   u_short ns_port = 0;
 
-  // Trading Service IOR string.
-  ACE_CString ts_ior;
-
   // Trading Service port used for Multicast
   u_short ts_port = 0;
-
-  // Implementation Repository Service IOR string.
-  ACE_CString ir_ior;
 
   // Implementation Repository Service port #.
   u_short ir_port = 0;
@@ -366,11 +364,11 @@ TAO_ORB_Core::init (int &argc, char *argv[])
           old_style_endpoint = 1;
           // Specify the name of the host (i.e., interface) on which
           // the server should listen.
+
           arg_shifter.consume_arg ();
 
           // Issue a warning since this backward compatibilty support
           // may be dropped in future releases.
-
           ACE_DEBUG ((LM_WARNING,
                       "(%P|%t) \nWARNING: The `-ORBHost' option is obsolete.\n"
                       "In the future, use the `-ORBEndpoint' option.\n"));
@@ -386,9 +384,29 @@ TAO_ORB_Core::init (int &argc, char *argv[])
           // Specify the IOR of the NameService.
 
           arg_shifter.consume_arg ();
+
+          // Issue a warning since this backward compatibilty support
+          // may be dropped in future releases.
+          ACE_DEBUG ((LM_WARNING,
+                      "(%P|%t) \nWARNING: The `-ORBNameServiceIOR' option "
+                      "is obsolete.\n"
+                      "Please use the `-ORBInitRef ' option instead.\n"));
+
           if (arg_shifter.is_parameter_next ())
             {
-              ns_ior = arg_shifter.get_current ();
+              // Construct an argument that would be equivalent to
+              // "-ORBInitRef NameService=....."
+              ACE_CString init_ref =
+                ACE_CString (TAO_OBJID_NAMESERVICE) +
+                ACE_CString ('=') +
+                ACE_CString (arg_shifter.get_current ());
+              if (this->add_to_ior_table (init_ref,
+                                          *ior_lookup_table) != 0)
+                ACE_ERROR_RETURN ((LM_ERROR,
+                                   "TAO (%P|%t) Unable to add the Name "
+                                   "Service IOR to the lookup table.\n"),
+                                  -1);
+
               arg_shifter.consume_arg ();
             }
         }
@@ -406,12 +424,34 @@ TAO_ORB_Core::init (int &argc, char *argv[])
         }
       else if (arg_shifter.cur_arg_strncasecmp ("-ORBTradingServiceIOR") != -1)
         {
-          // Specify the IOR of the NameService.
+          // Specify the IOR of the Trading Service.
 
           arg_shifter.consume_arg ();
+
+          // Issue a warning since this backward compatibilty support
+          // may be dropped in future releases.
+          ACE_DEBUG ((LM_WARNING,
+                      "(%P|%t) \nWARNING: The `-ORBTradingServiceIOR' "
+                      "option is obsolete.\n"
+                      "Please use the `-ORBInitRef' option instead.\n"));
+
           if (arg_shifter.is_parameter_next ())
             {
-              ts_ior = arg_shifter.get_current ();
+              // Construct an argument that would be equivalent to
+              // "-ORBInitRef TradingService=....."
+
+              ACE_CString init_ref =
+                ACE_CString (TAO_OBJID_TRADINGSERVICE) +
+                ACE_CString ('=') +
+                ACE_CString (arg_shifter.get_current ());
+
+              if (this->add_to_ior_table (init_ref,
+                                          *ior_lookup_table) != 0)
+                ACE_ERROR_RETURN ((LM_ERROR,
+                                   "TAO (%P|%t) Unable to add the Trading "
+                                   "Service IOR to the lookup table.\n"),
+                                  -1);
+
               arg_shifter.consume_arg ();
             }
         }
@@ -431,9 +471,32 @@ TAO_ORB_Core::init (int &argc, char *argv[])
           // Specify the IOR of the Implementation Repository
 
           arg_shifter.consume_arg ();
+
+          // Issue a warning since this backward compatibilty support
+          // may be dropped in future releases.
+          ACE_DEBUG ((LM_WARNING,
+                      "(%P|%t) \nWARNING: The `-ORBImplRepoServiceIOR' "
+                      "option is obsolete.\n"
+                      "Please use the `-ORBInitRef' option instead.\n"));
+
           if (arg_shifter.is_parameter_next ())
             {
-              ir_ior = arg_shifter.get_current ();
+              // Construct an argument that would be equivalent to
+              // "-ORBInitRef ImplRepoService=....."
+
+              ACE_CString init_ref =
+                ACE_CString (TAO_OBJID_IMPLREPOSERVICE) +
+                ACE_CString ('=') +
+                ACE_CString (arg_shifter.get_current ());
+
+              if (this->add_to_ior_table (init_ref,
+                                          *ior_lookup_table) != 0)
+                ACE_ERROR_RETURN ((LM_ERROR,
+                                   "TAO (%P|%t) Unable to add the "
+                                   "Implmentation Repository IOR to "
+                                   "the lookup table.\n"),
+                                  -1);
+
               arg_shifter.consume_arg ();
             }
         }
@@ -700,7 +763,7 @@ TAO_ORB_Core::init (int &argc, char *argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              init_ref = arg_shifter.get_current ();
+              ACE_CString init_ref = arg_shifter.get_current ();
               if (this->add_to_ior_table (init_ref,
                                           *ior_lookup_table) != 0)
                 ACE_ERROR_RETURN ((LM_ERROR,
@@ -898,20 +961,14 @@ TAO_ORB_Core::init (int &argc, char *argv[])
       this->orb_params ()->endpoints (iiop_endpoint);
     }
 
-  // Set the init_ref.
-  this->orb_params ()->init_ref (init_ref);
-
   // Set the IOR Table.
   this->orb_params ()->ior_lookup_table (ior_lookup_table);
 
   // Set the list of prefixes from -ORBDefaultInitRef.
   this->orb_params ()->default_init_ref (default_init_ref);
 
-  this->orb_params ()->name_service_ior (ns_ior);
   this->orb_params ()->name_service_port (ns_port);
-  this->orb_params ()->trading_service_ior (ts_ior);
   this->orb_params ()->trading_service_port (ts_port);
-  this->orb_params ()->implrepo_service_ior (ir_ior);
   this->orb_params ()->implrepo_service_port (ir_port);
   this->orb_params ()->use_dotted_decimal_addresses (dotted_decimal_addresses);
   if (rcv_sock_size != 0)
@@ -951,6 +1008,7 @@ TAO_ORB_Core::init (int &argc, char *argv[])
   // The ORB has been initialized, meaning that the ORB is no longer
   // in the shutdown state.
   this->has_shutdown_ = 0;
+  this->destroyed_ = 0;
 
   return 0;
 }
@@ -1388,7 +1446,10 @@ TAO_ORB_Core::leader_follower (void)
 }
 
 int
-TAO_ORB_Core::run (ACE_Time_Value *tv, int break_on_timeouts)
+TAO_ORB_Core::run (ACE_Time_Value *tv,
+                   int break_on_timeouts,
+                   CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (TAO_debug_level >= 3)
     ACE_DEBUG ((LM_DEBUG,
@@ -1422,20 +1483,11 @@ TAO_ORB_Core::run (ACE_Time_Value *tv, int break_on_timeouts)
   // This method should only be called by servers, so now we set up
   // for listening!
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
-    {
-      int ret = this->open (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+  int ret = this->open (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
 
-      if (ret == -1)
-        return -1;
-    }
-  ACE_CATCHANY
-    {
-      return -1;
-    }
-  ACE_ENDTRY;
+  if (ret == -1)
+    return -1;
 
   int result = 1;
   // 1 to detect that nothing went wrong
@@ -1495,6 +1547,7 @@ TAO_ORB_Core::run (ACE_Time_Value *tv, int break_on_timeouts)
 void
 TAO_ORB_Core::shutdown (CORBA::Boolean wait_for_completion,
                         CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Is the <wait_for_completion> semantics for this thread correct?
   TAO_POA::check_for_valid_wait_for_completions (wait_for_completion,
@@ -1529,14 +1582,27 @@ TAO_ORB_Core::shutdown (CORBA::Boolean wait_for_completion,
 
 void
 TAO_ORB_Core::destroy (CORBA_Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  // This method is currently unimplemented.
-  ACE_THROW (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
-                                  CORBA::COMPLETED_NO));
+  if (this->has_shutdown () == 0)
+    {
+      // Shutdown the ORB and block until the shutdown is complete.
+      this->shutdown (1, ACE_TRY_ENV);
+      ACE_CHECK;
+    }
 
-  // Shutdown the ORB and block until the shutdown is complete.
-  // this->shutdown (1, ACE_TRY_ENV);
+  // Now remove it from the ORB table so that it's ORBid may be
+  // reused.
+  {
+    ACE_MT (ACE_GUARD (ACE_SYNCH_RECURSIVE_MUTEX, guard,
+                       *ACE_Static_Object_Lock::instance ()));
+    TAO_ORB_Table::instance ()->unbind (this->orbid_);
+  }
+
+  // The ORB has now been destroyed.
+  this->destroyed_ = 1;
 }
+
 
 // Set up listening endpoints.
 
