@@ -1,29 +1,34 @@
+Thu May 21 17:28:55 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/GIOP.cpp (writev_n): added static cast of iov_len to
+          ssize_t to avoid signed/unsigned comparison.
+
 Thu May 21 12:16:34 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tests/Cubit/TAO/MT_Cubit/Makefile: 
-	  orbsvcs should go before TAO in the link line.
+        * tests/Cubit/TAO/MT_Cubit/Makefile:
+          orbsvcs should go before TAO in the link line.
 
-	* tests/Quoter/Makefile: 
-	  Pass a -I flag to the IDL compiler so it can find the
-	  CosLifeCycle.idl file.
+        * tests/Quoter/Makefile:
+          Pass a -I flag to the IDL compiler so it can find the
+          CosLifeCycle.idl file.
 
-	* tests/POA/Default_Servant/Makefile: 
-	* tests/POA/Generic_Servant/Makefile: 
-	  Added dependencies.
+        * tests/POA/Default_Servant/Makefile:
+        * tests/POA/Generic_Servant/Makefile:
+          Added dependencies.
 
-	* tests/OctetSeq/Makefile: 
-	  Updated dependencies.
+        * tests/OctetSeq/Makefile:
+          Updated dependencies.
 
-	* tests/OctetSeq/OctetSeq.cpp: 
-	  Removed yet another signed/unsigned comparison.
-	  Also was doing the wrong kind of cast.
+        * tests/OctetSeq/OctetSeq.cpp:
+          Removed yet another signed/unsigned comparison.
+          Also was doing the wrong kind of cast.
 
-	* tao/GIOP.cpp: 
-	  Fixed pointer airthmetic, it was done using "void*" instead of
-	  "char*".
+        * tao/GIOP.cpp:
+          Fixed pointer airthmetic, it was done using "void*" instead of
+          "char*".
 
-	* tao/CDR.cpp: 
-	  Fixed problems in error detection for OutputCDR::adjust.
+        * tao/CDR.cpp:
+          Fixed problems in error detection for OutputCDR::adjust.
 
 Wed May 20 21:25:33 1998  David L. Levine  <levine@cs.wustl.edu>
 
