@@ -1,3 +1,8 @@
+Tue Jun 15 13:44:04 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/OS.h: Moved the typedef of ACE_SIGNAL_C_FUNC to after when
+	  siginfo_t has been declared and changed siginfo to siginfo_t.
+
 Tue Jun 15 13:17:01 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
         * ace/OS.h:
