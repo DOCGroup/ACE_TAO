@@ -1,19 +1,42 @@
 Mon Apr 21 10:52:42 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
-	* svrrqst.*: Changed references to BOA_ptr from TOA_ptr.
+	* IIOP/test/clnt.cpp: Moved call to CORBA_ORB_init() prior to the
+ 	parsing of the command line args.  This got switched around during
+ 	porting to VxWorks.
 
-	* connect.*: ROA_Handler/ROA_Acceptor moved from roa.* into here.
+	* IIOP/lib/roa.cpp: Changed calls using clientAcceptor_to use APIs
+ 	vended by ACE_Strategy_Acceptor.
 
-	* params.*: ROA_Parameters moved from roa.* into here.
+	* IIOP/lib/roa.hh: Moved default thread flags into ROA_Factory.
 
-	* boa.*: What used to be TOA is now BOA, and lives in here.
+	* IIOP/lib/params.*: Added ROA_Factory, a singleton which is the
+ 	beginning of an abstract factory dynamically producing runtime
+ 	strategies based on information found in ROA_Parameters.
 
-	* roa.*: Major restructuring required removal of all classes (see
- 	other log entries) from here.  This file now houses only the ROA
- 	class.
+	* IIOP/lib/connect.cpp: Added call to ROA_Handler's base class
+ 	CTOR in initializer list.
 
-	* tcpoa.*,toa.*: Removed because of name changes from TCP_OA->ROA
- 	and TOA->BOA.
+	* IIOP/lib/connect.hh: Changed ROA_Handler's CTOR so that it can
+ 	take an optional ACE_Thread_Manager* arg.  This makes it
+ 	compatible with the CTORs for the base class.  Also changed base
+ 	class for ROA_Acceptor to ACE_Strategy_Acceptor.
+
+	* IIOP/lib/svrrqst.*: Changed references to BOA_ptr from TOA_ptr.
+
+	* IIOP/lib/connect.*: ROA_Handler/ROA_Acceptor moved from roa.*
+ 	into here.
+
+	* IIOP/lib/params.*: ROA_Parameters moved from roa.* into here.
+
+	* IIOP/lib/boa.*: What used to be TOA is now BOA, and lives in
+ 	here.
+
+	* IIOP/lib/roa.*: Major restructuring required removal of all
+ 	classes (see other log entries) from here.  This file now houses
+ 	only the ROA class.
+
+	* IIOP/lib/{tcpoa.*,toa.*}: Removed because of name changes from
+ 	TCP_OA->ROA and TOA->BOA.
 
 Fri Apr 18 08:09:19 1997  Brian Mendel   <bmendel@mdc.com>
 

@@ -12,7 +12,8 @@
 #include "debug.hh"
 
 
-ROA_Handler::ROA_Handler()
+ROA_Handler::ROA_Handler(ACE_Thread_Manager* t)
+  : SUPERCLASS(t)
 {
   // Grab the singleton...at some later point in time
   // we can provide an argumented CTOR to have per-instance

@@ -26,20 +26,6 @@ typedef ROA* ROA_ptr;
 #  include "params.hh"
 #  include "connect.hh"
 
-// Determine the appropriate default thread flags, based on system.
-// When I put the concurrency strategy into the factory, then this will
-// go away b/c the concurrency strategy will do this appropriate
-// for each platform!
-#  if defined(linux)
-#    define ROA_DEFAULT_THREADFLAGS  (THR_DETACHED)
-#  elif defined(WIN32)
-#    define ROA_DEFAULT_THREADFLAGS  (THR_DETACHED|THR_SCOPE_PROCESS)
-#  elif defined(sparc)
-#    define ROA_DEFAULT_THREADFLAGS  (THR_DETACHED|THR_SCOPE_PROCESS)
-#  else
-#    define ROA_DEFAULT_THREADFLAGS  (THR_DETACHED)
-#  endif
-
 extern const IID IID_ROA;
 
 struct Dispatch_Context

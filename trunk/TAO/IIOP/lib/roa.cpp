@@ -50,7 +50,7 @@ ROA::init (CORBA_ORB_ptr parent,
     // Don't know if this is right for what was originally being done.  Looks like
     // what was set in thread_attr were flags given to pthread_create().  However,
     // thread creation (when necessary) is now performed by the Svc_Handler::create().
-    (void) ROA_Parameters::instance()->thread_flags(ROA_DEFAULT_THREADFLAGS);
+    //(void) ROA_Parameters::instance()->thread_flags(ROA_DEFAULT_THREADFLAGS);
 #if 0
 
     //
@@ -88,23 +88,23 @@ ROA::ROA (CORBA_ORB_ptr owning_orb,
     skeleton(0)
 {
   ROA_Parameters* p = ROA_Parameters::instance();
+  ROA_Factory* f = ROA_Factory::instance();
 
   ACE_ASSERT(p->oa() == 0);
 
   //
   // Initialize the endpoint ... or try!
   //
-  if (clientAcceptor_.open(rendezvous, ACE_Service_Config::reactor()) == -1)
+  if (clientAcceptor_.open(rendezvous,
+			   ACE_Service_Config::reactor(),
+			   f->creation_strategy(),
+			   f->accept_strategy(),
+			   f->concurrency_strategy(),
+			   f->scheduling_strategy()) == -1)
     {
       // XXXCJC Need to return an error somehow!!  Maybe set do_exit?
     }
 
-  else if (ACE_Service_Config::reactor()->register_handler(&clientAcceptor_,
-					  ACE_Event_Handler::ACCEPT_MASK) == -1)
-    {
-      // XXXCJC Need to return an error somehow!!  Maybe set do_exit?
-    }
-  
   clientAcceptor_.acceptor().get_local_addr(addr);
 
   if (env.exception () != 0)
@@ -762,5 +762,6 @@ request_forwarder (opaque& target_key,
 
 #if defined(ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
 // Direct
+template class ACE_Strategy_Acceptor<ROA_Handler, ACE_SOCK_ACCEPTOR>;
 // Indirect
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
