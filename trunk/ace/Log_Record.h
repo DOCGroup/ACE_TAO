@@ -155,8 +155,9 @@ public:
   /// Set the message data of the <Log_Record>.
   void msg_data (const ACE_TCHAR *data);
 
-  /// Set the size of the message data of the <Log_Record>.
-  void msg_data_len (size_t len);
+  /// Get the size of the message data of the <Log_Record>, including
+  /// a byte for the NUL.
+  size_t msg_data_len (void) const;
 
   /// Dump the state of an object.
   void dump (void) const;
