@@ -1,3 +1,13 @@
+Thu Nov 13 23:22:21 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/os_include/sys/os_select.h:
+          Added missing #include of select.h when ACE_HAS_SELECT_H is
+          defined.
+
+        * tests/DLL_Test.cpp:
+        * tests/DLL_Test_Impl.cpp:
+          #ifdef away the dynamic_cast test if ACE_LACKS_RTTI is defined.
+
 Thu Nov 13 16:22:19 2003  Steve Huston  <shuston@riverace.com>
 
 	* configure.ac: Make the check for sys/select.h set
