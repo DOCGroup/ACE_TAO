@@ -98,6 +98,11 @@ public:
   virtual int encode (TAO_OutputCDR &stream) const = 0;
   // Encode this profile in a stream, i.e. marshal it.
 
+  virtual int encode_endpoints (void) = 0;
+  // Encodes this profile's endpoints into a tagged component.
+  // This is done only if RTCORBA is enabled, since currently this is
+  // the only case when we have more than one endpoint per profile.
+
   virtual const TAO_ObjectKey &object_key (void) const = 0;
   // @@ deprecated. return a reference to the Object Key.
 
@@ -217,6 +222,7 @@ public:
   virtual char* to_string (CORBA::Environment &ACE_TRY_ENV);
   virtual int decode (TAO_InputCDR& cdr);
   virtual int encode (TAO_OutputCDR &stream) const;
+  virtual int encode_endpoints (void);
   virtual const TAO_ObjectKey &object_key (void) const;
   virtual TAO_ObjectKey *_key (void) const;
   virtual TAO_Endpoint *endpoint (void);

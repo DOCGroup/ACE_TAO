@@ -3850,6 +3850,15 @@ fill_mprofile (const TAO_ObjectKey &object_key,
           return -1;
     }
 
+  // Encode endpoints.
+  for (TAO_PHandle i = 0;
+       i < mprofile.profile_count ();
+       ++i)
+    {
+      TAO_Profile *profile = mprofile.get_profile (i);
+      profile->encode_endpoints ();
+    }
+
   return 0;
 }
 #endif /* TAO_HAS_RT_CORBA == 1 */
