@@ -52,7 +52,7 @@ public:
   // ctor with T*, ownership flag and a POA
   ~POA_CORBA_Policy_tie (void);
   // dtor
-  
+
   // TIE specific functions
   T *_tied_object (void);
   // return the underlying object
@@ -64,14 +64,14 @@ public:
   // do we own it
   void _is_owner (CORBA::Boolean b);
   // set the ownership
-  
+
   // overridden ServantBase operations
   PortableServer::POA_ptr _default_POA (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
   CORBA::PolicyType policy_type (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -79,7 +79,7 @@ public:
     ));
 
   CORBA_Policy_ptr copy (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -87,7 +87,7 @@ public:
     ));
 
   void destroy (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -98,7 +98,7 @@ private:
   T *ptr_;
   PortableServer::POA_var poa_;
   CORBA::Boolean rel_;
-  
+
   // copy and assignment are not allowed
   POA_CORBA_Policy_tie (const POA_CORBA_Policy_tie &);
   void operator= (const POA_CORBA_Policy_tie &);

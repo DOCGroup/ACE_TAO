@@ -56,7 +56,7 @@ TAO_UIOP_Endpoint::next (void)
 }
 
 TAO_Endpoint *
-TAO_UIOP_Endpoint::duplicate (void)
+TAO_UIOP_Endpoint::duplicate (void) const
 {
   TAO_UIOP_Endpoint *endpoint = 0;
   ACE_NEW_RETURN (endpoint,

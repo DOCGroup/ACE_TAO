@@ -81,7 +81,7 @@ CORBA_Pollable_var::operator const ::CORBA_Pollable_ptr &() const // cast
   return this->ptr_;
 }
 
-CORBA_Pollable_var::operator ::CORBA_Pollable_ptr &() // cast 
+CORBA_Pollable_var::operator ::CORBA_Pollable_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -331,7 +331,7 @@ CORBA_DIIPollable_var::operator const ::CORBA_DIIPollable_ptr &() const // cast
   return this->ptr_;
 }
 
-CORBA_DIIPollable_var::operator ::CORBA_DIIPollable_ptr &() // cast 
+CORBA_DIIPollable_var::operator ::CORBA_DIIPollable_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -593,7 +593,7 @@ CORBA_PollableSet_var::operator const ::CORBA_PollableSet_ptr &() const // cast
   return this->ptr_;
 }
 
-CORBA_PollableSet_var::operator ::CORBA_PollableSet_ptr &() // cast 
+CORBA_PollableSet_var::operator ::CORBA_PollableSet_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -784,7 +784,7 @@ void *CORBA_PollableSet::_tao_QueryInterface (ptr_arith_t type)
   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
-    
+
   if (retv)
     this->_add_ref ();
   return retv;

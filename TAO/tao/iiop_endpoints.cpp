@@ -21,7 +21,7 @@ static const CORBA::Long _oc_TAO_IIOP_Endpoint_Info[] =
   23, ACE_NTOHL (0x54414f5f), ACE_NTOHL (0x49494f50), ACE_NTOHL (0x5f456e64), ACE_NTOHL (0x706f696e), ACE_NTOHL (0x745f496e), ACE_NTOHL (0x666f0000),  // name = TAO_IIOP_Endpoint_Info
   3, // member count
   5, ACE_NTOHL (0x686f7374), ACE_NTOHL (0x0),  // name = host
-  CORBA::tk_string, 
+  CORBA::tk_string,
   0U, // string length
   5, ACE_NTOHL (0x706f7274), ACE_NTOHL (0x0),  // name = port
   CORBA::tk_short,
@@ -41,7 +41,7 @@ void TAO_IIOP_Endpoint_Info::_tao_any_destructor (void *x)
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_TAO_IIOPENDPOINTSEQUENCE_CS_)
 #define __TAO_UNBOUNDED_SEQUENCE_TAO_IIOPENDPOINTSEQUENCE_CS_
 
@@ -50,43 +50,43 @@ void TAO_IIOP_Endpoint_Info::_tao_any_destructor (void *x)
   {
     TAO_IIOP_Endpoint_Info* tmp = 0;
     tmp = _TAO_Unbounded_Sequence_TAO_IIOPEndpointSequence::allocbuf (length);
-    
+
     if (this->buffer_ != 0)
     {
       TAO_IIOP_Endpoint_Info *old = ACE_reinterpret_cast (TAO_IIOP_Endpoint_Info *,this->buffer_);
-      
+
       for (CORBA::ULong i = 0; i < this->length_; ++i)
         tmp[i] = old[i];
-      
+
       if (this->release_)
         _TAO_Unbounded_Sequence_TAO_IIOPEndpointSequence::freebuf (old);
-      
+
     }
     this->buffer_ = tmp;
   }
-  
+
   void
   _TAO_Unbounded_Sequence_TAO_IIOPEndpointSequence::_deallocate_buffer (void)
   {
     if (this->buffer_ == 0 || this->release_ == 0)
       return;
-    
+
     TAO_IIOP_Endpoint_Info *tmp = ACE_reinterpret_cast (TAO_IIOP_Endpoint_Info *,this->buffer_);
-    
+
     _TAO_Unbounded_Sequence_TAO_IIOPEndpointSequence::freebuf (tmp);
     this->buffer_ = 0;
-  } 
-  
+  }
+
   _TAO_Unbounded_Sequence_TAO_IIOPEndpointSequence::~_TAO_Unbounded_Sequence_TAO_IIOPEndpointSequence (void) // Dtor.
   {
     this->_deallocate_buffer ();
   }
-  
-  
+
+
 #endif /* end #if !defined */
 
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 
 #if !defined (_TAO_IIOPENDPOINTSEQUENCE_CS_)
 #define _TAO_IIOPENDPOINTSEQUENCE_CS_
@@ -98,30 +98,30 @@ void TAO_IIOP_Endpoint_Info::_tao_any_destructor (void *x)
 TAO_IIOPEndpointSequence::TAO_IIOPEndpointSequence (void)
 {}
 TAO_IIOPEndpointSequence::TAO_IIOPEndpointSequence (CORBA::ULong max) // uses max size
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_TAO_IIOPEndpointSequence
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<TAO_IIOP_Endpoint_Info>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max)
 {}
 TAO_IIOPEndpointSequence::TAO_IIOPEndpointSequence (CORBA::ULong max, CORBA::ULong length, TAO_IIOP_Endpoint_Info *buffer, CORBA::Boolean release)
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_TAO_IIOPEndpointSequence
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<TAO_IIOP_Endpoint_Info>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max, length, buffer, release)
 {}
 TAO_IIOPEndpointSequence::TAO_IIOPEndpointSequence (const TAO_IIOPEndpointSequence &seq) // copy ctor
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_TAO_IIOPEndpointSequence
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<TAO_IIOP_Endpoint_Info>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (seq)
 {}
 TAO_IIOPEndpointSequence::~TAO_IIOPEndpointSequence (void) // dtor
@@ -150,7 +150,7 @@ static const CORBA::Long _oc_TAO_IIOPEndpointSequence[] =
       23, ACE_NTOHL (0x54414f5f), ACE_NTOHL (0x49494f50), ACE_NTOHL (0x5f456e64), ACE_NTOHL (0x706f696e), ACE_NTOHL (0x745f496e), ACE_NTOHL (0x666f0000),  // name = TAO_IIOP_Endpoint_Info
       3, // member count
       5, ACE_NTOHL (0x686f7374), ACE_NTOHL (0x0),  // name = host
-      CORBA::tk_string, 
+      CORBA::tk_string,
       0U, // string length
       5, ACE_NTOHL (0x706f7274), ACE_NTOHL (0x0),  // name = port
       CORBA::tk_short,
@@ -195,7 +195,7 @@ CORBA::Boolean operator>> (
     // set the length of the sequence
     _tao_sequence.length (_tao_seq_len);
     // If length is 0 we return true.
-    if (0 >= _tao_seq_len) 
+    if (0 >= _tao_seq_len)
       return 1;
     // retrieve all the elements
     CORBA::Boolean _tao_marshal_flag = 1;

@@ -49,7 +49,7 @@ TAO_NAMESPACE  POA_Messaging
     // ctor with T*, ownership flag and a POA
     ~ReplyHandler_tie (void);
     // dtor
-    
+
     // TIE specific functions
     T *_tied_object (void);
     // return the underlying object
@@ -61,17 +61,17 @@ TAO_NAMESPACE  POA_Messaging
     // do we own it
     void _is_owner (CORBA::Boolean b);
     // set the ownership
-    
+
     // overridden ServantBase operations
     PortableServer::POA_ptr _default_POA (
-        CORBA::Environment &ACE_TRY_ENV = 
+        CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       );
   private:
     T *ptr_;
     PortableServer::POA_var poa_;
     CORBA::Boolean rel_;
-    
+
     // copy and assignment are not allowed
     ReplyHandler_tie (const ReplyHandler_tie &);
     void operator= (const ReplyHandler_tie &);

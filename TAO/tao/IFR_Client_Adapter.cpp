@@ -11,14 +11,14 @@ TAO_IFR_Client_Adapter::~TAO_IFR_Client_Adapter (void)
 
 // Methods to be overridden.
 
-CORBA::Boolean 
+CORBA::Boolean
 TAO_IFR_Client_Adapter::interfacedef_cdr_insert (TAO_OutputCDR &,
                                                  CORBA_InterfaceDef_ptr)
 {
   return 0;
 }
 
-void 
+void
 TAO_IFR_Client_Adapter::interfacedef_any_insert (CORBA_Any &,
                                                  CORBA_InterfaceDef_ptr)
 {

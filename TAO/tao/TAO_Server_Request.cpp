@@ -68,7 +68,8 @@ TAO_ServerRequest::TAO_ServerRequest (TAO_Pluggable_Messaging *mesg_base,
     requesting_principal_ (0),
     is_dsi_ (0),
     dsi_nvlist_align_ (0),
-    argument_flag_ (1)
+    argument_flag_ (1),
+    profile_has_dispatch_info_ (0)
 #if TAO_HAS_INTERCEPTORS == 1
   , interceptor_count_ (0)
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
@@ -103,7 +104,8 @@ TAO_ServerRequest::TAO_ServerRequest (TAO_Pluggable_Messaging *mesg_base,
     requesting_principal_ (0),
     is_dsi_ (0),
     dsi_nvlist_align_ (0),
-    argument_flag_ (1)
+    argument_flag_ (1),
+    profile_has_dispatch_info_ (0)
 #if TAO_HAS_INTERCEPTORS == 1
   , interceptor_count_ (0)
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */

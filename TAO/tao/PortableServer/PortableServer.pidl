@@ -71,6 +71,12 @@ module PortableServer {
         Object forward_reference;
     };
 
+    // @@ Frank - MIOP specific calls
+
+    typedef sequence <ObjectId> IDs;
+
+    // @@ Frank - End MIOP
+
     // Policy interfaces
     const CORBA::PolicyType THREAD_POLICY_ID                = 16;
     const CORBA::PolicyType LIFESPAN_POLICY_ID              = 17;
@@ -280,6 +286,16 @@ module PortableServer {
                                     raises (ObjectNotActive, WrongPolicy);
         Object id_to_reference(     in ObjectId             oid)
                                         raises (ObjectNotActive, WrongPolicy);
+
+        // @@ Frank - MIOP specific calls
+
+        ObjectId create_id_for_reference(in CORBA::Object the_ref)
+                              raises (WrongAdapter);
+
+        IDs reference_to_ids(in CORBA::Object the_ref)
+                              raises (WrongAdapter);
+
+        // @@ Frank - End MIOP
     };
 
     // Current interface

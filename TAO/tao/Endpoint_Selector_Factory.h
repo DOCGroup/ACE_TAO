@@ -63,7 +63,7 @@ public:
                              CORBA::Environment &ACE_TRY_ENV);
 
 protected:
-  /// The possible endpoint selector strategies that can be 
+  /// The possible endpoint selector strategies that can be
   /// returned by this factory
 
   TAO_Default_Endpoint_Selector *default_endpoint_selector_;

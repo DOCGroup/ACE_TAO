@@ -635,6 +635,10 @@ SOURCE=.\Pool_Per_Endpoint.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\PortableGroup_Adapter.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\PortableInterceptor.cpp
 # End Source File
 # Begin Source File
@@ -692,6 +696,10 @@ SOURCE=.\Remote_Object_Proxy_Impl.cpp
 # Begin Source File
 
 SOURCE=.\Reply_Dispatcher.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Request_Dispatcher.cpp
 # End Source File
 # Begin Source File
 
@@ -1435,6 +1443,10 @@ SOURCE=.\Pool_Per_Endpoint.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\PortableGroup_Adapter.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\PortableInterceptor.h
 # End Source File
 # Begin Source File
@@ -1496,6 +1508,10 @@ SOURCE=.\Remote_Object_Proxy_Impl.h
 # Begin Source File
 
 SOURCE=.\Reply_Dispatcher.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Request_Dispatcher.h
 # End Source File
 # Begin Source File
 

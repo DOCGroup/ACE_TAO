@@ -74,7 +74,7 @@ CORBA_Current_var::operator const ::CORBA_Current_ptr &() const // cast
   return this->ptr_;
 }
 
-CORBA_Current_var::operator ::CORBA_Current_ptr &() // cast 
+CORBA_Current_var::operator ::CORBA_Current_ptr &() // cast
 {
   return this->ptr_;
 }

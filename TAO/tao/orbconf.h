@@ -371,10 +371,11 @@
 #define TAO_OBJID_NOTIFICATIONSERVICE "NotificationService"
 #define TAO_OBJID_TYPEDNOTIFICATIONSERVICE "TypedNotificationService"
 #define TAO_OBJID_COMPONENTHOMEFINDER "ComponentHomeFinder"
-#define TAO_OBJID_PSS "PSS"
-#define TAO_OBJID_CODECFACTORY "CodecFactory"
-#define TAO_OBJID_PICurrent "PICurrent"
-
+#define TAO_OBJID_PSS                 "PSS"
+#define TAO_OBJID_CODECFACTORY        "CodecFactory"
+#define TAO_OBJID_PICurrent           "PICurrent"
+#define TAO_OBJID_ROOTPGA             "RootPGA"
+#define TAO_OBJID_MIOP                "MIOP"      // @@ Frank: TAO-specific (may be removed)
 
 // Comma separated list of the above ObjectIDs.
 // DO NOT include unimplemented services!
@@ -944,6 +945,20 @@ enum MCAST_SERVICEID
 #if !defined (TAO_DEF_FT_CORBA_MINOR)
 #define TAO_DEF_FT_CORBA_MINOR 0
 #endif /* TAO_DEF_FT_CORBA_MINOR */
+
+// This is the version of the MIOP spec that TAO supports. The
+// exact use of this version has not been emphasized. But TAO would
+// get TaggedComponents for a group with version number. So, for the
+// present we will have this here and do a sanity check for our
+// supported version and the one we receive -- raise an error if
+// necessary.
+
+#if !defined (TAO_DEF_MIOP_MAJOR)
+#define TAO_DEF_MIOP_MAJOR 1
+#endif /* TAO_DEF_MIOP_MAJOR */
+#if !defined (TAO_DEF_MIOP_MINOR)
+#define TAO_DEF_MIOP_MINOR 0
+#endif /* TAO_DEF_MIOP_MINOR */
 
 #include "ace/post.h"
 #endif  /* TAO_ORB_CONFIG_H */

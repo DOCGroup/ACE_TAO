@@ -21,7 +21,12 @@
 
 #include "RTPortableServerC.h"
 
-#if (TAO_HAS_RT_CORBA == 1)
+#include "tao/Stub.h"
+#include "tao/Invocation.h"
+#include "tao/ClientRequestInfo.h"
+#if TAO_HAS_INTERCEPTORS == 1
+#include "tao/RequestInfo_Util.h"
+#endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
 #if defined (__BORLANDC__)
 #pragma option -w-rvl -w-rch -w-ccc -w-aus
@@ -30,6 +35,49 @@
 #if !defined (__ACE_INLINE__)
 #include "RTPortableServerC.i"
 #endif /* !defined INLINE */
+
+RTPortableServer::POA_ptr
+tao_RTPortableServer_POA_duplicate (
+    RTPortableServer::POA_ptr p
+  )
+{
+  return RTPortableServer::POA::_duplicate (p);
+}
+
+void
+tao_RTPortableServer_POA_release (
+    RTPortableServer::POA_ptr p
+  )
+{
+  CORBA::release (p);
+}
+
+RTPortableServer::POA_ptr
+tao_RTPortableServer_POA_nil (
+    void
+  )
+{
+  return RTPortableServer::POA::_nil ();
+}
+
+RTPortableServer::POA_ptr
+tao_RTPortableServer_POA_narrow (
+    CORBA::Object *p,
+    CORBA::Environment &ACE_TRY_ENV
+  )
+{
+  return RTPortableServer::POA::_narrow (p, ACE_TRY_ENV);
+}
+
+CORBA::Object *
+tao_RTPortableServer_POA_upcast (
+    void *src
+  )
+{
+  RTPortableServer::POA **tmp =
+    ACE_static_cast (RTPortableServer::POA **, src);
+  return *tmp;
+}
 
 // *************************************************************
 // Operations for class RTPortableServer::POA_var
@@ -79,7 +127,7 @@ RTPortableServer::POA_var::operator const ::RTPortableServer::POA_ptr &() const 
   return this->ptr_;
 }
 
-RTPortableServer::POA_var::operator ::RTPortableServer::POA_ptr &() // cast 
+RTPortableServer::POA_var::operator ::RTPortableServer::POA_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -155,7 +203,7 @@ RTPortableServer::POA_var::upcast (void *src)
 }
 
 // *************************************************************
-// Inline operations for class RTPortableServer::POA_out
+// Operations for class RTPortableServer::POA_out
 // *************************************************************
 
 RTPortableServer::POA_out::POA_out (POA_ptr &p)
@@ -283,7 +331,7 @@ void *RTPortableServer::POA::_tao_QueryInterface (ptr_arith_t type)
   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
-    
+
   if (retv)
     this->_add_ref ();
   return retv;
@@ -301,4 +349,3 @@ const char* RTPortableServer::POA::_interface_repository_id (void) const
   #  pragma instantiate TAO_Object_Manager<RTPortableServer::POA,RTPortableServer::POA_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-#endif /* TAO_HAS_RT_CORBA == 1 */

@@ -56,9 +56,9 @@ GIOP::IORAddressingInfo_var::operator= (const GIOP::IORAddressingInfo_var &p)
         }
       else
         {
-          GIOP::IORAddressingInfo *deep_copy = 
+          GIOP::IORAddressingInfo *deep_copy =
             new GIOP::IORAddressingInfo (*p.ptr_);
-          
+
           if (deep_copy != 0)
             {
               GIOP::IORAddressingInfo *tmp = deep_copy;
@@ -68,7 +68,7 @@ GIOP::IORAddressingInfo_var::operator= (const GIOP::IORAddressingInfo_var &p)
             }
         }
     }
-  
+
   return *this;
 }
 
@@ -368,9 +368,9 @@ GIOP::TargetAddress_var::operator= (const GIOP::TargetAddress_var &p)
         }
       else
         {
-          GIOP::TargetAddress *deep_copy = 
+          GIOP::TargetAddress *deep_copy =
             new GIOP::TargetAddress (*p.ptr_);
-          
+
           if (deep_copy != 0)
             {
               GIOP::TargetAddress *tmp = deep_copy;
@@ -380,7 +380,7 @@ GIOP::TargetAddress_var::operator= (const GIOP::TargetAddress_var &p)
             }
         }
     }
-  
+
   return *this;
 }
 

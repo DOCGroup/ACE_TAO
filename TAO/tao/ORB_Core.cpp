@@ -31,6 +31,8 @@
 #include "Invocation.h"
 #include "BiDir_Adapter.h"
 #include "Endpoint_Selector_Factory.h"
+#include "PortableGroup_Adapter.h"
+#include "Request_Dispatcher.h"
 
 #if (TAO_HAS_RT_CORBA == 1)
 #include "RT_Endpoint_Selector_Factory.h"
@@ -161,8 +163,10 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     parser_registry_ (),
     transport_cache_ (),
     bidir_adapter_ (0),
-    bidir_giop_policy_ (0)
-  , flushing_strategy_ (0)
+    bidir_giop_policy_ (0),
+    portable_group_ (0),
+    portable_group_resolved_ (0),
+    flushing_strategy_ (0)
 {
 #if defined(ACE_MVS)
   ACE_NEW (this->from_iso8859_, ACE_IBM1047_ISO8859);
@@ -203,6 +207,12 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
   ACE_NEW (this->transport_sync_strategy_,
            TAO_Transport_Sync_Strategy);
 
+  // Create the default portable group hooks.
+  ACE_NEW (this->portable_group_,
+           TAO_PortableGroup_Adapter);
+
+  ACE_NEW (this->request_dispatcher_,
+           TAO_Request_Dispatcher);
 }
 
 TAO_ORB_Core::~TAO_ORB_Core (void)
@@ -232,6 +242,14 @@ TAO_ORB_Core::~TAO_ORB_Core (void)
   delete this->endpoint_selector_factory_;
 
   delete this->transport_sync_strategy_;
+
+  /* Only free the PortableGroup adapter if we're
+   * using the default one.  Otherwise, let the
+   * service configurator delete it once it is done
+   * with it.
+   */
+  if (!this->portable_group_resolved_)
+    delete this->portable_group_;
 }
 
 int
@@ -1399,6 +1417,48 @@ TAO_ORB_Core::bidirectional_giop_init (CORBA::Environment &ACE_TRY_ENV)
     return 0;
 }
 
+
+void
+TAO_ORB_Core::resolve_portable_group (CORBA::Environment &ACE_TRY_ENV)
+{
+  if (this->portable_group_resolved_ == 0)
+    {
+      TAO_PortableGroup_Adapter *temp_portable_group;
+
+      temp_portable_group = ACE_Dynamic_Service<TAO_PortableGroup_Adapter>::instance ("PortableGroup_Loader");
+
+      if (temp_portable_group == 0)
+        {
+          // The Loader has not been statically configured, try to
+          // dynamically load it...
+          ACE_Service_Config::process_directive (
+                                                 "dynamic PortableGroup_Loader Service_Object *"
+                                                 "TAO_PortableGroup:_make_TAO_PortableGroup_Loader()"
+                                                 );
+
+          temp_portable_group =
+            ACE_Dynamic_Service<TAO_PortableGroup_Adapter>::instance ("PortableGroup_Loader");
+          if (temp_portable_group == 0)
+            ACE_THROW (CORBA::ORB::InvalidName ());
+        }
+
+      temp_portable_group->activate (this->orb_.in (),
+                                     0,
+                                     0,
+                                     ACE_TRY_ENV);
+
+      // Free the memory for the default portable group.  This could lead to a race
+      // condition except that the default portable group is stateless, objects should not
+      // cache portable group pointers, but go to the ORB_Core everytime a portable group
+      // object is needed.
+      delete this->portable_group_;
+
+      // Assign the portable group at last now that everything is ok.
+      this->portable_group_ = temp_portable_group;
+      this->portable_group_resolved_ = 1;
+    }
+}
+
 int
 TAO_ORB_Core::parse_bidir_policy (CORBA::Policy_ptr policy,
                                   CORBA::Environment &ACE_TRY_ENV)
@@ -1665,6 +1725,20 @@ TAO_ORB_Core::poa_adapter (void)
     }
   return this->poa_adapter_;
 }
+
+#if (TAO_HAS_MIOP == 1)
+void
+TAO_ORB_Core::resolve_miop_i (CORBA::Environment &ACE_TRY_ENV)
+{
+  // Resolve the PortableGroup if it hasn't already been resolved.
+  this->resolve_portable_group (ACE_TRY_ENV);
+  ACE_CHECK;
+
+  this->miop_factory_ = this->portable_group_->miop (ACE_TRY_ENV);
+  ACE_CHECK;
+}
+
+#endif /* TAO_HAS_MIOP == 1 */
 
 TAO_SYNCH_CONDITION *
 TAO_ORB_Core::leader_follower_condition_variable (void)

@@ -46,8 +46,8 @@ TAO_Pool_Per_Endpoint::run (CORBA::Environment &ACE_TRY_ENV)
 
       CORBA::Object_var obj =
         this->orb_->orb_core ()->priority_mapping_manager ();
-      
-      TAO_Priority_Mapping_Manager_var mapping_manager = 
+
+      TAO_Priority_Mapping_Manager_var mapping_manager =
         TAO_Priority_Mapping_Manager::_narrow (obj.in (),
                                                ACE_TRY_ENV);
       ACE_CHECK;
@@ -65,7 +65,7 @@ TAO_Pool_Per_Endpoint::run (CORBA::Environment &ACE_TRY_ENV)
       if (TAO_debug_level > 3)
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO (%P|%t) - creating thread at ")
-                    ACE_TEXT ("priority %d:%d\n"), 
+                    ACE_TEXT ("priority %d:%d\n"),
                     priority,
                     corba_priority));
 #endif /* TAO_HAS_RT_CORBA == 1 */

@@ -458,7 +458,7 @@ POA_Messaging::ReplyHandler::_this (CORBA_Environment &ACE_TRY_ENV)
 }
 
 #endif /* TAO_HAS_AMI_CALLBACK == 1 || TAO_HAS_AMI_POLLER == 1 */
-  
+
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
 #endif /* ifndef */

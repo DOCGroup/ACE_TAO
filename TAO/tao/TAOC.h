@@ -189,7 +189,7 @@ TAO_NAMESPACE  TAO
     static ClientPriorityPolicy_ptr nil (void);
     static ClientPriorityPolicy_ptr narrow (CORBA::Object *, CORBA::Environment &);
     static CORBA::Object * upcast (void *);
-  
+
   private:
     ClientPriorityPolicy_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -387,7 +387,7 @@ class TAO_Export ClientPriorityPolicy: public virtual CORBA::Policy
     static BufferingConstraintPolicy_ptr nil (void);
     static BufferingConstraintPolicy_ptr narrow (CORBA::Object *, CORBA::Environment &);
     static CORBA::Object * upcast (void *);
-  
+
   private:
     BufferingConstraintPolicy_ptr ptr_;
     // Unimplemented - prevents widening assignment.

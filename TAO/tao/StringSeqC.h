@@ -60,25 +60,25 @@
 
   class CORBA_StringSeq;
   class CORBA_StringSeq_var;
-  
+
   // *************************************************************
   // CORBA::StringSeq
   // *************************************************************
-  
-  class TAO_Export CORBA_StringSeq : public 
+
+  class TAO_Export CORBA_StringSeq : public
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
     TAO_Unbounded_String_Sequence
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
     TAO_Unbounded_String_Sequence
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
   {
   public:
     CORBA_StringSeq (void); // default ctor
     CORBA_StringSeq (CORBA::ULong max); // uses max size
     CORBA_StringSeq (
-      CORBA::ULong max, 
-      CORBA::ULong length, 
-      char * *buffer, 
+      CORBA::ULong max,
+      CORBA::ULong length,
+      char * *buffer,
       CORBA::Boolean release = 0
     );
     CORBA_StringSeq (const CORBA_StringSeq &); // copy ctor
@@ -90,7 +90,7 @@
 #endif /* ! __GNUC__ || g++ >= 2.8 */
 
   };
-  
+
 #endif /* end #if !defined */
 
 
@@ -108,20 +108,20 @@
     CORBA_StringSeq_var (CORBA_StringSeq *);
     CORBA_StringSeq_var (const CORBA_StringSeq_var &); // copy constructor
     ~CORBA_StringSeq_var (void); // destructor
-    
+
     CORBA_StringSeq_var &operator= (CORBA_StringSeq *);
     CORBA_StringSeq_var &operator= (const CORBA_StringSeq_var &);
     CORBA_StringSeq *operator-> (void);
     const CORBA_StringSeq *operator-> (void) const;
-    
+
     operator const CORBA_StringSeq &() const;
     operator CORBA_StringSeq &();
     operator CORBA_StringSeq &() const;
     operator CORBA_StringSeq *&(); // variable-size base types only
-    
+
     TAO_SeqElem_String_Manager operator[] (CORBA::ULong index);
-    
-    // in, inout, out, _retn 
+
+    // in, inout, out, _retn
     const CORBA_StringSeq &in (void) const;
     CORBA_StringSeq &inout (void);
     CORBA_StringSeq *&out (void);
@@ -151,7 +151,7 @@
     CORBA_StringSeq *&ptr (void);
     CORBA_StringSeq *operator-> (void);
     TAO_SeqElem_String_Manager operator[] (CORBA::ULong index);
-    
+
   private:
     CORBA_StringSeq *&ptr_;
     // assignment from T_var not allowed
@@ -166,25 +166,25 @@
 
   class CORBA_WStringSeq;
   class CORBA_WStringSeq_var;
-  
+
   // *************************************************************
   // CORBA::WStringSeq
   // *************************************************************
-  
-  class TAO_Export CORBA_WStringSeq : public 
+
+  class TAO_Export CORBA_WStringSeq : public
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
     TAO_Unbounded_WString_Sequence
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
     TAO_Unbounded_WString_Sequence
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
   {
   public:
     CORBA_WStringSeq (void); // default ctor
     CORBA_WStringSeq (CORBA::ULong max); // uses max size
     CORBA_WStringSeq (
-      CORBA::ULong max, 
-      CORBA::ULong length, 
-      CORBA::WChar * *buffer, 
+      CORBA::ULong max,
+      CORBA::ULong length,
+      CORBA::WChar * *buffer,
       CORBA::Boolean release = 0
     );
     CORBA_WStringSeq (const CORBA_WStringSeq &); // copy ctor
@@ -196,7 +196,7 @@
 #endif /* ! __GNUC__ || g++ >= 2.8 */
 
   };
-  
+
 #endif /* end #if !defined */
 
 
@@ -214,20 +214,20 @@
     CORBA_WStringSeq_var (CORBA_WStringSeq *);
     CORBA_WStringSeq_var (const CORBA_WStringSeq_var &); // copy constructor
     ~CORBA_WStringSeq_var (void); // destructor
-    
+
     CORBA_WStringSeq_var &operator= (CORBA_WStringSeq *);
     CORBA_WStringSeq_var &operator= (const CORBA_WStringSeq_var &);
     CORBA_WStringSeq *operator-> (void);
     const CORBA_WStringSeq *operator-> (void) const;
-    
+
     operator const CORBA_WStringSeq &() const;
     operator CORBA_WStringSeq &();
     operator CORBA_WStringSeq &() const;
     operator CORBA_WStringSeq *&(); // variable-size base types only
-    
+
     TAO_SeqElem_WString_Manager operator[] (CORBA::ULong index);
-    
-    // in, inout, out, _retn 
+
+    // in, inout, out, _retn
     const CORBA_WStringSeq &in (void) const;
     CORBA_WStringSeq &inout (void);
     CORBA_WStringSeq *&out (void);
@@ -257,7 +257,7 @@
     CORBA_WStringSeq *&ptr (void);
     CORBA_WStringSeq *operator-> (void);
     TAO_SeqElem_WString_Manager operator[] (CORBA::ULong index);
-    
+
   private:
     CORBA_WStringSeq *&ptr_;
     // assignment from T_var not allowed

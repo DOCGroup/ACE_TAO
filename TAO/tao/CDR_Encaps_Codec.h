@@ -62,36 +62,36 @@ public:
   /// Encode the given data, including the TypeCode, into an octet
   /// sequence.
   virtual CORBA::OctetSeq * encode (const CORBA::Any & data,
-				    CORBA::Environment &ACE_TRY_ENV =
-				      TAO_default_environment ())
+                                    CORBA::Environment &ACE_TRY_ENV =
+                                      TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
-		     IOP::Codec::InvalidTypeForEncoding));
+                     IOP::Codec::InvalidTypeForEncoding));
 
   /// Extract the TypeCode and the value from the octet sequence and
   /// place them into an Any.
   virtual CORBA::Any * decode (const CORBA::OctetSeq & data,
-			       CORBA::Environment &ACE_TRY_ENV =
-			         TAO_default_environment ())
+                               CORBA::Environment &ACE_TRY_ENV =
+                                 TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
-		     IOP::Codec::FormatMismatch));
+                     IOP::Codec::FormatMismatch));
 
   /// Encode the given data, excluding the TypeCode, into an octet
   /// sequence.
   virtual CORBA::OctetSeq * encode_value (const CORBA::Any & data,
-					  CORBA::Environment &ACE_TRY_ENV =
-					    TAO_default_environment ())
+                                          CORBA::Environment &ACE_TRY_ENV =
+                                            TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
-		     IOP::Codec::InvalidTypeForEncoding));
+                     IOP::Codec::InvalidTypeForEncoding));
 
   /// Extract the value from the octet sequence, based on the given
   /// TypeCode,  and place it into an Any.
   virtual CORBA::Any * decode_value (const CORBA::OctetSeq & data,
-				     CORBA::TypeCode_ptr tc,
-				     CORBA::Environment &ACE_TRY_ENV =
-				       TAO_default_environment ())
+                                     CORBA::TypeCode_ptr tc,
+                                     CORBA::Environment &ACE_TRY_ENV =
+                                       TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
-		     IOP::Codec::FormatMismatch,
-		     IOP::Codec::TypeMismatch));
+                     IOP::Codec::FormatMismatch,
+                     IOP::Codec::TypeMismatch));
 
 protected:
 
@@ -110,7 +110,7 @@ protected:
    * Codec.
    */
   void check_type_for_encoding (const CORBA::Any & data,
-				CORBA::Environment &ACE_TRY_ENV);
+                                CORBA::Environment &ACE_TRY_ENV);
 
 private:
 

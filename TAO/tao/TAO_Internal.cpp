@@ -109,12 +109,12 @@ TAO_Internal::open_services (int &argc, char **argv)
               // is set to ENOENT for some reason.
               errno = EINVAL;
 
-              ACE_ERROR_RETURN ((LM_ERROR, 
+              ACE_ERROR_RETURN ((LM_ERROR,
                                  ACE_TEXT ("TAO (%P|%t) Service Configurator ")
-                                 ACE_TEXT ("unable to open file %s\n"), 
+                                 ACE_TEXT ("unable to open file %s\n"),
                                            current_arg),
                                 -1);
-                          
+
             }
           else
             {

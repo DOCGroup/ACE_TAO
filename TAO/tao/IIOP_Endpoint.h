@@ -77,7 +77,7 @@ public:
   virtual void reset_hint (void);
 
   /// Makes a copy of <this>
-  virtual TAO_Endpoint *duplicate (void);
+  virtual TAO_Endpoint *duplicate (void) const;
 
   /// Return true if this endpoint is equivalent to <other_endpoint>.  Two
   /// endpoints are equivalent iff their port and host are the same.

@@ -23,49 +23,6 @@
 #if !defined (_RTPORTABLESERVER_POA___CI_)
 #define _RTPORTABLESERVER_POA___CI_
 
-ACE_INLINE RTPortableServer::POA_ptr
-tao_RTPortableServer_POA_duplicate (
-    RTPortableServer::POA_ptr p
-  )
-{
-  return RTPortableServer::POA::_duplicate (p);
-}
-
-ACE_INLINE void
-tao_RTPortableServer_POA_release (
-    RTPortableServer::POA_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-ACE_INLINE RTPortableServer::POA_ptr
-tao_RTPortableServer_POA_nil (
-    void
-  )
-{
-  return RTPortableServer::POA::_nil ();
-}
-
-ACE_INLINE RTPortableServer::POA_ptr
-tao_RTPortableServer_POA_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
-  )
-{
-  return RTPortableServer::POA::_narrow (p, ACE_TRY_ENV);
-}
-
-ACE_INLINE CORBA::Object *
-tao_RTPortableServer_POA_upcast (
-    void *src
-  )
-{
-  RTPortableServer::POA **tmp =
-    ACE_static_cast (RTPortableServer::POA **, src);
-  return *tmp;
-}
-
 
 #endif /* end #if !defined */
 

@@ -76,7 +76,7 @@ void Dynamic::Parameter::_tao_any_destructor (void *x)
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_DYNAMIC_PARAMETERLIST_CS_)
 #define __TAO_UNBOUNDED_SEQUENCE_DYNAMIC_PARAMETERLIST_CS_
 
@@ -85,43 +85,43 @@ void Dynamic::Parameter::_tao_any_destructor (void *x)
   {
     Dynamic::Parameter* tmp = 0;
     tmp = _TAO_Unbounded_Sequence_Dynamic_ParameterList::allocbuf (length);
-    
+
     if (this->buffer_ != 0)
     {
       Dynamic::Parameter *old = ACE_reinterpret_cast (Dynamic::Parameter *,this->buffer_);
-      
+
       for (CORBA::ULong i = 0; i < this->length_; ++i)
         tmp[i] = old[i];
-      
+
       if (this->release_)
         _TAO_Unbounded_Sequence_Dynamic_ParameterList::freebuf (old);
-      
+
     }
     this->buffer_ = tmp;
   }
-  
+
   void
   Dynamic::_TAO_Unbounded_Sequence_Dynamic_ParameterList::_deallocate_buffer (void)
   {
     if (this->buffer_ == 0 || this->release_ == 0)
       return;
-    
+
     Dynamic::Parameter *tmp = ACE_reinterpret_cast (Dynamic::Parameter *,this->buffer_);
-    
+
     _TAO_Unbounded_Sequence_Dynamic_ParameterList::freebuf (tmp);
     this->buffer_ = 0;
-  } 
-  
+  }
+
   Dynamic::_TAO_Unbounded_Sequence_Dynamic_ParameterList::~_TAO_Unbounded_Sequence_Dynamic_ParameterList (void) // Dtor.
   {
     this->_deallocate_buffer ();
   }
-  
-  
+
+
 #endif /* end #if !defined */
 
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 
 #if !defined (_DYNAMIC_PARAMETERLIST_CS_)
 #define _DYNAMIC_PARAMETERLIST_CS_
@@ -133,30 +133,30 @@ void Dynamic::Parameter::_tao_any_destructor (void *x)
 Dynamic::ParameterList::ParameterList (void)
 {}
 Dynamic::ParameterList::ParameterList (CORBA::ULong max) // uses max size
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_Dynamic_ParameterList
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<Dynamic::Parameter>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max)
 {}
 Dynamic::ParameterList::ParameterList (CORBA::ULong max, CORBA::ULong length, Dynamic::Parameter *buffer, CORBA::Boolean release)
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_Dynamic_ParameterList
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<Dynamic::Parameter>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max, length, buffer, release)
 {}
 Dynamic::ParameterList::ParameterList (const ParameterList &seq) // copy ctor
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_Dynamic_ParameterList
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<Dynamic::Parameter>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (seq)
 {}
 Dynamic::ParameterList::~ParameterList (void) // dtor
@@ -220,7 +220,7 @@ static const CORBA::Long _oc_Dynamic_ContextList[] =
     CORBA::tk_sequence, // typecode kind
     16, // encapsulation length
       TAO_ENCAP_BYTE_ORDER, // byte order
-      CORBA::tk_string, 
+      CORBA::tk_string,
       0U, // string length
       0U,
 
@@ -246,7 +246,7 @@ TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_TypeCode, &_tc_TAO_tc_Dynamic_Typ
 TAO_NAMESPACE_END
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
 #if !defined (__TAO_UNBOUNDED_OBJECT_SEQUENCE_DYNAMIC_EXCEPTIONLIST_CS_)
 #define __TAO_UNBOUNDED_OBJECT_SEQUENCE_DYNAMIC_EXCEPTIONLIST_CS_
 
@@ -256,7 +256,7 @@ TAO_NAMESPACE_END
   {
     CORBA::TypeCode **tmp = 0;
     tmp = _TAO_Unbounded_Object_Sequence_Dynamic_ExceptionList::allocbuf (length);
-    
+
     if (this->buffer_ != 0)
     {
       CORBA::TypeCode **old = ACE_reinterpret_cast (CORBA::TypeCode**, this->buffer_);
@@ -265,14 +265,14 @@ TAO_NAMESPACE_END
           tmp[i] = CORBA::TypeCode::_duplicate (old[i]);
         else
           tmp[i] = old[i];
-        
+
       if (this->release_)
         delete[] old;
-      
+
     }
     this->buffer_ = tmp;
   }
-  
+
   void
   Dynamic::_TAO_Unbounded_Object_Sequence_Dynamic_ExceptionList::_deallocate_buffer (void)
   {
@@ -287,28 +287,28 @@ TAO_NAMESPACE_END
     _TAO_Unbounded_Object_Sequence_Dynamic_ExceptionList::freebuf (tmp);
     this->buffer_ = 0;
   }
-  
+
   Dynamic::_TAO_Unbounded_Object_Sequence_Dynamic_ExceptionList::~_TAO_Unbounded_Object_Sequence_Dynamic_ExceptionList (void)
   {
     this->_deallocate_buffer ();
   }
-  
+
   void
   Dynamic::_TAO_Unbounded_Object_Sequence_Dynamic_ExceptionList::_shrink_buffer (CORBA::ULong nl, CORBA::ULong ol)
   {
     CORBA::TypeCode **tmp = ACE_reinterpret_cast (CORBA::TypeCode**, this->buffer_);
-    
+
     for (CORBA::ULong i = nl; i < ol; ++i)
     {
       CORBA::release (tmp[i]);
       tmp[i] = CORBA::TypeCode::_nil ();
     }
   }
-  
+
 #endif /* end #if !defined */
 
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 
 #if !defined (_DYNAMIC_EXCEPTIONLIST_CS_)
 #define _DYNAMIC_EXCEPTIONLIST_CS_
@@ -320,30 +320,30 @@ TAO_NAMESPACE_END
 Dynamic::ExceptionList::ExceptionList (void)
 {}
 Dynamic::ExceptionList::ExceptionList (CORBA::ULong max) // uses max size
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Object_Sequence_Dynamic_ExceptionList
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Pseudo_Sequence<CORBA::TypeCode,CORBA::TypeCode_var>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max)
 {}
 Dynamic::ExceptionList::ExceptionList (CORBA::ULong max, CORBA::ULong length, CORBA::TypeCode_ptr *buffer, CORBA::Boolean release)
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Object_Sequence_Dynamic_ExceptionList
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Pseudo_Sequence<CORBA::TypeCode,CORBA::TypeCode_var>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max, length, buffer, release)
 {}
 Dynamic::ExceptionList::ExceptionList (const ExceptionList &seq) // copy ctor
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Object_Sequence_Dynamic_ExceptionList
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Pseudo_Sequence<CORBA::TypeCode,CORBA::TypeCode_var>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (seq)
 {}
 Dynamic::ExceptionList::~ExceptionList (void) // dtor
@@ -394,7 +394,7 @@ static const CORBA::Long _oc_Dynamic_RequestContext[] =
     CORBA::tk_sequence, // typecode kind
     16, // encapsulation length
       TAO_ENCAP_BYTE_ORDER, // byte order
-      CORBA::tk_string, 
+      CORBA::tk_string,
       0U, // string length
       0U,
 
@@ -747,7 +747,7 @@ CORBA::Boolean operator>> (
     // set the length of the sequence
     _tao_sequence.length (_tao_seq_len);
     // If length is 0 we return true.
-    if (0 >= _tao_seq_len) 
+    if (0 >= _tao_seq_len)
       return 1;
     // retrieve all the elements
     CORBA::Boolean _tao_marshal_flag = 1;
@@ -789,7 +789,7 @@ CORBA::Boolean operator>> (
     // set the length of the sequence
     _tao_sequence.length (_tao_seq_len);
     // If length is 0 we return true.
-    if (0 >= _tao_seq_len) 
+    if (0 >= _tao_seq_len)
       return 1;
     // retrieve all the elements
     CORBA::Boolean _tao_marshal_flag = 1;

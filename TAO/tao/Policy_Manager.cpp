@@ -181,7 +181,7 @@ TAO_Policy_Manager_Impl::copy_from (TAO_Policy_Manager_Impl *source,
       this->client_protocol_ =
         source->client_protocol_->copy (ACE_TRY_ENV);
       ACE_CHECK;
-      
+
       // Check that cloning succeeded.
       if (this->client_protocol_ == 0)
         ACE_THROW (CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
@@ -287,7 +287,7 @@ TAO_Policy_Manager_Impl::set_policy_overrides (
 
   for (CORBA::ULong i = 0; i < policies.length ();  ++i)
     {
-      // Because MSVC 5 has a bug, we had to replace 
+      // Because MSVC 5 has a bug, we had to replace
       // a simple CORBA::Policy_var policy = policies[i];
       // with the following.
       CORBA::Policy_ptr temp = policies[i];

@@ -29,7 +29,7 @@
  * @brief TAO_IFR_Client_Adapter.
  *
  * Class that adapts various functions in the CORBA namespace
- * which use the Interface Repository. This is a base class for 
+ * which use the Interface Repository. This is a base class for
  * the actual implementation in the TAO_IFR_Client library.
  */
 class TAO_Export TAO_IFR_Client_Adapter : public ACE_Service_Object
@@ -54,7 +54,7 @@ public:
   virtual CORBA_InterfaceDef_ptr get_interface (
       CORBA::ORB_ptr orb,
       const char *repo_id,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
 

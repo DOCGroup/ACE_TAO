@@ -53,10 +53,10 @@ public:
 
   /// Create a Coder/Decoder for the given type of encoding.
   virtual IOP::Codec_ptr create_codec (const IOP::Encoding & enc,
-				       CORBA::Environment &ACE_TRY_ENV = 
-				         TAO_default_environment ())
+                                       CORBA::Environment &ACE_TRY_ENV =
+                                         TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
-		     IOP::CodecFactory::UnknownEncoding));
+                     IOP::CodecFactory::UnknownEncoding));
 
 private:
 

@@ -29,7 +29,7 @@
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_CORBA_INVALIDPOLICIES__TAO_SEQ_USHORT_CI_)
 #define __TAO_UNBOUNDED_SEQUENCE_CORBA_INVALIDPOLICIES__TAO_SEQ_USHORT_CI_
 
@@ -42,24 +42,24 @@
     ACE_NEW_RETURN (retval, CORBA::UShort[size], 0);
     return retval;
   }
-  
+
   ACE_INLINE void CORBA_InvalidPolicies::_TAO_Unbounded_Sequence_CORBA_InvalidPolicies__tao_seq_UShort::freebuf (CORBA::UShort *buffer)
   // Free the sequence.
   {
     delete [] buffer;
   }
-  
+
   ACE_INLINE
   CORBA_InvalidPolicies::_TAO_Unbounded_Sequence_CORBA_InvalidPolicies__tao_seq_UShort::_TAO_Unbounded_Sequence_CORBA_InvalidPolicies__tao_seq_UShort (void) // Default constructor.
   {
   }
-  
+
   ACE_INLINE
   CORBA_InvalidPolicies::_TAO_Unbounded_Sequence_CORBA_InvalidPolicies__tao_seq_UShort::_TAO_Unbounded_Sequence_CORBA_InvalidPolicies__tao_seq_UShort (CORBA::ULong maximum) // Constructor using a maximum length value.
     : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_CORBA_InvalidPolicies__tao_seq_UShort::allocbuf (maximum))
   {
   }
-  
+
   ACE_INLINE
   CORBA_InvalidPolicies::_TAO_Unbounded_Sequence_CORBA_InvalidPolicies__tao_seq_UShort::_TAO_Unbounded_Sequence_CORBA_InvalidPolicies__tao_seq_UShort (CORBA::ULong maximum,
     CORBA::ULong length,
@@ -68,7 +68,7 @@
   : TAO_Unbounded_Base_Sequence (maximum, length, data, release)
   {
   }
-  
+
   ACE_INLINE
   CORBA_InvalidPolicies::_TAO_Unbounded_Sequence_CORBA_InvalidPolicies__tao_seq_UShort::_TAO_Unbounded_Sequence_CORBA_InvalidPolicies__tao_seq_UShort (const _TAO_Unbounded_Sequence_CORBA_InvalidPolicies__tao_seq_UShort &rhs)
   // Copy constructor.
@@ -78,10 +78,10 @@
     {
       CORBA::UShort *tmp1 = _TAO_Unbounded_Sequence_CORBA_InvalidPolicies__tao_seq_UShort::allocbuf (this->maximum_);
       CORBA::UShort * const tmp2 = ACE_reinterpret_cast (CORBA::UShort * ACE_CAST_CONST, rhs.buffer_);
-      
+
       for (CORBA::ULong i = 0; i < this->length_; ++i)
         tmp1[i] = tmp2[i];
-      
+
       this->buffer_ = tmp1;
     }
     else
@@ -89,14 +89,14 @@
       this->buffer_ = 0;
     }
   }
-  
+
   ACE_INLINE CORBA_InvalidPolicies::_TAO_Unbounded_Sequence_CORBA_InvalidPolicies__tao_seq_UShort &
   CORBA_InvalidPolicies::_TAO_Unbounded_Sequence_CORBA_InvalidPolicies__tao_seq_UShort::operator= (const _TAO_Unbounded_Sequence_CORBA_InvalidPolicies__tao_seq_UShort &rhs)
   // Assignment operator.
   {
     if (this == &rhs)
       return *this;
-    
+
     if (this->release_)
     {
       if (this->maximum_ < rhs.maximum_)
@@ -109,18 +109,18 @@
     }
     else
       this->buffer_ = _TAO_Unbounded_Sequence_CORBA_InvalidPolicies__tao_seq_UShort::allocbuf (rhs.maximum_);
-    
+
     TAO_Unbounded_Base_Sequence::operator= (rhs);
-    
+
     CORBA::UShort *tmp1 = ACE_reinterpret_cast (CORBA::UShort *, this->buffer_);
     CORBA::UShort * const tmp2 = ACE_reinterpret_cast (CORBA::UShort * ACE_CAST_CONST, rhs.buffer_);
-    
+
     for (CORBA::ULong i = 0; i < this->length_; ++i)
       tmp1[i] = tmp2[i];
-    
+
     return *this;
   }
-  
+
   // = Accessors.
   ACE_INLINE CORBA::UShort &
   CORBA_InvalidPolicies::_TAO_Unbounded_Sequence_CORBA_InvalidPolicies__tao_seq_UShort::operator[] (CORBA::ULong i)
@@ -130,7 +130,7 @@
     CORBA::UShort* tmp = ACE_reinterpret_cast(CORBA::UShort*,this->buffer_);
     return tmp[i];
   }
-  
+
   ACE_INLINE const CORBA::UShort &
   CORBA_InvalidPolicies::_TAO_Unbounded_Sequence_CORBA_InvalidPolicies__tao_seq_UShort::operator[] (CORBA::ULong i) const
   // operator []
@@ -139,9 +139,9 @@
     CORBA::UShort * const tmp = ACE_reinterpret_cast (CORBA::UShort* ACE_CAST_CONST, this->buffer_);
     return tmp[i];
   }
-  
+
   // Implement the TAO_Base_Sequence methods (see Sequence.h)
-  
+
   ACE_INLINE CORBA::UShort *
   CORBA_InvalidPolicies::_TAO_Unbounded_Sequence_CORBA_InvalidPolicies__tao_seq_UShort::get_buffer (CORBA::Boolean orphan)
   {
@@ -175,13 +175,13 @@
     }
     return result;
   }
-  
+
   ACE_INLINE const CORBA::UShort *
   CORBA_InvalidPolicies::_TAO_Unbounded_Sequence_CORBA_InvalidPolicies__tao_seq_UShort::get_buffer (void) const
   {
     return ACE_reinterpret_cast(const CORBA::UShort * ACE_CAST_CONST, this->buffer_);
   }
-  
+
   ACE_INLINE void
   CORBA_InvalidPolicies::_TAO_Unbounded_Sequence_CORBA_InvalidPolicies__tao_seq_UShort::replace (CORBA::ULong max,
   CORBA::ULong length,
@@ -198,11 +198,11 @@
     this->buffer_ = data;
     this->release_ = release;
   }
-  
+
 #endif /* end #if !defined */
 
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 
 #if !defined (_CORBA_POLICY___CI_)
 #define _CORBA_POLICY___CI_
@@ -266,7 +266,7 @@ CORBA_Policy::CORBA_Policy (
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
 #if !defined (__TAO_UNBOUNDED_OBJECT_SEQUENCE_CORBA_POLICYLIST_CI_)
 #define __TAO_UNBOUNDED_OBJECT_SEQUENCE_CORBA_POLICYLIST_CI_
 
@@ -274,36 +274,36 @@ CORBA_Policy::CORBA_Policy (
   _TAO_Unbounded_Object_Sequence_CORBA_PolicyList::allocbuf (CORBA::ULong nelems)
   {
     CORBA_Policy **buf = 0;
-    
+
     ACE_NEW_RETURN (buf, CORBA_Policy*[nelems], 0);
-    
+
     for (CORBA::ULong i = 0; i < nelems; i++)
       {
         buf[i] = CORBA_Policy::_nil ();
       }
-    
+
     return buf;
   }
-  
-  ACE_INLINE void 
+
+  ACE_INLINE void
   _TAO_Unbounded_Object_Sequence_CORBA_PolicyList::freebuf (CORBA_Policy **buffer)
   {
     if (buffer == 0)
       return;
     delete[] buffer;
   }
-  
+
   ACE_INLINE
   _TAO_Unbounded_Object_Sequence_CORBA_PolicyList::_TAO_Unbounded_Object_Sequence_CORBA_PolicyList (void)
   {
   }
-  
+
   ACE_INLINE
   _TAO_Unbounded_Object_Sequence_CORBA_PolicyList::_TAO_Unbounded_Object_Sequence_CORBA_PolicyList (CORBA::ULong maximum)
     : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Object_Sequence_CORBA_PolicyList::allocbuf (maximum))
   {
   }
-  
+
   ACE_INLINE
   _TAO_Unbounded_Object_Sequence_CORBA_PolicyList::_TAO_Unbounded_Object_Sequence_CORBA_PolicyList (CORBA::ULong maximum,
     CORBA::ULong length,
@@ -312,7 +312,7 @@ CORBA_Policy::CORBA_Policy (
   : TAO_Unbounded_Base_Sequence (maximum, length, value, release)
   {
   }
-  
+
   ACE_INLINE
   _TAO_Unbounded_Object_Sequence_CORBA_PolicyList::_TAO_Unbounded_Object_Sequence_CORBA_PolicyList(const _TAO_Unbounded_Object_Sequence_CORBA_PolicyList &rhs)
     : TAO_Unbounded_Base_Sequence (rhs)
@@ -321,12 +321,12 @@ CORBA_Policy::CORBA_Policy (
     {
       CORBA_Policy **tmp1 = _TAO_Unbounded_Object_Sequence_CORBA_PolicyList::allocbuf (this->maximum_);
       CORBA_Policy ** const tmp2 = ACE_reinterpret_cast (CORBA_Policy ** ACE_CAST_CONST, rhs.buffer_);
-      
+
       for (CORBA::ULong i = 0; i < rhs.length_; ++i)
         {
           tmp1[i] = CORBA_Policy::_duplicate (tmp2[i]);
         }
-      
+
       this->buffer_ = tmp1;
     }
     else
@@ -334,17 +334,17 @@ CORBA_Policy::CORBA_Policy (
       this->buffer_ = 0;
     }
   }
-  
+
   ACE_INLINE _TAO_Unbounded_Object_Sequence_CORBA_PolicyList &
   _TAO_Unbounded_Object_Sequence_CORBA_PolicyList::operator= (const _TAO_Unbounded_Object_Sequence_CORBA_PolicyList &rhs)
   {
     if (this == &rhs)
       return *this;
-    
+
     if (this->release_)
     {
       CORBA_Policy **tmp = ACE_reinterpret_cast (CORBA_Policy **, this->buffer_);
-      
+
       for (CORBA::ULong i = 0; i < this->length_; ++i)
       {
         CORBA::release (tmp[i]);
@@ -358,20 +358,20 @@ CORBA_Policy::CORBA_Policy (
     }
     else
       this->buffer_ = _TAO_Unbounded_Object_Sequence_CORBA_PolicyList::allocbuf (rhs.maximum_);
-    
+
     TAO_Unbounded_Base_Sequence::operator= (rhs);
-    
+
     CORBA_Policy **tmp1 = ACE_reinterpret_cast (CORBA_Policy **, this->buffer_);
     CORBA_Policy ** const tmp2 = ACE_reinterpret_cast (CORBA_Policy ** ACE_CAST_CONST, rhs.buffer_);
-    
+
     for (CORBA::ULong i = 0; i < rhs.length_; ++i)
       {
         tmp1[i] = CORBA_Policy::_duplicate (tmp2[i]);
       }
-    
+
     return *this;
   }
-  
+
   ACE_INLINE TAO_Object_Manager<CORBA_Policy,CORBA_Policy_var>
   _TAO_Unbounded_Object_Sequence_CORBA_PolicyList::operator[] (CORBA::ULong index) const
   // read-write accessor
@@ -380,7 +380,7 @@ CORBA_Policy::CORBA_Policy (
     CORBA_Policy ** const tmp = ACE_reinterpret_cast (CORBA_Policy ** ACE_CAST_CONST, this->buffer_);
     return TAO_Object_Manager<CORBA_Policy,CORBA_Policy_var> (tmp + index, this->release_);
   }
-  
+
   ACE_INLINE CORBA_Policy* *
   _TAO_Unbounded_Object_Sequence_CORBA_PolicyList::get_buffer (CORBA::Boolean orphan)
   {
@@ -414,18 +414,18 @@ CORBA_Policy::CORBA_Policy (
     }
     return result;
   }
-  
+
   ACE_INLINE const CORBA_Policy* *
   _TAO_Unbounded_Object_Sequence_CORBA_PolicyList::get_buffer (void) const
   {
     return ACE_reinterpret_cast(const CORBA_Policy ** ACE_CAST_CONST, this->buffer_);
   }
-  
-  
+
+
 #endif /* end #if !defined */
 
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 
 #if !defined (_CORBA_POLICYLIST_CI_)
 #define _CORBA_POLICYLIST_CI_
@@ -481,7 +481,7 @@ CORBA_PolicyList_var::operator= (const ::CORBA_PolicyList_var &p)
         {
           CORBA_PolicyList *deep_copy =
             new CORBA_PolicyList (*p.ptr_);
-          
+
           if (deep_copy != 0)
             {
               CORBA_PolicyList *tmp = deep_copy;
@@ -491,7 +491,7 @@ CORBA_PolicyList_var::operator= (const ::CORBA_PolicyList_var &p)
             }
         }
     }
-  
+
   return *this;
 }
 
@@ -507,27 +507,27 @@ CORBA_PolicyList_var::operator-> (void)
   return this->ptr_;
 }
 
-ACE_INLINE 
+ACE_INLINE
 CORBA_PolicyList_var::operator const ::CORBA_PolicyList &() const // cast
 {
   return *this->ptr_;
 }
 
-ACE_INLINE 
-CORBA_PolicyList_var::operator ::CORBA_PolicyList &() // cast 
+ACE_INLINE
+CORBA_PolicyList_var::operator ::CORBA_PolicyList &() // cast
 {
   return *this->ptr_;
 }
 
-ACE_INLINE 
-CORBA_PolicyList_var::operator ::CORBA_PolicyList &() const // cast 
+ACE_INLINE
+CORBA_PolicyList_var::operator ::CORBA_PolicyList &() const // cast
 {
   return *this->ptr_;
 }
 
 // variable-size types only
 ACE_INLINE
-CORBA_PolicyList_var::operator ::CORBA_PolicyList *&() // cast 
+CORBA_PolicyList_var::operator ::CORBA_PolicyList *&() // cast
 {
   return this->ptr_;
 }
@@ -550,7 +550,7 @@ CORBA_PolicyList_var::inout (void)
   return *this->ptr_;
 }
 
-// mapping for variable size 
+// mapping for variable size
 ACE_INLINE ::CORBA_PolicyList *&
 CORBA_PolicyList_var::out (void)
 {
@@ -611,7 +611,7 @@ CORBA_PolicyList_out::operator= (CORBA_PolicyList *p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 CORBA_PolicyList_out::operator ::CORBA_PolicyList *&() // cast
 {
   return this->ptr_;
@@ -640,7 +640,7 @@ CORBA_PolicyList_out::operator[] (CORBA::ULong index)
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_CORBA_POLICYTYPESEQ_CI_)
 #define __TAO_UNBOUNDED_SEQUENCE_CORBA_POLICYTYPESEQ_CI_
 
@@ -653,24 +653,24 @@ CORBA_PolicyList_out::operator[] (CORBA::ULong index)
     ACE_NEW_RETURN (retval, CORBA::ULong[size], 0);
     return retval;
   }
-  
+
   ACE_INLINE void _TAO_Unbounded_Sequence_CORBA_PolicyTypeSeq::freebuf (CORBA::ULong *buffer)
   // Free the sequence.
   {
     delete [] buffer;
   }
-  
+
   ACE_INLINE
   _TAO_Unbounded_Sequence_CORBA_PolicyTypeSeq::_TAO_Unbounded_Sequence_CORBA_PolicyTypeSeq (void) // Default constructor.
   {
   }
-  
+
   ACE_INLINE
   _TAO_Unbounded_Sequence_CORBA_PolicyTypeSeq::_TAO_Unbounded_Sequence_CORBA_PolicyTypeSeq (CORBA::ULong maximum) // Constructor using a maximum length value.
     : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_CORBA_PolicyTypeSeq::allocbuf (maximum))
   {
   }
-  
+
   ACE_INLINE
   _TAO_Unbounded_Sequence_CORBA_PolicyTypeSeq::_TAO_Unbounded_Sequence_CORBA_PolicyTypeSeq (CORBA::ULong maximum,
     CORBA::ULong length,
@@ -679,7 +679,7 @@ CORBA_PolicyList_out::operator[] (CORBA::ULong index)
   : TAO_Unbounded_Base_Sequence (maximum, length, data, release)
   {
   }
-  
+
   ACE_INLINE
   _TAO_Unbounded_Sequence_CORBA_PolicyTypeSeq::_TAO_Unbounded_Sequence_CORBA_PolicyTypeSeq (const _TAO_Unbounded_Sequence_CORBA_PolicyTypeSeq &rhs)
   // Copy constructor.
@@ -689,10 +689,10 @@ CORBA_PolicyList_out::operator[] (CORBA::ULong index)
     {
       CORBA::ULong *tmp1 = _TAO_Unbounded_Sequence_CORBA_PolicyTypeSeq::allocbuf (this->maximum_);
       CORBA::ULong * const tmp2 = ACE_reinterpret_cast (CORBA::ULong * ACE_CAST_CONST, rhs.buffer_);
-      
+
       for (CORBA::ULong i = 0; i < this->length_; ++i)
         tmp1[i] = tmp2[i];
-      
+
       this->buffer_ = tmp1;
     }
     else
@@ -700,14 +700,14 @@ CORBA_PolicyList_out::operator[] (CORBA::ULong index)
       this->buffer_ = 0;
     }
   }
-  
+
   ACE_INLINE _TAO_Unbounded_Sequence_CORBA_PolicyTypeSeq &
   _TAO_Unbounded_Sequence_CORBA_PolicyTypeSeq::operator= (const _TAO_Unbounded_Sequence_CORBA_PolicyTypeSeq &rhs)
   // Assignment operator.
   {
     if (this == &rhs)
       return *this;
-    
+
     if (this->release_)
     {
       if (this->maximum_ < rhs.maximum_)
@@ -720,18 +720,18 @@ CORBA_PolicyList_out::operator[] (CORBA::ULong index)
     }
     else
       this->buffer_ = _TAO_Unbounded_Sequence_CORBA_PolicyTypeSeq::allocbuf (rhs.maximum_);
-    
+
     TAO_Unbounded_Base_Sequence::operator= (rhs);
-    
+
     CORBA::ULong *tmp1 = ACE_reinterpret_cast (CORBA::ULong *, this->buffer_);
     CORBA::ULong * const tmp2 = ACE_reinterpret_cast (CORBA::ULong * ACE_CAST_CONST, rhs.buffer_);
-    
+
     for (CORBA::ULong i = 0; i < this->length_; ++i)
       tmp1[i] = tmp2[i];
-    
+
     return *this;
   }
-  
+
   // = Accessors.
   ACE_INLINE CORBA::ULong &
   _TAO_Unbounded_Sequence_CORBA_PolicyTypeSeq::operator[] (CORBA::ULong i)
@@ -741,7 +741,7 @@ CORBA_PolicyList_out::operator[] (CORBA::ULong index)
     CORBA::ULong* tmp = ACE_reinterpret_cast(CORBA::ULong*,this->buffer_);
     return tmp[i];
   }
-  
+
   ACE_INLINE const CORBA::ULong &
   _TAO_Unbounded_Sequence_CORBA_PolicyTypeSeq::operator[] (CORBA::ULong i) const
   // operator []
@@ -750,9 +750,9 @@ CORBA_PolicyList_out::operator[] (CORBA::ULong index)
     CORBA::ULong * const tmp = ACE_reinterpret_cast (CORBA::ULong* ACE_CAST_CONST, this->buffer_);
     return tmp[i];
   }
-  
+
   // Implement the TAO_Base_Sequence methods (see Sequence.h)
-  
+
   ACE_INLINE CORBA::ULong *
   _TAO_Unbounded_Sequence_CORBA_PolicyTypeSeq::get_buffer (CORBA::Boolean orphan)
   {
@@ -786,13 +786,13 @@ CORBA_PolicyList_out::operator[] (CORBA::ULong index)
     }
     return result;
   }
-  
+
   ACE_INLINE const CORBA::ULong *
   _TAO_Unbounded_Sequence_CORBA_PolicyTypeSeq::get_buffer (void) const
   {
     return ACE_reinterpret_cast(const CORBA::ULong * ACE_CAST_CONST, this->buffer_);
   }
-  
+
   ACE_INLINE void
   _TAO_Unbounded_Sequence_CORBA_PolicyTypeSeq::replace (CORBA::ULong max,
   CORBA::ULong length,
@@ -809,11 +809,11 @@ CORBA_PolicyList_out::operator[] (CORBA::ULong index)
     this->buffer_ = data;
     this->release_ = release;
   }
-  
+
 #endif /* end #if !defined */
 
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 
 #if !defined (_CORBA_POLICYTYPESEQ_CI_)
 #define _CORBA_POLICYTYPESEQ_CI_
@@ -876,7 +876,7 @@ CORBA_PolicyTypeSeq_var::operator= (const ::CORBA_PolicyTypeSeq_var &p)
         {
           CORBA_PolicyTypeSeq *deep_copy =
             new CORBA_PolicyTypeSeq (*p.ptr_);
-          
+
           if (deep_copy != 0)
             {
               CORBA_PolicyTypeSeq *tmp = deep_copy;
@@ -886,7 +886,7 @@ CORBA_PolicyTypeSeq_var::operator= (const ::CORBA_PolicyTypeSeq_var &p)
             }
         }
     }
-  
+
   return *this;
 }
 
@@ -914,20 +914,20 @@ CORBA_PolicyTypeSeq_var::operator-> (void)
   return this->ptr_;
 }
 
-ACE_INLINE 
+ACE_INLINE
 CORBA_PolicyTypeSeq_var::operator const ::CORBA_PolicyTypeSeq &() const // cast
 {
   return *this->ptr_;
 }
 
-ACE_INLINE 
-CORBA_PolicyTypeSeq_var::operator ::CORBA_PolicyTypeSeq &() // cast 
+ACE_INLINE
+CORBA_PolicyTypeSeq_var::operator ::CORBA_PolicyTypeSeq &() // cast
 {
   return *this->ptr_;
 }
 
-ACE_INLINE 
-CORBA_PolicyTypeSeq_var::operator ::CORBA_PolicyTypeSeq &() const // cast 
+ACE_INLINE
+CORBA_PolicyTypeSeq_var::operator ::CORBA_PolicyTypeSeq &() const // cast
 {
   return *this->ptr_;
 }
@@ -956,7 +956,7 @@ CORBA_PolicyTypeSeq_var::inout (void)
   return *this->ptr_;
 }
 
-// mapping for variable size 
+// mapping for variable size
 ACE_INLINE ::CORBA_PolicyTypeSeq *&
 CORBA_PolicyTypeSeq_var::out (void)
 {
@@ -1017,7 +1017,7 @@ CORBA_PolicyTypeSeq_out::operator= (CORBA_PolicyTypeSeq *p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 CORBA_PolicyTypeSeq_out::operator ::CORBA_PolicyTypeSeq *&() // cast
 {
   return this->ptr_;
@@ -1154,12 +1154,12 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, CORBA::SetOverrideType
 {
   CORBA::ULong _tao_temp = 0;
   CORBA::Boolean _tao_result = strm >> _tao_temp;
-  
+
   if (_tao_result == 1)
     {
       _tao_enumval = ACE_static_cast (CORBA::SetOverrideType, _tao_temp);
     }
-  
+
   return _tao_result;
 }
 

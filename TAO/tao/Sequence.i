@@ -268,7 +268,7 @@ TAO_Unbounded_Sequence<CORBA::Octet>::get_buffer (CORBA::Boolean orphan)
           // The buffer was not allocated, we must allocate it now.
           result = TAO_Unbounded_Sequence<CORBA::Octet>::allocbuf (this->length_);
           this->buffer_ = result;
-	  this->release_ = 1;
+          this->release_ = 1;
         }
       else
         {

@@ -56,8 +56,8 @@ public:
 
   /// Constructor.
   TAO_IORInfo (TAO_ORB_Core *orb_core,
-	       TAO_MProfile &mp,
-	       CORBA::PolicyList *policy_list);
+               TAO_MProfile &mp,
+               CORBA::PolicyList *policy_list);
 
   /// Return the policy matching the given policy type that is in
   /// effect for the object whose IOR is being created.

@@ -624,6 +624,28 @@ public:
 
 #endif /* TAO_HAS_RT_CORBA == 1 */
 
+#if (TAO_HAS_MIOP == 1)
+  virtual PortableServer::ObjectId * create_id_for_reference (
+      CORBA::Object_ptr the_ref,
+      CORBA::Environment &ACE_TRY_ENV =
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((
+      CORBA::SystemException,
+      PortableServer::POA::WrongAdapter
+    ));
+
+  virtual PortableServer::IDs * reference_to_ids (
+      CORBA::Object_ptr the_ref,
+      CORBA::Environment &ACE_TRY_ENV =
+        TAO_default_environment ()
+    )
+    ACE_THROW_SPEC ((
+      CORBA::SystemException,
+      PortableServer::POA::WrongAdapter
+    ));
+#endif /* TAO_HAS_MIOP == 1 */
+
   TAO_POA_Policies &policies (void);
   // Accessor for POA policies.
 

@@ -171,6 +171,18 @@ TAO_ORB_Core::adapter_registry (void)
   return &this->adapter_registry_;
 }
 
+ACE_INLINE TAO_Request_Dispatcher *
+TAO_ORB_Core::request_dispatcher (void)
+{
+  return this->request_dispatcher_;
+}
+
+ACE_INLINE void
+TAO_ORB_Core::request_dispatcher (TAO_Request_Dispatcher *request_dispatcher)
+{
+  this->request_dispatcher_ = request_dispatcher;
+}
+
 ACE_INLINE void
 TAO_ORB_Core::optimize_collocation_objects (CORBA::Boolean opt)
 {
@@ -483,6 +495,12 @@ TAO_ORB_Core::resolve_typecodefactory (CORBA::Environment &ACE_TRY_ENV)
   return CORBA::Object::_duplicate (this->typecode_factory_);
 }
 
+ACE_INLINE TAO_PortableGroup_Adapter *
+TAO_ORB_Core::portable_group (void) const
+{
+  return this->portable_group_;
+}
+
 ACE_INLINE CORBA::Object_ptr
 TAO_ORB_Core::resolve_dynanyfactory (CORBA::Environment &ACE_TRY_ENV)
 {
@@ -521,6 +539,21 @@ TAO_ORB_Core::resolve_ior_table (CORBA::Environment &ACE_TRY_ENV)
     }
   return CORBA::Object::_duplicate (this->ior_table_);
 }
+
+#if (TAO_HAS_MIOP == 1)
+ACE_INLINE CORBA::Object_ptr
+TAO_ORB_Core::resolve_miop (CORBA::Environment &ACE_TRY_ENV)
+{
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, mon, this->lock_,
+                    CORBA::Object::_nil ());
+  if (CORBA::is_nil (this->miop_factory_))
+    {
+      this->resolve_miop_i (ACE_TRY_ENV);
+      ACE_CHECK_RETURN (CORBA::Object::_nil ());
+    }
+  return CORBA::Object::_duplicate (this->miop_factory_);
+}
+#endif /* TAO_HAS_MIOP == 1 */
 
 // ****************************************************************
 

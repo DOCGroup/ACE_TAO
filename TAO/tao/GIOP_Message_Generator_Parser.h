@@ -109,16 +109,28 @@ protected:
                              TAO_Pluggable_Reply_Params &reply);
 
   /// Unmarshals the received object key
-  CORBA::Boolean unmarshall_object_key (TAO_ObjectKey &object_key,
-                                        TAO_InputCDR &cdr);
+  CORBA::Boolean unmarshall_object_key (TAO_ServerRequest &request,
+                                        TAO_InputCDR &input);
 
   /// Unmarshall the IOP::TaggedProfile
-  CORBA::Boolean unmarshall_iop_profile (TAO_Tagged_Profile &profile,
-                                         TAO_InputCDR &cdr);
+  CORBA::Boolean unmarshall_iop_profile (TAO_ServerRequest &request,
+                                         TAO_InputCDR &input);
 
   /// Unmarshalls the GIOP::IORAddressingInfo
-  CORBA::Boolean unmarshall_ref_addr (TAO_Tagged_Profile &profile,
-                                      TAO_InputCDR &cdr);
+  CORBA::Boolean unmarshall_ref_addr (TAO_ServerRequest &request,
+                                      TAO_InputCDR &input);
+
+  /// Unmarshals the received object key
+  CORBA::Boolean unmarshall_object_key (TAO_GIOP_Locate_Request_Header &request,
+                                        TAO_InputCDR &input);
+
+  /// Unmarshall the IOP::TaggedProfile
+  CORBA::Boolean unmarshall_iop_profile (TAO_GIOP_Locate_Request_Header &request,
+                                         TAO_InputCDR &input);
+
+  /// Unmarshalls the GIOP::IORAddressingInfo
+  CORBA::Boolean unmarshall_ref_addr (TAO_GIOP_Locate_Request_Header &request,
+                                      TAO_InputCDR &input);
 
 };
 

@@ -42,7 +42,7 @@
  * object while other times they may use a remote implementation.
  * For example, the application could be configured to use a remote
  * Event Service or to dynamically load an Event Service
- * implementation and use the local copy instead.  The local Event 
+ * implementation and use the local copy instead.  The local Event
  * Service would federate to its remote peers to work as-if a single
  * Event Service was in place.
  *

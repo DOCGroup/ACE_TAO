@@ -582,6 +582,13 @@ struct CORBA_ValueDescription;
 class CORBA_ValueDescription_var;
 class CORBA_ValueDescription_out;
 
+enum IR_ParameterMode
+  {
+    PARAM_IN,
+    PARAM_OUT,
+    PARAM_INOUT
+  };
+
 class CORBA_TypeCodeFactory;
 class CORBA_TypeCodeFactory_var;
 class CORBA_TypeCodeFactory_out;
@@ -1667,6 +1674,7 @@ TAO_NAMESPACE_CLOSE  // end of class (namespace) CORBA
 // #define TAO_TAG_HTTPNG_PROFILE 0x54414f09U /* HTTP-NG */
 // #define TAO_TAG_PIPE_PROFILE   0x54414f0AU /* Pipe */
 // #define TAO_TAG_XXXX_PROFILE   0x54414f0BU /* ???? */
+#define TAO_TAG_UIPMC_PROFILE  0x54414f0CU /* Unreliable IP Multicast */
 #define TAO_TAG_BIOP_PROFILE   0x54414f0FU /* Boeing Custom Protocol */
 
 // We reserved the range 0x54414f00 - 0x54414f0f with the OMG to
@@ -1682,7 +1690,8 @@ TAO_NAMESPACE_CLOSE  // end of class (namespace) CORBA
 // Tag for storing multiple endpoints within a single profile.
 #define TAO_TAG_ENDPOINTS 0x54414f02U
 //#define TAO_TAG_SOME_OTHER_TAG 0x54414f03U
-
+// Tag for specifying object groups - see MIOP specification
+#define TAO_TAG_GROUP 0x54414f03U
 
 // We reserved the range 0x54414f00 - 0x54414f0f with the OMG to
 // define our own service context list entries.

@@ -73,7 +73,7 @@ TAO_NAMESPACE  TimeBase
 
   struct UtcT;
   class UtcT_var;
-  
+
   struct TAO_Export UtcT
   {
 
@@ -97,18 +97,18 @@ TAO_NAMESPACE  TimeBase
     UtcT_var (const UtcT_var &); // copy constructor
     UtcT_var (const UtcT &); // fixed-size types only
     ~UtcT_var (void); // destructor
-    
+
     UtcT_var &operator= (UtcT *);
     UtcT_var &operator= (const UtcT_var &);
     UtcT_var &operator= (const UtcT &); // fixed-size types only
     UtcT *operator-> (void);
     const UtcT *operator-> (void) const;
-    
+
     operator const UtcT &() const;
     operator UtcT &();
     operator UtcT &() const;
-    
-    // in, inout, out, _retn 
+
+    // in, inout, out, _retn
     const UtcT &in (void) const;
     UtcT &inout (void);
     UtcT &out (void);
@@ -125,7 +125,7 @@ TAO_NAMESPACE  TimeBase
 
   struct IntervalT;
   class IntervalT_var;
-  
+
   struct TAO_Export IntervalT
   {
 
@@ -147,18 +147,18 @@ TAO_NAMESPACE  TimeBase
     IntervalT_var (const IntervalT_var &); // copy constructor
     IntervalT_var (const IntervalT &); // fixed-size types only
     ~IntervalT_var (void); // destructor
-    
+
     IntervalT_var &operator= (IntervalT *);
     IntervalT_var &operator= (const IntervalT_var &);
     IntervalT_var &operator= (const IntervalT &); // fixed-size types only
     IntervalT *operator-> (void);
     const IntervalT *operator-> (void) const;
-    
+
     operator const IntervalT &() const;
     operator IntervalT &();
     operator IntervalT &() const;
-    
-    // in, inout, out, _retn 
+
+    // in, inout, out, _retn
     const IntervalT &in (void) const;
     IntervalT &inout (void);
     IntervalT &out (void);

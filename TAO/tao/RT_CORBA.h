@@ -8,7 +8,7 @@
  *
  *  Include all the required headers to use RT CORBA easily.
  *
- *  @author Carlos O'Ryan <coryan@uci.edu> 
+ *  @author Carlos O'Ryan <coryan@uci.edu>
  */
 // ================================================================
 

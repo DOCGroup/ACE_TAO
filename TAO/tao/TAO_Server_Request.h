@@ -145,6 +145,12 @@ public:
   void request_id (CORBA::ULong req);
   //@}
 
+  /// Get and set the location of the profile dispatch information.
+  //@{
+  CORBA::Boolean profile_has_dispatch_info (void);
+  void profile_has_dispatch_info (CORBA::Boolean yes);
+  //@}
+
   /**
    * Set the reference to the object the request should be forwarded
    * to.  This reference will only be used if set prior to calling
@@ -230,6 +236,7 @@ private:
   /// 0: anything else
   CORBA::Boolean sync_with_server_;
 
+
   //  TAO_GIOP_ReplyStatusType exception_type_;
   /// Exception type (will be NO_EXCEPTION in the majority of the cases).
   CORBA::ULong exception_type_;
@@ -264,6 +271,10 @@ private:
    * to the client.
    */
   CORBA::Boolean argument_flag_;
+
+  /// 1: Request dispatch information in tagged profile
+  /// 0: Request dispatch information in object key
+  CORBA::Boolean profile_has_dispatch_info_;
 
 #if TAO_HAS_INTERCEPTORS == 1
   /// The number of interceptors pushed on to the current interceptor

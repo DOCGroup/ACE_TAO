@@ -23,7 +23,7 @@ TAO_Messaging_ORBInitializer::pre_init (
   TAO_ORB_Core::set_timeout_hook
     (TAO_RelativeRoundtripTimeoutPolicy::hook);
 #endif /* TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
-  
+
   TAO_ORB_Core::set_sync_scope_hook (TAO_Sync_Scope_Policy::hook);
 }
 
@@ -57,13 +57,13 @@ TAO_Messaging_ORBInitializer::register_policy_factories (
   // the different types of Messaging policies.
 
   CORBA::PolicyType type;
-  
+
   type = TAO_MESSAGING_RELATIVE_RT_TIMEOUT_POLICY_TYPE;
   info->register_policy_factory (type,
                                  policy_factory,
                                  ACE_TRY_ENV);
   ACE_CHECK;
-  
+
 #if (TAO_HAS_CLIENT_PRIORITY_POLICY == 1)
 
   type = TAO_CLIENT_PRIORITY_POLICY_TYPE;
@@ -89,68 +89,68 @@ TAO_Messaging_ORBInitializer::register_policy_factories (
   ACE_CHECK;
 
 #endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
-  
+
   type = TAO_MESSAGING_REBIND_POLICY_TYPE;
   info->register_policy_factory (type,
                                  policy_factory,
                                  ACE_TRY_ENV);
   ACE_CHECK;
-  
+
 
   type = TAO_MESSAGING_REQUEST_PRIORITY_POLICY_TYPE;
   info->register_policy_factory (type,
                                  policy_factory,
                                  ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   type = TAO_MESSAGING_REPLY_PRIORITY_POLICY_TYPE;
   info->register_policy_factory (type,
                                  policy_factory,
                                  ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   type = TAO_MESSAGING_REQUEST_START_TIME_POLICY_TYPE;
   info->register_policy_factory (type,
                                  policy_factory,
                                  ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   type = TAO_MESSAGING_REQUEST_END_TIME_POLICY_TYPE;
   info->register_policy_factory (type,
                                  policy_factory,
                                  ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   type = TAO_MESSAGING_REPLY_START_TIME_POLICY_TYPE;
   info->register_policy_factory (type,
                                  policy_factory,
                                  ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   type = TAO_MESSAGING_REPLY_END_TIME_POLICY_TYPE;
   info->register_policy_factory (type,
                                  policy_factory,
                                  ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   type = TAO_MESSAGING_RELATIVE_REQ_TIMEOUT_POLICY_TYPE;
   info->register_policy_factory (type,
                                  policy_factory,
                                  ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   type = TAO_MESSAGING_ROUTING_POLICY_TYPE;
   info->register_policy_factory (type,
                                  policy_factory,
                                  ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   type = TAO_MESSAGING_MAX_HOPS_POLICY_TYPE;
   info->register_policy_factory (type,
                                  policy_factory,
                                  ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   type = TAO_MESSAGING_QUEUE_ORDER_POLICY_TYPE;
   info->register_policy_factory (type,
                                  policy_factory,

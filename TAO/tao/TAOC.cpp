@@ -33,21 +33,21 @@ static const CORBA::Long _oc_TAO_PrioritySelectionMode[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   34,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x54414f2f), 
-  ACE_NTOHL (0x5072696f), 
-  ACE_NTOHL (0x72697479), 
-  ACE_NTOHL (0x53656c65), 
-  ACE_NTOHL (0x6374696f), 
-  ACE_NTOHL (0x6e4d6f64), 
-  ACE_NTOHL (0x653a312e), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x54414f2f),
+  ACE_NTOHL (0x5072696f),
+  ACE_NTOHL (0x72697479),
+  ACE_NTOHL (0x53656c65),
+  ACE_NTOHL (0x6374696f),
+  ACE_NTOHL (0x6e4d6f64),
+  ACE_NTOHL (0x653a312e),
   ACE_NTOHL (0x30000000),  // repository ID = IDL:TAO/PrioritySelectionMode:1.0
   22,
-  ACE_NTOHL (0x5072696f), 
-  ACE_NTOHL (0x72697479), 
-  ACE_NTOHL (0x53656c65), 
-  ACE_NTOHL (0x6374696f), 
-  ACE_NTOHL (0x6e4d6f64), 
+  ACE_NTOHL (0x5072696f),
+  ACE_NTOHL (0x72697479),
+  ACE_NTOHL (0x53656c65),
+  ACE_NTOHL (0x6374696f),
+  ACE_NTOHL (0x6e4d6f64),
   ACE_NTOHL (0x65000000),  // name = PrioritySelectionMode
   CORBA::tk_short,
 
@@ -82,60 +82,60 @@ static const CORBA::Long _oc_TAO_PrioritySpecification[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   34,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x54414f2f), 
-  ACE_NTOHL (0x5072696f), 
-  ACE_NTOHL (0x72697479), 
-  ACE_NTOHL (0x53706563), 
-  ACE_NTOHL (0x69666963), 
-  ACE_NTOHL (0x6174696f), 
-  ACE_NTOHL (0x6e3a312e), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x54414f2f),
+  ACE_NTOHL (0x5072696f),
+  ACE_NTOHL (0x72697479),
+  ACE_NTOHL (0x53706563),
+  ACE_NTOHL (0x69666963),
+  ACE_NTOHL (0x6174696f),
+  ACE_NTOHL (0x6e3a312e),
   ACE_NTOHL (0x30000000),  // repository ID = IDL:TAO/PrioritySpecification:1.0
   22,
-  ACE_NTOHL (0x5072696f), 
-  ACE_NTOHL (0x72697479), 
-  ACE_NTOHL (0x53706563), 
-  ACE_NTOHL (0x69666963), 
-  ACE_NTOHL (0x6174696f), 
+  ACE_NTOHL (0x5072696f),
+  ACE_NTOHL (0x72697479),
+  ACE_NTOHL (0x53706563),
+  ACE_NTOHL (0x69666963),
+  ACE_NTOHL (0x6174696f),
   ACE_NTOHL (0x6e000000),  // name = PrioritySpecification
   3, // member count
   5,
-  ACE_NTOHL (0x6d6f6465), 
+  ACE_NTOHL (0x6d6f6465),
   ACE_NTOHL (0x0),  // name = mode
   CORBA::tk_alias, // typecode kind for typedefs
   76, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     34,
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x54414f2f), 
-    ACE_NTOHL (0x5072696f), 
-    ACE_NTOHL (0x72697479), 
-    ACE_NTOHL (0x53656c65), 
-    ACE_NTOHL (0x6374696f), 
-    ACE_NTOHL (0x6e4d6f64), 
-    ACE_NTOHL (0x653a312e), 
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x54414f2f),
+    ACE_NTOHL (0x5072696f),
+    ACE_NTOHL (0x72697479),
+    ACE_NTOHL (0x53656c65),
+    ACE_NTOHL (0x6374696f),
+    ACE_NTOHL (0x6e4d6f64),
+    ACE_NTOHL (0x653a312e),
     ACE_NTOHL (0x30000000),  // repository ID = IDL:TAO/PrioritySelectionMode:1.0
     22,
-    ACE_NTOHL (0x5072696f), 
-    ACE_NTOHL (0x72697479), 
-    ACE_NTOHL (0x53656c65), 
-    ACE_NTOHL (0x6374696f), 
-    ACE_NTOHL (0x6e4d6f64), 
+    ACE_NTOHL (0x5072696f),
+    ACE_NTOHL (0x72697479),
+    ACE_NTOHL (0x53656c65),
+    ACE_NTOHL (0x6374696f),
+    ACE_NTOHL (0x6e4d6f64),
     ACE_NTOHL (0x65000000),  // name = PrioritySelectionMode
     CORBA::tk_short,
 
 
   13,
-  ACE_NTOHL (0x6d696e5f), 
-  ACE_NTOHL (0x7072696f), 
-  ACE_NTOHL (0x72697479), 
+  ACE_NTOHL (0x6d696e5f),
+  ACE_NTOHL (0x7072696f),
+  ACE_NTOHL (0x72697479),
   ACE_NTOHL (0x0),  // name = min_priority
   CORBA::tk_short,
 
   13,
-  ACE_NTOHL (0x6d61785f), 
-  ACE_NTOHL (0x7072696f), 
-  ACE_NTOHL (0x72697479), 
+  ACE_NTOHL (0x6d61785f),
+  ACE_NTOHL (0x7072696f),
+  ACE_NTOHL (0x72697479),
   ACE_NTOHL (0x0),  // name = max_priority
   CORBA::tk_short,
 
@@ -213,7 +213,7 @@ TAO::ClientPriorityPolicy_var::operator const ::TAO::ClientPriorityPolicy_ptr &(
   return this->ptr_;
 }
 
-TAO::ClientPriorityPolicy_var::operator ::TAO::ClientPriorityPolicy_ptr &() // cast 
+TAO::ClientPriorityPolicy_var::operator ::TAO::ClientPriorityPolicy_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -435,21 +435,21 @@ static const CORBA::Long _oc_TAO_BufferingConstraintMode[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   36,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x54414f2f), 
-  ACE_NTOHL (0x42756666), 
-  ACE_NTOHL (0x6572696e), 
-  ACE_NTOHL (0x67436f6e), 
-  ACE_NTOHL (0x73747261), 
-  ACE_NTOHL (0x696e744d), 
-  ACE_NTOHL (0x6f64653a), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x54414f2f),
+  ACE_NTOHL (0x42756666),
+  ACE_NTOHL (0x6572696e),
+  ACE_NTOHL (0x67436f6e),
+  ACE_NTOHL (0x73747261),
+  ACE_NTOHL (0x696e744d),
+  ACE_NTOHL (0x6f64653a),
   ACE_NTOHL (0x312e3000),  // repository ID = IDL:TAO/BufferingConstraintMode:1.0
   24,
-  ACE_NTOHL (0x42756666), 
-  ACE_NTOHL (0x6572696e), 
-  ACE_NTOHL (0x67436f6e), 
-  ACE_NTOHL (0x73747261), 
-  ACE_NTOHL (0x696e744d), 
+  ACE_NTOHL (0x42756666),
+  ACE_NTOHL (0x6572696e),
+  ACE_NTOHL (0x67436f6e),
+  ACE_NTOHL (0x73747261),
+  ACE_NTOHL (0x696e744d),
   ACE_NTOHL (0x6f646500),  // name = BufferingConstraintMode
   CORBA::tk_ushort,
 
@@ -488,79 +488,79 @@ static const CORBA::Long _oc_TAO_BufferingConstraint[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   32,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x54414f2f), 
-  ACE_NTOHL (0x42756666), 
-  ACE_NTOHL (0x6572696e), 
-  ACE_NTOHL (0x67436f6e), 
-  ACE_NTOHL (0x73747261), 
-  ACE_NTOHL (0x696e743a), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x54414f2f),
+  ACE_NTOHL (0x42756666),
+  ACE_NTOHL (0x6572696e),
+  ACE_NTOHL (0x67436f6e),
+  ACE_NTOHL (0x73747261),
+  ACE_NTOHL (0x696e743a),
   ACE_NTOHL (0x312e3000),  // repository ID = IDL:TAO/BufferingConstraint:1.0
   20,
-  ACE_NTOHL (0x42756666), 
-  ACE_NTOHL (0x6572696e), 
-  ACE_NTOHL (0x67436f6e), 
-  ACE_NTOHL (0x73747261), 
+  ACE_NTOHL (0x42756666),
+  ACE_NTOHL (0x6572696e),
+  ACE_NTOHL (0x67436f6e),
+  ACE_NTOHL (0x73747261),
   ACE_NTOHL (0x696e7400),  // name = BufferingConstraint
   4, // member count
   5,
-  ACE_NTOHL (0x6d6f6465), 
+  ACE_NTOHL (0x6d6f6465),
   ACE_NTOHL (0x0),  // name = mode
   CORBA::tk_alias, // typecode kind for typedefs
   76, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     36,
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x54414f2f), 
-    ACE_NTOHL (0x42756666), 
-    ACE_NTOHL (0x6572696e), 
-    ACE_NTOHL (0x67436f6e), 
-    ACE_NTOHL (0x73747261), 
-    ACE_NTOHL (0x696e744d), 
-    ACE_NTOHL (0x6f64653a), 
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x54414f2f),
+    ACE_NTOHL (0x42756666),
+    ACE_NTOHL (0x6572696e),
+    ACE_NTOHL (0x67436f6e),
+    ACE_NTOHL (0x73747261),
+    ACE_NTOHL (0x696e744d),
+    ACE_NTOHL (0x6f64653a),
     ACE_NTOHL (0x312e3000),  // repository ID = IDL:TAO/BufferingConstraintMode:1.0
     24,
-    ACE_NTOHL (0x42756666), 
-    ACE_NTOHL (0x6572696e), 
-    ACE_NTOHL (0x67436f6e), 
-    ACE_NTOHL (0x73747261), 
-    ACE_NTOHL (0x696e744d), 
+    ACE_NTOHL (0x42756666),
+    ACE_NTOHL (0x6572696e),
+    ACE_NTOHL (0x67436f6e),
+    ACE_NTOHL (0x73747261),
+    ACE_NTOHL (0x696e744d),
     ACE_NTOHL (0x6f646500),  // name = BufferingConstraintMode
     CORBA::tk_ushort,
 
 
   8,
-  ACE_NTOHL (0x74696d65), 
+  ACE_NTOHL (0x74696d65),
   ACE_NTOHL (0x6f757400),  // name = timeout
   CORBA::tk_alias, // typecode kind for typedefs
   56, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     31,
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x54696d65), 
-    ACE_NTOHL (0x42617365), 
-    ACE_NTOHL (0x2f54696d), 
-    ACE_NTOHL (0x65543a31), 
+    ACE_NTOHL (0x49444c3a),
+    ACE_NTOHL (0x6f6d672e),
+    ACE_NTOHL (0x6f72672f),
+    ACE_NTOHL (0x54696d65),
+    ACE_NTOHL (0x42617365),
+    ACE_NTOHL (0x2f54696d),
+    ACE_NTOHL (0x65543a31),
     ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/TimeBase/TimeT:1.0
     6,
-    ACE_NTOHL (0x54696d65), 
+    ACE_NTOHL (0x54696d65),
     ACE_NTOHL (0x54000000),  // name = TimeT
     CORBA::tk_ulonglong,
 
 
   14,
-  ACE_NTOHL (0x6d657373), 
-  ACE_NTOHL (0x6167655f), 
-  ACE_NTOHL (0x636f756e), 
+  ACE_NTOHL (0x6d657373),
+  ACE_NTOHL (0x6167655f),
+  ACE_NTOHL (0x636f756e),
   ACE_NTOHL (0x74000000),  // name = message_count
   CORBA::tk_ulong,
 
   14,
-  ACE_NTOHL (0x6d657373), 
-  ACE_NTOHL (0x6167655f), 
-  ACE_NTOHL (0x62797465), 
+  ACE_NTOHL (0x6d657373),
+  ACE_NTOHL (0x6167655f),
+  ACE_NTOHL (0x62797465),
   ACE_NTOHL (0x73000000),  // name = message_bytes
   CORBA::tk_ulong,
 
@@ -638,7 +638,7 @@ TAO::BufferingConstraintPolicy_var::operator const ::TAO::BufferingConstraintPol
   return this->ptr_;
 }
 
-TAO::BufferingConstraintPolicy_var::operator ::TAO::BufferingConstraintPolicy_ptr &() // cast 
+TAO::BufferingConstraintPolicy_var::operator ::TAO::BufferingConstraintPolicy_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -858,15 +858,15 @@ static const CORBA::Long _oc_TAO_SyncScope[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   22,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x54414f2f), 
-  ACE_NTOHL (0x53796e63), 
-  ACE_NTOHL (0x53636f70), 
-  ACE_NTOHL (0x653a312e), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x54414f2f),
+  ACE_NTOHL (0x53796e63),
+  ACE_NTOHL (0x53636f70),
+  ACE_NTOHL (0x653a312e),
   ACE_NTOHL (0x30000000),  // repository ID = IDL:TAO/SyncScope:1.0
   10,
-  ACE_NTOHL (0x53796e63), 
-  ACE_NTOHL (0x53636f70), 
+  ACE_NTOHL (0x53796e63),
+  ACE_NTOHL (0x53636f70),
   ACE_NTOHL (0x65000000),  // name = SyncScope
   CORBA::tk_short,
 

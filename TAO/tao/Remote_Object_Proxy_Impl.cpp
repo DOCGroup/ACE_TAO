@@ -93,7 +93,7 @@ TAO_Remote_Object_Proxy_Impl::_is_a (const CORBA::Object_ptr target,
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
 
-CORBA::Boolean 
+CORBA::Boolean
 TAO_Remote_Object_Proxy_Impl::_non_existent (const CORBA::Object_ptr target,
                                              CORBA_Environment &ACE_TRY_ENV)
 {

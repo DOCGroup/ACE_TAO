@@ -1,4 +1,4 @@
-// -*- C++ -*- 
+// -*- C++ -*-
 //
 // $Id$
 
@@ -442,27 +442,27 @@ public:
 
     NoPossiblePollable (void);
     // Default constructor.
-    
+
     NoPossiblePollable (const NoPossiblePollable &);
     // Copy constructor.
-    
+
     ~NoPossiblePollable (void);
     // Destructor.
-    
+
     NoPossiblePollable &operator= (const NoPossiblePollable &);
-    
+
     virtual void _raise (void);
 
     virtual void _tao_encode (
         TAO_OutputCDR &,
         CORBA::Environment &
       ) const;
-    
+
     virtual void _tao_decode (
         TAO_InputCDR &,
         CORBA::Environment &
       );
-    
+
     static NoPossiblePollable *_downcast (CORBA::Exception *);
 
 
@@ -483,27 +483,27 @@ public:
 
     UnknownPollable (void);
     // Default constructor.
-    
+
     UnknownPollable (const UnknownPollable &);
     // Copy constructor.
-    
+
     ~UnknownPollable (void);
     // Destructor.
-    
+
     UnknownPollable &operator= (const UnknownPollable &);
-    
+
     virtual void _raise (void);
 
     virtual void _tao_encode (
         TAO_OutputCDR &,
         CORBA::Environment &
       ) const;
-    
+
     virtual void _tao_decode (
         TAO_InputCDR &,
         CORBA::Environment &
       );
-    
+
     static UnknownPollable *_downcast (CORBA::Exception *);
 
 

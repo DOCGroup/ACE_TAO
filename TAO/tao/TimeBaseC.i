@@ -77,7 +77,7 @@ TimeBase::UtcT_var::operator= (const ::TimeBase::UtcT_var &p)
         {
           UtcT *deep_copy =
             new UtcT (*p.ptr_);
-          
+
           if (deep_copy != 0)
             {
               UtcT *tmp = deep_copy;
@@ -87,7 +87,7 @@ TimeBase::UtcT_var::operator= (const ::TimeBase::UtcT_var &p)
             }
         }
     }
-  
+
   return *this;
 }
 
@@ -122,13 +122,13 @@ TimeBase::UtcT_var::operator const ::TimeBase::UtcT &() const // cast
 }
 
 ACE_INLINE
-TimeBase::UtcT_var::operator ::TimeBase::UtcT &() // cast 
+TimeBase::UtcT_var::operator ::TimeBase::UtcT &() // cast
 {
   return *this->ptr_;
 }
 
 ACE_INLINE
-TimeBase::UtcT_var::operator ::TimeBase::UtcT &() const // cast 
+TimeBase::UtcT_var::operator ::TimeBase::UtcT &() const // cast
 {
   return *this->ptr_;
 }
@@ -145,7 +145,7 @@ TimeBase::UtcT_var::inout (void)
   return *this->ptr_;
 }
 
-// mapping for fixed size 
+// mapping for fixed size
 ACE_INLINE ::TimeBase::UtcT &
 TimeBase::UtcT_var::out (void)
 {
@@ -222,7 +222,7 @@ TimeBase::IntervalT_var::operator= (const ::TimeBase::IntervalT_var &p)
         {
           IntervalT *deep_copy =
             new IntervalT (*p.ptr_);
-          
+
           if (deep_copy != 0)
             {
               IntervalT *tmp = deep_copy;
@@ -232,7 +232,7 @@ TimeBase::IntervalT_var::operator= (const ::TimeBase::IntervalT_var &p)
             }
         }
     }
-  
+
   return *this;
 }
 
@@ -267,13 +267,13 @@ TimeBase::IntervalT_var::operator const ::TimeBase::IntervalT &() const // cast
 }
 
 ACE_INLINE
-TimeBase::IntervalT_var::operator ::TimeBase::IntervalT &() // cast 
+TimeBase::IntervalT_var::operator ::TimeBase::IntervalT &() // cast
 {
   return *this->ptr_;
 }
 
 ACE_INLINE
-TimeBase::IntervalT_var::operator ::TimeBase::IntervalT &() const // cast 
+TimeBase::IntervalT_var::operator ::TimeBase::IntervalT &() const // cast
 {
   return *this->ptr_;
 }
@@ -290,7 +290,7 @@ TimeBase::IntervalT_var::inout (void)
   return *this->ptr_;
 }
 
-// mapping for fixed size 
+// mapping for fixed size
 ACE_INLINE ::TimeBase::IntervalT &
 TimeBase::IntervalT_var::out (void)
 {
@@ -320,7 +320,7 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const TimeBase::UtcT 
     return 1;
   else
     return 0;
-  
+
 }
 
 ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, TimeBase::UtcT &_tao_aggregate)
@@ -334,7 +334,7 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, TimeBase::UtcT &_tao_a
     return 1;
   else
     return 0;
-  
+
 }
 
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const TimeBase::IntervalT &_tao_aggregate)
@@ -346,7 +346,7 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const TimeBase::Inter
     return 1;
   else
     return 0;
-  
+
 }
 
 ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, TimeBase::IntervalT &_tao_aggregate)
@@ -358,6 +358,6 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, TimeBase::IntervalT &_
     return 1;
   else
     return 0;
-  
+
 }
 

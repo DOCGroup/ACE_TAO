@@ -74,7 +74,7 @@ CORBA_StringSeq_var::operator= (const ::CORBA_StringSeq_var &p)
         {
           CORBA_StringSeq *deep_copy =
             new CORBA_StringSeq (*p.ptr_);
-          
+
           if (deep_copy != 0)
             {
               CORBA_StringSeq *tmp = deep_copy;
@@ -84,7 +84,7 @@ CORBA_StringSeq_var::operator= (const ::CORBA_StringSeq_var &p)
             }
         }
     }
-  
+
   return *this;
 }
 
@@ -100,27 +100,27 @@ CORBA_StringSeq_var::operator-> (void)
   return this->ptr_;
 }
 
-ACE_INLINE 
+ACE_INLINE
 CORBA_StringSeq_var::operator const ::CORBA_StringSeq &() const // cast
 {
   return *this->ptr_;
 }
 
-ACE_INLINE 
-CORBA_StringSeq_var::operator ::CORBA_StringSeq &() // cast 
+ACE_INLINE
+CORBA_StringSeq_var::operator ::CORBA_StringSeq &() // cast
 {
   return *this->ptr_;
 }
 
-ACE_INLINE 
-CORBA_StringSeq_var::operator ::CORBA_StringSeq &() const // cast 
+ACE_INLINE
+CORBA_StringSeq_var::operator ::CORBA_StringSeq &() const // cast
 {
   return *this->ptr_;
 }
 
 // variable-size types only
 ACE_INLINE
-CORBA_StringSeq_var::operator ::CORBA_StringSeq *&() // cast 
+CORBA_StringSeq_var::operator ::CORBA_StringSeq *&() // cast
 {
   return this->ptr_;
 }
@@ -143,7 +143,7 @@ CORBA_StringSeq_var::inout (void)
   return *this->ptr_;
 }
 
-// mapping for variable size 
+// mapping for variable size
 ACE_INLINE ::CORBA_StringSeq *&
 CORBA_StringSeq_var::out (void)
 {
@@ -204,7 +204,7 @@ CORBA_StringSeq_out::operator= (CORBA_StringSeq *p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 CORBA_StringSeq_out::operator ::CORBA_StringSeq *&() // cast
 {
   return this->ptr_;
@@ -286,7 +286,7 @@ CORBA_WStringSeq_var::operator= (const ::CORBA_WStringSeq_var &p)
         {
           CORBA_WStringSeq *deep_copy =
             new CORBA_WStringSeq (*p.ptr_);
-          
+
           if (deep_copy != 0)
             {
               CORBA_WStringSeq *tmp = deep_copy;
@@ -296,7 +296,7 @@ CORBA_WStringSeq_var::operator= (const ::CORBA_WStringSeq_var &p)
             }
         }
     }
-  
+
   return *this;
 }
 
@@ -312,27 +312,27 @@ CORBA_WStringSeq_var::operator-> (void)
   return this->ptr_;
 }
 
-ACE_INLINE 
+ACE_INLINE
 CORBA_WStringSeq_var::operator const ::CORBA_WStringSeq &() const // cast
 {
   return *this->ptr_;
 }
 
-ACE_INLINE 
-CORBA_WStringSeq_var::operator ::CORBA_WStringSeq &() // cast 
+ACE_INLINE
+CORBA_WStringSeq_var::operator ::CORBA_WStringSeq &() // cast
 {
   return *this->ptr_;
 }
 
-ACE_INLINE 
-CORBA_WStringSeq_var::operator ::CORBA_WStringSeq &() const // cast 
+ACE_INLINE
+CORBA_WStringSeq_var::operator ::CORBA_WStringSeq &() const // cast
 {
   return *this->ptr_;
 }
 
 // variable-size types only
 ACE_INLINE
-CORBA_WStringSeq_var::operator ::CORBA_WStringSeq *&() // cast 
+CORBA_WStringSeq_var::operator ::CORBA_WStringSeq *&() // cast
 {
   return this->ptr_;
 }
@@ -355,7 +355,7 @@ CORBA_WStringSeq_var::inout (void)
   return *this->ptr_;
 }
 
-// mapping for variable size 
+// mapping for variable size
 ACE_INLINE ::CORBA_WStringSeq *&
 CORBA_WStringSeq_var::out (void)
 {
@@ -416,7 +416,7 @@ CORBA_WStringSeq_out::operator= (CORBA_WStringSeq *p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 CORBA_WStringSeq_out::operator ::CORBA_WStringSeq *&() // cast
 {
   return this->ptr_;

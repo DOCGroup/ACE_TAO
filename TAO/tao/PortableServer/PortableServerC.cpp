@@ -419,6 +419,159 @@ CORBA::TypeCode_ptr PortableServer::ForwardRequest::_type (void) const
   return ::PortableServer::_tc_ForwardRequest;
 }
 
+
+#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
+
+#if !defined (__TAO_UNBOUNDED_SEQUENCE_PORTABLESERVER_IDS_CS_)
+#define __TAO_UNBOUNDED_SEQUENCE_PORTABLESERVER_IDS_CS_
+
+  void
+  PortableServer::_TAO_Unbounded_Sequence_PortableServer_IDs::_allocate_buffer (CORBA::ULong length)
+  {
+    PortableServer::ObjectId* tmp = 0;
+    tmp = _TAO_Unbounded_Sequence_PortableServer_IDs::allocbuf (length);
+
+    if (this->buffer_ != 0)
+    {
+      PortableServer::ObjectId *old = ACE_reinterpret_cast (PortableServer::ObjectId *,this->buffer_);
+
+      for (CORBA::ULong i = 0; i < this->length_; ++i)
+        tmp[i] = old[i];
+
+      if (this->release_)
+        _TAO_Unbounded_Sequence_PortableServer_IDs::freebuf (old);
+
+    }
+    this->buffer_ = tmp;
+  }
+
+  void
+  PortableServer::_TAO_Unbounded_Sequence_PortableServer_IDs::_deallocate_buffer (void)
+  {
+    if (this->buffer_ == 0 || this->release_ == 0)
+      return;
+
+    PortableServer::ObjectId *tmp = ACE_reinterpret_cast (PortableServer::ObjectId *,this->buffer_);
+
+    _TAO_Unbounded_Sequence_PortableServer_IDs::freebuf (tmp);
+    this->buffer_ = 0;
+  }
+
+  PortableServer::_TAO_Unbounded_Sequence_PortableServer_IDs::~_TAO_Unbounded_Sequence_PortableServer_IDs (void) // Dtor.
+  {
+    this->_deallocate_buffer ();
+  }
+
+
+#endif /* end #if !defined */
+
+
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
+
+#if !defined (_PORTABLESERVER_IDS_CS_)
+#define _PORTABLESERVER_IDS_CS_
+
+// *************************************************************
+// PortableServer::IDs
+// *************************************************************
+
+PortableServer::IDs::IDs (void)
+{}
+PortableServer::IDs::IDs (CORBA::ULong max) // uses max size
+  :
+#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
+  _TAO_Unbounded_Sequence_PortableServer_IDs
+#else /* TAO_USE_SEQUENCE_TEMPLATES */
+  TAO_Unbounded_Sequence<PortableServer::ObjectId>
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
+ (max)
+{}
+PortableServer::IDs::IDs (CORBA::ULong max, CORBA::ULong length, PortableServer::ObjectId *buffer, CORBA::Boolean release)
+  :
+#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
+  _TAO_Unbounded_Sequence_PortableServer_IDs
+#else /* TAO_USE_SEQUENCE_TEMPLATES */
+  TAO_Unbounded_Sequence<PortableServer::ObjectId>
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
+ (max, length, buffer, release)
+{}
+PortableServer::IDs::IDs (const IDs &seq) // copy ctor
+  :
+#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
+  _TAO_Unbounded_Sequence_PortableServer_IDs
+#else /* TAO_USE_SEQUENCE_TEMPLATES */
+  TAO_Unbounded_Sequence<PortableServer::ObjectId>
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
+ (seq)
+{}
+PortableServer::IDs::~IDs (void) // dtor
+{}
+void PortableServer::IDs::_tao_any_destructor (void *x)
+{
+  IDs *tmp = ACE_static_cast (IDs*,x);
+  delete tmp;
+}
+
+
+#endif /* end #if !defined */
+
+static const CORBA::Long _oc_PortableServer_IDs[] =
+{
+  TAO_ENCAP_BYTE_ORDER, // byte order
+  27,
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x506f7274),
+  ACE_NTOHL (0x61626c65),
+  ACE_NTOHL (0x53657276),
+  ACE_NTOHL (0x65722f49),
+  ACE_NTOHL (0x44733a31),
+  ACE_NTOHL (0x2e300000),  // repository ID = IDL:PortableServer/IDs:1.0
+  4,
+  ACE_NTOHL (0x49447300),  // name = IDs
+  CORBA::tk_sequence, // typecode kind
+  92, // encapsulation length
+    TAO_ENCAP_BYTE_ORDER, // byte order
+    CORBA::tk_alias, // typecode kind for typedefs
+    76, // encapsulation length
+      TAO_ENCAP_BYTE_ORDER, // byte order
+      32,
+      ACE_NTOHL (0x49444c3a),
+      ACE_NTOHL (0x506f7274),
+      ACE_NTOHL (0x61626c65),
+      ACE_NTOHL (0x53657276),
+      ACE_NTOHL (0x65722f4f),
+      ACE_NTOHL (0x626a6563),
+      ACE_NTOHL (0x7449643a),
+      ACE_NTOHL (0x312e3000),  // repository ID = IDL:PortableServer/ObjectId:1.0
+      9,
+      ACE_NTOHL (0x4f626a65),
+      ACE_NTOHL (0x63744964),
+      ACE_NTOHL (0x0),  // name = ObjectId
+      CORBA::tk_sequence, // typecode kind
+      12, // encapsulation length
+        TAO_ENCAP_BYTE_ORDER, // byte order
+        CORBA::tk_octet,
+
+        0U,
+
+
+    0U,
+
+};
+
+static CORBA::TypeCode _tc_TAO_tc_PortableServer_IDs (
+    CORBA::tk_alias,
+    sizeof (_oc_PortableServer_IDs),
+    (char *) &_oc_PortableServer_IDs,
+    0,
+    sizeof (PortableServer::IDs)
+  );
+
+TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
+TAO_NAMESPACE_BEGIN (PortableServer)
+TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_IDs, &_tc_TAO_tc_PortableServer_IDs)
+TAO_NAMESPACE_END
+
 #endif /* TAO_HAS_MINIMUM_CORBA == 0 */
 
 TAO_NAMESPACE_TYPE (const CORBA::ULong)
@@ -5485,6 +5638,97 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const PortableServer::Fo
   return 0;
 }
 
+void operator<<= (
+    CORBA::Any &_tao_any,
+    const PortableServer::IDs &_tao_elem
+  ) // copying
+{
+  TAO_OutputCDR stream;
+  if (stream << _tao_elem)
+  {
+    _tao_any._tao_replace (
+        PortableServer::_tc_IDs,
+        TAO_ENCAP_BYTE_ORDER,
+        stream.begin ()
+      );
+  }
+}
+
+void operator<<= (CORBA::Any &_tao_any, PortableServer::IDs *_tao_elem) // non copying
+{
+  TAO_OutputCDR stream;
+  stream << *_tao_elem;
+  _tao_any._tao_replace (
+      PortableServer::_tc_IDs,
+      TAO_ENCAP_BYTE_ORDER,
+      stream.begin (),
+      1,
+      _tao_elem,
+      PortableServer::IDs::_tao_any_destructor
+    );
+}
+
+CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, PortableServer::IDs *&_tao_elem)
+{
+  return _tao_any >>= ACE_const_cast(
+      const PortableServer::IDs*&,
+      _tao_elem
+    );
+}
+
+CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const PortableServer::IDs *&_tao_elem)
+{
+  _tao_elem = 0;
+  ACE_TRY_NEW_ENV
+  {
+    CORBA::TypeCode_var type = _tao_any.type ();
+
+    CORBA::Boolean result = type->equivalent (PortableServer::_tc_IDs, ACE_TRY_ENV);
+    ACE_TRY_CHECK;
+
+    if (!result)
+      return 0; // not equivalent
+
+    if (_tao_any.any_owns_data ())
+    {
+      _tao_elem = ACE_static_cast(
+          const PortableServer::IDs*,
+          _tao_any.value ()
+        );
+      return 1;
+    }
+    else
+    {
+      PortableServer::IDs *tmp;
+      ACE_NEW_RETURN (tmp, PortableServer::IDs, 0);
+      TAO_InputCDR stream (
+          _tao_any._tao_get_cdr (),
+          _tao_any._tao_byte_order ()
+        );
+      if (stream >> *tmp)
+      {
+        ((CORBA::Any *)&_tao_any)->_tao_replace (
+            PortableServer::_tc_IDs,
+            1,
+            ACE_static_cast (void *, tmp),
+            PortableServer::IDs::_tao_any_destructor
+          );
+        _tao_elem = tmp;
+        return 1;
+      }
+      else
+      {
+        delete tmp;
+      }
+    }
+  }
+  ACE_CATCHANY
+  {
+  }
+  ACE_ENDTRY;
+  return 0;
+}
+
 #endif /* TAO_HAS_MINIMUM_CORBA == 0 */
 
 #if (TAO_HAS_MINIMUM_POA == 0)
@@ -5939,8 +6183,54 @@ CORBA::Boolean operator>> (
     return strm.read_octet_array (_tao_sequence.get_buffer (), _tao_seq_len);
 #else /* TAO_NO_COPY_OCTET_SEQUENCES == 0 */
     return strm.read_octet_array (_tao_sequence.get_buffer (), _tao_sequence.length ());
-
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES == 0 */
+  }
+  return 0; // error
+}
+
+CORBA::Boolean operator<< (
+    TAO_OutputCDR &strm,
+    const PortableServer::IDs &_tao_sequence
+  )
+{
+  if (strm << _tao_sequence.length ())
+  {
+    // encode all elements
+    CORBA::Boolean _tao_marshal_flag = 1;
+    for (CORBA::ULong i = 0; i < _tao_sequence.length () && _tao_marshal_flag; i++)
+    {
+      _tao_marshal_flag = (strm << _tao_sequence[i]);
+    }
+    return _tao_marshal_flag;
+  }
+  return 0; // error
+}
+
+CORBA::Boolean operator>> (
+    TAO_InputCDR &strm,
+    PortableServer::IDs &_tao_sequence
+  )
+{
+  CORBA::ULong _tao_seq_len;
+  if (strm >> _tao_seq_len)
+  {
+    // set the length of the sequence
+    _tao_sequence.length (_tao_seq_len);
+    // If length is 0 we return true.
+    if (0 >= _tao_seq_len)
+      return 1;
+    // Add a check to the length of the sequence
+    // to make sure it does not exceed the length
+    // of the stream. (See bug 58.)
+    if (_tao_seq_len > strm.length())
+      return 0;
+    // retrieve all the elements
+    CORBA::Boolean _tao_marshal_flag = 1;
+    for (CORBA::ULong i = 0; i < _tao_sequence.length () && _tao_marshal_flag; i++)
+    {
+      _tao_marshal_flag = (strm >> _tao_sequence[i]);
+    }
+    return _tao_marshal_flag;
   }
   return 0; // error
 }

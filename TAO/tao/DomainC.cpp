@@ -87,7 +87,7 @@ CORBA_DomainManager_var::operator const ::CORBA_DomainManager_ptr &() const // c
   return this->ptr_;
 }
 
-CORBA_DomainManager_var::operator ::CORBA_DomainManager_ptr &() // cast 
+CORBA_DomainManager_var::operator ::CORBA_DomainManager_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -794,7 +794,7 @@ CORBA_ConstructionPolicy_var::operator const ::CORBA_ConstructionPolicy_ptr &() 
   return this->ptr_;
 }
 
-CORBA_ConstructionPolicy_var::operator ::CORBA_ConstructionPolicy_ptr &() // cast 
+CORBA_ConstructionPolicy_var::operator ::CORBA_ConstructionPolicy_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -1495,7 +1495,7 @@ CORBA::TypeCode_ptr _tc_CORBA_ConstructionPolicy =
               tmp[i] = old[i];
             }
         }
-      
+
       if (this->release_)
         {
           delete[] old;

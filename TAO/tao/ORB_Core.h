@@ -74,6 +74,8 @@ class TAO_Message_State_Factory;
 class TAO_ServerRequest;
 class TAO_Protocols_Hooks;
 class TAO_BiDir_Adapter;
+class TAO_PortableGroup_Adapter;
+class TAO_Request_Dispatcher;
 
 class TAO_Flushing_Strategy;
 
@@ -699,6 +701,20 @@ public:
   CORBA::Object_ptr resolve_rir (const char *name,
                                  CORBA::Environment &);
 
+#if (TAO_HAS_MIOP == 1)
+  /// Resolve the RootPGA reference for MIOP */
+  CORBA::Object_ptr resolve_root_pga (CORBA::Environment &ACE_TRY_ENV);
+
+  /// Resolve the MIOP reference */
+  CORBA::Object_ptr resolve_miop (CORBA::Environment &ACE_TRY_ENV);
+
+  CORBA::Object_ptr TAO_ORB_Core::root_pga (CORBA::Environment &ACE_TRY_ENV);
+  TAO_Adapter *TAO_ORB_Core::pga_adapter (void);
+
+  /// Retrieve the current PortableGroup adapter.
+  TAO_PortableGroup_Adapter *portable_group (void) const;
+#endif /* TAO_HAS_MIOP == 1 */
+
   /// List all the service known by the ORB
   CORBA_ORB_ObjectIdList_ptr list_initial_references (CORBA::Environment &);
 
@@ -856,6 +872,14 @@ public:
   /// the resolve_initial_references() mechanism.
   TAO_Object_Ref_Table &object_ref_table (void);
 
+  /// Return the current request dispatcher strategy.
+  /// @@ Frank - This really seems like it should be implemented as
+  ///   chain of responsibility...
+  TAO_Request_Dispatcher *request_dispatcher (void);
+
+  /// Set a new request dispatcher (only call during initialization)
+  void request_dispatcher (TAO_Request_Dispatcher *rd);
+
   /// Return the flushing strategy
   /**
    * The flushing strategy is created by the resource factory, and it
@@ -907,6 +931,14 @@ protected:
 
   /// Obtain and cache the IORManipulation factory object reference.
   void resolve_iormanipulation_i (CORBA::Environment &ACE_TRY_ENV);
+
+#if (TAO_HAS_MIOP == 1)
+  /// Obtain and cache the MIOP factory object reference.
+  void resolve_miop_i (CORBA::Environment &ACE_TRY_ENV);
+
+  /// Resolve the portable group adapter.
+  void resolve_portable_group (CORBA::Environment &ACE_TRY_ENV);
+#endif /* TAO_HAS_MIOP == 1 */
 
   /// Search the Dynamic service list for BiDirectional options that
   /// can be dynamically loaded.
@@ -1004,6 +1036,19 @@ protected:
   /// object reference returned by calls to
   ///   CORBA::ORB::resolve_initial_references ("RootPOA").
   CORBA::Object_var root_poa_;
+
+#if (TAO_HAS_MIOP == 1)
+  /// Object reference to the root PGA.  It will eventually be the
+  /// object reference returned by calls to
+  ///   CORBA::ORB::resolve_initial_references ("RootPGA").
+  CORBA::Object_var root_pga_;
+
+  CORBA::Object_var miop_factory_;
+
+  TAO_PortableGroup_Adapter *portable_group_;
+
+  CORBA::Boolean portable_group_resolved_;
+#endif /* TAO_HAS_MIOP == 1 */
 
   /// Parameters used by the ORB.
   TAO_ORB_Parameters orb_params_;
@@ -1112,6 +1157,9 @@ protected:
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
+  /// The request dispatching strategy.
+  TAO_Request_Dispatcher *request_dispatcher_;
+
   /**
    * POA current.
    *
@@ -1126,6 +1174,11 @@ protected:
 
   /// An optimization for the POA.
   TAO_Adapter *poa_adapter_;
+
+#if (TAO_HAS_MIOP == 1)
+  /// An optimization for the POA.
+  TAO_Adapter *pga_adapter_;
+#endif /* TAO_HAS_MIOP == 1 */
 
   /// The Thread Manager
   ACE_Thread_Manager tm_;
