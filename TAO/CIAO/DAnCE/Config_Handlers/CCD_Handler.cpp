@@ -170,26 +170,26 @@ namespace CIAO
        }
      
      total = src.idlFile.length ();
-     for (size_t i = 0; i < total; ++i)
+     for (size_t j = 0; i < total; ++j)
        {
-         XMLSchema::string< char > curr ((src.idlFile[i]));
+         XMLSchema::string< char > curr ((src.idlFile[j]));
          cid.add_idlFile (curr);
        }
 
      total = src.configProperty.length ();
-     for (size_t i = 0; i < total; ++i)
+     for (size_t k = 0; i < total; ++k)
        {
          cid.add_configProperty (
            Property_Handler::get_property (
-             src.configProperty[i]));
+             src.configProperty[k]));
        }
      
      total = src.port.length ();
-     for (size_t i = 0; i < total; ++i)
+     for (size_t l = 0; i < total; ++l)
        {
          cid.add_port (
            CPD_Handler::component_port_description (
-             src.port[i]));
+             src.port[l]));
        }
 
 
