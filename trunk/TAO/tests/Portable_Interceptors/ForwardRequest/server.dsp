@@ -137,11 +137,11 @@ SOURCE=.\test_i.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\testS.h
+SOURCE=.\testC.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\testS_T.h
+SOURCE=.\testS.h
 # End Source File
 # End Group
 # Begin Group "IDL Files"
