@@ -1,3 +1,42 @@
+Tue Aug 17 19:17:20 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO/tests/Param_Test/driver.cpp:
+	* TAO/tests/Param_Test/helper.h:
+	* TAO/tests/Param_Test/helper.cpp:
+	* TAO/tests/Param_Test/options.h:
+	* TAO/tests/Param_Test/options.cpp:
+	* TAO/tests/Param_Test/tests.h:
+	* TAO/tests/Param_Test/param_test_i.h:
+	* TAO/tests/Param_Test/param_test_i.cpp
+	* TAO/tests/Param_Test/client.dsp:
+	* TAO/tests/Param_Test/param_test.idl:
+	* TAO/tests/Param_Test/Makefile:
+	* TAO/tests/Param_Test/README:
+	* TAO/tests/Param_Test/run_test.pl:
+	  Updated to accomodate the new files listed below.
+
+	* TAO/tests/Param_Test/bd_wstring.h:
+	* TAO/tests/Param_Test/bd_wstring.cpp:
+	* TAO/tests/Param_Test/ub_wstring.h:
+	* TAO/tests/Param_Test/ub_wstring.cpp:
+	* TAO/tests/Param_Test/ub_wstrseq.h:
+	* TAO/tests/Param_Test/ub_wstrseq.cpp:
+	* TAO/tests/Param_Test/bd_wstrseq.h:
+	* TAO/tests/Param_Test/bd_wstrseq.cpp:
+	  New files testing the (de)marshaling of wide
+	  strings. CORBA::WStrings have their 
+	  counterparts to the regular string manipulation
+	  functions defined in ACE_OS. They are (so far)
+	  wslen, wscpy, wscmp, and wsncmp. ACE_OS
+	  also has overloaded versions of strlen, strcmp, etc.
+	  that work with wstrings on NT, but they are not portable.
+
+	* TAO/tests/Param_Test/bd_string.h:
+	* TAO/tests/Param_Test/bd_string.cpp:
+	  Fixed some comments pasted in unmodified from other
+	  tests, and the SII test call, which was to 
+	  test_unbounded_string().
+
 Tue Aug 17 15:28:43 1999  Douglas C. Schmidt  <schmidt@mambo.cs.wustl.edu>
  
 	* TAO-INSTALL.html: Added a reference to the
