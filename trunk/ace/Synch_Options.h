@@ -70,6 +70,9 @@ public:
 		     const void *arg = 0);
   // Initialize the Synch_Options based on parameters.
 
+  ~ACE_Synch_Options (void);
+  // Default dtor.
+
   void set (u_long options = 0,
 	    const ACE_Time_Value &timeout = ACE_Time_Value::zero,
 	    const void *arg = 0);
@@ -130,5 +133,9 @@ private:
   // <schedule_timer> method.  Used to communicate values for
   // asynchronous programming.
 };
+
+#if defined (__ACE_INLINE__)
+#include "ace/Synch_Options.i"
+#endif /* __ACE_INLINE__ */
 
 #endif /* ACE_SYNCH_OPTIONS_H */

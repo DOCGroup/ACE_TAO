@@ -32,6 +32,12 @@ ACE_Timer_Node_T<TYPE>::ACE_Timer_Node_T (void)
   ACE_TRACE ("ACE_Timer_Node_T::ACE_Timer_Node_T");
 }
 
+template <class TYPE> 
+ACE_Timer_Node_T<TYPE>::~ACE_Timer_Node_T (void)
+{
+  ACE_TRACE ("ACE_Timer_Node_T::~ACE_Timer_Node_T");
+}
+
 template <class TYPE, class FUNCTOR, class ACE_LOCK> 
 ACE_Timer_Queue_Iterator_T<TYPE, FUNCTOR, ACE_LOCK>::ACE_Timer_Queue_Iterator_T (void)
 {
@@ -249,6 +255,16 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::return_node (ACE_Timer_Node_T<TYPE> 
   this->free_node (node);
 }
 
+
+template <class ACE_LOCK>
+ACE_Event_Handler_Handle_Timeout_Upcall<ACE_LOCK>::ACE_Event_Handler_Handle_Timeout_Upcall (void)
+{
+}
+
+template <class ACE_LOCK>
+ACE_Event_Handler_Handle_Timeout_Upcall<ACE_LOCK>::~ACE_Event_Handler_Handle_Timeout_Upcall (void)
+{
+}
 
 template <class ACE_LOCK> int
 ACE_Event_Handler_Handle_Timeout_Upcall<ACE_LOCK>::timeout (ACE_Timer_Queue_T<ACE_Event_Handler *, 

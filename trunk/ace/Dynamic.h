@@ -30,6 +30,7 @@ class ACE_Export ACE_Dynamic
   //     the call to operator new and the call to the constructor.
 public:
   ACE_Dynamic (void);
+  ~ACE_Dynamic (void);
 
   void set (void);
   // Sets a flag that indicates that the object was dynamically

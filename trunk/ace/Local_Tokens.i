@@ -89,6 +89,26 @@ ACE_TPQ_Entry::proxy (ACE_Token_Proxy *proxy)
   this->proxy_ = proxy;
 }
 
+ACE_INLINE
+ACE_TSS_TPQ_Entry::~ACE_TSS_TPQ_Entry (void)
+{
+}
+
+ACE_INLINE
+ACE_TPQ_Iterator::~ACE_TPQ_Iterator (void)
+{
+}
+
+ACE_INLINE
+ACE_Token_Proxy_Queue::~ACE_Token_Proxy_Queue (void)
+{
+}
+
+ACE_INLINE
+ACE_Tokens::~ACE_Tokens (void)
+{
+}
+
 ACE_INLINE void
 ACE_Tokens::remove (ACE_TPQ_Entry *caller)
 {
@@ -313,6 +333,21 @@ ACE_Local_Mutex::create_token (const ASYS_TCHAR *name)
   return new ACE_Mutex_Token (name);
 }
 
+ACE_INLINE
+ACE_Null_Token::ACE_Null_Token (void)
+{
+}
+
+ACE_INLINE
+ACE_Null_Token::~ACE_Null_Token (void)
+{
+}
+
+ACE_INLINE
+ACE_Local_Mutex::~ACE_Local_Mutex (void)
+{
+}
+
 // ************************************************************
 
 ACE_INLINE
@@ -322,6 +357,11 @@ ACE_Local_RLock::ACE_Local_RLock (const ASYS_TCHAR *token_name,
 {
   ACE_TRACE ("ACE_Local_RLock::ACE_Local_RLock");
   this->open (token_name, ignore_deadlock, debug);
+}
+
+ACE_INLINE
+ACE_Local_RLock::~ACE_Local_RLock (void)
+{
 }
 
 ACE_INLINE ACE_Tokens *
@@ -353,6 +393,11 @@ ACE_Local_WLock::ACE_Local_WLock (const ASYS_TCHAR *token_name,
 {
   ACE_TRACE ("ACE_Local_WLock::ACE_Local_WLock");
   this->open (token_name, ignore_deadlock, debug);
+}
+
+ACE_INLINE
+ACE_Local_WLock::~ACE_Local_WLock (void)
+{
 }
 
 ACE_INLINE ACE_Tokens *

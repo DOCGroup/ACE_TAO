@@ -141,6 +141,11 @@ ACE_CString::hash (void) const
   return ACE::hash_pjw (this->rep_);
 }
 
+ACE_INLINE
+ACE_SString::~ACE_SString (void)
+{
+}
+
 ACE_INLINE ACE_SString
 ACE_SString::substr (size_t offset,
                      ssize_t length) const

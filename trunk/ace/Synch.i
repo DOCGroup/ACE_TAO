@@ -525,6 +525,12 @@ ACE_Condition_Thread_Mutex::mutex (void)
   return this->mutex_;
 }
 
+ACE_INLINE
+ACE_Recursive_Thread_Mutex::~ACE_Recursive_Thread_Mutex (void)
+{
+  // ACE_TRACE ("ACE_Recursive_Thread_Mutex::~ACE_Recursive_Thread_Mutex");
+}
+
 #if !defined (ACE_WIN32)
 ACE_INLINE int
 ACE_Recursive_Thread_Mutex::remove (void)
@@ -720,6 +726,11 @@ ACE_Null_Barrier::ACE_Null_Barrier (u_int,
 {
 }
 
+ACE_INLINE
+ACE_Null_Barrier::~ACE_Null_Barrier (void)
+{
+}
+
 ACE_INLINE int
 ACE_Null_Barrier::wait (void)
 {
@@ -856,26 +867,71 @@ ACE_Null_Mutex_Guard::remove (void)
   return 0;
 }
 
-ACE_INLINE int ACE_Null_Mutex_Guard::locked (void)
+ACE_INLINE int
+ACE_Null_Mutex_Guard::locked (void)
 {
   return 1;
 }
 
-ACE_INLINE int ACE_Null_Mutex_Guard::acquire (void)
+ACE_INLINE int
+ACE_Null_Mutex_Guard::acquire (void)
 {
   return 0;
 }
 
-ACE_INLINE int ACE_Null_Mutex_Guard::tryacquire (void)
+ACE_INLINE int
+ACE_Null_Mutex_Guard::tryacquire (void)
 {
   return 0;
 }
 
-ACE_INLINE int ACE_Null_Mutex_Guard::release (void)
+ACE_INLINE int
+ACE_Null_Mutex_Guard::release (void)
 {
   return 0;
 }
 
-ACE_INLINE void ACE_Null_Mutex_Guard::dump (void) const
+ACE_INLINE void
+ACE_Null_Mutex_Guard::dump (void) const
+{
+}
+
+ACE_INLINE
+ACE_TSS_Adapter::~ACE_TSS_Adapter (void)
+{
+}
+
+ACE_INLINE
+ACE_Manual_Event::~ACE_Manual_Event (void)
+{
+}
+
+ACE_INLINE
+ACE_Auto_Event::~ACE_Auto_Event (void)
+{
+}
+
+ACE_INLINE 
+ACE_RW_Thread_Mutex::~ACE_RW_Thread_Mutex (void)
+{
+}
+
+ACE_INLINE
+ACE_Thread_Semaphore::~ACE_Thread_Semaphore (void)
+{
+}
+
+ACE_INLINE
+ACE_Sub_Barrier::~ACE_Sub_Barrier (void)
+{
+}
+
+ACE_INLINE
+ACE_Barrier::~ACE_Barrier (void)
+{
+}
+
+ACE_INLINE
+ACE_Thread_Barrier::~ACE_Thread_Barrier (void)
 {
 }

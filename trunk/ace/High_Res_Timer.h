@@ -86,6 +86,9 @@ public:
   ACE_High_Res_Timer (void);
   // Initialize the timer.
 
+  ~ACE_High_Res_Timer (void);
+  // dtor.
+
   void reset (void);
   // Reinitialize the timer.
 

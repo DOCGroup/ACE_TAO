@@ -58,5 +58,9 @@ protected:
   // Keeps track of whether we need to delete the queue.
 };
 
+#if defined (__ACE_INLINE__)
+#include "ace/Activation_Queue.i"
+#endif /* __ACE_INLINE__ */
+
 #endif /* ACE_ACTIVATION_QUEUE_H */
 

@@ -37,6 +37,9 @@ public:
 		     int protocol = 0);
     // Initiate a passive mode socket.
 
+  ~ACE_SOCK_Acceptor (void);
+  // Default dtor.
+
   int open (const ACE_Addr &local_sap, 
 	    int reuse_addr = 0, 
 	    int protocol_family = PF_INET, 
@@ -76,8 +79,8 @@ private:
   // Do not allow this function to percolate up to this interface... 
 };
 
-#if defined (__ACE_INLINE__)
+#if !defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/SOCK_Acceptor.i"
-#endif /* __ACE_INLINE__ */
+#endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
 #endif /* ACE_SOCK_ACCEPTOR_H */

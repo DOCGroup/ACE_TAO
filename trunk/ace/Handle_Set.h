@@ -39,6 +39,11 @@ public:
 
   ACE_Handle_Set (const ACE_FD_SET_TYPE &mask);
 
+#if defined (ACE_HAS_WINCE)
+  ~ACE_Handle_Set (void);
+  // Default dtor.
+#endif /* ACE_HAS_WINCE */
+
   // = Methods for manipulating bitsets.
   void reset (void);
   // Initialize the bitmask to all 0s and reset the associated fields.
@@ -123,6 +128,9 @@ class ACE_Export ACE_Handle_Set_Iterator
 public:
   ACE_Handle_Set_Iterator (const ACE_Handle_Set &hs);
   // Constructor.
+
+  ~ACE_Handle_Set_Iterator (void);
+  // Default dtor.
 
   ACE_HANDLE operator () (void);
   // "Next" operator.  Returns the next unseen <ACE_HANDLE> in the

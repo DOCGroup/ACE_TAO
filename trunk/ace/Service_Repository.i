@@ -25,3 +25,7 @@ ACE_Service_Repository::total_size (void)
   return this->total_size_;
 }
 
+ACE_INLINE
+ACE_Service_Repository_Iterator::~ACE_Service_Repository_Iterator (void)
+{
+}

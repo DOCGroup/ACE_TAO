@@ -7,6 +7,18 @@
 
 // Shut down just the reading end of a ACE_SOCK. 
 
+ASYS_INLINE
+ACE_SOCK_Stream::ACE_SOCK_Stream (void)
+{
+  ACE_TRACE ("ACE_SOCK_Stream::ACE_SOCK_Stream");
+}
+
+ASYS_INLINE
+ACE_SOCK_Stream::~ACE_SOCK_Stream (void)
+{
+  ACE_TRACE ("ACE_SOCK_Stream::~ACE_SOCK_Stream");
+}
+
 ASYS_INLINE int
 ACE_SOCK_Stream::close_reader (void)
 {

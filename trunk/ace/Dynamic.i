@@ -3,6 +3,12 @@
 
 // Dynamic.i
 
+ACE_INLINE
+ACE_Dynamic::~ACE_Dynamic (void)
+{
+  ACE_TRACE ("ACE_Dynamic::~ACE_Dynamic");
+}
+
 ACE_INLINE void
 ACE_Dynamic::set (void)
 { 

@@ -489,11 +489,6 @@ ACE_Recursive_Thread_Mutex::ACE_Recursive_Thread_Mutex (const ACE_Recursive_Thre
 {
 }
 
-ACE_Recursive_Thread_Mutex::~ACE_Recursive_Thread_Mutex (void)
-{
-  // ACE_TRACE ("ACE_Recursive_Thread_Mutex::~ACE_Recursive_Thread_Mutex");
-}
-
 int
 ACE_Recursive_Thread_Mutex::acquire (void)
 {

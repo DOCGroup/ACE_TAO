@@ -36,6 +36,10 @@ public:
 		    int protocol_family = PF_INET, 
 		    int protocol = 0,
 		    int reuse_addr = 0);
+
+  ~ACE_SOCK_CODgram (void);
+  // Default dtor.
+
   // Initiate a connected dgram.
 
   int open (const ACE_Addr &remote_sap, 

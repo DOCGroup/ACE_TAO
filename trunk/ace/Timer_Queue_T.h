@@ -29,6 +29,9 @@ public:
   ACE_Timer_Node_T (void);
   // Default constructor
 
+  ~ACE_Timer_Node_T (void);
+  // Dtor.
+
   void set (const TYPE &type, 
             const void *a, 
             const ACE_Time_Value &t, 
@@ -334,6 +337,9 @@ public:
                             ACE_LOCK>
           TIMER_QUEUE;
   
+  ACE_Event_Handler_Handle_Timeout_Upcall (void);
+  ~ACE_Event_Handler_Handle_Timeout_Upcall (void);
+
   int timeout (TIMER_QUEUE &timer_queue,
 	       ACE_Event_Handler *handler,
 	       const void *arg,

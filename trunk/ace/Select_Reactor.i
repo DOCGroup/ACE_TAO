@@ -1,7 +1,30 @@
 /* -*- C++ -*- */
 // $Id$
 
-#include "ace/Reactor.h"
+ACE_INLINE
+ACE_Event_Tuple::~ACE_Event_Tuple (void)
+{
+}
+
+ACE_INLINE
+ACE_Select_Reactor_Notify::ACE_Select_Reactor_Notify (void)
+{
+}
+
+ACE_INLINE
+ACE_Select_Reactor_Notify::~ACE_Select_Reactor_Notify (void)
+{
+}
+
+ACE_INLINE
+ACE_Select_Reactor_Handler_Repository::~ACE_Select_Reactor_Handler_Repository (void)
+{
+}
+
+ACE_INLINE
+ACE_Select_Reactor_Handler_Repository_Iterator::~ACE_Select_Reactor_Handler_Repository_Iterator (void)
+{
+}
 
 ACE_INLINE int
 ACE_Select_Reactor::resume_handler (ACE_Event_Handler *h)

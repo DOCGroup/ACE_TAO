@@ -3,6 +3,11 @@
 
 // Log_Record.i
 
+ASYS_INLINE
+ACE_Log_Record::~ACE_Log_Record (void)
+{
+}
+
 ASYS_INLINE void
 ACE_Log_Record::encode (void)
 {

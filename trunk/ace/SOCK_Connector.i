@@ -7,6 +7,12 @@
 // the specified REMOTE_SAP address using a blocking open.
 
 ASYS_INLINE
+ACE_SOCK_Connector::~ACE_SOCK_Connector (void)
+{
+  ACE_TRACE ("ACE_SOCK_Connector::~ACE_SOCK_Connector");
+}
+
+ASYS_INLINE
 ACE_SOCK_Connector::ACE_SOCK_Connector (ACE_SOCK_Stream &new_stream, 
 					const ACE_Addr &remote_sap, 
 					ACE_Time_Value *timeout,

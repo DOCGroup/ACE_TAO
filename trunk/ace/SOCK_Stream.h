@@ -30,6 +30,10 @@ class ACE_Export ACE_SOCK_Stream : public ACE_SOCK_IO
   //     This adds additional wrapper methods atop the <ACE_SOCK_IO>
   //     class.
 public:
+  ACE_SOCK_Stream (void);
+  ~ACE_SOCK_Stream (void);
+  // Default ctor/dtor.
+
   //= The following two methods use write and read system calls.
   ssize_t send_n (const void *buf, int n) const;
   // Send n bytes, keep trying until n are sent.

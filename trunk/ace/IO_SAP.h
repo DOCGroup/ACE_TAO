@@ -31,6 +31,9 @@ public:
     INVALID_HANDLE = -1 // Be consistent with Winsock 
   };
 
+  ~ACE_IO_SAP (void);
+  // Default dtor.
+
   int control (int cmd, void *) const;
   // Interface for ioctl. 
 

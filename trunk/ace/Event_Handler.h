@@ -137,6 +137,9 @@ public:
   ACE_Notification_Buffer (ACE_Event_Handler *eh,
 			   ACE_Reactor_Mask mask);
 
+  ~ACE_Notification_Buffer (void);
+  // Default dtor.
+
   ACE_Event_Handler *eh_;
   // Pointer to the Event_Handler that will be dispatched 
   // by the main event loop.

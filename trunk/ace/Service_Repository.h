@@ -135,6 +135,9 @@ public:
   ACE_Service_Repository_Iterator (ACE_Service_Repository &sr, 
 				   int ignored_suspended = 1);
 
+  ~ACE_Service_Repository_Iterator (void);
+  // dtor.
+
   // = Iteration methods.
 
   int next (const ACE_Service_Type *&next_item);

@@ -11,6 +11,12 @@ ACE_SOCK_Dgram::ACE_SOCK_Dgram (void)
   ACE_TRACE ("ACE_SOCK_Dgram::ACE_SOCK_Dgram");
 }
 
+ASYS_INLINE
+ACE_SOCK_Dgram::~ACE_SOCK_Dgram (void)
+{
+  ACE_TRACE ("ACE_SOCK_Dgram::~ACE_SOCK_Dgram");
+}
+
 // <sendto> an N byte datagram to <addr> (connectionless version).
 
 ASYS_INLINE ssize_t

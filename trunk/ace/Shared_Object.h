@@ -26,6 +26,8 @@ class ACE_Export ACE_Shared_Object
   //     Provide the abstract base class used to access dynamic
   //     linking facilities.
 public:
+  ACE_Shared_Object (void);
+
   virtual int init (int argc, ASYS_TCHAR *argv[]);
   // Initializes object when dynamic linking occurs.
 

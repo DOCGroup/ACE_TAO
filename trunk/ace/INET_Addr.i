@@ -3,6 +3,12 @@
 
 // INET_Addr.i
 
+// Default dtor.
+ACE_INLINE
+ACE_INET_Addr::~ACE_INET_Addr (void)
+{
+}
+
 // Return the port number, converting it into host byte order...
 
 ACE_INLINE u_short

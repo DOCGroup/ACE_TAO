@@ -17,6 +17,11 @@ ACE_Timer_List_Iterator_T<TYPE, FUNCTOR, ACE_LOCK>::ACE_Timer_List_Iterator_T (A
   // Nothing
 }
 
+template <class TYPE, class FUNCTOR, class ACE_LOCK>
+ACE_Timer_List_Iterator_T<TYPE, FUNCTOR, ACE_LOCK>::~ACE_Timer_List_Iterator_T (void)
+{
+}
+
 // Positions the iterator at the node right after the dummy node
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK> void

@@ -205,6 +205,7 @@ public:
   // = Initialization methods.
   ACE_Name_Node (const char *name, void *, ACE_Name_Node *);
   ACE_Name_Node (void);
+  ~ACE_Name_Node (void);
 
   char *name_;
   // Name of the Node.

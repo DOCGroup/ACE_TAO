@@ -19,6 +19,10 @@ ACE_Timer_Wheel_Iterator_T<TYPE, FUNCTOR, ACE_LOCK>::ACE_Timer_Wheel_Iterator_T 
   // Nothing
 }
 
+template <class TYPE, class FUNCTOR, class ACE_LOCK>
+ACE_Timer_Wheel_Iterator_T<TYPE, FUNCTOR, ACE_LOCK>::~ACE_Timer_Wheel_Iterator_T (void)
+{
+}
 
 // Positions the iterator at the first node in the timing wheel
 

@@ -39,6 +39,9 @@ public:
   ACE_Timer_Heap_Iterator_T (ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK> &);
   // Constructor.
 
+  ~ACE_Timer_Heap_Iterator_T (void);
+  // Destructor.
+
   virtual void first (void);
   // Positions the iterator at the earliest node in the Timer Queue
 

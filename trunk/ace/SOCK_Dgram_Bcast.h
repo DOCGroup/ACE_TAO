@@ -23,6 +23,8 @@ class ACE_Export ACE_Bcast_Node
 {
 public:
   ACE_Bcast_Node (ACE_INET_Addr &, ACE_Bcast_Node *);
+  ~ACE_Bcast_Node (void);
+  // Default dtor.
 
   ACE_INET_Addr bcast_addr_;
   // Broadcast address for the interface.
@@ -46,6 +48,10 @@ public:
                         int protocol = 0,
                         int reuse_addr = 0,
                         const ASYS_TCHAR *host_name = 0);
+
+  ~ACE_SOCK_Dgram_Bcast (void);
+  // Default dtor.
+
   // Initiate a connectionless datagram broadcast endpoint.
 
   int open (const ACE_Addr &local, 

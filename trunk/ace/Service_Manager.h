@@ -30,6 +30,7 @@ class ACE_Export ACE_Service_Manager : public ACE_Service_Object
   //     services in the Service Repository.
 public:
   ACE_Service_Manager (void);
+  ~ACE_Service_Manager (void);
   virtual int list_services (void);
   virtual int reconfigure_services (void);
 

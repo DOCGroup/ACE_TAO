@@ -145,6 +145,7 @@ class ACE_Export ACE_Event_Tuple
 public:
   ACE_Event_Tuple (void);
   ACE_Event_Tuple (ACE_Event_Handler* eh, ACE_HANDLE h);
+  ~ACE_Event_Tuple (void);
 
   int operator== (const ACE_Event_Tuple &rhs) const;
   // Equality operator.
@@ -175,6 +176,10 @@ class ACE_Export ACE_Select_Reactor_Notify : public ACE_Event_Handler
   //     passed to <notify>, the appropriate <handle_*> method is
   //     dispatched in the context of the <ACE_Select_Reactor> thread.
 public:
+  ACE_Select_Reactor_Notify (void);
+  ~ACE_Select_Reactor_Notify (void);
+  // Default dtor.
+
   // = Initialization and termination methods.
   int open (ACE_Select_Reactor *, int disable_notify_pipe);
   int close (void);
@@ -236,6 +241,9 @@ public:
   // = Initialization and termination methods.
   ACE_Select_Reactor_Handler_Repository (ACE_Select_Reactor &);
   // Default "do-nothing" constructor.
+
+  ~ACE_Select_Reactor_Handler_Repository (void);
+  // dtor.
 
   int open (size_t size);
   // Initialize a repository of the appropriate <size>.
@@ -322,6 +330,9 @@ class ACE_Export ACE_Select_Reactor_Handler_Repository_Iterator
 public:
   // = Initialization method.
   ACE_Select_Reactor_Handler_Repository_Iterator (const ACE_Select_Reactor_Handler_Repository *s);
+
+  ~ACE_Select_Reactor_Handler_Repository_Iterator (void);
+  // dtor.
 
   // = Iteration methods.
 

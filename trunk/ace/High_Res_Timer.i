@@ -68,6 +68,11 @@ ACE_High_Res_Timer::ACE_High_Res_Timer (void)
   this->reset ();
 }
 
+ACE_INLINE
+ACE_High_Res_Timer::~ACE_High_Res_Timer (void)
+{
+}
+
 ACE_INLINE void
 ACE_High_Res_Timer::start (const ACE_OS::ACE_HRTimer_Op op)
 {

@@ -1160,9 +1160,13 @@ ACE_OS::strchr (char *s, int c)
   // ACE_TRACE ("ACE_OS::strchr");
   return ::strchr (s, c);
 #else
-  ACE_UNUSED_ARG (s);
-  ACE_UNUSED_ARG (c);
-  ACE_NOTSUP_RETURN (0);
+  for (;;++s)
+    {
+      if (*s == c)
+        return s;
+      if (*s == 0)
+        return 0;
+    }
 #endif /* ACE_HAS_WINCE */
 }
 
@@ -1173,9 +1177,13 @@ ACE_OS::strchr (const char *s, int c)
   // ACE_TRACE ("ACE_OS::strchr");
   return (const char *) ::strchr (s, c);
 #else
-  ACE_UNUSED_ARG (s);
-  ACE_UNUSED_ARG (c);
-  ACE_NOTSUP_RETURN (0);
+  for (;;++s)
+    {
+      if (*s == c)
+        return s;
+      if (*s == 0)
+        return 0;
+    }
 #endif /* ACE_HAS_WINCE */
 }
 
@@ -5147,9 +5155,12 @@ ACE_OS::thr_getspecific (ACE_thread_key_t key, void **data)
 
   int error = errno;
   *data = ::TlsGetValue (key);
+#if !defined (ACE_HAS_WINCE)
   if (*data == 0 && (errno = ::GetLastError ()) != NO_ERROR)
+
     return -1;
   else
+#endif /* ACE_HAS_WINCE */
     {
       errno = error;
       return 0;

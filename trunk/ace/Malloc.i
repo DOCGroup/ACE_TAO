@@ -1,6 +1,11 @@
 /* -*- C++ -*- */
 // $Id$
 
+ACE_INLINE
+ACE_Name_Node::~ACE_Name_Node (void)
+{
+}
+
 ACE_INLINE void *
 ACE_New_Allocator::malloc (size_t nbytes)
 {

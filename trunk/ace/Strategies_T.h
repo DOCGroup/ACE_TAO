@@ -583,6 +583,9 @@ public:
   ACE_Hash_Addr (const ADDR_T &a, int recyclable);
   // Pre-compute hash value.
 
+  ~ACE_Hash_Addr (void);
+  // Default destructor.
+
   u_long hash (void) const;
   // Computes and returns hash value.  This "caches" the hash value to
   // improve performance.
@@ -797,6 +800,10 @@ public:
   virtual void dump (void) const;
   // Dump the state of the object.
 };
+
+#if !defined (ACE_LACKS_INLINE_FUNCTIONS)
+#include "ace/Strategies_T.i"
+#endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Strategies_T.cpp"

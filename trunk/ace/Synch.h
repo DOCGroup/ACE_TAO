@@ -611,6 +611,9 @@ public:
 		    void * = 0);
   // Initialize the barrier to synchronize <count> threads.
 
+  ~ACE_Null_Barrier (void);
+  // Default dtor.
+
   int wait (void);
   // Block the caller until all <count> threads have called <wait> and
   // then allow all the caller threads to continue in parallel.
@@ -727,6 +730,9 @@ public:
   ACE_TSS_Adapter (void *object, ACE_THR_DEST f);
   // Initialize the adapter.
 
+  ~ACE_TSS_Adapter (void);
+  // Default dtor.
+
   void cleanup (void);
   // Perform the cleanup operation.
 
@@ -835,6 +841,9 @@ public:
 		    void *arg = 0);
   // constructor which will create manual event
 
+  ~ACE_Manual_Event (void);
+  // Default dtor.
+
   void dump (void) const;
   // Dump the state of an object.
 
@@ -856,6 +865,9 @@ public:
 		  LPCTSTR name = 0,
 		  void *arg = 0);
   // constructor which will create auto event
+
+  ~ACE_Auto_Event (void);
+  // Default dtor.
 
   void dump (void) const;
   // Dump the state of an object.
@@ -1100,10 +1112,10 @@ public:
 			      void *arg = 0);
   // Initialize a recursive mutex.
 
-#if !defined (ACE_WIN32)
   ~ACE_Recursive_Thread_Mutex (void);
   // Implicitly release a recursive mutex.
 
+#if !defined (ACE_WIN32)
   int remove (void);
   // Implicitly release a recursive mutex.
 
@@ -1197,6 +1209,9 @@ public:
   ACE_RW_Thread_Mutex (LPCTSTR name = 0,
 		       void *arg = 0);
 
+  ~ACE_RW_Thread_Mutex (void);
+  // Default dtor.
+
   int tryacquire_write_upgrade (void);
   // Conditionally upgrade a read lock to a write lock.  This only
   // works if there are no other readers present, in which case the
@@ -1225,6 +1240,9 @@ public:
   // Initialize the semaphore, with an initial value of <count> and a
   // maximum value of <max>.
 
+  ~ACE_Thread_Semaphore (void);
+  // Default dtor.
+
   void dump (void) const;
   // Dump the state of an object.
 
@@ -1239,6 +1257,8 @@ struct ACE_Export ACE_Sub_Barrier
 		   ACE_Thread_Mutex &lock,
 		   LPCTSTR name = 0,
 		   void *arg = 0);
+
+  ~ACE_Sub_Barrier (void);
 
   ACE_Condition_Thread_Mutex barrier_finished_;
   // True if this generation of the barrier is done.
@@ -1272,6 +1292,9 @@ public:
 	       LPCTSTR name = 0,
 	       void *arg = 0);
   // Initialize the barrier to synchronize <count> threads.
+
+  ~ACE_Barrier (void);
+  // Default dtor.
 
   int wait (void);
   // Block the caller until all <count> threads have called <wait> and
@@ -1362,6 +1385,9 @@ class ACE_Export ACE_Thread_Barrier : public ACE_Barrier
 public:
   ACE_Thread_Barrier (u_int count, LPCTSTR name = 0);
   // Create a Thread_Barrier, passing in the optional <name>.
+
+  ~ACE_Thread_Barrier (void);
+  // Default dtor.
 
   void dump (void) const;
   // Dump the state of an object.
