@@ -1,6 +1,4 @@
-//
 // $Id$
-//
 
 #ifndef ACE_TIMEPROBE_H
 #define ACE_TIMEPROBE_H
