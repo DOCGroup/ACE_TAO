@@ -1,9 +1,19 @@
+Fri Dec  3 09:13:46 2004  Dale Wilson  <wilson_d@ociweb.com>
+
+        * orbsvcs/orbsvcs/Notify/Admin.cpp:
+        * orbsvcs/orbsvcs/Notify/EventChannel.cpp:
+        * orbsvcs/orbsvcs/Notify/ProxyConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/ProxySupplier.cpp:
+        * orbsvcs/orbsvcs/Notify/Topology_Object.h:
+        * orbsvcs/orbsvcs/Notify/Topology_Object.cpp:
+          One more pass at the "init" method.  This time to make VC6 happy.
+
 Fri Dec  3 09:50:27 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_exception/exception_cs.cpp:
         * TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp:
         * TAO_IDL/be/be_visitor_valuetype/valuetype_init_cs.cpp:
-        
+
           Regarding the generated _downcast() method for exceptions,
           valuetypes and value factories, since we are using
           dynamic_cast<> now for these, the existing checks for nil
@@ -67,20 +77,20 @@ Fri Dec  3 12:54:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Fri Dec  3 05:19:23 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/ObjRefTemplate/ObjectReferenceTemplate.h:
+        * tao/ObjRefTemplate/ObjectReferenceTemplate.h:
 
-	  New file that needs to be included by clients.
+          New file that needs to be included by clients.
 
-	* tao/ObjRefTemplate/Default_ORTC.h:
-	* tao/ObjRefTemplate/ObjectReferenceTemplateC.cpp:
-	* tao/ObjRefTemplate/ObjectReferenceTemplateC.h:
-	* tao/ObjRefTemplate/ObjectReferenceTemplateC.inl:
+        * tao/ObjRefTemplate/Default_ORTC.h:
+        * tao/ObjRefTemplate/ObjectReferenceTemplateC.cpp:
+        * tao/ObjRefTemplate/ObjectReferenceTemplateC.h:
+        * tao/ObjRefTemplate/ObjectReferenceTemplateC.inl:
 
-	  Included the above file.
+          Included the above file.
 
-	* tao/ObjRefTemplate/ORT_Adapter_Factory_Impl.h:
+        * tao/ObjRefTemplate/ORT_Adapter_Factory_Impl.h:
 
-	  Added a safe #define for including ObjectReferenceTemplateC.h.
+          Added a safe #define for including ObjectReferenceTemplateC.h.
 
 Thu Dec  2 21:21:47 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 

@@ -26,6 +26,10 @@ ACE_RCSID(RT_Notify, TAO_Notify_ProxyConsumer, "$Id$")
 # define DEBUG_LEVEL TAO_debug_level
 #endif //DEBUG_LEVEL
 
+// for VC6.  Otherwise calling Tao_Notify::TopologyObject::init confuses the parser
+using namespace TAO_Notify;
+
+
 TAO_Notify_ProxyConsumer::TAO_Notify_ProxyConsumer (void)
   : supplier_admin_ (0)
   , supplier_ (0)
@@ -43,10 +47,13 @@ TAO_Notify_ProxyConsumer::peer (void)
   return this->supplier ();
 }
 
+// for VC6.  Otherwise calling Tao_Notify::TopologyObject::init confuses the parser
+typedef TAO_Notify::Topology_Object TAO_Notify_Topology_Object;
+
 void
 TAO_Notify_ProxyConsumer::init (TAO_Notify::Topology_Parent * topology_parent ACE_ENV_ARG_DECL)
 {
-  TAO_Notify_Proxy::initialize (topology_parent ACE_ENV_ARG_PARAMETER);
+  TAO_Notify_Topology_Object::init (topology_parent ACE_ENV_ARG_PARAMETER);
 
   this->supplier_admin_ = dynamic_cast<TAO_Notify_SupplierAdmin *>(topology_parent);
   ACE_ASSERT(this->supplier_admin_ != 0);
