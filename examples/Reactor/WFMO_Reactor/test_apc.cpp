@@ -86,7 +86,7 @@ main (int argc, char *argv[])
 {
   event_handler.iterations_ = 5;
   int result = ACE_Reactor::instance ()->register_handler (&event_handler, 
-                                                           event_handler.handle_.handle ();
+                                                           event_handler.handle_.handle ());
   ACE_ASSERT (result == 0);
   
   ACE_Time_Value timeout (2);
