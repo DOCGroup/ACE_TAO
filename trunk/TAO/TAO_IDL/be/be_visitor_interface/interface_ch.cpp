@@ -327,11 +327,14 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
           << "_setup_collocation (int collocated);" << be_nl << be_nl;
     }
 
-  if (node->is_abstract ())
+  if (node->is_abstract () || node->is_local ())
     {
       // Protected default constructor for abstract interfaces.
       *os << node->local_name () << " (void);" << be_nl;
+    }
 
+  if (node->is_abstract ())
+    {
       // Protected copy constructor for abstract interfaces.
       *os << node->local_name () << " (const "
           << node->local_name () << " &);" << be_nl;

@@ -225,6 +225,13 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
   *os << "// TAO_IDL - Generated from " << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
+  if (node->is_local ())
+    {
+      *os << node->name () << "::" << node->local_name () 
+          << " (void)" << be_nl
+          << "{}" << be_nl << be_nl;
+    }
+
   if (! node->is_abstract () && ! node->is_local ())
     {
        // Generate the destructor and default constructor.
