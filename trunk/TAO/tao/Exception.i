@@ -37,20 +37,6 @@ CORBA_SystemException::completion (CORBA::CompletionStatus c)
   this->completed_ = c;
 }
 
-ACE_INLINE void
-CORBA_Environment::clear (void)
-{
-  if (this->exception_)
-    this->exception_->Release ();
-  this->exception_ = 0;
-}
-
-ACE_INLINE
-CORBA_Environment::~CORBA_Environment (void)
-{
-  this->clear ();
-}
-
 ACE_INLINE
 CORBA::Exception_ptr CORBA_Environment::exception (void) const
 {

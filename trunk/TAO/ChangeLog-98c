@@ -1,3 +1,11 @@
+Sun Mar 22 18:01:18 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* TAO/tao: Moved a bunch of inline methods from *.i files into
+ 	  *.cpp files to avoid warnings from G++.  I don't know why it
+ 	  complains but not inlining this code shouldn't matter unless we
+ 	  find that these functions get called a lot via profiling...
+  	  Thanks to David Levine for pointing this out.
+
 Sun Mar 22 14:04:31 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/tao.{dsp,dsw}: Updated Project files.
