@@ -1,3 +1,11 @@
+Tue Jun 22 16:54:35 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* configure.ac:
+	  Changed ACE_HAS_LIMITED_RUSAGE_T and ACE_HAS_BROKEN_SETRLIMIT
+	  checks to include <sys/time.h> before <sys/resource.h>.
+	  Changed ACE_HAS_BROKEN_WRITEV check to use !ACE_LACKS_UNISTD_H
+	  instead of ACE_HAS_UNISTD_H (which is never set).
+
 Tue Jun 22 13:54:36 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* ace/config-macosx-panther.h:

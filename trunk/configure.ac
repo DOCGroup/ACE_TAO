@@ -1484,6 +1484,7 @@ dnl Check for more than two fields in struct rusage
 ACE_CACHE_CHECK([for limited struct rusage],
     [ace_cv_lib_limited_rusage],[
         AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
+#include <sys/time.h>
 #include <sys/resource.h>
           ]],[[
            rusage ace_rusage;
@@ -4774,6 +4775,7 @@ dnl Check if setrlimit() takes a const pointer as 2nd argument
 ACE_CACHE_CHECK([if setrlimit() takes a const pointer as 2nd argument],
   [ace_cv_lib_posix_setrlimit_const_2],[
     AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
+#include <sys/time.h>
 #include <sys/resource.h>
       ]], [[
        const struct rlimit* rlp = 0;
@@ -4864,7 +4866,7 @@ dnl Check if writev omits the const from the iovec argument
  ACE_CACHE_CHECK([if writev omits the const from the iovec argument],
   [ace_cv_lib_broken_writev],[
     AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
-#ifdef ACE_HAS_UNISTD_H
+#ifndef ACE_LACKS_UNISTD_H
 # include <unistd.h>
 #endif
 
