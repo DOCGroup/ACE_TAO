@@ -15,6 +15,7 @@
 #include "ace/Reactor.h"
 #include "ace/OS_NS_sys_wait.h"
 #include "ace/OS_NS_signal.h"
+#include "ace/OS_NS_sys_time.h"
 
 ACE_RCSID (ace,
            Process_Manager,
