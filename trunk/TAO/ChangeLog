@@ -1,3 +1,10 @@
+Sat Jan 10 12:27:59 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* orbsvcs/tests/FT_App/FT_App.mpc:
+
+	  Used the wrong library name as a dependency which broke the
+	  SunOS MPC builds from remedy.
+
 Fri Jan  9 23:50:21 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* orbsvcs/tests/Miop/McastHello/McastHello.cpp:

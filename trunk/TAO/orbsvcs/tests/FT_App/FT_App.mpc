@@ -88,7 +88,7 @@ project(*FaultConsumer): taoserver, fault_tolerance, orbsvcsexe {
   avoids += minimum_corba
   requires += exceptions
   libs    += TAO_ReplicationManagerLib
-  after   += TAO_ReplicationManagerLib
+  after   += FT_ReplicationManager_Lib
   Source_Files {
     FTAPP_FaultConsumer_Main.cpp
     ReplicationManagerFaultConsumerAdapter.cpp
