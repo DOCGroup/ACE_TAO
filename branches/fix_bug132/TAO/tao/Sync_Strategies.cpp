@@ -18,7 +18,7 @@ TAO_Sync_Strategy::~TAO_Sync_Strategy (void)
 
 int
 TAO_Transport_Sync_Strategy::
-    must_queue (TAO_Stub *, int)
+    must_queue (int)
 {
   return 0;
 }
@@ -40,7 +40,7 @@ TAO_Transport_Sync_Strategy::
 
 int
 TAO_Eager_Buffering_Sync_Strategy::
-    must_queue (TAO_Stub *, int)
+    must_queue (int)
 {
   return 1;
 }
@@ -123,8 +123,7 @@ TAO_Eager_Buffering_Sync_Strategy::
 
 int
 TAO_Delayed_Buffering_Sync_Strategy::
-    must_queue (TAO_Stub *,
-                int queue_empty)
+    must_queue (int queue_empty)
 {
   // If the queue is empty we want to send immediately
   return !queue_empty;

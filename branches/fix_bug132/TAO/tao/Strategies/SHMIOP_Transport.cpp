@@ -90,12 +90,23 @@ TAO_SHMIOP_Transport::idle (void)
 }
 
 ssize_t
-TAO_SHMIOP_Transport::send (const ACE_Message_Block *message_block,
-                            const ACE_Time_Value *max_wait_time,
-                            size_t *)
+TAO_SHMIOP_Transport::send (iovec *iov, int iovcnt,
+                          size_t &bytes_transferred,
+                          const ACE_Time_Value *max_wait_time)
 {
-  return this->service_handler ()->peer ().send (message_block,
-                                                 max_wait_time);
+  bytes_transferred = 0;
+  for (int i = 0; i < iovcnt; ++i)
+    {
+      ssize_t retval =
+        this->service_handler ()->peer ().send (iov[i].iov_base,
+                                                iov[i].iov_len,
+                                                max_wait_time);
+      if (retval > 0)
+        bytes_transferred += retval;
+      if (retval <= 0)
+        return retval;
+    }
+  return bytes_transferred;
 }
 
 ssize_t

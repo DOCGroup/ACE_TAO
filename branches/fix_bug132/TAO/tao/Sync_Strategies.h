@@ -48,8 +48,7 @@ public:
   virtual ~TAO_Sync_Strategy (void);
 
   /// Return 1 if a message must be queued
-  virtual int must_queue (TAO_Stub *stub,
-                          int queue_empty) = 0;
+  virtual int must_queue (int queue_empty) = 0;
 
   /// Return 1 if it is time to start
   /**
@@ -72,8 +71,7 @@ public:
 class TAO_Export TAO_Transport_Sync_Strategy : public TAO_Sync_Strategy
 {
 public:
-  virtual int must_queue (TAO_Stub *stub,
-                          int queue_empty);
+  virtual int must_queue (int queue_empty);
 
   virtual int buffering_constraints_reached (TAO_Stub *stub,
                                              size_t msg_count,
@@ -87,8 +85,7 @@ public:
 class TAO_Export TAO_Eager_Buffering_Sync_Strategy : public TAO_Sync_Strategy
 {
 public:
-  virtual int must_queue (TAO_Stub *stub,
-                          int queue_empty);
+  virtual int must_queue (int queue_empty);
 
   virtual int buffering_constraints_reached (TAO_Stub *stub,
                                              size_t msg_count,
@@ -120,8 +117,7 @@ private:
 class TAO_Export TAO_Delayed_Buffering_Sync_Strategy : public TAO_Eager_Buffering_Sync_Strategy
 {
 public:
-  virtual int must_queue (TAO_Stub *stub,
-                          int queue_empty);
+  virtual int must_queue (int queue_empty);
 };
 
 #endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */

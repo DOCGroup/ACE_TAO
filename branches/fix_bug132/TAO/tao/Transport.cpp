@@ -154,7 +154,7 @@ TAO_Transport::send_message_block_chain (const ACE_Message_Block *message_block,
       // Select the next message block in the chain.
       message_block = message_block->cont ();
     }
-  
+
   // Check for remaining buffers to be sent.  This will happen when
   // IOV_MAX is not a multiple of the number of message blocks.
   if (iovcnt != 0)
@@ -265,8 +265,7 @@ TAO_Transport::send_message_i (TAO_Stub *stub,
   int non_queued_message =
     (this->current_message_ == 0) // There is an outgoing message already
     && (twoway_flag
-        || !stub->sync_strategy ().must_queue (stub,
-                                               queue_empty));
+        || !stub->sync_strategy ().must_queue (queue_empty));
 
   TAO_Queued_Message *queued_message = 0;
   if (non_queued_message)
@@ -281,7 +280,7 @@ TAO_Transport::send_message_i (TAO_Stub *stub,
       // code I will re-visit this stuff.
       ssize_t n = this->send_message_block_chain (message_block,
                                                   byte_count,
-                                                  0 /* non-blocking */);
+                                                  max_wait_time);
       if (n == 0)
         return -1;
       else if (n == -1 && errno != EWOULDBLOCK)
@@ -293,8 +292,8 @@ TAO_Transport::send_message_i (TAO_Stub *stub,
           // Done, just return.  Notice that there are no allocations
           // or copies up to this point (though some fancy calling
           // back and forth).
-          // This should be the normal path in the ORB, it should be
-          // fast.
+          // This is the common case for the critical path, it should
+          // be fast.
           return 0;
         }
 

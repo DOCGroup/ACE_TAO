@@ -1,3 +1,26 @@
+Mon Feb 12 15:44:54 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Makefile:
+          Update makefile to include new files
+
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp:
+        * tao/Strategies/SHMIOP_Transport.h:
+        * tao/Strategies/SHMIOP_Transport.cpp:
+        * tao/Strategies/UIOP_Transport.h:
+        * tao/Strategies/UIOP_Transport.cpp:
+          Fixed all protocols to use the new send() method with iovec
+          parameters.
+
+        * tao/GIOP_Message_Lite.cpp:
+          Use the send() method with iovec arguments.
+
+        * tao/Sync_Strategies.h:
+        * tao/Sync_Strategies.cpp:
+        * tao/Transport.cpp:
+          More cleanup for the Sync_Strategies, the must_queue() method
+          does not require a Stub argument.
+
 Mon Feb 12 10:15:47 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/Transport.h:

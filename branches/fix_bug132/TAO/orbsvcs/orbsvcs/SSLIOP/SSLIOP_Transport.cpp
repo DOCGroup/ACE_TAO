@@ -75,74 +75,16 @@ TAO_SSLIOP_Transport::idle (void)
 }
 
 ssize_t
-TAO_SSLIOP_Transport::send (const ACE_Message_Block *message_block,
-                            const ACE_Time_Value *max_wait_time,
-                            size_t *bt)
+TAO_SSLIOP_Transport::send (iovec *iov, int iovcnt,
+                            size_t &bytes_transferred,
+                            const ACE_Time_Value *timeout = 0)
 {
-  // @@ This code should be refactored into ACE.cpp or something
-  // similar!
+  ssize_t retval = this->service_handler ()->peer ().sendv (iov, iovcnt,
+                                                            max_wait_time);
+  if (retval > 0)
+    bytes_transferred = retval;
 
-  // For the most part this was copied from GIOP::send_request and
-  // friends.
-
-  size_t temp;
-  size_t &bytes_transferred = bt == 0 ? temp : *bt;
-
-  iovec iov[IOV_MAX];
-  int iovcnt = 0;
-  ssize_t n = 0;
-
-  for (const ACE_Message_Block *i = message_block;
-       i != 0;
-       i = i->cont ())
-    {
-      // Make sure there is something to send!
-      if (i->length () > 0)
-        {
-          iov[iovcnt].iov_base = i->rd_ptr ();
-          iov[iovcnt].iov_len  = i->length ();
-          iovcnt++;
-
-          // The buffer is full make a OS call.  @@ TODO this should
-          // be optimized on a per-platform basis, for instance, some
-          // platforms do not implement writev() there we should copy
-          // the data into a buffer and call send_n(). In other cases
-          // there may be some limits on the size of the iovec, there
-          // we should set IOV_MAX to that limit.
-          if (iovcnt == IOV_MAX)
-            {
-              if (max_wait_time == 0)
-                n = this->service_handler ()->peer ().sendv_n (iov,
-                                                               iovcnt);
-              else
-                // @@ No timeouts!!!
-                n = this->service_handler ()->peer ().sendv_n (iov,
-                                                               iovcnt /*,
-                                                     max_wait_time */);
-
-              if (n == 0 ||
-                  n == -1)
-                return n;
-
-              bytes_transferred += n;
-              iovcnt = 0;
-            }
-        }
-    }
-
-  // Check for remaining buffers to be sent!
-  if (iovcnt != 0)
-    {
-      n = this->service_handler ()->peer ().sendv_n (iov,
-                                                     iovcnt);
-      if (n == 0 ||
-          n == -1)
-        return n;
-
-      bytes_transferred += n;
-    }
-
-  return bytes_transferred;
+  return retval;
 }
 
 ssize_t
