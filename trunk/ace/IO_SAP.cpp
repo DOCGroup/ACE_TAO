@@ -54,16 +54,21 @@ ACE_IO_SAP::enable (int signum) const
       return ACE_IO_SAP::INVALID_HANDLE;
 #endif /* F_SETOWN */
 #endif /* SIGURG */
+#if defined (SIGIO)		// <==
     case SIGIO:
 #if defined (F_SETOWN) && defined (FASYNC)
       if (ACE_OS::fcntl (this->handle_, F_SETOWN, ACE_IO_SAP::pid_) == ACE_IO_SAP::INVALID_HANDLE)
 	return ACE_IO_SAP::INVALID_HANDLE;
       if (ACE::set_flags (this->handle_, FASYNC) == ACE_IO_SAP::INVALID_HANDLE)
 	return ACE_IO_SAP::INVALID_HANDLE;
-      break;
 #else
       return ACE_IO_SAP::INVALID_HANDLE;
 #endif /* F_SETOWN && FASYNC */
+#else  // <==
+      return ACE_IO_SAP::INVALID_HANDLE; // <==
+#endif /* SIGIO <== */
+      break;
+
     case ACE_NONBLOCK:
       if (ACE::set_flags (this->handle_, ACE_NONBLOCK) == ACE_IO_SAP::INVALID_HANDLE)
 	return ACE_IO_SAP::INVALID_HANDLE;
@@ -100,6 +105,7 @@ ACE_IO_SAP::disable (int signum) const
 #endif /* F_SETOWN */
       break;
 #endif /* SIGURG */
+#if defined (SIGIO)		// <==
     case SIGIO:
 #if defined (F_SETOWN) && defined (FASYNC)
       if (ACE_OS::fcntl (this->handle_, F_SETOWN, 0) == ACE_IO_SAP::INVALID_HANDLE)
@@ -109,6 +115,9 @@ ACE_IO_SAP::disable (int signum) const
 #else
       return ACE_IO_SAP::INVALID_HANDLE;
 #endif /* F_SETOWN && FASYNC */
+#else  // <==
+      return ACE_IO_SAP::INVALID_HANDLE; // <==
+#endif /* SIGIO <== */
       break;
     case ACE_NONBLOCK:
       if (ACE::clr_flags (this->handle_, ACE_NONBLOCK) == ACE_IO_SAP::INVALID_HANDLE)

@@ -3920,7 +3920,8 @@ ACE_OS::thr_self (ACE_hthread_t &self)
 #elif defined (ACE_HAS_THREAD_SELF)
   self = ::thread_self ();
 #elif defined (ACE_HAS_PTHREADS) || defined (ACE_HAS_SETKIND_NP)
-  self = ::pthread_self ();
+  // Note, don't use "::" here since the following call is often a macro.
+  self = pthread_self ();
 #elif defined (ACE_HAS_STHREADS)
   self = ::thr_self ();
 #elif defined (ACE_HAS_WTHREADS)

@@ -68,6 +68,7 @@ ACE_IPC_SAP::enable (int signum) const
 #endif /* F_SETOWN */
       break;
 #endif /* SIGURG */
+#if defined (SIGIO)		// <==
     case SIGIO:
 #if defined (F_SETOWN) && defined (FASYNC)
       if (ACE_OS::fcntl (this->handle_, F_SETOWN, ACE_IPC_SAP::pid_) == -1)
@@ -77,7 +78,10 @@ ACE_IPC_SAP::enable (int signum) const
 #else
       return -1;
 #endif /* F_SETOWN && FASYNC */
-      break;
+#else  // <==
+      return -1;		// <==
+#endif /* SIGIO <== */
+       break;
     case ACE_NONBLOCK:
       if (ACE::set_flags (this->handle_, ACE_NONBLOCK) == ACE_INVALID_HANDLE)
 	return -1;
@@ -124,6 +128,7 @@ ACE_IPC_SAP::disable (int signum) const
       return -1;
 #endif /* F_SETOWN */
 #endif /* SIGURG */
+#if defined (SIGIO)		// <==
     case SIGIO:
 #if defined (F_SETOWN) && defined (FASYNC)
       if (ACE_OS::fcntl (this->handle_, F_SETOWN, 0) == -1)
@@ -134,6 +139,9 @@ ACE_IPC_SAP::disable (int signum) const
 #else
       return -1;
 #endif /* F_SETOWN && FASYNC */
+#else  // <==
+      return -1;		// <==
+#endif /* SIGIO <== */
     case ACE_NONBLOCK:
       if (ACE::clr_flags (this->handle_, ACE_NONBLOCK) == -1)
 	return -1;

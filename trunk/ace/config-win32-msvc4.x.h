@@ -8,6 +8,7 @@
 #if !defined (ACE_CONFIG_H)
 #define ACE_CONFIG_H
 
+#define ACE_LACKS_KEY_T
 #define ACE_HAS_EXCEPTIONS
 #define ACE_HAS_MFC
 #define ACE_LACKS_SIGACTION

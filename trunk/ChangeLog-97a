@@ -1,3 +1,43 @@
+Fri Mar 21 15:10:59 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/Memory_Pool.cpp: Added #if !defined
+	  (ACE_LACKS_SYSV_SHMEM) to handle systems like Chorus that
+	  lack this feature.  
+
+Thu Mar 20 18:58:50 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/Svc_Handler.cpp (destroy): Added a state variable to keep
+ 	  track of when we are closing down the Svc_Handler.  This is
+ 	  necessary to prevent endless recursive calls to handle_close()
+ 	  due to the recent enhancements to ACE_Timer_{List,Heap}.  Thanks
+ 	  to Bert Craytor <Bert_Craytor@peoplesoft.com> for reporting
+ 	  this.
+
+	* tests/Conn_Test.cpp: Added a new test that makes sure the
+ 	  Acceptor, Connector, and Svc_Handler are working correctly.
+
+	* ace: Added some more changes for Chorus.  Thanks to Wei Chiang
+ 	  <chiang@tele.nokia.fi> for these changes.
+
+	* ace/OS.h: Added #define for SIGSEGV for platforms that lack it
+ 	  (e.g., Chorus).
+
+	* ace: Made a bunch of minor changes to support SunOS 4.x better.
+	  Thanks to Scott Halstead <scott.halstead@gs.com> for reporting
+	  these problems.
+
+	* tests/Conn_Test.cpp: Added ACE_TEMPLATES_REQUIRE_SPECIALIZATION
+ 	  for the various templates used in this test.  Thanks to Thilo
+ 	  Kielmann <kielmann@informatik.uni-siegen.de> for reporting this.
+
+	* ace/Connector.cpp (connector): Fixed some minor bugs that
+ 	  prevented the ACE_Connector from compiling.  Thanks to David
+ 	  Levine for noticing this.
+
+	* ace/OS.h: Moved the ACE_LACKS_SIGACTION block so that it will
+ 	  work on Win32.  Thanks to Matthias Kerkhoff
+ 	  <make@cs.tu-berlin.de> for pointing this out.
+
 Thu Mar 20 22:38:27 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/Timer_Heap.cpp: added template specializations.
@@ -27,26 +67,6 @@ Thu Mar 20 22:38:27 1997  David L. Levine  <levine@cs.wustl.edu>
 	* include/makeinclude/platform_{chorus,hpux,hpux_gcc}.GNU:
 	  split out CFLAGS and CCFLAGS from CC and CXX.
 
-Thu Mar 20 18:58:50 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
-
-	* ace: Made a bunch of minor changes to support SunOS 4.x better.
-	  Thanks to Scott Halstead <scott.halstead@gs.com> for reporting
-	  these problems.
-
-	* tests/Conn_Test.cpp: Added ACE_TEMPLATES_REQUIRE_SPECIALIZATION
- 	  for the various templates used in this test.  Thanks to Thilo
- 	  Kielmann <kielmann@informatik.uni-siegen.de> for reporting this.
-
-	* ace/Connector.cpp (connector): Fixed some minor bugs that
- 	  prevented the ACE_Connector from compiling.  Thanks to David
- 	  Levine for noticing this.
-
-	* ace/OS.h: Moved the ACE_LACKS_SIGACTION block so that it will
- 	  work on Win32.  Thanks to Matthias Kerkhoff
- 	  <make@cs.tu-berlin.de> for pointing this out.
-
-Thu Mar 20 15:52:34 1997  David L. Levine  <levine@cs.wustl.edu>
-
 	* ace/config-aix-4.[12].x.h: added back ACE_HAS_THREAD_SELF and
 	  and ACE_HAS_SVR4_DYNAMIC_LINKING; removed ACE_HAS_PTHREAD_T.
 	  Thanks to Chris Lahey <CLahey@cccis.com> for figuring these out.
@@ -64,8 +84,6 @@ Thu Mar 20 12:25:30 1997    <harrison@samba.cs.wustl.edu>
 	  Build->Settings->Code Generation->Processor to use the RDTSC
 	  instruction in ACE_OS::gethrtime.
 
-Thu Mar 20 01:13:19 1997    <harrison@samba.cs.wustl.edu>
-
 	* ace/High_Res_Timer.{cpp,i}: By default, High_Res_Timer is
 	  constructed with a scale_factor == 1.  This allowed me to remove
 	  all the checks for scale_factor == 0 in the code.
@@ -76,18 +94,6 @@ Thu Mar 20 01:13:19 1997    <harrison@samba.cs.wustl.edu>
  	  ACE_OS::gettimeofday will be used instead of ACE_OS::gethrtime.
   	  This allows the scale_factor of 1 to still result in correct
  	  values.
-
-Thu Mar 20 00:30:39 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
-
-	* ace/Svc_Handler.cpp (destroy): Added a state variable to keep
- 	  track of when we are closing down the Svc_Handler.  This is
- 	  necessary to prevent endless recursive calls to handle_close()
- 	  due to the recent enhancements to ACE_Timer_{List,Heap}.  Thanks
- 	  to Bert Craytor <Bert_Craytor@peoplesoft.com> for reporting
- 	  this.
-
-	* tests/Conn_Test.cpp: Added a new test that makes sure the
- 	  Acceptor, Connector, and Svc_Handler are working correctly.
 
 Wed Mar 19 15:02:09 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 

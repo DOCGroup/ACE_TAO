@@ -11,6 +11,8 @@
 #define __ACE_INLINE__
 #endif /* ! __ACE_INLINE__ */
 
+#define ACE_LACKS_SYSV_MSG_H
+#define ACE_LACKS_KEY_T
 #define ACE_LACKS_EXEC
 #define ACE_LACKS_MEMORY_H
 #define ACE_LACKS_FILELOCKS
