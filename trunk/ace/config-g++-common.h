@@ -20,8 +20,9 @@
 
 #elif __GNUC__ > 2 || ( __GNUC__ == 2 && __GNUC_MINOR__ >= 8)
   // egcs or g++ >= 2.8.0
-// __EXCEPTIONS is defined with -fexceptions, the default.  It is not
-// defined with -fno-exceptions.
+
+  // __EXCEPTIONS is defined with -fexceptions, the egcs default.  It
+  // is not defined with -fno-exceptions, the ACE default for g++.
 # if defined (__EXCEPTIONS) && !defined (ACE_HAS_EXCEPTIONS)
 #   define ACE_HAS_EXCEPTIONS
 # endif /* __EXCEPTIONS && ! ACE_HAS_EXCEPTIONS */
