@@ -168,14 +168,12 @@ TAO_IIOP_Client_Transport::handle_client_input (int block)
   //    Do I make any sense?
 
   TAO_InputCDR* cdr = this->tms_->get_cdr_stream ();
-  ACE_Message_Block* payload =
-    ACE_const_cast(ACE_Message_Block*, cdr->start ());
 
   int result = TAO_GIOP::handle_input (this,
                                        this->orb_core_,
                                        this->message_header_,
                                        this->current_offset_,
-                                       payload);
+                                       *cdr);
   if (result == -1)
     {
       if (TAO_debug_level > 0)

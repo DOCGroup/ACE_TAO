@@ -12,30 +12,30 @@
 #if defined (ACE_HAS_USING_KEYWORD)
 template <class T> ACE_INLINE
 POA_CORBA::DomainManager_tie<T>::DomainManager_tie (T &t)
-	: ptr_ (&t),
-	  poa_ (PortableServer::POA::_nil ()),
-	  rel_ (0)
+        : ptr_ (&t),
+          poa_ (PortableServer::POA::_nil ()),
+          rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_CORBA::DomainManager_tie<T>::DomainManager_tie (T &t, PortableServer::POA_ptr poa)
-	: ptr_ (&t),
-	  poa_ (PortableServer::POA::_duplicate (poa)),
-	  rel_ (0)
+        : ptr_ (&t),
+          poa_ (PortableServer::POA::_duplicate (poa)),
+          rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_CORBA::DomainManager_tie<T>::DomainManager_tie (T *tp, CORBA::Boolean release)
-	: ptr_ (tp),
-	  poa_ (PortableServer::POA::_nil ()),
-	  rel_ (release)
+        : ptr_ (tp),
+          poa_ (PortableServer::POA::_nil ()),
+          rel_ (release)
 {}
 
 template <class T> ACE_INLINE
 POA_CORBA::DomainManager_tie<T>::DomainManager_tie (T *tp, PortableServer::POA_ptr poa, CORBA::Boolean release)
-	: ptr_ (tp),
-	  poa_ (PortableServer::POA::_duplicate (poa)),
-	  rel_ (release)
+        : ptr_ (tp),
+          poa_ (PortableServer::POA::_duplicate (poa)),
+          rel_ (release)
 {}
 
 template <class T> ACE_INLINE
@@ -83,15 +83,8 @@ POA_CORBA::DomainManager_tie<T>::_default_POA (CORBA::Environment &env)
 {
   if (!CORBA::is_nil (this->poa_.in ()))
     return PortableServer::POA::_duplicate (this->poa_.in ());
-  else
-  {
-    TAO_POA *poa = TAO_ORB_Core_instance ()->root_poa ();
-    PortableServer::POA_var result = poa->_this (env);
-    if (env.exception () != 0)
-      return PortableServer::POA::_nil ();
-    else
-      return result._retn ();
-  }
+
+  return this->DomainManager::_default_POA (env);
 }
 
 template <class T> ACE_INLINE
@@ -113,30 +106,30 @@ CORBA::Policy_ptr POA_CORBA::DomainManager_tie<T>::get_domain_policy  (
 #if defined (ACE_HAS_USING_KEYWORD)
 template <class T> ACE_INLINE
 POA_CORBA::ConstructionPolicy_tie<T>::ConstructionPolicy_tie (T &t)
-	: ptr_ (&t),
-	  poa_ (PortableServer::POA::_nil ()),
-	  rel_ (0)
+        : ptr_ (&t),
+          poa_ (PortableServer::POA::_nil ()),
+          rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_CORBA::ConstructionPolicy_tie<T>::ConstructionPolicy_tie (T &t, PortableServer::POA_ptr poa)
-	: ptr_ (&t),
-	  poa_ (PortableServer::POA::_duplicate (poa)),
-	  rel_ (0)
+        : ptr_ (&t),
+          poa_ (PortableServer::POA::_duplicate (poa)),
+          rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_CORBA::ConstructionPolicy_tie<T>::ConstructionPolicy_tie (T *tp, CORBA::Boolean release)
-	: ptr_ (tp),
-	  poa_ (PortableServer::POA::_nil ()),
-	  rel_ (release)
+        : ptr_ (tp),
+          poa_ (PortableServer::POA::_nil ()),
+          rel_ (release)
 {}
 
 template <class T> ACE_INLINE
 POA_CORBA::ConstructionPolicy_tie<T>::ConstructionPolicy_tie (T *tp, PortableServer::POA_ptr poa, CORBA::Boolean release)
-	: ptr_ (tp),
-	  poa_ (PortableServer::POA::_duplicate (poa)),
-	  rel_ (release)
+        : ptr_ (tp),
+          poa_ (PortableServer::POA::_duplicate (poa)),
+          rel_ (release)
 {}
 
 template <class T> ACE_INLINE
@@ -184,15 +177,8 @@ POA_CORBA::ConstructionPolicy_tie<T>::_default_POA (CORBA::Environment &env)
 {
   if (!CORBA::is_nil (this->poa_.in ()))
     return PortableServer::POA::_duplicate (this->poa_.in ());
-  else
-  {
-    TAO_POA *poa = TAO_ORB_Core_instance ()->root_poa ();
-    PortableServer::POA_var result = poa->_this (env);
-    if (env.exception () != 0)
-      return PortableServer::POA::_nil ();
-    else
-      return result._retn ();
-  }
+
+  return this->Construction::_default_POA (env);
 }
 
 template <class T> ACE_INLINE

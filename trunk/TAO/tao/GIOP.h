@@ -372,12 +372,12 @@ public:
                           TAO_ORB_Core *orb_core,
                           TAO_GIOP_MessageHeader &header,
                           CORBA::ULong &header_size,
-                          ACE_Message_Block *payload);
+                          TAO_InputCDR &input);
   static int handle_input (TAO_Transport *transport,
                            TAO_ORB_Core *orb_core,
                            TAO_GIOP_MessageHeader &header,
                            CORBA::ULong &current_offset,
-                           ACE_Message_Block *payload);
+                           TAO_InputCDR& input);
 
   static int parse_reply (TAO_Transport *transport,
                           TAO_ORB_Core *orb_core,
@@ -462,14 +462,14 @@ private:
   // GIOP header is already there.
 
   static int parse_header (TAO_ORB_Core *orb_core,
-                           ACE_Message_Block *payload,
+                           TAO_InputCDR &input,
                            TAO_GIOP_MessageHeader& header);
   // Parse the header, extracting all the relevant info.
 
-  static int parse_header_std (ACE_Message_Block *payload,
+  static int parse_header_std (TAO_InputCDR &input,
                                TAO_GIOP_MessageHeader& header);
 
-  static int parse_header_lite (ACE_Message_Block *payload,
+  static int parse_header_lite (TAO_InputCDR &input,
                                 TAO_GIOP_MessageHeader& header);
 };
 

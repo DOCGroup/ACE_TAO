@@ -553,17 +553,15 @@ TAO_GIOP::read_header (TAO_Transport *transport,
                        TAO_ORB_Core *orb_core,
                        TAO_GIOP_MessageHeader &header,
                        CORBA::ULong &header_size,
-                       ACE_Message_Block *payload)
+                       TAO_InputCDR &input)
 {
   // Default header length.
   header_size = TAO_GIOP_HEADER_LEN;
   if (orb_core->orb_params ()->use_lite_protocol ())
     header_size = TAO_GIOP_LITE_HEADER_LEN;
 
-  if (ACE_CDR::grow (payload, header_size) == -1)
+  if (input.grow (header_size) == -1)
     return -1;
-
-  ACE_CDR::mb_align (payload);
 
   // Read until all the header is received.  There should be no
   // problems with locking, the header is only a few bytes so they
@@ -571,7 +569,7 @@ TAO_GIOP::read_header (TAO_Transport *transport,
   // problem with the underlying transport, in which case we have more
   // problems than just this small loop.
 
-  char* buf = payload->rd_ptr ();
+  char* buf = input.rd_ptr ();
   int t = header_size;
   while (t != 0)
     {
@@ -584,10 +582,7 @@ TAO_GIOP::read_header (TAO_Transport *transport,
       t -= n;
     }
 
-  // Adjust the length of the payload
-  payload->wr_ptr (header_size);
-
-  if (TAO_GIOP::parse_header (orb_core, payload, header) == -1)
+  if (TAO_GIOP::parse_header (orb_core, input, header) == -1)
     return -1;
   return header_size;
 }
@@ -597,7 +592,7 @@ TAO_GIOP::handle_input (TAO_Transport *transport,
                         TAO_ORB_Core *orb_core,
                         TAO_GIOP_MessageHeader &header,
                         CORBA::ULong &current_offset,
-                        ACE_Message_Block *payload)
+                        TAO_InputCDR& input)
 {
   if (header.message_size == 0)
     {
@@ -607,7 +602,7 @@ TAO_GIOP::handle_input (TAO_Transport *transport,
                                  orb_core,
                                  header,
                                  header_size,
-                                 payload) == -1)
+                                 input) == -1)
         {
           if (TAO_debug_level > 0)
             {
@@ -618,9 +613,8 @@ TAO_GIOP::handle_input (TAO_Transport *transport,
           return -1;
         }
 
-      if (ACE_CDR::grow (payload,
-                         header_size +
-                         header.message_size) == -1)
+      if (input.grow (header_size +
+                      header.message_size) == -1)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "TAO (%P|%t) - %p\n",
@@ -630,17 +624,14 @@ TAO_GIOP::handle_input (TAO_Transport *transport,
 
       // Growing the buffer may have reset the rd_ptr(), but we want to
       // leave it just after the GIOP header (that was parsed already);
-      ACE_CDR::mb_align (payload);
-      payload->wr_ptr (header_size);
-      payload->wr_ptr (header.message_size);
-      payload->rd_ptr (header_size);
+      input.skip_bytes (header_size);
     }
 
   size_t missing_data =
     header.message_size - current_offset;
   ssize_t n =
     TAO_GIOP::read_buffer (transport,
-                           payload->rd_ptr () + current_offset,
+                           input.rd_ptr () + current_offset,
                            missing_data);
   if (n == -1)
     {
@@ -675,9 +666,9 @@ TAO_GIOP::handle_input (TAO_Transport *transport,
           if (orb_core->orb_params ()->use_lite_protocol ())
             header_len = TAO_GIOP_LITE_HEADER_LEN;
 
-          char* buf = payload->rd_ptr ();
+          char* buf = input.rd_ptr ();
           buf -= header_len;
-          size_t msg_len = payload->length () + header_len;
+          size_t msg_len = input.length () + header_len;
           TAO_GIOP::dump_msg ("recv",
                               ACE_reinterpret_cast (u_char *, buf),
                               msg_len);
@@ -1298,7 +1289,6 @@ TAO_GIOP::start_message_std (TAO_GIOP::Message_Type type,
   msg.write_octet (type);
 
   // Write a dummy <size> later it is set to the right value...
-  // @@ TODO Maybe we should store the OutputCDR status in
   CORBA::ULong size = 0;
   msg.write_ulong (size);
 
@@ -1357,22 +1347,20 @@ TAO_GIOP::write_request_header_lite (const TAO_GIOP_ServiceContextList&,
 
 int
 TAO_GIOP::parse_header (TAO_ORB_Core *orb_core,
-                        ACE_Message_Block *payload,
+                        TAO_InputCDR &input,
                         TAO_GIOP_MessageHeader& header)
 {
   if (orb_core->orb_params ()->use_lite_protocol ())
-    return TAO_GIOP::parse_header_lite (payload,
-                                        header);
+    return TAO_GIOP::parse_header_lite (input, header);
   else
-    return TAO_GIOP::parse_header_std (payload,
-                                       header);
+    return TAO_GIOP::parse_header_std (input, header);
 }
 
 int
-TAO_GIOP::parse_header_std (ACE_Message_Block *payload,
+TAO_GIOP::parse_header_std (TAO_InputCDR &input,
                             TAO_GIOP_MessageHeader &header)
 {
-  char *buf = payload->rd_ptr ();
+  char *buf = input.rd_ptr ();
 
   // The values are hard-coded to support non-ASCII platforms
   if (!(buf [0] == 0x47    // 'G'
@@ -1400,11 +1388,9 @@ TAO_GIOP::parse_header_std (ACE_Message_Block *payload,
   header.byte_order = buf[6];
   header.message_type = buf[7];
 
-  TAO_InputCDR cdr (payload,
-                    ACE_static_cast(int,header.byte_order));
-
-  cdr.skip_bytes (TAO_GIOP_MESSAGE_SIZE_OFFSET);
-  cdr.read_ulong (header.message_size);
+  input.reset_byte_order (header.byte_order);
+  input.skip_bytes (TAO_GIOP_MESSAGE_SIZE_OFFSET);
+  input.read_ulong (header.message_size);
 
   if (TAO_debug_level > 2)
     {
@@ -1420,10 +1406,10 @@ TAO_GIOP::parse_header_std (ACE_Message_Block *payload,
 }
 
 int
-TAO_GIOP::parse_header_lite (ACE_Message_Block *payload,
+TAO_GIOP::parse_header_lite (TAO_InputCDR &input,
                              TAO_GIOP_MessageHeader& header)
 {
-  char *buf = payload->rd_ptr ();
+  char *buf = input.rd_ptr ();
 
 #if 0
   // @@ Nobody uses this magic number, no sense in wasting time here.
@@ -1437,10 +1423,8 @@ TAO_GIOP::parse_header_lite (ACE_Message_Block *payload,
   header.byte_order = TAO_ENCAP_BYTE_ORDER;
   header.message_type = buf[4];
 
-  TAO_InputCDR cdr (payload,
-                    ACE_static_cast(int,header.byte_order));
-
-  cdr.read_ulong (header.message_size);
+  input.reset_byte_order (header.byte_order);
+  input.read_ulong (header.message_size);
   return 0;
 }
 
