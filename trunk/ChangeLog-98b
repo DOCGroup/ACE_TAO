@@ -1,3 +1,9 @@
+Thu Aug 27 13:45:31 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Profile_Timer.h (ACE_Profile_Timer): Remove the Win32
+	  section.  Win32 (except CE) actually uses the code in
+	  ACE_HAS_GETRUSAGE. 
+
 Thu Aug 27 13:12:04 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* examples/Reactor/Proactor/test_proactor.cpp : 
