@@ -157,7 +157,7 @@ The filtering criteria will not work.\n"));
 void
 Notifier_i::subscribe (Event_Comm::Consumer_ptr consumer_ref,
 		       const char *filtering_criteria,
-		       CORBA::Environment &TAO_TRY_ENV)
+		       CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_DEBUG ((LM_DEBUG,
 	      "in Notifier_i::subscribe for %x with filtering criteria \"%s\"\n",
@@ -190,7 +190,7 @@ Notifier_i::subscribe (Event_Comm::Consumer_ptr consumer_ref,
 	  // Inform the caller that the <Event_Comm::Consumer> * is
 	  // already being used.
 
-	  TAO_TRY_ENV.exception (new Event_Comm::Notifier::CannotSubscribe
+	  ACE_TRY_ENV.exception (new Event_Comm::Notifier::CannotSubscribe
 				 ("Duplicate consumer and filtering criteria found.\n"));
 	  return;
 	}
@@ -208,7 +208,7 @@ Notifier_i::subscribe (Event_Comm::Consumer_ptr consumer_ref,
     {
       // Prevent memory leaks.
       delete nr_entry;
-      TAO_TRY_ENV.exception (new Event_Comm::Notifier::CannotSubscribe
+      ACE_TRY_ENV.exception (new Event_Comm::Notifier::CannotSubscribe
 			     ("Failed to add Consumer to internal map\n"));
     }
 }
@@ -218,7 +218,7 @@ Notifier_i::subscribe (Event_Comm::Consumer_ptr consumer_ref,
 void
 Notifier_i::unsubscribe (Event_Comm::Consumer_ptr consumer_ref,
 			 const char *filtering_criteria,
-			 CORBA::Environment &TAO_TRY_ENV)
+			 CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_DEBUG ((LM_DEBUG,
               "in Notifier_i::unsubscribe for %x\n",
@@ -256,7 +256,7 @@ Notifier_i::unsubscribe (Event_Comm::Consumer_ptr consumer_ref,
 	  // @@ This is a hack, we need a better approach!
 	  if (this->map_.unbind (me->ext_id_,
 				 nr_entry) == -1)
-	    TAO_TRY_ENV.exception (new Event_Comm::Notifier::CannotUnsubscribe
+	    ACE_TRY_ENV.exception (new Event_Comm::Notifier::CannotUnsubscribe
 				   ("Internal map unbind failed."));
 	  else
 	    delete nr_entry;
@@ -264,7 +264,7 @@ Notifier_i::unsubscribe (Event_Comm::Consumer_ptr consumer_ref,
     }
 
   if (found == 0)
-    TAO_TRY_ENV.exception (new Event_Comm::Notifier::CannotUnsubscribe
+    ACE_TRY_ENV.exception (new Event_Comm::Notifier::CannotUnsubscribe
                            ("The Consumer and filtering criteria were not found."));
 }
 
@@ -272,7 +272,7 @@ Notifier_i::unsubscribe (Event_Comm::Consumer_ptr consumer_ref,
 
 void
 Notifier_i::disconnect (const char *reason,
-			CORBA::Environment &TAO_TRY_ENV)
+			CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_DEBUG ((LM_DEBUG,
               "in Notifier_i::send_disconnect = %s\n",
@@ -295,16 +295,17 @@ Notifier_i::disconnect (const char *reason,
       ACE_DEBUG ((LM_DEBUG,
                   "disconnecting client %x\n",
                   consumer_ref));
-      TAO_TRY
+      ACE_TRY
         {
           consumer_ref->disconnect (reason,
-                                    TAO_TRY_ENV);
+                                    ACE_TRY_ENV);
+          ACE_TRY_CHECK;
         }
-      TAO_CATCHANY
+      ACE_CATCHANY
         {
-	  TAO_TRY_ENV.print_exception ("Unexpected exception\n");
+	  ACE_TRY_ENV.print_exception ("Unexpected exception\n");
         }
-      TAO_ENDTRY;
+      ACE_ENDTRY;
 
       delete me->int_id_;
       count++;
@@ -325,7 +326,7 @@ Notifier_i::disconnect (const char *reason,
 
 void
 Notifier_i::push (const Event_Comm::Event &event,
-		  CORBA::Environment &TAO_TRY_ENV)
+		  CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_DEBUG ((LM_DEBUG,
               "in Notifier_i::send_notification = %s\n",
@@ -357,18 +358,18 @@ Notifier_i::push (const Event_Comm::Event &event,
 		      (const char *) event.tag_,
 		      me->int_id_->criteria (),
 		      consumer_ref));
-	  TAO_TRY
+	  ACE_TRY
             {
               consumer_ref->push (event,
-				  TAO_TRY_ENV);
-	      TAO_CHECK_ENV;
+				  ACE_TRY_ENV);
+	      ACE_TRY_CHECK;
             }
-	  TAO_CATCHANY
+	  ACE_CATCHANY
             {
-	      TAO_TRY_ENV.print_exception ("Unexpected exception\n");
+	      ACE_TRY_ENV.print_exception ("Unexpected exception\n");
               continue;
             }
-	  TAO_ENDTRY;
+	  ACE_ENDTRY;
 	  count++;
 	}
     }
@@ -396,7 +397,7 @@ Consumer_i::~Consumer_i (void)
 
 void
 Consumer_i::push (const Event_Comm::Event &event,
-		  CORBA::Environment &TAO_TRY_ENV)
+		  CORBA::Environment &ACE_TRY_ENV)
 {
   const char *tmpstr = event.tag_;
 
@@ -410,7 +411,7 @@ Consumer_i::push (const Event_Comm::Event &event,
 
 void
 Consumer_i::disconnect (const char *reason,
-			CORBA::Environment &TAO_TRY_ENV)
+			CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_DEBUG ((LM_DEBUG,
               "**** got disconnected due to %s\n",
