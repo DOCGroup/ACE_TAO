@@ -98,6 +98,7 @@ SOURCE=.\Push_Iterator_Factory_i.cpp
 # Begin Source File
 
 SOURCE=.\Push_Web_ServerC.cpp
+# ADD CPP /GR
 # End Source File
 # Begin Source File
 

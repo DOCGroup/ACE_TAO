@@ -90,6 +90,15 @@ LINK32=link.exe
 # Begin Source File
 
 SOURCE=.\clientC.cpp
+
+!IF  "$(CFG)" == "server - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "server - Win32 Debug"
+
+# ADD CPP /GR
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 

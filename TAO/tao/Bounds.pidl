@@ -10,7 +10,7 @@
  * following command:
  *
  *   tao_idl
- *        -o orig -Gp -Gd -Ge 1 -Gv -DCORBA3
+ *        -o orig -Gp -Gd -Ge 1
  *        -Wb,export_macro=TAO_Export
  *        -Wb,export_include=TAO_Export.h
  *        -Wb,pre_include="ace/pre.h"
@@ -42,7 +42,5 @@ module CORBA
    */
   exception Bounds {};
 };
-
-#pragma prefix ""
 
 #endif /* TAO_CORBA_BOUNDS_PIDL */

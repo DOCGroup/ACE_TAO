@@ -43,7 +43,7 @@ public:
   virtual void check_close (int wait_for_completion
                             ACE_ENV_ARG_DECL);
   virtual int priority (void) const;
-  virtual int dispatch (TAO_ObjectKey &key,
+  virtual int dispatch (TAO::ObjectKey &key,
                         TAO_ServerRequest &request,
                         CORBA::Object_out foward_to
                         ACE_ENV_ARG_DECL)

@@ -1,3 +1,5 @@
+// $Id$
+
 #include "tao/Remote_Object_Proxy_Impl.h"
 #include "tao/Exception.h"
 #include "tao/Stub.h"
@@ -5,7 +7,6 @@
 #include "tao/IFR_Client_Adapter.h"
 
 #include "ace/Dynamic_Service.h"
-
 
 ACE_RCSID (tao,
            TAO_Remote_Object_Proxy_Impl,

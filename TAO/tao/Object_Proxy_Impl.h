@@ -27,6 +27,11 @@
 
 #include "ace/CORBA_macros.h"
 
+namespace CORBA
+{
+  class InterfaceDef;
+  typedef InterfaceDef *InterfaceDef_ptr;
+};
 
 /**
  * @class TAO_Object_Proxy_Impl

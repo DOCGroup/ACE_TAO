@@ -163,8 +163,9 @@ BE_ifr_init (int &ac,
           );
         }
 
-      CORBA::Repository_var repo = CORBA::Repository::_narrow (object.in ()
-                                                             ACE_ENV_ARG_PARAMETER);
+      CORBA::Repository_var repo = 
+        CORBA::Repository::_narrow (object.in ()
+                                    ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (repo.in ()))

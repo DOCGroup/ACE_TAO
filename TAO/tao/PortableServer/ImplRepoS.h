@@ -20,7 +20,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:443
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:443
 
 #ifndef _TAO_IDL_ORIG_IMPLREPOS_H_
 #define _TAO_IDL_ORIG_IMPLREPOS_H_
@@ -50,12 +50,12 @@
 #endif /* __BORLANDC__ */
 
 // TAO_IDL - Generated from
-// be/be_visitor_module/module_sh.cpp:49
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_sh.cpp:49
 
 TAO_NAMESPACE  POA_ImplementationRepository
 {
   // TAO_IDL - Generated from
-  // be/be_visitor_interface/interface_sh.cpp:86
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_sh.cpp:86
   
   class ServerObject;
   typedef ServerObject *ServerObject_ptr;
@@ -124,7 +124,7 @@ TAO_NAMESPACE  POA_ImplementationRepository
     virtual const char* _interface_repository_id (void) const;
     
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_sh.cpp:45
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_sh.cpp:45
     
     virtual void ping (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -141,7 +141,7 @@ TAO_NAMESPACE  POA_ImplementationRepository
       );
     
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_sh.cpp:45
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_sh.cpp:45
     
     virtual void shutdown (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -163,7 +163,7 @@ TAO_NAMESPACE  POA_ImplementationRepository
   //
   
   // TAO_IDL - Generated from
-  // be/be_visitor_interface/strategized_proxy_broker_sh.cpp:39
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/strategized_proxy_broker_sh.cpp:39
   
   class TAO_PortableServer_Export _TAO_ServerObject_Strategized_Proxy_Broker : public virtual ::ImplementationRepository::_TAO_ServerObject_Proxy_Broker
   {
@@ -210,7 +210,7 @@ TAO_NAMESPACE  POA_ImplementationRepository
   //
   
   // TAO_IDL - Generated from
-  // be/be_visitor_interface/thru_poa_proxy_impl_sh.cpp:37
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/thru_poa_proxy_impl_sh.cpp:37
   
   class TAO_PortableServer_Export _TAO_ServerObject_ThruPOA_Proxy_Impl : 
     public virtual ::ImplementationRepository::_TAO_ServerObject_Proxy_Impl,
@@ -222,7 +222,7 @@ TAO_NAMESPACE  POA_ImplementationRepository
     virtual ~_TAO_ServerObject_ThruPOA_Proxy_Impl (void) {}
     
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/proxy_impl_xh.cpp:24
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/proxy_impl_xh.cpp:24
     
     virtual void ping (
         CORBA::Object *_collocated_tao_target_
@@ -233,7 +233,7 @@ TAO_NAMESPACE  POA_ImplementationRepository
       ));
     
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/proxy_impl_xh.cpp:24
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/proxy_impl_xh.cpp:24
     
     virtual void shutdown (
         CORBA::Object *_collocated_tao_target_
@@ -261,7 +261,7 @@ public:
   virtual ~_TAO_ServerObject_Direct_Proxy_Impl (void) {}
   
   // TAO_IDL - Generated from
-  // be/be_visitor_operation/proxy_impl_xh.cpp:24
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/proxy_impl_xh.cpp:24
   
   virtual void ping (
       CORBA::Object *_collocated_tao_target_
@@ -272,7 +272,7 @@ public:
     ));
   
   // TAO_IDL - Generated from
-  // be/be_visitor_operation/proxy_impl_xh.cpp:24
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/proxy_impl_xh.cpp:24
   
   virtual void shutdown (
       CORBA::Object *_collocated_tao_target_
@@ -288,7 +288,7 @@ public:
 ///////////////////////////////////////////////////////////////////////
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_sh.cpp:86
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_sh.cpp:86
 
 class Administration;
 typedef Administration *Administration_ptr;
@@ -357,7 +357,7 @@ public:
   virtual const char* _interface_repository_id (void) const;
   
   // TAO_IDL - Generated from
-  // be/be_visitor_operation/operation_sh.cpp:45
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_sh.cpp:45
   
   virtual void activate_server (
       const char * server
@@ -377,7 +377,7 @@ public:
     );
   
   // TAO_IDL - Generated from
-  // be/be_visitor_operation/operation_sh.cpp:45
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_sh.cpp:45
   
   virtual char * activate_server_with_startup (
       const char * server,
@@ -398,7 +398,7 @@ public:
     );
   
   // TAO_IDL - Generated from
-  // be/be_visitor_operation/operation_sh.cpp:45
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_sh.cpp:45
   
   virtual void register_server (
       const char * server,
@@ -418,7 +418,7 @@ public:
     );
   
   // TAO_IDL - Generated from
-  // be/be_visitor_operation/operation_sh.cpp:45
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_sh.cpp:45
   
   virtual void reregister_server (
       const char * server,
@@ -437,7 +437,7 @@ public:
     );
   
   // TAO_IDL - Generated from
-  // be/be_visitor_operation/operation_sh.cpp:45
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_sh.cpp:45
   
   virtual void remove_server (
       const char * server
@@ -456,7 +456,7 @@ public:
     );
   
   // TAO_IDL - Generated from
-  // be/be_visitor_operation/operation_sh.cpp:45
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_sh.cpp:45
   
   virtual void shutdown_server (
       const char * server
@@ -475,7 +475,7 @@ public:
     );
   
   // TAO_IDL - Generated from
-  // be/be_visitor_operation/operation_sh.cpp:45
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_sh.cpp:45
   
   virtual char * server_is_running (
       const char * server,
@@ -496,7 +496,7 @@ public:
     );
   
   // TAO_IDL - Generated from
-  // be/be_visitor_operation/operation_sh.cpp:45
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_sh.cpp:45
   
   virtual void server_is_shutting_down (
       const char * server
@@ -515,7 +515,7 @@ public:
     );
   
   // TAO_IDL - Generated from
-  // be/be_visitor_operation/operation_sh.cpp:45
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_sh.cpp:45
   
   virtual void find (
       const char * server,
@@ -535,7 +535,7 @@ public:
     );
   
   // TAO_IDL - Generated from
-  // be/be_visitor_operation/operation_sh.cpp:45
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_sh.cpp:45
   
   virtual void list (
       CORBA::ULong how_many,
@@ -560,7 +560,7 @@ public:
 //
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/strategized_proxy_broker_sh.cpp:39
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/strategized_proxy_broker_sh.cpp:39
 
 class TAO_PortableServer_Export _TAO_Administration_Strategized_Proxy_Broker : public virtual ::ImplementationRepository::_TAO_Administration_Proxy_Broker
 {
@@ -607,7 +607,7 @@ public:
 //
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/thru_poa_proxy_impl_sh.cpp:37
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/thru_poa_proxy_impl_sh.cpp:37
 
 class TAO_PortableServer_Export _TAO_Administration_ThruPOA_Proxy_Impl : 
   public virtual ::ImplementationRepository::_TAO_Administration_Proxy_Impl,
@@ -619,7 +619,7 @@ public:
   virtual ~_TAO_Administration_ThruPOA_Proxy_Impl (void) {}
   
   // TAO_IDL - Generated from
-  // be/be_visitor_operation/proxy_impl_xh.cpp:24
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/proxy_impl_xh.cpp:24
   
   virtual void activate_server (
       CORBA::Object *_collocated_tao_target_,
@@ -633,7 +633,7 @@ public:
     ));
   
   // TAO_IDL - Generated from
-  // be/be_visitor_operation/proxy_impl_xh.cpp:24
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/proxy_impl_xh.cpp:24
   
   virtual char * activate_server_with_startup (
       CORBA::Object *_collocated_tao_target_,
@@ -648,7 +648,7 @@ public:
     ));
   
   // TAO_IDL - Generated from
-  // be/be_visitor_operation/proxy_impl_xh.cpp:24
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/proxy_impl_xh.cpp:24
   
   virtual void register_server (
       CORBA::Object *_collocated_tao_target_,
@@ -662,7 +662,7 @@ public:
     ));
   
   // TAO_IDL - Generated from
-  // be/be_visitor_operation/proxy_impl_xh.cpp:24
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/proxy_impl_xh.cpp:24
   
   virtual void reregister_server (
       CORBA::Object *_collocated_tao_target_,
@@ -675,7 +675,7 @@ public:
     ));
   
   // TAO_IDL - Generated from
-  // be/be_visitor_operation/proxy_impl_xh.cpp:24
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/proxy_impl_xh.cpp:24
   
   virtual void remove_server (
       CORBA::Object *_collocated_tao_target_,
@@ -688,7 +688,7 @@ public:
     ));
   
   // TAO_IDL - Generated from
-  // be/be_visitor_operation/proxy_impl_xh.cpp:24
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/proxy_impl_xh.cpp:24
   
   virtual void shutdown_server (
       CORBA::Object *_collocated_tao_target_,
@@ -701,7 +701,7 @@ public:
     ));
   
   // TAO_IDL - Generated from
-  // be/be_visitor_operation/proxy_impl_xh.cpp:24
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/proxy_impl_xh.cpp:24
   
   virtual char * server_is_running (
       CORBA::Object *_collocated_tao_target_,
@@ -716,7 +716,7 @@ public:
     ));
   
   // TAO_IDL - Generated from
-  // be/be_visitor_operation/proxy_impl_xh.cpp:24
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/proxy_impl_xh.cpp:24
   
   virtual void server_is_shutting_down (
       CORBA::Object *_collocated_tao_target_,
@@ -729,7 +729,7 @@ public:
     ));
   
   // TAO_IDL - Generated from
-  // be/be_visitor_operation/proxy_impl_xh.cpp:24
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/proxy_impl_xh.cpp:24
   
   virtual void find (
       CORBA::Object *_collocated_tao_target_,
@@ -743,7 +743,7 @@ public:
     ));
   
   // TAO_IDL - Generated from
-  // be/be_visitor_operation/proxy_impl_xh.cpp:24
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/proxy_impl_xh.cpp:24
   
   virtual void list (
       CORBA::Object *_collocated_tao_target_,
@@ -774,7 +774,7 @@ public:
   virtual ~_TAO_Administration_Direct_Proxy_Impl (void) {}
   
   // TAO_IDL - Generated from
-  // be/be_visitor_operation/proxy_impl_xh.cpp:24
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/proxy_impl_xh.cpp:24
   
   virtual void activate_server (
       CORBA::Object *_collocated_tao_target_,
@@ -788,7 +788,7 @@ public:
     ));
   
   // TAO_IDL - Generated from
-  // be/be_visitor_operation/proxy_impl_xh.cpp:24
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/proxy_impl_xh.cpp:24
   
   virtual char * activate_server_with_startup (
       CORBA::Object *_collocated_tao_target_,
@@ -803,7 +803,7 @@ public:
     ));
   
   // TAO_IDL - Generated from
-  // be/be_visitor_operation/proxy_impl_xh.cpp:24
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/proxy_impl_xh.cpp:24
   
   virtual void register_server (
       CORBA::Object *_collocated_tao_target_,
@@ -817,7 +817,7 @@ public:
     ));
   
   // TAO_IDL - Generated from
-  // be/be_visitor_operation/proxy_impl_xh.cpp:24
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/proxy_impl_xh.cpp:24
   
   virtual void reregister_server (
       CORBA::Object *_collocated_tao_target_,
@@ -830,7 +830,7 @@ public:
     ));
   
   // TAO_IDL - Generated from
-  // be/be_visitor_operation/proxy_impl_xh.cpp:24
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/proxy_impl_xh.cpp:24
   
   virtual void remove_server (
       CORBA::Object *_collocated_tao_target_,
@@ -843,7 +843,7 @@ public:
     ));
   
   // TAO_IDL - Generated from
-  // be/be_visitor_operation/proxy_impl_xh.cpp:24
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/proxy_impl_xh.cpp:24
   
   virtual void shutdown_server (
       CORBA::Object *_collocated_tao_target_,
@@ -856,7 +856,7 @@ public:
     ));
   
   // TAO_IDL - Generated from
-  // be/be_visitor_operation/proxy_impl_xh.cpp:24
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/proxy_impl_xh.cpp:24
   
   virtual char * server_is_running (
       CORBA::Object *_collocated_tao_target_,
@@ -871,7 +871,7 @@ public:
     ));
   
   // TAO_IDL - Generated from
-  // be/be_visitor_operation/proxy_impl_xh.cpp:24
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/proxy_impl_xh.cpp:24
   
   virtual void server_is_shutting_down (
       CORBA::Object *_collocated_tao_target_,
@@ -884,7 +884,7 @@ public:
     ));
   
   // TAO_IDL - Generated from
-  // be/be_visitor_operation/proxy_impl_xh.cpp:24
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/proxy_impl_xh.cpp:24
   
   virtual void find (
       CORBA::Object *_collocated_tao_target_,
@@ -898,7 +898,7 @@ public:
     ));
   
   // TAO_IDL - Generated from
-  // be/be_visitor_operation/proxy_impl_xh.cpp:24
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/proxy_impl_xh.cpp:24
   
   virtual void list (
       CORBA::Object *_collocated_tao_target_,
@@ -917,7 +917,7 @@ public:
 ///////////////////////////////////////////////////////////////////////
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_sh.cpp:86
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_sh.cpp:86
 
 class ServerInformationIterator;
 typedef ServerInformationIterator *ServerInformationIterator_ptr;
@@ -986,7 +986,7 @@ public:
   virtual const char* _interface_repository_id (void) const;
   
   // TAO_IDL - Generated from
-  // be/be_visitor_operation/operation_sh.cpp:45
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_sh.cpp:45
   
   virtual CORBA::Boolean next_n (
       CORBA::ULong how_many,
@@ -1005,7 +1005,7 @@ public:
     );
   
   // TAO_IDL - Generated from
-  // be/be_visitor_operation/operation_sh.cpp:45
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_sh.cpp:45
   
   virtual void destroy (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -1027,7 +1027,7 @@ public:
 //
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/strategized_proxy_broker_sh.cpp:39
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/strategized_proxy_broker_sh.cpp:39
 
 class TAO_PortableServer_Export _TAO_ServerInformationIterator_Strategized_Proxy_Broker : public virtual ::ImplementationRepository::_TAO_ServerInformationIterator_Proxy_Broker
 {
@@ -1074,7 +1074,7 @@ public:
 //
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/thru_poa_proxy_impl_sh.cpp:37
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/thru_poa_proxy_impl_sh.cpp:37
 
 class TAO_PortableServer_Export _TAO_ServerInformationIterator_ThruPOA_Proxy_Impl : 
   public virtual ::ImplementationRepository::_TAO_ServerInformationIterator_Proxy_Impl,
@@ -1086,7 +1086,7 @@ public:
   virtual ~_TAO_ServerInformationIterator_ThruPOA_Proxy_Impl (void) {}
   
   // TAO_IDL - Generated from
-  // be/be_visitor_operation/proxy_impl_xh.cpp:24
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/proxy_impl_xh.cpp:24
   
   virtual CORBA::Boolean next_n (
       CORBA::Object *_collocated_tao_target_,
@@ -1099,7 +1099,7 @@ public:
     ));
   
   // TAO_IDL - Generated from
-  // be/be_visitor_operation/proxy_impl_xh.cpp:24
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/proxy_impl_xh.cpp:24
   
   virtual void destroy (
       CORBA::Object *_collocated_tao_target_
@@ -1127,7 +1127,7 @@ public:
   virtual ~_TAO_ServerInformationIterator_Direct_Proxy_Impl (void) {}
   
   // TAO_IDL - Generated from
-  // be/be_visitor_operation/proxy_impl_xh.cpp:24
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/proxy_impl_xh.cpp:24
   
   virtual CORBA::Boolean next_n (
       CORBA::Object *_collocated_tao_target_,
@@ -1140,7 +1140,7 @@ public:
     ));
   
   // TAO_IDL - Generated from
-  // be/be_visitor_operation/proxy_impl_xh.cpp:24
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/proxy_impl_xh.cpp:24
   
   virtual void destroy (
       CORBA::Object *_collocated_tao_target_
@@ -1158,13 +1158,13 @@ public:
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_module/module_sh.cpp:80
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_sh.cpp:80
 
 }
 TAO_NAMESPACE_CLOSE // module ImplementationRepository
 
 // TAO_IDL - Generated from 
-// be/be_codegen.cpp:1044
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:1044
 
 #include "ImplRepoS_T.h"
 

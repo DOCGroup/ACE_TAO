@@ -19,21 +19,31 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
+
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_ci.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
 
 #if !defined (_MESSAGING_REBINDPOLICY___CI_)
 #define _MESSAGING_REBINDPOLICY___CI_
 
+ACE_INLINE
+CORBA::Boolean
+Messaging::RebindPolicy::marshal (TAO_OutputCDR &)
+{
+  return 0;
+}
 
 #endif /* end #if !defined */
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_structure.cpp:194
 
 // *************************************************************
 // Inline operations for class Messaging::PriorityRange_var
 // *************************************************************
 
 ACE_INLINE
-Messaging::PriorityRange_var::PriorityRange_var (void) // default constructor
+Messaging::PriorityRange_var::PriorityRange_var (void)
   : ptr_ (0)
 {}
 
@@ -43,15 +53,19 @@ Messaging::PriorityRange_var::PriorityRange_var (PriorityRange *p)
 {}
 
 ACE_INLINE
-Messaging::PriorityRange_var::PriorityRange_var (const ::Messaging::PriorityRange_var &p) // copy constructor
+Messaging::PriorityRange_var::PriorityRange_var (const ::Messaging::PriorityRange_var &p)
 {
   if (p.ptr_)
-    ACE_NEW (this->ptr_, ::Messaging::PriorityRange (*p.ptr_));
+    {
+      ACE_NEW (this->ptr_, ::Messaging::PriorityRange (*p.ptr_));
+    }
   else
-    this->ptr_ = 0;
+    {
+      this->ptr_ = 0;
+    }
 }
 
-// fixed-size types only
+// Fixed-size types only.
 ACE_INLINE
 Messaging::PriorityRange_var::PriorityRange_var (const ::Messaging::PriorityRange &p)
 {
@@ -59,12 +73,13 @@ Messaging::PriorityRange_var::PriorityRange_var (const ::Messaging::PriorityRang
 }
 
 ACE_INLINE
-Messaging::PriorityRange_var::~PriorityRange_var (void) // destructor
+Messaging::PriorityRange_var::~PriorityRange_var (void)
 {
   delete this->ptr_;
 }
 
-ACE_INLINE Messaging::PriorityRange_var &
+ACE_INLINE
+Messaging::PriorityRange_var &
 Messaging::PriorityRange_var::operator= (PriorityRange *_tao_struct_var)
 {
   delete this->ptr_;
@@ -72,7 +87,8 @@ Messaging::PriorityRange_var::operator= (PriorityRange *_tao_struct_var)
   return *this;
 }
 
-ACE_INLINE ::Messaging::PriorityRange_var &
+ACE_INLINE
+::Messaging::PriorityRange_var &
 Messaging::PriorityRange_var::operator= (const ::Messaging::PriorityRange_var &_tao_struct_var)
 {
   if (this != &_tao_struct_var)
@@ -183,74 +199,119 @@ Messaging::PriorityRange_var::ptr (void) const
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_ci.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
 
 #if !defined (_MESSAGING_REQUESTPRIORITYPOLICY___CI_)
 #define _MESSAGING_REQUESTPRIORITYPOLICY___CI_
 
+ACE_INLINE
+CORBA::Boolean
+Messaging::RequestPriorityPolicy::marshal (TAO_OutputCDR &)
+{
+  return 0;
+}
 
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_ci.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
 
 #if !defined (_MESSAGING_REPLYPRIORITYPOLICY___CI_)
 #define _MESSAGING_REPLYPRIORITYPOLICY___CI_
 
+ACE_INLINE
+CORBA::Boolean
+Messaging::ReplyPriorityPolicy::marshal (TAO_OutputCDR &)
+{
+  return 0;
+}
 
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_ci.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
 
 #if !defined (_MESSAGING_REQUESTSTARTTIMEPOLICY___CI_)
 #define _MESSAGING_REQUESTSTARTTIMEPOLICY___CI_
 
+ACE_INLINE
+CORBA::Boolean
+Messaging::RequestStartTimePolicy::marshal (TAO_OutputCDR &)
+{
+  return 0;
+}
 
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_ci.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
 
 #if !defined (_MESSAGING_REQUESTENDTIMEPOLICY___CI_)
 #define _MESSAGING_REQUESTENDTIMEPOLICY___CI_
 
+ACE_INLINE
+CORBA::Boolean
+Messaging::RequestEndTimePolicy::marshal (TAO_OutputCDR &)
+{
+  return 0;
+}
 
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_ci.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
 
 #if !defined (_MESSAGING_REPLYSTARTTIMEPOLICY___CI_)
 #define _MESSAGING_REPLYSTARTTIMEPOLICY___CI_
 
+ACE_INLINE
+CORBA::Boolean
+Messaging::ReplyStartTimePolicy::marshal (TAO_OutputCDR &)
+{
+  return 0;
+}
 
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_ci.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
 
 #if !defined (_MESSAGING_REPLYENDTIMEPOLICY___CI_)
 #define _MESSAGING_REPLYENDTIMEPOLICY___CI_
 
+ACE_INLINE
+CORBA::Boolean
+Messaging::ReplyEndTimePolicy::marshal (TAO_OutputCDR &)
+{
+  return 0;
+}
 
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_ci.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
 
 #if !defined (_MESSAGING_RELATIVEREQUESTTIMEOUTPOLICY___CI_)
 #define _MESSAGING_RELATIVEREQUESTTIMEOUTPOLICY___CI_
 
+ACE_INLINE
+CORBA::Boolean
+Messaging::RelativeRequestTimeoutPolicy::marshal (TAO_OutputCDR &)
+{
+  return 0;
+}
 
 #endif /* end #if !defined */
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_structure.cpp:194
 
 // *************************************************************
 // Inline operations for class Messaging::RoutingTypeRange_var
 // *************************************************************
 
 ACE_INLINE
-Messaging::RoutingTypeRange_var::RoutingTypeRange_var (void) // default constructor
+Messaging::RoutingTypeRange_var::RoutingTypeRange_var (void)
   : ptr_ (0)
 {}
 
@@ -260,15 +321,19 @@ Messaging::RoutingTypeRange_var::RoutingTypeRange_var (RoutingTypeRange *p)
 {}
 
 ACE_INLINE
-Messaging::RoutingTypeRange_var::RoutingTypeRange_var (const ::Messaging::RoutingTypeRange_var &p) // copy constructor
+Messaging::RoutingTypeRange_var::RoutingTypeRange_var (const ::Messaging::RoutingTypeRange_var &p)
 {
   if (p.ptr_)
-    ACE_NEW (this->ptr_, ::Messaging::RoutingTypeRange (*p.ptr_));
+    {
+      ACE_NEW (this->ptr_, ::Messaging::RoutingTypeRange (*p.ptr_));
+    }
   else
-    this->ptr_ = 0;
+    {
+      this->ptr_ = 0;
+    }
 }
 
-// fixed-size types only
+// Fixed-size types only.
 ACE_INLINE
 Messaging::RoutingTypeRange_var::RoutingTypeRange_var (const ::Messaging::RoutingTypeRange &p)
 {
@@ -276,12 +341,13 @@ Messaging::RoutingTypeRange_var::RoutingTypeRange_var (const ::Messaging::Routin
 }
 
 ACE_INLINE
-Messaging::RoutingTypeRange_var::~RoutingTypeRange_var (void) // destructor
+Messaging::RoutingTypeRange_var::~RoutingTypeRange_var (void)
 {
   delete this->ptr_;
 }
 
-ACE_INLINE Messaging::RoutingTypeRange_var &
+ACE_INLINE
+Messaging::RoutingTypeRange_var &
 Messaging::RoutingTypeRange_var::operator= (RoutingTypeRange *_tao_struct_var)
 {
   delete this->ptr_;
@@ -289,7 +355,8 @@ Messaging::RoutingTypeRange_var::operator= (RoutingTypeRange *_tao_struct_var)
   return *this;
 }
 
-ACE_INLINE ::Messaging::RoutingTypeRange_var &
+ACE_INLINE
+::Messaging::RoutingTypeRange_var &
 Messaging::RoutingTypeRange_var::operator= (const ::Messaging::RoutingTypeRange_var &_tao_struct_var)
 {
   if (this != &_tao_struct_var)
@@ -400,34 +467,52 @@ Messaging::RoutingTypeRange_var::ptr (void) const
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_ci.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
 
 #if !defined (_MESSAGING_ROUTINGPOLICY___CI_)
 #define _MESSAGING_ROUTINGPOLICY___CI_
 
+ACE_INLINE
+CORBA::Boolean
+Messaging::RoutingPolicy::marshal (TAO_OutputCDR &)
+{
+  return 0;
+}
 
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_ci.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
 
 #if !defined (_MESSAGING_MAXHOPSPOLICY___CI_)
 #define _MESSAGING_MAXHOPSPOLICY___CI_
 
+ACE_INLINE
+CORBA::Boolean
+Messaging::MaxHopsPolicy::marshal (TAO_OutputCDR &)
+{
+  return 0;
+}
 
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_ci.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
 
 #if !defined (_MESSAGING_QUEUEORDERPOLICY___CI_)
 #define _MESSAGING_QUEUEORDERPOLICY___CI_
 
+ACE_INLINE
+CORBA::Boolean
+Messaging::QueueOrderPolicy::marshal (TAO_OutputCDR &)
+{
+  return 0;
+}
 
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// be/be_visitor_structure/cdr_op_ci.cpp:71
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/cdr_op_ci.cpp:103
 
 ACE_INLINE
 CORBA::Boolean operator<< (
@@ -468,7 +553,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_structure/cdr_op_ci.cpp:71
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/cdr_op_ci.cpp:103
 
 ACE_INLINE
 CORBA::Boolean operator<< (

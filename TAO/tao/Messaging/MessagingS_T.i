@@ -19,13 +19,11 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
+
 // TAO_IDL - Generated from
-// be/be_visitor_interface/tie_si.cpp:95
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/tie_si.cpp:96
 
 #if defined (ACE_HAS_USING_KEYWORD)
-
-// TAO_IDL - Generated from be/be_visitor_interface/tie_si.cpp:105
-
 
 template <class T> ACE_INLINE
 POA_Messaging::ReplyHandler_tie<T>::ReplyHandler_tie (T &t)
@@ -58,7 +56,10 @@ POA_Messaging::ReplyHandler_tie<T>::ReplyHandler_tie (T *tp, PortableServer::POA
 template <class T> ACE_INLINE
 POA_Messaging::ReplyHandler_tie<T>::~ReplyHandler_tie (void)
 {
-  if (this->rel_) delete this->ptr_;
+  if (this->rel_)
+    {
+      delete this->ptr_;
+    }
 }
 
 template <class T> ACE_INLINE T *
@@ -70,7 +71,11 @@ POA_Messaging::ReplyHandler_tie<T>::_tied_object (void)
 template <class T> ACE_INLINE void
 POA_Messaging::ReplyHandler_tie<T>::_tied_object (T &obj)
 {
-  if (this->rel_) delete this->ptr_;
+  if (this->rel_)
+    {
+      delete this->ptr_;
+    }
+  
   this->ptr_ = &obj;
   this->rel_ = 0;
 }
@@ -78,7 +83,11 @@ POA_Messaging::ReplyHandler_tie<T>::_tied_object (T &obj)
 template <class T> ACE_INLINE void
 POA_Messaging::ReplyHandler_tie<T>::_tied_object (T *obj, CORBA::Boolean release)
 {
-  if (this->rel_) delete this->ptr_;
+  if (this->rel_)
+    {
+      delete this->ptr_;
+    }
+  
   this->ptr_ = obj;
   this->rel_ = release;
 }
@@ -99,8 +108,10 @@ template <class T> ACE_INLINE PortableServer::POA_ptr
 POA_Messaging::ReplyHandler_tie<T>::_default_POA (ACE_ENV_SINGLE_ARG_DECL)
 {
   if (!CORBA::is_nil (this->poa_.in ()))
-    return PortableServer::POA::_duplicate (this->poa_.in ());
-
+    {
+      return PortableServer::POA::_duplicate (this->poa_.in ());
+    }
+  
   return this->ReplyHandler::_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 

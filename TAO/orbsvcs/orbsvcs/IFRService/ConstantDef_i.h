@@ -43,8 +43,7 @@ class TAO_IFRService_Export TAO_ConstantDef_i : public virtual TAO_Contained_i
   //    Represents a named constant.
   //
 public:
-    TAO_ConstantDef_i (TAO_Repository_i *repo,
-                       ACE_Configuration_Section_Key section_key);
+    TAO_ConstantDef_i (TAO_Repository_i *repo);
   // Constructor
 
   virtual ~TAO_ConstantDef_i (void);

@@ -100,6 +100,7 @@ SOURCE=.\Echo_Client_i.cpp
 # Begin Source File
 
 SOURCE=.\EchoC.cpp
+# ADD CPP /GR
 # End Source File
 # Begin Source File
 

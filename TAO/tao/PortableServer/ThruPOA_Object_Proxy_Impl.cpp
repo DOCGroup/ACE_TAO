@@ -7,7 +7,9 @@
 #include "tao/Stub.h"
 
 
-ACE_RCSID(tao, TAO_ThruPOA_Object_Proxy_Impl, "$Id$")
+ACE_RCSID (tao, 
+           TAO_ThruPOA_Object_Proxy_Impl, 
+           "$Id$")
 
 TAO_ThruPOA_Object_Proxy_Impl::TAO_ThruPOA_Object_Proxy_Impl (void)
 {

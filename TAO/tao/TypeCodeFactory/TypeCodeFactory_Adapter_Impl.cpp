@@ -1,12 +1,12 @@
+// $Id$
+
 #include "TypeCodeFactory_Adapter_Impl.h"
 #include "TypeCodeFactory_i.h"
 #include "tao/ORB_Core.h"
 
-
 ACE_RCSID (TypeCodeFactory,
            TypeCodeFactory_Adapter_Impl,
            "$Id$")
-
 
 TAO_TypeCodeFactory_Adapter_Impl::~TAO_TypeCodeFactory_Adapter_Impl (void)
 {

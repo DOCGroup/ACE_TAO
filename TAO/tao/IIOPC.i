@@ -19,12 +19,16 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_structure.cpp:194
+
 // *************************************************************
 // Inline operations for class IIOP::ListenPoint_var
 // *************************************************************
 
 ACE_INLINE
-IIOP::ListenPoint_var::ListenPoint_var (void) // default constructor
+IIOP::ListenPoint_var::ListenPoint_var (void)
   : ptr_ (0)
 {}
 
@@ -34,46 +38,56 @@ IIOP::ListenPoint_var::ListenPoint_var (ListenPoint *p)
 {}
 
 ACE_INLINE
-IIOP::ListenPoint_var::ListenPoint_var (const ::IIOP::ListenPoint_var &p) // copy constructor
+IIOP::ListenPoint_var::ListenPoint_var (const ::IIOP::ListenPoint_var &p)
 {
   if (p.ptr_)
-    ACE_NEW (this->ptr_, ::IIOP::ListenPoint (*p.ptr_));
+    {
+      ACE_NEW (this->ptr_, ::IIOP::ListenPoint (*p.ptr_));
+    }
   else
-    this->ptr_ = 0;
+    {
+      this->ptr_ = 0;
+    }
 }
 
 ACE_INLINE
-IIOP::ListenPoint_var::~ListenPoint_var (void) // destructor
+IIOP::ListenPoint_var::~ListenPoint_var (void)
 {
   delete this->ptr_;
 }
 
-ACE_INLINE IIOP::ListenPoint_var &
-IIOP::ListenPoint_var::operator= (ListenPoint *p)
+ACE_INLINE
+IIOP::ListenPoint_var &
+IIOP::ListenPoint_var::operator= (ListenPoint *_tao_struct_var)
 {
   delete this->ptr_;
-  this->ptr_ = p;
+  this->ptr_ = _tao_struct_var;
   return *this;
 }
 
-ACE_INLINE ::IIOP::ListenPoint_var &
-IIOP::ListenPoint_var::operator= (const ::IIOP::ListenPoint_var &p)
+ACE_INLINE
+::IIOP::ListenPoint_var &
+IIOP::ListenPoint_var::operator= (const ::IIOP::ListenPoint_var &_tao_struct_var)
 {
-  if (this != &p)
+  if (this != &_tao_struct_var)
     {
-      if (p.ptr_ == 0)
+      if (_tao_struct_var.ptr_ == 0)
         {
           delete this->ptr_;
           this->ptr_ = 0;
         }
       else
         {
-          IIOP::ListenPoint *deep_copy = 
-            new IIOP::ListenPoint (*p.ptr_);
+          ListenPoint *deep_copy = 0;
+          ACE_NEW_RETURN (
+              deep_copy,
+              ListenPoint (*_tao_struct_var.ptr_),
+              *this
+            );
           
           if (deep_copy != 0)
             {
-              IIOP::ListenPoint *tmp = deep_copy;
+              ListenPoint *tmp = deep_copy;
               deep_copy = this->ptr_;
               this->ptr_ = tmp;
               delete deep_copy;
@@ -114,7 +128,7 @@ IIOP::ListenPoint_var::operator ::IIOP::ListenPoint &() const // cast
   return *this->ptr_;
 }
 
-// variable-size types only
+// Variable-size types only.
 ACE_INLINE
 IIOP::ListenPoint_var::operator ::IIOP::ListenPoint *&() // cast 
 {
@@ -133,7 +147,7 @@ IIOP::ListenPoint_var::inout (void)
   return *this->ptr_;
 }
 
-// mapping for variable size 
+// Mapping for variable size.
 ACE_INLINE ::IIOP::ListenPoint *&
 IIOP::ListenPoint_var::out (void)
 {
@@ -156,6 +170,9 @@ IIOP::ListenPoint_var::ptr (void) const
   return this->ptr_;
 }
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_structure.cpp:523
+
 // *************************************************************
 // Inline operations for class IIOP::ListenPoint_out
 // *************************************************************
@@ -168,7 +185,7 @@ IIOP::ListenPoint_out::ListenPoint_out (::IIOP::ListenPoint *&p)
 }
 
 ACE_INLINE
-IIOP::ListenPoint_out::ListenPoint_out (ListenPoint_var &p) // constructor from _var
+IIOP::ListenPoint_out::ListenPoint_out (ListenPoint_var &p)
   : ptr_ (p.out ())
 {
   delete this->ptr_;
@@ -176,21 +193,23 @@ IIOP::ListenPoint_out::ListenPoint_out (ListenPoint_var &p) // constructor from 
 }
 
 ACE_INLINE
-IIOP::ListenPoint_out::ListenPoint_out (const ::IIOP::ListenPoint_out &p) // copy constructor
+IIOP::ListenPoint_out::ListenPoint_out (const ::IIOP::ListenPoint_out &p)
   : ptr_ (ACE_const_cast (ListenPoint_out&, p).ptr_)
 {}
 
-ACE_INLINE IIOP::ListenPoint_out &
+ACE_INLINE
+IIOP::ListenPoint_out &
 IIOP::ListenPoint_out::operator= (const ::IIOP::ListenPoint_out &p)
 {
   this->ptr_ = ACE_const_cast (ListenPoint_out&, p).ptr_;
   return *this;
 }
 
-ACE_INLINE IIOP::ListenPoint_out &
-IIOP::ListenPoint_out::operator= (ListenPoint *p)
+ACE_INLINE
+IIOP::ListenPoint_out &
+IIOP::ListenPoint_out::operator= (ListenPoint *_tao_struct_out)
 {
-  this->ptr_ = p;
+  this->ptr_ = _tao_struct_out;
   return *this;
 }
 
@@ -212,192 +231,231 @@ IIOP::ListenPoint_out::operator-> (void)
   return this->ptr_;
 }
 
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/gen_unbounded_sequence_ci.cpp:99
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_IIOP_LISTENPOINTLIST_CI_)
 #define __TAO_UNBOUNDED_SEQUENCE_IIOP_LISTENPOINTLIST_CI_
 
-  // = Static operations.
-  ACE_INLINE IIOP::ListenPoint *
-  IIOP::_TAO_Unbounded_Sequence_IIOP_ListenPointList::allocbuf (CORBA::ULong size)
-  // Allocate storage for the sequence.
-  {
-    IIOP::ListenPoint *retval = 0;
-    ACE_NEW_RETURN (retval, IIOP::ListenPoint[size], 0);
-    return retval;
-  }
-  
-  ACE_INLINE void IIOP::_TAO_Unbounded_Sequence_IIOP_ListenPointList::freebuf (IIOP::ListenPoint *buffer)
-  // Free the sequence.
-  {
-    delete [] buffer;
-  }
-  
-  ACE_INLINE
-  IIOP::_TAO_Unbounded_Sequence_IIOP_ListenPointList::_TAO_Unbounded_Sequence_IIOP_ListenPointList (void) // Default constructor.
-  {
-  }
-  
-  ACE_INLINE
-  IIOP::_TAO_Unbounded_Sequence_IIOP_ListenPointList::_TAO_Unbounded_Sequence_IIOP_ListenPointList (CORBA::ULong maximum) // Constructor using a maximum length value.
-    : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_IIOP_ListenPointList::allocbuf (maximum))
-  {
-  }
-  
-  ACE_INLINE
-  IIOP::_TAO_Unbounded_Sequence_IIOP_ListenPointList::_TAO_Unbounded_Sequence_IIOP_ListenPointList (CORBA::ULong maximum,
+ACE_INLINE
+IIOP::ListenPoint *
+IIOP::_TAO_Unbounded_Sequence_IIOP_ListenPointList::allocbuf (CORBA::ULong size)
+{
+  IIOP::ListenPoint *retval = 0;
+  ACE_NEW_RETURN (retval, IIOP::ListenPoint[size], 0);
+  return retval;
+}
+
+ACE_INLINE
+void IIOP::_TAO_Unbounded_Sequence_IIOP_ListenPointList::freebuf (IIOP::ListenPoint *buffer)
+{
+  delete [] buffer;
+}
+
+ACE_INLINE
+IIOP::_TAO_Unbounded_Sequence_IIOP_ListenPointList::_TAO_Unbounded_Sequence_IIOP_ListenPointList (void)
+{
+}
+
+ACE_INLINE
+IIOP::_TAO_Unbounded_Sequence_IIOP_ListenPointList::_TAO_Unbounded_Sequence_IIOP_ListenPointList (CORBA::ULong maximum) 
+  : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_IIOP_ListenPointList::allocbuf (maximum))
+{
+}
+
+ACE_INLINE
+IIOP::_TAO_Unbounded_Sequence_IIOP_ListenPointList::_TAO_Unbounded_Sequence_IIOP_ListenPointList (
+    CORBA::ULong maximum,
     CORBA::ULong length,
     IIOP::ListenPoint *data,
-    CORBA::Boolean release)
+    CORBA::Boolean release
+  )
   : TAO_Unbounded_Base_Sequence (maximum, length, data, release)
-  {
-  }
-  
-  ACE_INLINE
-  IIOP::_TAO_Unbounded_Sequence_IIOP_ListenPointList::_TAO_Unbounded_Sequence_IIOP_ListenPointList (const _TAO_Unbounded_Sequence_IIOP_ListenPointList &rhs)
-  // Copy constructor.
-    : TAO_Unbounded_Base_Sequence (rhs)
-  {
-    if (rhs.buffer_ != 0)
+{
+}
+
+ACE_INLINE
+IIOP::_TAO_Unbounded_Sequence_IIOP_ListenPointList::_TAO_Unbounded_Sequence_IIOP_ListenPointList (
+    const _TAO_Unbounded_Sequence_IIOP_ListenPointList &rhs
+  )
+  : TAO_Unbounded_Base_Sequence (rhs)
+{
+  if (rhs.buffer_ != 0)
     {
-      IIOP::ListenPoint *tmp1 = _TAO_Unbounded_Sequence_IIOP_ListenPointList::allocbuf (this->maximum_);
-      IIOP::ListenPoint * const tmp2 = ACE_reinterpret_cast (IIOP::ListenPoint * ACE_CAST_CONST, rhs.buffer_);
+      IIOP::ListenPoint *tmp1 =
+        _TAO_Unbounded_Sequence_IIOP_ListenPointList::allocbuf (this->maximum_);
+      IIOP::ListenPoint * const tmp2 =
+        ACE_reinterpret_cast (IIOP::ListenPoint * ACE_CAST_CONST, rhs.buffer_);
       
       for (CORBA::ULong i = 0; i < this->length_; ++i)
-        tmp1[i] = tmp2[i];
+        {
+          tmp1[i] = tmp2[i];
+        }
       
       this->buffer_ = tmp1;
     }
-    else
+  else
     {
       this->buffer_ = 0;
     }
-  }
-  
-  ACE_INLINE IIOP::_TAO_Unbounded_Sequence_IIOP_ListenPointList &
-  IIOP::_TAO_Unbounded_Sequence_IIOP_ListenPointList::operator= (const _TAO_Unbounded_Sequence_IIOP_ListenPointList &rhs)
-  // Assignment operator.
-  {
-    if (this == &rhs)
+}
+
+ACE_INLINE
+IIOP::_TAO_Unbounded_Sequence_IIOP_ListenPointList &
+IIOP::_TAO_Unbounded_Sequence_IIOP_ListenPointList::operator= (
+    const _TAO_Unbounded_Sequence_IIOP_ListenPointList &rhs
+  )
+{
+  if (this == &rhs)
+    {
       return *this;
-    
-    if (this->release_)
+    }
+  
+  if (this->release_)
     {
       if (this->maximum_ < rhs.maximum_)
-      {
-        // free the old buffer
-        IIOP::ListenPoint *tmp = ACE_reinterpret_cast (IIOP::ListenPoint *, this->buffer_);
-        _TAO_Unbounded_Sequence_IIOP_ListenPointList::freebuf (tmp);
-        this->buffer_ = _TAO_Unbounded_Sequence_IIOP_ListenPointList::allocbuf (rhs.maximum_);
-      }
+        {
+          // Free the old buffer.
+          IIOP::ListenPoint *tmp =
+            ACE_reinterpret_cast (IIOP::ListenPoint *, this->buffer_);
+          
+          _TAO_Unbounded_Sequence_IIOP_ListenPointList::freebuf (tmp);
+          
+          this->buffer_ =
+            _TAO_Unbounded_Sequence_IIOP_ListenPointList::allocbuf (rhs.maximum_);
+        }
     }
-    else
-      this->buffer_ = _TAO_Unbounded_Sequence_IIOP_ListenPointList::allocbuf (rhs.maximum_);
-    
-    TAO_Unbounded_Base_Sequence::operator= (rhs);
-    
-    IIOP::ListenPoint *tmp1 = ACE_reinterpret_cast (IIOP::ListenPoint *, this->buffer_);
-    IIOP::ListenPoint * const tmp2 = ACE_reinterpret_cast (IIOP::ListenPoint * ACE_CAST_CONST, rhs.buffer_);
-    
-    for (CORBA::ULong i = 0; i < this->length_; ++i)
+  else
+    {
+      this->buffer_ =
+        _TAO_Unbounded_Sequence_IIOP_ListenPointList::allocbuf (rhs.maximum_);
+    }
+  
+  TAO_Unbounded_Base_Sequence::operator= (rhs);
+  
+  IIOP::ListenPoint *tmp1 =
+    ACE_reinterpret_cast (IIOP::ListenPoint *, this->buffer_);
+  IIOP::ListenPoint * const tmp2 =
+    ACE_reinterpret_cast (IIOP::ListenPoint * ACE_CAST_CONST, rhs.buffer_);
+  
+  for (CORBA::ULong i = 0; i < this->length_; ++i)
+    {
       tmp1[i] = tmp2[i];
-    
-    return *this;
-  }
+    }
   
-  // = Accessors.
-  ACE_INLINE IIOP::ListenPoint &
-  IIOP::_TAO_Unbounded_Sequence_IIOP_ListenPointList::operator[] (CORBA::ULong i)
-  // operator []
-  {
-    ACE_ASSERT (i < this->maximum_);
-    IIOP::ListenPoint* tmp = ACE_reinterpret_cast(IIOP::ListenPoint*,this->buffer_);
-    return tmp[i];
-  }
+  return *this;
+}
+
+// = Accessors.
+ACE_INLINE
+IIOP::ListenPoint &
+IIOP::_TAO_Unbounded_Sequence_IIOP_ListenPointList::operator[] (CORBA::ULong i)
+{
+  ACE_ASSERT (i < this->maximum_);
+  IIOP::ListenPoint* tmp =
+    ACE_reinterpret_cast (IIOP::ListenPoint*, this->buffer_);
+  return tmp[i];
+}
+
+ACE_INLINE
+const IIOP::ListenPoint &
+IIOP::_TAO_Unbounded_Sequence_IIOP_ListenPointList::operator[] (CORBA::ULong i) const
+{
+  ACE_ASSERT (i < this->maximum_);
+  IIOP::ListenPoint * const tmp =
+    ACE_reinterpret_cast (IIOP::ListenPoint* ACE_CAST_CONST, this->buffer_);
+  return tmp[i];
+}
+
+// Implement the TAO_Base_Sequence methods (see Sequence.h)
+
+ACE_INLINE
+IIOP::ListenPoint *
+IIOP::_TAO_Unbounded_Sequence_IIOP_ListenPointList::get_buffer (CORBA::Boolean orphan)
+{
+  IIOP::ListenPoint *result = 0;
   
-  ACE_INLINE const IIOP::ListenPoint &
-  IIOP::_TAO_Unbounded_Sequence_IIOP_ListenPointList::operator[] (CORBA::ULong i) const
-  // operator []
-  {
-    ACE_ASSERT (i < this->maximum_);
-    IIOP::ListenPoint * const tmp = ACE_reinterpret_cast (IIOP::ListenPoint* ACE_CAST_CONST, this->buffer_);
-    return tmp[i];
-  }
-  
-  // Implement the TAO_Base_Sequence methods (see Sequence.h)
-  
-  ACE_INLINE IIOP::ListenPoint *
-  IIOP::_TAO_Unbounded_Sequence_IIOP_ListenPointList::get_buffer (CORBA::Boolean orphan)
-  {
-    IIOP::ListenPoint *result = 0;
-    if (orphan == 0)
+  if (orphan == 0)
     {
       // We retain ownership.
       if (this->buffer_ == 0)
-      {
-        result = _TAO_Unbounded_Sequence_IIOP_ListenPointList::allocbuf (this->length_);
-        this->buffer_ = result;
-        this->release_ = 1;
-      }
+        {
+          result =
+            _TAO_Unbounded_Sequence_IIOP_ListenPointList::allocbuf (this->length_);
+          this->buffer_ = result;
+          this->release_ = 1;
+        }
       else
-      {
-        result = ACE_reinterpret_cast (IIOP::ListenPoint*, this->buffer_);
-      }
+        {
+          result =
+            ACE_reinterpret_cast (IIOP::ListenPoint*, this->buffer_);
+        }
     }
-    else // if (orphan == 1)
+  else // if (orphan == 1)
     {
       if (this->release_ != 0)
-      {
-        // We set the state back to default and relinquish
-        // ownership.
-        result = ACE_reinterpret_cast(IIOP::ListenPoint*,this->buffer_);
-        this->maximum_ = 0;
-        this->length_ = 0;
-        this->buffer_ = 0;
-        this->release_ = 0;
-      }
+        {
+          // We set the state back to default and relinquish ownership.
+          result =
+            ACE_reinterpret_cast(IIOP::ListenPoint*,this->buffer_);
+          this->maximum_ = 0;
+          this->length_ = 0;
+          this->buffer_ = 0;
+          this->release_ = 0;
+        }
     }
-    return result;
-  }
   
-  ACE_INLINE const IIOP::ListenPoint *
-  IIOP::_TAO_Unbounded_Sequence_IIOP_ListenPointList::get_buffer (void) const
-  {
-    return ACE_reinterpret_cast(const IIOP::ListenPoint * ACE_CAST_CONST, this->buffer_);
-  }
+  return result;
+}
+
+ACE_INLINE
+const IIOP::ListenPoint *
+IIOP::_TAO_Unbounded_Sequence_IIOP_ListenPointList::get_buffer (void) const
+{
+  return ACE_reinterpret_cast (const IIOP::ListenPoint * ACE_CAST_CONST, this->buffer_);
+}
+
+ACE_INLINE
+void
+IIOP::_TAO_Unbounded_Sequence_IIOP_ListenPointList::replace (
+    CORBA::ULong max,
+    CORBA::ULong length,
+    IIOP::ListenPoint *data,
+    CORBA::Boolean release
+  )
+{
+  this->maximum_ = max;
+  this->length_ = length;
   
-  ACE_INLINE void
-  IIOP::_TAO_Unbounded_Sequence_IIOP_ListenPointList::replace (CORBA::ULong max,
-  CORBA::ULong length,
-  IIOP::ListenPoint *data,
-  CORBA::Boolean release)
-  {
-    this->maximum_ = max;
-    this->length_ = length;
-    if (this->buffer_ && this->release_ == 1)
+  if (this->buffer_ && this->release_ == 1)
     {
-      IIOP::ListenPoint *tmp = ACE_reinterpret_cast(IIOP::ListenPoint*,this->buffer_);
+      IIOP::ListenPoint *tmp =
+        ACE_reinterpret_cast (IIOP::ListenPoint*, this->buffer_);
       _TAO_Unbounded_Sequence_IIOP_ListenPointList::freebuf (tmp);
     }
-    this->buffer_ = data;
-    this->release_ = release;
-  }
   
-#endif /* end #if !defined */
+  this->buffer_ = data;
+  this->release_ = release;
+}
 
+#endif /* end #if !defined */
 
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
 
 #if !defined (_IIOP_LISTENPOINTLIST_CI_)
 #define _IIOP_LISTENPOINTLIST_CI_
 
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ci.cpp:226
+
 // *************************************************************
 // Inline operations for class IIOP::ListenPointList_var
 // *************************************************************
 
 ACE_INLINE
-IIOP::ListenPointList_var::ListenPointList_var (void) // default constructor
+IIOP::ListenPointList_var::ListenPointList_var (void)
   : ptr_ (0)
 {}
 
@@ -407,21 +465,26 @@ IIOP::ListenPointList_var::ListenPointList_var (ListenPointList *p)
 {}
 
 ACE_INLINE
-IIOP::ListenPointList_var::ListenPointList_var (const ::IIOP::ListenPointList_var &p) // copy constructor
+IIOP::ListenPointList_var::ListenPointList_var (const ::IIOP::ListenPointList_var &p)
 {
   if (p.ptr_)
-    ACE_NEW (this->ptr_, ::IIOP::ListenPointList (*p.ptr_));
+    {
+      ACE_NEW (this->ptr_, ::IIOP::ListenPointList (*p.ptr_));
+    }
   else
-    this->ptr_ = 0;
+    {
+      this->ptr_ = 0;
+    }
 }
 
 ACE_INLINE
-IIOP::ListenPointList_var::~ListenPointList_var (void) // destructor
+IIOP::ListenPointList_var::~ListenPointList_var (void)
 {
   delete this->ptr_;
 }
 
-ACE_INLINE IIOP::ListenPointList_var &
+ACE_INLINE
+IIOP::ListenPointList_var &
 IIOP::ListenPointList_var::operator= (ListenPointList *p)
 {
   delete this->ptr_;
@@ -429,8 +492,9 @@ IIOP::ListenPointList_var::operator= (ListenPointList *p)
   return *this;
 }
 
-ACE_INLINE IIOP::ListenPointList_var &
-IIOP::ListenPointList_var::operator= (const ::IIOP::ListenPointList_var &p) // deep copy
+ACE_INLINE
+::IIOP::ListenPointList_var &
+IIOP::ListenPointList_var::operator= (const ::IIOP::ListenPointList_var &p)
 {
   if (this != &p)
     {
@@ -441,12 +505,16 @@ IIOP::ListenPointList_var::operator= (const ::IIOP::ListenPointList_var &p) // d
         }
       else
         {
-          IIOP::ListenPointList *deep_copy = 
-            new IIOP::ListenPointList (*p.ptr_);
+          ListenPointList *deep_copy = 0;
+          ACE_NEW_RETURN (
+              deep_copy,
+              ListenPointList (*p.ptr_),
+              *this
+            );
           
           if (deep_copy != 0)
             {
-              IIOP::ListenPointList *tmp = deep_copy;
+              ListenPointList *tmp = deep_copy;
               deep_copy = this->ptr_;
               this->ptr_ = tmp;
               delete deep_copy;
@@ -457,69 +525,75 @@ IIOP::ListenPointList_var::operator= (const ::IIOP::ListenPointList_var &p) // d
   return *this;
 }
 
-ACE_INLINE const ::IIOP::ListenPointList *
+ACE_INLINE
+const ::IIOP::ListenPointList *
 IIOP::ListenPointList_var::operator-> (void) const
 {
   return this->ptr_;
 }
 
-ACE_INLINE ::IIOP::ListenPointList *
+ACE_INLINE
+::IIOP::ListenPointList *
 IIOP::ListenPointList_var::operator-> (void)
 {
   return this->ptr_;
 }
 
-ACE_INLINE 
+ACE_INLINE
 IIOP::ListenPointList_var::operator const ::IIOP::ListenPointList &() const // cast
 {
   return *this->ptr_;
 }
 
-ACE_INLINE 
+ACE_INLINE
 IIOP::ListenPointList_var::operator ::IIOP::ListenPointList &() // cast 
 {
   return *this->ptr_;
 }
 
-ACE_INLINE 
+ACE_INLINE
 IIOP::ListenPointList_var::operator ::IIOP::ListenPointList &() const // cast 
 {
   return *this->ptr_;
 }
 
-// variable-size types only
+// Variable-size types only.
 ACE_INLINE
 IIOP::ListenPointList_var::operator ::IIOP::ListenPointList *&() // cast 
 {
   return this->ptr_;
 }
 
-ACE_INLINE IIOP::ListenPoint &
+ACE_INLINE
+IIOP::ListenPoint &
 IIOP::ListenPointList_var::operator[] (CORBA::ULong index)
 {
   return this->ptr_->operator[] (index);
 }
 
-ACE_INLINE const IIOP::ListenPoint &
+ACE_INLINE
+const IIOP::ListenPoint &
 IIOP::ListenPointList_var::operator[] (CORBA::ULong index) const
 {
   return ACE_const_cast (const IIOP::ListenPoint &, this->ptr_->operator[] (index));
 }
 
-ACE_INLINE const ::IIOP::ListenPointList &
+ACE_INLINE
+const ::IIOP::ListenPointList &
 IIOP::ListenPointList_var::in (void) const
 {
   return *this->ptr_;
 }
 
-ACE_INLINE ::IIOP::ListenPointList &
+ACE_INLINE
+::IIOP::ListenPointList &
 IIOP::ListenPointList_var::inout (void)
 {
   return *this->ptr_;
 }
 
-// mapping for variable size 
-ACE_INLINE ::IIOP::ListenPointList *&
+ACE_INLINE
+::IIOP::ListenPointList *&
 IIOP::ListenPointList_var::out (void)
 {
   delete this->ptr_;
@@ -527,7 +601,8 @@ IIOP::ListenPointList_var::out (void)
   return this->ptr_;
 }
 
-ACE_INLINE ::IIOP::ListenPointList *
+ACE_INLINE
+::IIOP::ListenPointList *
 IIOP::ListenPointList_var::_retn (void)
 {
   ::IIOP::ListenPointList *tmp = this->ptr_;
@@ -535,11 +610,15 @@ IIOP::ListenPointList_var::_retn (void)
   return tmp;
 }
 
-ACE_INLINE ::IIOP::ListenPointList *
+ACE_INLINE
+::IIOP::ListenPointList *
 IIOP::ListenPointList_var::ptr (void) const
 {
   return this->ptr_;
 }
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ci.cpp:567
 
 // *************************************************************
 // Inline operations for class IIOP::ListenPointList_out
@@ -553,7 +632,7 @@ IIOP::ListenPointList_out::ListenPointList_out (ListenPointList *&p)
 }
 
 ACE_INLINE
-IIOP::ListenPointList_out::ListenPointList_out (ListenPointList_var &p) // constructor from _var
+IIOP::ListenPointList_out::ListenPointList_out (ListenPointList_var &p)
   : ptr_ (p.out ())
 {
   delete this->ptr_;
@@ -561,57 +640,64 @@ IIOP::ListenPointList_out::ListenPointList_out (ListenPointList_var &p) // const
 }
 
 ACE_INLINE
-IIOP::ListenPointList_out::ListenPointList_out (const ::IIOP::ListenPointList_out &p) // copy constructor
+IIOP::ListenPointList_out::ListenPointList_out (const ::IIOP::ListenPointList_out &p)
   : ptr_ (ACE_const_cast (ListenPointList_out&, p).ptr_)
 {}
 
-ACE_INLINE ::IIOP::ListenPointList_out &
+ACE_INLINE
+::IIOP::ListenPointList_out &
 IIOP::ListenPointList_out::operator= (const ::IIOP::ListenPointList_out &p)
 {
   this->ptr_ = ACE_const_cast (ListenPointList_out&, p).ptr_;
   return *this;
 }
 
-ACE_INLINE ::IIOP::ListenPointList_out &
+ACE_INLINE
+::IIOP::ListenPointList_out &
 IIOP::ListenPointList_out::operator= (ListenPointList *p)
 {
   this->ptr_ = p;
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 IIOP::ListenPointList_out::operator ::IIOP::ListenPointList *&() // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE ::IIOP::ListenPointList *&
+ACE_INLINE
+::IIOP::ListenPointList *&
 IIOP::ListenPointList_out::ptr (void) // ptr
 {
   return this->ptr_;
 }
 
-ACE_INLINE ::IIOP::ListenPointList *
+ACE_INLINE
+::IIOP::ListenPointList *
 IIOP::ListenPointList_out::operator-> (void)
 {
   return this->ptr_;
 }
 
-ACE_INLINE IIOP::ListenPoint &
+ACE_INLINE
+IIOP::ListenPoint &
 IIOP::ListenPointList_out::operator[] (CORBA::ULong index)
 {
   return this->ptr_->operator[] (index);
 }
 
-
 #endif /* end #if !defined */
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_structure.cpp:194
 
 // *************************************************************
 // Inline operations for class IIOP::BiDirIIOPServiceContext_var
 // *************************************************************
 
 ACE_INLINE
-IIOP::BiDirIIOPServiceContext_var::BiDirIIOPServiceContext_var (void) // default constructor
+IIOP::BiDirIIOPServiceContext_var::BiDirIIOPServiceContext_var (void)
   : ptr_ (0)
 {}
 
@@ -621,46 +707,56 @@ IIOP::BiDirIIOPServiceContext_var::BiDirIIOPServiceContext_var (BiDirIIOPService
 {}
 
 ACE_INLINE
-IIOP::BiDirIIOPServiceContext_var::BiDirIIOPServiceContext_var (const ::IIOP::BiDirIIOPServiceContext_var &p) // copy constructor
+IIOP::BiDirIIOPServiceContext_var::BiDirIIOPServiceContext_var (const ::IIOP::BiDirIIOPServiceContext_var &p)
 {
   if (p.ptr_)
-    ACE_NEW (this->ptr_, ::IIOP::BiDirIIOPServiceContext (*p.ptr_));
+    {
+      ACE_NEW (this->ptr_, ::IIOP::BiDirIIOPServiceContext (*p.ptr_));
+    }
   else
-    this->ptr_ = 0;
+    {
+      this->ptr_ = 0;
+    }
 }
 
 ACE_INLINE
-IIOP::BiDirIIOPServiceContext_var::~BiDirIIOPServiceContext_var (void) // destructor
+IIOP::BiDirIIOPServiceContext_var::~BiDirIIOPServiceContext_var (void)
 {
   delete this->ptr_;
 }
 
-ACE_INLINE IIOP::BiDirIIOPServiceContext_var &
-IIOP::BiDirIIOPServiceContext_var::operator= (BiDirIIOPServiceContext *p)
+ACE_INLINE
+IIOP::BiDirIIOPServiceContext_var &
+IIOP::BiDirIIOPServiceContext_var::operator= (BiDirIIOPServiceContext *_tao_struct_var)
 {
   delete this->ptr_;
-  this->ptr_ = p;
+  this->ptr_ = _tao_struct_var;
   return *this;
 }
 
-ACE_INLINE ::IIOP::BiDirIIOPServiceContext_var &
-IIOP::BiDirIIOPServiceContext_var::operator= (const ::IIOP::BiDirIIOPServiceContext_var &p)
+ACE_INLINE
+::IIOP::BiDirIIOPServiceContext_var &
+IIOP::BiDirIIOPServiceContext_var::operator= (const ::IIOP::BiDirIIOPServiceContext_var &_tao_struct_var)
 {
-  if (this != &p)
+  if (this != &_tao_struct_var)
     {
-      if (p.ptr_ == 0)
+      if (_tao_struct_var.ptr_ == 0)
         {
           delete this->ptr_;
           this->ptr_ = 0;
         }
       else
         {
-          IIOP::BiDirIIOPServiceContext *deep_copy = 
-            new IIOP::BiDirIIOPServiceContext (*p.ptr_);
+          BiDirIIOPServiceContext *deep_copy = 0;
+          ACE_NEW_RETURN (
+              deep_copy,
+              BiDirIIOPServiceContext (*_tao_struct_var.ptr_),
+              *this
+            );
           
           if (deep_copy != 0)
             {
-              IIOP::BiDirIIOPServiceContext *tmp = deep_copy;
+              BiDirIIOPServiceContext *tmp = deep_copy;
               deep_copy = this->ptr_;
               this->ptr_ = tmp;
               delete deep_copy;
@@ -701,7 +797,7 @@ IIOP::BiDirIIOPServiceContext_var::operator ::IIOP::BiDirIIOPServiceContext &() 
   return *this->ptr_;
 }
 
-// variable-size types only
+// Variable-size types only.
 ACE_INLINE
 IIOP::BiDirIIOPServiceContext_var::operator ::IIOP::BiDirIIOPServiceContext *&() // cast 
 {
@@ -720,7 +816,7 @@ IIOP::BiDirIIOPServiceContext_var::inout (void)
   return *this->ptr_;
 }
 
-// mapping for variable size 
+// Mapping for variable size.
 ACE_INLINE ::IIOP::BiDirIIOPServiceContext *&
 IIOP::BiDirIIOPServiceContext_var::out (void)
 {
@@ -743,6 +839,9 @@ IIOP::BiDirIIOPServiceContext_var::ptr (void) const
   return this->ptr_;
 }
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_structure.cpp:523
+
 // *************************************************************
 // Inline operations for class IIOP::BiDirIIOPServiceContext_out
 // *************************************************************
@@ -755,7 +854,7 @@ IIOP::BiDirIIOPServiceContext_out::BiDirIIOPServiceContext_out (::IIOP::BiDirIIO
 }
 
 ACE_INLINE
-IIOP::BiDirIIOPServiceContext_out::BiDirIIOPServiceContext_out (BiDirIIOPServiceContext_var &p) // constructor from _var
+IIOP::BiDirIIOPServiceContext_out::BiDirIIOPServiceContext_out (BiDirIIOPServiceContext_var &p)
   : ptr_ (p.out ())
 {
   delete this->ptr_;
@@ -763,21 +862,23 @@ IIOP::BiDirIIOPServiceContext_out::BiDirIIOPServiceContext_out (BiDirIIOPService
 }
 
 ACE_INLINE
-IIOP::BiDirIIOPServiceContext_out::BiDirIIOPServiceContext_out (const ::IIOP::BiDirIIOPServiceContext_out &p) // copy constructor
+IIOP::BiDirIIOPServiceContext_out::BiDirIIOPServiceContext_out (const ::IIOP::BiDirIIOPServiceContext_out &p)
   : ptr_ (ACE_const_cast (BiDirIIOPServiceContext_out&, p).ptr_)
 {}
 
-ACE_INLINE IIOP::BiDirIIOPServiceContext_out &
+ACE_INLINE
+IIOP::BiDirIIOPServiceContext_out &
 IIOP::BiDirIIOPServiceContext_out::operator= (const ::IIOP::BiDirIIOPServiceContext_out &p)
 {
   this->ptr_ = ACE_const_cast (BiDirIIOPServiceContext_out&, p).ptr_;
   return *this;
 }
 
-ACE_INLINE IIOP::BiDirIIOPServiceContext_out &
-IIOP::BiDirIIOPServiceContext_out::operator= (BiDirIIOPServiceContext *p)
+ACE_INLINE
+IIOP::BiDirIIOPServiceContext_out &
+IIOP::BiDirIIOPServiceContext_out::operator= (BiDirIIOPServiceContext *_tao_struct_out)
 {
-  this->ptr_ = p;
+  this->ptr_ = _tao_struct_out;
   return *this;
 }
 
@@ -799,30 +900,49 @@ IIOP::BiDirIIOPServiceContext_out::operator-> (void)
   return this->ptr_;
 }
 
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const IIOP::ListenPoint &_tao_aggregate)
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/cdr_op_ci.cpp:103
+
+ACE_INLINE
+CORBA::Boolean operator<< (
+    TAO_OutputCDR &strm,
+    const IIOP::ListenPoint &_tao_aggregate
+  )
 {
   if (
     (strm << _tao_aggregate.host.in ()) &&
     (strm << _tao_aggregate.port)
-  )
-    return 1;
+   )
+    {
+      return 1;
+    }
   else
-    return 0;
-  
+    {
+      return 0;
+    }
 }
 
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, IIOP::ListenPoint &_tao_aggregate)
+ACE_INLINE
+CORBA::Boolean operator>> (
+    TAO_InputCDR &strm,
+    IIOP::ListenPoint &_tao_aggregate
+  )
 {
   if (
     (strm >> _tao_aggregate.host.out ()) &&
     (strm >> _tao_aggregate.port)
-  )
-    return 1;
+   )
+    {
+      return 1;
+    }
   else
-    return 0;
-  
+    {
+      return 0;
+    }
 }
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ci.cpp:84
 
 #if !defined _TAO_CDR_OP_IIOP_ListenPointList_I_
 #define _TAO_CDR_OP_IIOP_ListenPointList_I_
@@ -831,6 +951,7 @@ CORBA::Boolean TAO_Export operator<< (
     TAO_OutputCDR &,
     const IIOP::ListenPointList &
   );
+
 CORBA::Boolean TAO_Export operator>> (
     TAO_InputCDR &,
     IIOP::ListenPointList &
@@ -838,25 +959,42 @@ CORBA::Boolean TAO_Export operator>> (
 
 #endif /* _TAO_CDR_OP_IIOP_ListenPointList_I_ */
 
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const IIOP::BiDirIIOPServiceContext &_tao_aggregate)
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/cdr_op_ci.cpp:103
+
+ACE_INLINE
+CORBA::Boolean operator<< (
+    TAO_OutputCDR &strm,
+    const IIOP::BiDirIIOPServiceContext &_tao_aggregate
+  )
 {
   if (
     (strm << _tao_aggregate.listen_points)
-  )
-    return 1;
+   )
+    {
+      return 1;
+    }
   else
-    return 0;
-  
+    {
+      return 0;
+    }
 }
 
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, IIOP::BiDirIIOPServiceContext &_tao_aggregate)
+ACE_INLINE
+CORBA::Boolean operator>> (
+    TAO_InputCDR &strm,
+    IIOP::BiDirIIOPServiceContext &_tao_aggregate
+  )
 {
   if (
     (strm >> _tao_aggregate.listen_points)
-  )
-    return 1;
+   )
+    {
+      return 1;
+    }
   else
-    return 0;
-  
+    {
+      return 0;
+    }
 }
 

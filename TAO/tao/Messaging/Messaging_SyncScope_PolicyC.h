@@ -19,9 +19,8 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:151
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:151
 
 #ifndef _TAO_IDL_ORIG_MESSAGING_SYNCSCOPE_POLICYC_H_
 #define _TAO_IDL_ORIG_MESSAGING_SYNCSCOPE_POLICYC_H_
@@ -61,56 +60,54 @@
 #endif /* __BORLANDC__ */
 
 // TAO_IDL - Generated from
-// be/be_visitor_module/module_ch.cpp:45
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_ch.cpp:48
 
 TAO_NAMESPACE  Messaging
 {
+  
   // TAO_IDL - Generated from
-  // be/be_visitor_constant/constant_ch.cpp:52
-
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
+  
   const CORBA::ULong SYNC_SCOPE_POLICY_TYPE = 24U;
-
-
+  
   // TAO_IDL - Generated from
-  // be/be_visitor_interface/interface_ch.cpp:54
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:52
 
 #if !defined (_MESSAGING_SYNCSCOPEPOLICY___PTR_CH_)
 #define _MESSAGING_SYNCSCOPEPOLICY___PTR_CH_
-
+  
   class SyncScopePolicy;
   typedef SyncScopePolicy *SyncScopePolicy_ptr;
 
 #endif /* end #if !defined */
 
-
 #if !defined (_MESSAGING_SYNCSCOPEPOLICY___VAR_CH_)
 #define _MESSAGING_SYNCSCOPEPOLICY___VAR_CH_
-
-
+  
   // TAO_IDL - Generated from
-  // be/be_interface.cpp:569
-
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:571
+  
   class TAO_Messaging_Export SyncScopePolicy_var : public TAO_Base_var
   {
   public:
     SyncScopePolicy_var (void); // default constructor
-    SyncScopePolicy_var (SyncScopePolicy_ptr p) : ptr_ (p) {}
+    SyncScopePolicy_var (SyncScopePolicy_ptr p) : ptr_ (p) {} 
     SyncScopePolicy_var (const SyncScopePolicy_var &); // copy constructor
     ~SyncScopePolicy_var (void); // destructor
-
+    
     SyncScopePolicy_var &operator= (SyncScopePolicy_ptr);
     SyncScopePolicy_var &operator= (const SyncScopePolicy_var &);
     SyncScopePolicy_ptr operator-> (void) const;
-
+    
     operator const SyncScopePolicy_ptr &() const;
     operator SyncScopePolicy_ptr &();
-    // in, inout, out, _retn
+    // in, inout, out, _retn 
     SyncScopePolicy_ptr in (void) const;
     SyncScopePolicy_ptr &inout (void);
     SyncScopePolicy_ptr &out (void);
     SyncScopePolicy_ptr _retn (void);
     SyncScopePolicy_ptr ptr (void) const;
-
+    
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
     static SyncScopePolicy_ptr tao_duplicate (SyncScopePolicy_ptr);
@@ -121,7 +118,7 @@ TAO_NAMESPACE  Messaging
         ACE_ENV_ARG_DECL_NOT_USED
       );
     static CORBA::Object * tao_upcast (void *);
-
+  
   private:
     SyncScopePolicy_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -129,17 +126,14 @@ TAO_NAMESPACE  Messaging
     SyncScopePolicy_var &operator= (const TAO_Base_var &rhs);
   };
 
-
 #endif /* end #if !defined */
-
 
 #if !defined (_MESSAGING_SYNCSCOPEPOLICY___OUT_CH_)
 #define _MESSAGING_SYNCSCOPEPOLICY___OUT_CH_
-
-
+  
   // TAO_IDL - Generated from
-  // be/be_interface.cpp:929
-
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:946
+  
   class TAO_Messaging_Export SyncScopePolicy_out
   {
   public:
@@ -152,21 +146,19 @@ TAO_NAMESPACE  Messaging
     operator SyncScopePolicy_ptr &();
     SyncScopePolicy_ptr &ptr (void);
     SyncScopePolicy_ptr operator-> (void);
-
+  
   private:
     SyncScopePolicy_ptr &ptr_;
   };
 
-
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
-  // be/be_visitor_interface/interface_ch.cpp:113
-
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:110
 
 #if !defined (_MESSAGING_SYNCSCOPEPOLICY_CH_)
 #define _MESSAGING_SYNCSCOPEPOLICY_CH_
-
+  
   class TAO_Messaging_Export SyncScopePolicy
     : public virtual CORBA::Policy
   {
@@ -174,87 +166,90 @@ TAO_NAMESPACE  Messaging
     typedef SyncScopePolicy_ptr _ptr_type;
     typedef SyncScopePolicy_var _var_type;
     static int _tao_class_id;
-
+    
     // The static operations.
     static SyncScopePolicy_ptr _duplicate (SyncScopePolicy_ptr obj);
-
+    
     static SyncScopePolicy_ptr _narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     static SyncScopePolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     static SyncScopePolicy_ptr _nil (void)
       {
         return (SyncScopePolicy_ptr)0;
       }
-
+    
+    static void _tao_any_destructor (void *);
+    
     // TAO_IDL - Generated from
-    // be/be_visitor_operation/operation_ch.cpp:46
-
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
+    
     virtual Messaging::SyncScope synchronization (
-
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
     // TAO_IDL - Generated from
-    // be/be_visitor_interface/interface_ch.cpp:269
-
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:267
+    
     virtual void *_tao_QueryInterface (ptr_arith_t type);
-
+    
     virtual const char* _interface_repository_id (void) const;
-
+    virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
+  
   protected:
     SyncScopePolicy (void);
     virtual ~SyncScopePolicy (void);
-
+    
     friend class _TAO_SyncScopePolicy_Remote_Proxy_Impl;
     friend class _TAO_SyncScopePolicy_ThruPOA_Proxy_Impl;
     friend class _TAO_SyncScopePolicy_Direct_Proxy_Impl;
-
+  
   private:
     SyncScopePolicy (const SyncScopePolicy &);
     void operator= (const SyncScopePolicy &);
   };
 
-
 #endif /* end #if !defined */
-
+  
   // TAO_IDL - Generated from
-  // be/be_visitor_typecode/typecode_decl.cpp:44
-
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_SyncScopePolicy;
 
-
 // TAO_IDL - Generated from
-// be/be_visitor_module/module_ch.cpp:66
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_ch.cpp:67
 
 }
 TAO_NAMESPACE_CLOSE // module Messaging
 
-
 // TAO_IDL - Generated from
-// be/be_visitor_interface/any_op_ch.cpp:52
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/any_op_ch.cpp:52
 
-// Any operators for interface Messaging::SyncScopePolicy
 TAO_Messaging_Export void operator<<= (CORBA::Any &, Messaging::SyncScopePolicy_ptr); // copying
 TAO_Messaging_Export void operator<<= (CORBA::Any &, Messaging::SyncScopePolicy_ptr *); // non-copying
 TAO_Messaging_Export CORBA::Boolean operator>>= (const CORBA::Any &, Messaging::SyncScopePolicy_ptr &);
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/cdr_op.cpp:48
+
 #ifndef __ACE_INLINE__
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/cdr_op.cpp:64
 
 #endif /* __ACE_INLINE__ */
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:1002
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:1009
 
 #if defined (__ACE_INLINE__)
 #include "Messaging_SyncScope_PolicyC.i"
@@ -270,3 +265,4 @@ TAO_Messaging_Export CORBA::Boolean operator>>= (const CORBA::Any &, Messaging::
 
 #include "ace/post.h"
 #endif /* ifndef */
+

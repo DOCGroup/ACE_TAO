@@ -13,7 +13,7 @@
 //    ComponentRepository servant class.
 //
 // = AUTHOR
-//    Jeff Parsons <parsons@cs.wustl.edu>
+//    Jeff Parsons <j.parsons@vanderbiltl.edu>
 //
 // ============================================================================
 
@@ -27,7 +27,18 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "IFR_ComponentsS.h"
+#include "ComponentContainer_i.h"
+
+class TAO_ComponentDef_i;
+class TAO_HomeDef_i;
+class TAO_FinderDef_i;
+class TAO_FactoryDef_i;
+class TAO_EventDef_i;
+class TAO_EmitsDef_i;
+class TAO_PublishesDef_i;
+class TAO_ConsumesDef_i;
+class TAO_ProvidesDef_i;
+class TAO_UsesDef_i;
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
@@ -36,7 +47,9 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-class TAO_IFRService_Export TAO_ComponentRepository_i : public TAO_Repository_i
+class TAO_IFRService_Export TAO_ComponentRepository_i 
+  : public virtual TAO_Repository_i,
+    public virtual TAO_ComponentContainer_i
 {
   // = TITLE
   //    TAO_ComponentRepository_i
@@ -55,47 +68,52 @@ public:
   virtual ~TAO_ComponentRepository_i (void);
   // Destructor.
 
-  virtual IR::ComponentDef_ptr create_component (
-      const char *id,
-      const char *name,
-      const char *version,
-      IR::ComponentDef_ptr base_component,
-      const CORBA::InterfaceDefSeq & supports_interfaces
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  virtual int create_servants_and_poas (ACE_ENV_SINGLE_ARG_DECL);
+  // We create a default servant servant for each IR Object
+  // type and its corresponding POA.
 
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual TAO_IDLType_i *select_idltype (
+      CORBA::DefinitionKind def_kind
+    ) const;
+  virtual TAO_Container_i *select_container (
+      CORBA::DefinitionKind def_kind
+    ) const;
+  virtual TAO_Contained_i *select_contained (
+      CORBA::DefinitionKind def_kind
+    ) const;
+  // Return one of our servants for internal use.
 
-  IR::ComponentDef_ptr create_component_i (
-      const char *id,
-      const char *name,
-      const char *version,
-      IR::ComponentDef_ptr base_component,
-      const CORBA::InterfaceDefSeq & supports_interfaces
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  virtual PortableServer::POA_ptr select_poa (
+      CORBA::DefinitionKind def_kind
+    ) const;
+  // Select the right POA for object creation.
 
-    ACE_THROW_SPEC ((CORBA::SystemException));
+protected:
 
-  virtual IR::HomeDef_ptr create_home (
-      const char *id,
-      const char *name,
-      const char *version,
-      IR::HomeDef_ptr base_home,
-      IR::ComponentDef_ptr managed_component,
-      CORBA::ValueDef_ptr primary_key
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+#ifdef CONCRETE_IR_OBJECT_TYPES
+#undef CONCRETE_IR_OBJECT_TYPES
+#endif
 
-    ACE_THROW_SPEC ((CORBA::SystemException));
+#define CONCRETE_IR_OBJECT_TYPES \
+  GEN_IR_OBJECT (ComponentDef) \
+  GEN_IR_OBJECT (HomeDef) \
+  GEN_IR_OBJECT (FinderDef) \
+  GEN_IR_OBJECT (FactoryDef) \
+  GEN_IR_OBJECT (EventDef) \
+  GEN_IR_OBJECT (EmitsDef) \
+  GEN_IR_OBJECT (PublishesDef) \
+  GEN_IR_OBJECT (ConsumesDef) \
+  GEN_IR_OBJECT (ProvidesDef) \
+  GEN_IR_OBJECT (UsesDef)
 
-  IR::HomeDef_ptr create_home_i (
-      const char *id,
-      const char *name,
-      const char *version,
-      IR::HomeDef_ptr base_home,
-      IR::ComponentDef_ptr managed_component,
-      CORBA::ValueDef_ptr primary_key
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+#define GEN_IR_OBJECT(name) \
+  POA_CORBA::ComponentIR:: name ## _tie<TAO_ ## name ## _i> * name ## _servant_; \
+  PortableServer::POA_var name ## _poa_;
 
-    ACE_THROW_SPEC ((CORBA::SystemException));
+  CONCRETE_IR_OBJECT_TYPES
+
+#undef GEN_IR_OBJECT
+  // Servants for each IR Object type, created at startup.
 };
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)

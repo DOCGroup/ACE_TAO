@@ -46,10 +46,10 @@ public:
   CORBA::ULong request_id (void);
 
   /// Get the object_key in read mode..
-  const TAO_ObjectKey &object_key (void) const;
+  const TAO::ObjectKey &object_key (void) const;
 
   /// Get the object_key in read/write mode..
-  TAO_ObjectKey &object_key (void);
+  TAO::ObjectKey &object_key (void);
 
   /// Get the reference to the underlying profile
   TAO_Tagged_Profile &profile (void);
@@ -65,7 +65,7 @@ private:
   TAO_Tagged_Profile profile_;
 
   /// Object Key
-  TAO_ObjectKey object_key_;
+  TAO::ObjectKey object_key_;
 
   /// Incoming CDR stream
   TAO_InputCDR *incoming_;

@@ -477,13 +477,17 @@ public:
 
   CORBA::Boolean cleanup_in_progress (void);
 
+  static int parse_ir_object_key (const TAO::ObjectKey &object_key,
+                                  PortableServer::ObjectId &user_id);
+  // Calls protected static method used when POACurrent is not appropriate.
+
   TAO_Object_Adapter &object_adapter (void);
 
   ACE_Lock &lock (void);
 
   /// Create the correct stub, properly initialized with the
   /// attributes and policies attached to the current POA.
-  TAO_Stub* key_to_stub (const TAO_ObjectKey &key,
+  TAO_Stub* key_to_stub (const TAO::ObjectKey &key,
                          const char *type_id,
                          CORBA::Short priority
                          ACE_ENV_ARG_DECL);
@@ -620,7 +624,7 @@ protected:
                                           &user_id
                                           ACE_ENV_ARG_DECL);
 
-  CORBA::Object_ptr key_to_object (const TAO_ObjectKey &key,
+  CORBA::Object_ptr key_to_object (const TAO::ObjectKey &key,
                                    const char *type_id,
                                    TAO_ServantBase *servant,
                                    CORBA::Boolean collocated,
@@ -629,13 +633,13 @@ protected:
   // Wrapper for the ORB's key_to_object that will alter the object pointer
   // if the ImplRepo is used.
 
-  virtual TAO_Stub* key_to_stub_i (const TAO_ObjectKey &key,
+  virtual TAO_Stub* key_to_stub_i (const TAO::ObjectKey &key,
                                    const char *type_id,
                                    CORBA::Short priority
                                    ACE_ENV_ARG_DECL);
   // Like key_to_stub() but assume that the ORB is not shutting down.
 
-  TAO_Stub *create_stub_object (const TAO_ObjectKey &object_key,
+  TAO_Stub *create_stub_object (const TAO::ObjectKey &object_key,
                                 const char *type_id,
                                 CORBA::PolicyList *policy_list,
                                 TAO_Acceptor_Filter *filter,
@@ -765,11 +769,11 @@ protected:
 
   void set_id (void);
 
-  TAO_ObjectKey *create_object_key (const PortableServer::ObjectId &id);
+  TAO::ObjectKey *create_object_key (const PortableServer::ObjectId &id);
 
   int is_poa_generated_id (const PortableServer::ObjectId &id);
 
-  static int parse_key (const TAO_ObjectKey &key,
+  static int parse_key (const TAO::ObjectKey &key,
                         TAO_Object_Adapter::poa_name &poa_system_name,
                         PortableServer::ObjectId &system_id,
                         CORBA::Boolean &is_root,

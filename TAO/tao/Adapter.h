@@ -17,6 +17,7 @@
 
 #include "tao/corbafwd.h"
 #include "tao/Exception.h"
+#include "tao/Object_KeyC.h"
 #include "ace/Service_Object.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -34,7 +35,6 @@ class TAO_ORB_Core;
 class TAO_Stub;
 class TAO_MProfile;
 class TAO_ServerRequest;
-class TAO_ObjectKey;
 
 class TAO_Export TAO_Adapter
 {
@@ -62,7 +62,7 @@ public:
   virtual int priority (void) const = 0;
 
   /// Return the status....
-  virtual int dispatch (TAO_ObjectKey &key,
+  virtual int dispatch (TAO::ObjectKey &key,
                         TAO_ServerRequest &request,
                         CORBA::Object_out forward_to
                         ACE_ENV_ARG_DECL)
@@ -141,7 +141,7 @@ public:
    * It tries the adapters ordered by priority, stopping when the
    * adapter returns a status different from DS_MISMATCHED_KEY
    */
-  void dispatch (TAO_ObjectKey &key,
+  void dispatch (TAO::ObjectKey &key,
                  TAO_ServerRequest &request,
                  CORBA::Object_out forward_to
                  ACE_ENV_ARG_DECL)

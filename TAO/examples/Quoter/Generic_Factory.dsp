@@ -98,6 +98,7 @@ SOURCE=.\Generic_Factory_i.cpp
 # Begin Source File
 
 SOURCE=.\QuoterC.cpp
+# ADD CPP /GR
 # End Source File
 # Begin Source File
 

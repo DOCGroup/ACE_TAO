@@ -114,6 +114,7 @@ SOURCE=.\CosEventChannelFactory_i.cpp
 # Begin Source File
 
 SOURCE=.\CosEventChannelFactoryC.cpp
+# ADD CPP /GR
 # End Source File
 # Begin Source File
 

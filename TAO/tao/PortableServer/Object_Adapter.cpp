@@ -1,7 +1,4 @@
-
-
 // $Id$
-
 
 // -- PortableServer Include --
 #include "Object_Adapter.h"
@@ -297,7 +294,7 @@ TAO_Object_Adapter::create_lock (int enable_locking,
 }
 
 int
-TAO_Object_Adapter::dispatch_servant (const TAO_ObjectKey &key,
+TAO_Object_Adapter::dispatch_servant (const TAO::ObjectKey &key,
                                       TAO_ServerRequest &req,
                                       CORBA::Object_out forward_to
                                       ACE_ENV_ARG_DECL)
@@ -340,7 +337,7 @@ TAO_Object_Adapter::dispatch_servant (const TAO_ObjectKey &key,
 }
 
 void
-TAO_Object_Adapter::locate_poa (const TAO_ObjectKey &key,
+TAO_Object_Adapter::locate_poa (const TAO::ObjectKey &key,
                                 PortableServer::ObjectId &system_id,
                                 TAO_POA *&poa
                                 ACE_ENV_ARG_DECL)
@@ -501,7 +498,7 @@ TAO_Object_Adapter::unbind_poa (TAO_POA *poa,
 }
 
 int
-TAO_Object_Adapter::locate_servant_i (const TAO_ObjectKey &key
+TAO_Object_Adapter::locate_servant_i (const TAO::ObjectKey &key
                                       ACE_ENV_ARG_DECL)
 {
   PortableServer::ObjectId id;
@@ -536,7 +533,7 @@ TAO_Object_Adapter::locate_servant_i (const TAO_ObjectKey &key
 }
 
 TAO_SERVANT_LOCATION
-TAO_Object_Adapter::find_servant_i (const TAO_ObjectKey &key,
+TAO_Object_Adapter::find_servant_i (const TAO::ObjectKey &key,
                                     PortableServer::Servant &servant
                                     ACE_ENV_ARG_DECL)
 {
@@ -702,7 +699,7 @@ TAO_Object_Adapter::priority (void) const
 }
 
 int
-TAO_Object_Adapter::dispatch (TAO_ObjectKey &key,
+TAO_Object_Adapter::dispatch (TAO::ObjectKey &key,
                               TAO_ServerRequest &request,
                               CORBA::Object_out forward_to
                               ACE_ENV_ARG_DECL)
@@ -807,7 +804,7 @@ TAO_Object_Adapter::create_collocated_object (TAO_Stub *stub,
        ++j)
     {
       const TAO_Profile *profile = mp.get_profile (j);
-      TAO_ObjectKey_var objkey = profile->_key ();
+      TAO::ObjectKey_var objkey = profile->_key ();
 
       if (ACE_OS::memcmp (objkey->get_buffer (),
                           &TAO_POA::objectkey_prefix[0],
@@ -1215,7 +1212,7 @@ TAO_Object_Adapter::Servant_Upcall::Servant_Upcall (TAO_ORB_Core *oc)
 }
 
 int
-TAO_Object_Adapter::Servant_Upcall::prepare_for_upcall (const TAO_ObjectKey &key,
+TAO_Object_Adapter::Servant_Upcall::prepare_for_upcall (const TAO::ObjectKey &key,
                                                         const char *operation,
                                                         CORBA::Object_out forward_to
                                                         ACE_ENV_ARG_DECL)
@@ -1353,7 +1350,7 @@ TAO_Object_Adapter::Servant_Upcall::Pre_Invoke_State::Pre_Invoke_State (void)
 }
 
 TAO_POA *
-TAO_Object_Adapter::Servant_Upcall::lookup_POA (const TAO_ObjectKey &key
+TAO_Object_Adapter::Servant_Upcall::lookup_POA (const TAO::ObjectKey &key
                                                 ACE_ENV_ARG_DECL)
 {
   // Acquire the object adapter lock first.
@@ -1648,7 +1645,7 @@ TAO_POA_Current_Impl::TAO_POA_Current_Impl (void)
 
 void
 TAO_POA_Current_Impl::setup (TAO_POA *p,
-                             const TAO_ObjectKey &key)
+                             const TAO::ObjectKey &key)
 {
   // Remember information about this upcall.
   this->poa_ = p;

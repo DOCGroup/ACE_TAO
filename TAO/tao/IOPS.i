@@ -8,7 +8,7 @@
 //       Washington University
 //       St. Louis, MO
 //       USA
-//       http://www.cs.wustl.edu/~schmidt/doc-group.html
+//       http://www.cs.wustl.edu/~schmidt/doc-center.html
 // and
 //       Distributed Object Computing Laboratory
 //       University of California at Irvine
@@ -18,4 +18,5 @@
 //
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
+
 

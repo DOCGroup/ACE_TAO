@@ -36,7 +36,7 @@
 // The definitions are included in the same order as they are declared
 // in corbafwd.h
 #include "tao/Typecode.h"
-#include "tao/Any.h"
+#include "tao/Any_T.h"
 
 #include "tao/Environment.h"
 #include "tao/Exception.h"
@@ -55,7 +55,7 @@
 #include "tao/ValueFactory.h"
 #include "tao/AbstractBase.h"
 #include "tao/PolicyC.h"
-#include "tao/Services.h"
+#include "tao/ServicesC.h"
 #include "tao/DomainC.h"
 #include "tao/WrongTransactionC.h"
 
@@ -66,7 +66,7 @@
 #include "tao/Sequence.h"
 #include "tao/Managed_Types.h"
 #include "tao/Object_KeyC.h"
-#include "tao/ObjectIDList.h"
+#include "tao/ObjectIDListC.h"
 
 #include "tao/Remote_Object_Proxy_Impl.h"
 

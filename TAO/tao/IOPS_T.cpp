@@ -8,7 +8,7 @@
 //       Washington University
 //       St. Louis, MO
 //       USA
-//       http://www.cs.wustl.edu/~schmidt/doc-group.html
+//       http://www.cs.wustl.edu/~schmidt/doc-center.html
 // and
 //       Distributed Object Computing Laboratory
 //       University of California at Irvine
@@ -18,6 +18,9 @@
 //
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:777
 
 #ifndef _TAO_IDL_IOPS_T_CPP_
 #define _TAO_IDL_IOPS_T_CPP_

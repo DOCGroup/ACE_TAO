@@ -1,3 +1,5 @@
+// "$Id$"
+
 #include "tao/AbstractBase.h"
 
 #include "tao/Stub.h"
@@ -94,6 +96,13 @@ CORBA::AbstractBase::_add_ref (void)
 void
 CORBA::AbstractBase::_remove_ref (void)
 {
+}
+
+void
+CORBA::AbstractBase::_tao_any_destructor (void *x)
+{
+  CORBA::AbstractBase_ptr tmp = ACE_static_cast (CORBA::AbstractBase_ptr, x);
+  CORBA::release (tmp);
 }
 
 CORBA::Object_ptr

@@ -22,7 +22,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class TAO_MProfile;
+#include "tao/Object_KeyC.h"
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
@@ -31,8 +31,8 @@ class TAO_MProfile;
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+class TAO_MProfile;
 class TAO_Acceptor;
-class TAO_ObjectKey;
 
 /**
  * @class TAO_Acceptor_Filter
@@ -53,7 +53,7 @@ public:
    * selected acceptors (endpoints) from the array delimited by
    * <acceptors_begin> and <acceptors_end>.
    */
-  virtual int fill_profile (const TAO_ObjectKey &object_key,
+  virtual int fill_profile (const TAO::ObjectKey &object_key,
                             TAO_MProfile &mprofile,
                             TAO_Acceptor **acceptors_begin,
                             TAO_Acceptor **acceptors_end,

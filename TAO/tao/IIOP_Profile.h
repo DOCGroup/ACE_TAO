@@ -53,7 +53,7 @@ public:
   /// Profile constructor, same as above except the object_key has
   /// already been marshaled.
   TAO_IIOP_Profile (const ACE_INET_Addr &addr,
-                    const TAO_ObjectKey &object_key,
+                    const TAO::ObjectKey &object_key,
                     const TAO_GIOP_Message_Version &version,
                     TAO_ORB_Core *orb_core);
 
@@ -61,7 +61,7 @@ public:
   /// doesn't require any address resolution processing.
   TAO_IIOP_Profile (const char *host,
                     CORBA::UShort port,
-                    const TAO_ObjectKey &object_key,
+                    const TAO::ObjectKey &object_key,
                     const ACE_INET_Addr &addr,
                     const TAO_GIOP_Message_Version &version,
                     TAO_ORB_Core *orb_core);
@@ -112,11 +112,11 @@ public:
   virtual int encode_endpoints (void);
 
   /// @@ deprecated. return a reference to the Object Key.
-  virtual const TAO_ObjectKey &object_key (void) const;
+  virtual const TAO::ObjectKey &object_key (void) const;
 
   /// Return a pointer to the Object Key.  The caller owns the memory
   /// allocated for the returned key.
-  virtual TAO_ObjectKey *_key (void) const;
+  virtual TAO::ObjectKey *_key (void) const;
 
   /// Return pointer to the head of this profile's endpoints list.
   virtual TAO_Endpoint *endpoint (void);
@@ -185,7 +185,7 @@ protected:
 private:
 
   /// object_key associated with this profile.
-  TAO_ObjectKey object_key_;
+  TAO::ObjectKey object_key_;
 
   /// Our tagged profile
   IOP::TaggedProfile tagged_profile_;

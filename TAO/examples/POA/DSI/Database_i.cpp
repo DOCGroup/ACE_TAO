@@ -3,7 +3,9 @@
 #include "Database_i.h"
 #include "tao/DynamicInterface/Server_Request.h"
 
-ACE_RCSID(DSI, Database_i, "$Id$")
+ACE_RCSID (DSI, 
+           Database_i, 
+           "$Id$")
 
 DatabaseImpl::Simpler_Database_Malloc::Simpler_Database_Malloc (void)
   //  : DATABASE_MALLOC ()
@@ -73,7 +75,8 @@ DatabaseImpl::Entry::is_a (CORBA::ServerRequest_ptr request
   CORBA::NVList_ptr list;
   this->orb_->create_list (0, list);
 
-  CORBA::Any any_1 (CORBA::_tc_string);
+  CORBA::Any any_1 (CORBA::_tc_string,
+                    0);
 
   list->add_value ("value",
                    any_1,

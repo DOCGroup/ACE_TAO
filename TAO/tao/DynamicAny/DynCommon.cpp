@@ -1,3 +1,6 @@
+/* -*- C++ -*- */
+// $Id$
+
 #include "DynCommon.h"
 #include "DynAnyFactory.h"
 #include "DynAny_i.h"
@@ -6,7 +9,6 @@
 #include "DynSequence_i.h"
 #include "DynStruct_i.h"
 #include "DynUnion_i.h"
-
 
 ACE_RCSID (DynamicAny,
            DynCommon,
@@ -478,10 +480,13 @@ TAO_DynCommon::insert_reference (CORBA::Object_ptr value
       if (good_type)
         {
           TAO_OutputCDR cdr;
-          cdr << value;
-          this->any_._tao_replace (this->type_.in (),
-                                   TAO_ENCAP_BYTE_ORDER,
-                                   cdr.begin ());
+          value->marshal (cdr);
+          TAO::Unknown_IDL_Type *unk = 0;
+          ACE_NEW (unk,
+                   TAO::Unknown_IDL_Type (this->type_.in (),
+                                          cdr.begin (),
+                                          TAO_ENCAP_BYTE_ORDER));
+          this->any_.replace (unk);
         }
       else
         {

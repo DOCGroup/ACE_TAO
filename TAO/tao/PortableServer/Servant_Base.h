@@ -60,11 +60,13 @@ public:
 
   /// Query the Interface Repository for the interface definition.
   virtual CORBA::InterfaceDef_ptr _get_interface (
-    ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+    );
 
-  /// Default @c _get_component>: always returns CORBA::Object::_nil().
+  /// Default <_get_component>: always returns CORBA::Object::_nil().
   virtual CORBA::Object_ptr _get_component (
-    ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+    );
 
   /// Get the correct vtable.
   virtual void *_downcast (const char *repository_id) = 0;

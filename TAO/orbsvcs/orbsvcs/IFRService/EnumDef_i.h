@@ -44,8 +44,7 @@ public:
   //    Represents an OMG IDL enumeration definition.
   //
 public:
-  TAO_EnumDef_i (TAO_Repository_i *repo,
-                 ACE_Configuration_Section_Key section_key);
+  TAO_EnumDef_i (TAO_Repository_i *repoy);
   // Constructor
 
   virtual ~TAO_EnumDef_i (void);

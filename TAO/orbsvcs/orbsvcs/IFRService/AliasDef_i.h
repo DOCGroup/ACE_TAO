@@ -44,8 +44,7 @@ public:
   //    Represents an OMG IDL typedef that aliases another definition.
   //
 public:
-  TAO_AliasDef_i (TAO_Repository_i *repo,
-                  ACE_Configuration_Section_Key section_key);
+  TAO_AliasDef_i (TAO_Repository_i *repo);
   // Constructor
 
   virtual ~TAO_AliasDef_i (void);

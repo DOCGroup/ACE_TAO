@@ -285,7 +285,7 @@ protected:
                             TAO_Object_Adapter *object_adapter
                             ACE_ENV_ARG_DECL);
 
-  virtual TAO_Stub *key_to_stub_i (const TAO_ObjectKey &key,
+  virtual TAO_Stub *key_to_stub_i (const TAO::ObjectKey &key,
                                    const char *type_id,
                                    CORBA::Short priority
                                    ACE_ENV_ARG_DECL);
@@ -302,7 +302,7 @@ protected:
 
   size_t endpoint_count (void);
 
-  TAO_Stub *create_stub_object (const TAO_ObjectKey &object_key,
+  TAO_Stub *create_stub_object (const TAO::ObjectKey &object_key,
                                 const char *type_id,
                                 CORBA::PolicyList *policy_list,
                                 TAO_Acceptor_Filter *filter,

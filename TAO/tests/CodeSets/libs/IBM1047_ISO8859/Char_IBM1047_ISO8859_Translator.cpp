@@ -20,7 +20,9 @@
 
 #include "Char_IBM1047_ISO8859_Translator.h"
 
-ACE_RCSID(IBM1047_ISO8859, Char_IBM1047_ISO8859_Translator, "$Id$")
+ACE_RCSID (IBM1047_ISO8859, 
+           Char_IBM1047_ISO8859_Translator, 
+           "$Id$")
 
 // ****************************************************************
 

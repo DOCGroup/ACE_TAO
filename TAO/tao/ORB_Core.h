@@ -747,8 +747,9 @@ public:
   void portable_group_poa_hooks(TAO_POA_PortableGroup_Hooks *poa_hooks);
 
   /// List all the service known by the ORB
-  CORBA::ORB::ObjectIdList_ptr list_initial_references (
-    ACE_ENV_SINGLE_ARG_DECL);
+  CORBA::ORB_ObjectIdList *list_initial_references (
+      ACE_ENV_SINGLE_ARG_DECL_NOT_USED
+    );
 
   /// Reference counting...
   CORBA::ULong _incr_refcnt (void);

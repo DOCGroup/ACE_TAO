@@ -80,7 +80,7 @@ return this->requesting_principal_.ptr ();
 }
 */
 
-ACE_INLINE TAO_ObjectKey &
+ACE_INLINE TAO::ObjectKey &
 TAO_ServerRequest::object_key (void)
 {
   return this->profile_.object_key ();

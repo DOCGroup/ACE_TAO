@@ -10,8 +10,8 @@
  *
  * The command used to generate code from this file is:
  *
- *   tao_idl.exe
- *        -o orig -Gp -Gd -Ge 1 -Gv -DCORBA3
+ *   tao_idl
+ *        -o orig -Gp -Gd -Ge 1
  *        -Wb,export_macro=TAO_Messaging_Export
  *        -Wb,export_include=messaging_export.h
  *        -Wb,pre_include="ace/pre.h"
@@ -40,6 +40,7 @@
 #include <Messaging_SyncScope_Policy.pidl>
 #include <Messaging_RT_Policy.pidl>
 #include <Messaging_No_Impl.pidl>
+#include <OctetSeq.pidl>
 
 #pragma prefix "omg.org"
 
@@ -52,13 +53,13 @@ module Messaging
   struct ExceptionHolder {
     boolean         is_system_exception;
     boolean         byte_order;
-    sequence<octet> marshaled_exception;
+    CORBA::OctetSeq marshaled_exception;
   };
 #else
   valuetype ExceptionHolder {
     public boolean         is_system_exception;
     public boolean         byte_order;
-    public sequence<octet> marshaled_exception;
+    public CORBA::OctetSeq marshaled_exception;
   };
 #endif
 
@@ -68,7 +69,5 @@ module Messaging
 
   interface ReplyHandler { };
 };
-
-#pragma prefix ""
 
 #endif /* TAO_MESSAGING_PIDL */

@@ -17,7 +17,7 @@
 //   1. Run the tao_idl compiler on the pidl file.  The command used for
 //   this is:
 //
-//     tao_idl.exe
+//     tao_idl
 //          -o orig -Ge 1
 //          -Wb,export_macro=TAO_RTPortableServer_Export
 //          -Wb,export_include="rtportableserver_export.h"
@@ -76,7 +76,5 @@ module RTPortableServer
     raises ( ServantAlreadyActive, ObjectAlreadyActive, WrongPolicy );
   };
 };
-
-#pragma prefix ""
 
 #endif /* _RT_PORTABLE_SERVER_IDL_ */

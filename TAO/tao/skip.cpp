@@ -487,15 +487,13 @@ TAO_Marshal_Union::skip (CORBA::TypeCode_ptr  tc,
 
         case CORBA::tk_enum:
           {
-            CORBA::ULong d;
-
-            // Create an special Any to handle this case.
-            CORBA::Any tmp;
-            tmp._tao_replace (CORBA::_tc_ulong,
-                              any->_tao_byte_order (),
-                              any->_tao_get_cdr ());
-            if ((tmp >>= d) && d == enum_v)
-              current_member = i;
+            const CORBA::ULong *d = 
+              ACE_reinterpret_cast (const CORBA::ULong *,
+                                    any->value ());
+            if (*d == enum_v)
+              {
+                current_member = i;
+              }
           }
           break;
 

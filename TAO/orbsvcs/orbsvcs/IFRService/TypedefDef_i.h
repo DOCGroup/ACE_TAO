@@ -46,8 +46,7 @@ class TAO_IFRService_Export TAO_TypedefDef_i : public virtual TAO_Contained_i,
   //    struct, union, enum, alias, native, and valuebox.
   //
 public:
-  TAO_TypedefDef_i (TAO_Repository_i *repo,
-                    ACE_Configuration_Section_Key section_key);
+  TAO_TypedefDef_i (TAO_Repository_i *repo);
   // Constructor
 
   virtual ~TAO_TypedefDef_i (void);

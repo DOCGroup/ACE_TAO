@@ -29,6 +29,13 @@
 
 #include "dynamicinterface_export.h"
 
+TAO_NAMESPACE CORBA
+{
+  typedef char *RepositoryId;
+  typedef String_var RepositoryId_var;
+};
+TAO_NAMESPACE_CLOSE
+
 class TAO_DynamicInterface_Export TAO_DynamicImplementation
   : public virtual TAO_ServantBase
 {

@@ -19,52 +19,91 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-// *************************************************************
-// Inline operations for exception IORTable::AlreadyBound
-// *************************************************************
 
-// *************************************************************
-// Inline operations for exception IORTable::NotFound
-// *************************************************************
-
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
 
 #if !defined (_IORTABLE_TABLE___CI_)
 #define _IORTABLE_TABLE___CI_
 
+ACE_INLINE
+CORBA::Boolean
+IORTable::Table::marshal (TAO_OutputCDR &)
+{
+  return 0;
+}
 
 #endif /* end #if !defined */
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
 
 #if !defined (_IORTABLE_LOCATOR___CI_)
 #define _IORTABLE_LOCATOR___CI_
 
+ACE_INLINE
+CORBA::Boolean
+IORTable::Locator::marshal (TAO_OutputCDR &)
+{
+  return 0;
+}
 
 #endif /* end #if !defined */
 
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const IORTable::AlreadyBound &_tao_aggregate)
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/cdr_op_ci.cpp:103
+
+ACE_INLINE
+CORBA::Boolean operator<< (
+    TAO_OutputCDR &strm,
+    const IORTable::AlreadyBound &_tao_aggregate
+  )
 {
-  // first marshal the repository ID
+  // First marshal the repository ID.
   if (strm << _tao_aggregate._rep_id ())
-    return 1;
+    {
+      return 1;
+    }
   else
-    return 0;
+    {
+      return 0;
+    }
 }
 
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &,IORTable::AlreadyBound&)
+ACE_INLINE
+CORBA::Boolean operator>> (
+    TAO_InputCDR &,
+    IORTable::AlreadyBound&
+  )
 {
   return 1;
 }
 
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const IORTable::NotFound &_tao_aggregate)
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/cdr_op_ci.cpp:103
+
+ACE_INLINE
+CORBA::Boolean operator<< (
+    TAO_OutputCDR &strm,
+    const IORTable::NotFound &_tao_aggregate
+  )
 {
-  // first marshal the repository ID
+  // First marshal the repository ID.
   if (strm << _tao_aggregate._rep_id ())
-    return 1;
+    {
+      return 1;
+    }
   else
-    return 0;
+    {
+      return 0;
+    }
 }
 
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &,IORTable::NotFound&)
+ACE_INLINE
+CORBA::Boolean operator>> (
+    TAO_InputCDR &,
+    IORTable::NotFound&
+  )
 {
   return 1;
 }

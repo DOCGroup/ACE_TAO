@@ -45,8 +45,7 @@ class TAO_IFRService_Export TAO_ModuleDef_i : public virtual TAO_Container_i,
   //    Represents a module definition.
   //
 public:
-  TAO_ModuleDef_i (TAO_Repository_i *repo,
-                   ACE_Configuration_Section_Key section_key);
+  TAO_ModuleDef_i (TAO_Repository_i *repo);
   // Constructor
 
   virtual ~TAO_ModuleDef_i (void);

@@ -23,6 +23,14 @@
 
 #include "ace/Service_Object.h"
 
+namespace CORBA
+{
+  class EnumMemberSeq;
+  class StructMemberSeq;
+  class UnionMemberSeq;
+  class ValueMemberSeq;
+};
+
 /**
  * @class TAO_TypeCodeFactory_Adapter
  *

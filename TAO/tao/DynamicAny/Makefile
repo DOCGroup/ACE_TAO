@@ -136,7 +136,8 @@ endif
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Malloc.i \
   $(ACE_ROOT)/ace/Malloc_T.h \
-  $(ACE_ROOT)/ace/Synch.h $(ACE_ROOT)/ace/Synch.i \
+  $(ACE_ROOT)/ace/Synch.h \
+  $(ACE_ROOT)/ace/Synch.i \
   $(ACE_ROOT)/ace/Synch_T.h \
   $(ACE_ROOT)/ace/Synch_T.i \
   $(ACE_ROOT)/ace/Thread.h \
@@ -165,7 +166,8 @@ endif
   $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
   $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
   $(ACE_ROOT)/ace/Unbounded_Set.h \
-  $(ACE_ROOT)/ace/Node.h $(ACE_ROOT)/ace/Node.cpp \
+  $(ACE_ROOT)/ace/Node.h \
+  $(ACE_ROOT)/ace/Node.cpp \
   $(ACE_ROOT)/ace/Unbounded_Set.inl \
   $(ACE_ROOT)/ace/Unbounded_Set.cpp \
   $(ACE_ROOT)/ace/Memory_Pool.i \
@@ -201,7 +203,16 @@ endif
   $(ACE_ROOT)/ace/Reactor_Impl.h DynamicAnyC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(TAO_ROOT)/tao/Typecode.h \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor.i \
+  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_T.i \
+  $(ACE_ROOT)/ace/Functor_T.cpp \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
   $(TAO_ROOT)/tao/Typecode.i \
+  $(TAO_ROOT)/tao/Any_T.h \
   $(TAO_ROOT)/tao/Any.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -225,8 +236,17 @@ endif
   $(TAO_ROOT)/tao/CDR.i \
   $(TAO_ROOT)/tao/varbase.h \
   $(TAO_ROOT)/tao/Policy_ForwardC.i \
+  $(TAO_ROOT)/tao/Object_KeyC.h \
+  $(TAO_ROOT)/tao/Object_KeyC.i \
   $(TAO_ROOT)/tao/Object.i \
   $(TAO_ROOT)/tao/Any.i \
+  $(TAO_ROOT)/tao/AbstractBase.h \
+  $(TAO_ROOT)/tao/AbstractBase.inl \
+  $(TAO_ROOT)/tao/Any_T.inl \
+  $(TAO_ROOT)/tao/Any_T.cpp \
+  $(TAO_ROOT)/tao/Marshal.h \
+  $(TAO_ROOT)/tao/Marshal.i \
+  $(TAO_ROOT)/tao/debug.h \
   $(TAO_ROOT)/tao/NVList.h \
   $(TAO_ROOT)/tao/NVList.i \
   $(TAO_ROOT)/tao/LocalObject.h \
@@ -236,10 +256,12 @@ endif
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/Principal.i \
   $(TAO_ROOT)/tao/ORB.h \
-  $(TAO_ROOT)/tao/Services.h \
-  $(TAO_ROOT)/tao/Services.i \
+  $(TAO_ROOT)/tao/ServicesC.h \
+  $(TAO_ROOT)/tao/ServicesC.i \
   $(TAO_ROOT)/tao/CORBA_String.h \
   $(TAO_ROOT)/tao/CORBA_String.inl \
+  $(TAO_ROOT)/tao/ObjectIdListC.h \
+  $(TAO_ROOT)/tao/ObjectIdListC.i \
   $(TAO_ROOT)/tao/objectid.h \
   $(TAO_ROOT)/tao/PolicyC.h \
   $(TAO_ROOT)/tao/CurrentC.h \
@@ -255,16 +277,11 @@ endif
   $(TAO_ROOT)/tao/ValueBase.i \
   $(TAO_ROOT)/tao/ValueFactory.h \
   $(TAO_ROOT)/tao/ValueFactory.i \
-  $(TAO_ROOT)/tao/AbstractBase.h \
-  $(TAO_ROOT)/tao/AbstractBase.inl \
   $(TAO_ROOT)/tao/DomainC.h \
   $(TAO_ROOT)/tao/DomainC.i \
   $(TAO_ROOT)/tao/WrongTransactionC.h \
   $(TAO_ROOT)/tao/WrongTransactionC.i \
-  $(TAO_ROOT)/tao/Object_KeyC.h \
-  $(TAO_ROOT)/tao/Object_KeyC.i \
-  $(TAO_ROOT)/tao/ObjectIDList.h \
-  $(TAO_ROOT)/tao/ObjectIDList.i \
+  $(TAO_ROOT)/tao/ObjectIDListC.h \
   $(TAO_ROOT)/tao/StringSeqC.h \
   $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.h \
@@ -341,7 +358,8 @@ endif
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Malloc.i \
   $(ACE_ROOT)/ace/Malloc_T.h \
-  $(ACE_ROOT)/ace/Synch.h $(ACE_ROOT)/ace/Synch.i \
+  $(ACE_ROOT)/ace/Synch.h \
+  $(ACE_ROOT)/ace/Synch.i \
   $(ACE_ROOT)/ace/Synch_T.h \
   $(ACE_ROOT)/ace/Synch_T.i \
   $(ACE_ROOT)/ace/Thread.h \
@@ -370,7 +388,8 @@ endif
   $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
   $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
   $(ACE_ROOT)/ace/Unbounded_Set.h \
-  $(ACE_ROOT)/ace/Node.h $(ACE_ROOT)/ace/Node.cpp \
+  $(ACE_ROOT)/ace/Node.h \
+  $(ACE_ROOT)/ace/Node.cpp \
   $(ACE_ROOT)/ace/Unbounded_Set.inl \
   $(ACE_ROOT)/ace/Unbounded_Set.cpp \
   $(ACE_ROOT)/ace/Memory_Pool.i \
@@ -406,7 +425,16 @@ endif
   $(ACE_ROOT)/ace/Reactor_Impl.h DynamicAnyC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(TAO_ROOT)/tao/Typecode.h \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor.i \
+  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_T.i \
+  $(ACE_ROOT)/ace/Functor_T.cpp \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
   $(TAO_ROOT)/tao/Typecode.i \
+  $(TAO_ROOT)/tao/Any_T.h \
   $(TAO_ROOT)/tao/Any.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -430,8 +458,17 @@ endif
   $(TAO_ROOT)/tao/CDR.i \
   $(TAO_ROOT)/tao/varbase.h \
   $(TAO_ROOT)/tao/Policy_ForwardC.i \
+  $(TAO_ROOT)/tao/Object_KeyC.h \
+  $(TAO_ROOT)/tao/Object_KeyC.i \
   $(TAO_ROOT)/tao/Object.i \
   $(TAO_ROOT)/tao/Any.i \
+  $(TAO_ROOT)/tao/AbstractBase.h \
+  $(TAO_ROOT)/tao/AbstractBase.inl \
+  $(TAO_ROOT)/tao/Any_T.inl \
+  $(TAO_ROOT)/tao/Any_T.cpp \
+  $(TAO_ROOT)/tao/Marshal.h \
+  $(TAO_ROOT)/tao/Marshal.i \
+  $(TAO_ROOT)/tao/debug.h \
   $(TAO_ROOT)/tao/NVList.h \
   $(TAO_ROOT)/tao/NVList.i \
   $(TAO_ROOT)/tao/LocalObject.h \
@@ -441,10 +478,12 @@ endif
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/Principal.i \
   $(TAO_ROOT)/tao/ORB.h \
-  $(TAO_ROOT)/tao/Services.h \
-  $(TAO_ROOT)/tao/Services.i \
+  $(TAO_ROOT)/tao/ServicesC.h \
+  $(TAO_ROOT)/tao/ServicesC.i \
   $(TAO_ROOT)/tao/CORBA_String.h \
   $(TAO_ROOT)/tao/CORBA_String.inl \
+  $(TAO_ROOT)/tao/ObjectIdListC.h \
+  $(TAO_ROOT)/tao/ObjectIdListC.i \
   $(TAO_ROOT)/tao/objectid.h \
   $(TAO_ROOT)/tao/PolicyC.h \
   $(TAO_ROOT)/tao/CurrentC.h \
@@ -460,16 +499,11 @@ endif
   $(TAO_ROOT)/tao/ValueBase.i \
   $(TAO_ROOT)/tao/ValueFactory.h \
   $(TAO_ROOT)/tao/ValueFactory.i \
-  $(TAO_ROOT)/tao/AbstractBase.h \
-  $(TAO_ROOT)/tao/AbstractBase.inl \
   $(TAO_ROOT)/tao/DomainC.h \
   $(TAO_ROOT)/tao/DomainC.i \
   $(TAO_ROOT)/tao/WrongTransactionC.h \
   $(TAO_ROOT)/tao/WrongTransactionC.i \
-  $(TAO_ROOT)/tao/Object_KeyC.h \
-  $(TAO_ROOT)/tao/Object_KeyC.i \
-  $(TAO_ROOT)/tao/ObjectIDList.h \
-  $(TAO_ROOT)/tao/ObjectIDList.i \
+  $(TAO_ROOT)/tao/ObjectIDListC.h \
   $(TAO_ROOT)/tao/StringSeqC.h \
   $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.h \
@@ -555,7 +589,8 @@ endif
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Malloc.i \
   $(ACE_ROOT)/ace/Malloc_T.h \
-  $(ACE_ROOT)/ace/Synch.h $(ACE_ROOT)/ace/Synch.i \
+  $(ACE_ROOT)/ace/Synch.h \
+  $(ACE_ROOT)/ace/Synch.i \
   $(ACE_ROOT)/ace/Synch_T.h \
   $(ACE_ROOT)/ace/Synch_T.i \
   $(ACE_ROOT)/ace/Thread.h \
@@ -584,7 +619,8 @@ endif
   $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
   $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
   $(ACE_ROOT)/ace/Unbounded_Set.h \
-  $(ACE_ROOT)/ace/Node.h $(ACE_ROOT)/ace/Node.cpp \
+  $(ACE_ROOT)/ace/Node.h \
+  $(ACE_ROOT)/ace/Node.cpp \
   $(ACE_ROOT)/ace/Unbounded_Set.inl \
   $(ACE_ROOT)/ace/Unbounded_Set.cpp \
   $(ACE_ROOT)/ace/Memory_Pool.i \
@@ -620,7 +656,16 @@ endif
   $(ACE_ROOT)/ace/Reactor_Impl.h DynamicAnyC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(TAO_ROOT)/tao/Typecode.h \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor.i \
+  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_T.i \
+  $(ACE_ROOT)/ace/Functor_T.cpp \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
   $(TAO_ROOT)/tao/Typecode.i \
+  $(TAO_ROOT)/tao/Any_T.h \
   $(TAO_ROOT)/tao/Any.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -644,8 +689,17 @@ endif
   $(TAO_ROOT)/tao/CDR.i \
   $(TAO_ROOT)/tao/varbase.h \
   $(TAO_ROOT)/tao/Policy_ForwardC.i \
+  $(TAO_ROOT)/tao/Object_KeyC.h \
+  $(TAO_ROOT)/tao/Object_KeyC.i \
   $(TAO_ROOT)/tao/Object.i \
   $(TAO_ROOT)/tao/Any.i \
+  $(TAO_ROOT)/tao/AbstractBase.h \
+  $(TAO_ROOT)/tao/AbstractBase.inl \
+  $(TAO_ROOT)/tao/Any_T.inl \
+  $(TAO_ROOT)/tao/Any_T.cpp \
+  $(TAO_ROOT)/tao/Marshal.h \
+  $(TAO_ROOT)/tao/Marshal.i \
+  $(TAO_ROOT)/tao/debug.h \
   $(TAO_ROOT)/tao/NVList.h \
   $(TAO_ROOT)/tao/NVList.i \
   $(TAO_ROOT)/tao/LocalObject.h \
@@ -655,10 +709,12 @@ endif
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/Principal.i \
   $(TAO_ROOT)/tao/ORB.h \
-  $(TAO_ROOT)/tao/Services.h \
-  $(TAO_ROOT)/tao/Services.i \
+  $(TAO_ROOT)/tao/ServicesC.h \
+  $(TAO_ROOT)/tao/ServicesC.i \
   $(TAO_ROOT)/tao/CORBA_String.h \
   $(TAO_ROOT)/tao/CORBA_String.inl \
+  $(TAO_ROOT)/tao/ObjectIdListC.h \
+  $(TAO_ROOT)/tao/ObjectIdListC.i \
   $(TAO_ROOT)/tao/objectid.h \
   $(TAO_ROOT)/tao/PolicyC.h \
   $(TAO_ROOT)/tao/CurrentC.h \
@@ -674,16 +730,11 @@ endif
   $(TAO_ROOT)/tao/ValueBase.i \
   $(TAO_ROOT)/tao/ValueFactory.h \
   $(TAO_ROOT)/tao/ValueFactory.i \
-  $(TAO_ROOT)/tao/AbstractBase.h \
-  $(TAO_ROOT)/tao/AbstractBase.inl \
   $(TAO_ROOT)/tao/DomainC.h \
   $(TAO_ROOT)/tao/DomainC.i \
   $(TAO_ROOT)/tao/WrongTransactionC.h \
   $(TAO_ROOT)/tao/WrongTransactionC.i \
-  $(TAO_ROOT)/tao/Object_KeyC.h \
-  $(TAO_ROOT)/tao/Object_KeyC.i \
-  $(TAO_ROOT)/tao/ObjectIDList.h \
-  $(TAO_ROOT)/tao/ObjectIDList.i \
+  $(TAO_ROOT)/tao/ObjectIDListC.h \
   $(TAO_ROOT)/tao/StringSeqC.h \
   $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.h \
@@ -769,7 +820,8 @@ endif
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Malloc.i \
   $(ACE_ROOT)/ace/Malloc_T.h \
-  $(ACE_ROOT)/ace/Synch.h $(ACE_ROOT)/ace/Synch.i \
+  $(ACE_ROOT)/ace/Synch.h \
+  $(ACE_ROOT)/ace/Synch.i \
   $(ACE_ROOT)/ace/Synch_T.h \
   $(ACE_ROOT)/ace/Synch_T.i \
   $(ACE_ROOT)/ace/Thread.h \
@@ -798,7 +850,8 @@ endif
   $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
   $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
   $(ACE_ROOT)/ace/Unbounded_Set.h \
-  $(ACE_ROOT)/ace/Node.h $(ACE_ROOT)/ace/Node.cpp \
+  $(ACE_ROOT)/ace/Node.h \
+  $(ACE_ROOT)/ace/Node.cpp \
   $(ACE_ROOT)/ace/Unbounded_Set.inl \
   $(ACE_ROOT)/ace/Unbounded_Set.cpp \
   $(ACE_ROOT)/ace/Memory_Pool.i \
@@ -834,7 +887,16 @@ endif
   $(ACE_ROOT)/ace/Reactor_Impl.h DynamicAnyC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(TAO_ROOT)/tao/Typecode.h \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor.i \
+  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_T.i \
+  $(ACE_ROOT)/ace/Functor_T.cpp \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
   $(TAO_ROOT)/tao/Typecode.i \
+  $(TAO_ROOT)/tao/Any_T.h \
   $(TAO_ROOT)/tao/Any.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -858,8 +920,17 @@ endif
   $(TAO_ROOT)/tao/CDR.i \
   $(TAO_ROOT)/tao/varbase.h \
   $(TAO_ROOT)/tao/Policy_ForwardC.i \
+  $(TAO_ROOT)/tao/Object_KeyC.h \
+  $(TAO_ROOT)/tao/Object_KeyC.i \
   $(TAO_ROOT)/tao/Object.i \
   $(TAO_ROOT)/tao/Any.i \
+  $(TAO_ROOT)/tao/AbstractBase.h \
+  $(TAO_ROOT)/tao/AbstractBase.inl \
+  $(TAO_ROOT)/tao/Any_T.inl \
+  $(TAO_ROOT)/tao/Any_T.cpp \
+  $(TAO_ROOT)/tao/Marshal.h \
+  $(TAO_ROOT)/tao/Marshal.i \
+  $(TAO_ROOT)/tao/debug.h \
   $(TAO_ROOT)/tao/NVList.h \
   $(TAO_ROOT)/tao/NVList.i \
   $(TAO_ROOT)/tao/LocalObject.h \
@@ -869,10 +940,12 @@ endif
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/Principal.i \
   $(TAO_ROOT)/tao/ORB.h \
-  $(TAO_ROOT)/tao/Services.h \
-  $(TAO_ROOT)/tao/Services.i \
+  $(TAO_ROOT)/tao/ServicesC.h \
+  $(TAO_ROOT)/tao/ServicesC.i \
   $(TAO_ROOT)/tao/CORBA_String.h \
   $(TAO_ROOT)/tao/CORBA_String.inl \
+  $(TAO_ROOT)/tao/ObjectIdListC.h \
+  $(TAO_ROOT)/tao/ObjectIdListC.i \
   $(TAO_ROOT)/tao/objectid.h \
   $(TAO_ROOT)/tao/PolicyC.h \
   $(TAO_ROOT)/tao/CurrentC.h \
@@ -888,16 +961,11 @@ endif
   $(TAO_ROOT)/tao/ValueBase.i \
   $(TAO_ROOT)/tao/ValueFactory.h \
   $(TAO_ROOT)/tao/ValueFactory.i \
-  $(TAO_ROOT)/tao/AbstractBase.h \
-  $(TAO_ROOT)/tao/AbstractBase.inl \
   $(TAO_ROOT)/tao/DomainC.h \
   $(TAO_ROOT)/tao/DomainC.i \
   $(TAO_ROOT)/tao/WrongTransactionC.h \
   $(TAO_ROOT)/tao/WrongTransactionC.i \
-  $(TAO_ROOT)/tao/Object_KeyC.h \
-  $(TAO_ROOT)/tao/Object_KeyC.i \
-  $(TAO_ROOT)/tao/ObjectIDList.h \
-  $(TAO_ROOT)/tao/ObjectIDList.i \
+  $(TAO_ROOT)/tao/ObjectIDListC.h \
   $(TAO_ROOT)/tao/StringSeqC.h \
   $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.h \
@@ -974,7 +1042,8 @@ endif
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Malloc.i \
   $(ACE_ROOT)/ace/Malloc_T.h \
-  $(ACE_ROOT)/ace/Synch.h $(ACE_ROOT)/ace/Synch.i \
+  $(ACE_ROOT)/ace/Synch.h \
+  $(ACE_ROOT)/ace/Synch.i \
   $(ACE_ROOT)/ace/Synch_T.h \
   $(ACE_ROOT)/ace/Synch_T.i \
   $(ACE_ROOT)/ace/Thread.h \
@@ -1003,7 +1072,8 @@ endif
   $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
   $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
   $(ACE_ROOT)/ace/Unbounded_Set.h \
-  $(ACE_ROOT)/ace/Node.h $(ACE_ROOT)/ace/Node.cpp \
+  $(ACE_ROOT)/ace/Node.h \
+  $(ACE_ROOT)/ace/Node.cpp \
   $(ACE_ROOT)/ace/Unbounded_Set.inl \
   $(ACE_ROOT)/ace/Unbounded_Set.cpp \
   $(ACE_ROOT)/ace/Memory_Pool.i \
@@ -1039,7 +1109,16 @@ endif
   $(ACE_ROOT)/ace/Reactor_Impl.h DynamicAnyC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(TAO_ROOT)/tao/Typecode.h \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor.i \
+  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_T.i \
+  $(ACE_ROOT)/ace/Functor_T.cpp \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
   $(TAO_ROOT)/tao/Typecode.i \
+  $(TAO_ROOT)/tao/Any_T.h \
   $(TAO_ROOT)/tao/Any.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -1063,8 +1142,17 @@ endif
   $(TAO_ROOT)/tao/CDR.i \
   $(TAO_ROOT)/tao/varbase.h \
   $(TAO_ROOT)/tao/Policy_ForwardC.i \
+  $(TAO_ROOT)/tao/Object_KeyC.h \
+  $(TAO_ROOT)/tao/Object_KeyC.i \
   $(TAO_ROOT)/tao/Object.i \
   $(TAO_ROOT)/tao/Any.i \
+  $(TAO_ROOT)/tao/AbstractBase.h \
+  $(TAO_ROOT)/tao/AbstractBase.inl \
+  $(TAO_ROOT)/tao/Any_T.inl \
+  $(TAO_ROOT)/tao/Any_T.cpp \
+  $(TAO_ROOT)/tao/Marshal.h \
+  $(TAO_ROOT)/tao/Marshal.i \
+  $(TAO_ROOT)/tao/debug.h \
   $(TAO_ROOT)/tao/NVList.h \
   $(TAO_ROOT)/tao/NVList.i \
   $(TAO_ROOT)/tao/LocalObject.h \
@@ -1074,10 +1162,12 @@ endif
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/Principal.i \
   $(TAO_ROOT)/tao/ORB.h \
-  $(TAO_ROOT)/tao/Services.h \
-  $(TAO_ROOT)/tao/Services.i \
+  $(TAO_ROOT)/tao/ServicesC.h \
+  $(TAO_ROOT)/tao/ServicesC.i \
   $(TAO_ROOT)/tao/CORBA_String.h \
   $(TAO_ROOT)/tao/CORBA_String.inl \
+  $(TAO_ROOT)/tao/ObjectIdListC.h \
+  $(TAO_ROOT)/tao/ObjectIdListC.i \
   $(TAO_ROOT)/tao/objectid.h \
   $(TAO_ROOT)/tao/PolicyC.h \
   $(TAO_ROOT)/tao/CurrentC.h \
@@ -1093,16 +1183,11 @@ endif
   $(TAO_ROOT)/tao/ValueBase.i \
   $(TAO_ROOT)/tao/ValueFactory.h \
   $(TAO_ROOT)/tao/ValueFactory.i \
-  $(TAO_ROOT)/tao/AbstractBase.h \
-  $(TAO_ROOT)/tao/AbstractBase.inl \
   $(TAO_ROOT)/tao/DomainC.h \
   $(TAO_ROOT)/tao/DomainC.i \
   $(TAO_ROOT)/tao/WrongTransactionC.h \
   $(TAO_ROOT)/tao/WrongTransactionC.i \
-  $(TAO_ROOT)/tao/Object_KeyC.h \
-  $(TAO_ROOT)/tao/Object_KeyC.i \
-  $(TAO_ROOT)/tao/ObjectIDList.h \
-  $(TAO_ROOT)/tao/ObjectIDList.i \
+  $(TAO_ROOT)/tao/ObjectIDListC.h \
   $(TAO_ROOT)/tao/StringSeqC.h \
   $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.h \
@@ -1122,9 +1207,7 @@ endif
   $(ACE_ROOT)/ace/Array_Base.inl \
   $(ACE_ROOT)/ace/Array_Base.cpp \
   $(ACE_ROOT)/ace/Containers_T.i \
-  $(ACE_ROOT)/ace/Containers_T.cpp DynAnyFactory.h \
-  $(TAO_ROOT)/tao/Marshal.h \
-  $(TAO_ROOT)/tao/Marshal.i
+  $(ACE_ROOT)/ace/Containers_T.cpp DynAnyFactory.h
 
 .obj/DynSequence_i.o .obj/DynSequence_i.so .shobj/DynSequence_i.o .shobj/DynSequence_i.so: DynSequence_i.cpp DynSequence_i.h \
   $(ACE_ROOT)/ace/pre.h DynamicAny.h dynamicany_export.h \
@@ -1188,7 +1271,8 @@ endif
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Malloc.i \
   $(ACE_ROOT)/ace/Malloc_T.h \
-  $(ACE_ROOT)/ace/Synch.h $(ACE_ROOT)/ace/Synch.i \
+  $(ACE_ROOT)/ace/Synch.h \
+  $(ACE_ROOT)/ace/Synch.i \
   $(ACE_ROOT)/ace/Synch_T.h \
   $(ACE_ROOT)/ace/Synch_T.i \
   $(ACE_ROOT)/ace/Thread.h \
@@ -1217,7 +1301,8 @@ endif
   $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
   $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
   $(ACE_ROOT)/ace/Unbounded_Set.h \
-  $(ACE_ROOT)/ace/Node.h $(ACE_ROOT)/ace/Node.cpp \
+  $(ACE_ROOT)/ace/Node.h \
+  $(ACE_ROOT)/ace/Node.cpp \
   $(ACE_ROOT)/ace/Unbounded_Set.inl \
   $(ACE_ROOT)/ace/Unbounded_Set.cpp \
   $(ACE_ROOT)/ace/Memory_Pool.i \
@@ -1253,7 +1338,16 @@ endif
   $(ACE_ROOT)/ace/Reactor_Impl.h DynamicAnyC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(TAO_ROOT)/tao/Typecode.h \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor.i \
+  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_T.i \
+  $(ACE_ROOT)/ace/Functor_T.cpp \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
   $(TAO_ROOT)/tao/Typecode.i \
+  $(TAO_ROOT)/tao/Any_T.h \
   $(TAO_ROOT)/tao/Any.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -1277,8 +1371,17 @@ endif
   $(TAO_ROOT)/tao/CDR.i \
   $(TAO_ROOT)/tao/varbase.h \
   $(TAO_ROOT)/tao/Policy_ForwardC.i \
+  $(TAO_ROOT)/tao/Object_KeyC.h \
+  $(TAO_ROOT)/tao/Object_KeyC.i \
   $(TAO_ROOT)/tao/Object.i \
   $(TAO_ROOT)/tao/Any.i \
+  $(TAO_ROOT)/tao/AbstractBase.h \
+  $(TAO_ROOT)/tao/AbstractBase.inl \
+  $(TAO_ROOT)/tao/Any_T.inl \
+  $(TAO_ROOT)/tao/Any_T.cpp \
+  $(TAO_ROOT)/tao/Marshal.h \
+  $(TAO_ROOT)/tao/Marshal.i \
+  $(TAO_ROOT)/tao/debug.h \
   $(TAO_ROOT)/tao/NVList.h \
   $(TAO_ROOT)/tao/NVList.i \
   $(TAO_ROOT)/tao/LocalObject.h \
@@ -1288,10 +1391,12 @@ endif
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/Principal.i \
   $(TAO_ROOT)/tao/ORB.h \
-  $(TAO_ROOT)/tao/Services.h \
-  $(TAO_ROOT)/tao/Services.i \
+  $(TAO_ROOT)/tao/ServicesC.h \
+  $(TAO_ROOT)/tao/ServicesC.i \
   $(TAO_ROOT)/tao/CORBA_String.h \
   $(TAO_ROOT)/tao/CORBA_String.inl \
+  $(TAO_ROOT)/tao/ObjectIdListC.h \
+  $(TAO_ROOT)/tao/ObjectIdListC.i \
   $(TAO_ROOT)/tao/objectid.h \
   $(TAO_ROOT)/tao/PolicyC.h \
   $(TAO_ROOT)/tao/CurrentC.h \
@@ -1307,16 +1412,11 @@ endif
   $(TAO_ROOT)/tao/ValueBase.i \
   $(TAO_ROOT)/tao/ValueFactory.h \
   $(TAO_ROOT)/tao/ValueFactory.i \
-  $(TAO_ROOT)/tao/AbstractBase.h \
-  $(TAO_ROOT)/tao/AbstractBase.inl \
   $(TAO_ROOT)/tao/DomainC.h \
   $(TAO_ROOT)/tao/DomainC.i \
   $(TAO_ROOT)/tao/WrongTransactionC.h \
   $(TAO_ROOT)/tao/WrongTransactionC.i \
-  $(TAO_ROOT)/tao/Object_KeyC.h \
-  $(TAO_ROOT)/tao/Object_KeyC.i \
-  $(TAO_ROOT)/tao/ObjectIDList.h \
-  $(TAO_ROOT)/tao/ObjectIDList.i \
+  $(TAO_ROOT)/tao/ObjectIDListC.h \
   $(TAO_ROOT)/tao/StringSeqC.h \
   $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.h \
@@ -1336,9 +1436,7 @@ endif
   $(ACE_ROOT)/ace/Array_Base.inl \
   $(ACE_ROOT)/ace/Array_Base.cpp \
   $(ACE_ROOT)/ace/Containers_T.i \
-  $(ACE_ROOT)/ace/Containers_T.cpp DynAnyFactory.h \
-  $(TAO_ROOT)/tao/Marshal.h \
-  $(TAO_ROOT)/tao/Marshal.i
+  $(ACE_ROOT)/ace/Containers_T.cpp DynAnyFactory.h
 
 .obj/DynEnum_i.o .obj/DynEnum_i.so .shobj/DynEnum_i.o .shobj/DynEnum_i.so: DynEnum_i.cpp DynEnum_i.h $(ACE_ROOT)/ace/pre.h \
   DynamicAny.h dynamicany_export.h \
@@ -1402,7 +1500,8 @@ endif
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Malloc.i \
   $(ACE_ROOT)/ace/Malloc_T.h \
-  $(ACE_ROOT)/ace/Synch.h $(ACE_ROOT)/ace/Synch.i \
+  $(ACE_ROOT)/ace/Synch.h \
+  $(ACE_ROOT)/ace/Synch.i \
   $(ACE_ROOT)/ace/Synch_T.h \
   $(ACE_ROOT)/ace/Synch_T.i \
   $(ACE_ROOT)/ace/Thread.h \
@@ -1431,7 +1530,8 @@ endif
   $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
   $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
   $(ACE_ROOT)/ace/Unbounded_Set.h \
-  $(ACE_ROOT)/ace/Node.h $(ACE_ROOT)/ace/Node.cpp \
+  $(ACE_ROOT)/ace/Node.h \
+  $(ACE_ROOT)/ace/Node.cpp \
   $(ACE_ROOT)/ace/Unbounded_Set.inl \
   $(ACE_ROOT)/ace/Unbounded_Set.cpp \
   $(ACE_ROOT)/ace/Memory_Pool.i \
@@ -1467,7 +1567,16 @@ endif
   $(ACE_ROOT)/ace/Reactor_Impl.h DynamicAnyC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(TAO_ROOT)/tao/Typecode.h \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor.i \
+  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_T.i \
+  $(ACE_ROOT)/ace/Functor_T.cpp \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
   $(TAO_ROOT)/tao/Typecode.i \
+  $(TAO_ROOT)/tao/Any_T.h \
   $(TAO_ROOT)/tao/Any.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -1491,8 +1600,17 @@ endif
   $(TAO_ROOT)/tao/CDR.i \
   $(TAO_ROOT)/tao/varbase.h \
   $(TAO_ROOT)/tao/Policy_ForwardC.i \
+  $(TAO_ROOT)/tao/Object_KeyC.h \
+  $(TAO_ROOT)/tao/Object_KeyC.i \
   $(TAO_ROOT)/tao/Object.i \
   $(TAO_ROOT)/tao/Any.i \
+  $(TAO_ROOT)/tao/AbstractBase.h \
+  $(TAO_ROOT)/tao/AbstractBase.inl \
+  $(TAO_ROOT)/tao/Any_T.inl \
+  $(TAO_ROOT)/tao/Any_T.cpp \
+  $(TAO_ROOT)/tao/Marshal.h \
+  $(TAO_ROOT)/tao/Marshal.i \
+  $(TAO_ROOT)/tao/debug.h \
   $(TAO_ROOT)/tao/NVList.h \
   $(TAO_ROOT)/tao/NVList.i \
   $(TAO_ROOT)/tao/LocalObject.h \
@@ -1502,10 +1620,12 @@ endif
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/Principal.i \
   $(TAO_ROOT)/tao/ORB.h \
-  $(TAO_ROOT)/tao/Services.h \
-  $(TAO_ROOT)/tao/Services.i \
+  $(TAO_ROOT)/tao/ServicesC.h \
+  $(TAO_ROOT)/tao/ServicesC.i \
   $(TAO_ROOT)/tao/CORBA_String.h \
   $(TAO_ROOT)/tao/CORBA_String.inl \
+  $(TAO_ROOT)/tao/ObjectIdListC.h \
+  $(TAO_ROOT)/tao/ObjectIdListC.i \
   $(TAO_ROOT)/tao/objectid.h \
   $(TAO_ROOT)/tao/PolicyC.h \
   $(TAO_ROOT)/tao/CurrentC.h \
@@ -1521,16 +1641,11 @@ endif
   $(TAO_ROOT)/tao/ValueBase.i \
   $(TAO_ROOT)/tao/ValueFactory.h \
   $(TAO_ROOT)/tao/ValueFactory.i \
-  $(TAO_ROOT)/tao/AbstractBase.h \
-  $(TAO_ROOT)/tao/AbstractBase.inl \
   $(TAO_ROOT)/tao/DomainC.h \
   $(TAO_ROOT)/tao/DomainC.i \
   $(TAO_ROOT)/tao/WrongTransactionC.h \
   $(TAO_ROOT)/tao/WrongTransactionC.i \
-  $(TAO_ROOT)/tao/Object_KeyC.h \
-  $(TAO_ROOT)/tao/Object_KeyC.i \
-  $(TAO_ROOT)/tao/ObjectIDList.h \
-  $(TAO_ROOT)/tao/ObjectIDList.i \
+  $(TAO_ROOT)/tao/ObjectIDListC.h \
   $(TAO_ROOT)/tao/StringSeqC.h \
   $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.h \
@@ -1614,7 +1729,8 @@ endif
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Malloc.i \
   $(ACE_ROOT)/ace/Malloc_T.h \
-  $(ACE_ROOT)/ace/Synch.h $(ACE_ROOT)/ace/Synch.i \
+  $(ACE_ROOT)/ace/Synch.h \
+  $(ACE_ROOT)/ace/Synch.i \
   $(ACE_ROOT)/ace/Synch_T.h \
   $(ACE_ROOT)/ace/Synch_T.i \
   $(ACE_ROOT)/ace/Thread.h \
@@ -1643,7 +1759,8 @@ endif
   $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
   $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
   $(ACE_ROOT)/ace/Unbounded_Set.h \
-  $(ACE_ROOT)/ace/Node.h $(ACE_ROOT)/ace/Node.cpp \
+  $(ACE_ROOT)/ace/Node.h \
+  $(ACE_ROOT)/ace/Node.cpp \
   $(ACE_ROOT)/ace/Unbounded_Set.inl \
   $(ACE_ROOT)/ace/Unbounded_Set.cpp \
   $(ACE_ROOT)/ace/Memory_Pool.i \
@@ -1679,7 +1796,16 @@ endif
   $(ACE_ROOT)/ace/Reactor_Impl.h DynamicAnyC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(TAO_ROOT)/tao/Typecode.h \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor.i \
+  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_T.i \
+  $(ACE_ROOT)/ace/Functor_T.cpp \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
   $(TAO_ROOT)/tao/Typecode.i \
+  $(TAO_ROOT)/tao/Any_T.h \
   $(TAO_ROOT)/tao/Any.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -1703,8 +1829,17 @@ endif
   $(TAO_ROOT)/tao/CDR.i \
   $(TAO_ROOT)/tao/varbase.h \
   $(TAO_ROOT)/tao/Policy_ForwardC.i \
+  $(TAO_ROOT)/tao/Object_KeyC.h \
+  $(TAO_ROOT)/tao/Object_KeyC.i \
   $(TAO_ROOT)/tao/Object.i \
   $(TAO_ROOT)/tao/Any.i \
+  $(TAO_ROOT)/tao/AbstractBase.h \
+  $(TAO_ROOT)/tao/AbstractBase.inl \
+  $(TAO_ROOT)/tao/Any_T.inl \
+  $(TAO_ROOT)/tao/Any_T.cpp \
+  $(TAO_ROOT)/tao/Marshal.h \
+  $(TAO_ROOT)/tao/Marshal.i \
+  $(TAO_ROOT)/tao/debug.h \
   $(TAO_ROOT)/tao/NVList.h \
   $(TAO_ROOT)/tao/NVList.i \
   $(TAO_ROOT)/tao/LocalObject.h \
@@ -1714,10 +1849,12 @@ endif
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/Principal.i \
   $(TAO_ROOT)/tao/ORB.h \
-  $(TAO_ROOT)/tao/Services.h \
-  $(TAO_ROOT)/tao/Services.i \
+  $(TAO_ROOT)/tao/ServicesC.h \
+  $(TAO_ROOT)/tao/ServicesC.i \
   $(TAO_ROOT)/tao/CORBA_String.h \
   $(TAO_ROOT)/tao/CORBA_String.inl \
+  $(TAO_ROOT)/tao/ObjectIdListC.h \
+  $(TAO_ROOT)/tao/ObjectIdListC.i \
   $(TAO_ROOT)/tao/objectid.h \
   $(TAO_ROOT)/tao/PolicyC.h \
   $(TAO_ROOT)/tao/CurrentC.h \
@@ -1733,16 +1870,11 @@ endif
   $(TAO_ROOT)/tao/ValueBase.i \
   $(TAO_ROOT)/tao/ValueFactory.h \
   $(TAO_ROOT)/tao/ValueFactory.i \
-  $(TAO_ROOT)/tao/AbstractBase.h \
-  $(TAO_ROOT)/tao/AbstractBase.inl \
   $(TAO_ROOT)/tao/DomainC.h \
   $(TAO_ROOT)/tao/DomainC.i \
   $(TAO_ROOT)/tao/WrongTransactionC.h \
   $(TAO_ROOT)/tao/WrongTransactionC.i \
-  $(TAO_ROOT)/tao/Object_KeyC.h \
-  $(TAO_ROOT)/tao/Object_KeyC.i \
-  $(TAO_ROOT)/tao/ObjectIDList.h \
-  $(TAO_ROOT)/tao/ObjectIDList.i \
+  $(TAO_ROOT)/tao/ObjectIDListC.h \
   $(TAO_ROOT)/tao/StringSeqC.h \
   $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.h \
@@ -1762,9 +1894,7 @@ endif
   $(ACE_ROOT)/ace/Array_Base.inl \
   $(ACE_ROOT)/ace/Array_Base.cpp \
   $(ACE_ROOT)/ace/Containers_T.i \
-  $(ACE_ROOT)/ace/Containers_T.cpp DynAnyFactory.h \
-  $(TAO_ROOT)/tao/Marshal.h \
-  $(TAO_ROOT)/tao/Marshal.i
+  $(ACE_ROOT)/ace/Containers_T.cpp DynAnyFactory.h
 
 .obj/DynUnion_i.o .obj/DynUnion_i.so .shobj/DynUnion_i.o .shobj/DynUnion_i.so: DynUnion_i.cpp DynUnion_i.h \
   $(ACE_ROOT)/ace/pre.h DynamicAny.h dynamicany_export.h \
@@ -1828,7 +1958,8 @@ endif
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Malloc.i \
   $(ACE_ROOT)/ace/Malloc_T.h \
-  $(ACE_ROOT)/ace/Synch.h $(ACE_ROOT)/ace/Synch.i \
+  $(ACE_ROOT)/ace/Synch.h \
+  $(ACE_ROOT)/ace/Synch.i \
   $(ACE_ROOT)/ace/Synch_T.h \
   $(ACE_ROOT)/ace/Synch_T.i \
   $(ACE_ROOT)/ace/Thread.h \
@@ -1857,7 +1988,8 @@ endif
   $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
   $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
   $(ACE_ROOT)/ace/Unbounded_Set.h \
-  $(ACE_ROOT)/ace/Node.h $(ACE_ROOT)/ace/Node.cpp \
+  $(ACE_ROOT)/ace/Node.h \
+  $(ACE_ROOT)/ace/Node.cpp \
   $(ACE_ROOT)/ace/Unbounded_Set.inl \
   $(ACE_ROOT)/ace/Unbounded_Set.cpp \
   $(ACE_ROOT)/ace/Memory_Pool.i \
@@ -1893,7 +2025,16 @@ endif
   $(ACE_ROOT)/ace/Reactor_Impl.h DynamicAnyC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(TAO_ROOT)/tao/Typecode.h \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor.i \
+  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_T.i \
+  $(ACE_ROOT)/ace/Functor_T.cpp \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
   $(TAO_ROOT)/tao/Typecode.i \
+  $(TAO_ROOT)/tao/Any_T.h \
   $(TAO_ROOT)/tao/Any.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -1917,8 +2058,17 @@ endif
   $(TAO_ROOT)/tao/CDR.i \
   $(TAO_ROOT)/tao/varbase.h \
   $(TAO_ROOT)/tao/Policy_ForwardC.i \
+  $(TAO_ROOT)/tao/Object_KeyC.h \
+  $(TAO_ROOT)/tao/Object_KeyC.i \
   $(TAO_ROOT)/tao/Object.i \
   $(TAO_ROOT)/tao/Any.i \
+  $(TAO_ROOT)/tao/AbstractBase.h \
+  $(TAO_ROOT)/tao/AbstractBase.inl \
+  $(TAO_ROOT)/tao/Any_T.inl \
+  $(TAO_ROOT)/tao/Any_T.cpp \
+  $(TAO_ROOT)/tao/Marshal.h \
+  $(TAO_ROOT)/tao/Marshal.i \
+  $(TAO_ROOT)/tao/debug.h \
   $(TAO_ROOT)/tao/NVList.h \
   $(TAO_ROOT)/tao/NVList.i \
   $(TAO_ROOT)/tao/LocalObject.h \
@@ -1928,10 +2078,12 @@ endif
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/Principal.i \
   $(TAO_ROOT)/tao/ORB.h \
-  $(TAO_ROOT)/tao/Services.h \
-  $(TAO_ROOT)/tao/Services.i \
+  $(TAO_ROOT)/tao/ServicesC.h \
+  $(TAO_ROOT)/tao/ServicesC.i \
   $(TAO_ROOT)/tao/CORBA_String.h \
   $(TAO_ROOT)/tao/CORBA_String.inl \
+  $(TAO_ROOT)/tao/ObjectIdListC.h \
+  $(TAO_ROOT)/tao/ObjectIdListC.i \
   $(TAO_ROOT)/tao/objectid.h \
   $(TAO_ROOT)/tao/PolicyC.h \
   $(TAO_ROOT)/tao/CurrentC.h \
@@ -1947,16 +2099,11 @@ endif
   $(TAO_ROOT)/tao/ValueBase.i \
   $(TAO_ROOT)/tao/ValueFactory.h \
   $(TAO_ROOT)/tao/ValueFactory.i \
-  $(TAO_ROOT)/tao/AbstractBase.h \
-  $(TAO_ROOT)/tao/AbstractBase.inl \
   $(TAO_ROOT)/tao/DomainC.h \
   $(TAO_ROOT)/tao/DomainC.i \
   $(TAO_ROOT)/tao/WrongTransactionC.h \
   $(TAO_ROOT)/tao/WrongTransactionC.i \
-  $(TAO_ROOT)/tao/Object_KeyC.h \
-  $(TAO_ROOT)/tao/Object_KeyC.i \
-  $(TAO_ROOT)/tao/ObjectIDList.h \
-  $(TAO_ROOT)/tao/ObjectIDList.i \
+  $(TAO_ROOT)/tao/ObjectIDListC.h \
   $(TAO_ROOT)/tao/StringSeqC.h \
   $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.h \
@@ -1969,8 +2116,7 @@ endif
   $(TAO_ROOT)/tao/IOPC.h \
   $(TAO_ROOT)/tao/IOPC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i DynamicAnyC.i \
-  DynCommon.h DynAnyFactory.h $(TAO_ROOT)/tao/Marshal.h \
-  $(TAO_ROOT)/tao/Marshal.i
+  DynCommon.h DynAnyFactory.h
 
 .obj/DynamicAnyC.o .obj/DynamicAnyC.so .shobj/DynamicAnyC.o .shobj/DynamicAnyC.so: DynamicAnyC.cpp DynamicAny.h \
   $(ACE_ROOT)/ace/pre.h dynamicany_export.h \
@@ -2034,7 +2180,8 @@ endif
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Malloc.i \
   $(ACE_ROOT)/ace/Malloc_T.h \
-  $(ACE_ROOT)/ace/Synch.h $(ACE_ROOT)/ace/Synch.i \
+  $(ACE_ROOT)/ace/Synch.h \
+  $(ACE_ROOT)/ace/Synch.i \
   $(ACE_ROOT)/ace/Synch_T.h \
   $(ACE_ROOT)/ace/Synch_T.i \
   $(ACE_ROOT)/ace/Thread.h \
@@ -2063,7 +2210,8 @@ endif
   $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
   $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
   $(ACE_ROOT)/ace/Unbounded_Set.h \
-  $(ACE_ROOT)/ace/Node.h $(ACE_ROOT)/ace/Node.cpp \
+  $(ACE_ROOT)/ace/Node.h \
+  $(ACE_ROOT)/ace/Node.cpp \
   $(ACE_ROOT)/ace/Unbounded_Set.inl \
   $(ACE_ROOT)/ace/Unbounded_Set.cpp \
   $(ACE_ROOT)/ace/Memory_Pool.i \
@@ -2099,7 +2247,16 @@ endif
   $(ACE_ROOT)/ace/Reactor_Impl.h DynamicAnyC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(TAO_ROOT)/tao/Typecode.h \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor.i \
+  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_T.i \
+  $(ACE_ROOT)/ace/Functor_T.cpp \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
   $(TAO_ROOT)/tao/Typecode.i \
+  $(TAO_ROOT)/tao/Any_T.h \
   $(TAO_ROOT)/tao/Any.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -2123,8 +2280,17 @@ endif
   $(TAO_ROOT)/tao/CDR.i \
   $(TAO_ROOT)/tao/varbase.h \
   $(TAO_ROOT)/tao/Policy_ForwardC.i \
+  $(TAO_ROOT)/tao/Object_KeyC.h \
+  $(TAO_ROOT)/tao/Object_KeyC.i \
   $(TAO_ROOT)/tao/Object.i \
   $(TAO_ROOT)/tao/Any.i \
+  $(TAO_ROOT)/tao/AbstractBase.h \
+  $(TAO_ROOT)/tao/AbstractBase.inl \
+  $(TAO_ROOT)/tao/Any_T.inl \
+  $(TAO_ROOT)/tao/Any_T.cpp \
+  $(TAO_ROOT)/tao/Marshal.h \
+  $(TAO_ROOT)/tao/Marshal.i \
+  $(TAO_ROOT)/tao/debug.h \
   $(TAO_ROOT)/tao/NVList.h \
   $(TAO_ROOT)/tao/NVList.i \
   $(TAO_ROOT)/tao/LocalObject.h \
@@ -2134,10 +2300,12 @@ endif
   $(TAO_ROOT)/tao/OctetSeqC.i \
   $(TAO_ROOT)/tao/Principal.i \
   $(TAO_ROOT)/tao/ORB.h \
-  $(TAO_ROOT)/tao/Services.h \
-  $(TAO_ROOT)/tao/Services.i \
+  $(TAO_ROOT)/tao/ServicesC.h \
+  $(TAO_ROOT)/tao/ServicesC.i \
   $(TAO_ROOT)/tao/CORBA_String.h \
   $(TAO_ROOT)/tao/CORBA_String.inl \
+  $(TAO_ROOT)/tao/ObjectIdListC.h \
+  $(TAO_ROOT)/tao/ObjectIdListC.i \
   $(TAO_ROOT)/tao/objectid.h \
   $(TAO_ROOT)/tao/PolicyC.h \
   $(TAO_ROOT)/tao/CurrentC.h \
@@ -2153,16 +2321,11 @@ endif
   $(TAO_ROOT)/tao/ValueBase.i \
   $(TAO_ROOT)/tao/ValueFactory.h \
   $(TAO_ROOT)/tao/ValueFactory.i \
-  $(TAO_ROOT)/tao/AbstractBase.h \
-  $(TAO_ROOT)/tao/AbstractBase.inl \
   $(TAO_ROOT)/tao/DomainC.h \
   $(TAO_ROOT)/tao/DomainC.i \
   $(TAO_ROOT)/tao/WrongTransactionC.h \
   $(TAO_ROOT)/tao/WrongTransactionC.i \
-  $(TAO_ROOT)/tao/Object_KeyC.h \
-  $(TAO_ROOT)/tao/Object_KeyC.i \
-  $(TAO_ROOT)/tao/ObjectIDList.h \
-  $(TAO_ROOT)/tao/ObjectIDList.i \
+  $(TAO_ROOT)/tao/ObjectIDListC.h \
   $(TAO_ROOT)/tao/StringSeqC.h \
   $(TAO_ROOT)/tao/StringSeqC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.h \
@@ -2182,9 +2345,10 @@ endif
   $(TAO_ROOT)/tao/Policy_Manager.h \
   $(TAO_ROOT)/tao/Policy_Set.h \
   $(TAO_ROOT)/tao/Policy_Set.i \
-  $(TAO_ROOT)/tao/debug.h \
   $(TAO_ROOT)/tao/Policy_Manager.i \
   $(TAO_ROOT)/tao/Resource_Factory.h \
+  $(TAO_ROOT)/tao/CONV_FRAMEC.h \
+  $(TAO_ROOT)/tao/CONV_FRAMEC.i \
   $(TAO_ROOT)/tao/params.h \
   $(TAO_ROOT)/tao/params.i \
   $(TAO_ROOT)/tao/TAO_Singleton_Manager.h \
@@ -2215,14 +2379,6 @@ endif
   $(ACE_ROOT)/ace/Array_Base.cpp \
   $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
   $(TAO_ROOT)/tao/Object_Ref_Table.h \
-  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
-  $(ACE_ROOT)/ace/Functor.h \
-  $(ACE_ROOT)/ace/Functor.i \
-  $(ACE_ROOT)/ace/Functor_T.h \
-  $(ACE_ROOT)/ace/Functor_T.i \
-  $(ACE_ROOT)/ace/Functor_T.cpp \
-  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
-  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
   $(TAO_ROOT)/tao/Interceptor_List.h \
   $(TAO_ROOT)/tao/Interceptor_List.inl \
   $(TAO_ROOT)/tao/PICurrent.h \
@@ -2268,6 +2424,28 @@ endif
   $(TAO_ROOT)/tao/target_specification.h \
   $(TAO_ROOT)/tao/target_specification.i \
   $(TAO_ROOT)/tao/operation_details.i \
+  $(TAO_ROOT)/tao/Transport.h \
+  $(TAO_ROOT)/tao/Transport_Cache_Manager.h \
+  $(TAO_ROOT)/tao/Cache_Entries.h \
+  $(TAO_ROOT)/tao/Transport_Descriptor_Interface.h \
+  $(TAO_ROOT)/tao/Transport_Descriptor_Interface.inl \
+  $(ACE_ROOT)/ace/Recyclable.h \
+  $(ACE_ROOT)/ace/Recyclable.inl \
+  $(TAO_ROOT)/tao/Cache_Entries.inl \
+  $(TAO_ROOT)/tao/Transport_Cache_Manager.inl \
+  $(TAO_ROOT)/tao/Transport_Timer.h \
+  $(TAO_ROOT)/tao/Incoming_Message_Queue.h \
+  $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
+  $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
+  $(TAO_ROOT)/tao/Incoming_Message_Queue.inl \
+  $(TAO_ROOT)/tao/Synch_Refcountable.h \
+  $(ACE_ROOT)/ace/Refcountable.h \
+  $(ACE_ROOT)/ace/Refcountable.inl \
+  $(TAO_ROOT)/tao/Synch_Refcountable.inl \
+  $(TAO_ROOT)/tao/Codeset_Translator_Factory.h \
+  $(TAO_ROOT)/tao/Codeset_Translator_Factory_T.h \
+  $(TAO_ROOT)/tao/Codeset_Translator_Factory_T.cpp \
+  $(TAO_ROOT)/tao/Transport.inl \
   $(TAO_ROOT)/tao/Invocation.i \
   $(TAO_ROOT)/tao/PortableInterceptor.h \
   $(TAO_ROOT)/tao/RequestInfo_Util.h \

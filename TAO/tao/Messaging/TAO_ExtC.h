@@ -19,8 +19,12 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:151
+
 #ifndef _TAO_IDL_ORIG_TAO_EXTC_H_
 #define _TAO_IDL_ORIG_TAO_EXTC_H_
+
 #include "ace/pre.h"
 #include "tao/orbconf.h"
 
@@ -55,44 +59,55 @@
 #pragma option push -w-rvl -w-rch -w-ccc -w-inl
 #endif /* __BORLANDC__ */
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_ch.cpp:48
+
 TAO_NAMESPACE  TAO
 {
-  TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong CONNECTION_TIMEOUT_POLICY_TYPE;
-
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
+  
+  const CORBA::ULong CONNECTION_TIMEOUT_POLICY_TYPE = 1413545992U;
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:52
 
 #if !defined (_TAO_CONNECTIONTIMEOUTPOLICY___PTR_CH_)
 #define _TAO_CONNECTIONTIMEOUTPOLICY___PTR_CH_
-
+  
   class ConnectionTimeoutPolicy;
   typedef ConnectionTimeoutPolicy *ConnectionTimeoutPolicy_ptr;
 
 #endif /* end #if !defined */
 
-
 #if !defined (_TAO_CONNECTIONTIMEOUTPOLICY___VAR_CH_)
 #define _TAO_CONNECTIONTIMEOUTPOLICY___VAR_CH_
-
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:571
+  
   class TAO_Messaging_Export ConnectionTimeoutPolicy_var : public TAO_Base_var
   {
   public:
     ConnectionTimeoutPolicy_var (void); // default constructor
-    ConnectionTimeoutPolicy_var (ConnectionTimeoutPolicy_ptr p) : ptr_ (p) {}
+    ConnectionTimeoutPolicy_var (ConnectionTimeoutPolicy_ptr p) : ptr_ (p) {} 
     ConnectionTimeoutPolicy_var (const ConnectionTimeoutPolicy_var &); // copy constructor
     ~ConnectionTimeoutPolicy_var (void); // destructor
-
+    
     ConnectionTimeoutPolicy_var &operator= (ConnectionTimeoutPolicy_ptr);
     ConnectionTimeoutPolicy_var &operator= (const ConnectionTimeoutPolicy_var &);
     ConnectionTimeoutPolicy_ptr operator-> (void) const;
-
+    
     operator const ConnectionTimeoutPolicy_ptr &() const;
     operator ConnectionTimeoutPolicy_ptr &();
-    // in, inout, out, _retn
+    // in, inout, out, _retn 
     ConnectionTimeoutPolicy_ptr in (void) const;
     ConnectionTimeoutPolicy_ptr &inout (void);
     ConnectionTimeoutPolicy_ptr &out (void);
     ConnectionTimeoutPolicy_ptr _retn (void);
     ConnectionTimeoutPolicy_ptr ptr (void) const;
-
+    
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
     static ConnectionTimeoutPolicy_ptr tao_duplicate (ConnectionTimeoutPolicy_ptr);
@@ -103,7 +118,7 @@ TAO_NAMESPACE  TAO
         ACE_ENV_ARG_DECL_NOT_USED
       );
     static CORBA::Object * tao_upcast (void *);
-
+  
   private:
     ConnectionTimeoutPolicy_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -111,13 +126,14 @@ TAO_NAMESPACE  TAO
     ConnectionTimeoutPolicy_var &operator= (const TAO_Base_var &rhs);
   };
 
-
 #endif /* end #if !defined */
-
 
 #if !defined (_TAO_CONNECTIONTIMEOUTPOLICY___OUT_CH_)
 #define _TAO_CONNECTIONTIMEOUTPOLICY___OUT_CH_
-
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:946
+  
   class TAO_Messaging_Export ConnectionTimeoutPolicy_out
   {
   public:
@@ -130,96 +146,110 @@ TAO_NAMESPACE  TAO
     operator ConnectionTimeoutPolicy_ptr &();
     ConnectionTimeoutPolicy_ptr &ptr (void);
     ConnectionTimeoutPolicy_ptr operator-> (void);
-
+  
   private:
     ConnectionTimeoutPolicy_ptr &ptr_;
   };
 
-
 #endif /* end #if !defined */
-
-  // *************************************************************
-  // TAO::ConnectionTimeoutPolicy
+  
   // TAO_IDL - Generated from
-  // be/be_visitor_interface/interface_ch.cpp:106
-  // *************************************************************
-
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:110
 
 #if !defined (_TAO_CONNECTIONTIMEOUTPOLICY_CH_)
 #define _TAO_CONNECTIONTIMEOUTPOLICY_CH_
-
+  
   class TAO_Messaging_Export ConnectionTimeoutPolicy
     : public virtual CORBA::Policy
   {
   public:
-  #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
     typedef ConnectionTimeoutPolicy_ptr _ptr_type;
     typedef ConnectionTimeoutPolicy_var _var_type;
-  #endif /* ! __GNUC__ || g++ >= 2.8 */
-
     static int _tao_class_id;
-
+    
     // The static operations.
     static ConnectionTimeoutPolicy_ptr _duplicate (ConnectionTimeoutPolicy_ptr obj);
-
+    
     static ConnectionTimeoutPolicy_ptr _narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     static ConnectionTimeoutPolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-
+    
     static ConnectionTimeoutPolicy_ptr _nil (void)
       {
         return (ConnectionTimeoutPolicy_ptr)0;
       }
-
-    static void _tao_any_destructor (void*);
-
+    
+    static void _tao_any_destructor (void *);
+    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_ch.cpp:46
+    
     virtual TimeBase::TimeT relative_expiry (
-
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
+    
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:267
+    
     virtual void *_tao_QueryInterface (ptr_arith_t type);
-
+    
     virtual const char* _interface_repository_id (void) const;
-
+    virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
+  
   protected:
     ConnectionTimeoutPolicy (void);
-
     virtual ~ConnectionTimeoutPolicy (void);
-
+    
+    friend class _TAO_ConnectionTimeoutPolicy_Remote_Proxy_Impl;
+    friend class _TAO_ConnectionTimeoutPolicy_ThruPOA_Proxy_Impl;
+    friend class _TAO_ConnectionTimeoutPolicy_Direct_Proxy_Impl;
+  
   private:
     ConnectionTimeoutPolicy (const ConnectionTimeoutPolicy &);
     void operator= (const ConnectionTimeoutPolicy &);
   };
 
-
 #endif /* end #if !defined */
-
+  
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_decl.cpp:44
+  
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ConnectionTimeoutPolicy;
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_ch.cpp:67
 
 }
 TAO_NAMESPACE_CLOSE // module TAO
 
-// Any operators for interface TAO::ConnectionTimeoutPolicy
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/any_op_ch.cpp:52
+
 TAO_Messaging_Export void operator<<= (CORBA::Any &, TAO::ConnectionTimeoutPolicy_ptr); // copying
 TAO_Messaging_Export void operator<<= (CORBA::Any &, TAO::ConnectionTimeoutPolicy_ptr *); // non-copying
 TAO_Messaging_Export CORBA::Boolean operator>>= (const CORBA::Any &, TAO::ConnectionTimeoutPolicy_ptr &);
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/cdr_op.cpp:48
+
 #ifndef __ACE_INLINE__
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/cdr_op.cpp:64
 
 #endif /* __ACE_INLINE__ */
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:1009
 
 #if defined (__ACE_INLINE__)
 #include "TAO_ExtC.i"
@@ -235,3 +265,4 @@ TAO_Messaging_Export CORBA::Boolean operator>>= (const CORBA::Any &, TAO::Connec
 
 #include "ace/post.h"
 #endif /* ifndef */
+

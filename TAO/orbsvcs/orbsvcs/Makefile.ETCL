@@ -119,6 +119,7 @@ ETCL/ETCL_y: ETCL/ETCL.yy
 
 
 .obj/ETCL_Constraint.o .obj/ETCL_Constraint.so .shobj/ETCL_Constraint.o .shobj/ETCL_Constraint.so: ETCL/ETCL_Constraint.cpp ETCL/ETCL_Constraint.h \
+  $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -175,7 +176,8 @@ ETCL/ETCL_y: ETCL/ETCL.yy
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Malloc.i \
   $(ACE_ROOT)/ace/Malloc_T.h \
-  $(ACE_ROOT)/ace/Synch.h $(ACE_ROOT)/ace/Synch.i \
+  $(ACE_ROOT)/ace/Synch.h \
+  $(ACE_ROOT)/ace/Synch.i \
   $(ACE_ROOT)/ace/Synch_T.h \
   $(ACE_ROOT)/ace/Synch_T.i \
   $(ACE_ROOT)/ace/Thread.h \
@@ -204,7 +206,8 @@ ETCL/ETCL_y: ETCL/ETCL.yy
   $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
   $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
   $(ACE_ROOT)/ace/Unbounded_Set.h \
-  $(ACE_ROOT)/ace/Node.h $(ACE_ROOT)/ace/Node.cpp \
+  $(ACE_ROOT)/ace/Node.h \
+  $(ACE_ROOT)/ace/Node.cpp \
   $(ACE_ROOT)/ace/Unbounded_Set.inl \
   $(ACE_ROOT)/ace/Unbounded_Set.cpp \
   $(ACE_ROOT)/ace/Memory_Pool.i \
@@ -232,17 +235,46 @@ ETCL/ETCL_y: ETCL/ETCL.yy
   $(TAO_ROOT)/tao/Sequence_T.h \
   $(TAO_ROOT)/tao/Sequence_T.i \
   $(TAO_ROOT)/tao/Sequence_T.cpp \
+  $(TAO_ROOT)/tao/Typecode.h \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+  $(ACE_ROOT)/ace/Functor.h \
+  $(ACE_ROOT)/ace/Functor.i \
+  $(ACE_ROOT)/ace/Functor_T.h \
+  $(ACE_ROOT)/ace/Functor_T.i \
+  $(ACE_ROOT)/ace/Functor_T.cpp \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
+  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
+  $(ACE_ROOT)/ace/Service_Config.h \
+  $(ACE_ROOT)/ace/Unbounded_Queue.h \
+  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
+  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
+  $(ACE_ROOT)/ace/XML_Svc_Conf.h \
+  $(ACE_ROOT)/ace/Service_Config.i \
+  $(ACE_ROOT)/ace/Reactor.h \
+  $(ACE_ROOT)/ace/Handle_Set.h \
+  $(ACE_ROOT)/ace/Handle_Set.i \
+  $(ACE_ROOT)/ace/Timer_Queue.h \
+  $(ACE_ROOT)/ace/Timer_Queue_T.h \
+  $(ACE_ROOT)/ace/Test_and_Set.h \
+  $(ACE_ROOT)/ace/Test_and_Set.i \
+  $(ACE_ROOT)/ace/Test_and_Set.cpp \
+  $(ACE_ROOT)/ace/Timer_Queue_T.i \
+  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
+  $(ACE_ROOT)/ace/Reactor.i \
+  $(ACE_ROOT)/ace/Reactor_Impl.h \
+  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+  $(TAO_ROOT)/tao/Exception.h \
+  $(TAO_ROOT)/tao/Exception.i \
+  $(TAO_ROOT)/tao/Typecode.i \
   $(TAO_ROOT)/tao/Environment.h \
   $(TAO_ROOT)/tao/Environment.i \
   $(TAO_ROOT)/tao/CDR.h \
   $(TAO_ROOT)/tao/CDR.i \
   $(TAO_ROOT)/tao/varbase.h \
   $(TAO_ROOT)/tao/Policy_ForwardC.i \
+  $(TAO_ROOT)/tao/Object_KeyC.h \
+  $(TAO_ROOT)/tao/Object_KeyC.i \
   $(TAO_ROOT)/tao/Object.i \
-  $(TAO_ROOT)/tao/Typecode.h \
-  $(TAO_ROOT)/tao/Exception.h \
-  $(TAO_ROOT)/tao/Exception.i \
-  $(TAO_ROOT)/tao/Typecode.i \
   $(TAO_ROOT)/tao/Any.i
 
 .obj/ETCL_Interpreter.o .obj/ETCL_Interpreter.so .shobj/ETCL_Interpreter.o .shobj/ETCL_Interpreter.so: ETCL/ETCL_Interpreter.cpp ETCL/ETCL_Interpreter.h \
@@ -254,9 +286,10 @@ ETCL/ETCL_y: ETCL/ETCL.yy
   $(ACE_ROOT)/ace/Basic_Types.h \
   $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/Basic_Types.i \
+  $(ACE_ROOT)/ace/Global_Macros.h \
+  $(ACE_ROOT)/ace/OS_Export.h \
   $(ACE_ROOT)/ace/Synch.h $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/OS_Dirent.h \
-  $(ACE_ROOT)/ace/OS_Export.h \
   $(ACE_ROOT)/ace/OS_Errno.h \
   $(ACE_ROOT)/ace/OS_Errno.inl \
   $(ACE_ROOT)/ace/OS_Dirent.inl \
@@ -269,7 +302,6 @@ ETCL/ETCL_y: ETCL/ETCL.yy
   $(ACE_ROOT)/ace/Time_Value.h \
   $(ACE_ROOT)/ace/Time_Value.inl \
   $(ACE_ROOT)/ace/Default_Constants.h \
-  $(ACE_ROOT)/ace/Global_Macros.h \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
   $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
@@ -332,7 +364,8 @@ ETCL/ETCL_y: ETCL/ETCL.yy
   $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
   $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
   $(ACE_ROOT)/ace/Unbounded_Set.h \
-  $(ACE_ROOT)/ace/Node.h $(ACE_ROOT)/ace/Node.cpp \
+  $(ACE_ROOT)/ace/Node.h \
+  $(ACE_ROOT)/ace/Node.cpp \
   $(ACE_ROOT)/ace/Unbounded_Set.inl \
   $(ACE_ROOT)/ace/Unbounded_Set.cpp \
   $(ACE_ROOT)/ace/Memory_Pool.i \
@@ -369,7 +402,8 @@ ETCL/ETCL_y: ETCL/ETCL.yy
   $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
   ETCL/ETCL_Interpreter.h ETCL/etcl_export.h \
   $(TAO_ROOT)/tao/orbconf.h \
-  $(ACE_ROOT)/ace/Synch.h $(ACE_ROOT)/ace/Synch.i \
+  $(ACE_ROOT)/ace/Synch.h \
+  $(ACE_ROOT)/ace/Synch.i \
   $(ACE_ROOT)/ace/Synch_T.h \
   $(ACE_ROOT)/ace/Synch_T.i \
   $(ACE_ROOT)/ace/Thread.h \
@@ -428,7 +462,8 @@ ETCL/ETCL_y: ETCL/ETCL.yy
   $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
   $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
   $(ACE_ROOT)/ace/Unbounded_Set.h \
-  $(ACE_ROOT)/ace/Node.h $(ACE_ROOT)/ace/Node.cpp \
+  $(ACE_ROOT)/ace/Node.h \
+  $(ACE_ROOT)/ace/Node.cpp \
   $(ACE_ROOT)/ace/Unbounded_Set.inl \
   $(ACE_ROOT)/ace/Unbounded_Set.cpp \
   $(ACE_ROOT)/ace/Memory_Pool.i \
@@ -439,6 +474,7 @@ ETCL/ETCL_y: ETCL/ETCL.yy
   ETCL/ETCL_y.h
 
 .obj/ETCL_y.o .obj/ETCL_y.so .shobj/ETCL_y.o .shobj/ETCL_y.so: ETCL/ETCL_y.cpp ETCL/ETCL_y.h ETCL/ETCL_Constraint.h \
+  $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
   $(ACE_ROOT)/ace/ace_wchar.inl \
@@ -495,7 +531,8 @@ ETCL/ETCL_y: ETCL/ETCL.yy
   $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
   $(ACE_ROOT)/ace/Malloc.i \
   $(ACE_ROOT)/ace/Malloc_T.h \
-  $(ACE_ROOT)/ace/Synch.h $(ACE_ROOT)/ace/Synch.i \
+  $(ACE_ROOT)/ace/Synch.h \
+  $(ACE_ROOT)/ace/Synch.i \
   $(ACE_ROOT)/ace/Synch_T.h \
   $(ACE_ROOT)/ace/Synch_T.i \
   $(ACE_ROOT)/ace/Thread.h \
@@ -524,7 +561,8 @@ ETCL/ETCL_y: ETCL/ETCL.yy
   $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
   $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
   $(ACE_ROOT)/ace/Unbounded_Set.h \
-  $(ACE_ROOT)/ace/Node.h $(ACE_ROOT)/ace/Node.cpp \
+  $(ACE_ROOT)/ace/Node.h \
+  $(ACE_ROOT)/ace/Node.cpp \
   $(ACE_ROOT)/ace/Unbounded_Set.inl \
   $(ACE_ROOT)/ace/Unbounded_Set.cpp \
   $(ACE_ROOT)/ace/Memory_Pool.i \

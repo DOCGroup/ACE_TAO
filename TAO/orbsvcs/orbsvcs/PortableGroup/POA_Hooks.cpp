@@ -202,7 +202,7 @@ TAO_POA_Hooks::associate_group_with_ref (
 
 
   // Add a mapping from GroupId to Object key in the PortableGroup
-  const TAO_ObjectKey &key = obj_ref->_object_key ();
+  const TAO::ObjectKey &key = obj_ref->_object_key ();
   this->request_dispatcher_.group_map_.add_groupid_objectkey_pair (
                                    group_id._retn (),
                                    key

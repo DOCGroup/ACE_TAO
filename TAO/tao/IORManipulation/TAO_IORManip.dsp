@@ -156,6 +156,21 @@ LINK32=link.exe
 # Begin Source File
 
 SOURCE=.\IORC.cpp
+
+!IF  "$(CFG)" == "IORManip - Win32 Release"
+
+# ADD CPP /GR
+
+!ELSEIF  "$(CFG)" == "IORManip - Win32 Debug"
+
+# ADD CPP /GR
+
+!ELSEIF  "$(CFG)" == "IORManip - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "IORManip - Win32 MFC Release"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 

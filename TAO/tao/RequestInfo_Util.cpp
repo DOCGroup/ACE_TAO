@@ -84,20 +84,9 @@ TAO_RequestInfo_Util::make_any (CORBA::Boolean tk_void_any
 
   if (tk_void_any)
     {
-      CORBA::TypeCode *tc = 0;
-      ACE_NEW_THROW_EX (tc,
-                        CORBA::TypeCode (CORBA::tk_void),
-                        CORBA::NO_MEMORY (
-                          CORBA::SystemException::_tao_minor_code (
-                            TAO_DEFAULT_MINOR_CODE,
-                            ENOMEM),
-                          CORBA::COMPLETED_NO));
-      ACE_CHECK_RETURN (0);
-
-      CORBA::TypeCode_var safe_tc = tc;
-
       ACE_NEW_THROW_EX (any,
-                        CORBA::Any (tc),
+                        CORBA::Any (CORBA::_tc_void,
+                                    0),
                         CORBA::NO_MEMORY (
                           CORBA::SystemException::_tao_minor_code (
                             TAO_DEFAULT_MINOR_CODE,

@@ -21,7 +21,7 @@
 
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::Repository::lookup_skel (
     TAO_ServerRequest &req,
@@ -40,7 +40,7 @@ ACE_INLINE void POA_CORBA::Repository::lookup_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::Repository::contents_skel (
     TAO_ServerRequest &req,
@@ -59,7 +59,7 @@ ACE_INLINE void POA_CORBA::Repository::contents_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::Repository::lookup_name_skel (
     TAO_ServerRequest &req,
@@ -78,7 +78,7 @@ ACE_INLINE void POA_CORBA::Repository::lookup_name_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::Repository::describe_contents_skel (
     TAO_ServerRequest &req,
@@ -97,7 +97,7 @@ ACE_INLINE void POA_CORBA::Repository::describe_contents_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::Repository::create_module_skel (
     TAO_ServerRequest &req,
@@ -116,7 +116,7 @@ ACE_INLINE void POA_CORBA::Repository::create_module_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::Repository::create_constant_skel (
     TAO_ServerRequest &req,
@@ -135,7 +135,7 @@ ACE_INLINE void POA_CORBA::Repository::create_constant_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::Repository::create_struct_skel (
     TAO_ServerRequest &req,
@@ -154,7 +154,7 @@ ACE_INLINE void POA_CORBA::Repository::create_struct_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::Repository::create_union_skel (
     TAO_ServerRequest &req,
@@ -173,7 +173,7 @@ ACE_INLINE void POA_CORBA::Repository::create_union_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::Repository::create_enum_skel (
     TAO_ServerRequest &req,
@@ -192,7 +192,7 @@ ACE_INLINE void POA_CORBA::Repository::create_enum_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::Repository::create_alias_skel (
     TAO_ServerRequest &req,
@@ -211,7 +211,7 @@ ACE_INLINE void POA_CORBA::Repository::create_alias_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::Repository::create_interface_skel (
     TAO_ServerRequest &req,
@@ -230,7 +230,7 @@ ACE_INLINE void POA_CORBA::Repository::create_interface_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::Repository::create_value_skel (
     TAO_ServerRequest &req,
@@ -249,7 +249,7 @@ ACE_INLINE void POA_CORBA::Repository::create_value_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::Repository::create_value_box_skel (
     TAO_ServerRequest &req,
@@ -268,7 +268,7 @@ ACE_INLINE void POA_CORBA::Repository::create_value_box_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::Repository::create_exception_skel (
     TAO_ServerRequest &req,
@@ -287,7 +287,7 @@ ACE_INLINE void POA_CORBA::Repository::create_exception_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::Repository::create_native_skel (
     TAO_ServerRequest &req,
@@ -306,7 +306,7 @@ ACE_INLINE void POA_CORBA::Repository::create_native_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::Repository::create_abstract_interface_skel (
     TAO_ServerRequest &req,
@@ -325,7 +325,7 @@ ACE_INLINE void POA_CORBA::Repository::create_abstract_interface_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::Repository::create_local_interface_skel (
     TAO_ServerRequest &req,
@@ -336,6 +336,25 @@ ACE_INLINE void POA_CORBA::Repository::create_local_interface_skel (
 {
   POA_CORBA::Container_ptr impl = (POA_CORBA::Repository_ptr) obj;
   POA_CORBA::Container::create_local_interface_skel (
+      req,
+      (POA_CORBA::Container_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+
+ACE_INLINE void POA_CORBA::Repository::create_ext_value_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Container_ptr impl = (POA_CORBA::Repository_ptr) obj;
+  POA_CORBA::Container::create_ext_value_skel (
       req,
       (POA_CORBA::Container_ptr) impl,
       context
@@ -358,7 +377,7 @@ ACE_INLINE void POA_CORBA::Repository::create_local_interface_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::Repository::destroy_skel (
     TAO_ServerRequest &req,
@@ -377,7 +396,7 @@ ACE_INLINE void POA_CORBA::Repository::destroy_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::ModuleDef::lookup_skel (
     TAO_ServerRequest &req,
@@ -396,7 +415,7 @@ ACE_INLINE void POA_CORBA::ModuleDef::lookup_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::ModuleDef::contents_skel (
     TAO_ServerRequest &req,
@@ -415,7 +434,7 @@ ACE_INLINE void POA_CORBA::ModuleDef::contents_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::ModuleDef::lookup_name_skel (
     TAO_ServerRequest &req,
@@ -434,7 +453,7 @@ ACE_INLINE void POA_CORBA::ModuleDef::lookup_name_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::ModuleDef::describe_contents_skel (
     TAO_ServerRequest &req,
@@ -453,7 +472,7 @@ ACE_INLINE void POA_CORBA::ModuleDef::describe_contents_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::ModuleDef::create_module_skel (
     TAO_ServerRequest &req,
@@ -472,7 +491,7 @@ ACE_INLINE void POA_CORBA::ModuleDef::create_module_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::ModuleDef::create_constant_skel (
     TAO_ServerRequest &req,
@@ -491,7 +510,7 @@ ACE_INLINE void POA_CORBA::ModuleDef::create_constant_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::ModuleDef::create_struct_skel (
     TAO_ServerRequest &req,
@@ -510,7 +529,7 @@ ACE_INLINE void POA_CORBA::ModuleDef::create_struct_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::ModuleDef::create_union_skel (
     TAO_ServerRequest &req,
@@ -529,7 +548,7 @@ ACE_INLINE void POA_CORBA::ModuleDef::create_union_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::ModuleDef::create_enum_skel (
     TAO_ServerRequest &req,
@@ -548,7 +567,7 @@ ACE_INLINE void POA_CORBA::ModuleDef::create_enum_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::ModuleDef::create_alias_skel (
     TAO_ServerRequest &req,
@@ -567,7 +586,7 @@ ACE_INLINE void POA_CORBA::ModuleDef::create_alias_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::ModuleDef::create_interface_skel (
     TAO_ServerRequest &req,
@@ -586,7 +605,7 @@ ACE_INLINE void POA_CORBA::ModuleDef::create_interface_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::ModuleDef::create_value_skel (
     TAO_ServerRequest &req,
@@ -605,7 +624,7 @@ ACE_INLINE void POA_CORBA::ModuleDef::create_value_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::ModuleDef::create_value_box_skel (
     TAO_ServerRequest &req,
@@ -624,7 +643,7 @@ ACE_INLINE void POA_CORBA::ModuleDef::create_value_box_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::ModuleDef::create_exception_skel (
     TAO_ServerRequest &req,
@@ -643,7 +662,7 @@ ACE_INLINE void POA_CORBA::ModuleDef::create_exception_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::ModuleDef::create_native_skel (
     TAO_ServerRequest &req,
@@ -662,7 +681,7 @@ ACE_INLINE void POA_CORBA::ModuleDef::create_native_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::ModuleDef::create_abstract_interface_skel (
     TAO_ServerRequest &req,
@@ -681,7 +700,7 @@ ACE_INLINE void POA_CORBA::ModuleDef::create_abstract_interface_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::ModuleDef::create_local_interface_skel (
     TAO_ServerRequest &req,
@@ -692,6 +711,25 @@ ACE_INLINE void POA_CORBA::ModuleDef::create_local_interface_skel (
 {
   POA_CORBA::Container_ptr impl = (POA_CORBA::ModuleDef_ptr) obj;
   POA_CORBA::Container::create_local_interface_skel (
+      req,
+      (POA_CORBA::Container_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+
+ACE_INLINE void POA_CORBA::ModuleDef::create_ext_value_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Container_ptr impl = (POA_CORBA::ModuleDef_ptr) obj;
+  POA_CORBA::Container::create_ext_value_skel (
       req,
       (POA_CORBA::Container_ptr) impl,
       context
@@ -832,7 +870,7 @@ ACE_INLINE void POA_CORBA::ModuleDef::_set_version_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::ModuleDef::describe_skel (
     TAO_ServerRequest &req,
@@ -851,7 +889,7 @@ ACE_INLINE void POA_CORBA::ModuleDef::describe_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::ModuleDef::move_skel (
     TAO_ServerRequest &req,
@@ -884,7 +922,7 @@ ACE_INLINE void POA_CORBA::ModuleDef::move_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::ModuleDef::destroy_skel (
     TAO_ServerRequest &req,
@@ -1035,7 +1073,7 @@ ACE_INLINE void POA_CORBA::ConstantDef::_set_version_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::ConstantDef::describe_skel (
     TAO_ServerRequest &req,
@@ -1054,7 +1092,7 @@ ACE_INLINE void POA_CORBA::ConstantDef::describe_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::ConstantDef::move_skel (
     TAO_ServerRequest &req,
@@ -1087,7 +1125,7 @@ ACE_INLINE void POA_CORBA::ConstantDef::move_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::ConstantDef::destroy_skel (
     TAO_ServerRequest &req,
@@ -1106,7 +1144,7 @@ ACE_INLINE void POA_CORBA::ConstantDef::destroy_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::StructDef::lookup_skel (
     TAO_ServerRequest &req,
@@ -1125,7 +1163,7 @@ ACE_INLINE void POA_CORBA::StructDef::lookup_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::StructDef::contents_skel (
     TAO_ServerRequest &req,
@@ -1144,7 +1182,7 @@ ACE_INLINE void POA_CORBA::StructDef::contents_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::StructDef::lookup_name_skel (
     TAO_ServerRequest &req,
@@ -1163,7 +1201,7 @@ ACE_INLINE void POA_CORBA::StructDef::lookup_name_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::StructDef::describe_contents_skel (
     TAO_ServerRequest &req,
@@ -1182,7 +1220,7 @@ ACE_INLINE void POA_CORBA::StructDef::describe_contents_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::StructDef::create_module_skel (
     TAO_ServerRequest &req,
@@ -1201,7 +1239,7 @@ ACE_INLINE void POA_CORBA::StructDef::create_module_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::StructDef::create_constant_skel (
     TAO_ServerRequest &req,
@@ -1220,7 +1258,7 @@ ACE_INLINE void POA_CORBA::StructDef::create_constant_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::StructDef::create_struct_skel (
     TAO_ServerRequest &req,
@@ -1239,7 +1277,7 @@ ACE_INLINE void POA_CORBA::StructDef::create_struct_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::StructDef::create_union_skel (
     TAO_ServerRequest &req,
@@ -1258,7 +1296,7 @@ ACE_INLINE void POA_CORBA::StructDef::create_union_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::StructDef::create_enum_skel (
     TAO_ServerRequest &req,
@@ -1277,7 +1315,7 @@ ACE_INLINE void POA_CORBA::StructDef::create_enum_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::StructDef::create_alias_skel (
     TAO_ServerRequest &req,
@@ -1296,7 +1334,7 @@ ACE_INLINE void POA_CORBA::StructDef::create_alias_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::StructDef::create_interface_skel (
     TAO_ServerRequest &req,
@@ -1315,7 +1353,7 @@ ACE_INLINE void POA_CORBA::StructDef::create_interface_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::StructDef::create_value_skel (
     TAO_ServerRequest &req,
@@ -1334,7 +1372,7 @@ ACE_INLINE void POA_CORBA::StructDef::create_value_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::StructDef::create_value_box_skel (
     TAO_ServerRequest &req,
@@ -1353,7 +1391,7 @@ ACE_INLINE void POA_CORBA::StructDef::create_value_box_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::StructDef::create_exception_skel (
     TAO_ServerRequest &req,
@@ -1372,7 +1410,7 @@ ACE_INLINE void POA_CORBA::StructDef::create_exception_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::StructDef::create_native_skel (
     TAO_ServerRequest &req,
@@ -1391,7 +1429,7 @@ ACE_INLINE void POA_CORBA::StructDef::create_native_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::StructDef::create_abstract_interface_skel (
     TAO_ServerRequest &req,
@@ -1410,7 +1448,7 @@ ACE_INLINE void POA_CORBA::StructDef::create_abstract_interface_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::StructDef::create_local_interface_skel (
     TAO_ServerRequest &req,
@@ -1421,6 +1459,25 @@ ACE_INLINE void POA_CORBA::StructDef::create_local_interface_skel (
 {
   POA_CORBA::Container_ptr impl = (POA_CORBA::StructDef_ptr) obj;
   POA_CORBA::Container::create_local_interface_skel (
+      req,
+      (POA_CORBA::Container_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+
+ACE_INLINE void POA_CORBA::StructDef::create_ext_value_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Container_ptr impl = (POA_CORBA::StructDef_ptr) obj;
+  POA_CORBA::Container::create_ext_value_skel (
       req,
       (POA_CORBA::Container_ptr) impl,
       context
@@ -1561,7 +1618,7 @@ ACE_INLINE void POA_CORBA::StructDef::_set_version_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::StructDef::describe_skel (
     TAO_ServerRequest &req,
@@ -1580,7 +1637,7 @@ ACE_INLINE void POA_CORBA::StructDef::describe_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::StructDef::move_skel (
     TAO_ServerRequest &req,
@@ -1627,7 +1684,7 @@ ACE_INLINE void POA_CORBA::StructDef::move_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::StructDef::destroy_skel (
     TAO_ServerRequest &req,
@@ -1646,7 +1703,7 @@ ACE_INLINE void POA_CORBA::StructDef::destroy_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::UnionDef::lookup_skel (
     TAO_ServerRequest &req,
@@ -1665,7 +1722,7 @@ ACE_INLINE void POA_CORBA::UnionDef::lookup_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::UnionDef::contents_skel (
     TAO_ServerRequest &req,
@@ -1684,7 +1741,7 @@ ACE_INLINE void POA_CORBA::UnionDef::contents_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::UnionDef::lookup_name_skel (
     TAO_ServerRequest &req,
@@ -1703,7 +1760,7 @@ ACE_INLINE void POA_CORBA::UnionDef::lookup_name_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::UnionDef::describe_contents_skel (
     TAO_ServerRequest &req,
@@ -1722,7 +1779,7 @@ ACE_INLINE void POA_CORBA::UnionDef::describe_contents_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::UnionDef::create_module_skel (
     TAO_ServerRequest &req,
@@ -1741,7 +1798,7 @@ ACE_INLINE void POA_CORBA::UnionDef::create_module_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::UnionDef::create_constant_skel (
     TAO_ServerRequest &req,
@@ -1760,7 +1817,7 @@ ACE_INLINE void POA_CORBA::UnionDef::create_constant_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::UnionDef::create_struct_skel (
     TAO_ServerRequest &req,
@@ -1779,7 +1836,7 @@ ACE_INLINE void POA_CORBA::UnionDef::create_struct_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::UnionDef::create_union_skel (
     TAO_ServerRequest &req,
@@ -1798,7 +1855,7 @@ ACE_INLINE void POA_CORBA::UnionDef::create_union_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::UnionDef::create_enum_skel (
     TAO_ServerRequest &req,
@@ -1817,7 +1874,7 @@ ACE_INLINE void POA_CORBA::UnionDef::create_enum_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::UnionDef::create_alias_skel (
     TAO_ServerRequest &req,
@@ -1836,7 +1893,7 @@ ACE_INLINE void POA_CORBA::UnionDef::create_alias_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::UnionDef::create_interface_skel (
     TAO_ServerRequest &req,
@@ -1855,7 +1912,7 @@ ACE_INLINE void POA_CORBA::UnionDef::create_interface_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::UnionDef::create_value_skel (
     TAO_ServerRequest &req,
@@ -1874,7 +1931,7 @@ ACE_INLINE void POA_CORBA::UnionDef::create_value_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::UnionDef::create_value_box_skel (
     TAO_ServerRequest &req,
@@ -1893,7 +1950,7 @@ ACE_INLINE void POA_CORBA::UnionDef::create_value_box_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::UnionDef::create_exception_skel (
     TAO_ServerRequest &req,
@@ -1912,7 +1969,7 @@ ACE_INLINE void POA_CORBA::UnionDef::create_exception_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::UnionDef::create_native_skel (
     TAO_ServerRequest &req,
@@ -1931,7 +1988,7 @@ ACE_INLINE void POA_CORBA::UnionDef::create_native_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::UnionDef::create_abstract_interface_skel (
     TAO_ServerRequest &req,
@@ -1950,7 +2007,7 @@ ACE_INLINE void POA_CORBA::UnionDef::create_abstract_interface_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::UnionDef::create_local_interface_skel (
     TAO_ServerRequest &req,
@@ -1961,6 +2018,25 @@ ACE_INLINE void POA_CORBA::UnionDef::create_local_interface_skel (
 {
   POA_CORBA::Container_ptr impl = (POA_CORBA::UnionDef_ptr) obj;
   POA_CORBA::Container::create_local_interface_skel (
+      req,
+      (POA_CORBA::Container_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+
+ACE_INLINE void POA_CORBA::UnionDef::create_ext_value_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Container_ptr impl = (POA_CORBA::UnionDef_ptr) obj;
+  POA_CORBA::Container::create_ext_value_skel (
       req,
       (POA_CORBA::Container_ptr) impl,
       context
@@ -2101,7 +2177,7 @@ ACE_INLINE void POA_CORBA::UnionDef::_set_version_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::UnionDef::describe_skel (
     TAO_ServerRequest &req,
@@ -2120,7 +2196,7 @@ ACE_INLINE void POA_CORBA::UnionDef::describe_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::UnionDef::move_skel (
     TAO_ServerRequest &req,
@@ -2167,7 +2243,7 @@ ACE_INLINE void POA_CORBA::UnionDef::move_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::UnionDef::destroy_skel (
     TAO_ServerRequest &req,
@@ -2318,7 +2394,7 @@ ACE_INLINE void POA_CORBA::EnumDef::_set_version_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::EnumDef::describe_skel (
     TAO_ServerRequest &req,
@@ -2337,7 +2413,7 @@ ACE_INLINE void POA_CORBA::EnumDef::describe_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::EnumDef::move_skel (
     TAO_ServerRequest &req,
@@ -2384,7 +2460,7 @@ ACE_INLINE void POA_CORBA::EnumDef::move_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::EnumDef::destroy_skel (
     TAO_ServerRequest &req,
@@ -2535,7 +2611,7 @@ ACE_INLINE void POA_CORBA::AliasDef::_set_version_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::AliasDef::describe_skel (
     TAO_ServerRequest &req,
@@ -2554,7 +2630,7 @@ ACE_INLINE void POA_CORBA::AliasDef::describe_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::AliasDef::move_skel (
     TAO_ServerRequest &req,
@@ -2601,7 +2677,7 @@ ACE_INLINE void POA_CORBA::AliasDef::move_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::AliasDef::destroy_skel (
     TAO_ServerRequest &req,
@@ -2752,7 +2828,7 @@ ACE_INLINE void POA_CORBA::NativeDef::_set_version_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::NativeDef::describe_skel (
     TAO_ServerRequest &req,
@@ -2771,7 +2847,7 @@ ACE_INLINE void POA_CORBA::NativeDef::describe_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::NativeDef::move_skel (
     TAO_ServerRequest &req,
@@ -2818,7 +2894,7 @@ ACE_INLINE void POA_CORBA::NativeDef::move_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::NativeDef::destroy_skel (
     TAO_ServerRequest &req,
@@ -2865,7 +2941,7 @@ ACE_INLINE void POA_CORBA::NativeDef::destroy_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::PrimitiveDef::destroy_skel (
     TAO_ServerRequest &req,
@@ -2912,7 +2988,7 @@ ACE_INLINE void POA_CORBA::PrimitiveDef::destroy_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::StringDef::destroy_skel (
     TAO_ServerRequest &req,
@@ -2959,7 +3035,7 @@ ACE_INLINE void POA_CORBA::StringDef::destroy_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::WstringDef::destroy_skel (
     TAO_ServerRequest &req,
@@ -3006,7 +3082,7 @@ ACE_INLINE void POA_CORBA::WstringDef::destroy_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::SequenceDef::destroy_skel (
     TAO_ServerRequest &req,
@@ -3053,7 +3129,7 @@ ACE_INLINE void POA_CORBA::SequenceDef::destroy_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::ArrayDef::destroy_skel (
     TAO_ServerRequest &req,
@@ -3204,7 +3280,7 @@ ACE_INLINE void POA_CORBA::ExceptionDef::_set_version_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::ExceptionDef::describe_skel (
     TAO_ServerRequest &req,
@@ -3223,7 +3299,7 @@ ACE_INLINE void POA_CORBA::ExceptionDef::describe_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::ExceptionDef::move_skel (
     TAO_ServerRequest &req,
@@ -3242,7 +3318,7 @@ ACE_INLINE void POA_CORBA::ExceptionDef::move_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::ExceptionDef::lookup_skel (
     TAO_ServerRequest &req,
@@ -3261,7 +3337,7 @@ ACE_INLINE void POA_CORBA::ExceptionDef::lookup_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::ExceptionDef::contents_skel (
     TAO_ServerRequest &req,
@@ -3280,7 +3356,7 @@ ACE_INLINE void POA_CORBA::ExceptionDef::contents_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::ExceptionDef::lookup_name_skel (
     TAO_ServerRequest &req,
@@ -3299,7 +3375,7 @@ ACE_INLINE void POA_CORBA::ExceptionDef::lookup_name_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::ExceptionDef::describe_contents_skel (
     TAO_ServerRequest &req,
@@ -3318,7 +3394,7 @@ ACE_INLINE void POA_CORBA::ExceptionDef::describe_contents_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::ExceptionDef::create_module_skel (
     TAO_ServerRequest &req,
@@ -3337,7 +3413,7 @@ ACE_INLINE void POA_CORBA::ExceptionDef::create_module_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::ExceptionDef::create_constant_skel (
     TAO_ServerRequest &req,
@@ -3356,7 +3432,7 @@ ACE_INLINE void POA_CORBA::ExceptionDef::create_constant_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::ExceptionDef::create_struct_skel (
     TAO_ServerRequest &req,
@@ -3375,7 +3451,7 @@ ACE_INLINE void POA_CORBA::ExceptionDef::create_struct_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::ExceptionDef::create_union_skel (
     TAO_ServerRequest &req,
@@ -3394,7 +3470,7 @@ ACE_INLINE void POA_CORBA::ExceptionDef::create_union_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::ExceptionDef::create_enum_skel (
     TAO_ServerRequest &req,
@@ -3413,7 +3489,7 @@ ACE_INLINE void POA_CORBA::ExceptionDef::create_enum_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::ExceptionDef::create_alias_skel (
     TAO_ServerRequest &req,
@@ -3432,7 +3508,7 @@ ACE_INLINE void POA_CORBA::ExceptionDef::create_alias_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::ExceptionDef::create_interface_skel (
     TAO_ServerRequest &req,
@@ -3451,7 +3527,7 @@ ACE_INLINE void POA_CORBA::ExceptionDef::create_interface_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::ExceptionDef::create_value_skel (
     TAO_ServerRequest &req,
@@ -3470,7 +3546,7 @@ ACE_INLINE void POA_CORBA::ExceptionDef::create_value_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::ExceptionDef::create_value_box_skel (
     TAO_ServerRequest &req,
@@ -3489,7 +3565,7 @@ ACE_INLINE void POA_CORBA::ExceptionDef::create_value_box_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::ExceptionDef::create_exception_skel (
     TAO_ServerRequest &req,
@@ -3508,7 +3584,7 @@ ACE_INLINE void POA_CORBA::ExceptionDef::create_exception_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::ExceptionDef::create_native_skel (
     TAO_ServerRequest &req,
@@ -3527,7 +3603,7 @@ ACE_INLINE void POA_CORBA::ExceptionDef::create_native_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::ExceptionDef::create_abstract_interface_skel (
     TAO_ServerRequest &req,
@@ -3546,7 +3622,7 @@ ACE_INLINE void POA_CORBA::ExceptionDef::create_abstract_interface_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::ExceptionDef::create_local_interface_skel (
     TAO_ServerRequest &req,
@@ -3557,6 +3633,25 @@ ACE_INLINE void POA_CORBA::ExceptionDef::create_local_interface_skel (
 {
   POA_CORBA::Container_ptr impl = (POA_CORBA::ExceptionDef_ptr) obj;
   POA_CORBA::Container::create_local_interface_skel (
+      req,
+      (POA_CORBA::Container_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+
+ACE_INLINE void POA_CORBA::ExceptionDef::create_ext_value_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Container_ptr impl = (POA_CORBA::ExceptionDef_ptr) obj;
+  POA_CORBA::Container::create_ext_value_skel (
       req,
       (POA_CORBA::Container_ptr) impl,
       context
@@ -3579,7 +3674,7 @@ ACE_INLINE void POA_CORBA::ExceptionDef::create_local_interface_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::ExceptionDef::destroy_skel (
     TAO_ServerRequest &req,
@@ -3730,7 +3825,7 @@ ACE_INLINE void POA_CORBA::AttributeDef::_set_version_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::AttributeDef::describe_skel (
     TAO_ServerRequest &req,
@@ -3749,7 +3844,7 @@ ACE_INLINE void POA_CORBA::AttributeDef::describe_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::AttributeDef::move_skel (
     TAO_ServerRequest &req,
@@ -3782,7 +3877,7 @@ ACE_INLINE void POA_CORBA::AttributeDef::move_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::AttributeDef::destroy_skel (
     TAO_ServerRequest &req,
@@ -3792,6 +3887,283 @@ ACE_INLINE void POA_CORBA::AttributeDef::destroy_skel (
   )
 {
   POA_CORBA::IRObject_ptr impl = (POA_CORBA::AttributeDef_ptr) obj;
+  POA_CORBA::IRObject::destroy_skel (
+      req,
+      (POA_CORBA::IRObject_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}ACE_INLINE void POA_CORBA::ExtAttributeDef::_get_type_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::AttributeDef_ptr impl = (POA_CORBA::ExtAttributeDef_ptr) obj;
+  POA_CORBA::AttributeDef::_get_type_skel (
+      req,
+      (POA_CORBA::AttributeDef_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}ACE_INLINE void POA_CORBA::ExtAttributeDef::_get_type_def_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::AttributeDef_ptr impl = (POA_CORBA::ExtAttributeDef_ptr) obj;
+  POA_CORBA::AttributeDef::_get_type_def_skel (
+      req,
+      (POA_CORBA::AttributeDef_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+ACE_INLINE void POA_CORBA::ExtAttributeDef::_set_type_def_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::AttributeDef_ptr impl = (POA_CORBA::ExtAttributeDef_ptr) obj;
+  POA_CORBA::AttributeDef::_set_type_def_skel (
+      req,
+      (POA_CORBA::AttributeDef_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}ACE_INLINE void POA_CORBA::ExtAttributeDef::_get_mode_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::AttributeDef_ptr impl = (POA_CORBA::ExtAttributeDef_ptr) obj;
+  POA_CORBA::AttributeDef::_get_mode_skel (
+      req,
+      (POA_CORBA::AttributeDef_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+ACE_INLINE void POA_CORBA::ExtAttributeDef::_set_mode_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::AttributeDef_ptr impl = (POA_CORBA::ExtAttributeDef_ptr) obj;
+  POA_CORBA::AttributeDef::_set_mode_skel (
+      req,
+      (POA_CORBA::AttributeDef_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}ACE_INLINE void POA_CORBA::ExtAttributeDef::_get_id_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Contained_ptr impl = (POA_CORBA::ExtAttributeDef_ptr) obj;
+  POA_CORBA::Contained::_get_id_skel (
+      req,
+      (POA_CORBA::Contained_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+ACE_INLINE void POA_CORBA::ExtAttributeDef::_set_id_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Contained_ptr impl = (POA_CORBA::ExtAttributeDef_ptr) obj;
+  POA_CORBA::Contained::_set_id_skel (
+      req,
+      (POA_CORBA::Contained_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}ACE_INLINE void POA_CORBA::ExtAttributeDef::_get_name_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Contained_ptr impl = (POA_CORBA::ExtAttributeDef_ptr) obj;
+  POA_CORBA::Contained::_get_name_skel (
+      req,
+      (POA_CORBA::Contained_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+ACE_INLINE void POA_CORBA::ExtAttributeDef::_set_name_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Contained_ptr impl = (POA_CORBA::ExtAttributeDef_ptr) obj;
+  POA_CORBA::Contained::_set_name_skel (
+      req,
+      (POA_CORBA::Contained_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}ACE_INLINE void POA_CORBA::ExtAttributeDef::_get_version_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Contained_ptr impl = (POA_CORBA::ExtAttributeDef_ptr) obj;
+  POA_CORBA::Contained::_get_version_skel (
+      req,
+      (POA_CORBA::Contained_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+ACE_INLINE void POA_CORBA::ExtAttributeDef::_set_version_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Contained_ptr impl = (POA_CORBA::ExtAttributeDef_ptr) obj;
+  POA_CORBA::Contained::_set_version_skel (
+      req,
+      (POA_CORBA::Contained_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}ACE_INLINE void POA_CORBA::ExtAttributeDef::_get_defined_in_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Contained_ptr impl = (POA_CORBA::ExtAttributeDef_ptr) obj;
+  POA_CORBA::Contained::_get_defined_in_skel (
+      req,
+      (POA_CORBA::Contained_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}ACE_INLINE void POA_CORBA::ExtAttributeDef::_get_absolute_name_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Contained_ptr impl = (POA_CORBA::ExtAttributeDef_ptr) obj;
+  POA_CORBA::Contained::_get_absolute_name_skel (
+      req,
+      (POA_CORBA::Contained_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}ACE_INLINE void POA_CORBA::ExtAttributeDef::_get_containing_repository_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Contained_ptr impl = (POA_CORBA::ExtAttributeDef_ptr) obj;
+  POA_CORBA::Contained::_get_containing_repository_skel (
+      req,
+      (POA_CORBA::Contained_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+
+ACE_INLINE void POA_CORBA::ExtAttributeDef::describe_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Contained_ptr impl = (POA_CORBA::ExtAttributeDef_ptr) obj;
+  POA_CORBA::Contained::describe_skel (
+      req,
+      (POA_CORBA::Contained_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+
+ACE_INLINE void POA_CORBA::ExtAttributeDef::move_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Contained_ptr impl = (POA_CORBA::ExtAttributeDef_ptr) obj;
+  POA_CORBA::Contained::move_skel (
+      req,
+      (POA_CORBA::Contained_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}ACE_INLINE void POA_CORBA::ExtAttributeDef::_get_def_kind_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::IRObject_ptr impl = (POA_CORBA::ExtAttributeDef_ptr) obj;
+  POA_CORBA::IRObject::_get_def_kind_skel (
+      req,
+      (POA_CORBA::IRObject_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+
+ACE_INLINE void POA_CORBA::ExtAttributeDef::destroy_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::IRObject_ptr impl = (POA_CORBA::ExtAttributeDef_ptr) obj;
   POA_CORBA::IRObject::destroy_skel (
       req,
       (POA_CORBA::IRObject_ptr) impl,
@@ -3933,7 +4305,7 @@ ACE_INLINE void POA_CORBA::OperationDef::_set_version_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::OperationDef::describe_skel (
     TAO_ServerRequest &req,
@@ -3952,7 +4324,7 @@ ACE_INLINE void POA_CORBA::OperationDef::describe_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::OperationDef::move_skel (
     TAO_ServerRequest &req,
@@ -3985,7 +4357,7 @@ ACE_INLINE void POA_CORBA::OperationDef::move_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::OperationDef::destroy_skel (
     TAO_ServerRequest &req,
@@ -4004,7 +4376,7 @@ ACE_INLINE void POA_CORBA::OperationDef::destroy_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::InterfaceDef::lookup_skel (
     TAO_ServerRequest &req,
@@ -4023,7 +4395,7 @@ ACE_INLINE void POA_CORBA::InterfaceDef::lookup_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::InterfaceDef::contents_skel (
     TAO_ServerRequest &req,
@@ -4042,7 +4414,7 @@ ACE_INLINE void POA_CORBA::InterfaceDef::contents_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::InterfaceDef::lookup_name_skel (
     TAO_ServerRequest &req,
@@ -4061,7 +4433,7 @@ ACE_INLINE void POA_CORBA::InterfaceDef::lookup_name_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::InterfaceDef::describe_contents_skel (
     TAO_ServerRequest &req,
@@ -4080,7 +4452,7 @@ ACE_INLINE void POA_CORBA::InterfaceDef::describe_contents_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::InterfaceDef::create_module_skel (
     TAO_ServerRequest &req,
@@ -4099,7 +4471,7 @@ ACE_INLINE void POA_CORBA::InterfaceDef::create_module_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::InterfaceDef::create_constant_skel (
     TAO_ServerRequest &req,
@@ -4118,7 +4490,7 @@ ACE_INLINE void POA_CORBA::InterfaceDef::create_constant_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::InterfaceDef::create_struct_skel (
     TAO_ServerRequest &req,
@@ -4137,7 +4509,7 @@ ACE_INLINE void POA_CORBA::InterfaceDef::create_struct_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::InterfaceDef::create_union_skel (
     TAO_ServerRequest &req,
@@ -4156,7 +4528,7 @@ ACE_INLINE void POA_CORBA::InterfaceDef::create_union_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::InterfaceDef::create_enum_skel (
     TAO_ServerRequest &req,
@@ -4175,7 +4547,7 @@ ACE_INLINE void POA_CORBA::InterfaceDef::create_enum_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::InterfaceDef::create_alias_skel (
     TAO_ServerRequest &req,
@@ -4194,7 +4566,7 @@ ACE_INLINE void POA_CORBA::InterfaceDef::create_alias_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::InterfaceDef::create_interface_skel (
     TAO_ServerRequest &req,
@@ -4213,7 +4585,7 @@ ACE_INLINE void POA_CORBA::InterfaceDef::create_interface_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::InterfaceDef::create_value_skel (
     TAO_ServerRequest &req,
@@ -4232,7 +4604,7 @@ ACE_INLINE void POA_CORBA::InterfaceDef::create_value_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::InterfaceDef::create_value_box_skel (
     TAO_ServerRequest &req,
@@ -4251,7 +4623,7 @@ ACE_INLINE void POA_CORBA::InterfaceDef::create_value_box_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::InterfaceDef::create_exception_skel (
     TAO_ServerRequest &req,
@@ -4270,7 +4642,7 @@ ACE_INLINE void POA_CORBA::InterfaceDef::create_exception_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::InterfaceDef::create_native_skel (
     TAO_ServerRequest &req,
@@ -4289,7 +4661,7 @@ ACE_INLINE void POA_CORBA::InterfaceDef::create_native_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::InterfaceDef::create_abstract_interface_skel (
     TAO_ServerRequest &req,
@@ -4308,7 +4680,7 @@ ACE_INLINE void POA_CORBA::InterfaceDef::create_abstract_interface_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::InterfaceDef::create_local_interface_skel (
     TAO_ServerRequest &req,
@@ -4319,6 +4691,25 @@ ACE_INLINE void POA_CORBA::InterfaceDef::create_local_interface_skel (
 {
   POA_CORBA::Container_ptr impl = (POA_CORBA::InterfaceDef_ptr) obj;
   POA_CORBA::Container::create_local_interface_skel (
+      req,
+      (POA_CORBA::Container_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+
+ACE_INLINE void POA_CORBA::InterfaceDef::create_ext_value_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Container_ptr impl = (POA_CORBA::InterfaceDef_ptr) obj;
+  POA_CORBA::Container::create_ext_value_skel (
       req,
       (POA_CORBA::Container_ptr) impl,
       context
@@ -4459,7 +4850,7 @@ ACE_INLINE void POA_CORBA::InterfaceDef::_set_version_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::InterfaceDef::describe_skel (
     TAO_ServerRequest &req,
@@ -4478,7 +4869,7 @@ ACE_INLINE void POA_CORBA::InterfaceDef::describe_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::InterfaceDef::move_skel (
     TAO_ServerRequest &req,
@@ -4525,7 +4916,7 @@ ACE_INLINE void POA_CORBA::InterfaceDef::move_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::InterfaceDef::destroy_skel (
     TAO_ServerRequest &req,
@@ -4535,6 +4926,709 @@ ACE_INLINE void POA_CORBA::InterfaceDef::destroy_skel (
   )
 {
   POA_CORBA::IRObject_ptr impl = (POA_CORBA::InterfaceDef_ptr) obj;
+  POA_CORBA::IRObject::destroy_skel (
+      req,
+      (POA_CORBA::IRObject_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}ACE_INLINE void POA_CORBA::ExtInterfaceDef::_get_base_interfaces_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::InterfaceDef_ptr impl = (POA_CORBA::ExtInterfaceDef_ptr) obj;
+  POA_CORBA::InterfaceDef::_get_base_interfaces_skel (
+      req,
+      (POA_CORBA::InterfaceDef_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+ACE_INLINE void POA_CORBA::ExtInterfaceDef::_set_base_interfaces_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::InterfaceDef_ptr impl = (POA_CORBA::ExtInterfaceDef_ptr) obj;
+  POA_CORBA::InterfaceDef::_set_base_interfaces_skel (
+      req,
+      (POA_CORBA::InterfaceDef_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+
+ACE_INLINE void POA_CORBA::ExtInterfaceDef::is_a_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::InterfaceDef_ptr impl = (POA_CORBA::ExtInterfaceDef_ptr) obj;
+  POA_CORBA::InterfaceDef::is_a_skel (
+      req,
+      (POA_CORBA::InterfaceDef_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+
+ACE_INLINE void POA_CORBA::ExtInterfaceDef::describe_interface_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::InterfaceDef_ptr impl = (POA_CORBA::ExtInterfaceDef_ptr) obj;
+  POA_CORBA::InterfaceDef::describe_interface_skel (
+      req,
+      (POA_CORBA::InterfaceDef_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+
+ACE_INLINE void POA_CORBA::ExtInterfaceDef::create_attribute_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::InterfaceDef_ptr impl = (POA_CORBA::ExtInterfaceDef_ptr) obj;
+  POA_CORBA::InterfaceDef::create_attribute_skel (
+      req,
+      (POA_CORBA::InterfaceDef_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+
+ACE_INLINE void POA_CORBA::ExtInterfaceDef::create_operation_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::InterfaceDef_ptr impl = (POA_CORBA::ExtInterfaceDef_ptr) obj;
+  POA_CORBA::InterfaceDef::create_operation_skel (
+      req,
+      (POA_CORBA::InterfaceDef_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+
+ACE_INLINE void POA_CORBA::ExtInterfaceDef::describe_ext_interface_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::InterfaceAttrExtension_ptr impl = (POA_CORBA::ExtInterfaceDef_ptr) obj;
+  POA_CORBA::InterfaceAttrExtension::describe_ext_interface_skel (
+      req,
+      (POA_CORBA::InterfaceAttrExtension_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+
+ACE_INLINE void POA_CORBA::ExtInterfaceDef::create_ext_attribute_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::InterfaceAttrExtension_ptr impl = (POA_CORBA::ExtInterfaceDef_ptr) obj;
+  POA_CORBA::InterfaceAttrExtension::create_ext_attribute_skel (
+      req,
+      (POA_CORBA::InterfaceAttrExtension_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+
+ACE_INLINE void POA_CORBA::ExtInterfaceDef::lookup_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Container_ptr impl = (POA_CORBA::ExtInterfaceDef_ptr) obj;
+  POA_CORBA::Container::lookup_skel (
+      req,
+      (POA_CORBA::Container_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+
+ACE_INLINE void POA_CORBA::ExtInterfaceDef::contents_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Container_ptr impl = (POA_CORBA::ExtInterfaceDef_ptr) obj;
+  POA_CORBA::Container::contents_skel (
+      req,
+      (POA_CORBA::Container_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+
+ACE_INLINE void POA_CORBA::ExtInterfaceDef::lookup_name_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Container_ptr impl = (POA_CORBA::ExtInterfaceDef_ptr) obj;
+  POA_CORBA::Container::lookup_name_skel (
+      req,
+      (POA_CORBA::Container_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+
+ACE_INLINE void POA_CORBA::ExtInterfaceDef::describe_contents_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Container_ptr impl = (POA_CORBA::ExtInterfaceDef_ptr) obj;
+  POA_CORBA::Container::describe_contents_skel (
+      req,
+      (POA_CORBA::Container_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+
+ACE_INLINE void POA_CORBA::ExtInterfaceDef::create_module_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Container_ptr impl = (POA_CORBA::ExtInterfaceDef_ptr) obj;
+  POA_CORBA::Container::create_module_skel (
+      req,
+      (POA_CORBA::Container_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+
+ACE_INLINE void POA_CORBA::ExtInterfaceDef::create_constant_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Container_ptr impl = (POA_CORBA::ExtInterfaceDef_ptr) obj;
+  POA_CORBA::Container::create_constant_skel (
+      req,
+      (POA_CORBA::Container_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+
+ACE_INLINE void POA_CORBA::ExtInterfaceDef::create_struct_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Container_ptr impl = (POA_CORBA::ExtInterfaceDef_ptr) obj;
+  POA_CORBA::Container::create_struct_skel (
+      req,
+      (POA_CORBA::Container_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+
+ACE_INLINE void POA_CORBA::ExtInterfaceDef::create_union_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Container_ptr impl = (POA_CORBA::ExtInterfaceDef_ptr) obj;
+  POA_CORBA::Container::create_union_skel (
+      req,
+      (POA_CORBA::Container_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+
+ACE_INLINE void POA_CORBA::ExtInterfaceDef::create_enum_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Container_ptr impl = (POA_CORBA::ExtInterfaceDef_ptr) obj;
+  POA_CORBA::Container::create_enum_skel (
+      req,
+      (POA_CORBA::Container_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+
+ACE_INLINE void POA_CORBA::ExtInterfaceDef::create_alias_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Container_ptr impl = (POA_CORBA::ExtInterfaceDef_ptr) obj;
+  POA_CORBA::Container::create_alias_skel (
+      req,
+      (POA_CORBA::Container_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+
+ACE_INLINE void POA_CORBA::ExtInterfaceDef::create_interface_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Container_ptr impl = (POA_CORBA::ExtInterfaceDef_ptr) obj;
+  POA_CORBA::Container::create_interface_skel (
+      req,
+      (POA_CORBA::Container_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+
+ACE_INLINE void POA_CORBA::ExtInterfaceDef::create_value_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Container_ptr impl = (POA_CORBA::ExtInterfaceDef_ptr) obj;
+  POA_CORBA::Container::create_value_skel (
+      req,
+      (POA_CORBA::Container_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+
+ACE_INLINE void POA_CORBA::ExtInterfaceDef::create_value_box_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Container_ptr impl = (POA_CORBA::ExtInterfaceDef_ptr) obj;
+  POA_CORBA::Container::create_value_box_skel (
+      req,
+      (POA_CORBA::Container_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+
+ACE_INLINE void POA_CORBA::ExtInterfaceDef::create_exception_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Container_ptr impl = (POA_CORBA::ExtInterfaceDef_ptr) obj;
+  POA_CORBA::Container::create_exception_skel (
+      req,
+      (POA_CORBA::Container_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+
+ACE_INLINE void POA_CORBA::ExtInterfaceDef::create_native_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Container_ptr impl = (POA_CORBA::ExtInterfaceDef_ptr) obj;
+  POA_CORBA::Container::create_native_skel (
+      req,
+      (POA_CORBA::Container_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+
+ACE_INLINE void POA_CORBA::ExtInterfaceDef::create_abstract_interface_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Container_ptr impl = (POA_CORBA::ExtInterfaceDef_ptr) obj;
+  POA_CORBA::Container::create_abstract_interface_skel (
+      req,
+      (POA_CORBA::Container_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+
+ACE_INLINE void POA_CORBA::ExtInterfaceDef::create_local_interface_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Container_ptr impl = (POA_CORBA::ExtInterfaceDef_ptr) obj;
+  POA_CORBA::Container::create_local_interface_skel (
+      req,
+      (POA_CORBA::Container_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+
+ACE_INLINE void POA_CORBA::ExtInterfaceDef::create_ext_value_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Container_ptr impl = (POA_CORBA::ExtInterfaceDef_ptr) obj;
+  POA_CORBA::Container::create_ext_value_skel (
+      req,
+      (POA_CORBA::Container_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}ACE_INLINE void POA_CORBA::ExtInterfaceDef::_get_id_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Contained_ptr impl = (POA_CORBA::ExtInterfaceDef_ptr) obj;
+  POA_CORBA::Contained::_get_id_skel (
+      req,
+      (POA_CORBA::Contained_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+ACE_INLINE void POA_CORBA::ExtInterfaceDef::_set_id_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Contained_ptr impl = (POA_CORBA::ExtInterfaceDef_ptr) obj;
+  POA_CORBA::Contained::_set_id_skel (
+      req,
+      (POA_CORBA::Contained_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}ACE_INLINE void POA_CORBA::ExtInterfaceDef::_get_name_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Contained_ptr impl = (POA_CORBA::ExtInterfaceDef_ptr) obj;
+  POA_CORBA::Contained::_get_name_skel (
+      req,
+      (POA_CORBA::Contained_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+ACE_INLINE void POA_CORBA::ExtInterfaceDef::_set_name_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Contained_ptr impl = (POA_CORBA::ExtInterfaceDef_ptr) obj;
+  POA_CORBA::Contained::_set_name_skel (
+      req,
+      (POA_CORBA::Contained_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}ACE_INLINE void POA_CORBA::ExtInterfaceDef::_get_version_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Contained_ptr impl = (POA_CORBA::ExtInterfaceDef_ptr) obj;
+  POA_CORBA::Contained::_get_version_skel (
+      req,
+      (POA_CORBA::Contained_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+ACE_INLINE void POA_CORBA::ExtInterfaceDef::_set_version_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Contained_ptr impl = (POA_CORBA::ExtInterfaceDef_ptr) obj;
+  POA_CORBA::Contained::_set_version_skel (
+      req,
+      (POA_CORBA::Contained_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}ACE_INLINE void POA_CORBA::ExtInterfaceDef::_get_defined_in_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Contained_ptr impl = (POA_CORBA::ExtInterfaceDef_ptr) obj;
+  POA_CORBA::Contained::_get_defined_in_skel (
+      req,
+      (POA_CORBA::Contained_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}ACE_INLINE void POA_CORBA::ExtInterfaceDef::_get_absolute_name_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Contained_ptr impl = (POA_CORBA::ExtInterfaceDef_ptr) obj;
+  POA_CORBA::Contained::_get_absolute_name_skel (
+      req,
+      (POA_CORBA::Contained_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}ACE_INLINE void POA_CORBA::ExtInterfaceDef::_get_containing_repository_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Contained_ptr impl = (POA_CORBA::ExtInterfaceDef_ptr) obj;
+  POA_CORBA::Contained::_get_containing_repository_skel (
+      req,
+      (POA_CORBA::Contained_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+
+ACE_INLINE void POA_CORBA::ExtInterfaceDef::describe_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Contained_ptr impl = (POA_CORBA::ExtInterfaceDef_ptr) obj;
+  POA_CORBA::Contained::describe_skel (
+      req,
+      (POA_CORBA::Contained_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+
+ACE_INLINE void POA_CORBA::ExtInterfaceDef::move_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Contained_ptr impl = (POA_CORBA::ExtInterfaceDef_ptr) obj;
+  POA_CORBA::Contained::move_skel (
+      req,
+      (POA_CORBA::Contained_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}ACE_INLINE void POA_CORBA::ExtInterfaceDef::_get_type_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::IDLType_ptr impl = (POA_CORBA::ExtInterfaceDef_ptr) obj;
+  POA_CORBA::IDLType::_get_type_skel (
+      req,
+      (POA_CORBA::IDLType_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}ACE_INLINE void POA_CORBA::ExtInterfaceDef::_get_def_kind_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::IRObject_ptr impl = (POA_CORBA::ExtInterfaceDef_ptr) obj;
+  POA_CORBA::IRObject::_get_def_kind_skel (
+      req,
+      (POA_CORBA::IRObject_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+
+ACE_INLINE void POA_CORBA::ExtInterfaceDef::destroy_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::IRObject_ptr impl = (POA_CORBA::ExtInterfaceDef_ptr) obj;
   POA_CORBA::IRObject::destroy_skel (
       req,
       (POA_CORBA::IRObject_ptr) impl,
@@ -4574,7 +5668,7 @@ ACE_INLINE void POA_CORBA::AbstractInterfaceDef::_set_base_interfaces_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::AbstractInterfaceDef::is_a_skel (
     TAO_ServerRequest &req,
@@ -4593,7 +5687,7 @@ ACE_INLINE void POA_CORBA::AbstractInterfaceDef::is_a_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::AbstractInterfaceDef::describe_interface_skel (
     TAO_ServerRequest &req,
@@ -4612,7 +5706,7 @@ ACE_INLINE void POA_CORBA::AbstractInterfaceDef::describe_interface_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::AbstractInterfaceDef::create_attribute_skel (
     TAO_ServerRequest &req,
@@ -4631,7 +5725,7 @@ ACE_INLINE void POA_CORBA::AbstractInterfaceDef::create_attribute_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::AbstractInterfaceDef::create_operation_skel (
     TAO_ServerRequest &req,
@@ -4650,7 +5744,7 @@ ACE_INLINE void POA_CORBA::AbstractInterfaceDef::create_operation_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::AbstractInterfaceDef::lookup_skel (
     TAO_ServerRequest &req,
@@ -4669,7 +5763,7 @@ ACE_INLINE void POA_CORBA::AbstractInterfaceDef::lookup_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::AbstractInterfaceDef::contents_skel (
     TAO_ServerRequest &req,
@@ -4688,7 +5782,7 @@ ACE_INLINE void POA_CORBA::AbstractInterfaceDef::contents_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::AbstractInterfaceDef::lookup_name_skel (
     TAO_ServerRequest &req,
@@ -4707,7 +5801,7 @@ ACE_INLINE void POA_CORBA::AbstractInterfaceDef::lookup_name_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::AbstractInterfaceDef::describe_contents_skel (
     TAO_ServerRequest &req,
@@ -4726,7 +5820,7 @@ ACE_INLINE void POA_CORBA::AbstractInterfaceDef::describe_contents_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::AbstractInterfaceDef::create_module_skel (
     TAO_ServerRequest &req,
@@ -4745,7 +5839,7 @@ ACE_INLINE void POA_CORBA::AbstractInterfaceDef::create_module_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::AbstractInterfaceDef::create_constant_skel (
     TAO_ServerRequest &req,
@@ -4764,7 +5858,7 @@ ACE_INLINE void POA_CORBA::AbstractInterfaceDef::create_constant_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::AbstractInterfaceDef::create_struct_skel (
     TAO_ServerRequest &req,
@@ -4783,7 +5877,7 @@ ACE_INLINE void POA_CORBA::AbstractInterfaceDef::create_struct_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::AbstractInterfaceDef::create_union_skel (
     TAO_ServerRequest &req,
@@ -4802,7 +5896,7 @@ ACE_INLINE void POA_CORBA::AbstractInterfaceDef::create_union_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::AbstractInterfaceDef::create_enum_skel (
     TAO_ServerRequest &req,
@@ -4821,7 +5915,7 @@ ACE_INLINE void POA_CORBA::AbstractInterfaceDef::create_enum_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::AbstractInterfaceDef::create_alias_skel (
     TAO_ServerRequest &req,
@@ -4840,7 +5934,7 @@ ACE_INLINE void POA_CORBA::AbstractInterfaceDef::create_alias_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::AbstractInterfaceDef::create_interface_skel (
     TAO_ServerRequest &req,
@@ -4859,7 +5953,7 @@ ACE_INLINE void POA_CORBA::AbstractInterfaceDef::create_interface_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::AbstractInterfaceDef::create_value_skel (
     TAO_ServerRequest &req,
@@ -4878,7 +5972,7 @@ ACE_INLINE void POA_CORBA::AbstractInterfaceDef::create_value_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::AbstractInterfaceDef::create_value_box_skel (
     TAO_ServerRequest &req,
@@ -4897,7 +5991,7 @@ ACE_INLINE void POA_CORBA::AbstractInterfaceDef::create_value_box_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::AbstractInterfaceDef::create_exception_skel (
     TAO_ServerRequest &req,
@@ -4916,7 +6010,7 @@ ACE_INLINE void POA_CORBA::AbstractInterfaceDef::create_exception_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::AbstractInterfaceDef::create_native_skel (
     TAO_ServerRequest &req,
@@ -4935,7 +6029,7 @@ ACE_INLINE void POA_CORBA::AbstractInterfaceDef::create_native_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::AbstractInterfaceDef::create_abstract_interface_skel (
     TAO_ServerRequest &req,
@@ -4954,7 +6048,7 @@ ACE_INLINE void POA_CORBA::AbstractInterfaceDef::create_abstract_interface_skel 
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::AbstractInterfaceDef::create_local_interface_skel (
     TAO_ServerRequest &req,
@@ -4965,6 +6059,25 @@ ACE_INLINE void POA_CORBA::AbstractInterfaceDef::create_local_interface_skel (
 {
   POA_CORBA::Container_ptr impl = (POA_CORBA::AbstractInterfaceDef_ptr) obj;
   POA_CORBA::Container::create_local_interface_skel (
+      req,
+      (POA_CORBA::Container_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+
+ACE_INLINE void POA_CORBA::AbstractInterfaceDef::create_ext_value_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Container_ptr impl = (POA_CORBA::AbstractInterfaceDef_ptr) obj;
+  POA_CORBA::Container::create_ext_value_skel (
       req,
       (POA_CORBA::Container_ptr) impl,
       context
@@ -5105,7 +6218,7 @@ ACE_INLINE void POA_CORBA::AbstractInterfaceDef::_set_version_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::AbstractInterfaceDef::describe_skel (
     TAO_ServerRequest &req,
@@ -5124,7 +6237,7 @@ ACE_INLINE void POA_CORBA::AbstractInterfaceDef::describe_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::AbstractInterfaceDef::move_skel (
     TAO_ServerRequest &req,
@@ -5171,7 +6284,7 @@ ACE_INLINE void POA_CORBA::AbstractInterfaceDef::move_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::AbstractInterfaceDef::destroy_skel (
     TAO_ServerRequest &req,
@@ -5181,6 +6294,709 @@ ACE_INLINE void POA_CORBA::AbstractInterfaceDef::destroy_skel (
   )
 {
   POA_CORBA::IRObject_ptr impl = (POA_CORBA::AbstractInterfaceDef_ptr) obj;
+  POA_CORBA::IRObject::destroy_skel (
+      req,
+      (POA_CORBA::IRObject_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+
+ACE_INLINE void POA_CORBA::ExtAbstractInterfaceDef::describe_ext_interface_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::InterfaceAttrExtension_ptr impl = (POA_CORBA::ExtAbstractInterfaceDef_ptr) obj;
+  POA_CORBA::InterfaceAttrExtension::describe_ext_interface_skel (
+      req,
+      (POA_CORBA::InterfaceAttrExtension_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+
+ACE_INLINE void POA_CORBA::ExtAbstractInterfaceDef::create_ext_attribute_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::InterfaceAttrExtension_ptr impl = (POA_CORBA::ExtAbstractInterfaceDef_ptr) obj;
+  POA_CORBA::InterfaceAttrExtension::create_ext_attribute_skel (
+      req,
+      (POA_CORBA::InterfaceAttrExtension_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}ACE_INLINE void POA_CORBA::ExtAbstractInterfaceDef::_get_base_interfaces_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::InterfaceDef_ptr impl = (POA_CORBA::ExtAbstractInterfaceDef_ptr) obj;
+  POA_CORBA::InterfaceDef::_get_base_interfaces_skel (
+      req,
+      (POA_CORBA::InterfaceDef_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+ACE_INLINE void POA_CORBA::ExtAbstractInterfaceDef::_set_base_interfaces_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::InterfaceDef_ptr impl = (POA_CORBA::ExtAbstractInterfaceDef_ptr) obj;
+  POA_CORBA::InterfaceDef::_set_base_interfaces_skel (
+      req,
+      (POA_CORBA::InterfaceDef_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+
+ACE_INLINE void POA_CORBA::ExtAbstractInterfaceDef::is_a_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::InterfaceDef_ptr impl = (POA_CORBA::ExtAbstractInterfaceDef_ptr) obj;
+  POA_CORBA::InterfaceDef::is_a_skel (
+      req,
+      (POA_CORBA::InterfaceDef_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+
+ACE_INLINE void POA_CORBA::ExtAbstractInterfaceDef::describe_interface_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::InterfaceDef_ptr impl = (POA_CORBA::ExtAbstractInterfaceDef_ptr) obj;
+  POA_CORBA::InterfaceDef::describe_interface_skel (
+      req,
+      (POA_CORBA::InterfaceDef_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+
+ACE_INLINE void POA_CORBA::ExtAbstractInterfaceDef::create_attribute_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::InterfaceDef_ptr impl = (POA_CORBA::ExtAbstractInterfaceDef_ptr) obj;
+  POA_CORBA::InterfaceDef::create_attribute_skel (
+      req,
+      (POA_CORBA::InterfaceDef_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+
+ACE_INLINE void POA_CORBA::ExtAbstractInterfaceDef::create_operation_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::InterfaceDef_ptr impl = (POA_CORBA::ExtAbstractInterfaceDef_ptr) obj;
+  POA_CORBA::InterfaceDef::create_operation_skel (
+      req,
+      (POA_CORBA::InterfaceDef_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+
+ACE_INLINE void POA_CORBA::ExtAbstractInterfaceDef::lookup_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Container_ptr impl = (POA_CORBA::ExtAbstractInterfaceDef_ptr) obj;
+  POA_CORBA::Container::lookup_skel (
+      req,
+      (POA_CORBA::Container_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+
+ACE_INLINE void POA_CORBA::ExtAbstractInterfaceDef::contents_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Container_ptr impl = (POA_CORBA::ExtAbstractInterfaceDef_ptr) obj;
+  POA_CORBA::Container::contents_skel (
+      req,
+      (POA_CORBA::Container_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+
+ACE_INLINE void POA_CORBA::ExtAbstractInterfaceDef::lookup_name_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Container_ptr impl = (POA_CORBA::ExtAbstractInterfaceDef_ptr) obj;
+  POA_CORBA::Container::lookup_name_skel (
+      req,
+      (POA_CORBA::Container_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+
+ACE_INLINE void POA_CORBA::ExtAbstractInterfaceDef::describe_contents_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Container_ptr impl = (POA_CORBA::ExtAbstractInterfaceDef_ptr) obj;
+  POA_CORBA::Container::describe_contents_skel (
+      req,
+      (POA_CORBA::Container_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+
+ACE_INLINE void POA_CORBA::ExtAbstractInterfaceDef::create_module_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Container_ptr impl = (POA_CORBA::ExtAbstractInterfaceDef_ptr) obj;
+  POA_CORBA::Container::create_module_skel (
+      req,
+      (POA_CORBA::Container_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+
+ACE_INLINE void POA_CORBA::ExtAbstractInterfaceDef::create_constant_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Container_ptr impl = (POA_CORBA::ExtAbstractInterfaceDef_ptr) obj;
+  POA_CORBA::Container::create_constant_skel (
+      req,
+      (POA_CORBA::Container_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+
+ACE_INLINE void POA_CORBA::ExtAbstractInterfaceDef::create_struct_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Container_ptr impl = (POA_CORBA::ExtAbstractInterfaceDef_ptr) obj;
+  POA_CORBA::Container::create_struct_skel (
+      req,
+      (POA_CORBA::Container_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+
+ACE_INLINE void POA_CORBA::ExtAbstractInterfaceDef::create_union_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Container_ptr impl = (POA_CORBA::ExtAbstractInterfaceDef_ptr) obj;
+  POA_CORBA::Container::create_union_skel (
+      req,
+      (POA_CORBA::Container_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+
+ACE_INLINE void POA_CORBA::ExtAbstractInterfaceDef::create_enum_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Container_ptr impl = (POA_CORBA::ExtAbstractInterfaceDef_ptr) obj;
+  POA_CORBA::Container::create_enum_skel (
+      req,
+      (POA_CORBA::Container_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+
+ACE_INLINE void POA_CORBA::ExtAbstractInterfaceDef::create_alias_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Container_ptr impl = (POA_CORBA::ExtAbstractInterfaceDef_ptr) obj;
+  POA_CORBA::Container::create_alias_skel (
+      req,
+      (POA_CORBA::Container_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+
+ACE_INLINE void POA_CORBA::ExtAbstractInterfaceDef::create_interface_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Container_ptr impl = (POA_CORBA::ExtAbstractInterfaceDef_ptr) obj;
+  POA_CORBA::Container::create_interface_skel (
+      req,
+      (POA_CORBA::Container_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+
+ACE_INLINE void POA_CORBA::ExtAbstractInterfaceDef::create_value_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Container_ptr impl = (POA_CORBA::ExtAbstractInterfaceDef_ptr) obj;
+  POA_CORBA::Container::create_value_skel (
+      req,
+      (POA_CORBA::Container_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+
+ACE_INLINE void POA_CORBA::ExtAbstractInterfaceDef::create_value_box_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Container_ptr impl = (POA_CORBA::ExtAbstractInterfaceDef_ptr) obj;
+  POA_CORBA::Container::create_value_box_skel (
+      req,
+      (POA_CORBA::Container_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+
+ACE_INLINE void POA_CORBA::ExtAbstractInterfaceDef::create_exception_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Container_ptr impl = (POA_CORBA::ExtAbstractInterfaceDef_ptr) obj;
+  POA_CORBA::Container::create_exception_skel (
+      req,
+      (POA_CORBA::Container_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+
+ACE_INLINE void POA_CORBA::ExtAbstractInterfaceDef::create_native_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Container_ptr impl = (POA_CORBA::ExtAbstractInterfaceDef_ptr) obj;
+  POA_CORBA::Container::create_native_skel (
+      req,
+      (POA_CORBA::Container_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+
+ACE_INLINE void POA_CORBA::ExtAbstractInterfaceDef::create_abstract_interface_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Container_ptr impl = (POA_CORBA::ExtAbstractInterfaceDef_ptr) obj;
+  POA_CORBA::Container::create_abstract_interface_skel (
+      req,
+      (POA_CORBA::Container_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+
+ACE_INLINE void POA_CORBA::ExtAbstractInterfaceDef::create_local_interface_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Container_ptr impl = (POA_CORBA::ExtAbstractInterfaceDef_ptr) obj;
+  POA_CORBA::Container::create_local_interface_skel (
+      req,
+      (POA_CORBA::Container_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+
+ACE_INLINE void POA_CORBA::ExtAbstractInterfaceDef::create_ext_value_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Container_ptr impl = (POA_CORBA::ExtAbstractInterfaceDef_ptr) obj;
+  POA_CORBA::Container::create_ext_value_skel (
+      req,
+      (POA_CORBA::Container_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}ACE_INLINE void POA_CORBA::ExtAbstractInterfaceDef::_get_id_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Contained_ptr impl = (POA_CORBA::ExtAbstractInterfaceDef_ptr) obj;
+  POA_CORBA::Contained::_get_id_skel (
+      req,
+      (POA_CORBA::Contained_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+ACE_INLINE void POA_CORBA::ExtAbstractInterfaceDef::_set_id_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Contained_ptr impl = (POA_CORBA::ExtAbstractInterfaceDef_ptr) obj;
+  POA_CORBA::Contained::_set_id_skel (
+      req,
+      (POA_CORBA::Contained_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}ACE_INLINE void POA_CORBA::ExtAbstractInterfaceDef::_get_name_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Contained_ptr impl = (POA_CORBA::ExtAbstractInterfaceDef_ptr) obj;
+  POA_CORBA::Contained::_get_name_skel (
+      req,
+      (POA_CORBA::Contained_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+ACE_INLINE void POA_CORBA::ExtAbstractInterfaceDef::_set_name_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Contained_ptr impl = (POA_CORBA::ExtAbstractInterfaceDef_ptr) obj;
+  POA_CORBA::Contained::_set_name_skel (
+      req,
+      (POA_CORBA::Contained_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}ACE_INLINE void POA_CORBA::ExtAbstractInterfaceDef::_get_version_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Contained_ptr impl = (POA_CORBA::ExtAbstractInterfaceDef_ptr) obj;
+  POA_CORBA::Contained::_get_version_skel (
+      req,
+      (POA_CORBA::Contained_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+ACE_INLINE void POA_CORBA::ExtAbstractInterfaceDef::_set_version_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Contained_ptr impl = (POA_CORBA::ExtAbstractInterfaceDef_ptr) obj;
+  POA_CORBA::Contained::_set_version_skel (
+      req,
+      (POA_CORBA::Contained_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}ACE_INLINE void POA_CORBA::ExtAbstractInterfaceDef::_get_defined_in_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Contained_ptr impl = (POA_CORBA::ExtAbstractInterfaceDef_ptr) obj;
+  POA_CORBA::Contained::_get_defined_in_skel (
+      req,
+      (POA_CORBA::Contained_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}ACE_INLINE void POA_CORBA::ExtAbstractInterfaceDef::_get_absolute_name_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Contained_ptr impl = (POA_CORBA::ExtAbstractInterfaceDef_ptr) obj;
+  POA_CORBA::Contained::_get_absolute_name_skel (
+      req,
+      (POA_CORBA::Contained_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}ACE_INLINE void POA_CORBA::ExtAbstractInterfaceDef::_get_containing_repository_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Contained_ptr impl = (POA_CORBA::ExtAbstractInterfaceDef_ptr) obj;
+  POA_CORBA::Contained::_get_containing_repository_skel (
+      req,
+      (POA_CORBA::Contained_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+
+ACE_INLINE void POA_CORBA::ExtAbstractInterfaceDef::describe_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Contained_ptr impl = (POA_CORBA::ExtAbstractInterfaceDef_ptr) obj;
+  POA_CORBA::Contained::describe_skel (
+      req,
+      (POA_CORBA::Contained_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+
+ACE_INLINE void POA_CORBA::ExtAbstractInterfaceDef::move_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Contained_ptr impl = (POA_CORBA::ExtAbstractInterfaceDef_ptr) obj;
+  POA_CORBA::Contained::move_skel (
+      req,
+      (POA_CORBA::Contained_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}ACE_INLINE void POA_CORBA::ExtAbstractInterfaceDef::_get_type_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::IDLType_ptr impl = (POA_CORBA::ExtAbstractInterfaceDef_ptr) obj;
+  POA_CORBA::IDLType::_get_type_skel (
+      req,
+      (POA_CORBA::IDLType_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}ACE_INLINE void POA_CORBA::ExtAbstractInterfaceDef::_get_def_kind_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::IRObject_ptr impl = (POA_CORBA::ExtAbstractInterfaceDef_ptr) obj;
+  POA_CORBA::IRObject::_get_def_kind_skel (
+      req,
+      (POA_CORBA::IRObject_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+
+ACE_INLINE void POA_CORBA::ExtAbstractInterfaceDef::destroy_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::IRObject_ptr impl = (POA_CORBA::ExtAbstractInterfaceDef_ptr) obj;
   POA_CORBA::IRObject::destroy_skel (
       req,
       (POA_CORBA::IRObject_ptr) impl,
@@ -5220,7 +7036,7 @@ ACE_INLINE void POA_CORBA::LocalInterfaceDef::_set_base_interfaces_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::LocalInterfaceDef::is_a_skel (
     TAO_ServerRequest &req,
@@ -5239,7 +7055,7 @@ ACE_INLINE void POA_CORBA::LocalInterfaceDef::is_a_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::LocalInterfaceDef::describe_interface_skel (
     TAO_ServerRequest &req,
@@ -5258,7 +7074,7 @@ ACE_INLINE void POA_CORBA::LocalInterfaceDef::describe_interface_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::LocalInterfaceDef::create_attribute_skel (
     TAO_ServerRequest &req,
@@ -5277,7 +7093,7 @@ ACE_INLINE void POA_CORBA::LocalInterfaceDef::create_attribute_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::LocalInterfaceDef::create_operation_skel (
     TAO_ServerRequest &req,
@@ -5296,7 +7112,7 @@ ACE_INLINE void POA_CORBA::LocalInterfaceDef::create_operation_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::LocalInterfaceDef::lookup_skel (
     TAO_ServerRequest &req,
@@ -5315,7 +7131,7 @@ ACE_INLINE void POA_CORBA::LocalInterfaceDef::lookup_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::LocalInterfaceDef::contents_skel (
     TAO_ServerRequest &req,
@@ -5334,7 +7150,7 @@ ACE_INLINE void POA_CORBA::LocalInterfaceDef::contents_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::LocalInterfaceDef::lookup_name_skel (
     TAO_ServerRequest &req,
@@ -5353,7 +7169,7 @@ ACE_INLINE void POA_CORBA::LocalInterfaceDef::lookup_name_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::LocalInterfaceDef::describe_contents_skel (
     TAO_ServerRequest &req,
@@ -5372,7 +7188,7 @@ ACE_INLINE void POA_CORBA::LocalInterfaceDef::describe_contents_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::LocalInterfaceDef::create_module_skel (
     TAO_ServerRequest &req,
@@ -5391,7 +7207,7 @@ ACE_INLINE void POA_CORBA::LocalInterfaceDef::create_module_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::LocalInterfaceDef::create_constant_skel (
     TAO_ServerRequest &req,
@@ -5410,7 +7226,7 @@ ACE_INLINE void POA_CORBA::LocalInterfaceDef::create_constant_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::LocalInterfaceDef::create_struct_skel (
     TAO_ServerRequest &req,
@@ -5429,7 +7245,7 @@ ACE_INLINE void POA_CORBA::LocalInterfaceDef::create_struct_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::LocalInterfaceDef::create_union_skel (
     TAO_ServerRequest &req,
@@ -5448,7 +7264,7 @@ ACE_INLINE void POA_CORBA::LocalInterfaceDef::create_union_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::LocalInterfaceDef::create_enum_skel (
     TAO_ServerRequest &req,
@@ -5467,7 +7283,7 @@ ACE_INLINE void POA_CORBA::LocalInterfaceDef::create_enum_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::LocalInterfaceDef::create_alias_skel (
     TAO_ServerRequest &req,
@@ -5486,7 +7302,7 @@ ACE_INLINE void POA_CORBA::LocalInterfaceDef::create_alias_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::LocalInterfaceDef::create_interface_skel (
     TAO_ServerRequest &req,
@@ -5505,7 +7321,7 @@ ACE_INLINE void POA_CORBA::LocalInterfaceDef::create_interface_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::LocalInterfaceDef::create_value_skel (
     TAO_ServerRequest &req,
@@ -5524,7 +7340,7 @@ ACE_INLINE void POA_CORBA::LocalInterfaceDef::create_value_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::LocalInterfaceDef::create_value_box_skel (
     TAO_ServerRequest &req,
@@ -5543,7 +7359,7 @@ ACE_INLINE void POA_CORBA::LocalInterfaceDef::create_value_box_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::LocalInterfaceDef::create_exception_skel (
     TAO_ServerRequest &req,
@@ -5562,7 +7378,7 @@ ACE_INLINE void POA_CORBA::LocalInterfaceDef::create_exception_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::LocalInterfaceDef::create_native_skel (
     TAO_ServerRequest &req,
@@ -5581,7 +7397,7 @@ ACE_INLINE void POA_CORBA::LocalInterfaceDef::create_native_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::LocalInterfaceDef::create_abstract_interface_skel (
     TAO_ServerRequest &req,
@@ -5600,7 +7416,7 @@ ACE_INLINE void POA_CORBA::LocalInterfaceDef::create_abstract_interface_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::LocalInterfaceDef::create_local_interface_skel (
     TAO_ServerRequest &req,
@@ -5611,6 +7427,25 @@ ACE_INLINE void POA_CORBA::LocalInterfaceDef::create_local_interface_skel (
 {
   POA_CORBA::Container_ptr impl = (POA_CORBA::LocalInterfaceDef_ptr) obj;
   POA_CORBA::Container::create_local_interface_skel (
+      req,
+      (POA_CORBA::Container_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+
+ACE_INLINE void POA_CORBA::LocalInterfaceDef::create_ext_value_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Container_ptr impl = (POA_CORBA::LocalInterfaceDef_ptr) obj;
+  POA_CORBA::Container::create_ext_value_skel (
       req,
       (POA_CORBA::Container_ptr) impl,
       context
@@ -5751,7 +7586,7 @@ ACE_INLINE void POA_CORBA::LocalInterfaceDef::_set_version_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::LocalInterfaceDef::describe_skel (
     TAO_ServerRequest &req,
@@ -5770,7 +7605,7 @@ ACE_INLINE void POA_CORBA::LocalInterfaceDef::describe_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::LocalInterfaceDef::move_skel (
     TAO_ServerRequest &req,
@@ -5817,7 +7652,7 @@ ACE_INLINE void POA_CORBA::LocalInterfaceDef::move_skel (
 }
 
 // TAO_IDL - Generated from
-// be/be_interface.cpp:2229
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
 
 ACE_INLINE void POA_CORBA::LocalInterfaceDef::destroy_skel (
     TAO_ServerRequest &req,
@@ -5834,4 +7669,708 @@ ACE_INLINE void POA_CORBA::LocalInterfaceDef::destroy_skel (
       ACE_ENV_ARG_PARAMETER
     );
 }
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+
+ACE_INLINE void POA_CORBA::ExtLocalInterfaceDef::describe_ext_interface_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::InterfaceAttrExtension_ptr impl = (POA_CORBA::ExtLocalInterfaceDef_ptr) obj;
+  POA_CORBA::InterfaceAttrExtension::describe_ext_interface_skel (
+      req,
+      (POA_CORBA::InterfaceAttrExtension_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+
+ACE_INLINE void POA_CORBA::ExtLocalInterfaceDef::create_ext_attribute_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::InterfaceAttrExtension_ptr impl = (POA_CORBA::ExtLocalInterfaceDef_ptr) obj;
+  POA_CORBA::InterfaceAttrExtension::create_ext_attribute_skel (
+      req,
+      (POA_CORBA::InterfaceAttrExtension_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}ACE_INLINE void POA_CORBA::ExtLocalInterfaceDef::_get_base_interfaces_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::InterfaceDef_ptr impl = (POA_CORBA::ExtLocalInterfaceDef_ptr) obj;
+  POA_CORBA::InterfaceDef::_get_base_interfaces_skel (
+      req,
+      (POA_CORBA::InterfaceDef_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+ACE_INLINE void POA_CORBA::ExtLocalInterfaceDef::_set_base_interfaces_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::InterfaceDef_ptr impl = (POA_CORBA::ExtLocalInterfaceDef_ptr) obj;
+  POA_CORBA::InterfaceDef::_set_base_interfaces_skel (
+      req,
+      (POA_CORBA::InterfaceDef_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+
+ACE_INLINE void POA_CORBA::ExtLocalInterfaceDef::is_a_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::InterfaceDef_ptr impl = (POA_CORBA::ExtLocalInterfaceDef_ptr) obj;
+  POA_CORBA::InterfaceDef::is_a_skel (
+      req,
+      (POA_CORBA::InterfaceDef_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+
+ACE_INLINE void POA_CORBA::ExtLocalInterfaceDef::describe_interface_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::InterfaceDef_ptr impl = (POA_CORBA::ExtLocalInterfaceDef_ptr) obj;
+  POA_CORBA::InterfaceDef::describe_interface_skel (
+      req,
+      (POA_CORBA::InterfaceDef_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+
+ACE_INLINE void POA_CORBA::ExtLocalInterfaceDef::create_attribute_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::InterfaceDef_ptr impl = (POA_CORBA::ExtLocalInterfaceDef_ptr) obj;
+  POA_CORBA::InterfaceDef::create_attribute_skel (
+      req,
+      (POA_CORBA::InterfaceDef_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+
+ACE_INLINE void POA_CORBA::ExtLocalInterfaceDef::create_operation_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::InterfaceDef_ptr impl = (POA_CORBA::ExtLocalInterfaceDef_ptr) obj;
+  POA_CORBA::InterfaceDef::create_operation_skel (
+      req,
+      (POA_CORBA::InterfaceDef_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+
+ACE_INLINE void POA_CORBA::ExtLocalInterfaceDef::lookup_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Container_ptr impl = (POA_CORBA::ExtLocalInterfaceDef_ptr) obj;
+  POA_CORBA::Container::lookup_skel (
+      req,
+      (POA_CORBA::Container_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+
+ACE_INLINE void POA_CORBA::ExtLocalInterfaceDef::contents_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Container_ptr impl = (POA_CORBA::ExtLocalInterfaceDef_ptr) obj;
+  POA_CORBA::Container::contents_skel (
+      req,
+      (POA_CORBA::Container_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+
+ACE_INLINE void POA_CORBA::ExtLocalInterfaceDef::lookup_name_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Container_ptr impl = (POA_CORBA::ExtLocalInterfaceDef_ptr) obj;
+  POA_CORBA::Container::lookup_name_skel (
+      req,
+      (POA_CORBA::Container_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+
+ACE_INLINE void POA_CORBA::ExtLocalInterfaceDef::describe_contents_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Container_ptr impl = (POA_CORBA::ExtLocalInterfaceDef_ptr) obj;
+  POA_CORBA::Container::describe_contents_skel (
+      req,
+      (POA_CORBA::Container_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+
+ACE_INLINE void POA_CORBA::ExtLocalInterfaceDef::create_module_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Container_ptr impl = (POA_CORBA::ExtLocalInterfaceDef_ptr) obj;
+  POA_CORBA::Container::create_module_skel (
+      req,
+      (POA_CORBA::Container_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+
+ACE_INLINE void POA_CORBA::ExtLocalInterfaceDef::create_constant_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Container_ptr impl = (POA_CORBA::ExtLocalInterfaceDef_ptr) obj;
+  POA_CORBA::Container::create_constant_skel (
+      req,
+      (POA_CORBA::Container_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+
+ACE_INLINE void POA_CORBA::ExtLocalInterfaceDef::create_struct_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Container_ptr impl = (POA_CORBA::ExtLocalInterfaceDef_ptr) obj;
+  POA_CORBA::Container::create_struct_skel (
+      req,
+      (POA_CORBA::Container_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+
+ACE_INLINE void POA_CORBA::ExtLocalInterfaceDef::create_union_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Container_ptr impl = (POA_CORBA::ExtLocalInterfaceDef_ptr) obj;
+  POA_CORBA::Container::create_union_skel (
+      req,
+      (POA_CORBA::Container_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+
+ACE_INLINE void POA_CORBA::ExtLocalInterfaceDef::create_enum_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Container_ptr impl = (POA_CORBA::ExtLocalInterfaceDef_ptr) obj;
+  POA_CORBA::Container::create_enum_skel (
+      req,
+      (POA_CORBA::Container_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+
+ACE_INLINE void POA_CORBA::ExtLocalInterfaceDef::create_alias_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Container_ptr impl = (POA_CORBA::ExtLocalInterfaceDef_ptr) obj;
+  POA_CORBA::Container::create_alias_skel (
+      req,
+      (POA_CORBA::Container_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+
+ACE_INLINE void POA_CORBA::ExtLocalInterfaceDef::create_interface_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Container_ptr impl = (POA_CORBA::ExtLocalInterfaceDef_ptr) obj;
+  POA_CORBA::Container::create_interface_skel (
+      req,
+      (POA_CORBA::Container_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+
+ACE_INLINE void POA_CORBA::ExtLocalInterfaceDef::create_value_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Container_ptr impl = (POA_CORBA::ExtLocalInterfaceDef_ptr) obj;
+  POA_CORBA::Container::create_value_skel (
+      req,
+      (POA_CORBA::Container_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+
+ACE_INLINE void POA_CORBA::ExtLocalInterfaceDef::create_value_box_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Container_ptr impl = (POA_CORBA::ExtLocalInterfaceDef_ptr) obj;
+  POA_CORBA::Container::create_value_box_skel (
+      req,
+      (POA_CORBA::Container_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+
+ACE_INLINE void POA_CORBA::ExtLocalInterfaceDef::create_exception_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Container_ptr impl = (POA_CORBA::ExtLocalInterfaceDef_ptr) obj;
+  POA_CORBA::Container::create_exception_skel (
+      req,
+      (POA_CORBA::Container_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+
+ACE_INLINE void POA_CORBA::ExtLocalInterfaceDef::create_native_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Container_ptr impl = (POA_CORBA::ExtLocalInterfaceDef_ptr) obj;
+  POA_CORBA::Container::create_native_skel (
+      req,
+      (POA_CORBA::Container_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+
+ACE_INLINE void POA_CORBA::ExtLocalInterfaceDef::create_abstract_interface_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Container_ptr impl = (POA_CORBA::ExtLocalInterfaceDef_ptr) obj;
+  POA_CORBA::Container::create_abstract_interface_skel (
+      req,
+      (POA_CORBA::Container_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+
+ACE_INLINE void POA_CORBA::ExtLocalInterfaceDef::create_local_interface_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Container_ptr impl = (POA_CORBA::ExtLocalInterfaceDef_ptr) obj;
+  POA_CORBA::Container::create_local_interface_skel (
+      req,
+      (POA_CORBA::Container_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+
+ACE_INLINE void POA_CORBA::ExtLocalInterfaceDef::create_ext_value_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Container_ptr impl = (POA_CORBA::ExtLocalInterfaceDef_ptr) obj;
+  POA_CORBA::Container::create_ext_value_skel (
+      req,
+      (POA_CORBA::Container_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}ACE_INLINE void POA_CORBA::ExtLocalInterfaceDef::_get_id_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Contained_ptr impl = (POA_CORBA::ExtLocalInterfaceDef_ptr) obj;
+  POA_CORBA::Contained::_get_id_skel (
+      req,
+      (POA_CORBA::Contained_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+ACE_INLINE void POA_CORBA::ExtLocalInterfaceDef::_set_id_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Contained_ptr impl = (POA_CORBA::ExtLocalInterfaceDef_ptr) obj;
+  POA_CORBA::Contained::_set_id_skel (
+      req,
+      (POA_CORBA::Contained_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}ACE_INLINE void POA_CORBA::ExtLocalInterfaceDef::_get_name_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Contained_ptr impl = (POA_CORBA::ExtLocalInterfaceDef_ptr) obj;
+  POA_CORBA::Contained::_get_name_skel (
+      req,
+      (POA_CORBA::Contained_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+ACE_INLINE void POA_CORBA::ExtLocalInterfaceDef::_set_name_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Contained_ptr impl = (POA_CORBA::ExtLocalInterfaceDef_ptr) obj;
+  POA_CORBA::Contained::_set_name_skel (
+      req,
+      (POA_CORBA::Contained_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}ACE_INLINE void POA_CORBA::ExtLocalInterfaceDef::_get_version_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Contained_ptr impl = (POA_CORBA::ExtLocalInterfaceDef_ptr) obj;
+  POA_CORBA::Contained::_get_version_skel (
+      req,
+      (POA_CORBA::Contained_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+ACE_INLINE void POA_CORBA::ExtLocalInterfaceDef::_set_version_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Contained_ptr impl = (POA_CORBA::ExtLocalInterfaceDef_ptr) obj;
+  POA_CORBA::Contained::_set_version_skel (
+      req,
+      (POA_CORBA::Contained_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}ACE_INLINE void POA_CORBA::ExtLocalInterfaceDef::_get_defined_in_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Contained_ptr impl = (POA_CORBA::ExtLocalInterfaceDef_ptr) obj;
+  POA_CORBA::Contained::_get_defined_in_skel (
+      req,
+      (POA_CORBA::Contained_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}ACE_INLINE void POA_CORBA::ExtLocalInterfaceDef::_get_absolute_name_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Contained_ptr impl = (POA_CORBA::ExtLocalInterfaceDef_ptr) obj;
+  POA_CORBA::Contained::_get_absolute_name_skel (
+      req,
+      (POA_CORBA::Contained_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}ACE_INLINE void POA_CORBA::ExtLocalInterfaceDef::_get_containing_repository_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Contained_ptr impl = (POA_CORBA::ExtLocalInterfaceDef_ptr) obj;
+  POA_CORBA::Contained::_get_containing_repository_skel (
+      req,
+      (POA_CORBA::Contained_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+
+ACE_INLINE void POA_CORBA::ExtLocalInterfaceDef::describe_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Contained_ptr impl = (POA_CORBA::ExtLocalInterfaceDef_ptr) obj;
+  POA_CORBA::Contained::describe_skel (
+      req,
+      (POA_CORBA::Contained_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+
+ACE_INLINE void POA_CORBA::ExtLocalInterfaceDef::move_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::Contained_ptr impl = (POA_CORBA::ExtLocalInterfaceDef_ptr) obj;
+  POA_CORBA::Contained::move_skel (
+      req,
+      (POA_CORBA::Contained_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}ACE_INLINE void POA_CORBA::ExtLocalInterfaceDef::_get_type_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::IDLType_ptr impl = (POA_CORBA::ExtLocalInterfaceDef_ptr) obj;
+  POA_CORBA::IDLType::_get_type_skel (
+      req,
+      (POA_CORBA::IDLType_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}ACE_INLINE void POA_CORBA::ExtLocalInterfaceDef::_get_def_kind_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::IRObject_ptr impl = (POA_CORBA::ExtLocalInterfaceDef_ptr) obj;
+  POA_CORBA::IRObject::_get_def_kind_skel (
+      req,
+      (POA_CORBA::IRObject_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2228
+
+ACE_INLINE void POA_CORBA::ExtLocalInterfaceDef::destroy_skel (
+    TAO_ServerRequest &req,
+    void *obj,
+    void *context
+    ACE_ENV_ARG_DECL
+  )
+{
+  POA_CORBA::IRObject_ptr impl = (POA_CORBA::ExtLocalInterfaceDef_ptr) obj;
+  POA_CORBA::IRObject::destroy_skel (
+      req,
+      (POA_CORBA::IRObject_ptr) impl,
+      context
+      ACE_ENV_ARG_PARAMETER
+    );
+}
+
 

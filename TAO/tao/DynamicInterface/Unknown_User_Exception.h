@@ -99,6 +99,7 @@ namespace CORBA
   };
 } // End CORBA namespace.
 
+
 #include "ace/post.h"
 
 #endif /* TAO_UNKNOWN_USER_EXCEPTION_H */

@@ -49,7 +49,7 @@ CORBA::TypeCode::equivalent (CORBA::TypeCode_ptr tc
 {
   return this->equ_common (tc,
                            1
-                            ACE_ENV_ARG_PARAMETER);
+                           ACE_ENV_ARG_PARAMETER);
 }
 
 // Returns true if the two typecodes are identical.
@@ -59,7 +59,7 @@ CORBA::TypeCode::equal (CORBA::TypeCode_ptr tc
 {
   return this->equ_common (tc,
                            0
-                            ACE_ENV_ARG_PARAMETER);
+                           ACE_ENV_ARG_PARAMETER);
 }
 
 // returns the Repository ID
@@ -97,6 +97,18 @@ CORBA::TypeCode::member_count (ACE_ENV_SINGLE_ARG_DECL) const
     return this->private_state_->tc_member_count_;
   else
     return this->private_member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
+}
+
+ACE_INLINE CORBA::TypeCode::OFFSET_MAP *
+CORBA::TypeCode::offset_map (void) const
+{
+  return this->offset_map_;
+}
+
+ACE_INLINE void
+CORBA::TypeCode::offset_map (CORBA::TypeCode::OFFSET_MAP *map)
+{
+  this->offset_map_ = map;
 }
 
 // ************************************************************

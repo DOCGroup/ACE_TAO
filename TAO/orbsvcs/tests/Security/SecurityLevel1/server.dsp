@@ -98,6 +98,7 @@ SOURCE=.\SLevel1_Test_i.cpp
 # Begin Source File
 
 SOURCE=.\SLevel1_TestC.cpp
+# ADD CPP /GR
 # End Source File
 # Begin Source File
 

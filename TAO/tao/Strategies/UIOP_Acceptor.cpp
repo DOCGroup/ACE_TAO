@@ -28,7 +28,9 @@
 #include "tao/Protocols_Hooks.h"
 #include "tao/Codeset_Manager.h"
 
-ACE_RCSID(Strategies, UIOP_Acceptor, "$Id$")
+ACE_RCSID (Strategies, 
+           UIOP_Acceptor, 
+           "$Id$")
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
@@ -82,7 +84,7 @@ TAO_UIOP_Acceptor::~TAO_UIOP_Acceptor (void)
 }
 
 int
-TAO_UIOP_Acceptor::create_profile (const TAO_ObjectKey &object_key,
+TAO_UIOP_Acceptor::create_profile (const TAO::ObjectKey &object_key,
                                    TAO_MProfile &mprofile,
                                    CORBA::Short priority)
 {
@@ -100,7 +102,7 @@ TAO_UIOP_Acceptor::create_profile (const TAO_ObjectKey &object_key,
 }
 
 int
-TAO_UIOP_Acceptor::create_new_profile (const TAO_ObjectKey &object_key,
+TAO_UIOP_Acceptor::create_new_profile (const TAO::ObjectKey &object_key,
                                        TAO_MProfile &mprofile,
                                        CORBA::Short priority)
 {
@@ -145,7 +147,7 @@ TAO_UIOP_Acceptor::create_new_profile (const TAO_ObjectKey &object_key,
 }
 
 int
-TAO_UIOP_Acceptor::create_shared_profile (const TAO_ObjectKey &object_key,
+TAO_UIOP_Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
                                           TAO_MProfile &mprofile,
                                           CORBA::Short priority)
 {
@@ -388,7 +390,7 @@ TAO_UIOP_Acceptor::endpoint_count (void)
 
 int
 TAO_UIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
-                               TAO_ObjectKey &object_key)
+                               TAO::ObjectKey &object_key)
 {
   // Create the decoding stream from the encapsulation in the buffer,
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)

@@ -94,6 +94,7 @@ SOURCE=.\Grid_i.cpp
 # Begin Source File
 
 SOURCE=.\GridC.cpp
+# ADD CPP /GR
 # End Source File
 # Begin Source File
 
