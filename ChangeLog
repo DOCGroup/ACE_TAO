@@ -1,3 +1,12 @@
+Tue Oct  5 15:27:45 2004  Dale Wilson  <wilson_d@ociweb.com>
+
+        * TAO/orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_ProxyConsumer.h:
+        * TAO/orbsvcs/orbsvcs/FtRtEvent/EventChannel/Replication_Service.h:
+        * TAO/orbsvcs/orbsvcs/FtRtEvent/EventChannel/Replication_Strategy.h:
+          Build problems with exception=0
+          Can't use ACE_ENV_ARG_DECL_WITH_DEFAULTS in function pointer typedef
+
+
 Tue Oct  5 13:12:56 2004  Dale Wilson  <wilson_d@ociweb.com>
 
         * ace/Dev_Poll_Reactor.cpp:
