@@ -949,7 +949,8 @@ ACE_recursive_mutex_state::~ACE_recursive_mutex_state (void)
   ACE_OS::thread_mutex_unlock (&mutex_.get_nesting_mutex ());
 }    
 
-//ACE_TEMPLATE_METHOD_SPECIALIZATION int
+//ACE_TEMPLATE_METHOD_SPECIALIZATION
+int
 ACE_Condition<ACE_Recursive_Thread_Mutex>::remove (void)
 { 
   return ACE_OS::cond_destroy (&this->cond_); 
