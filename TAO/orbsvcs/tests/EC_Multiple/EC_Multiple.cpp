@@ -1632,8 +1632,15 @@ Test_Consumer::disconnect_push_consumer (CORBA::Environment &)
 int
 main (int argc, char *argv [])
 {
-  Test_ECG test;
-  return test.run (argc, argv);
+  Test_ECG *test;
+  // Dynamically allocate the Test_ECG instance so that we don't have
+  // to worry about running out of stack space if it's large.
+  ACE_NEW_RETURN (test, Test_ECG, -1);
+
+  const int status = test->run (argc, argv);
+
+  delete test;
+  return status;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
