@@ -1,3 +1,16 @@
+Sun Sep 17 07:14:28 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/tests/FaultTolerance/IOGR/Manager.cpp:
+	* orbsvcs/tests/FaultTolerance/IOGR/Manager.h:
+	* orbsvcs/tests/FaultTolerance/IOGR/client.cpp:
+	* orbsvcs/tests/FaultTolerance/IOGR/server.cpp:
+	* orbsvcs/tests/FaultTolerance/IOGR/test.idl:
+	* orbsvcs/tests/FaultTolerance/IOGR/test_i.h:
+	* orbsvcs/tests/FaultTolerance/IOGR/test_i.cpp:
+	* orbsvcs/tests/FaultTolerance/IOGR/test_i.h:
+	* orbsvcs/tests/FaultTolerance/IOGR/Makefile:
+	* orbsvcs/tests/FaultTolerance/IOGR/svc.conf: A test for IOGR.
+
 Sun Sep 17 07:09:11 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Makefile.FaultTolerance:
