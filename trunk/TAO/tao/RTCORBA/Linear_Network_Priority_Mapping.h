@@ -39,32 +39,17 @@ class TAO_RTCORBA_Export TAO_Linear_Network_Priority_Mapping : public TAO_Networ
   //
   // = DESCRIPTION
   //   This implementation uses linear mapping between the range of
-  //   priorities for a given scheduling class (ACE_SCHED_OTHER,
-  //   ACE_SCHED_FIFO, ACE_SCHED_RR) and the valid range of CORBA
-  //   priorities (0...32767)
+  //   DiffServ priorities and CORBA priorities.
   //
 public:
   TAO_Linear_Network_Priority_Mapping (long policy);
   // Default constructor
 
-  virtual ~TAO_Linear_Network_Priority_Mapping (void);
-  // The destructor
+  CORBA::Boolean to_network (RTCORBA::Priority corba_priority,
+                             RTCORBA::NetworkPriority &network_priority);
 
-  virtual CORBA::Boolean
-      to_network (RTCORBA::Priority corba_priority,
-                  RTCORBA::NetworkPriority &network_priority);
-  virtual CORBA::Boolean
-      to_CORBA (RTCORBA::NetworkPriority network_priority,
-                RTCORBA::Priority &corba_priority);
- private:
-    long policy_;
-  // The scheduling policy
-
-  int min_;
-  int max_;
-
-  int increment_;
-
+  CORBA::Boolean to_CORBA (RTCORBA::NetworkPriority network_priority,
+                           RTCORBA::Priority &corba_priority);
 };
 
 #if defined (__ACE_INLINE__)

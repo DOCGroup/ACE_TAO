@@ -9,7 +9,7 @@
 //   Custom_Network_Priority_Mapping.h
 //
 // = DESCRIPTION
-//   Declares the Custom_Network_Priority_Mapping interface, 
+//   Declares the Custom_Network_Priority_Mapping interface,
 //
 // = AUTHOR
 //   Yamuna Krishnamurthy (yamuna@oomworks.com)
@@ -18,11 +18,8 @@
 
 #ifndef TAO_CUSTOM_NETWORK_PRIORITY_MAPPING_H
 #define TAO_CUSTOM_NETWORK_PRIORITY_MAPPING_H
+
 #include /**/ "ace/pre.h"
-
-#include "tao/orbconf.h"
-
-#include "tao/RTCORBA/rtcorba_export.h"
 #include "tao/RTCORBA/Network_Priority_Mapping.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -43,25 +40,17 @@ class TAO_Custom_Network_Priority_Mapping : public TAO_Network_Priority_Mapping
   //
 public:
   TAO_Custom_Network_Priority_Mapping (void);
-  // Default constructor
 
-  virtual ~TAO_Custom_Network_Priority_Mapping (void);
-  // The destructor
+  CORBA::Boolean to_network (RTCORBA::Priority corba_priority,
+                             RTCORBA::NetworkPriority &network_priority);
 
-  virtual CORBA::Boolean
-      to_network (RTCORBA::Priority corba_priority,
-                 RTCORBA::NetworkPriority &network_priority);
-  virtual CORBA::Boolean
-      to_CORBA (RTCORBA::NetworkPriority network_priority,
-                RTCORBA::Priority &corba_priority);
+  CORBA::Boolean to_CORBA (RTCORBA::NetworkPriority network_priority,
+                           RTCORBA::Priority &corba_priority);
 
-  void desired_priority (int priority);
+  void corba_priority (RTCORBA::Priority corba_priority);
 
  private:
-  int corba_priority_;
-  int max_;
-  int min_;
-  int increment_;
+  RTCORBA::Priority corba_priority_;
 };
 
 
