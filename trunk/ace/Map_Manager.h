@@ -50,6 +50,10 @@ public:
 
 // Forward decl.
 template <class EXT_ID, class INT_ID, class ACE_LOCK>
+class ACE_Map_Iterator_Base;
+
+// Forward decl.
+template <class EXT_ID, class INT_ID, class ACE_LOCK>
 class ACE_Map_Iterator;
 
 // Forward decl.
@@ -74,6 +78,7 @@ class ACE_Map_Manager
   //     linearly.  For more efficient searching you should use the
   //     <ACE_Hash_Map_Manager>.
 public:
+  friend class ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>;
   friend class ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>;
   friend class ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>;
 
@@ -265,22 +270,69 @@ private:
 };
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK>
-class ACE_Map_Iterator
+class ACE_Map_Iterator_Base
 {
   // = TITLE
   //     Iterator for the ACE_Map_Manager.
 public:
   // = Initialization method.
-  ACE_Map_Iterator (ACE_Map_Manager <EXT_ID, INT_ID, ACE_LOCK> &mm);
-
-  ACE_Map_Iterator (ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK> &mi);
-  // Copy constructor. 
+  ACE_Map_Iterator_Base (ACE_Map_Manager <EXT_ID, INT_ID, ACE_LOCK> &mm,
+                         int head);
+  // Contructor.  If head != 0, the iterator constructed is positioned
+  // at the head of the map, it is positioned at the end otherwise.
 
   // = Iteration methods.
 
   int next (ACE_Map_Entry<EXT_ID, INT_ID> *&next_entry);
   // Pass back the next <entry> that hasn't been seen in the Set.
   // Returns 0 when all items have been seen, else 1.
+
+  int done (void) const;
+  // Returns 1 when all items have been seen, else 0.
+
+  ACE_Map_Entry<EXT_ID, INT_ID>& operator* (void);
+  // Returns a reference to the interal element <this> is pointing to.
+
+#if 0
+  int operator== (ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK> &);
+  int operator!= (ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK> &);
+  // Check if two iterators point to the same position
+#endif /* 0 */
+
+  ACE_ALLOC_HOOK_DECLARE;
+  // Declare the dynamic allocation hooks.
+
+protected:
+  int forward_i (void);
+  // Move forward by one element in the set.  Returns 0 when there's
+  // no more item in the set after the current items, else 1.
+
+  int reverse_i (void);
+  // Move backware by one element in the set.  Returns 0 when there's
+  // no more item in the set before the current item, else 1.
+
+  void dump_i (void) const;
+  // Dump the state of an object.
+
+  ACE_Map_Manager <EXT_ID, INT_ID, ACE_LOCK> *map_man_;
+  // Map we are iterating over.
+
+  ssize_t next_;
+  // Keeps track of how far we've advanced...
+};
+
+template <class EXT_ID, class INT_ID, class ACE_LOCK>
+class ACE_Map_Iterator
+  : public ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>
+{
+  // = TITLE
+  //     Iterator for the ACE_Map_Manager.
+public:
+  // = Initialization method.
+  ACE_Map_Iterator (ACE_Map_Manager <EXT_ID, INT_ID, ACE_LOCK> &mm,
+                    int tail = 0);
+
+  // = Iteration methods.
 
   int done (void) const;
   // Returns 1 when all items have been seen, else 0.
@@ -300,41 +352,28 @@ public:
   ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>& operator++ (int);
   // Prefix advance.
 
-  ACE_Map_Entry<EXT_ID, INT_ID>& operator* (void);
-  // Returns a reference to the interal element <this> is pointing to.
+  ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK> operator-- (void);
+  // Postfix advance.
 
-  int operator== (ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK> &);
-  int operator!= (ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK> &);
-  // Check if two iterators point to the same position
+  ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>& operator-- (int);
+  // Prefix advance.
 
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
-
-private:
-  ACE_Map_Manager <EXT_ID, INT_ID, ACE_LOCK> *map_man_;
-  // Map we are iterating over.
-
-  ssize_t next_;
-  // Keeps track of how far we've advanced...
 };
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK>
 class ACE_Map_Reverse_Iterator
+  : public ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>
 {
   // = TITLE
   //     Reverse Iterator for the ACE_Map_Manager.
 public:
   // = Initialization method.
-  ACE_Map_Reverse_Iterator (ACE_Map_Manager <EXT_ID, INT_ID, ACE_LOCK> &mm);
-
-  ACE_Map_Reverse_Iterator (ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK> &mi);
-  // Copy constructor. 
+  ACE_Map_Reverse_Iterator (ACE_Map_Manager <EXT_ID, INT_ID, ACE_LOCK> &mm,
+                            int head = 0);
 
   // = Iteration methods.
-
-  int next (ACE_Map_Entry<EXT_ID, INT_ID> *&next_entry);
-  // Pass back the <entry> that hasn't been seen in the Set.
-  // Returns 0 when all items have been seen, else 1.
 
   int done (void) const;
   // Returns 1 when all items have been seen, else 0.
@@ -354,22 +393,17 @@ public:
   ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>& operator++ (int);
   // Prefix advance.
 
+  ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK> operator-- (void);
+  // Postfix advance.
+
+  ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>& operator-- (int);
+  // Prefix advance.
+
   ACE_Map_Entry<EXT_ID, INT_ID>& operator* (void);
   // Returns a reference to the interal element <this> is pointing to.
 
-  int operator== (ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK> &);
-  int operator!= (ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK> &);
-  // Check if two iterators point to the same position
-
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
-
-private:
-  ACE_Map_Manager <EXT_ID, INT_ID, ACE_LOCK> *map_man_;
-  // Map we are iterating over.
-
-  ssize_t next_;
-  // Keeps track of how far we've advanced...
 };
 
 #if defined (__ACE_INLINE__)
