@@ -1,3 +1,37 @@
+Wed Dec 26 05:16:45 2001  Mayur Deshpande  <mayur@ics.uci.edu>
+
+	* TAO_IDL/be/be_operation_strategy.cpp:
+	* TAO_IDL/be/be_visitor_amh_pre_proc.cpp:
+	* TAO_IDL/be/be_visitor_factory.cpp:
+	* TAO_IDL/be/be_visitor_interface/amh_sh.cpp:
+	* TAO_IDL/be/be_visitor_interface/amh_ss.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface.cpp:
+	* TAO_IDL/be/be_visitor_operation/amh_sh.cpp:
+	* TAO_IDL/be/be_visitor_operation/amh_ss.cpp:
+	* TAO_IDL/be/be_visitor_operation/operation.cpp:
+	* TAO_IDL/be_include/be_codegen.h:
+	* TAO_IDL/be_include/be_operation_strategy.h:
+	* TAO_IDL/be_include/be_visitor_amh_pre_proc.h:
+	* TAO_IDL/be_include/be_visitor_interface/amh_sh.h:
+	* TAO_IDL/be_include/be_visitor_interface/amh_ss.h:
+	* TAO_IDL/be_include/be_visitor_operation/amh_sh.h:
+	* TAO_IDL/be_include/be_visitor_operation/amh_ss.h:
+	* tao/TAO_AMH_Response_Handler.cpp:
+	* tao/TAO_AMH_Response_Handler.h:
+	* tao/TAO_Server_Request.cpp:
+	* tao/TAO_Server_Request.h:
+	* tao/TAO_Server_Request.i:
+	* tao/PortableServer/Servant_Base.cpp:
+	* tao/PortableServer/Servant_Base.h:
+	  These files previously had all white-spaces removed from them
+	  due to an eronous script that I ran.  They are now re-indented 
+	  and re-formatted.
+
+	* TAO_IDL/be/be_visitor_interface/amh_sh.cpp:
+	* TAO_IDL/be/be_visitor_interface/amh_ss.cpp:
+	  Commented out the placeholder methods that were generating 
+	  compile-time warnings.
+	
 Wed Dec 26 02:57:48 2001  Mayur Deshpande  <mayur@ics.uci.edu>
 
 	* tao/TAO_AMH_Response_handler.h:
