@@ -132,30 +132,6 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Logger Test Client"=.\Logger\client.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "Logger Test Server"=.\Logger\server.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
 Project: "Sched_Conf"=.\Sched_Conf\Sched_Conf.dsp - Package Owner=<4>
 
 Package=<5>
