@@ -38,18 +38,25 @@ while getopts ?ln:r:t arg; do
       '?' ) echo $usage; echo $usage2; exit 0 ;;
   esac
 done
-shift `expr $OPTIND - 1`
 
-if [ $# -ne 1 ]; then
-  echo $usage; echo $usage2
-  exit 1
+if [ "$OPTIND" ]; then
+  shift `expr $OPTIND - 1`
+
+  if [ $# -ne 1 ]; then
+    echo $usage; echo $usage2
+    exit 1
+  fi
+else
+  #### sh does not support $OPTIND.  Arg error checking isn't as good.
+  if [ $# -lt 1 ]; then
+    echo $usage; echo $usage2
+    exit 1
+  fi
+
+  shift `expr $# - 1`
 fi
+
 threads=`expr $1 + 1`
-
-if [ $threads -ge 40 ]; then
-  echo $0: limit of 40 threads
-  exit 0
-fi
 
 
 ########
