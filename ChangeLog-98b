@@ -1,7 +1,29 @@
+Sun May 10 23:28:57 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/OS.cpp(inherit_log_msg):
+	* ace/Log_Msg.cpp (thr_desc): Wait on Thread_Descriptor's lock
+	  instead of the "global" Thread_Manager lock.
+
+	* ace/Thread_Manager.cpp: Moved acquire_release() from
+	  ACE_Thread_Manager to ACE_Thread_Descriptor.  This method is
+	  called from ACE_Log_Msg::thr_desc to prevent a thread from using
+	  its thread descriptor before it is fully built.  The change
+	  relieve spwaned threads from waiting for other threads created
+	  in the same spwan_n call to be created before it can start
+	  running.
+
+	  (insert): Added an extra argument to control whether we want to
+	  insert the newly created thread into ACE_Thread_Manager's thread
+	  table or not.  Notice that it is default to 1 to remain the
+	  original behavior in case anyone is using this class/function
+	  directly in their code.  However, in ACE_Thread_Manager, we
+	  always prevent it from inserting because we always register
+	  thread descriptors from spawn_i.
+
 Sun May 10 01:51:29 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/OS.h: Renamed ACE_OS::Time_To_The_Beginning to
-	  ACE_OS::FILETIME_to_timval_skew. 
+	  ACE_OS::FILETIME_to_timval_skew.
 
 	* ace/OS.cpp: Found the problem in ACE_OS::ctime_r.  An internal
 	  compiler bug (?) caused the bug.  The solution: move the format
