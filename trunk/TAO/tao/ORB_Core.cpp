@@ -431,7 +431,8 @@ TAO_ORB_Core::init (int &argc, char *argv[])
         TAO_debug_level = ACE_OS::atoi (value);
         if (TAO_debug_level <= 0)
           TAO_debug_level = 1;
-        dmsg1 ("TAO_debug_level == %d", TAO_debug_level);
+        ACE_DEBUG ((LM_DEBUG,
+                    "TAO_debug_level == %d", TAO_debug_level));
       }
   }
 #endif  /* DEBUG */
