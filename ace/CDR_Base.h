@@ -38,7 +38,7 @@
 
 #include "ace/Basic_Types.h"
 #include "ace/Default_Constants.h"
-#include "ace/IfThenElse.h"
+#include "ace/If_Then_Else.h"
 
 
 class ACE_Message_Block;
@@ -166,9 +166,15 @@ public:
    * avoid complaints from all compilers is to define them all.
    */
   //@{
-  typedef ACE::IfThenElse<(sizeof (bool) == 1),
-                          bool,
-                          unsigned char>::result_type Boolean;
+# if (defined (_MSC_VER) && (_MSC_VER < 1300))
+  // MSVC++ 6 can't handle partial template specializations so fall
+  // back on an unsigned char typedef.
+  typedef unsigned char Boolean;
+# else
+  typedef ACE::If_Then_Else<(sizeof (bool) == 1),
+                            bool,
+                            unsigned char>::result_type Boolean;
+# endif  /* _MSC_VER <= 1300 */
   typedef unsigned char Octet;
   typedef char Char;
   typedef ACE_WCHAR_T WChar;
