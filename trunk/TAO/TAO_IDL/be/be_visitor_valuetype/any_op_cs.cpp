@@ -98,7 +98,8 @@ be_visitor_valuetype_any_op_cs::visit_valuetype (be_valuetype *node)
       << ");" << be_uidt << be_uidt << be_uidt_nl
       << "}" << be_nl << be_nl;
 
-  *os << "CORBA::Boolean" << be_nl
+  *os << "template<>" << be_nl
+      << "CORBA::Boolean" << be_nl
       << "TAO::Any_Impl_T<" << node->name () << ">::to_value ("
       << be_idt <<  be_idt_nl
       << "CORBA::ValueBase *&_tao_elem" << be_uidt_nl

@@ -64,6 +64,7 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
             << "// " << __FILE__ << ":" << __LINE__;
 
           *os << be_nl << be_nl
+              << "template<>" << be_nl
               << "CORBA::Boolean" << be_nl
               << "TAO::Any_Dual_Impl_T<" << node->name ()
               << ">::marshal_value (TAO_OutputCDR &)" << be_nl
@@ -72,6 +73,7 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
               << "}";
 
           *os << be_nl << be_nl
+              << "template<>" << be_nl
               << "CORBA::Boolean" << be_nl
               << "TAO::Any_Dual_Impl_T<" << node->name ()
               << ">::demarshal_value (TAO_InputCDR &)" << be_nl
