@@ -1,9 +1,15 @@
+Sat Jan 20 13:27:01 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Transport.h:
+          Must include "Exception.h" for newer gcc versions.  Thanks to
+          Craig Rodrigues <crodrigu@bbn.com> for pointing this out.
+
 Sat Jan 20 09:29:34 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* examples/Advanced/ch_18/server.cpp: Made several fixes so
-	  this example will compile correctly.  Thanks to Craig Rodrigues
- 	  <rodrigc@mediaone.net> for reporting this.
-	
+        * examples/Advanced/ch_18/server.cpp: Made several fixes so
+          this example will compile correctly.  Thanks to Craig Rodrigues
+          <rodrigc@mediaone.net> for reporting this.
+
 Fri Jan 19 17:41:10 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
@@ -17,7 +23,7 @@ Fri Jan 19 17:41:10 2001  Jeff Parsons <parsons@cs.wustl.edu>
           Renamed all foo::bar::_tao_setup_collocation() functions
           as foo::bar::foo_bar_setup_collocation(). This eliminates
           the need for the ACE_NESTED_CLASS macro and for the the typedef
-          that was in the original fix. Thanks to Jonathan Stockdale 
+          that was in the original fix. Thanks to Jonathan Stockdale
           <Jonathan.Stockdale@locusdialogue.com> for letting us know
           that it still wasn't fixed, and for the example code that
           clarified the problem.
@@ -33,63 +39,63 @@ Fri Jan 19 15:42:19 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 Fri Jan 19 13:52:34 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-        * orbsvcs/tests/Security/RejectInsecure/Makefile: 
-        * orbsvcs/tests/Security/RejectInsecure/README: 
-        * orbsvcs/tests/Security/RejectInsecure/client.cpp : 
-        * orbsvcs/tests/Security/RejectInsecure/server.cpp : 
-        * orbsvcs/tests/Security/RejectInsecure/server_i.cpp : 
-        * orbsvcs/tests/Security/RejectInsecure/server_i.h : 
-        * orbsvcs/tests/Security/RejectInsecure/authorization_test.idl : 
-        * orbsvcs/tests/Security/RejectInsecure/authorization_test_i.h: 
+        * orbsvcs/tests/Security/RejectInsecure/Makefile:
+        * orbsvcs/tests/Security/RejectInsecure/README:
+        * orbsvcs/tests/Security/RejectInsecure/client.cpp :
+        * orbsvcs/tests/Security/RejectInsecure/server.cpp :
+        * orbsvcs/tests/Security/RejectInsecure/server_i.cpp :
+        * orbsvcs/tests/Security/RejectInsecure/server_i.h :
+        * orbsvcs/tests/Security/RejectInsecure/authorization_test.idl :
+        * orbsvcs/tests/Security/RejectInsecure/authorization_test_i.h:
         * orbsvcs/tests/Security/RejectInsecure/authorization_test_i.cpp :
-        * orbsvcs/tests/Security/RejectInsecure/authorization_test_i.i : 
+        * orbsvcs/tests/Security/RejectInsecure/authorization_test_i.i :
         * orbsvcs/tests/Security/RejectInsecure/client.conf :
-        * orbsvcs/tests/Security/RejectInsecure/client_nopassdwd.conf : 
+        * orbsvcs/tests/Security/RejectInsecure/client_nopassdwd.conf :
         * orbsvcs/tests/Security/RejectInsecure/server.conf :
-        * orbsvcs/tests/Security/RejectInsecure/server_nopassdwd.conf : 
+        * orbsvcs/tests/Security/RejectInsecure/server_nopassdwd.conf :
 
           Test to check if insecure and unauthroized connections are
           rejected.
-        
-        * orbsvcs/tests/Security/SecurityLevel1/SLevel1_Test_i.h: 
-        * orbsvcs/tests/Security/SecurityLevel1/SLevel1_Test_i.cpp: 
-        * orbsvcs/tests/Security/SecurityLevel1/SLevel1_Test.idl: 
-        * orbsvcs/tests/Security/SecurityLevel1/server.cpp: 
-        * orbsvcs/tests/Security/SecurityLevel1/client.cpp: 
-        * orbsvcs/tests/Security/SecurityLevel1/README : 
-        * orbsvcs/tests/Security/SecurityLevel1/Makefile : 
 
-        * orbsvcs/examples/Security/SecurityLevel1/SLevel1_Test_i.h: 
-        * orbsvcs/examples/Security/SecurityLevel1/SLevel1_Test_i.cpp: 
-        * orbsvcs/examples/Security/SecurityLevel1/SLevel1_Test.idl: 
-        * orbsvcs/examples/Security/SecurityLevel1/server.cpp: 
-        * orbsvcs/examples/Security/SecurityLevel1/client.cpp: 
-        * orbsvcs/examples/Security/SecurityLevel1/README : 
-        * orbsvcs/examples/Security/SecurityLevel1/Makefile : 
-         
+        * orbsvcs/tests/Security/SecurityLevel1/SLevel1_Test_i.h:
+        * orbsvcs/tests/Security/SecurityLevel1/SLevel1_Test_i.cpp:
+        * orbsvcs/tests/Security/SecurityLevel1/SLevel1_Test.idl:
+        * orbsvcs/tests/Security/SecurityLevel1/server.cpp:
+        * orbsvcs/tests/Security/SecurityLevel1/client.cpp:
+        * orbsvcs/tests/Security/SecurityLevel1/README :
+        * orbsvcs/tests/Security/SecurityLevel1/Makefile :
+
+        * orbsvcs/examples/Security/SecurityLevel1/SLevel1_Test_i.h:
+        * orbsvcs/examples/Security/SecurityLevel1/SLevel1_Test_i.cpp:
+        * orbsvcs/examples/Security/SecurityLevel1/SLevel1_Test.idl:
+        * orbsvcs/examples/Security/SecurityLevel1/server.cpp:
+        * orbsvcs/examples/Security/SecurityLevel1/client.cpp:
+        * orbsvcs/examples/Security/SecurityLevel1/README :
+        * orbsvcs/examples/Security/SecurityLevel1/Makefile :
+
           Base for a test and example for the Security::Level1. These are
           no where near to compilation ready but will act as a base.
-        
+
 Fri Jan 19 13:16:10 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-        * tests/Param_Test/client.cpp: 
+        * tests/Param_Test/client.cpp:
           Included tao/DynamicInterface/Request.h explicitly as HPUX had
           problems.
-        
-        * tests/DynAny_Test/test_wrapper.cpp: 
+
+        * tests/DynAny_Test/test_wrapper.cpp:
           Included ace/Log_Msg.h explicitly.
 
-        * tao/Sequence_T.cpp: 
+        * tao/Sequence_T.cpp:
           Included tao/Environment.h explicitly.
-        
-        * orbsvcs/orbsvcs/Makefile.SSLIOP: 
+
+        * orbsvcs/orbsvcs/Makefile.SSLIOP:
           Put a check for defining ACE_SHLIBS to get it compiled on HPUX.
 
 Fri Jan 19 14:32:28 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be/be_visitor_operation/ami_handler_reply_stub_operation_cs.cpp:
 
-          Made some changes to code generation to fix compile 
+          Made some changes to code generation to fix compile
           errors on LynxOS. Also made cosmetic changes to generated
           code.
 

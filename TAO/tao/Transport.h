@@ -20,6 +20,7 @@
 #include "ace/pre.h"
 
 #include "corbafwd.h"
+#include "Exception.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -288,7 +289,7 @@ protected:
   /**
    * Have we sent any info on bidirectional information or have we
    * received any info regarding making the connection served by this
-   * transport bidirectional. 
+   * transport bidirectional.
    * The flag is used as follows:
    * + We dont want to send the bidirectional context info more than
    *   once on the connection. Why? Waste of marshalling and
