@@ -1,54 +1,61 @@
 Wed Feb 18 09:32:43 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* orbsvcs/examples/LoadBalancing/RPS_Monitor.cpp:
-	* orbsvcs/examples/LoadBalancing/StockFactory.cpp:
-	  Added missing includes to fix compile problems with BCB
+        * orbsvcs/examples/LoadBalancing/RPS_Monitor.cpp:
+        * orbsvcs/examples/LoadBalancing/StockFactory.cpp:
+          Added missing includes to fix compile problems with BCB
 
-	* orbsvcs/examples/FaultTolerance/RolyPoly/ReplicaController.cpp:
-	  Fixed compile problem in BCB build.
+        * orbsvcs/examples/FaultTolerance/RolyPoly/ReplicaController.cpp:
+          Fixed compile problem in BCB build.
 
 Wed Feb 18 09:02:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connection_Handler.h:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.h:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Credentials.h:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current.h:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current_Impl.h:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.h:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.h:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Invocation_Interceptor.h:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_ORBInitializer.h:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Vault.h:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_ORBInitializer.cpp:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.cpp:
-	* orbsvcs/orbsvcs/SSLIOP/ssl_endpoints.h:
-	* orbsvcs/orbsvcs/SSLIOP/ssl_endpoints.pidl:
-	  Fixed include paths
+        * orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connection_Handler.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Credentials.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current_Impl.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Invocation_Interceptor.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_ORBInitializer.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Vault.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_ORBInitializer.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/ssl_endpoints.h:
+        * orbsvcs/orbsvcs/SSLIOP/ssl_endpoints.pidl:
+          Fixed include paths
+
+Wed Feb 18 08:51:05 2004  David Smith  <dts@prismtechnologies.com>
+
+        * orbsvcs/orbsvcs/Notify/Method_Request_Updates_T.inl:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Lookup_T.inl:
+
+          Fixed some compile errors on HPUX.
 
 Tue Feb 17 17:03:31 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/MT_Client/test_i.cpp (shutdown):
-	* performance-tests/Latency/Thread_Per_Connection/Roundtrip.cpp:
-	* performance-tests/Sequence_Latency/Thread_Per_Connection/Roundtrip.cpp:
+        * tests/MT_Client/test_i.cpp (shutdown):
+        * performance-tests/Latency/Thread_Per_Connection/Roundtrip.cpp:
+        * performance-tests/Sequence_Latency/Thread_Per_Connection/Roundtrip.cpp:
 
           Do not send the boolean value of true during shutdown.
 
 Tue Feb 17 16:56:45 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Thread_Per_Connection_Handler.cpp:
-	* tao/Thread_Per_Connection_Handler.h:
+        * tao/Thread_Per_Connection_Handler.cpp:
+        * tao/Thread_Per_Connection_Handler.h:
 
-	  Pass the thread manager used in the ORB_Core to the
-	  ACE_Task_Base instead of allowing task base to choose a thread
-	  manager on its own. This solves all sorts of crashes during
-	  shutdown and hack like the one in "Fri Feb  6 10:48:07 2004
-	  Balachandran Natarajan  <bala@dre.vanderbilt.edu>". We need to
-	  fix the patches applied.
+          Pass the thread manager used in the ORB_Core to the
+          ACE_Task_Base instead of allowing task base to choose a thread
+          manager on its own. This solves all sorts of crashes during
+          shutdown and hack like the one in "Fri Feb  6 10:48:07 2004
+          Balachandran Natarajan  <bala@dre.vanderbilt.edu>". We need to
+          fix the patches applied.
 
- 	* tao/Acceptor_Impl.cpp:
+        * tao/Acceptor_Impl.cpp:
 
-	  Pass TAO_ORB_Core to the Thread_Per_Connection_Handler during
-	  creation.
+          Pass TAO_ORB_Core to the Thread_Per_Connection_Handler during
+          creation.
 
 Tue Feb 17 16:06:45 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -70,18 +77,18 @@ Tue Feb 17 16:06:45 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Tue Feb 17 13:04:04 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/Makefile.CosLoadBalancing:
+        * orbsvcs/orbsvcs/Makefile.CosLoadBalancing:
 
-	  Updated dependencies.
+          Updated dependencies.
 
 Tue Feb 17 03:31:13 2004  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
-	* orbsvcs/orbsvcs/AV/SCTP_SEQ.cpp (open):
+        * orbsvcs/orbsvcs/AV/SCTP_SEQ.cpp (open):
 
-	  The address explicitly specified by the application was
-	  incorrectly passed as 0.0.0.0 to the acceptor. This was due to
-	  an erroneous setting of the address within the
-	  TAO_AV_SCTP_SEQ_Acceptor::open method which was fixed.
+          The address explicitly specified by the application was
+          incorrectly passed as 0.0.0.0 to the acceptor. This was due to
+          an erroneous setting of the address within the
+          TAO_AV_SCTP_SEQ_Acceptor::open method which was fixed.
 
 Mon Feb 16 14:31:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
