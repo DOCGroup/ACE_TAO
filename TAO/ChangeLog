@@ -1,3 +1,8 @@
+Fri Nov 28 12:44:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/AV.mpc:
+          Added missing md5c.c file
+
 Fri Nov 28 11:22:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Advanced/ch_12/Advanced_ch_12.mpc:
