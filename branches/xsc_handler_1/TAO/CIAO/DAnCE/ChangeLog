@@ -1,3 +1,15 @@
+Wed Jan 26 22:53:12 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
+
+	* DAnCE/ciao/Container_Impl.cpp
+	* DAnCE/ciao/NodeApplication_Impl.cpp
+	* DAnCE/tests/NodeApplicationTest/NodeApp_test_client.cpp
+	* DAnCE/tests/NodeApplicationTest/NodeApp_test_client_ex.cpp
+	* DAnCE/tests/NodeApplicationTest/NodeApp_test_client_simple.cpp
+
+          Fixed bugs to make sure all the above three tests running OK.
+          More tests will be written, at least one will test that multiple
+          components installed on different containers running OK.
+
 Wed Jan 26 12:02:41 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
 
 	* DAnCE/ciao/Deployment_Core.idl
