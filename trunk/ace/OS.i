@@ -4390,11 +4390,8 @@ ACE_OS::accept (ACE_HANDLE handle, struct sockaddr *addr,
 #  else
 
   ACE_HANDLE ace_result_;
-  do
-    ace_result_ = ::accept ((ACE_SOCKET) handle, addr,
-                            (ACE_SOCKET_LEN *) addrlen) ;
-  while (ace_result_ == ACE_INVALID_HANDLE && errno == EINTR &&
-         ACE_LOG_MSG->restart ());
+  ace_result_ = ::accept ((ACE_SOCKET) handle, addr,
+                          (ACE_SOCKET_LEN *) addrlen) ;
   if (ace_result_ == ACE_INVALID_HANDLE && errno == EAGAIN)
     errno = EWOULDBLOCK;
   return ace_result_;
@@ -4529,9 +4526,7 @@ ACE_OS::recv (ACE_HANDLE handle, char *buf, int len, int flags)
 #else
 
   int ace_result_;
-  do
-    ace_result_ = ::recv ((ACE_SOCKET) handle, buf, len, flags);
-  while (ace_result_ == -1 && errno == EINTR && ACE_LOG_MSG->restart ());
+  ace_result_ = ::recv ((ACE_SOCKET) handle, buf, len, flags);
   if (ace_result_ == -1 && errno == EAGAIN)
     errno = EWOULDBLOCK;
   return ace_result_;
