@@ -4424,6 +4424,10 @@ struct sigaction
 #   define IP_DEFAULT_MULTICAST_LOOP 0
 # endif /* IP_DEFAULT_MULTICAST_LOOP */
 
+# if !defined (IP_MULTICAST_IF)
+#   define IP_MULTICAST_IF 0
+#endif /* IP_MULTICAST_IF */
+
 # if !defined (IP_MAX_MEMBERSHIPS)
 #   define IP_MAX_MEMBERSHIPS 0
 # endif /* IP_MAX_MEMBERSHIP */
