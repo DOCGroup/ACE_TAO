@@ -1,3 +1,61 @@
+Fri Dec 12 03:06:16 1997  James C Hu  <jxh@cs.wustl.edu>
+
+	* server/Parse_Headers.cpp:  Many things have been touched, but
+	  only a few things have significantly changed.  I originally
+	  attempted to change the implementation entirely to use
+	  Hash_Map_Manager instead, but it was getting more complicated
+	  than I wanted, so I went back to debugging.
+
+	  - Trailing whitespace has been removed.
+	  - A couple of debug messages have been added the
+	    Headers::parse_header_line ().
+	  - Method declarations had to be changed to account for the
+	    fact that the Map_Item class (which had previously
+	    been declared inside of Headers_Map) is now in global
+	    scope and has been renamed to Headers_Map_Item.
+	  - The no_value_ data member and the char* cast operator of
+	    Map_Item have been removed.
+	  - The assignment operator for Map_Item has been made a bit
+	    tidier in its memory management (say no to memory
+	    leaks!).
+	  - Debugged the Headers_Map data structure.  This involved
+	    the following:
+	    . Re-implementation of strcasecmp (red-herring).
+	    . Re-implementation of Headers::compare ().  This is
+	      needed because empty table entries need to compare as
+	      infinity against real strings, so that real strings get
+	      inserted correctly.
+            . Debugging the Headers_Map::find () method by
+	      implementing first a linear search, and then my own binary
+	      search.  It turns out the C library ::bsearch() does work,
+	      but I will leave in my implementation for now, since
+	      ::bsearch () is not in ACE_OS yet.
+	    . Re-implementation of Headers::place ().  The old one
+	      was badly written.  The new one is more efficient, and
+	      less error prone.  This method turned out to be the main
+	      problem.  It was the reason that binary search was
+	      previously failing (but linear search worked).  The
+	      reason?  It was corrupting memory, believe it or not.
+	      No longer!
+
+	  In addition, Headers::place () had a serious bug in which a call
+	  to ACE_OS::free () was added, but included the ++ operator on
+	  the pointer from the previous line.  Ug.
+
+	* server/Parse_Headers.h: See comments for HTTP_Request.cpp.
+
+	* server/HTTP_Request.cpp: Removed extraneous whitespace.  It's
+	  not what you think Doug!  Just trailing whitespace at the end of
+	  lines that somehow get added on when people use LoseNT editors.
+	  Also, changes were made to Parse_Headers which made it necessary
+	  to explicitly use the value () accessor method when examining
+	  parsed headers.  There use to be a operator char* () method.
+
+	* server/HTTP_Response.cpp: See comments for HTTP_Request.cpp.
+
+	* server/HTTP_Helpers.cpp: Added a comment to
+	  HTTP_Helper::fixyear ().
+
 Tue Dec  9 01:19:09 1997  James C Hu  <jxh@cs.wustl.edu>
 
 	* stress_testing/util.cpp: Off by one errors when parsing a URL.
