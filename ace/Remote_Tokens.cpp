@@ -12,9 +12,9 @@
 ACE_RCSID(ace, Remote_Tokens, "$Id$")
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-typedef ACE_Thread_Mutex ACE_TSS_CONNECTION_MUTEX;
+#define ACE_TSS_CONNECTION_MUTEX ACE_Thread_Mutex
 #else
-typedef ACE_Null_Mutex ACE_TSS_CONNECTION_MUTEX;
+#define ACE_TSS_CONNECTION_MUTEX ACE_Null_Mutex
 #endif /* ACE_MT_SAFE */
 
 // Make a typedef to simplify access to the Singleton below.
