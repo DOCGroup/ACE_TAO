@@ -357,7 +357,7 @@ int be_interface::gen_client_stubs (void)
     nl;
   *cs << "{\n";
   cs->incr_indent (0);
-  if (this->gen_typecode () == -1)
+  if (this->gen_encapsulation () == -1)
     {
       ACE_ERROR ((LM_ERROR, "Error generating typecode\n\n"));
       return -1;
@@ -382,10 +382,10 @@ int be_interface::gen_server_header (void)
   TAO_OutStream *sh; // output stream
   long i;            // loop index
   TAO_NL  nl;        // end line
-  static char namebuf [MAXNAMELEN]; // holds the class name
+  static char namebuf [TAO_CodeGen::MAXNAMELEN]; // holds the class name
   AST_Decl *d;       // enclosing scope
 
-  ACE_OS::memset (namebuf, '\0', MAXNAMELEN);
+  ACE_OS::memset (namebuf, '\0', TAO_CodeGen::MAXNAMELEN);
 
   // retrieve a singleton instance of the code generator
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
@@ -753,9 +753,9 @@ be_interface::gen_var_defn (void)
   TAO_OutStream *ch; // output stream
   long i;            // loop index
   TAO_NL  nl;        // end line
-  char namebuf [MAXNAMELEN];  // names
+  char namebuf [TAO_CodeGen::MAXNAMELEN];  // names
 
-  ACE_OS::memset (namebuf, '\0', MAXNAMELEN);
+  ACE_OS::memset (namebuf, '\0', TAO_CodeGen::MAXNAMELEN);
   ACE_OS::sprintf (namebuf, "%s_var", this->local_name ()->get_string ());
 
   // retrieve a singleton instance of the code generator
@@ -831,13 +831,13 @@ be_interface::gen_var_impl (void)
   TAO_OutStream *ci; // output stream
   long i;            // loop index
   TAO_NL  nl;        // end line
-  char fname [MAXNAMELEN];  // to hold the full and
-  char lname [MAXNAMELEN];  // local _var names
+  char fname [TAO_CodeGen::MAXNAMELEN];  // to hold the full and
+  char lname [TAO_CodeGen::MAXNAMELEN];  // local _var names
 
-  ACE_OS::memset (fname, '\0', MAXNAMELEN);
+  ACE_OS::memset (fname, '\0', TAO_CodeGen::MAXNAMELEN);
   ACE_OS::sprintf (fname, "%s_var", this->fullname ());
 
-  ACE_OS::memset (lname, '\0', MAXNAMELEN);
+  ACE_OS::memset (lname, '\0', TAO_CodeGen::MAXNAMELEN);
   ACE_OS::sprintf (lname, "%s_var", local_name ()->get_string ());
 
   // retrieve a singleton instance of the code generator
@@ -1001,9 +1001,9 @@ be_interface::gen_out_defn (void)
   TAO_OutStream *ch; // output stream
   long i;            // loop index
   TAO_NL  nl;        // end line
-  char namebuf [MAXNAMELEN];  // to hold the _out name
+  char namebuf [TAO_CodeGen::MAXNAMELEN];  // to hold the _out name
 
-  ACE_OS::memset (namebuf, '\0', MAXNAMELEN);
+  ACE_OS::memset (namebuf, '\0', TAO_CodeGen::MAXNAMELEN);
   ACE_OS::sprintf (namebuf, "%s_out", local_name ()->get_string ());
 
   // retrieve a singleton instance of the code generator

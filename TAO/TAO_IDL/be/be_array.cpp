@@ -2,7 +2,7 @@
 //
 // = LIBRARY
 //    TAO IDL
-// 
+//
 // = FILENAME
 //    be_array.cpp
 //
@@ -12,9 +12,9 @@
 //
 // = AUTHOR
 //    Copyright 1994-1995 by Sun Microsystems, Inc.
-//    and 
+//    and
 //    Aniruddha Gokhale
-// 
+//
 // ============================================================================
 
 #include	"idl.h"
@@ -48,7 +48,7 @@ be_array::be_array (UTL_ScopedName *n, unsigned long ndims, UTL_ExprList *dims)
       ACE_OS::memset (namebuf, '\0', 200);
 
       // make a copy of our parent's name
-      myname = (UTL_ScopedName *)d->name ()->copy (); 
+      myname = (UTL_ScopedName *)d->name ()->copy ();
       ACE_OS::sprintf (namebuf, "_%s", this->local_name ()->get_string ());
       myname->nconc (new UTL_ScopedName (new Identifier (ACE_OS::strdup
                                                          (namebuf), 1, 0,
@@ -65,7 +65,7 @@ be_array::be_array (UTL_ScopedName *n, unsigned long ndims, UTL_ExprList *dims)
   // computes the fully scoped typecode name
   compute_tc_name ();
 
-  // compute the flattened fully scoped name 
+  // compute the flattened fully scoped name
   compute_flatname ();
 
 }
@@ -162,7 +162,7 @@ be_array::gen_client_header (void)
       // memory management functions
       // first find if we are inside a scope
       if (this->is_nested ()) // we were defined inside a scope. Hence the
-        // memory management 
+        // memory management
         // functions become static members of the enclosing class
         *ch << "static ";
       *ch <<  this->local_name () << "_slice *" << this->local_name () <<
@@ -226,7 +226,7 @@ be_array::gen_client_stubs (void)
       // generate the typecode information here
       cs->indent (); // start from current indentation level
       *cs << "static const CORBA::Long _oc_" << this->flatname () << "[] =" <<
-        nl; 
+        nl;
       *cs << "{\n";
       cs->incr_indent (0);
       if (this->gen_encapsulation () == -1)
@@ -237,9 +237,9 @@ be_array::gen_client_stubs (void)
       cs->decr_indent ();
       *cs << "};" << nl;
 
-      *cs << "static CORBA::TypeCode _tc__tc_" << this->flatname () << 
-        " (CORBA::tk_sequence, sizeof (_oc_" <<  this->flatname () << 
-        "), (unsigned char *) &_oc_" << this->flatname () << 
+      *cs << "static CORBA::TypeCode _tc__tc_" << this->flatname () <<
+        " (CORBA::tk_sequence, sizeof (_oc_" <<  this->flatname () <<
+        "), (unsigned char *) &_oc_" << this->flatname () <<
         ", CORBA::B_FALSE);" << nl;
       *cs << "CORBA::TypeCode_ptr " << this->tc_name () << " = &_tc__tc_" <<
         this->flatname () << ";\n\n";
@@ -264,7 +264,7 @@ be_array::gen_server_skeletons (void)
 }
 
 // Generates the client-side inline information
-int 
+int
 be_array::gen_client_inline (void)
 {
   if (!this->cli_inline_gen_)
@@ -281,7 +281,7 @@ be_array::gen_client_inline (void)
 
       // retrieve a singleton instance of the code generator
       TAO_CodeGen *cg = TAO_CODEGEN::instance ();
-  
+
       ci = cg->client_inline ();
       cg->outstream (ci);
       cg->node (this);
@@ -305,10 +305,10 @@ be_array::gen_client_inline (void)
       *ci << "new ";
       if (s->gen_code (bt, this) == -1)
         return -1;
-      
+
       ci->decr_indent ();
       *ci << "}\n\n";
-      
+
       // dup method
       *ci << "ACE_INLINE " << this->name () << "_slice *" << nl;
       *ci << this->name () << "_dup (" << this->name () << "_slice * s)" << nl;
@@ -330,7 +330,7 @@ be_array::gen_client_inline (void)
             {
               // generate a loop for each dimension
               *ci << "for (CORBA::ULong i" << i << " = 0; i" << i << " < " <<
-                expr->ev ()->u.ulval << "; i" << i << "++)\n"; 
+                expr->ev ()->u.ulval << "; i" << i << "++)\n";
               ci->incr_indent ();
             }
           else
@@ -341,8 +341,8 @@ be_array::gen_client_inline (void)
         }
 
       // the code below looks terribly complex. However, all it is trying to do
-      // is to generate code of the form 
-      // temp [i0][i1].... = 
+      // is to generate code of the form
+      // temp [i0][i1].... =
       *ci << "temp ";
       for (i = 0; i < this->n_dims (); i++)
         {
@@ -392,7 +392,7 @@ be_array::gen_client_inline (void)
 
       ci->decr_indent ();
       *ci << "}\n\n";
-      
+
       // free method
       *ci << this->name () << "_free (" << this->name () << "_slice *s)" << nl;
       *ci << "{\n";
@@ -428,12 +428,12 @@ be_array::gen_client_inline (void)
       cg->pop ();
       this->cli_inline_gen_ = I_TRUE;
     }
-  
+
   return 0;
 }
 
 // Generates the server-side inline
-int 
+int
 be_array::gen_server_inline (void)
 {
   // nothing to be done
@@ -447,12 +447,12 @@ be_array::gen_forany_defn (void)
   TAO_OutStream *ch; // output stream
   long i;            // loop index
   TAO_NL  nl;        // end line
-  char namebuf [MAXNAMELEN];  // to hold the _out name
+  char namebuf [TAO_CodeGen::MAXNAMELEN];  // to hold the _out name
 
   // Macro to avoid "warning: unused parameter" type warning.
   ACE_UNUSED_ARG (i);
 
-  ACE_OS::memset (namebuf, '\0', MAXNAMELEN);
+  ACE_OS::memset (namebuf, '\0', TAO_CodeGen::MAXNAMELEN);
   ACE_OS::sprintf (namebuf, "%s_forany", local_name ()->get_string ());
 
   // retrieve a singleton instance of the code generator
@@ -474,27 +474,27 @@ be_array::gen_forany_defn (void)
   // constr
   *ch << namebuf << " (" << local_name () << "_slice *);" << nl;
   // copy constructor
-  *ch << namebuf << " (const " << namebuf << 
+  *ch << namebuf << " (const " << namebuf <<
     " &); // copy constructor" << nl;
   // destructor
   *ch << "~" << namebuf << " (void); // destructor" << nl;
   *ch << nl;
   // assignment operator from a pointer
-  *ch << namebuf << " &operator= (" << local_name () << 
+  *ch << namebuf << " &operator= (" << local_name () <<
     "_slice *, CORBA::Boolean nocopy=0);" << nl;
   // assignment from _var
-  *ch << namebuf << " &operator= (const " << namebuf << 
+  *ch << namebuf << " &operator= (const " << namebuf <<
     " &);" << nl;
 
   // overloaded [] operator
   *ch << namebuf << "_slice &operator[] (CORBA::ULong index);" << nl;
-  *ch << "const " << namebuf << 
+  *ch << "const " << namebuf <<
     "_slice &operator[] (CORBA::ULong index) const;" << nl;
-  
+
   // cast operators
   *ch << "operator const " << local_name () << "_slice *&() (void) const;" << nl;
   *ch << "operator " << local_name () << "_slice *&() (void);" << nl;
-  
+
   *ch << "// in, inout, out, _retn " << nl;
   // the return types of in, out, inout, and _retn are based on the parameter
   // passing rules and the base type
@@ -519,7 +519,7 @@ be_array::gen_forany_defn (void)
   *ch << local_name () << "_slice *ptr_;\n";
   ch->decr_indent ();
   *ch << "};\n\n";
-  
+
   return 0;
 }
 
@@ -529,16 +529,16 @@ be_array::gen_forany_impl (void)
   TAO_OutStream *ci; // output stream
   long i;            // loop index
   TAO_NL  nl;        // end line
-  char fname [MAXNAMELEN];  // to hold the full and
-  char lname [MAXNAMELEN];  // local _var names
+  char fname [TAO_CodeGen::MAXNAMELEN];  // to hold the full and
+  char lname [TAO_CodeGen::MAXNAMELEN];  // local _var names
 
   // Macro to avoid "warning: unused parameter" type warning.
   ACE_UNUSED_ARG (i);
 
-  ACE_OS::memset (fname, '\0', MAXNAMELEN);
+  ACE_OS::memset (fname, '\0', TAO_CodeGen::MAXNAMELEN);
   ACE_OS::sprintf (fname, "%s_forany", this->fullname ());
 
-  ACE_OS::memset (lname, '\0', MAXNAMELEN);
+  ACE_OS::memset (lname, '\0', TAO_CodeGen::MAXNAMELEN);
   ACE_OS::sprintf (lname, "%s_forany", local_name ()->get_string ());
 
   // retrieve a singleton instance of the code generator
@@ -553,14 +553,14 @@ be_array::gen_forany_impl (void)
 
   ci->indent (); // start with whatever was our current indent level
 
-  *ci << "// *************************************************************" 
+  *ci << "// *************************************************************"
       << nl;
   *ci << "// Inline operations for class " << fname << nl;
   *ci << "// *************************************************************\n\n";
 
   // default constr
   *ci << "ACE_INLINE" << nl;
-  *ci << fname << "::" << lname << 
+  *ci << fname << "::" << lname <<
     " (void) // default constructor" << nl;
   *ci << "\t" << ": ptr_ ((" << name () << "_slice *)0)" << nl;
   *ci << "{}\n\n";
@@ -575,14 +575,14 @@ be_array::gen_forany_impl (void)
   // copy constructor (deep copy)
   ci->indent ();
   *ci << "ACE_INLINE" << nl;
-  *ci << fname << "::" << lname << " (const " << fname << 
+  *ci << fname << "::" << lname << " (const " << fname <<
     " &p) // copy constructor" << nl;
   *ci << "{\n";
   ci->incr_indent ();
   *ci << "this->ptr_ = " << this->name () << "_dup (p->ptr);\n";
   ci->decr_indent ();
   *ci << "}\n\n";
-        
+
   // destructor
   ci->indent ();
   *ci << "ACE_INLINE" << nl;
@@ -626,7 +626,7 @@ be_array::gen_forany_impl (void)
   ci->incr_indent ();
   *ci << "// not assigning to ourselves" << nl;
   *ci << this->name () << "_free (this->ptr_); // free old stuff" << nl;
-  *ci << "this->ptr_ = " << this->name () << 
+  *ci << "this->ptr_ = " << this->name () <<
     "_dup (p->ptr);// deep copy\n";
   ci->decr_indent ();
   *ci << "}" << nl;
@@ -637,7 +637,7 @@ be_array::gen_forany_impl (void)
   // other extra methods - cast operators ()
   ci->indent ();
   *ci << "ACE_INLINE " << nl;
-  *ci << fname << "::operator const " << name () << 
+  *ci << fname << "::operator const " << name () <<
     "_slice &() const // cast" << nl;
   *ci << "{\n";
   ci->incr_indent ();
@@ -745,10 +745,10 @@ be_array::gen_encapsulation (void)
 
   os = cg->client_stubs ();
   os->indent (); // start from the current indentation level
-  
+
   // XXXASG - byte order must be based on what m/c we are generating code -
-  // TODO 
-  *os << "0, // byte order" << nl; 
+  // TODO
+  *os << "0, // byte order" << nl;
 
   // emit typecode of element type
   bt = be_type::narrow_from_decl (this->base_type ());
@@ -785,12 +785,12 @@ be_array::tc_encap_len (void)
       bt = be_type::narrow_from_decl (this->base_type ());
       if (!bt)
         {
-          ACE_ERROR ((LM_ERROR, 
-                      "be_array::tc_encap_len - bad base type\n")); 
+          ACE_ERROR ((LM_ERROR,
+                      "be_array::tc_encap_len - bad base type\n"));
           return 0;
         }
       this->encap_len_ += bt->tc_encap_len ();
-      this->encap_len_ += 4; // to hold the array size 
+      this->encap_len_ += 4; // to hold the array size
 
     }
   return this->encap_len_;
@@ -799,4 +799,3 @@ be_array::tc_encap_len (void)
 // Narrowing
 IMPL_NARROW_METHODS2 (be_array, AST_Array, be_type)
 IMPL_NARROW_FROM_DECL (be_array)
-

@@ -2,7 +2,7 @@
 //
 // = LIBRARY
 //    TAO IDL
-// 
+//
 // = FILENAME
 //    be_decl.cpp
 //
@@ -12,9 +12,9 @@
 //
 // = AUTHOR
 //    Copyright 1994-1995 by Sun Microsystems, Inc.
-//    and 
+//    and
 //    Aniruddha Gokhale
-// 
+//
 // ============================================================================
 
 #include	"idl.h"
@@ -137,7 +137,7 @@ be_decl::compute_fullname (void)
       // in the first loop compute the total length
       namelen = 0;
       i = new UTL_IdListActiveIterator (this->name ());
-      while (!(i->is_done ())) 
+      while (!(i->is_done ()))
         {
           if (!first)
             namelen += 2; // for "::"
@@ -145,7 +145,7 @@ be_decl::compute_fullname (void)
             first = second = I_FALSE;
           // print the identifier
           namelen += ACE_OS::strlen (i->item ()->get_string ());
-          if (first) 
+          if (first)
             {
               if (ACE_OS::strcmp (i->item ()->get_string (), "") != 0)
                 // does not start with a ""
@@ -162,7 +162,7 @@ be_decl::compute_fullname (void)
       first = I_TRUE;
       second = I_FALSE;
       i = new UTL_IdListActiveIterator (this->name ());
-      while (!(i->is_done ())) 
+      while (!(i->is_done ()))
         {
           if (!first)
             ACE_OS::strcat (this->fullname_, "::");
@@ -170,7 +170,7 @@ be_decl::compute_fullname (void)
             first = second = I_FALSE;
           // print the identifier
           ACE_OS::strcat (this->fullname_, i->item ()->get_string ());
-          if (first) 
+          if (first)
             {
               if (ACE_OS::strcmp (i->item ()->get_string (), "") != 0)
                 // does not start with a ""
@@ -207,7 +207,7 @@ be_decl::compute_flatname (void)
       // in the first loop compute the total length
       namelen = 0;
       i = new UTL_IdListActiveIterator (this->name ());
-      while (!(i->is_done ())) 
+      while (!(i->is_done ()))
         {
           if (!first)
             namelen += 1; // for "_"
@@ -215,7 +215,7 @@ be_decl::compute_flatname (void)
             first = second = I_FALSE;
           // print the identifier
           namelen += ACE_OS::strlen (i->item ()->get_string ());
-          if (first) 
+          if (first)
             {
               if (ACE_OS::strcmp (i->item ()->get_string (), "") != 0)
                 // does not start with a ""
@@ -232,7 +232,7 @@ be_decl::compute_flatname (void)
       first = I_TRUE;
       second = I_FALSE;
       i = new UTL_IdListActiveIterator (this->name ());
-      while (!(i->is_done ())) 
+      while (!(i->is_done ()))
         {
           if (!first)
             ACE_OS::strcat (this->flatname_, "_");
@@ -240,7 +240,7 @@ be_decl::compute_flatname (void)
             first = second = I_FALSE;
           // print the identifier
           ACE_OS::strcat (this->flatname_, i->item ()->get_string ());
-          if (first) 
+          if (first)
             {
               if (ACE_OS::strcmp (i->item ()->get_string (), "") != 0)
                 // does not start with a ""
@@ -277,7 +277,7 @@ be_decl::compute_repoID (void)
       // in the first loop compute the total length
       namelen = 8; // for the prefix "IDL:" and suffix ":1.0"
       i = new UTL_IdListActiveIterator (this->name ());
-      while (!(i->is_done ())) 
+      while (!(i->is_done ()))
         {
           if (!first)
             namelen += 1; // for "/"
@@ -285,7 +285,7 @@ be_decl::compute_repoID (void)
             first = second = I_FALSE;
           // print the identifier
           namelen += ACE_OS::strlen (i->item ()->get_string ());
-          if (first) 
+          if (first)
             {
               if (ACE_OS::strcmp (i->item ()->get_string (), "") != 0)
                 // does not start with a ""
@@ -303,7 +303,7 @@ be_decl::compute_repoID (void)
       i = new UTL_IdListActiveIterator (this->name ());
       first = I_TRUE;
       second = I_FALSE;
-      while (!(i->is_done ())) 
+      while (!(i->is_done ()))
         {
           if (!first)
             ACE_OS::strcat (this->repoID_, "/");
@@ -311,7 +311,7 @@ be_decl::compute_repoID (void)
             first = second = I_FALSE;
           // print the identifier
           ACE_OS::strcat (this->repoID_, i->item ()->get_string ());
-          if (first) 
+          if (first)
             {
               if (ACE_OS::strcmp (i->item ()->get_string (), "") != 0)
                 // does not start with a ""
@@ -333,10 +333,10 @@ be_decl::repoID (void)
   return this->repoID_;
 }
 
-int 
+int
 be_decl::tc_name2long (const char *name, long *&larr, long &arrlen)
 {
-  static char buf [MAXNAMELEN];
+  static char buf [TAO_CodeGen::MAXNAMELEN];
   long slen;
   unsigned int i;
 
@@ -346,14 +346,14 @@ be_decl::tc_name2long (const char *name, long *&larr, long &arrlen)
   // multiple of 4 (i.e., size of long)
   arrlen = slen/4 + (slen%4 ? 1:0);
 
-  memset (buf, '\0', arrlen*4);
+  ACE_OS::memset (buf, '\0', arrlen*4);
   larr = (long *)buf;
 
   for (i=0; i < ACE_OS::strlen (name); i++)
     {
       long shift; // num bytes to shift left
 
-      shift = 3 - (i%4); 
+      shift = 3 - (i%4);
       // store the computed shifted quantity in the appropriate byte of the
       // array to be returned
       larr [i/4] |= ((name[i] & 0xff) << (shift*8));
@@ -372,9 +372,9 @@ be_decl::gen_var_defn (void)
 {
   TAO_OutStream *ch; // output stream
   TAO_NL  nl;        // end line
-  char namebuf [MAXNAMELEN];  // names
+  char namebuf [TAO_CodeGen::MAXNAMELEN];  // names
 
-  ACE_OS::memset (namebuf, '\0', MAXNAMELEN);
+  ACE_OS::memset (namebuf, '\0', TAO_CodeGen::MAXNAMELEN);
   ACE_OS::sprintf (namebuf, "%s_var", this->local_name ()->get_string ());
 
   // retrieve a singleton instance of the code generator
@@ -406,7 +406,7 @@ be_decl::gen_var_defn (void)
       *ch << namebuf << " (" << local_name () << " *);" << nl;
     }
   // copy constructor
-  *ch << namebuf << " (const " << namebuf << 
+  *ch << namebuf << " (const " << namebuf <<
     " &); // copy constructor" << nl;
   // destructor
   *ch << "~" << namebuf << " (void); // destructor" << nl;
@@ -424,7 +424,7 @@ be_decl::gen_var_defn (void)
       *ch << namebuf << " &operator= (" << local_name () << " *);" << nl;
     }
   // assignment from _var
-  *ch << namebuf << " &operator= (const " << namebuf << 
+  *ch << namebuf << " &operator= (const " << namebuf <<
     " &);" << nl;
 
   // arrow operator
@@ -435,7 +435,7 @@ be_decl::gen_var_defn (void)
       break;
     case AST_Decl::NT_array:
       // nothing here
-      break; 
+      break;
     default: // others
       *ch << local_name () << " *operator-> (void);" << nl;
       *ch << "const " << local_name () << " *operator-> (void) const;" << nl;
@@ -453,7 +453,7 @@ be_decl::gen_var_defn (void)
     case AST_Decl::NT_array:
       // overloaded [] operator
       *ch << namebuf << "_slice &operator[] (CORBA::ULong index);" << nl;
-      *ch << "const " << namebuf << 
+      *ch << "const " << namebuf <<
         "_slice &operator[] (CORBA::ULong index) const;" << nl;
 
       // cast operators
@@ -470,7 +470,7 @@ be_decl::gen_var_defn (void)
       {
         be_sequence *bs = be_sequence::narrow_from_decl (this);
         be_type *bt = be_type::narrow_from_decl (bs->base_type ());
-        
+
 	// Macro to avoid "warning: unused parameter" type warning.
 	ACE_UNUSED_ARG (bt);
 
@@ -478,14 +478,14 @@ be_decl::gen_var_defn (void)
         *ch << "operator const " << local_name () << " &() const;" << nl;
         *ch << "operator " << local_name () << " &();" << nl;
         *ch << "operator " << local_name () << " &() const;" << nl;
-        
+
         // overloaded [] operator. The const version is not required
         //        bt->gen_type ();
         // XXXASG
         *ch << " &operator[] (CORBA::ULong index);" << nl;
       }
     }
-  
+
   *ch << "// in, inout, out, _retn " << nl;
   // the return types of in, out, inout, and _retn are based on the parameter
   // passing rules and the base type
@@ -538,8 +538,25 @@ be_decl::gen_var_defn (void)
     default:
       break;
     }
+
+  // generate an additional member function that returns the underlying pointer
+  switch (this->node_type ())
+    {
+    case AST_Decl::NT_interface:
+      *ch << local_name () << "_ptr &ptr (void);\n";
+      break;
+    case AST_Decl::NT_array:
+      *ch << local_name () << "_slice *&ptr (void);\n";
+      break;
+    default:
+      *ch << local_name () << " *&ptr(void);\n";
+    }
+
+
   *ch << "\n";
   ch->decr_indent ();
+
+  // generate the private section
   *ch << "private:\n";
   ch->incr_indent ();
   switch (this->node_type ())
@@ -556,24 +573,24 @@ be_decl::gen_var_defn (void)
 
   ch->decr_indent ();
   *ch << "};\n\n";
-  
+
   return 0;
 }
 
 // implementation of the _var class. All of these get generated in the inline
-// file 
+// file
 int
 be_decl::gen_var_impl (void)
 {
   TAO_OutStream *ci; // output stream
   TAO_NL  nl;        // end line
-  char fname [MAXNAMELEN];  // to hold the full and
-  char lname [MAXNAMELEN];  // local _var names
+  char fname [TAO_CodeGen::MAXNAMELEN];  // to hold the full and
+  char lname [TAO_CodeGen::MAXNAMELEN];  // local _var names
 
-  ACE_OS::memset (fname, '\0', MAXNAMELEN);
+  ACE_OS::memset (fname, '\0', TAO_CodeGen::MAXNAMELEN);
   ACE_OS::sprintf (fname, "%s_var", this->fullname ());
 
-  ACE_OS::memset (lname, '\0', MAXNAMELEN);
+  ACE_OS::memset (lname, '\0', TAO_CodeGen::MAXNAMELEN);
   ACE_OS::sprintf (lname, "%s_var", local_name ()->get_string ());
 
   // retrieve a singleton instance of the code generator
@@ -588,7 +605,7 @@ be_decl::gen_var_impl (void)
 
   ci->indent (); // start with whatever was our current indent level
 
-  *ci << "// *************************************************************" 
+  *ci << "// *************************************************************"
       << nl;
   *ci << "// Inline operations for class " << fname << nl;
   *ci << "// *************************************************************\n\n";
@@ -600,7 +617,7 @@ be_decl::gen_var_impl (void)
     case AST_Decl::NT_interface:
       // default constr
       *ci << "ACE_INLINE" << nl;
-      *ci << fname << "::" << lname << 
+      *ci << fname << "::" << lname <<
         " (void) // default constructor" << nl;
       *ci << "\t" << ": ptr_ (" << this->name () << "::_nil ())" << nl;
       *ci << "{}\n\n";
@@ -615,9 +632,9 @@ be_decl::gen_var_impl (void)
       // copy constructor
       ci->indent ();
       *ci << "ACE_INLINE" << nl;
-      *ci << fname << "::" << lname << " (const " << fname << 
+      *ci << fname << "::" << lname << " (const " << fname <<
         " &p) // copy constructor" << nl;
-      *ci << "\t: ptr_ (" << name () << "::_duplicate (p))" << nl; 
+      *ci << "\t: ptr_ (" << name () << "::_duplicate (p.ptr_))" << nl;
       *ci << "{}\n\n";
 
       // destructor
@@ -654,7 +671,7 @@ be_decl::gen_var_impl (void)
       *ci << "{\n";
       ci->incr_indent ();
       *ci << "CORBA::release (this->ptr_);" << nl;
-      *ci << "this->ptr_ = " << name () << "::_duplicate (p);\n";
+      *ci << "this->ptr_ = " << name () << "::_duplicate (p.ptr_);\n";
       ci->decr_indent ();
       *ci << "}" << nl;
       *ci << "return *this;\n";
@@ -664,7 +681,7 @@ be_decl::gen_var_impl (void)
       // other extra methods - cast operator ()
       ci->indent ();
       *ci << "ACE_INLINE " << nl;
-      *ci << fname << "::operator const " << name () << 
+      *ci << fname << "::operator const " << name () <<
         "_ptr &() const // cast" << nl;
       *ci << "{\n";
       ci->incr_indent ();
@@ -733,15 +750,25 @@ be_decl::gen_var_impl (void)
       ci->decr_indent ();
       *ci << "}\n\n";
 
+      // the additional ptr () member function
+      ci->indent ();
+      *ci << "ACE_INLINE " << name () << "_ptr &" << nl;
+      *ci << fname << "::ptr (void)" << nl;
+      *ci << "{\n";
+      ci->incr_indent ();
+      *ci << "return this->ptr_;\n";
+      ci->decr_indent ();
+      *ci << "}\n\n";
+
       break;
     case AST_Decl::NT_array:
-      { 
+      {
         be_array *b;
 
         b = be_array::narrow_from_decl (this);
         // default constr
         *ci << "ACE_INLINE" << nl;
-        *ci << fname << "::" << lname << 
+        *ci << fname << "::" << lname <<
           " (void) // default constructor" << nl;
         *ci << "\t" << ": ptr_ ((" << name () << "_slice *)0)" << nl;
         *ci << "{}\n\n";
@@ -756,14 +783,14 @@ be_decl::gen_var_impl (void)
         // copy constructor (deep copy)
         ci->indent ();
         *ci << "ACE_INLINE" << nl;
-        *ci << fname << "::" << lname << " (const " << fname << 
+        *ci << fname << "::" << lname << " (const " << fname <<
           " &p) // copy constructor" << nl;
         *ci << "{\n";
         ci->incr_indent ();
-        *ci << "this->ptr_ = " << this->name () << "_dup (p->ptr);\n";
+        *ci << "this->ptr_ = " << this->name () << "_dup (p.ptr_);\n";
         ci->decr_indent ();
         *ci << "}\n\n";
-        
+
         // destructor
         ci->indent ();
         *ci << "ACE_INLINE" << nl;
@@ -807,8 +834,8 @@ be_decl::gen_var_impl (void)
         ci->incr_indent ();
         *ci << "// not assigning to ourselves" << nl;
         *ci << this->name () << "_free (this->ptr_); // free old stuff" << nl;
-        *ci << "this->ptr_ = " << this->name () << 
-          "_dup (p->ptr);// deep copy\n";
+        *ci << "this->ptr_ = " << this->name () <<
+          "_dup (p.ptr_);// deep copy\n";
         ci->decr_indent ();
         *ci << "}" << nl;
         *ci << "return *this;\n";
@@ -818,7 +845,7 @@ be_decl::gen_var_impl (void)
         // other extra methods - cast operators ()
         ci->indent ();
         *ci << "ACE_INLINE " << nl;
-        *ci << fname << "::operator const " << name () << 
+        *ci << fname << "::operator const " << name () <<
           "_slice *&() const // cast" << nl;
         *ci << "{\n";
         ci->incr_indent ();
@@ -890,14 +917,24 @@ be_decl::gen_var_impl (void)
         *ci << "return this->val;\n";
         ci->decr_indent ();
         *ci << "}\n\n";
-        
+
+        // the additional ptr () member function
+        ci->indent ();
+        *ci << "ACE_INLINE " << name () << "_slice *&" << nl;
+        *ci << fname << "::ptr (void)" << nl;
+        *ci << "{\n";
+        ci->incr_indent ();
+        *ci << "return this->ptr_;\n";
+        ci->decr_indent ();
+        *ci << "}\n\n";
+
       } // end of case ARRAY
     break;
     case AST_Decl::NT_struct:
     case AST_Decl::NT_union:
       // default constr
       *ci << "ACE_INLINE" << nl;
-      *ci << fname << "::" << lname << 
+      *ci << fname << "::" << lname <<
         " (void) // default constructor" << nl;
       *ci << "\t" << ": ptr_ (0)" << nl;
       *ci << "{}\n\n";
@@ -912,11 +949,11 @@ be_decl::gen_var_impl (void)
       // copy constructor
       ci->indent ();
       *ci << "ACE_INLINE" << nl;
-      *ci << fname << "::" << lname << " (const " << fname << 
+      *ci << fname << "::" << lname << " (const " << fname <<
         " &p) // copy constructor" << nl;
       *ci << "{\n";
       ci->incr_indent ();
-      *ci << "if (p.ptr_)" << nl; 
+      *ci << "if (p.ptr_)" << nl;
       *ci << "\tthis->ptr_ = new " << this->name () << "(*p.ptr_);" << nl;
       *ci << "else" << nl;
       *ci << "\tthis->ptr_ = 0;\n";
@@ -986,7 +1023,7 @@ be_decl::gen_var_impl (void)
       // other extra methods - 3 cast operator ()
       ci->indent ();
       *ci << "ACE_INLINE " << nl;
-      *ci << fname << "::operator const " << name () << 
+      *ci << fname << "::operator const " << name () <<
         " &() const // cast" << nl;
       *ci << "{\n";
       ci->incr_indent ();
@@ -1077,6 +1114,17 @@ be_decl::gen_var_impl (void)
           *ci << "return *this->ptr_;\n";
           ci->decr_indent ();
           *ci << "}\n\n";
+
+          // the additional ptr () member function
+          ci->indent ();
+          *ci << "ACE_INLINE " << name () << " *&" << nl;
+          *ci << fname << "::ptr (void)" << nl;
+          *ci << "{\n";
+          ci->incr_indent ();
+          *ci << "return this->ptr_;\n";
+          ci->decr_indent ();
+          *ci << "}\n\n";
+
         }
       break;
     case AST_Decl::NT_sequence:
@@ -1084,180 +1132,190 @@ be_decl::gen_var_impl (void)
         be_sequence *bs = be_sequence::narrow_from_decl (this);
         be_type *bt = be_type::narrow_from_decl (bs->base_type ());
 
-	// Macro to avoid "warning: unused parameter" type warning.
-	ACE_UNUSED_ARG (bt);
+        // Macro to avoid "warning: unused parameter" type warning.
+        ACE_UNUSED_ARG (bt);
 
-      // default constr
-      *ci << "ACE_INLINE" << nl;
-      *ci << fname << "::" << lname << 
-        " (void) // default constructor" << nl;
-      *ci << "\t" << ": ptr_ (0)" << nl;
-      *ci << "{}\n\n";
+        // default constr
+        *ci << "ACE_INLINE" << nl;
+        *ci << fname << "::" << lname <<
+          " (void) // default constructor" << nl;
+        *ci << "\t" << ": ptr_ (0)" << nl;
+        *ci << "{}\n\n";
 
-      // constr from a _ptr
-      ci->indent ();
-      *ci << "ACE_INLINE" << nl;
-      *ci << fname << "::" << lname << " (" << name () << "_ptr p)" << nl;
-      *ci << "\t: ptr_ (p)" << nl;
-      *ci << "{}\n\n";
+        // constr from a _ptr
+        ci->indent ();
+        *ci << "ACE_INLINE" << nl;
+        *ci << fname << "::" << lname << " (" << name () << "_ptr p)" << nl;
+        *ci << "\t: ptr_ (p)" << nl;
+        *ci << "{}\n\n";
 
-      // copy constructor
-      ci->indent ();
-      *ci << "ACE_INLINE" << nl;
-      *ci << fname << "::" << lname << " (const " << fname << 
-        " &p) // copy constructor" << nl;
-      *ci << "{\n";
-      ci->incr_indent ();
-      *ci << "if (p.ptr_)" << nl; 
-      *ci << "\tthis->ptr_ = new " << this->name () << "(*p.ptr_);" << nl;
-      *ci << "else" << nl;
-      *ci << "\tthis->ptr_ = 0;\n";
-      ci->decr_indent ();
-      *ci << "}\n\n";
+        // copy constructor
+        ci->indent ();
+        *ci << "ACE_INLINE" << nl;
+        *ci << fname << "::" << lname << " (const " << fname <<
+          " &p) // copy constructor" << nl;
+        *ci << "{\n";
+        ci->incr_indent ();
+        *ci << "if (p.ptr_)" << nl;
+        *ci << "\tthis->ptr_ = new " << this->name () << "(*p.ptr_);" << nl;
+        *ci << "else" << nl;
+        *ci << "\tthis->ptr_ = 0;\n";
+        ci->decr_indent ();
+        *ci << "}\n\n";
 
-      // destructor
-      ci->indent ();
-      *ci << "ACE_INLINE" << nl;
-      *ci << fname << "::~" << lname << " (void) // destructor" << nl;
-      *ci << "{\n";
-      ci->incr_indent ();
-      *ci << "delete this->ptr_;\n";
-      ci->decr_indent ();
-      *ci << "}\n\n";
+        // destructor
+        ci->indent ();
+        *ci << "ACE_INLINE" << nl;
+        *ci << fname << "::~" << lname << " (void) // destructor" << nl;
+        *ci << "{\n";
+        ci->incr_indent ();
+        *ci << "delete this->ptr_;\n";
+        ci->decr_indent ();
+        *ci << "}\n\n";
 
-      // assignment operator from a pointer
-      ci->indent ();
-      *ci << "ACE_INLINE " << fname << " &" << nl;
-      *ci << fname << "::operator= (" << name () <<
-        " *p)" << nl;
-      *ci << "{\n";
-      ci->incr_indent ();
-      *ci << "delete this->ptr_;" << nl;
-      *ci << "this->ptr_ = p;" << nl;
-      *ci << "return *this;\n";
-      ci->decr_indent ();
-      *ci << "}\n\n";
+        // assignment operator from a pointer
+        ci->indent ();
+        *ci << "ACE_INLINE " << fname << " &" << nl;
+        *ci << fname << "::operator= (" << name () <<
+          " *p)" << nl;
+        *ci << "{\n";
+        ci->incr_indent ();
+        *ci << "delete this->ptr_;" << nl;
+        *ci << "this->ptr_ = p;" << nl;
+        *ci << "return *this;\n";
+        ci->decr_indent ();
+        *ci << "}\n\n";
 
-      // assignment operator from _var
-      ci->indent ();
-      *ci << "ACE_INLINE " << fname << " &" << nl;
-      *ci << fname << "::operator= (const " << fname <<
-        "_var &p) // deep copy" << nl;
-      *ci << "{\n";
-      ci->incr_indent ();
-      *ci << "if (this != &p)" << nl;
-      *ci << "{\n";
-      ci->incr_indent ();
-      *ci << "delete this->ptr_;" << nl;
-      *ci << "this->ptr_ = new " << this->name () << " (*p.ptr_);\n";
-      ci->decr_indent ();
-      *ci << "}" << nl;
-      *ci << "return *this;\n";
-      ci->decr_indent ();
-      *ci << "}\n\n";
+        // assignment operator from _var
+        ci->indent ();
+        *ci << "ACE_INLINE " << fname << " &" << nl;
+        *ci << fname << "::operator= (const " << fname <<
+          "_var &p) // deep copy" << nl;
+        *ci << "{\n";
+        ci->incr_indent ();
+        *ci << "if (this != &p)" << nl;
+        *ci << "{\n";
+        ci->incr_indent ();
+        *ci << "delete this->ptr_;" << nl;
+        *ci << "this->ptr_ = new " << this->name () << " (*p.ptr_);\n";
+        ci->decr_indent ();
+        *ci << "}" << nl;
+        *ci << "return *this;\n";
+        ci->decr_indent ();
+        *ci << "}\n\n";
 
-      // two arrow operators
-      ci->indent ();
-      *ci << "ACE_INLINE const " << fname << " *" << nl;
-      *ci << fname << "::operator-> (void) const" << nl;
-      *ci << "{\n";
-      ci->incr_indent ();
-      *ci << "return this->ptr_;\n";
-      ci->decr_indent ();
-      *ci << "}\n\n";
+        // two arrow operators
+        ci->indent ();
+        *ci << "ACE_INLINE const " << fname << " *" << nl;
+        *ci << fname << "::operator-> (void) const" << nl;
+        *ci << "{\n";
+        ci->incr_indent ();
+        *ci << "return this->ptr_;\n";
+        ci->decr_indent ();
+        *ci << "}\n\n";
 
-      ci->indent ();
-      *ci << "ACE_INLINE " << fname << " *" << nl;
-      *ci << fname << "::operator-> (void)" << nl;
-      *ci << "{\n";
-      ci->incr_indent ();
-      *ci << "return this->ptr_;\n";
-      ci->decr_indent ();
-      *ci << "}\n\n";
+        ci->indent ();
+        *ci << "ACE_INLINE " << fname << " *" << nl;
+        *ci << fname << "::operator-> (void)" << nl;
+        *ci << "{\n";
+        ci->incr_indent ();
+        *ci << "return this->ptr_;\n";
+        ci->decr_indent ();
+        *ci << "}\n\n";
 
-      // other extra methods - 3 cast operator ()
-      ci->indent ();
-      *ci << "ACE_INLINE " << nl;
-      *ci << fname << "::operator const " << name () << 
-        " &() const // cast" << nl;
-      *ci << "{\n";
-      ci->incr_indent ();
-      *ci << "return *this->ptr_;\n";
-      ci->decr_indent ();
-      *ci << "}\n\n";
+        // other extra methods - 3 cast operator ()
+        ci->indent ();
+        *ci << "ACE_INLINE " << nl;
+        *ci << fname << "::operator const " << name () <<
+          " &() const // cast" << nl;
+        *ci << "{\n";
+        ci->incr_indent ();
+        *ci << "return *this->ptr_;\n";
+        ci->decr_indent ();
+        *ci << "}\n\n";
 
-      ci->indent ();
-      *ci << "ACE_INLINE " << nl;
-      *ci << fname << "::operator " << name () << " &() // cast " << nl;
-      *ci << "{\n";
-      ci->incr_indent ();
-      *ci << "return *this->ptr_;\n";
-      ci->decr_indent ();
-      *ci << "}\n\n";
+        ci->indent ();
+        *ci << "ACE_INLINE " << nl;
+        *ci << fname << "::operator " << name () << " &() // cast " << nl;
+        *ci << "{\n";
+        ci->incr_indent ();
+        *ci << "return *this->ptr_;\n";
+        ci->decr_indent ();
+        *ci << "}\n\n";
 
-      ci->indent ();
-      *ci << "ACE_INLINE " << nl;
-      *ci << fname << "::operator " << name () << " &() const// cast " << nl;
-      *ci << "{\n";
-      ci->incr_indent ();
-      *ci << "return *this->ptr_;\n";
-      ci->decr_indent ();
-      *ci << "}\n\n";
+        ci->indent ();
+        *ci << "ACE_INLINE " << nl;
+        *ci << fname << "::operator " << name () << " &() const// cast " << nl;
+        *ci << "{\n";
+        ci->incr_indent ();
+        *ci << "return *this->ptr_;\n";
+        ci->decr_indent ();
+        *ci << "}\n\n";
 
-      // operator []
-      ci->indent ();
-      *ci << "ACE_INLINE ";
-      //bt->gen_type (); 
-      // XXXASG
-      *ci << " " << nl;
-      *ci << fname << "::operator[] (CORBA::ULong index)" << nl;
-      *ci << "{\n";
-      ci->incr_indent ();
-      *ci << "return this->ptr_->operator[] (index);\n";
-      ci->decr_indent ();
-      *ci << "}\n\n";
+        // operator []
+        ci->indent ();
+        *ci << "ACE_INLINE ";
+        //bt->gen_type ();
+        // XXXASG
+        *ci << " " << nl;
+        *ci << fname << "::operator[] (CORBA::ULong index)" << nl;
+        *ci << "{\n";
+        ci->incr_indent ();
+        *ci << "return this->ptr_->operator[] (index);\n";
+        ci->decr_indent ();
+        *ci << "}\n\n";
 
-      // in, inout, out, and _retn
-      ci->indent ();
-      *ci << "ACE_INLINE const " << name () << " &" << nl;
-      *ci << fname << "::in (void) const" << nl;
-      *ci << "{\n";
-      ci->incr_indent ();
-      *ci << "return *this->ptr_;\n";
-      ci->decr_indent ();
-      *ci << "}\n\n";
+        // in, inout, out, and _retn
+        ci->indent ();
+        *ci << "ACE_INLINE const " << name () << " &" << nl;
+        *ci << fname << "::in (void) const" << nl;
+        *ci << "{\n";
+        ci->incr_indent ();
+        *ci << "return *this->ptr_;\n";
+        ci->decr_indent ();
+        *ci << "}\n\n";
 
-      ci->indent ();
-      *ci << "ACE_INLINE " << name () << " &" << nl;
-      *ci << fname << "::inout (void)" << nl;
-      *ci << "{\n";
-      ci->incr_indent ();
-      *ci << "return *this->ptr_;\n";
-      ci->decr_indent ();
-      *ci << "}\n\n";
+        ci->indent ();
+        *ci << "ACE_INLINE " << name () << " &" << nl;
+        *ci << fname << "::inout (void)" << nl;
+        *ci << "{\n";
+        ci->incr_indent ();
+        *ci << "return *this->ptr_;\n";
+        ci->decr_indent ();
+        *ci << "}\n\n";
 
-      ci->indent ();
-      *ci << "// mapping for variable size " << nl;
-      *ci << "ACE_INLINE " << name () << " *&" << nl;
-      *ci << fname << "::out (void)" << nl;
-      *ci << "{\n";
-      ci->incr_indent ();
-      *ci << "delete this->ptr_;" << nl;
-      *ci << "this->ptr_ = 0;" << nl;
-      *ci << "return this->ptr_;\n";
-      ci->decr_indent ();
-      *ci << "}\n\n";
+        ci->indent ();
+        *ci << "// mapping for variable size " << nl;
+        *ci << "ACE_INLINE " << name () << " *&" << nl;
+        *ci << fname << "::out (void)" << nl;
+        *ci << "{\n";
+        ci->incr_indent ();
+        *ci << "delete this->ptr_;" << nl;
+        *ci << "this->ptr_ = 0;" << nl;
+        *ci << "return this->ptr_;\n";
+        ci->decr_indent ();
+        *ci << "}\n\n";
 
-      ci->indent ();
-      *ci << "ACE_INLINE " << name () << " *" << nl;
-      *ci << fname << "::_retn (void)" << nl;
-      *ci << "{\n";
-      ci->incr_indent ();
-      *ci << this->name () << " *tmp = this->ptr_;" << nl;
-      *ci << "this->ptr_ = 0;" << nl;
-      *ci << "return tmp;\n";
-      ci->decr_indent ();
-      *ci << "}\n\n";
+        ci->indent ();
+        *ci << "ACE_INLINE " << name () << " *" << nl;
+        *ci << fname << "::_retn (void)" << nl;
+        *ci << "{\n";
+        ci->incr_indent ();
+        *ci << this->name () << " *tmp = this->ptr_;" << nl;
+        *ci << "this->ptr_ = 0;" << nl;
+        *ci << "return tmp;\n";
+        ci->decr_indent ();
+        *ci << "}\n\n";
+
+        // the additional ptr () member function
+        ci->indent ();
+        *ci << "ACE_INLINE " << name () << " *&" << nl;
+        *ci << fname << "::ptr (void)" << nl;
+        *ci << "{\n";
+        ci->incr_indent ();
+        *ci << "return this->ptr_;\n";
+        ci->decr_indent ();
+        *ci << "}\n\n";
 
       } // end of case for sequence
     } // end of switch
@@ -1270,9 +1328,9 @@ be_decl::gen_out_defn (void)
 {
   TAO_OutStream *ch; // output stream
   TAO_NL  nl;        // end line
-  char namebuf [MAXNAMELEN];  // to hold the _out name
+  char namebuf [TAO_CodeGen::MAXNAMELEN];  // to hold the _out name
 
-  ACE_OS::memset (namebuf, '\0', MAXNAMELEN);
+  ACE_OS::memset (namebuf, '\0', TAO_CodeGen::MAXNAMELEN);
   ACE_OS::sprintf (namebuf, "%s_out", local_name ()->get_string ());
 
   // retrieve a singleton instance of the code generator
@@ -1332,8 +1390,8 @@ be_decl::gen_out_defn (void)
       *ch << local_name () << "_slice *&ptr (void);" << nl;
       // operator [] instead of ->
       *ch << namebuf << "_slice &operator[] (CORBA::ULong index);" << nl;
-      *ch << "const " << namebuf << 
-        "_slice &operator[] (CORBA::ULong index) const;" << nl; 
+      *ch << "const " << namebuf <<
+        "_slice &operator[] (CORBA::ULong index) const;" << nl;
       break;
     default: // others
       // assignment
@@ -1390,13 +1448,13 @@ be_decl::gen_out_impl (void)
 {
   TAO_OutStream *ci; // output stream
   TAO_NL  nl;        // end line
-  char fname [MAXNAMELEN];  // to hold the full and
-  char lname [MAXNAMELEN];  // local _out names
+  char fname [TAO_CodeGen::MAXNAMELEN];  // to hold the full and
+  char lname [TAO_CodeGen::MAXNAMELEN];  // local _out names
 
-  ACE_OS::memset (fname, '\0', MAXNAMELEN);
+  ACE_OS::memset (fname, '\0', TAO_CodeGen::MAXNAMELEN);
   ACE_OS::sprintf (fname, "%s_out", this->fullname ());
 
-  ACE_OS::memset (lname, '\0', MAXNAMELEN);
+  ACE_OS::memset (lname, '\0', TAO_CodeGen::MAXNAMELEN);
   ACE_OS::sprintf (lname, "%s_out", local_name ()->get_string ());
 
   // retrieve a singleton instance of the code generator
@@ -1411,7 +1469,7 @@ be_decl::gen_out_impl (void)
 
   ci->indent (); // start with whatever was our current indent level
 
-  *ci << "// *************************************************************" 
+  *ci << "// *************************************************************"
       << nl;
   *ci << "// Inline operations for class " << fname << nl;
   *ci << "// *************************************************************\n\n";
@@ -1435,9 +1493,9 @@ be_decl::gen_out_impl (void)
       // constructor from _var &
       ci->indent ();
       *ci << "ACE_INLINE" << nl;
-      *ci << fname << "::" << lname << " (" << this->name () << 
+      *ci << fname << "::" << lname << " (" << this->name () <<
         "_var &p) // constructor from _var" << nl;
-      *ci << "\t: ptr_ (p.out ())" << nl;
+      *ci << "\t: ptr_ (p.ptr ())" << nl;
       *ci << "{\n";
       ci->incr_indent ();
       *ci << "CORBA::release (this->ptr_);" << nl;
@@ -1448,7 +1506,7 @@ be_decl::gen_out_impl (void)
       // copy constructor
       ci->indent ();
       *ci << "ACE_INLINE" << nl;
-      *ci << fname << "::" << lname << " (" << fname << 
+      *ci << fname << "::" << lname << " (" << fname <<
         " &p) // copy constructor" << nl;
       *ci << "\t: ptr_ (p.ptr_)" << nl;
       *ci << "{}\n\n";
@@ -1472,7 +1530,7 @@ be_decl::gen_out_impl (void)
         "_var &p)" << nl;
       *ci << "{\n";
       ci->incr_indent ();
-      *ci << "this->ptr_ = " << this->name () << "::_duplicate (p);" << nl;
+      *ci << "this->ptr_ = " << this->name () << "::_duplicate (p.ptr ());" << nl;
       *ci << "return *this;\n";
       ci->decr_indent ();
       *ci << "}\n\n";
@@ -1492,7 +1550,7 @@ be_decl::gen_out_impl (void)
       // other extra methods - cast operator ()
       ci->indent ();
       *ci << "ACE_INLINE " << nl;
-      *ci << fname << "::operator " << this->name () << 
+      *ci << fname << "::operator " << this->name () <<
         "_ptr &() // cast" << nl;
       *ci << "{\n";
       ci->incr_indent ();
@@ -1522,7 +1580,7 @@ be_decl::gen_out_impl (void)
 
       break;
     case AST_Decl::NT_array:
-      { 
+      {
         be_array *b;
 
         b = be_array::narrow_from_decl (this);
@@ -1540,7 +1598,7 @@ be_decl::gen_out_impl (void)
         // constructor from _var &
         ci->indent ();
         *ci << "ACE_INLINE" << nl;
-        *ci << fname << "::" << lname << " (" << this->name () << 
+        *ci << fname << "::" << lname << " (" << this->name () <<
           "_var &p) // constructor from _var" << nl;
         *ci << "\t: ptr_ (p.out ())" << nl;
         *ci << "{\n";
@@ -1553,7 +1611,7 @@ be_decl::gen_out_impl (void)
         // copy constructor
         ci->indent ();
         *ci << "ACE_INLINE" << nl;
-        *ci << fname << "::" << lname << " (" << fname << 
+        *ci << fname << "::" << lname << " (" << fname <<
           " &p) // copy constructor" << nl;
         *ci << "\t: ptr_ (p.ptr_)" << nl;
         *ci << "{}\n\n";
@@ -1570,7 +1628,7 @@ be_decl::gen_out_impl (void)
         ci->decr_indent ();
         *ci << "}\n\n";
 
-        // assignment from _var is not allowed by a private declaration 
+        // assignment from _var is not allowed by a private declaration
 
         // assignment operator from _ptr
         ci->indent ();
@@ -1587,7 +1645,7 @@ be_decl::gen_out_impl (void)
         // other extra methods - cast operator ()
         ci->indent ();
         *ci << "ACE_INLINE " << nl;
-        *ci << fname << "::operator " << this->name () << 
+        *ci << fname << "::operator " << this->name () <<
           "_slice *&() // cast" << nl;
         *ci << "{\n";
         ci->incr_indent ();
@@ -1631,7 +1689,7 @@ be_decl::gen_out_impl (void)
         // constructor from _var &
         ci->indent ();
         *ci << "ACE_INLINE" << nl;
-        *ci << fname << "::" << lname << " (" << this->name () << 
+        *ci << fname << "::" << lname << " (" << this->name () <<
           "_var &p) // constructor from _var" << nl;
         *ci << "\t: ptr_ (p.out ())" << nl;
         *ci << "{\n";
@@ -1644,7 +1702,7 @@ be_decl::gen_out_impl (void)
         // copy constructor
         ci->indent ();
         *ci << "ACE_INLINE" << nl;
-        *ci << fname << "::" << lname << " (" << fname << 
+        *ci << fname << "::" << lname << " (" << fname <<
           " &p) // copy constructor" << nl;
         *ci << "\t: ptr_ (p.ptr_)" << nl;
         *ci << "{}\n\n";
@@ -1661,7 +1719,7 @@ be_decl::gen_out_impl (void)
         ci->decr_indent ();
         *ci << "}\n\n";
 
-        // assignment from _var is not allowed by a private declaration 
+        // assignment from _var is not allowed by a private declaration
 
         // assignment operator from pointer
         ci->indent ();
@@ -1678,7 +1736,7 @@ be_decl::gen_out_impl (void)
         // other extra methods - cast operator ()
         ci->indent ();
         *ci << "ACE_INLINE " << nl;
-        *ci << fname << "::operator " << this->name () << 
+        *ci << fname << "::operator " << this->name () <<
           " *&() // cast" << nl;
         *ci << "{\n";
         ci->incr_indent ();
@@ -1711,7 +1769,7 @@ be_decl::gen_out_impl (void)
           {
             be_type *bt;
             bt = be_type::narrow_from_decl (be_sequence::narrow_from_decl
-                                            (this)->base_type ()); 
+                                            (this)->base_type ());
 
             ci->indent ();
             *ci << "ACE_INLINE ";
@@ -1740,7 +1798,7 @@ be_decl::lookup_seq_name (Identifier *id)
     return I_FALSE;
 
   i = new UTL_IdListActiveIterator (this->seq_names_);
-  while (!(i->is_done ())) 
+  while (!(i->is_done ()))
     {
       if (ACE_OS::strcmp (i->item ()->get_string (), id->get_string ()) == 0)
         return I_TRUE;  // found
@@ -1796,7 +1854,7 @@ be_decl::name_encap_len (void)
   long slen;
 
   slen = ACE_OS::strlen (this->local_name ()->get_string ()) + 1; // + 1 for
-                                                    // NULL terminating char 
+                                                    // NULL terminating char
   // the number of bytes to hold the string must be a multiple of 4 since this
   // will be represented as an array of longs
   return 4 + 4 * (slen/4 + (slen%4 ? 1:0));
@@ -1805,5 +1863,3 @@ be_decl::name_encap_len (void)
 // narrowing methods
 IMPL_NARROW_METHODS1 (be_decl, AST_Decl)
 IMPL_NARROW_FROM_DECL (be_decl)
-
-  
