@@ -31,9 +31,23 @@ sub new {
                                                       $options, $ipaths),
                         'replace' => $replace,
                         'dwrite'  => DependencyWriterFactory::create($type),
-                        'cwd'     => Cwd::getcwd() . '/',
+                        'cwd'     => undef,
                        }, $class;
+
+  ## Set the current working directory, but
+  ## escape regular expression special characters
+  $self->{'cwd'} = $self->escape_regex_special(Cwd::getcwd()) . '/';
+
   return $self;
+}
+
+
+sub escape_regex_special {
+  my($self) = shift;
+  my($name) = shift;
+
+  $name =~ s/([\+\-\\\$\[\]\(\)\.])/\\$1/g;
+  return $name;
 }
 
 
