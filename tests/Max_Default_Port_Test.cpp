@@ -30,8 +30,16 @@
 #include "ace/Reactor.h"
 #include "ace/SOCK_Connector.h"
 #include "ace/Thread_Manager.h"
+#include "ace/OS_NS_unistd.h"
+#include "ace/Time_Value.h"
 
 #include "Max_Default_Port_Test.h"
+
+// implement a retry and recuperation mechanism for VxWorks because test will otherwise fail
+// on a non-optimized kernel with several ETIME errors on the client connects.
+#if defined (ACE_VXWORKS)
+int retry_port_ = 0;
+#endif
 
 My_Accept_Handler::My_Accept_Handler (ACE_INET_Addr &addr)
   : addr_ (addr)
@@ -120,12 +128,33 @@ client (void *arg)
                    server_addr,
                    &timeout) == -1)
     {
+#if defined (ACE_VXWORKS)
+	  if (errno == ETIME)
+	  {
+		if ( ++retry_port_<6 )
+		{
+  		  ACE_DEBUG ((LM_DEBUG,
+  		   	         ACE_TEXT ("(%P|%t) Going to retry port %d\n"),
+                     server_addr.get_port_number()));
+		}
+	  }
+	  if ( retry_port_>5 )
+	  {
+		retry_port_ = 0;
+#endif
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("(%P|%t) %p\n"),
                   ACE_TEXT ("connection failed")));
 
+#if defined (ACE_VXWORKS)
+	  }
+#endif
       return 0;
     }
+
+#if defined (ACE_VXWORKS)
+  retry_port_ = 0;
+#endif
 
   // if connect succesful, what is the max port number we connected
   // up to now.
@@ -153,6 +182,12 @@ run_main (int argc, ACE_TCHAR *argv[])
   //Ports beyond 65279 were said to bad on NT sp 3.
   for (u_short idx = USHRT_MAX; idx != USHRT_MAX - 300; --idx)
     {
+	  if (retry_port_>0)
+	  {
+	  	++idx;
+        ACE_OS::sleep (ACE_Time_Value (2*ACE_DEFAULT_TIMEOUT));
+	  }
+
       ACE_INET_Addr addr (idx);
 
       My_Accept_Handler *eh = new My_Accept_Handler (addr);
