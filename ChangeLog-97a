@@ -8,6 +8,12 @@ Thu Apr 03 08:52:34 1997  David L. Levine  <levine@cs.wustl.edu>
 	  from size_t to int to avoid signed/unsigned mismatch.  Thanks
 	  to Matthias Kerkhoff <make@cs.tu-berlin.de> for reporting this.
 
+	* ace/OS.cpp (readv), SOCK_Dgram.cpp (recv): added casts of
+	  iov_len and copyn because iov_len is int on some platforms and
+	  size_t on others.  This avoids compiler (MSVC 4.1) warnings.
+	  Thanks to Matthias Kerkhoff <make@cs.tu-berlin.de> for reporting
+	  this.
+
 Thu Apr  3 01:48:01 1997  Tim H. Harrison  <harrison@lambada.cs.wustl.edu>
 
 	* ace/Malloc.i (malloc): ACE_New_Allocator::malloc only calls new
