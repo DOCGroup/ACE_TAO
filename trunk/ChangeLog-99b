@@ -1,4 +1,8 @@
-Tue Jul 06 16:15:38 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+Tue Jul 06 16:29:32 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/OS.h: Moved the string conversion macros before including
+	  OS.i because we also use them in the file.  Thanks to Carlos for
+	  reporting this.
 
 	* OS.{h,i,cpp}:
 	* Parse_Node.cpp: Windows CE fixes.

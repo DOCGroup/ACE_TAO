@@ -1,3 +1,11 @@
+Tue Jul  6 15:55:12 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* docs/Options.html:
+	* tao/ORB_Core.cpp (init): Merged the flags '-ORBCollocation yes/no'
+	  and '-ORBGlobalCollocation yes/no'.  The collocation policy is
+	  now controlled only by the flag '-ORBCollocation
+	  yes/global/per-orb/no'.  Thanks to Irfan for suggesting this.
+
 Tue Jul  6 15:31:01 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/GIOP.h:
