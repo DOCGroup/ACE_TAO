@@ -438,7 +438,7 @@ and should not be set by the user. Please use TAO_HAS_REMOTE_POLICIES instead.
 
 #if !defined (TAO_DEFAULT_THREAD_PER_CONNECTION_TIMEOUT)
 // The default timeout value for the thread-per-connection model, in
-// milliseconds. The -1 value is magic and means blocking forever.
+// milliseconds. The "INFINITE" value is magic and means blocking forever.
 #define TAO_DEFAULT_THREAD_PER_CONNECTION_TIMEOUT "5000"
 #endif /* TAO_DEFAULT_THREAD_PER_CONNECTION_TIMEOUT */
 
