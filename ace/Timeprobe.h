@@ -100,7 +100,7 @@ public:
   event_type event_type_;
 
   /// Timestamp.
-  ACE_hrtime_t time_;
+  ACE_Time_Value time_;
 
   /// Id of thread posting the time probe.
   ACE_thread_t thread_;
@@ -123,7 +123,9 @@ typedef ACE_SYNCH_MUTEX ACE_TIMEPROBE_MUTEX;
 typedef ACE_SYNCH_NULL_MUTEX ACE_TIMEPROBE_MUTEX;
 #  endif /* ACE_MT_TIMEPROBES */
 
-typedef ACE_Timeprobe<ACE_TIMEPROBE_MUTEX>
+typdef ACE_New_Allocator ACE_TIMEPROBE_ALLOCATOR;
+
+typedef ACE_Timeprobe<ACE_TIMEPROBE_MUTEX, ACE_TIMEPROBE_ALLOCATOR>
         ACE_TIMEPROBE_WITH_LOCKING;
 
 // If ACE_TSS_TIMEPROBES is defined, store the ACE_Timeprobe singleton
@@ -131,11 +133,15 @@ typedef ACE_Timeprobe<ACE_TIMEPROBE_MUTEX>
 // their own instance of ACE_Timerprobe, without interfering with each
 // other.
 #  if defined (ACE_TSS_TIMEPROBES)
-#    define ACE_TIMEPROBE_SINGLETON_TYPE ACE_TSS_Singleton
-#    define ACE_TIMEPROBE_SINGLETON_LOCK_TYPE ACE_SYNCH_NULL_MUTEX
+#define ACE_TIMEPROBE_SINGLETON_DEFINE \
+        ACE_TSS_Singleton<ACE_TIMEPROBE_WITH_LOCKING, ACE_SYNCH_NULL_MUTEX>;
+typedef ACE_TSS_Singleton<ACE_TIMEPROBE_WITH_LOCKING, ACE_SYNCH_NULL_MUTEX>
+        ACE_TIMEPROBE_SINGLETON;
 #  else /* ACE_TSS_TIMEPROBES */
-#    define ACE_TIMEPROBE_SINGLETON_TYPE ACE_Singleton
-#    define ACE_TIMEPROBE_SINGLETON_LOCK_TYPE ACE_SYNCH_MUTEX
+#define ACE_TIMEPROBE_SINGLETON_DEFINE \
+        ACE_Singleton<ACE_TIMEPROBE_WITH_LOCKING, ACE_SYNCH_MUTEX>;
+typedef ACE_Singleton<ACE_TIMEPROBE_WITH_LOCKING, ACE_SYNCH_MUTEX>
+        ACE_TIMEPROBE_SINGLETON;
 #  endif /* ACE_TSS_TIMEPROBES */
 
 typedef ACE_TIMEPROBE_SINGLETON_TYPE<ACE_TIMEPROBE_WITH_LOCKING, ACE_TIMEPROBE_SINGLETON_LOCK_TYPE>
@@ -153,11 +159,21 @@ ACE_SINGLETON_DECLARE (ACE_TIMEPROBE_SINGLETON_TYPE, \
 #if defined (ACE_ENABLE_TIMEPROBES) && defined (ACE_COMPILE_TIMEPROBES)
 
 #  define ACE_TIMEPROBE_RESET ACE_TIMEPROBE_SINGLETON::instance ()->reset ()
+
 #  define ACE_TIMEPROBE(id) ACE_TIMEPROBE_SINGLETON::instance ()->timeprobe (id)
+
 #  define ACE_TIMEPROBE_PRINT ACE_TIMEPROBE_SINGLETON::instance ()->print_times ()
+
 #  define ACE_TIMEPROBE_PRINT_ABSOLUTE ACE_TIMEPROBE_SINGLETON::instance ()->print_absolute_times ()
-#  define ACE_TIMEPROBE_EVENT_DESCRIPTIONS(descriptions, minimum_id) static int ace_timeprobe_##descriptions##_return = ACE_TIMEPROBE_SINGLETON::instance ()->event_descriptions (descriptions, minimum_id)
-#  define ACE_FUNCTION_TIMEPROBE(X) ACE_Function_Timeprobe<ACE_TIMEPROBE_WITH_LOCKING> function_timeprobe (*ACE_TIMEPROBE_SINGLETON::instance (), X)
+
+#  define ACE_TIMEPROBE_EVENT_DESCRIPTIONS(descriptions, minimum_id) \
+static int ace_timeprobe_##descriptions##_return = \
+  ACE_TIMEPROBE_SINGLETON::instance ()->event_descriptions \
+    (descriptions, minimum_id)
+
+#  define ACE_FUNCTION_TIMEPROBE(X) \
+  ACE_Function_Timeprobe<ACE_TIMEPROBE_WITH_LOCKING> function_timeprobe \
+    (*ACE_TIMEPROBE_SINGLETON::instance (), X)
 
 #else /* ACE_ENABLE_TIMEPROBES && ACE_COMPILE_TIMEPROBES */
 
