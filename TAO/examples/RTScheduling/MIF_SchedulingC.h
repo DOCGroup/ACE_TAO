@@ -28,8 +28,8 @@
 // TAO_IDL - Generated from
 // be/be_codegen.cpp:151
 
-#ifndef _TAO_IDL_____MIF_SCHEDULINGC_H_
-#define _TAO_IDL_____MIF_SCHEDULINGC_H_
+#ifndef _TAO_IDL_MIF_SCHEDULINGC_H_
+#define _TAO_IDL_MIF_SCHEDULINGC_H_
 
 
 #include "tao/corba.h"
@@ -155,7 +155,7 @@ TAO_NAMESPACE  MIF_Scheduling
     // be/be_visitor_operation/operation_ch.cpp:46
     
     virtual CORBA::Short importance (
-        
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -166,6 +166,7 @@ TAO_NAMESPACE  MIF_Scheduling
     
     virtual void importance (
         CORBA::Short importance
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -280,6 +281,7 @@ TAO_NAMESPACE  MIF_Scheduling
     
     virtual ::MIF_Scheduling::SegmentSchedulingParameterPolicy_ptr create_segment_scheduling_parameter (
         CORBA::Short segment_importance
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException

@@ -1,3 +1,10 @@
+Wed Jul 30 17:00:03 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
+
+	* ace/UUID.cpp: 	
+
+	  Removed erroneous casting of timeLow. Thanks to Johnny Willemsen
+	  <jwillemsen@remedy.nl> for pointing this out.
+
 Wed Jul 30 02:18:17 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * configure.ac:
