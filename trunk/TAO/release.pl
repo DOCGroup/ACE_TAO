@@ -84,7 +84,8 @@ chop $version_number;
 ($version_tag = $MODNAME."-".$version_number) =~ s/\./_/g;
 
 $CVSCOM = 'cvs';
-$COM = qq/$CVSCOM commit -m'$TAO_VERSION' $VERSION $CHANGELOG && $CVSCOM rtag $version_tag $MODNAME/;
+$COM = qq/$CVSCOM commit -m'$TAO_VERSION' $VERSION $CHANGELOG && \
+       $CVSCOM rtag $version_tag $MODNAME/ && $CVSCOM rtag -F Current $MODNAME/;
 print $COM;
 system $COM;
 
