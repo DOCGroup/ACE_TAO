@@ -52,7 +52,8 @@ TAO_Connector_Registry::get_connector (CORBA::ULong tag)
 int
 TAO_Connector_Registry::open (TAO_ORB_Core *orb_core)
 {
-  TAO_ProtocolFactorySet *pfs = orb_core->protocol_factories ();
+  TAO_ProtocolFactorySet *pfs =
+    orb_core->protocol_factories ();
 
   // The array containing the TAO_Connectors will never contain more
   // than the number of loaded protocols in the ORB core.
@@ -68,22 +69,22 @@ TAO_Connector_Registry::open (TAO_ORB_Core *orb_core)
        factory != end;
        ++factory)
     {
-      TAO_Connector * connector =
-        (*factory)->factory ()->make_connector ();
+      auto_ptr <TAO_Connector> connector (
+        (*factory)->factory ()->make_connector ());
 
-      if (connector)
+      if (connector.get ())
         {
          if (connector->open (orb_core) != 0)
            {
-             delete connector;
-
              ACE_ERROR_RETURN ((LM_ERROR,
                                 ACE_LIB_TEXT ("TAO (%P|%t) unable to open connector for ")
                                 ACE_LIB_TEXT ("<%s>.\n"),
                                 ACE_TEXT_CHAR_TO_TCHAR((*factory)->protocol_name ().c_str ())),
                                -1);
            }
-         this->connectors_[this->size_++] = connector;
+
+         this->connectors_[this->size_++] =
+           connector.release ();
         }
       else
         return -1;

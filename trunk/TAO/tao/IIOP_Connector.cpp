@@ -41,10 +41,10 @@ template class ACE_NonBlocking_Connect_Handler<TAO_IIOP_Connection_Handler>;
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 TAO_IIOP_Connector::TAO_IIOP_Connector (CORBA::Boolean flag)
-  : TAO_Connector (IOP::TAG_INTERNET_IOP),
-    lite_flag_ (flag),
-    connect_strategy_ (),
-    base_connector_ ()
+  : TAO_Connector (IOP::TAG_INTERNET_IOP)
+  , lite_flag_ (flag)
+  , connect_strategy_ ()
+  , base_connector_ ()
 {
 }
 
@@ -143,6 +143,15 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
   const ACE_INET_Addr &remote_address =
     iiop_endpoint->object_addr ();
 
+  bool pn =
+    iiop_endpoint->is_preferred_network ();
+
+  ACE_INET_Addr local_addr;
+
+  if (pn)
+    local_addr.set ((u_short) 0,
+                    iiop_endpoint->preferred_network ());
+
   if (TAO_debug_level > 2)
     ACE_DEBUG ((LM_DEBUG,
                 "TAO (%P|%t) - IIOP_Connector::make_connection, "
@@ -168,11 +177,11 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
 
   TAO_IIOP_Connection_Handler *svc_handler = 0;
 
-  // Connect.
   int result =
     this->base_connector_.connect (svc_handler,
                                    remote_address,
-                                   synch_options);
+                                   synch_options,
+                                   local_addr);
 
   // The connect() method creates the service handler and bumps the
   // #REFCOUNT# up one extra.  There are four possibilities from
@@ -347,7 +356,7 @@ TAO_IIOP_Connector::check_prefix (const char *endpoint)
   const size_t slot = ACE_OS::strchr (endpoint, ':') - endpoint;
   if (slot == 0) // an empty string is valid for corbaloc.
     return 0;
-                                                                                                                  
+
   const size_t len0 = ACE_OS::strlen (protocol[0]);
   const size_t len1 = ACE_OS::strlen (protocol[1]);
 

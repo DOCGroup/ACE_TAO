@@ -516,59 +516,28 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
           arg_shifter.consume_arg ();
         }
       else if ((current_arg = arg_shifter.get_the_parameter
-                (ACE_TEXT("-ORBPreconnect"))))
+                (ACE_TEXT("-ORBPreferredInterfaces"))))
         {
-#if 0
-          /*
-           *
-           *  TODO: Needs to go. Leaving it around for things to
-           *  settle down.
-           */
-          // Get a string which describes the connections we want to
-          // cache up-front, thus reducing the latency of the first call.
-          //
-          // For example,  specify -ORBpreconnect once for each
-          // protocol:
-          //
-          //   -ORBpreconnect iiop://tango:10015,watusi:10016
-          //   -ORBpreconnect busX_iop://board1:0x07450000,board2,0x08450000
-          //
-          // Or chain all possible endpoint designations together:
-          //
-          //   -ORBpreconnect iiop://tango:10015,watusi:10016/;
-          //              busX_iop://board1:0x07450000,board2,0x08450000/
-          //
-          // The old style command line only works for IIOP:
-          //    -ORBpreconnect tango:10015,tango:10015,watusi:10016
-
-          ACE_CString preconnections (ACE_TEXT_ALWAYS_CHAR(current_arg));
-
-
-          if (this->orb_params ()->preconnects (preconnections) != 0)
-            {
-              ACE_ERROR ((LM_ERROR,
-                          ACE_TEXT ("(%P|%t)\n")
-                          ACE_TEXT ("Invalid preconnect(s)")
-                          ACE_TEXT ("specified:\n%s\n"),
-                          preconnections.c_str ()));
-              ACE_THROW_RETURN (CORBA::BAD_PARAM (
+          if (this->orb_params ()->preferred_interfaces (
+                current_arg) == false)
+            ACE_THROW_RETURN (CORBA::INTERNAL (
                                   CORBA::SystemException::_tao_minor_code (
                                     TAO_ORB_CORE_INIT_LOCATION_CODE,
-                                    EINVAL),
+                                    0),
                                   CORBA::COMPLETED_NO),
                                 -1);
-            }
-#endif /*if 0*/
 
-          // validate_connection() supports the same functionality as
-          // the -ORBPreconnect option, and more.  Multiple
-          // preconnections are also provided by validate_connection()
-          // via "banded connections."
-          ACE_ERROR ((LM_WARNING,
-                      ACE_TEXT ("(%P|%t) -ORBPreconnect is ")
-                      ACE_TEXT ("deprecated.\n")
-                      ACE_TEXT ("(%P|%t) Use validate_connection()")
-                      ACE_TEXT ("at runtime, instead.\n")));
+          arg_shifter.consume_arg ();
+        }
+      else if ((current_arg = arg_shifter.get_the_parameter
+                (ACE_TEXT("-ORBEnforcePreferredInterfaces"))))
+        {
+          if (ACE_OS::strcasecmp (current_arg,
+                                  ACE_TEXT("YES")) == 0)
+            this->orb_params ()->enforce_pref_interfaces (true);
+          else if (ACE_OS::strcasecmp (current_arg,
+                                       ACE_TEXT("NO")) == 0)
+            this->orb_params ()->enforce_pref_interfaces (false);
 
           arg_shifter.consume_arg ();
         }
@@ -1928,7 +1897,7 @@ TAO_ORB_Core::run (ACE_Time_Value *tv,
   if (this->has_shutdown () == 1 &&
       this->server_factory_->activate_server_connections ())
       this->tm_.wait ();
-      
+
   if (TAO_debug_level > 2)
     {
       ACE_DEBUG ((LM_DEBUG,

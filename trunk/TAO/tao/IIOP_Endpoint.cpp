@@ -1,6 +1,7 @@
 #include "IIOP_Endpoint.h"
-#include "IOPC.h"
+#include "IOP_IORC.h"
 #include "debug.h"
+#include "ORB_Core.h"
 
 #include "ace/Log_Msg.h"
 #include "ace/Guard_T.h"
@@ -21,11 +22,12 @@ ACE_RCSID (tao,
 TAO_IIOP_Endpoint::TAO_IIOP_Endpoint (const ACE_INET_Addr &addr,
                                       int use_dotted_decimal_addresses)
   : TAO_Endpoint (IOP::TAG_INTERNET_IOP)
-    , host_ ()
-    , port_ (683) // default port (IANA assigned)
-    , object_addr_ (addr)
-    , object_addr_set_ (false)
-    , next_ (0)
+  , host_ ()
+  , port_ (683) // default port (IANA assigned)
+  , object_addr_ (addr)
+  , object_addr_set_ (false)
+  , preferred_path_ ()
+  , next_ (0)
 {
   this->set (addr, use_dotted_decimal_addresses);
 }
@@ -36,23 +38,23 @@ TAO_IIOP_Endpoint::TAO_IIOP_Endpoint (const char *host,
                                       CORBA::Short priority)
   : TAO_Endpoint (IOP::TAG_INTERNET_IOP,
                   priority)
-    , host_ ()
-    , port_ (port)
-    , object_addr_ (addr)
-    , object_addr_set_ (false)
-    , next_ (0)
+  , host_ (host)
+  , port_ (port)
+  , object_addr_ (addr)
+  , object_addr_set_ (false)
+  , preferred_path_ ()
+  , next_ (0)
 {
-  if (host != 0)
-    this->host_ = host;
 }
 
 TAO_IIOP_Endpoint::TAO_IIOP_Endpoint (void)
   : TAO_Endpoint (IOP::TAG_INTERNET_IOP)
-    , host_ ()
-    , port_ (683)  // default port (IANA assigned)
-    , object_addr_ ()
-    , object_addr_set_ (false)
-    , next_ (0)
+  , host_ ()
+  , port_ (683)  // default port (IANA assigned)
+  , object_addr_ ()
+  , object_addr_set_ (false)
+  , preferred_path_ ()
+  , next_ (0)
 {
 }
 
@@ -60,11 +62,12 @@ TAO_IIOP_Endpoint::TAO_IIOP_Endpoint (const char *host,
                                       CORBA::UShort port,
                                       CORBA::Short priority)
   : TAO_Endpoint (IOP::TAG_INTERNET_IOP)
-    , host_ ()
-    , port_ (port)
-    , object_addr_ ()
-    , object_addr_set_ (false)
-    , next_ (0)
+  , host_ ()
+  , port_ (port)
+  , object_addr_ ()
+  , object_addr_set_ (false)
+  , preferred_path_ ()
+  , next_ (0)
 {
   if (host != 0)
     this->host_ = host;
@@ -73,6 +76,18 @@ TAO_IIOP_Endpoint::TAO_IIOP_Endpoint (const char *host,
 }
 
 TAO_IIOP_Endpoint::~TAO_IIOP_Endpoint (void)
+{
+}
+
+TAO_IIOP_Endpoint::TAO_IIOP_Endpoint (const TAO_IIOP_Endpoint &rhs)
+  : TAO_Endpoint (rhs.tag_,
+                  rhs.priority_)
+  , host_ (rhs.host_)
+  , port_ (rhs.port_)
+  , object_addr_ (rhs.object_addr_)
+  , object_addr_set_ (rhs.object_addr_set_)
+  , preferred_path_  (rhs.preferred_path_)
+  , next_ (0)
 {
 }
 
@@ -155,11 +170,9 @@ TAO_IIOP_Endpoint::duplicate (void)
 {
   TAO_IIOP_Endpoint *endpoint = 0;
 
+  // @@ NOTE: Not exception safe..
   ACE_NEW_RETURN (endpoint,
-                  TAO_IIOP_Endpoint (this->host_.in (),
-                                     this->port_,
-                                     this->object_addr_,
-                                     this->priority ()),
+                  TAO_IIOP_Endpoint (*this),
                   0);
 
   return endpoint;
@@ -215,6 +228,90 @@ TAO_IIOP_Endpoint::object_addr_i (void) const
     }
 }
 
+CORBA::ULong
+TAO_IIOP_Endpoint::preferred_interfaces (TAO_ORB_Core *oc)
+{
+  ACE_CString tmp (
+    oc->orb_params ()->preferred_interfaces ());
+
+  ssize_t pos = 0;
+
+  pos = tmp.find (this->host_.in ());
+
+  TAO_IIOP_Endpoint *latest = this;
+
+  CORBA::ULong count = 0;
+
+  while (pos != ACE_CString::npos)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%P|%t) Pos value is [%d] \n",
+                  pos));
+
+      // Do we have a "," or an '\0'?
+      ssize_t new_pos = tmp.find (",",
+                                  pos + 1);
+
+      // Length of the preferred path
+      int length = 0;
+
+      if (new_pos == ACE_CString::npos)
+        length = tmp.length () - pos;
+      else
+        length = new_pos - pos;
+
+      ACE_CString rem_tmp = tmp.substr (pos, length);
+
+      // Search for the ":"
+      ssize_t col_pos = rem_tmp.find (":");
+
+      if (col_pos == ACE_CString::npos) continue;
+
+      ACE_CString path = rem_tmp.substr (col_pos + 1);
+
+      latest->preferred_path_.host =
+        CORBA::string_dup (path.c_str ());
+
+      if (TAO_debug_level > 3)
+        ACE_DEBUG ((LM_DEBUG,
+                    "(%P|%t) Adding path [%s] "
+                    " as preferred path for [%s] \n",
+                    path.c_str (), this->host_.in ()));
+
+      pos = tmp.find (latest->host_.in (),
+                      pos + length);
+
+      if (pos != ACE_CString::npos)
+        {
+          TAO_Endpoint *tmp_ep =
+            latest->duplicate ();
+
+          latest->next_ = dynamic_cast<TAO_IIOP_Endpoint *> (tmp_ep);
+
+          if (latest->next_ == 0) return count;
+
+          latest = latest->next_;
+          ++count;
+        }
+    }
+
+  if (tmp.c_str () != 0 &&
+      !oc->orb_params ()->enforce_pref_interfaces ())
+    {
+      TAO_Endpoint *tmp_ep = latest->duplicate ();
+
+      latest->next_ =
+        dynamic_cast<TAO_IIOP_Endpoint *> (tmp_ep);
+
+      if (latest->next_ == 0) return count;
+
+      latest->next_->preferred_path_.host = (const char *) 0;
+      ++count;
+    }
+
+  return count;
+}
+
 CORBA::Boolean
 TAO_IIOP_Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint)
 {
@@ -257,4 +354,16 @@ TAO_IIOP_Endpoint::hash (void)
   }
 
   return this->hash_val_;
+}
+
+bool
+TAO_IIOP_Endpoint::is_preferred_network (void) const
+{
+  return (this->preferred_path_.host.in () != 0);
+}
+
+const char *
+TAO_IIOP_Endpoint::preferred_network (void) const
+{
+  return this->preferred_path_.host.in ();
 }
