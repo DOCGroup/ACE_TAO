@@ -1,3 +1,9 @@
+Mon Nov 10 01:25:19 1997    <nw1@COYOTE>
+
+	* tao/giop.h: Added ACE_Svc_Export to classes
+ 	  (TAO_GIOP_Request_Header, TAO_GIOP_Invocation, TAO_GIOP.)  Some
+ 	  of them may not be necessary.
+
 Mon Nov 10 00:09:24 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* TAO version 0.0.27, released Mon Nov 10 00:09:24 1997.
