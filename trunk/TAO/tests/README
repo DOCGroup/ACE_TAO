@@ -172,10 +172,6 @@ how to run the following tests:
           
 	  Regression test for bugs #175 and #575
 
-        . LongWrites
-          
-	  Regression test for bugs #132
-
         . MProfile
 
           This program tests fundamentals of TAO's ORB fault tolerance
