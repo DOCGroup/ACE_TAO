@@ -1,17 +1,24 @@
+Tue Sep  7 22:14:43 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* CCF/CCF/IDL2/SemanticGraph/Elements.hpp:
+	* CCF/CCF/IDL2/Traversal/Elements.hpp:
+
+	  Fixed unused argument warnings.
+
 Tue Sep  7 15:48:19 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * DAnCE/ciao/Servant_Impl_Base.cpp:
         * ciao/Servant_Impl_Base.cpp:
-        
+
           Cosmetic changes.
-          
+
         * CIDLC/ServantHeaderGenerator.cpp:
         * CIDLC/ServantSourceGenerator.cpp:
         * DAnCE/ciao/Servant_Impl_T.cpp:
         * DAnCE/ciao/Servant_Impl_T.h:
         * ciao/Servant_Impl_T.cpp:
         * ciao/Servant_Impl_T.h:
-        
+
           Moved several methods from the generated servant class to the
           template Servant_Impl base class.
 
@@ -24,7 +31,7 @@ Tue Sep  7 10:44:10 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
         * CIDLC/ServantHeaderGenerator.cpp:
         * CIDLC/ServantSourceGenerator.cpp:
         * CIDLC/cidlc.cpp:
-        
+
           - Updated the RepositoryIdGenerator and re-added the source
             and header files to the build. This generator creates
             repository ids for interfaces and eventtypes, and stores
@@ -32,12 +39,12 @@ Tue Sep  7 10:44:10 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
             in code generation. It also handles modifications to the
             repository ids stemming from 'typeprefix' or 'typeid'
             declarations.
-            
+
           - Added generation of 'provide_<facet name>_i' and
             'get_consumer_<event consumer name>_i' methods in the servant,
             which create dummy object references and store them in the
             appropriate port table in the servant base class.
-            
+
           - Re-implemented the generated 'provide_<facet name>' and
             'get_consumer_<event consumer name>' methods. They now
             use the container's POA to activate the dummy objects
@@ -46,16 +53,16 @@ Tue Sep  7 10:44:10 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
             of these objects. If an object has already been activated,
             it will simply be found in its port table and returned.
             Thanks to Bala for the prototype code for this feature.
-            
+
         * ciao/Container_Base.cpp:
         * ciao/Container_Base.h:
-        
+
           Added 'generate_reference' utility method called by the
           '_i' methods described above.
-          
+
         * ciao/Servant_Impl_Base.cpp:
         * ciao/Servant_Impl_Base.h:
-        
+
           Added 'lookup_facet' and 'lookup_consumer' methods used in
           generated servant code to determine if a desired object has
           been activated already (and added to a port table) or not.
@@ -74,9 +81,9 @@ Sun Aug 29 19:25:21 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 Sun Aug 29 19:02:42 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* DAnCE/ciao/CCM_Core.mpc: 
-	 
-	  Added valuetype seperately to the Deployment_svnt project. 
+	* DAnCE/ciao/CCM_Core.mpc:
+
+	  Added valuetype seperately to the Deployment_svnt project.
 
 Sun Aug 29 18:10:13 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
@@ -84,7 +91,7 @@ Sun Aug 29 18:10:13 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* DAnCE/examples/BasicSP/BMDevice/BMDevice_svnt.h:
 	* DAnCE/examples/BasicSP/BMDisplay/BMDisplay_svnt.h:
 	* DAnCE/examples/BasicSP/EC/EC_svnt.h:
-	  
+
 	  These files should not be in the repository.
 
 Sat Aug 28 18:44:00 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
@@ -104,18 +111,18 @@ Sat Aug 28 09:22:15 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  Fixed the project names and shared librray names so that they
 	  don't collide with the regual BasicSP test. Ideally there
 	  shouldn't be any duplicate code. I waill talk to Gan about
-	  this. 
+	  this.
 
 Thu Aug 26 16:45:10 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/IDL3/Lookup/README:
         * tests/IDL3/Lookup/lookup_test.idl:
         * tests/IDL3/Lookup/lookup_test.mpc:
-        
+
           New files, a test for the IDL compiler lookup of declarations
           in base interfaces, valuetypes, components, and homes, and
           in supported interfaces, referenced by the local name in the
-          derived IDL type. Thanks to Boris Kolpackov 
+          derived IDL type. Thanks to Boris Kolpackov
           <boris@dre.vanderbilt.edu> for reporting the bug and for
           providing an example IDL file that illustrates the various
           cases.
@@ -123,20 +130,20 @@ Thu Aug 26 16:45:10 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 Thu Aug 26 13:24:40 2004  Gan Deng <gan.deng@vanderbilt.edu>
 
         * DAnCE/examples/BaiscSP/*.*:
-        
+
           Created above directory and subdictories to add an example for
           using DAnCE.
 
 Thu Aug 26 12:28:40 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIDLC/CIDLC.vcproj:
-        
+
           Added missing files to project.
 
 Thu Aug 26 11:25:39 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/CIDL/CodeGen/CodeGen.mpc:
-        
+
           Changed dependency from ciao_server to ciao_servant.
 
 Wed Aug 25 11:28:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>

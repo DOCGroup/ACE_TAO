@@ -224,13 +224,13 @@ namespace CCF
 
         /*
 
-	Let me know if you need this function.
+        Let me know if you need this function.
 
         ScopedName
         eponym () const
         {
         }
-	*/
+        */
 
       public:
         static Introspection::TypeInfo const&
@@ -460,7 +460,7 @@ namespace CCF
         }
 
         void
-        add_edge_right (Extends& e)
+        add_edge_right (Extends&)
         {
         }
 
