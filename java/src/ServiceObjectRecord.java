@@ -18,9 +18,6 @@
  *************************************************/
 package JACE.ServiceConfigurator;
 
-import java.lang.*;
-import JACE.ServiceConfigurator.*;
-
 public class ServiceObjectRecord extends ServiceRecord
 {
   public ServiceObjectRecord (Object so, String name)
