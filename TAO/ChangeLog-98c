@@ -13,6 +13,9 @@ Thu Feb 12 10:21:47 1998  David L. Levine  <levine@cs.wustl.edu>
           (create_wstring): use short instead of wchar_t if
           ACE_HAS_WCHAR_TYPEDEFS_CHAR.
 
+        * TAO_IDL/be/be_array.cpp (tao_name): changed type of loop index
+          "i" to unsigned int to avoid signed/unsigned comparison.
+
 Wed Feb 11 11:20:34 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/iiopobj.h,stub.h (operator =): added return type to avoid
