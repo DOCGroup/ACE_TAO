@@ -9,7 +9,7 @@ Tue Jul 07 09:26:22 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/run_tests.vxworks: added Dynamic_Priority_Test.
 
-        * apps/gperf/src/Makefile: added trailing $ to $Id$ string.
+        * apps/gperf/src/Makefile: added trailing $ to Id string.
 
 Tue Jul  7 10:48:42 EET DST 1998 Wei Chiang <chiang@horizon.ntc.nokia.com>
 

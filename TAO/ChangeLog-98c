@@ -37,7 +37,7 @@ Tue Jul 07 07:36:36 1998  David L. Levine  <levine@cs.wustl.edu>
         * tao/compat/objbase.h: use #if 0 instead of // to comment out a
           multiline #define, to avoid warning about a multiline comment.
 
-        * tests/Param_Test/results.{h,cpp}: added trailing $ to $Id$ string.
+        * tests/Param_Test/results.{h,cpp}: added trailing $ to Id string.
 
 Mon Jul  6 19:33:54 1998  Jeff Parsons  <jp4@cs.wustl,edu>
 
