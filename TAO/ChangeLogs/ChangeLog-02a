@@ -1,18 +1,33 @@
+Thu Mar 15 15:49:30 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * docs/tutorials/Quoter/Makefile:
+          Disable compilation for platforms without native C++ exception
+          support
+
+        * docs/tutorials/Quoter/Event_Service/Makefile:
+        * docs/tutorials/Quoter/RT_Event_Service/Makefile:
+          Add missing libraries
+
+        * docs/tutorials/Quoter/RT_Event_Service/index.html:
+        * docs/tutorials/Quoter/RT_Event_Service/Quoter.idl:
+          Copy IDL file from the Event_Service example, this is better for
+          automatic builds.
+
 Thu Mar 15 11:27:59 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/AMI_Timeouts/client.cpp (main): 
-	* tests/AMI_Timeouts/server.cpp:
-	* tests/AMI_Timeouts/timeout_client.cpp:
-	* tests/AMI_Timeouts/timeout_client.h:
-	* tests/AMI_Timeouts/timeout_i.cpp: Fixed quite few errors in
-	  SunCC 4.2 builds. The problem was the usage of the keyword 'bool'
-	  which is not supported in SunCC 4.2. Changed them to
-	  CORBA::Boolean which should be supported widely.
+        * tests/AMI_Timeouts/client.cpp (main): 
+        * tests/AMI_Timeouts/server.cpp:
+        * tests/AMI_Timeouts/timeout_client.cpp:
+        * tests/AMI_Timeouts/timeout_client.h:
+        * tests/AMI_Timeouts/timeout_i.cpp: Fixed quite few errors in
+          SunCC 4.2 builds. The problem was the usage of the keyword 'bool'
+          which is not supported in SunCC 4.2. Changed them to
+          CORBA::Boolean which should be supported widely.
 
 Thu Mar 15 10:32:01 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/IFR_Service/Makefile.TypeCodeFactory: Fixed a problem in
-	  TRUE_64 builds. Added -lTAO and -lACE to the list of libraries. 
+        * orbsvcs/IFR_Service/Makefile.TypeCodeFactory: Fixed a problem in
+          TRUE_64 builds. Added -lTAO and -lACE to the list of libraries. 
 
 Thu Mar 15 09:21:37 2001  Paul Calabrese <calabrese_p@ociweb.com>
 
@@ -33,7 +48,7 @@ Thu Mar 15 09:21:37 2001  Paul Calabrese <calabrese_p@ociweb.com>
 Thu Mar 15 07:21:21 2001  Balachandran Natarajan <bala@cs.wustl.edu>
 
         * orbsvcs/tests/FaultTolerance/IOGR/Makefile: 
-	  Fixed a problem with static builds.
+          Fixed a problem with static builds.
 
 Wed Mar 14 21:21:21 2001  Carlos O'Ryan  <coryan@uci.edu>
 
