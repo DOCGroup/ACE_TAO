@@ -56,7 +56,7 @@ CORBA_ExceptionList::item (CORBA::ULong slot,
 
   if (this->tc_list_.get (tc, slot) == -1)
     {
-      ACE_THROW_RETURN (CORBA::TypeCode::Bounds (), 
+      ACE_THROW_RETURN (CORBA::TypeCode::Bounds (),
                         CORBA::TypeCode::_nil ());
     }
   else
@@ -66,7 +66,7 @@ CORBA_ExceptionList::item (CORBA::ULong slot,
 }
 
 void
-CORBA_ExceptionList::remove (CORBA::ULong, 
+CORBA_ExceptionList::remove (CORBA::ULong,
                              CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_THROW (CORBA::NO_IMPLEMENT ());
@@ -106,9 +106,16 @@ CORBA_ExceptionList::_decr_refcnt (void)
 
 template class ACE_Atomic_Op<TAO_SYNCH_MUTEX, CORBA::ULong>;
 
+template class ACE_Node<CORBA::TypeCode_ptr>;
+template class ACE_Unbounded_Queue<CORBA::TypeCode_ptr>;
+template class ACE_Unbounded_Queue_Iterator<CORBA::TypeCode_ptr>;
+
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate ACE_Atomic_Op<TAO_SYNCH_MUTEX, CORBA::ULong>
 
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+#pragma instantiate ACE_Node<CORBA::TypeCode_ptr>
+#pragma instantiate ACE_Unbounded_Queue<CORBA::TypeCode_ptr>
+#pragma instantiate ACE_Unbounded_Queue_Iterator<CORBA::TypeCode_ptr>
 
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
