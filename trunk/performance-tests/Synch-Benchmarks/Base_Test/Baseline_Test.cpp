@@ -10,6 +10,11 @@
 
 ACE_RCSID(Synch_Benchmarks, Baseline_Test, "$Id$")
 
+Benchmark_Baseline_Test_Base::Benchmark_Baseline_Test_Base (void)
+  : Benchmark_Base (Benchmark_Base::BASELINE)
+{
+}
+
 Baseline_Test::Baseline_Test (void)
   : n_lwps_ (0),
     orig_n_lwps_ (0)

@@ -13,7 +13,7 @@
 extern int buffer;
 extern ACE_Svc_Export int synch_count;
 
-class SYNCHLIB_Export Benchmark_Performance_Test_Base : public Benchmark_Base
+class ACE_Svc_Export Benchmark_Performance_Test_Base : public Benchmark_Base
 {
   // = TITLE
   //     This class identifies itself as Benmarking Performance Test class.
