@@ -30,7 +30,7 @@
  * This data structure is meant to be used within a method,
  * function, or scope.  The actual parameter given for the
  * <ACE_SAFELY_INCREMENTABLE_DECREMENTABLE> template parameter
- * must provide at least opertaors ++ and --.
+ * must provide at least operators ++ and --.
  */
 template <class ACE_SAFELY_INCREMENTABLE_DECREMENTABLE>
 class ACE_Auto_IncDec
