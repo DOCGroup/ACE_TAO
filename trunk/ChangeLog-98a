@@ -1,3 +1,8 @@
+Wed Apr 01 09:32:27 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Msg_WFMO_Reactor.cpp (wait_for_multiple_events): Should not
+ 	  wait for all objects in this function.
+
 Tue Mar 31 15:27:25 1998  Steve Huston  <shuston@riverace.com>
 
         * apps/JAWS/server/JAWS_Pipeline_Handler.cpp: Defined 'status' in
