@@ -47,7 +47,7 @@ namespace TAO
 
       /**
        * Returns the POA on which the current request is being invoked.
-       * Can raise the <CORBA::NoContext> exception if this function is
+       * Can raise the @c NoContext exception if this function is
        * not invoked in the context of an upcall.
        */
       PortableServer::POA_ptr get_POA (ACE_ENV_SINGLE_ARG_DECL)
@@ -56,7 +56,7 @@ namespace TAO
 
       /**
        * Returns the object id of the current request being invoked.  Can
-       * raise the <CORBA::NoContext> exception if this function is not
+       * raise the @c NoContext exception if this function is not
        * invoked in the context of an upcall.
        */
       PortableServer::ObjectId *get_object_id (ACE_ENV_SINGLE_ARG_DECL)
