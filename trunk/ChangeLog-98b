@@ -1,3 +1,11 @@
+Sun Nov 29 20:13:15 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* examples/DLL/Today.cpp:
+	* examples/DLL/Newsweek.cpp:
+	  
+	  Added ACE_BUILD_SVC_DLL and ACE_Svc_Export directives needed for the
+	  extern "C" create_magazine function.
+
 Sun Nov 29 18:22:52 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/Thread_Pool_Reactor_Test.cpp: Removed the use of
