@@ -1,3 +1,11 @@
+Wed Aug 15 09:35:19 2001  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/Dirent_Test.cpp:
+
+          Added #define's for VXWORKS that allow this test to function
+          properly.  Avoid hard-coded relative paths that may not exist on
+          VxWorks.
+
 Wed Aug 15 09:08:40 2001  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/Sock_Connect.cpp:
@@ -7,25 +15,25 @@ Wed Aug 15 09:08:40 2001  Chad Elliott  <elliott_c@ociweb.com>
 
 Wed Aug 15 07:54:49 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* include/makeinclude/wrapper_macros.GNU: Unravelled the mystery a
-	  bit. The patch that was applied to remove the hard coding of
-	  OBJDIRS seems to be the problem. The OBJDIRS has been hardcoded
-	  again. This should fix the problems that we have been seeing in
-	  the builds.  If at all we need to remove hardcoding the OBJDIRS,
-	  we either need to put the value of VDIR or VSHDIR. If we put
-	  both we are going to end up duplicate targets. Now the killer,
-	  what do we add to the OBJDIRS? Me thinks it is VDIR. I have test
-	  that out else I would be breaking builds again.
+        * include/makeinclude/wrapper_macros.GNU: Unravelled the mystery a
+          bit. The patch that was applied to remove the hard coding of
+          OBJDIRS seems to be the problem. The OBJDIRS has been hardcoded
+          again. This should fix the problems that we have been seeing in
+          the builds.  If at all we need to remove hardcoding the OBJDIRS,
+          we either need to put the value of VDIR or VSHDIR. If we put
+          both we are going to end up duplicate targets. Now the killer,
+          what do we add to the OBJDIRS? Me thinks it is VDIR. I have test
+          that out else I would be breaking builds again.
 
 Wed Aug 15 07:30:00 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* include/makeinclude/wrapper_macros.GNU: Reverted the change "Tue
-	  Aug 14 21:42:24 2001  Balachandran Natarajan".Thought that was a
-	  typo. But looks like it is not. 
+        * include/makeinclude/wrapper_macros.GNU: Reverted the change "Tue
+          Aug 14 21:42:24 2001  Balachandran Natarajan".Thought that was a
+          typo. But looks like it is not.
 
 Wed Aug 15 06:39:50 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/Process.cpp: Fixed a warning with g++.
+        * ace/Process.cpp: Fixed a warning with g++.
 
 Tue Aug 14 23:57:42 2001  Steve Huston  <shuston@riverace.com>
 
@@ -40,7 +48,7 @@ Tue Aug 14 23:57:42 2001  Steve Huston  <shuston@riverace.com>
             handle value will be duplicated if on Win32 less than NT4.
 
           - ACE_Process_Options::dup_handles (ACE_Handle_Set set) const
-	    Get a copy of the handles the ACE_Process_Options duplicated
+            Get a copy of the handles the ACE_Process_Options duplicated
             for the spawned process.
 
           - ACE_Process_Options::passed_handles (ACE_Handle_Set set) const
@@ -76,16 +84,16 @@ Tue Aug 14 23:57:42 2001  Steve Huston  <shuston@riverace.com>
 
 Tue Aug 14 21:42:24 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* include/makeinclude/wrapper_macros.GNU: Fixed a typo.
+        * include/makeinclude/wrapper_macros.GNU: Fixed a typo.
 
 Tue Aug 14 21:30:04 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* apps/Makefile: Removed JAWS2 and JAWS from the Makefile. There
-	  are several reasons for reverting. This breaks the builds. The
-	  Makefiles in the recursed directories are all messed up. The
-	  library dependencies doesnt seem trivial. Nobody may have time
-	  to fix this. Further, our daily builds return too quickly and we
-	  just needed more files to compile :-).
+        * apps/Makefile: Removed JAWS2 and JAWS from the Makefile. There
+          are several reasons for reverting. This breaks the builds. The
+          Makefiles in the recursed directories are all messed up. The
+          library dependencies doesnt seem trivial. Nobody may have time
+          to fix this. Further, our daily builds return too quickly and we
+          just needed more files to compile :-).
 
 Tue Aug 14 14:19:49 2001  Steve Huston  <shuston@riverace.com>
 
@@ -99,13 +107,13 @@ Tue Aug 14 14:19:49 2001  Steve Huston  <shuston@riverace.com>
 
 Tue Aug 14 14:19:37 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/Log_Msg.cpp: Applied the patches sent by Tibor Kiss
-	  <tkiss@mindmaker.hu> for ACE_Log_Msg::close ()
+        * ace/Log_Msg.cpp: Applied the patches sent by Tibor Kiss
+          <tkiss@mindmaker.hu> for ACE_Log_Msg::close ()
 
 Tue Aug 14 13:55:42 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* include/makeinclude/platform_macosx.GNU: Added a patch from John
-	  Michael Zorko  <j.zorko@att.net>.
+        * include/makeinclude/platform_macosx.GNU: Added a patch from John
+          Michael Zorko  <j.zorko@att.net>.
 
 Tue Aug 14 10:21:39 2001  Steve Huston  <shuston@riverace.com>
 
@@ -114,20 +122,20 @@ Tue Aug 14 10:21:39 2001  Steve Huston  <shuston@riverace.com>
 
 Mon Aug 13 14:01:35 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* include/makeinclude/wrapper_macros.GNU: Fixed some hard-coded
-	  uses of .shobj and .obj.  Thanks to Shashi Bhushan
- 	  <Shashi.Bhushan@lmco.com> for contributing these.
+        * include/makeinclude/wrapper_macros.GNU: Fixed some hard-coded
+          uses of .shobj and .obj.  Thanks to Shashi Bhushan
+          <Shashi.Bhushan@lmco.com> for contributing these.
 
-	* ace/CDR_Stream.h: Added comments warning about the deletarious
-	  effects of not aligning buffers to ACE_InputCDR and
- 	  ACE_OutputCDR properly.  Thanks to Alain Decamps
- 	  <Alain.Decamps@PIDPA.be> for reporting this.
+        * ace/CDR_Stream.h: Added comments warning about the deletarious
+          effects of not aligning buffers to ACE_InputCDR and
+          ACE_OutputCDR properly.  Thanks to Alain Decamps
+          <Alain.Decamps@PIDPA.be> for reporting this.
 
 Sun Aug 12 14:46:07 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* ace/OS.cpp (sched_params): Make sure to set errno for Win32 so
-	  that callers can figure out what's going wrong in a consistent
- 	  way.
+        * ace/OS.cpp (sched_params): Make sure to set errno for Win32 so
+          that callers can figure out what's going wrong in a consistent
+          way.
 
 Mon Aug 13 20:09:04 2001  Balachandran  <bala@cs.wustl.edu>
 
@@ -135,9 +143,9 @@ Mon Aug 13 20:09:04 2001  Balachandran  <bala@cs.wustl.edu>
 
 Sun Aug 12 02:17:01 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/MEM_Acceptor.cpp:
+        * ace/MEM_Acceptor.cpp:
         * ace/MEM_Connector.cpp: On non-Win32 platforms, disable
-	  multithreaded MEM_IO if _ACE_USE_SV_SEM is defined.
+          multithreaded MEM_IO if _ACE_USE_SV_SEM is defined.
 
 Sun Aug 12 01:27:51 2001  Steve Huston  <shuston@riverace.com>
 
@@ -154,9 +162,9 @@ Sun Aug 12 00:34:42 2001  Steve Huston  <shuston@riverace.com>
 
 Sat Aug 11 09:01:11 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* ace/Thread.h:
-	* ace/Task.h: Added a list of other flags that can be passed to
-	  activate().
+        * ace/Thread.h:
+        * ace/Task.h: Added a list of other flags that can be passed to
+          activate().
 
 Fri Aug 10 19:39:48 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
@@ -204,9 +212,9 @@ Fri Aug 10 11:06:23 2001  Chad Elliott  <elliott_c@ociweb.com>
 
 Thu Aug  9 17:58:33 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/Select_Reactor_Base.i (purge_pending_notifications): Don't
-	  try to purge the notifications if notify_handler_ is 0.  thanks
- 	  to Steve Rahn <SRahn@rim.net> for reporting this.
+        * ace/Select_Reactor_Base.i (purge_pending_notifications): Don't
+          try to purge the notifications if notify_handler_ is 0.  thanks
+          to Steve Rahn <SRahn@rim.net> for reporting this.
 
 Thu Aug  9 16:56:05 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
@@ -221,23 +229,23 @@ Thu Aug  9 16:56:05 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 Thu Aug  9 11:51:10 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* include/makeinclude/platform_hpux_aCC.GNU: On popular mandate we
-	  have the -w flag removed from CCFLAGS in the above file. Looks
- 	  like the -w disables lots of warnings that may be useful.
+        * include/makeinclude/platform_hpux_aCC.GNU: On popular mandate we
+          have the -w flag removed from CCFLAGS in the above file. Looks
+          like the -w disables lots of warnings that may be useful.
 
 Thu Aug  9 11:41:01 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/CDR_Stream.h (ACE_OutputCDR): Fixed the ambigous constructor
-	  problem. The InputCDR class had two constructors which were
- 	  similar if the default values for the arguments were
- 	  exercised. Thanks to Torbjorn Backstrom
- 	  <torbjorn.k.backstrom@volvo.com> for reporting this.
+        * ace/CDR_Stream.h (ACE_OutputCDR): Fixed the ambigous constructor
+          problem. The InputCDR class had two constructors which were
+          similar if the default values for the arguments were
+          exercised. Thanks to Torbjorn Backstrom
+          <torbjorn.k.backstrom@volvo.com> for reporting this.
 
 Thu Aug  9 12:31:21 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* ace/OS_String.cpp (strtok_r_emulation): Make sure to check
-	  for a NULL return from strtok() before calling strlen()!  Thanks
- 	  to Boris Sukholitko <boriss@richfx.com> for reporting this.
+        * ace/OS_String.cpp (strtok_r_emulation): Make sure to check
+          for a NULL return from strtok() before calling strlen()!  Thanks
+          to Boris Sukholitko <boriss@richfx.com> for reporting this.
 
 Wed Aug 08 21:27:50 2001  Ossama Othman  <ossama@uci.edu>
 
