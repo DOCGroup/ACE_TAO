@@ -1,7 +1,15 @@
+Thu Apr 13 16:30:01 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/config-sunos5.7.h: added #undef ACE_NEEDS_LWP_PRIO_SET.
+          SunOS 5.7 no longer needs it, as shown by
+          performance-tests/Misc/preempt (run as superuser).  Thanks
+          to John Foresteire <John_J_Foresteire@res.raytheon.com>
+          for reporting this.
+
 Tue Apr 11 21:41:20 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* bin/auto_compile_win32.pl: Updated the lists of
-	  workspaces/projects to build.
+        * bin/auto_compile_win32.pl: Updated the lists of
+          workspaces/projects to build.
 
 Tue Apr 11 16:15:31 2000  David L. Levine  <levine@cs.wustl.edu>
 
@@ -15,8 +23,8 @@ Tue Apr 11 13:57:11 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * ace/Synch_T.cpp: Make sure to cast the "type" argument to
           "short" to avoid overload confusions by certain compilers.
-  	  Thanks to Charles Taurines <ctaurines@amadeus.net> for reporting
- 	  this.
+          Thanks to Charles Taurines <ctaurines@amadeus.net> for reporting
+          this.
 
 Tue Apr 11 12:52:04 2000  Vishal Kachroo  <vishal@cs.wustl.edu>
 
