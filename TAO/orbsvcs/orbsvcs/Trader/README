@@ -1,3 +1,15 @@
+$Id$
+
+Thank you for your interest in the TAO Trading Service. The TAO
+Trading Service is in the process of being ported to TAO from
+VisiBroker, and therefore it won't compile. I'll send mail to the
+group when the port is complete, and then people can play with it. 
+
+Thanks,
+Seth
+
+---------------------------------------------------------------------------
+
 Note: This version of the trading service requires the Object Space
 STL. To have the trading service compile properly, prepend the following
 to the makefile:
