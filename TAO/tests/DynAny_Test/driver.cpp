@@ -57,6 +57,11 @@ Driver::Driver (void)
 // destructor
 Driver::~Driver (void)
 {
+  if (this->orb_.in () != 0)
+    {
+      this->orb_->shutdown ();
+      this->orb_->destroy (); 
+    }
 }
 
 // initialize the driver
