@@ -1,3 +1,10 @@
+Sat Feb  6 17:50:16 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* orbsvcs/tests/Property/client.cpp: 	
+	* orbsvcs/tests/Property/server.cpp:
+	* orbsvcs/tests/Property/README: 
+	Fixed the problem with get_property_value passing IOR
+
 1999-02-06  Nagarajan Surendran  <naga@polka.cs.wustl.edu>
 
 	* TAO_IDL/driver/drv_preproc.cpp (DRV_pre_proc): Added an exit(1)
