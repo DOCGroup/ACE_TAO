@@ -1177,7 +1177,11 @@ ACE_Double_Linked_List<T>::copy_nodes (ACE_Double_Linked_List<T> &c)
   for (ACE_Double_Linked_List_Iterator<T> iter (c);
        !iter.done ();
        iter.advance ())
-    this->insert_head (new T (*iter.next ()));
+    {
+      T* temp = (T *) this->allocator_->malloc (sizeof (T));
+      new (temp) T (*iter.next ());
+      this->insert_head (temp);
+    }
 }
 
 template <class T> void
