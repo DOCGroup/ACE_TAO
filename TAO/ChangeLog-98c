@@ -1,3 +1,27 @@
+Mon May  5 20:28:54 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* IIOP/lib/boa.cpp: commented out code that uses the "void
+	*context" field. It doesn't make any sense to have it.
+
+	* IIOP/lib/boa.hh: Added 2 pure virtual methods (shutting_down and
+	clean_shutdown).
+	
+	In addition, the "register_obj" method was added. It was missing before.
+	
+	* IIOP/lib/corbacom.cpp: String_var's constructor bug is fixed. It
+	was trying to free storage that was never allocated.
+
+	* IIOP/lib/iiopobj.{hh,cpp}: Added a method - "get_name" that
+	retrieves the object name.
+
+	* IIOP/lib/object.{hh,cpp}: Added a method - "get_name" that
+	retrieves the object's name or key. This is for debugging purposes.
+
+	* IIOP/lib/orbobj.cpp: There was an infinite loop in parsing the
+	options to BOA_init. Fixed.
+
+	* IIOP/lib/stub.hh: Added the "get_name" virtual method.
+
 Sat May  3 22:45:23 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* IIOP/lib/boa.cpp: Added code temporarily that invokes the
