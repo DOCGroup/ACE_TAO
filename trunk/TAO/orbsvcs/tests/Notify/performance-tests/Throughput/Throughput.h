@@ -211,7 +211,7 @@ protected:
   TAO_SYNCH_MUTEX lock_;
   // The lock to serialize access to members.
 
-  ACE_Condition_Thread_Mutex condition_;
+  TAO_SYNCH_CONDITION condition_;
   // exit wait condition
 private:
   friend class Throughput_StructuredPushSupplier;
@@ -225,4 +225,3 @@ private:
 #endif /* _MSC_VER */
 
 #endif /* NOTIFY_TESTS_EventS_H */
-
