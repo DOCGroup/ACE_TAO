@@ -11,9 +11,17 @@ Wed Mar 31 09:06:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
         * ace/Timer_Hash_T.cpp:
         * ace/Timer_List_T.cpp:
           Removed accessor for zero and max_time which where added in the commit
-          and only for MinGW define two static variables in the header file.
-          This fixes the link problems in the MinGW builds we have with max_time
-          and zero. Thanks to Martin Corino <mcorino@remedy.nl> for figuring
+          above. We found that with some more complex TAO tests the linker was
+          still having problems using the zero and max_time static members.
+
+          As a different solution only for MinGW we define two static variables
+          in the header file that use zero and max_time. With these two statics
+          the linker can resolve these two members and we know don't get any
+          linker problem anymore with MinGW. In case you had problems in your
+          MinGW app, this patch also fixes the problems in your application
+          without the need to change your app code.
+
+          Thanks to Martin Corino <mcorino@remedy.nl> for figuring
           out the problem and making the patches.
 
 Tue Mar 30 17:53:32 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
