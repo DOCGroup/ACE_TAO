@@ -785,9 +785,9 @@ ACE_POSIX_AIOCB_Proactor::application_specific_code (ACE_POSIX_Asynch_Result *as
 }
 
 int
-ACE_POSIX_AIOCB_Proactor::register_aio_with_proactor (aiocb *aiocb_ptr)
+ACE_POSIX_AIOCB_Proactor::register_aio_with_proactor (ACE_POSIX_Asynch_Result *result)
 {
-  if (aiocb_ptr == 0)
+  if (result == 0)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Status check max %d cur %d\n",
@@ -826,7 +826,7 @@ ACE_POSIX_AIOCB_Proactor::register_aio_with_proactor (aiocb *aiocb_ptr)
                       -1);
 
   // Store the pointers.
-  this->aiocb_list_[ai] = aiocb_ptr;
+  this->aiocb_list_[ai] = result;
   this->aiocb_list_cur_size_ ++;
 
   return 0;

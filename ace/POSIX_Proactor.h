@@ -312,7 +312,7 @@ protected:
   // We will call the base class's application_specific_code from
   // here.
 
-  int register_aio_with_proactor (aiocb *aiocbptr);
+  int register_aio_with_proactor (ACE_POSIX_Asynch_Result *result);
   // If the ptr is o, just check whether there is any slot free and
   // return 0 if yes, else return -1. If a valid ptr is passed, keep it
   // in a free slot.
