@@ -13,7 +13,8 @@ DIRS = \
   Callback \
   MT_SSLIOP \
   Secure_Invocation \
-  SecurityLevel1
+  SecurityLevel1 \
+  Crash_Test
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
