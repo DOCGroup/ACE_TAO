@@ -1,6 +1,7 @@
 // $Id$
 
 #include "DescriptorGenerator.hpp"
+#include "Literals.hpp"
 
 #include <ostream>
 
@@ -31,11 +32,62 @@ namespace
   string
   compute_repo_id (DeclarationPtr const& d)
   {
-    string middle =
+    if (d->context ().count (
+          StringLiterals::STRS[StringLiterals::REPO_ID]))
+    {
+      return
+        d->context ().get<string> (
+          StringLiterals::STRS[StringLiterals::REPO_ID]);
+    }
+
+    string prefix ("");
+    TypePrefixPtr tp;
+    
+    if (d->context ().count (
+          StringLiterals::STRS[StringLiterals::TYPE_PREFIX]))
+    {
+      tp =
+        d->context ().get<TypePrefixPtr> (
+          StringLiterals::STRS[StringLiterals::TYPE_PREFIX]);
+        
+      prefix = tp->prefix ().str ();
+    }
+    else
+    {
+      DeclarationPtr parent = d->scope ();
+        
+      while (parent != 0)
+      {
+        if (parent->context ().count (
+              StringLiterals::STRS[StringLiterals::TYPE_PREFIX]))
+        {
+          tp =
+            parent->context ().get<TypePrefixPtr> (
+              StringLiterals::STRS[StringLiterals::TYPE_PREFIX]);
+            
+          prefix = tp->prefix ().str ();
+          break;
+        }
+          
+        if (parent->dynamic_type<CCF::IDL2::SyntaxTree::FileScope> () != 0) 
+          break;
+        else parent = parent->scope ();
+      }
+    }
+      
+    if (prefix != "") prefix += "/";
+    
+    string scope_name =
       regex::perl_s (name_to_string (d->name ().in_file_scope ()),
                      "%::%/%",
                      '%');
-    return "IDL:" + middle + ":1.0";
+                     
+    string repo_id = "IDL:" + prefix + scope_name + ":1.0";
+    
+    // Store the repo id for possible future reference.
+    d->context ().set<string> (StringLiterals::STRS[StringLiterals::REPO_ID],
+                               repo_id);
+    return repo_id;
   }
 
   typedef
