@@ -1133,7 +1133,7 @@ Tue Sep 28 15:06:50 2004  Iliyan Jeliazkov  <jeliazkov_i@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/ImR_Activator.idl:
 
-        Updated to include the correct file.
+          Updated to include the correct file.
 
 Tue Sep 28 11:01:00 2004  Iliyan Jeliazkov  <jeliazkov_i@ociweb.com>
 
