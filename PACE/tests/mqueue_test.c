@@ -16,7 +16,7 @@ int main (int argc, char** argv)
   attr.mq_flags = O_NONBLOCK;
   attr.mq_msgsize = 51;
   attr.mq_maxmsg = 50;
-  mqd = pace_mq_open (("/hello3", flags, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH, &attr));
+  mqd = pace_mq_open ("/hello3", flags, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH, &attr);
   if ((int)mqd == -1)
   {
     perror ("Open");
