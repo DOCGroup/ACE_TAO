@@ -4347,7 +4347,7 @@ libTAO_HTIOP_la_LDFLAGS = \
 
 libTAO_HTIOP_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
-  -lACE_HTBP \
+  $(ACE_BUILDDIR)/protocols/ace/HTBP/libACE_HTBP.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 nobase_include_HEADERS += \
@@ -4963,7 +4963,7 @@ libTAO_RTKokyuEvent_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
 
 libTAO_RTKokyuEvent_la_LIBADD = \
-  -lKokyu \
+  $(ACE_BUILDDIR)/Kokyu/libKokyu.la \
   libTAO_RTSched.la \
   libTAO_CosNaming.la \
   libTAO_RTEvent.la \
