@@ -17,23 +17,24 @@ Repository::add (const char *key, const Repository::Record &rec)
   char *temp; // Temporary string to hold all the variables in.
 
   // Needs to be as long as all the lengths plus the separators and the
-  // null character.
+  // null character (6) and then also the size that the host/port could
+  // take up.
   ACE_NEW_RETURN (temp,
                   char [ACE_OS::strlen (rec.comm_line)
                         + ACE_OS::strlen (rec.env)
                         + ACE_OS::strlen (rec.wdir)
-                        + ACE_OS::strlen (rec.ior)
                         + ACE_OS::strlen (rec.ping_ior)
-                        + 6],
+                        + 40],
                   -1);
 
   //Put them all in a string
   ACE_OS::sprintf (temp,
-                   "%s\n%s\n%s\n%s\n%s\n",
+                   "%s\n%s\n%s\n%lu %hu\n%s\n",
                    rec.comm_line,
                    rec.env,
                    rec.wdir,
-                   rec.ior,
+                   rec.host,
+                   rec.port,
                    rec.ping_ior);
 
   // Store the record in the repository.
@@ -124,10 +125,7 @@ Repository::resolve (const char *key, Repository::Record &rec)
     if (last != 0)
     {
       *last = '\0';
-      ACE_NEW_RETURN (rec.ior, char [strlen (temp) + 1], -1);
-
-      // Copy to the env argument
-      strcpy (rec.ior, temp);
+      ::sscanf (temp, "%lu %hu", &rec.host, &rec.port);
     }
     else
     {
@@ -142,7 +140,7 @@ Repository::resolve (const char *key, Repository::Record &rec)
       *last = '\0';
       ACE_NEW_RETURN (rec.ping_ior, char [strlen (temp) + 1], -1);
 
-      // Copy to the env argument
+      // Copy to the ping_ior argument
       strcpy (rec.ping_ior, temp);
     }
     else
@@ -151,12 +149,13 @@ Repository::resolve (const char *key, Repository::Record &rec)
       break;
     }
 
+    delete [] value;
+    delete [] type;
+
     // Now exit out.
     break;
   }
 
-  delete [] value;
-  delete [] type;
   return retval;
 }
 // = Accessor methods
@@ -172,7 +171,6 @@ Repository::get_comm_line (const char *key, char *&comm_line)
       comm_line = rec.comm_line;
       delete [] rec.env;
       delete [] rec.wdir;
-      delete [] rec.ior;
       delete [] rec.ping_ior;
     }
 
@@ -191,7 +189,6 @@ Repository::get_env (const char *key, char *&env)
       delete [] rec.comm_line;
       env = rec.env;
       delete [] rec.wdir;
-      delete [] rec.ior;
       delete [] rec.ping_ior;
     }
 
@@ -209,7 +206,6 @@ Repository::get_wdir (const char *key, char *&wdir)
       delete [] rec.comm_line;
       delete [] rec.env;
       wdir = rec.wdir;
-      delete [] rec.ior;
       delete [] rec.ping_ior;
     }
 
@@ -217,7 +213,7 @@ Repository::get_wdir (const char *key, char *&wdir)
 }
 
 int
-Repository::get_ior (const char *key, char *&ior)
+Repository::get_hostport (const char *key, unsigned long &host, unsigned short &port)
 {
   Repository::Record rec;
   int retval = this->resolve (key, rec);
@@ -227,7 +223,8 @@ Repository::get_ior (const char *key, char *&ior)
       delete [] rec.comm_line;
       delete [] rec.env;
       delete [] rec.wdir;
-      ior = rec.ior;
+      host = rec.host;
+      port = rec.port;
       delete [] rec.ping_ior;
     }
 
@@ -245,7 +242,6 @@ Repository::get_ping_ior (const char *key, char *&ping_ior)
       delete [] rec.comm_line;
       delete [] rec.env;
       delete [] rec.wdir;
-      delete [] rec.ior;
       ping_ior = rec.ping_ior;
     }
 
