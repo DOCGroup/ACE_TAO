@@ -90,7 +90,8 @@ HASH_STRING_MAP::hash (ASYS_TCHAR *const &ext_id)
 }
 
 int
-HASH_STRING_MAP::equal (ASYS_TCHAR *const &id1, ASYS_TCHAR *const &id2)
+HASH_STRING_MAP::equal (ASYS_TCHAR *const &id1,
+                        ASYS_TCHAR *const &id2)
 {
   return ACE_OS::strcmp (id1, id2) == 0;
 }
@@ -244,7 +245,7 @@ run_test (void)
 
   // Check the <trybind> operation.
   {
-    char *pc = string_table[1].value_;
+    MAP_STRING pc = string_table[1].value_;
     if (hash.trybind (string_table[0].key_,
                       pc) != 1)
       ACE_ERROR_RETURN ((LM_ERROR,
