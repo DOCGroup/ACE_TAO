@@ -1,6 +1,5 @@
 // $Id$
 
-#define ACE_WEBSVCS_BUILD_DLL
 #include "URL_Addr.h"
 
 #if !defined (__ACE_INLINE__)
@@ -38,6 +37,8 @@ ACE_URL_Addr::string_to_addr (LPCTSTR address)
 {
   if (this->url_ != 0)
     ACE_OS::free (this->url_);
+  if (address == 0)
+    return -1;
   ACE_ALLOCATOR_RETURN (this->url_, ACE_OS::strdup (address), -1);
   return 0;
 }
@@ -156,10 +157,17 @@ ACE_HTTP_Addr::set (LPCTSTR host_name,
                     LPCTSTR query,
                     u_short port)
 {
+  if (host_name == 0 || path == 0)
+    return -1;
+
   this->clear ();
   ACE_ALLOCATOR_RETURN (this->hostname_, ACE_OS::strdup (host_name), -1);
+  this->port_number_ = port;
   ACE_ALLOCATOR_RETURN (this->path_, ACE_OS::strdup (path), -1);
-  ACE_ALLOCATOR_RETURN (this->query_, ACE_OS::strdup (query), -1);
+  if (query != 0)
+    ACE_ALLOCATOR_RETURN (this->query_, ACE_OS::strdup (query), -1);
+  else
+    this->query_ = 0;
 
   size_t size = this->url_size (1);
 
@@ -182,7 +190,11 @@ ACE_HTTP_Addr::set (const ACE_HTTP_Addr &addr)
   this->clear ();
   ACE_ALLOCATOR_RETURN (this->hostname_, ACE_OS::strdup (addr.hostname_), -1);
   ACE_ALLOCATOR_RETURN (this->path_, ACE_OS::strdup (addr.path_), -1);
-  ACE_ALLOCATOR_RETURN (this->query_, ACE_OS::strdup (addr.query_), -1);
+  this->port_number_ = addr.port_number_;
+  if (addr.query_ != 0)
+    ACE_ALLOCATOR_RETURN (this->query_, ACE_OS::strdup (addr.query_), -1);
+  else
+    this->query_ = 0;
   return 0;
 }
 
@@ -233,6 +245,9 @@ ACE_HTTP_Addr::url_size (int flags) const
 int
 ACE_HTTP_Addr::string_to_addr (LPCTSTR address)
 {
+  if (address == 0)
+    return -1;
+
   if (ACE_OS::strncmp (http, address, http_size) != 0)
     return -1;
 
@@ -374,11 +389,19 @@ ACE_FTP_Addr::set (LPCTSTR host_name,
                    LPCTSTR user,
                    LPCTSTR passwd)
 {
+  if (host_name == 0 || path == 0)
+    return -1;
   this->clear ();
   ACE_ALLOCATOR_RETURN (this->hostname_, ACE_OS::strdup (host_name), -1);
   ACE_ALLOCATOR_RETURN (this->path_, ACE_OS::strdup (path), -1);
-  ACE_ALLOCATOR_RETURN (this->user_, ACE_OS::strdup (user), -1);
-  ACE_ALLOCATOR_RETURN (this->passwd_, ACE_OS::strdup (passwd), -1);
+  if (user != 0)
+    ACE_ALLOCATOR_RETURN (this->user_, ACE_OS::strdup (user), -1);
+  else
+    this->user_ = 0;
+  if (this->passwd_ != 0)
+    ACE_ALLOCATOR_RETURN (this->passwd_, ACE_OS::strdup (passwd), -1);
+  else
+    this->passwd_ = 0;
 
   size_t size = this->url_size (1);
 
@@ -401,8 +424,14 @@ ACE_FTP_Addr::set (const ACE_FTP_Addr& addr)
   this->clear ();
   ACE_ALLOCATOR_RETURN (this->hostname_, ACE_OS::strdup (addr.hostname_), -1);
   ACE_ALLOCATOR_RETURN (this->path_, ACE_OS::strdup (addr.path_), -1);
-  ACE_ALLOCATOR_RETURN (this->user_, ACE_OS::strdup (addr.user_), -1);
-  ACE_ALLOCATOR_RETURN (this->passwd_, ACE_OS::strdup (addr.passwd_), -1);
+  if (addr.user_ != 0)
+    ACE_ALLOCATOR_RETURN (this->user_, ACE_OS::strdup (addr.user_), -1);
+  else
+    this->user_ = 0;
+  if (addr.passwd_ != 0)
+    ACE_ALLOCATOR_RETURN (this->passwd_, ACE_OS::strdup (addr.passwd_), -1);
+  else
+    this->passwd_ = 0;
   return 0;
 }
 
@@ -490,6 +519,8 @@ ACE_FTP_Addr::addr_to_string (LPTSTR buffer,
 int
 ACE_FTP_Addr::string_to_addr (LPCTSTR address)
 {
+  if (address == 0)
+    return -1;
   if (ACE_OS::strncmp (ftp, address, ftp_size) != 0)
     return -1;
 
@@ -590,10 +621,15 @@ ACE_Mailto_Addr::set (LPCTSTR user,
                       LPCTSTR hostname,
                       LPCTSTR headers)
 {
+  if (user == 0 || hostname == 0)
+    return -1;
   this->clear ();
   ACE_ALLOCATOR_RETURN (this->user_, ACE_OS::strdup (user), -1);
   ACE_ALLOCATOR_RETURN (this->hostname_, ACE_OS::strdup (hostname), -1);
-  ACE_ALLOCATOR_RETURN (this->headers_, ACE_OS::strdup (headers), -1);
+  if (headers != 0)
+    ACE_ALLOCATOR_RETURN (this->headers_, ACE_OS::strdup (headers), -1);
+  else
+    this->headers_ = 0;
   size_t size = this->url_size (1);
   LPTSTR buffer;
   ACE_ALLOCATOR_RETURN (buffer,
@@ -614,7 +650,10 @@ ACE_Mailto_Addr::set (const ACE_Mailto_Addr &addr)
   this->clear ();
   ACE_ALLOCATOR_RETURN (this->user_, ACE_OS::strdup (addr.user_), -1);
   ACE_ALLOCATOR_RETURN (this->hostname_, ACE_OS::strdup (addr.hostname_), -1);
-  ACE_ALLOCATOR_RETURN (this->headers_, ACE_OS::strdup (addr.headers_), -1);
+  if (addr.headers_ != 0)
+    ACE_ALLOCATOR_RETURN (this->headers_, ACE_OS::strdup (addr.headers_), -1);
+  else
+    this->headers_ = 0;
   return 0;
 }
 
