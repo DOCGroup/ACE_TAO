@@ -108,7 +108,7 @@ namespace CIAO
         {
           CORBA::ULong i (resource.resourceType.length ());
           resource.resourceType.length (i + 1);
-          resource.resourceType[i] = str (XMLString::transcode (resource_type));
+          resource.resourceType[i] = XMLString::transcode (resource_type);
         }
     }
 

@@ -73,8 +73,7 @@ namespace CIAO
       ~Resource_Handler(void);
 
       /// Process the Resource type
-      void process_resource (DOMNodeIterator * iter,
-                             ::Deployment::Resource &resource);
+      void process_resource (::Deployment::Resource &resource);
 
       /// Process the name attribute
       void process_name (const XMLCh* name,
