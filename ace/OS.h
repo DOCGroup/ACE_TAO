@@ -6820,9 +6820,14 @@ public:
   // Does _not_ check for a valid key.
 
   static void *tss_open (void *ts_storage[ACE_TSS_THREAD_KEYS_MAX]);
-  // Setup an array to be used for local TSS.  Returns the array address on
-  // success.  Returns 0 if local TSS had already been setup for this thread.
-  // There is no corresponding tss_close () because it is not needed.
+  // Setup an array to be used for local TSS.  Returns the array
+  // address on success.  Returns 0 if local TSS had already been
+  // setup for this thread.  There is no corresponding tss_close ()
+  // because it is not needed.
+  // NOTE: tss_open () is called by ACE for threads that it spawns.
+  // If your application spawns threads without using ACE, and it uses
+  // ACE's TSS emulation, each of those threads should call tss_open
+  // ().  See the ace_thread_adapter () implementaiton for an example.
 
   static void tss_close ();
   // Shutdown TSS emulation.  For use only by ACE_OS::cleanup_tss ().
@@ -6837,7 +6842,7 @@ private:
   // key (that has one) when the thread exits.
 
 #   if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
-  static void **tss_base (void* ts_storage[] = 0);
+  static void **tss_base (void* ts_storage[] = 0, u_int *ts_created = 0);
   // Location of current thread's TSS array.
 #   else  /* ! ACE_HAS_THREAD_SPECIFIC_STORAGE */
   static void **&tss_base ();
