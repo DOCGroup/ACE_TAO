@@ -1,3 +1,9 @@
+Wed May  7 08:43:14 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
+
+          Added a missing semicolon.
+
 Wed May 07 11:36:43 2003  Simon McQueen  <sm@prismtechnologies.com>
 
         * orbsvcs/LoadBalancer/LoadManager.bor:
@@ -57,19 +63,19 @@ Wed May  7 07:22:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue May  6 17:52:53 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/Faults/middle.cpp:
-	* tests/Faults/ping.cpp:
-	* tests/Faults/ping_i.h:
-	* tests/Faults/test_i.h: Fixed servant memory management
-	  problems. Thanks to Ira <imburton@micron.com> for motivating to
-	  take a look.
+        * tests/Faults/middle.cpp:
+        * tests/Faults/ping.cpp:
+        * tests/Faults/ping_i.h:
+        * tests/Faults/test_i.h: Fixed servant memory management
+          problems. Thanks to Ira <imburton@micron.com> for motivating to
+          take a look.
 
 Tue May  6 15:52:42 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/Makefile.CosLoadBalancing (ACE_SHLIBS):
-	* orbsvcs/orbsvcs/Makefile.PortableGroup (ACE_SHLIBS):
+        * orbsvcs/orbsvcs/Makefile.CosLoadBalancing (ACE_SHLIBS):
+        * orbsvcs/orbsvcs/Makefile.PortableGroup (ACE_SHLIBS):
 
-	  Corrected library link order.
+          Corrected library link order.
 
 Tue May  6 16:04:33 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -80,43 +86,43 @@ Tue May  6 16:04:33 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Tue May  6 13:19:02 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/PortableGroup/PG_GenericFactory.h
-	  (process_criteria):
+        * orbsvcs/orbsvcs/PortableGroup/PG_GenericFactory.h
+          (process_criteria):
 
-	  Pass PortableGroup::FactoriesValue parameter by reference
-	  instead of by reference to pointer.  Part of a fix that corrects
-	  some infrastructure controlled membership problems.
+          Pass PortableGroup::FactoriesValue parameter by reference
+          instead of by reference to pointer.  Part of a fix that corrects
+          some infrastructure controlled membership problems.
 
-	* orbsvcs/orbsvcs/PortableGroup/PG_GenericFactory.cpp
-	  (create_object):
+        * orbsvcs/orbsvcs/PortableGroup/PG_GenericFactory.cpp
+          (create_object):
 
-	  Declare the PortableGroup::FactoriesValue variable on the
-	  stack.  Addresses some memory management/ownership issues for
-	  the infrastructure controlled membership case.
+          Declare the PortableGroup::FactoriesValue variable on the
+          stack.  Addresses some memory management/ownership issues for
+          the infrastructure controlled membership case.
 
-	  (process_criteria):
+          (process_criteria):
 
-	  Deep copy the FactoryInfos property to the
-	  PortableGroup::FactoriesValue parameter passed by reference
-	  instead of shallow copying it.  Fixes a segmentation fault
-	  caused by attempting to access memory owned by an Any that is
-	  destroyed when leaving the scope of this method.
+          Deep copy the FactoryInfos property to the
+          PortableGroup::FactoriesValue parameter passed by reference
+          instead of shallow copying it.  Fixes a segmentation fault
+          caused by attempting to access memory owned by an Any that is
+          destroyed when leaving the scope of this method.
 
 Tue May  6 13:02:07 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/Object.h:
+        * tao/Object.h:
 
-	  Fixed "fuzz" error in Doxygen documentation for this file.
+          Fixed "fuzz" error in Doxygen documentation for this file.
 
 Tue May  6 12:56:27 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* orbsvcs/PSS/PSDL_Interface_Visitor.cpp:
-	* orbsvcs/orbsvcs/Naming/Naming_Utils.cpp:
-	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.cpp:
-	* orbsvcs/orbsvcs/Sched/DynSched.cpp:
-	* orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.cpp:
+        * orbsvcs/PSS/PSDL_Interface_Visitor.cpp:
+        * orbsvcs/orbsvcs/Naming/Naming_Utils.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.cpp:
+        * orbsvcs/orbsvcs/Sched/DynSched.cpp:
+        * orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.cpp:
 
-	  More ptr_arith_t -> ptrdiff_t changes.
+          More ptr_arith_t -> ptrdiff_t changes.
 
 Tue May  6 10:42:50 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -127,8 +133,8 @@ Tue May  6 10:42:50 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Tue May  6 08:54:06 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/PortableServer/Default_ORTC.h: Removed an extra include of
-	  pre.h.
+        * tao/PortableServer/Default_ORTC.h: Removed an extra include of
+          pre.h.
 
 Tue May 06 14:46:20 2003  Simon McQueen  <sm@prismtechnologies.com>
 
@@ -141,13 +147,13 @@ Tue May 06 14:46:20 2003  Simon McQueen  <sm@prismtechnologies.com>
 
 Tue May  6 07:41:40 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/Param_Test/Makefile: Updated dependencies.
+        * tests/Param_Test/Makefile: Updated dependencies.
 
 Tue May  6 07:35:04 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* examples/Content_Server/AMI_Observer/Makefile:
+        * examples/Content_Server/AMI_Observer/Makefile:
         * examples/Content_Server/AMI_Iterator/Makefile: Updated
-	  dependecies.
+          dependecies.
 
 Tue May 06 11:46:17 2003  Simon McQueen  <sm@prismtechnologies.com>
 
@@ -175,29 +181,29 @@ Mon May  5 21:24:36 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Mon May  5 17:45:36 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/default_resource.cpp (TAO_Default_Resource_Factory):
+        * tao/default_resource.cpp (TAO_Default_Resource_Factory):
 
-	  Initialize the "corba_object_lock_type_" member with
-	  "TAO_THREAD_LOCK" in the base member initializer list.  Fixes a
-	  problem where the create_corba_object_lock() method had
-	  undefined behavior for the default case, i.e. when the user did
-	  not explicitly use the "-ORBCorbaObjectLock" resource factory
-	  option.
+          Initialize the "corba_object_lock_type_" member with
+          "TAO_THREAD_LOCK" in the base member initializer list.  Fixes a
+          problem where the create_corba_object_lock() method had
+          undefined behavior for the default case, i.e. when the user did
+          not explicitly use the "-ORBCorbaObjectLock" resource factory
+          option.
 
 Mon May  5 17:25:50 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/CDR_Encaps_Codec.cpp (encode_value):
+        * tao/CDR_Encaps_Codec.cpp (encode_value):
 
-	  Fixed problem where encoding a value failed due to
-	  incompatibilities between the old Any implementation and the new
-	  one.  An ACE_Message_Block must be explicitly allocated and
-	  populated if the Any doesn't contain one.  Thanks to Jeff for
-	  suggesting the fix.
+          Fixed problem where encoding a value failed due to
+          incompatibilities between the old Any implementation and the new
+          one.  An ACE_Message_Block must be explicitly allocated and
+          populated if the Any doesn't contain one.  Thanks to Jeff for
+          suggesting the fix.
 
-	* tests/Portable_Interceptors/IORInterceptor/FOO_IORInterceptor.cpp
-	  (establish_components):
+        * tests/Portable_Interceptors/IORInterceptor/FOO_IORInterceptor.cpp
+          (establish_components):
 
-	  Added some sanity checks.
+          Added some sanity checks.
 
 Mon May  5 18:55:44 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -272,8 +278,8 @@ Mon May  5 17:50:42 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
         * tests/LongUpcalls/blocking_server.bor:
         * tests/LongUpcalls/blocking_server.dsp:
 
-	  Added link and dependency of TAO_Valuetype library
-	  for these projects and makefiles.
+          Added link and dependency of TAO_Valuetype library
+          for these projects and makefiles.
 
 Mon May  5 17:03:44 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -333,10 +339,10 @@ Mon May  5 13:35:00 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Mon May  5 13:20:10 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* performance-tests/*/Makefile: Updated dependencies.
+        * performance-tests/*/Makefile: Updated dependencies.
 
-	* performance-tests/Latency/AMH/Single_Threaded/Makefile: Added
-	  TAO_Valuetype library to the command line.
+        * performance-tests/Latency/AMH/Single_Threaded/Makefile: Added
+          TAO_Valuetype library to the command line.
 
 Mon May  5 13:09:45 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -369,20 +375,20 @@ Mon May  5 10:54:59 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Mon May  5 08:52:15 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/LoadBalancing/LB_IORInterceptor.h: #included
-	  IORInterceptorC.h.
+        * orbsvcs/orbsvcs/LoadBalancing/LB_IORInterceptor.h: #included
+          IORInterceptorC.h.
 
-	* orbsvcs/examples/ORT/ObjectReferenceFactory.idl: Fixed a path to
-	  included idl file.
+        * orbsvcs/examples/ORT/ObjectReferenceFactory.idl: Fixed a path to
+          included idl file.
 
-	* orbsvcs/*/Makefile*: Updated dependencies.
+        * orbsvcs/*/Makefile*: Updated dependencies.
 
 Mon May  5 08:37:33 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbvcs/orbsvcs/*Makefile.*: Updated dependencies.
+        * orbvcs/orbsvcs/*Makefile.*: Updated dependencies.
 
-	* orbsvcs/orbsvcs/LB_ORT.idl: Fixed the path to the included pidl
-	  file.
+        * orbsvcs/orbsvcs/LB_ORT.idl: Fixed the path to the included pidl
+          file.
 
 Mon May  5 08:32:46 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -401,11 +407,11 @@ Mon May  5 10:30:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon May  5 02:20:52 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/*/Makefile: Updated dependencies.
+        * tests/*/Makefile: Updated dependencies.
 
 Mon May  5 01:55:05 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* TAO_IDL/Makefile*: Updated dependencies.
+        * TAO_IDL/Makefile*: Updated dependencies.
 
 Mon May  5 06:40:21 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -415,8 +421,8 @@ Mon May  5 06:40:21 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon May  5 01:10:48 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/*/Makefile: Updated dependencies.
-	* tao/Policy_ForwardC.cpp: Fixed a typo in #include.
+        * tao/*/Makefile: Updated dependencies.
+        * tao/Policy_ForwardC.cpp: Fixed a typo in #include.
 
 Mon May  5 06:02:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -452,21 +458,21 @@ Sun May  4 18:06:59 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * Merge of a branch in which 3 new libraries are split off from TAO.
 
-	- TAO_Valuetype, which contains all files relating to
-	  valuetypes and abstract interfaces.
+        - TAO_Valuetype, which contains all files relating to
+          valuetypes and abstract interfaces.
 
-	- TAO_IORInterceptor, which contains files for IOR interceptors.
-	  Depends on TAO_Valuetype.
+        - TAO_IORInterceptor, which contains files for IOR interceptors.
+          Depends on TAO_Valuetype.
 
-	- TAO_ObjRefTemplate, which contains the generated code from
-	  ObjectReferenceTemplate.pidl. Also depends on TAO_Valuetype.
+        - TAO_ObjRefTemplate, which contains the generated code from
+          ObjectReferenceTemplate.pidl. Also depends on TAO_Valuetype.
 
-	Also, the Any template files were split so that we now have
-	one file set per template class. This will reduce runtime
-	footprint since only those template classes actually instantiated
-	will get pulled in now.
+        Also, the Any template files were split so that we now have
+        one file set per template class. This will reduce runtime
+        footprint since only those template classes actually instantiated
+        will get pulled in now.
 
-	* TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ch.cpp:
         * TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ci.cpp:
         * TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_cs.cpp:
         * TAO_IDL/be/be_visitor_sequence/gen_bounded_sequence_ch.cpp:
@@ -485,7 +491,7 @@ Sun May  4 18:06:59 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/be/be_visitor_sequence/gen_unbounded_sequence_ci.cpp:
         * TAO_IDL/be/be_visitor_sequence/gen_unbounded_sequence_cs.cpp:
 
-	  Unused files removed from the TAO IDL compiler.
+          Unused files removed from the TAO IDL compiler.
 
         * tao/AbstractBase.cpp:
         * tao/AbstractBase.h:
@@ -503,26 +509,26 @@ Sun May  4 18:06:59 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
         * tao/Value_VarOut_T.h:
         * tao/Value_VarOut_T.inl:
 
-	  TAO files moved to the TAO_Valuetype library.
+          TAO files moved to the TAO_Valuetype library.
 
         * tao/ObjectReferenceTemplate.pidl
         * tao/ObjectReferenceTemplateC.cpp:
         * tao/ObjectReferenceTemplateC.h:
         * tao/ObjectReferenceTemplateC.i:
 
-	  TAO file moved to the TAO_ObjRefTemplate library.
+          TAO file moved to the TAO_ObjRefTemplate library.
 
         * tao/Pseudo_Value_VarOut_T.cpp:
         * tao/Pseudo_Value_VarOut_T.h:
         * tao/Pseudo_Value_VarOut_T.inl:
 
-	  Unused files removed from TAO.
+          Unused files removed from TAO.
 
         * tao/Any_T.cpp:
         * tao/Any_T.h:
         * tao/Any_T.inl:
 
-	  TAO files that were split into the group of files below.
+          TAO files that were split into the group of files below.
 
         * tao/Any_Array_Impl_T.cpp:
         * tao/Any_Array_Impl_T.h:
@@ -543,22 +549,22 @@ Sun May  4 18:06:59 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
         * tao/Any_Special_Impl_T.h:
         * tao/Any_Special_Impl_T.inl:
 
-	  New files containing the Any template implementation classes.
+          New files containing the Any template implementation classes.
 
         * tao/Valuetype_Adapter.cpp:
         * tao/Valuetype_Adapter.h:
         * tao/IORInterceptor_Adapter.cpp:
         * tao/IORInterceptor_Adapter.h:
 
-	  Adapter classes for TAO_IORInterceptor and TAO_Valuetype.
+          Adapter classes for TAO_IORInterceptor and TAO_Valuetype.
 
         * tao/PI_Forward.pidl
         * tao/PI_ForwardC.cpp:
         * tao/PI_ForwardC.h:
         * tao/PI_ForwardC.i:
 
-	  New files that aid in breaking dependencies between IOR
-	  interceptors and the rest of the ORB.
+          New files that aid in breaking dependencies between IOR
+          interceptors and the rest of the ORB.
 
         * tao/IORInterceptor/IORInterceptor.mpc:
         * tao/IORInterceptor/IORInterceptor.pidl:
@@ -573,7 +579,7 @@ Sun May  4 18:06:59 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
         * tao/IORInterceptor/TAO_IORInterceptor.rc:
         * tao/IORInterceptor/iorinterceptor_export.h:
 
-	  New files making up the TAO_IORInterceptor library.
+          New files making up the TAO_IORInterceptor library.
 
         * tao/ObjRefTemplate/Makefile:
         * tao/ObjRefTemplate/Makefile.bor:
@@ -585,7 +591,7 @@ Sun May  4 18:06:59 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
         * tao/ObjRefTemplate/TAO_ObjRefTemplate.dsp:
         * tao/ObjRefTemplate/ort_export.h:
 
-	  New files making up the TAO_ObjRefTemplate library.
+          New files making up the TAO_ObjRefTemplate library.
 
         * tao/Valuetype/AbstractBase.cpp:
         * tao/Valuetype/AbstractBase.h:
@@ -614,12 +620,12 @@ Sun May  4 18:06:59 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
         * tao/Valuetype/Valuetype_Adapter_Impl.h:
         * tao/Valuetype/valuetype_export.h:
 
-	  New file making up the TAO_Valuetype library.
+          New file making up the TAO_Valuetype library.
 
         * rules.tao.GNU:
 
-	  Added the new libraries to the TAO_SRVR_LIBS variable,
-	  since the TAO_PortableServer library depends on them.
+          Added the new libraries to the TAO_SRVR_LIBS variable,
+          since the TAO_PortableServer library depends on them.
 
         * TAOACE.dsw:
         * TAO_IDL/ast/ast_interface.cpp:
@@ -832,530 +838,530 @@ Sun May  4 18:06:59 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
         * tests/Portable_Interceptors/IORInterceptor/server.bor:
         * tests/Portable_Interceptors/IORInterceptor/server.dsp:
 
-	  Changes to the ORB, IDL compiler, TAO tests and examples
-	  corresponding to the new libraries and Any files created
-	  above. Following is the branch ChangeLog.
-
-	  Sat May  3 14:00:48 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
-
-		  * tao/Any_T.cpp:
-		  * tao/Any_T.h:
-		  * tao/Any_T.inl:
-
-		    Removed these files and replaced them with those below.
-
-		  * tao/Any_Array_Impl_T.cpp:
-		  * tao/Any_Array_Impl_T.h:
-		  * tao/Any_Array_Impl_T.inl:
-		  * tao/Any_Basic_Impl_T.cpp:
-		  * tao/Any_Basic_Impl_T.h:
-		  * tao/Any_Basic_Impl_T.inl:
-		  * tao/Any_Dual_Impl_T.cpp:
-		  * tao/Any_Dual_Impl_T.h:
-		  * tao/Any_Dual_Impl_T.inl:
-		  * tao/Any_Impl_T.cpp:
-		  * tao/Any_Impl_T.h:
-		  * tao/Any_Impl_T.inl:
-		  * tao/Any_Special_Basic_Impl_T.cpp:
-		  * tao/Any_Special_Basic_Impl_T.h:
-		  * tao/Any_Special_Basic_Impl_T.inl:
-		  * tao/Any_Special_Impl_T.cpp:
-		  * tao/Any_Special_Impl_T.h:
-		  * tao/Any_Special_Impl_T.inl:
-
-		    New files, each set containing one template class,
-		    allowing more fine-grained includes.
-
-		  * tao/Any.cpp:
-		  * tao/Any.h:
-		  * tao/CONV_FRAMEC.cpp:
-		  * tao/CurrentC.h:
-		  * tao/DynamicC.h:
-		  * tao/GIOPC.cpp:
-		  * tao/IIOPC.cpp:
-		  * tao/IOP_CodecC.h:
-		  * tao/OctetSeqC.cpp:
-		  * tao/PolicyC.h:
-		  * tao/Policy_ForwardC.cpp:
-		  * tao/Policy_ForwardC.h:
-		  * tao/ServicesC.cpp:
-		  * tao/StringSeqC.cpp:
-		  * tao/TAO.dsp:
-		  * tao/TAOC.cpp:
-		  * tao/TimeBaseC.cpp:
-		  * tao/TimeBaseC.h:
-		  * tao/corba.h:
-		  * tao/corbafwd.h:
-		  * tao/DynamicAny/DynAny_i.h:
-		  * tao/IFR_Client/IFR_BaseC.h:
-		  * tao/IORManipulation/IORC.h:
-		  * tao/ObjRefTemplate/ObjectReferenceTemplateC.h:
-		  * tao/PortableServer/Default_ORTC.cpp:
-		  * tao/PortableServer/ImplRepoC.h:
-		  * tao/PortableServer/PortableServerC.h:
-		  * tao/RTCORBA/RTCORBAC.h:
-
-		    Changes resulting from the new files above.
-
-		  * tao/IORInterceptor/TAO_IORInterceptor.dsp:
-		  * tao/ObjRefTemplate/TAO_ObjRefTemplate.dsp:
-
-		    Fixed settings in the release version.
-
-		  * tao/Makefile.tao:
-		  * tao/BiDir_GIOP/Makefile:
-		  * tao/RTCORBA/Makefile:
-		  * tao/RTPortableServer/Makefile:
-		  * tao/Strategies/Makefile:
-		  * tao/TypeCodeFactory/Makefile:
-		  * tao/Utils/Makefile:
-		  * tao/IORManipulation/Makefile:
-		  * tao/IORTable/Makefile:
-		  * tao/Messaging/Makefile:
-		  * tao/Valuetype/Makefile:
-		  * tao/ObjRefTemplate/Makefile:
-		  * tao/PortableServer/Makefile:
-		  * tao/IORInterceptor/Makefile:
-		  * tao/IFR_Client/Makefile:
-		  * tao/Domain/Makefile:
-		  * tao/DynamicAny/Makefile:
-		  * tao/DynamicInterface/Makefile:
-
-		    Updated dependencies.
-
-	  Fri May  2 16:28:36 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
-
-		  * TAO_IDL/be/be_codegen.cpp:
-		  * TAO_IDL/be/be_global.cpp:
-		  * TAO_IDL/be/be_interface.cpp:
-		  * TAO_IDL/be/be_valuetype.cpp:
-		  * TAO_IDL/be_include/be_global.h:
-		  * TAO_IDL/include/idl_global.h:
-		  * TAO_IDL/util/utl_global.cpp:
-
-		    Added detection and storage of info about
-		    declarations of valuetypes and abstract interfaces,
-		    checked to conditionally generate file includes
-		    for these types from the Valuetype library.
-
-		  * examples/AMH/Sink_Server/AMH_Servant.h:
-		  * examples/AMH/Sink_Server/Base_Server.cpp:
-		  * examples/AMH/Sink_Server/Client_Task.cpp:
-		  * examples/AMH/Sink_Server/MT_AMH_Server.cpp:
-		  * examples/AMH/Sink_Server/Makefile:
-		  * examples/AMH/Sink_Server/client.bor:
-		  * examples/AMH/Sink_Server/client.dsp:
-		  * examples/AMH/Sink_Server/mt_server.bor:
-		  * examples/AMH/Sink_Server/mt_server.dsp:
-		  * examples/AMH/Sink_Server/st_server.bor:
-		  * examples/AMH/Sink_Server/st_server.dsp:
-		  * examples/AMI/FL_Callback/AMI_Peer.dsp:
-		  * examples/AMI/FL_Callback/AMI_Progress.dsp:
-		  * examples/AMI/FL_Callback/Makefile:
-		  * examples/AMI/FL_Callback/Progress_i.cpp:
-		  * examples/AMI/FL_Callback/peer.cpp:
-		  * examples/AMI/FL_Callback/progress.cpp:
-		  * examples/Buffered_AMI/Makefile:
-		  * examples/Buffered_AMI/client.bor:
-		  * examples/Buffered_AMI/client.cpp:
-		  * examples/Buffered_AMI/client.dsp:
-		  * examples/Buffered_AMI/server.bor:
-		  * examples/Buffered_AMI/server.cpp:
-		  * examples/Buffered_AMI/server.dsp:
-		  * tests/AMH_Exceptions/Makefile:
-		  * tests/AMH_Exceptions/Test.idl:
-		  * tests/AMH_Exceptions/client.bor:
-		  * tests/AMH_Exceptions/client.dsp:
-		  * tests/AMH_Exceptions/server.bor:
-		  * tests/AMH_Exceptions/server.cpp:
-		  * tests/AMH_Exceptions/server.dsp:
-		  * tests/AMH_Oneway/Makefile:
-		  * tests/AMH_Oneway/client.bor:
-		  * tests/AMH_Oneway/client.dsp:
-		  * tests/AMH_Oneway/server.bor:
-		  * tests/AMH_Oneway/server.cpp:
-		  * tests/AMH_Oneway/server.dsp:
-		  * tests/AMI/AMI_Test_Client.dsp:
-		  * tests/AMI/AMI_Test_Server.dsp:
-		  * tests/AMI/AMI_Test_Simple_Client.dsp:
-		  * tests/AMI/Makefile:
-		  * tests/AMI/client.bor:
-		  * tests/AMI/client.cpp:
-		  * tests/AMI/server.bor:
-		  * tests/AMI/simple_client.cpp:
-		  * tests/AMI_Buffering/Makefile:
-		  * tests/AMI_Buffering/admin.dsp:
-		  * tests/AMI_Buffering/client.bor:
-		  * tests/AMI_Buffering/client.dsp:
-		  * tests/AMI_Buffering/server.bor:
-		  * tests/AMI_Buffering/server.dsp:
-		  * tests/AMI_Timeouts/Makefile:
-		  * tests/AMI_Timeouts/client.bor:
-		  * tests/AMI_Timeouts/client.cpp:
-		  * tests/AMI_Timeouts/client.dsp:
-		  * tests/AMI_Timeouts/server.bor:
-		  * tests/AMI_Timeouts/server.cpp:
-		  * tests/AMI_Timeouts/server.dsp:
-		  * tests/AMI_Timeouts/timeout_client.h:
-		  * tests/Abstract_Interface/Abstract_Interface_Client.dsp:
-		  * tests/Abstract_Interface/Abstract_Interface_Server.dsp:
-		  * tests/Abstract_Interface/Makefile:
-		  * tests/Abstract_Interface/client.bor:
-		  * tests/Abstract_Interface/server.bor:
-		  * tests/ORT/Makefile:
-		  * tests/ORT/ORT_test_IORInterceptor.h:
-		  * tests/ORT/ObjectReferenceFactory.idl:
-		  * tests/ORT/client.bor:
-		  * tests/ORT/server.bor:
-		  * tests/ORT/server.dsp:
-		  * tests/Portable_Interceptors/IORInterceptor/FOO_IORInterceptor.h:
-		  * tests/Portable_Interceptors/IORInterceptor/Makefile:
-		  * tests/Portable_Interceptors/IORInterceptor/client.dsp:
-		  * tests/Portable_Interceptors/IORInterceptor/server.bor:
-		  * tests/Portable_Interceptors/IORInterceptor/server.dsp:
-
-		    Updated makefiles and project files for the TAO tests
-		    and examples that use valuetypes, abstract interfaces,
-		    IOR interceptors or object reference templates. Also
-		    removed many unnecessary links, includes
-		    and IDL compiler command line options.
-
-	  Fri May  2 000:42:11 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
-
-		  * rules.tao.GNU:
-		  * TAO_IDL/be/be_codegen.cpp:
-		  * TAO_IDL/be/be_global.cpp:
-		  * TAO_IDL/be/be_interface.cpp:
-		  * TAO_IDL/be/be_valuetype.cpp:
-		  * TAO_IDL/be/be_visitor_component/component_ch.cpp:
-		  * TAO_IDL/be/be_visitor_component/component_cs.cpp:
-		  * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
-		  * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
-		  * TAO_IDL/be/be_visitor_valuetype/cdr_op_cs.cpp:
-		  * TAO_IDL/be/be_visitor_valuetype/valuetype_ch.cpp:
-		  * TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp:
-		  * TAO_IDL/be_include/be_global.h
-		  * tests/OBV/Any/Makefile:
-		  * tests/OBV/Any/client.bor:
-		  * tests/OBV/Any/client.dsp:
-		  * tests/OBV/Any/server.bor:
-		  * tests/OBV/Any/server.dsp:
-		  * tests/OBV/Factory/Makefile:
-		  * tests/OBV/Factory/client.bor:
-		  * tests/OBV/Factory/client.dsp:
-		  * tests/OBV/Factory/server.bor:
-		  * tests/OBV/Factory/server.dsp:
-		  * tests/OBV/Forward/Makefile:
-		  * tests/OBV/Forward/client.bor:
-		  * tests/OBV/Forward/client.dsp:
-		  * tests/OBV/Forward/server.bor:
-		  * tests/OBV/Forward/server.dsp:
-		  * tests/OBV/TC_Alignment/Makefile:
-		  * tests/OBV/TC_Alignment/client.bor:
-		  * tests/OBV/TC_Alignment/client.dsp:
-		  * tests/OBV/TC_Alignment/server.bor:
-		  * tests/OBV/TC_Alignment/server.dsp:
-
-		    Updated rules.tao.GNU and the tests in the
-		    TAO/tests/OBV directory to work with the
-		    new Valuetype library. Also substituted ptrdiff_t
-		    for ptr_arith_t in TAO_IDL.
-
-	  Thu May  1 20:24:13 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
-
-		  * TAO_IDL/be_include/be_helper.h:
-		  * tao/ORB.cpp:
-		  * tao/IORInterceptor/IORInterceptorC.cpp:
-		  * tao/IORInterceptor/IORInterceptorC.h:
-		  * tao/Messaging/MessagingC.cpp:
-		  * tao/Messaging/MessagingC.h:
-		  * tao/Messaging/Messaging_No_ImplC.cpp:
-		  * tao/Messaging/Messaging_No_ImplC.h:
-		  * tao/Messaging/Messaging_RT_PolicyC.cpp:
-		  * tao/Messaging/Messaging_RT_PolicyC.h:
-		  * tao/Messaging/Messaging_SyncScope_PolicyC.cpp:
-		  * tao/Messaging/Messaging_SyncScope_PolicyC.h:
-		  * tao/Messaging/TAO_ExtC.cpp:
-		  * tao/Messaging/TAO_ExtC.h:
-		  * tao/ObjRefTemplate/ObjectReferenceTemplateC.cpp:
-		  * tao/ObjRefTemplate/ObjectReferenceTemplateC.h:
-		  * tao/PortableServer/Default_ORTC.cpp:
-		  * tao/PortableServer/Default_ORTC.h:
-		  * tao/Valuetype/AbstractBase.cpp:
-		  * tao/Valuetype/AbstractBase.h:
-		  * tao/Valuetype/AbstractBase.inl:
-		  * tao/Valuetype/ValueBase.cpp:
-
-		    Finished subsetting the Valuetype library. Also changed some
-		    ptr_arith_t to ptrdiff_t, to be compatible with recent
-		    changes in ACE.
-
-		  * TAOACE.dsw:
-		  * rules.tao.GNU:
-		  * tao/BiDir_GIOP/Makefile:
-		  * tao/Domain/Makefile:
-		  * tao/DynamicAny/Makefile:
-		  * tao/DynamicInterface/Makefile:
-		  * tao/IFR_Client/Makefile:
-		  * tao/Valuetype/ValueBase.h:
-		  * tao/IORInterceptor/Makefile:
-		  * tao/IORManipulation/Makefile:
-		  * tao/IORTable/Makefile:
-		  * tao/Makefile.bor:
-		  * tao/Makefile.dirs
-		  * tao/Makefile.tao:
-		  * tao/ObjRefTemplate/Makefile:
-		  * tao/ObjRefTemplate/Makefile.bor:
-		  * tao/Messaging/Makefile:
-		  * tao/RTCORBA/Makefile:
-		  * tao/RTPortableServer/Makefile:
-		  * tao/SmartProxies/Makefile:
-		  * tao/Strategies/Makefile:
-		  * tao/TypeCodeFactory/Makefile:
-		  * tao/PortableServer/Makefile:
-		  * tao/PortableServer/TAO_PortableServer.dsp:
-		  * tao/Utils/Makefile:
-		  * tao/Messaging/TAO_Messaging.dsp:
-		  * tao/ObjRefTemplate/TAO_ObjRefTemplate.dsp:
-
-		    Modified and/or updated dependencies.
-
-		  * tao/Valuetype/Valuetype.mpc:
-		  * tao/Valuetype/Makefile:
-		  * tao/Valuetype/Makefile.bor:
-		  * tao/ObjRefTemplate/ObjRefTemplate.mpc:
-
-		    New files.
-
-	  Thu May  1 15:48:19 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
-
-		  * tao/ObjectReferencTemplate/ObjectReferenceTemplateC.h:
-		  * tao/Valuetype/ValueFactory_Map.h:
-
-		    Minor changes to get the ORT and Valuetype libraries to
-		    compile.
-
-	  Wed Apr 30 21:33:08 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
-
-		  * tao/ORB.cpp:
-		  * tao/TAO.dsp:
-		  * tao/Valuetype_Adapter.h:
-		  * tao/append.cpp:
-		  * tao/corba.h:
-		  * tao/skip.cpp:
-		  * tao/Valuetype/AbstractBase.cpp:
-		  * tao/Valuetype/TAO_Valuetype.dsp
-		  * tao/Valuetype/Valuetype_Adapter_Impl.cpp:
-		  * tao/Valuetype/Valuetype_Adapter_Impl.h:
-
-		    Exisiting files modified toward separating
-		    valuetype-related files into a library.
-
-		  * tao/Valuetype/ValueBase.cpp:
-		  * tao/Valuetype/ValueBase.h:
-		  * tao/Valuetype/ValueBase.inl:
-		  * tao/Valuetype/ValueFactory.cpp:
-		  * tao/Valuetype/ValueFactory.h:
-		  * tao/Valuetype/ValueFactory.inl:
-		  * tao/Valuetype/ValueFactory_Map.cpp:
-		  * tao/Valuetype/ValueFactory_Map.h:
-		  * tao/Valuetype/ValueFactory_Map.inl:
-
-		    Files moved from TAO/tao and/or renamed.
-
-		  * tao/ValueBase.cpp:
-		  * tao/ValueBase.h:
-		  * tao/ValueBase.i:
-		  * tao/ValueFactory.cpp:
-		  * tao/ValueFactory.h:
-		  * tao/ValueFactory.i:
-		  * tao/ValueFactory_Map.cpp:
-		  * tao/ValueFactory_Map.h:
-		  * tao/ValueFactory_Map.i:
-
-		    Files removed from TAO and transferred to
-		    the TAO_Valuetype library.
-
-	  Wed Apr 30 18:11:05 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
-
-		  * TAO_IDL/ast/ast_interface.cpp:
-		  * TAO_IDL/be/be_decl.cpp:
-		  * TAO_IDL/be/be_visitor_operation.cpp:
-
-		    Changes to keep in sync with changes in ACE.
-
-		  * tao/ClientRequestInfo_i.cpp:
-		  * tao/IORInterceptor_Adapter.h:
-		  * tao/ORB_Core.cpp:
-		  * tao/ORB_Core.h:
-		  * tao/TAO.dsp:
-		  * tao/TAO.dsw:
-		  * TAOACE.dsw:
-		  * tao/ValueBase.h:
-		  * tao/corbafwd.h:
-
-		    Progress in constructing the Valuetype library.
-
-		  * tao/Valuetype_Adapter.cpp:
-		  * tao/Valuetype_Adapter.h:
-		  * tao/ObjRefTemplate/Makefile:
-		  * tao/ObjRefTemplate/Makefile.bor:
-		  * tao/Valuetype/AbstractBase.cpp:
-		  * tao/Valuetype/AbstractBase.h:
-		  * tao/Valuetype/AbstractBase.inl:
-		  * tao/Valuetype/TAO_Valuetype.dsp:
-		  * tao/Valuetype/Valuetype_Adapter_Impl.cpp:
-		  * tao/Valuetype/Valuetype_Adapter_Impl.h:
-		  * tao/Valuetype/valuetype_export.h:
-
-		    New files.
-
-		  * tao/AbstractBase.cpp:
-		  * tao/AbstractBase.h:
-		  * tao/AbstractBase.inl:
-
-		    Moved these files to the Valuetype library.
-
-	  Tue Apr 29 17:21:13 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
-
-		  * tao/Any_T.h:
-		  * tao/CORBA_String.cpp:
-		  * tao/CORBA_String.h:
-		  * tao/ClientRequestInfo_i.cpp:
-		  * tao/Queued_Message.h:
-		  * tao/Transport_Connector.h:
-		  * tao/Wait_Strategy.h:
-		  * tao/corba.h:
-		  * tao/corbafwd.cpp:
-
-		    Added some forward declarations and some includes to eliminate
-		    build errors, and other changes in preparation for moving
-		    out valuetype- and abstract interface-related files.
-
-	  Fri Apr 11 17:18:16 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
-
-		  * TAOACE.dsw:
-		  * tao/AbstractBase.cpp:
-		  * tao/Makefile.bor:
-		  * tao/Makefile.dirs:
-		  * tao/Makefile.tao:
-		  * tao/PortableInterceptorC.h:
-		  * tao/TAO.dsp:
-		  * tao/DynamicInterface/Makefile:
-		  * tao/IORInterceptor/IORInterceptor.pidl
-		  * tao/IORInterceptor/IORInterceptorC.h:
-		  * tao/IORInterceptor/Makefile:
-		  * tao/IORInterceptor/TAO_IORInterceptor.dsp
-		  * tao/PortableServer/Default_ORTC.h:
-		  * tao/PortableServer/Makefile:
-		  * tao/PortableServer/Makefile.bor:
-		  * tao/PortableServer/POAManager.h:
-		  * tao/PortableServer/TAO_PortableServer.dsp:
-
-		    More subsetting-related changes.
-
-		  * tao/ObjRefTemplate/ObjectReferenceTemplate.pidl:
-		  * tao/ObjRefTemplate/ObjectReferenceTemplateC.cpp:
-		  * tao/ObjRefTemplate/ObjectReferenceTemplateC.h:
-		  * tao/ObjRefTemplate/ObjectReferenceTemplateC.i:
-		  * tao/ObjRefTemplate/TAO_ObjRefTemplate.dsp:
-		  * tao/ObjRefTemplate/ort_export.h:
-
-		    Library created from ObjectReferenceTemplate*
-		    files moved from TAO.
-
-		  * tao/ObjectReferenceTemplate.pidl:
-		  * tao/ObjectReferenceTemplateC.cpp:
-		  * tao/ObjectReferenceTemplateC.h:
-		  * tao/ObjectReferenceTemplateC.i:
-
-		    Corresponding files removed from TAO.
-
-	  Fri Apr 11 13:01:04 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
-
-		  * TAOACE.dsw:
-		  * tao/Interceptor_List.cpp:
-		  * tao/Makefile.bor:
-		  * tao/Makefile.dirs:
-		  * tao/Makefile.tao:
-		  * tao/IORInterceptor/TAO_IORInterceptor.dsp:
-		  * tao/PortableServer/IORInfo.h:
-		  * tao/PortableServer/Makefile:
-		  * tao/PortableServer/Makefile.bor:
-		  * tao/PortableServer/POA.h:
-		  * tao/PortableServer/POAManager.cpp:
-		  * tao/PortableServer/PortableServer.mpc:
-		  * tao/PortableServer/TAO_PortableServer.dsp:
-
-		    Changes to integrate the new IORInterceptor
-		    library into existing TAO builds.
-
-		  * tao/IORInterceptor/IORInterceptor.mpc:
-		  * tao/IORInterceptor/Makefile:
-		  * tao/IORInterceptor/Makefile.bor:
-		  * tao/IORInterceptor/TAO_IORInterceptor.rc:
-
-		    New files to complete the build framework of
-		    TAO_IORInterceptors.
-
-	  Fri Apr 11 02:58:32 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
-
-		  * IFR_Client_Adapter.cpp:
-
-		    Cosmetic changes.
-
-		  * Interceptor_List.cpp:
-		  * Interceptor_List.h:
-		  * Interceptor_List.inl:
-		  * ORB_Core.cpp:
-		  * ORB_Core.h:
-		  * ObjectReferenceTemplate.pidl:
-		  * ObjectReferenceTemplateC.cpp:
-		  * ObjectReferenceTemplateC.h:
-		  * PortableInterceptor.pidl:
-		  * PortableInterceptorC.cpp:
-		  * PortableInterceptorC.h:
-		  * TAO.dsp:
-		  * IORInterceptor/TAO_IORInterceptor.dsp:
-
-		    Modified files toward finishing the TAO_IORInterceptor
-		    library.
-
-		  * PI_Forward.pidl:
-		  * PI_ForwardC.cpp:
-		  * PI_ForwardC.h:
-		  * PI_ForwardC.i:
-
-		    New files, collecting typedefs used by both
-		    PortableInterceptor.pidl and ObjectReferenceTemplate.pidl.
-
-		  * IORInterceptor/IORInterceptor_Adapter_Impl.cpp:
-		  * IORInterceptor/IORInterceptor_Adapter_Impl.h:
-		  * IORInterceptor_Adapter.cpp:
-		  * IORInterceptor_Adapter.h:
-
-		    Abstract and concrete adapter classes whose methods
-		    wrap the few remaining dependencies in TAO on
-		    PortableInterceptor::IORInterceptor.
-
-	  Thu Apr 10 22:44:04 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
-
-		  * tao/PortableInterceptor.pidl:
-		  * tao/PortableInterceptorC.h:
-		  * tao/PortableInterceptorC.i:
-		  * tao/PortableInterceptorC.cpp:
-
-		    Removed IORInterceptor and IORInfo from these files.
-
-		  * tao/IORInterceptor/IORInterceptor.pidl:
-		  * tao/IORInterceptor/IORInterceptorC.cpp:
-		  * tao/IORInterceptor/IORInterceptorC.h:
-		  * tao/IORInterceptor/IORInterceptorC.i:
-		  * tao/IORInterceptor/TAO_IORInterceptor.dsp:
-		  * tao/IORInterceptor/iorinterceptor_export.h:
-
-		    Started a new library with the interfaces removed from
-		    PortableInterceptor.pidl.
+          Changes to the ORB, IDL compiler, TAO tests and examples
+          corresponding to the new libraries and Any files created
+          above. Following is the branch ChangeLog.
+
+          Sat May  3 14:00:48 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+                  * tao/Any_T.cpp:
+                  * tao/Any_T.h:
+                  * tao/Any_T.inl:
+
+                    Removed these files and replaced them with those below.
+
+                  * tao/Any_Array_Impl_T.cpp:
+                  * tao/Any_Array_Impl_T.h:
+                  * tao/Any_Array_Impl_T.inl:
+                  * tao/Any_Basic_Impl_T.cpp:
+                  * tao/Any_Basic_Impl_T.h:
+                  * tao/Any_Basic_Impl_T.inl:
+                  * tao/Any_Dual_Impl_T.cpp:
+                  * tao/Any_Dual_Impl_T.h:
+                  * tao/Any_Dual_Impl_T.inl:
+                  * tao/Any_Impl_T.cpp:
+                  * tao/Any_Impl_T.h:
+                  * tao/Any_Impl_T.inl:
+                  * tao/Any_Special_Basic_Impl_T.cpp:
+                  * tao/Any_Special_Basic_Impl_T.h:
+                  * tao/Any_Special_Basic_Impl_T.inl:
+                  * tao/Any_Special_Impl_T.cpp:
+                  * tao/Any_Special_Impl_T.h:
+                  * tao/Any_Special_Impl_T.inl:
+
+                    New files, each set containing one template class,
+                    allowing more fine-grained includes.
+
+                  * tao/Any.cpp:
+                  * tao/Any.h:
+                  * tao/CONV_FRAMEC.cpp:
+                  * tao/CurrentC.h:
+                  * tao/DynamicC.h:
+                  * tao/GIOPC.cpp:
+                  * tao/IIOPC.cpp:
+                  * tao/IOP_CodecC.h:
+                  * tao/OctetSeqC.cpp:
+                  * tao/PolicyC.h:
+                  * tao/Policy_ForwardC.cpp:
+                  * tao/Policy_ForwardC.h:
+                  * tao/ServicesC.cpp:
+                  * tao/StringSeqC.cpp:
+                  * tao/TAO.dsp:
+                  * tao/TAOC.cpp:
+                  * tao/TimeBaseC.cpp:
+                  * tao/TimeBaseC.h:
+                  * tao/corba.h:
+                  * tao/corbafwd.h:
+                  * tao/DynamicAny/DynAny_i.h:
+                  * tao/IFR_Client/IFR_BaseC.h:
+                  * tao/IORManipulation/IORC.h:
+                  * tao/ObjRefTemplate/ObjectReferenceTemplateC.h:
+                  * tao/PortableServer/Default_ORTC.cpp:
+                  * tao/PortableServer/ImplRepoC.h:
+                  * tao/PortableServer/PortableServerC.h:
+                  * tao/RTCORBA/RTCORBAC.h:
+
+                    Changes resulting from the new files above.
+
+                  * tao/IORInterceptor/TAO_IORInterceptor.dsp:
+                  * tao/ObjRefTemplate/TAO_ObjRefTemplate.dsp:
+
+                    Fixed settings in the release version.
+
+                  * tao/Makefile.tao:
+                  * tao/BiDir_GIOP/Makefile:
+                  * tao/RTCORBA/Makefile:
+                  * tao/RTPortableServer/Makefile:
+                  * tao/Strategies/Makefile:
+                  * tao/TypeCodeFactory/Makefile:
+                  * tao/Utils/Makefile:
+                  * tao/IORManipulation/Makefile:
+                  * tao/IORTable/Makefile:
+                  * tao/Messaging/Makefile:
+                  * tao/Valuetype/Makefile:
+                  * tao/ObjRefTemplate/Makefile:
+                  * tao/PortableServer/Makefile:
+                  * tao/IORInterceptor/Makefile:
+                  * tao/IFR_Client/Makefile:
+                  * tao/Domain/Makefile:
+                  * tao/DynamicAny/Makefile:
+                  * tao/DynamicInterface/Makefile:
+
+                    Updated dependencies.
+
+          Fri May  2 16:28:36 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+                  * TAO_IDL/be/be_codegen.cpp:
+                  * TAO_IDL/be/be_global.cpp:
+                  * TAO_IDL/be/be_interface.cpp:
+                  * TAO_IDL/be/be_valuetype.cpp:
+                  * TAO_IDL/be_include/be_global.h:
+                  * TAO_IDL/include/idl_global.h:
+                  * TAO_IDL/util/utl_global.cpp:
+
+                    Added detection and storage of info about
+                    declarations of valuetypes and abstract interfaces,
+                    checked to conditionally generate file includes
+                    for these types from the Valuetype library.
+
+                  * examples/AMH/Sink_Server/AMH_Servant.h:
+                  * examples/AMH/Sink_Server/Base_Server.cpp:
+                  * examples/AMH/Sink_Server/Client_Task.cpp:
+                  * examples/AMH/Sink_Server/MT_AMH_Server.cpp:
+                  * examples/AMH/Sink_Server/Makefile:
+                  * examples/AMH/Sink_Server/client.bor:
+                  * examples/AMH/Sink_Server/client.dsp:
+                  * examples/AMH/Sink_Server/mt_server.bor:
+                  * examples/AMH/Sink_Server/mt_server.dsp:
+                  * examples/AMH/Sink_Server/st_server.bor:
+                  * examples/AMH/Sink_Server/st_server.dsp:
+                  * examples/AMI/FL_Callback/AMI_Peer.dsp:
+                  * examples/AMI/FL_Callback/AMI_Progress.dsp:
+                  * examples/AMI/FL_Callback/Makefile:
+                  * examples/AMI/FL_Callback/Progress_i.cpp:
+                  * examples/AMI/FL_Callback/peer.cpp:
+                  * examples/AMI/FL_Callback/progress.cpp:
+                  * examples/Buffered_AMI/Makefile:
+                  * examples/Buffered_AMI/client.bor:
+                  * examples/Buffered_AMI/client.cpp:
+                  * examples/Buffered_AMI/client.dsp:
+                  * examples/Buffered_AMI/server.bor:
+                  * examples/Buffered_AMI/server.cpp:
+                  * examples/Buffered_AMI/server.dsp:
+                  * tests/AMH_Exceptions/Makefile:
+                  * tests/AMH_Exceptions/Test.idl:
+                  * tests/AMH_Exceptions/client.bor:
+                  * tests/AMH_Exceptions/client.dsp:
+                  * tests/AMH_Exceptions/server.bor:
+                  * tests/AMH_Exceptions/server.cpp:
+                  * tests/AMH_Exceptions/server.dsp:
+                  * tests/AMH_Oneway/Makefile:
+                  * tests/AMH_Oneway/client.bor:
+                  * tests/AMH_Oneway/client.dsp:
+                  * tests/AMH_Oneway/server.bor:
+                  * tests/AMH_Oneway/server.cpp:
+                  * tests/AMH_Oneway/server.dsp:
+                  * tests/AMI/AMI_Test_Client.dsp:
+                  * tests/AMI/AMI_Test_Server.dsp:
+                  * tests/AMI/AMI_Test_Simple_Client.dsp:
+                  * tests/AMI/Makefile:
+                  * tests/AMI/client.bor:
+                  * tests/AMI/client.cpp:
+                  * tests/AMI/server.bor:
+                  * tests/AMI/simple_client.cpp:
+                  * tests/AMI_Buffering/Makefile:
+                  * tests/AMI_Buffering/admin.dsp:
+                  * tests/AMI_Buffering/client.bor:
+                  * tests/AMI_Buffering/client.dsp:
+                  * tests/AMI_Buffering/server.bor:
+                  * tests/AMI_Buffering/server.dsp:
+                  * tests/AMI_Timeouts/Makefile:
+                  * tests/AMI_Timeouts/client.bor:
+                  * tests/AMI_Timeouts/client.cpp:
+                  * tests/AMI_Timeouts/client.dsp:
+                  * tests/AMI_Timeouts/server.bor:
+                  * tests/AMI_Timeouts/server.cpp:
+                  * tests/AMI_Timeouts/server.dsp:
+                  * tests/AMI_Timeouts/timeout_client.h:
+                  * tests/Abstract_Interface/Abstract_Interface_Client.dsp:
+                  * tests/Abstract_Interface/Abstract_Interface_Server.dsp:
+                  * tests/Abstract_Interface/Makefile:
+                  * tests/Abstract_Interface/client.bor:
+                  * tests/Abstract_Interface/server.bor:
+                  * tests/ORT/Makefile:
+                  * tests/ORT/ORT_test_IORInterceptor.h:
+                  * tests/ORT/ObjectReferenceFactory.idl:
+                  * tests/ORT/client.bor:
+                  * tests/ORT/server.bor:
+                  * tests/ORT/server.dsp:
+                  * tests/Portable_Interceptors/IORInterceptor/FOO_IORInterceptor.h:
+                  * tests/Portable_Interceptors/IORInterceptor/Makefile:
+                  * tests/Portable_Interceptors/IORInterceptor/client.dsp:
+                  * tests/Portable_Interceptors/IORInterceptor/server.bor:
+                  * tests/Portable_Interceptors/IORInterceptor/server.dsp:
+
+                    Updated makefiles and project files for the TAO tests
+                    and examples that use valuetypes, abstract interfaces,
+                    IOR interceptors or object reference templates. Also
+                    removed many unnecessary links, includes
+                    and IDL compiler command line options.
+
+          Fri May  2 000:42:11 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+                  * rules.tao.GNU:
+                  * TAO_IDL/be/be_codegen.cpp:
+                  * TAO_IDL/be/be_global.cpp:
+                  * TAO_IDL/be/be_interface.cpp:
+                  * TAO_IDL/be/be_valuetype.cpp:
+                  * TAO_IDL/be/be_visitor_component/component_ch.cpp:
+                  * TAO_IDL/be/be_visitor_component/component_cs.cpp:
+                  * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+                  * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+                  * TAO_IDL/be/be_visitor_valuetype/cdr_op_cs.cpp:
+                  * TAO_IDL/be/be_visitor_valuetype/valuetype_ch.cpp:
+                  * TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp:
+                  * TAO_IDL/be_include/be_global.h
+                  * tests/OBV/Any/Makefile:
+                  * tests/OBV/Any/client.bor:
+                  * tests/OBV/Any/client.dsp:
+                  * tests/OBV/Any/server.bor:
+                  * tests/OBV/Any/server.dsp:
+                  * tests/OBV/Factory/Makefile:
+                  * tests/OBV/Factory/client.bor:
+                  * tests/OBV/Factory/client.dsp:
+                  * tests/OBV/Factory/server.bor:
+                  * tests/OBV/Factory/server.dsp:
+                  * tests/OBV/Forward/Makefile:
+                  * tests/OBV/Forward/client.bor:
+                  * tests/OBV/Forward/client.dsp:
+                  * tests/OBV/Forward/server.bor:
+                  * tests/OBV/Forward/server.dsp:
+                  * tests/OBV/TC_Alignment/Makefile:
+                  * tests/OBV/TC_Alignment/client.bor:
+                  * tests/OBV/TC_Alignment/client.dsp:
+                  * tests/OBV/TC_Alignment/server.bor:
+                  * tests/OBV/TC_Alignment/server.dsp:
+
+                    Updated rules.tao.GNU and the tests in the
+                    TAO/tests/OBV directory to work with the
+                    new Valuetype library. Also substituted ptrdiff_t
+                    for ptr_arith_t in TAO_IDL.
+
+          Thu May  1 20:24:13 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+                  * TAO_IDL/be_include/be_helper.h:
+                  * tao/ORB.cpp:
+                  * tao/IORInterceptor/IORInterceptorC.cpp:
+                  * tao/IORInterceptor/IORInterceptorC.h:
+                  * tao/Messaging/MessagingC.cpp:
+                  * tao/Messaging/MessagingC.h:
+                  * tao/Messaging/Messaging_No_ImplC.cpp:
+                  * tao/Messaging/Messaging_No_ImplC.h:
+                  * tao/Messaging/Messaging_RT_PolicyC.cpp:
+                  * tao/Messaging/Messaging_RT_PolicyC.h:
+                  * tao/Messaging/Messaging_SyncScope_PolicyC.cpp:
+                  * tao/Messaging/Messaging_SyncScope_PolicyC.h:
+                  * tao/Messaging/TAO_ExtC.cpp:
+                  * tao/Messaging/TAO_ExtC.h:
+                  * tao/ObjRefTemplate/ObjectReferenceTemplateC.cpp:
+                  * tao/ObjRefTemplate/ObjectReferenceTemplateC.h:
+                  * tao/PortableServer/Default_ORTC.cpp:
+                  * tao/PortableServer/Default_ORTC.h:
+                  * tao/Valuetype/AbstractBase.cpp:
+                  * tao/Valuetype/AbstractBase.h:
+                  * tao/Valuetype/AbstractBase.inl:
+                  * tao/Valuetype/ValueBase.cpp:
+
+                    Finished subsetting the Valuetype library. Also changed some
+                    ptr_arith_t to ptrdiff_t, to be compatible with recent
+                    changes in ACE.
+
+                  * TAOACE.dsw:
+                  * rules.tao.GNU:
+                  * tao/BiDir_GIOP/Makefile:
+                  * tao/Domain/Makefile:
+                  * tao/DynamicAny/Makefile:
+                  * tao/DynamicInterface/Makefile:
+                  * tao/IFR_Client/Makefile:
+                  * tao/Valuetype/ValueBase.h:
+                  * tao/IORInterceptor/Makefile:
+                  * tao/IORManipulation/Makefile:
+                  * tao/IORTable/Makefile:
+                  * tao/Makefile.bor:
+                  * tao/Makefile.dirs
+                  * tao/Makefile.tao:
+                  * tao/ObjRefTemplate/Makefile:
+                  * tao/ObjRefTemplate/Makefile.bor:
+                  * tao/Messaging/Makefile:
+                  * tao/RTCORBA/Makefile:
+                  * tao/RTPortableServer/Makefile:
+                  * tao/SmartProxies/Makefile:
+                  * tao/Strategies/Makefile:
+                  * tao/TypeCodeFactory/Makefile:
+                  * tao/PortableServer/Makefile:
+                  * tao/PortableServer/TAO_PortableServer.dsp:
+                  * tao/Utils/Makefile:
+                  * tao/Messaging/TAO_Messaging.dsp:
+                  * tao/ObjRefTemplate/TAO_ObjRefTemplate.dsp:
+
+                    Modified and/or updated dependencies.
+
+                  * tao/Valuetype/Valuetype.mpc:
+                  * tao/Valuetype/Makefile:
+                  * tao/Valuetype/Makefile.bor:
+                  * tao/ObjRefTemplate/ObjRefTemplate.mpc:
+
+                    New files.
+
+          Thu May  1 15:48:19 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+                  * tao/ObjectReferencTemplate/ObjectReferenceTemplateC.h:
+                  * tao/Valuetype/ValueFactory_Map.h:
+
+                    Minor changes to get the ORT and Valuetype libraries to
+                    compile.
+
+          Wed Apr 30 21:33:08 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+                  * tao/ORB.cpp:
+                  * tao/TAO.dsp:
+                  * tao/Valuetype_Adapter.h:
+                  * tao/append.cpp:
+                  * tao/corba.h:
+                  * tao/skip.cpp:
+                  * tao/Valuetype/AbstractBase.cpp:
+                  * tao/Valuetype/TAO_Valuetype.dsp
+                  * tao/Valuetype/Valuetype_Adapter_Impl.cpp:
+                  * tao/Valuetype/Valuetype_Adapter_Impl.h:
+
+                    Exisiting files modified toward separating
+                    valuetype-related files into a library.
+
+                  * tao/Valuetype/ValueBase.cpp:
+                  * tao/Valuetype/ValueBase.h:
+                  * tao/Valuetype/ValueBase.inl:
+                  * tao/Valuetype/ValueFactory.cpp:
+                  * tao/Valuetype/ValueFactory.h:
+                  * tao/Valuetype/ValueFactory.inl:
+                  * tao/Valuetype/ValueFactory_Map.cpp:
+                  * tao/Valuetype/ValueFactory_Map.h:
+                  * tao/Valuetype/ValueFactory_Map.inl:
+
+                    Files moved from TAO/tao and/or renamed.
+
+                  * tao/ValueBase.cpp:
+                  * tao/ValueBase.h:
+                  * tao/ValueBase.i:
+                  * tao/ValueFactory.cpp:
+                  * tao/ValueFactory.h:
+                  * tao/ValueFactory.i:
+                  * tao/ValueFactory_Map.cpp:
+                  * tao/ValueFactory_Map.h:
+                  * tao/ValueFactory_Map.i:
+
+                    Files removed from TAO and transferred to
+                    the TAO_Valuetype library.
+
+          Wed Apr 30 18:11:05 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+                  * TAO_IDL/ast/ast_interface.cpp:
+                  * TAO_IDL/be/be_decl.cpp:
+                  * TAO_IDL/be/be_visitor_operation.cpp:
+
+                    Changes to keep in sync with changes in ACE.
+
+                  * tao/ClientRequestInfo_i.cpp:
+                  * tao/IORInterceptor_Adapter.h:
+                  * tao/ORB_Core.cpp:
+                  * tao/ORB_Core.h:
+                  * tao/TAO.dsp:
+                  * tao/TAO.dsw:
+                  * TAOACE.dsw:
+                  * tao/ValueBase.h:
+                  * tao/corbafwd.h:
+
+                    Progress in constructing the Valuetype library.
+
+                  * tao/Valuetype_Adapter.cpp:
+                  * tao/Valuetype_Adapter.h:
+                  * tao/ObjRefTemplate/Makefile:
+                  * tao/ObjRefTemplate/Makefile.bor:
+                  * tao/Valuetype/AbstractBase.cpp:
+                  * tao/Valuetype/AbstractBase.h:
+                  * tao/Valuetype/AbstractBase.inl:
+                  * tao/Valuetype/TAO_Valuetype.dsp:
+                  * tao/Valuetype/Valuetype_Adapter_Impl.cpp:
+                  * tao/Valuetype/Valuetype_Adapter_Impl.h:
+                  * tao/Valuetype/valuetype_export.h:
+
+                    New files.
+
+                  * tao/AbstractBase.cpp:
+                  * tao/AbstractBase.h:
+                  * tao/AbstractBase.inl:
+
+                    Moved these files to the Valuetype library.
+
+          Tue Apr 29 17:21:13 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+                  * tao/Any_T.h:
+                  * tao/CORBA_String.cpp:
+                  * tao/CORBA_String.h:
+                  * tao/ClientRequestInfo_i.cpp:
+                  * tao/Queued_Message.h:
+                  * tao/Transport_Connector.h:
+                  * tao/Wait_Strategy.h:
+                  * tao/corba.h:
+                  * tao/corbafwd.cpp:
+
+                    Added some forward declarations and some includes to eliminate
+                    build errors, and other changes in preparation for moving
+                    out valuetype- and abstract interface-related files.
+
+          Fri Apr 11 17:18:16 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+                  * TAOACE.dsw:
+                  * tao/AbstractBase.cpp:
+                  * tao/Makefile.bor:
+                  * tao/Makefile.dirs:
+                  * tao/Makefile.tao:
+                  * tao/PortableInterceptorC.h:
+                  * tao/TAO.dsp:
+                  * tao/DynamicInterface/Makefile:
+                  * tao/IORInterceptor/IORInterceptor.pidl
+                  * tao/IORInterceptor/IORInterceptorC.h:
+                  * tao/IORInterceptor/Makefile:
+                  * tao/IORInterceptor/TAO_IORInterceptor.dsp
+                  * tao/PortableServer/Default_ORTC.h:
+                  * tao/PortableServer/Makefile:
+                  * tao/PortableServer/Makefile.bor:
+                  * tao/PortableServer/POAManager.h:
+                  * tao/PortableServer/TAO_PortableServer.dsp:
+
+                    More subsetting-related changes.
+
+                  * tao/ObjRefTemplate/ObjectReferenceTemplate.pidl:
+                  * tao/ObjRefTemplate/ObjectReferenceTemplateC.cpp:
+                  * tao/ObjRefTemplate/ObjectReferenceTemplateC.h:
+                  * tao/ObjRefTemplate/ObjectReferenceTemplateC.i:
+                  * tao/ObjRefTemplate/TAO_ObjRefTemplate.dsp:
+                  * tao/ObjRefTemplate/ort_export.h:
+
+                    Library created from ObjectReferenceTemplate*
+                    files moved from TAO.
+
+                  * tao/ObjectReferenceTemplate.pidl:
+                  * tao/ObjectReferenceTemplateC.cpp:
+                  * tao/ObjectReferenceTemplateC.h:
+                  * tao/ObjectReferenceTemplateC.i:
+
+                    Corresponding files removed from TAO.
+
+          Fri Apr 11 13:01:04 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+                  * TAOACE.dsw:
+                  * tao/Interceptor_List.cpp:
+                  * tao/Makefile.bor:
+                  * tao/Makefile.dirs:
+                  * tao/Makefile.tao:
+                  * tao/IORInterceptor/TAO_IORInterceptor.dsp:
+                  * tao/PortableServer/IORInfo.h:
+                  * tao/PortableServer/Makefile:
+                  * tao/PortableServer/Makefile.bor:
+                  * tao/PortableServer/POA.h:
+                  * tao/PortableServer/POAManager.cpp:
+                  * tao/PortableServer/PortableServer.mpc:
+                  * tao/PortableServer/TAO_PortableServer.dsp:
+
+                    Changes to integrate the new IORInterceptor
+                    library into existing TAO builds.
+
+                  * tao/IORInterceptor/IORInterceptor.mpc:
+                  * tao/IORInterceptor/Makefile:
+                  * tao/IORInterceptor/Makefile.bor:
+                  * tao/IORInterceptor/TAO_IORInterceptor.rc:
+
+                    New files to complete the build framework of
+                    TAO_IORInterceptors.
+
+          Fri Apr 11 02:58:32 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+                  * IFR_Client_Adapter.cpp:
+
+                    Cosmetic changes.
+
+                  * Interceptor_List.cpp:
+                  * Interceptor_List.h:
+                  * Interceptor_List.inl:
+                  * ORB_Core.cpp:
+                  * ORB_Core.h:
+                  * ObjectReferenceTemplate.pidl:
+                  * ObjectReferenceTemplateC.cpp:
+                  * ObjectReferenceTemplateC.h:
+                  * PortableInterceptor.pidl:
+                  * PortableInterceptorC.cpp:
+                  * PortableInterceptorC.h:
+                  * TAO.dsp:
+                  * IORInterceptor/TAO_IORInterceptor.dsp:
+
+                    Modified files toward finishing the TAO_IORInterceptor
+                    library.
+
+                  * PI_Forward.pidl:
+                  * PI_ForwardC.cpp:
+                  * PI_ForwardC.h:
+                  * PI_ForwardC.i:
+
+                    New files, collecting typedefs used by both
+                    PortableInterceptor.pidl and ObjectReferenceTemplate.pidl.
+
+                  * IORInterceptor/IORInterceptor_Adapter_Impl.cpp:
+                  * IORInterceptor/IORInterceptor_Adapter_Impl.h:
+                  * IORInterceptor_Adapter.cpp:
+                  * IORInterceptor_Adapter.h:
+
+                    Abstract and concrete adapter classes whose methods
+                    wrap the few remaining dependencies in TAO on
+                    PortableInterceptor::IORInterceptor.
+
+          Thu Apr 10 22:44:04 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+                  * tao/PortableInterceptor.pidl:
+                  * tao/PortableInterceptorC.h:
+                  * tao/PortableInterceptorC.i:
+                  * tao/PortableInterceptorC.cpp:
+
+                    Removed IORInterceptor and IORInfo from these files.
+
+                  * tao/IORInterceptor/IORInterceptor.pidl:
+                  * tao/IORInterceptor/IORInterceptorC.cpp:
+                  * tao/IORInterceptor/IORInterceptorC.h:
+                  * tao/IORInterceptor/IORInterceptorC.i:
+                  * tao/IORInterceptor/TAO_IORInterceptor.dsp:
+                  * tao/IORInterceptor/iorinterceptor_export.h:
+
+                    Started a new library with the interfaces removed from
+                    PortableInterceptor.pidl.
 
 Sun May 16:45:46 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
@@ -1372,17 +1378,17 @@ Sun May 16:45:46 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Sat May 03 15:55:07 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/Object.cpp (operator<<): If the object reference is not
-	  completely evaluated just marshall the stream of octets into the
-	  incoming CDR. Thanks to Andras Lang
-	  <lang@isis-server.isis.vanderbilt.edu> for reporting the
-	  problem.
+        * tao/Object.cpp (operator<<): If the object reference is not
+          completely evaluated just marshall the stream of octets into the
+          incoming CDR. Thanks to Andras Lang
+          <lang@isis-server.isis.vanderbilt.edu> for reporting the
+          problem.
 
 Sat May  3 09:35:26 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/orbconf.h:
-	* tao/default_resource.cpp: Added a #if option to select lazy
-	  resource strategy at compile time.
+        * tao/orbconf.h:
+        * tao/default_resource.cpp: Added a #if option to select lazy
+          resource strategy at compile time.
 
 Fri May  2 12:01:45 2003  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -1411,7 +1417,7 @@ Fri May 02 17:03:49 2003  Simon McQueen  <sm@prismtechnologies.com>
 
 Fri May 02 14:10:01 2003  Simon McQueen  <sm@prismtechnologies.com>
 
-	* tao/DynamicInterface/Request.cpp: Trimmed trailing spaces.
+        * tao/DynamicInterface/Request.cpp: Trimmed trailing spaces.
 
 Fri May 02 05:51:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -1489,79 +1495,79 @@ Thu May 01 21:55:00 UTC 2003  Gautam Thaker  <gthaker@atl.lmco.com>
 
 Thu May 01 16:15:29 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tao/PortableServer/POA:
+        * tao/PortableServer/POA:
 
-	  Object_Reactivation test pointed out the following bug: When
-	  waiting for the <servant_deactivation_condition>, the waiting
-	  thread gives up the POA lock.  This can potentially allow other
-	  threads to come in and make changes to the state of the POA.
-	  This includes, as in the case of the Object_Reactivation test,
-	  non-servant upcalls being in progress.  The waiting thread must
-	  reevaluate all conditions again from scratch after coming back
-	  from the wait() call.
+          Object_Reactivation test pointed out the following bug: When
+          waiting for the <servant_deactivation_condition>, the waiting
+          thread gives up the POA lock.  This can potentially allow other
+          threads to come in and make changes to the state of the POA.
+          This includes, as in the case of the Object_Reactivation test,
+          non-servant upcalls being in progress.  The waiting thread must
+          reevaluate all conditions again from scratch after coming back
+          from the wait() call.
 
-	  Therefore, I moved the while(1) loop from is_servant_in_map()
-	  and is_user_id_in_map() to activate_object() and
-	  activate_object_with_id().  This way all conditions are
-	  reevaluated after the wait completes, including the condition
-	  that no non-servant upcalls are in progress.
+          Therefore, I moved the while(1) loop from is_servant_in_map()
+          and is_user_id_in_map() to activate_object() and
+          activate_object_with_id().  This way all conditions are
+          reevaluated after the wait completes, including the condition
+          that no non-servant upcalls are in progress.
 
-	  Also in locate_servant_i(), similar changes were made.  In
-	  addition, if error occurred or a restart is required,
-	  etherealize the incarnated servant.
+          Also in locate_servant_i(), similar changes were made.  In
+          addition, if error occurred or a restart is required,
+          etherealize the incarnated servant.
 
-	  In imr_notify_startup(), we can ignore the wait flag since this
-	  method is called from the POA constructor, there shouldn't be
-	  any waiting required.
+          In imr_notify_startup(), we can ignore the wait flag since this
+          method is called from the POA constructor, there shouldn't be
+          any waiting required.
 
-	  Thanks to Simon McQueen <sm@prismtechnologies.com> for pointing
-	  out that Object_Reactivation was failing. In fact,
-	  Object_Reactivation was always doing the incorrect thing; it was
-	  the new assert statements in Object_Adapter.cpp that pointed
-	  them out.
+          Thanks to Simon McQueen <sm@prismtechnologies.com> for pointing
+          out that Object_Reactivation was failing. In fact,
+          Object_Reactivation was always doing the incorrect thing; it was
+          the new assert statements in Object_Adapter.cpp that pointed
+          them out.
 
-	* tao/PortableServer/Object_Adapter.cpp:
+        * tao/PortableServer/Object_Adapter.cpp:
 
-	  Renamed the existing prepare_for_upcall() to
-	  prepare_for_upcall_i().  The new prepare_for_upcall() calls
-	  prepare_for_upcall_i() and watches out for potential restarts.
-	  If we end up waiting on a condition variable, the POA state may
-	  have changed while we are waiting.  Therefore, we need to call
-	  prepare_for_upcall_i() again.  We also need to cleanup the state
-	  of the upcall object.  Therefore, invoke the upcall destructor
-	  before continuing.
+          Renamed the existing prepare_for_upcall() to
+          prepare_for_upcall_i().  The new prepare_for_upcall() calls
+          prepare_for_upcall_i() and watches out for potential restarts.
+          If we end up waiting on a condition variable, the POA state may
+          have changed while we are waiting.  Therefore, we need to call
+          prepare_for_upcall_i() again.  We also need to cleanup the state
+          of the upcall object.  Therefore, invoke the upcall destructor
+          before continuing.
 
-	* tao/RTPortableServer/RT_POA.i:
+        * tao/RTPortableServer/RT_POA.i:
 
-	  Changes similar to the POA class were required for
-	  RT_POA::activate_object_with_priority() and
-	  RT_POA::activate_object_with_id_and_priority().
+          Changes similar to the POA class were required for
+          RT_POA::activate_object_with_priority() and
+          RT_POA::activate_object_with_id_and_priority().
 
-	* tao/RTPortableServer/RT_Collocation_Resolver.cpp:
+        * tao/RTPortableServer/RT_Collocation_Resolver.cpp:
 
-	  is_collocated() calls POA::locate_servant_i().  However, it can
-	  ignore the <wait_occurred_restart_call> flag since there is no
-	  implicit activation, there is no chance of waiting on a
-	  condition variable.
+          is_collocated() calls POA::locate_servant_i().  However, it can
+          ignore the <wait_occurred_restart_call> flag since there is no
+          implicit activation, there is no chance of waiting on a
+          condition variable.
 
-	* tests/POA/Single_Threaded_POA/Single_Threaded_POA.cpp:
-	* tests/POA/Object_Reactivation/Object_Reactivation.cpp:
+        * tests/POA/Single_Threaded_POA/Single_Threaded_POA.cpp:
+        * tests/POA/Object_Reactivation/Object_Reactivation.cpp:
 
-	  Removed unnecessary parameters to Task::activate() call.
+          Removed unnecessary parameters to Task::activate() call.
 
-	* tests/POA/Object_Reactivation/Object_Reactivation.cpp:
+        * tests/POA/Object_Reactivation/Object_Reactivation.cpp:
 
-	  Made debugging statements optional.
+          Made debugging statements optional.
 
-	* examples/POA/DSI/server.dsp:
-	* examples/POA/DSI/client.dsp:
-	* examples/POA/DSI/Makefile:
+        * examples/POA/DSI/server.dsp:
+        * examples/POA/DSI/client.dsp:
+        * examples/POA/DSI/Makefile:
 
-	  No need to link with the messaging library.
+          No need to link with the messaging library.
 
-	* examples/TAO_Examples.dsw:
+        * examples/TAO_Examples.dsw:
 
-	  Added POA BiDir test.
+          Added POA BiDir test.
 
 Thu May  1 15:03:48 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -1590,144 +1596,144 @@ Thu May  1 14:16:58 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Thu May  1 11:25:42 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* TAO_IDL/be/be_interface.cpp:
-	* TAO_IDL/be/be_visitor_component/component_ch.cpp:
-	* TAO_IDL/be/be_visitor_component/component_cs.cpp:
-	* TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
-	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
-	* TAO_IDL/be/be_visitor_valuetype/cdr_op_cs.cpp:
-	* TAO_IDL/be/be_visitor_valuetype/valuetype_ch.cpp:
-	* TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Credentials.cpp:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Credentials.h:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current.cpp:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current.h:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_ReceivedCredentials.cpp:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_ReceivedCredentials.h:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_TargetCredentials.cpp:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_TargetCredentials.h:
-	* orbsvcs/orbsvcs/Security/PrincipalAuthenticator.cpp:
-	* orbsvcs/orbsvcs/Security/PrincipalAuthenticator.h:
-	* tao/AbstractBase.cpp:
-	* tao/AbstractBase.h:
-	* tao/AbstractBase.inl:
-	* tao/Any.cpp:
-	* tao/ClientRequestInfo_i.cpp:
-	* tao/CurrentC.cpp:
-	* tao/CurrentC.h:
-	* tao/DomainC.cpp:
-	* tao/DomainC.h:
-	* tao/GIOP_Message_Generator_Parser_10.cpp:
-	* tao/IOP_CodecC.cpp:
-	* tao/IOP_CodecC.h:
-	* tao/LocalObject.cpp:
-	* tao/LocalObject.i:
-	* tao/NVList.cpp:
-	* tao/NVList.h:
-	* tao/ORBInitInfo.cpp:
-	* tao/ORBInitInfo.h:
-	* tao/Object.cpp:
-	* tao/Object.h:
-	* tao/ObjectReferenceTemplateC.cpp:
-	* tao/ObjectReferenceTemplateC.h:
-	* tao/Pluggable_Messaging_Utils.h:
-	* tao/PolicyC.cpp:
-	* tao/PolicyC.h:
-	* tao/PollableC.cpp:
-	* tao/PollableC.h:
-	* tao/PortableInterceptorC.cpp:
-	* tao/PortableInterceptorC.h:
-	* tao/TAOC.cpp:
-	* tao/TAOC.h:
-	* tao/TAO_Server_Request.h:
-	* tao/TAO_Server_Request.i:
-	* tao/ValueBase.cpp:
-	* tao/ValueBase.h:
-	* tao/BiDir_GIOP/BiDirPolicyC.cpp:
-	* tao/BiDir_GIOP/BiDirPolicyC.h:
-	* tao/DynamicAny/DynAny_i.cpp:
-	* tao/DynamicAny/DynAny_i.h:
-	* tao/DynamicAny/DynArray_i.cpp:
-	* tao/DynamicAny/DynArray_i.h:
-	* tao/DynamicAny/DynEnum_i.cpp:
-	* tao/DynamicAny/DynEnum_i.h:
-	* tao/DynamicAny/DynSequence_i.cpp:
-	* tao/DynamicAny/DynSequence_i.h:
-	* tao/DynamicAny/DynStruct_i.cpp:
-	* tao/DynamicAny/DynStruct_i.h:
-	* tao/DynamicAny/DynUnion_i.cpp:
-	* tao/DynamicAny/DynUnion_i.h:
-	* tao/DynamicAny/DynamicAnyC.cpp:
-	* tao/DynamicAny/DynamicAnyC.h:
-	* tao/IFR_Client/IFR_BaseC.cpp:
-	* tao/IFR_Client/IFR_BaseC.h:
-	* tao/IFR_Client/IFR_BasicC.cpp:
-	* tao/IFR_Client/IFR_BasicC.h:
-	* tao/IFR_Client/IFR_ComponentsC.cpp:
-	* tao/IFR_Client/IFR_ComponentsC.h:
-	* tao/IFR_Client/IFR_ExtendedC.cpp:
-	* tao/IFR_Client/IFR_ExtendedC.h:
-	* tao/IORManipulation/IORC.cpp:
-	* tao/IORManipulation/IORC.h:
-	* tao/IORTable/IORTableC.cpp:
-	* tao/IORTable/IORTableC.h:
-	* tao/Messaging/MessagingC.cpp:
-	* tao/Messaging/MessagingC.h:
-	* tao/Messaging/Messaging_No_ImplC.cpp:
-	* tao/Messaging/Messaging_No_ImplC.h:
-	* tao/Messaging/Messaging_RT_PolicyC.cpp:
-	* tao/Messaging/Messaging_RT_PolicyC.h:
-	* tao/Messaging/Messaging_SyncScope_PolicyC.cpp:
-	* tao/Messaging/Messaging_SyncScope_PolicyC.h:
-	* tao/Messaging/TAO_ExtC.cpp:
-	* tao/Messaging/TAO_ExtC.h:
-	* tao/PortableServer/Collocated_Object.cpp:
-	* tao/PortableServer/Collocated_Object.h:
-	* tao/PortableServer/Default_ORTC.cpp:
-	* tao/PortableServer/Default_ORTC.h:
-	* tao/PortableServer/ImR_LocatorC.cpp:
-	* tao/PortableServer/ImR_LocatorC.h:
-	* tao/PortableServer/ImplRepoC.cpp:
-	* tao/PortableServer/ImplRepoC.h:
-	* tao/PortableServer/POAManager.i:
-	* tao/PortableServer/PortableServerC.cpp:
-	* tao/PortableServer/PortableServerC.h:
-	* tao/PortableServer/Servant_Base.i:
-	* tao/PortableServer/ServerRequestInfo.cpp:
-	* tao/RTCORBA/Network_Priority_Mapping_Manager.cpp:
-	* tao/RTCORBA/Network_Priority_Mapping_Manager.h:
-	* tao/RTCORBA/Priority_Mapping_Manager.cpp:
-	* tao/RTCORBA/Priority_Mapping_Manager.h:
-	* tao/RTCORBA/RTCORBAC.cpp:
-	* tao/RTCORBA/RTCORBAC.h:
-	* tao/RTCORBA/RT_Invocation_Endpoint_Selectors.cpp:
-	* tao/RTPortableServer/RTPortableServerC.cpp:
-	* tao/RTPortableServer/RTPortableServerC.h:
-	* tao/TypeCodeFactory/TypeCodeFactoryC.cpp:
-	* tao/TypeCodeFactory/TypeCodeFactoryC.h:
-	* tao/TypeCodeFactory/TypeCodeFactory_i.cpp:
-	* tao/TypeCodeFactory/TypeCodeFactory_i.h:
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_visitor_component/component_ch.cpp:
+        * TAO_IDL/be/be_visitor_component/component_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Credentials.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Credentials.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_ReceivedCredentials.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_ReceivedCredentials.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_TargetCredentials.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_TargetCredentials.h:
+        * orbsvcs/orbsvcs/Security/PrincipalAuthenticator.cpp:
+        * orbsvcs/orbsvcs/Security/PrincipalAuthenticator.h:
+        * tao/AbstractBase.cpp:
+        * tao/AbstractBase.h:
+        * tao/AbstractBase.inl:
+        * tao/Any.cpp:
+        * tao/ClientRequestInfo_i.cpp:
+        * tao/CurrentC.cpp:
+        * tao/CurrentC.h:
+        * tao/DomainC.cpp:
+        * tao/DomainC.h:
+        * tao/GIOP_Message_Generator_Parser_10.cpp:
+        * tao/IOP_CodecC.cpp:
+        * tao/IOP_CodecC.h:
+        * tao/LocalObject.cpp:
+        * tao/LocalObject.i:
+        * tao/NVList.cpp:
+        * tao/NVList.h:
+        * tao/ORBInitInfo.cpp:
+        * tao/ORBInitInfo.h:
+        * tao/Object.cpp:
+        * tao/Object.h:
+        * tao/ObjectReferenceTemplateC.cpp:
+        * tao/ObjectReferenceTemplateC.h:
+        * tao/Pluggable_Messaging_Utils.h:
+        * tao/PolicyC.cpp:
+        * tao/PolicyC.h:
+        * tao/PollableC.cpp:
+        * tao/PollableC.h:
+        * tao/PortableInterceptorC.cpp:
+        * tao/PortableInterceptorC.h:
+        * tao/TAOC.cpp:
+        * tao/TAOC.h:
+        * tao/TAO_Server_Request.h:
+        * tao/TAO_Server_Request.i:
+        * tao/ValueBase.cpp:
+        * tao/ValueBase.h:
+        * tao/BiDir_GIOP/BiDirPolicyC.cpp:
+        * tao/BiDir_GIOP/BiDirPolicyC.h:
+        * tao/DynamicAny/DynAny_i.cpp:
+        * tao/DynamicAny/DynAny_i.h:
+        * tao/DynamicAny/DynArray_i.cpp:
+        * tao/DynamicAny/DynArray_i.h:
+        * tao/DynamicAny/DynEnum_i.cpp:
+        * tao/DynamicAny/DynEnum_i.h:
+        * tao/DynamicAny/DynSequence_i.cpp:
+        * tao/DynamicAny/DynSequence_i.h:
+        * tao/DynamicAny/DynStruct_i.cpp:
+        * tao/DynamicAny/DynStruct_i.h:
+        * tao/DynamicAny/DynUnion_i.cpp:
+        * tao/DynamicAny/DynUnion_i.h:
+        * tao/DynamicAny/DynamicAnyC.cpp:
+        * tao/DynamicAny/DynamicAnyC.h:
+        * tao/IFR_Client/IFR_BaseC.cpp:
+        * tao/IFR_Client/IFR_BaseC.h:
+        * tao/IFR_Client/IFR_BasicC.cpp:
+        * tao/IFR_Client/IFR_BasicC.h:
+        * tao/IFR_Client/IFR_ComponentsC.cpp:
+        * tao/IFR_Client/IFR_ComponentsC.h:
+        * tao/IFR_Client/IFR_ExtendedC.cpp:
+        * tao/IFR_Client/IFR_ExtendedC.h:
+        * tao/IORManipulation/IORC.cpp:
+        * tao/IORManipulation/IORC.h:
+        * tao/IORTable/IORTableC.cpp:
+        * tao/IORTable/IORTableC.h:
+        * tao/Messaging/MessagingC.cpp:
+        * tao/Messaging/MessagingC.h:
+        * tao/Messaging/Messaging_No_ImplC.cpp:
+        * tao/Messaging/Messaging_No_ImplC.h:
+        * tao/Messaging/Messaging_RT_PolicyC.cpp:
+        * tao/Messaging/Messaging_RT_PolicyC.h:
+        * tao/Messaging/Messaging_SyncScope_PolicyC.cpp:
+        * tao/Messaging/Messaging_SyncScope_PolicyC.h:
+        * tao/Messaging/TAO_ExtC.cpp:
+        * tao/Messaging/TAO_ExtC.h:
+        * tao/PortableServer/Collocated_Object.cpp:
+        * tao/PortableServer/Collocated_Object.h:
+        * tao/PortableServer/Default_ORTC.cpp:
+        * tao/PortableServer/Default_ORTC.h:
+        * tao/PortableServer/ImR_LocatorC.cpp:
+        * tao/PortableServer/ImR_LocatorC.h:
+        * tao/PortableServer/ImplRepoC.cpp:
+        * tao/PortableServer/ImplRepoC.h:
+        * tao/PortableServer/POAManager.i:
+        * tao/PortableServer/PortableServerC.cpp:
+        * tao/PortableServer/PortableServerC.h:
+        * tao/PortableServer/Servant_Base.i:
+        * tao/PortableServer/ServerRequestInfo.cpp:
+        * tao/RTCORBA/Network_Priority_Mapping_Manager.cpp:
+        * tao/RTCORBA/Network_Priority_Mapping_Manager.h:
+        * tao/RTCORBA/Priority_Mapping_Manager.cpp:
+        * tao/RTCORBA/Priority_Mapping_Manager.h:
+        * tao/RTCORBA/RTCORBAC.cpp:
+        * tao/RTCORBA/RTCORBAC.h:
+        * tao/RTCORBA/RT_Invocation_Endpoint_Selectors.cpp:
+        * tao/RTPortableServer/RTPortableServerC.cpp:
+        * tao/RTPortableServer/RTPortableServerC.h:
+        * tao/TypeCodeFactory/TypeCodeFactoryC.cpp:
+        * tao/TypeCodeFactory/TypeCodeFactoryC.h:
+        * tao/TypeCodeFactory/TypeCodeFactory_i.cpp:
+        * tao/TypeCodeFactory/TypeCodeFactory_i.h:
 
-	  Changed all uses of ptr_arith_t to ptrdiff_t.  Addresses 64 bit
-	  platform issues.  Thanks to Steve Huston <shuston@riverace.com>
-	  for suggesting this change.
+          Changed all uses of ptr_arith_t to ptrdiff_t.  Addresses 64 bit
+          platform issues.  Thanks to Steve Huston <shuston@riverace.com>
+          for suggesting this change.
 
-	* tao/Exception.h:
+        * tao/Exception.h:
 
-	  Updated author information.
+          Updated author information.
 
-	* tao/Pseudo_VarOut_T.h:
+        * tao/Pseudo_VarOut_T.h:
 
-	  Nuked trailing whitespace.
+          Nuked trailing whitespace.
 
 Thu May 01 10:35:03 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Profile.cpp (encode_endpoints):
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Profile.cpp (encode_endpoints):
 
-	  Use the ssl_component() accessor method instead of directly
-	  accessing the class member variable.  TAO_SSLIOP_Profile is
-	  currently a friend of TAO_SSLIOP_Endpoint.  This change is a
-	  step in the direction of removing that friend declaration.
+          Use the ssl_component() accessor method instead of directly
+          accessing the class member variable.  TAO_SSLIOP_Profile is
+          currently a friend of TAO_SSLIOP_Endpoint.  This change is a
+          step in the direction of removing that friend declaration.
 
 Thu May  1 11:29:27 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -1797,8 +1803,8 @@ Thu May  1 08:37:49 2003  Chad Elliott  <elliott_c@ociweb.com>
 
 Wed Apr 30 20:18:51 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/IORManipulation/IORC.cpp: Added explicit template
-	  instantiations.
+        * tao/IORManipulation/IORC.cpp: Added explicit template
+          instantiations.
 
 Wed Apr 30 17:13:43 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -1857,14 +1863,14 @@ Wed Apr 30 10:45:44 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Wed Apr 30 16:44:12 2003  Simon McQueen  <sm@prismtechnologies.com>
 
-	* orbsvcs/orbsvcs/CosNotification_Static.dsp:
+        * orbsvcs/orbsvcs/CosNotification_Static.dsp:
 
           Removed attic'ed files.
 
 Wed Apr 30 10:40:31 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Event/EC_Kokyu_Dispatching.cpp:
-	  Fixed compile errors for no exception builds on MSVC++.
+        * orbsvcs/orbsvcs/Event/EC_Kokyu_Dispatching.cpp:
+          Fixed compile errors for no exception builds on MSVC++.
 
 Wed Apr 30 16:21:21 2003  Simon McQueen  <sm@prismtechnologies.com>
 
