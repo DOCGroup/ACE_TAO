@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_BASED_POINTER_REPOSITORY_H
 #define ACE_BASED_POINTER_REPOSITORY_H
 
@@ -23,6 +22,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/OS.h"
 
 // Forward decl., using the "Cheshire Cat" technique.
 class ACE_Based_Pointer_Repository_Rep;

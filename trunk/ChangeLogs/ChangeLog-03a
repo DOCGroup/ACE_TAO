@@ -1,5 +1,6 @@
 Sun Jun 30 15:32:47 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
+	* ace/Based_Pointer_Repository.h: 
 	* ace/Array_Base.h: Added #include "ace/OS.h" to get the 
 	  definition of size_t on MacOS.  Thanks to John Zorko
  	  <j.zorko@att.net> for this fix.
