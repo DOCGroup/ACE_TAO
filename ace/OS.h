@@ -304,7 +304,7 @@
 
 #if defined (ACE_HAS_MOSTLY_UNICODE_APIS)
 #define ASYS_TCHAR wchar_t
-#define ASYS_TEXT(STRING)   L##STRING
+#define ASYS_TEXT(STRING)   _TEXT(STRING)
 #else
 #define ASYS_TCHAR char
 #define ASYS_TEXT(STRING)   STRING
@@ -928,7 +928,7 @@ extern "C" pthread_t pthread_self (void);
 #if (ACE_NTRACE == 1)
 #define ACE_TRACE(X)
 #else
-#define ACE_TRACE(X) ACE_Trace ____ (X, __LINE__, __FILE__)
+#define ACE_TRACE(X) ACE_Trace ____ (ASYS_TEXT (X), __LINE__, ASYS_TEXT (__FILE__)
 #endif /* ACE_NTRACE */
 
 #if !defined (ACE_HAS_WINCE)
