@@ -69,7 +69,7 @@ public:
 
   // = The TAO_Transport methods, please check the documentation in
   //   "tao/Pluggable.h" for more details.
-  virtual void close_connection (void);
+
   virtual int idle (void);
   virtual ACE_HANDLE handle (void);
   virtual ACE_Event_Handler *event_handler (void);
@@ -125,6 +125,7 @@ public:
 
   // = The TAO_Transport methods, please check the documentation in
   //   "tao/Pluggable.h" for more details.
+  virtual void close_connection (void);
   virtual int idle (void);
 
   virtual void start_request (TAO_ORB_Core *orb_core,
@@ -206,6 +207,7 @@ public:
 
   // Please see Pluggable.h for documentation
   virtual int idle (void);
+  virtual void close_connection (void);
 
   virtual TAO_SSL_SVC_HANDLER *service_handler (void);
 
