@@ -134,7 +134,7 @@ SFP_Encoder::~SFP_Encoder ()
 // This method copies the CDR buffer into a new
 // ACE_Message_Block and returns it.
 ACE_Message_Block *
-SFP_Encoder::create_message_block ()
+SFP_Encoder::create_message_block (void)
 {
   // put the cdr encoded buffer into the message block
   ACE_Message_Block *message;
