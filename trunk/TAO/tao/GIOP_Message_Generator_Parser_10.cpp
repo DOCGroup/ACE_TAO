@@ -3,7 +3,7 @@
 #include "GIOP_Message_Generator_Parser_10.h"
 #include "GIOP_Utils.h"
 
-#include "GIOP_Message_Headers.h"
+#include "GIOP_Message_Locate_Header.h"
 
 #include "operation_details.h"
 #include "CDR.h"
@@ -29,52 +29,52 @@ TAO_GIOP_Message_Generator_Parser_10::write_request_header (
     TAO_OutputCDR &msg)
 {
   // Write the service context list
-  msg << opdetails.service_info	();
+  msg << opdetails.service_info ();
 
   // The request ID
   msg << opdetails.request_id ();
 
-  const	CORBA::Octet response_flags = opdetails.response_flags ();
+  const CORBA::Octet response_flags = opdetails.response_flags ();
 
   // Write the response flags
-  if (response_flags ==	TAO_TWOWAY_RESPONSE_FLAG)
-    msg	<< CORBA::Any::from_octet (1);
+  if (response_flags == TAO_TWOWAY_RESPONSE_FLAG)
+    msg << CORBA::Any::from_octet (1);
   else
-    msg	<< CORBA::Any::from_octet (0);
+    msg << CORBA::Any::from_octet (0);
 
-  // In	this case we cannot recognise anything other than the Object
-  // key as the	address	disposition variable. But we do	a sanity check
+  // In this case we cannot recognise anything other than the Object
+  // key as the address disposition variable. But we do a sanity check
   // anyway.
-  const	TAO_ObjectKey *key = spec.object_key ();
+  const TAO_ObjectKey *key = spec.object_key ();
   if (key)
     {
-      // Put in	the object key
+      // Put in the object key
       msg << *key;
     }
   else
     {
       if (TAO_debug_level)
-	ACE_DEBUG ((LM_DEBUG,
-		    ACE_TEXT ("(%N |%l)	Unable to handle this request \n")));
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("(%N |%l) Unable to handle this request \n")));
       return 0;
     }
 
   msg.write_string (opdetails.opname_len (),
-		    opdetails.opname ());
+                    opdetails.opname ());
 
   // Last element of request header is the principal; no portable way
-  // to	get it,	we just	pass empty principal (convention: indicates
-  // "anybody").  Steps	upward in security include passing an
-  // unverified	user ID, and then verifying the	message	(i.e. a	dummy
-  // service context entry is set up to	hold a digital signature for
-  // this message, then	patched	shortly	before it's sent).
+  // to get it, we just pass empty principal (convention: indicates
+  // "anybody").  Steps upward in security include passing an
+  // unverified user ID, and then verifying the message (i.e. a dummy
+  // service context entry is set up to hold a digital signature for
+  // this message, then patched shortly before it's sent).
 
   /***** This has been deprecated in the 2.4 spec ******/
-  //static CORBA::Principal_ptr	principal = 0;
-  //msg	<< principal;
+  //static CORBA::Principal_ptr principal = 0;
+  //msg << principal;
 
   // This is now introduced in 2.4 spec
-  CORBA::OctetSeq req_principal	(0);
+  CORBA::OctetSeq req_principal (0);
   req_principal.length (0);
   msg << req_principal;
 
@@ -92,10 +92,10 @@ TAO_GIOP_Message_Generator_Parser_10::write_locate_request_header (
 {
   msg << request_id;
 
-  // In	this case we cannot recognise anything other than the Object
-  // key as the	address	disposition variable. But we do	a sanity check
+  // In this case we cannot recognise anything other than the Object
+  // key as the address disposition variable. But we do a sanity check
   // anyway.
-  const	TAO_ObjectKey *key = spec.object_key ();
+  const TAO_ObjectKey *key = spec.object_key ();
   if (key)
     {
       // Everything is fine
@@ -104,8 +104,8 @@ TAO_GIOP_Message_Generator_Parser_10::write_locate_request_header (
   else
     {
       if (TAO_debug_level)
-	ACE_DEBUG ((LM_DEBUG,
-		    ACE_TEXT ("(%N | %l) Unable	to handle this request \n")));
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("(%N | %l) Unable to handle this request \n")));
       return 0;
     }
 
@@ -413,7 +413,7 @@ TAO_GIOP_Message_Generator_Parser_10::parse_reply (
   // Read the service context list first
   if ((stream >> params.svc_ctx_) == 0)
     {
-      if (TAO_debug_level >	0)
+      if (TAO_debug_level >     0)
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO (%P|%t) parse_reply, ")
                     ACE_TEXT ("extracting context\n")));
@@ -453,7 +453,7 @@ CORBA::Octet
 TAO_GIOP_Message_Generator_Parser_10::major_version (void)
 {
   // Any harm in hardcoding??
-  return (CORBA::Octet)	1;
+  return (CORBA::Octet) 1;
 }
 
 CORBA::Octet
