@@ -8,6 +8,7 @@ template <class T, class LOCK> ACE_INLINE void
 ACE_Locked_Free_List<T, LOCK>::add (T *element)
 {
   ACE_MT (ACE_GUARD (LOCK, ace_mon, this->mutex_));
+
   // Check to see that we not at the high water mark.
   if (this->mode_ == ACE_PURE_FREE_LIST 
       || this->size_ >= this->hwm_)
@@ -20,12 +21,11 @@ ACE_Locked_Free_List<T, LOCK>::add (T *element)
     delete element;
 }
 
-  
 // Takes a element off the freelist and returns it.  It creates <inc>
 // new elements if we are allowed to do it and the size is at the low
 // water mark.
 
-template <class T, class LOCK> ACE_INLINE T*
+template <class T, class LOCK> ACE_INLINE T *
 ACE_Locked_Free_List<T, LOCK>::remove (void)
 {
   ACE_MT (ACE_GUARD_RETURN (LOCK, ace_mon, this->mutex_, 0));
@@ -54,7 +54,6 @@ ACE_Locked_Free_List<T, LOCK>::size (void)
 {
   return this->size_;
 }
-
 
 // Resizes the free list to <newsize>
 
