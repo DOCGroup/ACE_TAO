@@ -1,7 +1,7 @@
-Mon Feb  3 21:16:19 1997  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
+Tue Feb  4 03:02:52 1997  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
 
 	* tests/Naming_Test.cpp: Added timing and made debug print outs
- 	  optional.
+ 	  optional. Also added randomization of the test data.
 
 	* ace/OS.h: Fixed prototype for gethrtime ()
 
