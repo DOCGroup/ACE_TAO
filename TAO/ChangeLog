@@ -1,6 +1,7 @@
 Wed Nov 26 11:48:25 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/Scheduling_Service/Makefile:
+	* orbsvcs/Dump_Schedule/Makefile:
 
 	  Check for RTSched instead of Sched before going ahead to build. 
 	
