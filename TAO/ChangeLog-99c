@@ -1,3 +1,9 @@
+Sun Jun 27 11:02:03 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Trader/Offer_Iterators.cpp (next_n): Fixed
+	  an error by returning 0 if we get an exception.  Thanks to David
+ 	  Levine for reporting this.
+
 Sun Jun 27 11:54:48 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Event/RT_Task.cpp:
