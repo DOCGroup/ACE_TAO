@@ -470,8 +470,7 @@ TAO_ClientRequestInfo_i::response_expected (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   return this->response_expected_;
 }
 
-# if TAO_HAS_CORBA_MESSAGING == 1
-CORBA::Short
+Messaging::SyncScope
 TAO_ClientRequestInfo_i::sync_scope (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -492,7 +491,6 @@ TAO_ClientRequestInfo_i::sync_scope (ACE_ENV_SINGLE_ARG_DECL)
                                           CORBA::COMPLETED_NO),
                     -1);
 }
-#endif  /* TAO_HAS_CORBA_MESSAGING == 1 */
 
 PortableInterceptor::ReplyStatus
 TAO_ClientRequestInfo_i::reply_status (ACE_ENV_SINGLE_ARG_DECL)

@@ -19,7 +19,7 @@
 
 #include "ace/pre.h"
 
-#include "corbafwd.h"
+#include "tao/corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -27,9 +27,9 @@
 
 #if (TAO_HAS_INTERCEPTORS == 1)
 
-#include "PortableInterceptorC.h"
-#include "StringSeqC.h"
-#include "PICurrent.h"
+#include "tao/PortableInterceptorC.h"
+#include "tao/StringSeqC.h"
+#include "tao/PICurrent.h"
 
 
 class TAO_GIOP_Invocation;
@@ -94,13 +94,11 @@ public:
   CORBA::Boolean response_expected (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException)) ;
 
-#if TAO_HAS_CORBA_MESSAGING == 1
   /// Return the sync_scope policy value for the current one-way
   /// operation.  If the operation is not a one-way, a
   /// CORBA::BAD_INV_ORDER exception is thrown.
-  CORBA::Short sync_scope (ACE_ENV_SINGLE_ARG_DECL)
+  Messaging::SyncScope sync_scope (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
-#endif  /* TAO_HAS_CORBA_MESSAGING == 1 */
 
   /// Return the reply status for the current request.  Statuses can
   /// be PortableInterceptor::SUCCESSFUL, SYSTEM_EXCEPTION,
