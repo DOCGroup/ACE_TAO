@@ -2,6 +2,10 @@
 # $Id$
 #
 
+ifndef TAO_ROOT
+  TAO_ROOT = $(ACE_ROOT)/TAO
+endif
+
 LDLIBS = -lTAO_CosNotification -lTAO_CosTrading -lTAO_CosEvent -lTAO_RTEvent -lTAO_RTSched -lTAO_CosNaming -lTAO_Svc_Utils -lTAO
 
 LSRC = Notify_Service.cpp
@@ -31,11 +35,6 @@ include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 #include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
-ifndef TAO_ROOT
-  TAO_ROOT = $(ACE_ROOT)/TAO
-endif
-
-TSS_ORB_FLAG = #-DTAO_HAS_TSS_ORBCORE
 LDFLAGS += -L$(TAO_ROOT)/orbsvcs/orbsvcs -L$(TAO_ROOT)/tao
 CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT) $(TSS_ORB_FLAG)
 
