@@ -31,7 +31,7 @@ CDR_Array_Test
 Collection_Test
 Conn_Test: !chorus
 Dirent_Test
-DLL_Test: !Unicos !STATIC
+DLL_Test: !Unicos !STATIC !KCC_Linux
 DLList_Test
 Dynamic_Priority_Test
 Enum_Interfaces_Test
