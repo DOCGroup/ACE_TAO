@@ -1,3 +1,10 @@
+Thu Jun 29 18:44:07 2000  John Heitmann  <jwh1@cs.wustl.edu>
+
+        * ace/OS.{i,cpp,inl}:
+	* ace/OS_Dirent.{inl,h}:
+	  Began integration of pace with ACE_OS. #define
+	  ACE_HAS_PACE to activate. About 25% is complete.
+
 Thu Jun 29 15:49:16 2000  Steve Huston  <shuston@riverace.com>
 
         * ace/INET_Addr.h (ACE_INET_Addr (const ACE_TCHAR [])):
@@ -42,7 +49,7 @@ Wed Jun 28 19:35:23 2000 Jerry D. De Master <jdemaste@rite-solutions.com>
 
 Wed Jun 28 11:20:08 2000  Joe Hoffert  <joeh@cs.wustl.edu>
 
-        * bin/pace_components: 
+        * bin/pace_components:
           Modified to make PACE_ROOT $(ACE_ROOT)/PACE rather than the
           previous value of $(ACE_ROOT)/pace.
 
