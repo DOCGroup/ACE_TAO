@@ -30,7 +30,7 @@ CIAO::NodeApplication_Impl::create_all_containers (
   const CORBA::ULong len = node_impl_info.length ();
   for (CORBA::ULong i = 0; i < len; ++i)
   {
-    // The factory method <create_container> will intialize the container 
+    // The factory method <create_container> will intialize the container
     // servant with properties, so we don't need to call <init> on the
     // container object reference.
     // Also, the factory method will add the container object reference
@@ -262,7 +262,7 @@ CIAO::NodeApplication_Impl::remove (ACE_ENV_SINGLE_ARG_DECL)
 
 
 // Create a container interface, which will be hosted in this NodeApplication.
-::Deployment::Container_ptr 
+::Deployment::Container_ptr
 CIAO::NodeApplication_Impl::create_container (const ::Deployment::Properties &properties
                                               ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
@@ -277,15 +277,16 @@ CIAO::NodeApplication_Impl::create_container (const ::Deployment::Properties &pr
                     CIAO::Container_Impl (this->orb_.in (),
                                           this->poa_.in (),
                                           this->get_objref ()),
-                    CORBA::INTERNAL ());
+                    CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (0);
 
   PortableServer::ServantBase_var safe_servant (container_servant);
 
-  // @TODO: Need to decide a "component_installation" equivalent data structure
-  // to pass to the container, which will be used to suggest how to install the components.
-  // Each such data stucture should be correspond to one <process_collocation> tag
-  // in the XML file to describe the deployment plan.
+  // @TODO: Need to decide a "component_installation" equivalent data
+  // structure  to pass to the container, which will be used to
+  // suggest how to install the components.  Each such data stucture
+  // should be correspond to one <process_collocation> tag  in the XML
+  // file to describe the deployment plan.
   container_servant->init (properties
                            ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
@@ -315,7 +316,8 @@ CIAO::NodeApplication_Impl::create_container (const ::Deployment::Properties &pr
     this->container_set_.add (ci.in ());
   }
 
-  ACE_DEBUG ((LM_DEBUG, "LEAVING: NodeApplication_Impl::create_container()\n"));
+  ACE_DEBUG ((LM_DEBUG,
+              "LEAVING: NodeApplication_Impl::create_container()\n"));
   return ci._retn ();
 }
 
@@ -353,7 +355,7 @@ CIAO::NodeApplication_Impl::remove_container (::Deployment::Container_ptr cref
 }
 
 // Get containers
-::Deployment::Containers * 
+::Deployment::Containers *
 CIAO::NodeApplication_Impl::get_containers (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {

@@ -24,6 +24,8 @@ CIAO::Container_Impl::init (const ::Deployment::Properties &properties
                             ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  // @@ Gan/Jai, see how this init can create many instances of the
+  // same container? Neither thread safe or single entity safe.
   this->properties_ = properties;
 
   // @@ Initialize container and create the internal container
@@ -32,6 +34,9 @@ CIAO::Container_Impl::init (const ::Deployment::Properties &properties
 
   // @@ We will need a container factory here later on when we support
   // more kinds of container implementations.
+
+  // @@Jai, what is the condition to create an upgradeable container?
+  // Where is it getting created and how? Need to address that.
 
   ACE_NEW_THROW_EX (this->container_,
                     CIAO::Session_Container (this->orb_.in (), this),
@@ -74,7 +79,7 @@ CIAO::Container_Impl::install (
      for (CORBA::ULong i = 0; i < len; ++i)
        {
          // Install home
-         Components::CCMHome_var home = 
+         Components::CCMHome_var home =
            this->install_home (impl_infos[i]
                                ACE_ENV_ARG_PARAMETER);
          ACE_TRY_CHECK;

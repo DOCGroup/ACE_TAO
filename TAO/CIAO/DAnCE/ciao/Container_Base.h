@@ -97,6 +97,8 @@ namespace CIAO
                                       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
 
+    // @@Jai, please see the Session Container class for comments.
+    // @@ Jai, do you really need the environment variable?
     virtual void add_servant_map (PortableServer::ObjectId &oid,
                                   Dynamic_Component_Servant_Base* servant
                                   ACE_ENV_ARG_DECL) = 0;
@@ -243,13 +245,26 @@ namespace CIAO
                     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
+    // @@Jai, please consider naming this method as
+    // "add_servant_to_map ()" to be more descriptive.
     virtual void add_servant_map (PortableServer::ObjectId &oid,
                                   Dynamic_Component_Servant_Base* servant
                                   ACE_ENV_ARG_DECL);
 
+    // @@Jai, please consider naming this method as
+    // "delete_servant_from_map ()" to be more descriptive.
     virtual void delete_servant_map (PortableServer::ObjectId &oid
                                      ACE_ENV_ARG_DECL);
 
+    // @@Jai, could yo please add documentation?
+    /*
+     * @@Jai, you may want to consider moving these away from the
+     * container interface. I know what you are going to say
+     * :-). Consider using dynamic_cast <> to access
+     * add_servant_to_map, delete_servant_from_map and
+     * deactivate_facet from the Swapping_Conatiner's interface. It
+     * would make the base container interface much cleaner.
+     */
     virtual void deactivate_facet (PortableServer::ObjectId &oid
                                    ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
