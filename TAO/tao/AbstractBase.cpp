@@ -329,7 +329,7 @@ operator>> (TAO_InputCDR &strm, CORBA_AbstractBase_ptr &abs)
             orb_core->orb ()->lookup_value_factory (repo_id_stream.in ());
 
           // We should throw an exception, if there were an appropriate one.
-          if (factory == 0)
+          if (factory.in() == 0)
             {
               ACE_DEBUG ((LM_ERROR,
                           ACE_TEXT ("(%N:%l) OBV factory is null !!!\n")));
