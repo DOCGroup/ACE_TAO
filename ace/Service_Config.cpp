@@ -402,7 +402,7 @@ ACE_Service_Config::ACE_Service_Config (int ignore_static_svcs,
 
 // There's no point in dealing with this on NT since it doesn't really
 // support signals very well...
-#if defined (ACE_LACKS_UNIX_SIGNALS)
+#if !defined (ACE_LACKS_UNIX_SIGNALS)
   // This really ought to be a Singleton I suspect...
 
   if (ACE_Service_Config::reactor_->register_handler 
@@ -440,7 +440,7 @@ ACE_Service_Config::parse_args (int argc, char *argv[])
 	{
 // There's no point in dealing with this on NT since it doesn't really
 // support signals very well...
-#if defined (ACE_LACKS_UNIX_SIGNALS)
+#if !defined (ACE_LACKS_UNIX_SIGNALS)
 	  ACE_Service_Config::signum_ = ACE_OS::atoi (getopt.optarg);
 
 	  if (ACE_Service_Config::reactor ()->register_handler 
