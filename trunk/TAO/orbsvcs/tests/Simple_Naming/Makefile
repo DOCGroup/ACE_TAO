@@ -10,13 +10,13 @@
 
 LDLIBS =  -lorbsvcs -lTAO
 
-CLNT_SRCS = clnt.cpp
+CLIENT_SRCS = client.cpp
 
-LSRC = $(CLNT_SRCS)
+LSRC = $(CLIENT_SRCS)
 
-CLNT_OBJS = $(CLNT_SRCS:.cpp=.o)
+CLIENT_OBJS = $(CLIENT_SRCS:.cpp=.o)
 
-BIN = clnt
+BIN = client
 BUILD = $(BIN)
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 
@@ -41,7 +41,7 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT) $(TSS_ORB_FLAG)#-H
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
-.obj/clnt.o .obj/clnt.so .shobj/clnt.o .shobj/clnt.so: clnt.cpp clnt.h \
+.obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp client.h \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
