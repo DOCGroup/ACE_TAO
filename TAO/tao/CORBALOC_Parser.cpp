@@ -55,8 +55,7 @@ TAO_CORBALOC_Parser::parse_string_count_helper (const char * &corbaloc_name,
               ACE_ERROR((LM_ERROR,
                          ACE_TEXT ("TAO (%P|%t) Invalid Syntax\n")));
 
-              ACE_THROW (CORBA::BAD_PARAM (TAO_OMG_VMCID |
-                                           TAO_OMG_MINOR_BAD_PARAM_10,
+              ACE_THROW (CORBA::BAD_PARAM (TAO_OMG_VMCID | 10,
                                            CORBA::COMPLETED_NO));
             }
         }
