@@ -1,3 +1,11 @@
+Tue Jan 19 00:42:44 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* examples/Log_Msg/test_callback.cpp (log): Removed the use of
+ 	  cerr and used ACE_OS::printf() instead.
+	
+	* ace/Log_Record.cpp (print): Fixed comparison between signed and
+ 	  unsigned.  Thanks to David Levine for pointing this out.
+
 Mon Jan 18 23:55:03 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * ACE-INSTALL.html: Added more info on Alpha configuration
