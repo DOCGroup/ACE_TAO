@@ -271,6 +271,10 @@ TAO_Leader_Follower::wait_for_event (TAO_LF_Event *event,
                                   " [has timer, follower failed]\n",
                                   transport->id ()));
 
+                    // We have timedout.. So set the state in the
+                    // LF_Event about this.. We call the non-locking,
+                    // no-signalling method on LF_Event..
+                    event->set_state (TAO_LF_Event::LFS_TIMEOUT);
                     if (!event->successful ())
                       {
                         // Remove follower can fail because either
@@ -296,6 +300,8 @@ TAO_Leader_Follower::wait_for_event (TAO_LF_Event *event,
                                         " elect_new_leader failed\n"));
                           }
                       }
+
+
                     return -1;
                   }
               }

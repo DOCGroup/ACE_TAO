@@ -22,7 +22,7 @@
 
 class TAO_Transport;
 class TAO_LF_Follower;
-
+class TAO_Leader_Follower;
 /**
  * @class TAO_LF_Event
  *
@@ -45,6 +45,9 @@ class TAO_LF_Follower;
 class TAO_Export TAO_LF_Event
 {
 public:
+
+  friend class TAO_Leader_Follower;
+
   /// Constructor
   TAO_LF_Event (void);
 
@@ -107,6 +110,14 @@ public:
 protected:
   /// Validate the state change
   void state_changed_i (int new_state);
+
+private:
+
+  /// Check whether we have reached the final state..
+  int is_state_final (void);
+
+  /// Set the state.
+  void set_state (int new_state);
 
 private:
   /// The current state
