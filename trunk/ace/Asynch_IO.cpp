@@ -129,7 +129,7 @@ ACE_Asynch_Operation::open (ACE_Handler &handler,
   return this->proactor_->register_handle (this->handle_,
                                            completion_key);
 #else /* ACE_HAS_AIO_CALLS */
-  // AIO stuff is present. So no registering business.
+  // AIO stuff is present. So no registering.
   return 1;
 #endif /* ACE_HAS_AIO_CALLS */
 }
@@ -182,7 +182,7 @@ ACE_Asynch_Read_Stream::shared_read (ACE_Asynch_Read_Stream::Result *result)
   // store this with the Proactor, so that that can be used for
   // <aio_return> and <aio_error>.
   aiocb *aiocb_ptr;
-  ACE_NEW_RETURN (aiocb_ptr, 
+  ACE_NEW_RETURN (aiocb_ptr,
                   aiocb,
                   -1);
 
@@ -215,7 +215,7 @@ ACE_Asynch_Read_Stream::shared_read (ACE_Asynch_Read_Stream::Result *result)
                       -1);
 
   // Aio successfully issued and ptr stored.
-  return 1;
+  return 0;
 
 #else /* ACE_HAS_AIO_CALLS */
   u_long bytes_read;
@@ -944,9 +944,8 @@ ACE_Asynch_Transmit_File::Header_And_Trailer::trailer_bytes (u_long bytes)
   this->trailer_bytes_ = bytes;
 }
 
-#if 0
 ACE_LPTRANSMIT_FILE_BUFFERS
-ACE_Asynch_Transmit_Fie::Header_And_Trailer::transmit_buffers (void)
+ACE_Asynch_Transmit_File::Header_And_Trailer::transmit_buffers (void)
 {
   // If both are zero, return zero
   if (this->header_ == 0 && this->trailer_ == 0)
@@ -983,7 +982,6 @@ ACE_Asynch_Transmit_Fie::Header_And_Trailer::transmit_buffers (void)
       return &this->transmit_buffers_;
     }
 }
-#endif /* 0 */
 
 // ************************************************************
 
