@@ -186,6 +186,12 @@ if ($#BUILD_LIST == -1) {
 }
 
 sub mydie {
+  my $DEST_DIR = $LOG_DESTINATION.'/'.$HOST.'_'.$BUILD;
+  mkdir $DEST_DIR,0755 if (!-d $DEST_DIR);
+  if (open(STATUS, '>'.$DEST_DIR.'/status.txt')) {
+    print STATUS "SCOREBOARD_STATUS: Inactive\n";
+    close STATUS;
+  }
   unlink $disable_file;
   die $_ . "\n";
 }
@@ -312,6 +318,12 @@ LOG->autoflush ();
 #}
 
 print LOG "#################### CVS\n";
+my $DEST_DIR = $LOG_DESTINATION.'/'.$HOST.'_'.$BUILD;
+mkdir $DEST_DIR,0755 if !-d $DEST_DIR;
+if (open(STATUS, '>'.$DEST_DIR.'/status.txt')) {
+  print STATUS "SCOREBOARD_STATUS: CVS\n";
+  close STATUS;
+}
 
 chdir($CHECKOUT)
     || mydie "Cannot chdir to $CHECKOUT";
@@ -364,6 +376,10 @@ if ($makefile_suffix ne "") {
 }
 
 print LOG "#################### Compiler\n";
+if (open(STATUS, '>'.$DEST_DIR.'/status.txt')) {
+  print STATUS "SCOREBOARD_STATUS: Compile\n";
+  close STATUS;
+}
 
 if ($pre_realclean) {
   foreach $i (@BUILD_LIST) {
@@ -459,6 +475,10 @@ foreach $i (@BUILD_LIST) {
 }
 
 print LOG "#################### Tests\n";
+if (open(STATUS, '>'.$DEST_DIR.'/status.txt')) {
+  print STATUS "SCOREBOARD_STATUS: Tests\n";
+  close STATUS;
+}
 
 if ($dont_run == 0) {
   my $config_params;
@@ -560,6 +580,10 @@ close (CONFIG)
 report_errors @failures;
 
 print LOG "#################### End\n";
+if (open(STATUS, '>'.$DEST_DIR.'/status.txt')) {
+  print STATUS "SCOREBOARD_STATUS: Inactive\n";
+  close STATUS;
+}
 
 close(LOG)
     || mydie "cannot close LOGFILE";
