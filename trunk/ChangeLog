@@ -1,3 +1,11 @@
+Mon Apr 21 09:14:09 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+
+          If pch files are listed in header_files or source_files, then
+          remove them from the listing.  It is important that they are not
+          duplicated.
+
 Mon Apr 21 04:51:09 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * bin/generate_compile_stats.sh:
@@ -8,12 +16,12 @@ Mon Apr 21 04:51:09 UTC 2003  Don Hinton  <dhinton@dresystems.com>
         * ace/SStringfwd.h:
         * ace/SString.h:
 
-          Moved typedef for ACE_TString to SStringfwd.h to go with 
+          Moved typedef for ACE_TString to SStringfwd.h to go with
           ACE_CString and ACE_WString.
 
         * ace/Get_Opt.{h,cpp,i}:
 
-          Include ace/SStringfwd.h instead of ace/SString.h in header, 
+          Include ace/SStringfwd.h instead of ace/SString.h in header,
           changed members variables to pointers, and uninlined optstring()
           to reduce inter header dependencies.
 

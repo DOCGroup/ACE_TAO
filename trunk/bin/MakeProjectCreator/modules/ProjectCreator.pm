@@ -824,6 +824,41 @@ sub fix_pch_filenames {
 }
 
 
+sub remove_extra_pch_listings {
+  my($self) = shift;
+  my(@pchs) = ('pch_header', 'pch_source');
+  my(@tags) = ('header_files', 'source_files');
+
+  for(my $j = 0; $j <= $#pchs; ++$j) {
+    my($pch) = $self->get_assignment($pchs[$j]);
+
+    if (defined $pch) {
+      ## If we are converting slashes, then we need to
+      ## convert the pch file back to forward slashes
+      if ($self->convert_slashes()) {
+        $pch =~ s/\\/\//g;
+      }
+
+      ## Find out which files are duplicated
+      my($names) = $self->{$tags[$j]};
+      foreach my $name (keys %$names) {
+        my($comps) = $$names{$name};
+        foreach my $key (keys %$comps) {
+          my($array) = $$comps{$key};
+          my($count) = scalar(@$array);
+          for(my $i = 0; $i < $count; ++$i) {
+            if ($pch eq $$array[$i]) {
+              splice(@$array, $i, 1);
+              --$count;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+
 sub is_special_tag {
   my($self) = shift;
   my($tag)  = shift;
@@ -1243,6 +1278,10 @@ sub generate_defaults {
   ## Remove source files that are also listed in the template files
   ## If we do not do this, then generated projects can be invalid.
   $self->remove_duplicated_files('source_files', 'template_files');
+
+  ## If pch files are listed in header_files or source_files more than
+  ## once, we need to remove the extras
+  $self->remove_extra_pch_listings();
 
   ## Generate the default idl generated list of source files
   ## only if we defaulted the idl file list
