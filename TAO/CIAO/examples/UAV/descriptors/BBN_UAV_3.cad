@@ -64,20 +64,16 @@
           <componentinstantiation id="a_UAV_GS">
         </componentinstantiation>
       </homeplacement>
-     <destination>UAVGSHost</destination>
-    </processcollocation>
-  
-  
-    <processcollocation>    
+      
       <homeplacement id="a_UAVHome">
         <componentfileref idref="com-UAV"/>
           <componentinstantiation id="a_UAV">
         </componentinstantiation>
       </homeplacement>
 
-     <destination>UAVHost</destination>
+     <destination>UAVGSHost</destination>
     </processcollocation>
-         
+  
          
     <processcollocation>              
       <homeplacement id="a_EngagementHome">
