@@ -1,3 +1,10 @@
+1999-03-16  Nagarajan Surendran  <naga@polka.cs.wustl.edu>
+
+	* tao/Server_Request.cpp: 
+	Removed a continue statement in the marshal method since it
+	prevented an exception from getting printed on the server side if
+	the idl method had no arguments and only a return value.  
+
 Tue Mar 16 02:25:56 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_union_branch/private_ch.cpp:
