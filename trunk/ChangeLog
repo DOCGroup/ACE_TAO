@@ -1,3 +1,21 @@
+Thu Aug 10 04:04:31 2000  John Heitmann  <jwh1@cs.wustl.edu>
+
+	* ace/OS.cpp:
+	  Added pace version of thr_create and thr_exit.
+
+	* ace/OS.h:
+	  Added pace #define for pthread_cleanup_*
+	  Deleted all ansi cast defines since they were
+  	  also redundantly defined in config-all.h
+
+	* ace/OS.i:
+	  Put all pace functions in the global scope. Minor
+	  fixes.
+
+	* examples/Shared_Malloc/Malloc.cpp
+	  Removed template instantiations which are duplicated
+	  in ACE.cpp.
+
 Wed Aug  9 18:16:26 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * ace/RMCast/RMCast.h:

@@ -55,7 +55,6 @@ Malloc::instance (void)
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Allocator_Adapter<L_ALLOCATOR>;
 template class ACE_Allocator_Adapter<M_ALLOCATOR>;
 #if !defined (ACE_LACKS_SBRK)
 template class ACE_Allocator_Adapter<SB_ALLOCATOR>;
@@ -66,9 +65,7 @@ template class ACE_Malloc_T <ACE_SBRK_MEMORY_POOL, ACE_SYNCH_MUTEX, ACE_Control_
 template class ACE_Allocator_Adapter<SP_ALLOCATOR>;
 #endif /* ! ACE_LACKS_SYSV_SHMEM */
 template class ACE_Allocator_Adapter<ST_ALLOCATOR>;
-template class ACE_Malloc <ACE_LOCAL_MEMORY_POOL, ACE_SYNCH_MUTEX>;
 template class ACE_Malloc <ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex>;
-template class ACE_Malloc_T <ACE_LOCAL_MEMORY_POOL, ACE_SYNCH_MUTEX, ACE_Control_Block>;
 template class ACE_Malloc_T <ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex, ACE_Control_Block>;
 template class ACE_Read_Guard<ACE_Process_Mutex>;
 template class ACE_Write_Guard<ACE_Process_Mutex>;
