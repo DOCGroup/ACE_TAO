@@ -1,3 +1,10 @@
+Tue Sep 21 19:29:50 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
+
+	* orbsvcs/tests/Trading/Makefile:
+	  Workaround for the "unresolved assignment operator" mystery -
+	  Added a check to not compile the trader tests under older
+	  versions of g++.
+
 Tue Sep 21 18:05:21 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
 	* orbsvcs/tests/Trading/Simple_Dynamic.h: Fix for the Trader tests
