@@ -5,7 +5,7 @@
 //
 // = LIBRARY
 //    tests
-// 
+//
 // = FILENAME
 //    Enum_interfaces.cpp
 //
@@ -24,7 +24,7 @@
 //
 // = AUTHOR
 //    Michael R. MacFaden <mrm@cisco.com>
-// 
+//
 // ============================================================================
 
 #include "ace/OS.h"
@@ -34,7 +34,7 @@
 int
 main (int, char *[])
 {
-  ACE_START_TEST ("Enum_interfaces");
+  ACE_START_TEST ("Enum_Interfaces_Test");
 
   ACE_INET_Addr *the_addr_array;
   size_t how_many = 0;
@@ -46,12 +46,12 @@ main (int, char *[])
 		"%p\n",
 		"ACE::get_ip_interfaces failed"));
   else if (how_many == 0)
-    ACE_ERROR ((LM_ERROR, 
+    ACE_ERROR ((LM_ERROR,
 		"No interfaces presently configured in the kernel\n"));
   else
     {
       ACE_DEBUG ((LM_DEBUG, "there are %d interfaces\n", how_many));
-	 
+
       for (size_t i = 0; i < how_many; i++)
 	ACE_DEBUG ((LM_DEBUG, "\t%s\n", the_addr_array[i].get_host_addr ()));
 
