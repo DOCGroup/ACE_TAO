@@ -25,6 +25,11 @@ if [ -x /bin/uname -a `uname -s` = 'HP-UX' ]; then
   export SHLIB_PATH
 fi
 
+if [ -x /bin/uname -a `uname -s` = 'AIX' ]; then
+  LIBPATH=$ACE_ROOT/ace:${LIBPATH:-/usr/lib:/lib}
+  export LIBPATH
+fi
+
 ####
 #### Process command line arguments.
 ####
