@@ -9,6 +9,7 @@
 
 
 #include "Messaging.hpp"
+#include "Protocol.hpp"
 
 namespace TMCast
 {
