@@ -123,17 +123,10 @@ Wed May  7 18:32:45 2003  Steve Huston  <shuston@riverace.com>
 
 Wed May  7 17:02:44 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-<<<<<<< ChangeLog
         * bin/MakeProjectCreator/config/ciao_component.mpb: Added the
           required libraries to build the server. This was necessitated by
           the recent subsetting in TAO.
 
-=======
-        * bin/MakeProjectCreator/config/ciao_component.mpb: Added the
-          required libraries to build the server. This was necessitated by
-          the recent subsetting in TAO.
-
->>>>>>> 4.5036
 Wed May  7 17:25:49 2003  Steve Huston  <shuston@riverace.com>
 
         * ace/Service_Config.h: Added description of the -s option to
@@ -146,17 +139,10 @@ Wed May  7 14:00:31 2003  Steve Huston  <shuston@riverace.com>
 
 Wed May  7 12:03:28 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-<<<<<<< ChangeLog
         * bin/topinfo_iorsize_stats.sh (FILES): Removed the memory
           tracking on the client side since its of no use. Added code to
           collect the actual size of the server growth once data is
           marshalled.
-=======
-        * bin/topinfo_iorsize_stats.sh (FILES): Removed the memory
-          tracking on the client side since its of no use. Added code to
-          collect the actual size of the server growth once data is
-          marshalled.
->>>>>>> 4.5036
 
         * bin/generate_topinfo_stats.sh: Used the 4th argument to plot
           information on the y axis.
