@@ -1,3 +1,15 @@
+Wed May 19 18:08:34 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Connect.cpp:
+	* tao/GIOP.cpp:
+	* tao/IIOP_RMS.cpp:
+	* tao/IIOP_Reply_Dispatcher.cpp:
+	* tao/IIOP_Transport.cpp:
+	* tao/IIOP_Wait_Strategy.cpp:
+	* tao/Invocation.cpp:
+	* tao/Pluggable.cpp:
+	  Several @@ comments
+
 Wed May 19 16:23:18 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* tao/Pluggable.cpp (TAO_Transport): Hardcoded <Wait_On_Read>

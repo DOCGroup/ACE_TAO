@@ -2,6 +2,14 @@
 
 #include "tao/IIOP_RMS.h"
 
+// @@ Alex: there is another aspect that is controlled by this
+//    strategy: the demuxed version must idle() the transport
+//    right after the request is sent, otherwise nobody else will be
+//    able to use it.
+//    The exclusive version must idle it after the reply is received,
+//    to guarantee that nobody else is using it.
+//    We may need to add a couple of methods to implement that.
+
 TAO_IIOP_Request_Multiplexing_Strategy::TAO_IIOP_Request_Multiplexing_Strategy (void)
   : cdr_ (0)
 {
@@ -29,11 +37,11 @@ TAO_IIOP_Muxed_RMS::~TAO_IIOP_Muxed_RMS (void)
 }
 
 // Generate and return an unique request id for the current
-// invocation.  
+// invocation.
 CORBA::ULong
 TAO_IIOP_Muxed_RMS::request_id (void)
 {
-  // @@ 
+  // @@
   return 0;
 }
 
@@ -50,10 +58,10 @@ TAO_IIOP_Muxed_RMS::bind_dispatcher (CORBA::ULong request_id,
 TAO_IIOP_Reply_Dispatcher*
 TAO_IIOP_Muxed_RMS::find_dispatcher (CORBA::ULong request_id)
 {
-  // @@ 
+  // @@
   return 0;
 }
-  
+
 void
 TAO_IIOP_Muxed_RMS::set_cdr_stream (TAO_InputCDR *Cdr)
 {

@@ -78,11 +78,11 @@ TAO_GIOP_Invocation::TAO_GIOP_Invocation (TAO_Stub *stub,
     transport_ (0)
 {
   // @@ Alex: this code here is broken, this is not the right way to
-  //    initialize the request_id, please fix it I know it is not your 
+  //    initialize the request_id, please fix it I know it is not your
   //    fault. (coryan)
 
   // @@ I am commenting this out. We will use the RMS object as a
-  //    factory to give us the unique request ids. (alex)  
+  //    factory to give us the unique request ids. (alex)
 
   // @@ TODO The comments here are scary, can someone please give me a
   // warm fuzzy feeling about this (coryan).
@@ -92,7 +92,7 @@ TAO_GIOP_Invocation::TAO_GIOP_Invocation (TAO_Stub *stub,
   // it will compile on multiple platforms through the magic of ACE
   // :-/
 
-  
+
   //assert (sizeof (CORBA::ULong) == sizeof (ACE_thread_t));
   // ACE_thread_t me = ACE_OS::thr_self ();
 
@@ -172,7 +172,7 @@ TAO_GIOP_Invocation::start (CORBA::Boolean is_roundtrip,
       this->profile_ = this->stub_->profile_in_use ();
 
       // Get the transport object.
-      
+
       if (this->transport_ != 0)
         this->transport_->idle ();
 
@@ -185,18 +185,24 @@ TAO_GIOP_Invocation::start (CORBA::Boolean is_roundtrip,
       if (this->stub_->next_profile_retry () == 0)
         ACE_THROW (CORBA::TRANSIENT ());
     }
-  
+
+  // @@ Alex: we must check this, it seems that it would be cleaner if 
+  //    the Transport's ORB_Core was initialized way in advance...
   // Init the transport object with the orb core resource.
   this->transport_->orb_core (this->orb_core_);
 
   // Init the input message states in the transport object.
   // This is necessary for the round trip call only. But it is ok to
   // do this in all cases.
+  // @@ Alex: I think we should keep the "reading" state (message_size 
+  //    and offset) separate from the writing state, i.e. those
+  //    variables should only be set by the handle_input() method and 
+  //    its friends...
   this->transport_->message_size (0);
-  
+
   // Obtain unique request id from the RMS.
   this->request_id_ = this->transport_->request_id ();
-  
+
   // Obtain object key.
   const TAO_ObjectKey& key = this->profile_->object_key();
 
@@ -226,9 +232,9 @@ TAO_GIOP_Invocation::start (CORBA::Boolean is_roundtrip,
                                this->out_stream_,
                                this->orb_core_) == 0)
     ACE_THROW (CORBA::MARSHAL ());
-  
+
   ACE_TIMEPROBE (TAO_GIOP_INVOCATION_START_START_MSG);
-  
+
   // Then fill in the rest of the RequestHeader
   //
   // The first element of header is service context list;
@@ -244,6 +250,9 @@ TAO_GIOP_Invocation::start (CORBA::Boolean is_roundtrip,
   // this message, then patched shortly before it's sent).
   static CORBA::Principal_ptr principal = 0;
 
+  // @@ TODO: the service context list should be kept in the ORB, or
+  //    maybe in TSS storage... that is required for interceptors to
+  //    work.
   // This static is only used to write into the CDR stream, once we
   // have real service context (needed for the messaging spec) this
   // will have to be a parameter.
@@ -253,6 +262,9 @@ TAO_GIOP_Invocation::start (CORBA::Boolean is_roundtrip,
     {
     case TAO_GIOP::Request:
 
+      // @@ Alex: could you move this to the GIOP module? I think we
+      //    should keep as little knowledge about GIOP as possible
+      //    here...
       this->write_request_header (svc_ctx,
                                   this->request_id_,
                                   is_roundtrip,
@@ -262,6 +274,9 @@ TAO_GIOP_Invocation::start (CORBA::Boolean is_roundtrip,
       break;
 
     case TAO_GIOP::LocateRequest:
+      // @@ Alex: could you move this to the GIOP module? I think we
+      //    should keep as little knowledge about GIOP as possible
+      //    here...
       this->out_stream_ << this->request_id_;
       this->out_stream_ << key;
       break;
@@ -351,11 +366,17 @@ TAO_GIOP_Invocation::invoke (CORBA::Boolean is_roundtrip,
     ACE_THROW_RETURN (CORBA::INTERNAL (),
                       TAO_INVOKE_EXCEPTION);
 
+  // @@ Alex: the <is_roundtrip> flag will be tricky when we move to
+  //    AMI: now it is used both to indicate the the CORBA request in
+  //    a twoway and that the send_request() operation should block.
+  //    Even for oneways: with AMI it is possible to wait for a
+  //    response (empty) for oneways, just to make sure that they
+  //    arrive, there are policies to control that.
   int result =
     this->transport_->send_request (this->orb_core_,
                                     this->out_stream_,
                                     is_roundtrip);
-  
+
   //
   // @@ highly desirable to know whether we wrote _any_ data; if
   // we wrote none, then there's no chance the call completed and
@@ -667,23 +688,26 @@ TAO_GIOP_Twoway_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
   // Just send the request, without trying to wait for the reply.
   int retval = TAO_GIOP_Invocation::invoke (1, ACE_TRY_ENV);
   ACE_CHECK_RETURN (retval);
-  
+
   // Give the CDR stream for reading the input.
   this->transport_->input_cdr_stream (&this->inp_stream_);
-  
+
   // Register a reply dispatcher for this invocation. Use the
   // preallocated reply dispatcher.
-  
+
   // Init reply dispatcher.
   this->rd_.request_id (this->request_id_);
 
   // Bind.
   retval = this->transport_->bind_reply_dispatcher (this->request_id_,
                                                     &this->rd_);
+  // @@ Alex: you cannot raise a SystemException, you must pick a
+  //    particular one, depending on why it failed it may be a:
+  //    COMM_FAILURE, TRANSIENT, NO_MEMORY or something else.
   if (retval == -1)
     ACE_THROW_RETURN (CORBA::SystemException,
                       -1);
-  
+
   // This blocks until the response is read.  In the current version,
   // there is only one client thread that ever uses this connection,
   // so most response messages are illegal.
@@ -721,27 +745,27 @@ TAO_GIOP_Twoway_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
   // environment.
 
   // Get the reply status.
-  
+
   // @@ Alex: I botched last time, we also need to obtain the
   //    ServiceContextList and other fields from the wait_for_reply()
   //    call.
-  
+
   //    I am reading all reply context, reply status etc and putting
   //    them in the Reply Dispatcher object, so that Invocation class
   //    can read it later. (Alex).
-  
+
   // @@ Alex: How did we choose the wait_strategy?  The problem is to
   //    do it in such a way that does *not* require a dynamic memory
   //    allocation for the critical path [this *IS* the critical]
   //    I would like to obtain the object from the stack, but I don't
   //    know how.
-  
+
   //    Right now, I have hard coded this in the Consructor of the
   //    Transport class. We can get this from the
   //    Client_Strategy_Factory or something later. (Alex).
-  
+
   // Wait for the reply.
-  
+
   this->transport_->wait_for_reply ();
 
   // @@ Alex: the old version of this had some error handling code,
@@ -752,9 +776,9 @@ TAO_GIOP_Twoway_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
   //    raised in the wait_for_reply() method you won't get a chance
   //    to do that kind of error handling.  Do you really need
   //    exceptions in the transport objects?
-  
+
   CORBA::ULong reply_status = this->rd_.reply_status ();
-  
+
   switch (reply_status)
     {
     case TAO_GIOP_NO_EXCEPTION:
@@ -793,23 +817,23 @@ TAO_GIOP_Locate_Request_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
 {
   // @@ TODO This method is very similar to invoke_i(), we should try
   //    to refactor them.
-  
+
   if (this->transport_ == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (),
                       TAO_INVOKE_EXCEPTION);
-  
+
   int result =
     this->transport_->send_request (this->orb_core_,
                                     this->out_stream_,
                                     1);
-  
-  
+
+
   if (result == -1)
     {
       // send_request () closed the connection; we just set the
       // handler to 0 here.
       this->profile_->reset_hint ();
-      
+
       // @@ This code abort if the connection for the currenct profile
       //    fails.  Should we transparently try new profiles until one
       //    works? Or is that something that a higher level component
@@ -818,11 +842,11 @@ TAO_GIOP_Locate_Request_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
       ACE_THROW_RETURN (CORBA::TRANSIENT (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_MAYBE),
                         TAO_INVOKE_EXCEPTION);
     }
-  
+
   // @@ Maybe the right place to do this is once the reply is
   //    received? But what about oneways?
   this->stub_->set_valid_profile ();
-  
+
   TAO_GIOP_Version version;
 
   TAO_GIOP::Message_Type m = TAO_GIOP::recv_message (this->transport_,
@@ -830,16 +854,16 @@ TAO_GIOP_Locate_Request_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
                                                      this->orb_core_,
                                                      version,
                                                      1);
-  
+
   this->transport_->resume_connection (this->orb_core_->reactor ());
   // suspend was called in TAO_Client_Connection_Handler::handle_input
-  
+
   switch (m)
     {
     case TAO_GIOP::Reply:
       // Thereply is handled at the end of this switch() statement.
       break;
-      
+
     case TAO_GIOP::CloseConnection:
       // Try the same profile again, but open a new connection.
       // If that fails then we go to the next profile.
