@@ -347,7 +347,7 @@ private:
 #define ACE_MIN(x,y) (((x)<(y))?(x):(y))
 
 // Keep the compiler from complaining about parameters which are not used.
-#if defined (ghs) || (__GNUC__) || defined (__hpux) || defined (__sgi)
+#if defined (ghs) || defined (__GNUC__) || defined (__hpux) || defined (__sgi) || defined (DEC_CXX)
 // Some compilers complain about "statement with no effect" with (a).
 // This eliminates the warnings, and no code is generated for the null
 // conditional statement.  NOTE: that may only be true if -O is enabled,
