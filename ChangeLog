@@ -1,3 +1,12 @@
+Fri Jun  7 14:30:22 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/Message_Queue.{h cpp} (ACE_Message_Queue_NT): Change
+          deactivate (int pulse) to deactive() and pulse() - forgot this
+          one in "Thu Jun  6 18:10:45 2002  Steve Huston" set of changes.
+          Also, corrected the way the completion routine checks state
+          of the queue.  enqueue() will always pass ACTIVATED as the
+          queue state to be sure that blocks are seen when dequeued.
+
 Thu Jun  6 17:41:24 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * ACEXML/common/Mem_Map_Stream.h:

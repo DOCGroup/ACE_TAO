@@ -331,13 +331,17 @@ ACE_Message_Queue_NT::enqueue (ACE_Message_Block *new_item,
     {
       size_t msize = new_item->total_size ();
       size_t mlength = new_item->total_length ();
+      // Note - we send ACTIVATED in the 3rd arg to tell the completion
+      // routine it's _NOT_ being woken up because of deactivate().
+#if defined (ACE_WIN64)
+      ULONG_PTR state_to_post;
+#else
+      DWORD state_to_post;
+#endif /* ACE_WIN64 */
+      state_to_post = ACE_Message_Queue_Base::ACTIVATED;
       if (::PostQueuedCompletionStatus (this->completion_port_,
                                         msize,
-                                        // Irfan, can you please figure out what this should be?  It used
-                                        // to be this->deactivated_, but that was removed...  I don't
-                                        // see how that ever worked, however, since this seems to want
-                                        // to be a pointer!
-                                        this->state_,
+                                        state_to_post,
                                         ACE_reinterpret_cast (LPOVERLAPPED, new_item)))
         {
           // Update the states once I succeed.
@@ -372,12 +376,16 @@ ACE_Message_Queue_NT::dequeue (ACE_Message_Block *&first_item,
       ++this->cur_thrs_;        // Increase the waiting thread count.
   }
 
-  DWORD shutdown;
+#if defined (ACE_WIN64)
+  ULONG_PTR queue_state;
+#else
+  DWORD queue_state;
+#endif /* ACE_WIN64 */
   DWORD msize;
   // Get a message from the completion port.
   int retv = ::GetQueuedCompletionStatus (this->completion_port_,
                                           &msize,
-                                          &shutdown,
+                                          &queue_state,
                                           ACE_reinterpret_cast (LPOVERLAPPED *, &first_item),
                                           (timeout == 0 ? INFINITE : timeout->msec ()));
   {
@@ -385,14 +393,14 @@ ACE_Message_Queue_NT::dequeue (ACE_Message_Block *&first_item,
     --this->cur_thrs_;          // Decrease waiting thread count.
     if (retv)
       {
-        if (!shutdown)
+        if (queue_state == ACE_Message_Queue_Base::ACTIVATED)
           {                     // Really get a valid MB from the queue.
             --this->cur_count_;
             this->cur_bytes_ -= msize;
             this->cur_length_ -= first_item->total_length ();
             return this->cur_count_;
           }
-        else                    // I am woken up by deactivate ().
+        else                    // Woken up by deactivate () or pulse ().
             errno = ESHUTDOWN;
       }
   }
@@ -400,7 +408,7 @@ ACE_Message_Queue_NT::dequeue (ACE_Message_Block *&first_item,
 }
 
 int
-ACE_Message_Queue_NT::deactivate (int pulse)
+ACE_Message_Queue_NT::deactivate (void)
 {
   ACE_TRACE ("ACE_Message_Queue_NT::deactivate");
   ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1);
@@ -408,10 +416,7 @@ ACE_Message_Queue_NT::deactivate (int pulse)
   int previous_state = this->state_;
   if (previous_state != ACE_Message_Queue_Base::DEACTIVATED)
     {
-      if (pulse)
-        this->state_ = ACE_Message_Queue_Base::PULSED;
-      else
-        this->state_ = ACE_Message_Queue_Base::DEACTIVATED;
+      this->state_ = ACE_Message_Queue_Base::DEACTIVATED;
 
       // Get the number of shutdown messages necessary to wake up all
       // waiting threads.
@@ -420,14 +425,6 @@ ACE_Message_Queue_NT::deactivate (int pulse)
            cntr > 0; cntr++)
         ::PostQueuedCompletionStatus (this->completion_port_,
                                       0,
-                                      // Irfan, can you please figure
-                                      // out what this should be?  It
-                                      // used to be
-                                      // this->deactivated_, but that
-                                      // was removed...  I don't see
-                                      // how that ever worked,
-                                      // however, since this seems to
-                                      // want to be a pointer!
                                       this->state_,
                                       NULL);
     }
@@ -442,6 +439,30 @@ ACE_Message_Queue_NT::activate (void)
   int previous_status = this->state_;
   this->state_ = ACE_Message_Queue_Base::ACTIVATED;
   return previous_status;
+}
+
+int
+ACE_Message_Queue_NT::pulse (void)
+{
+  ACE_TRACE ("ACE_Message_Queue_NT::pulse");
+  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1);
+
+  int previous_state = this->state_;
+  if (previous_state != ACE_Message_Queue_Base::DEACTIVATED)
+    {
+      this->state_ = ACE_Message_Queue_Base::PULSED;
+
+      // Get the number of shutdown messages necessary to wake up all
+      // waiting threads.
+
+      for (size_t cntr = this->cur_thrs_ - this->cur_count_;
+           cntr > 0; cntr++)
+        ::PostQueuedCompletionStatus (this->completion_port_,
+                                      0,
+                                      this->state_,
+                                      NULL);
+    }
+  return previous_state;
 }
 
 void

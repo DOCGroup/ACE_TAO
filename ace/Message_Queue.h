@@ -515,21 +515,30 @@ public:
   // = Activation control methods.
 
   /**
-   * Notify all waiting threads so they can wakeup and continue other
-   * processing.  If <pulse> is 0 the queue's state is changed to
-   * deactivated and other operations called until the queue is
-   * activated again will return -1 with <errno> == ESHUTDOWN.  If <pulse> is
-   * non-0 then only the waiting threads are notified and the queue's state
-   * is not changed.  In either case, however, no messages are removed
-   * from the queue.  Returns the state of the queue before the call.
+   * Deactivate the queue and wake up all threads waiting on the queue
+   * so they can continue.  No messages are removed from the queue,
+   * however.  Any other operations called until the queue is
+   * activated again will immediately return -1 with @c errno
+   * ESHUTDOWN.
+   *
+   * @retval  The queue's state before this call.
    */
-  virtual int deactivate (int pulse = 0);
+  virtual int deactivate (void);
 
   /**
    * Reactivate the queue so that threads can enqueue and dequeue
    * messages again.  Returns the state of the queue before the call.
    */
   virtual int activate (void);
+
+  /**
+   * Pulse the queue to wake up any waiting threads.  Changes the
+   * queue state to PULSED; future enqueue/dequeue operations proceed
+   * as in ACTIVATED state.
+   *
+   * @retval  The queue's state before this call.
+   */
+  virtual int pulse (void);
 
   /// Returns true if the state of the queue is <DEACTIVATED>,
   /// but false if the queue's is <ACTIVATED> or <PULSED>.
