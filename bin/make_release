@@ -377,7 +377,7 @@ sub tag () {
 
 
 ########
-######## If building a beta, create a diff from the previos version.
+######## If building a beta, create a diff from the previous version.
 ########
 sub diff () {
   if ("$previous_version") {
@@ -385,13 +385,13 @@ sub diff () {
 
     my $previous_tag = "$KIT-$previous_version";
     my $tag = "$KIT-$version";
-    my $diffs_dir = "$kit" eq 'ace+tao'  ?  '../diffs'  :  'diffs';
+    my $diffs_dir = "$kit" eq 'ace'  ?  'diffs'  :  '../diffs';
 
     #### cvs tag does not allow dots.
     $previous_tag =~ tr/./_/;
     $tag =~ tr/./_/;
 
-    my $module = $kit eq 'ace'  ?  'ACE_wrappers'  :  'ACE_wrappers/TAO';
+    my $module = "$kit" eq 'ace'  ?  'ACE_wrappers'  :  'ACE_wrappers/TAO';
 
     if ("$exec_prefix") {
       print "nice -15 $cvs -q rdiff -u -r $previous_tag -r $tag " .
