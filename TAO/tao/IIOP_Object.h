@@ -205,16 +205,16 @@ public:
                const IIOP::Profile &profile);
   // Construct from a repository ID and a profile ID.
 
-  IIOP_Object (const char *host = ACE_DEFAULT_SERVER_HOST,
-               const CORBA::UShort p = TAO_DEFAULT_SERVER_PORT,
-               const char *objkey = "0", // @@ (IRFAN) We may need to remove this def arg
+  IIOP_Object (const char *host,
+               const CORBA::UShort p,
+               const char *objkey, 
                char *repository_id = 0);
   // This constructor will usually be used by a <_bind> call on the
   // client side.
 
   IIOP_Object (char *repository_id,
                const ACE_INET_Addr &addr,
-               const char *objkey /*= "0"*/); // @@ (IRFAN) We may need to remove this def arg
+               const char *objkey); 
   // Constructor used typically by the server side.
 
   // = Memory management.

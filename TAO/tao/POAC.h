@@ -7,9 +7,6 @@
 // Information on TAO is available at
 //                 http://www.cs.wustl.edu/~schmidt/TAO.html
 
-// @@ Irfan, please zap ALL of the "generated" stubs/skeletons from
-// TAO since we don't want to increase the code size!
-
 #if !defined (TAO_IDL_POAC_H)
 #define TAO_IDL_POAC_H
 

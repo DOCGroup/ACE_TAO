@@ -46,21 +46,11 @@ IIOP::Profile::set (const char *h,
                     const char *key,
                     const ACE_INET_Addr *addr)
 {
-  if (this->set (h, p, addr) == -1)
+  if (key == 0)
     return -1;
 
-  // Enough room as to print a <void *>.
-  // @@ The following "32" should not be a magic #...
-  const int bufs = 32;
-  char buffer[bufs];
-
-  if (key == 0)
-    {
-      // @@ (IRFAN) Object key generation
-      // Use <this> as the key...
-      ACE_OS::sprintf (buffer, "0x%024.24x", this);
-      key = buffer;
-    }
+  if (this->set (h, p, addr) == -1)
+    return -1;
 
   int l = ACE_OS::strlen (key);
   this->object_key.length (l);
