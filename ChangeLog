@@ -1,3 +1,10 @@
+Tue Feb 1 12:42:37 2005  Martin Corino  <mcorino@remedy.nl>
+
+	* tests/Dirent_Test.cpp:
+
+	  Fixed directory recursion test for VxWorks where chdir() only
+          accepts full paths.
+
 Tue Feb  1 11:19:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/ace_tests.lst:
