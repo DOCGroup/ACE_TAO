@@ -1,3 +1,17 @@
+Mon Sep 24 12:22:32 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tao/params.cpp: 
+	  Made mcast://:::: as the default multicast address. This address
+	  will default to 
+	  mcast://ACE_DEFAULT_MULTICAST_ADDR:
+	          TAO_DEFAULT_NAME_SERVER_REQUEST_PORT:eth0:1. 
+
+	  With this change, to get the previous multicast behaviour, the user
+	  doesnt have to use any extra variables.
+
+	* orbsvcs/tests/Simple_Naming/run_test.pl: 
+	  Reverted the change to run_test.pl
+
 Mon Sep 24 12:17:28 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tao/PICurrent.cpp (~TAO_PICurrent_Impl, get_slot, set_slot):
