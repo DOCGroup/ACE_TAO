@@ -8,8 +8,8 @@
 #include "ace/Service_Record.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_Service_Object_Type::ACE_Service_Object_Type (ACE_Service_Object *so, 
-						  const char *s_name, 
+ACE_Service_Object_Type::ACE_Service_Object_Type (ACE_Service_Object *so,
+						  const char *s_name,
 						  unsigned int f)
   : ACE_Service_Type ((const void *) so, s_name, f)
 {
@@ -37,8 +37,8 @@ ACE_Module_Type::dump (void) const
   ACE_TRACE ("ACE_Module_Type::dump");
 }
 
-ACE_Module_Type::ACE_Module_Type (MT_Module *m, 
-				  const char *m_name, 
+ACE_Module_Type::ACE_Module_Type (MT_Module *m,
+				  const char *m_name,
 				  u_int f)
   : ACE_Service_Type ((const void *) m, m_name, f)
 {
@@ -114,7 +114,7 @@ ACE_Module_Type::fini (void) const
 
   // Close the module and delete the memory.
   mod->close (MT_Module::M_DELETE);
-  return ACE_Service_Type::fini ();     
+  return ACE_Service_Type::fini ();
 }
 
 int
@@ -181,10 +181,10 @@ ACE_Stream_Type::resume (void) const
   return 0;
 }
 
-ACE_Stream_Type::ACE_Stream_Type (MT_Stream *s, 
-				  const char *s_name, 
+ACE_Stream_Type::ACE_Stream_Type (MT_Stream *s,
+				  const char *s_name,
 				  unsigned int f)
-  : ACE_Service_Type ((const void *) s, s_name, f), 
+  : ACE_Service_Type ((const void *) s, s_name, f),
     head_ (0)
 {
   ACE_TRACE ("ACE_Stream_Type::ACE_Stream_Type");
@@ -249,16 +249,16 @@ ACE_Stream_Type::remove (ACE_Module_Type *mod)
 	{
 	  if (prev == 0)
 	    this->head_ = next;
-	  else	  
+	  else
 	    prev->link (next);
 
 	  // Final arg is an indication to *not* delete the Module.
 	  if (str->remove (m->name (), MT_Module::M_DELETE_NONE) == -1)
-	    result = -1; 
+	    result = -1;
 
 	  // This call may end up deleting m, which is ok since we
 	  // don't access it again!
-	  m->fini (); 
+	  m->fini ();
 	}
       else
 	prev = m;
@@ -287,8 +287,8 @@ ACE_Stream_Type::find (const char *mod_name) const
 {
   ACE_TRACE ("ACE_Stream_Type::find");
 
-  for (ACE_Module_Type *m = this->head_; 
-       m != 0; 
+  for (ACE_Module_Type *m = this->head_;
+       m != 0;
        m = m->link ())
     if (ACE_OS::strcmp (m->name (), mod_name) == 0)
       return m;
@@ -304,13 +304,13 @@ ACE_Service_Record::dump (void) const
   ACE_TRACE ("ACE_Service_Record::dump");
 }
 
-ACE_Service_Record::ACE_Service_Record (const char *n, 
-					ACE_Service_Type *t, 
-					const ACE_SHLIB_HANDLE h, 
+ACE_Service_Record::ACE_Service_Record (const char *n,
+					ACE_Service_Type *t,
+					const ACE_SHLIB_HANDLE h,
 					int active)
   : name_ (0),
-    type_ (t), 
-    handle_ (h), 
+    type_ (t),
+    handle_ (h),
     active_ (active)
 {
   ACE_TRACE ("ACE_Service_Record::ACE_Service_Record");
@@ -326,7 +326,7 @@ ACE_Service_Record::~ACE_Service_Record (void)
   delete [] (char *) this->name_;
 }
 
-void 
+void
 ACE_Service_Record::suspend (void) const
 {
   ACE_TRACE ("ACE_Service_Record::suspend");
@@ -334,7 +334,7 @@ ACE_Service_Record::suspend (void) const
   this->type_->suspend ();
 }
 
-void 
+void
 ACE_Service_Record::resume (void) const
 {
   ACE_TRACE ("ACE_Service_Record::resume");
@@ -353,7 +353,7 @@ ACE_Service_Object_Type::fini (void) const
   return ACE_Service_Type::fini ();
 }
 
-#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Message_Queue<ACE_SYNCH>;
 template class ACE_Module<ACE_SYNCH>;
 template class ACE_Stream<ACE_SYNCH>;
@@ -369,4 +369,21 @@ template class ACE_Thru_Task<ACE_SYNCH>;
   template class ACE_Task<ACE_NULL_SYNCH>;
   template class ACE_Thru_Task<ACE_NULL_SYNCH>;
 #endif /* ACE_HAS_THREADS */
-#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Message_Queue<ACE_SYNCH>
+#pragma instantiate ACE_Module<ACE_SYNCH>
+#pragma instantiate ACE_Stream<ACE_SYNCH>
+#pragma instantiate ACE_Stream_Head<ACE_SYNCH>
+#pragma instantiate ACE_Stream_Tail<ACE_SYNCH>
+#pragma instantiate ACE_Task<ACE_SYNCH>
+#pragma instantiate ACE_Thru_Task<ACE_SYNCH>
+
+// Even with threads, these ACE_NULL_SYNCH specializations are necessary.
+#if defined (ACE_HAS_THREADS)
+  #pragma instantiate ACE_Message_Queue<ACE_NULL_SYNCH>
+  #pragma instantiate ACE_Module<ACE_NULL_SYNCH>
+  #pragma instantiate ACE_Task<ACE_NULL_SYNCH>
+  #pragma instantiate ACE_Thru_Task<ACE_NULL_SYNCH>
+#endif /* ACE_HAS_THREADS */
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+

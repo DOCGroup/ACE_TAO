@@ -4,18 +4,18 @@
 //
 // = LIBRARY
 //    tests
-// 
+//
 // = FILENAME
 //    Reader_Writer_Test.cpp
 //
 // = DESCRIPTION
 //      This test program verifies the functionality of the ACE_OS
 //      implementation of readers/writer locks on Win32 and Posix
-//      pthreads. 
+//      pthreads.
 //
 // = AUTHOR
 //    Prashant Jain and Doug C. Schmidt
-// 
+//
 // ============================================================================
 
 #include "ace/Synch.h"
@@ -39,20 +39,20 @@ static size_t n_readers = 6;
 static size_t n_writers = 4;
 
 // Thread id of last writer.
-static ACE_thread_t shared_data;  
+static ACE_thread_t shared_data;
 
 // Lock for shared_data.
-static ACE_RW_Mutex rw_mutex;     
+static ACE_RW_Mutex rw_mutex;
 
 // Count of the number of readers and writers.
 static ACE_Atomic_Op<ACE_Thread_Mutex, int> current_readers;
 static ACE_Atomic_Op<ACE_Thread_Mutex, int> current_writers;
 
 // Explain usage and exit.
-static void 
+static void
 print_usage_and_die (void)
 {
-  ACE_DEBUG ((LM_DEBUG, 
+  ACE_DEBUG ((LM_DEBUG,
 	      "usage: %n [-r n_readers] [-w n_writers] [-n iteration_count]\n"));
   ACE_OS::exit (1);
 }
@@ -62,7 +62,7 @@ parse_args (int argc, char *argv[])
 {
   ACE_Get_Opt get_opt (argc, argv, "r:w:n:");
 
-  int c; 
+  int c;
 
   while ((c = get_opt ()) != -1)
     switch (c)
@@ -81,7 +81,7 @@ parse_args (int argc, char *argv[])
       break;
   }
 }
- 
+
 // Iterate <n_iterations> each time checking that nobody modifies the data
 // while we have a read lock.
 
@@ -92,7 +92,7 @@ reader (void *)
   ACE_NEW_THREAD;
 
   ACE_DEBUG ((LM_DEBUG, " (%t) reader starting\n"));
-  
+
   for (size_t iterations = 1; iterations <= n_iterations; iterations++)
     {
       ACE_Read_Guard<ACE_RW_Mutex> g (rw_mutex);
@@ -101,7 +101,7 @@ reader (void *)
 
       if (current_writers > 0)
         ACE_DEBUG ((LM_DEBUG, " (%t) writers found!!!\n"));
-	
+
       ACE_thread_t data = shared_data;
 
       for (size_t loop = 1; loop <= n_loops; loop++)
@@ -109,8 +109,8 @@ reader (void *)
 	  ACE_Thread::yield ();
 
 	  if (!ACE_OS::thr_equal (shared_data, data))
-            ACE_DEBUG ((LM_DEBUG, 
-			" (%t) somebody changed %d to %d\n", 
+            ACE_DEBUG ((LM_DEBUG,
+			" (%t) somebody changed %d to %d\n",
 			data, shared_data));
         }
 
@@ -132,7 +132,7 @@ writer (void *)
   ACE_NEW_THREAD;
 
   ACE_DEBUG ((LM_DEBUG, " (%t) writer starting\n"));
-  
+
   for (size_t iterations = 1; iterations <= n_iterations; iterations++)
     {
       ACE_Write_Guard<ACE_RW_Mutex> g (rw_mutex);
@@ -145,7 +145,7 @@ writer (void *)
 
       if (current_readers > 0)
         ACE_DEBUG ((LM_DEBUG, " (%t) readers found!!!\n"));
-	
+
       ACE_thread_t self = ACE_Thread::self ();
 
       shared_data = self;
@@ -155,8 +155,8 @@ writer (void *)
 	  ACE_Thread::yield ();
 
 	  if (!ACE_OS::thr_equal (shared_data, self))
-            ACE_DEBUG ((LM_DEBUG, 
-			" (%t) somebody wrote on my data %d\n", 
+            ACE_DEBUG ((LM_DEBUG,
+			" (%t) somebody wrote on my data %d\n",
 			shared_data));
         }
 
@@ -184,14 +184,14 @@ int main (int argc, char *argv[])
 
   ACE_DEBUG ((LM_DEBUG, " (%t) main thread starting\n"));
 
-  if (ACE_Thread_Manager::instance ()->spawn_n (n_readers, 
-					       ACE_THR_FUNC (reader), 
-					       0, 
+  if (ACE_Thread_Manager::instance ()->spawn_n (n_readers,
+					       ACE_THR_FUNC (reader),
+					       0,
 					       THR_NEW_LWP) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "spawn_n"), 1);
-  else if (ACE_Thread_Manager::instance ()->spawn_n (n_writers, 
-						    ACE_THR_FUNC (writer), 
-						    0, 
+  else if (ACE_Thread_Manager::instance ()->spawn_n (n_writers,
+						    ACE_THR_FUNC (writer),
+						    0,
 						    THR_NEW_LWP) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "spawn_n"), 1);
 
@@ -207,8 +207,13 @@ int main (int argc, char *argv[])
   return 0;
 }
 
-#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Read_Guard<ACE_RW_Mutex>;
 template class ACE_Write_Guard<ACE_RW_Mutex>;
 template class ACE_Guard<ACE_RW_Mutex>;
-#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Read_Guard<ACE_RW_Mutex>
+#pragma instantiate ACE_Write_Guard<ACE_RW_Mutex>
+#pragma instantiate ACE_Guard<ACE_RW_Mutex>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+

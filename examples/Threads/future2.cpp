@@ -4,7 +4,7 @@
 //
 // = LIBRARY
 //    tests
-// 
+//
 // = FILENAME
 //    Test_Future.cpp
 //
@@ -13,7 +13,7 @@
 //
 // = AUTHOR
 //    Andres Kruse <Andres.Kruse@cern.ch> and Douglas C. Schmidt
-//    <schmidt@cs.wustl.edu> 
+//    <schmidt@cs.wustl.edu>
 //
 // Modification History
 // Aug. 96; A.Kruse; dev.
@@ -51,7 +51,7 @@ class Scheduler : public ACE_Task<ACE_MT_SYNCH>
 {
   // Every method object has to be able to access the private methods.
 
-  friend class Method_Object_work; 
+  friend class Method_Object_work;
   friend class Method_Object_name;
   friend class Method_Object_end;
 public:
@@ -101,14 +101,14 @@ private:
 };
 
 Method_Object_work::Method_Object_work (Scheduler* new_Scheduler,
-				        u_long new_param, 
-				        int new_count, 
+				        u_long new_param,
+				        int new_count,
 					ACE_Future<u_long> &new_result)
   : scheduler_ (new_Scheduler),
     param_ (new_param),
     count_ (new_count),
     future_result_ (new_result)
-{ 
+{
 }
 
 Method_Object_work::~Method_Object_work (void)
@@ -147,7 +147,7 @@ Method_Object_name::Method_Object_name (Scheduler *new_scheduler,
 
 Method_Object_name::~Method_Object_name (void)
 {
-  ACE_DEBUG ((LM_DEBUG, 
+  ACE_DEBUG ((LM_DEBUG,
 	      " (%t) Method_Object_name will be deleted.\n"));
 }
 
@@ -185,7 +185,7 @@ Scheduler::~Scheduler (void)
   ACE_DEBUG ((LM_DEBUG, " (%t) Scheduler %s will be destroyed\n", this->name_));
 }
 
-int 
+int
 Scheduler::open (void *)
 {
   scheduler_open_count++;
@@ -193,7 +193,7 @@ Scheduler::open (void *)
   return this->activate (THR_BOUND);
 }
 
-int 
+int
 Scheduler::close (u_long)
 {
   ACE_DEBUG ((LM_DEBUG, " (%t) Scheduler %s close\n", this->name_));
@@ -201,11 +201,11 @@ Scheduler::close (u_long)
   return 0;
 }
 
-int 
+int
 Scheduler::svc (void)
 {
   // Main event loop for this active object.
-  for (;;) 
+  for (;;)
     {
       // Dequeue the next method object (we use an auto pointer in
       // case an exception is thrown in the <call>).
@@ -222,15 +222,15 @@ Scheduler::svc (void)
   return 0;
 }
 
-void 
+void
 Scheduler::end (void)
 {
   this->activation_queue_.enqueue (new Method_Object_end (this));
 }
 
 // Here's where the Work takes place.
-u_long 
-Scheduler::work_i (u_long param, 
+u_long
+Scheduler::work_i (u_long param,
 		   int count)
 {
   ACE_UNUSED_ARG (count);
@@ -249,21 +249,21 @@ Scheduler::name_i (void)
   return the_name;
 }
 
-ACE_Future<char *> 
+ACE_Future<char *>
 Scheduler::name (void)
 {
-  if (this->scheduler_) 
+  if (this->scheduler_)
     // Delegate to the other scheduler
     return this->scheduler_->name ();
-  else 
+  else
     {
       ACE_Future<char*> new_future;
 
-      if (this->thr_count () == 0) 
+      if (this->thr_count () == 0)
 	{
 	  // This scheduler is inactive... so we execute the user
 	  // request right away...
-	
+
 	  auto_ptr<ACE_Method_Object> mo (new Method_Object_name (this, new_future));
 
 	  mo->call ();
@@ -273,23 +273,23 @@ Scheduler::name (void)
 	// @@ What happens if new fails here?
 	this->activation_queue_.enqueue
 	  (new Method_Object_name (this, new_future));
-	
+
       return new_future;
     }
 }
 
-ACE_Future<u_long> 
+ACE_Future<u_long>
 Scheduler::work (u_long newparam, int newcount)
 {
-  if (this->scheduler_) 
+  if (this->scheduler_)
     return this->scheduler_->work (newparam, newcount);
-  else 
+  else
     {
       ACE_Future<u_long> new_future;
 
-      if (this->thr_count () == 0) 
+      if (this->thr_count () == 0)
 	{
-	  auto_ptr<ACE_Method_Object> mo 
+	  auto_ptr<ACE_Method_Object> mo
 	    (new Method_Object_work (this, newparam, newcount, new_future));
 	  mo->call ();
 	  // Smart pointer destructor automatically deletes it.
@@ -302,14 +302,14 @@ Scheduler::work (u_long newparam, int newcount)
     }
 }
 
-static int 
+static int
 determine_iterations (void)
 {
   int n_iterations;
 
   ACE_DEBUG ((LM_DEBUG," (%t) determining the number of iterations...\n"));
   Scheduler *worker_a;
-  
+
   ACE_NEW_RETURN (worker_a, Scheduler ("worker A"), -1);
 
   ACE_Time_Value tstart (ACE_OS::gettimeofday ());
@@ -329,7 +329,7 @@ determine_iterations (void)
       tend = ACE_OS::gettimeofday ();
     }
 
-  ACE_DEBUG ((LM_DEBUG," (%t) n_iterations %d\n", 
+  ACE_DEBUG ((LM_DEBUG," (%t) n_iterations %d\n",
 	      (int) n_iterations));
 
   worker_a->end ();
@@ -347,7 +347,7 @@ test_active_object (int n_iterations)
   // futures to return values from an active object.
 
   Scheduler *worker_a;
-  Scheduler *worker_b; 
+  Scheduler *worker_b;
   Scheduler *worker_c;
 
   ACE_NEW (worker_a, Scheduler ("worker A"));
@@ -365,7 +365,7 @@ test_active_object (int n_iterations)
   // activated
   for (int i = 0; i < 2; i++)
     {
-      if (i == 1) 
+      if (i == 1)
 	{
 	  worker_a->open ();
 	  worker_b->open ();
@@ -376,7 +376,7 @@ test_active_object (int n_iterations)
       ACE_Future<u_long> fresultb = worker_b->work (9013);
       ACE_Future<u_long> fresultc = worker_c->work (9013);
 
-      if (i == 0) 
+      if (i == 0)
 	{
 	  if (!fresulta.ready ())
 	    ACE_DEBUG ((LM_DEBUG," (%t) ERROR: worker A is should be ready!!!\n"));
@@ -495,7 +495,7 @@ test_timeout (int n_iterations)
 }
 
 int
-main (int, char *[]) 
+main (int, char *[])
 {
   int n_iterations = determine_iterations ();
 
@@ -509,7 +509,7 @@ main (int, char *[])
   return 0;
 }
 
-#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Atomic_Op<ACE_Thread_Mutex, int>;
 template class ACE_Future<char *>;
 template class ACE_Future<u_long>;
@@ -517,10 +517,19 @@ template class ACE_Future_Rep<char *>;
 template class ACE_Future_Rep<u_long>;
 template class auto_ptr<ACE_Method_Object>;
 template class auto_basic_ptr<ACE_Method_Object>;
-#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Atomic_Op<ACE_Thread_Mutex, int>
+#pragma instantiate ACE_Future<char *>
+#pragma instantiate ACE_Future<u_long>
+#pragma instantiate ACE_Future_Rep<char *>
+#pragma instantiate ACE_Future_Rep<u_long>
+#pragma instantiate auto_ptr<ACE_Method_Object>
+#pragma instantiate auto_basic_ptr<ACE_Method_Object>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
 
 #else
-int 
+int
 main (int, char *[])
 {
   ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));

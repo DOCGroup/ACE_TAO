@@ -47,7 +47,7 @@ ACE_Token_Invariant_Manager::mutex_acquired (const char *token_name)
   else
     return inv->acquired ();
 }
-  
+
 int
 ACE_Token_Invariant_Manager::acquired (const ACE_Token_Proxy *proxy)
 {
@@ -64,7 +64,7 @@ ACE_Token_Invariant_Manager::acquired (const ACE_Token_Proxy *proxy)
 	return this->writer_acquired (proxy->name ());
     }
 }
-  
+
 void
 ACE_Token_Invariant_Manager::releasing (const ACE_Token_Proxy *proxy)
 {
@@ -76,7 +76,7 @@ ACE_Token_Invariant_Manager::releasing (const ACE_Token_Proxy *proxy)
   else // ACE_Tokens::RWLOCK.
     this->rwlock_releasing (proxy->name ());
 }
-  
+
 void
 ACE_Token_Invariant_Manager::mutex_releasing (const char *token_name)
 {
@@ -136,7 +136,7 @@ ACE_Token_Invariant_Manager::dump (void) const
   mutex_collection_.dump ();
   ACE_DEBUG ((LM_DEBUG, "rwlock_collection_:\n"));
   rwlock_collection_.dump ();
-  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));    
+  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
 
@@ -150,7 +150,7 @@ ACE_Token_Invariant_Manager::get_mutex (const char *token_name,
     // We did not find one in the collection.
     {
       ACE_Mutex_Invariants *new_invariant;
-      
+
       ACE_NEW_RETURN (new_invariant, ACE_Mutex_Invariants, -1);
 
       if (mutex_collection_.bind (name, new_invariant) == -1)
@@ -177,7 +177,7 @@ ACE_Token_Invariant_Manager::get_rwlock (const char *token_name,
     // We did not find one in the collection.
     {
       ACE_RWLock_Invariants *new_invariant;
-      
+
       ACE_NEW_RETURN (new_invariant, ACE_RWLock_Invariants, -1);
 
       if (rwlock_collection_.bind (name, new_invariant) == -1)
@@ -219,7 +219,7 @@ ACE_Mutex_Invariants::ACE_Mutex_Invariants (void)
 {
 }
 
-int 
+int
 ACE_Mutex_Invariants::acquired (void)
 {
   if (++owners_ > 1)
@@ -231,7 +231,7 @@ ACE_Mutex_Invariants::acquired (void)
     return 1;
 }
 
-void 
+void
 ACE_Mutex_Invariants::releasing (void)
 {
   if (owners_ == 1)
@@ -243,7 +243,7 @@ ACE_Mutex_Invariants::ACE_Mutex_Invariants (const ACE_Mutex_Invariants &rhs)
 {
 }
 
-void 
+void
 ACE_Mutex_Invariants::operator= (const ACE_Mutex_Invariants &rhs)
 {
   owners_ = rhs.owners_;
@@ -255,7 +255,7 @@ ACE_Mutex_Invariants::dump (void) const
   ACE_TRACE ("ACE_Mutex_Invariants::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG, "owners_ = %d\n", owners_));
-  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));    
+  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
 // **************************************************
@@ -268,7 +268,7 @@ ACE_RWLock_Invariants::ACE_RWLock_Invariants (void)
 {
 }
 
-int 
+int
 ACE_RWLock_Invariants::writer_acquired (void)
 {
   if (readers_ > 0)
@@ -285,7 +285,7 @@ ACE_RWLock_Invariants::writer_acquired (void)
     return 1;
 }
 
-int 
+int
 ACE_RWLock_Invariants::reader_acquired (void)
 {
   if (writers_ > 0)
@@ -300,7 +300,7 @@ ACE_RWLock_Invariants::reader_acquired (void)
     }
 }
 
-void 
+void
 ACE_RWLock_Invariants::releasing (void)
 {
   if (writers_ == 1)
@@ -315,7 +315,7 @@ ACE_RWLock_Invariants::ACE_RWLock_Invariants (const ACE_RWLock_Invariants &rhs)
 {
 }
 
-void 
+void
 ACE_RWLock_Invariants::operator= (const ACE_RWLock_Invariants &rhs)
 {
   writers_ = rhs.writers_;
@@ -330,14 +330,22 @@ ACE_RWLock_Invariants::dump (void) const
   ACE_DEBUG ((LM_DEBUG, "writers_ = %d\n",
 	      "readers_ = %d\n",
 	      writers_, readers_));
-  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));    
+  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
-#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Map_Manager<ACE_Token_Name, ACE_Mutex_Invariants *, ACE_Null_Mutex>;
 template class ACE_Map_Iterator<ACE_Token_Name, ACE_Mutex_Invariants *, ACE_Null_Mutex>;
 template class ACE_Map_Entry<ACE_Token_Name, ACE_Mutex_Invariants *>;
 template class ACE_Map_Manager<ACE_Token_Name, ACE_RWLock_Invariants *, ACE_Null_Mutex>;
 template class ACE_Map_Iterator<ACE_Token_Name, ACE_RWLock_Invariants *, ACE_Null_Mutex>;
 template class ACE_Map_Entry<ACE_Token_Name, ACE_RWLock_Invariants *>;
-#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Map_Manager<ACE_Token_Name, ACE_Mutex_Invariants *, ACE_Null_Mutex>
+#pragma instantiate ACE_Map_Iterator<ACE_Token_Name, ACE_Mutex_Invariants *, ACE_Null_Mutex>
+#pragma instantiate ACE_Map_Entry<ACE_Token_Name, ACE_Mutex_Invariants *>
+#pragma instantiate ACE_Map_Manager<ACE_Token_Name, ACE_RWLock_Invariants *, ACE_Null_Mutex>
+#pragma instantiate ACE_Map_Iterator<ACE_Token_Name, ACE_RWLock_Invariants *, ACE_Null_Mutex>
+#pragma instantiate ACE_Map_Entry<ACE_Token_Name, ACE_RWLock_Invariants *>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+

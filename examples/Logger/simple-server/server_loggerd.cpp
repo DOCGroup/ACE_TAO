@@ -38,7 +38,7 @@ main (int argc, char *argv[])
   for (int c; (c = get_opt ()) != -1; )
      switch (c)
        {
-       case 'p': 
+       case 'p':
 	 addr.set (ACE_OS::atoi (get_opt.optarg));
 	 break;
        default:
@@ -47,28 +47,31 @@ main (int argc, char *argv[])
 
   if (peer_acceptor.open (addr) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), -1);
-  else if (REACTOR::instance ()->register_handler 
-	   (&peer_acceptor, 
+  else if (REACTOR::instance ()->register_handler
+	   (&peer_acceptor,
 	    ACE_Event_Handler::ACCEPT_MASK) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, 
-		       "registering service with ACE_Reactor\n"), 
+    ACE_ERROR_RETURN ((LM_ERROR,
+		       "registering service with ACE_Reactor\n"),
 		       -1);
 
   // Run forever, performing logging service.
 
-  ACE_DEBUG ((LM_DEBUG, 
+  ACE_DEBUG ((LM_DEBUG,
 	      "(%P|%t) starting up server logging daemon\n"));
 
   while (!finished)
      REACTOR::instance ()->handle_events ();
 
-  ACE_DEBUG ((LM_DEBUG, 
+  ACE_DEBUG ((LM_DEBUG,
 	      "(%P|%t) shutting down server logging daemon\n"));
 
   return 0;
 }
 
 
-#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Singleton<ACE_Reactor, ACE_Null_Mutex>;
-#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Singleton<ACE_Reactor, ACE_Null_Mutex>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+

@@ -20,7 +20,7 @@ static char role = 'S';
 
 // Handle the command-line arguments.
 
-static void 
+static void
 parse_args (int argc, char *argv[])
 {
   ACE_Get_Opt get_opt (argc, argv, "Ch:p:S");
@@ -44,7 +44,7 @@ parse_args (int argc, char *argv[])
 	role = c;
 	break;
       default:
-	ACE_ERROR ((LM_ERROR, 
+	ACE_ERROR ((LM_ERROR,
 		    "usage: %n [-p portnum] [-h host_name]\n%a", 1));
 	/* NOTREACHED */
 	break;
@@ -61,7 +61,7 @@ parse_args (int argc, char *argv[])
 class Event_Transceiver : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
   // = TITLE
   //     Generate and receives messages from the event server.
-  // 
+  //
   // = DESCRIPTION
   //     This class is both a consumer and supplier of events, i.e.,
   //     it is a ``transceiver.''
@@ -92,23 +92,23 @@ private:
   // Writes data from ACE_STDIN to socket.
 };
 
-int 
+int
 Event_Transceiver::handle_close (ACE_HANDLE,
 				 ACE_Reactor_Mask)
 {
-  ACE_Reactor::end_event_loop();  
+  ACE_Reactor::end_event_loop();
   return 0;
 }
 
 // Close down via SIGINT or SIGQUIT.
 
-int 
-Event_Transceiver::handle_signal (int signum, 
-				  siginfo_t *, 
+int
+Event_Transceiver::handle_signal (int signum,
+				  siginfo_t *,
 				  ucontext_t *)
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) received signal %S\n", signum));
-  
+
   ACE_Reactor::end_event_loop();
   return 0;
 }
@@ -116,19 +116,19 @@ Event_Transceiver::handle_signal (int signum,
 Event_Transceiver::Event_Transceiver (void)
 {
   ACE_Sig_Set sig_set;
-  
+
   sig_set.sig_add (SIGINT);
   sig_set.sig_add (SIGQUIT);
 
 #if !defined (ACE_WIN32)
 
-  if (ACE_Reactor::instance ()->register_handler 
+  if (ACE_Reactor::instance ()->register_handler
       (sig_set, this) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "register_handler"));
 
 #else
 
-  if (ACE_Reactor::instance ()->register_handler 
+  if (ACE_Reactor::instance ()->register_handler
       (SIGINT, this) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "register_handler"));
 
@@ -140,8 +140,8 @@ Event_Transceiver::Event_Transceiver (void)
   else if (ACE::register_stdin_handler (this,
 					ACE_Reactor::instance (),
 					ACE_Thread_Manager::instance ()) == -1)
-    ACE_ERROR ((LM_ERROR, 
-		"%p\n", 
+    ACE_ERROR ((LM_ERROR,
+		"%p\n",
 		"register_stdin_handler"));
 }
 
@@ -152,9 +152,9 @@ Event_Transceiver::open (void *)
   // socket.
   if (ACE_Reactor::instance ()->register_handler
 	   (this, ACE_Event_Handler::READ_MASK) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, 
-		       "%p\n", 
-		       "register_handler"), 
+    ACE_ERROR_RETURN ((LM_ERROR,
+		       "%p\n",
+		       "register_handler"),
 		       -1);
   return 0;
 }
@@ -206,9 +206,9 @@ Event_Transceiver::receiver (void)
   return result;
 }
 
-int 
-main (int argc, char *argv[]) 
-{ 
+int
+main (int argc, char *argv[])
+{
   ACE_Service_Config daemon (argv[0]);
 
   parse_args (argc, argv);
@@ -228,11 +228,19 @@ main (int argc, char *argv[])
   return 0;
 }
 
-#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Connector<Event_Transceiver, ACE_SOCK_CONNECTOR>;
 template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
 template class ACE_Svc_Tuple<Event_Transceiver>;
 template class ACE_Map_Entry<ACE_HANDLE, ACE_Svc_Tuple<Event_Transceiver> *>;
 template class ACE_Map_Iterator<ACE_HANDLE, ACE_Svc_Tuple<Event_Transceiver> *, ACE_SYNCH_RW_MUTEX>;
 template class ACE_Map_Manager<ACE_HANDLE, ACE_Svc_Tuple<Event_Transceiver> *, ACE_SYNCH_RW_MUTEX>;
-#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Connector<Event_Transceiver, ACE_SOCK_CONNECTOR>
+#pragma instantiate ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
+#pragma instantiate ACE_Svc_Tuple<Event_Transceiver>
+#pragma instantiate ACE_Map_Entry<ACE_HANDLE, ACE_Svc_Tuple<Event_Transceiver> *>
+#pragma instantiate ACE_Map_Iterator<ACE_HANDLE, ACE_Svc_Tuple<Event_Transceiver> *, ACE_SYNCH_RW_MUTEX>
+#pragma instantiate ACE_Map_Manager<ACE_HANDLE, ACE_Svc_Tuple<Event_Transceiver> *, ACE_SYNCH_RW_MUTEX>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+

@@ -104,8 +104,8 @@ operator>> (ACE_SOCK_IOStream & stream, qchar *buf)
 
   // if we don't have a quote, append until we see space
   if (c != '"')
-    for (*buf++ = c; 
-	 (void *) stream.get(c) && !isspace(c); 
+    for (*buf++ = c;
+	 (void *) stream.get(c) && !isspace(c);
 	 *buf++ = c)
       continue;
   else
@@ -118,7 +118,7 @@ operator>> (ACE_SOCK_IOStream & stream, qchar *buf)
 	}
 
   *buf = '\0';
-	
+
   return stream;
 }
 
@@ -168,13 +168,13 @@ client (void *arg = 0)
   ACE_SOCK_IOStream &server = *server_p;
 
   ACE_INET_Addr *remote_addr = (ACE_INET_Addr *) arg;
-  ACE_INET_Addr addr (remote_addr->get_port_number (), 
+  ACE_INET_Addr addr (remote_addr->get_port_number (),
 		      ACE_DEFAULT_SERVER_HOST);
   ACE_SOCK_Connector connector;
 
   if (connector.connect (server, addr) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, 
-		       "(%t) %p\n", "Failed to connect to server thread"), 
+    ACE_ERROR_RETURN ((LM_ERROR,
+		       "(%t) %p\n", "Failed to connect to server thread"),
 		      0);
 
   // Send a string to the server which it can interpret as a qchar[]
@@ -203,7 +203,7 @@ client (void *arg = 0)
   // the server.
 
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Client Receiving\n"));
- 
+
   int i;
   float f1, f2;
   long l;
@@ -214,13 +214,13 @@ client (void *arg = 0)
   server >> f2;
   server >> d;
 
-  ACE_DEBUG ((LM_DEBUG, 
-	      "(%P|%t) Client Received: int %d float %f long %d float %f double %f\n", 
+  ACE_DEBUG ((LM_DEBUG,
+	      "(%P|%t) Client Received: int %d float %f long %d float %f double %f\n",
 	      i, f1, (int) l, f2, d));
 
   // Check for proper received values.
-  ACE_ASSERT (i == 1  && (f1 >= 0.123420 && f1 <= 0.123422)  
-	      && l == 666555444  &&  (f2 >= 23.44 && f2 <= 23.46)  
+  ACE_ASSERT (i == 1  && (f1 >= 0.123420 && f1 <= 0.123422)
+	      && l == 666555444  &&  (f2 >= 23.44 && f2 <= 23.46)
 	      && (d >= -47.1e+9 && d <= -45.9e+9));
   // Reset the precision to limit ourselves to two significant digits.
   server.precision (2);
@@ -267,16 +267,16 @@ server (void *arg = 0)
 #if defined (ACE_HAS_THREADS)
   ACE_Thread_Control thread_control (ACE_Thread_Manager::instance ());
 
-  if (ACE_Thread_Manager::instance ()->spawn (ACE_THR_FUNC (client), 
+  if (ACE_Thread_Manager::instance ()->spawn (ACE_THR_FUNC (client),
 					     (void *) &server_addr,
 					     THR_NEW_LWP | THR_DETACHED) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, 
-		       "(%t) %p\n", "spawing client thread"), 
+    ACE_ERROR_RETURN ((LM_ERROR,
+		       "(%t) %p\n", "spawing client thread"),
 		      0);
 #endif /* ACE_HAS_THREADS */
 
   if (acceptor->accept (client_handler) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, 
+    ACE_ERROR_RETURN ((LM_ERROR,
 		       "(%P|%t) Failed to accept new client_handler"),
 		      0);
 
@@ -285,8 +285,8 @@ server (void *arg = 0)
   qchar qbuf[BUFSIZ];
   ACE_OS::memset (qbuf, 0, sizeof qbuf);
   client_handler >> qbuf;
-  ACE_DEBUG ((LM_DEBUG, 
-	      "(%P|%t) Server Received: (\"%s\")\n", 
+  ACE_DEBUG ((LM_DEBUG,
+	      "(%P|%t) Server Received: (\"%s\")\n",
 	      qbuf));
 
   // Give the client time to announce the next test to the user.
@@ -300,7 +300,7 @@ server (void *arg = 0)
   ACE_OS::memset (buf, 0, sizeof buf);
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Server Received: ("));
 
-  while (ACE_OS::strlen (buf) == 0 
+  while (ACE_OS::strlen (buf) == 0
 	 || buf[ACE_OS::strlen (buf) - 1] != '"')
     {
       client_handler >> buf;
@@ -333,13 +333,13 @@ server (void *arg = 0)
   double d;
   client_handler >> i >> f1 >> l >> f2 >> d;
 
-  ACE_DEBUG ((LM_DEBUG, 
-	      "(%P|%t) Server Received: int %d float %g long %d float %g double %g\n", 
+  ACE_DEBUG ((LM_DEBUG,
+	      "(%P|%t) Server Received: int %d float %g long %d float %g double %g\n",
 	      i, f1, (int) l, f2, d));
 
   // check for proper received values
   ACE_ASSERT (i == -1  && (f1 >= -0.13 && f1 <= -0.11)
-	      && l == -666555444  &&  (f2 >= -24.0 && f2 <= -22.0)  
+	      && l == -666555444  &&  (f2 >= -24.0 && f2 <= -22.0)
 	      && (d >= -45e+9 && d <= 47e+9));
 
   delete client_handler_p;
@@ -359,8 +359,8 @@ spawn (void)
   else if (ACE_Thread_Manager::instance ()->spawn (ACE_THR_FUNC (server),
 						  &acceptor,
 						  THR_NEW_LWP | THR_DETACHED) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, 
-		       "%p\n", "spawning server thread"), 
+    ACE_ERROR_RETURN ((LM_ERROR,
+		       "%p\n", "spawning server thread"),
 		      -1);
 
   // Wait for the client and server thread to exit.
@@ -391,10 +391,10 @@ spawn (void)
       break;
     }
 #else
-  ACE_ERROR_RETURN ((LM_ERROR, 
+  ACE_ERROR_RETURN ((LM_ERROR,
 		     "threads *and* processes not supported on this platform\n%"),
 		    -1);
-#endif /* ACE_HAS_THREADS */	
+#endif /* ACE_HAS_THREADS */
   return 0;
 }
 #endif /* !ACE_LACKS_ACE_IOSTREAM */
@@ -415,8 +415,12 @@ main (int, char *[])
 
 
 #if !defined (ACE_LACKS_ACE_IOSTREAM)
-#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_IOStream_T<ACE_SOCK_Stream>;
 template class ACE_Streambuf_T<ACE_SOCK_Stream>;
-#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_IOStream_T<ACE_SOCK_Stream>
+#pragma instantiate ACE_Streambuf_T<ACE_SOCK_Stream>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
 #endif /* !ACE_LACKS_ACE_IOSTREAM */

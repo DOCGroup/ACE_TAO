@@ -8,8 +8,8 @@
 typedef FP::Return_Type FP_RETURN_TYPE;
 
 FP_RETURN_TYPE
-Consumer_Config_File_Parser::read_entry (Consumer_Config_Info &entry, 
-					 int &line_number) 
+Consumer_Config_File_Parser::read_entry (Consumer_Config_Info &entry,
+					 int &line_number)
 {
   FP_RETURN_TYPE read_result;
 
@@ -18,11 +18,11 @@ Consumer_Config_File_Parser::read_entry (Consumer_Config_Info &entry,
 
   // Ignore comments, check for EOF and EOLINE if this succeeds, we
   // have our connection id.
-  while ((read_result = this->getint (entry.proxy_id_)) != FP::SUCCESS) 
+  while ((read_result = this->getint (entry.proxy_id_)) != FP::SUCCESS)
     {
-      if (read_result == FP::EOFILE) 
+      if (read_result == FP::EOFILE)
 	return FP::EOFILE;
-      else if (read_result == FP::EOLINE 
+      else if (read_result == FP::EOLINE
 	       || read_result == FP::COMMENT)
 	line_number++;
     }
@@ -49,8 +49,8 @@ Consumer_Config_File_Parser::read_entry (Consumer_Config_Info &entry,
 }
 
 FP_RETURN_TYPE
-Proxy_Config_File_Parser::read_entry (Proxy_Config_Info &entry, 
-					   int &line_number) 
+Proxy_Config_File_Parser::read_entry (Proxy_Config_Info &entry,
+					   int &line_number)
 {
   char buf[BUFSIZ];
   FP_RETURN_TYPE read_result;
@@ -59,12 +59,12 @@ Proxy_Config_File_Parser::read_entry (Proxy_Config_Info &entry,
 
   // Ignore comments, check for EOF and EOLINE
   // if this succeeds, we have our connection id
-  while ((read_result = this->getint (entry.proxy_id_)) != FP::SUCCESS) 
+  while ((read_result = this->getint (entry.proxy_id_)) != FP::SUCCESS)
     {
-      if (read_result == FP::EOFILE) 
+      if (read_result == FP::EOFILE)
 	return FP::EOFILE;
-      else if (read_result == FP::EOLINE 
-	       || read_result == FP::COMMENT) 
+      else if (read_result == FP::EOLINE
+	       || read_result == FP::COMMENT)
 	line_number++;
     }
 
@@ -118,7 +118,7 @@ int main (int argc, char *argv[])
   FP_RETURN_TYPE result;
   Proxy_Config_Info entry;
   Proxy_Config_File_Parser CCfile;
-  
+
   CCfile.open (argv[1]);
 
   int line_number = 0;
@@ -131,7 +131,7 @@ int main (int argc, char *argv[])
       if (result != FP::SUCCESS)
  //	ACE_DEBUG ((LM_DEBUG, "Error line %d.\n", line_number));
 	cerr << "Error at line " << line_number << endl;
-      else 
+      else
 	printf ("%d\t%s\t%d\t%c\t%d\t%c\t%d\n",
 	       entry.proxy_id_, entry.host_, entry.remote_port_, entry.proxy_role_,
 	       entry.max_retry_timeout_, entry.transform_, entry.local_port_);
@@ -152,7 +152,7 @@ int main (int argc, char *argv[])
     {
       if (result != FP::SUCCESS)
 	cerr << "Error at line " << line_number << endl;
-      else 
+      else
 	{
 	  printf ("%d\t%d\t%d\t%d\t",
 		  entry.proxy_id_, entry.supplier_id_, entry.type_);
@@ -167,7 +167,11 @@ int main (int argc, char *argv[])
 }
 #endif /* DEBUGGING */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class File_Parser<Proxy_Config_Info>;
 template class File_Parser<Consumer_Config_Info>;
-#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate File_Parser<Proxy_Config_Info>
+#pragma instantiate File_Parser<Consumer_Config_Info>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+

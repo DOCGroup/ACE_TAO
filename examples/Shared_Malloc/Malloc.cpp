@@ -52,7 +52,7 @@ Malloc::instance (void)
   return Malloc::instance_;
 }
 
-#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Allocator_Adapter<L_ALLOCATOR>;
 template class ACE_Allocator_Adapter<M_ALLOCATOR>;
 template class ACE_Allocator_Adapter<SB_ALLOCATOR>;
@@ -78,4 +78,31 @@ template class ACE_Malloc <ACE_LOCAL_MEMORY_POOL, ACE_SYNCH_MUTEX>;
 #else
 template class ACE_Malloc <ACE_SBRK_MEMORY_POOL, ACE_SYNCH_MUTEX>;
 #endif /* ACE_LACKS_SBRK */
-#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Allocator_Adapter<L_ALLOCATOR>
+#pragma instantiate ACE_Allocator_Adapter<M_ALLOCATOR>
+#pragma instantiate ACE_Allocator_Adapter<SB_ALLOCATOR>
+#pragma instantiate ACE_Allocator_Adapter<SP_ALLOCATOR>
+#pragma instantiate ACE_Allocator_Adapter<ST_ALLOCATOR>
+#pragma instantiate ACE_Guard<ACE_Process_Mutex>
+#pragma instantiate ACE_Malloc <ACE_LOCAL_MEMORY_POOL, ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Malloc <ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex>
+#pragma instantiate ACE_Read_Guard<ACE_Process_Mutex>
+#pragma instantiate ACE_Read_Guard<ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Write_Guard<ACE_Process_Mutex>
+#pragma instantiate ACE_Write_Guard<ACE_SYNCH_MUTEX>
+
+#if defined (ACE_LACKS_SYSV_SHMEM)
+#pragma instantiate ACE_Malloc <ACE_MMAP_MEMORY_POOL, ACE_SYNCH_MUTEX>
+#else
+#pragma instantiate ACE_Malloc <ACE_SHARED_MEMORY_POOL, ACE_Process_Mutex>
+#pragma instantiate ACE_Malloc <ACE_SHARED_MEMORY_POOL, ACE_SYNCH_MUTEX>
+#endif /* ACE_LACKS_SYSV_SHMEM */
+
+#if defined (ACE_LACKS_SBRK)
+#pragma instantiate ACE_Malloc <ACE_LOCAL_MEMORY_POOL, ACE_SYNCH_MUTEX>
+#else
+#pragma instantiate ACE_Malloc <ACE_SBRK_MEMORY_POOL, ACE_SYNCH_MUTEX>
+#endif /* ACE_LACKS_SBRK */
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+

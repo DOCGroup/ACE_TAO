@@ -78,15 +78,21 @@ main (void)
 #else
 int main (void)
 {
-  ACE_ERROR ((LM_ERROR, 
+  ACE_ERROR ((LM_ERROR,
 	      "SYSV IPC is not supported on this platform\n"));
   return 0;
 }
 #endif /* ACE_HAS_SYSV_IPC */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Guard<ACE_SV_Semaphore_Simple>;
 template class ACE_Malloc<ACE_SHARED_MEMORY_POOL, ACE_SV_Semaphore_Simple>;
 template class ACE_Read_Guard<ACE_SV_Semaphore_Simple>;
 template class ACE_Write_Guard<ACE_SV_Semaphore_Simple>;
-#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Guard<ACE_SV_Semaphore_Simple>
+#pragma instantiate ACE_Malloc<ACE_SHARED_MEMORY_POOL, ACE_SV_Semaphore_Simple>
+#pragma instantiate ACE_Read_Guard<ACE_SV_Semaphore_Simple>
+#pragma instantiate ACE_Write_Guard<ACE_SV_Semaphore_Simple>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+

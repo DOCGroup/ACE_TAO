@@ -20,17 +20,17 @@ Svc_Handler::~Svc_Handler (void)
 {
 }
 
-int 
+int
 Svc_Handler::open (void *)
 {
   ACE_DEBUG ((LM_DEBUG, "client connected on handle %d\n",
 	      this->peer ().get_handle ()));
   if (this->ar_.open (*this, this->peer ().get_handle ()) == -1)
-    return -1;  
+    return -1;
   return this->ar_.read (this->mb_, this->mb_.size ());
 }
 
-void 
+void
 Svc_Handler::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
 {
   if (result.success () && result.bytes_transferred () > 0)
@@ -39,7 +39,7 @@ Svc_Handler::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
       // Print out the message received from the server.
       ACE_DEBUG ((LM_DEBUG, "(%t) message size %d.\n", result.message_block ().length ()));
       ACE_DEBUG ((LM_DEBUG, "%s", result.message_block ().rd_ptr ()));
-      
+
       this->ar_.read (this->mb_, this->mb_.size ());
     }
   else
@@ -57,7 +57,7 @@ IPC_Server::~IPC_Server (void)
 {
 }
 
-int 
+int
 IPC_Server::init (int argc, char *argv[])
 {
   if (this->parse_args (argc, argv) == -1)
@@ -77,7 +77,7 @@ IPC_Server::init (int argc, char *argv[])
     return 0;
 }
 
-int 
+int
 IPC_Server::fini (void)
 {
   return 0;
@@ -95,13 +95,13 @@ IPC_Server::parse_args (int argc, char *argv[])
       switch (c)
 	{
 	case 'r':
-	  ACE_OS::strncpy (rendezvous_, 
+	  ACE_OS::strncpy (rendezvous_,
 			   ACE_WIDE_STRING (get_opt.optarg),
 			   sizeof rendezvous_ / sizeof TCHAR);
 	  break;
 	case 't':
 	  n_threads_ = ACE_OS::atoi (get_opt.optarg);
-	  ACE_DEBUG ((LM_DEBUG, "%s == %d.\n", 
+	  ACE_DEBUG ((LM_DEBUG, "%s == %d.\n",
 		      get_opt.optarg,
 		      n_threads_));
 	  ACE_Proactor::instance(2*n_threads_);
@@ -130,14 +130,14 @@ run_reactor_event_loop (void *)
   return 0;
 }
 
-int 
+int
 IPC_Server::svc (void)
 {
   // Performs the iterative server activities.
   while (ACE_Reactor::event_loop_done() == 0)
     {
       Svc_Handler sh;
-      
+
       // Create a new SH endpoint, which performs all processing in
       // its open() method (note no automatic restart if errno ==
       // EINTR).
@@ -163,7 +163,7 @@ IPC_Server::svc (void)
 	  ACE_DEBUG ((LM_DEBUG, "(%t) main thread exiting.\n"));
 	}
     }
-  
+
   /* NOTREACHED */
   return 0;
 }
@@ -171,7 +171,11 @@ IPC_Server::svc (void)
 #endif /* SPIPE_ACCEPTOR_C */
 
 
-#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Concurrency_Strategy<Svc_Handler>;
 template class ACE_Oneshot_Acceptor<Svc_Handler, ACE_SPIPE_ACCEPTOR>;
-#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Concurrency_Strategy<Svc_Handler>
+#pragma instantiate ACE_Oneshot_Acceptor<Svc_Handler, ACE_SPIPE_ACCEPTOR>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+

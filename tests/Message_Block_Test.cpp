@@ -4,7 +4,7 @@
 //
 // = LIBRARY
 //    tests
-// 
+//
 // = FILENAME
 //    Message_Block_Test.cpp
 //
@@ -15,7 +15,7 @@
 //
 // = AUTHOR
 //    Doug Schmidt and Nanbor Wang
-// 
+//
 // ============================================================================
 
 #include "ace/Task.h"
@@ -61,9 +61,9 @@ private:
   // Close hook.
 };
 
-int 
-Worker_Task::close (u_long) 
-{ 
+int
+Worker_Task::close (u_long)
+{
   ACE_DEBUG ((LM_DEBUG, "(%t) close of worker\n"));
   return 0;
 }
@@ -72,15 +72,15 @@ Worker_Task::close (u_long)
 
 int
 Worker_Task::put (ACE_Message_Block *mb, ACE_Time_Value *tv)
-{ 
-  return this->msg_queue ()->enqueue_prio (mb, tv); 
+{
+  return this->msg_queue ()->enqueue_prio (mb, tv);
 }
 
 // Iterate <n_iterations> printing off a message and "waiting" for all
 // other threads to complete this iteration.
 
-int 
-Worker_Task::svc (void) 
+int
+Worker_Task::svc (void)
 {
   ACE_NEW_THREAD;
   // The <ACE_Task::svc_run()> method automatically adds us to the
@@ -88,12 +88,12 @@ Worker_Task::svc (void)
   // begins.
 
   ACE_DEBUG ((LM_DEBUG, "(%t) starting svc() method\n"));
-  
+
   // Keep looping, reading a message out of the queue, until we get a
   // message with a length == 0, which signals us to quit.
 
   for (int count = 0; ; count++)
-    {       
+    {
       ACE_Message_Block *mb;
 
       ACE_ASSERT (this->msg_queue ()->dequeue_head (mb) != -1);
@@ -117,7 +117,7 @@ Worker_Task::svc (void)
 
 	  ACE_ASSERT (count == current_count);
 
-	  ACE_DEBUG ((LM_DEBUG, "(%t) enqueueing %d duplicates\n", 
+	  ACE_DEBUG ((LM_DEBUG, "(%t) enqueueing %d duplicates\n",
 		      current_count));
 
 	  ACE_Message_Block *dup;
@@ -133,8 +133,8 @@ Worker_Task::svc (void)
 	      // threads.
 	      dup->msg_priority (1);
 
-	      ACE_ASSERT (this->msg_queue ()->enqueue_prio 
-			  (dup, 
+	      ACE_ASSERT (this->msg_queue ()->enqueue_prio
+			  (dup,
 			   // Don't block indefinitely if we flow control...
 			   (ACE_Time_Value *) &ACE_Time_Value::zero) != -1);
 	    }
@@ -152,11 +152,11 @@ Worker_Task::svc (void)
 	      dup->release ();
 	    }
 
-	  ACE_DEBUG ((LM_DEBUG, 
+	  ACE_DEBUG ((LM_DEBUG,
 		      "(%t) in iteration %d, length = %d, prio = %d, text = \"%*s\"\n",
-		      count, 
-		      length, 
-		      mb->msg_priority (), 
+		      count,
+		      length,
+		      mb->msg_priority (),
 		      length - 2, // remove the trailing "\n\0"
 		      mb->rd_ptr ()));
 	}
@@ -166,7 +166,7 @@ Worker_Task::svc (void)
 
       if (length == 0)
 	{
-	  ACE_DEBUG ((LM_DEBUG, 
+	  ACE_DEBUG ((LM_DEBUG,
 		      "(%t) in iteration %d, queue len = %d, got NULL message, exiting\n",
 		      count, this->msg_queue ()->message_count ()));
 	  break;
@@ -183,7 +183,7 @@ Worker_Task::Worker_Task (void)
   // Make us an Active Object.
   if (this->activate (THR_NEW_LWP) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "activate failed"));
-}  
+}
 
 static int
 produce (Worker_Task &worker_task,
@@ -200,7 +200,7 @@ produce (Worker_Task &worker_task,
       int n = ACE_OS::strlen (buf) + 1;
 
       // Allocate a new message.
-      ACE_NEW_RETURN (mb, 
+      ACE_NEW_RETURN (mb,
 		      ACE_Message_Block (n, // size
 					 ACE_Message_Block::MB_DATA, // type
 					 0, // cont
@@ -214,18 +214,18 @@ produce (Worker_Task &worker_task,
       mb->copy (buf, n);
 
       // Pass the message to the Worker_Task.
-      if (worker_task.put (mb, 
+      if (worker_task.put (mb,
 			   // Don't block indefinitely if we flow control...
 			   (ACE_Time_Value *) &ACE_Time_Value::zero) == -1)
 	ACE_ERROR ((LM_ERROR, " (%t) %p\n", "put"));
     }
 
   // Send a shutdown message to the waiting threads and exit.
-  ACE_DEBUG ((LM_DEBUG, 
+  ACE_DEBUG ((LM_DEBUG,
 	      "\n(%t) sending shutdown message\n"));
 
-  ACE_NEW_RETURN (mb, 
-		  ACE_Message_Block (0, ACE_Message_Block::MB_DATA, 
+  ACE_NEW_RETURN (mb,
+		  ACE_Message_Block (0, ACE_Message_Block::MB_DATA,
 				     0, 0, alloc_strategy, &lock_adapter_),
 		  -1);
 
@@ -240,7 +240,7 @@ produce (Worker_Task &worker_task,
 typedef char MEMORY_CHUNK[ACE_MALLOC_ALIGN * ACE_ALLOC_SIZE];
 
 ACE_Cached_Allocator<MEMORY_CHUNK,
-                     ACE_SYNCH_MUTEX> 
+                     ACE_SYNCH_MUTEX>
                      mem_allocator (ACE_ALLOC_AMOUNT);
 
 struct
@@ -254,7 +254,7 @@ struct
   { &mem_allocator, "Cached Memory" }
 };
 
-#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Cached_Allocator<MEMORY_CHUNK, ACE_SYNCH_MUTEX>;
 template class ACE_Cached_Mem_Pool_Node<MEMORY_CHUNK>;
 template class ACE_Locked_Free_List<ACE_Cached_Mem_Pool_Node<MEMORY_CHUNK>, ACE_SYNCH_MUTEX>;
@@ -262,17 +262,26 @@ template class ACE_Free_List<ACE_Cached_Mem_Pool_Node<MEMORY_CHUNK> >;
 template class ACE_Lock_Adapter<ACE_SYNCH_MUTEX>;
 template class ACE_Message_Queue_Iterator<ACE_NULL_SYNCH>;
 template class ACE_Message_Queue_Reverse_Iterator<ACE_NULL_SYNCH>;
-#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Cached_Allocator<MEMORY_CHUNK, ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Cached_Mem_Pool_Node<MEMORY_CHUNK>
+#pragma instantiate ACE_Locked_Free_List<ACE_Cached_Mem_Pool_Node<MEMORY_CHUNK>, ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Free_List<ACE_Cached_Mem_Pool_Node<MEMORY_CHUNK> >
+#pragma instantiate ACE_Lock_Adapter<ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Message_Queue_Iterator<ACE_NULL_SYNCH>
+#pragma instantiate ACE_Message_Queue_Reverse_Iterator<ACE_NULL_SYNCH>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
 
 #endif /* ACE_HAS_THREADS */
 
-int 
+int
 main (int, char *[])
 {
   ACE_START_TEST ("Message_Block_Test");
 #if defined (ACE_HAS_THREADS)
   int n_threads = ACE_MAX_THREADS;
-  
+
   ACE_DEBUG ((LM_DEBUG, "(%t) threads = %d\n", n_threads));
 
   ACE_Profile_Timer ptime;
@@ -287,7 +296,7 @@ main (int, char *[])
 
       // Create the worker tasks.
       Worker_Task worker_task[ACE_MAX_THREADS] ;
-    
+
       // Link all the tasks together into a simple pipeline.
       for (int j = 1; j < ACE_MAX_THREADS; j++)
 	worker_task[j - 1].next (&worker_task[j]);
@@ -297,10 +306,10 @@ main (int, char *[])
       produce (worker_task[0], alloc_struct[i].strategy_);
 
       // Wait for all the threads to reach their exit point.
-    
+
       ACE_DEBUG ((LM_DEBUG,
 		  "(%t) waiting for worker tasks to finish...\n"));
-    
+
       ACE_Thread_Manager::instance ()->wait ();
       ptime.stop ();
       ptime.elapsed_time (alloc_struct[i].et_);

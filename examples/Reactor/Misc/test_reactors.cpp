@@ -24,7 +24,7 @@ public:
   virtual int svc (void);
 
   virtual int handle_input (ACE_HANDLE handle);
-  virtual int handle_close (ACE_HANDLE fd, 
+  virtual int handle_close (ACE_HANDLE fd,
 			    ACE_Reactor_Mask close_mask);
 
 private:
@@ -45,8 +45,8 @@ Test_Task::Test_Task (void)
   ACE_GUARD (ACE_Recursive_Thread_Mutex, ace_mon, reclock_);
 
   Test_Task::task_count_++;
-  ACE_DEBUG ((LM_DEBUG, 
-	      "(%t) TT+ Test_Task::task_count_ = %d\n", 
+  ACE_DEBUG ((LM_DEBUG,
+	      "(%t) TT+ Test_Task::task_count_ = %d\n",
 	      Test_Task::task_count_));
 }
 
@@ -54,31 +54,31 @@ Test_Task::~Test_Task (void)
 {
   ACE_GUARD (ACE_Recursive_Thread_Mutex, ace_mon, reclock_);
 
-  ACE_DEBUG ((LM_DEBUG, 
-	      "(%t) TT- Test_Task::task_count_ = %d\n", 
+  ACE_DEBUG ((LM_DEBUG,
+	      "(%t) TT- Test_Task::task_count_ = %d\n",
 	      Test_Task::task_count_));
 }
 
-int 
+int
 Test_Task::open (void *args)
 {
   this->reactor ((ACE_Reactor *) args);
   return this->activate (THR_NEW_LWP);
 }
 
-int 
+int
 Test_Task::close (u_long)
 {
   ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, reclock_, -1);
 
   Test_Task::task_count_--;
-  ACE_DEBUG ((LM_DEBUG, 
-	      "(%t) close Test_Task::task_count_ = %d\n", 
+  ACE_DEBUG ((LM_DEBUG,
+	      "(%t) close Test_Task::task_count_ = %d\n",
 	      Test_Task::task_count_));
   return 0;
 }
 
-int 
+int
 Test_Task::svc (void)
 {
   for (int i = 0; i < NUM_INVOCATIONS; i++)
@@ -89,14 +89,14 @@ Test_Task::svc (void)
 
       if (this->reactor ()->notify (this, ACE_Event_Handler::READ_MASK) == -1)
 	ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "notify"), -1);
-      
+
       // ACE_DEBUG ((LM_DEBUG, "(%t) leaving notify %d\n", i));
     }
 
   return 0;
 }
 
-int 
+int
 Test_Task::handle_close (ACE_HANDLE,
 			 ACE_Reactor_Mask)
 {
@@ -104,7 +104,7 @@ Test_Task::handle_close (ACE_HANDLE,
   return 0;
 }
 
-int 
+int
 Test_Task::handle_input (ACE_HANDLE)
 {
   ACE_DEBUG ((LM_DEBUG, "(%t) handle_input\n"));
@@ -114,7 +114,7 @@ Test_Task::handle_input (ACE_HANDLE)
   if (this->handled_ == NUM_INVOCATIONS)
     {
       done_count--;
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
 		  "(%t) handle_input, handled_ = %d, done_count = %d\n",
 		  this->handled_, (int) done_count));
     }
@@ -154,7 +154,7 @@ worker (void *args)
   return 0;
 }
 
-int 
+int
 main (void)
 {
   ACE_Reactor *react1 = ACE_Reactor::instance ();
@@ -168,11 +168,11 @@ main (void)
       tt2[i].open (react2);
     }
 
-  if (ACE_Thread_Manager::instance ()->spawn 
+  if (ACE_Thread_Manager::instance ()->spawn
       (ACE_THR_FUNC (worker), (void *) react1, THR_NEW_LWP) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "spawn"), -1);
 
-  else if (ACE_Thread_Manager::instance ()->spawn 
+  else if (ACE_Thread_Manager::instance ()->spawn
       (ACE_THR_FUNC (worker), (void *) react2, THR_NEW_LWP) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "spawn"), -1);
 
@@ -182,12 +182,15 @@ main (void)
   return 0;
 }
 
-#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Atomic_Op<ACE_Thread_Mutex, int>;
-#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Atomic_Op<ACE_Thread_Mutex, int>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
 
 #else
-int 
+int
 main (int, char *[])
 {
   ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));

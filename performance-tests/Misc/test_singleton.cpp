@@ -6,7 +6,7 @@
 // call.  In addition, we compare the performance of using the
 // ACE_Singleton (which encapsulates the Double-Check Locking pattern)
 // vs. hand-coding the pattern.
-// 
+//
 // Here's the output from running this test on our SPARCstation 20, model 712s.
 //
 // ./test_singleton 1000000
@@ -125,7 +125,7 @@ main (int argc, char *argv[])
   ACE_DEBUG ((LM_DEBUG, "real time = %f secs, user time = %f secs, system time = %f secs\n",
 	    et.real_time, et.user_time, et.system_time));
 
-  ACE_DEBUG ((LM_DEBUG, "time per call = %f usecs\n", 
+  ACE_DEBUG ((LM_DEBUG, "time per call = %f usecs\n",
 	      (et.real_time / double (iterations)) * 1000000));
 
   // Test the hand-coded Singleton performance (which uses
@@ -144,7 +144,7 @@ main (int argc, char *argv[])
   ACE_DEBUG ((LM_DEBUG, "real time = %f secs, user time = %f secs, system time = %f secs\n",
 	      et.real_time, et.user_time, et.system_time));
 
-  ACE_DEBUG ((LM_DEBUG, "time per call = %f usecs\n", 
+  ACE_DEBUG ((LM_DEBUG, "time per call = %f usecs\n",
 	      (et.real_time / double (iterations)) * 1000000));
 
   // Test the Mutex_Singleton implementation (which does not use
@@ -163,18 +163,21 @@ main (int argc, char *argv[])
   ACE_DEBUG ((LM_DEBUG, "real time = %f secs, user time = %f secs, system time = %f secs\n",
 	      et.real_time, et.user_time, et.system_time));
 
-  ACE_DEBUG ((LM_DEBUG, "time per call = %f usecs\n", 
+  ACE_DEBUG ((LM_DEBUG, "time per call = %f usecs\n",
 	      (et.real_time / double (iterations)) * 1000000));
 
   return 0;
 }
 
-#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Singleton<DC_Singleton, ACE_Thread_Mutex>;
-#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Singleton<DC_Singleton, ACE_Thread_Mutex>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
 
 #else
-int 
+int
 main (int, char *[])
 {
   ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));

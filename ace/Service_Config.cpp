@@ -46,7 +46,7 @@ ACE_Sig_Adapter ACE_Service_Config::signal_handler_ (&ACE_Service_Config::handle
 // Trigger a reconfiguration.
 sig_atomic_t ACE_Service_Config::reconfig_occurred_ = 0;
 
-  // = Set by command-line options. 
+  // = Set by command-line options.
 char ACE_Service_Config::debug_ = 0;
 char ACE_Service_Config::be_a_daemon_ = 0;
 char ACE_Service_Config::no_static_svcs_ = 0;
@@ -54,7 +54,7 @@ char ACE_Service_Config::no_static_svcs_ = 0;
 // Number of the signal used to trigger reconfiguration.
 int ACE_Service_Config::signum_ = SIGHUP;
 
-// Name of the service configuration file. 
+// Name of the service configuration file.
 const char *ACE_Service_Config::service_config_file_ = ACE_DEFAULT_SVC_CONF;
 
 // Name of file used to store messages.
@@ -189,7 +189,7 @@ ACE_Service_Config::suspend (const char svc_name[])
 }
 
 // Resume a SVC_NAME that was previously suspended or has not yet
-// been resumed (e.g., a static service). 
+// been resumed (e.g., a static service).
 
 int
 ACE_Service_Config::resume (const char svc_name[])
@@ -201,10 +201,10 @@ ACE_Service_Config::resume (const char svc_name[])
 // Initialize the Service Repository.  Note that this *must*
 // be performed in the constructor (rather than open()) since
 // otherwise the repository will not be properly initialized
-// to allow static configuration of services... 
+// to allow static configuration of services...
 
-ACE_Service_Config::ACE_Service_Config (int ignore_static_svcs, 
-					size_t size, 
+ACE_Service_Config::ACE_Service_Config (int ignore_static_svcs,
+					size_t size,
 					int signum)
 {
   ACE_TRACE ("ACE_Service_Config::ACE_Service_Config");
@@ -223,7 +223,7 @@ ACE_Service_Config::ACE_Service_Config (int ignore_static_svcs,
 #if !defined (ACE_LACKS_UNIX_SIGNALS)
   // This really ought to be a Singleton I suspect...
 
-  if (ACE_Reactor::instance ()->register_handler (ACE_Service_Config::signum_, 
+  if (ACE_Reactor::instance ()->register_handler (ACE_Service_Config::signum_,
 						  &ACE_Service_Config::signal_handler_) == -1)
     ACE_ERROR ((LM_ERROR, "can't register signal handler\n"));
 #endif /* ACE_LACKS_UNIX_SIGNALS */
@@ -244,7 +244,7 @@ ACE_Service_Config::parse_args (int argc, char *argv[])
       case 'b':
 	ACE_Service_Config::be_a_daemon_ = 1;
 	break;
-      case 'd': 
+      case 'd':
 	ACE_Service_Config::debug_ = 1;
 	break;
       case 'f':
@@ -260,8 +260,8 @@ ACE_Service_Config::parse_args (int argc, char *argv[])
 #if !defined (ACE_LACKS_UNIX_SIGNALS)
 	  ACE_Service_Config::signum_ = ACE_OS::atoi (getopt.optarg);
 
-	  if (ACE_Reactor::instance()->register_handler 
-	      (ACE_Service_Config::signum_, 
+	  if (ACE_Reactor::instance()->register_handler
+	      (ACE_Service_Config::signum_,
 	       &ACE_Service_Config::signal_handler_) == -1)
 	    ACE_ERROR ((LM_ERROR, "cannot obtain signal handler\n"));
 #endif /* ACE_LACKS_UNIX_SIGNALS */
@@ -273,10 +273,10 @@ ACE_Service_Config::parse_args (int argc, char *argv[])
       }
 }
 
-// Initialize and activate a statically linked service. 
+// Initialize and activate a statically linked service.
 
 int
-ACE_Service_Config::initialize (const char svc_name[], 
+ACE_Service_Config::initialize (const char svc_name[],
 				char *parameters)
 {
   ACE_TRACE ("ACE_Service_Config::initialize");
@@ -285,12 +285,12 @@ ACE_Service_Config::initialize (const char svc_name[],
 
   ACE_DEBUG ((LM_DEBUG, "opening static service %s\n", svc_name));
 
-  if (ACE_Service_Repository::instance()->find (svc_name, 
+  if (ACE_Service_Repository::instance()->find (svc_name,
 						(const ACE_Service_Record **) &srp) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%s not found\n", svc_name), -1);    
+    ACE_ERROR_RETURN ((LM_ERROR, "%s not found\n", svc_name), -1);
 
   else if (srp->type ()->init (args.argc (), args.argv ()) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "static initialization failed, %p\n", 
+    ACE_ERROR_RETURN ((LM_ERROR, "static initialization failed, %p\n",
 		       svc_name), -1);
   else
     {
@@ -315,7 +315,7 @@ ACE_Service_Config::initialize (const ACE_Service_Record *sr,
     ACE_ERROR_RETURN ((LM_ERROR, "insertion failed, %p\n", sr->name ()), -1);
 
   else if (sr->type ()->init (args.argc (), args.argv ()) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "dynamic initialization failed for %s\n", 
+    ACE_ERROR_RETURN ((LM_ERROR, "dynamic initialization failed for %s\n",
 		      sr->name ()), -1);
   else
     return 0;
@@ -324,7 +324,7 @@ ACE_Service_Config::initialize (const ACE_Service_Record *sr,
 // Process service configuration requests as indicated in the
 // <service_config_file>.
 
-int 
+int
 ACE_Service_Config::process_directives (void)
 {
   ACE_TRACE ("ACE_Service_Config::process_directives");
@@ -342,7 +342,7 @@ ACE_Service_Config::process_directives (void)
 
       ace_yyerrno = 0;
       ace_yylineno = 1;
-  
+
       // Use an auto_ptr to make sure that we release this memory
       // regardless of how we exit...
       ACE_NEW_RETURN (ace_obstack, ACE_Obstack, -1);
@@ -353,7 +353,7 @@ ACE_Service_Config::process_directives (void)
 
       if (ace_yyerrno > 0)
 	{
-	  errno = EINVAL; // This is a hack, better errors should be provided... 
+	  errno = EINVAL; // This is a hack, better errors should be provided...
 	  return ace_yyerrno;
 	}
       else
@@ -378,17 +378,17 @@ ACE_Service_Config::load_static_svcs (void)
     {
       ACE_Static_Svc_Descriptor *ssd = *ssdp;
 
-      ACE_Service_Type *stp = 
-	ace_create_service_type (ssd->name_, 
-				 ssd->type_, 
-				 (const void *) (*ssd->alloc_)(), 
+      ACE_Service_Type *stp =
+	ace_create_service_type (ssd->name_,
+				 ssd->type_,
+				 (const void *) (*ssd->alloc_)(),
 				 ssd->flags_);
       if (stp == 0)
 	continue;
 
       ACE_Service_Record *sr;
 
-      ACE_NEW_RETURN (sr, ACE_Service_Record (ssd->name_, stp, 
+      ACE_NEW_RETURN (sr, ACE_Service_Record (ssd->name_, stp,
 					      0, ssd->active_), -1);
 
       if (ACE_Service_Repository::instance()->insert (sr) == -1)
@@ -401,15 +401,15 @@ ACE_Service_Config::load_static_svcs (void)
 
 int
 ACE_Service_Config::open (const char program_name[])
-{   
+{
   ACE_TRACE ("ACE_Service_Config::open");
 
   // Become a daemon before doing anything else.
   if (ACE_Service_Config::be_a_daemon_)
-    ACE_Service_Config::start_daemon ();	 
+    ACE_Service_Config::start_daemon ();
 
   // Only use STDERR if the users hasn't already set the flags.
-  if (ACE_LOG_MSG->open (program_name, 
+  if (ACE_LOG_MSG->open (program_name,
 			 ACE_LOG_MSG->flags () ? ACE_LOG_MSG->flags () : (u_long) ACE_Log_Msg::STDERR,
 			 ACE_Service_Config::logger_key_) == -1)
     return -1;
@@ -426,7 +426,7 @@ ACE_Service_Config::open (const char program_name[])
   // Register ourselves to receive reconfiguration requests via
   // signals!
 
-  if (ACE_Service_Config::no_static_svcs_ == 0 
+  if (ACE_Service_Config::no_static_svcs_ == 0
       && ACE_Service_Config::load_static_svcs () == -1)
     return -1;
   else
@@ -437,10 +437,10 @@ ACE_Service_Config::ACE_Service_Config (const char program_name[])
 {
   ACE_TRACE ("ACE_Service_Config::ACE_Service_Config");
 
-  if (this->open (program_name) == -1 
-      && errno != ENOENT)   
+  if (this->open (program_name) == -1
+      && errno != ENOENT)
     // Only print out an error if it wasn't the svc.conf file that was
-    // missing.  
+    // missing.
     ACE_ERROR ((LM_ERROR, "%p\n", program_name));
 }
 
@@ -452,8 +452,8 @@ ACE_Service_Config::handle_signal (int sig, siginfo_t *, ucontext_t *)
   ACE_TRACE ("ACE_Service_Config::handle_signal");
 
   if (ACE_Service_Config::signum_ != sig)
-    ACE_ERROR ((LM_ERROR, 
-		"error, signal %S does match %S\n", 
+    ACE_ERROR ((LM_ERROR,
+		"error, signal %S does match %S\n",
 		sig, ACE_Service_Config::signum_));
 
   if (ACE_Service_Config::debug_)
@@ -566,9 +566,9 @@ ACE_Service_Config::close_singletons (void)
   return 0;
 }
 
-// Perform user-specified close activities and remove dynamic memory. 
+// Perform user-specified close activities and remove dynamic memory.
 
- 
+
 ACE_Service_Config::~ACE_Service_Config (void)
 {
   ACE_TRACE ("ACE_Service_Config::~ACE_Service_Config");
@@ -664,7 +664,7 @@ ACE_Service_Config::start_daemon (void)
   return ACE::daemonize ();
 }
 
-#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Node<ACE_Static_Svc_Descriptor *>;
 template class ACE_Unbounded_Set<ACE_Static_Svc_Descriptor *>;
 template class ACE_Unbounded_Set_Iterator<ACE_Static_Svc_Descriptor *>;
@@ -672,4 +672,13 @@ template class ACE_Malloc<ACE_LOCAL_MEMORY_POOL, ACE_Null_Mutex>;
 template class ACE_Allocator_Adapter<ACE_Malloc<ACE_LOCAL_MEMORY_POOL, ACE_Null_Mutex> >;
 template class auto_ptr<ACE_Obstack>;
 template class auto_basic_ptr<ACE_Obstack>;
-#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Node<ACE_Static_Svc_Descriptor *>
+#pragma instantiate ACE_Unbounded_Set<ACE_Static_Svc_Descriptor *>
+#pragma instantiate ACE_Unbounded_Set_Iterator<ACE_Static_Svc_Descriptor *>
+#pragma instantiate ACE_Malloc<ACE_LOCAL_MEMORY_POOL, ACE_Null_Mutex>
+#pragma instantiate ACE_Allocator_Adapter<ACE_Malloc<ACE_LOCAL_MEMORY_POOL, ACE_Null_Mutex> >
+#pragma instantiate auto_ptr<ACE_Obstack>
+#pragma instantiate auto_basic_ptr<ACE_Obstack>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+

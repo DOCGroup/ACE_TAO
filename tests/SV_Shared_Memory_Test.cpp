@@ -4,17 +4,17 @@
 //
 // = LIBRARY
 //    tests
-// 
+//
 // = FILENAME
 //    SV_Shared_Memory_Test.cpp
 //
 // = DESCRIPTION
 //     This is a simple test of ACE_SV_Shared_Memory and ACE_Malloc
-//     using the ACE_Shared_Memory_Pool. 
+//     using the ACE_Shared_Memory_Pool.
 //
 // = AUTHOR
 //    Prashant Jain and Doug Schmidt
-// 
+//
 // ============================================================================
 
 #include "ace/Malloc.h"
@@ -87,12 +87,18 @@ child (char *shm)
   return 0;
 }
 
-#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Malloc<ACE_SHARED_MEMORY_POOL, ACE_SV_Semaphore_Simple>;
 template class ACE_Guard<ACE_SV_Semaphore_Simple>;
 template class ACE_Write_Guard<ACE_SV_Semaphore_Simple>;
 template class ACE_Read_Guard<ACE_SV_Semaphore_Simple>;
-#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Malloc<ACE_SHARED_MEMORY_POOL, ACE_SV_Semaphore_Simple>
+#pragma instantiate ACE_Guard<ACE_SV_Semaphore_Simple>
+#pragma instantiate ACE_Write_Guard<ACE_SV_Semaphore_Simple>
+#pragma instantiate ACE_Read_Guard<ACE_SV_Semaphore_Simple>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
 
 #endif /* ACE_HAS_SYSV_IPC */
 
@@ -118,7 +124,7 @@ main (int, char *[])
       break;
     }
 #else
-  ACE_ERROR ((LM_ERROR, 
+  ACE_ERROR ((LM_ERROR,
 	      "SYSV IPC is not supported on this platform\n"));
 #endif /* ACE_HAS_SYSV_IPC */
   ACE_END_TEST;

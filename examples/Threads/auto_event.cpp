@@ -31,7 +31,7 @@ reader (void *arg)
   int& data = *(int *) arg;
 
   ACE_Thread_Control tc (ACE_Thread_Manager::instance ());
-  
+
   // Wait for writer to complete.
 
   ACE_DEBUG ((LM_DEBUG, "(%t) reader: waiting...... \n"));
@@ -39,7 +39,7 @@ reader (void *arg)
   if (EVENT::instance ()->wait () == -1)
     {
       ACE_ERROR ((LM_ERROR, "thread wait failed"));
-      ACE_OS::exit (0);  
+      ACE_OS::exit (0);
     }
 
   // Read shared data.
@@ -55,7 +55,7 @@ writer (void *arg)
   int& data = *(int *) arg;
 
   ACE_Thread_Control tc (ACE_Thread_Manager::instance ());
-  
+
   // Calculate (work).
   ACE_DEBUG ((LM_DEBUG, "(%t) writer: working for %d secs\n", work_time));
   ACE_OS::sleep (work_time);
@@ -69,13 +69,13 @@ writer (void *arg)
   if (EVENT::instance ()->signal () == -1)
     {
       ACE_ERROR ((LM_ERROR, "thread wait failed"));
-      ACE_OS::exit (0);  
+      ACE_OS::exit (0);
     }
-  
+
   return 0;
 }
 
-int 
+int
 main (int argc, char **argv)
 {
   // Shared data: set by writer, read by reader.
@@ -90,26 +90,29 @@ main (int argc, char **argv)
   // Create reader thread.
   if (tm.spawn (reader, (void *) &data) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "thread create for reader failed"), -1);
-  
+
   // Create writer thread.
   if (tm.spawn (writer, (void *) &data) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "thread create for writer failed"), -1);
-  
+
   // Wait for both.
   if (tm.wait () == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "thread wait failed"), -1);
-  else 
+  else
     ACE_DEBUG ((LM_ERROR, "graceful exit\n"));
 
   return 0;
 }
 
-#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Singleton<ACE_Auto_Event, ACE_Thread_Mutex>;
-#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Singleton<ACE_Auto_Event, ACE_Thread_Mutex>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
 
 #else
-int 
+int
 main (int, char *[])
 {
   ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));
