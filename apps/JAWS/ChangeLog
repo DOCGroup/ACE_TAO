@@ -1,3 +1,84 @@
+Sun Jun  4 14:57:04 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * clients/WebSTONE/bin/WebStone-common.pl:
+        * clients/WebSTONE/bin/WebStone-manage.pl:
+        * clients/WebSTONE/bin/WebStone-run.pl:
+        * clients/WebSTONE/bin/WebStone-setup.pl:
+        * clients/WebSTONE/bin/killbench.pl:
+        * clients/WebSTONE/bin/mine-logs.pl:
+        * clients/WebSTONE/bin/move-filelist.pl:
+        * clients/WebSTONE/bin/move-runs.pl:
+        * clients/WebSTONE/bin/runbench.pl:
+        * clients/WebSTONE/bin/view-results.pl:
+        * clients/WebSTONE/bin/webstone-gui.pl:
+        * clients/WebSTONE/bin/write-testbed.pl:
+        * clients/WebSTONE/bin/wscollect.pl:
+        * clients/WebSTONE/conf/paths.pl:
+        * clients/WebSTONE/doc/FAQ-webstone.html:
+        * clients/WebSTONE/doc/LICENSE.html:
+        * clients/WebSTONE/doc/WebStone.html:
+        * clients/WebSTONE/doc/webstone2.html:
+        * clients/WebSTONE/src/acconfig.h:
+        * clients/WebSTONE/src/bench.c:
+        * clients/WebSTONE/src/bench.h:
+        * clients/WebSTONE/src/cgi-send.c:
+        * clients/WebSTONE/src/config.h:
+        * clients/WebSTONE/src/debug.h:
+        * clients/WebSTONE/src/errexit.c:
+        * clients/WebSTONE/src/genrand.c:
+        * clients/WebSTONE/src/get.c:
+        * clients/WebSTONE/src/get.h:
+        * clients/WebSTONE/src/getopt.c:
+        * clients/WebSTONE/src/gettimeofday.c:
+        * clients/WebSTONE/src/nsapi-send.c:
+        * clients/WebSTONE/src/parse_file_list.c:
+        * clients/WebSTONE/src/parse_file_list.h:
+        * clients/WebSTONE/src/rexec.c:
+        * clients/WebSTONE/src/statistics.c:
+        * clients/WebSTONE/src/statistics.h:
+        * clients/WebSTONE/src/sysdep.c:
+        * clients/WebSTONE/src/sysdep.h:
+        * clients/WebSTONE/src/timefunc.c:
+        * clients/WebSTONE/src/timefunc.h:
+        * clients/WebSTONE/src/webclient.c:
+        * clients/WebSTONE/src/webmaster.c:
+        * clients/WebSTONE/src/nsapi-includes/netsite.h:
+        * clients/WebSTONE/src/nsapi-includes/base/buffer.h:
+        * clients/WebSTONE/src/nsapi-includes/base/cinfo.h:
+        * clients/WebSTONE/src/nsapi-includes/base/crit.h:
+        * clients/WebSTONE/src/nsapi-includes/base/daemon.h:
+        * clients/WebSTONE/src/nsapi-includes/base/dll.h:
+        * clients/WebSTONE/src/nsapi-includes/base/ereport.h:
+        * clients/WebSTONE/src/nsapi-includes/base/eventlog.h:
+        * clients/WebSTONE/src/nsapi-includes/base/file.h:
+        * clients/WebSTONE/src/nsapi-includes/base/minissl.h:
+        * clients/WebSTONE/src/nsapi-includes/base/net.h:
+        * clients/WebSTONE/src/nsapi-includes/base/nodelock.h:
+        * clients/WebSTONE/src/nsapi-includes/base/nterrors.h:
+        * clients/WebSTONE/src/nsapi-includes/base/objndx.h:
+        * clients/WebSTONE/src/nsapi-includes/base/pblock.h:
+        * clients/WebSTONE/src/nsapi-includes/base/sem.h:
+        * clients/WebSTONE/src/nsapi-includes/base/session.h:
+        * clients/WebSTONE/src/nsapi-includes/base/shexp.h:
+        * clients/WebSTONE/src/nsapi-includes/base/shmem.h:
+        * clients/WebSTONE/src/nsapi-includes/base/systems.h:
+        * clients/WebSTONE/src/nsapi-includes/base/systhr.h:
+        * clients/WebSTONE/src/nsapi-includes/base/util.h:
+        * clients/WebSTONE/src/nsapi-includes/frame/conf.h:
+        * clients/WebSTONE/src/nsapi-includes/frame/dnfilter.h:
+        * clients/WebSTONE/src/nsapi-includes/frame/func.h:
+        * clients/WebSTONE/src/nsapi-includes/frame/http.h:
+        * clients/WebSTONE/src/nsapi-includes/frame/httpact.h:
+        * clients/WebSTONE/src/nsapi-includes/frame/ipfilter.h:
+        * clients/WebSTONE/src/nsapi-includes/frame/log.h:
+        * clients/WebSTONE/src/nsapi-includes/frame/object.h:
+        * clients/WebSTONE/src/nsapi-includes/frame/objset.h:
+        * clients/WebSTONE/src/nsapi-includes/frame/protocol.h:
+        * clients/WebSTONE/src/nsapi-includes/frame/req.h:
+        * clients/WebSTONE/src/nsapi-includes/frame/servact.h:
+
+          Added missing CVS Id strings.
+
 Wed Mar 22 12:36:00 2000  James Hu  <jxh@cs.wustl.edu>
 
         * stress_testing/connection.h:

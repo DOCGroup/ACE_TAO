@@ -1,4 +1,5 @@
 // -*- c++ -*-
+// $Id$
 static char _server_cc_[]
 = "server.cc,v 2.3 1992/06/15 19:13:18 mnl Exp";
 

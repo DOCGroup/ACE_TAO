@@ -2,6 +2,8 @@
 #ifndef Event_Comm_hh
 #define Event_Comm_hh
 
+/* $Id$ */
+
 #include <CORBA.h>
 
 #include <string.h>

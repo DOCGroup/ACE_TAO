@@ -1,3 +1,75 @@
+Sun Jun  4 14:58:37 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * apps/Orbix-Examples/Event_Comm/include/Event_Comm.hh:
+        * apps/Orbix-Examples/Event_Comm/libsrc/Event_Comm.hh:
+        * apps/Orbix-Examples/Logger/logger.hh:
+        * docs/ACE-categories.html:
+        * docs/tutorials/guide-tutorials.html:
+        * docs/tutorials/online-tutorials.html:
+        * docs/tutorials/templates.html:
+        * docs/tutorials/Chap_2/ex01.html:
+        * docs/tutorials/Chap_2/ex02.html:
+        * docs/tutorials/Chap_2/ex03.html:
+        * docs/tutorials/Chap_2/ex04.html:
+        * docs/tutorials/Chap_2/ex05.htm:
+        * docs/tutorials/Chap_2/ex05.html:
+        * docs/tutorials/Chap_2/ex06.html:
+        * docs/tutorials/Chap_3/ex01.html:
+        * docs/tutorials/Chap_3/ex02.html:
+        * docs/tutorials/Chap_4/ex01.html:
+        * docs/tutorials/Chap_4/ex02.html:
+        * docs/tutorials/Chap_4/ex03.html:
+        * docs/tutorials/Chap_4/ex04.html:
+        * docs/tutorials/Chap_4/ex05.html:
+        * docs/tutorials/Chap_4/ex06.html:
+        * docs/tutorials/Chap_4/ex07.html:
+        * docs/tutorials/Chap_4/ex08.html:
+        * docs/tutorials/Chap_5/ex01.html:
+        * docs/tutorials/Chap_5/ex02.html:
+        * docs/tutorials/Chap_5/ex03.html:
+        * docs/tutorials/Chap_5/ex04.html:
+        * docs/tutorials/Chap_5/ex05.html:
+        * docs/tutorials/Chap_6/ex01.html:
+        * docs/tutorials/Chap_6/ex02.html:
+        * docs/tutorials/Chap_6/ex03.html:
+        * docs/tutorials/Chap_6/ex04.html:
+        * docs/tutorials/Chap_6/ex05.html:
+        * docs/tutorials/Chap_6/ex06.html:
+        * docs/tutorials/Chap_6/ex07.html:
+        * docs/tutorials/Chap_6/ex08.html:
+        * docs/tutorials/Chap_6/ex09.html:
+        * docs/tutorials/Chap_6/ex10.html:
+        * docs/tutorials/Chap_7/ex01.html:
+        * docs/tutorials/Chap_7/ex02.html:
+        * docs/tutorials/Chap_7/ex03.html:
+        * examples/Service_Configurator/IPC-tests/server/Handle_Thr_Stream.i:
+        * os-patches/lynxos-patches.html:
+        * performance-tests/Synch-Benchmarks/context.c:
+        * psosim/drv_conf.c:
+        * rpc++/callback.cc:
+        * rpc++/request.cc:
+        * rpc++/service.cc:
+        * rpc++/stub.cc:
+        * rpc++/version.h:
+        * rpc++/xdr++.cc:
+        * rpc++/StdHdrs/rpc/auth.h:
+        * rpc++/StdHdrs/rpc/c_types.h:
+        * rpc++/StdHdrs/rpc/clnt.h:
+        * rpc++/StdHdrs/rpc/pmap_clnt.h:
+        * rpc++/StdHdrs/rpc/svc.h:
+        * rpc++/StdHdrs/rpc/xdr.h:
+        * rpc++/example/calcsvc.cc:
+        * rpc++/example/calcsvc.h:
+        * rpc++/example/client.cc:
+        * rpc++/example/server.cc:
+        * rpc++/rpc++/callback.h:
+        * rpc++/rpc++/request.h:
+        * rpc++/rpc++/service.h:
+        * rpc++/rpc++/stub.h:
+        * rpc++/rpc++/xdr++.h:
+
+          Added missing CVS Id strings.
+
 Sun Jun  4 14:55:46 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * bin/fuzz.pl:
