@@ -1,0 +1,16 @@
+// -*- MPC -*-
+// $Id$
+
+project(NodeApplicationManager): ciao_server, iortable {
+  requries = dnc
+  Source_Files {
+    NodeApplicationManager.cpp
+  }
+}
+
+project(NodeApplicationManager_test_client) : ciao_server {
+  requries = dnc
+  Source_Files {
+    NodeApplicationManager_test_client.cpp
+  }
+}

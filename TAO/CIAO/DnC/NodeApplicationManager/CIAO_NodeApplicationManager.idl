@@ -1,0 +1,46 @@
+// $Id$
+
+/**
+ * This IDL file is used to combine the ServerActivator
+ * interface in the old spec with the NodeApplicationManager
+ * interface in the new spec.
+ *
+ * NodeApplicationManager will be like an abstract base class, which means
+ * that when ever a servant of the type is needed CIAO_NodeApplicationManager
+ * should be used instead.
+ */
+
+/**
+ * @@ Compile this file with:
+ *
+ *     tao_idl -I ../.. \
+ *          -Wb,export_macro=CIAO_Export \
+ *          -Wb,export_include=CIAO_export.h \
+ *          -Wb,pre_include="ace/pre.h" \
+ *          -Wb,post_include="ace/post.h" \
+ *          CCM_Deployment.idl
+ */
+//@@ The export macro file should be fixed.
+
+
+#if !defined (CIAO_NODEAPPLICATIONMANAGER_IDL)
+#define CIAO_NODEAPPLICATIONMANAGER_IDL
+
+#include "../Deployment.idl"
+//#include "ciao/CCM_Base.idl"
+// for some exception definitions. Future refactorying might be required.
+
+#include "ciao/CCM_Component.idl"
+// For ConfigValues.
+
+module CIAO
+{
+  interface NodeApplicationManager_Callback
+  {
+    NodeApplicationManager
+    register_node_application (in Deployment::NodeApplication na,
+			       out Components::ConfigValues config);
+  };
+};
+
+#endif /* CIAO_NODEAPPLICATIONMANAGER_IDL */
