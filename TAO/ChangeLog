@@ -1,3 +1,18 @@
+Fri Feb 21 19:38:19 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/IFRService/ComponentContainer_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/Container_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.cpp:
+        * orbsvcs/orbsvcs/IFRService/InterfaceDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/OperationDef_i.cpp:
+
+          Fixed bugs turned up from running IFR_Test.
+
+        * orbsvcs/tests/InterfaceRepo/IFR_Test/Admin_Client.cpp:
+
+          Changed test checks because AttributeDef creation no longer
+          automatically creates corresponding OperationDef(s).
+
 Thu Feb 20 15:48:19 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/IFRService.dsp:
