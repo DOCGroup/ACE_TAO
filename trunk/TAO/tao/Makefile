@@ -3219,8 +3219,7 @@ realclean:
  Typecode.i \
  Any.i iiop_endpoints.i
 
-.obj/IIOP_Factory.o .obj/IIOP_Factory.so .shobj/IIOP_Factory.o .shobj/IIOP_Factory.so: IIOP_Factory.cpp \
- IIOP_Factory.h \
+.obj/IIOP_Factory.o .obj/IIOP_Factory.so .shobj/IIOP_Factory.o .shobj/IIOP_Factory.so: IIOP_Factory.cpp IIOP_Factory.h \
  $(ACE_ROOT)/ace/pre.h \
  Protocol_Factory.h \
  corbafwd.h \
@@ -3350,8 +3349,7 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.i \
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/Reactor_Impl.h \
- IIOP_Acceptor.h \
+ $(ACE_ROOT)/ace/Reactor_Impl.h IIOP_Acceptor.h \
  Transport_Acceptor.h \
  IOPC.h \
  Exception.h \
@@ -3568,17 +3566,15 @@ realclean:
  $(ACE_ROOT)/ace/SOCK_Acceptor.i \
  GIOP_Message_Version.h \
  GIOP_Message_Version.inl \
- IIOP_Acceptor.i \
- IIOP_Connector.h \
+ IIOP_Acceptor.i IIOP_Connector.h \
  $(ACE_ROOT)/ace/SOCK_Connector.h \
  $(ACE_ROOT)/ace/SOCK_Connector.i \
  $(ACE_ROOT)/ace/Connector.h \
- $(ACE_ROOT)/ace/Connector.cpp \
- Transport_Connector.h \
- Transport_Connector.inl \
+ $(ACE_ROOT)/ace/Connector.cpp Transport_Connector.h \
+ corbafwd.h Transport_Connector.inl \
  Connector_Impl.h \
  Connector_Impl.inl \
- Connector_Impl.cpp
+ Connector_Impl.cpp IOPC.h
 
 .obj/IIOP_Lite_Factory.o .obj/IIOP_Lite_Factory.so .shobj/IIOP_Lite_Factory.o .shobj/IIOP_Lite_Factory.so: IIOP_Lite_Factory.cpp \
  IIOP_Lite_Factory.h \
@@ -4195,8 +4191,7 @@ realclean:
  $(ACE_ROOT)/ace/Thread_Manager.i ORB_Core.i debug.h \
  iiop_endpoints.h iiop_endpoints.i
 
-.obj/IIOP_Transport.o .obj/IIOP_Transport.so .shobj/IIOP_Transport.o .shobj/IIOP_Transport.so: IIOP_Transport.cpp \
- IIOP_Transport.h \
+.obj/IIOP_Transport.o .obj/IIOP_Transport.so .shobj/IIOP_Transport.o .shobj/IIOP_Transport.so: IIOP_Transport.cpp IIOP_Transport.h \
  $(ACE_ROOT)/ace/pre.h \
  Transport.h \
  corbafwd.h \
@@ -4440,8 +4435,7 @@ realclean:
  IIOPC.h \
  IIOPC.i \
  IIOP_Transport.i \
- IIOP_Connection_Handler.h \
- $(ACE_ROOT)/ace/Acceptor.h \
+ IIOP_Connection_Handler.h $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Strategies_T.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Hashable.h \
@@ -4458,10 +4452,11 @@ realclean:
  LF_Event.h \
  LF_Event.inl \
  Connection_Handler.inl \
+ IIOP_Transport.h \
  IIOP_Connection_Handler.i \
- IIOP_Acceptor.h \
- Transport_Acceptor.h \
+ IIOP_Acceptor.h Transport_Acceptor.h \
  Transport_Acceptor.inl \
+ IIOP_Connection_Handler.h \
  Acceptor_Impl.h \
  Acceptor_Impl.i \
  Acceptor_Impl.cpp \
@@ -4542,8 +4537,7 @@ realclean:
  $(ACE_ROOT)/ace/SOCK_Acceptor.i \
  GIOP_Message_Version.h \
  GIOP_Message_Version.inl \
- IIOP_Acceptor.i \
- IIOP_Profile.h \
+ IIOP_Acceptor.i IIOP_Profile.h \
  Profile.h \
  Tagged_Components.h \
  CONV_FRAMEC.h \
@@ -4554,19 +4548,13 @@ realclean:
  Object_KeyC.i \
  IIOP_Endpoint.h \
  IIOP_Endpoint.i \
- IIOP_Profile.i \
- Acceptor_Registry.h \
+ IIOP_Profile.i Acceptor_Registry.h \
  Acceptor_Registry.i \
- operation_details.h \
- Service_Context.h \
- Service_Context.inl \
- target_specification.h \
- target_specification.i \
- operation_details.i \
- Timeprobe.h \
- $(ACE_ROOT)/ace/Timeprobe.h \
- Transport_Mux_Strategy.h \
- Sync_Strategies.h \
+ Thread_Lane_Resources.h operation_details.h corbafwd.h \
+ Service_Context.h Service_Context.inl \
+ target_specification.h target_specification.i operation_details.i \
+ Timeprobe.h $(ACE_ROOT)/ace/Timeprobe.h CDR.h \
+ Transport_Mux_Strategy.h Wait_Strategy.h Sync_Strategies.h \
  TAOC.h \
  TimeBaseC.h \
  SmartProxies/Smart_Proxies.h \
@@ -4574,11 +4562,10 @@ realclean:
  SmartProxies/Smart_Proxies.inl \
  TimeBaseC.i \
  TAOC.i \
- Sync_Strategies.i \
- Stub.h \
+ Sync_Strategies.i Stub.h \
  MProfile.h \
  MProfile.i \
- Stub.i \
+ Stub.i ORB_Core.h debug.h \
  GIOP_Message_Base.h \
  Pluggable_Messaging.h \
  Pluggable_Messaging.i \
@@ -4598,7 +4585,8 @@ realclean:
  GIOP_Message_State.inl \
  GIOP_Message_Base.i \
  GIOP_Message_Lite.h \
- GIOP_Message_Lite.i
+ GIOP_Message_Lite.i Protocols_Hooks.h \
+ Policy_ForwardC.h Adapter.h
 
 .obj/IIOP_Connector.o .obj/IIOP_Connector.so .shobj/IIOP_Connector.o .shobj/IIOP_Connector.so: IIOP_Connector.cpp IIOP_Connector.h \
  $(ACE_ROOT)/ace/pre.h \
@@ -5647,10 +5635,10 @@ realclean:
  Base_Transport_Property.h \
  Base_Transport_Property.inl \
  Resume_Handle.h \
- Resume_Handle.inl
+ Resume_Handle.inl \
+ Protocols_Hooks.h
 
-.obj/IIOP_Endpoint.o .obj/IIOP_Endpoint.so .shobj/IIOP_Endpoint.o .shobj/IIOP_Endpoint.so: IIOP_Endpoint.cpp \
- IIOP_Endpoint.h \
+.obj/IIOP_Endpoint.o .obj/IIOP_Endpoint.so .shobj/IIOP_Endpoint.o .shobj/IIOP_Endpoint.so: IIOP_Endpoint.cpp IIOP_Endpoint.h \
  $(ACE_ROOT)/ace/pre.h \
  Endpoint.h \
  corbafwd.h \
@@ -5792,8 +5780,10 @@ realclean:
  $(ACE_ROOT)/ace/INET_Addr.h \
  $(ACE_ROOT)/ace/Addr.h $(ACE_ROOT)/ace/Addr.i \
  $(ACE_ROOT)/ace/INET_Addr.i \
- IIOP_Endpoint.i \
- debug.h
+ IIOP_Endpoint.i IOPC.h Exception.h \
+ Object.h Any.h Typecode.h \
+ Typecode.i \
+ Any.i IOPC.i debug.h
 
 .obj/IIOPC.o .obj/IIOPC.so .shobj/IIOPC.o .shobj/IIOPC.so: IIOPC.cpp IIOPC.h \
  $(ACE_ROOT)/ace/pre.h \
@@ -13709,7 +13699,11 @@ realclean:
  PolicyC.i $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(ACE_ROOT)/ace/Dynamic_Service_Base.h \
  $(ACE_ROOT)/ace/Dynamic_Service.i \
- $(ACE_ROOT)/ace/Dynamic_Service.cpp
+ $(ACE_ROOT)/ace/Dynamic_Service.cpp \
+ Connection_Handler.h \
+ LF_Event.h \
+ LF_Event.inl \
+ Connection_Handler.inl
 
 .obj/Messaging_SyncScopeC.o .obj/Messaging_SyncScopeC.so .shobj/Messaging_SyncScopeC.o .shobj/Messaging_SyncScopeC.so: Messaging_SyncScopeC.cpp \
  Messaging_SyncScopeC.h $(ACE_ROOT)/ace/pre.h corbafwd.h \

@@ -53,10 +53,10 @@ public:
 
   /**
    * The tag identifying the specific ORB transport layer protocol.
-   * For example TAO_TAG_IIOP_PROFILE = 0.  The tag is used in the
+   * For example IOP::TAG_INTERNET_IOP == 0.  The tag is used in the
    * IOR to identify the type of profile included. IOR -> {{tag0,
-   * profile0} {tag1, profole1} ...}  GIOP.h defines typedef
-   * CORBA::ULong TAO_IOP_Profile_ID;
+   * profile0} {tag1, profile1} ...}.  The IOP module defines the
+   * ProfileId typedef to be a CORBA::ULong.
    */
   CORBA::ULong tag (void) const;
 

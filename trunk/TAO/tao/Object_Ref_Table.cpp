@@ -33,7 +33,7 @@ TAO_Object_Ref_Table::register_initial_reference (
   if (id == 0 || ACE_OS_String::strlen (id) == 0)
     ACE_THROW (CORBA::ORB::InvalidName ());
   else if (CORBA::is_nil (obj))
-    ACE_THROW (CORBA::BAD_PARAM (TAO_OMG_VMCID | 27,
+    ACE_THROW (CORBA::BAD_PARAM (CORBA::OMGVMCID | 27,
                                  CORBA::COMPLETED_NO));
 
   int result = this->bind (id, obj);

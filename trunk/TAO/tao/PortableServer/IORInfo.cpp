@@ -48,7 +48,7 @@ TAO_IORInfo::get_effective_policy (CORBA::PolicyType type
   // TODO: Now check the global ORB policies.
   // ........
 
-  ACE_THROW_RETURN (CORBA::INV_POLICY (TAO_OMG_VMCID | 2,
+  ACE_THROW_RETURN (CORBA::INV_POLICY (CORBA::OMGVMCID | 2,
                                        CORBA::COMPLETED_NO),
                     CORBA::Policy::_nil ());
 }
@@ -105,7 +105,7 @@ TAO_IORInfo::adapter_template (ACE_ENV_SINGLE_ARG_DECL)
 
   if (adapter_template == 0)
     {
-      ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 14,
+      ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14,
                                               CORBA::COMPLETED_NO),
                         0);
     }
@@ -129,7 +129,7 @@ TAO_IORInfo::current_factory (ACE_ENV_SINGLE_ARG_DECL)
 
   if (adapter_factory == 0)
     {
-      ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 14,
+      ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14,
                                               CORBA::COMPLETED_NO),
                         0);
     }

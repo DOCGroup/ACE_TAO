@@ -120,7 +120,7 @@ TAO_RT_Invocation_Endpoint_Selector::select_endpoint_based_on_client_protocol_po
 
   // If we get here, we found at least one pertinent profile, but no
   // usable endpoints.
-  ACE_THROW (CORBA::TRANSIENT (TAO_OMG_VMCID | 2,
+  ACE_THROW (CORBA::TRANSIENT (CORBA::OMGVMCID | 2,
                                CORBA::COMPLETED_NO));
 
 }

@@ -485,7 +485,7 @@ CORBA::_TAO_DomainManager_Remote_Proxy_Impl::_TAO_DomainManager_Remote_Proxy_Imp
           if (_invoke_status == TAO_INVOKE_EXCEPTION)
             {
               TAO_INTERCEPTOR_THROW_RETURN (
-                CORBA::UNKNOWN (TAO_OMG_VMCID | 1, CORBA::COMPLETED_YES),
+                CORBA::UNKNOWN (CORBA::OMGVMCID | 1, CORBA::COMPLETED_YES),
                 0
               );
               
@@ -1272,7 +1272,7 @@ void CORBA::_TAO_ConstructionPolicy_Remote_Proxy_Impl::make_domain_manager (
           if (_invoke_status == TAO_INVOKE_EXCEPTION)
             {
               TAO_INTERCEPTOR_THROW (
-                CORBA::UNKNOWN (TAO_OMG_VMCID | 1, CORBA::COMPLETED_YES)
+                CORBA::UNKNOWN (CORBA::OMGVMCID | 1, CORBA::COMPLETED_YES)
               );
               
             }

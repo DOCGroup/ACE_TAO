@@ -48,15 +48,19 @@ Thu Aug 29 14:48:51 2002  Ossama Othman  <ossama@uci.edu>
 	* TAO_IDL/be/be_visitor_operation/operation_ss.cpp
 	  (visit_operation):
 
-	  Catch non-CORBA C++ native exceptions and convert them to
-	  CORBA::UNKNOWN when native exception handling is enabled and
-	  the ACE_HAS_BROKEN_UNEXPECTED_EXCEPTIONS preprocessor macro is
+	  When PortableInterceptor support is enabled, catch non-CORBA C++
+	  native exceptions and convert them to CORBA::UNKNOWN when native
+	  exception handling is enabled and the
+	  ACE_HAS_BROKEN_UNEXPECTED_EXCEPTIONS preprocessor macro is
 	  defined.  This is necessary for platforms that do not correctly
 	  handle unexpected exceptions, i.e. do not call the unexpected
-	  exception handler.  Note that this does not handle the case
-	  where the application explicitly overrides the ORB's unexpected
-	  exception handler.  Application developers are on their own in
-	  that case.
+	  exception handler.  On those platforms, the
+	  receive/send_exception() interception points were not called.
+	  Note that this does not handle the case where the application
+	  explicitly overrides the ORB's unexpected exception handler.
+	  Application developers are on their own in that case.  These
+	  changes have no effect when emulated exceptions are used, or
+	  when Portable Interceptor support is disabled.
 
 	  Updated all uses of "TAO_OMG_VMCID" in generated code with
 	  "CORBA::OMGVMCID".

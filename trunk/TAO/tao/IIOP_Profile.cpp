@@ -34,7 +34,7 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const ACE_INET_Addr &addr,
                                     const TAO_ObjectKey &object_key,
                                     const TAO_GIOP_Message_Version &version,
                                     TAO_ORB_Core *orb_core)
-  : TAO_Profile (TAO_TAG_IIOP_PROFILE, orb_core, version),
+  : TAO_Profile (IOP::TAG_INTERNET_IOP, orb_core, version),
     endpoint_ (addr,
                orb_core->orb_params ()->use_dotted_decimal_addresses ()),
     count_ (1),
@@ -49,7 +49,7 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const char* host,
                                     const ACE_INET_Addr &addr,
                                     const TAO_GIOP_Message_Version &version,
                                     TAO_ORB_Core *orb_core)
-  : TAO_Profile (TAO_TAG_IIOP_PROFILE, orb_core, version),
+  : TAO_Profile (IOP::TAG_INTERNET_IOP, orb_core, version),
     endpoint_ (host, port, addr),
     count_ (1),
     object_key_ (object_key),
@@ -58,7 +58,7 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const char* host,
 }
 
 TAO_IIOP_Profile::TAO_IIOP_Profile (TAO_ORB_Core *orb_core)
-  : TAO_Profile (TAO_TAG_IIOP_PROFILE,
+  : TAO_Profile (IOP::TAG_INTERNET_IOP,
                  orb_core,
                  TAO_GIOP_Message_Version (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR)),
     endpoint_ (),
@@ -300,7 +300,7 @@ CORBA::Boolean
 TAO_IIOP_Profile::is_equivalent (const TAO_Profile *other_profile)
 {
 
-  if (other_profile->tag () != TAO_TAG_IIOP_PROFILE)
+  if (other_profile->tag () != IOP::TAG_INTERNET_IOP)
     return 0;
 
   const TAO_IIOP_Profile *op =
@@ -457,7 +457,7 @@ TAO_IIOP_Profile::create_tagged_profile (void)
   if (this->tagged_profile_.profile_data.get_buffer () == 0)
     {
       // As we have not created we will now create the TaggedProfile
-      this->tagged_profile_.tag = TAO_TAG_IIOP_PROFILE;
+      this->tagged_profile_.tag = IOP::TAG_INTERNET_IOP;
 
       // Create the encapsulation....
       TAO_OutputCDR encap (ACE_CDR::DEFAULT_BUFSIZE,

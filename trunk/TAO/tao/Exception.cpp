@@ -571,7 +571,7 @@ CORBA_SystemException::_info (void) const
 
       info += buffer;
     }
-  else if (VMCID == TAO_OMG_VMCID)
+  else if (VMCID == CORBA::OMGVMCID)
     {
       CORBA::ULong minor_code = this->minor () & 0xFFFU;
 

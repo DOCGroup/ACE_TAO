@@ -49,7 +49,7 @@ template class TAO_Accept_Strategy<TAO_IIOP_Connection_Handler, ACE_SOCK_ACCEPTO
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 TAO_IIOP_Acceptor::TAO_IIOP_Acceptor (CORBA::Boolean flag)
-  : TAO_Acceptor (TAO_TAG_IIOP_PROFILE),
+  : TAO_Acceptor (IOP::TAG_INTERNET_IOP),
     addrs_ (0),
     port_span_ (1),
     hosts_ (0),
@@ -171,7 +171,7 @@ TAO_IIOP_Acceptor::create_shared_profile (const TAO_ObjectKey &object_key,
   for (TAO_PHandle i = 0; i != mprofile.profile_count (); ++i)
     {
       pfile = mprofile.get_profile (i);
-      if (pfile->tag () == TAO_TAG_IIOP_PROFILE)
+      if (pfile->tag () == IOP::TAG_INTERNET_IOP)
         {
           iiop_profile = ACE_dynamic_cast (TAO_IIOP_Profile *,
                                            pfile);
