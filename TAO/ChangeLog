@@ -1,9 +1,45 @@
+Sun Jan 26 17:23:22 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+ 	* tao/Notify_Handler.cpp (TAO_Notify_Handler): 
+	* tao/Notify_Handler.h: 
+
+	  - Added a new constructor and a create_handler () method which
+	    takes in a transport and the ACE_HANDLE that this handler would
+	    be used for.
+
+	  - Deprecating the old create_handler () and the constructor.
+	    They have been left there for backward compatibility. 
+
+	  The above changes were made to get around a problem that Yakov
+	  Becker and Johnny Willemsen observed in one of their
+	  applications. We havent been able to reproduce the problem here
+	  at all. The gist of the problem is 
+
+	   - A server thread after buffering lots of incoming messages
+	     starts processing one of the messages. Keeping the handle
+	     suspended it wakes up another thread in the Reactor.
+
+	   - The first thread after processing the request tries to write
+	     a reply only to find the socket closed. It starts the
+	     cleanup and disassociates the transport and the handler. So
+	     far so good.  
+
+	   - The second thread that is woken up now tries to get to the
+	     handler and then to the transport to process the queued
+	     messages. But the transport is already disassociated from the
+	     handler and the assert fails. 
+
+	   We address this problem by using the transport as the mechanism
+	   to process messages instead of the handler. The above changes
+	   were made to accomodate the change in philosophy.
+
+	 * tao/Transport.cpp: Used the new method to create the
+	   Notify_Handler.
+
 Sat Jan 25 18:10:10 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* orbsvcs/tests/Security/MT_IIOP_SSL/Makefile: Fixed dependencies. 
-
 	* orbsvcs/tests/Security/MT_IIOP_SSL/test_i.cpp: Cosmetic fixes. 
-
 	* orbsvcs/tests/Security/Makefile: Added the new file to the DIRS
 	  section. 
 	

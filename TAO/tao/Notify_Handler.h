@@ -22,8 +22,10 @@
 
 #include "ace/Event_Handler.h"
 
-class TAO_Connection_Handler;
+class TAO_Transport;
 class ACE_Allocator;
+class TAO_Connection_Handler;
+
 /**
  * @class TAO_Notify_Handler
  *
@@ -43,9 +45,15 @@ public:
   /// Dtor
   ~TAO_Notify_Handler (void);
 
+  /// NOTE: Needs to be deprecated. Just here for backward
+  /// compatibility
+  static TAO_Notify_Handler *create_handler (TAO_Connection_Handler *ch,
+                                             ACE_Allocator *alloc);
+
   /// Static method to create an instance of this object in the
   /// memory pool
-  static TAO_Notify_Handler *create_handler (TAO_Connection_Handler *c,
+  static TAO_Notify_Handler *create_handler (TAO_Transport *t,
+                                             ACE_HANDLE h,
                                              ACE_Allocator *alloc);
 
   /// Static method to destroy an instance of this object
@@ -59,8 +67,13 @@ public:
 
 protected:
 
-  /// Ctor
+  /// NOTE: Needs to be deprecated.
   TAO_Notify_Handler (TAO_Connection_Handler *ch,
+                      ACE_Allocator *alloc);
+
+  /// Ctor
+  TAO_Notify_Handler (TAO_Transport *t,
+                      ACE_HANDLE h,
                       ACE_Allocator *alloc);
 
 private:
@@ -69,9 +82,12 @@ private:
   ACE_UNIMPLEMENTED_FUNC (TAO_Notify_Handler (void))
 
 private:
-  /// Our copy of the connection handler, reference count incremented
+  /// Our copy of the TAO_TRansport, reference count incremented
   /// and stored.
-  TAO_Connection_Handler *ch_;
+  TAO_Transport *t_;
+
+  /// The handle that we should be concerened with
+  ACE_HANDLE h_;
 
   /// Our allocator
   ACE_Allocator *allocator_;
