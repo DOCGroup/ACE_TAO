@@ -1,3 +1,9 @@
+Tue May  7 15:00:16 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/Messaging/messaging_export.h: Regenerated the export file
+	  so it follows it's export settings based on TAO_AS_STATIC_LIBS
+	  macros by default.
+
 Tue May  7 14:40:01 2002  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/Muxed_GIOP_Versions/run_test.pl:
@@ -11,7 +17,7 @@ Tue May  7 12:27:16 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  noise in our daily builds. The bounds should not be increased
 	  too much since we may miss errors doing that. Thanks to Ru
 	  Gunatilleke for pointing it out.
-	  
+
 Mon May  6 09:12:15 2002  Ru Gunatilleke  <ru@ociweb.com>
 
         * TAO/tests/Connection_Timeout/client.dsp:
@@ -271,6 +277,50 @@ Wed May 01 22:56:44 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 Wed May  1 22:12:04 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
+<<<<<<< ChangeLog
+	This checkin is to reduce the size of orbconf.h. I see all
+	similarities between this and ace/OS.h. Looks like it is an OS.h
+	in the making. Trying to learn and avert the crisis before.
+
+	* tao/orbconf.h: Removed a few definitions and moved it other
+	  files. Please see below for the names of the new files and the
+	  details of the contents removed from this file. The idea is to
+	  keep the contents of this file very very ORB specific. No
+	  service level details should be included. All the policies need
+	  to be moved out, but that is the next round.
+
+	* tao/objectid.h: ObjectIds redefined by TAO for internal use have
+	  been moved here. Symbols recognized by resolveinitial_references
+	  () and list_initial_services () have been placed here.
+
+	* tao/reserved_ports.h: All the reserved ports for TAO's services
+	  are defind here.
+
+	* tao/Transport.cpp: Used TAO_MAXBUFSIZE instead of
+	  TAO_CONNECTION_HANDLER_STACK_BUF_SIZE which needs to be
+	  deprecated.
+
+	* tao/MCAST_Parser.cpp:
+	* tao/ORB.h:
+	* tao/ORB.cpp:
+	* tao/params.h: Additional includes because of the above changes.
+
+	* orbsvcs/orbsvcs/FaultTolerance/ftconf.h:
+	* orbsvcs/orbsvcs/Naming/nsconf.h:
+	* orbsvcs/orbsvcs/PortableGroup/miopconf.h: New service specific
+	  configuration files. IMHO, they dont have any business to be in
+	  the ORB core.
+
+	* orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.cpp:
+	* orbsvcs/orbsvcs/Naming/Hash_Naming_Context.cpp:
+	* orbsvcs/orbsvcs/Naming/Naming_Utils.cpp:
+	* orbsvcs/orbsvcs/Naming/Naming_Utils.h:
+	* orbsvcs/orbsvcs/Naming/Persistent_Context_Index.h:
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Profile.cpp:
+	* orbsvcs/orbsvcs/Trader/Trading_Loader.cpp: Additional includes
+	  because of the above changes.
+
+=======
         This checkin is to reduce the size of orbconf.h. I see all
         similarities between this and ace/OS.h. Looks like it is an OS.h
         in the making. Trying to learn and avert the crisis before.
@@ -313,6 +363,7 @@ Wed May  1 22:12:04 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
         * orbsvcs/orbsvcs/Trader/Trading_Loader.cpp: Additional includes
           because of the above changes.
 
+>>>>>>> 1.5526
 Wed May  1 18:49:10 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
         * tests/Big_Oneways/Coordinator.h:
@@ -391,6 +442,15 @@ Wed May  1 00:59:39 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 Tue Apr 30 17:39:37 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
+<<<<<<< ChangeLog
+	* tao/default_resource.cpp (init): Removed support for
+	  "-ORBConnectionLock" and "-ORBConnectorLock". They had been in
+	  the deperecated mode for sometime now.
+
+	* docs/Ooptions.html: Removed documentation for the above two
+	  ORB options and added documentation for "-ORBConnectStrategy".
+
+=======
         * tao/default_resource.cpp (init): Removed support for
           "-ORBConnectionLock" and "-ORBConnectorLock". They had been in
           the deperecated mode for sometime now.
@@ -398,6 +458,7 @@ Tue Apr 30 17:39:37 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
         * docs/Ooptions.html: Removed documentation for the above two
           ORB options and added documentation for "-ORBConnectStrategy".
 
+>>>>>>> 1.5526
 
 Tue Apr 30 17:03:49 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
@@ -475,6 +536,53 @@ Tue Apr 30 14:20:55 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
           Connection_Timeout_Policy.*  to the project file.
 
 Tue Apr 30 13:50:55 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+<<<<<<< ChangeLog
+
+	* tao/IIOP_Connector.cpp: Checked to see if the connection timeout
+	  policy is set by the application and if so, gets the value.
+
+	* tao/ORB_Core.cpp:
+	* tao/ORB_Core.h: Added new hook methods connection_timeout_hook
+	  (), connection_timeout () and stubless_connection_timeout
+	  (). They are used for setting the connection timeout hook and
+	  querying the timeout values on the ORB and thread levels.
+
+	* tao/Stub.cpp:
+	* tao/Stub.h: Added a new method connection_timeout () that
+	  queries the policy list at the object level for a
+	  connection timeout policy and returns the policy.
+
+	* tao/orbconf.h:
+	  Removed TAO_HAS_MINIMUM_CONNECTION_CACHING_STRATEGY since it has
+	  no meaning now. Added a new #define
+	  TAO_HAS_CONNECTION_TIMEOUT_POLICY that can be configured into
+	  the ORB. Added TAO_CACHED_POLICY_CONNECTION_TIMEOUT to the list
+	  of cached policies in the ORB.
+
+	* tao/Messaging/Connection_Timeout_Policy_i.cpp:
+	* tao/Messaging/Connection_Timeout_Policy_i.h: New files
+	  containing the implementation of the new proprietary connection
+	  timeout policy.
+
+	* tao/Messaging/TAO_Messaging.dsp:
+	* tao/Messaging/Makefile: Added the new file.
+
+	* tao/Messaging/Messaging.h: #included TAO_ExtC.h
+
+	* tao/Messaging/Messaging_ORBInitializer.cpp: Initialized the hook
+	  for the connection timeout.
+
+	* tao/Messaging/Messaging_PolicyFactory.cpp: Added a call to
+	  create the connection timeout policy.
+
+	* tao/Messaging/Messaging_Policy_i.cpp: Moved the inline inclusion
+	  to the global scope. The inline inclusion was within the #if
+	  defined of RELATIVE_RT_TIMEOUT_POLICY and it doesnt sound
+	  right.
+
+	* tao/Messaging/Messaging_Policy_i.h: Doxygenized the
+	  documentation of the classes.
+=======
 
         * tao/IIOP_Connector.cpp: Checked to see if the connection timeout
           policy is set by the application and if so, gets the value.
@@ -520,6 +628,7 @@ Tue Apr 30 13:50:55 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
         * tao/Messaging/Messaging_Policy_i.h: Doxygenized the
           documentation of the classes.
+>>>>>>> 1.5526
 
 Tue Apr 30 09:36:37 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
