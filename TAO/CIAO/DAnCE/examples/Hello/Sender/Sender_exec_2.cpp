@@ -102,8 +102,8 @@ Sender_Impl::Sender_exec_2_i::ccm_activate (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
        ++cnt)
     {
       sender->subscribe ("click_out",
-                                (*c)[cnt]->consumer ()
-                                ACE_ENV_ARG_PARAMETER);
+                         (*c)[cnt]->consumer ()
+                         ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
 }
