@@ -2,7 +2,7 @@
 
 // ===================================================================
 /**
- *  @file   Interceptor_List.h
+ *  @file   IORInterceptor_List.h
  *
  *  $Id$
  *
