@@ -2023,11 +2023,10 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 
   ACE_hthread_t tid = ::taskSpawn (0, priority,
 				   (int) flags,
-                                   (int) stacksize,
-                                   ACE_THREAD_FUNCTION,
-				   (int) ACE_THREAD_ARGUMENT,
+				   (int) stacksize,
+				   ACE_THREAD_FUNCTION,
+				   (int) ACE_THREAD_ARGUMENT, 
                                    0, 0, 0, 0, 0, 0, 0, 0, 0);
-
   if (tid == ERROR)
     return -1;
   else
