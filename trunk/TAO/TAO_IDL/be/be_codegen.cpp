@@ -486,7 +486,7 @@ TAO_CodeGen::start_server_header (const char *fname)
       if (be_global->gen_amh_classes ())
         {
           this->gen_standard_include (this->server_header_,
-                                      "tao/TAO_AMH_Response_Handler.h");
+                                      "tao/PortableServer/AMH_Response_Handler.h");
         }
 
       *this->server_header_ << be_nl
