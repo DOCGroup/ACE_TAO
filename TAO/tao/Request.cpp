@@ -13,6 +13,13 @@
 
 ACE_RCSID(tao, Request, "$Id$")
 
+void
+CORBA::release (CORBA::Request_ptr req)
+{
+  if (req)
+    req->_decr_refcnt ();
+}
+
 CORBA::ULong
 CORBA_Request::_incr_refcnt (void)
 {
@@ -31,6 +38,12 @@ CORBA_Request::_decr_refcnt (void)
   }
 
   delete this;
+  return 0;
+}
+
+CORBA_Request*
+CORBA_Request::_nil (void)
+{
   return 0;
 }
 
