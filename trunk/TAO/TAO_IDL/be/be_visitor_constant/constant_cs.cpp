@@ -47,10 +47,18 @@ be_visitor_constant_cs::visit_constant (be_constant *node)
     {
       return 0;
     }
+    
+  // (JP) I'm turning on inline constants by default for all scopes.
+  // The only problem I remember having with them is with 
+  // pre-compiled headers, in which case folks can use -Guc to
+  // explicitly uninline constants. If this change turns up
+  // problems in our nightly builds, I'll revert it, otherwise it
+  // should stay.
 
   // Was the constant value already assigned in *C.h?
-  if (node->defined_in ()->scope_node_type () == AST_Decl::NT_module
-      && be_global->gen_inline_constants ())
+//  if (node->defined_in ()->scope_node_type () == AST_Decl::NT_module
+//      && be_global->gen_inline_constants ())
+  if (be_global->gen_inline_constants () || !node->is_nested ())
     {
       return 0;
     }

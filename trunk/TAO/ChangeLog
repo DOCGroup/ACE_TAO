@@ -1,3 +1,22 @@
+Mon Feb 28 20:31:35 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_constant/constant_ch.cpp:
+        * TAO_IDL/be/be_visitor_constant/constant_cs.cpp:
+        
+          Enabled inlined code generation for constants 
+          (constant's value is assigned in the header file declaration)
+          when the constant is declared inside an interface, home,
+          valuetype or eventtype. The only documented problem with
+          inlined code generation for these types of constants is
+          when pre-compiled headers are used, in which case the IDL
+          compiler option -Guc can be used to explicitly turn off
+          inline constant generation. Thanks to Steve Baker
+          <steven_d_baker@raytheon.com> for redirecting our attention
+          to the known problem that uninlined constants cannot be used
+          as union case labels, or array, sequence or string bounds
+          since the C++ compiler does not recognize them as constant
+          values.
+
 Mon Feb 28 17:06:44 2005  Iliyan Jeliazkov  <jeliazkov_i@ociweb.com>
 
         * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.h:
