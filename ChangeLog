@@ -1,3 +1,43 @@
+Wed Jan  7 17:34:26 2004  Steve Huston  <shuston@riverace.com>
+
+	* examples/APG/Proactor/HA_Proactive_Status.cpp: Added #include
+	  "ace/Log_Msg.h" to find LM_DEBUG, et al.
+
+	* examples/APG/Processes/Process_Manager_Spawn.cpp:
+	* examples/APG/Processes/Process_Mutex.cpp:
+	* examples/APG/Processes/Spawn.cpp:
+	* examples/APG/Reactor/HAStatus.cpp:
+	* examples/APG/Reactor/HAStatus-AC.cpp:
+	* examples/APG/Shared_Memory/Hash_Map.cpp:
+	* examples/APG/Shared_Memory/Malloc.cpp:
+	* examples/APG/Shared_Memory/PI_Malloc.cpp:
+	* examples/APG/Shared_Memory/Pool_Growth.cpp:
+	* examples/APG/Timers/Alarm.cpp:
+	* examples/APG/Timers/Task.cpp:
+	* examples/APG/Timers/Upcall.cpp: Added missing includes
+	  for "ace/OS_NS_*.h".
+
+	* examples/APG/Reactor/Client.h:
+	* examples/APG/Reactor/ClientService.h" Add #include
+	  "ace/Synch_Traits.h", "ace/Null_Condition.h", and "ace/Null_Mutex.h"
+	  for Visual Age C++ to see when compiling templates.
+
+	* ACEXML/Makefile:
+	* examples/APG/Svc_Config/Makefile:
+	* examples/APG/Timers/Makefile: Move the rm tempinc up to before
+	  the sub-make runs to avoid whacking it while a subsequent sub-make
+	  is running.
+
+	* examples/APG/Svc_Config/Makefile.dynamic: Add LIBS += $(ACELIB)
+
+	* tests/Makefile: Add .NOTPARALLEL for Visual Age C++ to avoid
+	  squashing tempinc randomly, resulting in missing templates.
+
+	* tests/Makefile.tests: Moved the DIRS_PARALLEL setting down to after
+	  wrapper_macros.GNU is included and only set it for non-Visual Age C++
+	  builds. The tempinc directory getting mashed in parallel builds
+	  makes mysterious build errors happen on AIX, Visual Age C++.
+
 Wed Jan  7 16:33:14 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
         * ace/config-tandem-nsk-mips-v2.h:

@@ -4,6 +4,9 @@
  * A simple client program using ACE_Svc_Handler and ACE_Connector.
  */
 
+#include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_errno.h"
+#include "ace/OS_NS_sys_time.h"
 #include "Client.h"
 
 // Listing 2 code/ch07

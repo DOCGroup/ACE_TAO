@@ -12,6 +12,12 @@
 	@$(MAKE) -f Makefile.tests $@
 	@$(MAKE) -f Makefile.dirs SUBDIR_MAKEFILE=Makefile $@
 
+# Visual Age C++ needs to run strictly sequentially to avoid squashing
+# the tempinc directory on parallel makes.
+ifdef TEMPINCDIR
+.NOTPARALLEL:
+endif
+
 # Invoke Makefile.libs first to build the libTest_Output and the other
 # libraries, then invoke Makefile.tests and Makefile.dirs to recurse
 # through subdirectories
