@@ -1,33 +1,89 @@
+Fri Aug 24 14:35:59 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/orbsvcs/Event/EC_Gateway.cpp:
+          Comment out debug messages
+          Don't publish special event types for the gateway, they are
+          not used for filtering supplier data anyway.
+
+        * orbsvcs/orbsvcs/Event/EC_ObserverStrategy.cpp:
+          Use a temporary reference to make the code easier to read.
+
+        * orbsvcs/Makefile:
+        * orbsvcs/performance-tests/Makefile:
+          Add new directory for the orbsvcs performance tests.
+
+        * orbsvcs/performance-tests/EC_Latency/Makefile:
+        * orbsvcs/performance-tests/EC_Latency/README:
+        * orbsvcs/performance-tests/EC_Latency/run_test.pl:
+        * orbsvcs/performance-tests/EC_Latency/Client_Task.h:
+        * orbsvcs/performance-tests/EC_Latency/Client_Task.cpp:
+        * orbsvcs/performance-tests/EC_Latency/Consumer.h:
+        * orbsvcs/performance-tests/EC_Latency/Consumer.cpp:
+        * orbsvcs/performance-tests/EC_Latency/Supplier.h:
+        * orbsvcs/performance-tests/EC_Latency/Supplier.cpp:
+        * orbsvcs/performance-tests/EC_Latency/client.cpp:
+        * orbsvcs/performance-tests/EC_Latency/server.cpp:
+          A latency test for the real-time event channel that can be
+          automatically ran in the nightly regression testsuite.
+
+        * orbsvcs/performance-tests/EC_Federated_Latency/README:
+        * orbsvcs/performance-tests/EC_Federated_Latency/Makefile:
+        * orbsvcs/performance-tests/EC_Federated_Latency/run_test.pl:
+        * orbsvcs/performance-tests/EC_Federated_Latency/Control.idl:
+        * orbsvcs/performance-tests/EC_Federated_Latency/ECFL_Configuration.h:
+        * orbsvcs/performance-tests/EC_Federated_Latency/Consumer.h:
+        * orbsvcs/performance-tests/EC_Federated_Latency/Consumer.cpp:
+        * orbsvcs/performance-tests/EC_Federated_Latency/Coordinator.h:
+        * orbsvcs/performance-tests/EC_Federated_Latency/Coordinator.cpp:
+        * orbsvcs/performance-tests/EC_Federated_Latency/Loopback.h:
+        * orbsvcs/performance-tests/EC_Federated_Latency/Loopback.cpp:
+        * orbsvcs/performance-tests/EC_Federated_Latency/Loopback_Consumer.h:
+        * orbsvcs/performance-tests/EC_Federated_Latency/Loopback_Consumer.cpp:
+        * orbsvcs/performance-tests/EC_Federated_Latency/Loopback_Supplier.h:
+        * orbsvcs/performance-tests/EC_Federated_Latency/Loopback_Supplier.cpp:
+        * orbsvcs/performance-tests/EC_Federated_Latency/Peer.h:
+        * orbsvcs/performance-tests/EC_Federated_Latency/Peer.cpp:
+        * orbsvcs/performance-tests/EC_Federated_Latency/Servant_var.h:
+        * orbsvcs/performance-tests/EC_Federated_Latency/Servant_var.inl:
+        * orbsvcs/performance-tests/EC_Federated_Latency/Servant_var.cpp:
+        * orbsvcs/performance-tests/EC_Federated_Latency/Supplier.h:
+        * orbsvcs/performance-tests/EC_Federated_Latency/Supplier.cpp:
+        * orbsvcs/performance-tests/EC_Federated_Latency/client.conf:
+        * orbsvcs/performance-tests/EC_Federated_Latency/client.cpp:
+        * orbsvcs/performance-tests/EC_Federated_Latency/server.cpp:
+          Finally!  A test to measure latency over a federated event
+          channel, initial numbers look good.
+
 Fri Aug 24 13:36:19 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/File_IO/run_test.pl:
-	* tests/File_IO/File_i.cpp: Removed some vague debug statements.
-	* tests/File_IO/client.cpp: Reduced teh number of threads to 10,
-	  instead of 20.  
+        * tests/File_IO/run_test.pl:
+        * tests/File_IO/File_i.cpp: Removed some vague debug statements.
+        * tests/File_IO/client.cpp: Reduced teh number of threads to 10,
+          instead of 20.
 
 Fri Aug 24 12:44:45 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/File_IO/: New test to our test suite. This test actually
-	  brought the problem mentioned in bug #1002 to the surface. The
-	  problem was burried in other tests and this test actually
-	  could reproduce the bug every time consistently.
+        * tests/File_IO/: New test to our test suite. This test actually
+          brought the problem mentioned in bug #1002 to the surface. The
+          problem was burried in other tests and this test actually
+          could reproduce the bug every time consistently.
 
-	* tests/File_IO/File_IO.dsw:
-	* tests/File_IO/File_i.h:
-	* tests/File_IO/server.bor:   
-	* tests/File_IO/Makefile:
-	* tests/File_IO/Makefile.bor:
-	* tests/File_IO/client.dsp: 
-	* tests/File_IO/server.cpp:  
-	* tests/File_IO/File.idl:             
-	* tests/File_IO/client.bor:
-	* tests/File_IO/File_i.cpp:
-        * tests/File_IO/README:        
-	* tests/File_IO/client.cpp:  
-	* tests/File_IO/run_test.pl:
-	* tests/File_IO/big.txt:
-	* tests/File_IO/server.dsp: Files for the new test. Thanks to
-	  Jonathan Reis <reis@stentor.com> for providing this test.
+        * tests/File_IO/File_IO.dsw:
+        * tests/File_IO/File_i.h:
+        * tests/File_IO/server.bor:
+        * tests/File_IO/Makefile:
+        * tests/File_IO/Makefile.bor:
+        * tests/File_IO/client.dsp:
+        * tests/File_IO/server.cpp:
+        * tests/File_IO/File.idl:
+        * tests/File_IO/client.bor:
+        * tests/File_IO/File_i.cpp:
+        * tests/File_IO/README:
+        * tests/File_IO/client.cpp:
+        * tests/File_IO/run_test.pl:
+        * tests/File_IO/big.txt:
+        * tests/File_IO/server.dsp: Files for the new test. Thanks to
+          Jonathan Reis <reis@stentor.com> for providing this test.
 
 Fri Aug 24 08:24:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
