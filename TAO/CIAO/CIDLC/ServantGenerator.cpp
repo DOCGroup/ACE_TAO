@@ -15,6 +15,9 @@ using namespace CIDL;
 using namespace SemanticGraph;
 using namespace Traversal;
 
+using std::string;
+using std::ostream;
+
 namespace
 {
   // On some platforms toupper can be something else than a
@@ -124,6 +127,8 @@ ServantGenerator::compute_export_macro (const fs::path& file_path)
   }
 }
 
+
+
 ostream&
 ServantGenerator::configure_stream (string const& suffix_option,
                                     string const& default_suffix,
@@ -154,7 +159,7 @@ ServantGenerator::configure_stream (string const& suffix_option,
 
   return ofs.is_open ()
     ? static_cast<ostream&> (ofs)
-    : static_cast<ostream&> (cout);
+    : static_cast<ostream&> (std::cout);
 }
 
 

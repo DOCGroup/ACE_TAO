@@ -1,5 +1,6 @@
 // file      : CCF/CodeGenerationKit/IndentationXML.hpp
 // author    : Diego Sevilla Ruiz <dsevilla@ditec.um.es>
+// author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
 // cvs-id    : $Id$
 
 #ifndef CCF_CODE_GENERATION_KIT_INDENTATION_XML_HPP
@@ -11,10 +12,28 @@
 
 namespace Indentation
 {
-  class XML : public Buffer
+  template <typename C>
+  class XML : public Buffer<C>
   {
   public:
-    XML (Buffer& out)
+    typedef
+    typename Buffer<C>::traits_type
+    traits_type;
+
+    typedef
+    typename Buffer<C>::char_type
+    char_type;
+
+    typedef
+    typename Buffer<C>::int_type
+    int_type;
+
+    typedef
+    typename Buffer<C>::EndOfStream
+    EndOfStream;
+
+  public:
+    XML (Buffer<C>& out)
         : out_ (out),
           indentation_ (0),
           base_indent_ (indentation_),
@@ -186,7 +205,7 @@ namespace Indentation
 
 
   private:
-    Buffer& out_;
+    Buffer<C>& out_;
     long indentation_;
     unsigned long base_indent_;
     unsigned long spaces_;
@@ -203,17 +222,12 @@ namespace Indentation
 
     Construct construct_;
 
-    typedef std::deque<int_type> Hold;
+    typedef
+    std::deque<int_type>
+    Hold;
 
     Hold hold_;
   };
 }
 
 #endif // CCF_CODE_GENERATION_KIT_INDENTATION_XML_HPP
-
-/*
- * Local Variables:
- * mode: C++
- * c-basic-offset: 2
- * End:
- */

@@ -38,7 +38,7 @@ namespace CCF
       void ParameterTemplate<T>::
       belongs (T& p)
       {
-        belongs (p, edge_traverser ());
+        belongs (p, this->edge_traverser ());
       }
 
       template<typename T>
@@ -86,7 +86,7 @@ namespace CCF
       void OperationTemplate<T>::
       returns (T& o)
       {
-        returns (o, edge_traverser ());
+        returns (o, this->edge_traverser ());
       }
 
       template<typename T>
@@ -113,7 +113,7 @@ namespace CCF
         {
           receives_pre (o);
           iterate_and_traverse (
-            b, e, edge_traverser (), *this, &OperationTemplate<T>::comma, o);
+            b, e, this->edge_traverser (), *this, &OperationTemplate<T>::comma, o);
           receives_post (o);
         }
         else
@@ -158,7 +158,7 @@ namespace CCF
         {
           raises_pre (o);
           iterate_and_traverse (
-            b, e, edge_traverser (), *this, &OperationTemplate<T>::comma, o);
+            b, e, this->edge_traverser (), *this, &OperationTemplate<T>::comma, o);
           raises_post (o);
         }
         else

@@ -11,10 +11,28 @@
 
 namespace Indentation
 {
-  class Cxx : public Buffer
+  template <typename C>
+  class Cxx : public Buffer<C>
   {
   public:
-    Cxx (Buffer& out)
+    typedef
+    typename Buffer<C>::traits_type
+    traits_type;
+
+    typedef
+    typename Buffer<C>::char_type
+    char_type;
+
+    typedef
+    typename Buffer<C>::int_type
+    int_type;
+
+    typedef
+    typename Buffer<C>::EndOfStream
+    EndOfStream;
+
+  public:
+    Cxx (Buffer<C>& out)
         : out_ (out),
           indentation_ (0),
           spaces_ (2),
@@ -57,19 +75,25 @@ namespace Indentation
             // Reduce multiple newlines to one.
             while (hold_.size () > 1)
             {
-              Hold::reverse_iterator i = hold_.rbegin ();
+              typename Hold::reverse_iterator i = hold_.rbegin ();
               if (*i == '\n' && *(i + 1) == '\n') hold_.pop_back ();
               else break;
             }
 
             ensure_new_line ();
             output_indentation ();
-            
+
             hold_.push_back (c);
-            
+
             // result = write (c);
 
-            ensure_new_line ();
+            //ensure_new_line ();
+
+            // Add double newline after '}'.
+            //
+            hold_.push_back ('\n');
+            hold_.push_back ('\n');
+
 
             break;
           }
@@ -77,16 +101,19 @@ namespace Indentation
           {
             // Handling '};' case.
             //
+
+            bool brace (false);
+
             if (hold_.size () > 1 && hold_.back () == '\n')
             {
               bool pop_nl (false);
 
-              for (Hold::reverse_iterator
+              for (typename Hold::reverse_iterator
                      i (hold_.rbegin ()), e (hold_.rend ()); i != e; ++i)
               {
                 if (*i != '\n')
                 {
-                  if (*i == '}') pop_nl = true;
+                  if (*i == '}') brace = pop_nl = true;
                   break;
                 }
               }
@@ -94,9 +121,14 @@ namespace Indentation
               if (pop_nl) while (hold_.back () == '\n') hold_.pop_back ();
             }
 
-
             output_indentation ();
             result = write (c);
+
+            if (brace)
+            {
+              hold_.push_back ('\n');
+              hold_.push_back ('\n');
+            }
 
             if (construct_ != STRING_LITERAL && construct_ != CHAR_LITERAL)
             {
@@ -219,7 +251,7 @@ namespace Indentation
 
 
   private:
-    Buffer& out_;
+    Buffer<C>& out_;
     unsigned long indentation_;
     unsigned long spaces_;
 

@@ -15,6 +15,8 @@ using namespace CCF::CIDL;
 using namespace CCF::CIDL::SemanticGraph;
 using namespace StringLiterals;
 
+using std::string;
+
 namespace
 {
   class Context

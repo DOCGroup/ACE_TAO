@@ -139,7 +139,7 @@ main (int argc, char* argv[])
     }
 
     fs::ifstream ifs;
-    ifs.exceptions (ios_base::badbit | ios_base::failbit);
+    ifs.exceptions (std::ios_base::badbit | std::ios_base::failbit);
 
     fs::path file_path;
 
@@ -167,7 +167,7 @@ main (int argc, char* argv[])
     //@@ for some reason ifs throws exception if I don't reset it to
     //   original state. It probably has something to do with call to
     //   get after eof.
-    ifs.exceptions (ios_base::iostate (0));
+    ifs.exceptions (std::ios_base::iostate (0));
 
     std::istream& is = ifs.is_open ()
       ? static_cast<std::istream&> (ifs)

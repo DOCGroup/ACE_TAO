@@ -16,6 +16,16 @@
 #include "CCF/IDL2/Parsing/Action.hpp"
 #include "CCF/IDL2/Parsing/Recovery.hpp"
 
+// #$%^ing MS
+//
+#ifdef CONST
+#undef CONST
+#undef FACTORY
+#undef IN
+#undef OUT
+#endif
+
+
 namespace CCF
 {
   namespace IDL2

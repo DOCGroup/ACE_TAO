@@ -11,10 +11,28 @@
 
 namespace Indentation
 {
-  class IDL : public Buffer
+  template <typename C>
+  class IDL : public Buffer<C>
   {
   public:
-    IDL (Buffer& out)
+    typedef
+    typename Buffer<C>::traits_type
+    traits_type;
+
+    typedef
+    typename Buffer<C>::char_type
+    char_type;
+
+    typedef
+    typename Buffer<C>::int_type
+    int_type;
+
+    typedef
+    typename Buffer<C>::EndOfStream
+    EndOfStream;
+
+  public:
+    IDL (Buffer<C>& out)
         : out_ (out),
           indentation_ (0),
           spaces_ (2),
@@ -57,7 +75,7 @@ namespace Indentation
             // Reduce multiple newlines to one.
             while (hold_.size () > 1)
             {
-              Hold::reverse_iterator i = hold_.rbegin ();
+              typename Hold::reverse_iterator i = hold_.rbegin ();
               if (*i == '\n' && *(i + 1) == '\n') hold_.pop_back ();
               else break;
             }
@@ -193,7 +211,7 @@ namespace Indentation
 
 
   private:
-    Buffer& out_;
+    Buffer<C>& out_;
     unsigned long indentation_;
     unsigned long spaces_;
 
