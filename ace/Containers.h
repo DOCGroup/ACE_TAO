@@ -602,7 +602,7 @@ public:
 
   T *insert_tail (T *new_item);
   // Adds <new_item> to the tail of the list. Returns the new item
-  // that was inserted. 
+  // that was inserted.
 
   T *insert_head (T *new_item);
   // Adds <new_item> to the head of the list.Returns the new item that
