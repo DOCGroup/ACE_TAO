@@ -1,3 +1,21 @@
+Wed Jan 26 16:17:24 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_scope.cpp:
+	* TAO_IDL/be/be_visitor_interface_fwd/interface_fwd_ch.cpp:
+	* TAO_IDL/be/be_visitor_interface_fwd/interface_fwd_ci.cpp:
+	* TAO_IDL/be/be_visitor_interface_fwd/cdr_op_ch.cpp:
+	  A fix for what I broke yesterday. At least we should now
+	  again be able to compile files where a forward declared
+	  interface is defined later in the file.
+
+	* TAO_IDL/be/be_visitor_interface/cdr_op_ch.cpp:
+	  Cosmetic changes.
+
+	* tests/IDL_Test/interface.idl:
+	  Commented out the forward declared interface that's not
+	  defined in the same file for now, until it is working on
+	  more platforms.
+
 Tue Jan 25 19:42:54 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/UIOP_Profile.cpp (decode): 
