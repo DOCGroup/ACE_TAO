@@ -399,7 +399,7 @@ CORBA_TypeCode::private_equal (CORBA_TypeCode_ptr,
 //
 // Valid only for objref, struct, union, enum, alias, and except. Raises
 // BadKind exception for the rest of the cases.
-const CORBA_String
+TAO_CONST CORBA_String
 CORBA_TypeCode::private_id (CORBA_Environment &env) const
 {
   env.clear ();
@@ -434,7 +434,7 @@ CORBA_TypeCode::private_id (CORBA_Environment &env) const
 }
 
 // return the name. The string is owned by the typecode
-const CORBA_String
+TAO_CONST CORBA_String
 CORBA_TypeCode::private_name (CORBA_Environment &env) const
 {
   env.clear ();
@@ -553,7 +553,7 @@ CORBA_TypeCode::private_member_count (CORBA_Environment &env) const
 
 // Return the name for the nth member
 // Applicable only to tk_struct, tk_union, and tk_except
-const CORBA_String 
+TAO_CONST CORBA_String 
 CORBA_TypeCode::member_name (CORBA_ULong,
 			     CORBA_Environment &) const
 {
