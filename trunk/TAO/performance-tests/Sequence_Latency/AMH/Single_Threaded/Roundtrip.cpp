@@ -13,7 +13,7 @@ Roundtrip::Roundtrip (CORBA::ORB_ptr orb)
 void
 Roundtrip::test_octet_method (
                 Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
-                const Test::octet_load& ol,
+                const Test::octet_load &,
                 Test::Timestamp send_time
                 ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
@@ -27,7 +27,7 @@ Roundtrip::test_octet_method (
 void
 Roundtrip::test_long_method (
                 Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
-                const Test::long_load& ol,
+                const Test::long_load &,
                 Test::Timestamp send_time
                 ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
@@ -41,7 +41,7 @@ Roundtrip::test_long_method (
 void
 Roundtrip::test_short_method (
                 Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
-                const Test::short_load& ol,
+                const Test::short_load &,
                 Test::Timestamp send_time
                 ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
@@ -55,7 +55,7 @@ Roundtrip::test_short_method (
 void
 Roundtrip::test_char_method (
                 Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
-                const Test::char_load& ol,
+                const Test::char_load &,
                 Test::Timestamp send_time
                 ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
@@ -70,7 +70,7 @@ Roundtrip::test_char_method (
 void
 Roundtrip::test_longlong_method (
                 Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
-                const Test::longlong_load& ol,
+                const Test::longlong_load &,
                 Test::Timestamp send_time
                 ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
@@ -84,7 +84,7 @@ Roundtrip::test_longlong_method (
 void
 Roundtrip::test_double_method (
                 Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
-                const Test::double_load& ol,
+                const Test::double_load &,
                 Test::Timestamp send_time
                 ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
@@ -94,7 +94,6 @@ Roundtrip::test_double_method (
   _tao_rh->test_double_method (send_time ACE_ENV_ARG_PARAMETER);
   //ACE_DEBUG ((LM_DEBUG, "RH completed\n"));
 }
-
 
 void
 Roundtrip::shutdown (
