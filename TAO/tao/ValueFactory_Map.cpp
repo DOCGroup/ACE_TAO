@@ -61,9 +61,11 @@ TAO_ValueFactory_Map::rebind (const char *repo_id,
 //   --- but must be recursive
   const char *prev_repo_id;
   CORBA_ValueFactory_ptr prev_factory;
-  int ret = this->map_.rebind (CORBA::string_dup (repo_id),
-                                 factory,
-                                 prev_repo_id, prev_factory);
+  int ret = 0;
+  ret = this->map_.rebind (CORBA::string_dup (repo_id),
+                           factory,
+                           prev_repo_id, 
+                           prev_factory);
   if (ret > -1)   // ok, no error
     {
       factory->_add_ref ();    // The map owns one reference.
@@ -82,7 +84,9 @@ TAO_ValueFactory_Map::unbind (const char *repo_id,
 {
   // ACE_Hash_Map_Entry<const char *, CORBA_ValueFactory_ptr> *prev_entry;
   FACTORY_MAP_MANAGER::ENTRY *prev_entry;
-  int ret = this->map_.find (repo_id, prev_entry);
+  int ret = 0;
+  ret = this->map_.find (repo_id, 
+                         prev_entry);
   if (ret == 0)    // there was a matching factory
     {
       // set factory to the previous factory,
@@ -102,7 +106,9 @@ int
 TAO_ValueFactory_Map::find (const char *repo_id,
                             CORBA_ValueFactory_ptr &factory)
 {
-  int ret = this->map_.find (repo_id, factory);
+  int ret = 0;
+  ret = this->map_.find (repo_id, 
+                         factory);
   // %! this must be guarded to be atomic  !!!!!!!!!!!!!!!!!!
   if (ret > -1)
     {
