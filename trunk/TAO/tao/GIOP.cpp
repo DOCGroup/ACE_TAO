@@ -930,13 +930,13 @@ TAO_GIOP::process_server_message (TAO_Transport *transport,
 
 void
 TAO_GIOP::process_server_request (TAO_Transport *transport,
-                                  TAO_ORB_Core* orb_core,
+                                  TAO_ORB_Core *orb_core,
                                   TAO_InputCDR &input,
                                   TAO_OutputCDR &output,
-                                  const TAO_GIOP_Version& version)
+                                  const TAO_GIOP_Version &version)
 {
   CORBA::ULong request_id;
-  CORBA::ULong response_required;
+  CORBA::ULong response_required = 0;
   CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ();
   ACE_TRY
     {
