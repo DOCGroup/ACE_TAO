@@ -1,3 +1,8 @@
+Thu Feb 26 18:02:41 2004  Steve Huston  <shuston@riverace.com>
+
+	* m4/tls.m4: Add handling for ACE_TLS_LDFLAGS so user can specify
+	  linker options (e.g. -L) necessary to find SSL libs.
+
 Thu Feb 26 12:26:28 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tests/Makefile.am (Bug_1576_Regression_Test):
