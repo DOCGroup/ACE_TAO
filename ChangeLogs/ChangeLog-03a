@@ -1,3 +1,17 @@
+Mon Jul 24 21:22:03 2000  Andrew G. Gilpin  <agg1@cs.wustl.edu>
+
+	* ace/Remote_Tokens.cpp: 
+	* ace/Signal.{cpp,h}: 
+	* ace/Priority_Reactor.cpp:
+	* ace/Object_Manager.{cpp,h}:
+	* ace/OS.cpp:
+	* ace/Parse_Node.{cpp,h}:
+
+	  The script $ACE_ROOT/bin/split-cpp makes some assumptions about the
+	  source code that it is working with. These changes allow split-cpp
+	  to be used with ACE. These fixes are all mostly code formatting changes.
+	  The functionality should not be changed in any case.
+
 Mon Jul 24 20:21:47 2000  Andrew G. Gilpin  <agg1@cs.wustl.edu>
 
 	* include/makeinclude/wrapper_macros.GNU

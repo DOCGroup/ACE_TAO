@@ -68,14 +68,20 @@ protected:
   ACE_OS_Thread_Mutex_Guard (const ACE_OS_Thread_Mutex_Guard &);
 };
 
-inline
+#if defined (ACE_IS_SPLITTING)
+# define ACE_SPECIAL_INLINE
+#else
+# define ACE_SPECIAL_INLINE inline
+#endif
+
+ACE_SPECIAL_INLINE
 int
 ACE_OS_Thread_Mutex_Guard::acquire (void)
 {
   return owner_ = ACE_OS::thread_mutex_lock (&lock_);
 }
 
-inline
+ACE_SPECIAL_INLINE
 int
 ACE_OS_Thread_Mutex_Guard::release (void)
 {
@@ -88,7 +94,7 @@ ACE_OS_Thread_Mutex_Guard::release (void)
     }
 }
 
-inline
+ACE_SPECIAL_INLINE
 ACE_OS_Thread_Mutex_Guard::ACE_OS_Thread_Mutex_Guard (ACE_thread_mutex_t &m)
    : lock_ (m)
 {
@@ -136,14 +142,14 @@ protected:
     const ACE_OS_Recursive_Thread_Mutex_Guard &);
 };
 
-inline
+ACE_SPECIAL_INLINE
 int
 ACE_OS_Recursive_Thread_Mutex_Guard::acquire (void)
 {
   return owner_ = ACE_OS::recursive_mutex_lock (&lock_);
 }
 
-inline
+ACE_SPECIAL_INLINE
 int
 ACE_OS_Recursive_Thread_Mutex_Guard::release (void)
 {
@@ -156,7 +162,7 @@ ACE_OS_Recursive_Thread_Mutex_Guard::release (void)
     }
 }
 
-inline
+ACE_SPECIAL_INLINE
 ACE_OS_Recursive_Thread_Mutex_Guard::ACE_OS_Recursive_Thread_Mutex_Guard (
   ACE_recursive_thread_mutex_t &m)
    : lock_ (m),
@@ -1505,7 +1511,7 @@ ACE_TRACE ("ACE_TSS_Ref::operator==");
 }
 
 // Check for inequality.
-inline
+ACE_SPECIAL_INLINE
 int
 ACE_TSS_Ref::operator!= (const ACE_TSS_Ref &tss_ref) const
 {
@@ -1539,17 +1545,17 @@ ACE_TRACE ("ACE_TSS_Info::ACE_TSS_Info");
 }
 
 # if defined (ACE_HAS_NONSCALAR_THREAD_KEY_T)
-  static inline int operator== (const ACE_thread_key_t &lhs,
-                                const ACE_thread_key_t &rhs)
-  {
-    return ! ACE_OS::memcmp (&lhs, &rhs, sizeof (ACE_thread_key_t));
-  }
+static inline int operator== (const ACE_thread_key_t &lhs,
+                              const ACE_thread_key_t &rhs)
+{
+  return ! ACE_OS::memcmp (&lhs, &rhs, sizeof (ACE_thread_key_t));
+}
 
-  static inline int operator!= (const ACE_thread_key_t &lhs,
-                                const ACE_thread_key_t &rhs)
-  {
-    return ! (lhs == rhs);
-  }
+static inline int operator!= (const ACE_thread_key_t &lhs,
+                              const ACE_thread_key_t &rhs)
+{
+  return ! (lhs == rhs);
+}
 # endif /* ACE_HAS_NONSCALAR_THREAD_KEY_T */
 
 // Check for equality.
@@ -1593,7 +1599,7 @@ ACE_TSS_Keys::ACE_TSS_Keys (void)
     }
 }
 
-inline
+ACE_SPECIAL_INLINE
 void
 ACE_TSS_Keys::find (const u_int key, u_int &word, u_int &bit)
 {
@@ -2074,7 +2080,6 @@ ACE_OS_thread_key_t ACE_TSS_Emulation::native_tss_key_;
 /* static */
 #     if defined (ACE_HAS_THR_C_FUNC)
 extern "C"
-#     endif /* ACE_HAS_THR_C_FUNC */
 void
 ACE_TSS_Emulation_cleanup (void *ptr)
 {
@@ -2082,6 +2087,15 @@ ACE_TSS_Emulation_cleanup (void *ptr)
    // Really this must be used for ACE_TSS_Emulation code to make the TSS
    // cleanup
 }
+#else
+void
+ACE_TSS_Emulation_cleanup (void *ptr)
+{
+   ACE_UNUSED_ARG (ptr);
+   // Really this must be used for ACE_TSS_Emulation code to make the TSS
+   // cleanup
+}
+#     endif /* ACE_HAS_THR_C_FUNC */
 
 void **
 ACE_TSS_Emulation::tss_base (void* ts_storage[], u_int *ts_created)
@@ -2604,10 +2618,24 @@ ace_cleanup_destroyer (ACE_Cleanup *object, void *param)
 
 #if defined (ACE_PSOS)
 extern "C" void ace_thread_adapter (unsigned long args)
+{
+  ACE_TRACE ("ace_thread_adapter");
+
+#if defined (ACE_HAS_TSS_EMULATION)
+  // As early as we can in the execution of the new thread, allocate
+  // its local TS storage.  Allocate it on the stack, to save dynamic
+  // allocation/dealloction.
+  void *ts_storage[ACE_TSS_Emulation::ACE_TSS_THREAD_KEYS_MAX];
+  ACE_TSS_Emulation::tss_open (ts_storage);
+#endif /* ACE_HAS_TSS_EMULATION */
+
+  ACE_Thread_Adapter *thread_args = (ACE_Thread_Adapter *) args;
+
+  // Invoke the user-supplied function with the args.
+  thread_args->invoke ();
+}
 #else /* ! defined (ACE_PSOS) */
-extern "C" void *
-ace_thread_adapter (void *args)
-#endif /* ACE_PSOS */
+extern "C" void * ace_thread_adapter (void *args)
 {
   ACE_TRACE ("ace_thread_adapter");
 
@@ -2624,10 +2652,9 @@ ace_thread_adapter (void *args)
   // Invoke the user-supplied function with the args.
   void *status = thread_args->invoke ();
 
-#if ! defined (ACE_PSOS)
   return status;
-#endif /* ACE_PSOS */
 }
+#endif /* ACE_PSOS */
 
 
 ACE_Thread_Adapter::ACE_Thread_Adapter (ACE_THR_FUNC user_func,

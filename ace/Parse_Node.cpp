@@ -14,13 +14,6 @@
 
 ACE_RCSID(ace, Parse_Node, "$Id$")
 
-// Keeps track of the number of errors encountered so far.
-extern int ace_yyerrno;
-
-// Global variable used to communicate between the parser and the main
-// program.
-extern ACE_Service_Config *ace_this_svc;
-
 ACE_ALLOC_HOOK_DEFINE(ACE_Stream_Node)
 
 void
