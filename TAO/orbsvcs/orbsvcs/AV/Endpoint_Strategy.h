@@ -158,6 +158,14 @@ class TAO_ORBSVCS_Export TAO_AV_Endpoint_Reactive_Strategy
   // Bridge method to create a vdev, a la Acceptor. Applications
   // can override this
 
+  virtual int make_stream_endpoint (T_StreamEndpoint *&stream_endpoint);
+  // Bridge method to create a stream_endpoint, a la Acceptor. Applications
+  // can override this
+
+  virtual int make_mediactrl (T_MediaCtrl *&media_ctrl);
+  // Bridge method to create a media_ctrl, a la Acceptor. Applications
+  // can override this
+
   TAO_ORB_Manager *orb_manager_;
 
 };
