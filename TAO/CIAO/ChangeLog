@@ -1,3 +1,13 @@
+Thu Jul  8 16:53:06 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * CIDLC/ServantSourceGenerator.cpp:
+        
+          Moved the call to populate_port_tables() from the
+          component servant constructor to the end of
+          the ciao_postactivate() method in the component servant,
+          but it is commented out for now until related issues
+          in DaNCe are resolved.
+
 Thu Jul  8 16:46:55 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * DAnCE/NodeApplicationManager/NodeApplicationManager_Impl.cpp:
