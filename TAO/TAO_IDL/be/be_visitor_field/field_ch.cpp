@@ -302,9 +302,9 @@ be_visitor_field_ch::visit_predefined_type (be_predefined_type *node)
   if (node->pt () == AST_PredefinedType::PT_pseudo) // is a psuedo obj
     {
       // check if we are dealing with a CORBA::Object
-      if (!ACE_OS::strcmp (bt->local_name ()->get_string (), "Object"))
+      if (!ACE_OS::strcmp (node->local_name ()->get_string (), "Object"))
         {
-          *os << "TAO_Object_Field_T<CORBA::Object>";
+          *os << "TAO_Object_Field_T<" << bt->name () << ">";
         }
       else
         *os << bt->nested_type_name (this->ctx_->scope (), "_var");

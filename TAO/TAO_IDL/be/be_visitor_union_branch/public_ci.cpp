@@ -458,7 +458,7 @@ be_visitor_union_branch_public_ci::visit_predefined_type (be_predefined_type *no
       switch (node->pt ())
         {
         case AST_PredefinedType::PT_pseudo:
-          if (!ACE_OS::strcmp (bt->local_name ()->get_string (), "Object"))
+          if (!ACE_OS::strcmp (node->local_name ()->get_string (), "Object"))
             {
               *os << "this->u_." << ub->local_name () << "_ = new "
                   << "TAO_Object_Field_T<CORBA::Object> (CORBA::Object::_duplicate (val));"

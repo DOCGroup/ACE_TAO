@@ -1,3 +1,17 @@
+Sun Jun 20 07:40:02 EDT 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
+
+	* TAO_IDL/be/be_visitor_field/field_ch.cpp:
+	  TAO_IDL/be/be_visitor_union_branch/private_ch.cpp:
+	  TAO_IDL/be/be_visitor_union_branch/public_assign_cs.cpp:
+	  TAO_IDL/be/be_visitor_union_branch/public_ci.cpp:
+	  TAO_IDL/be/be_visitor_union_branch/public_reset_cs.cpp:
+
+	  In the visit_predefined_type method for all the above, we were generating 
+	  incorrect mapping for typedef to CORBA::Object. In the earlier buggy version
+	  we were checking if the local name of the typedef node is "Object". However,
+	  the correct way to do this is to check if the local name of the most primitive
+	  type node of the typedef node is "Object".
+
 Sat Jun 19 22:27:35 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tests/Multiple_Inheritance/run_test.pl:
