@@ -19,8 +19,6 @@ SHOBJ   = $(addsuffix .so,$(FILES))
 
 LIBS    += $(ACELIB)
 
-LDLIBS  = -lDump_Restore
-
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 
 BIN2    = main

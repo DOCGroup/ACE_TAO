@@ -1,3 +1,10 @@
+Wed Aug  4 15:54:51 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* netsvcs/clients/Naming/Client/Makefile:
+	* netsvcs/clients/Naming/Dump_Restore/Makefile:
+	  If the libraries are specified as dependencies then they don't
+	  need to be listed in LDLIBS
+
 Wed Aug  4 13:20:54 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/Malloc.h: Ok, let's try this again ;-).  Removed the
