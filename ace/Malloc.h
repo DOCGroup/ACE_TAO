@@ -158,12 +158,24 @@ struct ACE_Export ACE_Malloc_Stats
 #define AMS(X) 
 #endif /* ACE_MALLOC_STATS */
 
-// Allow the user to override this in the config.h file.
+// ACE_MALLOC_ALIGN allows you to insure that allocated regions are at least
+// <ACE_MALLOC_ALIGN> bytes long.  It is especially useful when you want
+// areas to be at least a page long, or 32K long, or something like that.
+// It doesn't guarantee alignment to an address multiple, like 8-byte
+// data alignment, etc.  The allocated area's padding to your selected size
+// is done with an added array of long[] and your compiler will decide how
+// to align things in memory.
+//
+// The default ACE_MALLOC_ALIGN is 'long', which will probably add a long
+// of padding - it doesn't have any real affect.  If you want to use this
+// feature, define ACE_MALLOC_ALIGN in your config.h file and use a signed
+// integer number of bytes you want.  For example:
+//    #define ACE_MALLOC_ALIGN ((int)4096)
+
 #if !defined (ACE_MALLOC_ALIGN)
 #define ACE_MALLOC_ALIGN ((int)(sizeof (long)))
 #endif /* ACE_MALLOC_ALIGN */
 
-// For alignment to long boundary 
 
 union ACE_Export ACE_Malloc_Header
 // TITLE
