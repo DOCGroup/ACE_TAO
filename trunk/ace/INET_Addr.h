@@ -250,7 +250,7 @@ public:
    * number.  This operator makes it possible to use <ACE_INET_Addr>s
    * in STL maps.
    */
-  int operator < (const ACE_INET_Addr &rhs);
+  int operator < (const ACE_INET_Addr &rhs) const;
 
   /// Compare two addresses for equality.  The addresses are considered
   /// equal if they contain the same IP address and port number.
