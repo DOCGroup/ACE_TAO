@@ -1,0 +1,479 @@
+<HTML>
+<HEAD>
+   <TITLE>TAO TODO List</TITLE>
+</HEAD>
+  <BODY TEXT="#000000" BGCOLOR="#FFFFFF">
+    <!-- $Id$ -->
+    <CENTER><HR></CENTER>
+    
+    <CENTER>
+      <H3>General TODO list for TAO</H3>
+    </CENTER>
+
+    <P>
+      This document presents a general TODO list for TAO,
+      the list is not very well organized or prioritized;
+      it started as a personal TODO list for Carlos so it is biased
+      towards the Event Service and related components.
+      Hopefully as more people gets involved it will become more
+      organized.
+    </P>
+    <P>
+      Last Updated: $Date$ $Revision$
+    </P>
+
+    <CENTER><HR></CENTER>
+    
+    <CENTER>
+      <H4>Pending Tasks</H4>
+    </CENTER>
+
+    <UL>
+      <LI>Optimize the outgoing CDR streams by using TSS memory pools
+	for both the data blocks and the buffers.
+      </LI>
+
+      <LI>The do_static_call() and do_dynamic_call() methods should
+	use an array of void* (in the first case static and generated
+	by the IDL compiler);
+	this will remove the problems with g++ and probably work
+	faster.
+      </LI>
+
+      <LI>Optimize twoways by delaying memory allocation for the
+	incoming data buffer.
+      </LI>
+
+      <LI>Optimize connection lookup in the client side, using "hints"
+	from the previous lookup, or keeping smaller sets on each IIOP
+	profile or a combination of both. [STATUS] Irfan is working on
+	this.
+      </LI>
+
+      <LI>Add compiled marshalling [STATUS] Andy is working on this.
+      </LI>
+      
+      <LI>Use active demuxing in the POA
+      </LI>
+
+      <LI>The data blocks and their buffers could be allocated in a
+	single operation, using the beginning of a buffer to contain
+	the data block and the rest of it to contain the actual buffer
+      </LI>
+      
+      <LI>The size of pre-allocated buffer for the outgoing CDR
+	streams is defined at compilation time; but if we use an
+	efficient enough allocator we could make its size configurable
+	via the svc.conf file. In any case the *second* (and
+	subsequent) buffers come out of the allocator, so their sizes
+	could be configured in the already mentioned file
+      </LI>
+
+      <LI>The operation tables do not need to be statics.
+      </LI>
+
+      <LI>IDL compiler front-end should be case-insensitive.
+      </LI>
+
+      <LI>Support nested upcalls in different concurrency models, like
+	thread-per-connection.
+      </LI>
+
+      <LI>Add an option to the IDL-compiler (e.g. -rp) meaning
+	"generate relative include paths".
+      </LI>
+
+      <LI>The IDL compiler should generate the files locally (maybe
+	with an option).
+      </LI>
+
+      <LI>Add options to the IDL compiler to set the suffixes.
+      </LI>
+
+      <LI>We need some TAO_TRY_* macro to encapsulate a common use of
+	the CORBA::Environment argument: checking if it contains an
+	exception and then returning.
+      </LI>
+
+      <LI>The TypeCode internal (private) state needs locking, double
+	checked locking is needed to avoid excessive overhead, there
+	is potential for memory leaks if this locking is not used.
+      </LI>
+
+      <LI>Object references inside structures or sequences are not
+	decoded properly, the problem starts because the interpreter
+	expects a CORBA::Object_ptr, but the real type is a T_var;
+	virtual inheritance adds the last ingredient to the poison.
+	[STATUS] A possible solution is to use a T_manager_var that
+	has two fields a Object_ptr and a T_ptr....
+      </LI>
+
+      <LI>Support for unions with default cases (implicit or explicit)
+	in the IDL compiler is incomplete.
+      </LI>
+
+      <LI>It seems that some memory is leaked from the ORB cached
+	connector.
+      </LI>
+
+      <LI>Support for 64bit longs in the IDL compiler
+      </LI>
+
+      <LI>Support for fixed in the IDL compiler
+      </LI>
+
+      <LI>CDR stream support for wchar is flaky.
+      </LI>
+
+      <LI>Add a corbafwd.h header file to eliminate the deep (and
+	recursive) header dependencies in TAO.
+      </LI>
+
+      <LI>Prepare the 1.0 release:
+	<UL>
+	  <LI>Integrate the compiled marshalling approach.
+	  </LI>
+	  <LI>Verify the GPERF is working in all the relevant
+	    platforms.
+	  </LI>
+	  <LI>Integrate active demux of operations?
+	  </LI>
+	</UL>
+      </LI>
+
+      <LI>Support the Sun bootstrapping mechanism for the Naming
+	Service
+      </LI>
+
+      <LI>Add a -ORBlogfile flag so we can set the ACE_ERROR and
+	ACE_DEBUG output destination in all TAO applications
+      </LI>
+      
+      <LI>Study the CORBAlite spec and see how we could implement it
+	with TAO, considering dynamic and static configurations for
+	the full CORBA support
+      </LI>
+
+      <LI>Add the _raise() method to the exceptions...
+      </LI>
+
+      <LI>Add support for multiple Profiles in the ORB (completing the
+	IIOP 1.0 support)
+      </LI>
+
+      <LI>Purify, purify, purify the EC
+      </LI>
+
+      <LI>Quantify the EC.
+      </LI>
+
+      <LI>Support several calls to ORB_init() on the same thread.
+      </LI>
+
+      <LI>Support IIOP 1.1 in the ORB
+      </LI>
+
+      <LI>Use the IIOP 1.1 profile info to pass QoS info and use it to
+	preserve end-to-end QoS.
+      </LI>
+
+      <LI>Debug Memory Pools in the EC there seem to be a problem when
+	sending multiple events in a row (a memory leak, limit or
+	corruption).
+      </LI>
+
+      <LI>Call ORB_init() in the EC threads?
+	[The dispatching threads for Boeing]
+      </LI>
+
+      <LI>Build an EC example that uses all the cool features
+	(multiple ORBs on each process, collocated EC and Scheduling
+	service, Naming, etc.)
+      </LI>
+
+      <LI>Extend the Concurrency Service (or create a new one) that
+	allow us to have global "barriers" to synchronize EC
+	startup/shutdown.
+      </LI>
+
+      <LI>Correlation in the EC has a bug [?]
+	Build regression tests for the EC features (filtering,
+	correlation, timers, etc).
+      </LI>
+
+      <LI>Build a COS Event Channel on top of the RTEC Event Service.
+      </LI>
+
+      <LI>Check what is failing in $TAO_ROOT/tests/CDR/tc.
+      </LI>
+
+      <LI>Debug interval computation in Linux (and NT?)
+      </LI>
+
+      <LI>Remove the uneeded methods from CORBA::Object
+      </LI>
+
+      <LI>Optimize operation demuxing [active demuxing for operations].
+      </LI>
+
+      <LI>Cleanup memory managment in some of the servers, for
+	instance: Naming still believes that controlling the memory
+	for a stub will control the servants, this is not true
+	anymore.
+      </LI>
+
+      <LI>The current scheme for the orbsvcs leaves the user without
+	control collocation of servants, we need to move to a scheme
+	similar to the one in $ACE_ROOT/netsvcs.
+	[STATUS] The user can control collocation, but we need a
+	dynamic way to do it (or an example) that exploits the Service
+	Configurator. We also may need to split the library.
+      </LI>
+
+      <LI>Cleanup the IDL structures for subscriptions, publications,
+	etc.
+      </LI>
+
+      <LI>Resolve the Typecode::equal dilemma: is it structural or
+	type equivalence? Or a mixin?
+      </LI>
+
+      <LI>Automate EC multicast group usage. This probably requires
+	some kind of server that mantains the realtion between event
+	type/source and the mcast groups.
+      </LI>
+
+      <LI>Improve configuration support in the EC, give an example of
+	a single threaded EC, support different dispatching
+	strategies, etc.
+      </LI>
+
+      <LI>Use the Service_Configurator to dynamically load the EC
+	Module_Factory thus making it really configurable.
+      </LI>
+
+      <LI>The current scheme for Typecode (keeping a CDR buffer with
+	their representation) is broken.
+      </LI>
+
+      <LI>We must support DynAny.
+      </LI>
+
+      <LI>We must support a IFR.
+      </LI>
+
+      <LI>Server_Request objects in TAO are magical, the _duplicate()
+	method returns 0 and release() does nothing.
+	The problem starts because Server_Request is allocated from the
+	stack (to speed up things), hence reference counting would be
+	useless. Adding a clone() method will work better, but the
+	Server_Request holds pointers to several positions in the CDR
+	stream, we could clone the CDR stream, but a normal
+	Server_Request does not own it....  In our opinion (Carlos and
+	Irfan) we need not worry about this until we find a use case for
+	it.
+      </LI>
+    </UL>
+
+    <CENTER>
+      <H4>Completed Tasks</H4>
+    </CENTER>
+
+    <UL>
+      <LI>Optimize Octet Sequences.
+	[DONE]
+      </LI>
+
+      <LI>Obtain results for the EC_Multiple test.
+	<UL>
+	  <LI>Latency seems OK.
+	  </LI>
+	  <LI> Overhead: need lower priority for scavenger thread.
+	  </LI>
+	</UL>
+      </LI>
+
+      <LI>Debug EC_Multiple.
+      </LI>
+
+      <LI>Your next assignment: Regenerate all methods in
+	_tao_collocated to avoid "inherit via dominance" warnings.
+	[STATUS] The IDL compiler was modified to generate a suitable
+	#pragma that removes the warning, it reenables the warning when
+	leaving the file
+      </LI>
+
+      <LI>Remove the SOLARIS2 macro from the TAO_IDL compilation.
+	[DONE]
+      </LI>
+
+      <LI>Remove the preemption_prio message from Scheduling_Service.
+      </LI>
+
+      <LI>The ORB core should be able to choose the right port for us
+	(in other words -ORBport 0) should work.
+	[DONE]
+      </LI>
+
+      <LI>Client side optimization for Octet Sequences.
+	[DONE]
+      </LI>
+
+      <LI>Minimize memory allocation in TAO
+	[STATUS] Down to 3 on the client side and 4 on the server
+	side.
+      </LI>
+
+      <LI>Automate subscription and publication list generation in the
+	EC_Gateway.
+	[VERY important for Boeing]
+	[STATUS] Completed and debugged, but the EC is still buggy.
+      </LI>
+
+      <LI>Debug EC shutdown and startup....
+	[Specially startup for Boeign, but shutdown is important for
+	Purify and Quantify] 
+	[STATUS] Shutdown is clean and startup of threads can be
+	controlled by the user.
+      </LI>
+
+      <LI>Support a chain of Message Blocks in Output CDRs and use
+	writev() to write them.
+	[DONE]
+      </LI>
+
+      <LI>Memory managment in the demarshalling engine, it is not
+	clear that the current scheme works in all cases (like
+	sequences of unions of anys).
+	We also need to fix sequences of object references: how does
+	the demarshalling engine learn about the dynamic type of the
+	objects?
+	Closely related to this is the problem of memory alignment for
+	different architectures, we need to develop strategies for each
+	one (they should only be a few) and choose the right one.
+	[STATUS] This seems to be working for most of the cases, the
+	main idea is to delay demarshalling until enough information
+	is available, for instance, when decoding an Any just a
+	reference to the CDR stream is stored, decoding actually
+	happens when the user invokes >>= on the any (at that point
+	all the info is there).
+      </LI>
+
+      <LI>Add a new Profile type that includes the QoS info and using
+	for end-to-end QoS preservation.
+	[DEPRECATED] The IIOP 1.1 Profiles can handle that.
+      </LI>
+
+      <LI>Show an example of the sequence<octet> and CDR streams.
+	  [DONE] But the example could also include the marshalling of
+	  plain C++ types.
+	  [DONE too]
+      </LI>
+
+      <LI>Test anys in the EC.
+	[DONE] Michael reported that they work OK on NT.
+      </LI>
+
+      <LI>UDP for event channel and Multicast support in the EC.
+	[STATUS] Manual configuration using Suppliers and Consumers is
+	possible, automation is under research. 
+      </LI>
+
+      <LI>Unbind the EC and scheduling service from the Naming
+	Service.
+	[DONE] For the Event_Service and the examples.
+      </LI>
+
+      <LI>Optimize oneways by not allocating the memory for the return
+	buffers.
+	[DONE] Added different Invocation classes for each case.
+      </LI>
+
+      <LI>Fix the _non_existent call.
+	[DONE] The client side semantics match the new clarifications
+	of the C++ RTF, the server side is implemented by the IDL
+	compiler, though t could be a good idea to put that in the
+	POA.
+      </LI>
+
+      <LI>Simplify EC configuration, a Factory class must provide the
+	Dispatching, Supplier, Correlation and any other Modules that
+	are required.
+	This is the right spot to add trivial Dispatching or
+	Correlation Modules and to dynamically load and configure the
+	EC.
+	[DONE] A Factory class is used to create the modules, only the
+	default factory is implemented so far.
+      </LI>
+
+      <LI>Fix the ACE_Thread_Condition madness.
+	[DONE] We changed ACE so ACE_SYNCH_CONDITION expands to
+	ACE_Condition_Thread_Mutex
+      </LI>
+
+      <LI>Reference counting should have locks, but we should remove
+	all the QueryInterface madness to make that work. The policy
+	for references in multiple threads is: the reference count
+	must be >2 if that happens.
+	[STATUS] The QueryInterface method (all the COM stuff for that
+	matter) was removed...
+	[DONE]
+      </LI>
+
+      <LI>Reference counting for Typecodes is completely broken.
+	[DONE]
+      </LI>
+
+      <LI>Under g++(2.7.2) the use of multiple inheritance in IDL
+	triggers some compiler bug, if the IDL explictly generated the
+	copy constructor for the skeletons (the POA_ classes) the
+	problem would go away. 
+	[DONE] Fixed, Seth is testing the fixes and will commit them
+	soon (Tue Jul 21 14:24:56 CDT 1998) 
+      </LI>
+
+      <LI>The octet sequence optimization causes problems when Anys
+	get into the game.
+	[DONE] Seth reported that the problem was not real.
+      </LI>
+
+      <LI>The DEEP_FREE method is also broken, sometimes we need to
+	release the top-level memory, sometimes not.
+	[DONE] We always release the memory in the Any, it was failing
+	due to weird interactions between the Environment containing
+	an exception and the Any that also did.
+      </LI>
+
+      <LI>Improve error messages in the IDL compiler.
+	[DONE] At least the filename is correct now.
+      </LI>
+
+      <LI>Support for arrays in the IDL compiler is incomplete,
+	specially anonymous arrays.
+	[DONE] According to Andy this is properly supported by the IDL
+	compiler now.
+      </LI>
+
+      <LI>Prepare the 0.2 release:
+	<UL>
+	  <LI>Execute all the tests in $TAO_ROOT/tests
+	  </LI>
+	  <LI>Run Param_Test (SII) and record what fails and what works.
+	  </LI>
+	  <LI>Run Param_test (DII) and record what fails and what works.
+	  </LI>
+	  <LI>Run Param_Test across Endian Borders.
+	  </LI>
+	</UL>
+	[DONE] At last!
+      </LI>
+
+      <LI>Move this list to the release notes.
+      </LI>
+    </UL>
+
+<HR>
+
+<P>Back to the TAO <A HREF="../index.html">documentation index</A>.&nbsp;<!--#include virtual="/~schmidt/cgi-sig.html" -->
+</BODY>
+</HTML>
