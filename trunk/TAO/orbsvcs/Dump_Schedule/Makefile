@@ -1,35 +1,31 @@
-#----------------------------------------------------------------------------
 #
 # $Id$
 #
-#----------------------------------------------------------------------------
 
-#----------------------------------------------------------------------------
-#	Local macros
-#----------------------------------------------------------------------------
-
-LDLIBS =  -lorbsvcs -lTAO
-
-CLNT_SRCS = clnt.cpp
-
-LSRC = $(CLNT_SRCS)
-
-CLNT_OBJS = $(CLNT_SRCS:.cpp=.o)
-
-BIN = clnt
+BIN = Dump_Schedule
 BUILD = $(BIN)
+
+DUMP_SRCS = \
+	Dump_Schedule.cpp
+
+LSRC = 	$(DUMP_SRCS)
+
+SCHEDULE_OBJS=$(SCHEDULE_SRCS:.cpp=.o)
+DUMP_OBJS=$(DUMP_SRCS:.cpp=.o)
+
+LDLIBS     =  -lorbsvcs -lTAO
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 
 #----------------------------------------------------------------------------
 #	Include macros and targets
 #----------------------------------------------------------------------------
 
-include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
-include $(ACE_ROOT)/include/makeinclude/macros.GNU
-include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
-include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
-include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
-include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
+include	$(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+include	$(ACE_ROOT)/include/makeinclude/macros.GNU
+include	$(ACE_ROOT)/include/makeinclude/rules.common.GNU
+include	$(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
+#include	$(ACE_ROOT)/include/makeinclude/rules.bin.GNU
+include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 ifndef TAO_ROOT
 TAO_ROOT = $(ACE_ROOT)/TAO
@@ -39,12 +35,19 @@ DCFLAGS = -g
 LDFLAGS += -L$(TAO_ROOT)/orbsvcs/orbsvcs -L$(TAO_ROOT)/tao
 CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT) -I$(TAO_ROOT)/tao/compat $(TSS_ORB_FLAG)#-H
 
+Dump_Schedule: $(addprefix $(VDIR),$(DUMP_OBJS))
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS)
+
+
+#----------------------------------------------------------------------------
+#	Dependencies
+#----------------------------------------------------------------------------
+
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
-.obj/clnt.o .shobj/clnt.: clnt.cpp clnt.h \
- $(ACE_ROOT)/ace/Get_Opt.h \
- $(ACE_ROOT)/ace/ACE.h \
+.obj/Dump_Schedule.o .shobj/Dump_Schedule.: Dump_Schedule.cpp \
+ $(ACE_ROOT)/ace/Sched_Params.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/streams.h \
@@ -52,10 +55,13 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT) -I$(TAO_ROOT)/tao/compat $(TSS_O
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Sched_Params.i \
+ $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Get_Opt.i \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
@@ -150,6 +156,8 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT) -I$(TAO_ROOT)/tao/compat $(TSS_O
  $(ACE_ROOT)/ace/Connector.i \
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Acceptor.i \
+ $(TAO_ROOT)/tao/compat/objbase.h \
+ $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/orb.h \
  $(TAO_ROOT)/tao/corbacom.h \
@@ -159,7 +167,6 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT) -I$(TAO_ROOT)/tao/compat $(TSS_O
  $(TAO_ROOT)/tao/varout.h \
  $(TAO_ROOT)/tao/any.h \
  $(TAO_ROOT)/tao/poa.h \
- $(TAO_ROOT)/tao/tao_internals.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/client_factory.h \
  $(TAO_ROOT)/tao/server_factory.h \
@@ -180,6 +187,7 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT) -I$(TAO_ROOT)/tao/compat $(TSS_O
  $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/optable.h \
  $(TAO_ROOT)/tao/debug.h \
+ $(TAO_ROOT)/tao/managed_types.h \
  $(TAO_ROOT)/tao/iiopobj.h \
  $(TAO_ROOT)/tao/iioporb.h \
  $(TAO_ROOT)/tao/giop.h \
@@ -189,20 +197,27 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT) -I$(TAO_ROOT)/tao/compat $(TSS_O
  $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/typecode.i \
  $(TAO_ROOT)/tao/any.i \
- $(TAO_ROOT)/tao/cdr.i \
  $(TAO_ROOT)/tao/stub.i \
  $(TAO_ROOT)/tao/object.i \
  $(TAO_ROOT)/tao/orbobj.i \
  $(TAO_ROOT)/tao/marshal.i \
+ $(TAO_ROOT)/tao/cdr.i \
  $(TAO_ROOT)/tao/poa.i \
  $(TAO_ROOT)/tao/giop.i \
  $(TAO_ROOT)/tao/iioporb.i \
  $(TAO_ROOT)/tao/iiopobj.i \
+ $(TAO_ROOT)/tao/managed_types.i \
  $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/server_factory.i \
  $(TAO_ROOT)/tao/default_client.i \
  $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/connect.i \
- $(TAO_ROOT)/tao/singletons.h 
+ $(TAO_ROOT)/tao/singletons.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Scheduler_Factory.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Scheduler_Factory.i
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

@@ -1,3 +1,22 @@
+Wed Dec 10 20:13:57 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
+
+	* Makefile: 
+	  Added orbsvcs to the hierarchy.
+
+	* The orbsvcs directory was completely reorganized, in preparation
+	  for its official release. The new hierarchy is:
+	  - orbsvcs/orbsvcs: Contains a library with:
+	    + The client stubs for the services.
+	    + Common utility classes to access the services.
+	    + The server skeletons, but not their implementation.
+	  - orbsvcs/Naming_Service: the COSS Naming Service.
+	  - orbsvcs/Scheduling_Service: TAO Real-Time Scheduling Service.
+	  - orbsvcs/Event_Service: TAO Real-Time Event Service.
+	  - orbsvcs/tests: test programs and examples.
+
+	* docs/releasenotes/index.html: 
+	  Updated documentation on the Event Service and its friends.
+
 Wed Dec 10 19:57:07 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* tests/Cubit/TAO/IDL_Cubit/cubit_i.cpp (Cubit_i::cube_sequence):

@@ -8,9 +8,12 @@
 #	Local macros
 #----------------------------------------------------------------------------
 
-DIRS  =	lib \
-	bin \
-	tests
+DIRS  =	orbsvcs \
+	Naming_Service \
+	Scheduling_Service \
+	Event_Service \
+	Dump_Schedule \
+	tests \
 
 #----------------------------------------------------------------------------
 #	Include macros and targets
