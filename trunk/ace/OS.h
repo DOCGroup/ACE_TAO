@@ -4254,6 +4254,12 @@ public:
                          LPCTSTR name = 0,
                          mode_t perms = 0);
   static int flock_destroy (ACE_OS::ace_flock_t *lock);
+#if defined (ACE_WIN32)
+  static void adjust_flock_params (ACE_OS::ace_flock_t *lock, 
+                                   short whence, 
+                                   off_t &start, 
+                                   off_t &len);
+#endif /* ACE_WIN32 */
   static int flock_rdlock (ACE_OS::ace_flock_t *lock,
                            short whence = 0,
                            off_t start = 0,

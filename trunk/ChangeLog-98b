@@ -1,5 +1,20 @@
 Sat Aug 01 13:34:12 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
+	* ace/OS.i (flock_wrlock): LockFileEx() and UnLockFileEx() are not
+ 	  implemented on Win32.  Therefore, the flock methods were changed
+ 	  to use the non-Ex versions on Win95.  Thanks to XuYifeng
+ 	  <xuyf@pop.zg169.net> for pointing this out.
+
+	  While making the changes, I found that there were a couple bugs
+ 	  in the code: (a) the <whence> parameter was being ignored and
+ 	  (b) the adjustment for <len> == 0 was incorrect.  I think I have
+ 	  fixed both of these also in ACE_OS::adjust_flock_params().
+
+	  One last thing: I changed flock_unlock() to use UnLockFile()
+ 	  instead of UnLockFileEx(). UnLockFileEx() is also not supported
+ 	  on Win95.  Hopefully, it is ok to lock with LockFileEx() and
+ 	  unlock with UnLockFile() instead of UnLockFileEx().
+	
 	* ace/OS.cpp (pread): Changed bytes_written to bytes_read.
 
 Fri Jul 31 23:47:50 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
