@@ -61,7 +61,7 @@ main (int argc, char** argv)
             
       // Run the Service Type Exporter tests
       ACE_DEBUG ((LM_DEBUG, "*** Running the Service Type Exporter tests.\n"));
-      TAO_Service_Type_Exporter type_exporter (lookup_if.ptr (),
+      TAO_Service_Type_Exporter type_exporter (lookup_if,
                                                verbose,
                                                TAO_TRY_ENV);
       TAO_CHECK_ENV;
