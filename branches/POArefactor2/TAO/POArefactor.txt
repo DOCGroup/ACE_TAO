@@ -1,3 +1,15 @@
+Tue Oct 26 13:40:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/POA.{h,cpp.i}:
+          Removed get_servant_i, set_servant_i, get_servant_manager_i and
+          set_servant_manager_i, just moved the functionality to the method
+          without _i. All methods just call the request processing strategy,
+          no need to keep these methods anymore. Some missing ACE_CHECKS in
+          the set methods are added.
+
+Tue Oct 26 11:30:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/POA.{h,cpp}:
 Tue Oct 26 11:30:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/POA.{h,cpp}:
