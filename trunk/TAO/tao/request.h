@@ -77,8 +77,8 @@ private:
   CORBA_Environment _env;
   CORBA_ExceptionList _exceptions;
 
-  ACE_Thread_Mutex lock_;
-  u_int _refcount;
+  ACE_SYNCH_MUTEX lock_;
+  u_int refcount_;
 };
 
 #endif /* TAO_REQUEST_H */

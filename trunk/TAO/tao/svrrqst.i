@@ -7,7 +7,7 @@ IIOP_ServerRequest::IIOP_ServerRequest(CDR *msg,
     _retval (0),
     _exception (0),
     _ex_type (NO_EXCEPTION),
-    _refcount (1),
+    refcount_ (1),
     _orb (the_orb),
     _boa (the_boa)
 {}

@@ -138,7 +138,7 @@ public:
 private:
   CORBA_Object base;
   ACE_Thread_Mutex lock_;
-  u_int _refcount;
+  u_int refcount_;
 
   ~IIOP_Object (void);
   // Destructor is to be called only through Release()

@@ -4,13 +4,13 @@
 ACE_INLINE
 CORBA_ORB::CORBA_ORB (void)
 {
-  _refcount = 1;
+  refcount_ = 1;
 }
 
 ACE_INLINE
 CORBA_ORB::~CORBA_ORB (void)
 {
-  assert (_refcount == 0);
+  assert (refcount_ == 0);
 }
 
 // CORBA dup/release build on top of COM's (why not).
@@ -47,9 +47,9 @@ CORBA_is_nil (CORBA_ORB_ptr obj)
 ACE_INLINE ULONG __stdcall
 CORBA_ORB::AddRef (void)
 {
-  ACE_GUARD_RETURN (ACE_Thread_Mutex, guard, lock_, 0);
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, guard, lock_, 0));
 
-  return _refcount++;
+  return refcount_++;
 }
 
 ACE_INLINE

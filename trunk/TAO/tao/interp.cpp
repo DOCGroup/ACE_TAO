@@ -1112,7 +1112,7 @@ union_traverse (CDR *stream,
   // be used later.
 
   u_char *default_tc_ptr = 0;
-  size_t default_tc_len;
+  size_t default_tc_len = 0;
 
   while (member_count-- != 0) 
     {
@@ -1377,7 +1377,7 @@ CORBA_TypeCode::traverse (const void *value1,
 // this typecode ... typically used to allocate memory.
 
 size_t
-CORBA_TypeCode::prv_size (CORBA_Environment &env)
+CORBA_TypeCode::private_size (CORBA_Environment &env)
 {
   if (_kind >= TC_KIND_COUNT) 
     {
@@ -1388,9 +1388,9 @@ CORBA_TypeCode::prv_size (CORBA_Environment &env)
 
   if (table [_kind].calc == 0)
     {
-      _prv_state->tc_size_known_ = CORBA_B_TRUE;
-      _prv_state->tc_size_ = table [_kind].size;
-      return _prv_state->tc_size_;
+      _private_state->tc_size_known_ = CORBA_B_TRUE;
+      _private_state->tc_size_ = table [_kind].size;
+      return _private_state->tc_size_;
     }
 
   size_t alignment;
@@ -1398,9 +1398,9 @@ CORBA_TypeCode::prv_size (CORBA_Environment &env)
 
   stream.setup_encapsulation (_buffer, (size_t) _length);
 
-  _prv_state->tc_size_known_ = CORBA_B_TRUE;
-  _prv_state->tc_size_ = table [_kind].calc (&stream, alignment, env);
-  return _prv_state->tc_size_;
+  _private_state->tc_size_known_ = CORBA_B_TRUE;
+  _private_state->tc_size_ = table [_kind].calc (&stream, alignment, env);
+  return _private_state->tc_size_;
 }
 
 // Tell user the alignment restriction for the data type described by
@@ -1408,7 +1408,7 @@ CORBA_TypeCode::prv_size (CORBA_Environment &env)
 // completeness.
 
 size_t
-CORBA_TypeCode::prv_alignment (CORBA_Environment &env)
+CORBA_TypeCode::private_alignment (CORBA_Environment &env)
 {
   if (_kind >= TC_KIND_COUNT) 
     {
@@ -1419,9 +1419,9 @@ CORBA_TypeCode::prv_alignment (CORBA_Environment &env)
 
   if (table [_kind].calc == 0)
     {
-        _prv_state->tc_alignment_known_ = CORBA_B_TRUE;
-        _prv_state->tc_alignment_ = table [_kind].alignment;
-	return _prv_state->tc_alignment_;
+        _private_state->tc_alignment_known_ = CORBA_B_TRUE;
+        _private_state->tc_alignment_ = table [_kind].alignment;
+	return _private_state->tc_alignment_;
     }
 
   size_t alignment;
@@ -1430,7 +1430,7 @@ CORBA_TypeCode::prv_alignment (CORBA_Environment &env)
   stream.setup_encapsulation (_buffer, (size_t) _length);
 
   (void) table [_kind].calc (&stream, alignment, env);
-  _prv_state->tc_alignment_known_ = CORBA_B_TRUE;
-  _prv_state->tc_alignment_ = alignment;
+  _private_state->tc_alignment_known_ = CORBA_B_TRUE;
+  _private_state->tc_alignment_ = alignment;
   return alignment;
 }

@@ -103,10 +103,10 @@ private:
   CORBA_Boolean _orb_owns_data;
   // Flag that indicates the ORB is responsible for deleting the data.
 
-  u_int _refcnt;
+  u_int refcount_;
   // Reference count the <Any> to reduce copying costs.
 
-  ACE_Thread_Mutex lock_;
+  ACE_SYNCH_MUTEX lock_;
   // Serialize access to the reference count.
 
   // = NOT PROVIDED

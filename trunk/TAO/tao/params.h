@@ -163,7 +163,8 @@ private:
 };
 
 // Create a type for the singleton
-typedef ACE_Singleton<TAO_OA_Parameters, ACE_Thread_Mutex> TAO_OA_PARAMS;
+typedef ACE_Singleton<TAO_OA_Parameters, ACE_SYNCH_MUTEX> 
+	TAO_OA_PARAMS;
 
 #  if defined(__ACE_INLINE__)
 #    include "params.i"

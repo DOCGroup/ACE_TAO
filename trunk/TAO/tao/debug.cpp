@@ -108,12 +108,11 @@ dmsg_filter (const char *_FAR categories,
 	     const char *_FAR fmt,
 	     ...)
 {
-  const char *cp;
+  const char *cp = 0;
 
   if (!categories || !TAO_debug_filter)
     return;
-
-  if (*TAO_debug_filter != '*') 
+  else if (*TAO_debug_filter != '*') 
     {		// filter with "*" --> all pass
       for (cp = categories; *cp; cp++)
 	if (strchr (TAO_debug_filter, *cp) != 0)

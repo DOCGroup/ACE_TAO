@@ -8,12 +8,6 @@
 // = FILENAME
 //    iiopobj.h
 //
-// = DESCRIPTION
-//    Bridge implementation of IIOP_ORB
-//
-//    This is one of the two main hooks into IIOP in this Win32
-//    C/C++/COM based implementation; the other being IIOP_Object.
-//
 // = AUTHOR
 //     Copyright 1994-1995 by Sun Microsystems Inc.
 // 
@@ -33,9 +27,15 @@ extern const IID IID_IIOP_ORB;
 // ORB pseudo-objref
 
 class ACE_Svc_Export IIOP_ORB : public CORBA_ORB
+// = TITLE
+//    Bridge implementation of IIOP_ORB
+//
+// = DESCRIPTION
+//    This is one of the two main hooks into IIOP in this Win32
+//    C/C++/COM based implementation; the other being IIOP_Object.
 {
 public:
-  IIOP_ORB(void);
+  IIOP_ORB (void);
 
   ~IIOP_ORB (void);
 
@@ -49,9 +49,9 @@ public:
 				    void **ppv);
 
   // = ACCESSORS
-  void use_omg_ior_format(CORBA_Boolean ior);
+  void use_omg_ior_format (CORBA_Boolean ior);
   // Set the IOR flag.
-  CORBA_Boolean use_omg_ior_format(void);
+  CORBA_Boolean use_omg_ior_format (void);
   // Get the IOR flag.
   
 private:
@@ -62,10 +62,11 @@ private:
   IIOP_ORB &operator = (const IIOP_ORB &);
 };
 
-typedef IIOP_ORB* IIOP_ORB_ptr;
+typedef IIOP_ORB *IIOP_ORB_ptr;
 
 // Create a type for the singleton.
-typedef ACE_Singleton<IIOP_ORB, ACE_Thread_Mutex> TAO_ORB;
+typedef ACE_Singleton<IIOP_ORB, ACE_SYNCH_MUTEX> 
+	TAO_ORB;
 
 #  if defined(__ACE_INLINE__)
 #    include "iioporb.i"

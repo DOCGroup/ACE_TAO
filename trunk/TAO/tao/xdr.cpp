@@ -473,9 +473,9 @@ THROWS_NOTHING
 
       case tk_any:
 	{
-	    CORBA_Any			*any = (CORBA_Any *)data;
+	    CORBA_Any *any = (CORBA_Any *)data;
 	    CORBA_TypeCode_ptr	tc2;
-	    void			*value;
+	    void *value;
 
 	    if (decoder (_tc_CORBA_TypeCode, &tc2, 0, context, env)
 		    != CORBA_TypeCode::TRAVERSE_CONTINUE)
@@ -589,10 +589,11 @@ THROWS_NOTHING
 	            for (i = 0; i < len && continue_decoding; i++)
 			continue_decoding = stream->get_octet (buffer [i]);
 
-		    if (!continue_decoding) {
-			delete buffer;
+		    if (!continue_decoding) 
+		      {
+			delete [] buffer;
 			break;
-		    }
+		      }
 		    *tcp = new CORBA_TypeCode ((CORBA_TCKind)kind,
 			    len, buffer, CORBA_B_TRUE);
 	        }
@@ -767,7 +768,7 @@ THROWS_NOTHING
 // Write an XDR message fragment out on the stream.
 //
 CORBA_Boolean
-XDR_stream::flush_frag (CORBA_Boolean is_last)
+XDR_stream::flush_frag (CORBA_Boolean /* is_last */)
 THROWS_NOTHING
 {
   return CORBA_B_FALSE;

@@ -126,14 +126,14 @@ public:
   CORBA_Any_ptr _exception;
   CORBA_ExceptionType _ex_type;
 
-  void release (void) { _refcount--; }
+  void release (void) { refcount_--; }
   // Just drop the refcount, don't destroy the object; most of these
   // are stack-allocated.
 
 private:
-  ACE_Thread_Mutex lock_;
+  ACE_SYNCH_MUTEX lock_;
 
-  u_int _refcount;
+  u_int refcount_;
 
   CORBA_ORB_ptr _orb;
 

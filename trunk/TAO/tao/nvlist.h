@@ -66,8 +66,8 @@ public:
 				    void **ppv);
 
 private:
-  u_int _refcount;
-  ACE_Thread_Mutex lock_;
+  u_int refcount_;
+  ACE_SYNCH_MUTEX lock_;
 
   CORBA_Any _any;
   CORBA_Flags _flags;
@@ -127,14 +127,14 @@ private:
   CORBA_NamedValue *_FAR _values;
   u_int _max;
   u_int _len;
-  ACE_Thread_Mutex lock_;
-  unsigned _refcount;
+  ACE_SYNCH_MUTEX lock_;
+  u_int refcount_;
 
   CORBA_NVList (void)
     : _values (0), 
     _max (0),
     _len (0), 
-    _refcount (1)
+    refcount_ (1)
   { }
 
   friend class CORBA_ORB;

@@ -20,7 +20,7 @@
 
 #  include "ace/INET_Addr.h"
 
-#  if defined(__IIOP_BUILD)
+#  if defined (__IIOP_BUILD)
 #    include "boa.h"
 #  else
 #    include <corba/boa.h>
@@ -44,7 +44,7 @@ public:
 		       ACE_INET_Addr &addr,
 		       CORBA_Environment &env);
   // NON-STANDARD CALL.  According to CORBA V2.0, this functionality
-  // should really be <ROA_ptr ORB::ROA_init(argc,argv,ident)>.
+  // should really be <ROA_ptr ORB::ROA_init (argc,argv,ident)>.
   //
   // The current signature is residue from when this code was part of
   // the SunSoft IIOP reference implementation.
@@ -125,7 +125,7 @@ private:
   // connections and requests.
 
   CORBA_Boolean do_exit_;	
-  // Flag set by <clean_shutdown()>.
+  // Flag set by <clean_shutdown ()>.
 
   ROA_Acceptor client_acceptor_;
   // The acceptor listening for requests.
@@ -145,11 +145,11 @@ private:
   void *context_;		
   // Who knows!?!
 
-  ACE_Thread_Mutex lock_;	
+  ACE_SYNCH_MUTEX lock_;	
   // Locks critical sections within ROA code methods (was
   // tcpoa_mutex).
 
-  ACE_Thread_Mutex com_lock_;	
+  ACE_SYNCH_MUTEX com_lock_;	
   // Locks critical sections in COM-related code (was tcpoa_lock).
 
 #if defined (ROA_NEEDS_REQ_KEY)
