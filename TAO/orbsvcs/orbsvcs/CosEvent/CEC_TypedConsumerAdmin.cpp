@@ -75,7 +75,7 @@ TAO_CEC_TypedConsumerAdmin::obtain_typed_pull_supplier (
   ))
 
 {
-  ACE_THROW (CosTypedEventChannelAdmin::InterfaceNotSupported ());
+  ACE_THROW_RETURN (CosTypedEventChannelAdmin::InterfaceNotSupported (), 0);
 }
 
 CosEventChannelAdmin::ProxyPushSupplier_ptr
@@ -94,7 +94,7 @@ TAO_CEC_TypedConsumerAdmin::obtain_typed_push_supplier (
 
   if (result == -1)
     {
-      ACE_THROW (CosTypedEventChannelAdmin::NoSuchImplementation ());
+      ACE_THROW_RETURN (CosTypedEventChannelAdmin::NoSuchImplementation (), 0);
     }
 
   return this->typed_push_admin_.obtain (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -104,14 +104,14 @@ CosEventChannelAdmin::ProxyPushSupplier_ptr
 TAO_CEC_TypedConsumerAdmin::obtain_push_supplier (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-    ACE_THROW (CORBA::NO_IMPLEMENT ());
+    ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 }
 
 CosEventChannelAdmin::ProxyPullSupplier_ptr
 TAO_CEC_TypedConsumerAdmin::obtain_pull_supplier (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-    ACE_THROW (CORBA::NO_IMPLEMENT ());
+    ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 }
 
 PortableServer::POA_ptr

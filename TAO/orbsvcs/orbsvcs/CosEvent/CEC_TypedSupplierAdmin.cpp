@@ -73,7 +73,7 @@ TAO_CEC_TypedSupplierAdmin::obtain_typed_push_consumer (
 
   if (result == -1)
     {
-      ACE_THROW (CosTypedEventChannelAdmin::InterfaceNotSupported ());
+      ACE_THROW_RETURN (CosTypedEventChannelAdmin::InterfaceNotSupported (),0);
     }
 
   return this->typed_push_admin_.obtain (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -90,21 +90,21 @@ TAO_CEC_TypedSupplierAdmin::obtain_typed_pull_consumer (
   ))
 
 {
-  ACE_THROW (CosTypedEventChannelAdmin::NoSuchImplementation ());
+  ACE_THROW_RETURN (CosTypedEventChannelAdmin::NoSuchImplementation (), 0);
 }
 
 CosEventChannelAdmin::ProxyPushConsumer_ptr
 TAO_CEC_TypedSupplierAdmin::obtain_push_consumer (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_THROW (CORBA::NO_IMPLEMENT ());
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 }
 
 CosEventChannelAdmin::ProxyPullConsumer_ptr
 TAO_CEC_TypedSupplierAdmin::obtain_pull_consumer (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_THROW (CORBA::NO_IMPLEMENT ());
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 }
 
 // ****************************************************************
