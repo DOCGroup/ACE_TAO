@@ -29,43 +29,94 @@ parse_string_dynamic_request_helper (CORBA::Object_ptr naming_context,
                                      CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  CORBA::Object_ptr _tao_retval = CORBA::Object::_nil ();
 
-  CORBA::Object_ptr obj = CORBA::Object::_nil ();
-  ACE_TRY
+  CORBA::Object_var _tao_safe_retval (_tao_retval);
+
+  TAO_Stub *istub = naming_context->_stubobj ();
+  if (istub == 0)
+    ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
+
+  TAO_GIOP_Twoway_Invocation _tao_call (
+      istub,
+      "resolve_str",
+      11,
+      istub->orb_core ()
+    );
+
+  for (;;)
     {
-      // Now that you got a reference to the naming context, use
-      // resolve_str.
-      CORBA::Request_var rs_req =
-        naming_context->_request ("resolve_str", ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      _tao_call.start (ACE_TRY_ENV);
+      ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
-      // resolve_str takes a str as an argument: so we must include
-      // that in the request
-      rs_req->add_in_arg () <<= key_string.c_str ();
+      CORBA::Short _tao_response_flag = TAO_TWOWAY_RESPONSE_FLAG;
 
-      // Set the return type
-      rs_req->set_return_type (CORBA::_tc_Object);
+      _tao_call.prepare_header (
+          ACE_static_cast (CORBA::Octet, _tao_response_flag),
+          ACE_TRY_ENV
+        );
+      ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
-      // Finally invoke the <resolve_str> operation.
-      rs_req->invoke (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
+      if (!(
+            (_tao_out << key_string.c_str ())
+          ))
+        ACE_THROW_RETURN (
+            CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO),
+            CORBA::Object::_nil ()
+          );
 
-      // Extract the returned object reference from the request
-      rs_req->return_value () >>= CORBA::Any::to_object (obj);
+      int _invoke_status;
+      ACE_TRY
+        {
+          _invoke_status = _tao_call.invoke (0, 0, ACE_TRY_ENV);
+          ACE_CHECK_RETURN (CORBA::Object::_nil ());
+        }
+      ACE_CATCH (CORBA::UNKNOWN, ex)
+        {
+          ACE_UNUSED_ARG (ex);
 
-      if (CORBA::is_nil (obj))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " could not obtain object <%s>\n"),
-                          0);
+          ACE_THROW_RETURN (
+              CORBA::BAD_PARAM (TAO_OMG_VMCID | TAO_OMG_MINOR_BAD_PARAM_10,
+                                CORBA::COMPLETED_YES),
+              CORBA::Object::_nil ()
+            );
+        }
+      ACE_ENDTRY;
+      ACE_CHECK_RETURN (CORBA::Object::_nil ());
+
+      if (_invoke_status == TAO_INVOKE_RESTART)
+        {
+          _tao_call.restart_flag (1);
+          continue;
+        }
+      if (_invoke_status != TAO_INVOKE_OK)
+        {
+          // @@ Is there any way we can reach this point?  Any
+          //    USER_EXCEPTION response will be caught by the UNKNOWN
+          //    catch block above.  Any SYSTEM_EXCEPTION response will
+          //    be simply raised, and any RESTART is handled
+          //    already...  leave this here "just in case".
+          ACE_THROW_RETURN (
+              CORBA::BAD_PARAM (TAO_OMG_VMCID | TAO_OMG_MINOR_BAD_PARAM_10,
+                                CORBA::COMPLETED_YES),
+              CORBA::Object::_nil ()
+            );
+        }
+      TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
+      if (!(
+            (_tao_in >> _tao_safe_retval.inout ())
+          ))
+        {
+          ACE_THROW_RETURN (
+              CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES),
+              CORBA::Object::_nil ()
+            );
+        }
+      break;
     }
-  ACE_CATCH (CORBA::SystemException, ex)
-    {
-      ACE_PRINT_EXCEPTION (ex, "CORBANAME_Parser");
-    }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
-  return obj;
+  return _tao_safe_retval._retn ();
 }
 
 CORBA::Object_ptr

@@ -399,6 +399,7 @@ CORBA_SystemException::_info (void) const
 
   if (VMCID == TAO_DEFAULT_MINOR_CODE)
     {
+      // @@ Move the following code to a subroutine, it is too long already!
       const char *location;
       switch (this->minor () & 0x00000F80u)
         {
@@ -553,12 +554,47 @@ CORBA_SystemException::_info (void) const
 
       info += buffer;
     }
+  else if (VMCID == TAO_OMG_VMCID)
+    {
+      // @@ This case should go into a subroutine too, it will grow
+      //    over time.
+      const char *minor_description = "*unknown description*";
+
+      if (this->_is_a ("IDL:omg.org/CORBA/BAD_PARAM"))
+        {
+          switch (this->minor () & 0xFFFU)
+            {
+            case TAO_OMG_MINOR_BAD_PARAM_10:
+              minor_description = "string_to_object conversion failed due to non specific reason";
+              break;
+            default:
+              break;
+              // @@ We should add all the standard minor codes from 
+            }
+        }
+      /* else if (this->is_a ("IDL:omg.org/CORBA/....")) */
+
+      char buffer[BUFSIZ];
+      ACE_OS::sprintf (buffer,
+                       "This is an OMG minor code (%d), "
+                       "described as '%s', "
+                       "completed = %s\n",
+                       this->minor (),
+                       minor_description,
+                       (completed () == CORBA::COMPLETED_YES) ? "YES" :
+                       (completed () == CORBA::COMPLETED_NO) ? "NO" :
+                       (completed () == CORBA::COMPLETED_MAYBE) ? "MAYBE" :
+                       "garbage");
+      
+      info += buffer;
+    }
   else
     {
       char buffer[BUFSIZ];
       ACE_OS::sprintf (buffer,
-                       "non-TAO exception, "
+                       "Unknown vendor minor code id (%x), "
                        "minor code = %x, completed = %s\n",
+                       VMCID,
                        this->minor (),
                        (completed () == CORBA::COMPLETED_YES) ? "YES" :
                        (completed () == CORBA::COMPLETED_NO) ? "NO" :
