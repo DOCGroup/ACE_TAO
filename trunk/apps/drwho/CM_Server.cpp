@@ -25,7 +25,7 @@ CM_Server::open (short port_number)
 
   // This call fails if an rflo daemon is already running.
   if (ACE_OS::bind (this->sokfd_,
-                    (sockaddr *) &this->sin_,
+                    ACE_reinterpret_cast (sockaddr *, &this->sin_),
                     sizeof this->sin_) < 0)
     return -1;
 
@@ -51,7 +51,7 @@ CM_Server::receive (int)
                             this->recv_packet_,
                             UDP_PACKET_SIZE,
                             0,
-                            (sockaddr *) &this->sin_,
+                            ACE_reinterpret_cast (sockaddr *, &this->sin_),
                             (int *) &sin_len);
   if (n == -1)
     return -1;
@@ -85,7 +85,7 @@ CM_Server::send (void)
               this->send_packet_,
               packet_length,
               0,
-              (sockaddr *) &this->sin_,
+              ACE_reinterpret_cast (sockaddr *, &this->sin_),
               sizeof this->sin_) < 0)
     return -1;
 
