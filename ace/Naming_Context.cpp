@@ -107,8 +107,8 @@ ACE_Naming_Context::close (void)
 }
 
 ACE_Naming_Context::ACE_Naming_Context (void)
-  : name_space_ (0),
-    name_options_ (0)
+  : name_options_ (0),
+    name_space_ (0)
 {
   ACE_TRACE ("ACE_Naming_Context::ACE_Naming_Context");
   ACE_NEW (this->name_options_, ACE_Name_Options);
@@ -116,8 +116,8 @@ ACE_Naming_Context::ACE_Naming_Context (void)
 
 ACE_Naming_Context::ACE_Naming_Context (Context_Scope_Type scope_in,
 					int lite)
-  : name_space_ (0),
-    name_options_ (0)
+  : name_options_ (0),
+    name_space_ (0)
 {
   ACE_TRACE ("ACE_Naming_Context::ACE_Naming_Context");
 
