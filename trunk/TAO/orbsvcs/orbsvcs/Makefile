@@ -362,6 +362,7 @@ $(foreach ext, $(targets), $(addsuffix $(ext),Makefile.RTEvent-)): \
     Makefile.Svc_Utils-%
 $(foreach ext, $(targets), $(addsuffix $(ext),Makefile.RTEventLogAdmin-)): \
   Makefile.RTEventLogAdmin-%: \
+    Makefile.RTSched-% \
     Makefile.RTEvent-% \
     Makefile.DsLogAdmin-% \
     Makefile.CosEvent-% \
