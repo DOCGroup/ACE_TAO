@@ -21,19 +21,22 @@
 #if !defined (ACE_CONFIG_IRIX6X_NTHR_H)
 #define ACE_CONFIG_IRIX6X_NTHR_H
 
+// Include this file to set the _MIPS_SIM*ABI* macros.
+#include <sgidefs.h>
+
 // The Irix 6.x float.h doesn't allow us to distinguish between a
 // double and a long double.  So, we have to hard-code this.  Thanks
 // to Bob Laferriere <laferrie@gsao.med.ge.com> for figuring it out.
-#if defined (_MIPS_SIM)               // 6.X System
-# if defined (_ABI64)  &&  (_MIPS_SIM == _ABI64)
+#if defined (_MIPS_SIM)             /* 6.X System */
+# if defined (_MIPS_SIM_NABI32) && (_MIPS_SIM == _MIPS_SIM_NABI32)
 #   define ACE_SIZEOF_LONG_DOUBLE 16
-# elif defined (_NABI32)  &&  (_MIPS_SIM == _NABI32)
-#   define ACE_SIZEOF_LONG_DOUBLE 16
-# elif defined (_ABIO32)  &&  (_MIPS_SIM == _ABIO32)
-#   define ACE_SIZEOF_LONG_DOUBLE  8
+# elif defined (_MIPS_SIM_ABI32) && (_MIPS_SIM == _MIPS_SIM_ABI32)
+#   define ACE_SIZEOF_LONG_DOUBLE 8
+# elif !defined (ACE_SIZEOF_LONG_DOUBLE)
+#   define ACE_SIZEOF_LONG_DOUBLE 8
 # endif
 #else
-# define ACE_SIZEOF_LONG_DOUBLE  8    // 5.3 System
+# define ACE_SIZEOF_LONG_DOUBLE 8   /* 5.3 System */
 #endif
 
 #define ACE_HAS_P_READ_WRITE
@@ -49,7 +52,7 @@
 #define ACE_HAS_XPG4_MULTIBYTE_CHAR
 
 // We need to setup a very high address or Naming_Test won't run.
-#define ACE_DEFAULT_BASE_ADDR ((char *) (1024U * 1024 * 1024)) 
+#define ACE_DEFAULT_BASE_ADDR ((char *) (1024U * 1024 * 1024))
 
 // Include XtReactor into the library.
 #define ACE_HAS_XT
@@ -95,7 +98,7 @@
 #define ACE_HAS_SIGWAIT
 
 // Platform supports System V IPC (most versions of UNIX, but not Win32)
-#define ACE_HAS_SYSV_IPC			
+#define ACE_HAS_SYSV_IPC
 
 // Platform requires void * for mmap().
 #define ACE_HAS_VOIDPTR_MMAP
@@ -107,7 +110,7 @@
 #define ACE_HAS_SYSCALL_H
 
 // Compiler/platform supports alloca()
-#define ACE_HAS_ALLOCA 
+#define ACE_HAS_ALLOCA
 
 // Compiler/platform has <alloca.h>
 #define ACE_HAS_ALLOCA_H
@@ -123,61 +126,61 @@
 #define ACE_HAS_IRIX_GETTIMEOFDAY
 
 // Platform supports POSIX O_NONBLOCK semantics.
-#define ACE_HAS_POSIX_NONBLOCK 
+#define ACE_HAS_POSIX_NONBLOCK
 
 // Platform supports POSIX timers via timestruc_t.
-#define ACE_HAS_POSIX_TIME 
+#define ACE_HAS_POSIX_TIME
 // #define ACE_HAS_SVR4_TIME
 #define ACE_NEEDS_SYSTIME_H
 
 // Compiler/platform has correctly prototyped header files.
-#define ACE_HAS_CPLUSPLUS_HEADERS 
+#define ACE_HAS_CPLUSPLUS_HEADERS
 
 // Platform contains <poll.h>.
-#define ACE_HAS_POLL 
+#define ACE_HAS_POLL
 
-// No multi-threading so use poll() call 
-// - for easier debugging, if nothing else 
+// No multi-threading so use poll() call
+// - for easier debugging, if nothing else
 // #define ACE_USE_POLL
 
 // Platform supports the /proc file system.
-#define ACE_HAS_PROC_FS 
+#define ACE_HAS_PROC_FS
 
 // Compiler/platform defines the sig_atomic_t typedef.
-#define ACE_HAS_SIG_ATOMIC_T 
+#define ACE_HAS_SIG_ATOMIC_T
 
 // Platform supports SVR4 extended signals.
 #define ACE_HAS_SIGINFO_T
 #define ACE_HAS_UCONTEXT_T
 
 // Compiler supports the ssize_t typedef.
-#define ACE_HAS_SSIZE_T 
+#define ACE_HAS_SSIZE_T
 
 // Platform supports STREAMS.
-#define ACE_HAS_STREAMS 
+#define ACE_HAS_STREAMS
 
 // Platform supports STREAM pipes (note that this is disabled by
 // default, see the manual page on pipe(2) to find out how to enable
-// it). 
-// #define ACE_HAS_STREAM_PIPES 
+// it).
+// #define ACE_HAS_STREAM_PIPES
 
 // Compiler/platform supports strerror ().
-#define ACE_HAS_STRERROR 
+#define ACE_HAS_STRERROR
 
 // Compiler/platform supports struct strbuf.
-#define ACE_HAS_STRBUF_T 
+#define ACE_HAS_STRBUF_T
 
 // Compiler/platform supports SVR4 dynamic linking semantics.
-#define ACE_HAS_SVR4_DYNAMIC_LINKING 
+#define ACE_HAS_SVR4_DYNAMIC_LINKING
 
 // Prototypes for both signal() and struct sigaction are consistent.
 #define ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES
 
 // Platform provides <sys/filio.h> header.
-#define ACE_HAS_SYS_FILIO_H 
+#define ACE_HAS_SYS_FILIO_H
 
 // Compiler/platform defines a union semun for SysV shared memory.
-#define ACE_HAS_SEMUN 
+#define ACE_HAS_SEMUN
 
 // Platform supports IP multicast
 #define ACE_HAS_IP_MULTICAST
@@ -194,12 +197,12 @@
 
 // Platform supports STREAM pipes (note that this is disabled by
 // default, see the manual page on pipe(2) to find out how to enable
-// it). 
-// #define ACE_HAS_STREAM_PIPES 
+// it).
+// #define ACE_HAS_STREAM_PIPES
 
 // Platform supports POSIX timers via timestruc_t.
 // This will *NOT* work in 6.4, but ACE doesn't use it anymore.
-// #define ACE_HAS_POSIX_TIME 
+// #define ACE_HAS_POSIX_TIME
 // #define ACE_HAS_SVR4_TIME
 
 // Turns off the tracing feature.
