@@ -234,7 +234,7 @@ Client<InterfaceObj, Var>::~Client (void)
 }
 
 template <class InterfaceObj, class Var> int
-Client<InterfaceObj, Var>::init (const char *name,
+Client<InterfaceObj, Var>::init (const char * /*name*/,
                                  int argc,
                                  char **argv)
 {
