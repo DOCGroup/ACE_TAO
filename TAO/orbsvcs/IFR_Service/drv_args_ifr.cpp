@@ -65,6 +65,10 @@ DRV_usage (void)
     ));
   ACE_DEBUG ((
       LM_DEBUG,
+      ACE_TEXT (" -Si\t\t\tSuppress processing of included IDL files\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
       ACE_TEXT (" -t\t\t\tTemporary directory to be used")
       ACE_TEXT (" by the IDL compiler.\n")
     ));
@@ -181,6 +185,24 @@ DRV_parse_args (int ac, char *av[])
             case 'w':
               idl_global->set_compile_flags (idl_global->compile_flags ()
                                              | IDL_CF_NOWARNINGS);
+              break;
+            case 'S':
+              // Suppress ...
+              if (av[i][2] == 'i')
+                {
+                  // ... processing of included IDL files.
+                  be_global->do_included_files (0);
+                }
+              else
+                {
+                  ACE_ERROR ((
+                      LM_ERROR,
+                      ACE_TEXT ("IDL: I don't understand the '%s' option\n"),
+                      av[i]
+                    ));
+
+                  ACE_OS::exit (99);
+                }
               break;
             case 'Y':
               if (av[i][2] == '\0')

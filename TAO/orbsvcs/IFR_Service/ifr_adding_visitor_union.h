@@ -37,7 +37,8 @@ class ifr_adding_visitor_union : public ifr_adding_visitor
   //    for the case when a union node is seen in the AST.
   //
 public:
-  ifr_adding_visitor_union (CORBA::Boolean is_nested);
+  ifr_adding_visitor_union (AST_Decl *scope,
+                            CORBA::Boolean is_nested);
   // Constructor.
 
   virtual ~ifr_adding_visitor_union (void);

@@ -103,6 +103,30 @@ AST_Type::in_recursion (AST_Type *)
   return 0;
 }
 
+idl_bool 
+AST_Type::ifr_added (void)
+{
+  return this->ifr_added_;
+}
+
+void 
+AST_Type::ifr_added (idl_bool val)
+{
+  this->ifr_added_ = val;
+}
+
+idl_bool 
+AST_Type::ifr_fwd_added (void)
+{
+  return this->ifr_fwd_added_;
+}
+
+void 
+AST_Type::ifr_fwd_added (idl_bool val)
+{
+  this->ifr_fwd_added_ = val;
+}
+
 int
 AST_Type::ast_accept (ast_visitor *visitor)
 {

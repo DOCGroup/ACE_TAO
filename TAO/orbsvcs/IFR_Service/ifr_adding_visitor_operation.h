@@ -37,7 +37,7 @@ class ifr_adding_visitor_operation : public ifr_adding_visitor
   //    for the case when an operation node is seen in the AST.
   //
 public:
-  ifr_adding_visitor_operation (void);
+  ifr_adding_visitor_operation (AST_Decl *scope);
   // Constructor.
 
   virtual ~ifr_adding_visitor_operation (void);

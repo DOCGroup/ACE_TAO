@@ -37,7 +37,7 @@ class ifr_adding_visitor_exception : public ifr_adding_visitor
   //    for the case when an exception node is seen in the AST.
   //
 public:
-  ifr_adding_visitor_exception (void);
+  ifr_adding_visitor_exception (AST_Decl *scope);
   // Constructor.
 
   virtual ~ifr_adding_visitor_exception (void);
