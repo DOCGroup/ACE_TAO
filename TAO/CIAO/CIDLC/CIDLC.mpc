@@ -6,7 +6,7 @@ project(CIDLC) {
   includes += .. ../CCF
   after += IDL2 IDL3 CIDL CodeGenerationKit CompilerElements
   install = ../bin
-  libpaths += ../CCF/CCF
+  libpaths += ../CCF/CCF ../../../lib
   libs += CIDL IDL3 IDL2 CodeGenerationKit CompilerElements
   Source_Files {
     ExecutorMappingGenerator.cpp
