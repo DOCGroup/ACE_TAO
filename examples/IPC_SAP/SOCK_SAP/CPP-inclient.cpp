@@ -105,7 +105,9 @@ private:
   char oneway_;
   // Are we running oneway or twoway?
 
-  ACE_MT (ACE_Barrier *barrier_);
+  // Please leave the ; inside the parenthesis to avoid Green Hills
+  // (and probably other) compiler warning about extra ;.
+  ACE_MT (ACE_Barrier *barrier_;)
   // Barrier used to synchronize the start of all the threads.
 };
 
@@ -120,7 +122,7 @@ Options::Options (void)
     io_source_ (ACE_INVALID_HANDLE), // Defaults to using the generator.
     iterations_ (10000),
     oneway_ (1) // Make oneway calls the default.
-#if defined (ACE_MT_SAFE)
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
     , barrier_ (0)
 #endif /* ACE_MT_SAFE */
 {
@@ -131,7 +133,7 @@ Options::~Options (void)
   ACE_MT (delete this->barrier_);
   delete [] this->message_buf_;
 }
-  
+
 // Options Singleton.
 typedef ACE_Singleton<Options, ACE_SYNCH_RECURSIVE_MUTEX> OPTIONS;
 
@@ -300,7 +302,7 @@ Options::shared_client_test (u_short port,
 
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) waiting...\n"));
-              
+
   // Wait for all other threads to finish initialization.
   ACE_MT (this->barrier_->wait ());
   return buf;
@@ -436,9 +438,9 @@ Options::twoway_client_test (void *)
   double messages_per_sec = iteration * double (ACE_ONE_SECOND_IN_USECS) / real_time;
 
   ACE_DEBUG ((LM_DEBUG,
-	      ASYS_TEXT ("(%t) messages = %d\n(%t) usec-per-message = %f\n(%t) messages-per-second = %0.00f\n"),
-	      iteration,
-	      real_time / double (iteration),
+              ASYS_TEXT ("(%t) messages = %d\n(%t) usec-per-message = %f\n(%t) messages-per-second = %0.00f\n"),
+              iteration,
+              real_time / double (iteration),
               messages_per_sec < 0 ? 0 : messages_per_sec));
 
   // Close the connection.
