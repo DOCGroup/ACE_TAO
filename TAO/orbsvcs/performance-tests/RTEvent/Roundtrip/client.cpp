@@ -11,6 +11,7 @@
 #include "Auto_Disconnect.h"
 #include "ORB_Task_Activator.h"
 #include "Low_Priority_Setup.h"
+#include "EC_Destroyer.h"
 
 #include "orbsvcs/Event_Service_Constants.h"
 
@@ -125,7 +126,7 @@ int main (int argc, char *argv[])
 
       if (parse_args (argc, argv) != 0)
         return 1;
-      
+
       RTServer_Setup rtserver_setup (use_rt_corba,
                                      orb,
                                      rt_class
@@ -155,6 +156,16 @@ int main (int argc, char *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "Finished ORB and POA configuration\n"));
 
+      ACE_Thread_Manager my_thread_manager;
+
+      ORB_Task orb_task (orb);
+      orb_task.thr_mgr (&my_thread_manager);
+      ORB_Task_Activator orb_task_activator (rt_class.priority_high (),
+                                             rt_class.thr_sched_class (),
+                                             &orb_task);
+
+      ACE_DEBUG ((LM_DEBUG, "ORB is active\n"));
+
       CORBA::Object_var object =
         orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -164,15 +175,14 @@ int main (int argc, char *argv[])
                                                       ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
+      EC_Destroyer ec_destroyer (ec.in ());
+
+      CORBA::PolicyList_var inconsistent_policies;
+      (void) ec->_validate_connection (inconsistent_policies
+                                       ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
       ACE_DEBUG ((LM_DEBUG, "Finished EC configuration and activation\n"));
-
-      ACE_Thread_Manager my_thread_manager;
-
-      ORB_Task orb_task (orb);
-      orb_task.thr_mgr (&my_thread_manager);
-      ORB_Task_Activator orb_task_activator (rt_class.priority_high (),
-                                             rt_class.thr_sched_class (),
-                                             &orb_task);
 
 
       int thread_count = 1;
@@ -252,10 +262,7 @@ int main (int argc, char *argv[])
       low_priority_setup.collect_basic_stats (low_priority_stats);
       low_priority_stats.dump_results ("Low Priority", gsf);
 
-      ec->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - event loop finished\n"));
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) client - starting cleanup\n"));
     }
   ACE_CATCHANY
     {

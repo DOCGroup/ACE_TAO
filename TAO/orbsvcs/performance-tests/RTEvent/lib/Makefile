@@ -45,11 +45,15 @@ SRCS = \
   PriorityBand_Setup \
   Send_Task_Stopper \
   ORB_Task_Activator \
-  RTServer_Setup
+  RTServer_Setup \
+  EC_Destroyer
 
 TEMPLATE_SOURCES = \
   Servant_var \
-  RT_Class
+  RT_Class \
+  Low_Priority_Setup \
+  Task_Activator
+
 FILES = $(SRCS)
 DEFS  = $(addsuffix .h,$(FILES))
 LSRC  = $(addsuffix .cpp,$(FILES))
