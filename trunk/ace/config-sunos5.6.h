@@ -20,10 +20,6 @@
   extern "C" int madvise(caddr_t, size_t, int);
 #endif /* _POSIX_C_SOURCE >= 199506L  ||  __EXTENSIONS__ */
 
-#if defined (_POSIX_PTHREAD_SEMANTICS)
-# define ACE_HAS_POSIX_SEM
-#endif /* _POSIX_PTHREAD_SEMANTICS */
-
 // SunOS 5.6 has AIO calls.
 #define ACE_HAS_AIO_CALLS
 #endif /* ACE_CONFIG_H */
