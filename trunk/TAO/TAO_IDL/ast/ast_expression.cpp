@@ -1658,10 +1658,6 @@ AST_Expression::eval_symbol(AST_Expression::EvalKind ek)
 AST_Expression::AST_ExprValue *
 AST_Expression::coerce(AST_Expression::ExprType t)
 {
-  // Holds result.
-  AST_ExprValue result;
-  AST_ExprValue *copy = &result;
-
   /*
    * Is it already of the right type?
    */
@@ -1706,7 +1702,16 @@ AST_Expression::coerce(AST_Expression::ExprType t)
   if (pd_ev == NULL)
     return NULL;
 
+  /*
+   * Create a copy to contain coercion result
+   */
+  AST_ExprValue *copy = 0;
+  ACE_NEW_RETURN (copy,
+                  AST_ExprValue,
+                  0);
+
   copy->et = pd_ev->et;
+
   switch (pd_ev->et)
   {
     case EV_longdouble:
