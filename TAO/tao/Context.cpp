@@ -3,6 +3,7 @@
 #include "tao/Typecode.h"
 #include "tao/Environment.h"
 #include "tao/NVList.h"
+#include "ORB.h"
 #include "tao/Context.h"
 
 #if !defined (__ACE_INLINE__)
@@ -173,7 +174,7 @@ template class ACE_Node<char *>;
 template class ACE_Unbounded_Queue<char *>;
 template class ACE_Unbounded_Queue_Iterator<char *>;
 
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate ACE_Node<char *>
 #pragma instantiate ACE_Unbounded_Queue<char *>
