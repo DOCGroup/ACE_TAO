@@ -1,3 +1,27 @@
+Mon Oct  2 15:25:16 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tao/default_resource.h (TAO_Default_Resource_Factory): 
+	* tao/default_resource.cpp (get_parser_names): 
+	  Added CORBALOC_Parser in the list of IOR parsers.
+	
+	* tao/CORBALOC_Parser.h: 
+	* tao/CORBALOC_Parser.cpp: 
+	* tao/ior_corbaloc_export.h: 
+	* tao/CORBALOC_Parser.i: 
+	  Moved these files from the sub-directory ior_corbaloc to tao.
+	  Added support for uiop and shmiop protocols in the corbaloc url.
+	  So, finally TAO supports corbaloc scheme.
+
+	* tao/Makefile: 
+	  Added the CORBALOC_Parser files.
+	
+	* tao/SHMIOP_Profile.cpp (parse_string): 
+	  Added support so that if the host is not specified, the host is
+	  to be defaulted to the local host.
+
+	* tests/ior_corbaloc/ior_corbaloc_client_i.cpp (init): 
+	  Added some comments.
+
 Mon Oct 02 17:16:38 2000  David L. Levine <levine@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Makefile.CosEvent: inserted

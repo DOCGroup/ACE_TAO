@@ -374,7 +374,7 @@ TAO_Default_Resource_Factory::get_parser_names (const char **&names,
     }
 
   // OK fallback on the hardcoded ones....
-  this->parser_names_count_ = 2; /*HOW MANY DO WE HAVE?*/
+  this->parser_names_count_ = 3; /*HOW MANY DO WE HAVE?*/
 
   // @@ this->parser_names_count_ should later be changed to 4 when
   // activating CORBALOC and CORBANAME Parsers.
@@ -430,28 +430,29 @@ TAO_Default_Resource_Factory::get_parser_names (const char **&names,
       index++;
     }
 
-  /* 
+  
   // CORBALOC_Parser
   tmp =
     ACE_Dynamic_Service<TAO_IOR_Parser>::instance ("CORBALOC_Parser");
-
+  
   if (tmp == 0)
     {
       int r = ACE_Service_Config::process_directive
         (
-         "dynamic CORBALOC_Parser Service_Object * TAO_IOR_CORBALOC:_make_TAO_CORBALOC_Parser()"
+         "dynamic CORBALOC_Parser Service_Object * TAO:_make_TAO_CORBALOC_Parser()"
          );
-
+      
       if (r != 0)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Error Configuring CORBALOC Parser\n"), -1);
         }
     }
-
+  
   this->parser_names_[index] = "CORBALOC_Parser";
   index++;
-
+  
+  /*
   // CORBANAME_Parser
   tmp =
     ACE_Dynamic_Service<TAO_IOR_Parser>::instance ("CORBANAME_Parser");
