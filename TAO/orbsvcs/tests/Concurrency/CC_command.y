@@ -114,10 +114,13 @@ lock_mode:	T_READ { $$ = CosConcurrencyControl::read; }
 
 %%
 
-int yyerror(char *s)
+void
+yyerror (const char *s)
 {
-  printf("%d: %s at %s in:\n%s\n",
-         line_no, s, yytext, line_buf);
-  ACE_OS::exit(-1);
-  return 0;
+  ACE_OS::printf ("%d: %s at %s in:\n%s\n",
+                  line_no,
+                  s,
+                  yytext,
+                  line_buf);
+  ACE_OS::exit (-1);
 }
