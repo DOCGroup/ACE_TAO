@@ -13,6 +13,7 @@ ifndef TAO_ROOT
 endif # ! TAO_ROOT
 
 LDLIBS = -lTAO_IDL_FE_DLL
+ACE_SHLIBS = -lTAO_IDL_FE_DLL -lACE
 
 VPATH = .:be
 
