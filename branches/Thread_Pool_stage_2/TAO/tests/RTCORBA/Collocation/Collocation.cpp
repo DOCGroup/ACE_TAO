@@ -1,7 +1,7 @@
 // $Id$
 
 #include "ace/Get_Opt.h"
-#include "ace/Array.h"
+#include "ace/Array_Base.h"
 #include "tao/ORB_Core.h"
 #include "tao/RTCORBA/Thread_Pool.h"
 #include "testS.h"
@@ -19,7 +19,7 @@ struct Test_Object_And_Servant
   test_i *servant_;
 };
 
-typedef ACE_Array<Test_Object_And_Servant> Tests;
+typedef ACE_Array_Base<Test_Object_And_Servant> Tests;
 
 class test_i :
   public POA_test,
@@ -634,3 +634,11 @@ main (int argc, char *argv[])
 
   return 0;
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Array_Base<Test_Object_And_Servant>;
+template class ACE_Array_Iterator<Test_Object_And_Servant>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Array_Base<Test_Object_And_Servant>
+#pragma instantiate ACE_Array_Iterator<Test_Object_And_Servant>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

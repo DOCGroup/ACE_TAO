@@ -1288,7 +1288,7 @@ TAO_Object_Adapter::Servant_Upcall::lookup_POA (const TAO_ObjectKey &key,
   // upcall is in progress, wait for it to complete.  Unless of
   // course, the thread making the non-servant upcall is this thread.
   this->object_adapter_->wait_for_non_servant_upcalls_to_complete (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (TAO_Adapter::DS_FAILED);
+  ACE_CHECK_RETURN (0);
 
   // Locate the POA.
   this->object_adapter_->locate_poa (key,
