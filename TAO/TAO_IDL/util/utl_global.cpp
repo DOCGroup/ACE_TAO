@@ -179,7 +179,6 @@ IDL_GlobalData::IDL_GlobalData (void)
     gperf_path_ (0),
     temp_dir_ (0),
     ident_string_ (0),
-    obv_support_ (I_TRUE),
     case_diff_error_ (I_TRUE),
     nest_orb_ (I_FALSE),
     idl_flags_ (""),
@@ -979,18 +978,6 @@ const char *
 IDL_GlobalData::ident_string (void) const
 {
   return this->ident_string_;
-}
-
-void
-IDL_GlobalData::obv_support (idl_bool val)
-{
-  this->obv_support_ = val;
-}
-
-idl_bool
-IDL_GlobalData::obv_support (void)
-{
-  return this->obv_support_;
 }
 
 void
