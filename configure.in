@@ -1,7 +1,7 @@
 dnl
 dnl $Id$
 
-AC_REVISION($Revision 0.68 $)dnl
+AC_REVISION($Revision 0.69 $)dnl
 
 dnl
 dnl An autoconf script to automatically configure ACE.
@@ -1686,145 +1686,6 @@ ACE_CACHE_CHECK(if dlfcn.h is protected by extern \"C\",
         ])
 ], , AC_DEFINE(ACE_HAS_DLFCN_H_BROKEN_EXTERN_C))
 
-dnl Check if _XOPEN_SOURCE and _XOPEN_SOURCE_EXTENDED macros are
-dnl needed to make the getpgid() prototype visible.
-ACE_CACHE_CHECK(if XOPEN defines are needed for getpgid prototype,
-  ace_cv_lib_getpgid_needs_xopen,
-  [
-   save_CPPFLAGS="$CPPFLAGS"
-   ace_no_xopen="-U_XOPEN_SOURCE -U_XOPEN_SOURCE_EXTENDED"
-   CPPFLAGS="$CPPFLAGS $ace_no_xopen"
-   AC_EGREP_HEADER([[^_]+getpgid], unistd.h,
-     [
-      ace_cv_lib_getpgid_needs_xopen=no
-     ],
-     [
-      ace_xopen="-D_XOPEN_SOURCE -D_XOPEN_SOURCE_EXTENDED"
-      CPPFLAGS="$save_CPPFLAGS $ace_xopen"
-      AC_EGREP_HEADER([[^_]+getpgid], unistd.h,
-        [
-         ace_cv_lib_getpgid_needs_xopen=yes
-        ],
-        [
-         # We're hosed if we get here!
-         ace_cv_lib_getpgid_needs_xopen=no
-        ])
-     ])
-   dnl Reset the compiler flags
-   CPPFLAGS="$save_CPPFLAGS"
-  ], AC_DEFINE(ACE_LACKS_GETPGID_PROTOTYPE),)
-
-dnl Check if _POSIX_SOURCE macro is needed to make the strtok_r()
-dnl prototype visible.
-ACE_CACHE_CHECK(if POSIX define is needed for strtok_r prototype,
-  ace_cv_lib_strtok_r_needs_posix,
-  [
-   save_CPPFLAGS="$CPPFLAGS"
-   ace_no_posix="-U_POSIX_SOURCE"
-   CPPFLAGS="$CPPFLAGS $ace_no_posix"
-   AC_EGREP_HEADER([[^_]+strtok_r], string.h,
-     [
-      ace_cv_lib_strtok_r_needs_posix=no
-     ],
-     [
-      ace_posix="-D_POSIX_SOURCE"
-      CPPFLAGS="$save_CPPFLAGS $ace_posix"
-      AC_EGREP_HEADER([[^_]+strtok_r], string.h,
-        [
-         ace_cv_lib_strtok_r_needs_posix=yes
-        ],
-        [
-         # We're hosed if we get here!
-         ace_cv_lib_strtok_r_needs_posix=no
-        ])
-     ])
-   dnl Reset the compiler flags
-   CPPFLAGS="$save_CPPFLAGS"
-  ], AC_DEFINE(ACE_LACKS_STRTOK_R_PROTOTYPE),)
-
-dnl Check if _XOPEN_SOURCE macro is needed to make the strptime()
-dnl prototype visible.
-ACE_CACHE_CHECK(if XOPEN define is needed for strptime prototype,
-  ace_cv_lib_strptime_needs_xopen,
-  [
-   save_CPPFLAGS="$CPPFLAGS"
-   ace_no_xopen="-U_XOPEN_SOURCE"
-   CPPFLAGS="$CPPFLAGS $ace_no_xopen"
-   AC_EGREP_HEADER([[^_]+strptime], time.h,
-     [
-      ace_cv_lib_strptime_needs_xopen=no
-     ],
-     [
-      ace_xopen="-D_XOPEN_SOURCE"
-      CPPFLAGS="$save_CPPFLAGS $ace_xopen"
-      AC_EGREP_HEADER([[^_]+strptime], time.h,
-        [
-         ace_cv_lib_strptime_needs_xopen=yes
-        ],
-        [
-         # We're hosed if we get here!
-         ace_cv_lib_strptime_needs_xopen=no
-        ])
-     ])
-   dnl Reset the compiler flags
-   CPPFLAGS="$save_CPPFLAGS"
-  ], AC_DEFINE(ACE_LACKS_STRPTIME_PROTOTYPE),)
-
-dnl Check if _LARGEFILE64_SOURCE macro is needed to make the lseek64()
-dnl prototype visible.
-ACE_CACHE_CHECK(if LARGEFILE64 define is needed for lseek64 prototype,
-  ace_cv_lib_lseek64_needs_largefile64,
-  [
-   save_CPPFLAGS="$CPPFLAGS"
-   ace_no_largefile64="-U_LARGEFILE64_SOURCE"
-   CPPFLAGS="$CPPFLAGS $ace_no_largefile64"
-   AC_EGREP_HEADER([[^_]+lseek64], unistd.h,
-     [
-      ace_cv_lib_lseek64_needs_largefile64=no
-     ],
-     [
-      ace_largefile64="-D_LARGEFILE64_SOURCE"
-      CPPFLAGS="$save_CPPFLAGS $ace_largefile64"
-      AC_EGREP_HEADER([[^_]+lseek64], unistd.h,
-        [
-         ace_cv_lib_lseek64_needs_largefile64=yes
-        ],
-        [
-         # We're hosed if we get here!
-         ace_cv_lib_lseek64_needs_largefile64=no
-        ])
-     ])
-   dnl Reset the compiler flags
-   CPPFLAGS="$save_CPPFLAGS"
-  ], AC_DEFINE(ACE_LACKS_LSEEK64_PROTOTYPE),)
-
-dnl Check if _XOPEN_SOURCE=500 macro is needed to make the pread() and
-dnl pwrite() prototypes visible.
-ACE_CACHE_CHECK(if XOPEN define is needed for pread prototype,
-  ace_cv_lib_pread_needs_xopen,
-  [
-   save_CPPFLAGS="$CPPFLAGS"
-   ace_no_xopen="-U_XOPEN_SOURCE"
-   CPPFLAGS="$CPPFLAGS $ace_no_xopen"
-   AC_EGREP_HEADER([[^_]+pread], unistd.h,
-     [
-      ace_cv_lib_pread_needs_xopen=no
-     ],
-     [
-      ace_xopen="-D_XOPEN_SOURCE=500"
-      CPPFLAGS="$save_CPPFLAGS $ace_xopen"
-      AC_EGREP_HEADER([[^_]+pread], unistd.h,
-        [
-         ace_cv_lib_pread_needs_xopen=yes
-        ],
-        [
-         # We're hosed if we get here!
-         ace_cv_lib_pread_needs_xopen=no
-        ])
-     ])
-   dnl Reset the compiler flags
-   CPPFLAGS="$save_CPPFLAGS"
-  ], AC_DEFINE(ACE_LACKS_PREAD_PROTOTYPE),)
 
 dnl
 dnl SECTION 6: Checks for typedefs
@@ -3626,8 +3487,53 @@ AC_CHECK_FUNC(difftime, dnl
   ,
   AC_DEFINE(ACE_LACKS_DIFFTIME))
 
-AC_CHECK_FUNC(llseek, dnl
-  AC_DEFINE(ACE_HAS_LLSEEK),)
+AC_CHECK_FUNC(lseek64, dnl
+  [
+   AC_DEFINE(ACE_HAS_LSEEK64)
+   dnl Check if _LARGEFILE64_SOURCE macro is needed to make the
+   dnl lseek64() prototype visible, or if the prototype itself is missing.
+   ACE_CACHE_CHECK(for lseek64 prototype,
+     ace_cv_lib_has_lseek64_prototype,
+     [
+      save_CPPFLAGS="$CPPFLAGS"
+      ace_no_largefile64="-U_LARGEFILE64_SOURCE"
+      CPPFLAGS="$CPPFLAGS $ace_no_largefile64"
+      AC_EGREP_HEADER([[^_]+lseek64], unistd.h,
+        [
+         ace_cv_lib_has_lseek64_prototype=yes
+        ],
+        [
+         ace_cv_lib_has_lseek64_prototype=no
+        ])
+      dnl Reset the compiler flags
+      CPPFLAGS="$save_CPPFLAGS"
+     ],, AC_DEFINE(ACE_LACKS_LSEEK64_PROTOTYPE))
+  ],
+  [
+   AC_CHECK_FUNC(llseek,
+     [
+      AC_DEFINE(ACE_HAS_LLSEEK)
+      dnl Check if _LARGEFILE64_SOURCE macro is needed to make the
+      dnl llseek() prototype visible, or if the prototype itself is
+      dnl missing.
+      ACE_CACHE_CHECK(for llseek prototype,
+        ace_cv_lib_has_llseek_prototype,
+        [
+         save_CPPFLAGS="$CPPFLAGS"
+         ace_no_largefile64="-U_LARGEFILE64_SOURCE"
+         CPPFLAGS="$CPPFLAGS $ace_no_largefile64"
+         AC_EGREP_HEADER([[^_]+llseek], unistd.h,
+           [
+            ace_cv_lib_has_llseek_prototype=no
+           ],
+           [
+            ace_cv_lib_has_llseek_prototype=yes
+           ],)
+         dnl Reset the compiler flags
+         CPPFLAGS="$save_CPPFLAGS"
+        ],, AC_DEFINE(ACE_LACKS_LLSEEK_PROTOTYPE))
+     ],)
+  ])
 
 AC_CHECK_FUNC(bind, dnl
   [
@@ -3731,8 +3637,27 @@ AC_CHECK_FUNC(gethrtime, dnl
 
 AC_CHECK_FUNC(pread, dnl
   AC_CHECK_FUNC(pwrite,
-    AC_DEFINE(ACE_HAS_P_READ_WRITE),),
-  )
+    [
+     AC_DEFINE(ACE_HAS_P_READ_WRITE)
+     dnl Check if _XOPEN_SOURCE=500 macro is needed to make the pread() and
+     dnl pwrite() prototypes visible.
+     ACE_CACHE_CHECK(for pread prototype,
+       ace_cv_lib_has_pread_prototype,
+       [
+        save_CPPFLAGS="$CPPFLAGS"
+        ace_no_xopen="-U_XOPEN_SOURCE"
+        CPPFLAGS="$CPPFLAGS $ace_no_xopen"
+        AC_EGREP_HEADER([[^_]+pread], unistd.h,
+          [
+           ace_cv_lib_has_pread_prototype=yes
+          ],
+          [
+           ace_cv_lib_has_pread_prototype=no
+          ])
+        dnl Reset the compiler flags
+        CPPFLAGS="$save_CPPFLAGS"
+       ],, AC_DEFINE(ACE_LACKS_PREAD_PROTOTYPE))
+    ],),)
 
 AC_CHECK_FUNC(readv, , AC_DEFINE(ACE_LACKS_READV)) dnl
 
@@ -3763,8 +3688,30 @@ AC_CHECK_FUNC(strrchr, dnl
   AC_DEFINE(ACE_LACKS_STRRCHR))
 
 AC_CHECK_FUNC(strptime, dnl
-  AC_DEFINE(ACE_HAS_STRPTIME),
-  AC_DEFINE(ACE_LACKS_NATIVE_STRPTIME))
+  [
+   AC_DEFINE(ACE_HAS_STRPTIME)
+   dnl Check if _XOPEN_SOURCE macro is needed to make the strptime()
+   dnl prototype visible.
+   ACE_CACHE_CHECK(for strptime prototype,
+     ace_cv_lib_has_strptime_prototype,
+     [
+      save_CPPFLAGS="$CPPFLAGS"
+      ace_no_xopen="-U_XOPEN_SOURCE"
+      CPPFLAGS="$CPPFLAGS $ace_no_xopen"
+      AC_EGREP_HEADER([[^_]+strptime], time.h,
+        [
+         ace_cv_lib_has_strptime_prototype=yes
+        ],
+        [
+         ace_cv_lib_has_strptime_prototype=no
+        ])
+      dnl Reset the compiler flags
+      CPPFLAGS="$save_CPPFLAGS"
+     ],, AC_DEFINE(ACE_LACKS_STRPTIME_PROTOTYPE))
+  ],
+  [
+   AC_DEFINE(ACE_LACKS_NATIVE_STRPTIME)
+  ])
 
 AC_CHECK_FUNC(memchr, dnl
   AC_DEFINE(ACE_HAS_MEMCHR),)
@@ -3837,8 +3784,29 @@ AC_CHECK_FUNC(getrusage, dnl
   AC_DEFINE(ACE_HAS_GETRUSAGE),)
 
 AC_CHECK_FUNC(getpgid, dnl
-  ,
-  AC_DEFINE(ACE_LACKS_GETPGID))
+  [
+   dnl Check if _XOPEN_SOURCE and _XOPEN_SOURCE_EXTENDED macros are
+   dnl needed to make the getpgid() prototype visible.
+   ACE_CACHE_CHECK(for getpgid prototype,
+     ace_cv_lib_has_getpgid_prototype,
+     [
+      save_CPPFLAGS="$CPPFLAGS"
+      ace_no_xopen="-U_XOPEN_SOURCE -U_XOPEN_SOURCE_EXTENDED"
+      CPPFLAGS="$CPPFLAGS $ace_no_xopen"
+      AC_EGREP_HEADER([[^_]+getpgid], unistd.h,
+        [
+         ace_cv_lib_has_getpgid_prototype=yes
+        ],
+        [
+         ace_cv_lib_has_getpgid_prototype=no
+        ])
+      dnl Reset the compiler flags
+      CPPFLAGS="$save_CPPFLAGS"
+     ],, AC_DEFINE(ACE_LACKS_GETPGID_PROTOTYPE))
+  ],
+  [
+   AC_DEFINE(ACE_LACKS_GETPGID)
+  ])
 
 AC_CHECK_FUNC(getppid, dnl
   ,
@@ -4236,7 +4204,27 @@ dnl Check for reentrant functions
 if test "$ace_user_enable_reentrant_funcs" = yes; then
   AC_CHECK_FUNC(rand_r,,)
 
-  AC_CHECK_FUNC(strtok_r,,)
+  AC_CHECK_FUNC(strtok_r,
+    [
+     dnl Check if _POSIX_SOURCE macro is needed to make the strtok_r()
+     dnl prototype visible.
+     ACE_CACHE_CHECK(for strtok_r prototype,
+     ace_cv_lib_has_strtok_r_prototype,
+        [
+         save_CPPFLAGS="$CPPFLAGS"
+         ace_no_posix="-U_POSIX_SOURCE"
+         CPPFLAGS="$CPPFLAGS $ace_no_posix"
+         AC_EGREP_HEADER([[^_]+strtok_r], string.h,
+           [
+            ace_cv_lib_has_strtok_r_prototype=yes
+           ],
+           [
+            ace_cv_lib_has_strtok_r_prototype=no
+           ])
+           dnl Reset the compiler flags
+           CPPFLAGS="$save_CPPFLAGS"
+        ],, AC_DEFINE(ACE_LACKS_STRTOK_R_PROTOTYPE))
+    ],)
 
   AC_CHECK_FUNC(getpwnam_r,, AC_DEFINE(ACE_LACKS_PWD_REENTRANT_FUNCTIONS))
 
