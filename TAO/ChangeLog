@@ -1,3 +1,49 @@
+Thu Sep 18 14:11:53 MST 2003 Trevor Fields <fields_t@ociweb.com>
+
+        * TAO/performance-tests/Cubit/TAO/DII_Cubit/DII_Cubit.mpc:
+
+          Corrected the name of the IDL_Cubit project to build after
+
+        * TAO/examples/Quoter/Quoter.mpc:
+        * TAO/examples/TypeCode_Creation/TypeCode_Creation.mpc:
+        * TAO/orbsvcs/IFR_Service/IFR_Service.mpc:
+        * TAO/orbsvcs/LifeCycle_Service/LifeCycle_Service.mpc:
+        * TAO/orbsvcs/orbsvcs/CosLoadBalancing.mpc:
+        * TAO/orbsvcs/orbsvcs/FTORB.mpc:
+        * TAO/orbsvcs/orbsvcs/FaultTolerance.mpc:
+        * TAO/orbsvcs/orbsvcs/IFRService.mpc:
+        * TAO/orbsvcs/orbsvcs/PortableGroup.mpc:
+        * TAO/orbsvcs/tests/CosEvent/Basic/basiceventtestexe.mpb:
+        * TAO/orbsvcs/tests/CosEvent/lib/CosEvent_lib.mpc:
+        * TAO/orbsvcs/tests/EC_Custom_Marshal/EC_Custom_Marshal.mpc:
+        * TAO/orbsvcs/tests/EC_Mcast/EC_Mcast.mpc:
+        * TAO/orbsvcs/tests/EC_Multiple/EC_Multiple.mpc:
+        * TAO/orbsvcs/tests/EC_Throughput/EC_Throughput.mpc:
+        * TAO/orbsvcs/tests/Event/Performance/eventperftestexe.mpb:
+        * TAO/orbsvcs/tests/InterfaceRepo/Application_Test/InterfaceRepo_Application_Test.mpc:
+        * TAO/orbsvcs/tests/InterfaceRepo/IDL3_Test/InterfaceRepo_IDL3_Test.mpc:
+        * TAO/orbsvcs/tests/InterfaceRepo/IFR_Test/InterfaceRepo_IFR_Test.mpc:
+        * TAO/orbsvcs/tests/InterfaceRepo/Persistence_Test/InterfaceRepo_Persistence_Test.mpc:
+        * TAO/tests/ICMG_Any_Bug/Hello.mpc:
+        * TAO/tests/Object_Loader/Object_Loader.mpc:
+        * TAO/tests/POA/Default_Servant/Default_Servant.mpc:
+        * TAO/tests/POA/MT_Servant_Locator/MT_Servant_Locator.mpc:
+
+          Changed to not build when minimum_corba = 1
+
+        * TAO/orbsvcs/examples/RtEC/IIOPGateway/RtEC_IIOPGateway.mpc:
+        * TAO/tao/RTCORBA/RTCORBA.mpc:
+        * TAO/tao/RTPortableServer/RTPortableServer.mpc:
+        * TAO/tao/RTScheduling/RTScheduler.mpc:
+
+          Added requires += corba_messaging
+
+        * TAO/tests/AMI_Buffering/AMI_Buffering.mpc:
+        * TAO/tests/AMI_Timeouts/AMI_Timeouts.mpc:
+        * TAO/tests/LongUpcalls/LongUpcalls.mpc:
+
+          Added requires += ami
+
 Thurs Sep 18 17:15:51 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 	
 	* examples/RTScheduling/Fixed_Priority_Scheduler/FP_Scheduler.h: 
