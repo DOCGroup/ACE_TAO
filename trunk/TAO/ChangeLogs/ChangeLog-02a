@@ -1,3 +1,11 @@
+Wed Nov  7 13:20:50 2001  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/Trader/Offer_Database.cpp:
+
+          Check the return value of a find operation before using the
+          pointer value (set by find).  This was causing the Trading_Service
+          to core dump in certain situations.
+
 Wed Nov  7 13:12:01 2001  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/orbsvcs/FaultTolerance/FT_Invocation_Endpoint_Selectors.cpp:

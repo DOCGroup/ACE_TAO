@@ -226,9 +226,8 @@ lookup_offer (const char* type, CORBA::ULong id)
       ACE_READ_GUARD_RETURN (LOCK_TYPE, ace_mon, offer_map_entry->lock_, 0);
 
       TAO_Offer_Map::ENTRY* offer_entry_ptr = 0;
-      offer_map_entry->offer_map_->find (id, offer_entry_ptr);
-
-      return_value = offer_entry_ptr->int_id_;
+      if (offer_map_entry->offer_map_->find (id, offer_entry_ptr) == 0)
+        return_value = offer_entry_ptr->int_id_;
     }
 
   return return_value;
