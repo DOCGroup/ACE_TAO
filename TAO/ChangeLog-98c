@@ -1,3 +1,8 @@
+Wed Sep 03 06:15:00 1997  Brian Mendel  <brian.r.mendel@boeing.com>
+
+   * tao/default_client.cpp:  Added conditional sections around the code for setting the
+     socket options for VxWorks.  VxWorks does not support a 64K buffer size.
+
 Tue Sep 02 18:32:12 1997  Brian Mendel  <brian.r.mendel@boeing.com>
 
    * tao/orbobj.cpp:  Added include for Service_Repository.h to orbobj.h
