@@ -70,13 +70,13 @@ test (void *args)
                 {
                   ACE_DEBUG ((LM_INFO,
                               ACE_TEXT ("(%P|%t) %p, but ACE_HAS_MUTEX_TIMEOUTS is not defined - Ok\n"),
-                              ACE_TEXT ("mutex timeouts")));
+                              ACE_TEXT ("mutex timed acquire")));
                   reported_notsup = 1;
                 }
 #else
-              ACE_DEBUG ((LM_INFO,
+              ACE_DEBUG ((LM_ERROR,
                           ACE_TEXT ("(%P|%t) %p - maybe ACE_HAS_MUTEX_TIMEOUTS should not be defined?\n"),
-                          ACE_TEXT ("mutex timeouts")));
+                          ACE_TEXT ("mutex timed acquire")));
 #endif  /* ACE_HAS_MUTEX_TIMEOUTS */
             }
           else
