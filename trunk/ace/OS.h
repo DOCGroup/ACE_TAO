@@ -1835,8 +1835,8 @@ inline DWORD ACE_LOW_DWORD  (ACE_QWORD q) { return q.LowPart; }
 inline DWORD ACE_HIGH_DWORD (ACE_QWORD q) { return q.HighPart; }
 #else
 typedef unsigned __int64 ACE_QWORD;
-//typedef signed __int64 ACE_hrtime_t;  /* VC++ won't convert unsigned __int64 to double */
-typedef unsigned __int64 ACE_hrtime_t; /* VC++ can deal. We need this. */
+typedef signed __int64 ACE_hrtime_t;  /* VC++ won't convert unsigned __int64 to double */
+// typedef unsigned __int64 ACE_hrtime_t; /* Why do we need this? */
 inline ACE_QWORD ACE_MAKE_QWORD (DWORD lo, DWORD hi) { return ACE_QWORD (lo) | (ACE_QWORD (hi) << 32); }
 inline DWORD ACE_LOW_DWORD  (ACE_QWORD q) { return (DWORD) q; }
 inline DWORD ACE_HIGH_DWORD (ACE_QWORD q) { return (DWORD) (q >> 32); }
