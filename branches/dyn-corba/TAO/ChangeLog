@@ -1,3 +1,20 @@
+Thu Feb 27 09:36:05 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * performance-tests/Anyop/Anyop.dsp:
+        * performance-tests/Anyop/Makefile:
+        * performance-tests/Anyop/Makefile.bor:
+        * performance-tests/Anyop/anyop.cpp:
+        * performance-tests/Anyop/test.idl:
+
+	  New test for benchmarking Any insertion and extraction
+	  operators.
+
+	* performance-tests/Makefile:
+	* performance-tests/Makefile.bor:
+	* performance-tests/TAO_Perf_Tests.dsw:
+
+	  Added new test to makefiles and MSVC workspace.
+
 Mon Feb 24 16:49:34 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.cpp:
