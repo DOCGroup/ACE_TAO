@@ -1,3 +1,10 @@
+Tue Jan 13 21:39:30 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* Makefile (CONTROLLED_FILES):
+
+	  Removed aux and configure from the CONTROLLED_FILES section and
+	  moved it to the RELEASE_FILES section.
+
 Tue Jan 13 16:33:12 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* Makefile (CONTROLLED_FILES):
