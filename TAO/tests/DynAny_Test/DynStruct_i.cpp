@@ -508,7 +508,7 @@ DynStruct_i::insert_wchar (CORBA::WChar value, CORBA::Environment &env)
 }
 
 void
-DynStruct_i::insert_any (CORBA::Any& value, CORBA::Environment &env)
+DynStruct_i::insert_any (const CORBA::Any& value, CORBA::Environment &env)
 {
   if (DynAny_i::unalias (this->type_.in ()->member_type (this->index_), env) 
     == CORBA::tk_any)

@@ -79,7 +79,7 @@ public:
                                             CORBA::Environment &env);
   void                  insert_wchar        (CORBA::WChar value,
                                             CORBA::Environment &env);
-  void                  insert_any          (CORBA::Any& value,
+  void                  insert_any          (const CORBA::Any& value,
                                              CORBA::Environment &env);
 
   CORBA::Boolean        get_boolean         (CORBA::Environment &env);
