@@ -1015,6 +1015,8 @@ template class ACE_RB_Tree_Iterator<TAO_EC_ProxyPushConsumer *, int, ACE_Less_Th
 template class ACE_RB_Tree_Reverse_Iterator<TAO_EC_ProxyPushConsumer *, int, ACE_Less_Than<TAO_EC_ProxyPushConsumer *>, ACE_Null_Mutex>;
 template class ACE_RB_Tree_Iterator_Base<TAO_EC_ProxyPushConsumer *, int, ACE_Less_Than<TAO_EC_ProxyPushConsumer *>, ACE_Null_Mutex>;
 template class ACE_RB_Tree_Node<TAO_EC_ProxyPushConsumer *, int>;
+template class ACE_Less_Than<TAO_EC_ProxyPushConsumer *>;
+template class TAO_EC_RB_Tree_Based_Proxy_Set_Iterator<TAO_EC_ProxyPushConsumer>;
 
 template class TAO_EC_Proxy_Collection<TAO_EC_ProxyPushSupplier>;
 template class TAO_EC_List_Based_Proxy_Set<TAO_EC_ProxyPushSupplier>;
@@ -1027,6 +1029,8 @@ template class ACE_RB_Tree_Iterator<TAO_EC_ProxyPushSupplier *, int, ACE_Less_Th
 template class ACE_RB_Tree_Iterator_Base<TAO_EC_ProxyPushSupplier *, int, ACE_Less_Than<TAO_EC_ProxyPushSupplier *>, ACE_Null_Mutex>;
 template class ACE_RB_Tree_Reverse_Iterator<TAO_EC_ProxyPushSupplier *, int, ACE_Less_Than<TAO_EC_ProxyPushSupplier *>, ACE_Null_Mutex>;
 template class ACE_RB_Tree_Node<TAO_EC_ProxyPushSupplier *, int>;
+template class ACE_Less_Than<TAO_EC_ProxyPushSupplier *>;
+template class TAO_EC_RB_Tree_Based_Proxy_Set_Iterator<TAO_EC_ProxyPushSupplier>;
 
 #if defined (ACE_HAS_THREADS)
 //
@@ -1059,6 +1063,11 @@ template class TAO_EC_Busy_Lock_Adapter<
       TAO_EC_List_Based_Proxy_Set<TAO_EC_ProxyPushConsumer>,
       TAO_EC_Consumer_List_Iterator,
       ACE_SYNCH> >;
+template class ACE_Guard< TAO_EC_Busy_Lock_Adapter<
+  TAO_EC_Delayed_Changes<TAO_EC_ProxyPushConsumer,
+      TAO_EC_List_Based_Proxy_Set<TAO_EC_ProxyPushConsumer>,
+      TAO_EC_Consumer_List_Iterator,
+      ACE_SYNCH> > >;
 template class TAO_EC_Connected_Command<
   TAO_EC_Delayed_Changes<TAO_EC_ProxyPushConsumer,
       TAO_EC_List_Based_Proxy_Set<TAO_EC_ProxyPushConsumer>,
@@ -1102,6 +1111,11 @@ template class TAO_EC_Busy_Lock_Adapter<
       TAO_EC_RB_Tree_Based_Proxy_Set<TAO_EC_ProxyPushConsumer>,
       TAO_EC_Consumer_RB_Tree_Iterator,
       ACE_SYNCH> >;
+template class ACE_Guard< TAO_EC_Busy_Lock_Adapter<
+  TAO_EC_Delayed_Changes<TAO_EC_ProxyPushConsumer,
+      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_EC_ProxyPushConsumer>,
+      TAO_EC_Consumer_RB_Tree_Iterator,
+      ACE_SYNCH> > >;
 template class TAO_EC_Connected_Command<
   TAO_EC_Delayed_Changes<TAO_EC_ProxyPushConsumer,
       TAO_EC_RB_Tree_Based_Proxy_Set<TAO_EC_ProxyPushConsumer>,
@@ -1146,6 +1160,11 @@ template class TAO_EC_Busy_Lock_Adapter<
       TAO_EC_List_Based_Proxy_Set<TAO_EC_ProxyPushSupplier>,
       TAO_EC_Supplier_List_Iterator,
       ACE_SYNCH> >;
+template class ACE_Guard< TAO_EC_Busy_Lock_Adapter<
+  TAO_EC_Delayed_Changes<TAO_EC_ProxyPushSupplier,
+      TAO_EC_List_Based_Proxy_Set<TAO_EC_ProxyPushSupplier>,
+      TAO_EC_Supplier_List_Iterator,
+      ACE_SYNCH> > >;
 template class TAO_EC_Connected_Command<
   TAO_EC_Delayed_Changes<TAO_EC_ProxyPushSupplier,
       TAO_EC_List_Based_Proxy_Set<TAO_EC_ProxyPushSupplier>,
@@ -1189,6 +1208,11 @@ template class TAO_EC_Busy_Lock_Adapter<
       TAO_EC_RB_Tree_Based_Proxy_Set<TAO_EC_ProxyPushSupplier>,
       TAO_EC_Supplier_RB_Tree_Iterator,
       ACE_SYNCH> >;
+template class ACE_Guard< TAO_EC_Busy_Lock_Adapter<
+  TAO_EC_Delayed_Changes<TAO_EC_ProxyPushSupplier,
+      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_EC_ProxyPushSupplier>,
+      TAO_EC_Supplier_RB_Tree_Iterator,
+      ACE_SYNCH> > >;
 template class TAO_EC_Connected_Command<
   TAO_EC_Delayed_Changes<TAO_EC_ProxyPushSupplier,
       TAO_EC_RB_Tree_Based_Proxy_Set<TAO_EC_ProxyPushSupplier>,
@@ -1234,6 +1258,11 @@ template class TAO_EC_Busy_Lock_Adapter<
       TAO_EC_List_Based_Proxy_Set<TAO_EC_ProxyPushConsumer>,
       TAO_EC_Consumer_List_Iterator,
       ACE_NULL_SYNCH> >;
+template class ACE_Guard< TAO_EC_Busy_Lock_Adapter<
+  TAO_EC_Delayed_Changes<TAO_EC_ProxyPushConsumer,
+      TAO_EC_List_Based_Proxy_Set<TAO_EC_ProxyPushConsumer>,
+      TAO_EC_Consumer_List_Iterator,
+      ACE_NULL_SYNCH> > >;
 template class TAO_EC_Connected_Command<
   TAO_EC_Delayed_Changes<TAO_EC_ProxyPushConsumer,
       TAO_EC_List_Based_Proxy_Set<TAO_EC_ProxyPushConsumer>,
@@ -1277,6 +1306,11 @@ template class TAO_EC_Busy_Lock_Adapter<
       TAO_EC_RB_Tree_Based_Proxy_Set<TAO_EC_ProxyPushConsumer>,
       TAO_EC_Consumer_RB_Tree_Iterator,
       ACE_NULL_SYNCH> >;
+template class ACE_Guard< TAO_EC_Busy_Lock_Adapter<
+  TAO_EC_Delayed_Changes<TAO_EC_ProxyPushConsumer,
+      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_EC_ProxyPushConsumer>,
+      TAO_EC_Consumer_RB_Tree_Iterator,
+      ACE_NULL_SYNCH> > >;
 template class TAO_EC_Connected_Command<
   TAO_EC_Delayed_Changes<TAO_EC_ProxyPushConsumer,
       TAO_EC_RB_Tree_Based_Proxy_Set<TAO_EC_ProxyPushConsumer>,
@@ -1321,6 +1355,11 @@ template class TAO_EC_Busy_Lock_Adapter<
       TAO_EC_List_Based_Proxy_Set<TAO_EC_ProxyPushSupplier>,
       TAO_EC_Supplier_List_Iterator,
       ACE_NULL_SYNCH> >;
+template class ACE_Guard< TAO_EC_Busy_Lock_Adapter<
+  TAO_EC_Delayed_Changes<TAO_EC_ProxyPushSupplier,
+      TAO_EC_List_Based_Proxy_Set<TAO_EC_ProxyPushSupplier>,
+      TAO_EC_Supplier_List_Iterator,
+      ACE_NULL_SYNCH> > >;
 template class TAO_EC_Connected_Command<
   TAO_EC_Delayed_Changes<TAO_EC_ProxyPushSupplier,
       TAO_EC_List_Based_Proxy_Set<TAO_EC_ProxyPushSupplier>,
@@ -1364,6 +1403,11 @@ template class TAO_EC_Busy_Lock_Adapter<
       TAO_EC_RB_Tree_Based_Proxy_Set<TAO_EC_ProxyPushSupplier>,
       TAO_EC_Supplier_RB_Tree_Iterator,
       ACE_NULL_SYNCH> >;
+template class ACE_Guard< TAO_EC_Busy_Lock_Adapter<
+  TAO_EC_Delayed_Changes<TAO_EC_ProxyPushSupplier,
+      TAO_EC_RB_Tree_Based_Proxy_Set<TAO_EC_ProxyPushSupplier>,
+      TAO_EC_Supplier_RB_Tree_Iterator,
+      ACE_NULL_SYNCH> > >;
 template class TAO_EC_Connected_Command<
   TAO_EC_Delayed_Changes<TAO_EC_ProxyPushSupplier,
       TAO_EC_RB_Tree_Based_Proxy_Set<TAO_EC_ProxyPushSupplier>,
