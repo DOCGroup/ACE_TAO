@@ -1,3 +1,10 @@
+Tue Oct 31 14:21:11 2000  David L. Levine <levine@cs.wustl.edu>
+
+        * bin/check_build_logs: sort the output file names, so
+          that guajira's cxx build shows up first (locally).
+          Limit total number of lines to 2000 to keep below
+          majordomo's size limit.
+
 Tue Oct 31 10:54:42 2000 Darrell Brunsch <brunsch@uci.edu>
 
         * ace/Process.i:
@@ -7,21 +14,21 @@ Tue Oct 31 10:54:42 2000 Darrell Brunsch <brunsch@uci.edu>
 
 Tue Oct 31 11:35:31 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/config-sunos5.5.h: 
-	* ace/Log_Msg.cpp: Added patches provided by Russ. Bugzilla id 710. 
+        * ace/config-sunos5.5.h:
+        * ace/Log_Msg.cpp: Added patches provided by Russ. Bugzilla id 710.
 
 Tue Oct 31 08:14:33 2000  Chris Cleeland  <cleeland_c@ociweb.com>
 
-	* wrapper_macros.GNU: 
+        * wrapper_macros.GNU:
 
-	  Set defaults for exceptions, rtti, and fast to all be zero
-	  (0),i.e., off.  Henceforth, if you're creating a new port and
-	  you want exceptions to be on, you must explicitly have
-	  "exceptions=1" in your platform_*.GNU file.
-	
-	* platform_irix6.x_common.GNU:
+          Set defaults for exceptions, rtti, and fast to all be zero
+          (0),i.e., off.  Henceforth, if you're creating a new port and
+          you want exceptions to be on, you must explicitly have
+          "exceptions=1" in your platform_*.GNU file.
 
-	  Added an "exceptions=1" directive per the comment above.
+        * platform_irix6.x_common.GNU:
+
+          Added an "exceptions=1" directive per the comment above.
 
 Mon Oct 30 18:56:33 2000  Darrell Brunsch <brunsch@uci.edu>
 
@@ -31,7 +38,7 @@ Mon Oct 30 18:56:33 2000  Darrell Brunsch <brunsch@uci.edu>
 
           Changed several of the socket calls to use char instead
           of ACE_TCHAR, seeing that no OS supports anything but char.
-          But I am keeping the ACE_TCHAR or dual char/wchar_t 
+          But I am keeping the ACE_TCHAR or dual char/wchar_t
           interfaces on classes higher up the stream.
 
           Methods changed are:
@@ -52,8 +59,8 @@ Mon Oct 30 18:56:33 2000  Darrell Brunsch <brunsch@uci.edu>
           - inet_pton
 
           This should take care of a couple of things.  First we don't
-          have to worry about returning a wchar_t * static buffer 
-          instead of a char * static buffer from something like 
+          have to worry about returning a wchar_t * static buffer
+          instead of a char * static buffer from something like
           inet_ntoa and this should remove some slowdowns reported from
           gethostbyname.  Thanks to Nick Pratt <npratt@microstrategy.com>
           for reporting both of these.
@@ -63,12 +70,12 @@ Mon Oct 30 18:56:33 2000  Darrell Brunsch <brunsch@uci.edu>
         * ace/INET_Addr.i:
 
           Fixed references to interface changes and added dual
-          char/wchar_t interfaces to replace some ACE_TCHAR ones.  
+          char/wchar_t interfaces to replace some ACE_TCHAR ones.
 
         * ace/MEM_Addr.cpp:
         * ace/MEM_Addr.h:
         * ace/MEM_Addr.i:
-          
+
           Changed get_host_name and get_host_name to return char *
 
         * ace/SOCK_Dgram_Mcast.cpp:
@@ -78,8 +85,8 @@ Mon Oct 30 18:56:33 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/Object_Manager.cpp:
 
-          Added ERROR to the output for AV's and Unhandled Exceptions.      
-    
+          Added ERROR to the output for AV's and Unhandled Exceptions.
+
 Mon Oct 30 18:51:40 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * examples/IPC_SAP/SSL_SAP/SSL-client.dsp:
@@ -104,10 +111,10 @@ Mon Oct 30 18:51:40 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Mon Oct 30 16:34:33 2000  Chris Cleeland  <cleeland_c@ociweb.com>
 
-	* include/makeinclude/platform_vxworks5.x_g++.GNU:
- 	
-	More exceptions/fast/rtti canonicalization fixes.  Thanks again,
- 	Carlos.
+        * include/makeinclude/platform_vxworks5.x_g++.GNU:
+
+        More exceptions/fast/rtti canonicalization fixes.  Thanks again,
+        Carlos.
 
 Mon Oct 30 11:56:13 2000  Carlos O'Ryan  <coryan@uci.edu>
 
@@ -356,17 +363,17 @@ Wed Oct 25 20:38:33 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Wed Oct 25 13:20:24 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tests/Purgable_Map_Manager_Test: Removed this deprecated test.
-	  The following files were effected:
+        * tests/Purgable_Map_Manager_Test: Removed this deprecated test.
+          The following files were effected:
 
-	  - Makefile.am
-	  - icc.bat
-	  - t.icc
+          - Makefile.am
+          - icc.bat
+          - t.icc
 
-	  These files were removed:
+          These files were removed:
 
-	  - Purgable_Map_Manager_Test.cpp
-	  - Purgable_Map_Manager_Test.icc	
+          - Purgable_Map_Manager_Test.cpp
+          - Purgable_Map_Manager_Test.icc
 
 Wed Oct 25 11:24:42 2000  Darrell Brunsch  <brunsch@uci.edu>
 
