@@ -41,11 +41,11 @@ Cubit_Client::read_ior (char *filename)
 
   // Open the file for reading.
   this->f_handle_ = ACE_OS::open (filename,0);
-  
+
   if (this->f_handle_ == ACE_INVALID_HANDLE)
     ACE_ERROR_RETURN ((LM_ERROR,
-		       "Unable to open %s for writing: %p\n",
-		       filename),
+                       "Unable to open %s for writing: %p\n",
+                       filename),
                       -1);
   ACE_Read_Buffer ior_buffer (this->f_handle_);
   this->cubit_factory_key_ = ior_buffer.read ();
@@ -72,27 +72,27 @@ Cubit_Client::parse_args (void)
       case 'd':  // debug flag
         TAO_debug_level++;
         break;
-      case 'n':			// loop count
+      case 'n':                 // loop count
         this->loop_count_ = (u_int) ACE_OS::atoi (get_opts.optarg);
         break;
       case 'f': // read the IOR from the file.
-	result = this->read_ior (get_opts.optarg);
-	if (result < 0)
-	  ACE_ERROR_RETURN ((LM_ERROR,
+        result = this->read_ior (get_opts.optarg);
+        if (result < 0)
+          ACE_ERROR_RETURN ((LM_ERROR,
                              "Unable to read ior from %s : %p\n",
-			     get_opts.optarg),
+                             get_opts.optarg),
                             -1);
-	    break;
+            break;
       case 'k': // read the cubit IOR from the command-line.
         this->cubit_factory_key_ =
           ACE_OS::strdup (get_opts.optarg);
         break;
-      case 'x': 
+      case 'x':
         this->shutdown_ = 1;
         break;
       case 's': // Don't use the TAO Naming Service.
-	this->use_naming_service_ = 0;
-	break;
+        this->use_naming_service_ = 0;
+        break;
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -102,7 +102,7 @@ Cubit_Client::parse_args (void)
                            " [-f cubit_factory-obj-ref-key-file]"
                            " [-k cubit-obj-ref-key]"
                            " [-x]"
-			   " [-s]"
+                           " [-s]"
                            "\n",
                            this->argv_ [0]),
                           -1);
@@ -138,10 +138,10 @@ Cubit_Client::cube_union_stub (void)
       u.l (u.l () * u.l () * u.l ()) ;
 
       if (u.l () != r.l ())
-	{
-	  ACE_DEBUG ((LM_DEBUG, "** cube_union ERROR\n"));
-	  this->error_count_++;
-	}
+        {
+          ACE_DEBUG ((LM_DEBUG, "** cube_union ERROR\n"));
+          this->error_count_++;
+        }
 
     }
 
@@ -174,12 +174,12 @@ Cubit_Client::cube_union_stub (void)
       u.cm ().o = u.cm ().o * u.cm ().o * u.cm ().o;
 
       if (u.cm ().l != r.cm ().l
-	  || u.cm ().s != r.cm ().s
-	  || u.cm ().o != r.cm ().o)
-	{
-	  ACE_DEBUG ((LM_DEBUG, "** cube_union ERROR\n"));
-	  this->error_count_++;
-	}
+          || u.cm ().s != r.cm ().s
+          || u.cm ().o != r.cm ().o)
+        {
+          ACE_DEBUG ((LM_DEBUG, "** cube_union ERROR\n"));
+          this->error_count_++;
+        }
     }
 }
 
@@ -204,7 +204,7 @@ Cubit_Client::cube_union_dii (void)
     }
 
   // ... initialise the argument list and result ...
-  Cubit::oneof	*u, r;
+  Cubit::oneof  *u, r;
 
   u = new Cubit::oneof;
   u->_d (Cubit::e_3rd);
@@ -290,17 +290,17 @@ Cubit_Client::cube_short (int i)
   else
     {
       dmsg2 ("cube short:  %d --> %d\n",
-	     arg_short,
-	     ret_short);
+             arg_short,
+             ret_short);
       arg_short = arg_short * arg_short * arg_short;
 
       if (arg_short != ret_short)
-	{
-	  ACE_ERROR ((LM_ERROR, "** cube_short (%d) ERROR (--> %d)\n",
-		      (CORBA::Short) this->func (i),
-		      ret_short));
-	  this->error_count_++;
-	}
+        {
+          ACE_ERROR ((LM_ERROR, "** cube_short (%d) ERROR (--> %d)\n",
+                      (CORBA::Short) this->func (i),
+                      ret_short));
+          this->error_count_++;
+        }
     }
 }
 
@@ -326,11 +326,11 @@ Cubit_Client::cube_octet (int i)
       dmsg2 ("cube octet:  %d --> %d\n", arg_octet, ret_octet);
       arg_octet = arg_octet * arg_octet * arg_octet;
       if (arg_octet != ret_octet) {
-	ACE_DEBUG ((LM_DEBUG,
-		    "** cube_octet (%d) ERROR (--> %d)\n",
-		    (CORBA::Octet) this->func (i),
-		    ret_octet));
-	this->error_count_++;
+        ACE_DEBUG ((LM_DEBUG,
+                    "** cube_octet (%d) ERROR (--> %d)\n",
+                    (CORBA::Octet) this->func (i),
+                    ret_octet));
+        this->error_count_++;
       }
     }
 }
@@ -357,7 +357,7 @@ Cubit_Client::cube_long (int i)
       dmsg2 ("cube long:  %d --> %d\n", arg_long, ret_long);
       arg_long = arg_long * arg_long * arg_long;
 
-      if (arg_long != ret_long) 
+      if (arg_long != ret_long)
         {
           ACE_ERROR ((LM_ERROR,
                       "** cube_long (%ld) ERROR (--> %ld)\n",
@@ -398,12 +398,12 @@ Cubit_Client::cube_struct (int i)
       arg_struct.o = arg_struct.o * arg_struct.o * arg_struct.o;
 
       if (arg_struct.l != ret_struct.l
-	  || arg_struct.s != ret_struct.s
-	  || arg_struct.o != ret_struct.o)
-	{
-	  ACE_ERROR ((LM_ERROR, "** cube_struct ERROR\n"));
-	  this->error_count_++;
-	}
+          || arg_struct.s != ret_struct.s
+          || arg_struct.o != ret_struct.o)
+        {
+          ACE_ERROR ((LM_ERROR, "** cube_struct ERROR\n"));
+          this->error_count_++;
+        }
     }
 }
 
@@ -531,14 +531,26 @@ Cubit_Client::cube_struct_dii (void)
 
 void
 Cubit_Client::print_stats (const char *call_name,
-			   ACE_Profile_Timer::ACE_Elapsed_Time &elapsed_time)
+                           ACE_Profile_Timer::ACE_Elapsed_Time &elapsed_time)
 {
   ACE_DEBUG ((LM_DEBUG,
-	      "%s:\n",
-	      call_name));
+              "%s:\n",
+              call_name));
 
   if (this->call_count_ > 0 && this->error_count_ == 0)
     {
+#if defined (ACE_LACKS_FLOATING_POINT)
+# if defined (ACE_LACKS_LONGLONG_T)
+      const u_int calls_per_sec = 1000 / elapsed_time.real_time.lo ();
+# else  /* ACE_LACKS_LONGLONG_T */
+      const u_int calls_per_sec = 1000 / elapsed_time.real_time
+# endif /* ACE_LACKS_LONGLONG_T */
+      ACE_DEBUG ((LM_DEBUG,
+                  "\treal_time\t= %u sec, \n\t"
+                  "\t%u calls/second\n",
+                  elapsed_time.real_time < 0 ? 0 : elapsed_time.real_time,
+                  calls_per_sec));
+#else  /* ! ACE_LACKS_FLOATING_POINT */
       double tmp = 1000 / elapsed_time.real_time;
 
       elapsed_time.real_time *= ACE_ONE_SECOND_IN_MSECS;
@@ -549,26 +561,25 @@ Cubit_Client::print_stats (const char *call_name,
       elapsed_time.user_time /= this->call_count_;
       elapsed_time.system_time /= this->call_count_;
 
-      tmp = 1000 / elapsed_time.real_time;
-
       ACE_DEBUG ((LM_DEBUG,
-		  "\treal_time\t= %0.06f ms, \n\t"
-		  "user_time\t= %0.06f ms, \n\t"
-		  "system_time\t= %0.06f ms\n"
-		  "\t%0.00f calls/second\n",
-		  elapsed_time.real_time < 0.0? 0.0:elapsed_time.real_time,
-		  elapsed_time.user_time < 0.0? 0.0:elapsed_time.user_time,
-		  elapsed_time.system_time < 0.0? 0.0:elapsed_time.system_time,
-		  tmp < 0.0? 0.0 : tmp));
+                  "\treal_time\t= %0.06f ms, \n\t"
+                  "user_time\t= %0.06f ms, \n\t"
+                  "system_time\t= %0.06f ms\n"
+                  "\t%0.00f calls/second\n",
+                  elapsed_time.real_time < 0.0? 0.0:elapsed_time.real_time,
+                  elapsed_time.user_time < 0.0? 0.0:elapsed_time.user_time,
+                  elapsed_time.system_time < 0.0? 0.0:elapsed_time.system_time,
+                  tmp < 0.0? 0.0 : tmp));
+#endif /* ! ACE_LACKS_FLOATING_POINT */
     }
   else
     ACE_ERROR ((LM_ERROR,
-		"\tNo time stats printed.  Call count zero or error ocurred.\n"));
+                "\tNo time stats printed.  Call count zero or error ocurred.\n"));
 
   ACE_DEBUG ((LM_DEBUG,
-	      "\t%d calls, %d errors\n",
-	      this->call_count_,
-	      this->error_count_));
+              "\t%d calls, %d errors\n",
+              this->call_count_,
+              this->error_count_));
 }
 
 // Execute client example code.
@@ -704,28 +715,28 @@ Cubit_Client::init_naming_service (void)
   TAO_TRY
     {
       CORBA::Object_var naming_obj =
-	this->orb_->resolve_initial_references ("NameService");
+        this->orb_->resolve_initial_references ("NameService");
       if (CORBA::is_nil (naming_obj.in ()))
-	ACE_ERROR_RETURN ((LM_ERROR,
-			   " (%P|%t) Unable to resolve the Name Service.\n"),
-			  -1);
-      CosNaming::NamingContext_var naming_context = 
-	CosNaming::NamingContext::_narrow (naming_obj.in (),
-					   TAO_TRY_ENV);
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           " (%P|%t) Unable to resolve the Name Service.\n"),
+                          -1);
+      CosNaming::NamingContext_var naming_context =
+        CosNaming::NamingContext::_narrow (naming_obj.in (),
+                                           TAO_TRY_ENV);
       TAO_CHECK_ENV;
-      
+
       CosNaming::Name cubit_factory_name (2);
       cubit_factory_name.length (2);
       cubit_factory_name[0].id = CORBA::string_dup ("IDL_Cubit");
       cubit_factory_name[1].id = CORBA::string_dup ("cubit_factory");
       CORBA::Object_var factory_obj =
-	naming_context->resolve (cubit_factory_name,TAO_TRY_ENV);
+        naming_context->resolve (cubit_factory_name,TAO_TRY_ENV);
       TAO_CHECK_ENV;
-  
+
       this->factory_ =
-	Cubit_Factory::_narrow (factory_obj.in (),TAO_TRY_ENV);
+        Cubit_Factory::_narrow (factory_obj.in (),TAO_TRY_ENV);
       TAO_CHECK_ENV;
-  
+
       if (CORBA::is_nil (this->factory_.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            " could not resolve cubit factory in Naming service <%s>\n"),
@@ -752,58 +763,58 @@ Cubit_Client::init (int argc, char **argv)
     {
       // Retrieve the ORB.
       this->orb_ = CORBA::ORB_init (this->argc_,
-				    this->argv_,
-				    "internet",
-				    TAO_TRY_ENV);
+                                    this->argv_,
+                                    "internet",
+                                    TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       // Parse command line and verify parameters.
       if (this->parse_args () == -1)
-	return -1;
+        return -1;
 
       if (this->use_naming_service_)
-	{
-	  naming_result = this->init_naming_service ();
-	  if (naming_result < 0)
-	    return naming_result;
-	}
-      else 
-	{
-	  if (this->cubit_factory_key_ == 0)
-	    ACE_ERROR_RETURN ((LM_ERROR,
-			       "%s: no cubit factory key specified\n",
-			       this->argv_[0]),
-			      -1);
-	  
-	  
-	  CORBA::Object_var factory_object = 
-	    this->orb_->string_to_object (this->cubit_factory_key_,
-					  TAO_TRY_ENV);
-	  TAO_CHECK_ENV;
+        {
+          naming_result = this->init_naming_service ();
+          if (naming_result < 0)
+            return naming_result;
+        }
+      else
+        {
+          if (this->cubit_factory_key_ == 0)
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "%s: no cubit factory key specified\n",
+                               this->argv_[0]),
+                              -1);
 
-	  this->factory_ = 
-	    Cubit_Factory::_narrow (factory_object.in(), TAO_TRY_ENV);
-	  TAO_CHECK_ENV;
 
-	  if (CORBA::is_nil (this->factory_.in ()))
+          CORBA::Object_var factory_object =
+            this->orb_->string_to_object (this->cubit_factory_key_,
+                                          TAO_TRY_ENV);
+          TAO_CHECK_ENV;
+
+          this->factory_ =
+            Cubit_Factory::_narrow (factory_object.in(), TAO_TRY_ENV);
+          TAO_CHECK_ENV;
+
+          if (CORBA::is_nil (this->factory_.in ()))
             ACE_ERROR_RETURN ((LM_ERROR,
                                "invalid factory key <%s>\n",
                                this->cubit_factory_key_),
                               -1);
-	}
+        }
 
       ACE_DEBUG ((LM_DEBUG, "Factory received OK\n"));
-      
+
       // Now retrieve the Cubit obj ref corresponding to the key.
       this->cubit_ =
-	this->factory_->make_cubit (this->cubit_key_,
-				    TAO_TRY_ENV);
+        this->factory_->make_cubit (this->cubit_key_,
+                                    TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       if (CORBA::is_nil (this->cubit_))
-	ACE_ERROR_RETURN ((LM_ERROR,
-			   "null cubit objref returned by factory\n"),
-			  -1);
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "null cubit objref returned by factory\n"),
+                          -1);
     }
   TAO_CATCHANY
     {
