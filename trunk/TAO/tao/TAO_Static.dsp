@@ -65,7 +65,7 @@ LIB32=link.exe -lib
 # PROP Intermediate_Dir "LIB\Debug"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /Z7 /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /YX /FD /c
-# ADD CPP /nologo /MDd /W3 /GX /Z7 /Od /I "../../" /I "../" /D TAO_HAS_DLL=0 /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /FD /c
+# ADD CPP /nologo /MDd /W3 /GX /Z7 /Od /I "../../" /I "../" /D TAO_HAS_DLL=0 /D "_WINDOWS" /D "_DEBUG" /D "WIN32" /D ACE_HAS_DLL=0 /D ACE_OS_HAS_DLL=0 /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE RSC /l 0x409
 # ADD RSC /l 0x409
@@ -212,6 +212,10 @@ SOURCE=.\DynStruct_i.cpp
 # Begin Source File
 
 SOURCE=.\DynUnion_i.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Encodable.cpp
 # End Source File
 # Begin Source File
 
@@ -460,6 +464,10 @@ SOURCE=.\POAManager.cpp
 # Begin Source File
 
 SOURCE=.\POAS.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Policy_Factory.cpp
 # End Source File
 # Begin Source File
 

@@ -2,7 +2,7 @@
 # Microsoft Developer Studio Generated Build File, Format Version 6.00
 # ** DO NOT EDIT **
 
-# TARGTYPE "Win32 Static (x86) Console Application" 0x0103
+# TARGTYPE "Win32 (x86) Console Application" 0x0103
 
 CFG=Simple Time Server Static - Win32 Static Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
@@ -17,8 +17,8 @@ CFG=Simple Time Server Static - Win32 Static Debug
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "Simple Time Server Static - Win32 Static Debug" (based on "Win32 Static (x86) Console Application")
-!MESSAGE "Simple Time Server Static - Win32 Static Release" (based on "Win32 Static (x86) Console Application")
+!MESSAGE "Simple Time Server Static - Win32 Static Debug" (based on "Win32 (x86) Console Application")
+!MESSAGE "Simple Time Server Static - Win32 Static Release" (based on "Win32 (x86) Console Application")
 !MESSAGE 
 
 # Begin Project
@@ -44,7 +44,7 @@ RSC=rc.exe
 # PROP Target_Dir "server"
 # ADD BASE CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\\" /I "..\..\..\\" /D "_DEBUG" /D "WIN32" /D "_CONSOLE" /FD /c
 # SUBTRACT BASE CPP /YX
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\..\\" /I "..\..\..\..\\" /I "..\..\..\orbsvcs" /D "_DEBUG" /D "WIN32" /D "_CONSOLE" /D ACE_HAS_DLL=0 /D TAO_HAS_DLL=0 /D TAO_NAMING_HAS_DLL=0 /D TAO_SVC_UTILS_HAS_DLL=0 /D "ACE_NO_INLINE" /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\..\\" /I "..\..\..\..\\" /I "..\..\..\orbsvcs" /D "_DEBUG" /D "WIN32" /D "_CONSOLE" /D ACE_HAS_DLL=0 /D TAO_HAS_DLL=0 /D TAO_NAMING_HAS_DLL=0 /D TAO_SVC_UTILS_HAS_DLL=0 /D "ACE_NO_INLINE" /D ACE_OS_HAS_DLL=0 /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
@@ -53,7 +53,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 aced.lib TAOd.lib /nologo /subsystem:console /debug /machine:I386 /libpath:"..\..\tao" /libpath:"..\..\..\ace"
-# ADD LINK32 advapi32.lib user32.lib acesd.lib TAOsd.lib TAO_CosNamingsd.lib TAO_Svc_Utilssd.lib /nologo /subsystem:console /debug /machine:I386 /libpath:"..\..\..\tao" /libpath:"..\..\..\..\ace" /libpath:"..\..\..\orbsvcs\orbsvcs"
+# ADD LINK32 user32.lib advapi32.lib acesd.lib TAOsd.lib TAO_CosNamingsd.lib TAO_Svc_Utilssd.lib /nologo /subsystem:console /debug /machine:I386 /libpath:"..\..\..\tao" /libpath:"..\..\..\..\ace" /libpath:"..\..\..\orbsvcs\orbsvcs"
 
 !ELSEIF  "$(CFG)" == "Simple Time Server Static - Win32 Static Release"
 
@@ -71,7 +71,7 @@ LINK32=link.exe
 # PROP Target_Dir "server"
 # ADD BASE CPP /nologo /MD /W3 /GX /O2 /I "..\..\\" /I "..\..\..\\" /D "NDEBUG" /D "WIN32" /D "_CONSOLE" /FD /c
 # SUBTRACT BASE CPP /YX
-# ADD CPP /nologo /MD /W3 /GX /O2 /I "..\..\..\\" /I "..\..\..\..\\" /I "..\..\..\orbsvcs" /D "NDEBUG" /D "WIN32" /D "_CONSOLE" /D TAO_HAS_DLL=0 /D ACE_HAS_DLL=0 /D TAO_NAMING_HAS_DLL=0 /D TAO_SVC_UTILS_HAS_DLL=0 /FD /c
+# ADD CPP /nologo /MD /W3 /GX /O2 /I "..\..\..\\" /I "..\..\..\..\\" /I "..\..\..\orbsvcs" /D "NDEBUG" /D "WIN32" /D "_CONSOLE" /D TAO_HAS_DLL=0 /D ACE_HAS_DLL=0 /D TAO_NAMING_HAS_DLL=0 /D TAO_SVC_UTILS_HAS_DLL=0 /D ACE_OS_HAS_DLL=0 /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
@@ -80,7 +80,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 ace.lib TAO.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\tao" /libpath:"..\..\..\ace"
-# ADD LINK32 TAO_CosNamings.lib TAO_Svc_Utilss.lib TAOs.lib aces.lib advapi32.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\..\tao" /libpath:"..\..\..\..\ace" /libpath:"..\..\..\orbsvcs\orbsvcs"
+# ADD LINK32 TAO_CosNamings.lib TAO_Svc_Utilss.lib TAOs.lib aces.lib advapi32.lib user32.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\..\tao" /libpath:"..\..\..\..\ace" /libpath:"..\..\..\orbsvcs\orbsvcs"
 
 !ENDIF 
 
