@@ -1753,7 +1753,7 @@ sub write_output_file {
               print $fh $line;
             }
             close($fh);
-            if (compare($tmp, $name) == 0) {
+            if (-s $tmp == -s $name && compare($tmp, $name) == 0) {
               $different = 0;
             }
           }
