@@ -13,9 +13,6 @@
 #ifndef TAO_PRIORITY_MAPPING_MANAGER_H
 #define TAO_PRIORITY_MAPPING_MANAGER_H
 
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-# pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
