@@ -1,3 +1,15 @@
+Tue Jan 8 15:51:06 2002  Don Hinton <dhinton@gmx.net>
+
+         * ace/Get_Opt.cpp
+         * ace/Service_Config.cpp:
+
+           Moved the template instantiations from Service_Config.cpp to
+           Get_Opt.cpp where they belong.
+
+         * ace/Get_Opt.{h.cpp}: Replaced ACE_TString with ACE_TCHAR for 
+           type of member variable ACE_Get_Opt_Long_Option since it
+           wasn't really needed and took up space.
+
 Tue Jan  8 10:43:48 2002  Ossama Othman  <ossama@uci.edu>
 
 	* ace/config-sunos5.5.h (ACE_LACKS_INET_ATON):
