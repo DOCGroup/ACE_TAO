@@ -1,5 +1,5 @@
---- orig/RTSchedulerC.h	2005-02-11 15:05:03.696392000 +0100
-+++ RTSchedulerC.h	2005-02-11 15:09:32.272585600 +0100
+--- orig/RTSchedulerC.h	2005-02-14 15:00:39.953600300 +0100
++++ RTSchedulerC.h	2005-02-14 15:00:40.133859500 +0100
 @@ -54,6 +54,10 @@
  #include "tao/PortableServer/PortableServer_includeC.h"
  #include "tao/PortableInterceptorC.h"
@@ -21,8 +21,8 @@
  } // module CORBA
  
  // TAO_IDL - Generated from
---- orig/RTSchedulerC.cpp	2005-02-11 15:05:03.696392000 +0100
-+++ RTSchedulerC.cpp	2005-02-11 15:07:11.239790400 +0100
+--- orig/RTSchedulerC.cpp	2005-02-14 15:00:39.953600300 +0100
++++ RTSchedulerC.cpp	2005-02-14 15:00:40.153888300 +0100
 @@ -29,7 +29,7 @@
  // be\be_codegen.cpp:302
  
@@ -32,3 +32,14 @@
  #include "tao/CDR.h"
  #include "tao/ORB_Core.h"
  #include "tao/Typecode.h"
+--- orig/RTSchedulerA.cpp	2005-02-14 15:00:39.953600300 +0100
++++ RTSchedulerA.cpp	2005-02-14 15:00:53.903659500 +0100
+@@ -25,7 +25,7 @@
+ // Information about TAO is available at:
+ //     http://www.cs.wustl.edu/~schmidt/TAO.html
+ 
+-#include "RTSchedulerC.h"
++#include "RTScheduler.h"
+ #include "tao/Typecode.h"
+ 
+ // TAO_IDL - Generated from

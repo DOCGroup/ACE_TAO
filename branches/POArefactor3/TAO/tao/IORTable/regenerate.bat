@@ -4,3 +4,4 @@ copy orig\*C.cpp .
 copy orig\*C.h .
 copy orig\*C.inl .
 
+patch < diff/IORTable.diff
