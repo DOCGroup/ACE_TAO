@@ -103,7 +103,7 @@ Worker::svc (void)
 
       validate_connection(this->controller_.in()
                           ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      ACE_TRY_CHECK;
 
       this->controller_->sendc_worker_started (handler.in ()
                                                ACE_ENV_ARG_PARAMETER);
