@@ -13,7 +13,7 @@
 
 #ifndef TAO_RT_SERVANT_DISPATCHER_H
 #define TAO_RT_SERVANT_DISPATCHER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "rtportableserver_export.h"
 #include "tao/PortableServer/Servant_Dispatcher.h"
@@ -72,5 +72,5 @@ public:
 
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_RT_SERVANT_DISPATCHER_H */

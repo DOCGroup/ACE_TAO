@@ -16,7 +16,7 @@
 
 #ifndef RT_ENDPOINT_UTILS_H
 #define RT_ENDPOINT_UTILS_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "rtcorba_export.h"
 
@@ -49,5 +49,5 @@ private:
   TAO_RT_Endpoint_Utils ();
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif  /* RT_ENDPOINT_UTILS_H */

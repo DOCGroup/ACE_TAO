@@ -14,7 +14,7 @@
 
 #ifndef TAO_PORTABLESERVER_H
 #define TAO_PORTABLESERVER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "portableserver_export.h"
 #include "tao/corbafwd.h"
@@ -48,5 +48,5 @@ TAO_Requires_POA_Initializer = TAO_POA_Initializer::init ();
 #include "PortableServerC.h"
 #undef TAO_PORTABLESERVER_SAFE_INCLUDE
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_PORTABLESERVER_H */

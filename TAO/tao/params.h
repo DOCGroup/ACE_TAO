@@ -14,7 +14,7 @@
 
 #ifndef TAO_PARAMS_H
 #define TAO_PARAMS_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/corbafwd.h"
 
@@ -274,5 +274,5 @@ private:
 # include "tao/params.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_PARAMS_H */

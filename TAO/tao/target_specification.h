@@ -1,4 +1,4 @@
-//-*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -8,8 +8,6 @@
  *
  *  A class that encapsulates the target identification details.
  *
- *
- *
  *  @author  Balachandran  Natarajan <bala@cs.wustl.edu>
  */
 //=============================================================================
@@ -17,11 +15,32 @@
 
 #ifndef TAO_TARGET_SPECIFICATION_H
 #define TAO_TARGET_SPECIFICATION_H
-#include "ace/pre.h"
 
-#include "tao/Object_KeyC.h"
-#include "tao/IOPC.h"
+#include /**/ "ace/pre.h"
 
+#include "tao/corbafwd.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#if defined (HPUX) && defined (IOR)
+   /* HP-UX 11.11 defines IOR in /usr/include/pa/inline.h
+      and we don't want that definition.  See IOP_IORC.h. */
+# undef IOR
+#endif /* HPUX && IOR */
+
+
+namespace IOP
+{
+  struct IOR;
+  struct TaggedProfile;
+}
+
+namespace TAO
+{
+  class ObjectKey;
+}
 
 /**
  * @class TAO_Target_Specification
@@ -141,5 +160,5 @@ private:
 #include "target_specification.i"
 #endif /* defined INLINE */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /*TAO_TARGET_SPECIFICATION_H*/

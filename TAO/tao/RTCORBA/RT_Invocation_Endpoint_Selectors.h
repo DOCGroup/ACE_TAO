@@ -17,7 +17,7 @@
 
 #ifndef TAO_RT_INVOCATION_ENDPOINT_SELECTOR_H
 #define TAO_RT_INVOCATION_ENDPOINT_SELECTOR_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/corbafwd.h"
 
@@ -66,5 +66,5 @@ public:
 
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif  /* TAO_RT_INVOCATION_ENDPOINT_SELECTOR_H */

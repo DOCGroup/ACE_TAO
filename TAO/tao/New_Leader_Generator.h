@@ -11,7 +11,7 @@
 #ifndef TAO_NEW_LEADER_GENERATOR_H
 #define TAO_NEW_LEADER_GENERATOR_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "tao/orbconf.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -35,6 +35,6 @@ public:
   virtual void no_leaders_available (void) = 0;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* TAO_NEW_LEADER_GENERATOR_H */

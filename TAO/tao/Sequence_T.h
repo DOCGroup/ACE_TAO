@@ -13,7 +13,7 @@
 #ifndef TAO_SEQUENCE_T_H
 #define TAO_SEQUENCE_T_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/Sequence.h"
 
@@ -1230,6 +1230,6 @@ public:
 #pragma implementation ("Sequence_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* TAO_SEQUENCE_T_H */

@@ -12,7 +12,7 @@
 
 #ifndef TAO_TYPECODEFACTORY_LOADER_H
 #define TAO_TYPECODEFACTORY_LOADER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "typecodefactory_export.h"
 #include "tao/Object_Loader.h"
@@ -68,5 +68,5 @@ TAO_Requires_TCF_Initializer = TAO_TypeCodeFactory_Loader::Initializer ();
 #include "TypeCodeFactoryC.h"
 #undef TAO_TYPECODEFACTORY_SAFE_INCLUDE
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_TYPECODEFACTORY_LOADER_H */

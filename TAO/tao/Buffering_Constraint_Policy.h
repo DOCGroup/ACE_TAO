@@ -12,7 +12,7 @@
 
 #ifndef TAO_BUFFERING_CONSTRAINT_POLICY_H
 #define TAO_BUFFERING_CONSTRAINT_POLICY_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/orbconf.h"
 
@@ -90,5 +90,5 @@ private:
 
 #endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_BUFFERING_CONSTRAINT_POLICY_H */

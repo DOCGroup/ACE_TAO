@@ -17,7 +17,7 @@
 
 #ifndef TAO_DEFAULT_ENDPOINT_SELECTOR_FACTORY_H
 #define TAO_DEFAULT_ENDPOINT_SELECTOR_FACTORY_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/Endpoint_Selector_Factory.h"
 #include "ace/Service_Config.h"
@@ -73,5 +73,5 @@ protected:
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO, TAO_Default_Endpoint_Selector_Factory)
 ACE_FACTORY_DECLARE (TAO, TAO_Default_Endpoint_Selector_Factory)
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif  /* TAO_DEFAULT_ENDPOINT_SELECTOR_FACTORY_H */

@@ -13,7 +13,7 @@
 
 #ifndef TAO_ORB_MANAGER_H
 #define TAO_ORB_MANAGER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "PortableServer.h"
 
@@ -232,5 +232,5 @@ protected:
 };
 
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_ORB_MANAGER_H */

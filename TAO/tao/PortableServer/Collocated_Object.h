@@ -15,7 +15,7 @@
 #ifndef TAO_COLLOCATED_OBJECT_H
 #define TAO_COLLOCATED_OBJECT_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "portableserver_export.h"
 
@@ -91,6 +91,6 @@ private:
 # include "Collocated_Object.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* TAO_COLLOCATED_OBJECT_H */

@@ -22,7 +22,7 @@
 #ifndef _TAO_IDL_ORIG_TIMEBASES_H_
 #define _TAO_IDL_ORIG_TIMEBASES_H_
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "TimeBaseC.h"
 
 
@@ -36,5 +36,5 @@
 #include "TimeBaseS.i"
 #endif /* defined INLINE */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ifndef */

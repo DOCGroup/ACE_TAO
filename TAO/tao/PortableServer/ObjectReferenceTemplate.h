@@ -16,7 +16,7 @@
 #ifndef TAO_OBJECT_REFERENCE_TEMPLATE_H
 #define TAO_OBJECT_REFERENCE_TEMPLATE_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/PortableServer/portableserver_export.h"
 
@@ -122,6 +122,6 @@ private:
 # include "ObjectReferenceTemplate.inl"
 #endif /* ! __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* TAO_OBJECT_REFERENCE_TEMPLATE_H */

@@ -25,7 +25,7 @@
 #ifndef _TAO_IDL_ORIG_MESSAGING_SYNCSCOPEC_H_
 #define _TAO_IDL_ORIG_MESSAGING_SYNCSCOPEC_H_
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/corbafwd.h"
 
@@ -124,6 +124,6 @@ TAO_NAMESPACE_CLOSE // module Messaging
 #pragma option pop
 #endif /* __BORLANDC__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ifndef */
 

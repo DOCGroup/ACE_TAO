@@ -2,7 +2,16 @@
 
 #if TAO_HAS_SCIOP == 1
 
-#include "netinet/sctp.h"
+// jcohen@atl.lmco.com: The purpose of this is to allow RH9 to build
+// SCIOR Profile support even without a functioning SCTP implementation
+
+#ifndef IPPROTO_SCTP
+#  include "netinet/sctp.h"
+#else // !IPPROTO_SCTP
+#  ifndef SCTP_NODELAY
+#    define SCTP_NODELAY 1
+#  endif // !SCTP_NODELAY
+#endif
 
 #include "tao/Timeprobe.h"
 #include "tao/debug.h"
@@ -389,7 +398,7 @@ TAO_SCIOP_Connection_Handler::set_dscp_codepoint (void)
 
   if (tos != this->dscp_codepoint_)
     {
-      int ret = this->peer ().set_option (IPPROTO_IP,
+      int ret = this->peer ().set_option (IPPROTO_SCTP,
                                           IP_TOS,
                                           (int *) &tos ,
                                           (int) sizeof (tos));

@@ -14,7 +14,7 @@
 
 #ifndef TAO_PROTOCOL_FACTORY_H
 #define TAO_PROTOCOL_FACTORY_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "corbafwd.h"
 
@@ -72,5 +72,5 @@ private:
   CORBA::ULong tag_;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_PROTOCOL_FACTORY_H */

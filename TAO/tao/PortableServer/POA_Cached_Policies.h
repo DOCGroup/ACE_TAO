@@ -15,7 +15,7 @@
 
 #ifndef TAO_POA_CACHED_POLICIES_H
 #define TAO_POA_CACHED_POLICIES_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "POA_Policies.h"
 
@@ -102,5 +102,5 @@ protected:
 # include "POA_Cached_Policies.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_POA_CACHED_POLICIES_H */

@@ -12,7 +12,7 @@
 
 #ifndef TAO_TRANSPORT_TIMER_H
 #define TAO_TRANSPORT_TIMER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "TAO_Export.h"
 #include "ace/Event_Handler.h"
@@ -50,5 +50,5 @@ private:
   TAO_Transport *transport_;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif  /* TAO_TRANSPORT_TIMER_H */

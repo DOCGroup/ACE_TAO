@@ -16,7 +16,7 @@
 
 #ifndef TAO_PLUGGABLE_MESSAGING_UTILS_H
 #define TAO_PLUGGABLE_MESSAGING_UTILS_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/IOP_IORC.h"
 
@@ -188,5 +188,5 @@ enum TAO_Pluggable_Message_Exception_Type
 #include "tao/Pluggable_Messaging_Utils.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /*TAO_PLUGGABLE_MESSAGING_UTILS_H*/

@@ -1,6 +1,6 @@
 //$Id$
 #include "Refcounted_ObjectKey.h"
-
+#include "ace/Log_Msg.h"
 
 #if !defined (__ACE_INLINE__)
 #include "Refcounted_ObjectKey.inl"

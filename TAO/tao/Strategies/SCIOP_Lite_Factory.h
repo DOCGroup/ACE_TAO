@@ -13,7 +13,7 @@
 
 #ifndef TAO_SCIOP_LITE_FACTORY_H
 #define TAO_SCIOP_LITE_FACTORY_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/Protocol_Factory.h"
 
@@ -68,5 +68,5 @@ ACE_FACTORY_DECLARE (TAO_Strategies, TAO_SCIOP_Lite_Protocol_Factory)
 
 #endif /* TAO_HAS_SCIOP == 1 */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_SCIOP_Lite_factory_H */

@@ -13,7 +13,7 @@
 
 #ifndef TAO_TAGGED_COMPONENTS_H
 #define TAO_TAGGED_COMPONENTS_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/IOPC.h"
 
@@ -86,6 +86,10 @@ public:
   /// 0 if the component is not present.
   int get_component (IOP::TaggedComponent& component) const;
 
+  /// Remove a component, if present. Return number of components
+  /// removed.
+  int remove_component (IOP::ComponentId id);
+
   // = Marshaling and demarshaling
 
   /// Marshal and demarshal the list.
@@ -111,6 +115,10 @@ private:
   void add_component_i (const IOP::TaggedComponent& component);
   void add_component_i (IOP::TaggedComponent& component);
   void set_component_i (IOP::ComponentId tag, TAO_OutputCDR &cdr);
+
+  /// Helper methods to implement remove_component()
+  int remove_known_component_i (IOP::ComponentId tag);
+  int remove_component_i (IOP::ComponentId tag);
 
   /// Helper methods to implement set_component()
   int get_known_component_i (IOP::TaggedComponent& component) const;
@@ -145,5 +153,5 @@ private:
 # include "tao/Tagged_Components.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_TAGGED_COMPONENTS_H */

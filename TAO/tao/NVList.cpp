@@ -6,8 +6,6 @@
 #include "tao/NVList.h"
 
 #include "tao/Exception.h"
-#include "tao/Environment.h"
-#include "tao/ORB.h"
 #include "tao/BoundsC.h"
 #include "tao/debug.h"
 #include "tao/Typecode.h"
@@ -241,6 +239,7 @@ CORBA::NVList::add_element (CORBA::Flags flags
 
   // set the flags and enqueue in the queue
   nv->flags_ = flags;
+
   if (this->values_.enqueue_tail (nv) == -1)
     {
       delete nv;

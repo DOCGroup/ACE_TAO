@@ -13,7 +13,7 @@
 
 #ifndef TAO_DEBUG_H
 #define TAO_DEBUG_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/TAO_Export.h"
 
@@ -33,5 +33,5 @@ extern TAO_Export unsigned int TAO_debug_level;
 // debug messages on (1) or off (0)
 extern TAO_Export unsigned int  TAO_orbdebug;
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_DEBUG_H */

@@ -12,7 +12,7 @@
 
 #ifndef TAO_GIOP_MESSAGE_GENERATOR_PARSER_H
 #define TAO_GIOP_MESSAGE_GENERATOR_PARSER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/corbafwd.h"
 
@@ -109,5 +109,5 @@ protected:
 # include "tao/GIOP_Message_Generator_Parser.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /*TAO_GIOP_MESSAGE_GENERATOR_PARSER_H*/

@@ -2,7 +2,7 @@
 
 #ifndef TAO_ADVANCED_RESOURCE_H
 #define TAO_ADVANCED_RESOURCE_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "strategies_export.h"
 #include "tao/default_resource.h"
@@ -136,5 +136,5 @@ ACE_FACTORY_DECLARE (TAO_Strategies, TAO_Advanced_Resource_Factory)
 
 static TAO_Resource_Factory_Changer TAO_changer;
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_ADVANCED_RESOURCE_H */

@@ -29,6 +29,7 @@ template class TAO_Connect_Concurrency_Strategy<TAO_SCIOP_Connection_Handler>;
 template class TAO_Connect_Creation_Strategy<TAO_SCIOP_Connection_Handler>;
 template class ACE_Strategy_Connector<TAO_SCIOP_Connection_Handler, ACE_SOCK_SEQPACK_CONNECTOR>;
 template class ACE_Connect_Strategy<TAO_SCIOP_Connection_Handler, ACE_SOCK_SEQPACK_CONNECTOR>;
+template class ACE_Connector_Base<TAO_SCIOP_Connection_Handler>;
 template class ACE_Connector<TAO_SCIOP_Connection_Handler, ACE_SOCK_SEQPACK_CONNECTOR>;
 template class ACE_Svc_Tuple<TAO_SCIOP_Connection_Handler>;
 
@@ -44,6 +45,7 @@ template class ACE_Map_Reverse_Iterator<ACE_HANDLE,ACE_Svc_Tuple<TAO_SCIOP_Conne
 #pragma instantiate TAO_Connect_Creation_Strategy<TAO_SCIOP_Connection_Handler>
 #pragma instantiate ACE_Strategy_Connector<TAO_SCIOP_Connection_Handler, ACE_SOCK_SEQPACK_CONNECTOR>
 #pragma instantiate ACE_Connect_Strategy<TAO_SCIOP_Connection_Handler, ACE_SOCK_SEQPACK_CONNECTOR>
+#pragma instantiate ACE_Connector_Base<TAO_SCIOP_Connection_Handler>
 #pragma instantiate ACE_Connector<TAO_SCIOP_Connection_Handler, ACE_SOCK_SEQPACK_CONNECTOR>
 #pragma instantiate ACE_Svc_Tuple<TAO_SCIOP_Connection_Handler>
 
@@ -313,7 +315,7 @@ TAO_SCIOP_Connector::make_connection (TAO_GIOP_Invocation *invocation,
   // Add the handler to Cache
   int retval =
     this->orb_core ()->lane_resources ().transport_cache ().cache_transport (desc,
-                                                                             base_transport);
+                                                                             transport);
 
   // Failure in adding to cache.
   if (retval != 0)

@@ -15,7 +15,7 @@
 
 #ifndef TAO_OBJECTID_H
 #define TAO_OBJECTID_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -102,5 +102,5 @@ enum TAO_MCAST_SERVICEID
 
 
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /*TAO_OBJECTID_H*/

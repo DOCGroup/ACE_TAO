@@ -13,16 +13,7 @@
 #ifndef TAO_PRIORITY_MAPPING_MANAGER_H
 #define TAO_PRIORITY_MAPPING_MANAGER_H
 
-
-#if defined(_MSC_VER)
-#if (_MSC_VER >= 1200)
-#pragma warning(push)
-#endif /* _MSC_VER >= 1200 */
-#pragma warning(disable:4250)
-#endif /* _MSC_VER */
-
-#include "RTSchedulerC.h"
-//#include "tao/LocalObject.h"
+#include "RTScheduler.h"
 
 class TAO_RTScheduler_Manager;
 class TAO_RTScheduler_Manager_var;
@@ -73,7 +64,7 @@ public:
       return (TAO_RTScheduler_Manager_ptr)0;
     }
 
-  virtual void *_tao_QueryInterface (ptr_arith_t type);
+  virtual void *_tao_QueryInterface (ptrdiff_t type);
 
   virtual const char* _interface_repository_id (void) const;
 

@@ -12,7 +12,7 @@
 
 #ifndef TAO_LF_FOLLOWER_AUTO_ADDER_H
 #define TAO_LF_FOLLOWER_AUTO_ADDER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/orbconf.h"
 #include "tao/Leader_Follower.h"
@@ -51,5 +51,5 @@ private:
 # include "tao/LF_Follower_Auto_Adder.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif  /* TAO_LF_FOLLOWER_AUTO_ADDER_H */

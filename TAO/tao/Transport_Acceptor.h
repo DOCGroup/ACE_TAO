@@ -14,7 +14,7 @@
 //=============================================================================
 #ifndef TAO_ACCEPTOR_H
 #define TAO_ACCEPTOR_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "tao/corbafwd.h"
 
 
@@ -126,6 +126,6 @@ private:
 # include "Transport_Acceptor.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif  /* TAO_ACCEPTOR_H */

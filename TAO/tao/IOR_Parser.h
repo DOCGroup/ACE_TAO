@@ -12,7 +12,7 @@
 
 #ifndef TAO_IOR_PARSER_H
 #define TAO_IOR_PARSER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/corbafwd.h"
 #include "tao/Exception.h"
@@ -58,5 +58,5 @@ public:
 # include "tao/IOR_Parser.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_IOR_PARSER_H */

@@ -12,7 +12,7 @@
 
 #ifndef TAO_RT_POLICY_I_H
 #define TAO_RT_POLICY_I_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/orbconf.h"
 
@@ -741,5 +741,5 @@ protected:
 
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_RT_POLICY_I_H */

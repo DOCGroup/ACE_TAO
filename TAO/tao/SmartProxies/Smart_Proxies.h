@@ -21,7 +21,7 @@
 
 #ifndef TAO_SMARTPROXIES_H
 #define TAO_SMARTPROXIES_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "smartproxies_export.h"
 #include "tao/Object.h"
@@ -60,5 +60,5 @@ protected:
 #include "Smart_Proxies.inl"
 #endif /* defined INLINE */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_SMARTPROXIES_H */

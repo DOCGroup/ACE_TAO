@@ -13,7 +13,7 @@
 
 #ifndef TAO_DEFAULT_SERVANT_DISPATCHER_H
 #define TAO_DEFAULT_SERVANT_DISPATCHER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "portableserver_export.h"
 #include "Servant_Dispatcher.h"
@@ -66,5 +66,5 @@ public:
                        ACE_ENV_ARG_DECL);
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_DEFAULT_SERVANT_DISPATCHER_H */

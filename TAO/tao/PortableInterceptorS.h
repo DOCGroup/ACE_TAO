@@ -22,7 +22,7 @@
 #ifndef _TAO_IDL_PORTABLEINTERCEPTORS_H_
 #define _TAO_IDL_PORTABLEINTERCEPTORS_H_
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -32,5 +32,5 @@
 
 #include "PortableInterceptorC.h"
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ifndef */

@@ -18,7 +18,7 @@
 #ifndef TAO_POLICY_SET_H
 #define TAO_POLICY_SET_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/PolicyC.h"
 
@@ -128,6 +128,6 @@ private:
 # include "tao/Policy_Set.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_POLICY_SET_H */
 

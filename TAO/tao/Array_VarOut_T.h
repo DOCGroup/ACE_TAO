@@ -14,7 +14,7 @@
 #ifndef TAO_ARRAY_VAROUT_T_H
 #define TAO_ARRAY_VAROUT_T_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -185,6 +185,6 @@ private:
 #pragma implementation ("Array_VarOut_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* TAO_ARRAY_VAROUT_T_H */

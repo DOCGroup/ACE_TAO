@@ -12,7 +12,7 @@
 
 #ifndef TAO_DLL_PARSER_H
 #define TAO_DLL_PARSER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/IOR_Parser.h"
 #include "ace/Service_Config.h"
@@ -95,5 +95,5 @@ public:
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO, TAO_DLL_Parser)
 ACE_FACTORY_DECLARE (TAO, TAO_DLL_Parser)
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_DLL_PARSER_H */

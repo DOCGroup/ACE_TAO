@@ -12,7 +12,7 @@
 
 #ifndef TAO_LF_EVENT_LOOP_THREAD_HELPER_H
 #define TAO_LF_EVENT_LOOP_THREAD_HELPER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/LF_Strategy.h"
 
@@ -58,5 +58,5 @@ private:
 # include "tao/LF_Event_Loop_Thread_Helper.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif  /* TAO_LF_EVENT_LOOP_THREAD_HELPER_H */

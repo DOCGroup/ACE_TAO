@@ -18,7 +18,7 @@
 #ifndef TAO_UNKNOWN_USER_EXCEPTION_H
 #define TAO_UNKNOWN_USER_EXCEPTION_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "dynamicinterface_export.h"
 
@@ -74,7 +74,7 @@ namespace CORBA
     CORBA::Any& exception (void);
 
     /// To throw an UnknownUserException of this type.
-    virtual void _raise (void);
+    virtual void _raise (void) const;
 
     virtual CORBA::Exception *_tao_duplicate (void) const;
     virtual void _tao_encode (TAO_OutputCDR &cdr
@@ -100,6 +100,6 @@ namespace CORBA
 } // End CORBA namespace.
 
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* TAO_UNKNOWN_USER_EXCEPTION_H */

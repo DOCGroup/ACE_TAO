@@ -14,7 +14,7 @@
 
 #ifndef TAO_RT_PROTOCOLS_HOOKS_H
 #define TAO_RT_PROTOCOLS_HOOKS_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/Protocols_Hooks.h"
 
@@ -179,5 +179,5 @@ ACE_FACTORY_DECLARE (TAO_RTCORBA, TAO_RT_Protocols_Hooks)
 
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_RT_PROTOCOLS_HOOKS_H */

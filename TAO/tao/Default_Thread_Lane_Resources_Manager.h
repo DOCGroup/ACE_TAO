@@ -11,7 +11,7 @@
 #ifndef TAO_DEFAULT_THREAD_LANE_RESOURCES_MANAGER_H
 #define TAO_DEFAULT_THREAD_LANE_RESOURCES_MANAGER_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "tao/orbconf.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -92,6 +92,6 @@ ACE_FACTORY_DECLARE (TAO, TAO_Default_Thread_Lane_Resources_Manager_Factory)
 # include "tao/Default_Thread_Lane_Resources_Manager.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* TAO_DEFAULT_THREAD_LANE_RESOURCES_MANAGER_H */

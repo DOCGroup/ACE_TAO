@@ -6,6 +6,7 @@
 
 #include "tao/Timeprobe.h"
 #include "tao/ORB_Core.h"
+#include "tao/TSS_Resources.h"
 #include "tao/Stub.h"
 #include "tao/Environment.h"
 #include "tao/TAO_Server_Request.h"
@@ -216,16 +217,6 @@ void TAO_ServantBase::synchronous_upcall_dispatch (TAO_ServerRequest &req,
 
   ACE_TRY
     {
-      // @@ Do we really need the following "callback?"  The
-      //    STANDARD receive_request_service_contexts() interception
-      //    point appears to be placed at around the same point in the
-      //    upcall, i.e. just before the upcall is dispatched.  It is
-      //    slightly earlier than this callback function().  It also
-      //    potentially provides more information than is available in
-      //    this callback.
-      //        -Ossama
-      req.orb_core ()->services_log_msg_pre_upcall (req);
-
       // Invoke the skeleton, it will demarshal the arguments,
       // invoke the right operation on the skeleton class
       // (<derived_this>), and marshal any results.
@@ -237,16 +228,6 @@ void TAO_ServantBase::synchronous_upcall_dispatch (TAO_ServerRequest &req,
 
       // It is our job to send the already marshaled reply, but only
       // send if it is expected and it has not already been sent
-
-      // @@ Same here...
-      //    Do we really need the following "callback?"  The
-      //    STANDARD send_reply()/send_other()/send_exception
-      //    interception points appear to do the same thing.  They
-      //    even provide more information than is available in this
-      //    callback.
-      //        -Ossama
-      // Log the message state to FT_Service Logging facility
-      req.orb_core ()->services_log_msg_post_upcall (req);
 
       // We send the reply only if it is NOT a SYNC_WITH_SERVER, a
       // response is expected and if the reply is not deferred.
@@ -298,16 +279,6 @@ void TAO_ServantBase::asynchronous_upcall_dispatch (TAO_ServerRequest &req,
 
   ACE_TRY
     {
-      // @@ Do we really need the following "callback?"  The
-      //    STANDARD receive_request_service_contexts() interception
-      //    point appears to be placed at around the same point in the
-      //    upcall, i.e. just before the upcall is dispatched.  It is
-      //    slightly earlier than this callback function().  It also
-      //    potentially provides more information than is available in
-      //    this callback.
-      //        -Ossama
-      req.orb_core ()->services_log_msg_pre_upcall (req);
-
       // Invoke the skeleton, it will demarshal the arguments,
       // invoke the right operation on the skeleton class
       // (<derived_this>), and marshal any results.
@@ -319,16 +290,6 @@ void TAO_ServantBase::asynchronous_upcall_dispatch (TAO_ServerRequest &req,
 
       // It is our job to send the already marshaled reply, but only
       // send if it is expected and it has not already been sent
-
-      // @@ Same here...
-      //    Do we really need the following "callback?"  The
-      //    STANDARD send_reply()/send_other()/send_exception
-      //    interception points appear to do the same thing.  They
-      //    even provide more information than is available in this
-      //    callback.
-      //        -Ossama
-      // Log the message state to FT_Service Logging facility
-      req.orb_core ()->services_log_msg_post_upcall (req);
 
       // Return immediately. Do not send a reply; this is an
       // asunchronous upcall. (unless, of course there is a system

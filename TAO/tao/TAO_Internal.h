@@ -16,7 +16,7 @@
 #ifndef TAO_INTERNAL_H
 #define TAO_INTERNAL_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "TAO_Export.h"
 
@@ -94,6 +94,6 @@ private:
   static const char *client_strategy_factory_args_;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif  /* TAO_INTERNAL_H */

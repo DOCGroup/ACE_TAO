@@ -1,6 +1,10 @@
 #include "ClientRequestInfo_i.h"
+
+#if TAO_HAS_INTERCEPTORS == 1
+
 #include "Invocation.h"
 #include "Stub.h"
+#include "ORB_Core.h"
 #include "Profile.h"
 #include "Tagged_Components.h"
 #include "Valuetype_Adapter.h"
@@ -11,8 +15,6 @@
 ACE_RCSID (TAO,
            ClientRequestInfo_i,
            "$Id$")
-
-#if TAO_HAS_INTERCEPTORS == 1
 
 # if !defined (__ACE_INLINE__)
 #   include "ClientRequestInfo_i.inl"
@@ -91,7 +93,7 @@ TAO_ClientRequestInfo_i::target (ACE_ENV_SINGLE_ARG_DECL)
 {
   if (CORBA::is_nil (this->target_))
     {
-      
+
       TAO_Valuetype_Adapter *adapter =
         ACE_Dynamic_Service<TAO_Valuetype_Adapter>::instance (
             TAO_ORB_Core::valuetype_adapter_name ()

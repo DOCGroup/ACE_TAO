@@ -17,7 +17,7 @@
 
 #ifndef TAO_SYNCH_REPLY_DISPATCHER_H
 #define TAO_SYNCH_REPLY_DISPATCHER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/Reply_Dispatcher.h"
 
@@ -89,5 +89,5 @@ private:
   TAO_InputCDR reply_cdr_;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_REPLY_DISPATCHER_H */

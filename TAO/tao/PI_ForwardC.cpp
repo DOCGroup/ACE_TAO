@@ -30,6 +30,7 @@
 
 
 #include "PI_ForwardC.h"
+#include "tao/Typecode.h"
 
 #if defined (__BORLANDC__)
 #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig

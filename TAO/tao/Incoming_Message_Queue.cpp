@@ -1,5 +1,4 @@
 #include "Incoming_Message_Queue.h"
-#include "ORB_Core.h"
 #include "debug.h"
 #include "ace/Malloc_T.h"
 
@@ -7,7 +6,9 @@
 # include "Incoming_Message_Queue.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (tao, Incoming_Message_Queue, "$Id$")
+ACE_RCSID (tao,
+           Incoming_Message_Queue,
+           "$Id$")
 
 
 TAO_Incoming_Message_Queue::TAO_Incoming_Message_Queue (TAO_ORB_Core *orb_core)

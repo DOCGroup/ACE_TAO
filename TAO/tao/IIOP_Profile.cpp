@@ -4,7 +4,6 @@
 #include "IIOP_Profile.h"
 #include "CDR.h"
 #include "Environment.h"
-#include "ORB.h"
 #include "ORB_Core.h"
 #include "debug.h"
 #include "iiop_endpoints.h"
@@ -150,9 +149,27 @@ TAO_IIOP_Profile::parse_string_i (const char *ior
       ACE_OS::strncpy (tmp.inout (), cp_pos + 1, length_port);
       tmp[length_port] = '\0';
 
-      this->endpoint_.port_ =
-        ACE_static_cast (CORBA::UShort, ACE_OS::atoi (tmp.in ()));
-
+      if (ACE_OS::strspn (tmp.in (), "1234567890") == length_port)
+        {
+          this->endpoint_.port_ =
+            ACE_static_cast (CORBA::UShort, ACE_OS::atoi (tmp.in ()));
+        }
+      else
+        {
+          ACE_INET_Addr ia;
+          if (ia.string_to_addr (tmp.in ()) == -1)
+            {
+              ACE_THROW (CORBA::INV_OBJREF (
+                             CORBA::SystemException::_tao_minor_code (
+                               TAO_DEFAULT_MINOR_CODE,
+                               EINVAL),
+                             CORBA::COMPLETED_NO));
+            }
+          else
+            {
+              this->endpoint_.port_ = ia.get_port_number ();
+            }
+        }
       length_host = cp_pos - ior;
     }
   else
@@ -236,6 +253,9 @@ TAO_IIOP_Profile::is_equivalent (const TAO_Profile *other_profile)
         return 0;
     }
 
+  if (!TAO_Profile::is_profile_equivalent_i (other_profile))
+    return 0;
+
   return 1;
 }
 
@@ -263,6 +283,8 @@ TAO_IIOP_Profile::hash (CORBA::ULong max
       hashval += ok[1];
       hashval += ok[3];
     }
+
+  hashval += TAO_Profile::hash_service_i (max);
 
   return hashval % max;
 }

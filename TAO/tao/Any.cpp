@@ -7,6 +7,9 @@
 #include "tao/Any_Dual_Impl_T.h"
 
 #include "tao/ORB_Core.h"
+#include "tao/Valuetype_Adapter.h"
+
+#include "ace/Dynamic_Service.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Any.i"
@@ -136,24 +139,6 @@ CORBA::Any::Any (const CORBA::Any &rhs)
     }
 }
 
-CORBA::Any::Any (CORBA::TypeCode_ptr tc,
-                 void *value,
-                 CORBA::Boolean release)
-{
-  if (value != 0)
-    {
-      ACE_DECLARE_NEW_CORBA_ENV;
-      ACE_THROW (CORBA::NO_IMPLEMENT ());
-      return;
-    }
-
-  ACE_NEW (this->impl_,
-           TAO::Unknown_IDL_Type (tc,
-                                  0,
-                                  ACE_CDR_BYTE_ORDER,
-                                  release));
-}
-
 CORBA::Any::~Any (void)
 {
   if (this->impl_ != 0)
@@ -184,25 +169,16 @@ CORBA::Any::operator= (const CORBA::Any &rhs)
 }
 
 void
-CORBA::Any::replace (CORBA::TypeCode_ptr,
-                     void *,
-                     CORBA::Boolean)
-{
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_THROW (CORBA::NO_IMPLEMENT ());
-}
-
-void
 CORBA::Any::replace (TAO::Any_Impl *new_impl)
 {
+  ACE_ASSERT (new_impl != 0);
+
   if (this->impl_ != 0)
     {
       this->impl_->_remove_ref ();
     }
 
   this->impl_ = new_impl;
-
-  ACE_ASSERT (this->impl_ != 0);
 }
 
 CORBA::TypeCode_ptr
@@ -225,6 +201,20 @@ CORBA::Any::_tao_get_typecode (void) const
     }
 
   return CORBA::_tc_null;
+}
+
+void
+CORBA::Any::_tao_set_typecode (const CORBA::TypeCode_ptr tc)
+{
+  if (this->impl_ == 0)
+    {
+      ACE_NEW (this->impl_,
+               TAO::Unknown_IDL_Type (tc));
+    }
+  else
+    {
+      this->impl_->type (tc);
+    }
 }
 
 ACE_Message_Block *
@@ -346,7 +336,7 @@ CORBA::Any::checked_to_abstract_base (
 TAO::Any_Impl::Any_Impl (_tao_destructor destructor,
                          CORBA::TypeCode_ptr tc)
   : value_destructor_ (destructor),
-    type_ (tc),
+    type_ (CORBA::TypeCode::_duplicate (tc)),
     refcount_ (1)
 {
 }
@@ -399,15 +389,16 @@ TAO::Any_Impl::_remove_ref (void)
 }
 
 void
-TAO::Any_Impl::_tao_decode (TAO_InputCDR &
-                            ACE_ENV_ARG_DECL_NOT_USED)
+TAO::Any_Impl::assign_translator (CORBA::TCKind,
+                                  TAO_InputCDR *)
 {
 }
 
 void
-TAO::Any_Impl::assign_translator (CORBA::TCKind,
-                                  TAO_InputCDR *)
+TAO::Any_Impl::_tao_decode (TAO_InputCDR &
+                            ACE_ENV_ARG_DECL)
 {
+  ACE_THROW (CORBA::NO_IMPLEMENT ());
 }
 
 // =======================================================================
@@ -416,15 +407,12 @@ TAO::Unknown_IDL_Type::Unknown_IDL_Type (
     CORBA::TypeCode_ptr tc,
     const ACE_Message_Block *mb,
     int byte_order,
-    CORBA::Boolean release_tc,
     ACE_Char_Codeset_Translator *ctrans,
     ACE_WChar_Codeset_Translator *wtrans
   )
-  : TAO::Any_Impl (0,
-                   tc),
+  : TAO::Any_Impl (0, tc),
     cdr_ (ACE_Message_Block::duplicate (mb)),
     byte_order_ (byte_order),
-    release_tc_ (release_tc),
     char_translator_ (ctrans),
     wchar_translator_ (wtrans)
 {
@@ -466,11 +454,7 @@ TAO::Unknown_IDL_Type::marshal_value (TAO_OutputCDR &cdr)
 void
 TAO::Unknown_IDL_Type::free_value (void)
 {
-  if (this->release_tc_ == 1)
-    {
-      CORBA::release (this->type_);
-    }
-
+  CORBA::release (this->type_);
   ACE_Message_Block::release (this->cdr_);
 }
 
@@ -547,6 +531,156 @@ TAO::Unknown_IDL_Type::assign_translator (CORBA::TCKind kind,
       default:
         break;
     }
+}
+
+CORBA::Boolean
+TAO::Unknown_IDL_Type::to_object (CORBA::Object_ptr &obj) const
+{
+  ACE_TRY_NEW_ENV
+    {
+      CORBA::ULong kind =
+        this->type_->kind (TAO_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      CORBA::TypeCode_var tcvar =
+        CORBA::TypeCode::_duplicate (this->type_);
+
+      while (kind == CORBA::tk_alias)
+        {
+          tcvar = tcvar->content_type (TAO_ENV_SINGLE_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+
+          kind = tcvar->kind (TAO_ENV_SINGLE_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
+
+      if (kind != CORBA::tk_objref)
+        {
+          return 0;
+        }
+
+      TAO_InputCDR stream (this->cdr_,
+                           this->byte_order_,
+                           TAO_DEF_GIOP_MAJOR,
+                           TAO_DEF_GIOP_MINOR,
+                           TAO_ORB_Core_instance ());
+
+      return stream >> obj;
+    }
+  ACE_CATCH (CORBA::Exception, ex)
+    {
+    }
+  ACE_ENDTRY;
+
+  return 0;
+}
+
+CORBA::Boolean
+TAO::Unknown_IDL_Type::to_value (CORBA::ValueBase *&val) const
+{
+  ACE_TRY_NEW_ENV
+    {
+      CORBA::ULong kind =
+        this->type_->kind (TAO_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      CORBA::TypeCode_var tcvar =
+        CORBA::TypeCode::_duplicate (this->type_);
+
+      while (kind == CORBA::tk_alias)
+        {
+          tcvar = tcvar->content_type (TAO_ENV_SINGLE_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+
+          kind = tcvar->kind (TAO_ENV_SINGLE_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
+
+      if (kind != CORBA::tk_value)
+        {
+          return 0;
+        }
+
+      TAO_InputCDR stream (this->cdr_,
+                           this->byte_order_,
+                           TAO_DEF_GIOP_MAJOR,
+                           TAO_DEF_GIOP_MINOR,
+                           TAO_ORB_Core_instance ());
+
+      TAO_Valuetype_Adapter *adapter =
+        ACE_Dynamic_Service<TAO_Valuetype_Adapter>::instance (
+            TAO_ORB_Core::valuetype_adapter_name ()
+          );
+
+      if (adapter == 0)
+        {
+          ACE_THROW_RETURN (CORBA::INTERNAL (),
+                            0);
+        }
+
+      return adapter->stream_to_value (stream,
+                                       val);
+    }
+  ACE_CATCH (CORBA::Exception, ex)
+    {
+    }
+  ACE_ENDTRY;
+
+  return 0;
+}
+
+CORBA::Boolean
+TAO::Unknown_IDL_Type::to_abstract_base (CORBA::AbstractBase_ptr &obj) const
+{
+  ACE_TRY_NEW_ENV
+    {
+      CORBA::ULong kind =
+        this->type_->kind (TAO_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      CORBA::TypeCode_var tcvar =
+        CORBA::TypeCode::_duplicate (this->type_);
+
+      while (kind == CORBA::tk_alias)
+        {
+          tcvar = tcvar->content_type (TAO_ENV_SINGLE_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+
+          kind = tcvar->kind (TAO_ENV_SINGLE_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
+
+      if (kind != CORBA::tk_value)
+        {
+          return 0;
+        }
+
+      TAO_InputCDR stream (this->cdr_,
+                           this->byte_order_,
+                           TAO_DEF_GIOP_MAJOR,
+                           TAO_DEF_GIOP_MINOR,
+                           TAO_ORB_Core_instance ());
+
+      TAO_Valuetype_Adapter *adapter =
+        ACE_Dynamic_Service<TAO_Valuetype_Adapter>::instance (
+            TAO_ORB_Core::valuetype_adapter_name ()
+          );
+
+      if (adapter == 0)
+        {
+          ACE_THROW_RETURN (CORBA::INTERNAL (),
+                            0);
+        }
+
+      return adapter->stream_to_abstract_base (stream,
+                                               obj);
+    }
+  ACE_CATCH (CORBA::Exception, ex)
+    {
+    }
+  ACE_ENDTRY;
+
+  return 0;
 }
 
 // ****************************************************************

@@ -16,7 +16,7 @@
 
 #ifndef TAO_POLICY_MANAGER_H
 #define TAO_POLICY_MANAGER_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/orbconf.h"
 
@@ -159,5 +159,5 @@ public:
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_POLICY_MANAGER_H */

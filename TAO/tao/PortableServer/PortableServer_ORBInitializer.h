@@ -14,7 +14,7 @@
 #ifndef TAO_PORTABLESERVER_ORB_INITIALIZER_H
 #define TAO_PORTABLESERVER_ORB_INITIALIZER_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "tao/corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -64,6 +64,6 @@ private:
                              ACE_ENV_ARG_DECL);
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* TAO_PORTABLESERVER_ORB_INITIALIZER_H */

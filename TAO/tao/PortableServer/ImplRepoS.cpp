@@ -115,7 +115,7 @@ TAO_ImplementationRepository_ServerObject_Perfect_Hash_OpTable::hash (const char
      16, 16, 16, 16, 16, 16, 16, 16,
 #endif /* ACE_MVS */
     };
-  return len + asso_values[str[len - 1]] + asso_values[str[0]];
+  return len + asso_values[(int) str[len - 1]] + asso_values[(int) str[0]];
 }
 
 const class TAO_operation_db_entry *
@@ -703,7 +703,8 @@ POA_ImplementationRepository::ServerObject::ServerObject (void)
 }
 
 POA_ImplementationRepository::ServerObject::ServerObject (const ServerObject& rhs)
-  :  TAO_ServantBase (rhs)
+  : TAO_Abstract_ServantBase (rhs),
+    TAO_ServantBase (rhs)
 {}
 
 POA_ImplementationRepository::ServerObject::~ServerObject (void)
@@ -1227,7 +1228,7 @@ TAO_ImplementationRepository_Administration_Perfect_Hash_OpTable::hash (const ch
      34, 34, 34, 34, 34, 34, 34, 34,
 #endif /* ACE_MVS */
     };
-  return len + asso_values[str[len - 1]] + asso_values[str[0]];
+  return len + asso_values[(int) str[len - 1]] + asso_values[(int) str[0]];
 }
 
 const class TAO_operation_db_entry *
@@ -3724,7 +3725,8 @@ POA_ImplementationRepository::Administration::Administration (void)
 }
 
 POA_ImplementationRepository::Administration::Administration (const Administration& rhs)
-  :  TAO_ServantBase (rhs)
+  : TAO_Abstract_ServantBase (rhs),
+    TAO_ServantBase (rhs)
 {}
 
 POA_ImplementationRepository::Administration::~Administration (void)
@@ -5364,7 +5366,7 @@ TAO_ImplementationRepository_ServerInformationIterator_Perfect_Hash_OpTable::has
      16,  0, 16, 16, 16, 16, 16, 16,
 #endif /* ACE_MVS */
     };
-  return len + asso_values[str[len - 1]] + asso_values[str[0]];
+  return len + asso_values[(int) str[len - 1]] + asso_values[(int) str[0]];
 }
 
 const class TAO_operation_db_entry *

@@ -24,7 +24,7 @@
 
 #ifndef _TAO_IDL_ORIG_IOPC_H_
 #define _TAO_IDL_ORIG_IOPC_H_
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/corbafwd.h"
 
@@ -78,5 +78,5 @@
 #pragma option pop
 #endif /* __BORLANDC__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ifndef */

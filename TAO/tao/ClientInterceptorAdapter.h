@@ -19,7 +19,7 @@
 #ifndef TAO_CLIENT_INTERCEPTOR_ADAPTER_H
 #define TAO_CLIENT_INTERCEPTOR_ADAPTER_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "orbconf.h"
 
@@ -142,6 +142,6 @@ private:
 
 #endif /* TAO_HAS_INTERCEPTORS */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* TAO_CLIENT_INTERCEPTOR_ADAPTER_H */

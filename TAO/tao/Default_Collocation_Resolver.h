@@ -11,7 +11,7 @@
 #ifndef TAO_DEFAULT_COLLOCATION_RESOLVER_H
 #define TAO_DEFAULT_COLLOCATION_RESOLVER_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "tao/orbconf.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -47,6 +47,6 @@ ACE_FACTORY_DECLARE (TAO, TAO_Default_Collocation_Resolver)
 # include "tao/Default_Collocation_Resolver.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* TAO_DEFAULT_COLLOCATION_RESOLVER_H */

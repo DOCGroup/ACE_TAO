@@ -278,10 +278,11 @@ TAO_GIOP_Invocation::perform_call (TAO_Transport_Descriptor_Interface &desc
 
   // Obtain a connection.
   int result =
-    conn_reg->get_connector (desc.endpoint ())->connect (this,
-                                                         &desc,
-                                                         max_wait_time
-                                                         ACE_ENV_ARG_PARAMETER);
+    conn_reg->get_connector (desc.endpoint ()->tag ())->connect (
+      this,
+      &desc,
+      max_wait_time
+      ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   // A timeout error occurred

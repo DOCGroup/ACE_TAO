@@ -115,7 +115,7 @@ CORBA::WrongTransaction::_tao_duplicate (void) const
   return result;
 }
 
-void CORBA::WrongTransaction::_raise (void)
+void CORBA::WrongTransaction::_raise (void) const
 {
   TAO_RAISE (*this);
 }

@@ -18,7 +18,7 @@
 
 #ifndef TAO_IIOP_CONNECTOR_H
 #define TAO_IIOP_CONNECTOR_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "ace/SOCK_Connector.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -122,5 +122,5 @@ private:
 };
 
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif  /* TAO_IIOP_CONNECTOR_H */

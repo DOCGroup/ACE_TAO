@@ -12,7 +12,7 @@
 #ifndef TAO_BIDIR_POLICY_FACTORY_H
 #define TAO_BIDIR_POLICY_FACTORY_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "bidirgiop_export.h"
 
@@ -53,6 +53,6 @@ public:
 #endif /* _MSC_VER */
 
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* TAO_BIDIR_POLICY_FACTORY_H */

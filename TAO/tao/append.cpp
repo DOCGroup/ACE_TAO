@@ -213,6 +213,13 @@ TAO_Marshal_TypeCode::append (CORBA::TypeCode_ptr,
             case CORBA::tk_alias:
             case CORBA::tk_except:
             case CORBA::tk_value:
+            case CORBA::tk_value_box:
+            case CORBA::tk_native:
+            case CORBA::tk_abstract_interface:
+            case CORBA::tk_local_interface:
+            case CORBA::tk_component:
+            case CORBA::tk_home:
+            case CORBA::tk_event:
               {
                 // write the encapsulation i.e., octet sequence
                 retval =
@@ -543,12 +550,34 @@ TAO_Marshal_Union::append (CORBA::TypeCode_ptr tc,
 
         case CORBA::tk_enum:
           {
-            const CORBA::ULong *d =
-              ACE_reinterpret_cast (const CORBA::ULong *,
-                                    any->value ());
-            if (*d == enum_v)
+            ACE_Message_Block *mb = any->_tao_get_cdr ();
+
+            if (mb != 0)
               {
-                current_member = i;
+                CORBA::ULong d = 0;
+                TAO_InputCDR cdr (mb->data_block (),
+                                  ACE_Message_Block::DONT_DELETE,
+                                  mb->rd_ptr () - mb->base (),
+                                  mb->wr_ptr () - mb->base (),
+                                  ACE_CDR_BYTE_ORDER,
+                                  TAO_DEF_GIOP_MAJOR,
+                                  TAO_DEF_GIOP_MINOR); 
+                cdr.read_ulong (d); 
+
+                if (d == enum_v)
+                  {
+                    current_member = i;
+                  }
+              }
+            else
+              {
+                const CORBA::ULong *d =
+                  ACE_reinterpret_cast (const CORBA::ULong *,
+                                        any->value ());
+                if (*d == enum_v)
+                  {
+                    current_member = i;
+                  }
               }
           }
           break;

@@ -14,7 +14,7 @@
 
 #ifndef TAO_BIDIR_POLICY_I_H
 #define TAO_BIDIR_POLICY_I_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "bidirgiop_export.h"
 
 
@@ -95,5 +95,5 @@ private:
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_BIDIR_POLICY_I_H */

@@ -2,6 +2,7 @@
 
 #include "tao/Messaging/Messaging_Policy_i.h"
 #include "tao/Stub.h"
+#include "tao/ORB_Core.h"
 #include "tao/debug.h"
 
 #if ! defined (__ACE_INLINE__)
@@ -109,7 +110,7 @@ TAO_RelativeRoundtripTimeoutPolicy::create (const CORBA::Any& val
 
   TimeBase::TimeT value;
   if ((val >>= value) == 0)
-    ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_TYPE),
+    ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_VALUE),
                       CORBA::Policy::_nil ());
 
   TAO_RelativeRoundtripTimeoutPolicy *tmp;
@@ -256,7 +257,7 @@ TAO_Sync_Scope_Policy::create (const CORBA::Any& val
 {
   Messaging::SyncScope synchronization;
   if ((val >>= synchronization) == 0)
-    ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_TYPE),
+    ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_VALUE),
                       CORBA::Policy::_nil ());
 
   TAO_Sync_Scope_Policy *servant = 0;

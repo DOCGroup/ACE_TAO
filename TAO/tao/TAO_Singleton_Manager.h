@@ -18,7 +18,7 @@
 #ifndef TAO_SINGLETON_MANAGER_H
 #define TAO_SINGLETON_MANAGER_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/TAO_Export.h"
 #include "tao/orbconf.h"
@@ -226,6 +226,6 @@ private:
 # include "tao/TAO_Singleton_Manager.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif  /* TAO_SINGLETON_MANAGER_H */

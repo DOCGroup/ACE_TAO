@@ -13,7 +13,7 @@
 #ifndef TAO_CODEC_FACTORY_H
 #define TAO_CODEC_FACTORY_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "TAO_Export.h"
 
@@ -21,7 +21,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "IOPC.h"
+#include "IOP_CodecC.h"
 #include "LocalObject.h"
 
 // This is to remove "inherits via dominance" warnings from MSVC.
@@ -80,6 +80,6 @@ private:
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif  /* TAO_CODEC_FACTORY_H */

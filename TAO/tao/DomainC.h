@@ -25,7 +25,7 @@
 #ifndef _TAO_IDL_ORIG_DOMAINC_H_
 #define _TAO_IDL_ORIG_DOMAINC_H_
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/corbafwd.h"
 
@@ -753,5 +753,5 @@ TAO_Export CORBA::Boolean operator>> (
 #pragma option pop
 #endif /* __BORLANDC__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ifndef */

@@ -29,7 +29,7 @@
 #error "You should not include BiDirPolicyC.h directly, use BiDirGIOP.h"
 #endif /* !TAO_BIDIRGIOP_SAFE_INCLUDE */
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "bidirgiop_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -238,6 +238,6 @@ TAO_NAMESPACE_CLOSE // module BiDirPolicy
 #pragma option pop
 #endif /* __BORLANDC__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* ifndef */
 

@@ -16,7 +16,7 @@
 
 #ifndef TAO_RTCORBA_H_
 #define TAO_RTCORBA_H_
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "rtcorba_export.h"
 
@@ -44,5 +44,5 @@ static TAO_RTCORBA_Initializer TAO_RTCORBA_initializer;
 
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_RTCORBA_H_ */

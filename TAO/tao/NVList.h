@@ -1,4 +1,4 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -15,7 +15,7 @@
 #ifndef TAO_NVLIST_H
 #define TAO_NVLIST_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/orbconf.h"
 
@@ -23,11 +23,13 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Unbounded_Queue.h"
-#include "ace/Synch.h"
 #include "tao/Any.h"
+#include "tao/Environment.h"
 
+#include "ace/Unbounded_Queue.h"
+#include "ace/Thread_Mutex.h"
 
+class TAO_ORB_Core;
 class TAO_InputCDR;
 
 namespace CORBA
@@ -283,5 +285,5 @@ namespace CORBA
 # include "tao/NVList.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_NVLIST_H */

@@ -17,7 +17,7 @@
 #ifndef TAO_ENCODABLE_H_
 #define TAO_ENCODABLE_H_
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "tao/corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -48,6 +48,6 @@ public:
   virtual CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr) = 0;
 };
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* TAO_ENCODABLE_H_ */

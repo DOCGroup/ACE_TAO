@@ -13,7 +13,7 @@
 
 #ifndef TAO_MANAGED_TYPES_H
 #define TAO_MANAGED_TYPES_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/corbafwd.h"
 
@@ -324,5 +324,5 @@ private:
 #include "tao/Managed_Types.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_MANAGED_TYPES_H */

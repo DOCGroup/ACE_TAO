@@ -11,7 +11,7 @@
 // =========================
 #ifndef TAO_CODESET_TRANSLATOR_FACTORY_H
 #define TAO_CODESET_TRANSLATOR_FACTORY_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "ace/Service_Object.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -97,5 +97,5 @@ protected:
 // Get the template includes last
 #include "tao/Codeset_Translator_Factory_T.h"
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif /* TAO_Codeset_Translator_Factory */

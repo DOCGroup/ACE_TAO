@@ -13,7 +13,7 @@
 
 #ifndef TAO_SCIOP_TRANSPORT_H
 #define TAO_SCIOP_TRANSPORT_H
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/Transport.h"
 
@@ -145,6 +145,6 @@ private:
 
 #endif /* TAO_HAS_SCIOP == 1 */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif  /* TAO_SCIOP_TRANSPORT_H */

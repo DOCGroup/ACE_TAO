@@ -1,6 +1,8 @@
 #include "Connection_Timeout_Policy_i.h"
 #include "tao/ORB_Core.h"
 #include "tao/Stub.h"
+#include "tao/debug.h"
+
 
 ACE_RCSID (Messaging,
            Connection_Timeout_Policy_i,
@@ -106,7 +108,7 @@ TAO_ConnectionTimeoutPolicy::create (const CORBA::Any& val
 
   TimeBase::TimeT value;
   if ((val >>= value) == 0)
-    ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_TYPE),
+    ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_VALUE),
                       CORBA::Policy::_nil ());
 
   TAO_ConnectionTimeoutPolicy *tmp;

@@ -14,7 +14,7 @@
 #ifndef TAO_ANY_SPECIAL_BASIC_IMPL_T_H
 #define TAO_ANY_SPECIAL_BASIC_IMPL_T_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 
 #include "tao/Any.h"
 
@@ -76,7 +76,7 @@ namespace TAO
 #pragma implementation ("Any_Special_Basic_Impl_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif /* TAO_ANY_SPECIAL_BASIC_IMPL_T_H */
 

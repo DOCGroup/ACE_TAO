@@ -646,7 +646,7 @@ CORBA::PollableSet::NoPossiblePollable::_tao_duplicate (void) const
   return result;
 }
 
-void CORBA::PollableSet::NoPossiblePollable::_raise (void)
+void CORBA::PollableSet::NoPossiblePollable::_raise (void) const
 {
   TAO_RAISE (*this);
 }
@@ -731,7 +731,7 @@ CORBA::PollableSet::UnknownPollable::_tao_duplicate (void) const
   return result;
 }
 
-void CORBA::PollableSet::UnknownPollable::_raise (void)
+void CORBA::PollableSet::UnknownPollable::_raise (void) const
 {
   TAO_RAISE (*this);
 }

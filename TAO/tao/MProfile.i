@@ -192,17 +192,6 @@ TAO_MProfile::pfiles (void) const
 }
 
 ACE_INLINE void
-TAO_MProfile::create_policy_list (ACE_ENV_SINGLE_ARG_DECL)
-{
-  ACE_NEW_THROW_EX (this->policy_list_,
-                    CORBA::PolicyList,
-                    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
-                                      CORBA::COMPLETED_NO)
-                    );
-}
-
-
-ACE_INLINE void
 TAO_MProfile::policy_list (CORBA::PolicyList *policy_list)
 {
   this->policy_list_ = policy_list;
