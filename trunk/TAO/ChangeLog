@@ -879,7 +879,6 @@ Thu Jul 03 17:03:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
           Set correct BUILD_DLL define when building shared libs. This fixes
           link errors in the Cygwin/MinGW and Kylix builds.
 
->>>>>>> 1.2069
 Thu Jul 03 16:24:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Event/ECG_Mcast_Gateway.cpp (init_endpoint):
