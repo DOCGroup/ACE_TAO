@@ -1,3 +1,9 @@
+Sat Mar 10 16:59:51 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+	* ACE-INSTALL.html:
+	  Remove references to the now obsolete config-linux-lxpthreads.h
+	  and platform_linux_lxpthread.GNU 
+
 Sat Mar 10 16:38:22 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/run_test.lst:
