@@ -232,7 +232,7 @@ public:
   // static objects.  If no static object spawns any threads, the
   // program will be single-threaded when this flag returns 1.  (Note
   // that the program still might construct some static objects when
-  // this flag returns 0, if ACE_HAS_NON_STATIC_OBJECT_MANAGER is not
+  // this flag returns 0, if ACE_HAS_NONSTATIC_OBJECT_MANAGER is not
   // defined.)
 
   static int shutting_down ();
@@ -240,7 +240,7 @@ public:
   // can be used to determine if the program is in the midst of
   // destroying static objects.  (Note that the program might destroy
   // some static objects before this flag can return 1, if
-  // ACE_HAS_NON_STATIC_OBJECT_MANAGER is not defined.)
+  // ACE_HAS_NONSTATIC_OBJECT_MANAGER is not defined.)
 
   static ACE_Sig_Set &default_mask (void);
   // Accesses a default signal set used in ACE_Sig_Guard methods.
