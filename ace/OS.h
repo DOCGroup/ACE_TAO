@@ -4169,7 +4169,7 @@ private:
 
 #else   /* ! ACE_HAS_TSS_EMULATION */
 # if defined (TLS_MINIMUM_AVAILABLE)
-#   // WIN32 platforms define TLS_MINIMUM_AVAILABLE natively.
+    // WIN32 platforms define TLS_MINIMUM_AVAILABLE natively.
 #   define ACE_DEFAULT_THREAD_KEYS TLS_MINIMUM_AVAILABLE
 # endif /* TSL_MINIMUM_AVAILABLE */
 #endif /* ACE_HAS_TSS_EMULATION */

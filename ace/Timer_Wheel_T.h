@@ -188,7 +188,7 @@ private:
   long size_;
   // Keeps track of the size of the queue
 
-  ACE_Timer_Wheel_Iterator_T<TYPE, FUNCTOR, LOCK> iterator_;
+  WHEEL_ITERATOR *iterator_;
   // Iterator used to expire timers.
 
   ACE_Timer_Node_T<TYPE> *freelist_;

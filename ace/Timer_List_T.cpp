@@ -58,7 +58,7 @@ ACE_Timer_List_Iterator_T<TYPE, FUNCTOR, LOCK>::item (void)
 template <class TYPE, class FUNCTOR, class LOCK> ACE_Timer_Queue_Iterator_T<TYPE, FUNCTOR, LOCK> &
 ACE_Timer_List_T<TYPE, FUNCTOR, LOCK>::iter (void)
 {
-  return this->iterator_;
+  return *this->iterator_;
 }
 
 // Create an empty list.
@@ -68,12 +68,13 @@ ACE_Timer_List_T<TYPE, FUNCTOR, LOCK>::ACE_Timer_List_T (FUNCTOR *upcall_functor
                                                          ACE_Free_List<ACE_Timer_Node_T <TYPE> > *freelist)
   : ACE_Timer_Queue_T<TYPE, FUNCTOR, LOCK> (upcall_functor, freelist),
     head_ (new ACE_Timer_Node_T<TYPE>),
-    iterator_ (*this),
     timer_id_ (0)
 {
   ACE_TRACE ("ACE_Timer_List_T::ACE_Timer_List");
   this->head_->set_next (this->head_);
   this->head_->set_prev (this->head_);
+
+  iterator_ = new LIST_ITERATOR(*this);
 }
 
 
@@ -105,6 +106,8 @@ ACE_Timer_List_T<TYPE, FUNCTOR, LOCK>::~ACE_Timer_List_T (void)
   ACE_TRACE ("ACE_Timer_List_T::~ACE_Timer_List_T");
   ACE_MT (ACE_GUARD (LOCK, ace_mon, this->mutex_));
   
+  delete iterator_;
+
   ACE_Timer_Node_T<TYPE> *curr = this->head_->get_next ();
   
   while (curr != this->head_)

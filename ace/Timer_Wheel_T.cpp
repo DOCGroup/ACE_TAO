@@ -106,8 +106,7 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, LOCK>::ACE_Timer_Wheel_T (size_t wheelsize,
   : INHERITED (upcall_functor, freelist),
     wheel_size_ (wheelsize),
     resolution_ (resolution),
-    earliest_pos_ (0),
-    iterator_ (*this)
+    earliest_pos_ (0)
 {
   ACE_TRACE ("ACE_Timer_Wheel_T::ACE_Timer_Wheel_T");
   size_t i;
@@ -129,6 +128,8 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, LOCK>::ACE_Timer_Wheel_T (size_t wheelsize,
 
   // Do the preallocation
   this->free_list_->resize (prealloc);
+
+  iterator_ = new WHEEL_ITERATOR(*this);
 }
 
 template <class TYPE, class FUNCTOR, class LOCK>
@@ -137,8 +138,7 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, LOCK>::ACE_Timer_Wheel_T (FUNCTOR *upcall_funct
   : INHERITED (upcall_functor, freelist),
     wheel_size_ (ACE_DEFAULT_TIMER_WHEEL_SIZE),
     resolution_ (ACE_DEFAULT_TIMER_WHEEL_RESOLUTION),
-    earliest_pos_ (0),
-    iterator_ (*this)
+    earliest_pos_ (0)
 {
   ACE_TRACE ("ACE_Timer_Wheel_T::ACE_Timer_Wheel_T");
   size_t i;
@@ -156,6 +156,8 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, LOCK>::ACE_Timer_Wheel_T (FUNCTOR *upcall_funct
       tempnode->set_prev (tempnode);
       this->wheel_[i] = tempnode;
     }
+
+  iterator_ = new WHEEL_ITERATOR(*this);
 }
 
 // Destructor just cleans up its memory
@@ -164,6 +166,8 @@ template <class TYPE, class FUNCTOR, class LOCK>
 ACE_Timer_Wheel_T<TYPE, FUNCTOR, LOCK>::~ACE_Timer_Wheel_T (void)
 {
   ACE_TRACE ("ACE_Timer_Wheel_T::~ACE_Timer_Wheel_T");
+
+  delete iterator_;
 
   for (size_t i = 0; i < this->wheel_size_; i++)
     {
@@ -482,7 +486,7 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, LOCK>::reschedule (ACE_Timer_Node_T<TYPE> *expi
 template <class TYPE, class FUNCTOR, class LOCK> ACE_Timer_Queue_Iterator_T<TYPE, FUNCTOR, LOCK> &
 ACE_Timer_Wheel_T<TYPE, FUNCTOR, LOCK>::iter (void)
 {
-  return this->iterator_;
+  return *this->iterator_;
 }
 
 // Dummy version of expire to get rid of warnings in Sun CC 4.2
