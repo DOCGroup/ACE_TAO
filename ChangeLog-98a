@@ -22,7 +22,7 @@ Sun Feb 08 12:06:30 1998  David L. Levine  <levine@cs.wustl.edu>
         * ace/config-linux-common.h: added ACE_HAS_TERM_IOCTLS.  Thanks
           to James CE Johnson <jcej@lads.com> for this addition.
 
-        * examples/Naming//test_multiple_contexts.cpp,test_non_existent.cpp,
+        * examples/Naming/test_multiple_contexts.cpp,test_non_existent.cpp,
           test_writers.cpp:
           replaced uses of cout with ACE_DEBUG.
 
