@@ -1,3 +1,10 @@
+Wed May 05 15:11:26 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Time_Utilities.i (Time_Value_to_TimeT):
+          replaced static cast of ACE_ONE_SECOND_IN_NSECS to ACE_UINT32
+          with ACE_U_ONE_SECOND_IN_NSECS, so we don't cast away
+          constness.
+
 Wed May 05 13:07:49 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * all Makefiles: replaced /bin/rm with $(RM) and /bin/mv with mv.
