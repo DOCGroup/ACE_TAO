@@ -21,7 +21,7 @@
 
 ACE_RCSID(MT_Server, client, "client.cpp,v 1.2 2003/10/08 13:26:32 venkita Exp")
 
-const char *ior = "file://test.ior";
+const char *ior = "file://test1.ior";
 int do_shutdown = 1;
 int enable_dynamic_scheduling = 1;
 int enable_yield = 1;

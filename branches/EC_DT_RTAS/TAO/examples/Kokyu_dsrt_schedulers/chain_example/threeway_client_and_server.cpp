@@ -19,7 +19,7 @@
 ACE_RCSID(MT_Server, server, "server.cpp,v 1.3 2003/10/14 05:57:01 jwillemsen Exp")
 
 const char *ior_input_file = "file://test2.ior";
-const char *ior_output_file = "test.ior";
+const char *ior_output_file = "test1.ior";
 
 int nthreads = 1;
 int enable_dynamic_scheduling = 1;
@@ -104,14 +104,7 @@ main (int argc, char *argv[])
 
 //  TAO_debug_level =1;
 
-  CPULoad::calibrate(10);
-
   Object_ID oid = ACE_OBJECT_COUNTER->increment();
-
-//print out the start time of the program.
-  ACE_Time_Value start_time=ACE_OS::gettimeofday();
-  ACE_OS::printf ( ACE_TEXT ("The Start time: %u (sec), %u (usec)\n"), start_time.sec(), start_time.usec());
-  DSTRM_EVENT(MAIN_GROUP_FAM, START,0,sizeof(Object_ID), (char*)&oid);
 
   ACE_TRY_NEW_ENV
     {
@@ -226,6 +219,15 @@ main (int argc, char *argv[])
           ACE_OS::fprintf (output_file, "%s", ior.in ());
           ACE_OS::fclose (output_file);
         }
+
+  ACE_OS::printf ( ACE_TEXT ("The Client_and_Server has generated %s\n"),ior_output_file);
+ 
+  CPULoad::calibrate(10);
+
+//print out the start time of the program.
+  ACE_Time_Value start_time=ACE_OS::gettimeofday();
+  ACE_OS::printf ( ACE_TEXT ("The Start time: %u (sec), %u (usec)\n"), start_time.sec(), start_time.usec());
+  DSTRM_EVENT(MAIN_GROUP_FAM, START,0,sizeof(Object_ID), (char*)&oid);
 
       poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
