@@ -22,6 +22,9 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if !defined (ACE_LACKS_SBRK)
+
+#include "ace/os_include/sys/os_mman.h"
+
 /**
  * @class ACE_Sbrk_Memory_Pool_Options
  *
