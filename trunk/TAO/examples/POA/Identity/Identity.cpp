@@ -124,6 +124,7 @@ create_poas (PortableServer::POA_ptr root_poa,
 
 void
 test_poas (CORBA::ORB_ptr orb,
+           PortableServer::POA_ptr root_poa,
            PortableServer::POA_ptr first_poa,
            PortableServer::POA_ptr second_poa,
            PortableServer::POA_ptr third_poa,
@@ -131,6 +132,130 @@ test_poas (CORBA::ORB_ptr orb,
            int perform_deactivation_test,
            CORBA::Environment &ACE_TRY_ENV)
 {
+  {
+    test_i servant (root_poa);
+
+    CORBA::Object_var obj = root_poa->create_reference ("IDL:test:1.0",
+                                                        ACE_TRY_ENV);
+    ACE_CHECK;
+
+    CORBA::String_var string = orb->object_to_string (obj.in (),
+                                                      ACE_TRY_ENV);
+    ACE_CHECK;
+
+    ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
+
+    PortableServer::ObjectId_var id = root_poa->reference_to_id (obj.in (),
+                                                                 ACE_TRY_ENV);
+    ACE_CHECK;
+
+    root_poa->activate_object_with_id (id.in (),
+                                       &servant,
+                                       ACE_TRY_ENV);
+    ACE_CHECK;
+
+    obj = root_poa->id_to_reference (id.in (),
+                                     ACE_TRY_ENV);
+    ACE_CHECK;
+
+    string = orb->object_to_string (obj.in (),
+                                    ACE_TRY_ENV);
+    ACE_CHECK;
+
+    ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
+
+    PortableServer::Servant servant_from_reference = root_poa->reference_to_servant (obj.in (),
+                                                                                     ACE_TRY_ENV);
+    ACE_CHECK;
+
+    PortableServer::Servant servant_from_id = root_poa->id_to_servant (id.in (),
+                                                                       ACE_TRY_ENV);
+    ACE_CHECK;
+
+    ACE_ASSERT (servant_from_reference == servant_from_id);
+    ACE_ASSERT (servant_from_reference == &servant);
+
+    obj = root_poa->servant_to_reference (&servant,
+                                          ACE_TRY_ENV);
+    ACE_CHECK;
+
+    string = orb->object_to_string (obj.in (),
+                                    ACE_TRY_ENV);
+    ACE_CHECK;
+
+    ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
+
+    obj = servant._this (ACE_TRY_ENV);
+    ACE_CHECK;
+
+    string = orb->object_to_string (obj.in (),
+                                    ACE_TRY_ENV);
+    ACE_CHECK;
+
+    ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
+
+    PortableServer::ObjectId_var id_from_servant = root_poa->servant_to_id (&servant,
+                                                                            ACE_TRY_ENV);
+    ACE_CHECK;
+
+    ACE_ASSERT (id_from_servant.in () == id.in ());
+
+    root_poa->deactivate_object (id.in (),
+                                 ACE_TRY_ENV);
+    ACE_CHECK;
+
+    if (perform_deactivation_test)
+      {
+        root_poa->activate_object_with_id (id.in (),
+                                           &servant,
+                                           ACE_TRY_ENV);
+        ACE_CHECK;
+
+        servant_from_reference = root_poa->reference_to_servant (obj.in (),
+                                                                 ACE_TRY_ENV);
+        ACE_CHECK;
+
+        ACE_ASSERT (servant_from_reference == &servant);
+
+        root_poa->deactivate_object (id.in (),
+                                     ACE_TRY_ENV);
+        ACE_CHECK;
+      }
+  }
+
+  {
+    test_i servant (root_poa);
+
+    PortableServer::ObjectId_var id = root_poa->activate_object (&servant,
+                                                                 ACE_TRY_ENV);
+    ACE_CHECK;
+
+    CORBA::Object_var obj = root_poa->id_to_reference (id.in (),
+                                                       ACE_TRY_ENV);
+    ACE_CHECK;
+
+    CORBA::String_var string = orb->object_to_string (obj.in (),
+                                                      ACE_TRY_ENV);
+    ACE_CHECK;
+
+    ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
+
+    obj = root_poa->create_reference_with_id (id.in (),
+                                              "IDL:test:1.0",
+                                              ACE_TRY_ENV);
+    ACE_CHECK;
+
+    string = orb->object_to_string (obj.in (),
+                                    ACE_TRY_ENV);
+    ACE_CHECK;
+
+    ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
+
+    root_poa->deactivate_object (id.in (),
+                                 ACE_TRY_ENV);
+    ACE_CHECK;
+  }
+
   {
     test_i servant (first_poa);
 
@@ -566,6 +691,7 @@ main (int argc, char **argv)
       ACE_TRY_CHECK;
 
       test_poas (orb.in (),
+                 root_poa.in (),
                  first_poa.in (),
                  second_poa.in (),
                  third_poa.in (),
@@ -604,6 +730,7 @@ main (int argc, char **argv)
       ACE_TRY_CHECK;
 
       test_poas (orb.in (),
+                 root_poa.in (),
                  first_poa.in (),
                  second_poa.in (),
                  third_poa.in (),

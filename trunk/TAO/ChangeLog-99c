@@ -1,4 +1,13 @@
-Sat May 08 02:03:38 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+Sat May 08 02:36:53 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* examples/POA/Identity/Identity.cpp (test_poas): Added testing
+	  for root POA.
+
+	* tao/POA.cpp (reference_to_servant and reference_to_id): Fixed
+	  the checking of results from TAO_POA::parse_key().  POA names
+	  should not be compared when the target POA is the root POA.
+	  Thanks to Tommy Andreasen <tommy.andreasen@post.tele.dk> for
+	  pointing out this bug.
 
 	* tao/TAO_Static.dsp and tao/TAO.dsp: Removed Sequence_T.cpp from
 	  compilation list; it only contains template code.
