@@ -84,7 +84,7 @@ echo // The IOR of the Naming Service: $IOR
 echo // Started Naming Service on port $nameserviceport
 
 cd $TAO_ROOT/tests/Quoter
-./server -ORBnameserviceior $IOR -ORBport $serverport >> /tmp/logfile_$login  2>&1 &
+./server -ORBsvcconf server.conf -ORBnameserviceior $IOR -ORBport $serverport >> /tmp/logfile_$login  2>&1 &
 
 echo // Started server on port $serverport
 
@@ -131,6 +131,6 @@ ps -ef | grep mk1 | grep ORBnameserviceior
 echo ..
 echo call the client:
 echo ..
-./client -ORBnameserviceior $IOR -ORBport $clientport
+./client -ORBsvcconf client.conf -ORBnameserviceior $IOR -ORBport $clientport
 
 cd $old_dir
