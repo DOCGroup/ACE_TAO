@@ -66,19 +66,24 @@ TAO_SSLIOP_Protocol_Factory::init (int argc,
   for (int curarg = 0; curarg != argc; ++curarg)
     {
       if (ACE_OS::strcasecmp (argv[curarg],
-                              "-SSLDisable") == 0)
+                              "-SSLNoProtection") == 0)
         {
-          ACE_ERROR ((LM_WARNING,
-                      ACE_TEXT ("(%P|%t) \"-SSLDisable\" has been ")
-                      ACE_TEXT ("superceded by the ")
-                      ACE_TEXT ("\"-SSLNoProtection\" option.\n")));
+          // Enable the eNULL cipher.  Note that enabling the "eNULL"
+          // cipher only disables encryption.  However, certificate
+          // exchanges will still occur.
+          if (::SSL_CTX_set_cipher_list (
+                  ACE_SSL_Context::instance ()->context (),
+                  "DEFAULT:eNULL") == 0)
+            {
+              if (TAO_debug_level > 0)
+                ACE_DEBUG ((LM_ERROR,
+                            ACE_TEXT ("(%P|%t) Unable to set eNULL ")
+                            ACE_TEXT ("SSL cipher in SSLIOP ")
+                            ACE_TEXT ("factory.\n")));
 
-          this->no_protection_ = 1;
-        }
+              return -1;
+            }
 
-      else if (ACE_OS::strcasecmp (argv[curarg],
-                                   "-SSLNoProtection") == 0)
-        {
           this->no_protection_ = 1;
         }
 
@@ -94,6 +99,7 @@ TAO_SSLIOP_Protocol_Factory::init (int argc,
               const char *path =
                 ACE_OS::strtok_r (0, ":", &lasts);
               int type = -1;
+
               if (ACE_OS::strcasecmp (type_name, "ASN1") == 0)
                 {
                   type = SSL_FILETYPE_ASN1;
@@ -102,7 +108,17 @@ TAO_SSLIOP_Protocol_Factory::init (int argc,
                 {
                   type = SSL_FILETYPE_PEM;
                 }
-              ACE_SSL_Context::instance ()->certificate (path, type);
+
+              if (ACE_SSL_Context::instance ()->certificate (path, type) != 0)
+                {
+                  if (TAO_debug_level > 0)
+                    ACE_DEBUG ((LM_ERROR,
+                                ACE_TEXT ("(%P|%t) Unable to set eNULL ")
+                                ACE_TEXT ("SSL cipher in SSLIOP ")
+                                ACE_TEXT ("factory.\n")));
+
+                  return -1;
+                }
             }
         }
 
@@ -126,7 +142,18 @@ TAO_SSLIOP_Protocol_Factory::init (int argc,
                 {
                   type = SSL_FILETYPE_PEM;
                 }
-              ACE_SSL_Context::instance ()->private_key (path, type);
+
+              if (ACE_SSL_Context::instance ()->private_key (path, type) != 0)
+                {
+                  if (TAO_debug_level > 0)
+                    ACE_DEBUG ((LM_ERROR,
+                                ACE_TEXT ("(%P|%t) Unable to set eNULL ")
+                                ACE_TEXT ("SSL cipher in SSLIOP ")
+                                ACE_TEXT ("factory.\n")));
+
+                  return -1;
+                }
+
             }
         }
 
@@ -149,8 +176,9 @@ TAO_SSLIOP_Protocol_Factory::init (int argc,
                        || ACE_OS::strcasecmp (argv[curarg],
                                               "SERVER_AND_CLIENT") == 0)
                 {
-                  mode = SSL_VERIFY_PEER|SSL_VERIFY_FAIL_IF_NO_PEER_CERT;
+                  mode = SSL_VERIFY_PEER | SSL_VERIFY_FAIL_IF_NO_PEER_CERT;
                 }
+
               ACE_SSL_Context::instance ()->default_verify_mode (mode);
             }
         }
