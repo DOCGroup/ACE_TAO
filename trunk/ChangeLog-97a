@@ -11,6 +11,10 @@ Fri Mar 28 11:34:38 1997  David L. Levine  <levine@cs.wustl.edu>
 	  priority logic.  Thanks to Thilo Kielmann
 	  <kielmann@informatik.uni-siegen.de> for the patch.
 
+	* tests/Priority_Task_Test.cpp (open): added THR_SCHED_FIFO flag.
+	  Thanks to Thilo Kielmann <kielmann@informatik.uni-siegen.de> for
+	  for this suggestion.
+
 	* examples/ASX/Event_Server/Event_Server/Makefile,
 	                            Transceiver/Makefile:
 	  added -lGateway to LIBS to pick up its template
