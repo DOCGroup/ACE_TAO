@@ -6,7 +6,6 @@ ACE_RCSID(Naming, test_non_existent, "$Id$")
 
 int main (int, char *[])
 {
-#if defined (ACE_HAS_WCHAR)
   int i;
 
   ACE_Naming_Context *ns_ptr;
@@ -48,8 +47,5 @@ int main (int, char *[])
   ACE_DEBUG ((LM_DEBUG,
               "(%P) bound with %d\n",
               i));
-#else /* ACE_HAS_WCHAR */
-  ACE_ERROR ((LM_INFO, ACE_TEXT ("Naming requires wchar_t support to run.\n")));
-#endif /* ACE_HAS_WCHAR */
   return 0;
 }
