@@ -1,3 +1,9 @@
+Thu Feb 18 19:21:03 1999  James CE Johnson  <jcej@chiroptera.tragus.org>
+	
+	* docs/tutorials/005/client_handler.cpp: Replaced the leading '_'
+	in the open() method so that we can cast _acceptor to acceptor.
+
+
 Thu Feb 18 14:12:28 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* netsvcs/clients/Naming/Client/svc.conf: Changed to start up

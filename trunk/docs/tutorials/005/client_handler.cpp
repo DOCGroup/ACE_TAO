@@ -63,7 +63,7 @@ Client_Handler::destroy (void)
    The Client_Acceptor instance pointer is cast to a void* and given
    to us here.  We'll use that to avoid some global data...  */
 int 
-Client_Handler::open (void *acceptor)
+Client_Handler::open (void *_acceptor)
 {
   /* Convert the void* to a Client_Acceptor*.  You should probably use
      those fancy ACE_*_cast macros but I can never remember how/when
@@ -71,7 +71,7 @@ Client_Handler::open (void *acceptor)
      without compiler warnings be very sure of what you're doing when
      you do this kind of thing.  That's where the new-style cast
      operators can save you.  */
-  Client_Acceptor *acceptor = (Client_Acceptor *) acceptor;
+  Client_Acceptor *acceptor = (Client_Acceptor *) _acceptor;
 
   /* Our reactor reference will be set when we register ourselves but
      I decided to go ahead and set it here.  No good reason really...  */
