@@ -148,6 +148,9 @@ typedef int ucontext_t;
 #   include /**/ <tli/timod.h>
 # endif /* ACE_HAS_TIMOD_H */
 
+# if defined (ACE_LACKS_SIGSET_T)
+typedef u_int sigset_t;
+# endif /* ACE_LACKS_SIGSET_T */
 
 // Type of the extended signal handler.
 typedef void (*ACE_Sig_Handler_Ex) (int, siginfo_t *siginfo, ucontext_t *ucontext);
@@ -184,10 +187,6 @@ struct sigaction
   sigset_t sa_mask;
 };
 # endif /* ACE_LACKS_SIGACTION_T */
-
-# if defined (ACE_LACKS_SIGSET_T)
-typedef u_int sigset_t;
-# endif /* ACE_LACKS_SIGSET_T */
 
 # if !defined (SIGHUP)
 #   define SIGHUP 0
