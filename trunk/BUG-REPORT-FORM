@@ -13,7 +13,7 @@
 To: ace-users@cs.wustl.edu
 Subject: [area]: [synopsis]
 
-    ACE VERSION:  [from $ACE_ROOT/VERSION]
+    ACE VERSION: 4.5.41
 
     HOST MACHINE and OPERATING SYSTEM:
     TARGET MACHINE and OPERATING SYSTEM, if different from HOST:
