@@ -84,6 +84,7 @@ Legend:
 NOTES
 * Solaris/CC
 **orbsvcs/tests/Logger does not compile
+**Thruput/TAO/server.cpp -same errors as Logger/svr.cpp
 
 * NT
 ** Warnings on libTAO and tao_idl compilation.
