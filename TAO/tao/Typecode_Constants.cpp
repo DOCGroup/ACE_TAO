@@ -34,6 +34,7 @@
 #include "tao/PolicyC.h"
 #include "tao/CurrentC.h"
 #include "tao/InconsistentTypeCodeC.h"
+#include "tao/NVList.h"
 #if defined(TAO_POLLER)
 #include "tao/PollableC.h"
 #endif /* TAO_POLLER */
@@ -89,6 +90,7 @@ CORBA::TypeCode_ptr CORBA::_tc_ORBid = 0;
 CORBA::TypeCode_ptr CORBA_ORB::_tc_ObjectId = 0;
 #if !defined(TAO_HAS_MINIMUM_CORBA)
 CORBA::TypeCode_ptr CORBA_ORB::_tc_InconsistentTypeCode = 0;
+CORBA::TypeCode_ptr CORBA::_tc_NamedValue = 0;
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
 CORBA::TypeCode_ptr CORBA::_tc_PolicyErrorCode = 0;
@@ -402,6 +404,33 @@ TAO_TypeCodes::init (void)
                          (char *) &_oc_CORBA_ORB_InconsistentTypeCode,
                          0,
                          sizeof (CORBA_ORB_InconsistentTypeCode));
+
+static const CORBA::Long _oc_corba_NamedValue[] =
+{
+  TAO_ENCAP_BYTE_ORDER, // byte order
+  33, 
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x636f7262), 
+  ACE_NTOHL (0x612f4e61), 
+  ACE_NTOHL (0x6d656456), 
+  ACE_NTOHL (0x616c7565), 
+  ACE_NTOHL (0x3a312e30), 
+  ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/corba/NamedValue:1.0
+  11, 
+  ACE_NTOHL (0x4e616d65), 
+  ACE_NTOHL (0x6456616c), 
+  ACE_NTOHL (0x75650000),  // name = NamedValue,
+};
+
+CORBA::_tc_NamedValue = 
+  new CORBA::TypeCode (CORBA::tk_objref,
+                       sizeof (_oc_corba_NamedValue),
+                       (char *) &_oc_corba_NamedValue,
+                       0,
+                       sizeof (CORBA::NamedValue));
+
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
   // ****************************************************************
@@ -1060,6 +1089,7 @@ TAO_TypeCodes::fini (void)
 
 #if !defined(TAO_HAS_MINIMUM_CORBA)
   CORBA::release (CORBA_ORB::_tc_InconsistentTypeCode);
+  CORBA::release (CORBA::_tc_NamedValue);
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
   CORBA::release (CORBA_ORB::_tc_ObjectId);
