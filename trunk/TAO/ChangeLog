@@ -1,3 +1,39 @@
+Sat Jul 26 11:37:17 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_Component.h:
+
+	  Uncommented ACE_STATIC_SVC_REQUIRE macro.  It is needed when
+	  using this component in a statically linked application.
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_IORInterceptor.h:
+	* orbsvcs/orbsvcs/LoadBalancing/LB_IORInterceptor.cpp:
+
+	  Re-enabled code that automatically and transparently adds load
+	  balancing to servers.  This was made possible by Carlos'
+	  IORInterceptor deadlock fix (see Bug 1414).
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_ObjectReferenceFactory.cpp
+	  (find_object_group):
+
+	  Fixed problem where nil object group reference was used when
+	  adding members to the object group.  In particular, use
+	  "_retn()" not "out()" when transferring ownership of object
+	  group reference.
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_ServerRequestInterceptor.cpp
+	  (receive_request_service_contexts):
+
+	  Commented out code that attempts to check for a load
+	  balancing-specific IOP::ServiceContext.  Such a service context
+	  is no longer used.  A CORBA::TRANSIENT exception is now thrown
+	  for all requests when a load alert is enabled, regardless of
+	  whether or not the target is load balanced.
+
+	* tao/Pseudo_VarOut_T.inl:
+	* tao/Pseudo_VarOut_T.cpp:
+
+	  Nuked trailing whitespace.
+
 Sat Jul 26 13:27:35 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/RTKokyuEvent.dsp:
