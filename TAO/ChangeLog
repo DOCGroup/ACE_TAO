@@ -1,3 +1,16 @@
+Fri Jan  7 08:34:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ORB.h:
+        * tao/orb_typesC.h:
+          Temporarily commented out the ObjectId typedefs in the orb_typesC.h,
+          when someone uses using namespace CORBA and PortableServer we get
+          ambiguity because ObjectId is in the CORBA and PortableServer
+          namespace. Removed the typecode for ObjectId from ORB.h, it is not
+          in orb_types. When the POA refactoring is merged next month, the
+          ObjectId in the PortableServer namespace will move to the GOA
+          namespace (see MIOP specification) and we can enable the typedefs
+          again
+
 Thu Jan  6 12:39:43 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* tao/Makefile.am:
