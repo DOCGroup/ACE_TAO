@@ -2062,7 +2062,7 @@ PAGE_NOCACHE  */
 #define _O_CREAT O_CREAT
 #define _O_EXCL  O_EXCL
 #define _O_TRUNC O_TRUNC
-#define _O_TEMPORARY 	0x0800 // see fcntl.h
+#define _O_TEMPORARY 0x0800 // see fcntl.h
 #endif /* __BORLANDC__ */
 
 typedef OVERLAPPED ACE_OVERLAPPED;
@@ -2966,7 +2966,7 @@ extern "C"
 typedef FUNCPTR ACE_THR_C_FUNC;  // where typedef int (*FUNCPTR) (...)
 #else
 typedef void *(*ACE_THR_C_FUNC)(void *);
-#endif /* ACE_WIN32 */
+#endif /* VXWORKS */
 }
 
 #if !defined (MAP_FAILED)
@@ -3123,10 +3123,18 @@ struct ACE_Export ACE_Str_Buf : public strbuf
 };
 
 #if defined (ACE_HAS_BROKEN_BITSHIFT)
-#define ACE_MSB_MASK (~(ACE_UINT32 (1) << ACE_UINT32 (NFDBITS - 1)))
+  // This might not be necessary any more:  it was added prior to the
+  // (fd_mask) cast being added to the version below.  Maybe that cast
+  // will fix the problem on tandems.    Fri Dec 12 1997 David L. Levine
+# define ACE_MSB_MASK (~(ACE_UINT32 (1) << ACE_UINT32 (NFDBITS - 1)))
 #else
-// This needs to go here to avoid overflow problems on some compilers.
-#define ACE_MSB_MASK (~(1 << (NFDBITS - 1)))
+  // This needs to go here to avoid overflow problems on some compilers.
+# if defined (ACE_WIN32)
+    //  Does ACE_WIN32 have an fd_mask?
+#   define ACE_MSB_MASK (~(1 << (NFDBITS - 1)))
+# else  /* ! ACE_WIN32 */
+#   define ACE_MSB_MASK (~((fd_mask) 1 << (NFDBITS - 1)))
+# endif /* ! ACE_WIN32 */
 #endif /* ACE_HAS_BROKEN_BITSHIFT */
 
 // Signature for registering a cleanup function that is used by the
