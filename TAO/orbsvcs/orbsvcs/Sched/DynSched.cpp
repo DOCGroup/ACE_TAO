@@ -456,12 +456,12 @@ int ACE_DynScheduler::add_dependency(RT_Info* rt_info,
   return 0;
 }
 
-void ACE_DynScheduler::export(RT_Info* info, FILE* file)
+void ACE_DynScheduler::export_to_file (RT_Info* info, FILE* file)
 {
-  export(*info, file);
+  ACE_DynScheduler::export_to_file (*info, file);
 }
 
-void ACE_DynScheduler::export(RT_Info& info, FILE* file)
+void ACE_DynScheduler::export_to_file (RT_Info& info, FILE* file)
 {
   (void) ACE_OS::fprintf (file,
                           "%s\n%d\n%ld\n%ld\n%ld\n%ld\n%d\n%d\n%ld\n%u\n"

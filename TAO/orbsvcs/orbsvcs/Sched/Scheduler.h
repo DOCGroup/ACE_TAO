@@ -169,7 +169,7 @@ public:
 
 
   // = Computes the schedule.
-  virtual status_t 
+  virtual status_t
     schedule (ACE_Unbounded_Set<Scheduling_Anomaly *> &anomaly_set) = 0;
   // This actually generates the files.
 
@@ -229,8 +229,8 @@ public:
   static int number_of_dependencies(RT_Info* rt_info);
   static int number_of_dependencies(RT_Info& rt_info);
 
-  static void export(RT_Info*, FILE* file);
-  static void export(RT_Info&, FILE* file);
+  static void export_to_file (RT_Info*, FILE* file);
+  static void export_to_file (RT_Info&, FILE* file);
 
   virtual int dispatch_configuration (const Preemption_Priority &p_priority,
                                       OS_Thread_Priority& priority,

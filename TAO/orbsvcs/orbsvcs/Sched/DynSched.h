@@ -84,7 +84,7 @@ public:
     , ST_BAD_DEPENDENCIES_ON_TASK
     , ST_BAD_INTERNAL_POINTER
     , ST_VIRTUAL_MEMORY_EXHAUSTED
-    , TWO_WAY_DISJUNCTION 
+    , TWO_WAY_DISJUNCTION
     , TWO_WAY_CONJUNCTION
     , UNRECOGNIZED_INFO_TYPE
 
@@ -193,7 +193,7 @@ public:
                                Config_Info* &config_info);
   // Obtains a Config_Info based on its priority.
 
-  status_t 
+  status_t
     schedule (ACE_Unbounded_Set<Scheduling_Anomaly *> &anomaly_set);
   // This sets up the data structures, invokes the internal scheduling method.
 
@@ -242,8 +242,8 @@ public:
   static int number_of_dependencies(RT_Info* rt_info);
   static int number_of_dependencies(RT_Info& rt_info);
 
-  static void export(RT_Info*, FILE* file);
-  static void export(RT_Info&, FILE* file);
+  static void export_to_file (RT_Info*, FILE* file);
+  static void export_to_file (RT_Info&, FILE* file);
 
   // accessors for the minimal and maximal dispatch entry id in the schedule
   u_long min_dispatch_id () const;
@@ -424,7 +424,7 @@ private:
   status_t relate_task_entries_recurse (long &time, Task_Entry &entry);
 
   // identify thread delimiters
-  status_t 
+  status_t
     identify_threads (ACE_CString & unresolved_locals,
                       ACE_CString & unresolved_remotes);
 
@@ -446,7 +446,7 @@ private:
   // update the scheduling parameters for the previous priority level
   void update_priority_level_params ();
 
-  status_t 
+  status_t
     propagate_dispatches (
       ACE_Unbounded_Set<RtecScheduler::Scheduling_Anomaly *> &anomaly_set,
       ACE_CString & unresolved_locals,
