@@ -14,10 +14,11 @@
 // 
 // ============================================================================
 
+#include "ace/OS.h"
+
 #if !defined (ACE_ACE_H)
 #define ACE_ACE_H
 
-#include "ace/OS.h"
 #include "ace/Version.h"
 
 // Forward declarations.
