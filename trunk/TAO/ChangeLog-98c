@@ -1,92 +1,93 @@
 Thu Jul 16 00:00:20 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* Removed all the COM madness, TAO no longer uses the IUnknown
-	  classes, QueryInterface(), AddRef() or Release(). The new
-	  reference counting methods are called _incr_refcnt and
-	  _decr_refcnt (the leading underscore is necessary for CORBA
-	  complaince, but it breaks ANSI/C or ANSI/C++ complaince, yuk!).
-	  This change save a few microseconds on the critical path,
-	  because QueryInterface() was used in remote method invocation,
-	  invoking many virtual methods, increasing the refcnt and then
-	  decreasing it again; but the real motivations are:
-	  + It was confusing to users it what way did TAO support COM (it
-	  does not, yet).
-	  + Removing QueryInterface() and the ref counting from the
-	  critical path will allow us to protect the ref counts with
-	  mutexes (strategized, of course).
+        * Removed all the COM madness, TAO no longer uses the IUnknown
+          classes, QueryInterface(), AddRef() or Release(). The new
+          reference counting methods are called _incr_refcnt and
+          _decr_refcnt (the leading underscore is necessary for CORBA
+          complaince, but it breaks ANSI/C or ANSI/C++ complaince, yuk!).
+          This change save a few microseconds on the critical path,
+          because QueryInterface() was used in remote method invocation,
+          invoking many virtual methods, increasing the refcnt and then
+          decreasing it again; but the real motivations are:
+          + It was confusing to users it what way did TAO support COM (it
+          does not, yet).
+          + Removing QueryInterface() and the ref counting from the
+          critical path will allow us to protect the ref counts with
+          mutexes (strategized, of course).
 
-	* tao/Any.cpp: 
-	* tao/Any.h: 
-	* tao/CurrentC.cpp: 
-	* tao/Exception.cpp: 
-	* tao/Exception.h: 
-	* tao/IIOP_ORB.cpp: 
-	* tao/IIOP_Object.cpp: 
-	* tao/IIOP_Object.h: 
-	* tao/Invocation.cpp: 
-	* tao/Makefile: 
-	* tao/Marshal.i: 
-	* tao/NVList.cpp: 
-	* tao/NVList.h: 
-	* tao/ORB.cpp: 
-	* tao/ORB.h: 
-	* tao/ORB.i: 
-	* tao/Object.cpp: 
-	* tao/Object.h: 
-	* tao/Object.i: 
-	* tao/POAC.cpp: 
-	* tao/PolicyC.cpp: 
-	* tao/Principal.cpp: 
-	* tao/Principal.h: 
-	* tao/Request.cpp: 
-	* tao/Request.h: 
-	* tao/Server_Request.cpp: 
-	* tao/Server_Request.h: 
-	* tao/Server_Request.i: 
-	* tao/Stub.h: 
-	* tao/Typecode.cpp: 
-	* tao/Typecode.h: 
-	* tao/append.cpp: 
-	* tao/corba.h: 
-	* tao/decode.cpp: 
-	* tao/deep_copy.cpp: 
-	* tao/encode.cpp: 
-	* tao/skip.cpp: 
-	  This are the files affected by the change.
+        * tao/Any.cpp:
+        * tao/Any.h:
+        * tao/CurrentC.cpp:
+        * tao/Exception.cpp:
+        * tao/Exception.h:
+        * tao/IIOP_ORB.cpp:
+        * tao/IIOP_Object.cpp:
+        * tao/IIOP_Object.h:
+        * tao/Invocation.cpp:
+        * tao/Makefile:
+        * tao/Marshal.i:
+        * tao/NVList.cpp:
+        * tao/NVList.h:
+        * tao/ORB.cpp:
+        * tao/ORB.h:
+        * tao/ORB.i:
+        * tao/Object.cpp:
+        * tao/Object.h:
+        * tao/Object.i:
+        * tao/POAC.cpp:
+        * tao/PolicyC.cpp:
+        * tao/Principal.cpp:
+        * tao/Principal.h:
+        * tao/Request.cpp:
+        * tao/Request.h:
+        * tao/Server_Request.cpp:
+        * tao/Server_Request.h:
+        * tao/Server_Request.i:
+        * tao/Stub.h:
+        * tao/Typecode.cpp:
+        * tao/Typecode.h:
+        * tao/append.cpp:
+        * tao/corba.h:
+        * tao/decode.cpp:
+        * tao/deep_copy.cpp:
+        * tao/encode.cpp:
+        * tao/skip.cpp:
+          This are the files affected by the change.
 
-	* tao/compat/initguid.h: 
-	* tao/compat/objbase.h: 
-	  Removed! COM is gone from TAO.
+        * tao/compat/initguid.h:
+        * tao/compat/objbase.h:
+          Removed! COM is gone from TAO.
 
-	* TAO_IDL/be/be_visitor_operation/operation_cs.cpp: 
-	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp: 
-	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp: 
-	  Generate the new CORBA_Object methods to gain access to the
-	  STUB_Object, we don't generate the old COM methods.
+        * TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+          Generate the new CORBA_Object methods to gain access to the
+          STUB_Object, we don't generate the old COM methods.
 
-	* taoconfig.mk: 
-	  Removed -I$(TAO_ROOT)/tao/compat 
+        * taoconfig.mk:
+          Removed -I$(TAO_ROOT)/tao/compat
 
-	* Makefiles: 
-	  Updated the dependencies in all the Makfiles of TAO (due to the
-	  removal of objbase.h & friends). Also fixed many problems in the
-	  Makefiles, like missing SRC or LSRC lists, removed the
-	  -I$(TAO_ROOT)/tao/compat includes, added missing TAO_ROOT
-	  definitions, etc.
+        * Makefiles:
+          Updated the dependencies in all the Makfiles of TAO (due to the
+          removal of objbase.h & friends). Also fixed many problems in the
+          Makefiles, like missing SRC or LSRC lists, removed the
+          -I$(TAO_ROOT)/tao/compat includes, added missing TAO_ROOT
+          definitions, etc.
 
-	* docs/releasenotes/ec.html: 
-	  Added the latest changes.
+        * docs/releasenotes/ec.html:
+          Added the latest changes.
 
-	* tests/Cubit/TAO/IDL_Cubit/client_i.cpp: 
-	  Fixed mismatched memory free (new vs. malloc).
+        * tests/Cubit/TAO/IDL_Cubit/client_i.cpp:
+          Fixed mismatched memory free (new vs. malloc).
 
-	* orbsvcs/tests/Logger/client.h: 
-	  Fixed method declaration.
+        * orbsvcs/tests/Logger/client.h:
+          Fixed method declaration.
 
 Wed Jul 15 22:17:20 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/ORB_Core.cpp: added ACE_Unbounded_Set<ACE_SYNCH_CONDITION *>,
-          etc., template instantiations.
+          etc., template instantiations.  Added ACE_Thread_Condition and
+          ACE_Condition instantiations, w/o ACE_HAS_TEMPLATE_TYPEDEFS.
 
 Wed Jul 15 21:16:19 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
