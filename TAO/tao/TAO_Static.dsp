@@ -211,7 +211,7 @@ SOURCE=.\IIOP_Profile.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\IIOP_Server_Request.cpp
+SOURCE=.\GIOP_Server_Request.cpp
 # End Source File
 # Begin Source File
 
@@ -487,7 +487,7 @@ SOURCE=.\IIOP_Profile.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\IIOP_Server_Request.h
+SOURCE=.\GIOP_Server_Request.h
 # End Source File
 # Begin Source File
 
@@ -719,7 +719,7 @@ SOURCE=.\IIOP_ORB.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\IIOP_Server_Request.i
+SOURCE=.\GIOP_Server_Request.i
 # End Source File
 # Begin Source File
 
