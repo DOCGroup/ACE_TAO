@@ -13,8 +13,9 @@
 // PHSS_8490
 //
 // worked for me (Carlos O'Ryan), but you should check by yourself.
-// The most important one is PHSS_9855, but in depends on some of the
+// The most important one is PHSS_9855, but it depends on some of the
 // others.
+// 
 
 #if !defined (ACE_CONFIG_H)
 #define ACE_CONFIG_H
@@ -24,16 +25,14 @@
 #define HPUX
 #endif /* HPUX */
 
-#if __cplusplus < 199707L
-#define ACE_HAS_BROKEN_HPUX_TEMPLATES
-#endif /* __cplusplus < 199707L */
-
 // The HP/UX compiler doesn't support volatile!!!!
 #define volatile
 
+#if !defined(_HPUX_SOURCE)
 #define _HPUX_SOURCE
+#endif /* _HPUX_SOURCE */
 #include /**/ <sys/stdsyms.h>
-#include /**/ <sched.h>                              /*  pthread.h doesn't include this */
+#include /**/ <sched.h>              /*  pthread.h doesn't include this */
 
 // Compiler's template mechanism must see source code (i.e., .C files).
 #define ACE_TEMPLATES_REQUIRE_SOURCE
@@ -46,8 +45,6 @@
 
 #define ACE_LACKS_SYSCALL
 #define ACE_HAS_POSIX_TIME
-#define ACE_HAS_IP_MULTICAST
-#define ACE_HAS_CLOCK_GETTIME
 
 // Platform supports System V IPC (most versions of UNIX, but not Win32)
 #define ACE_HAS_SYSV_IPC
@@ -68,9 +65,6 @@
 // Compiler/platform has correctly prototyped header files.
 #define ACE_HAS_CPLUSPLUS_HEADERS
 
-// Header files lack t_errno for ACE_TLI.
-#define ACE_LACKS_T_ERRNO
-
 // Compiler/platform supports poll().
 #define ACE_HAS_POLL
 
@@ -80,26 +74,43 @@
 // Compiler/platform defines the sig_atomic_t typedef
 #define ACE_HAS_SIG_ATOMIC_T
 
+#define ACE_HAS_SIGINFO_T
+#define ACE_HAS_SIGINFO_T
+#define ACE_HAS_UCONTEXT_T
+
 // If you don't want to use threads make sure to comment out the
 // folowing block of #defines 
-#define ACE_HAS_THREADS
-#define ACE_HAS_PTHREADS
-#define ACE_LACKS_RWLOCK_T
-#define ACE_MT_SAFE
-#define ACE_HAS_SIGINFO_T
-#define ACE_LACKS_PTHREAD_THR_SIGSETMASK
-#define ACE_HAS_SETKIND_NP
-#define ACE_LACKS_CONDATTR_PSHARED
-#define ACE_LACKS_SI_ADDR
-#define ACE_LACKS_SETDETACH                     /*  new */
-#define ACE_LACKS_KEYDELETE                     /*  new */
-#define ACE_LACKS_THREAD_PROCESS_SCOPING
-#define ACE_LACKS_THREAD_STACK_ADDR
-#define ACE_HAS_THREAD_SPECIFIC_STORAGE
-#define ACE_HAS_STREAMS
+// #define ACE_HAS_THREADS
+// #define ACE_HAS_PTHREADS
+// #define ACE_LACKS_RWLOCK_T
+// #define ACE_MT_SAFE
+// #define ACE_LACKS_PTHREAD_THR_SIGSETMASK
+// #define ACE_HAS_SETKIND_NP
+// #define ACE_LACKS_CONDATTR_PSHARED
+// #define ACE_LACKS_SI_ADDR
+// #define ACE_LACKS_SETDETACH                     /*  new */
+// #define ACE_LACKS_KEYDELETE                     /*  new */
+// #define ACE_LACKS_THREAD_PROCESS_SCOPING
+// #define ACE_LACKS_THREAD_STACK_ADDR
+// #define ACE_HAS_THREAD_SPECIFIC_STORAGE
+// Compiler/platform has thread-specific storage
+// #define ACE_HAS_THREAD_SPECIFIC_STORAGE
+
+// Platform supports POSIX 1.b clock_gettime ()
+#define ACE_HAS_CLOCK_GETTIME
+
+// iostream header lacks ipfx (), isfx (), etc., declarations
+#define ACE_LACKS_IOSTREAM_FX
+// streambuf class lacks linebuffered() method.
+#define ACE_LACKS_LINEBUFFERED_STREAMBUF
+// "signed char" is not distinguished from "char" in overloading
+#define ACE_LACKS_SIGNED_CHAR
 
 // Compiler/platform supports struct strbuf.
 #define ACE_HAS_STRBUF_T
+#define ACE_HAS_STREAM_PIPES
+#define ACE_LACKS_CONST_STRBUF_PTR
+#include /**/ <stropts.h> /* for struct strbuf */
 
 // Compiler supports the ssize_t typedef.
 #define ACE_HAS_SSIZE_T
@@ -119,9 +130,6 @@
 // Note, this only works if the flag is set above!
 #define ACE_HAS_GETRUSAGE
 
-#define ACE_HAS_SIGINFO_T
-#define ACE_HAS_UCONTEXT_T
-
 // Platform uses int for select() rather than fd_set.
 // #define ACE_SELECT_USES_INT
 
@@ -137,7 +145,8 @@
 // Platform supports ACE_TLI.
 #define ACE_HAS_TLI
 
-#define ACE_NEEDS_DEV_IO_CONVERSION
+// Platform supports IP multicast
+#define ACE_HAS_IP_MULTICAST
 
 // Turns off the tracing feature.
 #if !defined (ACE_NTRACE)

@@ -197,7 +197,7 @@ private:
 // GreenHills C++ 1.8.8 complains that the (a) expression has no effect.  But,
 // it doesn't complain about unused args, so don't bother with them.
 #define ACE_UNUSED_ARG(a)
-#elif defined (__GNUC__) || defined (__sgi)
+#elif defined (__GNUC__) || defined (__sgi) || defined (__hpux)
 // Some compilers complain about "statement with no effect" with (a).
 // This eliminates the warnings, and no code is generated for the null
 // conditional statement.

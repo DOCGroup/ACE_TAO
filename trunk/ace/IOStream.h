@@ -682,7 +682,7 @@ public:
 #  if ! defined( ACE_IOSTREAM_C )
 #    define ACE_IOSTREAM_BUILDING_TEMPLATE
 #  endif
-#  include "IOStream.cpp"
+#  include "ace/IOStream.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #endif /* ACE_IOSTREAM_H */
