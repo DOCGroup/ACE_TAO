@@ -83,4 +83,4 @@ ACE_CORBA_Ref<CORBA_REF>::~ACE_CORBA_Ref ()
     ref_->_release ();
 }
 
-#endif // ACE_CORBA_REF_C
+#endif /* ACE_CORBA_REF_C */

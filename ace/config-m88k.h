@@ -17,11 +17,11 @@ extern "C" void pthread_init();
 
 #if !defined (IP_ADD_MEMBERSHIP)
 #define IP_ADD_MEMBERSHIP 0x13
-#endif	//  m88k
+#endif	/*  m88k */
 
 #if !defined (IP_DROP_MEMBERSHIP)
 #define IP_DROP_MEMBERSHIP 0x14
-#endif	//  m88k
+#endif	/*  m88k */
 
 struct sched_param  
 {
@@ -48,7 +48,7 @@ struct ip_mreq
 #define ACE_TEMPLATES_REQUIRE_SOURCE
 #define ACE_TEMPLATES_REQUIRE_SPECIALIZATION
 #define ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES
-#endif	// m88k
+#endif	/* m88k */
 
 // Platform supports System V IPC (most versions of UNIX, but not Win32)
 #define ACE_HAS_SYSV_IPC			
@@ -74,7 +74,7 @@ struct ip_mreq
 #if !defined (ACE_HAS_FSU_PTHREADS)
 // Platform supports reentrant functions (i.e., all the POSIX *_r functions).
 #define ACE_HAS_REENTRANT_FUNCTIONS
-#endif	// ACE_HAS_FSU_PTHREADS
+#endif	/* ACE_HAS_FSU_PTHREADS */
 
 // Platform has terminal ioctl flags like TCGETS and TCSETS.
 #define ACE_HAS_TERM_IOCTLS
@@ -91,7 +91,7 @@ struct ip_mreq
 #if !defined (m88k)
 // Compiler/platform supports SunOS high resolution timers.
 #define ACE_HAS_HI_RES_TIMER
-#endif 	// m88k
+#endif 	/* m88k */
 
 // Platform supports IP multicast
 #define ACE_HAS_IP_MULTICAST
@@ -105,7 +105,7 @@ struct ip_mreq
 #if !defined (m88k)
 // Compiler/platform has <alloca.h>
 #define ACE_HAS_ALLOCA_H
-#endif	// m88k
+#endif	/* m88k */
 
 // Sockets may be called in multi-threaded programs.
 #define ACE_HAS_MT_SAFE_SOCKETS
@@ -123,7 +123,7 @@ struct ip_mreq
 #if !defined (m88k)
 // Platform supports the prusage_t struct.
 #define ACE_HAS_PRUSAGE_T
-#endif	// m88k
+#endif	/* m88k */
 
 // Explicit dynamic linking permits "lazy" symbol resolution.
 #define ACE_HAS_RTLD_LAZY_V
@@ -171,7 +171,7 @@ struct ip_mreq
 #if !defined (m88k)
 // Compiler/platform supports sys_siglist array.
 #define ACE_HAS_SYS_SIGLIST
-#endif	// m88k
+#endif	/* m88k */
 
 /* Turn off the following five defines if you want to disable threading. */
 // Compile using multi-thread libraries.
@@ -182,14 +182,14 @@ struct ip_mreq
 #define ACE_HAS_STHREADS
 #else
 #define ACE_HAS_PTHREADS
-#endif	// m88k
+#endif	/* m88k */
 
 // Platform supports threads.
 #define ACE_HAS_THREADS
 
 #if defined (ACE_HAS_FSU_PTHREADS)
 #define ACE_LACKS_THREAD_STACK_ADDR
-#endif	//  ACE_HAS_FSU_PTHREADS
+#endif	/*  ACE_HAS_FSU_PTHREADS */
 
 // Compiler/platform has thread-specific storage
 #define ACE_HAS_THREAD_SPECIFIC_STORAGE

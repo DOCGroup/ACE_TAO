@@ -108,9 +108,9 @@ ACE_CString::ACE_CString (const ACE_USHORT16 *s, ACE_Allocator *alloc)
       // Copy the ACE_USHORT16 * string byte-by-byte into the char *
       // string.
       for (size_t i = 0; i < this->len_; i++)
-#pragma warning(disable: 4244)  // Possible loss of data	
+#pragma warning(disable: 4244)  /* Possible loss of data */
 	this->rep_[i] = (ACE_USHORT16) s[i];
-#pragma warning(default: 4244)  // Possible loss of data
+#pragma warning(default: 4244)  /* Possible loss of data */
 
       this->rep_[this->len_] = '\0';
     }

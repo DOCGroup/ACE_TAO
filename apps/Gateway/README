@@ -2,7 +2,10 @@ OVERVIEW
 
 This directory contains source code for a prototype application-level
 gateway implemented with ACE.  This prototype was developed in my
-cs422 grad OS class at Washington University.
+cs422 grad OS class at Washington University.  You can get a paper
+that explains the patterns used in this implementation at URL
+
+http://www.cs.wustl.edu/~schmidt/TAPOS-95.ps.gz
 
 DIRECTORY STRUCTURE
 

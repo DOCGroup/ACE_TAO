@@ -1,3 +1,33 @@
+<<<<<<< ChangeLog-96b
+Fri Dec 13 00:53:34 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace: Replaced all uses of 
+	
+	  #if defined (.....) // ....
+	  
+	  with
+	  
+	  #if defined (.....) /* ... */
+
+	  so that broken C++ compilers won't complain.  Thanks to
+	  John Cosby <John.D.Cosby@cpmx.saic.com> for reporting this.
+
+	* ace/Thread.i: Updated the signature of getprio() and setprio()
+ 	  so that they take ACE_hthread_t.  Thanks to Wayne Vucenic
+ 	  <wvucenic@netgate.net> for finding this.
+
+	* Reran all the tests on NT and Solaris.  Everything seems to
+ 	  work.  Therefore, incremented the version number to 4.1 and put
+ 	  it out for ftp and http.
+
+Thu Dec 12 18:51:04 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tests/Priority_Task_Test.cpp (svc): Added a new test to exercise
+ 	  the new "priority" feature of ACE_OS::thr_create()
+	  (which is also available to ACE_Task).
+
+	* ace/Thread: Added getprio() and setprio() methods to ACE_Thread.
+=======
 Fri Dec 13 13:44:12 1996  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/config-vxworks*.h: added ACE_NEEDS_SYSTIME_H to VxWorks
@@ -7,6 +37,7 @@ Fri Dec 13 13:44:12 1996  David L. Levine  <levine@cs.wustl.edu>
 	  config files
 
 Thu Dec 12 18:51:04 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+>>>>>>> 4.95
 
 	* ace: Added a new macro called ACE_UNUSED_ARG() to keep 
 	  the compiler from outputting warnings about unused

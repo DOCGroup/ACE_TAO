@@ -528,7 +528,7 @@ ACE_Reactor_Notify::open (ACE_Reactor *r)
   if (this->notification_pipe_.open () == -1)
     return -1;
 
-#if !defined (ACE_WIN32) // There seems to be a Win32 bug with this...
+#if !defined (ACE_WIN32) /* There seems to be a Win32 bug with this... */
   // Set this into non-blocking mode.
   if (ACE::set_flags (this->notification_pipe_.read_handle (), 
 		      ACE_NONBLOCK) == -1)

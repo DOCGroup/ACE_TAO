@@ -15,10 +15,10 @@
 
 #if defined (_MSC_VER)
 // "C4355: 'this' : used in base member initializer list"
-#pragma warning(disable:4355) // disable C4514 warning
+#pragma warning(disable:4355) /* disable C4514 warning */
 //	#pragma warning(default:4355)   // use this to reenable, if desired
 
-#pragma warning(disable:4201)  // winnt.h uses nameless structs
+#pragma warning(disable:4201)  /* winnt.h uses nameless structs */
 #endif /* _MSC_VER */
 
 // While digging the MSVC 4.0 include files, I found how to disable
@@ -45,12 +45,12 @@
 // This is necessary since MFC users apparently can't #include
 // <windows.h> directly.
 #if defined (_AFXDLL) || defined (_WINDLL)
-#include /**/ <afxwin.h>   // He is doing MFC
+#include /**/ <afxwin.h>   /* He is doing MFC */
 	// Windows.h will be included via afxwin.h->afx.h->afx_ver_.h->afxv_w32.h
 	// #define	_INC_WINDOWS  // Prevent winsock.h from including windows.h
 #endif
 
-#if !defined (_INC_WINDOWS)	// Already include windows.h ?
+#if !defined (_INC_WINDOWS)	/* Already include windows.h ? */
 	// Must define strict before including windows.h !
 #if defined (ACE_HAS_STRICT)
 #define STRICT 1
@@ -62,13 +62,13 @@
 
 #if defined (_UNICODE)
 #if !defined (UNICODE)
-#define UNICODE         // UNICODE is used by Windows headers
+#define UNICODE         /* UNICODE is used by Windows headers */
 #endif /* UNICODE */
 #endif /* _UNICODE */
 
 #if defined (UNICODE)
 #if !defined (_UNICODE)
-#define _UNICODE        // _UNICODE is used by C-runtime/MFC headers
+#define _UNICODE        /* _UNICODE is used by C-runtime/MFC headers */
 #endif /* _UNICODE */
 #endif /* UNICODE */
 #endif /* !defined (_INC_INWDOWS) */
@@ -78,7 +78,7 @@
 
 #if defined (ACE_HAS_WINSOCK2)
 #if !defined (_WINSOCK2API_)
-#include /**/ <winsock2.h>		// will also include windows.h, if not present
+#include /**/ <winsock2.h>		/* will also include windows.h, if not present */
 #if defined (_MSC_VER)
 #pragma comment(lib, "ws2_32.lib")
 #endif /* _MSC_VER */
@@ -87,7 +87,7 @@
 #define ACE_WSOCK_VERSION 2, 0
 #else
 #if !defined (_WINSOCKAPI_)
-#include /**/ <winsock.h>	// will also include windows.h, if not present
+#include /**/ <winsock.h>	/* will also include windows.h, if not present */
 
 #if defined (_MSC_VER)
 #pragma comment(lib, "wsock32.lib")
@@ -99,7 +99,7 @@
 #endif /* ACE_HAS_WINSOCK2 */
 
 #if defined (_MSC_VER)
-#pragma warning(default: 4201)  // winnt.h uses nameless structs
+#pragma warning(default: 4201)  /* winnt.h uses nameless structs */
 #endif /* _MSC_VER */
 
 #define ACE_HAS_UNICODE

@@ -85,7 +85,7 @@ do {\
   ACE_LOG_MSG->open (program, ACE_Log_Msg::OSTREAM); \
   if (ace_file_stream.set_output (program, 1) != 0) \
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "set_output failed"), -1); \
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) starting %s test at %T\n", program));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) Starting %s test at %T\n", program));
 
 #define ACE_END_LOG \
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Ending %s test at %T\n\n", program)); \

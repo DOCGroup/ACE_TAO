@@ -26,7 +26,7 @@
 
 #if defined (ACE_HAS_THREADS)
 
-// Global thread manager.
+// Global message count.
 static int count = 0;
 
 // Make the queue be capable of being *very* large.

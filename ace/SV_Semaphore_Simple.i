@@ -7,7 +7,7 @@
 #include "ace/Trace.h"
 
 #undef LUSED
-#define LUSED 4 // # of chars used from name
+#define LUSED 4 /* # of chars used from name */
 
 inline int
 ACE_SV_Semaphore_Simple::control (int cmd, 
