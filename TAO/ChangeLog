@@ -1,3 +1,21 @@
+Sat Dec  1 13:41:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/IIOP_Endpoint.cpp:
+          Updated formatting of some debug messages to match the other
+          messages in TAO
+
+        * tao/ORBInitInfo.h:
+          Removed check for _MSC_VER >= 1200, this is always true, removed
+          check for ACE_HAS_GNUG_PRE_2_8, this define is nowhere set and
+          such old versions of GCC aren't usable anymore
+
+        * tao/UTF16_BOM_Factory.cpp:
+          Check argc before using argv[0], this can be unitialized memory
+          under VxWorks.
+
+        * TAO-INSTALL.html:
+          Corrected e-mail address of the TAO mailing list
+
 Fri Dec 31 22:10:51 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/ImplRepo_Service/ImR_Locator_i.h:
