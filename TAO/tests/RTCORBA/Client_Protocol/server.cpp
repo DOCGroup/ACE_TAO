@@ -98,7 +98,7 @@ parse_args (int argc, char *argv[])
 }
 
 int
-check_for_nil (CORBA::Object_ptr obj, char *msg)
+check_for_nil (CORBA::Object_ptr obj, const char *msg)
 {
   if (CORBA::is_nil (obj))
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -119,17 +119,17 @@ create_object (PortableServer::POA_ptr poa,
   // Register with poa.
   PortableServer::ObjectId_var id =
     poa->activate_object (server_impl, ACE_TRY_ENV);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (-1);
 
   CORBA::Object_var server =
     poa->id_to_reference (id.in (),
                           ACE_TRY_ENV);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (-1);
 
   // Print out the IOR.
   CORBA::String_var ior =
     orb->object_to_string (server.in (), ACE_TRY_ENV);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (-1);
 
   ACE_DEBUG ((LM_DEBUG, "<%s>\n\n", ior.in ()));
 
@@ -222,7 +222,7 @@ main (int argc, char *argv[])
       // Create object 2.
       ACE_DEBUG ((LM_DEBUG, "\nActivated object two as "));
       result = create_object (root_poa.in (), orb.in (), &server_impl,
-                              ior_output_file2, ACE_TRY_ENV)
+                              ior_output_file2, ACE_TRY_ENV);
       ACE_TRY_CHECK;
       if (result == -1)
         return 1;
