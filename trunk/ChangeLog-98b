@@ -3,8 +3,11 @@ Tue Sep 15 16:34:47 1998  David L. Levine  <levine@cs.wustl.edu>
         * ace/OS.i (gethrtime): added high-res timer support with
           g++ and ACE_HAS_POWERPC_TIMER.
 
-        * ace/config-vxworks5.x.GNU,README: changed ACE_HAS_POWERPC to
+        * ace/config-vxworks5.x.h,README: changed ACE_HAS_POWERPC to
           ACE_HAS_POWERPC_TIMER.
+
+        * ace/config-lynxos.h: added ACE_HAS_PENTIUM, to provide
+          high-res timer support on LynxOS.
 
 Tue Sep 15 16:28:12 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
