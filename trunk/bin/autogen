@@ -6,7 +6,7 @@
 # Bootstrap ACE/TAO configuration tools when checked out from CVS.
 # Requires GNU autoconf, GNU automake and GNU libtool.
 #
-# This script is only meant to be run ACE/TAO maintainers.
+# This script is only meant to be run by ACE/TAO maintainers.
 # 
 # -------------------------------------------------------------------------
 
@@ -36,4 +36,9 @@ autoconf
 # `configure.in' and add any missing files that GNU Automake needs so
 # that the distribution and configuration processes will run properly.
 automake --add-missing #--verbose
+
+# Update the NEWS file
+# For now just copy the contents of the `VERSION' file to make automake
+# happy.  Eventually, we should start putting real news in to it.
+cp VERSION NEWS
 
