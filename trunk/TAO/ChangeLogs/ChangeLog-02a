@@ -13,6 +13,9 @@ Fri Feb 11 18:20:51 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 	  for sending in the example IDL file that pointed
 	  this out.
 
+	* tests/IDL_Test/reopened_modules:
+	  Added Klaus Hofmann's example IDL file to the group.
+
 Fri Feb 11 14:56:58 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/TAO_Internal.cpp: I forgot to add the initialization for
