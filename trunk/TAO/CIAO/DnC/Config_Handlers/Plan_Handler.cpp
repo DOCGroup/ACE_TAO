@@ -14,16 +14,11 @@
 #include "CEPE_Handler.h"
 #include "ERE_Handler.h"
 #include "CPK_Handler.h"
-
 #include "Process_Basic_Type.h"
 #include "Process_Element.h"
 #include "Utils.h"
-
 #include <iostream>
 #include "string.h"
-
-using std::cerr;
-using std::endl;
 
 BEGIN_DEPLOYMENT_NAMESPACE
 
@@ -42,51 +37,51 @@ void Plan_Handler::process_plan(Deployment::DeploymentPlan& plan)
         {
         }
       else if
-        (process_string(this->iter_, node_name, "label", plan.label));
+        (process_string (this->iter_, node_name, "label", plan.label));
       else if
-        (process_string(this->iter_, node_name, "UUID", plan.UUID));
+        (process_string (this->iter_, node_name, "UUID", plan.UUID));
       else if
         (process_element<Deployment::ComponentInterfaceDescription>
-         (this->doc_, this->iter_, node,
-          node_name, "realizes", plan.realizes,
-          this, &Plan_Handler::process_ccd,
-          this->id_map_));
+           (this->doc_, this->iter_, node,
+            node_name, "realizes", plan.realizes,
+            this, &Plan_Handler::process_ccd,
+            this->id_map_));
       else if
         (process_sequence_local<Deployment::MonolithicDeploymentDescription>
-         (this->doc_, this->iter_, node,
-          node_name, "implementation", plan.implementation,
-          this, &Plan_Handler::process_mdd));
+           (this->doc_, this->iter_, node,
+            node_name, "implementation", plan.implementation,
+            this, &Plan_Handler::process_mdd));
       else if
         (process_sequence_local<Deployment::InstanceDeploymentDescription>
-         (this->doc_, this->iter_, node,
-          node_name, "instance", plan.instance,
-          this, &Plan_Handler::process_idd));
+           (this->doc_, this->iter_, node,
+            node_name, "instance", plan.instance,
+            this, &Plan_Handler::process_idd));
       else if
         (process_sequence_local<Deployment::PlanConnectionDescription>
-         (this->doc_, this->iter_, node,
-          node_name, "connection", plan.connection,
-          this, &Plan_Handler::process_pcd));
+           (this->doc_, this->iter_, node,
+            node_name, "connection", plan.connection,
+            this, &Plan_Handler::process_pcd));
       else if
         (process_sequence_local<Deployment::PlanPropertyMapping>
-         (this->doc_, this->iter_, node,
-          node_name, "externalProperty", plan.externalProperty,
-          this, &Plan_Handler::process_ppm));
+           (this->doc_, this->iter_, node,
+            node_name, "externalProperty", plan.externalProperty,
+            this, &Plan_Handler::process_ppm));
       else if
         (process_sequence_common<Deployment::ImplementationDependency>
-         (this->doc_, this->iter_, node,
-          node_name, "dependsOn", plan.dependsOn,
-          &ID_Handler::process_ImplementationDependency, this->id_map_));
+           (this->doc_, this->iter_, node,
+            node_name, "dependsOn", plan.dependsOn,
+            &ID_Handler::process_ImplementationDependency, this->id_map_));
       else if
         (process_sequence_local<Deployment::ArtifactDeploymentDescription>
-         (this->doc_, this->iter_, node,
-          node_name, "artifact", plan.artifact,
-          this, &Plan_Handler::process_add));
+           (this->doc_, this->iter_, node,
+            node_name, "artifact", plan.artifact,
+            this, &Plan_Handler::process_add));
       else if
         (process_sequence_common<Deployment::Property>
-         (this->doc_, this->iter_, node,
-          node_name, "infoProperty", plan.infoProperty,
-          &Property_Handler::process_Property,
-          this->id_map_));
+           (this->doc_, this->iter_, node,
+            node_name, "infoProperty", plan.infoProperty,
+            &Property_Handler::process_Property,
+            this->id_map_));
       else
         {
           // ??? How did we get here ???
@@ -101,9 +96,9 @@ void Plan_Handler::process_plan(Deployment::DeploymentPlan& plan)
   return;
 }
 
-void Plan_Handler::process_rdd
-(DOMNodeIterator* iter,
- Deployment::ResourceDeploymentDescription& rdd)
+void Plan_Handler::process_rdd (DOMNodeIterator* iter,
+                                Deployment::
+                                ResourceDeploymentDescription& rdd)
 {
   for (DOMNode* node = iter->nextNode();
        node != 0;
@@ -112,15 +107,18 @@ void Plan_Handler::process_rdd
       XStr node_name (node->getNodeName());
 
       if (node_name == XStr 
-          (ACE_TEXT ("Deployment:ResourceDeploymentDescription")))
+                  (ACE_TEXT ("Deployment:ResourceDeploymentDescription")))
         {
         }
       else if
-        (process_string(iter, node_name, "requirementName", rdd.requirementName));
+        (process_string (iter, node_name, "requirementName", 
+                         rdd.requirementName));
       else if
-        (process_string(iter, node_name, "resourceName", rdd.resourceName));
+        (process_string (iter, node_name, "resourceName", rdd.resourceName));
       else if (node_name == XStr (ACE_TEXT ("resourceValue")))
-        Any_Handler::process_Any (iter, rdd.resourceValue);
+        {
+          Any_Handler::process_Any (iter, rdd.resourceValue);
+        }
       else
         {
           iter->previousNode();
@@ -130,7 +128,8 @@ void Plan_Handler::process_rdd
 }
 
 void Plan_Handler::process_irdd (DOMNodeIterator* iter,
-                                 Deployment::InstanceResourceDeploymentDescription &irdd)
+                                 Deployment::
+                                 InstanceResourceDeploymentDescription &irdd)
 {
   for (DOMNode* node = iter->nextNode();
        node != 0;
@@ -139,17 +138,22 @@ void Plan_Handler::process_irdd (DOMNodeIterator* iter,
       XStr node_name (node->getNodeName());
 
       if (node_name == XStr 
-          (ACE_TEXT ("Deployment:InstanceResourceDeploymentDescription")))
+                (ACE_TEXT ("Deployment:InstanceResourceDeploymentDescription")))
         {
         }
       else if (node_name == "resourceUsage")
-        RUK_Handler::process_ResourceUsageKind (iter, irdd.resourceUsage);
+        {
+          RUK_Handler::process_ResourceUsageKind (iter, irdd.resourceUsage);
+        }
       else if
-        (process_string (iter, node_name, "requirementName", irdd.requirementName));
+        (process_string (iter, node_name, "requirementName", 
+                         irdd.requirementName));
       else if
         (process_string (iter, node_name, "resourceName", irdd.resourceName));
       else if (node_name == XStr (ACE_TEXT ("resourceValue")))
-        Any_Handler::process_Any (iter, irdd.resourceValue);
+        {
+          Any_Handler::process_Any (iter, irdd.resourceValue);
+        }
       else
         {
           iter->previousNode();
@@ -180,20 +184,22 @@ void Plan_Handler::process_add (DOMNodeIterator* iter,
       else if
         (process_string_seq (iter, node_name, "source", add.source));
       else if
-        (process_sequence_common<Deployment::Property>(node->getOwnerDocument(), iter, node,
-                                                node_name, "execParameter", add.execParameter,
-                                                &Property_Handler::process_Property,
-                                                this->id_map_));
+        (process_sequence_common<Deployment::Property>
+           (node->getOwnerDocument(), iter, node,
+            node_name, "execParameter", add.execParameter,
+            &Property_Handler::process_Property,
+            this->id_map_));
       else if
-        (process_sequence_common<Deployment::Requirement>(node->getOwnerDocument(), iter, node,
-                                                   node_name, "deployRequirement", add.deployRequirement,
-                                                   &Requirement_Handler::process_Requirement,
-                                                   this->id_map_));
+        (process_sequence_common<Deployment::Requirement>
+           (node->getOwnerDocument(), iter, node,
+            node_name, "deployRequirement", add.deployRequirement,
+            &Requirement_Handler::process_Requirement,
+            this->id_map_));
       else if
         (process_sequence_local<Deployment::ResourceDeploymentDescription>
-         (node->getOwnerDocument(), iter, node,
-          node_name, "deployedResource", add.deployedResource,
-          this, &Plan_Handler::process_rdd));
+           (node->getOwnerDocument(), iter, node,
+            node_name, "deployedResource", add.deployedResource,
+            this, &Plan_Handler::process_rdd));
       else
         {
           iter->previousNode();
@@ -212,7 +218,7 @@ void Plan_Handler::process_idd (DOMNodeIterator* iter,
       XStr node_name (node->getNodeName());
 
       if (node_name == XStr 
-          (ACE_TEXT ("Deployment:InstanceDeploymentDescription")))
+                    (ACE_TEXT ("Deployment:InstanceDeploymentDescription")))
         {
         }
       else if
@@ -229,20 +235,23 @@ void Plan_Handler::process_idd (DOMNodeIterator* iter,
           this->index_ = this->index_ + 1;
         }
       else if
-        (process_sequence_common<Deployment::Property>(node->getOwnerDocument(), iter, node,
-                                                node_name, "configProperty", idd.configProperty,
-                                                &Property_Handler::process_Property,
-                                                this->id_map_));
+        (process_sequence_common<Deployment::Property>
+           (node->getOwnerDocument(), iter, node,
+            node_name, "configProperty", idd.configProperty,
+            &Property_Handler::process_Property,
+            this->id_map_));
       else if
-        (process_sequence_local<Deployment::InstanceResourceDeploymentDescription>
-         (node->getOwnerDocument(), iter, node,
-          node_name, "deployedResource", idd.deployedResource,
-          this, &Plan_Handler::process_irdd));
+        (process_sequence_local<Deployment::
+                                InstanceResourceDeploymentDescription>
+           (node->getOwnerDocument(), iter, node,
+            node_name, "deployedResource", idd.deployedResource,
+            this, &Plan_Handler::process_irdd));
       else if
-        (process_sequence_local<Deployment::InstanceResourceDeploymentDescription>
-         (node->getOwnerDocument(), iter, node,
-          node_name, "deployedSharedResource", idd.deployedSharedResource,
-          this, &Plan_Handler::process_irdd));
+        (process_sequence_local<Deployment::
+                                InstanceResourceDeploymentDescription>
+           (node->getOwnerDocument(), iter, node,
+            node_name, "deployedSharedResource", idd.deployedSharedResource,
+            this, &Plan_Handler::process_irdd));
       else
         {
           iter->previousNode();
@@ -251,9 +260,9 @@ void Plan_Handler::process_idd (DOMNodeIterator* iter,
     }
 }
 
-void Plan_Handler::process_mdd
-(DOMNodeIterator* iter,
- Deployment::MonolithicDeploymentDescription& mdd)
+void Plan_Handler::process_mdd (DOMNodeIterator* iter,
+                                Deployment::MonolithicDeploymentDescription&
+                                mdd)
 {
   for (DOMNode* node = iter->nextNode();
        node != 0;
@@ -262,30 +271,32 @@ void Plan_Handler::process_mdd
       XStr node_name (node->getNodeName());
 
       if (node_name == XStr 
-          (ACE_TEXT ("Deployment:MonolithicDeploymentDescription")))
+                 (ACE_TEXT ("Deployment:MonolithicDeploymentDescription")))
         {
         }
       else if
-        (process_string(iter, node_name, "name", mdd.name));
+        (process_string (iter, node_name, "name", mdd.name));
       else if
-        (process_string_seq(iter, node_name, "source", mdd.source));
+        (process_string_seq (iter, node_name, "source", mdd.source));
       else if
-        (process_reference_seq(node, node_name, "artifact",
-                               mdd.artifactRef,
-                               this->index_, this->idref_map_))
+        (process_reference_seq (node, node_name, "artifact",
+                                mdd.artifactRef,
+                                this->index_, this->idref_map_))
         {
           this->index_ = this->index_ + 1;
         }
       else if
-        (process_sequence_common<Deployment::Property>(node->getOwnerDocument(), this->iter_, node,
-                                                node_name, "execParameter", mdd.execParameter,
-                                                &Property_Handler::process_Property,
-                                                this->id_map_));
+        (process_sequence_common<Deployment::Property>
+           (node->getOwnerDocument(), this->iter_, node,
+            node_name, "execParameter", mdd.execParameter,
+            &Property_Handler::process_Property,
+            this->id_map_));
       else if
-        (process_sequence_common<Deployment::Requirement>(node->getOwnerDocument(), this->iter_, node,
-                                                   node_name, "deployRequirement", mdd.deployRequirement,
-                                                   &Requirement_Handler::process_Requirement,
-                                                   this->id_map_));
+        (process_sequence_common<Deployment::Requirement>
+           (node->getOwnerDocument(), this->iter_, node,
+            node_name, "deployRequirement", mdd.deployRequirement,
+            &Requirement_Handler::process_Requirement,
+            this->id_map_));
       else
         {
           iter->previousNode();
@@ -294,16 +305,16 @@ void Plan_Handler::process_mdd
     }
 }
 
-void Plan_Handler::process_ccd
-(DOMNodeIterator* iter,
- Deployment::ComponentInterfaceDescription& cid)
+void Plan_Handler::process_ccd (DOMNodeIterator* iter,
+                                Deployment::ComponentInterfaceDescription&
+                                cid)
 {
   CompIntrDesc_Handler handler (iter, false);
   handler.process_ComponentInterfaceDescription (cid);
 }
 
 void Plan_Handler::process_pspr (DOMNodeIterator* iter,
-                                 Deployment::PlanSubcomponentPropertyReference& pspr)
+                                 Deployment::PlanSubcomponentPropertyReference&                                  pspr)
 {
   for (DOMNode* node = iter->nextNode();
        node != 0;
@@ -312,13 +323,14 @@ void Plan_Handler::process_pspr (DOMNodeIterator* iter,
       XStr node_name (node->getNodeName());
 
       if (node_name == XStr 
-          (ACE_TEXT ("Deployment:PlanSubcomponentPropertyReference")))
+             (ACE_TEXT ("Deployment:PlanSubcomponentPropertyReference")))
         {
         }
       else if
-        (process_string(iter, node_name, "propertyName", pspr.propertyName));
+        (process_string (iter, node_name, "propertyName", pspr.propertyName));
       else if
-        (process_reference(node, node_name, "instance", pspr.instanceRef, this->index_, this->idref_map_))
+        (process_reference (node, node_name, "instance", pspr.instanceRef, 
+                            this->index_, this->idref_map_))
         {
           this->index_ = this->index_ + 1;
         }
@@ -340,19 +352,21 @@ void Plan_Handler::process_pspe (DOMNodeIterator* iter,
       XStr node_name (node->getNodeName());
 
       if (node_name == XStr 
-          (ACE_TEXT ("Deployment:PlanSubcomponentPortEndpoint")))
+            (ACE_TEXT ("Deployment:PlanSubcomponentPortEndpoint")))
         {
         }
       else if
-        (process_string(iter, node_name, "portName", pspe.portName));
+        (process_string (iter, node_name, "portName", pspe.portName));
       else if
-        (process_boolean(iter, node_name, "provider", pspe.provider));
-      else if (node_name == XStr(ACE_TEXT("kind")))
-        CPK_Handler::process_CCMComponentPortKind (iter, pspe.kind);
+        (process_boolean (iter, node_name, "provider", pspe.provider));
+      else if (node_name == XStr (ACE_TEXT ("kind")))
+        {
+          CPK_Handler::process_CCMComponentPortKind (iter, pspe.kind);
+        }
       else if
-        (process_reference(node, node_name, "instance",
-                           pspe.instanceRef,
-                           this->index_, this->idref_map_))
+        (process_reference (node, node_name, "instance",
+                            pspe.instanceRef,
+                            this->index_, this->idref_map_))
         {
           this->index_ = this->index_ + 1;
         }
@@ -374,20 +388,20 @@ void Plan_Handler::process_ppm(DOMNodeIterator* iter,
       XStr node_name (node->getNodeName());
 
       if (node_name == XStr 
-          (ACE_TEXT ("Deployment:PlanPropertyMapping")))
+            (ACE_TEXT ("Deployment:PlanPropertyMapping")))
         {
         }
       else if
-        (process_string(iter, node_name, "name", ppm.name));
+        (process_string (iter, node_name, "name", ppm.name));
       else if
-        (process_string_seq(iter, node_name, "source", ppm.source));
+        (process_string_seq (iter, node_name, "source", ppm.source));
       else if
-        (process_string(iter, node_name, "externalName", ppm.externalName));
+        (process_string (iter, node_name, "externalName", ppm.externalName));
       else if
         (process_sequence_local<Deployment::PlanSubcomponentPropertyReference>
-         (node->getOwnerDocument(), iter, node,
-          node_name, "delegatesTo", ppm.delegatesTo,
-          this, &Plan_Handler::process_pspr));
+           (node->getOwnerDocument(), iter, node,
+            node_name, "delegatesTo", ppm.delegatesTo,
+            this, &Plan_Handler::process_pspr));
       else
         {
           iter->previousNode();
@@ -397,7 +411,8 @@ void Plan_Handler::process_ppm(DOMNodeIterator* iter,
 }
 
 void Plan_Handler::process_crdd (DOMNodeIterator* iter,
-                                 Deployment::ConnectionResourceDeploymentDescription& crdd)
+                                 Deployment::
+                                 ConnectionResourceDeploymentDescription& crdd)
 {
   for (DOMNode* node = iter->nextNode();
        node != 0;
@@ -406,17 +421,20 @@ void Plan_Handler::process_crdd (DOMNodeIterator* iter,
       XStr node_name (node->getNodeName());
 
       if (node_name == XStr 
-          (ACE_TEXT ("Deployment:ConnectionResourceDeploymentDescription")))
+            (ACE_TEXT ("Deployment:ConnectionResourceDeploymentDescription")))
         {
         }
       else if
-        (process_string(iter, node_name, "targetName", crdd.targetName));
+        (process_string (iter, node_name, "targetName", crdd.targetName));
       else if
-        (process_string(iter, node_name, "requirementName", crdd.requirementName));
+        (process_string (iter, node_name, "requirementName", 
+                         crdd.requirementName));
       else if
-        (process_string(iter, node_name, "resourceName", crdd.resourceName));
+        (process_string (iter, node_name, "resourceName", crdd.resourceName));
       else if (node_name == XStr (ACE_TEXT ("resourceValue")))
-        Any_Handler::process_Any (iter, crdd.resourceValue);
+        {
+          Any_Handler::process_Any (iter, crdd.resourceValue);
+        }
       else
         {
           iter->previousNode();
@@ -435,40 +453,42 @@ void Plan_Handler::process_pcd (DOMNodeIterator* iter,
       XStr node_name (node->getNodeName());
 
       if (node_name == XStr 
-          (ACE_TEXT ("Deployment:PlanConnectionDescription")))
+             (ACE_TEXT ("Deployment:PlanConnectionDescription")))
         {
         }
       else if
-        (process_string(iter, node_name, "name", pcd.name));
+        (process_string (iter, node_name, "name", pcd.name));
       else if
-        (process_string_seq(iter, node_name, "source", pcd.source));
+        (process_string_seq (iter, node_name, "source", pcd.source));
       else if
-        (process_sequence_common<Deployment::Requirement>(node->getOwnerDocument(), this->iter_, node,
-                                                   node_name, "deployRequirement", pcd.deployRequirement,
-                                                   &Requirement_Handler::process_Requirement,
-                                                   this->id_map_));
+        (process_sequence_common<Deployment::Requirement>
+           (node->getOwnerDocument(), this->iter_, node,
+            node_name, "deployRequirement", pcd.deployRequirement,
+            &Requirement_Handler::process_Requirement,
+            this->id_map_));
       else if
         (process_sequence_common<Deployment::ComponentExternalPortEndpoint>
-         (node->getOwnerDocument(), iter, node,
-          node_name, "externalEndpoint", pcd.externalEndpoint,
-          &CEPE_Handler::process_ComponentExternalPortEndpoint,
-          this->id_map_));
+           (node->getOwnerDocument(), iter, node,
+            node_name, "externalEndpoint", pcd.externalEndpoint,
+            &CEPE_Handler::process_ComponentExternalPortEndpoint,
+            this->id_map_));
       else if
         (process_sequence_local<Deployment::PlanSubcomponentPortEndpoint>
-         (node->getOwnerDocument(), iter, node,
-          node_name, "internalEndpoint", pcd.internalEndpoint,
-          this, &Plan_Handler::process_pspe));
+           (node->getOwnerDocument(), iter, node,
+            node_name, "internalEndpoint", pcd.internalEndpoint,
+            this, &Plan_Handler::process_pspe));
       else if
         (process_sequence_common<Deployment::ExternalReferenceEndpoint>
-         (node->getOwnerDocument(), iter, node,
-          node_name, "externalReference", pcd.externalReference,
-          &ERE_Handler::process_ExternalReferenceEndpoint,
-          this->id_map_));
+           (node->getOwnerDocument(), iter, node,
+            node_name, "externalReference", pcd.externalReference,
+            &ERE_Handler::process_ExternalReferenceEndpoint,
+            this->id_map_));
       else if
-        (process_sequence_local<Deployment::ConnectionResourceDeploymentDescription>
-         (node->getOwnerDocument(), iter, node,
-          node_name, "deployedResource", pcd.deployedResource,
-          this, &Plan_Handler::process_crdd));
+        (process_sequence_local<Deployment::
+                                ConnectionResourceDeploymentDescription>
+           (node->getOwnerDocument(), iter, node,
+            node_name, "deployedResource", pcd.deployedResource,
+            this, &Plan_Handler::process_crdd));
       else
         {
           iter->previousNode();
