@@ -33,7 +33,7 @@ public:
       logCritical (msg);
   }
 
-  void logCritical (LogMessage *msg)
+  void logCritical (LogMessage *)
   {
     // Acquires the same mutex as log()!
     ACE_GUARD(MUTEX, mon, mutex_);
