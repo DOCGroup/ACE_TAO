@@ -101,7 +101,7 @@ ACE_RMCast_Reassembly_Tester::svc (void)
 
         // Use an ACT to store the results in <received>
         ACE_Message_Block *received_pointer = &received;
-        ACE_OS::memcpy (big_blob.rd_ptr (),
+        ACE_OS::memcpy (big_blob.wr_ptr (),
                         &received_pointer,
                         sizeof(received_pointer));
 
@@ -142,7 +142,7 @@ ACE_RMCast_Reassembly_Tester::svc (void)
 
         // Use an ACT to store the results in <received>
         ACE_Message_Block *received_pointer = &received;
-        ACE_OS::memcpy (big_blob.rd_ptr (),
+        ACE_OS::memcpy (big_blob.wr_ptr (),
                         &received_pointer,
                         sizeof(received_pointer));
 
@@ -200,10 +200,9 @@ ACE_RMCast_Reassembly_Tester::initialize (ACE_Message_Block *mb)
   for (ACE_Message_Block *i = mb; i != 0; i = i->cont ())
     {
       char z = 0;
+
       for (char *j = i->rd_ptr (); j != i->wr_ptr (); ++j)
-        {
-          *j = ++z;
-        }
+        *j = ++z;
     }
 }
 
@@ -215,14 +214,14 @@ ACE_RMCast_Reassembly_Tester::compare (ACE_Message_Block *received,
   ACE_Message_Block blob (n);
 
   for (const ACE_Message_Block *i = original; i != 0; i = i->cont ())
-    {
-      blob.copy (i->rd_ptr (), i->length ());
-    }
+    blob.copy (i->wr_ptr (), i->length ());
 
   if (received->rd_ptr () == 0)
-    ACE_ERROR_RETURN ((LM_DEBUG, ACE_TEXT ("INCOMPLETE MESSAGE\n")), -1);
+    ACE_ERROR_RETURN ((LM_DEBUG, 
+                       ACE_TEXT ("INCOMPLETE MESSAGE\n")),
+                      -1);
 
-  if (ACE_OS::memcmp (blob.rd_ptr (),
+  if (ACE_OS::memcmp (blob.wr_ptr (),
                       received->rd_ptr (),
                       n) != 0)
     {
@@ -257,12 +256,14 @@ ACE_RMCast_Reassembly_Tester::data (ACE_RMCast::Data &data)
   ACE_Message_Block *mb = data.payload;
 
   ACE_Message_Block *pointer;
-  ACE_OS::memcpy (&pointer, mb->rd_ptr (), sizeof(pointer));
+  ACE_OS::memcpy (&pointer,
+                  mb->wr_ptr (),
+                  sizeof (pointer));
 
   size_t l = mb->length ();
   pointer->size (l);
   pointer->wr_ptr (pointer->rd_ptr () + l);
-  ACE_OS::memcpy (pointer->rd_ptr (), mb->rd_ptr (), l);
+  ACE_OS::memcpy (pointer->wr_ptr (), mb->rd_ptr (), l);
   return 0;
 }
 

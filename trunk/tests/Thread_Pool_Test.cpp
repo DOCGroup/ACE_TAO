@@ -222,14 +222,14 @@ Thread_Pool::test_queue_deactivation_shutdown (void)
                       ACE_TEXT ("(%t) enter a new message for ")
                       ACE_TEXT ("the task pool...")));
           n = ACE_OS::read (ACE_STDIN,
-                            mb->rd_ptr (),
+                            mb->wr_ptr (),
                             mb->size ());
         }
       else
         {
           static size_t count = 0;
 
-          ACE_OS::sprintf (mb->rd_ptr (),
+          ACE_OS::sprintf (mb->wr_ptr (),
                            "%d\n",
                            count);
           n = ACE_OS::strlen (mb->rd_ptr ());
@@ -312,14 +312,14 @@ Thread_Pool::test_empty_message_shutdown (void)
                       ACE_TEXT ("(%t) enter a new message for ")
                       ACE_TEXT ("the task pool...")));
           n = ACE_OS::read (ACE_STDIN,
-                            mb->rd_ptr (),
+                            mb->wr_ptr (),
                             mb->size ());
         }
       else
         {
           static size_t count = 0;
 
-          ACE_OS::sprintf (mb->rd_ptr (),
+          ACE_OS::sprintf (mb->wr_ptr (),
                            "%d\n",
                            count);
           n = ACE_OS::strlen (mb->rd_ptr ());

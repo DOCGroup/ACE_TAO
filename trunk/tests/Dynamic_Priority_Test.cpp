@@ -411,7 +411,7 @@ performance_producer (void *args)
 
       // Set a character in the current message block at its
       // read pointer position, and adjust the write pointer.
-      *mb->rd_ptr () = 'a';
+      *mb->wr_ptr () = 'a';
       mb->wr_ptr (1);
 
       // Enqueue the message block in priority order.
