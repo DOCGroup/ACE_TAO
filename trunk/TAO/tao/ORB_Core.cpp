@@ -62,15 +62,15 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     resource_factory_ (0),
     resource_factory_from_service_config_ (0),
     // @@ This is not needed since the default resource factory, fredk
-    //    is staticaly added to the service configurator.
+    //    is statically added to the service configurator.
     client_factory_ (0),
     client_factory_from_service_config_ (0),
     // @@ This is not needed since the default client factory, fredk
-    //    is staticaly added to the service configurator.
+    //    is statically added to the service configurator.
     server_factory_ (0),
     server_factory_from_service_config_ (0),
     // @@ This is not needed since the default server factory, fredk
-    //    is staticaly added to the service configurator.
+    //    is statically added to the service configurator.
     opt_for_collocation_ (1),
     use_global_collocation_ (1),
     collocation_strategy_ (THRU_POA),
