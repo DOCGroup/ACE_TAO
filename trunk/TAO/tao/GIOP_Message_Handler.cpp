@@ -206,17 +206,21 @@ TAO_GIOP_Message_Handler::parse_magic_bytes (void)
 CORBA::ULong
 TAO_GIOP_Message_Handler::get_payload_size (void)
 {
+  // We need to store the offset due to alignment on the buffer, since
+  // this offset must be used in any recalculation of the message size.
+  size_t align_offset = this->rd_pos ();
+
   // Set the read pointer in <current_buffer_> to point to the size of
   // the payload
   this->current_buffer_.rd_ptr (TAO_GIOP_MESSAGE_SIZE_OFFSET);
 
   CORBA::ULong x = this->read_ulong (this->current_buffer_.rd_ptr ());
 
-  if ((x + TAO_GIOP_MESSAGE_HEADER_LEN) > this->message_size_)
+  if ((align_offset + x + TAO_GIOP_MESSAGE_HEADER_LEN) > this->message_size_)
     {
       // Increase the size of the <current_buffer_>
-      this->current_buffer_.size (x + TAO_GIOP_MESSAGE_HEADER_LEN);
-      this->message_size_ = x + TAO_GIOP_MESSAGE_HEADER_LEN;
+      this->current_buffer_.size (align_offset + x + TAO_GIOP_MESSAGE_HEADER_LEN);
+      this->message_size_ = align_offset + x + TAO_GIOP_MESSAGE_HEADER_LEN;
     }
 
   // Set the read pointer to the end of the GIOP message
@@ -306,7 +310,7 @@ TAO_GIOP_Message_Handler::is_message_ready (TAO_Transport *transport)
 
           // Reset the current buffer
           this->current_buffer_.reset ();
-          ACE_CDR::mb_align (&this->current_buffer_);
+
 
           // Set the read and write pointers again for the current buffer
           this->current_buffer_.rd_ptr (rd_pos);
@@ -368,7 +372,6 @@ TAO_GIOP_Message_Handler::more_messages (void)
 
           // Reset the supp buffer now
           this->supp_buffer_.reset ();
-          ACE_CDR::mb_align (&this->supp_buffer_);
 
           this->message_status_ = TAO_GIOP_WAITING_FOR_HEADER;
         }
@@ -439,7 +442,6 @@ TAO_GIOP_Message_Handler::get_message (void)
 
           // Reset the supp buffer now
           this->supp_buffer_.reset ();
-          ACE_CDR::mb_align (&this->supp_buffer_);
         }
     }
 

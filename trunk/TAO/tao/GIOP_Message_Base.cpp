@@ -374,7 +374,7 @@ TAO_GIOP_Message_Base::process_reply_message (
   // Create a message block by stealing the data block
   ACE_Message_Block msg_block (this->message_handler_.data_block_dup ());
 
-  // ACE_CDR::mb_align (&msg_block);
+  ACE_CDR::mb_align (&msg_block);
 
   // Move the wr_ptr () and rd_ptr in the message block. This is not
   // generally required as we are not going to write anything. But
