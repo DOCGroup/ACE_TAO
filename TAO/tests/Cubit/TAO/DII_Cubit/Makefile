@@ -29,7 +29,7 @@ ECHO_CLT_OBJS = test1.o echo_clnt.o
 BIN = svr clnt
 BUILD = $(BIN)
 VLDLIBS = $(LDLIBS:%=%$(VAR))
-VBIN = $(BIN:%=%(VAR))
+VBIN = $(BIN:%=%$(VAR))
 
 #----------------------------------------------------------------------------
 #	Include macros and targets
