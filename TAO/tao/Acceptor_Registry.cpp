@@ -15,6 +15,7 @@
 
 #include "ace/Auto_Ptr.h"
 #include "ace/OS_NS_string.h"
+#include "ace/os_include/os_ctype.h"
 
 #if !defined(__ACE_INLINE__)
 #include "tao/Acceptor_Registry.i"
