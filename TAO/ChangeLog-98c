@@ -1,6 +1,10 @@
 Sun Oct 11 17:09:16 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp: 
+	* tao/POAC.cpp: 
+	* tao/PolicyC.cpp: 
+	* tao/DynAnyC.cpp: 
+	* tao/CurrentC.cpp: 
 	  Optimized _narrow() it does not need to call _create_stub() on
 	  the collocated case, using the CORBA::Object stub is good
 	  enough.

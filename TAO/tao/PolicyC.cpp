@@ -34,19 +34,16 @@ CORBA_Policy_ptr CORBA_Policy::_narrow (
     return CORBA_Policy::_nil ();
   if (!obj->_is_a ("IDL:CORBA/Policy:1.0", env))
     return CORBA_Policy::_nil ();
+  STUB_Object *stub = obj->_stubobj ();
+  stub->_incr_refcnt ();
   if (!obj->_is_collocated ()
          || !obj->_servant()
          || obj->_servant()->_downcast ("IDL:CORBA/Policy:1.0") == 0
       )
   {
-    STUB_Object *stub = obj->_stubobj ();
-    stub->_incr_refcnt ();
     CORBA_Policy_ptr new_obj = new CORBA_Policy(stub);
     return new_obj;
   } // end of if
-  STUB_Object *stub = obj->_servant ()->_create_stub (env);
-  if (env.exception () != 0)
-    return CORBA_Policy::_nil ();
   void* servant = obj->_servant ()->_downcast ("IDL:CORBA/Policy:1.0");
   return new POA_CORBA::_tao_collocated_Policy(
       ACE_reinterpret_cast(POA_CORBA::Policy_ptr, servant),
