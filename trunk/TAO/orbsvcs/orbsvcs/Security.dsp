@@ -176,6 +176,7 @@ SOURCE=.\Security.idl
 !IF  "$(CFG)" == "Security - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
+USERDEP__SECUR="..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build
 InputPath=.\Security.idl
 InputName=Security
@@ -260,6 +261,7 @@ SOURCE=.\SecurityLevel1.idl
 !IF  "$(CFG)" == "Security - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
+USERDEP__SECURI="..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build
 InputPath=.\SecurityLevel1.idl
 InputName=SecurityLevel1
@@ -298,6 +300,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "Security - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
+USERDEP__SECURI="..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
 InputPath=.\SecurityLevel1.idl
 InputName=SecurityLevel1
@@ -343,6 +346,7 @@ SOURCE=.\SecurityLevel2.idl
 !IF  "$(CFG)" == "Security - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
+USERDEP__SECURIT="..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build
 InputPath=.\SecurityLevel2.idl
 InputName=SecurityLevel2
@@ -381,6 +385,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "Security - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
+USERDEP__SECURIT="..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
 InputPath=.\SecurityLevel2.idl
 InputName=SecurityLevel2
