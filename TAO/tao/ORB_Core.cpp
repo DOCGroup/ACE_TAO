@@ -22,7 +22,9 @@
 
 #include "tao/POA.h"
 
-#include "tao/Priority_Mapping.h"
+#include "tao/RT_ORB.h"
+#include "tao/Priority_Mapping_Manager.h"
+#include "tao/RT_Current.h"
 
 #include "ace/Object_Manager.h"
 #include "ace/Env_Value_T.h"
@@ -108,7 +110,11 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     thread_per_connection_use_timeout_ (1),
     open_lock_ (),
     open_called_ (0),
-    priority_mapping_ (0),
+#if (TAO_HAS_RT_CORBA == 1)
+    rt_orb_ (0),
+    rt_current_ (0),
+    priority_mapping_manager_ (0),
+#endif /* TAO_HAS_RT_CORBA == 1 */
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
     eager_buffering_sync_strategy_ (0),
     delayed_buffering_sync_strategy_ (0),
@@ -147,6 +153,19 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
   ACE_NEW (this->policy_current_,
            TAO_Policy_Current);
 
+#if (TAO_HAS_RT_CORBA == 1)
+
+  ACE_NEW (this->rt_orb_,
+           TAO_RT_ORB);
+
+  ACE_NEW (this->rt_current_,
+           TAO_RT_Current);
+
+  ACE_NEW (this->priority_mapping_manager_,
+           TAO_Priority_Mapping_Manager);
+
+#endif /* TAO_HAS_RT_CORBA == 1 */
+
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
   ACE_NEW (this->transport_sync_strategy_,
@@ -175,6 +194,14 @@ TAO_ORB_Core::~TAO_ORB_Core (void)
   delete this->policy_current_;
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
+
+#if (TAO_HAS_RT_CORBA == 1)
+
+  delete this->rt_orb_;
+  delete this->rt_current_;
+  delete this->priority_mapping_manager_;
+
+#endif /* TAO_HAS_RT_CORBA == 1 */
 
   delete this->transport_sync_strategy_;
 
@@ -1054,8 +1081,7 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
     trf->get_reactor_registry ();
   this->reactor_registry_->open (this);
 
-  this->priority_mapping_ =
-    trf->get_priority_mapping ();
+  this->priority_mapping_manager_->mapping (trf->get_priority_mapping ());
 
   // @@ ????
   // Make sure the reactor is initialized...
@@ -1264,10 +1290,6 @@ TAO_ORB_Core::fini (void)
   }
 
   delete this->reactor_registry_;
-
-#if (TAO_HAS_RT_CORBA == 1)
-  delete this->priority_mapping_;
-#endif /* TAO_HAS_RT_CORBA == 1 */
 
   delete this;
 
@@ -2087,7 +2109,7 @@ TAO_ORB_Core::get_thread_priority (CORBA::Short &priority)
     }
 
   TAO_Priority_Mapping *priority_mapping =
-    this->priority_mapping ();
+    this->priority_mapping_manager ()->mapping ();
 
   if (priority_mapping->to_CORBA (native_priority, priority) == 0)
     {
@@ -2109,7 +2131,7 @@ TAO_ORB_Core::set_thread_priority (CORBA::Short priority)
   return 0;
 #else
   TAO_Priority_Mapping *priority_mapping =
-    this->priority_mapping ();
+    this->priority_mapping_manager ()->mapping ();
 
   CORBA::Short native_priority;
   if (priority_mapping->to_native (priority, native_priority) == 0)

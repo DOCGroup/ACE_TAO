@@ -1,3 +1,81 @@
+Tue Jun 27 00:44:42 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+	* tao/TAOC.h
+	* tao/Priority_Mapping_Manager.h
+	* tao/Priority_Mapping_Manager.i
+	* tao/Priority_Mapping_Manager.cpp:
+
+	  Added new pseudo object TAO::PriorityMappingManager, which can
+	  be obtained by invoking
+	  ORB::resolve_initial_references ("PriorityMappingManager").
+
+	  TAO::PriorityMappingManager allows application programmer to set/
+	  obtain the Priority Mapping used by the orb.  This is a
+	  TAO-specific interface (hence TAO scope): the spec requires the
+	  functionality but does not define the interface.  For
+	  more information refer to RTCORBA specification.
+
+	  Example of using TAO::ProrityMappingManager to obtain ORB's
+	  priority mapping can be found in:
+	  tests/Endpoint_Per_Priority/client.cpp
+
+	  TAO::PriorityMappingManager can be used to set priority mapping
+	  used by the orb:
+	  - mapping class must derive from RTCORBA::PriorityMapping, i.e,
+	    TAO_Priority_Mapping
+	  - mapping object must be dynamically allocated, and its
+	    ownership surrendered to the mapping manager
+          - mapping class can be user-defined or TAO-provided
+
+	* tao/ORB.cpp
+	* tao/ORB.h
+	* tao/ORB.i
+	* tao/ORB_Core.cpp
+	* tao/ORB_Core.h
+	* tao/ORB_Core.i
+	* tao/orbconf.h:
+
+	  The following objects are now available from
+	  <resolve_initial_references>:
+	  - RTCORBA::RTORB
+	  - RTCORBA::Current
+	  - TAO::PriorityMappingManager
+
+	* tao/RT_Current.h
+	* tao/RT_Mutex.cpp
+	* tao/RT_Mutex.h
+	* tao/RT_ORB.h
+	* tao/RT_Policy_i.cpp
+	* tao/RT_Policy_i.h:
+
+	  Fixed all local interface implementations in the files above to
+	  inherit from CORBA::LocalObject (per CCM spec).  Since
+	  CORBA::LocalObject's <add_ref> and <remove_ref> are no-ops,
+	  overriden them to provide reference counting for all objects
+	  that need it, i.e, in all policies and mutex implementations.
+
+	* tao/Pool_Per_Endpoint.cpp
+
+	  Updated to use TAO::PriorityMappingManager.
+
+	* peformance-tests/RTCorba/Multiple_Endpoints/client.cpp
+	* peformance-tests/RTCorba/Single_Endpoint/client.cpp
+	* peformance-tests/RTCorba/Orb_Per_Priority/client.cpp
+	* peformance-tests/RTCorba/Orb_Per_Priority/server.cpp
+	* tests/Endpoint_Per_Priority/client.cpp
+
+	  Updated these tests to use new TAO::PriorityMappingManager
+	  interface mentioned above.
+
+	* peformance-tests/RTCorba/Multiple_Endpoints/Makefile
+	* peformance-tests/RTCorba/Single_Endpoint/Makefile
+	* peformance-tests/RTCorba/Orb_Per_Priority/Makefile
+	* tests/Endpoint_Per_Priority/Makefile
+	* tao/Makefile:
+
+	  Updated dependencies.
+
+
 Tue Jun 27 15:15:07 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/Client_Priority_Policy.cpp:

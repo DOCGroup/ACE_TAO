@@ -29,8 +29,8 @@
 
 #if (TAO_HAS_RT_CORBA == 1)
 
-#include "RTCORBAS.h"
-
+#include "tao/RTCORBAS.h"
+#include "tao/LocalObject.h"
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
@@ -43,7 +43,8 @@
 class Policy_Factory;
 
 class TAO_Export TAO_PriorityModelPolicy :
-  public RTCORBA::PriorityModelPolicy
+  public RTCORBA::PriorityModelPolicy,
+  public CORBA::LocalObject
 {
   // = TITLE
   //   RTCORBA::PriorityModelPolicy implementation
@@ -95,6 +96,15 @@ public:
   virtual CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr);
   // This method reads the object state from a CDR representation.
 
+  // = Override CORBA::LocalObject no-op methods to
+  // provide reference counting.
+
+  virtual void _add_ref (void);
+  // Increment the reference count.
+
+  virtual void _remove_ref (void);
+  // Decrement the reference count.
+
 protected:
 
   // @@ Angelo, Do we want this friendship or should we just make the
@@ -113,7 +123,9 @@ private:
 
 ////////////////////////////////////////////////////////////////////////////
 
-class TAO_Export TAO_ThreadpoolPolicy : public RTCORBA::ThreadpoolPolicy
+class TAO_Export TAO_ThreadpoolPolicy :
+  public RTCORBA::ThreadpoolPolicy,
+  public CORBA::LocalObject
 {
   // = TITLE
   //   RTCORBA::ThreadpoolPolicy implementation
@@ -146,6 +158,15 @@ public:
   virtual void destroy (CORBA::Environment &ACE_TRY_ENV =
                                          TAO_default_environment ());
 
+  // = Override CORBA::LocalObject no-op methods to
+  // provide reference counting.
+
+  virtual void _add_ref (void);
+  // Increment the reference count.
+
+  virtual void _remove_ref (void);
+  // Decrement the reference count.
+
 private:
 
   RTCORBA::ThreadpoolId id_;
@@ -155,7 +176,8 @@ private:
 //////////////////////////////////////////////////////////////////////////////
 
 class TAO_Export TAO_PrivateConnectionPolicy :
-  public RTCORBA::PrivateConnectionPolicy
+  public RTCORBA::PrivateConnectionPolicy,
+  public CORBA::LocalObject
 {
   // = TITLE
   //   RTCORBA::PrivateConnectionPolicy implementation
@@ -184,11 +206,22 @@ public:
 
   virtual void destroy (CORBA::Environment &ACE_TRY_ENV =
                                          TAO_default_environment ());
+
+  // = Override CORBA::LocalObject no-op methods to
+  // provide reference counting.
+
+  virtual void _add_ref (void);
+  // Increment the reference count.
+
+  virtual void _remove_ref (void);
+  // Decrement the reference count.
+
 };
 ////////////////////////////////////////////////////////////////////////////
 
 class TAO_Export TAO_PriorityBandedConnectionPolicy :
-  public  RTCORBA::PriorityBandedConnectionPolicy
+  public RTCORBA::PriorityBandedConnectionPolicy,
+  public CORBA::LocalObject
 {
   // = TITLE
   //   RTCORBA::PriorityBandedConnectionPolicy implementation
@@ -237,6 +270,15 @@ public:
   virtual CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr);
   // This method reads the object state from a CDR representation.
 
+  // = Override CORBA::LocalObject no-op methods to
+  // provide reference counting.
+
+  virtual void _add_ref (void);
+  // Increment the reference count.
+
+  virtual void _remove_ref (void);
+  // Decrement the reference count.
+
 protected:
 
   friend class TAO_Policy_Factory;
@@ -252,7 +294,8 @@ private:
 ////////////////////////////////////////////////////////////////////////////
 
 class TAO_Export TAO_ServerProtocolPolicy :
-  public RTCORBA::ServerProtocolPolicy
+  public RTCORBA::ServerProtocolPolicy,
+  public CORBA::LocalObject
 {
   // = TITLE
   //   RTCORBA::ServerProtocolPolicy implementation
@@ -286,6 +329,16 @@ public:
   virtual void destroy (CORBA::Environment &ACE_TRY_ENV =
                                          TAO_default_environment ());
 
+  // = Override CORBA::LocalObject no-op methods to
+  // provide reference counting.
+
+  virtual void _add_ref (void);
+  // Increment the reference count.
+
+  virtual void _remove_ref (void);
+  // Decrement the reference count.
+
+
 private:
 
   RTCORBA::ProtocolList protocols_;
@@ -295,7 +348,8 @@ private:
 ////////////////////////////////////////////////////////////////////////////
 
 class TAO_Export TAO_ClientProtocolPolicy :
-  public  RTCORBA::ClientProtocolPolicy
+  public RTCORBA::ClientProtocolPolicy,
+  public CORBA::LocalObject
 {
   // = TITLE
   //   RTCORBA::ClientProtocolPolicy implementation
@@ -334,13 +388,22 @@ public:
   virtual void destroy (CORBA::Environment &ACE_TRY_ENV =
                                          TAO_default_environment ());
 
-  // CDR Encoder/Decoder.
+  // = CDR Encoder/Decoder.
 
   virtual CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr);
   // This method writes a CDR representation of the current object.
 
   virtual CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr);
   // This method reads the object state from a CDR representation.
+
+  // = Override CORBA::LocalObject no-op methods to
+  // provide reference counting.
+
+  virtual void _add_ref (void);
+  // Increment the reference count.
+
+  virtual void _remove_ref (void);
+  // Decrement the reference count.
 
 protected:
 
@@ -357,7 +420,9 @@ private:
 
 ////////////////////////////////////////////////////////////////////////////
 
-class TAO_Export TAO_TCP_Properties : public RTCORBA::TCPProtocolProperties
+class TAO_Export TAO_TCP_Properties :
+  public RTCORBA::TCPProtocolProperties,
+  public CORBA::LocalObject
 
 {
   // = TITLE
@@ -433,6 +498,15 @@ public:
   virtual CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr);
   // This method reads the object state from a CDR representation.
 
+  // = Override CORBA::LocalObject no-op methods to
+  // provide reference counting.
+
+  virtual void _add_ref (void);
+  // Increment the reference count.
+
+  virtual void _remove_ref (void);
+  // Decrement the reference count.
+
 private:
   // = Attributes.
 
@@ -446,10 +520,20 @@ private:
 class  TAO_Protocol_Properties_Factory;
 
 class TAO_Export TAO_GIOP_Properties :
-  public RTCORBA::GIOPProtocolProperties
+  public RTCORBA::GIOPProtocolProperties,
+  public CORBA::LocalObject
 {
 public:
   virtual ~TAO_GIOP_Properties ();
+
+  // = Override CORBA::LocalObject no-op methods to
+  // provide reference counting.
+
+  virtual void _add_ref (void);
+  // Increment the reference count.
+
+  virtual void _remove_ref (void);
+  // Decrement the reference count.
 
 protected:
   friend class TAO_Protocol_Properties_Factory;
