@@ -1,3 +1,8 @@
+Thu May 27 22:02:21  Emre Turkay  <turkaye@dre.vanderbilt.edu>
+	* DnC/Config_Handlers/Plan_Handler.cpp:
+
+	Added handler for DeploymentPlan::UUID
+
 Thu May 27 16:42:26 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
         * DnC/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
@@ -8259,3 +8264,4 @@ Mon Jun 17 17:35:31 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
         * docs/imgs/deployment.png:
         * docs/imgs/extended-container.png:
         * docs/imgs/home-config.png: Added CIAO documentation.
+

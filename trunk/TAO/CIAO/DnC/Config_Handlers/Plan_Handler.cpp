@@ -43,6 +43,8 @@ void Plan_Handler::process_plan(Deployment::DeploymentPlan& plan)
       else if
         (process_string(this->iter_, node_name, "label", plan.label));
       else if
+        (process_string(this->iter_, node_name, "UUID", plan.UUID));
+      else if
         (process_element<Deployment::ComponentInterfaceDescription>
          (this->doc_, this->iter_, node,
           node_name, "realizes", plan.realizes,
