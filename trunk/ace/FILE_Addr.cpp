@@ -20,19 +20,24 @@ ACE_FILE_Addr::ACE_FILE_Addr (void)
 int
 ACE_FILE_Addr::set (const ACE_FILE_Addr &sa)
 {
-  this->base_set (sa.get_type (), sa.get_size ());
-
   if (sa.get_type () == AF_ANY)
     {
       // Create a temporary file.
       ACE_OS::strcpy (this->filename_,
                       ACE_DEFAULT_TEMP_FILE);
       ACE_OS::mktemp (this->filename_);
+      this->base_set (AF_FILE,
+                      ACE_OS::strlen (this->filename_) + 1);
     }
   else
-    (void) ACE_OS::strncpy (this->filename_,
-                            sa.filename_,
-                            sa.get_size ());
+    {
+      (void) ACE_OS::strncpy (this->filename_,
+                              sa.filename_,
+                              sa.get_size ());
+
+      this->base_set (sa.get_type (),
+                      sa.get_size ());
+    }
   return 0;
 }
 
