@@ -1,3 +1,10 @@
+Sun Jun 13 18:12:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/tmcast.mpb:
+          For TMCast we require threads and we shouldn't set the
+          dynamicflags. That is only required when we build a library
+          and not when we use it.
+
 Sun Jun 13 17:05:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * apps/JAWS/clients/Blobby/blobby.cpp:
