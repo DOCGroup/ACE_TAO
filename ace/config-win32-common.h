@@ -15,6 +15,9 @@
 #endif
 
 #define ACE_WIN32
+#if defined (_WIN64) || defined (WIN64)
+#  define ACE_WIN64
+#endif /* _WIN64 || WIN64 */
 
 // Define this if you're running NT >= 4.0 (Win2K == NT 5).
 //  Setting applies to  : building ACE

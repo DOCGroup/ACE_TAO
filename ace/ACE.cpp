@@ -139,12 +139,15 @@ ACE::select (int width,
                                timeout);
   if (result > 0)
     {
+# if !defined (ACE_WIN64)
+      // This isn't needed for Windows... it's a no-op anyway.
       if (readfds)
         readfds->sync ((ACE_HANDLE) width);
       if (writefds)
         writefds->sync ((ACE_HANDLE) width);
       if (exceptfds)
         exceptfds->sync ((ACE_HANDLE) width);
+#endif /* ACE_WIN64 */
     }
   return result;
 }
@@ -158,9 +161,11 @@ ACE::select (int width,
                                readfds.fdset (),
                                0,
                                0,
-                               timeout);
+
+#if !defined (ACE_WIN64)                               timeout);
   if (result > 0)
     readfds.sync ((ACE_HANDLE) width);
+#endif /* ACE_WIN64 */
   return result;
 }
 
@@ -753,7 +758,7 @@ ACE::recv_n_i (ACE_HANDLE handle,
         }
     }
 
-  return bytes_transferred;
+  return ACE_static_cast (ssize_t, bytes_transferred);
 }
 
 ssize_t
@@ -820,7 +825,7 @@ ACE::recv_n_i (ACE_HANDLE handle,
   if (error)
     return result;
   else
-    return bytes_transferred;
+    return ACE_static_cast (ssize_t, bytes_transferred);
 }
 
 #if defined (ACE_HAS_TLI)
@@ -992,7 +997,7 @@ ACE::recv_n_i (ACE_HANDLE handle,
         }
     }
 
-  return bytes_transferred;
+  return ACE_static_cast (ssize_t, bytes_transferred);
 }
 
 ssize_t
@@ -1057,7 +1062,7 @@ ACE::recv_n_i (ACE_HANDLE handle,
   if (error)
     return result;
   else
-    return bytes_transferred;
+    return ACE_static_cast (ssize_t, bytes_transferred);
 }
 
 // This is basically an interface to ACE_OS::readv, that doesn't use
