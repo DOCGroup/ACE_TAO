@@ -141,6 +141,21 @@ Type cube (Type arg)
     return temp;
 }
 
+#if defined(ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+#define TEMPLATE_DECL(t) template CORBA_ ## t cube(CORBA_ ## t)
+TEMPLATE_DECL(Octet);
+TEMPLATE_DECL(Short);
+TEMPLATE_DECL(UShort);
+TEMPLATE_DECL(Long);
+TEMPLATE_DECL(ULong);
+TEMPLATE_DECL(LongLong);
+TEMPLATE_DECL(ULongLong);
+TEMPLATE_DECL(Float);
+TEMPLATE_DECL(Double);
+#  if !defined(NONNATIVE_LONGDOUBLE)
+TEMPLATE_DECL(LongDouble);
+#  endif
+#endif
 
 static int	skip_longdouble = 0;
 
@@ -231,6 +246,7 @@ do_tests (
 	//
 	// Boolean -- negation
 	//
+#undef TEMPLATE_DECL
 #define EXPVAL(type,original_value) (!(type)(original_value))
 #define COMPARE(type,retval,original_value) \
 		(((type)(retval)) == EXPVAL(type,original_value))

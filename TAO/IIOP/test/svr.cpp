@@ -192,137 +192,6 @@ tcpoa_forwarder (
 //
 // Socket-based passive OA entry point
 //
-int
-OA_listen (
-    CORBA_ORB_ptr	orb_ptr,
-    TCP_OA_ptr		oa_ptr,
-    CORBA_String	key,
-    int			idle,
-    CORBA_Boolean	do_fork,
-    CORBA_Boolean	do_threads
-)
-{
-  //
-  // Create the object we'll be implementing.
-  //
-  CORBA_OctetSeq	obj_key;
-  CORBA_Object_ptr	obj;
-  CORBA_Environment	env;
-
-  obj_key.buffer = (CORBA_Octet *) key;
-  obj_key.length = obj_key.maximum = ACE_OS::strlen ((char *)key);
-
-  obj = oa_ptr->create (obj_key, (CORBA_String) "", env);
-  if (env.exception () != 0) {
-    print_exception (env.exception (), "TCP_OA::create");
-    return 1;
-  }
-
-  //
-  // Stringify the objref we'll be implementing, and
-  // print it to stdout.  Someone will take that string
-  // and give it to some client.  Then release the object.
-  //
-  CORBA_String	str;
-
-  str = orb_ptr->object_to_string (obj, env);
-  if (env.exception () != 0) {
-    print_exception (env.exception (), "object2string");
-    return 1;
-  }
-  ACE_OS::puts ((char *)str);
-  ACE_OS::fflush (stdout);
-  dmsg1 ("listening as object '%s'", str);
-  CORBA_release (obj);
-  obj = 0;
-
-  //
-  // If we're forking a child server, do so -- read the objref
-  // it'll use, and prepare to forward all requests to it.  That
-  // objref has a dynamically assigned port. 
-  //
-  if (do_fork) {
-#if	defined (HAVE_POPEN)
-    FILE		*f = popen ("exec ./svr -i120 -kbaskerville", "r");
-    char		buffer [BUFSIZ];
-
-    if (ACE_OS::fgets (buffer, sizeof buffer, f) != buffer) {
-      ACE_OS::fprintf (stderr, "error: can't read from child\n");
-      return 1;
-    }
-    fwd_ref = orb_ptr->string_to_object ((CORBA_String) buffer, env);
-    if (env.exception () != 0) {
-      print_exception (env.exception (), "string2object");
-      return 1;
-    }
-
-    //
-    // NOTE:  don't fclose("f") since some systems make that the
-    // same as pclose("f").  Pclose waits for the child to exit,
-    // causing a deadlock since the child won't exit until it's
-    // told to do so by a client, but no client can be redirected 
-    // to the child until the pclose returns ...
-    //
-#else
-    ACE_OS::fprintf (stderr, "error:  no popen(), can't create child\n");
-    env.exception (new CORBA_IMP_LIMIT(COMPLETED_NO));
-    return 1;
-#endif	// !defined (HAVE_POPEN)
-  }
-
-  //
-  // Handle requests for this object until we're killed, or one of
-  // the methods asks us to exit.
-  //
-  // NOTE:  for multithreaded environments (e.g. POSIX threads) also
-  // want to use threads.  The current notion is to dedicate a thread
-  // to a "read" on each client file descriptor, and then when that
-  // successfully gets a Request message, to start another thread
-  // reading that descriptor while the first one creates the Reply.
-  //
-  // This will accentuate the need for server-side policies to address
-  // resource management, such as shutting down connections that have
-  // no requests in progress after they've been idle for some time
-  // period (e.g. 10 minutes), and reclaiming the thread used by that
-  // connection. 
-  //
-  while (oa_ptr->shutting_down () != CORBA_B_TRUE) {
-    if (idle == -1)
-      oa_ptr->get_request (tcpoa_dispatch,
-			   fwd_ref ? tcpoa_forwarder : 0,
-			   do_threads, &obj_key, 0, env);
-    else {
-      timeval		tv;
-
-      tv.tv_sec = idle;
-      tv.tv_usec = 0;
-      oa_ptr->get_request (tcpoa_dispatch,
-			   fwd_ref ? tcpoa_forwarder : 0,
-			   do_threads, &obj_key, &tv, env);
-    }
-
-    //
-    // XXX "env2" should be checked to see if TypeCode::id() reported
-    // an exception ...
-    //
-    CORBA_Environment	env2;
-
-    if (env.exception () != 0
-	&& ACE_OS::strcmp ((char *)env.exception ()->id (),
-			   _tc_CORBA_INITIALIZE->id (env2)) == 0) {
-      print_exception (env.exception (), "TCP_OA::get_request");
-      return 1;
-    }
-    env.clear ();
-  }
-
-  //
-  // Shut down the OA -- recycles all underlying resources (e.g. file
-  // descriptors, etc).
-  //
-  oa_ptr->clean_shutdown (env);
-  return 0;
-}
 
 
 //
@@ -411,11 +280,168 @@ main (
     return 1;
   }
 
-  oa_ptr = TCP_OA::init (orb_ptr, oa_name, env);
+  ACE_INET_Addr svraddr;
+  if (oa_name == 0)
+    svraddr.set((u_short)0, "watusi");
+  else
+    svraddr.set(oa_name);
+
+  oa_ptr = TCP_OA::init (orb_ptr, svraddr, env);
   if (env.exception () != 0) {
     print_exception (env.exception (), "OA init");
     return 1;
   }
+  // Register the OA with ACE_ROA
+  ACE_ROA::oa(oa_ptr);		// Should this be done in TCP_OA's CTOR?
 
+#if 0
+  // This is the old call and syntax
   return OA_listen (orb_ptr, oa_ptr, key, idle, do_fork, do_threads);
+  int
+    OA_listen (
+	       CORBA_ORB_ptr	orb_ptr,
+	       TCP_OA_ptr		oa_ptr,
+	       CORBA_String	key,
+	       int			idle,
+	       CORBA_Boolean	do_fork,
+	       CORBA_Boolean	do_threads
+	       )
+    {
+      return 0;
+    }
+#endif
+  //
+  // Create the object we'll be implementing.
+  //
+  CORBA_OctetSeq	obj_key;
+  CORBA_Object_ptr	obj;
+
+  obj_key.buffer = (CORBA_Octet *) key;
+  obj_key.length = obj_key.maximum = ACE_OS::strlen ((char *)key);
+
+  env.clear();
+  obj = oa_ptr->create (obj_key, (CORBA_String) "", env);
+  if (env.exception () != 0) {
+    print_exception (env.exception (), "TCP_OA::create");
+    return 1;
+  }
+
+  //
+  // Stringify the objref we'll be implementing, and
+  // print it to stdout.  Someone will take that string
+  // and give it to some client.  Then release the object.
+  //
+  CORBA_String	str;
+
+  str = orb_ptr->object_to_string (obj, env);
+  if (env.exception () != 0) {
+    print_exception (env.exception (), "object2string");
+    return 1;
+  }
+  ACE_OS::puts ((char *)str);
+  ACE_OS::fflush (stdout);
+  dmsg1 ("listening as object '%s'", str);
+  CORBA_release (obj);
+  obj = 0;
+
+  //
+  // If we're forking a child server, do so -- read the objref
+  // it'll use, and prepare to forward all requests to it.  That
+  // objref has a dynamically assigned port. 
+  //
+  if (do_fork) {
+#if	defined (HAVE_POPEN)
+    FILE		*f = popen ("exec ./svr -i120 -kbaskerville", "r");
+    char		buffer [BUFSIZ];
+
+    if (ACE_OS::fgets (buffer, sizeof buffer, f) != buffer) {
+      ACE_OS::fprintf (stderr, "error: can't read from child\n");
+      return 1;
+    }
+    fwd_ref = orb_ptr->string_to_object ((CORBA_String) buffer, env);
+    if (env.exception () != 0) {
+      print_exception (env.exception (), "string2object");
+      return 1;
+    }
+
+    //
+    // NOTE:  don't fclose("f") since some systems make that the
+    // same as pclose("f").  Pclose waits for the child to exit,
+    // causing a deadlock since the child won't exit until it's
+    // told to do so by a client, but no client can be redirected 
+    // to the child until the pclose returns ...
+    //
+#else
+    ACE_OS::fprintf (stderr, "error:  no popen(), can't create child\n");
+    env.exception (new CORBA_IMP_LIMIT(COMPLETED_NO));
+    return 1;
+#endif	// !defined (HAVE_POPEN)
+  }
+
+  //
+  // Handle requests for this object until we're killed, or one of
+  // the methods asks us to exit.
+  //
+  // NOTE:  for multithreaded environments (e.g. POSIX threads) also
+  // want to use threads.  The current notion is to dedicate a thread
+  // to a "read" on each client file descriptor, and then when that
+  // successfully gets a Request message, to start another thread
+  // reading that descriptor while the first one creates the Reply.
+  //
+  // This will accentuate the need for server-side policies to address
+  // resource management, such as shutting down connections that have
+  // no requests in progress after they've been idle for some time
+  // period (e.g. 10 minutes), and reclaiming the thread used by that
+  // connection. 
+  //
+  int terminationStatus = 0;
+#if defined(USE_ACE_EVENT_HANDLING)
+  while (ACE_ROA::end_reactor_event_loop_ == 0)
+    {
+      int result = ACE_ROA::reactor()->handle_events ();
+
+      if (result == -1)
+	{
+	  terminationStatus = -1;
+	  break;
+	}
+    }
+#else
+  while (oa_ptr->shutting_down () != CORBA_B_TRUE) {
+    if (idle == -1)
+      oa_ptr->get_request (tcpoa_dispatch,
+			   fwd_ref ? tcpoa_forwarder : 0,
+			   do_threads, &obj_key, 0, env);
+    else {
+      timeval		tv;
+
+      tv.tv_sec = idle;
+      tv.tv_usec = 0;
+      oa_ptr->get_request (tcpoa_dispatch,
+			   fwd_ref ? tcpoa_forwarder : 0,
+			   do_threads, &obj_key, &tv, env);
+    }
+
+    //
+    // XXX "env2" should be checked to see if TypeCode::id() reported
+    // an exception ...
+    //
+    CORBA_Environment	env2;
+
+    if (env.exception () != 0
+	&& ACE_OS::strcmp ((char *)env.exception ()->id (),
+			   _tc_CORBA_INITIALIZE->id (env2)) == 0) {
+      print_exception (env.exception (), "TCP_OA::get_request");
+      return 1;
+    }
+    env.clear ();
+  }
+#endif
+
+  //
+  // Shut down the OA -- recycles all underlying resources (e.g. file
+  // descriptors, etc).
+  //
+  oa_ptr->clean_shutdown (env);
+  return terminationStatus;
 }

@@ -36,7 +36,7 @@
 #include	"thread.hh"
 #include	"debug.hh"
 #include	"giop.hh"
-#include	"connmgr.hh"
+#include "connmgr.hh"
 
 
 //
