@@ -79,7 +79,7 @@ main (int, char *[])
     }
 }
 #else
-int main (int, char *[])
+ACE_TMAIN main (int, ACE_TCHAR *[])
 {
   ACE_ERROR ((LM_ERROR,
               "SYSV IPC, or SYSV SHMEM is not supported on this platform\n"));
