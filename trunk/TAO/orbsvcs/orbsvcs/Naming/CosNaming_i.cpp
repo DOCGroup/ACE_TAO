@@ -127,7 +127,7 @@ TAO_NamingContext::bind (const CosNaming::Name& n,
 
   // Check for invalid name.
   if (len == 0)
-    TAO_THROW (CosNaming::NamingContext::InvalidName);
+    TAO_THROW (CosNaming::NamingContext::InvalidName());
 
   // If we received compound name, resolve it to get the context in
   // which the binding should take place, then perform the binding on
@@ -161,7 +161,7 @@ TAO_NamingContext::bind (const CosNaming::Name& n,
       // Try binding the name.
       int result = context_.bind (name, entry);
       if (result == 1)
-        TAO_THROW (CosNaming::NamingContext::AlreadyBound);
+        TAO_THROW (CosNaming::NamingContext::AlreadyBound());
 
       // Something went wrong with the internal structure
       else if (result == -1)
@@ -181,7 +181,7 @@ TAO_NamingContext::rebind (const CosNaming::Name& n,
 
   // Check for invalid name.
   if (len == 0)
-    TAO_THROW (CosNaming::NamingContext::InvalidName);
+    TAO_THROW (CosNaming::NamingContext::InvalidName());
 
   // If we received compound name, resolve it to get the context in
   // which the rebinding should take place, then perform the rebinding
@@ -236,7 +236,7 @@ TAO_NamingContext::bind_context (const CosNaming::Name &n,
 
   // Check for invalid name.
   if (len == 0)
-    TAO_THROW (CosNaming::NamingContext::InvalidName);
+    TAO_THROW (CosNaming::NamingContext::InvalidName());
 
   // If we received compound name, resolve it to get the context in
   // which the binding should take place, then perform the binding on
@@ -270,7 +270,7 @@ TAO_NamingContext::bind_context (const CosNaming::Name &n,
       // Try binding the name.
       int result = context_.bind (name, entry);
       if (result == 1)
-        TAO_THROW (CosNaming::NamingContext::AlreadyBound);
+        TAO_THROW (CosNaming::NamingContext::AlreadyBound());
 
       // Something went wrong with the internal structure
       else if (result == -1)
@@ -290,7 +290,7 @@ TAO_NamingContext::rebind_context (const CosNaming::Name &n,
 
   // Check for invalid name.
   if (len == 0)
-    TAO_THROW (CosNaming::NamingContext::InvalidName);
+    TAO_THROW (CosNaming::NamingContext::InvalidName());
 
   // If we received compound name, resolve it to get the context in
   // which the rebinding should take place, then perform the rebinding
@@ -342,7 +342,7 @@ TAO_NamingContext::resolve (const CosNaming::Name& n,
 
   // Check for invalid name.
   if (len == 0)
-    TAO_THROW_RETURN (CosNaming::NamingContext::InvalidName,
+    TAO_THROW_RETURN (CosNaming::NamingContext::InvalidName(),
                       result);
 
   // Resolve the first component of the name.
@@ -419,7 +419,7 @@ TAO_NamingContext::unbind (const CosNaming::Name& n,
 
   // Check for invalid name.
   if (len == 0)
-    TAO_THROW (CosNaming::NamingContext::InvalidName);
+    TAO_THROW (CosNaming::NamingContext::InvalidName());
 
   // If we received compound name, resolve it to get the context in
   // which the unbinding should take place, then perform the unbinding
@@ -557,7 +557,7 @@ TAO_NamingContext::destroy (CORBA::Environment &_env)
                      CORBA::INTERNAL (CORBA::COMPLETED_NO));
 
     if (context_.current_size () != 0)
-      TAO_THROW (CosNaming::NamingContext::NotEmpty);
+      TAO_THROW (CosNaming::NamingContext::NotEmpty());
 
     if (this->root_ != 0)
       return; // Destroy is a no-op on a root context.
