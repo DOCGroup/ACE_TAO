@@ -22,7 +22,7 @@ This will produce a file named output which will contain the ior.
 Run the client as follows:
 
 % cd $TAO_ROOT/examples/POA/Generic_Servant
-% ./client -f ../Explicit_Activation/output
+% ./client -f ../Reference_Counted_Servant/output
 ________________________________________
 
 Or

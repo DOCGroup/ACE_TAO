@@ -20,9 +20,34 @@
 // ================================================================
 
 #include "ace/Get_Opt.h"
-#include "Reference_Counted_Foo.h"
+#include "MyFooServant.h"
 
 ACE_RCSID(Reference_Counted_Servant, server, "$Id$")
+
+// This is to remove "inherits via dominance" warnings from MSVC.
+// MSVC is being a little too paranoid.
+#if defined (_MSC_VER)
+# pragma warning (disable : 4250)
+#endif /* _MSC_VER */
+
+class Reference_Counted_Foo : public virtual PortableServer::RefCountServantBase,
+                              public virtual MyFooServant
+{
+public:
+  Reference_Counted_Foo (CORBA::ORB_ptr orb,
+                         PortableServer::POA_ptr poa,
+                         CORBA::Long value);
+  // Constructor - takes a POA and a value parameter
+};
+
+Reference_Counted_Foo::Reference_Counted_Foo (CORBA::ORB_ptr orb,
+                                              PortableServer::POA_ptr poa,
+                                              CORBA::Long value)
+  : MyFooServant (orb,
+                  poa,
+                  value)
+{
+}
 
 static char *ior_output_file = 0;
 
