@@ -122,7 +122,13 @@ ACE_Task_Base::activate (long flags,
                                stack_size,
                                thread_handles);
   if (this->grp_id_ == -1)
-    return -1;
+    {
+      // @@ This isn't 100% correct since spawn_n() may have spawned
+      // some threads before it failed.  However, this is better than
+      // nothing...
+      this->thr_count_ -= n_threads;
+      return -1;
+    }
   else
     return 0;
 #else
