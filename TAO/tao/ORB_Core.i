@@ -61,11 +61,10 @@ TAO_ORB_Core::get_collocation_strategy (void) const
   return this->collocation_strategy_;
 }
 
-ACE_INLINE
-TAO_ORB_Parameters *
+ACE_INLINE TAO_ORB_Parameters *
 TAO_ORB_Core::orb_params(void)
 {
-  return this->orb_params_;
+  return &(this->orb_params_);
 }
 
 #define TAO_OC_RETRIEVE(member) \

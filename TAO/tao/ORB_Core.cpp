@@ -49,7 +49,7 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     acceptor_registry_ (0),
     protocol_factories_ (0),
     root_poa_ (0),
-    orb_params_ (0),
+    orb_params_ (),
     orbid_ (ACE_OS::strdup (orbid?orbid:"")),
     resource_factory_ (0),
     resource_factory_from_service_config_ (0),
@@ -90,9 +90,6 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
 
 TAO_ORB_Core::~TAO_ORB_Core (void)
 {
-  // Allocated in init()
-  delete this->orb_params_;
-
   ACE_OS::free (this->orbid_);
 
   delete this->poa_current_;
@@ -153,13 +150,6 @@ TAO_ORB_Core::init (int &argc, char *argv[])
   if (argc > 0 && argv != 0)
     argv0 = argv[0];
   svc_config_argv[svc_config_argc++] = CORBA::string_dup (argv0);
-
-  // Initialize the container for the ORB parameters.
-  // orb_params_ must be initialized before the command line parsing loop
-  // since some of the parsing code expects it to have been already
-  // initialized.
-  if (this->orb_params_ == 0)
-    ACE_NEW_RETURN (this->orb_params_, TAO_ORB_Parameters, 0);
 
   // @@ This should be an IIOP default, more generally each
   //    loaded protocol should have it's own default defined by the
