@@ -138,14 +138,12 @@ TAO_Connection_Handler::svc_i (void)
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
                     "TAO (%P|%t) - Connection_Handler::svc_i - "
-                    "loop <%d>\n", current_timeout.msec ()
-		    ));
+                    "loop <%d>\n", current_timeout.msec ()));
     }
 
   if (TAO_debug_level > 0)
     ACE_DEBUG  ((LM_DEBUG,
-                 "TAO (%P|%t) - Connection_Handler::svc_i end\n"
-		 ));
+                 "TAO (%P|%t) - Connection_Handler::svc_i end\n"));
 
   return result;
 }
@@ -261,7 +259,7 @@ TAO_Connection_Handler::handle_input_eh (
     ACE_HANDLE h, ACE_Event_Handler * eh)
 {
   // Increase the reference count on the upcall that have passed us.
-  // 
+  //
   // REFCNT: Matches decr_refcount() in this function...
   long refcount = this->incr_refcount ();
   ACE_ASSERT (refcount > 0);
@@ -298,7 +296,7 @@ TAO_Connection_Handler::handle_input_eh (
 
   if (TAO_debug_level > 6)
     {
-      ACE_HANDLE handle = eh->get_handle();
+      ACE_HANDLE handle = eh->get_handle ();
       ACE_DEBUG ((LM_DEBUG,
                   "TAO (%P|%t) - IIOP_Connection_Handler[%d]::handle_input, "
                   "handle = %d/%d, refcount = %d, retval = %d\n",
@@ -335,7 +333,7 @@ int
 TAO_Connection_Handler::close_connection_eh (ACE_Event_Handler * eh)
 {
   // Perform a double checked locking on the underlying ACE_HANDLE
-  ACE_HANDLE handle = eh->get_handle();
+  ACE_HANDLE handle = eh->get_handle ();
 
   // If the handle is ACE_INVALID_HANDLE then there is no work to be
   // done in this function, and we return immediately.  Returning 0
@@ -348,9 +346,9 @@ TAO_Connection_Handler::close_connection_eh (ACE_Event_Handler * eh)
 
   int id = -1;
   {
-    ACE_GUARD_RETURN(ACE_Lock, ace_mon, *this->lock_, 0);
+    ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->lock_, 0);
 
-    handle = eh->get_handle();
+    handle = eh->get_handle ();
     if(handle == ACE_INVALID_HANDLE)
       {
         return 0;
@@ -379,10 +377,10 @@ TAO_Connection_Handler::close_connection_eh (ACE_Event_Handler * eh)
     // something valid to ACE_INVALID_HANDLE, and the transport() field
     // will not be changed before that state transition.
     //
-    ACE_ASSERT(this->transport () != 0);
+    ACE_ASSERT (this->transport () != 0);
 
     // Save the ID for debugging messages
-    id = this->transport()->id();
+    id = this->transport()->id ();
     if (TAO_debug_level)
       {
         ACE_DEBUG  ((LM_DEBUG,
