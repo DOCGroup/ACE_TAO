@@ -1,3 +1,9 @@
+Thu Aug  5 13:17:26 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* ace/ACE.cpp (sock_error): Added support for WSAEISCONN.
+	  Thanks to Boris Kaminer <boris_kaminer@mail.ru> for reporting
+ 	  this.
+
 Thu Aug  5 07:45:53 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* m4/config_h.m4:
