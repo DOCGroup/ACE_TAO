@@ -1,3 +1,9 @@
+Wed Dec  4 21:53:28 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/OS.h: Include <sys/pstat.h> for __hpux platform.
+        * ace/OS.cpp (num_processors_online): Try the syscall for this
+          on HP-UX if __hpux is defined, not hpux (only set for g++).
+
 Wed Dec  4 21:18:31 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/Proactor_Timer_Test.cpp: Fix incorrect use of pointer-integer
