@@ -1,3 +1,11 @@
+Fri Sep 10 12:18:51 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/examples/CosEC/Factory/FactoryServer.dsp:
+	* orbsvcs/examples/CosEC/Factory/FactoryClient.dsp:
+	  Use the -Ge 1 option to generate the CORBA::Environment
+	  option. Thanks to Joerg Pommnitz <pommnitz@darmstadt.gmd.de> for 
+	  pointing out this problem.
+
 Thu Sep  9 21:30:45 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* tao/ORB.cpp (string_to_object):
