@@ -12,7 +12,7 @@ ACE_RCSID (TAO_SSLIOP, SSLIOP_Current_Impl, "$Id$")
 
 #include <openssl/x509.h>
 
-TAO_SSLIOP_Current_Impl::TAO_SSLIOP_Current_Impl (void) 
+TAO_SSLIOP_Current_Impl::TAO_SSLIOP_Current_Impl (void)
   : ssl_ (0)
 {
 }
