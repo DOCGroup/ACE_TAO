@@ -90,6 +90,9 @@ public:
   //    the Acceptor_Registry? Is there just one per orb core? Should
   //    tbe acceptor registry know which ORB_Core it belongs to?
 
+  int make_mprofile (const TAO_ObjectKey &object_key,
+                                      TAO_MProfile  *&mprofile)
+  // add profiles to the mprofile object for all open endpoints.
 
   int is_collocated (const TAO_MProfile& mprofile);
   // Check if there is at least one profile in <mprofile> that
