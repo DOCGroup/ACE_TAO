@@ -1,0 +1,10 @@
+/*
+ * $Id$
+ */
+
+interface Authorization_Server
+{
+  boolean check_access ();
+
+  void shutdown ();
+};
