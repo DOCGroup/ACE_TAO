@@ -8,7 +8,7 @@
 
 ACE_RCSID (LoadBalancing,
            server,
-           "$Id$");
+           "$Id$")
 
 const char *ior_output_file = "obj.ior";
 
