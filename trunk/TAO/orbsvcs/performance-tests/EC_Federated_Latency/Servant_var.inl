@@ -1,7 +1,7 @@
 // $Id$
 
 template<typename SERVANT> ACE_INLINE
-Servant_var<SERVANT>::Servant_var (SERVANT *s = 0)
+Servant_var<SERVANT>::Servant_var (SERVANT *s)
   : ptr_ (s)
 {
 }
