@@ -309,6 +309,7 @@ namespace CCF
       KeywordParser LOCAL;
       KeywordParser MODULE;
       KeywordParser OUT;
+      KeywordParser SEQUENCE;
       KeywordParser SINCLUDE;
       KeywordParser SUPPORTS;
       KeywordParser TYPEDEF;
@@ -322,6 +323,8 @@ namespace CCF
       PunctuationParser RBRACE;
       PunctuationParser LPAREN;
       PunctuationParser RPAREN;
+      PunctuationParser LT;
+      PunctuationParser GT;
       PunctuationParser SEMI;
 
       IdentifierParser       identifier;
@@ -501,6 +504,9 @@ namespace CCF
       //
       OneArgAction<IdentifierPtr, SemanticAction::Typedef>
       act_typedef_begin;
+
+      OneArgAction<IdentifierPtr, SemanticAction::Typedef>
+      act_typedef_begin_seq;
 
       OneArgAction<SimpleIdentifierPtr, SemanticAction::Typedef>
       act_typedef_declarator;

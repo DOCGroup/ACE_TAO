@@ -10,6 +10,7 @@
 #include "CCF/IDL2/SyntaxTree/Interface.hpp"
 #include "CCF/IDL2/SyntaxTree/Module.hpp"
 #include "CCF/IDL2/SyntaxTree/Operation.hpp"
+#include "CCF/IDL2/SyntaxTree/Sequence.hpp"
 #include "CCF/IDL2/SyntaxTree/Translation.hpp"
 #include "CCF/IDL2/SyntaxTree/Typedef.hpp"
 #include "CCF/IDL2/SyntaxTree/TypeId.hpp"

@@ -1,3 +1,25 @@
+Wed Oct 15 15:43:13 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
+
+	* CCF/CCF/IDL2/LexicalAnalyzer.cpp:
+	* CCF/CCF/IDL2/Makefile.archive:
+	* CCF/CCF/IDL2/Parser.cpp:
+	* CCF/CCF/IDL2/Parser.hpp:
+	* CCF/CCF/IDL2/SyntaxTree.hpp:
+	* CCF/CCF/IDL2/Traversal.hpp:
+	* CCF/CCF/IDL2/SemanticAction/Typedef.hpp:
+	* CCF/CCF/IDL2/SemanticAction/Impl/Typedef.hpp:
+	* CCF/CCF/IDL2/SyntaxTree/Makefile.alt:
+	* CCF/CCF/IDL2/SyntaxTree/Sequence.cpp:
+	* CCF/CCF/IDL2/SyntaxTree/Sequence.hpp:
+	* CCF/CCF/IDL2/Traversal/Makefile.alt:
+	* CCF/CCF/IDL2/Traversal/Sequence.cpp:
+	* CCF/CCF/IDL2/Traversal/Sequence.hpp: Added support for
+	  unbounded sequence.
+
+	* CCF/Example/CIDL/LocalExecutorMapping/test-2.idl:
+	* CCF/Example/CIDL/LocalExecutorMapping/test-2_exec.idl.orig:
+	  Added a few sequences for testing.
+
 Wed Oct 15 13:59:33 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
 	* CCF/CCF/IDL2/SyntaxTree/BuiltIn.hpp:
@@ -22,10 +44,10 @@ Wed Oct 15 13:59:33 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 	* CCF/Example/CIDL/LocalExecutorMapping/test-0_exec.idl.orig:
 	* CCF/Example/CIDL/LocalExecutorMapping/test-1.idl: Added a few
 	  typedef's for testing.
-	
+
 	* CCF/Example/CIDL/LocalExecutorMapping/ExecutorMappingGenerator.cpp:
 	* CCF/Example/CIDL/LocalExecutorMapping/Makefile.alt:
-	* CCF/Example/CIDL/LocalExecutorMapping/cidlc.cpp: Some minor 
+	* CCF/Example/CIDL/LocalExecutorMapping/cidlc.cpp: Some minor
 	  clean-up's.
 
 	* CCF/Documentation/TODO: Added a few more items.
@@ -100,7 +122,7 @@ Tue Oct 14 16:41:41 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 	* CCF/CIDL/Traversal/Composition.hpp:
 	* CCF/CIDL/Traversal/HomeExecutor.hpp: First part of
 	  typedef-related infrastructure.
-	  
+
 	* CCF/CodeGenerationKit/IndentationIDL.hpp:
 	* CCF/CompilerElements/Preprocessor.hpp:
 	* Example/CIDL/LocalExecutorMapping/ExecutorMappingGenerator.cpp:

@@ -26,6 +26,9 @@ namespace CCF
         begin (IdentifierPtr const& id) = 0;
 
         virtual void
+        begin_seq (IdentifierPtr const& id) = 0;
+
+        virtual void
         declarator (SimpleIdentifierPtr const& id) = 0;
 
         virtual void

@@ -12,12 +12,15 @@ module M2
   {
     provides Goof g;
   };
+
+  typedef sequence<octet> OctetSeq;
   
   home H2 : M1::H1 manages C2
   {
     attribute long l;
     attribute M::I i;
+    attribute OctetSeq seq;
     void foo (in long l, inout boolean b, out long ol, in M::I i, out unsigned long long ull);
-    factory new (in long l);
+    factory new (in long l, in OctetSeq s);
   };
 };

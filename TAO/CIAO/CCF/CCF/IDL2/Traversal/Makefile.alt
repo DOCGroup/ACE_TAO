@@ -15,6 +15,7 @@ cxx_translation_units := BuiltIn.cpp     \
                          Interface.cpp   \
                          Module.cpp      \
                          Operation.cpp   \
+                         Sequence.cpp    \
                          Translation.cpp
 
 
