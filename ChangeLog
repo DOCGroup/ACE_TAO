@@ -1,6 +1,11 @@
+Thu May 22 15:29:02 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/TP_Reactor.cpp:
+          Fixed typo on Windows.
+
 Thu May 22 15:02:04 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
-        * ace/tests/Signal_Test.cpp:
+        * tests/Signal_Test.cpp:
           Added include of ace/ACE.h to fix compile problem on AIX.
 
 Thu May 22 13:16:11 UTC 2003  Don Hinton  <dhinton@dresystems.com>
