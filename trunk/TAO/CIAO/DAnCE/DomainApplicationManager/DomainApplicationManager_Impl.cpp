@@ -326,15 +326,6 @@ add_connections (const Deployment::Connections & incoming_conn)
   // Expand the length of the <all_connection_> sequence.
   this->all_connections_->length (old_len + incoming_conn.length ());
 
-  // @@ (OO) Please change "i++" to "++i".  The prefix increment
-  //         operator is more efficient than the postfix increment
-  //         operator.
-
-  // @@ (OO) The "continue loop" condition portion of the for
-  //         statement is executed during each loop iteration.  To
-  //         improve performance execute it only once outside the
-  //         for-loop.
-
   // Store the connections to the <all_conections_> sequence
   const CORBA::ULong conn_lenth = incoming_conn.length ();
   for (CORBA::ULong i = 0; i < conn_lenth; ++i)
@@ -416,8 +407,6 @@ startLaunch (const ::Deployment::Properties & configProperty,
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            "DomainApplicationManager_Impl::startLaunch\t\n");
       ACE_RE_THROW;
-      return;  // @@ (OO) What purpose does this "return" statement
-               //         serve?
     }
   ACE_ENDTRY;
 
@@ -570,9 +559,6 @@ destroyApplication (ACE_ENV_SINGLE_ARG_DECL)
   ACE_CHECK;
 }
 
-// @@ (OO) Method definitions should never use "_WITH_DEFAULTS"
-//         versions of emulated exception parameters.  Please remove
-//         the "_WITH_DEFAULTS"
 void
 CIAO::DomainApplicationManager_Impl::
 destroyManager (ACE_ENV_SINGLE_ARG_DECL)
