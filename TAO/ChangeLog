@@ -1,3 +1,48 @@
+Sun Mar  6 23:52:15 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/TypeCode/TypeCode.h:
+
+	  New TypeCode implementation. [Bug 1637]
+
+	  This new implementation provides the following improvements:
+
+	  All TypeCode constants are now statically instantiated.  This
+	  (1) improves ORB initialization times, (2) allows TypeCode
+	  constants to be used prior to ORB initialization, and (3)
+	  provides C++ compilers with greater opportunities for
+	  optimization.
+
+          Improved const correctness.  TypeCode constants, such as
+	  CORBA::_tc_null, can no longer be modified.  Their corresponding
+	  TypeCode_ptr pseudo-references are now declared const.
+
+	  In-memory representation of TypeCodes is now a direct
+	  C++ representation, i.e. a C++ object, instead of a C++ class
+	  wrapping an intermediate CDR stream.  This has the following
+	  benefits: (1) TypeCode operations are now faster, (2) stub
+	  footprint and compile times are improved, and (3) simpler code
+	  maintenance.
+
+	  Reduced run-time memory requirements, especially for recursive
+	  TypeCodes.
+
+	  CORBA::TypeCode::get_compact_typecode() is now implemented.
+
+	* TAO_IDL/be/be_visitor_exception/exception_ch.cpp (visit_exception):
+	* TAO_IDL/be/be_visitor_exception/exception_ch.cpp (visit_exception):
+
+	  Renamed TAO-specific CORBA::UserException::_type() method to
+	  _tao_type().
+
+	* tao/ORB.h:
+
+	  All TypeCode_ptr pseudo-references are now const since it should
+	  not be possible to possible to modify them.
+
+	* orbsvcs/orbsvcs/Naming/Hash_Naming_Context.cpp:
+
+	  Added missing "tao/SystemException.h" #include directive.
+
 Thu Sep 16 20:48:33 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/tests/Security/SecurityLevel1/README:
