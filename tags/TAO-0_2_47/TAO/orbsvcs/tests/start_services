@@ -1,0 +1,108 @@
+#! /bin/sh
+# $Id$
+
+# = TITLE
+#  Restart script
+#
+# = AUTHOR
+#  Michael Kircher (mk1@cs.wustl.edu)
+#
+# = DESCRIPTION
+#  This script restarts the Naming, Scheduling and Event Service,
+#  if "clean" is specified as a parameter, then the old
+#  services are only killed and not restarted.
+
+#### ps options are platform-specific.
+if [ `uname -s` = 'SunOS' ]; then
+  ps_opts=-ef
+else
+  ps_opts=aux
+fi
+
+#### Get the user name
+if [ "$LOGNAME" ]; then
+  #### LOGNAME is preserved across su
+  login=$LOGNAME
+else
+  #### whoami returns the users login, which changes across su
+  login=`whoami`
+fi
+
+#### Set TAO_ROOT, if it wasn't set.
+if [ ! "$TAO_ROOT" ]; then
+  if [ "$ACE_ROOT" ]; then
+    TAO_ROOT=$ACE_ROOT/TAO
+  else
+    echo $0: you must set ACE_ROOT or TAO_ROOT!
+    exit 1
+  fi
+fi
+
+#### Set up a signal handler.
+trap "/bin/rm -f /tmp/pids$login" 0 1 2 3 15
+
+echo // Killing the old services
+
+if [ -s /tmp/nameservicepid_$login ]; then
+  kill `cat /tmp/nameservicepid_$login`
+  /bin/rm /tmp/nameserviceior_$login /tmp/nameservicepid_$login
+fi
+
+ps $ps_opts | grep Service | grep $login | grep -v grep | cut -c10-17 > /tmp/pids$login
+
+if [ -s /tmp/pids$login ]; then
+  pids=`cat /tmp/pids$login`
+  kill $pids
+fi
+
+#### stop here if "start_services clean" was called
+if [ "$1"  -a  "$1" = 'clean' ]; then
+  exit
+fi
+
+echo // Initializing the log file
+
+echo // Logfile for the script which startes Name and Event Service  > /tmp/logfile_$login
+
+nameserviceport=0
+schedulerserviceport=0
+eventserviceport=0
+
+cd $TAO_ROOT/orbsvcs/Naming_Service
+echo $ ./Naming_Service -ORBport $nameserviceport \
+       -o /tmp/nameserviceior_$login \
+       -p /tmp/nameservicepid_$login >> /tmp/logfile_$login
+./Naming_Service -ORBport $nameserviceport \
+       -o /tmp/nameserviceior_$login \
+       -p /tmp/nameservicepid_$login > /tmp/logfile_Naming_Service_$login 2>&1  &
+
+sleep 8
+
+IOR=`cat /tmp/nameserviceior_$login`
+
+echo // The IOR of the Naming Service: $IOR
+
+echo // Started Naming Service on port $nameserviceport
+
+# cd $TAO_ROOT/orbsvcs/Scheduling_Service
+#echo $ ./Scheduling_Service -ORBnameserviceior $IOR -ORBport $schedulerserviceport  >> /tmp/logfile_$login
+#./Scheduling_Service -ORBnameserviceior $IOR -ORBport $schedulerserviceport  > /tmp/logfile_Scheduling_Service_$login  2>&1 &
+
+# sleep 5
+
+# echo // Started Scheduling Service on port $schedulerserviceport
+
+cd $TAO_ROOT/orbsvcs/Event_Service
+echo $ ./Event_Service -ORBnameserviceior $IOR -ORBport $eventserviceport >> /tmp/logfile_$login
+./Event_Service -ORBnameserviceior $IOR -ORBport $eventserviceport > /tmp/logfile_Event_Service_$login 2>&1 &
+
+echo // Started Event Service on port $eventserviceport
+
+echo "// Enjoy the use ;-)"
+ps $ps_opts | grep Service | grep -v grep
+
+echo
+echo Note: if you will be running an application that uses the Naming Service,
+echo you might want to set the NameService environment variable, like this:
+echo 't/csh: % setenv NameService `cat /tmp/nameserviceior_'$login'`'
+echo 'bash:  $ export NameService=`cat /tmp/nameserviceior_'$login'`'

@@ -1,0 +1,37 @@
+#!/bin/sh
+# usage: run_client <num objs> <num methods> <num iters>
+run_client 500 100 1
+sleep 5
+run_client 500 10  1
+sleep 5
+run_client 500 1   1
+sleep 5
+run_client 400 100 1
+sleep 5
+run_client 400 10  1
+sleep 5
+run_client 400 1   1
+sleep 5
+run_client 300 100 1
+sleep 5
+run_client 300 10  1
+sleep 5
+run_client 300 1   1
+sleep 5
+run_client 200 100 1
+sleep 5
+run_client 200 10  1
+sleep 5
+run_client 200 1   1
+sleep 5
+run_client 100 100 1
+sleep 5
+run_client 100 10  1
+sleep 5
+run_client 100 1   1
+sleep 5
+run_client 1   100 1
+sleep 5
+run_client 1   10  10
+sleep 5
+run_client 1   1   100
