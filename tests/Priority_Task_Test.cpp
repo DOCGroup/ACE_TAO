@@ -17,7 +17,6 @@
 // 
 // ============================================================================
 
-
 #include "ace/Service_Config.h"
 #include "ace/Task.h"
 #include "test_config.h"
@@ -64,7 +63,12 @@ Priority_Task::svc (void)
   ACE_hthread_t thr_handle;
   ACE_Thread::self (thr_handle);
   int prio;
-  ACE_Thread::getprio (thr_handle, prio);
+
+  if (ACE_Thread::getprio (thr_handle, prio) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "getprio failed"), -1);
+
+  ACE_DEBUG ((LM_DEBUG, "(%t) prio = %d, priority_ = %d\n", 
+	      prio, this->priority_));
   ACE_ASSERT (this->priority_ == prio);
   return 0;
 }

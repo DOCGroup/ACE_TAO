@@ -2,7 +2,7 @@
 // $Id$
 
 // The following configuration file is designed to work for Linux
-// platforms using GNU C++ and the MIT threads package.
+// platforms using GNU C++ and L. Xavier's pthreads package.
 
 #if !defined (ACE_CONFIG_H)
 #define ACE_CONFIG_H
@@ -86,18 +86,19 @@
 
 // Yes, we do have threads.
 #define ACE_HAS_THREADS
-
-#define ACE_HAS_THREAD_SPECIFIC_STORAGE
-#define ACE_MT_SAFE
 // And they're even POSIX pthreads (MIT implementation)
 #define ACE_HAS_PTHREADS
-#define ACE_LACKS_RWLOCK_T
+#define ACE_MT_SAFE
+#define ACE_HAS_THREAD_SPECIFIC_STORAGE
+#define ACE_HAS_PTHREADS_XAVIER		// JCEJ 12/19/96
 #define ACE_HAS_SIGWAIT
 #define ACE_LACKS_CONDATTR_PSHARED
+#define ACE_LACKS_THREAD_STACK_ADDR	// JCEJ 12/17/96
+#define ACE_LACKS_THREAD_STACK_SIZE	// JCEJ 12/17/96
 
 // To use pthreads on Linux you'll need to use the MIT version, for
 // now...
 #define _MIT_POSIX_THREADS 1
-#include /**/ <pthread/mit/pthread.h>
+#include /**/ <pthread.h>
 
 #endif /* ACE_CONFIG_H */

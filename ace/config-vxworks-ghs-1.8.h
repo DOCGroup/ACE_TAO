@@ -7,6 +7,8 @@
 #if !defined (ACE_CONFIG_H)
 #define ACE_CONFIG_H
 
+#define ACE_LACKS_COND_T
+#define ACE_LACKS_RWLOCK_T
 #define ACE_HAS_BROKEN_SENDMSG
 #define ACE_HAS_BROKEN_WRITEV
 #define ACE_HAS_CHARPTR_SOCKOPT

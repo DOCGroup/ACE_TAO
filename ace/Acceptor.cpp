@@ -170,6 +170,14 @@ ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::handle_close (ACE_HANDLE,
 
       this->reactor_->remove_handler 
 	(handle, ACE_Event_Handler::READ_MASK | ACE_Event_Handler::DONT_CALL);
+
+      // Shut down the listen socket to recycle the handles.
+      if (this->peer_acceptor_.close () == -1)
+	ACE_ERROR ((LM_ERROR, "close\n"));
+
+      // Set the Reactor to 0 so that we don't try to close down
+      // again.
+      this->reactor (0);
     }
   return 0;
 }
@@ -484,7 +492,7 @@ ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::handle_close (ACE_HANDL
 {
   ACE_TRACE ("ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::handle_close");
   // Guard against multiple closes.
-  if (this->creation_strategy_ != 0)  
+  if (this->reactor () != 0)  
     {
       ACE_HANDLE handle = this->get_handle ();
 
@@ -513,6 +521,10 @@ ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::handle_close (ACE_HANDL
 
       this->reactor ()->remove_handler 
 	(handle, ACE_Event_Handler::READ_MASK | ACE_Event_Handler::DONT_CALL);
+
+      // Set the Reactor to 0 so that we don't try to close down
+      // again.
+      this->reactor (0);
     }
   return 0;
 }

@@ -27,6 +27,7 @@ class ACE_Svc_Export ACE_Event_Channel : public ACE_Event_Handler
 public:
   // = Initialization and termination methods.
   ACE_Event_Channel (void);
+  ~ACE_Event_Channel (void);
 
   int open (int argc, char *argv[]);
   // Initialize the Channel.
@@ -89,7 +90,7 @@ private:
 };
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/Event_Channel.cpp"
+#include "Event_Channel.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

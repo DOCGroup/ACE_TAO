@@ -42,6 +42,7 @@
 
 // IRIX 6.2 supports some variant of POSIX Pthreads, is it stock DCE?
 #define ACE_HAS_PTHREADS
+#define ACE_LACKS_RWLOCK_T
 
 // Platform/compiler has the sigwait(2) prototype
 #define ACE_HAS_SIGWAIT

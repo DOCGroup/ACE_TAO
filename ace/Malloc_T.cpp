@@ -164,7 +164,8 @@ ACE_Malloc<ACE_MEM_POOL_2, LOCK>::ACE_Malloc (LPCTSTR pool_name,
 					      LPCTSTR lock_name, 
 					      const ACE_MEM_POOL_OPTIONS *options)
   : memory_pool_ (pool_name, options),
-    lock_ (lock_name)
+    lock_ (lock_name != 0 ? lock_name : ACE::basename (pool_name, 
+						       ACE_DIRECTORY_SEPARATOR_CHAR))
 {
   ACE_TRACE ("ACE_Malloc<ACE_MEM_POOL_2, LOCK>::ACE_Malloc");
   this->open ();

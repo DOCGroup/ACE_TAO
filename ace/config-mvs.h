@@ -61,6 +61,8 @@
 // Platform supports POSIX threads
 #define ACE_HAS_PTHREADS
 
+#define ACE_LACKS_RWLOCK_T
+
 // Platform has pthread_condattr_setkind_np()
 #define ACE_HAS_PTHREAD_CONDATTR_SETKIND_NP
 

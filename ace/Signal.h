@@ -271,7 +271,6 @@ private:
   // This is a normal C function.
 };
 
-// HPUX sucks big time!
 #if !defined (HPUX)
 class ACE_Export ACE_Sig_Handlers : public ACE_Sig_Handler
   // = TITLE

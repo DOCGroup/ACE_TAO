@@ -5,7 +5,6 @@
 
 Barrier_Test
 Buffer_Stream_Test
-CPP_Test
 Future_Test
 Handle_Set_Test
 Map_Manager_Test
@@ -23,6 +22,7 @@ Reactors_Test
 Reader_Writer_Test
 Recursive_Mutex_Test
 Service_Config_Test
+SOCK_Test
 SPIPE_Test
 SString_Test
 SV_Shared_Memory_Test

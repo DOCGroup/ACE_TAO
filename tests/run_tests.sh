@@ -58,11 +58,11 @@ run Task_Test			# uses Thread_Manager, Task
 run Thread_Manager_Test		# uses Thread_Manager, Task
 run Thread_Pool_Test		# uses Thread_Manager, Task
 run Future_Test			# uses Thread_Manager, Task
-run CPP_Test			# uses Thread_Manager, SAP
-run TSS_Test			# uses Task, Mutex, Guard
 run Reactors_Test		# uses Task, Mutex, Reactor
 run Reactor_Timer_Test		# uses Event_Handler, Reactor
 run Reader_Writer_Test		# uses Thread_Manager, Mutex
+run SOCK_Test			# uses Thread_Manager, SOCK_SAP
+run TSS_Test			# uses Task, Mutex, Guard
 
 # ifdef ACE_HAS_STREAM_PIPES
 run SPIPE_Test			# uses SPIPE_Acceptor/Connector, Thread_Manager

@@ -132,6 +132,7 @@ ACE_HAS_XLI 				Platform has the XLI version of TLI
 ACE_HAS_XT 				Platform has Xt and Motif
 ACE_HAS_YIELD_VOID_PTR			Platform requires pthread_yield() to take a NULL.
 ACE_LACKS_CONST_TIMESPEC_PTR		Platform forgot const in cond_timewait (e.g., HP/UX).
+ACE_LACKS_COND_T			Platform lacks condition variables (e.g., Win32 and VxWorks)
 ACE_LACKS_CONDATTR_PSHARED		Platform has no implementation of pthread_condattr_setpshared(), even though it supports pthreads!
 ACE_LACKS_MADVISE			Platform lacks madvise() (e.g., Linux)
 ACE_LACKS_MALLOC_H			Platform lacks malloc.h
@@ -146,6 +147,7 @@ ACE_LACKS_POSIX_PROTO			Platform lacks POSIX prototypes for certain System V fun
 ACE_LACKS_PTHREAD_THR_SIGSETMASK	Platform lacks pthread_thr_sigsetmask (e.g., MVS, HP/UX, and OSF/1 3.2)
 ACE_LACKS_RECVMSG			Platform lacks recvmsg() (e.g., Linux)
 ACE_LACKS_RPC_H				Platform lacks the ONC RPC header files.
+ACE_LACKS_RWLOCK_T			Platform lacks readers/writer locks.
 ACE_LACKS_SBRK				Platform lacks a working sbrk() (e.g., Win32 and VxWorks)
 ACE_LACKS_SEMBUF_T			Platform lacks struct sembuf (e.g., Win32 and VxWorks)
 ACE_LACKS_SETDETACH			Platform lacks pthread_attr_setdetachstate() (e.g., HP/UX 10.x)
@@ -161,6 +163,7 @@ ACE_LACKS_STRRECVFD			Platform doesn't define struct strrecvfd.
 ACE_LACKS_SYSCALL			Platform doesn't have syscall() prototype
 ACE_LACKS_SYSV_MSQ_PROTOS		Platform doesn't have prototypes for Sys V msg()* queues.
 ACE_LACKS_T_ERRNO			Header files lack t_errno for TLI
+ACE_LACKS_THREAD_STACK_SIZE		Platform lacks pthread_attr_setstacksize() (e.g., Linux pthreads)
 ACE_LACKS_UCONTEXT_H			Platform lacks the ucontext.h file
 ACE_LACKS_UNIX_DOMAIN_SOCKETS		ACE platform has no UNIX domain sockets
 ACE_LACKS_UTSNAME_T			Platform lacks struct utsname (e.g., Win32 and VxWorks)

@@ -120,18 +120,19 @@ ACE_ReactorEx::schedule_timer (ACE_Event_Handler *handler,
 }
 
 // Waits for and dispatches all events.  Returns -1 on error, 0 if
-// how_long expired, and 1 if events were dispatched.
+// max_wait_time expired, and 1 if events were dispatched.
 int 
-ACE_ReactorEx::handle_events (ACE_Time_Value *how_long,
+ACE_ReactorEx::handle_events (ACE_Time_Value *max_wait_time,
 			      int wait_all,
-			      ACE_Event_Handler *wait_all_callback)
+			      ACE_Event_Handler *wait_all_callback,
+			      int alertable)
 {
   ACE_TRACE ("ACE_ReactorEx::handle_events");
 
   // Stash the current time -- the destructor of this object will
   // automatically compute how much time elapsed since this method was
   // called.
-  ACE_Countdown_Time countdown (how_long);
+  ACE_Countdown_Time countdown (max_wait_time);
 
 #if defined (ACE_MT_SAFE)
   ACE_GUARD_RETURN (ACE_ReactorEx_Token, ace_mon, this->token_, -1);
@@ -148,16 +149,26 @@ ACE_ReactorEx::handle_events (ACE_Time_Value *how_long,
     }
 
   // Check for pending timeout events.
-  ACE_Time_Value *wait_time = timer_queue_->calculate_timeout (how_long);
+  ACE_Time_Value *wait_time = timer_queue_->calculate_timeout (max_wait_time);
   // Translate into Win32 time value.
   int timeout = wait_time == 0 ? INFINITE : wait_time->msec ();
 
+  DWORD wait_status;
   // Wait for any of handles_ to be active, or until timeout expires.
   // If wait_all is true, then wait for all handles_ to be active.
-  DWORD wait_status = ::WaitForMultipleObjects (active_handles_,
-						handles_,
-						wait_all,
-						timeout);
+
+  if (alertable)
+    // Allow asynchronous completion of ReadFileEx and WriteFileEx
+    // operations.
+    wait_status= ::WaitForMultipleObjectsEx (active_handles_,
+					     handles_,
+					     wait_all,
+					     timeout);
+  else
+    wait_status= ::WaitForMultipleObjects (active_handles_,
+					   handles_,
+					   wait_all,
+					   timeout);
   // Expire all pending timers.
   this->timer_queue_->expire ();
 
