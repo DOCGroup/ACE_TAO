@@ -7,7 +7,7 @@
 ACE_RCSID(FaultTolerance, TAO_FT_IOGR_Property, "$Id$")
 
 #if !defined (__ACE_INLINE__)
-# include "tao/FT_IOGR_Property.i"
+# include "FT_IOGR_Property.i"
 #endif /* ! __ACE_INLINE__ */
 
 
