@@ -129,7 +129,7 @@ DRV_usage (void)
   cerr << GTDEVEL (" -GI[h|s|b|e|c]\tGenerate Implemenation Files \n");
 
   cerr << GTDEVEL (" -GC \t\tGenerate the code for using AMI Call back model\n");
-
+  cerr << GTDEVEL (" -Gs \t\tGenerate the code for Smart Proxies\n");
   cerr << GTDEVEL ("  \t\t\th - Implementation header file name ending. Default is I.h \n");
   cerr << GTDEVEL ("  \t\t\ts - Implementation skeleton file name ending. Default is I.cpp\n");
   cerr << GTDEVEL ("  \t\t\tb - Prefix to the implementation class names. Default is 'no prefix' \n");
@@ -628,6 +628,13 @@ DRV_parse_args (long ac, char **av)
                   idl_global->gen_thru_poa_collocation (0);
                   idl_global->gen_direct_collocation (1);
                   idl_global->ami_call_back (0);
+                }
+              else if (av[i][2] == 's')
+                {
+                  if (av[i][3] == 'p')
+                    // smart proxies
+                    idl_global->gen_smart_proxies (I_TRUE);
+
                 }
               else if (av[i][2] == 't')
                 {
