@@ -116,6 +116,7 @@ template <class EXT_ID, class INT_ID, class ACE_LOCK>
 ACE_Hash_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::ACE_Hash_Map_Manager (size_t size,
                                                                       ACE_Allocator *alloc)
   : allocator_ (alloc),
+    table_ (0),
     total_size_ (0),
     cur_size_ (0)
 {
@@ -126,6 +127,7 @@ ACE_Hash_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::ACE_Hash_Map_Manager (size_t siz
 template <class EXT_ID, class INT_ID, class ACE_LOCK>
 ACE_Hash_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::ACE_Hash_Map_Manager (ACE_Allocator *alloc)
   : allocator_ (alloc),
+    table_ (0),
     total_size_ (0),
     cur_size_ (0)
 {
