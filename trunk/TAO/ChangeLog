@@ -3,19 +3,19 @@ Wed Oct 30 11:38:36 2002  Irfan Pyarali  <irfan@oomworks.com>
 	* Following are fixes for bug 1344.  Thanks to Ossama for pointing
 	  this out.
 
-	* tao\PortableServer\Object_Adapter.cpp (create): Moved the
+	* tao/PortableServer/Object_Adapter.cpp (create): Moved the
 	  registration of the POA Current to the
 	  PortableServer_ORBInitializer.  If POA Current is resolved
 	  before RootPOA, this code executes does not execute in time.
 
-	* tao\PortableServer\PortableServer_ORBInitializer.cpp
+	* tao/PortableServer/PortableServer_ORBInitializer.cpp
 	  (register_poa_current): POA Current is now registered in
 	  TAO_PortableServer_ORBInitializer::post_init().
 
-	* tao\ORB_Core.i (poa_current): Simply return <poa_current>.  It
+	* tao/ORB_Core.i (poa_current): Simply return <poa_current>.  It
 	  should have been correctly initialized.
 
-	* tests\POA\Current: Added new test to ensure that accessing the
+	* tests/POA/Current: Added new test to ensure that accessing the
 	  POA current before the RootPOA does not cause any problems.
 
 	  The following files were added:
@@ -126,17 +126,17 @@ Mon Oct 28 19:18:25 2002  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
 Mon Oct 28 17:19:58 2002  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tests\POA\MT_Servant_Locator\MT_Servant_Locator.cpp: Fixed
+	* tests/POA/MT_Servant_Locator\MT_Servant_Locator.cpp: Fixed
 	  ACE_ENV warnings.
 
 Mon Oct 28 16:55:11 2002  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tests\POA\MT_Servant_Locator\Makefile: Fixed and updated
+	* tests/POA/MT_Servant_Locator/Makefile: Fixed and updated
 	  dependencies.
 
 Mon Oct 28 16:48:23 2002  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tests\POA\MT_Servant_Locator\MT_Servant_Locator.cpp: <Task::event_>
+	* tests/POA/MT_Servant_Locator/MT_Servant_Locator.cpp: <Task::event_>
 	  was being used in both preinvoke() and postinvoke().  This led
 	  to a deadlock if the second signal() was missed since the event
 	  was already signaled. Solution was to give both preinvoke() and
@@ -144,7 +144,7 @@ Mon Oct 28 16:48:23 2002  Irfan Pyarali  <irfan@oomworks.com>
 
 Mon Oct 28 14:20:32 2002  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tao\PortableServer\POA.cpp (locate_servant_i): We no longer
+	* tao/PortableServer/POA.cpp (locate_servant_i): We no longer
 	  need to use the non-servant upcall idiom for calling
 	  ServantLocator::preinvoke() since we are now let of the lock
 	  altogether before calling the servant locator.
@@ -159,15 +159,15 @@ Mon Oct 28 14:20:32 2002  Irfan Pyarali  <irfan@oomworks.com>
 	  Thanks to Ashok Sadasivan <ashok_sadasivan@hotmail.com> for
 	  pointing this out.
 
-	* tao\PortableServer\Object_Adapter.cpp (prepare_for_upcall):
+	* tao/PortableServer/Object_Adapter.cpp (prepare_for_upcall):
 	  Check the state before releasing the lock since it may already
 	  have been released for Servant Locators.
 
-	* tao\PortableServer\Object_Adapter: Moved State enumeration from
+	* tao/PortableServer/Object_Adapter: Moved State enumeration from
 	  protected to public section.  Also added accessor and set method
 	  of the state.
 
-	* tests\POA\MT_Servant_Locator: Added new test to ensure that the
+	* tests/POA/MT_Servant_Locator: Added new test to ensure that the
 	  POA allows multiple simultaneous calls to Servant Locators.
 
 	  The following files were added:
@@ -194,13 +194,13 @@ Mon Oct 28 14:20:32 2002  Irfan Pyarali  <irfan@oomworks.com>
 	* Following are fixes for bug 1317.  Thanks to Ossama for pointing
 	  this out.
 
-	* tao\TAO_Internal.cpp (open_services_i): If available, allow the
+	* tao/TAO_Internal.cpp (open_services_i): If available, allow the
 	  Adapter Factory to setup by calling init().  This is similar to
 	  what we do for RT-CORBA.
 
-	* tao\ORB_Core.cpp (poa_factory_name): Added accessor.
+	* tao/ORB_Core.cpp (poa_factory_name): Added accessor.
 
-	* tao\RTPortableServer\RT_Object_Adapter_Factory.h: Changed
+	* tao/RTPortableServer/RT_Object_Adapter_Factory.h: Changed
 	  inheritance from TAO_Adapter_Factory to
 	  TAO_Object_Adapter_Factory to get the base class' init()
 	  functionality.
