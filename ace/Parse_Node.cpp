@@ -404,13 +404,16 @@ ACE_Location_Node::open_dll (int & yyerrno)
 
   if (-1 == this->dll_.open (this->pathname ()))
     {
-      yyerrno++;
+      ++yyerrno;
 
+#ifndef ACE_NLOGGING
       ACE_TCHAR *errmsg = this->dll_.error ();
       ACE_ERROR ((LM_ERROR,
                   ACE_LIB_TEXT ("ACE_DLL::open failed for %s: %s\n"),
                   this->pathname (),
                   errmsg ? errmsg : ACE_LIB_TEXT ("no error reported")));
+#endif /* ACE_NLOGGING */
+
       return -1;
     }
 
@@ -449,13 +452,16 @@ ACE_Object_Node::symbol (int & yyerrno,
       this->symbol_ = this->dll_.symbol (object_name);
       if (this->symbol_ == 0)
         {
-          yyerrno++;
+          ++yyerrno;
 
+#ifndef ACE_NLOGGING
           ACE_TCHAR *errmsg = this->dll_.error ();
           ACE_ERROR ((LM_ERROR,
                       ACE_LIB_TEXT ("ACE_DLL::symbol failed for object %s: %s\n"),
                       object_name,
                       errmsg ? errmsg : ACE_LIB_TEXT ("no error reported")));
+#endif /* ACE_NLOGGING */
+
           return 0;
         }
 
@@ -510,18 +516,21 @@ ACE_Function_Node::symbol (int & yyerrno,
       void *func_p = this->dll_.symbol (function_name);
       if (func_p == 0)
         {
-          yyerrno++;
+          ++yyerrno;
 
           if (this->symbol_ == 0)
             {
-              yyerrno++;
+              ++yyerrno;
 
+#ifndef ACE_NLOGGING
               ACE_TCHAR *errmsg = this->dll_.error ();
               ACE_ERROR ((LM_ERROR,
                           ACE_LIB_TEXT ("ACE_DLL::symbol failed for function %s: %s\n"),
                           function_name,
                           errmsg ? errmsg :
                                    ACE_LIB_TEXT ("no error reported")));
+#endif /* ACE_NLOGGING */
+
               return 0;
             }
         }
@@ -573,11 +582,15 @@ ACE_Dummy_Node::apply (int & yyerrno)
 {
   ACE_TRACE ("ACE_Dummy_Node::apply");
 
+#ifndef ACE_NLOGGING
   if (ACE::debug ())
     ACE_DEBUG ((LM_DEBUG,
                 ACE_LIB_TEXT ("did operations on stream %s, error = %d\n"),
                 this->name (),
                 yyerrno));
+#else
+  ACE_UNUSED_ARG (yyerrno);
+#endif /* ACE_NLOGGING */
 }
 
 ACE_Dummy_Node::~ACE_Dummy_Node (void)

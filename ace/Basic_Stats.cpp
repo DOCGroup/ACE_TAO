@@ -41,6 +41,7 @@ void
 ACE_Basic_Stats::dump_results (const ACE_TCHAR *msg,
                                ACE_UINT32 sf) const
 {
+#ifndef ACE_NLOGGING
   if (this->samples_count () == 0u)
     {
       ACE_DEBUG ((LM_DEBUG,
@@ -48,20 +49,20 @@ ACE_Basic_Stats::dump_results (const ACE_TCHAR *msg,
       return;
     }
 
-  ACE_UINT64 avg = this->sum_ / this->samples_count_;
+  const ACE_UINT64 avg = this->sum_ / this->samples_count_;
   ACE_UINT64 dev =
-#if defined ACE_LACKS_LONGLONG_T
+# if defined ACE_LACKS_LONGLONG_T
     ACE_static_cast (ACE_U_LongLong,
                      this->sum2_ / this->samples_count_)
     - avg * ACE_U64_TO_U32(avg);
-#else  /* ! ACE_LACKS_LONGLONG_T */
+# else  /* ! ACE_LACKS_LONGLONG_T */
     this->sum2_ / this->samples_count_ - avg * avg;
-#endif /* ! ACE_LACKS_LONGLONG_T */
+# endif /* ! ACE_LACKS_LONGLONG_T */
 
-  double l_min = ACE_CU64_TO_CU32 (this->min_) / sf;
-  double l_max = ACE_CU64_TO_CU32 (this->max_) / sf;
-  double l_avg = ACE_CU64_TO_CU32 (avg) / sf;
-  double l_dev = ACE_CU64_TO_CU32 (dev) / (sf * sf);
+  const double l_min = ACE_CU64_TO_CU32 (this->min_) / sf;
+  const double l_max = ACE_CU64_TO_CU32 (this->max_) / sf;
+  const double l_avg = ACE_CU64_TO_CU32 (avg) / sf;
+  const double l_dev = ACE_CU64_TO_CU32 (dev) / (sf * sf);
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_LIB_TEXT ("%s latency   : %.2f[%d]/%.2f/%.2f[%d]/%.2f (min/avg/max/var^2)\n"),
@@ -70,4 +71,6 @@ ACE_Basic_Stats::dump_results (const ACE_TCHAR *msg,
               l_avg,
               l_max, this->max_at_,
               l_dev));
+
+#endif /* ACE_NLOGGING */
 }

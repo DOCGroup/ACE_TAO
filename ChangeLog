@@ -1,3 +1,18 @@
+Wed Apr 28 22:06:08 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/Basic_Stats.cpp:
+	* ace/Parse_Node.cpp:
+	* ace/Sample_History.cpp:
+	* ace/Stats.cpp:
+
+	  Fixed unused parameter and variable warnings in the ACE_NLOGGING
+	  case.
+
+	* netsvcs/lib/Token_Handler.cpp:
+
+	  Include "ace/Signal.h" to pull in ACE_Sig_Action class
+	  declaration.
+
 Wed Apr 28 14:25:21 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/templates/gnu.mpd:
