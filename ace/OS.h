@@ -1563,7 +1563,6 @@ extern "C"
 
 #if defined (VXWORKS)
 
-#if defined (ACE_HAS_GREENHILLS_SOCKETS)  
 #include /**/ <hostLib.h>
 #include /**/ <ioLib.h>
 #include /**/ <selectLib.h>
@@ -1575,7 +1574,6 @@ struct sockaddr_un {
   short sun_family;    // AF_UNIX.
   char  sun_path[108]; // path name.
 };
-#endif /* ACE_HAS_GREENHILLS_SOCKETS */
 
 #define MAXPATHLEN  1024
 #define MAXNAMLEN   255
