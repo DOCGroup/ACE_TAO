@@ -1,5 +1,11 @@
 Tue May 20 10:55:09 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
+	* IIOP/lib/cdr.h: Fixed the automatic inclusion of cdr.i into
+ 	cdr.h by checking to see if __ACE_INLINE__ is not defined and, if
+ 	so, defining ACE_INLINE to be "inline" (we tidy up the namespace
+ 	immediately after the inclusion of cdr.i, too).  See source for
+ 	comments regarding why this is done.
+
 	* IIOP/lib/optable.cpp (TAO_Linear_OpTable_Entry): Removed setting
  	of opname and skel_ptr to zero in CTOR since the CTOR for those
  	already insures this.  Moreover, NT's compiler was complaining
