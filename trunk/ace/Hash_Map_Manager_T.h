@@ -587,7 +587,12 @@ public:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/Hash_Map_Manager_T.i"
+// Include ace/Hash_Map_Manager_T.i on all platforms excluding SunCC.
+// This nonsense is necessary since SunCC (version 4.2) cannot inline
+// the code in ace/Hash_Map_Manager_T.i (with the fast option).
+# if !defined (__SUNPRO_CC)
+#  include "ace/Hash_Map_Manager_T.i"
+# endif /* ! __SUNPRO_CC */
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
