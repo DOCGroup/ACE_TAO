@@ -1,3 +1,11 @@
+Mon Mar 11 11:35:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Registry_Name_Space.cpp:
+          Changed ACE_USHORT16 to ACE_WSTRING_TYPE because the underlying type
+          of ACE_WString is ACE_USHORT16 with MSVC and with BCB it is
+          wchar_t. The define ACE_WSTRING_TYPE hides these differences. When
+          UNICODE and ACE_USES_WCHAR are defined BCB gave a compile error.
+
 Sun Mar 10 18:53:48 2002  Si Mong Park  <spark@ociweb.com>
 
 	* Svc_Conf_l.cpp:
@@ -6,7 +14,7 @@ Sun Mar 10 18:53:48 2002  Si Mong Park  <spark@ociweb.com>
 Sun Mar 10 05:54:30 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* THANKS : Added Val Dumitrescu <val.dumitrescu@am-beo.com> to the
-	  Hal of Fame. 
+	  Hal of Fame.
 	* bin/auto_run_tests.lst: Added a new test to the daily builds.
 
 Sat Mar  9 21:22:51 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
