@@ -41,7 +41,7 @@ public:
   // This registration method passes a <Callback> that
   // the Web server uses to ``push'' data associated with
   // <pathname> one ``chunk'' at a time.  The <metadata>
-  // reports information about the <pathname>. 
+  // reports information about the <pathname>.
   Web_Server::Metadata_Type * register_callback (
       const char *pathname,
       Web_Server::Callback_ptr client_callback,

@@ -7,7 +7,7 @@
 #include "ace/Log_Msg.h"
 #include "Callback_Handler.h"
 
-ACE_RCSID(Content_Server, Callback_Handler, "$Id$")
+ACE_RCSID(AMI_Observer, Callback_Handler, "$Id$")
 
 Callback_Handler::Callback_Handler (const char * pathname,
                                     Web_Server::Callback_ptr client_callback)
@@ -130,7 +130,7 @@ Callback_Handler::run (CORBA::Environment &ACE_TRY_ENV)
   return this->file_io_.get_handle ();
 }
 
-void 
+void
 Callback_Handler::open_file (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Web_Server::Error_Result))
@@ -139,7 +139,7 @@ Callback_Handler::open_file (CORBA::Environment &ACE_TRY_ENV)
   ACE_FILE_Connector connector;
 
   if (connector.connect (this->file_io_,
-                         this->file_, 
+                         this->file_,
                          0,
                          ACE_Addr::sap_any,
                          0,

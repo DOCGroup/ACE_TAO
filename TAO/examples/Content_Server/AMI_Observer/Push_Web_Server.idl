@@ -22,11 +22,11 @@ module Web_Server
     short status;
  };
 
-  struct Metadata_Type 
+  struct Metadata_Type
   {
     // Modification date.
     string modification_date;
-    
+
     // Type of content.
     string content_type;
   };
@@ -36,7 +36,7 @@ module Web_Server
     // This registration method passes a <Callback> that
     // the Web server uses to ``push'' data associated with
     // <pathname> one ``chunk'' at a time.  The <metadata>
-    // reports information about the <pathname>. 
+    // reports information about the <pathname>.
     Metadata_Type register_callback (in string pathname,
                                      in Callback client_callback)
       raises (Error_Result);

@@ -41,3 +41,75 @@ The client program performs the following activities:
            to spawn is determined by examining the the content_type_
            metadata returned by the server.
        
+The example can be run as follows:
+
+	1. Start the Name Service:
+
+		$ NameService -o /tmp/ns.ior
+
+	2. Start the SMI Content Server:
+
+		$ server -ORBInitRef NameService=file:///tmp/ns.ior
+
+	3. Request a file using the client:
+
+		$ client -ORBInitRef NameService=file:///tmp/ns.ior \
+		~/foo.jpg ~/bar.pdf ~/baz.jpg
+
+This example can service multiple file requests.
+
+
+Server output should look like the following:
+
+$ ./server -ORBInitRef NameService=file:///tmp/ns.ior
+Bound <Push_Iterator_Factory> to <IOR:010000002300000039434c3a5765625f5365727665722f4974657261746f725f466163746f72793a312e300001000000000000007c000000010102001400000076616c696e6f722e6563652e7563692e65647500489700001b00000014010f00525354a6ae4e392ad209000000000001000000010000000003000000000000000800000001000000004f4154010000001400000001ac854001000100000000000901010000000000004f41540400000001ac0000> in Name Service.
+Accepting requests.
+Received request for file: </home/myhome/foo.jpg>
+Sending chunk 1 from /home/myhome/foo.jpg of size <8192>
+Received request for file: </home/myhome/bar.pdf>
+Sending chunk 1 from /home/myhome/bar.pdf of size <8192>
+Received request for file: </home/myhome/baz.jpg>
+Sending chunk 1 from /home/myhome/baz.jpg of size <8192>
+Sending chunk 2 from /home/myhome/baz.jpg of size <8192>
+Sending chunk 2 from /home/myhome/foo.jpg of size <8192>
+Sending chunk 2 from /home/myhome/bar.pdf of size <8192>
+Sending chunk 3 from /home/myhome/foo.jpg of size <8192>
+Sending chunk 3 from /home/myhome/baz.jpg of size <8192>
+Sending chunk 3 from /home/myhome/bar.pdf of size <8192>
+Sending chunk 4 from /home/myhome/baz.jpg of size <8192>
+Sending chunk 4 from /home/myhome/foo.jpg of size <8192>
+Sending chunk 4 from /home/myhome/bar.pdf of size <8192>
+Sending chunk 5 from /home/myhome/baz.jpg of size <6997>
+Sending chunk 5 from /home/myhome/foo.jpg of size <4573>
+Sending chunk 5 from /home/myhome/bar.pdf of size <8192>
+Sending chunk 6 from /home/myhome/bar.pdf of size <8192>
+Sending chunk 7 from /home/myhome/bar.pdf of size <8192>
+Sending chunk 8 from /home/myhome/bar.pdf of size <8192>
+...
+Sending chunk 138 from /home/myhome/bar.pdf of size <8192>
+Sending chunk 139 from /home/myhome/bar.pdf of size <5832>
+
+
+Notice that requests for chunks of data from three separate files occur
+in the above run.
+
+
+Client output should look similar to:
+
+$ ./client -ORBInitRef NameService=file:///tmp/ns.ior ~/foo.jpg ~/bar.pdf \
+~/baz.jpg
+Retrieved file has the following characteristics:
+  Modification Date: Wed, 01 Mar 2000 04:28:18 GMT
+  Content Type: image/jpeg
+Retrieved file has the following characteristics:
+  Modification Date: Fri, 24 Mar 2000 06:25:23 GMT
+  Content Type: image/jpeg
+Retrieved file has the following characteristics:
+  Modification Date: Sat, 19 Feb 2000 03:19:50 GMT
+  Content Type: application/pdf
+Wrote retrieved data to file </tmp/ace-file-0oklyh>
+Spawned viewer <xv> with PID <11631>.
+Wrote retrieved data to file </tmp/ace-file-qyLaLc>
+Spawned viewer <xv> with PID <11632>.
+Wrote retrieved data to file </tmp/ace-file-2VHw4l>
+Spawned viewer <acroread> with PID <11633>.
