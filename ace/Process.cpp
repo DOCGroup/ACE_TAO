@@ -17,7 +17,7 @@ ACE_Process::ACE_Process (void)
 #endif /* !defined (ACE_WIN32) */
 {
 #if defined (ACE_WIN32)
-  ACE_OS::memset ((void *) &this->process_info__,
+  ACE_OS::memset ((void *) &this->process_info_,
                   0, sizeof this->process_info_);
 #endif /* ACE_WIN32 */
 }

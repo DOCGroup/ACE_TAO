@@ -1189,7 +1189,7 @@ ACE_OS::atexit (ACE_EXIT_HOOK func)
   ACE_NOTSUP_RETURN (-1);
 #else
   return ::atexit (func);
-#endif /* ACE_LACKS_ATEXIT */  
+#endif /* ACE_LACKS_ATEXIT */
 }
 
 // Doesn't need a macro since it *never* returns!
@@ -10056,11 +10056,9 @@ ACE_OS::getppid (void)
 {
   ACE_TRACE ("ACE_OS::getppid");
 #if defined (ACE_LACKS_GETPPID)
-  ACE_UNUSED_ARG (pid);
   ACE_NOTSUP_RETURN (-1);
 #elif defined (VXWORKS) || defined (ACE_PSOS)
   // getppid() is not supported, only one process anyway.
-  ACE_UNUSED_ARG (pid);
   return 0;
 #else
   ACE_OSCALL_RETURN (::getppid (), pid_t, -1);
@@ -12046,7 +12044,7 @@ ACE_OS::getuid (void)
 # endif /* VXWORKS */
 }
 
-ACE_INLINE ACE_EXIT_HOOK 
+ACE_INLINE ACE_EXIT_HOOK
 ACE_OS::set_exit_hook (ACE_EXIT_HOOK exit_hook)
 {
   ACE_EXIT_HOOK old_hook = exit_hook_;
@@ -12222,4 +12220,3 @@ ACE_Countdown_Time::update (void)
 {
   return this->stop () == 0 && this->start ();
 }
-
