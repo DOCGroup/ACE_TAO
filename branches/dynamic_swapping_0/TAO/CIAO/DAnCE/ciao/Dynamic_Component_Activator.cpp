@@ -25,8 +25,12 @@ namespace CIAO
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableServer::ForwardRequest))
   {
+    Dynamic_Component_Servant_Base* servant = 0;
 
-    // @@ Jai, where is the implementation?
+    if (this->servant_map_.find (oid, servant) == 0)
+    {
+      return servant->create ();
+    }
   }
 
   void
@@ -39,14 +43,13 @@ namespace CIAO
     ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
-    /// Need to investigate what needs to be handled here..
   }
 
-  // @@ Jai, what is this update map supposed to be doing.
   void update_servant_map (PortableServer::ObjectId &oid,
                            Dynamic_Component_Servant_Base* servant
                            ACE_ENV_ARG_DECL)
   {
+    this->servant_map_.bind (oid, servant);
   }
 
 }

@@ -35,7 +35,8 @@ namespace CIAO
     : public virtual Dynamic_Component_Servant_Base
   {
   public:
-    Dynamic_Component_Servant (EXEC *exe, Components::CCMHome_ptr home);
+    Dynamic_Component_Servant (EXEC *exe, Components::CCMHome_ptr home,
+                               Session_Container *c);
 
     virtual ~Dynamic_Component_Servant (void);
 

@@ -32,15 +32,20 @@ namespace CIAO
   {
     ::Components::EnterpriseComponent_var ciao_ec =
       this->executor_->create (ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_CHECK_RETURN (COMP::_nil ());
 
     COMP_EXEC_VAR ciao_comp = COMP_EXEC::_narrow (ciao_ec.in ()
                                                   ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK_RETURN (COMP::_nil ());
 
     COMP_SERVANT *svt = 0;
     ACE_NEW_RETURN (svt,
                     COMP_SERVANT (ciao_comp.in (),
-                                  this->home_.in ()),
+                                  this->home_.in (),
+                                  this->container_),
                     COMP::_nil ());
+
+    return svt._retn ();
   }
 }
 
