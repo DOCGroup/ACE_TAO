@@ -13,18 +13,20 @@ TCF_Loader::TCF_Loader (void)
 
 CORBA::Object_ptr
 TCF_Loader::create_object (CORBA::ORB_ptr orb,
+                           int argc,
+                           char * argv[],
                            CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC (())
 {
   ACE_TRY
     {
       CORBA::Object_var obj =
-        orb->resolve_initial_references ("RootPOA", 
+        orb->resolve_initial_references ("RootPOA",
                                          ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       PortableServer::POA_var poa =
-        PortableServer::POA::_narrow (obj.in (), 
+        PortableServer::POA::_narrow (obj.in (),
                                       ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
@@ -36,7 +38,7 @@ TCF_Loader::create_object (CORBA::ORB_ptr orb,
       ACE_TRY_CHECK;
 
       TAO_TypeCodeFactory_i *servant = 0;
-      ACE_NEW_RETURN (servant, 
+      ACE_NEW_RETURN (servant,
                       TAO_TypeCodeFactory_i (),
                       CORBA::Object::_nil ());
 
