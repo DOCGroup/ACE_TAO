@@ -1,20 +1,22 @@
+Mon Nov 22 14:03:44 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tests/Smart_Proxies: Revised the code to conform to the TAO
+	  programming guidelines.
+
 Mon Nov 22 14:04:14 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/Invocation.cpp:
-	  Added code to turn a user exception into an unknown
-	  exception on the client side for reliable oneways.
-	  Thanks to Carlos for clarifying the required behavior
-	  here.
+	* tao/Invocation.cpp:  Added code to turn a user exception into an
+	  unknown exception on the client side for reliable oneways.
+  	  Thanks to Carlos for clarifying the required behavior here.
 
 Mon Nov 22 13:15:10 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/Stub.cpp:
 	* TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
-	* TAO_IDL/be/be_visitor_operation/ami_cs.cpp:
-	  Added a 'const' to a variable that is cast from a
-	  declared constant in IDL, hopefully appeasing an
-	  older version of sunc++. Thanks to David for reporting
-	  this build error. 
+	* TAO_IDL/be/be_visitor_operation/ami_cs.cpp: Added a 'const' to a
+	  variable that is cast from a declared constant in IDL, hopefully
+ 	  appeasing an older version of sunc++. Thanks to David for
+ 	  reporting this build error.
 
 Mon Nov 22 12:10:37 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
