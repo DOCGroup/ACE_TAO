@@ -55,9 +55,6 @@
 #define _IFR_BASIC_IDL_
 
 #include "IFR_Base.pidl"
-#include "orb.idl"
-
-#pragma prefix "omg.org"
 
 module CORBA 
 {
@@ -217,17 +214,7 @@ module CORBA
     attribute StructMemberSeq members;
   };
 
-  struct ExceptionDescription 
-  {
-    Identifier name;
-    RepositoryId id;
-    RepositoryId defined_in;
-    VersionSpec version;
-    TypeCode type;
-  };
-
   typedef sequence <ExceptionDef> ExceptionDefSeq;
-  typedef sequence <ExceptionDescription> ExcDescriptionSeq;
 
   enum AttributeMode 
   {
@@ -250,6 +237,27 @@ module CORBA
     VersionSpec version;
     TypeCode type;
     AttributeMode mode;
+  };
+
+  struct ExtAttributeDescription 
+  {
+    Identifier name;
+    RepositoryId id;
+    RepositoryId defined_in;
+    VersionSpec version;
+    TypeCode type;
+    AttributeMode mode;
+    ExcDescriptionSeq get_exceptions;
+    ExcDescriptionSeq put_exceptions;
+  };
+
+  interface ExtAttributeDef : AttributeDef 
+  {
+    // read/write interface
+    attribute ExcDescriptionSeq get_exceptions;
+    attribute ExcDescriptionSeq set_exceptions;
+    // read interface
+    ExtAttributeDescription describe_attribute ();
   };
 
   enum OperationMode 
@@ -305,8 +313,11 @@ module CORBA
   typedef sequence <RepositoryId> RepositoryIdSeq;
   typedef sequence <OperationDescription> OpDescriptionSeq;
   typedef sequence <AttributeDescription> AttrDescriptionSeq;
+  typedef sequence <ExtAttributeDescription> ExtAttrDescriptionSeq;
 
-  interface InterfaceDef : Container, Contained, IDLType 
+  interface InterfaceDef : Container, 
+			   Contained, 
+			   IDLType 
   {
     // read/write interface
     attribute InterfaceDefSeq base_interfaces;
@@ -358,11 +369,55 @@ module CORBA
     RepositoryIdSeq base_interfaces;
   };
 
+  interface InterfaceAttrExtension 
+  {
+    // read interface
+    struct ExtFullInterfaceDescription 
+    {
+      Identifier name;
+      RepositoryId id;
+      RepositoryId defined_in;
+      VersionSpec version;
+      OpDescriptionSeq operations;
+      ExtAttrDescriptionSeq attributes;
+      RepositoryIdSeq base_interfaces;
+      TypeCode type;
+    };
+
+    ExtFullInterfaceDescription describe_ext_interface ();
+
+    // write interface
+    ExtAttributeDef create_ext_attribute (
+	in RepositoryId id,
+	in Identifier name,
+	in VersionSpec version,
+	in IDLType type,
+	in AttributeMode mode,
+	in ExceptionDefSeq get_exceptions,
+	in ExceptionDefSeq set_exceptions
+      );
+  };
+
+  interface ExtInterfaceDef : InterfaceDef,
+			      InterfaceAttrExtension 
+  {
+  };
+
   interface AbstractInterfaceDef : InterfaceDef 
   {
   };
 
+  interface ExtAbstractInterfaceDef : AbstractInterfaceDef,
+				      InterfaceAttrExtension 
+  {
+  };
+
   interface LocalInterfaceDef : InterfaceDef 
+  {
+  };
+
+  interface ExtLocalInterfaceDef : LocalInterfaceDef,
+				   InterfaceAttrExtension 
   {
   };
 };

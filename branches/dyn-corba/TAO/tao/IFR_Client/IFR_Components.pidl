@@ -56,255 +56,237 @@
 
 #include "IFR_Extended.pidl"
 
-#pragma prefix "omg.org"
-
-module IR
+module CORBA
 {
-  typedef string Identifier;
-  typedef string ScopedName;
-  typedef string RepositoryId;
-  typedef sequence<RepositoryId> RepositoryIdSeq;
-  typedef string VersionSpec;
-
-  interface ComponentDef;
-  typedef sequence <ComponentDef> ComponentDefSeq;
-  interface ProvidesDef;
-  typedef sequence <ProvidesDef> ProvidesDefSeq;
-  interface UsesDef;
-  typedef sequence <UsesDef> UsesDefSeq;
-  interface HomeDef;
-  typedef sequence <HomeDef> HomeDefSeq;
-  interface EventDef;
-  interface EmitsDef;
-  typedef sequence <EmitsDef> EmitsDefSeq;
-  interface PublishesDef;
-  typedef sequence <PublishesDef> PublishesDefSeq;
-  interface ConsumesDef;
-  typedef sequence <ConsumesDef> ConsumesDefSeq;
-  interface FactoryDef;
-  typedef sequence <FactoryDef> FactoryDefSeq;
-  interface FinderDef;
-  typedef sequence <FinderDef> FinderDefSeq;
-  interface PrimaryKeyDef;
-
-  interface ComponentRepository : CORBA::Repository
+  module ComponentIR
   {
-    ComponentDef create_component (
-        in RepositoryId id,
-        in Identifier name,
-        in VersionSpec version,
-        in ComponentDef base_component,
-        in CORBA::InterfaceDefSeq supports_interfaces
-      );
-    HomeDef create_home (
-        in RepositoryId id,
-        in Identifier name,
-        in VersionSpec version,
-        in HomeDef base_home,
-        in ComponentDef managed_component,
-        in CORBA::ValueDef primary_key
-      );
-  };
+    typeprefix ComponentIR "omg.org";
 
-  interface ProvidesDef : CORBA::Contained 
-  {
-    // read interface
-    readonly attribute CORBA::InterfaceDef interface_type;
-  };
+    interface ComponentDef;
+    interface HomeDef;
 
-  struct ProvidesDescription 
-  {
-    Identifier name;
-    RepositoryId id;
-    RepositoryId defined_in;
-    VersionSpec version;
-    CORBA::InterfaceDef interface_type;
-  };
+    interface EventDef : ExtValueDef 
+    {
+    };
 
-  interface UsesDef : CORBA::Contained 
-  {
-    // read interface
-    readonly attribute CORBA::InterfaceDef interface_type;
-    readonly attribute boolean is_multiple;
-  };
+    interface Container
+    {
+      ComponentDef create_component (
+	  in RepositoryId id,
+	  in Identifier name,
+	  in VersionSpec version,
+	  in ComponentDef base_component,
+	  in InterfaceDefSeq supports_interfaces
+	);
 
-  struct UsesDescription 
-  {
-    Identifier name;
-    RepositoryId id;
-    RepositoryId defined_in;
-    VersionSpec version;
-    CORBA::InterfaceDef interface_type;
-    boolean is_multiple;
-  };
+      HomeDef create_home (
+	  in RepositoryId id,
+	  in Identifier name,
+	  in VersionSpec version,
+	  in HomeDef base_home,
+	  in ComponentDef managed_component,
+	  in InterfaceDefSeq supports_interfaces,
+	  in ValueDef primary_key
+	);
 
-  typedef sequence <ProvidesDescription> ProvidesDescSeq;
-  typedef sequence <UsesDescription> UsesDescSeq;
+      EventDef create_event (
+	  in RepositoryId id,
+	  in Identifier name,
+	  in VersionSpec version,
+	  in boolean is_custom,
+	  in boolean is_abstract,
+	  in ValueDef base_value,
+	  in boolean is_truncatable,
+	  in ValueDefSeq abstract_base_values,
+	  in InterfaceDefSeq supported_interfaces,
+	in ExtInitializerSeq initializers
+	);
+    };
 
-  interface EventDef : CORBA::Contained 
-  { // abstract - never instantiated
-    // read interface
-    boolean is_a (in RepositoryId event_id);
-    readonly attribute CORBA::ValueDef event;
-  };
+    interface ModuleDef : CORBA::ModuleDef, 
+			  Container
+    {
+    };
 
-  struct EventDescription 
-  {
-    Identifier name;
-    RepositoryId id;
-    RepositoryId defined_in;
-    VersionSpec version;
-    CORBA::ValueDef value;
-  };
+    interface Repository : CORBA::Repository, 
+			   Container
+    {
+    };
 
-  interface EmitsDef : EventDef 
-  {
-  };
+    interface ProvidesDef : Contained 
+    {
+      attribute InterfaceDef interface_type;
+    };
 
-  interface PublishesDef : EventDef 
-  {
-  };
+    struct ProvidesDescription 
+    {
+      Identifier name;
+      RepositoryId id;
+      RepositoryId defined_in;
+      VersionSpec version;
+      RepositoryId interface_type;
+    };
 
-  interface ConsumesDef : EventDef 
-  {
-  };
+    interface UsesDef : Contained 
+    {
+      attribute InterfaceDef interface_type;
+      attribute boolean is_multiple;
+    };
 
-  interface ComponentDef : CORBA::InterfaceDef 
-  {
-    // read/write interface
-    attribute CORBA::InterfaceDefSeq supported_interfaces;
-    // read interface
-    readonly attribute ComponentDef base_component;
-    readonly attribute ProvidesDefSeq provides_interfaces;
-    readonly attribute UsesDefSeq uses_interfaces;
-    readonly attribute EmitsDefSeq emits_events;
-    readonly attribute PublishesDefSeq publishes_events;
-    readonly attribute ConsumesDefSeq consumes_events;
-    readonly attribute boolean is_basic;
-    // write interface
-    ProvidesDef create_provides (
-        in RepositoryId id,
-        in Identifier name,
-        in VersionSpec version,
-        in CORBA::InterfaceDef interface_type
-      );
-    UsesDef create_uses (
-        in RepositoryId id,
-        in Identifier name,
-        in VersionSpec version,
-        in CORBA::InterfaceDef interface_type,
-        in boolean is_multiple
-      );
-    EmitsDef create_emits (
-        in RepositoryId id,
-        in Identifier name,
-        in VersionSpec version,
-        in CORBA::ValueDef value
-      );
-    PublishesDef create_publishes (
-        in RepositoryId id,
-        in Identifier name,
-        in VersionSpec version,
-        in CORBA::ValueDef value
-      );
-    ConsumesDef create_consumes (
-        in RepositoryId id,
-        in Identifier name,
-        in VersionSpec version,
-        in CORBA::ValueDef value
-      );
-  };
+    struct UsesDescription 
+    {
+      Identifier name;
+      RepositoryId id;
+      RepositoryId defined_in;
+      VersionSpec version;
+      RepositoryId interface_type;
+      boolean is_multiple;
+    };
 
-  struct ComponentDescription 
-  {
-    Identifier name;
-    RepositoryId id;
-    RepositoryId defined_in;
-    VersionSpec version;
-    RepositoryId base_component;
-    RepositoryIdSeq supports_interfaces;
-    ProvidesDefSeq provides_interfaces;
-    UsesDefSeq uses_interfaces;
-    CORBA::AttrDescriptionSeq attributes;
-    EmitsDefSeq emits_events;
-    PublishesDefSeq publishes_events;
-    ConsumesDefSeq consumes_events;
-    boolean is_basic;
-  };
+    interface EventPortDef : Contained 
+    {
+      // read/write interface
+      attribute EventDef event;
+      // read interface
+      boolean is_a (in RepositoryId event_id);
+    };
 
-  interface PrimaryKeyDef : CORBA::Contained 
-  {
-    // read interface
-    boolean is_a (in RepositoryId primary_key_id);
-    readonly attribute CORBA::ValueDef primary_key;
-  };
+    struct EventPortDescription 
+    {
+      Identifier name;
+      RepositoryId id;
+      RepositoryId defined_in;
+      VersionSpec version;
+      RepositoryId event;
+    };
 
-  struct PrimaryKeyDescription 
-  {
-    Identifier name;
-    RepositoryId id;
-    RepositoryId defined_in;
-    VersionSpec version;
-    CORBA::ValueDef primary_key;
-  };
+    interface EmitsDef : EventPortDef 
+    {
+    };
 
-  interface FactoryDef : CORBA::OperationDef 
-  { // only PARAM_IN parameters
-  };
+    interface PublishesDef : EventPortDef 
+    {
+    };
 
-  interface FinderDef : CORBA::OperationDef 
-  { // only PARAM_IN parameters
-  };
+    interface ConsumesDef : EventPortDef 
+    {
+    };
 
-  interface HomeDef : CORBA::InterfaceDef 
-  {
-    // read operations
-    readonly attribute HomeDef base_home;
-    readonly attribute ComponentDef managed_component;
-    readonly attribute PrimaryKeyDef primary_key;
-    readonly attribute FactoryDefSeq factories;
-    readonly attribute FinderDefSeq finders;
-    readonly attribute boolean is_basic;
-    // write interfaces
-    PrimaryKeyDef create_primary_key (
-        in RepositoryId id,
-        in Identifier name,
-        in VersionSpec version,
-        in CORBA::ValueDef primary_key
-      );
-    FactoryDef create_factory (
-        in RepositoryId id,
-        in Identifier name,
-        in VersionSpec version,
-        in CORBA::ParDescriptionSeq params, // only PARAM_INs
-        in CORBA::ExceptionDefSeq exceptions
-      );
-    FinderDef create_finder (
-        in RepositoryId id,
-        in Identifier name,
-        in VersionSpec version,
-        in CORBA::ParDescriptionSeq params, // only PARAM_INs
-        in CORBA::ExceptionDefSeq exceptions
-      );
-  };
+    interface ComponentDef : ExtInterfaceDef 
+    {
+      // read/write interface
+      attribute ComponentDef base_component;
+      attribute InterfaceDefSeq supported_interfaces;
 
-  struct HomeDescription 
-  {
-    Identifier name;
-    RepositoryId id;
-    RepositoryId defined_in;
-    VersionSpec version;
-    RepositoryId base_home;
-    RepositoryId managed_component;
-    PrimaryKeyDef primary_key_def;
-    FactoryDefSeq factories;
-    FinderDefSeq finders;
-    CORBA::OpDescriptionSeq operations;
-    CORBA::AttrDescriptionSeq attributes;
-    boolean is_basic;
+      // write interface
+      ProvidesDef create_provides (
+	  in RepositoryId id,
+	  in Identifier name,
+	  in VersionSpec version,
+	  in InterfaceDef interface_type
+	);
+
+      UsesDef create_uses (
+	  in RepositoryId id,
+	  in Identifier name,
+	  in VersionSpec version,
+	  in InterfaceDef interface_type,
+	  in boolean is_multiple
+	);
+
+      EmitsDef create_emits (
+	  in RepositoryId id,
+	  in Identifier name,
+	  in VersionSpec version,
+	  in EventDef event
+	);
+
+      PublishesDef create_publishes (
+	  in RepositoryId id,
+	  in Identifier name,
+	  in VersionSpec version,
+	  in EventDef event
+	);
+
+      ConsumesDef create_consumes (
+	  in RepositoryId id,
+	  in Identifier name,
+	  in VersionSpec version,
+	  in EventDef event
+	);
+    };
+
+    typedef sequence<ProvidesDescription> ProvidesDescriptionSeq;
+    typedef sequence<UsesDescription> UsesDescriptionSeq;
+    typedef sequence<EventPortDescription> EventPortDescriptionSeq;
+
+    struct ComponentDescription 
+    {
+      Identifier name;
+      RepositoryId id;
+      RepositoryId defined_in;
+      VersionSpec version;
+      RepositoryId base_component;
+      RepositoryIdSeq supported_interfaces;
+      ProvidesDescriptionSeq provided_interfaces;
+      UsesDescriptionSeq used_interfaces;
+      EventPortDescriptionSeq emits_events;
+      EventPortDescriptionSeq publishes_events;
+      EventPortDescriptionSeq consumes_events;
+      ExtAttrDescriptionSeq attributes;
+      TypeCode type;
+    };
+
+    interface FactoryDef : OperationDef 
+    {
+    };
+
+    interface FinderDef : OperationDef 
+    {
+    };
+
+    interface HomeDef : ExtInterfaceDef 
+    {
+      // read/write interface
+      attribute HomeDef base_home;
+      attribute InterfaceDefSeq supported_interfaces;
+      attribute ComponentDef managed_component;
+      attribute ValueDef primary_key;
+
+      // write interface
+      FactoryDef create_factory (
+	  in RepositoryId id,
+	  in Identifier name,
+	  in VersionSpec version,
+	  in ParDescriptionSeq params,
+	  in ExceptionDefSeq exceptions
+	);
+
+      FinderDef create_finder (
+	  in RepositoryId id,
+	  in Identifier name,
+	  in VersionSpec version,
+	  in ParDescriptionSeq params,
+	  in ExceptionDefSeq exceptions
+	);
+    };
+
+    struct HomeDescription 
+    {
+      Identifier name;
+      RepositoryId id;
+      RepositoryId defined_in;
+      VersionSpec version;
+      RepositoryId base_home;
+      RepositoryId managed_component;
+      ValueDescription primary_key;
+      OpDescriptionSeq factories;
+      OpDescriptionSeq finders;
+      OpDescriptionSeq operations;
+      ExtAttrDescriptionSeq attributes;
+      TypeCode type;
+    };
   };
 };
-
-#pragma prefix ""
 
 #endif /* _IFR_COMPONENTS_IDL_ */

@@ -2,7 +2,16 @@
 // $Id$
 
 #include "ComponentRepository_i.h"
-#include "concrete_classes.h"
+#include "ComponentDef_i.h"
+#include "HomeDef_i.h"
+#include "EventDef_i.h"
+#include "FinderDef_i.h"
+#include "FactoryDef_i.h"
+#include "EmitsDef_i.h"
+#include "PublishesDef_i.h"
+#include "ConsumesDef_i.h"
+#include "ProvidesDef_i.h"
+#include "UsesDef_i.h"
 
 ACE_RCSID (IFRService, 
            ComponentRepository_i, 
@@ -17,93 +26,13 @@ TAO_ComponentRepository_i::TAO_ComponentRepository_i (
     TAO_Container_i (0),
     TAO_Repository_i (orb, 
                       poa, 
-                      config)
+                      config),
+    TAO_ComponentContainer_i (0)
 {
 }
 
 TAO_ComponentRepository_i::~TAO_ComponentRepository_i (void)
 {
-}
-
-IR::ComponentDef_ptr
-TAO_ComponentRepository_i::create_component (
-    const char *id,
-    const char *name,
-    const char *version,
-    IR::ComponentDef_ptr base_component,
-    const CORBA::InterfaceDefSeq & supports_interfaces
-    ACE_ENV_ARG_DECL
-  )
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  TAO_IFR_WRITE_GUARD_RETURN (IR::ComponentDef::_nil ());
-
-  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (IR::ComponentDef::_nil ());
-
-  return this->create_component_i (id,
-                                   name,
-                                   version,
-                                   base_component,
-                                   supports_interfaces
-                                   ACE_ENV_ARG_PARAMETER);
-}
-
-IR::ComponentDef_ptr
-TAO_ComponentRepository_i::create_component_i (
-    const char * /* id */,
-    const char * /* name */,
-    const char * /* version */,
-    IR::ComponentDef_ptr /* base_component */,
-    const CORBA::InterfaceDefSeq & /* supports_interfaces */
-    ACE_ENV_ARG_DECL_NOT_USED /* ACE_ENV_SINGLE_ARG_PARAMETER */
-  )
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  // TODO
-  return 0;
-}
-
-IR::HomeDef_ptr
-TAO_ComponentRepository_i::create_home (
-    const char *id,
-    const char *name,
-    const char *version,
-    IR::HomeDef_ptr base_component,
-    IR::ComponentDef_ptr managed_component,
-    CORBA::ValueDef_ptr primary_key
-    ACE_ENV_ARG_DECL
-  )
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  TAO_IFR_WRITE_GUARD_RETURN (IR::HomeDef::_nil ());
-
-  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (IR::HomeDef::_nil ());
-
-  return this->create_home_i (id,
-                              name,
-                              version,
-                              base_component,
-                              managed_component,
-                              primary_key
-                              ACE_ENV_ARG_PARAMETER);
-}
-
-IR::HomeDef_ptr
-TAO_ComponentRepository_i::create_home_i (
-    const char * /* id */,
-    const char * /* name */,
-    const char * /* version */,
-    IR::HomeDef_ptr /* base_component */,
-    IR::ComponentDef_ptr /* managed_component */,
-    CORBA::ValueDef_ptr /* primary_key */
-    ACE_ENV_ARG_DECL_NOT_USED /* ACE_ENV_SINGLE_ARG_PARAMETER */
-  )
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  // TODO
-  return 0;
 }
 
 int
@@ -177,7 +106,7 @@ TAO_ComponentRepository_i::create_servants_and_poas (
                   TAO_ ## name ## _i (this), \
                   -1); \
   ACE_NEW_RETURN (this-> name ## _servant_, \
-                  POA_IR:: name ## _tie<TAO_ ## name ## _i> ( \
+                  POA_CORBA::ComponentIR:: name ## _tie<TAO_ ## name ## _i> ( \
                       name ## _impl, \
                       this-> name ## _poa_.in (), \
                       1 \
@@ -254,8 +183,8 @@ TAO_ComponentRepository_i::select_contained (
       return this->FinderDef_servant_->_tied_object ();
     case CORBA::dk_Factory:
       return this->FactoryDef_servant_->_tied_object ();
-    case CORBA::dk_PrimaryKey:
-      return this->PrimaryKeyDef_servant_->_tied_object ();
+    case CORBA::dk_Event:
+      return this->EventDef_servant_->_tied_object ();
     case CORBA::dk_Emits:
       return this->EmitsDef_servant_->_tied_object ();
     case CORBA::dk_Publishes:
@@ -286,8 +215,8 @@ TAO_ComponentRepository_i::select_poa (
       return this->FinderDef_poa_.in ();
     case CORBA::dk_Factory:
       return this->FactoryDef_poa_.in ();
-    case CORBA::dk_PrimaryKey:
-      return this->PrimaryKeyDef_poa_.in ();
+    case CORBA::dk_Event:
+      return this->EventDef_poa_.in ();
     case CORBA::dk_Emits:
       return this->EmitsDef_poa_.in ();
     case CORBA::dk_Publishes:

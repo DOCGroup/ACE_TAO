@@ -973,6 +973,42 @@ template <class T> ACE_INLINE
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
 
 template <class T> ACE_INLINE
+::CORBA::ExtValueDef_ptr POA_CORBA::Container_tie<T>::create_ext_value  (
+    const char * id,
+    const char * name,
+    const char * version,
+    CORBA::Boolean is_custom,
+    CORBA::Boolean is_abstract,
+    CORBA::ValueDef_ptr base_value,
+    CORBA::Boolean is_truncatable,
+    const CORBA::ValueDefSeq & abstract_base_values,
+    const CORBA::InterfaceDefSeq & supported_interfaces,
+    const CORBA::ExtInitializerSeq & initializers
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  return this->ptr_->create_ext_value (
+    id,
+    name,
+    version,
+    is_custom,
+    is_abstract,
+    base_value,
+    is_truncatable,
+    abstract_base_values,
+    supported_interfaces,
+    initializers
+    ACE_ENV_ARG_PARAMETER
+  );
+}
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/tie_si.cpp:68
+
+template <class T> ACE_INLINE
 ::CORBA::DefinitionKind POA_CORBA::Container_tie<T>::def_kind  (
     ACE_ENV_SINGLE_ARG_DECL
   )

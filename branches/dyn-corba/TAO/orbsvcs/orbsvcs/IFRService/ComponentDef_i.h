@@ -20,7 +20,7 @@
 #ifndef TAO_COMPONENTDEF_I_H
 #define TAO_COMPONENTDEF_I_H
 
-#include "InterfaceDef_i.h"
+#include "ExtInterfaceDef_i.h"
 #include "ifr_service_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -36,7 +36,8 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-class TAO_IFRService_Export TAO_ComponentDef_i : public virtual TAO_InterfaceDef_i
+class TAO_IFRService_Export TAO_ComponentDef_i 
+  : public virtual TAO_ExtInterfaceDef_i
 {
   // = TITLE
   //    TAO_ComponentDef_i
@@ -115,77 +116,29 @@ public:
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual IR::ComponentDef_ptr base_component (
+  virtual CORBA::ComponentIR::ComponentDef_ptr base_component (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  IR::ComponentDef_ptr base_component_i (
+  CORBA::ComponentIR::ComponentDef_ptr base_component_i (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual IR::ProvidesDefSeq *provides_interfaces (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
+  virtual void base_component (
+      CORBA::ComponentIR::ComponentDef_ptr base_component
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
+    )
     ACE_THROW_SPEC ((CORBA::SystemException));
-
-  IR::ProvidesDefSeq *provides_interfaces_i (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
+      
+  void base_component_i (
+      CORBA::ComponentIR::ComponentDef_ptr base_component
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
+    )
     ACE_THROW_SPEC ((CORBA::SystemException));
-
-  virtual IR::UsesDefSeq *uses_interfaces (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
-  IR::UsesDefSeq *uses_interfaces_i (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
-  virtual IR::EmitsDefSeq *emits_events (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
-  IR::EmitsDefSeq *emits_events_i (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
-  virtual IR::PublishesDefSeq *publishes_events (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
-  IR::PublishesDefSeq *publishes_events_i (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
-  virtual IR::ConsumesDefSeq *consumes_events (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
-  IR::ConsumesDefSeq *consumes_events_i (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
-  virtual CORBA::Boolean is_basic (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
-  CORBA::Boolean is_basic_i (
-      ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
-  virtual IR::ProvidesDef_ptr create_provides (
+      
+  virtual CORBA::ComponentIR::ProvidesDef_ptr create_provides (
       const char *id,
       const char *name,
       const char *version,
@@ -194,7 +147,7 @@ public:
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  IR::ProvidesDef_ptr create_provides_i (
+  CORBA::ComponentIR::ProvidesDef_ptr create_provides_i (
       const char *id,
       const char *name,
       const char *version,
@@ -203,7 +156,7 @@ public:
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual IR::UsesDef_ptr create_uses (
+  virtual CORBA::ComponentIR::UsesDef_ptr create_uses (
       const char *id,
       const char *name,
       const char *version,
@@ -213,7 +166,7 @@ public:
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  IR::UsesDef_ptr create_uses_i (
+  CORBA::ComponentIR::UsesDef_ptr create_uses_i (
       const char *id,
       const char *name,
       const char *version,
@@ -223,7 +176,7 @@ public:
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual IR::EmitsDef_ptr create_emits (
+  virtual CORBA::ComponentIR::EmitsDef_ptr create_emits (
       const char *id,
       const char *name,
       const char *version,
@@ -232,7 +185,7 @@ public:
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  IR::EmitsDef_ptr create_emits_i (
+  CORBA::ComponentIR::EmitsDef_ptr create_emits_i (
       const char *id,
       const char *name,
       const char *version,
@@ -241,7 +194,7 @@ public:
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual IR::PublishesDef_ptr create_publishes (
+  virtual CORBA::ComponentIR::PublishesDef_ptr create_publishes (
       const char *id,
       const char *name,
       const char *version,
@@ -250,7 +203,7 @@ public:
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  IR::PublishesDef_ptr create_publishes_i (
+  CORBA::ComponentIR::PublishesDef_ptr create_publishes_i (
       const char *id,
       const char *name,
       const char *version,
@@ -259,7 +212,7 @@ public:
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual IR::ConsumesDef_ptr create_consumes (
+  virtual CORBA::ComponentIR::ConsumesDef_ptr create_consumes (
       const char *id,
       const char *name,
       const char *version,
@@ -268,7 +221,7 @@ public:
 
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  IR::ConsumesDef_ptr create_consumes_i (
+  CORBA::ComponentIR::ConsumesDef_ptr create_consumes_i (
       const char *id,
       const char *name,
       const char *version,

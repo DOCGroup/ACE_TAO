@@ -287,10 +287,12 @@ TAO_IFR_Server::create_repository (ACE_ENV_SINGLE_ARG_DECL)
 
   auto_ptr<TAO_ComponentRepository_i> safety (impl);
 
-  POA_IR::ComponentRepository_tie<TAO_ComponentRepository_i> *impl_tie = 0;
+  POA_CORBA::ComponentIR::Repository_tie<TAO_ComponentRepository_i> *impl_tie
+    = 0;
+
   ACE_NEW_THROW_EX (
       impl_tie,
-      POA_IR::ComponentRepository_tie<TAO_ComponentRepository_i> (
+      POA_CORBA::ComponentIR::Repository_tie<TAO_ComponentRepository_i> (
           impl,
           this->repo_poa_,
           1

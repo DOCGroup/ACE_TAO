@@ -258,7 +258,7 @@ CORBA::ValueMember_out::operator-> (void)
 }
 
 // TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/gen_unbounded_sequence_ci.cpp:99
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/gen_unbounded_sequence_ci.cpp:98
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
 
@@ -644,7 +644,7 @@ CORBA::ValueMemberSeq_var::ptr (void) const
 }
 
 // TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ci.cpp:567
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ci.cpp:566
 
 // *************************************************************
 // Inline operations for class CORBA::ValueMemberSeq_out
@@ -1190,6 +1190,243 @@ CORBA::ValueDescription_out::operator-> (void)
 }
 
 // TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_structure.cpp:194
+
+// *************************************************************
+// Inline operations for class CORBA::ExtValueDef::ExtFullValueDescription_var
+// *************************************************************
+
+ACE_INLINE
+CORBA::ExtValueDef::ExtFullValueDescription_var::ExtFullValueDescription_var (void)
+  : ptr_ (0)
+{}
+
+ACE_INLINE
+CORBA::ExtValueDef::ExtFullValueDescription_var::ExtFullValueDescription_var (ExtFullValueDescription *p)
+  : ptr_ (p)
+{}
+
+ACE_INLINE
+CORBA::ExtValueDef::ExtFullValueDescription_var::ExtFullValueDescription_var (const ::CORBA::ExtValueDef::ExtFullValueDescription_var &p)
+{
+  if (p.ptr_)
+    {
+      ACE_NEW (this->ptr_, ::CORBA::ExtValueDef::ExtFullValueDescription (*p.ptr_));
+    }
+  else
+    {
+      this->ptr_ = 0;
+    }
+}
+
+ACE_INLINE
+CORBA::ExtValueDef::ExtFullValueDescription_var::~ExtFullValueDescription_var (void)
+{
+  delete this->ptr_;
+}
+
+ACE_INLINE
+CORBA::ExtValueDef::ExtFullValueDescription_var &
+CORBA::ExtValueDef::ExtFullValueDescription_var::operator= (ExtFullValueDescription *_tao_struct_var)
+{
+  delete this->ptr_;
+  this->ptr_ = _tao_struct_var;
+  return *this;
+}
+
+ACE_INLINE
+::CORBA::ExtValueDef::ExtFullValueDescription_var &
+CORBA::ExtValueDef::ExtFullValueDescription_var::operator= (const ::CORBA::ExtValueDef::ExtFullValueDescription_var &_tao_struct_var)
+{
+  if (this != &_tao_struct_var)
+    {
+      if (_tao_struct_var.ptr_ == 0)
+        {
+          delete this->ptr_;
+          this->ptr_ = 0;
+        }
+      else
+        {
+          ExtFullValueDescription *deep_copy = 0;
+          ACE_NEW_RETURN (
+              deep_copy,
+              ExtFullValueDescription (*_tao_struct_var.ptr_),
+              *this
+            );
+          
+          if (deep_copy != 0)
+            {
+              ExtFullValueDescription *tmp = deep_copy;
+              deep_copy = this->ptr_;
+              this->ptr_ = tmp;
+              delete deep_copy;
+            }
+        }
+    }
+  
+  return *this;
+}
+
+ACE_INLINE const ::CORBA::ExtValueDef::ExtFullValueDescription *
+CORBA::ExtValueDef::ExtFullValueDescription_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::CORBA::ExtValueDef::ExtFullValueDescription *
+CORBA::ExtValueDef::ExtFullValueDescription_var::operator-> (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+CORBA::ExtValueDef::ExtFullValueDescription_var::operator const ::CORBA::ExtValueDef::ExtFullValueDescription &() const // cast
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE
+CORBA::ExtValueDef::ExtFullValueDescription_var::operator ::CORBA::ExtValueDef::ExtFullValueDescription &() // cast 
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE
+CORBA::ExtValueDef::ExtFullValueDescription_var::operator ::CORBA::ExtValueDef::ExtFullValueDescription &() const // cast 
+{
+  return *this->ptr_;
+}
+
+// Variable-size types only.
+ACE_INLINE
+CORBA::ExtValueDef::ExtFullValueDescription_var::operator ::CORBA::ExtValueDef::ExtFullValueDescription *&() // cast 
+{
+  return this->ptr_;
+}
+
+ACE_INLINE const ::CORBA::ExtValueDef::ExtFullValueDescription &
+CORBA::ExtValueDef::ExtFullValueDescription_var::in (void) const
+{
+  return *this->ptr_;
+}
+
+ACE_INLINE ::CORBA::ExtValueDef::ExtFullValueDescription &
+CORBA::ExtValueDef::ExtFullValueDescription_var::inout (void)
+{
+  return *this->ptr_;
+}
+
+// Mapping for variable size.
+ACE_INLINE ::CORBA::ExtValueDef::ExtFullValueDescription *&
+CORBA::ExtValueDef::ExtFullValueDescription_var::out (void)
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+  return this->ptr_;
+}
+
+ACE_INLINE ::CORBA::ExtValueDef::ExtFullValueDescription *
+CORBA::ExtValueDef::ExtFullValueDescription_var::_retn (void)
+{
+  ::CORBA::ExtValueDef::ExtFullValueDescription *tmp = this->ptr_;
+  this->ptr_ = 0;
+  return tmp;
+}
+
+ACE_INLINE ::CORBA::ExtValueDef::ExtFullValueDescription *
+CORBA::ExtValueDef::ExtFullValueDescription_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_structure.cpp:523
+
+// *************************************************************
+// Inline operations for class CORBA::ExtValueDef::ExtFullValueDescription_out
+// *************************************************************
+
+ACE_INLINE
+CORBA::ExtValueDef::ExtFullValueDescription_out::ExtFullValueDescription_out (::CORBA::ExtValueDef::ExtFullValueDescription *&p)
+  : ptr_ (p)
+{
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+CORBA::ExtValueDef::ExtFullValueDescription_out::ExtFullValueDescription_out (ExtFullValueDescription_var &p)
+  : ptr_ (p.out ())
+{
+  delete this->ptr_;
+  this->ptr_ = 0;
+}
+
+ACE_INLINE
+CORBA::ExtValueDef::ExtFullValueDescription_out::ExtFullValueDescription_out (const ::CORBA::ExtValueDef::ExtFullValueDescription_out &p)
+  : ptr_ (ACE_const_cast (ExtFullValueDescription_out&, p).ptr_)
+{}
+
+ACE_INLINE
+CORBA::ExtValueDef::ExtFullValueDescription_out &
+CORBA::ExtValueDef::ExtFullValueDescription_out::operator= (const ::CORBA::ExtValueDef::ExtFullValueDescription_out &p)
+{
+  this->ptr_ = ACE_const_cast (ExtFullValueDescription_out&, p).ptr_;
+  return *this;
+}
+
+ACE_INLINE
+CORBA::ExtValueDef::ExtFullValueDescription_out &
+CORBA::ExtValueDef::ExtFullValueDescription_out::operator= (ExtFullValueDescription *_tao_struct_out)
+{
+  this->ptr_ = _tao_struct_out;
+  return *this;
+}
+
+ACE_INLINE 
+CORBA::ExtValueDef::ExtFullValueDescription_out::operator ::CORBA::ExtValueDef::ExtFullValueDescription *&() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::CORBA::ExtValueDef::ExtFullValueDescription *&
+CORBA::ExtValueDef::ExtFullValueDescription_out::ptr (void) // ptr
+{
+  return this->ptr_;
+}
+
+ACE_INLINE ::CORBA::ExtValueDef::ExtFullValueDescription *
+CORBA::ExtValueDef::ExtFullValueDescription_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
+
+#if !defined (_CORBA_EXTVALUEDEF___CI_)
+#define _CORBA_EXTVALUEDEF___CI_
+
+ACE_INLINE
+CORBA::ExtValueDef::ExtValueDef (
+    TAO_Stub *objref,
+    CORBA::Boolean _tao_collocated,
+    TAO_Abstract_ServantBase *servant
+  )
+  : CORBA_Object (objref, _tao_collocated, servant)
+{
+  this->CORBA_ExtValueDef_setup_collocation (_tao_collocated);
+}
+
+ACE_INLINE
+CORBA::Boolean
+CORBA::ExtValueDef::marshal (TAO_OutputCDR &cdr)
+{
+  return (cdr << this);
+}
+
+#endif /* end #if !defined */
+
+// TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
 
 #if !defined (_CORBA_VALUEBOXDEF___CI_)
@@ -1229,7 +1466,7 @@ TAO_IFR_Client_Export CORBA::Boolean operator>> (
   );
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/cdr_op_ci.cpp:71
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/cdr_op_ci.cpp:103
 
 ACE_INLINE
 CORBA::Boolean operator<< (
@@ -1324,7 +1561,7 @@ TAO_IFR_Client_Export CORBA::Boolean operator>> (
   );
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/cdr_op_ci.cpp:71
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/cdr_op_ci.cpp:103
 
 ACE_INLINE
 CORBA::Boolean operator<< (
@@ -1391,7 +1628,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/cdr_op_ci.cpp:71
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/cdr_op_ci.cpp:103
 
 ACE_INLINE
 CORBA::Boolean operator<< (
@@ -1437,6 +1674,86 @@ CORBA::Boolean operator>> (
     (strm >> _tao_aggregate.abstract_base_values) &&
     (strm >> CORBA::Any::to_boolean (_tao_aggregate.is_truncatable)) &&
     (strm >> _tao_aggregate.base_value.out ())
+   )
+    {
+      return 1;
+    }
+  else
+    {
+      return 0;
+    }
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_ci.cpp:72
+
+TAO_IFR_Client_Export CORBA::Boolean operator<< (
+    TAO_OutputCDR &,
+    const CORBA::ExtValueDef_ptr
+  );
+
+TAO_IFR_Client_Export CORBA::Boolean operator>> (
+    TAO_InputCDR &,
+    CORBA::ExtValueDef_ptr &
+  );
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/cdr_op_ci.cpp:103
+
+ACE_INLINE
+CORBA::Boolean operator<< (
+    TAO_OutputCDR &strm,
+    const CORBA::ExtValueDef::ExtFullValueDescription &_tao_aggregate
+  )
+{
+  if (
+    (strm << _tao_aggregate.name.in ()) &&
+    (strm << _tao_aggregate.id.in ()) &&
+    (strm << CORBA::Any::from_boolean (_tao_aggregate.is_abstract)) &&
+    (strm << CORBA::Any::from_boolean (_tao_aggregate.is_custom)) &&
+    (strm << _tao_aggregate.defined_in.in ()) &&
+    (strm << _tao_aggregate.version.in ()) &&
+    (strm << _tao_aggregate.operations) &&
+    (strm << _tao_aggregate.attributes) &&
+    (strm << _tao_aggregate.members) &&
+    (strm << _tao_aggregate.initializers) &&
+    (strm << _tao_aggregate.supported_interfaces) &&
+    (strm << _tao_aggregate.abstract_base_values) &&
+    (strm << CORBA::Any::from_boolean (_tao_aggregate.is_truncatable)) &&
+    (strm << _tao_aggregate.base_value.in ()) &&
+    (strm << _tao_aggregate.type.in ())
+   )
+    {
+      return 1;
+    }
+  else
+    {
+      return 0;
+    }
+}
+
+ACE_INLINE
+CORBA::Boolean operator>> (
+    TAO_InputCDR &strm,
+    CORBA::ExtValueDef::ExtFullValueDescription &_tao_aggregate
+  )
+{
+  if (
+    (strm >> _tao_aggregate.name.out ()) &&
+    (strm >> _tao_aggregate.id.out ()) &&
+    (strm >> CORBA::Any::to_boolean (_tao_aggregate.is_abstract)) &&
+    (strm >> CORBA::Any::to_boolean (_tao_aggregate.is_custom)) &&
+    (strm >> _tao_aggregate.defined_in.out ()) &&
+    (strm >> _tao_aggregate.version.out ()) &&
+    (strm >> _tao_aggregate.operations) &&
+    (strm >> _tao_aggregate.attributes) &&
+    (strm >> _tao_aggregate.members) &&
+    (strm >> _tao_aggregate.initializers) &&
+    (strm >> _tao_aggregate.supported_interfaces) &&
+    (strm >> _tao_aggregate.abstract_base_values) &&
+    (strm >> CORBA::Any::to_boolean (_tao_aggregate.is_truncatable)) &&
+    (strm >> _tao_aggregate.base_value.out ()) &&
+    (strm >> _tao_aggregate.type.out ())
    )
     {
       return 1;

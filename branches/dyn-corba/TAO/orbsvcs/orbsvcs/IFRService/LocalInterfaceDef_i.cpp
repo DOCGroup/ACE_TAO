@@ -57,3 +57,4 @@ TAO_LocalInterfaceDef_i::is_a_i (const char *interface_id
   return this->TAO_InterfaceDef_i::is_a_i (interface_id
                                            ACE_ENV_ARG_PARAMETER);
 }
+

@@ -33,7 +33,7 @@ template class POA_CORBA::StructDef_tie<TAO_StructDef_i>;
 template class POA_IR::ConsumesDef_tie<TAO_ConsumesDef_i>;
 template class POA_IR::PublishesDef_tie<TAO_PublishesDef_i>;
 template class POA_IR::EmitsDef_tie<TAO_EmitsDef_i>;
-template class POA_IR::PrimaryKeyDef_tie<TAO_PrimaryKeyDef_i>;
+template class POA_IR::EventDef_tie<TAO_EventDef_i>;
 template class POA_IR::ProvidesDef_tie<TAO_ProvidesDef_i>;
 template class POA_IR::UsesDef_tie<TAO_UsesDef_i>;
 template class POA_CORBA::ValueMemberDef_tie<TAO_ValueMemberDef_i>;
@@ -85,8 +85,8 @@ template class auto_ptr<TAO_PublishesDef_i>;
 template class ACE_Auto_Basic_Ptr<TAO_PublishesDef_i>;
 template class auto_ptr<TAO_EmitsDef_i>;
 template class ACE_Auto_Basic_Ptr<TAO_EmitsDef_i>;
-template class auto_ptr<TAO_PrimaryKeyDef_i>;
-template class ACE_Auto_Basic_Ptr<TAO_PrimaryKeyDef_i>;
+template class auto_ptr<TAO_EventDef_i>;
+template class ACE_Auto_Basic_Ptr<TAO_EventDef_i>;
 template class auto_ptr<TAO_ProvidesDef_i>;
 template class ACE_Auto_Basic_Ptr<TAO_ProvidesDef_i>;
 template class auto_ptr<TAO_UsesDef_i>;
@@ -154,7 +154,7 @@ template class ACE_Auto_Basic_Ptr<char>;
 #pragma instantiate POA_IR::ConsumesDef_tie<TAO_ConsumesDef_i>
 #pragma instantiate POA_IR::PublishesDef_tie<TAO_PublishesDef_i>
 #pragma instantiate POA_IR::EmitsDef_tie<TAO_EmitsDef_i>
-#pragma instantiate POA_IR::PrimaryKeyDef_tie<TAO_PrimaryKeyDef_i>
+#pragma instantiate POA_IR::EventDef_tie<TAO_PrimaryKeyDef_i>
 #pragma instantiate POA_IR::ProvidesDef_tie<TAO_ProvidesDef_i>
 #pragma instantiate POA_IR::UsesDef_tie<TAO_UsesDef_i>
 #pragma instantiate POA_CORBA::ValueMemberDef_tie<TAO_ValueMemberDef_i>
@@ -206,8 +206,8 @@ template class ACE_Auto_Basic_Ptr<char>;
 #pragma instantiate ACE_Auto_Basic_Ptr<TAO_PublishesDef_i>
 #pragma instantiate auto_ptr<TAO_EmitsDef_i>
 #pragma instantiate ACE_Auto_Basic_Ptr<TAO_EmitsDef_i>
-#pragma instantiate auto_ptr<TAO_PrimaryKeyDef_i>
-#pragma instantiate ACE_Auto_Basic_Ptr<TAO_PrimaryKeyDef_i>
+#pragma instantiate auto_ptr<TAO_EventDef_i>
+#pragma instantiate ACE_Auto_Basic_Ptr<TAO_EventDef_i>
 #pragma instantiate auto_ptr<TAO_ProvidesDef_i>
 #pragma instantiate ACE_Auto_Basic_Ptr<TAO_ProvidesDef_i>
 #pragma instantiate auto_ptr<TAO_UsesDef_i>

@@ -1403,7 +1403,6 @@ TAO_Container_i::create_interface_i (const char *id,
     {
       // Open a section for the base interfaces.
       ACE_Configuration_Section_Key inherited_key;
-
       this->repo_->config ()->open_section (new_key,
                                             "inherited",
                                             1,
@@ -1414,7 +1413,7 @@ TAO_Container_i::create_interface_i (const char *id,
       for (CORBA::ULong i = 0; i < length; ++i)
         {
           inherited_path = 
-            this->reference_to_path (base_interfaces[i]);
+            this->reference_to_path (base_interfaces[i].in ());
 
           this->repo_->config ()->set_string_value (inherited_key,
                                                     this->int_to_string (i),
@@ -1430,21 +1429,23 @@ TAO_Container_i::create_interface_i (const char *id,
   ACE_CHECK_RETURN (CORBA::InterfaceDef::_nil ());
 
   return CORBA::InterfaceDef::_narrow (obj.in ()
-                                      ACE_ENV_ARG_PARAMETER);
+                                       ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::ValueDef_ptr
-TAO_Container_i::create_value (const char *id,
-                               const char *name,
-                               const char *version,
-                               CORBA::Boolean is_custom,
-                               CORBA::Boolean is_abstract,
-                               CORBA::ValueDef_ptr base_value,
-                               CORBA::Boolean is_truncatable,
-                               const CORBA::ValueDefSeq &abstract_base_values,
-                               const CORBA::InterfaceDefSeq &supported_interfaces,
-                               const CORBA::InitializerSeq &initializers
-                               ACE_ENV_ARG_DECL)
+TAO_Container_i::create_value (
+    const char *id,
+    const char *name,
+    const char *version,
+    CORBA::Boolean is_custom,
+    CORBA::Boolean is_abstract,
+    CORBA::ValueDef_ptr base_value,
+    CORBA::Boolean is_truncatable,
+    const CORBA::ValueDefSeq &abstract_base_values,
+    const CORBA::InterfaceDefSeq &supported_interfaces,
+    const CORBA::InitializerSeq &initializers
+    ACE_ENV_ARG_DECL
+  )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::ValueDef::_nil ());
@@ -1466,21 +1467,185 @@ TAO_Container_i::create_value (const char *id,
 }
 
 CORBA::ValueDef_ptr
-TAO_Container_i::create_value_i (const char * /* id */,
-                                 const char * /* name */,
-                                 const char * /* version */,
-                                 CORBA::Boolean /* is_custom */,
-                                 CORBA::Boolean /* is_abstract */,
-                                 CORBA::ValueDef_ptr /* base_value */,
-                                 CORBA::Boolean /* is_truncatable */,
-                                 const CORBA::ValueDefSeq & /* abstract_base_values */,
-                                 const CORBA::InterfaceDefSeq & /* supported_interfaces */,
-                                 const CORBA::InitializerSeq & /* initializers */
-                                 ACE_ENV_ARG_DECL_NOT_USED /* ACE_ENV_SINGLE_ARG_PARAMETER */)
+TAO_Container_i::create_value_i (
+    const char *id,
+    const char *name,
+    const char *version,
+    CORBA::Boolean is_custom,
+    CORBA::Boolean is_abstract,
+    CORBA::ValueDef_ptr base_value,
+    CORBA::Boolean is_truncatable,
+    const CORBA::ValueDefSeq &abstract_base_values,
+    const CORBA::InterfaceDefSeq &supported_interfaces,
+    const CORBA::InitializerSeq &initializers
+    ACE_ENV_ARG_DECL
+  )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  // TODO
-  return 0;
+  CORBA::Boolean legal_op = this->valid_container (CORBA::dk_Value
+                                                   ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (CORBA::ValueDef::_nil ());
+
+  if (!legal_op)
+    {
+      return CORBA::ValueDef::_nil ();
+    }
+
+  CORBA::Boolean bad_params = this->pre_exist (id,
+                                               name
+                                               ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (CORBA::ValueDef::_nil ());
+
+  if (bad_params)
+    {
+      return CORBA::ValueDef::_nil ();
+    }
+
+  // Create new section.
+  ACE_Configuration_Section_Key defns_key;
+  this->repo_->config ()->open_section (this->section_key_,
+                                        "defns",
+                                        1,
+                                        defns_key);
+
+  // Common to all IR objects created in CORBA::Container.
+  ACE_Configuration_Section_Key new_key;
+  ACE_TString path = this->create_common (defns_key,
+                                          new_key,
+                                          id,
+                                          name,
+                                          version,
+                                          "defns\\",
+                                          CORBA::dk_Value);
+
+  this->repo_->config ()->set_integer_value (new_key,
+                                             "is_custom",
+                                             (CORBA::ULong) is_custom);
+
+  this->repo_->config ()->set_integer_value (new_key,
+                                             "is_abstract",
+                                             (CORBA::ULong) is_abstract);
+
+  this->repo_->config ()->set_integer_value (new_key,
+                                             "is_truncatable",
+                                             (CORBA::ULong) is_truncatable);
+
+  if (!CORBA::is_nil (base_value))
+    {
+      char *base_value_path = this->reference_to_path (base_value);
+      this->repo_->config ()->set_string_value (new_key,
+                                                "base_value",
+                                                base_value_path);
+    }
+
+  CORBA::ULong length = abstract_base_values.length ();
+  CORBA::ULong i = 0;
+
+  if (length > 0)
+    {
+      ACE_Configuration_Section_Key bases_key;
+      this->repo_->config ()->open_section (new_key,
+                                            "abstract_bases",
+                                            1,
+                                            bases_key);
+
+      char *base_path = 0;
+
+      for (i = 0; i < length; ++i)
+        {
+          base_path = 
+            this->reference_to_path (abstract_base_values[i].in ());
+          this->repo_->config ()->set_string_value (bases_key,
+                                                    this->int_to_string (i),
+                                                    base_path);
+        }
+    }
+
+  length = supported_interfaces.length ();
+
+  if (length > 0)
+    {
+      ACE_Configuration_Section_Key supported_key;
+      this->repo_->config ()->open_section (new_key,
+                                            "supported",
+                                            1,
+                                            supported_key);
+
+      char *supported_path = 0;
+
+      for (i = 0; i < length; ++i)
+        {
+          supported_path = 
+            this->reference_to_path (supported_interfaces[i].in ());
+          this->repo_->config ()->set_string_value (supported_key,
+                                                    this->int_to_string (i),
+                                                    supported_path);
+        }
+    }
+
+  length = initializers.length ();
+
+  if (length > 0)
+    {
+      ACE_Configuration_Section_Key initializers_key;
+      this->repo_->config ()->open_section (new_key,
+                                            "initializers",
+                                            1,
+                                            initializers_key);
+
+      CORBA::ULong arg_count = 0;
+      char *arg_path = 0;
+      ACE_Configuration_Section_Key initializer_key;
+      ACE_Configuration_Section_Key arg_key;
+
+      for (i = 0; i < length; ++i)
+        {
+          this->repo_->config ()->open_section (initializers_key,
+                                                this->int_to_string (i),
+                                                1,
+                                                initializer_key);
+          this->repo_->config ()->set_string_value (
+                                      initializer_key,
+                                      "name",
+                                      initializers[i].name.in ()
+                                    );
+
+          arg_count = initializers[i].members.length ();
+
+          for (CORBA::ULong j = 0; j < arg_count; ++j)
+            {
+              this->repo_->config ()->open_section (initializer_key,
+                                                    this->int_to_string (j),
+                                                    1,
+                                                    arg_key);
+
+              this->repo_->config ()->set_string_value (
+                                          arg_key,
+                                          "arg_name",
+                                          initializers[i].members[j].name.in ()
+                                        );
+
+              arg_path = 
+                this->reference_to_path (
+                          initializers[i].members[j].type_def.in ()
+                        );
+
+              this->repo_->config ()->set_string_value (arg_key,
+                                                        "arg_path",
+                                                        arg_path);
+            }
+        }
+    }
+
+  // Create the object reference.
+  CORBA::Object_var obj =
+    this->create_objref (CORBA::dk_Value,
+                         path.c_str ()
+                         ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (CORBA::ValueDef::_nil ());
+
+  return CORBA::ValueDef::_narrow (obj.in ()
+                                   ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::ValueBoxDef_ptr
@@ -1954,6 +2119,60 @@ TAO_Container_i::create_local_interface_i (
 
   return CORBA::LocalInterfaceDef::_narrow (obj.in ()
                                            ACE_ENV_ARG_PARAMETER);
+}
+
+CORBA::ExtValueDef_ptr 
+TAO_Container_i::create_ext_value (
+      const char *id,
+      const char *name,
+      const char *version,
+      CORBA::Boolean is_custom,
+      CORBA::Boolean is_abstract,
+      CORBA::ValueDef_ptr base_value,
+      CORBA::Boolean is_truncatable,
+      const CORBA::ValueDefSeq &abstract_base_values,
+      const CORBA::InterfaceDefSeq &supported_interfaces,
+      const CORBA::ExtInitializerSeq &initializers
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  TAO_IFR_WRITE_GUARD_RETURN (CORBA::LocalInterfaceDef::_nil ());
+
+  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (CORBA::LocalInterfaceDef::_nil ());
+
+  return this->create_ext_value_i (id,
+                                   name,
+                                   version,
+                                   is_custom,
+                                   is_abstract,
+                                   base_value,
+                                   is_truncatable,
+                                   abstract_base_values,
+                                   supported_interfaces,
+                                   initializers
+                                   ACE_ENV_ARG_PARAMETER);
+}
+
+CORBA::ExtValueDef_ptr 
+TAO_Container_i::create_ext_value_i (
+      const char *id,
+      const char *name,
+      const char * ersion,
+      CORBA::Boolean is_custom,
+      CORBA::Boolean is_abstract,
+      CORBA::ValueDef_ptr base_value,
+      CORBA::Boolean is_truncatable,
+      const CORBA::ValueDefSeq &abstract_base_values,
+      const CORBA::InterfaceDefSeq &supported_interfaces,
+      const CORBA::ExtInitializerSeq &initializers
+      ACE_ENV_ARG_DECL_WITH_DEFAULTS
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // TODO
+  return 0;
 }
 
 CORBA::Boolean
