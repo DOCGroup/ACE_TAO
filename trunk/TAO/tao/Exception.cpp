@@ -43,8 +43,11 @@ ACE_Allocator *TAO_Exceptions::global_allocator_;
 // initialized.
 bool TAO_Exceptions::initialized_ = false;
 
-// TAO specific typecode.
-extern CORBA::TypeCode_ptr TC_completion_status;
+namespace TAO
+{
+  // TAO specific typecode.
+  extern CORBA::TypeCode_ptr TC_completion_status;
+}
 
 
 /**
@@ -1059,7 +1062,7 @@ TAO_Exceptions::make_standard_typecode (CORBA::TypeCode_ptr &tcp,
   (void) safe_full_id.out ();  // No longer need the string
 
   result = result || stream.write_string (completed) == 0;
-  result = result || !(stream << TC_completion_status);
+  result = result || !(stream << TAO::TC_completion_status);
 
   if (result)
     ACE_THROW (CORBA::INITIALIZE ());
