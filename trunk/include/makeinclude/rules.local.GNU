@@ -178,7 +178,7 @@ endif # SOEXT
 depend.local: $(MAKEFILE)
 	@$(RM) -f $(MAKEFILE).old
 	@cp $(MAKEFILE) $(MAKEFILE).old
-	$(ACE_ROOT)/bin/g++dep -f $(MAKEFILE) $(CPPFLAGS) -DMAKEDEPEND $(LSRC) $(SRC)
+	$(ACE_ROOT)/bin/g++dep -f $(MAKEFILE) $(CPPFLAGS) -DMAKEDEPEND $(LSRC) $(SRC) $(PSRC)
 	@cat $(MAKEFILE) | \
 	sed -e "s;$(TAO_ROOT);\$$(TAO_ROOT);g" \
 	    -e "s;$(ACE_ROOT);\$$(ACE_ROOT);g" \
