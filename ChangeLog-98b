@@ -1,3 +1,32 @@
+Sat Oct 24 02:13:11 1998  Detlef Backer <Detlef.Becker@med.siemens.de>
+
+	* ace/OS.cpp (invoke): ACE_Thread_Adapter::invoke() swapped the
+ 	  nesting level of __except() and __finally() because if the
+ 	  selector returns EXCEPTION_EXECUTE_HANDLER a global unwind takes
+ 	  place, activating nested __finally blocks and in this case
+ 	  terminating the thread before having a chance to execute the
+ 	  handler. After reversing the logic, now the exception handler
+ 	  gets called first before the termination handler is invoked.
+
+	  Furthermore I added the call to GetExceptionInformation(),
+ 	  passing the result as a void* into the selector function. This
+ 	  allows a case sensitive handling startegy of the exception in
+ 	  the selector function.
+
+	  (inherit_log_msg): In ACE_Thread_Adapter::inherit_log_msg() I
+	  moved the copy operation from the selector and handler
+	  attributes outside of the "if (this->ostream_)" condition,
+	  because I don't think this condition is related to the SEH.
+
+	  (thr_create): In ACE_OS::thr_create() I "inherit" the current
+	  selector handler into the newly created ACE_Thread_Adapter in
+	  case that the caller did not specify one at invocation.
+
+	* ace/Thread_Manager.cpp (spawn_i): In
+	  ACE_Thread_Manager::spawn_i() I added the initialization of
+	  selector and handler at the creation time of
+	  ACE_Thread_Adapter. 
+
 Fri Oct 23 21:11:03 1998  Douglas C. Schmidt  <schmidt@mambo.cs.wustl.edu>
 
 	* ace/OS.h: Changed a comment to be consistent.  Thanks to Serge
