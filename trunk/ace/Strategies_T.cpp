@@ -295,13 +295,13 @@ template <class SVC_HANDLER> int
 ACE_Process_Strategy<SVC_HANDLER>::open (size_t n_processes,
                                          ACE_Event_Handler *acceptor,
                                          ACE_Reactor *reactor,
-                                         int daemonize)
+                                         int avoid_zombies)
 {
   ACE_TRACE ("ACE_Process_Strategy<SVC_HANDLER>::open");
   this->n_processes_ = n_processes;
   this->acceptor_ = acceptor;
   this->reactor_ = reactor;
-  this->flags_ = daemonize;
+  this->flags_ = avoid_zombies;
 
   return 0;
 }
@@ -312,16 +312,8 @@ ACE_Process_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *svc_handle
 {
   ACE_TRACE ("ACE_Process_Strategy<SVC_HANDLER>::activate_svc_handler");
 
-  int result;
-
-  // If <flags_> is non-0 then we'll use <ACE::daemonize> to avoid
-  // creating zombies.
-  if (this->flags_)
-    result = ACE::daemonize (0, 0, "child");
-  else
-    result = ACE_OS::fork ("child");
-
-  switch (result)
+  // If <flags_> is non-0 then we won't create zombies.
+  switch (ACE::fork ("child", this->flags_))
     {
     case -1:
       ACE_ERROR_RETURN ((LM_ERROR,

@@ -1997,6 +1997,60 @@ ACE::daemonize (const char pathname[],
 #endif /* ACE_LACKS_FORK */
 }
 
+pid_t
+ACE::fork (const char *program_name,
+           int avoid_zombies)
+{
+  if (avoid_zombies == 0)
+    return ACE_OS::fork (program_name);
+  else
+    {
+      // This algorithm is adapted from an example in the Stevens book
+      // "Advanced Programming in the Unix Environment" and an item in
+      // Andrew Gierth's Unix Programming FAQ.  It creates an orphan
+      // process that's inherited by the init process; init cleans up
+      // when the orphan process terminates.
+      // 
+      // Another way to avoid zombies is to ignore or catch the
+      // SIGCHLD signal; we don't use that approach here.
+
+      pid_t pid = ACE_OS::fork ();
+      if (pid == 0)
+        {
+          // The child process forks again to create a grandchild.
+          switch (ACE_OS::fork (program_name)) 
+            {
+            case 0: // grandchild returns 0.
+              return 0;  
+            case -1: // assumes all errnos are < 256
+              ACE_OS::_exit (errno);
+            default:  // child terminates, orphaning grandchild
+              ACE_OS::_exit (0);
+            }
+        }
+
+      // Parent process waits for child to terminate.
+      int status;
+      if (pid < 0 || ACE_OS::waitpid (pid, &status, 0) < 0)
+        return -1;
+
+      // child terminated by calling exit()?
+      if (WIFEXITED (status))
+        { 
+          // child terminated normally?
+          if (WEXITSTATUS (status) == 0)
+            return 1; 
+          else
+            errno = WEXITSTATUS (status);
+        } 
+      else
+        // child didn't call exit(); perhaps it received a signal?
+        errno = EINTR; 
+
+      return -1;
+    }
+}
+
 int
 ACE::max_handles (void)
 {

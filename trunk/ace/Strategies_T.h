@@ -348,28 +348,25 @@ class ACE_Process_Strategy : public ACE_Concurrency_Strategy<SVC_HANDLER>
   // = DESCRIPTION
   //     This class provides a strategy that manages the creation of
   //     processes to handle requests from clients concurrently.  It
-  //     behaves as a "process factory", using <ACE_OS::fork> or
-  //     <ACE::daemonize> to fork threads "on-demand" to run the
-  //     service specified by a user-supplied <SVC_HANDLER> in a
-  //     separate process.
+  //     behaves as a "process factory", using <ACE::fork> to fork
+  //     threads "on-demand" to run the service specified by a
+  //     user-supplied <SVC_HANDLER> in a separate process.
 public:
   // = Intialization and termination methods.
 
   ACE_Process_Strategy (size_t n_processes = 1,
                         ACE_Event_Handler *acceptor = 0,
                         ACE_Reactor * = 0,
-                        int daemonize = 0);
-  // Initialize the strategy.  If <daemonize> is non-0 then use the
-  // <ACE::daemonize> method instead of <ACE_OS::fork> to avoid
-  // zombies.
+                        int avoid_zombies = 0);
+  // Initialize the strategy.  If <avoid_zombies> is non-0 then set a
+  // flag to <ACE::fork> to avoid zombies.
 
   virtual int open (size_t n_processes = 1,
                     ACE_Event_Handler *acceptor = 0,
                     ACE_Reactor * = 0,
-                    int daemonize = 0);
-  // Initialize the strategy.  If <daemonize> is non-0 then use the
-  // <ACE::daemonize> method instead of <ACE_OS::fork> to avoid
-  // zombies.
+                    int avoid_zombies = 0);
+  // Initialize the strategy.  If <avoid_zombies> is non-0 then set a
+  // flag to <ACE::fork> to avoid zombies.
 
   virtual ~ACE_Process_Strategy (void);
 
