@@ -146,8 +146,10 @@ current_factory (PortableInterceptor::ObjectReferenceFactory * current_factory
                  TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return this->poa_->set_obj_ref_factory (current_factory
-                                          TAO_ENV_ARG_DECL);
+  this->poa_->set_obj_ref_factory (current_factory
+                                   TAO_ENV_ARG_DECL);
+
+  return;
 
   ACE_THROW (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 14,
                                    CORBA::COMPLETED_NO));
