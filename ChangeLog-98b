@@ -1,18 +1,22 @@
+Wed Sep 16 11:41:57 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/High_Res_Timer.cpp: added ACE_HAS_POWERPC_TIMER support.
+
 Wed Sep 16 11:28:47 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* netsvcs/clients/Naming/Dump_Restore/Dump_Restore.cpp: In
- 	  general, using iostreams in ACE causes more problems for us than
- 	  it is worth since some systems do not support iostreams.  I have
- 	  rewritten this file to not use iostreams but use
- 	  ACE_DEBUG/ACE_ERROR instead.
+        * netsvcs/clients/Naming/Dump_Restore/Dump_Restore.cpp: In
+          general, using iostreams in ACE causes more problems for us than
+          it is worth since some systems do not support iostreams.  I have
+          rewritten this file to not use iostreams but use
+          ACE_DEBUG/ACE_ERROR instead.
 
 Wed Sep 16 10:49:34 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* bin/auto_compile: Updated to the new directory hierarchy in TAO.
+        * bin/auto_compile: Updated to the new directory hierarchy in TAO.
 
 Wed Sep 16 09:46:31 1998  Steve Huston  <shuston@riverace.com>
 
-	* ace/config-hpux-10.x.h: Added ACE_HAS_DIRENT.
+        * ace/config-hpux-10.x.h: Added ACE_HAS_DIRENT.
 
 Tue Sep 15 20:25:23 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
