@@ -1,3 +1,13 @@
+Fri Jan 12 16:36:11 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
+	* tao/IIOP_Connection_Handler.cpp:
+	* tao/Pluggable.i:
+	* tao/Strategies/SHMIOP_Connection_Handler.cpp:
+	* tao/Strategies/UIOP_Connection_Handler.cpp: We open the sockets
+	  in non-blocking mode  and but change it to blocking only for the
+	  thread-per-connection option.
+
 Fri Jan 12 11:32:01 2001  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/LoadBalancing/ReplicaLocator.cpp (preinvoke):
