@@ -38,7 +38,7 @@ family_t TIMEOUT = {
 };
 
 int ec_table_offset= 1;
-family_t *ec_family_table[NUM_FAMILIES] = {
+family_t *ec_family_table[ec_NUM_FAMILIES] = {
 	
 	&EC2_GROUP,
 	&TIMEOUT,

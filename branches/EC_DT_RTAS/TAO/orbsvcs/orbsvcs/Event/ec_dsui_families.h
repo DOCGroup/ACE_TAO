@@ -3,7 +3,7 @@
 #ifndef _ec_DSUI_FAMILIES_H
 #define _ec_DSUI_FAMILIES_H
 
-#define NUM_FAMILIES 2
+#define ec_NUM_FAMILIES 2
 
 /* DSUI Family: EC2_GROUP
  * "EC DSUI group"
@@ -60,8 +60,8 @@
 #define DSUI_LOG_HISTOGRAM_EC2_GROUP_FAM( histogram )
 #define DSUI_RESET_HISTOGRAM_EC2_GROUP_FAM( histogram )
 #define DSUI_INIT_HISTOGRAM_EC2_GROUP_FAM( histogram )
-#endif                                  
-                                                                                                        
+#endif
+
 
 #ifdef CONFIG_DSTREAM_TIMEOUT
 #define DSUI_EVENT_LOG_TIMEOUT_FAM( event,tag, len, data ) { \
