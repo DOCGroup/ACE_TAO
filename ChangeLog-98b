@@ -1,3 +1,12 @@
+Fri Nov 20 15:49:04 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/OS.i (recvfrom): There is a bug in the Win32 implementation
+ 	  of this function.  It reports an error (with errno=WSAEMSGSIZE),
+ 	  even MSG_PEEK is specified, when the message was too large to
+ 	  fit into the specified buffer and was truncated.  So we fixed it
+ 	  by returning the length of the recv request when
+ 	  errno=WSAEMSGSIZE and the MSG_PEEK flag was specified.
+
 Fri Nov 20 11:15:40 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-sunos5.5.h: changed comment to use
