@@ -48,7 +48,13 @@
 # if !defined(ACE_HAS_PTHREADS)
 #  define ACE_HAS_PTHREADS
 # endif /* ACE_HAS_PTHREADS */
+
+# if !defined(ACE_HAS_PTHREADS_STD)
+#  define ACE_HAS_PTHREADS_STD
+# endif /* ACE_HAS_PTHREADS_STD */
 #endif /* _POSIX_THREADS */
+
+
 
 #if defined(_POSIX_MESSAGE_PASSING) && (_POSIX_MESSAGE_PASSING-0 != -1 )
 # if !defined(ACE_HAS_POSIX_MESSAGE_PASSING)
