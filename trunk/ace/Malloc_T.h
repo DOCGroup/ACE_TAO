@@ -364,6 +364,12 @@ public:
   /// Destructor
   ~ACE_Malloc_T (void);
 
+  /// Get Reference counter.
+  int ref_counter (void);
+
+  /// Release ref counter.
+  int release (void);
+
   /// Releases resources allocated by <ACE_Malloc>.
   int remove (void);
 

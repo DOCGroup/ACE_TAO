@@ -194,6 +194,7 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::open (void)
                            this->cb_ptr_);
 
       this->cb_ptr_->freep_->size_ = 0;
+      this->cb_ptr_->ref_counter_ = 1;
 
       if (rounded_bytes > (sizeof *this->cb_ptr_ + sizeof (MALLOC_HEADER)))
         {
@@ -228,6 +229,8 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::open (void)
           this->shared_free (p + 1);
         }
     }
+  else
+    ++this->cb_ptr_->ref_counter_;
   return 0;
 }
 
@@ -301,6 +304,14 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::remove (void)
 
   // Give the memory pool a chance to release its resources.
   result = this->memory_pool_.release ();
+
+  // Reset this->cb_ptr_ as it is no longer valid.
+  // There's also no need to keep the reference counter as the
+  // underlying memory pool has been destroyed.
+  // Also notice that we are leaving the decision of removing
+  // the pool to users so they can map to the same mmap file
+  // again.
+  this->cb_ptr_ = 0;
 
   return result;
 }

@@ -141,7 +141,6 @@ Echo_Handler::handle_close (ACE_HANDLE,
               this->connection_));
 
   // Shutdown
-  this->peer ().cleanup (1);
   this->destroy ();
   return 0;
 }

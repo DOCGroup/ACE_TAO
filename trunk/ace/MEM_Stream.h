@@ -53,9 +53,6 @@ public:
   /// Destructor.
   ~ACE_MEM_Stream (void);
 
-  /// Set whether we shuold cleanup after ourselves.
-  void cleanup (int set);
-
   //= The following two methods use write and read system calls.
   /// Send n bytes, keep trying until n are sent.
   /// Recv n bytes, keep trying until n are received.
@@ -133,9 +130,6 @@ public:
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
-private:
-  /// Should we clean up after ourselves.
-  int cleanup_;
 };
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)
