@@ -49,12 +49,12 @@ static const char usage [] = "[-? |\n"
                              "       [-n to spawn a new LWP with each thread\n"
                              "[<iterations>]]";
 
-#include "ace/Sched_Params.h"
-#include "ace/ACE.h"
 #include "ace/Task.h"
-#include "ace/Synch.h"
+#include "ace/Sched_Params.h"
+#include "ace/Stats.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/Get_Opt.h"
+#include "ace/Synch.h"
 
 #if defined (ACE_HAS_THREADS)
 
@@ -698,6 +698,9 @@ main (int argc, char *argv [])
 
   int forever = count == 0;
 
+  ACE_Stats context_switch_test_stats;
+  ACE_Stats yield_test_stats;
+
   while (forever  ||  count-- > 0)
     {
       // Check to see if thr_continue (), and therefore thr_suspend (),
@@ -715,35 +718,31 @@ main (int argc, char *argv [])
           // Wait for all tasks to exit.
           ACE_Thread_Manager::instance ()->wait ();
 
-          // NOTE:  the divisions by (ACE_UINT32) 1u below allow transparent
-          // support of ACE_U_LongLongs.
-
           if (ping_suspend_resume_test.elapsed_time () >
                suspend_resume_test.elapsed_time ())
             {
+              context_switch_test_stats.
+                sample (ping_suspend_resume_test.elapsed_time () -
+                        suspend_resume_test.elapsed_time ());
+
               ACE_DEBUG ((LM_INFO, "context switch time is (%.3f - %.3f)/2 = "
                                    "%.3f microseconds\n",
                           (double) (ping_suspend_resume_test.elapsed_time () /
-                                      (ACE_UINT32) 1u) /
-                                    num_iterations,
+                                      num_iterations),
                           (double) (suspend_resume_test.elapsed_time () /
-                                      (ACE_UINT32) 1u) /
-                                    num_iterations,
+                                      num_iterations),
                           (double) ((ping_suspend_resume_test.elapsed_time () -
                                       suspend_resume_test.elapsed_time ()) /
-                                      (ACE_UINT32) 1u) /
-                                    num_iterations / 2));
+                                    num_iterations / 2u)));
             }
           else
             {
               ACE_DEBUG ((LM_INFO, "ping suspend/resume time of %.3f usec was "
                                    "less than suspend/resume time of %.3f\n",
                           (double) (ping_suspend_resume_test.elapsed_time () /
-                                      (ACE_UINT32) 1u) /
-                                    num_iterations,
+                                      num_iterations),
                           (double) (suspend_resume_test.elapsed_time () /
-                                      (ACE_UINT32) 1u) /
-                                    num_iterations));
+                                      num_iterations)));
             }
         }
 
@@ -751,6 +750,8 @@ main (int argc, char *argv [])
       Yield_Test yield_test (num_iterations);
       // Wait for all tasks to exit.
       ACE_Thread_Manager::instance ()->wait ();
+
+      yield_test_stats.sample (yield_test.elapsed_time ());
 
       // Try _really_ hard not to use floating point.
       ACE_DEBUG ((LM_INFO, "context switch time from yield test is %u.%03u "
@@ -761,6 +762,12 @@ main (int argc, char *argv [])
                     (yield_test.elapsed_time () % (num_iterations * 2u)) *
                       1000u / num_iterations / 2u));
     }
+
+  ACE_OS::printf ("context_switch_test:\n");
+  context_switch_test_stats.print_summary (3, num_iterations * 2u);
+
+  ACE_OS::printf ("\nyield_test:\n");
+  yield_test_stats.print_summary (3, num_iterations * 2u);
 
   return 0;
 }
