@@ -1,3 +1,14 @@
+Thu Feb 21 15:37:37 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp (ssliop_connect):
+
+	  If trust in neither the client nor the target is explicitly
+	  specified, then use the default setting found in the
+	  ACE_SSL_Context singleton.  Fixes a problem a where client side
+	  authentication was always disabled if not explicitly enabled via
+	  the SecurityLevel2::EstablishTrustPolicy.  Thanks to Tom
+	  Venturella at OCI for pointing out this problem.
+
 Thu Feb 21 13:15:50 2002  Chris Cleeland  <cleeland_c@ociweb.com>
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.cpp (init): Added new
