@@ -31,9 +31,19 @@ $nsport = 20000 + $uid;
 $client_port = 0;
 $server_port = 0;
 
-$SV = Process::Create ("..$DIR_SEPARATOR"."IDL_Cubit".$DIR_SEPARATOR."server".$Process::EXE_EXT, 
-                       "-ORBport ".$server_port." -ORBnameserviceport ".$nsport." -ORBobjrefstyle url");
+$SV = Process::Create ("..$DIR_SEPARATOR"."IDL_Cubit".
+		       $DIR_SEPARATOR."server".$Process::EXE_EXT, 
+                       " -ORBport ".$server_port.
+		       " -ORBnameserviceport ".$nsport.
+		       " -ORBobjrefstyle url");
 
 sleep (2);
 
-system ("client".$Process::EXE_EXT." -x -ORBnameserviceport ".$nsport." -ORBobjrefstyle url -ORBport ".$client_port );
+$status = system ("client".$Process::EXE_EXT.
+		  " -x -ORBnameserviceport ".$nsport.
+		  " -ORBobjrefstyle url -ORBport ".$client_port );
+
+# @@ TODO change to Wait() once the -x option works.
+$SV->Kill ();
+
+exit $status;

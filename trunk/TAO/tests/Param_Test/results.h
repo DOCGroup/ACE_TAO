@@ -32,7 +32,7 @@ public:
   ~Results (void);
   // destructor
 
-  void print_stats (const char *call_name);
+  void print_stats (void);
   // prints the time stats
 
   void print_exception (const char *call_name,

@@ -14,14 +14,18 @@ $ior2file = "theior2";
 $sleeptime = 3;
 
 $SV1 = Process::Create ("server_A".$Process::EXE_EXT, 
-                        "-ORBport $server1_port -o $ior1file -ORBobjrefstyle url");
+                        " -ORBport $server1_port -o $ior1file ".
+			" -ORBobjrefstyle url");
 
 $SV2 = Process::Create ("server_B".$Process::EXE_EXT, 
-                        "-ORBport $server2_port -o $ior2file -ORBobjrefstyle url");
+                        " -ORBport $server2_port -o $ior2file ".
+			" -ORBobjrefstyle url");
 
 sleep ($sleeptime);
 
-system ("initiator".$Process::EXE_EXT." -ORBport $client_port -f $ior1file -g $ior2file");
+$status = system ("initiator".$Process::EXE_EXT.
+		  " -ORBport $client_port ".
+		  " -f $ior1file -g $ior2file");
 
 $SV1->Kill ();
 $SV2->Kill ();
@@ -36,3 +40,6 @@ else
   system ("rm ".$ior1file);
   system ("rm ".$ior2file);
 }
+
+# @@ Capture any errors from the server too.
+exit $status;

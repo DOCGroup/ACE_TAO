@@ -14,8 +14,17 @@ $iorfile = "theior";
 $sleeptime = 3;
 
 $SV = Process::Create ("server".$Process::EXE_EXT, 
-                       "-ORBport ".$server_port." -ORBnameserviceport ".$nsport." -ORBobjrefstyle url");
+                       " -ORBport ".$server_port.
+		       " -ORBnameserviceport ".$nsport.
+		       " -ORBobjrefstyle url");
 
 sleep ($sleeptime);
 
-system ("client".$Process::EXE_EXT." -x -ORBnameserviceport ".$nsport." -ORBport ".$client_port );
+$status  = system ("client".$Process::EXE_EXT.
+		   " -x -ORBnameserviceport ".$nsport.
+		   " -ORBport ".$client_port );
+
+$SV->Wait ();
+
+# @@ Capture any errors from the server too.
+exit $status;
