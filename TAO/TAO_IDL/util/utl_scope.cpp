@@ -1215,26 +1215,72 @@ UTL_Scope::add_to_referenced(AST_Decl *e, idl_bool recursive)
 void
 UTL_Scope::add_to_scope(AST_Decl *e)
 {
-  AST_Decl      **tmp;
-  long          odecls_allocated;
-  long          i;
-
   if (e == NULL) return;
 
-  // Make sure there's space for one more
-  if (pd_decls_allocated == pd_decls_used) {
+  AST_Decl **tmp = this->pd_referenced;
+  UTL_IdListActiveIterator *iter;
+  long i = this->pd_referenced_used;
+  long odecls_allocated;
+  Identifier *decl_name = e->local_name ();
 
-    odecls_allocated    = pd_decls_allocated;
-    pd_decls_allocated  += INCREMENT;
-    tmp                 = new AST_Decl *[pd_decls_allocated];
+  // First, make sure there's no clash between e, that was
+  // just declared, and some other identifier referenced
+  // in this scope.
+  for (; i > 0; i--, tmp++)
+    {
+      UTL_ScopedName *s = (*tmp)->name ();
+      iter = new UTL_IdListActiveIterator (s);
+      Identifier *ref_name = iter->item ();
+      char *ref_string = ref_name->get_string ();
 
-    for (i = 0; i < odecls_allocated; i++)
-      tmp[i] = pd_decls[i];
+      // Get the top level compenent of the scoped
+      // name. That's the only one that matters for
+      // collision comparisons.
+      while (!ACE_OS::strcmp (ref_string, "")
+             || !ACE_OS::strcmp (ref_string, "::"))
+        {
+          iter->next ();
+          ref_name = iter->item ();
+          ref_string = ref_name->get_string ();
+        }
 
-    delete []pd_decls;
+      delete iter;
 
-    pd_decls = tmp;
-  }
+      // If the names compare exactly, it's a redefinition 
+      // error, unless they're both modules (which can be
+      // reopened) or we have a belated definition of a 
+      // forward-declared interface.
+      if (decl_name->compare (ref_name) == I_TRUE
+          && e->node_type () != AST_Decl::NT_module
+          && ((*tmp)->node_type () != AST_Decl::NT_interface_fwd
+              || e->node_type () != AST_Decl::NT_interface))
+        {
+          idl_global->err ()->redef_error (decl_name->get_string (),
+                                           ref_name->get_string ());
+        }
+
+      // If the spellings differ only by case, it's also an error
+      // (case_compare outputs its own error message).
+      (void) decl_name->case_compare (ref_name);
+    }
+
+  // Now make sure there's space for one more.
+  if (pd_decls_allocated == pd_decls_used) 
+    {
+
+      odecls_allocated    = pd_decls_allocated;
+      pd_decls_allocated  += INCREMENT;
+      tmp                 = new AST_Decl *[pd_decls_allocated];
+
+      for (i = 0; i < odecls_allocated; i++)
+        {
+          tmp[i] = this->pd_decls[i];
+        }
+
+      delete [] this->pd_decls;
+
+      this->pd_decls = tmp;
+    }
 
   // Insert new decl
   pd_decls[pd_decls_used++] = e;
