@@ -1239,7 +1239,9 @@ ACE_OS::cond_wait (ACE_cond_t *cv,
 
 #if defined (ACE_HAS_SIGNAL_OBJECT_AND_WAIT)
   // This call will automatically release the mutex and wait on the semaphore.
-  ACE_OSCALL (ACE_ADAPT_RETVAL (::SignalObjectAndWait (external_mutex->proc_mutex_, cv->sema_, INFINITE, FALSE), result),
+  ACE_OSCALL (ACE_ADAPT_RETVAL (::SignalObjectAndWait (external_mutex->proc_mutex_, 
+						       cv->sema_, INFINITE, FALSE), 
+				result),
               int, -1, result);
 #else
   // We keep the lock held just long enough to increment the count of
@@ -1329,7 +1331,8 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
   
 #if defined (ACE_HAS_SIGNAL_OBJECT_AND_WAIT)
   // This call will automatically release the mutex and wait on the semaphore.
-  result = ::SignalObjectAndWait (external_mutex->proc_mutex_, cv->sema_, msec_timeout, FALSE);
+  result = ::SignalObjectAndWait (external_mutex->proc_mutex_, 
+				  cv->sema_, msec_timeout, FALSE);
 #else
   // We keep the lock held just long enough to increment the count of
   // waiters by one.  Note that we can't keep it held across the call

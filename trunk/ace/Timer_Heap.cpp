@@ -61,7 +61,6 @@ ACE_Timer_Heap::pop_freelist (void)
   // The freelist values in the <timer_ids_> are negative, so we need
   // to negate them to get the next freelist "pointer."
   this->freelist_ = -this->timer_ids_[this->freelist_];
-  ACE_ASSERT (this->freelist_ != this->max_size_);
   return new_id;
 }
 
@@ -288,9 +287,7 @@ ACE_Timer_Heap::schedule (ACE_Event_Handler *handler,
 
   int timer_id = -1;
 
-  if (this->cur_size_ >= this->max_size_)
-    errno = ENOMEM;
-  else
+  if (this->cur_size_ < this->max_size_)
     {
       // Obtain the next unique sequence number.
       timer_id = this->timer_id ();
@@ -308,6 +305,8 @@ ACE_Timer_Heap::schedule (ACE_Event_Handler *handler,
       
       this->insert (temp);
     }
+  else
+    errno = ENOMEM;
 
   return timer_id;
 }
