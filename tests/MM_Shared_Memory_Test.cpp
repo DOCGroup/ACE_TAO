@@ -112,7 +112,6 @@ parent (void * = 0)
 
   // Allow the child to proceed.
   result = synchronizer->release ();
-  ACE_DEBUG((LM_ERROR, "(%P|%t) %p\n", "release failed"));
   ACE_ASSERT (result != -1);
 
   // Perform a "busy wait" until the child sets the character to '*'.
