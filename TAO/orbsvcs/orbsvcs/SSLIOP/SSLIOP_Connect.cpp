@@ -83,7 +83,7 @@ TAO_SSLIOP_Server_Connection_Handler::TAO_SSLIOP_Server_Connection_Handler (ACE_
 
 TAO_SSLIOP_Server_Connection_Handler::TAO_SSLIOP_Server_Connection_Handler
  (TAO_ORB_Core *orb_core,
-  CORBA::Boolean /*lite_flag */)
+  CORBA::Boolean /* lite_flag */)
   : TAO_SSLIOP_Handler_Base (orb_core),
     transport_ (this, orb_core),
     acceptor_factory_ (orb_core),
@@ -140,20 +140,24 @@ TAO_SSLIOP_Server_Connection_Handler::open (void*)
   // operation fails we are out of luck (some platforms do not support
   // it and return -1).
 
-  // Called by the <Strategy_Acceptor> when the handler is completely
-  // connected.
+  // Called by the <Strategy_Acceptor> when the handler is
+  // completely connected.
   ACE_INET_Addr addr;
 
   if (this->peer ().get_remote_addr (addr) == -1)
     return -1;
 
-  char client[MAXHOSTNAMELEN + 16];
-  (void) addr.addr_to_string (client, sizeof (client));
-
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "TAO (%P|%t) IIOP connection from client <%s> on %d\n",
-                client, this->peer ().get_handle ()));
+    {
+      char client[MAXHOSTNAMELEN + 16];
+      (void) addr.addr_to_string (client, sizeof (client));
+
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("TAO (%P|%t) IIOP connection from ")
+                  ACE_TEXT ("client <%s> on %d\n"),
+                  client,
+                  this->peer ().get_handle ()));
+    }
 
   return 0;
 }
@@ -172,8 +176,9 @@ TAO_SSLIOP_Server_Connection_Handler::activate (long flags,
 {
   if (TAO_orbdebug)
     ACE_DEBUG  ((LM_DEBUG,
-                 "TAO (%P|%t) SSLIOP_Server_Connection_Handler::activate %d "
-                 "threads, flags = %d\n",
+                 ACE_TEXT ("TAO (%P|%t) ")
+                 ACE_TEXT ("SSLIOP_Server_Connection_Handler::activate %d ")
+                 ACE_TEXT ("threads, flags = %d\n"),
                  n_threads,
                  flags,
                  THR_BOUND));
@@ -281,9 +286,9 @@ TAO_SSLIOP_Server_Connection_Handler::handle_input_i (ACE_HANDLE,
   if (result == -1 && TAO_debug_level > 0)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "TAO (%P|%t) - %p\n",
-                  "SSLIOP_Server_Connection_Handler::handle_input, "
-                  "handle_input"));
+                  ACE_TEXT ("TAO (%P|%t) - %p\n "),
+                  ACE_TEXT ("SSLIOP_Server_Connection_Handler::handle_input, ")
+                  ACE_TEXT ("handle_input")));
     }
 
   if (result == 0 || result == -1)
@@ -401,7 +406,7 @@ TAO_SSLIOP_Client_Connection_Handler::open (void *)
                                 (void *) &nodelay,
                                 sizeof (nodelay)) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "NODELAY failed\n"),
+                       ACE_TEXT ("NODELAY failed\n")),
                       -1);
 #endif /* TCP_NODELAY */
 
@@ -417,14 +422,18 @@ TAO_SSLIOP_Client_Connection_Handler::open (void *)
   if (this->peer ().get_remote_addr (addr) == -1)
     return -1;
 
-  char server[MAXHOSTNAMELEN + 16];
-
-  (void) addr.addr_to_string (server, sizeof (server));
-
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "TAO (%P|%t) IIOP connection to server <%s> on %d\n",
-                server, this->peer ().get_handle ()));
+    {
+      char server[MAXHOSTNAMELEN + 16];
+
+      (void) addr.addr_to_string (server, sizeof (server));
+
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("TAO (%P|%t) IIOP connection to server ")
+                  ACE_TEXT ("<%s> on %d\n"),
+                  server,
+                  this->peer ().get_handle ()));
+    }
 
   // Register the handler with the Reactor if necessary.
   return this->transport ()->wait_strategy ()->register_handler ();
@@ -453,6 +462,29 @@ TAO_SSLIOP_Client_Connection_Handler::handle_timeout (const ACE_Time_Value &,
   // This method is called when buffering timer expires.
   //
 
+  ACE_Time_Value *max_wait_time = 0;
+
+#if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
+
+  TAO_RelativeRoundtripTimeoutPolicy *timeout_policy =
+    this->orb_core_->stubless_relative_roundtrip_timeout ();
+
+  // Automatically release the policy
+  CORBA::Object_var auto_release = timeout_policy;
+
+  ACE_Time_Value max_wait_time_value;
+
+  // If max_wait_time is not zero then this is not the first attempt
+  // to send the request, the timeout value includes *all* those
+  // attempts.
+  if (timeout_policy != 0)
+    {
+      timeout_policy->set_time_value (max_wait_time_value);
+      max_wait_time = &max_wait_time_value;
+    }
+
+#endif /* TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
+
   // Cannot deal with errors, and therefore they are ignored.
   this->transport ()->send_buffered_messages ();
 
@@ -472,8 +504,11 @@ TAO_SSLIOP_Client_Connection_Handler::handle_close (ACE_HANDLE handle,
 
   if (TAO_debug_level > 0)
     ACE_DEBUG  ((LM_DEBUG,
-                 "TAO (%P|%t) SSLIOP_Client_Connection_Handler::"
-                 "handle_close (%d, %d)\n", handle, rm));
+                 ACE_TEXT ("TAO (%P|%t) ")
+                 ACE_TEXT ("SSLIOP_Client_Connection_Handler::")
+                 ACE_TEXT ("handle_close (%d, %d)\n"),
+                 handle,
+                 rm));
 
   if (this->recycler ())
     this->recycler ()->mark_as_closed (this->recycling_act ());
@@ -495,8 +530,11 @@ TAO_SSLIOP_Client_Connection_Handler::handle_close_i (ACE_HANDLE handle,
 
   if (TAO_debug_level > 0)
     ACE_DEBUG  ((LM_DEBUG,
-                 "TAO (%P|%t) SSLIOP_Client_Connection_Handler::"
-                 "handle_close_i (%d, %d)\n", handle, rm));
+                 ACE_TEXT ("TAO (%P|%t) ")
+                 ACE_TEXT ("SSLIOP_Client_Connection_Handler::")
+                 ACE_TEXT ("handle_close_i (%d, %d)\n"),
+                 handle,
+                 rm));
 
   if (this->recycler ())
     this->recycler ()->mark_as_closed_i (this->recycling_act ());
