@@ -130,8 +130,9 @@ main (int argc, char *argv[])
           flags = THR_NEW_LWP|THR_JOINABLE;
         }
       else
-        ACE_ERROR ((LM_ERROR,
-                    "server (%P|%t): sched_params failed\n"));
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "server (%P|%t): sched_params failed\n"),
+                          1);
     }
 
   ACE_TRY_NEW_ENV
@@ -170,7 +171,11 @@ main (int argc, char *argv[])
           client[i].set (server.in (), niterations, i, orb.in ());
 
           CORBA::Short native_priority = 0;
-          pm->to_native (priorities[i], native_priority);
+          if (pm->to_native (priorities[i], native_priority) == 0)
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "Cannot convert corba priority %d to native priority\n",
+                               priorities[i]),
+                              1);
 
           ACE_DEBUG ((LM_DEBUG,
                       "Activating thread id = %d at priority = %d\n",
@@ -289,6 +294,7 @@ Client::svc (void)
       // increase the likelihood that each thread will have its own
       // connection.  (This is not an issue when all threads&endpoints
       // are of different priorities).
+      
       for (int j = 0; j < 100; ++j)
         {
           CORBA::PolicyList_var pols;
@@ -296,7 +302,7 @@ Client::svc (void)
                                          ACE_TRY_ENV);
           ACE_TRY_CHECK;
         }
-
+      
       ACE_hrtime_t throughput_base = ACE_OS::gethrtime ();
 
       for (int i = 0; i < this->niterations_; ++i)

@@ -23,7 +23,6 @@ $SV = Process::Create ($EXEPREFIX."server$EXE_EXT ",
 		       . " -ORBEndPoint iiop://localhost:0/priority=3 "
                        . " -ORBEndPoint iiop://localhost:0/priority=4 "
                        . " -ORBEndPoint iiop://localhost:0/priority=5 "
-                       . " -ORBEndPoint iiop://localhost:0/priority=30 "
                        . " -o $iorfile");
 
 if (ACE::waitforfile_timed ($iorfile, 5) == -1) {
@@ -35,7 +34,7 @@ if (ACE::waitforfile_timed ($iorfile, 5) == -1) {
 $CL = Process::Create ($EXEPREFIX."client$EXE_EXT ",
                        " -ORBSvcConf client.conf "
                        . " -i file://$iorfile "
-                       . " -t 1 -t 2 -t 3 -t 4 -t 5 -t 30 -n 400000");
+                       . " -t 1 -t 2 -t 3 -t 4 -t 5 -n 4000");
 
 $client = $CL->TimedWait (60);
 if ($client == -1) {
