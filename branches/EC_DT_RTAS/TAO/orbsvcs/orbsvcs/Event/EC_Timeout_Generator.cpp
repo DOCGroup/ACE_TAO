@@ -44,10 +44,10 @@ TAO_EC_Timeout_Adapter::handle_timeout (const ACE_Time_Value & /* tv */,
       evnt.header.type = filter->type ();
       evnt.header.source = 0;
 
-      kokyu::Object_Counter::object_id oid = kokyu::OBJECT_COUNTER->increment();
+      Kokyu::Object_Counter::object_id oid = Kokyu::OBJECT_COUNTER->increment();
       evnt.header.eid.id = oid.id;
       evnt.header.eid.tid = oid.tid;
-      DSUI_EVENT_LOG (EC2_GROUP_FAM, ENTER_TIMEOUT_GENERATOR, 0, sizeof(kokyu::Object_Counter::object_id), (char*)&oid);
+      DSUI_EVENT_LOG (EC2_GROUP_FAM, ENTER_TIMEOUT_GENERATOR, 0, sizeof(Kokyu::Object_Counter::object_id), (char*)&oid);
 
       RtecEventComm::EventSet single_event (1, 1, &evnt, 0);
 

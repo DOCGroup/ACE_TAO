@@ -42,6 +42,7 @@ module RtecEventComm
   typedef long _EventType;
   typedef long EventID_Type;
   typedef long EventTID_Type;
+  typedef long QueueID_Type;
 
   /**
    * @struct EventID
@@ -63,6 +64,11 @@ module RtecEventComm
      * Thread ID of the thread which created the Event
      */
     EventTID_Type tid;
+
+    /**
+     * Queue ID
+     */
+    QueueID_Type queue_id;
   };
 
   /**
