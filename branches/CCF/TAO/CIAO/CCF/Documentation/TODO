@@ -1,0 +1,42 @@
+@@ post-cvs: write build instructions
+
+@@+ add Elements to IDL3 and CIDL for consistency
+
+@@+ Should CIDL syntax tree files have 'using namespace IDL2::SyntaxTree;' 
+    directives?
+
+@@++ Add traversal of inheritance list as done for scope.
+
+@@+ it's a good idea to include ostream instead of iostream where I only
+    use ostreams
+
+@@+++ Currently character stream is scanned completely before parsing. The
+      better approach would be scanning on demand (1).
+
+@@+++ IDL2::Parsing::parse () should be eliminated (or terminated if you 
+      like ;-). This item depends on (1)
+
+@@++ 'using namespace' cleanup
+
+@@+++ Diagnostic evolution
+
+@@++ XML indentation buffer
+
+@@+++ Anonymous types and typedef's model
+
+@@+++ Intorduction (injection) of names into scope
+
+@@++++ C Preporcessor integration (wave)
+
+@@ IDL feature: type id/prefix
+
+@@ IDL feature: exceptions
+
+@@ IDL feature: built-in types
+
+@@ IDL feature: sequences
+
+@@ IDL feature: struct
+
+@@ IDL feature: literals and expressions
+

@@ -1,0 +1,19 @@
+# file      : CCF/CIDL/Makefile.alt
+# author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
+# cvs-id    : $id$
+
+root := ../..
+
+include $(root)/Bootstrap.rules
+
+$(call include, $(root)/Config.rules)
+
+$(call include, $(UTILITY_ROOT)/BuildRules/Recursion.pre.rules)
+
+target_makefile_list  := Makefile.archive
+target_directory_list := SyntaxTree Traversal SemanticAction
+default_makefile_name := Makefile.alt
+
+Makefile.archive : SyntaxTree Traversal SemanticAction
+
+$(call include, $(UTILITY_ROOT)/BuildRules/Recursion.post.rules)

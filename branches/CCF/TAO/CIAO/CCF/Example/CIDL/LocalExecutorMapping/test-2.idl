@@ -1,0 +1,23 @@
+// file      : CCF/Example/CIDL/LocalExecutorMapping/test-2.idl
+// author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
+// cvs-id    : $id$
+
+include "test-1.idl";
+
+interface Goof {};
+
+module M2
+{
+  component C2 : M1::C1
+  {
+    provides Goof g;
+  };
+  
+  home H2 : M1::H1 manages C2
+  {
+    attribute long l;
+    attribute M::I i;
+    void foo (in long l, inout boolean b, out long ol, in M::I i);
+    factory new (in long l);
+  };
+};
