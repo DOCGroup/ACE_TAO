@@ -392,40 +392,29 @@ TAO_Active_Demux_ObjTable::parse_object_id (const PortableServer::ObjectId &id,
                                             CORBA::ULong &generation)
 {
   CORBA::ULong id_data[2];
-  const int index_field = 0;
-  const int generation_field = 1;
 
-#if 0
-  ::sscanf (buffer,
-            "%8x%8x",
-            &index,
-            &generation);
-#elif 0
-  index =
-    ((CORBA::ULong)ACE::hex2byte (id[0]) << 28) +
-    ((CORBA::ULong)ACE::hex2byte (id[1]) << 24) +
-    ((CORBA::ULong)ACE::hex2byte (id[2]) << 20) +
-    ((CORBA::ULong)ACE::hex2byte (id[3]) << 16) +
-    ((CORBA::ULong)ACE::hex2byte (id[4]) << 12) +
-    ((CORBA::ULong)ACE::hex2byte (id[5]) <<  8) +
-    ((CORBA::ULong)ACE::hex2byte (id[6]) <<  4) +
-    ((CORBA::ULong)ACE::hex2byte (id[7]));
-  generation =
-    ((CORBA::ULong)ACE::hex2byte (id[8])  << 28) +
-    ((CORBA::ULong)ACE::hex2byte (id[9])  << 24) +
-    ((CORBA::ULong)ACE::hex2byte (id[10]) << 20) +
-    ((CORBA::ULong)ACE::hex2byte (id[11]) << 16) +
-    ((CORBA::ULong)ACE::hex2byte (id[12]) << 12) +
-    ((CORBA::ULong)ACE::hex2byte (id[13]) <<  8) +
-    ((CORBA::ULong)ACE::hex2byte (id[14]) <<  4) +
-    ((CORBA::ULong)ACE::hex2byte (id[15]));
-#else
   ACE_OS::memcpy (&id_data, 
                   id.get_buffer (), 
                   sizeof id_data);
+
   index = id_data[TAO_Active_Demux_ObjTable::INDEX_FIELD];
   generation = id_data[TAO_Active_Demux_ObjTable::GENERATION_FIELD];
-#endif
+
   return 0;
+}
+
+ACE_INLINE 
+TAO_Dynamic_Hash_ObjTable::~TAO_Dynamic_Hash_ObjTable (void)
+{
+}
+
+ACE_INLINE 
+TAO_Dynamic_Hash_ObjTable_Iterator::~TAO_Dynamic_Hash_ObjTable_Iterator (void)
+{
+}
+
+ACE_INLINE 
+TAO_Array_ObjTable_Iterator::~TAO_Array_ObjTable_Iterator (void)
+{
 }
 

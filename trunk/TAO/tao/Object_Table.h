@@ -141,7 +141,7 @@ public:
 
   TAO_Object_Table_Iterator (const TAO_Object_Table_Iterator &x);
   TAO_Object_Table_Iterator &operator=(const TAO_Object_Table_Iterator &x);
-  ~TAO_Object_Table_Iterator (void);
+  virtual ~TAO_Object_Table_Iterator (void);
   // This is a well behaved class
 
   const TAO_Object_Table_Entry &operator *(void) const;
@@ -171,7 +171,7 @@ public:
                     int delete_impl = 0);
   // Constructor
   
-  ~TAO_Object_Table (void);
+  virtual ~TAO_Object_Table (void);
   // Destructor.
 
   int bind (const PortableServer::ObjectId &id, 
@@ -257,6 +257,8 @@ class TAO_Export TAO_Dynamic_Hash_ObjTable : public TAO_Object_Table_Impl
 public:
   TAO_Dynamic_Hash_ObjTable (CORBA::ULong size);
   // constructor. If size is 0, some default is used.
+  
+  virtual ~TAO_Dynamic_Hash_ObjTable (CORBA::ULong size);
 
   // Implement TAO_Dynamic_Hash_ObjTable....
   virtual int find (const PortableServer::Servant servant);
@@ -288,6 +290,7 @@ class TAO_Export TAO_Dynamic_Hash_ObjTable_Iterator : public TAO_Object_Table_It
 public:
   typedef TAO_Dynamic_Hash_ObjTable::Iterator Impl;
   TAO_Dynamic_Hash_ObjTable_Iterator (const Impl &impl);
+  virtual ~TAO_Dynamic_Hash_ObjTable_Iterator (void);
 
   // default copy ctor, dtor and operator=
 
@@ -310,6 +313,7 @@ class TAO_Export TAO_Array_ObjTable_Iterator : public TAO_Object_Table_Iterator_
   //   Iterator for TAO_Linear_ObjTable and TAO_Active_Demux_ObjTable
 public:
   TAO_Array_ObjTable_Iterator (TAO_Object_Table_Entry *pos);
+  virtual ~TAO_Array_ObjTable_Iterator (void);
 
   // default copy ctor, dtor and operator=
 
@@ -391,7 +395,7 @@ public:
   TAO_Active_Demux_ObjTable (CORBA::ULong size);
   // Constructor, including an initial size.
 
-  ~TAO_Active_Demux_ObjTable (void);
+  virtual ~TAO_Active_Demux_ObjTable (void);
   // Destructor
 
   // Implement TAO_Dynamic_Hash_ObjTable....
