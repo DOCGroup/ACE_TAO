@@ -143,7 +143,9 @@ Base_Server::start_orb_and_poa (void)
     }
   ACE_ENDTRY;
 
-  return 0;
+  // If we have got to this point, everything has gone well.  return
+  // normally
+  return 1;
 }
 
 void

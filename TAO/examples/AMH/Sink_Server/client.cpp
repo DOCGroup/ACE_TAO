@@ -161,13 +161,13 @@ Client_Task::narrow_servant (void)
 int
 Client_Task::run_test (void)
 {
+  ACE_hrtime_t test_start = 0;
+  ACE_hrtime_t test_end = 0;
+
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      // High resolution timer calibration
-      ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
-
-      ACE_hrtime_t test_start = ACE_OS::gethrtime ();
+      test_start = ACE_OS::gethrtime ();
 
       this->roundtrip_->start_test (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -177,17 +177,8 @@ Client_Task::run_test (void)
       this->roundtrip_->end_test (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      ACE_hrtime_t test_end = ACE_OS::gethrtime ();
+      test_end = ACE_OS::gethrtime ();
 
-      ACE_Basic_Stats totals;
-
-      this->accumulate_and_dump (totals, "Task", gsf);
-
-      totals.dump_results ("Total", gsf);
-
-      ACE_Throughput_Stats::dump_throughput ("Total", gsf,
-                                             test_end - test_start,
-                                             totals.samples_count ());
     }
   ACE_CATCHANY
     {
@@ -195,6 +186,20 @@ Client_Task::run_test (void)
     }
   ACE_ENDTRY;
 
+  
+  // High resolution timer calibration
+  ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
+
+  ACE_Basic_Stats totals;
+  
+  this->accumulate_and_dump (totals, "Task", gsf);
+  
+  totals.dump_results ("Total", gsf);
+  
+  ACE_Throughput_Stats::dump_throughput ("Total", gsf,
+                                         test_end - test_start,
+                                         totals.samples_count ());
+  
   return 1;
 }
 
