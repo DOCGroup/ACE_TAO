@@ -51,36 +51,6 @@ typedef ACE_Thread_Timer_Queue_Adapter<Timer_Heap>
 // Forward declaration.
 class Thread_Bounded_Packet_Relay_Driver;
 
-template <class RECEIVER, class ACTION>
-class Command : public Command_Base
-{
-  // = TITLE
-  //    Defines an abstract class that allows us to invoke commands
-  //    without knowing anything about the implementation.  This class
-  //    is used in the <Bounded_Packet_Relay_Driver> to invoke
-  //    operations of the driver.
-  //
-  // = DESCRIPTION
-  //    This class declares an interface to execute operations,
-  //    binding a RECEIVER object with an ACTION.  The RECEIVER knows
-  //    how to implement the operation.  A class can invoke operations
-  //    without knowing anything about it, or how it was implemented.
-public:
-  Command (RECEIVER &recvr, ACTION action);
-  // Sets the <receiver_> of the Command to recvr, and the <action_>
-  // of the Command to <action>.
-
-  virtual int execute (void *arg);
-  // Invokes the method <action_> from the object <receiver_>.
-
-private:
-  RECEIVER &receiver_;
-  // Object where the method resides.
-
-  ACTION action_;
-  // Method that is going to be invoked.
-};
-
 class Text_Input_Device_Wrapper : public Input_Device_Wrapper_Base
 {
   // = TITLE
@@ -222,21 +192,6 @@ private:
 
   Thread_Bounded_Packet_Relay_Driver &driver_;
   // The thread timer queue test driver.
-
-  u_long packet_count_;
-  // Count of packets to send in a transmission.
-
-  u_long arrival_period_;
-  // Rate at which input packets are to arrive.
-
-  u_long send_period_;
-  // Rate at which packets are to be relayed (usec).
-
-  u_long duration_limit_;
-  // Limit on the duration of the transmission (usec).
-
-  u_long logging_level_;
-  // Logging level.
 
 };
 

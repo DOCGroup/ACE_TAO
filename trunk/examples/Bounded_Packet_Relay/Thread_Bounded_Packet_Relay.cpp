@@ -34,24 +34,6 @@ ACE_RCSID(Bounded_Packet_Relay, Thread_Bounded_Packet_Relay, "$Id$")
 
 // Constructor.
 
-template <class RECEIVER, class ACTION>
-Command<RECEIVER, ACTION>::Command (RECEIVER &recvr,
-                                    ACTION action)
-  : receiver_ (recvr),
-    action_ (action)
-{
-}
-
-// Invokes an operation.
-
-template <class RECEIVER, class ACTION> int
-Command<RECEIVER, ACTION>::execute (void *arg)
-{
-  return (receiver_.*action_) (arg);
-}
-
-// Constructor.
-
 Text_Input_Device_Wrapper::Text_Input_Device_Wrapper (ACE_Thread_Manager *input_task_mgr,
                                                       size_t read_length, 
                                                       const char* text)
@@ -119,18 +101,19 @@ Text_Output_Device_Wrapper::write_output_message (void *message)
   if (message)
     {
       if (logging_)
-        {
-// CDG - TBD - print (also fix other printfs to use ACE_DEBUG, ACE_ERROR)
-//      ACE_DEBUG ();
-        }
+	  {
+          ACE_DEBUG ((LM_DEBUG, "%s", 
+	      ACE_static_cast (ACE_Message_Block *, message)->
+		    rd_ptr ()));
+	  }
 
       delete ACE_static_cast (ACE_Message_Block *, message);
+	  return 0;
     }
 
   ACE_ERROR_RETURN ((LM_ERROR,
                      "Text_Output_Device_Wrapper::"
                      "write_output_message: null argument"), -1);
-  return 0;
 }
 
 // Modifies device settings based on passed pointer to a u_long turns
@@ -146,6 +129,7 @@ Text_Output_Device_Wrapper::modify_device_settings (void *logging)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "null logging level pointer"),
                       -1);
+  return 0;
 }
 
 // Constructor.
@@ -176,7 +160,7 @@ User_Input_Task::svc (void)
   this->relay_->end_transmission (Bounded_Packet_Relay_Base::CANCELLED);
   this->queue_->deactivate ();
   ACE_DEBUG ((LM_DEBUG,
-              "terminating input thread\n"));
+              "terminating user input thread\n"));
   return 0;
 } 
 
@@ -187,7 +171,7 @@ User_Input_Task::set_packet_count (void *argument)
 {
   if (argument)
     {
-      packet_count_ = *ACE_static_cast (int *, argument);
+      driver_.packet_count (*ACE_static_cast (int *, argument));
       return 0;
     }
   ACE_ERROR_RETURN ((LM_ERROR, 
@@ -203,7 +187,7 @@ User_Input_Task::set_arrival_period (void *argument)
 {
   if (argument)
     {
-      arrival_period_ = *ACE_static_cast (int *, argument);
+      driver_.arrival_period (*ACE_static_cast (int *, argument));
       return 0;
     }
   ACE_ERROR_RETURN ((LM_ERROR, 
@@ -219,7 +203,7 @@ User_Input_Task::set_send_period (void *argument)
 {
   if (argument)
     {
-      send_period_ = *ACE_static_cast (int *, argument);
+      driver_.send_period (*ACE_static_cast (int *, argument));
       return 0;
     }
   ACE_ERROR_RETURN ((LM_ERROR, 
@@ -234,7 +218,7 @@ User_Input_Task::set_duration_limit (void *argument)
 {
   if (argument)
     {
-      duration_limit_ = *ACE_static_cast (int *, argument);
+      driver_.duration_limit (*ACE_static_cast (int *, argument));
       return 0;
     }
   ACE_ERROR_RETURN ((LM_ERROR, 
@@ -250,7 +234,7 @@ User_Input_Task::set_logging_level (void *argument)
 {
   if (argument)
     {
-      logging_level_ = *ACE_static_cast (int *, argument);
+      driver_.logging_level (*ACE_static_cast (int *, argument));
       return 0;
     }  
   ACE_ERROR_RETURN ((LM_ERROR, 
@@ -265,9 +249,9 @@ User_Input_Task::run_transmission (void *)
 {
   if (relay_)
     {
-      switch (relay_->start_transmission (packet_count_,
-                                          arrival_period_,
-                                          logging_level_))
+      switch (relay_->start_transmission (driver_.packet_count (),
+                                          driver_.arrival_period (),
+                                          driver_.logging_level ()))
         {
           case 1:
             ACE_DEBUG ((LM_DEBUG, 
@@ -278,12 +262,12 @@ User_Input_Task::run_transmission (void *)
           case 0:
             {
               ACE_Time_Value now = ACE_OS::gettimeofday ();
-              ACE_Time_Value send_every (0, send_period_);
+              ACE_Time_Value send_every (0, driver_.send_period ());
               ACE_Time_Value send_at (send_every + now);
 
               Send_Handler *send_handler;
               ACE_NEW_RETURN (send_handler, 
-                              Send_Handler (packet_count_, 
+                              Send_Handler (driver_.packet_count (), 
                                             send_every,
                                             *relay_,
                                             *queue_), 
@@ -293,9 +277,9 @@ User_Input_Task::run_transmission (void *)
                                    "User_Input_Task::run_transmission: "
                                    "failed to schedule send handler"), 
                                   -1);
-              if (duration_limit_)
+              if (driver_.duration_limit ())
                 {
-                  ACE_Time_Value terminate_at (0, duration_limit_);
+                  ACE_Time_Value terminate_at (0, driver_.duration_limit ());
                   terminate_at += now;
 
                   Termination_Handler *termination_handler;
@@ -573,23 +557,31 @@ Thread_Bounded_Packet_Relay_Driver::display_menu (void)
 {
   static char menu[] =
     "\n\n  Options:\n"
-    "  -------\n"
-    "  1 <number of packets to relay in one transmission>\n"
-    "     min = 1 packet, default = 1000.\n"
-    "  2 <input packet arrival period (in usec)>\n"
-    "     min = 1, default = 500.\n"
-    "  3 <output packet transmission period (in usec)>\n"
-    "     min = 1, default = 1000.\n"
-    "  4 <limit on duration of transmission (in usec)>\n"
-    "     min = 1, default = 1500000, no limit = 0.\n"
-    "  5 <logging level>\n"
-    "     no logging = 0 (default), logging = 1.\n"
+    "  ----------------------------------------------------------------------\n"
+    "  1 <number of packets to relay in one transmission = %d>\n"
+    "     min = 1 packet.\n"
+    "  2 <input packet arrival period (in usec) = %d>\n"
+    "     min = 1.\n"
+    "  3 <output packet transmission period (in usec) = %d>\n"
+    "     min = 1.\n"
+    "  4 <limit on duration of transmission (in usec) = %d>\n"
+    "     min = 1, no limit = 0.\n"
+    "  5 <logging level = %d>\n"
+    "     no logging = 0, logging = non-zero.\n"
+    "  ----------------------------------------------------------------------\n"
     "  6 - run a transmission using the current settings\n"
     "  7 - cancel transmission (if there is one running)\n"
     "  8 - report statistics from the most recent transmission\n"
-    "  9 - quit the program\n";
+    "  9 - quit the program\n"
+    "  ----------------------------------------------------------------------\n";
 
-  ACE_DEBUG ((LM_DEBUG, "%s", menu));
+  ACE_DEBUG ((LM_DEBUG, 
+	          menu, 
+	          this->packet_count (),
+              this->arrival_period (),
+              this->send_period (),
+              this->duration_limit (),
+              this->logging_level ()));
 
   return 0;
 }

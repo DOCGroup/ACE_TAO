@@ -34,6 +34,9 @@ typedef Bounded_Packet_Relay_Driver<Thread_Timer_Queue>
 typedef Bounded_Packet_Relay<ACE_MT_SYNCH>
 	BOUNDED_PACKET_RELAY;
 
+typedef Command<BOUNDED_PACKET_RELAY, BOUNDED_PACKET_RELAY::ACTION>
+	INPUT_CALLBACK;
+
 // A snippet from Andrew Marvell (Oliver Cromwell's poet laureate)
 static const char input_text [] =
 "But ever at my back I hear\n"
@@ -77,6 +80,22 @@ main (int, char *[])
                                         output_device),
                   -1);
   auto_ptr <BOUNDED_PACKET_RELAY> relay (packet_relay);
+
+  // Construct a receive input callback command for the relay, and register 
+  // it with the input device.  Auto ptr ensures memory is freed when we exit 
+  // this scope.
+  INPUT_CALLBACK *input_callback;
+  ACE_NEW_RETURN (input_callback,
+                  INPUT_CALLBACK (*packet_relay,
+                                  &BOUNDED_PACKET_RELAY::receive_input),
+                  -1);
+  auto_ptr <INPUT_CALLBACK> callback (input_callback);
+  if (input_device->set_send_input_msg_cmd (input_callback) < 0)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "failed to register input callback"), 
+                        -1);
+    }
 
   // Construct a new bounded packet relay driver.  Auto ptr ensures
   // memory is freed when we exit this scope.
