@@ -1,3 +1,9 @@
+Tue Dec 19 19:22:30 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tao/TAO_Static.dsp
+	   
+	  Added the new files.
+
 Tue Dec 19 17:58:00 2000  Jeff Parsons <parsons@cs.wustl.edu.edu>
 
         * TAO_IDL/fe/idl.yy:
@@ -92,7 +98,6 @@ Mon Dec 18 19:18:51 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 Mon Dec 18 19:03:10 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* tao/TAO.dsp
-	* tao/TAO_Static.dsp
 	  Added the new files.
 
 Mon Dec 18 18:57:57 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
