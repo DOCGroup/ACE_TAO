@@ -1,3 +1,18 @@
+Wed Jul 30 10:05:38 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tao/boa.h: Removed the #include of "tao/objtable.h" which seems
+ 	to be unnecessary and may cause problems for template
+ 	specialization.
+
+	* tao/iiopobj.i (IIOP_Object): Changed the second parameter to the
+ 	IIOP_Object constructor so that we can is a const
+ 	IIOP::ProfileBody &.  This prevents a compiler warning.
+
+	* tao/typecode.cpp (private_id): Removed unused variable status.
+
+	* tao/objtable.cpp (bind): Removed the temp variable, which
+	was unused.
+
 Tue Jul 29 19:31:11 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* tao/boa.cpp (get_boa): Added casts of ACE_UINT32 so that we

@@ -22,17 +22,14 @@
 // ============================================================================
 
 #if !defined (TAO_BOA_H)
-#  define TAO_BOA_H
+#define TAO_BOA_H
 
-#  include "ace/OS.h"    // WARNING! This MUST come before objbase.h on WIN32!
-#  include <objbase.h>
-
-#  include "ace/SOCK_Stream.h"
-
-#  include "tao/orb.h"
-#  include "tao/sequence.h"
-#  include "tao/svrrqst.h"
-#  include "tao/objtable.h"
+#include "ace/OS.h"    // WARNING! This MUST come before objbase.h on WIN32!
+#include <objbase.h>
+#include "ace/SOCK_Stream.h"
+#include "tao/orb.h"
+#include "tao/sequence.h"
+#include "tao/svrrqst.h"
 
 // @@ Shouldn't this go into the CORBA:: namespace?  It doesn't belong
 // at global scope!

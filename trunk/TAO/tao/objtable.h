@@ -49,7 +49,7 @@ public:
 // Dynamic Hashing scheme using template specialization for char*
 typedef ACE_Hash_Map_Manager<const char*, CORBA_Object_ptr, ACE_SYNCH_RW_MUTEX> OBJ_MAP_MANAGER;
 
-class TAO_Dynamic_Hash_ObjTable: public TAO_Object_Table
+class TAO_Dynamic_Hash_ObjTable : public TAO_Object_Table
 {
   // =TITLE
   // Lookup strategy based on dynamic hashing. This works on the assumption

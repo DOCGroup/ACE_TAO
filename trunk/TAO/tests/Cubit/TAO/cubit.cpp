@@ -34,17 +34,14 @@
 
 #include	"cubit.h"		// for stubs ...
 #include	"tao/boa.h"		// ... and skeletons
-
 #include	"tao/debug.h"		// ... and debugging
 
-
-//
 // CUBE OCTET
-//
 
-static const TAO_Param_Data Cubit_cube_octet_params [] = {
-    { _tc_CORBA_Octet, PARAM_RETURN, 0 },
-    { _tc_CORBA_Octet, PARAM_IN, 0 }
+static const TAO_Param_Data Cubit_cube_octet_params [] = 
+{
+  { _tc_CORBA_Octet, PARAM_RETURN, 0 },
+  { _tc_CORBA_Octet, PARAM_IN, 0 }
 };
 
 static const TAO_Call_Data Cubit_cube_octet_calldata = {
@@ -80,11 +77,11 @@ _cube_octet_skel (CORBA_ServerRequest &req,
 		  CORBA_Object_ptr obj,
 		  CORBA_Environment &env)
 {
-  CORBA_NVList_ptr		nvlist;
-  CORBA_NamedValue_ptr	nv;
-  CORBA_Any			temp_value (_tc_CORBA_Octet);
+  CORBA_NVList_ptr nvlist;
+  CORBA_NamedValue_ptr nv;
+  CORBA_Any temp_value (_tc_CORBA_Octet);
 
-  req.orb()->create_list (0, nvlist);
+  req.orb ()->create_list (0, nvlist);
   nv = nvlist->add_value (0, temp_value, CORBA_ARG_IN, env);
   dexc (env, "cube_octet, add value");
 
@@ -146,11 +143,11 @@ _cube_short_skel (CORBA_ServerRequest &req,
 		  CORBA_Object_ptr obj,
 		  CORBA_Environment &env)
 {
-  CORBA_NVList_ptr		nvlist;
-  CORBA_NamedValue_ptr	nv;
-  CORBA_Any			temp_value (_tc_CORBA_Short);
+  CORBA_NVList_ptr nvlist;
+  CORBA_NamedValue_ptr nv;
+  CORBA_Any temp_value (_tc_CORBA_Short);
 
-  req.orb()->create_list (0, nvlist);
+  req.orb ()->create_list (0, nvlist);
   nv = nvlist->add_value (0, temp_value, CORBA_ARG_IN, env);
   dexc (env, "cube_short, add_value");
 
@@ -213,11 +210,11 @@ _cube_long_skel (CORBA_ServerRequest &req,
 		 CORBA_Object_ptr obj,
 		 CORBA_Environment &env)
 {
-  CORBA_NVList_ptr		nvlist;
+  CORBA_NVList_ptr nvlist;
   CORBA_NamedValue_ptr	nv;
-  CORBA_Any			temp_value (_tc_CORBA_Long);
+  CORBA_Any temp_value (_tc_CORBA_Long);
 
-  req.orb()->create_list (0, nvlist);
+  req.orb ()->create_list (0, nvlist);
   nv = nvlist->add_value (0, temp_value, CORBA_ARG_IN, env);
   dexc (env, "cube_long, add_value");
 
@@ -312,11 +309,11 @@ _cube_struct_skel (CORBA_ServerRequest &req,
 		   CORBA_Object_ptr obj,
 		   CORBA_Environment &env)
 {
-  CORBA_NVList_ptr		nvlist;
+  CORBA_NVList_ptr nvlist;
   CORBA_NamedValue_ptr	nv;
-  CORBA_Any			temp_value (TC_Cubit_Many);
+  CORBA_Any temp_value (TC_Cubit_Many);
 
-  req.orb()->create_list (0, nvlist);
+  req.orb ()->create_list (0, nvlist);
   nv = nvlist->add_value (0, temp_value, CORBA_ARG_IN, env);
   dexc (env, "cube_struct, add_value");
 
@@ -475,7 +472,7 @@ _cube_union_skel (CORBA_ServerRequest &req,
   CORBA_NamedValue_ptr nv;
   CORBA_Any temp_value (TC_Cubit_oneof);
 
-  req.orb()->create_list (0, nvlist);
+  req.orb ()->create_list (0, nvlist);
   nv = nvlist->add_value (0, temp_value, CORBA_ARG_IN, env);
   dexc (env, "cube_union_3rd, add_value");
 
@@ -549,28 +546,26 @@ _please_exit_skel (CORBA_ServerRequest &req,
 		   CORBA_Object_ptr obj,
 		   CORBA_Environment &env)
 {
-    dmsg ("I've been asked to shut down...");
-    req.oa ()->please_shutdown (env);
-    dexc (env, "please_exit, please_shutdown");
+  dmsg ("I've been asked to shut down...");
+  req.oa ()->please_shutdown (env);
+  dexc (env, "please_exit, please_shutdown");
 }
 
 
-const CORBA_Char	*Cubit__id = (CORBA_Char *)
-    "IDL:Eng.SUN.COM/Cubit:1.1";
+const CORBA_Char *Cubit__id = (CORBA_Char *) "IDL:Eng.SUN.COM/Cubit:1.1";
 
-
-//
 // table of all operations, used by operation dispatch to get to the
 // right skeleton ... could be sorted by the IDL compiler so bsearch
 // is effective, perhaps with help from opname hashes and a small cache
 // (e.g. like Obj-C?).  for now, just lsearch.
-//
-const TAO_Skel_Entry Cubit_operations [] = {
-    { &Cubit_cube_octet_calldata, _cube_octet_skel },
-    { &Cubit_cube_short_calldata, _cube_short_skel },
-    { &Cubit_cube_long_calldata, _cube_long_skel },
-    { &Cubit_cube_struct_calldata, _cube_struct_skel },
-    { &Cubit_cube_union_calldata, _cube_union_skel },
-    { &Cubit_please_exit_calldata, _please_exit_skel },
-    { 0, 0 }					// last entry
+
+const TAO_Skel_Entry Cubit_operations [] = 
+{
+  { &Cubit_cube_octet_calldata, _cube_octet_skel },
+  { &Cubit_cube_short_calldata, _cube_short_skel },
+  { &Cubit_cube_long_calldata, _cube_long_skel },
+  { &Cubit_cube_struct_calldata, _cube_struct_skel },
+  { &Cubit_cube_union_calldata, _cube_union_skel },
+  { &Cubit_please_exit_calldata, _please_exit_skel },
+  { 0, 0 }					// last entry
 };

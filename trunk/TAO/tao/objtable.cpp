@@ -82,7 +82,6 @@ TAO_Linear_ObjTable::bind (const CORBA_OctetSeq &key,
 			   CORBA_Object_ptr obj)
 {
   CORBA_ULong i = this->next_;
-  CORBA_String temp;
 
   if (i < this->tablesize_)
     {

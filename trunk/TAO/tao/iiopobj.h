@@ -130,7 +130,7 @@ public:
 
   IIOP_Object (char *repository_id);
   IIOP_Object (char *repository_id,
-               IIOP::ProfileBody& profile);
+               const IIOP::ProfileBody &profile);
 
   // = COM stuff
   ULONG __stdcall AddRef (void);
