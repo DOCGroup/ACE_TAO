@@ -470,6 +470,10 @@ ACE_Log_Msg::open (const char *prog_name,
 
   int status = 0;
 
+  // Always close the current handle before doing anything else.
+  if (ACE_Log_Msg_message_queue->get_handle () != ACE_INVALID_HANDLE)
+    ACE_Log_Msg_message_queue->close ();
+
   // Note that if we fail to open the message queue the default action
   // is to use stderr (set via static initialization in the
   // ACE_Log_Msg.C file).
@@ -480,9 +484,6 @@ ACE_Log_Msg::open (const char *prog_name,
         status = -1;
       else
         {
-          if (ACE_Log_Msg_message_queue->get_handle () != ACE_INVALID_HANDLE)
-            ACE_Log_Msg_message_queue->close ();
-
           ACE_LOG_MSG_IPC_CONNECTOR con;
           status = con.connect (*ACE_Log_Msg_message_queue,
                                 ACE_LOG_MSG_IPC_ADDR (ACE_MULTIBYTE_STRING (logger_key)));
@@ -492,6 +493,12 @@ ACE_Log_Msg::open (const char *prog_name,
         ACE_SET_BITS (ACE_Log_Msg::flags_, ACE_Log_Msg::STDERR);
       else
         ACE_SET_BITS (ACE_Log_Msg::flags_, ACE_Log_Msg::LOGGER);
+    }
+  else if (ACE_BIT_ENABLED (ACE_Log_Msg::flags_, ACE_Log_Msg::LOGGER))
+    {
+      // If we are closing down logger, redirect logging to stderr.
+      ACE_CLR_BITS (ACE_Log_Msg::flags_, ACE_Log_Msg::LOGGER);
+      ACE_SET_BITS (ACE_Log_Msg::flags_, ACE_Log_Msg::STDERR);
     }
 
   // Remember, ACE_Log_Msg::STDERR bit is on by default...
