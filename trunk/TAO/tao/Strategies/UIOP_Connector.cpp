@@ -222,7 +222,7 @@ TAO_UIOP_Connector::make_connection (TAO_GIOP_Invocation *invocation,
 
        // Check if the handler has been closed.
        int closed =
-         svc_handler->is_finalized ();
+         svc_handler->is_closed ();
 
        // In case of failures and close() has not be called.
        if (result == -1 &&
