@@ -45,8 +45,9 @@ namespace CIAO
     NodeApplication_Callback_Impl (CORBA::ORB_ptr o,
 				   PortableServer::POA_ptr p,
 				   Deployment::NodeApplicationManager_ptr s,
-				   const Deployment::Properties &properties);
-
+				   const Deployment::Properties &properties
+                 ACE_ENV_ARG_DECL_NOT_USED)
+      ACE_THROW_SPEC ((CORBA::SystemException));
     // Destructor.
     ~NodeApplication_Callback_Impl ();
 

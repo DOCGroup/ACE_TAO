@@ -5,12 +5,32 @@ CIAO::NodeApplication_Callback_Impl::
 NodeApplication_Callback_Impl  (CORBA::ORB_ptr o,
 				PortableServer::POA_ptr p,
 				Deployment::NodeApplicationManager_ptr s,
-				const Deployment::Properties &properties)
+				const Deployment::Properties &properties
+              ACE_ENV_ARG_DECL_NOT_USED)
+    ACE_THROW_SPEC ((CORBA::SystemException))
   : orb_ (CORBA::ORB::_duplicate (o)),
     poa_ (PortableServer::POA::_duplicate (p)),
     nam_ (s)
 {
-  this->properties_ = new Deployment::Properties (properties);
+  ACE_TRY 
+  { 
+    //@@ Note: this properties is useless unless
+    //   we have some specific properties for the callback obj.
+    Deployment::Properties * tmp = 0;
+    ACE_NEW_THROW_EX (tmp,
+                    Deployment::Properties (properties),
+                    CORBA::NO_MEMORY ());
+    ACE_TRY_CHECK;
+    this->properties_ = tmp; 
+  }
+  ACE_CATCHANY
+  {
+    ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+			 "NodeApp_CB_Impl::Constructor\t\n");
+    ACE_RE_THROW;
+  }
+  ACE_ENDTRY;
+  ACE_CHECK;
 }
 
 CIAO::NodeApplication_Callback_Impl::

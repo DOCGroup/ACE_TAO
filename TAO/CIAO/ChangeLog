@@ -1,3 +1,30 @@
+Sat Jun 12 23:17:08 2004  Tao Lu  <lu@dre.vanderbilt.edu>
+
+        *  DnC/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
+        *  DnC/NodeApplicationManager/ImplementationInfo.cpp:
+        *  DnC/NodeApplicationManager/NodeApplicationManager_Impl.cpp:
+        *  DnC/NodeApplicationManager/NodeApplicationManager_Impl.h:
+        *  DnC/NodeApplicationManager/NodeApplicationManager_Impl.inl:
+        *  DnC/NodeManager/NodeDaemon_Impl.cpp:
+        *  DnC/NodeManager/NodeDaemon_Impl.h:
+        *  DnC/NodeManager/NodeDaemon_Impl.inl:
+        *  DnC/RepositoryManager/Repository_Manager.cpp:
+        *  DnC/ciao/NodeApp_CB_Impl.cpp:
+        *  DnC/ciao/NodeApp_CB_Impl.h:
+        
+           Debugged on Windows with Visual Studio + Purify. Now 
+           Every thing should be fine and people could start to
+           do their own code revision.
+           
+           @@Note: If you want to make any change other than 
+           syntactic Changes please be careful and make sure you
+           don't break anything.
+           
+           Now I am moving to add support for Properties.
+           Things we need for the Demo.
+           1. ComponentIOR registration.
+           2. Component Attribute initialization.
+           
 Sat Jun 12 16:51:11 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * DnC/Config_Handlers/Property_Handler.cpp:
