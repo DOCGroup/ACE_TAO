@@ -1,20 +1,24 @@
+Thu Sep 09 09:24:29 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/run_tests.lst: disabled Signal_Test.  [Bug 309]
+
 Thu Sep  9 08:46:58 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tests/Lazy_Map_Manager_Test.cpp (main): ACEified this a bit
-	  and fixed a typo for the argv argument in main().
+        * tests/Lazy_Map_Manager_Test.cpp (main): ACEified this a bit
+          and fixed a typo for the argv argument in main().
 
-	* Updated the ACE-mail.html file to put the *-request addresses
-	  first.  Thanks to Lorin Hochstein <lmh@xiphos.ca> for this
- 	  suggestion.
+        * Updated the ACE-mail.html file to put the *-request addresses
+          first.  Thanks to Lorin Hochstein <lmh@xiphos.ca> for this
+          suggestion.
 
 Wed Sep 08 23:01:22 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* examples/Service_Configurator/Misc/Timer_Service.h: Added
-	  ACE_Svc_Export specifiers.
+        * examples/Service_Configurator/Misc/Timer_Service.h: Added
+          ACE_Svc_Export specifiers.
 
-	* examples/Service_Configurator/Misc/Misc.dsw:
-	* examples/Service_Configurator/Misc/Timer.dsp: Added a new
-	  project file for the dll file.
+        * examples/Service_Configurator/Misc/Misc.dsw:
+        * examples/Service_Configurator/Misc/Timer.dsp: Added a new
+          project file for the dll file.
 
 Wed Sep 08 22:19:47 1999  David L. Levine  <levine@cs.wustl.edu>
 
