@@ -1,5 +1,10 @@
 Wed Dec  4 09:09:56 1996  David L. Levine  <levine@cs.wustl.edu>
-	* ace/config-vxworks*.h: added ACE_LACKS_MPROTECT
+	* ace/Log_Msg.cpp:  added printout to stderr before call
+ 	  to exit() in ACE_Log_Msg::log().  Silent calls to exit()
+ 	  are bad :-}
+
+	* ace/config-vxworks*.h: added ACE_LACKS_MPROTECT and
+          ACE_HAS_STRERROR
 
 	* include/makeinclude/platform_vxworks*: removed INCLDIRS and
  	  added indlib.o to GreenHills LIBS
