@@ -193,9 +193,11 @@ class ACE_Export ACE_Sig_Handler
   //    <signum>, the <handle_signal> method of the registered
   //    <ACE_Event_Handler> is invoked automatically.
 public:
+#if defined (ACE_HAS_WINCE)
   ACE_Sig_Handler (void);
   virtual ~ACE_Sig_Handler (void);
   // Default ctor/dtor.
+#endif /* ACE_HAS_WINCE */
 
   // = Registration and removal methods.
   virtual int register_handler (int signum,
