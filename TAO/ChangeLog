@@ -9,7 +9,7 @@ Wed Jul 31 11:28:16 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tao/ORB.cpp (init_orb_globals):
 
-	  Moved code that sets the unexpected handler to
+	  Moved code that sets the unexpected exception handler to
 	  TAO_Singleton_Manager.cpp.  See below for the reason why this
 	  was done.
 
