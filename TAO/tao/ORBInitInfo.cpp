@@ -2,8 +2,9 @@
 //
 // $Id$
 
-#include "tao/ORBInitInfo.h"
-#include "tao/ORB_Core.h"
+#include "ORBInitInfo.h"
+#include "ORB_Core.h"
+#include "StringSeqC.h"
 
 ACE_RCSID(tao, ORBInitInfo, "$Id$")
 
@@ -12,34 +13,47 @@ TAO_ORBInitInfo::TAO_ORBInitInfo (TAO_ORB_Core *orb_core,
                                   int argc,
                                   char *argv[])
   : orb_core_ (orb_core),
-    arguments_ ()
+    argc_ (0),
+    argv_ (0)
 {
-  if (argc > 0)
-    {
-      this->arguments_.length (argc);
-      for (int i = 0; i < argc; ++i)
-        this->arguments_[i] = CORBA::string_dup (argv[i]);
-    }
 }
 
 TAO_ORBInitInfo::~TAO_ORBInitInfo (void)
 {
-  /// The string sequence automatically calls the destructor on its
-  /// elements so we do not have to explicitly deallocate the
-  /// duplicated strings.
 }
 
 CORBA::StringSeq *
-TAO_ORBInitInfo::arguments (CORBA::Environment &)
+TAO_ORBInitInfo::arguments (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return &(this->arguments_);
+  // In accordance with the C++ mapping for sequences, it is up to the
+  // caller to deallocate storage for returned sequences.
+
+  CORBA::StringSeq *args = 0;
+  ACE_NEW_THROW_EX (args,
+                    CORBA::StringSeq,
+                    CORBA::NO_MEMORY (
+                      CORBA_SystemException::_tao_minor_code (
+                        TAO_DEFAULT_MINOR_CODE,
+                        ENOMEM),
+                      CORBA::COMPLETED_NO));
+  ACE_CHECK_RETURN (0);
+
+  // Copy the argument vector to the string sequence.
+
+  args->length (this->argc_);   // Not a problem if argc is zero.
+  for (int i = 0; i < this->argc_; ++i)
+    (*args)[i] = CORBA::string_dup (this->argv_[i]);
+
+  return args;
 }
 
 char *
 TAO_ORBInitInfo::orb_id (CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  // In accordance with the C++ mapping for strings, return a copy.
+
   return CORBA::string_dup (this->orb_core_->orbid ());
 }
 
@@ -81,9 +95,12 @@ TAO_ORBInitInfo::resolve_initial_references (
     ACE_THROW_RETURN (PortableInterceptor::ORBInitInfo::InvalidName (),
                       CORBA::Object::_nil ());
 
-  // @@ REMOVE THIS ONCE IMPLEMENTED.
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),
-                    CORBA::Object::_nil ());
+  // The ORB is practically fully initialized by the time this point
+  // is reached so just use the ORB's resolve_initial_references()
+  // mechanism.
+  return
+    this->orb_core_->orb ()->resolve_initial_references (id,
+                                                         ACE_TRY_ENV);
 }
 
 void
@@ -121,19 +138,24 @@ TAO_ORBInitInfo::add_server_request_interceptor (
 
 void
 TAO_ORBInitInfo::add_ior_interceptor (
-    PortableInterceptor::IORInterceptor_ptr /* interceptor */,
+    PortableInterceptor::IORInterceptor_ptr interceptor,
     CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ORBInitInfo::DuplicateName))
 {
-  ACE_THROW (CORBA::NO_IMPLEMENT ());
+  this->orb_core_->add_interceptor (interceptor,
+                                    ACE_TRY_ENV);
 }
 
 PortableInterceptor::SlotId
 TAO_ORBInitInfo::allocate_slot_id (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (
+                      CORBA_SystemException::_tao_minor_code (
+                        TAO_DEFAULT_MINOR_CODE,
+                        ENOTSUP),
+                      CORBA::COMPLETED_NO),
                     0);
 }
 
@@ -150,4 +172,25 @@ TAO_ORBInitInfo::register_policy_factory (
   registry->register_policy_factory (type,
                                      policy_factory,
                                      ACE_TRY_ENV);
+}
+
+size_t
+TAO_ORBInitInfo::allocate_tss_slot_id (ACE_CLEANUP_FUNC cleanup,
+                                       CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  size_t slot_id = 0;
+
+  int result = this->orb_core_->add_tss_cleanup_func (cleanup,
+                                                      slot_id);
+
+  if (result != 0)
+    ACE_THROW_RETURN (CORBA::INTERNAL (
+                        CORBA_SystemException::_tao_minor_code (
+                          TAO_DEFAULT_MINOR_CODE,
+                          errno),
+                        CORBA::COMPLETED_NO),
+                      0);
+
+  return slot_id;
 }

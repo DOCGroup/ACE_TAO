@@ -65,7 +65,7 @@ TAO_ORBInitializer_Registry::register_orb_initializer (
 {
   if (!CORBA::is_nil (init))
     {
-      /// Increase the length of the ORBInitializer array by one.
+      // Increase the length of the ORBInitializer array by one.
       size_t cur_len = this->initializers_.size ();
       size_t new_len = cur_len + 1;
       if (this->initializers_.size (new_len) != 0)
@@ -74,7 +74,7 @@ TAO_ORBInitializer_Registry::register_orb_initializer (
       // @@ Do we need to duplicate the reference to the
       //    ORBInitializer?
 
-      /// Add the given ORBInitializer to the sequence.
+      // Add the given ORBInitializer to the sequence.
       this->initializers_[cur_len] =
         PortableInterceptor::ORBInitializer::_duplicate (init);
     }

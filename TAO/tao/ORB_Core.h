@@ -1,50 +1,46 @@
-// This may look like C, but it's really -*- C++ -*-
-// $Id$
+// -*- C++ -*-
 
-// ============================================================================
-//
-// = LIBRARY
-//     TAO
-//
-// = FILENAME
-//     ORB_Core.h
-//
-// = AUTHOR
-//     Chris Cleeland
-//
-// ============================================================================
+// ===================================================================
+/**
+ *  @file   ORB_Core.h
+ *
+ *  $Id$
+ *
+ *  @author DOC Center, Washington University, St. Louis
+ *  @author DOC Laboratory, University of California at Irvine
+ */
+// ===================================================================
 
 #ifndef TAO_ORB_CORE_H
 #define TAO_ORB_CORE_H
 #include "ace/pre.h"
 
-#include "tao/corbafwd.h"
+#include "corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/ORB.h"
-#include "tao/Environment.h"
-#include "tao/Policy_Manager.h"
-#include "tao/Resource_Factory.h"
-#include "tao/params.h"
-#include "tao/TAO_Singleton_Manager.h"
-#include "tao/TAO_Singleton.h"
-#include "tao/Adapter.h"
-#include "tao/PolicyFactory_Registry.h"
-#include "tao/Parser_Registry.h"
-#include "tao/Service_Callbacks.h"
-#include "tao/Fault_Tolerance_Service.h"
+#include "ORB.h"
+#include "Environment.h"
+#include "Policy_Manager.h"
+#include "Resource_Factory.h"
+#include "params.h"
+#include "TAO_Singleton_Manager.h"
+#include "TAO_Singleton.h"
+#include "Adapter.h"
+#include "PolicyFactory_Registry.h"
+#include "Parser_Registry.h"
+#include "Service_Callbacks.h"
+#include "Fault_Tolerance_Service.h"
+#include "Connection_Cache_Manager.h"
+#include "Cleanup_Func_Registry.h"
 
-#if (TAO_HAS_INTERCEPTORS == 1)
 // Interceptor definitions.
-# include "tao/PortableInterceptorC.h"
-# include "tao/Interceptor_List.h"
-#endif  /* TAO_HAS_INTERCEPTORS */
+#include "PortableInterceptorC.h"
+#include "Interceptor_List.h"
 
-#include "tao/Connection_Cache_Manager.h"
-
+#include "ace/Hash_Map_Manager.h"
 
 // Forward declarations
 class TAO_Acceptor;
@@ -92,83 +88,102 @@ class TAO_Sync_Strategy;
 
 // ****************************************************************
 
+/**
+ * @class TAO_ORB_Core_TSS_Resources
+ *
+ * @brief The TSS resoures of an ORB core.
+ *
+ * This class is used by the ORB_Core to store the resources
+ * potentially bound to a thread in TSS storage. The members are public
+ * because only the ORB Core is expected to access them.
+ */
 class TAO_Export TAO_ORB_Core_TSS_Resources
 {
-  // = TITLE
-  //   The TSS resoures of an ORB core.
-  //
-  // = DESCRIPTION
-  //   This class is used by the ORB_Core to store the resources
-  //   potentially bound to a thread in TSS storage.
-  //   The members are public because only the ORB Core is expected to
-  //   access them.
-  //
 public:
-  TAO_ORB_Core_TSS_Resources (void);
-  // constructor
 
+  /// onstructor
+  TAO_ORB_Core_TSS_Resources (void);
+
+  /// destructor
   ~TAO_ORB_Core_TSS_Resources (void);
-  // destructor
 
 private:
-  // The ORB Core TSS resources should not be copied
+
+  /// The ORB Core TSS resources should not be copied
   ACE_UNIMPLEMENTED_FUNC (TAO_ORB_Core_TSS_Resources (const TAO_ORB_Core_TSS_Resources&))
   ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_ORB_Core_TSS_Resources&))
 
 public:
-  // = The rest of the resources are not currently in use, just a plan
-  //   for the future...
+  /**
+   * @todo
+   * The rest of the resources are not currently in use, just a plan
+   * for the future...
+   */
 
+  /// The allocators for the output CDR streams.
+  //@{
   ACE_Allocator *output_cdr_dblock_allocator_;
   ACE_Allocator *output_cdr_buffer_allocator_;
   ACE_Allocator *output_cdr_msgblock_allocator_;
-  // The allocators for the output CDR streams.
+  //@}
 
+  /// The allocators for the input CDR streams.
+  //@{
   ACE_Allocator *input_cdr_dblock_allocator_;
   ACE_Allocator *input_cdr_buffer_allocator_;
-  // The allocators for the input CDR streams.
+  //@}
 
+  /// This is is just a place holder, in the future the connection
+  /// cache will be separated from the connectors and it will be a
+  /// (potentially) TSS object.
   TAO_Connection_Cache *connection_cache_;
-  // This is is just a place holder, in the future the connection
-  // cache will be separated from the connectors and it will be a
-  // (potentially) TSS object.
 
+  /// Counter for how (nested) calls this thread has made to run the
+  /// event loop.
   int event_loop_thread_;
-  // Counter for how (nested) calls this thread has made to run the
-  // event loop.
 
+  /// Counter for how many times this thread has become a client
+  /// leader.
   int client_leader_thread_;
-  // Counter for how many times this thread has become a client
-  // leader.
 
+  /// Condition variable for the leader follower model.
   ACE_SYNCH_CONDITION* leader_follower_condition_variable_;
-  // Condition variable for the leader follower model.
 
+  /// The Reactor Holder that we should callback when destroying the
+  /// cookie.
   TAO_Reactor_Registry *reactor_registry_;
-  // The Reactor Holder that we should callback when destroying the
-  // cookie.
 
+  /// A TSS magic cookie used by the Reactor_Registry
   void *reactor_registry_cookie_;
-  // A TSS magic cookie used by the Reactor_Registry
+
+  /// Generic container for thread-specific objects.
+  ACE_Array_Base<void *> ts_objects_;
+
+  /// Pointer to the ORB core.  Needed to get access to the TSS
+  /// cleanup functions for the TSS objects stored in the TSS object
+  /// array in this class.
+  TAO_ORB_Core *orb_core_;
 };
 
 // ****************************************************************
 
+/**
+ * @class TAO_ORB_Core
+ *
+ * @brief Encapsulates the state of an ORB.
+ *
+ * This is the implementation class for the CORBA::ORB interface.  The
+ * class also encapsulates the access to the ORB resources and its
+ * state.
+ * @par
+ * Some resources can be TSS or global, those resources are always
+ * accessed through a TSS interface, but are allocated using the
+ * Resource_Factory.  If the resource is really global the
+ * Resource_Factory will simply return a pointer to the global
+ * instance.
+ */
 class TAO_Export TAO_ORB_Core
 {
-  // = TITLE
-  //    Encapsulates the state of an ORB.
-  //
-  // = DESCRIPTION
-  //   This is the implementation class for the CORBA::ORB interface.
-  //   The class also encapsulates the access to the ORB resources and
-  //   its state.
-  //   Some resources can be TSS or global, those resources are always
-  //   accessed through a TSS interface, but are allocated using the
-  //   Resource_Factory.  If the resource is really global the
-  //   Resource_Factory will simply return a pointer to the global
-  //   instance.
-  //
   friend class TAO_ORB_Core_Auto_Ptr;
   friend class TAO_ORB_Table;
   friend CORBA::ORB_ptr CORBA::ORB_init (int &,
@@ -177,57 +192,63 @@ class TAO_Export TAO_ORB_Core
                                          CORBA_Environment &);
 
 public:
-  // = Initialization and termination methods.
+
+  /// Constructor.
   TAO_ORB_Core (const char* id);
-  // Constructor.
 
+  /// Accessor for the ORB parameters.
   TAO_ORB_Parameters *orb_params (void);
-  // Accessor for the ORB parameters.
 
-  // @@ In the future this hook should change, instead of hardcoding
-  //    the object we should add a "Resolver" to the ORB, so the
-  //    "POACurrent" object returns a per-ORB object.
-  //    Similarly, each ORB should implement the TSS pattern to put
-  //    the POA_Current_Impl in a void* slot.
-  //    The current approach *does* decouple the POA from the ORB, but
-  //    it cannot add new adapters or other components transparently.
-  CORBA::Object_ptr poa_current (void);
-  void poa_current (CORBA::Object_ptr poa_current);
-  // Accessor to the POA current.
+  /**
+   * @todo
+   * In the future this hook should change, instead of hardcoding the
+   * object we should add a "Resolver" to the ORB, so the "POACurrent"
+   * object returns a per-ORB object.
+   * @par
+   * Similarly, each ORB should implement the TSS pattern to put   the
+   * POA_Current_Impl in a void* slot.  The current approach *does*
+   * decouple the POA from the ORB, but it cannot add new adapters or
+   * other components transparently.
+   */
+   /// Accessor to the POA current.
+   CORBA::Object_ptr poa_current(void);
+   void poa_current (CORBA::Object_ptr poa_current);
 
-  // = Get the connector registry
+  ///Get the connector registry
   TAO_Connector_Registry *connector_registry (void);
 
-  // = Get the acceptor registry
+  ///Get the acceptor registry
   TAO_Acceptor_Registry  *acceptor_registry  (void);
 
-  // = Get the IOR parser registry
+  ///Get the IOR parser registry
   TAO_Parser_Registry *parser_registry (void);
 
+  /// Return pointer to the policy factory registry associated with
+  /// this ORB core.
   TAO_PolicyFactory_Registry *policy_factory_registry (void);
-  ///< Return pointer to the policy factory registry associated with
-  ///< this ORB core.
 
-  // = Get the protocol factories
+  /// Get the protocol factories
   TAO_ProtocolFactorySet *protocol_factories (void);
 
-  // = Get pointer to the ORB.
+  /// Get pointer to the ORB.
   CORBA::ORB_ptr orb (void);
 
+  /// Wrappers that forward the request to the concurrency strategy.
   ACE_Reactor *reactor (void);
   ACE_Reactor *reactor (TAO_Acceptor *acceptor);
-  // Wrappers that forward the request to the concurrency strategy
 
-  // = Get the ACE_Thread_Manager
+  /// Get the ACE_Thread_Manager
   ACE_Thread_Manager *thr_mgr (void);
 
+  /// Return the RootPOA, or try to load it if not initialized already.
   CORBA::Object_ptr root_poa (CORBA::Environment &ACE_TRY_ENV);
-  // Return the RootPOA, or try to load it if not initialized already.
 
+  /// Get the adapter registry
   TAO_Adapter_Registry *adapter_registry (void);
-  // Get the adapter registry
 
-  // = Collocation strategies.
+
+  /// @name Collocation Strategies
+  //@{
   enum
   {
     ORB_CONTROL,  // Indicate object should refer to ORB for either
@@ -252,49 +273,65 @@ public:
                                 // of collocation strategies.
   };
 
-  static TAO_Collocation_Strategies collocation_strategy (CORBA::Object_ptr object);
-  // This methods give the right collocation strategy, if any,
-  // to be used to perform a method invokation on the given object.
-  // (Note that No-Collocation is a special case of collocation).
+  /**
+   * This methods give the right collocation strategy, if any,
+   * to be used to perform a method invokation on the given object.
+   *
+   * @note
+   * No-Collocation is a special case of collocation.
+   */
+  static TAO_Collocation_Strategies collocation_strategy (
+    CORBA::Object_ptr object); 
+  //@}
 
-
-  // = Get the default codeset translators.
-  //   In most configurations these are just <nil> objects, but they
-  //   can be set to something different if the native character sets
-  //   are not ISO8869 (aka Latin/1, UTF-8) and UNICODE (aka UTF-16).
-
+  /**
+   * @name Default Code Set Translators
+   *
+   * Get the default codeset translators.
+   *
+   * @par
+   * In most configurations these are just <nil> objects, but they can
+   * be set to something different if the native character sets are
+   * not ISO8869 (aka Latin/1, UTF-8) and UNICODE (aka UTF-16).
+   */
+  //@{
+  /// Convert from ISO8859 to the native character set
   ACE_Char_Codeset_Translator *from_iso8859 (void) const;
-  // Convert from ISO8859 to the native character set
 
+  /// Convert from the native character set to ISO8859
   ACE_Char_Codeset_Translator *to_iso8859 (void) const;
-  // Convert from the native character set to ISO8859
 
+  /// Convert from UNICODE to the native wide character set
   ACE_WChar_Codeset_Translator *from_unicode (void) const;
-  // Convert from UNICODE to the native wide character set
 
+  /// Convert from the native wide character set to UNICODE
   ACE_WChar_Codeset_Translator *to_unicode (void) const;
-  // Convert from the native wide character set to UNICODE
 
-  // @@ This is just note on how could the translator database be
-  //    implemented: use the service configurator to load the
-  //    translator, and then use the CodesetId (an unsigned long) to
-  //    translate the character set code into the Service Object
-  //    name.
-  //    The default resource factory could parse command line options
-  //    like:
-  //    -ORBcharcodeset 0x00010001=ISO8859
-  //    -ORBcharcodeset 0x10020417=IBM1047
-  //    -ORBwcharcodeset 0x00010106=ISOIEC10646
-  //    that would let the user experiment with different translators
-  //    and plug them in on demand.
-  //
-  //    We should also think about how translators will report
-  //    conversion failures and how to simplify the implementation of
-  //    char translators (it would seem like just a couple of arrays
-  //    are needed, maybe the arrays should be dynamically loaded and
-  //    the implementation would remain constant?  Just a thought
+  /**
+   * @note
+   * This is just note on how could the translator database be
+   * implemented: use the service configurator to load the translator,
+   * and then use the CodesetId (an unsigned long) to translate the
+   * character set code into the Service Object name.
+   * @par
+   * The default resource factory could parse command line options
+   * like:
+   *   - -ORBcharcodeset 0x00010001=ISO8859
+   *   - -ORBcharcodeset 0x10020417=IBM1047
+   *   - -ORBwcharcodeset 0x00010106=ISOIEC10646
+   * that would let the user experiment with different translators
+   * and plug them in on demand.
+   *@par
+   *
+   * We should also think about how translators will report conversion
+   * failures and how to simplify the implementation of char
+   * translators (it would seem like just a couple of arrays are
+   * needed, maybe the arrays should be dynamically loaded and the
+   * implementation would remain constant?  Just a thought.
+   */
+  //@}
 
-  // = Set/get the collocation flags
+  /// Set/get the collocation flags
   void optimize_collocation_objects (CORBA::Boolean opt);
   CORBA::Boolean optimize_collocation_objects (void) const;
 
@@ -303,34 +340,37 @@ public:
 
   CORBA::ULong get_collocation_strategy (void) const;
 
+  /// Get the adapter named "RootPOA" and cache the result, this is an
+  /// optimization for the POA.
   TAO_Adapter *poa_adapter (void);
-  // Get the adapter named "RootPOA" and cache the result, this is an
-  // optimization for the POA.
 
+  /// A spawned thread needs to inherit some properties/objects from
+  /// the spawning thread in order to serve requests.  Return 0 if
+  /// it successfully inherits from the parent, -1 otherwise.
   int inherit_from_parent_thread (TAO_ORB_Core_TSS_Resources *tss_resources);
-  // A spawned thread needs to inherit some properties/objects from
-  // the spawning thread in order to serve requests.  Return 0 if
-  // it successfully inherits from the parent, -1 otherwise.
 
-  // = Access to Factories.
-  //
-  // These factories are not thread-specific, and are presented here
-  // in order to have one place to get useful information.  Often, the
-  // instances to which the return pointers are stored in the Service
-  // Repository.
-
+  /**
+   * @name Access to Factories
+   *
+   * These factories are not thread-specific, and are presented here
+   * in order to have one place to get useful information.  Often, the
+   * instances to which the return pointers are stored in the Service
+   * Repository.
+   */
+  //@{
+  /// Returns pointer to the resource factory.
   TAO_Resource_Factory *resource_factory (void);
-  // Returns pointer to the resource factory.
 
+  /// Returns pointer to the client factory.
   TAO_Client_Strategy_Factory *client_factory (void);
-  // Returns pointer to the client factory.
 
+  /// Returns pointer to the server factory.
   TAO_Server_Strategy_Factory *server_factory (void);
-  // Returns pointer to the server factory.
+  //@}
 
+  /// See if we have a collocated address, if yes, return the POA
+  /// associated with the address.
   int is_collocated (const TAO_MProfile& mprofile);
-  // See if we have a collocated address, if yes, return the POA
-  // associated with the address.
 
   ACE_Allocator *output_cdr_dblock_allocator (void);
   // This allocator is always TSS and has no locks. It is intended for
@@ -417,8 +457,9 @@ public:
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
-  CORBA::Policy *default_relative_roundtrip_timeout (void) const;
+#if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
 
+  CORBA::Policy *default_relative_roundtrip_timeout (void) const;
   CORBA::Policy *stubless_relative_roundtrip_timeout (void);
   // Access to the RoundtripTimeoutPolicy policy set on the thread or
   // on the ORB.  In this method, we do not consider the stub since we
@@ -438,6 +479,8 @@ public:
   static Timeout_Hook timeout_hook_;
   // The hook to be set for the RelativeRoundtripTimeoutPolicy
 
+#endif  /* TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
+
 #if (TAO_HAS_CLIENT_PRIORITY_POLICY == 1)
 
   TAO_Client_Priority_Policy *default_client_priority (void) const;
@@ -449,12 +492,9 @@ public:
   void call_sync_scope_hook (TAO_Stub *stub,
                              int &has_synchronization,
                              int &scope);
-
   TAO_Sync_Strategy &get_sync_strategy (TAO_Stub *stub,
                                         int &scope);
-
   typedef void (*Sync_Scope_Hook) (TAO_ORB_Core *, TAO_Stub *, int&, int&);
-
   static void set_sync_scope_hook (Sync_Scope_Hook hook);
 
   void stubless_sync_scope (CORBA::Policy *&result);
@@ -528,6 +568,22 @@ public:
   TAO_ORB_Core_TSS_Resources* get_tss_resources (void);
   // Obtain the TSS resources of this orb.
 
+  /// Obtain the TSS resource in the given slot.
+  void* get_tss_resource (size_t slot_id);
+
+  /// Set the TSS resource at the given slot.
+  /// Returns 0 on success, and -1 on failure.
+  int set_tss_resource (size_t slot_id, void *);
+
+  /// Register a TSS cleanup function.  The slot ID for the
+  /// corresponding ORB core TSS resource is returned by the reference
+  /// argument.  This method return 0 on success, and -1 on failure.
+  int add_tss_cleanup_func (ACE_CLEANUP_FUNC cleanup,
+                            size_t &slot_id);
+
+  /// Return the underlying TSS cleanup function registry.
+  TAO_Cleanup_Func_Registry *tss_cleanup_funcs (void);
+
   TAO_Leader_Follower &leader_follower (void);
   // Get access to the leader_follower class.
 
@@ -565,6 +621,12 @@ public:
                                 CORBA::Environment &ACE_TRY_ENV);
   // Makes sure that the ORB is open and then creates a TAO_Stub
   // based on the endpoint.
+
+  void establish_components (TAO_MProfile &mp,
+			     CORBA::PolicyList *policy_list,
+			     CORBA::Environment &ACE_TRY_ENV);
+  ///< Give each registered IOR interceptor the opportunity to add
+  ///< tagged components to profiles of each created servant.
 
   CORBA::Object_ptr create_object (TAO_Stub *the_stub);
   // Create a new object, use the adapter registry to create a
@@ -614,6 +676,8 @@ public:
   // The following methods would represent the hooks in the ORB
   // Core. These hooks would be used to call back on the services or
   // other features that are dynamically loaded.
+
+  
 
   CORBA::Boolean service_profile_selection (TAO_MProfile &mprofile,
                                             TAO_Profile  *&profile);
@@ -697,6 +761,14 @@ public:
   ///< this ORB.
 
 #endif /* TAO_HAS_INTERCEPTORS */
+
+  /// Register an IOR interceptor.
+  void add_interceptor (
+    PortableInterceptor::IORInterceptor_ptr interceptor,
+    CORBA_Environment &ACE_TRY_ENV);
+
+  /// Return the array of IOR interceptors specific to this ORB.
+  TAO_IORInterceptor_List::TYPE & ior_interceptors (void);
 
   int open (CORBA::Environment &ACE_TRY_ENV);
   // Set up the ORB Core's acceptor to listen on the
@@ -896,6 +968,10 @@ protected:
   ACE_WChar_Codeset_Translator *to_unicode_;
   // Codeset translators for simple implementations.
 
+  /// TSS Object cleanup functions.  These correspond to the TSS
+  /// objects stored in TAO's TSS resources.
+  TAO_Cleanup_Func_Registry tss_cleanup_funcs_;
+
   int use_tss_resources_;
   // If 1 then this ORB uses thread-specific resources
 
@@ -991,16 +1067,19 @@ protected:
   ///< Registry containing all registered policy factories.
 
 #if (TAO_HAS_INTERCEPTORS == 1)
+  /// Request interceptor registries.
   TAO_ClientRequestInterceptor_List client_request_interceptors_;
   TAO_ServerRequestInterceptor_List server_request_interceptors_;
-  ///< Interceptor registries.
 #endif /* TAO_HAS_INTERCEPTORS */
 
+  /// IOR interceptor registry.
+  TAO_IORInterceptor_List ior_interceptors_;
+
   TAO_Parser_Registry parser_registry_;
-  // The IOR parser registry
+  // The IOR parser registry.
 
   TAO_Connection_Cache_Manager connection_cache_;
-  // The connection cache for TAO
+  // TAO's connection cache.
 };
 
 // ****************************************************************
@@ -1094,7 +1173,7 @@ typedef TAO_TSS_Singleton<TAO_TSS_Resources, ACE_SYNCH_MUTEX>
 TAO_Export TAO_ORB_Core *TAO_ORB_Core_instance (void);
 
 #if defined (__ACE_INLINE__)
-# include "tao/ORB_Core.i"
+# include "ORB_Core.i"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"

@@ -1,60 +1,60 @@
 // $Id$
 
-#include "tao/ORB_Core.h"
-#include "tao/ORB_Table.h"
+#include "ORB_Core.h"
+#include "ORB_Table.h"
 
 #include "ace/Env_Value_T.h"
 #include "ace/Arg_Shifter.h"
 #include "ace/Auto_Ptr.h"
 
-#include "tao/TAO_Internal.h"
-#include "tao/default_client.h"
-#include "tao/default_server.h"
-#include "tao/default_resource.h"
-#include "tao/debug.h"
-#include "tao/MProfile.h"
-#include "tao/Stub.h"
-#include "tao/Reactor_Registry.h"
-#include "tao/Leader_Follower.h"
+#include "TAO_Internal.h"
+#include "default_client.h"
+#include "default_server.h"
+#include "default_resource.h"
+#include "debug.h"
+#include "MProfile.h"
+#include "Stub.h"
+#include "Reactor_Registry.h"
+#include "Leader_Follower.h"
 
-#include "tao/Connector_Registry.h"
-#include "tao/Acceptor_Registry.h"
+#include "Connector_Registry.h"
+#include "Acceptor_Registry.h"
 
-#include "tao/RT_ORB.h"
-#include "tao/Priority_Mapping_Manager.h"
-#include "tao/RT_Current.h"
-#include "tao/RT_Policy_i.h"
+#include "RT_ORB.h"
+#include "Priority_Mapping_Manager.h"
+#include "RT_Current.h"
+#include "RT_Policy_i.h"
 
-#include "tao/Sync_Strategies.h"
+#include "Sync_Strategies.h"
 
-#include "tao/Object_Loader.h"
+#include "Object_Loader.h"
 
-#include "tao/ObjectIDList.h"
+#include "ObjectIDList.h"
 
 #include "ace/Object_Manager.h"
 #include "ace/Env_Value_T.h"
 #include "ace/Dynamic_Service.h"
 #include "ace/Arg_Shifter.h"
-#include "tao/Services_Activate.h"
-#include "tao/Invocation.h"
+#include "Services_Activate.h"
+#include "Invocation.h"
 
-#include "tao/Invocation_Endpoint_Selectors.h"
+#include "Invocation_Endpoint_Selectors.h"
+
+#include "IORInfo.h"
 
 #if defined(ACE_MVS)
 #include "ace/Codeset_IBM1047.h"
 #endif /* ACE_MVS */
 
 #if !defined (__ACE_INLINE__)
-# include "tao/ORB_Core.i"
+# include "ORB_Core.i"
 #endif /* ! __ACE_INLINE__ */
-
 
 ACE_RCSID(tao, ORB_Core, "$Id$")
 
+// ****************************************************************
 
-  // ****************************************************************
-
-  CORBA::Environment &
+CORBA::Environment &
 TAO_default_environment ()
 {
   return *TAO_TSS_RESOURCES::instance ()->default_environment_;
@@ -111,6 +111,7 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     to_iso8859_ (0),
     from_unicode_ (0),
     to_unicode_ (0),
+    tss_cleanup_funcs_ (),
     use_tss_resources_ (0),
     tss_resources_ (),
     orb_resources_ (),
@@ -150,6 +151,7 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     client_request_interceptors_ (),
     server_request_interceptors_ (),
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
+    ior_interceptors_ (),
     parser_registry_ (),
     connection_cache_ ()
 {
@@ -1479,7 +1481,7 @@ TAO_ORB_Core::server_factory (void)
 
 int
 TAO_ORB_Core::inherit_from_parent_thread (
-                                          TAO_ORB_Core_TSS_Resources *tss_resources)
+  TAO_ORB_Core_TSS_Resources *tss_resources)
 {
   // Inherit properties/objects used in ORB_Core from the
   // parent thread.  Stuff inherited here must already exist
@@ -1600,11 +1602,6 @@ TAO_ORB_Core::create_stub_object (const TAO_ObjectKey &key,
   (void) this->open (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
-  CORBA::String_var id;
-
-  if (type_id)
-    id = CORBA::string_dup (type_id);
-
   TAO_Stub *stub = 0;
 
   // Create a profile container and have Acceptor_Registry populate it
@@ -1613,9 +1610,10 @@ TAO_ORB_Core::create_stub_object (const TAO_ObjectKey &key,
   if (this->acceptor_registry ()->make_mprofile (key, mp, filter) == -1)
     {
       ACE_THROW_RETURN (CORBA::INTERNAL (
-         CORBA::SystemException::_tao_minor_code (
-                                                  TAO_MPROFILE_CREATION_ERROR, 0 ),
-         CORBA::COMPLETED_NO ),
+                          CORBA::SystemException::_tao_minor_code (
+                            TAO_MPROFILE_CREATION_ERROR,
+			    0),
+			  CORBA::COMPLETED_NO),
                         0);
     }
 
@@ -1625,9 +1623,10 @@ TAO_ORB_Core::create_stub_object (const TAO_ObjectKey &key,
   if (mp.profile_count () == 0)
     {
       ACE_THROW_RETURN (CORBA::BAD_PARAM (
-         CORBA::SystemException::_tao_minor_code (
-                                                  TAO_MPROFILE_CREATION_ERROR, 0 ),
-         CORBA::COMPLETED_NO ),
+                          CORBA::SystemException::_tao_minor_code (
+                            TAO_MPROFILE_CREATION_ERROR,
+			    0 ),
+			  CORBA::COMPLETED_NO),
                         0);
     }
 
@@ -1653,8 +1652,15 @@ TAO_ORB_Core::create_stub_object (const TAO_ObjectKey &key,
         }
     }
 
+  // Iterate over the registered IOR interceptors so that they may be
+  // given the opportunity to add tagged components to the profiles
+  // for this servant.
+  this->establish_components (mp, policy_list, ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+
+  // Done creating profiles.  Initialize a TAO_Stub object with them.
   ACE_NEW_THROW_EX (stub,
-                    TAO_Stub (id._retn (), mp, this),
+                    TAO_Stub (type_id, mp, this),
                     CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
                                       CORBA::COMPLETED_MAYBE));
   ACE_CHECK_RETURN (stub);
@@ -1662,6 +1668,42 @@ TAO_ORB_Core::create_stub_object (const TAO_ObjectKey &key,
   stub->base_profiles ().policy_list (policy_list);
 
   return stub;
+}
+
+void
+TAO_ORB_Core::establish_components (TAO_MProfile &mp,
+				    CORBA::PolicyList *policy_list,
+				    CORBA::Environment &ACE_TRY_ENV)
+{
+  // Iterate over the registered IOR interceptors so that they may be
+  // given the opportunity to add tagged components to the profiles
+  // for this servant.
+  TAO_IORInterceptor_List::TYPE &interceptors =
+    this->ior_interceptors ();
+
+  size_t interceptor_count = interceptors.size ();
+  if (interceptor_count == 0)
+    return;
+
+  PortableInterceptor::IORInfo_ptr info_temp;
+  ACE_NEW_THROW_EX (info_temp,
+                    TAO_IORInfo (this, mp, policy_list),
+                    CORBA::NO_MEMORY (
+                      CORBA_SystemException::_tao_minor_code (
+                        TAO_MPROFILE_CREATION_ERROR,
+                        ENOMEM),
+                      CORBA::COMPLETED_NO));
+  ACE_CHECK;
+
+  PortableInterceptor::IORInfo_var info = info_temp;
+
+  for (size_t i = 0; i < interceptor_count; ++i)
+    {
+      interceptors[i]->establish_components (
+        info.in ()
+	TAO_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+    }
 }
 
 CORBA::Object_ptr
@@ -2720,17 +2762,19 @@ TAO_ORB_Core::server_protocol (void)
 // ****************************************************************
 
 TAO_ORB_Core_TSS_Resources::TAO_ORB_Core_TSS_Resources (void)
-  :  output_cdr_dblock_allocator_ (0),
-     output_cdr_buffer_allocator_ (0),
-     output_cdr_msgblock_allocator_ (0),
-     input_cdr_dblock_allocator_ (0),
-     input_cdr_buffer_allocator_ (0),
-     connection_cache_ (0),
-     event_loop_thread_ (0),
-     client_leader_thread_ (0),
-     leader_follower_condition_variable_ (0),
-     reactor_registry_ (0),
-     reactor_registry_cookie_ (0)
+  : output_cdr_dblock_allocator_ (0),
+    output_cdr_buffer_allocator_ (0),
+    output_cdr_msgblock_allocator_ (0),
+    input_cdr_dblock_allocator_ (0),
+    input_cdr_buffer_allocator_ (0),
+    connection_cache_ (0),
+    event_loop_thread_ (0),
+    client_leader_thread_ (0),
+    leader_follower_condition_variable_ (0),
+    reactor_registry_ (0),
+    reactor_registry_cookie_ (0),
+    ts_objects_ (),
+    orb_core_ (0)
 {
 }
 
@@ -2763,7 +2807,11 @@ TAO_ORB_Core_TSS_Resources::~TAO_ORB_Core_TSS_Resources (void)
   this->leader_follower_condition_variable_ = 0;
 
   if (this->reactor_registry_ != 0)
-    this->reactor_registry_->destroy_tss_cookie (this->reactor_registry_cookie_);
+    this->reactor_registry_->destroy_tss_cookie (
+      this->reactor_registry_cookie_);
+
+  if (this->orb_core_ != 0)
+    this->orb_core_->tss_cleanup_funcs ()->cleanup (this->ts_objects_);
 }
 
 // ****************************************************************

@@ -77,10 +77,6 @@ TAO_RT_ORBInitializer::register_policy_factories (
                                  policy_factory.in ()
                                  TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
-
-  /// Transfer ownership of the policy factory to the registry.
-  (void) policy_factory._retn ();
-
 }
 
 #endif  /* TAO_HAS_RT_CORBA == 1 */

@@ -21,13 +21,13 @@
 #define TAO_PRINCIPAL_H
 #include "ace/pre.h"
 
-#include "tao/corbafwd.h"
+#include "corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Sequence.h"
+#include "OctetSeqC.h"
 
 class TAO_Export CORBA_Principal
 {

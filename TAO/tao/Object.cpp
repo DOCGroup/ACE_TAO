@@ -634,7 +634,7 @@ operator>> (TAO_InputCDR& cdr, CORBA_Object*& x)
   // Ownership of type_hint is given to TAO_Stub
   // TAO_Stub will make a copy of mp!
   TAO_Stub *objdata = 0;
-  ACE_NEW_RETURN (objdata, TAO_Stub (type_hint._retn (),
+  ACE_NEW_RETURN (objdata, TAO_Stub (type_hint.in (),
                                      mp,
                                      orb_core),
                   0);

@@ -2,8 +2,7 @@
 //
 // $Id$
 
-#include "tao/PolicyFactory_Registry.h"
-#include "tao/corbafwd.h"
+#include "PolicyFactory_Registry.h"
 
 ACE_RCSID(tao, PolicyFactory_Registry, "$Id$")
 
@@ -42,15 +41,18 @@ TAO_PolicyFactory_Registry::register_policy_factory (
 
   if (result == 1)
     {
-      /// PolicyFactory of given type already exists.
-      ACE_THROW (CORBA::BAD_INV_ORDER ());
+      // PolicyFactory of given type already exists.
 
-      // @@ We need to fill in the appropriate minor code once the OMG
-      //    decides what it should be.
+      /**
+       * @todo
+       * Fill in the appropriate minor code once the OMG decides what
+       * it should be.
+       */
+      ACE_THROW (CORBA::BAD_INV_ORDER ());
     }
   else if (result == -1)
     {
-      /// Could not add PolicyFactory due to internal bind failures.
+      // Could not add PolicyFactory due to internal bind failures.
       ACE_THROW (CORBA::INTERNAL ());
     }
 }
@@ -68,10 +70,10 @@ TAO_PolicyFactory_Registry::create_policy (CORBA::PolicyType type,
   if (this->factories_.find (type,
                              policy_factory) == -1)
     {
-      /// Policy factory corresponding to given policy type does not
-      /// exist in policy factory map.
+      // Policy factory corresponding to given policy type does not
+      // exist in policy factory map.
       ACE_THROW_RETURN (
-                        CORBA::PolicyError (CORBA::BAD_POLICY_TYPE),  // @@ Right exception?
+         CORBA::PolicyError (CORBA::BAD_POLICY_TYPE),  // @@ Right exception?
          CORBA::Policy::_nil ());
     }
 

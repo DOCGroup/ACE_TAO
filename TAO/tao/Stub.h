@@ -241,7 +241,7 @@ public:
 
   // Our Constructors ...
 
-  TAO_Stub (char *repository_id,
+  TAO_Stub (const char *repository_id,
             const TAO_MProfile &profiles,
             TAO_ORB_Core *orb_core);
   // Construct from a repository ID and a list of profiles.

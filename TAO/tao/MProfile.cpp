@@ -178,7 +178,7 @@ TAO_MProfile::remove_profile (const TAO_Profile *pfile)
 int
 TAO_MProfile::remove_profiles (const TAO_MProfile *pfiles)
 {
-  for (TAO_PHandle h = 0;h < pfiles->last_;h++)
+  for (TAO_PHandle h = 0; h < pfiles->last_; ++h)
     {
       if (this->remove_profile (pfiles->pfiles_[h]) < 0)
         return -1;
@@ -190,10 +190,10 @@ CORBA::Boolean
 TAO_MProfile::is_equivalent (const TAO_MProfile *rhs)
 {
   // Two profile lists are equivalent iff at least one of the profiles
-  // form the first list is_equivalent to at least one of the profiles
+  // from the first list is_equivalent to at least one of the profiles
   // from the second list!!
-  for (TAO_PHandle h1 = 0; h1 < this->last_;h1++)
-    for (TAO_PHandle h2 = 0; h2 < rhs->last_; h2++ )
+  for (TAO_PHandle h1 = 0; h1 < this->last_; ++h1)
+    for (TAO_PHandle h2 = 0; h2 < rhs->last_; ++h2)
       if (this->pfiles_[h1]->is_equivalent (rhs->pfiles_[h2]))
         return 1;
 
@@ -205,10 +205,10 @@ TAO_MProfile::hash (CORBA::ULong max, CORBA::Environment &ACE_TRY_ENV)
 {
   CORBA::ULong hashval = 0;
 
-  if (last_ == 0)
+  if (this->last_ == 0)
     return 0;
 
-  for (TAO_PHandle h=0; h < last_ ; h++)
+  for (TAO_PHandle h = 0; h < this->last_ ; ++h)
     {
       hashval += pfiles_[h]->hash (max, ACE_TRY_ENV);
       ACE_CHECK_RETURN (0);
@@ -216,7 +216,7 @@ TAO_MProfile::hash (CORBA::ULong max, CORBA::Environment &ACE_TRY_ENV)
 
   // The above hash function return an ULong between 0 and max here we
   // simply take the average value and round.
-  return hashval / last_;
+  return hashval / this->last_;
 }
 
 void
