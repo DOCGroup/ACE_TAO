@@ -35,6 +35,7 @@
 
 #include "Deployment_Configuration.h"
 #include "DomainApplicationManager_Export.h"
+#include "ciao/CIAO_common.h"
 
 namespace CIAO
 {
@@ -73,14 +74,6 @@ namespace CIAO
       ACE_THROW_SPEC ((CORBA::SystemException));
 
 
-    // @@ (OO) Since this class is reference counted, please make this
-    //         destructor protected to enforce proper memory managment
-    //         through the reference counting mechanism (i.e. to
-    //         disallow calling operator delete() on an instance of
-    //         this class.
-    /// Destructor
-    virtual ~DomainApplicationManager_Impl (void);
-
     /*===========================================================
      * Below are helper methods for the DomainApplicationManager
      *
@@ -115,11 +108,7 @@ namespace CIAO
      */
     void set_uuid (const char * uuid);
 
-    // @@ (OO) To improve const correctness, this method should be
-    //         declared as const, i.e.:
-    //
-    //           const char * get_uuid () const;
-    const char * get_uuid ();
+    const char * get_uuid () const;
 
     /*===========================================================
      * Below are operations from the DomainApplicationManager
@@ -181,16 +170,21 @@ namespace CIAO
     virtual ::Deployment::DeploymentPlan * getPlan (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-    // This is a helper function to destroy the NodeAppManager.
-    // Since we don't want to do so in the destructor so we will
-    // ask the ExecutionManager to do this on us when the same IDL
-    // op invoked on it. This is part of the result for merging DAM
-    // with DA.
+    /** 
+     * This is a helper function to destroy the NodeAppManager.
+     * Since we don't want to do so in the destructor so we will
+     * ask the ExecutionManager to do this on us when the same IDL
+     * op invoked on it. This is part of the result for merging DAM
+     * with DA.
+     */
     virtual void destroyManager (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Deployment::StopError));
 
   protected:
+    /// Destructor
+    virtual ~DomainApplicationManager_Impl (void);    
+    
     /**
      * (1) Parse the global deployment plan, get the total number of
      *     child plans included in the global plan, and get the list of
@@ -198,7 +192,7 @@ namespace CIAO
      * (2) Check whether all the NodeManager names are present in the
      *     deployment information data file.
      */
-    int get_plan_info (void);
+    bool get_plan_info (void);
 
     /**
      * Split the global (domain-level) deployment plan to a set of
@@ -224,12 +218,12 @@ namespace CIAO
     Deployment::Connections *
     get_outgoing_connections (const Deployment::DeploymentPlan &plan);
 
-    // This is a helper function to find the connection for a component.
+    /// This is a helper function to find the connection for a component.
     bool
     get_outgoing_connections_i (const char * instname,
                                 Deployment::Connections & retv);
 
-    // Dump connections, a static method
+    /// Dump connections, a static method
     static void dump_connections (const ::Deployment::Connections & connections);
 
   protected:
