@@ -1,3 +1,17 @@
+Wed Nov  6 18:55:22 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/OS.{h i} (recursive_mutex_cond_unlock,
+          recursive_mutex_cond_relock): For Windows, don't try to save/restore
+          CRITICAL_SECTION members individually - there are undocumented
+          details at work there. Instead, release and acquire the mutex
+          one fewer times than the recursion count, letting Windows take
+          care of its internals. Fixes the hung Recursive_Condition_Test on
+          Windows. This also neatly removes the WinCE conditional code in
+          this area.
+
+        * tests/Recursive_Condition_Test.cpp: Fix a const error that gcc
+          pointed out.
+
 Wed Nov  6 11:12:28 2002  Steve Huston  <shuston@riverace.com>
 
         * tests/Recursive_Condition_Test.cpp: Replaced ACE_TRACE with

@@ -2631,16 +2631,19 @@ ACE_OS::recursive_mutex_cond_unlock (ACE_recursive_thread_mutex_t *m,
   // does not integrate them into a condition variable.
 #    if defined (ACE_WIN32)
   // For Windows, the OS takes care of the mutex and its recursion. We just
-  // need to save the nesting count and reduce it so that we can release
-  // the mutex with the condition. When we reacquire it, reset the counts
-  // to match the conditions before the wait occurred so that this thread
-  // does all of its acquires and releases correctly.
-  state.lock_count_ = m->LockCount;
-  m->LockCount = 0;
-#      if !defined (_WIN32_WCE) || (_WIN32_WCE >= 400) /* Windows and CE.NET */
-  state.recursion_count_ = m->RecursionCount;
-  m->RecursionCount = 1;
-#      endif /* _WIN32_WCE >= 400 */
+  // need to release the lock one fewer times than this thread has acquired
+  // it. Remember how many times, and reacquire it that many more times when
+  // the condition is signaled.
+  state.relock_count_ = 0;
+  while (m->LockCount > 0)
+    {
+      // This may fail if the current thread doesn't own the mutex. If it
+      // does fail, it'll be on the first try, so don't worry about resetting
+      // the state.
+      if (ACE_OS::recursive_mutex_unlock (m) == -1)
+        return -1;
+      ++state.relock_count_;
+    }
 #    endif /* ACE_WIN32 */
   return 0;
 #  else /* ACE_HAS_RECURSIVE_MUTEXES */
@@ -2710,12 +2713,14 @@ ACE_OS::recursive_mutex_cond_relock (ACE_recursive_thread_mutex_t *m,
   // Windows need special handling since it has recursive mutexes, but
   // does not integrate them into a condition variable.
   // On entry, the OS has already reacquired the lock for us. Just
-  // restore the counts to what they were before waiting on the condition.
+  // reacquire it the proper number of times so the recursion is the same as
+  // before waiting on the condition.
 #    if defined (ACE_WIN32)
-  m->LockCount = state.lock_count_;
-#      if !defined (_WIN32_WCE) || (_WIN32_WCE >= 400) /* Windows and CE.NET */
-  m->RecursionCount = state.recursion_count_;
-#      endif /* _WIN32_WCE >= 400 */
+  while (state.relock_count_ > 0)
+    {
+      ACE_OS::recursive_mutex_lock (m);
+      --state.relock_count_;
+    }
   return;
 #    endif /* ACE_WIN32 */
 #  else
