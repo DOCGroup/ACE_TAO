@@ -1,3 +1,12 @@
+Tue Apr 18 14:06:32 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* ace/CDR_Stream.cpp:
+	  Patch to ACE_CDR::consolidate() sent in by Carlos, that
+	  fixes a bug reported by Harald Finster <finster@ave.ac.agit.de>,
+	  and an added check for 0 value of the 'length' arg in
+	  read_array() and write_array(), that fixes [Bug 540],
+	  reported by Mathew Samuel <Mathew.Samuel@msdw.com>.
+
 Tue Apr 18 11:47:57 2000  Ossama Othman  <ossama@uci.edu>
 
 	* ace/SOCK_Connector.cpp:
