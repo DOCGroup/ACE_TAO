@@ -1,3 +1,19 @@
+// ============================================================================
+//
+// = LIBRARY
+//    tests
+// 
+// = FILENAME
+//    Pipe_Test.cpp
+//
+// = DESCRIPTION
+//    Tests the construction of multiple pipes in a process.
+//
+// = AUTHOR
+//    Irfan Pyarali
+// 
+// ============================================================================
+
 #include "ace/Pipe.h"
 #include "test_config.h"
 
