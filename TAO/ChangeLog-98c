@@ -1,3 +1,29 @@
+Sun Jul 12 01:40:58 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* Fixed several problems reported by John Mulhern
+	  <9107@mn3.lawson.lawson.com>, that fix portability problems to
+	  HP/aCC.
+
+	* tao/Typecode.cpp: 
+	  Declared a temporary buffer as CORBA::Octet* instead of void*,
+	  otherwise HP/aCC balks.
+
+	* TAO_IDL/fe/y.tab.cpp: 
+	  Removed indent pragma.
+	  Declared tao_yyerror as taking a const char*, it is not used
+	  anyway.
+
+	* TAO_IDL/be/be_visitor_operation/tie_si.cpp: 
+	  Tie delegation is similar to collocated upcalls, the arguments
+	  are T_ptr objects and not T_var, hence, no .in () calls are
+	  needed.
+
+	* TAO_IDL/fe/fe_extern.cpp: 
+	* TAO_IDL/driver/drv_preproc.cpp: 
+	  Changed old C-style cast to reinterpret_cast, that should make
+	  HP/aCC compiler happy. This is just because SunCFE uses File* as
+	  a compilation barrier for FILE*, IMHO a waste of time.
+
 Sat Jul 11 10:17:35 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/tests/Makefile: 

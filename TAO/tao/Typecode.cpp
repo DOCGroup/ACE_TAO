@@ -1742,7 +1742,7 @@ CORBA_TypeCode::private_member_label (CORBA::ULong n,
           for (CORBA::ULong i = 0; i < member_count; i++)
             {
               // allocate buffer to hold the member label value
-              void *buf = new CORBA::Octet [tc->size (env)];
+              CORBA::Octet *buf = new CORBA::Octet [tc->size (env)];
               if (stream.decode (tc, buf, this,  env)
                   != CORBA::TypeCode::TRAVERSE_CONTINUE
                   || !stream.skip_string ()         // member name
