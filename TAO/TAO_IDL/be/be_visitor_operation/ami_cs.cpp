@@ -70,18 +70,6 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
-  // Retrieve the operation return type.
-  be_type *bt = be_type::narrow_from_decl (node->return_type ());
-
-  if (!bt)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_operation_ami_cs::"
-                         "visit_operation - "
-                         "Bad return type\n"),
-                        -1);
-    }
-
   // Generate the return type mapping. Return type is simply void.
   *os << be_nl << be_nl
       << "void" << be_nl;
@@ -126,7 +114,10 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
   ctx = *this->ctx_;
   be_visitor_operation_arglist oa_visitor (&ctx);
 
-  if (node->arguments ()->accept (&oa_visitor) == -1)
+  // Get the AMI version from the strategy class.
+  be_operation *ami_op = node->arguments ();
+  
+  if (ami_op->accept (&oa_visitor) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_operation_ami_cs::"
@@ -146,25 +137,6 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
           << "ACE_DECLARE_NEW_CORBA_ENV;";
     }
 
-  // Generate any pre stub info if and only if none of our parameters is of the
-  // native type.
-  if (!node->has_native ())
-    {
-      // Native type does not exist.
-
-      // Generate any "pre" stub information such as tables or declarations
-      // This is a template method and the actual work will be done by the
-      // derived class
-      if (this->gen_pre_stub_info (node, bt) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_operation_ami_cs::"
-                             "visit_operation - "
-                             "gen_pre_stub_info failed\n"),
-                            -1);
-        }
-    }
-
   if (node->has_native ()) // native exists => no stub
     {
       be_predefined_type bpt (AST_PredefinedType::PT_void,
@@ -179,13 +151,14 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_operation_ami_cs::"
                              "visit_operation - "
-                             "codegen for return var failed\n"),
+                             "codegen for has-native exception failed\n"),
                             -1);
         }
     }
   else
     {
-      *os << "if (!this->is_evaluated ())" << be_idt_nl
+      *os << be_nl
+          << "if (!this->is_evaluated ())" << be_idt_nl
           << "{" << be_idt_nl
           << "ACE_NESTED_CLASS (CORBA, Object)::tao_object_initialize (this);"
           << be_uidt_nl
@@ -202,29 +175,50 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
           << "}" << be_uidt;
     }
 
+  *os << be_nl<< be_nl
+      << "TAO::Arg_Traits<void>::ret_val _tao_retval;";
+
+  // Declare the argument helper classes.
+  this->gen_stub_body_arglist (ami_op, os, I_TRUE);
+
+  // Assemble the arg helper class pointer array.
+  *os << be_nl << be_nl
+      << "TAO::Argument *_tao_signature [] =" << be_idt_nl
+      << "{" << be_idt_nl
+      << "&_tao_retval";
+
+  AST_Argument *arg = 0;
+  UTL_ScopeActiveIterator arg_list_iter (ami_op, 
+                                         UTL_Scope::IK_decls);
+  
+  // For a sendc_* operation, skip the reply handler (first argument).
+  arg_list_iter.next ();
+
+  for (; ! arg_list_iter.is_done (); arg_list_iter.next ())
+    {
+      arg = AST_Argument::narrow_from_decl (arg_list_iter.item ());
+
+      *os << "," << be_nl
+          << "&_tao_" << arg->local_name ();
+    }
+
+  *os << be_uidt_nl
+      << "};" << be_uidt;
+
+  be_interface *intf = be_interface::narrow_from_decl (parent);
+  
+  // Includes the reply handler, but we have to add 1 for the retval anyway.
+  int nargs = ami_op->argument_count ();
+  
   const char *lname = node->local_name ()->get_string ();
   long opname_len = ACE_OS::strlen (lname);
   ACE_CString opname;
-  int nargs = node->argument_count ();
 
-  *os << be_nl<< be_nl
-      << "TAO::Arg_Traits<";
-
-  this->gen_arg_template_param_name (bt,
-                                     os);
-
-  *os << ">::ret_val _tao_retval;";
-
-  // Check if we are an attribute node in disguise.
   if (this->ctx_->attribute ())
     {
-      // Declare return type helper class.
-
-      // If we are a attribute node, add the length of the operation
-      // name.
+      // If we are a attribute node, add 5 for '_get_' or '_set_'.
       opname_len += 5;
 
-      // Count the return value.
       // Now check if we are a "get" or "set" operation.
       if (node->nmembers () == 1)
         {
@@ -238,41 +232,11 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
 
   opname += lname;
 
-  // Declare the argument helper classes.
-  this->gen_stub_body_arglist (node, os, I_TRUE);
-
-  *os << be_nl << be_nl
-      << "TAO::Argument *_tao_signature [] =" << be_idt_nl
-      << "{" << be_idt_nl
-      << "&_tao_retval";
-
-  AST_Argument *arg = 0;
-
-  for (UTL_ScopeActiveIterator arg_list_iter (node, UTL_Scope::IK_decls);
-       ! arg_list_iter.is_done ();
-       arg_list_iter.next ())
-    {
-      arg = AST_Argument::narrow_from_decl (arg_list_iter.item ());
-
-      if (arg->direction () == AST_Argument::dir_OUT)
-        {
-          nargs--;
-          continue;
-        }
-      *os << "," << be_nl
-          << "&_tao_" << arg->local_name ();
-    }
-
-  *os << be_uidt_nl
-      << "};" << be_uidt;
-
-  be_interface *intf = be_interface::narrow_from_decl (parent);
-
   *os << be_nl << be_nl
       << "TAO::Asynch_Invocation_Adapter _tao_call (" << be_idt << be_idt_nl
       << "this," << be_nl
       << "_tao_signature," << be_nl
-      << nargs + 1 << "," << be_nl
+      << nargs << "," << be_nl
       << "\"" << opname.fast_rep () << "\"," << be_nl
       << opname_len << "," << be_nl
       << "this->the" << intf->base_proxy_broker_name () << "_"
