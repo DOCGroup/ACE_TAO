@@ -414,6 +414,7 @@ ACE_Event_Channel::open (void *)
 {
   // Ignore SIPPIPE so each Consumer_Proxy can handle it.
   ACE_Sig_Action sig (ACE_SignalHandler (SIG_IGN), SIGPIPE);
+  ACE_UNUSED_ARG (sig);
 
   if (this->options ().connector_role_)
     // Actively initiate Peer connections.
