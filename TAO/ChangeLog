@@ -1,3 +1,9 @@
+Tue Nov 11 16:54:38 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/tests/Security/Callback/server.cpp:
+
+	  Fixed compile errors with g++.
+
 Tue Nov 11 14:54:02 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/DynamicInterface/Request.cpp:
