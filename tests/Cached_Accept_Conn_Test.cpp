@@ -303,7 +303,7 @@ Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::out_of_sockets_handler (void)
       // connection cache maintained by the connector.
       ACE_DEBUG ((LM_DEBUG, "Purging connections from Connection Cache...\n"));
 
-      return this->caching_connect_strategy_.purge_connections (purge_percentage);
+      return this->caching_connect_strategy_.purge_connections ();
     }
 
   return -1;

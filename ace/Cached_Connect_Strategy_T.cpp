@@ -232,7 +232,7 @@ ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATE
           // are done from the CONNECTION_CACHE. This frees the
           // descriptors which get used in the connect process and
           // hence the same method is called again!
-          if (this->purge_connections (this->caching_strategy ().purge_percent ()) == -1)
+          if (this->purge_connections () == -1)
             return -1;
 
           // Try connecting again.
@@ -378,10 +378,8 @@ ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATE
 }
 
 template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class CACHING_STRATEGY, class ATTRIBUTES, class MUTEX> int
-ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATEGY, ATTRIBUTES, MUTEX>::purge_connections (double percentage)
+ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATEGY, ATTRIBUTES, MUTEX>::purge_connections (void)
 {
-  // Set the percentage of entries to remove and then call purge on the cache.
-  this->caching_strategy ().purge_percent (percentage);
   return this->connection_cache_.purge ();
 }
 

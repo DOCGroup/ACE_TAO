@@ -72,7 +72,7 @@ public:
   // the descriptors which get used in the connect process and hence
   // the connect operation can succeed.
 
-  virtual int purge_connections (double percentage = 10);
+  virtual int purge_connections (void);
   // Explicit purging of connection entries from the connection cache.
 
   // = Typedefs for managing the map
