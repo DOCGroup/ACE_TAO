@@ -1,3 +1,9 @@
+Wed Aug  4 22:31:24 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* docs/tutorial/Hello/client.cpp (main):
+
+	  Fixed typo that caused a syntax error.
+
 Wed Aug  4 17:24:18 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* examples/OEP/Display/RateGen/RateGen_exec.cpp (create):
