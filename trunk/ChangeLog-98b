@@ -1,15 +1,19 @@
 Fri Nov  6 10:12:16 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Process.h: Clarified the behavior of ACE_Process and
- 	  ACE_Process_Options on UNIX because of the use of execve(),
- 	  which doesn't search the path.  Thanks to Avi Nash for reporting
- 	  this.
+        * ace/Process.h: Clarified the behavior of ACE_Process and
+          ACE_Process_Options on UNIX because of the use of execve(),
+          which doesn't search the path.  Thanks to Avi Nash for reporting
+          this.
 
 Fri Nov 06 08:57:49 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Mem_Map_Test.cpp (reverse_file): put the volatile
           qualifier back in.  LynxOS 3.0.0/PowerPC needs it with -O2
           and without ACE_HAS_INLINE.
+
+        * VERSION: added reference to BUG-REPORT-FORM.  Thanks to
+          Peter Nordlund <petern@nada.kth.se> for provided the new
+          text.
 
 Thu Nov  5 23:10:46 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
