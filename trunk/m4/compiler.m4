@@ -44,6 +44,11 @@ AC_DEFUN(ACE_SET_COMPILER_FLAGS, dnl
  dnl                   CXXFLAGS to allow the user override them.
  dnl    DCXXFLAGS - C++ debugging flags
  dnl    OCXXFLAGS - C++ optimization flags
+ dnl    WERROR    - Compiler flag that converts warnings to errors
+
+ if test -n "$GXX"; then
+    WERROR="-Werror"
+ fi
 
  case "$target" in
    *aix4.2* | *aix4.3*)
@@ -182,6 +187,8 @@ AC_DEFUN(ACE_SET_COMPILER_FLAGS, dnl
    *solaris2*)
      case "$CXX" in
        CC)
+         WERROR="-xwe"
+
          if test "$ace_user_enable_exceptions" != yes; then
            CXXFLAGS="$CXXFLAGS -noex"
          fi

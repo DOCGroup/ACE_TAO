@@ -1,7 +1,7 @@
 dnl
 dnl $Id$
 
-AC_REVISION($Revision 0.72 $)dnl
+AC_REVISION($Revision 0.73 $)dnl
 
 dnl
 dnl An autoconf script to automatically configure ACE.
@@ -36,10 +36,10 @@ dnl Its argument names a file that must exist in the directory where
 dnl autoconf will run, just to check things.
 dnl AC_INIT(ace_unique.m4)
 dnl
-AC_INIT(ace/ACE.cpp)
+AC_INIT(ace/ACE.cpp)dnl
 
 dnl Require GNU Autoconf 2.13 or better.
-AC_PREREQ(2.13)
+AC_PREREQ(2.13)dnl
 
 dnl Add maintainer mode option to the option list.
 AM_MAINTAINER_MODE
@@ -48,24 +48,32 @@ dnl Until autoconf support in ACE is complete, prevent this script
 dnl from running unless the user explictly forces the configure script
 dnl to run using the "--enable-maintainer-mode" configure script
 dnl option.
-if test $USE_MAINTAINER_MODE != yes; then
-  AC_MSG_ERROR([
-    ACE autoconf support is currently disabled by default since it is
-    still under development.  Please use the stock ACE build procedure
-    detailed in the file \`ACE-INSTALL.html'.
-
-    If you wish to experiment with ACE's autoconf support then use the
-    \"--enable-maintainer-mode\" configure script option to enable
-    autoconf support.  For more details see the file
-    \`ACE-configuration.txt'.])
-fi  dnl  test $USE_MAINTAINER_MODE != yes
+dnl if test $USE_MAINTAINER_MODE != yes; then
+dnl   AC_MSG_ERROR([
+dnl     ACE autoconf support is currently disabled by default since it is
+dnl     still under development.  Please use the stock ACE build procedure
+dnl     detailed in the file \`ACE-INSTALL.html'.
+dnl 
+dnl     If you wish to experiment with ACE's autoconf support then use the
+dnl     \"--enable-maintainer-mode\" configure script option to enable
+dnl     autoconf support.  For more details see the file
+dnl     \`ACE-configuration.txt'.])
+dnl fi  dnl  test $USE_MAINTAINER_MODE != yes
 
 dnl If we are configuring in a CVS controlled directory then don't
 dnl continue any further.  The idea is to prevent automatically
 dnl generated files from being checked into the repository.  This
 dnl will prevent accidental overwrites of ACE's current Makefiles by
 dnl the automatically generated ones, for example.
-ACE_CHECK_FOR_CVS_DIR
+dnl ACE_CHECK_FOR_CVS_DIR
+
+dnl Prevent the configure script from continuing any further if
+dnl configuration is being performed in the top-level directory.  The
+dnl idea is to prevent files generated during configuration and build
+dnl from overwriting the stock files of the same name.
+ACE_CHECK_TOP_SRCDIR
+
+
 
 dnl Check what platform we are running on.
 AC_CANONICAL_SYSTEM
@@ -82,10 +90,10 @@ changequote(, )dnl
 ACE_VERSION=`head -1 ${srcdir}/VERSION | sed 's/.*version \([0-9.]*\).*/\1/'`
 changequote([, ])dnl
 
-AM_INIT_AUTOMAKE("$PACKAGE", "$ACE_VERSION", DUMMY)
+AM_INIT_AUTOMAKE("$PACKAGE", "$ACE_VERSION", DUMMY)dnl
 
 dnl Generate a header file with all settings.
-AM_CONFIG_HEADER(ace/config.h)
+AM_CONFIG_HEADER(ace/config.h)dnl
 
 dnl Move before the AC_ARG_ENABLE stuff to prevent autoconf complaints.
 dnl This is a bit messy but it makes life easier for me.
@@ -113,14 +121,14 @@ changequote(, )dnl
 changequote([, ])dnl
     ace_has_old_gcc=no
   else
-    AC_DEFINE(ACE_HAS_GNUG_PRE_2_8) dnl
-    AC_DEFINE(ACE_HAS_GNUC_BROKEN_TEMPLATE_INLINE_FUNCTIONS) dnl
+    AC_DEFINE(ACE_HAS_GNUG_PRE_2_8)dnl
+    AC_DEFINE(ACE_HAS_GNUC_BROKEN_TEMPLATE_INLINE_FUNCTIONS)dnl
     ace_has_old_gcc=yes
   fi
 fi
 
 dnl If we are cross compiling disable certain things in the Makefiles.
-AM_CONDITIONAL(ACE_CROSS_COMPILED, test X$cross_compiling = Xyes)
+AM_CONDITIONAL(ACE_CROSS_COMPILED, test X$cross_compiling = Xyes)dnl
 
 
 dnl This checks for a binary called gm4, gnum4 or m4, and assigns
@@ -151,9 +159,9 @@ ACE_REVISION=$ACE_BETA
 
 fi
 
-AC_SUBST(ACE_CURRENT)
-AC_SUBST(ACE_AGE)
-AC_SUBST(ACE_REVISION)
+AC_SUBST(ACE_CURRENT)dnl
+AC_SUBST(ACE_AGE)dnl
+AC_SUBST(ACE_REVISION)dnl
 
 dnl Do the usual install settings; don't forget to include a
 dnl `install-sh' script, in case there is no BSD compatible `install'
@@ -167,37 +175,10 @@ dnl Special handling for some UNIX variants and Cygwin32
 AC_AIX
 
 dnl This test replaces the obsolete AC_ISC_POSIX kludge.
-AC_CHECK_LIB(cposix, strerror, [LIBS="$LIBS -lcposix"])
+AC_CHECK_LIB([cposix], [strerror], [LIBS="$LIBS -lcposix"])dnl
 
 AC_MINIX
 AC_CYGWIN
-
-
-dnl Setup Libtool
-dnl
-dnl This should be done in the "programs" section of this file but compiler
-dnl potentially set by the thread checks will have been missed by libtool
-dnl if the libtool setup was done prior to the thread checks.
-
-dnl Disable building of static libraries by default
-AC_DISABLE_STATIC
-
-dnl Enable Libtool module support
-AC_LIBTOOL_DLOPEN
-
-dnl FIXME: Temporary hack to make libtool work with g++.
-dnl        Shared library support will only work with GNU g++ and GNU ld
-dnl        right now.
-dnl save_CC="$CC"
-dnl CC="$CXX"
-
-dnl Check for libtool and turn on Automake processing for Libtool
-AC_PROG_LIBTOOL
-
-dnl Enable C++ support in libtool
-AC_LIBTOOL_CXX
-
-dnl CC="$save_CC"
 
 dnl Check if we support symlinks
 AC_PROG_LN_S
@@ -212,10 +193,10 @@ dnl   ./missing yacc
 dnl fi
 
 dnl Check for perfect hash function generator
-AC_CHECK_PROG(GPERF, gperf, gperf) dnl
+AC_CHECK_PROG(GPERF, gperf, gperf)dnl
 
 dnl Check for profiling progam
-AC_CHECK_PROGS(PROF, gprof prof,) dnl
+AC_CHECK_PROGS(PROF, gprof prof,)dnl
 
 
 dnl Set the test language as C++
@@ -1013,19 +994,61 @@ if test "$ace_user_enable_threads" = yes; then
   ACE_CHECK_THREADS
 fi dnl test "$ace_user_enable_threads" = yes
 
+dnl Setup Libtool
+dnl
+dnl This should be done in the "programs" section of this file but
+dnl libtool may then be unaware of compiler flags set during the
+dnl thread checks.
+
+# Autoconf's AC_OBJEXT and AC_EXEEXT macros only works for C compilers!
+# Libtool's setup macro calls AC_OBJEXT and AC_EXEEXT without setting
+# the test language to C.  We do it before any libtool setup macros are
+# called so that the proper values are cached beforehand.
+AC_LANG_SAVE
+AC_LANG_C
+AC_OBJEXT
+AC_EXEEXT
+AC_LANG_RESTORE
+
+dnl Disable building of static libraries by default
+AC_DISABLE_STATIC
+
+dnl Enable Libtool module support
+AC_LIBTOOL_DLOPEN
+
+dnl FIXME: Temporary hack to make libtool work with g++.
+dnl        Shared library support will only work with GNU g++ and GNU ld
+dnl        right now.
+dnl save_CC="$CC"
+dnl CC="$CXX"
+
+dnl Check for libtool and turn on Automake processing for Libtool
+AC_PROG_LIBTOOL
+
+dnl Enable C++ support in libtool
+AC_LIBTOOL_CXX
+
+dnl Temporary hack until I get integrate libtool's new tag support
+dnl into automake.
+dnl This hack forces libtool to always use the C++ tag.
+LIBTOOL="$LIBTOOL --tag=CXX"
+
+dnl CC="$save_CC"
+
 dnl Check for sched_yield() in posix4 library.
 dnl Some platforms, such as Solaris, may define sched_yield() there.
 dnl Later we run AC_CHECK_FUNC(sched_yield), which is redundant in this case
 dnl but is needed if sched_yield() is defined in one of the other libraries
 dnl we check for.
-ACE_SEARCH_LIBS(sched_yield, rt posix4, ace_has_sched_yield=yes,)dnl
+ACE_SEARCH_LIBS([sched_yield],[rt posix4],[ace_has_sched_yield=yes],)dnl
 
 dnl Check for asynchronous IO calls (perform check *after* thread check!)
 ACE_CHECK_ASYNCH_IO
 
 dnl Additional `-lposix4' library check since it may not be added by the
 dnl above checks on some platforms that may need it
-ACE_SEARCH_LIBS(clock_gettime, rt posix4, AC_DEFINE(ACE_HAS_CLOCK_GETTIME),)dnl
+ACE_SEARCH_LIBS([clock_gettime],
+  [rt posix4],[AC_DEFINE(ACE_HAS_CLOCK_GETTIME)],)dnl
 
 dnl
 dnl SECTION 5: checks for header files
@@ -1038,7 +1061,7 @@ if test "$ac_cv_header_dirent_dirent_h" = yes ||
    test "$ac_cv_header_dirent_sys_ndir_h" = yes ||
    test "$ac_cv_header_dirent_sys_dir_h" = yes ||
    test "$ac_cv_header_dirent_ndir_h" = yes; then
-  AC_DEFINE(ACE_HAS_DIRENT)
+  AC_DEFINE(ACE_HAS_DIRENT)dnl
 fi
 
 dnl Check for sys/wait.h Posix.1 compliance
@@ -5871,7 +5894,7 @@ if test "$ace_cv_lib_voidptr_gettimeofday" = no; then
 ACE_CONVERT_WARNINGS_TO_ERRORS( dnl
 [
 dnl Check for old OSF1 style gettimeofday()
-  AC_CACHE_CHECK(if gettimeofday() takes a timzeone * second argument,
+  AC_CACHE_CHECK(if gettimeofday() takes a timezone * second argument,
     ace_cv_lib_timezone_gettimeofday,
     [
      AC_TRY_COMPILE(

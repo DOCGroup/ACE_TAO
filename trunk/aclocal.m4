@@ -103,6 +103,38 @@ AC_DEFUN(ACE_CHECK_FOR_CVS_DIR,
  fi
 ])
 
+
+dnl Prevent the configure script from continuing any further if
+dnl configuration is being performed in the top-level directory.  The
+dnl idea is to prevent files generated during configuration and build
+dnl from overwriting the stock files of the same name.
+dnl Usage: ACE_CHECK_TOP_SRCDIR
+AC_DEFUN(ACE_CHECK_TOP_SRCDIR,
+[
+ if test $srcdir = "." && test $USE_MAINTAINER_MODE != yes; then
+   AC_MSG_ERROR(
+     [
+      Please configure and build in a directory other than the
+      top-level source directory.  Doing so will prevent files
+      distributed with the package from being overwritten.  This
+      currently necessary since autoconf support is still
+      experimental.  If you encounter problems please use the stock
+      build procedure.
+
+      For example, try the following from the top-level source
+      directory:
+
+          mkdir objdir
+          cd objdir
+          ../configure
+          make
+
+      This will create a build space in the directory \`objdir' and
+      start a build in that directory.
+     ])
+ fi
+])
+
 dnl Add compiler flags to the CXXFLAGS and CFLAGS variables when doing an
 dnl AC_TRY_COMPILE (not ACE_TRY_COMPILE).
 dnl Use this macro when adding include directories to the compiler flags,
@@ -111,17 +143,21 @@ dnl Usage: ACE_TRY_COMPILE(COMPILER-FLAGS, INCLUDES, FUNCTION-BODY,
 dnl                        [ACTION-IF-FOUND [,ACTION-IF-NOT-FOUND]])
 AC_DEFUN(ACE_TRY_COMPILE, dnl
 [
- ace_pre_try_CXXFLAGS="$CXXFLAGS"
- CXXFLAGS="$CXXFLAGS $1"
+ ifelse(AC_LANG, [CPLUSPLUS],
+   [
+    ace_pre_try_CXXFLAGS="$CXXFLAGS"
+    CXXFLAGS="$CXXFLAGS $1"
+   ],
+   [
+    ace_pre_try_CFLAGS="$CFLAGS"
+    CFLAGS="$CFLAGS $1"
+   ])
 
- ace_pre_try_CFLAGS="$CFLAGS"
- CFLAGS="$CFLAGS $1"
-
- AC_TRY_COMPILE($2, $3, $4, $5)
+ AC_TRY_COMPILE([$2],[$3],[$4],[$5])
 
  dnl Restore the C++ and C flags
- CXXFLAGS="$ace_pre_try_CXXFLAGS"
- CFLAGS="$ace_pre_try_CFLAGS"
+ ifelse(AC_LANG, [CPLUSPLUS],
+   [CXXFLAGS="$ace_pre_try_CXXFLAGS"],[CFLAGS="$ace_pre_try_CFLAGS"])
 
 ])
 
@@ -135,12 +171,22 @@ dnl header when doing an AC_TRY_COMPILE.
 dnl Usage: ACE_USE_TEMP_FILE(TEMP-FILE-TO-CREATE, COMMANDS-THAT-WILL-USE-IT)
 AC_DEFUN(ACE_USE_TEMP_FILE, dnl
 [
+ test -d ./$1 && AC_MSG_ERROR([cannot create file: $acetmp is a directory])
 
  test -f ${srcdir}/$1 && mv ${srcdir}/$1 ${srcdir}/$1.conf
  touch ${srcdir}/$1
 
  if test ${srcdir}/$1 != "./$1"; then
    test -f ./$1 && mv ./$1 ./$1.conf
+   dnl Create all of the sub-directories (assume "mkdir -p" is not portable).
+   acetmp="."
+changequote(, )dnl
+   for ace_dir in `echo $1 | sed -e 's,/[^/][^/]*\$,,' -e 's,/, ,g'`; do
+changequote([, ])dnl
+     acetmp="$acetmp/$ace_dir"
+     test -f $acetmp && AC_MSG_ERROR([cannot create directory: $acetmp])
+     test -d $acetmp || mkdir $acetmp
+   done
    touch ./$1
  fi
 
@@ -156,6 +202,9 @@ AC_DEFUN(ACE_USE_TEMP_FILE, dnl
    if test -f ./$1.conf; then
      mv ./$1.conf ./$1
    else
+     dnl Remove the file.  Any sub-directories will not be removed
+     dnl since we have no way to tell if they existed prior to the
+     dnl creation of this file.
      rm ./$1
    fi
  fi
@@ -174,18 +223,7 @@ dnl Other "treat warnings as errors" flags for other compilers should
 dnl be added if possible.
   ace_pre_warning_CXXFLAGS="$CXXFLAGS"
 
-  if test -n "$GXX"; then
-    CXXFLAGS="$CXXFLAGS -Werror"
-  else
-    case $target in
-    *solaris*)
-       if test "$CXX" = CC; then
-         CXXFLAGS="$CXXFLAGS -xwe"
-       fi
-       ;;
-    *) ;;
-    esac
-  fi
+  CXXFLAGS="$CXXFLAGS $WERROR"
 
   $1
 
@@ -234,7 +272,7 @@ dnl  AC_REQUIRE([AC_PROG_CXX])
 dnl  AC_REQUIRE([AC_PROG_CXXCPP])
 dnl  AC_REQUIRE([AC_LANG_CPLUSPLUS])
 
-  ACE_CACHE_CHECK(for $1 in $2, ace_cv_type_$1,
+  ACE_CACHE_CHECK([for $1 in $2], [ace_cv_type_$1],
     [
      AC_TRY_COMPILE(
        [
@@ -249,7 +287,7 @@ dnl  AC_REQUIRE([AC_LANG_CPLUSPLUS])
        [
         ace_cv_type_$1=no
        ])
-    ], $3, $4)
+    ],[$3],[$4])
 ])
 
 
@@ -268,9 +306,9 @@ dnl  AC_REQUIRE([AC_LANG_CPLUSPLUS])
 dnl Do the transliteration at runtime so arg 1 can be a shell variable.
 dnl  ac_safe=`echo "$1" | sed 'y%./+-%__p_%'`
 
-  ACE_CACHE_CHECK(for struct $1 in $2, ace_cv_struct_$1,
+  ACE_CACHE_CHECK([for struct $1 in $2], [ace_cv_struct_$1],
     [
-     ACE_TRY_COMPILE_STRUCT($1, $2,
+     ACE_TRY_COMPILE_STRUCT([$1], [$2],
        [
         ace_cv_struct_$1=yes
        ],
@@ -345,9 +383,11 @@ dnl  AC_REQUIRE([AC_LANG_CPLUSPLUS])
   AC_REQUIRE([AC_PROG_AWK])
 
   AC_TRY_CPP(
-    [
+     [
 #include <$2>
-    ], ace_header_exists=yes, ace_header_exists=no)
+     ],
+     [ace_header_exists=yes],
+     [ace_header_exists=no])
 
   cat > conftest.$ac_ext <<EOF
 
@@ -358,7 +398,7 @@ EOF
 
   if test "$ace_header_exists" = yes; then
     if test -z "$AWK"; then
-      AC_MSG_WARN(No awk program found.  "Real" function may not be found.)
+      AC_MSG_WARN([No awk program found.  "Real" function may not be found.])
     fi
 
     if (eval "$ac_cpp conftest.$ac_ext") 2>&5 |
@@ -370,14 +410,14 @@ EOF
     fi
 
     if test $1 != "$ace_real_function"; then
-      AC_MSG_CHECKING(for real $1 from $2)
-      AC_MSG_RESULT($ace_real_function)
+      AC_MSG_CHECKING([for real $1 from $2])
+      AC_MSG_RESULT([$ace_real_function])
     fi
   else
     ace_real_function=$1
   fi dnl test "$ace_header_not_exist" != yes
 
-  AC_CHECK_FUNC($ace_real_function, $3, $4)
+  AC_CHECK_FUNC([$ace_real_function],[$3],[$4])
 ])
 
 dnl Check for function in library using prototype in header
@@ -450,7 +490,7 @@ dnl Here we attempt to determine the type of the first argument of
 dnl getrusage from its prototype.  It should either be an int or an
 dnl enum.  If it is an enum, determine the enum type.
      ace_setrlimit_enum=`eval "$ac_cpp conftest.$ac_ext" | \
-       egrep 'setrlimit.*\(.*[^,]*enum' | \
+       egrep '[ ]+setrlimit.*\(.*[^,]*enum' | \
        sed -e 's/^.*setrlimit.*(.*enum//' -e 's/[^ ]*,.*$//'`
 changequote([, ])dnl
 
@@ -459,7 +499,7 @@ changequote([, ])dnl
      AC_MSG_RESULT([$ace_setrlimit_enum])
 
 if test -n "$ace_setrlimit_enum"; then
-     AC_DEFINE_UNQUOTED(ACE_HAS_RLIMIT_RESOURCE_ENUM, $ace_setrlimit_enum)
+     AC_DEFINE_UNQUOTED([ACE_HAS_RLIMIT_RESOURCE_ENUM], [$ace_setrlimit_enum])
 fi
 
      rm -rf conftest*
@@ -493,7 +533,7 @@ dnl Here we attempt to determine the type of the first argument of
 dnl getrusage from its prototype.  It should either be an int or an
 dnl enum.  If it is an enum, determine the enum type.
      ace_rusage_who=`eval "$ac_cpp conftest.$ac_ext" | \
-       egrep 'getrusage.*\(.*[^,]*enum' | \
+       egrep '[ ]+getrusage.*\(.*[^,]*enum' | \
        sed -e 's/^.*getrusage.*(.*enum//' -e 's/[^ ]*,.*$//'`
 changequote([, ])dnl
 
@@ -502,7 +542,7 @@ changequote([, ])dnl
      AC_MSG_RESULT([$ace_rusage_who])
 
 if test -n "$ace_rusage_who"; then
-     AC_DEFINE_UNQUOTED(ACE_HAS_RUSAGE_WHO_ENUM, $ace_rusage_who)
+     AC_DEFINE_UNQUOTED([ACE_HAS_RUSAGE_WHO_ENUM], [$ace_rusage_who])
 fi
 
      rm -rf conftest*
@@ -592,9 +632,9 @@ dnl Roland McGrath, Noah Friedman, david d zuhn, and many others.
 dnl Usage: ACE_SEARCH_LIBS(FUNCTION, SEARCH-LIBS [, ACTION-IF-FOUND
 dnl                        [, ACTION-IF-NOT-FOUND [, OTHER-LIBRARIES]]])
 dnl Search for a library defining FUNCTION, if it's not already available.
-AC_DEFUN(ACE_SEARCH_LIBS,
+AC_DEFUN(ACE_SEARCH_LIBS, dnl
 [
- AC_CACHE_CHECK(for library containing $1, ac_cv_search_$1,
+ AC_CACHE_CHECK([for library containing $1], [ac_cv_search_$1],
    [
     ac_func_search_save_LIBS="$LIBS"
 
@@ -604,7 +644,7 @@ AC_DEFUN(ACE_SEARCH_LIBS,
 
     test "$ac_cv_search_$1" = "no" && for i in $2; do
       LIBS="-l$i $5 $ac_func_search_save_LIBS"
-      ACE_TRY_LINK_FUNC($1,
+      ACE_TRY_LINK_FUNC([$1],
         [
          ac_cv_search_$1="-l$i"
          break
@@ -625,7 +665,7 @@ AC_DEFUN(ACE_SEARCH_LIBS,
 dnl Usage: ACE_TRY_LINK_FUNC(FUNCTION,[, ACTION-IF-FOUND
 dnl                          [, ACTION-IF-NOT-FOUND])
 dnl Search for a library defining FUNCTION, if it's not already available.
-AC_DEFUN(ACE_TRY_LINK_FUNC,
+AC_DEFUN(ACE_TRY_LINK_FUNC, dnl
 [
 AC_TRY_LINK(
 dnl Don't include <ctype.h> because on OSF/1 3.0 it includes <sys/types.h>
@@ -1455,6 +1495,11 @@ AC_DEFUN(ACE_SET_COMPILER_FLAGS, dnl
  dnl                   CXXFLAGS to allow the user override them.
  dnl    DCXXFLAGS - C++ debugging flags
  dnl    OCXXFLAGS - C++ optimization flags
+ dnl    WERROR    - Compiler flag that converts warnings to errors
+
+ if test -n "$GXX"; then
+    WERROR="-Werror"
+ fi
 
  case "$target" in
    *aix4.2* | *aix4.3*)
@@ -1593,6 +1638,12 @@ AC_DEFUN(ACE_SET_COMPILER_FLAGS, dnl
    *solaris2*)
      case "$CXX" in
        CC)
+         WERROR="-xwe"
+
+         if test "$ace_user_enable_exceptions" != yes; then
+           CXXFLAGS="$CXXFLAGS -noex"
+         fi
+
          dnl Some flags only work with Sun C++ 4.2
          if (CC -V 2>&1 | egrep 'Compilers 4\.2' > /dev/null); then
            CXXFLAGS="$CXXFLAGS -features=castop"
@@ -1601,8 +1652,14 @@ AC_DEFUN(ACE_SET_COMPILER_FLAGS, dnl
            fi 
          fi
 
-         if test "$ace_user_enable_exceptions" != yes; then
-           CXXFLAGS="$CXXFLAGS -noex"
+         dnl Sun C++ 5.0 weirdness
+         if (CC -V 2>&1 | egrep 'Compilers 5\.0' > /dev/null); then
+           CXXFLAGS="$CXXFLAGS -library=iostream,no%Cstd -instances=explicit"
+
+           if test "$ace_user_enable_exceptions" != yes; then
+             dnl See /opt/SUNWspro_5.0/SC5.0/include/CC/stdcomp.h.
+             AC_DEFINE(_RWSTD_NO_EXCEPTIONS)
+           fi
          fi
 
          CXXFLAGS="$CXXFLAGS"
@@ -1629,7 +1686,7 @@ AC_DEFUN(ACE_SET_COMPILER_FLAGS, dnl
 ])
 
 
-# serial 40 AC_PROG_LIBTOOL
+# serial 42 AC_PROG_LIBTOOL
 AC_DEFUN(AC_PROG_LIBTOOL,
 [AC_REQUIRE([AC_LIBTOOL_SETUP])dnl
 
@@ -1637,12 +1694,14 @@ AC_DEFUN(AC_PROG_LIBTOOL,
 AC_CACHE_SAVE
 
 # Actually configure libtool.  ac_aux_dir is where install-sh is found.
-CC="$CC" CFLAGS="$CFLAGS" CPPFLAGS="$CPPFLAGS" \
-LD="$LD" LDFLAGS="$LDFLAGS" LIBS="$LIBS" \
-LN_S="$LN_S" NM="$NM" RANLIB="$RANLIB" \
-DLLTOOL="$DLLTOOL" AS="$AS" OBJDUMP="$OBJDUMP" \
+AR="$AR" LTCC="$CC" CC="$CC" CFLAGS="$CFLAGS" CPPFLAGS="$CPPFLAGS" \
+FILE="$FILE" LD="$LD" LDFLAGS="$LDFLAGS" LIBS="$LIBS" \
+LN_S="$LN_S" NM="$NM" RANLIB="$RANLIB" STRIP="$STRIP" \
+AS="$AS" DLLTOOL="$DLLTOOL" OBJDUMP="$OBJDUMP" \
+objext="$OBJEXT" exeext="$EXEEXT" reload_flag="$reload_flag" \
+deplibs_check_method="$deplibs_check_method" file_magic_cmd="$file_magic_cmd" \
 ${CONFIG_SHELL-/bin/sh} $ac_aux_dir/ltconfig --no-reexec \
-$libtool_flags --no-verify $ac_aux_dir/ltmain.sh $host \
+$libtool_flags --no-verify --build="$build" $ac_aux_dir/ltmain.sh $lt_target \
 || AC_MSG_ERROR([libtool configure failed])
 
 # Reload cache, that may have been modified by ltconfig
@@ -1667,12 +1726,36 @@ AC_REQUIRE([AC_ENABLE_STATIC])dnl
 AC_REQUIRE([AC_ENABLE_FAST_INSTALL])dnl
 AC_REQUIRE([AC_CANONICAL_HOST])dnl
 AC_REQUIRE([AC_CANONICAL_BUILD])dnl
-AC_REQUIRE([AC_PROG_RANLIB])dnl
 AC_REQUIRE([AC_PROG_CC])dnl
 AC_REQUIRE([AC_PROG_LD])dnl
+AC_REQUIRE([AC_PROG_LD_RELOAD_FLAG])dnl
 AC_REQUIRE([AC_PROG_NM])dnl
 AC_REQUIRE([AC_PROG_LN_S])dnl
+AC_REQUIRE([AC_DEPLIBS_CHECK_METHOD])dnl
+# Autoconf's AC_OBJEXT and AC_EXEEXT macros only works for C compilers!
+AC_REQUIRE([AC_LANG_SAVE])dnl
+AC_REQUIRE([AC_LANG_C])dnl
+AC_REQUIRE([AC_OBJEXT])dnl
+AC_REQUIRE([AC_EXEEXT])dnl
+AC_REQUIRE([AC_LANG_RESTORE])dnl
 dnl
+
+# Only perform the check for file, if the check method requires it
+case "$deplibs_check_method" in
+file_magic*)
+  if test "$file_magic_cmd" = '$FILE'; then
+    AC_PATH_FILE
+  fi
+  ;;
+esac
+
+case "$target" in
+NONE) lt_target="$host" ;;
+*) lt_target="$target" ;;
+esac
+
+AC_CHECK_TOOL(RANLIB, ranlib, :)
+AC_CHECK_TOOL(STRIP, strip, :)
 
 # Check for any special flags to pass to ltconfig.
 libtool_flags="--cache-file=$cache_file"
@@ -1690,9 +1773,15 @@ AC_ARG_ENABLE(libtool-lock,
 test "x$enable_libtool_lock" = xno && libtool_flags="$libtool_flags --disable-lock"
 test x"$silent" = xyes && libtool_flags="$libtool_flags --silent"
 
+AC_ARG_WITH(pic,
+  [  --with-pic              try to use only PIC/non-PIC objects [default=use both]],
+     pic_mode="$withval", pic_mode=default)
+test x"$pic_mode" = xyes && libtool_flags="$libtool_flags --prefer-pic"
+test x"$pic_mode" = xno && libtool_flags="$libtool_flags --prefer-non-pic"
+
 # Some flags need to be propagated to the compiler or linker for good
 # libtool support.
-case "$host" in
+case "$lt_target" in
 *-*-irix6*)
   # Find out which ABI we are using.
   echo '[#]line __oline__ "configure"' > conftest.$ac_ext
@@ -1729,8 +1818,31 @@ ifdef([AC_PROVIDE_AC_LIBTOOL_WIN32_DLL],
   AC_CHECK_TOOL(DLLTOOL, dlltool, false)
   AC_CHECK_TOOL(AS, as, false)
   AC_CHECK_TOOL(OBJDUMP, objdump, false)
+
+  # recent cygwin and mingw systems supply a stub DllMain which the user
+  # can override, but on older systems we have to supply one
+  AC_CACHE_CHECK([if libtool should supply DllMain function], lt_cv_need_dllmain,
+    [AC_TRY_LINK([],
+      [extern int __attribute__((__stdcall__)) DllMain(void*, int, void*);
+      DllMain (0, 0, 0);],
+      [lt_cv_need_dllmain=yes],[lt_cv_need_dllmain=no])])
+
+  case "$lt_target/$CC" in
+  *-*-cygwin*/gcc*-mno-cygwin*|*-*-mingw*)
+    # old mingw systems require "-dll" to link a DLL, while more recent ones
+    # require "-mdll"
+    SAVE_CFLAGS="$CFLAGS"
+    CFLAGS="$CFLAGS -mdll"
+    AC_CACHE_CHECK([how to link DLLs], lt_cv_cc_dll_switch,
+      [AC_TRY_LINK([], [], [lt_cv_cc_dll_switch=-mdll],[lt_cv_cc_dll_switch=-dll])])
+    CFLAGS="$SAVE_CFLAGS" ;;
+  *-*-cygwin*)
+    # cygwin systems need to pass --dll to the linker, and not link
+    # crt.o which will require a WinMain@16 definition.
+    lt_cv_cc_dll_switch="-Wl,--dll -nostartfiles" ;;
+  esac
   ;;
-])
+  ])
 esac
 ])
 
@@ -1840,6 +1952,83 @@ enable_fast_install=AC_ENABLE_FAST_INSTALL_DEFAULT)dnl
 AC_DEFUN(AC_DISABLE_FAST_INSTALL, [AC_BEFORE([$0],[AC_LIBTOOL_SETUP])dnl
 AC_ENABLE_FAST_INSTALL(no)])
 
+
+# AC_PATH_TOOL_PREFIX - find a file program which can recognise shared library
+AC_DEFUN(AC_PATH_TOOL_PREFIX,
+[AC_MSG_CHECKING([for $1])
+AC_CACHE_VAL(lt_cv_path_FILE,
+[case "$FILE" in
+  /*)
+  lt_cv_path_FILE="$FILE" # Let the user override the test with a path.
+  ;;
+  ?:/*)
+  ac_cv_path_FILE="$FILE" # Let the user override the test with a dos path.
+  ;;
+  *)
+  ac_save_file="$FILE"
+  IFS="${IFS=   }"; ac_save_ifs="$IFS"; IFS=":"
+dnl $ac_dummy forces splitting on constant user-supplied paths.
+dnl POSIX.2 word splitting is done only on the output of word expansions,
+dnl not every word.  This closes a longstanding sh security hole.
+  ac_dummy="ifelse([$2], , $PATH, [$2])"
+  for ac_dir in $ac_dummy; do
+    test -z "$ac_dir" && ac_dir=.
+    if test -f $ac_dir/$1; then
+      lt_cv_path_FILE="$ac_dir/$1"
+      if test -n "$file_magic_test_file"; then
+        case "$deplibs_check_method" in
+        "file_magic "*)
+          file_magic_regex="`expr \"$deplibs_check_method\" : \"file_magic \(.*\)\"`"
+	  FILE="$lt_cv_path_FILE"
+          if eval $file_magic_cmd \$file_magic_test_file 2> /dev/null |
+            egrep "$file_magic_regex" > /dev/null; then
+            :
+          else
+            cat <<EOF 1>&2
+
+*** Warning: the command libtool uses to detect shared libraries,
+*** $file_magic_cmd, produces output that libtool cannot recognize.
+*** The result is that libtool may fail to recognize shared libraries
+*** as such.  This will affect the creation of libtool libraries that
+*** depend on shared libraries, but programs linked with such libtool
+*** libraries will work regardless of this problem.  Nevertheless, you
+*** may want to report the problem to your system manager and/or to
+*** bug-libtool@gnu.org
+
+EOF
+          fi ;;
+        esac
+      fi
+      break
+    fi
+  done
+  IFS="$ac_save_ifs"
+  FILE="$ac_save_file"
+  ;;
+esac])
+FILE="$lt_cv_path_FILE"
+if test -n "$FILE"; then
+  AC_MSG_RESULT($FILE)
+else
+  AC_MSG_RESULT(no)
+fi
+])
+
+
+# AC_PATH_FILE - find a file program which can recognise a shared library
+AC_DEFUN(AC_PATH_FILE,
+[AC_REQUIRE([AC_CHECK_TOOL_PREFIX])dnl
+AC_PATH_TOOL_PREFIX(${ac_tool_prefix}file, /usr/bin:$PATH)
+if test -z "$lt_cv_path_FILE"; then
+  if test -n "$ac_tool_prefix"; then
+    AC_PATH_TOOL_PREFIX(file, /usr/bin:$PATH)
+  else
+    FILE=:
+  fi
+fi
+])
+
+
 # AC_PROG_LD - find the path to the GNU or non-GNU linker
 AC_DEFUN(AC_PROG_LD,
 [AC_ARG_WITH(gnu-ld,
@@ -1852,7 +2041,13 @@ ac_prog=ld
 if test "$ac_cv_prog_gcc" = yes; then
   # Check if gcc -print-prog-name=ld gives a path.
   AC_MSG_CHECKING([for ld used by GCC])
-  ac_prog=`($CC -print-prog-name=ld) 2>&5`
+  case $lt_target in
+  *-*-mingw*)
+    # gcc leaves a trailing carriage return which upsets mingw
+    ac_prog=`($CC -print-prog-name=ld) 2>&5 | tr -d '\015'` ;;
+  *)
+    ac_prog=`($CC -print-prog-name=ld) 2>&5` ;;
+  esac
   case "$ac_prog" in
     # Accept absolute paths.
 changequote(,)dnl
@@ -1908,7 +2103,6 @@ else
   AC_MSG_RESULT(no)
 fi
 test -z "$LD" && AC_MSG_ERROR([no acceptable ld found in \$PATH])
-AC_SUBST(LD)
 AC_PROG_LD_GNU
 ])
 
@@ -1920,7 +2114,130 @@ if $LD -v 2>&1 </dev/null | egrep '(GNU|with BFD)' 1>&5; then
 else
   ac_cv_prog_gnu_ld=no
 fi])
+with_gnu_ld=$ac_cv_prog_gnu_ld
 ])
+
+# AC_PROG_LD_RELOAD_FLAG - find reload flag for linker
+#   -- PORTME Some linkers may need a different reload flag.
+AC_DEFUN(AC_PROG_LD_RELOAD_FLAG,
+[AC_CACHE_CHECK([for $LD option to reload object files], lt_cv_ld_reload_flag,
+[lt_cv_ld_reload_flag='-r'])
+reload_flag=$lt_cv_ld_reload_flag
+test -n "$reload_flag" && reload_flag=" $reload_flag"
+])
+
+# AC_DEPLIBS_CHECK_METHOD - how to check for library dependencies
+#  -- PORTME fill in with the dynamic library characteristics
+AC_DEFUN(AC_DEPLIBS_CHECK_METHOD,
+[AC_CACHE_CHECK([how to recognise dependant libraries], 
+lt_cv_deplibs_check_method,
+[lt_cv_file_magic_cmd='$FILE'
+lt_cv_file_magic_test_file=
+lt_cv_deplibs_check_method='unknown'
+# Need to set the preceding variable on all platforms that support
+# interlibrary dependencies.
+# 'none' -- dependencies not supported.
+# `unknown' -- same as none, but documents that we really don't know.
+# 'pass_all' -- all dependencies passed with no checks.
+# 'test_compile' -- check by making test program.
+# 'file_magic [regex]' -- check by looking for files in library path
+# which responds to the $file_magic_cmd with a given egrep regex.
+# If you have `file' or equivalent on your system and you're not sure
+# whether `pass_all' will *always* work, you probably want this one.
+
+case "$host_os" in
+aix4* | beos*)
+  lt_cv_deplibs_check_method=pass_all
+  ;;
+  
+bsdi4*)
+  lt_cv_deplibs_check_method='file_magic ELF [0-9][0-9]*-bit [ML]SB (shared object|dynamic lib)'
+  lt_cv_file_magic_test_file=/shlib/libc.so
+  ;;  
+
+cygwin* | mingw*)
+  lt_cv_deplibs_check_method='file_magic file format pei*-i386(.*architecture: i386)?'
+  lt_cv_file_magic_cmd='${OBJDUMP} -f'
+  ;;
+
+freebsd*)
+  case "$version_type" in
+  freebsd-elf*)
+    lt_cv_deplibs_check_method=pass_all
+    ;;
+  esac
+  ;;
+  
+gnu*)
+  lt_cv_deplibs_check_method=pass_all
+  ;;
+  
+irix5* | irix6*)
+  case "$host_os" in
+  irix5*)
+    # this will be overridden with pass_all, but let us keep it just in case
+    lt_cv_deplibs_check_method="file_magic ELF 32-bit MSB dynamic lib MIPS - version 1"
+    ;;
+  *)
+    case "$LD" in
+    *-32|*"-32 ") libmagic=32-bit;;
+    *-n32|*"-n32 ") libmagic=N32;;
+    *-64|*"-64 ") libmagic=64-bit;;
+    *) libmagic=never-match;;
+    esac
+    # this will be overridden with pass_all, but let us keep it just in case
+    lt_cv_deplibs_check_method="file_magic ELF ${libmagic} MSB mips-[1234] dynamic lib MIPS - version 1"
+    ;;
+  esac
+  lt_cv_file_magic_test_file=`echo /lib${libsuff}/libc.so*`
+  lt_cv_deplibs_check_method=pass_all
+  ;;
+
+# This must be Linux ELF.
+linux-gnu*)
+  case "$host_cpu" in
+  alpha* | i*86 | sparc* )
+    lt_cv_deplibs_check_method=pass_all ;;
+  *)
+    # glibc up to 2.1.1 does not perform some relocations on ARM
+    lt_cv_deplibs_check_method='file_magic ELF [0-9][0-9]*-bit [LM]SB (shared object|dynamic lib )' ;;
+  esac
+  lt_cv_file_magic_test_file=`echo /lib/libc.so* /lib/libc-*.so`
+  ;;
+
+osf3* | osf4* | osf5*)
+  # this will be overridden with pass_all, but let us keep it just in case
+  lt_cv_deplibs_check_method='file_magic COFF format alpha shared library'
+  lt_cv_file_magic_test_file=/shlib/libc.so
+  lt_cv_deplibs_check_method=pass_all
+  ;;
+
+sco3.2v5*)
+  lt_cv_deplibs_check_method=pass_all
+  ;;
+  
+solaris*)
+  lt_cv_deplibs_check_method=pass_all
+  lt_cv_file_magic_test_file=/lib/libc.so
+  ;;
+
+sysv4 | sysv4.2uw2* | sysv4.3* | sysv5*)
+  case "$host_vendor" in
+  ncr)
+    lt_cv_deplibs_check_method=pass_all
+    ;;
+  motorola)
+    lt_cv_deplibs_check_method='file_magic ELF [0-9][0-9]*-bit [ML]SB (shared object|dynamic lib) M[0-9][0-9]* Version [0-9]'
+    lt_cv_file_magic_test_file=`echo /usr/lib/libc.so*`
+    ;;
+  esac
+  ;;
+esac
+])
+file_magic_cmd=$lt_cv_file_magic_cmd
+deplibs_check_method=$lt_cv_deplibs_check_method
+])
+
 
 # AC_PROG_NM - find the path to a BSD-compatible name lister
 AC_DEFUN(AC_PROG_NM,
@@ -1954,14 +2271,13 @@ else
 fi])
 NM="$ac_cv_path_NM"
 AC_MSG_RESULT([$NM])
-AC_SUBST(NM)
 ])
 
 # AC_CHECK_LIBM - check for math library
 AC_DEFUN(AC_CHECK_LIBM,
 [AC_REQUIRE([AC_CANONICAL_HOST])dnl
 LIBM=
-case "$host" in
+case "$lt_target" in
 *-*-beos* | *-*-cygwin*)
   # These system don't have libm
   ;;
@@ -2020,6 +2336,29 @@ AC_DEFUN(AC_LIBLTDL_INSTALLABLE, [AC_BEFORE([$0],[AC_LIBTOOL_SETUP])dnl
     LIBLTDL="-lltdl"
     INCLTDL=
   fi
+])
+
+# AC_LIBTOOL_CXX - enable support for C++ libraries
+AC_DEFUN(AC_LIBTOOL_CXX,
+[AC_REQUIRE([AC_PROG_CXX])
+AC_REQUIRE([AC_PROG_CXXCPP])
+AC_REQUIRE([AC_PROG_LIBTOOL])
+lt_save_CC="$CC"
+lt_save_CFLAGS="$CFLAGS"
+dnl Make sure LTCC is set to the C compiler, i.e. set LTCC before CC
+dnl is set to the C++ compiler.
+AR="$AR" LTCC="$CC" CC="$CXX" CFLAGS="$CXXFLAGS" CPPFLAGS="$CPPFLAGS" \
+FILE="$FILE" LIBS="$LIBS" \
+LN_S="$LN_S" NM="$NM" RANLIB="$RANLIB" STRIP="$STRIP" \
+AS="$AS" DLLTOOL="$DLLTOOL" OBJDUMP="$OBJDUMP" \
+objext="$OBJEXT" exeext="$EXEEXT" \
+deplibs_check_method="$deplibs_check_method" \
+file_magic_cmd="$file_magic_cmd" \
+${CONFIG_SHELL-/bin/sh} $ac_aux_dir/ltconfig -o libtool $libtool_flags \
+--build="$build" --add-tag=CXX $ac_aux_dir/ltcf-cxx.sh \
+|| AC_MSG_ERROR([libtool tag configuration failed])
+CC="$lt_save_CC"
+CFLAGS="$lt_save_CFLAGS"
 ])
 
 dnl old names
@@ -2293,12 +2632,12 @@ AC_DEFUN(ACE_SEARCH_THREAD_FLAGS, dnl
  ACE_CACHE_CHECK(for compiler thread flag,
    ace_cv_thread_flag_search,
    [
-    ace_save_CXXFLAGS="$CXXFLAGS"
-    ace_save_CFLAGS="$CFLAGS"
+    ifelse(AC_LANG, [CPLUSPLUS],
+           [ace_save_CXXFLAGS="$CXXFLAGS"],[ace_save_CFLAGS="$CFLAGS"])
 
     for i in $1; do
-      CXXFLAGS="$CXXFLAGS -$i"
-      CFLAGS="$CFLAGS -$i"
+      ifelse(AC_LANG, [CPLUSPLUS],
+             [CXXFLAGS="$CXXFLAGS -$i"],[CFLAGS="$CFLAGS -$i"])
 
       ACE_CHECK_THREAD_FLAGS(
         [
@@ -2312,20 +2651,21 @@ AC_DEFUN(ACE_SEARCH_THREAD_FLAGS, dnl
         ])
 
       dnl Reset the flags for the next flag check.
-      CXXFLAGS="$ace_save_CXXFLAGS"
-      CFLAGS="$ace_save_CFLAGS"
+      ifelse(AC_LANG, [CPLUSPLUS],
+             [CXXFLAGS="$ace_save_CXXFLAGS"],[CFLAGS="$ace_save_CFLAGS"])
     done
 
     dnl Reset the flags to a consistent state.
     dnl This prevents duplicate flags from being added to
     dnl the C/CXXFLAGS variable.
-    CXXFLAGS="$ace_save_CXXFLAGS"
-    CFLAGS="$ace_save_CFLAGS"
+    ifelse(AC_LANG, [CPLUSPLUS],
+           [CXXFLAGS="$ace_save_CXXFLAGS"],[CFLAGS="$ace_save_CFLAGS"])
    ],
    [
     dnl Add the found/cached thread flag to the C/CXXFLAGS variables
-    CXXFLAGS="$CXXFLAGS $ace_cv_thread_flag_search"
-    CFLAGS="$CFLAGS $ace_cv_thread_flag_search"
+    ifelse(AC_LANG, [CPLUSPLUS],
+           [CXXFLAGS="$CXXFLAGS $ace_cv_thread_flag_search"],
+           [CFLAGS="$CFLAGS $ace_cv_thread_flag_search"])
 
     $2
    ],
@@ -2378,12 +2718,12 @@ AC_DEFUN(ACE_CHECK_ASYNCH_IO, dnl
  dnl In some cases, the thread library must be linked to in addition to the
  dnl real-time support library.  As such, make sure these checks are done
  dnl after the thread library checks.
- ACE_SEARCH_LIBS(aio_read, aio rt posix4, dnl
-    ace_has_aio_funcs=yes, ace_has_aio_funcs=no)
+ ACE_SEARCH_LIBS([aio_read], [aio rt posix4],
+    [ace_has_aio_funcs=yes], [ace_has_aio_funcs=no])
 
 if test "$ace_has_aio_funcs" = yes; then
-  ACE_CACHE_CHECK(for working asynchronous IO,
-    ace_cv_feature_aio_calls,
+  ACE_CACHE_CHECK([for working asynchronous IO],
+    [ace_cv_feature_aio_calls],
     [
      AC_TRY_RUN(
        [
@@ -2957,7 +3297,7 @@ main (int, char *[])
            ace_cv_feature_aio_calls=no
           ])
        ])
-    ], AC_DEFINE(ACE_HAS_AIO_CALLS), LIBS="$ace_save_LIBS")
+    ],[AC_DEFINE(ACE_HAS_AIO_CALLS)],[LIBS="$ace_save_LIBS"])
 fi dnl test "$ace_has_aio_funcs" = yes
 ])
 
