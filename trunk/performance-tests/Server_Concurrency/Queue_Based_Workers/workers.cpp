@@ -4,6 +4,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/Sched_Params.h"
+#include "ace/Profile_Timer.h"
 #include "../Latency_Stats.h"
 
 static size_t number_of_messages = 100;
@@ -195,7 +196,8 @@ IO_Task::svc (void)
         }
 
       ++burst;
-      ACE_OS::sleep (timeout_between_bursts);
+      ACE_Time_Value tv (0, timeout_between_bursts);
+      ACE_OS::sleep (tv);
     }
 
   // Terminate messages.
@@ -296,10 +298,13 @@ main (int argc, ASYS_TCHAR *argv[])
                   Worker_Task *[number_of_workers],
                   -1);
 
+  ACE_Profile_Timer timer;
+  timer.start ();
+
   int priority =
     (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO) +
      ACE_Sched_Params::priority_max (ACE_SCHED_FIFO)) / 2;
-  priority = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO, priority);
+  // priority = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO, priority);
 
   long flags = THR_BOUND | THR_SCHED_FIFO;
 
@@ -338,6 +343,7 @@ main (int argc, ASYS_TCHAR *argv[])
   priority =
     (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO) +
      ACE_Sched_Params::priority_max (ACE_SCHED_FIFO)) / 2;
+  priority = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO, priority);
 
   flags = THR_BOUND | THR_SCHED_FIFO;
 
@@ -360,12 +366,18 @@ main (int argc, ASYS_TCHAR *argv[])
   // Wait for all threads to terminate.
   result = ACE_Thread_Manager::instance ()->wait ();
 
+  timer.stop ();
+  ACE_Rusage rusage;
+  timer.elapsed_rusage (rusage);
+
   Latency_Stats latency;
   Throughput_Stats throughput;
   for (i = 0; i < number_of_workers; ++i)
     {
       latency.accumulate (workers[i]->latency_stats_);
       throughput.accumulate (workers[i]->throughput_stats_);
+      ACE_DEBUG ((LM_DEBUG, "Thread[%d]: ", i));
+      workers[i]->throughput_stats_.dump_results ("", "");
     }
 
   ACE_DEBUG ((LM_DEBUG, "\nTotals for latency:\n"));
@@ -373,6 +385,15 @@ main (int argc, ASYS_TCHAR *argv[])
 
   ACE_DEBUG ((LM_DEBUG, "\nTotals for throughput:\n"));
   throughput.dump_results (argv[0], "throughput");
+
+  ACE_DEBUG ((LM_DEBUG, "\n(%t) Context switches %d/%d\n",
+#if defined(ACE_HAS_PRUSAGE_T)
+              rusage.pr_vctx,
+              rusage.pr_ictx));
+#else
+              rusage.pr_vctx,
+              rusage.pr_ictx));
+#endif /* ACE_HAS_PRUSAGE_T */
 
   for (i = 0; i < number_of_workers; ++i)
     {
