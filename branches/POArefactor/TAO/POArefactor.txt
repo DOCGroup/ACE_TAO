@@ -4,6 +4,7 @@ Fri Sep 24 14:27:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
           Moved all new Policy Value classes to the TAO::PortableServer
           namespace. Renamed everything to match filenames. Everything
           compiles again, no testing done yet.
+          Removed checks for _MSC_VER >= 1200
 
 Fri Sep 24 14:16:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
