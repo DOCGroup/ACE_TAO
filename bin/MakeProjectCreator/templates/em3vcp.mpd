@@ -227,5 +227,50 @@ BuildCmds= \
 <%endfor%>
 # End Group
 <%endif%>
+<%foreach(custom_types)%>
+# Begin Group "<%custom_type%>"
+
+# PROP Default_Filter "<%foreach(custom_type->inputexts)%><%custom_type->inputext%><%fornotlast(";")%><%endfor%>"
+<%foreach(custom_type->input_files)%>
+# Begin Source File
+
+SOURCE=.\<%custom_type->input_file%>
+
+<%foreach(platform_longs)%>
+<%foreach(configurations)%>
+!<%fornotfirst("ELSE")%>IF  "$(CFG)" == "<%project_name%> - <%platform%> (<%platform_long%>) <%configuration%>"
+
+# PROP Ignore_Default_Tool 1
+# Begin Custom Build - Invoking <%custom_type->command%> on $(InputPath)
+InputPath=.\<%custom_type->input_file%>
+InputName=<%basenoextension(custom_type->input_file)%>
+InputDir=<%dirname(custom_type->input_file)%>
+
+<%if(custom_type->output_option)%>
+<%foreach(custom_type->input_file->output_files)%>
+".\<%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>\<%endif%><%custom_type->input_file->output_file%>" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   <%custom_type->command%> <%if(flag_overrides(custom_type->input_file, commandflags))%><%flag_overrides(custom_type->input_file, commandflags)%><%else%><%custom_type->commandflags%><%endif%> $(InputPath) <%custom_type->output_option%> <%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>\<%endif%><%custom_type->input_file->output_file%>
+
+<%endfor%>
+<%else%>
+BuildCmds= \
+	<%custom_type->command%> <%if(flag_overrides(custom_type->input_file, commandflags))%><%flag_overrides(custom_type->input_file, commandflags)%><%else%><%custom_type->commandflags%><%endif%> $(InputPath)
+
+<%foreach(custom_type->input_file->output_files)%>
+".\<%custom_type->input_file->output_file%>" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+<%endfor%>
+<%endif%>
+# End Custom Build
+
+<%endfor%>
+<%endfor%>
+!ENDIF
+
+# End Source File
+<%endfor%>
+# End Group
+<%endfor%>
 # End Target
 # End Project

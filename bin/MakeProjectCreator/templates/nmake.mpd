@@ -48,7 +48,7 @@ OUTDIR=<%libout%>
 <%endif%>
 INTDIR=<%intermediate_dir%>\<%noextension(project_file)%>
 
-ALL : <%if(exename)%><%if(install)%>"$(INSTALLDIR)" <%endif%><%endif%>"<%if(type_is_dynamic)%><%dllout%>\<%sharedname%><%lib_modifier%>.dll<%endif%><%if(type_is_static)%>$(OUTDIR)\<%staticname%><%lib_modifier%>.lib<%endif%><%if(exename)%>$(INSTALLDIR)\<%exename%>.exe<%endif%>"
+ALL : <%if(exename)%><%if(install)%>"$(INSTALLDIR)" <%endif%><%endif%>"<%if(type_is_dynamic)%><%dllout%>\<%sharedname%><%lib_modifier%>.dll<%endif%><%if(type_is_static)%>$(OUTDIR)\<%staticname%><%lib_modifier%>.lib<%endif%><%if(exename)%>$(INSTALLDIR)\<%exename%>.exe<%endif%>"<%foreach(custom_types)%><%foreach(custom_type->input_files)%><%foreach(custom_type->input_file->output_files)%> ".\<%if(custom_type->output_option)%><%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>\<%endif%><%endif%><%custom_type->input_file->output_file%>"<%endfor%><%endfor%><%endfor%>
 
 DEPEND :
 	depgen.pl<%foreach(includes)%> -I"<%include%>"<%endfor%><%foreach(defines cpu_defines common_defines)%> -D<%define%>=1<%endfor%><%if(type_is_dynamic)%><%foreach(dllflags)%> -D<%dllflag%>=1<%endfor%><%endif%><%if(need_libflags)%><%foreach(libflags)%> -D<%libflag%>=1<%endfor%><%endif%><%if(pch_header)%><%foreach(pch_defines)%> -D<%pch_define%>=1<%endfor%><%endif%> -f "<%noextension(project_file)%>.dep"<%foreach(source_files)%> <%source_file%><%endfor%>
@@ -89,6 +89,13 @@ REALCLEAN : CLEAN
 <%if(idl_files)%>
         -@erase<%foreach(idl_files)%> "<%if(flag_overrides(idl_file, idlgendir))%><%flag_overrides(idl_file, idlgendir)%><%else%><%if(idlgendir)%><%idlgendir%><%else%><%dirname(idl_file)%><%endif%><%endif%>\<%basenoextension(idl_file)%>C.*" "<%if(flag_overrides(idl_file, idlgendir))%><%flag_overrides(idl_file, idlgendir)%><%else%><%if(idlgendir)%><%idlgendir%><%else%><%dirname(idl_file)%><%endif%><%endif%>\<%basenoextension(idl_file)%>S.*"<%endfor%>
 <%endif%>
+<%foreach(custom_types)%>
+<%foreach(custom_type->input_files)%>
+<%foreach(custom_type->input_file->output_files)%>
+        -@erase "<%if(custom_type->output_option)%><%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>\<%endif%><%endif%><%custom_type->input_file->output_file%>"
+<%endfor%>
+<%endfor%>
+<%endfor%>
 
 <%if(install)%>
 "$(INSTALLDIR)" :
@@ -238,6 +245,36 @@ InputDir=<%dirname(idl_file)%>
 !ENDIF
 <%endfor%>
 
+<%endfor%>
+<%foreach(custom_types)%>
+<%foreach(custom_type->input_files)%>
+SOURCE=<%custom_type->input_file%>
+
+<%foreach(platforms)%>
+<%foreach(configurations)%>
+!<%fornotfirst("ELSE")%>IF  "$(CFG)" == "<%platform%> <%configuration%>"
+
+InputPath=.\<%custom_type->input_file%>
+InputName=<%basenoextension(custom_type->input_file)%>
+InputDir=<%dirname(custom_type->input_file)%>
+
+<%foreach(custom_type->input_file->output_files)%>".\<%if(custom_type->output_option)%><%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>\<%endif%><%endif%><%custom_type->input_file->output_file%>" <%endfor%>: $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+	<<tempfile.bat
+	@echo off
+<%if(custom_type->output_option)%>
+<%foreach(custom_type->input_file->output_files)%>
+	<%custom_type->command%> <%if(flag_overrides(custom_type->input_file, commandflags))%><%flag_overrides(custom_type->input_file, commandflags)%><%else%><%custom_type->commandflags%><%endif%> $(InputPath) <%custom_type->output_option%> <%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>\<%endif%><%custom_type->input_file->output_file%>
+<%endfor%>
+<%else%>
+	<%custom_type->command%> <%if(flag_overrides(custom_type->input_file, commandflags))%><%flag_overrides(custom_type->input_file, commandflags)%><%else%><%custom_type->commandflags%><%endif%> $(InputPath)
+<%endif%>
+<<
+
+<%endfor%>
+!ENDIF
+<%endfor%>
+
+<%endfor%>
 <%endfor%>
 <%foreach(resource_files)%>
 SOURCE=.\<%resource_file%>

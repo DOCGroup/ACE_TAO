@@ -176,6 +176,27 @@
 <%endfor%>
 		</Filter>
 <%endif%>
+<%foreach(custom_types)%>
+		<Filter
+			Name="<%custom_type%>"
+			Filter="<%foreach(custom_type->inputexts)%><%custom_type->inputext%><%fornotlast(";")%><%endfor%>">
+<%foreach(custom_type->input_files)%>
+			<File
+				RelativePath=".\<%custom_type->input_file%>">
+<%foreach(configurations)%>
+				<FileConfiguration
+					Name="<%configuration%>|<%platform%>">
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Invoking <%custom_type->command%> on <%custom_type->input_file%>"
+						CommandLine="<%custom_type->command%> <%if(flag_overrides(custom_type->input_file, commandflags))%><%flag_overrides(custom_type->input_file, commandflags)%><%else%><%custom_type->commandflags%><%endif%> <%custom_type->input_file%> <%if(custom_type->output_option)%><%custom_type->output_option%> <%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>\<%endif%><%custom_type->input_file->output_files%><%endif%>"
+						Outputs="<%foreach(custom_type->input_file->output_files)%><%if(custom_type->output_option)%><%if(flag_overrides(custom_type->input_file, gendir))%><%flag_overrides(custom_type->input_file, gendir)%>\<%endif%><%endif%><%custom_type->input_file->output_file%><%fornotlast(";")%><%endfor%>"/>
+				</FileConfiguration>
+<%endfor%>
+			</File>
+<%endfor%>
+		</Filter>
+<%endfor%>
 <%if(inline_files)%>
 		<Filter
 			Name="Inline Files"
