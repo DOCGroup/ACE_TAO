@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<!DOCTYPE corbacomponent SYSTEM "corbacomponent.dtd">
+
+<corbacomponent>
+  <corbaversion>3.0</corbaversion>
+  <componentrepid repid="IDL:Protocols/Receiver:1.0"/>
+  <homerepid repid="IDL:Protocols/ReceiverHome:1.0"/>
+  <componentkind>
+    <session>
+      <servant lifetime="container"/>
+    </session>
+  </componentkind>
+  <threading policy="multithread"/>
+  <configurationcomplete set="true"/>
+  
+  <homefeatures
+      name="ReceiverHome"
+      repid="IDL:Protocols/ReceiverHome:1.0">
+  </homefeatures>
+  
+  <componentfeatures
+      name="Receiver"
+      repid="IDL:Protocols/Receiver:1.0">
+    <supportsinterface repid="IDL:Protocols/Receiver_Controller:1.0"/>
+    <ports>
+      <provides
+          providesname="writer"
+          repid="IDL:Protocols/test:1.0"
+          facettag="1">
+      </provides>
+    </ports>
+  </componentfeatures>
+  
+  <interface
+      name="Receiver_Controller"
+      repid="IDL:Protocols/Receiver_Controller:1.0">
+  </interface>
+  
+  <interface
+      name="test"
+      repid="IDL:Protocols/test:1.0">
+  </interface>
+  
+</corbacomponent>
