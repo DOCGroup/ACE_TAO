@@ -1,6 +1,10 @@
-Thu Feb 22 00:24:43 2001  Krishnakumar B  <kitty@cs.wustl.edu>
+Thu Feb 22 02:58:36 2001  Krishnakumar B  <kitty@ace.cs.wustl.edu>
 
-        * ACE version 5.1.13 released.
+	* VERSION:
+ 	* PROBLEM-REPORT-FORM:
+	* ace/Version.h:
+	Reverted the changes and restored the old versions of 
+	these files as the beta build script was killed. Pain :-(
 
 Wed Feb 21 20:10:42 2001  Darrell Brunsch <brunsch@uci.edu>
 
