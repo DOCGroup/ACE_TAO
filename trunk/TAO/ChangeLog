@@ -1,3 +1,10 @@
+Mon Sep  2 09:09:30 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* orbsvcs/orbsvcs/Time/TAO_Time_Service_Server.cpp (universal_time): 
+	  Only call ACE_OS::gettimeofday() once, not twice, to avoid a
+ 	  skew.  Thanks to Jon Biggar <jon@floorboard.com> for reporting
+ 	  this.
+
 Sun Sep  1 11:10:51 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/LoadBalancing/LB_ServerRequestInterceptor.cpp
