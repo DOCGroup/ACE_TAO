@@ -6,7 +6,6 @@
 
 module flowProtocol
 {
-  typedef sequence<char> my_seq_char;
   typedef sequence <unsigned long> my_seq_ulong;
   enum MsgType
   {
