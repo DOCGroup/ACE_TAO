@@ -264,7 +264,7 @@ typedef unsigned __int64 ACE_UINT64;
         #endif /* _MT */
 #endif /* ACE_MT_SAFE && ACE_MT_SAFE != 0 */
 
-#if !defined (ACE_HAS_WINCE) && !defined (__BORLANDC__) !defined (__IBMCPP__)
+#if !defined (ACE_HAS_WINCE) && !defined (__BORLANDC__) && !defined (__IBMCPP__)
 #if defined(ACE_HAS_DLL) && (ACE_HAS_DLL != 0)
         #if !defined(_DLL)
                 // *** DO NOT *** DO NOT *** defeat this error message
