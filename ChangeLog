@@ -1,3 +1,16 @@
+Wed Jul 17 14:25:39 2002  Steve Huston  <shuston@riverace.com>
+
+        * include/makeinclude/platform_aix_ibm.GNU: Added -qfuncsect to the
+          compile options. Allows for smaller executables/libraries, and
+          gets rid of most of the multiple definition warnings for templates.
+          Unfortunately, there are still a few stragglers so the aix_shr
+          post-processing script is still required.
+
+        * ace/Sock_Connect.cpp: Added a hack to get Visual Age C++ on AIX
+          build running clean. Have to include a template instantiation we
+          don't need to get the compiler to pull the proper header files
+          at template compilation time.
+
 Wed Jul 17 11:34:28 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/OS.{i cpp}: Windows, in calls to _open_osfhandle(), cast
