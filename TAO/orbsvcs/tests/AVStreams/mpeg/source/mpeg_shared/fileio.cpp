@@ -182,7 +182,7 @@ int time_read_bytes(int s, char * buf, int size)
   if (size == 0) return 0;
   
   for (;;) {
-    struct fd_set read_mask;
+    fd_set read_mask;
     struct timeval tval = {0, 0};
 
     FD_ZERO(&read_mask);

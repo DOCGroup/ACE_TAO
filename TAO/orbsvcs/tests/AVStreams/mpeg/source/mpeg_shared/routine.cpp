@@ -131,24 +131,6 @@ long get_duration(long val1, long val2)
   return val2>=val1 ? val2-val1 : ((LONG_MAX - val1) + (val2 - LONG_MIN) + 1);
 }
 
-#ifdef LINUX
-#else
-int usleep(unsigned int usec)
-{
-  struct timeval val;
-
-  if (usec <= 0) return -1;
-  val.tv_sec = usec / 1000000;
-  val.tv_usec = usec % 1000000;
-  if (select(0, NULL, NULL, NULL, &val) == -1 && errno != 4)
-  {
-   ACE_OS::perror ("sleep with select");
-    ACE_OS::exit (1);
-  }
-  return 0;
-}
-#endif
-
 void beep(void)
 {
   fprintf(stderr, "\007");
@@ -418,7 +400,7 @@ void setsignal(int sig, void (func)(int))
    ACE_OS::perror ("");
     ACE_OS::exit (1);
   }
-#elif defined(sun) || defined(FreeBSD) || defined(ULTRIX) || defined(LINUX)
+#elif defined(sun) || defined(FreeBSD) || defined(ULTRIX) || defined(__linux__)
   {
     struct sigaction act;
     act.sa_handler = func;
