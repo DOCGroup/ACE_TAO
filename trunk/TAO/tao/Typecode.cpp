@@ -2022,7 +2022,7 @@ CORBA::TypeCode::private_member_count (ACE_ENV_SINGLE_ARG_DECL) const
 
         if (!stream.skip_string ()          // ID
             || !stream.skip_string ()       // Name
-            || !stream.skip_short ()        // ValueModifier
+            || !stream.skip_ulong ()        // ValueModifier
             || !stream.read_ulong (tc_kind_holder)) // Base's TCKind
           {
             ACE_THROW_RETURN (CORBA::BAD_TYPECODE (),
@@ -2274,7 +2274,7 @@ CORBA::TypeCode::private_member_type (CORBA::ULong slot
 
       if (!stream.skip_string ()          // ID
           || !stream.skip_string ()       // Name
-          || !stream.skip_short ()        // ValueModifier
+          || !stream.skip_ulong ()        // ValueModifier
           || !stream.read_ulong (tc_kind_holder)) // Base's TCKind
         {
           ACE_THROW_RETURN (CORBA::BAD_TYPECODE (),
@@ -2332,7 +2332,7 @@ CORBA::TypeCode::private_member_type (CORBA::ULong slot
                                        ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
 
-          if (!stream.skip_short ())  // skip member visibility
+          if (!stream.skip_ulong ())  // skip member visibility
             {
               ACE_THROW_RETURN (CORBA::BAD_TYPECODE (),
                                 CORBA::TypeCode::_nil ());
@@ -2544,7 +2544,7 @@ CORBA::TypeCode::private_member_name (CORBA::ULong slot
 
         if (!stream.skip_string ()          // ID
             || !stream.skip_string ()       // Name
-            || !stream.skip_short ()        // ValueModifier
+            || !stream.skip_ulong ()        // ValueModifier
             || !stream.read_ulong (tc_kind_holder)) // Base's TCKind
           {
             ACE_THROW_RETURN (CORBA::BAD_TYPECODE (),
@@ -2591,7 +2591,7 @@ CORBA::TypeCode::private_member_name (CORBA::ULong slot
                      this->private_state_->tc_member_name_list_[i]
                    )
                 || !this->skip_typecode (stream)    // member typecode
-                || !stream.skip_short ())           // member visibility
+                || !stream.skip_ulong ())           // member visibility
               {
                 ACE_THROW_RETURN (CORBA::BAD_TYPECODE (),
                                   0);
@@ -3082,7 +3082,7 @@ CORBA::TypeCode::private_member_visibility (CORBA::ULong slot
   // number of value members.
   if (!stream.skip_string ()              // ID
       || !stream.skip_string ()           // Name
-      || !stream.skip_short ()            // ValueModifier
+      || !stream.skip_ulong ()            // ValueModifier
       || !this->skip_typecode (stream)    // Concrete base typecode
       || !stream.skip_ulong ())           // Member count
     {
@@ -3189,7 +3189,7 @@ CORBA::TypeCode::private_concrete_base_type (ACE_ENV_SINGLE_ARG_DECL) const
   // number of value members.
   if (!stream.skip_string ()          // ID
       || !stream.skip_string ()       // Name
-      || !stream.skip_short ())       // ValueModifier
+      || !stream.skip_ulong ())       // ValueModifier
     {
       ACE_THROW_RETURN (CORBA::BAD_TYPECODE (),
                         CORBA::TypeCode::_nil ());
