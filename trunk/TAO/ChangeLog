@@ -13,6 +13,7 @@ Thu Feb 20 13:05:36 2003  Ossama Othman  <ossama@uci.edu>
 	* tao/DynamicInterface/ExceptionList.h:
 	* tao/DynamicInterface/ExceptionList.inl:
 	* tao/DynamicInterface/Makefile:
+	* tao/DynamicInterface/Makefile.bor:
 	* tao/DynamicInterface/Request.cpp:
 	* tao/DynamicInterface/Request.h:
 	* tao/DynamicInterface/Request.inl:
