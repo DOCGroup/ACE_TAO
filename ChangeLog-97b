@@ -1,3 +1,11 @@
+Fri Sep 26 11:55:27 1997  Steve Huston  <shuston@riverace.com>
+
+	* ace/Malloc.h: Use signed math in the preprocessor calculations
+	  for ACE_CONTROL_BLOCK_ALIGN_LONGS (and all of its contributing
+	  factors).
+
+	* ace/ACE.cpp: Fixed the TLI/BSD checks in handle_timed_complete.
+
 Fri Sep 26 05:11:40 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 
 	* ace/SOCK_Acceptor.cpp (shared_accept): Made the newly added
