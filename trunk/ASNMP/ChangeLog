@@ -1,3 +1,12 @@
+Fri May  7 14:42:22 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tests/Counter_Test.cpp (TestCounter):
+	* tests/Gauge_Test.cpp (TestGuage):
+	* tests/Integer_Test.cpp (TestUnsignedInteger32):
+
+	  More "comparison between signed and unsigned integer"
+	  warning fixes.
+
 Thu May  6 11:03:26 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tests/Counter_Test.cpp (TestCounter):
