@@ -172,7 +172,7 @@ sub check_for_id_string ()
 {
     print "Running \$Id\$ string check\n";
     foreach $file (@files_cpp, @files_inl, @files_h, @files_mpc,
-                   @files_html, @files_idl, @files_pl) {
+                   @files_html, @files_idl, @files_pl, @makefile_files) {
         my $found = 0;
         if (open (FILE, $file)) {
             print "Looking at file $file\n" if $opt_d;
@@ -507,7 +507,7 @@ sub check_for_dependency_file ()
         if (open (FILE, $file)) {
             print "Looking at file $file\n" if $opt_d;
             while (<FILE>) {
-                if (/^DEPENDENCY_FILE = (.*)/) {
+                if (/^DEPENDENCY_FILE\s* =\s*(.*)/) {
                     my $depend = $1;
                     my $path = $file;
                     $path =~ s/\/Makefile.*/\//;
@@ -529,6 +529,42 @@ sub check_for_dependency_file ()
     }
 }
 
+# This checks to see if Makefiles define a MAKEFILE, and if it matches the
+# name of the Makefile
+sub check_for_makefile_variable ()
+{
+    print "Running MAKEFILE variable test\n";
+    foreach $file (@files_makefile) {
+        if (!(substr($file,-4) eq ".bor")
+            and !(substr($file,-3) eq ".am")
+            and !(substr($file,-4) eq ".vac")
+            and !(substr($file,-4) eq ".alt")) {
+            if (open (FILE, $file)) {
+                print "Looking at file $file\n" if $opt_d;
+                my $makevarfound = 0;
+                my $filename = basename($file,"");
+                while (<FILE>) {
+                    if (/^MAKEFILE\s*=\s*(.*)/) {
+                        $makevarfound = 1;
+                        $makevar = $1;
+                        if (!($makevar eq $filename)) {
+                            print_error ("MAKEFILE variable $makevar != $filename in $file");
+                            print " Change MAKEFILE = $filename in $file.\n\n";
+                        }
+                    }
+                }
+                if ($makevarfound == 0 and !($filename eq "Makefile")) {
+                    print_error ("MAKEFILE variable missing in $file");
+                    print " Add MAKEFILE = $filename to the top of $file.\n\n";
+                }
+                close (FILE);
+            }
+            else {
+                print_error ("cannot open $file");
+            }
+        }
+    }
+}
 
 
 # This checks to make sure files include ace/post.h if ace/pre.h is included
@@ -1072,6 +1108,7 @@ check_for_synch_include () if ($opt_l >= 1);
 check_for_OS_h_include () if ($opt_l >= 1);
 check_for_streams_include () if ($opt_l >= 1);
 check_for_dependency_file () if ($opt_l >= 1);
+check_for_makefile_variable () if ($opt_l >= 1);
 check_for_inline_in_cpp () if ($opt_l >= 2);
 check_for_id_string () if ($opt_l >= 1);
 check_for_newline () if ($opt_l >= 1);

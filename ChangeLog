@@ -1,3 +1,12 @@
+Tue Nov 11 17:09:46 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * bin/fuzz.pl:
+          Added new check, check_for_makefile_variable, to verify that
+          MAKEFILE variable is correct and that Makefile's not named just
+          "Makefile" without an extension, have a MAKEFILE variable.  Added
+          check for spaces around "=" to dependency file check.  Added
+          makefiles to the ID check.
+
 Tue Nov 11 15:45:23 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_stdlib.inl:
