@@ -1,5 +1,5 @@
 // $Id$
-//
+
 //================================================================================
 //
 // = LIBRARY
@@ -20,14 +20,12 @@
 #include "tao/corba.h"
 
 class MyFooServantLocator : public POA_PortableServer::ServantLocator
-
-// This class is used by a POA with USE_SERVANT_MANAGER and NON_RETAIN
-// policy.
-
 {
+  // = TITLE
+  //   This class is used by a POA with USE_SERVANT_MANAGER and
+  //   NON_RETAIN policy.
 public:
   MyFooServantLocator (void);
-
   // constructor
 
   virtual PortableServer::Servant preinvoke (const PortableServer::ObjectId &oid,
@@ -35,9 +33,8 @@ public:
                                              const char *operation,
                                              PortableServer::ServantLocator::Cookie &the_cookie,
                                              CORBA::Environment &env);
-
-  // This method is invoked by a POA whenever it receives a request for
-  // MyFoo object that is not currently active.
+  // This method is invoked by a POA whenever it receives a request
+  // for MyFoo object that is not currently active.
 
   virtual void postinvoke (const PortableServer::ObjectId &oid,
                            PortableServer::POA_ptr adapter,
@@ -45,12 +42,10 @@ public:
                            PortableServer::ServantLocator::Cookie the_cookie,
                            PortableServer::Servant the_servant,
                            CORBA::Environment &env);
-
-  // This method is invoked whenever a MyFooServant completes a request.
+  // This method is invoked whenever a MyFooServant completes a
+  // request.
 
 private:
-
   int counter_;
-
   // Counter for number of invocations of this.
 };
