@@ -188,7 +188,7 @@ Echo_Server_Request_Interceptor::send_reply (PortableInterceptor::ServerRequestI
 
  // ServiceID? is hacked and set to 1 for now
   IOP::ServiceId id = reply_ctx_id;
-  IOP::ServiceContext_var sc = ri->get_reply_service_context (id); 
+  IOP::ServiceContext *sc = ri->get_reply_service_context (id); 
 
   const char *buf = ACE_reinterpret_cast (const char *,
                                           sc->context_data.get_buffer ());
