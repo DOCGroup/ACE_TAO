@@ -1,3 +1,15 @@
+Tue Dec 30 13:09:43 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/IFRService/IFR_BaseS.cpp:
+        * orbsvcs/orbsvcs/IFRService/IFR_BasicS.cpp:
+        * orbsvcs/orbsvcs/IFRService/IFR_ComponentsS.cpp:
+        * orbsvcs/orbsvcs/IFRService/IFR_ExtendedS.cpp:
+          Removed not needed ; after c++ namespace closure.
+
+        * orbsvcs/orbsvcs/Log/EventLogNotification.h:
+          Added missing type of inheritence from base class. Fixes Tru64
+          warning.
+
 Tue Dec 30 12:46:11 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_ConsumerAdmin.h:
