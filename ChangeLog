@@ -1,3 +1,10 @@
+Fri Dec 15 15:27:02 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * bin/auto_compile:
+        * bin/make_pretty.pl:
+          The DU/CXX compiler has three levels, 'Error', 'Warning' and
+          'Info:', the latter was being ignored.
+
 Fri Dec 15 14:36:33 2000  Christopher Kohlhoff <chris@kohlhoff.com>
 
         * include/makeinclude/clean.bor:
@@ -10,10 +17,10 @@ Fri Dec 15 14:36:33 2000  Christopher Kohlhoff <chris@kohlhoff.com>
 
 Fri Dec 15 14:32:06 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/Log_Msg.h (ACE_Log_Msg): Changed the documentation
-	  to reflect the fact that the %a option causes the program to
- 	  abort() rather than exit().  Thanks to Mike Curtis
- 	  <mccurry@my-deja.com> for pointing this out.
+        * ace/Log_Msg.h (ACE_Log_Msg): Changed the documentation
+          to reflect the fact that the %a option causes the program to
+          abort() rather than exit().  Thanks to Mike Curtis
+          <mccurry@my-deja.com> for pointing this out.
 
 Fri Dec 15 14:29:44 2000  Carlos O'Ryan  <coryan@uci.edu>
 
@@ -73,9 +80,9 @@ Thu Dec 14 10:20:49 2000  Chad Elliott  <elliott_c@ociweb.com>
 
 Thu Dec 14 06:00:12 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace: Removed makefile-light since it's no longer needed.
-	  Thanks to Johnny Willemsen <johnny.willemsen@meco.nl> for
- 	  reporting this.
+        * ace: Removed makefile-light since it's no longer needed.
+          Thanks to Johnny Willemsen <johnny.willemsen@meco.nl> for
+          reporting this.
 
 Wed Dec 13 18:33:19 2000  Carlos O'Ryan  <coryan@uci.edu>
 
