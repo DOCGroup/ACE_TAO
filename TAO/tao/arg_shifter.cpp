@@ -13,7 +13,7 @@ Arg_Shifter::Arg_Shifter(int& argc, char** argv, char** temp)
 {
   // If not provided with one, allocate a temporary array.
   if (this->temp_ == 0)
-    this->temp_ = new char*[this->argc_];
+    this->temp_ = new char*[this->total_size_];
   
   if (this->temp_ != 0)
     {
