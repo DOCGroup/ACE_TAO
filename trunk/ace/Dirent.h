@@ -101,7 +101,7 @@ private:
   // Pointer to the directory stream.
 };
 
-#if !defined (__ACE_INLINE__)
+#if defined (__ACE_INLINE__)
 #include "ace/Dirent.i"
 #endif /* __ACE_INLINE__ */
 

@@ -1,3 +1,11 @@
+Tue Mar 28 11:56:56 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Dirent.h"
+	* ace/Dirent.cpp: The meaning of __ACE_INLINE__ is just the
+	  opposite of ACE_LACKS_INLINE_FUNCTIONS (my fault.)  Rearrange
+	  the logic for checking __ACE_INLINE__ and include "ace/Dirent.h"
+	  in Dirent.cpp.
+
 Tue Mar 28 06:00:00 2000  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
 	* Dirent.cpp,
@@ -10,23 +18,23 @@ Tue Mar 28 06:00:00 2000  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 	  FindFirstFile and FindNextFile provide similar behavior. This change
 	  added an emulation of dirent based on these functions. Changes were
 	  made to ACE_OS::opendir, ACE_OS::readdir, and ACE_OS::closedir.
- 
+
 	* ace/config-win32-common.h: Added the defines ACE_HAS_DIRENT,
 	  ACE_LACKS_TELLDIR, ACE_LACKS_SEEKDIR, ACE_LACKS_REWINDDIR and
 	  ACE_LACKS_READDIR_R.
 	  This was necessary to enable the above mentioned <dirent> emulation.
-	  
+
 Mon Mar 27 17:27:40 2000  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-	* TAO/orbsvcs/tests/AVStreams/Full_Profile/server.cpp: 
+	* TAO/orbsvcs/tests/AVStreams/Full_Profile/server.cpp:
 	  Fixed the ACE_Null_Mutex mispelt error. Thanks to Thomas Groth
 	  <groth.th@t-online.de> for pointing this out.
 
 Mon Mar 27 16:58:03 2000  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-	* ace/TkReactor.cpp: 
+	* ace/TkReactor.cpp:
 	  Fixed the unused variable warning and ACE_Select_Reactor_Token
-	  undeclared error. 
+	  undeclared error.
 
 Fri Mar 24 10:30:44 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
