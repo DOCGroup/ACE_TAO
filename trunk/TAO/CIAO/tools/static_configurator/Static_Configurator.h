@@ -45,6 +45,22 @@ namespace CIAO
                 CIAO::Static_Config::ResolveInfoAttributes* resolvers,
                 int resolvers_count);
 
+    void config_rt_info(Components::ConfigValues &configs, 
+		        CIAO::Static_Config::ThreadPoolAttributes *thread_pool_table,
+		        int thread_pool_table_size,
+			CIAO::Static_Config::LaneAttributes *lane_table,
+			int lane_table_size,
+			CIAO::Static_Config::ThreadPoolLanesAttributes *thread_pool_lanes_table,
+			int thread_pool_lanes_table_size,
+			CIAO::Static_Config::BandAttributes *band_table,
+			int band_table_size,
+			CIAO::Static_Config::PriorityBandsAttributes *priority_band_table,
+			int priority_band_table_size,
+			CIAO::Static_Config::PolicyConfigAttributes *policy_config_table,
+			int policy_config_table_size,
+			CIAO::Static_Config::PolicySetAttributes    *policy_set_table,
+			int policy_set_table_size);
+
     int create_components (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
     int create_homes (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
     int create_connections (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
