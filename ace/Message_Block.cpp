@@ -684,8 +684,8 @@ ACE_Message_Block::clone (Message_Flags mask) const
   nb->wr_ptr (this->wr_ptr_ - this->data_block ()->base ());
 
   // Clone all the continuation messages if necessary.
-  if (nb->cont_ != 0
-      && (nb->cont_ = nb->cont_->clone (mask)) == 0)
+  if (this->cont () != 0
+      && (nb->cont_ = this->cont ()->clone (mask)) == 0)
     {
       nb->release ();
       return 0;
