@@ -161,11 +161,11 @@ main (int, ASYS_TCHAR *[])
 
 #if defined (_SC_PAGESIZE)
   ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("sysconf page size: %d\n"),
-              (int) sysconf (_SC_PAGESIZE)));
+              (int) ACE_OS::sysconf (_SC_PAGESIZE)));
 #endif /* _SC_PAGESIZE */
 #if defined (_SC_CLK_TCK)
   ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("clock ticks/sec = %d\n"),
-              (int) sysconf (_SC_CLK_TCK)));
+              (int) ACE_OS::sysconf (_SC_CLK_TCK)));
 #endif /* _SC_CLK_TCK */
 
 
