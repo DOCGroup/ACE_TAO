@@ -1,3 +1,7 @@
+Mon Jul 13 17:50:35 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/TAO.dsp:  Added Invocation.cpp into project.
+
 Mon Jul 13 17:37:01 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/Object.cpp: 
