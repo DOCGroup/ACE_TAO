@@ -1,3 +1,12 @@
+Sun Feb 28 20:08:54 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* ace/POSIX_Proactor.cpp: 
+	* ace/POSIX_Asynch_IO.h: 
+	* ace/POSIX_Asynch_IO.cpp: 
+	Fixed to pass <ACE_POSIX_Asynch_Result *> wherever <aiocb *> is being
+	passed, since it is ok to pass the derived class pointer in place of
+	base class pointer.
+
 Sun Feb 28 14:22:38 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/platform_linux_kcc.GNU: added
