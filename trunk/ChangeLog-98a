@@ -1,3 +1,19 @@
+Tue Feb 17 12:56:24 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* include/makeinclude/wrapper_macros.GNU: Broke the "purify"
+ 	command out of PRELINK into its own variable: PURELINK.  This was
+ 	done to quiet purify when building shared libraries.  It wasn't
+ 	possible simply to remove the PRELINK reference from SOLINK.cc
+ 	because PRELINK is also used for specifying quantify.
+
+	Also added two new variables: PURE_CACHE_DIR and
+ 	PURE_CACHE_BASE_DIR.  PURE_CACHE_DIR is the value of the
+ 	purify/quantify '-cache-dir=' option, and PURE_CACHE_BASE_DIR is
+ 	used as the base directory to build a user/compiler-specific cache
+ 	directory.  In general, you probably want to use them like this:
+ 	"make PURE_CACHE_BASE_DIR=~/mypurecache", which will end up
+ 	creating the directory ~/mypurecache-<username>-<compiler>.
+
 Tue Feb 17 09:23:05 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.h: there were two SIGCHLD #defines, if it was not
