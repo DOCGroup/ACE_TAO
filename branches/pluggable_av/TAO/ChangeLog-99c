@@ -1,3 +1,39 @@
+Wed Jul  7 22:05:22 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/AV/RTP.{h,cpp}: 
+	  Added RTP over UDP support to the pluggable data protocols
+	  framework in AV. The RTCP part is not complete yet.
+
+	* orbsvcs/orbsvcs/AV/Policy.{h,cpp}:
+	  Defines the policy class to resolve differences in behavior
+	  between the different framing protocols like SFP and RTP. For
+	  eg RTP needs the Payload Type for all frames whereas in SFP its
+	  optional. 
+
+	* orbsvcs/orbsvcs/AV/Nil.{h,cpp}:
+	  Defines Nil Framing protocols for TCP,UDP and UDP_MCast which
+	  just sends the frames over the underlying transport.
+
+	* orbsvcs/orbsvcs/AV/AVStreams_i.{h,cpp}:
+	  The protocol specific upcalls have been removed and there is a
+	  generic upcall for setting the protocol object and getting the
+	  callback for a flow.
+
+	* orbsvcs/orbsvcs/AV/Transport.{h,cpp}:
+	* orbsvcs/orbsvcs/AV/sfp.{h,cpp}:
+	  All the transport handlers for udp,tcp,sfp now create protocol
+	  objects and makes an upcall to the application to set them.
+
+	* orbsvcs/tests/AVStreams/Pluggable/ftp.{h,cpp}:
+	  The application now uses a generic TAO_AV_Protocol_Object to
+	  send the frames except for RTP for which it sets the
+	  synchronization source and payload type policies.
+
+	* orbsvcs/tests/AVStreams/Pluggable/server.{h,cpp}:
+	  The server side defines a generic TAO_AV_Callback which is
+	  called by all the different framing protocols to give the
+	  received frame.
+	
 Sun Jul  4 17:59:10 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/AV/MCast.cpp: 
