@@ -6,7 +6,7 @@ Tue Oct 10 21:54:52 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 Tue Oct 10 18:51:16 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * ace/Makefile.bor:
-        * ace/RMCast\Makefile.bor:
+        * ace/RMCast/Makefile.bor:
         * include/makeinclude/ace_flags.bor:
           Add a Borland makefile for the RMCast library.  Thanks to Johhny
           Willemsen <johnny.willemsen@meco.nl> for providing this.
