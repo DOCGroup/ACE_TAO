@@ -1,3 +1,13 @@
+Fri Jul 21 20:23:55 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* pace/win32/utsname.inl (pace_uname):
+	  
+	  Partial emulation made. But more work to be done!
+
+	* pace/docs/PACE_POSIX_support.txt
+
+	  Updated.
+
 Fri Jul 21 19:49:19 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* pace/win32/utime.h (pace_utime):	
