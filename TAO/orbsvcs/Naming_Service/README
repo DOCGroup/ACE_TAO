@@ -16,6 +16,7 @@ How to Run the TAO Naming Service
                         [-s context_size]
                         [-t time]
                         [-f persitence_file_name]
+                        [-b base_address]
 
 2. Optional Command-line Arguments
 
@@ -48,6 +49,12 @@ How to Run the TAO Naming Service
                 option, Naming Service is started in non-persistent
                 mode.
 
+        -b base_address
+                The address used for memory mapping the file specified
+                with the "-f" option above.  The value supplied with
+                this option is only used when the Naming Service runs
+                in persistent mode, i.e., "-f" option is present.
+
 3. Environment Variables
 
         NameServicePort
@@ -68,7 +75,7 @@ How to Run the TAO Naming Service
 
         1. If the specified file does not exist, it is created and
            used to store the state of the Naming Service.  An initial
-           (root) Naming Context is also created. 
+           (root) Naming Context is also created.
 
         2. If the specified file exists, it is scanned and:
 
@@ -82,6 +89,19 @@ How to Run the TAO Naming Service
                 b) If the file is recognized and is ok, the state
                 stored in the file becomes the current state of the
                 Naming Service.
+
+        Internally, TAO uses memory mapped file to implement
+        persistence feature of the Naming Service.  A default memory
+        address (ACE_DEFAULT_BASE_ADDR) is used for mapping the file.
+        Alternate mapping address can be specified at compile-time by
+        redefining TAO_NAMING_BASE_ADDR in tao/orbconf.h.  Alternate
+        mapping address can also be specified at run-time
+        with the "-b" command-line option, which takes precedence over
+        TAO_NAMING_BASE_ADDR definition.
+        NOTE: Naming Service stores absolute pointers in its
+        memory-mapped file.  Therefore, it is important to use the
+        same mapping address on each run for the same persistence file.
+
 
 5. Implementation Policies
 
@@ -111,7 +131,7 @@ How to Run the TAO Naming Service
         "NameService".
 
         1. Multicast
-                
+
                 By default (unless other options are specified - see
                 items 2 and 3 below), ip multicast is used to locate a
                 Naming Service. TAO Naming Server is listening for
@@ -158,7 +178,7 @@ How to Run the TAO Naming Service
                 below can be used to bootstrap to the Naming Service.
 
         2. Command-line options
-                
+
                 The "-ORBInitRef NameService=IOR:..." or environment
                 variable NameServiceIOR can be used on the client side
                 to specify the object that the call to
@@ -179,26 +199,26 @@ How to Run the TAO Naming Service
                         format.
 
         3. Interoperable Naming Service.
-                
+
                 TAO implements the standard CORBA Interoperable Naming
                 Service (ING).  Therefore, most initialization options
                 provided by INS can be used to bootstrap to the Naming
                 Service (see TAO's releasenotes for the status of INS
                 implementation).
-                        
+
 How to use the NT_Naming_Service
 ================================
 
 1. Syntax
 
         % NT_Naming_Server [-i value]
-                           [-r] 
+                           [-r]
                            [-s]
                            [-k]
                            [-t n]
                            [-d]
 
-2. Optional Command-line Arguments 
+2. Optional Command-line Arguments
 
         -i value
                 Install this program as an NT service, with specified startup
@@ -211,7 +231,7 @@ How to use the NT_Naming_Service
         -k
                 Kill the service
 
-        -t value 
+        -t value
                 Set startup for an existing service
 
         -d
@@ -225,7 +245,7 @@ How to use the NT_Naming_Service
 
         a. First, you must initialize the service in the NT SCM
            database.  Run NT_Naming_Service with -in, where n is one of
-           the following startup options: 
+           the following startup options:
 
            // Start Type (from WinNT.h)
            //
@@ -239,10 +259,10 @@ How to use the NT_Naming_Service
         b. Now you are ready to run the actual service. Run
            NT_Naming_Service again, this time with -s option. If the
            service starts successfully, it will ring the system
-           bell every second or so until the service is stopped. 
+           bell every second or so until the service is stopped.
 
         c. To stop service execution, run NT_Naming_Service with the
-           -k option. 
+           -k option.
 
         d. To remove the service from the Service Control Manager
            database, run NT_Naming_Service with -r.
@@ -250,7 +270,7 @@ How to use the NT_Naming_Service
         In addition, once you have initialized this service (by using
         the -i option) you can change its startup type to one of the
         other values above.  To do this, run NT_Naming_Service with
-        -tn option. n is as explained above for -i. 
+        -tn option. n is as explained above for -i.
 
         In order to debug the service's execution itself, use the -d
-        option. 
+        option.
