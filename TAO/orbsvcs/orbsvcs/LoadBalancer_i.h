@@ -22,7 +22,7 @@
 
 #include "orbsvcs/LoadBalancingS.h"
 #include "ReplicaProxy.h"
-#include "DSI_ForwardingProxy.h"
+#include "ReplicaLocator.h"
 #include "LoadBalancing_Strategy.h"
 #include "LoadBalancing_export.h"
 
@@ -43,7 +43,7 @@ class TAO_LoadBalancing_Export TAO_LB_LoadBalancer : public virtual POA_LoadBala
 public:
   TAO_LB_LoadBalancer (const char *interface_id,
                        TAO_LB_LoadBalancing_Strategy *strategy,
-                       PortableServer::POA_ptr poa);
+                       PortableServer::POA_ptr root_poa);
   // Constructor that initializes this Load Balancer for use with a
   // Replica that has the specified interface repository ID.
 
@@ -86,11 +86,12 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
-  int init (void);
-  // Initialize the <redirector_> DSI forwarding proxy.
+  int init (const char * repository_id,
+            PortableServer::POA_ptr root_poa);
+  // Initialize the <locator_> ReplicaLocator.
 
 private:
-  TAO_LB_DSI_ForwardingProxy redirector_;
+  TAO_LB_ReplicaLocator locator_;
   // The object that tells the invoking client to forward its requests
   // from the LoadBalancer to an actual replica.
 
@@ -98,7 +99,7 @@ private:
   // The underlying load balancing strategy.
 
   PortableServer::POA_var poa_;
-  // The POA where the forwarding proxy is activated.
+  // The POA that dispatches requests to the ReplicaLocator.
 
   CORBA::Object_var group_identity_;
   // The group identity
