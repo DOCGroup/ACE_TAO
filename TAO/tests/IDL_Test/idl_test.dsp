@@ -237,6 +237,10 @@ SOURCE=.\reopened_modulesS.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\repo_id_modC.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\sequenceC.cpp
 # End Source File
 # Begin Source File
@@ -409,6 +413,10 @@ SOURCE=.\reopened_modulesS.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\repo_id_modC.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\sequenceC.h
 # End Source File
 # Begin Source File
@@ -518,6 +526,10 @@ SOURCE=.\reopen_include2C.i
 # Begin Source File
 
 SOURCE=.\reopened_modulesC.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\repo_id_modC.i
 # End Source File
 # Begin Source File
 
@@ -1823,6 +1835,27 @@ BuildCmds= \
 
 "$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
+# End Custom Build
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\repo_id_mod.idl
+
+!IF  "$(CFG)" == "idl_test - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "idl_test - Win32 Debug"
+
+USERDEP__REPO_="..\..\..\bin\tao_idl.exe"	
+# Begin Custom Build - Invoking TAO IDL Compiler on $(InputName).idl
+InputPath=.\repo_id_mod.idl
+InputName=repo_id_mod
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+	..\..\..\bin\tao_idl -Ge 1 $(InputName).idl
+
 # End Custom Build
 
 !ENDIF 

@@ -1,3 +1,16 @@
+Mon Oct 14 17:15:23 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
+
+	* tests/IDL_Test/repo_id_mod.idl:
+
+	  New file added to test 'typeprefix', 'typeid' and #pragma version.
+
+        * tests/IDL_Test/Makefile:
+	* tests/IDL_Test/Makefile.bor:
+	* tests/IDL_Test/idl_test.dsp:
+	* tests/IDL_Test/main.cpp:
+
+	  Files modified with addition of new test to the suite.
+
 Mon Oct 14 15:44:05 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ci.cpp:
