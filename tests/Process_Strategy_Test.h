@@ -11,12 +11,13 @@
 //    instantiation (such as AIX C Set ++).
 //
 // = AUTHOR
-//    Doug Schmidt and Kevin Boyle <kboyle@sanwafp.com>
+//    Doug Schmidt <schmidt@cs.wustl.edu> and 
+//    Kevin Boyle <kboyle@sanwafp.com>
 //
 // ============================================================================
 
-#ifndef PROCESS_STRATEGY_TEST_H
-#define PROCESS_STRATEGY_TEST_H
+#ifndef ACE_TESTS_PROCESS_STRATEGY_TEST_H
+#define ACE_TESTS_PROCESS_STRATEGY_TEST_H
 
 #include "ace/Event_Handler.h"
 
@@ -138,4 +139,4 @@ private:
   // Name of the counting file.
 };
 
-#endif /* PROCESS_STRATEGY_TEST_H */
+#endif /* ACE_TESTS_PROCESS_STRATEGY_TEST_H */

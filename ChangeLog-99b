@@ -1,7 +1,27 @@
+Tue Aug 31 00:16:34 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* build/egcs/tests/Cached_Accept_Conn_Test.h: Moved the template
+	  class into the header file so that IBM C++ will be happy.
+
+	* tests/Cached_*_Test.h: Updated these files to include the proper
+	  descriptive information.
+
+	* tests/Upgradable_RW_Test.h: Cleaned up the formatting for this
+	  test.  
+
+	* tests/Cached_Accept_Conn_Test.cpp,
+  	* tests/Cached_Conn_Test.cpp,
+  	* tests/Conn_Test.cpp,
+  	* tests/DLList_Test.cpp,
+	* tests/Hash_Map_Manager_Test.cpp:
+	  Fixed some "order of definition" problems caused by the
+ 	  workarounds for SunC++ 5.0 -g bugs.  Also replaced the use of
+ 	  ADDR and STRING with ACE_ADDR and ACE_STRING to avoid potential
+ 	  clashes with symbols in the global name space.  Thanks to David
+ 	  for reporting this.
+
 1999-08-31  Vishal Kachroo  <vishal@cs.wustl.edu>
 
-	  Added following files for the ACE QOS test.
-	
 	* ACE_wrappers/examples/QOS/server.cpp
 	* ACE_wrappers/examples/QOS/client.cpp
 	* ACE_wrappers/examples/QOS/QOS_Event_Handler.cpp
@@ -11,13 +31,15 @@
 	* ACE_wrappers/examples/QOS/Read_Handler.cpp
 	* ACE_wrappers/examples/QOS/QOS.dsw
 	* ACE_wrappers/examples/QOS/client.dsp
-	* ACE_wrappers/examples/QOS/server.dsp
+	* ACE_wrappers/examples/QOS/server.dsp:
+	  These files test the new ACE GQoS features, which 
+	  implement IntServ features over WinNT 2000.
 
-	
 Tue Aug 31 14:47:54 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* ACE-INSTALL.html: Added a note on building egcs with the
-	 -fsquangle option contributed by Skye Sweeney.
+	  -fsquangle option contributed by Skye Sweeney
+ 	  <ssweeney@sanders.com>.
 	
 Tue Aug 31 00:16:34 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
