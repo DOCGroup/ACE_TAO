@@ -4735,7 +4735,7 @@ class ACE_Export ACE_Errno_Guard
 public:
   // = Initialization and termination methods.
   ACE_Errno_Guard (int &errno_ref,
-		   int error);
+                   int error);
   //  Stash the value of <error> into <error_> and initialize the
   //  <errno_ptr_> to the address of <errno_ref>.
 
@@ -4843,10 +4843,10 @@ class ACE_Export ACE_Connect_QoS_Params
   //   enabled <ACE_OS::connect> and <ACE_OS::join_leaf> methods.
 public:
   ACE_Connect_QoS_Params (iovec *caller_data = 0,
-			  iovec *callee_data = 0,
-			  ACE_QoS *socket_qos = 0,
-			  ACE_QoS *group_socket_qos = 0,
-			  u_long flags = 0);
+                          iovec *callee_data = 0,
+                          ACE_QoS *socket_qos = 0,
+                          ACE_QoS *group_socket_qos = 0,
+                          u_long flags = 0);
   // Initialize the data members.  The <caller_data> is a pointer to
   // the user data that is to be transferred to the peer during
   // connection establishment.  The <callee_data> is a pointer to the
@@ -4901,20 +4901,20 @@ private:
 // Callback function that's used by the QoS-enabled <ACE_OS::accept>
 // method.
 typedef int (*ACE_QOS_CONDITION_FUNC) (iovec *caller_id,
-				       iovec *caller_data,
-				       ACE_QoS *socket_qos,
-				       ACE_QoS *group_socket_qos,
-				       iovec *callee_id,
-				       iovec *callee_data,
-				       ACE_SOCK_GROUP *g,
-				       u_long callbackdata);
+                                       iovec *caller_data,
+                                       ACE_QoS *socket_qos,
+                                       ACE_QoS *group_socket_qos,
+                                       iovec *callee_id,
+                                       iovec *callee_data,
+                                       ACE_SOCK_GROUP *g,
+                                       u_long callbackdata);
 
 // Callback function that's used by the QoS-enabled <ACE_OS::ioctl>
 // method.
 typedef void (*ACE_OVERLAPPED_COMPLETION_FUNC) (u_long error,
-						u_long bytes_transferred,
-						ACE_OVERLAPPED *overlapped,
-						u_long flags);
+                                                u_long bytes_transferred,
+                                                ACE_OVERLAPPED *overlapped,
+                                                u_long flags);
 class ACE_Export ACE_Accept_QoS_Params
 {
   // = TITLE
@@ -4922,7 +4922,7 @@ class ACE_Export ACE_Accept_QoS_Params
   //   enabled <ACE_OS::accept> method.
 public:
   ACE_Accept_QoS_Params (ACE_QOS_CONDITION_FUNC qos_condition_callback = 0,
-			 u_long callback_data = 0);
+                         u_long callback_data = 0);
   // Initialize the data members.  The <qos_condition_callback> is the
   // address of an optional, application-supplied condition function
   // that will make an accept/reject decision based on the caller
@@ -5467,14 +5467,14 @@ public:
                     void * = 0);
   // UNIX-style <ioctl>.
   static int ioctl (ACE_HANDLE socket,
-		    u_long io_control_code,
-		    void *in_buffer_p,
-		    u_long in_buffer,
-		    void *out_buffer_p,
-		    u_long out_buffer,
-		    u_long *bytes_returned,
-		    ACE_OVERLAPPED *overlapped,
-		    ACE_OVERLAPPED_COMPLETION_FUNC func);
+                    u_long io_control_code,
+                    void *in_buffer_p,
+                    u_long in_buffer,
+                    void *out_buffer_p,
+                    u_long out_buffer,
+                    u_long *bytes_returned,
+                    ACE_OVERLAPPED *overlapped,
+                    ACE_OVERLAPPED_COMPLETION_FUNC func);
   // QoS-enabled <ioctl>.
   static int isastream (ACE_HANDLE handle);
   static int isatty (ACE_HANDLE handle);
@@ -5708,7 +5708,7 @@ public:
   static ACE_HANDLE accept (ACE_HANDLE handle,
                             struct sockaddr *addr,
                             int *addrlen,
-			    const ACE_Accept_QoS_Params &qos_params);
+                            const ACE_Accept_QoS_Params &qos_params);
   // QoS-enabled <accept>, which passes <qos_params> to <accept>.  If
   // the OS platform doesn't support QoS-enabled <accept> then the
   // <qos_params> are ignored and the BSD-style <accept> is called.
@@ -5722,7 +5722,7 @@ public:
   static int connect (ACE_HANDLE handle,
                       const sockaddr *addr,
                       int addrlen,
-		      const ACE_Connect_QoS_Params &qos_params);
+                      const ACE_Connect_QoS_Params &qos_params);
   // QoS-enabled <connect>, which passes <qos_params> to <connect>.
   // If the OS platform doesn't support QoS-enabled <connect> then the
   // <qos_params> are ignored and the BSD-style <connect> is called.
@@ -5780,9 +5780,9 @@ public:
                         const char *strptr,
                         void *addrptr);
   static ACE_HANDLE join_leaf (ACE_HANDLE socket,
-			       const sockaddr *name,
-			       int namelen,
-			       const ACE_Connect_QoS_Params &qos_params);
+                               const sockaddr *name,
+                               int namelen,
+                               const ACE_Connect_QoS_Params &qos_params);
   // Joins a leaf node into a QoS-enabled multi-point session.
   static int listen (ACE_HANDLE handle,
                      int backlog);
@@ -5824,9 +5824,9 @@ public:
   static ACE_HANDLE socket (int domain,
                             int type,
                             int proto,
-			    ACE_Protocol_Info *protocolinfo,
-			    ACE_SOCK_GROUP g,
-			    u_long flags);
+                            ACE_Protocol_Info *protocolinfo,
+                            ACE_SOCK_GROUP g,
+                            u_long flags);
   // Create a QoS-enabled socket.  If the OS platform doesn't support
   // QoS-enabled <socket> then the BSD-style <socket> is called.
 
