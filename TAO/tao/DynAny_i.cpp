@@ -31,11 +31,11 @@ TAO_DynAny_i::TAO_DynAny_i (CORBA_TypeCode_ptr tc)
       case CORBA::tk_null:
       case CORBA::tk_void:
       case CORBA::tk_short:
-      case CORBA::tk_long: 
+      case CORBA::tk_long:
       case CORBA::tk_ushort:
       case CORBA::tk_ulong:
       case CORBA::tk_float:
-      case CORBA::tk_double: 
+      case CORBA::tk_double:
       case CORBA::tk_longlong:
       case CORBA::tk_ulonglong:
       case CORBA::tk_boolean:
@@ -64,11 +64,11 @@ TAO_DynAny_i::TAO_DynAny_i (const CORBA_Any& any)
       case CORBA::tk_null:
       case CORBA::tk_void:
       case CORBA::tk_short:
-      case CORBA::tk_long: 
+      case CORBA::tk_long:
       case CORBA::tk_ushort:
       case CORBA::tk_ulong:
       case CORBA::tk_float:
-      case CORBA::tk_double: 
+      case CORBA::tk_double:
       case CORBA::tk_longlong:
       case CORBA::tk_ulonglong:
       case CORBA::tk_boolean:
@@ -101,10 +101,10 @@ TAO_DynAny_i::type (CORBA::Environment &)
 }
 
 void
-TAO_DynAny_i::assign (CORBA_DynAny_ptr dyn_any, 
+TAO_DynAny_i::assign (CORBA_DynAny_ptr dyn_any,
                       CORBA::Environment &env)
 {
-  if (this->value_.type ()->equal (dyn_any->type (env), 
+  if (this->value_.type ()->equal (dyn_any->type (env),
                                    env))
     this->value_ = *dyn_any->to_any (env);
   else
@@ -125,12 +125,12 @@ TAO_DynAny_i::destroy (CORBA::Environment &env)
 }
 
 void
-TAO_DynAny_i::from_any (const CORBA_Any& any, 
+TAO_DynAny_i::from_any (const CORBA_Any& any,
                         CORBA::Environment &env)
 {
-  if (!this->value_.type ()->equal (any.type (), 
-                                    env) 
-      || any.value () == 0)
+  if (!this->value_.type ()->equal (any.type (),
+                                    env)
+      || any._tao_get_cdr () == 0)
     {
       env.exception (new CORBA_DynAny::Invalid);
     }
@@ -141,7 +141,7 @@ TAO_DynAny_i::from_any (const CORBA_Any& any,
 CORBA::Any_ptr
 TAO_DynAny_i::to_any (CORBA::Environment &env)
 {
-  if (this->value_.value ())
+  if (this->value_._tao_get_cdr ())
     return new CORBA::Any (this->value_);
   else
     {
@@ -182,7 +182,7 @@ TAO_DynAny_i::rewind (CORBA::Environment &)
 // Insert functions
 
 void
-TAO_DynAny_i::insert_boolean (CORBA::Boolean value, 
+TAO_DynAny_i::insert_boolean (CORBA::Boolean value,
                               CORBA::Environment &env)
 {
   if (unalias (this->value_.type (), env) == CORBA::tk_boolean)
@@ -192,7 +192,7 @@ TAO_DynAny_i::insert_boolean (CORBA::Boolean value,
 }
 
 void
-TAO_DynAny_i::insert_octet (CORBA::Octet value, 
+TAO_DynAny_i::insert_octet (CORBA::Octet value,
                             CORBA::Environment &env)
 {
   if (this->value_.type ()->kind (env) == CORBA::tk_octet)
@@ -202,7 +202,7 @@ TAO_DynAny_i::insert_octet (CORBA::Octet value,
 }
 
 void
-TAO_DynAny_i::insert_char (CORBA::Char value, 
+TAO_DynAny_i::insert_char (CORBA::Char value,
                            CORBA::Environment &env)
 {
   if (this->value_.type ()->kind (env) == CORBA::tk_char)
@@ -212,7 +212,7 @@ TAO_DynAny_i::insert_char (CORBA::Char value,
 }
 
 void
-TAO_DynAny_i::insert_short (CORBA::Short value, 
+TAO_DynAny_i::insert_short (CORBA::Short value,
                             CORBA::Environment &env)
 {
   if (this->value_.type ()->kind (env) == CORBA::tk_short)
@@ -222,7 +222,7 @@ TAO_DynAny_i::insert_short (CORBA::Short value,
 }
 
 void
-TAO_DynAny_i::insert_ushort (CORBA::UShort value, 
+TAO_DynAny_i::insert_ushort (CORBA::UShort value,
                              CORBA::Environment &env)
 {
   if (this->value_.type ()->kind (env) == CORBA::tk_ushort)
@@ -232,7 +232,7 @@ TAO_DynAny_i::insert_ushort (CORBA::UShort value,
 }
 
 void
-TAO_DynAny_i::insert_long (CORBA::Long value, 
+TAO_DynAny_i::insert_long (CORBA::Long value,
                            CORBA::Environment &env)
 {
   if (this->value_.type ()->kind (env) == CORBA::tk_long)
@@ -242,7 +242,7 @@ TAO_DynAny_i::insert_long (CORBA::Long value,
 }
 
 void
-TAO_DynAny_i::insert_ulong (CORBA::ULong value, 
+TAO_DynAny_i::insert_ulong (CORBA::ULong value,
                             CORBA::Environment &env)
 {
   if (this->value_.type ()->kind (env) == CORBA::tk_ulong)
@@ -252,7 +252,7 @@ TAO_DynAny_i::insert_ulong (CORBA::ULong value,
 }
 
 void
-TAO_DynAny_i::insert_float (CORBA::Float value, 
+TAO_DynAny_i::insert_float (CORBA::Float value,
                             CORBA::Environment &env)
 {
   if (this->value_.type ()->kind (env) == CORBA::tk_float)
@@ -262,7 +262,7 @@ TAO_DynAny_i::insert_float (CORBA::Float value,
 }
 
 void
-TAO_DynAny_i::insert_double (CORBA::Double value, 
+TAO_DynAny_i::insert_double (CORBA::Double value,
                              CORBA::Environment &env)
 {
   if (this->value_.type ()->kind (env) == CORBA::tk_double)
@@ -272,11 +272,11 @@ TAO_DynAny_i::insert_double (CORBA::Double value,
 }
 
 void
-TAO_DynAny_i::insert_string (const char * value, 
+TAO_DynAny_i::insert_string (const char * value,
                              CORBA::Environment &env)
 {
   if (this->value_.type ()->kind (env) == CORBA::tk_string)
-    this->value_ <<= CORBA::Any::from_string (CORBA::string_dup (value), 
+    this->value_ <<= CORBA::Any::from_string (CORBA::string_dup (value),
                                               0,
                                               1);
   else
@@ -284,7 +284,7 @@ TAO_DynAny_i::insert_string (const char * value,
 }
 
 void
-TAO_DynAny_i::insert_reference (CORBA::Object_ptr value, 
+TAO_DynAny_i::insert_reference (CORBA::Object_ptr value,
                                 CORBA::Environment &env)
 {
   if (this->value_.type ()->kind (env) == CORBA::tk_objref)
@@ -294,7 +294,7 @@ TAO_DynAny_i::insert_reference (CORBA::Object_ptr value,
 }
 
 void
-TAO_DynAny_i::insert_typecode (CORBA::TypeCode_ptr value, 
+TAO_DynAny_i::insert_typecode (CORBA::TypeCode_ptr value,
                                CORBA::Environment &env)
 {
   if (this->value_.type ()->kind (env) == CORBA::tk_TypeCode)
@@ -304,7 +304,7 @@ TAO_DynAny_i::insert_typecode (CORBA::TypeCode_ptr value,
 }
 
 void
-TAO_DynAny_i::insert_longlong (CORBA::LongLong value, 
+TAO_DynAny_i::insert_longlong (CORBA::LongLong value,
                                CORBA::Environment &env)
 {
   if (this->value_.type ()->kind (env) == CORBA::tk_longlong)
@@ -314,7 +314,7 @@ TAO_DynAny_i::insert_longlong (CORBA::LongLong value,
 }
 
 void
-TAO_DynAny_i::insert_ulonglong (CORBA::ULongLong value, 
+TAO_DynAny_i::insert_ulonglong (CORBA::ULongLong value,
                                 CORBA::Environment &env)
 {
   if (this->value_.type ()->kind (env) == CORBA::tk_ulonglong)
@@ -324,7 +324,7 @@ TAO_DynAny_i::insert_ulonglong (CORBA::ULongLong value,
 }
 
 void
-TAO_DynAny_i::insert_wchar (CORBA::WChar value, 
+TAO_DynAny_i::insert_wchar (CORBA::WChar value,
                             CORBA::Environment &env)
 {
   if (this->value_.type ()->kind (env) == CORBA::tk_wchar)
@@ -334,7 +334,7 @@ TAO_DynAny_i::insert_wchar (CORBA::WChar value,
 }
 
 void
-TAO_DynAny_i::insert_any (const CORBA::Any& value, 
+TAO_DynAny_i::insert_any (const CORBA::Any& value,
                           CORBA::Environment &env)
 {
   if (this->value_.type ()->kind (env) == CORBA::tk_any)
@@ -353,7 +353,7 @@ TAO_DynAny_i::get_boolean (CORBA::Environment &env)
 
   if (!(this->value_ >>= CORBA_Any::to_boolean (val)))
     env.exception (new CORBA_DynAny::TypeMismatch);
-  
+
   return val;
 }
 
@@ -518,9 +518,9 @@ TAO_DynAny_i::get_any (CORBA::Environment& _env)
 {
   CORBA_Any_ptr val;
 
-  ACE_NEW_THROW_RETURN (val, 
-                        CORBA_Any, 
-                        CORBA::NO_MEMORY (), 
+  ACE_NEW_THROW_RETURN (val,
+                        CORBA_Any,
+                        CORBA::NO_MEMORY (),
                         0);
 
   if (!(this->value_ >>= *val))
@@ -545,11 +545,11 @@ TAO_DynAny_i::create_dyn_any (const CORBA_Any& any,
       case CORBA::tk_null:
       case CORBA::tk_void:
       case CORBA::tk_short:
-      case CORBA::tk_long: 
+      case CORBA::tk_long:
       case CORBA::tk_ushort:
       case CORBA::tk_ulong:
       case CORBA::tk_float:
-      case CORBA::tk_double: 
+      case CORBA::tk_double:
       case CORBA::tk_longlong:
       case CORBA::tk_ulonglong:
       case CORBA::tk_boolean:
@@ -562,9 +562,9 @@ TAO_DynAny_i::create_dyn_any (const CORBA_Any& any,
       case CORBA::tk_string:
         {
           TAO_DynAny_i* dp;
-          ACE_NEW_THROW_RETURN (dp, 
-                                TAO_DynAny_i (any), 
-                                CORBA::NO_MEMORY (), 
+          ACE_NEW_THROW_RETURN (dp,
+                                TAO_DynAny_i (any),
+                                CORBA::NO_MEMORY (),
                                 CORBA_DynAny::_nil ());
           return dp->_this (_env);
         }
@@ -702,11 +702,11 @@ TAO_DynAny_i::create_dyn_any (CORBA_TypeCode_ptr tc,
       case CORBA::tk_null:
       case CORBA::tk_void:
       case CORBA::tk_short:
-      case CORBA::tk_long: 
+      case CORBA::tk_long:
       case CORBA::tk_ushort:
       case CORBA::tk_ulong:
       case CORBA::tk_float:
-      case CORBA::tk_double: 
+      case CORBA::tk_double:
       case CORBA::tk_longlong:
       case CORBA::tk_ulonglong:
       case CORBA::tk_boolean:
@@ -746,9 +746,8 @@ TAO_DynAny_i::unalias (CORBA_TypeCode_ptr tc,
   CORBA::TCKind tck = tc->kind (env);
 
   while (tck == CORBA::tk_alias)
-    tck = TAO_DynAny_i::unalias (tc->content_type (env), 
+    tck = TAO_DynAny_i::unalias (tc->content_type (env),
                                  env);
 
   return tck;
 }
-
