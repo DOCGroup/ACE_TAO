@@ -1,7 +1,7 @@
 # $Id$
 #
 # Platform macros for building on AIX 4.x with g++.  This has been tested on
-# AIX 4.3 with egcs 1.1.2 and gcc 2.95.2.
+# AIX 4.3 with gcc 3.1
 #
 # Original contributed by Ian Wright <I.Wright@elsevier.co.uk>. Updated for
 # AIX 4 and egcs by Steve Huston <shuston@riverace.com>.
@@ -23,11 +23,20 @@ ifeq (,$(exceptions))
   exceptions = 0
 endif
 
+# Yes, believe it or not...
+# The way to make a shared lib on AIX is to make a shared object file and
+# then put that in an archive.
+# Non-shared archives are named lib<x>ns.a - ns = non-shared.
+SOEXT       = a
+# aix_build turns on the funky shared library building code in
+# rules.lib.GNU
+aix_build = 1
+
 ifeq (0,$(threads))
   CFLAGS  += -DACE_MT_SAFE=0
 endif
 ifeq (1,$(threads))
-  CFLAGS  += -mthreads
+  CFLAGS  += -pthread
 endif
 
 # In case anything here or in the config depends on OS version number,
@@ -45,6 +54,12 @@ include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
 
 
 CFLAGS         += -W -Wall -pipe -mcpu=common -DACE_AIX_VERS=$(AIX_VERS)
+ifeq (32,$(buildbits))
+  CFLAGS  += -m32
+endif
+ifeq (32,$(buildbits))
+  CFLAGS  += -m64
+endif
 CCFLAGS        += $(CFLAGS) $(TEMPLATES_FLAG)
 DCFLAGS        += -g
 DLD             = $(CXX)
@@ -58,7 +73,7 @@ endif
 OCFLAGS         = -O2
 OCCFLAGS        = $(OCFLAGS)
 ifeq ($(threads),1)
-SOFLAGS        += -mthreads
+SOFLAGS        += -pthread
 endif
 SOFLAGS        += -shared -Wl,-bexpall # -Wl,-bloadmap:lib.map
 LIBS           += -ltli_r -ldl
