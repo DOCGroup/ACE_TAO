@@ -524,8 +524,7 @@ operator<< (TAO_OutputCDR& cdr, const CORBA_Object* x)
   if ((cdr << stubobj->type_id.in ()) == 0)
     return 0;
 
-  const TAO_MProfile& mprofile =
-    stubobj->get_base_profiles ();
+  const TAO_MProfile& mprofile = stubobj->base_profiles ();
 
   CORBA::ULong profile_count = mprofile.profile_count ();
   if ((cdr << profile_count) == 0)

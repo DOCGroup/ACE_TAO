@@ -65,7 +65,7 @@ TAO_IIOP_Acceptor::create_mprofile (const TAO_ObjectKey &object_key,
         return -1;
     }
 
-  TAO_IIOP_Profile *pfile;
+  TAO_IIOP_Profile *pfile = 0;
   ACE_NEW_RETURN (pfile,
                   TAO_IIOP_Profile (this->host_.c_str (),
                                     this->address_.get_port_number (),
@@ -76,7 +76,11 @@ TAO_IIOP_Acceptor::create_mprofile (const TAO_ObjectKey &object_key,
                   -1);
 
   if (mprofile.give_profile (pfile) == -1)
-    return -1;
+    {
+      pfile->_decr_refcnt ();
+      pfile = 0;
+      return -1;
+    }
 
   if (this->orb_core_->orb_params ()->std_profile_components () == 0)
     return 0;
