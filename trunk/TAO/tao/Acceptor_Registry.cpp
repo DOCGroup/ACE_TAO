@@ -57,7 +57,7 @@ TAO_Acceptor_Registry::make_mprofile (const TAO_ObjectKey &object_key,
   // profiles than there are endpoints.  In some cases, there can be
   // less profiles than endpoints.
   size_t pfile_count = this->endpoint_count ();
-  if (mprofile.set (pfile_count) != pfile_count)
+  if (mprofile.set (pfile_count) < 0)
     return -1;
 
   TAO_AcceptorSetIterator end = this->end ();
