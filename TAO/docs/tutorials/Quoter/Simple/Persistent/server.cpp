@@ -16,7 +16,7 @@
 //============================================================================
 
 #include "Stock_Factory_i.h"
-#include <iostream.h>
+#include <iostream>
 
 int
 main (int argc, char *argv[])
@@ -93,7 +93,7 @@ main (int argc, char *argv[])
     root_poa->destroy (1, 1);
     orb->destroy ();
   }
-  catch (CORBA::Exception &ex) {
+  catch (CORBA::Exception &) {
     std::cerr << "CORBA exception raised !" << std::endl;
   }
   return 0;

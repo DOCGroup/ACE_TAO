@@ -44,11 +44,11 @@
       <EM>Transient Objects</EM>.
       Notice that this has nothing to do with the state of the object,
       an application can create transient objects to access some
-      persistent information maintained in a database,
-      for exammple,
-      the object can represent a different session or transaction view
+      persistent information maintained in a database.
+      For exammple,
+      such  objects can represent a different session or transaction view
       of the data,
-      simlilarly, some persistent object references may have no state
+      similarly, some persistent object references may have no state
       or no persistent state,
       for example, a logging facility is persistent because it is
       always available, but it may maintain no state or simply cache
@@ -154,8 +154,7 @@
     professional looking documents, then again it may be my fault,
     because I was really loose on the first set of tutorials.
     -->
-    <P>Now let's come to the actual creation of the child POA.
-      Child POAs are created using the <CODE>create_POA</CODE>
+    <P>Child POAs are created using the <CODE>create_POA</CODE>
       operation on the parent POA.
     </P>
  <PRE>
@@ -169,10 +168,10 @@
       <CODE>CORBA::PolicyList</CODE>.
       We can create a child controlled by a new
       <CODE>POAManager</CODE> by passing
-      a nil reference, but commonly the <CODE>POAManager</CODE> of the
-      parent is used.
+      a <CODE>nil</CODE> reference,
+      but commonly the <CODE>POAManager</CODE> of the parent is used.
     </P>
-    <P> Finally, we can now destroy the life span policy and id assignment 
+    <P>Finally, we can now destroy the life span policy and id assignment 
       policy objects since they are no longer needed. The 
       <CODE>create_POA</CODE> operation will make a copy of the objects in the 
       policy list. And the newly created POA will refer to the copies of the 

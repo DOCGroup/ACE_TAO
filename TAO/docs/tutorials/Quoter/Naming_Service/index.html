@@ -138,8 +138,9 @@
 
     <P>To test your changes you need to run three programs, first
       configure TAO's naming service lookup protocol to use a
-      hopefully unique port, something base in your user id is a good
-      idea, for example:
+      unique port in your LAN,
+      something based in your user id is a good idea,
+      for example:
     </P>
 <PRE>
 $ setenv NameServicePort `expr 10000 + $uid`
@@ -168,9 +169,15 @@ $ client MSFT RHAT RHAT MSFT
       the server.  The multicast protocol is very simple minded, but
       works well in small LANs where there are not many naming
       services running.
+      To avoid problems when multiple naming services run in the same
+      LAN you must assign a different multicast port to each one,
+      as shown above.
     </P>
-    <P>A more interesting approach is to use the Interoperable Naming
-      Service features in TAO to control the
+    <P>Unfortunately the protocol shown above does not work across
+      multiple LANs, and it is hard to ensure that there are no
+      conflicts in the assignment of multicast ports.
+      TAO supports the Interoperable Naming Service specification,
+      that provides several mechanisms to control the behavior of the
       <CODE>resolve_initial_references()</CODE> call.
       For example, you can ask the Naming Service to dump its IOR to a
       file, as in:
