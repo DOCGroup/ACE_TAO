@@ -1,4 +1,5 @@
-// 	$Id$	
+// $Id$
+//
 // ============================================================================
 //
 // = LIBRARY
@@ -29,7 +30,7 @@
 
 #if defined (ACE_LACKS_FLOATING_POINT)
   #define double ACE_UINT32
-  #define fabs(X) ((X) < 0? (X):-(X))
+  #define fabs(X) ((X) >= 0  ?  (X)  :  -(X))
 #endif /* ACE_LACKS_FLOATING_POINT */
 
 
@@ -50,8 +51,8 @@ static CORBA::String key = CORBA::String ("Cubit");
 // cubed.
 inline int func (unsigned i) { return i - 117; }
 
-// The various datatypes which the client and the server can exchange. 
-enum Cubit_Datatypes 
+// The various datatypes which the client and the server can exchange.
+enum Cubit_Datatypes
 {
   CB_OCTET,
   CB_SHORT,
@@ -60,9 +61,9 @@ enum Cubit_Datatypes
 };
 
 const int CB_40HZ_CONSUMER = 0;
-const int CB_20HZ_CONSUMER = 1;    
-const int CB_10HZ_CONSUMER = 2;    
-const int CB_5HZ_CONSUMER = 3;    
+const int CB_20HZ_CONSUMER = 1;
+const int CB_10HZ_CONSUMER = 2;
+const int CB_5HZ_CONSUMER = 3;
 const int CB_1HZ_CONSUMER = 4;
 
 const int CB_40HZ_CONSUMER_RATE = 40;
@@ -80,7 +81,7 @@ class Task_State
 
   // = DESCRIPTION
   //     This class maintains state which is common to the potentially
-  //     multiple concurrent clients. 
+  //     multiple concurrent clients.
 
 
 {
@@ -148,7 +149,7 @@ public:
 
   u_int use_name_service_;
   // flag that say if we are using the or not the name service.
-  
+
   char *iors_ [50];
 
   char * ior_file_;
@@ -156,7 +157,7 @@ public:
 
 class Client : public ACE_Task<ACE_SYNCH>
   // = TITLE
-  //     The Cubit client. 
+  //     The Cubit client.
 {
 public:
   Client (Task_State *ts);
@@ -175,27 +176,27 @@ public:
 
 private:
 
-  int run_tests (Cubit_ptr, 
-                 unsigned int, 
-                 unsigned int, 
-                 Cubit_Datatypes, 
+  int run_tests (Cubit_ptr,
+                 unsigned int,
+                 unsigned int,
+                 Cubit_Datatypes,
                  double frequency);
   // makes the calls to the servant
 
-  void put_latency (double *jitter, 
-                    double latency, 
+  void put_latency (double *jitter,
+                    double latency,
                     unsigned int);
   // Records the latencies in the Task_State
 
   void put_ave_latency (int latency, unsigned int);
-  // Records the latencies in the Task_State 
+  // Records the latencies in the Task_State
 
   int parse_args (int, char **);
   // parses the arguments
 
   Task_State *ts_;
   // pointer to shared state
-  
+
   CosNaming::NamingContext_var naming_context_;
   // Object reference to the naming service
 
