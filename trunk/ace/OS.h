@@ -2935,7 +2935,7 @@ typedef unsigned int size_t;
 # if defined (ACE_HAS_LLSEEK) || defined (ACE_HAS_LSEEK64)
 #   if ACE_SIZEOF_LONG == 8
       typedef off_t ACE_LOFF_T;
-#   elif defined (__sgi) || defined (AIX)
+#   elif defined (__sgi) || defined (AIX) || defined (HPUX)
       typedef off64_t ACE_LOFF_T;
 #   elif defined (__sun)
       typedef offset_t ACE_LOFF_T;
