@@ -4741,12 +4741,16 @@ ACE_OS::sigwait (sigset_t *set, int *sig)
     // signal number is returned).
     *sig = ::sigwait (set, 0);
     return *sig;
-#  else /* ! __Lynx __ */
+#  elif defined (DIGITAL_UNIX) && defined (__DECCXX_VER)
+    // DEC cxx (but not g++) needs this direct call to its internal
+    // sigwait ().  This allows us to #undef sigwait, so that we can
+    // have ACE_OS::sigwait.  cxx gets confused by ACE_OS::sigwait if
+    // sigwait is _not_ #undef'ed.
+    errno = ::_Psigwait (set, sig);
+    return errno == 0  ?  *sig  :  -1;
+#  else /* ! __Lynx __ && ! (DIGITAL_UNIX && __DECCXX_VER) */
     errno = ::sigwait (set, sig);
-    if (errno == 0)
-      return *sig;
-    else
-      return -1;
+    return errno == 0  ?  *sig  :  -1;
 #  endif /* ! __Lynx__ */
 #endif /* ACE_HAS_ONEARG_SIGWAIT */
 #elif defined (ACE_HAS_WTHREADS)
