@@ -6,7 +6,7 @@
  *    pace
  *
  * = FILENAME
- *    pace/win32/pwd.h
+ *    pace/posix/pwd.h
  *
  * = AUTHOR
  *    Luther Baker
@@ -17,27 +17,53 @@
 #define PACE_PWD_H
 
 #include <pwd.h>
+#include "pace/sys/types.h"
 
 #if defined (PACE_HAS_CPLUSPLUS)
 extern "C" {
 #endif /* PACE_HAS_CPLUSPLUS */
 
-  PACE_INLINE struct passwd * pace_getpwuid (uid_t uid);
+#ifndef PACE_PASSWD
+#define PACE_PASSWD
+  typedef struct passwd pace_passwd;
+#endif /* PACE_PASSWD */
 
-  PACE_INLINE int pace_getpwuid_r (uid_t uid,
-                                   struct passwd * pwd,
+  /**
+     PACE's implementation of the POSIX function getpwuid.
+     See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
+     IEEE Std 1003.1, 1996 Edition), Section 9.2.2.
+   */
+  PACE_INLINE pace_passwd * pace_getpwuid (pace_uid_t uid);
+
+  /**
+     PACE's implementation of the POSIX function getpwuid_r.
+     See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
+     IEEE Std 1003.1, 1996 Edition), Section 9.2.2.
+   */
+  PACE_INLINE int pace_getpwuid_r (pace_uid_t uid,
+                                   pace_passwd * pwd,
                                    char * buffer,
-                                   size_t bufsize,
-                                   struct passwd ** result);
+                                   pace_size_t bufsize,
+                                   pace_passwd ** result);
   /* Requires PACE_HAS_POSIX_PTHREAD_SEMANTICS. */
 
-  PACE_INLINE struct passwd * pace_getpwnam (const char * name);
+  /**
+     PACE's implementation of the POSIX function getpwnam.
+     See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
+     IEEE Std 1003.1, 1996 Edition), Section 9.2.2.
+   */
+  PACE_INLINE pace_passwd * pace_getpwnam (const char * name);
 
+  /**
+     PACE's implementation of the POSIX function getpwnam_r.
+     See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
+     IEEE Std 1003.1, 1996 Edition), Section 9.2.2.
+   */
   PACE_INLINE int pace_getpwnam_r (const char * name,
-                                   struct passwd * pwd,
+                                   pace_passwd * pwd,
                                    char * buffer,
-                                   size_t bufsize,
-                                   struct passwd ** result);
+                                   pace_size_t bufsize,
+                                   pace_passwd ** result);
   /* Requires PACE_HAS_POSIX_PTHREAD_SEMANTICS. */
 
 #if defined (PACE_HAS_CPLUSPLUS)
@@ -45,7 +71,7 @@ extern "C" {
 #endif /* PACE_HAS_CPLUSPLUS */
 
 #if defined (PACE_HAS_INLINE)
-# include "pace/win32/pwd.inl"
+# include "pace/posix/pwd.inl"
 #endif /* PACE_HAS_INLINE */
 
 #endif /* PACE_PWD_H */

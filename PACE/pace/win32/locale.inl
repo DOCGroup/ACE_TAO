@@ -6,7 +6,7 @@
  *    pace
  *
  * = FILENAME
- *    pace/win32/locale.inl
+ *    pace/posix/locale.inl
  *
  * = AUTHOR
  *    Joe Hoffert
@@ -14,6 +14,14 @@
  * =========================================================================== */
 
 #include <locale.h>
+
+
+PACE_INLINE
+pace_lconv *
+pace_localeconv (void)
+{
+  return localeconv ();
+}
 
 PACE_INLINE
 char *

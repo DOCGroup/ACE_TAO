@@ -6,7 +6,7 @@
  *    pace
  *
  * = FILENAME
- *    pace/win32/fcntl.inl
+ *    pace/posix/fcntl.inl
  *
  * = AUTHOR
  *    Luther Baker

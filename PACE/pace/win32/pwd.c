@@ -6,7 +6,7 @@
  *    pace
  *
  * = FILENAME
- *    pace/win32/pwd.c
+ *    pace/posix/pwd.c
  *
  * = AUTHOR
  *    Luther Baker
@@ -16,5 +16,5 @@
 #include "pace/pwd.h"
 
 #if !defined (PACE_HAS_INLINE)
-# include "pace/win32/pwd.inl"
+# include "pace/posix/pwd.inl"
 #endif /* ! PACE_HAS_INLINE */

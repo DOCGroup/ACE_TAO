@@ -3,10 +3,10 @@
  * =============================================================================
  *
  * = LIBRARY
- *    pace (win32 ace)
+ *    pace (posix ace)
  *
  * = FILENAME
- *    pace/win32/mqueue.c
+ *    pace/posix/mqueue.c
  *
  * = AUTHOR
  *    Luther Baker
@@ -16,5 +16,5 @@
 #include "pace/mqueue.h"
 
 #if !defined (PACE_HAS_INLINE)
-# include "pace/win32/mqueue.inl"
+# include "pace/posix/mqueue.inl"
 #endif /* ! PACE_HAS_INLINE */
