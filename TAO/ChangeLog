@@ -1,3 +1,9 @@
+Wed Dec 24 19:41:43 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/Makefile:
+
+	  Needed extra libraries to link fine on static builds.
+
 Wed Dec 24 14:29:20 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* tao/IOP_Codec.pidl:
