@@ -35,6 +35,7 @@ PUB_HDRS = \
   Server_Strategy_Factory \
   Client_Strategy_Factory \
   ORB_Core \
+  ORB_Core_Auto_Ptr \
   Collocation_Resolver \
   Default_Collocation_Resolver \
   ORB_Table \
@@ -198,6 +199,7 @@ ORB_CORE_FILES = \
   OctetSeqC \
   StringSeqC \
   ORB_Core \
+  ORB_Core_Auto_Ptr \
   Collocation_Resolver \
   Default_Collocation_Resolver \
   Stub_Factory \
