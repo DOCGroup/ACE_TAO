@@ -1,3 +1,11 @@
+Fri Feb 21 06:18:19 2003  Ossama Othman  <ossama@uci.edu>
+
+	* tests/Framework_Component_DLL.cpp:
+
+	  Include "ace/Service_Object.h" to pull in ACE_Service_Object
+	  class declaration.  Necessitated by inter-header dependency
+	  reductions.
+
 Thu Feb 20 18:54:03 2003  Ossama Othman  <ossama@uci.edu>
 
 	* apps/Gateway/Gateway/gatewayd.cpp:
