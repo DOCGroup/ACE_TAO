@@ -1398,7 +1398,7 @@ TAO_GIOP::send_reply_exception (const TAO_GIOP_Version &version,
 }
 
 CORBA::Boolean
-TAO_GIOP::start_message_std (const TAO_GIOP_Version &,
+TAO_GIOP::start_message_std (const TAO_GIOP_Version &version,
                              TAO_GIOP::Message_Type type,
                              TAO_OutputCDR &msg)
 {
