@@ -78,7 +78,7 @@ namespace Kokyu
 
 //Maybe I need to change Guid_t to a task ID.
     typedef ACE_Hash_Map_Manager_Ex<int,
-                                    TimeBase::TimeT,
+                                    ACE_Time_Value,
                                     Guid_Hash,
                                     ACE_Equal_To<int>,
                                     ACE_SYNCH_NULL_MUTEX>
