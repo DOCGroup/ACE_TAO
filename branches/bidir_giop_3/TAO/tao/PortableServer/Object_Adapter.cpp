@@ -1423,6 +1423,7 @@ TAO_Object_Adapter::Priority_Model_Processing::pre_invoke (
 
       // Attempt to extract client-propagated priority from the
       //  ServiceContextList of the request.
+
       RTCORBA::Priority target_priority;
       int priority_found = 0;
       for (CORBA::ULong i = 0;

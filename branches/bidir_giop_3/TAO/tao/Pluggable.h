@@ -227,6 +227,8 @@ public:
   virtual void bidirectional_flag (int flag);
   // Set the bidirectional flag
 
+  virtual int tear_listen_point_list (TAO_InputCDR &cdr);
+
   void dequeue_all (void);
 
   /// Return the TAO_ORB_Core

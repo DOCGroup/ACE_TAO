@@ -110,6 +110,13 @@ TAO_IIOP_Connector::connect (TAO_Connection_Descriptor_Interface *desc,
   TAO_IIOP_Connection_Handler *svc_handler = 0;
   TAO_Connection_Handler *conn_handler = 0;
 
+  // If the BiDir policy has been set look for BiDir Connections if
+  // any
+  if (this->orb_core ()->bidir_giop_policy ())
+    {
+      desc->set_bidir_flag (1);
+    }
+
   // Check the Cache first for connections
   if (this->orb_core ()->connection_cache ().find_handler (desc,
                                                            conn_handler) == 0)
