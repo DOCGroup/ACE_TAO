@@ -1,4 +1,9 @@
-Mon Sep 13 17:51:26 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+Mon Sep 13 18:08:43 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/MessagingS.cpp (_dispatch): No need to replicate code.
+	  Forward call to base class.
+
+	  MessagingS.h and MessagingS.i got facials (cosmetic changes).
 
 	* $ACE_ROOT/bin/run_all_list.pm: The following were removed from
 	  the run list because they do not compile with minimum CORBA:
