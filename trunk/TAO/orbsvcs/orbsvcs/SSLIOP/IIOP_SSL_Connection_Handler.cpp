@@ -70,7 +70,6 @@ TAO_IIOP_SSL_Connection_Handler (TAO_ORB_Core *orb_core,
                                  CORBA::Boolean flag,
                                  void *arg)
   : TAO_IIOP_Connection_Handler (orb_core,
-                                 flag,
                                  (ACE_static_cast (
                                     TAO_SSLIOP_Connection_Handler_State *,
                                     arg))->tcp_properties)
@@ -80,11 +79,11 @@ TAO_IIOP_SSL_Connection_Handler (TAO_ORB_Core *orb_core,
                      arg);
 
   TAO_IIOP_SSL_Transport* specific_transport = 0;
-  ACE_NEW(specific_transport,
-          TAO_IIOP_SSL_Transport (this,
-                                  orb_core,
-                                  s->ssliop_current.in (),
-                                  0));
+  ACE_NEW (specific_transport,
+           TAO_IIOP_SSL_Transport (this,
+                                   orb_core,
+                                   s->ssliop_current.in (),
+                                   0));
 
   // store this pointer (indirectly increment ref count)
   this->transport (specific_transport);
