@@ -503,6 +503,7 @@ client (void *arg)
 
   command = "read";
   command_len = ACE_OS::strlen (command);
+  int bytes_read = 0;
 
   if (connector.connect (stream, server_addr) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), 0);
@@ -510,10 +511,14 @@ client (void *arg)
 			&command_len, sizeof command_len,
 			command, command_len) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "send"), 0);
-  else if (stream.recv (buf, sizeof buf) <= 0)
+  else if ((bytes_read = stream.recv (buf, sizeof buf)) <= 0)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "recv"), 0);
   else
     {
+      // Null terminate buf to avoid an uninitialized memory read in the
+      // call to ACE_OS::strrchr ().
+      buf [bytes_read] = '\0';
+
       size_t count = ACE_OS::atoi (ACE_OS::strrchr (buf, ' '));
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) count = %d\n", count));
