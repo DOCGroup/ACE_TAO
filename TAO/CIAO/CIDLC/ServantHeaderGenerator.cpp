@@ -227,6 +227,77 @@ namespace
     std::ostream& os;
   };
 
+  // Generates operations associated with attributes.
+  // @@@ (JP) Need to support exceptions.
+  struct AttributeEmitter : Traversal::ReadWriteAttribute,
+                            EmitterBase
+  {
+    AttributeEmitter (Context& c)
+      : EmitterBase (c),
+        write_type_name_emitter_ (c.os ()),
+        read_type_name_emitter_ (c.os ())
+    {
+      write_belongs_.node_traverser (write_type_name_emitter_);
+      read_belongs_.node_traverser (read_type_name_emitter_);
+    }
+
+    virtual void traverse (SemanticGraph::ReadWriteAttribute& a)
+    {
+      os << "virtual ";
+
+      Traversal::ReadWriteAttribute::belongs (a, read_belongs_);
+
+      os << endl
+         << a.name () << " (" << endl
+         << STRS[ENV_SNGL_HDR] << ")" << endl
+         << STRS[EXCP_SNGL] << ";" << endl << endl;
+
+      os << "virtual void" << endl
+         << a.name () << " (" << endl;
+
+      Traversal::ReadWriteAttribute::belongs (a, write_belongs_);
+
+      os << endl
+         << STRS[ENV_HDR] << ")" << endl
+         << STRS[EXCP_SNGL] << ";" << endl << endl;
+    }
+
+  private:
+    INArgTypeNameEmitter write_type_name_emitter_;
+    ReturnTypeNameEmitter read_type_name_emitter_;
+    Traversal::Belongs write_belongs_;
+    Traversal::Belongs read_belongs_;
+  };
+
+  // Generates operations associated with readonly attributes.
+  // @@@ (JP) Need to support exceptions.
+  struct ReadOnlyAttributeEmitter : Traversal::ReadAttribute,
+                                    EmitterBase
+  {
+    ReadOnlyAttributeEmitter (Context& c)
+      : EmitterBase (c),
+        read_type_name_emitter_ (c.os ())
+    {
+      read_belongs_.node_traverser (read_type_name_emitter_);
+    }
+
+    virtual void traverse (SemanticGraph::ReadAttribute& a)
+    {
+      os << "virtual ";
+
+      Traversal::ReadAttribute::belongs (a, read_belongs_);
+
+      os << endl
+         << a.name () << " (" << endl
+         << STRS[ENV_SNGL_HDR] << ")" << endl
+         << STRS[EXCP_SNGL] << ";" << endl << endl;
+    }
+
+  private:
+    ReturnTypeNameEmitter read_type_name_emitter_;
+    Traversal::Belongs read_belongs_;
+  };
+
   struct FacetEmitter : Traversal::ProviderData,
                         EmitterBase
   {
@@ -293,6 +364,11 @@ namespace
         Traversal::Inherits inherits;
         interface_emitter.edge_traverser (defines);
         interface_emitter.edge_traverser (inherits);
+
+        AttributeEmitter attribute_emitter (ctx);
+        ReadOnlyAttributeEmitter read_only_attribute_emitter (ctx);
+        defines.node_traverser (attribute_emitter);
+        defines.node_traverser (read_only_attribute_emitter);
 
         OperationEmitter operation_emitter (ctx);
         defines.node_traverser (operation_emitter);
@@ -364,77 +440,6 @@ namespace
     Traversal::Belongs simple_belongs_;
     Traversal::Belongs stripped_belongs_;
     Traversal::Belongs enclosing_belongs_;
-  };
-
-  // Generates operations associated with attributes.
-  // @@@ (JP) Need to support exceptions.
-  struct AttributeEmitter : Traversal::ReadWriteAttribute,
-                            EmitterBase
-  {
-    AttributeEmitter (Context& c)
-      : EmitterBase (c),
-        write_type_name_emitter_ (c.os ()),
-        read_type_name_emitter_ (c.os ())
-    {
-      write_belongs_.node_traverser (write_type_name_emitter_);
-      read_belongs_.node_traverser (read_type_name_emitter_);
-    }
-
-    virtual void traverse (SemanticGraph::ReadWriteAttribute& a)
-    {
-      os << "virtual ";
-
-      Traversal::ReadWriteAttribute::belongs (a, read_belongs_);
-
-      os << endl
-         << a.name () << " (" << endl
-         << STRS[ENV_SNGL_HDR] << ")" << endl
-         << STRS[EXCP_SNGL] << ";" << endl << endl;
-
-      os << "virtual void" << endl
-         << a.name () << " (" << endl;
-
-      Traversal::ReadWriteAttribute::belongs (a, write_belongs_);
-
-      os << endl
-         << STRS[ENV_HDR] << ")" << endl
-         << STRS[EXCP_SNGL] << ";" << endl << endl;
-    }
-
-  private:
-    INArgTypeNameEmitter write_type_name_emitter_;
-    ReturnTypeNameEmitter read_type_name_emitter_;
-    Traversal::Belongs write_belongs_;
-    Traversal::Belongs read_belongs_;
-  };
-
-  // Generates operations associated with readonly attributes.
-  // @@@ (JP) Need to support exceptions.
-  struct ReadOnlyAttributeEmitter : Traversal::ReadAttribute,
-                                    EmitterBase
-  {
-    ReadOnlyAttributeEmitter (Context& c)
-      : EmitterBase (c),
-        read_type_name_emitter_ (c.os ())
-    {
-      read_belongs_.node_traverser (read_type_name_emitter_);
-    }
-
-    virtual void traverse (SemanticGraph::ReadAttribute& a)
-    {
-      os << "virtual ";
-
-      Traversal::ReadAttribute::belongs (a, read_belongs_);
-
-      os << endl
-         << a.name () << " (" << endl
-         << STRS[ENV_SNGL_HDR] << ")" << endl
-         << STRS[EXCP_SNGL] << ";" << endl << endl;
-    }
-
-  private:
-    ReturnTypeNameEmitter read_type_name_emitter_;
-    Traversal::Belongs read_belongs_;
   };
 
   struct ContextEmitter : Traversal::Component, EmitterBase
@@ -1719,6 +1724,11 @@ namespace
         Traversal::Inherits inherits;
         interface_emitter.edge_traverser (defines);
         interface_emitter.edge_traverser (inherits);
+
+        AttributeEmitter attribute_emitter (ctx);
+        ReadOnlyAttributeEmitter read_only_attribute_emitter (ctx);
+        defines.node_traverser (attribute_emitter);
+        defines.node_traverser (read_only_attribute_emitter);
 
         OperationEmitter operation_emitter (ctx);
         defines.node_traverser (operation_emitter);
