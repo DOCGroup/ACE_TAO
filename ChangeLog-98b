@@ -1,3 +1,8 @@
+Wed Sep 16 20:44:12 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/OS.i (open): Added SetFilePointer to move the file pointer
+	  of the opened file to end of file if _O_APPEND is specified.
+
 Wed Sep 16 20:42:16 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/OS: Added a typedef for ACE_IO_Vector_Base so that it will
@@ -5,8 +10,8 @@ Wed Sep 16 20:42:16 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 Wed Sep 16 20:09:01 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/OS.h: 
-	* ace/OS.i: 
+	* ace/OS.h:
+	* ace/OS.i:
 	  ACE_OS::rand_r() is easier to use now. Just define a variable of
 	  that type and invoke ACE_OS::rand_r() with it, it even works on
 	  broken platforms that define it as a non-pointer.
@@ -50,7 +55,7 @@ Wed Sep 16 17:16:51 EDT 1998   James CE Johnson    <jcej@lads.com>
           docs/tutorials/012/task.cpp
           docs/tutorials/012/task.h
           docs/tutorials/index.html
-   
+
    	  Tutorial 12.  This corrects some of the nastyness
    	  in number 11 by specializing the ACE_Message_Block
    	  to carry around the data.
