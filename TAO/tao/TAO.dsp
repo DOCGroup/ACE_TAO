@@ -529,6 +529,19 @@ SOURCE=.\Invocation_Endpoint_Selectors.cpp
 # Begin Source File
 
 SOURCE=.\IOP_CodecC.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+# ADD CPP /GR
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
