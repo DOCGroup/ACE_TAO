@@ -1,3 +1,23 @@
+Wed Dec 20 19:44:16 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* examples/Reactor/WFMO_Reactor/test_abandoned.cpp,
+	* examples/Reactor/WFMO_Reactor/test_directory_changes.cpp,
+	* examples/Reactor/WFMO_Reactor/test_network_events.cpp,
+	* examples/Reactor/WFMO_Reactor/test_prerun_state_changes.cpp,
+	* examples/Reactor/WFMO_Reactor/test_registration.cpp,
+	* examples/Reactor/WFMO_Reactor/test_registry_changes.cpp,
+	* examples/Reactor/WFMO_Reactor/test_talker.cpp,
+	* examples/Reactor/WFMO_Reactor/test_window_messages.cpp:
+
+	* ace/Sock_Connect.cpp: The ACE 5.1.11 implementation of
+	  ACE_Sock_Connect::get_ip_interfaces() fails when run on Windows
+ 	  2000 when ACE_HAS_WINSOCK2 = 0.  This is because
+ 	  get_ip_interfaces() checks the registry for the available
+ 	  interfaces and fails when it encounters a new entry in windows
+ 	  2000 named "Device\NDisWanIP".  The patch is to ignore invalid
+ 	  devices and continue checking.  Thanks to Chris Hafey
+ 	  <chris@stentorsoft.com> for contributing this fix.
+
 Wed Dec 20 15:57:32 2000  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * ace/RMCast/RMCast_IO_UDP.cpp
