@@ -106,11 +106,8 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
       << node->name () << " *" << be_nl << node->name ()
       << "::_downcast (CORBA::ValueBase *v)" << be_nl
       << "{" << be_idt_nl
-      << "if (v == 0)" << be_idt_nl
-      << "{" << be_idt_nl
-      << "return 0;" << be_uidt_nl
-      << "}" << be_uidt_nl << be_nl
-      << "return dynamic_cast< ::" << node->name () << " * > (v);" << be_uidt_nl
+      << "return dynamic_cast< ::" << node->name () 
+      << " * > (v);" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
   // The _tao_obv_repository_id method.

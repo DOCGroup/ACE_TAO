@@ -142,7 +142,7 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
           << "{" << be_idt_nl
           << node->local_name () << " *_tao_tmp_pointer =" << be_idt_nl
           << "static_cast<"
-          << node->local_name () << "*> (_tao_void_pointer);" << be_uidt_nl
+          << node->local_name () << " *> (_tao_void_pointer);" << be_uidt_nl
           << "delete _tao_tmp_pointer;" << be_uidt_nl
           << "}" << be_nl << be_nl;
     }
@@ -151,16 +151,8 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
   *os << node->name () << " *" << be_nl;
   *os << node->name () << "::_downcast (CORBA::Exception *_tao_excp)" << be_nl;
   *os << "{" << be_idt_nl;
-  *os << "if (!ACE_OS::strcmp (\"" << node->repoID ()
-      << "\", _tao_excp->_rep_id ()))" << be_idt_nl;
-  *os << "{" << be_idt_nl;
   *os << "return dynamic_cast<" << node->local_name ()
       << " *> (_tao_excp);" << be_uidt_nl;
-  *os << "}" << be_uidt_nl;
-  *os << "else" << be_idt_nl;
-  *os << "{" << be_idt_nl;
-  *os << "return 0;" << be_uidt_nl;
-  *os << "}" << be_uidt << be_uidt_nl;
   *os << "}" << be_nl << be_nl;
   
   // Const downcast method.
@@ -168,16 +160,8 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
   *os << node->name () << "::_downcast (CORBA::Exception const *_tao_excp)" 
       << be_nl;
   *os << "{" << be_idt_nl;
-  *os << "if (!ACE_OS::strcmp (\"" << node->repoID ()
-      << "\", _tao_excp->_rep_id ()))" << be_idt_nl;
-  *os << "{" << be_idt_nl;
   *os << "return dynamic_cast<const " << node->local_name ()
       << " *> (_tao_excp);" << be_uidt_nl;
-  *os << "}" << be_uidt_nl;
-  *os << "else" << be_idt_nl;
-  *os << "{" << be_idt_nl;
-  *os << "return 0;" << be_uidt_nl;
-  *os << "}" << be_uidt << be_uidt_nl;
   *os << "}" << be_nl << be_nl;
 
   // Generate the _alloc method.
