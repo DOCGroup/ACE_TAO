@@ -22,7 +22,8 @@ DIRS  = CDR \
 	POA \
 	IORManipulation \
 	Timeout \
-	Connection_Purging 
+	Connection_Purging \
+	ORB_init
 
 #----------------------------------------------------------------------------
 #       Include macros and targets

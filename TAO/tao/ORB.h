@@ -67,7 +67,6 @@ struct TAO_Dispatch_Context;
 class TAO_Operation_Table;
 class TAO_Client_Strategy_Factory;
 class TAO_Server_Strategy_Factory;
-class TAO_ORB_Parameters;
 class TAO_InputCDR;
 class TAO_OutputCDR;
 class CORBA_ORB_InconsistentTypeCode;

@@ -93,11 +93,10 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     reactor_registry_ (0),
     reactor_ (0),
     has_shutdown_ (1),
-    destroyed_ (1),
-    // Start the ORB in a  "shutdown" and "destroyed" state.  Only
-    // after CORBA::ORB_init() is called will the ORB no longer be
-    // shutdown.  This does not mean that the ORB can be
-    // reinitialized.  It can only be initialized once.
+    // Start the ORB in a  "shutdown" state.  Only after
+    // CORBA::ORB_init() is called will the ORB no longer be shutdown.
+    // This does not mean that the ORB can be reinitialized.  It can
+    // only be initialized once.
     thread_per_connection_use_timeout_ (1),
     open_lock_ (),
     open_called_ (0),
@@ -972,7 +971,6 @@ TAO_ORB_Core::init (int &argc, char *argv[])
   // The ORB has been initialized, meaning that the ORB is no longer
   // in the shutdown state.
   this->has_shutdown_ = 0;
-  this->destroyed_ = 0;
 
   return 0;
 }
@@ -1052,17 +1050,17 @@ TAO_ORB_Core::fini (void)
   TAO_Internal::close_services ();
 
   // @@ This is not needed since the default resource factory
-  //    is staticaly added to the service configurator, fredk
+  //    is statically added to the service configurator, fredk
   if (!this->resource_factory_from_service_config_)
     delete resource_factory_;
 
   // @@ This is not needed since the default client factory
-  //    is staticaly added to the service configurator, fredk
+  //    is statically added to the service configurator, fredk
   if (!this->client_factory_from_service_config_)
     delete client_factory_;
 
   // @@ This is not needed since the default server factory
-  //    is staticaly added to the service configurator, fredk
+  //    is statically added to the service configurator, fredk
   if (!this->server_factory_from_service_config_)
     delete server_factory_;
 
@@ -1071,6 +1069,9 @@ TAO_ORB_Core::fini (void)
                               *ACE_Static_Object_Lock::instance (), 0));
     TAO_ORB_Table::instance ()->unbind (this->orbid_);
   }
+
+  // Release what should be the last reference of the ORB.
+  CORBA::release (this->orb ());
 
   delete this->reactor_registry_;
 #if defined(TAO_HAS_RT_CORBA)
@@ -1566,8 +1567,13 @@ TAO_ORB_Core::destroy (CORBA_Environment &ACE_TRY_ENV)
     TAO_ORB_Table::instance ()->unbind (this->orbid_);
   }
 
-  // The ORB has now been destroyed.
-  this->destroyed_ = 1;
+  // Destroy the ORB_Core.
+  if (this->fini () != 0)
+    {
+      ACE_THROW (CORBA::INTERNAL (TAO_DEFAULT_MINOR_CODE,
+                                  CORBA::COMPLETED_NO));
+      ACE_CHECK;
+    }
 }
 
 
@@ -2028,9 +2034,16 @@ TAO_ORB_Table::~TAO_ORB_Table (void)
        i != this->end ();
        i = this->begin ())
     {
-      CORBA::release ((*i).int_id_->orb ());
+      // Destroy the ORB_Core
+      (*i).int_id_->fini ();
     }
   this->table_.close ();
+
+  // free up all the ORB owned Exceptions
+  TAO_Exceptions::fini ();
+
+  // free up all the ORB owned TypeCodes
+  TAO_TypeCodes::fini ();
 }
 
 TAO_ORB_Table::Iterator
