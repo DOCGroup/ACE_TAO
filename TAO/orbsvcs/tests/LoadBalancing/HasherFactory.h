@@ -31,7 +31,7 @@
  * process but each will reside at different logical locations.
  */
 class HasherFactory
-  : public virtual POA_TAO_LoadBalancing::GenericFactory
+  : public virtual POA_LoadBalancing::GenericFactory
 {
 public:
 

@@ -81,16 +81,13 @@ main (int argc, char *argv[])
       if (parse_args (argc, argv) != 0)
         return -1;
 
-      // @@ Is _interface_repository_id() portable?
-      const char * type_id = replica->_interface_repository_id ();
-
       // Obtain Reference to the TAO LoadBalancer ReplicationManager
       CORBA::Object_var lb =
         orb->resolve_initial_references ("TAO_LoadBalancer",
                                          ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      TAO_LoadBalancer::GenericFactory_var factory =
+      LoadBalancing::GenericFactory_var factory =
         TAO_LoadBalancer::GenericFactory::_narrow (lb.in (),
                                                    ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -113,7 +110,7 @@ main (int argc, char *argv[])
       // Run the PropertyManager tests, in addition to setting up the
       // Load Balancer for the remainder of this test.
 
-      // The FactoryCreationId 
+      // The FactoryCreationId
       TAO_LoadBalancer::FactoryCreationId_var factory_creation_id;
 
       // Create a replicated Hasherobject (object group)
