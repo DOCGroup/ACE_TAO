@@ -3,6 +3,12 @@ Fri Dec 04 13:46:12 1998  David L. Levine  <levine@cs.wustl.edu>
         * ace/Stats.cpp (std_dev): fixed difference calculation so
           that it always calculates a non-negative value.
 
+        * ace/config-vxworks5.x.h,
+          include/makeinclude/platform_vxworks5.x_g++.GNU,
+          include/makeinclude/platform_vxworks5.x_ghs.GNU: moved -DVXWORKS
+          from platform_vxworks5.x_* files to config-vxworks5.x.h, to reduce
+          command-line clutter a bit.
+
 Fri Dec  4 12:45:04 1998  James CE Johnson <jcej@lads.com>
 
         * docs/tutorials/linify:
