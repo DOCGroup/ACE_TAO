@@ -1,3 +1,13 @@
+Mon Nov 03 16:52:47 1997    <nw1@CHA-CHA>
+
+	* tests/Cubit/TAO/MT_Cubit/MTCubit.dsw:
+	* tests/Cubit/TAO/MT_Cubit/client/client.dsp:
+	* tests/Cubit/TAO/MT_Cubit/server/server.dsp:
+	* tests/Cubit/TAO/IDL_Cubit/client.dsp:
+	* tests/Cubit/TAO/IDL_Cubit/server.dsp:
+	* tests/Cubit/TAO/IDL_Cubit/test.dsw:  Added new workspace and
+	  project files. 
+	  
 Mon Nov 03 18:43:37 1997  Carlos O'Ryan  <coryan@MILONGA>
 
 	* TAO_IDL/be/be_operation.cpp: 
