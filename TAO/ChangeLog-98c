@@ -1,4 +1,9 @@
-Mon Nov 02 12:34:20 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+Mon Nov  2 17:57:23 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.{h,cpp}:
+	* performance-tests/Cubit/TAO/IDL_Cubit/collocation_test.cpp
+	  Make sure the client instructs the server to shutdown no matter
+	  we are using the collocation optimization or not.
 
 	* performance-tests/Demux/demux_test_client.cpp (run_linear_test,
 	  run_random_test, run_worst_test, run_best_test): Win32 doesn't
@@ -36,10 +41,10 @@ Mon Nov 02 12:34:20 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 1998-11-02  Kirthika Parameswaran  <kirthika@macarena.cs.wustl.edu>
 
-	* examples/Callback_Quoter/Supplier_Timer_Handler.h: 
+	* examples/Callback_Quoter/Supplier_Timer_Handler.h:
 	* examples/Callback_Quoter/Supplier_Timer_Handler.cpp:
 		Added these files, for implementing the timer handler for
-	the supplier. 
+	the supplier.
 
 Sun Nov 01 19:53:15 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
