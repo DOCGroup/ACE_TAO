@@ -393,9 +393,6 @@ ACE_WIN32_Asynch_Read_Stream::shared_read (ACE_WIN32_Asynch_Read_Stream_Result *
       // Something else went wrong: the OVERLAPPED will not get
       // queued.
 
-      // Cleanup dynamically allocated Asynch_Result
-      delete result;
-
       if (ACE::debug ())
         {
           ACE_DEBUG ((LM_ERROR,
@@ -413,14 +410,14 @@ ACE_WIN32_Asynch_Read_Stream::shared_read (ACE_WIN32_Asynch_Read_Stream_Result *
 
 int
 ACE_WIN32_Asynch_Read_Stream::open (ACE_Handler &handler,
-				    ACE_HANDLE handle,
-				    const void *completion_key,
-				    ACE_Proactor *proactor)
+                                    ACE_HANDLE handle,
+                                    const void *completion_key,
+                                    ACE_Proactor *proactor)
 {
   return ACE_WIN32_Asynch_Operation::open (handler,
-					   handle,
-					   completion_key,
-					   proactor);
+                                           handle,
+                                           completion_key,
+                                           proactor);
 }
 
 int
@@ -633,9 +630,6 @@ ACE_WIN32_Asynch_Write_Stream::shared_write (ACE_WIN32_Asynch_Write_Stream_Resul
       // Something else went wrong: the OVERLAPPED will not get
       // queued.
 
-      // Cleanup dynamically allocated Asynch_Result
-      delete result;
-
       if (ACE::debug ())
         {
           ACE_DEBUG ((LM_ERROR,
@@ -657,9 +651,9 @@ ACE_WIN32_Asynch_Write_Stream::open (ACE_Handler &handler,
                                      ACE_Proactor *proactor)
 {
   return ACE_WIN32_Asynch_Operation::open (handler,
-					   handle,
-					   completion_key,
-					   proactor);
+                                           handle,
+                                           completion_key,
+                                           proactor);
 }
 
 int
@@ -891,9 +885,9 @@ ACE_WIN32_Asynch_Read_File::open (ACE_Handler &handler,
                                   ACE_Proactor *proactor)
 {
   return ACE_WIN32_Asynch_Operation::open (handler,
-					   handle,
-					   completion_key,
-					   proactor);
+                                           handle,
+                                           completion_key,
+                                           proactor);
 }
 
 int
@@ -1122,9 +1116,9 @@ ACE_WIN32_Asynch_Write_File::open (ACE_Handler &handler,
                                    ACE_Proactor *proactor)
 {
   return ACE_WIN32_Asynch_Operation::open (handler,
-					   handle,
-					   completion_key,
-					   proactor);
+                                           handle,
+                                           completion_key,
+                                           proactor);
 }
 
 int
@@ -1404,9 +1398,9 @@ ACE_WIN32_Asynch_Accept::open (ACE_Handler &handler,
                                ACE_Proactor *proactor)
 {
   return ACE_WIN32_Asynch_Operation::open (handler,
-					   handle,
-					   completion_key,
-					   proactor);
+                                           handle,
+                                           completion_key,
+                                           proactor);
 }
 
 int
@@ -1687,9 +1681,9 @@ ACE_WIN32_Asynch_Transmit_File::open (ACE_Handler &handler,
                                       ACE_Proactor *proactor)
 {
   return ACE_WIN32_Asynch_Operation::open (handler,
-					   handle,
-					   completion_key,
-					   proactor);
+                                           handle,
+                                           completion_key,
+                                           proactor);
 }
 
 int
