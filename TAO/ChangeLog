@@ -1,3 +1,17 @@
+Thu Mar 13 17:12:21 2003  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Profile.h (TAO_SSLIOP_Profile):
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Profile.cpp (TAO_SSLIOP_Profile):
+
+	  Corrected ObjectKey parameter in these constructors.  The
+	  "TAO_ObjectKey" type has been replaced by the "TAO::ObjectKey"
+	  type.
+
+	  (parse_string):
+
+	  Added missing ACE_CHECK.  Fixes potentially missed run-time
+	  errors in emulated exception builds.
+
 Thu Mar 13 14:13:08 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.cpp:
