@@ -3,6 +3,7 @@
 
 CC		= gcc -g -D_REENTRANT
 CXX		= gcc -g -D_REENTRANT -fno-strict-prototypes -D__ACE_INLINE__ 
+LD		= $(CXX)
 DLD		= $(CXX)
 LIBS		+= -lpthread -lmach -lexc -ltli -lstdc++
 PIC		= -fpic
