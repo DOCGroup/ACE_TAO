@@ -1,3 +1,14 @@
+Fri Jan 16 08:56:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* bin/MakeProjectCreator/config/ec_typed_events.mpb:
+	  Added this file. When the feature ec_typed_events is available,
+	  we must link with the IFRClient and DynamicInterface library.
+
+	* bin/MakeProjectCreator/config/event.mpb:
+	  Add ec_typed_events as parent project. When ec_typed_events is
+	  available projects using event should link with the extra needed
+	  libraries. This fixes the link errors in the BCB6 Static build.
+
 Thu Jan 15 20:54:38 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* configure.ac:
@@ -49,9 +60,9 @@ Thu Jan 15 20:54:38 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 Thu Jan 15 20:33:09 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* docs/ACE-development-process.html (HREF): 
+	* docs/ACE-development-process.html (HREF):
 
-	  Added a small writeup about the features of BFO. 
+	  Added a small writeup about the features of BFO.
 
 Thu Jan 15 19:47:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
