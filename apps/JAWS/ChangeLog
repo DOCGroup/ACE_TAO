@@ -1,3 +1,10 @@
+Tue Sep  9 22:08:36 1997  James C Hu  <jxh@lambada.cs.wustl.edu>
+
+	* server/HTTP_Server.{cpp,h}:  Changes which answer questions
+	  brought up in design review.  Mostly additional comments.  Also
+	  changes to have a task spawn a number of threads rather than
+	  iterating through calls to the activate method.
+
 Fri Aug 29 11:07:43 1997 James C Hu  <jxh@lambada.cs.wustl.edu>
 
         * server/*.{cpp,h}:  Changes to make JAWS comply with ACE
