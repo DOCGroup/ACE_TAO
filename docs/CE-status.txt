@@ -2,29 +2,21 @@
 
 [Current difficulties]
 
-  [Non-static object manager problem]
-     CE uses non-static object manager.  However, there seems to be
-     another global object manager hanging somewhere and it gets
-     deleted when a windows program is shutting down.  As the real
-     object manager has already been destructed when the ACE worker
-     thread exits, this causes Access Violations.  So far, this
-     doesn't really affect my work so I'll defer it to a later point. 
-
   [Bugs in cross compiler for SH series CPU]
-     
+
     [Inline functions]
         are not supported at least for debug build for DLL.  I have to
         un-inline _all_ inline functions in ACE to get it to work.
         Not sure if inlining works for Release version or other CPUs
         (namely, MIPS series.)  It appears to work fine for x86
-        emulator builds.  
+        emulator builds.
 
     [Lost string literals]
         The following format string in ACE_OS::ctime_r was
         misteriously replaced with garbage by SH compiler:
 
           ACE_OS::sprintf (buf, __TEXT ("%3s %3s %02d %02d:%02d:%02d %04d\n"),.....
-                
+
         The solution for this is to define the format string in global
         namespace as:
 
@@ -43,13 +35,13 @@
      Rumor has it that Microsoft will provide a DOS shell in their
      next release of CE.  Oh well, I made it up and there'll probably
      no DOS prompt in the future CE.  All current ACE programs are
-     text-based.  They all need a shell to start from.  
+     text-based.  They all need a shell to start from.
 
      [Dialog Based]
         This is a collection of files that combined with any ACE
      program to run on CE.  To use this template, compile your main
      project with all the cpp and rc files under $ACE_ROOT/windoezCE/.
-     
+
      The program will start by asking you the command line argument
      that you want to pass to the original ACE program.  We should be
      able to get this infomation automatically if we execute the
@@ -59,7 +51,7 @@
      CE.
 
         [Future Improvement]
-           
+
             Get the command line argument automatically.
 
             Buffered keyboard input (stdin.)
@@ -78,7 +70,7 @@
         other paltforms.
 
     [ASYS_TEXT] A macro that converts a char text to a wchar text
-        only under CE. 
+        only under CE.
 
     [ASYS_WIDE_STRING] A macro that converts char strings to wchar
         strings using ACE_WString only when
@@ -91,11 +83,11 @@
 
     [ASYS_ONLY_MULTIBYTE_STRING] Like ASYS_MULTIBYTE_STRING but only
         convert a string when ACE_HAS_MOSTLY_UNICODE_APIS defined and
-        UNICODE not defined. 
+        UNICODE not defined.
 
     [ACE_TRACE] When using ACE_TRACE macros, you don't need to use
         wide char string in it.  ACE converts the char string to wchar
-        string for you.  
+        string for you.
 
 
 [CE Toolkit issues]
@@ -105,31 +97,31 @@
      around 30 seconds to start up a debug session and 5+ seconds to
      single step thru a statement.  It only allows remote debugging
      using the serial link but not the network.  (BTW, currently, CE
-     only support NE2000 compatible PCMCIA ethernet card.)  
+     only support NE2000 compatible PCMCIA ethernet card.)
 
   [SH3 compiler]
      * The SH3 compiler does not generate string literals when they
        are used inside a function and when a precompiled header is
        also used. This problem can be seen when a variable inside a
        function is defined by initializing it to a string literal. Two
-       solutions are available:  
+       solutions are available:
 
           - Use a global variable, if you want to initialize it to a
-            string literal, or  
+            string literal, or
           - Do not use precompiled headers if you initialize a
             variable, defined inside a function, with a string
-            literal. 
+            literal.
 
      * The SH3 compiler generates a fatal internal error, when
        __declspec(dllimport) is used for a class with a virtual
        function in it. To avoid the internal error, change the
-       imported class to not use any virtual functions.  
+       imported class to not use any virtual functions.
 
 
 [Tidbits]
 
   [Web resources]
-    
+
      http://www.sockets.com/ws_wince.htm
 
   [FILETIME]
@@ -152,44 +144,44 @@
 [Status of one-button tests]
 
    [Convention of project files settings]
-        
+
       Procedures:
-        
+
       * Create a new "Win32 Application" project file. It should
         support the following platforms: WCE x86em, WCE MIPS, and WCE
         SH3. Notice the project location should Be under
-        $ACE_ROOT/tests/WinCE. 
-        
+        $ACE_ROOT/tests/WinCE.
+
       * Add the cpp file(s) along with all .cpp and .rc files under
         $ACE_ROOT/WindozeCE.
 
-      * Open Project settings.  
+      * Open Project settings.
 
       * General Settings are:
         "Using MFC in a Shared DLL" for all platforms.
         Both "Intermediate files" and "Output files" should be the
         same path.  They should be one of "x86emDbg", "WMIPSDbg", and
         "WCESHDbg" depend on the target platform.
-        
+
       * "C/C++" Settings:
         Add "ACE_HAS_DLL=1", "ACE_HAS_WINCE" to preprocessor
         definitions for all target platforms.
         Set "Code Generation" -> "Use run-time library" to "Debug
-        Multithreaded". 
+        Multithreaded".
         Add to "Preprocessor" -> "Additional include directories" the
         following: "..\,..\..\,..\..\WindozeCE\".
 
       * "Link" Settings:
         Added "aced.lib" into "Input" -> "Object/library modules".
         Set "Input" -> "Additional library path" according to the
-        target platform.  It should one of the following: 
+        target platform.  It should one of the following:
                 "..\..\ace\WCE\x86em",
                 "..\..\ace\WCE\MIPS", or,
                 "..\..\ace\WCE\SH".
 
       * You are all done.
-        
-   [Legend:] 
+
+   [Legend:]
         X - test working properly
         F - compile but doesn't work correctly.
         C - compilation trouble
@@ -218,8 +210,8 @@
     [F] Conn_Test
            [EM] Runs successfully
            [SH] Hangs at halfway.  (Can't have two server threads
-                running at the same time.) 
-                I managed the test to run to completion when setting n_server = 1 and 
+                running at the same time.)
+                I managed the test to run to completion when setting n_server = 1 and
                 n_client = 4.  But I don't think that considered a successful run.
     [X] Enum_Interfaces_Test
           Sort of working right.
@@ -239,11 +231,11 @@
            ???
     [N] MM_Shared_Memory_Test
            ???
-    [X] MT_SOCK_Test 
+    [X] MT_SOCK_Test
         This one takes some time.....zzzzz.....
-           [EM] Runs successfully 
+           [EM] Runs successfully
            [SH] Runs if client threads reduced to 5.
-                (And I reverted my change back, so it won't runs on our 
+                (And I reverted my change back, so it won't runs on our
                  HP 360LX.)
     [X] Map_Manager_Test
            [EM] Runs successfully
