@@ -394,6 +394,22 @@ SOURCE=.\Trader\Offer_Iterators.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Naming\Persistent_Bindings_Map.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Naming\Persistent_Context_Index.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Naming\Persistent_Entries.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Naming\Persistent_Naming_Context.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\PingC.cpp
 # End Source File
 # Begin Source File
@@ -854,6 +870,26 @@ SOURCE=.\Trader\Offer_Iterators_T.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Naming\Persistent_Bindings_Map.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Naming\Persistent_Context_Index.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Naming\Persistent_Context_Index_T.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Naming\Persistent_Entries.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Naming\Persistent_Naming_Context.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\PingC.h
 # End Source File
 # Begin Source File
@@ -923,6 +959,10 @@ SOURCE=.\Scheduler_Utilities.h
 # Begin Source File
 
 SOURCE=.\Trader\Service_Type_Repository.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Naming\Shared_Hash_Map_T.h
 # End Source File
 # Begin Source File
 
@@ -2563,8 +2603,16 @@ SOURCE=.\Trader\Offer_Iterators_T.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Naming\Persistent_Context_Index_T.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\PingS_T.cpp
 # PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Naming\Shared_Hash_Map_T.cpp
 # End Source File
 # Begin Source File
 
