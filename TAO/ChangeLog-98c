@@ -1,3 +1,9 @@
+Fri Mar 20 02:47:22 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/default_server.cpp
+	  (create_servant_lock,create_poa_lock,create_poa_mgr_lock):
+	  Don't return 0 but an ACE_Null_Mutex as default.
+
 Fri Mar 20 00:36:16 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/poa.cpp (dispatch_servant_i): The POA Current was not being
