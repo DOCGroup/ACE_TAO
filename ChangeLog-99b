@@ -1,6 +1,30 @@
+Tue Dec 21 01:04:55 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* ACE-configuration.txt:
+
+	  Updated information about using ACE+autoconf.
+
+	* configure.in:
+
+	  Moved AC_{EXE,OBJ}EXT tests before C++ linker flags since these
+	  tests require C linker flags.
+
+	* Makefile (release, releaseall):
+
+	  ACE-INSTALL should be a dependency of these targets in order for
+	  it to be generated.  This fixes a "no such file or directory"
+	  error that occurs when making an ACE beta/release.  Note that
+	  this fix is unrelated to the ACE+autoconf bootstrapping support
+	  that was recently added.
+
+	* bin/bootstrap:
+
+	  Output message that lets the user know that bootstrapping is
+	  done.
+
 Mon Dec 20 23:55:18 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* Makefile:
+	* Makefile (release, releaseall):
 
 	  Removed ACE+autoconf bootstrapping commands.  Bootstrapping must
 	  be done later in the process (i.e. in bin/make_release).
