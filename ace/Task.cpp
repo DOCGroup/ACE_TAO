@@ -15,6 +15,10 @@
 ACE_Thread_Mutex ACE_Task_Exit::ace_task_lock_;
 #endif /* defined (ACE_MT_SAFE) && !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES) */
 
+// NOTE:  this preprocessor directive should match the one in
+// ACE_Task_Base::svc_run () below.  This prevents the two statics
+// from being defined.
+#if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) && ! defined (LINUX)
 ACE_Task_Exit *
 ACE_Task_Exit::instance (void)
 {
@@ -42,6 +46,8 @@ ACE_Task_Exit::instance (void)
   return ACE_TSS_GET (instance_, ACE_Task_Exit);
 
 }
+#endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE && ! LINUX */
+
 
 // Grab hold of the Task * so that we can close() it in the
 // destructor.
@@ -219,16 +225,30 @@ ACE_Task_Base::svc_run (void *args)
 
   ACE_Task_Base *t = (ACE_Task_Base *) args;
 
+// NOTE:  this preprocessor directive should match the one in
+// above ACE_Task_Exit::instance ().
+#if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) && ! defined (LINUX)
   // Obtain our thread-specific exit hook and make sure that it knows
-  // how to clean us up!
-  ACE_Task_Exit *exit_hook = ACE_Task_Exit::instance ();
+  // how to clean us up!  Note that we never use this pointer directly
+  // (it's stored in thread-specific storage), so it's ok to
+  // dereference it here and only store it as a reference.
+  ACE_Task_Exit &exit_hook = *ACE_Task_Exit::instance ();
+#else
+  // Without TSS, create an ACE_Task_Exit instance.  When this
+  // function returns, its destructor will be call because the
+  // object goes out of scope.  The drawback with this appraoch is
+  // that the destructor _won't_ get called if thr_exit () is called.
+  // So, threads shouldn't exit that way.  Instead, they should
+  // return from svc ().
+  ACE_Task_Exit exit_hook;
+#endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE */
 
-  exit_hook->set_task (t);
+  exit_hook.set_task (t);
 
   // Call the Task's svc() method.
   void *status = (void *) t->svc ();
 
-  return exit_hook->status (status);
+  return exit_hook.status (status);
   /* NOTREACHED */
 }
 
