@@ -414,6 +414,13 @@ ACE_Push_Supplier_Proxy::push (const RtecEventComm::EventSet &event,
   if (!this->connected ())
     ACE_THROW (RtecEventComm::Disconnected);
 
+  // @@ TOTAL HACK
+  ACE_hrtime_t ec_recv = ACE_OS::gethrtime ();
+  for (CORBA::ULong i = 0; i < event.length (); ++i)
+    {
+      ACE_OS::memcpy (&event[i].ec_recv_time_, &ec_recv,
+		      sizeof (RtecEventComm::Time));
+    }
   supplier_module_->push (this, event, _env);
 }
 
@@ -1041,6 +1048,13 @@ ACE_ES_Consumer_Module::push (const ACE_ES_Dispatch_Request *request,
   request->make_copy (event_set);
 
   // Forward the event set.
+  // @@ TOTAL HACK
+  ACE_hrtime_t ec_send = ACE_OS::gethrtime ();
+  for (CORBA::ULong i = 0; i < event_set.length (); ++i)
+    {
+      ACE_OS::memcpy (&event_set[i].ec_send_time_, &ec_send,
+		      sizeof (RtecEventComm::Time));
+    }
   request->consumer ()->push (event_set, _env);
   ACE_TIMEPROBE ("  leave ES_Consumer_Module::push");
 }
@@ -1154,8 +1168,8 @@ ACE_ES_Correlation_Module::push (ACE_ES_Consumer_Rep *consumer,
 int
 ACE_ES_Correlation_Module::schedule_timeout (ACE_ES_Consumer_Rep_Timeout *consumer)
 {
-  RtecEventComm::Time &interval = consumer->dependency ()->event_.time_;
-  RtecEventComm::Time &delay = consumer->dependency ()->event_.time_;
+  RtecEventComm::Time &interval = consumer->dependency ()->event_.creation_time_;
+  RtecEventComm::Time &delay = consumer->dependency ()->event_.creation_time_;
 
   // Store the preemption priority so we can cancel the correct timer.
   // The priority values may change during the process lifetime (e.g.,
@@ -1204,8 +1218,8 @@ ACE_ES_Correlation_Module::reschedule_timeout (ACE_ES_Consumer_Rep_Timeout *cons
     ACE_ERROR_RETURN ((LM_ERROR, "%p.\n", "ACE_ES_Disjunction_Group::reschedule_deadline"), -1);
   else
     {
-      RtecEventComm::Time &interval = consumer->dependency ()->event_.time_;
-      RtecEventComm::Time &delay = consumer->dependency ()->event_.time_;
+      RtecEventComm::Time &interval = consumer->dependency ()->event_.creation_time_;
+      RtecEventComm::Time &delay = consumer->dependency ()->event_.creation_time_;
 
       // Store the preemption priority so we can cancel the correct timer.
       // The priority values may change during the process lifetime (e.g.,
@@ -1772,7 +1786,7 @@ ACE_ES_Consumer_Rep_Timeout::execute (void)
     {
       CORBA::Environment __env;
       ACE_Time_Value tv = ACE_OS::gettimeofday ();
-      timeout_event_->time_ = tv.sec () * 10000000 + tv.usec () * 10;
+      timeout_event_->creation_time_ = tv.sec () * 10000000 + tv.usec () * 10;
       correlation_->correlation_module_->push (this, timeout_event_, __env);
       if (__env.exception () != 0)
 	ACE_ERROR ((LM_ERROR, "ACE_ES_Consumer_Rep_Timeout::execute: unexpected exception.\n"));
@@ -2744,7 +2758,7 @@ dump_event (const RtecEventComm::Event &event)
 	      (void*)event.source_,
 	      event.type_,
 	      // The divide-by-1 is for ACE_U_LongLong support.
-	      event.time_ / 1));
+	      event.creation_time_ / 1));
 }
 
 // ************************************************************
