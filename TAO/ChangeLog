@@ -1,3 +1,10 @@
+Fri Aug  6 12:16:35 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* utils/nslist/nslist.cpp:
+
+	  Fixed a core dump with the Object is _nil (). Thanks to Tufan
+	  Oruk <toruk at usa dot net> for the patch.
+
 Thu Aug  5 23:42:02 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/ec_typed_events.mpb:
