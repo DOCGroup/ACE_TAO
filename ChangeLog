@@ -1,3 +1,27 @@
+Mon Aug 25 11:13:28 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/em3vcp.mpd:
+        * bin/MakeProjectCreator/templates/em3vcpdll.mpt:
+        * bin/MakeProjectCreator/templates/em3vcpdllexe.mpt:
+        * bin/MakeProjectCreator/templates/em3vcplib.mpt:
+        * bin/MakeProjectCreator/templates/em3vcplibexe.mpt:
+        * bin/MakeProjectCreator/templates/nmake.mpd:
+        * bin/MakeProjectCreator/templates/nmakedll.mpt:
+        * bin/MakeProjectCreator/templates/nmakeexe.mpt:
+        * bin/MakeProjectCreator/templates/vc6dsp.mpd:
+        * bin/MakeProjectCreator/templates/vc6dspdll.mpt:
+        * bin/MakeProjectCreator/templates/vc6dspdllexe.mpt:
+        * bin/MakeProjectCreator/templates/vc6dsplib.mpt:
+        * bin/MakeProjectCreator/templates/vc6dsplibexe.mpt:
+        * bin/MakeProjectCreator/templates/vc7.mpd:
+        * bin/MakeProjectCreator/templates/vc7dll.mpt:
+        * bin/MakeProjectCreator/templates/vc7exe.mpt:
+
+          Added the ability to enable and disable optimization for the
+          nmake, em3, vc6 and vc71 types.  By default the release targets
+          have optimization on and using -value_template optimize=
+          allows a user to turn off optimization compiler flags.
+
 Mon Aug 25 08:00:20 UTC 2003  Kobi Cohen-Arazi  <kcarazi@finjan.com>
 
         * apps/JAWS3:
@@ -55,8 +79,8 @@ Sun Aug 24 19:04:23 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Sun Aug 24 09:45:13 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* samewise: Removed contents of this directory since the new
-	  MakefileProjectCreator (MPC) supresedes this.
+        * samewise: Removed contents of this directory since the new
+          MakefileProjectCreator (MPC) supresedes this.
 
 Sun Aug 24 14:09:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -67,36 +91,36 @@ Sun Aug 24 14:09:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sat Aug 23 12:55:04 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/DLL.cpp (ACE_DLL, open_i):
-	* ace/DLL_Manager.cpp (ACE_DLL_Manager, ~ACE_DLL_Manager, open):
-	  (close, symbol, get_handle, open_dll, unload_dll):
+        * ace/DLL.cpp (ACE_DLL, open_i):
+        * ace/DLL_Manager.cpp (ACE_DLL_Manager, ~ACE_DLL_Manager, open):
+          (close, symbol, get_handle, open_dll, unload_dll):
 
-	  Only print error messages if the ACE debugging flag is set,
-	  i.e if ACE::debug() returns a non-zero value.  Thanks to Carlos
-	  for pointing out that the ACE_DLL class was printing out error
-	  messages without the user/application ever requesting them.
+          Only print error messages if the ACE debugging flag is set,
+          i.e if ACE::debug() returns a non-zero value.  Thanks to Carlos
+          for pointing out that the ACE_DLL class was printing out error
+          messages without the user/application ever requesting them.
 
 Sat Aug 23 12:38:08 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/Dev_Poll_Reactor.cpp:
+        * ace/Dev_Poll_Reactor.cpp:
 
-	  Added "const" qualifier to some constant variables.
+          Added "const" qualifier to some constant variables.
 
-	From Carlos O'Ryan <coryan@atdesk.com>
-	* ace/DLL.cpp (symbol):
-	* ace/config-linux.h:
+        From Carlos O'Ryan <coryan@atdesk.com>
+        * ace/DLL.cpp (symbol):
+        * ace/config-linux.h:
 
-	  Fixed problem where seg fault could occur if symbol() method is
-	  called after a failed call to open().  Thanks to Jody Hagins
-	  <jody@atdesk.com> for finding this bug.  [Bug 1576]
+          Fixed problem where seg fault could occur if symbol() method is
+          called after a failed call to open().  Thanks to Jody Hagins
+          <jody@atdesk.com> for finding this bug.  [Bug 1576]
 
-	* tests/Bug_1576_Regression_Test.cpp:
-	* tests/Makefile.tests (BIN):
-	* tests/run_test.lst:
-	* tests/tests.mpc:
+        * tests/Bug_1576_Regression_Test.cpp:
+        * tests/Makefile.tests (BIN):
+        * tests/run_test.lst:
+        * tests/tests.mpc:
 
-	  New test that verifies whether or not bug 1576 regressions
-	  occur.
+          New test that verifies whether or not bug 1576 regressions
+          occur.
 
 Sat Aug 23 19:26:41 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
@@ -144,32 +168,32 @@ Fri Aug 22 20:10:41 UTC 2003  Justin Michel <michel_j@ociweb.com>
         * bin/MakeProjectCreator/templates/vc7.mpd
 
         SSL now works in a more normal MPC feature fashion similar to all
-	the other feature-based libraries. I removed the hard-coded ssl
-	logic from some of the mpd files that still had it. A side-effect
-	of the new way, is that you must now define an SSL_ROOT
-	environment variable that the openssl.mpb feature will now use to
-	locate the openssl libraries.
+        the other feature-based libraries. I removed the hard-coded ssl
+        logic from some of the mpd files that still had it. A side-effect
+        of the new way, is that you must now define an SSL_ROOT
+        environment variable that the openssl.mpb feature will now use to
+        locate the openssl libraries.
 
         There were some problems with the existing vc7.mpd template.  I've
-	improved the template, and also added support for lots of new
-	settings in the corresponding .mpt files. (Although I haven't used
-	them yet.)  I'll probably use this to enable some of the new
-	features in vc71 that help track down problems that typically only
-	show up in release mode.
+        improved the template, and also added support for lots of new
+        settings in the corresponding .mpt files. (Although I haven't used
+        them yet.)  I'll probably use this to enable some of the new
+        features in vc71 that help track down problems that typically only
+        show up in release mode.
 
         The creation of workspaces for vc71 did not correctly set
-	dependencies between projects.
+        dependencies between projects.
 
         I added an allow_duplicates() method to the WorkspaceCreator.  A
-	warning will always be generated if a workspace contains duplicate
-	project names, and now the vc6/7/71 creators will abort creation
-	of these invalid workspaces. I suggest that any future
-	WorkspaceCreator subclasses that generate IDE projects, override
-	allow_duplicates() to return 0.
+        warning will always be generated if a workspace contains duplicate
+        project names, and now the vc6/7/71 creators will abort creation
+        of these invalid workspaces. I suggest that any future
+        WorkspaceCreator subclasses that generate IDE projects, override
+        allow_duplicates() to return 0.
 
         Renamed the gperf_exe to gperf. This was named as a special hack
-	for vc6 that is now unnecessary. We had already renamed other
-	similar projects, but missed this one.
+        for vc6 that is now unnecessary. We had already renamed other
+        similar projects, but missed this one.
 
 Fri Aug 22 15:28:34 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 

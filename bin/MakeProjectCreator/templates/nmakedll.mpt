@@ -21,7 +21,8 @@ Win64 {
 Release {
   type_code             = 0x0102
   use_debug_libraries   = 0
-  compile_flags         = /W3 /GX /O2 /MD /Zi /GR
+  optimize              = 1
+  compile_flags         = /W3 /GX /MD /Zi /GR
   defines               = NDEBUG
   compile_flags_removed = /YX
   output_dir            = Release
@@ -35,7 +36,8 @@ Release {
 Debug {
   type_code             = 0x0102
   use_debug_libraries   = 1
-  compile_flags         = /W3 /Gm /GX /Zi /Od /MDd /GR /Gy
+  optimize              =
+  compile_flags         = /W3 /Gm /GX /Zi /MDd /GR /Gy
   defines               = _DEBUG
   compile_flags_removed = /Fr /YX
   output_dir            = .
@@ -50,7 +52,8 @@ Static Release {
   type_description      = "Static Library"
   type_code             = 0x0104
   use_debug_libraries   = 0
-  compile_flags         = /G5 /W3 /GX /O2 /MD /Zi /GR
+  optimize              = 1
+  compile_flags         = W3 /GX /MD /Zi /GR
   defines               = NDEBUG
   compile_flags_removed = /YX
   output_dir            = Static_Release
@@ -65,7 +68,8 @@ Static Debug {
   type_description      = "Static Library"
   type_code             = 0x0104
   use_debug_libraries   = 1
-  compile_flags         = /G5 /W3 /Gm /GX /Zi /Od /GR /Gy /MDd
+  optimize              =
+  compile_flags         = /W3 /Gm /GX /Zi /GR /Gy /MDd
   defines               = _DEBUG
   compile_flags_removed = /Fr /YX
   output_dir            = Static_Debug
@@ -78,7 +82,8 @@ Static Debug {
 MFC Release {
   type_code             = 0x0102
   use_debug_libraries   = 0
-  compile_flags         = /W3 /GX /O2 /MD /Zi /GR
+  optimize              = 1
+  compile_flags         = /W3 /GX /MD /Zi /GR
   defines               = NDEBUG
   compile_flags_removed = /YX
   output_dir            = MFC_Release
@@ -93,7 +98,8 @@ MFC Release {
 MFC Debug {
   type_code             = 0x0102
   use_debug_libraries   = 1
-  compile_flags         = /W3 /Gm /GX /Zi /Od /MDd /GR /Gy
+  optimize              =
+  compile_flags         = /W3 /Gm /GX /Zi /MDd /GR /Gy
   defines               = _DEBUG
   compile_flags_removed = /Fr /YX
   output_dir            = MFC_Debug
@@ -108,7 +114,8 @@ Static MFC Release {
   type_description      = "Static Library"
   type_code             = 0x0104
   use_debug_libraries   = 0
-  compile_flags         = /G5 /W3 /GX /O2 /MD /Zi /GR
+  optimize              = 1
+  compile_flags         = /W3 /GX /MD /Zi /GR
   defines               = NDEBUG
   compile_flags_removed = /YX
   output_dir            = Static_MFC_Release
@@ -123,7 +130,8 @@ Static MFC Debug {
   type_description      = "Static Library"
   type_code             = 0x0104
   use_debug_libraries   = 1
-  compile_flags         = /G5 /W3 /Gm /GX /Zi /Od /GR /Gy /MDd
+  optimize              =
+  compile_flags         = /W3 /Gm /GX /Zi /GR /Gy /MDd
   defines               = _DEBUG
   compile_flags_removed = /Fr /YX
   output_dir            = Static_MFC_Debug

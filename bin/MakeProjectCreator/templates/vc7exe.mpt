@@ -16,7 +16,7 @@ Release {
 }
 
 Debug {
-  optimization     = 0
+  optimize         = 0
   debug            = 1
   defines          = _DEBUG
   output_dir       = .
@@ -35,7 +35,7 @@ Static Release {
 }
 
 Static Debug {
-  optimization     = 0
+  optimize         = 0
   debug            = 1
   defines          = _DEBUG
   output_dir       = Static_Debug
@@ -56,7 +56,7 @@ MFC Release {
 }
 
 MFC Debug {
-  optimization     = 0
+  optimize         = 0
   debug            = 1
   common_defines   = WIN32 _WINDOWS
   defines          = _DEBUG _AFXDLL
@@ -78,7 +78,7 @@ Static MFC Release {
 }
 
 Static MFC Debug {
-  optimization     = 0
+  optimize         = 0
   debug            = 1
   defines          = _DEBUG _AFXDLL
   output_dir       = Static_MFC_Debug
