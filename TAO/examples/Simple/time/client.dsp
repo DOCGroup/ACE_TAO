@@ -18,17 +18,14 @@ CFG=Simple Time Client - Win32 Alpha Debug
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "Simple Time Client - Win32 Release" (based on\
- "Win32 (x86) Console Application")
-!MESSAGE "Simple Time Client - Win32 Debug" (based on\
- "Win32 (x86) Console Application")
-!MESSAGE "Simple Time Client - Win32 Alpha Debug" (based on\
- "Win32 (ALPHA) Console Application")
-!MESSAGE "Simple Time Client - Win32 Alpha Release" (based on\
- "Win32 (ALPHA) Console Application")
+!MESSAGE "Simple Time Client - Win32 Release" (based on "Win32 (x86) Console Application")
+!MESSAGE "Simple Time Client - Win32 Debug" (based on "Win32 (x86) Console Application")
+!MESSAGE "Simple Time Client - Win32 Alpha Debug" (based on "Win32 (ALPHA) Console Application")
+!MESSAGE "Simple Time Client - Win32 Alpha Release" (based on "Win32 (ALPHA) Console Application")
 !MESSAGE 
 
 # Begin Project
+# PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
 
@@ -101,9 +98,9 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir "client"
 CPP=cl.exe
-# ADD BASE CPP /nologo /Gt0 /W3 /GX /Zi /Od /I "..\..\..\\" /I "..\..\..\..\\" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /FD /c
+# ADD BASE CPP /nologo /Gt0 /W3 /GX /Zi /Od /I "..\..\..\\ /I "..\..\..\..\\ /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /FD /c
 # SUBTRACT BASE CPP /YX
-# ADD CPP /nologo /Gt0 /W3 /GX /Zi /Od /I "..\..\..\\" /I "..\..\..\..\\" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /FD /MDd /c
+# ADD CPP /nologo /Gt0 /W3 /GX /Zi /Od /I "..\..\..\\ /I "..\..\..\..\\ /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /FD /MDd /c
 # SUBTRACT CPP /YX
 RSC=rc.exe
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -130,9 +127,9 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir "client"
 CPP=cl.exe
-# ADD BASE CPP /nologo /Gt0 /W3 /GX /O2 /I "..\..\..\\" /I "..\..\..\..\\" /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /FD /c
+# ADD BASE CPP /nologo /Gt0 /W3 /GX /O2 /I "..\..\..\\ /I "..\..\..\..\\ /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /FD /c
 # SUBTRACT BASE CPP /YX
-# ADD CPP /nologo /MD /Gt0 /W3 /GX /O2 /I "..\..\..\\" /I "..\..\..\..\\" /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /FD /c
+# ADD CPP /nologo /MD /Gt0 /W3 /GX /O2 /I "..\..\..\\ /I "..\..\..\..\\ /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /FD /c
 # SUBTRACT CPP /YX
 RSC=rc.exe
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
@@ -300,7 +297,6 @@ DEP_CPP_CLIEN=\
 	"..\..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\..\ace\Synch_T.h"\
 	"..\..\..\..\ace\Synch_T.i"\
-	"..\..\..\..\ace\sys_conf.h"\
 	"..\..\..\..\ace\Task.h"\
 	"..\..\..\..\ace\Task.i"\
 	"..\..\..\..\ace\Task_T.cpp"\
@@ -402,6 +398,7 @@ DEP_CPP_CLIEN=\
 	"..\..\..\tao\varout.i"\
 	
 NODEP_CPP_CLIEN=\
+	"..\..\..\..\ace\sys_conf.h"\
 	".\Client_impl.h"\
 	".\TimeC.h"\
 	
@@ -571,7 +568,6 @@ DEP_CPP_TIMEC=\
 	"..\..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\..\ace\Synch_T.h"\
 	"..\..\..\..\ace\Synch_T.i"\
-	"..\..\..\..\ace\sys_conf.h"\
 	"..\..\..\..\ace\Task.h"\
 	"..\..\..\..\ace\Task.i"\
 	"..\..\..\..\ace\Task_T.cpp"\
@@ -673,6 +669,7 @@ DEP_CPP_TIMEC=\
 	"..\..\..\tao\varout.i"\
 	
 NODEP_CPP_TIMEC=\
+	"..\..\..\..\ace\sys_conf.h"\
 	".\TimeC.h"\
 	".\TimeC.i"\
 	".\TimeS.h"\
@@ -832,7 +829,6 @@ DEP_CPP_TIMES=\
 	"..\..\..\..\ace\Synch_T.cpp"\
 	"..\..\..\..\ace\Synch_T.h"\
 	"..\..\..\..\ace\Synch_T.i"\
-	"..\..\..\..\ace\sys_conf.h"\
 	"..\..\..\..\ace\Task.h"\
 	"..\..\..\..\ace\Task.i"\
 	"..\..\..\..\ace\Task_T.cpp"\
@@ -934,6 +930,7 @@ DEP_CPP_TIMES=\
 	"..\..\..\tao\varout.i"\
 	
 NODEP_CPP_TIMES=\
+	"..\..\..\..\ace\sys_conf.h"\
 	".\TimeC.h"\
 	".\TimeC.i"\
 	".\TimeS.h"\
@@ -967,13 +964,13 @@ SOURCE=.\Time.idl
 !IF  "$(CFG)" == "Simple Time Client - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__TIME_="..\..\..\tao_idl\Release\tao_idl.exe"	
+USERDEP__TIME_="..\..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\Time.idl
 InputName=Time
 
 BuildCmds= \
-	..\..\..\tao_idl\Release\tao_idl $(InputName).idl
+	tao_idl $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -1006,13 +1003,13 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "Simple Time Client - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__TIME_="..\..\..\tao_idl\tao_idl.exe"	
+USERDEP__TIME_="..\..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\Time.idl
 InputName=Time
 
 BuildCmds= \
-	..\..\..\tao_idl\tao_idl $(InputName).idl
+	tao_idl $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)

@@ -17,13 +17,12 @@ CFG=POA Forwarding Server - Win32 Debug
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "POA Forwarding Server - Win32 Release" (based on\
- "Win32 (x86) Console Application")
-!MESSAGE "POA Forwarding Server - Win32 Debug" (based on\
- "Win32 (x86) Console Application")
+!MESSAGE "POA Forwarding Server - Win32 Release" (based on "Win32 (x86) Console Application")
+!MESSAGE "POA Forwarding Server - Win32 Debug" (based on "Win32 (x86) Console Application")
 !MESSAGE 
 
 # Begin Project
+# PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
 CPP=cl.exe
@@ -144,13 +143,13 @@ SOURCE=.\Foo.idl
 
 !IF  "$(CFG)" == "POA Forwarding Server - Win32 Release"
 
-USERDEP__FOO_I="..\..\..\tao_idl\Release\tao_idl.exe"	
+USERDEP__FOO_I="..\..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL compiler
 InputPath=.\Foo.idl
 InputName=Foo
 
 BuildCmds= \
-	..\..\..\tao_idl\Release\tao_idl $(InputName).idl
+	tao_idl $(InputName).idl
 
 "$(InputPath)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -182,13 +181,14 @@ BuildCmds= \
 
 !ELSEIF  "$(CFG)" == "POA Forwarding Server - Win32 Debug"
 
-USERDEP__FOO_I="..\..\..\tao_idl\tao_idl.exe"	
+# PROP Ignore_Default_Tool 1
+USERDEP__FOO_I="..\..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL compiler
 InputPath=.\Foo.idl
 InputName=Foo
 
 BuildCmds= \
-	..\..\..\tao_idl\tao_idl $(InputName).idl
+	tao_idl $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)

@@ -17,13 +17,12 @@ CFG=NU Reactor Server - Win32 Debug
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "NU Reactor Server - Win32 Release" (based on\
- "Win32 (x86) Console Application")
-!MESSAGE "NU Reactor Server - Win32 Debug" (based on\
- "Win32 (x86) Console Application")
+!MESSAGE "NU Reactor Server - Win32 Release" (based on "Win32 (x86) Console Application")
+!MESSAGE "NU Reactor Server - Win32 Debug" (based on "Win32 (x86) Console Application")
 !MESSAGE 
 
 # Begin Project
+# PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
 CPP=cl.exe
@@ -138,13 +137,13 @@ SOURCE=.\Reactor.idl
 
 !IF  "$(CFG)" == "NU Reactor Server - Win32 Release"
 
-USERDEP__REACT="..\..\..\tao_idl\Release\tao_idl.exe"	
+USERDEP__REACT="..\..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO IDL compiler
 InputPath=.\Reactor.idl
 InputName=Reactor
 
 BuildCmds= \
-	..\..\..\tao_idl\Release\tao_idl $(InputName).idl
+	tao_idl $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -176,13 +175,13 @@ BuildCmds= \
 
 !ELSEIF  "$(CFG)" == "NU Reactor Server - Win32 Debug"
 
-USERDEP__REACT="..\..\..\tao_idl\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO IDL compiler
+USERDEP__REACT="..\..\..\..\bin\tao_idl.exe"	
+# Begin Custom Build - Invoking TAO IDL Compiler
 InputPath=.\Reactor.idl
 InputName=Reactor
 
 BuildCmds= \
-	..\..\..\tao_idl\tao_idl $(InputName).idl
+	tao_idl $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)

@@ -158,13 +158,13 @@ SOURCE=.\cubit.idl
 !IF  "$(CFG)" == "MT_Cubit Client - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__CUBIT="..\..\..\..\tao_idl\Release\tao_idl.exe"	
+USERDEP__CUBIT="..\..\..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\cubit.idl
 InputName=cubit
 
 BuildCmds= \
-	..\..\..\..\tao_idl\Release\tao_idl $(InputName).idl
+	tao_idl $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -197,13 +197,13 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "MT_Cubit Client - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__CUBIT="..\..\..\..\tao_idl\tao_idl.exe"	
+USERDEP__CUBIT="..\..\..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\cubit.idl
 InputName=cubit
 
 BuildCmds= \
-	..\..\..\..\tao_idl\tao_idl $(InputName).idl
+	tao_idl $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
