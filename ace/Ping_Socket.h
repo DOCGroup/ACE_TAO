@@ -101,7 +101,7 @@ namespace ACE
 
     char icmp_recv_buff_[PING_BUFFER_SIZE];
 
-    unsigned long sequence_number_;
+    ACE_UINT16 sequence_number_;
 
     int connected_socket_;
 
