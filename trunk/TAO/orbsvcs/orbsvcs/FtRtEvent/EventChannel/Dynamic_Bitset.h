@@ -12,6 +12,7 @@
 #ifndef DYNAMIC_BITSET_H
 #define DYNAMIC_BITSET_H
 
+#include "ace/config-all.h"
 #include <memory.h>
 
 /**
@@ -42,7 +43,7 @@ public:
   ~Dynamic_Bitset();
   Dynamic_Bitset(const Dynamic_Bitset& other);
   Dynamic_Bitset& operator = (const Dynamic_Bitset& other);
-    Dynamic_Bitset& operator &=(const Dynamic_Bitset& other);
+  Dynamic_Bitset& operator &=(const Dynamic_Bitset& other);
 
   reference operator[](size_type bit);
 
@@ -52,7 +53,8 @@ public:
   void set(size_type bit, bool val = true);
   void flip();
   void resize(size_type num_bits, bool value = false);
-    friend bool operator == (const Dynamic_Bitset& lhs, const Dynamic_Bitset& rhs);
+
+  friend bool operator == (const Dynamic_Bitset& lhs, const Dynamic_Bitset& rhs);
 private:
   block* buffer_;
   size_type buffer_size_;
@@ -60,59 +62,10 @@ private:
 };
 
 bool operator == (const Dynamic_Bitset& lhs, const Dynamic_Bitset& rhs);
+Dynamic_Bitset operator & (const Dynamic_Bitset& lhs, const Dynamic_Bitset& rhs);
 
-inline Dynamic_Bitset operator & (const Dynamic_Bitset& lhs, const Dynamic_Bitset& rhs)
-{
-  Dynamic_Bitset tmp(lhs);
-  tmp &= rhs;
-  return tmp;
-}
-
-
-
-inline Dynamic_Bitset::reference::reference(Dynamic_Bitset* bitset, Dynamic_Bitset::reference::size_type bit)
-: bitset_(bitset), bit_(bit)
-{
-}
-
-inline Dynamic_Bitset::reference Dynamic_Bitset::reference::operator = (bool val)
-{
-  bitset_->set(bit_, val);
-  return *this;
-}
-
-inline Dynamic_Bitset::reference::operator bool () const
-{
-  return bitset_->test(bit_);
-}
-
-
-
-inline Dynamic_Bitset::~Dynamic_Bitset()
-{
-  delete[] buffer_;
-}
-
-inline Dynamic_Bitset::Dynamic_Bitset(const Dynamic_Bitset& other)
-: buffer_(new block[other.buffer_size_])
-, buffer_size_(other.buffer_size_)
-, bit_size_(other.bit_size_)
-{
-  memcpy(buffer_, other.buffer_, buffer_size_*BYTES_PER_BLOCK);
-}
-
-
-
-
-inline Dynamic_Bitset::size_type Dynamic_Bitset::size() const
-{
-  return bit_size_;
-}
-
-inline Dynamic_Bitset::reference Dynamic_Bitset::operator[](Dynamic_Bitset::size_type bit)
-{
-  return Dynamic_Bitset::reference(this, bit);
-}
-
+#if defined (__ACE_INLINE__)
+#include "Dynamic_Bitset.inl"
+#endif /* __ACE_INLINE__ */
 
 #endif
