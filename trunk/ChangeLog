@@ -1,3 +1,9 @@
+Fri Aug  9 09:24:08 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/Time_Value.{inl,cpp}: Make sure to normalize the set() methods...
+	  Thanks to Francois <francois@vibes.net> for reporting this.  This
+	  fixes BugID 1275.
+
 Thu Aug  8 23:11:30 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* include/makeinclude/rules.nested.GNU: Reverted this change "Thu
