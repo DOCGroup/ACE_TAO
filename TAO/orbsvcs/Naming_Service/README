@@ -67,7 +67,7 @@ Multicast.  This behavior can be overridden in the following ways:
 
            % client -ORBnameserviceior <iiop:1.0//tango:20000/P35194c690003809cRootPOA/child_poa/NameService>
 
-        2. Set the environment variable `NameService' (minus the
+        2. Set the environment variable `NameServiceIOR' (minus the
            quotes), as follows in csh or tcsh:
 
            % setenv NameServiceIOR <iiop:1.0//tango:20000/P35194c690003809cRootPOA/child_poa/NameService>
