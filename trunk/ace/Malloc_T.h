@@ -80,8 +80,11 @@ public:
   ~ACE_Cached_Allocator (void);
   // clear things up.
 
-  void* malloc (size_t);
-  // get a chunk of memory from free store.
+  void *malloc (size_t nbytes = sizeof (T));
+  // Get a chunk of memory from free store.  Note that <nbytes> is
+  // only checked to make sure that it's <= to sizeof T, and is
+  // otherwise ignored since <malloc> always returns a pointer to an
+  // item of sizeof (T).
 
   void free (void *);
   // return a chunk of memory back to free store.
