@@ -1,6 +1,7 @@
 // $Id$
 
 #include "Container_Base.h"
+#include "CIAO_common.h"
 #include "ace/DLL.h"
 #include "tao/Utils/PolicyList_Destroyer.h"
 #include "ace/OS_NS_stdio.h"
@@ -280,16 +281,35 @@ namespace CIAO
         ACE_DLL executor_dll, servant_dll;
 
         if (exe_dll_name == 0 || sv_dll_name == 0)
-          ACE_THROW_RETURN (Deployment::UnknownImplId (),
-                            Components::CCMHome::_nil ());
+          {
+            if (CIAO::debug_level () > 10)
+              {
+                if (exe_dll_name == 0)
+                  ACE_DEBUG ((LM_DEBUG, "ERROR (install_home): Null component executor DLL name\n"));
+                if (sv_dll_name == 0)
+                  ACE_DEBUG ((LM_DEBUG, "ERROR (install_home): Null component servant DLL name\n"));
+              }
+
+            ACE_THROW_RETURN (Deployment::UnknownImplId (),
+                              Components::CCMHome::_nil ());
+          }
 
         if (executor_dll.open (exe_dll_name,
                                ACE_DEFAULT_SHLIB_MODE,
-                               0) != 0
-            || servant_dll.open (sv_dll_name,
-                                 ACE_DEFAULT_SHLIB_MODE,
-                                 0) != 0)
+                               0) != 0)
           {
+            if (CIAO::debug_level () > 10)
+              ACE_DEBUG ((LM_ERROR, "ERROR (install_home): Failed to open executor DLL: %s\n", exe_dll_name));
+            ACE_THROW_RETURN (Deployment::UnknownImplId (),
+                              Components::CCMHome::_nil ());
+          }
+
+        if (servant_dll.open (sv_dll_name,
+                              ACE_DEFAULT_SHLIB_MODE,
+                              0) != 0)
+          {
+            if (CIAO::debug_level () > 10)
+              ACE_DEBUG ((LM_ERROR, "ERROR (install_home): Failed to open servant DLL: %s\n", sv_dll_name));
             ACE_THROW_RETURN (Deployment::UnknownImplId (),
                               Components::CCMHome::_nil ());
           }
