@@ -11,50 +11,41 @@
 
 ACE_Object_Manager *ACE_Object_Manager::instance_ = 0;
 
-
-ACE_Object_Manager::ACE_Object_Manager ()
-  : registered_objects_ (),
-    registered_arrays_ ()
+ACE_Object_Manager::ACE_Object_Manager (void)
 {
 }
 
-ACE_Object_Manager::~ACE_Object_Manager ()
+ACE_Object_Manager::~ACE_Object_Manager (void)
 {
   void *p;
   int i;
 
   // Delete all registered objects and arrays.
   while ((i = registered_objects_.dequeue_head (p)) != -1)
-    {
-      delete p;
-    }
+    delete p;
 
   while ((i = registered_arrays_.dequeue_head (p)) != -1)
-    {
-      delete [] p;
-    }
+    delete [] p;
 
-
-  // This call closes and deletes all ACE library services and singletons.
+  // This call closes and deletes all ACE library services and
+  // singletons.
   ACE_Service_Config::close ();
 }
 
 ACE_Object_Manager *
-ACE_Object_Manager::instance ()
+ACE_Object_Manager::instance (void)
 {
-  // This function should be call during construction of static instances,
-  // so it's not thread safe.
+  // This function should be call during construction of static
+  // instances, so it's not thread safe.
 
   if (instance_ == 0)
-    {
-      ACE_NEW_RETURN (instance_, ACE_Object_Manager (), 0);
-    }
+    ACE_NEW_RETURN (instance_, ACE_Object_Manager, 0);
 
   return instance_;
 }
 
 int
-ACE_Object_Manager::delete_at_exit_ (void *object)
+ACE_Object_Manager::delete_at_exit_i (void *object)
 {
   // Check for already in queue, and return 1 if so.
   ACE_Unbounded_Queue_Iterator<void *> i (registered_objects_);
@@ -65,10 +56,8 @@ ACE_Object_Manager::delete_at_exit_ (void *object)
       i.advance ();
 
       if (obj == object)
-        {
-          // The object has already been registered.
-          return 1;
-        }
+	// The object has already been registered.
+	return 1;
     }
 
   // Returns -1 if unable to allocate storage.
@@ -76,7 +65,7 @@ ACE_Object_Manager::delete_at_exit_ (void *object)
 }
 
 int
-ACE_Object_Manager::delete_array_at_exit_ (void *array)
+ACE_Object_Manager::delete_array_at_exit_i (void *array)
 {
   // Check for already in queue, and return 1 if so.
   ACE_Unbounded_Queue_Iterator<void *> i (registered_arrays_);
@@ -87,16 +76,13 @@ ACE_Object_Manager::delete_array_at_exit_ (void *array)
       i.advance ();
 
       if (obj == array)
-        {
-          // The array has already been registered.
-          return 1;
-        }
+	// The array has already been registered.
+	return 1;
     }
 
   // Returns -1 if unable to allocate storage.
   return registered_arrays_.enqueue_tail (array);
 }
-
 
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
 template class ACE_Unbounded_Queue<void *>;
