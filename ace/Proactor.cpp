@@ -9,7 +9,7 @@
 
 #include "ace/Task_T.h"
 #include "ace/Log_Msg.h"
-#include "ace/Service_Config.h"
+#include "ace/Object_Manager.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Proactor.i"
