@@ -1,3 +1,11 @@
+Wed May 21 14:12:16 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS.h:
+        * ace/config-cygwin32-common.h:
+        * ace/README:
+          Removed define ACE_HAS_CYGWIN32_SOCKET_H because it is not used and
+          needed anymore.
+
 Wed May 21 02:49:10 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * tests/Makefile.am:
@@ -95,7 +103,7 @@ Tue May 20 01:10:42 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Mon May 19 11:03:31 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* configure.ac: 
+	* configure.ac:
 
 	  Only detect alloca() support if explicitly enabled by the user.
 

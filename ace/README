@@ -273,7 +273,6 @@ ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES    Prototypes for both signal()
 ACE_HAS_CPLUSPLUS_HEADERS               Compiler/platform has
                                         correctly prototyped header
                                         files
-ACE_HAS_CYGWIN32_SOCKET_H               Platform has cygwin32 socket.h
 ACE_HAS_DIRENT                          Compiler/platform has Dirent
                                         iterator functions
 ACE_HAS_DLFCN_H_BROKEN_EXTERN_C         For platforms, e.g., RedHat
