@@ -1,3 +1,20 @@
+Thu Dec  5 22:19:41 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/OS.{h i}: Added ACE_OS::sigwaitinfo() wrapper.
+
+        * ace/POSIX_Proactor.{h cpp} (ACE_POSIX_SIG_Proactor): Clean up some
+          spelling and formatting in documentation comments. Clean up the
+          signal calls, and substitue ACE_OS calls for naked API calls.
+          Unless we have specific evidence to the contrary, trust what the
+          OS says with signal information. Otherwise, if we run through
+          all the aiocbs on every signal, we could get into a situation
+          where deferred I/O operations are never restarted.
+
+        * ace/POSIX_CB_Proactor.h: Changed the comments to say this is a
+          callback-based proactor, not an SGI IRIX one. The callback
+          paradigm is part of newer POSIXes and available on more than
+          SGI... HP-UX, for instance.
+
 Thu Dec  5 20:33:18 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/config-aix-4.x.h: Removed ACE_NEEDS_DEV_IO_CONVERSION. This

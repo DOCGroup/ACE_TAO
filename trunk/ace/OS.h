@@ -5908,6 +5908,8 @@ public:
   static int sigtimedwait (const sigset_t *set,
                            siginfo_t *info,
                            const ACE_Time_Value *timeout);
+  static int sigwaitinfo (const sigset_t *set,
+                          siginfo_t *info);
   static void thr_testcancel (void);
   static void thr_yield (void);
 

@@ -1234,7 +1234,7 @@ ACE_POSIX_AIOCB_Proactor::find_completed_aio (int &error_status,
   for (; count > 0; index++ , count--)
     {
       if (index >= aiocb_list_max_size_) // like a wheel
-          index = 0;
+        index = 0;
 
       if (aiocb_list_[index] == 0) // Dont process null blocks.
         continue;
@@ -1282,11 +1282,11 @@ ACE_POSIX_AIOCB_Proactor::start_aio (ACE_POSIX_Asynch_Result *result,
   // Save operation code in the aiocb
   switch (op)
     {
-    case ACE_POSIX_Proactor::READ :
+    case ACE_POSIX_Proactor::READ:
       result->aio_lio_opcode = LIO_READ;
       break;
 
-    case ACE_POSIX_Proactor::WRITE :
+    case ACE_POSIX_Proactor::WRITE:
       result->aio_lio_opcode = LIO_WRITE;
       break;
 
@@ -1587,17 +1587,13 @@ ACE_POSIX_SIG_Proactor::ACE_POSIX_SIG_Proactor (size_t max_aio_operations)
   // signal action to pass signal information when we want it.
 
   // Clear the signal set.
-  if (sigemptyset (&this->RT_completion_signals_) == -1)
-    ACE_ERROR ((LM_ERROR,
-                "Error:%p\n",
-                "Couldn't init the RT completion signal set"));
+  ACE_OS::sigemptyset (&this->RT_completion_signals_);
 
   // Add the signal number to the signal set.
-  if (sigaddset (&this->RT_completion_signals_, ACE_SIGRTMIN) == -1)
-    ACE_ERROR ((LM_ERROR,
-                "Error:%p\n",
-                "Couldnt init the RT completion signal set"));
-  this->mask_signals (&this->RT_completion_signals_);
+  if (ACE_OS::sigaddset (&this->RT_completion_signals_, ACE_SIGRTMIN) == -1)
+    ACE_ERROR ((LM_ERROR, ACE_LIB_TEXT ("ACE_POSIX_SIG_Proactor: %p\n"),
+                ACE_LIB_TEXT ("sigaddset")));
+  this->block_signals ();
   // Set up the signal action for SIGRTMIN.
   this->setup_signal_handler (ACE_SIGRTMIN);
 
@@ -1646,7 +1642,7 @@ ACE_POSIX_SIG_Proactor::ACE_POSIX_SIG_Proactor (const sigset_t signal_set,
     }
 
   // Mask all the signals.
-  this->mask_signals (&this->RT_completion_signals_);
+  this->block_signals ();
 
   // we do not have to create notify manager
   // but we should start pseudo-asynchronous accept task
@@ -1668,13 +1664,13 @@ ACE_POSIX_SIG_Proactor::handle_events (ACE_Time_Value &wait_time)
 {
   // Decrement <wait_time> with the amount of time spent in the method
   ACE_Countdown_Time countdown (&wait_time);
-  return this->handle_events (wait_time.msec ());
+  return this->handle_events_i (&wait_time);
 }
 
 int
 ACE_POSIX_SIG_Proactor::handle_events (void)
 {
-  return this->handle_events (ACE_INFINITE);
+  return this->handle_events_i (0);
 }
 
 int
@@ -1800,14 +1796,9 @@ ACE_POSIX_SIG_Proactor::setup_signal_handler (int signal_number) const
 
 
 int
-ACE_POSIX_SIG_Proactor::mask_signals (const sigset_t *signals) const
+ACE_POSIX_SIG_Proactor::block_signals (void) const
 {
-  if (ACE_OS::pthread_sigmask (SIG_BLOCK, signals, 0) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Error:(%P | %t):%p\n",
-                       "pthread_sigmask failed"),
-                      -1);
-  return 0;
+  return ACE_OS::pthread_sigmask (SIG_BLOCK, &this->RT_completion_signals_, 0);
 }
 
 ssize_t
@@ -1841,130 +1832,81 @@ ACE_POSIX_SIG_Proactor::allocate_aio_slot (ACE_POSIX_Asynch_Result *result)
 }
 
 int
-ACE_POSIX_SIG_Proactor::handle_events (u_long milli_seconds)
+ACE_POSIX_SIG_Proactor::handle_events_i (const ACE_Time_Value *timeout)
 {
   int result_sigwait = 0;
   siginfo_t sig_info;
 
-  // Mask all the signals.
-  if (this->mask_signals (&this->RT_completion_signals_) != 0)
+  // Wait for the signals.
+  if (timeout == 0)
+    {
+      result_sigwait = ACE_OS::sigwaitinfo (&this->RT_completion_signals_,
+                                            &sig_info);
+    }
+  else
+    {
+      result_sigwait = ACE_OS::sigtimedwait (&this->RT_completion_signals_,
+                                             &sig_info,
+                                             timeout);
+      if (result_sigwait == -1 && errno == EAGAIN)
+        return 0;
+    }
+
+  // We should not get EINTR since ACE_OS methods restart the system call
+  // on EINTR. So -1 here is bad.
+  if (result_sigwait == -1)
     return -1;
 
-  // Wait for the signals.
-  if (milli_seconds == ACE_INFINITE)
-    {
-      result_sigwait = sigwaitinfo (&this->RT_completion_signals_,
-                                    &sig_info);
-    }
-  else
-    {
-      // Wait for <milli_seconds> amount of time.
-      timespec timeout;
-      timeout.tv_sec = milli_seconds / 1000;
-      timeout.tv_nsec = (milli_seconds - (timeout.tv_sec * 1000)) * 1000;
-      result_sigwait = sigtimedwait (&this->RT_completion_signals_,
-                                     &sig_info,
-                                     &timeout);
-    }
+  // Decide what to do. We always check the completion queue since it's an
+  // easy, quick check. What is decided here is whether to check for
+  // I/O completions and, if so, how completely to scan.
+  int flg_aio = 0;           // 1 if AIO Completion possible
 
   size_t index = 0;          // start index to scan aiocb list
-  size_t count = aiocb_list_max_size_;  // max number to iterate
+  size_t count = 1;          // max number of aiocbs to scan
   int error_status = 0;
   size_t transfer_count = 0;
-  int flg_aio = 0;          // 1 if AIO Completion possible
-  int flg_que = 0;          // 1 if SIGQUEUE possible
 
-  // define index to start
-  // nothing will happen if it contains garbage
+  if (sig_info.si_code == SI_ASYNCIO || this->os_id_ == OS_SUN_56)
+    {
+      flg_aio = 1;  // AIO signal received
+      // define index to start
+      // nothing will happen if it contains garbage
 #if defined (__FreeBSD__)
-  index = ACE_static_cast (size_t, sig_info.si_value.sigval_int);
+      index = ACE_static_cast (size_t, sig_info.si_value.sigval_int);
 #else
-  index = ACE_static_cast (size_t, sig_info.si_value.sival_int);
+      index = ACE_static_cast (size_t, sig_info.si_value.sival_int);
 #endif
-
-  // Check for errors
-  // but let continue work in case of errors
-  // we should check "post_completed" queue
-  if (result_sigwait == -1)
-    {
-      if (errno != EAGAIN &&   // timeout
-          errno != EINTR )    // interrupted system call
-        ACE_ERROR ((LM_ERROR,
-                    "%N:%l:(%P | %t)::%p\n",
-                    "ACE_POSIX_SIG_Proactor::handle_events:"
-                    "sigtimedwait/sigwaitinfo failed"
-                  ));
+      // Assume we have a correctly-functioning implementation, and that
+      // there is one I/O to process, and it's correctly specified in the
+      // siginfo received. There are, however, some special situations
+      // where this isn't true...
+      if (os_id_ == OS_SUN_56) // Solaris 6
+        {
+          // 1. Solaris 6 always loses any RT signal,
+          //    if it has more SIGQUEMAX=32 pending signals
+          //    so we should scan the whole aiocb list
+          // 2. Moreover,it has one more bad habit
+          //    to notify aio completion
+          //    with SI_QUEUE code instead of SI_ASYNCIO, hence the
+          //    OS_SUN_56 addition to the si_code check, above.
+          count = aiocb_list_max_size_;
+        }
     }
-  else if (sig_info.si_signo != result_sigwait)
-    {
-      // No errors, RT compleion signal is received.
-      // Is the signo returned consistent with the sig info?
-      ACE_ERROR ((LM_ERROR,
-                  "Error:%N:%l:(%P | %t):"
-                  "ACE_POSIX_SIG_Proactor::handle_events:"
-                  "Inconsistent signal number (%d) in the signal info block",
-                   sig_info.si_signo
-                ));
-    }
-  else if (sig_info.si_code == SI_ASYNCIO)
-    flg_aio = 1;  // AIO signal received
-  else if (sig_info.si_code == SI_QUEUE)
-    flg_que = 1;  // SIGQUEUE received
-  else
+  else if (sig_info.si_code != SI_QUEUE)
     {
       // Unknown signal code.
       // may some other third-party libraries could send it
       // or message queue could also generate it !
       // So print the message and check our completions
       ACE_ERROR ((LM_DEBUG,
-                "%N:%l:(%P | %t):"
-                "ACE_POSIX_SIG_Proactor::handle_events:\n"
-                "Unexpected signal code (%d) returned on completion querying\n",
-                sig_info.si_code));
+                  ACE_LIB_TEXT ("%N:%l:(%P | %t): ")
+                  ACE_LIB_TEXT ("ACE_POSIX_SIG_Proactor::handle_events: ")
+                  ACE_LIB_TEXT ("Unexpected signal code (%d) returned ")
+                  ACE_LIB_TEXT ("from sigwait; expecting %d\n"),
+                  result_sigwait, sig_info.si_code));
+      flg_aio = 1;
     }
-
-   // extra actions for different systems
-   if (os_id_ == OS_SUN_58)  // Solaris 8
-     {
-       // Solaris 8 never loses any AIO completion It can store more
-       // than 40000 notifications!  So don't waste time to scan all
-       // aiocb list We know exactly what finished in case SI_ASYNCHIO
-
-       // But we can easy have lost SI_QUEUE
-
-       if (flg_aio)   // AIO - correct behavior
-         count = 1;
-       flg_que=1;       // not to miss "post_completed" results
-     }
-   else if (os_id_ == OS_SUN_56) // Solaris 6
-     {
-       // 1. Solaris 6 always loses any RT signal,
-       //    if it has more SIGQUEMAX=32 pending signals
-       //    so we should scan the whole aiocb list
-       // 2. Moreover,it has one more bad habit
-       //    to notify aio completion
-       //    with  SI_QUEUE code instead of SI_ASYNCIO.
-
-       // this is reliable solution
-       flg_aio =1;  // always find_completed_aio
-       flg_que =1;  // always scan queue
-       count = aiocb_list_max_size_;
-     }
-   else // insert here specific for other systems
-     {
-       // this is reliable solution
-       flg_aio =1;  // always find_completed_aio
-       flg_que =1;  // always scan queue
-       count = aiocb_list_max_size_;
-     }
-
-  // At this point we have
-  // if (flg_aio)
-  //    scan aiocb list starting with "index" slot
-  //    no more "count" times
-  //    till we have no more AIO completed
-  // if (flg_que)
-  //    check "post_completed" queue
 
   int ret_aio = 0;
   int ret_que = 0;
@@ -1989,14 +1931,15 @@ ACE_POSIX_SIG_Proactor::handle_events (u_long milli_seconds)
       }
 
   // process post_completed results
-  if (flg_que)
-    ret_que = this->process_result_queue ();
+  ret_que = this->process_result_queue ();
 
   // Uncomment this  if you want to test
   // and research the behavior of you system
+#if 0
   ACE_DEBUG ((LM_DEBUG,
               "(%t) NumAIO=%d NumQueue=%d\n",
               ret_aio, ret_que));
+#endif
 
   return ret_aio + ret_que > 0 ? 1 : 0;
 }

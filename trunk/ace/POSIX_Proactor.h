@@ -497,12 +497,12 @@ protected:
 /**
  * @class ACE_POSIX_SIG_Proactor
  *
- * @brief This Proactor implementation does compeltion querying using
- * POSIX Real Time signals. <sigtimedwait>/<sigwaitinfo> call is
- * used to get the notify/get the completions.
+ * @brief This Proactor implementation does completion event detection using
+ * POSIX Real Time signals. @c sigtimedwait() or @c sigwaitinfo() is
+ * used to wait for completions.
  * The real-time signals that are going to be used with this
  * Proactor should be given apriori in the constructor, so that
- * those signals can be masked from asynchornous delivery.
+ * those signals can be masked from asynchronous delivery.
  */
 class ACE_Export ACE_POSIX_SIG_Proactor : public ACE_POSIX_AIOCB_Proactor
 {
@@ -574,22 +574,19 @@ protected:
   /// To setup the handler for a real-time signbal.
   int setup_signal_handler (int signal_number) const;
 
-  /// To mask all the specified signals in a thread.
-  int mask_signals (const sigset_t *signals) const;
+  /// Insures that RT_completion_signals_ are blocked in the calling thread.
+  int block_signals (void) const;
 
   /**
-   * Dispatch a single set of events.  If <milli_seconds> elapses
-   * before any events occur, return 0. Return 1 if a completion is
-   * dispatched. Return -1 on errors.
+   * Dispatch a single set of events.  @a timeout is a pointer to a
+   * relative time representing the maximum amount of time to wait for
+   * an event to occur. If 0, wait indefinitely.
+   *
+   * @retval 0  A timeout occurred before any event was detected.
+   * @retval 1  A completion was dispatched.
+   * @retval -1 An error occurred; errno contains an error code.
    */
-  virtual int handle_events (u_long milli_seconds);
-
-  /**
-   * These signals are used for completion notification by the
-   * Proactor. The signals specified while issueing <Asynch
-   * Operation>s are stored here in this set. These signals are masked
-   * for a thread when it calls the Proactor::handle_events.
-   */
+  virtual int handle_events_i (const ACE_Time_Value *timeout);
 
   /// Find free slot to store result and aiocb pointer
   virtual ssize_t allocate_aio_slot (ACE_POSIX_Asynch_Result *result);
@@ -599,6 +596,12 @@ protected:
   /// called from post_completion method
   virtual int notify_completion (int sig_num);
 
+  /**
+   * These signals are used for completion notification by the
+   * Proactor. The signals specified while issuing asynchronous
+   * operations are stored here in this set. These signals are masked
+   * for a thread when it calls handle_events().
+   */
   sigset_t RT_completion_signals_;
 };
 
