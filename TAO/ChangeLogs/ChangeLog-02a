@@ -1,3 +1,9 @@
+Mon Dec 24 11:01:55 2001  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.h: 
+	  Fixed Single_Threaded compile errors. Replaced 
+	  ACE_Condition_Thread_Mutex with TAO_SYNCH_CONDITION.
+
 Mon Dec 24 10:24:33 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* orbsvcs/ImplRepo_Service/ImplRepo_i.cpp (start_server_i): 
