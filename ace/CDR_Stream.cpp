@@ -706,7 +706,7 @@ ACE_InputCDR::ACE_InputCDR (const ACE_InputCDR& rhs)
                                     ACE_CDR::MAX_ALIGNMENT);
 
   size_t rd_offset = rhs.start_.rd_ptr () - buf;
-  size_t wr_offset = rhs.start_.rd_ptr () - buf;
+  size_t wr_offset = rhs.start_.wr_ptr () - buf;
   this->start_.rd_ptr (rd_offset);
   this->start_.wr_ptr (wr_offset);
 }
