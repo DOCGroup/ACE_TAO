@@ -13,8 +13,10 @@
 #define __ACE_INLINE__
 #endif /* ! __ACE_INLINE__ */
 
-// uncomment next line if you are using FreeBSD 2.1.x
+// ********************************************************
+// uncomment next line if you are using FreeBSD 2.1.x[R]
 // #define FreeBSD_2_1
+// ********************************************************
 
 // Platform specific directives
 #define FreeBSD
@@ -23,6 +25,12 @@
 #define ACE_HAS_SIG_MACROS
 
 #if defined(FreeBSD_2_1)
+
+#define ACE_HAS_CPLUSPLUS_HEADERS
+
+// This is to fix the nested struct if_data definition on FreeBSD 2.1.x
+#include <sys/types.h>
+#include <sys/time.h>
 struct  if_data {
 /* generic interface information */
   u_char  ifi_type;       /* ethernet, tokenring, etc */
@@ -47,10 +55,14 @@ struct  if_data {
   struct  timeval ifi_lastchange;/* time of last administrative ch
 ange */
 } ;
-#else
+
+// this is a hack, but since this only occured in FreeBSD 2.1.x,
+// I guess it is ok.
+#define   timespec   timeval
+#endif /* defined FreeBSD_2_1 */
+
 // Platform supports POSIX timers via timestruct_t.
 #define ACE_HAS_POSIX_TIME
-#endif /* defined FreeBSD_2_1 */
 #define ACE_NEEDS_SYSTIME_H
 
 #define ACE_LACKS_STRRECVFD
@@ -63,9 +75,7 @@ ange */
 // Compiler/platform contains the <sys/syscall.h> file.
 #define ACE_HAS_SYSCALL_H
 
-#if defined(FreeBSD_2_1)
-#define ACE_HAS_CPLUSPLUS_HEADERS
-#else
+#if !defined(FreeBSD_2_1)
 #define ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES
 #endif /* defined FreeBSD_2_1 */
 
