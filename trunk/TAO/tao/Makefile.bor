@@ -176,8 +176,6 @@ OBJFILES = \
 	$(OBJDIR)\Object_Proxy_Broker.obj \
 	$(OBJDIR)\Object_Proxy_Impl.obj \
 	$(OBJDIR)\Object_Ref_Table.obj \
-	$(OBJDIR)\OctetSeqC.obj \
-	$(OBJDIR)\OctetSeqA.obj \
    $(OBJDIR)\ParameterMode.obj \
 	$(OBJDIR)\Parser_Registry.obj \
 	$(OBJDIR)\PICurrent.obj \
@@ -222,6 +220,14 @@ OBJFILES = \
 	$(OBJDIR)\ServicesA.obj \
 	$(OBJDIR)\Services_Activate.obj \
 	$(OBJDIR)\Special_Basic_Arguments.obj \
+	$(OBJDIR)\BooleanSeqC.obj \
+	$(OBJDIR)\BooleanSeqA.obj \
+	$(OBJDIR)\FloatSeqC.obj \
+	$(OBJDIR)\FloatSeqA.obj \
+	$(OBJDIR)\OctetSeqC.obj \
+	$(OBJDIR)\OctetSeqA.obj \
+	$(OBJDIR)\ShortSeqC.obj \
+	$(OBJDIR)\ShortSeqA.obj \
 	$(OBJDIR)\StringSeqC.obj \
 	$(OBJDIR)\StringSeqA.obj \
 	$(OBJDIR)\ULongSeqC.obj \

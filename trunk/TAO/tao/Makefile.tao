@@ -214,8 +214,14 @@ ORB_CORE_FILES = \
   Dynamic_ParameterC \
   Dynamic_ParameterA \
   ParameterMode \
+  BooleanSeqA \
+  BooleanSeqC \
+  FloatSeqA \
+  FloatSeqC \
   OctetSeqC \
   OctetSeqA \
+  ShortSeqA \
+  ShortSeqC \
   StringSeqC \
   StringSeqA \
   ULongSeqC \
