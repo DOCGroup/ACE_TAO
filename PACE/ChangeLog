@@ -1,132 +1,132 @@
 Fri Jul  7 19:11:38 2000  John Heitmann  <jwh1@cs.wustl.edu>
 
-	* pace/sys/mman.h
-	* pace/sys/stat.h
-	* pace/sys/times.h
-	* pace/sys/types.h
-	* pace/sys/utsname.h
-	* pace/sys/wait.h
-	* pace/termios.h
-	* pace/time.h
-	* pace/unistd.h
-	* pace/utime.h
-	* pace/posix/mman.h
-	* pace/posix/stat.h
-	* pace/posix/termios.h
-	* pace/posix/time.h
-	* pace/posix/times.h
-	* pace/posix/types.h
-	* pace/posix/unistd.h
-	* pace/posix/utime.h
-	* pace/posix/utsname.h
-	* pace/posix/wait.h
+        * pace/sys/mman.h
+        * pace/sys/stat.h
+        * pace/sys/times.h
+        * pace/sys/types.h
+        * pace/sys/utsname.h
+        * pace/sys/wait.h
+        * pace/termios.h
+        * pace/time.h
+        * pace/unistd.h
+        * pace/utime.h
+        * pace/posix/mman.h
+        * pace/posix/stat.h
+        * pace/posix/termios.h
+        * pace/posix/time.h
+        * pace/posix/times.h
+        * pace/posix/types.h
+        * pace/posix/unistd.h
+        * pace/posix/utime.h
+        * pace/posix/utsname.h
+        * pace/posix/wait.h
 
-	Continued  changes:
+        Continued  changes:
 
         Changed the #if defined (PACE_HAS_POSIX) to #if
-	PACE_HAS_POSIX per our recent conversation regarding all macros being
-	assigned a value.
+        PACE_HAS_POSIX per our recent conversation regarding all macros being
+        assigned a value.
 
-	Moved the prototype function signatures to the root
-	directory *.h file.
+        Moved the prototype function signatures to the root
+        directory *.h file.
 
-	Changed the form the *.inl file was included.
+        Changed the form the *.inl file was included.
 
 
 Fri Jul  7 17:24:33 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/fcntl.h:
+        * pace/fcntl.h:
 
-	  Missing extern "C" { }.
+          Missing extern "C" { }.
 
 Fri Jul  7 17:22:56 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/aio.h:
-	* pace/posix/aio.h:
-	* pace/assert.h:
-	* pace/posix/assert.h:
-	* pace/ctype.h:
-	* pace/posix/ctype.h:
-	* pace/dirent.h:
-	* pace/posix/dirent.h:
-	* pace/fcntl.h:
-	* pace/posix/fcntl.h:
-	* pace/grp.h:
-	* pace/posix/grp.h:
-	* pace/math.h:
-	* pace/posix/math.h:
-	* pace/mqueue.h:
-	* pace/posix/mqueue.h:
-	* pace/pthread.h:
-	* pace/posix/pthread.h:
-	* pace/pwd.h:
-	* pace/posix/pwd.h:
-	* pace/sched.h:
-	* pace/posix/sched.h:
-	* pace/semaphore.h:
-	* pace/posix/semaphore.h:
-	* pace/setjmp.h:
-	* pace/posix/setjmp.h:
-	* pace/signal.h:
-	* pace/posix/signal.h:
+        * pace/aio.h:
+        * pace/posix/aio.h:
+        * pace/assert.h:
+        * pace/posix/assert.h:
+        * pace/ctype.h:
+        * pace/posix/ctype.h:
+        * pace/dirent.h:
+        * pace/posix/dirent.h:
+        * pace/fcntl.h:
+        * pace/posix/fcntl.h:
+        * pace/grp.h:
+        * pace/posix/grp.h:
+        * pace/math.h:
+        * pace/posix/math.h:
+        * pace/mqueue.h:
+        * pace/posix/mqueue.h:
+        * pace/pthread.h:
+        * pace/posix/pthread.h:
+        * pace/pwd.h:
+        * pace/posix/pwd.h:
+        * pace/sched.h:
+        * pace/posix/sched.h:
+        * pace/semaphore.h:
+        * pace/posix/semaphore.h:
+        * pace/setjmp.h:
+        * pace/posix/setjmp.h:
+        * pace/signal.h:
+        * pace/posix/signal.h:
 
-	  Changed the protection includes. Eg:
-	    ROOT directory PACE_ASSERT_H
-	    POSIX directory PACE_ASSERT_H_POSIX.
+          Changed the protection includes. Eg:
+            ROOT directory PACE_ASSERT_H
+            POSIX directory PACE_ASSERT_H_POSIX.
 
-	  Changed the #if defined (PACE_HAS_POSIX) to #if PACE_HAS_POSIX
-	  per our recent conversation regarding all macros being assigned a
-	  value.
+          Changed the #if defined (PACE_HAS_POSIX) to #if PACE_HAS_POSIX
+          per our recent conversation regarding all macros being assigned a
+          value.
 
-	  Moved the prototype function signatures to the root directory *.h file.
+          Moved the prototype function signatures to the root directory *.h file.
 
-	  Changed the form the *.inl file was included.
+          Changed the form the *.inl file was included.
 
 Fri Jul  7 16:23:57 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/errno.h:
-	* pace/posix/errno.h
+        * pace/errno.h:
+        * pace/posix/errno.h
 
-	  Altered to fit in current
+          Altered to fit in current
 
 Fri Jul  7 16:04:30 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/config/platform:
+        * pace/config/platform:
 
-	  # define all unused macros so we can test them against '0'
-	  in the source code.
+          # define all unused macros so we can test them against '0'
+          in the source code.
 
 Fri Jul  7 15:24:57 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/config/compiler.h:
+        * pace/config/compiler.h:
 
-	  # define PACE_HAS_CPLUSPLUS __cplusplus
+          # define PACE_HAS_CPLUSPLUS __cplusplus
 
 Fri Jul 07 14:41:51 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/win32/types.h:
+        * pace/win32/types.h:
 
-	  Fixed some non-native type problems. Also, made some temporary
-	  types (pthread_*) until we actually get to win32/pthread.h at
-	  which point, we will correctly define these.
+          Fixed some non-native type problems. Also, made some temporary
+          types (pthread_*) until we actually get to win32/pthread.h at
+          which point, we will correctly define these.
 
 Fri Jul  7 02:18:02 2000  John Heitmann  <jwh1@cs.wustl.edu>
 
-	* pace/posix/dirent.*:
-	* pace/posix/pthread.*:
-	* pace/posix/sched.h:
-	* pace/posix/signal.*:
-	* pace/posix/stat.*:
-	* pace/posix/time.*:
-	* pace/posix/utsname.inl:
-	  Fixed a problem with certain typedefs not being
-	  exposed in other .inl files due to an odd
-	  interaction of the #pragma once style protections
-	  present in the header files. A few structs were redefined
-	  a second time outside of their header file.
+        * pace/posix/dirent.*:
+        * pace/posix/pthread.*:
+        * pace/posix/sched.h:
+        * pace/posix/signal.*:
+        * pace/posix/stat.*:
+        * pace/posix/time.*:
+        * pace/posix/utsname.inl:
+          Fixed a problem with certain typedefs not being
+          exposed in other .inl files due to an odd
+          interaction of the #pragma once style protections
+          present in the header files. A few structs were redefined
+          a second time outside of their header file.
 
-	  Also, pace_stat was changed to pace_stat_s to avoid a conflict
-	  witht the pace_stat() function.
+          Also, pace_stat was changed to pace_stat_s to avoid a conflict
+          witht the pace_stat() function.
 
         * pace/win32/termios.*:
         * pace/win32/wait.h:
@@ -134,7 +134,7 @@ Fri Jul  7 02:18:02 2000  John Heitmann  <jwh1@cs.wustl.edu>
         * pace/win32/times.*:
         * pace/win32/stat.*:
         * pace/win32/mman.*:
-	  Added changes made to /posix earlier.
+          Added changes made to /posix earlier.
 
 
 Thu Jul  6 13:04:02 2000  Joe Hoffert  <joeh@cs.wustl.edu>
