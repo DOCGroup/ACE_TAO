@@ -1,6 +1,5 @@
 Thu Dec  2 09:14:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-
         Prevent that users can include PortableServerC.h, they must include
         PortableServer.h, thanks to Bala for giving the hint how to do this.
 
