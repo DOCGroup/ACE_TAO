@@ -28,51 +28,47 @@ int main (int argc, char* argv[])
     policies[0] =
         poa->create_id_assignment_policy (PortableServer::USER_ID);
 
-    policies [1] = 
+    policies [1] =
       poa->create_request_processing_policy (PortableServer::USE_SERVANT_MANAGER);
 
-    policies [2] = 
+    policies [2] =
       poa->create_servant_retention_policy (PortableServer::NON_RETAIN);
 
     // Create the POA with these policies
-    PortableServer::POA_var child_poa = 
-      poa->create_POA ("childPOA", 
-                       poa_manager.in (), 
+    PortableServer::POA_var child_poa =
+      poa->create_POA ("childPOA",
+                       poa_manager.in (),
                        policies);
-    
+
     // Destroy the policy objects
     for (CORBA::ULong i = 0; i != policies.length (); ++i) {
       policies[i]->destroy ();
     }
 
-    // Create a Stock_Factory_Locator servant
-    Quoter_Stock_Factory_Locator_i servant_locator_i(orb.in ());
-   
-     // Need to activate a servant_manager object in the Root POA
-    PortableServer::ServantLocator_var servant_locator = 
-      servant_locator_i._this ();
-    
+    // Create a Stock_Factory_Locator
+    PortableServer::ServantLocator_var servant_locator =
+      new Quoter_Stock_Factory_Locator_i (orb.in ());
+
     // Set the SM with the childPOA
     child_poa->set_servant_manager (servant_locator.in ());
-    
-    PortableServer::ObjectId_var child_oid = 
+
+    PortableServer::ObjectId_var child_oid =
       PortableServer::string_to_ObjectId ("childFoo");
 
-    
-    CORBA::Object_var stock_factory = 
-      child_poa->create_reference_with_id (child_oid.in (), 
+    CORBA::Object_var stock_factory =
+      child_poa->create_reference_with_id (child_oid.in (),
                                            "IDL:Quoter/Stock_Factory:1.0");
-    
+
 
     // Put the object reference as an IOR string
     CORBA::String_var ior = orb->object_to_string (stock_factory.in ());
     // Print it out!
     std::cout << ior.in () << std::endl;
-    
+
     /*
     // Create the servant
     Quoter_Stock_Factory_i stock_factory_i;
-    
+
     // Activate it to obtain the object reference
     Quoter::Stock_Factory_var stock_factory =
     stock_factory_i._this ();
@@ -93,4 +89,3 @@ int main (int argc, char* argv[])
   }
   return 0;
 }
-

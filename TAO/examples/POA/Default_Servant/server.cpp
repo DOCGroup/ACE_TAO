@@ -22,7 +22,7 @@
 
 ACE_RCSID(Default_Servant, server, "$Id$")
 
-static char *ior_output_file = 0;
+static char *ior_output_file = "ior";
 
 static int
 parse_args (int argc, char **argv)
@@ -147,18 +147,14 @@ main (int argc, char **argv)
       ACE_DEBUG ((LM_DEBUG,"%s\n",
                   file_system_ior.in ()));
 
-      // If the ior_output_file exists, output the ior to it
-      if (ior_output_file != 0)
-        {
-          FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
-          if (output_file == 0)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "Cannot open output file for writing IOR: %s",
-                               ior_output_file),
-                              -1);
-          ACE_OS::fprintf (output_file, "%s", file_system_ior.in ());
-          ACE_OS::fclose (output_file);
-        }
+      FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
+      if (output_file == 0)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Cannot open output file for writing IOR: %s",
+                           ior_output_file),
+                          -1);
+      ACE_OS::fprintf (output_file, "%s", file_system_ior.in ());
+      ACE_OS::fclose (output_file);
 
       // set the state of the poa_manager to active i.e ready to process requests
       poa_manager->activate (ACE_TRY_ENV);
@@ -167,12 +163,6 @@ main (int argc, char **argv)
       // Run the ORB
       if (orb->run () == -1)
         ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "CORBA::ORB::run"), -1);
-
-      // Destroy the rootPOA and its children
-      root_poa->destroy (1,
-                         1,
-                         ACE_TRY_ENV);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {

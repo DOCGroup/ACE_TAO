@@ -24,7 +24,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/POAC.h"
+#include "tao/PortableServerC.h"
 
 class TAO_Operation_Table;
 
@@ -247,29 +247,6 @@ protected:
   TAO_Stub *_create_stub (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
   // This is an auxiliar method for _this().  Make sure *not* to
   // register with the default POA.
-
-  void _dispatch (CORBA::ServerRequest &request,
-                  void *context,
-                  CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
-  // Throws CORBA::BAD_OPERATION exception.
-};
-
-class TAO_Export TAO_Locality_Constrained_ServantBase : public virtual TAO_ServantBase
-{
-  // = TITLE
-  //     Base class for locality constrained servants.
-  //
-  // = DESCRIPTION
-  //     This servant does register with the POA.  However, it does
-  //     not produce a valid stub, i.e., object references of this
-  //     servant cannot be exported.  The (collocated) stubs of these
-  //     servants can either call directly to the servant or go
-  //     through the POA.
-  //
-protected:
-  TAO_Stub *_create_stub (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
-  // This is an auxiliar method for _this().  We do register with the
-  // default POA.
 
   void _dispatch (CORBA::ServerRequest &request,
                   void *context,

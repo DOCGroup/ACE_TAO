@@ -325,17 +325,7 @@ Quoter_i::move (CosLifeCycle::FactoryFinder_ptr there,
           PortableServer::ObjectId_var oid = this->poa_var_->servant_to_id (this, ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
-          PortableServer::Servant servant = this->poa_var_->_servant ();
-
-          if (servant == 0)
-            {
-              ACE_ERROR ((LM_ERROR,"Quoter_i::move: Could not find servant.\n"));
-              ACE_THROW (CosLifeCycle::NotMovable());
-            }
-
-          void *ptr = servant->_downcast ("IDL:PortableServer/POA:1.0");
-          POA_PortableServer::POA *poa = (POA_PortableServer::POA *) ptr;
-          TAO_POA *tao_poa = ACE_dynamic_cast (TAO_POA *, poa);
+          TAO_POA *tao_poa = ACE_dynamic_cast (TAO_POA *, this->poa_var_.in ());
 
           exception_message = "While forwarding object";
           tao_poa->forward_object (oid.in (),

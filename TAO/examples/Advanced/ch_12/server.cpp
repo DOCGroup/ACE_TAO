@@ -53,7 +53,7 @@ operator<< (ostream & os, const CORBA::Exception & e)
 
 //#endif
 
-// Helper function to create object references. 
+// Helper function to create object references.
 
 static CCS::Thermometer_ptr
 make_dref (PortableServer::POA_ptr poa, CCS::AssetType anum)
@@ -196,7 +196,7 @@ location (const char *loc) throw (CORBA::SystemException)
 {
   set_loc (loc);
 }
-    
+
 //----------------------------------------------------------------
 
 // Helper function to get a thermostat's nominal temperature.
@@ -223,9 +223,9 @@ throw (CCS::Thermostat::BadTemp)
   // so we first read the current nominal temperature before
   // changing it.
   assert (ICP_get (m_anum, "nominal_temp", &old_temp, sizeof (old_temp)) == 0);
-    
+
   // Now set the nominal temperature to the new value.
-  if  (ICP_set (m_anum, "nominal_temp", &new_temp) != 0) 
+  if  (ICP_set (m_anum, "nominal_temp", &new_temp) != 0)
     {
       // If ICP_set () failed, read this thermostat's minimum and
       // maximum so we can initialize the BadTemp exception.
@@ -308,12 +308,12 @@ exists (CCS::AssetType anum)
 Controller_impl::
 Controller_impl (PortableServer::POA_ptr poa,
                  const char *asset_file)
-  throw (int) 
+  throw (int)
     : m_poa (PortableServer::POA::_duplicate (poa)),
       m_asset_file (asset_file)
 {
   fstream afile (m_asset_file.in (), ios::in|ios::out, 0666);
-  if  (!afile) 
+  if  (!afile)
     {
       cerr << "Cannot open " << m_asset_file.in () << endl;
       throw 0;
@@ -338,17 +338,17 @@ Controller_impl::
   // Write out the current set of asset numbers
   // and clean up all servant instances.
   ofstream afile (m_asset_file.in ());
-  if  (!afile) 
+  if  (!afile)
     {
       cerr << "Cannot open " << m_asset_file.in () << endl;
       assert (0);
     }
   AssetMap::iterator i;
 
-  for  (i = m_assets.begin (); i != m_assets.end (); i++) 
+  for  (i = m_assets.begin (); i != m_assets.end (); i++)
     {
       afile << i->first << endl;
-      if  (!afile) 
+      if  (!afile)
         {
           cerr << "Cannot update " << m_asset_file.in () << endl;
           assert (0);
@@ -356,7 +356,7 @@ Controller_impl::
       delete i->second;
     }
   afile.close ();
-  if  (!afile) 
+  if  (!afile)
     {
       cerr << "Cannot close " << m_asset_file.in () << endl;
       assert (0);
@@ -396,7 +396,7 @@ create_thermostat (CCS::AssetType anum,
   assert (ICP_online (anum) == 0);
   assert (ICP_set (anum, "location", loc) == 0);
   // Set the nominal temperature.
-  if  (ICP_set (anum, "nominal_temp", &temp) != 0) 
+  if  (ICP_set (anum, "nominal_temp", &temp) != 0)
     {
       // If ICP_set () failed, read this thermostat's minimum
       // and maximum so we can initialize the BadTemp exception.
@@ -453,7 +453,7 @@ change (const CCS::Controller::ThermostatSeq &  tlist,
   // directly, so for each thermostat, we read the nominal
   // temperature, add the delta value to it, and write
   // it back again.
-  for  (CORBA::ULong i = 0; i < tlist.length (); i++) 
+  for  (CORBA::ULong i = 0; i < tlist.length (); i++)
     {
       if  (CORBA::is_nil (tlist[i]))
         continue;                       // Skip nil references
@@ -461,11 +461,11 @@ change (const CCS::Controller::ThermostatSeq &  tlist,
       // Read nominal temp and update it.
       CCS::TempType tnom = tlist[i]->get_nominal ();
       tnom += delta;
-      try 
+      try
         {
           tlist[i]->set_nominal (tnom);
         }
-      catch  (const CCS::Thermostat::BadTemp &bt) 
+      catch  (const CCS::Thermostat::BadTemp &bt)
         {
           // If the update failed because the temperature
           // is out of range, we add the thermostat's info
@@ -492,26 +492,26 @@ throw (CORBA::SystemException)
 {
   // Loop over input list and lookup each device.
   CORBA::ULong listlen = slist.length ();
-  for  (CORBA::ULong i = 0; i < listlen; i++) 
+  for  (CORBA::ULong i = 0; i < listlen; i++)
     {
 
       AssetMap::iterator where;   // Iterator for asset set
       int num_found = 0;          // Num matched per iteration
-        
+
       // Assume we will not find a matching device.
       slist[i].device = CCS::Thermometer::_nil ();
 
       // Work out whether we are searching by asset,
       // model, or location.
       CCS::Controller::SearchCriterion sc = slist[i].key._d ();
-      if  (sc == CCS::Controller::ASSET) 
+      if  (sc == CCS::Controller::ASSET)
         {
           // Search for matching asset number.
           where = m_assets.find (slist[i].key.asset_num ());
           if  (where != m_assets.end ())
             slist[i].device = make_dref (m_poa.in (), where->first);
         }
-      else 
+      else
         {
           // Search for model or location string.
           const char *search_str;
@@ -523,17 +523,17 @@ throw (CORBA::SystemException)
           // Find first matching device  (if any).
           where = find_if (m_assets.begin (), m_assets.end (),
                            StrFinder (sc, search_str));
-            
+
           // While there are matches...
-          while  (where != m_assets.end ()) 
+          while  (where != m_assets.end ())
             {
-              if  (num_found == 0) 
+              if  (num_found == 0)
                 {
                   // First match overwrites reference
                   // in search record.
                   slist[i].device = make_dref (m_poa.in (), where->first);
                 }
-              else 
+              else
                 {
                   // Further matches each append a new
                   // element to the search sequence.
@@ -569,11 +569,11 @@ preinvoke (const PortableServer::ObjectId & oid,
 {
   // Convert object id into asset number.
   CORBA::String_var oid_string;
-  try 
+  try
     {
       oid_string = PortableServer::ObjectId_to_string (oid);
     }
-  catch  (const CORBA::BAD_PARAM &) 
+  catch  (const CORBA::BAD_PARAM &)
     {
       throw CORBA::OBJECT_NOT_EXIST ();
     }
@@ -586,7 +586,7 @@ preinvoke (const PortableServer::ObjectId & oid,
   istr >> anum;
   if  (istr.fail ())
     throw CORBA::OBJECT_NOT_EXIST ();
-    
+
   // Check whether the device is known.
   if  (!m_ctrl->exists (anum))
     throw CORBA::OBJECT_NOT_EXIST ();
@@ -595,11 +595,11 @@ preinvoke (const PortableServer::ObjectId & oid,
   // we have a servant in memory.
   Thermometer_impl * servant;
   ActiveObjectMap::iterator servant_pos = m_aom.find (anum);
-  if  (servant_pos  == m_aom.end ()) 
+  if  (servant_pos  == m_aom.end ())
     {
       // No servant in memory. If evictor queue is full,
       // evict servant at head of queue.
-      if  (m_eq.size () == MAX_EQ_SIZE) 
+      if  (m_eq.size () == MAX_EQ_SIZE)
         {
           servant = m_eq.back ();
           m_aom.erase (servant->m_anum);
@@ -613,8 +613,8 @@ preinvoke (const PortableServer::ObjectId & oid,
         servant = new Thermometer_impl (anum);
       else
         servant = new Thermostat_impl (anum);
-    } 
-  else 
+    }
+  else
     {
       // Servant already in memory.
       servant = * (servant_pos->second);   // Remember servant
@@ -629,7 +629,7 @@ preinvoke (const PortableServer::ObjectId & oid,
   // We found a servant, or just instantiated it.  If the operation is
   // not a remove, move the servant to the tail of the evictor queue
   // and update its queue position in the map.
-  if  (strcmp (operation, "remove") != 0) 
+  if  (strcmp (operation, "remove") != 0)
     {
       m_eq.push_front (servant);
       m_aom[anum] = m_eq.begin ();
@@ -643,7 +643,7 @@ main (int argc, char * argv[])
 {
   CORBA::ORB_var orb;
 
-  try 
+  try
     {
       // Initialize orb
       orb = CORBA::ORB_init (argc, argv);
@@ -656,7 +656,7 @@ main (int argc, char * argv[])
 
       // Get POA manager
       PortableServer::POAManager_var poa_mgr = poa->the_POAManager ();
-        
+
       // Create a policy list. We use persistent objects with
       // user-assigned IDs, and explicit activation.
       CORBA::PolicyList policy_list;
@@ -671,7 +671,7 @@ main (int argc, char * argv[])
       // Create a POA for all CCS elements.
       PortableServer::POA_var ccs_poa
         = poa->create_POA ("CCS_POA", poa_mgr.in (), policy_list);
-        
+
       // Create a controller and set static m_ctrl member
       // for thermostats and thermometers.
       Controller_impl ctrl_servant (ccs_poa.in (), "/tmp/CCS_assets");
@@ -688,25 +688,24 @@ main (int argc, char * argv[])
       cout << str.in () << endl << endl;
 
       // Instantiate the servant locator for devices.
-      DeviceLocator_impl my_locator (&ctrl_servant);
-      PortableServer::ServantManager_var locator
-        = my_locator._this ();
+      PortableServer::ServantManager_var locator =
+        new DeviceLocator_impl (&ctrl_servant);
 
       // Set servant locator.
       ccs_poa->set_servant_manager (locator.in ());
-        
+
       // Activate the POA manager.
       poa_mgr->activate ();
 
       // Accept requests
       orb->run ();
     }
-  catch  (const CORBA::Exception & e) 
+  catch  (const CORBA::Exception & e)
     {
       cerr << "Uncaught CORBA exception: " << e << endl;
       return 1;
     }
-  catch  (...) 
+  catch  (...)
     {
       assert (0);  // Uncaught exception, dump core
     }

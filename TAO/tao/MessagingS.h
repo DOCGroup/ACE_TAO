@@ -18,7 +18,7 @@
 
 #include "TimeBaseS.h"
 #include "MessagingC.h"
-#include "POAC.h"
+#include "PortableServerC.h"
 #include "Servant_Base.h"
 
 

@@ -21,21 +21,33 @@
 #define TAO_POAMANAGER_H
 #include "ace/pre.h"
 
-#include "tao/POAS.h"
+#include "tao/PortableServerC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-// for POA skeleton.
-
 #include "tao/poa_macros.h"
+
+// Local Object
+#include "tao/LocalObject.h"
 
 class TAO_POA;
 class TAO_Object_Adapter;
 // Forward decl.
 
-class TAO_Export TAO_POA_Manager : public POA_PortableServer::POAManager
+// This is to remove "inherits via dominance" warnings from MSVC.
+// MSVC is being a little too paranoid.
+#if defined(_MSC_VER)
+#if (_MSC_VER >= 1200)
+#pragma warning(push)
+#endif /* _MSC_VER >= 1200 */
+#pragma warning(disable:4250)
+#endif /* _MSC_VER */
+
+class TAO_Export TAO_POA_Manager :
+  public PortableServer::POAManager,
+  public TAO_Local_RefCounted_Object
 {
   friend class TAO_POA;
   friend class TAO_Object_Adapter;

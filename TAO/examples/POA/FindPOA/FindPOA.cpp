@@ -54,17 +54,14 @@ main (int argc, char **argv)
       ACE_TRY_CHECK;
 
       // Get a TAO_Adapter_Activator reference
-      TAO_Adapter_Activator activator_impl (poa_manager.in ());
-
-      ACE_OS::strcpy (str, "TAO_Adapter_Activator::_this");
       PortableServer::AdapterActivator_var activator =
-        activator_impl._this (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+        new TAO_Adapter_Activator (poa_manager.in ());
 
       // Register the TAO_Adapter_Activator reference to be the RootPOA's
       // Adapter Activator.
       ACE_OS::strcpy (str,"PortableServer::POA::the_activator");
-      root_poa->the_activator (activator.in (), ACE_TRY_ENV);
+      root_poa->the_activator (activator.in (),
+                               ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       // Try to find a childPOA of RootPOA named firstPOA
@@ -103,14 +100,6 @@ main (int argc, char **argv)
                   root_poa_name.in (),
                   first_poa_name.in (),
                   second_poa_name.in ()));
-
-      // This should destroy all its children
-      ACE_OS::strcpy (str, "PortableServer::POA::destroy");
-      root_poa->destroy (1,
-                         1,
-                         ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
     }
   ACE_CATCHANY
     {

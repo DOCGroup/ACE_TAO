@@ -34,7 +34,7 @@ class IMR_Forwarder;
 typedef ImplRepo_i *ImplRepo_i_ptr;
 typedef ImplRepo_i_ptr ImplRepo_i_ref;
 
-class IMR_Adapter_Activator : public POA_PortableServer::AdapterActivator
+class IMR_Adapter_Activator : public PortableServer::AdapterActivator
 {
   // = TITLE
   //    Implementation Repository Adapter Activator
@@ -59,7 +59,7 @@ private:
   // The object to use as the default servant.
 };
 
-class ImplRepo_i 
+class ImplRepo_i
 : public POA_ImplementationRepository::Administration,
   public TAO_IOR_LookupTable_Callback
 {
@@ -161,8 +161,8 @@ private:
     ACE_THROW_SPEC ((CORBA::SystemException,
                      ImplementationRepository::Administration::NotFound,
                      ImplementationRepository::Administration::CannotActivate));
-  // Implementation of activate_server.  <check_startup> is a flag to check 
-  // the activation mode before attempting to start it.  
+  // Implementation of activate_server.  <check_startup> is a flag to check
+  // the activation mode before attempting to start it.
 
   void start_server_i (const char *server,
                        CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
@@ -201,7 +201,7 @@ private:
   // The ior_multicast event handler.
 
   CORBA::String_var imr_ior_;
-  // Implementation Repository's IOR.  Why do we store it here?  Multicast 
+  // Implementation Repository's IOR.  Why do we store it here?  Multicast
   // doesn't work otherwise.
 
   int argc_;
@@ -209,7 +209,7 @@ private:
 
   char **argv_;
   // The command line arguments.
-  
+
   friend class IMR_Forwarder;
 };
 

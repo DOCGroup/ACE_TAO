@@ -19,23 +19,9 @@ TAO_Client_Priority_Policy::TAO_Client_Priority_Policy (
 
 TAO_Client_Priority_Policy::TAO_Client_Priority_Policy (const TAO_Client_Priority_Policy &rhs)
   : TAO::ClientPriorityPolicy (),
-    CORBA::LocalObject (),
+    TAO_Local_RefCounted_Object (),
     priority_spec_ (rhs.priority_spec_)
 {
-}
-
-void
-TAO_Client_Priority_Policy::_add_ref (void)
-{
-  this->_incr_refcnt ();
-  // This is a TAO specific implementation.
-}
-
-void
-TAO_Client_Priority_Policy::_remove_ref (void)
-{
-  this->_decr_refcnt ();
-  // This is a TAO specific implementation.
 }
 
 TAO::PrioritySpecification

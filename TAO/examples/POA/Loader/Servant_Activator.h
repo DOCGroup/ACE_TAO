@@ -26,7 +26,7 @@
 #include "tao/corba.h"
 #include "ace/DLL.h"
 
-class ServantActivator_i : public POA_PortableServer::ServantActivator
+class ServantActivator_i : public PortableServer::ServantActivator
 {
   //= TITLE
   //   Servant Activator for the MyFoo servant.

@@ -43,7 +43,7 @@
 
 class TAO_Export TAO_Client_Priority_Policy
   : public TAO::ClientPriorityPolicy,
-    public CORBA::LocalObject
+    public TAO_Local_RefCounted_Object
 {
   // = TITLE
   //
@@ -57,12 +57,6 @@ public:
 
   TAO_Client_Priority_Policy (const TAO_Client_Priority_Policy &rhs);
   // Copy constructor.
-
-  virtual void _add_ref (void);
-  // Increment the reference count.
-
-  virtual void _remove_ref (void);
-  // Decrement the reference count.
 
   static CORBA::Policy_ptr create (
       const CORBA::Any& val,

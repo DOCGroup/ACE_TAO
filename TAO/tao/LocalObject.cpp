@@ -199,4 +199,16 @@ CORBA::LocalObject::_validate_connection (CORBA::PolicyList_out,
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 }
 
+void
+TAO_Local_RefCounted_Object::_add_ref (void)
+{
+  this->_incr_refcnt ();
+}
+
+void
+TAO_Local_RefCounted_Object::_remove_ref (void)
+{
+  this->_decr_refcnt ();
+}
+
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */

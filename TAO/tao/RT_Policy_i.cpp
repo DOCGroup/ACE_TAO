@@ -22,7 +22,7 @@ TAO_PriorityModelPolicy::TAO_PriorityModelPolicy
 TAO_PriorityModelPolicy::TAO_PriorityModelPolicy (const
                                                   TAO_PriorityModelPolicy &rhs)
   : RTCORBA::PriorityModelPolicy (),
-    CORBA::LocalObject (),
+    TAO_Local_RefCounted_Object (),
     priority_model_ (rhs.priority_model_),
     server_priority_ (rhs.server_priority_)
 {
@@ -102,18 +102,6 @@ TAO_PriorityModelPolicy::_tao_decode (TAO_InputCDR &in_cdr)
   return 0;
 }
 
-void
-TAO_PriorityModelPolicy::_add_ref (void)
-{
-  this->_incr_refcnt ();
-}
-
-void
-TAO_PriorityModelPolicy::_remove_ref (void)
-{
-  this->_decr_refcnt ();
-}
-
 // ****************************************************************
 
 TAO_ThreadpoolPolicy::TAO_ThreadpoolPolicy (RTCORBA::ThreadpoolId id)
@@ -124,7 +112,7 @@ TAO_ThreadpoolPolicy::TAO_ThreadpoolPolicy (RTCORBA::ThreadpoolId id)
 TAO_ThreadpoolPolicy::TAO_ThreadpoolPolicy (const TAO_ThreadpoolPolicy
                                             &rhs)
   : RTCORBA::ThreadpoolPolicy (),
-    CORBA::LocalObject (),
+    TAO_Local_RefCounted_Object (),
     id_ (rhs.id_)
 {
 }
@@ -163,18 +151,6 @@ void TAO_ThreadpoolPolicy::destroy (CORBA::Environment &)
 {
 }
 
-void
-TAO_ThreadpoolPolicy::_add_ref (void)
-{
-  this->_incr_refcnt ();
-}
-
-void
-TAO_ThreadpoolPolicy::_remove_ref (void)
-{
-  this->_decr_refcnt ();
-}
-
 // ****************************************************************
 
 TAO_PrivateConnectionPolicy::TAO_PrivateConnectionPolicy (void)
@@ -184,7 +160,7 @@ TAO_PrivateConnectionPolicy::TAO_PrivateConnectionPolicy (void)
 TAO_PrivateConnectionPolicy::TAO_PrivateConnectionPolicy (const
                                                            TAO_PrivateConnectionPolicy &)
   : RTCORBA::PrivateConnectionPolicy (),
-    CORBA::LocalObject ()
+    TAO_Local_RefCounted_Object ()
 {
 }
 
@@ -216,18 +192,6 @@ TAO_PrivateConnectionPolicy::destroy (CORBA::Environment &)
 {
 }
 
-void
-TAO_PrivateConnectionPolicy::_add_ref (void)
-{
-  this->_incr_refcnt ();
-}
-
-void
-TAO_PrivateConnectionPolicy::_remove_ref (void)
-{
-  this->_decr_refcnt ();
-}
-
 // ****************************************************************
 
 TAO_PriorityBandedConnectionPolicy::TAO_PriorityBandedConnectionPolicy
@@ -240,7 +204,7 @@ TAO_PriorityBandedConnectionPolicy::TAO_PriorityBandedConnectionPolicy
 TAO_PriorityBandedConnectionPolicy::TAO_PriorityBandedConnectionPolicy
 (const TAO_PriorityBandedConnectionPolicy &rhs)
   : RTCORBA::PriorityBandedConnectionPolicy (),
-    CORBA::LocalObject (),
+    TAO_Local_RefCounted_Object (),
     priority_bands_ (rhs.priority_bands_)
 {
 }
@@ -284,18 +248,6 @@ TAO_PriorityBandedConnectionPolicy::copy (CORBA::Environment &ACE_TRY_ENV)
 
 void TAO_PriorityBandedConnectionPolicy::destroy (CORBA::Environment &)
 {
-}
-
-void
-TAO_PriorityBandedConnectionPolicy::_add_ref (void)
-{
-  this->_incr_refcnt ();
-}
-
-void
-TAO_PriorityBandedConnectionPolicy::_remove_ref (void)
-{
-  this->_decr_refcnt ();
 }
 
 ///////////////////////////////////////////////////////
@@ -417,7 +369,7 @@ TAO_TCP_Properties::no_delay (CORBA::Boolean no_delay,
 CORBA::Boolean
 TAO_TCP_Properties::_tao_encode (TAO_OutputCDR & out_cdr)
 {
-  return ((out_cdr << this->send_buffer_size_) 
+  return ((out_cdr << this->send_buffer_size_)
           &&
           (out_cdr << this->recv_buffer_size_)
           &&
@@ -442,18 +394,6 @@ TAO_TCP_Properties::_tao_decode (TAO_InputCDR &in_cdr)
           (in_cdr.read_boolean (this->no_delay_)));
 }
 
-void
-TAO_TCP_Properties::_add_ref (void)
-{
-  this->_incr_refcnt ();
-}
-
-void
-TAO_TCP_Properties::_remove_ref (void)
-{
-  this->_decr_refcnt ();
-}
-
 // ****************************************************************
 
 TAO_ServerProtocolPolicy::TAO_ServerProtocolPolicy (const
@@ -466,7 +406,7 @@ TAO_ServerProtocolPolicy::TAO_ServerProtocolPolicy (const
 TAO_ServerProtocolPolicy::TAO_ServerProtocolPolicy (const
                                                     TAO_ServerProtocolPolicy &rhs)
   : RTCORBA::ServerProtocolPolicy (),
-    CORBA::LocalObject (),
+    TAO_Local_RefCounted_Object (),
     protocols_ (rhs.protocols_)
 {
 }
@@ -513,18 +453,6 @@ TAO_ServerProtocolPolicy::destroy (CORBA::Environment &)
 {
 }
 
-void
-TAO_ServerProtocolPolicy::_add_ref (void)
-{
-  this->_incr_refcnt ();
-}
-
-void
-TAO_ServerProtocolPolicy::_remove_ref (void)
-{
-  this->_decr_refcnt ();
-}
-
 // ****************************************************************
 
 TAO_ClientProtocolPolicy::TAO_ClientProtocolPolicy (const
@@ -537,7 +465,7 @@ TAO_ClientProtocolPolicy::TAO_ClientProtocolPolicy (const
 TAO_ClientProtocolPolicy::TAO_ClientProtocolPolicy (const
                                                     TAO_ClientProtocolPolicy &rhs)
   : RTCORBA::ClientProtocolPolicy (),
-    CORBA::LocalObject (),
+    TAO_Local_RefCounted_Object (),
     protocols_ (rhs.protocols_)
 {
 }
@@ -584,18 +512,6 @@ TAO_ClientProtocolPolicy::destroy (CORBA::Environment &)
 {
 }
 
-void
-TAO_ClientProtocolPolicy::_add_ref (void)
-{
-  this->_incr_refcnt ();
-}
-
-void
-TAO_ClientProtocolPolicy::_remove_ref (void)
-{
-  this->_decr_refcnt ();
-}
-
 ///////////////////////////////////////////////////////
 // Method for serialization support.
 
@@ -613,7 +529,7 @@ TAO_ClientProtocolPolicy::_tao_encode (TAO_OutputCDR &out_cdr)
        (i < this->protocols_.length ()) && is_write_ok;
        i++)
     {
-      is_write_ok = 
+      is_write_ok =
         (out_cdr << protocols_[i].protocol_type)
         &&
         this->protocols_[i].orb_protocol_properties->_tao_encode (out_cdr)
@@ -669,18 +585,6 @@ TAO_GIOP_Properties::TAO_GIOP_Properties (void)
 
 TAO_GIOP_Properties::~TAO_GIOP_Properties (void)
 {
-}
-
-void
-TAO_GIOP_Properties::_add_ref (void)
-{
-  this->_incr_refcnt ();
-}
-
-void
-TAO_GIOP_Properties::_remove_ref (void)
-{
-  this->_decr_refcnt ();
 }
 
 // ****************************************************************

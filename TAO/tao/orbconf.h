@@ -226,13 +226,17 @@
 # error "tao/orbconf.h: You can only use exceptions in TAO if ACE supports them"
 #endif /* TAO_HAS_EXCEPTIONS */
 
-#if !defined(TAO_HAS_EXCEPTIONS)
+#if !defined (TAO_HAS_EXCEPTIONS)
 #define TAO_ENV_ARG_DECL , CORBA::Environment &ACE_TRY_ENV
+#define TAO_ENV_ARG_DECL_WITH_DEFAULTS , CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ()
 #define TAO_ENV_ARG_DECL_NOT_USED , CORBA::Environment &
+#define TAO_ENV_ARG_PARAMETER , ACE_TRY_ENV
 #define TAO_ENV_ARG_DEFN
 #else
 #define TAO_ENV_ARG_DECL
+#define TAO_ENV_ARG_DECL_WITH_DEFAULTS
 #define TAO_ENV_ARG_DECL_NOT_USED
+#define TAO_ENV_ARG_PARAMETER
 #define TAO_ENV_ARG_DEFN CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ()
 #endif /* TAO_HAS_EXCEPTIONS */
 
@@ -782,35 +786,6 @@ enum MCAST_SERVICEID
 #if !defined (TAO_HAS_INTERFACE_REPOSITORY)
 #  define TAO_HAS_INTERFACE_REPOSITORY 0
 #endif  /* !TAO_HAS_INTERFACE_REPOSITORY */
-
-// REMOTE_POLICIES support is enabled by default if TAO is not
-// configured for minimum CORBA.  If TAO is configured for minimum
-// CORBA, then REMOTE_POLICIES will be disabled by default.
-// To explicitly enable REMOTE_POLICIES support uncomment the following
-// #define TAO_HAS_REMOTE_POLICIES 1
-// To explicitly disable REMOTE_POLICIES support uncomment the following
-// #define TAO_HAS_REMOTE_POLICIES 0
-
-// Default REMOTE_POLICIES settings
-#if !defined (TAO_HAS_REMOTE_POLICIES)
-#  if (TAO_HAS_MINIMUM_CORBA == 1)
-#    define TAO_HAS_REMOTE_POLICIES 0
-#  else
-#    define TAO_HAS_REMOTE_POLICIES 1
-#  endif  /* TAO_HAS_MINIMUM_CORBA */
-#endif  /* !TAO_HAS_REMOTE_POLICIES */
-
-// TAO_HAS_LOCALITY_CONSTRAINT_POLICIES is an internal macro and
-// should not be set by the user.
-#if defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
-# undef TAO_HAS_LOCALITY_CONSTRAINT_POLICIES
-# warning TAO_HAS_LOCALITY_CONSTRAINT_POLICIES is an internal macro \
-and should not be set by the user. Please use TAO_HAS_REMOTE_POLICIES instead.
-#endif /* TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
-
-#if (TAO_HAS_REMOTE_POLICIES == 0)
-# define TAO_HAS_LOCALITY_CONSTRAINT_POLICIES
-#endif /* TAO_HAS_REMOTE_POLICIES */
 
 // With minimum CORBA, we don't have the ForwardRequest exception.
 // Therefore, we can't support the INS forwarding agent.  Otherwise,

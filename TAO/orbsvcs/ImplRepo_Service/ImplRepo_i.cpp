@@ -827,14 +827,10 @@ ImplRepo_i::init (int argc, char **argv, CORBA::Environment &ACE_TRY_ENV)
                       IMR_Adapter_Activator (this->forwarder_impl_),
                       -1);
 
-      PortableServer::AdapterActivator_var activator =
-        this->activator_->_this (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
       // Register the Adapter_Activator reference to be the RootPOA's
       // Adapter Activator.
 
-      this->root_poa_->the_activator (activator.in (), ACE_TRY_ENV);
+      this->root_poa_->the_activator (this->activator_, ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       // Get reactor instance from TAO.
@@ -1029,7 +1025,7 @@ ImplRepo_i::~ImplRepo_i (void)
                   "Implementation Repository: cannot remove handler\n"));
 
   delete this->forwarder_impl_;
-  delete this->activator_;
+  CORBA::release (this->activator_);
   delete this->ior_multicast_;
 }
 
@@ -1306,12 +1302,8 @@ IMR_Adapter_Activator::unknown_adapter (PortableServer::POA_ptr parent,
           ACE_TRY_CHECK;
         }
 
-      exception_message = "While _this";
-      PortableServer::AdapterActivator_var activator = this->_this (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
       exception_message = "While child->the_activator";
-      child->the_activator (activator.in (), ACE_TRY_ENV);
+      child->the_activator (this, ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       exception_message = "While unknown_adapter, set_servant";

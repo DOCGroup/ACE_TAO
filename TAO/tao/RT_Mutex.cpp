@@ -37,18 +37,6 @@ TAO_RT_Mutex::try_lock (TimeBase::TimeT,
   return 0;
 }
 
-void
-TAO_RT_Mutex::_add_ref (void)
-{
-  this->_incr_refcnt ();
-}
-
-void
-TAO_RT_Mutex::_remove_ref (void)
-{
-  this->_decr_refcnt ();
-}
-
 #endif /* TAO_HAS_RT_CORBA == 1 */
 
 ////////////////////////////////////////////////////////////////////////////////

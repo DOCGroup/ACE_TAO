@@ -78,8 +78,8 @@ Server_i::write_iors_to_file (const char *first_ior,
                       -1);
 
   int result = ACE_OS::fprintf (output_file_1,
-				"%s",
-				first_ior);
+                                "%s",
+                                first_ior);
   if (result <= 0
       || ACE_static_cast (size_t,result) != ACE_OS::strlen (first_ior))
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -251,13 +251,9 @@ Server_i::create_activator (PortableServer::POA_var first_poa)
                                           "destroy_servant"),
                       0);
 
-      PortableServer::ServantActivator_var servant_activator =
-        servant_activator_impl_->_this (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
       // Set ServantActivator_i object as the servant_manager of
       // firstPOA.
-      first_poa->set_servant_manager (servant_activator.in (),
+      first_poa->set_servant_manager (servant_activator_impl_,
                                       ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
@@ -300,14 +296,10 @@ Server_i::create_locator (PortableServer::POA_var second_poa)
                                         "destroy_servant"),
                       0);
 
-      PortableServer::ServantLocator_var servant_locator =
-        servant_locator_impl_->_this (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
       // Set ServantLocator_i object as the servant Manager of
       // secondPOA.
 
-      second_poa->set_servant_manager (servant_locator.in (),
+      second_poa->set_servant_manager (servant_locator_impl_,
                                        ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
@@ -380,12 +372,6 @@ Server_i::run (void)
                            "%p\n",
                            "CORBA::ORB::run"),
                           -1);
-
-      // Destroy the root_poa_ and also first_poa and second_poa.
-      root_poa_->destroy (1,
-                          1,
-                          ACE_TRY_ENV);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {

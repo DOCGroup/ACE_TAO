@@ -20,7 +20,7 @@
 
 ACE_RCSID(On_Demand_Activation, server, "$Id$")
 
-static char *ior_output_file = 0;
+static char *ior_output_file = "ior";
 
 static int
 parse_args (int argc, char **argv)
@@ -53,10 +53,6 @@ static int
 write_iors_to_file (const char *first_ior,
                     const char *second_ior)
 {
-  if (ior_output_file == 0)
-    // No filename was specified; simply return
-    return 0;
-
   char ior_output_file_1[BUFSIZ];
   char ior_output_file_2[BUFSIZ];
 
@@ -74,8 +70,8 @@ write_iors_to_file (const char *first_ior,
                       -1);
 
   int result = ACE_OS::fprintf (output_file_1,
-				"%s",
-				first_ior);
+                                "%s",
+                                first_ior);
   if (result <= 0
       || ACE_static_cast(size_t,result) != ACE_OS::strlen (first_ior))
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -200,15 +196,13 @@ main (int argc, char **argv)
           ACE_TRY_CHECK;
         }
 
-      MyFooServantActivator servant_activator_impl (orb.in ());
-      PortableServer::ServantActivator_var servant_activator =
-        servant_activator_impl._this (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+      PortableServer::ServantManager_var servant_activator =
+        new MyFooServantActivator (orb.in ());
 
       // Set MyFooServantActivator object as the servant_manager of
       // firstPOA.
-
-      first_poa->set_servant_manager (servant_activator.in (), ACE_TRY_ENV);
+      first_poa->set_servant_manager (servant_activator.in (),
+                                      ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       // Create a reference with user created ID in firstPOA which uses
@@ -222,15 +216,13 @@ main (int argc, char **argv)
       ACE_TRY_CHECK;
 
 
-      MyFooServantLocator servant_locator_impl (orb.in ());
-      PortableServer::ServantLocator_var servant_locator =
-        servant_locator_impl._this (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
+      PortableServer::ServantManager_var servant_locator =
+        new MyFooServantLocator (orb.in ());
 
       // Set MyFooServantLocator object as the servant Manager of
       // secondPOA.
-      second_poa->set_servant_manager (servant_locator.in (), ACE_TRY_ENV);
+      second_poa->set_servant_manager (servant_locator.in (),
+                                       ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       // Try to create a reference with user created ID in second_poa
@@ -274,13 +266,6 @@ main (int argc, char **argv)
       // Run the ORB.
       if (orb->run () == -1)
         ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "CORBA::ORB::run"), -1);
-
-      // Destroy the root_poa and also first_poa and second_poa
-
-      root_poa->destroy (1,
-                         1,
-                         ACE_TRY_ENV);
-      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {

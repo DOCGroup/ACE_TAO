@@ -18,7 +18,8 @@ TAO_POA::lock (void)
 
 ACE_INLINE
 TAO_POA_Guard::TAO_POA_Guard (TAO_POA &poa,
-                              CORBA::Environment &ACE_TRY_ENV)
+                              CORBA::Environment &ACE_TRY_ENV,
+                              int check_for_destruction)
   : guard_ (poa.lock ())
 {
   if (!this->guard_.locked ())
@@ -29,7 +30,8 @@ TAO_POA_Guard::TAO_POA_Guard (TAO_POA &poa,
           0),
         CORBA::COMPLETED_NO));
 
-  if (poa.cleanup_in_progress ())
+  if (check_for_destruction &&
+      poa.cleanup_in_progress ())
     ACE_THROW (
       CORBA::BAD_INV_ORDER (
         CORBA_SystemException::_tao_minor_code (
@@ -295,7 +297,9 @@ TAO_POA::destroy (CORBA::Boolean etherealize_objects,
                   CORBA::Environment &ACE_TRY_ENV)
 {
   // Lock access for the duration of this transaction.
-  TAO_POA_GUARD;
+  TAO_POA_Guard poa_guard (*this, ACE_TRY_ENV, 0);
+  ACE_UNUSED_ARG (poa_guard);
+  ACE_CHECK;
 
   this->destroy_i (etherealize_objects,
                    wait_for_completion,
@@ -576,18 +580,28 @@ TAO_POA::forward_object (const PortableServer::ObjectId &oid,
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
 ACE_INLINE PortableServer::POA_ptr
-TAO_POA::the_parent (CORBA::Environment &ACE_TRY_ENV)
+TAO_POA::the_parent (CORBA::Environment &)
 {
   if (this->parent_ != 0)
-    return this->parent_->_this (ACE_TRY_ENV);
+    return PortableServer::POA::_duplicate (this->parent_);
   else
     return PortableServer::POA::_nil ();
 }
 
-ACE_INLINE PortableServer::POAManager_ptr
-TAO_POA::the_POAManager (CORBA::Environment &ACE_TRY_ENV)
+ACE_INLINE PortableServer::POAList *
+TAO_POA::the_children (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return this->poa_manager_._this (ACE_TRY_ENV);
+  // Lock access for the duration of this transaction.
+  TAO_POA_GUARD;
+
+  return this->the_children_i (ACE_TRY_ENV);
+}
+
+ACE_INLINE PortableServer::POAManager_ptr
+TAO_POA::the_POAManager (CORBA::Environment &)
+{
+  return PortableServer::POAManager::_duplicate (&this->poa_manager_);
 }
 
 #if (TAO_HAS_MINIMUM_POA == 0)
@@ -646,10 +660,8 @@ TAO_POA::name (void) const
 }
 
 ACE_INLINE char *
-TAO_POA::the_name (CORBA::Environment &ACE_TRY_ENV)
+TAO_POA::the_name (CORBA::Environment &)
 {
-  ACE_UNUSED_ARG (ACE_TRY_ENV);
-
   return CORBA::string_dup (this->name_.c_str ());
 }
 

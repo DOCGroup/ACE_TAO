@@ -79,12 +79,6 @@ TAO_LB_LoadBalancer::init (const char * repository_id,
 {
   ACE_TRY_NEW_ENV
     {
-      // Create a new transient servant manager object in the Root
-      // POA.
-      PortableServer::ServantManager_var servant_manager =
-        this->locator_._this (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
       // Create the appropriate RequestProcessingPolicy
       // (USE_SERVANT_MANAGER) and ServantRetentionPolicy (NON_RETAIN)
       // for a ServantLocator.
@@ -109,7 +103,7 @@ TAO_LB_LoadBalancer::init (const char * repository_id,
       policy_list[1] =
         PortableServer::ServantRetentionPolicy::_duplicate (
            retention. in ());
-      
+
       // Create the child POA with the ServantManager (ReplicaLocator)
       // above policies.
       PortableServer::POAManager_var poa_manager =
@@ -133,7 +127,7 @@ TAO_LB_LoadBalancer::init (const char * repository_id,
 
       // Now set the ReplicaLocator as the child POA's Servant
       // Manager.
-      this->poa_->set_servant_manager (servant_manager.in (),
+      this->poa_->set_servant_manager (&this->locator_,
                                        ACE_TRY_ENV);
       ACE_TRY_CHECK;
 

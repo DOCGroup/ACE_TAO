@@ -48,7 +48,7 @@ public:
                                 throw(CORBA::SystemException);
     virtual void            remove()
                                 throw(CORBA::SystemException);
-    
+
     // Constructor & destructor
     Thermometer_impl(CCS::AssetType anum);
     virtual ~Thermometer_impl();
@@ -195,7 +195,7 @@ private:
 };
 
 class DeviceLocator_impl :
-    public virtual POA_PortableServer::ServantLocator {
+    public virtual PortableServer::ServantLocator {
 public:
     DeviceLocator_impl(Controller_impl * ctrl);
 
@@ -217,7 +217,7 @@ public:
                     void *                           /* cookie */,
                     PortableServer::Servant          /* servant */,
                     CORBA_Environment &
-                ) throw(CORBA::SystemException) {}    
+                ) throw(CORBA::SystemException) {}
 
 private:
     Controller_impl *                   m_ctrl;
@@ -225,7 +225,7 @@ private:
     typedef list<Thermometer_impl *>    EvictorQueue;
     typedef map<CCS::AssetType, EvictorQueue::iterator>
                                         ActiveObjectMap;
-    
+
     static const unsigned int           MAX_EQ_SIZE = 100;
     EvictorQueue                        m_eq;
     ActiveObjectMap                     m_aom;
