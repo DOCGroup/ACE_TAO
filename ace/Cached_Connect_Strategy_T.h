@@ -162,6 +162,13 @@ protected:
   // used in the connect process and hence the connect operation can
   // succeed.
 
+#if defined (ACE_HAS_BROKEN_EXTENDED_TEMPLATES)
+  void cleanup (void);
+  // Since g++ version < 2.8 arent happy with templates, this special
+  // method had to be devised to avoid memory leaks and perform
+  // cleanup of the <connection_cache_>.
+#endif /* ACE_HAS_BROKEN_EXTENDED_TEMPLATES */
+
   CONNECTION_CACHE connection_cache_;
   // Table that maintains the cache of connected <SVC_HANDLER>s.
 };
