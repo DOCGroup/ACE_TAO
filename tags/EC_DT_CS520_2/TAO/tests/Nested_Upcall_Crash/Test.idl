@@ -1,0 +1,27 @@
+/**
+ * @file Test.idl
+ *
+ * $Id$
+ *
+ * @author Carlos O'Ryan <coryan@atdesk.com>
+ *
+ */
+#ifndef Test__idl_
+#define Test__idl_
+
+module Test
+{
+  typedef sequence<octet> Payload;
+  interface Peer
+  {
+    oneway void callme (in Peer callback,
+                        in unsigned long max_depth,
+                        in Payload extra_data);
+
+    oneway void crash();
+
+    void noop();
+  };
+};
+
+#endif /* Test__idl_ */

@@ -1,0 +1,13 @@
+// $Id$
+
+#include "CCM_Deployment.idl"
+
+module ATest
+{
+  interface controller
+  {
+    ::Components::Deployment::AssemblyFactory get_factory ();
+
+    oneway void shutdown ();
+  };
+};

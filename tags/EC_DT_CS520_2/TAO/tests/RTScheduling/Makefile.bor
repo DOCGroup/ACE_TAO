@@ -1,0 +1,13 @@
+# $Id$
+#
+# Makefile for building RTScheduling tests
+#
+
+DIRS = \
+   Current \
+   DT_Spawn \
+   Scheduling_Interceptor \
+   Thread_Cancel \
+   VoidData
+
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

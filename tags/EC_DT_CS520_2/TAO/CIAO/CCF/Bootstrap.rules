@@ -1,0 +1,93 @@
+# file      : Bootstrap.rules
+# author    : Boris Kolpackov <boris@kolpackov.net>
+# cvs-id    : $Id$
+
+# basics
+#
+#
+
+define set
+$(eval $1 := $(strip $2))
+endef
+
+define get
+$(value $(strip $1))
+endef
+
+define sub
+$(shell echo $$(($1-$2)))
+endef
+
+define add
+$(shell echo $$(($1+$2)))
+endef
+
+# stack
+#
+#
+
+define push
+$(eval $1 +=$(strip $2))
+endef
+
+define pop
+$(eval $1 :=$(wordlist 1,$(call sub, $(words $(value $(strip $1))), 1),$(value $(strip $1))))
+endef
+
+define top
+$(word $(words $(value $(strip $1))),$(value $(strip $1)))
+endef
+
+# local
+#
+#
+
+define path_to_id
+$(subst /,_,$(subst .,_,$(strip $1)))
+endef
+
+MAKEFILE := $(word $(call sub,$(words $(MAKEFILE_LIST)),1),$(MAKEFILE_LIST))
+INCLUSION_ID := $(call path_to_id,$(MAKEFILE))
+
+define get_inclusion_id
+$(INCLUSION_ID)
+endef
+
+define local_set
+$(eval $(strip $(call get_inclusion_id))_$1 := $(strip $2))
+endef
+
+define local_get
+$($(strip $(call get_inclusion_id))_$1)
+endef
+
+define local_origin
+$(origin $(strip $(call get_inclusion_id))_$1)
+endef
+
+
+define _get_inclusion_count
+$(if $(call local_get,INCLUSION_COUNT),$(call local_get,INCLUSION_COUNT),0)
+endef
+
+define _set_inclusion_count
+$(call local_set,INCLUSION_COUNT,$1)
+endef
+
+# include
+#
+#
+
+define include
+$(strip
+  $(eval $(call push, include_stack, $(MAKEFILE)))                                               \
+  $(eval MAKEFILE :=$(strip $1))                                                                 \
+  $(eval $(call push, inclusion_id_stack, $(INCLUSION_ID)))                                      \
+  $(eval $(call _set_inclusion_count,$(call add,$(call _get_inclusion_count),1)))                \
+  $(eval INCLUSION_ID :=$(INCLUSION_ID)_$(call local_get,INCLUSION_COUNT)_$(call path_to_id,$1)) \
+  $(eval include $1)                                                                             \
+  $(eval INCLUSION_ID :=$(call top, inclusion_id_stack))                                         \
+  $(eval $(call pop, inclusion_id_stack))                                                        \
+  $(eval MAKEFILE :=$(call top, include_stack))                                                  \
+  $(eval $(call pop, include_stack)))
+endef

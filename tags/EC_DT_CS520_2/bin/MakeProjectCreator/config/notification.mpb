@@ -1,0 +1,8 @@
+// -*- MPC -*-
+// $Id$
+
+project : etcl, dynamicany, portableserver {
+  after     += CosNotification
+  libs      += TAO_CosNotification
+  tagchecks += Notify
+}

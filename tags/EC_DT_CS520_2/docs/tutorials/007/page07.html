@@ -1,0 +1,112 @@
+<!-- $Id$ -->
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.04 [en] (X11; I; Linux 2.0.32 i486) [Netscape]">
+   <META NAME="Author" CONTENT="James CE Johnson">
+   <META NAME="Description" CONTENT="A first step towards using ACE productively">
+   <TITLE>ACE Tutorial 007</TITLE>
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF" LINK="#000FFF" VLINK="#FF0F0F">
+
+<CENTER><B><FONT SIZE=+2>ACE Tutorial 007</FONT></B></CENTER>
+
+<CENTER><B><FONT SIZE=+2>Creating a thread-pool server</FONT></B></CENTER>
+<HR>
+<P>Two new files this time.&nbsp; The first is <A HREF="thread_pool.h">thread_pool.h</A>
+where we declare our Thread_Pool object.&nbsp; This is responsible for
+abstracting away the thread pool implementation details and allowing us
+to make so few changes to the rest of the code.
+
+<P>
+<HR WIDTH="100%"><FONT FACE="Arial,Helvetica"></FONT>
+
+<PRE>
+<font color=red>// $Id$</font>
+
+<font color=blue>#ifndef</font> <font color=purple>THREAD_POOL_H</font>
+<font color=blue>#define</font> <font color=purple>THREAD_POOL_H</font>
+
+<font color=red>/* In order to implement a thread pool, we have to have an object that
+   can create a thread.  The ACE_Task&lt;> is the basis for doing just
+   such a thing.  */</font>
+<font color=blue>#include</font> "<A HREF="../../../ace/Task.h">ace/Task.h</A>"
+<font color=blue>#include</font> "<A HREF="../../../ace/Atomic_Op.h">ace/Atomic_Op.h</A>"
+
+<font color=blue>#if !defined</font> (<font color=purple>ACE_LACKS_PRAGMA_ONCE</font>)
+<font color=blue># pragma</font> <font color=purple>once</font>
+<font color=blue>#endif</font> <font color=red>/* ACE_LACKS_PRAGMA_ONCE */</font>
+
+<font color=red>/* We need a forward reference for ACE_Event_Handler so that our
+   enqueue() method can accept a pointer to one.  */</font>
+class ACE_Event_Handler;
+
+<font color=red>/* Although we modified the rest of our program to make use of the
+   thread pool implementation, if you look closely you'll see that the
+   changes were rather minor.  The "<font color=green>ACE way</font>" is generally to create a
+   helper object that abstracts away the details not relevant to your
+   application.  That's what I'm trying to do here by creating the
+   Thread_Pool object.  */</font>
+class Thread_Pool : public ACE_Task&lt;ACE_MT_SYNCH>
+{
+public:
+  typedef ACE_Task&lt;ACE_MT_SYNCH> inherited;
+
+  <font color=red>/* Provide an enumeration for the default pool size.  By doing this,
+    other objects can use the value when they want a default.  */</font>
+  enum size_t
+  {
+    default_pool_size_ = 5
+  };
+
+  <font color=red>// Basic constructor</font>
+  Thread_Pool (void);
+
+  <font color=red>/* Starting the thread pool causes one or more threads to be
+    activated.  When activated, they all execute the svc() method
+    declared below.  */</font>
+  int start (int pool_size = default_pool_size_);
+
+  <font color=red>/*
+   */</font>
+  virtual int stop (void);
+
+  <font color=red>/* To use the thread pool, you have to put some unit of work into
+    it.  Since we're dealing with event handlers (or at least their
+    derivatives), I've chosen to provide an enqueue() method that
+    takes a pointer to an ACE_Event_Handler.  The handler's
+    handle_input() method will be called, so your object has to know
+    when it is being called by the thread pool.  */</font>
+  int enqueue (ACE_Event_Handler *handler);
+
+  <font color=red>/* Another handy ACE template is ACE_Atomic_Op&lt;>.  When
+    parameterized, this allows is to have a thread-safe counting
+    object.  The typical arithmetic operators are all internally
+    thread-safe so that you can share it across threads without
+    worrying about any contention issues.  */</font>
+  typedef ACE_Atomic_Op&lt;ACE_Mutex, int> counter_t;
+
+protected:
+
+  <font color=red>/* Our svc() method will dequeue the enqueued event handler objects
+    and invoke the handle_input() method on each.  Since we're likely
+    running in more than one thread, idle threads can take work from
+    the queue while other threads are busy executing handle_input() on
+    some object.  */</font>
+  int svc (void);
+
+  <font color=red>/* We use the atomic op to keep a count of the number of threads in
+    which our svc() method is running.  This is particularly important
+    when we want to close() it down!  */</font>
+  counter_t active_threads_;
+};
+
+<font color=blue>#endif</font> <font color=red>/* THREAD_POOL_H */</font>
+</PRE>
+<HR WIDTH="100%">
+
+<P>Well, that doesn't look too complex.&nbsp; What about the implementation?
+
+<P><HR WIDTH="100%">
+<CENTER>[<A HREF="../online-tutorials.html">Tutorial Index</A>] [<A HREF="page08.html">Continue This Tutorial</A>]</CENTER>
+

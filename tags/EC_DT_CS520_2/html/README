@@ -1,0 +1,11 @@
+# $Id$
+
+	The following directory is a placeholder for the Doxygen
+generated files.  The index.html file only makes sense if you download
+the ACE-html.tar.gz documents from:
+
+ftp://ace.cs.wustl.edu/pub/ACE/
+
+	or if you generate the Doxygen documentation using the
+configuration files in $ACE_ROOT/etc/*.doxygen and/or the perl script
+in $ACE_ROOT/bin/generate_doxygen.pl

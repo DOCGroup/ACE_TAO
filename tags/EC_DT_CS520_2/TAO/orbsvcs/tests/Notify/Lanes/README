@@ -1,0 +1,58 @@
+RT Notification test to verify lane support
+===========================================
+This test makes sure that events are send according to the lanes
+configured on the evnt channel.
+
+Description:
+===========
+
+notify.conf:
+-----------
+The notify.conf file specifies the Test Filter Factory to be used by
+the RT Notification library.
+The Test Filter factory create special filter objects. these objects
+check if the correct lane is being used for invocations.
+
+
+supplier.conf:
+-------------
+
+An event channel is created with 4 lanes. The lowest priority lane (0 in
+continuous mapping) is used to handle the administrative invocations
+by the driver program. 3 other lanes are used to handle 3 different
+event flow "paths" in the event channel.
+
+3 Periodic suppliers are created. Each supplier is configured to
+operate in its lane.
+
+consumer.conf:
+------------
+
+An RT POA is created with 4 lanes (identical to the one setup on the
+eventchannel).
+
+3 Periodic consumers and created and activated in the local RT POA.
+
+Expected Result:
+==============
+if a request reaches a Lane that it was not supposed to, an
+error message is printed. otherwise some housekeeping messages are
+generated when the test runs.
+
+
+Running the test on 1 host:
+-------------------------
+$> perl run_test.pl
+
+
+Running the test distributed:
+-------------------------
+
+on Host1:
+$1> perl run_test_notify.pl
+
+on Host2:
+$2> perl run_test_supplier.pl
+
+on Host3:
+$3> perl run_test_consumer.pl
