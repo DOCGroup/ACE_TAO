@@ -107,6 +107,10 @@ SOURCE=.\Asynch_Invocation.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Asynch_Reply_Dispatcher.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\BoundsC.cpp
 # End Source File
 # Begin Source File
@@ -171,6 +175,14 @@ SOURCE=.\default_server.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\DII_Invocation.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\DII_Reply_Dispatcher.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Direct_Priority_Mapping.cpp
 # End Source File
 # Begin Source File
@@ -224,6 +236,10 @@ SOURCE=.\Environment.cpp
 # Begin Source File
 
 SOURCE=.\Exception.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Exclusive_TMS.cpp
 # End Source File
 # Begin Source File
 
@@ -392,6 +408,10 @@ SOURCE=.\MessagingS.cpp
 # Begin Source File
 
 SOURCE=.\MProfile.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Muxed_TMS.cpp
 # End Source File
 # Begin Source File
 
@@ -623,6 +643,10 @@ SOURCE=.\Sync_Strategies.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Synch_Reply_Dispatcher.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Tagged_Components.cpp
 # End Source File
 # Begin Source File
@@ -711,6 +735,18 @@ SOURCE=.\ValueFactory_Map.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Wait_On_Leader_Follower.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Wait_On_Reactor.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Wait_On_Read.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Wait_Strategy.cpp
 # End Source File
 # Begin Source File
@@ -740,6 +776,10 @@ SOURCE=.\arg_shifter.h
 # Begin Source File
 
 SOURCE=.\Asynch_Invocation.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Asynch_Reply_Dispatcher.h
 # End Source File
 # Begin Source File
 
@@ -807,6 +847,14 @@ SOURCE=.\default_server.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\DII_Invocation.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\DII_Reply_Dispatcher.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Direct_Priority_Mapping.h
 # End Source File
 # Begin Source File
@@ -852,6 +900,10 @@ SOURCE=.\Environment.h
 # Begin Source File
 
 SOURCE=.\Exception.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Exclusive_TMS.h
 # End Source File
 # Begin Source File
 
@@ -996,6 +1048,10 @@ SOURCE=.\MessagingS.h
 # Begin Source File
 
 SOURCE=.\MProfile.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Muxed_TMS.h
 # End Source File
 # Begin Source File
 
@@ -1227,6 +1283,10 @@ SOURCE=.\stub.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Synch_Reply_Dispatcher.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Tagged_Components.h
 # End Source File
 # Begin Source File
@@ -1304,6 +1364,18 @@ SOURCE=.\ValueFactory_Map.h
 # Begin Source File
 
 SOURCE=.\varbase.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Wait_On_Leader_Follower.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Wait_On_Reactor.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Wait_On_Read.h
 # End Source File
 # Begin Source File
 
