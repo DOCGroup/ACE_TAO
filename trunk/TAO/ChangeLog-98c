@@ -1,40 +1,46 @@
+Thu Jul 23 23:15:33 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/Cubit/TAO/MT_Cubit/server.cpp (start_servants):
+          fixed some signed/unsigned comparisons.  (main): removed
+          unused local "temp_ptr".
+
 Thu Jul 23 19:59:31 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* tests/Cubit/TAO/MT_Cubit/server.cpp: Added code so that -ORB
-	arguments are passed to the low priority thread as well. Also now
-	the high priority threads checks the -p and -h arguments before
-	ORB_init so that it uses the port specified on the command line.
+        * tests/Cubit/TAO/MT_Cubit/server.cpp: Added code so that -ORB
+        arguments are passed to the low priority thread as well. Also now
+        the high priority threads checks the -p and -h arguments before
+        ORB_init so that it uses the port specified on the command line.
 
 Thu Jul 23 16:54:59 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/Server_Request.cpp: 
-	  Care must be exercised when transferring the exception from the
-	  Environment to the Any (in set_exception()): both believe that
-	  they own the Exception so the refcnt() must be increased.
+        * tao/Server_Request.cpp:
+          Care must be exercised when transferring the exception from the
+          Environment to the Any (in set_exception()): both believe that
+          they own the Exception so the refcnt() must be increased.
 
-	* tao/Any.cpp: 
-	  The Any owns the top-level memory for the objects it contains,
-	  we delete it now.
+        * tao/Any.cpp:
+          The Any owns the top-level memory for the objects it contains,
+          we delete it now.
 
-	* tao/Typecode.h: 
-	* tao/Typecode.cpp: 
-	  Fixed memory leaks in the private_member_name_list and in
-	  Typecodes created on the stack (not owned by the ORB, yes there
-	  are some).
+        * tao/Typecode.h:
+        * tao/Typecode.cpp:
+          Fixed memory leaks in the private_member_name_list and in
+          Typecodes created on the stack (not owned by the ORB, yes there
+          are some).
 
-	* orbsvcs/Trading_Service/Makefile: 
-	* orbsvcs/tests/Trading/Makefile: 
-	  Updated dependencies.
+        * orbsvcs/Trading_Service/Makefile:
+        * orbsvcs/tests/Trading/Makefile:
+          Updated dependencies.
 
 Thu Jul 23 13:06:10 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_union/union_cs.cpp: 
-	  Removed excesive unindentation, the generated code was
-	  unreadable, but correct, it just happens that I have to debug it
-	  every so often.
+        * TAO_IDL/be/be_visitor_union/union_cs.cpp:
+          Removed excesive unindentation, the generated code was
+          unreadable, but correct, it just happens that I have to debug it
+          every so often.
 
-	* TAO_IDL/be/be_helper.cpp: 
-	  Never accept negative indentation values.
+        * TAO_IDL/be/be_helper.cpp:
+          Never accept negative indentation values.
 
 Thu Jul 23 12:18:04 1998  David L. Levine  <levine@cs.wustl.edu>
 
