@@ -29,9 +29,9 @@ namespace TAO
 {
 
   /**
-   * The PG_Property_Set captures the set of properties from a PortableGroup::Properties
-   * structure in a more usable format (a hash map), and provides methods for
-   * operating on these properties.
+   * The PG_Property_Set captures the set of properties from a
+   * PortableGroup::Properties structure in a more usable format (a
+   * hash map), and provides methods for operating on these properties.
    *
    * It supports "chains" of property sets to implement default value semantics.
    * If a requested property is not found in this set, the default set(s) are searched.
@@ -59,13 +59,14 @@ namespace TAO
     /**
      * constructor: empty set with no defaults.
      */
-    PG_Property_Set();
+    PG_Property_Set (void);
 
     /**
      * constructor
      * @param property_set the properties to be decoded
      */
-    PG_Property_Set (const PortableGroup::Properties & property_set ACE_ENV_ARG_DECL)
+    PG_Property_Set (const PortableGroup::Properties & property_set
+                     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     /**
@@ -73,7 +74,9 @@ namespace TAO
      * @param property_set the properties to be decoded
      * @param defaults a propert set decoder that supplies default values.
      */
-    PG_Property_Set (const PortableGroup::Properties & property_set, PG_Property_Set * defaults ACE_ENV_ARG_DECL)
+    PG_Property_Set (const PortableGroup::Properties & property_set,
+                     PG_Property_Set * defaults
+                     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     /**

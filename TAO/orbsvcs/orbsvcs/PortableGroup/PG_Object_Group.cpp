@@ -39,21 +39,12 @@ TAO::PG_Object_Group::MemberInfo::MemberInfo (
 {
 }
 
-TAO::PG_Object_Group::MemberInfo::~MemberInfo ()
+TAO::PG_Object_Group::MemberInfo::~MemberInfo (void)
 {
   if( ! CORBA::is_nil (this->factory_.in()))
-  {
-    ACE_TRY_NEW_ENV
     {
       this->factory_->delete_object (this->factory_id_);
     }
-    ACE_CATCHANY;
-    {
-      // ignore this.  It may have faulted and gone away.
-      // (and besides, we're in a destructor.
-    }
-    ACE_ENDTRY;
-  }
 }
 
 
@@ -175,8 +166,8 @@ PortableGroup::ObjectGroup_ptr TAO::PG_Object_Group::add_member_to_iogr(
 void TAO::PG_Object_Group::add_member (
     const PortableGroup::Location & the_location,
     CORBA::Object_ptr member
-    ACE_ENV_ARG_PARAMETER)
-  ACE_THROW_SPEC ( (CORBA::SystemException,
+    ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableGroup::ObjectNotAdded))
 
 {
@@ -189,25 +180,34 @@ void TAO::PG_Object_Group::add_member (
   // IORs, not IOGRs to send new IOGRs out
   // to replicas.
 
-  CORBA::String_var member_ior_string = orb_->object_to_string (member ACE_ENV_ARG_PARAMETER);
+  CORBA::String_var member_ior_string =
+    orb_->object_to_string (member
+                            ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  PortableGroup::ObjectGroup_var new_reference = add_member_to_iogr (member ACE_ENV_ARG_PARAMETER);
+  PortableGroup::ObjectGroup_var new_reference =
+    add_member_to_iogr (member
+                        ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
 
   // Convert new member back to a (non group) ior.
-  CORBA::Object_var member_ior = this->orb_->string_to_object (member_ior_string ACE_ENV_ARG_PARAMETER);
+  CORBA::Object_var member_ior =
+    this->orb_->string_to_object (member_ior_string
+                                  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   MemberInfo * info = 0;
-  ACE_NEW_THROW_EX (info, MemberInfo(member_ior.in(), the_location),
-    CORBA::NO_MEMORY());
+  ACE_NEW_THROW_EX (info,
+                    MemberInfo(member_ior.in(),
+                               the_location),
+                    CORBA::NO_MEMORY());
 
   if (this->members_.bind (the_location, info) != 0)
-  {
-    ACE_THROW(CORBA::NO_MEMORY());
-  }
+    {
+      // @@ Dale why this is a NO MEMORY exception?
+      ACE_THROW(CORBA::NO_MEMORY());
+    }
 
   this->reference_ = new_reference; // note var-to-var assignment does a duplicate
   if (this->increment_version ())
@@ -217,14 +217,13 @@ void TAO::PG_Object_Group::add_member (
   }
   else
   {
-    ACE_THROW (PortableGroup::ObjectNotAdded());
+    ACE_THROW (PortableGroup::ObjectNotAdded ());
   }
 
   if (TAO_debug_level > 6)
   {
     ACE_DEBUG ((LM_DEBUG,
-      ACE_TEXT("PG (%P|%t) exit Object_Group add_member \n")
-      ));
+      ACE_TEXT("PG (%P|%t) exit Object_Group add_member \n")));
   }
 }
 
@@ -287,12 +286,13 @@ int TAO::PG_Object_Group::set_primary_member (
   else
   {
     if (TAO_debug_level > 3)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-        ACE_TEXT ("TAO-PG (%P|%t) - set_primary_location throwing MemberNotFound.\n")
-        ));
-    }
-    ACE_THROW (PortableGroup::MemberNotFound());
+      {
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("TAO-PG (%P|%t) - set_primary_location ")
+                    ACE_TEXT ("throwing MemberNotFound.\n")));
+      }
+    ACE_THROW_RETURN (PortableGroup::MemberNotFound(),
+                      -1);
   }
   return result;
 }
@@ -356,21 +356,24 @@ PortableGroup::ObjectGroupId TAO::PG_Object_Group::get_object_group_id () const
 
 void TAO::PG_Object_Group::set_properties_dynamically (
     const PortableGroup::Properties & overrides
-    ACE_ENV_ARG_DECL)
+    ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableGroup::InvalidProperty,
                    PortableGroup::UnsupportedProperty))
 {
-  InternalGuard guard(this->internals_);
-  this->properties_.decode (overrides ACE_ENV_ARG_PARAMETER);
+  InternalGuard guard (this->internals_);
+
+  this->properties_.decode (overrides);
+
   //@@ int todo_override_rather_than_replace?
 }
 
-void TAO::PG_Object_Group::get_properties (PortableGroup::Properties_var & result ACE_ENV_ARG_DECL) const
+void TAO::PG_Object_Group::get_properties (PortableGroup::Properties_var & result
+                                           ACE_ENV_ARG_DECL) const
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // const cast to simulate mutable
-  InternalGuard guard(ACE_const_cast (TAO::PG_Object_Group *, this)->internals_);
+  InternalGuard guard (ACE_const_cast (TAO::PG_Object_Group *, this)->internals_);
   this->properties_.export_properties(*result ACE_ENV_ARG_PARAMETER);
 }
 
