@@ -81,7 +81,7 @@ TAO_Collocated_Object::_is_a (const CORBA::Char *logical_type_id,
 CORBA::Boolean
 TAO_Collocated_Object::_is_equivalent (CORBA_Object_ptr other_obj,
                                        CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+  ACE_THROW_SPEC (())
 {
   CORBA::Boolean equivalent =
     this->CORBA_Object::_is_equivalent (other_obj, ACE_TRY_ENV);
