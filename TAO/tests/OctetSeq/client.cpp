@@ -1,6 +1,7 @@
 // $Id$
 
 #include "ace/Get_Opt.h"
+#include "ace/ACE.h"
 #include "testC.h"
 
 ACE_RCSID(OctetSeq, client, "$Id$")
