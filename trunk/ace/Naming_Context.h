@@ -7,13 +7,13 @@
 //
 // = LIBRARY
 //    ACE
-// 
+//
 // = FILENAME
-//    ACE_Naming_Context.h
+//    Naming_Context.h
 //
 // = AUTHOR
 //    Gerhard Lenzer, Douglas C. Schmidt, and Prashant Jain
-// 
+//
 // ============================================================================
 
 #if !defined (ACE_NAMING_CONTEXT_H)
@@ -101,25 +101,25 @@ public:
   ACE_Name_Options *name_options (void);
   // Returns the ACE_Name_Options associated with the Naming_Context
 
-  int bind (const ACE_WString &name_in, 
-	    const ACE_WString &value_in, 
+  int bind (const ACE_WString &name_in,
+	    const ACE_WString &value_in,
 	    const char *type_in = "");
   // Bind a new name to a naming context (Wide character strings).
 
-  int bind (const char *name_in, 
-	    const char *value_in, 
+  int bind (const char *name_in,
+	    const char *value_in,
 	    const char *type_in = "");
   // Bind a new name to a naming context ( character strings).
 
-  int rebind (const ACE_WString &name_in, 
-	      const ACE_WString &value_in, 
+  int rebind (const ACE_WString &name_in,
+	      const ACE_WString &value_in,
 	      const char *type_in = "");
   // Overwrite the value or type of an existing name in a
   // ACE_Naming_Context or bind a new name to the context, if it
   // didn't exist yet. (Wide charcter strings interface).
 
-  int rebind (const char *name_in, 
-	      const char *value_in, 
+  int rebind (const char *name_in,
+	      const char *value_in,
 	      const char *type_in = "");
   // Overwrite the value or type of an existing name in a
   // ACE_Naming_Context or bind a new name to the context, if it
@@ -133,86 +133,86 @@ public:
   // Delete a name from a ACE_Naming_Context (character strings
   // interface).
 
-  int resolve (const ACE_WString &name_in, 
-	       ACE_WString &value_out, 
+  int resolve (const ACE_WString &name_in,
+	       ACE_WString &value_out,
 	       char *&type_out);
   // Get value and type of a given name binding (Wide chars).  The
   // caller is responsible for deleting both <value_out> and <type_out>!
 
-  int resolve (const char *name_in, 
-	       ACE_WString &value_out, 
+  int resolve (const char *name_in,
+	       ACE_WString &value_out,
 	       char *&type_out);
   // Get value and type of a given name binding (Wide chars output).
   // The caller is responsible for deleting both <value_out> and
   // <type_out>!
 
-  int resolve (const char *name_in, 
-	       char *&value_out, 
+  int resolve (const char *name_in,
+	       char *&value_out,
 	       char *&type_out);
   // Get value and type of a given name binding ( chars ).  The caller
   // is responsible for deleting both <value_out> and <type_out>!
 
-  int list_names (ACE_PWSTRING_SET &set_out, 
+  int list_names (ACE_PWSTRING_SET &set_out,
 		  const ACE_WString &pattern_in);
   // Get a set of names matching a specified pattern (wchars). Matching
   // means the names must begin with the pattern string.
 
-  int list_names (ACE_PWSTRING_SET &set_out, 
+  int list_names (ACE_PWSTRING_SET &set_out,
 		  const char *pattern_in);
   // Get a set of names matching a specified pattern (chars). Matching
   // means the names must begin with the pattern string.
 
-  int list_values (ACE_PWSTRING_SET &set_out, 
+  int list_values (ACE_PWSTRING_SET &set_out,
 		   const ACE_WString &pattern_in);
   // Get a set of values matching a specified pattern (wchars). Matching
   // means the values must begin with the pattern string.
 
-  int list_values (ACE_PWSTRING_SET &set_out, 
+  int list_values (ACE_PWSTRING_SET &set_out,
 		   const char *pattern_in);
   // Get a set of values matching a specified pattern (chars). Matching
   // means the values must begin with the pattern string.
 
-  int list_types (ACE_PWSTRING_SET &set_out, 
+  int list_types (ACE_PWSTRING_SET &set_out,
 		  const ACE_WString &pattern_in);
   // Get a set of types matching a specified pattern (wchars). Matching
   // means the types must begin with the pattern string.
 
-  int list_types (ACE_PWSTRING_SET &set_out, 
+  int list_types (ACE_PWSTRING_SET &set_out,
 		  const char *pattern_in);
   // Get a set of types matching a specified pattern (chars). Matching
   // means the types must begin with the pattern string.
 
-  virtual int list_name_entries (ACE_BINDING_SET &set_out, 
+  virtual int list_name_entries (ACE_BINDING_SET &set_out,
 				 const ACE_WString &pattern_in);
   // Get a set of names matching a specified pattern (wchars). Matching
   // means the names must begin with the pattern string. Returns the
   // complete binding associated each pattern match.
 
-  virtual int list_name_entries (ACE_BINDING_SET &set_out, 
+  virtual int list_name_entries (ACE_BINDING_SET &set_out,
 				 const char *pattern_in);
   // Get a set of names matching a specified pattern (wchars). Matching
   // means the names must begin with the pattern string. Returns the
   // complete binding associated each pattern match.
 
-  virtual int list_value_entries (ACE_BINDING_SET &set_out, 
+  virtual int list_value_entries (ACE_BINDING_SET &set_out,
 				  const ACE_WString &pattern_in);
   // Get a set of values matching a specified pattern (wchars). Matching
   // means the values must begin with the pattern string. Returns the
   // complete binding associated each pattern match.
 
-  virtual int list_value_entries (ACE_BINDING_SET &set_out, 
+  virtual int list_value_entries (ACE_BINDING_SET &set_out,
 				  const char *pattern_in);
   // Get a set of values matching a specified pattern (wchars). Matching
   // means the values must begin with the pattern string. Returns the
   // complete binding associated each pattern match.
 
-  virtual int list_type_entries (ACE_BINDING_SET &set_out, 
+  virtual int list_type_entries (ACE_BINDING_SET &set_out,
 				 const ACE_WString &pattern_in);
   // Get a set of types matching a specified pattern (wchars). Matching
   // means the types must begin with the pattern string. Returns the
   // complete binding associated each pattern match.
 
-  virtual int list_type_entries (ACE_BINDING_SET &set_out, 
+  virtual int list_type_entries (ACE_BINDING_SET &set_out,
 				 const char *pattern_in);
   // Get a set of types matching a specified pattern (wchars). Matching
   // means the types must begin with the pattern string. Returns the
@@ -228,7 +228,7 @@ private:
   ACE_Name_Space *name_space_;
   // Name space (can be either local or remote) dynamically bound.
 
-  char hostname_[MAXHOSTNAMELEN + 1];   
+  char hostname_[MAXHOSTNAMELEN + 1];
   // Holds the local hostname.
 
   const char *netnameserver_host_;
@@ -281,7 +281,7 @@ public:
   // = Set/Get base address of the underlying allocator
   void base_address (char *address);
   char *base_address (void);
-  
+
   // Set/Get use of registry in naming
   int use_registry (void);
   void use_registry (int);
@@ -293,25 +293,25 @@ public:
   // Return verbose status
 
 private:
-  int debugging_;		
+  int debugging_;
   // Extra debugging info
 
-  int verbosity_;		
+  int verbosity_;
   // Extra verbose messages
 
-  int use_registry_;		
+  int use_registry_;
   // Use Win32 Registry
 
-  int nameserver_port_;	
+  int nameserver_port_;
   // Port to connect to nameserver process.
 
-  const char *nameserver_host_;	
+  const char *nameserver_host_;
   // Hostname of nameserver.
 
-  LPCTSTR namespace_dir_;	
+  LPCTSTR namespace_dir_;
   // Directory to hold name_bindings.
 
-  LPCTSTR process_name_;         
+  LPCTSTR process_name_;
   // Name of this process.
 
   LPCTSTR database_;

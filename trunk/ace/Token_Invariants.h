@@ -6,9 +6,9 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
-//    Token_Invariants
+//    Token_Invariants.h
 //
 // = AUTHOR
 //    Tim Harrison (harrison@cs.wustl.edu)
@@ -157,7 +157,7 @@ public:
   // Dump the state of the class.
 
   // = The following two method should be in the protected part of the
-  //   class.  Bugs with certain compilers preclude this. 
+  //   class.  Bugs with certain compilers preclude this.
   ACE_Token_Invariant_Manager (void);
   // Prevent non-singleton construction.
 
@@ -165,11 +165,11 @@ public:
   // Destruction.
 
 protected:
-  int get_mutex (const char *token_name, 
+  int get_mutex (const char *token_name,
                  ACE_Mutex_Invariants *&inv);
   // Return or create.
 
-  int get_rwlock (const char *token_name, 
+  int get_rwlock (const char *token_name,
                   ACE_RWLock_Invariants *&inv);
   // Return or create.
 

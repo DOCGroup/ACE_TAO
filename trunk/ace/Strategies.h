@@ -5,13 +5,13 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
-//   ACE_Strategies.h 
+//   Strategies.h
 //
 // = AUTHOR
-//    Doug Schmidt 
-// 
+//    Doug Schmidt
+//
 // ============================================================================
 
 #if !defined (ACE_STRATEGIES_H)
@@ -22,7 +22,7 @@
 // Forward decls.
 class ACE_Reactor;
 
-class ACE_Export ACE_Notification_Strategy 
+class ACE_Export ACE_Notification_Strategy
   // = TITLE
   //     Abstract class used for notifing an interested party
   //
@@ -74,7 +74,7 @@ public:
   // Get/Set the reactor
   ACE_Reactor *reactor (void);
   void reactor (ACE_Reactor *r);
-  
+
 protected:
   ACE_Reactor *reactor_;
 };

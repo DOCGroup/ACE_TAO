@@ -6,9 +6,9 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
-//    CORBA_Ref
+//    CORBA_Ref.h
 //
 // = AUTHOR
 //    Irfan Pyarali (irfan@wuerl.wustl.edu).
