@@ -9,6 +9,7 @@
 #include "ace/Arg_Shifter.h"
 #include "ECG_ConsumerEC_Control.h"
 #include "ECG_Reactive_ConsumerEC_Control.h"
+#include "ECG_Reconnect_ConsumerEC_Control.h"
 #include "EC_Gateway_IIOP.h"
 
 #if !defined (__ACE_INLINE__)
@@ -66,6 +67,8 @@ TAO_EC_Gateway_IIOP_Factory::init (int argc, char* argv[])
                 this->consumer_ec_control_ = 0;
               else if (ACE_OS::strcasecmp (opt, ACE_LIB_TEXT("reactive")) == 0)
                 this->consumer_ec_control_ = 1;
+              else if (ACE_OS::strcasecmp (opt, ACE_LIB_TEXT("reconnect")) == 0)
+                this->consumer_ec_control_ = 2;
               else
                 this->unsupported_option_value ("-ECGIIOPConsumerECControl", opt);
               arg_shifter.consume_arg ();
@@ -172,6 +175,15 @@ TAO_EC_Gateway_IIOP_Factory::create_consumerec_control (TAO_EC_Gateway_IIOP* gat
         CORBA::ORB_init (argc, argv, this->orbid_.c_str ());
       ACE_Time_Value rate (0, this->consumer_ec_control_period_);
       return new TAO_ECG_Reactive_ConsumerEC_Control (rate, consumer_ec_control_timeout_, gateway, orb.in ());
+    }
+  else if (this->consumer_ec_control_ == 2)
+    {
+      int argc = 0;
+      char **argv = 0;
+      CORBA::ORB_var orb =
+        CORBA::ORB_init (argc, argv, this->orbid_.c_str ());
+      ACE_Time_Value rate (0, this->consumer_ec_control_period_);
+      return new TAO_ECG_Reconnect_ConsumerEC_Control (rate, consumer_ec_control_timeout_, gateway, orb.in ());
     }
   return 0;
 }

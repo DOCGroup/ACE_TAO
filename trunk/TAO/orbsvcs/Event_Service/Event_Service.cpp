@@ -225,6 +225,15 @@ Event_Service::run (int argc, ACE_TCHAR* argv[])
                                   ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
+          // Creation of persistentPOA is over. Destroy the Policy objects.
+          for (CORBA::ULong i = 0;
+               i < policies.length ();
+               ++i)
+            {
+              policies[i]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+              ACE_TRY_CHECK;
+            }
+
           if (CORBA::is_nil (persistent_poa.in ()))
             ACE_ERROR_RETURN ((LM_ERROR,
                                " (%P|%t) Unable to initialize the persistent POA.\n"),

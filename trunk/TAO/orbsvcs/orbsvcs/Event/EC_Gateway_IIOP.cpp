@@ -168,7 +168,7 @@ TAO_EC_Gateway_IIOP::disconnect_supplier_proxy_i (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO_EC_Gateway_IIOP::reconnect_consumer_ec()
+TAO_EC_Gateway_IIOP::reconnect_consumer_ec(ACE_ENV_SINGLE_ARG_DECL)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 
@@ -244,7 +244,7 @@ TAO_EC_Gateway_IIOP::update_consumer_i (
 
   // ACE_DEBUG ((LM_DEBUG, "ECG (%t) update_consumer_i \n"));
 
-  this->open_i (c_qos ACE_ENV_SINGLE_ARG_PARAMETER);
+  this->open_i (c_qos ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
