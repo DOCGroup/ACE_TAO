@@ -53,13 +53,13 @@
 // Arg traits specializations.
 namespace TAO
 {
-
+  
   // TAO_IDL - Generated from
   // be\be_visitor_arg_traits.cpp:383
 
 #if !defined (_CORBA_STRINGSEQ__ARG_TRAITS_CS_)
 #define _CORBA_STRINGSEQ__ARG_TRAITS_CS_
-
+  
   ACE_TEMPLATE_SPECIALIZATION
   class TAO_ORT_Export Arg_Traits<CORBA::StringSeq>
     : public
@@ -78,7 +78,7 @@ namespace TAO
 // TAO_IDL - Generated from
 // be\be_visitor_valuetype/valuetype_cs.cpp:66
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 void
 TAO::Value_Traits<PortableInterceptor::ObjectReferenceFactory>::add_ref (
     PortableInterceptor::ObjectReferenceFactory * p
@@ -87,7 +87,7 @@ TAO::Value_Traits<PortableInterceptor::ObjectReferenceFactory>::add_ref (
   CORBA::add_ref (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 void
 TAO::Value_Traits<PortableInterceptor::ObjectReferenceFactory>::remove_ref (
     PortableInterceptor::ObjectReferenceFactory * p
@@ -96,7 +96,7 @@ TAO::Value_Traits<PortableInterceptor::ObjectReferenceFactory>::remove_ref (
   CORBA::remove_ref (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 void
 TAO::Value_Traits<PortableInterceptor::ObjectReferenceFactory>::release (
     PortableInterceptor::ObjectReferenceFactory * p
@@ -142,29 +142,29 @@ CORBA::Boolean PortableInterceptor::ObjectReferenceFactory::_tao_unmarshal (
         base,
         ObjectReferenceFactory::_tao_obv_static_repository_id ()
       );
-
+  
   if (retval == 0)
     {
       return 0;
     }
-
+  
   if (factory.in () != 0)
     {
       base = factory->create_for_unmarshal ();
-
+      
       if (base == 0)
         {
           return 0;  // %! except.?
         }
-
+      
       retval = base->_tao_unmarshal_v (strm);
-
+      
       if (retval == 0)
         {
           return 0;
         }
     }
-
+  
   // Now base must be null or point to the unmarshaled object.
   // Align the pointer to the right subobject.
   new_object = ObjectReferenceFactory::_downcast (base);
@@ -174,7 +174,7 @@ CORBA::Boolean PortableInterceptor::ObjectReferenceFactory::_tao_unmarshal (
 // TAO_IDL - Generated from
 // be\be_visitor_valuetype/valuetype_cs.cpp:66
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 void
 TAO::Value_Traits<PortableInterceptor::ObjectReferenceTemplate>::add_ref (
     PortableInterceptor::ObjectReferenceTemplate * p
@@ -183,7 +183,7 @@ TAO::Value_Traits<PortableInterceptor::ObjectReferenceTemplate>::add_ref (
   CORBA::add_ref (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 void
 TAO::Value_Traits<PortableInterceptor::ObjectReferenceTemplate>::remove_ref (
     PortableInterceptor::ObjectReferenceTemplate * p
@@ -192,7 +192,7 @@ TAO::Value_Traits<PortableInterceptor::ObjectReferenceTemplate>::remove_ref (
   CORBA::remove_ref (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 void
 TAO::Value_Traits<PortableInterceptor::ObjectReferenceTemplate>::release (
     PortableInterceptor::ObjectReferenceTemplate * p
@@ -238,36 +238,36 @@ CORBA::Boolean PortableInterceptor::ObjectReferenceTemplate::_tao_unmarshal (
         base,
         ObjectReferenceTemplate::_tao_obv_static_repository_id ()
       );
-
+  
   if (retval == 0)
     {
       return 0;
     }
-
+  
   if (factory.in () != 0)
     {
       base = factory->create_for_unmarshal ();
-
+      
       if (base == 0)
         {
           return 0;  // %! except.?
         }
-
+      
       retval = base->_tao_unmarshal_v (strm);
-
+      
       if (retval == 0)
         {
           return 0;
         }
     }
-
+  
   // Now base must be null or point to the unmarshaled object.
   // Align the pointer to the right subobject.
   new_object = ObjectReferenceTemplate::_downcast (base);
   return retval;
 }
 
-// TAO_IDL - Generated from
+// TAO_IDL - Generated from 
 // be\be_visitor_sequence/sequence_cs.cpp:65
 
 #if !defined (_PORTABLEINTERCEPTOR_OBJECTREFERENCETEMPLATESEQ_CS_)
@@ -356,11 +356,8 @@ operator<< (
   return
     CORBA::ValueBase::_tao_marshal (
         strm,
-        const_cast<
-            PortableInterceptor::ObjectReferenceFactory *> (
-            _tao_valuetype
-          ),
-        (ptrdiff_t) &PortableInterceptor::ObjectReferenceFactory::_downcast
+        const_cast<PortableInterceptor::ObjectReferenceFactory *> (_tao_valuetype),
+        reinterpret_cast<ptrdiff_t> (&PortableInterceptor::ObjectReferenceFactory::_downcast)
       );
 }
 
@@ -408,11 +405,8 @@ operator<< (
   return
     CORBA::ValueBase::_tao_marshal (
         strm,
-        const_cast<
-            PortableInterceptor::ObjectReferenceTemplate *> (
-            _tao_valuetype
-          ),
-        (ptrdiff_t) &PortableInterceptor::ObjectReferenceTemplate::_downcast
+        const_cast<PortableInterceptor::ObjectReferenceTemplate *> (_tao_valuetype),
+        reinterpret_cast<ptrdiff_t> (&PortableInterceptor::ObjectReferenceTemplate::_downcast)
       );
 }
 
@@ -439,20 +433,20 @@ CORBA::Boolean operator<< (
   )
 {
   const CORBA::ULong _tao_seq_len = _tao_sequence.length ();
-
+  
   if (strm << _tao_seq_len)
     {
       // Encode all elements.
       CORBA::Boolean _tao_marshal_flag = true;
-
+      
       for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
         {
           _tao_marshal_flag = (strm << _tao_sequence[i].in ());
         }
-
+      
       return _tao_marshal_flag;
     }
-
+  
   return false;
 }
 
@@ -462,7 +456,7 @@ CORBA::Boolean operator>> (
   )
 {
   CORBA::ULong _tao_seq_len;
-
+  
   if (strm >> _tao_seq_len)
     {
       // Add a check to the length of the sequence
@@ -472,28 +466,28 @@ CORBA::Boolean operator>> (
         {
           return false;
         }
-
+      
       // Set the length of the sequence.
       _tao_sequence.length (_tao_seq_len);
-
+      
       // If length is 0 we return true.
-      if (0 >= _tao_seq_len)
+      if (0 >= _tao_seq_len) 
         {
           return true;
         }
-
+      
       // Retrieve all the elements.
       CORBA::Boolean _tao_marshal_flag = true;
-
+      
       for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
         {
           _tao_marshal_flag = (strm >> _tao_sequence[i].out ());
         }
-
+      
       return _tao_marshal_flag;
-
+    
     }
-
+  
   return false;
 }
 
@@ -526,13 +520,13 @@ CORBA::Boolean operator>> (
   template class
     TAO_Value_Var_T<
         PortableInterceptor::ObjectReferenceFactory
-
+        
       >;
-
+  
   template class
     TAO_Value_Out_T<
         PortableInterceptor::ObjectReferenceFactory
-
+        
       >;
 
   template class
@@ -549,13 +543,13 @@ CORBA::Boolean operator>> (
   template class
     TAO_Value_Var_T<
         PortableInterceptor::ObjectReferenceTemplate
-
+        
       >;
-
+  
   template class
     TAO_Value_Out_T<
         PortableInterceptor::ObjectReferenceTemplate
-
+        
       >;
 
   template class
@@ -627,13 +621,13 @@ CORBA::Boolean operator>> (
 # pragma instantiate \
     TAO_Value_Var_T< \
         PortableInterceptor::ObjectReferenceFactory \
-
+        
       >
-
+  
 # pragma instantiate \
     TAO_Value_Out_T< \
         PortableInterceptor::ObjectReferenceFactory \
-
+        
       >
 
 # pragma instantiate \
@@ -650,13 +644,13 @@ CORBA::Boolean operator>> (
 # pragma instantiate \
     TAO_Value_Var_T< \
         PortableInterceptor::ObjectReferenceTemplate \
-
+        
       >
-
+  
 # pragma instantiate \
     TAO_Value_Out_T< \
         PortableInterceptor::ObjectReferenceTemplate \
-
+        
       >
 
 # pragma instantiate \
@@ -698,4 +692,4 @@ CORBA::Boolean operator>> (
 
 #endif /* end #if !defined */
 
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
