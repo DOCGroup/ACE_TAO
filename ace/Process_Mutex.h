@@ -45,11 +45,11 @@
  * the same host machine, as well as within a process, of
  * course.
  *
- * @attention NOTE The mechanism upon which @c ACE_Process_Mutex is based
+ * @attention The mechanism upon which @c ACE_Process_Mutex is based
  * can be configured at build time to be either @c ACE_SV_Semaphore_Complex
  * (on platforms that support it) or @c ACE_Mutex. On platforms that
  * require interprocess mutexes be allocated from shared memory (Pthreads
- * an UI Threads are examples), @c ACE_SV_Semaphore_Complex provides a
+ * and UI Threads are examples), @c ACE_SV_Semaphore_Complex provides a
  * more reliable mechanism for implementing inter-process mutex than
  * @c ACE_Mutex. However, at least on some platforms,
  * @c ACE_SV_Semaphore_Complex is limited to a small number of
@@ -64,7 +64,7 @@ class ACE_Export ACE_Process_Mutex
 {
 public:
   /**
-   * Create a Process_Mutex, passing in the optional /c name.
+   * Create a Process_Mutex, passing in the optional @c name.
    *
    * @param name optional, null-terminated string containing the name of
    * the object. Multiple users of the same @c ACE_Process_Mutex must use
@@ -79,8 +79,8 @@ public:
 
 #if defined (ACE_HAS_WCHAR)
   /**
-   * Create a Process_Mutex, passing in the optional /c name. (@c wchar_t
-   * version.
+   * Create a Process_Mutex, passing in the optional @c name. (@c wchar_t
+   * version)
    *
    * @param name optional, null-terminated string containing the name of
    * the object. Multiple users of the same @c ACE_Process_Mutex must use
