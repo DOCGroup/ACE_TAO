@@ -1,6 +1,15 @@
+Tue Apr 22 23:30:19 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* IIOP/lib/connect.cpp (open): Added log message.
+
+	* IIOP/lib/params.cpp (concurrency_strategy): Uses reactive
+ 	strategy when appropriate.
+
+	* IIOP/lib/params.hh: Reactive strategy added.
+
 Tue Apr 22 21:03:15 1997  Chris Cleeland  <cleeland@tango.cs.wustl.edu>
 
-	* giop.cpp: Changed erroneous ACE_GUARD calls to ACE_GUARD_RETURN
+	* IIOP/lib/giop.cpp: Changed erroneous ACE_GUARD calls to ACE_GUARD_RETURN
  	calls.
 
 Tue Apr 22 16:15:52 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
