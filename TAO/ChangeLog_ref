@@ -5,6 +5,10 @@ Mon Sep  1 13:41:47 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
           Added generation of forward declaration for the TAO::Narrow_Utils
           template class.
 
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+
+          Fixed code generation of _narrow() for local interfaces.
+
 Mon Sep  1 13:26:03 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Sync_Strategies.h: Removed Transport.h inclusion
