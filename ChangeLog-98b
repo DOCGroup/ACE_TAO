@@ -1,3 +1,8 @@
+Mon Oct 26 18:33:28 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* Updated the dependencies in all the Makefiles, this was required
+	  after the new Message_Block_T.{h,i,cpp} files.
+
 Mon Oct 26 19:16:27 1998  James CE Johnson  <jcej@chiroptera.tragus.org>
 
 	* docs/tutorials/000/index.html: This index is has a layout
