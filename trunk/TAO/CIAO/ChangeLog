@@ -1,3 +1,22 @@
+Sun Jul  4 09:07:20 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* CIAO.mwc:
+
+	  Added DAnCE and removed DnC
+
+	* DAnCE/RepositoryManager/Repository_Manager.cpp:	
+	* DAnCE/ExecutionManager/Execution_Manager.cpp:
+
+	  Fixed warnings in our daily builds. 
+	
+	* DAnCE/NodeManager/NodeDaemon.mpc:
+
+	  Use CIAO_DnC_Server instead of  CIAO_Server.
+
+	* DAnCE/ciao/CCM_Core.mpc:
+
+	  Removed unneeded dependancies. 
+	
 Sat Jul  3 10:03:22 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
 	* DAnCE/ciao/Deployment_Base.idl:

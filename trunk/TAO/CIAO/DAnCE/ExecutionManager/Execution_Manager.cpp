@@ -38,8 +38,8 @@
 const char *ior_file_name_ = "executionManager.ior";
 char * default_svcconf_ = 0;
 char * svcconf_config_ = 0;
-char * name = "ExecutionManager";
-char * init_file_name = "deployment.dat";
+const char * name = "ExecutionManager";
+const char * init_file_name = "deployment.dat";
 
 int write_to_ior_ = 0;
 int register_with_ns_ = 0;
