@@ -61,7 +61,8 @@ public:
   // Parse the commandline arguments.
 
   int if_first_server (CosNaming::Name &server_context_name);
-  // Check if this is the first server.
+  // Check if this is the first server binding to the Naming
+  // Service.
 
 private:
 
