@@ -1,11 +1,11 @@
 Fri Jul 23 08:53:52 EDT 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
 	* TAO_IDL/be/be_type.cpp (nested_type_name):
-
-	  There was an error in the computation of the string length that we
-	  use to do string comparison. This error resulted due to a copy/paste which
-	  was causing errors in generated code. This bug report was passed to me by 
-	  Jeff Parsons. Thanks to ?? <??> for submitting the bug report.
+	  There was an error in the computation of the string length that
+ 	  we use to do string comparison. This error resulted due to a
+ 	  copy/paste which was causing errors in generated code. This bug
+ 	  report was passed to me by Jeff Parsons. Thanks to ?? <??> for
+ 	  submitting the bug report.
 
 Fri Jul 23 02:13:44 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
