@@ -12053,11 +12053,6 @@ ACE_Cleanup::ACE_Cleanup (void)
 {
 }
 
-ACE_INLINE
-ACE_Cleanup::~ACE_Cleanup (void)
-{
-}
-
 ACE_INLINE DIR *
 ACE_OS::opendir (const ACE_TCHAR *filename)
 {
