@@ -150,7 +150,7 @@ TAO_EC_Sched_Filter_Builder::recursive_build (
       // @@ We need a unique name for each timeout, assigned by the
       //    application?
       char buf[64];
-      ACE_OS::sprintf (buf, "TIMEOUT:%ul",
+      ACE_OS::sprintf (buf, "TIMEOUT:%u",
                        ACE_static_cast (u_int,
                                         (e.header.creation_time / 10000)));
       ACE_CString name = buf;
@@ -290,7 +290,7 @@ TAO_EC_Sched_Filter_Builder:: recursive_name (
       pos++;
 
       char buf[64];
-      ACE_OS::sprintf (buf, "TIMEOUT:%ul",
+      ACE_OS::sprintf (buf, "TIMEOUT:%u",
                        ACE_static_cast (u_int,
                                         (e.header.creation_time / 10000)));
       name = buf;
