@@ -27,7 +27,6 @@
 #include "orb_typesC.h"
 #include "objectid.h"
 #include "Policy_ForwardC.h"
-#include "OBV_Constants.h"
 #include "CORBA_methods.h"
 #include "VarOut_T.h"
 
@@ -120,6 +119,8 @@ namespace CORBA
   typedef ORB * ORB_ptr;
   typedef TAO_Pseudo_Var_T<ORB> ORB_var;
   typedef TAO_Pseudo_Out_T<ORB, ORB_var> ORB_out;
+
+  typedef CORBA::Short ValueModifier;
 
   /**
    * @class ORB

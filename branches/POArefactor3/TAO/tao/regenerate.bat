@@ -42,6 +42,8 @@ tao_idl.exe -o orig -Ge 1 -GA -Sp -Wb,export_macro=TAO_Export -Wb,export_include
 tao_idl.exe -o orig -Ge 1 -St -Sp -Wb,export_macro=TAO_Export -Wb,export_include=tao/TAO_Export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" -I %TAO_ROOT% -I %TAO_ROOT%\tao -I .. ParameterMode.pidl
 tao_idl.exe -o orig -Ge 1 -GA -GT -Wb,export_macro=TAO_Export -Wb,export_include=tao/TAO_Export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" -I %TAO_ROOT% -I %TAO_ROOT%\tao -I .. Services.pidl
 tao_idl.exe -o orig -Ge 1 -St -Gp -Gd -Sc -GT -Wb,export_macro=TAO_Export -Wb,export_include=tao/TAO_Export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" -I %TAO_ROOT% -I %TAO_ROOT%\tao -I .. Object_Key.pidl
+tao_idl.exe -o orig -Ge 1 -St -Sp -Wb,export_macro=TAO_Export -Wb,export_include=tao/TAO_Export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" -I %TAO_ROOT% -I %TAO_ROOT%\tao -I .. Visibility.pidl
+tao_idl.exe -o orig -Ge 1 -St -Sp -Wb,export_macro=TAO_Export -Wb,export_include=tao/TAO_Export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" -I %TAO_ROOT% -I %TAO_ROOT%\tao -I .. ValueModifier.pidl
 
 copy orig\*A.cpp .
 copy orig\*C.cpp .

@@ -22,7 +22,7 @@
 
 #include "tao/SystemException.h"
 #include "tao/Environment.h"
-#include "tao/OBV_Constants.h"
+#include "tao/ValueModifierC.h"
 
 namespace CORBA
 {
