@@ -355,7 +355,7 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                 {
                   // out parameter is cast to Object_ptr
                   *os << "*_tao_base_" << arg->local_name () << " = " <<
-                    arg->local_name () << "_out;" << nl;
+                    arg->local_name () << "_out.ptr ();" << nl;
                   *os << "nv_" << arg->local_name () << "->value ()->" <<
                     "replace (" << bt->tc_name ()
                       << ", _tao_base_" << arg->local_name () << ", 1, " <<
@@ -602,8 +602,10 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                     break;
                   case TAO_CodeGen::TAO_ARGUMENT_POST_UPCALL_SS:
                     {
+#if 0 // causing ambiguity on NT compiler
                       *os << arg->local_name () << " = " << arg->local_name ()
                           << "_out;" << nl;
+#endif
                       *os << "nv_" << arg->local_name () << "->" <<
                         "value ()->replace (" << bt->tc_name ()
                           << ", " << arg->local_name () << ", 1, " <<
@@ -827,6 +829,7 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                     break;
                   case TAO_CodeGen::TAO_ARGUMENT_POST_DOCALL_CS:
                     {
+                      // this was causing an ambiguity on NT compiler
                       // assign to the _out parameter
                       *os << arg->local_name () << " = _tao_base_" <<
                         arg->local_name () << ";" << nl;
@@ -844,8 +847,10 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                     break;
                   case TAO_CodeGen::TAO_ARGUMENT_POST_UPCALL_SS:
                     {
+#if 0 // causing ambiguity on NT compiler
                       *os << "*" << arg->local_name () << " = " <<
                         arg->local_name () << "_out;" << nl;
+#endif
                       *os << "nv_" << arg->local_name () << "->" <<
                         "value ()->replace (" << bt->tc_name ()
                           << ", " << arg->local_name () << ", 1, " <<
@@ -1114,6 +1119,7 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
               {
               case TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS:
                 {
+                  // XXXASG- check for memory leak here - TODO
                     // declare a variable
                   if (bt->node_type () == AST_Decl::NT_typedef)
                     *os << bt->name ();
@@ -1360,9 +1366,11 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                 break;
               case TAO_CodeGen::TAO_ARGUMENT_POST_UPCALL_SS:
                 {
+#if 0 // causing ambiguity on NT compiler
                   // out parameter is cast back to the real parameter
                   *os << "*" << arg->local_name () << " = " <<
                     arg->local_name () << "_out;" << nl;
+#endif
                 }
                 break;
               case TAO_CodeGen::TAO_ARGUMENT_CH:
@@ -1756,7 +1764,17 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                   // if we are sequence, call init manager
                   if (type->node_type () == AST_Decl::NT_sequence)
                     {
-                      *os << arg->local_name () << ".init_mgr ();" << nl;
+                      be_sequence *seq = be_sequence::narrow_from_decl (type);
+                      // init_mgr method for managed types
+                      switch (seq->managed_type ())
+                        {
+                        case be_sequence::MNG_OBJREF:
+                        case be_sequence::MNG_STRING:
+                          *os << arg->local_name () << ".init_mgr ();" << nl;
+                          break;
+                        default:
+                          break;
+                        }
                     }
                 }
                 break;
@@ -1877,8 +1895,18 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                   // if we are sequence, call init manager
                   if (type->node_type () == AST_Decl::NT_sequence)
                     {
-                      *os << "_tao_base_" << arg->local_name () <<
-                        "->init_mgr ();" << nl;
+                      be_sequence *seq = be_sequence::narrow_from_decl (type);
+                      // init_mgr method for managed types
+                      switch (seq->managed_type ())
+                        {
+                        case be_sequence::MNG_OBJREF:
+                        case be_sequence::MNG_STRING:
+                          *os << "_tao_base_" << arg->local_name () <<
+                            "->init_mgr ();" << nl;
+                          break;
+                        default:
+                          break;
+                        }
                     }
                   if (bt->size_type () == be_decl::VARIABLE)
                     {
@@ -1904,8 +1932,10 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                 {
                   if (bt->size_type () == be_decl::VARIABLE)
                     {
+#if 0 // causing ambiguity on NT compiler
                       *os << arg->local_name () << " = " << arg->local_name ()
                           << "_out;" << nl;
+#endif
                       *os << "nv_" << arg->local_name () << "->" <<
                         "value ()->replace (" << bt->tc_name ()
                           << ", " << arg->local_name () << ", 1, " <<
