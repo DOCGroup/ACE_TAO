@@ -140,6 +140,9 @@ public:
   int stop (void);
   int elapsed_time (ACE_Elapsed_Time &et);
 
+  void dump (void) const;
+  // Dump the state of an object.
+
 private:
   ACE_High_Res_Timer timer_;
 };
