@@ -10416,15 +10416,15 @@ ACE_OS::readdir_r (DIR *dirp,
      (!defined (sun) && (defined (ACE_HAS_PTHREADS_STD) || \
 			 defined (ACE_HAS_PTHREADS_DRAFT7)))
     return ::readdir_r (dirp, entry, result);
-# else  /* ! POSIX.1c */
-#   if defined (sun) || defined (ACE_HAS_PTHREADS_DRAFT6)
+# else  /* ! POSIX.1c - this is draft 4 or draft 6 */
+#   if defined (HPUX_10)   /* But HP 10.x doesn't follow the draft either */
+    *result = entry;
+    return ::readdir_r (dirp, entry);
+#   else
     // <result> had better not be 0!
     *result = ::readdir_r (dirp, entry);
     return 0;
-#   else /* This is Pthreads draft 4 */
-    *result = entry;
-    return ::readdir_r (dirp, entry);
-#   endif /* sun || ACE_HAS_PTHREADS_DRAFT6 */
+#   endif /* HPUX_10 */
 # endif /* ! POSIX.1c */
 #else  /* ! ACE_HAS_DIRENT  ||  ACE_LACKS_READDIR_R */
   ACE_UNUSED_ARG (dirp);
