@@ -133,7 +133,7 @@ TAO_Persistent_Index_IntId::TAO_Persistent_Index_IntId (void)
 }
 
 TAO_Persistent_Index_IntId::TAO_Persistent_Index_IntId (ACE_UINT32 *counter,
-                                                        ACE_Shared_Hash_Map<TAO_Persistent_ExtId,
+                                                        ACE_Hash_Map_With_Allocator<TAO_Persistent_ExtId,
                                                         TAO_Persistent_IntId> * hash_map)
   : counter_ (counter),
     hash_map_ (hash_map)
