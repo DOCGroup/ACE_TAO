@@ -62,7 +62,8 @@ TAO_AV_RTP::handle_input (TAO_AV_Transport *transport,
     ACE_ERROR_RETURN ((LM_ERROR,"TAO_AV_RTP::handle_input:connection closed\n"),-1);
   if (n < 0)
     ACE_ERROR_RETURN ((LM_ERROR,"TAO_AV_RTP::handle_input:recv error\n"),-1);
-  if (n < sizeof (rtphdr))
+  int size_phdr = ACE_static_cast (int, sizeof (rtphdr));
+  if (n < size_phdr)
     ACE_ERROR_RETURN ((LM_ERROR,"TAO_AV_RTP::handle_input:invalid header\n"),-1);
   data->wr_ptr (n);
   int result = transport->get_peer_addr (addr);
@@ -94,7 +95,8 @@ TAO_AV_RTCP::handle_input (TAO_AV_Transport *transport,
     ACE_ERROR_RETURN ((LM_ERROR,"TAO_AV_RTP::handle_input:connection closed\n"),-1);
   if (n < 0)
     ACE_ERROR_RETURN ((LM_ERROR,"TAO_AV_RTP::handle_input:recv error\n"),-1);
-  if (n < sizeof (rtcphdr))
+  int size_phdr = ACE_static_cast (int, sizeof (rtcphdr));
+  if (n < size_phdr)
     {
       nrunt_++;
       ACE_ERROR_RETURN ((LM_ERROR,"TAO_AV_RTP::handle_input:invalid header\n"),-1);
@@ -131,7 +133,10 @@ TAO_AV_RTCP::handle_input (TAO_AV_Transport *transport,
    * at this point we think the packet's valid.  Update our average
    * size estimator.  Also, there's valid ssrc so charge errors to it
    */
-  rtcp_avg_size_ += RTCP_SIZE_GAIN * (double(n + 28) - rtcp_avg_size_);
+  result = (n + 28) - rtcp_avg_size_;
+  double tmp = ACE_static_cast (double, result);
+  tmp *= RTCP_SIZE_GAIN;
+  rtcp_avg_size_ += ACE_static_cast (int, tmp);
   ACE_UINT32 addr = 0;
   switch (peer_addr.get_type ())
     {
@@ -192,6 +197,7 @@ TAO_AV_RTP::send_frame (TAO_AV_Transport *transport,
 // TAO_AV_RTP_UDP_Protocol_Factory
 //------------------------------------------------------------
 
+int
 TAO_AV_RTP_UDP_Protocol_Factory::match_protocol (TAO_AV_Core::Protocol protocol)
 {
   return (protocol == TAO_AV_Core::TAO_AV_RTP_UDP);
@@ -340,9 +346,9 @@ int
 TAO_AV_RTP_Object::send_frame (ACE_Message_Block *frame,
                                ACE_UINT32 timestamp)
 {
-  rtphdr header;
-  int format;
-  CORBA::ULong ssrc;
+  TAO_AV_RTP::rtphdr header;
+  int format = 0;
+  CORBA::ULong ssrc = 0;
   u_int num_policies = this->policy_list_.length ();
   TAO_AV_Policy *policy = 0;
   for (u_int i=0; i< num_policies;i++)
@@ -368,6 +374,8 @@ TAO_AV_RTP_Object::send_frame (ACE_Message_Block *frame,
             ssrc = ssrc_policy->value ();;
           }
           break;
+        default:
+          break;
         }
     }
   int result = TAO_AV_RTP::write_header (header,
@@ -382,6 +390,8 @@ TAO_AV_RTP_Object::send_frame (ACE_Message_Block *frame,
                                    frame);
   if (result < 0)
     return result;
+
+  return 0;
 }
 
 TAO_AV_RTP_Object::TAO_AV_RTP_Object (TAO_AV_Callback *callback,

@@ -49,7 +49,7 @@ TAO_AV_UDP_MCast_Acceptor::open (TAO_Base_StreamEndPoint *endpoint,
   ACE_INET_Addr *mcast_addr = ACE_dynamic_cast (ACE_INET_Addr*, entry->address ());
   TAO_AV_UDP_MCast_Flow_Handler *handler;
   this->make_svc_handler (handler);
-  int result = handler->subscribe (*mcast_addr);
+  int result = handler->get_mcast_socket ()->subscribe (*mcast_addr);
   if (result < 0)
     ACE_ERROR_RETURN ((LM_ERROR,"TAO_AV_UDP_connector::open failed\n"),-1);
   result = this->activate_svc_handler (handler);
@@ -144,7 +144,7 @@ TAO_AV_UDP_MCast_Connector::connect (TAO_FlowSpec_Entry *entry,
   ACE_INET_Addr *mcast_addr = ACE_dynamic_cast (ACE_INET_Addr*, entry->address ());
   TAO_AV_UDP_MCast_Flow_Handler *handler;
   this->make_svc_handler (handler);
-  int result = handler->subscribe (*mcast_addr);
+  int result = handler->get_mcast_socket ()->subscribe (*mcast_addr);
   if (result < 0)
     ACE_ERROR_RETURN ((LM_ERROR,"TAO_AV_UDP_connector::open failed\n"),-1);
   result = this->activate_svc_handler (handler);
@@ -187,14 +187,22 @@ TAO_AV_UDP_MCast_Flow_Handler::TAO_AV_UDP_MCast_Flow_Handler (TAO_AV_Callback *c
 {
   ACE_NEW (transport_,
            TAO_AV_UDP_MCast_Transport (this));
+  ACE_NEW (dgram_mcast_,
+           ACE_SOCK_Dgram_Mcast);
+
+}
+
+TAO_AV_UDP_MCast_Flow_Handler::~TAO_AV_UDP_MCast_Flow_Handler (void)
+{
+  delete this->transport_;
+  delete this->dgram_mcast_;
 }
 
 ACE_HANDLE
 TAO_AV_UDP_MCast_Flow_Handler::get_handle (void) const
 {
   ACE_DEBUG ((LM_DEBUG,"TAO_AV_UDP_MCast_Flow_Handler::get_handle "));
-  cerr << ACE_IPC_SAP::get_handle () << " " << endl;
-  return ACE_IPC_SAP::get_handle () ;
+  return this->get_mcast_socket ()->get_handle () ;
 }
 
 int
@@ -215,6 +223,13 @@ TAO_AV_UDP_MCast_Flow_Handler::handle_input (ACE_HANDLE fd)
   this->callback_->receive_frame (frame);
   return 0;
 }
+
+ACE_SOCK_Dgram_Mcast *
+TAO_AV_UDP_MCast_Flow_Handler::get_mcast_socket (void) const
+{
+  return this->dgram_mcast_;
+}
+
 
 //------------------------------------------------------------
 // TAO_AV_UDP_MCast_Transport
@@ -288,9 +303,9 @@ TAO_AV_UDP_MCast_Transport::send (const ACE_Message_Block *mblk, ACE_Time_Value 
           // we should set IOV_MAX to that limit.
           if (iovcnt == IOV_MAX)
             {
-              n = this->handler_->send ((const iovec *) iov,
-                                        iovcnt);
-
+              n = this->handler_->get_mcast_socket ()->send ((const iovec *) iov,
+                                                             iovcnt);
+              
               if (n < 1)
                 return n;
 
@@ -303,8 +318,8 @@ TAO_AV_UDP_MCast_Transport::send (const ACE_Message_Block *mblk, ACE_Time_Value 
   // Check for remaining buffers to be sent!
   if (iovcnt != 0)
     {
-      n = this->handler_->send ((const iovec *) iov,
-                                iovcnt);
+      n = this->handler_->get_mcast_socket ()->send ((const iovec *) iov,
+                                                     iovcnt);
       if (n < 1)
         return n;
 
@@ -324,7 +339,7 @@ TAO_AV_UDP_MCast_Transport::send (const char *buf,
   this->peer_addr_.addr_to_string (addr,BUFSIZ);
   ACE_DEBUG ((LM_DEBUG,"to %s\n",addr));
 
-  return this->handler_->send (buf, len);
+  return this->handler_->get_mcast_socket ()->send (buf, len);
 }
 
 ssize_t
@@ -332,9 +347,9 @@ TAO_AV_UDP_MCast_Transport::send (const iovec *iov,
                                   int iovcnt,
                                   ACE_Time_Value *)
 {
-  return this->handler_->send (iov,
-                               iovcnt,
-                               0);
+  return this->handler_->get_mcast_socket ()->send (iov,
+                                                    iovcnt,
+                                                    0);
 
 }
 
@@ -343,7 +358,7 @@ TAO_AV_UDP_MCast_Transport::recv (char *buf,
                                   size_t len,
                                   ACE_Time_Value *)
 {
-  return this->handler_->recv (buf, len,this->peer_addr_);
+  return this->handler_->get_mcast_socket ()->recv (buf, len,this->peer_addr_);
 }
 
 ssize_t
@@ -352,11 +367,11 @@ TAO_AV_UDP_MCast_Transport::recv (char *buf,
                                   int flags,
                                   ACE_Time_Value *timeout)
 {
-  return this->handler_->recv (buf,
-                               len,
-                               this->peer_addr_,
-                               flags,
-                               timeout);
+  return this->handler_->get_mcast_socket ()->recv (buf,
+                                                    len,
+                                                    this->peer_addr_,
+                                                    flags,
+                                                    timeout);
 }
 
 ssize_t
@@ -364,7 +379,7 @@ TAO_AV_UDP_MCast_Transport::recv (iovec *iov,
                             int iovcnt,
                             ACE_Time_Value *timeout)
 {
-  return handler_->recv (iov,this->peer_addr_,0,timeout);
+  return handler_->get_mcast_socket ()->recv (iov,this->peer_addr_,0,timeout);
 }
 
 //------------------------------------------------------------
@@ -379,6 +394,7 @@ TAO_AV_UDP_MCast_Protocol_Factory::~TAO_AV_UDP_MCast_Protocol_Factory (void)
 {
 }
 
+int
 TAO_AV_UDP_MCast_Protocol_Factory::match_protocol (TAO_AV_Core::Protocol protocol)
 {
   return (protocol == TAO_AV_Core::TAO_AV_UDP_MCAST);

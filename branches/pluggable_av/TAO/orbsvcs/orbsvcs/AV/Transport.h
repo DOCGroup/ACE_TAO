@@ -282,7 +282,7 @@ public:
                     ACE_Reactor *reactor);
 
   virtual int connect (TAO_AV_UDP_Flow_Handler *&handler,
-                       const ACE_Addr &remote_addr,
+                       ACE_Addr &remote_addr,
                        ACE_Addr &local_addr);
   virtual int make_svc_handler (TAO_AV_UDP_Flow_Handler *&handler);
   virtual int activate_svc_handler (TAO_AV_UDP_Flow_Handler *handler);
@@ -452,18 +452,22 @@ protected:
 
 class TAO_AV_UDP_Flow_Handler
   :public virtual TAO_AV_Flow_Handler,
-   public virtual ACE_SOCK_Dgram,
    public virtual ACE_Event_Handler
 {
 public:
   TAO_AV_UDP_Flow_Handler (TAO_AV_Callback *callback);
+  //Ctor
+  ~TAO_AV_UDP_Flow_Handler (void);
+  // Dtor
   virtual TAO_AV_Transport *transport (void);
   virtual int set_remote_address (ACE_Addr *address);
   virtual ACE_HANDLE get_handle (void) const;
   virtual int handle_input (ACE_HANDLE fd);
+  virtual ACE_SOCK_Dgram *get_socket (void) const;
 protected:
   TAO_AV_Core *av_core_;
   ACE_INET_Addr peer_addr_;
+  ACE_SOCK_Dgram *sock_dgram_;
 };
 
 typedef ACE_Unbounded_Set<TAO_AV_Connector*> TAO_AV_ConnectorSet;

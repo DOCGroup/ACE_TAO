@@ -76,6 +76,8 @@ TAO_AV_Policy_Manager::create_policy (TAO_AV_Policy::PolicyType type,
                         0);
       }
       break;
+    default:
+      break;
     }
   return policy;
 }
@@ -148,3 +150,13 @@ TAO_AV_Callback::handle_end_stream (void)
 {
   return -1;
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+template class TAO_Unbounded_Sequence<TAO_AV_Policy*>;
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#pragma instantiate TAO_Unbounded_Sequence<TAO_AV_Policy*>
+
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

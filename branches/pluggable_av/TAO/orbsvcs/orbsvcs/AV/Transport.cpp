@@ -209,6 +209,8 @@ TAO_AV_Core::init_reverse_flows (TAO_Base_StreamEndPoint *endpoint,
     }
   if (result == -1)
     ACE_ERROR_RETURN ((LM_ERROR,"acceptor_registry::open"),-1);
+
+  return 0;
 }
 
 TAO_FlowSpec_Entry *
@@ -870,9 +872,9 @@ TAO_AV_UDP_Transport::send (const ACE_Message_Block *mblk, ACE_Time_Value *)
           // we should set IOV_MAX to that limit.
           if (iovcnt == IOV_MAX)
             {
-              n = this->handler_->send ((const iovec *) iov,
-                                        iovcnt,
-                                        this->peer_addr_);
+              n = this->handler_->get_socket ()->send ((const iovec *) iov,
+                                                        iovcnt,
+                                                        this->peer_addr_);
 
               if (n < 1)
                 return n;
@@ -886,9 +888,9 @@ TAO_AV_UDP_Transport::send (const ACE_Message_Block *mblk, ACE_Time_Value *)
   // Check for remaining buffers to be sent!
   if (iovcnt != 0)
     {
-      n = this->handler_->send ((const iovec *) iov,
-                                iovcnt,
-                                this->peer_addr_);
+      n = this->handler_->get_socket ()->send ((const iovec *) iov,
+                                               iovcnt,
+                                               this->peer_addr_);
 
       if (n < 1)
         return n;
@@ -909,7 +911,7 @@ TAO_AV_UDP_Transport::send (const char *buf,
   this->peer_addr_.addr_to_string (addr,BUFSIZ);
   ACE_DEBUG ((LM_DEBUG,"to %s\n",addr));
 
-  return this->handler_->send (buf, len,this->peer_addr_);
+  return this->handler_->get_socket ()->send (buf, len,this->peer_addr_);
 }
 
 ssize_t
@@ -917,9 +919,9 @@ TAO_AV_UDP_Transport::send (const iovec *iov,
                           int iovcnt,
                           ACE_Time_Value *)
 {
-  return this->handler_->send ((const iovec *) iov,
-                               iovcnt,
-                               this->peer_addr_);
+  return this->handler_->get_socket ()->send ((const iovec *) iov,
+                                              iovcnt,
+                                              this->peer_addr_);
 
 }
 
@@ -928,7 +930,7 @@ TAO_AV_UDP_Transport::recv (char *buf,
                             size_t len,
                             ACE_Time_Value *)
 {
-  return this->handler_->recv (buf, len,this->peer_addr_);
+  return this->handler_->get_socket ()->recv (buf, len,this->peer_addr_);
 }
 
 ssize_t
@@ -937,11 +939,11 @@ TAO_AV_UDP_Transport::recv (char *buf,
                             int flags,
                             ACE_Time_Value *timeout)
 {
-  return this->handler_->recv (buf,
-                               len,
-                               this->peer_addr_,
-                               flags,
-                               timeout);
+  return this->handler_->get_socket ()->recv (buf,
+                                              len,
+                                              this->peer_addr_,
+                                              flags,
+                                              timeout);
 }
 
 ssize_t
@@ -949,7 +951,7 @@ TAO_AV_UDP_Transport::recv (iovec *iov,
                             int iovcnt,
                             ACE_Time_Value *timeout)
 {
-  return handler_->recv (iov,this->peer_addr_,0,timeout);
+  return handler_->get_socket ()->recv (iov,this->peer_addr_,0,timeout);
 }
 
 //------------------------------------------------------------
@@ -1222,29 +1224,29 @@ TAO_AV_Dgram_Acceptor::open (TAO_AV_UDP_Acceptor *acceptor,
   this->reactor_ = reactor;
   int result = 0;
   result = this->make_svc_handler (handler);
-  result = handler->open (address);
+  result = handler->get_socket ()->open (address);
   if (result < 0)
     ACE_ERROR_RETURN ((LM_ERROR,"SOCK_Dgram::open failed\n"),-1);
   int sndbufsize = ACE_DEFAULT_MAX_SOCKET_BUFSIZ;
   int rcvbufsize = ACE_DEFAULT_MAX_SOCKET_BUFSIZ;
 
-  if (handler->set_option (SOL_SOCKET,
-                           SO_SNDBUF,
-                           (void *) &sndbufsize,
-                           sizeof (sndbufsize)) == -1
+  if (handler->get_socket ()->set_option (SOL_SOCKET,
+                                          SO_SNDBUF,
+                                          (void *) &sndbufsize,
+                                          sizeof (sndbufsize)) == -1
       && errno != ENOTSUP)
     return 0;
 
-  else if (handler->set_option (SOL_SOCKET,
-                                SO_RCVBUF,
-                                (void *) &rcvbufsize,
-                                sizeof (rcvbufsize)) == -1
+  else if (handler->get_socket ()->set_option (SOL_SOCKET,
+                                               SO_RCVBUF,
+                                               (void *) &rcvbufsize,
+                                               sizeof (rcvbufsize)) == -1
            && errno != ENOTSUP)
     return 0;
   result = this->activate_svc_handler (handler);
   if (result < 0)
     return result;
-  result = handler->get_local_addr (address);
+  result = handler->get_socket ()->get_local_addr (address);
   if (result < 0)
     ACE_ERROR_RETURN ((LM_ERROR,"SOCK_Dgram::get_local_addr failed\n"),-1);
   return 0;
@@ -1285,28 +1287,28 @@ TAO_AV_Dgram_Connector::open (TAO_AV_UDP_Connector *connector,
 
 int
 TAO_AV_Dgram_Connector::connect (TAO_AV_UDP_Flow_Handler *&handler,
-                                 const ACE_Addr &remote_addr,
+                                 ACE_Addr &remote_addr,
                                  ACE_Addr &local_addr)
 {
   ACE_DEBUG ((LM_DEBUG,"TAO_AV_Dgram_Connector::connect "));
   int result = 0;
   this->make_svc_handler (handler);
-  result = handler->open (local_addr);
+  result = handler->get_socket ()->open (local_addr);
   // set the socket buffer sizes to 64k.
   int sndbufsize = ACE_DEFAULT_MAX_SOCKET_BUFSIZ;
   int rcvbufsize = ACE_DEFAULT_MAX_SOCKET_BUFSIZ;
 
-  if (handler->set_option (SOL_SOCKET,
-                           SO_SNDBUF,
-                           (void *) &sndbufsize,
-                           sizeof (sndbufsize)) == -1
+  if (handler->get_socket ()->set_option (SOL_SOCKET,
+                                          SO_SNDBUF,
+                                          (void *) &sndbufsize,
+                                          sizeof (sndbufsize)) == -1
       && errno != ENOTSUP)
     return 0;
 
-  else if (handler->set_option (SOL_SOCKET,
-                                SO_RCVBUF,
-                                (void *) &rcvbufsize,
-                                sizeof (rcvbufsize)) == -1
+  else if (handler->get_socket ()->set_option (SOL_SOCKET,
+                                               SO_RCVBUF,
+                                               (void *) &rcvbufsize,
+                                               sizeof (rcvbufsize)) == -1
            && errno != ENOTSUP)
     return 0;
 
@@ -1316,7 +1318,7 @@ TAO_AV_Dgram_Connector::connect (TAO_AV_UDP_Flow_Handler *&handler,
   if (result < 0)
     return result;
   handler->set_remote_address  (&remote_addr);
-  result = handler->get_local_addr (local_addr);
+  result = handler->get_socket ()->get_local_addr (local_addr);
   if (result < 0)
     ACE_ERROR_RETURN ((LM_ERROR,"TAO_AV_Dgram_Connector::open: get_local_addr failed\n"),result);
   return 0;
@@ -1343,10 +1345,19 @@ TAO_AV_Dgram_Connector::make_svc_handler (TAO_AV_UDP_Flow_Handler *&handler)
 //------------------------------------------------------------
 
 TAO_AV_UDP_Flow_Handler::TAO_AV_UDP_Flow_Handler (TAO_AV_Callback *callback)
+                                                  
   :TAO_AV_Flow_Handler(callback)
 {
   ACE_NEW (this->transport_,
            TAO_AV_UDP_Transport (this));
+  ACE_NEW (this->sock_dgram_,
+           ACE_SOCK_Dgram);
+}
+
+TAO_AV_UDP_Flow_Handler::~TAO_AV_UDP_Flow_Handler (void)
+{
+  delete this->transport_;
+  delete this->sock_dgram_;
 }
 
 TAO_AV_Transport *
@@ -1384,14 +1395,19 @@ TAO_AV_UDP_Flow_Handler::set_remote_address (ACE_Addr *address)
   return transport->set_remote_address (*inet_addr);
 }
 
+
 ACE_HANDLE
 TAO_AV_UDP_Flow_Handler::get_handle (void) const
 {
-  ACE_DEBUG ((LM_DEBUG,"TAO_AV_UDP_Flow_Handler::get_handle "));
-  cerr << ACE_IPC_SAP::get_handle () << " " << endl;
-  return ACE_IPC_SAP::get_handle () ;
+  ACE_DEBUG ((LM_DEBUG,"TAO_AV_UDP_Flow_Handler::get_handle:%d\n",this->sock_dgram_->get_handle ()));
+  return this->sock_dgram_->get_handle () ;
 }
 
+ACE_SOCK_Dgram *
+TAO_AV_UDP_Flow_Handler::get_socket (void) const
+{
+  return this->sock_dgram_;
+}
 //------------------------------------------------------------
 // TAO_AV_Connector
 //------------------------------------------------------------
@@ -1493,6 +1509,7 @@ TAO_AV_UDP_Protocol_Factory::~TAO_AV_UDP_Protocol_Factory (void)
 {
 }
 
+int
 TAO_AV_UDP_Protocol_Factory::match_protocol (TAO_AV_Core::Protocol protocol)
 {
   return (protocol == TAO_AV_Core::TAO_AV_UDP);
@@ -1531,6 +1548,7 @@ TAO_AV_TCP_Protocol_Factory::~TAO_AV_TCP_Protocol_Factory (void)
 {
 }
 
+int
 TAO_AV_TCP_Protocol_Factory::match_protocol (TAO_AV_Core::Protocol protocol)
 {
   return (protocol == TAO_AV_Core::TAO_AV_TCP);
@@ -1836,18 +1854,22 @@ TAO_AV_TCP_Flow_Handler::handle_input (ACE_HANDLE fd)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Node <TAO_AV_Connector*>;
-template class ACE_Unbounded_Set<TAO_AV_Connector*>;
-template class ACE_Unbounded_Set_Iterator<TAO_AV_Connector*>;
 template class ACE_Node <TAO_AV_Acceptor*>;
 template class ACE_Unbounded_Set<TAO_AV_Acceptor*>;
+template class ACE_Unbounded_Set<TAO_AV_Connector*>;
 template class ACE_Unbounded_Set_Iterator<TAO_AV_Acceptor*>;
+template class ACE_Unbounded_Set_Iterator<TAO_AV_Connector*>;
 template class ACE_Singleton<TAO_AV_Core,ACE_Null_Mutex>;
+template class ACE_Acceptor<TAO_AV_TCP_Flow_Handler, ACE_SOCK_Acceptor, ACE_INET_Addr>;
+template class ACE_Connector<TAO_AV_TCP_Flow_Handler, ACE_SOCK_Connector, ACE_INET_Addr>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Node <TAO_AV_Connector*>
-#pragma instantiate ACE_Unbounded_Set<TAO_AV_Connector*>
-#pragma instantiate ACE_Unbounded_Set_Iterator<TAO_AV_Connector*>
 #pragma instantiate ACE_Node <TAO_AV_Acceptor*>
+#pragma instantiate ACE_Unbounded_Set<TAO_AV_Connector*>
 #pragma instantiate ACE_Unbounded_Set<TAO_AV_Acceptor*>
+#pragma instantiate ACE_Unbounded_Set_Iterator<TAO_AV_Connector*>
 #pragma instantiate ACE_Unbounded_Set_Iterator<TAO_AV_Acceptor*>
 #pragma instantiate ACE_Singleton<TAO_AV_Core,ACE_Null_Mutex>
+#pragma instantiate ACE_Acceptor<TAO_AV_TCP_Flow_Handler, ACE_SOCK_Acceptor, ACE_INET_Addr>
+#pragma instantiate ACE_Connector<TAO_AV_TCP_Flow_Handler, ACE_SOCK_Connector, ACE_INET_Addr>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

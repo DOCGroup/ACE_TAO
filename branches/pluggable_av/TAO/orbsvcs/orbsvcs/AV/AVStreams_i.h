@@ -341,8 +341,14 @@ public:
   TAO_StreamCtrl (void);
   // Default Constructor
 
+  TAO_StreamCtrl (TAO_StreamCtrl const &);
+  // Copy  Constructor to fool g++
+
   virtual ~TAO_StreamCtrl (void);
   // virtual destructor.
+
+  void operator= (TAO_StreamCtrl const &);
+  // Fooling g++
 
   virtual void stop (const AVStreams::flowSpec &the_spec,
                      CORBA::Environment &env = CORBA::Environment::default_environment ())
@@ -465,6 +471,9 @@ public:
 
   TAO_MCastConfigIf (void);
   // Default constructor.
+
+  ~TAO_MCastConfigIf (void);
+  // Dtor
 
   virtual CORBA::Boolean set_peer (CORBA::Object_ptr peer,
                                    AVStreams::streamQoS & the_qos,
@@ -928,6 +937,9 @@ public:
   enum MMDevice_Type {MMDEVICE_A = 0,MMDEVICE_B = 1};
   TAO_MMDevice (TAO_AV_Endpoint_Strategy *endpoint_strategy_);
   // Constructor
+
+  TAO_MMDevice (TAO_MMDevice const &);
+  // Copy constructor to fool g++
 
   virtual AVStreams::StreamEndPoint_ptr create_A_B (MMDevice_Type type,
                                                     AVStreams::StreamCtrl_ptr the_requester,
@@ -1425,6 +1437,9 @@ public:
 
   TAO_FDev (const char *flowname);
   // constructor taking a flowname.
+
+  ~TAO_FDev (void);
+  // Destructor..
 
   AVStreams::FlowProducer_ptr create_producer (AVStreams::FlowConnection_ptr the_requester,
                                                        AVStreams::QoS & the_qos,

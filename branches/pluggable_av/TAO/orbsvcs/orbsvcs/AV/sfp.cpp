@@ -728,7 +728,7 @@ TAO_SFP_Base::read_start_message (TAO_AV_Transport *transport,
       char *buf = input.rd_ptr ();
       int n = transport->recv (buf,
                                start_len);
-      if (n != start_len)
+      if (n != ACE_static_cast (int, start_len))
         ACE_ERROR_RETURN ((LM_ERROR,"%p","TAO_SFP_Base::read_start\n"),0);
       else
         {
@@ -762,7 +762,7 @@ TAO_SFP_Base::read_start_reply_message (TAO_AV_Transport *transport,
       char *buf = input.rd_ptr ();
       int n = transport->recv (buf,
                                start_reply_len);
-      if (n != start_len)
+      if (n != ACE_static_cast (int, start_len))
         ACE_ERROR_RETURN ((LM_ERROR,"%p","TAO_SFP_Base::read_start_reply_message"),0);
       else
         {
@@ -795,7 +795,7 @@ TAO_SFP_Base::read_credit_message (TAO_AV_Transport *transport,
       char *buf = input.rd_ptr ();
       int n = transport->recv (buf,
                                credit_len);
-      if (n != credit_len)
+      if (n != ACE_static_cast (int, credit_len))
         ACE_ERROR_RETURN ((LM_ERROR,"%p","TAO_SFP_Base::read_credit_message"),0);
       else
         {
@@ -828,7 +828,7 @@ TAO_SFP_Base::read_endofstream_message (TAO_AV_Transport *transport,
       char *buf = input.rd_ptr ();
       int n = transport->recv (buf,
                                frame_header_len);
-      if (n != frame_header_len)
+      if (n != ACE_static_cast (int, frame_header_len))
         ACE_ERROR_RETURN ((LM_ERROR,"%p","TAO_SFP_Base::read_endofstream_message"),0);
       else
         {
@@ -862,7 +862,7 @@ TAO_SFP_Base::peek_frame_header (TAO_AV_Transport *transport,
       int n = transport->recv (buf,
                                frame_header_len,
                                MSG_PEEK);
-      if (n != frame_header_len)
+      if (n != ACE_static_cast (int, frame_header_len))
         ACE_ERROR_RETURN ((LM_ERROR,"%p","TAO_SFP_Base::read_endofstream_message"),0);
       else
         {
@@ -896,7 +896,7 @@ TAO_SFP_Base::peek_fragment_header (TAO_AV_Transport *transport,
       int n = transport->recv (buf,
                                fragment_len,
                                MSG_PEEK);
-      if (n != fragment_len)
+      if (n != ACE_static_cast (int, fragment_len))
         ACE_ERROR_RETURN ((LM_ERROR,"%p","TAO_SFP_Base::read_endofstream_message"),0);
       else
         {
@@ -1170,8 +1170,9 @@ TAO_SFP_UDP_Receiver_Handler::stop (void)
 TAO_SFP_Object::TAO_SFP_Object (TAO_AV_Callback *callback,
                                 TAO_AV_Transport *transport)
   :TAO_AV_Protocol_Object (callback,transport),
-   credit_ (20),
-   source_id_ (10)
+   source_id_ (10),
+   credit_ (20)
+   
 {
 }
 
@@ -1189,6 +1190,7 @@ TAO_SFP_Object::end_stream (void)
                                        out_stream);
   if (result < 0)
     return result;
+  return 0;
 }
 
 int
@@ -1207,7 +1209,7 @@ TAO_SFP_Object::send_frame (ACE_Message_Block *frame,
       for (ACE_Message_Block *temp = frame;temp != 0;temp = temp->cont ())
         total_length += temp->length ();
       ACE_DEBUG ((LM_DEBUG,"total_length of frame=%d\n",total_length));
-      if (total_length < (TAO_SFP_MAX_PACKET_SIZE -TAO_SFP_Base::frame_header_len))
+      if (ACE_static_cast (u_int, total_length) < (TAO_SFP_MAX_PACKET_SIZE -TAO_SFP_Base::frame_header_len))
         {
           CORBA::Boolean result = TAO_SFP_Base::start_frame (flags,
                                                              flowProtocol::SimpleFrame_Msg,
@@ -1295,6 +1297,8 @@ TAO_SFP_Object::send_frame (ACE_Message_Block *frame,
     {
       // flow controlled so wait.
     }
+
+   return 0;
 }
 
 ACE_Message_Block*
@@ -1305,7 +1309,7 @@ TAO_SFP_Object::get_fragment (ACE_Message_Block *&mb,
 {
   ACE_Message_Block *fragment_mb = 0,*temp_mb = 0;
   int prev_len,last_len = 0;
-  size_t current_len;
+  size_t current_len = 0;
   size_t message_len = initial_len;
   while (mb != 0)
     {
@@ -1358,6 +1362,7 @@ TAO_SFP_Frame_State::TAO_SFP_Frame_State (void)
 {
 }
 
+CORBA::Boolean
 TAO_SFP_Frame_State::is_complete (void)
 {
   return (!this->more_fragments_) &&  (this->frame_block_);
@@ -1412,6 +1417,7 @@ template class ACE_Hash_Map_Reverse_Iterator_Ex<CORBA::ULong,TAO_SFP_Fragment_Ta
 template class ACE_Hash_Map_Iterator_Ex<CORBA::ULong,TAO_SFP_Fragment_Table_Entry*,ACE_Hash<CORBA::ULong>,ACE_Equal_To<CORBA::ULong>,ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator<CORBA::ULong,TAO_SFP_Fragment_Table_Entry *,ACE_Null_Mutex>;
 template class ACE_Hash_Map_Reverse_Iterator<CORBA::ULong,TAO_SFP_Fragment_Table_Entry *,ACE_Null_Mutex>;
+template class ACE_Singleton<TAO_SFP_Base, ACE_Thread_Mutex>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate ACE_DNode<TAO_SFP_Fragment_Node>
@@ -1426,4 +1432,5 @@ template class ACE_Hash_Map_Reverse_Iterator<CORBA::ULong,TAO_SFP_Fragment_Table
 #pragma instantiate ACE_Equal_To<CORBA::ULong>
 #pragma instantiate ACE_Hash_Map_Iterator<CORBA::ULong,TAO_SFP_Fragment_Table_Entry *,ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator<CORBA::ULong,TAO_SFP_Fragment_Table_Entry *,ACE_Null_Mutex>
+#pragma instantiate ACE_Singleton<TAO_SFP_Base, ACE_Thread_Mutex>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
