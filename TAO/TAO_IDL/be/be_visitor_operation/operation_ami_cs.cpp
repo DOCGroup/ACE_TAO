@@ -629,8 +629,8 @@ be_compiled_visitor_operation_ami_cs::gen_pre_stub_info (be_operation *node,
 
 int
 be_compiled_visitor_operation_ami_cs::gen_marshal_and_invoke (be_operation
-                                                          *node,
-                                                          be_type *bt)
+                                                              *node,
+                                                              be_type *bt)
 {
   TAO_OutStream *os = this->ctx_->stream ();
   be_visitor *visitor;
@@ -756,8 +756,6 @@ be_compiled_visitor_operation_ami_cs::gen_marshal_and_invoke (be_operation
   *os << be_nl
       << "if (_invoke_status == TAO_INVOKE_RESTART)" << be_idt_nl
       << "continue;" << be_uidt_nl
-      << "// if (_invoke_status == TAO_INVOKE_EXCEPTION)" << be_idt_nl
-      << "// cannot happen" << be_uidt_nl
       << "if (_invoke_status != TAO_INVOKE_OK)" << be_nl
       << "{" << be_idt_nl;
 
