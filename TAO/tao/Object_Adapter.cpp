@@ -684,8 +684,8 @@ TAO_Object_Adapter::poa_name_iterator::operator* () const
     this->last_separator_ -
     TAO_POA::name_separator_length ();
 
-  return ACE_CString (ACE_static_cast (const char *,
-                                       &this->folded_buffer_[start_at]),
+  return ACE_CString (ACE_reinterpret_cast (const char *,
+                                            &this->folded_buffer_[start_at]),
                       how_many);
 }
 
@@ -792,7 +792,9 @@ template class ACE_Hash_Map_Iterator_Base_Ex<key, value, hash_key, compare_keys,
 template class ACE_Hash_Map_Iterator_Ex<key, value, hash_key, compare_keys, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Reverse_Iterator_Ex<key, value, hash_key, compare_keys, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Entry<key, value>;
-template class ACE_Equal_To<key>;
+
+// Already in Active_Object_Map.cpp
+// template class ACE_Equal_To<key>;
 
 // Map Manager related.
 template class ACE_Map_Manager_Iterator_Adapter<value_type, key, value>;
@@ -858,7 +860,9 @@ typedef ACE_Noop_Key_Generator<key> noop_key_generator;
 #pragma instantiate ACE_Hash_Map_Iterator_Ex<key, value, hash_key, compare_keys, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<key, value, hash_key, compare_keys, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Entry<key, value>
-#pragma instantiate ACE_Equal_To<key>
+
+// Already in Active_Object_Map.cpp
+// #pragma instantiate ACE_Equal_To<key>
 
 // Map Manager related.
 #pragma instantiate ACE_Map_Manager_Iterator_Adapter<value_type, key, value>
