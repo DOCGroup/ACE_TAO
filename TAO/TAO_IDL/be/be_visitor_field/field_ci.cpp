@@ -91,7 +91,7 @@ be_visitor_field_ci::visit_array (be_array *node)
 }
 
 int
-be_visitor_field_ci::visit_sequence (be_sequence *node)
+be_visitor_field_ci::visit_sequence (be_sequence *)
 {
   return 0;
 }
@@ -139,7 +139,7 @@ be_visitor_field_ci::visit_typedef (be_typedef *node)
 }
 
 int
-be_visitor_field_ci::visit_union (be_union *node)
+be_visitor_field_ci::visit_union (be_union *)
 {
   if (node->node_type () != AST_Decl::NT_typedef
       && node->is_child (this->ctx_->scope ()))
