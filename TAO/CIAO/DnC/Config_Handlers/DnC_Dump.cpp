@@ -8,8 +8,39 @@
 #include "DnC_Dump.h"
 #include <iostream>
 
+#include "tckind_names.h"
+
 namespace Deployment
 {
+  /*
+   *  Generic dump functions
+   */
+
+  // Dumps a string sequence
+  void DnC_Dump::dump (const char* caption, const ::CORBA::StringSeq &str_seq)
+  {
+    ACE_DEBUG ((LM_DEBUG, "%s: ", caption));
+
+    CORBA::ULong size = str_seq.length ();
+    for (CORBA::ULong i = 0; i < size; ++i)
+      {
+	ACE_DEBUG ((LM_DEBUG, "%s%s ",
+		    str_seq[i].in ()), (i < size) ? ", " : "\n");
+      }
+  }
+
+  template <typename SEQUENCE>
+  void DnC_Dump::dump_sequence (const char* caption, const SEQUENCE &seq)
+  {
+    ACE_DEBUG ((LM_DEBUG, "%s: ", caption));
+
+    for (CORBA::ULong i = 0; i < seq.length (); ++i)
+      {
+	ACE_DEBUG ((LM_DEBUG, "  %s %d: \n", caption, i));
+        DnC_Dump::dump (seq[i]);
+      }
+  }
+
   // AssemblyConnectionDescription
 
   void DnC_Dump::dump (const ::Deployment::AssemblyConnectionDescription &acd)
@@ -115,7 +146,7 @@ namespace Deployment
     ACE_DEBUG ((LM_DEBUG, "  name: %s\n", compportdesc.name.in ()));
     ACE_DEBUG ((LM_DEBUG, "  specificType: %s\n", compportdesc.specificType.in ()));
 
-    ACE_DEBUG ((LM_DEBUG, "  supportedType: \n"));
+   ACE_DEBUG ((LM_DEBUG, "  supportedType: \n"));
     for (CORBA::ULong i = 0;
           i < compportdesc.supportedType.length ();
           ++i)
@@ -135,7 +166,7 @@ namespace Deployment
   {
     ACE_DEBUG ((LM_DEBUG, "ComponentPropertyDescription: \n"));  
     ACE_DEBUG ((LM_DEBUG, "  name: %s\n", comppropdesc.name.in ()));
-    ACE_DEBUG ((LM_DEBUG, "  type: \n"));
+    ACE_DEBUG ((LM_DEBUG, "  type: %s\n", TCKind_Names::get_name(comppropdesc.type));
   }
 
   // MonolithicImplementationDescription
@@ -483,10 +514,23 @@ namespace Deployment
 
   void DnC_Dump::dump (const ::Deployment::NamedImplementationArtifact &nia)
   {
+    ACE_DEBUG ((LM_DEBUG, "NamedImplementationArtifact: \n"));
+    ACE_DEBUG ((LM_DEBUG, "name: %s \n", nia.name.in ()));
+    DnC_Dump::dump_sequence ("referencedArtifact", nia.referencedArtifact);
   }
 
   void DnC_Dump::dump (const ::Deployment::ComponentInterfaceDescription &cid)
   {
+    ACE_DEBUG ((LM_DEBUG, "ComponentInterfaceDescription: \n"));
+    ACE_DEBUG ((LM_DEBUG, "label: %s \n", cid.label.in ()));
+    ACE_DEBUG ((LM_DEBUG, "UUID: %s \n", cid.UUID.in ()));
+    ACE_DEBUG ((LM_DEBUG, "specificType: %s \n", cid.specificType.in ()));
+    DnC_Dump::dump ("supportedType", cid.supportedType); // string sequence
+    ACE_DEBUG ((LM_DEBUG, "idlFile: %s \n", cid.idlFile.in ()));
+    DnC_Dump::dump_sequence ("configProperty", cid.configProperty); // Property seq.
+    DnC_Dump::dump_sequence ("infoProperty", cid.infoProperty); // Property seq.
+    DnC_Dump::dump_sequence ("port", cid.port); // ComponentPortDescription seq.
+    DnC_Dump::dump_sequence ("property", cid.property); // ComponentPropertyDescription seq.
   }
 
   void DnC_Dump::dump (const ::Deployment::SubcomponentPropertyReference &scpr)
@@ -638,6 +682,35 @@ namespace Deployment
     ACE_DEBUG ((LM_DEBUG, "ExternalReferenceEndpoint: \n"));
     ACE_DEBUG ((LM_DEBUG, "location: %s \n", ere.location.in ()));
   }
-}
+
+  void DnC_Dump::dump (const ::Deployment::Capability &capability)
+  {
+    ACE_DEBUG ((LM_DEBUG, "Capability: \n"));
+    ACE_DEBUG ((LM_DEBUG, "name: %s", capability.name.in ()));
+    DnC_Dump::dump ("resourceType", capability.resourceType); // string sequence
+    DnC_Dump::dump_sequence ("property", capability.property); // SatisfierProperty sequence
+   }
+
+  void DnC_Dump::dump (const ::Deployment::ImplementationArtifactDescriptor &iad)
+  {
+    ACE_DEBUG ((LM_DEBUG, "label: %s", iad.label.in ()));
+    ACE_DEBUG ((LM_DEBUG, "UUID: %s", iad.UUID.in ()));
+    ACE_DEBUG ((LM_debug, "location: %s", iad.location.in ()));
+    DnC_Dump::dump_sequence ("execParameter", iad.execParameter); // Property seq.
+    DnC_Dump::dump_sequence ("infoProperty", iad.infoProperty); // Property seq.
+    DnC_Dump::dump_sequence ("deployRequirement", iad.deployRequirement); // Requirement seq.
+    DnC_Dump::dump_sequence ("dependsOn", iad.dependsOn); // NamedImplementationArtifact seq.
+  }
+
+  void DnC_Dump::dump (const ::Deployment::ImplementationRequiremenet &ir)
+  {
+    DnC_Dump::dump ("resourcePort", ir.resourcePort); // string sequence
+    DnC_Dump::dump ("componentPort", ir.componentPort); // string sequence
+    DnC_Dump::dump_sequence ("resourceUsage", ir.resourceUsage); // ResourceUsageKind seq.
+    ACE_DEBUG ((LM_DEBUG, "resourceType: %s", ir.resourceType.in ()));
+    ACE_DEBUG ((LM_DEBUG, "name: %s", ir.name.in ()));
+  }
+
+ }
 
 #endif /* DNC_DUMP_C */

@@ -27,7 +27,8 @@ namespace CIAO
 {
   namespace Config_Handler
   {
-    CompPropDesc_Handler::CompPropDesc_Handler (DOMDocument* doc, unsigned long filter)
+    CompPropDesc_Handler::CompPropDesc_Handler (DOMDocument* doc,
+						unsigned long filter)
       : doc_ (doc),
         root_ (doc->getDocumentElement()),
         filter_ (filter),
@@ -38,7 +39,8 @@ namespace CIAO
         release_ (true)
     {}
 
-    CompPropDesc_Handler::CompPropDesc_Handler (DOMNodeIterator* iter, bool release)
+    CompPropDesc_Handler::CompPropDesc_Handler (DOMNodeIterator* iter,
+						bool release)
       : doc_ (0), root_ (0), filter_ (0), iter_ (iter), release_ (release)
     {}
 
@@ -61,14 +63,16 @@ namespace CIAO
           if (node_name == XStr (ACE_TEXT ("name")))
             {
               // Fetch the text node which contains the "label"
-	            node = this->iter_->nextNode();
+	      node = this->iter_->nextNode();
       	      DOMText* text = ACE_reinterpret_cast (DOMText*, node);
               this->process_name (text->getNodeValue(), comppropdesc);
-	          }
-	        else if (node_name == XStr (ACE_TEXT ("type")))
+	    }
+	  else if (node_name == XStr (ACE_TEXT ("type")))
             {
-	            // TODO: How to implement this?
-	            // DataType ???
+	      int argc = 0;
+	      char **argv = 0;
+	      CORBA::ORB orb = CORBA::ORB::init(argc, argv, "");
+	      DT_Handler::process_DataType(iter_, comppropdesc.type, orb.in());
             }
           else
             {

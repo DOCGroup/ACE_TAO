@@ -62,8 +62,10 @@ namespace CIAO
       ~CompIntrDesc_Handler();
 
       /// Process the component package description
-      void process_ComponentInterfaceDescription (::Deployment::ComponentInterfaceDescription &CompIntrDesc);
+      static void
+	process_ComponentInterfaceDescription (::Deployment::ComponentInterfaceDescription &CompIntrDesc);
 
+    protected:
       /// Process the label attribute
       void process_label (const XMLCh* label, ::Deployment::ComponentInterfaceDescription &compintrdesc);
 
