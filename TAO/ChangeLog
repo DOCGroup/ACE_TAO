@@ -1,3 +1,10 @@
+>Mon Sep 13 15:56:53 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/tests/Trading/Trading.mpc:
+
+          Changed import_test and export_test projects to inherit from
+	  trading_serv.  Needed by Borland CBuilderX.
+
 Mon Sep 13 12:18:49 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/Logging_Service/Basic_Logging_Service/Makefile.am:
