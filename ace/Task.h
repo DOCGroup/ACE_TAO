@@ -62,7 +62,17 @@ public:
   // information into <open>.
 
   virtual int close (u_long flags = 0) = 0;
-  // Hook called to close a Task.
+  // Hook called from ACE_Task_Exit when during thread exit and from
+  // the default implemenation of module_closed().
+
+  virtual int module_closed (void);
+  // Hook called during ACE_Module::close().  The default
+  // implementation calls forwards the call to close(1).  Please
+  // notice the changed value of the default argument of close().
+  // This allows tasks to differ between the call has been originated
+  // from ACE_Task_Exit or from module_closed().  Be aware that
+  // close(0) will be also called when a thread associated with the
+  // ACE_Task instance exits.
 
   // = Immediate and deferred processing methods, respectively.
   virtual int put (ACE_Message_Block *, ACE_Time_Value * = 0) = 0;

@@ -19,13 +19,13 @@ ace_signal_handler_dispatch (int signum, siginfo_t *info, ucontext_t *context)
 }
 
 extern "C" void 
-ace_signal_handlers_dispatch (int, siginfo_t *, ucontext_t *)
+ace_signal_handlers_dispatch (int signum, siginfo_t *info, ucontext_t *context)
 {
   ACE_TRACE ("ace_signal_handlers_dispatch");
   ACE_Sig_Handlers::dispatch (signum, info, context);
 }
 
-static ACE_SignalHandler ace_dispatcher = ACE_SignalHandler (ace_signal_handlers_dispatch);
+static ACE_SignalHandler ace_dispatcher = ACE_SignalHandler (ace_signal_handler_dispatch);
 #else
 static ACE_SignalHandler ace_dispatcher = ACE_SignalHandler (ACE_Sig_Handler::dispatch);
 #endif /* ACE_HAS_SIG_C_FUNC */

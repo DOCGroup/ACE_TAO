@@ -110,7 +110,7 @@ ACE_Stream<ACE_SYNCH_2>::top (ACE_Module<ACE_SYNCH_2> *&m)
 // stream_head.
 
 template <ACE_SYNCH_1> int
-ACE_Stream<ACE_SYNCH_2>::pop (u_long flags)
+ACE_Stream<ACE_SYNCH_2>::pop (int flags)
 {
   ACE_TRACE ("ACE_Stream<ACE_SYNCH_2>::pop");
   if (this->stream_head_->next () == this->stream_tail_)
@@ -139,7 +139,7 @@ ACE_Stream<ACE_SYNCH_2>::pop (u_long flags)
 // ACE_Stream.
 
 template <ACE_SYNCH_1> int
-ACE_Stream<ACE_SYNCH_2>::remove (const char *name, u_long flags)
+ACE_Stream<ACE_SYNCH_2>::remove (const char *name, int flags)
 {
   ACE_TRACE ("ACE_Stream<ACE_SYNCH_2>::remove");
   ACE_Module<ACE_SYNCH_2> *prev = 0;
@@ -286,7 +286,7 @@ ACE_Stream<ACE_SYNCH_2>::open (void *a,
 }
 
 template <ACE_SYNCH_1> int
-ACE_Stream<ACE_SYNCH_2>::close (u_long flags)
+ACE_Stream<ACE_SYNCH_2>::close (int flags)
 {
   ACE_TRACE ("ACE_Stream<ACE_SYNCH_2>::close");
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1);

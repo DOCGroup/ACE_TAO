@@ -489,7 +489,7 @@ int ace_yyindent;
 #endif /* YYDEBUG_SHIFT_ERROR_LEXEME */
 #endif /* YYDEBUG */
 #ifdef __cplusplus
-extern "C" { extern char *getenv(const char *); }
+extern "C" { extern char *ace_foo(const char *); }
 #endif
 int
 ace_yyparse()
@@ -498,7 +498,7 @@ ace_yyparse()
 #if YYDEBUG
     register char *ace_yys;
 #ifndef __cplusplus
-    extern char *getenv();
+    extern char *ace_foo();
 #endif
 
     if (ace_yys = ACE_OS::getenv("YYDEBUG"))

@@ -114,6 +114,60 @@ ACE_RW_Process_Mutex::dump (void) const
 }
 
 void
+ACE_RW_Mutex::dump (void) const
+{
+// ACE_TRACE ("ACE_RW_Mutex::dump");
+
+  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+  ACE_DEBUG ((LM_DEBUG, "\n"));
+  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+}
+
+ACE_RW_Mutex::ACE_RW_Mutex (int type, LPCTSTR name, void *arg)
+{
+// ACE_TRACE ("ACE_RW_Mutex::ACE_RW_Mutex");
+  if (ACE_OS::rwlock_init (&this->lock_, type, name, arg) != 0)
+    ACE_ERROR ((LM_ERROR, "%p\n", "ACE_RW_Mutex::~ACE_RW_Mutex"));
+}
+
+ACE_RW_Mutex::~ACE_RW_Mutex (void)
+{
+// ACE_TRACE ("ACE_RW_Mutex::~ACE_RW_Mutex");
+  if (this->remove () == -1)
+    ACE_ERROR ((LM_ERROR, "%p\n", "ACE_RW_Mutex::~ACE_RW_Mutex"));
+}
+
+ACE_ALLOC_HOOK_DEFINE(ACE_Semaphore)
+
+void
+ACE_Semaphore::dump (void) const
+{
+// ACE_TRACE ("ACE_Semaphore::dump");
+
+  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+  ACE_DEBUG ((LM_DEBUG, "\n"));
+  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+}
+
+ACE_Semaphore::ACE_Semaphore (u_int count, 
+			      int type, 
+			      LPCTSTR name, 
+			      void *arg,
+			      int max)
+{
+// ACE_TRACE ("ACE_Semaphore::ACE_Semaphore");
+  if (ACE_OS::sema_init (&this->semaphore_, count, type, 
+			 name, arg, max) != 0)
+    ACE_ERROR ((LM_ERROR, "%p\n", "ACE_Semaphore::ACE_Semaphore"));
+}
+
+ACE_Semaphore::~ACE_Semaphore (void)
+{
+// ACE_TRACE ("ACE_Semaphore::~ACE_Semaphore");
+  this->remove ();
+}
+
+void
 ACE_File_Lock::dump (void) const
 {
 // ACE_TRACE ("ACE_File_Lock::dump");
@@ -214,6 +268,33 @@ ACE_Process_Semaphore::release (void)
 {
 // ACE_TRACE ("ACE_Process_Semaphore::release");
   return this->lock_.release ();
+}
+
+ACE_ALLOC_HOOK_DEFINE(ACE_Mutex)
+
+void
+ACE_Mutex::dump (void) const
+{
+// ACE_TRACE ("ACE_Mutex::dump");
+
+  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+  ACE_DEBUG ((LM_DEBUG, "\n"));
+  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+}
+
+ACE_Mutex::ACE_Mutex (int type, LPCTSTR name, void *arg)
+{
+// ACE_TRACE ("ACE_Mutex::ACE_Mutex");
+
+  if (ACE_OS::mutex_init (&this->lock_, type, name, arg) != 0)
+    ACE_ERROR ((LM_ERROR, "%p\n", "ACE_Mutex::ACE_Mutex"));
+}
+
+ACE_Mutex::~ACE_Mutex (void)
+{
+// ACE_TRACE ("ACE_Mutex::~ACE_Mutex");
+  if (this->remove () != 0)
+    ACE_ERROR ((LM_ERROR, "%p\n", "ACE_Mutex::~ACE_Mutex"));
 }
 
 #if defined (ACE_HAS_THREADS)
@@ -327,18 +408,6 @@ ACE_Auto_Event::dump (void) const
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Recursive_Thread_Mutex)
 ACE_ALLOC_HOOK_DEFINE(ACE_Thread_Mutex_Guard)
-ACE_ALLOC_HOOK_DEFINE(ACE_Mutex)
-ACE_ALLOC_HOOK_DEFINE(ACE_Semaphore)
-
-void
-ACE_Semaphore::dump (void) const
-{
-// ACE_TRACE ("ACE_Semaphore::dump");
-
-  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, "\n"));
-  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
-}
 
 void
 ACE_Thread_Semaphore::dump (void) const
@@ -346,18 +415,6 @@ ACE_Thread_Semaphore::dump (void) const
 // ACE_TRACE ("ACE_Thread_Semaphore::dump");
 
   ACE_Semaphore::dump ();
-}
-
-ACE_Semaphore::ACE_Semaphore (u_int count, 
-			      int type, 
-			      LPCTSTR name, 
-			      void *arg,
-			      int max)
-{
-// ACE_TRACE ("ACE_Semaphore::ACE_Semaphore");
-  if (ACE_OS::sema_init (&this->semaphore_, count, type, 
-			 name, arg, max) != 0)
-    ACE_ERROR ((LM_ERROR, "%p\n", "ACE_Semaphore::ACE_Semaphore"));
 }
 
 ACE_Thread_Semaphore::ACE_Thread_Semaphore (u_int count, 
@@ -369,12 +426,6 @@ ACE_Thread_Semaphore::ACE_Thread_Semaphore (u_int count,
 // ACE_TRACE ("ACE_Thread_Semaphore::ACE_Thread_Semaphore");
 }
 
-ACE_Semaphore::~ACE_Semaphore (void)
-{
-// ACE_TRACE ("ACE_Semaphore::~ACE_Semaphore");
-  this->remove ();
-}
-
 void
 ACE_Thread_Mutex_Guard::dump (void) const
 {
@@ -383,31 +434,6 @@ ACE_Thread_Mutex_Guard::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG, "\n"));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
-}
-
-void
-ACE_Mutex::dump (void) const
-{
-// ACE_TRACE ("ACE_Mutex::dump");
-
-  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, "\n"));
-  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
-}
-
-ACE_Mutex::ACE_Mutex (int type, LPCTSTR name, void *arg)
-{
-// ACE_TRACE ("ACE_Mutex::ACE_Mutex");
-
-  if (ACE_OS::mutex_init (&this->lock_, type, name, arg) != 0)
-    ACE_ERROR ((LM_ERROR, "%p\n", "ACE_Mutex::ACE_Mutex"));
-}
-
-ACE_Mutex::~ACE_Mutex (void)
-{
-// ACE_TRACE ("ACE_Mutex::~ACE_Mutex");
-  if (this->remove () != 0)
-    ACE_ERROR ((LM_ERROR, "%p\n", "ACE_Mutex::~ACE_Mutex"));
 }
 
 ACE_thread_t 
@@ -795,7 +821,7 @@ ACE_Thread_Mutex::ACE_Thread_Mutex (LPCTSTR name, void *arg)
 //  ACE_TRACE ("ACE_Thread_Mutex::ACE_Thread_Mutex");
 
   if (ACE_OS::thread_mutex_init (&this->lock_, USYNC_THREAD, name, arg) != 0)
-    ACE_ERROR ((LM_ERROR, "%p\n", "ACE_Mutex::ACE_Mutex"));
+    ACE_ERROR ((LM_ERROR, "%p\n", "ACE_Thread_Mutex::ACE_Thread_Mutex"));
 }
 
 ACE_ALLOC_HOOK_DEFINE(ACE_RW_Thread_Mutex)
@@ -808,34 +834,10 @@ ACE_RW_Thread_Mutex::ACE_RW_Thread_Mutex (LPCTSTR name,
 }
 
 void
-ACE_RW_Mutex::dump (void) const
-{
-// ACE_TRACE ("ACE_RW_Mutex::dump");
-
-  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, "\n"));
-  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
-}
-
-void
 ACE_RW_Thread_Mutex::dump (void) const
 {
 // ACE_TRACE ("ACE_RW_Thread_Mutex::dump");
   ACE_RW_Mutex::dump ();
-}
-
-ACE_RW_Mutex::ACE_RW_Mutex (int type, LPCTSTR name, void *arg)
-{
-// ACE_TRACE ("ACE_RW_Mutex::ACE_RW_Mutex");
-  if (ACE_OS::rwlock_init (&this->lock_, type, name, arg) != 0)
-    ACE_ERROR ((LM_ERROR, "%p\n", "ACE_RW_Mutex::~ACE_RW_Mutex"));
-}
-
-ACE_RW_Mutex::~ACE_RW_Mutex (void)
-{
-// ACE_TRACE ("ACE_RW_Mutex::~ACE_RW_Mutex");
-  if (this->remove () == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n", "ACE_RW_Mutex::~ACE_RW_Mutex"));
 }
 
 #endif /* ACE_HAS_THREADS */

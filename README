@@ -145,7 +145,7 @@ The following subdirectories are included in C++_wrappers.tar.gz file:
 
         . ace  -- the source code and binaries for C++ components (note that
                   all of these are at the same "level" in order to work around
-                  deficiencies with Windows NT...)
+                  Windows NT lack of symbolic links...)
                 . ASX -- higher-level C++ network programming
                         framework based on System V STREAMs
                 . Collections -- stacks, sets, strings, etc.
@@ -665,6 +665,7 @@ James Michael Dwyer <jdwyer@knox.edu>
 Arun Katkere <katkere@praja.com>
 Bob Dunmire <bobd@titan.com>
 Sandro Doro <alex@aureus.sublink.org>
+Robert Lyng <RLyng@msmail.hsii.ccare.com>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson and is now at ObjectSpace.  Paul devised the recursive
