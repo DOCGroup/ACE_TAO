@@ -1,0 +1,102 @@
+<!-- $Id$ -->
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="Author" CONTENT="James CE Johnson">
+   <TITLE>ACE Tutorial 015</TITLE>
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF" LINK="#000FFF" VLINK="#FF0F0F">
+
+<CENTER><B><FONT SIZE=+2>ACE Tutorial 015</FONT></B></CENTER>
+
+<CENTER><B><FONT SIZE=+2>Building a protocol stream</FONT></B></CENTER>
+
+<P>
+<HR WIDTH="100%">
+And now the implementation of Server.  This is actually just the
+main() code from a previous tutorial broken into appropriate method
+calls.  It may seem silly to do this rather than keeping the stuff in
+main() but you'll find that you have less trouble enhancing an
+application when you take this sort of approach.
+<HR>
+
+<PRE>
+
+<font color=red>// $Id$</font>
+
+<font color=blue>#include</font> "<font color=green>Server_i.h</font>"
+
+<font color=red>/* We have to allocate space for our static finished_ flag.  We also
+   initialize it to 'false' so that we don't exit immediately.
+*/</font>
+sig_atomic_t <font color=#008888>Server::finished_</font> = 0;
+
+<font color=red>/* The simple constructor and destructor don't do anything but give us
+   a place to expand in the future if we want.
+*/</font>
+<font color=#008888>Server::Server</font>(void)
+{
+    ;
+}
+
+<font color=#008888>Server::~Server</font>(void)
+{
+    ;
+}
+
+<font color=red>/* Opening the server is as simple as opening the acceptor with the
+   default ACE_Reactor instance.  If we want to allow multiple
+   instances of Server objects then we should have an ACE_Reactor
+   member variable that we can register with.
+*/</font>
+int <font color=#008888>Server::open</font>(void)
+{
+    if (acceptor_.open (ACE_INET_Addr (ACE_DEFAULT_SERVER_PORT), <font color=#008888>ACE_Reactor::instance</font>()) == -1)
+        ACE_ERROR_RETURN ((LM_ERROR, "<font color=green>%p\n</font>", "<font color=green>open</font>"), -1);
+
+    return(0);
+}
+
+<font color=red>/* Running the server just means that we execute the basic event
+   loop for the reactor.  Again, if we had a private reactor then we
+   could have multiple server's in their run() method.
+*/</font>
+int <font color=#008888>Server::run</font>(void)
+{
+    ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) starting up server daemon\n</font>"));
+
+        <font color=red>// Here's the basic event loop.  I have a 2-second timeout on</font>
+        <font color=red>// the handle_events() so that we don't have to wait too long</font>
+        <font color=red>// when we set the finished_ flag.</font>
+    while (!finished_)
+    {
+         <font color=red>// Some (all?) platforms return the "<font color=green>remaining time</font>" in the</font>
+         <font color=red>// timeout parameter.  If we don't reset it each time, we</font>
+         <font color=red>// will end up with a 100% CPU spin loop!</font>
+        ACE_Time_Value timeout(2);
+
+        <font color=#008888>ACE_Reactor::instance</font>()->handle_events (&timeout);
+    }
+
+        <font color=red>// Close the acceptor when we're done.  This may be handled by</font>
+        <font color=red>// the framework but it's good practice to be explicit about things.</font>
+    acceptor_.close();
+
+    ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) shutting down server daemon\n</font>"));
+
+    return 0;
+}
+
+<font color=red>/* The close() method simply sets the finished_ flag so that run()
+   will leave the event loop and exit.
+*/</font>
+int <font color=#008888>Server::close</font>(void)
+{
+    finished_ = 1;
+    <font color=#008888>ACE_Reactor::instance</font>()->notify();
+    return(0);
+}
+</PRE>
+<P><HR WIDTH="100%">
+<CENTER>[<A HREF="../online-tutorials.html">Tutorial Index</A>] [<A HREF="page08.html">Continue This Tutorial</A>]</CENTER>
+

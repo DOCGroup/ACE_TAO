@@ -1,0 +1,124 @@
+@@ -987,7 +987,7 @@
+ /* Code executed at the end of each rule. */
+ #ifndef TAO_YY_BREAK
+-#define TAO_YY_BREAK break;
++#define TAO_YY_BREAK ACE_NOTREACHED (break;)
+ #endif
+ 
+ #define TAO_YY_RULE_SETUP \
+@@ -999,7 +999,7 @@
+ TAO_YY_DECL
+ 	{
+ 	register tao_yy_state_type tao_yy_current_state;
+-	register char *tao_yy_cp, *tao_yy_bp;
++	register char *tao_yy_cp = 0, *tao_yy_bp = 0;
+ 	register int tao_yy_act;
+ 
+@@ -1435,7 +1435,7 @@
+   		  idl_global->set_lineno(idl_global->lineno() + 1);
+ 		  idl_store_pragma(ace_tao_yytext);
+ 		}
+-	TAO_YY_BREAK
++   break;
+ case 69:
+ case 70:
+
+@@ -1442,7 +1442,7 @@
+{/* ignore file */
+  		  idl_global->set_lineno(idl_global->lineno() + 1);
+		}
+-	TAO_YY_BREAK
++       break;
+case 71:
+case 72:
+ TAO_YY_RULE_SETUP
+ {
+ 		  idl_parse_line_and_file(ace_tao_yytext);
+ 		}
+-	TAO_YY_BREAK
++	break;
+ case 73:
+ case 74:
+
+@@ -1455,7 +1455,7 @@
+ TAO_YY_RULE_SETUP
+ {
+ 		  idl_parse_line_and_file(ace_tao_yytext);
+ 		}
+-	TAO_YY_BREAK
++	break;
+ case 75:
+ case 76:
+
+@@ -1462,7 +1462,7 @@
+ TAO_YY_RULE_SETUP
+ {
+ 		  idl_parse_line_and_file(ace_tao_yytext);
+ 		}
+-	TAO_YY_BREAK
++	break;
+ case 77:
+ case 78:
+
+@@ -1469,7 +1469,7 @@
+ TAO_YY_RULE_SETUP
+ {
+ 		  idl_parse_line_and_file(ace_tao_yytext);
+ 	        }
+-	TAO_YY_BREAK
++	break;
+ case 79:
+ case 80:
+
+@@ -1478,14 +1478,14 @@
+ 		  /* ignore cpp ident */
+   		  idl_global->set_lineno(idl_global->lineno() + 1);
+ 		}
+-	TAO_YY_BREAK
++	break;
+ case 81:
+ TAO_YY_RULE_SETUP
+
+@@ -1484,7 +1484,7 @@
+ {
+ 		  /* ignore comments */
+   		  idl_global->set_lineno(idl_global->lineno() + 1);
+ 		}
+-	TAO_YY_BREAK
++	break;
+ case 82:
+ TAO_YY_RULE_SETUP
+
+@@ -1502,25 +1502,25 @@
+ 		    }
+ 	          }
+ 	        }
+-	TAO_YY_BREAK
++	break;
+ case 83:
+ TAO_YY_RULE_SETUP
+ ;
+-	TAO_YY_BREAK
++	break;
+ case 84:
+ TAO_YY_RULE_SETUP
+ {
+   		  idl_global->set_lineno(idl_global->lineno() + 1);
+ 		}
+-	TAO_YY_BREAK
++	break;
+ case 85:
+ TAO_YY_RULE_SETUP
+
+@@ -1518,7 +1518,7 @@
+ return ace_tao_yytext [0];
+-	TAO_YY_BREAK
++	break;
+ case 86:
+ TAO_YY_RULE_SETUP
+ TAO_YY_ECHO;
+-	TAO_YY_BREAK
++	break;
+ case TAO_YY_STATE_EOF(INITIAL):
+ 	tao_yyterminate();
+ 
