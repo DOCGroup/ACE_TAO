@@ -434,6 +434,8 @@ TAO_Client_StreamEndPoint::connect (AVStreams::StreamEndPoint_ptr responder,
                                     const AVStreams::flowSpec &the_spec,  
                                     CORBA::Environment &env)
 {
+  this->handle_preconnect ();
+  
   // Use the base class implementation of connect
   TAO_StreamEndPoint::connect (responder, 
                                qos_spec, 
@@ -441,11 +443,9 @@ TAO_Client_StreamEndPoint::connect (AVStreams::StreamEndPoint_ptr responder,
                                env);
 
   // Make the upcall to the app
-  return this->handle_connection_established (responder, 
-                                              qos_spec, 
-                                              the_spec,  
-                                              env);
-  
+  return this->handle_postconnect ();
+
+
 }
 
 
