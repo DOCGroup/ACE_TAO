@@ -1,3 +1,10 @@
+Fri Aug 13 20:50:02 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Select_Reactor_T.cpp (handle_events): Added a deactivation
+	  check for non-threaded case.  The original check was mixed with
+	  thread owner check and thus got disabled under single-threaded
+	  configurations.  Thanks to Kirthika for reporting the problem.
+
 Fri Aug 13 13:11:16 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * bin/make_release: moved ACE_wrappers/TAO addition to
