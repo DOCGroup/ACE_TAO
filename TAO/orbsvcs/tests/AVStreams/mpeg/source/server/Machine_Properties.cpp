@@ -45,6 +45,7 @@ TAO_Machine_Properties (const ACE_Time_Value& timeout)
 void
 TAO_Machine_Properties::init (void)
 {
+  /*
   this->rstat_client_ =
     ::clnt_create("localhost", RSTATPROG, RSTATVERS_TIME, "udp");
 
@@ -55,27 +56,44 @@ TAO_Machine_Properties::init (void)
     }
 
   ::memset (&this->old_stats_, 0, sizeof (statstime));
+  */
   this->retrieve_stats ();
 }
 
 int
 TAO_Machine_Properties::retrieve_stats (void)
 {
+  // initialize the handle everytime ??
+  this->rstat_client_ =
+    ::clnt_create("localhost", RSTATPROG, RSTATVERS_TIME, "udp");
+
   if (this->rstat_client_ == 0)
-    return -1;
+    {
+      ACE_ERROR ((LM_ERROR, "(%P|%t) %s\n",
+		  ::clnt_spcreateerror ("localhost")));
+    }
+
+  ::memset (&this->old_stats_, 0, sizeof (statstime));
+
+  //  if (this->rstat_client_ == 0)
+  //    return -1;
   
   static struct timeval timeout = {25, 0};
-  if (clnt_call (this->rstat_client_,
+  u_int result;
+  if ((result =clnt_call (this->rstat_client_,
 		 RSTATPROC_STATS,
 		 xdr_void,
 		 0,
 		 (xdrproc_t) xdr_statstime,
 		 (caddr_t) &this->stats_,
-		 timeout) != RPC_SUCCESS)
+		 timeout)) != RPC_SUCCESS)
     {
+      ACE_DEBUG ((LM_DEBUG,"rpc-error:%d\n",result));
       ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %s\n",
 			 ::clnt_sperror (this->rstat_client_, "localhost")), -1);
     }
+  else
+      ACE_DEBUG ((LM_DEBUG,"rpc client call worked\n"));
 
   this->sample_time_ = ACE_OS::gettimeofday () - this->timestamp_;
   this->timestamp_ = ACE_OS::gettimeofday ();
@@ -168,6 +186,7 @@ define_properties (CosTradingRepos::ServiceTypeRepository::PropStructSeq& prop_s
 void
 TAO_Machine_Properties::compute_cpu (CORBA::Any& value, int elapsed_seconds)
 {
+
   // The first three cpu stats are for user, kernal, iowait
   CORBA::ULong used = 0.0;
   for (int i = 0; i < RSTAT_CPUSTATES - 1; i++)

@@ -30,6 +30,7 @@ public class Strip_Chart extends Canvas
   private int old_max_value_;
   private int spacing_;
   private float local_max_ = 0;
+  private float old_point_;
   private boolean max_increased_ = false;
   
   public Strip_Chart (String title)
@@ -42,7 +43,7 @@ public class Strip_Chart extends Canvas
     max_value_ = 1;
     // max_value_ = max_value;
     old_max_value_ = max_value_;
-    
+    old_point_=0;
     java.util.Random rand = new java.util.Random (System.currentTimeMillis());
     float hue_ = rand.nextFloat();
     float brightness = rand.nextFloat();
@@ -91,11 +92,21 @@ public class Strip_Chart extends Canvas
       local_max_ = new_point;
     
     while (local_max_ > max_value_)
-      max_value_ *= 2;
+      max_value_ += 2;
     
     while ((local_max_ < max_value_/2) && (max_value_ > old_max_value_))
-      max_value_ /= 2;
-
+      if(max_value_!=0) 
+        max_value_ -= 2;
+    //else max_value_=0;
+    /*
+    if (new_point>old_point_)
+      max_value_=max_value_+1;
+    else
+      if(max_value_!=0) max_value_=max_value_-1;
+    else max_value_=0;
+    old_point_=new_point;
+    */
+    //old_max_value_=max_value_;
     repaint();
   }
 
@@ -147,7 +158,11 @@ public class Strip_Chart extends Canvas
 
         x2 = x1 - spacing_;
         offgraphics_.drawLine(x1, y1, x2, y2);
-        x1 = x2;
+        String temp = new String();
+        //System.out.println(temp.valueOf(x1)+" " + " "+temp.valueOf(y1)+ " "+temp.valueOf(x2)+" " + temp.valueOf(y2));
+
+
+        x1=x2;
 	if (x1 <= 5)
 	  break;
       }
