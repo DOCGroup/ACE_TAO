@@ -1032,21 +1032,125 @@ ACE_Dev_Poll_Reactor::close (void)
       result = ACE_OS::close (this->poll_fd_);
     }
 
+  if (this->delete_signal_handler_)
+    {
+      delete this->signal_handler_;
+      this->signal_handler_ = 0;
+      this->delete_signal_handler_ = 0;
+    }
+
+  (void) this->handler_rep_.close ();
+
+  if (this->delete_timer_queue_)
+    {
+      delete this->timer_queue_;
+      this->timer_queue_ = 0;
+      this->delete_timer_queue_ = 0;
+    }
+
+  if (this->notify_handler_ != 0)
+    this->notify_handler_->close ();
+
+  if (this->delete_notify_handler_)
+    {
+      delete this->notify_handler_;
+      this->notify_handler_ = 0;
+      this->delete_notify_handler_ = 0;
+    }
+
   this->poll_fd_ = ACE_INVALID_HANDLE;
+  this->start_pfds_ = 0;
+  this->end_pfds_ = 0;
+  this->initialized_ = 0;
 
   return result;
 }
 
 int
-ACE_Dev_Poll_Reactor::work_pending (const ACE_Time_Value & /* max_wait_time */)
+ACE_Dev_Poll_Reactor::work_pending (const ACE_Time_Value & max_wait_time)
 {
   ACE_TRACE ("ACE_Dev_Poll_Reactor::work_pending");
 
-  // /dev/epoll is a "state change" interface, not a "state
-  // monitoring" interface.  This means that it is not possible to
-  // provide the semantics required by this method.
-  ACE_NOTSUP_RETURN (-1);
+  // Stash the current time
+  //
+  // The destructor of this object will automatically compute how much
+  // time elapsed since this method was called.
+  ACE_Time_Value mwt (max_wait_time);
+  ACE_MT (ACE_Countdown_Time countdown (&mwt));
+
+  ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1));
+
+  // Update the countdown to reflect time waiting for the mutex.
+  ACE_MT (countdown.update ());
+
+  return this->work_pending_i (mwt);
 }
+
+int
+ACE_Dev_Poll_Reactor::work_pending_i (ACE_Time_Value & max_wait_time)
+{
+  ACE_TRACE ("ACE_Dev_Poll_Reactor::work_pending_i");
+
+  if (this->deactivated_)
+    return 0;
+
+  if (this->start_pfds_ != this->end_pfds_)
+    return 1;  // We still have work_pending() do not poll for
+               // additional events.
+
+  ACE_Time_Value timer_buf (0);
+  ACE_Time_Value *this_timeout = 0;
+
+  this_timeout = this->timer_queue_->calculate_timeout (&max_wait_time,
+                                                        &timer_buf);
+
+  long timeout =
+    (this_timeout == 0 ? -1 /* Infinity */ : this_timeout->msec ());
+
+#if defined (ACE_HAS_EVENT_POLL)
+
+  struct evpoll evp;
+
+  evp.ep_timeout = timeout;  // Milliseconds
+  evp.ep_resoff = 0;
+
+  // Poll for events
+  int nfds = ACE_OS::ioctl (this->poll_fd_, EP_POLL, &evp);
+
+  if (nfds > 0)
+    ACE_DEBUG ((LM_DEBUG, "%%%%%% RECEIVED EVENTS ON %d handles.\n",
+                nfds));
+
+  // Retrieve the results from the memory map.
+  this->start_pfds_ =
+    ACE_reinterpret_cast (struct pollfd *,
+                          this->mmap_ + evp.ep_resoff);
+
+#else
+
+  struct dvpoll dvp;
+
+  dvp.dp_fds = this->dp_fds_;
+  dvp.dp_nfds = this->size_;
+  dvp.dp_timeout = timeout;  // Milliseconds
+
+  // Poll for events
+  int nfds = ACE_OS::ioctl (this->poll_fd_, DP_POLL, &dvp);
+
+  // Retrieve the results from the pollfd array.
+  this->start_pfds_ = dvp.dp_fds;
+
+#endif  /* ACE_HAS_EVENT_POLL */
+
+  // If nfds == 0 then end_pfds_ == start_pfds_ meaning that there is
+  // no work pending.  If nfds > 0 then there is work pending.
+  // Otherwise an error occurred.
+  if (nfds > -1)
+    this->end_pfds_ = this->start_pfds_ + nfds;
+
+  return (nfds > 0 ? 1 : nfds);
+}
+
 
 int
 ACE_Dev_Poll_Reactor::handle_events (ACE_Time_Value *max_wait_time)
@@ -1057,7 +1161,7 @@ ACE_Dev_Poll_Reactor::handle_events (ACE_Time_Value *max_wait_time)
   //
   // The destructor of this object will automatically compute how much
   // time elapsed since this method was called.
-  ACE_Countdown_Time countdown (max_wait_time);
+  ACE_MT (ACE_Countdown_Time countdown (max_wait_time));
 
   ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1));
 
@@ -1075,74 +1179,31 @@ ACE_Dev_Poll_Reactor::handle_events_i (ACE_Time_Value *max_wait_time)
 {
   ACE_TRACE ("ACE_Dev_Poll_Reactor::handle_events_i");
 
-  int io_handlers_dispatched = 0;
+  int result = 0;
+  int active_handle_count = 0;
 
-  // Dispatch all "ready" events before polling for events.
-  if (this->ready_set_.nfds > 0
-      && this->dispatch_io_events (this->ready_set_.pfds,
-                                   this->ready_set_.nfds,
-                                   io_handlers_dispatched) != 0)
+  // Poll for events
+  //
+  // If the underlying ioctl() call was interrupted via the interrupt
+  // signal (i.e. returned -1 with errno == EINTR) then the loop will
+  // be restarted if so desired.
+  do
+    {
+      result = this->work_pending_i (*max_wait_time);
+    }
+  while (result == -1 && this->restart_ != 0 && errno == EINTR);
+
+  if (result == 0 || (result == -1 && errno == ETIME))
+    return 0;
+  else if (result == -1)
     return -1;
 
-  // Check if additional events are "ready" before polling.
-  if (this->ready_set_.nfds == 0)
-    {
-      ACE_Time_Value timer_buf (0);
-      ACE_Time_Value *this_timeout = 0;
-
-      this_timeout = this->timer_queue_->calculate_timeout (max_wait_time,
-                                                            &timer_buf);
-
-      long timeout =
-        (this_timeout == 0 ? -1 /* Infinity */ : this_timeout->msec ());
-
-#if defined (ACE_HAS_EVENT_POLL)
-
-      struct evpoll evp;
-
-      evp.ep_timeout = timeout;  // Milliseconds
-      evp.ep_resoff = 0;
-
-      // Poll for events
-      int nfds = ACE_OS::ioctl (this->poll_fd_, EP_POLL, &evp);
-
-      if (nfds > 0)
-        ACE_DEBUG ((LM_DEBUG, "%%%%%% RECEIVED EVENTS ON %d handles.\n",
-                    nfds));
-
-      // Retrieve the results from the memory map.
-      struct pollfd *pfds =
-        ACE_reinterpret_cast (struct pollfd *,
-                              this->mmap_ + evp.ep_resoff);
-
-#else
-
-      struct dvpoll dvp;
-
-      dvp.dp_fds = this->dp_fds_;
-      dvp.dp_nfds = this->size_;
-      dvp.dp_timeout = timeout;  // Milliseconds
-
-      // Poll for events
-      int nfds = ACE_OS::ioctl (this->poll_fd_, DP_POLL, &dvp);
-
-      // Retrieve the results from the pollfd array.
-      struct pollfd *pfds = dvp.dp_fds;
-
-#endif  /* ACE_HAS_EVENT_POLL */
-
-      return this->dispatch (pfds,
-                             nfds);
-    }
-
-  // this->state_changed_ = 1;
-
-  return io_handlers_dispatched;
+  // Dispatch the events, if any.
+  return this->dispatch ();
 }
 
 int
-ACE_Dev_Poll_Reactor::dispatch (struct pollfd *pfds,
-                                int active_handle_count)
+ACE_Dev_Poll_Reactor::dispatch (int active_handle_count)
 {
   ACE_TRACE ("ACE_Dev_Poll_Reactor::dispatch");
 
@@ -1224,9 +1285,7 @@ ACE_Dev_Poll_Reactor::dispatch (struct pollfd *pfds,
 #endif  /* 0 */
 
       // Finally, dispatch the I/O handlers.
-      else if (this->dispatch_io_events (pfds,
-                                         active_handle_count,
-                                         io_handlers_dispatched) == -1)
+      else if (this->dispatch_io_events (io_handlers_dispatched) == -1)
         // State has changed, so exit loop.
         break;
     }
@@ -1237,14 +1296,18 @@ ACE_Dev_Poll_Reactor::dispatch (struct pollfd *pfds,
 
 int
 ACE_Dev_Poll_Reactor::dispatch_timer_handlers (
-  int &number_of_handlers_dispatched)
+  int &number_of_timers_cancelled)
 {
-  number_of_handlers_dispatched += this->timer_queue_->expire ();
+  // Release the lock during the upcall.
+  ACE_Reverse_Lock<ACE_SYNCH_MUTEX> reverse_lock (this->lock_);
+  ACE_GUARD_RETURN (ACE_Reverse_Lock<ACE_SYNCH_MUTEX>,
+                    reverse_guard,
+                    reverse_lock,
+                    -1);
 
-//   if (this->state_changed_)
-//     return -1;
-//   else
-    return 0;
+  number_of_timers_cancelled += this->timer_queue_->expire ();
+
+  return 0;
 }
 
 #if 0
@@ -1275,35 +1338,37 @@ ACE_Dev_Poll_Reactor::dispatch_notification_handlers (
 #endif  /* 0 */
 
 int
-ACE_Dev_Poll_Reactor::dispatch_io_events (struct pollfd *pfds,
-                                          int nfds,
-                                          int &io_handlers_dispatched)
+ACE_Dev_Poll_Reactor::dispatch_io_events (int &io_handlers_dispatched)
 {
-  // nfds == 0  :  timeout
-  // nfds >  0  :  number of file descriptors (all received events)
-  // nfds <  0  :  error
-  if (nfds < 0)
-    return -1;
-
-  // Prepare the ready set to use the result buffer set by the ioctl()
-  // poll call.
-  this->ready_set_.pfds = pfds;
-
-  // Reset the "ready" file descriptor count.
-  this->ready_set_.nfds = 0;
+  // Since the underlying event demultiplexing mechansim (`/dev/poll'
+  // or '/dev/epoll') is stateful, and since only one result buffer is
+  // used, all pending events (i.e. those retrieved from a previous
+  // poll) must be dispatched before any additional event can be
+  // polled.  As such, the Dev_Poll_Reactor keeps track of the
+  // progress of events that have been dispatched.
 
   // Dispatch the events.
   //
+  // The semantics of this loop in the presence of multiple threads is
+  // non-trivial.  this->start_pfds_ will be incremented each time an
+  // event handler is dispatched, which may be done across multiple
+  // threads.  Multiple threads may change the loop variables.  Care
+  // must be taken to only change those variables with the reactor
+  // lock held.
+  //
   // Notice that pfds only contains file descriptors that have
   // received events.
-  for (int i = 0; i < nfds; ++i, ++pfds)
+  for (struct pollfd *& pfds = this->start_pfds_;
+       pfds < this->end_pfds_;
+       /* Nothing to do before next loop iteration */)
     {
       const ACE_HANDLE handle = pfds->fd;
       const short revents     = pfds->revents;
 
-      // Events to be dispatched the next time the ready set is
-      // processed.
-      short ready_set_events = 0;
+      // Increment the pointer to the next pollfd element before we
+      // release the lock.  Otherwise event handlers end up being
+      // dispatched multiple times for the same poll.
+      ++pfds;
 
       ACE_Event_Handler *eh = this->handler_rep_.find (handle);
 
@@ -1325,13 +1390,16 @@ ACE_Dev_Poll_Reactor::dispatch_io_events (struct pollfd *pfds,
           {
             ACE_DEBUG ((LM_DEBUG, "GOT POLLOUT EVENT\n"));
 
-            status = eh->handle_output (handle);
+            int status =
+              this->upcall (eh, ACE_Event_Handler::handle_output, handle);
 
             if (status < 0)
-              return this->remove_handler_i (handle,
+              {
+                // Note that the lock is reacquired in
+                // remove_handler().
+                return this->remove_handler (handle,
                                              ACE_Event_Handler::WRITE_MASK);
-            else if (status > 0)
-              ACE_SET_BITS (ready_set_events, POLLOUT);
+              }
 
             io_handlers_dispatched++;
           }
@@ -1341,13 +1409,16 @@ ACE_Dev_Poll_Reactor::dispatch_io_events (struct pollfd *pfds,
           {
             ACE_DEBUG ((LM_DEBUG, "GOT POLLPRI EVENT\n"));
 
-            status = eh->handle_exception (handle);
+            int status =
+              this->upcall (eh, ACE_Event_Handler::handle_exception, handle);
 
             if (status < 0)
-              return this->remove_handler_i (handle,
+              {
+                // Note that the lock is reacquired in
+                // remove_handler().
+                return this->remove_handler (handle,
                                              ACE_Event_Handler::EXCEPT_MASK);
-            else if (status > 0)
-              ACE_SET_BITS (ready_set_events, POLLPRI);
+              }
 
             io_handlers_dispatched++;
           }
@@ -1359,26 +1430,20 @@ ACE_Dev_Poll_Reactor::dispatch_io_events (struct pollfd *pfds,
 //                         "GOT POLLIN EVENT ON HANDLE <%d>\n",
 //                         handle));
 
-            status = eh->handle_input (handle);
+            int status =
+              this->upcall (eh, ACE_Event_Handler::handle_input, handle);
 
             if (status < 0)
-              return this->remove_handler_i (handle,
+              {
+                // Note that the lock is reacquired in
+                // remove_handler().
+                return this->remove_handler (handle,
                                              ACE_Event_Handler::READ_MASK);
-            else if (status > 0)
-              ACE_SET_BITS (ready_set_events, POLLIN);
+              }
 
             io_handlers_dispatched++;
           }
-      }
-
-      if (ready_set_events != 0)
-        {
-          // Notice that all events for pfds have been dispatched
-          // at this point in time so overwriting its revents field is
-          // safe.
-          pfds->revents = ready_set_events;
-          this->ready_set_.pfds[this->ready_set_.nfds++] = *pfds;
-        }
+      } // The reactor lock is reacquired upon leaving this scope.
     }
 
   return 0;
@@ -1525,7 +1590,7 @@ ACE_Dev_Poll_Reactor::register_handler (const ACE_Handle_Set &handle_set,
 
   return 0;
 }
-
+
 int
 ACE_Dev_Poll_Reactor::register_handler (int signum,
                                         ACE_Event_Handler *new_sh,
@@ -2128,6 +2193,9 @@ ACE_Dev_Poll_Reactor::owner (ACE_thread_t /* new_owner */,
 {
   ACE_TRACE ("ACE_Dev_Poll_Reactor::owner");
 
+  // There is no need to set the owner of the event loop.  Multiple
+  // threads may invoke the event loop simulataneously.
+
   return 0;
 }
 
@@ -2135,6 +2203,9 @@ int
 ACE_Dev_Poll_Reactor::owner (ACE_thread_t * /* owner */)
 {
   ACE_TRACE ("ACE_Dev_Poll_Reactor::owner");
+
+  // There is no need to set the owner of the event loop.  Multiple
+  // threads may invoke the event loop simulataneously.
 
   return 0;
 }
@@ -2321,6 +2392,7 @@ ACE_Dev_Poll_Reactor::dump (void) const
   ACE_TRACE ("ACE_Dev_Poll_Reactor::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("restart_ = %d\n"), this->restart_));
   ACE_DEBUG ((LM_DEBUG,
               ACE_LIB_TEXT ("initialized_ = %d"),
               this->initialized_));

@@ -88,12 +88,13 @@ public:
    *       counted event handlers need not pay for reference counting
    *       resources.
    */
-  size_t refcount;
+  unsigned long refcount;
 
 };
 
 // ---------------------------------------------------------------------
 
+#if 0
 /**
  * @class ACE_Dev_Poll_Ready_Set
  *
@@ -135,6 +136,7 @@ public:
   int nfds;
 
 };
+#endif  /* 0 */
 
 // ---------------------------------------------------------------------
 
@@ -376,14 +378,14 @@ public:
   /**
    * @return Returns the updated reference count.
    */
-  size_t add_ref (ACE_HANDLE handle);
+  unsigned long add_ref (ACE_HANDLE handle);
 
   /// Decrease the reference count on the event handler corresponding
   /// to the given file descriptor.
   /**
    * @return Returns the updated reference count.
    */
-  size_t remove_ref (ACE_HANDLE handle);
+  unsigned long remove_ref (ACE_HANDLE handle);
   //@}
 
   /**
@@ -864,25 +866,50 @@ public:
   /// Returns a reference to the Reactor's internal lock.
   virtual ACE_Lock &lock (void);
 
-  /// Wake up all threads in waiting in the event loop
+  /// Wake up all threads waiting in the event loop.
   virtual void wakeup_all_threads (void);
 
   /// Transfers ownership of Reactor_Impl to the new_owner.
+  /**
+   * @note There is no need to set the owner of the event loop for the
+   *       ACE_Dev_Poll_Reactor.  Multiple threads may invoke the
+   *       event loop simulataneously.  As such, this method is a
+   *       no-op.
+   */
   virtual int owner (ACE_thread_t new_owner, ACE_thread_t *old_owner = 0);
 
   /// Return the ID of the "owner" thread.
+  /**
+   * @note There is no need to set the owner of the event loop for the
+   *       ACE_Dev_Poll_Reactor.  Multiple threads may invoke the
+   *       event loop simulataneously.  As such, this method is a
+   *       no-op.
+   */
   virtual int owner (ACE_thread_t *owner);
 
   /// Get the existing restart value.
   virtual int restart (void);
 
   /// Set a new value for restart and return the original value.
+  /**
+   * @param r If zero, then the event loop will not be automatically
+   *          restarted if the underlying poll is interrupted via the
+   *          INTR (interrupt) signal.
+   *
+   * @return Returns the previous "restart" value.
+   */
   virtual int restart (int r);
 
   /// Set position of the owner thread.
+  /**
+   * @note This is currently a no-op.
+   */
   virtual void requeue_position (int);
 
   /// Get position of the owner thread.
+  /**
+   * @note This is currently a no-op.
+   */
   virtual int requeue_position (void);
 
   /**
@@ -914,9 +941,6 @@ public:
    * @name Low-level ready_set mask manipulation methods
    *
    * These methods are unimplemented.
-   * @par
-   * As implemented, the ready_set may only be indirectly manipulated
-   * by returning a value greater than zero from an event handler.
    */
   //@{
 
@@ -941,6 +965,17 @@ public:
 
 protected:
 
+  /// Non-locking version of wait_pending().
+  /**
+   * Returns non-zero if there are I/O events "ready" for dispatching,
+   * but does not actually dispatch the event handlers.  By default,
+   * don't block while checking this, i.e., "poll".
+   *
+   * @note It is only possible to achieve millisecond timeout
+   *       resolutions with the ACE_Dev_Poll_Reactor.
+   */
+  int work_pending_i (ACE_Time_Value &max_wait_time);
+
   /// Poll for events and return the number of event handlers that
   /// were dispatched.
   /**
@@ -948,8 +983,13 @@ protected:
    */
   int handle_events_i (ACE_Time_Value *max_wait_time);
 
+  /// Perform the upcall with the given event handler method.
+  int upcall (ACE_Event_Handler *event_handler,
+              int (ACE_Event_Handler::*callback)(ACE_HANDLE),
+              ACE_HANDLE handle);
+
   /**
-   * Dispatche ACE_Event_Handlers for time events, I/O events, and
+   * Dispatch ACE_Event_Handlers for time events, I/O events, and
    * signal events.  Returns the total number of ACE_Event_Handlers
    * that were dispatched or -1 if something goes wrong.
    */
@@ -1009,16 +1049,18 @@ protected:
 
   /// Track HANDLES we are interested in for various events that must
   /// be dispatched *without* polling.
-  ACE_Dev_Poll_Ready_Set ready_set_;
+  /// ACE_Dev_Poll_Ready_Set ready_set_;
 
 #if defined (ACE_HAS_EVENT_POLL)
-  /// The memory map to which `/dev/poll' or `/dev/poll' will feed its
-  /// results.
+  /// The memory map that `/dev/epoll' will feed its results to.
   char *mmap_;
 #else
-  ///
+  /// The pollfd array that `/dev/poll' will feed its results to.
   struct pollfd *dp_fds_;
 #endif  /* ACE_HAS_EVENT_POLL */
+
+  /// Pointer to the array 
+  struct pollfd *pfds_;
 
   /// This flag is used to keep track of whether we are actively handling
   /// events or not.
