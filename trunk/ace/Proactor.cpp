@@ -15,11 +15,6 @@
 #include "ace/Proactor.i"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-// Lock the creation of the Singleton.
-static ACE_Thread_Mutex ace_proactor_lock_;
-#endif /* ACE_MT_SAFE */
-
 // Process-wide ACE_Proactor.
 ACE_Proactor *ACE_Proactor::proactor_ = 0;
 
@@ -244,7 +239,8 @@ ACE_Proactor::instance (size_t threads)
   if (ACE_Proactor::proactor_ == 0)
     {
       // Perform Double-Checked Locking Optimization.
-      ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, ace_proactor_lock_, 0));
+      ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon,
+				*ACE_Static_Object_Lock::get_lock (), 0));
 
       if (ACE_Proactor::proactor_ == 0)
 	{
@@ -260,7 +256,8 @@ ACE_Proactor::instance (ACE_Proactor *r)
 {
   ACE_TRACE ("ACE_Proactor::instance");
 
-  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, ace_proactor_lock_, 0));
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon,
+			    *ACE_Static_Object_Lock::get_lock ()_, 0));
 
   ACE_Proactor *t = ACE_Proactor::proactor_;
   // We can't safely delete it since we don't know who created it!
@@ -275,7 +272,8 @@ ACE_Proactor::close_singleton (void)
 {
   ACE_TRACE ("ACE_Proactor::close_singleton");
 
-  ACE_MT (ACE_GUARD (ACE_Thread_Mutex, ace_mon, ace_proactor_lock_));
+  ACE_MT (ACE_GUARD (ACE_Thread_Mutex, ace_mon,
+		     *ACE_Static_Object_Lock::get_lock ()_));
 
   if (ACE_Proactor::delete_proactor_)
     {
