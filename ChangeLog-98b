@@ -4,7 +4,7 @@ Wed Jun 24 11:38:00 1998  Chris Gill  <cdgill@cs.wustl.edu>
           deadline absolute time ACE_Time_Value members to ACE_Message_Block.
           These default to ACE_Time_Value::zero in the constructors and
           initialization methods.
-           
+
         * ace/Message_Queue.{cpp,h,i}: Added ACE_Dynamic_Message_Queue,
           ACE_Dynamic_Message_Strategy, ACE_Deadline_Message_Strategy,
           ACE_Laxity_Message_Strategy, and ACE_Message_Queue_Factory
@@ -17,6 +17,9 @@ Wed Jun 24 10:23:27 1998  David L. Levine  <levine@cs.wustl.edu>
           PATH, if it exists.  That way, cvs diff will use GNU diff.
           Thanks to Doug for tripping over that.
           2) changed grep -E to egrep.
+
+        * ace/OS.i,gethrtime.cpp (gethrtime): with Pentium and g++ or ghs,
+          only; fixed load of 64-bit tick count into two 4-byte ints.
 
 Wed Jun 24 10:02:14 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
