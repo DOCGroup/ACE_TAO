@@ -19,7 +19,7 @@ BIN_UNCHECKED = client server
 SRC = $(addsuffix .cpp, $(BIN_UNCHECKED) Roundtrip) $(IDL_SRC)
 
 CLIENT_OBJS = client.o TestC.o
-SERVER_OBJS = server.o Roundtrip.o
+SERVER_OBJS = server.o Roundtrip.o TestC.o
 
 TAO_IDLFLAGS += -Ge 1
 #----------------------------------------------------------------------------
