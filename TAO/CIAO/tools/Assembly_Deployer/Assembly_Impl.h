@@ -86,7 +86,7 @@ namespace CIAO
     PortableServer::POA_var poa_;
 
     /// Keep a list of managed Assembly objects.
-    ACE_Active_Map_Manager<::Components::Deployment::Assembly_var> assembly_map_;
+    ACE_Active_Map_Manager<Components::Deployment::Assembly_var> assembly_map_;
   };
 
   /**

@@ -18,7 +18,7 @@
 #define CIAO_DAEMON_IMPL_H
 #include "ace/pre.h"
 
-#include "daemonS.h"
+#include "DaemonS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

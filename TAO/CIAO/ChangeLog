@@ -1,3 +1,23 @@
+Sat Mar 15 11:43:34 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ciao/Makefile:
+	* ciao/Makefile.client:
+	* ciao/Makefile.container:
+	* ciao/Makefile.server: Removed Makefiles.  I depend on MPC files
+	  exclusively at the moment.
+
+	* ciao/Assembly_Impl.cpp:
+	* ciao/Assembly_Impl.h:
+	* ciao/CCM_Core.mpc:
+	* ciao/Container_Base.cpp:
+	* ciao/Container_Base.h:
+	* ciao/Container_Impl.h:
+	* ciao/Daemon_Impl.h:
+	* ciao/Object_Set_T.cpp:
+	* ciao/ServerActivator_Impl.h: Fixed Linux build errors.  Some
+	  warnings are not fixed due to incomplete implementations and I
+	  want to make sure they got addressed in some future point. 
+
 Fri Mar 14 23:19:52 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ciao/CCM_Core.mpc: Updated the core MPC file to reflect recent

@@ -4,7 +4,7 @@
 #include "ace/DLL.h"
 
 #if !defined (__ACE_INLINE__)
-# include "ciao/Container_Base.inl"
+# include "Container_Base.inl"
 #endif /* __ACE_INLINE__ */
 
 ////////////////////////////////////////////////////////////////
