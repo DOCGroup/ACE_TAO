@@ -1,14 +1,14 @@
 // -*- MPC -*-
 // $Id$
 
-project(*Server): taoexe, portableserver, minimum_corba {
+project(*Server): taoserver, minimum_corba {
   Source_Files {
     File_i.cpp
     server.cpp
   }
 }
 
-project(*Client): taoexe, minimum_corba {
+project(*Client): taoclient, minimum_corba {
   Source_Files {
     FileC.cpp
     client.cpp

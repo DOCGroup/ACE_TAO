@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*Server): taoexe, messaging {
+project(*Server): taoserver, messaging {
   Source_Files {
     ORB_Task.cpp
     Server_i.cpp
