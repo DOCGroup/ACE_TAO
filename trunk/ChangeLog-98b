@@ -1,7 +1,7 @@
 Sun Nov 29 22:14:32 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.i (exit): with ACE_HAS_NON_STATIC_OBJECT_MANAGER,
-          call ACE_Object_Manager::fini ().  The ACE_Object_Manager
+          call ACE_Object_Manager_fini ().  The ACE_Object_Manager
           instantiation on main's stack is not destroyed by ::exit (),
           so this addition causes the ACE_Object_Manager to be
           properly shutdown.  Thanks to Jeff Greif <jmg@trivida.com>
@@ -10,6 +10,11 @@ Sun Nov 29 22:14:32 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Object_Manager.h: added Jeff Greif's ACE_OS::exit ()
           recommendations in comments.
+
+        * ace/Object_Manager.{h,cpp} (ACE_Object_Manager_fini):
+          added this global wrapper function around
+          ACE_Object_Manager::fini (), to avoid circular include
+          problems between OS.h and Object_Manager.h.
 
 Sun Nov 29 20:13:15 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
