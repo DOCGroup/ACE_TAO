@@ -1,3 +1,13 @@
+Mon Sep 27 14:10:15 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * include/makeinclude/wrapper_macros.GNU:
+
+          Set INSBIN to $(PWD) by default.  To allow installation of apps
+          (even if 'install' is not used in the mpc file), the gnu template
+          always sets INSTALL to $(VBIN:%=$(INSBIN)/%) for exe's.  Without
+          this change every exe built gets installed up in $(ACE_ROOT)/bin
+          which is not what we want.
+
 Mon Sep 27 13:46:21 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/templates/gnu.mpd:
