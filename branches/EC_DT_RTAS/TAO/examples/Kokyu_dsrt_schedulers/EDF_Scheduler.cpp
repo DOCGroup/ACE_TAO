@@ -113,6 +113,7 @@ EDF_Scheduler::create_scheduling_parameter (const EDF_Scheduling::SchedulingPara
 
   sched_param_policy->value (value);
 
+  DSUI_EVENT_LOG (EDF_SCHED_FAM, CREATE_SCHED_PARAM_END, 0, 0, NULL);
   return sched_param_policy;
 }
 
@@ -139,7 +140,7 @@ EDF_Scheduler::begin_new_scheduling_segment (const RTScheduling::Current::IdType
   // ACE_DEBUG ((LM_DEBUG, "(%t|%T): guid is %d\n", int_guid));
   //#endif
 
-  DSUI_EVENT_LOG (EDF_SCHED_FAM, BEGIN_SCHED_SEGMENT_START, int_guid, 0, NULL);
+  DSUI_EVENT_LOG (EDF_SCHED_FAM, BEGIN_NEW_SCHED_SEGMENT_START, int_guid, 0, NULL);
   EDF_Scheduler_Traits::QoSDescriptor_t qos;
   EDF_Scheduling::SchedulingParameterPolicy_var sched_param_policy =
     EDF_Scheduling::SchedulingParameterPolicy::_narrow (sched_policy);
@@ -151,7 +152,7 @@ EDF_Scheduler::begin_new_scheduling_segment (const RTScheduling::Current::IdType
 
   kokyu_dispatcher_->schedule (guid, qos);
 
-  DSUI_EVENT_LOG (EDF_SCHED_FAM, BEGIN_SCHED_SEGMENT_END, int_guid, 0, NULL);
+  DSUI_EVENT_LOG (EDF_SCHED_FAM, BEGIN_NEW_SCHED_SEGMENT_END, int_guid, 0, NULL);
 #ifdef KOKYU_DSRT_LOGGING
   ACE_DEBUG ((LM_DEBUG,
               "(%t|%T):EDF_Scheduler::begin_new_scheduling_segment exit\n"));
@@ -179,6 +180,7 @@ EDF_Scheduler::begin_nested_scheduling_segment (const RTScheduling::Current::IdT
                                       implicit_sched_param
                                       ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
+  DSUI_EVENT_LOG (EDF_SCHED_FAM, BEGIN_NESTED_SCHED_SEGMENT_END, int_guid, 0, NULL);
 }
 
 void
@@ -232,6 +234,7 @@ EDF_Scheduler::end_scheduling_segment (const RTScheduling::Current::IdType &guid
 
   DSUI_EVENT_LOG (EDF_SCHED_FAM, END_SCHED_SEGMENT, int_guid, 0, NULL);
   kokyu_dispatcher_->cancel_schedule (guid);
+  DSUI_EVENT_LOG (EDF_SCHED_FAM, END_SCHED_SEGMENT_END, int_guid, 0, NULL);
 }
 
 void
@@ -269,8 +272,8 @@ EDF_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr ri
 #ifdef KOKYU_DSRT_LOGGING
   ACE_DEBUG ((LM_DEBUG,
               "(%t|%T): send_request "
-              "from \"%s\"\n",
-              operation.in ()));
+              "from \"%s\" and guid is %d\n",
+              operation.in(), int_guid));
 #endif
 
   // Make the context to send the context to the target
@@ -313,8 +316,20 @@ EDF_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr ri
 #endif
     }
   //Fill the guid in the SC Qos struct
+
+  if(int_guid==1) {
+
+        long long_guid = (long) int_guid+1;
+	ACE_DEBUG((LM_DEBUG,"The long guid is %d\n",long_guid));
+        sc_qos.guid.length (sizeof(long));
+        ACE_OS::memcpy (sc_qos.guid.get_buffer (),
+                        &long_guid,
+                        sizeof(long));
+   }
+  else {
   sc_qos.guid.length (this->current_->id ()->length ());
   guid_copy (sc_qos.guid, *(this->current_->id ()));
+  }
   sc_qos.deadline = deadline;
   sc_qos.importance = importance;
   sc_qos.task_id = task_id;
@@ -322,14 +337,17 @@ EDF_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr ri
   CORBA::Any sc_qos_as_any;
   sc_qos_as_any <<= sc_qos;
 
-  sc.context_data =
-    ACE_reinterpret_cast(IOP::ServiceContext::
-                         _tao_seq_CORBA_Octet_ &,
-                         *codec_->encode (sc_qos_as_any));
+      sc.context_data =
+        ACE_reinterpret_cast (CORBA::OctetSeq &,
+                             *codec_->encode (sc_qos_as_any));
+
+  ACE_OS::memcpy (&int_guid,
+                  sc_qos.guid.get_buffer (),
+                  sc_qos.guid.length ());
 
 #ifdef KOKYU_DSRT_LOGGING
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%t|%T): send_request : about to add sched SC\n")));
+              "(%t|%T): send_request : about to add sched SC and guid is %d\n",int_guid));
 #endif
 
   // Add this context to the service context list.
@@ -377,7 +395,7 @@ EDF_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr ri,
 
 
 
-#ifdef KOKYU_DSRT_LOGGING
+#ifdef MY_KOKYU_DSRT_LOGGING
   ACE_DEBUG ((LM_DEBUG, "(%t|%T):entered EDF_Scheduler::receive_request\n"));
 #endif
 
@@ -492,7 +510,7 @@ EDF_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr ri,
   ACE_DEBUG ((LM_DEBUG, "(%t|%T): receive_request interceptor done\n"));
 #endif
 
-  DSUI_EVENT_LOG (EDF_SCHED_FAM, LEAVE_SERVER_SCHED_TIME, 0, 0, NULL);
+  DSUI_EVENT_LOG (EDF_SCHED_FAM, LEAVE_SERVER_SCHED_TIME, int_guid, 0, NULL);
 }
 
 void
@@ -576,10 +594,10 @@ EDF_Scheduler::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri
       CORBA::Any sc_qos_as_any;
       sc_qos_as_any <<= sc_qos;
 
-      sc.context_data = ACE_reinterpret_cast(
-                                             IOP::ServiceContext::
-                                             _tao_seq_CORBA_Octet_ &,
-                                             *codec_->encode (sc_qos_as_any));
+      sc.context_data =
+        ACE_reinterpret_cast (CORBA::OctetSeq &,
+                             *codec_->encode (sc_qos_as_any));
+
 
       // Add this context to the service context list.
       ri->add_reply_service_context (sc, 1 ACE_ENV_ARG_PARAMETER);
@@ -705,7 +723,7 @@ EDF_Scheduler::receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri
                   guid.length ());
 
   EDF_Scheduler_Traits::QoSDescriptor_t qos;
-  qos.deadline_ =   qos.importance_ = importance;
+  qos.importance_ = importance;
   qos.deadline_ = deadline;
   this->kokyu_dispatcher_->schedule (guid, qos);
   DSUI_EVENT_LOG (EDF_SCHED_FAM, EXIT_RECEIVE_REPLY, int_guid, 0, NULL);
