@@ -1,8 +1,8 @@
 /* -*- C++ -*- */
 // $Id$
 
-// The following configuration file is designed to build only the
-// minimal ACE_OS adaptation layer.
+// This configuration file is designed to build only the minimal
+// ACE_OS adaptation layer.
 
 #ifndef ACE_CONFIG_H
 #define ACE_CONFIG_H
