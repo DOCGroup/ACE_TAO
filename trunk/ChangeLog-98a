@@ -1,3 +1,9 @@
+Mon Jan 12 12:30:34 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * config-linux-common.h: moved ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES
+          so that it isn't used with egcs.  Thanks to Gonzo for
+          testing this.
+
 Sun Jan 11 23:02:07 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tests/SString_Test.cpp (main): Removed the "silly" strings from
@@ -66,7 +72,7 @@ Sat Jan 10 18:17:06 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 Sat Jan 10 22:37:37 1998  David L. Levine  <levine@cs.wustl.edu>
 
-        * ace/SStirng.i (find): changed type of local i to size_t to
+        * ace/SString.i (find): changed type of local i to size_t to
           avoid signed/unsigned comparison.
 
 Sat Jan 10 14:57:01 1998    <coryan@MILONGA>
