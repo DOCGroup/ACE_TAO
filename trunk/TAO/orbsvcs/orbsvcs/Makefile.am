@@ -5297,6 +5297,7 @@ SSLIOP = \
   SSLIOP/SSLIOP_Transport.cpp \
   SSLIOP/SSLIOP_Util.cpp \
   SSLIOP/SSLIOP_X509.cpp \
+  SSLIOP/params_dup.c \
   SSLIOP/ssl_endpoints.cpp \
   SSLIOPC.cpp
 
