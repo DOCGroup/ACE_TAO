@@ -14,15 +14,18 @@ ACE_RCSID(tao, Muxed_TMS, "$Id$")
 
 
 TAO_Muxed_TMS::TAO_Muxed_TMS (TAO_Transport *transport)
-  : TAO_Transport_Mux_Strategy (transport),
-    request_id_generator_ (0),
-    orb_core_ (transport->orb_core ()),
-    dispatcher_table_ (TAO_RD_TABLE_SIZE)
+  : TAO_Transport_Mux_Strategy (transport)
+    , request_id_generator_ (0)
+    , orb_core_ (transport->orb_core ())
+    , dispatcher_table_ (this->orb_core_->client_factory ()->reply_dispatcher_table_size ())
 {
+  this->lock_ =
+    this->orb_core_->client_factory ()->create_transport_mux_strategy_lock ();
 }
 
 TAO_Muxed_TMS::~TAO_Muxed_TMS (void)
 {
+  delete this->lock_;
 }
 
 // Generate and return an unique request id for the current
@@ -31,8 +34,8 @@ CORBA::ULong
 TAO_Muxed_TMS::request_id (void)
 {
   // @@ What is a good error return value?
-  ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX, ace_mon,
-                    this->lock_, 0);
+  ACE_GUARD_RETURN (ACE_Lock, ace_mon,
+                    *this->lock_, 0);
 
   ++this->request_id_generator_;
 
@@ -63,9 +66,9 @@ int
 TAO_Muxed_TMS::bind_dispatcher (CORBA::ULong request_id,
                                 TAO_Reply_Dispatcher *rd)
 {
-  ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX,
+  ACE_GUARD_RETURN (ACE_Lock,
                     ace_mon,
-                    this->lock_,
+                    *this->lock_,
                     -1);
 
   int result =
@@ -88,9 +91,9 @@ TAO_Muxed_TMS::bind_dispatcher (CORBA::ULong request_id,
 int
 TAO_Muxed_TMS::unbind_dispatcher (CORBA::ULong request_id)
 {
-  ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX,
+  ACE_GUARD_RETURN (ACE_Lock,
                     ace_mon,
-                    this->lock_,
+                    *this->lock_,
                     -1);
   TAO_Reply_Dispatcher *rd = 0;
 
@@ -107,9 +110,9 @@ TAO_Muxed_TMS::dispatch_reply (TAO_Pluggable_Reply_Params &params)
 
   // Grab the reply dispatcher for this id.
   {
-    ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX,
+    ACE_GUARD_RETURN (ACE_Lock,
                       ace_mon,
-                      this->lock_,
+                      *this->lock_,
                       -1);
 
     result =
@@ -190,9 +193,9 @@ TAO_Muxed_TMS::idle_after_reply (void)
 void
 TAO_Muxed_TMS::connection_closed (void)
 {
-  ACE_GUARD (TAO_SYNCH_RECURSIVE_MUTEX,
+  ACE_GUARD (ACE_Lock,
              ace_mon,
-             this->lock_);
+             *this->lock_);
 
   REQUEST_DISPATCHER_TABLE::ITERATOR end =
     this->dispatcher_table_.end ();

@@ -56,6 +56,9 @@ public:
   /// Create the correct client request muxing strategy.
   virtual TAO_Transport_Mux_Strategy *create_transport_mux_strategy (TAO_Transport *transport);
 
+  /// Create the correct lock for request muxing strategy.
+  virtual ACE_Lock *create_transport_mux_strategy_lock (void);
+
   /// Return the size of the reply dispatcher table
   virtual int reply_dispatcher_table_size (void) const;
 

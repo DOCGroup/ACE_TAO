@@ -83,6 +83,9 @@ public:
 protected:
   /// Cache the transport reference.
   TAO_Transport *transport_;
+
+  /// Lock to protect the state of the object
+  ACE_Lock *lock_;
 };
 
 #include "ace/post.h"

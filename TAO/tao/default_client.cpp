@@ -19,8 +19,9 @@
 ACE_RCSID(tao, default_client, "$Id$")
 
 TAO_Default_Client_Strategy_Factory::TAO_Default_Client_Strategy_Factory (void)
-  : profile_lock_type_ (TAO_THREAD_LOCK),
-    rd_table_size_ (TAO_RD_TABLE_SIZE)
+  : profile_lock_type_ (TAO_THREAD_LOCK)
+    , rd_table_size_ (TAO_RD_TABLE_SIZE)
+    , muxed_strategy_lock_type_ (TAO_THREAD_LOCK)
 {
   // Use single thread client connection handler
 #if defined (TAO_USE_ST_CLIENT_CONNECTION_HANDLER)
@@ -137,6 +138,24 @@ TAO_Default_Client_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
             }
         }
       else if (ACE_OS::strcmp (argv[curarg],
+                               ACE_LIB_TEXT("-ORBTransportMuxStrategyLock")) == 0)
+        {
+          curarg++;
+          if (curarg < argc)
+            {
+              ACE_TCHAR* name = argv[curarg];
+
+              if (ACE_OS::strcasecmp (name,
+                                      ACE_LIB_TEXT("null")) == 0)
+                this->muxed_strategy_lock_type_ = TAO_NULL_LOCK;
+              else if (ACE_OS::strcasecmp (name,
+                                           ACE_LIB_TEXT("thread")) == 0)
+                this->muxed_strategy_lock_type_ = TAO_THREAD_LOCK;
+              else
+                this->report_option_value_error (ACE_LIB_TEXT("-ORBTransportMuxStrategyLock"), name);
+            }
+        }
+      else if (ACE_OS::strcmp (argv[curarg],
                                ACE_LIB_TEXT("-ORBConnectStrategy")) == 0)
         {
           curarg++;
@@ -205,12 +224,6 @@ TAO_Default_Client_Strategy_Factory::create_profile_lock (void)
   return the_lock;
 }
 
-// @@ Alex: implement the WS and TMS methods here, similar to the
-//    create_profile_lock above...
-// @@ Alex: remember your idea of using the
-//    -ORBclientconnectionhandler option to implement the WS factory,
-//    but you need new options for the TMS...
-
 // Create the correct client transport muxing strategy.
 TAO_Transport_Mux_Strategy *
 TAO_Default_Client_Strategy_Factory::create_transport_mux_strategy (TAO_Transport *transport)
@@ -227,6 +240,23 @@ TAO_Default_Client_Strategy_Factory::create_transport_mux_strategy (TAO_Transpor
                     0);
 
   return tms;
+}
+
+ACE_Lock *
+TAO_Default_Client_Strategy_Factory::create_transport_mux_strategy_lock (void)
+{
+  ACE_Lock *the_lock = 0;
+
+  if (this->muxed_strategy_lock_type_ == TAO_NULL_LOCK)
+    ACE_NEW_RETURN (the_lock,
+                    ACE_Lock_Adapter<ACE_SYNCH_NULL_MUTEX> (),
+                    0);
+  else
+    ACE_NEW_RETURN (the_lock,
+                    ACE_Lock_Adapter<TAO_SYNCH_RECURSIVE_MUTEX> (),
+                    0);
+
+  return the_lock;
 }
 
 int
