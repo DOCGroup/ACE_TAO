@@ -5,6 +5,14 @@ Tue Feb 10 09:34:27 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.i (getprotoby{name,number}{,_r}): not supported on Chorus.
 
+        * ace/Makefile: build Select_Reactor.o without -g on ghs/Chorus,
+          because it causes GreenHills 1.8.8 to core dump.
+
+        * ace/config-chorus.h: adjusted to work with GreenHills 1.8.8.
+
+        * include/makeinclude/platform_chorus_ghs.GNU: use Gnu ar instead
+          of ax, because we don't have a license for ax.
+
         * Timer_Queue_Adapters.{h,i} (activate): added stack and stack_size
           parameters to match declaration in ACE_Task_Base.
 
