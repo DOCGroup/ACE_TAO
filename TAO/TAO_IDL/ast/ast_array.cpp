@@ -1,3 +1,5 @@
+// $Id$
+
 /*
 
 COPYRIGHT
@@ -51,8 +53,8 @@ Technical Data and Computer Software clause at DFARS 252.227-7013 and FAR
 Sun, Sun Microsystems and the Sun logo are trademarks or registered
 trademarks of Sun Microsystems, Inc.
 
-SunSoft, Inc.  
-2550 Garcia Avenue 
+SunSoft, Inc.
+2550 Garcia Avenue
 Mountain View, California  94043
 
 NOTE:
@@ -74,20 +76,20 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include	"idl.h"
 #include	"idl_extern.h"
-      
+
 /*
  * Constructor(s) and destructor
  */
 AST_Array::AST_Array()
-	 : pd_n_dims(0), 
+	 : pd_n_dims(0),
 	   pd_dims(NULL),
 	   pd_base_type(NULL)
 {
 }
 
 AST_Array::AST_Array(UTL_ScopedName *n, unsigned long nd, UTL_ExprList *ds)
-	 : pd_n_dims(nd), pd_base_type(NULL),
-	   AST_Decl(AST_Decl::NT_array, n, NULL)
+	 : AST_Decl(AST_Decl::NT_array, n, NULL),
+	   pd_n_dims(nd), pd_base_type(NULL)
 {
   pd_dims = compute_dims(ds, nd);
 }
@@ -149,7 +151,7 @@ AST_Array::dump(ostream &o)
 /*
  * Data accessors
  */
-unsigned long 
+unsigned long
 AST_Array::n_dims()
 {
   return pd_n_dims;
@@ -167,7 +169,7 @@ AST_Array::base_type()
   return pd_base_type;
 }
 
-void 
+void
 AST_Array::set_base_type(AST_Type *nbt)
 {
   pd_base_type = nbt;
