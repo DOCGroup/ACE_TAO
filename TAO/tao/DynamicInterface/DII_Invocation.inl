@@ -24,11 +24,11 @@ TAO_GIOP_DII_Deferred_Invocation::TAO_GIOP_DII_Deferred_Invocation (
     CORBA::Boolean argument_flag,
     const CORBA::Request_ptr req
   )
-  : TAO_GIOP_Invocation (stub,
-                         req->operation (),
-                         ACE_OS::strlen (req->operation ()),
-                         argument_flag,
-                         orb_core)
+  : TAO_GIOP_Asynch_Invocation (stub,
+                                req->operation (),
+                                ACE_OS::strlen (req->operation ()),
+                                argument_flag,
+                                orb_core)
 {
   // New reply dispatcher on the heap, because
   // we will go out of scope and hand over the

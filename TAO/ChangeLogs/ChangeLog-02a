@@ -1,3 +1,16 @@
+Sun Nov 19 14:15:12 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/DynamicInterface/DII_Invocation.h:
+	* tao/DynamicInterface/DII_Invocation.inl: Inherited
+	  TAO_GIOP_DII_Deferred_Invocation from TAO_GIOP_Asynch_Invocation
+	  instead of TAO_GIOP_Invocation. 
+	
+	* tao/Asynch_Invocation.h:
+	* tao/Asynch_Invocation.cpp: Added a method start () in
+	  TAO_GIOP_Asynch_Invocation. Thanks to Jeff for helping me with
+	  this. This should fix the DII test failures that we have been
+	  experiencing lately on many platforms.
+
 Sun Nov 19 11:02:17 2000  DOC Group CVS Access  <doccvs@ace.cs.wustl.edu>
 
 	* tests/RTCORBA/Client_Propagated/Makefile: 
