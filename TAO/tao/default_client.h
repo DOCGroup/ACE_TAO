@@ -46,38 +46,12 @@ public:
   virtual ~TAO_Default_Client_Strategy_Factory (void);
   // Destructor.
   
-  // = Useful typedef.
-  typedef ACE_Cached_Connect_Strategy<TAO_Client_Connection_Handler, 
-                                      ACE_SOCK_CONNECTOR,
-				      ACE_SYNCH_RW_MUTEX>
-          CACHED_CONNECT_STRATEGY;
-
-  virtual TAO_CONNECTOR *connector (void);
-  // Return a pointer to a connector using appropriate strategies.
-
   // = Service Configurator hooks.
-  virtual int init(int argc, char* argv[]);
+  virtual int init (int argc, char* argv[]);
   // Dynamic linking hook
 
   int parse_args(int argc, char* argv[]);
   // Parse svc.conf arguments
-  
-private:
-
-#if defined (TAO_HAS_CLIENT_CONCURRENCY)
-  // @@ Chris, shouldn't this always be "potentially" the case, even
-  // if a client didn't want to use it?
-  // @@ Yes, but we don't support this right now...
-  CONCURRENCY_STRATEGY *concurrency_strategy_;
-#endif /* TAO_HAS_CLIENT_CONCURRENCY */
-
-  // @@ Chris, please add comments to these members.
-
-  TAO_CONNECTOR connector_;
-
-  NULL_CREATION_STRATEGY null_creation_strategy_;
-
-  CACHED_CONNECT_STRATEGY caching_connect_strategy_;
 };
 
 ACE_SVC_FACTORY_DECLARE (TAO_Default_Client_Strategy_Factory)
