@@ -1,6 +1,14 @@
+Thu Jan 27 10:37:19 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/examples/ImR/Combined_Service/run_test.pl:
+
+          Use the tao_imr to shutdown the server before ending the test.
+          Since the ImR Activator probably started the server, $SERV no
+          longer refers to the actual server process.
+
 Thr Jan 27 07:35:05 2005  Huang-Ming Huang  <hh1@cse.wustul.edu>
 
-        * orbsvcs/orbsvcs/FtRtEvent/EventChanel/GroupInfoPublisher.cpp      
+        * orbsvcs/orbsvcs/FtRtEvent/EventChanel/GroupInfoPublisher.cpp
         Removed dependancy on log_obj_endpoints.h.
 
 Wed Jan 26 17:20:05 2005  Huang-Ming Huang  <hh1@cse.wustul.edu>
@@ -12,17 +20,17 @@ Wed Jan 26 17:20:05 2005  Huang-Ming Huang  <hh1@cse.wustul.edu>
         * orbsvcs/orbsvcs/FtRtEvent/EventChanel/IOGR_Maker.cpp
         * orbsvcs/orbsvcs/FtRtEvent/EventChanel/Replication_Service.cpp
         * orbsvcs/orbsvcs/FtRtEvent/EventChanel/FtEventServiceInterceptor
-        Fixed incorrect object_group_ref_version problem. Thanks to Thia Chang Chao 
+        Fixed incorrect object_group_ref_version problem. Thanks to Thia Chang Chao
         <tchangch@dso.org.sg> for reporting the problem.
-             
+
 
 Tue Jan 25 14:15:05 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* tao/Makefile.am:
+        * tao/Makefile.am:
 
-	  Update for this change:
+          Update for this change:
 
-	  Tue Jan 26 10:01:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+          Tue Jan 26 10:01:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue Jan 25 12:57:05 2005  Phil Mesnier  <mesnier_p@ociweb.com>
 
@@ -33,239 +41,239 @@ Tue Jan 25 12:57:05 2005  Phil Mesnier  <mesnier_p@ociweb.com>
 
 Tue Jan 25 09:59:28 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* orbsvcs/Event_Service/Event_Service.cpp:
-	* orbsvcs/FT_ReplicationManager/FT_FaultConsumer.cpp:
-	* orbsvcs/Fault_Detector/FT_FaultDetectorFactory_i.cpp:
-	* orbsvcs/Fault_Notifier/FT_Notifier_i.cpp:
-	* orbsvcs/IFR_Service/be_init.cpp:
-	* orbsvcs/IFR_Service/ifr_adding_visitor.cpp:
-	* orbsvcs/IFR_Service/ifr_adding_visitor_exception.cpp:
-	* orbsvcs/IFR_Service/ifr_adding_visitor_operation.cpp:
-	* orbsvcs/IFR_Service/ifr_adding_visitor_structure.cpp:
-	* orbsvcs/IFR_Service/ifr_adding_visitor_union.cpp:
-	* orbsvcs/ImplRepo_Service/Forwarder.cpp:
-	* orbsvcs/ImplRepo_Service/Locator_Repository.cpp:
-	* orbsvcs/LoadBalancer/LoadManager.cpp:
-	* orbsvcs/LoadBalancer/LoadMonitor.cpp:
-	* orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.cpp:
-	* orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.cpp:
-	* orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.cpp:
-	* orbsvcs/Logging_Service/RTEvent_Logging_Service/RTEvent_Logging_Service.cpp:
-	* orbsvcs/PSS/PSDL_Datastore.cpp:
-	* orbsvcs/PSS/PSDL_Interface_Visitor.cpp:
-	* orbsvcs/PSS/PSDL_Struct_Visitor.cpp:
-	* orbsvcs/Scheduling_Service/Scheduling_Service.cpp:
-	* orbsvcs/examples/FaultTolerance/RolyPoly/ReplicaController.cpp:
-	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
-	* orbsvcs/orbsvcs/AV/AV_Core.cpp:
-	* orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.cpp:
-	* orbsvcs/orbsvcs/AV/FlowSpec_Entry.cpp:
-	* orbsvcs/orbsvcs/AV/MCast.cpp:
-	* orbsvcs/orbsvcs/AV/QoS_UDP.cpp:
-	* orbsvcs/orbsvcs/AV/RTCP.cpp:
-	* orbsvcs/orbsvcs/AV/RTCP_Channel.cpp:
-	* orbsvcs/orbsvcs/AV/RTCP_Packet.cpp:
-	* orbsvcs/orbsvcs/AV/RTP.cpp:
-	* orbsvcs/orbsvcs/AV/SCTP_SEQ.cpp:
-	* orbsvcs/orbsvcs/AV/TCP.cpp:
-	* orbsvcs/orbsvcs/AV/UDP.cpp:
-	* orbsvcs/orbsvcs/AV/sfp.cpp:
-	* orbsvcs/orbsvcs/CosEvent/CEC_Dispatching_Task.cpp:
-	* orbsvcs/orbsvcs/CosEvent/CEC_EventChannel.h:
-	* orbsvcs/orbsvcs/CosEvent/CEC_TypedEventChannel.i:
-	* orbsvcs/orbsvcs/ESF/ESF_Delayed_Command.cpp:
-	* orbsvcs/orbsvcs/ETCL/ETCL_Constraint.i:
-	* orbsvcs/orbsvcs/ETCL/ETCL_Constraint.inl:
-	* orbsvcs/orbsvcs/Event/Dispatching_Modules.cpp:
-	* orbsvcs/orbsvcs/Event/Dispatching_Modules.i:
-	* orbsvcs/orbsvcs/Event/ECG_CDR_Message_Sender.cpp:
-	* orbsvcs/orbsvcs/Event/ECG_Mcast_Gateway.cpp:
-	* orbsvcs/orbsvcs/Event/ECG_Mcast_Gateway.i:
-	* orbsvcs/orbsvcs/Event/EC_And_Filter.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Bitmask_Filter.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Conjunction_Filter.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Disjunction_Filter.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Dispatching_Task.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Group_Scheduling.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Kokyu_Filter_Builder.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Kokyu_Scheduling.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Negation_Filter.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Null_Scheduling.cpp:
-	* orbsvcs/orbsvcs/Event/EC_ObserverStrategy.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Priority_Scheduling.cpp:
-	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Reactive_Timeout_Generator.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Timeout_Generator.cpp:
-	* orbsvcs/orbsvcs/Event/Event_Channel.cpp:
-	* orbsvcs/orbsvcs/Event/Timer_Module.cpp:
-	* orbsvcs/orbsvcs/FaultTolerance/FT_ClientRequest_Interceptor.cpp:
-	* orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.cpp:
-	* orbsvcs/orbsvcs/FaultTolerance/FT_Invocation_Endpoint_Selectors.cpp:
-	* orbsvcs/orbsvcs/FaultTolerance/FT_ServerRequest_Interceptor.cpp:
-	* orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.cpp:
-	* orbsvcs/orbsvcs/FtRtEvent/ClientORB/FTRT_ClientORB_Interceptor.cpp:
-	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_Event_Channel_Impl.cpp:
-	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/FT_ProxyAdmin_Base.cpp:
-	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/FT_ProxyAdmin_T.cpp:
-	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/ForwardCtrlServerInterceptor.cpp:
-	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/FtEventServiceInterceptor.cpp:
-	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/IOGR_Maker.cpp:
-	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/SCTP_Fault_Detector.cpp:
-	* orbsvcs/orbsvcs/FtRtEvent/Utils/activate_with_id.h:
-	* orbsvcs/orbsvcs/HTIOP/HTIOP_Acceptor.cpp:
-	* orbsvcs/orbsvcs/HTIOP/HTIOP_Acceptor_Impl.cpp:
-	* orbsvcs/orbsvcs/HTIOP/HTIOP_Endpoint.cpp:
-	* orbsvcs/orbsvcs/HTIOP/HTIOP_Profile.cpp:
-	* orbsvcs/orbsvcs/HTIOP/HTIOP_Transport.cpp:
-	* orbsvcs/orbsvcs/IFRService/ArrayDef_i.cpp:
-	* orbsvcs/orbsvcs/IFRService/AttributeDef_i.cpp:
-	* orbsvcs/orbsvcs/IFRService/ComponentDef_i.cpp:
-	* orbsvcs/orbsvcs/IFRService/ConstantDef_i.cpp:
-	* orbsvcs/orbsvcs/IFRService/Contained_i.cpp:
-	* orbsvcs/orbsvcs/IFRService/Container_i.cpp:
-	* orbsvcs/orbsvcs/IFRService/ExceptionDef_i.cpp:
-	* orbsvcs/orbsvcs/IFRService/ExtValueDef_i.cpp:
-	* orbsvcs/orbsvcs/IFRService/HomeDef_i.cpp:
-	* orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.cpp:
-	* orbsvcs/orbsvcs/IFRService/IRObject_i.cpp:
-	* orbsvcs/orbsvcs/IFRService/InterfaceAttrExtension_i.cpp:
-	* orbsvcs/orbsvcs/IFRService/InterfaceDef_i.cpp:
-	* orbsvcs/orbsvcs/IFRService/OperationDef_i.cpp:
-	* orbsvcs/orbsvcs/IFRService/PrimitiveDef_i.cpp:
-	* orbsvcs/orbsvcs/IFRService/Repository_i.cpp:
-	* orbsvcs/orbsvcs/IFRService/SequenceDef_i.cpp:
-	* orbsvcs/orbsvcs/IFRService/StringDef_i.cpp:
-	* orbsvcs/orbsvcs/IFRService/StructDef_i.cpp:
-	* orbsvcs/orbsvcs/IFRService/UnionDef_i.cpp:
-	* orbsvcs/orbsvcs/IFRService/UsesDef_i.cpp:
-	* orbsvcs/orbsvcs/IFRService/ValueDef_i.cpp:
-	* orbsvcs/orbsvcs/IFRService/ValueMemberDef_i.cpp:
-	* orbsvcs/orbsvcs/IFRService/WstringDef_i.cpp:
-	* orbsvcs/orbsvcs/IOR_Multicast.cpp:
-	* orbsvcs/orbsvcs/LoadBalancing/LB_CPU_Load_Average_Monitor.cpp:
-	* orbsvcs/orbsvcs/LoadBalancing/LB_CPU_Utilization_Monitor.cpp:
-	* orbsvcs/orbsvcs/LoadBalancing/LB_LoadManager.cpp:
-	* orbsvcs/orbsvcs/LoadBalancing/LB_Random.cpp:
-	* orbsvcs/orbsvcs/LoadBalancing/LB_ServerRequestInterceptor.cpp:
-	* orbsvcs/orbsvcs/Log/LogMgr_i.cpp:
-	* orbsvcs/orbsvcs/Log/Log_i.cpp:
-	* orbsvcs/orbsvcs/Log/NotifyLog_i.cpp:
-	* orbsvcs/orbsvcs/Metrics/Metrics_Logger.cpp:
-	* orbsvcs/orbsvcs/Naming/Hash_Naming_Context.cpp:
-	* orbsvcs/orbsvcs/Naming/Naming_Server.cpp:
-	* orbsvcs/orbsvcs/Naming/Persistent_Context_Index.cpp:
-	* orbsvcs/orbsvcs/Naming/Persistent_Naming_Context.cpp:
-	* orbsvcs/orbsvcs/Naming/Storable_Naming_Context.cpp:
-	* orbsvcs/orbsvcs/Naming/Transient_Naming_Context.cpp:
-	* orbsvcs/orbsvcs/Notify/Admin.cpp:
-	* orbsvcs/orbsvcs/Notify/Any/PushConsumer.cpp:
-	* orbsvcs/orbsvcs/Notify/Any/PushSupplier.cpp:
-	* orbsvcs/orbsvcs/Notify/Buffering_Strategy.cpp:
-	* orbsvcs/orbsvcs/Notify/Consumer.cpp:
-	* orbsvcs/orbsvcs/Notify/ConsumerAdmin.cpp:
-	* orbsvcs/orbsvcs/Notify/ETCL_Filter.cpp:
-	* orbsvcs/orbsvcs/Notify/EventChannel.cpp:
-	* orbsvcs/orbsvcs/Notify/EventChannelFactory.cpp:
-	* orbsvcs/orbsvcs/Notify/EventTypeSeq.cpp:
-	* orbsvcs/orbsvcs/Notify/FilterAdmin.cpp:
-	* orbsvcs/orbsvcs/Notify/Method_Request.inl:
-	* orbsvcs/orbsvcs/Notify/Method_Request_Dispatch.cpp:
-	* orbsvcs/orbsvcs/Notify/Name_Value_Pair.cpp:
-	* orbsvcs/orbsvcs/Notify/Persistent_File_Allocator.cpp:
-	* orbsvcs/orbsvcs/Notify/Random_File.cpp:
-	* orbsvcs/orbsvcs/Notify/Reconnection_Registry.cpp:
-	* orbsvcs/orbsvcs/Notify/Routing_Slip.cpp:
-	* orbsvcs/orbsvcs/Notify/Routing_Slip_Persistence_Manager.cpp:
-	* orbsvcs/orbsvcs/Notify/Sequence/Batch_Buffering_Strategy.cpp:
-	* orbsvcs/orbsvcs/Notify/Sequence/SequencePushConsumer.cpp:
-	* orbsvcs/orbsvcs/Notify/Sequence/SequencePushSupplier.cpp:
-	* orbsvcs/orbsvcs/Notify/Structured/StructuredPushConsumer.cpp:
-	* orbsvcs/orbsvcs/Notify/Structured/StructuredPushSupplier.cpp:
-	* orbsvcs/orbsvcs/Notify/SupplierAdmin.cpp:
-	* orbsvcs/orbsvcs/Notify/XML_Topology_Factory.cpp:
-	* orbsvcs/orbsvcs/PortableGroup/PG_FactoryRegistry.cpp:
-	* orbsvcs/orbsvcs/PortableGroup/PG_GenericFactory.cpp:
-	* orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroupManager.cpp:
-	* orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.cpp:
-	* orbsvcs/orbsvcs/PortableGroup/PG_Object_Group_Manipulator.cpp:
-	* orbsvcs/orbsvcs/PortableGroup/PG_Property_Set.cpp:
-	* orbsvcs/orbsvcs/PortableGroup/PG_Utils.cpp:
-	* orbsvcs/orbsvcs/PortableGroup/POA_Hooks.cpp:
-	* orbsvcs/orbsvcs/PortableGroup/PortableGroup_Acceptor_Registry.cpp:
-	* orbsvcs/orbsvcs/PortableGroup/Portable_Group_Map.cpp:
-	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Acceptor.cpp:
-	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Connector.cpp:
-	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Endpoint.cpp:
-	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Message_Block_Data_Iterator.cpp:
-	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Profile.cpp:
-	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.cpp:
-	* orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp:
-	* orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_ServerScheduler_i.i:
-	* orbsvcs/orbsvcs/Runtime_Scheduler.cpp:
-	* orbsvcs/orbsvcs/Sched/Config_Scheduler.cpp:
-	* orbsvcs/orbsvcs/Sched/DynSched.cpp:
-	* orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils.cpp:
-	* orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils_T.cpp:
-	* orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.cpp:
-	* orbsvcs/orbsvcs/Sched/Scheduler_Generic.cpp:
-	* orbsvcs/orbsvcs/Sched/Strategy_Scheduler.cpp:
-	* orbsvcs/orbsvcs/Time/TAO_Time_Service_Clerk.cpp:
-	* orbsvcs/orbsvcs/Time/TAO_Time_Service_Server.cpp:
-	* orbsvcs/orbsvcs/Time/Timer_Helper.cpp:
-	* orbsvcs/orbsvcs/Time_Utilities.i:
-	* orbsvcs/orbsvcs/Trader/Constraint_Interpreter.cpp:
-	* orbsvcs/orbsvcs/Trader/Constraint_Visitors.cpp:
-	* orbsvcs/orbsvcs/Trader/Offer_Database.cpp:
-	* orbsvcs/orbsvcs/Trader/Offer_Iterators.cpp:
-	* orbsvcs/orbsvcs/Trader/Offer_Iterators_T.cpp:
-	* orbsvcs/orbsvcs/Trader/Service_Type_Repository.cpp:
-	* orbsvcs/orbsvcs/Trader/Trader.cpp:
-	* orbsvcs/orbsvcs/Trader/Trader_Interfaces.cpp:
-	* orbsvcs/orbsvcs/Trader/Trader_Utils.cpp:
-	* orbsvcs/orbsvcs/Trader/Trading_Loader.cpp:
-	* orbsvcs/performance-tests/LoadBalancing/LBPerf/CPU/client.cpp:
-	* orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/client.cpp:
-	* orbsvcs/tests/AVStreams/Latency/ping.cpp:
-	* orbsvcs/tests/EC_Custom_Marshal/ECM_Consumer.cpp:
-	* orbsvcs/tests/EC_Custom_Marshal/ECM_Supplier.cpp:
-	* orbsvcs/tests/EC_Mcast/EC_Mcast.cpp:
-	* orbsvcs/tests/EC_Multiple/EC_Multiple.cpp:
-	* orbsvcs/tests/EC_Throughput/ECT_Consumer_Driver.cpp:
-	* orbsvcs/tests/EC_Throughput/ECT_Supplier_Driver.cpp:
-	* orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp:
-	* orbsvcs/tests/Event/lib/Driver.cpp:
-	* orbsvcs/tests/FT_App/FT_Client.cpp:
-	* orbsvcs/tests/FT_App/FT_Creator.cpp:
-	* orbsvcs/tests/FT_App/FT_ReplicaFactory_i.cpp:
-	* orbsvcs/tests/FT_App/FT_TestReplica_i.cpp:
-	* orbsvcs/tests/FT_App/ReplicationManagerFaultConsumerAdapter.cpp:
-	* orbsvcs/tests/FT_App/StubFaultConsumer.cpp:
-	* orbsvcs/tests/FT_App/StubFaultNotifier.cpp:
-	* orbsvcs/tests/FT_App/TAO_Object_Group_Creator.cpp:
-	* orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/Server_Request_Interceptor.cpp:
-	* orbsvcs/tests/HTIOP/AMI/Test_Output.cpp:
-	* orbsvcs/tests/HTIOP/BiDirectional/Test_Output.cpp:
-	* orbsvcs/tests/HTIOP/Hello/Test_Output.cpp:
-	* orbsvcs/tests/HTIOP/test_config.h:
-	* orbsvcs/tests/ImplRepo/nestea_i.cpp:
-	* orbsvcs/tests/InterfaceRepo/IFR_Test/Admin_Client.cpp:
-	* orbsvcs/tests/Notify/Blocking/common.cpp:
-	* orbsvcs/tests/Notify/Discarding/common.cpp:
-	* orbsvcs/tests/Notify/Ordering/Notify_Sequence_Push_Consumer.cpp:
-	* orbsvcs/tests/Notify/Ordering/Notify_Structured_Push_Consumer.cpp:
-	* orbsvcs/tests/Notify/Ordering/common.cpp:
-	* orbsvcs/tests/Notify/Reconnecting/Consumer.cpp:
-	* orbsvcs/tests/Notify/Reconnecting/Supplier.cpp:
-	* orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/common.cpp:
-	* orbsvcs/tests/Notify/Sequence_Multi_Filter/common.cpp:
-	* orbsvcs/tests/Notify/Structured_Multi_Filter/Notify_Push_Consumer.cpp:
-	* orbsvcs/tests/Notify/performance-tests/Filter/common.cpp:
-	* orbsvcs/tests/Sched_Conf/Sched_Conf.cpp:
-	* orbsvcs/tests/Sched_Conf/Sched_Conf_Anomalies.cpp:
-	* orbsvcs/tests/Sched_Conf/Sched_Conf_Runtime.cpp:
-	* orbsvcs/tests/Trading/Offer_Exporter.cpp:
-	* orbsvcs/tests/Trading/Offer_Importer.cpp:
-	* orbsvcs/tests/Trading/Service_Type_Exporter.cpp:
+        * orbsvcs/Event_Service/Event_Service.cpp:
+        * orbsvcs/FT_ReplicationManager/FT_FaultConsumer.cpp:
+        * orbsvcs/Fault_Detector/FT_FaultDetectorFactory_i.cpp:
+        * orbsvcs/Fault_Notifier/FT_Notifier_i.cpp:
+        * orbsvcs/IFR_Service/be_init.cpp:
+        * orbsvcs/IFR_Service/ifr_adding_visitor.cpp:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_exception.cpp:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_operation.cpp:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_structure.cpp:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_union.cpp:
+        * orbsvcs/ImplRepo_Service/Forwarder.cpp:
+        * orbsvcs/ImplRepo_Service/Locator_Repository.cpp:
+        * orbsvcs/LoadBalancer/LoadManager.cpp:
+        * orbsvcs/LoadBalancer/LoadMonitor.cpp:
+        * orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.cpp:
+        * orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.cpp:
+        * orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.cpp:
+        * orbsvcs/Logging_Service/RTEvent_Logging_Service/RTEvent_Logging_Service.cpp:
+        * orbsvcs/PSS/PSDL_Datastore.cpp:
+        * orbsvcs/PSS/PSDL_Interface_Visitor.cpp:
+        * orbsvcs/PSS/PSDL_Struct_Visitor.cpp:
+        * orbsvcs/Scheduling_Service/Scheduling_Service.cpp:
+        * orbsvcs/examples/FaultTolerance/RolyPoly/ReplicaController.cpp:
+        * orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
+        * orbsvcs/orbsvcs/AV/AV_Core.cpp:
+        * orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.cpp:
+        * orbsvcs/orbsvcs/AV/FlowSpec_Entry.cpp:
+        * orbsvcs/orbsvcs/AV/MCast.cpp:
+        * orbsvcs/orbsvcs/AV/QoS_UDP.cpp:
+        * orbsvcs/orbsvcs/AV/RTCP.cpp:
+        * orbsvcs/orbsvcs/AV/RTCP_Channel.cpp:
+        * orbsvcs/orbsvcs/AV/RTCP_Packet.cpp:
+        * orbsvcs/orbsvcs/AV/RTP.cpp:
+        * orbsvcs/orbsvcs/AV/SCTP_SEQ.cpp:
+        * orbsvcs/orbsvcs/AV/TCP.cpp:
+        * orbsvcs/orbsvcs/AV/UDP.cpp:
+        * orbsvcs/orbsvcs/AV/sfp.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Dispatching_Task.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_EventChannel.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_TypedEventChannel.i:
+        * orbsvcs/orbsvcs/ESF/ESF_Delayed_Command.cpp:
+        * orbsvcs/orbsvcs/ETCL/ETCL_Constraint.i:
+        * orbsvcs/orbsvcs/ETCL/ETCL_Constraint.inl:
+        * orbsvcs/orbsvcs/Event/Dispatching_Modules.cpp:
+        * orbsvcs/orbsvcs/Event/Dispatching_Modules.i:
+        * orbsvcs/orbsvcs/Event/ECG_CDR_Message_Sender.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_Gateway.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_Gateway.i:
+        * orbsvcs/orbsvcs/Event/EC_And_Filter.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Bitmask_Filter.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Conjunction_Filter.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Disjunction_Filter.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Dispatching_Task.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Group_Scheduling.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Kokyu_Filter_Builder.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Kokyu_Scheduling.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Negation_Filter.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Null_Scheduling.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ObserverStrategy.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Priority_Scheduling.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Reactive_Timeout_Generator.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Timeout_Generator.cpp:
+        * orbsvcs/orbsvcs/Event/Event_Channel.cpp:
+        * orbsvcs/orbsvcs/Event/Timer_Module.cpp:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ClientRequest_Interceptor.cpp:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.cpp:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Invocation_Endpoint_Selectors.cpp:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_ServerRequest_Interceptor.cpp:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/ClientORB/FTRT_ClientORB_Interceptor.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_Event_Channel_Impl.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FT_ProxyAdmin_Base.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FT_ProxyAdmin_T.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/ForwardCtrlServerInterceptor.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FtEventServiceInterceptor.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/IOGR_Maker.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/SCTP_Fault_Detector.cpp:
+        * orbsvcs/orbsvcs/FtRtEvent/Utils/activate_with_id.h:
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Acceptor.cpp:
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Acceptor_Impl.cpp:
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Endpoint.cpp:
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Profile.cpp:
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Transport.cpp:
+        * orbsvcs/orbsvcs/IFRService/ArrayDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/AttributeDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ComponentDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ConstantDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/Contained_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/Container_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ExceptionDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ExtValueDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/HomeDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.cpp:
+        * orbsvcs/orbsvcs/IFRService/IRObject_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/InterfaceAttrExtension_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/InterfaceDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/OperationDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/PrimitiveDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/Repository_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/SequenceDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/StringDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/StructDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/UnionDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/UsesDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ValueDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ValueMemberDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/WstringDef_i.cpp:
+        * orbsvcs/orbsvcs/IOR_Multicast.cpp:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_CPU_Load_Average_Monitor.cpp:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_CPU_Utilization_Monitor.cpp:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_LoadManager.cpp:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_Random.cpp:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_ServerRequestInterceptor.cpp:
+        * orbsvcs/orbsvcs/Log/LogMgr_i.cpp:
+        * orbsvcs/orbsvcs/Log/Log_i.cpp:
+        * orbsvcs/orbsvcs/Log/NotifyLog_i.cpp:
+        * orbsvcs/orbsvcs/Metrics/Metrics_Logger.cpp:
+        * orbsvcs/orbsvcs/Naming/Hash_Naming_Context.cpp:
+        * orbsvcs/orbsvcs/Naming/Naming_Server.cpp:
+        * orbsvcs/orbsvcs/Naming/Persistent_Context_Index.cpp:
+        * orbsvcs/orbsvcs/Naming/Persistent_Naming_Context.cpp:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.cpp:
+        * orbsvcs/orbsvcs/Naming/Transient_Naming_Context.cpp:
+        * orbsvcs/orbsvcs/Notify/Admin.cpp:
+        * orbsvcs/orbsvcs/Notify/Any/PushConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Any/PushSupplier.cpp:
+        * orbsvcs/orbsvcs/Notify/Buffering_Strategy.cpp:
+        * orbsvcs/orbsvcs/Notify/Consumer.cpp:
+        * orbsvcs/orbsvcs/Notify/ConsumerAdmin.cpp:
+        * orbsvcs/orbsvcs/Notify/ETCL_Filter.cpp:
+        * orbsvcs/orbsvcs/Notify/EventChannel.cpp:
+        * orbsvcs/orbsvcs/Notify/EventChannelFactory.cpp:
+        * orbsvcs/orbsvcs/Notify/EventTypeSeq.cpp:
+        * orbsvcs/orbsvcs/Notify/FilterAdmin.cpp:
+        * orbsvcs/orbsvcs/Notify/Method_Request.inl:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Dispatch.cpp:
+        * orbsvcs/orbsvcs/Notify/Name_Value_Pair.cpp:
+        * orbsvcs/orbsvcs/Notify/Persistent_File_Allocator.cpp:
+        * orbsvcs/orbsvcs/Notify/Random_File.cpp:
+        * orbsvcs/orbsvcs/Notify/Reconnection_Registry.cpp:
+        * orbsvcs/orbsvcs/Notify/Routing_Slip.cpp:
+        * orbsvcs/orbsvcs/Notify/Routing_Slip_Persistence_Manager.cpp:
+        * orbsvcs/orbsvcs/Notify/Sequence/Batch_Buffering_Strategy.cpp:
+        * orbsvcs/orbsvcs/Notify/Sequence/SequencePushConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Sequence/SequencePushSupplier.cpp:
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredPushConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredPushSupplier.cpp:
+        * orbsvcs/orbsvcs/Notify/SupplierAdmin.cpp:
+        * orbsvcs/orbsvcs/Notify/XML_Topology_Factory.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_FactoryRegistry.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_GenericFactory.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroupManager.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group_Manipulator.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Property_Set.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Utils.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/POA_Hooks.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PortableGroup_Acceptor_Registry.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/Portable_Group_Map.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Acceptor.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Connector.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Endpoint.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Message_Block_Data_Iterator.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Profile.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.cpp:
+        * orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp:
+        * orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_ServerScheduler_i.i:
+        * orbsvcs/orbsvcs/Runtime_Scheduler.cpp:
+        * orbsvcs/orbsvcs/Sched/Config_Scheduler.cpp:
+        * orbsvcs/orbsvcs/Sched/DynSched.cpp:
+        * orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils.cpp:
+        * orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils_T.cpp:
+        * orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.cpp:
+        * orbsvcs/orbsvcs/Sched/Scheduler_Generic.cpp:
+        * orbsvcs/orbsvcs/Sched/Strategy_Scheduler.cpp:
+        * orbsvcs/orbsvcs/Time/TAO_Time_Service_Clerk.cpp:
+        * orbsvcs/orbsvcs/Time/TAO_Time_Service_Server.cpp:
+        * orbsvcs/orbsvcs/Time/Timer_Helper.cpp:
+        * orbsvcs/orbsvcs/Time_Utilities.i:
+        * orbsvcs/orbsvcs/Trader/Constraint_Interpreter.cpp:
+        * orbsvcs/orbsvcs/Trader/Constraint_Visitors.cpp:
+        * orbsvcs/orbsvcs/Trader/Offer_Database.cpp:
+        * orbsvcs/orbsvcs/Trader/Offer_Iterators.cpp:
+        * orbsvcs/orbsvcs/Trader/Offer_Iterators_T.cpp:
+        * orbsvcs/orbsvcs/Trader/Service_Type_Repository.cpp:
+        * orbsvcs/orbsvcs/Trader/Trader.cpp:
+        * orbsvcs/orbsvcs/Trader/Trader_Interfaces.cpp:
+        * orbsvcs/orbsvcs/Trader/Trader_Utils.cpp:
+        * orbsvcs/orbsvcs/Trader/Trading_Loader.cpp:
+        * orbsvcs/performance-tests/LoadBalancing/LBPerf/CPU/client.cpp:
+        * orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/client.cpp:
+        * orbsvcs/tests/AVStreams/Latency/ping.cpp:
+        * orbsvcs/tests/EC_Custom_Marshal/ECM_Consumer.cpp:
+        * orbsvcs/tests/EC_Custom_Marshal/ECM_Supplier.cpp:
+        * orbsvcs/tests/EC_Mcast/EC_Mcast.cpp:
+        * orbsvcs/tests/EC_Multiple/EC_Multiple.cpp:
+        * orbsvcs/tests/EC_Throughput/ECT_Consumer_Driver.cpp:
+        * orbsvcs/tests/EC_Throughput/ECT_Supplier_Driver.cpp:
+        * orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp:
+        * orbsvcs/tests/Event/lib/Driver.cpp:
+        * orbsvcs/tests/FT_App/FT_Client.cpp:
+        * orbsvcs/tests/FT_App/FT_Creator.cpp:
+        * orbsvcs/tests/FT_App/FT_ReplicaFactory_i.cpp:
+        * orbsvcs/tests/FT_App/FT_TestReplica_i.cpp:
+        * orbsvcs/tests/FT_App/ReplicationManagerFaultConsumerAdapter.cpp:
+        * orbsvcs/tests/FT_App/StubFaultConsumer.cpp:
+        * orbsvcs/tests/FT_App/StubFaultNotifier.cpp:
+        * orbsvcs/tests/FT_App/TAO_Object_Group_Creator.cpp:
+        * orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/Server_Request_Interceptor.cpp:
+        * orbsvcs/tests/HTIOP/AMI/Test_Output.cpp:
+        * orbsvcs/tests/HTIOP/BiDirectional/Test_Output.cpp:
+        * orbsvcs/tests/HTIOP/Hello/Test_Output.cpp:
+        * orbsvcs/tests/HTIOP/test_config.h:
+        * orbsvcs/tests/ImplRepo/nestea_i.cpp:
+        * orbsvcs/tests/InterfaceRepo/IFR_Test/Admin_Client.cpp:
+        * orbsvcs/tests/Notify/Blocking/common.cpp:
+        * orbsvcs/tests/Notify/Discarding/common.cpp:
+        * orbsvcs/tests/Notify/Ordering/Notify_Sequence_Push_Consumer.cpp:
+        * orbsvcs/tests/Notify/Ordering/Notify_Structured_Push_Consumer.cpp:
+        * orbsvcs/tests/Notify/Ordering/common.cpp:
+        * orbsvcs/tests/Notify/Reconnecting/Consumer.cpp:
+        * orbsvcs/tests/Notify/Reconnecting/Supplier.cpp:
+        * orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/common.cpp:
+        * orbsvcs/tests/Notify/Sequence_Multi_Filter/common.cpp:
+        * orbsvcs/tests/Notify/Structured_Multi_Filter/Notify_Push_Consumer.cpp:
+        * orbsvcs/tests/Notify/performance-tests/Filter/common.cpp:
+        * orbsvcs/tests/Sched_Conf/Sched_Conf.cpp:
+        * orbsvcs/tests/Sched_Conf/Sched_Conf_Anomalies.cpp:
+        * orbsvcs/tests/Sched_Conf/Sched_Conf_Runtime.cpp:
+        * orbsvcs/tests/Trading/Offer_Exporter.cpp:
+        * orbsvcs/tests/Trading/Offer_Importer.cpp:
+        * orbsvcs/tests/Trading/Service_Type_Exporter.cpp:
 
           Converted ACE_{static,dynamic,reinterpret,const}_cast macros
           calls to their standard C++ counterparts using my "safe" but
@@ -297,69 +305,69 @@ Tue Jan 26 10:01:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue Jan 25 00:00:51 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/PortableServer/POA.cpp (reference_to_id):
-	* orbsvcs/orbsvcs/Event/ECG_CDR_Message_Receiver.cpp
-	  (handle_input):
-	* orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.cpp
-	  (visit_component_assoc):
-	* orbsvcs/orbsvcs/Naming/Hash_Naming_Context.cpp
-	  (bind_new_context):
-	* orbsvcs/orbsvcs/Naming/Storable_Naming_Context.cpp
-	  (bind_new_context):
-	* orbsvcs/orbsvcs/Notify/Notify_Constraint_Visitors.cpp
-	  (visit_component_assoc):
+        * tao/PortableServer/POA.cpp (reference_to_id):
+        * orbsvcs/orbsvcs/Event/ECG_CDR_Message_Receiver.cpp
+          (handle_input):
+        * orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.cpp
+          (visit_component_assoc):
+        * orbsvcs/orbsvcs/Naming/Hash_Naming_Context.cpp
+          (bind_new_context):
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.cpp
+          (bind_new_context):
+        * orbsvcs/orbsvcs/Notify/Notify_Constraint_Visitors.cpp
+          (visit_component_assoc):
 
-	  Fixed "control reaches end of non-void function" warnings
-	  exhibited by the latest GNU G++ 4.0 CVS snapshot.
+          Fixed "control reaches end of non-void function" warnings
+          exhibited by the latest GNU G++ 4.0 CVS snapshot.
 
-	* orbsvcs/orbsvcs/Notify/Persistent_File_Allocator.cpp
-	  (allocate_nowrite):
+        * orbsvcs/orbsvcs/Notify/Persistent_File_Allocator.cpp
+          (allocate_nowrite):
 
-	  Explicitly cast "~0" to a "size_t".  Addresses a warning
-	  exhibited by the latest GNU G++ 4.0 CVS snapshot regarding
-	  passing a negative value as a "size_t" function argument.
+          Explicitly cast "~0" to a "size_t".  Addresses a warning
+          exhibited by the latest GNU G++ 4.0 CVS snapshot regarding
+          passing a negative value as a "size_t" function argument.
 
 Mon Jan 24 22:06:05 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/ORB_Core.h (TAO_ORB_Core):
+        * tao/ORB_Core.h (TAO_ORB_Core):
 
-	  Removed obsolete "friend class TAO_ORB_Table" declaration.
+          Removed obsolete "friend class TAO_ORB_Table" declaration.
 
 Mon Jan 24 21:38:09 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/CosLoadBalancing.idl (CosLoadBalancing):
+        * orbsvcs/orbsvcs/CosLoadBalancing.idl (CosLoadBalancing):
 
-	  Changed typeprefix for this module from "omg.org" to "tao.lb".
-	  The IDL in this file is not yet OMG standard, and is generally
-	  specific to TAO.
+          Changed typeprefix for this module from "omg.org" to "tao.lb".
+          The IDL in this file is not yet OMG standard, and is generally
+          specific to TAO.
 
 Mon Jan 24 16:59:22 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* tao/Makefile.am:
+        * tao/Makefile.am:
 
-	  Fix thinko in pkgsrc *.pc file generation.
+          Fix thinko in pkgsrc *.pc file generation.
 
 Mon Jan 24 16:15:31 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* tao/Makefile.am:
+        * tao/Makefile.am:
 
-	  Update.
+          Update.
 
-	* configure.ac:
+        * configure.ac:
 
-	  Changed to invoke ACE_ENABLE_{FL,QT,TK,XT}_REACTOR.
+          Changed to invoke ACE_ENABLE_{FL,QT,TK,XT}_REACTOR.
 
 Mon Jan 24 13:22:04 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* tao/FlResource.mpc:
-	* tao/QtResource.mpc:
-	* tao/TkResource.mpc:
-	* tao/XtResource.mpc:
+        * tao/FlResource.mpc:
+        * tao/QtResource.mpc:
+        * tao/TkResource.mpc:
+        * tao/XtResource.mpc:
 
-	  Removed Default_Resources subsection from Source_Files.
+          Removed Default_Resources subsection from Source_Files.
 
-	  Added empty Inline_Files, Template_Files, Resource_Files, and
-	  PIDL_Files sections.
+          Added empty Inline_Files, Template_Files, Resource_Files, and
+          PIDL_Files sections.
 
 Mon Jan 24 09:38:08 2005  Chad Elliott  <elliott_c@ociweb.com>
 

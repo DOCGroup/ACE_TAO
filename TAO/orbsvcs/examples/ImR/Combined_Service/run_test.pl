@@ -146,6 +146,16 @@ print STDERR "Starting client\n";
         return $ret;
     }
 
+    # We have to kill the server, since $SERV most likely does
+    # not refer to the actual process anymore since a new server
+    # was started by the ImR Activator.
+    $IMRUTIL->Arguments("$imr_initref shutdown TestObject1");
+    $ret = $IMRUTIL->SpawnWaitKill(5);
+    if ($ret != 0) {
+        print "ERROR : Shutting down test server.\n";
+        return $ret;
+    }
+
     $COMB->TerminateWaitKill(5);
     if ($ret != 0) {
         print "ERROR : Terminating combined service.\n";
