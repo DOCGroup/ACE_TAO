@@ -1,3 +1,11 @@
+Sun Apr 27 18:13:24 1997  Sumedh Mungee       <sumedh@cs.wustl.edu>
+
+        * apps/JAWS/client: Removed blobby.h, and replaced it with
+          blobby_options.{h,cpp}.
+
+        * apps/JAWS/stress-testing: Removed unused argument warnings
+          etc.
+
 Sun Apr 27 14:18:45 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/Timer_Queue.cpp: Added yet more template specializations for
