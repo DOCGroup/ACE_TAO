@@ -210,6 +210,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "Cached_Conn_Test"=..\tests\Cached_Conn_Test.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Callback Quoter Consumer"=.\examples\Callback_Quoter\Consumer.dsp - Package Owner=<4>
 
 Package=<5>
@@ -3554,3 +3566,4 @@ Package=<3>
 }}}
 
 ###############################################################################
+

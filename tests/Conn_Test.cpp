@@ -718,14 +718,16 @@ main (int argc, ASYS_TCHAR *argv[])
   // Bind acceptor to any port and then find out what the port was.
   if (acceptor.open (ACE_sap_any_cast (const ACE_INET_Addr &)) == -1
       || acceptor.acceptor ().get_local_addr (server_addr) == -1)
-    ACE_ERROR ((LM_ERROR,
-                ASYS_TEXT ("(%P|%t) %p\n"),
-                ASYS_TEXT ("open")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ASYS_TEXT ("(%P|%t) %p\n"),
+                  ASYS_TEXT ("open")));
+      ACE_ASSERT (0);
+    }
   else
     {
       ACE_DEBUG ((LM_DEBUG,
                   ASYS_TEXT ("(%P|%t) starting server at port %d\n"),
-
                   server_addr.get_port_number ()));
 
 #if !defined (ACE_LACKS_FORK)

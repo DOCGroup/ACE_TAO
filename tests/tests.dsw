@@ -87,6 +87,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "Cached_Conn_Test"=.\Cached_Conn_Test.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Collection_Test"=.\Collection_Test.dsp - Package Owner=<4>
 
 Package=<5>
