@@ -97,7 +97,7 @@ Server_Events::~Server_Events (void)
 }
 
 int
-Server_Events::handle_input (ACE_HANDLE fd)
+Server_Events::handle_input (ACE_HANDLE)
 {
   // after the first message, point this to a timer
   // that way, the next time reactor::handle_events is called,
@@ -126,7 +126,7 @@ static const char MCAST_ADDR[] = ACE_DEFAULT_MULTICAST_ADDR;
 static const int UDP_PORT = ACE_DEFAULT_MULTICAST_PORT;
 
 int 
-main(int argc, char *argv[])
+main(int, char *[])
 {
   int duration = 5;
 
@@ -148,7 +148,7 @@ main(int argc, char *argv[])
 }
 #else
 int 
-main (int argc, char *argv[])
+main (int, char *argv[])
 {
   ACE_ERROR_RETURN ((LM_ERROR, 
 		     "error: %s must be run on a platform that support IP multicast\n",

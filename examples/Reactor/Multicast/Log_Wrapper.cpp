@@ -1,13 +1,13 @@
-// client.C
 // $Id$
 
+// client.C
 
 #include "Log_Wrapper.h"
 
 Log_Wrapper::Log_Wrapper (void)
 {
   this->log_msg_.sequence_number = 0;
-  this->log_msg_.app_id = ACE_OS::getpid();
+  this->log_msg_.app_id = ACE_OS::getpid ();
 }
 
 Log_Wrapper::~Log_Wrapper (void) 
@@ -15,7 +15,6 @@ Log_Wrapper::~Log_Wrapper (void)
 }
 
 // Set the log_msg_ host address.
-// Get a binding to a logger object from orbixd
 
 int
 Log_Wrapper::open (const int port, const char *mcast_addr) 
@@ -70,6 +69,4 @@ Log_Wrapper::log_message (ACE_Log_Priority type, char *message)
   // success.
   return 0;
 }
-
-
 

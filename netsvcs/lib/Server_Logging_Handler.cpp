@@ -1,5 +1,5 @@
-// Server_Logging_Handler.cpp
 // $Id$
+// Server_Logging_Handler.cpp
 
 #define ACE_BUILD_SVC_DLL
 #include "ace/Synch.h"
@@ -231,7 +231,7 @@ ACE_Server_Logging_Handler<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_2>::handle_logg
 // established.
 
 template <ACE_PEER_STREAM_1, class COUNTER, ACE_SYNCH_1> int
-ACE_Server_Logging_Handler<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_2>::open (void *arg)
+ACE_Server_Logging_Handler<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_2>::open (void *)
 {
   // Register ourselves with the Reactor to enable subsequent
   // dispatching.

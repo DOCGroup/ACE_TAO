@@ -15,7 +15,7 @@
 //   use netstat(1M) to find whether your interface
 //   is le0 or ie0
 
-static const char *interface = "le0";
+static const char *INTERFACE = "le0";
 static const char *MCAST_ADDR = ACE_DEFAULT_MULTICAST_ADDR;
 static const u_short UDP_PORT = ACE_DEFAULT_MULTICAST_PORT;
 
@@ -132,21 +132,19 @@ Handle_Events::Handle_Events (u_short udp_port,
 static void
 parse_args (int argc, char *argv[])
 {
-  extern char *optarg;
-  extern int  optind;
   int c;
 
   while ((c = ACE_OS::getopt (argc, argv, "i:u")) != -1)
     switch (c)
       {
       case 'i':
-	interface = optarg;
+	INTERFACE = optarg;
 	break;
       case 'u':
-	// usage fallthrough
+	// Usage fallthrough.
       default:
-        cerr << argv[0] << " -i interface\n";
-	::exit (1);
+        ACE_DEBUG ((LM_DEBUG, "%s -i interface\n", argv[0]));
+	ACE_OS::exit (1);
       }
 }
 
@@ -166,8 +164,8 @@ main (int argc, char *argv[])
   ACE_Sig_Action sig ((ACE_SignalHandler) handler, SIGINT);
   parse_args (argc, argv);
 
-  ACE_Reactor	reactor;
-  Handle_Events handle_events (UDP_PORT, MCAST_ADDR, interface, reactor);
+  ACE_Reactor reactor;
+  Handle_Events handle_events (UDP_PORT, MCAST_ADDR, INTERFACE, reactor);
 
   // main loop
 	  

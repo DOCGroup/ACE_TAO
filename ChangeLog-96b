@@ -1,3 +1,16 @@
+Mon Nov 18 00:47:27 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* examples/Misc: Added a new test (test_get_opt.cpp) which
+ 	  exercises the ACE_Get_Opt class.
+
+Sun Nov 17 13:00:02 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Get_Opt: Replaced the GNU-based implementation of class
+ 	  ACE_Get_Opt with an implementation based on BSD UNIX.  The
+ 	  advantage here is that the BSD version is not encumbered by the
+ 	  GNU GPL.  Thus, ACE has no more dependencies on GNU GPL.  Thanks
+ 	  to James Hu <jxh@cs.wustl.edu> for finding the BSD code.
+
 Mon Nov 18 00:13:25 1996  Tim H. Harrison  <harrison@lambada.cs.wustl.edu>
 
 	* ace/stdcpp.h: Added this file to ACE.  This file contains the
