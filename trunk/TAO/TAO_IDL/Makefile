@@ -1,20 +1,20 @@
 #----------------------------------------------------------------------------
-#	$Id$
+#       $Id$
 #
-#	Top-level Makefile for the TAO IDL compiler
+#       Top-level Makefile for the TAO IDL compiler
 #----------------------------------------------------------------------------
 
 #----------------------------------------------------------------------------
-#	Local macros
+#       Local macros
 #----------------------------------------------------------------------------
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # ! TAO_ROOT
 
-BIN   	= tao_idl
+BIN     = tao_idl
 LDLIBS = -lACE
-BUILD 	= $(BIN)
+BUILD   = $(BIN)
 
 VPATH=.:driver:fe:ast:util:narrow:be
 
@@ -137,12 +137,12 @@ FILES = tao_idl \
 	be/be_visitor_union \
 	be/be_visitor_union_branch
 
-SRC   	= $(addsuffix .cpp,$(FILES))
+SRC     = $(addsuffix .cpp,$(FILES))
 #VOBJS = $(LSRC:%.cpp=$(VDIR)%.$(OBJEXT))
 #$(BIN): $(VOBJS)
 
 #----------------------------------------------------------------------------
-#	Include macros and targets
+#       Include macros and targets
 #----------------------------------------------------------------------------
 
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
@@ -158,7 +158,7 @@ ifeq ($(CROSS-COMPILE),)
 endif # ! CROSS-COMPILE
 
 #----------------------------------------------------------------------------
-#	Local targets
+#       Local targets
 #----------------------------------------------------------------------------
 
 ifneq ($(CROSS-COMPILE),)
@@ -181,6 +181,12 @@ else  # ! CROSS-COMPILE
     ifneq ($(CXX_VER),CXX_5)
       WARNING_FLAGS += -msg_disable 111,177,550
     endif # CXX_5
+  else
+  ifeq ($(findstring gcx,$(CXX)),gcx)
+    # GreenHills gcx, to suppress many warnings about TAO_YY_BREAK
+    # statements being unreachable.
+    CCFLAGS += -w
+  endif # gcx
   endif # cxx
   endif # g++
 
