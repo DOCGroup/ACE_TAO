@@ -1,27 +1,28 @@
 Fri Sep 25 14:51:54 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* ace/Asynch_IO.h:
-	* ace/Asynch_IO.cpp:
-	* ace/Proactor.h: 
-	* ace/Proactor.cpp:
-     	  Implemented Asynch_Accept to work for AIO_CONTROL_BLOCKS strategy of
-   	  completion notification. 
+        * ace/Asynch_IO.h:
+        * ace/Asynch_IO.cpp:
+        * ace/Proactor.h:
+        * ace/Proactor.cpp:
+          Implemented Asynch_Accept to work for AIO_CONTROL_BLOCKS strategy of
+          completion notification.
 
-   	  Defined an auxillary Accept_Handler called ACE_AIO_Accept_Handler in
-   	  addition to the ACE_Asynch_Accept_Handler. ACE_AIO_Accept_Handler  
-   	  holds the notification pipe and does a read on it to handle the	   
-   	  <ACE_Asynch_Accept::Result> coming from Asynch_Accept_handler.
+          Defined an auxillary Accept_Handler called ACE_AIO_Accept_Handler in
+          addition to the ACE_Asynch_Accept_Handler. ACE_AIO_Accept_Handler
+          holds the notification pipe and does a read on it to handle the
+          <ACE_Asynch_Accept::Result> coming from Asynch_Accept_handler.
 
-   	  THANKS to Doug and Irfan for suggesting this 'notification pipe' based
-   	  implementation for AIO_CONTROL_BLOCKS strategy, so that Proactor will
-   	  work on platforms where POSIX4 RT_Signals are broken (Solaris 2.6 !)
-   	  
-	  Note : Proactor uses AIO_CONTROL_BLOACKS strategy by default on
-	  POSIX4 platforms. Call the constructor with RT_SIGNALS to enable
-	  Real Time singal implementation. 
-	
-	  This should become very easier when we finish organizing these
-	  files according to the Bridge pattern. 
+          THANKS to Doug and Irfan for suggesting this 'notification pipe' based
+          implementation for AIO_CONTROL_BLOCKS strategy, so that Proactor will
+          work on platforms where POSIX4 RT_Signals are broken (Solaris 2.6 !)
+
+          Note : Proactor uses AIO_CONTROL_BLOACKS strategy by default on
+          POSIX4 platforms. Call the constructor with RT_SIGNALS to enable
+          Real Time singal implementation.
+
+          This should become very easier when we finish organizing these
+          files according to the Bridge pattern.
+
 Fri Sep 25 12:40:45 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-sunos5.{5,6}.h: removed #define/#undef of
@@ -30,6 +31,10 @@ Fri Sep 25 12:40:45 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.i: removed carriage returns.  Thanks to Darrell
           for noticing it.
+
+        * tests/Handle_Set.cpp: removed ACE_Node<ACE_HANDLE>
+          template instantiation because it conflicted with the
+          ACE_Node<ACE_INT32> instantiation in ace/Stats.cpp.
 
 Fri Sep 25 12:15:00 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
