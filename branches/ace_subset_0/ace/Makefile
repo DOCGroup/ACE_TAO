@@ -20,6 +20,7 @@ SUBDIRS= \
   Other \
   QoS \
   RMCast \
+	Sockets \
   SSL \
   Streams \
   Svcconf \
