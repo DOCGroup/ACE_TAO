@@ -1,3 +1,11 @@
+Tue Jun 25 14:45:31 2002  Steve Huston  <shuston@riverace.com>
+
+        * examples/C++NPv2/AC_Client_Logging_Daemon.cpp: Comment out
+          declarations for info(), suspend(), and resume() - they're left
+          as exercises for the reader.
+
+        * examples/C++NPv2/AC_CLD.dsp: Added SSL link libraries.
+
 Tue Jun 25 12:13:39 2002  Steve Huston  <shuston@riverace.com>
 
         * examples/C++NPv2/AC_CLD.dsp:
