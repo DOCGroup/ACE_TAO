@@ -174,17 +174,19 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
       << ");" << be_uidt_nl;
   *os << node->local_name () << " (const " << node->local_name ()
       << " &);" << be_nl;
-  *os << "~" << node->local_name () << " (void);" << be_nl << be_nl;
+  *os << "~" << node->local_name () << " (void);";
 
-  if (be_global->any_support ())
+  if (be_global->any_support () && !node->anonymous ())
     {
-      *os << "static void _tao_any_destructor (void *);" << be_nl << be_nl;
+      *os << be_nl << be_nl 
+          << "static void _tao_any_destructor (void *);";
     }
 
   // Generate the _var_type typedef (only if we are not anonymous).
   if (this->ctx_->tdef () != 0)
     {
-      *os << "typedef " << node->local_name () << "_var _var_type;";
+      *os << be_nl << be_nl 
+          << "typedef " << node->local_name () << "_var _var_type;";
     }
 
   // TAO provides extensions for octet sequences, first find out if

@@ -363,12 +363,14 @@ be_visitor_tmplinst_cs::visit_sequence (be_sequence *node)
     {
       this->gen_varout_tmplinst (node,
                                  bt);
+    }
 
-      if (nt == AST_Decl::NT_typedef)
-        {
-          be_typedef *td = be_typedef::narrow_from_decl (bt);
-          nt = td->base_node_type ();
-        }
+  be_typedef *td = 0;
+
+  while (nt == AST_Decl::NT_typedef)
+    {
+      td = be_typedef::narrow_from_decl (bt);
+      nt = td->base_node_type ();
     }
 
   // basic IDL types are in TAO. Sequences of (w)strings in TAO are
@@ -385,7 +387,7 @@ be_visitor_tmplinst_cs::visit_sequence (be_sequence *node)
     }
 
   // For Any impl template class.
-  if (be_global->any_support ())
+  if (be_global->any_support () && !node->anonymous ())
     {
       TAO_OutStream *tmp = os;
 
