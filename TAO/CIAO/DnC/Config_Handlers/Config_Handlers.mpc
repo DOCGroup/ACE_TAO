@@ -21,6 +21,7 @@ project (Config_Handlers) : taolib {
     CompIntrDesc_Handler.cpp
     CompPkgDesc_Handler.cpp
     CompPortDesc_Handler.cpp
+    CompPropDesc_Handler.cpp
     CPR_Handler.cpp
     CRDD_Handler.cpp
     Domain_Handler.cpp
