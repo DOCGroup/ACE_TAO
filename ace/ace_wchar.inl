@@ -22,6 +22,10 @@ ACE_Wide_To_Ascii::char_rep (void)
 inline char *
 ACE_Wide_To_Ascii::convert (const wchar_t *wstr)
 {
+  // Short circuit null pointer case
+  if (wstr == 0)
+    return 0;
+
 # if defined (ACE_WIN32)
   size_t len = ::WideCharToMultiByte (CP_OEMCP, 
                                       0, 
@@ -32,7 +36,7 @@ ACE_Wide_To_Ascii::convert (const wchar_t *wstr)
                                       NULL, 
                                       NULL);
 # elif defined (VXWORKS)
-  // @@ we should use a different macro than VXWORKS here, ACE_LACKS_WCSLEN?
+  // @todo: we should use a different macro than VXWORKS here, ACE_LACKS_WCSLEN?
   const wchar_t *wtemp = wstr;
   while (wtemp != 0)
     ++wtemp;
@@ -82,6 +86,10 @@ ACE_Ascii_To_Wide::wchar_rep (void)
 inline wchar_t *
 ACE_Ascii_To_Wide::convert (const char *str)
 {
+  // Short circuit null pointer case
+  if (str == 0)
+    return 0;
+
 # if defined (ACE_WIN32)
   size_t len = ::MultiByteToWideChar (CP_OEMCP, 0, str, -1, NULL, 0);
 # else /* ACE_WIN32 */
