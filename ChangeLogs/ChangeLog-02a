@@ -1,19 +1,24 @@
+Mon Mar 19 19:53:34 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * include/makeinclude/ace_flags.bor:
+          Define macros for the RT Event Service test library
+
 Mon Mar 19 16:57:43 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/TP_Reactor.cpp (handle_events): Return value from
-	  handle_events() after the Reactor has been deactivated should be
-	  -1.  We just need to remember that as illustrated in
-	  ACE_Reactor::run_reactor_event_loop(), this is not an error:
+        * ace/TP_Reactor.cpp (handle_events): Return value from
+          handle_events() after the Reactor has been deactivated should be
+          -1.  We just need to remember that as illustrated in
+          ACE_Reactor::run_reactor_event_loop(), this is not an error:
 
-	  if (result == -1 && this->implementation_->deactivated ())
-	    return 0;
-	
-	* tests/Thread_Pool_Reactor_Test.cpp (svr_worker): Changed this
-	  function to call ACE_Reactor::run_reactor_event_loop() instead
-	  of ACE_Reactor::handle_events().  In the previous revision, we
-	  were not handling return values from
-	  ACE_Reactor::handle_events() correctly when
-	  ACE_Reactor::deactivated() had been called.
+          if (result == -1 && this->implementation_->deactivated ())
+            return 0;
+        
+        * tests/Thread_Pool_Reactor_Test.cpp (svr_worker): Changed this
+          function to call ACE_Reactor::run_reactor_event_loop() instead
+          of ACE_Reactor::handle_events().  In the previous revision, we
+          were not handling return values from
+          ACE_Reactor::handle_events() correctly when
+          ACE_Reactor::deactivated() had been called.
 
 Mon Mar 19 09:14:12 2001  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -24,28 +29,28 @@ Mon Mar 19 09:14:12 2001  Chad Elliott  <elliott_c@ociweb.com>
 
 Sun Mar 18 22:12:16 2001  Ossama Othman  <ossama@uci.edu>
 
-	* ace/SSL/SSL_SOCK_Stream.i (close):
+        * ace/SSL/SSL_SOCK_Stream.i (close):
 
-	  Commented out debugging output that was inadvertently committed
-	  to the repository.
+          Commented out debugging output that was inadvertently committed
+          to the repository.
 
-	  Don't bother invalidating the handle.  Doing so can potentially
-	  cause some side-effects in the underlying OpenSSL
-	  implementation since setting the handle in the SSL_SOCK_Stream
-	  also causes the OpenSSL SSL_set_fd() function to be called.
+          Don't bother invalidating the handle.  Doing so can potentially
+          cause some side-effects in the underlying OpenSSL
+          implementation since setting the handle in the SSL_SOCK_Stream
+          also causes the OpenSSL SSL_set_fd() function to be called.
 
-	  Fixed a socket leak caused by the fact that the handle was
-	  invalidated before the underlying ACE_SOCK_Stream was closed.
+          Fixed a socket leak caused by the fact that the handle was
+          invalidated before the underlying ACE_SOCK_Stream was closed.
 
 Sun Mar 18 09:46:47 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/New_Fail_Test.cpp: Fixed warnings in g++.
+        * tests/New_Fail_Test.cpp: Fixed warnings in g++.
 
 Sun Mar 18 08:31:34 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* examples/IPC_SAP/FILE_SAP/client.cpp (main): Added a couple of
-	  casts so that the arguments passed to printf() will match the
-	  format specifier types.	
+        * examples/IPC_SAP/FILE_SAP/client.cpp (main): Added a couple of
+          casts so that the arguments passed to printf() will match the
+          format specifier types.       
 
 Sat Mar 17 18:02:28 2001  Steve Huston  <shuston@riverace.com>
 
@@ -63,25 +68,25 @@ Sat Mar 17 18:02:28 2001  Steve Huston  <shuston@riverace.com>
 
 Fri Mar 16 15:07:23 2001  Ossama Othman  <ossama@uci.edu>
 
-	* ace/SSL/SSL_Context.h (set_mode):
+        * ace/SSL/SSL_Context.h (set_mode):
 
-	  Changed the default mode from SSLv3 to SSLv23, i.e. support
-	  SSLv2 and SSLv3 by default.  This fixes interoperability
-	  with applications that use Sun's JSSE, which only supports
-	  SSLv2.  Thanks to Max Khon <fjoe@newst.net> for providing the
-	  patch.
+          Changed the default mode from SSLv3 to SSLv23, i.e. support
+          SSLv2 and SSLv3 by default.  This fixes interoperability
+          with applications that use Sun's JSSE, which only supports
+          SSLv2.  Thanks to Max Khon <fjoe@newst.net> for providing the
+          patch.
 
 Thu Mar 15 17:47:28 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/Log_Msg_Test.cpp: Changed a ERROR message as a DEBUG
-	  message. If it is an error message the scripts that run the
-	  build gets confused.
+        * tests/Log_Msg_Test.cpp: Changed a ERROR message as a DEBUG
+          message. If it is an error message the scripts that run the
+          build gets confused.
 
 Thu Mar 15 17:42:54 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/Logging_Strategy_Test.cpp: Changed the "-s" option in the
-	  test to write the output in to the output generated in the "log"
-	  directory. This is just a hack to make the scoreboard clean.
+        * tests/Logging_Strategy_Test.cpp: Changed the "-s" option in the
+          test to write the output in to the output generated in the "log"
+          directory. This is just a hack to make the scoreboard clean.
 
 Thu Mar 15 15:55:37 2001  Steve Huston  <shuston@riverace.com>
 
@@ -98,23 +103,23 @@ Thu Mar 15 15:55:37 2001  Steve Huston  <shuston@riverace.com>
 
 Thu Mar 15 11:26:35 2001  Ossama Othman  <ossama@uci.edu>
 
-	* ace/SSL/SSL_SOCK_Acceptor.i (ACE_SSL_SOCK_Acceptor):
+        * ace/SSL/SSL_SOCK_Acceptor.i (ACE_SSL_SOCK_Acceptor):
 
-	  Make sure the handle is set for the ACE_SSL_SOCK_Acceptor, after
-	  initializing the underlying ACE_SOCK_Acceptor.  This ensures
-	  that OpenSSL has the proper handle.  Thanks to Greg McCain
-	  <greg.mccain@veritas.com> for suggesting this fix.
+          Make sure the handle is set for the ACE_SSL_SOCK_Acceptor, after
+          initializing the underlying ACE_SOCK_Acceptor.  This ensures
+          that OpenSSL has the proper handle.  Thanks to Greg McCain
+          <greg.mccain@veritas.com> for suggesting this fix.
 
-	* THANKS:
+        * THANKS:
 
-	  Added Greg to the hall of the fame.
+          Added Greg to the hall of the fame.
 
 Thu Mar 15 05:46:59 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/FILE_Addr.cpp (ACE_FILE_Addr): Make sure to divide the size of
-	  the filename_ by the sizeof (ACE_TCHAR) to handle unicode
- 	  correctly.  Thanks to the ever vigilant Ivan Murphy for catching
- 	  this!
+        * ace/FILE_Addr.cpp (ACE_FILE_Addr): Make sure to divide the size of
+          the filename_ by the sizeof (ACE_TCHAR) to handle unicode
+          correctly.  Thanks to the ever vigilant Ivan Murphy for catching
+          this!
 
 Wed Mar 14 01:47:10 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
@@ -128,36 +133,36 @@ Wed Mar 14 01:47:10 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
         * examples/Timer_Queue/Makefile:
         * netsvcs/clients/Naming/Client/Makefile:
         * netsvcs/clients/Naming/Dump_Restore/Makefile:  Removed
-	  unnecessary 'LIBS += $(ACELIB)'.  They were causing link problem
-	  for the latest KCC. compiner.
+          unnecessary 'LIBS += $(ACELIB)'.  They were causing link problem
+          for the latest KCC. compiner.
 
 Tue Mar 13 20:56:10 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/WFMO_Reactor.cpp (remove_to_be_added_handler_i):
-	* ace/WFMO_Reactor.cpp (remove_suspended_handler_i):
-	* ace/WFMO_Reactor.cpp (remove_handler_i):
+        * ace/WFMO_Reactor.cpp (remove_to_be_added_handler_i):
+        * ace/WFMO_Reactor.cpp (remove_suspended_handler_i):
+        * ace/WFMO_Reactor.cpp (remove_handler_i):
 
-	  If a user tried to (a) remove a "to be suspended handle" from
-	  either the current info set or the to be added set, the handle
-	  was correctly removed but the "to be suspended handle" count was
-	  not reduced; (b) remove a "to be resumed handle" from the
-	  suspended set, the handle was correctly removed but the "to be
-	  resumed handle" count was not reduced.  Since the "to be resumed
-	  handle" and the "to be suspended handle" were not adjusted
-	  properly, the reactor kept waking up thinking that changes were
-	  required. Thanks to Lu Yunhai <luyunhai@huawei.com> for
-	  reporting this problem.
+          If a user tried to (a) remove a "to be suspended handle" from
+          either the current info set or the to be added set, the handle
+          was correctly removed but the "to be suspended handle" count was
+          not reduced; (b) remove a "to be resumed handle" from the
+          suspended set, the handle was correctly removed but the "to be
+          resumed handle" count was not reduced.  Since the "to be resumed
+          handle" and the "to be suspended handle" were not adjusted
+          properly, the reactor kept waking up thinking that changes were
+          required. Thanks to Lu Yunhai <luyunhai@huawei.com> for
+          reporting this problem.
 
-	* examples/Reactor/WFMO_Reactor/test_suspended_removals.cpp: Added
-	  an extensive example for regression testing the above use cases.
+        * examples/Reactor/WFMO_Reactor/test_suspended_removals.cpp: Added
+          an extensive example for regression testing the above use cases.
 
 Tue Mar 13 15:23:04 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Service_Manager.cpp (list_services): Fixed Unicode bugs.
+        * ace/Service_Manager.cpp (list_services): Fixed Unicode bugs.
 
 Tue Mar 13 15:13:48 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tests/Logging_Strategy_Test.cpp: Fixed Unicode related bugs.
+        * tests/Logging_Strategy_Test.cpp: Fixed Unicode related bugs.
 
 Tue Mar 13 10:04:06 2001  Carlos O'Ryan  <coryan@uci.edu>
 
