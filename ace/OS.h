@@ -2440,11 +2440,11 @@ typedef void (*ACE_SignalHandlerV)(...);
 
 // The following defines are used by the ACE Name Server...
 #if !defined (ACE_DEFAULT_NAMESPACE_DIR_W)
-#define ACE_DEFAULT_NAMESPACE_DIR_W L"C:\\temp\\"
+#define ACE_DEFAULT_NAMESPACE_DIR_W L"C:\\temp"
 #endif /* ACE_DEFAULT_NAMESPACE_DIR_W */
 
 #if !defined (ACE_DEFAULT_NAMESPACE_DIR_A)
-#define ACE_DEFAULT_NAMESPACE_DIR_A "C:\\temp\\"
+#define ACE_DEFAULT_NAMESPACE_DIR_A "C:\\temp"
 #endif /* ACE_DEFAULT_NAMESPACE_DIR_A */
 
 #if !defined (ACE_DEFAULT_LOCALNAME_A)
