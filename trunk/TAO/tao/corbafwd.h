@@ -1105,6 +1105,8 @@ TAO_NAMESPACE_CLOSE  // end of class (namespace) CORBA
 #define TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE   (0x0EU << 7)
 #define TAO_ORB_CORE_INIT_LOCATION_CODE            (0x0FU << 7)
 #define TAO_POLICY_NARROW_CODE                     (0x10U << 7)
+#define TAO_GUARD_FAILURE                          (0x11U << 7)
+#define TAO_POA_BEING_DESTROYED                    (0x12U << 7)
 // *Don't* use TAO_<location>_MINOR_CODE greater than 0x1FU!
 
 // errno encoding:  bottom 7 bits.

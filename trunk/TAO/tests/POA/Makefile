@@ -12,6 +12,7 @@
 
 DIRS  = Destruction \
 	Deactivation \
+	Non_Servant_Upcalls \
 	Identity
 
 # The following test hasn't been updated yet
