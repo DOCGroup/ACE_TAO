@@ -298,7 +298,7 @@ public:
    *  @param pos Starting index position to start searching for string @a str.
    *  @return Index value of the first location of string @a str else npos.
    */
-  ssize_t rfind (CHAR c, size_t pos = ACE_static_cast (size_t, npos)) const;
+  ssize_t rfind (CHAR c, ssize_t pos = npos) const;
 
   /**
    *  Equality comparison operator (must match entire string).
