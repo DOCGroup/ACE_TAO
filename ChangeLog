@@ -1,3 +1,10 @@
+Thu Aug 30 00:27:05 2001  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * ChangeLog:
+
+          Removed bogus files from the pervious entries. I should not play
+          around with a lot of tasks at once.
+
 Wed Aug 29 19:57:29 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * ace/config-osf1-4.0.h:
@@ -6,11 +13,9 @@ Wed Aug 29 19:57:29 2001  Krishnakumar B  <kitty@cs.wustl.edu>
           default value seems to be good enough.
 
         * ace/config-vxworks5.x.h:
-        * ace/config-linux-common.h:
         * ace/config-lynxos.h:
         * ace/config-qnx-neutrino.h:
         * ace/config-rtems.h:
-        * ace/config-vxworks5.x.h:
 
           Standardized the values to 64KB on these platforms. Don't know
           if these platforms need it. But I don't have access to any of
