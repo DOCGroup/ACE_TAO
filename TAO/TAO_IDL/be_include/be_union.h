@@ -96,6 +96,10 @@ public:
   DEF_NARROW_FROM_DECL(be_union);
   DEF_NARROW_FROM_SCOPE(be_union);
 
+protected:
+  virtual int compute_size_type (void);
+  // compute the size type if it is unknown
+
 private:
   //=helper
 

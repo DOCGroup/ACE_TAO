@@ -56,6 +56,10 @@ public:
   virtual int gen_server_inline (void);
   // Generates the server-side inlines for the constant
 
+  // = helper
+  char *exprtype_to_string (void);
+  // returns the appropriate type
+
   // Visiting
   virtual int accept (be_visitor *visitor);
 
@@ -63,9 +67,6 @@ public:
   DEF_NARROW_METHODS2 (be_constant, AST_Constant, be_decl);
   DEF_NARROW_FROM_DECL (be_constant);
 
-private:
-  char *exprtype_to_string (void);
-  // returns the appropriate type
 };
 
 #endif // if !defined

@@ -718,7 +718,7 @@ TAO_Marshal_String::encode (CORBA::TypeCode_ptr tc,
             {
 
               // Encode the string, followed by a NUL character.
-
+#if 0
               for (continue_encoding = stream->put_ulong (len + 1); // length +
                                                                     // 1 for
                                                                     // the NULL
@@ -728,7 +728,11 @@ TAO_Marshal_String::encode (CORBA::TypeCode_ptr tc,
                 continue;
               // put a NULL terminating character
               stream->put_char (0);
-              return CORBA::TypeCode::TRAVERSE_CONTINUE;
+#endif
+              if (stream->put_string (str, len))
+                return CORBA::TypeCode::TRAVERSE_CONTINUE;
+              else
+                return CORBA::TypeCode::TRAVERSE_STOP;
             }
           else
             return CORBA::TypeCode::TRAVERSE_STOP;

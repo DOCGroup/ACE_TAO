@@ -12,8 +12,8 @@
 //    be_visitor.h
 //
 // = DESCRIPTION
-//    Extension of class AST_Interface that provides additional means for C++
-//    mapping of an interface.
+//    The abstract visitor class. The concrete classes are responsible for code
+//    generation.
 //
 // = AUTHOR
 //    Copyright 1994-1995 by Sun Microsystems, Inc.
@@ -52,6 +52,7 @@ class be_typedef;
 class be_root;
 class be_native;
 
+class be_visitor_context;
 class TAO_OutStream;
 
 class be_visitor
@@ -69,54 +70,88 @@ class be_visitor
 public:
   virtual ~be_visitor (void);
 
-  virtual int visit_decl (be_decl *node);
+  virtual visit_decl (be_decl *d);
+  // visit a decl node
+
   virtual int visit_scope (be_scope *node);
+  // visit the scope
+
   virtual int visit_type (be_type *node);
+  // visit the type
+
   virtual int visit_predefined_type (be_predefined_type *node);
+  // visit the predefined type
+
   virtual int visit_module (be_module *node);
+  // visit module
+
   virtual int visit_interface (be_interface *node);
+  // visit interface
+
   virtual int visit_interface_fwd (be_interface_fwd *node);
+  // visit interface_fwd
+
   virtual int visit_structure (be_structure *node);
+  // visit a structure
+
   virtual int visit_exception (be_exception *node);
+  // visit exception
+
   virtual int visit_expression (be_expression *node);
+  // visit expression
+
   virtual int visit_enum (be_enum *node);
+  // visit an enum
+
   virtual int visit_operation (be_operation *node);
+  // visit an operation
+
   virtual int visit_field (be_field *node);
+  // visit a field
+
   virtual int visit_argument (be_argument *node);
+  // visit argument
+
   virtual int visit_attribute (be_attribute *node);
+  // visit an attribute
+
   virtual int visit_union (be_union *node);
+  // visit union
+
   virtual int visit_union_branch (be_union_branch *node);
+  // visit union branch
+
   virtual int visit_union_label (be_union_label *node);
+  // visit union label
+
   virtual int visit_constant (be_constant *node);
+  // visit a constant
+
   virtual int visit_enum_val (be_enum_val *node);
+  // visit enum val
+
   virtual int visit_array (be_array *node);
+  // visit an array
+
   virtual int visit_sequence (be_sequence *node);
+  // visit a sequence
+
   virtual int visit_string (be_string *node);
+  // visit a string
+
   virtual int visit_typedef (be_typedef *node);
+  // visit a typedef
+
   virtual int visit_root (be_root *node);
+  // visit a root
+
   virtual int visit_native (be_native *node);
-
-  virtual void be_node (be_decl *);
-  // save a node
-
-  virtual be_decl *be_node (void);
-  // return the saved node
-
-  virtual TAO_OutStream &stream (void);
-  // return reference to stream
-
-  virtual void stream (TAO_OutStream *);
-  // set the underlying stream
+  // visit a native
 
 protected:
   be_visitor (void);
   // constructor is protected
 
-  be_decl *node_;
-  // saved node
-
-  TAO_OutStream *os_;
-  // output stream
 };
 
 #endif // TAO_BE_VISITOR_H

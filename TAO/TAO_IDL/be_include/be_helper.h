@@ -14,6 +14,8 @@
 // = AUTHOR
 //    Aniruddha Gokhale
 //
+//    Improvements by Carlos O'Ryan
+//
 // ============================================================================
 
 #if !defined (TAO_BE_OUTSTRM_H)
@@ -47,7 +49,7 @@ struct TAO_UNINDENT
   //   Operates like a manipulator, decreasing the indentation level.
   //
   // = DESCRIPTION
-  //   Increase the indentation level, if the "do_now" parameter is
+  //   Decrease the indentation level, if the "do_now" parameter is
   //   not zero then the <indent> method is called on the stream.
   //
   TAO_UNINDENT (int do_now = 0);

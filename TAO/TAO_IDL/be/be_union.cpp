@@ -287,7 +287,7 @@ be_union::gen_client_header (void)
       this->cli_hdr_gen_ = I_TRUE;
     }
   return 0;
- }
+}
 
 int
 be_union::gen_client_stubs (void)
@@ -1124,6 +1124,47 @@ be_union::tc_encap_len (void)
       this->encap_len_ += be_scope::tc_encap_len ();
     }
   return this->encap_len_;
+}
+
+// compute the size type of the node in question
+int
+be_union::compute_size_type (void)
+{
+  UTL_ScopeActiveIterator *si;
+  AST_Decl *d;
+  be_decl *bd;
+
+  if (this->nmembers () > 0)
+    {
+      // if there are elements in this scope
+
+      si = new UTL_ScopeActiveIterator (this, UTL_Scope::IK_decls);
+      // instantiate a scope iterator.
+
+      while (!(si->is_done ()))
+        {
+          // get the next AST decl node
+          d = si->item ();
+          bd = be_decl::narrow_from_decl (d);
+          if (bd != 0)
+            {
+              // our sizetype depends on the sizetype of our members. Although
+              // previous value of sizetype may get overwritten, we are
+              // guaranteed by the "size_type" call that once the value reached
+              // be_decl::VARIABLE, nothing else can overwrite it.
+              this->size_type (bd->size_type ());
+            }
+          else
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "WARNING (%N:%l) be_structure::compute_size_type - "
+                          "narrow_from_decl returned 0\n"));
+            }
+          si->next ();
+        } // end of while
+      delete si; // free the iterator object
+    }
+  return 0;
 }
 
 int be_union::write_as_return (TAO_OutStream *stream,

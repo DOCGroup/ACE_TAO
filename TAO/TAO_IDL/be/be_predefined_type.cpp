@@ -239,12 +239,14 @@ be_predefined_type::compute_tc_name (void)
       }
     break;
     case AST_PredefinedType::PT_pseudo:
-      // @@@ XXXASG
-      // TODO: This is a kind of hack, there are other things that are
-      // pseudo objects, not only objref (aka CORBA::Object).
       {
-        this->tc_name_->nconc (new UTL_ScopedName (new Identifier ("_tc_Object", 1, 0,
-                                                             I_FALSE), NULL));
+        char tcname [100];
+        ACE_OS::sprintf (tcname, "_tc_%s",
+                         this->name ()->last_component ()->get_string ());
+        this->tc_name_->nconc (new UTL_ScopedName (new Identifier
+                                                   (ACE_OS::strdup (tcname),
+                                                    1, 0,
+                                                    I_FALSE), NULL));
       }
     break;
     default:
@@ -391,6 +393,8 @@ be_predefined_type::gen_typecode (void)
     case AST_PredefinedType::PT_wchar:
       *cs << "CORBA::tk_wchar,\n\n";
       break;
+    case AST_PredefinedType::PT_pseudo:
+      *cs << "CORBA::tk_objref,\n\n";
     }
   return 0;
 }

@@ -24,6 +24,8 @@
  * BE_Sequence
  */
 
+class be_typedef;
+
 // A sequence in OMG IDL does not define a scoping construct just as a struct
 // or union or an interface do. However, in the C++ mapping, a sequence becomes
 // a class. If the base type of a sequence is another anonymous sequence, then
@@ -50,7 +52,7 @@ public:
   be_sequence (AST_Expression *v, AST_Type *bt);
   // constructor
 
-  virtual int create_name (void);
+  virtual int create_name (be_typedef *node=0);
   // create a name for ourselves. If we are typedefed, then we get the name of
   // the typedef node, else we generate a name for ourselves
 

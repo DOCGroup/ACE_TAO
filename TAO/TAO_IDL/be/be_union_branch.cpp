@@ -184,6 +184,24 @@ be_union_branch::tc_encap_len (void)
   return this->encap_len_;
 }
 
+// compute the size type of the node in question
+int
+be_union_branch::compute_size_type (void)
+{
+  be_type *type = be_type::narrow_from_decl (this->field_type ());
+  if (!type)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_field::compute_size_type - "
+                         "bad field type\n"), -1);
+    }
+
+  // our size type is the same as our type
+  this->size_type (type->size_type ()); // as a side effect will also update
+                                        // the size type of parent
+  return 0;
+}
+
 int
 be_union_branch::accept (be_visitor *visitor)
 {

@@ -111,35 +111,45 @@ be_sequence::gen_name (void)
 
 // create a name for ourselves
 int
-be_sequence::create_name (void)
+be_sequence::create_name (be_typedef *node)
 {
   static char namebuf [NAMEBUFSIZE];
   UTL_ScopedName *n = NULL;
   be_decl *scope; // scope in which we are defined
 
-  ACE_OS::memset (namebuf, '\0', NAMEBUFSIZE);  // reset the buffer
-  ACE_OS::strcpy (namebuf, this->gen_name ()); // generate a local name
-
-  // now see if we have a fully scoped name and if so, generate one
-  scope = be_scope::narrow_from_scope (this->defined_in ())->decl ();
-  if (scope)
+  // if there is a typedef node, we use its name as our name
+  if (node)
     {
-      // make a copy of the enclosing scope's  name
-      n = (UTL_ScopedName *)scope->name ()->copy () ;
-
-      // add our local name as the last component
-      n->nconc (new UTL_ScopedName (new Identifier (ACE_OS::strdup
-                                                    (namebuf), 1,
-                                                    0, I_FALSE),
-                                    NULL));
-      // set the fully scoped name
-      this->set_name (n);
+      n = (UTL_ScopedName *)node->name ()->copy ();
+      this->set_name (n); // set our name
     }
   else
     {
-      // We better be not here because we must be inside some scope,
-      // atleast the ROOT scope.
-      return -1;
+
+      ACE_OS::memset (namebuf, '\0', NAMEBUFSIZE);  // reset the buffer
+      ACE_OS::strcpy (namebuf, this->gen_name ()); // generate a local name
+
+      // now see if we have a fully scoped name and if so, generate one
+      scope = be_scope::narrow_from_scope (this->defined_in ())->decl ();
+      if (scope)
+        {
+          // make a copy of the enclosing scope's  name
+          n = (UTL_ScopedName *)scope->name ()->copy () ;
+
+          // add our local name as the last component
+          n->nconc (new UTL_ScopedName (new Identifier (ACE_OS::strdup
+                                                        (namebuf), 1,
+                                                        0, I_FALSE),
+                                        NULL));
+          // set the fully scoped name
+          this->set_name (n);
+        }
+      else
+        {
+          // We better be not here because we must be inside some scope,
+          // atleast the ROOT scope.
+          return -1;
+        }
     }
   return 0;
 }
@@ -220,8 +230,8 @@ be_sequence::gen_client_header (void)
                             -1);
         }
 
-      be_visitor *visitor_seq_ch = cg->make_visitor
-        (TAO_CodeGen::TAO_SEQUENCE_BODY_CH);
+      be_visitor *visitor_seq_ch = cg->make_visitor (0);
+        //        (TAO_CodeGen::TAO_SEQUENCE_BODY_CH);
 
       if (this->accept (visitor_seq_ch) == -1)
         {
@@ -1332,7 +1342,6 @@ be_sequence::gen_var_defn (void)
         }
       *ch << " &";
     }
-#endif
 
   be_visitor_sequence_elemtype elemtype (ch, this, bt);
   if (bt->accept (&elemtype) == -1)
@@ -1343,6 +1352,7 @@ be_sequence::gen_var_defn (void)
                          "[] ret type gen failed\n"),
                         -1);
     }
+#endif
 
   *ch << "operator[] (CORBA::ULong index);" << nl;
 
@@ -1558,7 +1568,6 @@ be_sequence::gen_var_impl (void)
         }
       *ci << " &";
     }
-#endif
 
   be_visitor_sequence_elemtype elemtype (ci, 0, bt);
   if (bt->accept (&elemtype) == -1)
@@ -1569,6 +1578,7 @@ be_sequence::gen_var_impl (void)
                          "[] ret type gen failed\n"),
                         -1);
     }
+#endif
 
 
   *ci << nl;
@@ -1741,7 +1751,7 @@ be_sequence::gen_out_defn (void)
         }
       *ch << " &";
     }
-#endif
+
   be_visitor_sequence_elemtype elemtype(ch, this, bt);
   if (bt->accept (&elemtype) == -1)
     {
@@ -1751,7 +1761,7 @@ be_sequence::gen_out_defn (void)
                          "[] ret type gen failed\n"),
                         -1);
     }
-
+#endif
 
   *ch << "operator[] (CORBA::ULong index);" << nl;
   *ch << "\n";
@@ -1926,7 +1936,6 @@ be_sequence::gen_out_impl (void)
         }
       *ci << " &";
     }
-#endif
 
   be_visitor_sequence_elemtype elemtype (ci, 0, bt);
   if (bt->accept (&elemtype) == -1)
@@ -1937,6 +1946,7 @@ be_sequence::gen_out_impl (void)
                          "[] ret type gen failed\n"),
                         -1);
     }
+#endif
 
 
   *ci << nl;

@@ -128,6 +128,7 @@ be_structure::gen_client_header (void)
         {
           // we have a scoped name
           ch->indent ();
+
           *ch << "static CORBA::TypeCode_ptr " << this->tc_name
             ()->last_component () << ";\n\n";
         }
@@ -192,6 +193,7 @@ be_structure::gen_client_stubs (void)
     }
 
   return 0;
+
 }
 
 // Generates the client-side inline information

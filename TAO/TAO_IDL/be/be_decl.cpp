@@ -466,10 +466,101 @@ be_decl::scope (void)
    }
 }
 
+// boolean methods to test if code was already generated
+idl_bool
+be_decl::cli_hdr_gen (void)
+{
+  return this->cli_hdr_gen_;
+}
+
+idl_bool
+be_decl::cli_stub_gen (void)
+{
+  return this->cli_stub_gen_;
+}
+
+idl_bool
+be_decl::cli_inline_gen (void)
+{
+  return this->cli_inline_gen_;
+}
+
+idl_bool
+be_decl::srv_hdr_gen (void)
+{
+  return this->srv_hdr_gen_;
+}
+
+idl_bool
+be_decl::srv_skel_gen (void)
+{
+  return this->srv_skel_gen_;
+}
+
+idl_bool
+be_decl::srv_inline_gen (void)
+{
+  return this->srv_inline_gen_;
+}
+
+// set the flag indicating that code generation is done
+void
+be_decl::cli_hdr_gen (idl_bool val)
+{
+  this->cli_hdr_gen_ = val;
+}
+
+void
+be_decl::cli_stub_gen (idl_bool val)
+{
+  this->cli_stub_gen_ = val;
+}
+
+void
+be_decl::cli_inline_gen (idl_bool val)
+{
+  this->cli_inline_gen_ = val;
+}
+
+void
+be_decl::srv_hdr_gen (idl_bool val)
+{
+  this->srv_hdr_gen_ = val;
+}
+
+void
+be_decl::srv_skel_gen (idl_bool val)
+{
+  this->srv_skel_gen_ = val;
+}
+
+void
+be_decl::srv_inline_gen (idl_bool val)
+{
+  this->srv_inline_gen_ = val;
+}
+
 int
 be_decl::accept (be_visitor *visitor)
 {
   return visitor->visit_decl (this);
+}
+
+idl_bool
+be_decl::is_child (be_decl *node)
+{
+  if (this->defined_in ())
+    {
+      be_decl *bd;
+
+      bd = be_scope::narrow_from_scope (this->defined_in ())->decl ();
+      if (!bd)
+        return 0;
+
+      if (!ACE_OS::strcmp (bd->fullname (), node->fullname ()))
+        return 1; // true
+    }
+  return 0; // not a child
 }
 
 // narrowing methods
