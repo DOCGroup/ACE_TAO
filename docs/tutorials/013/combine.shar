@@ -3,7 +3,7 @@
 # To extract the files from this archive, save it to some FILE, remove
 # everything before the `!/bin/sh' line above, then type `sh FILE'.
 #
-# Made on 1998-11-14 23:15 EST by <jcej@chiroptera.tragus.org>.
+# Made on 1998-11-15 12:09 EST by <jcej@chiroptera.tragus.org>.
 # Source directory was `/var/home/jcej/projects/ACE_wrappers/docs/tutorials/013'.
 #
 # Existing files will *not* be overwritten unless `-c' is specified.
@@ -23,7 +23,6 @@
 #    862 -rw-rw-r-- page08.pre
 #    204 -rw-rw-r-- page02.pst
 #    704 -rw-rw-r-- page04.pst
-#    751 -rw-rw-r-- page05.pst
 #    386 -rw-rw-r-- page06.pst
 #    371 -rw-rw-r-- page07.pst
 #
@@ -72,7 +71,7 @@ else
 fi
 rm -f 1231235999 $$.touch
 #
-if mkdir _sh11170; then
+if mkdir _sh10945; then
   $echo 'x -' 'creating lock directory'
 else
   $echo 'failed to create lock directory'
@@ -569,43 +568,6 @@ SHAR_EOF
     $echo 'page04.pst:' 'original size' '704,' 'current size' "$shar_count!"
   fi
 fi
-# ============= page05.pst ==============
-if test -f 'page05.pst' && test "$first_param" != -c; then
-  $echo 'x -' SKIPPING 'page05.pst' '(file already exists)'
-else
-  $echo 'x -' extracting 'page05.pst' '(text)'
-  sed 's/^X//' << 'SHAR_EOF' > 'page05.pst' &&
-<HR WIDTH="100%">
-<P>
-I hope that wasn't too confusing.  The locking strategy can be a bit
-daunting at times.  The worst problem  is dealing with the fact
-that the lock is held while the object being guarded by the lock is
-being destroyed.  But the only object that has a reference to the
-(dynamically created) lock object is the very thing being deleted.  We 
-would be in a world of hurt if the lock's release() method had not
-been created virtual!  By simply overridding that method we can get
-ourselves out of a nasty situation.
-<P>
-The rest of the code is pretty cut and dried.  We could have had the
-hangup indicator create a data block with a null unit of work but it's 
-more orthgonal for the thread pool if we always have a valid pointer.
-<P>
-SHAR_EOF
-  $shar_touch -am 1114225798 'page05.pst' &&
-  chmod 0664 'page05.pst' ||
-  $echo 'restore of' 'page05.pst' 'failed'
-  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
-  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
-    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
-    || $echo 'page05.pst:' 'MD5 check failed'
-7f978b134710ee448886671d3432cc35  page05.pst
-SHAR_EOF
-  else
-    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page05.pst'`"
-    test 751 -eq "$shar_count" ||
-    $echo 'page05.pst:' 'original size' '751,' 'current size' "$shar_count!"
-  fi
-fi
 # ============= page06.pst ==============
 if test -f 'page06.pst' && test "$first_param" != -c; then
   $echo 'x -' SKIPPING 'page06.pst' '(file already exists)'
@@ -668,5 +630,5 @@ SHAR_EOF
     $echo 'page07.pst:' 'original size' '371,' 'current size' "$shar_count!"
   fi
 fi
-rm -fr _sh11170
+rm -fr _sh10945
 exit 0
