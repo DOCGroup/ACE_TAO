@@ -63,7 +63,7 @@ Sat Jul 31 12:07:48 1999  Douglas C. Schmidt  <schmidt@mambo.cs.wustl.edu>
  	  SVC_HANDLER if it's not given one.  Thanks to Hao Ruan
  	  <hruan@lucent.com> for reporting this.
 
-Sat Jul 31 15:57:16 1999  coryan  <coryan@cs.wustl.edu>
+Sat Jul 31 15:57:16 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * ACE version 5.0 released.
 
