@@ -1,3 +1,7 @@
+Fri Feb 05 21:12:56 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+        * ACE version 4.6.20 released.
+
 Fri Feb 05 12:02:31 1999  Steve Huston  <shuston@riverace.com>
 
         * tests/run_tests.sh: Added SHLIB_PATH support for HP-UX. Fixed
