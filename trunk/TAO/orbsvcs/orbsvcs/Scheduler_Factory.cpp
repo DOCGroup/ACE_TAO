@@ -14,8 +14,11 @@
 RtecScheduler::Scheduler_ptr ACE_Scheduler_Factory::server_ = 0;
 ACE_Scheduler_Factory::Factory_Status ACE_Scheduler_Factory::status_ =
   ACE_Scheduler_Factory::UNINITIALIZED;
-static int entry_count = -1;
-static ACE_Scheduler_Factory::POD_RT_Info* rt_info = 0;
+
+// This symbols are extern because the automatic template
+// instantiation mechanism in SunCC get confused otherwise.
+int TAO_SF_entry_count = -1;
+ACE_Scheduler_Factory::POD_RT_Info* TAO_SF_rt_info = 0;
 
 // Helper struct, to encapsulate the singleton static server and
 // ACE_TSS objects.  We can't use ACE_Singleton directly, because
@@ -32,7 +35,7 @@ struct ACE_Scheduler_Factory_Data
   // Channel.
 
   ACE_Scheduler_Factory_Data (void)
-    : scheduler_ (entry_count, rt_info),
+    : scheduler_ (TAO_SF_entry_count, TAO_SF_rt_info),
       preemption_priority_ ()
     {
     }
@@ -43,15 +46,15 @@ static ACE_Scheduler_Factory_Data *ace_scheduler_factory_data = 0;
 int ACE_Scheduler_Factory::use_runtime (int ec,
                                         POD_RT_Info rti[])
 {
-  if (server_ != 0 || entry_count != -1)
+  if (server_ != 0 || TAO_SF_entry_count != -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "ACE_Scheduler_Factory::use_runtime - "
                          "server already configured\n"), -1);
     }
 
-  entry_count = ec;
-  rt_info = rti;
+  TAO_SF_entry_count = ec;
+  TAO_SF_rt_info = rti;
   status_ = ACE_Scheduler_Factory::RUNTIME;
 
   return 0;
@@ -102,7 +105,7 @@ int
 ACE_Scheduler_Factory::use_config (CosNaming::NamingContext_ptr naming,
                                    const char* name)
 {
-  if (server_ != 0 || entry_count != -1)
+  if (server_ != 0 || TAO_SF_entry_count != -1)
     {
       // No errors, runtime execution simply takes precedence over
       // config runs.
@@ -138,7 +141,7 @@ ACE_Scheduler_Factory::use_config (CosNaming::NamingContext_ptr naming,
 RtecScheduler::Scheduler_ptr
 ACE_Scheduler_Factory::server (void)
 {
-  if (server_ == 0 && entry_count != -1)
+  if (server_ == 0 && TAO_SF_entry_count != -1)
     {
       server_ = static_server ();
     }
