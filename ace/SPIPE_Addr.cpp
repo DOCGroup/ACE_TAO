@@ -74,6 +74,7 @@ ACE_SPIPE_Addr::set (const ACE_SPIPE_Addr &sa)
 // Copy constructor.
 
 ACE_SPIPE_Addr::ACE_SPIPE_Addr (const ACE_SPIPE_Addr &sa)
+  : ACE_Addr (AF_SPIPE, sizeof this->SPIPE_addr_)
 {
   this->set (sa);
 }
@@ -143,6 +144,7 @@ ACE_SPIPE_Addr::set (LPCTSTR addr,
 ACE_SPIPE_Addr::ACE_SPIPE_Addr (LPCTSTR addr,
 				gid_t gid, 
 				uid_t uid)
+  : ACE_Addr (AF_SPIPE, sizeof this->SPIPE_addr_)
 {
   this->set (addr, gid, uid);
 }
