@@ -1,3 +1,9 @@
+Mon Feb 23 21:30:04 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/Cubit/TAO/MT_Cubit/server.cpp (start_servants):
+          declare local "i" outside of for loop because it is reused
+          in a few loops.
+
 Mon Feb 23 20:45:03 1998  Michael Kircher  <mk1@cec.wustl.edu>
 
 	* orbsvcs/tests/Simulator/Sim_Display: Fixed some small
@@ -17,7 +23,7 @@ Mon Feb 23 18:51:03 1998  Sergio Flores  <sergio@polka.cs.wustl.edu>
 
 Mon Feb 23 17:33:52 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* TAO_IDL/Makefile: 
+	* TAO_IDL/Makefile:
 	  We don't generate the compiler as a single executable, without
 	  multiple shared libraries.
 
@@ -32,8 +38,8 @@ Mon Feb 23 16:55:08 1998  David L. Levine  <levine@cs.wustl.edu>
 
 Mon Feb 23 12:25:21 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Event/Memory_Pools.h: 
-	* orbsvcs/orbsvcs/Event/Memory_Pools.i: 
+	* orbsvcs/orbsvcs/Event/Memory_Pools.h:
+	* orbsvcs/orbsvcs/Event/Memory_Pools.i:
 	* orbsvcs/orbsvcs/Event/Memory_Pools.cpp:
  	  We cannot use TSS memory pools: in some cases the memory is
 	  allocated in one thread and disposed in another. Until we can
