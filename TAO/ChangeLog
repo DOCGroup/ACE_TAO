@@ -1,3 +1,14 @@
+Thu Aug 19 22:00:39 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/tests/Security/MT_IIOP_SSL/MT_IIOP_SSL.mpc:
+	* orbsvcs/tests/Security/Secure_Invocation/Secure_Invocation.mpc:
+
+	  Fixed incorrect base project.  "orbsvcslib", not "orbsvcsexe".
+	  Addresses problems related to missing directories in the
+	  preprocessor include path.
+
+	  Removed unecessary base projects from client projects.
+
 Thu Aug 19 16:49:24 2004  Chris Cleeland  <cleeland_c@ociweb.com>
 
         * tao/Wait_On_LF_No_Upcall.h:
