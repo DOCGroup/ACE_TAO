@@ -311,14 +311,6 @@ SOURCE=.\IOR_LookupTable.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\IORC.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\IORManipulation.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Leader_Follower.h
 # End Source File
 # Begin Source File
@@ -859,10 +851,6 @@ SOURCE=.\IOPS.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\IORC.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\Leader_Follower.i
 # End Source File
 # Begin Source File
@@ -1348,14 +1336,6 @@ SOURCE=.\IOPS.cpp
 # Begin Source File
 
 SOURCE=.\IOR_LookupTable.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\IORC.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\IORManipulation.cpp
 # End Source File
 # Begin Source File
 
