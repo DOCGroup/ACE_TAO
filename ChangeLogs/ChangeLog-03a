@@ -1,3 +1,24 @@
+Fri Nov 10 12:53:28 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * bin/auto_compile:
+          Format test output so make_pretty.pl can recognize where each
+          test starts.
+
+        * etc/ace_rmcast.doxygen:
+        * etc/ace_ssl.doxygen:
+        * etc/tao.doxygen:
+        * etc/tao_dynamicany.doxygen:
+        * etc/tao_dynamicinterface.doxygen:
+        * etc/tao_esf.doxygen:
+        * etc/tao_iormanip.doxygen:
+        * etc/tao_iortable.doxygen:
+        * etc/tao_portableserver.doxygen:
+        * etc/tao_rtevent.doxygen:
+          Don't define the macros explicitly, use the config-doxygen.h
+          file.
+          Must define ACE_RCSID and ACE_UNDEFINED_FUNC properly, so
+          doxygen does not get confused.
+
 Fri Nov 10 14:26:41 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/config-sunos5.6.h: The AIO definitions were missing the #if

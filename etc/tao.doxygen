@@ -117,14 +117,9 @@ MACRO_EXPANSION       = YES
 EXPAND_ONLY_PREDEF    = YES
 SEARCH_INCLUDES       = YES
 INCLUDE_PATH          = TAO .
-PREDEFINED            = ACE_HAS_WCHAR \
-			ACE_LACKS_STRCASECMP \
-			ACE_LACKS_STRCSPN \
-                        ACE_LACKS_STRCHR \
-			ACE_LACKS_STRRCHR \
-			ACE_HAS_THREADS \
-			ACE_WIN32
-EXPAND_AS_DEFINED     = ACE_RCSID
+PREDEFINED            = 
+EXPAND_AS_DEFINED     = ACE_RCSID \
+			ACE_UNIMPLEMENTED_FUNC
 
 #---------------------------------------------------------------------------
 # Configuration::addtions related to external references   
