@@ -1,3 +1,15 @@
+Mon Nov  4 16:14:21 UTC 2002  Don Hinton  <dhinton@ieee.org>
+
+	* tests/Multicast_Test.cpp (get_handle): Made return type of 
+	  definition ACE_HANDLE to match the declaration.  Thanks to 
+	  Ed Skees <eskees@dctd.saic.com> for reporting this.
+
+	* tests/Multicast_Test.dsp:
+	* tests/tests.dsw:  Added new dsp.  Thanks again to Ed Skees
+	  for providing this.
+
+	* THANKS:  Added Ed Skees to hall of fame...
+
 Mon Nov  4 09:28:34 UTC 2002  Don Hinton  <dhinton@ieee.org>
 
 	* ace/SOCK_Dgram.cpp (recv): Corrected method signature in .cpp to 
