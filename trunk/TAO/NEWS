@@ -12,6 +12,10 @@ PLANNED MAJOR CHANGES TARGETED FOR TAO-1.4.3
 
 - (Ossama) Remainder of CSIv2 code that didn't make it into TAO 1.4.2
 
+- (Ossama/Jeff) Skeleton refactoring
+
+- (Johnny/Ossama) POA refactoring/modularization
+
 - (JTC/Ossama) autoconf support for TAO
 
 - (OCI) Naming Service implementation fixes
