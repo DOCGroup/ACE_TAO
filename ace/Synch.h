@@ -692,6 +692,18 @@ public:
   // Declare the dynamic allocation hooks.
 };
 
+class ACE_Export ACE_Noop_Token : public ACE_Null_Mutex
+{
+public:
+  int renew (int = 0, ACE_Time_Value * =0);
+
+  void dump (void) const;
+  // Dump the state of an object.
+
+  ACE_ALLOC_HOOK_DECLARE;
+  // Declare the dynamic allocation hooks.
+};
+
 class ACE_Export ACE_Null_Condition
 {
   // = TITLE
@@ -1449,7 +1461,7 @@ class ACE_Export ACE_Guard<ACE_Null_Mutex>
 {
   // = TITLE
   //     Template specialization of <ACE_Guard> for the
-  //     <ACE_Null_Mutex>. 
+  //     <ACE_Null_Mutex>.
   //
   // = DESCRIPTION
   //     This specialization is useful since it helps to speedup
@@ -1480,9 +1492,9 @@ class ACE_Export ACE_Write_Guard<ACE_Null_Mutex> : public ACE_Guard<ACE_Null_Mut
 {
   // = TITLE
 public:
-  ACE_Write_Guard (ACE_Null_Mutex &m) 
+  ACE_Write_Guard (ACE_Null_Mutex &m)
     : ACE_Guard<ACE_Null_Mutex> (m) {}
-  ACE_Write_Guard (ACE_Null_Mutex &m, int blocked) 
+  ACE_Write_Guard (ACE_Null_Mutex &m, int blocked)
     : ACE_Guard<ACE_Null_Mutex> (m, blocked) {}
 
   int acquire_write (void) { return 0; }
@@ -1499,9 +1511,9 @@ class ACE_Export ACE_Read_Guard<ACE_Null_Mutex> : public ACE_Guard<ACE_Null_Mute
 {
   // = TITLE
 public:
-  ACE_Read_Guard (ACE_Null_Mutex &m) 
+  ACE_Read_Guard (ACE_Null_Mutex &m)
     : ACE_Guard<ACE_Null_Mutex> (m) {}
-  ACE_Read_Guard (ACE_Null_Mutex &m, int blocked) 
+  ACE_Read_Guard (ACE_Null_Mutex &m, int blocked)
     : ACE_Guard<ACE_Null_Mutex> (m, blocked) {}
 
   int acquire_write (void) { return 0; }
