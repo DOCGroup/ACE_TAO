@@ -111,6 +111,7 @@ namespace TAO
         ACE_TRY_CHECK;
 
 #if TAO_HAS_INTERCEPTORS == 1
+        // @@NOTE: Too much code repetition.
         // If the above call returns a restart due to connection
         // failure then call the receive_other interception point
         // before we leave.
@@ -122,11 +123,10 @@ namespace TAO
 
             if (tmp != TAO_INVOKE_SUCCESS)
               s = tmp;
+
+            return s;
           }
 #endif /*TAO_HAS_INTERCEPTORS */
-
-        if (s != TAO_INVOKE_SUCCESS)
-          return s;
 
         countdown.update ();
 
@@ -160,6 +160,21 @@ namespace TAO
                                 ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
 
+#if TAO_HAS_INTERCEPTORS == 1
+        if (s == TAO_INVOKE_RESTART)
+          {
+            Invocation_Status tmp =
+              this->receive_other_interception (ACE_ENV_SINGLE_ARG_PARAMETER);
+            ACE_TRY_CHECK;
+
+            // Push the latest values for the return..
+            if (tmp != TAO_INVOKE_SUCCESS)
+              s = tmp;
+
+            return s;
+          }
+#endif /*TAO_HAS_INTERCEPTORS */
+
         // What happens when the above call returns an error through
         // the return value? That would be bogus as per the contract
         // in the interface. The call violated the contract
@@ -174,22 +189,21 @@ namespace TAO
           this->resolver_.transport_released ();
 
 #if TAO_HAS_INTERCEPTORS == 1
-        if (s == TAO_INVOKE_SUCCESS)
+        Invocation_Status tmp = TAO_INVOKE_FAILURE;
+        if (s == TAO_INVOKE_RESTART)
           {
-            s =
-              this->receive_reply_interception (ACE_ENV_SINGLE_ARG_PARAMETER);
-            ACE_TRY_CHECK;
-          }
-        else if (s == TAO_INVOKE_RESTART)
-          {
-            s =
+            tmp =
               this->receive_other_interception (ACE_ENV_SINGLE_ARG_PARAMETER);
             ACE_TRY_CHECK;
           }
-        // What about other values of "s"? The method called should
-        // have returned an exception instead of trying to communicate
-        // using return values, since that is the contract in the
-        // interface.
+        else if (s == TAO_INVOKE_SUCCESS)
+          {
+            tmp  =
+              this->receive_reply_interception (ACE_ENV_SINGLE_ARG_PARAMETER);
+            ACE_TRY_CHECK;
+          }
+        if (tmp != TAO_INVOKE_SUCCESS)
+          s = tmp;
 #endif /*TAO_HAS_INTERCEPTORS */
       }
     ACE_CATCHANY
