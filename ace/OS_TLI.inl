@@ -2,7 +2,8 @@
 // $Id$
 
 ACE_INLINE int
-ACE_OS_TLI::t_accept (ACE_HANDLE handle, int reshandle,
+ACE_OS_TLI::t_accept (ACE_HANDLE handle, 
+                      ACE_HANDLE reshandle,
                       struct t_call *call)
 {
 #if defined (ACE_HAS_TLI)
@@ -170,7 +171,7 @@ ACE_OS_TLI::t_look (ACE_HANDLE handle)
 #endif /* ACE_HAS_TLI */
 }
 
-ACE_INLINE int
+ACE_INLINE ACE_HANDLE
 ACE_OS_TLI::t_open (char *path, int oflag, struct t_info *info)
 {
 #if defined (ACE_HAS_TLI)
