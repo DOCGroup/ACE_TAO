@@ -1,3 +1,10 @@
+Fri Apr 17 13:29:46 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/skip.cpp (skip): 
+	* tao/deep_copy.cpp (deep_copy):
+	* TAO_IDL/be/be_decl.cpp (tc_name2long): Removed unreferenced
+ 	  variables.
+
 Fri Apr 17 12:12:04 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_operation.cpp: There was an error in the
