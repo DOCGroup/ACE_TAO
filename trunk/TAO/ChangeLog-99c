@@ -1,3 +1,8 @@
+Mon Apr 26 16:49:24 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* TAO_IDL/fe/lex.yy.cpp: Redefined TAO_YY_BREAK as ACE_NOTREACHED
+	  (break;) and made sure it is used properly in the file.
+
 Mon Apr 26 10:44:18 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Event/EC_Default_Factory.h:
