@@ -56,6 +56,10 @@ public:
   void host (const ACE_CString &host);
   // Set/Get the hostname.
 
+  const char *init_ref (void) const;
+  void init_ref (const ACE_CString &init_ref);
+  // Set/Get the Init Reference of an arbitrary ObjectID.
+
   const char *name_service_ior (void) const;
   void name_service_ior (const ACE_CString &ns);
   // Set/Get the IOR of our name service.
@@ -118,7 +122,7 @@ private:
 
   ACE_CString host_;
   // host name
-  
+
   ACE_CString name_service_ior_;
   // The IOR of our configured Naming Service.
 
@@ -130,6 +134,9 @@ private:
 
   CORBA::UShort trading_service_port_;
   // The port number of our configured Trading Service.
+
+  ACE_CString init_ref_;
+  // Initial Reference supplied as <ObjectID>:<IOR>
 
   int sock_rcvbuf_size_;
   // Size to be used for a socket's receive buffer.
@@ -190,7 +197,7 @@ public:
   // return the lookup strategy for the system id policy
 
   TAO_LOCAL_INLINE TAO_Reverse_Active_Object_Map_Impl *userdef_reverse_lookup_strategy_for_unique_id_policy (void);
-  // return the reverse lookup strategy for unique id policy 
+  // return the reverse lookup strategy for unique id policy
 
   TAO_LOCAL_INLINE void tablesize (CORBA::ULong tablesize);
   // set the table size for lookup table
