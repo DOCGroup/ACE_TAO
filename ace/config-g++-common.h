@@ -11,14 +11,8 @@
 #if __GNUC__ > 2 || ( __GNUC__ == 2 && __GNUC_MINOR__ >= 8)
   // egcs or g++ >= 2.8.0
 
-  // __EXCEPTIONS is defined with -fexceptions, the egcs default.  It
-  // is not defined with -fno-exceptions, the ACE default for g++.
-# if defined (__EXCEPTIONS) && !defined (ACE_HAS_EXCEPTIONS)
-#   define ACE_HAS_EXCEPTIONS
-# endif /* __EXCEPTIONS && ! ACE_HAS_EXCEPTIONS */
-
 # if __GNUC__ == 2 && __GNUC_MINOR__ >= 90
-    // egcs or really modern g++
+    // egcs or really modern g++.  Do these work with g++ 2.8.0?
 #   define ACE_HAS_ANSI_CASTS
 #   define ACE_HAS_CPLUSPLUS_HEADERS
 #   define ACE_HAS_STDCPP_STL_INCLUDES
@@ -32,6 +26,15 @@
 #   // egcs 2.91 apparently has a bug with this . . .
 #   define ACE_HAS_TEMPLATE_SPECIALIZATION
 # endif /* __GNUC__ != 2.91 */
+
+  // __EXCEPTIONS is defined with -fexceptions, the egcs default.  It
+  // is not defined with -fno-exceptions, the ACE default for g++.
+  // ACE_HAS_EXCEPTIONS is defined in
+  // include/makeinclude/wrapper_macros.GNU, so this really isn't
+  // necessary.  Just in case . . .
+# if defined (__EXCEPTIONS) && !defined (ACE_HAS_EXCEPTIONS)
+#   define ACE_HAS_EXCEPTIONS
+# endif /* __EXCEPTIONS && ! ACE_HAS_EXCEPTIONS */
 
 #else  /* ! EGCS */
   // Plain old g++.
