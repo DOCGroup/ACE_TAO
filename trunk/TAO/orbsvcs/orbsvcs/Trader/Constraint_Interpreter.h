@@ -20,6 +20,9 @@
 #include "Constraint_Nodes.h"
 #include "Constraint_Visitors.h"
 
+class TAO_Constraint_Evaluator;
+class TAO_Constraint_Validator;
+
   // *************************************************************
   // TAO_Interpreter
   // *************************************************************

@@ -88,7 +88,6 @@ TAO_Time_Service_Server::new_interval (TimeBase::TimeT lower,
 				       CORBA::Environment &_env)
 {
   TAO_TIO *tio = 0;
-  TimeBase::IntervalT time_interval;
 
   ACE_NEW_THROW_RETURN (tio,
 			TAO_TIO (lower,

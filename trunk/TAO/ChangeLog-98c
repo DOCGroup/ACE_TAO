@@ -1,3 +1,25 @@
+Thu Dec 31 11:56:47 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* Fixed several errors and warnings detected by the IRIX
+	  compiler.
+
+	* orbsvcs/orbsvcs/Time/TAO_Time_Service_Server.cpp: 
+	  Removed unused variable.
+
+	* TAO_IDL/be/be_visitor_typedef/typedef.cpp: 
+	* TAO_IDL/be/be_visitor_sequence/gen_bounded_str_sequence_ci.cpp: 
+	* TAO_IDL/be/be_visitor_sequence/gen_bounded_str_sequence_cs.cpp: 
+	* TAO_IDL/be/be_visitor_argument/pre_docall_cs.cpp: 
+	* TAO_IDL/be/be_visitor_argument/post_upcall_ss.cpp: 
+	  Removed unused variables and unreached statements.
+
+	* orbsvcs/orbsvcs/Trader/Trader_Interfaces.h: 
+	* orbsvcs/orbsvcs/Trader/Constraint_Interpreter.h: 
+	  Added several forward declarations.
+
+	* orbsvcs/orbsvcs/Trader/Constraint_Visitors.cpp: 
+	  Removed unnecesary template instantiations.
+
 1998-12-31  Seth Widoff  <swidoff@cs.cmu.edu>
 
 	* orbsvcs/orbsvcs/Trader/Constraint_Visitors.{cpp,h}:

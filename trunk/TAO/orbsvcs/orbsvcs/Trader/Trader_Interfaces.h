@@ -25,6 +25,11 @@
 
 // Hack because g++ forced this inane circular dependecy!
 
+class TAO_Constraint_Interpreter;
+class TAO_Constraint_Evaluator;
+class TAO_Constraint_Validator;
+class TAO_Preference_Interpreter;
+
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE> class TAO_Lookup;
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE> class TAO_Register;
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE> class TAO_Admin;

@@ -1226,40 +1226,11 @@ TAO_Constraint_Validator::expr_returns_string (TAO_Expression_Type expr_type)
 template class ACE_Node<TAO_Literal_Constraint>;
 template class ACE_Unbounded_Queue<TAO_Literal_Constraint>;
 template class ACE_Unbounded_Queue_Iterator<TAO_Literal_Constraint>;
-template class TAO_Element_Equal<CORBA::Float>;
-template class TAO_Element_Equal<CORBA::Double>;
-template class TAO_Element_Equal<CORBA::Long>;
-template class TAO_Element_Equal<CORBA::ULong>;
-template class TAO_Element_Equal<CORBA::Boolean>;
-template class TAO_Element_Equal<CORBA::Short>;
-template class TAO_Element_Equal<CORBA::UShort>;
-template class TAO_Element_Equal<const char*>;
-template CORBA::Boolean TAO_find (const Any&, CORBA::Float);
-template CORBA::Boolean TAO_find (const Any&, CORBA::Double);
-template CORBA::Boolean TAO_find (const Any&, CORBA::Boolean);
-template CORBA::Boolean TAO_find (const Any&, CORBA::ULong);
-template CORBA::Boolean TAO_find (const Any&, CORBA::Long);
-template CORBA::Boolean TAO_find (const Any&, CORBA::Short);
-template CORBA::Boolean TAO_find (const Any&, CORBA::UShort);
-template CORBA::Boolean TAO_find (const Any&, const char*);   
+
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
 #pragma instantiate ACE_Node<TAO_Literal_Constraint>
 #pragma instantiate ACE_Unbounded_Queue<TAO_Literal_Constraint>
 #pragma instantiate ACE_Unbounded_Queue_Iterator<TAO_Literal_Constraint>
-#pragma instantiate TAO_Element_Equal<CORBA::Float>
-#pragma instantiate TAO_Element_Equal<CORBA::Double>
-#pragma instantiate TAO_Element_Equal<CORBA::Long>
-#pragma instantiate TAO_Element_Equal<CORBA::ULong>
-#pragma instantiate TAO_Element_Equal<CORBA::Boolean>
-#pragma instantiate TAO_Element_Equal<CORBA::Short>
-#pragma instantiate TAO_Element_Equal<CORBA::UShort>
-#pragma instantiate TAO_Element_Equal<const char*>
-#pragma instantiate CORBA::Boolean TAO_find (const Any&, CORBA::Float);  
-#pragma instantiate CORBA::Boolean TAO_find (const Any&, CORBA::Double); 
-#pragma instantiate CORBA::Boolean TAO_find (const Any&, CORBA::Boolean);
-#pragma instantiate CORBA::Boolean TAO_find (const Any&, CORBA::ULong);  
-#pragma instantiate CORBA::Boolean TAO_find (const Any&, CORBA::Long);   
-#pragma instantiate CORBA::Boolean TAO_find (const Any&, CORBA::Short);  
-#pragma instantiate CORBA::Boolean TAO_find (const Any&, CORBA::UShort); 
-#pragma instantiate CORBA::Boolean TAO_find (const Any&, const char*);   
+
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

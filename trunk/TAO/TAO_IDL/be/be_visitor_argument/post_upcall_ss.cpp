@@ -138,7 +138,6 @@ int be_visitor_args_post_upcall_ss::visit_interface_fwd (be_interface_fwd *node)
 	  << " = CORBA::Object::_duplicate ("
 	  << arg->local_name () << ".in ());\n";
       break;
-      break;
     }
   return 0;
 }

@@ -44,19 +44,6 @@ be_visitor_sequence_ci::gen_bounded_str_sequence (be_sequence *node)
                          "Bad element type\n"), -1);
     }
 
-  // generate the class name
-  be_type  *pt; // base types
-      
-  if (bt->node_type () == AST_Decl::NT_typedef)
-  {
-    // get the primitive base type of this typedef node
-    be_typedef *t = be_typedef::narrow_from_decl (bt);
-    pt = t->primitive_base_type ();
-  }
-  else
-    pt = bt;
-
-
   const char * class_name = node->instance_name ();
 
   static char full_class_name [NAMEBUFSIZE];
@@ -89,6 +76,18 @@ be_visitor_sequence_ci::gen_bounded_str_sequence (be_sequence *node)
   os->indent ();
 
 #if 0 /* Why is this here? ASG */
+  // generate the class name
+  be_type  *pt; // base types
+      
+  if (bt->node_type () == AST_Decl::NT_typedef)
+  {
+    // get the primitive base type of this typedef node
+    be_typedef *t = be_typedef::narrow_from_decl (bt);
+    pt = t->primitive_base_type ();
+  }
+  else
+    pt = bt;
+
   // the accept is here the first time used and if an 
   // error occurs, it will occur here. Later no check
   // for errors will be done.
