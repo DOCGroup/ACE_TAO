@@ -65,7 +65,7 @@ public:
   virtual CORBA::Boolean object_is_nil (CORBA::Object_ptr obj);
 
 
-  /// Allow the services to add service specific service contexr
+  /// Allow the services to add service specific service context
   /// information.
   virtual void service_context_list (TAO_Stub *&stub,
                                      IOP::ServiceContextList &service_list,
