@@ -1,4 +1,5 @@
 // -*- C++ -*-
+//
 //$Id$
 
 ACE_INLINE
@@ -43,17 +44,16 @@ TAO_GIOP_Message_Version::set_version (CORBA::Octet maj,
   this->minor = min;
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 TAO_GIOP_Message_Version::operator== (
     const TAO_GIOP_Message_Version &src)
 {
   return this->major == src.major && this->minor == src.minor;
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 TAO_GIOP_Message_Version::operator!= (
     const TAO_GIOP_Message_Version &src)
 {
   return !(*this == src);
 }
-

@@ -141,7 +141,7 @@ public:
       , EV_enum                   // Expression value is from an enum.
 
       // CORBA::Any and CORBA::Object are constructed in the parser first as
-      // expression values, then looked up by name to get the 
+      // expression values, then looked up by name to get the
       // AST_PredefinedType entry. This is so the grammar non-terminals
       // integer_type, float_type, bool_type, etc. can also be expression
       // values in order to serve double duty -- as productions of const_type
@@ -277,7 +277,7 @@ public:
 
   // Compare two AST_Expressions.
 
-  long operator== (AST_Expression *vc);
+  bool operator== (AST_Expression *vc);
 
   long compare (AST_Expression *vc);
 

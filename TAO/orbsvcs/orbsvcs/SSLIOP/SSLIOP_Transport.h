@@ -1,22 +1,18 @@
-// This may look like C, but it's really -*- C++ -*-
-// $Id$
+// -*- C++ -*-
 
-// ============================================================================
-//
-// = LIBRARY
-//     TAO_SSLIOP
-//
-// = FILENAME
-//     SSLIOP_Transport.h
-//
-// = DESCRIPTION
-//     SSLIOP Transport specific processing
-//
-// = AUTHOR
-//     Carlos O'Ryan <coryan@ece.uci.edu>
-//     Ossama Othman <ossama@ece.uci.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   SSLIOP_Transport.h
+ *
+ *  $Id$
+ *
+ *  SSLIOP Transport specific processing.
+ *
+ *  @author Carlos O'Ryan <coryan@ece.uci.edu>
+ *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_SSLIOP_TRANSPORT_H
 #define TAO_SSLIOP_TRANSPORT_H
@@ -36,7 +32,7 @@
 #include "tao/IIOPC.h"
 
 #include "ace/SSL/SSL_SOCK_Stream.h"
-#include "ace/Synch.h"
+
 #include "ace/Svc_Handler.h"
 
 // Forward decls.

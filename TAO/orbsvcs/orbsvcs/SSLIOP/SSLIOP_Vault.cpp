@@ -1,6 +1,6 @@
 #include "SSLIOP_Vault.h"
 
-ACE_RCSID (TAO_SSLIOP,
+ACE_RCSID (SSLIOP,
            SSLIOP_Vault,
            "$Id$")
 
@@ -15,6 +15,7 @@ ACE_RCSID (TAO_SSLIOP,
 
 #include "ace/SSL/SSL_Context.h"
 
+#include "ace/OS_NS_stdio.h"
 
 extern "C"
 int

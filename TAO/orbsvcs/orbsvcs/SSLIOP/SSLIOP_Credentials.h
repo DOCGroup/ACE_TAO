@@ -227,7 +227,7 @@ public:
   EVP_PKEY *evp (void);
   //@}
 
-  CORBA::Boolean operator== (const TAO_SSLIOP_Credentials &rhs);
+  bool operator== (const TAO_SSLIOP_Credentials &rhs);
 
   CORBA::ULong hash (void) const;
 

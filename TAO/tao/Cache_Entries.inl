@@ -16,13 +16,13 @@ TAO_Cache_IntId::TAO_Cache_IntId (const TAO_Cache_IntId &rhs)
   *this = rhs;
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 TAO_Cache_IntId::operator== (const TAO_Cache_IntId &rhs) const
 {
   return (this->transport_ == rhs.transport_);
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 TAO_Cache_IntId::operator!= (const TAO_Cache_IntId &rhs) const
 {
   return (this->transport_ != rhs.transport_);
@@ -118,21 +118,21 @@ TAO_Cache_ExtId::TAO_Cache_ExtId (const TAO_Cache_ExtId &rhs)
   *this = rhs;
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 TAO_Cache_ExtId::operator== (const TAO_Cache_ExtId &rhs) const
 {
   return (this->transport_property_->is_equivalent (rhs.transport_property_) &&
             this->index_ == rhs.index_);
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 TAO_Cache_ExtId::operator!= (const TAO_Cache_ExtId &rhs) const
 {
   if (this->transport_property_->is_equivalent (rhs.transport_property_) &&
       this->index_ == rhs.index_)
-  return 0;
+  return false;
 
-  return 1;
+  return true;
 }
 
 ACE_INLINE u_long

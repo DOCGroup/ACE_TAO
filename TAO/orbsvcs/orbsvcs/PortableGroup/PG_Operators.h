@@ -30,15 +30,15 @@
  * Used for checking equality of PortableGroup::Location and
  * PortableGroup::Property variables.
  */
-int TAO_PortableGroup_Export operator== (const CosNaming::Name & lhs,
-                                         const CosNaming::Name & rhs);
+bool TAO_PortableGroup_Export operator== (const CosNaming::Name & lhs,
+                                          const CosNaming::Name & rhs);
 
 /// Global CosNaming::Name inequality operator.
 /**
  * This simple implementation simply negates the result of the
  * equality operator.
  */
-int  TAO_PortableGroup_Export operator!= (const CosNaming::Name & lhs,
+bool TAO_PortableGroup_Export operator!= (const CosNaming::Name & lhs,
                                           const CosNaming::Name & rhs);
 
 
