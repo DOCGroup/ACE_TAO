@@ -187,13 +187,14 @@ SOURCE=.\da_tests.idl
 
 !IF  "$(CFG)" == "DynAny Basics - Win32 Release"
 
+# PROP Ignore_Default_Tool 1
 USERDEP__DA_TE="..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO IDL compiler
 InputPath=.\da_tests.idl
 InputName=da_tests
 
 BuildCmds= \
-	..\..\..\bin\Release\tao_idl -Ge 1 $(InputName).idl
+	..\..\..\bin\Release\tao_idl -I..\..\tao -Ge 1 $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -225,13 +226,14 @@ BuildCmds= \
 
 !ELSEIF  "$(CFG)" == "DynAny Basics - Win32 Debug"
 
+# PROP Ignore_Default_Tool 1
 USERDEP__DA_TE="..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO IDL compiler
 InputPath=.\da_tests.idl
 InputName=da_tests
 
 BuildCmds= \
-	..\..\..\bin\tao_idl -Ge 1 $(InputName).idl
+	..\..\..\bin\tao_idl -I..\..\tao -Ge 1 $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
