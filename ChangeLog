@@ -1,3 +1,31 @@
+Wed Apr 14 21:07:35 2004  Marek Brudka  <mbrudka@elka.pw.edu.pl>
+
+	* ACE-INSTALL.html: updated documentation in QNX section.
+	* include/makeinclude/platform_qnx_rtp_gcc.GNU: several changes 
+	related to compilation under QNX RTP v.6.2.0.
+	* ace/Mutex.inl: Fixed bugs for pthread::process_mutex placed in 
+	shared memory
+	* ace/Process_Mutex.h: Explained in doxygen documentation the 
+	difference between SYSV semaphores and pthreads based process 
+	mutexes.
+	* ace/RW_Process_Mutex.h: Added \todo section in doxygen doc.
+	* ace/Dev_Addr.h: 
+	* ace/Dev_Addr.i: 
+	* ace/File_Addr.h:
+	* ace/Module.h: 
+	* ace/Module.i:
+	* ace/SPIPE_Addr.h: MAXNAMLEN replaced by MAXPATHLEN to prevent 
+	filename truncation
+	* ace/Time_Value.cpp: Removed warning for QNX RTP related with 
+	unsigned tv_sec
+	* ace/config-qnx-rtp-62x.h:
+	* ace/config-qnx-rtp-pre62x.h:
+	* ace/config-qnx-rtp.h:
+	* ace/config-qnx-neutrino.h: New configuration macros for QNX RTP.
+	* ace/OS.h: Removed unnecessary semicolon in QNX (4.x) section.
+	* tests/Process_Mutex_Test.cpp: Ensured correct order of pthreads-based 
+	Process_Mutex destruction.
+
 Wed Apr 14 12:34:56 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tests/Makefile.libs:

@@ -1,6 +1,5 @@
 // -*- C++ -*-
 // $Id$
-
 // The following configuration file is designed to work for Neutrino
 // 2.0 (Beta) with GNU C++ and the POSIX (pthread) threads package.
 
