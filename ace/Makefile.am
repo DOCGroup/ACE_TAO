@@ -929,6 +929,7 @@ HEADER_FILES = \
   Timer_List_T.h \
   Timer_Queue.h \
   Timer_Queue_Adapters.h \
+  Timer_Queuefwd.h \
   Timer_Queue_T.h \
   Timer_Wheel.h \
   Timer_Wheel_T.h \
