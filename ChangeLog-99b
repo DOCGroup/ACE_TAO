@@ -1,3 +1,12 @@
+Thu Mar 18 14:31:29 1999  Steve Huston  <shuston@riverace.com>
+
+        * tests/DLL_Test.cpp: Use the new DLL_Test.h file that contains the
+          class defs - needed for AIX xlC.  This should have been done
+          with the Mar 15 changes but slipped through the cracks.
+
+        * include/makeinclude/platform_hpux_aCC.GNU: Added support for
+          building HP-UX 11 distributions with both 32 and 64 bits.
+
 Thu Mar 18 14:30:04 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/OS.i (timezone): Removed the leading '::' to cope with VC
