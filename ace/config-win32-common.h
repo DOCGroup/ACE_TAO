@@ -89,7 +89,7 @@ typedef unsigned __int64 ACE_UINT64;
 // Platform supports the /proc file system.
 //define ACE_HAS_PROC_FS
 
-#if !defined (ACE_HAS_WINCE)
+#if defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)
 // Platform supports the rusage struct.
 #define ACE_HAS_GETRUSAGE
 #endif /* ! ACE_HAS_WINCE */
