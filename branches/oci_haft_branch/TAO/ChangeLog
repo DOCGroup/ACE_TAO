@@ -34,6 +34,9 @@ Fri Sep 19 19:49:11 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* orbsvcs/orbsvcs/FaultTolerance/FT_ORBInitializer.cpp: Installed
 	  server interceptors.
 
+	* orbsvcs/orbsvcs/Makefile.FTORB: Added the
+	  ServerRequestInterceptor to the Makefile.
+
 Fri Sep 19 16:29:42 2003  Dale Wilson  <wilson_d@ociweb.com>
 
         * orbsvcs/Fault_Detector/FT_FaultDetectorFactory_i.h:
