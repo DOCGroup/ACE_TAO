@@ -1,3 +1,12 @@
+Mon Sep 22 17:42:23 2003  Dale Wilson  <wilson_d@ociweb.com>
+        * orbsvcs/test/FT_App/FT_ReplicaFactory_i.cpp
+        * orbsvcs/test/FT_App/FT_ReplicaFactory_i.h
+        * orbsvcs/test/FT_App/FT_ReplicaFactory_i.cpp
+        * orbsvcs/test/FT_App/FT_Replica.cpp
+          Implement GenericFactory to create test replicas.
+
+        These changes were made in the oci_haft branch.
+
 Mon Sep 22 17:05:31 2003  Dale Wilson  <wilson_d@ociweb.com>
 
         * orbsvcs/Fault_Notifier/Fault_Notifier.mpc:
