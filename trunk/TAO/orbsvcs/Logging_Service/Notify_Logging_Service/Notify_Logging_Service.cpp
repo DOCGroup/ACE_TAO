@@ -101,13 +101,12 @@ Notify_Logging_Service::init (int argc, char *argv[]
   // Register the Factory
   ACE_ASSERT (!CORBA::is_nil (this->naming_.in ()));
 
-  CosNaming::Name_var name =
-    this->naming_->to_name (this->notify_factory_name_.c_str ()
-                            ACE_ENV_ARG_PARAMETER);
+  CosNaming::Name name (1);
+  name.length (1);
+  name[0].id = CORBA::string_dup (this->notify_factory_name_.c_str ());
   ACE_CHECK_RETURN (-1);
 
-
-  this->naming_->rebind (name.in (),
+  this->naming_->rebind (name,
                          obj.in ()
                          ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
@@ -132,7 +131,7 @@ Notify_Logging_Service::resolve_naming_service (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW (CORBA::UNKNOWN ());
 
   this->naming_ =
-    CosNaming::NamingContextExt::_narrow (naming_obj.in ()
+    CosNaming::NamingContext::_narrow (naming_obj.in ()
                                           ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
@@ -173,12 +172,12 @@ Notify_Logging_Service::shutdown (ACE_ENV_SINGLE_ARG_DECL)
                                  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  CosNaming::Name_var name =
-    this->naming_->to_name (this->notify_factory_name_.c_str ()
-                            ACE_ENV_ARG_PARAMETER);
+  CosNaming::Name name (1);
+  name.length (1);
+  name[0].id = CORBA::string_dup (this->notify_factory_name_.c_str ());
   ACE_CHECK;
 
-  this->naming_->unbind (name.in ()
+  this->naming_->unbind (name
                          ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
