@@ -305,7 +305,11 @@ typedef long      id_t;
 
 // Default file permissions.
 # if !defined (ACE_DEFAULT_FILE_PERMS)
-#   define ACE_DEFAULT_FILE_PERMS 0666
+#   if defined (ACE_WIN32)
+#     define ACE_DEFAULT_FILE_PERMS (FILE_SHARE_READ | FILE_SHARE_WRITE)
+#   else
+#     define ACE_DEFAULT_FILE_PERMS 0666
+#   endif /* ACE_WIN32 */
 # endif /* ACE_DEFAULT_FILE_PERMS */
 
 // Default directory permissions.
