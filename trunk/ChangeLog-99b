@@ -1,3 +1,14 @@
+Wed Jul 28 12:08:56 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* ace/CDR_Stream.cpp (reset_contents):
+
+	  Modified call to clone() so that it uses the newly added
+	  zero-copy semantics.  A data copy was already being made in
+	  ACE_InputCDR::steal_from(), which also calls
+	  ACE_InputCDR::reset_contents().  Two data copies were being
+	  performed.  This change reduces the number of data copies to
+	  one.  Thanks to Carlos for this change.
+
 Wed Jul 28 11:23:36 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* ace/Message_Block.h:
