@@ -1,3 +1,9 @@
+Tue Feb 26 16:17:45 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Thread_Manager.h (ACE_Thread_Manager): Fixed a typo in
+	  doxygen document tag.  Thanks to Brad Hoskins
+	  <BHoskins@slo.newport.com> for reporting this.
+
 Tue Feb 26 10:22:39 2002  Steve Huston  <shuston@riverace.com>
 
         * include/makeinclude/platform_sunos5_sunc++.GNU: Added the ability
@@ -223,7 +229,7 @@ Mon Feb 18 23:17:08 2002  Christopher Kohlhoff  <chris@kohlhoff.com>
 Mon Feb 18 20:16:27 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* ace/Acceptor.cpp (make_svc_handler):
-  	* ace/Connector.cpp (make_svc_handler):  There doesn't seem to be 
+  	* ace/Connector.cpp (make_svc_handler):  There doesn't seem to be
 	  anypoint in *conditionally* assigning the Acceptor/Connector's
  	  reactor to the Svc_Handler, so we'll just assign it...
 
@@ -233,7 +239,7 @@ Mon Feb 18 18:41:33 2002  Steve Huston  <shuston@riverace.com>
 
         Wed Feb 13 15:37:41 2002  Steve Huston  <shuston@riverace.com>
 
-        * ace/Hash_Cache_Map_Manager_T.h: Added #include "ace/Synch.h" to 
+        * ace/Hash_Cache_Map_Manager_T.h: Added #include "ace/Synch.h" to
           pick up ACE_Null_Mutex.
 
         * tests/Process_Manager_Test.cpp: Added #include "ace/Thread.h" to
@@ -351,10 +357,10 @@ Mon Feb 18 10:45:00 2002  Craig Rodrigues  <crodrigu@bbn.com>
 	  Add new constant
 	  ACE_QoS_Session_Factory::ACE_DEFAULT_QOS_SESSION. Give
 	  ACE_QoS_Session_Factory::create_session() a default argument of
-	  ACE_DEFAULT_QOS_SESSION. 
+	  ACE_DEFAULT_QOS_SESSION.
 
 	* ace/QoS/QoS_Session_Factory.cpp:
-	  Set the value of ACE_DEFAULT_QOS_SESSION to ACE_RAPI_SESSION on 
+	  Set the value of ACE_DEFAULT_QOS_SESSION to ACE_RAPI_SESSION on
 	  platforms with RAPI RSVP support.  Set it to
 	  ACE_GQOS_SESSION on Win32 platforms with GQoS support.
 	  Otherwise, issue a compilation error, since these are the only
@@ -369,7 +375,7 @@ Mon Feb 18 10:45:00 2002  Craig Rodrigues  <crodrigu@bbn.com>
 	  Remove reference to ACE_RAPI_SESSION from invocations of
 	  create_session(), leave it empty and choose default argument
 	  instead. This will allow the examples to compile and run on
-	  Win32. 
+	  Win32.
 
 Mon Feb 18 08:07:59 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
@@ -380,7 +386,7 @@ Mon Feb 18 08:07:59 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 Mon Feb 18 13:05:12 2002  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * ace/config-all.h:
-          Added ACE_NEW_NORETURN macro. This macro is the same as ACE_NEW 
+          Added ACE_NEW_NORETURN macro. This macro is the same as ACE_NEW
           but doesn't do a return when an out of memory error occured so that
           the caller can do extra handling.
 
