@@ -1,3 +1,11 @@
+Wed Sep 19 16:54:04 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * ace/Containers_T.cpp:
+
+          In copy constructor for ACE_Duuble_Linked_List, added line to
+          copy the size of the rhs to the lhs. The new list was ending
+          up with a garbage value for its size.
+
 Wed Sep 19 14:15:08 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/ace_dll.dsp:
