@@ -737,7 +737,7 @@ TAO_PropertySet::get_all_property_names (CORBA::ULong how_many,
        ni++, iterator.advance ())
     if (iterator.next (entry_ptr) != 0)
       property_names [ni] =
-        CORBA::string_dup (entry_ptr->ext_id_.pname_);
+        CORBA::string_dup (entry_ptr->ext_id_.pname_.in ());
 
   // If there are some more properties, put them in the
   // iterator. How?? Make a new PropertySet and use that to create
@@ -917,7 +917,7 @@ TAO_PropertySet::get_all_properties (CORBA::ULong how_many,
     if (iterator.next (entry_ptr) != 0)
       {
         nproperties[i].property_name =
-          CORBA::string_dup (entry_ptr->ext_id_.pname_);
+          CORBA::string_dup (entry_ptr->ext_id_.pname_.in ());
         nproperties[i].property_value =
           entry_ptr->int_id_.pvalue_;
       }
@@ -1703,7 +1703,7 @@ TAO_PropertyNamesIterator::next_one (CORBA::String_out property_name,
   if (this->iterator_.next (entry_ptr) != 0)
     {
       property_name =
-        CORBA::string_dup (entry_ptr->ext_id_.pname_);
+        CORBA::string_dup (entry_ptr->ext_id_.pname_.in ());
       this->iterator_.advance ();
       return 1;
     }
@@ -1741,7 +1741,7 @@ TAO_PropertyNamesIterator::next_n (CORBA::ULong how_many,
        ni++, this->iterator_.advance ())
     if (this->iterator_.next (entry_ptr) != 0)
       property_names [ni] =
-        CORBA::string_dup (entry_ptr->ext_id_.pname_);
+        CORBA::string_dup (entry_ptr->ext_id_.pname_.in ());
 
   return 1;
 }
