@@ -13,7 +13,7 @@
 #if 0 // XXXASG - commenting out temporarily as it doesn't compile
 #define ACE_BUILD_SVC_DLL
 #if 0
-#include "default_server.h"
+#include "tao/default_server.h"
 #endif /* 0 */
 
 #include "tao/corba.h"

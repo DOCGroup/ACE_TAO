@@ -1,3 +1,20 @@
+Tue Aug 12 22:37:06 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+        * tao/{any,typecode,cdr}.h: Finished appeasing the compiler gods
+	so that we can remove the ACE_INLINE hack.  Things now seem to be
+	in order.
+
+	* tao/corba.h: Got all the frigging header *.i files #included in
+ 	the right order so that the GCC compiler stops complaining.
+
+	* tao/giop.cpp: We had method definitions that were defined inline
+ 	within the giop.h file.  This was causing problems for GCC, which
+ 	kept warning that methods in the cdi.i file were being used before
+ 	being inlined.  I've fixed this by creating a giop.i file.
+
+	* tao/corba.h: Add #include files should be prefixed by "tao/".
+  	I've fixed this in the release.
+
 Tue Aug 12 16:23:17 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* tao/any.i: Added a missing replace() method used by overloaded

@@ -15,7 +15,7 @@
 
 #define ACE_BUILD_SVC_DLL
 #if 0
-#include "default_client.h"
+#include "tao/default_client.h"
 #endif /* 0 */
 
 #include "tao/corba.h"

@@ -244,22 +244,15 @@ public:
     // calls that may fail -- and thus throw exceptions.
 
     void put_param (CORBA::TypeCode_ptr tc, 
-		    void *value, 
-		    CORBA::Environment &env)
-      {
-	(void) stream.encode(tc, value, 0, env);
-      }
+		    void *value,
+		    CORBA::Environment &env);
 
     ReplyStatusType invoke (CORBA::ExceptionList &exceptions,
 			    CORBA::Environment &env);
 
     void get_value (CORBA::TypeCode_ptr tc,
 		   void *value,
-		   CORBA::Environment &env)
-      {
-	(void) stream.decode (tc, value, 0, env);
-      }
-
+		   CORBA::Environment &env);
     // No CORBA::Context support (deprecated).
 
   private:

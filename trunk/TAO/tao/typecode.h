@@ -81,9 +81,6 @@ public:
   static CORBA::TypeCode_ptr _nil (void);
   // returns a NULL typecode
 
-#if defined(__ACE_INLINE__)
-  ACE_INLINE
-#endif  
   CORBA::Boolean equal (const CORBA::TypeCode_ptr, CORBA::Environment &env) const;
   // compares two typecodes
 
@@ -425,7 +422,7 @@ extern ACE_Svc_Export CORBA::TypeCode_ptr _tc_CORBA_TypeCode;
 extern ACE_Svc_Export CORBA::TypeCode_ptr _tc_CORBA_Principal;
 
 extern ACE_Svc_Export CORBA::TypeCode_ptr _tc_CORBA_Object;
-#endif
+#endif /* 0 */
 
 // In this case, we make a substantial exception to how inline
 // files are included.  Normally, we would conditionally include the
@@ -440,12 +437,13 @@ extern ACE_Svc_Export CORBA::TypeCode_ptr _tc_CORBA_Object;
 #    undef ACE_INLINE
 #    define ACE_INLINE inline
 #    define do_undef_on_ACE_INLINE
-#  endif
+#  endif /* __ACE_INLINE__ */
+
 //#  include "typecode.i"
 #  if defined (do_undef_on_ACE_INLINE)
 #    undef do_undef_on_ACE_INLINE
 #    undef ACE_INLINE
 #    define ACE_INLINE
-#  endif
+#  endif /* __ACE_INLINE__ */
 
 #endif /* TAO_TYPECODE_H */

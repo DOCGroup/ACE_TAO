@@ -40,7 +40,11 @@
 // error is detected when marshaling or unmarshaling, it should be
 // reported.
 
-#include "corba.h"
+#include "tao/corba.h"
+
+#if !defined (__ACE_INLINE__)
+#include "tao/giop.i"
+#endif /* __ACE_INLINE__ */
 
 #if 0
 #include "ace/Log_Msg.h"
