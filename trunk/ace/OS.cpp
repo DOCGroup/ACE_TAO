@@ -245,9 +245,9 @@ ACE_OS::uname (struct utsname *name)
 #elif defined (VXWORKS)
   size_t maxnamelen = sizeof name->nodename;
   ::strcpy (name->sysname, "VxWorks");
-  ::strcpy (name->release, "???");
+  ::strcpy (name->release, sysBspRev ());
   ::strcpy (name->version, "???");
-  ::strcpy (name->machine, "???");
+  ::strcpy (name->machine, sysModel ());
 
   return ACE_OS::hostname (name->nodename, maxnamelen);
 #endif /* ACE_WIN32 */
