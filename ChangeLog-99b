@@ -1,3 +1,11 @@
+Mon Apr 26 16:43:32 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Asynch_IO_Impl.h (ACE_Asynch_[Read|Write]_File_Impl):
+	  Declared the read/write pure virtual methods of
+	  ACE_Asynch_[Read|Write]_Stream_Impl again in these class to
+	  avoid KAI compiler's overwriting pure virtual function
+	  warnings.
+
 Mon Apr 26 10:54:23 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* ace/High_Res_Timer.h:
