@@ -51,6 +51,20 @@ Collocation_Test::init (int argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
                                       ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
 
+//    // We only care about the most derived class here.
+//    this->diamond_obj_ = this->diamond_servant_._this (ACE_TRY_ENV);
+//    ACE_CHECK_RETURN (-1);
+
+  id =
+    this->root_poa_->activate_object (&this->diamond_servant_,
+                                      ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+
+  // We only care about the most derived class here.
+  this->diamond_obj_ = this->root_poa_->id_to_reference (id.in (),
+                                                         ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+
   id =
     this->root_poa_->activate_object (&this->left_servant_,
                                       ACE_TRY_ENV);
@@ -59,15 +73,6 @@ Collocation_Test::init (int argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
   id =
     this->root_poa_->activate_object (&this->right_servant_,
                                       ACE_TRY_ENV);
-  ACE_CHECK_RETURN (-1);
-
-  id =
-    this->root_poa_->activate_object (&this->diamond_servant_,
-                                      ACE_TRY_ENV);
-  ACE_CHECK_RETURN (-1);
-
-  // We only care about the most derived class here.
-  this->diamond_obj_ = this->diamond_servant_._this (ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
 
   CORBA::String_var str =
