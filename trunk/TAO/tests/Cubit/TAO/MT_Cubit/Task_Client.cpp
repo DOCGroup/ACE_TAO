@@ -11,7 +11,7 @@
 ACE_RCSID(MT_Cubit, Task_Client, "$Id$")
 
 Task_State::Task_State (void)
-  : barrier_ (0), 
+  : barrier_ (0),
     key_ ("Cubit"),
     loop_count_ (1000),
     thread_count_ (2),
@@ -164,7 +164,7 @@ Task_State::parse_args (int argc,char *argv[])
       u_int i;
 
       for (i = 0;
-           ACE_OS::fgets (buf, BUFSIZ, ior_file) != 0 
+           ACE_OS::fgets (buf, BUFSIZ, ior_file) != 0
              && i < thread_count_;
            i++)
         {
@@ -173,7 +173,7 @@ Task_State::parse_args (int argc,char *argv[])
           int j = ACE_OS::strlen (buf);
 
           // This overwrites the '\n' that was read from the file.
-          buf[j - 1] = 0;  
+          buf[j - 1] = 0;
           iors_[i] = ACE_OS::strdup (buf);
         }
 
@@ -360,7 +360,7 @@ Client::get_high_priority_jitter (void)
       // since latency is in usecs, lets convert it to seconds before
       // giving it to stats.
       stats.sample ((ACE_UINT32) (*latency *1000 *1000 + 0.5));
-    }          
+    }
 
   // Return the square root of the sum of the differences computed
   // above, i.e. jitter.
@@ -402,7 +402,7 @@ Client::get_low_priority_jitter (void)
       JITTER_ARRAY_ITERATOR iterator =
         this->ts_->global_jitter_array_ [j]->begin ();
 
-      ACE_timer_t number_of_calls = 
+      ACE_timer_t number_of_calls =
         this->ts_->count_ [j] / this->ts_->granularity_;
 
       ACE_timer_t *latency = 0;
@@ -579,7 +579,7 @@ Client::init_orb (void)
                   "parsing the arguments\n"));
 
       int result = this->ts_->parse_args (argc,
-					  argv);
+                                          argv);
       if (result != 0)
         return -1;
 
@@ -662,7 +662,7 @@ Client::get_cubit_from_naming (void)
             {
               ACE_DEBUG ((LM_DEBUG,
                           " (%t) resolve() returned nil\n"));
-              TAO_TRY_ENV.print_exception 
+              TAO_TRY_ENV.print_exception
                 ("Attempt to resolve() a cubit object"
                  "using the name service Failed!\n");
             }
@@ -709,7 +709,7 @@ Client::get_cubit (void)
 
               // If we are running the "1 to n" test make sure all low
               // priority clients use only 1 low priority servant.
-              if (this->id_ > 0 
+              if (this->id_ > 0
                   && this->ts_->one_to_n_test_ == 1)
                 my_ior = this->ts_->iors_[1];
 
@@ -724,7 +724,7 @@ Client::get_cubit (void)
 
               // If we are running the "1 to n" test make sure all low
               // priority clients use only 1 low priority servant.
-              if (this->id_ > 0 
+              if (this->id_ > 0
                   && this->ts_->one_to_n_test_ == 1)
                 my_ior = this->ts_->iors_[1];
 
@@ -845,7 +845,7 @@ Client::svc (void)
   return 0;
 }
 
-int 
+int
 Client::cube_octet (void)
 {
   TAO_TRY
@@ -1006,7 +1006,7 @@ Client::cube_struct (void)
     }
   TAO_CATCHANY
     {
-      TAO_TRY_ENV.print_exception 
+      TAO_TRY_ENV.print_exception
         ("call to cube_struct()\n");
       ACE_ERROR_RETURN ((LM_ERROR,
                          "%s: Call failed\n", TAO_TRY_ENV.exception ()),
@@ -1076,14 +1076,14 @@ Client::print_stats (void)
 {
   // Perform latency stats only if we are not running the utilization
   // tests.
-  if (this->call_count_ > 0 
+  if (this->call_count_ > 0
       && this->ts_->use_utilization_test_ == 0)
     {
       if (this->error_count_ == 0)
         {
           // since latency is in usecs.
           ACE_timer_t calls_per_second =
-            (this->call_count_ * ACE_ONE_SECOND_IN_USECS) 
+            (this->call_count_ * ACE_ONE_SECOND_IN_USECS)
             / this->latency_;
 
           // Calculate average latency in usecs.
@@ -1142,16 +1142,16 @@ Client::do_test (void)
   ACE_timer_t delta = 0;
   u_int low_priority_client_count = this->ts_->thread_count_ - 1;
   ACE_timer_t sleep_time = // usec
-    (1 / this->frequency_) * ACE_ONE_SECOND_IN_USECS * this->ts_->granularity_; 
+    (1 / this->frequency_) * ACE_ONE_SECOND_IN_USECS * this->ts_->granularity_;
   for (u_int i = 0;
        // keep running for loop count, OR
-       i < this->ts_->loop_count_ 
+       i < this->ts_->loop_count_
        // keep running if we are the highest priority thread and at
        // least another lower client thread is running, OR
-       || (id_ == 0 && this->ts_->thread_count_ > 1) 
+       || (id_ == 0 && this->ts_->thread_count_ > 1)
        // keep running if test is thread_per_rate and we're not the
        // lowest frequency thread.
-       || (this->ts_->thread_per_rate_ == 1 
+       || (this->ts_->thread_per_rate_ == 1
            && id_ < (this->ts_->thread_count_ - 1));
        i++)
     {
@@ -1175,7 +1175,7 @@ Client::do_test (void)
         return 2;
 
       // Stop the timer.
-      if (i % this->ts_->granularity_ == this->ts_->granularity_ - 1 
+      if (i % this->ts_->granularity_ == this->ts_->granularity_ - 1
           && this->ts_->use_utilization_test_ == 0)
         {
           this->timer_->stop ();
@@ -1189,8 +1189,8 @@ Client::do_test (void)
           delta = this->calc_delta (real_time,delta);
           this->latency_ += real_time * this->ts_->granularity_;
           this->my_jitter_array_->insert (real_time);
-        } 
-      if (this->ts_->thread_per_rate_ == 1 
+        }
+      if (this->ts_->thread_per_rate_ == 1
           && id_ < (this->ts_->thread_count_ - 1))
         {
           if (this->ts_->semaphore_->tryacquire () != -1)
@@ -1200,7 +1200,7 @@ Client::do_test (void)
         // If we are the high priority client.  If tryacquire()
         // succeeded then a client must have done a release () on it,
         // thus we decrement the client counter.
-        if (id_ == 0 
+        if (id_ == 0
             && this->ts_->thread_count_ > 1)
           {
             if (this->ts_->semaphore_->tryacquire () != -1)
@@ -1254,11 +1254,3 @@ Client::run_tests (void)
   this->print_stats ();
   return 0;
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Condition<ACE_SYNCH_MUTEX>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate ACE_Condition<ACE_SYNCH_MUTEX>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
-
