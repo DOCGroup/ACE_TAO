@@ -1,3 +1,11 @@
+Thu Aug 26 18:11:09 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.cpp:
+        
+          Changed the minor code of a BAD_PARAM exception to 3
+          (local name clash) from its incorrect value of 5
+          (inherited name clash).
+
 Thu Aug 26 16:37:29 2004  Dale Wilson  <wilson_d@ociweb.com>
 
         * interop-tests/wchar/interop_wchar.idl:
