@@ -1,4 +1,0 @@
-project : acelib {
-  after   += RMCast
-  libs    += ACE_RMCast
-}
