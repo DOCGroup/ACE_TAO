@@ -521,8 +521,9 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::ACE_Select_Reactor_T
       // determine the size at run-time by checking the process file
       // descriptor limit on platforms that support this feature.
 
-      // Deallocate resources from previous open() call.
-      (void) this->close ();
+      // There is no need to deallocate resources from previous open()
+      // call since the open() method deallocates any resources prior
+      // to exiting if an error was encountered.
 
       // Set the default reactor size to be the current limit on the
       // number of file descriptors available to the process.  This
