@@ -1,3 +1,10 @@
+Tue Feb 15 14:10:33 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * TAOACE.mwc:
+
+          Changed ../protocols/ace/HTBP to ../protocols to get RMCast and
+          TMCast too.
+
 Tue Feb 15 14:04:51 2005  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/tests/Notify/MT_Dispatching/run_test.pl:

@@ -8,7 +8,7 @@ workspace {
   ../ACEXML/parser/parser
   ../ACEXML/apps/svcconf
   ../Kokyu/Kokyu.mpc
-  ../protocols/ace/HTBP
+  ../protocols
   tao
   TAO_IDL
   utils
