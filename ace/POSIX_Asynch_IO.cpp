@@ -533,8 +533,9 @@ ACE_POSIX_SIG_Asynch_Read_Stream::shared_read (ACE_POSIX_Asynch_Read_Stream_Resu
   // We want queuing of RT signal to notify completion.
   result->aio_sigevent.sigev_notify = SIGEV_SIGNAL;
   result->aio_sigevent.sigev_signo = result->signal_number ();
-  result->aio_sigevent.sigev_value.sival_ptr = (void *) result;
-  
+  result->aio_sigevent.sigev_value.sival_ptr = ACE_reinterpret_cast (void *,
+                                                                     (ACE_POSIX_Asynch_Result *) result);
+
   // Fire off the aio read.
   if (aio_read (result) == -1)
     // Queueing failed.
@@ -861,7 +862,8 @@ ACE_POSIX_SIG_Asynch_Write_Stream::shared_write (ACE_POSIX_Asynch_Write_Stream_R
   // We want queuing of RT signal to notify completion.
   result->aio_sigevent.sigev_notify = SIGEV_SIGNAL;
   result->aio_sigevent.sigev_signo = result->signal_number ();
-  result->aio_sigevent.sigev_value.sival_ptr = (void *) result;
+  result->aio_sigevent.sigev_value.sival_ptr = ACE_reinterpret_cast (void *,
+                                                                     (ACE_POSIX_Asynch_Result *) result);
 
   // Fire off the aio write.
   if (aio_write (result) == -1)
@@ -2079,7 +2081,7 @@ ACE_POSIX_AIOCB_Asynch_Accept::open (ACE_Handler &handler,
   // Spawn the thread. It is the only thread we are going to have. It
   // will do the <handle_events> on the reactor.
   return_val = ACE_Thread_Manager::instance ()->spawn (ACE_POSIX_AIOCB_Asynch_Accept::thread_function,
-                                                       (void *) &this->reactor_);
+                                                       ACE_reinterpret_cast (void *, &this->reactor_));
   if (return_val  == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%N:%l:Thread_Manager::spawn failed\n"),
@@ -2098,7 +2100,8 @@ ACE_POSIX_AIOCB_Asynch_Accept::thread_function (void* arg_reactor)
   ACE_DEBUG ((LM_DEBUG, "ACE_Asynch_Accept::thread_function called\n"));
 
   // Retrieve the reactor pointer from the argument.
-  ACE_Reactor* reactor = (ACE_Reactor *) arg_reactor;
+  ACE_Reactor* reactor = ACE_reinterpret_cast (ACE_Reactor *,
+                                               arg_reactor);
 
   // It should be valid Reactor, since we have a reactor_ ,e,ner we
   // are passing only that one here.
@@ -2247,7 +2250,8 @@ void*
 ACE_POSIX_SIG_Asynch_Accept::thread_function (void* arg_reactor)
 {
   // Retrieve the reactor pointer from the argument.
-  ACE_Reactor* reactor = (ACE_Reactor *) arg_reactor;
+  ACE_Reactor* reactor = ACE_reinterpret_cast (ACE_Reactor *,
+                                               arg_reactor);
   if (reactor == 0)
     reactor = ACE_Reactor::instance ();
 
@@ -2665,7 +2669,7 @@ ACE_POSIX_AIOCB_Asynch_Transmit_Handler::transmit (void)
   // Transmit the header.
   if (this->ws_.write (*this->result_->header_and_trailer ()->header (),
                        this->result_->header_and_trailer ()->header_bytes (),
-                       (void *) &this->header_act_,
+                       ACE_reinterpret_cast (void *, &this->header_act_),
                        0) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Asynch_Transmit_Handler:transmitting header:write_stream failed\n"),
@@ -2734,7 +2738,7 @@ ACE_POSIX_AIOCB_Asynch_Transmit_Handler::handle_write_stream (const ACE_Asynch_W
   // Not a partial write. A full write.
 
   // Check ACT to see what was sent.
-  ACT act = *(ACT *) result.act ();
+  ACT act = * (ACT *) result.act ();
 
   switch (act)
     {
@@ -2900,7 +2904,8 @@ ACE_POSIX_SIG_Asynch_Transmit_Handler::transmit (void)
   // Transmit the header.
   if (this->ws_.write (*this->result_->header_and_trailer ()->header (),
                        this->result_->header_and_trailer ()->header_bytes (),
-                       (void *) &this->header_act_,
+                       ACE_reinterpret_cast (void *,
+                                             &this->header_act_),
                        this->result_->priority (),
                        this->result_->signal_number ()) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,

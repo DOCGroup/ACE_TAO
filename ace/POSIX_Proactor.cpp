@@ -290,7 +290,7 @@ void
 ACE_POSIX_Proactor::application_specific_code (ACE_POSIX_Asynch_Result *asynch_result,
                                                u_long bytes_transferred,
                                                int success,
-                                               const void *completion_key,
+                                               const void */* completion_key*/,
                                                u_long error)
 {
   ACE_SEH_TRY
@@ -298,7 +298,7 @@ ACE_POSIX_Proactor::application_specific_code (ACE_POSIX_Asynch_Result *asynch_r
       // Call completion hook
       asynch_result->complete (bytes_transferred,
                                success,
-                               (void *) completion_key,
+                               0, // No completion key.
                                error);
     }
   ACE_SEH_FINALLY
@@ -410,7 +410,8 @@ ACE_AIOCB_Notify_Pipe_Manager::notify (ACE_POSIX_Asynch_Result *result)
 {
   // Send the result pointer through the pipe.
   int return_val = ACE::send (this->pipe_.write_handle (),
-                              (char *) &result,
+                              ACE_reinterpret_cast (char *,
+                                                    &result),
                               sizeof (result));
   if (return_val != sizeof (result))
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -562,12 +563,22 @@ ACE_POSIX_AIOCB_Proactor::handle_events (unsigned long milli_seconds)
 {
   int result_suspend = 0;
   if (milli_seconds == ACE_INFINITE)
-    // Indefinite blocking.
-    result_suspend = aio_suspend (this->aiocb_list_,
-                                  this->aiocb_list_max_size_,
-                                  0);
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "ACE_POSIX_AIOCB_Proactor::handle_events:"
+                  "Indefinite blocking on aio_suspend\n"));
+      
+      // Indefinite blocking.
+      result_suspend = aio_suspend (this->aiocb_list_,
+                                    this->aiocb_list_max_size_,
+                                    0);
+    }
   else
     {
+      ACE_DEBUG ((LM_DEBUG,
+                  "ACE_POSIX_AIOCB_Proactor::handle_events:"
+                  "Finite blocking on aio_suspend\n"));
+      
       // Block on <aio_suspend> for <milli_seconds>
       timespec timeout;
       timeout.tv_sec = milli_seconds / 1000;
@@ -576,6 +587,10 @@ ACE_POSIX_AIOCB_Proactor::handle_events (unsigned long milli_seconds)
                                     this->aiocb_list_max_size_,
                                     &timeout);
     }
+
+  ACE_DEBUG ((LM_DEBUG,
+              "ACE_POSIX_AIOCB_Proactor::handle_events: result_aiosuspend %d\n",
+              result_suspend));
   
   // Check for errors
   if (result_suspend == -1)
@@ -639,7 +654,8 @@ ACE_POSIX_AIOCB_Proactor::handle_events (unsigned long milli_seconds)
   
   // Retrive the result pointer.
   ACE_POSIX_Asynch_Result *asynch_result =
-    (ACE_POSIX_Asynch_Result *) this->aiocb_list_[ai];
+    ACE_dynamic_cast (ACE_POSIX_Asynch_Result *,
+                      this->aiocb_list_[ai]);
 
 
   // Invalidate entry in the aiocb list.
@@ -827,7 +843,8 @@ ACE_POSIX_SIG_Proactor::post_completion (ACE_POSIX_Asynch_Result *result)
   
   // Set the signal information.
   sigval value;
-  value.sival_ptr = (void *) result;
+  value.sival_ptr = ACE_reinterpret_cast (void *,
+                                          result);
   
   // Queue the signal.
   if (sigqueue (pid, result->signal_number (), value) == -1)
@@ -1051,14 +1068,14 @@ ACE_POSIX_SIG_Proactor::handle_events (unsigned long milli_seconds)
                       -1);
   
   // Retrive the result pointer.
-  ACE_POSIX_Asynch_Result *asynch_result =
-    (ACE_POSIX_Asynch_Result *) sig_info.si_value.sival_ptr;
+  ACE_POSIX_Asynch_Result *asynch_result = ACE_reinterpret_cast (ACE_POSIX_Asynch_Result *,
+                                                                 sig_info.si_value.sival_ptr);
 
   // Check the <signal code> and act according to that.
   if (sig_info.si_code == SI_ASYNCIO)
     {
       // Analyze error and return values. 
-
+      
       // Check the error status
       int error_status = aio_error (asynch_result);
       if (error_status == -1)
@@ -1090,7 +1107,7 @@ ACE_POSIX_SIG_Proactor::handle_events (unsigned long milli_seconds)
           this->application_specific_code (asynch_result,
                                            return_status,
                                            1,             // Result : True.
-                                           0,             // No completion_signal.
+                                           0,             // No completion key.
                                            error_status); // Error.
         }
     }
