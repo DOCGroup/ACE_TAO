@@ -53,7 +53,7 @@ namespace TAO
 
     ACE_STATIC_SVC_DEFINE (
         ThreadPolicyFactoryImpl,
-        ACE_TEXT ("ThreadPolicyFactory"),
+        ACE_TEXT ("ThreadPolicyFactoryImpl"),
         ACE_SVC_OBJ_T,
         &ACE_SVC_NAME (ThreadPolicyFactoryImpl),
         ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,

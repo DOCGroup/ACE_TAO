@@ -35,7 +35,7 @@ namespace TAO
       static
       POLICYTYPE create (
         const char *factory_string,
-        const ACE_Static_Svc_Descriptor &directive,
+        const ACE_TCHAR directive[],
         const CORBA::Any &value ACE_ENV_ARG_DECL)
           ACE_THROW_SPEC ((CORBA::PolicyError))
       {
@@ -61,7 +61,7 @@ namespace TAO
       static
       POLICYTYPE create (
         const char *factory_string,
-        const ACE_Static_Svc_Descriptor &directive,
+        const ACE_TCHAR directive[],
         POLICYVALUETYPE value)
       {
         FACTORY *policy_factory =

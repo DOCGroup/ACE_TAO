@@ -167,9 +167,7 @@ namespace TAO
       ServerObject_i *server_object_;
 
       /// Flag for whether the ImR should be used or not.
-      // @@ Johnny, Can't this be bool?
-      // @ Bala, I will change this
-      int use_imr_;
+      bool use_imr_;
     };
   } /* namespace Portable_Server */
 } /* namespace TAO */

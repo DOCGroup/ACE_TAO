@@ -9,7 +9,7 @@
 #include "ThreadPolicyC.h"
 #include "Policy_Creator_T.h"
 
-#include "ThreadPolicyFactoryImpl.h"
+#include "ThreadPolicyFactory.h"
 #include "LifespanPolicyFactory.h"
 #include "IdAssignmentPolicyFactory.h"
 #include "IdUniquenessPolicyFactory.h"
@@ -36,8 +36,9 @@ TAO_PortableServer_PolicyFactory::create_policy (
             TAO::Portable_Server::ThreadPolicyFactory,
             CORBA::Policy_ptr,
             PortableServer::ThreadPolicyValue>::create (
-              "ThreadPolicyFactory",
-              TAO::Portable_Server::ace_svc_desc_ThreadPolicyFactoryImpl,
+              "ThreadPolicyFactoryImpl",
+              ACE_TEXT("dynamic ThreadPolicyFactory Service_Object *")
+              ACE_TEXT("TAO_PortableServer:_make_ThreadPolicyFactoryImpl()"),
               value ACE_ENV_ARG_PARAMETER);
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
@@ -47,7 +48,8 @@ TAO_PortableServer_PolicyFactory::create_policy (
             CORBA::Policy_ptr,
             PortableServer::LifespanPolicyValue>::create (
               "LifespanPolicyFactory",
-              TAO::Portable_Server::ace_svc_desc_LifespanPolicyFactory,
+              ACE_TEXT("dynamic LifespanPolicyFactory Service_Object *")
+              ACE_TEXT("TAO_PortableServer:_make_LifespanPolicyFactory()"),
               value ACE_ENV_ARG_PARAMETER);
 
   if (type == PortableServer::ID_UNIQUENESS_POLICY_ID)
@@ -56,7 +58,8 @@ TAO_PortableServer_PolicyFactory::create_policy (
             CORBA::Policy_ptr,
             PortableServer::IdUniquenessPolicyValue>::create (
               "IdUniquenessPolicyFactory",
-              TAO::Portable_Server::ace_svc_desc_IdUniquenessPolicyFactory,
+              ACE_TEXT("dynamic IdUniquenessPolicyFactory Service_Object *")
+              ACE_TEXT("TAO_PortableServer:_make_IdUniquenessPolicyFactory()"),
               value ACE_ENV_ARG_PARAMETER);
 
   if (type == PortableServer::ID_ASSIGNMENT_POLICY_ID)
@@ -65,7 +68,8 @@ TAO_PortableServer_PolicyFactory::create_policy (
             CORBA::Policy_ptr,
             PortableServer::IdAssignmentPolicyValue>::create (
               "IdAssignmentPolicyFactory",
-              TAO::Portable_Server::ace_svc_desc_IdAssignmentPolicyFactory,
+              ACE_TEXT("dynamic IdAssignmentPolicyFactory Service_Object *")
+              ACE_TEXT("TAO_PortableServer:_make_IdAssignmentPolicyFactory()"),
               value ACE_ENV_ARG_PARAMETER);
 
 #if (TAO_HAS_MINIMUM_POA == 0)
@@ -76,7 +80,8 @@ TAO_PortableServer_PolicyFactory::create_policy (
             CORBA::Policy_ptr,
             PortableServer::ImplicitActivationPolicyValue>::create (
               "ImplicitActivationPolicyFactory",
-              TAO::Portable_Server::ace_svc_desc_ImplicitActivationPolicyFactory,
+              ACE_TEXT("dynamic ImplicitActivationPolicyFactory Service_Object *")
+              ACE_TEXT("TAO_PortableServer:_make_ImplicitActivationPolicyFactory()"),
               value ACE_ENV_ARG_PARAMETER);
 
   if (type == PortableServer::SERVANT_RETENTION_POLICY_ID)
@@ -85,7 +90,8 @@ TAO_PortableServer_PolicyFactory::create_policy (
             CORBA::Policy_ptr,
             PortableServer::ServantRetentionPolicyValue>::create (
               "ServantRetentionPolicyFactory",
-              TAO::Portable_Server::ace_svc_desc_ServantRetentionPolicyFactory,
+              ACE_TEXT("dynamic ServantRetentionPolicyFactory Service_Object *")
+              ACE_TEXT("TAO_PortableServer:_make_ServantRetentionPolicyFactory()"),
               value ACE_ENV_ARG_PARAMETER);
 
   if (type == PortableServer::REQUEST_PROCESSING_POLICY_ID)
@@ -94,7 +100,8 @@ TAO_PortableServer_PolicyFactory::create_policy (
             CORBA::Policy_ptr,
             PortableServer::RequestProcessingPolicyValue>::create (
               "RequestProcessingPolicyFactory",
-              TAO::Portable_Server::ace_svc_desc_RequestProcessingPolicyFactory,
+              ACE_TEXT("dynamic RequestProcessingPolicyFactory Service_Object *")
+              ACE_TEXT("TAO_PortableServer:_make_RequestProcessingPolicyFactory()"),
               value ACE_ENV_ARG_PARAMETER);
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */

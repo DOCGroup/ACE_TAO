@@ -226,7 +226,7 @@ namespace TAO
 
     Persistent_Lifespan_Strategy::Persistent_Lifespan_Strategy() :
       server_object_ (0),
-      use_imr_ (1)
+      use_imr_ (true)
     {
     }
 
