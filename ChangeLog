@@ -1,12 +1,17 @@
+Fri Sep  3 19:13:24 2004  Olli Savia  <ops@iki.fi>
+
+        * apps/drwho/File_Manager.cpp:
+          LynxOS 3.x needs explicit template instantiation.
+        
 Fri Sep  3 10:44:27 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace/Process_Manager.cpp (append_proc): If the process_table_ needs
-	  to be enlarged, make sure it's to a size greater than 0. If the
-	  original size is 0, change it to DEFAULT_SIZE, else double it (as
-	  was always done).
-	  (resize): Changed to not shrink the process_table_ array. Primarily
-	  to guard against changing it to 0, but also guards against having to
-	  decide what to do with entries that won't fit in the new array.
+        * ace/Process_Manager.cpp (append_proc): If the process_table_ needs
+          to be enlarged, make sure it's to a size greater than 0. If the
+          original size is 0, change it to DEFAULT_SIZE, else double it (as
+          was always done).
+          (resize): Changed to not shrink the process_table_ array. Primarily
+          to guard against changing it to 0, but also guards against having to
+          decide what to do with entries that won't fit in the new array.
 
 Fri Sep  3 07:43:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -16,34 +21,34 @@ Fri Sep  3 07:43:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Sep  2 16:39:29 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ace/config-linux-common.h:
-	* ace/config-netbsd.h:
+        * ace/config-linux-common.h:
+        * ace/config-netbsd.h:
 
-	  Changed to define ACE_HAS_TIMEZONE.
+          Changed to define ACE_HAS_TIMEZONE.
 
-	* ace/OS_NS_time.h:
+        * ace/OS_NS_time.h:
 
-	  Changed ace_timezone() to use ACE_HAS_TIMEZONE feature test
-	  macro instead of OS-specific macros to determine whether to
-	  use global timezone variable or the gettimeofday() function
-	  to obtain the current timezone.
+          Changed ace_timezone() to use ACE_HAS_TIMEZONE feature test
+          macro instead of OS-specific macros to determine whether to
+          use global timezone variable or the gettimeofday() function
+          to obtain the current timezone.
 
-	* configure.ac:
+        * configure.ac:
 
-	  Changed to call ACE_VAR_TIMEZONE.
+          Changed to call ACE_VAR_TIMEZONE.
 
-	* m4/platform.m4:
+        * m4/platform.m4:
 
-	  Added new macro, ACE_VAR_TIMEZONE.  Sets new feature test macro
-	  ACE_HAS_TIMEZONE if platform supports global timezone variable.
+          Added new macro, ACE_VAR_TIMEZONE.  Sets new feature test macro
+          ACE_HAS_TIMEZONE if platform supports global timezone variable.
 
 Thu Sep  2 16:43:29 2004  Steve Huston  <shuston@riverace.com>
 
-	* m4/ace.m4: Added AM_CONDITIONAL for BUILD_EXCEPTIONS, BUILD_THREADS,
-	  BUILD_ACE_CODECS, BUILD_ACE_FILECACHE, BUILD_ACE_OTHER,
-	  BUILD_ACE_TOKEN, BUILD_ACE_UUID, BUILD_RWHO, BUILD_WFMO, and
-	  BUILD_WINREGISTRY so the MPC 'requires' feature can properly weed
-	  things out without configure- and build-time errors.
+        * m4/ace.m4: Added AM_CONDITIONAL for BUILD_EXCEPTIONS, BUILD_THREADS,
+          BUILD_ACE_CODECS, BUILD_ACE_FILECACHE, BUILD_ACE_OTHER,
+          BUILD_ACE_TOKEN, BUILD_ACE_UUID, BUILD_RWHO, BUILD_WFMO, and
+          BUILD_WINREGISTRY so the MPC 'requires' feature can properly weed
+          things out without configure- and build-time errors.
 
 Thu Sep  2 12:51:00 UTC 2004  Martin Corino  <mcorino@remedy.nl>
 
@@ -107,7 +112,7 @@ Wed Sep  1 12:32:31 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
           ACE_ADAPT_RETVAL macro call to "void" to address a "right-hand
           operand of comma has no effect" warning exhibited by GNU g++
           3.4.x.  Thanks to Bogdan Jeram <bjeram at eso dot org> and
-	  Paul Lew <paullew@cisco.com> for reporting the warning.
+          Paul Lew <paullew@cisco.com> for reporting the warning.
 
 Wed Sep  1 11:35:44 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 

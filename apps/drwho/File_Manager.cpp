@@ -173,7 +173,7 @@ template class ACE_Singleton<File_Manager,ACE_Null_Mutex>;
 
 #pragma instantiate ACE_Singleton<File_Manager,ACE_Null_Mutex>
 
-#elif defined (__GNUC__) && (defined (_AIX) || defined (__hpux))
+#elif defined (__GNUC__) && (defined (_AIX) || defined (__hpux) || defined (__Lynx__))
 
 template ACE_Singleton<File_Manager, ACE_Null_Mutex> *
   ACE_Singleton<File_Manager, ACE_Null_Mutex>::singleton_;
