@@ -174,6 +174,7 @@ be_enum::gen_client_stubs (void)
 
       // generate the typecode information here
       cs->indent (); // start from current indentation level
+      *cs << nl;
       *cs << "static const CORBA::Long _oc_" << this->flatname () << "[] =" <<
         nl;
       *cs << "{\n";
@@ -192,7 +193,7 @@ be_enum::gen_client_stubs (void)
         ", CORBA::B_FALSE);" << nl;
       *cs << "CORBA::TypeCode_ptr " << this->tc_name () << " = &_tc__tc_" <<
         this->flatname () << ";\n\n";
-      this->cli_stub_gen_;
+      this->cli_stub_gen_ = I_TRUE;
       cg->pop ();
     }
   return 0;
@@ -259,6 +260,7 @@ be_enum::gen_encapsulation (void)
   long i, arrlen;
   long *arr;  // an array holding string names converted to array of longs
 
+  
   cs = cg->outstream ();
   cs->indent (); // start from whatever indentation level we were at
 
