@@ -96,7 +96,7 @@ test $chorus || run MM_Shared_Memory_Test # tests ACE_Shared_Memory_MM
 
 run Sigset_Ops_Test                     # tests ACE_sigset*() functions
 
-test $LynxOS || run Timer_Queue_Test    # tests ACE_Event_Handler, ACE_Timer_Queue
+run Timer_Queue_Test                    # tests ACE_Event_Handler, ACE_Timer_Queue
 # The following test doesn't halt on g++/Solaris and DU 4.0.
 # run MT_Reactor_Timer_Test               # tests ACE_Reactor's timer mechanism.
 
@@ -144,7 +144,7 @@ run Service_Config_Test                 # tests ACE_Service_Config
 run Priority_Task_Test                  # tests ACE_Task with priorities
 run IOStream_Test                       # tests ACE_IOStream and ACE_SOCK_Stream
 run Enum_Interfaces_Test                # tests ACE_ACE::get_ip_interfaces()
-test $chorus || test $LynxOS || run Upgradable_RW_Test # tests ACE_RW locks
+test $chorus run Upgradable_RW_Test     # tests ACE_RW locks
 test $chorus || run Conn_Test           # tests ACE_Thread_Manager, ACE_Acceptor/ACE_Connector, ACE_SOCK_SAP
 
 echo "Tests complete..."
