@@ -1,3 +1,13 @@
+Mon Jun 26 14:32:17 2000  Ossama Othman  <ossama@uci.edu>
+
+	* examples/Content_Server/Makefile (DIRS):
+
+	  Moved conditional definition of additional directories to
+	  recurse into when AMI is enabled after the inclusion of the
+	  TAO-specific make rule files.  This fixes a problem that was
+	  occuring in the Minimum CORBA build due to the fact that the
+	  "ami" variable wasn't set to zero yet.
+
 Mon Jun 26 16:04:53 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * tao/Messaging_Policy_i.h:
