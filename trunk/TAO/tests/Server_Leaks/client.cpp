@@ -6,7 +6,7 @@
 ACE_RCSID(Server_Leaks, client, "$Id$")
 
 const char *ior = "file://test.ior";
-int do_shutdown = 1000;
+int do_shutdown = 0;
 
 int
 parse_args (int argc, char *argv[])

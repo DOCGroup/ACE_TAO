@@ -6,7 +6,7 @@
 ACE_RCSID(Crashed_Callback, client, "$Id$")
 
 const char *ior = "file://test.ior";
-int iterations = 1000;
+int iterations = 1500;
 
 int
 parse_args (int argc, char *argv[])
