@@ -914,9 +914,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Vector<ACE_CString *>;
 template class ACE_Array_Base<ACE_String_Base<char> *>;
+template class ACE_Array<ACE_String_Base<char> *>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Vector<ACE_CString *>
 #pragma instantiate ACE_Array_Base<ACE_String_Base<char> *>
+#pragma instantiate ACE_Array<ACE_String_Base<char> *>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 #else
