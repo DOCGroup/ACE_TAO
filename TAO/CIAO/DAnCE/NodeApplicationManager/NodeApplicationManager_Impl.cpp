@@ -12,59 +12,61 @@ CIAO::NodeApplicationManager_Impl::~NodeApplicationManager_Impl ()
 }
 
 Deployment::NodeApplicationManager_ptr
-CIAO::NodeApplicationManager_Impl::
-init (const char *nodeapp_location,
-      const CORBA::ULong delay,
-      const Deployment::DeploymentPlan & plan,
-      const PortableServer::POA_ptr callback_poa
-      ACE_ENV_ARG_DECL)
+CIAO::NodeApplicationManager_Impl::init (
+    const char *nodeapp_location,
+    const CORBA::ULong delay,
+    const Deployment::DeploymentPlan & plan,
+    const PortableServer::POA_ptr callback_poa
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Deployment::InvalidProperty))
 {
   ACE_TRY
-  {
-    if (nodeapp_location == 0)
-      ACE_THROW_RETURN (CORBA::BAD_PARAM (), 0);
+    {
+      if (nodeapp_location == 0)
+        ACE_TRY_THROW (CORBA::BAD_PARAM ());
 
-    if (spawn_delay_ == 0)
-      ACE_THROW_RETURN (CORBA::BAD_PARAM (), 0);
+      if (spawn_delay_ == 0)
+        ACE_TRY_THROW (CORBA::BAD_PARAM ());
 
-    this->nodeapp_path_.set (nodeapp_location);
-    this->spawn_delay_ = delay;
+      this->nodeapp_path_.set (nodeapp_location);
+      this->spawn_delay_ = delay;
 
-    // Make a copy of the plan for later usage.
-    this->plan_ =  plan;
+      // Make a copy of the plan for later usage.
+      this->plan_ =  plan;
 
-    // Cache the call back POA for callback object.
-    this->callback_poa_ = PortableServer::POA::_duplicate (callback_poa);
+      // Cache the call back POA for callback object.
+      this->callback_poa_ = PortableServer::POA::_duplicate (callback_poa);
 
-    // Activate the ourself.
-    PortableServer::ObjectId_var oid
-      = this->poa_->activate_object (this
+      // Activate the ourself.
+      PortableServer::ObjectId_var oid
+        = this->poa_->activate_object (this
+                                       ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      CORBA::Object_var obj =
+        this->poa_->id_to_reference (oid.in ()
                                      ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+      ACE_TRY_CHECK;
 
-    CORBA::Object_var obj = this->poa_->id_to_reference (oid.in ()
-                                                         ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
-
-    // And cache the object reference.
-    this->objref_ = Deployment::NodeApplicationManager::_narrow (obj.in ()
-                                                                 ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
-
-    //return this object reference
-    return Deployment::NodeApplicationManager::_duplicate (this->objref_.in ());
-
-  }
+      // And cache the object reference.
+      this->objref_ =
+        Deployment::NodeApplicationManager::_narrow (obj.in ()
+                                                     ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+    }
   ACE_CATCHANY
-  {
-    ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                         "NodeApplicationManager_Impl::init\t\n");
-    ACE_RE_THROW;
-  }
-
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "NodeApplicationManager_Impl::init\t\n");
+      ACE_RE_THROW;
+    }
   ACE_ENDTRY;
+  ACE_CHECK_RETURN (Deployment::NodeApplicationManager::_nil ());
+
+  //return this object reference
+  return
+    Deployment::NodeApplicationManager::_duplicate (this->objref_.in ());
 }
 
 void
