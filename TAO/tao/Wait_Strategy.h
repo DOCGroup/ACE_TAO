@@ -50,7 +50,7 @@ public:
   virtual int sending_request (TAO_ORB_Core *orb_core,
                                int two_way);
 
-  /// Base class virtual method. Wait till the <reply_received> flag is
+  /// Base class virtual method. Wait till the @c reply_received flag is
   /// true or the time expires.
   virtual int wait (ACE_Time_Value *max_wait_time,
                     TAO_Synch_Reply_Dispatcher &rd) = 0;
