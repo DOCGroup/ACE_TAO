@@ -1,15 +1,22 @@
+Mon Aug 06 09:04:04 2001  Ossama Othman  <ossama@uci.edu>
+
+	* ace/Svc_Conf.l:
+
+	  Unicode updates.  Wrap debugging text within an ACE_LIB_TEXT
+	  macro.
+
 Sun Aug  5 14:31:10 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/run_tests.lst: Ossama suggested that we dont run the
 	  Service_Config_Test in static builds.
-	
 
 Fri Aug 04 3:33:31 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 	
 	* ace/QoS/SOCK_Dgram_Mcast_QoS.h:
 	* ace/QoS/SOCK_Dgram_Mcast_QoS.cpp: 	
 
-	  Made the open method public so we can open UDP sockets for non-multicast addresses.
+	  Made the open method public so we can open UDP sockets for
+	  non-multicast addresses.
 
 Fri Aug 03 22:19:31 2001  Steve Huston  <shuston@riverace.com>
 
