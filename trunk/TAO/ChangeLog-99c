@@ -1,3 +1,13 @@
+Mon Jun 14 09:59:45 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_operation/collocated_ss.cpp:
+	  Fixed code for void functions, the collocated version was
+	  calling through the POA and directly (yikes!)
+
+	* orbsvcs/orbsvcs/Naming/Transient_Naming_Context.cpp:
+	* orbsvcs/orbsvcs/Naming/Persistent_Naming_Context.cpp:
+	  Minor cosmetic fixes.
+
 Mon Jun 14 09:58:47 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* TAO-INSTALL.html: Updated Barry Hoggard's CORBA page URL.
