@@ -126,35 +126,31 @@ ACE_INET_Addr::string_to_addr (const ASYS_TCHAR s[])
 
   if (ip_addr == 0) // Assume it's a port number.
     {
-      // Check to see if this is a port number.
-      if (ACE_OS::strspn (t,
-                          "1234567890") == ACE_OS::strlen (t))
-        { 
+      if (ACE_OS::strspn (t, "1234567890") 
+          == ACE_OS::strlen (t))
+        { // port number
           u_short port = (u_short) ACE_OS::atoi (t);
-          result = this->set (port, ACE_UINT32 (INADDR_ANY));
+          result = this->set (port,
+                              ACE_UINT32 (INADDR_ANY));
         }
-      // Otherwise, it's a port name.
-      else 
-        {
-          *ip_addr++ = '\0'; // skip over ':'
-
-          // Check to see if this is a port number.
-          if (ACE_OS::strspn (ip_addr,
-                              "1234567890") == ACE_OS::strlen (ip_addr))
-            { 
-              u_short port = (u_short) ACE_OS::atoi (ip_addr);
-              result = this->set (port, t);
-            }
-          // Otherwise, it's a port name.
-          else
-            result = this->set (ip_addr, t);
-        }
+      else // port name
+        result = this->set (t, 
+                            ACE_UINT32 (INADDR_ANY));
     }
   else
     {
-      *ip_addr = '\0';
-      u_short port = (u_short) ACE_OS::atoi (ip_addr + 1); // Skip over ':'
-      result = this->set (port, t);
+      *ip_addr = '\0'; ++ip_addr; // skip over ':'
+
+      if (ACE_OS::strspn (ip_addr,
+                         "1234567890") ==          
+          ACE_OS::strlen (ip_addr))
+        {
+          u_short port = 
+            (u_short) ACE_OS::atoi (ip_addr);
+          result = this->set (port, t);
+        }
+      else
+        result = this->set (ip_addr, t);
     }
 
   ACE_OS::free (ACE_MALLOC_T (t));
