@@ -7,6 +7,9 @@ Tue May 26 10:03:51 1998  David L. Levine  <levine@cs.wustl.edu>
         * tests/NestedUpcall/server.cpp (init_naming_service): dereferenced
           the parameters to init () call.
 
+        * tests/NestedUpcall/client.{h,cpp}: moved template instantiations
+          from .h file to .cpp file.  Removed unused instantiations.
+
         * tests/NestedUpcall/NestedUpCalls_Test.cpp,NestedUpCalls_i.h,
           client.{h,cpp},eh_i.{h,cpp},reactor_i.{h,cpp},server.h:
           removed trailing ^M's from all lines.
