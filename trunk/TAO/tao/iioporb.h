@@ -26,7 +26,7 @@ typedef class IIOP_ORB *IIOP_ORB_ptr;
 
 // ORB pseudo-objref
 
-class ACE_Svc_Export IIOP_ORB : public CORBA::ORB
+class ACE_Svc_Export IIOP_ORB : public CORBA_ORB
 // = TITLE
 //    Bridge implementation of IIOP_ORB
 //

@@ -29,7 +29,7 @@
 class ACE_Svc_Export ROA;
 typedef ROA* ROA_ptr;
 
-class ACE_Svc_Export ROA : public CORBA::BOA
+class ACE_Svc_Export ROA : public CORBA_BOA
 // = TITLE
 //     Realtime Object Adapter class.
 {
