@@ -630,4 +630,106 @@ ACE_Schedule_All_Threaded_Strategy<SVC_HANDLER>::dump (void) const
   ACE_Scheduling_Strategy<SVC_HANDLER>::dump ();
 }
 
+template <class T> size_t
+hash(const T& b)
+  // Default definition for global hash value computation function
+{
+  // Return the addr by default...you should really specialize this!
+  size_t tmp;
+  const void* a = &b;
+  (void) memcpy(&tmp, &a, sizeof(tmp));
+  return tmp;
+}
+
+
+template <class T> int
+compare(const T& b1, const T& b2)
+  // Default definition for type comparison operation (returns
+  // values corresponding to those returned by <memcmp>/<strcmp>.
+{
+  // Really needs to be specialized!
+  return (&b1 == &b2) ? 0 : ::memcmp(&b1, &b2, sizeof(T));
+}
+
+template<class ADDR_T, class SVC_HANDLER>
+Hash_Addr<ADDR_T,SVC_HANDLER>::Hash_Addr()
+  : hash_value_(0),
+    svc_handler_(0)
+{
+}
+
+template<class ADDR_T, class SVC_HANDLER>
+Hash_Addr<ADDR_T,SVC_HANDLER>::Hash_Addr(const ADDR_T& a, SVC_HANDLER* sh)
+  : ADDR_T(a),
+    hash_value_(0),
+    svc_handler_(sh)
+{
+  (void) hash();
+}
+
+template<class ADDR_T, class SVC_HANDLER>
+size_t
+Hash_Addr<ADDR_T,SVC_HANDLER>::hash() const
+{
+  // In doing the check below, we take chance of paying a performance
+  // price when the hash value is zero.  But, that will (hopefully)
+  // happen far less often than a non-zero value, so this caching
+  // strategy should pay off, esp. if hash computation is expensive
+  // relative to the simple comparison.
+  Hash_Addr<ADDR_T,SVC_HANDLER>* ncthis = (Hash_Addr<ADDR_T,SVC_HANDLER>*)this;
+  if (hash_value_ == 0)
+    ncthis->hash_value_ = ::hash(*((ADDR_T*)this));
+  return hash_value_;
+}
+
+template<class ADDR_T, class SVC_HANDLER>
+Hash_Addr<ADDR_T,SVC_HANDLER>::operator==(const Hash_Addr<ADDR_T,SVC_HANDLER>& rhs) const
+{
+  if (svc_handler_ == 0)
+    {
+      return !(::compare(*((ADDR_T*)this), rhs) != 0);
+    }
+  else
+    {
+      return (svc_handler_->in_use() == 0) && !(::compare(*((ADDR_T*)this), rhs) != 0);
+    }
+}
+
+template<class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class MUTEX>
+ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>
+::connect_svc_handler(SVC_HANDLER*& sh,
+		      const ACE_PEER_CONNECTOR_ADDR& remote_addr,
+		      ACE_Time_Value* timeout,
+		      const ACE_PEER_CONNECTOR_ADDR& local_addr,
+		      int reuse_addr,
+		      int flags,
+		      int perms)
+{
+  Hash_Addr<ACE_PEER_CONNECTOR_ADDR,SVC_HANDLER> search_addr(remote_addr);
+
+  // Try to find the addres in the cache.  Only if we don't find it do we
+  // create a new <SVC_HANDLER> and connect it with the server.
+
+  if (connection_cache_.find(search_addr, sh) == -1)
+    {
+      ACE_NEW_RETURN(sh, SVC_HANDLER, -1);
+
+      // Actively establish the connection
+      if (ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::connect_svc_handler
+	  (sh, remote_addr, timeout, local_addr, reuse_addr, flags, perms) == -1)
+	return -1;
+      // Insert the new SVC_HANDLER instance into the cache
+      else
+	{
+	  Hash_Addr<ACE_PEER_CONNECTOR_ADDR,SVC_HANDLER> server_addr(remote_addr,sh);
+
+	  if (connection_cache_.bind(server_addr, sh) == -1)
+	    return -1;
+	}
+    }
+  sh->in_use(1);
+  return 0;
+}
+
+
 #endif /* ACE_STRATEGIES_T_C */
