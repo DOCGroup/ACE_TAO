@@ -29,8 +29,6 @@ INSTALL =
 #	Include macros and targets
 #----------------------------------------------------------------------------
 
-LDFLAGS  += -R$(FORE_ROOT)/lib -L$(FORE_ROOT)/lib
-LIBS     += -lans -lpmp
 include		$(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include		$(ACE_ROOT)/include/makeinclude/macros.GNU
 include		$(ACE_ROOT)/include/makeinclude/rules.common.GNU
