@@ -918,6 +918,8 @@ Param_Test_i::test_var_array (const Param_Test::Var_Array a1,
 {
   Param_Test::Var_Array_slice *ret;
 
+  ACE_DEBUG ((LM_DEBUG,
+	      "(%N| %l) \n"));
   Param_Test::Var_Array_copy (a2, a1);
   a3 = Param_Test::Var_Array_dup (a1);
   ret = Param_Test::Var_Array_dup (a1);

@@ -427,7 +427,7 @@ main (int argc,
   ACE_ASSERT (result == 0);
 
   invoke_remote_calls (client_orb.in ());
-  orbs_shutdown ();
+  //orbs_shutdown ();
 
   return 0;
 }

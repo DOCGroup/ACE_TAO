@@ -70,10 +70,12 @@ realclean: clean
 
 .obj/MT_Client_TestC.o .obj/MT_Client_TestC.so .shobj/MT_Client_TestC.o .shobj/MT_Client_TestC.so: MT_Client_TestC.cpp MT_Client_TestC.h \
  $(TAO_ROOT)/tao/corba.h \
+ $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config-sunos5.6.h \
  $(ACE_ROOT)/ace/config-sunos5.5.h \
+ $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -322,19 +324,19 @@ realclean: clean
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  $(TAO_ROOT)/tao/Invocation.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
- $(TAO_ROOT)/tao/GIOP_Utils.h \
+ $(TAO_ROOT)/tao/GIOP_Message_State.h \
  $(TAO_ROOT)/tao/Pluggable_Messaging.h \
- $(TAO_ROOT)/tao/target_identifier.h \
- $(TAO_ROOT)/tao/target_identifier.i \
  $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
  $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
  $(TAO_ROOT)/tao/Pluggable_Messaging.i \
- $(TAO_ROOT)/tao/GIOP_Utils.i \
+ $(TAO_ROOT)/tao/GIOP_Message_State.i \
  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
  $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/TAOC.i \
  $(TAO_ROOT)/tao/operation_details.h \
  $(TAO_ROOT)/tao/operation_details.i \
+ $(TAO_ROOT)/tao/target_specification.h \
+ $(TAO_ROOT)/tao/target_specification.i \
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/ImplRepoC.i \
  $(TAO_ROOT)/tao/POA.i \
@@ -356,10 +358,12 @@ realclean: clean
 
 .obj/MT_Client_TestS.o .obj/MT_Client_TestS.so .shobj/MT_Client_TestS.o .shobj/MT_Client_TestS.so: MT_Client_TestS.cpp MT_Client_TestS.h \
  MT_Client_TestC.h $(TAO_ROOT)/tao/corba.h \
+ $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config-sunos5.6.h \
  $(ACE_ROOT)/ace/config-sunos5.5.h \
+ $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -608,19 +612,19 @@ realclean: clean
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  $(TAO_ROOT)/tao/Invocation.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
- $(TAO_ROOT)/tao/GIOP_Utils.h \
+ $(TAO_ROOT)/tao/GIOP_Message_State.h \
  $(TAO_ROOT)/tao/Pluggable_Messaging.h \
- $(TAO_ROOT)/tao/target_identifier.h \
- $(TAO_ROOT)/tao/target_identifier.i \
  $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
  $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
  $(TAO_ROOT)/tao/Pluggable_Messaging.i \
- $(TAO_ROOT)/tao/GIOP_Utils.i \
+ $(TAO_ROOT)/tao/GIOP_Message_State.i \
  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
  $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/TAOC.i \
  $(TAO_ROOT)/tao/operation_details.h \
  $(TAO_ROOT)/tao/operation_details.i \
+ $(TAO_ROOT)/tao/target_specification.h \
+ $(TAO_ROOT)/tao/target_specification.i \
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/ImplRepoC.i \
  $(TAO_ROOT)/tao/POA.i \
@@ -644,11 +648,13 @@ realclean: clean
 
 .obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp server.h \
  $(ACE_ROOT)/ace/Get_Opt.h \
+ $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config-sunos5.6.h \
  $(ACE_ROOT)/ace/config-sunos5.5.h \
+ $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -900,19 +906,19 @@ realclean: clean
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  $(TAO_ROOT)/tao/Invocation.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
- $(TAO_ROOT)/tao/GIOP_Utils.h \
+ $(TAO_ROOT)/tao/GIOP_Message_State.h \
  $(TAO_ROOT)/tao/Pluggable_Messaging.h \
- $(TAO_ROOT)/tao/target_identifier.h \
- $(TAO_ROOT)/tao/target_identifier.i \
  $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
  $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
  $(TAO_ROOT)/tao/Pluggable_Messaging.i \
- $(TAO_ROOT)/tao/GIOP_Utils.i \
+ $(TAO_ROOT)/tao/GIOP_Message_State.i \
  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
  $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/TAOC.i \
  $(TAO_ROOT)/tao/operation_details.h \
  $(TAO_ROOT)/tao/operation_details.i \
+ $(TAO_ROOT)/tao/target_specification.h \
+ $(TAO_ROOT)/tao/target_specification.i \
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/ImplRepoC.i \
  $(TAO_ROOT)/tao/POA.i \
@@ -936,11 +942,13 @@ realclean: clean
 
 .obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp \
  $(ACE_ROOT)/ace/Read_Buffer.h \
+ $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config-sunos5.6.h \
  $(ACE_ROOT)/ace/config-sunos5.5.h \
+ $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -1203,19 +1211,19 @@ realclean: clean
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  $(TAO_ROOT)/tao/Invocation.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
- $(TAO_ROOT)/tao/GIOP_Utils.h \
+ $(TAO_ROOT)/tao/GIOP_Message_State.h \
  $(TAO_ROOT)/tao/Pluggable_Messaging.h \
- $(TAO_ROOT)/tao/target_identifier.h \
- $(TAO_ROOT)/tao/target_identifier.i \
  $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
  $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
  $(TAO_ROOT)/tao/Pluggable_Messaging.i \
- $(TAO_ROOT)/tao/GIOP_Utils.i \
+ $(TAO_ROOT)/tao/GIOP_Message_State.i \
  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
  $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/TAOC.i \
  $(TAO_ROOT)/tao/operation_details.h \
  $(TAO_ROOT)/tao/operation_details.i \
+ $(TAO_ROOT)/tao/target_specification.h \
+ $(TAO_ROOT)/tao/target_specification.i \
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/ImplRepoC.i \
  $(TAO_ROOT)/tao/POA.i \
@@ -1240,11 +1248,13 @@ realclean: clean
 
 .obj/local_server.o .obj/local_server.so .shobj/local_server.o .shobj/local_server.so: local_server.cpp \
  $(ACE_ROOT)/ace/Read_Buffer.h \
+ $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config-sunos5.6.h \
  $(ACE_ROOT)/ace/config-sunos5.5.h \
+ $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -1495,19 +1505,19 @@ realclean: clean
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  $(TAO_ROOT)/tao/Invocation.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
- $(TAO_ROOT)/tao/GIOP_Utils.h \
+ $(TAO_ROOT)/tao/GIOP_Message_State.h \
  $(TAO_ROOT)/tao/Pluggable_Messaging.h \
- $(TAO_ROOT)/tao/target_identifier.h \
- $(TAO_ROOT)/tao/target_identifier.i \
  $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
  $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
  $(TAO_ROOT)/tao/Pluggable_Messaging.i \
- $(TAO_ROOT)/tao/GIOP_Utils.i \
+ $(TAO_ROOT)/tao/GIOP_Message_State.i \
  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
  $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/TAOC.i \
  $(TAO_ROOT)/tao/operation_details.h \
  $(TAO_ROOT)/tao/operation_details.i \
+ $(TAO_ROOT)/tao/target_specification.h \
+ $(TAO_ROOT)/tao/target_specification.i \
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/ImplRepoC.i \
  $(TAO_ROOT)/tao/POA.i \
@@ -1544,10 +1554,12 @@ realclean: clean
 
 .obj/MT_Object_i.o .obj/MT_Object_i.so .shobj/MT_Object_i.o .shobj/MT_Object_i.so: MT_Object_i.cpp \
  $(TAO_ROOT)/tao/corba.h \
+ $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config-sunos5.6.h \
  $(ACE_ROOT)/ace/config-sunos5.5.h \
+ $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/Min_Max.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -1796,19 +1808,19 @@ realclean: clean
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  $(TAO_ROOT)/tao/Invocation.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
- $(TAO_ROOT)/tao/GIOP_Utils.h \
+ $(TAO_ROOT)/tao/GIOP_Message_State.h \
  $(TAO_ROOT)/tao/Pluggable_Messaging.h \
- $(TAO_ROOT)/tao/target_identifier.h \
- $(TAO_ROOT)/tao/target_identifier.i \
  $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
  $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
  $(TAO_ROOT)/tao/Pluggable_Messaging.i \
- $(TAO_ROOT)/tao/GIOP_Utils.i \
+ $(TAO_ROOT)/tao/GIOP_Message_State.i \
  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
  $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/TAOC.i \
  $(TAO_ROOT)/tao/operation_details.h \
  $(TAO_ROOT)/tao/operation_details.i \
+ $(TAO_ROOT)/tao/target_specification.h \
+ $(TAO_ROOT)/tao/target_specification.i \
  $(TAO_ROOT)/tao/Invocation.i \
  $(TAO_ROOT)/tao/ImplRepoC.i \
  $(TAO_ROOT)/tao/POA.i \
