@@ -3,11 +3,15 @@ Tue Dec 25 09:30:14 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 	* tests/Makefile: 
   	* tests/Makefile.bor: Added the new Proactor_Timer_Test.
     
-	* tests: Added the new Proactor_Timer_Test.cpp and
-	  Proactor_Timer_Test.dsp.  Thanks to Miljenko Norsic for
-	  contributing this.	  
-  
 	* tests/run_test.lst: Added the new Proactor_Timer_Test.
+
+	* tests: Added the new Proactor_Timer_Test.cpp and
+	  Proactor_Timer_Test.dsp to exercise the new high-resolution
+ 	  support in the ACE_Proactor.  Thanks to Miljenko Norsic for
+ 	  contributing this.
+  
+	* ace/Proactor.cpp: Added support for high-resolution timers to
+	  the proactor.  Thanks to Miljenko Norsic for contributing this.
 
 	* ace/OS.{h,i}:  Changed the ACE_OS::event_timedwait() method to
 	  allow callers to specify either relative or absolute time.
