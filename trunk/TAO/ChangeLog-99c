@@ -1,3 +1,18 @@
+Tue May 11 21:46:52 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
+
+	Added a new type ObjectIDList to the ORB interface. This is
+	required by the list_initital_references (). Handcrafted
+	the IDL generated files into the following files :
+	* tao/ObjectIDList.cpp
+	* tao/ObjectIDList.h
+	* tao/ObjectIDList.i
+
+	Included the declaration of ObjectIDList in the CORBA_ORB class.
+	* tao/ORB.h
+
+	Included ObjectIDList into the makefile.
+	* tao/Makefile 
+
 Tue May 11 21:46:29 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/DomainC.h:

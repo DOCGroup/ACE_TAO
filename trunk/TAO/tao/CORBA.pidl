@@ -23,6 +23,11 @@ module CORBA
     SYSTEM_EXCEPTION
   };
 
+  typedef sequence<Request_ptr> RequestSeq;
+  
+  typedef string ObjectId; 
+  typedef sequence <ObjectId> ObjectIdList;
+
   typedef unsigned short ServiceType; 
   typedef unsigned long ServiceOption; 
   typedef unsigned long ServiceDetailType;
@@ -38,6 +43,7 @@ module CORBA
      sequence <ServiceOption> service_options; 
      sequence <ServiceDetail> service_details; 
    };
+
 };
 
 #pragma prefix ""
