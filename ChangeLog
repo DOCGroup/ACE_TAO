@@ -1,3 +1,13 @@
+Fri Feb 20 21:18:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* Static_Performance.dsw:
+	* netsvcs/clients/Naming/Dump_Restore/Dump_Restore_static.dsp:
+	* examples/Service_Configurator/IPC-tests/server/Server_static.dsp:
+	* examples/ASX/CCM_App/CCM_App_static.dsp:
+	  Removed these static msvc6 project files. Use MPC to generate these
+	  if you need them. These are outdated and should have gone before 1.4
+	  was released.
+
 Fri Feb 20 18:47:26 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* bin/msvc_static_order.lst:
