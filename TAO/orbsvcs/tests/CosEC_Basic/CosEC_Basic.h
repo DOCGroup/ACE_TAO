@@ -46,7 +46,7 @@ public:
   ~CosEC_Basic (void);
   // Destructor.
 
-  int init (int argc, char *argv []);
+  int init (int argc, char *argv[]);
   // Starts up an ORB, a Rtec and the CosEC.
 
   void run (void);
