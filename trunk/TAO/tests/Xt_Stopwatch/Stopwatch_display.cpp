@@ -8,7 +8,7 @@
 
 ACE_RCSID (Xt_Stopwatch,
            Stopwatch_display,
-           "$Id$)
+           "$Id$")
 
 
 Stopwatch_display::Stopwatch_display (Widget &parent)
