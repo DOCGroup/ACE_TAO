@@ -20,42 +20,37 @@ Bottom_Impl::~Bottom_Impl (void)
 }
 
 char *
-Bottom_Impl::top_quote (CORBA::Environment &ACE_TRY_ENV)
+Bottom_Impl::top_quote (CORBA::Environment & )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_UNUSED_ARG (ACE_TRY_ENV);
   return CORBA::string_dup(Quote::top);
 }
 
 char *
-Bottom_Impl::left_quote (CORBA::Environment &ACE_TRY_ENV)
+Bottom_Impl::left_quote (CORBA::Environment & )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_UNUSED_ARG (ACE_TRY_ENV);
   return CORBA::string_dup(Quote::left);
 }
 
 char *
-Bottom_Impl::right_quote (CORBA::Environment &ACE_TRY_ENV)
+Bottom_Impl::right_quote (CORBA::Environment & )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_UNUSED_ARG (ACE_TRY_ENV);
   return CORBA::string_dup(Quote::right);
 }
 
 char *
-Bottom_Impl::bottom_quote (CORBA::Environment &ACE_TRY_ENV)
+Bottom_Impl::bottom_quote (CORBA::Environment & )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_UNUSED_ARG (ACE_TRY_ENV);
   return CORBA::string_dup(Quote::bottom);
 }
 
 void
-Bottom_Impl::shutdown (CORBA::Environment &ACE_TRY_ENV)
+Bottom_Impl::shutdown (CORBA::Environment & )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_UNUSED_ARG (ACE_TRY_ENV);
   this->orb_->shutdown (0, ACE_TRY_ENV);
 }
 
