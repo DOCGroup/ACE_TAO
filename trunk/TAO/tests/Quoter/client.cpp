@@ -124,9 +124,10 @@ Quoter_Client::run (void)
   ACE_DEBUG ((LM_DEBUG, "ACE Hardware = %i\n", q));
 
   CosLifeCycle::Criteria criteria;
-  CORBA::Object_var quoterObj_var = this->quoter_var_->copy (factory_Finder_var_, 
-                                                         criteria,
-                                                         this->env_);
+  CORBA::Object_var quoterObj_var =
+    this->quoter_var_->copy (factory_Finder_var_.in (), 
+			     criteria,
+			     this->env_);
   if (this->env_.exception () != 0)
   {
     this->env_.print_exception ("with copy.");
@@ -135,8 +136,9 @@ Quoter_Client::run (void)
   }
 
 
-  Stock::Quoter_var quoter_var =  Stock::Quoter::_narrow (quoterObj_var,
-                                                          this->env_);
+  Stock::Quoter_var quoter_var =
+    Stock::Quoter::_narrow (quoterObj_var.in (),
+			    this->env_);
   if (this->env_.exception () != 0)
   {
     this->env_.print_exception ("with narrow.");

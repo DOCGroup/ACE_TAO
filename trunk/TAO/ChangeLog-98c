@@ -1,3 +1,12 @@
+Mon May 25 11:58:35 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tests/Quoter/client.cpp: 
+	* tests/Quoter/Factory_Finder.cpp: 
+	* tests/Quoter/Generic_Factory.cpp: 
+	* tests/Quoter/Life_Cycle_Service.cpp: 
+	  Added several .in() calls to disambiguate things, otherwise g++
+	  gets really confused.
+
 Mon May 25 10:04:52 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/GIOP.cpp: 
