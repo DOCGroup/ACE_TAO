@@ -52,7 +52,7 @@ include $(TAO_ROOT)/taoconfig.mk
 
 LDFLAGS += -L$(TAO_ROOT)/orbsvcs/orbsvcs -L$(TAO_ROOT)/tao
 CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT) \
-            -I$(TAO_ROOT)/orbsvcs/orbsvcs $(TSS_ORB_FLAG)#-H
+            -I$(TAO_ROOT)/orbsvcs/orbsvcs
 
 $(IDL_SRC): NavWeap.idl
 	$(TAO_IDL) $(TAO_IDLFLAGS) $<

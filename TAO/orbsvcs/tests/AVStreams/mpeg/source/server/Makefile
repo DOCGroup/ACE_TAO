@@ -10,10 +10,10 @@ ifndef TAO_ROOT
 TAO_ROOT = $(ACE_ROOT)/TAO
 endif
 
-AV_SERVER_OBJS = server.o 
+AV_SERVER_OBJS = server.o
 AV_AUGSERVER_OBJS = Video_RepositoryC.o augmented_server.o \
 		    Property_Exporter.o Machine_Properties.o \
-		    Video_Repository.o 
+		    Video_Repository.o
 AV_VS_OBJS = vs.o
 AV_AS_OBJS = as.o
 
@@ -61,10 +61,10 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 #	Local targets (and local hacks)
 #----------------------------------------------------------------------------
 
-CPPFLAGS += -DSH_MEM -DNDEBUG 
-CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs $(TSS_ORB_FLAG)
+CPPFLAGS += -DSH_MEM -DNDEBUG
+CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs
 
-.PRECIOUS: Video_RepositoryC.cpp 
+.PRECIOUS: Video_RepositoryC.cpp
 
 idl_stubs: $(addsuffix .h, $(IDL_FILES))
 

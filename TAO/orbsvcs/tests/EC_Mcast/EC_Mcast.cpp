@@ -190,14 +190,14 @@ ECM_Driver::run (int argc, char* argv[])
 
       ec_impl.shutdown (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
     }
   ACE_CATCH (CORBA::SystemException, sys_ex)
     {
       ACE_PRINT_EXCEPTION (sys_ex, "SYS_EX");
     }
   ACE_CATCHANY
-    { 
+    {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "NON SYS EX");
     }
   ACE_ENDTRY;
@@ -945,9 +945,6 @@ ECM_Local_Federation::supplier_timeout (RtecEventComm::PushConsumer_ptr consumer
   ORBSVCS_Time::hrtime_to_TimeT (s.header.creation_time, t);
   s.header.ec_recv_time = ORBSVCS_Time::zero ();
   s.header.ec_send_time = ORBSVCS_Time::zero ();
-
-  s.data.x = 0;
-  s.data.y = 0;
 
   this->event_count_--;
 

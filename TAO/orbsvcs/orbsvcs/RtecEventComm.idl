@@ -10,6 +10,8 @@
 // if pragmas should survive the file scope...
 #pragma prefix ""
 
+#include "RtecDefaultEventData.idl"
+
 module RtecEventComm
 {
   // = TITLE
@@ -24,25 +26,7 @@ module RtecEventComm
   //   Users willing to implement their own marshalling may use a
   //   sequence of octet.
 
-  typedef sequence<octet> EventPayload;
-  struct EventData
-  {
-    long x;
-    long y;
-
-    double pad0;
-    long pad1;
-    // This two objects ensure that the encapsulated stream below is
-    // properly aligned; this makes the decoding of the payload more
-    // efficient because we can use the usual demarshalling code
-    // (without making extra copies).
-
-    EventPayload payload;
-
-#if !defined (TAO_LACKS_EVENT_CHANNEL_ANY)
-    any any_value;
-#endif /* TAO_LACKS_EVENT_CHANNEL_ANY */
-  };
+  typedef RtecEventData EventData;
 
   typedef TimeBase::TimeT Time;
 

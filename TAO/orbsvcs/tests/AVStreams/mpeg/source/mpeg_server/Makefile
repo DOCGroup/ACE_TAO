@@ -21,7 +21,7 @@ DEFS    = $(addsuffix .h,$(FILES))
 LSRC	= $(addsuffix .cpp,$(FILES))
 
 
-LDLIBS 	+= -lAVsvc -lorbsvcs -lTAO 
+LDLIBS 	+= -lAVsvc -lorbsvcs -lTAO
 MPEG_ROOT = $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source
 CPPFLAGS += -I$(MPEG_ROOT)
 
@@ -52,7 +52,7 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 #	Local targets (and local hacks)
 #----------------------------------------------------------------------------
 
-CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs $(TSS_ORB_FLAG)
+CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs
 CPPFLAGS += -DSH_MEM  -I/project/doc/pkg/X11/include
 
 realclean: clean

@@ -39,9 +39,6 @@ EC_Supplier::send_event (int event_number,
   event[0].header.ec_recv_time = ORBSVCS_Time::zero ();
   event[0].header.ec_send_time = ORBSVCS_Time::zero ();
 
-  event[0].data.x = 0;
-  event[0].data.y = 0;
-
   // We use replace to minimize the copies, this should result
   // in just one memory allocation:
   event[0].data.payload.length (this->payload_size_);
@@ -69,7 +66,7 @@ EC_Supplier::send_event (const RtecEventComm::EventSet& event,
                   "EC_Consumer (%P|%t): %d events received\n",
                   this->push_count_));
     }
-  
+
   ACE_hrtime_t start = ACE_OS::gethrtime ();
 
   this->consumer_proxy_->push (event, ACE_TRY_ENV);
@@ -233,9 +230,6 @@ EC_Supplier_Task::svc (void)
   ORBSVCS_Time::hrtime_to_TimeT (event[0].header.creation_time, t);
   event[0].header.ec_recv_time = ORBSVCS_Time::zero ();
   event[0].header.ec_send_time = ORBSVCS_Time::zero ();
-
-  event[0].data.x = 0;
-  event[0].data.y = 0;
 
   // We use replace to minimize the copies, this should result
   // in just one memory allocation;

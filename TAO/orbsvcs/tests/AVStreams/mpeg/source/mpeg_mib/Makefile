@@ -59,7 +59,7 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 #	Local targets (and local hacks)
 #----------------------------------------------------------------------------
 
-LDFLAGS +=  -L/project/doc/pkg/X11/lib/ 
+LDFLAGS +=  -L/project/doc/pkg/X11/lib/
 LDLIBS += -lXm -lXt -lXext -lSM -lICE -lX11
 CPPFLAGS += -DSH_MEM -DNDEBUG  -I/project/doc/pkg/X11/include
 

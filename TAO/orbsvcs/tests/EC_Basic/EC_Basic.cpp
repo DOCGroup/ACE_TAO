@@ -501,9 +501,6 @@ ECB_SupplierID_Test::run (CORBA::ORB_ptr orb,
   e.header.ec_recv_time = ORBSVCS_Time::zero ();
   e.header.ec_send_time = ORBSVCS_Time::zero ();
 
-  e.data.x = 0;
-  e.data.y = 0;
-
   // Start the real test.
 
   // PHASE 0, test filtering by supplier ID in the presence of
@@ -838,9 +835,6 @@ ECB_Correlation_Test::run (CORBA::ORB_ptr orb,
     ORBSVCS_Time::hrtime_to_TimeT (e.header.creation_time, t);
     e.header.ec_recv_time = ORBSVCS_Time::zero ();
     e.header.ec_send_time = ORBSVCS_Time::zero ();
-
-    e.data.x = 0;
-    e.data.y = 0;
   }
 
   RtecEventComm::EventSet event_b (1);
@@ -855,9 +849,6 @@ ECB_Correlation_Test::run (CORBA::ORB_ptr orb,
     ORBSVCS_Time::hrtime_to_TimeT (e.header.creation_time, t);
     e.header.ec_recv_time = ORBSVCS_Time::zero ();
     e.header.ec_send_time = ORBSVCS_Time::zero ();
-
-    e.data.x = 0;
-    e.data.y = 0;
   }
 
   RtecEventComm::EventSet event_ab (2);
@@ -872,9 +863,6 @@ ECB_Correlation_Test::run (CORBA::ORB_ptr orb,
     ORBSVCS_Time::hrtime_to_TimeT (e.header.creation_time, t);
     e.header.ec_recv_time = ORBSVCS_Time::zero ();
     e.header.ec_send_time = ORBSVCS_Time::zero ();
-
-    e.data.x = 0;
-    e.data.y = 0;
   }
   {
     RtecEventComm::Event& e = event_ab[1];
@@ -886,9 +874,6 @@ ECB_Correlation_Test::run (CORBA::ORB_ptr orb,
     ORBSVCS_Time::hrtime_to_TimeT (e.header.creation_time, t);
     e.header.ec_recv_time = ORBSVCS_Time::zero ();
     e.header.ec_send_time = ORBSVCS_Time::zero ();
-
-    e.data.x = 0;
-    e.data.y = 0;
   }
 
   // Start the real test.

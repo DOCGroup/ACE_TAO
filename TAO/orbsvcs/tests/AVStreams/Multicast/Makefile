@@ -9,7 +9,7 @@
 #	Local macros
 #----------------------------------------------------------------------------
 
-LIBS     += -lAVsvc -lorbsvcs -lTAO 
+LIBS     += -lAVsvc -lorbsvcs -lTAO
 
 SERVER_OBJS = server.o
 CLIENT_OBJS = ftp.o
@@ -47,7 +47,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 DCFLAGS = -g
 LDFLAGS += -L$(TAO_ROOT)/orbsvcs/orbsvcs -L$(TAO_ROOT)/tao
-CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT) $(TSS_ORB_FLAG)
+CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.

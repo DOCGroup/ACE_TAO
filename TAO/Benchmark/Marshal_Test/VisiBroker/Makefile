@@ -21,11 +21,16 @@ MARSHAL_SERVER_OBJS = marshalC.o marshalS.o visi_marshal_impl.o visi_marshal_ser
 
 BIN = client server
 
+ifndef TAO_ROOT
+  TAO_ROOT = $(ACE_ROOT)/TAO
+endif
+
 #----------------------------------------------------------------------------
 #	Include macros and targets
 #----------------------------------------------------------------------------
 
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+include $(TAO_ROOT)/rules.tao.GNU
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
@@ -39,10 +44,6 @@ include /project/mambo/gokhale/CONFIG/orbeline_defaults.mk
 # Local modifications to variables imported by includes above.
 #----------------------------------------------------------------------------
 
-ifndef TAO_ROOT
-TAO_ROOT = $(ACE_ROOT)/TAO
-endif
-
 CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/Benchmark -D_PMC_INCLUDE_DSI
 
 server:	$(addprefix $(VDIR),$(MARSHAL_SERVER_OBJS))
@@ -52,9 +53,8 @@ client:	$(addprefix $(VDIR),$(MARSHAL_CLIENT_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 marshalC.h marshalS.h marshalC.cpp marshalS.cpp: marshal.idl
-	$(IDL) $(IDLFLAGS) $< 
+	$(IDL) $(IDLFLAGS) $<
 
 clean:
 	$(RM) core *.o *~ client server *C.cpp *S.cpp *S.h *C.h
 	$(MAKE) realclean
-
