@@ -1,3 +1,11 @@
+Mon Nov 01 10:11:36 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Capabilities.{i,cpp}: unlined definition of
+          ~ACE_CapEntry.  It caused an internal compiler error
+          with g++ 2.7.2.3, and it is a good idea to not inline
+          it because it's virtual.  Also, prepended ACE_ to
+          enum values.
+
 Sun Oct 31 22:46:17 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Capabilities_Test.cpp (main): removed declarations
