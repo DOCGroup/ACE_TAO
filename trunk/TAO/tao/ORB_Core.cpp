@@ -63,7 +63,7 @@ TAO_ORB_Core::TAO_ORB_Core (void)
     opt_for_collocation_ (CORBA::B_TRUE),
 #if defined (TAO_ARL_USES_SAME_CONNECTOR_PORT)
     arl_same_port_connect_ (CORBA::B_FALSE),
-#endif /* TAO_ARL_USES_SAME_CONNECTOR_PORT */    
+#endif /* TAO_ARL_USES_SAME_CONNECTOR_PORT */
     preconnections_ (0)
 {
 }
@@ -1231,8 +1231,8 @@ IMPLEMENT_PRE_GET_METHOD(get_thr_mgr, ACE_Thread_Manager *, tm_)
 IMPLEMENT_PRE_GET_METHOD(get_acceptor, TAO_ACCEPTOR *, a_)
 IMPLEMENT_PRE_GET_METHOD(get_connector, TAO_CONNECTOR *, c_)
 IMPLEMENT_PRE_GET_METHOD(get_cached_connect_strategy, TAO_CACHED_CONNECT_STRATEGY *, cached_connect_strategy_)
-IMPLEMENT_PRE_GET_METHOD(get_null_creation_strategy, TAO_NULL_CREATION_STRATEGY *, null_creation_strategy_);
-IMPLEMENT_PRE_GET_METHOD(get_null_activation_strategy, TAO_NULL_ACTIVATION_STRATEGY *, null_activation_strategy_);
+IMPLEMENT_PRE_GET_METHOD(get_null_creation_strategy, TAO_NULL_CREATION_STRATEGY *, null_creation_strategy_)
+IMPLEMENT_PRE_GET_METHOD(get_null_activation_strategy, TAO_NULL_ACTIVATION_STRATEGY *, null_activation_strategy_)
 IMPLEMENT_APP_GET_METHOD(get_orb, CORBA_ORB_ptr, orb_)
 IMPLEMENT_PRE_GET_METHOD(get_orb_params, TAO_ORB_Parameters *, orbparams_)
 IMPLEMENT_PRE_GET_METHOD(get_oa_params, TAO_OA_Parameters *, oaparams_)
