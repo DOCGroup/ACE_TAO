@@ -35,136 +35,99 @@ be_argument::be_argument (AST_Argument::Direction d, AST_Type *ft,
     AST_Field (AST_Decl::NT_argument, ft, n, p),
     AST_Decl (AST_Decl::NT_argument, n, p)
 {
-  // computes the repoID
-  compute_repoID ();
-
-  // computes the fully scoped name
-  compute_fullname ();
-
-  // compute the flattened fully scoped name
-  compute_flatname ();
 }
+
+
+// All the methods here are very similar. The state is set by the be_operation
+// method which then invokes its scope which inturn calls one of these methods
+// with the state that was set.
+
 
 int
 be_argument::gen_client_header (void)
 {
-  TAO_OutStream *os; // output stream
-  TAO_NL  nl;        // end line
   be_type *bt;  // the field type
   be_state *s;  // state based code gen object
 
-  // Macro to avoid "warning: unused parameter" type warning.
-  ACE_UNUSED_ARG (nl);
-
   // retrieve a singleton instance of the code generator
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
-  cg->push (TAO_CodeGen::TAO_ARGUMENT_CH); // generating code for arguments
-
-  os = cg->client_header ();
-  cg->outstream (os);
 
   bt = be_type::narrow_from_decl (this->field_type ());
   s = cg->make_state ();
 
   if (!s || !bt || (s->gen_code (bt, this) == -1))
     {
-      ACE_ERROR ((LM_ERROR, "be_argument: error generating type\n"));
-      return -1;
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_argument::gen_client_header - "
+                         "error generating type\n"),
+                        -1);
     }
-  *os << " " << this->local_name () << ", ";
-  cg->pop ();
   return 0;
 }
 
 int
 be_argument::gen_client_stubs (void)
 {
-  TAO_OutStream *os; // output stream
-  TAO_NL  nl;        // end line
   be_type *bt;  // the field type
   be_state *s;  // state based code gen object
 
-  // Macro to avoid "warning: unused parameter" type warning.
-  ACE_UNUSED_ARG (nl);
-
   // retrieve a singleton instance of the code generator
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
-  cg->push (TAO_CodeGen::TAO_ARGUMENT_CS); // generating code for arguments
-
-  os = cg->client_stubs ();
 
   bt = be_type::narrow_from_decl (this->field_type ());
   s = cg->make_state ();
 
   if (!s || !bt || (s->gen_code (bt, this) == -1))
     {
-      ACE_ERROR ((LM_ERROR, "be_argument: error generating type\n"));
-      return -1;
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_argument::gen_client_stubs - "
+                         "error generating type\n"),
+                        -1);
     }
-  *os << " " << this->local_name () << ", ";
-  cg->pop ();
   return 0;
 }
 
 int
 be_argument::gen_server_header (void)
 {
-  TAO_OutStream *os; // output stream
-  TAO_NL  nl;        // end line
   be_type *bt;  // the field type
   be_state *s;  // state based code gen object
 
-  // Macro to avoid "warning: unused parameter" type warning.
-  ACE_UNUSED_ARG (nl);
-
   // retrieve a singleton instance of the code generator
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
-  cg->push (TAO_CodeGen::TAO_ARGUMENT_SH); // generating code for arguments
-
-  os = cg->server_header ();
-  cg->outstream (os);
 
   bt = be_type::narrow_from_decl (this->field_type ());
   s = cg->make_state ();
 
   if (!s || !bt || (s->gen_code (bt, this) == -1))
     {
-      ACE_ERROR ((LM_ERROR, "be_argument: error generating type\n"));
-      return -1;
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_argument::gen_server_header - "
+                         "error generating type\n"),
+                        -1);
     }
-  *os << " " << this->local_name () << ", ";
-  cg->pop ();
   return 0;
 }
 
 int
 be_argument::gen_server_skeletons (void)
 {
-  TAO_OutStream *os; // output stream
-  TAO_NL  nl;        // end line
   be_type *bt;  // the field type
   be_state *s;  // state based code gen object
 
-  // Macro to avoid "warning: unused parameter" type warning.
-  ACE_UNUSED_ARG (nl);
-
   // retrieve a singleton instance of the code generator
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
-  //  cg->push (TAO_CodeGen::TAO_ARGUMENT_SS); // generating code for arguments
-
-  os = cg->server_skeletons ();
-  cg->outstream (os);
 
   bt = be_type::narrow_from_decl (this->field_type ());
   s = cg->make_state ();
 
   if (!s || !bt || (s->gen_code (bt, this) == -1))
     {
-      ACE_ERROR ((LM_ERROR, "be_argument: error generating type\n"));
-      return -1;
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_argument::gen_server_skeletons - "
+                         "error generating type\n"),
+                        -1);
     }
-  //  *os << " " << this->local_name () << ", ";
-  //  cg->pop ();
   return 0;
 }
 

@@ -1,11 +1,38 @@
+Mon Nov 17 20:13:09 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* TAO_IDL/be_include/be_codegen.h, TAO_IDL/be/be_codegen.cpp:
+	Added 5 new states for code generation. All of these for
+	operations and arguments.
+
+	* TAO_IDL/be/be_argument.cpp: Made all methods uniform so that the
+	state will be set by the corresponding be_operation method. Thus
+	the be_operation method will vary the state but still invoke the
+	same be_argument method.
+
+	* TAO_IDL/be/be_enum.cpp, be_structure.cpp, be_union.cpp, be_field.cpp,
+	be_sequence.cpp: Some reformatting, removed unused variables.
+
+	* TAO_IDL/be/be_scope.cpp: Changes include adding ACE_ERROR_RETURN
+	with file name, line number capability. In addition, we were not
+	testing for return status of the various gen methods called.
+
+	* Most important changes in these files:
+
+	TAO_IDL/be/{be_operation,be_state_argument,be_state_operation}.cpp:
+
+	Large scale changes that include a uniform way to invoke methods
+	of the be_argument class from the be_operation methods. Added the
+	5 new states. Added proper handling of _out parameters in stubs
+	and skeletons.
+
 Mon Nov 17 20:05:16 1997  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 
-	* orb_core.cpp: 
+	* orb_core.cpp:
 	  Modified the init routine to "consume" command line arguments it
 	  recognizes by placing them in the rear of argv, and adjusting
 	  argc. It uses the Arg_Shifter class to accomplish this.
 
-	* arg_shifter.h:	  
+	* arg_shifter.h:
 	* arg_shifter.cpp:
 	  The Arg_Shifter class is an iterator that, as it iterates over
 	  argv, places consumed arguments at the end of the vector,
@@ -14,20 +41,20 @@ Mon Nov 17 20:05:16 1997  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 
 Mon Nov 17 18:40:49 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
-	* orb_core.i: 
+	* orb_core.i:
 	  Some data was not initialized when used from a thread different
 	  than the one doing ORB_init (even though we choose a global ORB
 	  in the svc.conf file). Chris found a fix for this. The affected
 	  methods are reactor(), thr_mgr(), connector() and acceptor().
 
-	* TAO_IDL/be/be_sequence.cpp: 
+	* TAO_IDL/be/be_sequence.cpp:
 	  length was not working if the value was <= than the maximum.
 
-	* orbsvcs/lib/CosNamingC.cpp: 
-	* orbsvcs/lib/RtecEventChannelAdminC.cpp: 
-	* orbsvcs/lib/RtecEventCommC.cpp: 
-	* orbsvcs/lib/RtecSchedulerC.cpp: 
-	* orbsvcs/lib/RtecSchedulerS.cpp: 
+	* orbsvcs/lib/CosNamingC.cpp:
+	* orbsvcs/lib/RtecEventChannelAdminC.cpp:
+	* orbsvcs/lib/RtecEventCommC.cpp:
+	* orbsvcs/lib/RtecSchedulerC.cpp:
+	* orbsvcs/lib/RtecSchedulerS.cpp:
 	  Fixed the length() problem by hand, even though the new IDL
 	  compiler should do it right.
 
@@ -45,69 +72,69 @@ Mon Nov 17 02:40:14 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Mon Nov 17 01:48:17 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
-	* TAO_IDL/be/be_scope.cpp: 
+	* TAO_IDL/be/be_scope.cpp:
 	  TypeCode generation was failing for imported members.
 
-	* TAO_IDL/be/be_structure.cpp: 
+	* TAO_IDL/be/be_structure.cpp:
 	  Member count must include all members, imported or not.
 
-	* TAO_IDL/be/be_typedef.cpp: 
+	* TAO_IDL/be/be_typedef.cpp:
 	  Added missing decr_indent() in the typecode generation which was
 	  making the generated code completely unreadable.
 
-	* orbsvcs/lib/RtecEventChannelAdmin.idl: 
-	* orbsvcs/lib/RtecEventComm.idl: 
+	* orbsvcs/lib/RtecEventChannelAdmin.idl:
+	* orbsvcs/lib/RtecEventComm.idl:
 	  Removed the PullConsumer and PullSupplier classes, they are not
 	  supported.
 
-	* orbsvcs/lib/CosNamingC.cpp: 
-	* orbsvcs/lib/CosNamingS.cpp: 
-	* orbsvcs/lib/RtecEventChannelAdminC.cpp: 
-	* orbsvcs/lib/RtecEventChannelAdminC.h: 
-	* orbsvcs/lib/RtecEventChannelAdminC.i: 
-	* orbsvcs/lib/RtecEventChannelAdminS.cpp: 
-	* orbsvcs/lib/RtecEventChannelAdminS.h: 
-	* orbsvcs/lib/RtecEventChannelAdminS.i: 
-	* orbsvcs/lib/RtecEventCommC.cpp: 
-	* orbsvcs/lib/RtecEventCommC.h: 
-	* orbsvcs/lib/RtecEventCommC.i: 
-	* orbsvcs/lib/RtecEventCommS.cpp: 
-	* orbsvcs/lib/RtecEventCommS.h: 
-	* orbsvcs/lib/RtecEventCommS.i: 
-	* orbsvcs/lib/RtecSchedulerC.cpp: 
-	* orbsvcs/lib/RtecSchedulerS.cpp: 
+	* orbsvcs/lib/CosNamingC.cpp:
+	* orbsvcs/lib/CosNamingS.cpp:
+	* orbsvcs/lib/RtecEventChannelAdminC.cpp:
+	* orbsvcs/lib/RtecEventChannelAdminC.h:
+	* orbsvcs/lib/RtecEventChannelAdminC.i:
+	* orbsvcs/lib/RtecEventChannelAdminS.cpp:
+	* orbsvcs/lib/RtecEventChannelAdminS.h:
+	* orbsvcs/lib/RtecEventChannelAdminS.i:
+	* orbsvcs/lib/RtecEventCommC.cpp:
+	* orbsvcs/lib/RtecEventCommC.h:
+	* orbsvcs/lib/RtecEventCommC.i:
+	* orbsvcs/lib/RtecEventCommS.cpp:
+	* orbsvcs/lib/RtecEventCommS.h:
+	* orbsvcs/lib/RtecEventCommS.i:
+	* orbsvcs/lib/RtecSchedulerC.cpp:
+	* orbsvcs/lib/RtecSchedulerS.cpp:
 	  New version of the generated files, this last version is almost
 	  making in it, but still needs hand crafting.
 
-	* TAO_IDL/be/be_array.cpp: 
-	* TAO_IDL/be/be_sequence.cpp: 
-	* TAO_IDL/be/be_typedef.cpp: 
+	* TAO_IDL/be/be_array.cpp:
+	* TAO_IDL/be/be_sequence.cpp:
+	* TAO_IDL/be/be_typedef.cpp:
 	  Fixed buggy TypeCode lenght computation, it was only taking into
 	  account the tc_encap_len() for the base type but it should use
 	  the full tc_size().
 
-	* tao/encode.cpp: 
+	* tao/encode.cpp:
 	  Object references *must* be passed a pointer to Object_ptr in
 	  the marshalling code.
 
-	* TAO_IDL/be/be_operation.cpp: 
-	* TAO_IDL/be/be_state_operation.cpp: 
+	* TAO_IDL/be/be_operation.cpp:
+	* TAO_IDL/be/be_state_operation.cpp:
 	  Fixed generated code for Object references as return values. It
 	  allocates the Object_ptr in the heap, stores the result there
 	  and creates an Any for it.
 
 Sun Nov 16 23:30:26 1997  Sergio Flores  <sergio@tango.cs.wustl.edu>
 
-	* orbsvcs/tests/Logger/svr.cpp (main): 
+	* orbsvcs/tests/Logger/svr.cpp (main):
 	Changed the code to use the resolve_initial_references ()
 	interface to get the object refrence to the naming service.
-	
+
 	* orbsvcs/tests/Logger/clnt.cpp (main): Now uses the
  	resolve_initial_references() to get the naming service object
  	reference, to get the logger factory object reference.
 
-	* orbsvcs/bin/Naming_Service/svr.cpp (main): 
-	* orbsvcs/bin/Naming_Service/svr.h: 
+	* orbsvcs/bin/Naming_Service/svr.cpp (main):
+	* orbsvcs/bin/Naming_Service/svr.h:
 	Added code to respond to multicast requests for the IOR.
 
 	Added code to respond to multicast requests for the IOR.
@@ -137,95 +164,95 @@ Sun Nov 16 05:51:38 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Sun Nov 16 00:22:04 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
-	* tests/Cubit/TAO/IDL_Cubit/clnt.cpp: 
+	* tests/Cubit/TAO/IDL_Cubit/clnt.cpp:
 	  Fixed output for structs and union test.
 
-	* tao/iiopobj.cpp: 
+	* tao/iiopobj.cpp:
 	  If the user provides no key for an object we generate one, based
 	  on the object address.
 
-	* TAO_IDL/be/be_sequence.cpp: 
+	* TAO_IDL/be/be_sequence.cpp:
 	  The length() method should get the maximum if reallocation
 	  occurs.
 
-	* tao/orb_core.cpp: 
-	* tao/orbobj.cpp: 
-	* tao/orbobj.h: 
-	* tao/params.cpp: 
-	* tao/params.h: 
+	* tao/orb_core.cpp:
+	* tao/orbobj.cpp:
+	* tao/orbobj.h:
+	* tao/params.cpp:
+	* tao/params.h:
 	  Added new options to the ORB (-ORBeventserviceior,
 	  -ORBscheduleserviceior), this should go away once the Naming
 	  Service works properly, but are needed now to locate this
 	  services.
 
-	* orbsvcs/lib/Makefile: 
+	* orbsvcs/lib/Makefile:
 	  Added several small classes that help when using the Scheduling
 	  and/or the Event Service.
 
-	* orbsvcs/lib/Scheduler_Factory.cpp: 
-	* orbsvcs/lib/Scheduler_Factory.h: 
-	* orbsvcs/lib/Scheduler_Factory.i: 
+	* orbsvcs/lib/Scheduler_Factory.cpp:
+	* orbsvcs/lib/Scheduler_Factory.h:
+	* orbsvcs/lib/Scheduler_Factory.i:
 	  Encapsulate the construction and configuration of the Scheduling
 	  Service.
 
-	* orbsvcs/lib/Runtime_Scheduler.cpp: 
-	* orbsvcs/lib/Runtime_Scheduler.h: 
-	* orbsvcs/lib/Runtime_Scheduler.i: 
+	* orbsvcs/lib/Runtime_Scheduler.cpp:
+	* orbsvcs/lib/Runtime_Scheduler.h:
+	* orbsvcs/lib/Runtime_Scheduler.i:
 	  Implement a simple, but fast, Scheduling Service based on a
 	  precomputed scheduling.
 
-	* orbsvcs/lib/Event_Utilities.cpp: 
-	* orbsvcs/lib/Event_Utilities.h: 
-	* orbsvcs/lib/Event_Utilities.i: 
+	* orbsvcs/lib/Event_Utilities.cpp:
+	* orbsvcs/lib/Event_Utilities.h:
+	* orbsvcs/lib/Event_Utilities.i:
 	  Simplify the creation of QoS structures for the Event Service.
 
-	* orbsvcs/lib/Scheduler_Utilities.cpp: 
-	* orbsvcs/lib/Scheduler_Utilities.h: 
-	* orbsvcs/lib/Scheduler_Utilities.i: 
+	* orbsvcs/lib/Scheduler_Utilities.cpp:
+	* orbsvcs/lib/Scheduler_Utilities.h:
+	* orbsvcs/lib/Scheduler_Utilities.i:
 	  Simplify manipulation of the RT_Infos for the Scheduling
 	  Service.
 
-	* orbsvcs/lib/Channel_Clients.cpp: 
-	* orbsvcs/lib/Channel_Clients.h: 
-	* orbsvcs/lib/Channel_Clients_T.cpp: 
-	* orbsvcs/lib/Channel_Clients_T.h: 
+	* orbsvcs/lib/Channel_Clients.cpp:
+	* orbsvcs/lib/Channel_Clients.h:
+	* orbsvcs/lib/Channel_Clients_T.cpp:
+	* orbsvcs/lib/Channel_Clients_T.h:
 	  Helpers to adapt PushSuppliers and PushConsumers.
 
-	* orbsvcs/lib/CosNamingC.cpp: 
-	* orbsvcs/lib/CosNamingC.h: 
-	* orbsvcs/lib/CosNamingC.i: 
-	* orbsvcs/lib/CosNamingS.cpp: 
-	* orbsvcs/lib/RtecEventChannelAdminC.cpp: 
-	* orbsvcs/lib/RtecEventChannelAdminC.h: 
-	* orbsvcs/lib/RtecEventChannelAdminC.i: 
-	* orbsvcs/lib/RtecEventChannelAdminS.cpp: 
-	* orbsvcs/lib/RtecEventChannelAdminS.h: 
-	* orbsvcs/lib/RtecEventComm.idl: 
-	* orbsvcs/lib/RtecEventCommC.cpp: 
-	* orbsvcs/lib/RtecEventCommC.h: 
-	* orbsvcs/lib/RtecEventCommC.i: 
-	* orbsvcs/lib/RtecEventCommS.cpp: 
-	* orbsvcs/lib/RtecSchedulerC.cpp: 
-	* orbsvcs/lib/RtecSchedulerC.h: 
-	* orbsvcs/lib/RtecSchedulerC.i: 
-	* orbsvcs/lib/RtecSchedulerS.cpp: 
+	* orbsvcs/lib/CosNamingC.cpp:
+	* orbsvcs/lib/CosNamingC.h:
+	* orbsvcs/lib/CosNamingC.i:
+	* orbsvcs/lib/CosNamingS.cpp:
+	* orbsvcs/lib/RtecEventChannelAdminC.cpp:
+	* orbsvcs/lib/RtecEventChannelAdminC.h:
+	* orbsvcs/lib/RtecEventChannelAdminC.i:
+	* orbsvcs/lib/RtecEventChannelAdminS.cpp:
+	* orbsvcs/lib/RtecEventChannelAdminS.h:
+	* orbsvcs/lib/RtecEventComm.idl:
+	* orbsvcs/lib/RtecEventCommC.cpp:
+	* orbsvcs/lib/RtecEventCommC.h:
+	* orbsvcs/lib/RtecEventCommC.i:
+	* orbsvcs/lib/RtecEventCommS.cpp:
+	* orbsvcs/lib/RtecSchedulerC.cpp:
+	* orbsvcs/lib/RtecSchedulerC.h:
+	* orbsvcs/lib/RtecSchedulerC.i:
+	* orbsvcs/lib/RtecSchedulerS.cpp:
 	  This files were generated by the IDL compiler and don't need any
 	  hand crafting (so far). I still maintain them in CVS because the
 	  compiler is not stable enough.
 
-	* orbsvcs/bin/Naming_Service/Makefile: 
+	* orbsvcs/bin/Naming_Service/Makefile:
 	  Removed spurious call to rm.
 
-	* orbsvcs/lib/RtecEventComm.idl: 
+	* orbsvcs/lib/RtecEventComm.idl:
 	  Removed the (already commented out) include of "orb.idl".
 
 Sat Nov 15 21:38:48 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
-	* TAO_IDL/be/be_sequence.cpp: 
+	* TAO_IDL/be/be_sequence.cpp:
 	  The generated length() method will reallocate the sequences
 	  now.
 
-	* TAO_IDL/be/be_constant.cpp: 
+	* TAO_IDL/be/be_constant.cpp:
 	  It was initializing nested constants in the client header file,
 	  Andy told me how to fix it.
 

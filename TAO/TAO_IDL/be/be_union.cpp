@@ -971,8 +971,6 @@ be_union::gen_encapsulation (void)
   cs = cg->client_stubs ();
   cs->indent (); // start from whatever indentation level we were at
 
-  // XXXASG - byte order must be based on what m/c we are generating code -
-  // TODO
   *cs << "TAO_ENCAP_BYTE_ORDER, // byte order" << nl;
   // generate repoID
   *cs << (ACE_OS::strlen (this->repoID ())+1) << ", ";
@@ -1044,7 +1042,7 @@ be_union::tc_encap_len (void)
 
       // add encapsulation size of discriminant typecode
       discrim = be_type::narrow_from_decl (this->disc_type ());
-      this->encap_len_ += discrim->tc_encap_len ();
+      this->encap_len_ += discrim->tc_size ();
 
       this->encap_len_ += 4; // to hold the "default used" flag
       this->encap_len_ += 4; // to hold the member count

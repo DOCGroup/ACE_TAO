@@ -143,12 +143,13 @@ be_sequence::gen_client_header (void)
       // generate the ifdefined macro for the sequence type
       ch->gen_ifdef_macro (this->flatname ());
 
+      ch->indent (); // start with the current indentation level
+
       *ch << "// *************************************************************"
           << nl;
       *ch << "// class " << this->local_name () << nl;
-      *ch << "// *************************************************************\n\n";
-
-      ch->indent (); // start with the current indentation level
+      *ch << "// *************************************************************"
+              << nl << nl;
 
       *ch << "class " << this->local_name () << nl;
       *ch << "{" << nl;
@@ -195,6 +196,7 @@ be_sequence::gen_client_header (void)
         }
 
       *ch << "\t";
+      // generate the type info for the element type
       if (s->gen_code (bt, this) == -1)
         return -1;
       *ch << " *value, CORBA::Boolean release=CORBA::B_FALSE);" << nl;
@@ -415,50 +417,50 @@ be_sequence::gen_client_stubs (void)
       *cs << "{\n";
       cs->incr_indent ();
       if (this->max_size () == 0)
-	{
-	  // The sequence has a maximum length, check that the new
-	  // length is valid before changing anything.
-	  *cs << "if (length > this->maximum_)" << nl;
-	  *cs << "{\n";
-	  cs->incr_indent ();
-	  *cs << "// @@ throw something?" << nl;
-	  *cs << "return;" << nl;
-	  cs->decr_indent ();
-	  *cs << "}" << nl;
-	  *cs << "this->length_ = length;\n";
-	}
+        {
+          // The sequence has a maximum length, check that the new
+          // length is valid before changing anything.
+          *cs << "if (length > this->maximum_)" << nl;
+          *cs << "{\n";
+          cs->incr_indent ();
+          *cs << "// @@ throw something?" << nl;
+          *cs << "return;" << nl;
+          cs->decr_indent ();
+          *cs << "}" << nl;
+          *cs << "this->length_ = length;\n";
+        }
       else
-	{
-	  // Reallocate the buffer.
-	  *cs << "if (length > this->maximum_)" << nl;
-	  *cs << "{\n";
-	  cs->incr_indent ();
-	  if (s->gen_code (bt, this) == -1)
-	    return -1;
-	  *cs << " *tmp = " << this->name ()
-	      << "::allocbuf (length);" << nl;
-	  *cs << "if (tmp == 0)\n";
-	  cs->incr_indent ();
-	  *cs << "return;\n";
-	  cs->decr_indent ();
+        {
+          // Reallocate the buffer.
+          *cs << "if (length > this->maximum_)" << nl;
+          *cs << "{\n";
+          cs->incr_indent ();
+          if (s->gen_code (bt, this) == -1)
+            return -1;
+          *cs << " *tmp = " << this->name ()
+              << "::allocbuf (length);" << nl;
+          *cs << "if (tmp == 0)\n";
+          cs->incr_indent ();
+          *cs << "return;\n";
+          cs->decr_indent ();
 
-	  *cs << "for (int i = 0; i < this->length_; ++i)" << nl;
-	  *cs << "{\n";
-	  cs->incr_indent ();
-	  *cs << "tmp[i] = this->buffer_[i];\n";
-	  cs->decr_indent ();
-	  *cs << "}" << nl;
-	  *cs << "if (this->release_)\n";
-	  cs->incr_indent ();
-	  *cs << this->name () << "::freebuf (this->buffer_);\n";
-	  cs->decr_indent ();
-	  *cs << "this->buffer_ = tmp;" << nl;
-	  *cs << "this->release_ = 1;" << nl;
-	  *cs << "this->maximum_ = length;\n";
-	  cs->decr_indent ();
-	  *cs << "}\n";
-	  *cs << "this->length_ = length;\n";
-	}
+          *cs << "for (int i = 0; i < this->length_; ++i)" << nl;
+          *cs << "{\n";
+          cs->incr_indent ();
+          *cs << "tmp[i] = this->buffer_[i];\n";
+          cs->decr_indent ();
+          *cs << "}" << nl;
+          *cs << "if (this->release_)\n";
+          cs->incr_indent ();
+          *cs << this->name () << "::freebuf (this->buffer_);\n";
+          cs->decr_indent ();
+          *cs << "this->buffer_ = tmp;" << nl;
+          *cs << "this->release_ = 1;" << nl;
+          *cs << "this->maximum_ = length;\n";
+          cs->decr_indent ();
+          *cs << "}\n";
+          *cs << "this->length_ = length;\n";
+        }
       cs->decr_indent ();
       *cs << "}\n\n";
 
