@@ -40,6 +40,8 @@ namespace CIAO
       create (PortableServer::ObjectId &oid) = 0;
 
     virtual void destroy (PortableServer::ObjectId &oid) = 0;
+  
+    virtual void update_destroy_count () = 0;
 
   protected:
     Session_Container *container_;

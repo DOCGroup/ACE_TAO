@@ -54,6 +54,8 @@ namespace CIAO
     PortableServer::ObjectId_var oid =
       PortableServer::string_to_ObjectId (this->obj_id_);
 
+    this->container_->delete_servant_map (oid);
+
     for (DYNAMIC_SERVANT_MAP_ITERATOR iter = 
            this->dynamic_servant_map_.begin ();
          iter != end; ++iter)
@@ -81,7 +83,7 @@ namespace CIAO
                     COMP_EXEC,
                     COMP_EXEC_VAR,
                     COMP_SVNT>::remove_component (
-      ::Components::CCMObject_ptr comp
+      ::Components::CCMObject_ptr 
       ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((CORBA::SystemException,
@@ -95,7 +97,6 @@ namespace CIAO
     {
       servant->destroy (oid);
     }
-    // this->container_->delete_servant_map (oid);
   }
 
   // Operations for keyless home interface.
@@ -244,14 +245,11 @@ namespace CIAO
                     COMP_SVNT>::update_component_map (
     PortableServer::ObjectId &oid)
   {
-    /*
     Dynamic_Component_Servant_Base *servant;
-    if (dynamic_servant_map_.unbind (oid, servant) != 0)
-      {
-        ACE_DEBUG ((LM_DEBUG, "Invalid component object reference\n"));
-        return;
-      }
-    */
+    if (this->dynamic_servant_map_.find (oid, servant) == 0)
+    {
+      servant->update_destroy_count ();
+    }
     return;
   }
 
