@@ -10,35 +10,36 @@
 //
 // ============================================================================
 
-#ifndef ACE_RMCAST_UDP_RECEIVER_H
-#define ACE_RMCAST_UDP_RECEIVER_H
+#ifndef ACE_RMCAST_IO_UDP_H
+#define ACE_RMCAST_IO_UDP_H
 #include "ace/pre.h"
 
+#include "RMCast_Module.h"
 #include "RMCast_UDP_Event_Handler.h"
 #include "ace/SOCK_Dgram_Mcast.h"
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Synch.h"
+#include "ace/INET_Addr.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class ACE_RMCast_Sender_Proxy;
-class ACE_RMCast_Sender_Proxy_Factory;
+class ACE_RMCast_UDP_Proxy;
+class ACE_RMCast_Module_Factory;
 class ACE_Reactor;
 class ACE_Time_Value;
-class ACE_INET_Addr;
 
-class ACE_RMCast_Export ACE_RMCast_UDP_Receiver
+class ACE_RMCast_Export ACE_RMCast_IO_UDP : public ACE_RMCast_Module
 {
 public:
-  ACE_RMCast_UDP_Receiver (ACE_RMCast_Sender_Proxy_Factory *factory);
+  ACE_RMCast_IO_UDP (ACE_RMCast_Module_Factory *factory);
   // Constructor
-  // <factory> is used to create the Sender_Proxy and Modules that
-  // process incoming messages.
-  // The caller owns <factory>.
+  // <factory> is used to create the modules for each proxy that
+  // process incoming messages. The class does *not* assume ownership
+  // of <factory>, the caller owns it.
 
-  ~ACE_RMCast_UDP_Receiver (void);
+  ~ACE_RMCast_IO_UDP (void);
   // Destructor
 
   int subscribe (const ACE_INET_Addr &mcast_addr,
@@ -69,25 +70,36 @@ public:
   ACE_HANDLE get_handle (void) const;
   // Obtain the handle for the underlying socket
 
+  // Send back to the remove object represented by <proxy>
+  int send_data (ACE_RMCast::Data &, const ACE_INET_Addr &);
+  int send_poll (ACE_RMCast::Poll &, const ACE_INET_Addr &);
+  int send_ack_join (ACE_RMCast::Ack_Join &, const ACE_INET_Addr &);
+  int send_ack_leave (ACE_RMCast::Ack_Leave &, const ACE_INET_Addr &);
+  int send_ack (ACE_RMCast::Ack &, const ACE_INET_Addr &);
+  int send_join (ACE_RMCast::Join &, const ACE_INET_Addr &);
+  int send_leave (ACE_RMCast::Leave &, const ACE_INET_Addr &);
+
+  // = The RMCast_Module methods
+  virtual int data (ACE_RMCast::Data &);
+  virtual int poll (ACE_RMCast::Poll &);
+  virtual int ack_join (ACE_RMCast::Ack_Join &);
+  virtual int ack_leave (ACE_RMCast::Ack_Leave &);
+  virtual int ack (ACE_RMCast::Ack &);
+  virtual int join (ACE_RMCast::Join &);
+  virtual int leave (ACE_RMCast::Leave &);
+  // The messages are sent to the multicast group
+
 private:
-  int send_join (ACE_INET_Addr &from);
-  // Send a JOIN message
+  ACE_RMCast_Module_Factory *factory_;
+  // The factory used to create the modules attached to each proxy
 
-  int send_ack (ACE_RMCast_Sender_Proxy *sender_proxy,
-                ACE_INET_Addr &from);
-  // Send an ACK message
-
-  int send_leave (ACE_INET_Addr &from);
-  // Send a LEAVE messsage
-
-private:
-  ACE_RMCast_Sender_Proxy_Factory *factory_;
-  // The factory used to create Sender proxies
+  ACE_INET_Addr mcast_group_;
+  // The multicast group we subscribe and send to
 
   ACE_SOCK_Dgram_Mcast dgram_;
   // The socket
 
-  typedef ACE_Hash_Map_Manager<ACE_INET_Addr,ACE_RMCast_Sender_Proxy*,ACE_Null_Mutex> Map;
+  typedef ACE_Hash_Map_Manager<ACE_INET_Addr,ACE_RMCast_UDP_Proxy*,ACE_Null_Mutex> Map;
   Map map_;
 
   ACE_RMCast_UDP_Event_Handler eh_;
@@ -95,8 +107,8 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "RMCast_UDP_Receiver.i"
+#include "RMCast_IO_UDP.i"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"
-#endif /* ACE_RMCAST_UDP_RECEIVER_H */
+#endif /* ACE_RMCAST_IO_UDP_H */
