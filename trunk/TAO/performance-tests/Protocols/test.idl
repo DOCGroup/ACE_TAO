@@ -2,8 +2,12 @@
 
 interface test
 {
+  void start_test (in unsigned long iterations);
+  void end_test ();
+
   typedef sequence<octet> octets;
-  
-  void method (in octets payload);
-  oneway void shutdown ();
+  oneway void method (in unsigned long iteration,
+                      in octets payload);
+
+  void shutdown ();
 };

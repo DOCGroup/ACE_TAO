@@ -6,22 +6,25 @@
 #include "ace/Sample_History.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_string.h"
+#include "tao/RTCORBA/RTCORBA.h"
+#include "tao/ORB_Constants.h"
 #include "testC.h"
 
 static const char *ior = "file://ior";
 static int shutdown_server = 0;
-static int iterations = 5;
+static CORBA::ULong iterations = 5;
 static int invocation_rate = 5;
 static int count_missed_end_deadlines = 0;
 static ACE_UINT32 gsf = 0;
 static int do_dump_history = 0;
 static int print_missed_invocations = 0;
 static CORBA::ULong message_size = 0;
+static const char *test_protocol = "TCP";
 
 static int
 parse_args (int argc, char **argv)
 {
-  ACE_Get_Opt get_opts (argc, argv, "d:e:i:k:m:r:s:x:");
+  ACE_Get_Opt get_opts (argc, argv, "d:e:i:k:m:p:r:s:x:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -47,6 +50,10 @@ parse_args (int argc, char **argv)
         print_missed_invocations = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
+      case 'p':
+        test_protocol = get_opts.opt_arg ();
+        break;
+
       case 'r':
         invocation_rate = ACE_OS::atoi (get_opts.opt_arg ());
         break;
@@ -68,6 +75,7 @@ parse_args (int argc, char **argv)
                            "\t-i <iterations> (defaults to %d)\n"
                            "\t-k <ior> (defaults to %s)\n"
                            "\t-m <print missed invocations for paced workers> (defaults to %d)\n"
+                           "\t-p <test protocol> (defaults to %s [valid values are TCP, UDP, and SCIOP])\n"
                            "\t-r <invocation rate> (defaults to %d)\n"
                            "\t-s <message size> (defaults to %d)\n"
                            "\t-x <shutdown server> (defaults to %d)\n"
@@ -78,6 +86,7 @@ parse_args (int argc, char **argv)
                            iterations,
                            ior,
                            print_missed_invocations,
+                           test_protocol,
                            invocation_rate,
                            message_size,
                            shutdown_server),
@@ -113,9 +122,9 @@ to_hrtime (double seconds,
 class Paced_Worker
 {
 public:
-  Paced_Worker (test_ptr test,
-                CORBA::Short rate,
-                CORBA::ULong iterations);
+  Paced_Worker (RTCORBA::RTORB_ptr rtorb,
+                CORBA::PolicyManager_ptr policy_manager,
+                test_ptr test);
 
   void run (ACE_ENV_SINGLE_ARG_DECL);
 
@@ -126,8 +135,9 @@ private:
   void missed_start_deadline (CORBA::ULong invocation);
   void missed_end_deadline (CORBA::ULong invocation);
 
+  RTCORBA::RTORB_var rtorb_;
+  CORBA::PolicyManager_var policy_manager_;
   test_var test_;
-  int rate_;
   ACE_Sample_History history_;
   ACE_hrtime_t interval_between_calls_;
   ACE_hrtime_t test_start_;
@@ -138,13 +148,17 @@ private:
   typedef ACE_Array_Base<CORBA::ULong> Missed_Invocations;
   Missed_Invocations missed_start_invocations_;
   Missed_Invocations missed_end_invocations_;
+
+  CORBA::PolicyList tcp_protocol_policy_;
+  CORBA::PolicyList test_protocol_policy_;
 };
 
-Paced_Worker::Paced_Worker (test_ptr test,
-                            CORBA::Short rate,
-                            CORBA::ULong iterations)
-  : test_ (test::_duplicate (test)),
-    rate_ (rate),
+Paced_Worker::Paced_Worker (RTCORBA::RTORB_ptr rtorb,
+                            CORBA::PolicyManager_ptr policy_manager,
+                            test_ptr test)
+  : rtorb_ (RTCORBA::RTORB::_duplicate (rtorb)),
+    policy_manager_ (CORBA::PolicyManager::_duplicate (policy_manager)),
+    test_ (test::_duplicate (test)),
     history_ (iterations),
     interval_between_calls_ (),
     missed_start_deadlines_ (0),
@@ -153,7 +167,41 @@ Paced_Worker::Paced_Worker (test_ptr test,
     missed_end_invocations_ (iterations)
 {
   this->interval_between_calls_ =
-    to_hrtime (1 / double (this->rate_), gsf);
+    to_hrtime (1 / double (invocation_rate), gsf);
+
+  this->tcp_protocol_policy_.length (1);
+  this->test_protocol_policy_.length (1);
+
+  RTCORBA::ProtocolList protocols;
+  protocols.length (1);
+  protocols[0].transport_protocol_properties =
+    RTCORBA::ProtocolProperties::_nil ();
+  protocols[0].orb_protocol_properties =
+    RTCORBA::ProtocolProperties::_nil ();
+
+  protocols[0].protocol_type = 0;
+
+  this->tcp_protocol_policy_[0] =
+    this->rtorb_->create_client_protocol_policy (protocols);
+
+  CORBA::ULong test_protocol_id = 0;
+  if (ACE_OS::strcmp (test_protocol, "DIOP") == 0)
+    {
+      ACE_DEBUG ((LM_DEBUG, "test protocol is DIOP\n"));
+      protocols[0].protocol_type = TAO_TAG_UDP_PROFILE;
+    }
+  else if (ACE_OS::strcmp (test_protocol, "SCIOP") == 0)
+    {
+      ACE_DEBUG ((LM_DEBUG, "test protocol is SCIOP\n"));
+      protocols[0].protocol_type = TAO_TAG_SCIOP_PROFILE;
+    }
+  else
+    {
+      ACE_DEBUG ((LM_DEBUG, "test protocol is IIOP\n"));
+    }
+
+  this->test_protocol_policy_[0] =
+    this->rtorb_->create_client_protocol_policy (protocols);
 }
 
 ACE_hrtime_t
@@ -176,15 +224,15 @@ Paced_Worker::print_stats (void)
     this->missed_start_deadlines_ + this->missed_end_deadlines_;
 
   CORBA::ULong made_total_deadlines =
-    this->history_.max_samples () - missed_total_deadlines;
+    iterations - missed_total_deadlines;
 
   ACE_DEBUG ((LM_DEBUG,
               "\n************ Statistics ************\n\n"));
 
   ACE_DEBUG ((LM_DEBUG,
               "Rate = %d/sec; Iterations = %d; ",
-              this->rate_,
-              this->history_.max_samples ()));
+              invocation_rate,
+              iterations));
 
   if (count_missed_end_deadlines)
     ACE_DEBUG ((LM_DEBUG,
@@ -193,14 +241,14 @@ Paced_Worker::print_stats (void)
                 missed_total_deadlines,
                 this->missed_start_deadlines_,
                 this->missed_end_deadlines_,
-                made_total_deadlines * 100 / (double) this->history_.max_samples (),
+                made_total_deadlines * 100 / (double) iterations,
                 made_total_deadlines / to_seconds (this->test_end_ - this->test_start_, gsf)));
   else
     ACE_DEBUG ((LM_DEBUG,
                 "Deadlines made/missed/%% = %d/%d/%.2f%%; Effective Rate = %.2f\n",
                 made_total_deadlines,
                 missed_total_deadlines,
-                made_total_deadlines * 100 / (double) this->history_.max_samples (),
+                made_total_deadlines * 100 / (double) iterations,
                 made_total_deadlines / to_seconds (this->test_end_ - this->test_start_, gsf)));
 
 
@@ -219,10 +267,10 @@ Paced_Worker::print_stats (void)
 
   if (print_missed_invocations)
     {
-      ACE_DEBUG ((LM_DEBUG, "\nMissed start invocations are: "));
+      ACE_DEBUG ((LM_DEBUG, "\nMissed start invocations are:\n"));
 
       for (CORBA::ULong j = 0;
-           j != this->missed_start_deadlines_;
+           j < this->missed_start_deadlines_;
            ++j)
         {
           ACE_DEBUG ((LM_DEBUG,
@@ -234,10 +282,10 @@ Paced_Worker::print_stats (void)
 
       if (count_missed_end_deadlines)
         {
-          ACE_DEBUG ((LM_DEBUG, "\nMissed end invocations are: "));
+          ACE_DEBUG ((LM_DEBUG, "\nMissed end invocations are:\n"));
 
           for (CORBA::ULong j = 0;
-               j != this->missed_end_deadlines_;
+               j < this->missed_end_deadlines_;
                ++j)
             {
               ACE_DEBUG ((LM_DEBUG,
@@ -268,6 +316,16 @@ Paced_Worker::missed_end_deadline (CORBA::ULong invocation)
 void
 Paced_Worker::run (ACE_ENV_SINGLE_ARG_DECL)
 {
+  // Let the server know what to expect..
+  this->test_->start_test (iterations
+                           ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  this->policy_manager_->set_policy_overrides (this->test_protocol_policy_,
+                                               CORBA::SET_OVERRIDE
+                                               ACE_ENV_ARG_PARAMETER);
+  ACE_TRY_CHECK;
+
   ::test::octets payload;
   payload.length (message_size);
 
@@ -278,16 +336,11 @@ Paced_Worker::run (ACE_ENV_SINGLE_ARG_DECL)
                   1,
                   message_size * sizeof (CORBA::Octet));
 
-  // To get things going...
-  this->test_->method (payload
-                       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-
   this->test_start_ =
     ACE_OS::gethrtime ();
 
   for (CORBA::ULong i = 0;
-       i != this->history_.max_samples ();
+       i < iterations;
        ++i)
     {
       ACE_hrtime_t deadline_for_current_call =
@@ -298,11 +351,12 @@ Paced_Worker::run (ACE_ENV_SINGLE_ARG_DECL)
 
       if (time_before_call > deadline_for_current_call)
         {
-          this->missed_start_deadline (i + 1);
+          this->missed_start_deadline (i);
           continue;
         }
 
-      this->test_->method (payload
+      this->test_->method (i,
+                           payload
                            ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
@@ -312,7 +366,7 @@ Paced_Worker::run (ACE_ENV_SINGLE_ARG_DECL)
 
       if (time_after_call > deadline_for_current_call)
         {
-          this->missed_end_deadline (i + 1);
+          this->missed_end_deadline (i);
           continue;
         }
 
@@ -325,6 +379,14 @@ Paced_Worker::run (ACE_ENV_SINGLE_ARG_DECL)
     }
 
   this->test_end_ = ACE_OS::gethrtime ();
+
+  this->policy_manager_->set_policy_overrides (this->tcp_protocol_policy_,
+                                               CORBA::SET_OVERRIDE
+                                               ACE_ENV_ARG_PARAMETER);
+  ACE_TRY_CHECK;
+
+  this->test_->end_test (ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 
   this->print_stats ();
 }
@@ -343,12 +405,32 @@ main (int argc, char **argv)
                          ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
+      CORBA::Object_var object =
+        orb->resolve_initial_references ("RTORB"
+                                         ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      RTCORBA::RTORB_var rtorb =
+        RTCORBA::RTORB::_narrow (object.in ()
+                                 ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      object =
+        orb->resolve_initial_references ("ORBPolicyManager"
+                                         ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      CORBA::PolicyManager_var policy_manager =
+        CORBA::PolicyManager::_narrow (object.in ()
+                                       ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
       int parse_args_result =
         parse_args (argc, argv);
       if (parse_args_result != 0)
         return parse_args_result;
 
-      CORBA::Object_var object =
+      object =
         orb->string_to_object (ior
                                ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -358,9 +440,9 @@ main (int argc, char **argv)
                        ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      Paced_Worker paced_worker (test.in (),
-                                 invocation_rate,
-                                 iterations);
+      Paced_Worker paced_worker (rtorb.in (),
+                                 policy_manager.in (),
+                                 test.in ());
       paced_worker.run (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
