@@ -451,16 +451,16 @@ Mon Apr 28 10:54:02 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 Mon Apr 28 13:45:03 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-        * tests\Hash_Map_Bucket_Iterator_Test.cpp (ACE_TMAIN):
+        * tests/Hash_Map_Bucket_Iterator_Test.cpp (ACE_TMAIN):
 
           Added debugging statements.
 
-        * ace\Hash_Map_Manager_T.h (class ACE_Hash_Map_Bucket_Iterator):
+        * ace/Hash_Map_Manager_T.h (class ACE_Hash_Map_Bucket_Iterator):
 
           Added to documentation about why there is no creation method on
           the Hash Map for the ACE_Hash_Map_Bucket_Iterator.
 
-        * ace\README: Added description for ACE_LACKS_MEMBER_TEMPLATES.
+        * ace/README: Added description for ACE_LACKS_MEMBER_TEMPLATES.
 
 Mon Apr 28 17:35:00 UTC 2003  Gautam Thaker  <gthaker@atl.lmco.com>
 
@@ -1853,7 +1853,7 @@ Wed Apr 16 19:27:29 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Wed Apr 16 12:15:04 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-        * ace\OS:
+        * ace/OS:
 
           - thr_setprio(): Streamlined code to only call
           pthread_getschedparam() when <policy> is -1.
@@ -1863,7 +1863,7 @@ Wed Apr 16 12:15:04 2003  Irfan Pyarali  <irfan@oomworks.com>
           priority of a thread. This makes the thr_getprio() function
           consistent with the changes to thr_setprio().
 
-        * ace\Thread: Made changes to the thr_setprio() and thr_getprio()
+        * ace/Thread: Made changes to the thr_setprio() and thr_getprio()
           functions to make them similar to the ACE_OS functions.
 
 Wed Apr 16 11:34:49 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
