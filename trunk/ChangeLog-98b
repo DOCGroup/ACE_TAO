@@ -1,78 +1,85 @@
+Mon Oct 12 22:18:03 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/High_Res_Timer.cpp (dump): cleaned up output so that it
+          works and is consistent across all platforms.  (long long
+          printing is not portable:  some platforms use %llu and
+          others use %Lu).
+
 Mon Oct 12 18:39:09 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/Mem_Map.cpp: Revised the code to take the offset into
- 	  account when deciding whether to grow the backing store.  
+        * ace/Mem_Map.cpp: Revised the code to take the offset into
+          account when deciding whether to grow the backing store.
 
-	  Also, ACE_Mem_Map was trying to be too clever when it tries to
- 	  make sure that your offset is a multiple of the allocation
- 	  granularity.  It ends up messing up user offset and length
- 	  calculations.  Therefore, I have taken this out of ACE_Mem_Map
- 	  code.  Users is still welcome to use
- 	  ACE_OS::allocation_granularity and
- 	  ACE::round_to_allocation_granularity by themselves.
+          Also, ACE_Mem_Map was trying to be too clever when it tries to
+          make sure that your offset is a multiple of the allocation
+          granularity.  It ends up messing up user offset and length
+          calculations.  Therefore, I have taken this out of ACE_Mem_Map
+          code.  Users is still welcome to use
+          ACE_OS::allocation_granularity and
+          ACE::round_to_allocation_granularity by themselves.
 
 Mon Oct 12 14:39:15 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Parse_Node.cpp: Added some ACE_const_casts to cleanup the
- 	  casting going on here.
+        * ace/Parse_Node.cpp: Added some ACE_const_casts to cleanup the
+          casting going on here.
 
-	* examples/ASX/CCM_App/CCM_App.cpp: We need to make sure and use
-	  the ACE_SVC_FACTORY_* macros so that the gobbler will be set
-	  correctly.  Purify rules!
+        * examples/ASX/CCM_App/CCM_App.cpp: We need to make sure and use
+          the ACE_SVC_FACTORY_* macros so that the gobbler will be set
+          correctly.  Purify rules!
 
-	* ace/Makefile: Make sure to add the // $ Id: $ CVS string when
- 	  recreating Svc_Conf_Tokens.h.
+        * ace/Makefile: Make sure to add the // $ Id: $ CVS string when
+          recreating Svc_Conf_Tokens.h.
 
-	* ace/Svc_Conf.y: Just to be paranoid, make sure to set the
- 	  gobbler function to 0.  At least this way we'll get crashes
- 	  rather than bizarre errors if users don't use the ACE_*FACTORY*
- 	  macros.
+        * ace/Svc_Conf.y: Just to be paranoid, make sure to set the
+          gobbler function to 0.  At least this way we'll get crashes
+          rather than bizarre errors if users don't use the ACE_*FACTORY*
+          macros.
 
 Mon Oct 12 19:19:27 1998  James CE Johnson  <jcej@chiroptera.tragus.org>
 
-	* docs/ACE-tutorials.html:
-	Added a link to Bob McWhirter's	Frequently Made Mistakes page.
+        * docs/ACE-tutorials.html:
+        Added a link to Bob McWhirter's Frequently Made Mistakes page.
 
-	* docs/tutorials/014/Makefile
-	* docs/tutorials/014/Task.{cpp|h}
-	* docs/tutorials/014/EndTask.h
-	* docs/tutorials/014/stream.cpp
-	* docs/tutorials/014/page0[123456].html
-	A slightly modified version of Bob McWhirter's ACE_Stream tutorial.
-	
+        * docs/tutorials/014/Makefile
+        * docs/tutorials/014/Task.{cpp|h}
+        * docs/tutorials/014/EndTask.h
+        * docs/tutorials/014/stream.cpp
+        * docs/tutorials/014/page0[123456].html
+        A slightly modified version of Bob McWhirter's ACE_Stream tutorial.
+
 Mon Oct 12 15:59:00 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Message_Block.cpp (size): removed unused local "old_base".
 
 Mon Oct 12 11:24:45 PDT 1998  James Hu  <jxh@entera.com>
 
-	* Asynch_IO.cpp: Minor changes to deal with FMR error.
+        * Asynch_IO.cpp: Minor changes to deal with FMR error.
 
-	* Message_Block.{cpp,i,h}: Changed rd_ptr_ and wr_ptr_ to be
-	  byte offsets from base ().  This allows one to resize a
-	  duplicate without trashing other Message_Blocks that may be
-	  referring to the same data block.
+        * Message_Block.{cpp,i,h}: Changed rd_ptr_ and wr_ptr_ to be
+          byte offsets from base ().  This allows one to resize a
+          duplicate without trashing other Message_Blocks that may be
+          referring to the same data block.
 
-	* Proactor.cpp: Made the message block 64 bytes bigger to make
-	  purify happier.
+        * Proactor.cpp: Made the message block 64 bytes bigger to make
+          purify happier.
 
 Mon Oct 12 12:14:45 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Parse_Node.cpp (ACE_Stream_Node): In error cases, the strops
- 	  parameter can be NULL.  Therefore, we need to protect against
- 	  this case.  Thanks to David O'Farrell <dave@virgo.aersoft.ie>
- 	  for reporting this.
+        * ace/Parse_Node.cpp (ACE_Stream_Node): In error cases, the strops
+          parameter can be NULL.  Therefore, we need to protect against
+          this case.  Thanks to David O'Farrell <dave@virgo.aersoft.ie>
+          for reporting this.
 
 Mon Oct 12 10:43:09 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* ace/Asynch_IO.cpp (ACE_Asynch_Result): Fixed a double deletion
-	problem. Thanks to James Hu for reporting this.
+        * ace/Asynch_IO.cpp (ACE_Asynch_Result): Fixed a double deletion
+        problem. Thanks to James Hu for reporting this.
 
 Mon Oct 12 09:43:07 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/Containers_T.h:
-	* ace/Containers_T.cpp:
-	  Added a new method to modify the size of an ACE_Array.
+        * ace/Containers_T.h:
+        * ace/Containers_T.cpp:
+          Added a new method to modify the size of an ACE_Array.
 
 Mon Oct 12 09:23:49 1998  David L. Levine  <levine@cs.wustl.edu>
 
