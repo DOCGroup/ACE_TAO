@@ -151,6 +151,16 @@ ACE_Process_Options::get_stderr (void)
   return stderr_;
 }
 
+ACE_INLINE int
+ACE_Process_Options::avoid_zombies (void)
+{
+  return avoid_zombies_;
+}
+ACE_INLINE void
+ACE_Process_Options::avoid_zombies (int avoid_zombies)
+{
+  avoid_zombies_ = avoid_zombies;
+}
 #endif /* ACE_WIN32 */
 
 ACE_INLINE LPTSTR
