@@ -20,5 +20,7 @@ project(Repository_Manager): ciao_deployment_svnt, ciao_deployment_stub, taoexe 
     RepositoryManagerS.cpp
     Repository_Manager.cpp
     RepositoryManager_Impl.cpp
+    ../NodeManager/NodeDaemonC.cpp
+    ../ExecutionManager/ExecutionManagerC.cpp
   }
 }
