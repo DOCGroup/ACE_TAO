@@ -71,16 +71,12 @@ sub run_client
     {
         print STDERR "ERROR: client returned $client\n";
         $status = 1;
-        goto kill_server;
+        zap_server ();
     }
 }
 
 sub run_server 
 {
-    print STDERR "\n******************************************************\n";
-
-    unlink $iorfile;
-
     $SV = new PerlACE::Process ("server", @_);
 
     $SV->Spawn ();
@@ -89,34 +85,34 @@ sub run_server
     {
         print STDERR "ERROR: cannot find ior file: $iorfile\n";
         $status = 1;
-        goto kill_server;
+        zap_server ();
     }
 }
 
-for $test (@configurations)
+sub zap_server
 {
-    run_server ($test->{server});
-
-    run_client ($test->{client});
-
     $server = $SV->WaitKill (5);
-
+    
     if ($server != 0) 
     {
         print STDERR "ERROR: server returned $server\n";
         $status = 1;
     }
+
+    unlink $iorfile;
 }
 
-kill_server:
+for $test (@configurations)
+{
+    print STDERR "\n******************************************************\n";
 
-$server = $SV->WaitKill (5);
+    unlink $iorfile;
 
-if ($server != 0) {
-    print STDERR "ERROR: server returned $server\n";
-    $status = 1
+    run_server ($test->{server});
+
+    run_client ($test->{client});
+    
+    zap_server ();
 }
-
-unlink $iorfile;
 
 exit $status
