@@ -42,13 +42,19 @@ public class GIFHandler extends BlobWriter
   // Send the data
   protected int sendData ()
   {
+
+
     try
       {
 	if (this.length_ > 0)
 	  {
 	    OutputStream ostream = this.peer ().outputStream ();
+
 	    this.encoder_ = new GifEncoder (this.image_, ostream);
+
 	    this.encoder_.encode ();
+
+	    ostream.flush();
 
 	    //	this.encoder_ = new GIFEncoder (this.image_);
 	    //	this.encoder_.Write (ostream);
