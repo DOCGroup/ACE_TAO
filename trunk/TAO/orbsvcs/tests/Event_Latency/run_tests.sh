@@ -36,6 +36,15 @@ done
 
 whoami=`whoami`
 
+#### Get the user name
+if [ "$LOGNAME" ]; then
+  #### LOGNAME is preserved across su
+  login=$LOGNAME
+else
+  #### whoami returns the users login, which changes across su
+  login=$whoami
+fi
+
 run ()
 #### Run the process in the RT class, if root on Solaris.
 {
@@ -57,7 +66,7 @@ trap '../start_services clean' 0 1 2 3 15
 ######## Start NameService, etc.
 ########
 run ../start_services
-NameService=`cat /tmp/nameserviceior_levine`
+NameService=`cat /tmp/nameserviceior_$login`
 export NameService
 
 
