@@ -1,8 +1,8 @@
 // -*- C++ -*-
 
 #include "ace/Get_Opt.h"
-
 #include "testC.h"
+#include "orbsvcs/FaultTolerance/FT_Service_Activate.h"
 
 ACE_RCSID (Group_Ref_Manip,
            client,

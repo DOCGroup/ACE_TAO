@@ -62,9 +62,10 @@ Server_Request_Interceptor::receive_request_service_contexts (
 {
   this->request_count_++;
 
-  ACE_DEBUG ((LM_DEBUG,
+/*  ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) receive_request_service_context called [%d] times \n",
               this->request_count_));
+	      */
 
   if (this->forward_request_thrown_ == true)
     {
@@ -107,10 +108,6 @@ Server_Request_Interceptor::receive_request (
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
-  ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) receive_request called [%d] times \n",
-              this->request_count_));
-
   if (this->request_count_ == 8)
     {
       ACE_DEBUG ((LM_DEBUG,

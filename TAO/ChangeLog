@@ -1,3 +1,10 @@
+Sat Aug  2 09:14:42 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/Server_Request_interceptor.cpp:
+	* orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/client.cpp: 
+
+	  Cosmetic fixes.
+
 Sat Aug  2 09:10:06 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/FaultTolerance/FT_ClientRequest_Interceptor.cpp:
