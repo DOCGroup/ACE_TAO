@@ -1,3 +1,34 @@
+Mon Mar 23 00:03:37 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* examples/Reactor/ReactorEx/test_abandoned.cpp: Tests the
+ 	  WFMO_Reactor's ability to handle abandoned mutexes.
+
+	* examples/Reactor/ReactorEx/test_apc.cpp: Tests the
+ 	  WFMO_Reactor's ability to handle regular APC notifications.
+
+Sun Mar 22 23:47:00 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/WFMO_Reactor.cpp: Added code to the Reactor to make it more
+ 	  resilient when the wait() function returns WAIT_IO_COMPLETION
+ 	  and WAIT_ABANDONED.
+
+	  ok_to_wait: Keep waiting if wait() returns WAIT_IO_COMPLETION.
+
+	  dispatch: Return <handlers_dispatched> if wait() returns
+ 	  WAIT_IO_COMPLETION.
+
+	  dispatch_handles: Added code to correctly handle WAIT_ABANDONED
+ 	  and to correctly figure out the index of the handler to be
+ 	  dispatched.
+
+          Thanks to Beskrovny Evgeny (evgeny_beskrovny@icomverse.com) of
+ 	  Comverse Network Systems for pointing out the problem with
+ 	  WAIT_IO_COMPLETION.
+
+	* ace/Reactor.cpp (run_alertable_event_loop): Added new function
+ 	  that runs the Reactor using alertable_handle_events() instead of
+ 	  handle_events().
+
 Sat Mar 21 19:58:42 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/OS.i (flock_destroy): lock->lockname_ should be cast to
