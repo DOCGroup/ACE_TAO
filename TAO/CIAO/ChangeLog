@@ -1,3 +1,35 @@
+Sat May  8 15:19:18 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * DnC/Config_Handlers/ACD_Handler.cpp:
+        * DnC/Config_Handlers/ADD_Handler.cpp:
+        * DnC/Config_Handlers/APM_Handler.cpp:
+        * DnC/Config_Handlers/CAD_Handler.cpp:
+        * DnC/Config_Handlers/CPR_Handler.cpp:
+        * DnC/Config_Handlers/CRDD_Handler.cpp:
+        * DnC/Config_Handlers/CompImplDesc_Handler.cpp:
+        * DnC/Config_Handlers/CompPkgDesc_Handler.cpp:
+        * DnC/Config_Handlers/CompPortDesc_Handler.cpp:
+        * DnC/Config_Handlers/Config_Handlers.mpc:
+        * DnC/Config_Handlers/DP_Handler.cpp:
+        * DnC/Config_Handlers/Domain_Handler.cpp:
+        * DnC/Config_Handlers/Domain_Handler.h:
+        * DnC/Config_Handlers/IDD_Handler.cpp:
+        * DnC/Config_Handlers/IRDD_Handler.cpp:
+        * DnC/Config_Handlers/MDD_Handler.cpp:
+        * DnC/Config_Handlers/MID_Handler.cpp:
+        * DnC/Config_Handlers/PCD_Handler.cpp:
+        * DnC/Config_Handlers/PCI_Handler.cpp:
+        * DnC/Config_Handlers/PC_Handler.cpp:
+        * DnC/Config_Handlers/PPM_Handler.cpp:
+        * DnC/Config_Handlers/PSPE_Handler.cpp:
+        * DnC/Config_Handlers/PSPR_Handler.cpp:
+        * DnC/Config_Handlers/RDD_Handler.cpp:
+        * DnC/Config_Handlers/SID_Handler.cpp:
+        * DnC/Config_Handlers/SPE_Handler.cpp:
+        * DnC/Config_Handlers/SPR_Handler.cpp:
+
+          Removed unnecessary declaration of ACE_DECLARE_NEW_CORBA_ENV
+
 Sat May  8 14:53:33 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * DnC/Config_Handlers/Domain.cpp:
