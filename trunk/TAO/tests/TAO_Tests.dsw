@@ -114,6 +114,30 @@ Package=<4>
 
 ###############################################################################
 
+Project: "Multiple Inheritance Client"=.\Multiple_Inheritance\client.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Multiple Inheritance Server"=.\Multiple_Inheritance\server.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "NU MT_Client_Test Client"=.\NestedUpcall\MT_Client_Test\client.dsp - Package Owner=<4>
 
 Package=<5>
