@@ -15,6 +15,7 @@
 #include "ace/FlReactor.h"
 #include "ace/WFMO_Reactor.h"
 #include "ace/Msg_WFMO_Reactor.h"
+#include "ace/TP_Reactor.h"
 #include "ace/Dynamic_Service.h"
 #include "ace/Arg_Shifter.h"
 
@@ -25,7 +26,7 @@
 ACE_RCSID(tao, default_resource, "$Id$")
 
 TAO_Default_Resource_Factory::TAO_Default_Resource_Factory (void)
-  : resource_source_ (TAO_GLOBAL),
+  : use_tss_resources_ (0),
     reactor_type_ (TAO_REACTOR_SELECT_MT),
     cdr_allocator_source_ (TAO_GLOBAL)
 {
@@ -49,12 +50,12 @@ TAO_Default_Resource_Factory::init (int argc, char **argv)
 {
   ACE_TRACE ("TAO_Default_Server_Strategy_Factory::parse_args");
 
-  int local_resource_source = -1;
-
   for (int curarg = 0; curarg < argc; curarg++)
     if (ACE_OS::strcasecmp (argv[curarg],
                             "-ORBResources") == 0)
       {
+        ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) The -ORBResources option "
+                    "has been moved to the ORB parameters\n"));
         curarg++;
         if (curarg < argc)
           {
@@ -62,10 +63,10 @@ TAO_Default_Resource_Factory::init (int argc, char **argv)
 
             if (ACE_OS::strcasecmp (name,
                                     "global") == 0)
-              local_resource_source = TAO_GLOBAL;
+              this->use_tss_resources_ = 0;
             else if (ACE_OS::strcasecmp (name,
                                          "tss") == 0)
-              local_resource_source = TAO_TSS;
+              this->use_tss_resources_ = 1;
           }
       }
     else if (ACE_OS::strcasecmp (argv[curarg],
@@ -79,11 +80,9 @@ TAO_Default_Resource_Factory::init (int argc, char **argv)
           {
             char *name = argv[curarg];
 
-            if (ACE_OS::strcasecmp (name,
-                                    "null") == 0)
+            if (ACE_OS::strcasecmp (name, "null") == 0)
               reactor_type_ = TAO_REACTOR_SELECT_ST;
-            else if (ACE_OS::strcasecmp (name,
-                                         "token") == 0)
+            else if (ACE_OS::strcasecmp (name, "token") == 0)
               reactor_type_= TAO_REACTOR_SELECT_MT;
           }
       }
@@ -138,6 +137,10 @@ TAO_Default_Resource_Factory::init (int argc, char **argv)
                           "TAO_Default_Factory - MsgWFMO Reactor"
                           " not supported on this platform\n"));
 #endif /* ACE_WIN32 */
+
+            else if (ACE_OS::strcasecmp (name,
+                                         "ThreadPool") == 0)
+              reactor_type_ = TAO_REACTOR_TP;
             else
               ACE_DEBUG ((LM_DEBUG,
                           "TAO_Default_Factory - unknown argument"
@@ -178,10 +181,6 @@ TAO_Default_Resource_Factory::init (int argc, char **argv)
                           argv[curarg]));
           }
       }
-
-  // Update the object data members.
-  if (local_resource_source != -1)
-    this->resource_source_ = local_resource_source;
 
   return 0;
 }
@@ -279,6 +278,12 @@ TAO_Default_Resource_Factory::init_protocol_factories (void)
   return 0;
 }
 
+int
+TAO_Default_Resource_Factory::use_tss_resources (void) const
+{
+  return this->use_tss_resources_;
+}
+
 TAO_ProtocolFactorySet *
 TAO_Default_Resource_Factory::get_protocol_factories (void)
 {
@@ -339,6 +344,10 @@ TAO_Default_Resource_Factory::allocate_reactor_impl (void) const
       ACE_NEW_RETURN (impl, ACE_Msg_WFMO_Reactor, 0);
 #endif /* ACE_WIN32 && !ACE_HAS_WINCE */
       break;
+
+    case TAO_REACTOR_TP:
+      ACE_NEW_RETURN (impl, ACE_TP_Reactor, 0);
+      break;
     }
   return impl;
 }
@@ -346,28 +355,11 @@ TAO_Default_Resource_Factory::allocate_reactor_impl (void) const
 ACE_Reactor *
 TAO_Default_Resource_Factory::get_reactor (void)
 {
-  switch (this->resource_source_)
-    {
-    case TAO_GLOBAL:
-      if (GLOBAL_ALLOCATED::instance ()->r_ == 0)
-        {
-          ACE_NEW_RETURN (GLOBAL_ALLOCATED::instance ()->r_,
-                          ACE_Reactor (this->allocate_reactor_impl (), 1),
-                          0);
-        }
-      return GLOBAL_ALLOCATED::instance ()->r_;
-      ACE_NOTREACHED (break);
-    case TAO_TSS:
-      if (TSS_ALLOCATED::instance ()->r_ == 0)
-        {
-          ACE_NEW_RETURN (TSS_ALLOCATED::instance ()->r_,
-                          ACE_Reactor (this->allocate_reactor_impl (), 1),
-                          0);
-        }
-      return TSS_ALLOCATED::instance ()->r_;
-      ACE_NOTREACHED (break);
-    }
-  return 0;
+  ACE_Reactor *reactor;
+  ACE_NEW_RETURN (reactor,
+                  ACE_Reactor (this->allocate_reactor_impl ()),
+                  0);
+  return reactor;
 }
 
 typedef ACE_Malloc<ACE_LOCAL_MEMORY_POOL,ACE_Null_Mutex> TSS_MALLOC;
@@ -431,27 +423,18 @@ TAO_Default_Resource_Factory::input_cdr_buffer_allocator (void)
 ACE_Allocator*
 TAO_Default_Resource_Factory::output_cdr_dblock_allocator (void)
 {
-  if (TSS_ALLOCATED::instance ()->output_cdr_dblock_allocator_ == 0)
-    {
-      ACE_NEW_RETURN (TSS_ALLOCATED::instance ()->output_cdr_dblock_allocator_,
-                      TSS_ALLOCATOR,
-                      0);
-    }
-  return TSS_ALLOCATED::instance ()->output_cdr_dblock_allocator_;
+  ACE_Allocator *allocator;
+  ACE_NEW_RETURN (allocator, TSS_ALLOCATOR, 0);
+  return allocator;
 }
 
 ACE_Allocator *
 TAO_Default_Resource_Factory::output_cdr_buffer_allocator (void)
 {
-  if (TSS_ALLOCATED::instance ()->output_cdr_buffer_allocator_ == 0)
-    {
-      ACE_NEW_RETURN (TSS_ALLOCATED::instance ()->output_cdr_buffer_allocator_,
-                      TSS_ALLOCATOR,
-                      0);
-    }
-  return TSS_ALLOCATED::instance ()->output_cdr_buffer_allocator_;
+  ACE_Allocator *allocator;
+  ACE_NEW_RETURN (allocator, TSS_ALLOCATOR, 0);
+  return allocator;
 }
-
 
 ACE_Data_Block*
 TAO_Default_Resource_Factory::create_input_cdr_data_block (size_t size)
@@ -514,21 +497,13 @@ TAO_Default_Resource_Factory::create_input_cdr_data_block (size_t size)
 // ****************************************************************
 
 TAO_Allocated_Resources::TAO_Allocated_Resources (void)
-  : r_ (0),
-    input_cdr_dblock_allocator_ (0),
-    input_cdr_buffer_allocator_ (0),
-    output_cdr_dblock_allocator_ (0),
-    output_cdr_buffer_allocator_ (0)
+  : input_cdr_dblock_allocator_ (0),
+    input_cdr_buffer_allocator_ (0)
 {
 }
 
 TAO_Allocated_Resources::~TAO_Allocated_Resources (void)
 {
-  // The destruction of the Reactor must come before the destruction
-  // of the allocators.  The handlers deleted when the Reactors die
-  // access these allocators.
-  delete this->r_;
-
   if (this->input_cdr_dblock_allocator_ != 0)
     this->input_cdr_dblock_allocator_->remove ();
   delete this->input_cdr_dblock_allocator_;
@@ -536,14 +511,6 @@ TAO_Allocated_Resources::~TAO_Allocated_Resources (void)
   if (this->input_cdr_buffer_allocator_ != 0)
     this->input_cdr_buffer_allocator_->remove ();
   delete this->input_cdr_buffer_allocator_;
-
-  if (this->output_cdr_dblock_allocator_ != 0)
-    this->output_cdr_dblock_allocator_->remove ();
-  delete this->output_cdr_dblock_allocator_;
-
-  if (this->output_cdr_buffer_allocator_ != 0)
-    this->output_cdr_buffer_allocator_->remove ();
-  delete this->output_cdr_buffer_allocator_;
 }
 
 // ****************************************************************

@@ -291,6 +291,20 @@ which is not reentrant.</TD></TR>
               in GIOP 1.1
               The default value is controlled by a compile-time flag
               (check orbconf.h).</TD></TR>
+
+<TR>
+<TD><CODE>-ORBResources</CODE> <EM>which</EM></TD>
+<TD><A name=-ORBResources>Control the use of thread specific resources
+                in the ORB.
+                If (<em>which</em> = <code>global</code>) then the
+                same set of resources are shared by all the threads
+                that use that ORB.
+                If (<em>which</em> = <code>tss</code>) then each that
+                uses that ORB gets its own set of resources.
+                Currently the resources are limited to the reactor.
+            </TD></TR>
+<TR>
+
 </TABLE>
 </P>
 </blockquote>
@@ -306,7 +320,11 @@ which is not reentrant.</TD></TR>
 <TD><CODE>-ORBResources</CODE> <EM>which</EM></TD>
 <TD>Specify whether each thread uses a global
 (<em>which</em> = <code>global</code>) or a thread-specific
-(<em>which</em> = <code>tss</code>) instance for the resources it returns.</TD></TR>
+(<em>which</em> = <code>tss</code>) instance for the resources it
+              returns.
+              <B>NOTE:</B> This option has been deprecated, use the
+              same option on the <A HREF="#ORB">ORB parameters</A>.
+</TD></TR>
 <TR>
 <TD><CODE>-ORBReactorLock</CODE> <EM>which</EM></TD>
 <TD><a name="-ORBReactorLock"></a>Specify whether the ORB reactor is

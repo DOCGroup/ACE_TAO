@@ -149,6 +149,12 @@ TAO_ORB_Core::default_relative_roundtrip_timeout (void) const
 
 #endif /* TAO_HAS_CORBA_MESSAGING */
 
+ACE_INLINE TAO_ORB_Core_TSS_Resources*
+TAO_ORB_Core::get_tss_resources (void)
+{
+  return ACE_TSS_GET (&this->tss_resources_,TAO_ORB_Core_TSS_Resources);
+}
+
 // ****************************************************************
 
 ACE_INLINE TAO_ORB_Table*

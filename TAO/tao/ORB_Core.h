@@ -43,7 +43,50 @@ class TAO_Resource_Factory;
 class TAO_Client_Strategy_Factory;
 class TAO_Server_Strategy_Factory;
 class TAO_Connection_Cache;
-class TAO_ORB_Core_TSS_Resources;
+class TAO_TSS_Resources;
+
+// ****************************************************************
+
+class TAO_Export TAO_ORB_Core_TSS_Resources
+{
+  // = TITLE
+  //   The TSS resoures of an ORB core.
+  //
+  // = DESCRIPTION
+  //   This class is used by the ORB_Core to store the resources
+  //   potentially bound to a thread in TSS storage.
+  //   The members are public because only the ORB Core is expected to
+  //   access them.
+  //
+public:
+  TAO_ORB_Core_TSS_Resources (void);
+  // constructor
+
+  ~TAO_ORB_Core_TSS_Resources (void);
+  // destructor
+
+  int owns_reactor_;
+  // Set to 1 if this object owns the reactor
+
+  ACE_Reactor *reactor_;
+  // Used for responding to I/O reactively
+
+  // = The rest of the resources are not currently in use, just a plan
+  //   for the future...
+
+  ACE_Allocator *output_cdr_dblock_allocator_;
+  ACE_Allocator *output_cdr_buffer_allocator_;
+  ACE_Allocator *output_cdr_msgblock_allocator_;
+  // The allocators for the output CDR streams.
+
+  int owns_connection_cache_;
+  // Set to 1 if this object owns the connection cache
+
+  TAO_Connection_Cache *connection_cache_;
+  // This is is just a place holder, in the future the connection
+  // cache will be separated from the connectors and it will be a
+  // (potentially) TSS object.
+};
 
 // ****************************************************************
 
@@ -96,7 +139,6 @@ public:
   CORBA::ORB_ptr orb (void);
 
   // = Set/get the <ACE_Reactor>.
-  ACE_Reactor *reactor (ACE_Reactor *r);
   ACE_Reactor *reactor (void);
 
   // = Set/get the <ACE_Thread_Manager>.
@@ -300,6 +342,9 @@ public:
       default_relative_roundtrip_timeout (void) const;
 #endif /* TAO_HAS_CORBA_MESSAGING */
 
+  TAO_ORB_Core_TSS_Resources* get_tss_resources (void);
+  // Obtain the TSS resources of this orb.
+
 protected:
   int set_iiop_endpoint (int dotted_decimal_addresses,
                          CORBA::UShort port,
@@ -428,6 +473,16 @@ protected:
   ACE_WChar_Codeset_Translator *to_unicode_;
   // Codeset translators for simple implementations.
 
+  int use_tss_resources_;
+  // If 1 then this ORB uses thread-specific resources
+
+  ACE_Reactor* reactor_;
+  // If the ORB has a single reactor shared between all the threads
+  // then this is it....
+
+  ACE_TSS_TYPE (TAO_ORB_Core_TSS_Resources) tss_resources_;
+  // This is where the tss resources for this ORB are stored.
+
   // @@ TODO: the service context list may need to be in TSS
   //    storage...
   // NOTE: this is only used to *send* requests, not to store the
@@ -437,26 +492,23 @@ protected:
 
 // ****************************************************************
 
-class TAO_Export TAO_ORB_Core_TSS_Resources
+class TAO_Export TAO_TSS_Resources
 {
   // = TITLE
-  //   The TSS resoures of an ORB core.
+  //   The TSS resoures shared by all the ORBs
   //
   // = DESCRIPTION
-  //   This class is used by the ORB_Core to store the resources
-  //   potentially bound to a thread in TSS storage.
+  //   This class is used by TAO to store the resources that are
+  //   thread-specific but are *not* ORB specific...
   //   The members are public because only the ORB Core is expected to
   //   access them.
   //
 public:
-  TAO_ORB_Core_TSS_Resources (void);
+  TAO_TSS_Resources (void);
   // constructor
 
-  ~TAO_ORB_Core_TSS_Resources (void);
+  ~TAO_TSS_Resources (void);
   // destructor
-
-  ACE_Reactor *reactor_;
-  // Used for responding to I/O reactively
 
   TAO_POA_Current_Impl *poa_current_impl_;
   // Points to structure containing state for the current upcall
@@ -482,21 +534,13 @@ public:
   TAO_Policy_Current_Impl *policy_current_;
   // This pointer is reset by the POA on each upcall.
 #endif /* TAO_HAS_CORBA_MESSAGING */
-
-  ACE_Allocator *output_cdr_dblock_allocator_;
-  ACE_Allocator *output_cdr_buffer_allocator_;
-  // The allocators for the output CDR streams.
-
-  TAO_Connection_Cache *connection_cache_;
-  // This is is just a place holder, in the future the connection
-  // cache will be separated from the connectors and it will be a
-  // (potentially) TSS object.
 };
 
-// ****************************************************************
+// @@ Must go away....
+typedef ACE_TSS_Singleton<TAO_TSS_Resources, ACE_SYNCH_MUTEX>
+        TAO_TSS_RESOURCES;
 
-typedef ACE_TSS_Singleton<TAO_ORB_Core_TSS_Resources, ACE_SYNCH_MUTEX>
-        TAO_ORB_CORE_TSS_RESOURCES;
+// ****************************************************************
 
 class TAO_Export TAO_ORB_Table
 {

@@ -181,13 +181,10 @@ ifndef TAO_ROOT
 TAO_ROOT = $(ACE_ROOT)/TAO
 endif
 
-BIN = # t-sizes
-
 DEFS    = $(addsuffix .h,$(PUB_HDRS))
 
 LDLIBS = -lACE
-LIBS = -lACE
-VLDLIBS = $(LDLIBS:%=%$(VAR))
+LIBS += $(ACELIB)
 
 #----------------------------------------------------------------------------
 #       Include macros and targets

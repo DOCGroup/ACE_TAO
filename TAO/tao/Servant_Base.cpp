@@ -119,7 +119,7 @@ TAO_ServantBase::_create_stub (CORBA_Environment &ACE_TRY_ENV)
   TAO_Stub *stub = 0;
 
   TAO_POA_Current_Impl *poa_current_impl =
-    TAO_ORB_CORE_TSS_RESOURCES::instance ()->poa_current_impl_;
+    TAO_TSS_RESOURCES::instance ()->poa_current_impl_;
 
   CORBA::ORB_ptr servant_orb = 0;
 
@@ -389,7 +389,7 @@ TAO_DynamicImplementation::_create_stub (CORBA::Environment &ACE_TRY_ENV)
   // by the DSI servant, it raises the PortableServer::WrongPolicy
   // exception.
   TAO_POA_Current_Impl *poa_current_impl =
-    TAO_ORB_CORE_TSS_RESOURCES::instance ()->poa_current_impl_;
+    TAO_TSS_RESOURCES::instance ()->poa_current_impl_;
 
   if (poa_current_impl != 0 &&
       this == poa_current_impl->servant ())
