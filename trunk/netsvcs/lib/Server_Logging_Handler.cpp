@@ -16,10 +16,6 @@ ACE_SVC_FACTORY_DEFINE (ACE_Server_Logging_Acceptor)
 ACE_SVC_FACTORY_DEFINE (ACE_Thr_Server_Logging_Acceptor)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-#if !defined (ACE_HAS_BROKEN_HPUX_TEMPLATES) && !defined (__GNUG__)
-  template class Base_Optimizer<LOG_MESSAGE_RECEIVER, ACE_CString>;
-  template class Base_Optimizer<LOG_MESSAGE_RECEIVER, SCHEDULE_STRATEGY>;
-#endif /* ! (ACE_HAS_BROKEN_HPUX_TEMPLATES) && ! (__GNUG__) */
 template class Log_Message_Receiver_Impl<ACE_NULL_SYNCH>;
 template class Static_Log_Message_Receiver<ACE_NULL_SYNCH>;
 template class ACE_Acceptor<Null_Synch_Logging_Handler_Static_Receiver, LOGGING_PEER_ACCEPTOR>;
@@ -34,6 +30,10 @@ template class ACE_Server_Logging_Acceptor_T<Null_Synch_Logging_Handler_Static_R
                                              ACE_Schedule_All_Reactive_Strategy<Null_Synch_Logging_Handler_Static_Receiver> >;
 template class ACE_Server_Logging_Handler_T<LOGGING_PEER_STREAM, u_long, ACE_NULL_SYNCH, Null_Synch_Static_Receiver>;
 template class ACE_Server_Logging_Handler<Null_Synch_Static_Receiver>;
+#if !defined (ACE_HAS_BROKEN_HPUX_TEMPLATES) && !defined (__GNUG__)
+  template class Base_Optimizer<Null_Synch_Static_Receiver, ACE_CString>;
+  template class Base_Optimizer<Null_Synch_Static_Receiver, ACE_Schedule_All_Reactive_Strategy<Null_Synch_Logging_Handler_Static_Receiver> >;
+#endif /* ! (ACE_HAS_BROKEN_HPUX_TEMPLATES) && ! (__GNUG__) */
 
 
 template class Static_Log_Message_Receiver<ACE_LOGGER_SYNCH>;
@@ -89,6 +89,14 @@ template class ACE_Server_Logging_Acceptor_T<Synch_Thr_Logging_Handler_Receiver,
 
 template class ACE_Server_Logging_Handler_T<LOGGING_PEER_STREAM, u_long, ACE_NULL_SYNCH, Synch_Static_Receiver>;
 template class ACE_Server_Logging_Handler_T<LOGGING_PEER_STREAM, u_long, ACE_NULL_SYNCH, Synch_Receiver>;
+#if !defined (ACE_HAS_BROKEN_HPUX_TEMPLATES) && !defined (__GNUG__)
+  template class Base_Optimizer<Synch_Static_Receiver, ACE_CString>;
+  template class Base_Optimizer<Synch_Receiver, ACE_CString>;
+  template class Base_Optimizer<Synch_Static_Receiver, ACE_Schedule_All_Reactive_Strategy<Synch_Logging_Handler_Static_Receiver> >;
+  template class Base_Optimizer<Synch_Static_Receiver, ACE_Schedule_All_Threaded_Strategy<Synch_Thr_Logging_Handler_Static_Receiver> >;
+  template class Base_Optimizer<Synch_Receiver, ACE_Schedule_All_Reactive_Strategy<Synch_Logging_Handler_Static_Receiver> >;
+  template class Base_Optimizer<Synch_Receiver, ACE_Schedule_All_Threaded_Strategy<Synch_Thr_Logging_Handler_Static_Receiver> >;
+#endif /* ! (ACE_HAS_BROKEN_HPUX_TEMPLATES) && ! (__GNUG__) */
 
   #if defined (ACE_HAS_THREADS)
   template class ACE_Atomic_Op<ACE_Thread_Mutex, u_long>;
@@ -114,10 +122,6 @@ template class ACE_Thr_Server_Logging_Handler<Synch_Receiver>;
   // here.
   #endif /* ACE_HAS_TLI */
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#if !defined (ACE_HAS_BROKEN_HPUX_TEMPLATES) && !defined (__GNUG__)
-  #pragma instantiate Base_Optimizer<LOG_MESSAGE_RECEIVER, ACE_CString>
-  #pragma instantiate Base_Optimizer<LOG_MESSAGE_RECEIVER, SCHEDULE_STRATEGY>
-#endif /* ! (ACE_HAS_BROKEN_HPUX_TEMPLATES) && ! (__GNUG__) */
 #pragma instantiate Log_Message_Receiver_Impl<ACE_NULL_SYNCH>
 #pragma instantiate Static_Log_Message_Receiver<ACE_NULL_SYNCH>
 #pragma instantiate ACE_Acceptor<Null_Synch_Logging_Handler_Static_Receiver, LOGGING_PEER_ACCEPTOR>
@@ -132,6 +136,10 @@ template class ACE_Thr_Server_Logging_Handler<Synch_Receiver>;
                                              ACE_Schedule_All_Reactive_Strategy<Null_Synch_Logging_Handler_Static_Receiver> >
 #pragma instantiate ACE_Server_Logging_Handler_T<LOGGING_PEER_STREAM, u_long, ACE_NULL_SYNCH, Null_Synch_Static_Receiver>
 #pragma instantiate ACE_Server_Logging_Handler<Null_Synch_Static_Receiver>
+#if !defined (ACE_HAS_BROKEN_HPUX_TEMPLATES) && !defined (__GNUG__)
+  #pragma instantiate Base_Optimizer<Null_Synch_Static_Receiver, ACE_CString>
+  #pragma instantiate Base_Optimizer<Null_Synch_Static_Receiver, ACE_Schedule_All_Reactive_Strategy<Null_Synch_Logging_Handler_Static_Receiver> >
+#endif /* ! (ACE_HAS_BROKEN_HPUX_TEMPLATES) && ! (__GNUG__) */
 
 
 #pragma instantiate Static_Log_Message_Receiver<ACE_LOGGER_SYNCH>
@@ -187,6 +195,14 @@ template class ACE_Thr_Server_Logging_Handler<Synch_Receiver>;
 
 #pragma instantiate ACE_Server_Logging_Handler_T<LOGGING_PEER_STREAM, u_long, ACE_NULL_SYNCH, Synch_Static_Receiver>
 #pragma instantiate ACE_Server_Logging_Handler_T<LOGGING_PEER_STREAM, u_long, ACE_NULL_SYNCH, Synch_Receiver>
+#if !defined (ACE_HAS_BROKEN_HPUX_TEMPLATES) && !defined (__GNUG__)
+  #pragma instantiate Base_Optimizer<Synch_Static_Receiver, ACE_CString>
+  #pragma instantiate Base_Optimizer<Synch_Receiver, ACE_CString>
+  #pragma instantiate Base_Optimizer<Synch_Static_Receiver, ACE_Schedule_All_Reactive_Strategy<Synch_Logging_Handler_Static_Receiver> >
+  #pragma instantiate Base_Optimizer<Synch_Static_Receiver, ACE_Schedule_All_Threaded_Strategy<Synch_Thr_Logging_Handler_Static_Receiver> >
+  #pragma instantiate Base_Optimizer<Synch_Receiver, ACE_Schedule_All_Reactive_Strategy<Synch_Logging_Handler_Static_Receiver> >
+  #pragma instantiate Base_Optimizer<Synch_Receiver, ACE_Schedule_All_Threaded_Strategy<Synch_Thr_Logging_Handler_Static_Receiver> >
+#endif /* ! (ACE_HAS_BROKEN_HPUX_TEMPLATES) && ! (__GNUG__) */
 
   #if defined (ACE_HAS_THREADS)
   #pragma instantiate ACE_Atomic_Op<ACE_Thread_Mutex, u_long>
