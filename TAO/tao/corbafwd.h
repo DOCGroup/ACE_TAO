@@ -38,25 +38,7 @@
 
 #include "tao/try_macros.h"
 #include "tao/varbase.h"
-
-#if !defined (TAO_HAS_DLL)
-// On Windows NT, the default is to build TAO as a DLL library.
-#  define TAO_HAS_DLL 1
-#endif /* TAO_HAS_DLL */
-
-// Here are definition for TAO library.
-#if defined (TAO_HAS_DLL) && (TAO_HAS_DLL == 1)
-#  if defined (TAO_BUILD_DLL)
-#    define TAO_Export ACE_Proper_Export_Flag
-#    define TAO_SINGLETON_DECLARATION(T) ACE_EXPORT_SINGLETON_DECLARATION (T)
-#  else
-#    define TAO_Export ACE_Proper_Import_Flag
-#    define TAO_SINGLETON_DECLARATION(T) ACE_IMPORT_SINGLETON_DECLARATION (T)
-#  endif /* TAO_BUILD_DLL */
-#else /* TAO_HAS_DLL */
-#  define TAO_Export
-#  define TAO_SINGLETON_DECLARATION(T)
-#endif /* TAO_HAS_DLL */
+#include "tao/TAO_Export.h"
 
 // @@ NW: Disable messing with the alignment for now.
 // For some reason, PC compilers don't implement "natural" alignment,

@@ -580,6 +580,12 @@ public:
   static void fini (void);
   // Runtime finalization of all standard typecodes.
 
+private:
+
+  static int initialized_;
+  // Flag that denotes that the TAO TypeCode constants have been
+  // initialized.
+
 };
 
 // These operators are too complex to be inline....

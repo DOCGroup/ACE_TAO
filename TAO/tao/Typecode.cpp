@@ -238,19 +238,15 @@ CORBA_TypeCode::CORBA_TypeCode (CORBA::TCKind kind,
 CORBA_TypeCode::~CORBA_TypeCode (void)
 {
   // Delete the original, possibly nonaligned, buffer.
-  if (this->non_aligned_buffer_ != 0)
-    {
-      delete [] this->non_aligned_buffer_;
-      this->non_aligned_buffer_ = 0;
-    }
+  delete [] this->non_aligned_buffer_;
+  this->non_aligned_buffer_ = 0;
+
   this->buffer_ = 0;
 
-  // Free up our private state (if any)
-  if (this->private_state_)
-    {
-      delete this->private_state_;
-      this->private_state_ = 0;
-    }
+  // Free up our private state.
+  delete this->private_state_;
+  this->private_state_ = 0;
+
 }
 
 

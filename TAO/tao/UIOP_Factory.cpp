@@ -7,7 +7,6 @@
 
 #include "tao/UIOP_Acceptor.h"
 #include "tao/UIOP_Connector.h"
-#include "ace/Dynamic_Service.h"
 
 ACE_RCSID(tao, UIOP_Factory, "$Id$")
 
