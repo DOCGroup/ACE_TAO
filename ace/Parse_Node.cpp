@@ -464,34 +464,21 @@ ACE_Function_Node::ACE_Function_Node (const ACE_TCHAR *path,
 void *
 ACE_Function_Node::symbol (ACE_Service_Object_Exterminator *gobbler)
 {
+  typedef ACE_Service_Object *(*ACE_Service_Factory_Ptr)
+    (ACE_Service_Object_Exterminator *);
+
   ACE_TRACE ("ACE_Function_Node::symbol");
   if (this->open_dll () == 0)
     {
-      void *(*func) (ACE_Service_Object_Exterminator *) = 0;
+      ACE_Service_Factory_Ptr func = 0;
       this->symbol_ = 0;
 
       // Locate the factory function <function_name> in the shared
       // object.
-
       ACE_TCHAR *function_name = ACE_const_cast (ACE_TCHAR *,
-                                                  this->function_name_);
-
-      // According to the new ANSI C++ specification, casting a void*
-      // pointer to a function pointer is not allowed.  However,
-      // casting a void* pointer to an integer type that is large
-      // enough to hold the pointer value is legal.  I (Nanbor) chose
-      // to cast the return value to long since it should be large
-      // enough to hold the void* pointer's value on most platforms.
-      // I am not sure if casting a long value to a function pointer
-      // is legal or not (can't find a good explanation in spec) but
-      // SunC++, egcs, and KAI compilers, all of which are pretty
-      // close to (or, at least claim to conform with) the standard
-      // did not complain about this as an illegal pointer conversion.
-      long temp_ptr =
-        ACE_reinterpret_cast(long, this->dll_.symbol (function_name));
-      func = ACE_reinterpret_cast(void *(*)(ACE_Service_Object_Exterminator *),
-                                  temp_ptr);
-
+                                                 this->function_name_);
+      func = ACE_reinterpret_cast (ACE_Service_Factory_Ptr,
+                                   this->dll_.symbol (function_name));
       if (func == 0)
         {
           ace_yyerrno++;

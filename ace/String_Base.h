@@ -30,20 +30,20 @@ class ACE_Allocator;
  *
  * @brief This class provides a wrapper facade for C strings.
  *
- * This class uses an <ACE_Allocator> to allocate memory.  The
+ * This class uses an ACE_Allocator to allocate memory.  The
  * user can make this a persistant class by providing an
  * ACE_Allocator with a persistable memory pool.  This class is
  * optimized for efficiency, so it doesn't provide any internal
  * locking.
  * NOTE: if an instance of this class is constructed from or
  * assigned an empty string (with first element of '\0'), then it
- * is _not_ allocated new space.  Instead, its internal
+ * is not allocated new space.  Instead, its internal
  * representation is set equal to a global empty string.
  * CAUTION: in cases when ACE_String_Base is constructed from a
  * provided buffer with the release parameter set to 0,
  * ACE_String_Base is not guaranteed to be '\0' terminated.
  */
-template < class CHAR > class ACE_String_Base:public ACE_String_Base_Const
+template <class CHAR> class ACE_String_Base : public ACE_String_Base_Const
 {
 public:
    /**
@@ -67,8 +67,8 @@ public:
    * @return ACE_String_Base containing const CHAR *s
    */
   ACE_String_Base (const CHAR * s,
-		   ACE_Allocator * alloc = 0,
-		   int release = 1);
+                   ACE_Allocator * alloc = 0,
+                   int release = 1);
 
   /**
    * Constructor that copies @a len CHARs of @a s into dynamically
@@ -84,9 +84,9 @@ public:
    * @return ACE_String_Base containing const CHAR *s
    */
   ACE_String_Base (const CHAR * s,
-		   size_t len, 
-		   ACE_Allocator * alloc = 0,
-		   int release = 1);
+                   size_t len, 
+                   ACE_Allocator * alloc = 0,
+                   int release = 1);
 
   /**
    *  Copy constructor.
@@ -104,7 +104,7 @@ public:
    *  @return ACE_String_Base containing CHAR 'c'
    */
   ACE_String_Base (CHAR c, 
-		  ACE_Allocator * alloc = 0);
+                   ACE_Allocator * alloc = 0);
 
   /**
    *  Constructor that dynamically allocate @a len long of char array
@@ -116,8 +116,8 @@ public:
    *  @return ACE_String_Base containing character array 'c'
    */
   ACE_String_Base (size_t len, 
-		  CHAR c = 0, 
-		  ACE_Allocator * alloc = 0);
+                   CHAR c = 0, 
+                   ACE_Allocator * alloc = 0);
 
   /**
    *  Deletes the memory...
@@ -129,18 +129,18 @@ public:
    * bounds checking).
    *
    * @param slot Index of the desired character
-   * @return The character at index 'slot'
+   * @return The character at index @a slot
    */
-  const CHAR & operator[] (int slot) const;
+  const CHAR & operator[] (size_t slot) const;
 
   /**
    * Return the <slot'th> character by reference in the string
    * (doesn't perform bounds checking).
    *
    * @param slot Index of the desired character
-   * @return The character at index 'slot'
+   * @return The character at index @a slot
    */
-  CHAR & operator[](int slot);
+  CHAR & operator[] (size_t slot);
 
   /**
    *  Assignment operator (does copy memory).
@@ -188,7 +188,7 @@ public:
    * @return The string containing the desired substring
    */
   ACE_String_Base < CHAR > substring (size_t offset, 
-		  			ssize_t length = -1) const;
+                                      ssize_t length = -1) const;
 
   /**
    *  Same as <substring>.
@@ -258,7 +258,7 @@ public:
    *  @return Integer index value of the first location of string @a s or
    *  	-1 (not found).
    */
-  int strstr (const ACE_String_Base<CHAR> &s) const;
+  ssize_t strstr (const ACE_String_Base<CHAR> &s) const;
 
   /**
    *  Find <str> starting at pos.  Returns the slot of the first
@@ -268,7 +268,7 @@ public:
    *  @param pos Starting index position to start searching for string @a str.
    *  @return Index value of the first location of string @a str else npos.
    */
-  int find (const ACE_String_Base<CHAR> &str, int pos = 0) const;
+  ssize_t find (const ACE_String_Base<CHAR> &str, size_t pos = 0) const;
 
   /**
    *  Find @a s starting at pos.  Returns the slot of the first
@@ -278,7 +278,7 @@ public:
    *  @param pos Starting index position to start searching for string @a str.
    *  @return Index value of the first location of string @a str else npos.
    */
-  int find (const CHAR *s, int pos = 0) const;
+  ssize_t find (const CHAR *s, size_t pos = 0) const;
 
   /**
    *  Find @a c starting at pos.  Returns the slot of the first
@@ -288,7 +288,7 @@ public:
    *  @param pos Starting index position to start searching for string @a str.
    *  @return Index value of the first location of string @a str else npos.
    */
-  int find (CHAR c, int pos = 0) const;
+  ssize_t find (CHAR c, size_t pos = 0) const;
 
   /**
    *  Find @a c starting at pos (counting from the end).  Returns the
@@ -298,7 +298,7 @@ public:
    *  @param pos Starting index position to start searching for string @a str.
    *  @return Index value of the first location of string @a str else npos.
    */
-  int rfind (CHAR c, int pos = npos) const;
+  ssize_t rfind (CHAR c, size_t pos = ACE_static_cast (size_t, npos)) const;
 
   /**
    *  Equality comparison operator (must match entire string).

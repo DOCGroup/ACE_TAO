@@ -1901,7 +1901,7 @@ CLEAN :
     if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
 
 CPP=cl.exe
-CPP_PROJ=/nologo /MDd /W3 /Wp64 /Gm /GX /Zi /Od /Gy /I "../" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "ACE_BUILD_DLL" /D "ACE_OS_BUILD_DLL" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
+CPP_PROJ=/nologo /MDd /W3 /wd4267 /Wp64 /Gm /GX /Zi /Od /Gy /I "../" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "ACE_BUILD_DLL" /D "ACE_OS_BUILD_DLL" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
 
 .c{$(INTDIR)}.obj::
    $(CPP) @<<

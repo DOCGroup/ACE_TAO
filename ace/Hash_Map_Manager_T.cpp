@@ -204,7 +204,7 @@ ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::bind_
                                                                                    const INT_ID &int_id,
                                                                                    ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&entry)
 {
-  u_long loc;
+  size_t loc;
   int result = this->shared_find (ext_id, entry, loc);
 
   if (result == -1)
@@ -233,7 +233,7 @@ ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::trybi
                                                                                       INT_ID &int_id,
                                                                                       ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&entry)
 {
-  u_long loc;
+  size_t loc;
   int result = this->shared_find (ext_id, entry, loc);
 
   if (result == -1)
@@ -263,7 +263,7 @@ ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::unbin
 {
   ACE_Hash_Map_Entry<EXT_ID, INT_ID> *temp;
 
-  u_long loc;
+  size_t loc;
   int result = this->shared_find (ext_id, temp, loc);
 
   if (result == -1)
@@ -293,7 +293,7 @@ ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::unbin
 template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class ACE_LOCK> int
 ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::shared_find (const EXT_ID &ext_id,
                                                                                         ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&entry,
-                                                                                        u_long &loc)
+                                                                                        size_t &loc)
 {
   loc = this->hash (ext_id) % this->total_size_;
 
@@ -319,7 +319,7 @@ ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::rebin
                                                                                      const INT_ID &int_id,
                                                                                      ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&entry)
 {
-  u_long dummy;
+  size_t dummy;
   if (this->shared_find (ext_id, entry, dummy) == -1)
     return this->bind_i (ext_id, int_id);
   else
@@ -336,7 +336,7 @@ ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::rebin
                                                                                      INT_ID &old_int_id,
                                                                                      ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&entry)
 {
-  u_long dummy;
+  size_t dummy;
   if (this->shared_find (ext_id, entry, dummy) == -1)
     return this->bind_i (ext_id, int_id);
   else
@@ -355,7 +355,7 @@ ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::rebin
                                                                                      INT_ID &old_int_id,
                                                                                      ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&entry)
 {
-  u_long dummy;
+  size_t dummy;
   if (this->shared_find (ext_id, entry, dummy) == -1)
     return this->bind_i (ext_id, int_id);
   else
