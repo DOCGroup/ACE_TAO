@@ -73,6 +73,10 @@ class TAO_PortableServer_Export TAO_ObjectReferenceFactory
   CORBA::ULong make_object_invoker_;
 };
 
+#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#pragma warning(pop)
+#endif /* _MSC_VER */
+
 #include "ace/post.h"
 
 #endif /* TAO_OBJECT_REFERENCE_FACTORY_H */

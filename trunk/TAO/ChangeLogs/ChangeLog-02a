@@ -1,3 +1,11 @@
+Mon Feb 11 18:20:33 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/ORT/ORT_test_IORInterceptor.h: 
+	* orbsvcs/examples/ORT/Server_IORInterceptor.h:
+	* tao/PortableServer/Object_Adapter.h:
+	* tao/PortableServer/ObjectReferenceFactory.h:
+	* tao/PortableServer/ObjectReferenceTemplate.h: More fuzz errors. 
+
 Mon Feb 11 18:02:18 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/PortableServer/POAManager.h: 
