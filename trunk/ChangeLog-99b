@@ -3,7 +3,7 @@ Fri Apr 30 17:42:11 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 	* ace/OS.i (pthread_sigmask): 
 	* ace/OS.h (ACE_OS): Added wrapper for <pthread_sigmask> to get
 	the Proactor code compile on LynxOS.
-
+	
 	* ace/config-lynxos.h (ACE_HAS_AIO_CALLS): 
 	 Enabled ACE_HAS_AIO_CALLS for LynxOS. Also enabled
 	 ACE_HAS_AIOCB_PROACTOR since LynxOS 3.0.0 has not got
@@ -13,7 +13,8 @@ Fri Apr 30 17:42:11 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 	* examples/Reactor/Proactor/test_aiosig_ace.cpp
 	(setup_signal_delivery): Added ACE_OS:: scope to pthread_sigmask
 	so that it works (fails!!) correctly on LynxOS. 
-
+	
+	* examples/Reactor/Proactor/post_completions.cpp: 
 	* examples/Reactor/Proactor/test_timeout.cpp: Added 'main'
 	function for platforms where only AIOCB_Proactor is enabled so
 	that the test prints out a message. 
