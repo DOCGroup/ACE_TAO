@@ -1574,7 +1574,7 @@ ACE_OS::cond_wait (ACE_cond_t *cv,
     // unfairness.
     ACE_OSCALL (ACE_ADAPT_RETVAL (::SignalObjectAndWait (cv->waiters_done_,
 							 external_mutex->proc_mutex_,
-							 cv->sema_, INFINITE, FALSE), 
+							 INFINITE, FALSE), 
 				  result),
 		int, -1, result);
   else
@@ -1690,7 +1690,7 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
     // unfairness.
     ACE_OSCALL (ACE_ADAPT_RETVAL (::SignalObjectAndWait (cv->waiters_done_,
 							 external_mutex->proc_mutex_,
-							 cv->sema_, INFINITE, FALSE), 
+							 INFINITE, FALSE), 
 				  result),
 		int, -1, result);
   else

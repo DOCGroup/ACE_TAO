@@ -93,6 +93,14 @@ private:
 #endif /* VXWORKS */
 };
 
+#if defined (ACE_HAS_SIG_C_FUNC)
+extern "C" void 
+ace_log_msg_atexit (void)
+{
+  ACE_Log_Msg_Manager::atexit ();
+}
+#endif /* ACE_HAS_SIG_C_FUNC */
+
 ACE_Thread_Mutex *ACE_Log_Msg_Manager::lock_ = 0;
 
 ACE_Thread_Mutex *
@@ -268,8 +276,13 @@ ACE_Log_Msg::instance (void)
 	        return 0; // Major problems, this should *never* happen!
 	      }
 	  }
+
 	  // Register cleanup handler.
+#if defined (ACE_HAS_SIG_C_FUNC)
+	  ::atexit (ace_log_msg_atexit);
+#else
 	  ::atexit (ACE_Log_Msg_Manager::atexit);
+#endif /* ACE_HAS_SIG_C_FUNC */
 	  key_created_ = 1;
 	}
       ACE_OS::thread_mutex_unlock (&lock);

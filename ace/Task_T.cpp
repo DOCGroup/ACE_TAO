@@ -6,9 +6,9 @@
 
 #define ACE_BUILD_DLL
 #include "ace/Task_T.h"
-#if !defined(HPUX) || defined(__GNUG_)
+#if !defined (HPUX) || defined (__GNUG_) || defined (ACE_HAS_BROKEN_HPUX_TEMPLATES)
 #include "ace/Module.h"
-#endif /* !defined(HPUX) || defined(__GNUG__) */
+#endif /* !defined (HPUX) || defined (__GNUG__) || defined (ACE_HAS_BROKEN_HPUX_TEMPLATES) */
 #include "ace/Service_Config.h"
 
 #if !defined (__ACE_INLINE__)
