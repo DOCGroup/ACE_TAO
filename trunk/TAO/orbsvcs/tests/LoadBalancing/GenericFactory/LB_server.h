@@ -39,8 +39,8 @@ public:
   LB_Basic_Test (int argc, char **argv);
   // Constructor
 
-  ~LB_Basic_Test (void);
-  // Destructor
+  int destroy (void);
+  // destroys LoadManager, ORB and POA.
 
   int start_orb_and_poa (void);
   // start the ORB.
@@ -54,15 +54,14 @@ public:
   int register_servant (Basic *servant, const char *loc);
   // register the servants with the object group.
 
-  // @@ Jai, we do not inline methods in the header.  If you're going
-  //    to inline this method, put it in a separate inline file.  Is
-  //    it really necessary to inline this method?
-  // @@ Jai, you're missing the "void" parameter in this method.
-  //    According to our coding style, methods/functions without
-  //    parameters must have "void" explicitly placed in the parameter
-  //    list.  I've mentioned this to you before.
-  CORBA::ORB_ptr orb () { return this->orb_.in ();}
+  CORBA::ORB_ptr orb (void);
   // for servants to register to the initialised ORB.
+
+  CORBA::Object_ptr object_group (void);
+  // for servants to get the reference for object_group.
+
+  CosLoadBalancing::LoadManager_ptr load_manager (void);
+  // for servants to get the reference for object_group.
 
 private:
 

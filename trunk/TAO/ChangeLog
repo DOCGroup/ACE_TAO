@@ -1,3 +1,14 @@
+Fri Oct  4 19:31:51 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
+
+	* orbsvcs/tests/LoadBalancing/GenericFactory/Basic.cpp:
+	* orbsvcs/tests/LoadBalancing/GenericFactory/Basic.h:
+	* orbsvcs/tests/LoadBalancing/GenericFactory/LB_server.h:
+	* orbsvcs/tests/LoadBalancing/GenericFactory/LB_server.cpp:
+	* orbsvcs/tests/LoadBalancing/GenericFactory/Makefile:
+	* orbsvcs/tests/LoadBalancing/GenericFactory/client.cpp:
+	* orbsvcs/tests/LoadBalancing/GenericFactory/server.cpp:
+	  Fixed the code review comments given by Ossama.
+
 Fri Oct 04 19:23:08 2002  Irfan Pyarali  <irfan@oomworks.com>
 
 	* tao/PortableServer/Object_Adapter.cpp (init): 
