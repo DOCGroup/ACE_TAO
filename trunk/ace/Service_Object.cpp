@@ -39,20 +39,6 @@ ACE_Service_Type::ACE_Service_Type (const ACE_TCHAR *n,
   this->name (n);
 }
 
-ACE_Service_Type::ACE_Service_Type (const ACE_TCHAR *n,
-                                    ACE_Service_Type_Impl *t,
-                                    ACE_SHLIB_HANDLE handle,
-                                    int active)
-  : name_ (0),
-    type_ (t),
-    active_ (active),
-    fini_already_called_ (0)
-{
-  ACE_TRACE ("ACE_Service_Type::ACE_Service_Type");
-  this->dll_.set_handle (handle);
-  this->name (n);
-}
-
 ACE_Service_Type::~ACE_Service_Type (void)
 {
   ACE_TRACE ("ACE_Service_Type::~ACE_Service_Type");
