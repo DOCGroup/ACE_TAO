@@ -1,3 +1,9 @@
+Tue May 11 21:46:29 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/DomainC.h:
+	  Removed the generated typecode declarations - they're
+	  unnecessary and cause warnings on VxWorks.
+
 Tue May 11 20:40:52 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/Environment.cpp:

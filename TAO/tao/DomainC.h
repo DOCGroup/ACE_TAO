@@ -116,8 +116,6 @@ private:
   void operator= (const CORBA_DomainManager &);
 };
 
-TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_DomainManager;
-
 // *************************************************************
 // DomainManagerList
 // *************************************************************
@@ -191,8 +189,6 @@ private:
   // assignment from T_var not allowed
   void operator= (const CORBA_DomainManagerList_var &);
 };
-
-TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_DomainManagerList;
 
 // *************************************************************
 // ConstructionPolicy
@@ -288,8 +284,6 @@ private:
   CORBA_ConstructionPolicy (const CORBA_ConstructionPolicy &);
   void operator= (const CORBA_ConstructionPolicy &);
 };
-
-TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ConstructionPolicy;
 
 // Any operators for interface CORBA_ConstructionPolicy
 void TAO_Export operator<<= (CORBA::Any &, 
