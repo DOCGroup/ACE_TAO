@@ -1,3 +1,7 @@
+Wed Sep 16 19:23:21 1998  Steve Huston  <shuston@riverace.com>
+
+	* ace/config-hpux-11.x-hpc++.h: Moved ACE_HAS_DIRENT to config-hpux11.h
+
 Wed Sep 16 18:21:45 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Containers.h: Reformatted the ACE_DLList* classes to conform
