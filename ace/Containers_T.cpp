@@ -1269,7 +1269,7 @@ ACE_Bounded_Set<T>::insert (const T &item)
         && this->search_structure_[i].is_free_ == 0)
       return 1;
     else if (this->search_structure_[i].is_free_ && first_free == -1)
-      first_free = i;
+      first_free = ACE_static_cast (int, i);
 
   if (first_free > -1)   // If we found a free spot let's reuse it.
     {

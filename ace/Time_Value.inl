@@ -49,7 +49,7 @@ ACE_Time_Value::set (const timespec_t &tv)
 {
   // ACE_OS_TRACE ("ACE_Time_Value::set");
 #if ! defined(ACE_HAS_BROKEN_TIMESPEC_MEMBERS)
-  this->tv_.tv_sec = tv.tv_sec;
+  this->tv_.tv_sec = ACE_static_cast (long, tv.tv_sec);
   // Convert nanoseconds into microseconds.
   this->tv_.tv_usec = tv.tv_nsec / 1000;
 #else

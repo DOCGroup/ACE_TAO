@@ -1,3 +1,26 @@
+Tue Apr 29 11:21:40 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ACEXML/common/AttributesImpl.cpp:
+        * ACEXML/common/FileCharStream.cpp:
+        * ACEXML/common/HttpCharStream.cpp:
+        * ACEXML/common/Mem_Map_Stream.cpp:
+        * ACEXML/common/NamespaceSupport.cpp:
+        * ACEXML/common/StrCharStream.cpp:
+        * ACEXML/common/Transcode.i:
+        * ACEXML/common/Transcode.cpp:
+        * ACEXML/parser/parser/Parser.cpp:
+        * ace/Containers_T.cpp:
+        * ace/FIFO_Send_Msg.cpp:
+        * ace/Functor.i:
+        * ace/Time_Value.inl:
+
+          Remove build warnings on Windows XP 64-bit.
+
+        * ace/config-win32-common.h:
+
+          Added a definition for ACE_SIZEOF_VOID_P in the ACE_WIN64 section
+          stating that the size of a pointer is 8 bytes.
+
 Tue Apr 29 11:02:27 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/NMakeWorkspaceCreator.pm:
