@@ -5924,10 +5924,6 @@ ACE_OS_CString::ACE_OS_CString (const char *s)
   return;
 }
 
-ACE_Object_Manager_Base::Object_Manager_State
-  ACE_Object_Manager_Base::object_manager_state_ =
-    ACE_Object_Manager_Base::UNINITIALIZED_OBJ_MAN;
-
 # define ACE_OS_PREALLOCATE_OBJECT(TYPE, ID)\
     {\
       TYPE *obj_p;\
@@ -5939,7 +5935,8 @@ ACE_Object_Manager_Base::Object_Manager_State
     preallocated_object[ID] = 0;
 
 ACE_Object_Manager_Base::ACE_Object_Manager_Base (void)
-  : dynamically_allocated_ (0)
+  : object_manager_state_ (OBJ_MAN_UNINITIALIZED)
+  , dynamically_allocated_ (0)
   , next_ (0)
 {
 }
@@ -5953,15 +5950,15 @@ ACE_Object_Manager_Base::~ACE_Object_Manager_Base (void)
 }
 
 int
-ACE_Object_Manager_Base::starting_up ()
+ACE_Object_Manager_Base::starting_up_i ()
 {
-  return object_manager_state_ < RUNNING_OBJ_MAN;
+  return object_manager_state_ < OBJ_MAN_INITIALIZED;
 }
 
 int
-ACE_Object_Manager_Base::shutting_down ()
+ACE_Object_Manager_Base::shutting_down_i ()
 {
-  return object_manager_state_ > RUNNING_OBJ_MAN;
+  return object_manager_state_ > OBJ_MAN_INITIALIZED;
 }
 
 extern "C"
@@ -6023,11 +6020,11 @@ ACE_OS_Object_Manager::instance (void)
 int
 ACE_OS_Object_Manager::init (void)
 {
-  if (starting_up ())
+  if (starting_up_i ())
     {
       // First, indicate that the ACE_OS_Object_Manager instance is being
       // initialized.
-      object_manager_state_ = INITIALIZING_ACE_OS_OBJ_MAN;
+      object_manager_state_ = OBJ_MAN_INITIALIZING;
 
 # if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
       ACE_OS_PREALLOCATE_OBJECT (ACE_thread_mutex_t, ACE_OS_MONITOR_LOCK)
@@ -6067,7 +6064,7 @@ ACE_OS_Object_Manager::init (void)
 
       // Finally, indicate that the ACE_OS_Object_Manager instance has
       // been initialized.
-      object_manager_state_ = INITIALIZED_ACE_OS_OBJ_MAN;
+      object_manager_state_ = OBJ_MAN_INITIALIZED;
 
       return 0;
     } else {
@@ -6079,7 +6076,7 @@ ACE_OS_Object_Manager::init (void)
 int
 ACE_OS_Object_Manager::fini (void)
 {
-  if (instance_ == 0  || shutting_down ())
+  if (instance_ == 0  ||  shutting_down_i ())
     // Too late.  Or, maybe too early.  Either fini () has already
     // been called, or init () was never called.
     return -1;
@@ -6087,16 +6084,17 @@ ACE_OS_Object_Manager::fini (void)
   // No mutex here.  Only the main thread should destroy the singleton
   // ACE_OS_Object_Manager instance.
 
+  // Indicate that the ACE_OS_Object_Manager instance is being shut
+  // down.  This object manager should be the last one to be shut
+  // down.
+  object_manager_state_ = OBJ_MAN_SHUTTING_DOWN;
+
   // If another Object_Manager has registered for termination, do it.
   if (next_)
     {
       next_->fini ();
       next_ = 0;  // Protect against recursive calls.
     }
-
-  // First, indicate that the ACE_OS_Object_Manager instance is being
-  // shut down.
-  object_manager_state_ = SHUTTING_DOWN_ACE_OS_OBJ_MAN;
 
   // Close down Winsock (no-op on other platforms).
   ACE_OS::socket_fini ();
@@ -6133,6 +6131,9 @@ ACE_OS_Object_Manager::fini (void)
 # endif /* ACE_MT_SAFE */
 #endif /* ! ACE_HAS_STATIC_PREALLOCATION */
 
+  // Indicate that the ACE_OS_Object_Manager instance has been shut down.
+  object_manager_state_ = OBJ_MAN_SHUT_DOWN;
+
 #if defined (ACE_HAS_NONSTATIC_OBJECT_MANAGER)
   if (dynamically_allocated_)
     {
@@ -6140,9 +6141,6 @@ ACE_OS_Object_Manager::fini (void)
       instance_ = 0;
     }
 #endif /* ACE_HAS_NONSTATIC_OBJECT_MANAGER */
-
-  // Indicate that the ACE_OS_Object_Manager instance has been shut down.
-  object_manager_state_ = SHUT_DOWN_ACE_OS_OBJ_MAN;
 
   return 0;
 }
