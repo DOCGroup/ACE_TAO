@@ -26,6 +26,9 @@ PLANNED MAJOR CHANGES TARGETED FOR ACE-5.4.4
   from now on. The ACE_x_cast macros are deprecated and will be removed
   after the x.5.1 release
 
+. Some improvements in autoconf support; better detection of available
+  OS and compiler features.
+
 USER VISIBLE CHANGES BETWEEN ACE-5.4.2 and ACE-5.4.3
 ====================================================
 
