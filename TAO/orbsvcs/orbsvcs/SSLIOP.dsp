@@ -107,6 +107,10 @@ SOURCE=.\SSLIOP\IIOP_SSL_Connector.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\SSLIOP\IIOP_SSL_Transport.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\SSLIOP\ssl_endpoints.cpp
 # End Source File
 # Begin Source File
@@ -176,6 +180,10 @@ SOURCE=.\SSLIOP\IIOP_SSL_Connection_Handler.h
 # Begin Source File
 
 SOURCE=.\SSLIOP\IIOP_SSL_Connector.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\SSLIOP\IIOP_SSL_Transport.h
 # End Source File
 # Begin Source File
 

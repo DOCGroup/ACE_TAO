@@ -17,6 +17,7 @@ IDLFILES = \
 OBJFILES = \
 	$(OBJDIR)\IIOP_SSL_Acceptor.obj \
 	$(OBJDIR)\IIOP_SSL_Connection_Handler.obj \
+       	$(OBJDIR)\IIOP_SSL_Transport.obj \
 	$(OBJDIR)\IIOP_SSL_Connector.obj \
         $(OBJDIR)\ssl_endpoints.obj \
 	$(OBJDIR)\SSLIOP_Acceptor.obj \
