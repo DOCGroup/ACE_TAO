@@ -32,6 +32,7 @@
 #include "Messaging_SyncScope_PolicyC.h"
 #include "tao/Typecode.h"
 #include "tao/Any_Impl_T.h"
+#include "ace/OS_NS_string.h"
 
 #if defined (__BORLANDC__)
 #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
@@ -54,6 +55,7 @@ namespace TAO
 
 // Traits specializations for Messaging::SyncScopePolicy.
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 Messaging::SyncScopePolicy_ptr
 TAO::Objref_Traits<Messaging::SyncScopePolicy>::tao_duplicate (
     Messaging::SyncScopePolicy_ptr p
@@ -62,6 +64,7 @@ TAO::Objref_Traits<Messaging::SyncScopePolicy>::tao_duplicate (
   return Messaging::SyncScopePolicy::_duplicate (p);
 }
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 void
 TAO::Objref_Traits<Messaging::SyncScopePolicy>::tao_release (
     Messaging::SyncScopePolicy_ptr p
@@ -70,12 +73,14 @@ TAO::Objref_Traits<Messaging::SyncScopePolicy>::tao_release (
   CORBA::release (p);
 }
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 Messaging::SyncScopePolicy_ptr
 TAO::Objref_Traits<Messaging::SyncScopePolicy>::tao_nil (void)
 {
   return Messaging::SyncScopePolicy::_nil ();
 }
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 CORBA::Boolean
 TAO::Objref_Traits<Messaging::SyncScopePolicy>::tao_marshal (
     Messaging::SyncScopePolicy_ptr p,
@@ -290,18 +295,19 @@ operator>>= (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-  template class TAO::Objref_Traits<Messaging::SyncScopePolicy>;
+  template class
+    TAO::Objref_Traits<
+        Messaging::SyncScopePolicy
+      >;
 
   template class
     TAO_Objref_Var_T<
         Messaging::SyncScopePolicy
-        
       >;
   
   template class
     TAO_Objref_Out_T<
         Messaging::SyncScopePolicy
-        
       >;
 
   template class
@@ -311,18 +317,19 @@ operator>>= (
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-# pragma instantiate TAO::Objref_Traits<Messaging::SyncScopePolicy>
+# pragma instantiate \
+    TAO::Objref_Traits< \
+        Messaging::SyncScopePolicy \
+      >
 
 # pragma instantiate \
     TAO_Objref_Var_T< \
         Messaging::SyncScopePolicy
-        
       >
   
 # pragma instantiate \
     TAO_Objref_Out_T< \
         Messaging::SyncScopePolicy
-        
       >
 
 # pragma instantiate \

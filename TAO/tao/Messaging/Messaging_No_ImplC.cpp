@@ -33,6 +33,7 @@
 #include "tao/Typecode.h"
 #include "tao/Any_Impl_T.h"
 #include "tao/Any_Dual_Impl_T.h"
+#include "ace/OS_NS_string.h"
 
 #if defined (__BORLANDC__)
 #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
@@ -209,6 +210,7 @@ namespace Messaging
 
 // Traits specializations for Messaging::RebindPolicy.
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 Messaging::RebindPolicy_ptr
 TAO::Objref_Traits<Messaging::RebindPolicy>::tao_duplicate (
     Messaging::RebindPolicy_ptr p
@@ -217,6 +219,7 @@ TAO::Objref_Traits<Messaging::RebindPolicy>::tao_duplicate (
   return Messaging::RebindPolicy::_duplicate (p);
 }
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 void
 TAO::Objref_Traits<Messaging::RebindPolicy>::tao_release (
     Messaging::RebindPolicy_ptr p
@@ -225,12 +228,14 @@ TAO::Objref_Traits<Messaging::RebindPolicy>::tao_release (
   CORBA::release (p);
 }
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 Messaging::RebindPolicy_ptr
 TAO::Objref_Traits<Messaging::RebindPolicy>::tao_nil (void)
 {
   return Messaging::RebindPolicy::_nil ();
 }
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 CORBA::Boolean
 TAO::Objref_Traits<Messaging::RebindPolicy>::tao_marshal (
     Messaging::RebindPolicy_ptr p,
@@ -471,6 +476,7 @@ Messaging::PriorityRange::_tao_any_destructor (
 
 // Traits specializations for Messaging::RequestPriorityPolicy.
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 Messaging::RequestPriorityPolicy_ptr
 TAO::Objref_Traits<Messaging::RequestPriorityPolicy>::tao_duplicate (
     Messaging::RequestPriorityPolicy_ptr p
@@ -479,6 +485,7 @@ TAO::Objref_Traits<Messaging::RequestPriorityPolicy>::tao_duplicate (
   return Messaging::RequestPriorityPolicy::_duplicate (p);
 }
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 void
 TAO::Objref_Traits<Messaging::RequestPriorityPolicy>::tao_release (
     Messaging::RequestPriorityPolicy_ptr p
@@ -487,12 +494,14 @@ TAO::Objref_Traits<Messaging::RequestPriorityPolicy>::tao_release (
   CORBA::release (p);
 }
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 Messaging::RequestPriorityPolicy_ptr
 TAO::Objref_Traits<Messaging::RequestPriorityPolicy>::tao_nil (void)
 {
   return Messaging::RequestPriorityPolicy::_nil ();
 }
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 CORBA::Boolean
 TAO::Objref_Traits<Messaging::RequestPriorityPolicy>::tao_marshal (
     Messaging::RequestPriorityPolicy_ptr p,
@@ -641,6 +650,7 @@ namespace Messaging
 
 // Traits specializations for Messaging::ReplyPriorityPolicy.
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 Messaging::ReplyPriorityPolicy_ptr
 TAO::Objref_Traits<Messaging::ReplyPriorityPolicy>::tao_duplicate (
     Messaging::ReplyPriorityPolicy_ptr p
@@ -649,6 +659,7 @@ TAO::Objref_Traits<Messaging::ReplyPriorityPolicy>::tao_duplicate (
   return Messaging::ReplyPriorityPolicy::_duplicate (p);
 }
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 void
 TAO::Objref_Traits<Messaging::ReplyPriorityPolicy>::tao_release (
     Messaging::ReplyPriorityPolicy_ptr p
@@ -657,12 +668,14 @@ TAO::Objref_Traits<Messaging::ReplyPriorityPolicy>::tao_release (
   CORBA::release (p);
 }
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 Messaging::ReplyPriorityPolicy_ptr
 TAO::Objref_Traits<Messaging::ReplyPriorityPolicy>::tao_nil (void)
 {
   return Messaging::ReplyPriorityPolicy::_nil ();
 }
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 CORBA::Boolean
 TAO::Objref_Traits<Messaging::ReplyPriorityPolicy>::tao_marshal (
     Messaging::ReplyPriorityPolicy_ptr p,
@@ -810,6 +823,7 @@ namespace Messaging
 
 // Traits specializations for Messaging::RequestStartTimePolicy.
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 Messaging::RequestStartTimePolicy_ptr
 TAO::Objref_Traits<Messaging::RequestStartTimePolicy>::tao_duplicate (
     Messaging::RequestStartTimePolicy_ptr p
@@ -818,6 +832,7 @@ TAO::Objref_Traits<Messaging::RequestStartTimePolicy>::tao_duplicate (
   return Messaging::RequestStartTimePolicy::_duplicate (p);
 }
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 void
 TAO::Objref_Traits<Messaging::RequestStartTimePolicy>::tao_release (
     Messaging::RequestStartTimePolicy_ptr p
@@ -826,12 +841,14 @@ TAO::Objref_Traits<Messaging::RequestStartTimePolicy>::tao_release (
   CORBA::release (p);
 }
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 Messaging::RequestStartTimePolicy_ptr
 TAO::Objref_Traits<Messaging::RequestStartTimePolicy>::tao_nil (void)
 {
   return Messaging::RequestStartTimePolicy::_nil ();
 }
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 CORBA::Boolean
 TAO::Objref_Traits<Messaging::RequestStartTimePolicy>::tao_marshal (
     Messaging::RequestStartTimePolicy_ptr p,
@@ -981,6 +998,7 @@ namespace Messaging
 
 // Traits specializations for Messaging::RequestEndTimePolicy.
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 Messaging::RequestEndTimePolicy_ptr
 TAO::Objref_Traits<Messaging::RequestEndTimePolicy>::tao_duplicate (
     Messaging::RequestEndTimePolicy_ptr p
@@ -989,6 +1007,7 @@ TAO::Objref_Traits<Messaging::RequestEndTimePolicy>::tao_duplicate (
   return Messaging::RequestEndTimePolicy::_duplicate (p);
 }
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 void
 TAO::Objref_Traits<Messaging::RequestEndTimePolicy>::tao_release (
     Messaging::RequestEndTimePolicy_ptr p
@@ -997,12 +1016,14 @@ TAO::Objref_Traits<Messaging::RequestEndTimePolicy>::tao_release (
   CORBA::release (p);
 }
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 Messaging::RequestEndTimePolicy_ptr
 TAO::Objref_Traits<Messaging::RequestEndTimePolicy>::tao_nil (void)
 {
   return Messaging::RequestEndTimePolicy::_nil ();
 }
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 CORBA::Boolean
 TAO::Objref_Traits<Messaging::RequestEndTimePolicy>::tao_marshal (
     Messaging::RequestEndTimePolicy_ptr p,
@@ -1151,6 +1172,7 @@ namespace Messaging
 
 // Traits specializations for Messaging::ReplyStartTimePolicy.
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 Messaging::ReplyStartTimePolicy_ptr
 TAO::Objref_Traits<Messaging::ReplyStartTimePolicy>::tao_duplicate (
     Messaging::ReplyStartTimePolicy_ptr p
@@ -1159,6 +1181,7 @@ TAO::Objref_Traits<Messaging::ReplyStartTimePolicy>::tao_duplicate (
   return Messaging::ReplyStartTimePolicy::_duplicate (p);
 }
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 void
 TAO::Objref_Traits<Messaging::ReplyStartTimePolicy>::tao_release (
     Messaging::ReplyStartTimePolicy_ptr p
@@ -1167,12 +1190,14 @@ TAO::Objref_Traits<Messaging::ReplyStartTimePolicy>::tao_release (
   CORBA::release (p);
 }
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 Messaging::ReplyStartTimePolicy_ptr
 TAO::Objref_Traits<Messaging::ReplyStartTimePolicy>::tao_nil (void)
 {
   return Messaging::ReplyStartTimePolicy::_nil ();
 }
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 CORBA::Boolean
 TAO::Objref_Traits<Messaging::ReplyStartTimePolicy>::tao_marshal (
     Messaging::ReplyStartTimePolicy_ptr p,
@@ -1321,6 +1346,7 @@ namespace Messaging
 
 // Traits specializations for Messaging::ReplyEndTimePolicy.
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 Messaging::ReplyEndTimePolicy_ptr
 TAO::Objref_Traits<Messaging::ReplyEndTimePolicy>::tao_duplicate (
     Messaging::ReplyEndTimePolicy_ptr p
@@ -1329,6 +1355,7 @@ TAO::Objref_Traits<Messaging::ReplyEndTimePolicy>::tao_duplicate (
   return Messaging::ReplyEndTimePolicy::_duplicate (p);
 }
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 void
 TAO::Objref_Traits<Messaging::ReplyEndTimePolicy>::tao_release (
     Messaging::ReplyEndTimePolicy_ptr p
@@ -1337,12 +1364,14 @@ TAO::Objref_Traits<Messaging::ReplyEndTimePolicy>::tao_release (
   CORBA::release (p);
 }
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 Messaging::ReplyEndTimePolicy_ptr
 TAO::Objref_Traits<Messaging::ReplyEndTimePolicy>::tao_nil (void)
 {
   return Messaging::ReplyEndTimePolicy::_nil ();
 }
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 CORBA::Boolean
 TAO::Objref_Traits<Messaging::ReplyEndTimePolicy>::tao_marshal (
     Messaging::ReplyEndTimePolicy_ptr p,
@@ -1490,6 +1519,7 @@ namespace Messaging
 
 // Traits specializations for Messaging::RelativeRequestTimeoutPolicy.
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 Messaging::RelativeRequestTimeoutPolicy_ptr
 TAO::Objref_Traits<Messaging::RelativeRequestTimeoutPolicy>::tao_duplicate (
     Messaging::RelativeRequestTimeoutPolicy_ptr p
@@ -1498,6 +1528,7 @@ TAO::Objref_Traits<Messaging::RelativeRequestTimeoutPolicy>::tao_duplicate (
   return Messaging::RelativeRequestTimeoutPolicy::_duplicate (p);
 }
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 void
 TAO::Objref_Traits<Messaging::RelativeRequestTimeoutPolicy>::tao_release (
     Messaging::RelativeRequestTimeoutPolicy_ptr p
@@ -1506,12 +1537,14 @@ TAO::Objref_Traits<Messaging::RelativeRequestTimeoutPolicy>::tao_release (
   CORBA::release (p);
 }
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 Messaging::RelativeRequestTimeoutPolicy_ptr
 TAO::Objref_Traits<Messaging::RelativeRequestTimeoutPolicy>::tao_nil (void)
 {
   return Messaging::RelativeRequestTimeoutPolicy::_nil ();
 }
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 CORBA::Boolean
 TAO::Objref_Traits<Messaging::RelativeRequestTimeoutPolicy>::tao_marshal (
     Messaging::RelativeRequestTimeoutPolicy_ptr p,
@@ -1764,6 +1797,7 @@ Messaging::RoutingTypeRange::_tao_any_destructor (
 
 // Traits specializations for Messaging::RoutingPolicy.
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 Messaging::RoutingPolicy_ptr
 TAO::Objref_Traits<Messaging::RoutingPolicy>::tao_duplicate (
     Messaging::RoutingPolicy_ptr p
@@ -1772,6 +1806,7 @@ TAO::Objref_Traits<Messaging::RoutingPolicy>::tao_duplicate (
   return Messaging::RoutingPolicy::_duplicate (p);
 }
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 void
 TAO::Objref_Traits<Messaging::RoutingPolicy>::tao_release (
     Messaging::RoutingPolicy_ptr p
@@ -1780,12 +1815,14 @@ TAO::Objref_Traits<Messaging::RoutingPolicy>::tao_release (
   CORBA::release (p);
 }
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 Messaging::RoutingPolicy_ptr
 TAO::Objref_Traits<Messaging::RoutingPolicy>::tao_nil (void)
 {
   return Messaging::RoutingPolicy::_nil ();
 }
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 CORBA::Boolean
 TAO::Objref_Traits<Messaging::RoutingPolicy>::tao_marshal (
     Messaging::RoutingPolicy_ptr p,
@@ -1930,6 +1967,7 @@ namespace Messaging
 
 // Traits specializations for Messaging::MaxHopsPolicy.
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 Messaging::MaxHopsPolicy_ptr
 TAO::Objref_Traits<Messaging::MaxHopsPolicy>::tao_duplicate (
     Messaging::MaxHopsPolicy_ptr p
@@ -1938,6 +1976,7 @@ TAO::Objref_Traits<Messaging::MaxHopsPolicy>::tao_duplicate (
   return Messaging::MaxHopsPolicy::_duplicate (p);
 }
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 void
 TAO::Objref_Traits<Messaging::MaxHopsPolicy>::tao_release (
     Messaging::MaxHopsPolicy_ptr p
@@ -1946,12 +1985,14 @@ TAO::Objref_Traits<Messaging::MaxHopsPolicy>::tao_release (
   CORBA::release (p);
 }
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 Messaging::MaxHopsPolicy_ptr
 TAO::Objref_Traits<Messaging::MaxHopsPolicy>::tao_nil (void)
 {
   return Messaging::MaxHopsPolicy::_nil ();
 }
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 CORBA::Boolean
 TAO::Objref_Traits<Messaging::MaxHopsPolicy>::tao_marshal (
     Messaging::MaxHopsPolicy_ptr p,
@@ -2096,6 +2137,7 @@ namespace Messaging
 
 // Traits specializations for Messaging::QueueOrderPolicy.
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 Messaging::QueueOrderPolicy_ptr
 TAO::Objref_Traits<Messaging::QueueOrderPolicy>::tao_duplicate (
     Messaging::QueueOrderPolicy_ptr p
@@ -2104,6 +2146,7 @@ TAO::Objref_Traits<Messaging::QueueOrderPolicy>::tao_duplicate (
   return Messaging::QueueOrderPolicy::_duplicate (p);
 }
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 void
 TAO::Objref_Traits<Messaging::QueueOrderPolicy>::tao_release (
     Messaging::QueueOrderPolicy_ptr p
@@ -2112,12 +2155,14 @@ TAO::Objref_Traits<Messaging::QueueOrderPolicy>::tao_release (
   CORBA::release (p);
 }
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 Messaging::QueueOrderPolicy_ptr
 TAO::Objref_Traits<Messaging::QueueOrderPolicy>::tao_nil (void)
 {
   return Messaging::QueueOrderPolicy::_nil ();
 }
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 CORBA::Boolean
 TAO::Objref_Traits<Messaging::QueueOrderPolicy>::tao_marshal (
     Messaging::QueueOrderPolicy_ptr p,
@@ -3139,18 +3184,19 @@ operator>>= (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-  template class TAO::Objref_Traits<Messaging::RebindPolicy>;
+  template class
+    TAO::Objref_Traits<
+        Messaging::RebindPolicy
+      >;
 
   template class
     TAO_Objref_Var_T<
         Messaging::RebindPolicy
-        
       >;
   
   template class
     TAO_Objref_Out_T<
         Messaging::RebindPolicy
-        
       >;
 
   template class
@@ -3173,18 +3219,19 @@ operator>>= (
         Messaging::PriorityRange
       >;
 
-  template class TAO::Objref_Traits<Messaging::RequestPriorityPolicy>;
+  template class
+    TAO::Objref_Traits<
+        Messaging::RequestPriorityPolicy
+      >;
 
   template class
     TAO_Objref_Var_T<
         Messaging::RequestPriorityPolicy
-        
       >;
   
   template class
     TAO_Objref_Out_T<
         Messaging::RequestPriorityPolicy
-        
       >;
 
   template class
@@ -3192,18 +3239,19 @@ operator>>= (
         Messaging::RequestPriorityPolicy
       >;
 
-  template class TAO::Objref_Traits<Messaging::ReplyPriorityPolicy>;
+  template class
+    TAO::Objref_Traits<
+        Messaging::ReplyPriorityPolicy
+      >;
 
   template class
     TAO_Objref_Var_T<
         Messaging::ReplyPriorityPolicy
-        
       >;
   
   template class
     TAO_Objref_Out_T<
         Messaging::ReplyPriorityPolicy
-        
       >;
 
   template class
@@ -3211,18 +3259,19 @@ operator>>= (
         Messaging::ReplyPriorityPolicy
       >;
 
-  template class TAO::Objref_Traits<Messaging::RequestStartTimePolicy>;
+  template class
+    TAO::Objref_Traits<
+        Messaging::RequestStartTimePolicy
+      >;
 
   template class
     TAO_Objref_Var_T<
         Messaging::RequestStartTimePolicy
-        
       >;
   
   template class
     TAO_Objref_Out_T<
         Messaging::RequestStartTimePolicy
-        
       >;
 
   template class
@@ -3230,18 +3279,19 @@ operator>>= (
         Messaging::RequestStartTimePolicy
       >;
 
-  template class TAO::Objref_Traits<Messaging::RequestEndTimePolicy>;
+  template class
+    TAO::Objref_Traits<
+        Messaging::RequestEndTimePolicy
+      >;
 
   template class
     TAO_Objref_Var_T<
         Messaging::RequestEndTimePolicy
-        
       >;
   
   template class
     TAO_Objref_Out_T<
         Messaging::RequestEndTimePolicy
-        
       >;
 
   template class
@@ -3249,18 +3299,19 @@ operator>>= (
         Messaging::RequestEndTimePolicy
       >;
 
-  template class TAO::Objref_Traits<Messaging::ReplyStartTimePolicy>;
+  template class
+    TAO::Objref_Traits<
+        Messaging::ReplyStartTimePolicy
+      >;
 
   template class
     TAO_Objref_Var_T<
         Messaging::ReplyStartTimePolicy
-        
       >;
   
   template class
     TAO_Objref_Out_T<
         Messaging::ReplyStartTimePolicy
-        
       >;
 
   template class
@@ -3268,18 +3319,19 @@ operator>>= (
         Messaging::ReplyStartTimePolicy
       >;
 
-  template class TAO::Objref_Traits<Messaging::ReplyEndTimePolicy>;
+  template class
+    TAO::Objref_Traits<
+        Messaging::ReplyEndTimePolicy
+      >;
 
   template class
     TAO_Objref_Var_T<
         Messaging::ReplyEndTimePolicy
-        
       >;
   
   template class
     TAO_Objref_Out_T<
         Messaging::ReplyEndTimePolicy
-        
       >;
 
   template class
@@ -3287,18 +3339,19 @@ operator>>= (
         Messaging::ReplyEndTimePolicy
       >;
 
-  template class TAO::Objref_Traits<Messaging::RelativeRequestTimeoutPolicy>;
+  template class
+    TAO::Objref_Traits<
+        Messaging::RelativeRequestTimeoutPolicy
+      >;
 
   template class
     TAO_Objref_Var_T<
         Messaging::RelativeRequestTimeoutPolicy
-        
       >;
   
   template class
     TAO_Objref_Out_T<
         Messaging::RelativeRequestTimeoutPolicy
-        
       >;
 
   template class
@@ -3321,18 +3374,19 @@ operator>>= (
         Messaging::RoutingTypeRange
       >;
 
-  template class TAO::Objref_Traits<Messaging::RoutingPolicy>;
+  template class
+    TAO::Objref_Traits<
+        Messaging::RoutingPolicy
+      >;
 
   template class
     TAO_Objref_Var_T<
         Messaging::RoutingPolicy
-        
       >;
   
   template class
     TAO_Objref_Out_T<
         Messaging::RoutingPolicy
-        
       >;
 
   template class
@@ -3340,18 +3394,19 @@ operator>>= (
         Messaging::RoutingPolicy
       >;
 
-  template class TAO::Objref_Traits<Messaging::MaxHopsPolicy>;
+  template class
+    TAO::Objref_Traits<
+        Messaging::MaxHopsPolicy
+      >;
 
   template class
     TAO_Objref_Var_T<
         Messaging::MaxHopsPolicy
-        
       >;
   
   template class
     TAO_Objref_Out_T<
         Messaging::MaxHopsPolicy
-        
       >;
 
   template class
@@ -3359,18 +3414,19 @@ operator>>= (
         Messaging::MaxHopsPolicy
       >;
 
-  template class TAO::Objref_Traits<Messaging::QueueOrderPolicy>;
+  template class
+    TAO::Objref_Traits<
+        Messaging::QueueOrderPolicy
+      >;
 
   template class
     TAO_Objref_Var_T<
         Messaging::QueueOrderPolicy
-        
       >;
   
   template class
     TAO_Objref_Out_T<
         Messaging::QueueOrderPolicy
-        
       >;
 
   template class
@@ -3380,18 +3436,19 @@ operator>>= (
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-# pragma instantiate TAO::Objref_Traits<Messaging::RebindPolicy>
+# pragma instantiate \
+    TAO::Objref_Traits< \
+        Messaging::RebindPolicy \
+      >
 
 # pragma instantiate \
     TAO_Objref_Var_T< \
         Messaging::RebindPolicy
-        
       >
   
 # pragma instantiate \
     TAO_Objref_Out_T< \
         Messaging::RebindPolicy
-        
       >
 
 # pragma instantiate \
@@ -3414,18 +3471,19 @@ operator>>= (
         Messaging::PriorityRange \
       >
 
-# pragma instantiate TAO::Objref_Traits<Messaging::RequestPriorityPolicy>
+# pragma instantiate \
+    TAO::Objref_Traits< \
+        Messaging::RequestPriorityPolicy \
+      >
 
 # pragma instantiate \
     TAO_Objref_Var_T< \
         Messaging::RequestPriorityPolicy
-        
       >
   
 # pragma instantiate \
     TAO_Objref_Out_T< \
         Messaging::RequestPriorityPolicy
-        
       >
 
 # pragma instantiate \
@@ -3433,18 +3491,19 @@ operator>>= (
         Messaging::RequestPriorityPolicy \
       >
 
-# pragma instantiate TAO::Objref_Traits<Messaging::ReplyPriorityPolicy>
+# pragma instantiate \
+    TAO::Objref_Traits< \
+        Messaging::ReplyPriorityPolicy \
+      >
 
 # pragma instantiate \
     TAO_Objref_Var_T< \
         Messaging::ReplyPriorityPolicy
-        
       >
   
 # pragma instantiate \
     TAO_Objref_Out_T< \
         Messaging::ReplyPriorityPolicy
-        
       >
 
 # pragma instantiate \
@@ -3452,18 +3511,19 @@ operator>>= (
         Messaging::ReplyPriorityPolicy \
       >
 
-# pragma instantiate TAO::Objref_Traits<Messaging::RequestStartTimePolicy>
+# pragma instantiate \
+    TAO::Objref_Traits< \
+        Messaging::RequestStartTimePolicy \
+      >
 
 # pragma instantiate \
     TAO_Objref_Var_T< \
         Messaging::RequestStartTimePolicy
-        
       >
   
 # pragma instantiate \
     TAO_Objref_Out_T< \
         Messaging::RequestStartTimePolicy
-        
       >
 
 # pragma instantiate \
@@ -3471,18 +3531,19 @@ operator>>= (
         Messaging::RequestStartTimePolicy \
       >
 
-# pragma instantiate TAO::Objref_Traits<Messaging::RequestEndTimePolicy>
+# pragma instantiate \
+    TAO::Objref_Traits< \
+        Messaging::RequestEndTimePolicy \
+      >
 
 # pragma instantiate \
     TAO_Objref_Var_T< \
         Messaging::RequestEndTimePolicy
-        
       >
   
 # pragma instantiate \
     TAO_Objref_Out_T< \
         Messaging::RequestEndTimePolicy
-        
       >
 
 # pragma instantiate \
@@ -3490,18 +3551,19 @@ operator>>= (
         Messaging::RequestEndTimePolicy \
       >
 
-# pragma instantiate TAO::Objref_Traits<Messaging::ReplyStartTimePolicy>
+# pragma instantiate \
+    TAO::Objref_Traits< \
+        Messaging::ReplyStartTimePolicy \
+      >
 
 # pragma instantiate \
     TAO_Objref_Var_T< \
         Messaging::ReplyStartTimePolicy
-        
       >
   
 # pragma instantiate \
     TAO_Objref_Out_T< \
         Messaging::ReplyStartTimePolicy
-        
       >
 
 # pragma instantiate \
@@ -3509,18 +3571,19 @@ operator>>= (
         Messaging::ReplyStartTimePolicy \
       >
 
-# pragma instantiate TAO::Objref_Traits<Messaging::ReplyEndTimePolicy>
+# pragma instantiate \
+    TAO::Objref_Traits< \
+        Messaging::ReplyEndTimePolicy \
+      >
 
 # pragma instantiate \
     TAO_Objref_Var_T< \
         Messaging::ReplyEndTimePolicy
-        
       >
   
 # pragma instantiate \
     TAO_Objref_Out_T< \
         Messaging::ReplyEndTimePolicy
-        
       >
 
 # pragma instantiate \
@@ -3528,18 +3591,19 @@ operator>>= (
         Messaging::ReplyEndTimePolicy \
       >
 
-# pragma instantiate TAO::Objref_Traits<Messaging::RelativeRequestTimeoutPolicy>
+# pragma instantiate \
+    TAO::Objref_Traits< \
+        Messaging::RelativeRequestTimeoutPolicy \
+      >
 
 # pragma instantiate \
     TAO_Objref_Var_T< \
         Messaging::RelativeRequestTimeoutPolicy
-        
       >
   
 # pragma instantiate \
     TAO_Objref_Out_T< \
         Messaging::RelativeRequestTimeoutPolicy
-        
       >
 
 # pragma instantiate \
@@ -3562,18 +3626,19 @@ operator>>= (
         Messaging::RoutingTypeRange \
       >
 
-# pragma instantiate TAO::Objref_Traits<Messaging::RoutingPolicy>
+# pragma instantiate \
+    TAO::Objref_Traits< \
+        Messaging::RoutingPolicy \
+      >
 
 # pragma instantiate \
     TAO_Objref_Var_T< \
         Messaging::RoutingPolicy
-        
       >
   
 # pragma instantiate \
     TAO_Objref_Out_T< \
         Messaging::RoutingPolicy
-        
       >
 
 # pragma instantiate \
@@ -3581,18 +3646,19 @@ operator>>= (
         Messaging::RoutingPolicy \
       >
 
-# pragma instantiate TAO::Objref_Traits<Messaging::MaxHopsPolicy>
+# pragma instantiate \
+    TAO::Objref_Traits< \
+        Messaging::MaxHopsPolicy \
+      >
 
 # pragma instantiate \
     TAO_Objref_Var_T< \
         Messaging::MaxHopsPolicy
-        
       >
   
 # pragma instantiate \
     TAO_Objref_Out_T< \
         Messaging::MaxHopsPolicy
-        
       >
 
 # pragma instantiate \
@@ -3600,18 +3666,19 @@ operator>>= (
         Messaging::MaxHopsPolicy \
       >
 
-# pragma instantiate TAO::Objref_Traits<Messaging::QueueOrderPolicy>
+# pragma instantiate \
+    TAO::Objref_Traits< \
+        Messaging::QueueOrderPolicy \
+      >
 
 # pragma instantiate \
     TAO_Objref_Var_T< \
         Messaging::QueueOrderPolicy
-        
       >
   
 # pragma instantiate \
     TAO_Objref_Out_T< \
         Messaging::QueueOrderPolicy
-        
       >
 
 # pragma instantiate \
