@@ -51,6 +51,8 @@
 #ifndef RTCOSSCHEDULING_SERVER_CONTAINERS
 #define RTCOSSCHEDULING_SERVER_CONTAINERS
 
+class TAO::PCP_Manager;
+
 /**
  * CosSchedulingObjectNameMap
  *
