@@ -170,7 +170,7 @@ worker (void *c)
   return 0;
 }
 
-static void 
+extern "C" void 
 handler (int signum)
 {
   ACE_DEBUG ((LM_DEBUG, "signal = %S\n", signum));
@@ -180,15 +180,15 @@ handler (int signum)
 int 
 main (int argc, char *argv[])
 {
-  // The Service_Config must *always* be the first object defined in
-  // main...
+  // The Service_Config must be the first object defined in main...
   ACE_Service_Config daemon (argv[0]);
   ACE_Thread_Control tc (ACE_Service_Config::thr_mgr ());
   int threads = argc > 1 ? ACE_OS::atoi (argv[1]) : 4;
   int count = argc > 2 ? ACE_OS::atoi (argv[2]) : 10000;
 
-  signal (SIGINT, ACE_SignalHandler (handler));
-  
+  // Register a signal handler.
+  ACE_Sig_Action sa ((ACE_SignalHandler) (handler), SIGINT);
+
 #if defined (ACE_HAS_THREADS)
   if (ACE_Service_Config::thr_mgr ()->spawn_n (threads, 
 					       ACE_THR_FUNC (&worker), 

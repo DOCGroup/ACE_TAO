@@ -92,7 +92,6 @@ Test_Task::put (ACE_Message_Block *, ACE_Time_Value *)
   return 0;
 }
 
-int 
 Test_Task::svc (void)
 {
   // Every thread must register the same stream to write to file.
@@ -104,7 +103,7 @@ Test_Task::svc (void)
 
   for (int index = 0; index < NUM_INVOCATIONS; index++)
     {
-      ACE_OS::thr_yield ();
+      ACE_OS::thr_extern "C" yield ();
 
       if (r_->notify (this, ACE_Event_Handler::READ_MASK))
 	{
@@ -162,8 +161,8 @@ dispatch (void *arg)
   return 0;
 }
 
-static void 
-handler (int signum)
+extern "C" void 
+handler (int)
 {
   *out_stream << flush;
   out_stream->close ();
@@ -179,8 +178,10 @@ main (int argc, char **argv)
       out_stream = new ofstream ("test_task_three.out", ios::trunc|ios::out);
       ACE_LOG_MSG->set_flags (ACE_Log_Msg::OSTREAM);
       ACE_LOG_MSG->msg_ostream (out_stream);
-      signal (SIGINT, ACE_SignalHandler (handler));
     }
+
+  // Register a signal handler.
+  ACE_Sig_Action sa (ACE_Sig_Handler_Ex (handler), SIGINT);
 
   ACE_Reactor *reactor1 = ACE_Service_Config::reactor ();
   ACE_Reactor *reactor2 = new ACE_Reactor ();

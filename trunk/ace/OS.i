@@ -137,9 +137,9 @@ extern "C" char *mktemp (char *);
 #if defined (ACE_HAS_THR_C_FUNC)
 // This is necessary to work around nasty problems with MVS C++.
 extern "C" void ace_mutex_lock_cleanup_adapter (void *args);
-#define ACE_PTHREAD_CLEANUP_PUSH(A) pthread_cleanup_push (ace_mutex_lock_cleanup_adapter, (void *) A));
+#define ACE_PTHREAD_CLEANUP_PUSH(A) pthread_cleanup_push (ace_mutex_lock_cleanup_adapter, (void *) A);
 #else
-#define ACE_PTHREAD_CLEANUP_PUSH(A) pthread_cleanup_push (ACE_OS::mutex_lock_cleanup, (void *) A));
+#define ACE_PTHREAD_CLEANUP_PUSH(A) pthread_cleanup_push (ACE_OS::mutex_lock_cleanup, (void *) A);
 #endif /* ACE_HAS_THR_C_FUNC */
 
 #if defined (ACE_HAS_REGEX)
@@ -2450,7 +2450,10 @@ ACE_OS::gethostbyname_r (const char *name, hostent *result,
 #if defined (VXWORKS)
   ACE_NOTSUP_RETURN (0);
 #elif defined (ACE_HAS_REENTRANT_FUNCTIONS) && defined (ACE_MT_SAFE) && !defined (UNIXWARE)
-#if defined (AIX) || defined (DIGITAL_UNIX)
+#if defined (DIGITAL_UNIX)
+  // gethostbyname returns thread-specific storage on Digital Unix
+  ACE_SOCKCALL_RETURN (::gethostbyname (name), struct hostent *, 0);
+#elif defined (AIX)
   ::memset (buffer, 0, sizeof (ACE_HOSTENT_DATA));
 
   if (::gethostbyname_r (name, result, (struct hostent_data *) buffer) == 0)
@@ -3212,10 +3215,10 @@ ACE_OS::thr_sigsetmask (int how,
   ACE_NOTSUP_RETURN (-1);  
 #elif defined (ACE_HAS_PTHREADS_1003_DOT_1C)
   // PTHREADS_1003_DOT_1C is NOT a subcase of DCETHREADS!
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::sigthreadmask (how, nsm, osm), 
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_sigmask (how, nsm, osm), 
 				       ace_result_), int, -1);
 #elif defined (ACE_HAS_PTHREADS) && !defined (ACE_HAS_FSU_PTHREADS)
-#if defined (ACE_HAS_IRIX62_THREADS) || defined (DIGITAL_UNIX)
+#if defined (ACE_HAS_IRIX62_THREADS)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_sigmask (how, nsm, osm),
  			               ace_result_),int, -1);
 #else
@@ -3266,11 +3269,10 @@ ACE_OS::thr_min_stack (void)
 #elif (defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)) && !defined (ACE_HAS_SETKIND_NP)
 #if defined (ACE_HAS_IRIX62_THREADS)
   return (size_t) ACE_OS::sysconf (_SC_THREAD_STACK_MIN);
-#if defined (PTHREAD_STACK_MIN)
+#elif defined (PTHREAD_STACK_MIN)
   return PTHREAD_STACK_MIN;
 #else
   ACE_NOTSUP_RETURN (0);
-#endif /* PTHREAD_STACK_MIN */
 #endif /* ACE_HAS_IRIX62_THREADS */
 #elif (defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)) && !defined (ACE_HAS_SETKIND_NP)
   ACE_NOTSUP_RETURN (0);
@@ -4658,7 +4660,7 @@ ACE_OS::asctime_r (const struct tm *t, char *buf, int buflen)
 #endif /* ACE_HAS_ONLY_TWO_PARAMS_FOR_ASCTIME_R_AND_CTIME_R */
 #else
   char *result;
-  ACE_OSCALL_RETURN (::asctime (t), char *, 0);
+  ACE_OSCALL (::asctime (t), char *, 0, result);
   ::strncpy (buf, result, buflen);
   return buf;
 #endif /* defined (ACE_HAS_REENTRANT_FUNCTIONS) && defined (ACE_MT_SAFE) */
@@ -5235,6 +5237,8 @@ ACE_OS::mkdir (const char *path, mode_t mode)
 // ACE_TRACE ("ACE_OS::mkdir");
 #if defined (ACE_WIN32)
   ACE_OSCALL_RETURN (::_mkdir (path), int, -1);  
+#elif defined (VXWORKS)
+  ACE_OSCALL_RETURN (::_mkdir ((char *) path), int, -1);  
 #else
   ACE_OSCALL_RETURN (::mkdir (path, mode), int, -1);
 #endif /* VXWORKS */

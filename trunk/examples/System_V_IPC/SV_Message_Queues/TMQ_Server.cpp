@@ -1,16 +1,16 @@
-#include "ace/Signal.h"
 // $Id$
 
+#include "ace/Signal.h"
 #include "ace/Typed_SV_Message_Queue.h"
 #include "ace/Log_Msg.h"
 #include "test.h"
 
 // Must be global for signal Message...
-ACE_Typed_SV_Message_Queue<Message_Data> msgque 
+static ACE_Typed_SV_Message_Queue<Message_Data> msgque 
   (SRV_KEY, ACE_Typed_SV_Message_Queue<Message_Data>::ACE_CREATE);
 
-void
-SIGNAL_handler (int)
+extern "C" void
+handler (int)
 {
   if (msgque.remove () < 0)
     ACE_ERROR ((LM_ERROR, "%p\n%a", "msgque.recv", 1));
@@ -25,7 +25,8 @@ main (void)
   ACE_Typed_SV_Message<Message_Data> send_msg (msg_data, 0, msg_data.length ());
   ACE_Typed_SV_Message<Message_Data> recv_msg (SRV_ID);
 
-  ACE_Sig_Action sig2 ((ACE_SignalHandler) SIGNAL_handler, SIGINT);
+  // Register a signal handler.
+  ACE_Sig_Action sa ((ACE_SignalHandler) handler, SIGINT);
 
   for (;;)
     {

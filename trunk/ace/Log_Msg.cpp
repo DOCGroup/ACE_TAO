@@ -65,37 +65,30 @@ ACE_Log_Msg::instance (void)
 {
 #if defined (ACE_MT_SAFE)
 #if defined (VXWORKS)
-
-  // TSS Singleton implementation.
-
+  // TSS Singleton implementation for VxWorks.
   static int once_ = 0;
 
-  // this isn't thread safe . . .
+  // This isn't thread safe . . .
   if (once_ == 0 && lock_ == 0)
     {
       // Initialize the static recursive lock here.  Note that we
       // can't rely on the constructor being called at this point.
       ACE_NEW_RETURN (lock_, ACE_Recursive_Thread_Mutex, 0);
-
       once_ = 1;
     }  
 
-  // Get the tss_log_msg from thread-specific storage, using one of the
-  // "spare" fields in the task control block.  Note that no locks
-  // are required here...
+  // Get the tss_log_msg from thread-specific storage, using one of
+  // the "spare" fields in the task control block.  Note that no locks
+  // are required here since this is within our thread context...
   ACE_Log_Msg **tss_log_msg = (ACE_Log_Msg **) &taskIdCurrent->spare1;
 
   // Check to see if this is the first time in for this thread.
   if (*(int **) tss_log_msg == 0)
-    {
-      // Allocate memory off the heap and store it in a pointer in
-      // thread-specific storage (on the stack...).
-
-      ACE_NEW_RETURN (*tss_log_msg, ACE_Log_Msg, 0);
-    }
+    // Allocate memory off the heap and store it in a pointer in
+    // thread-specific storage (on the stack...).
+    ACE_NEW_RETURN (*tss_log_msg, ACE_Log_Msg, 0);
 
   return *tss_log_msg;
-
 #elif !defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
 #error "Platform must support thread-specific storage if threads are used..."
 #else

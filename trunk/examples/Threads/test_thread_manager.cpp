@@ -1,6 +1,6 @@
-// Test out the group management mechanisms provided by the
 // $Id$
 
+// Test out the group management mechanisms provided by the
 // ACE_Thread_Manager, including the group signal handling, group
 // suspension and resumption, and cooperative thread cancellation
 // mechanisms.
@@ -10,7 +10,7 @@
 
 #if defined (ACE_HAS_THREADS)
 
-static void
+extern "C" void
 handler (int signum)
 {
   ACE_DEBUG ((LM_DEBUG, "(%t) received signal %d\n", signum));
@@ -53,9 +53,8 @@ main (int argc, char *argv[])
 
   daemon.open (argv[0]);
 
-  // Register a signal handler
-  ACE_SignalHandler sh (handler);
-  ACE_Sig_Action sa (sh, SIGINT);
+  // Register a signal handler.
+  ACE_Sig_Action sa (ACE_Sig_Handler_Ex (handler), SIGINT);
 
   int n_threads = argc > 1 ? ACE_OS::atoi (argv[1]) : DEFAULT_THREADS;
   int n_iterations = argc > 2 ? ACE_OS::atoi (argv[2]) : DEFAULT_ITERATIONS;

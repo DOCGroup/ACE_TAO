@@ -134,7 +134,6 @@ ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::resize_i (size_t size)
   size_t i;
   
   ACE_Map_Entry<EXT_ID, INT_ID> *temp = (ACE_Map_Entry<EXT_ID, INT_ID> *) ptr;
-  ACE_Map_Entry<EXT_ID, INT_ID> *foo;
 
   // Copy over the currently active elements.
   for (i = 0; i < this->cur_size_; i++)
@@ -148,8 +147,8 @@ ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::resize_i (size_t size)
   
   for (i = this->cur_size_; i < this->max_size_; i++)
     {
-      // call the constructor for each element in the array
-      foo = new (&(temp[i])) ACE_Map_Entry<EXT_ID, INT_ID>;
+      // Call the constructor for each element in the array.
+      new (&(temp[i])) ACE_Map_Entry<EXT_ID, INT_ID>;
       temp[i].is_free_ = 1;
     }
   

@@ -173,8 +173,7 @@ public:
 	  ACE_DEBUG ((LM_DEBUG, "\nshutting down SIGQUIT in Sig_Handler_2 (%s, %d, %d)",
 		     this->msg_, this->int_sigkey_, this->quit_sigkey_));
       }
-    else
-      return 0;
+    return 0;
   }
 };
 
@@ -198,6 +197,7 @@ main (int argc, char *argv)
     {
       // Register an "external" signal handler so that the
       // ACE_Sig_Handlers code will have something to incorporate!
+
       ACE_SignalHandler eh = ACE_SignalHandler (external_handler);
       ACE_Sig_Action sa (eh);
 

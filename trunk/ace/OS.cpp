@@ -562,8 +562,8 @@ public:
 // Run the thread exit point.  This must be an extern "C" to make
 // certain compilers happy...
 
-extern "C" 
-void *ace_thread_adapter (void *args)
+extern "C" void *
+ace_thread_adapter (void *args)
 {
   // ACE_TRACE ("ACE_Thread_Adapter::svc_run");
   ACE_Thread_Adapter *thread_args = (ACE_Thread_Adapter *) args;
@@ -592,7 +592,7 @@ void *ace_thread_adapter (void *args)
   /* NOTREACHED */
   return status;
 #else
-  return (*func) (arg);  // Call thread entry point.
+  return (void *) (*func) (arg);  // Call thread entry point.
 #endif /* ACE_WIN32 */
 }
 
@@ -841,7 +841,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 	  }
       }
 
-      p_thr = (thr_id == 0 ? &tmp_thr : thr_id);
+      p_thr = thr_id == 0 ? &tmp_thr : thr_id;
 
 #if defined (ACE_HAS_SETKIND_NP)
       ACE_OSCALL (ACE_ADAPT_RETVAL (::pthread_create (p_thr, attr, func, args), 
@@ -894,7 +894,6 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 
       ACE_Thread_Adapter *thread_args;
       ACE_NEW_RETURN (thread_args, ACE_Thread_Adapter (func, args), -1);
-
 #if defined (ACE_HAS_MFC)
       if (ACE_BIT_ENABLED (flags, THR_USE_AFX))
   	{
@@ -946,8 +945,9 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 	ACE_FAIL_RETURN (-1);
       /* NOTREACHED */
 #elif defined (VXWORKS)
-      // If thr_id points to NULL (or is 0), the call below causes VxWorks
-      // to assign a unique task name of the form:  "t" + an integer.
+      // If thr_id points to NULL (or is 0), the call below causes
+      // VxWorks to assign a unique task name of the form: "t" + an
+      // integer.
 
       // args must be an array of _exactly_ 10 ints.
 
@@ -1078,7 +1078,7 @@ ACE_OS::thr_keyfree (ACE_thread_key_t key)
 
 int 
 ACE_OS::thr_keycreate (ACE_thread_key_t *key, 
-		       void (*dest) (void *),
+		       ACE_THR_DEST dest,
 		       void *inst)
 {
 // ACE_TRACE ("ACE_OS::thr_keycreate");
