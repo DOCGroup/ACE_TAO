@@ -1,7 +1,13 @@
+Mon May 01 12:41:39 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Hash_Map_Manager_T.cpp (close_i): Restored freeing of the
+	  table memory which had been mistakenly removed.  Thanks to David
+	  for pointing this out.
+
 Mon May  1 10:27:48 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * bin/auto_compile_win32.pl:
-          
+
           Some minor changes that should make the Win32 builds clean
           ( which I want to see once before bugging Nanbor to switch
           to my script :-) )
