@@ -210,7 +210,7 @@ HTTP_Response::normal_response (void)
           else
             this->error_response (HTTP_Status_Code::STATUS_UNAUTHORIZED,
                                   "Invalid authorization attempt");
-          delete buf;
+          delete [] buf;
         }
       break;
 
@@ -353,9 +353,9 @@ HTTP_Response::build_headers (void)
 
         struct stat file_stat;
         // If possible, add the Content-length field to the header.
-        // @@ Note that using 'ACE_OS::stat' is a hack.  Normally,
-        // a web browser will have a 'virtual' file system. In a
-        // VFS, 'stat' might not reference the correct location. 
+        // @@ Note that using 'ACE_OS::stat' is a hack.  Normally, a
+        // web browser will have a 'virtual' file system. In a VFS,
+        // 'stat' might not reference the correct location.
         if ((this->request_.type () == HTTP_Request::GET) &&
             (ACE_OS::stat (this->request_.path (), &file_stat) == 0))
         {
@@ -368,7 +368,6 @@ HTTP_Response::build_headers (void)
         HTTP_HEADER[HTTP_HEADER_LENGTH++] = '\r';
         HTTP_HEADER[HTTP_HEADER_LENGTH++] = '\n';
       }
-
 #else
       if (! this->request_.cgi ())
         HTTP_HEADER = "HTTP/1.0 200 OK\r\n"
