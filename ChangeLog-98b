@@ -17,6 +17,11 @@ Wed Aug 05 14:53:18 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 	* ace/Svc_Handler.cpp (recycling_act): Added accessor to get the
  	  <recycling_act_>.
 
+	* tests/Conn_Test.cpp (idle): Added method so that we can tell
+ 	  when a Svc_Handler is being set to idle.  Also changed the test
+ 	  so that it can use the new "hint" mechanism in the cached
+ 	  connector.
+
 Wed Aug  5 16:12:34 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Log_Msg.cpp: Replaced usage of ACE_OS::thr_* with

@@ -239,8 +239,16 @@ specifies that no locking be performed.  The default is
 <code>thread</code>.</TD></TR>
 <TR>
 <TD><CODE>-ORBcoltbllock</CODE> <EM>lock type</EM></TD>
-<TD><a name="-ORBtoltbllock"></a>Specify the type of lock to be used for
+<TD><a name="-ORBcoltbllock"></a>Specify the type of lock to be used for
 the global collocation table.  Possible values for <em>lock type</em> are
+<code>thread</code>, which specifies that an inter-thread mutex is
+used to guarantee exclusive acccess, and <code>null</code>, which
+specifies that no locking be performed.  The default is
+<code>thread</code>.</TD></TR>
+<TR>
+<TD><CODE>-ORBconnectorlock</CODE> <EM>lock type</EM></TD> <TD><a
+name="-ORBconnectorlock"></a>Specify the type of lock to be used by
+the connector.  Possible values for <em>lock type</em> are
 <code>thread</code>, which specifies that an inter-thread mutex is
 used to guarantee exclusive acccess, and <code>null</code>, which
 specifies that no locking be performed.  The default is
