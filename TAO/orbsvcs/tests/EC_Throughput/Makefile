@@ -1,6 +1,7 @@
 # $Id$
 
-BUILD = ECT_Supplier ECT_Consumer
+BIN = ECT_Supplier ECT_Consumer
+VBIN = $(BIN:%=%$(VAR))
 LDLIBS= -lorbsvcs -lTAO
 
 ifndef TAO_ROOT
@@ -13,7 +14,7 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs \
 ECT_Supplier_OBJS=$(addsuffix .o,ECT_Supplier)
 ECT_Consumer_OBJS=$(addsuffix .o,ECT_Consumer)
 
-SRC =   $(addsuffix .cpp, $(BUILD))
+SRC =   $(addsuffix .cpp, $(BIN))
 
 ifdef quantify
   CCFLAGS += -Dquantify
@@ -41,7 +42,7 @@ ECT_Consumer: $(addprefix $(VDIR),$(ECT_Consumer_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 realclean:
-	$(RM) -f $(BUILD)
+	$(RM) -f $(BIN)
 
 #----------------------------------------------------------------------------
 #       Dependencies

@@ -1,7 +1,6 @@
 # $Id$
 
 BIN = EC_Mcast
-BUILD = $(BIN)
 SRC = $(BIN:%=%$(VAR).cpp)
 LDLIBS= -lorbsvcs -lTAO
 
