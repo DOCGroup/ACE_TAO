@@ -1,4 +1,6 @@
-Thu Jun 24 21:33:00 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+Thu Jun 24 21:43:59 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/POAC.cpp (_narrow): Fixed use of try macros.
 
 	* tao/ORB.cpp: Even though MSVC has support for standard C++
 	  library, the set_unexpected() function is not in the std
