@@ -218,10 +218,9 @@ Test_Complex_Any::add_args (CORBA::NVList_ptr param_list,
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            "Test_Complex_Any::add_args\n");
 
-      return -1;
     }
   ACE_ENDTRY;
-  ACE_NOTREACHED (return -1;)
+  return -1;
 }
 
 CORBA::Boolean
