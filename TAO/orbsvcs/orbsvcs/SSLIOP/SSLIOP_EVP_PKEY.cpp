@@ -3,7 +3,7 @@
 #include "SSLIOP_EVP_PKEY.h"
 
 
-ACE_RCSID (TAO_SSLIOP,
+ACE_RCSID (SSLIOP,
            SSLIOP_EVP_PKEY,
            "$Id$")
 

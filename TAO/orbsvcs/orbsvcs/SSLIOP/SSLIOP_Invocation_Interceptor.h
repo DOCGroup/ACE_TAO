@@ -35,100 +35,106 @@
 #endif /* _MSC_VER */
 
 
-/**
- * @class TAO_SSLIOP_Server_Invocation_Interceptor
- *
- * @brief Secure invocation server request interceptor.
- *
- * This server request interceptor rejects insecure request
- * invocations if the effective target object policy requires secure
- * invocations.
- */
-class TAO_SSLIOP_Export TAO_SSLIOP_Server_Invocation_Interceptor
-  : public virtual PortableInterceptor::ServerRequestInterceptor,
-    public virtual TAO_Local_RefCounted_Object
+namespace TAO
 {
-public:
+  namespace SSLIOP
+  {
+    /**
+     * @class Server_Invocation_Interceptor
+     *
+     * @brief Secure invocation server request interceptor.
+     *
+     * This server request interceptor rejects insecure request
+     * invocations if the effective target object policy requires
+     * secure invocations.
+     */
+    class TAO_SSLIOP_Export Server_Invocation_Interceptor
+      : public virtual PortableInterceptor::ServerRequestInterceptor,
+        public virtual TAO_Local_RefCounted_Object
+    {
+    public:
 
-  /// Constructor.
-  TAO_SSLIOP_Server_Invocation_Interceptor (SSLIOP::Current_ptr current,
-                                            Security::QOP qop);
+      /// Constructor.
+      Server_Invocation_Interceptor (::SSLIOP::Current_ptr current,
+                                     ::Security::QOP qop);
 
-  /**
-   * @name PortableInterceptor::ServerRequestInterceptor Methods
-   *
-   * Methods required by the
-   * PortableInterceptor::ServerRequestInterceptor interface.
-   */
-  //@{
-  virtual char * name (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+      /**
+       * @name PortableInterceptor::ServerRequestInterceptor Methods
+       *
+       * Methods required by the
+       * PortableInterceptor::ServerRequestInterceptor interface.
+       */
+      //@{
+      virtual char * name (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+      virtual void destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void receive_request_service_contexts (
-      PortableInterceptor::ServerRequestInfo_ptr ri
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableInterceptor::ForwardRequest));
+      virtual void receive_request_service_contexts (
+          PortableInterceptor::ServerRequestInfo_ptr ri
+          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_THROW_SPEC ((CORBA::SystemException,
+                         PortableInterceptor::ForwardRequest));
 
-  virtual void receive_request (
-      PortableInterceptor::ServerRequestInfo_ptr ri
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableInterceptor::ForwardRequest));
+      virtual void receive_request (
+          PortableInterceptor::ServerRequestInfo_ptr ri
+          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_THROW_SPEC ((CORBA::SystemException,
+                         PortableInterceptor::ForwardRequest));
 
-  virtual void send_reply (
-      PortableInterceptor::ServerRequestInfo_ptr ri
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+      virtual void send_reply (
+          PortableInterceptor::ServerRequestInfo_ptr ri
+          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void send_exception (
-      PortableInterceptor::ServerRequestInfo_ptr ri
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableInterceptor::ForwardRequest));
+      virtual void send_exception (
+          PortableInterceptor::ServerRequestInfo_ptr ri
+          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_THROW_SPEC ((CORBA::SystemException,
+                         PortableInterceptor::ForwardRequest));
 
-  virtual void send_other (
-      PortableInterceptor::ServerRequestInfo_ptr ri
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableInterceptor::ForwardRequest));
-  //@}
+      virtual void send_other (
+          PortableInterceptor::ServerRequestInfo_ptr ri
+          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_THROW_SPEC ((CORBA::SystemException,
+                         PortableInterceptor::ForwardRequest));
+      //@}
 
-protected:
+    protected:
 
-  /// Destructor
-  /**
-   * Protected destructor to force deallocation by the reference
-   * counting mechanism.
-   */
-  ~TAO_SSLIOP_Server_Invocation_Interceptor (void);
+      /// Destructor
+      /**
+       * Protected destructor to force deallocation by the reference
+       * counting mechanism.
+       */
+      ~Server_Invocation_Interceptor (void);
 
-private:
+    private:
 
-  /**
-   * @name Copying and Assignment
-   *
-   * Protected to prevent copying through the copy constructor and the
-   * assignment operator.
-   */
-  //@{
-  ACE_UNIMPLEMENTED_FUNC (
-    TAO_SSLIOP_Server_Invocation_Interceptor (const TAO_SSLIOP_Server_Invocation_Interceptor &))
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_SSLIOP_Server_Invocation_Interceptor &))
-  //@}
+      /**
+       * @name Copying and Assignment
+       *
+       * Protected to prevent copying through the copy constructor and the
+       * assignment operator.
+       */
+      //@{
+      ACE_UNIMPLEMENTED_FUNC (Server_Invocation_Interceptor (const Server_Invocation_Interceptor &))
+        ACE_UNIMPLEMENTED_FUNC (void operator= (const Server_Invocation_Interceptor &))
+        //@}
 
-private:
+        private:
 
-  /// Reference to the current SSLIOP execution context.
-  SSLIOP::Current_var ssliop_current_;
+      /// Reference to the current SSLIOP execution context.
+      ::SSLIOP::Current_var ssliop_current_;
 
-  /// The default quality-of-protection settings in use.
-  Security::QOP qop_;
+      /// The default quality-of-protection settings in use.
+      ::Security::QOP qop_;
 
-};
+    };
+
+  }  // End SSLIOP namespace.
+}  // End TAO namespace.
 
 #if defined (_MSC_VER) && (_MSC_VER >= 1200)
 #pragma warning(pop)

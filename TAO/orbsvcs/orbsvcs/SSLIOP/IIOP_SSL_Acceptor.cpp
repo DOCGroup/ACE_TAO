@@ -1,7 +1,3 @@
-// -*- C++ -*-
-//
-// $Id$
-
 #include "IIOP_SSL_Acceptor.h"
 
 #include "SSLIOP_Util.h"
@@ -10,37 +6,37 @@
 #include "tao/debug.h"
 
 
-ACE_RCSID (TAO_SSLIOP,
+ACE_RCSID (SSLIOP,
            IIOP_SSL_Acceptor,
            "$Id$")
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class ACE_Acceptor<TAO_IIOP_SSL_Connection_Handler, ACE_SOCK_ACCEPTOR>;
-template class ACE_Strategy_Acceptor<TAO_IIOP_SSL_Connection_Handler, ACE_SOCK_ACCEPTOR>;
-template class ACE_Accept_Strategy<TAO_IIOP_SSL_Connection_Handler, ACE_SOCK_ACCEPTOR>;
-template class ACE_Creation_Strategy<TAO_IIOP_SSL_Connection_Handler>;
-template class ACE_Concurrency_Strategy<TAO_IIOP_SSL_Connection_Handler>;
-template class ACE_Scheduling_Strategy<TAO_IIOP_SSL_Connection_Handler>;
-template class TAO_Creation_Strategy<TAO_IIOP_SSL_Connection_Handler>;
-template class TAO_Concurrency_Strategy<TAO_IIOP_SSL_Connection_Handler>;
-template class TAO_Accept_Strategy<TAO_IIOP_SSL_Connection_Handler, ACE_SOCK_ACCEPTOR>;
+template class ACE_Acceptor<TAO::IIOP_SSL_Connection_Handler, ACE_SOCK_ACCEPTOR>;
+template class ACE_Strategy_Acceptor<TAO::IIOP_SSL_Connection_Handler, ACE_SOCK_ACCEPTOR>;
+template class ACE_Accept_Strategy<TAO::IIOP_SSL_Connection_Handler, ACE_SOCK_ACCEPTOR>;
+template class ACE_Creation_Strategy<TAO::IIOP_SSL_Connection_Handler>;
+template class ACE_Concurrency_Strategy<TAO::IIOP_SSL_Connection_Handler>;
+template class ACE_Scheduling_Strategy<TAO::IIOP_SSL_Connection_Handler>;
+template class TAO_Creation_Strategy<TAO::IIOP_SSL_Connection_Handler>;
+template class TAO_Concurrency_Strategy<TAO::IIOP_SSL_Connection_Handler>;
+template class TAO_Accept_Strategy<TAO::IIOP_SSL_Connection_Handler, ACE_SOCK_ACCEPTOR>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate ACE_Acceptor<TAO_IIOP_SSL_Connection_Handler, ACE_SOCK_ACCEPTOR>
-#pragma instantiate ACE_Strategy_Acceptor<TAO_IIOP_SSL_Connection_Handler, ACE_SOCK_ACCEPTOR>
-#pragma instantiate ACE_Accept_Strategy<TAO_IIOP_SSL_Connection_Handler, ACE_SOCK_ACCEPTOR>
-#pragma instantiate ACE_Creation_Strategy<TAO_IIOP_SSL_Connection_Handler>
-#pragma instantiate ACE_Concurrency_Strategy<TAO_IIOP_SSL_Connection_Handler>
-#pragma instantiate ACE_Scheduling_Strategy<TAO_IIOP_SSL_Connection_Handler>
-#pragma instantiate TAO_Creation_Strategy<TAO_IIOP_SSL_Connection_Handler>
-#pragma instantiate TAO_Concurrency_Strategy<TAO_IIOP_SSL_Connection_Handler>
-#pragma instantiate TAO_Accept_Strategy<TAO_IIOP_SSL_Connection_Handler, ACE_SOCK_ACCEPTOR>
+#pragma instantiate ACE_Acceptor<TAO::IIOP_SSL_Connection_Handler, ACE_SOCK_ACCEPTOR>
+#pragma instantiate ACE_Strategy_Acceptor<TAO::IIOP_SSL_Connection_Handler, ACE_SOCK_ACCEPTOR>
+#pragma instantiate ACE_Accept_Strategy<TAO::IIOP_SSL_Connection_Handler, ACE_SOCK_ACCEPTOR>
+#pragma instantiate ACE_Creation_Strategy<TAO::IIOP_SSL_Connection_Handler>
+#pragma instantiate ACE_Concurrency_Strategy<TAO::IIOP_SSL_Connection_Handler>
+#pragma instantiate ACE_Scheduling_Strategy<TAO::IIOP_SSL_Connection_Handler>
+#pragma instantiate TAO_Creation_Strategy<TAO::IIOP_SSL_Connection_Handler>
+#pragma instantiate TAO_Concurrency_Strategy<TAO::IIOP_SSL_Connection_Handler>
+#pragma instantiate TAO_Accept_Strategy<TAO::IIOP_SSL_Connection_Handler, ACE_SOCK_ACCEPTOR>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-TAO_IIOP_SSL_Acceptor::TAO_IIOP_SSL_Acceptor (CORBA::Boolean flag)
+TAO::IIOP_SSL_Acceptor::IIOP_SSL_Acceptor (CORBA::Boolean flag)
   : TAO_IIOP_Acceptor (flag),
     base_acceptor_ (),
     creation_strategy_ (0),
@@ -50,7 +46,7 @@ TAO_IIOP_SSL_Acceptor::TAO_IIOP_SSL_Acceptor (CORBA::Boolean flag)
 {
 }
 
-TAO_IIOP_SSL_Acceptor::~TAO_IIOP_SSL_Acceptor (void)
+TAO::IIOP_SSL_Acceptor::~IIOP_SSL_Acceptor (void)
 {
   // Make sure we are closed before we start destroying the
   // strategies.
@@ -62,18 +58,18 @@ TAO_IIOP_SSL_Acceptor::~TAO_IIOP_SSL_Acceptor (void)
 }
 
 int
-TAO_IIOP_SSL_Acceptor::close (void)
+TAO::IIOP_SSL_Acceptor::close (void)
 {
   return this->base_acceptor_.close ();
 }
 
 int
-TAO_IIOP_SSL_Acceptor::open_i (const ACE_INET_Addr& addr,
-                               ACE_Reactor *reactor)
+TAO::IIOP_SSL_Acceptor::open_i (const ACE_INET_Addr& addr,
+                                ACE_Reactor *reactor)
 {
-  if (TAO_SSLIOP_Util::setup_handler_state (this->orb_core_,
-                                            &(this->tcp_properties_),
-                                            this->handler_state_) != 0)
+  if (SSLIOP::Util::setup_handler_state (this->orb_core_,
+                                         &(this->tcp_properties_),
+                                         this->handler_state_) != 0)
       return -1;
 
   ACE_NEW_RETURN (this->creation_strategy_,
@@ -123,7 +119,7 @@ TAO_IIOP_SSL_Acceptor::open_i (const ACE_INET_Addr& addr,
   // interface then the endpoint created on each interface will be on
   // the same port.  This is how a wildcard socket bind() is supposed
   // to work.
-  u_short port = address.get_port_number ();
+  const unsigned short port = address.get_port_number ();
   for (size_t j = 0; j < this->endpoint_count_; ++j)
     this->addrs_[j].set_port_number (port, 1);
 

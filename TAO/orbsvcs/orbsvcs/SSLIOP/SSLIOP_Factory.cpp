@@ -6,69 +6,74 @@
 
 #include "orbsvcs/orbsvcs/Security/Security_ORBInitializer.h"  /// @todo should go away
 
+//#include "orbsvcs/CSIIOPC.h"
+
 #include "tao/debug.h"
 
 #include "ace/SSL/SSL_Context.h"
 
 
-ACE_RCSID (TAO_SSLIOP,
+ACE_RCSID (SSLIOP,
            SSLIOP_Factory,
            "$Id$")
 
 
 static const char prefix_[] = "iiop";
 
-static const long TAO_SSLIOP_ACCEPT_TIMEOUT = 10;  // Default accept
-                                                   // timeout in
-                                                   // seconds.
+namespace TAO
+{
+  namespace SSLIOP
+  {
+    static const long ACCEPT_TIMEOUT = 10;  // Default accept timeout
+                                            // in seconds.
+  }
+}
 
-TAO_SSLIOP_Protocol_Factory::TAO_SSLIOP_Protocol_Factory (void)
+TAO::SSLIOP::Protocol_Factory::Protocol_Factory (void)
   :  TAO_Protocol_Factory (IOP::TAG_INTERNET_IOP),
-     major_ (TAO_DEF_GIOP_MAJOR),
-     minor_ (TAO_DEF_GIOP_MINOR),
-     qop_ (Security::SecQOPIntegrityAndConfidentiality),
-     timeout_ (TAO_SSLIOP_ACCEPT_TIMEOUT)
+     qop_ (::Security::SecQOPIntegrityAndConfidentiality),
+     timeout_ (TAO::SSLIOP::ACCEPT_TIMEOUT)
 {
 }
 
-TAO_SSLIOP_Protocol_Factory::~TAO_SSLIOP_Protocol_Factory (void)
+TAO::SSLIOP::Protocol_Factory::~Protocol_Factory (void)
 {
 }
 
 int
-TAO_SSLIOP_Protocol_Factory::match_prefix (const ACE_CString &prefix)
+TAO::SSLIOP::Protocol_Factory::match_prefix (const ACE_CString &prefix)
 {
   // Check for the proper prefix for this protocol.
   return (ACE_OS::strcasecmp (prefix.c_str (), ::prefix_) == 0);
 }
 
 const char *
-TAO_SSLIOP_Protocol_Factory::prefix (void) const
+TAO::SSLIOP::Protocol_Factory::prefix (void) const
 {
   return ::prefix_;
 }
 
 char
-TAO_SSLIOP_Protocol_Factory::options_delimiter (void) const
+TAO::SSLIOP::Protocol_Factory::options_delimiter (void) const
 {
   return '/';
 }
 
 TAO_Acceptor *
-TAO_SSLIOP_Protocol_Factory::make_acceptor (void)
+TAO::SSLIOP::Protocol_Factory::make_acceptor (void)
 {
   TAO_Acceptor *acceptor = 0;
 
   ACE_NEW_RETURN (acceptor,
-                  TAO_SSLIOP_Acceptor (this->qop_,
-                                       this->timeout_),
+                  TAO::SSLIOP::Acceptor (this->qop_,
+                                         this->timeout_),
                   0);
 
   return acceptor;
 }
 
 int
-TAO_SSLIOP_Protocol_Factory::init (int argc,
+TAO::SSLIOP::Protocol_Factory::init (int argc,
                                    char* argv[])
 {
   char *certificate_path = 0;
@@ -80,6 +85,11 @@ TAO_SSLIOP_Protocol_Factory::init (int argc,
   int dhparams_type = -1;
 
   int prevdebug = -1;
+
+  CSIIOP::AssociationOptions csiv2_target_supports =
+    CSIIOP::Integrity | CSIIOP::Confidentiality;
+  CSIIOP::AssociationOptions csiv2_target_requires =
+    CSIIOP::Integrity | CSIIOP::Confidentiality;
 
   // Force the Singleton instance to be initialized/instantiated.
   // Some SSLIOP option combinations below will result in the
@@ -129,7 +139,13 @@ TAO_SSLIOP_Protocol_Factory::init (int argc,
           // side, secure invocations will be disabled unless
           // overridden by a SecurityLevel2::QOPPolicy in the object
           // reference.
-          this->qop_ = Security::SecQOPNoProtection;
+          this->qop_ = ::Security::SecQOPNoProtection;
+
+          ACE_SET_BITS (csiv2_target_supports,
+                        CSIIOP::NoProtection);
+
+          ACE_CLR_BITS (csiv2_target_requires,
+                        CSIIOP::Confidentiality);
         }
 
       else if (ACE_OS::strcasecmp (argv[curarg],
@@ -192,12 +208,23 @@ TAO_SSLIOP_Protocol_Factory::init (int argc,
               else if (ACE_OS::strcasecmp (argv[curarg], "SERVER") == 0)
                 {
                   mode = SSL_VERIFY_PEER;
+
+                  ACE_SET_BITS (csiv2_target_supports,
+                                CSIIOP::EstablishTrustInTarget
+                                | CSIIOP::EstablishTrustInClient);
                 }
               else if (ACE_OS::strcasecmp (argv[curarg], "CLIENT") == 0
                        || ACE_OS::strcasecmp (argv[curarg],
                                               "SERVER_AND_CLIENT") == 0)
                 {
                   mode = SSL_VERIFY_PEER | SSL_VERIFY_FAIL_IF_NO_PEER_CERT;
+
+                  ACE_SET_BITS (csiv2_target_supports,
+                                CSIIOP::EstablishTrustInTarget
+                                | CSIIOP::EstablishTrustInClient);
+
+                  ACE_SET_BITS (csiv2_target_requires,
+                                CSIIOP::EstablishTrustInClient);
                 }
 
               ssl_ctx->default_verify_mode (mode);
@@ -358,7 +385,8 @@ TAO_SSLIOP_Protocol_Factory::init (int argc,
         }
     }
 
-  if (this->register_orb_initializer () != 0)
+  if (this->register_orb_initializer (csiv2_target_supports,
+                                      csiv2_target_requires) != 0)
     return -1;
 
   if (prevdebug != -1)
@@ -368,7 +396,9 @@ TAO_SSLIOP_Protocol_Factory::init (int argc,
 }
 
 int
-TAO_SSLIOP_Protocol_Factory::register_orb_initializer (void)
+TAO::SSLIOP::Protocol_Factory::register_orb_initializer (
+  CSIIOP::AssociationOptions csiv2_target_supports,
+  CSIIOP::AssociationOptions csiv2_target_requires)
 {
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
@@ -378,7 +408,7 @@ TAO_SSLIOP_Protocol_Factory::register_orb_initializer (void)
       // Register the Security ORB initializer.
       PortableInterceptor::ORBInitializer_ptr tmp;
       ACE_NEW_THROW_EX (tmp,
-                        TAO_Security_ORBInitializer,
+                        TAO::Security::ORBInitializer,
                         CORBA::NO_MEMORY (
                           CORBA::SystemException::_tao_minor_code (
                             TAO_DEFAULT_MINOR_CODE,
@@ -395,7 +425,9 @@ TAO_SSLIOP_Protocol_Factory::register_orb_initializer (void)
       // Register the SSLIOP ORB initializer.
       // PortableInterceptor::ORBInitializer_ptr tmp;
       ACE_NEW_THROW_EX (tmp,
-                        TAO_SSLIOP_ORBInitializer (this->qop_),
+                        TAO::SSLIOP::ORBInitializer (this->qop_,
+                                                     csiv2_target_supports,
+                                                     csiv2_target_requires),
                         CORBA::NO_MEMORY (
                           CORBA::SystemException::_tao_minor_code (
                             TAO_DEFAULT_MINOR_CODE,
@@ -418,24 +450,25 @@ TAO_SSLIOP_Protocol_Factory::register_orb_initializer (void)
       return -1;
     }
   ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
 
   return 0;
 }
 
 
 TAO_Connector *
-TAO_SSLIOP_Protocol_Factory::make_connector (void)
+TAO::SSLIOP::Protocol_Factory::make_connector (void)
 {
   TAO_Connector *connector = 0;
 
   ACE_NEW_RETURN (connector,
-                  TAO_SSLIOP_Connector (this->qop_),
+                  TAO::SSLIOP::Connector (this->qop_),
                   0);
   return connector;
 }
 
 int
-TAO_SSLIOP_Protocol_Factory::requires_explicit_endpoint (void) const
+TAO::SSLIOP::Protocol_Factory::requires_explicit_endpoint (void) const
 {
   return 0;
 }
@@ -444,8 +477,8 @@ ACE_STATIC_SVC_DEFINE (TAO_SSLIOP_Protocol_Factory,
                        ACE_TEXT ("SSLIOP_Factory"),
                        ACE_SVC_OBJ_T,
                        &ACE_SVC_NAME (TAO_SSLIOP_Protocol_Factory),
-                       ACE_Service_Type::DELETE_THIS |
-                                  ACE_Service_Type::DELETE_OBJ,
+                       ACE_Service_Type::DELETE_THIS
+                       | ACE_Service_Type::DELETE_OBJ,
                        0)
 
 ACE_FACTORY_DEFINE (TAO_SSLIOP, TAO_SSLIOP_Protocol_Factory)

@@ -1,3 +1,152 @@
+Sat Jul 31 00:43:37 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	The following changes represent a basic/core implemenation of the
+	CSIv2 specification and slight variation of the informal standard
+	SecurityLevel3 API.  Higher level features requiring the Security
+	Attribute Service will be pushed to the	next beta.
+
+	* orbsvcs/orbsvcs/Security.mpc:
+
+	  Removed obsolete IDL files from the source list, and added newer
+	  ones.
+
+	* orbsvcs/orbsvcs/Security/SL2_EstablishTrustPolicy.cpp:
+	* orbsvcs/orbsvcs/Security/SL2_EstablishTrustPolicy.h:
+	* orbsvcs/orbsvcs/Security/SL2_QOPPolicy.cpp:
+	* orbsvcs/orbsvcs/Security/SL2_QOPPolicy.h:
+
+	  Renamed these files by prepending "SL2_" to them to make it
+	  clear they are SecurityLevel2 policy implementations.
+
+	* orbsvcs/orbsvcs/Security/SL3_CredentialsAcquirerFactory.cpp:
+	* orbsvcs/orbsvcs/Security/SL3_CredentialsAcquirerFactory.h:
+	* orbsvcs/orbsvcs/Security/SL3_CredentialsCurator.cpp:
+	* orbsvcs/orbsvcs/Security/SL3_CredentialsCurator.h:
+	* orbsvcs/orbsvcs/Security/SL3_SecurityCurrent.cpp:
+	* orbsvcs/orbsvcs/Security/SL3_SecurityCurrent.h:
+	* orbsvcs/orbsvcs/Security/SL3_SecurityCurrent.inl:
+	* orbsvcs/orbsvcs/Security/SL3_SecurityCurrent_Impl.cpp:
+	* orbsvcs/orbsvcs/Security/SL3_SecurityCurrent_Impl.h:
+
+	  New SecurityLevel3 related sources.
+
+	* orbsvcs/orbsvcs/Security/CSI_Utils.cpp:
+	* orbsvcs/orbsvcs/Security/SL3_ObjectCredentialsPolicy.cpp:
+	* orbsvcs/orbsvcs/Security/SL3_SecurityManager.cpp:
+	* orbsvcs/orbsvcs/Security/SL3_SecurityManager.h:
+	* orbsvcs/orbsvcs/Security/Security_Current.cpp:
+	* orbsvcs/orbsvcs/Security/Security_Current.h:
+	* orbsvcs/orbsvcs/Security/Security_Current.inl:
+	* orbsvcs/orbsvcs/Security/Security_Current_Impl.cpp:
+	* orbsvcs/orbsvcs/Security/Security_Current_Impl.h:
+	* orbsvcs/orbsvcs/Security/Security_ORBInitializer.cpp:
+	* orbsvcs/orbsvcs/Security/Security_ORBInitializer.h:
+	* orbsvcs/orbsvcs/Security/Security_PolicyFactory.cpp:
+	* orbsvcs/orbsvcs/Security/Security_PolicyFactory.h:
+
+	  Enabled some CSIv2/SecurityLevel3 features.
+
+	  Code cleanup.
+
+	* orbsvcs/orbsvcs/Security/EstablishTrustPolicy.cpp:
+	* orbsvcs/orbsvcs/Security/EstablishTrustPolicy.h:
+	* orbsvcs/orbsvcs/Security/InvocationCredentialsPolicy.cpp:
+	* orbsvcs/orbsvcs/Security/InvocationCredentialsPolicy.h:
+	* orbsvcs/orbsvcs/Security/MechanismPolicy.cpp:
+	* orbsvcs/orbsvcs/Security/MechanismPolicy.h:
+	* orbsvcs/orbsvcs/Security/PrincipalAuthenticator.cpp:
+	* orbsvcs/orbsvcs/Security/PrincipalAuthenticator.h:
+	* orbsvcs/orbsvcs/Security/QOPPolicy.cpp:
+	* orbsvcs/orbsvcs/Security/QOPPolicy.h:
+	* orbsvcs/orbsvcs/Security/SecurityManager.cpp:
+	* orbsvcs/orbsvcs/Security/SecurityManager.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_ReceivedCredentials.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_ReceivedCredentials.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Vault.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Vault.h:
+	
+	  Removed these files.  They were either obsolete, not maintained
+	  or have been renamed.
+
+	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Acceptor.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Acceptor.h:
+	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connection_Handler.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connection_Handler.h:
+	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connection_Handler.inl:
+	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.h:
+	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Transport.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Transport.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Accept_Strategy.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Accept_Strategy.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.i:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.i:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Credentials.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Credentials.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Credentials.inl:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current.inl:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current_Impl.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current_Impl.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current_Impl.inl:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_EVP_PKEY.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_EVP_PKEY.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_EVP_PKEY.inl:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.i:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Invocation_Interceptor.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Invocation_Interceptor.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_ORBInitializer.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_ORBInitializer.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Profile.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Profile.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_TargetCredentials.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_TargetCredentials.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Util.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Util.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_X509.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_X509.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_X509.inl:
+	* orbsvcs/orbsvcs/SSLIOP/ssl_endpoints.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/ssl_endpoints.i:
+
+	  Integrated basic CSIv2 features.
+
+	  Most classes are now in the TAO::SSLIOP namespace.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_ClientCredentials.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_ClientCredentials.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_CredentialsAcquirer.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_CredentialsAcquirer.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_CredentialsAcquirerFactory.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_CredentialsAcquirerFactory.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_OwnCredentials.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_OwnCredentials.h:
+
+	  New SSLIOP-specific implementations of SecurityLevel3 or related
+	  interfaces.
+
+	* orbsvcs/tests/Security/Secure_Invocation/Foo_i.cpp:
+	* orbsvcs/tests/Security/Secure_Invocation/Foo_i.h:
+	* orbsvcs/tests/Security/Secure_Invocation/README:
+	* orbsvcs/tests/Security/Secure_Invocation/server.cpp:
+
+	  The SecurityLevel2::Current object this test used is no longer
+	  supported.  Updated to use the SecurityLevel3::SecurityCurrent
+	  object instead.
+
 Sat Jul 31 03:16:12 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* Release: Include TAO.mwc which is very important.

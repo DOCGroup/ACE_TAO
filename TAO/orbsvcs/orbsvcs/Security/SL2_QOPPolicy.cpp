@@ -1,36 +1,38 @@
 // -*- C++ -*-
 
-#include "QOPPolicy.h"
+#include "SL2_QOPPolicy.h"
 
 #include "tao/ORB_Constants.h"
 
+
 ACE_RCSID (Security,
-           QOPPolicy,
+           SL2_QOPPolicy,
            "$Id$")
 
-TAO_QOPPolicy::TAO_QOPPolicy (Security::QOP qop)
+
+TAO::Security::QOPPolicy::QOPPolicy (::Security::QOP qop)
   : qop_ (qop)
 {
 }
 
-TAO_QOPPolicy::~TAO_QOPPolicy (void)
+TAO::Security::QOPPolicy::~QOPPolicy (void)
 {
 }
 
 CORBA::PolicyType
-TAO_QOPPolicy::policy_type (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO::Security::QOPPolicy::policy_type (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return Security::SecQOPPolicy;
+  return ::Security::SecQOPPolicy;
 }
 
 CORBA::Policy_ptr
-TAO_QOPPolicy::copy (ACE_ENV_SINGLE_ARG_DECL)
+TAO::Security::QOPPolicy::copy (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_QOPPolicy *policy = 0;
+  TAO::Security::QOPPolicy * policy = 0;
   ACE_NEW_THROW_EX (policy,
-                    TAO_QOPPolicy (this->qop_),
+                    TAO::Security::QOPPolicy (this->qop_),
                     CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
                         TAO_DEFAULT_MINOR_CODE,
@@ -42,13 +44,13 @@ TAO_QOPPolicy::copy (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO_QOPPolicy::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO::Security::QOPPolicy::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 Security::QOP
-TAO_QOPPolicy::qop (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO::Security::QOPPolicy::qop (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->qop_;

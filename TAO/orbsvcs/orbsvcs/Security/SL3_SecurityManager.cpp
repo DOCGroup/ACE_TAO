@@ -5,7 +5,7 @@
 #include "SL3_ObjectCredentialsPolicy.h"
 
 
-ACE_RCSID (CSIv2,
+ACE_RCSID (Security,
            SL3_SecurityManager,
            "$Id$")
 

@@ -1,91 +1,132 @@
-// -*- C++ -*-
-
 #include "SSLIOP_TargetCredentials.h"
 #include "tao/ORB_Constants.h"
 
-ACE_RCSID (TAO_SSLIOP,
+
+ACE_RCSID (SSLIOP,
            SSLIOP_TargetCredentials,
            "$Id$")
 
 
-TAO_SSLIOP_TargetCredentials::TAO_SSLIOP_TargetCredentials (X509 *cert,
-                                                            EVP_PKEY *evp)
-  : TAO_SSLIOP_Credentials (cert, evp)
+TAO::SSLIOP::TargetCredentials::TargetCredentials (::X509 *cert,
+                                                   ::EVP_PKEY *evp)
+  : Credentials (cert, evp)
 {
 }
 
-SecurityLevel2::Credentials_ptr
-TAO_SSLIOP_TargetCredentials::copy (ACE_ENV_SINGLE_ARG_DECL)
+
+SecurityLevel3::CredentialsType
+TAO::SSLIOP::TargetCredentials::creds_type (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_SSLIOP_TargetCredentials *c = 0;
-  ACE_NEW_THROW_EX (c,
-                    TAO_SSLIOP_TargetCredentials (this->x509_.in (),
-                                                  this->evp_.in ()),
-                    CORBA::NO_MEMORY (
-                      CORBA::SystemException::_tao_minor_code (
-                        TAO_DEFAULT_MINOR_CODE,
-                        ENOMEM),
-                      CORBA::COMPLETED_NO));
-  ACE_CHECK_RETURN (SecurityLevel2::Credentials::_nil ());
-
-  return c;
+  return SecurityLevel3::CT_TargetCredentials;
 }
 
-Security::InvocationCredentialsType
-TAO_SSLIOP_TargetCredentials::credentials_type (
-    ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+char *
+TAO::SSLIOP::TargetCredentials::context_id (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return Security::SecTargetCredentials;
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 }
 
-SecurityLevel2::Credentials_ptr
-TAO_SSLIOP_TargetCredentials::initiating_credentials (
+SecurityLevel3::Principal *
+TAO::SSLIOP::TargetCredentials::client_principal (ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+}
+
+SecurityLevel3::StatementList *
+TAO::SSLIOP::TargetCredentials::client_supporting_statements (
     ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (
-                      CORBA::SystemException::_tao_minor_code (
-                        TAO_DEFAULT_MINOR_CODE,
-                        ENOTSUP),
-                      CORBA::COMPLETED_NO),
-                    SecurityLevel2::Credentials::_nil ());
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 }
 
-Security::AssociationOptions
-TAO_SSLIOP_TargetCredentials::association_options_used (
+SecurityLevel3::ResourceNameList *
+TAO::SSLIOP::TargetCredentials::client_restricted_resources (
     ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (
-                      CORBA::SystemException::_tao_minor_code (
-                        TAO_DEFAULT_MINOR_CODE,
-                        ENOTSUP),
-                      CORBA::COMPLETED_NO),
-                    0);
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 }
 
-// ---------------------------
-
-TAO_SSLIOP_TargetCredentials_ptr
-TAO_SSLIOP_TargetCredentials::_narrow (CORBA::Object_ptr obj
-                                       ACE_ENV_ARG_DECL_NOT_USED)
+SecurityLevel3::Principal *
+TAO::SSLIOP::TargetCredentials::target_principal (ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return  TAO_SSLIOP_TargetCredentials::_duplicate (
-              dynamic_cast<TAO_SSLIOP_TargetCredentials *> (obj));
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 }
 
-TAO_SSLIOP_TargetCredentials_ptr
-TAO_SSLIOP_TargetCredentials::_duplicate (
-  TAO_SSLIOP_TargetCredentials_ptr obj)
+SecurityLevel3::StatementList *
+TAO::SSLIOP::TargetCredentials::target_supporting_statements (
+    ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  if (!CORBA::is_nil (obj))
-    obj->_add_ref ();
-
-  return obj;
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 }
 
-// -----------------------------------------------------------
+SecurityLevel3::ResourceNameList *
+TAO::SSLIOP::TargetCredentials::target_restricted_resources (
+    ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+}
 
-int TAO_SSLIOP_TargetCredentials::_tao_class_id = 0;
+SecurityLevel3::OwnCredentials_ptr
+TAO::SSLIOP::TargetCredentials::parent_credentials (ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),
+                    SecurityLevel3::OwnCredentials::_nil ());
+}
+
+CORBA::Boolean
+TAO::SSLIOP::TargetCredentials::client_authentication (ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+}
+
+CORBA::Boolean
+TAO::SSLIOP::TargetCredentials::target_authentication (ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+}
+
+CORBA::Boolean
+TAO::SSLIOP::TargetCredentials::confidentiality (ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+}
+
+CORBA::Boolean
+TAO::SSLIOP::TargetCredentials::integrity (ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+}
+
+CORBA::Boolean
+TAO::SSLIOP::TargetCredentials::target_embodied (ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+}
+
+CORBA::Boolean
+TAO::SSLIOP::TargetCredentials::target_endorsed (ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+}
+
+void
+TAO::SSLIOP::TargetCredentials::release (ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  ACE_THROW (CORBA::NO_IMPLEMENT ());
+}

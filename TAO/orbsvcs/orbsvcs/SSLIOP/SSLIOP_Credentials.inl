@@ -2,14 +2,14 @@
 //
 // $Id$
 
-ACE_INLINE X509 *
-TAO_SSLIOP_Credentials::x509 (void)
+ACE_INLINE ::X509 *
+TAO::SSLIOP::Credentials::x509 (void)
 {
-  return TAO_SSLIOP_X509::_duplicate (this->x509_.in ());
+  return TAO::SSLIOP::_duplicate (this->x509_.in ());
 }
 
-ACE_INLINE EVP_PKEY *
-TAO_SSLIOP_Credentials::evp (void)
+ACE_INLINE ::EVP_PKEY *
+TAO::SSLIOP::Credentials::evp (void)
 {
-  return TAO_SSLIOP_EVP_PKEY::_duplicate (this->evp_.in ());
+  return TAO::SSLIOP::_duplicate (this->evp_.in ());
 }

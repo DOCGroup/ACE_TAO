@@ -1,27 +1,27 @@
-// This may look like C, but it's really -*- C++ -*-
-//
-// $Id$
-
 #include "SSLIOP_Endpoint.h"
-#include "SSLIOP_Connection_Handler.h"
+
 #include "tao/IIOP_Endpoint.h"
+
+#include "ace/OS_NS_stdio.h"
+
 
 ACE_RCSID (SSLIOP,
            SSLIOP_Endpoint,
            "$Id$")
 
+
 #if !defined (__ACE_INLINE__)
 # include "SSLIOP_Endpoint.i"
 #endif /* __ACE_INLINE__ */
 
-TAO_SSLIOP_Endpoint::TAO_SSLIOP_Endpoint (const SSLIOP::SSL *ssl_component,
-                                          TAO_IIOP_Endpoint *iiop_endp)
+TAO_SSLIOP_Endpoint::TAO_SSLIOP_Endpoint (const ::SSLIOP::SSL *ssl_component,
+                                 TAO_IIOP_Endpoint *iiop_endp)
   : TAO_Endpoint (IOP::TAG_INTERNET_IOP),
     object_addr_ (),
     next_ (0),
     iiop_endpoint_ (iiop_endp),
-    destroy_iiop_endpoint_ (0),
-    qop_ (Security::SecQOPIntegrityAndConfidentiality),
+    destroy_iiop_endpoint_ (false),
+    qop_ (::Security::SecQOPIntegrityAndConfidentiality),
 #if !defined (VXWORKS) && !defined (__QNX__)
     // Some compilers don't like the initialization
     trust_ (),
@@ -49,9 +49,9 @@ TAO_SSLIOP_Endpoint::TAO_SSLIOP_Endpoint (const SSLIOP::SSL *ssl_component,
 
       // SSLIOP requires these Security::AssociationOptions by default.
       ACE_SET_BITS (this->ssl_component_.target_requires,
-                    Security::Integrity
-                    | Security::Confidentiality
-                    | Security::NoDelegation);
+                    ::Security::Integrity
+                    | ::Security::Confidentiality
+                    | ::Security::NoDelegation);
 
       // SSLIOP supports these Security::AssociationOptions by
       // default.
@@ -60,11 +60,11 @@ TAO_SSLIOP_Endpoint::TAO_SSLIOP_Endpoint (const SSLIOP::SSL *ssl_component,
       // can't be sure if the server supports SSL, and TAO's SSLIOP
       // implementation must support IIOP over SSL and plain IIOP.
       ACE_SET_BITS (this->ssl_component_.target_supports,
-                    Security::Integrity
-                    | Security::Confidentiality
-                    | Security::EstablishTrustInTarget
-                    | Security::NoProtection
-                    | Security::NoDelegation);
+                    ::Security::Integrity
+                    | ::Security::Confidentiality
+                    | ::Security::EstablishTrustInTarget
+                    | ::Security::NoProtection
+                    | ::Security::NoDelegation);
 
       // Initialize the default SSL port to zero, not the IANA
       // assigned IIOP over SSL port (684).  We usually only get here
@@ -116,16 +116,15 @@ TAO_SSLIOP_Endpoint::next (void)
 CORBA::Boolean
 TAO_SSLIOP_Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint)
 {
-  TAO_Endpoint *endpt = ACE_const_cast (TAO_Endpoint *,
-                                        other_endpoint);
+  TAO_Endpoint *endpt = const_cast<TAO_Endpoint *> (other_endpoint);
 
   TAO_SSLIOP_Endpoint *endpoint =
-    ACE_dynamic_cast (TAO_SSLIOP_Endpoint *, endpt);
+    dynamic_cast<TAO_SSLIOP_Endpoint *> (endpt);
 
   if (endpoint == 0)
     return 0;
 
-  Security::EstablishTrust t = endpoint->trust ();
+  ::Security::EstablishTrust t = endpoint->trust ();
 
   if ((this->ssl_component_.port != 0
        && endpoint->ssl_component_.port != 0
@@ -150,14 +149,14 @@ TAO_SSLIOP_Endpoint::duplicate (void)
   // shouldnt be a problem as long as SSL is not used with RTCORBA.
   ACE_NEW_RETURN (endpoint,
                   TAO_SSLIOP_Endpoint (&this->ssl_component_,
-                                       0),
+                                         0),
                   0);
 
   endpoint->qop (this->qop_);
   endpoint->trust (this->trust_);
   endpoint->credentials (this->credentials_.in ());  // Shallow copy
 
-  endpoint->iiop_endpoint (this->iiop_endpoint_, 1);
+  endpoint->iiop_endpoint (this->iiop_endpoint_, true);
 
   return endpoint;
 }
@@ -204,25 +203,17 @@ TAO_SSLIOP_Endpoint::object_addr (void) const
   // Double checked locking optimization.
   if (this->object_addr_.get_type () != AF_INET)
     {
-      // We need to modify the object_addr_ in this method.  Do so
-      // using a non-const copy of the <this> pointer.
-      ACE_INET_Addr &ssl_addr =
-        ACE_const_cast (ACE_INET_Addr &, this->object_addr_);
-
       const ACE_INET_Addr &iiop_addr = this->iiop_endpoint_->object_addr ();
-
-      TAO_SSLIOP_Endpoint *ssl_endpoint =
-        ACE_const_cast (TAO_SSLIOP_Endpoint *, this);
 
       ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                         guard,
-                        ssl_endpoint->addr_lookup_lock_,
+                        this->addr_lookup_lock_,
                         this->object_addr_);
 
       if (this->object_addr_.get_type () != AF_INET)
         {
-          ssl_addr = iiop_addr;
-          ssl_addr.set_port_number (this->ssl_component_.port);
+          this->object_addr_ = iiop_addr;
+          this->object_addr_.set_port_number (this->ssl_component_.port);
         }
     }
 

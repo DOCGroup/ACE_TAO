@@ -1,8 +1,10 @@
 #include "SSLIOP_Connector.h"
-#include "SSLIOP_Credentials.h"
+#include "SSLIOP_OwnCredentials.h"
 #include "SSLIOP_Profile.h"
 #include "SSLIOP_Util.h"
 #include "SSLIOP_X509.h"
+
+#include "orbsvcs/orbsvcs/SecurityLevel2C.h"
 
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
@@ -21,38 +23,38 @@
 
 
 
-ACE_RCSID (TAO_SSLIOP,
+ACE_RCSID (SSLIOP,
            SSLIOP_Connector,
            "$Id$")
 
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class TAO_Connect_Concurrency_Strategy<TAO_SSLIOP_Connection_Handler>;
-template class TAO_Connect_Creation_Strategy<TAO_SSLIOP_Connection_Handler>;
-template class ACE_Strategy_Connector<TAO_SSLIOP_Connection_Handler, ACE_SSL_SOCK_CONNECTOR>;
-template class ACE_Connect_Strategy<TAO_SSLIOP_Connection_Handler, ACE_SSL_SOCK_CONNECTOR>;
-template class ACE_Connector_Base<TAO_SSLIOP_Connection_Handler>;
-template class ACE_Connector<TAO_SSLIOP_Connection_Handler, ACE_SSL_SOCK_CONNECTOR>;
-template class ACE_NonBlocking_Connect_Handler<TAO_SSLIOP_Connection_Handler>;
-template class ACE_Auto_Basic_Ptr<TAO_SSLIOP_Connection_Handler>;
+template class TAO_Connect_Concurrency_Strategy<TAO::SSLIOP::Connection_Handler>;
+template class TAO_Connect_Creation_Strategy<TAO::SSLIOP::Connection_Handler>;
+template class ACE_Strategy_Connector<TAO::SSLIOP::Connection_Handler, ACE_SSL_SOCK_CONNECTOR>;
+template class ACE_Connect_Strategy<TAO::SSLIOP::Connection_Handler, ACE_SSL_SOCK_CONNECTOR>;
+template class ACE_Connector_Base<TAO::SSLIOP::Connection_Handler>;
+template class ACE_Connector<TAO::SSLIOP::Connection_Handler, ACE_SSL_SOCK_CONNECTOR>;
+template class ACE_NonBlocking_Connect_Handler<TAO::SSLIOP::Connection_Handler>;
+template class ACE_Auto_Basic_Ptr<TAO::SSLIOP::Connection_Handler>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate TAO_Connect_Concurrency_Strategy<TAO_SSLIOP_Connection_Handler>
-#pragma instantiate TAO_Connect_Creation_Strategy<TAO_SSLIOP_Connection_Handler>
-#pragma instantiate ACE_Strategy_Connector<TAO_SSLIOP_Connection_Handler, ACE_SSL_SOCK_CONNECTOR>
-#pragma instantiate ACE_Connect_Strategy<TAO_SSLIOP_Connection_Handler, ACE_SSL_SOCK_CONNECTOR>
-#pragma instantiate ACE_Connector_Base<TAO_SSLIOP_Connection_Handler>
-#pragma instantiate ACE_Connector<TAO_SSLIOP_Connection_Handler, ACE_SSL_SOCK_CONNECTOR>
-#pragma instantiate ACE_NonBlocking_Connect_Handler<TAO_SSLIOP_Connection_Handler>
-#pragma instantiate ACE_Auto_Basic_Ptr<TAO_SSLIOP_Connection_Handler>
+#pragma instantiate TAO_Connect_Concurrency_Strategy<TAO::SSLIOP::Connection_Handler>
+#pragma instantiate TAO_Connect_Creation_Strategy<TAO::SSLIOP::Connection_Handler>
+#pragma instantiate ACE_Strategy_Connector<TAO::SSLIOP::Connection_Handler, ACE_SSL_SOCK_CONNECTOR>
+#pragma instantiate ACE_Connect_Strategy<TAO::SSLIOP::Connection_Handler, ACE_SSL_SOCK_CONNECTOR>
+#pragma instantiate ACE_Connector_Base<TAO::SSLIOP::Connection_Handler>
+#pragma instantiate ACE_Connector<TAO::SSLIOP::Connection_Handler, ACE_SSL_SOCK_CONNECTOR>
+#pragma instantiate ACE_NonBlocking_Connect_Handler<TAO::SSLIOP::Connection_Handler>
+#pragma instantiate ACE_Auto_Basic_Ptr<TAO::SSLIOP::Connection_Handler>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 
-TAO_SSLIOP_Connector::TAO_SSLIOP_Connector (Security::QOP qop)
-  : TAO_IIOP_SSL_Connector (),
+TAO::SSLIOP::Connector::Connector (::Security::QOP qop)
+  : TAO::IIOP_SSL_Connector (),
     qop_ (qop),
     connect_strategy_ (),
     base_connector_ (),
@@ -61,7 +63,7 @@ TAO_SSLIOP_Connector::TAO_SSLIOP_Connector (Security::QOP qop)
 }
 
 int
-TAO_SSLIOP_Connector::open (TAO_ORB_Core *orb_core)
+TAO::SSLIOP::Connector::open (TAO_ORB_Core *orb_core)
 {
   // Since the ACE_Strategy_Connector (and ACE_Connector) cannot
   // handle non-blocking connections with protocols that have more
@@ -71,19 +73,19 @@ TAO_SSLIOP_Connector::open (TAO_ORB_Core *orb_core)
                   TAO_Blocked_Connect_Strategy (orb_core),
                   -1);
 
-  if (this->TAO_IIOP_SSL_Connector::open (orb_core) == -1)
+  if (this->TAO::IIOP_SSL_Connector::open (orb_core) == -1)
     return -1;
 
-  if (TAO_SSLIOP_Util::setup_handler_state (orb_core,
-                                            &(this->tcp_properties_),
-                                            this->handler_state_) != 0)
+  if (TAO::SSLIOP::Util::setup_handler_state (orb_core,
+                                              &(this->tcp_properties_),
+                                              this->handler_state_) != 0)
       return -1;
 
   // Our connect creation strategy
-  TAO_SSLIOP_CONNECT_CREATION_STRATEGY *connect_creation_strategy = 0;
+  CONNECT_CREATION_STRATEGY *connect_creation_strategy = 0;
 
   ACE_NEW_RETURN (connect_creation_strategy,
-                  TAO_SSLIOP_CONNECT_CREATION_STRATEGY
+                  CONNECT_CREATION_STRATEGY
                       (orb_core->thr_mgr (),
                        orb_core,
                        &(this->handler_state_),
@@ -92,10 +94,10 @@ TAO_SSLIOP_Connector::open (TAO_ORB_Core *orb_core)
                   -1);
 
   // Our activation strategy
-  TAO_SSLIOP_CONNECT_CONCURRENCY_STRATEGY *concurrency_strategy = 0;
+  CONNECT_CONCURRENCY_STRATEGY *concurrency_strategy = 0;
 
   ACE_NEW_RETURN (concurrency_strategy,
-                  TAO_SSLIOP_CONNECT_CONCURRENCY_STRATEGY (orb_core),
+                  CONNECT_CONCURRENCY_STRATEGY (orb_core),
                   -1);
 
   ACE_Reactor *r = this->orb_core ()->reactor ();
@@ -107,9 +109,9 @@ TAO_SSLIOP_Connector::open (TAO_ORB_Core *orb_core)
 }
 
 int
-TAO_SSLIOP_Connector::close (void)
+TAO::SSLIOP::Connector::close (void)
 {
-  (void) this->TAO_IIOP_SSL_Connector::close ();
+  (void) this->TAO::IIOP_SSL_Connector::close ();
 
   delete this->base_connector_.creation_strategy ();
   delete this->base_connector_.concurrency_strategy ();
@@ -117,10 +119,10 @@ TAO_SSLIOP_Connector::close (void)
 }
 
 TAO_Transport *
-TAO_SSLIOP_Connector::connect (TAO::Profile_Transport_Resolver *resolver,
-                               TAO_Transport_Descriptor_Interface *desc,
-                               ACE_Time_Value *timeout
-                               ACE_ENV_ARG_DECL)
+TAO::SSLIOP::Connector::connect (TAO::Profile_Transport_Resolver *resolver,
+                                 TAO_Transport_Descriptor_Interface *desc,
+                                 ACE_Time_Value *timeout
+                                 ACE_ENV_ARG_DECL)
 {
   if (TAO_debug_level > 0)
       ACE_DEBUG ((LM_DEBUG,
@@ -133,8 +135,7 @@ TAO_SSLIOP_Connector::connect (TAO::Profile_Transport_Resolver *resolver,
     return 0;
 
   TAO_SSLIOP_Endpoint *ssl_endpoint =
-    ACE_dynamic_cast (TAO_SSLIOP_Endpoint *,
-                      endpoint);
+    dynamic_cast<TAO_SSLIOP_Endpoint *> (endpoint);
 
   if (ssl_endpoint == 0)
     return 0;
@@ -146,8 +147,8 @@ TAO_SSLIOP_Connector::connect (TAO::Profile_Transport_Resolver *resolver,
   // Check if the user overrode the default establishment of trust
   // policy for the current object.
   CORBA::Policy_var policy =
-    resolver->stub ()->get_policy (Security::SecEstablishTrustPolicy
-                                  ACE_ENV_ARG_PARAMETER);
+    resolver->stub ()->get_policy (::Security::SecEstablishTrustPolicy
+                                   ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   SecurityLevel2::EstablishTrustPolicy_var trust_policy =
@@ -159,7 +160,7 @@ TAO_SSLIOP_Connector::connect (TAO::Profile_Transport_Resolver *resolver,
   // if no establishment of trust policy was set.  Specifically, if
   // the "trust" pointer below is zero, then the SSLIOP pluggable
   // protocol default value will be used.
-  Security::EstablishTrust trust = { 0 , 0 };
+  ::Security::EstablishTrust trust = { 0 , 0 };
   if (!CORBA::is_nil (trust_policy.in ()))
     {
       trust = trust_policy->trust (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -194,7 +195,7 @@ TAO_SSLIOP_Connector::connect (TAO::Profile_Transport_Resolver *resolver,
 
   // Check if the user overrode the default Quality-of-Protection for
   // the current object.
-  policy = resolver->stub ()->get_policy (Security::SecQOPPolicy
+  policy = resolver->stub ()->get_policy (::Security::SecQOPPolicy
                                           ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
@@ -205,7 +206,7 @@ TAO_SSLIOP_Connector::connect (TAO::Profile_Transport_Resolver *resolver,
 
   // Temporary variable used to avoid overwriting the default value
   // set when the ORB was initialized.
-  Security::QOP qop = this->qop_;
+  ::Security::QOP qop = this->qop_;
 
   if (!CORBA::is_nil (qop_policy.in ()))
     {
@@ -216,7 +217,7 @@ TAO_SSLIOP_Connector::connect (TAO::Profile_Transport_Resolver *resolver,
   // If the SSL port is zero, then no SSLIOP tagged component was
   // available in the IOR, meaning that there is no way to make a
   // secure invocation.  Throw an exception.
-  if (qop != Security::SecQOPNoProtection
+  if (qop != ::Security::SecQOPNoProtection
       && ssl_endpoint->ssl_component ().port == 0)
     {
       if (TAO_debug_level > 0)
@@ -232,7 +233,7 @@ TAO_SSLIOP_Connector::connect (TAO::Profile_Transport_Resolver *resolver,
                         0);
     }
 
-  if ((!establish_trust && qop == Security::SecQOPNoProtection)
+  if ((!establish_trust && qop == ::Security::SecQOPNoProtection)
       || ssl_endpoint->ssl_component ().port == 0)
     {
       return this->iiop_connect (ssl_endpoint,
@@ -252,14 +253,14 @@ TAO_SSLIOP_Connector::connect (TAO::Profile_Transport_Resolver *resolver,
 
 
 TAO_Profile *
-TAO_SSLIOP_Connector::create_profile (TAO_InputCDR& cdr)
+TAO::SSLIOP::Connector::create_profile (TAO_InputCDR& cdr)
 {
   TAO_Profile *pfile;
   ACE_NEW_RETURN (pfile,
                   TAO_SSLIOP_Profile (this->orb_core ()),
                   0);
 
-  int r = pfile->decode (cdr);
+  const int r = pfile->decode (cdr);
   if (r == -1)
     {
       pfile->_decr_refcnt ();
@@ -270,7 +271,7 @@ TAO_SSLIOP_Connector::create_profile (TAO_InputCDR& cdr)
 }
 
 TAO_Profile *
-TAO_SSLIOP_Connector::make_profile (ACE_ENV_SINGLE_ARG_DECL)
+TAO::SSLIOP::Connector::make_profile (ACE_ENV_SINGLE_ARG_DECL)
 {
   // The endpoint should be of the form:
   //    N.n@host:port/object_key
@@ -280,7 +281,7 @@ TAO_SSLIOP_Connector::make_profile (ACE_ENV_SINGLE_ARG_DECL)
   TAO_Profile *profile = 0;
   ACE_NEW_THROW_EX (profile,
                     TAO_SSLIOP_Profile (this->orb_core (),
-                                        0), // SSL component
+                                          0), // SSL component
                     CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
                         TAO_DEFAULT_MINOR_CODE,
@@ -292,12 +293,13 @@ TAO_SSLIOP_Connector::make_profile (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 TAO_Transport*
-TAO_SSLIOP_Connector::iiop_connect (TAO_SSLIOP_Endpoint *ssl_endpoint,
-                                    TAO::Profile_Transport_Resolver *resolver,
-                                    ACE_Time_Value *timeout
-                                    ACE_ENV_ARG_DECL)
+TAO::SSLIOP::Connector::iiop_connect (
+  TAO_SSLIOP_Endpoint *ssl_endpoint,
+  TAO::Profile_Transport_Resolver *resolver,
+  ACE_Time_Value *timeout
+  ACE_ENV_ARG_DECL)
 {
-  const SSLIOP::SSL &ssl_component = ssl_endpoint->ssl_component ();
+  const ::SSLIOP::SSL &ssl_component = ssl_endpoint->ssl_component ();
 
   // Only allow connection to the insecure IIOP port if the endpoint
   // explicitly allows it, i.e. if the Security::NoProtection security
@@ -311,7 +313,7 @@ TAO_SSLIOP_Connector::iiop_connect (TAO_SSLIOP_Endpoint *ssl_endpoint,
   // port.  In that case, the server will have to prevent the
   // connection, and subsequently the request, from completing.
   if (ACE_BIT_DISABLED (ssl_component.target_supports,
-                        Security::NoProtection))
+                        ::Security::NoProtection))
     ACE_THROW_RETURN (CORBA::NO_PERMISSION (
                         CORBA::SystemException::_tao_minor_code (
                           TAO_DEFAULT_MINOR_CODE,
@@ -328,22 +330,23 @@ TAO_SSLIOP_Connector::iiop_connect (TAO_SSLIOP_Endpoint *ssl_endpoint,
   TAO_Base_Transport_Property iiop_desc (iiop_endpoint);
 
   // Note that the IIOP-only transport descriptor is used!
-  return this->TAO_IIOP_SSL_Connector::connect (resolver,
-                                                &iiop_desc,
-                                                timeout
-                                                ACE_ENV_ARG_PARAMETER);
+  return this->TAO::IIOP_SSL_Connector::connect (resolver,
+                                                 &iiop_desc,
+                                                 timeout
+                                                 ACE_ENV_ARG_PARAMETER);
 }
 
 TAO_Transport *
-TAO_SSLIOP_Connector::ssliop_connect (TAO_SSLIOP_Endpoint *ssl_endpoint,
-                                      Security::QOP qop,
-                                      const Security::EstablishTrust &trust,
-                                      TAO::Profile_Transport_Resolver *resolver,
-                                      TAO_Transport_Descriptor_Interface *desc,
-                                      ACE_Time_Value *max_wait_time
-                                      ACE_ENV_ARG_DECL)
+TAO::SSLIOP::Connector::ssliop_connect (
+  TAO_SSLIOP_Endpoint *ssl_endpoint,
+  ::Security::QOP qop,
+  const ::Security::EstablishTrust &trust,
+  TAO::Profile_Transport_Resolver *resolver,
+  TAO_Transport_Descriptor_Interface *desc,
+  ACE_Time_Value *max_wait_time
+  ACE_ENV_ARG_DECL)
 {
-  const SSLIOP::SSL &ssl_component = ssl_endpoint->ssl_component ();
+  const ::SSLIOP::SSL &ssl_component = ssl_endpoint->ssl_component ();
 
   // @@ The following check for "required insecurity" seems odd, but
   //    I haven't seen anything in the Security spec that says this
@@ -355,7 +358,7 @@ TAO_SSLIOP_Connector::ssliop_connect (TAO_SSLIOP_Endpoint *ssl_endpoint,
   // SSLIOP::SSL::target_requires field is enabled, then prevent an
   // SSL connection from occuring.
   if (ACE_BIT_ENABLED (ssl_component.target_requires,
-                       Security::NoProtection))
+                       ::Security::NoProtection))
     ACE_THROW_RETURN (CORBA::NO_PERMISSION (
                         CORBA::SystemException::_tao_minor_code (
                           TAO_DEFAULT_MINOR_CODE,
@@ -371,8 +374,8 @@ TAO_SSLIOP_Connector::ssliop_connect (TAO_SSLIOP_Endpoint *ssl_endpoint,
   // cipher.  However, the "eNULL" cipher is only enabled on the
   // server side if "no protection" is enabled.
   if (ACE_BIT_DISABLED (ssl_component.target_supports,
-                        Security::NoProtection)
-      && qop == Security::SecQOPIntegrity)
+                        ::Security::NoProtection)
+      && qop == ::Security::SecQOPIntegrity)
     ACE_THROW_RETURN (CORBA::INV_POLICY (), 0);
 
   const ACE_INET_Addr &remote_address =
@@ -396,7 +399,7 @@ TAO_SSLIOP_Connector::ssliop_connect (TAO_SSLIOP_Endpoint *ssl_endpoint,
     }
 
   int result = 0;
-  TAO_SSLIOP_Connection_Handler *svc_handler = 0;
+  TAO::SSLIOP::Connection_Handler *svc_handler = 0;
   TAO_Transport *transport = 0;
 
   // Check the Cache first for connections
@@ -448,7 +451,7 @@ TAO_SSLIOP_Connector::ssliop_connect (TAO_SSLIOP_Endpoint *ssl_endpoint,
           return 0;
         }
 
-      ACE_Auto_Basic_Ptr<TAO_SSLIOP_Connection_Handler>
+      ACE_Auto_Basic_Ptr<TAO::SSLIOP::Connection_Handler>
         safe_handler (svc_handler);
 
       // Setup the establishment of trust connection properties, if
@@ -483,8 +486,8 @@ TAO_SSLIOP_Connector::ssliop_connect (TAO_SSLIOP_Endpoint *ssl_endpoint,
       //
       // Note that it is not possible to completely disable protection
       // here.
-      if ((qop == Security::SecQOPNoProtection
-          || qop == Security::SecQOPIntegrity)
+      if ((qop == ::Security::SecQOPNoProtection
+          || qop == ::Security::SecQOPIntegrity)
           && ::SSL_set_cipher_list (svc_handler->peer ().ssl (),
                                     "eNULL") == 0)
         {
@@ -496,7 +499,7 @@ TAO_SSLIOP_Connector::ssliop_connect (TAO_SSLIOP_Endpoint *ssl_endpoint,
           ACE_THROW_RETURN (CORBA::INV_POLICY (), 0);
         }
 
-      TAO_SSLIOP_Credentials_var credentials =
+      TAO::SSLIOP::Credentials_var credentials =
         this->retrieve_credentials (resolver->stub (),
                                     svc_handler->peer ().ssl ()
                                     ACE_ENV_ARG_PARAMETER);
@@ -542,7 +545,7 @@ TAO_SSLIOP_Connector::ssliop_connect (TAO_SSLIOP_Endpoint *ssl_endpoint,
           // failure) within timeout.
           result =
             this->active_connect_strategy_->wait (svc_handler,
-                                                  max_wait_time);
+                                                  0);
 
           if (TAO_debug_level > 2)
             {
@@ -646,8 +649,9 @@ TAO_SSLIOP_Connector::ssliop_connect (TAO_SSLIOP_Endpoint *ssl_endpoint,
 
       // Add the handler to Cache
       int retval =
-        this->orb_core ()->lane_resources ().transport_cache ().cache_transport (desc,
-                                                                                 transport);
+        this->orb_core ()->
+          lane_resources ().transport_cache ().cache_transport (desc,
+                                                                transport);
 
       // Failure in adding to cache.
       if (retval != 0)
@@ -683,7 +687,8 @@ TAO_SSLIOP_Connector::ssliop_connect (TAO_SSLIOP_Endpoint *ssl_endpoint,
             {
               ACE_ERROR ((LM_ERROR,
                           "TAO (%P|%t) - IIOP_Connector::make_connection, "
-                          "could not register the new connection in the reactor\n"));
+                          "could not register the new connection in the "
+                          "reactor\n"));
             }
 
           return 0;
@@ -693,59 +698,57 @@ TAO_SSLIOP_Connector::ssliop_connect (TAO_SSLIOP_Endpoint *ssl_endpoint,
   return transport;
 }
 
-TAO_SSLIOP_Credentials *
-TAO_SSLIOP_Connector::retrieve_credentials (TAO_Stub *stub,
-                                            SSL *ssl
-                                            ACE_ENV_ARG_DECL)
+TAO::SSLIOP::OwnCredentials *
+TAO::SSLIOP::Connector::retrieve_credentials (TAO_Stub *stub,
+                                              SSL *ssl
+                                              ACE_ENV_ARG_DECL)
 {
   // Check if the user overrode the default invocation credentials.
   CORBA::Policy_var policy =
-    stub->get_policy (Security::SecInvocationCredentialsPolicy
+    stub->get_policy (::SecurityLevel3::ContextEstablishmentPolicyType
                       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (TAO_SSLIOP_Credentials::_nil ());
+  ACE_CHECK_RETURN (TAO::SSLIOP::OwnCredentials::_nil ());
 
-  SecurityLevel2::InvocationCredentialsPolicy_var creds_policy =
-    SecurityLevel2::InvocationCredentialsPolicy::_narrow (
+  SecurityLevel3::ContextEstablishmentPolicy_var creds_policy =
+    SecurityLevel3::ContextEstablishmentPolicy::_narrow (
       policy.in ()
       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (TAO_SSLIOP_Credentials::_nil ());
+  ACE_CHECK_RETURN (TAO::SSLIOP::OwnCredentials::_nil ());
 
-  TAO_SSLIOP_Credentials_var ssliop_credentials;
+  TAO::SSLIOP::OwnCredentials_var ssliop_credentials;
 
   // Set the Credentials (X.509 certificates and corresponding private
   // keys) to be used for this invocation.
   if (!CORBA::is_nil (creds_policy.in ()))
     {
-      SecurityLevel2::CredentialsList_var creds_list =
-        creds_policy->creds (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (TAO_SSLIOP_Credentials::_nil ());
+      SecurityLevel3::OwnCredentialsList_var creds_list =
+        creds_policy->creds_list (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK_RETURN (TAO::SSLIOP::OwnCredentials::_nil ());
 
       if (creds_list->length () > 0)
         {
-          // Only use the first credential.  All others are supposed
-          // to be used for delegation but SSLIOP in CSIv1 does not
-          // support delegation.  (Compare to CSIv2.)
-          SecurityLevel2::Credentials_ptr credentials =
-            creds_list[(CORBA::ULong) 0];
+          // Assume that we've got an SSLIOP credential.
+          SecurityLevel3::Credentials_ptr credentials =
+            creds_list[0u];
 
           ssliop_credentials =
-            TAO_SSLIOP_Credentials::_narrow (credentials
-                                             ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (TAO_SSLIOP_Credentials::_nil ());
+            TAO::SSLIOP::OwnCredentials::_narrow (credentials
+                                                  ACE_ENV_ARG_PARAMETER);
+          ACE_CHECK_RETURN (TAO::SSLIOP::OwnCredentials::_nil ());
 
           if (!CORBA::is_nil (ssliop_credentials.in ()))
             {
-              TAO_SSLIOP_X509_var x509 = ssliop_credentials->x509 ();
+              TAO::SSLIOP::X509_var x509 = ssliop_credentials->x509 ();
               if (::SSL_use_certificate (ssl, x509.in ()) != 1)
-                return TAO_SSLIOP_Credentials::_nil ();
+                return TAO::SSLIOP::OwnCredentials::_nil ();
 
-              TAO_SSLIOP_EVP_PKEY_var evp = ssliop_credentials->evp ();
+              TAO::SSLIOP::EVP_PKEY_var evp = ssliop_credentials->evp ();
               if (evp.in () != 0
                   && ::SSL_use_PrivateKey (ssl, evp.in ()) != 1)
                 {
                   // Invalidate the certificate we just set.
                   (void) ::SSL_use_certificate (ssl, 0);
-                  return TAO_SSLIOP_Credentials::_nil ();
+                  return TAO::SSLIOP::OwnCredentials::_nil ();
                 }
             }
         }
@@ -755,12 +758,13 @@ TAO_SSLIOP_Connector::retrieve_credentials (TAO_Stub *stub,
       // Use the default certificate and private key, i.e. the one set
       // in the SSL_CTX that was used when creating the SSL data
       // structure.
-      TAO_SSLIOP_Credentials_ptr & c = ssliop_credentials.out ();
+      TAO::SSLIOP::OwnCredentials_ptr & c = ssliop_credentials.out ();
       ACE_NEW_THROW_EX (c,
-                        TAO_SSLIOP_Credentials (::SSL_get_certificate (ssl),
-                                                ::SSL_get_privatekey (ssl)),
+                        TAO::SSLIOP::OwnCredentials (
+                          ::SSL_get_certificate (ssl),
+                          ::SSL_get_privatekey (ssl)),
                         CORBA::NO_MEMORY ());
-      ACE_CHECK_RETURN (TAO_SSLIOP_Credentials::_nil ());
+      ACE_CHECK_RETURN (TAO::SSLIOP::OwnCredentials::_nil ());
     }
 
   return ssliop_credentials._retn ();

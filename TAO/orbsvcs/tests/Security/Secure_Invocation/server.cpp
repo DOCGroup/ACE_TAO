@@ -65,13 +65,14 @@ main (int argc, char *argv[])
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      obj = orb->resolve_initial_references ("SecurityCurrent"
-                                             ACE_ENV_ARG_PARAMETER);
+      obj =
+        orb->resolve_initial_references ("SecurityLevel3:SecurityCurrent"
+                                         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      SecurityLevel2::Current_var security_current =
-        SecurityLevel2::Current::_narrow (obj.in ()
-                                          ACE_ENV_ARG_PARAMETER);
+      SecurityLevel3::SecurityCurrent_var security_current =
+        SecurityLevel3::SecurityCurrent::_narrow (obj.in ()
+                                                  ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (security_current.in ()))
@@ -83,7 +84,7 @@ main (int argc, char *argv[])
       Foo_i *server_impl = 0;
 
       ACE_NEW_RETURN (server_impl,
-		      Foo_i (orb.in (), 
+		      Foo_i (orb.in (),
 			     security_current.in ()),
 		      -1);
 

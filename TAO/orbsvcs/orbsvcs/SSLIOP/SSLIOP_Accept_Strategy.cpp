@@ -6,19 +6,19 @@ ACE_RCSID (SSLIOP,
            "$Id$")
 
 
-TAO_SSLIOP_Accept_Strategy::TAO_SSLIOP_Accept_Strategy (
+TAO::SSLIOP::Accept_Strategy::Accept_Strategy (
   TAO_ORB_Core * orb_core,
   const ACE_Time_Value & timeout)
-  : TAO_Accept_Strategy<TAO_SSLIOP_Connection_Handler,
+  : TAO_Accept_Strategy<TAO::SSLIOP::Connection_Handler,
                         ACE_SSL_SOCK_ACCEPTOR> (orb_core),
     timeout_ (timeout)
 {
 }
 
 int
-TAO_SSLIOP_Accept_Strategy::accept_svc_handler (handler_type * svc_handler)
+TAO::SSLIOP::Accept_Strategy::accept_svc_handler (handler_type * svc_handler)
 {
-  ACE_TRACE ("TAO_SSLIOP_Accept_Strategy::accept_svc_handler");
+  ACE_TRACE ("TAO::SSLIOP::Accept_Strategy::accept_svc_handler");
 
   // The following code is basically the same code found in
   // ACE_Accept_Strategy::accept_svc_handler().  The only difference
@@ -40,7 +40,7 @@ TAO_SSLIOP_Accept_Strategy::accept_svc_handler (handler_type * svc_handler)
   // created handle. This is because the newly created handle will
   // inherit the properties of the listen handle, including its event
   // associations.
-  int reset_new_handle = this->reactor_->uses_event_associations ();
+  const int reset_new_handle = this->reactor_->uses_event_associations ();
 
   if (this->peer_acceptor_.accept (svc_handler->peer (), // stream
                                    0,                // remote address
@@ -61,12 +61,12 @@ TAO_SSLIOP_Accept_Strategy::accept_svc_handler (handler_type * svc_handler)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class ACE_Accept_Strategy<TAO_SSLIOP_Connection_Handler, ACE_SSL_SOCK_ACCEPTOR>;
-template class TAO_Accept_Strategy<TAO_SSLIOP_Connection_Handler, ACE_SSL_SOCK_ACCEPTOR>;
+template class ACE_Accept_Strategy<TAO::SSLIOP::Connection_Handler, ACE_SSL_SOCK_ACCEPTOR>;
+template class TAO_Accept_Strategy<TAO::SSLIOP::Connection_Handler, ACE_SSL_SOCK_ACCEPTOR>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-# pragma instantiate ACE_Accept_Strategy<TAO_SSLIOP_Connection_Handler, ACE_SSL_SOCK_ACCEPTOR>
-# pragma instantiate TAO_Accept_Strategy<TAO_SSLIOP_Connection_Handler, ACE_SSL_SOCK_ACCEPTOR>
+# pragma instantiate ACE_Accept_Strategy<TAO::SSLIOP::Connection_Handler, ACE_SSL_SOCK_ACCEPTOR>
+# pragma instantiate TAO_Accept_Strategy<TAO::SSLIOP::Connection_Handler, ACE_SSL_SOCK_ACCEPTOR>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -1,7 +1,3 @@
-// -*- C++ -*-
-//
-// $Id$
-
 #include "IIOP_SSL_Connector.h"
 
 #include "SSLIOP_Util.h"
@@ -18,47 +14,47 @@
 #include "ace/Strategies_T.h"
 
 
-ACE_RCSID (TAO_SSLIOP,
+ACE_RCSID (SSLIOP,
            IIOP_SSL_Connector,
            "$Id$")
 
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class TAO_Connect_Concurrency_Strategy<TAO_IIOP_SSL_Connection_Handler>;
-template class TAO_Connect_Creation_Strategy<TAO_IIOP_SSL_Connection_Handler>;
-template class ACE_Strategy_Connector<TAO_IIOP_SSL_Connection_Handler, ACE_SOCK_CONNECTOR>;
-template class ACE_Connect_Strategy<TAO_IIOP_SSL_Connection_Handler, ACE_SOCK_CONNECTOR>;
-template class ACE_Connector_Base<TAO_IIOP_SSL_Connection_Handler>;
-template class ACE_Connector<TAO_IIOP_SSL_Connection_Handler, ACE_SOCK_CONNECTOR>;
-template class ACE_NonBlocking_Connect_Handler<TAO_IIOP_SSL_Connection_Handler>;
+template class TAO_Connect_Concurrency_Strategy<TAO::IIOP_SSL_Connection_Handler>;
+template class TAO_Connect_Creation_Strategy<TAO::IIOP_SSL_Connection_Handler>;
+template class ACE_Strategy_Connector<TAO::IIOP_SSL_Connection_Handler, ACE_SOCK_CONNECTOR>;
+template class ACE_Connect_Strategy<TAO::IIOP_SSL_Connection_Handler, ACE_SOCK_CONNECTOR>;
+template class ACE_Connector_Base<TAO::IIOP_SSL_Connection_Handler>;
+template class ACE_Connector<TAO::IIOP_SSL_Connection_Handler, ACE_SOCK_CONNECTOR>;
+template class ACE_NonBlocking_Connect_Handler<TAO::IIOP_SSL_Connection_Handler>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate TAO_Connect_Concurrency_Strategy<TAO_IIOP_SSL_Connection_Handler>
-#pragma instantiate TAO_Connect_Creation_Strategy<TAO_IIOP_SSL_Connection_Handler>
-#pragma instantiate ACE_Strategy_Connector<TAO_IIOP_SSL_Connection_Handler, ACE_SOCK_CONNECTOR>
-#pragma instantiate ACE_Connect_Strategy<TAO_IIOP_SSL_Connection_Handler, ACE_SOCK_CONNECTOR>
-#pragma instantiate ACE_Connector_Base<TAO_IIOP_SSL_Connection_Handler>
-#pragma instantiate ACE_Connector<TAO_IIOP_SSL_Connection_Handler, ACE_SOCK_Connector>
-#pragma instantiate ACE_NonBlocking_Connect_Handler<TAO_IIOP_SSL_Connection_Handler>
+#pragma instantiate TAO_Connect_Concurrency_Strategy<TAO::IIOP_SSL_Connection_Handler>
+#pragma instantiate TAO_Connect_Creation_Strategy<TAO::IIOP_SSL_Connection_Handler>
+#pragma instantiate ACE_Strategy_Connector<TAO::IIOP_SSL_Connection_Handler, ACE_SOCK_CONNECTOR>
+#pragma instantiate ACE_Connect_Strategy<TAO::IIOP_SSL_Connection_Handler, ACE_SOCK_CONNECTOR>
+#pragma instantiate ACE_Connector_Base<TAO::IIOP_SSL_Connection_Handler>
+#pragma instantiate ACE_Connector<TAO::IIOP_SSL_Connection_Handler, ACE_SOCK_Connector>
+#pragma instantiate ACE_NonBlocking_Connect_Handler<TAO::IIOP_SSL_Connection_Handler>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 
-TAO_IIOP_SSL_Connector::TAO_IIOP_SSL_Connector (CORBA::Boolean flag)
+TAO::IIOP_SSL_Connector::IIOP_SSL_Connector (CORBA::Boolean flag)
   : TAO_IIOP_Connector (flag),
     connect_strategy_ (),
     base_connector_ ()
 {
 }
 
-TAO_IIOP_SSL_Connector::~TAO_IIOP_SSL_Connector (void)
+TAO::IIOP_SSL_Connector::~IIOP_SSL_Connector (void)
 {
 }
 
 int
-TAO_IIOP_SSL_Connector::open (TAO_ORB_Core *orb_core)
+TAO::IIOP_SSL_Connector::open (TAO_ORB_Core *orb_core)
 {
   this->orb_core (orb_core);
 
@@ -69,27 +65,26 @@ TAO_IIOP_SSL_Connector::open (TAO_ORB_Core *orb_core)
   if (this->init_tcp_properties () != 0)
     return -1;
 
-  if (TAO_SSLIOP_Util::setup_handler_state (orb_core,
-                                            &(this->tcp_properties_),
-                                            this->handler_state_) != 0)
+  if (TAO::SSLIOP::Util::setup_handler_state (orb_core,
+                                              &(this->tcp_properties_),
+                                              this->handler_state_) != 0)
       return -1;
 
-  /// Our connect creation strategy
-  TAO_IIOP_SSL_CONNECT_CREATION_STRATEGY *connect_creation_strategy = 0;
+  // Our connect creation strategy
+  CONNECT_CREATION_STRATEGY *connect_creation_strategy = 0;
 
   ACE_NEW_RETURN (connect_creation_strategy,
-                  TAO_IIOP_SSL_CONNECT_CREATION_STRATEGY
-                      (orb_core->thr_mgr (),
-                       orb_core,
-                       &(this->handler_state_),
-                       this->lite_flag_),
+                  CONNECT_CREATION_STRATEGY (orb_core->thr_mgr (),
+                                             orb_core,
+                                             &(this->handler_state_),
+                                             this->lite_flag_),
                   -1);
 
-  /// Our activation strategy
-  TAO_IIOP_SSL_CONNECT_CONCURRENCY_STRATEGY *concurrency_strategy = 0;
+  // Our activation strategy
+  CONNECT_CONCURRENCY_STRATEGY *concurrency_strategy = 0;
 
   ACE_NEW_RETURN (concurrency_strategy,
-                  TAO_IIOP_SSL_CONNECT_CONCURRENCY_STRATEGY (orb_core),
+                  CONNECT_CONCURRENCY_STRATEGY (orb_core),
                   -1);
 
 
@@ -100,7 +95,7 @@ TAO_IIOP_SSL_Connector::open (TAO_ORB_Core *orb_core)
 }
 
 int
-TAO_IIOP_SSL_Connector::close (void)
+TAO::IIOP_SSL_Connector::close (void)
 {
   delete this->base_connector_.creation_strategy ();
   delete this->base_connector_.concurrency_strategy ();
@@ -108,14 +103,13 @@ TAO_IIOP_SSL_Connector::close (void)
 }
 
 int
-TAO_IIOP_SSL_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
+TAO::IIOP_SSL_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
 {
   if (endpoint->tag () != IOP::TAG_INTERNET_IOP)
     return -1;
 
   TAO_IIOP_Endpoint *iiop_endpoint =
-    ACE_dynamic_cast (TAO_IIOP_Endpoint *,
-                      endpoint);
+    dynamic_cast<TAO_IIOP_Endpoint *> (endpoint);
 
   if (iiop_endpoint == 0)
     return -1;
@@ -144,14 +138,13 @@ TAO_IIOP_SSL_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
 }
 
 TAO_Transport *
-TAO_IIOP_SSL_Connector::make_connection (
+TAO::IIOP_SSL_Connector::make_connection (
   TAO::Profile_Transport_Resolver *,
   TAO_Transport_Descriptor_Interface &desc,
   ACE_Time_Value *max_wait_time)
 {
   TAO_IIOP_Endpoint *iiop_endpoint =
-    ACE_dynamic_cast (TAO_IIOP_Endpoint *,
-                      desc.endpoint ());
+    dynamic_cast<TAO_IIOP_Endpoint *> (desc.endpoint ());
 
   if (iiop_endpoint == 0)
     return 0;
@@ -170,7 +163,7 @@ TAO_IIOP_SSL_Connector::make_connection (
   this->active_connect_strategy_->synch_options (max_wait_time,
                                                  synch_options);
 
-  TAO_IIOP_SSL_Connection_Handler *svc_handler = 0;
+  IIOP_SSL_Connection_Handler *svc_handler = 0;
 
   // Connect.
   int result =
@@ -213,7 +206,7 @@ TAO_IIOP_SSL_Connector::make_connection (
       // failure) within timeout.
       result =
         this->active_connect_strategy_->wait (svc_handler,
-                                              max_wait_time);
+                                              0);
 
       if (TAO_debug_level > 2)
         {
@@ -309,8 +302,9 @@ TAO_IIOP_SSL_Connector::make_connection (
 
   // Add the handler to Cache
   int retval =
-    this->orb_core ()->lane_resources ().transport_cache ().cache_transport (&desc,
-                                                                             transport);
+    this->orb_core ()->lane_resources ().transport_cache ().cache_transport (
+      &desc,
+      transport);
 
   // Failure in adding to cache.
   if (retval != 0)

@@ -55,15 +55,12 @@ TAO::CSI_Utils::extract_sas_service_context (
                       sc.context_data.get_buffer ()),
                     sc.context_data.length ());
 
-  CORBA::Boolean byte_order;
+  ACE_CDR::Boolean byte_order;
 
   if (!(cdr >> ACE_InputCDR::to_boolean (byte_order)))
     return false;
 
   cdr.reset_byte_order (static_cast<int> (byte_order));
 
-  if (!(cdr >> sas_context))
-    return false;
-
-  return true;
+  return (cdr >> sas_context);
 }
