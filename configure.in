@@ -1,7 +1,7 @@
 dnl
 dnl $Id$
 
-AC_REVISION($Revision 0.54 $)dnl
+AC_REVISION($Revision 0.55 $)dnl
 
 dnl
 dnl An autoconf script to automatically configure ACE.
@@ -940,13 +940,7 @@ ace_has_aio_funcs=yes
 AC_CHECK_FUNC(aio_read, , dnl
   AC_CHECK_LIB(aio, aio_read, ,
     AC_CHECK_LIB(posix4, aio_read, , 
-      AC_CHECK_LIB(rt, aio_read, , ace_has_aio_funcs=no)))
-
-dnl Check for all of the things we need to compile and link threads
-dnl properly.
-if test "$ace_user_enable_threads" = yes; then
-  ACE_CHECK_THREADS
-fi dnl test "$ace_user_enable_threads" = yes
+      AC_CHECK_LIB(rt, aio_read, , ace_has_aio_funcs=no))))
 
 dnl Check for sched_yield() in posix4 library.
 dnl Some platforms, such as Solaris, may define sched_yield() there.
@@ -1639,7 +1633,7 @@ ACE_CHECK_TYPE(key_t, sys/types.h, ,AC_DEFINE(ACE_LACKS_KEY_T))
 ACE_CHECK_TYPE(ssize_t, sys/types.h, AC_DEFINE(ACE_HAS_SSIZE_T),)
 ACE_CHECK_TYPE(u_longlong_t, sys/types.h, , AC_DEFINE(ACE_LACKS_U_LONGLONG_T))
 ACE_CHECK_TYPE(pri_t, sys/types.h, ,AC_DEFINE(ACE_LACKS_PRI_T))
-ACE_CHECK_TYPE(socklen_t, sys/socket.h, AC_DEFIE(ACE_HAS_SOCKLEN_T),)
+ACE_CHECK_TYPE(socklen_t, sys/socket.h, AC_DEFINE(ACE_HAS_SOCKLEN_T),)
 ACE_CHECK_TYPE(ucontext_t, ucontext.h, AC_DEFINE(ACE_HAS_UCONTEXT_T),)
 ACE_CHECK_TYPE(wchar_t, wchar.h, AC_DEFINE(ACE_HAS_XPG4_MULTIBYTE_CHAR),
   [
@@ -2959,6 +2953,10 @@ AC_CHECK_FUNC(readlink, dnl
   ,
   AC_DEFINE(ACE_LACKS_READLINK))
 
+AC_CHECK_FUNC(rename, dnl
+  ,
+  AC_DEFINE(ACE_LACKS_RENAME))
+
 AC_CHECK_FUNC(recvmsg, dnl
   ,
   AC_DEFINE(ACE_LACKS_RECVMSG))
@@ -4129,7 +4127,7 @@ ACE_CACHE_CHECK(if platform has line-buffered streambufs,
 dnl Check if platform has unbuffered streambufs
 ACE_CACHE_CHECK(if platform has unbuffered streambufs,
   ace_cv_feature_has_unbuffered_streambuf,[
-    A_TRY_COMPILE(
+    AC_TRY_COMPILE(
       [
 #include <iostream.h>
       ],
@@ -5430,7 +5428,7 @@ if test "$ace_user_enable_reentrant_funcs" = yes &&
    test "$ac_cv_func_localtime_r" = yes &&
    test "$ac_cv_func_gmtime_r" = yes &&
    test "$ac_cv_func_asctime_r" = yes; then
-  AC_DEFINE(ACE_HAS_REENTRANT_FUNCTIONS
+  AC_DEFINE(ACE_HAS_REENTRANT_FUNCTIONS)
 fi
 
 dnl Don't bother with reentrant functions if they are disabled by the user.
@@ -6094,37 +6092,37 @@ dnl We can finally create all the files listed here; Makefile is
 dnl created from Makefile.in, etc.  Top-level Makefiles should be
 dnl created first.
 AC_OUTPUT([
-dnl        Makefile
-dnl        NEWS
+           Makefile
+           NEWS
            ace-config
            ace-diff-config
-dnl        ace/Makefile
-dnl        apps/Makefile
-dnl        apps/gperf/Makefile
-dnl        apps/gperf/src/Makefile
-dnl        man/Makefile
-dnl        man/man3/Makefile
-dnl        netsvcs/Makefile
-dnl        netsvcs/clients/Makefile
-dnl        netsvcs/clients/Logger/Makefile
-dnl        netsvcs/clients/Naming/Makefile
-dnl        netsvcs/clients/Naming/Client/Makefile
-dnl        netsvcs/clients/Naming/Dump_Restore/Makefile
-dnl        netsvcs/clients/Tokens/Makefile
-dnl        netsvcs/clients/Tokens/collection/Makefile
-dnl        netsvcs/clients/Tokens/deadlock/Makefile
-dnl        netsvcs/clients/Tokens/invariant/Makefile
-dnl        netsvcs/clients/Tokens/manual/Makefile
-dnl        netsvcs/clients/Tokens/mutex/Makefile
-dnl        netsvcs/clients/Tokens/rw_lock/Makefile
-dnl        netsvcs/lib/Makefile
-dnl        netsvcs/servers/Makefile
-dnl        tests/Makefile
-dnl        tests/log/Makefile
+           ace/Makefile
+           apps/Makefile
+           apps/gperf/Makefile
+           apps/gperf/src/Makefile
+           man/Makefile
+           man/man3/Makefile
+           netsvcs/Makefile
+           netsvcs/clients/Makefile
+           netsvcs/clients/Logger/Makefile
+           netsvcs/clients/Naming/Makefile
+           netsvcs/clients/Naming/Client/Makefile
+           netsvcs/clients/Naming/Dump_Restore/Makefile
+           netsvcs/clients/Tokens/Makefile
+           netsvcs/clients/Tokens/collection/Makefile
+           netsvcs/clients/Tokens/deadlock/Makefile
+           netsvcs/clients/Tokens/invariant/Makefile
+           netsvcs/clients/Tokens/manual/Makefile
+           netsvcs/clients/Tokens/mutex/Makefile
+           netsvcs/clients/Tokens/rw_lock/Makefile
+           netsvcs/lib/Makefile
+           netsvcs/servers/Makefile
+           tests/Makefile
+           tests/log/Makefile
           ])
 
 dnl Make sure ace-diff-config is executable
-dnl chmod 755 ace-diff-config
+chmod 755 ace-diff-config
 
 echo ""
 echo "Configuration of ACE is now complete."
