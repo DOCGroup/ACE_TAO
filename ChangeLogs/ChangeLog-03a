@@ -1,3 +1,18 @@
+Wed Sep 27 16:17:36 2000  Ossama Othman  <ossama@uci.edu>
+
+	* ace/IOStream.h:
+	* ace/IOStream_T.h:
+
+	  Moved inclusion of `ace/INET_Addr.h' and `ace/Handle_Set.h' to
+	  `IOStream_T.h'.  They weren't needed in `IOStream.h'.
+
+	* ace/config-g++-common.h (ACE_LACKS_AUTO_PTR,
+	  ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES,
+	  ACE_HAS_GNUC_BROKEN_TEMPLATE_INLINE_FUNCTIONS):
+
+	  G++ 2.95.x properly support the auto_ptr class, templates with
+	  static data members, and inlined template functions.
+
 Wed Sep 27 14:02:30 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* examples/Reactor/WFMO_Reactor/test_abandoned.cpp

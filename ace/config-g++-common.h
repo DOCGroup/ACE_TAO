@@ -23,8 +23,20 @@
 # define ACE_HAS_STD_TEMPLATE_SPECIALIZATION
 # define ACE_HAS_STANDARD_CPP_LIBRARY 1
 # define ACE_USES_OLD_IOSTREAMS
-// For some reason EGCS doesn't define this in its stdlib.
-# define ACE_LACKS_AUTO_PTR
+
+
+# if __GNUC__ <= 2 && __GNUC_MINOR__ < 95
+    // G++ 2.95.x and better properly support the auto_ptr class.
+#   define ACE_LACKS_AUTO_PTR
+
+    // Some versions of egcs, e.g., egcs-2.90.27 980315 (egcs-1.0.2
+    // release), have bugs with static data members in template
+    // classes.
+#   define ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES
+
+#   define ACE_HAS_GNUC_BROKEN_TEMPLATE_INLINE_FUNCTIONS
+# endif  /* G++ 2.91 or less */
+
 
 # if __GNUC__ == 2 && __GNUC_MINOR__ >= 91
 #   define ACE_HAS_USING_KEYWORD
@@ -39,10 +51,6 @@
 #   // g++ 2.9 and egcs 2.91 apparently have a bug with this . . .
 #   define ACE_HAS_TEMPLATE_SPECIALIZATION
 # endif /* __GNUC__ != 2.9  &&  __GNUC__ != 2.91*/
-
-  // Some versions of egcs, e.g., egcs-2.90.27 980315 (egcs-1.0.2 release),
-  // have bugs with static data members in template classes.
-# define ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES
 
   // __EXCEPTIONS is defined with -fexceptions, the egcs default.  It
   // is not defined with -fno-exceptions, the ACE default for g++.
@@ -60,7 +68,6 @@
 #else  /* ! egcs */
   // Plain old g++.
 # define ACE_LACKS_PLACEMENT_OPERATOR_DELETE
-# define ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES
 # define ACE_HAS_GNUG_PRE_2_8
 # define ACE_HAS_TEMPLATE_SPECIALIZATION
 # define ACE_LACKS_MIN_MAX_TEMPLATES
@@ -93,7 +100,7 @@
 #else  /* ! ACE_HAS_GNU_REPO */
 # define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
 #endif /* ! ACE_HAS_GNU_REPO */
-#define ACE_HAS_GNUC_BROKEN_TEMPLATE_INLINE_FUNCTIONS
+
 #define ACE_TEMPLATES_REQUIRE_SOURCE
 
 #include "ace/post.h"
