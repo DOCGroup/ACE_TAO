@@ -295,15 +295,15 @@ static ACE_Object_Manager_Destroyer ACE_Object_Manager_Destroyer_internal;
   ACE_Recursive_Thread_Mutex *
   ACE_Static_Object_Lock::instance (void)
   {
-#if defined (ACE_HAS_NONSTATIC_OBJECT_MANAGER)
+#if 1
     // Temporary hack until we get rid of all statics from ACE library.
     // The ACE static services need this . . .
     static ACE_Recursive_Thread_Mutex _mutex;
     return &_mutex;
-#else
+#else /* ! 1 */
     return ACE_Managed_Object<ACE_Recursive_Thread_Mutex>::
       get_preallocated_object(ACE_Object_Manager::ACE_STATIC_OBJECT_LOCK);
-#endif
+#endif /* ! 1 */
   }
 #endif /* ACE_HAS_THREADS */
 
