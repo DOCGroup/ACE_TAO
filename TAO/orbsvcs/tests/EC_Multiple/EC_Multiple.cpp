@@ -78,7 +78,7 @@ Test_ECG::run (int argc, char* argv[])
 			       " (%P|%t) Cannot activate scavenger.\n"),
 			      1);
 	}
-	      
+
       if (this->short_circuit_ != 0)
 	{
 	  if (this->run_short_circuit (orb.in (),
@@ -114,6 +114,9 @@ Test_ECG::run_short_circuit (CORBA::ORB_ptr orb,
 			     PortableServer::POAManager_ptr poa_manager,
 			     CORBA::Environment& _env)
 {
+  ACE_UNUSED_ARG (root_poa);
+  ACE_UNUSED_ARG (poa_manager);
+
   TAO_TRY
     {
       ACE_Reactor* reactor = TAO_ORB_Core_instance ()->reactor ();
@@ -157,6 +160,8 @@ Test_ECG::run_ec (CORBA::ORB_ptr orb,
 		  PortableServer::POAManager_ptr poa_manager,
 		  CORBA::Environment& _env)
 {
+  ACE_UNUSED_ARG (root_poa);
+
   TAO_TRY
     {
       CORBA::Object_var naming_obj =
@@ -182,7 +187,7 @@ Test_ECG::run_ec (CORBA::ORB_ptr orb,
 	  if (scheduler_impl.get () == 0)
 	    return -1;
 
-	  RtecScheduler::Scheduler_var scheduler = 
+	  RtecScheduler::Scheduler_var scheduler =
 	    scheduler_impl->_this (TAO_TRY_ENV);
 	  TAO_CHECK_ENV;
 
@@ -276,17 +281,17 @@ Test_ECG::run_ec (CORBA::ORB_ptr orb,
 	    {
 	      rsch_name[0].id = CORBA::string_dup (this->lcl_sch_name_);
 	    }
-	  CORBA::Object_var tmpobj = 
+	  CORBA::Object_var tmpobj =
 	    naming_context->resolve (rsch_name, TAO_TRY_ENV);
 	  TAO_CHECK_ENV;
 
-	  RtecScheduler::Scheduler_var remote_sch = 
-	    RtecScheduler::Scheduler::_narrow (tmpobj, TAO_TRY_ENV);
+	  RtecScheduler::Scheduler_var remote_sch =
+	    RtecScheduler::Scheduler::_narrow (tmpobj.in (), TAO_TRY_ENV);
 	  TAO_CHECK_ENV;
 
 	  if (this->connect_ecg (local_ec.in (),
 				 remote_ec.in (),
-				 remote_sch,
+				 remote_sch.in (),
 				 TAO_TRY_ENV) == -1)
 	    return 1;
 
@@ -744,6 +749,8 @@ int
 Test_ECG::handle_timeout (const ACE_Time_Value &tv,
 			  const void*)
 {
+  ACE_UNUSED_ARG (tv);
+
   this->message_count_--;
   if (this->message_count_ == 0)
     {
