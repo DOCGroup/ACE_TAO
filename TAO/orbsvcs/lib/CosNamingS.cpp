@@ -62,9 +62,11 @@ void POA_CosNaming::NamingContext::bind_skel (CORBA::ServerRequest &_tao_server_
   // parse the arguments
   _tao_server_request.params (nvlist, _tao_environment);
   if (_tao_environment.exception ()) return;
-  impl = (POA_CosNaming::NamingContext_ptr) _tao_object_reference->get_subclass ();
+  
+impl = (POA_CosNaming::NamingContext_ptr) _tao_object_reference->get_subclass ();
   impl->bind(n, obj, _tao_environment);
   
+
 }
 
 void POA_CosNaming::NamingContext::rebind_skel (CORBA::ServerRequest &_tao_server_request, CORBA::Object_ptr _tao_object_reference, CORBA::Environment &_tao_environment)
@@ -86,9 +88,11 @@ void POA_CosNaming::NamingContext::rebind_skel (CORBA::ServerRequest &_tao_serve
   // parse the arguments
   _tao_server_request.params (nvlist, _tao_environment);
   if (_tao_environment.exception ()) return;
-  impl = (POA_CosNaming::NamingContext_ptr) _tao_object_reference->get_subclass ();
+  
+impl = (POA_CosNaming::NamingContext_ptr) _tao_object_reference->get_subclass ();
   impl->rebind(n, obj, _tao_environment);
   
+
 }
 
 void POA_CosNaming::NamingContext::bind_context_skel (CORBA::ServerRequest &_tao_server_request, CORBA::Object_ptr _tao_object_reference, CORBA::Environment &_tao_environment)
@@ -99,8 +103,9 @@ void POA_CosNaming::NamingContext::bind_context_skel (CORBA::ServerRequest &_tao
   CORBA::NamedValue_ptr nv_n;
   CORBA::Any 	 any_n (CosNaming::_tc_Name, &n); // ORB does not own
   CosNaming::NamingContext_ptr nc;
+  CORBA::Object_ptr _tao_base_nc;
   CORBA::NamedValue_ptr nv_nc;
-  CORBA::Any 	 any_nc (CosNaming::_tc_NamingContext, &nc); // ORB does not own
+  CORBA::Any 	 any_nc (CosNaming::_tc_NamingContext, &_tao_base_nc); // ORB does not own
   
   // create an NV list and populate it with typecodes
   _tao_server_request.orb ()->create_list (0, nvlist); // initialize a list
@@ -110,9 +115,13 @@ void POA_CosNaming::NamingContext::bind_context_skel (CORBA::ServerRequest &_tao
   // parse the arguments
   _tao_server_request.params (nvlist, _tao_environment);
   if (_tao_environment.exception ()) return;
-  impl = (POA_CosNaming::NamingContext_ptr) _tao_object_reference->get_subclass ();
+  nc = CosNaming::NamingContext::_narrow (_tao_base_nc, _tao_environment);
+  if (_tao_environment.exception ()) return;
+  
+impl = (POA_CosNaming::NamingContext_ptr) _tao_object_reference->get_subclass ();
   impl->bind_context(n, nc, _tao_environment);
   
+
 }
 
 void POA_CosNaming::NamingContext::rebind_context_skel (CORBA::ServerRequest &_tao_server_request, CORBA::Object_ptr _tao_object_reference, CORBA::Environment &_tao_environment)
@@ -123,8 +132,9 @@ void POA_CosNaming::NamingContext::rebind_context_skel (CORBA::ServerRequest &_t
   CORBA::NamedValue_ptr nv_n;
   CORBA::Any 	 any_n (CosNaming::_tc_Name, &n); // ORB does not own
   CosNaming::NamingContext_ptr nc;
+  CORBA::Object_ptr _tao_base_nc;
   CORBA::NamedValue_ptr nv_nc;
-  CORBA::Any 	 any_nc (CosNaming::_tc_NamingContext, &nc); // ORB does not own
+  CORBA::Any 	 any_nc (CosNaming::_tc_NamingContext, &_tao_base_nc); // ORB does not own
   
   // create an NV list and populate it with typecodes
   _tao_server_request.orb ()->create_list (0, nvlist); // initialize a list
@@ -134,9 +144,13 @@ void POA_CosNaming::NamingContext::rebind_context_skel (CORBA::ServerRequest &_t
   // parse the arguments
   _tao_server_request.params (nvlist, _tao_environment);
   if (_tao_environment.exception ()) return;
-  impl = (POA_CosNaming::NamingContext_ptr) _tao_object_reference->get_subclass ();
+  nc = CosNaming::NamingContext::_narrow (_tao_base_nc, _tao_environment);
+  if (_tao_environment.exception ()) return;
+  
+impl = (POA_CosNaming::NamingContext_ptr) _tao_object_reference->get_subclass ();
   impl->rebind_context(n, nc, _tao_environment);
   
+
 }
 
 void POA_CosNaming::NamingContext::resolve_skel (CORBA::ServerRequest &_tao_server_request, CORBA::Object_ptr _tao_object_reference, CORBA::Environment &_tao_environment)
@@ -156,9 +170,11 @@ void POA_CosNaming::NamingContext::resolve_skel (CORBA::ServerRequest &_tao_serv
   // parse the arguments
   _tao_server_request.params (nvlist, _tao_environment);
   if (_tao_environment.exception ()) return;
-  impl = (POA_CosNaming::NamingContext_ptr) _tao_object_reference->get_subclass ();
+  
+impl = (POA_CosNaming::NamingContext_ptr) _tao_object_reference->get_subclass ();
   retval = impl->resolve(n, _tao_environment);
-  result = new CORBA::Any (CORBA::_tc_Object, retval, 1); // ORB owns
+  
+result = new CORBA::Any (CORBA::_tc_Object, retval, 1); // ORB owns
   _tao_server_request.result (result, _tao_environment);
   
 }
@@ -178,9 +194,11 @@ void POA_CosNaming::NamingContext::unbind_skel (CORBA::ServerRequest &_tao_serve
   // parse the arguments
   _tao_server_request.params (nvlist, _tao_environment);
   if (_tao_environment.exception ()) return;
-  impl = (POA_CosNaming::NamingContext_ptr) _tao_object_reference->get_subclass ();
+  
+impl = (POA_CosNaming::NamingContext_ptr) _tao_object_reference->get_subclass ();
   impl->unbind(n, _tao_environment);
   
+
 }
 
 void POA_CosNaming::NamingContext::new_context_skel (CORBA::ServerRequest &_tao_server_request, CORBA::Object_ptr _tao_object_reference, CORBA::Environment &_tao_environment)
@@ -196,9 +214,11 @@ void POA_CosNaming::NamingContext::new_context_skel (CORBA::ServerRequest &_tao_
   // parse the arguments
   _tao_server_request.params (nvlist, _tao_environment);
   if (_tao_environment.exception ()) return;
-  impl = (POA_CosNaming::NamingContext_ptr) _tao_object_reference->get_subclass ();
+  
+impl = (POA_CosNaming::NamingContext_ptr) _tao_object_reference->get_subclass ();
   *retval = impl->new_context(_tao_environment);
-  result = new CORBA::Any (CosNaming::_tc_NamingContext, retval, 1); // ORB owns
+  
+result = new CORBA::Any (CosNaming::_tc_NamingContext, retval, 1); // ORB owns
   _tao_server_request.result (result, _tao_environment);
   
 }
@@ -220,9 +240,11 @@ void POA_CosNaming::NamingContext::bind_new_context_skel (CORBA::ServerRequest &
   // parse the arguments
   _tao_server_request.params (nvlist, _tao_environment);
   if (_tao_environment.exception ()) return;
-  impl = (POA_CosNaming::NamingContext_ptr) _tao_object_reference->get_subclass ();
+  
+impl = (POA_CosNaming::NamingContext_ptr) _tao_object_reference->get_subclass ();
   *retval = impl->bind_new_context(n, _tao_environment);
-  result = new CORBA::Any (CosNaming::_tc_NamingContext, retval, 1); // ORB owns
+  
+result = new CORBA::Any (CosNaming::_tc_NamingContext, retval, 1); // ORB owns
   _tao_server_request.result (result, _tao_environment);
   
 }
@@ -238,9 +260,11 @@ void POA_CosNaming::NamingContext::destroy_skel (CORBA::ServerRequest &_tao_serv
   // parse the arguments
   _tao_server_request.params (nvlist, _tao_environment);
   if (_tao_environment.exception ()) return;
-  impl = (POA_CosNaming::NamingContext_ptr) _tao_object_reference->get_subclass ();
+  
+impl = (POA_CosNaming::NamingContext_ptr) _tao_object_reference->get_subclass ();
   impl->destroy(_tao_environment);
   
+
 }
 
 void POA_CosNaming::NamingContext::list_skel (CORBA::ServerRequest &_tao_server_request, CORBA::Object_ptr _tao_object_reference, CORBA::Environment &_tao_environment)
@@ -256,8 +280,9 @@ void POA_CosNaming::NamingContext::list_skel (CORBA::ServerRequest &_tao_server_
   CORBA::Any 	 any_bl (CosNaming::_tc_BindingList, bl, 1); // ORB owns
   CosNaming::BindingIterator_ptr bi;
   CosNaming::BindingIterator_out bi_out (bi);
+  CORBA::Object_ptr *_tao_base_bi = new CORBA::Object_ptr;
   CORBA::NamedValue_ptr nv_bi;
-  CORBA::Any 	 any_bi (CosNaming::_tc_BindingIterator, &bi, 1); // ORB owns
+  CORBA::Any 	 any_bi (CosNaming::_tc_BindingIterator, _tao_base_bi, 1); // ORB owns
   
   // create an NV list and populate it with typecodes
   _tao_server_request.orb ()->create_list (0, nvlist); // initialize a list
@@ -268,9 +293,12 @@ void POA_CosNaming::NamingContext::list_skel (CORBA::ServerRequest &_tao_server_
   // parse the arguments
   _tao_server_request.params (nvlist, _tao_environment);
   if (_tao_environment.exception ()) return;
-  impl = (POA_CosNaming::NamingContext_ptr) _tao_object_reference->get_subclass ();
-  impl->list(how_many, bl_out, bi_out, _tao_environment);
   
+impl = (POA_CosNaming::NamingContext_ptr) _tao_object_reference->get_subclass ();
+  impl->list(how_many, bl_out, bi_out, _tao_environment);
+  *_tao_base_bi = bi_out;
+  
+
 }
 
 void POA_CosNaming::NamingContext::_is_a_skel (CORBA::ServerRequest &req, CORBA::Object_ptr /* obj */, CORBA::Environment &env)
@@ -341,9 +369,11 @@ void POA_CosNaming::BindingIterator::next_one_skel (CORBA::ServerRequest &_tao_s
   // parse the arguments
   _tao_server_request.params (nvlist, _tao_environment);
   if (_tao_environment.exception ()) return;
-  impl = (POA_CosNaming::BindingIterator_ptr) _tao_object_reference->get_subclass ();
+  
+impl = (POA_CosNaming::BindingIterator_ptr) _tao_object_reference->get_subclass ();
    *retval = impl->next_one(b_out, _tao_environment);
-  result = new CORBA::Any (CORBA::_tc_boolean, retval, 1); // ORB owns
+  
+result = new CORBA::Any (CORBA::_tc_boolean, retval, 1); // ORB owns
   _tao_server_request.result (result, _tao_environment);
   
 }
@@ -370,9 +400,11 @@ void POA_CosNaming::BindingIterator::next_n_skel (CORBA::ServerRequest &_tao_ser
   // parse the arguments
   _tao_server_request.params (nvlist, _tao_environment);
   if (_tao_environment.exception ()) return;
-  impl = (POA_CosNaming::BindingIterator_ptr) _tao_object_reference->get_subclass ();
+  
+impl = (POA_CosNaming::BindingIterator_ptr) _tao_object_reference->get_subclass ();
    *retval = impl->next_n(how_many, bl_out, _tao_environment);
-  result = new CORBA::Any (CORBA::_tc_boolean, retval, 1); // ORB owns
+  
+result = new CORBA::Any (CORBA::_tc_boolean, retval, 1); // ORB owns
   _tao_server_request.result (result, _tao_environment);
   
 }
@@ -388,9 +420,11 @@ void POA_CosNaming::BindingIterator::destroy_skel (CORBA::ServerRequest &_tao_se
   // parse the arguments
   _tao_server_request.params (nvlist, _tao_environment);
   if (_tao_environment.exception ()) return;
-  impl = (POA_CosNaming::BindingIterator_ptr) _tao_object_reference->get_subclass ();
+  
+impl = (POA_CosNaming::BindingIterator_ptr) _tao_object_reference->get_subclass ();
   impl->destroy(_tao_environment);
   
+
 }
 
 void POA_CosNaming::BindingIterator::_is_a_skel (CORBA::ServerRequest &req, CORBA::Object_ptr /* obj */, CORBA::Environment &env)

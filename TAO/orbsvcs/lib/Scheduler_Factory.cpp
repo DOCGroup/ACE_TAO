@@ -15,19 +15,30 @@
 
 RtecScheduler::Scheduler_ptr ACE_Scheduler_Factory::server_ = 0;
 
-int ACE_Scheduler_Factory::use_runtime (int entry_count,
-					POD_RT_Info rt_info[])
+static int entry_count = -1;
+static POD_RT_Info* rt_info = 0;
+
+int ACE_Scheduler_Factory::use_runtime (int ec,
+					POD_RT_Info rti[])
 {
-  if (server_ != 0)
+  if (server_ != 0 || entry_count != -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
 			 "ACE_Scheduler_Factory::use_runtime - "
 			 "server already configured\n"), -1);
     }
 
+  entry_count = ec;
+  rt_info = rti;
+}
+
+RtecScheduler::Scheduler_ptr static_server ()
+{
+  RtecScheduler::Scheduler_ptr server_ = 0;
+
   typedef RtecScheduler::RT_Info* RT_Info_ptr;
   RtecScheduler::RT_Info** info;
-  ACE_NEW_RETURN (info, RT_Info_ptr[entry_count], -1);
+  ACE_NEW_RETURN (info, RT_Info_ptr[entry_count], 0);
   for (int i = 0; i < entry_count; ++i)
     {
       info[i] = new RtecScheduler::RT_Info;
@@ -40,7 +51,7 @@ int ACE_Scheduler_Factory::use_runtime (int entry_count,
 	  delete[] info;
 	  ACE_ERROR_RETURN ((LM_ERROR,
 			     "ACE_Scheduler_Factory::config_runtime - "
-			     "cannot allocate RT_Info\n"), -1);
+			     "cannot allocate RT_Info\n"), 0);
 	}
       info[i]->entry_point = rt_info[i].entry_point;
       info[i]->handle = rt_info[i].handle;
@@ -66,18 +77,18 @@ int ACE_Scheduler_Factory::use_runtime (int entry_count,
       delete[] info;
       ACE_ERROR_RETURN ((LM_ERROR,
 			 "ACE_Scheduler_Factory::config_runtime - "
-			 "cannot allocate server\n"), -1);
+			 "cannot allocate server\n"), 0);
     }
   ACE_DEBUG ((LM_DEBUG,
 	      "ACE_Scheduler_Factory - configured static server\n"));
   CORBA::Object::_duplicate (server_);
-  return 0;
+  return server_;
 }
 
 int
 ACE_Scheduler_Factory::use_config (CosNaming::NamingContext_ptr naming)
 {
-  if (server_ != 0)
+  if (server_ != 0 || entry_count != -1)
     {
       // No errors, runtime execution simply takes precedence over
       // config runs.
@@ -114,7 +125,7 @@ ACE_Scheduler_Factory::use_config (CosNaming::NamingContext_ptr naming)
 int
 ACE_Scheduler_Factory::use_config (CORBA::ORB_ptr orb)
 {
-  if (server_ != 0)
+  if (server_ != 0 || entry_count != -1)
     {
       // No errors, runtime execution simply takes precedence over
       // config runs.
@@ -149,6 +160,11 @@ ACE_Scheduler_Factory::use_config (CORBA::ORB_ptr orb)
 RtecScheduler::Scheduler_ptr
 ACE_Scheduler_Factory::server (void)
 {
+  if (server_ == 0 && entry_count != -1)
+    {
+      server_ = static_server ();
+    }
+	
   if (server_ == 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,

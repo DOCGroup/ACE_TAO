@@ -21,34 +21,34 @@ public:
     NamingContext (const char *obj_name = 0);
     virtual ~NamingContext (void);
   public:
-    virtual void bind (const CosNaming::Name & n, CORBA::Object_ptr  obj,  CORBA::Environment &env) = 0; // pure virtual
+    virtual void bind (const CosNaming::Name &n, CORBA::Object_ptr obj,  CORBA::Environment &env) = 0; // pure virtual
     static void bind_skel (CORBA::ServerRequest &req, CORBA::Object_ptr obj, CORBA::Environment &env);
 
-    virtual void rebind (const CosNaming::Name & n, CORBA::Object_ptr  obj,  CORBA::Environment &env) = 0; // pure virtual
+    virtual void rebind (const CosNaming::Name &n, CORBA::Object_ptr obj,  CORBA::Environment &env) = 0; // pure virtual
     static void rebind_skel (CORBA::ServerRequest &req, CORBA::Object_ptr obj, CORBA::Environment &env);
 
-    virtual void bind_context (const CosNaming::Name & n, CosNaming::NamingContext_ptr  nc,  CORBA::Environment &env) = 0; // pure virtual
+    virtual void bind_context (const CosNaming::Name &n, CosNaming::NamingContext_ptr nc,  CORBA::Environment &env) = 0; // pure virtual
     static void bind_context_skel (CORBA::ServerRequest &req, CORBA::Object_ptr obj, CORBA::Environment &env);
 
-    virtual void rebind_context (const CosNaming::Name & n, CosNaming::NamingContext_ptr  nc,  CORBA::Environment &env) = 0; // pure virtual
+    virtual void rebind_context (const CosNaming::Name &n, CosNaming::NamingContext_ptr nc,  CORBA::Environment &env) = 0; // pure virtual
     static void rebind_context_skel (CORBA::ServerRequest &req, CORBA::Object_ptr obj, CORBA::Environment &env);
 
-    virtual CORBA::Object_ptr resolve (const CosNaming::Name & n,  CORBA::Environment &env) = 0; // pure virtual
+    virtual CORBA::Object_ptr resolve (const CosNaming::Name &n,  CORBA::Environment &env) = 0; // pure virtual
     static void resolve_skel (CORBA::ServerRequest &req, CORBA::Object_ptr obj, CORBA::Environment &env);
 
-    virtual void unbind (const CosNaming::Name & n,  CORBA::Environment &env) = 0; // pure virtual
+    virtual void unbind (const CosNaming::Name &n,  CORBA::Environment &env) = 0; // pure virtual
     static void unbind_skel (CORBA::ServerRequest &req, CORBA::Object_ptr obj, CORBA::Environment &env);
 
     virtual CosNaming::NamingContext_ptr  new_context ( CORBA::Environment &env) = 0; // pure virtual
     static void new_context_skel (CORBA::ServerRequest &req, CORBA::Object_ptr obj, CORBA::Environment &env);
 
-    virtual CosNaming::NamingContext_ptr  bind_new_context (const CosNaming::Name & n,  CORBA::Environment &env) = 0; // pure virtual
+    virtual CosNaming::NamingContext_ptr  bind_new_context (const CosNaming::Name &n,  CORBA::Environment &env) = 0; // pure virtual
     static void bind_new_context_skel (CORBA::ServerRequest &req, CORBA::Object_ptr obj, CORBA::Environment &env);
 
     virtual void destroy ( CORBA::Environment &env) = 0; // pure virtual
     static void destroy_skel (CORBA::ServerRequest &req, CORBA::Object_ptr obj, CORBA::Environment &env);
 
-    virtual void list (CORBA::ULong how_many, CosNaming::BindingList_out bl, CosNaming::BindingIterator_out  bi,  CORBA::Environment &env) = 0; // pure virtual
+    virtual void list (CORBA::ULong how_many, CosNaming::BindingList_out bl, CosNaming::BindingIterator_out bi,  CORBA::Environment &env) = 0; // pure virtual
     static void list_skel (CORBA::ServerRequest &req, CORBA::Object_ptr obj, CORBA::Environment &env);
 
     static void _is_a_skel (CORBA::ServerRequest &req, CORBA::Object_ptr obj, CORBA::Environment &env);

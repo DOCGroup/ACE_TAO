@@ -166,7 +166,7 @@ RtecEventComm::_tao__seq_EventSet::length (CORBA::ULong length)
   {
     RtecEventComm::Event *tmp = RtecEventComm::_tao__seq_EventSet::allocbuf (length);
     if (tmp == 0)
-          return;
+      return;
     for (int i = 0; i < this->length_; ++i)
     {
       tmp[i] = this->buffer_[i];
@@ -175,10 +175,9 @@ RtecEventComm::_tao__seq_EventSet::length (CORBA::ULong length)
       RtecEventComm::_tao__seq_EventSet::freebuf (this->buffer_);
     this->buffer_ = tmp;
     this->release_ = 1;
-
-this->maximum_ = length;
+    this->maximum_ = length;
   }
-    this->length_ = length;
+this->length_ = length;
 }
 
 static const CORBA::Long _oc_RtecEventComm__tao__seq_EventSet[] =
@@ -343,9 +342,9 @@ static const TAO_Param_Data RtecEventComm_PushConsumer_push_paramdata [] =
 };
 
 static const TAO_Call_Data RtecEventComm_PushConsumer_push_calldata = 
-{"push", 1, 2, RtecEventComm_PushConsumer_push_paramdata, 0, 0};
+{"push", 0, 2, RtecEventComm_PushConsumer_push_paramdata, 0, 0};
 
-void  RtecEventComm::PushConsumer::push (const RtecEventComm::EventSet & data, CORBA::Environment &env)
+void  RtecEventComm::PushConsumer::push (const RtecEventComm::EventSet &data, CORBA::Environment &env)
 {
   STUB_Object *istub;
 
@@ -353,7 +352,7 @@ void  RtecEventComm::PushConsumer::push (const RtecEventComm::EventSet & data, C
   {
     env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
     return;
-    }
+  }
   this->Release (); // QueryInterface has bumped up our refcount
   istub->do_call (env, &RtecEventComm_PushConsumer_push_calldata, 0, &data);
   return; // no value
@@ -366,7 +365,7 @@ static const TAO_Param_Data RtecEventComm_PushConsumer_disconnect_push_consumer_
 };
 
 static const TAO_Call_Data RtecEventComm_PushConsumer_disconnect_push_consumer_calldata = 
-{"disconnect_push_consumer", 1, 1, RtecEventComm_PushConsumer_disconnect_push_consumer_paramdata, 0, 0};
+{"disconnect_push_consumer", 0, 1, RtecEventComm_PushConsumer_disconnect_push_consumer_paramdata, 0, 0};
 
 void  RtecEventComm::PushConsumer::disconnect_push_consumer (CORBA::Environment &env)
 {
@@ -376,7 +375,7 @@ void  RtecEventComm::PushConsumer::disconnect_push_consumer (CORBA::Environment 
   {
     env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
     return;
-    }
+  }
   this->Release (); // QueryInterface has bumped up our refcount
   istub->do_call (env, &RtecEventComm_PushConsumer_disconnect_push_consumer_calldata, 0);
   return; // no value
@@ -446,7 +445,7 @@ static const TAO_Param_Data RtecEventComm_PushSupplier_disconnect_push_supplier_
 };
 
 static const TAO_Call_Data RtecEventComm_PushSupplier_disconnect_push_supplier_calldata = 
-{"disconnect_push_supplier", 1, 1, RtecEventComm_PushSupplier_disconnect_push_supplier_paramdata, 0, 0};
+{"disconnect_push_supplier", 0, 1, RtecEventComm_PushSupplier_disconnect_push_supplier_paramdata, 0, 0};
 
 void  RtecEventComm::PushSupplier::disconnect_push_supplier (CORBA::Environment &env)
 {
@@ -456,7 +455,7 @@ void  RtecEventComm::PushSupplier::disconnect_push_supplier (CORBA::Environment 
   {
     env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
     return;
-    }
+  }
   this->Release (); // QueryInterface has bumped up our refcount
   istub->do_call (env, &RtecEventComm_PushSupplier_disconnect_push_supplier_calldata, 0);
   return; // no value

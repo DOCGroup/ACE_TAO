@@ -32,12 +32,12 @@ module RtecEventComm {
   typedef sequence<Event> EventSet;
 
   interface PushConsumer {
-    void push (in EventSet data) raises(Disconnected);
-    void disconnect_push_consumer(); 
+    oneway void push (in EventSet data); //  raises(Disconnected);
+    oneway void disconnect_push_consumer(); 
   };
 
   interface PushSupplier {
-    void disconnect_push_supplier();
+    oneway void disconnect_push_supplier();
   };
 
 };

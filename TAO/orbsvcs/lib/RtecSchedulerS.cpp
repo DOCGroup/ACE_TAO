@@ -58,9 +58,11 @@ void POA_RtecScheduler::Scheduler::create_skel (CORBA::ServerRequest &_tao_serve
   // parse the arguments
   _tao_server_request.params (nvlist, _tao_environment);
   if (_tao_environment.exception ()) return;
-  impl = (POA_RtecScheduler::Scheduler_ptr) _tao_object_reference->get_subclass ();
+  
+impl = (POA_RtecScheduler::Scheduler_ptr) _tao_object_reference->get_subclass ();
    *retval = impl->create(entry_point, _tao_environment);
-  result = new CORBA::Any (RtecScheduler::_tc_handle_t, retval, 1); // ORB owns
+  
+result = new CORBA::Any (RtecScheduler::_tc_handle_t, retval, 1); // ORB owns
   _tao_server_request.result (result, _tao_environment);
   
 }
@@ -82,9 +84,11 @@ void POA_RtecScheduler::Scheduler::lookup_skel (CORBA::ServerRequest &_tao_serve
   // parse the arguments
   _tao_server_request.params (nvlist, _tao_environment);
   if (_tao_environment.exception ()) return;
-  impl = (POA_RtecScheduler::Scheduler_ptr) _tao_object_reference->get_subclass ();
+  
+impl = (POA_RtecScheduler::Scheduler_ptr) _tao_object_reference->get_subclass ();
    *retval = impl->lookup(entry_point, _tao_environment);
-  result = new CORBA::Any (RtecScheduler::_tc_handle_t, retval, 1); // ORB owns
+  
+result = new CORBA::Any (RtecScheduler::_tc_handle_t, retval, 1); // ORB owns
   _tao_server_request.result (result, _tao_environment);
   
 }
@@ -106,9 +110,11 @@ void POA_RtecScheduler::Scheduler::get_skel (CORBA::ServerRequest &_tao_server_r
   // parse the arguments
   _tao_server_request.params (nvlist, _tao_environment);
   if (_tao_environment.exception ()) return;
-  impl = (POA_RtecScheduler::Scheduler_ptr) _tao_object_reference->get_subclass ();
+  
+impl = (POA_RtecScheduler::Scheduler_ptr) _tao_object_reference->get_subclass ();
   retval = impl->get(handle, _tao_environment);
-  result = new CORBA::Any (RtecScheduler::_tc_RT_Info, retval, 1); // ORB owns
+  
+result = new CORBA::Any (RtecScheduler::_tc_RT_Info, retval, 1); // ORB owns
   _tao_server_request.result (result, _tao_environment);
   
 }
@@ -156,9 +162,11 @@ void POA_RtecScheduler::Scheduler::set_skel (CORBA::ServerRequest &_tao_server_r
   // parse the arguments
   _tao_server_request.params (nvlist, _tao_environment);
   if (_tao_environment.exception ()) return;
-  impl = (POA_RtecScheduler::Scheduler_ptr) _tao_object_reference->get_subclass ();
+  
+impl = (POA_RtecScheduler::Scheduler_ptr) _tao_object_reference->get_subclass ();
   impl->set(handle, time, typical_time, cached_time, period, importance, quantum, threads, _tao_environment);
   
+
 }
 
 void POA_RtecScheduler::Scheduler::add_dependency_skel (CORBA::ServerRequest &_tao_server_request, CORBA::Object_ptr _tao_object_reference, CORBA::Environment &_tao_environment)
@@ -184,9 +192,11 @@ void POA_RtecScheduler::Scheduler::add_dependency_skel (CORBA::ServerRequest &_t
   // parse the arguments
   _tao_server_request.params (nvlist, _tao_environment);
   if (_tao_environment.exception ()) return;
-  impl = (POA_RtecScheduler::Scheduler_ptr) _tao_object_reference->get_subclass ();
+  
+impl = (POA_RtecScheduler::Scheduler_ptr) _tao_object_reference->get_subclass ();
   impl->add_dependency(handle, dependency, number_of_calls, _tao_environment);
   
+
 }
 
 void POA_RtecScheduler::Scheduler::priority_skel (CORBA::ServerRequest &_tao_server_request, CORBA::Object_ptr _tao_object_reference, CORBA::Environment &_tao_environment)
@@ -196,15 +206,15 @@ void POA_RtecScheduler::Scheduler::priority_skel (CORBA::ServerRequest &_tao_ser
   RtecScheduler::handle_t handle;
   CORBA::NamedValue_ptr nv_handle;
   CORBA::Any 	 any_handle (RtecScheduler::_tc_handle_t, &handle); // ORB does not own
-  RtecScheduler::OS_Priority priority;
+  RtecScheduler::OS_Priority *priority = new RtecScheduler::OS_Priority;
   CORBA::NamedValue_ptr nv_priority;
-  CORBA::Any 	 any_priority (RtecScheduler::_tc_OS_Priority, &priority, 1); // ORB owns
-  RtecScheduler::Sub_Priority subpriority;
+  CORBA::Any 	 any_priority (RtecScheduler::_tc_OS_Priority, priority, 1); // ORB owns
+  RtecScheduler::Sub_Priority *subpriority = new RtecScheduler::Sub_Priority;
   CORBA::NamedValue_ptr nv_subpriority;
-  CORBA::Any 	 any_subpriority (RtecScheduler::_tc_Sub_Priority, &subpriority, 1); // ORB owns
-  RtecScheduler::Preemption_Priority p_priority;
+  CORBA::Any 	 any_subpriority (RtecScheduler::_tc_Sub_Priority, subpriority, 1); // ORB owns
+  RtecScheduler::Preemption_Priority *p_priority = new RtecScheduler::Preemption_Priority;
   CORBA::NamedValue_ptr nv_p_priority;
-  CORBA::Any 	 any_p_priority (RtecScheduler::_tc_Preemption_Priority, &p_priority, 1); // ORB owns
+  CORBA::Any 	 any_p_priority (RtecScheduler::_tc_Preemption_Priority, p_priority, 1); // ORB owns
   
   // create an NV list and populate it with typecodes
   _tao_server_request.orb ()->create_list (0, nvlist); // initialize a list
@@ -216,9 +226,11 @@ void POA_RtecScheduler::Scheduler::priority_skel (CORBA::ServerRequest &_tao_ser
   // parse the arguments
   _tao_server_request.params (nvlist, _tao_environment);
   if (_tao_environment.exception ()) return;
-  impl = (POA_RtecScheduler::Scheduler_ptr) _tao_object_reference->get_subclass ();
-  impl->priority(handle, priority, subpriority, p_priority, _tao_environment);
   
+impl = (POA_RtecScheduler::Scheduler_ptr) _tao_object_reference->get_subclass ();
+  impl->priority(handle, *priority, *subpriority, *p_priority, _tao_environment);
+  
+
 }
 
 void POA_RtecScheduler::Scheduler::entry_point_priority_skel (CORBA::ServerRequest &_tao_server_request, CORBA::Object_ptr _tao_object_reference, CORBA::Environment &_tao_environment)
@@ -228,15 +240,15 @@ void POA_RtecScheduler::Scheduler::entry_point_priority_skel (CORBA::ServerReque
   char *entry_point;
   CORBA::NamedValue_ptr nv_entry_point;
   CORBA::Any 	 any_entry_point (CORBA::_tc_string, &entry_point); // ORB does not own
-  RtecScheduler::OS_Priority priority;
+  RtecScheduler::OS_Priority *priority = new RtecScheduler::OS_Priority;
   CORBA::NamedValue_ptr nv_priority;
-  CORBA::Any 	 any_priority (RtecScheduler::_tc_OS_Priority, &priority, 1); // ORB owns
-  RtecScheduler::Sub_Priority subpriority;
+  CORBA::Any 	 any_priority (RtecScheduler::_tc_OS_Priority, priority, 1); // ORB owns
+  RtecScheduler::Sub_Priority *subpriority = new RtecScheduler::Sub_Priority;
   CORBA::NamedValue_ptr nv_subpriority;
-  CORBA::Any 	 any_subpriority (RtecScheduler::_tc_Sub_Priority, &subpriority, 1); // ORB owns
-  RtecScheduler::Preemption_Priority p_priority;
+  CORBA::Any 	 any_subpriority (RtecScheduler::_tc_Sub_Priority, subpriority, 1); // ORB owns
+  RtecScheduler::Preemption_Priority *p_priority = new RtecScheduler::Preemption_Priority;
   CORBA::NamedValue_ptr nv_p_priority;
-  CORBA::Any 	 any_p_priority (RtecScheduler::_tc_Preemption_Priority, &p_priority, 1); // ORB owns
+  CORBA::Any 	 any_p_priority (RtecScheduler::_tc_Preemption_Priority, p_priority, 1); // ORB owns
   
   // create an NV list and populate it with typecodes
   _tao_server_request.orb ()->create_list (0, nvlist); // initialize a list
@@ -248,9 +260,11 @@ void POA_RtecScheduler::Scheduler::entry_point_priority_skel (CORBA::ServerReque
   // parse the arguments
   _tao_server_request.params (nvlist, _tao_environment);
   if (_tao_environment.exception ()) return;
-  impl = (POA_RtecScheduler::Scheduler_ptr) _tao_object_reference->get_subclass ();
-  impl->entry_point_priority(entry_point, priority, subpriority, p_priority, _tao_environment);
   
+impl = (POA_RtecScheduler::Scheduler_ptr) _tao_object_reference->get_subclass ();
+  impl->entry_point_priority(entry_point, *priority, *subpriority, *p_priority, _tao_environment);
+  
+
 }
 
 void POA_RtecScheduler::Scheduler::compute_scheduling_skel (CORBA::ServerRequest &_tao_server_request, CORBA::Object_ptr _tao_object_reference, CORBA::Environment &_tao_environment)
@@ -265,23 +279,23 @@ void POA_RtecScheduler::Scheduler::compute_scheduling_skel (CORBA::ServerRequest
   CORBA::Any 	 any_maximum_priority (CORBA::_tc_long, &maximum_priority); // ORB does not own
   RtecScheduler::RT_Info_Set *infos;
   RtecScheduler::RT_Info_Set_out infos_out (infos);
+  CORBA::NamedValue_ptr nv_infos;
+  CORBA::Any 	 any_infos (RtecScheduler::_tc_RT_Info_Set, infos, 1); // ORB owns
   
   // create an NV list and populate it with typecodes
   _tao_server_request.orb ()->create_list (0, nvlist); // initialize a list
   // add each argument according to the in, out, inout semantics
   nv_minimum_priority = nvlist->add_value ("minimum_priority", any_minimum_priority, CORBA::ARG_IN, _tao_environment);
   nv_maximum_priority = nvlist->add_value ("maximum_priority", any_maximum_priority, CORBA::ARG_IN, _tao_environment);
+  nv_infos = nvlist->add_value ("infos", any_infos, CORBA::ARG_OUT, _tao_environment);
   // parse the arguments
   _tao_server_request.params (nvlist, _tao_environment);
   if (_tao_environment.exception ()) return;
-  impl = (POA_RtecScheduler::Scheduler_ptr) _tao_object_reference->get_subclass ();
-  impl->compute_scheduling(minimum_priority, maximum_priority, infos_out, _tao_environment);
-  if (_tao_environment.exception ()) return;
-
-  CORBA::NamedValue_ptr nv_infos;
-  CORBA::Any 	 any_infos (RtecScheduler::_tc_RT_Info_Set, infos, 1); // ORB owns
-  nv_infos = nvlist->add_value ("infos", any_infos, CORBA::ARG_OUT, _tao_environment);
   
+impl = (POA_RtecScheduler::Scheduler_ptr) _tao_object_reference->get_subclass ();
+  impl->compute_scheduling(minimum_priority, maximum_priority, infos_out, _tao_environment);
+  
+
 }
 
 void POA_RtecScheduler::Scheduler::_is_a_skel (CORBA::ServerRequest &req, CORBA::Object_ptr /* obj */, CORBA::Environment &env)

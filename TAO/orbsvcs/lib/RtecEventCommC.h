@@ -134,10 +134,10 @@ static CORBA::TypeCode_ptr _tc_Disconnected;
 #if !defined (_RTECEVENTCOMM__TAO__SEQ_EVENTSET_CH_)
 #define _RTECEVENTCOMM__TAO__SEQ_EVENTSET_CH_
 
-// *************************************************************
+  // *************************************************************
   // class _tao__seq_EventSet
   // *************************************************************
-
+  
   class _tao__seq_EventSet
   {
   public:
@@ -260,7 +260,7 @@ class PushConsumer: public virtual ACE_CORBA_1 (Object)
     static PushConsumer_ptr _nil (void);
     static PushConsumer_ptr _bind (const char *host, CORBA::UShort port, const char *key, CORBA::Environment &env);
 
-    virtual void push (const ACE_NESTED_CLASS (RtecEventComm,EventSet) & data, CORBA::Environment &env);
+    virtual void push (const ACE_NESTED_CLASS (RtecEventComm,EventSet) &data, CORBA::Environment &env);
     virtual void disconnect_push_consumer (CORBA::Environment &env);
   protected:
     PushConsumer (void); // default constructor

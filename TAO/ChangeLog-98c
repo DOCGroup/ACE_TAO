@@ -1,3 +1,39 @@
+Tue Nov 18 17:33:20 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
+
+	* orbsvcs/lib/RtecEventChannelAdmin.idl: 
+	* orbsvcs/lib/RtecEventComm.idl: 
+	  Changed several operations to "oneway" to avoid dead-locks in
+	  the Event Channel tests.
+
+	* orbsvcs/lib/Runtime_Scheduler.h: 
+	* orbsvcs/lib/Runtime_Scheduler.cpp: 
+	  This class is a servant, event though it is only used
+	  collocated, so it must inherit from the POA class.
+
+	* orbsvcs/lib/Scheduler_Factory.cpp: 
+	  Care must be exercised to create the Runtime_Scheduler instance
+	  only once the ORB is up and running.
+
+	* orbsvcs/lib/CosNamingC.cpp: 
+	* orbsvcs/lib/CosNamingC.h: 
+	* orbsvcs/lib/CosNamingS.cpp: 
+	* orbsvcs/lib/CosNamingS.h: 
+	* orbsvcs/lib/RtecEventChannelAdminC.cpp: 
+	* orbsvcs/lib/RtecEventChannelAdminC.h: 
+	* orbsvcs/lib/RtecEventChannelAdminS.cpp: 
+	* orbsvcs/lib/RtecEventChannelAdminS.h: 
+	* orbsvcs/lib/RtecEventCommC.cpp: 
+	* orbsvcs/lib/RtecEventCommC.h: 
+	* orbsvcs/lib/RtecEventCommS.cpp: 
+	* orbsvcs/lib/RtecEventCommS.h: 
+	* orbsvcs/lib/RtecSchedulerC.cpp: 
+	* orbsvcs/lib/RtecSchedulerC.h: 
+	* orbsvcs/lib/RtecSchedulerS.cpp: 
+	* orbsvcs/lib/RtecSchedulerS.h: 
+	  Regenerated all the stubs and skeletons using the latest IDL
+	  compiler, but still some hand crafting is required, namely for
+	  operations in base classes.
+
 Tue Nov 18 14:27:02 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* tao/cdr.cpp (CDR): Changed TAO_PURIFY to ACE_PURIFY.

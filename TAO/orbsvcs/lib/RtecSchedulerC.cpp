@@ -148,7 +148,7 @@ RtecScheduler::_tao__seq_Dependency_Set::length (CORBA::ULong length)
   {
     RtecScheduler::Dependency_Info *tmp = RtecScheduler::_tao__seq_Dependency_Set::allocbuf (length);
     if (tmp == 0)
-          return;
+      return;
     for (int i = 0; i < this->length_; ++i)
     {
       tmp[i] = this->buffer_[i];
@@ -157,10 +157,9 @@ RtecScheduler::_tao__seq_Dependency_Set::length (CORBA::ULong length)
       RtecScheduler::_tao__seq_Dependency_Set::freebuf (this->buffer_);
     this->buffer_ = tmp;
     this->release_ = 1;
-
-this->maximum_ = length;
+    this->maximum_ = length;
   }
-    this->length_ = length;
+this->length_ = length;
 }
 
 static const CORBA::Long _oc_RtecScheduler__tao__seq_Dependency_Set[] =
@@ -492,7 +491,7 @@ RtecScheduler::_tao__seq_RT_Info_Set::length (CORBA::ULong length)
   {
     RtecScheduler::RT_Info *tmp = RtecScheduler::_tao__seq_RT_Info_Set::allocbuf (length);
     if (tmp == 0)
-          return;
+      return;
     for (int i = 0; i < this->length_; ++i)
     {
       tmp[i] = this->buffer_[i];
@@ -501,10 +500,9 @@ RtecScheduler::_tao__seq_RT_Info_Set::length (CORBA::ULong length)
       RtecScheduler::_tao__seq_RT_Info_Set::freebuf (this->buffer_);
     this->buffer_ = tmp;
     this->release_ = 1;
-
-this->maximum_ = length;
+    this->maximum_ = length;
   }
-    this->length_ = length;
+this->length_ = length;
 }
 
 static const CORBA::Long _oc_RtecScheduler__tao__seq_RT_Info_Set[] =
@@ -841,7 +839,7 @@ static const TAO_Param_Data RtecScheduler_Scheduler_create_paramdata [] =
 static const TAO_Call_Data RtecScheduler_Scheduler_create_calldata = 
 {"create", 1, 2, RtecScheduler_Scheduler_create_paramdata, 0, 0};
 
-RtecScheduler::handle_t  RtecScheduler::Scheduler::create (const char * entry_point, CORBA::Environment &env)
+RtecScheduler::handle_t  RtecScheduler::Scheduler::create (const char *entry_point, CORBA::Environment &env)
 {
   RtecScheduler::handle_t retval;
   STUB_Object *istub;
@@ -850,7 +848,7 @@ RtecScheduler::handle_t  RtecScheduler::Scheduler::create (const char * entry_po
   {
     env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
     return retval;
-    }
+  }
   this->Release (); // QueryInterface has bumped up our refcount
   istub->do_call (env, &RtecScheduler_Scheduler_create_calldata, &retval, &entry_point);
   return retval;
@@ -866,7 +864,7 @@ static const TAO_Param_Data RtecScheduler_Scheduler_lookup_paramdata [] =
 static const TAO_Call_Data RtecScheduler_Scheduler_lookup_calldata = 
 {"lookup", 1, 2, RtecScheduler_Scheduler_lookup_paramdata, 0, 0};
 
-RtecScheduler::handle_t  RtecScheduler::Scheduler::lookup (const char * entry_point, CORBA::Environment &env)
+RtecScheduler::handle_t  RtecScheduler::Scheduler::lookup (const char *entry_point, CORBA::Environment &env)
 {
   RtecScheduler::handle_t retval;
   STUB_Object *istub;
@@ -875,7 +873,7 @@ RtecScheduler::handle_t  RtecScheduler::Scheduler::lookup (const char * entry_po
   {
     env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
     return retval;
-    }
+  }
   this->Release (); // QueryInterface has bumped up our refcount
   istub->do_call (env, &RtecScheduler_Scheduler_lookup_calldata, &retval, &entry_point);
   return retval;
@@ -900,7 +898,7 @@ RtecScheduler::RT_Info * RtecScheduler::Scheduler::get (RtecScheduler::handle_t 
   {
     env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
     return 0;
-    }
+  }
   this->Release (); // QueryInterface has bumped up our refcount
   istub->do_call (env, &RtecScheduler_Scheduler_get_calldata, &retval, &handle);
   return retval;
@@ -931,9 +929,9 @@ void  RtecScheduler::Scheduler::set (RtecScheduler::handle_t handle, RtecSchedul
   {
     env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
     return;
-    }
+  }
   this->Release (); // QueryInterface has bumped up our refcount
-  istub->do_call (env, &RtecScheduler_Scheduler_set_calldata, 0, &handle, &time, &typical_time, &cached_time, &period, &importance, &quantum, &threads);
+  istub->do_call (env, &RtecScheduler_Scheduler_set_calldata, 0, &handle, &time, &typical_time, &cached_time, &period, &quantum, &threads);
   return; // no value
   
 }
@@ -957,7 +955,7 @@ void  RtecScheduler::Scheduler::add_dependency (RtecScheduler::handle_t handle, 
   {
     env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
     return;
-    }
+  }
   this->Release (); // QueryInterface has bumped up our refcount
   istub->do_call (env, &RtecScheduler_Scheduler_add_dependency_calldata, 0, &handle, &dependency, &number_of_calls);
   return; // no value
@@ -984,7 +982,7 @@ void  RtecScheduler::Scheduler::priority (RtecScheduler::handle_t handle, RtecSc
   {
     env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
     return;
-    }
+  }
   this->Release (); // QueryInterface has bumped up our refcount
   istub->do_call (env, &RtecScheduler_Scheduler_priority_calldata, 0, &handle, &priority, &subpriority, &p_priority);
   return; // no value
@@ -1003,7 +1001,7 @@ static const TAO_Param_Data RtecScheduler_Scheduler_entry_point_priority_paramda
 static const TAO_Call_Data RtecScheduler_Scheduler_entry_point_priority_calldata = 
 {"entry_point_priority", 1, 5, RtecScheduler_Scheduler_entry_point_priority_paramdata, 0, 0};
 
-void  RtecScheduler::Scheduler::entry_point_priority (const char * entry_point, RtecScheduler::OS_Priority_out priority, RtecScheduler::Sub_Priority_out subpriority, RtecScheduler::Preemption_Priority_out p_priority, CORBA::Environment &env)
+void  RtecScheduler::Scheduler::entry_point_priority (const char *entry_point, RtecScheduler::OS_Priority_out priority, RtecScheduler::Sub_Priority_out subpriority, RtecScheduler::Preemption_Priority_out p_priority, CORBA::Environment &env)
 {
   STUB_Object *istub;
 
@@ -1011,7 +1009,7 @@ void  RtecScheduler::Scheduler::entry_point_priority (const char * entry_point, 
   {
     env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
     return;
-    }
+  }
   this->Release (); // QueryInterface has bumped up our refcount
   istub->do_call (env, &RtecScheduler_Scheduler_entry_point_priority_calldata, 0, &entry_point, &priority, &subpriority, &p_priority);
   return; // no value
@@ -1032,16 +1030,16 @@ static const TAO_Call_Data RtecScheduler_Scheduler_compute_scheduling_calldata =
 void  RtecScheduler::Scheduler::compute_scheduling (CORBA::Long minimum_priority, CORBA::Long maximum_priority, RtecScheduler::RT_Info_Set_out infos, CORBA::Environment &env)
 {
   STUB_Object *istub;
-  RT_Info_Set* tmp = new RtecScheduler::RT_Info_Set;
 
   if (this->QueryInterface (IID_STUB_Object, (void **)&istub) != NOERROR)
   {
     env.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
     return;
-    }
+  }
   this->Release (); // QueryInterface has bumped up our refcount
-  istub->do_call (env, &RtecScheduler_Scheduler_compute_scheduling_calldata, 0, &minimum_priority, &maximum_priority, &tmp);
-  infos.ptr () = tmp;
+  RtecScheduler::RT_Info_Set *_tao_base_infos = new RtecScheduler::RT_Info_Set;
+  istub->do_call (env, &RtecScheduler_Scheduler_compute_scheduling_calldata, 0, &minimum_priority, &maximum_priority, _tao_base_infos);
+  infos = _tao_base_infos;
   return; // no value
   
 }
