@@ -1,3 +1,17 @@
+Wed Dec  8 10:36:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/PortableServer_Functions.{h,cpp}:
+          Moved the string_to_objectid and objectid_to_string methods to this
+          file and into the TAO::Portable_Server namespace. They stand on
+          their own and don't need to be in the RootPOA itself.
+
+        * tao/PortableServer/Root_POA.{h,cpp}:
+          Removed the methods that moved to the new file
+
+        * tao/PortableServer/PortableServerC.cpp:
+          No need to include RootPOA anymore, just include
+          PortableServer_Functions.h
+
 Wed Dec  8 09:58:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Regular_POA.cpp:

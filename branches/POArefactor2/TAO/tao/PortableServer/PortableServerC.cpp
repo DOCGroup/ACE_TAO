@@ -36,7 +36,7 @@
 #include "tao/Object_Argument_T.h"
 #include "ace/OS_NS_string.h"
 
-#include "tao/PortableServer/Root_POA.h"
+#include "tao/PortableServer/PortableServer_Functions.h"
 
 #if defined (__BORLANDC__)
 #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
@@ -75,25 +75,25 @@ namespace TAO
 char *
 PortableServer::ObjectId_to_string (const PortableServer::ObjectId &id)
 {
-  return TAO_Root_POA::ObjectId_to_string (id);
+  return TAO::Portable_Server::ObjectId_to_string (id);
 }
 
 CORBA::WChar *
 PortableServer::ObjectId_to_wstring (const PortableServer::ObjectId &id)
 {
-  return TAO_Root_POA::ObjectId_to_wstring (id);
+  return TAO::Portable_Server::ObjectId_to_wstring (id);
 }
 
 PortableServer::ObjectId *
 PortableServer::string_to_ObjectId (const char *id)
 {
-  return TAO_Root_POA::string_to_ObjectId (id);
+  return TAO::Portable_Server::string_to_ObjectId (id);
 }
 
 PortableServer::ObjectId *
 PortableServer::wstring_to_ObjectId (const CORBA::WChar *id)
 {
-  return TAO_Root_POA::wstring_to_ObjectId (id);
+  return TAO::Portable_Server::wstring_to_ObjectId (id);
 }
 
 // TAO_IDL - Generated from

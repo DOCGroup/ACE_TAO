@@ -357,22 +357,6 @@ public:
       ACE_ENV_ARG_DECL
     );
 
-  /// Utility functions for the other
-  static char* ObjectId_to_string (const PortableServer::ObjectId &id);
-
-  static CORBA::WChar* ObjectId_to_wstring (
-      const PortableServer::ObjectId &id
-    );
-
-  static PortableServer::ObjectId *string_to_ObjectId (const char *id);
-
-  static PortableServer::ObjectId *string_to_ObjectId (const char *string,
-                                                       int size);
-
-  static PortableServer::ObjectId *wstring_to_ObjectId (
-      const CORBA::WChar *id
-    );
-
   TAO_Root_POA (const String &name,
                 TAO_POA_Manager &poa_manager,
                 const TAO_POA_Policy_Set &policies,
