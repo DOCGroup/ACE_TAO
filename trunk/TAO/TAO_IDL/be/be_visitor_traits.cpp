@@ -22,6 +22,8 @@
 #include "be_valuetype_fwd.h"
 #include "be_eventtype.h"
 #include "be_eventtype_fwd.h"
+#include "be_component.h"
+#include "be_component_fwd.h"
 #include "be_typedef.h"
 #include "be_helper.h"
 #include "be_extern.h"
@@ -229,6 +231,18 @@ be_visitor_traits::visit_valuetype_fwd (be_valuetype_fwd *node)
 
   node->cli_traits_gen (I_TRUE);
   return 0;
+}
+
+int
+be_visitor_traits::visit_component (be_component *node)
+{
+  return this->visit_interface (node);
+}
+
+int
+be_visitor_traits::visit_component_fwd (be_component_fwd *node)
+{
+  return this->visit_interface_fwd (node);
 }
 
 int

@@ -189,6 +189,7 @@ int be_visitor_array_ci::visit_array (be_array *node)
   os->gen_ifdef_macro (unique.fast_rep ());
 
   *os << be_nl << be_nl
+      << "ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION " << be_nl
       << "ACE_INLINE" << be_nl
       << "void" << be_nl
       << "TAO::Array_Traits<" << fname << ", " 
@@ -201,6 +202,7 @@ int be_visitor_array_ci::visit_array (be_array *node)
       << "}";
 
   *os << be_nl << be_nl
+      << "ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION " << be_nl
       << "ACE_INLINE" << be_nl
       << fname << "_slice *" << be_nl
       << "TAO::Array_Traits<" << fname << ", " 
