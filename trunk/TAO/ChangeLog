@@ -1,3 +1,9 @@
+Tue Jul 22 11:29:47 2003  Irfan Pyarali  <irfan@oomworks.com>
+
+	* orbsvcs\orbsvcs\Notify\RT_Builder.cpp: 
+
+	  Added include for Object.h.
+
 Tue Jul 22 09:31:34 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/IIOP_Profile.cpp:
@@ -17,7 +23,8 @@ Tue Jul 22 09:31:34 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  <charlie.frasch@navy.mil> for detecting the problem and
 	  providing the patches. 
 	
-It would be really helpful if the port could be specified using a name in the network services database
+	  It would be really helpful if the port could be specified using
+	  a name in the network services database
 
 Tue Jul 22 06:11:53 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
