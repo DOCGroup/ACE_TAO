@@ -10,6 +10,7 @@
 #include "orbsvcs/Sched/Config_Scheduler.h"
 #include "orbsvcs/Scheduler_Factory.h"
 #include "orbsvcs/FtRtEvent/EventChannel/FTRTEC_ServiceActivate.h"
+#include "orbsvcs/FtRtEvent/EventChannel/Replication_Service.h"
 #include "orbsvcs/FtRtEvent/Utils/Log.h"
 
 ACE_RCSID (Event_Service,
@@ -27,7 +28,6 @@ FT_EventService::FT_EventService()
 : global_scheduler_(0)
 , sched_impl_(0)
 , membership_(TAO_FTEC_Event_Channel::NONE)
-, num_threads_(1)
 , task_(orb_)
 {
 }
@@ -137,13 +137,7 @@ FT_EventService::parse_args (int argc, ACE_TCHAR* argv [])
     }
   }
 
-  char* n_threads = ACE_OS::getenv("FTEC_NUM_THREAD");
-
-  this->num_threads_ = 1;
-  if (n_threads)
-    this->num_threads_ = ACE_OS::atoi(n_threads);
-
-  ACE_Get_Opt get_opt (argc, argv, ACE_LIB_TEXT("d:jn:ps:"));
+  ACE_Get_Opt get_opt (argc, argv, ACE_LIB_TEXT("d:jps:"));
   int opt;
 
   while ((opt = get_opt ()) != EOF)
@@ -155,9 +149,6 @@ FT_EventService::parse_args (int argc, ACE_TCHAR* argv [])
       break;
     case 'j':
       this->membership_ = TAO_FTEC_Event_Channel::BACKUP;
-      break;
-    case 'n':
-      this->num_threads_ = ACE_OS::atoi(get_opt.opt_arg ());
       break;
     case 'p':
       this->membership_ = TAO_FTEC_Event_Channel::PRIMARY;
@@ -197,9 +188,6 @@ FT_EventService::parse_args (int argc, ACE_TCHAR* argv [])
       return -1;
     }
   }
-
-  if (this->num_threads_ < 1)
-    ACE_ERROR_RETURN((LM_ERROR, "Invalid number of threads specified\n"), -1);
 
   return 0;
 }
@@ -299,8 +287,9 @@ FT_EventService::report_factory(CORBA::ORB_ptr orb,
 
 void FT_EventService::become_primary()
 {
-  if (this->num_threads_ > 1) {
-    task_.activate(THR_NEW_LWP | THR_JOINABLE, num_threads_-1);
+  int threads = FTRTEC::Replication_Service::instance()->threads();
+  if ( threads > 1) {
+    task_.activate(THR_NEW_LWP | THR_JOINABLE, threads-1);
   }
 }
 

@@ -44,7 +44,6 @@ private:
   POA_RtecScheduler::Scheduler *sched_impl_;
   // The Scheduler implementation.
   TAO_FTEC_Event_Channel::MEMBERSHIP membership_;
-  int num_threads_;
   CORBA::ORB_var orb_;
   TP_Task task_;
 };
