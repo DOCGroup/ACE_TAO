@@ -147,10 +147,6 @@ be_field::tc_encap_len (void)
   if (this->encap_len_ == -1)  // not computed yet
     {
       be_type *bt;
-      long slen;
-
-      // Macro to avoid "warning: unused parameter" type warning.
-      ACE_UNUSED_ARG (slen);
 
       // struct member is represented as the "name" followed by the typecode
 
