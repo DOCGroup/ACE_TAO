@@ -1,3 +1,10 @@
+Wed Jul 30 12:55:25 2003  Dale Wilson  <wilson_d@ociweb.com>
+
+        * bin/MakeProjectCreator/config/fault_tolerance.mpb:
+          new file for configurations that use fault_tolerance.
+
+        These changes were made in the oci_haft branch.
+
 Mon Jul 28 16:20:29 2003  Dale Wilson  <wilson_d@ociweb.com>
 
 

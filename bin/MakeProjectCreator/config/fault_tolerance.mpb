@@ -1,0 +1,4 @@
+project : naming, notification, portablegroup {
+  after   += FaultTolerance
+  libs    += TAO_FaultTolerance
+}
