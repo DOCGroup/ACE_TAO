@@ -112,8 +112,20 @@ public:
 
   // Public operations.
 
+  /// Return the number of arguments
   virtual int argument_count (void);
-  // Return the count of members.
+
+  /// Count the number of arguments of a certain type.
+  /**
+   * @param direction_mask limit the direction (IN, OUT or INOUT) of
+   * the arguments considered.  Typically used as follows:
+   *
+   * int count =
+   *    ast_operation->count_arguments_with_direction
+   *    (AST_Argument::dir_IN
+   *     | AST_Argument::dir_OUT);
+   */
+  int count_arguments_with_direction (int direction_mask);
 
   virtual int has_native (void);
   // Any of the arguments or the return value is a <native> type.

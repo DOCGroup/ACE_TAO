@@ -146,6 +146,26 @@ AST_Operation::argument_count (void)
   return this->argument_count_;
 }
 
+int
+AST_Operation::count_arguments_with_direction (int direction_mask)
+{
+  int count = 0;
+
+  for (UTL_ScopeActiveIterator si (this, UTL_Scope::IK_decls);
+       !si.is_done ();
+       si.next ())
+    {
+      AST_Argument *arg =
+        AST_Argument::narrow_from_decl (si.item ());
+      
+      if ((arg->direction () & direction_mask) != 0)
+        count++;
+    }
+
+  return count;
+}
+
+
 // Return if any argument or the return type is a <native> type.
 int
 AST_Operation::has_native (void)
