@@ -394,7 +394,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 4.3.3.
      */
 #if (PACE_HAS_POSIX_JC_UOF)
-  PACE_INLINE int pace_setpgid (pace_pid_t pid, pid_t pgid);
+  PACE_INLINE int pace_setpgid (pace_pid_t pid, pace_pid_t pgid);
 #endif /* PACE_HAS_POSIX_JC_UOF */
 
   /**
@@ -439,7 +439,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 7.2.3.1.
      */
 #if (PACE_HAS_POSIX_JC_UOF)
-  PACE_INLINE pid_t pace_tcgetpgrp (PACE_HANDLE fildes);
+  PACE_INLINE pace_pid_t pace_tcgetpgrp (PACE_HANDLE fildes);
 #endif /* PACE_HAS_POSIX_JC_UOF */
 
   /**
@@ -448,7 +448,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 7.2.3.1.
      */
 #if (PACE_HAS_POSIX_JC_UOF)
-  PACE_INLINE int pace_tcsetpgrp (PACE_HANDLE fildes, pid_t pgrp_id);
+  PACE_INLINE int pace_tcsetpgrp (PACE_HANDLE fildes, pace_pid_t pgrp_id);
 #endif /* PACE_HAS_POSIX_JC_UOF */
 
   /**
