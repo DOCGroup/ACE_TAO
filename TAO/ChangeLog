@@ -1,3 +1,11 @@
+Thu Mar 25 23:06:01 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_home.cpp:
+        
+          In constructor, added check for null value of managed component
+          argument before doing a narrow on it. Some previous error could
+          have propagated to a lookup failure.
+
 Fri Mar 26 10:36:55 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* TAO_IDL/be/be_interface.cpp:

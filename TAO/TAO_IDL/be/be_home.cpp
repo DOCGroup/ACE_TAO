@@ -82,6 +82,14 @@ be_home::be_home (UTL_ScopedName *n,
                   I_FALSE)
 {
   this->size_type (AST_Type::VARIABLE);
+  
+  // Some previous error may have caused a lookup failure, in which
+  // case we'll crash if we do the narrow below.
+  if (managed_component == 0)
+    {
+      idl_global->set_err_count (idl_global->err_count () + 1);
+      return;
+    }
 
   be_component *bt =
      be_component::narrow_from_decl (managed_component);
