@@ -22,7 +22,6 @@
 #define TAO_SERVER_REQUEST_H
 
 class TAO_POA;
-class TAO_GIOP_RequestHeader;
 
 class TAO_Param_Data_Skel
 {
@@ -183,11 +182,11 @@ class TAO_Export IIOP_ServerRequest : public CORBA_ServerRequest
   //    Class representing an IIOP ServerRequest object.
 public:
   // = Initialization and termination methods.
-  IIOP_ServerRequest (const TAO_GIOP_RequestHeader &hdr,
-		      TAO_InputCDR *req,
-                      TAO_OutputCDR *resp,
+  IIOP_ServerRequest (TAO_InputCDR &input,
+                      TAO_OutputCDR &output,
 		      CORBA::ORB_ptr the_orb,
-		      TAO_POA *the_poa);
+		      TAO_POA *the_poa,
+                      CORBA::Environment &env);
   // Constructor
 
   virtual ~IIOP_ServerRequest (void);
@@ -253,6 +252,12 @@ public:
   virtual CORBA::Boolean response_expected (void) const;
   // is the response expected
 
+  virtual CORBA::Principal_ptr principal (void) const;
+
+  virtual const TAO_opaque &object_key (void) const;
+
+  virtual const TAO_GIOP_ServiceContextList &service_info (void) const;
+
   // = Stuff required for memory management and COM
   ULONG  AddRef (void);
   ULONG  Release (void);
@@ -260,7 +265,7 @@ public:
                                void **ppv);
 
 private:
-  CORBA::String_var opname_;
+  CORBA::String_var operation_;
   // Operation name.
 
   TAO_InputCDR *incoming_;
@@ -268,9 +273,6 @@ private:
 
   TAO_OutputCDR *outgoing_;
   // Outgoing stream.
-
-  CORBA::ULong reqid_;
-  // request ID
 
   CORBA::Boolean response_expected_;
   // is it oneway or twoway
@@ -296,6 +298,18 @@ private:
 
   TAO_POA *poa_;
   // The object adapter with whicih this server request is associated.
+
+  TAO_GIOP_ServiceContextList service_info_;
+  // The service context for the request (CORBA Reference?)
+
+  CORBA::ULong request_id_;
+  // Unique identifier for a request
+
+  TAO_opaque object_key_;
+  // The object key of the destination object.
+
+  CORBA::Principal_ptr requesting_principal_;
+  // Identifies the requester
 };
 
 #if defined (__ACE_INLINE__)

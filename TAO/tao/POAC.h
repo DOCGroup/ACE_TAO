@@ -1166,11 +1166,16 @@ class POAManager;
     public:
       AdapterInactive (void); // default ctor
       AdapterInactive (const AdapterInactive &); // copy ctor
-      ~AdapterInactive(void); // dtor
-      AdapterInactive &operator= (const AdapterInactive &);
+      ~AdapterInactive (void); // dtor
+            AdapterInactive &operator= (const AdapterInactive &);
       static AdapterInactive *_narrow (CORBA::Exception *);
-    };
-        static CORBA::TypeCode_ptr _tc_AdapterInactive;
+      // the alloc method. This is TAO extension
+      static CORBA::Exception *_alloc (void);
+    }; // exception PortableServer::POAManager::AdapterInactive
+        friend void operator<<= (CORBA::Any &, const AdapterInactive &); // copying version
+    friend void operator<<= (CORBA::Any &, AdapterInactive*); // noncopying version
+    friend CORBA::Boolean operator>>= (const CORBA::Any &, AdapterInactive *&);
+static CORBA::TypeCode_ptr _tc_AdapterInactive;
 
 
 #endif // end #if !defined
@@ -1690,11 +1695,16 @@ class POA;
     public:
       AdapterAlreadyExists (void); // default ctor
       AdapterAlreadyExists (const AdapterAlreadyExists &); // copy ctor
-      ~AdapterAlreadyExists(void); // dtor
-      AdapterAlreadyExists &operator= (const AdapterAlreadyExists &);
+      ~AdapterAlreadyExists (void); // dtor
+            AdapterAlreadyExists &operator= (const AdapterAlreadyExists &);
       static AdapterAlreadyExists *_narrow (CORBA::Exception *);
-    };
-        static CORBA::TypeCode_ptr _tc_AdapterAlreadyExists;
+      // the alloc method. This is TAO extension
+      static CORBA::Exception *_alloc (void);
+    }; // exception PortableServer::POA::AdapterAlreadyExists
+        friend void operator<<= (CORBA::Any &, const AdapterAlreadyExists &); // copying version
+    friend void operator<<= (CORBA::Any &, AdapterAlreadyExists*); // noncopying version
+    friend CORBA::Boolean operator>>= (const CORBA::Any &, AdapterAlreadyExists *&);
+static CORBA::TypeCode_ptr _tc_AdapterAlreadyExists;
 
 
 #endif // end #if !defined
@@ -1717,11 +1727,16 @@ class POA;
     public:
       AdapterInactive (void); // default ctor
       AdapterInactive (const AdapterInactive &); // copy ctor
-      ~AdapterInactive(void); // dtor
-      AdapterInactive &operator= (const AdapterInactive &);
+      ~AdapterInactive (void); // dtor
+            AdapterInactive &operator= (const AdapterInactive &);
       static AdapterInactive *_narrow (CORBA::Exception *);
-    };
-        static CORBA::TypeCode_ptr _tc_AdapterInactive;
+      // the alloc method. This is TAO extension
+      static CORBA::Exception *_alloc (void);
+    }; // exception PortableServer::POA::AdapterInactive
+        friend void operator<<= (CORBA::Any &, const AdapterInactive &); // copying version
+    friend void operator<<= (CORBA::Any &, AdapterInactive*); // noncopying version
+    friend CORBA::Boolean operator>>= (const CORBA::Any &, AdapterInactive *&);
+static CORBA::TypeCode_ptr _tc_AdapterInactive;
 
 
 #endif // end #if !defined
@@ -1744,11 +1759,16 @@ class POA;
     public:
       AdapterNonExistent (void); // default ctor
       AdapterNonExistent (const AdapterNonExistent &); // copy ctor
-      ~AdapterNonExistent(void); // dtor
-      AdapterNonExistent &operator= (const AdapterNonExistent &);
+      ~AdapterNonExistent (void); // dtor
+            AdapterNonExistent &operator= (const AdapterNonExistent &);
       static AdapterNonExistent *_narrow (CORBA::Exception *);
-    };
-        static CORBA::TypeCode_ptr _tc_AdapterNonExistent;
+      // the alloc method. This is TAO extension
+      static CORBA::Exception *_alloc (void);
+    }; // exception PortableServer::POA::AdapterNonExistent
+        friend void operator<<= (CORBA::Any &, const AdapterNonExistent &); // copying version
+    friend void operator<<= (CORBA::Any &, AdapterNonExistent*); // noncopying version
+    friend CORBA::Boolean operator>>= (const CORBA::Any &, AdapterNonExistent *&);
+static CORBA::TypeCode_ptr _tc_AdapterNonExistent;
 
 
 #endif // end #if !defined
@@ -1771,13 +1791,20 @@ class POA;
     public:
       InvalidPolicy (void); // default ctor
       InvalidPolicy (const InvalidPolicy &); // copy ctor
-      ~InvalidPolicy(void); // dtor
-      InvalidPolicy(const CORBA::UShort);
+      ~InvalidPolicy (void); // dtor
+      InvalidPolicy(
+        CORBA::UShort _tao_index);
+
       InvalidPolicy &operator= (const InvalidPolicy &);
       static InvalidPolicy *_narrow (CORBA::Exception *);
       CORBA::UShort index;
-    };
-        static CORBA::TypeCode_ptr _tc_InvalidPolicy;
+      // the alloc method. This is TAO extension
+      static CORBA::Exception *_alloc (void);
+    }; // exception PortableServer::POA::InvalidPolicy
+        friend void operator<<= (CORBA::Any &, const InvalidPolicy &); // copying version
+    friend void operator<<= (CORBA::Any &, InvalidPolicy*); // noncopying version
+    friend CORBA::Boolean operator>>= (const CORBA::Any &, InvalidPolicy *&);
+static CORBA::TypeCode_ptr _tc_InvalidPolicy;
 
 
 #endif // end #if !defined
@@ -1800,11 +1827,16 @@ class POA;
     public:
       NoServant (void); // default ctor
       NoServant (const NoServant &); // copy ctor
-      ~NoServant(void); // dtor
-      NoServant &operator= (const NoServant &);
+      ~NoServant (void); // dtor
+            NoServant &operator= (const NoServant &);
       static NoServant *_narrow (CORBA::Exception *);
-    };
-        static CORBA::TypeCode_ptr _tc_NoServant;
+      // the alloc method. This is TAO extension
+      static CORBA::Exception *_alloc (void);
+    }; // exception PortableServer::POA::NoServant
+        friend void operator<<= (CORBA::Any &, const NoServant &); // copying version
+    friend void operator<<= (CORBA::Any &, NoServant*); // noncopying version
+    friend CORBA::Boolean operator>>= (const CORBA::Any &, NoServant *&);
+static CORBA::TypeCode_ptr _tc_NoServant;
 
 
 #endif // end #if !defined
@@ -1827,11 +1859,16 @@ class POA;
     public:
       ObjectAlreadyActive (void); // default ctor
       ObjectAlreadyActive (const ObjectAlreadyActive &); // copy ctor
-      ~ObjectAlreadyActive(void); // dtor
-      ObjectAlreadyActive &operator= (const ObjectAlreadyActive &);
+      ~ObjectAlreadyActive (void); // dtor
+            ObjectAlreadyActive &operator= (const ObjectAlreadyActive &);
       static ObjectAlreadyActive *_narrow (CORBA::Exception *);
-    };
-        static CORBA::TypeCode_ptr _tc_ObjectAlreadyActive;
+      // the alloc method. This is TAO extension
+      static CORBA::Exception *_alloc (void);
+    }; // exception PortableServer::POA::ObjectAlreadyActive
+        friend void operator<<= (CORBA::Any &, const ObjectAlreadyActive &); // copying version
+    friend void operator<<= (CORBA::Any &, ObjectAlreadyActive*); // noncopying version
+    friend CORBA::Boolean operator>>= (const CORBA::Any &, ObjectAlreadyActive *&);
+static CORBA::TypeCode_ptr _tc_ObjectAlreadyActive;
 
 
 #endif // end #if !defined
@@ -1854,11 +1891,16 @@ class POA;
     public:
       ObjectNotActive (void); // default ctor
       ObjectNotActive (const ObjectNotActive &); // copy ctor
-      ~ObjectNotActive(void); // dtor
-      ObjectNotActive &operator= (const ObjectNotActive &);
+      ~ObjectNotActive (void); // dtor
+            ObjectNotActive &operator= (const ObjectNotActive &);
       static ObjectNotActive *_narrow (CORBA::Exception *);
-    };
-        static CORBA::TypeCode_ptr _tc_ObjectNotActive;
+      // the alloc method. This is TAO extension
+      static CORBA::Exception *_alloc (void);
+    }; // exception PortableServer::POA::ObjectNotActive
+        friend void operator<<= (CORBA::Any &, const ObjectNotActive &); // copying version
+    friend void operator<<= (CORBA::Any &, ObjectNotActive*); // noncopying version
+    friend CORBA::Boolean operator>>= (const CORBA::Any &, ObjectNotActive *&);
+static CORBA::TypeCode_ptr _tc_ObjectNotActive;
 
 
 #endif // end #if !defined
@@ -1881,11 +1923,16 @@ class POA;
     public:
       ServantAlreadyActive (void); // default ctor
       ServantAlreadyActive (const ServantAlreadyActive &); // copy ctor
-      ~ServantAlreadyActive(void); // dtor
-      ServantAlreadyActive &operator= (const ServantAlreadyActive &);
+      ~ServantAlreadyActive (void); // dtor
+            ServantAlreadyActive &operator= (const ServantAlreadyActive &);
       static ServantAlreadyActive *_narrow (CORBA::Exception *);
-    };
-        static CORBA::TypeCode_ptr _tc_ServantAlreadyActive;
+      // the alloc method. This is TAO extension
+      static CORBA::Exception *_alloc (void);
+    }; // exception PortableServer::POA::ServantAlreadyActive
+        friend void operator<<= (CORBA::Any &, const ServantAlreadyActive &); // copying version
+    friend void operator<<= (CORBA::Any &, ServantAlreadyActive*); // noncopying version
+    friend CORBA::Boolean operator>>= (const CORBA::Any &, ServantAlreadyActive *&);
+static CORBA::TypeCode_ptr _tc_ServantAlreadyActive;
 
 
 #endif // end #if !defined
@@ -1908,11 +1955,16 @@ class POA;
     public:
       ServantNotActive (void); // default ctor
       ServantNotActive (const ServantNotActive &); // copy ctor
-      ~ServantNotActive(void); // dtor
-      ServantNotActive &operator= (const ServantNotActive &);
+      ~ServantNotActive (void); // dtor
+            ServantNotActive &operator= (const ServantNotActive &);
       static ServantNotActive *_narrow (CORBA::Exception *);
-    };
-        static CORBA::TypeCode_ptr _tc_ServantNotActive;
+      // the alloc method. This is TAO extension
+      static CORBA::Exception *_alloc (void);
+    }; // exception PortableServer::POA::ServantNotActive
+        friend void operator<<= (CORBA::Any &, const ServantNotActive &); // copying version
+    friend void operator<<= (CORBA::Any &, ServantNotActive*); // noncopying version
+    friend CORBA::Boolean operator>>= (const CORBA::Any &, ServantNotActive *&);
+static CORBA::TypeCode_ptr _tc_ServantNotActive;
 
 
 #endif // end #if !defined
@@ -1935,11 +1987,16 @@ class POA;
     public:
       WrongAdapter (void); // default ctor
       WrongAdapter (const WrongAdapter &); // copy ctor
-      ~WrongAdapter(void); // dtor
-      WrongAdapter &operator= (const WrongAdapter &);
+      ~WrongAdapter (void); // dtor
+            WrongAdapter &operator= (const WrongAdapter &);
       static WrongAdapter *_narrow (CORBA::Exception *);
-    };
-        static CORBA::TypeCode_ptr _tc_WrongAdapter;
+      // the alloc method. This is TAO extension
+      static CORBA::Exception *_alloc (void);
+    }; // exception PortableServer::POA::WrongAdapter
+        friend void operator<<= (CORBA::Any &, const WrongAdapter &); // copying version
+    friend void operator<<= (CORBA::Any &, WrongAdapter*); // noncopying version
+    friend CORBA::Boolean operator>>= (const CORBA::Any &, WrongAdapter *&);
+static CORBA::TypeCode_ptr _tc_WrongAdapter;
 
 
 #endif // end #if !defined
@@ -1962,11 +2019,16 @@ class POA;
     public:
       WrongPolicy (void); // default ctor
       WrongPolicy (const WrongPolicy &); // copy ctor
-      ~WrongPolicy(void); // dtor
-      WrongPolicy &operator= (const WrongPolicy &);
+      ~WrongPolicy (void); // dtor
+            WrongPolicy &operator= (const WrongPolicy &);
       static WrongPolicy *_narrow (CORBA::Exception *);
-    };
-        static CORBA::TypeCode_ptr _tc_WrongPolicy;
+      // the alloc method. This is TAO extension
+      static CORBA::Exception *_alloc (void);
+    }; // exception PortableServer::POA::WrongPolicy
+        friend void operator<<= (CORBA::Any &, const WrongPolicy &); // copying version
+    friend void operator<<= (CORBA::Any &, WrongPolicy*); // noncopying version
+    friend CORBA::Boolean operator>>= (const CORBA::Any &, WrongPolicy *&);
+static CORBA::TypeCode_ptr _tc_WrongPolicy;
 
 
 #endif // end #if !defined
@@ -2116,11 +2178,16 @@ class Current;
     public:
       NoContext (void); // default ctor
       NoContext (const NoContext &); // copy ctor
-      ~NoContext(void); // dtor
-      NoContext &operator= (const NoContext &);
+      ~NoContext (void); // dtor
+            NoContext &operator= (const NoContext &);
       static NoContext *_narrow (CORBA::Exception *);
-    };
-        static CORBA::TypeCode_ptr _tc_NoContext;
+      // the alloc method. This is TAO extension
+      static CORBA::Exception *_alloc (void);
+    }; // exception PortableServer::Current::NoContext
+        friend void operator<<= (CORBA::Any &, const NoContext &); // copying version
+    friend void operator<<= (CORBA::Any &, NoContext*); // noncopying version
+    friend CORBA::Boolean operator>>= (const CORBA::Any &, NoContext *&);
+static CORBA::TypeCode_ptr _tc_NoContext;
 
 
 #endif // end #if !defined

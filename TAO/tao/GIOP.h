@@ -186,39 +186,7 @@ typedef TAO_Unbounded_Sequence<TAO_GIOP_ServiceContext>
 
 extern CORBA::TypeCode_ptr TC_ServiceContextList;
 
-// = Request, Reply headers
-
-class TAO_Export TAO_GIOP_RequestHeader
-{
-  // = TITLE
-  //   This class embodies the header of a GIOP request.
-public:
-  TAO_GIOP_RequestHeader (void);
-  // Constructor.
-
-  CORBA::Boolean init (TAO_InputCDR &msg,
-                       CORBA::Environment& env);
-  // Initialize the header from the values found in <msg>.
-
-  //private:
-  TAO_GIOP_ServiceContextList service_info;
-  // The service context for the request (CORBA Reference?)
-
-  CORBA::ULong request_id;
-  // Unique identifier for a request
-
-  CORBA::Boolean response_expected;
-  // true if this request requires a response
-
-  TAO_opaque object_key;
-  // The object key of the destination object.
-
-  CORBA::String operation;
-  // Name of the operation being performed
-
-  CORBA::Principal_ptr requesting_principal;
-  // Identifies the requester
-};
+// = Reply headers
 
 enum TAO_GIOP_ReplyStatusType
 {
