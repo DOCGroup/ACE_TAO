@@ -1,3 +1,8 @@
+Tue May 26 14:53:21 1998  Steve Huston  <shuston@riverace.com>
+
+	* ace/SOCK_Dgram_Mcast.cpp (subscribe): Fixed use of uninitialized
+	  variable, nr_subscribed.  Thanks to Nanbor for finding this.
+
 Tue May 26 13:39:21 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* ace/Timeprobe.cpp: 
