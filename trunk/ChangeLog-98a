@@ -1,3 +1,9 @@
+Tue Feb 17 17:59:32 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* examples/Reactor/Multicast/Multicast.dsw:
+	* examples/Reactor/Multicast/client.dsp:
+	* examples/reactor/multicast/server.dsp: New project files.
+
 Tue Feb 17 15:53:41 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/ACE.cpp (recv_n): Added a check to drop out if the MSG_PEEK
