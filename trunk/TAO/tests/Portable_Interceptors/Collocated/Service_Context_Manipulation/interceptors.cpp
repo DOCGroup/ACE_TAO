@@ -73,10 +73,9 @@ Echo_Client_Request_Interceptor::send_request (
 
   ACE_DEBUG ((LM_DEBUG,
               "%s.send_request "
-              "from \"%s\" on object: %s\n",
+              "from \"%s\"\n",
               this->myname_,
-              operation.in (),
-              ior.in ()));
+              operation.in ()));
 
   // Populate target member of the ClientRequestInfo.
 
@@ -141,10 +140,9 @@ Echo_Client_Request_Interceptor::receive_reply (
 
   ACE_DEBUG ((LM_DEBUG,
               "%s.receive_reply from "
-              "\"%s\" on object: %s\n",
+              "\"%s\"\n",
               this->myname_,
-              operation.in (),
-              ior.in ()));
+              operation.in ()));
 
   // Check that the reply service context was received as
   // expected.
@@ -224,10 +222,9 @@ Echo_Client_Request_Interceptor::receive_exception (
 
   ACE_DEBUG ((LM_DEBUG,
               "%s.received_exception "
-              "from \"%s\" on object: %s\n",
+              "from \"%s\"\n",
               this->myname_,
-              operation.in (),
-              ior.in ()));
+              operation.in ()));
 
   // Check that the reply service context was received as
   // expected.
