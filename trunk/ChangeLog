@@ -1,3 +1,13 @@
+Thu Feb 3 10:36:37 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-win32-common.h:
+          Added ACE_LACKS_UNIX_SYSLOG
+
+        * ace/Log_Msg_UNIX_Syslog.{h,cpp}:
+          Only check for the ACE_LACKS_UNIX_SYSLOG define, not for ACE_WIN32.
+          Makes it a little easier to maintain and then this class is also
+          added to the doxygen documentation
+
 Thu Feb 3 10:28:37 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/templates/gnu.mpd:
