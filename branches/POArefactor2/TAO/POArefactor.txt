@@ -1,3 +1,16 @@
+Tue Nov 16 12:05:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/IdUniquenessStrategyMultiple.cpp:
+        * tao/PortableServer/LifespanStrategyPersistent.cpp:
+        * tao/PortableServer/Object_Adapter.cpp:
+        * tao/PortableServer/POA.{cpp,h}:
+        * tao/PortableServer/RequestProcessingStrategyServantActivator.cpp:
+        * tao/PortableServer/ServantRetentionStrategyNonRetain.cpp:
+        * tao/PortableServer/ServantRetentionStrategyRetain.cpp:
+          Added server_priority to the POA, which gets the server_priority
+          from the cached_policies, use this in the strategies and shortened
+          the documentation above the Non_Servant_Upcall usages.
+
 Tue Nov 16 10:27:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/LifespanStrategy*.{h,cpp}:
