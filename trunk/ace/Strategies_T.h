@@ -199,11 +199,13 @@ public:
   // "Do-nothing constructor"
 
   ACE_Reactive_Strategy (ACE_Reactor *reactor,
-			 ACE_Reactor_Mask = ACE_Event_Handler::READ_MASK);
+			 ACE_Reactor_Mask = ACE_Event_Handler::READ_MASK,
+			 int flags = 0);
   // Initialize the strategy.
 
   virtual int open (ACE_Reactor *reactor,
-		    ACE_Reactor_Mask = ACE_Event_Handler::READ_MASK);
+		    ACE_Reactor_Mask = ACE_Event_Handler::READ_MASK, 
+		    int flags = 0);
   // Initialize the strategy.
 
   virtual ~ACE_Reactive_Strategy (void);

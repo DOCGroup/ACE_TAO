@@ -1,5 +1,9 @@
 Thu May 15 13:10:12 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
+	* ace/Strategies_T: Added a minor ACE_Reactive_Strategy extension
+ 	  to enable non-blocking I/O in active_svc_handler().  Thanks to
+ 	  Arturo Montes <mitosys@colomsat.net.co> for contributing this.
+
 	* ace/config-osf1-4.0[-g++].h: Added a #define for
  	  ACE_POLL_IS_BROKEN since DEC UNIX's poll() doesn't seem to work
  	  correctly as a highres timer.  Thanks to James Johnson and Thilo

@@ -211,11 +211,13 @@ ACE_Reactive_Strategy<SVC_HANDLER>::dump (void) const
 
 template <class SVC_HANDLER> int
 ACE_Reactive_Strategy<SVC_HANDLER>::open (ACE_Reactor *reactor,
-					  ACE_Reactor_Mask mask)
+					  ACE_Reactor_Mask mask,
+					  int flags)
 {
   ACE_TRACE ("ACE_Reactive_Strategy<SVC_HANDLER>::open");
   this->reactor_ = reactor;
   this->mask_ = mask;
+  this->flags_ = flags;
 
   // Must have a <Reactor>
   if (this->reactor_ == 0)
@@ -226,11 +228,12 @@ ACE_Reactive_Strategy<SVC_HANDLER>::open (ACE_Reactor *reactor,
 
 template <class SVC_HANDLER> 
 ACE_Reactive_Strategy<SVC_HANDLER>::ACE_Reactive_Strategy (ACE_Reactor *reactor,
-							   ACE_Reactor_Mask mask)
+							   ACE_Reactor_Mask mask,
+							   int flags)
 {
   ACE_TRACE ("ACE_Reactive_Strategy<SVC_HANDLER>::ACE_Reactive_Strategy");
 
-  if (this->open (reactor, mask) == -1)
+  if (this->open (reactor, mask, flags) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", 
 		"ACE_Reactive_Strategy<SVC_HANDLER>::ACE_Reactive_Strategy"));
 }
@@ -238,7 +241,8 @@ ACE_Reactive_Strategy<SVC_HANDLER>::ACE_Reactive_Strategy (ACE_Reactor *reactor,
 template <class SVC_HANDLER> 
 ACE_Reactive_Strategy<SVC_HANDLER>::ACE_Reactive_Strategy (void)
   : reactor_ (0),
-    mask_ (ACE_Event_Handler::NULL_MASK)
+    mask_ (ACE_Event_Handler::NULL_MASK),
+    flags_ (0)
 {
   ACE_TRACE ("ACE_Reactive_Strategy<SVC_HANDLER>::ACE_Reactive_Strategy");
 }
@@ -260,7 +264,9 @@ ACE_Reactive_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *svc_handl
   else if (this->reactor_->register_handler (svc_handler, this->mask_) == -1)
     return -1;
     // Call up to our parent to do the SVC_HANDLER initialization.
-  else if (this->inherited::activate_svc_handler (svc_handler, arg) == -1)
+  else if (this->inherited::activate_svc_handler (svc_handler, arg) == -1
+	   || (ACE_BIT_ENABLED (this->flags_, ACE_NONBLOCK) != 0
+	       && svc_handler->peer ().enable (ACE_NONBLOCK) == -1))
     {
       // Make sure to remove the <svc_handler> from the <Reactor>.
       this->reactor_->remove_handler (svc_handler, this->mask_);
