@@ -49,13 +49,13 @@ class TAO_RTEvent_Export TAO_EC_ConsumerAdmin
 {
 public:
   /**
-   * constructor. If <supplier_set> is nil then it builds one using
-   * the <event_channel> argument.
+   * Constructor. If <supplier_set> is nil then it builds one using
+   * the @a event_channel argument.
    * In any case it assumes ownership.
    */
   TAO_EC_ConsumerAdmin (TAO_EC_Event_Channel_Base* event_channel);
 
-  /// destructor...
+  /// Destructor...
   virtual ~TAO_EC_ConsumerAdmin (void);
 
   // = The RtecEventChannelAdmin::ConsumerAdmin methods...

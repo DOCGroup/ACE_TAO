@@ -1,3 +1,41 @@
+Mon Jul 21 19:33:24 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/orbsvcs.html:
+          Updated description of tests directories of the RTEvent service
+
+        * orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.h:
+        * orbsvcs/orbsvcs/Event/EC_Dispatching.h:
+        * orbsvcs/orbsvcs/Event/ReactorTask.h:
+        * orbsvcs/orbsvcs/Event/Timer_Module.h:
+          Doxygen documentation update
+
+        * orbsvcs/orbsvcs/Event/EC_Gateway_IIOP.{h,cpp}
+          The gateway used the variable names local ec and remote ec but this
+          makes it very confusing. With local ec the ec that consumes events
+          is meant, with remote ec the ec that supplies the events. Local and
+          remote where chosen because normally the gateway is located on the
+          host where the consumer ec is located. We are working on a solution
+          where the gateway is located on the host where the supplier ec is
+          located, so having local and remote makes it very confusing.
+          Therefor changed local_ec in consumer_ec and remote_ec in
+          supplier_ec. This makes it easier to implement and understand the
+          additions we will adding the next few weeks.
+
+        * orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ObserverStrategy.{h,cpp,i}:
+          Added a reactive observer strategy. The existing basic strategy
+          always just tries each observer and in case of an exception it just
+          continues with the next observer, but with the next update the
+          observer that caused the exception is just tried again. The reactive
+          observer strategy removes an observer that causes an excepion from
+          its observer map, this is just like the consumer/supplier reactive
+          controls work. In this way an observer that is crashed or
+          unreachable doesn't slow down the EC anymore. This can be configures
+          using "-ECObserver reactive" svc.conf file.
+
+        * docs/ec_options:
+          Described new reactive observer strategy
+
 Mon Jul 21 14:09:27 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Domain/DomainS.cpp:
@@ -32,14 +70,14 @@ Mon Jul 21 14:07:09 2003  Aniruddha Gokhale  <gokhale@doc.dre.vanderbilt.edu>
           tao/Valuetype/Makefile:
 
 	  Updated dependencies
-	
+
 Mon Jul 21 13:41:54 2003  George Edwards <g.edwards@vanderbilt.edu>
 
         * tao/Makefile.bor:
         * tao/Makefile.tao:
         * tao/TAO.dsp:
         * tao/TAO_Static.dsp:
-        
+
           Updated makefiles to include new files
           tao/IORInterceptor_Adapter_Factory.h and
           tao/IORInterceptor_Adapter_Factory.cpp.

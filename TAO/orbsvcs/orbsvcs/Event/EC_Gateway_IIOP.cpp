@@ -9,8 +9,8 @@ ACE_RCSID(Event, EC_Gateway, "$Id$")
 TAO_EC_Gateway_IIOP::TAO_EC_Gateway_IIOP (void)
   :  busy_count_ (0),
      update_posted_ (0),
-     rmt_info_ (0),
-     lcl_info_ (0),
+     supplier_info_ (0),
+     consumer_info_ (0),
      consumer_ (this),
      consumer_is_active_ (0),
      supplier_ (this),
@@ -23,33 +23,33 @@ TAO_EC_Gateway_IIOP::~TAO_EC_Gateway_IIOP (void)
 }
 
 int
-TAO_EC_Gateway_IIOP::init (RtecEventChannelAdmin::EventChannel_ptr rmt_ec,
-                           RtecEventChannelAdmin::EventChannel_ptr lcl_ec
+TAO_EC_Gateway_IIOP::init (RtecEventChannelAdmin::EventChannel_ptr supplier_ec,
+                           RtecEventChannelAdmin::EventChannel_ptr consumer_ec
                            ACE_ENV_ARG_DECL)
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, -1);
 
-  return this->init_i (rmt_ec, lcl_ec ACE_ENV_ARG_PARAMETER);
+  return this->init_i (supplier_ec, consumer_ec ACE_ENV_ARG_PARAMETER);
 }
 
 int
-TAO_EC_Gateway_IIOP::init_i (RtecEventChannelAdmin::EventChannel_ptr rmt_ec,
-                             RtecEventChannelAdmin::EventChannel_ptr lcl_ec
+TAO_EC_Gateway_IIOP::init_i (RtecEventChannelAdmin::EventChannel_ptr supplier_ec,
+                             RtecEventChannelAdmin::EventChannel_ptr consumer_ec
                              ACE_ENV_ARG_DECL_NOT_USED)
 {
-  if (CORBA::is_nil (this->rmt_ec_.in ()) && CORBA::is_nil (this->lcl_ec_.in ()))
+  if (CORBA::is_nil (this->supplier_ec_.in ()) && CORBA::is_nil (this->consumer_ec_.in ()))
   {
-    this->rmt_ec_ =
-      RtecEventChannelAdmin::EventChannel::_duplicate (rmt_ec);
-    this->lcl_ec_ =
-      RtecEventChannelAdmin::EventChannel::_duplicate (lcl_ec);
+    this->supplier_ec_ =
+      RtecEventChannelAdmin::EventChannel::_duplicate (supplier_ec);
+    this->consumer_ec_ =
+      RtecEventChannelAdmin::EventChannel::_duplicate (consumer_ec);
 
     return 0;
   }
   else
     ACE_ERROR_RETURN ((LM_ERROR,
                        "TAO_EC_Gateway_IIOP - init_i "
-                       "Remote and local event channel reference "
+                       "Supplier and consumer event channel reference "
                        "should be nil.\n"), -1);
 }
 
@@ -140,15 +140,15 @@ TAO_EC_Gateway_IIOP::update_consumer_i (
   this->close_i (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  if (CORBA::is_nil (this->lcl_ec_.in ())
-      || CORBA::is_nil (this->rmt_ec_.in ()))
+  if (CORBA::is_nil (this->consumer_ec_.in ())
+      || CORBA::is_nil (this->supplier_ec_.in ()))
     return;
 
   // ACE_DEBUG ((LM_DEBUG, "ECG (%t) update_consumer_i \n"));
 
-  // = Connect as a supplier to the local EC
+  // = Connect as a supplier to the consumer EC
   RtecEventChannelAdmin::SupplierAdmin_var supplier_admin =
-    this->lcl_ec_->for_suppliers (ACE_ENV_SINGLE_ARG_PARAMETER);
+    this->consumer_ec_->for_suppliers (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   // Change the RT_Info in the consumer QoS.
@@ -158,7 +158,7 @@ TAO_EC_Gateway_IIOP::update_consumer_i (
   sub.is_gateway = 1;
   for (CORBA::ULong i = 0; i < sub.dependencies.length (); ++i)
     {
-      sub.dependencies[i].rt_info = this->rmt_info_;
+      sub.dependencies[i].rt_info = this->supplier_info_;
 
       RtecEventChannelAdmin::ProxyPushConsumer_ptr proxy = 0;
       const RtecEventComm::EventHeader &h =
@@ -228,7 +228,7 @@ TAO_EC_Gateway_IIOP::update_consumer_i (
               pub.publications[c].dependency_info.dependency_type =
                 RtecBase::TWO_WAY_CALL;
               pub.publications[c].dependency_info.number_of_calls = 1;
-              pub.publications[c].dependency_info.rt_info = this->lcl_info_;
+              pub.publications[c].dependency_info.rt_info = this->consumer_info_;
               c++;
             }
           //ACE_DEBUG ((LM_DEBUG,
@@ -268,7 +268,7 @@ TAO_EC_Gateway_IIOP::update_consumer_i (
       pub.publications[c].dependency_info.dependency_type =
         RtecBase::TWO_WAY_CALL;
       pub.publications[c].dependency_info.number_of_calls = 1;
-      pub.publications[c].dependency_info.rt_info = this->lcl_info_;
+      pub.publications[c].dependency_info.rt_info = this->consumer_info_;
       c++;
     }
 
@@ -298,7 +298,7 @@ TAO_EC_Gateway_IIOP::update_consumer_i (
 
 
   RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin =
-    this->rmt_ec_->for_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
+    this->supplier_ec_->for_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   this->supplier_proxy_ =
@@ -444,9 +444,9 @@ TAO_EC_Gateway_IIOP::shutdown (ACE_ENV_SINGLE_ARG_DECL)
       this->consumer_is_active_ = 0;
     }
 
-  this->lcl_ec_ =
+  this->consumer_ec_ =
     RtecEventChannelAdmin::EventChannel::_nil ();
-  this->rmt_ec_ =
+  this->supplier_ec_ =
     RtecEventChannelAdmin::EventChannel::_nil ();
 
   return 0;
