@@ -39,7 +39,7 @@ OBJFILES = \
 	$(OBJDIR)\Transport.obj \
 	$(OBJDIR)\UDP.obj
 
-RESOURCE = $(OBJDIR)\orbsvcs.res
+RESOURCE = $(OBJDIR)\AV.res
 
 CFLAGS = \
 	$(ACE_CFLAGS) \

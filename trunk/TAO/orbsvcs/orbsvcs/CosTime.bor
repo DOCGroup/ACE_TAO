@@ -21,7 +21,7 @@ OBJFILES = \
 	$(OBJDIR)\TimeServiceC.obj \
 	$(OBJDIR)\TimeServiceS.obj
 
-RESOURCE = $(OBJDIR)\orbsvcs.res
+RESOURCE = $(OBJDIR)\CosTime.res
 
 CFLAGS = \
 	$(ACE_CFLAGS) \

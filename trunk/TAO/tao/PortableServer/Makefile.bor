@@ -35,6 +35,8 @@ OBJFILES = \
 	$(OBJDIR)\Strategized_Object_Proxy_Broker.obj \
 	$(OBJDIR)\ThruPOA_Object_Proxy_Impl.obj
 
+RESOURCE = $(OBJDIR)\TAO_PortableServer.res
+
 !ifdef STATIC
 CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS) $(TAO_PORTABLESERVER_CFLAGS)
 !else

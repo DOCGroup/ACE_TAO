@@ -16,6 +16,8 @@ OBJFILES = \
 	$(OBJDIR)\DynStruct_i.obj \
 	$(OBJDIR)\DynUnion_i.obj
 
+RESOURCE = $(OBJDIR)\TAO_DynamicAny.res
+
 !ifdef STATIC
 CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS) $(TAO_DYNAMICANY_CFLAGS)
 !else

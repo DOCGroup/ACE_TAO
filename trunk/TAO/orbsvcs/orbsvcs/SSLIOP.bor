@@ -39,7 +39,7 @@ OBJFILES = \
 	$(OBJDIR)\SSLIOP_X509.obj \
         $(OBJDIR)\SSLIOPC.obj
 
-RESOURCE = $(OBJDIR)\orbsvcs.res
+RESOURCE = $(OBJDIR)\SSLIOP.res
 
 CFLAGS = \
 	$(ACE_CFLAGS) \

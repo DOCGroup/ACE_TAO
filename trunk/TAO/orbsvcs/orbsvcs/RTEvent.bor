@@ -71,7 +71,7 @@ OBJFILES = \
 	$(OBJDIR)\RtecUDPAdminC.obj \
 	$(OBJDIR)\RtecUDPAdminS.obj
 
-RESOURCE = $(OBJDIR)\orbsvcs.res
+RESOURCE = $(OBJDIR)\RTEvent.res
 
 CFLAGS = \
 	$(ACE_CFLAGS) \

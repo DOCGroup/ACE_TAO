@@ -18,6 +18,8 @@ OBJFILES = \
 	$(OBJDIR)\RT_Policy_Validator.obj \
 	$(OBJDIR)\RT_Servant_Dispatcher.obj
 
+RESOURCE = $(OBJDIR)\TAO_RTPortableServer.res
+
 !ifdef STATIC
 CFLAGS = \
 	$(ACE_CFLAGS) \

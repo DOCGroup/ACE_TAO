@@ -20,7 +20,7 @@ OBJFILES = \
 	$(OBJDIR)\CosConcurrencyControlC.obj \
 	$(OBJDIR)\CosConcurrencyControlS.obj
 
-RESOURCE = $(OBJDIR)\orbsvcs.res
+RESOURCE = $(OBJDIR)\CosConcurrency.res
 
 CFLAGS = \
 	$(ACE_CFLAGS) \

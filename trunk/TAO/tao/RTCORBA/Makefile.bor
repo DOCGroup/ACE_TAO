@@ -33,6 +33,8 @@ OBJFILES = \
 	$(OBJDIR)\RT_Stub_Factory.obj \
 	$(OBJDIR)\Thread_Pool.obj
 
+RESOURCE = $(OBJDIR)\TAO_RTCORBA.res
+
 !ifdef STATIC
 CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS) $(TAO_RTCORBA_CFLAGS)
 !else

@@ -61,7 +61,7 @@ OBJFILES = \
 	$(OBJDIR)\Notify_Buffering_Strategy.obj \
 	$(OBJDIR)\Notify_MT_Worker_Task.obj
 
-RESOURCE = $(OBJDIR)\orbsvcs.res
+RESOURCE = $(OBJDIR)\CosNotification.res
 
 CFLAGS = \
 	$(ACE_CFLAGS) \

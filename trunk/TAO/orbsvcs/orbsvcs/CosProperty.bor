@@ -17,7 +17,7 @@ OBJFILES = \
 	$(OBJDIR)\CosPropertyServiceC.obj \
 	$(OBJDIR)\CosPropertyServiceS.obj
 
-RESOURCE = $(OBJDIR)\orbsvcs.res
+RESOURCE = $(OBJDIR)\CosProperty.res
 
 CFLAGS = \
 	$(ACE_CFLAGS) \

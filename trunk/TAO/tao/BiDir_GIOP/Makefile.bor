@@ -11,6 +11,8 @@ OBJFILES = \
 	$(OBJDIR)\BiDir_PolicyFactory.obj \
 	$(OBJDIR)\BiDir_Policy_i.obj
 
+RESOURCE = $(OBJDIR)\TAO_BiDir_GIOP.res
+
 !ifdef STATIC
 CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS) $(TAO_BIDIRGIOP_CFLAGS)
 !else
