@@ -200,6 +200,7 @@ run IOStream_Test                       # tests ACE_IOStream and ACE_SOCK_Stream
 run Enum_Interfaces_Test                # tests ACE_ACE::get_ip_interfaces()
 test $chorus || run Upgradable_RW_Test  # tests ACE_RW locks
 test $chorus || run Conn_Test           # tests ACE_Thread_Manager, ACE_Acceptor/ACE_Connector, ACE_SOCK_SAP
+run New_Fail_Test                       # tests correct ACE_NEW[_RETURN]
 
 echo "Finished ACE version $ace_version tests."
 
