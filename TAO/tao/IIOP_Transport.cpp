@@ -133,10 +133,10 @@ TAO_IIOP_Transport::send (const ACE_Message_Block *mblk, ACE_Time_Value *s)
 
   for (const ACE_Message_Block *i = mblk;
        i != 0;
-       i = i->cont ()) 
+       i = i->cont ())
     {
       // Make sure there is something to send!
-      if (i->length () > 0) 
+      if (i->length () > 0)
         {
           iov[iovcnt].iov_base = i->rd_ptr ();
           iov[iovcnt].iov_len  = i->length ();
@@ -156,9 +156,10 @@ TAO_IIOP_Transport::send (const ACE_Message_Block *mblk, ACE_Time_Value *s)
                 return n;
 
               nbytes += n;
-            } 
+              iovcnt = 0;
+            }
         }
-    } 
+    }
 
   // Check for remaining buffers to be sent!
   if (iovcnt != 0)
