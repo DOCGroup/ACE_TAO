@@ -338,11 +338,9 @@ TAO_IIOP_Connection_Handler::handle_input_i (ACE_HANDLE,
   if (--this->pending_upcalls_ <= 0)
     result = -1;
 
-  if (result == -1)
+  if (result == -1 ||
+      result == 1)
     return result;
-  else if (result == 0)
-    // Requires another call to handle_input  ()
-    return 1;
 
   return 0;
 }
