@@ -1,3 +1,10 @@
+Sun Jan 25 12:26:19 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* tests/Auto_IncDec_Test.cpp:
+	  Extended debug info with the total number of threads. This then shows
+	  that with Cygwin threads that exit are not removed from the
+	  thread manager
+
 Sun Jan 25 11:34:31 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* tests/Tests.bor:
