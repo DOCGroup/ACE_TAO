@@ -1,3 +1,17 @@
+Wed Mar  1 22:39:04 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/Log_Record.cpp:
+          
+          Thanks to Valery Arkhangorodsky <valerya@servicesoft.com>,
+          who took the time to figure out the code in round_up () and
+          spotted a mistake in it.
+          
+        * examples/Shared_Malloc/test_persistence.cpp:
+          
+          The last bug in my changes.  Changing a pointer to an array
+          is not something to be done on a whim.  Needed to change a
+          couple of "== 0" to strcpy's, etc.
+
 Wed Mar 01 19:25:39 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Based_Pointer_T.cpp:
