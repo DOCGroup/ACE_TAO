@@ -1,3 +1,9 @@
+Tue Jul 27 09:58:58 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
+
+        * DAnCE/NodeApplication/NodeApplication.mpc:
+          Rearranged the order of libraries to fix link errors in static
+          configurations.
+
 Mon Jul 26 11:08:14 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
         * DAnCE/tests/Config_Handlers/handler_test.mpb:
