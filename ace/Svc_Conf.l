@@ -30,6 +30,7 @@ symbol		[ -~]
 string		(\"{symbol}*\"|\'{symbol}*\')
 white_space	[ \t]
 newline         \n
+carrage_retn    \r
 other		.
 
 %%
@@ -77,6 +78,7 @@ inactive	      { return token (ACE_INACTIVE); }
 			return token (ACE_PATHNAME);
 		      }
 {white_space}+	      ; /* EMPTY */
+{carrage_retn}        ; /* EMPTY */
 {newline}	      { ACE_SVC_CONF_PARAM->yylineno++; ace_yylineno++; }
 {other}		      {
                          ACE_ERROR ((LM_ERROR,
