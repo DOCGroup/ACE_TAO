@@ -1,9 +1,3 @@
-Fri Oct 24 01:23:55 1997  Sergio Flores  <sergio@polka.cs.wustl.edu>
-
-	* examples/Timer_Queue/Thread_Timer_Queue_Test.cpp (list_timer): 
-	Deleted unnecessary cancellation points.  Since we are not blocking
-	on a condition variable, we don't need to guard the code.
-
 Thu Oct 23 19:05:08 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
         * netsvcs/clients/Naming/Client/Makefile
@@ -88,6 +82,11 @@ Thu Oct 23 22:52:17 1997  Sergio Flores  <sergio@polka.cs.wustl.edu>
 	* ace/Timer_Queue_Adapters.cpp (svc): Added some POSIX thread
  	  cancellation points to make sure the mutex that the condition
  	  variable uses is unlocked before the thread is cancelled.
+
+	* examples/Timer_Queue/Thread_Timer_Queue_Test.cpp (list_timer):
+ 	  Deleted unnecessary cancellation points.  Since we are not
+ 	  blocking on a condition variable, we don't need to guard the
+ 	  code.
 
 Thu Oct 23 22:07:03 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 

@@ -1,5 +1,8 @@
 Fri Oct 24 01:02:01 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* clnt.cpp: Removed mysterious obsolete definitions of
+	cube_union_stub() and cube_union_dii().
+
 	* be_state.h: Added definitions for the methods in class
  	be_state_attribute.  For some reason, they were missing.
 
