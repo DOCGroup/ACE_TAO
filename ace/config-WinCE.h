@@ -89,6 +89,7 @@
 #define  FILE  void             // Try to map FILE* to HANDLE
 #define ostream FILE                  // Fake a ostream for now.
 
+typedef void (*__sighandler_t)(int); // keep Signal compilation happy
 typedef long off_t;
 #define stderr 0
 
