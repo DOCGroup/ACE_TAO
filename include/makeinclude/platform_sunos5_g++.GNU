@@ -5,7 +5,7 @@
 CC              = gcc
 CXX		= g++
 CFLAGS          += -Wall -Wpointer-arith  #### -O2 -Winline
-CCFLAGS         += -Wall -Wpointer-arith  #### -O2 -fno-implicit-templates -Winline
+CCFLAGS         += -Wall -Wpointer-arith -fno-implicit-templates #### -O2 -Winline
 DLD		= $(CXX)
 LD		= $(CXX)
 LDFLAGS		+=     # -z muldefs

@@ -5,7 +5,7 @@
 CC		= gcc
 CXX		= g++
 CFLAGS          += -w
-CCFLAGS         += $(CFLAGS)      # -w -fno-strict-prototypes
+CCFLAGS         += -w -fno-implicit-templates       # -fno-strict-prototypes
 DLD		= $(CXX)
 LD		= $(CXX)
 LDFLAGS		+= -L/usr/lib
