@@ -5,6 +5,7 @@
 #include "ace/Acceptor.h"
 #include "ace/SOCK_Acceptor.h"
 #include "ace/Reactor.h"
+#include "ace/Signal.h"
 #include "handler.h"
 
 /* We'll still use the global reactor pointer.  There's a snappy way

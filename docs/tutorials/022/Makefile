@@ -10,45 +10,50 @@
 # itself that will satisfy our application needs.  This one was taken from
 # one of the examples.
 
-	# Define the name of the binary we want to create.  There has to be
-	# a CPP file $(BIN).cpp but it doesn't necessarily have to have your
-	# main() in it.  Most of the time, though, it will.
+# Define the name of the binary we want to create.  There has to be
+# a CPP file $(BIN).cpp but it doesn't necessarily have to have your
+# main() in it.  Most of the time, though, it will.
 MAKEFILE = Makefile
 BIN      = server 
 LIBNAME  = libAcceptor_Server
 LIB	 = $(LIBNAME).a
 SHLIB    = $(LIBNAME).$(SOEXT)
-	# Few applications will have a single source file.  We use the FILES
-	# macro to build up a list of additional files to compile.  Notice
-	# that we leave off the extension just as with BIN
+
+# Few applications will have a single source file.  We use the FILES
+# macro to build up a list of additional files to compile.  Notice
+# that we leave off the extension just as with BIN
 FILES   = 
 FILES   += Acceptor_Service client_handler
 
-	# Here we use some GNU make extensions to build the SRC macro. Basically,
-	# we're just adding .cpp to the value of BIN and for each entry of the
-	# FILES macro.
+# Here we use some GNU make extensions to build the SRC macro. Basically,
+# we're just adding .cpp to the value of BIN and for each entry of the
+# FILES macro.
 PSRC    = $(addsuffix .cpp,$(BIN))
 LSRC    = $(addsuffix .cpp,$(FILES))
+
+# Since we use the client_handler from tutorial 005, make sure we
+# can find it.
+CPPFLAGS += -I../005
 
 LDLIBS  = 
 
 LIBS   += $(ACELIB)
 
-	# The BUILD macro is used by the ACE makefiles.  Basically, it tells
-	# the system what to build.  I don't really know what VBIN is other
-	# than it is constructed from the value of BIN.  Just go with it...
+# The BUILD macro is used by the ACE makefiles.  Basically, it tells
+# the system what to build.  I don't really know what VBIN is other
+# than it is constructed from the value of BIN.  Just go with it...
 BUILD	= $(VLIB) $(VSHLIB) $(SHLIBA) $(VBIN)
 
 #----------------------------------------------------------------------------
 #	Include macros and targets
 #----------------------------------------------------------------------------
 
-	# This is where the real power lies!  These included makefile components
-	# are similar to the C++ templates in ACE.  That is, they do a tremendous
-	# amount of work for you and all you have to do is include them.
-	# As a matter of fact, in our project, I created a single file named
-	# "app.mk" that includes all of these.  Our project makefiles then just
-	# need to include app.mk to get everything they need.
+# This is where the real power lies!  These included makefile components
+# are similar to the C++ templates in ACE.  That is, they do a tremendous
+# amount of work for you and all you have to do is include them.
+# As a matter of fact, in our project, I created a single file named
+# "app.mk" that includes all of these.  Our project makefiles then just
+# need to include app.mk to get everything they need.
 
 include	$(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include	$(ACE_ROOT)/include/makeinclude/macros.GNU
@@ -62,10 +67,10 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 #	Local targets
 #----------------------------------------------------------------------------
 
-	# Sometimes I like to reformat my code to make it more readable.  This is
-	# more useful for the comments than anything else.  Unfortunately, the
-	# "indent" program doesn't quite grok C++ so I have to post-process it's
-	# output just a bit.
+# Sometimes I like to reformat my code to make it more readable.  This is
+# more useful for the comments than anything else.  Unfortunately, the
+# "indent" program doesn't quite grok C++ so I have to post-process it's
+# output just a bit.
 Indent : #
 	for i in $(SRC) $(HDR) ; do \
 		indent -npsl -l80 -fca -fc1 -cli0 -cdb < $$i | \
@@ -80,17 +85,17 @@ Indent : #
 		mv $$i~ $$i ;\
 	done
 
-	# One of the targets in the ACE makefiles is "depend".  It will invoke
-	# your compiler in a way that will generate a list of dependencies for
-	# you.  This is a great thing!  Unfortunately, it puts all of that mess
-	# directly into the Makefile.  I prefer my Makefile to stay clean and
-	# uncluttered.  The perl script referenced here pulls the dependency
-	# stuff back out of the Makefile and into a file ".depend" which we then
-	# include just like the makefile components above.
-	#
-	# NOTE:  The 'depend' target expects to have GCC available.
-	# You can do the same thing with other compilers  but the ACE 
-	# makefiles and utilities are only wired up to work with GCC.
+# One of the targets in the ACE makefiles is "depend".  It will invoke
+# your compiler in a way that will generate a list of dependencies for
+# you.  This is a great thing!  Unfortunately, it puts all of that mess
+# directly into the Makefile.  I prefer my Makefile to stay clean and
+# uncluttered.  The perl script referenced here pulls the dependency
+# stuff back out of the Makefile and into a file ".depend" which we then
+# include just like the makefile components above.
+#
+# NOTE:  The 'depend' target expects to have GCC available.
+# You can do the same thing with other compilers  but the ACE 
+# makefiles and utilities are only wired up to work with GCC.
 Depend : depend
 	perl ../fix.Makefile
 
@@ -101,5 +106,5 @@ CLEAN : realclean
 #	Dependencies
 #----------------------------------------------------------------------------
 
-	# Don't put anything below here.  Between the "depend" target and fix.Makefile
-	# it's guaranteed to be lost!
+# Don't put anything below here.  Between the "depend" target and fix.Makefile
+# it's guaranteed to be lost!

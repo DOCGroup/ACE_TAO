@@ -4,6 +4,7 @@
 #include "task.h"
 #include "block.h"
 #include "work.h"
+#include "ace/Barrier.h"
 
 /*
    Construct the Task with zero or more subtasks.  If subtasks are requested,

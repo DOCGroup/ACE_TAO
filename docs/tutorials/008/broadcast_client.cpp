@@ -3,6 +3,7 @@
 #include "ace/Log_Msg.h"
 #include "ace/SOCK_Dgram_Bcast.h"
 #include "ace/INET_Addr.h"
+#include "ace/OS_NS_string.h"
 
 static const u_short PORT = ACE_DEFAULT_SERVER_PORT;
 
