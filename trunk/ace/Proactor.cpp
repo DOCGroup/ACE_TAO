@@ -257,8 +257,8 @@ ACE_Proactor::handle_events (ACE_Time_Value *how_long)
   ACE_Overlapped_IO *overlapped = 0;
   u_long bytes_transferred = 0;
 
-#if defined (ACE_WIN32)
   int error = 0;
+#if defined (ACE_WIN32)
   ACE_HANDLE io_handle = ACE_INVALID_HANDLE;
   int timeout = how_long == 0 ? INFINITE : how_long->msec ();
 
@@ -365,10 +365,12 @@ ACE_Proactor::initiate (ACE_Event_Handler *handler,
   // operation.
   ACE_Overlapped_IO *overlapped;
   
+#if defined (ACE_WIN32)
   ACE_NEW_RETURN (overlapped,
 		  ACE_Overlapped_IO (mask, handler, msg, 
 				     file, shared_event_.handle ()),
 		  -1);
+#endif
 
   // Tell the handler that *this* <Proactor> is dispatching it.
   handler->proactor (this);
