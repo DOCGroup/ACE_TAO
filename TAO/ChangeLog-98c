@@ -1,3 +1,12 @@
+Wed Jan  6 15:33:10 1999  Jeff Parsons <jp4@cs.wustl.edu>
+
+        * DynStruct_i.cpp:
+          Even though this had already been fixed with respect to
+          the latest compile problem, I noticed that the line in
+          this file that contains ACE_Array_Base<> should be 
+          changed to something better that's already used in a
+          couple of the other DynAny classes.
+
 Wed Jan  6 15:29:10 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
 	Commented out some IR related code for the build to go through.
