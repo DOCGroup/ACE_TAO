@@ -192,6 +192,8 @@ JAWS_HTTP_10_Parse_Task::parse_headers (JAWS_HTTP_10_Request *info,
       info->status (JAWS_HTTP_10_Request::STATUS_BAD_REQUEST);
       return 1;
     }
+
+  return 0;
 }
 
 char *
