@@ -1,3 +1,11 @@
+Fri Jun 25 20:31:05 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/Any.cpp:
+	  Added some ACE_NOTREACHED macros. These were in
+	  response to some warnings about ACE_CHECK_RETURN (...)
+	  after ACE_ENDTRY in non-void functions. We'll see if
+	  this make all the compilers happy.
+
 Fri Jun 25 18:09:07 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO/tests/Param_Test/any.cpp:
