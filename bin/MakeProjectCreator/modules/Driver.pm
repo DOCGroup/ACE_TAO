@@ -40,7 +40,7 @@ sub new {
 
   $self->{'path'}     = $path;
   $self->{'name'}     = $name;
-  $self->{'version'}  = "2.1";
+  $self->{'version'}  = "2.2";
   $self->{'types'}    = {};
   $self->{'creators'} = \@creators;
   $self->{'default'}  = $creators[0];
@@ -295,6 +295,13 @@ sub run {
         else {
           $options->{'relative'}->{$key} = $value;
         }
+      }
+
+      ## If a relative path is defined, remove all trailing slashes
+      ## and replace any two or more slashes with a single slash.
+      if (defined $options->{'relative'}->{$key}) {
+        $options->{'relative'}->{$key} =~ s/([\/\\])[\/\\]+/$1/g;
+        $options->{'relative'}->{$key} =~ s/[\/\\]$//g;
       }
     }
   }
