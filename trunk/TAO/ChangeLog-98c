@@ -1,3 +1,7 @@
+Mon Oct 26 18:28:36 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* Updated dependencies for all the Makefiles.
+
 Mon Oct 26 16:01:27 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tests/DynAny_Test: Made the run_tests.pl script have
