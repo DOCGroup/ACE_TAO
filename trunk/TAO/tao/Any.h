@@ -373,6 +373,7 @@ TAO_Export void operator<<= (CORBA::Any &, CORBA::Any *);
 TAO_Export void operator<<= (CORBA::Any &, const char *);
 TAO_Export void operator<<= (CORBA::Any &, const CORBA::WChar *);
 TAO_Export void operator<<= (CORBA::Any &, CORBA::TypeCode_ptr);
+TAO_Export void operator<<= (CORBA::Any &, CORBA::TypeCode_ptr *);
 TAO_Export void operator<<= (CORBA::Any &, const CORBA::Object_ptr);
 TAO_Export void operator<<= (CORBA::Any &, CORBA::Object_ptr *);
 TAO_Export void operator<<= (CORBA::Any &, const CORBA::Exception &);

@@ -799,14 +799,23 @@ operator<<= (CORBA::Any &any, CORBA::Any *a)
                                             a);
 }
 
+// Insertion of TypeCode - copying.
 void
 operator<<= (CORBA::Any &any, CORBA::TypeCode_ptr tc)
+{
+  CORBA::TypeCode_ptr dup = CORBA::TypeCode::_duplicate (tc);
+  any <<= &dup;
+}
+
+// Insertion of TypeCode - non-copying.
+void
+operator<<= (CORBA::Any &any, CORBA::TypeCode_ptr * tc)
 {
   TAO::Any_Impl_T<CORBA::TypeCode>::insert (
       any,
       CORBA::TypeCode::_tao_any_destructor,
       CORBA::_tc_TypeCode,
-      tc
+      *tc
     );
 }
 
