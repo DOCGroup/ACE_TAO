@@ -1,3 +1,18 @@
+Mon Aug 3 19:46:55 1998 Jeff Parsons <jp4@cs.wuslt.edu>
+
+      * tao_idl/be/be_visitor_sequence/gen_bounded_sequence_ch.cpp:
+        moved buffer allocation in default constructor from body to
+        base class call - prevents debug assertion in param tests.
+
+      * tao/Sequence_T.i:
+        change corresponding to the above
+
+      * TAO/tests/Param_Test/bd_short_seq.{h,cpp}:
+        TAO/tests/Param_Test/bd_long_seq.{h,cpp}:
+        TAO/tests/Param_Test/bd_str_seq.{h,cpp}:
+        created non-_var members for OUT args and return values,
+        changed add_args and check_validity accordingly. These
+        param tests now work for SII and DII.
 Mon Aug  3 17:21:42 1998  Gonzalo Diethelm  <gonzo@tango.cs.wustl.edu>
 
 	* IIOP/test/clnt.cpp: 
