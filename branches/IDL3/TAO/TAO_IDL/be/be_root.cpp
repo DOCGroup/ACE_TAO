@@ -52,7 +52,7 @@ be_root::fe_add_sequence (AST_Sequence *t)
       return 0;
     }
 
-  add_to_local_types(t);
+  add_to_local_types (t);
   return t;
 }
 
@@ -88,6 +88,7 @@ be_root::destroy (void)
   // Call the destroy methods of our base classes.
   be_scope::destroy ();
   be_decl::destroy ();
+  AST_Root::destroy ();
 }
 
 int

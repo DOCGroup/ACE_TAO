@@ -18,13 +18,15 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
-
+#include "idl.h"
+#include "idl_extern.h"
+#include "be.h"
 #include "be_visitor_typedef.h"
+#include "be_visitor_typecode/typecode_decl.h"
 
-ACE_RCSID(be_visitor_typedef, typedef_ch, "$Id$")
+ACE_RCSID(be_visitor_typedef, 
+          typedef_ch, 
+          "$Id$")
 
 
 // ******************************************************
@@ -83,8 +85,7 @@ be_visitor_typedef_ch::visit_typedef (be_typedef *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_typedef_ch::"
                              "visit_typedef - "
-                             "bad primitive base type\n"
-                             ),
+                             "bad primitive base type\n"),
                             -1);
         }
 
@@ -94,8 +95,7 @@ be_visitor_typedef_ch::visit_typedef (be_typedef *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_typedef_ch::"
                              "visit_typedef - "
-                             "failed to accept visitor\n"
-                             ),
+                             "failed to accept visitor\n"),
                             -1);
         }
 
@@ -115,9 +115,8 @@ be_visitor_typedef_ch::visit_typedef (be_typedef *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_typedef_ch::"
                              "visit_typedef - "
-                             "bad base type\n"
-                             ),
-                             -1);
+                             "bad base type\n"),
+                            -1);
         }
 
       // accept on this base type, but generate code for the typedef node.
@@ -126,28 +125,23 @@ be_visitor_typedef_ch::visit_typedef (be_typedef *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_typedef_ch::"
                              "visit_typedef - "
-                             "failed to accept visitor\n"
-                             ),
-                             -1);
+                             "failed to accept visitor\n"),
+                            -1);
         }
 
       // Generate the typecode decl for this typedef node.
-      // @@ NW: !bt->is_local () is a hack.  There should be a way to
-      // propagate bt's info up to typedef.
-      if (!node->imported () && !node->is_local () && !bt->is_local ())
+      if (!node->imported () && be_global->tc_support ())
         {
-          be_visitor *visitor;
           be_visitor_context ctx (*this->ctx_);
           ctx.state (TAO_CodeGen::TAO_TYPECODE_DECL);
-          visitor = tao_cg->make_visitor (&ctx);
+          be_visitor_typecode_decl visitor (&ctx);
 
-          if (!visitor || (node->accept (visitor) == -1))
+          if (node->accept (&visitor) == -1)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "(%N:%l) be_visitor_typedef_ch::"
                                  "visit_typedef - "
-                                 "TypeCode declaration failed\n"
-                                 ),
+                                 "TypeCode declaration failed\n"),
                                 -1);
             }
         }

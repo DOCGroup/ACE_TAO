@@ -18,10 +18,9 @@
 //
 // ============================================================================
 
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "be.h"
-
+#include "idl.h"
+#include "idl_extern.h"
+#include "be.h"
 #include "be_visitor_valuetype.h"
 
 ACE_RCSID(be_visitor_valuetype, ami_exception_holder_cs, "$Id$")
@@ -43,31 +42,34 @@ be_visitor_valuetype_ami_exception_holder_cs::~be_visitor_valuetype_ami_exceptio
 int
 be_visitor_valuetype_ami_exception_holder_cs::visit_valuetype (be_valuetype *node)
 {
-  TAO_OutStream *os; // output stream
+ TAO_OutStream *os = this->ctx_->stream ();
 
-  os = this->ctx_->stream ();
-
-  if (node->is_nested () &&
-      node->defined_in ()->scope_node_type () == AST_Decl::NT_module)
-    *os << "OBV_";
+  if (node->is_nested () 
+      && node->defined_in ()->scope_node_type () == AST_Decl::NT_module)
+    {
+      *os << "OBV_";
+    }
 
   *os << node->compute_name ("_tao_", "") << "::"
       << node->compute_local_name ("_tao_", "") << " () { }" << be_nl << be_nl;
 
-  if (node->is_nested () &&
-      node->defined_in ()->scope_node_type () == AST_Decl::NT_module)
-    *os << "OBV_";
+  if (node->is_nested () 
+      && node->defined_in ()->scope_node_type () == AST_Decl::NT_module)
+    {
+      *os << "OBV_";
+    }
 
   *os << node->compute_name ("_tao_", "") << "::~"
       << node->compute_local_name ("_tao_", "") << " () { }" << be_nl << be_nl;
 
-  // generate code for the elements of the interface
+  // Generate code for the elements of the interface
   if (this->visit_valuetype_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_ami_exception_holder_cs::"
                          "visit_valuetype - "
-                         "codegen for scope failed\n"), -1);
+                         "codegen for scope failed\n"), 
+                        -1);
     }
 
   return 0;
@@ -79,28 +81,16 @@ be_visitor_valuetype_ami_exception_holder_cs::visit_operation (be_operation *nod
 {
   be_visitor_context ctx (*this->ctx_);
   ctx.state (TAO_CodeGen::TAO_AMI_EXCEPTION_HOLDER_RAISE_OPERATION_CS);
-  be_visitor *visitor = tao_cg->make_visitor (&ctx);
+  be_visitor_operation_ami_exception_holder_operation_cs visitor (&ctx);
 
-  if (!visitor)
+  if (node->accept (&visitor) == -1)
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_valuetype_ami_exception_holder_ch::"
-                         "visit_operation - "
-                         "Bad visitor to argument list\n"),
-                        -1);
-    }
-
-  if (node->accept (visitor) == -1)
-    {
-      delete visitor;
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_ami_exception_holder_ch::"
                          "visit_operation - "
                          "codegen for argument list failed\n"),
                         -1);
     }
-
-  delete visitor;
 
   return 0;
 }

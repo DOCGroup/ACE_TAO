@@ -9,7 +9,7 @@
 //    be_string.cpp
 //
 // = DESCRIPTION
-//    Extension of class AST_Array that provides additional means for C++
+//    Extension of class AST_String that provides additional means for C++
 //    mapping.
 //
 // = AUTHOR
@@ -23,7 +23,9 @@
 #include "idl_extern.h"
 #include "be.h"
 
-ACE_RCSID(be, be_string, "$Id$")
+ACE_RCSID (be, 
+           be_string, 
+           "$Id$")
 
 be_string::be_string (void)
 {
@@ -31,28 +33,16 @@ be_string::be_string (void)
   this->size_type (be_decl::VARIABLE);
 }
 
-be_string::be_string (AST_Expression *v)
-  : AST_String (v),
-    AST_Decl (AST_Decl::NT_string,
-              new UTL_ScopedName (new Identifier ("string"),
-                                  0),
-              I_TRUE)
-{
-  // Always the case.
-  this->size_type (be_decl::VARIABLE);
-}
-
-be_string::be_string (AST_Expression *v,
-                      long wide)
-  : AST_String (v, wide),
-    AST_Decl (wide == (long) sizeof (char)
-                ? AST_Decl::NT_string
-                : AST_Decl::NT_wstring,
-              wide == (long) sizeof (char)
-                ? new UTL_ScopedName (new Identifier ("string"),
-                                      0)
-                : new UTL_ScopedName (new Identifier ("wstring"),
-                                      0),
+be_string::be_string (AST_Decl::NodeType nt,
+                      UTL_ScopedName *n,
+                      AST_Expression *v,
+                      long width)
+  : AST_String (nt,
+                n,
+                v,
+                width),
+    AST_Decl (nt,
+              n,
               I_TRUE)
 {
   // Always the case.
@@ -88,6 +78,13 @@ int
 be_string::accept (be_visitor *visitor)
 {
   return visitor->visit_string (this);
+}
+
+void
+be_string::destroy (void)
+{
+  this->be_type::destroy ();
+  this->AST_String::destroy ();
 }
 
 // Narrowing.

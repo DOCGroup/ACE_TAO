@@ -172,7 +172,6 @@ public:
   // e.g. the reply handler to the actual node.
 
 protected:
-
   char *local_name_;
 
   char *full_name_;
@@ -197,11 +196,7 @@ protected:
 
   Strategy_Kind strategy_type_;
   // The type of strategy
-
-
 };
-
-
 
 class be_interface_default_strategy
   : public be_interface_strategy

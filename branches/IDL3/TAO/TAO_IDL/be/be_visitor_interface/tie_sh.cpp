@@ -19,20 +19,23 @@
 //
 // ============================================================================
 
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "be.h"
-
+#include "idl.h"
+#include "idl_extern.h"
+#include "be.h"
 #include "be_visitor_interface.h"
 
-ACE_RCSID(be_visitor_interface, tie_sh, "$Id$")
+ACE_RCSID (be_visitor_interface, 
+           tie_sh, 
+           "$Id$")
 
 
 // ************************************************************
-// Interface visitor for server header
+// Interface visitor for server header.
 // ************************************************************
 
-be_visitor_interface_tie_sh::be_visitor_interface_tie_sh (be_visitor_context *ctx)
+be_visitor_interface_tie_sh::be_visitor_interface_tie_sh (
+    be_visitor_context *ctx
+  )
   : be_visitor_interface (ctx)
 {
 }
@@ -88,6 +91,9 @@ be_visitor_interface_tie_sh::visit_interface (be_interface *node)
   // Now generate the class definition.
   os->indent ();
 
+  *os << "// TAO_IDL - Generated from "
+      << __FILE__ << ":" << __LINE__ << be_nl << be_nl << be_nl;
+
   *os << "// TIE class: Refer to CORBA v2.2, Section 20.34.4" << be_nl;
   *os << "template <class T>" << be_nl;
   *os << "class " << be_global->skel_export_macro ()
@@ -121,10 +127,13 @@ be_visitor_interface_tie_sh::visit_interface (be_interface *node)
       << "ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
       << ");" << be_uidt << "\n";
 
-  if (node->traverse_inheritance_graph (
-                be_visitor_interface_tie_sh::method_helper,
-                os
-              ) == -1)
+  int status = 
+    node->traverse_inheritance_graph (
+              be_visitor_interface_tie_sh::method_helper,
+              os
+            );
+
+  if (status == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "be_visitor_interface_tie_sh_ss::"
@@ -134,6 +143,7 @@ be_visitor_interface_tie_sh::visit_interface (be_interface *node)
     }
 
   os->decr_indent (1);
+
   *os << "private:" << be_idt_nl
       << "T *ptr_;" << be_nl
       << "PortableServer::POA_var poa_;" << be_nl
@@ -148,23 +158,21 @@ be_visitor_interface_tie_sh::visit_interface (be_interface *node)
 
 int
 be_visitor_interface_tie_sh::method_helper (be_interface *,
-                                                                          be_interface *node,
-                                                                          TAO_OutStream *os)
+                                            be_interface *node,
+                                            TAO_OutStream *os)
 {
   be_visitor_context ctx;
   ctx.state (TAO_CodeGen::TAO_INTERFACE_TIE_SH);
-
   ctx.stream (os);
-  be_visitor* visitor = tao_cg->make_visitor (&ctx);
+  be_visitor_interface_tie_sh visitor (&ctx);
 
-  if (visitor == 0 || visitor->visit_scope (node) == -1)
+  if (visitor.visit_scope (node) == -1)
     {
-      delete visitor;
       ACE_ERROR_RETURN ((LM_ERROR,
                          "be_visitor_interface_tie_sh::"
-                         "method_helper\n"), -1);
+                         "method_helper\n"), 
+                        -1);
     }
 
-  delete visitor;
   return 0;
 }

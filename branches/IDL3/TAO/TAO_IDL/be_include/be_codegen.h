@@ -320,11 +320,6 @@ public:
       TAO_OPERATION_RETTYPE_IS,               // return type in client header op
       TAO_OPERATION_RETTYPE_OTHERS,           // ... in other cases
 
-      TAO_OPERATION_INVOKE_ARG_LIST,           // Generate the signature needed to invoke
-      // the operation given. The signature generated
-      // consists of the name of the arguments, without
-      // any type
-
       TAO_OPERATION_ARGLIST_CH,               // parameter list in op signature
       // ... for client header
       TAO_OPERATION_ARGLIST_SH,               // ... for server header
@@ -339,9 +334,6 @@ public:
       TAO_OPERATION_INTERCEPTORS_INFO_ARGLIST_SH,   // private member list list for request info
       TAO_OPERATION_INTERCEPTORS_INFO_ARGLIST_SS,   // arglist for request info obj instantiation
       TAO_OPERATION_INTERCEPTORS_ARGLIST_SS,  // private member list list for request info                                                                  // ... for server source
-
-      //    TAO_OPERATION_ARGLIST_PROXY_IMPL_CH,    // Proxy impl arg list generation
-      // in client header
 
       TAO_OPERATION_ARGLIST_PROXY_IMPL_XH,    // Proxy impl arg list generation
       // in client/server  header

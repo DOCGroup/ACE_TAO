@@ -205,7 +205,6 @@ protected:
 
   int indent_level_;
   // indentation level
-
 };
 
 #endif // if !defined

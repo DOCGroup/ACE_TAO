@@ -18,13 +18,13 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
-
+#include "be.h"
 #include "be_visitor_structure.h"
+#include "be_visitor_typecode/typecode_decl.h"
 
-ACE_RCSID(be_visitor_structure, structure_ch, "$Id$")
+ACE_RCSID (be_visitor_structure, 
+           structure_ch, 
+           "$Id$")
 
 
 // ******************************************************
@@ -111,20 +111,18 @@ int be_visitor_structure_ch::visit_structure (be_structure *node)
               << node->local_name () << "_out;" << be_nl << be_nl;
         }
 
-      if (!node->is_local ())
+      if (be_global->tc_support ())
         {
-          be_visitor *visitor;
           be_visitor_context ctx (*this->ctx_);
           ctx.state (TAO_CodeGen::TAO_TYPECODE_DECL);
-          visitor = tao_cg->make_visitor (&ctx);
+          be_visitor_typecode_decl visitor (&ctx);
 
-          if (!visitor || (node->accept (visitor) == -1))
+          if (node->accept (&visitor) == -1)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "(%N:%l) be_visitor_structure_ch::"
                                  "visit_structure - "
-                                 "TypeCode declaration failed\n"
-                                 ),
+                                 "TypeCode declaration failed\n"),
                                 -1);
             }
         }

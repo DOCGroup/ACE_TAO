@@ -19,21 +19,18 @@
 //    Modifications by Aniruddha Gokhale
 // ============================================================================
 
-#include	"be.h"
-
+#include "be.h"
 #include "be_visitor_sequence.h"
 
-ACE_RCSID(be_visitor_sequence, gen_bounded_obj_sequence_ci, "$Id$")
+ACE_RCSID (be_visitor_sequence, 
+           gen_bounded_obj_sequence_ci, 
+           "$Id$")
 
 int
 be_visitor_sequence_ci::gen_bounded_obj_sequence (be_sequence *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  be_type *bt;
-
-  // Retrieve the base type since we may need to do some code
-  // generation for the base type.
-  bt = be_type::narrow_from_decl (node->base_type ());
+  be_type *bt = be_type::narrow_from_decl (node->base_type ());
 
   if (!bt)
     {
@@ -105,14 +102,15 @@ be_visitor_sequence_ci::gen_bounded_obj_sequence (be_sequence *node)
 
   be_visitor_context ctx (*this->ctx_);
   ctx.state (TAO_CodeGen::TAO_SEQUENCE_BASE_CI);
-  be_visitor *visitor = tao_cg->make_visitor (&ctx);
+  be_visitor_sequence_base visitor (&ctx);
+
+  *os << be_nl << "// TAO_IDL - Generated from "
+      << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   // Branching in either compile time template instantiation
   // or manual template instatiation.
   os->gen_ifdef_AHETI();
-
   os->gen_ifdef_macro (class_name);
-
   os->indent ();
 
   // First generate the static methods since they are used by others. Since
@@ -120,7 +118,7 @@ be_visitor_sequence_ci::gen_bounded_obj_sequence (be_sequence *node)
   // some compilers give lots of warnings.
 
   // allocbuf
-  *os << "ACE_INLINE "; bt->accept (visitor);
+  *os << "ACE_INLINE "; bt->accept (&visitor);
   *os << " **" << be_nl;
   *os << full_class_name << "::allocbuf (CORBA::ULong /* length */) "
       << "// Allocate storage for a sequence.." << be_nl
@@ -129,7 +127,7 @@ be_visitor_sequence_ci::gen_bounded_obj_sequence (be_sequence *node)
   // The accept is here the first time used and if an
   // error occurs, it will occur here. Later no check
   // for errors will be done.
-  if (bt->accept (visitor) == -1)
+  if (bt->accept (&visitor) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_sequence_ci::"
@@ -142,7 +140,7 @@ be_visitor_sequence_ci::gen_bounded_obj_sequence (be_sequence *node)
       << be_nl
       << "ACE_NEW_RETURN (buf, ";
 
-  bt->accept (visitor);
+  bt->accept (&visitor);
 
   *os << "*[" << node->max_size () << "], 0);" << be_nl
       << be_nl
@@ -152,17 +150,21 @@ be_visitor_sequence_ci::gen_bounded_obj_sequence (be_sequence *node)
       << "buf[i] = ";
 
   int is_valuetype = 0;
-  {
-    be_interface *bf = be_interface::narrow_from_decl (pt);
-    if (bf != 0)
+  be_interface *bf = be_interface::narrow_from_decl (pt);
+
+  if (bf != 0)
+    {
       is_valuetype = bf->is_valuetype ();
-    else
-      {
-        be_interface_fwd *bff = be_interface_fwd::narrow_from_decl (pt);
-        if (bff != 0)
+    }
+  else
+    {
+      be_interface_fwd *bff = be_interface_fwd::narrow_from_decl (pt);
+
+      if (bff != 0)
+        {
           is_valuetype = bff->is_valuetype ();
-      }
-  }
+        }
+    }
 
   if (is_valuetype)
     {
@@ -170,7 +172,7 @@ be_visitor_sequence_ci::gen_bounded_obj_sequence (be_sequence *node)
     }
   else if (bt_is_defined)
     {
-      bt->accept (visitor);
+      bt->accept (&visitor);
 
       *os << "::_nil ();";
     }
@@ -188,7 +190,7 @@ be_visitor_sequence_ci::gen_bounded_obj_sequence (be_sequence *node)
   *os << "ACE_INLINE void" << be_nl
       << full_class_name << "::freebuf (";
 
-  bt->accept (visitor);
+  bt->accept (&visitor);
 
   *os << " **buffer)" << be_nl
       << "{" << be_idt_nl
@@ -206,14 +208,14 @@ be_visitor_sequence_ci::gen_bounded_obj_sequence (be_sequence *node)
     }
   else if (bt_is_defined)
     {
-      bt->accept (visitor);
+      bt->accept (&visitor);
 
       *os << "::_nil ())" << be_idt_nl
           << "{" << be_idt_nl
           << "CORBA::release (buffer[i]);" << be_nl
           << "buffer[i] = ";
 
-      bt->accept (visitor);
+      bt->accept (&visitor);
 
       *os << "::_nil ();" << be_uidt_nl;
     }
@@ -247,7 +249,7 @@ be_visitor_sequence_ci::gen_bounded_obj_sequence (be_sequence *node)
       << full_class_name << "::" << class_name
       << " (CORBA::ULong length," << be_idt_nl;
 
-  bt->accept (visitor);
+  bt->accept (&visitor);
 
   *os <<"* *value," << be_nl
       << "CORBA::Boolean release)" << be_uidt_nl
@@ -268,15 +270,15 @@ be_visitor_sequence_ci::gen_bounded_obj_sequence (be_sequence *node)
       << "if (rhs.buffer_ != 0)" << be_nl
       << "{" << be_idt_nl;
 
-  bt->accept(visitor);
+  bt->accept (&visitor);
 
   *os <<" **tmp1 = allocbuf (" << node->max_size () << ");" << be_nl;
 
-  bt->accept(visitor);
+  bt->accept(&visitor);
 
   *os <<" ** const tmp2 = ACE_reinterpret_cast (";
 
-  bt->accept (visitor);
+  bt->accept (&visitor);
 
   *os << "** ACE_CAST_CONST, rhs.buffer_);" << be_nl
       << "for (CORBA::ULong i = 0; i < rhs.length_; i++)" << be_idt_nl
@@ -291,16 +293,17 @@ be_visitor_sequence_ci::gen_bounded_obj_sequence (be_sequence *node)
   else
     {
       *os << "tmp1[i] = ";
-  if (bt_is_defined)
-    {
-      bt->accept (visitor);
 
-      *os << "::_duplicate (tmp2[i]);";
-    }
-  else
-    {
-      *os << "tao_" << pt->flat_name () << "_duplicate (tmp2[i]);";
-    }
+      if (bt_is_defined)
+        {
+          bt->accept (&visitor);
+
+          *os << "::_duplicate (tmp2[i]);";
+        }
+      else
+        {
+          *os << "tao_" << pt->flat_name () << "_duplicate (tmp2[i]);";
+        }
     }
 
   *os << be_uidt_nl
@@ -326,11 +329,11 @@ be_visitor_sequence_ci::gen_bounded_obj_sequence (be_sequence *node)
       << "if (this->release_ && this->buffer_ != 0)" << be_nl
       << "{" << be_idt_nl;
 
-  bt->accept (visitor);
+  bt->accept (&visitor);
 
   *os <<" **tmp = ACE_reinterpret_cast (";
 
-  bt->accept (visitor);
+  bt->accept (&visitor);
 
   *os << " **, this->buffer_);" << be_nl
       << be_nl
@@ -348,7 +351,7 @@ be_visitor_sequence_ci::gen_bounded_obj_sequence (be_sequence *node)
       *os << "CORBA::release (tmp[i]);" << be_nl
           << "tmp[i] = ";
 
-      bt->accept (visitor);
+      bt->accept (&visitor);
 
       *os << "::_nil ();";
     }
@@ -369,19 +372,19 @@ be_visitor_sequence_ci::gen_bounded_obj_sequence (be_sequence *node)
       << "TAO_Bounded_Base_Sequence::operator= (rhs);" << be_nl
       << be_nl;
 
-  bt->accept(visitor);
+  bt->accept (&visitor);
 
   *os <<" **tmp1 = ACE_reinterpret_cast (";
 
-  bt->accept (visitor);
+  bt->accept (&visitor);
 
   *os << " **, this->buffer_);" << be_nl;
 
-  bt->accept(visitor);
+  bt->accept (&visitor);
 
   *os <<" ** const tmp2 = ACE_reinterpret_cast (";
 
-  bt->accept (visitor);
+  bt->accept (&visitor);
 
   *os << " ** ACE_CAST_CONST, rhs.buffer_);" << be_nl
       << "for (CORBA::ULong i=0; i < rhs.length_; ++i)" << be_idt_nl
@@ -396,16 +399,17 @@ be_visitor_sequence_ci::gen_bounded_obj_sequence (be_sequence *node)
   else
     {
       *os << "tmp1[i] = ";
-  if (bt_is_defined)
-    {
-      bt->accept (visitor);
 
-      *os << "::_duplicate (tmp2[i]);";
-    }
-  else
-    {
-      *os << "tao_" << pt->flat_name () << "_duplicate (tmp2[i]);";
-    }
+      if (bt_is_defined)
+        {
+          bt->accept (&visitor);
+
+          *os << "::_duplicate (tmp2[i]);";
+        }
+      else
+        {
+          *os << "tao_" << pt->flat_name () << "_duplicate (tmp2[i]);";
+        }
     }
 
   *os << be_uidt_nl
@@ -430,9 +434,13 @@ be_visitor_sequence_ci::gen_bounded_obj_sequence (be_sequence *node)
   else
     {
       if (is_valuetype)
-        *os << "TAO_Valuetype_Manager<";
+        {
+          *os << "TAO_Valuetype_Manager<";
+        }
       else
-      *os << "ACE_INLINE TAO_Object_Manager<";
+        {
+          *os << "ACE_INLINE TAO_Object_Manager<";
+        }
     }
 
   *os << bt->name () << ","
@@ -442,11 +450,11 @@ be_visitor_sequence_ci::gen_bounded_obj_sequence (be_sequence *node)
       << "{" << be_idt_nl
       << "ACE_ASSERT (index < this->maximum_);" << be_nl;
 
-  bt->accept(visitor);
+  bt->accept (&visitor);
 
   *os <<" **const tmp = ACE_reinterpret_cast (";
 
-  bt->accept (visitor);
+  bt->accept (&visitor);
 
   *os << " ** ACE_CAST_CONST, this->buffer_);" << be_nl;
 
@@ -457,9 +465,13 @@ be_visitor_sequence_ci::gen_bounded_obj_sequence (be_sequence *node)
   else
     {
       if (is_valuetype)
+        {
         *os << "return TAO_Valuetype_Manager<";
+        }
       else
-      *os << "return TAO_Object_Manager<";
+        {
+          *os << "return TAO_Object_Manager<";
+        }
     }
 
   *os << bt->name () << ","
@@ -471,14 +483,14 @@ be_visitor_sequence_ci::gen_bounded_obj_sequence (be_sequence *node)
   // get_buffer
   *os << "ACE_INLINE ";
 
-  bt->accept(visitor);
+  bt->accept (&visitor);
 
   *os << " **" << be_nl;
   *os << full_class_name << "::get_buffer (CORBA::Boolean orphan)"
       << be_nl
       << "{" << be_idt_nl;
 
-  bt->accept(visitor);
+  bt->accept (&visitor);
 
   *os << " **result = 0;" << be_nl
       << "if (orphan == 0)" << be_nl
@@ -495,7 +507,7 @@ be_visitor_sequence_ci::gen_bounded_obj_sequence (be_sequence *node)
       << "{" << be_idt_nl
       << "result = ACE_reinterpret_cast (";
 
-  bt->accept (visitor);
+  bt->accept (&visitor);
 
   *os << "**, this->buffer_);" << be_uidt_nl
       << "}" << be_uidt_nl
@@ -509,7 +521,7 @@ be_visitor_sequence_ci::gen_bounded_obj_sequence (be_sequence *node)
       << "result = ACE_reinterpret_cast(";
 
 
-  bt->accept (visitor);
+  bt->accept (&visitor);
   *os << "**,this->buffer_);" << be_nl
       << "this->maximum_ = 0;" << be_nl
       << "this->length_ = 0;" << be_nl
@@ -524,14 +536,14 @@ be_visitor_sequence_ci::gen_bounded_obj_sequence (be_sequence *node)
   // get_buffer.
   *os << "ACE_INLINE const ";
 
-  bt->accept (visitor);
+  bt->accept (&visitor);
 
   *os << "* *" << be_nl
       << full_class_name << "::get_buffer (void) const" << be_nl
       << "{" << be_idt_nl
       << "return ACE_reinterpret_cast(const ";
 
-  bt->accept (visitor);
+  bt->accept (&visitor);
 
   *os << " ** ACE_CAST_CONST, this->buffer_);" << be_uidt_nl
       << "}" << be_nl
@@ -542,6 +554,5 @@ be_visitor_sequence_ci::gen_bounded_obj_sequence (be_sequence *node)
   // Generate #endif for AHETI.
   os->gen_endif_AHETI();
 
-  delete visitor;
   return 0;
 }

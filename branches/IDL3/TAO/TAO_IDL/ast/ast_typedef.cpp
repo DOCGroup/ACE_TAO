@@ -143,6 +143,11 @@ AST_Typedef::ast_accept (ast_visitor *visitor)
   return visitor->visit_typedef (this);
 }
 
+void
+AST_Typedef::destroy (void)
+{
+}
+
 // Data accessors.
 
 AST_Type *

@@ -71,7 +71,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include	"idl.h"
 #include	"idl_extern.h"
-
 #include	"fe_private.h"
 
 ACE_RCSID(fe, fe_private, "$Id$")

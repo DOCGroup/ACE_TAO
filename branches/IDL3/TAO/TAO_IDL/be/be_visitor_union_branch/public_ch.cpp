@@ -18,32 +18,34 @@
 //
 // ============================================================================
 
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "be.h"
-
+#include "be.h"
 #include "be_visitor_union_branch.h"
+#include "be_visitor_array.h"
+#include "be_visitor_enum.h"
+#include "be_visitor_sequence.h"
+#include "be_visitor_structure.h"
+#include "be_visitor_union.h"
 
-ACE_RCSID(be_visitor_union_branch, public_ch, "$Id$")
+ACE_RCSID (be_visitor_union_branch, 
+           public_ch, 
+           "$Id$")
 
 
 // **********************************************
-//  visitor for union_branch in the client header file
+//  Visitor for union_branch in the client header file.
 // **********************************************
 
-// Constructor.
-be_visitor_union_branch_public_ch::be_visitor_union_branch_public_ch
-(be_visitor_context *ctx)
+be_visitor_union_branch_public_ch::be_visitor_union_branch_public_ch (
+    be_visitor_context *ctx
+  )
   : be_visitor_decl (ctx)
 {
 }
 
-// Destructor.
 be_visitor_union_branch_public_ch::~be_visitor_union_branch_public_ch (void)
 {
 }
 
-// Visit the union_branch node.
 int
 be_visitor_union_branch_public_ch::visit_union_branch (be_union_branch *node)
 {
@@ -66,8 +68,7 @@ be_visitor_union_branch_public_ch::visit_union_branch (be_union_branch *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_public_ch::"
                          "visit_union_branch - "
-                         "codegen for union_branch type failed\n"
-                         ),
+                         "codegen for union_branch type failed\n"),
                         -1);
     }
 
@@ -76,7 +77,6 @@ be_visitor_union_branch_public_ch::visit_union_branch (be_union_branch *node)
 
 // Visit operations on all possible data types  that a union_branch can be.
 
-// Visit array type.
 int
 be_visitor_union_branch_public_ch::visit_array (be_array *node)
 {
@@ -99,8 +99,7 @@ be_visitor_union_branch_public_ch::visit_array (be_array *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_public_ch::"
                          "visit_array - "
-                         "bad context information\n"
-                         ),
+                         "bad context information\n"),
                         -1);
     }
 
@@ -112,26 +111,12 @@ be_visitor_union_branch_public_ch::visit_array (be_array *node)
     {
       // This is the case of an anonymous array inside a union.
 
-      // Instantiate a visitor context with a copy of our context. This info
-      // will be modified based on what type of node we are visiting.
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node);
-
-      // First generate the array declaration.
       ctx.state (TAO_CodeGen::TAO_ARRAY_CH);
-      be_visitor *visitor = tao_cg->make_visitor (&ctx);
+      be_visitor_array_ch visitor (&ctx);
 
-      if (!visitor)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_union_branch_public_ch::"
-                             "visit_array - "
-                             "Bad visitor\n"
-                             ),
-                            -1);
-        }
-
-      if (node->accept (visitor) == -1)
+      if (node->accept (&visitor) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_union_branch_public_ch::"
@@ -140,8 +125,6 @@ be_visitor_union_branch_public_ch::visit_array (be_array *node)
                              ),
                             -1);
         }
-
-      delete visitor;
 
       // Now use this array as a "type" for the subsequent declarator
       // the set method.
@@ -166,7 +149,6 @@ be_visitor_union_branch_public_ch::visit_array (be_array *node)
   return 0;
 }
 
-// Visit enum type.
 int
 be_visitor_union_branch_public_ch::visit_enum (be_enum *node)
 {
@@ -189,47 +171,29 @@ be_visitor_union_branch_public_ch::visit_enum (be_enum *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_public_ch::"
                          "visit_enum - "
-                         "bad context information\n"
-                         ),
+                         "bad context information\n"),
                         -1);
     }
 
   TAO_OutStream *os = this->ctx_->stream ();
 
   // Not a typedef and bt is defined inside the union.
-  if (bt->node_type () != AST_Decl::NT_typedef // not a typedef
-      && bt->is_child (bu)) // bt is defined inside the union
+  if (bt->node_type () != AST_Decl::NT_typedef
+      && bt->is_child (bu))
     {
-      // Instantiate a visitor context with a copy of our context. This info
-      // will be modified based on what type of node we are visiting.
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node);
-
-      // First generate the enum declaration.
       ctx.state (TAO_CodeGen::TAO_ENUM_CH);
-      be_visitor *visitor = tao_cg->make_visitor (&ctx);
+      be_visitor_enum_ch visitor (&ctx);
 
-      if (!visitor)
+     if (node->accept (&visitor) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_union_branch_public_ch::"
                              "visit_enum - "
-                             "Bad visitor\n"
-                             ),
+                             "codegen failed\n"),
                             -1);
         }
-
-      if (node->accept (visitor) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_union_branch_public_ch::"
-                             "visit_enum - "
-                             "codegen failed\n"
-                             ),
-                            -1);
-        }
-
-      delete visitor;
     }
 
   // Now use this enum as a "type" for the subsequent declarator
@@ -244,7 +208,6 @@ be_visitor_union_branch_public_ch::visit_enum (be_enum *node)
   return 0;
 }
 
-// Visit interface type.
 int
 be_visitor_union_branch_public_ch::visit_interface (be_interface *node)
 {
@@ -267,8 +230,7 @@ be_visitor_union_branch_public_ch::visit_interface (be_interface *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_public_ch::"
                          "visit_interface - "
-                         "bad context information\n"
-                         ),
+                         "bad context information\n"),
                         -1);
     }
 
@@ -281,10 +243,10 @@ be_visitor_union_branch_public_ch::visit_interface (be_interface *node)
   // Get method.
   *os << bt->nested_type_name (bu, "_ptr") << " " << ub->local_name ()
       << " (void) const;" << be_nl << be_nl;
+
   return 0;
 }
 
-// Visit interface forward type.
 int
 be_visitor_union_branch_public_ch::visit_interface_fwd (be_interface_fwd *node)
 {
@@ -307,8 +269,7 @@ be_visitor_union_branch_public_ch::visit_interface_fwd (be_interface_fwd *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_public_ch::"
                          "visit_interface_fwd - "
-                         "bad context information\n"
-                         ),
+                         "bad context information\n"),
                         -1);
     }
 
@@ -325,7 +286,6 @@ be_visitor_union_branch_public_ch::visit_interface_fwd (be_interface_fwd *node)
   return 0;
 }
 
-// Visit valuetype type.
 int
 be_visitor_union_branch_public_ch::visit_valuetype (be_valuetype *node)
 {
@@ -348,8 +308,7 @@ be_visitor_union_branch_public_ch::visit_valuetype (be_valuetype *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_public_ch::"
                          "visit_valuetype - "
-                         "bad context information\n"
-                         ),
+                         "bad context information\n"),
                         -1);
     }
 
@@ -366,7 +325,6 @@ be_visitor_union_branch_public_ch::visit_valuetype (be_valuetype *node)
   return 0;
 }
 
-// Visit valuetype forward type.
 int
 be_visitor_union_branch_public_ch::visit_valuetype_fwd (be_valuetype_fwd *node)
 {
@@ -389,8 +347,7 @@ be_visitor_union_branch_public_ch::visit_valuetype_fwd (be_valuetype_fwd *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_public_ch::"
                          "visit_valuetype_fwd - "
-                         "bad context information\n"
-                         ),
+                         "bad context information\n"),
                         -1);
     }
 
@@ -407,7 +364,6 @@ be_visitor_union_branch_public_ch::visit_valuetype_fwd (be_valuetype_fwd *node)
   return 0;
 }
 
-// Visit predefined type.
 int
 be_visitor_union_branch_public_ch::visit_predefined_type (be_predefined_type *node)
 {
@@ -430,8 +386,7 @@ be_visitor_union_branch_public_ch::visit_predefined_type (be_predefined_type *no
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_public_ch::"
                          "visit_predefined_type - "
-                         "bad context information\n"
-                         ),
+                         "bad context information\n"),
                         -1);
     }
 
@@ -465,7 +420,6 @@ be_visitor_union_branch_public_ch::visit_predefined_type (be_predefined_type *no
   return 0;
 }
 
-// visit sequence type
 int
 be_visitor_union_branch_public_ch::visit_sequence (be_sequence *node)
 {
@@ -488,8 +442,7 @@ be_visitor_union_branch_public_ch::visit_sequence (be_sequence *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_public_ch::"
                          "visit_sequence - "
-                         "bad context information\n"
-                         ),
+                         "bad context information\n"),
                         -1);
     }
 
@@ -499,36 +452,19 @@ be_visitor_union_branch_public_ch::visit_sequence (be_sequence *node)
   if (bt->node_type () != AST_Decl::NT_typedef
       && bt->is_child (bu))
     {
-      // Instantiate a visitor context with a copy of our context. This info
-      // will be modified based on what type of node we are visiting.
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node);
-
-      // First generate the sequence declaration.
       ctx.state (TAO_CodeGen::TAO_SEQUENCE_CH);
-      be_visitor *visitor = tao_cg->make_visitor (&ctx);
+      be_visitor_sequence_ch visitor (&ctx);
 
-      if (!visitor)
+      if (node->accept (&visitor) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_union_branch_public_ch::"
                              "visit_sequence - "
-                             "Bad visitor\n"
-                             ),
+                             "codegen failed\n"),
                             -1);
         }
-
-      if (node->accept (visitor) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_union_branch_public_ch::"
-                             "visit_sequence - "
-                             "codegen failed\n"
-                             ),
-                            -1);
-        }
-
-      delete visitor;
 
       // Generate the anonymous sequence member typedef
       // but we must protect against certain versions of g++.
@@ -553,7 +489,6 @@ be_visitor_union_branch_public_ch::visit_sequence (be_sequence *node)
   return 0;
 }
 
-// Visit string type.
 int
 be_visitor_union_branch_public_ch::visit_string (be_string *node)
 {
@@ -565,8 +500,7 @@ be_visitor_union_branch_public_ch::visit_string (be_string *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_public_ch::"
                          "visit_string - "
-                         "bad context information\n"
-                         ),
+                         "bad context information\n"),
                         -1);
     }
 
@@ -597,7 +531,6 @@ be_visitor_union_branch_public_ch::visit_string (be_string *node)
   return 0;
 }
 
-// Visit structure type.
 int
 be_visitor_union_branch_public_ch::visit_structure (be_structure *node)
 {
@@ -620,8 +553,7 @@ be_visitor_union_branch_public_ch::visit_structure (be_structure *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_public_ch::"
                          "visit_structure - "
-                         "bad context information\n"
-                         ),
+                         "bad context information\n"),
                         -1);
     }
 
@@ -631,37 +563,19 @@ be_visitor_union_branch_public_ch::visit_structure (be_structure *node)
   if (bt->node_type () != AST_Decl::NT_typedef
       && bt->is_child (bu))
     {
-      // Instantiate a visitor context with a copy of our context. This info
-      // will be modified based on what type of node we are visiting.
       be_visitor_context ctx (*this->ctx_);
-      ctx.node (node); // set the node to be the node being visited. The scope
-                       // is still the same
-
-      // First generate the sequence declaration.
+      ctx.node (node);
       ctx.state (TAO_CodeGen::TAO_STRUCT_CH);
-      be_visitor *visitor = tao_cg->make_visitor (&ctx);
+      be_visitor_structure_ch visitor (&ctx);
 
-      if (!visitor)
+      if (node->accept (&visitor) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_union_branch_public_ch::"
                              "visit_structure - "
-                             "Bad visitor\n"
-                             ),
+                             "codegen failed\n"),
                             -1);
         }
-
-      if (node->accept (visitor) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_union_branch_public_ch::"
-                             "visit_structure - "
-                             "codegen failed\n"
-                             ),
-                            -1);
-        }
-
-      delete visitor;
     }
 
   *os << "void " << ub->local_name () << " (const "
@@ -675,7 +589,6 @@ be_visitor_union_branch_public_ch::visit_structure (be_structure *node)
   return 0;
 }
 
-// Visit typedefed type.
 int
 be_visitor_union_branch_public_ch::visit_typedef (be_typedef *node)
 {
@@ -689,8 +602,7 @@ be_visitor_union_branch_public_ch::visit_typedef (be_typedef *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_spec_ch::"
                          "visit_typedef - "
-                         "Bad primitive type\n"
-                         ),
+                         "Bad primitive type\n"),
                         -1);
     }
 
@@ -698,7 +610,6 @@ be_visitor_union_branch_public_ch::visit_typedef (be_typedef *node)
   return 0;
 }
 
-// Visit union type.
 int
 be_visitor_union_branch_public_ch::visit_union (be_union *node)
 {
@@ -732,36 +643,19 @@ be_visitor_union_branch_public_ch::visit_union (be_union *node)
   if (bt->node_type () != AST_Decl::NT_typedef
       && bt->is_child (bu))
     {
-      // Instantiate a visitor context with a copy of our context. This info
-      // will be modified based on what type of node we are visiting.
       be_visitor_context ctx (*this->ctx_);
       ctx.node (node);
-
-      // First generate the union declaration.
       ctx.state (TAO_CodeGen::TAO_UNION_CH);
-      be_visitor *visitor = tao_cg->make_visitor (&ctx);
+      be_visitor_union_ch visitor (&ctx);
 
-      if (!visitor)
+      if (node->accept (&visitor) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_union_branch_public_ch::"
                              "visit_union - "
-                             "Bad visitor\n"
-                             ),
+                             "codegen failed\n"),
                             -1);
         }
-
-      if (node->accept (visitor) == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_union_branch_public_ch::"
-                             "visit_union - "
-                             "codegen failed\n"
-                             ),
-                            -1);
-        }
-
-      delete visitor;
     }
 
   *os << "void " << ub->local_name () << " (const "

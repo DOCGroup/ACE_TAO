@@ -1059,8 +1059,7 @@ be_interface::gen_operation_table (const char *flat_name,
     case BE_GlobalData::TAO_DYNAMIC_HASH:
       {
         // Init the outstream appropriately.
-        TAO_OutStream *os =
-          this->strategy_->get_out_stream ();
+        TAO_OutStream *os = this->strategy_->get_out_stream ();
 
         // Start from current indentation level.
         os->indent ();
@@ -1068,10 +1067,12 @@ be_interface::gen_operation_table (const char *flat_name,
         // Start the table generation.
         *os << "static const TAO_operation_db_entry " << flat_name <<
           "_operations [] = {\n";
+
         os->incr_indent (0);
 
         // Traverse the graph.
         TAO_IDL_Gen_OpTable_Worker worker (skeleton_class_name);
+
         if (this->traverse_inheritance_graph (worker, os) == -1)
           {
             ACE_ERROR_RETURN ((LM_ERROR,
@@ -1081,23 +1082,29 @@ be_interface::gen_operation_table (const char *flat_name,
 
         // Generate the skeleton for the is_a method.
         os->indent ();
+
         *os << "{\"_is_a\", &" << skeleton_class_name
             << "::_is_a_skel},\n";
+
         this->skel_count_++;
 
         os->indent ();
+
         *os << "{\"_non_existent\", &" << skeleton_class_name
             << "::_non_existent_skel},\n";
+
         this->skel_count_++;
 
         os->indent ();
+
         *os << "{\"_interface\", &" << skeleton_class_name
             << "::_interface_skel}\n";
+
         this->skel_count_++;
 
         os->decr_indent ();
-        *os << "};\n" << be_nl;
 
+        *os << "};\n" << be_nl;
         *os << "static const CORBA::Long _tao_" << flat_name
             << "_optable_size = sizeof (ACE_Hash_Map_Entry<const char *,"
             << " TAO_Skeleton>) * (" << (3 * this->skel_count_)
@@ -1130,9 +1137,10 @@ be_interface::gen_operation_table (const char *flat_name,
         // Temp file name.
         char *temp_file = 0;
         ACE_NEW_RETURN (temp_file,
-                        char [ACE_OS::strlen (idl_global->temp_dir ()) +
-                             ACE_OS::strlen (flat_name) +
-                             ACE_OS::strlen (".gperf") + 1],
+                        char [ACE_OS::strlen (idl_global->temp_dir ())
+                              + ACE_OS::strlen (flat_name)
+                              + ACE_OS::strlen (".gperf") 
+                              + 1],
                         -1);
 
         ACE_OS::sprintf (temp_file,
@@ -1158,8 +1166,7 @@ be_interface::gen_operation_table (const char *flat_name,
         // interface.
 
         // Retrieve the singleton instance to the outstream factory.
-        TAO_OutStream_Factory *factory =
-          TAO_OUTSTREAM_FACTORY::instance ();
+        TAO_OutStream_Factory *factory = TAO_OUTSTREAM_FACTORY::instance ();
 
         // Get a new instance for the temp file.
         TAO_OutStream *os = factory->make_outstream ();
@@ -1546,12 +1553,14 @@ be_interface::traverse_inheritance_graph (TAO_IDL_Inheritance_Hierarchy_Worker &
               be_interface **temp;
 
               (void) q_iter.next (temp);
+
               if (!ACE_OS::strcmp (parent->full_name (),
                                    (*temp)->full_name ()))
                 {
                   // We exist in this queue and cannot be inserted.
                   found = 1;
                 }
+
               if (found)
                 {
                   break;
@@ -2292,8 +2301,9 @@ void
 be_interface::destroy (void)
 {
   // Call the destroy methods of our base classes.
-  be_scope::destroy ();
-  be_type::destroy ();
+  this->AST_Interface::destroy ();
+  this->be_scope::destroy ();
+  this->be_type::destroy ();
 }
 
 int

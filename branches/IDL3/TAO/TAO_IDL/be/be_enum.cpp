@@ -49,8 +49,10 @@ void
 be_enum::destroy (void)
 {
   // Call the destroy methods of our base classes.
-  be_scope::destroy ();
-//  be_type::destroy ();
+  // No need to call be_scope::destroy(). It has no
+  // allocated members, and AST_Enum::destroy() will
+  // call UTL_Scope::destroy().
+  this->AST_Enum::destroy ();
 }
 
 int

@@ -92,6 +92,9 @@ public:
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
 
+  // Cleanup.
+  virtual void destroy ();
+
 private:
   friend class FE_Declarator;
   friend int tao_yyparse (void);

@@ -26,53 +26,79 @@ ACE_RCSID(be, be_global, "$Id$")
 TAO_IDL_BE_Export BE_GlobalData *be_global = 0;
 
 BE_GlobalData::BE_GlobalData (void)
-    : changing_standard_include_files_ (1),
-      skel_export_macro_ (0),
-      skel_export_include_ (0),
-      stub_export_macro_ (0),
-      stub_export_include_ (0),
-      pch_include_ (0),
-      pre_include_ (0),
-      post_include_ (0),
-      client_hdr_ending_ (ACE::strnew ("C.h")),
-      client_stub_ending_ (ACE::strnew ("C.cpp")),
-      client_inline_ending_ (ACE::strnew ("C.i")),
-      server_hdr_ending_ (ACE::strnew ("S.h")),
-      implementation_hdr_ending_ (ACE::strnew ("I.h")),
-      implementation_skel_ending_ (ACE::strnew ("I.cpp")),
-      impl_class_prefix_ (ACE::strnew ("")),
-      impl_class_suffix_ (ACE::strnew ("_i")),
-      server_template_hdr_ending_ (ACE::strnew ("S_T.h")),
-      server_skeleton_ending_ (ACE::strnew ("S.cpp")),
-      server_template_skeleton_ending_ (ACE::strnew ("S_T.cpp")),
-      server_inline_ending_ (ACE::strnew ("S.i")),
-      server_template_inline_ending_ (ACE::strnew ("S_T.i")),
-      output_dir_ (0),
-      any_support_ (I_TRUE),
-      tc_support_ (I_TRUE),
-      obv_opt_accessor_ (0),
-      gen_impl_files_ (I_FALSE),
-      gen_copy_ctor_ (I_FALSE),
-      gen_assign_op_ (I_FALSE),
-      gen_thru_poa_collocation_ (I_TRUE), // Default is thru_poa.
-      gen_direct_collocation_ (I_FALSE),
+  : changing_standard_include_files_ (1),
+    skel_export_macro_ (0),
+    skel_export_include_ (0),
+    stub_export_macro_ (0),
+    stub_export_include_ (0),
+    pch_include_ (0),
+    pre_include_ (0),
+    post_include_ (0),
+    client_hdr_ending_ (ACE::strnew ("C.h")),
+    client_stub_ending_ (ACE::strnew ("C.cpp")),
+    client_inline_ending_ (ACE::strnew ("C.i")),
+    server_hdr_ending_ (ACE::strnew ("S.h")),
+    implementation_hdr_ending_ (ACE::strnew ("I.h")),
+    implementation_skel_ending_ (ACE::strnew ("I.cpp")),
+    impl_class_prefix_ (ACE::strnew ("")),
+    impl_class_suffix_ (ACE::strnew ("_i")),
+    server_template_hdr_ending_ (ACE::strnew ("S_T.h")),
+    server_skeleton_ending_ (ACE::strnew ("S.cpp")),
+    server_template_skeleton_ending_ (ACE::strnew ("S_T.cpp")),
+    server_inline_ending_ (ACE::strnew ("S.i")),
+    server_template_inline_ending_ (ACE::strnew ("S_T.i")),
+    output_dir_ (0),
+    any_support_ (I_TRUE),
+    tc_support_ (I_TRUE),
+    obv_opt_accessor_ (0),
+    gen_impl_files_ (I_FALSE),
+    gen_copy_ctor_ (I_FALSE),
+    gen_assign_op_ (I_FALSE),
+    gen_thru_poa_collocation_ (I_TRUE), // Default is thru_poa.
+    gen_direct_collocation_ (I_FALSE),
 #ifdef ACE_HAS_EXCEPTIONS
-      exception_support_ (I_TRUE),
+    exception_support_ (I_TRUE),
 #else
-      exception_support_ (I_FALSE),
+    exception_support_ (I_FALSE),
 #endif /* ACE_HAS_EXCEPTIONS */
-      use_raw_throw_ (I_FALSE),
-      opt_tc_ (I_FALSE),
-      ami_call_back_ (I_FALSE),
-      gen_amh_classes_ (I_FALSE),
-      gen_tie_classes_ (I_TRUE),
-      gen_smart_proxies_ (I_FALSE),
-      lookup_strategy_ (TAO_PERFECT_HASH)
+    use_raw_throw_ (I_FALSE),
+    opt_tc_ (I_FALSE),
+    ami_call_back_ (I_FALSE),
+    gen_amh_classes_ (I_FALSE),
+    gen_tie_classes_ (I_TRUE),
+    gen_smart_proxies_ (I_FALSE),
+    lookup_strategy_ (TAO_PERFECT_HASH)
 {
 }
 
 BE_GlobalData::~BE_GlobalData (void)
 {
+  delete this->client_hdr_ending_;
+  this->client_hdr_ending_ = 0;
+  delete this->client_stub_ending_;
+  this->client_stub_ending_ = 0;
+  delete this->client_inline_ending_;
+  this->client_inline_ending_ = 0;
+  delete this->server_hdr_ending_;
+  this->server_hdr_ending_ = 0;
+  delete this->implementation_hdr_ending_;
+  this->implementation_hdr_ending_ = 0;
+  delete this->implementation_skel_ending_;
+  this->implementation_skel_ending_ = 0;
+  delete this->impl_class_prefix_;
+  this->impl_class_prefix_ = 0;
+  delete this->impl_class_suffix_;
+  this->impl_class_suffix_ = 0;
+  delete this->server_template_hdr_ending_;
+  this->server_template_hdr_ending_ = 0;
+  delete this->server_skeleton_ending_;
+  this->server_skeleton_ending_ = 0;
+  delete this->server_template_skeleton_ending_;
+  this->server_template_skeleton_ending_ = 0;
+  delete this->server_inline_ending_;
+  this->server_inline_ending_ = 0;
+  delete this->server_template_inline_ending_;
+  this->server_template_inline_ending_ = 0;
 }
 
 // To switch between changing or non-changing standard include files

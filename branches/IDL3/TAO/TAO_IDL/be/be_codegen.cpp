@@ -57,6 +57,11 @@ TAO_CodeGen::~TAO_CodeGen (void)
   delete this->client_inline_;
   delete this->server_inline_;
   delete this->server_template_inline_;
+#if !defined (linux) && !defined (__QNX__)
+  // This causes a seg fault on Linux RH 5.1.  Let it leak . . .
+  delete this->gperf_input_stream_;
+#endif /* ! linux */
+  delete [] this->gperf_input_filename_;
   this->curr_os_ = 0;
   //  delete this->visitor_factory_;
 }
@@ -175,11 +180,11 @@ TAO_CodeGen::start_client_header (const char *fname)
         {
           // Include Messaging skeleton file.
           this->gen_standard_include (this->client_header_,
-                                      "tao/Messaging.h");
+                                      "tao/Messaging/Messaging.h");
 
           // Including Asynch Invocation file.
           this->gen_standard_include (this->client_header_,
-                                      "tao/Asynch_Invocation.h");
+                                      "tao/Messaging/Twoway_Asynch_Invocation.h");
         }
 
       // Include the smart proxy base class if smart proxies are enabled.
@@ -430,9 +435,9 @@ TAO_CodeGen::start_server_header (const char *fname)
         {
           // Include Messaging skeleton file.
           this->gen_standard_include (this->server_header_,
-                                      "tao/PortableServer/MessagingS.h");
+                                      "tao/Messaging/MessagingS.h");
           this->gen_standard_include (this->server_header_,
-                                      "tao/Asynch_Invocation.h");
+                                      "tao/Messaging/Twoway_Asynch_Invocation.h");
         }
 
       // We must include all the skeleton headers corresponding to
@@ -1166,8 +1171,8 @@ TAO_CodeGen::gperf_input_stream (void)
 void
 TAO_CodeGen::gperf_input_filename (char *filename)
 {
-  delete  [] this->gperf_input_filename_;
-  this->gperf_input_filename_ = ACE::strnew (filename);
+  delete [] this->gperf_input_filename_;
+  this->gperf_input_filename_ = filename;
 }
 
 char *

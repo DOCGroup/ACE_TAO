@@ -88,10 +88,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // and to populate it with nodes for the predefined types
 
 TAO_IDL_FE_Export void
-FE_init_stage1 (void);       // Initialize stage 1
-
-TAO_IDL_FE_Export void
-FE_init_stage2 (void);       // Initialize stage 2
+FE_init (void);       // Initialize FE
 
 // Interface to Yacc parser
 
@@ -107,15 +104,11 @@ FE_set_yyin (File *);    // Set yyin
 
 class UTL_Error;
 class UTL_Indenter;
-class UTL_String;
 
 TAO_IDL_FE_Export UTL_Error *
 FE_new_UTL_Error (void);
 
 TAO_IDL_FE_Export UTL_Indenter *
 FE_new_UTL_Indenter (void);
-
-TAO_IDL_FE_Export UTL_String *
-FE_new_UTL_String (char *);
 
 #endif           // _FE_EXTERN_FE_EXTERN_HH

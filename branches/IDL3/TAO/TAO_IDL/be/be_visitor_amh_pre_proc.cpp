@@ -266,7 +266,7 @@ be_visitor_amh_pre_proc::add_exception_reply (be_operation *node,
                                               be_interface *response_handler,
                                               be_valuetype *exception_holder)
 {
-  Identifier *id = 0;
+ Identifier *id = 0;
   UTL_ScopedName *sn = 0;
 
   ACE_NEW_RETURN (id,
@@ -677,7 +677,7 @@ be_visitor_amh_pre_proc::create_exception_holder (be_interface *node)
   AST_Interface **p_intf = 0;
 #endif
 
-  UTL_ScopedName *excep_holder_name =
+ UTL_ScopedName *excep_holder_name =
     node->compute_name ("AMH_", "ExceptionHolder");
 
   be_valuetype *excep_holder = 0;

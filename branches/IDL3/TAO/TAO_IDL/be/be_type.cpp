@@ -522,9 +522,12 @@ be_type::destroy (void)
 
   if (this->nested_type_name_ != 0)
     {
-      delete this->nested_type_name_;
+      delete [] this->nested_type_name_;
       this->nested_type_name_ = 0;
     }
+
+  this->AST_Type::destroy ();
+  this->be_decl::destroy ();
 }
 
 int

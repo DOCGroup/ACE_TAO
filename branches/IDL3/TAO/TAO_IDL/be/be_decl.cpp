@@ -269,8 +269,6 @@ be_decl::compute_flat_name (void)
     }
 }
 
-
-
 void
 be_decl::compute_flat_name  (const char *prefix,
                              const char *suffix,
@@ -341,6 +339,8 @@ be_decl::destroy (void)
       delete [] this->flat_name_;
       this->flat_name_ = 0;
     }
+
+  this->AST_Decl::destroy ();
 }
 
 idl_bool

@@ -182,6 +182,12 @@ AST_Root::ast_accept (ast_visitor *visitor)
   return visitor->visit_root (this);
 }
 
+void
+AST_Root::destroy ()
+{
+  this->AST_Decl::destroy ();
+}
+
 // Narrowing methods.
 IMPL_NARROW_METHODS1(AST_Root, AST_Module)
 IMPL_NARROW_FROM_DECL(AST_Root)

@@ -19,20 +19,23 @@
 //
 // ============================================================================
 
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "be.h"
-
+#include "idl.h"
+#include "idl_extern.h"
+#include "be.h"
 #include "be_visitor_operation.h"
 
-ACE_RCSID(be_visitor_operation, operation_ami_ch, "$Id$")
+ACE_RCSID (be_visitor_operation, 
+           operation_ami_ch, 
+           "$Id$")
 
 
 // ******************************************************
 // Visitor for generating AMI stub for "operation" in client header.
 // ******************************************************
 
-be_visitor_operation_ami_ch::be_visitor_operation_ami_ch (be_visitor_context *ctx)
+be_visitor_operation_ami_ch::be_visitor_operation_ami_ch (
+    be_visitor_context *ctx
+  )
   : be_visitor_operation (ctx)
 {
 }
@@ -86,30 +89,16 @@ be_visitor_operation_ami_ch::visit_operation (be_operation *node)
   //         parameter listing.
   be_visitor_context ctx (*this->ctx_);
   ctx.state (TAO_CodeGen::TAO_OPERATION_ARGLIST_CH);
-  be_visitor *visitor = tao_cg->make_visitor (&ctx);
+  be_visitor_operation_arglist visitor (&ctx);
 
-  if (!visitor)
+  if (node->arguments ()->accept (&visitor) == -1)
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_operation_ami_ch::"
-                         "visit_operation - "
-                         "Bad visitor to return type\n"),
-                        -1);
-    }
-
-  if (node->arguments ()->accept (visitor) == -1)
-    {
-      delete visitor;
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_operation_ami_ch::"
                          "visit_operation - "
                          "codegen for argument list failed\n"),
                         -1);
     }
-
-  delete visitor;
-
-//  *os << be_nl;
 
   return 0;
 }

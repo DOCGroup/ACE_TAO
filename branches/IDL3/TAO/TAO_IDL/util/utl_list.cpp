@@ -88,8 +88,6 @@ UTL_List::UTL_List (UTL_List *c)
 // Destructor
 UTL_List::~UTL_List (void)
 {
-//  delete this->pd_cdr_data;
-//  this->pd_cdr_data = 0;
 }
 
 // Private operations
@@ -98,56 +96,88 @@ UTL_List::~UTL_List (void)
 long
 UTL_List::list_length (long n)
 {
-  if (pd_cdr_data == NULL)
-    return n;
+  if (this->pd_cdr_data == 0)
+    {
+      return n;
+    }
   else
-    return pd_cdr_data->list_length (n+1);
+    {
+      return this->pd_cdr_data->list_length (n + 1);
+    }
 }
 
 // Public operations
 
-// Smash last cdr with l
+// Smash last cdr with l.
 void
 UTL_List::nconc (UTL_List *l)
 {
-  if (pd_cdr_data == NULL)
-    pd_cdr_data = l;
+  if (this->pd_cdr_data == 0)
+    {
+      this->pd_cdr_data = l;
+    }
   else
-    pd_cdr_data->nconc (l);
+    {
+      this->pd_cdr_data->nconc (l);
+    }
 }
 
-// Override this operation to copy lists of other types
+// Override this operation to copy lists of other types.
 UTL_List *
-UTL_List::copy ()
+UTL_List::copy (void)
 {
-  if (pd_cdr_data == NULL)
-    return new UTL_List (NULL);
+  UTL_List *retval = 0;
 
-  return new UTL_List (pd_cdr_data->copy ());
+  if (this->pd_cdr_data == 0)
+    {
+      ACE_NEW_RETURN (retval,
+                      UTL_List (0),
+                      0);
+    }
+  else
+    {
+      ACE_NEW_RETURN (retval,
+                      UTL_List (this->pd_cdr_data->copy ()),
+                      0);
+    }
+
+  return retval;
 }
 
 // Get next list
 UTL_List *
-UTL_List::tail ()
+UTL_List::tail (void)
 {
   return pd_cdr_data;
 }
 
-// Set next list
+// Set next list.
 void
 UTL_List::set_tail (UTL_List *l)
 {
+  this->pd_cdr_data->destroy ();
   this->pd_cdr_data = l;
 }
 
-// Compute list length
+// Compute list length.
 long
-UTL_List::length ()
+UTL_List::length (void)
 {
   return list_length (1);
 }
 
-// UTL_List active iterator
+void
+UTL_List::destroy (void)
+{
+  if (this->pd_cdr_data != 0)
+    {
+      this->pd_cdr_data->destroy ();
+      delete this->pd_cdr_data;
+      this->pd_cdr_data = 0;
+    }
+}
+
+// UTL_List active iterator.
 
 // Constructor
 UTL_ListActiveIterator::UTL_ListActiveIterator (UTL_List *s)
@@ -160,17 +190,19 @@ UTL_ListActiveIterator::UTL_ListActiveIterator (UTL_List *s)
  */
 
 // Is iterator done?
-long
-UTL_ListActiveIterator::is_done ()
+idl_bool
+UTL_ListActiveIterator::is_done (void)
 {
-  return (source == NULL) ? I_TRUE : I_FALSE;
+  return (this->source == 0) ? I_TRUE : I_FALSE;
 }
 
 // Advance to next item
 void
 UTL_ListActiveIterator::next ()
 {
-  if (source != NULL)
-    source = source->tail ();
+  if (this->source != 0)
+    {
+      this->source = this->source->tail ();
+    }
 }
 

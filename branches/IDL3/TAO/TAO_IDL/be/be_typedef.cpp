@@ -105,7 +105,8 @@ be_typedef::base_node_type (void) const
 void
 be_typedef::destroy (void)
 {
-  // Do nothing
+  this->AST_Typedef::destroy ();
+  this->be_type::destroy ();
 }
 
 int

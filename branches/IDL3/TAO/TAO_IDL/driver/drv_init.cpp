@@ -83,7 +83,6 @@ DRV_init (void)
            IDL_GlobalData);
 
   // Initialize some of its data.
-  idl_global->set_scopes (0);
   idl_global->set_root (0);
   idl_global->set_gen (0);
   idl_global->set_err (FE_new_UTL_Error ());

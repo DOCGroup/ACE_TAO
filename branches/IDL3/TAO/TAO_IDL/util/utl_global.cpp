@@ -78,41 +78,41 @@ ACE_RCSID(util, utl_global, "$Id$")
 #define         INCREMENT       64
 
 IDL_GlobalData::IDL_GlobalData (void)
-    : pd_scopes (0),
-      pd_root (0),
-      pd_gen (0),
-      pd_err (0),
-      pd_err_count (0),
-      pd_lineno (0),
-      pd_filename (0),
-      pd_main_filename (0),
-      pd_real_filename (0),
-      pd_stripped_filename (0),
-      pd_import (I_FALSE),
-      pd_in_main_file (I_FALSE),
-      pd_prog_name (0),
-      pd_cpp_location (0),
-      pd_compile_flags (0),
-      pd_be (0),
-      pd_local_escapes (0),
-      pd_indent (0),
-      pd_read_from_stdin (I_FALSE),
-      pd_include_file_names (0),
-      pd_n_include_file_names (0),
-      pd_n_alloced_file_names (0),
-      included_idl_files_ (0),
-      n_included_idl_files_ (0),
-      n_allocated_idl_files_ (0),
-      pd_parse_state (PS_NoState),
-      pd_idl_src_file (0),
-      gperf_path_ (0),
-      temp_dir_ (0),
-      ident_string_ (0),
-      obv_support_ (I_FALSE),
-      case_diff_error_ (I_TRUE),
-      idl_flags_ (""),
-      last_seen_index_ (1)
- {
+  : pd_root (0),
+    pd_gen (0),
+    pd_err (0),
+    pd_err_count (0),
+    pd_lineno (0),
+    pd_filename (0),
+    pd_main_filename (0),
+    pd_real_filename (0),
+    pd_stripped_filename (0),
+    pd_import (I_FALSE),
+    pd_in_main_file (I_FALSE),
+    pd_prog_name (0),
+    pd_cpp_location (0),
+    pd_compile_flags (0),
+    pd_be (0),
+    pd_local_escapes (0),
+    pd_indent (0),
+    pd_read_from_stdin (I_FALSE),
+    pd_include_file_names (0),
+    pd_n_include_file_names (0),
+    pd_n_alloced_file_names (0),
+    included_idl_files_ (0),
+    n_included_idl_files_ (0),
+    n_allocated_idl_files_ (0),
+    pd_parse_state (PS_NoState),
+    pd_idl_src_file (0),
+    gperf_path_ (0),
+    temp_dir_ (0),
+    ident_string_ (0),
+    obv_support_ (I_FALSE),
+    component_support_ (I_FALSE),
+    case_diff_error_ (I_TRUE),
+    idl_flags_ (""),
+    last_seen_index_ (1)
+{
   // Path for the perfect hash generator(gperf) program.
   // Default is $ACE_ROOT/bin/gperf unless ACE_GPERF is defined.
   // Use ACE_GPERF if $ACE_ROOT hasn't been set or won't be set
@@ -161,16 +161,10 @@ IDL_GlobalData::~IDL_GlobalData (void)
 }
 
 // Get or set scopes stack
-UTL_ScopeStack *
+UTL_ScopeStack &
 IDL_GlobalData::scopes (void)
 {
   return this->pd_scopes;
-}
-
-void
-IDL_GlobalData::set_scopes (UTL_ScopeStack *s)
-{
-  this->pd_scopes = s;
 }
 
 // Get or set root of AST
@@ -411,10 +405,10 @@ IDL_GlobalData::set_local_escapes (const char *e)
 {
   if (this->pd_local_escapes != 0)
     {
-      ACE_OS::free (this->pd_local_escapes);
+      delete [] this->pd_local_escapes;
     }
 
-  this->pd_local_escapes = ACE_OS::strdup (e);
+  this->pd_local_escapes = ACE::strnew (e);
 }
 
 // Get or set indent object
@@ -731,13 +725,13 @@ IDL_GlobalData::PredefinedTypeToExprType(AST_PredefinedType::PredefinedType pt)
 }
 
 // returns the IDL source file being copiled
-UTL_String* IDL_GlobalData::idl_src_file()
+UTL_String* IDL_GlobalData::idl_src_file (void)
 {
   return this->pd_idl_src_file;
 }
 
 // set the source IDL file that is being parsed
-void IDL_GlobalData::idl_src_file(UTL_String *s)
+void IDL_GlobalData::idl_src_file (UTL_String *s)
 {
   this->pd_idl_src_file = s;
 }
@@ -806,6 +800,18 @@ IDL_GlobalData::obv_support (void)
 }
 
 void
+IDL_GlobalData::component_support (idl_bool val)
+{
+  this->component_support_ = val;
+}
+
+idl_bool
+IDL_GlobalData::component_support (void)
+{
+  return this->component_support_;
+}
+
+void
 IDL_GlobalData::case_diff_error (idl_bool val)
 {
   this->case_diff_error_ = val;
@@ -848,8 +854,12 @@ IDL_GlobalData::destroy (void)
       this->pd_stripped_filename = 0;
     }
 
-  delete [] this->ident_string_;
-  this->ident_string_ = 0;
+  if (this->pd_idl_src_file != 0)
+    {
+      this->pd_idl_src_file->destroy ();
+      delete this->pd_idl_src_file;
+      this->pd_idl_src_file = 0;
+    }
 
   size_t size = this->pragma_prefixes ().size  ();
   char *trash = 0;
@@ -860,6 +870,25 @@ IDL_GlobalData::destroy (void)
       delete [] trash;
       trash = 0;
     }
+
+  this->pd_root->destroy ();
+  delete this->pd_root;
+  this->pd_root = 0;
+
+  delete this->pd_err;
+  this->pd_err = 0;
+  delete this->pd_gen;
+  this->pd_gen = 0;
+  delete this->pd_indent;
+  this->pd_indent = 0;
+  delete [] this->pd_local_escapes;
+  this->pd_local_escapes = 0;
+  delete [] this->gperf_path_;
+  this->gperf_path_ = 0;
+  delete [] this->temp_dir_;
+  this->temp_dir_ = 0;
+  delete [] this->ident_string_;
+  this->ident_string_ = 0;
 }
 
 void

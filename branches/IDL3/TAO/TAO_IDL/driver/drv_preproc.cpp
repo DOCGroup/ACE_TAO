@@ -100,9 +100,9 @@ DRV_cpp_putarg (const char *str)
       ACE_ERROR ((LM_ERROR,
                   "%s%s %d %s\n",
                   idl_global->prog_name (),
-                  ACE_TEXT (": More than"),
+                  ": More than",
                   max_argcount,
-                  ACE_TEXT ("arguments to preprocessor")));
+                  "arguments to preprocessor"));
 
       ACE_OS::exit (99);
     }
@@ -162,10 +162,10 @@ DRV_cpp_init (void)
         {
           ACE_ERROR ((LM_ERROR,
                       "%s%s%s%s",
-                      ACE_TEXT ("Warning: The environment variable ")
-                      ACE_TEXT ("CPP_LOCATION has been deprecated.\n")
-                      ACE_TEXT ("         Please use TAO_IDL_PREPROCESSOR ")
-                      ACE_TEXT ("instead.\n")));
+                      "Warning: The environment variable "
+                      "CPP_LOCATION has been deprecated.\n"
+                      "         Please use TAO_IDL_PREPROCESSOR "
+                      "instead.\n"));
 
           cpp_loc = cpp_path;
         }
@@ -209,11 +209,11 @@ DRV_cpp_init (void)
         {
           ACE_ERROR ((LM_ERROR,
                       "%s%s%s%s%s",
-                      ACE_TEXT ("Warning: The environment variable "),
-                      ACE_TEXT ("TAO_IDL_DEFAULT_CPP_FLAGS has been "),
-                      ACE_TEXT ("deprecated.\n"),
-                      ACE_TEXT ("         Please use "),
-                      ACE_TEXT ("TAO_IDL_PREPROCESSOR_ARGS instead.\n")));
+                      "Warning: The environment variable ",
+                      "TAO_IDL_DEFAULT_CPP_FLAGS has been ",
+                      "deprecated.\n",
+                      "         Please use ",
+                      "TAO_IDL_PREPROCESSOR_ARGS instead.\n"));
 
           cpp_args = args2;
         }
@@ -261,10 +261,10 @@ DRV_cpp_init (void)
                   ACE_ERROR ((
                       LM_ERROR,
                       "%s%s%s%s",
-                      ACE_TEXT ("Note: The environment variables "),
-                      ACE_TEXT ("TAO_ROOT and ACE_ROOT are not defined.\n"),
-                      ACE_TEXT ("      TAO_IDL may not be able to "),
-                      ACE_TEXT ("locate orb.idl\n")
+                      "Note: The environment variables ",
+                      "TAO_ROOT and ACE_ROOT are not defined.\n",
+                      "      TAO_IDL may not be able to ",
+                      "locate orb.idl\n"
                     ));
 
                   ACE_OS::strcat (option, ".");
@@ -346,9 +346,9 @@ DRV_copy_input (FILE *fin,
       ACE_ERROR ((LM_ERROR,
                   "%s%s%s%s",
                   idl_global->prog_name (),
-                  ACE_TEXT (": cannot open temp file "),
+                  ": cannot open temp file ",
                   fn,
-                  ACE_TEXT (" for writing\n")));
+                  " for writing\n"));
 
       ACE_OS::exit (99);
     }
@@ -358,7 +358,7 @@ DRV_copy_input (FILE *fin,
       ACE_ERROR ((LM_ERROR,
                   "%s%s",
                   idl_global->prog_name (),
-                  ACE_TEXT (": cannot open input file\n")));
+                  ": cannot open input file\n"));
 
       ACE_OS::exit (99);
     }
@@ -544,9 +544,9 @@ DRV_pre_proc (const char *myfile)
           ACE_ERROR ((LM_ERROR,
                       "%s%s%s%s",
                       idl_global->prog_name (),
-                      ACE_TEXT (": cannot open temp file "),
+                      ": cannot open temp file ",
                       tmp_file,
-                      ACE_TEXT (" for writing\n")));
+                      " for writing\n"));
 
           return;
         }
@@ -559,9 +559,9 @@ DRV_pre_proc (const char *myfile)
       ACE_ERROR ((LM_ERROR,
                   "%s%s%s%s",
                   idl_global->prog_name (),
-                  ACE_TEXT (": spawn of "),
+                  ": spawn of ",
                   arglist[0],
-                  ACE_TEXT (" failed\n")));
+                  " failed\n"));
 
       return;
     }
@@ -574,9 +574,9 @@ DRV_pre_proc (const char *myfile)
           ACE_ERROR ((LM_ERROR,
                       "%s%s%s%s",
                       idl_global->prog_name (),
-                      ACE_TEXT (": cannot close temp file"),
+                      ": cannot close temp file",
                       tmp_file,
-                      ACE_TEXT (" on parent\n")));
+                      " on parent\n"));
 
           return;
         }
@@ -592,7 +592,7 @@ DRV_pre_proc (const char *myfile)
       ACE_ERROR ((LM_ERROR,
                   "%s%s",
                   idl_global->prog_name (),
-                  ACE_TEXT (": wait for child process failed\n")));
+                  ": wait for child process failed\n"));
 
       return;
     }
@@ -607,9 +607,9 @@ DRV_pre_proc (const char *myfile)
           ACE_ERROR ((LM_ERROR,
                       "%s%s%s%s",
                       idl_global->prog_name (),
-                      ACE_TEXT (": preprocessor "),
+                      ": preprocessor ",
                       arglist[0],
-                      ACE_TEXT (" returned with an error\n")));
+                      " returned with an error\n"));
 
           ACE_OS::exit (1);
         }
@@ -622,9 +622,9 @@ DRV_pre_proc (const char *myfile)
       ACE_ERROR ((LM_ERROR,
                   "%s%s%s%s",
                   idl_global->prog_name (),
-                  ACE_TEXT (": preprocessor "),
+                  ": preprocessor ",
                   arglist[0],
-                  ACE_TEXT (" appears to have been interrupted\n")));
+                  " appears to have been interrupted\n"));
 
       ACE_OS::exit (1);
     }
@@ -639,7 +639,7 @@ DRV_pre_proc (const char *myfile)
       ACE_ERROR ((LM_ERROR,
                   "%s%s %s\n",
                   idl_global->prog_name (),
-                  ACE_TEXT (": Could not open cpp output file"),
+                  ": Could not open cpp output file",
                   tmp_file));
 
       ACE_OS::exit (99);
@@ -693,7 +693,7 @@ DRV_pre_proc (const char *myfile)
       ACE_ERROR ((LM_ERROR,
                   "%s%s %s\n",
                   idl_global->prog_name (),
-                  ACE_TEXT (": Could not remove cpp input file"),
+                  ": Could not remove cpp input file",
                   tmp_ifile));
 
       ACE_OS::exit (99);
@@ -705,7 +705,7 @@ DRV_pre_proc (const char *myfile)
       ACE_ERROR ((LM_ERROR,
                   "%s%s %s\n",
                   idl_global->prog_name (),
-                  ACE_TEXT (": Could not remove cpp output file"),
+                  ": Could not remove cpp output file",
                   tmp_file));
 
       ACE_OS::exit (99);

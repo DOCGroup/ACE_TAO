@@ -71,9 +71,9 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 //
 // Global variables and functions for IDL compiler
 
-#include        "fe_extern.h"           // External API of FE
-#include        "ast_extern.h"          // External API of AST
-#include        "nr_extern.h"           // External API of NR
-#include        "global_extern.h"       // Global data
+#include "fe_extern.h"           // External API of FE
+#include "ast_extern.h"          // External API of AST
+#include "nr_extern.h"           // External API of NR
+#include "global_extern.h"       // Global data
 
 #endif           // _IDL_EXTERN_IDL_EXTERN_HH

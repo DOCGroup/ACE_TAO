@@ -19,11 +19,13 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
+#include "idl.h"
+#include "idl_extern.h"
+#include "be.h"
 
-ACE_RCSID(be, be_constant, "$Id$")
+ACE_RCSID (be, 
+           be_constant, 
+           "$Id$")
 
 be_constant::be_constant (void)
 {
@@ -91,6 +93,13 @@ int
 be_constant::accept (be_visitor *visitor)
 {
   return visitor->visit_constant (this);
+}
+
+void
+be_constant::destroy (void)
+{
+  this->AST_Constant::destroy ();
+  this->be_decl::destroy ();
 }
 
 // Narrowing

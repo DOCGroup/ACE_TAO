@@ -72,7 +72,10 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "idl.h"
 #include "idl_extern.h"
 
-ACE_RCSID(ast, ast_string, "$Id$")
+ACE_RCSID (ast, 
+           ast_string, 
+           "$Id$")
+
 // Constructor(s) and destructor.
 AST_String::AST_String (void)
  : pd_max_size (0),
@@ -80,28 +83,13 @@ AST_String::AST_String (void)
 {
 }
 
-AST_String::AST_String (AST_Expression *ms)
- : AST_Decl (AST_Decl::NT_string,
-		         new UTL_ScopedName (new Identifier ("string"),
-					                       0),
-             I_TRUE),
-   pd_max_size (ms),
-   pd_width (sizeof (char))
-{
-}
-
-AST_String::AST_String (AST_Expression *ms,
+AST_String::AST_String (AST_Decl::NodeType nt,
+                        UTL_ScopedName *n,
+                        AST_Expression *ms,
                         long wide)
- : AST_Decl
-   (
-     wide == (long) sizeof (char) ? AST_Decl::NT_string : AST_Decl::NT_wstring,
-		 new UTL_ScopedName
-     (
-       new Identifier ((wide == (long) sizeof (char)) ? "string" : "wstring"),
-			 0
-     ),
-     I_TRUE
-   ),
+ : AST_Decl (nt,
+		         n,
+             I_TRUE),
    pd_max_size (ms),
    pd_width (wide)
 {
@@ -115,7 +103,7 @@ AST_String::~AST_String (void)
 
 // Dump this AST_String node to the ostream o.
 void
-AST_String::dump(ACE_OSTREAM_TYPE &o)
+AST_String::dump (ACE_OSTREAM_TYPE &o)
 {
   o << "string <";
   this->pd_max_size->dump (o);
@@ -126,6 +114,16 @@ int
 AST_String::ast_accept (ast_visitor *visitor)
 {
   return visitor->visit_string (this);
+}
+
+void
+AST_String::destroy (void)
+{
+  this->pd_max_size->destroy ();
+  delete this->pd_max_size;
+  this->pd_max_size = 0;
+
+  this->AST_Decl::destroy ();
 }
 
 // Data accessors.

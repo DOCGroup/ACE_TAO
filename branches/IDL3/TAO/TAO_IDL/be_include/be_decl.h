@@ -94,6 +94,9 @@ public:
   void has_constructor (idl_bool value);
   // Mutator for protected member.
 
+  virtual void destroy (void);
+  // Cleanup function.
+
   // Boolean methods to test if code was already generated.
   idl_bool cli_hdr_gen (void);
   idl_bool cli_stub_gen (void);
@@ -136,9 +139,6 @@ protected:
 
   virtual void compute_flat_name (void);
   // Compute the flattened fully scoped name.
-
-  virtual void destroy (void);
-  // Cleanup function.
 
   // Variables that indicate if the code generation for that node is already
   // been done. This way we avoid regenerating same code.

@@ -598,9 +598,16 @@ be_generator::create_sequence (AST_Expression *v,
 AST_String *
 be_generator::create_string (AST_Expression *v)
 {
+  Identifier id ("string");
+  UTL_ScopedName n (&id,
+                    0);
+
   be_string *retval = 0;
   ACE_NEW_RETURN (retval,
-                  be_string (v),
+                  be_string (AST_Decl::NT_string,
+                             &n,
+                             v,
+                             1),
                   0);
 
   return retval;
@@ -609,9 +616,20 @@ be_generator::create_string (AST_Expression *v)
 AST_String *
 be_generator::create_wstring (AST_Expression *v)
 {
+  Identifier id (sizeof (ACE_CDR::WChar) == 1
+                   ? "string"
+                   : "wstring");
+  UTL_ScopedName n (&id,
+                    0);
+  AST_Decl::NodeType nt = sizeof (ACE_CDR::WChar) == 1
+                            ? AST_Decl::NT_string
+                            : AST_Decl::NT_wstring;
+
   be_string *retval = 0;
   ACE_NEW_RETURN (retval,
-                  be_string (v,
+                  be_string (nt,
+                             &n,
+                             v,
                              sizeof (ACE_CDR::WChar)),
                   0);
 

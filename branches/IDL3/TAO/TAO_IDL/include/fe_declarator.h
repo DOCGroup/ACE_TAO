@@ -95,6 +95,7 @@ public:
   // Compose an FE_Declarator into an AST_Type once all the needed information
   // is available.
   AST_Type *compose (AST_Decl* tc);
+  virtual void destroy (void);
 
 private:
   // Data.

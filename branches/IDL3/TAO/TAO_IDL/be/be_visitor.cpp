@@ -24,7 +24,7 @@
 #include "idl.h"
 #include "be.h"
 #include "be_visitor.h"
-#include "be_visitor_valuetype.h"
+
 ACE_RCSID(be, be_visitor, "$Id$")
 
 be_visitor::be_visitor (void)
@@ -180,3 +180,4 @@ int be_visitor::visit_native (be_native *)
 {
   return 0;
 }
+

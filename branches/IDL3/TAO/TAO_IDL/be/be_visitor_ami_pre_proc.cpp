@@ -517,8 +517,8 @@ be_visitor_ami_pre_proc::create_reply_handler (be_interface *node,
                   be_interface (reply_handler_name, // name
                                 p_intf,             // list of inherited
                                 1,                  // number of inherited
-                                p_intf,             // list of ancestors
-                                1,                  // number of ancestors
+                                0,                  // list of all ancestors
+                                0,                  // number of ancestors
                                 0,                  // non-local
                                 0),                 // non-abstract
                   0);

@@ -74,8 +74,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 //	 will cease to operate correctly if you use either multiple or
 //	 public virtual inheritance.
 
-#include        "idl.h"
-#include        "idl_extern.h"
+#include "idl.h"
+#include "idl_extern.h"
 
 ACE_RCSID(util, utl_idlist, "$Id$")
 
@@ -117,14 +117,14 @@ UTL_IdList::copy (void)
 Identifier *
 UTL_IdList::head (void)
 {
-  return pd_car_data;
+  return this->pd_car_data;
 }
 
 // Get last item of this list.
 Identifier *
 UTL_IdList::last_component (void)
 {
-  if (this->tail ()== 0)
+  if (this->tail () == 0)
     {
       return this->head ();
     }
@@ -136,12 +136,12 @@ UTL_IdList::last_component (void)
 void
 UTL_IdList::dump (ACE_OSTREAM_TYPE &o)
 {
-  UTL_IdListActiveIterator i (this);
-
   long first = I_TRUE;
   long second = I_FALSE;
 
-  while (!(i.is_done ()))
+  for (UTL_IdListActiveIterator i (this);
+       !i.is_done ();
+       i.next ())
     {
       if (!first)
         {
@@ -165,30 +165,19 @@ UTL_IdList::dump (ACE_OSTREAM_TYPE &o)
               second = I_TRUE;
             }
         }
-
-      i.next ();
     }
 }
 
 void
 UTL_IdList::destroy (void)
 {
-  Identifier *id = 0;
-  UTL_IdListActiveIterator i (this);
-
-  while (!(i.is_done ()))
+  if (this->pd_car_data != 0)
     {
-      id = i.item ();
-
-      if (id != 0)
-        {
-          id->destroy ();
-          delete id;
-          id = 0;
-        }
-
-      i.next ();
+      delete this->pd_car_data;
+      this->pd_car_data = 0;
     }
+
+  this->UTL_List::destroy ();
 }
 
 // UTL_IdList active iterator.

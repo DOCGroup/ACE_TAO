@@ -77,7 +77,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_scope.h"
 #include "ast_decl.h"
 
-
 class TAO_IDL_FE_Export AST_Interface : public virtual AST_Type,
                                         public virtual UTL_Scope
 {

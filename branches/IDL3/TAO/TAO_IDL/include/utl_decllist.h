@@ -89,14 +89,18 @@ public:
   // Operations
 
   // Constructor(s)
-  UTL_DeclList(FE_Declarator *s, UTL_DeclList *cdr);
+  UTL_DeclList (FE_Declarator *s, 
+                UTL_DeclList *cdr);
 
   // Get element
-  FE_Declarator         *head();
+  FE_Declarator *head (void);
+
+  // Cleanup.
+  virtual void destroy (void);
 
 private:
   // Data
-  FE_Declarator         *pd_car_data;   // The element this list stores
+  FE_Declarator *pd_car_data;   // The element this list stores
 };
 
 // Active iterator fooor UTL_DeclList
@@ -107,10 +111,10 @@ public:
   // Operations
 
   // Constructor(s)
-  UTL_DecllistActiveIterator(UTL_DeclList *s);
+  UTL_DecllistActiveIterator (UTL_DeclList *s);
 
   // Get current item
-  FE_Declarator         *item();
+  FE_Declarator *item (void);
 };
 
 #endif           // _UTL_DECLLIST_UTL_DECLLIST_HH

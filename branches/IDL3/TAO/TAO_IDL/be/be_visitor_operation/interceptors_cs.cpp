@@ -29,7 +29,7 @@ ACE_RCSID (be_visitor_operation,
 
 
 // ******************************************************
-// primary visitor for "operation" in client header
+// Primary visitor for "operation" in client header
 // ******************************************************
 
 be_visitor_operation_interceptors_cs::be_visitor_operation_interceptors_cs (
@@ -51,24 +51,28 @@ be_visitor_operation_interceptors_cs::visit_operation (be_operation *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   if (this->generate_class_declaration (os, node) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   if (this->generate_class_definition (os, node) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   return 0;
 }
 
 int
-be_visitor_operation_interceptors_cs::
-   generate_class_declaration (TAO_OutStream *os,
-                               be_operation *node)
+be_visitor_operation_interceptors_cs::generate_class_declaration (
+    TAO_OutStream *os,
+    be_operation *node
+  )
 {
   be_type *bt = 0;
   be_visitor_context ctx (*this->ctx_);
-  be_visitor *visitor = tao_cg->make_visitor (&ctx);
 
-  // Save the node
+  // Save the node.
   this->ctx_->node (node);
 
   // Generate the ClientRequestInfo object per operation to
@@ -153,28 +157,16 @@ be_visitor_operation_interceptors_cs::
   // we grab a visitor that generates the parameter listing.
   ctx = *this->ctx_;
   ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_ARGLIST_CH);
-  visitor = tao_cg->make_visitor (&ctx);
+  be_visitor_operation_interceptors_arglist oia_visitor (&ctx);
 
-  if (!visitor)
+  if (node->accept (&oia_visitor) == -1)
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_operation_interceptors_cs::"
-                         "visit_operation - "
-                         "Bad visitor to return type\n"),
-                        -1);
-    }
-
-  if (node->accept (visitor) == -1)
-    {
-      delete visitor;
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_operation_interceptors_ch::"
                          "visit_operation - "
                          "codegen for argument list failed\n"),
                         -1);
     }
-
-  delete visitor;
 
   if (be_global->exception_support ())
     {
@@ -219,11 +211,10 @@ be_visitor_operation_interceptors_cs::
       *os << be_nl << "void result (";
       ctx = *this->ctx_;
       ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_INFO_RETTYPE_CH);
-      visitor = tao_cg->make_visitor (&ctx);
+      be_visitor_operation_interceptors_info_rettype oiir_visitor (&ctx);
 
-      if (!visitor || (bt->accept (visitor) == -1))
+      if (bt->accept (&oiir_visitor) == -1)
         {
-          delete visitor;
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_operation_cs::"
                              "visit_operation - "
@@ -235,7 +226,6 @@ be_visitor_operation_interceptors_cs::
     }
 
   *os << be_uidt_nl << "private:" << be_idt_nl;
-
   *os << "TAO_ClientRequestInfo_" << node->flat_name ();
 
   // We need the interface node in which this operation was defined. However,
@@ -341,28 +331,16 @@ be_visitor_operation_interceptors_cs::
   // we grab a visitor that generates the parameter listing and
   // modify it to generate reference members.
   ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_INFO_ARGLIST_CH);
-  visitor = tao_cg->make_visitor (&ctx);
+  be_visitor_operation_interceptors_arglist oiia_visitor (&ctx);
 
-  if (!visitor)
+  if (node->accept (&oiia_visitor) == -1)
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_operation_interceptors_ch::"
-                         "visit_operation - "
-                         "Bad visitor to return type\n"),
-                        -1);
-    }
-
-  if (node->accept (visitor) == -1)
-    {
-      delete visitor;
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_operation_interceptors_ch::"
                          "visit_operation - "
                          "codegen for argument list failed\n"),
                         -1);
     }
-
-  delete visitor;
 
   // Generate the result data member.
   // Generate the return type.
@@ -383,11 +361,10 @@ be_visitor_operation_interceptors_cs::
     {
       ctx = *this->ctx_;
       ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_INFO_RETTYPE_CH);
-      visitor = tao_cg->make_visitor (&ctx);
+      be_visitor_operation_interceptors_info_rettype toiir_visitor (&ctx);
 
-      if (!visitor || (bt->accept (visitor) == -1))
+      if (bt->accept (&toiir_visitor) == -1)
         {
-          delete visitor;
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_operation_cs::"
                              "visit_operation - "
@@ -408,16 +385,16 @@ be_visitor_operation_interceptors_cs::
 }
 
 int
-be_visitor_operation_interceptors_cs::
-   generate_class_definition (TAO_OutStream *os,
-                              be_operation *node)
+be_visitor_operation_interceptors_cs::generate_class_definition (
+    TAO_OutStream *os,
+    be_operation *node
+  )
 {
   // Start with the current indentation level.
   os->indent ();
 
   be_type *bt = 0;
   be_visitor_context ctx (*this->ctx_);
-  be_visitor  *visitor = tao_cg->make_visitor (&ctx);
 
   // Save the node.
   this->ctx_->node (node);
@@ -496,11 +473,10 @@ be_visitor_operation_interceptors_cs::
 
   ctx = *this->ctx_;
   ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_ARGLIST_CS);
-  visitor = tao_cg->make_visitor (&ctx);
+  be_visitor_operation_interceptors_arglist toiia_visitor (&ctx);
 
-  if (!visitor || (node->accept (visitor) == -1))
+  if (node->accept (&toiia_visitor) == -1)
     {
-      delete visitor;
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_operation_cs::"
                          "visit_operation - "
@@ -508,7 +484,6 @@ be_visitor_operation_interceptors_cs::
                         -1);
     }
 
-  delete visitor;
   os->indent ();
   *os << be_uidt_nl << ")" << be_uidt_nl;
 
@@ -519,19 +494,16 @@ be_visitor_operation_interceptors_cs::
 
   ctx = *this->ctx_;
   ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_ARG_INFO_CS);
-  visitor = tao_cg->make_visitor (&ctx);
+  be_visitor_operation_interceptors_arglist oiai_visitor (&ctx);
 
-  if (!visitor || (node->accept (visitor) == -1))
+  if (node->accept (&oiai_visitor) == -1)
     {
-      delete visitor;
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_operation_cs::"
                          "visit_operation - "
                          "codegen for argument pre invoke failed\n"),
                         -1);
     }
-
-  delete visitor;
 
   os->decr_indent ();
   *os << be_nl << "{}\n\n";
@@ -582,20 +554,21 @@ be_visitor_operation_interceptors_cs::
     {
       *os << "// Generate the argument list on demand." << be_nl
           << "Dynamic::ParameterList *parameter_list ="  << be_idt_nl
-          << "TAO_RequestInfo_Util::make_parameter_list (ACE_ENV_SINGLE_ARG_PARAMETER);"
+          << "TAO_RequestInfo_Util::make_parameter_list "
+          << "(ACE_ENV_SINGLE_ARG_PARAMETER);"
           << be_uidt_nl
           << "ACE_CHECK_RETURN (0);" << be_nl
           << be_nl;
 
       size_t parameter_count = this->count_non_out_parameters (node);
 
-      if (node->argument_count () == 0 ||
-          parameter_count == 0 ||
+      if (node->argument_count () == 0
+          || parameter_count == 0
           // Now make sure that we have some in and inout
           // parameters. Otherwise, there is nothing to be put into
           // the Dyanmic::Paramlist.
-          (!(this->has_param_type (node, AST_Argument::dir_IN)) &&
-          !(this->has_param_type (node, AST_Argument::dir_INOUT))))
+          || (!(this->has_param_type (node, AST_Argument::dir_IN)) 
+              && !(this->has_param_type (node, AST_Argument::dir_INOUT))))
         {
           *os << "return parameter_list;" << be_uidt_nl;
         }
@@ -621,19 +594,16 @@ be_visitor_operation_interceptors_cs::
           // decide this.
           ctx = *this->ctx_;
           ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_PARAMLIST);
-          visitor = tao_cg->make_visitor (&ctx);
+          be_visitor_operation_interceptors_arglist oip_visitor (&ctx);
 
-          if (!visitor || (node->accept (visitor) == -1))
+          if (node->accept (&oip_visitor) == -1)
             {
-              delete visitor;
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "(%N:%l) be_visitor_operation_cs::"
                                  "visit_operation - "
                                  "codegen for argument pre invoke failed\n"),
                                 -1);
             }
-
-          delete visitor;
 
           *os << be_nl
               << "return safe_parameter_list._retn ();";
@@ -701,7 +671,8 @@ be_visitor_operation_interceptors_cs::
     {
       *os << "// Generate the exception list on demand." << be_nl
           << "Dynamic::ExceptionList *exception_list ="  << be_idt_nl
-          << "TAO_RequestInfo_Util::make_exception_list (ACE_ENV_SINGLE_ARG_PARAMETER);"
+          << "TAO_RequestInfo_Util::make_exception_list "
+          << "(ACE_ENV_SINGLE_ARG_PARAMETER);"
           << be_uidt_nl
           << "ACE_CHECK_RETURN (0);" << be_nl
           << be_nl;
@@ -718,19 +689,16 @@ be_visitor_operation_interceptors_cs::
           // We change our scope to be able to generate the exceptionlist.
           ctx = *this->ctx_;
           ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_EXCEPTLIST);
-          visitor = tao_cg->make_visitor (&ctx);
+          be_visitor_operation_interceptors_exceptlist oie_visitor (&ctx);
 
-          if (!visitor || (node->accept (visitor) == -1))
+          if (node->accept (&oie_visitor) == -1)
             {
-              delete visitor;
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "(%N:%l) be_visitor_operation_cs::"
                                  "visit_operation - "
                                  "codegen for exceptlist failed\n"),
                                 -1);
             }
-
-          delete visitor;
 
           *os << be_nl
               << "return safe_exception_list._retn ();";
@@ -805,7 +773,8 @@ be_visitor_operation_interceptors_cs::
           // Return an Any with tk_void TypeCode.
           *os << "CORBA::Boolean tk_void_any = 1;" << be_nl
               << "CORBA::Any *result_any ="  << be_idt_nl
-              << "TAO_RequestInfo_Util::make_any (tk_void_any ACE_ENV_ARG_PARAMETER);"
+              << "TAO_RequestInfo_Util::make_any "
+              << "(tk_void_any ACE_ENV_ARG_PARAMETER);"
               << be_uidt_nl
               << "ACE_CHECK_RETURN (0);" << be_nl
               << be_nl
@@ -815,7 +784,8 @@ be_visitor_operation_interceptors_cs::
         {
           *os << "CORBA::Boolean tk_void_any = 0;" << be_nl
               << "CORBA::Any *result_any ="  << be_idt_nl
-              << "TAO_RequestInfo_Util::make_any (tk_void_any ACE_ENV_ARG_PARAMETER);"
+              << "TAO_RequestInfo_Util::make_any "
+              << "(tk_void_any ACE_ENV_ARG_PARAMETER);"
               << be_uidt_nl
               << "ACE_CHECK_RETURN (0);" << be_nl
               << be_nl
@@ -825,19 +795,16 @@ be_visitor_operation_interceptors_cs::
           // Generate the insertion of result into Any.
           ctx = *this->ctx_;
           ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_RESULT);
-          visitor = tao_cg->make_visitor (&ctx);
+          be_visitor_operation_interceptors_result oir_visitor (&ctx);
 
-          if (!visitor || (bt->accept (visitor) == -1))
+          if (bt->accept (&oir_visitor) == -1)
             {
-              delete visitor;
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "(%N:%l) be_visitor_operation_cs::"
                                  "visit_operation - "
                                  "codegen for result failed\n"),
                                 -1);
             }
-
-          delete visitor;
 
           *os << "return safe_result_any._retn ();";
         }
@@ -867,7 +834,7 @@ be_visitor_operation_interceptors_cs::
   if (!bt)
     {
           ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_interceptors_ch::"
+                             "(%N:%l) be_visitor_interceptors_ch::"
                              "visit_operation - "
                              "Bad return type\n"),
                             -1);
@@ -882,11 +849,11 @@ be_visitor_operation_interceptors_cs::
 
       *os << "TAO_ClientRequestInfo_"<< node->flat_name ();
 
-      // We need the interface node in which this operation was defined. However,
-      // if this operation node was an attribute node in disguise, we get this
-      // information from the context and add a "_get"/"_set" to the flat
-      // name to get around the problem of overloaded methods which are
-      // generated for attributes.
+      // We need the interface node in which this operation was defined.
+      // However, if this operation node was an attribute node in disguise,
+      // we get this information from the context and add a "_get"/"_set"
+      // to the flat name to get around the problem of overloaded methods
+      // which are generated for attributes.
       if (this->ctx_->attribute ())
         {
           bt = be_type::narrow_from_decl (node->return_type ());
@@ -917,11 +884,10 @@ be_visitor_operation_interceptors_cs::
 
       ctx = *this->ctx_;
       ctx.state (TAO_CodeGen::TAO_OPERATION_RETTYPE_CH);
-      visitor = tao_cg->make_visitor (&ctx);
+      be_visitor_operation_rettype or_visitor (&ctx);
 
-      if (!visitor || (bt->accept (visitor) == -1))
+      if (bt->accept (&or_visitor) == -1)
         {
-          delete visitor;
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_operation_cs::"
                              "visit_operation - "
@@ -930,6 +896,7 @@ be_visitor_operation_interceptors_cs::
         }
 
       os->indent ();
+
       *os << " result)" << be_uidt << be_uidt << be_uidt_nl
           << "{" << be_idt_nl
           << "// update the result " << be_nl

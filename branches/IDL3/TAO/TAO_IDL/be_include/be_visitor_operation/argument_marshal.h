@@ -27,7 +27,7 @@
 // generic operation visitor for docall, upcall, pre/post
 // ************************************************************
 
-class be_compiled_visitor_operation_argument_marshal
+class be_visitor_operation_argument_marshal
   : public be_visitor_operation_argument
 {
   //
@@ -39,10 +39,10 @@ class be_compiled_visitor_operation_argument_marshal
   //   return type
   //
 public:
-  be_compiled_visitor_operation_argument_marshal (be_visitor_context *ctx);
+  be_visitor_operation_argument_marshal (be_visitor_context *ctx);
   // constructor
 
-  ~be_compiled_visitor_operation_argument_marshal (void);
+  ~be_visitor_operation_argument_marshal (void);
   // destructor
 
   virtual int pre_process (be_decl *bd);
@@ -65,7 +65,7 @@ private:
 
 // ****************************************************************
 
-class be_visitor_compiled_args_decl : public be_visitor_scope
+class be_visitor_args_decl : public be_visitor_scope
 {
   //
   // = TITLE
@@ -76,7 +76,7 @@ class be_visitor_compiled_args_decl : public be_visitor_scope
   //   compiled marshaling stubs.
   //
 public:
-  be_visitor_compiled_args_decl (be_visitor_context *ctx);
+  be_visitor_args_decl (be_visitor_context *ctx);
   // constructor
 
   int visit_array (be_array *node);

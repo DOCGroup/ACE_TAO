@@ -162,11 +162,6 @@ AST_Constant::AST_Constant (AST_Expression::ExprType t,
 
 AST_Constant::~AST_Constant (void)
 {
-  if (this->pd_constant_value != 0)
-    {
-      delete this->pd_constant_value;
-      this->pd_constant_value = 0;
-    }
 }
 
 // Redefinition of inherited virtual operations.
@@ -185,6 +180,17 @@ int
 AST_Constant::ast_accept (ast_visitor *visitor)
 {
   return visitor->visit_constant (this);
+}
+
+void
+AST_Constant::destroy (void)
+{
+  if (this->pd_constant_value != 0)
+    {
+      this->pd_constant_value->destroy ();
+      delete this->pd_constant_value;
+      this->pd_constant_value = 0;
+    }
 }
 
 // Data accessors.

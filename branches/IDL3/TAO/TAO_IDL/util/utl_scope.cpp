@@ -968,7 +968,7 @@ UTL_Scope::lookup_pseudo (Identifier *e)
       || ACE_OS::strcmp (name_string, "ValueBase") == 0)
     {
       // Iterate over the global scope.
-      UTL_ScopeActiveIterator global_iter (idl_global->scopes ()->bottom (),
+      UTL_ScopeActiveIterator global_iter (idl_global->scopes ().bottom (),
                                            UTL_Scope::IK_decls);
 
       i = &global_iter;
@@ -2023,6 +2023,27 @@ UTL_Scope::nmembers (void)
 void
 UTL_Scope::destroy (void)
 {
+  for (UTL_ScopeActiveIterator iter (this, IK_both);
+       !iter.is_done ();
+       iter.next ())
+    {
+      AST_Decl *i = iter.item ();
+      i->destroy ();
+      delete i;
+      i = 0;
+    }
+
+  delete [] this->pd_decls;
+  this->pd_decls = 0;
+
+  delete [] this->pd_local_types;
+  this->pd_local_types = 0;
+
+  delete [] this->pd_referenced;
+  this->pd_referenced = 0;
+
+  delete [] this->pd_name_referenced;
+  this->pd_name_referenced = 0;
 }
 
 // Narrowing.
@@ -2037,9 +2058,9 @@ UTL_ScopeActiveIterator::UTL_ScopeActiveIterator (
     UTL_Scope::ScopeIterationKind i
   )
   : iter_source (s),
-    ik(i),
-    stage(i == UTL_Scope::IK_both ? UTL_Scope::IK_localtypes : i),
-    il(0)
+    ik (i),
+    stage (i == UTL_Scope::IK_both ? UTL_Scope::IK_localtypes : i),
+    il (0)
 {
 }
 

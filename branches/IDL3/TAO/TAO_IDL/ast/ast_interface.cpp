@@ -87,14 +87,16 @@ AST_Interface::AST_Interface (void)
 {
 }
 
-AST_Interface::AST_Interface(UTL_ScopedName *n,
-                             AST_Interface **ih,
-                             long nih,
-                             AST_Interface **ih_flat,
-                             long nih_flat,
-                             idl_bool local,
-                             idl_bool abstract)
-  : AST_Decl (AST_Decl::NT_interface,
+AST_Interface::AST_Interface (UTL_ScopedName *n,
+                              AST_Interface **ih,
+                              long nih,
+                              AST_Interface **ih_flat,
+                              long nih_flat,
+                              idl_bool local,
+                              idl_bool abstract)
+  : AST_Type (AST_Decl::NT_interface,
+              n),
+    AST_Decl (AST_Decl::NT_interface,
               n),
     UTL_Scope (AST_Decl::NT_interface),
     COMMON_Base (local,
@@ -370,7 +372,7 @@ AST_Interface::fe_add_field (AST_Field *t)
 
 // Add an AST_Operation node (an operation declaration) to this scope.
 AST_Operation *
-AST_Interface::fe_add_operation(AST_Operation *t)
+AST_Interface::fe_add_operation (AST_Operation *t)
 {
   AST_Decl *d = 0;
 
@@ -1206,6 +1208,10 @@ AST_Interface::inherited_name_clash (void)
 void
 AST_Interface::destroy (void)
 {
+  delete [] this->pd_inherits;
+  this->pd_inherits = 0;
+  delete [] this->pd_inherits_flat;
+  this->pd_inherits_flat = 0;
 }
 
 int

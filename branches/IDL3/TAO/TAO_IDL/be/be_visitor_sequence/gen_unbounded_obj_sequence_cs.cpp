@@ -19,21 +19,18 @@
 //    Modifications by Aniruddha Gokhale
 // ============================================================================
 
-#include        "be.h"
-
+#include "be.h"
 #include "be_visitor_sequence.h"
 
-ACE_RCSID(be_visitor_sequence, gen_unbounded_obj_sequence_cs, "$Id$")
+ACE_RCSID (be_visitor_sequence, 
+           gen_unbounded_obj_sequence_cs, 
+           "$Id$")
 
 int
 be_visitor_sequence_cs::gen_unbounded_obj_sequence (be_sequence *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  be_type *bt;
-
-  // Retrieve the base type since we may need to do some code
-  // generation for the base type.
-  bt = be_type::narrow_from_decl (node->base_type ());
+  be_type *bt = be_type::narrow_from_decl (node->base_type ());
 
   if (!bt)
     {
@@ -57,8 +54,7 @@ be_visitor_sequence_cs::gen_unbounded_obj_sequence (be_sequence *node)
       pt = bt;
     }
 
-  const char *name =
-    be_decl::narrow_from_decl (pt)->full_name ();
+  const char *name = be_decl::narrow_from_decl (pt)->full_name ();
 
   idl_bool bt_is_defined;
 
@@ -82,13 +78,19 @@ be_visitor_sequence_cs::gen_unbounded_obj_sequence (be_sequence *node)
   int is_valuetype = 0;
   {
     be_interface *bf = be_interface::narrow_from_decl (pt);
+
     if (bf != 0)
-      is_valuetype = bf->is_valuetype ();
+      {
+        is_valuetype = bf->is_valuetype ();
+      }
     else
       {
         be_interface_fwd *bff = be_interface_fwd::narrow_from_decl (pt);
+
         if (bff != 0)
-          is_valuetype = bff->is_valuetype ();
+          {
+            is_valuetype = bff->is_valuetype ();
+          }
       }
   }
 
@@ -117,14 +119,13 @@ be_visitor_sequence_cs::gen_unbounded_obj_sequence (be_sequence *node)
 
   be_visitor_context ctx (*this->ctx_);
   ctx.state (TAO_CodeGen::TAO_SEQUENCE_BASE_CS);
-  be_visitor *visitor = tao_cg->make_visitor (&ctx);
+  be_visitor_sequence_base visitor (&ctx);
 
-  // Branching in either compile time template instantiation
-  // or manual template instatiation.
+  *os << be_nl << "// TAO_IDL - Generated from "
+      << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+
   os->gen_ifdef_AHETI();
-
   os->gen_ifdef_macro (class_name);
-
   os->indent ();
 
   // allocate_buffer.
@@ -135,7 +136,7 @@ be_visitor_sequence_cs::gen_unbounded_obj_sequence (be_sequence *node)
       << be_nl
       << "{" << be_idt_nl;
 
-  bt->accept (visitor);
+  bt->accept (&visitor);
 
   *os <<" **tmp = 0;" << be_nl
       << "tmp = " << class_name << "::allocbuf (length);" << be_nl
@@ -143,11 +144,11 @@ be_visitor_sequence_cs::gen_unbounded_obj_sequence (be_sequence *node)
       << "if (this->buffer_ != 0)" << be_nl
       << "{" << be_idt_nl;
 
-  bt->accept(visitor);
+  bt->accept (&visitor);
 
   *os <<" **old = ACE_reinterpret_cast (";
 
-  bt->accept (visitor);
+  bt->accept (&visitor);
 
   *os << "**, this->buffer_);" << be_nl
       << "for (CORBA::ULong i = 0; i < this->length_; ++i)" << be_idt_nl
@@ -164,16 +165,17 @@ be_visitor_sequence_cs::gen_unbounded_obj_sequence (be_sequence *node)
   else
     {
       *os << "tmp[i] = ";
-  if (bt_is_defined)
-    {
-      bt->accept (visitor);
 
-      *os << "::_duplicate (old[i]);";
-    }
-  else
-    {
-      *os << "tao_" << pt->flat_name () << "_duplicate (old[i]);";
-    }
+      if (bt_is_defined)
+        {
+          bt->accept (&visitor);
+
+          *os << "::_duplicate (old[i]);";
+        }
+      else
+        {
+          *os << "tao_" << pt->flat_name () << "_duplicate (old[i]);";
+        }
     }
 
   *os << be_uidt_nl
@@ -199,11 +201,11 @@ be_visitor_sequence_cs::gen_unbounded_obj_sequence (be_sequence *node)
       << "if (this->buffer_ == 0 || this->release_ == 0)" << be_idt_nl
       << "return;" << be_uidt_nl;
 
-  bt->accept (visitor);
+  bt->accept (&visitor);
 
   *os <<" **tmp = ACE_reinterpret_cast (";
 
-  bt->accept (visitor);
+  bt->accept (&visitor);
 
   *os << "**, this->buffer_);" << be_nl << be_nl
       << "for (CORBA::ULong i = 0; i < this->length_; ++i)" << be_idt_nl
@@ -220,7 +222,7 @@ be_visitor_sequence_cs::gen_unbounded_obj_sequence (be_sequence *node)
       *os << "CORBA::release (tmp[i]);" << be_nl
           << "tmp[i] = ";
 
-      bt->accept (visitor);
+      bt->accept (&visitor);
 
       *os << "::_nil ();";
     }
@@ -251,11 +253,11 @@ be_visitor_sequence_cs::gen_unbounded_obj_sequence (be_sequence *node)
       << "::_shrink_buffer (CORBA::ULong nl, CORBA::ULong ol)" << be_nl
       << "{" << be_idt_nl;
 
-  bt->accept (visitor);
+  bt->accept (&visitor);
 
   *os <<" **tmp = ACE_reinterpret_cast (";
 
-  bt->accept (visitor);
+  bt->accept (&visitor);
 
   *os << "**, this->buffer_);" << be_nl << be_nl
       << "for (CORBA::ULong i = nl; i < ol; ++i)" << be_idt_nl
@@ -272,7 +274,7 @@ be_visitor_sequence_cs::gen_unbounded_obj_sequence (be_sequence *node)
       *os << "CORBA::release (tmp[i]);" << be_nl
           << "tmp[i] = ";
 
-      bt->accept (visitor);
+      bt->accept (&visitor);
 
       *os << "::_nil ();";
     }
@@ -304,18 +306,18 @@ be_visitor_sequence_cs::gen_unbounded_obj_sequence (be_sequence *node)
                 << ")" << be_uidt_nl
                 << "{" << be_idt_nl;
 
-      bt->accept (visitor);
+      bt->accept (&visitor);
 
       *os << " **tmp = ACE_static_cast (";
 
-      bt->accept (visitor);
+      bt->accept (&visitor);
 
       *os << "**, target);" << be_nl
                 << "*tmp = ";
 
       if (bt_is_defined)
         {
-          bt->accept (visitor);
+          bt->accept (&visitor);
 
           *os << "::_narrow (src ACE_ENV_ARG_PARAMETER);";
         }
@@ -331,26 +333,26 @@ be_visitor_sequence_cs::gen_unbounded_obj_sequence (be_sequence *node)
 
       *os << "CORBA_Object*" << be_nl
           << full_class_name << "::_upcast (void *src) const" <<  be_nl
-                << "{" << be_idt_nl;
+          << "{" << be_idt_nl;
 
       if (bt_is_defined)
         {
-          bt->accept (visitor);
+          bt->accept (&visitor);
 
           *os << " **tmp = ACE_static_cast (";
 
-          bt->accept (visitor);
+          bt->accept (&visitor);
 
           *os << "**, src);" << be_nl
               << "return *tmp;";
         }
       else
         {
-                *os << "return tao_" << pt->flat_name () << "_upcast (src);";
+          *os << "return tao_" << pt->flat_name () << "_upcast (src);";
         }
 
       *os << be_uidt_nl
-                << "}" << be_nl;
+          << "}" << be_nl;
     }
 
   os->gen_endif ();
@@ -358,6 +360,5 @@ be_visitor_sequence_cs::gen_unbounded_obj_sequence (be_sequence *node)
   // Generate #endif for AHETI.
   os->gen_endif_AHETI();
 
-  delete visitor;
   return 0;
 }

@@ -100,7 +100,7 @@ public:
               UTL_IdList *cdr);
   // Constructor(s)
 
-  virtual ~UTL_IdList() {}
+  virtual ~UTL_IdList (void) {}
   // destructor
 
   // =AST Dumping
@@ -113,13 +113,13 @@ public:
 
   // Other operations
 
-  UTL_List *copy ();
+  UTL_List *copy (void);
   // Copy the list
 
-  Identifier *head ();
+  Identifier *head (void);
   // get element
 
-  Identifier *last_component ();
+  Identifier *last_component (void);
   // Get last element in this list
 private:
   Identifier *pd_car_data;

@@ -19,11 +19,13 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
+#include "idl.h"
+#include "idl_extern.h"
+#include "be.h"
 
-ACE_RCSID(be, be_expression, "$Id$")
+ACE_RCSID (be, 
+           be_expression, 
+           "$Id$")
 
 be_expression::be_expression (UTL_ScopedName *n)
   : AST_Expression (n)

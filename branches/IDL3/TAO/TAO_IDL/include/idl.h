@@ -72,22 +72,23 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // Main include file for IDL compiler. Includes the rest of the
 // files defining the different units of the compiler
 
-#include        "ace/ACE.h"             // Most important ACE include file
-#include        "ace/streams.h"         // iostreams
+#include "ace/ACE.h"             // Most important ACE include file
+#include "ace/streams.h"         // iostreams
+
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include        "TAO_IDL_FE_Export.h"   // Defines export macro
-#include        "idl_narrow.h"          // IDL Narrowing mechanism
-#include        "idl_defines.h"         // Constants for IDL compiler
-#include        "idl_fwd.h"             // Forward decls of classes
-#include        "idl_bool.h"            // Defines boolean for IDL
-#include        "utl_string.h"          // Defines utility string class
-#include        "utl_identifier.h"      // Defines utility identifier class
-#include        "ast.h"                 // AST classes
-#include        "util.h"                // Utility classes
+#include "TAO_IDL_FE_Export.h"   // Defines export macro
+#include "idl_narrow.h"          // IDL Narrowing mechanism
+#include "idl_defines.h"         // Constants for IDL compiler
+#include "idl_fwd.h"             // Forward decls of classes
+#include "idl_bool.h"            // Defines boolean for IDL
+#include "utl_string.h"          // Defines utility string class
+#include "utl_identifier.h"      // Defines utility identifier class
+#include "ast.h"                 // AST classes
+#include "util.h"                // Utility classes
 
 #if defined (interface)
 // Mingw needs this.

@@ -22,8 +22,15 @@
 #include "idl_extern.h"
 #include "be.h"
 #include "be_visitor_field.h"
+#include "be_visitor_array/cdr_op_ci.h"
+#include "be_visitor_enum/cdr_op_ci.h"
+#include "be_visitor_sequence/cdr_op_ci.h"
+#include "be_visitor_structure/cdr_op_ci.h"
+#include "be_visitor_union/cdr_op_ci.h"
 
-ACE_RCSID(be_visitor_field, cdr_op_ci, "$Id$")
+ACE_RCSID (be_visitor_field, 
+           cdr_op_ci, 
+           "$Id$")
 
 
 // **********************************************
@@ -171,18 +178,9 @@ be_visitor_field_cdr_op_ci::visit_array (be_array *node)
 
       // First generate the  declaration.
       ctx.state (TAO_CodeGen::TAO_ARRAY_CDR_OP_CI);
-      be_visitor *visitor = tao_cg->make_visitor (&ctx);
+      be_visitor_array_cdr_op_ci visitor (&ctx);
 
-      if (visitor == 0)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_field_cdr_op_ci::"
-                             "visit_array - "
-                             "Bad visitor\n"),
-                            -1);
-        }
-
-      if (node->accept (visitor) == -1)
+      if (node->accept (&visitor) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_field_cdr_op_ci::"
@@ -190,8 +188,6 @@ be_visitor_field_cdr_op_ci::visit_array (be_array *node)
                              "codegen failed\n"),
                             -1);
         }
-
-      delete visitor;
     }
 
   return 0;
@@ -251,18 +247,9 @@ be_visitor_field_cdr_op_ci::visit_enum (be_enum *node)
 
       // Generate the typcode for enums.
       ctx.state (TAO_CodeGen::TAO_ENUM_CDR_OP_CI);
-      be_visitor *visitor = tao_cg->make_visitor (&ctx);
+      be_visitor_enum_cdr_op_ci visitor (&ctx);
 
-      if (visitor == 0)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_field_cdr_op_ci::"
-                             "visit_enum - "
-                             "Bad visitor\n"),
-                            -1);
-        }
-
-      if (node->accept (visitor) == -1)
+      if (node->accept (&visitor) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_field_cdr_op_ci::"
@@ -270,8 +257,6 @@ be_visitor_field_cdr_op_ci::visit_enum (be_enum *node)
                              "codegen failed\n"),
                             -1);
         }
-
-      delete visitor;
     }
 
   return 0;
@@ -520,17 +505,9 @@ be_visitor_field_cdr_op_ci::visit_sequence (be_sequence *node)
 
       // Generate the inline code for structs.
       ctx.state (TAO_CodeGen::TAO_SEQUENCE_CDR_OP_CI);
-      be_visitor *visitor = tao_cg->make_visitor (&ctx);
-      if (!visitor)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_field_cdr_op_ci::"
-                             "visit_sequence - "
-                             "Bad visitor\n"),
-                            -1);
-        }
+      be_visitor_sequence_cdr_op_ci visitor (&ctx);
 
-      if (node->accept (visitor) == -1)
+      if (node->accept (&visitor) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_field_cdr_op_ci::"
@@ -538,8 +515,6 @@ be_visitor_field_cdr_op_ci::visit_sequence (be_sequence *node)
                              "codegen failed\n"),
                             -1);
         }
-
-      delete visitor;
     }
 
   return 0;
@@ -643,18 +618,9 @@ be_visitor_field_cdr_op_ci::visit_structure (be_structure *node)
 
       // Generate the inline code for structs.
       ctx.state (TAO_CodeGen::TAO_STRUCT_CDR_OP_CI);
-      be_visitor *visitor = tao_cg->make_visitor (&ctx);
+      be_visitor_structure_cdr_op_ci visitor (&ctx);
 
-      if (visitor == 0)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_field_cdr_op_ci::"
-                             "visit_struct - "
-                             "Bad visitor\n"),
-                            -1);
-        }
-
-      if (node->accept (visitor) == -1)
+      if (node->accept (&visitor) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_field_cdr_op_ci::"
@@ -662,8 +628,6 @@ be_visitor_field_cdr_op_ci::visit_structure (be_structure *node)
                              "codegen failed\n"),
                             -1);
         }
-
-      delete visitor;
     }
 
   return 0;
@@ -748,18 +712,9 @@ be_visitor_field_cdr_op_ci::visit_union (be_union *node)
 
       // Generate the inline code for union.
       ctx.state (TAO_CodeGen::TAO_UNION_CDR_OP_CI);
-      be_visitor *visitor = tao_cg->make_visitor (&ctx);
+      be_visitor_union_cdr_op_ci visitor (&ctx);
 
-      if (visitor == 0)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_field_cdr_op_ci::"
-                             "visit_union - "
-                             "Bad visitor\n"),
-                            -1);
-        }
-
-      if (node->accept (visitor) == -1)
+      if (node->accept (&visitor) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_field_cdr_op_ci::"
@@ -767,8 +722,6 @@ be_visitor_field_cdr_op_ci::visit_union (be_union *node)
                              "codegen failed\n"),
                             -1);
         }
-
-      delete visitor;
     }
 
   return 0;

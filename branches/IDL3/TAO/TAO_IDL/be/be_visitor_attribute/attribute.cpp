@@ -70,17 +70,18 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
 
 
   // first the "get" operation
-  be_operation *op = new be_operation (node->field_type (),
-                                       AST_Operation::OP_noflags,
-                                       node->name (),
-                                       node->is_local (),
-                                       node->is_abstract ());
-  op->set_name ((UTL_IdList *) node->name ()->copy ());
-  op->set_defined_in (node->defined_in ());
+  be_operation get_op (node->field_type (),
+                       AST_Operation::OP_noflags,
+                       node->name (),
+                       node->is_local (),
+                       node->is_abstract ());
+
+  get_op.set_name ((UTL_IdList *) node->name ()->copy ());
+  get_op.set_defined_in (node->defined_in ());
 
   // Get the strategy from the attribute and hand it over
   // to the operation
-  delete op->set_strategy (node->get_get_strategy ());
+  delete get_op.set_strategy (node->get_get_strategy ());
 
   be_visitor_context ctx (*this->ctx_);
 
@@ -141,7 +142,7 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
     case TAO_CodeGen::TAO_ATTRIBUTE_SMART_PROXY_CS:
       ctx.state (TAO_CodeGen::TAO_OPERATION_SMART_PROXY_CS);
       break;
-   case TAO_CodeGen::TAO_ATTRIBUTE_INTERCEPTORS_CH:
+    case TAO_CodeGen::TAO_ATTRIBUTE_INTERCEPTORS_CH:
       ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_CH);
       break;
     case TAO_CodeGen::TAO_ATTRIBUTE_INTERCEPTORS_CS:
@@ -170,13 +171,13 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
     }
 
   // Change the state depending on the kind of node strategy
-  ctx.state (op->next_state (ctx.state ()));
+  ctx.state (get_op.next_state (ctx.state ()));
 
   be_visitor *visitor = tao_cg->make_visitor (&ctx);
-  if (!visitor || !op || (op->accept (visitor) == -1))
+
+  if (!visitor || (get_op.accept (visitor) == -1))
     {
       delete visitor;
-      delete op;
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_attribute::"
                          "visit_attribute - "
@@ -187,16 +188,15 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
   delete visitor;
   visitor = 0;
 
-  if (op->has_extra_code_generation (ctx.state ()))
+  if (get_op.has_extra_code_generation (ctx.state ()))
     {
       // Change the state depending on the kind of node strategy
-      ctx.state (op->next_state (ctx.state (), 1));
-
+      ctx.state (get_op.next_state (ctx.state (), 1));
       be_visitor *visitor = tao_cg->make_visitor (&ctx);
-      if (!visitor || !op || (op->accept (visitor) == -1))
+
+      if (!visitor || (get_op.accept (visitor) == -1))
         {
           delete visitor;
-          delete op;
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_attribute::"
                              "visit_attribute - "
@@ -208,37 +208,46 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
       visitor = 0;
     }
 
-  delete op;
-
   // Do nothing for readonly attributes.
   if (node->readonly ())
-    return 0;
+    {
+      return 0;
+    }
 
   // Create the set method.
+  Identifier *id = 0;
+  UTL_ScopedName *sn = 0;
+
+  ACE_NEW_RETURN (id,
+                  Identifier ("void"),
+                  -1);
+
+  ACE_NEW_RETURN (sn,
+                  UTL_ScopedName (id,
+                                  0),
+                  -1);
 
   // the return type  is "void"
-  be_predefined_type *rt =
-    new be_predefined_type (AST_PredefinedType::PT_void,
-                            new UTL_ScopedName (new Identifier ("void"),
-                                                0));
+  be_predefined_type rt (AST_PredefinedType::PT_void,
+                         sn);
   // argument type is the same as the attribute type
-  be_argument *arg = new be_argument (AST_Argument::dir_IN,
-                                      node->field_type (),
-                                      node->name ());
-  arg->set_name ((UTL_IdList *) node->name ()->copy ());
+  be_argument arg (AST_Argument::dir_IN,
+                   node->field_type (),
+                   node->name ());
+  arg.set_name ((UTL_IdList *) node->name ()->copy ());
   // create the operation
-  op = new be_operation (rt,
-                         AST_Operation::OP_noflags,
-                         node->name (),
-                         node->is_local (),
-                         node->is_abstract ());
-  op->set_name ((UTL_IdList *) node->name ()->copy ());
-  op->set_defined_in (node->defined_in ());
-  op->add_argument_to_scope (arg);
+  be_operation set_op (&rt,
+                       AST_Operation::OP_noflags,
+                       node->name (),
+                       node->is_local (),
+                       node->is_abstract ());
+  set_op.set_name ((UTL_IdList *) node->name ()->copy ());
+  set_op.set_defined_in (node->defined_in ());
+  set_op.add_argument_to_scope (&arg);
 
   // Get the strategy from the attribute and hand it over
   // to the operation, thereby deleting the old one.
-  delete op->set_strategy (node->get_set_strategy ());
+  delete set_op.set_strategy (node->get_set_strategy ());
 
   ctx = *this->ctx_;
   // this switch statement eliminates the need for different classes that have
@@ -327,49 +336,43 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
 
 
   // Change the state depending on the kind of node strategy
-  ctx.state (op->next_state (ctx.state ()));
-
+  ctx.state (set_op.next_state (ctx.state ()));
   visitor = tao_cg->make_visitor (&ctx);
-  if (!visitor || !op || (op->accept (visitor) == -1))
+
+  if (!visitor || (set_op.accept (visitor) == -1))
     {
       delete visitor;
-      delete op;
-      delete arg;
-      delete rt;
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_attribute::"
                          "visit_attribute - "
                          "codegen for set_attribute failed\n"),
                         -1);
     }
+
   delete visitor;
   visitor = 0;
 
-  if (op->has_extra_code_generation (ctx.state ()))
+  if (set_op.has_extra_code_generation (ctx.state ()))
     {
       // Change the state depending on the kind of node strategy
-      ctx.state (op->next_state (ctx.state (), 1));
+      ctx.state (set_op.next_state (ctx.state (), 1));
 
       visitor = tao_cg->make_visitor (&ctx);
-      if (!visitor || !op || (op->accept (visitor) == -1))
+
+      if (!visitor || (set_op.accept (visitor) == -1))
         {
           delete visitor;
-          delete op;
-          delete arg;
-          delete rt;
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_attribute::"
                              "visit_attribute - "
                              "codegen for set_attribute failed\n"),
                             -1);
         }
+
       delete visitor;
       visitor = 0;
     }
 
 
-  delete op;
-  delete rt;
-  delete arg;
   return 0;
 }

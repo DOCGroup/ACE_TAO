@@ -71,18 +71,7 @@ be_scope::decl (void)
 void
 be_scope::destroy (void)
 {
-  for (UTL_ScopeActiveIterator iter (this, IK_decls);
-       !iter.is_done ();
-       iter.next ())
-    {
-      AST_Decl *i = iter.item ();
-      i->destroy ();
-      delete i;
-      i = 0;
-    }
-  // Still some glitches, but the call should eventually
-  // be made here.
-  //  UTL_Scope::destroy ();
+  UTL_Scope::destroy ();
 }
 
 int

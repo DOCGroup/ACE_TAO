@@ -129,46 +129,50 @@ void
 UTL_StrList::destroy (void)
 {
   UTL_String *str = 0;
-  UTL_StrlistActiveIterator *i = 0;
-  ACE_NEW (i,
-           UTL_StrlistActiveIterator (this));
 
-  while (!(i->is_done ()))
+  for (UTL_StrlistActiveIterator i (this); !i.is_done (); i.next ())
     {
-      str = i->item ();
+      str = i.item ();
       str->destroy ();
       delete str;
       str = 0;
-      i->next ();
     }
-
-  delete i;
 }
 
 // AST Dumping
 void
-UTL_StrList::dump(ACE_OSTREAM_TYPE &o)
+UTL_StrList::dump (ACE_OSTREAM_TYPE &o)
 {
-  char                        *s;
-  UTL_StrlistActiveIterator *i = new UTL_StrlistActiveIterator(this);
-  idl_bool                     first = I_TRUE;
-  idl_bool                     second = I_FALSE;
+  char *s = 0;
+  idl_bool first = I_TRUE;
+  idl_bool second = I_FALSE;
 
-  while (!(i->is_done())) {
-    if (!first)
-      o << "::";
-    else if (second)
-      first = second = I_FALSE;
-    s = i->item()->get_string();
-    o << s;
-    if (first) {
-      if (strcmp(s, "::") != 0)
-        first = I_FALSE;
-      else
-        second = I_TRUE;
+  for (UTL_StrlistActiveIterator i (this); !i.is_done(); i.next ()) 
+    {
+      if (!first)
+        {
+          o << "::";
+        }
+      else if (second)
+        {
+          first = second = I_FALSE;
+        }
+
+      s = i.item ()->get_string ();
+      o << s;
+
+      if (first) 
+        {
+          if (ACE_OS::strcmp (s, "::") != 0)
+            {
+              first = I_FALSE;
+            }
+          else
+            {
+              second = I_TRUE;
+            }
+        }
     }
-    i->next();
-  }
 }
 
 /*
@@ -181,8 +185,8 @@ UTL_StrList::dump(ACE_OSTREAM_TYPE &o)
  * Constructor
  */
 
-UTL_StrlistActiveIterator::UTL_StrlistActiveIterator(UTL_StrList *s)
-                           : UTL_ListActiveIterator(s)
+UTL_StrlistActiveIterator::UTL_StrlistActiveIterator (UTL_StrList *s)
+  : UTL_ListActiveIterator (s)
 {
 }
 
@@ -196,11 +200,14 @@ UTL_StrlistActiveIterator::UTL_StrlistActiveIterator(UTL_StrList *s)
 
 // Get current item
 UTL_String *
-UTL_StrlistActiveIterator::item()
+UTL_StrlistActiveIterator::item (void)
 {
-  if (source == NULL)
-    return NULL;
-  return ((UTL_StrList *) source)->head();
+  if (source == 0)
+    {
+      return 0;
+    }
+
+  return ((UTL_StrList *) source)->head ();
 }
 
 /*

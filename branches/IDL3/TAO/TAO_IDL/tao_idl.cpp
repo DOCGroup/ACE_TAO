@@ -201,9 +201,6 @@ DRV_drive (const char *s)
 
   DRV_pre_proc (s);
 
-  // Initialize FE stage 1.
-  FE_init_stage1 ();
-
   // Initialize BE.
   AST_Generator *gen = BE_init ();
 
@@ -221,8 +218,8 @@ DRV_drive (const char *s)
       idl_global->set_gen (gen);
     }
 
-  // Initialize FE stage 2.
-  FE_init_stage2 ();
+  // Initialize FE.
+  FE_init ();
 
   // Parse.
   if (idl_global->compile_flags () & IDL_CF_INFORMATIVE)

@@ -146,6 +146,10 @@ public:
                                     // dependent on the programming
                                     // language
       , NT_factory                  // Denotes a OBV factory construct
+      , NT_component                // Denotes a CORBA component
+      , NT_home                     // Denotes a CORBA component home
+      , NT_finder                   // Denotes a home finder
+      , NT_eventtype                // Denotes a CCM event source or sink
   };
 
   // Operations.
@@ -211,10 +215,20 @@ public:
 
   const char *version (void);
   void version (char *value);
-  // Accessors for the version member.
+  // Accessors for the version_ member.
 
   idl_bool anonymous (void) const;
-  // Are we an anonymous (no repo ID) type?
+  // Accessors for the anonymous_ member.
+
+  idl_bool typeid_set (void) const;
+  void typeid_set (idl_bool val);
+  // Accessors for the typeid_set_ member.
+
+  void set_id_with_typeid (char *value);
+  // Called by a 'typeId' declaration.
+
+  void set_prefix_with_typeprefix (char *value);
+  // Called by a 'type_prefix' declaration.
 
   // If there is _cxx_ in the beginning, we will remove that and keep
   // a copy of the original name. TAO IDL's front end adds _cxx_
@@ -289,7 +303,6 @@ private:
   // What file defined in.
 
   UTL_ScopedName *pd_name;
-  // As given.
 
   Identifier *pd_local_name;
   // Name in scope.
@@ -312,10 +325,16 @@ private:
   idl_bool anonymous_;
   // Are we an anonymous (no repo ID) type?
 
+  idl_bool typeid_set_;
+  // Has our repo id been set by a typeId declaration?
+
   // Operations
 
-  // Compute the full name of an AST node.
   void compute_full_name (UTL_ScopedName *n);
+  // Compute the full name of an AST node.
+
+  void set_prefix_with_typeprefix_r (char *value);
+  // Non-top-level version of set_prefix_with_typeprefix.
 };
 
 #endif           // _AST_DECL_AST_DECL_HH

@@ -67,8 +67,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _AST_STRUCTURE_AST_STRUCTURE_HH
 #define _AST_STRUCTURE_AST_STRUCTURE_HH
 
-#include "ace/Unbounded_Queue.h"
-
 // Representation of structure:
 //
 // NOTE: add (AST_ConcreteType *) is defined here because a structure
@@ -78,6 +76,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // be defined manifest locally; the constants defined in these
 // enums are inserted in the enclosing scope. It is unlikely that
 // a BE writer will need to overload this function in AST_Structure.
+
+#include "ace/Unbounded_Queue.h"
 
 class TAO_IDL_FE_Export AST_Structure : public virtual AST_ConcreteType,
                                         public virtual UTL_Scope

@@ -98,7 +98,7 @@ AST_Module *
 AST_Generator::create_module (UTL_Scope *s,
                               UTL_ScopedName *n)
 {
-  // We create this first so if we find a module with the
+ // We create this first so if we find a module with the
   // same name from an included file, we can add its
   // members to the new module's scope.
   AST_Module *retval = 0;
@@ -669,9 +669,15 @@ AST_Generator::create_sequence (AST_Expression *ms,
 AST_String *
 AST_Generator::create_string (AST_Expression *ms)
 {
+  Identifier id ("string");
+  UTL_ScopedName n (&id,
+                    0);
+
   AST_String *retval = 0;
   ACE_NEW_RETURN (retval,
-                  AST_String (ms),
+                  AST_String (AST_Decl::NT_string,
+                              &n,
+                              ms),
                   0);
 
   return retval;
@@ -681,9 +687,20 @@ AST_Generator::create_string (AST_Expression *ms)
 AST_String      *
 AST_Generator::create_wstring (AST_Expression *ms)
 {
+  Identifier id (sizeof (ACE_CDR::WChar) == 1
+                   ? "string"
+                   : "wstring");
+  UTL_ScopedName n (&id,
+                    0);
+  AST_Decl::NodeType nt = sizeof (ACE_CDR::WChar) == 1
+                            ? AST_Decl::NT_string
+                            : AST_Decl::NT_wstring;
+
   AST_String *retval = 0;
   ACE_NEW_RETURN (retval,
-                  AST_String (ms,
+                  AST_String (nt,
+                              &n,
+                              ms,
                               sizeof (ACE_OS::WChar)),
                   0);
 

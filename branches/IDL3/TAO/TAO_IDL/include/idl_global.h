@@ -85,7 +85,9 @@ public:
   // where context sensitive behavior is required
   enum ParseState {
       PS_NoState                // No state
-    , PS_TypeDeclSeen           // Seen complete typedef declaration
+    , PS_TypeDeclSeen           // Seen complete type declaration
+    , PS_TypeIdDeclSeen         // Seen complete typeId declaration
+    , PS_TypePrefixDeclSeen     // Seen complete type_prefix declaration
     , PS_ConstDeclSeen          // Seen complete const declaration
     , PS_ExceptDeclSeen         // Seen complete exception declaration
     , PS_InterfaceDeclSeen      // Seen complete interface declaration
@@ -210,8 +212,8 @@ public:
   virtual ~IDL_GlobalData (void);
 
   // Operations
-  virtual UTL_ScopeStack   *scopes (void);              // Scopes stack
-  virtual void             set_scopes (UTL_ScopeStack *);
+  virtual UTL_ScopeStack   &scopes (void);              // Scopes stack
+//  virtual void             set_scopes (UTL_ScopeStack *);
                                                         // Set it
 
   virtual AST_Root         *root (void);                // Root of AST
@@ -345,6 +347,12 @@ public:
   virtual idl_bool obv_support (void);
   // check if OBV (Valuetype) support is enabled
 
+  void component_support (idl_bool);
+  // set enable/disable CORBA component support
+
+  idl_bool component_support (void);
+  // check if CORBA component support is enabled
+
   virtual void case_diff_error (idl_bool);
   // report an error (1) for indentifiers in the same scope
   // that differ only by case, or report a warning (0).
@@ -373,7 +381,7 @@ public:
 
 private:
   // Data
-  UTL_ScopeStack             *pd_scopes;             // Store scopes stack
+  UTL_ScopeStack             pd_scopes;              // Store scopes stack
   AST_Root                   *pd_root;               // Store AST root
   AST_Generator              *pd_gen;                // Store generator
   UTL_Error                  *pd_err;                // Error object
@@ -429,6 +437,9 @@ private:
 
   idl_bool obv_support_;
   // Do we support OBV (Valuetype)?
+
+  idl_bool component_support_;
+  // Do we support the CCM (CORBA Component Model)?
 
   idl_bool case_diff_error_;
   // Do we report an error for indentifiers in the same scope that differ

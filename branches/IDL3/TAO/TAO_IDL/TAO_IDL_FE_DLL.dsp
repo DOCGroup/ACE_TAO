@@ -118,6 +118,10 @@ SOURCE=.\ast\ast_check.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\ast\ast_component.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\ast\ast_concrete_type.cpp
 # End Source File
 # Begin Source File
@@ -351,6 +355,10 @@ SOURCE=.\include\ast_array.h
 # Begin Source File
 
 SOURCE=.\include\ast_attribute.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\include\ast_component.h
 # End Source File
 # Begin Source File
 

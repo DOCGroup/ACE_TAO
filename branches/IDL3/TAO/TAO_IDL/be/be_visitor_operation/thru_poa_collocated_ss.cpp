@@ -18,115 +18,98 @@
 //
 // ============================================================================
 
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "be.h"
-
+#include "idl.h"
+#include "idl_extern.h"
+#include "be.h"
 #include "be_visitor_operation.h"
 
-ACE_RCSID(be_visitor_operation, thru_poa_collocated_ss, "$Id$")
+ACE_RCSID (be_visitor_operation, 
+           thru_poa_collocated_ss, 
+           "$Id$")
 
 
 // *************************************************************************
-//  be_visitor_operation_thru_poa_collocated_ss --
 //  This visitor generates code for the thru_poa_collocated operation signature in a
-//  server skeletons file
+//  server skeletons file.
 // *************************************************************************
 
-be_visitor_operation_thru_poa_collocated_ss::be_visitor_operation_thru_poa_collocated_ss
-(be_visitor_context *ctx)
+be_visitor_operation_thru_poa_collocated_ss::
+be_visitor_operation_thru_poa_collocated_ss (be_visitor_context *ctx)
   : be_visitor_operation (ctx)
 {
 }
 
-be_visitor_operation_thru_poa_collocated_ss::~be_visitor_operation_thru_poa_collocated_ss (void)
+be_visitor_operation_thru_poa_collocated_ss::
+~be_visitor_operation_thru_poa_collocated_ss (void)
 {
 }
 
-int be_visitor_operation_thru_poa_collocated_ss::visit_operation (be_operation *node)
+int be_visitor_operation_thru_poa_collocated_ss::visit_operation (
+    be_operation *node
+  )
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
   // We need the interface node in which this operation was defined. However,
   // if this operation node was an attribute node in disguise, we get this
-  // information from the context
-  be_interface *intf;
-  intf = this->ctx_->attribute ()
+  // information from the context.
+  be_interface *intf = this->ctx_->attribute ()
     ? be_interface::narrow_from_scope (this->ctx_->attribute ()->defined_in ())
     : be_interface::narrow_from_scope (node->defined_in ());
 
   if (!intf)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_operation_thru_poa_collocated_ss::"
+                         "(%N:%l) be_visitor_operation_"
+                         "thru_poa_collocated_ss::"
                          "visit_operation - "
                          "bad interface scope\n"),
                         -1);
     }
 
-  // retrieve the operation return type
   be_type *bt = be_type::narrow_from_decl (node->return_type ());
+
   if (!bt)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_operation_thru_poa_collocated_ss::"
+                         "(%N:%l) be_visitor_operation_"
+                         "thru_poa_collocated_ss::"
                          "visit_operation - "
                          "Bad return type\n"),
                         -1);
     }
 
-  // STEP 2: generate the return type mapping (same as in the header file)
+  // STEP 2: generate the return type mapping (same as in the header file).
   be_visitor_context ctx (*this->ctx_);
   ctx.state (TAO_CodeGen::TAO_OPERATION_RETTYPE_OTHERS);
-  be_visitor *visitor = tao_cg->make_visitor (&ctx);
+  be_visitor_operation_rettype oro_visitor (&ctx);
 
-  if (!visitor)
+  if (bt->accept (&oro_visitor) == -1)
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_operation_thru_poa_collocated_ss::"
-                         "visit_operation - "
-                         "Bad visitor for return type\n"),
-                        -1);
-    }
-
-  if (bt->accept (visitor) == -1)
-    {
-      delete visitor;
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_operation_thru_poa_collocated_ss::"
                          "visit_operation - "
                          "codegen for return type failed\n"),
                         -1);
     }
-  delete visitor;
 
   *os << " " << intf->full_coll_name (be_interface::THRU_POA) << "::";
   *os << node->local_name ();
 
   // STEP 4: generate the argument list with the appropriate mapping (same as
-  // in the header file)
+  // in the header file).
   ctx = *this->ctx_;
   ctx.state (TAO_CodeGen::TAO_OPERATION_ARGLIST_OTHERS);
-  visitor = tao_cg->make_visitor (&ctx);
-  if (!visitor)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_operation_ss::"
-                         "visit_operation - "
-                         "Bad visitor to return type\n"),
-                        -1);
-    }
+  be_visitor_operation_arglist oao_visitor (&ctx);
 
-  if (node->accept (visitor) == -1)
+  if (node->accept (&oao_visitor) == -1)
     {
-      delete visitor;
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_operation_ss::"
                          "visit_operation - "
                          "codegen for argument list failed\n"),
                         -1);
     }
-  delete visitor;
 
   *os << "{" << be_idt_nl
       << "TAO_Object_Adapter::Servant_Upcall servant_upcall ("
@@ -139,21 +122,29 @@ int be_visitor_operation_thru_poa_collocated_ss::visit_operation (be_operation *
       << "this->_object_key ()," << be_nl
       << "\"" << node->original_local_name () << "\"," << be_nl
       << "forward_to.out ()";
+
   if (!be_global->exception_support ())
-    *os << " ACE_ENV_ARG_PARAMETER);\n" << be_uidt_nl << be_uidt;
+    {
+      *os << " ACE_ENV_ARG_PARAMETER);\n" << be_uidt_nl << be_uidt;
+    }
   else
-    *os << be_uidt_nl << ");\n" << be_uidt;
+    {
+      *os << be_uidt_nl << ");\n" << be_uidt;
+    }
 
   // check if there is an exception
   if (!be_global->exception_support ())
-    if (this->gen_check_exception (0) == -1)
-      {
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "(%N:%l) be_visitor_operation_thru_poa_collocated_ss::"
-                           "visit_operation - "
-                           "codegen for checking exception failed\n"),
-                          -1);
-      }
+    {
+      if (this->gen_check_exception (0) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_operation_"
+                             "thru_poa_collocated_ss::"
+                             "visit_operation - "
+                             "codegen for checking exception failed\n"),
+                            -1);
+        }
+    }
 
   os->indent ();
 
@@ -170,7 +161,9 @@ int be_visitor_operation_thru_poa_collocated_ss::visit_operation (be_operation *
       << ")" << be_uidt;
 
   if (this->gen_invoke (ctx, node) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   if (this->void_return_type (bt))
     {
@@ -194,11 +187,10 @@ int be_visitor_operation_thru_poa_collocated_ss::gen_invoke (
 
   ctx = *this->ctx_;
   ctx.state (TAO_CodeGen::TAO_OPERATION_COLLOCATED_ARG_UPCALL_SS);
-  be_visitor *visitor = tao_cg->make_visitor (&ctx);
+  be_visitor_operation_argument visitor (&ctx);
 
-  if (!visitor || (node->accept (visitor) == -1))
+  if (node->accept (&visitor) == -1)
     {
-      delete visitor;
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_operation_thru_poa_collocated_ss::"
                          "gen_invoke - "
@@ -206,22 +198,9 @@ int be_visitor_operation_thru_poa_collocated_ss::gen_invoke (
                         -1);
     }
 
-  // End the upcall
   *os << be_uidt_nl
       << ");\n";
 
   return 0;
 }
 
-int
-be_visitor_operation_thru_poa_collocated_ss::void_return_type (be_type *bt)
-{
-  // is the operation return type void?
-
-  if (bt->node_type () == AST_Decl::NT_pre_defined
-      && (be_predefined_type::narrow_from_decl (bt)->pt ()
-          == AST_PredefinedType::PT_void))
-    return 1;
-  else
-    return 0;
-}

@@ -84,10 +84,10 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // the entire AST. The check ensures that for each fwd declared interface
 // the full definition was also seen.
 
-extern void     AST_record_fwd_interface(AST_InterfaceFwd *i);
-extern void     AST_check_fwd_interface();
+extern void AST_record_fwd_interface (AST_InterfaceFwd *i);
+extern void AST_check_fwd_interface (void);
 
-extern idl_bool AST_illegal_recursive_type(AST_Decl *t);
+extern idl_bool AST_illegal_recursive_type (AST_Decl *t);
 
 #endif           // _AST_EXTERN_AST_EXTERN_HH
 
