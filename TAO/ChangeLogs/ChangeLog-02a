@@ -1,3 +1,12 @@
+Wed Jan 23 12:06:37 2002  Mayur Deshpande  <mayur@ics.uci.edu>
+
+	* TAO/tao/Makefile: 
+	* TAO/tao/Makefile.bor: 
+	* TAO/tao/PortableServer/Makefile: 
+	* TAO/tao/PortableServer/Makefile.bor:
+	  Updated the files with the changes of moving the AMH_Response_Handler
+	  files from tao/ tao/PortableServer
+
 Wed Jan 23 12:03:01 2002  Carlos O'Ryan  <coryan@uci.edu>
 
 	* TAO_IDL/be/be_interface.cpp:
@@ -20,7 +29,7 @@ Wed Jan 23 12:00:35 2002  Ossama Othman  <ossama@uci.edu>
 	  not the credential has expired.
 
 Wed Jan 23 11:10:33 2002  Mayur Deshpande  <mayur@ics.uci.edu>
-	
+
         * tao/PortableServer/AMH_Response_Handler.h:
         * tao/PortableServer/TAO_PortableServer.dsp:
         * tao/TAO.dsp:

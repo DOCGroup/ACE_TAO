@@ -6,6 +6,7 @@ NAME = TAO_PortableServer
 
 OBJFILES = \
 	$(OBJDIR)\Active_Object_Map.obj \
+	$(OBJDIR)\AMH_Response_handler.obj \
 	$(OBJDIR)\Collocated_Object.obj \
 	$(OBJDIR)\Default_Acceptor_Filter.obj \
 	$(OBJDIR)\Default_Policy_Validator.obj \
