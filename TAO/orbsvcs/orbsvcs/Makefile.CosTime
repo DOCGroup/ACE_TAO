@@ -75,8 +75,8 @@ realclean: clean
 
 .obj/TAO_Time_Service_Server.o .obj/TAO_Time_Service_Server.so .shobj/TAO_Time_Service_Server.o .shobj/TAO_Time_Service_Server.so: Time/TAO_Time_Service_Server.cpp \
   Time/TAO_UTO.h $(ACE_ROOT)/ace/pre.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeServiceS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.h \
+  TimeServiceS.h \
+  TimeBaseS.h \
   $(TAO_ROOT)/tao/TimeBaseS.h \
   $(TAO_ROOT)/tao/TimeBaseC.h \
   $(TAO_ROOT)/tao/corbafwd.h \
@@ -218,7 +218,7 @@ realclean: clean
   $(TAO_ROOT)/tao/TimeBaseS_T.i \
   $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
   $(TAO_ROOT)/tao/TimeBaseS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
+  TimeBaseC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(TAO_ROOT)/tao/NVList.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
@@ -277,8 +277,8 @@ realclean: clean
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
+  svc_utils_export.h \
+  TimeBaseC.i \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
   $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -293,17 +293,17 @@ realclean: clean
   $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
   $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
   $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeServiceC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Time/time_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeServiceC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeServiceS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeServiceS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeServiceS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeServiceS.i \
+  TimeBaseS_T.h \
+  TimeBaseS_T.i \
+  TimeBaseS_T.cpp \
+  TimeBaseS.i \
+  TimeServiceC.h \
+  Time/time_export.h \
+  TimeServiceC.i \
+  TimeServiceS_T.h \
+  TimeServiceS_T.i \
+  TimeServiceS_T.cpp \
+  TimeServiceS.i \
   Time/time_export.h Time/TAO_TIO.h \
   $(TAO_ROOT)/tao/PortableServer/ORB_Manager.h \
   Time/TAO_Time_Service_Server.h
@@ -384,7 +384,7 @@ realclean: clean
   $(ACE_ROOT)/ace/Signal.i \
   $(ACE_ROOT)/ace/Reactor.i \
   $(ACE_ROOT)/ace/Reactor_Impl.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/Naming_Utils.h \
+  Naming/Naming_Utils.h \
   $(TAO_ROOT)/tao/corba.h \
   $(TAO_ROOT)/tao/corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
@@ -518,11 +518,11 @@ realclean: clean
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/IOR_Multicast.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
+  CosNamingC.h \
+  Naming/naming_export.h \
+  CosNamingC.i \
+  IOR_Multicast.h \
+  svc_utils_export.h \
   $(ACE_ROOT)/ace/INET_Addr.h \
   $(ACE_ROOT)/ace/Addr.h \
   $(ACE_ROOT)/ace/Addr.i \
@@ -535,8 +535,8 @@ realclean: clean
   $(ACE_ROOT)/ace/SOCK.i \
   $(ACE_ROOT)/ace/SOCK_Dgram.i \
   $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/Naming_Context_Interface.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.h \
+  Naming/Naming_Context_Interface.h \
+  CosNamingS.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
   $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -551,30 +551,30 @@ realclean: clean
   $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
   $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
   $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeServiceS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.h \
+  CosNamingS_T.h \
+  CosNamingS_T.i \
+  CosNamingS_T.cpp \
+  CosNamingS.i \
+  TimeServiceS.h \
+  TimeBaseS.h \
   $(TAO_ROOT)/tao/TimeBaseS.h \
   $(TAO_ROOT)/tao/TimeBaseS_T.h \
   $(TAO_ROOT)/tao/TimeBaseS_T.i \
   $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
   $(TAO_ROOT)/tao/TimeBaseS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeServiceC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Time/time_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeServiceC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeServiceS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeServiceS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeServiceS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeServiceS.i \
+  TimeBaseC.h \
+  TimeBaseC.i \
+  TimeBaseS_T.h \
+  TimeBaseS_T.i \
+  TimeBaseS_T.cpp \
+  TimeBaseS.i \
+  TimeServiceC.h \
+  Time/time_export.h \
+  TimeServiceC.i \
+  TimeServiceS_T.h \
+  TimeServiceS_T.i \
+  TimeServiceS_T.cpp \
+  TimeServiceS.i \
   Time/Timer_Helper.h \
   $(ACE_ROOT)/ace/Containers.h \
   $(ACE_ROOT)/ace/Containers.i \
@@ -643,8 +643,8 @@ realclean: clean
 
 .obj/TAO_UTO.o .obj/TAO_UTO.so .shobj/TAO_UTO.o .shobj/TAO_UTO.so: Time/TAO_UTO.cpp Time/TAO_UTO.h \
   $(ACE_ROOT)/ace/pre.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeServiceS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.h \
+  TimeServiceS.h \
+  TimeBaseS.h \
   $(TAO_ROOT)/tao/TimeBaseS.h \
   $(TAO_ROOT)/tao/TimeBaseC.h \
   $(TAO_ROOT)/tao/corbafwd.h \
@@ -786,7 +786,7 @@ realclean: clean
   $(TAO_ROOT)/tao/TimeBaseS_T.i \
   $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
   $(TAO_ROOT)/tao/TimeBaseS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
+  TimeBaseC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(TAO_ROOT)/tao/NVList.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
@@ -845,8 +845,8 @@ realclean: clean
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
+  svc_utils_export.h \
+  TimeBaseC.i \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
   $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -861,17 +861,17 @@ realclean: clean
   $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
   $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
   $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeServiceC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Time/time_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeServiceC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeServiceS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeServiceS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeServiceS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeServiceS.i \
+  TimeBaseS_T.h \
+  TimeBaseS_T.i \
+  TimeBaseS_T.cpp \
+  TimeBaseS.i \
+  TimeServiceC.h \
+  Time/time_export.h \
+  TimeServiceC.i \
+  TimeServiceS_T.h \
+  TimeServiceS_T.i \
+  TimeServiceS_T.cpp \
+  TimeServiceS.i \
   Time/time_export.h Time/TAO_TIO.h \
   $(TAO_ROOT)/tao/PortableServer/ORB_Manager.h
 
@@ -1022,8 +1022,8 @@ realclean: clean
   $(TAO_ROOT)/tao/CORBA_String.h \
   $(TAO_ROOT)/tao/CORBA_String.inl \
   $(TAO_ROOT)/tao/ORB.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeServiceS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.h \
+  TimeServiceS.h \
+  TimeBaseS.h \
   $(TAO_ROOT)/tao/TimeBaseS.h \
   $(TAO_ROOT)/tao/TimeBaseC.h \
   $(TAO_ROOT)/tao/SmartProxies/Smart_Proxies.h \
@@ -1044,7 +1044,7 @@ realclean: clean
   $(TAO_ROOT)/tao/TimeBaseS_T.i \
   $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
   $(TAO_ROOT)/tao/TimeBaseS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
+  TimeBaseC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(TAO_ROOT)/tao/NVList.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
@@ -1084,8 +1084,8 @@ realclean: clean
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
+  svc_utils_export.h \
+  TimeBaseC.i \
   $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
   $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
   $(ACE_ROOT)/ace/Atomic_Op.h \
@@ -1096,17 +1096,17 @@ realclean: clean
   $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
   $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
   $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeServiceC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Time/time_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeServiceC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeServiceS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeServiceS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeServiceS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeServiceS.i \
+  TimeBaseS_T.h \
+  TimeBaseS_T.i \
+  TimeBaseS_T.cpp \
+  TimeBaseS.i \
+  TimeServiceC.h \
+  Time/time_export.h \
+  TimeServiceC.i \
+  TimeServiceS_T.h \
+  TimeServiceS_T.i \
+  TimeServiceS_T.cpp \
+  TimeServiceS.i \
   Time/TAO_UTO.h Time/time_export.h
 
 .obj/Timer_Helper.o .obj/Timer_Helper.so .shobj/Timer_Helper.o .shobj/Timer_Helper.so: Time/Timer_Helper.cpp Time/Timer_Helper.h \
@@ -1174,8 +1174,8 @@ realclean: clean
   $(ACE_ROOT)/ace/Containers_T.i \
   $(ACE_ROOT)/ace/Containers_T.cpp \
   Time/time_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeServiceS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.h \
+  TimeServiceS.h \
+  TimeBaseS.h \
   $(TAO_ROOT)/tao/TimeBaseS.h \
   $(TAO_ROOT)/tao/TimeBaseC.h \
   $(TAO_ROOT)/tao/corbafwd.h \
@@ -1266,7 +1266,7 @@ realclean: clean
   $(TAO_ROOT)/tao/TimeBaseS_T.i \
   $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
   $(TAO_ROOT)/tao/TimeBaseS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
+  TimeBaseC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(TAO_ROOT)/tao/NVList.h \
   $(TAO_ROOT)/tao/NVList.i \
@@ -1322,8 +1322,8 @@ realclean: clean
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
+  svc_utils_export.h \
+  TimeBaseC.i \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
   $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -1338,17 +1338,17 @@ realclean: clean
   $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
   $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
   $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeServiceC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Time/time_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeServiceC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeServiceS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeServiceS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeServiceS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeServiceS.i \
+  TimeBaseS_T.h \
+  TimeBaseS_T.i \
+  TimeBaseS_T.cpp \
+  TimeBaseS.i \
+  TimeServiceC.h \
+  Time/time_export.h \
+  TimeServiceC.i \
+  TimeServiceS_T.h \
+  TimeServiceS_T.i \
+  TimeServiceS_T.cpp \
+  TimeServiceS.i \
   Time/TAO_Time_Service_Clerk.h \
   $(ACE_ROOT)/ace/Reactor.h \
   $(ACE_ROOT)/ace/Handle_Set.h \
@@ -1362,11 +1362,11 @@ realclean: clean
   $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
   $(ACE_ROOT)/ace/Reactor.i \
   $(ACE_ROOT)/ace/Reactor_Impl.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/Naming_Utils.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/IOR_Multicast.h \
+  Naming/Naming_Utils.h \
+  CosNamingC.h \
+  Naming/naming_export.h \
+  CosNamingC.i \
+  IOR_Multicast.h \
   $(ACE_ROOT)/ace/INET_Addr.h \
   $(ACE_ROOT)/ace/Addr.h \
   $(ACE_ROOT)/ace/Addr.i \
@@ -1379,12 +1379,12 @@ realclean: clean
   $(ACE_ROOT)/ace/SOCK.i \
   $(ACE_ROOT)/ace/SOCK_Dgram.i \
   $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/Naming_Context_Interface.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.i
+  Naming/Naming_Context_Interface.h \
+  CosNamingS.h \
+  CosNamingS_T.h \
+  CosNamingS_T.i \
+  CosNamingS_T.cpp \
+  CosNamingS.i
 
 .obj/TimeServiceS.o .obj/TimeServiceS.so .shobj/TimeServiceS.o .shobj/TimeServiceS.so: TimeServiceS.cpp TimeServiceS.h \
   $(ACE_ROOT)/ace/pre.h TimeBaseS.h \
@@ -1680,7 +1680,6 @@ realclean: clean
   $(ACE_ROOT)/ace/Array_Base.inl \
   $(ACE_ROOT)/ace/Array_Base.cpp \
   $(TAO_ROOT)/tao/PICurrent.inl \
-  $(TAO_ROOT)/tao/TAO_AMH_Response_Handler.h \
   $(TAO_ROOT)/tao/TAO_Server_Request.i \
   $(TAO_ROOT)/tao/ORB_Core.h \
   $(TAO_ROOT)/tao/Policy_Manager.h \

@@ -85,8 +85,8 @@ realclean: clean
 .obj/Naming_Context_Interface.o .obj/Naming_Context_Interface.so .shobj/Naming_Context_Interface.o .shobj/Naming_Context_Interface.so: Naming/Naming_Context_Interface.cpp \
   Naming/Naming_Context_Interface.h \
   $(ACE_ROOT)/ace/pre.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
+  CosNamingS.h \
+  CosNamingC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ACE_export.h \
@@ -281,8 +281,8 @@ realclean: clean
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
+  Naming/naming_export.h \
+  CosNamingC.i \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
   $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -297,10 +297,10 @@ realclean: clean
   $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
   $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
   $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.i \
+  CosNamingS_T.h \
+  CosNamingS_T.i \
+  CosNamingS_T.cpp \
+  CosNamingS.i \
   Naming/naming_export.h
 
 .obj/Hash_Naming_Context.o .obj/Hash_Naming_Context.so .shobj/Hash_Naming_Context.o .shobj/Hash_Naming_Context.so: Naming/Hash_Naming_Context.cpp \
@@ -334,8 +334,8 @@ realclean: clean
   $(ACE_ROOT)/ace/Auto_Ptr.i \
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
   Naming/Hash_Naming_Context.h Naming/Naming_Context_Interface.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
+  CosNamingS.h \
+  CosNamingC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(TAO_ROOT)/tao/corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
@@ -502,8 +502,8 @@ realclean: clean
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
+  Naming/naming_export.h \
+  CosNamingC.i \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
   $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -518,10 +518,10 @@ realclean: clean
   $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
   $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
   $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.i \
+  CosNamingS_T.h \
+  CosNamingS_T.i \
+  CosNamingS_T.cpp \
+  CosNamingS.i \
   Naming/naming_export.h
 
 .obj/Persistent_Naming_Context.o .obj/Persistent_Naming_Context.so .shobj/Persistent_Naming_Context.o .shobj/Persistent_Naming_Context.so: Naming/Persistent_Naming_Context.cpp \
@@ -556,8 +556,8 @@ realclean: clean
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
   Naming/Persistent_Naming_Context.h Naming/Hash_Naming_Context.h \
   Naming/Naming_Context_Interface.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
+  CosNamingS.h \
+  CosNamingC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(TAO_ROOT)/tao/corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
@@ -724,8 +724,8 @@ realclean: clean
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
+  Naming/naming_export.h \
+  CosNamingC.i \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
   $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -740,10 +740,10 @@ realclean: clean
   $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
   $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
   $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.i \
+  CosNamingS_T.h \
+  CosNamingS_T.i \
+  CosNamingS_T.cpp \
+  CosNamingS.i \
   Naming/naming_export.h Naming/Persistent_Entries.h \
   $(ACE_ROOT)/ace/Hash_Map_With_Allocator_T.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -811,8 +811,8 @@ realclean: clean
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
   Naming/Transient_Naming_Context.h Naming/Hash_Naming_Context.h \
   Naming/Naming_Context_Interface.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
+  CosNamingS.h \
+  CosNamingC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(TAO_ROOT)/tao/corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
@@ -979,8 +979,8 @@ realclean: clean
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
+  Naming/naming_export.h \
+  CosNamingC.i \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
   $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -995,10 +995,10 @@ realclean: clean
   $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
   $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
   $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.i \
+  CosNamingS_T.h \
+  CosNamingS_T.i \
+  CosNamingS_T.cpp \
+  CosNamingS.i \
   Naming/naming_export.h Naming/Entries.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager.h \
   $(ACE_ROOT)/ace/Functor.h \
@@ -1258,9 +1258,9 @@ realclean: clean
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
+  CosNamingC.h \
+  Naming/naming_export.h \
+  CosNamingC.i \
   Naming/naming_export.h
 
 .obj/Entries.o .obj/Entries.so .shobj/Entries.o .shobj/Entries.so: Naming/Entries.cpp Naming/Entries.h \
@@ -1487,9 +1487,9 @@ realclean: clean
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
+  CosNamingC.h \
+  Naming/naming_export.h \
+  CosNamingC.i \
   Naming/naming_export.h
 
 .obj/Persistent_Context_Index.o .obj/Persistent_Context_Index.so .shobj/Persistent_Context_Index.o .shobj/Persistent_Context_Index.so: Naming/Persistent_Context_Index.cpp \
@@ -1721,9 +1721,9 @@ realclean: clean
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
+  CosNamingC.h \
+  Naming/naming_export.h \
+  CosNamingC.i \
   Naming/naming_export.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
   $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
@@ -1731,7 +1731,7 @@ realclean: clean
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
   Naming/Persistent_Naming_Context.h Naming/Hash_Naming_Context.h \
   Naming/Naming_Context_Interface.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.h \
+  CosNamingS.h \
   $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
   $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
   $(ACE_ROOT)/ace/Atomic_Op.h \
@@ -1742,10 +1742,10 @@ realclean: clean
   $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
   $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
   $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.i \
+  CosNamingS_T.h \
+  CosNamingS_T.i \
+  CosNamingS_T.cpp \
+  CosNamingS.i \
   $(TAO_ROOT)/tao/debug.h
 
 .obj/Naming_Utils.o .obj/Naming_Utils.so .shobj/Naming_Utils.o .shobj/Naming_Utils.so: Naming/Naming_Utils.cpp Naming/Naming_Utils.h \
@@ -1944,11 +1944,11 @@ realclean: clean
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/IOR_Multicast.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
+  CosNamingC.h \
+  Naming/naming_export.h \
+  CosNamingC.i \
+  IOR_Multicast.h \
+  svc_utils_export.h \
   $(ACE_ROOT)/ace/INET_Addr.h \
   $(ACE_ROOT)/ace/Addr.h \
   $(ACE_ROOT)/ace/Addr.i \
@@ -1974,7 +1974,7 @@ realclean: clean
   $(ACE_ROOT)/ace/Reactor.i \
   $(ACE_ROOT)/ace/Reactor_Impl.h \
   Naming/Naming_Context_Interface.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.h \
+  CosNamingS.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
   $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -1989,10 +1989,10 @@ realclean: clean
   $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
   $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
   $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.i \
+  CosNamingS_T.h \
+  CosNamingS_T.i \
+  CosNamingS_T.cpp \
+  CosNamingS.i \
   Naming/naming_export.h Naming/Transient_Naming_Context.h \
   Naming/Hash_Naming_Context.h Naming/Entries.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -2184,7 +2184,7 @@ realclean: clean
   $(ACE_ROOT)/ace/Shared_Object.i \
   $(ACE_ROOT)/ace/Service_Object.i \
   $(TAO_ROOT)/tao/Object_Loader.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/Naming_Utils.h \
+  Naming/Naming_Utils.h \
   $(TAO_ROOT)/tao/corba.h \
   $(TAO_ROOT)/tao/Typecode.h \
   $(TAO_ROOT)/tao/Typecode.i \
@@ -2272,11 +2272,11 @@ realclean: clean
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/IOR_Multicast.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
+  CosNamingC.h \
+  Naming/naming_export.h \
+  CosNamingC.i \
+  IOR_Multicast.h \
+  svc_utils_export.h \
   $(ACE_ROOT)/ace/INET_Addr.h \
   $(ACE_ROOT)/ace/Addr.h \
   $(ACE_ROOT)/ace/Addr.i \
@@ -2301,8 +2301,8 @@ realclean: clean
   $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
   $(ACE_ROOT)/ace/Reactor.i \
   $(ACE_ROOT)/ace/Reactor_Impl.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/Naming_Context_Interface.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.h \
+  Naming/Naming_Context_Interface.h \
+  CosNamingS.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
   $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -2317,10 +2317,10 @@ realclean: clean
   $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
   $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
   $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.i \
+  CosNamingS_T.h \
+  CosNamingS_T.i \
+  CosNamingS_T.cpp \
+  CosNamingS.i \
   $(ACE_ROOT)/ace/Dynamic_Service.h \
   $(ACE_ROOT)/ace/Dynamic_Service_Base.h \
   $(ACE_ROOT)/ace/Dynamic_Service.i \
@@ -2613,7 +2613,6 @@ realclean: clean
   $(ACE_ROOT)/ace/Array_Base.inl \
   $(ACE_ROOT)/ace/Array_Base.cpp \
   $(TAO_ROOT)/tao/PICurrent.inl \
-  $(TAO_ROOT)/tao/TAO_AMH_Response_Handler.h \
   $(TAO_ROOT)/tao/TAO_Server_Request.i \
   $(TAO_ROOT)/tao/ORB_Core.h \
   $(TAO_ROOT)/tao/Policy_Manager.h \
