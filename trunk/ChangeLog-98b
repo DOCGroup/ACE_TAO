@@ -1,35 +1,43 @@
+Sat Aug 22 07:59:28 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/UPIPE_SAP_Test.cpp (main): removed unused local
+          variables thr_handle_acceptor and thr_handle_connector.
+
+        * tests/UPIPE_SAP_Test.cpp (connector): removed leading newline
+          in printout at end of thread execution.
+
 Sat Aug 22 00:27:06 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/Read_Buffer.i (alloc): Added new method to get to
- 	  Read_Buffer's allocator.  This is necessary because we need to
- 	  free up the memory that it allocates for us.
+        * ace/Read_Buffer.i (alloc): Added new method to get to
+          Read_Buffer's allocator.  This is necessary because we need to
+          free up the memory that it allocates for us.
 
-	* ace/Service_Object.cpp (fini): New method calls fini() on
- 	  <type_> and sets the <fini_already_called_> flag.  This flag is
- 	  tested in the destructor so that the <type_> is not fini'ed
- 	  twice.
+        * ace/Service_Object.cpp (fini): New method calls fini() on
+          <type_> and sets the <fini_already_called_> flag.  This flag is
+          tested in the destructor so that the <type_> is not fini'ed
+          twice.
 
-	* ace/Service_Repository.cpp (fini): New method to finalize (call
- 	  fini() and possibly delete) all the services.
+        * ace/Service_Repository.cpp (fini): New method to finalize (call
+          fini() and possibly delete) all the services.
 
-	* ace/Service_Config.cpp (fini_svcs): New method calls
- 	  ACE_Service_Repository::instance ()->fini ().
+        * ace/Service_Config.cpp (fini_svcs): New method calls
+          ACE_Service_Repository::instance ()->fini ().
 
-	* ace/Object_Manager.cpp (~ACE_Object_Manager): Added a call to
- 	  close and possibly delete all service instances in the Service
- 	  Repository by calling ACE_Service_Config::fini_svcs ().  This
- 	  call is made *before* the singletons are destroyed since the
- 	  service instances maybe accessing these singletons in the fini()
- 	  and destructor methods.
+        * ace/Object_Manager.cpp (~ACE_Object_Manager): Added a call to
+          close and possibly delete all service instances in the Service
+          Repository by calling ACE_Service_Config::fini_svcs ().  This
+          call is made *before* the singletons are destroyed since the
+          service instances maybe accessing these singletons in the fini()
+          and destructor methods.
 
-	* ace/Service_Config.cpp (fini_svcs): Disable log messages when
- 	  appropriate.
+        * ace/Service_Config.cpp (fini_svcs): Disable log messages when
+          appropriate.
 
 Fri Aug 21 22:26:54 1998  Steve Huston  <shuston@riverace.com>
 
-	* ace/OS.i (ACE_OS::gettimeofday): On Win32, instead of _ftime,
-	  use GetSystemTimeAsFileTime.  _ftime has a bug crossing from
-	  daylight time to standard time in the US.
+        * ace/OS.i (ACE_OS::gettimeofday): On Win32, instead of _ftime,
+          use GetSystemTimeAsFileTime.  _ftime has a bug crossing from
+          daylight time to standard time in the US.
 
 Fri Aug 21 22:13:51 1998  David L. Levine  <levine@cs.wustl.edu>
 
