@@ -304,11 +304,11 @@ protected:
 
   void validity_check (CORBA::Environment &ACE_TRY_ENV);
 
+#if (TAO_HAS_RT_CORBA == 1)
+
   int validate_priority_model (void);
 
   int validate_server_protocol (void);
-
-#if (TAO_HAS_RT_CORBA == 1)
 
   int validate_priority_bands (void);
 
