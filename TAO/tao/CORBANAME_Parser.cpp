@@ -66,7 +66,7 @@ parse_string_dynamic_request_helper (CORBA::Object_ptr naming_context,
             CORBA::Object::_nil ()
           );
 
-      int _invoke_status;
+      int _invoke_status = 0;
       ACE_TRY
         {
           _invoke_status = _tao_call.invoke (0, 0, ACE_TRY_ENV);

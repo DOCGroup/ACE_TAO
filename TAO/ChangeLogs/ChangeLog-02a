@@ -1,3 +1,10 @@
+Sat Oct 07 11:06:31 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
+
+	* tao/CORBANAME_Parser.cpp:
+
+	  Added initalization of a local variable to avoid compilation
+	  warnings.
+
 Sat Oct 07 10:39:27 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
 	* tao/PortableServer/Makefile.bor
