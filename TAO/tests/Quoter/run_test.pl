@@ -1,4 +1,4 @@
-#!/pkg/gnu/bin/perl -I../../../bin
+#!/pkg/gnu/bin/perl -I..\..\..\bin
 #
 # If your perl installation isn't in /pkg/gnu/bin/perl,
 # please make the change accordingly
@@ -10,6 +10,10 @@ use Process;
 
 $nsiorfile = "qns_ior";
 
+# number of threads to use for multithreaded clients or servers
+
+$num_threads = 4;
+
 # amount of delay between running the servers
 
 $sleeptime = 1;
@@ -20,12 +24,12 @@ $nsport = 20002;
 $clport = 20003;
 $svport = 20004;
 $ffport = 20005;
-$gfport = 20006;
+$gfport = 0;
 
 # other variables
 
 $n = 1;
-$leave = 0;
+$leave = 1;
 $ior = 0;
 $done = "";
 $debug = "";
@@ -84,7 +88,6 @@ sub generic_factory
 	                    $ior);
 
 
-	print ("Generic_Factory".$Process::EXE_EXT);
 	$GF = Process::Create ("Generic_Factory".$Process::EXE_EXT, $args);
 }
 
@@ -114,7 +117,7 @@ for ($i = 0; $i <= $#ARGV; $i++)
 			print "\n";
 			print "-n num              -- runs the client num times\n";
 			print "-leave              -- leaves the servers running and their windows open\n";
-			print "-d	               -- runs each in debug mode\n";
+			print "-d                  -- runs each in debug mode\n";
 			print "-h                  -- prints this information\n";
 			print "-cm                 -- use more than one thread in the client\n";
 			print "-sm                 -- use more than one thread in the server\n";
@@ -139,13 +142,12 @@ for ($i = 0; $i <= $#ARGV; $i++)
 		}
 		if ($ARGV[i] eq "-sm")
 		{
-			$sm = "-m";
+			$sm = "-n ".$num_threads;
 			last SWITCH;
 		}
-
 		if ($ARGV[i] eq "-leave")
 		{
-			$leave = 1;
+			$leave = 0;
 			last SWITCH;
 		}
 		if ($ARGV[i] eq "-ns")
@@ -155,22 +157,26 @@ for ($i = 0; $i <= $#ARGV; $i++)
 		}
 		if ($ARGV[i] eq "-sv")
 		{
+			read_nsior ();
 			server ();
 			exit;
 		}
 		if ($ARGV[i] eq "-ff")
 		{
+			read_nsior ();
 			factory_finder ();
 			exit;
 		}
 		if ($ARGV[i] eq "-gf")
 		{
+			read_nsior ();
 			generic_factory ();
 			exit;
 		}
 		if ($ARGV[i] eq "-cl")
 		{
-			client;
+			read_nsior ();
+			client ();
 			exit;
 		}
 		$other = $other." ".$ARGV[i];
@@ -184,20 +190,17 @@ read_nsior ();
 sleep $sleeptime;
 
 server ();
-
 sleep $sleeptime;
 
 factory_finder ();
-
 sleep $sleeptime;
 
 generic_factory ();
-
 sleep $sleeptime;
 
 client ();
 
-if (leave == 0)
+if ($leave)
 {
 	$GF->Kill ();
 	$FF->Kill ();
