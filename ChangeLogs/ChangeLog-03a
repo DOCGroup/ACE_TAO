@@ -1,3 +1,9 @@
+Wed Jun 28 11:42:53 2000  Steve Huston  <shuston@riverace.com>
+
+        * ace.config-psos-diab-ppc.h: Added ACE_LACKS_PRAGMA_ONCE for the
+          non-g++ situation. The newer Diab compiler (at least) needs this.
+          Corrected a '#defined' directive to '#define'.
+
 Tue Jun 27 13:01:37 2000  Steve Huston  <shuston@riverace.com>
 
         * tests/CDR_Array_Test.cpp: Moved the 'digits' array inside the
