@@ -222,9 +222,6 @@ class Video_Global
   int fast_preGroup;
   int fast_preHeader;
   
-  enum video_states {INVALID=-1, VIDEO_PLAY=1,VIDEO_FAST_FORWARD=2,VIDEO_FAST_BACKWARD=3};
-  video_states state;
-  // Indicates the state of the Video Server process ie. play, fast forward play
 };
 
 typedef ACE_TSS_Singleton <Video_Global, ACE_SYNCH_MUTEX> VIDEO_SINGLETON;

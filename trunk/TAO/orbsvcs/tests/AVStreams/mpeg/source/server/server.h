@@ -90,7 +90,7 @@ private:
   // from the <ACE_Reactor> when we <fork>.
 
   // %% need a similar dude for audio!
-  Video_Server vs_;
+  Video_Server *vs_;
 };
 
 class AV_Server_Sig_Handler 

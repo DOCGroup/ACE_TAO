@@ -39,7 +39,7 @@
 #include "../mpeg_shared/routine.h"
 #include "../mpeg_shared/sendpt.h"
 #include "proto.h"
-
+#include "Video_Control_State.h"
 
 // Function Prototypes
 // %% put them in some class maybe ?
@@ -57,12 +57,54 @@ int SendPicture (int *frame);
 int play_send (int debug=0);
 int fast_play_send (void);
 
-// %% comments
+class Video_Control_Handler 
+  : public virtual ACE_Event_Handler
+{
+
+public:
+
+  Video_Control_Handler (int video_control_fd);
+  // Construct this handler with a data fd
+
+  virtual int handle_input (ACE_HANDLE fd = ACE_INVALID_HANDLE);
+  // Called when input events occur (e.g., connection or data).
+
+  virtual ACE_HANDLE get_handle (void) const;
+  // Returns the handle used by the event_handler.
+  
+  Video_Control_State *get_state (void);
+  // Accessor for the state_ 
+
+  void change_state (Video_Control_State *state);
+  // Used to change the state
+
+private:
+  Video_Control_State *state_;
+  // State pattern - pointer to abstract State object
+
+  ACE_HANDLE control_handle_;
+
+};
+
+class Video_Control_Handler_Instance
+{
+public:
+  Video_Control_Handler_Instance (void);
+  
+  void set_video_control_handler (Video_Control_Handler *h);
+  
+  Video_Control_Handler *get_video_control_handler (void);
+private:
+  Video_Control_Handler *video_control_handler_;
+};
+
+typedef ACE_TSS_Singleton <Video_Control_Handler_Instance, ACE_SYNCH_MUTEX> VIDEO_CONTROL_HANDLER_INSTANCE; 
+
 class Video_Sig_Handler 
   : public virtual ACE_Event_Handler
 {
 public:
-  Video_Sig_Handler (void);
+  Video_Sig_Handler (Video_Control_Handler *vch);
 
   virtual ACE_HANDLE get_handle (void) const;
 
@@ -80,6 +122,11 @@ public:
                              ucontext_t* = 0);
 private:
   ACE_HANDLE handle_;
+  // my handle
+
+  Video_Control_Handler *vch_;
+  // Pointer to the control handler, for accessing
+  // the current state of the server.
 };
 
 
@@ -88,7 +135,8 @@ class Video_Data_Handler
 {
 
 public:
-  Video_Data_Handler (int video_data_fd);
+  Video_Data_Handler (int video_data_fd,
+                      Video_Control_Handler *vch);
   // Construct this handler with a data fd
 
   virtual int handle_input (ACE_HANDLE fd = ACE_INVALID_HANDLE);
@@ -99,29 +147,16 @@ public:
 
 private:
   ACE_HANDLE data_handle_;
+  // my handle
+
+  Video_Control_Handler *vch_;
+  // Pointer to the control handler, for accessing
+  // the current state of the server.
+  
 
 };
 
-class Video_Control_Handler 
-  : public virtual ACE_Event_Handler
-{
 
-public:
-
-  Video_Control_Handler (int video_control_fd);
-  // Construct this handler with a data fd
-
-  virtual int handle_input (ACE_HANDLE fd = ACE_INVALID_HANDLE);
-  // Called when input events occur (e.g., connection or data).
-
-  virtual ACE_HANDLE get_handle (void) const;
-  // Returns the handle used by the event_handler.
-
-private:
-
-  ACE_HANDLE control_handle_;
-
-};
 
 // %% this class needs a dtor which deletes the
 // 3 handlers - data, control, and sig
@@ -146,8 +181,8 @@ public:
   // initialize the Video Server.
 
   int run (void);
-  static  int read_cmd (void);
-  // Read a command and demux it to various functions.
+  // register the handlers with the reactor
+  // and set the control_handler to the WAITING state
 
   static int SendPacket (int shtag,int gop,int frame,int timeToUse);
   static int CmdRead(char *buf, int psize);
@@ -155,12 +190,11 @@ public:
   static void on_exit_routine(void);
   static PLAYpara para;
 
-protected:
   static  int position (void);
   static  int step_video (void);
   static  int fast_forward (void);
   static  int fast_backward (void);
-  static  int play (void);
+  static  int init_play (void);
   //static   int close (void);
   static  int stat_stream (void);
   static  int stat_sent (void);
