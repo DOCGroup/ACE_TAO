@@ -106,7 +106,7 @@ Basic_Replication_Strategy::replicate_request(
     }
   }
   else if (transaction_depth > 1) {
-    TAO_FTRTEC::Log(3, "Throwing FTRT::OutOfSequence\n");
+    TAO_FTRTEC::Log(3, "Throwing FTRT::TransactionDepthTooHigh\n");
     ACE_THROW(FTRT::TransactionDepthTooHigh());
   }
 }
