@@ -20,6 +20,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/OS_Memory.h"
+
 /**
  * @class TAO_Seq_Var_Base_T
  *
@@ -53,7 +55,7 @@ public:
   _inout_type   inout (void);
   _out_type     out (void);
   _retn_type    _retn (void);
-    
+
   // TAO extension.
   _retn_type    ptr (void) const;
 

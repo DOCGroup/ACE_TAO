@@ -1,3 +1,20 @@
+Sun Aug 17 17:22:03 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/Cleanup_Func_Registry.h:
+
+	  No longer any need to include "ace/OS.h" to pull in
+	  ACE_CLEANUP_FUNC typedef.  Bonus!
+
+	* tao/Seq_Var_T.h:
+	* tao/Seq_Var_T.cpp:
+	* tao/VarOut_T.h:
+	* tao/VarOut_T.cpp:
+
+	  Moved "ace/OS_Memory.h" include from implementation file to
+	  header file.  The corresponding inline files require/use the
+	  ACE_NEW macros defined in "ace/OS_Memory.h".  Fixes build errors
+	  in explicit template instantiation builds.
+
 Sun Aug 17 16:14:03 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* examples/RTScheduling/Fixed_Priority_Scheduler/Makefile (LIBS):

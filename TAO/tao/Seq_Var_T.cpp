@@ -9,8 +9,6 @@
 #include "tao/Seq_Var_T.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/OS_Memory.h"
-
 
 ACE_RCSID (tao,
            Seq_VarOut_T,
