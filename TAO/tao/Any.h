@@ -20,6 +20,7 @@
 
 #include "tao/CDR.h"
 #include "tao/Environment.h"
+#include "tao/Object.h"
 
 class TAO_Export CORBA_Any
 {
