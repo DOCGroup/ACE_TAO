@@ -25,7 +25,7 @@ static const char *TAO_Dispatching_Modules_Timeprobe_Description[] =
 
 enum
 {
-  // Timeprobe description table start key 
+  // Timeprobe description table start key
   TAO_DISPATCHING_MODULES_DISPATCH_THE_EVENT = 5000,
   TAO_DISPATCHING_MODULES_PUSH_SOURCE_TYPE_CORRELATION_MODULE,
   TAO_DISPATCHING_MODULES_PRIORITY_DISPATCHING_PUSH_PRIORITY_REQUESTED,
@@ -146,7 +146,7 @@ ACE_ES_Priority_Dispatching::initialize_queues (void)
       RtecScheduler::Period period = period_tv.sec () * 10000000 +
                                      period_tv.usec () * 10;
 
-      ACE_NEW (this->queues_[x], 
+      ACE_NEW (this->queues_[x],
 	       ACE_ES_Dispatch_Queue (this, &notification_strategy_));
       this->queues_[x]->thr_mgr (&this->thr_mgr_);
 
@@ -480,7 +480,7 @@ ACE_ES_Dispatch_Queue::open_queue (RtecScheduler::Period &period,
         #if defined (TAO_USES_EDF_SCHEDULING)
 
           ACE_Deadline_Message_Strategy *adms = new ACE_Deadline_Message_Strategy;
-          
+
           if (adms)
           {
             mq = new ACE_Dynamic_Message_Queue<ACE_SYNCH> (*adms);
@@ -540,7 +540,7 @@ ACE_ES_Dispatch_Queue::open_queue (RtecScheduler::Period &period,
                                                 ORBSVCS_Time::zero,
                                                 ORBSVCS_Time::zero,
                                                 ORBSVCS_Time::zero,
-                                                0,
+                                                period,
                                                 RtecScheduler::VERY_LOW_IMPORTANCE,
                                                 ORBSVCS_Time::zero,
                                                 1,
