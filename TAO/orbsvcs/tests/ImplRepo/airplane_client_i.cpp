@@ -8,36 +8,12 @@ ACE_RCSID(ImplRepo, airplane_client_i, "$Id$")
 
 // Constructor.
 Airplane_Client_i::Airplane_Client_i (void)
-  : server_key_ (ACE_OS::strdup ("key0")),
+  : server_key_ (ACE::strnew ("key0")),
     loop_count_ (10),
     server_ (Paper_Airplane_Server::_nil ())
 {
 }
 
-// Reads the Server factory ior from a file
-
-int
-Airplane_Client_i::read_ior (char *filename)
-{
-  // Open the file for reading.
-  ACE_HANDLE f_handle_ = ACE_OS::open (filename, 0);
-
-  if (f_handle_ == ACE_INVALID_HANDLE)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Unable to open %s for writing: %p\n",
-                       filename),
-                      -1);
-  ACE_Read_Buffer ior_buffer (f_handle_);
-  this->server_key_ = ior_buffer.read ();
-
-  if (this->server_key_ == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Unable to allocate memory to read ior: %p\n"),
-                      -1);
-
-  ACE_OS::close (f_handle_);
-  return 0;
-}
 
 // Parses the command line arguments and returns an error status.
 
@@ -57,7 +33,7 @@ Airplane_Client_i::parse_args (void)
         this->loop_count_ = (u_int) ACE_OS::atoi (get_opts.optarg);
         break;
       case 'k':  // ior provide on command line
-        this->server_key_ = ACE_OS::strdup (get_opts.optarg);
+        this->server_key_ = ACE::strnew (get_opts.optarg);
         break;
       case '?':
       default:
@@ -114,11 +90,9 @@ Airplane_Client_i::run ()
 Airplane_Client_i::~Airplane_Client_i (void)
 {
   // Free resources
-  // Close the ior files
   CORBA::release (this->server_);
 
-  if (this->server_key_ != 0)
-    delete this->server_key_;
+  delete [] this->server_key_;
 }
 
 

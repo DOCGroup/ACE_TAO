@@ -225,6 +225,20 @@ Airplane_Server_i::run (CORBA::Environment &ACE_TRY_ENV)
 
 Airplane_Server_i::~Airplane_Server_i (void)
 {
+  ACE_TRY_NEW_ENV
+    {
+      if (!CORBA::is_nil (this->airplane_poa_.in ()))
+        {
+          this->airplane_poa_->destroy (1, 1, ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+        }
+    }
+  ACE_CATCHANY
+    {
+      // ignore exceptions
+    }
+  ACE_ENDTRY;
+
   delete this->ir_helper_;
   delete this->server_impl_;
 }
