@@ -1,4 +1,4 @@
-Fri Mar 01 07:28:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+Fri Mar 01 08:03:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Makefile.bor:
           Added Swap.cpp to the list of installable files
@@ -7,6 +7,9 @@ Fri Mar 01 07:28:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
           Added ACE_TEXT_CHAR_TO_TCHAR around first argument of ACE_OS::fopen
           call to convert char to ACE_TCHAR to fix compile errors in unicode
           build
+
+        * include/makeinclude/ace_flags.bor:
+          Corrected typing error for new tao messaging library
 
 Wed Feb 27 13:50:20 2002  Jaiganesh Balasubramanian  <jai@kelvar.ece.uci.edu>
 
