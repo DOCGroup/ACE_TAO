@@ -1,3 +1,11 @@
+Fri Sep  8 13:56:50 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+        * ace/Thread_Exit.cpp:
+          It was not compiling under Sun/CC 4.2 and 5.0.
+          The fix was to make the extern "C" cleanup handler simply call
+          the regular cleanup handler.  That solves the access problem and
+          it is cleaner code anyways.
+
 Fri Sep  8 11:30:56 2000  Christopher Kohlhoff <chris@kohlhoff.com>
 
         * ace/config-win32-borland.h:
