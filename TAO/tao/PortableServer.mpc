@@ -26,6 +26,10 @@ project : taolib_with_idl, core {
   }
 
   IDL_Files {
-    PortableServer/ImplRepo.idl
+    PortableServer
+  }
+
+  PIDL_Files {
+    PortableServer
   }
 }
