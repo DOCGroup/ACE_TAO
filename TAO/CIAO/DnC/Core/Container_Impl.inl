@@ -4,14 +4,10 @@
 ACE_INLINE
 CIAO::Container_Impl::Container_Impl (CORBA::ORB_ptr o,
                                       PortableServer::POA_ptr p,
-                                      Components::Deployment::ComponentServer_ptr s,
-                                      int static_config_flag,
-                                      const Static_Config_EntryPoints_Maps* static_entrypts_maps)
+                                      CORBA::Object_ptr nodeapp)
   : orb_ (CORBA::ORB::_duplicate (o)),
     poa_ (PortableServer::POA::_duplicate (p)),
-    comserv_ (Components::Deployment::ComponentServer::_duplicate (s)),
-    static_config_flag_ (static_config_flag),
-    static_entrypts_maps_ (static_entrypts_maps)
+    nodeapp_ (CORBA::Object::_duplicate (nodeapp))
 {
 }
 
