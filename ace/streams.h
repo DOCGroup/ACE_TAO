@@ -54,11 +54,6 @@
   // probably should have some sort of macro that will prevent including this
   // when it is used.
 #     include /**/ <iomanip.h>
-#     if defined (_MSC_VER)
-#       include /**/ <strstrea.h>
-#     else
-#       include /**/ <strstream.h>
-#     endif /* _MSC_VER */
 #   else
 #     if defined (__BORLANDC__) && (__BORLANDC__ == 0x551)
 #       include /**/ <iterator>
@@ -70,7 +65,6 @@
 #     include /**/ <streambuf>
 #     include /**/ <iomanip>
 #     include /**/ <ios>
-#     include /**/ <strstream>
 #   endif /* ACE_USES_OLD_IOSTREAMS */
 
 #   if defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB) && \
@@ -87,9 +81,6 @@
         using std::ifstream;
         using std::ofstream;
         using std::fstream;
-
-        using std::istrstream;
-        using std::ostrstream;
 
         using std::cin;
         using std::cout;
@@ -133,9 +124,6 @@
 #       include /**/ <istream.h>
 #       include /**/ <ostream.h>
 #     endif /* _MSC_VER */
-#     include /**/ <strstrea.h> // VSB
-#   else
-#     include /**/ <strstream.h>
 #   endif /* ACE_WIN32 && !__MINGW32__ */
 
 # endif /* ! ACE_HAS_STANDARD_CPP_LIBRARY */
