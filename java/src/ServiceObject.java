@@ -12,6 +12,7 @@
 package ACE.ServiceConfigurator;
 
 import java.io.*;
+import ACE.ASX.*;
 import ACE.Reactor.*;
 
 public class ServiceObject implements EventHandler

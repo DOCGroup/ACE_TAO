@@ -11,8 +11,6 @@
  *************************************************/
 package ACE.ASX;
 
-import ACE.Reactor.*;
-
 public abstract class TimedWait
 {
   /**

@@ -1,8 +1,8 @@
-For some strange reason, when you type "make", the Java compiler
-freaks out and prints several error messages. 
+The Makefile has been worked over severely, and it now REQUIRES GNU
+Make.  The makefile is still a little rough, and will definitely
+evolve.
 
-Ignore these messages and just type "make" again. Everything should
-compile fine.
+Suggestsions are welcome at cleeland@cs.wustl.edu or pjain@cs.wustl.edu.
 
-In case you can find a solution to fix this problem, please let me
-know at pjain@cs.wustl.edu
+Also, TimeValue moved from the ACE.Reactor to ACE.ASX package to break
+up some circular dependency problems.

@@ -13,9 +13,8 @@ package ACE.Concurrency;
 
 import java.util.*;
 import ACE.ASX.*;
-import ACE.Reactor.*;
 
-class TimedWaitSAdapter extends TimedWait
+class TimedWaitSAdapter extends ACE.ASX.TimedWait
 {
   TimedWaitSAdapter (Object obj)
   {
@@ -51,8 +50,8 @@ class TimedWaitSAdapter extends TimedWait
 
 /**
  * <hr>
- * <p><b>TITLE</b><br>
- *     Implementation of a semaphore in java.
+ * <h2>SYNOPSIS</h2>
+ *     Implementation of Dijkstra's counting semaphore in java.
  */
 public class Semaphore
 {  
@@ -83,8 +82,8 @@ public class Semaphore
    *@exception TimeoutException wait timed out exception
    *@exception InterruptedException exception during wait
    */
-  public synchronized void acquire (TimeValue tv) throws
-  TimeoutException, InterruptedException 
+  public synchronized void acquire (TimeValue tv)
+      throws ACE.ASX.TimeoutException, InterruptedException 
     {
       this.monitor_.timedWait (tv);
       this.monitor_.decrement ();
