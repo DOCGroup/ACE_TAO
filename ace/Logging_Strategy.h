@@ -104,7 +104,7 @@ public:
 
   void log_msg (ACE_Log_Msg *log_msg);
 
-private:
+protected:
   /// Tokenize to set all the flags
   void tokenize (ACE_TCHAR *flag_string);
 
