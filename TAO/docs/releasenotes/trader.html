@@ -6,7 +6,7 @@
 </head>
 
 <body text="#000000" link="#0000FF" vlink="#CC0000" bgcolor="#FFFFFF">
-
+ <!-- $Id$ -->
 <hr>
 
 <h1 align="center">TAO Trading Service Documentation</h1>
@@ -92,23 +92,23 @@ following TAO code bootstraps to the Trading Service:</p>
 
 <table border="1" width="100%" cellpadding="6">
   <tr>
-    <td width="100%"><pre>TAO_TRY
+    <td width="100%"><pre>ACE_TRY
 {
   TAO_ORB_Manager orb_manager;
-  orb_manager.init (argc, argv, TAO_TRY_ENV);
-  TAO_CHECK_ENV;
+  orb_manager.init (argc, argv, ACE_TRY_ENV);
+  ACE_CHECK_ENV;
   CORBA::ORB_var orb = orb_manager.orb ();
   CORBA::Object_var trading_obj =
     orb-&gt;resolve_initial_references ("TradingService");
   CosTrading::Lookup_var lookup_if =
-    CosTrading::Lookup::_narrow (trading_obj.in (), TAO_TRY_ENV);
-  TAO_CHECK_ENV;
+    CosTrading::Lookup::_narrow (trading_obj.in (), ACE_TRY_ENV);
+  ACE_CHECK_ENV;
 }
-TAO_CATCHANY
+ACE_CATCHANY
 {
-  TAO_TRY_ENV.print_exception (&quot;Failed to bootstrap to a trader&quot;);
+  ACE_TRY_ENV.print_exception (&quot;Failed to bootstrap to a trader&quot;);
 }
-TAO_ENDTRY;</pre>
+ACE_ENDTRY;</pre>
     </td>
   </tr>
 </table>
@@ -382,7 +382,7 @@ CORBA::Environment _env;</pre>
     any_left = offer_iterator-&gt;next_n (length,
                         	       iter_offers_out,
                                        _env);
-    TAO_CHECK_ENV_RETURN (_env, 0);
+    ACE_CHECK_ENV_RETURN (_env, 0);
 
     CosTrading::OfferSeq_var iter_offers (iter_offers_ptr);
     // Process offers...
@@ -412,22 +412,22 @@ the properties of an offer to the screen. </p>
 for (int length = prop_seq.length (), k = 0; k &lt; length; k++)
   {
     ACE_DEBUG ((LM_DEBUG, &quot;%-15s: &quot;, prop_seq[k].name.in ()));
-    TAO_TRY
+    ACE_TRY
       {
         CORBA::Boolean is_dynamic = prop_eval.is_dynamic_property (k);
-        TAO_CHECK_ENV;
+        ACE_CHECK_ENV;
 
 	value = prop_eval.property_value(k, env);
-    	TAO_CHECK_ENV;
+    	ACE_CHECK_ENV;
 	
 	if (value != 0)
 	  CORBA::Any::dump (*value);
       }
-    TAO_CATCHANY
+    ACE_CATCHANY
       {
         ACE_DEBUG ((LM_DEBUG, &quot;Error retrieving property value.\n&quot;));
       }
-    TAO_ENDTRY;
+    ACE_ENDTRY;
   }</pre>
     </td>
   </tr>
@@ -448,22 +448,22 @@ a second time. Here's the boilerplate code:</p>
   orb_ptr-&gt;resolve_initial_references (&quot;TradingService&quot;);
 CosTrading::Lookup_var lookup_if = 
   CosTrading::Lookup::_narrow (trading_obj.in (), _env);
-TAO_CHECK_ENV_RETURN (_env, -1);
+ACE_CHECK_ENV_RETURN (_env, -1);
 CosTrading::Register_var register_if = lookup_if-&gt;register_if (_env);
-TAO_CHECK_ENV_RETURN (_env, -1);
+ACE_CHECK_ENV_RETURN (_env, -1);
 CosTrading::TypeRepository_ptr obj = this-&gt;trader_-&gt;type_repos (_env);
 CosTradingRepos::ServiceTypeRepository_var str =
   CosTradingRepos::ServiceTypeRepository::_narrow (obj, _env);
-TAO_CHECK_ENV_RETURN (_env, -1);
+ACE_CHECK_ENV_RETURN (_env, -1);
 
-TAO_TRY
+ACE_TRY
   {
     // Attempt to export the offer.
     offer_id = 
-      register_id-&gt;export (object_ref, type, props, TAO_TRY_ENV);
-    TAO_CHECK_ENV;
+      register_id-&gt;export (object_ref, type, props, ACE_TRY_ENV);
+    ACE_CHECK_ENV;
   }
-TAO_CATCH (CosTrading::UnknownServiceType, excp)    
+ACE_CATCH (CosTrading::UnknownServiceType, excp)    
   {      
     // If the ServiceTypeName wasn't found, we'll have to add the
     // type to the Service Type repository ourselves.
@@ -472,20 +472,20 @@ TAO_CATCH (CosTrading::UnknownServiceType, excp)
 		   prop_struct_seq,
 		   super_type_name_seq,
 		   _env);
-    TAO_CHECK_ENV_RETURN (_env, 0);
+    ACE_CHECK_ENV_RETURN (_env, 0);
 
     // Now we'll try again to register the offer.
     offer_id = reg-&gt;export (object_ref, type, this-&gt;tprops_, _env);
-    TAO_CHECK_ENV_RETURN (_env, 0);
+    ACE_CHECK_ENV_RETURN (_env, 0);
 
-    TAO_TRY_ENV.clear ();
+    ACE_TRY_ENV.clear ();
   }
-TAO_CATCHANY
+ACE_CATCHANY
   {
     // Sigh, all our efforts were for naught.
-    TAO_RETHROW_RETURN (0);
+    ACE_RETHROW_RETURN (0);
   }  
-TAO_ENDTRY;</pre>
+ACE_ENDTRY;</pre>
     </td>
   </tr>
 </table>
@@ -574,7 +574,7 @@ public:
                               CORBA::TypeCode_ptr returned_type,
                               const CORBA::Any&amp; extra_info,	      
 			      CORBA::Environment&amp; _env)
-    TAO_THROW_SPEC ((CosTradingDynamic::DPEvalFailure));
+    ACE_THROW_SPEC ((CosTradingDynamic::DPEvalFailure));
 };
 
 CORBA::Any*
@@ -582,7 +582,7 @@ Simple_DP::evalDP (const char* name,
                    CORBA::TypeCode_ptr returned_type,
                    const CORBA::Any&amp; extra_info,
                    CORBA::Environment&amp; _env)
-  TAO_THROW_SPEC ((CosTradingDynamic::DPEvalFailure))
+  ACE_THROW_SPEC ((CosTradingDynamic::DPEvalFailure))
 {
   CORBA::Any* return_value = 0;
   ACE_NEW_RETURN (return_value, CORBA::Any, 0);
@@ -605,7 +605,7 @@ prop_seq[0].value.replace (CosTrading::_tc_DynamicProp,
                            dp_struct, 
                            CORBA::B_TRUE, 
                            env);
-TAO_CHECK_ENV_RETURN (env, -1);</pre>
+ACE_CHECK_ENV_RETURN (env, -1);</pre>
     </td>
   </tr>
 </table>
@@ -625,8 +625,8 @@ policy:</p>
   <tr>
     <td width="100%"><pre>// lookup_if returned from resolve_initial_references.
 CosTrading::Admin_var admin_if = 
-  lookup_if-&gt;admin_if (TAO_TRY_ENV);
-TAO_CHECK_ENV;</pre>
+  lookup_if-&gt;admin_if (ACE_TRY_ENV);
+ACE_CHECK_ENV;</pre>
     <pre>admin_if-&gt;set_max_match_card (200);</pre>
     </td>
   </tr>
@@ -637,33 +637,33 @@ offers from the Trader:</p>
 
 <table border="1" width="100%" cellpadding="3">
   <tr>
-    <td width="100%"><pre>TAO_TRY
+    <td width="100%"><pre>ACE_TRY
 {
 CosTrading::OfferIdIterator_ptr offer_id_iter;
 CosTrading::OfferIdSeq_ptr offer_id_seq;
 
 // lookup_if returned from resolve_initial_references.
 CosTrading::Admin_var admin_if = 
-  lookup_if-&gt;admin_if (TAO_TRY_ENV);
-TAO_CHECK_ENV;
+  lookup_if-&gt;admin_if (ACE_TRY_ENV);
+ACE_CHECK_ENV;
 
 CosTrading::Register_var register_if = 
-  lookup_if-&gt;register_if (TAO_TRY_ENV);
-TAO_CHECK_ENV;
+  lookup_if-&gt;register_if (ACE_TRY_ENV);
+ACE_CHECK_ENV;
 
 admin_if-&gt;list_offers (10,
                        CosTrading::OfferIdSeq_out (offer_id_seq),
                        CosTrading::OfferIdIterator_out (offer_id_iter),
-                       TAO_TRY_ENV);
-TAO_CHECK_ENV;
+                       ACE_TRY_ENV);
+ACE_CHECK_ENV;
 
 if (offer_id_seq != 0)
  {
    CosTrading::OfferIdSeq_var offer_id_seq_var (offer_id_seq);
    for (CORBA::ULong i = 0; i &lt; offer_id_seq_var.length (); i++)
      {
-       register_if-&gt;withdraw (offer_id_seq_var[i], TAO_TRY_ENV);
-       TAO_CHECK_ENV;
+       register_if-&gt;withdraw (offer_id_seq_var[i], ACE_TRY_ENV);
+       ACE_CHECK_ENV;
      }
  }
 
@@ -678,29 +678,29 @@ if (offer_id_iter != CosTrading::OfferIdIterator::_nil ())
        any_left = 
          offer_id_iter-&gt;next_n (length,
                                 CosTrading::OfferIdSeq_out (id_seq),
-                                TAO_TRY_ENV);
-       TAO_CHECK_ENV;
+                                ACE_TRY_ENV);
+       ACE_CHECK_ENV;
 
        CORBA::ULong offers = id_seq-&gt;length ();
        for (CORBA::ULong i = 0; i &lt; offers; i++)
         {
-          register_if-&gt;withdraw (id_seq[i], TAO_TRY_ENV);
-          TAO_CHECK_ENV;
+          register_if-&gt;withdraw (id_seq[i], ACE_TRY_ENV);
+          ACE_CHECK_ENV;
         }
 
        delete id_seq;
      }
    while (any_left);
 
-   offer_id_iter-&gt;destroy (TAO_TRY_ENV);
-   TAO_CHECK_ENV;
+   offer_id_iter-&gt;destroy (ACE_TRY_ENV);
+   ACE_CHECK_ENV;
  }
 }
-TAO_CATCHANY
+ACE_CATCHANY
 {
   // Handle Errors.
 }
-TAO_ENDTRY;</pre>
+ACE_ENDTRY;</pre>
     </td>
   </tr>
 </table>
@@ -710,10 +710,10 @@ is a colocated trader --- see the next section for more information): </p>
 
 <table border="1" width="100%" cellpadding="3">
   <tr>
-    <td width="100%"><pre>TAO_TRY
+    <td width="100%"><pre>ACE_TRY
  {
-   CosTrading::Link_var link_if =  lookup_if-&gt;link_if (TAO_TRY_ENV);
-   TAO_CHECK_ENV;
+   CosTrading::Link_var link_if =  lookup_if-&gt;link_if (ACE_TRY_ENV);
+   ACE_CHECK_ENV;
 
    TAO_Trading_Components_Impl&amp; trd_comp =
      this-&gt;trader_-&gt;trading_components ();
@@ -724,20 +724,20 @@ is a colocated trader --- see the next section for more information): </p>
                       our_lookup,
                       CosTrading::always,
                       CosTrading::always,
-                      TAO_TRY_ENV);
-   TAO_CHECK_ENV;
+                      ACE_TRY_ENV);
+   ACE_CHECK_ENV;
 
    our_link-&gt;add_link (&quot;Bootstrap_Trader&quot;,
                        lookup_if.in (),
                        CosTrading::always,
                        CosTrading::always,
-                       TAO_TRY_ENV);
+                       ACE_TRY_ENV);
  }
-TAO_CATCHANY
+ACE_CATCHANY
 {
   // Handle Errors.
 }
-TAO_ENDTRY;</pre>
+ACE_ENDTRY;</pre>
     </td>
   </tr>
 </table>
@@ -988,7 +988,7 @@ CORBA::Environment _env;
 TAO_Service_Type_Repository type_repos* type_repos = 0;
 ACE_NEW (type_repos, TAO_Service_Type_Repository); 
 sup_attr.type_repos (type_repos-&gt;_this (_env));
-TAO_CHECK_ENV_RETURN (_env, -1);</pre>
+ACE_CHECK_ENV_RETURN (_env, -1);</pre>
     <pre>// Configure other policies, overriding the command line arguments.
 imp_attr.search_card (20);
 sup_attr.supports_dynamic_properties (CORBA::B_FALSE);</pre>
