@@ -1,4 +1,0 @@
-project : client {
-  depends += RTCORBA
-  libs    += TAO_RTCORBA
-}

@@ -1,3 +1,0 @@
-project(wait for completion): server {
-  exename = wait_for_completion
-}  
