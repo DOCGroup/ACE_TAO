@@ -1,3 +1,9 @@
+Thu Nov 13 01:47:02 1997  Chris Cleeland  <cleeland@macarena.cs.wustl.edu>
+
+	* tao/iiopobj.cpp (IIOP_Object): Removed the duplicate CTORs that
+ 	I'd accidentally included here during the prior merge/commit
+ 	phase.
+
 Wed Nov 12 23:59:29 1997    <nw1@COYOTE>
 
 	* TAO/TAO_IDL/tao_idl.dsp: Changed to generate multithreaded codes
