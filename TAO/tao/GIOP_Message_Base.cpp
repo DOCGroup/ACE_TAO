@@ -110,8 +110,8 @@ TAO_GIOP_Message_Base::generate_request_header (
 
   // Now call the implementation for the rest of the header
   if (!this->generator_parser_->write_request_header (op,
-                                                     spec,
-                                                     cdr))
+                                                      spec,
+                                                      cdr))
     {
       if (TAO_debug_level > 4)
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -294,7 +294,6 @@ TAO_GIOP_Message_Base::read_message (TAO_Transport *transport,
         }
     }
 
-  cout << "Amba " <<endl;
   return this->message_state_.is_complete ();
 }
 
@@ -394,7 +393,7 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
   orb_core->leader_follower ().set_upcall_thread ();
 
   // Reset the output CDR stream.
-  // @@@@Should we be doing this here?
+  // @@@@Is it necessary  here?
   this->output_->reset ();
 
   //
@@ -415,7 +414,8 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
   // @@@ Needed for DOORS
   //  orb_core->services_log_msg_rcv (this->message_state_);
 
-  // Reset the message state.
+  // Reset the message state. Now, we are ready for the next nested
+  // upcall if any.
   this->message_state_.reset (0);
 
   // We know we have some request message. Check whether it is a
@@ -1328,4 +1328,13 @@ TAO_GIOP_Message_Base::dump_msg (const char *label,
 
 
     }
+}
+
+
+int
+TAO_GIOP_Message_Base::generate_locate_reply_header (
+    TAO_OutputCDR & /*cdr*/,
+    TAO_Pluggable_Reply_Params & /*params*/)
+{
+  return 0;
 }
