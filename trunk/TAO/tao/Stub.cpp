@@ -433,7 +433,8 @@ TAO_Stub::do_static_call (CORBA::Environment &ACE_TRY_ENV,
                   // and they better allocate all the memory.
 
                   // assert (value_size == tc->size());
-                  *(void **)ptr = new CORBA::Octet [pdp->value_size];
+                  ACE_NEW (*(void **)ptr,
+                           CORBA::Octet [pdp->value_size]);
                   call.get_value (pdp->tc, *(void **)ptr, ACE_TRY_ENV);
                   ACE_CHECK;
                 }
@@ -593,31 +594,6 @@ TAO_Stub::do_dynamic_call (const char *opname,
 
       if (result != 0)
         {
-#if 0
-          // @@ (ASG) I need to look into this OUT_LIST_MEMORY stuff
-          // (4/21/98).
-          // @@ (Carlos) All this code seems bogus, we know that
-          //    allocating memory of behalf of the user is and endless
-          //    source of trouble (due to vtbls and the such).
-
-          // If caller didn't set OUT_LIST_MEMORY flag, allocate
-          // memory for return value ...
-
-          if (!(flags & CORBA::OUT_LIST_MEMORY))
-            {
-              CORBA::TypeCode_var tcp = result->value ()->type ();
-              size_t size = tcp->size (ACE_TRY_ENV);
-              ACE_CHECK;
-
-              if (size != 0)
-                {
-                  void *ptr = new CORBA::Octet [size];
-
-                  result->value ()->replace (tcp.in (), ptr, 1, ACE_TRY_ENV);
-                  ACE_CHECK;
-                }
-            }
-#endif
           if (!result->value ()->value_)
             {
               // storage was not allocated. In this case, we
@@ -638,7 +614,8 @@ TAO_Stub::do_dynamic_call (const char *opname,
               if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
                 {
                   end = temp.rd_ptr ();
-                  any->cdr_ = new ACE_Message_Block (end - begin);
+                  ACE_NEW (any->cdr_,
+                           ACE_Message_Block (end - begin));
                   any->cdr_->wr_ptr (end - begin);
                   TAO_OutputCDR out (any->cdr_);
                   retval = out.append (any->type_,
@@ -672,27 +649,6 @@ TAO_Stub::do_dynamic_call (const char *opname,
           if (value->flags () == CORBA::ARG_OUT
               || value->flags () == CORBA::ARG_INOUT)
             {
-#if 0
-              // @@  (ASG) need to deal with this
-
-              // If caller didn't set OUT_LIST_MEMORY flag, allocate
-              // memory for this parameter ...
-              if (!(flags & CORBA::OUT_LIST_MEMORY))
-                {
-                  CORBA::TypeCode_var tcp = value->value ()->type ();
-                  size_t size = tcp->size (ACE_TRY_ENV);
-                  ACE_CHECK;
-
-                  if (size != 0)
-                    {
-                      CORBA::Octet *ptr = new CORBA::Octet [size];
-
-                      value->value ()->replace (tcp.in (), ptr,
-                                                1, ACE_TRY_ENV);
-                      ACE_CHECK;
-                    }
-                }
-#endif
               if (!any->value_)
                 {
                   // storage was not allocated. In this case,
@@ -713,7 +669,9 @@ TAO_Stub::do_dynamic_call (const char *opname,
                   if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
                     {
                       end = temp.rd_ptr ();
-                      any->cdr_ = new ACE_Message_Block (end - begin);
+                      ACE_NEW (any->cdr_,
+                               ACE_Message_Block (end - begin));
+                      any->cdr_->wr_ptr (end - begin);
                       TAO_OutputCDR out (any->cdr_);
 
                       retval = out.append (any->type_,

@@ -295,6 +295,9 @@ public:
   CORBA_UnknownUserException (CORBA_Any& exception);
   // Destructor.
 
+  CORBA_UnknownUserException (const CORBA_UnknownUserException& e);
+  // Copy constructor
+
   virtual ~CORBA_UnknownUserException (void);
   // Constructor.
 
