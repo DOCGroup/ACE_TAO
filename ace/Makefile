@@ -2115,7 +2115,48 @@ endif # GHS
  Object_Manager.i \
  Managed_Object.h \
  Managed_Object.i \
- Managed_Object.cpp
+ Managed_Object.cpp \
+ DLL_Manager.h \
+ Singleton.h \
+ Singleton.i \
+ Singleton.cpp \
+ Auto_Ptr.h \
+ Auto_Ptr.i \
+ Auto_Ptr.cpp \
+ SString.h \
+ String_Base.h \
+ String_Base_Const.h \
+ String_Base.i \
+ Malloc_Base.h \
+ String_Base.cpp \
+ Malloc.h \
+ Malloc.i \
+ Malloc_T.h \
+ Malloc_Allocator.h \
+ Malloc_Allocator.i \
+ Free_List.h \
+ Free_List.i \
+ Free_List.cpp \
+ Malloc_T.i \
+ Malloc_T.cpp \
+ Memory_Pool.h \
+ Event_Handler.h \
+ Event_Handler.i \
+ Signal.h \
+ Signal.i \
+ Mem_Map.h \
+ Mem_Map.i \
+ SV_Semaphore_Complex.h \
+ SV_Semaphore_Simple.h \
+ SV_Semaphore_Simple.i \
+ SV_Semaphore_Complex.i \
+ Unbounded_Set.h \
+ Node.h \
+ Node.cpp \
+ Unbounded_Set.inl \
+ Unbounded_Set.cpp \
+ Memory_Pool.i \
+ SString.i
 
 .obj/Functor.o .obj/Functor.so .shobj/Functor.o .shobj/Functor.so: Functor.cpp \
  Functor_T.h \
@@ -14030,13 +14071,8 @@ endif # GHS
  Stream.cpp
 
 .obj/Svc_Conf_Lexer_Guard.o .obj/Svc_Conf_Lexer_Guard.so .shobj/Svc_Conf_Lexer_Guard.o .shobj/Svc_Conf_Lexer_Guard.so: Svc_Conf_Lexer_Guard.cpp \
- Svc_Conf.h \
+ Svc_Conf_Lexer_Guard.h \
  pre.h \
- Obstack.h \
- Obstack_T.h \
- Obchunk.h \
- Malloc.h \
- ACE_export.h \
  config-all.h \
  config.h \
  config-linux.h \
@@ -14045,6 +14081,12 @@ endif # GHS
  post.h \
  ace_wchar.h \
  ace_wchar.inl \
+ Svc_Conf.h \
+ Obstack.h \
+ Obstack_T.h \
+ Obchunk.h \
+ Malloc.h \
+ ACE_export.h \
  OS.h \
  OS_Dirent.h \
  OS_Export.h \
@@ -14160,8 +14202,7 @@ endif # GHS
  Reactor.i \
  Reactor_Impl.h \
  Parse_Node.h \
- Parse_Node.i \
- Svc_Conf_Lexer_Guard.h
+ Parse_Node.i
 
 .obj/CDR_Base.o .obj/CDR_Base.so .shobj/CDR_Base.o .shobj/CDR_Base.so: CDR_Base.cpp \
  CDR_Base.h \
