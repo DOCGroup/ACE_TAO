@@ -96,14 +96,14 @@ ACE_TTY_IO::control (Control_Mode cmd,
           return -1;
         }
 
-#if defined(ACE_USES_OLD_TERMIOS_STRUCT)
+#if defined(ACE_USES_NEW_TERMIOS_STRUCT)
       // @@ Can you really have different input and output baud
       // rates?!
       devpar.c_ispeed = newbaudrate;
       devpar.c_ospeed = newbaudrate;
 #else
       c_cflag |= newbaudrate;
-#endif /* ACE_USES_OLD_TERMIOS_STRUCT */
+#endif /* ACE_USES_NEW_TERMIOS_STRUCT */
 
       switch (arg->databits)
         {
@@ -122,6 +122,7 @@ ACE_TTY_IO::control (Control_Mode cmd,
         default:
           return -1;
         }
+
       switch (arg->stopbits)
         {
         case   1:
@@ -139,30 +140,52 @@ ACE_TTY_IO::control (Control_Mode cmd,
               || ACE_OS::strcmp (arg->paritymode, "odd") == 0)
             c_cflag |= PARODD;
         }
+
 #if defined (CRTSCTS)
-  	  // 6/22/00 MLS add rtsenb to if statement 
+          // 6/22/00 MLS add rtsenb to if statement
       if ((arg->ctsenb)||(arg->rtsenb)) /* enable CTS/RTS protocoll */
         c_cflag |= CRTSCTS;
+#endif /* CRTSCTS */
+#if defined (NEW_RTSCTS)
+      // 8/30/00 MLS add rtsenb to if statement to support new termios
+      if ((arg->ctsenb)||(arg->rtsenb)) /* enable CTS/RTS protocoll */
+        c_cflag |= NEW_RTSCTS;
 #endif /* CRTSCTS */
 #if defined (CREAD)
       if (arg->rcvenb) /* enable receiver */
         c_cflag |= CREAD;
 #endif /* CREAD */
 
-	  // 6/22/00 MLS add enable xon/xoff 
-#if defined (IXON)
-      if (arg->xinenb) /* enable XON/XOFF output*/
-        c_cflag |= IXON;
-#endif /* IXON */
-#if defined (IXOFF)
-      if (arg->xoutenb) /* enable XON/XOFF input*/
-        c_cflag |= IXOFF;
-#endif /* IXOFF */
+
+#if defined (HUPCL)
+      // Cause DTR to be drop after port close MS 7/24/2000;
+      c_cflag |= HUPCL;
+#endif /* HUPCL */
+
+#if defined (CLOCAL)
+      // if device is not a modem set to local device MS  7/24/2000
+      if(!arg->modem)
+        c_cflag |= CLOCAL;
+#endif /* CLOCAL */
 
       c_oflag = 0;
       c_iflag = IGNPAR | INPCK;
       if (arg->databits < 8)
         c_iflag |= ISTRIP;
+#if defined (IGNBRK)
+      // if device is not a modem set to ignore break points MS  7/24/2000
+      if(!arg->modem)
+        c_iflag |= IGNBRK;
+#endif /* IGNBRK */
+          // 6/22/00 MLS add enable xon/xoff
+#if defined (IXON)
+      if (arg->xinenb) /* enable XON/XOFF output*/
+        c_iflag |= IXON;
+#endif /* IXON */
+#if defined (IXOFF)
+      if (arg->xoutenb) /* enable XON/XOFF input*/
+        c_iflag |= IXOFF;
+#endif /* IXOFF */
       c_lflag = 0;
 
       ivmin_cc4 = (u_char) 0;
@@ -173,6 +196,14 @@ ACE_TTY_IO::control (Control_Mode cmd,
       devpar.c_lflag = c_lflag;
       devpar.c_cc[4] = ivmin_cc4;
       devpar.c_cc[5] = ivtime_cc5;
+
+#if defined(TIOCMGET)
+      // ensure DTR is enabled
+      int status;
+      this->ACE_IO_SAP::control(TIOCMGET, &status);
+      status |= TIOCM_DTR;
+      this->ACE_IO_SAP::control(TIOCMSET,&status);
+#endif /* definded (TIOCMGET) */
 
 #if defined(TCSETS)
       return this->ACE_IO_SAP::control (TCSETS,
@@ -231,11 +262,11 @@ ACE_TTY_IO::control (Control_Mode cmd,
       switch (arg->stopbits)
         {
         case 1:
-	  dcb.StopBits = ONESTOPBIT;
-	  break;
+          dcb.StopBits = ONESTOPBIT;
+          break;
         case 2:
-	  dcb.StopBits = TWOSTOPBITS;
-	  break;
+          dcb.StopBits = TWOSTOPBITS;
+          break;
         default:
           return -1;
         }
@@ -271,8 +302,8 @@ ACE_TTY_IO::control (Control_Mode cmd,
       else
         dcb.fOutxCtsFlow = FALSE;
 
-      // 6/22/00 MLS add  great flexibility for win32 
-      //		     pulled rts out of ctsenb
+      // 6/22/00 MLS add  great flexibility for win32
+      //                     pulled rts out of ctsenb
       switch (arg->rtsenb) // enable RTS protocol.
         {
         case 1:
@@ -286,9 +317,9 @@ ACE_TTY_IO::control (Control_Mode cmd,
           break;
         default:
           dcb.fRtsControl = RTS_CONTROL_DISABLE;
-        }	  
+        }
 
-      // 6/22/00 MLS add enable xon/xoff 
+      // 6/22/00 MLS add enable xon/xoff
       if (arg->xinenb) // enable XON/XOFF for reception
         dcb.fOutX = TRUE;
       else
@@ -309,12 +340,34 @@ ACE_TTY_IO::control (Control_Mode cmd,
       dcb.fDtrControl = DTR_CONTROL_ENABLE;
       dcb.fBinary = TRUE;
       ::SetCommState (this->get_handle (), &dcb);
-  
+
       // 2/13/97 BWF added drop out timer
+      // modified time out to operate correctly with when delay
+      // is requested or no delay is requestes
       COMMTIMEOUTS timeouts;
-      ::GetCommTimeouts (this->get_handle (), &timeouts);
-      timeouts.ReadIntervalTimeout = arg->readtimeoutmsec;
-      return ::SetCommTimeouts (this->get_handle (), &timeouts);
+      ::GetCommTimeouts (this->get_handle(), &timeouts) ;
+      if(arg->readtimeoutmsec == 0)
+      {
+        // return immediately if no data in the input buffer
+        timeouts.ReadIntervalTimeout = MAXDWORD;
+        timeouts.ReadTotalTimeoutMultiplier = 0;
+        timeouts.ReadTotalTimeoutConstant   = 0 ;
+      }
+      else
+        {
+          // Wait for specified  time-out for char to arrive
+          // before returning.
+          timeouts.ReadIntervalTimeout        = MAXDWORD;
+          timeouts.ReadTotalTimeoutMultiplier = MAXDWORD;
+
+          // ensure specified timeout is below MAXDWORD
+          if(arg->readtimeoutmsec < MAXDWORD)
+            timeouts.ReadTotalTimeoutConstant   = arg->readtimeoutmsec ;
+          else
+            timeouts.ReadTotalTimeoutConstant   = MAXDWORD;
+        }
+
+      return ::SetCommTimeouts (this->get_handle (), &timeouts) ;
 
     case GETPARAMS:
       ACE_NOTSUP_RETURN (-1); // Not yet implemented.

@@ -165,4 +165,7 @@
 #define ACE_LACKS_PLACEMENT_OPERATOR_DELETE
 #define ACE_PI_CONTROL_BLOCK_ALIGN_LONGS 2
 
+// Enables use of POSIX termios struct
+#define ACE_USES_NEW_TERMIOS
+
 #endif /* ACE_CONFIG_IRIX6X_COMMON_H */
