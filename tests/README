@@ -18,15 +18,10 @@ $ACE_ROOT/tests:
 2.  Add test to Makefile
 3.  Add test to MS project files (tests.dsp and version_tests/version_tests.dsp)
     (... and tests.mdp and version_tests/version_tests.mdp (for MSVC 4.2))
-4.  Add test to all or most of these: 
+4.  Add test to all or most of these:
 
     run_tests.bat, run_tests.psosim, run_tests.sh, and run_tests.vxworks.
 ________________________________________
-
-We had problems running the batch file on Windows 95 and Windows NT
-using the native DOS prompt. However we were able to get around this
-problem by using a program called "4DOS for Windows NT" which also
-displays a DOS prompt but allows us to run batch files through it.
 
 The tests have been run on UNIX, pSOS, Windows NT, and Windows 95 and they
 all work with the following exceptions:
@@ -34,7 +29,7 @@ all work with the following exceptions:
 1. Name_Server_Test on Windows 95: this does not work on Windows 95
    since Windows 95 has a different model for shared memory and does
    not support explicitly selecting shared memory addresses.
- 
+
 2. UPIPE_Test and SPIPE_Test on Windows 95: these do not work on
    Windows 95 since Windows 95 does not support the server side
    functionality of accepting connections from clients using named pipes.
@@ -43,7 +38,7 @@ all work with the following exceptions:
    Windows 95 since Windows 95 does not support I/O completion ports.
 
 4. Of the tests (believed) relevant to the single threaded port to pSOSim,
-   Sigset_Ops_Test, Sock_Connector_Test, Priority_Reactor_Test, 
+   Sigset_Ops_Test, Sock_Connector_Test, Priority_Reactor_Test,
    Process_Strategy_Test, and Service_Config_Test are still failing.
    These are being debugged and will either be corrected or, if there
    are unsupported features in these tests, removed from the test suite for
@@ -67,18 +62,20 @@ Notes:
    any of the tests require any variable parameters these are
    specified in test_config.h.
 
-4. Time_Service_Test executes the Time Server and Clerk components
-   as two processes and so the executable "main" need to be present in the
-   netsvcs/bin directory. These components rely on config files. Two
-   sample config files are also present in the test-suite, namely
-   UNIXserver.conf and UNIXclerk.conf (and for Win32, Win32server.conf 
-   and Win32clerk.conf). 
+4. Time_Service_Test executes the Time Server and Clerk components as
+   two processes and so the executable "main" need to be present in
+   the netsvcs/servers directory.  Be sure you build
+   $ACE_ROOT/netsvcs/lib/ and $ACE_ROOT/netsvcs/servers before running
+   this test.  These components rely on config files. Two sample
+   config files are also present in the test-suite, namely
+   UNIXserver.conf and UNIXclerk.conf (and for Win32, Win32server.conf
+   and Win32clerk.conf).
 
 Please see run_tests.vxworks for information on the status of
 tests on VxWorks.
 
 Please see run_tests.psosim for information on the status of tests on pSOSim.
-Run_tests.psosim is an executable shell script that runs all tests that are 
+Run_tests.psosim is an executable shell script that runs all tests that are
 (believed) relevant to the single threaded port to pSOSim.
 
 
