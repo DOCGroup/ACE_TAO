@@ -170,12 +170,12 @@ TAO_CDR_Encaps_Codec::encode_value (const CORBA::Any & data
   if ((cdr << TAO_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER)))
     {
       TAO::Any_Impl *impl = data.impl ();
-      
+
       if (impl->encoded ())
         {
           TAO::Unknown_IDL_Type *unk =
             dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
-            
+
           // We don't want unk's rd_ptr to move, in case we are shared by
           // another Any, so we use this to copy the state, not the buffer.
           TAO_InputCDR for_reading (unk->_tao_get_cdr ());
@@ -262,8 +262,6 @@ TAO_CDR_Encaps_Codec::decode_value (const CORBA::OctetSeq & data,
   //       refactored to make it possible to use the given TypeCode
   //       rather than attempt to extract it from the CDR
   //       encapsulation.
-
-  CORBA::ULong sequence_length = data.length ();
 
   size_t rd_pos = mb.rd_ptr () - mb.base ();
   size_t wr_pos = mb.wr_ptr () - mb.base () + data.length ();
