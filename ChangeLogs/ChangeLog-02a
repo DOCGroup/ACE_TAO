@@ -1,7 +1,14 @@
+Mon Jul 24 22:49:09 2000  John Heitmann  <jwh1@cs.wustl.edu>
+
+	* ace/OS_String.inl
+
+	  The emulation functions still need system libraries,
+	  which were not being included when ace was enabled.
+
 Mon Jul 24 21:22:03 2000  Andrew G. Gilpin  <agg1@cs.wustl.edu>
 
-	* ace/Remote_Tokens.cpp: 
-	* ace/Signal.{cpp,h}: 
+	* ace/Remote_Tokens.cpp:
+	* ace/Signal.{cpp,h}:
 	* ace/Priority_Reactor.cpp:
 	* ace/Object_Manager.{cpp,h}:
 	* ace/OS.cpp:
@@ -35,7 +42,7 @@ Mon Jul 24 20:02:03 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
  	  ACE_Recursive_Thread_Mutex to avoid nasty self-deadlocks!
   	  Thanks to Tom Arbuckle's <arbuckle@uran.informatik.uni-bonn.de>
 	  for reporting this.
-  
+
 	* ace/Log_Msg.cpp (log): Added a sanity check to make sure that
  	  long messages don't corrupt the memory.  Thanks to Tomer
 	  Amiaz <Tomer@bandwiz.com> for contributing this.
@@ -54,7 +61,7 @@ Sat Jul 22 22:10:35 2000  Marina Spivak  <marina@cs.wustl.edu>
 
 	* config-win32-common.h
 	* config-win32-visualage.h:
-	
+
 	  By default WIN32 has FD_SETSIZE of 64, which places the limit
 	  between 61 and 64 on the number of clients a server using the
 	  Select Reactor can support at the same time (i.e., 64 - standard
@@ -110,38 +117,38 @@ Fri Jul 21 00:29:38 2000  Vishal Kachroo  <vishal@cs.wustl.edu>
           handler to handle QoS and socket data for the receiver.
 
         * examples/QOS/Sender_QoS_Event_Handler.h:
-        * examples/QOS/Sender_QoS_Event_Handler.cpp: Added this event 
+        * examples/QOS/Sender_QoS_Event_Handler.cpp: Added this event
           handler to handle QoS and socket data for the Sender.
-        
+
         * examples/QOS/QoS_Util.h:
-        * examples/QOS/QoS_Util.cpp: This class provides utility funtions 
+        * examples/QOS/QoS_Util.cpp: This class provides utility funtions
           like parsing QoS parameters for the QoS enabled applications.
-        
+
         * examples/QOS/QoS_Signal_Handler.h:
-        * examples/QOS/QoS_Signal_Handler.cpp: Used to gracefully close 
+        * examples/QOS/QoS_Signal_Handler.cpp: Used to gracefully close
           QoS sessions and shutdown RSVP signalling.
-        
-        * examples/QOS/FlowSpec_Dbase.h: Provides a name-Flowspec mapping 
-          for the standard QoS flowspecs like g711. Typical QoS flowspecs 
-          required for different video encoding/decoding schemes can be 
+
+        * examples/QOS/FlowSpec_Dbase.h: Provides a name-Flowspec mapping
+          for the standard QoS flowspecs like g711. Typical QoS flowspecs
+          required for different video encoding/decoding schemes can be
           listed here.
-        
+
         * examples/QOS/Fill_ACE_QoS.h:
-        * examples/QOS/Fill_ACE_QoS.cpp: This class helps users to add 
+        * examples/QOS/Fill_ACE_QoS.cpp: This class helps users to add
           new flow specs and provides utility functions for filling up the
           flow specs for simplex/duplex sessions.
 
         * examples/QOS/server.cpp: QoS enabled receiver application.
         * examples/QOS/client.cpp: QoS enabled sender application.
-        
+
         * examples/QOS/Makefile:
         * examples/QOS/README
         * examples/QOS/QOS.dsw:
         * examples/QOS/client.dsp:
-        * examples/QOS/server.dsp: Updated these files to reflect changes 
-          to the test. The above test demonstrates the use of various 
+        * examples/QOS/server.dsp: Updated these files to reflect changes
+          to the test. The above test demonstrates the use of various
           aspects of AQoSA (ACE QoS API).
-        
+
 Thu Jul 20 23:04:30 2000  John Heitmann  <jwh1@cs.wustl.edu>
 
         * ace/Thread_Manager.cpp

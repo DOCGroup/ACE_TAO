@@ -7,7 +7,7 @@
 # include "pace/string.h"
 # include "pace/ctype.h"
 # include "pace/stdlib.h"
-#else
+#endif /* ACE_HAS_PACE */
 
 #if defined (ACE_HAS_GNU_CSTRING_H)
 // Define this file to keep /usr/include/memory.h from being included.
@@ -30,7 +30,7 @@
 #endif /* ACE_HAS_STRINGS */
 
 #include /**/ <ctype.h>
-#endif /* ACE_HAS_PACE */
+
 ACE_INLINE int
 ACE_OS_String::memcmp (const void *t, const void *s, size_t len)
 {
