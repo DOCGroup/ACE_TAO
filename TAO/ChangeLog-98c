@@ -8,34 +8,34 @@ Wed Oct 14 23:33:24 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Wed Oct 14 20:10:00 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/tests/EC_Mcast/EC_Mcast.cpp: 
-	  This test uses the Reactive version of the EC, just to show how
-	  to configure the EC in that mode (this test does not attempt to
-	  preserve priorities, so it is good place to put this).
+        * orbsvcs/tests/EC_Mcast/EC_Mcast.cpp:
+          This test uses the Reactive version of the EC, just to show how
+          to configure the EC in that mode (this test does not attempt to
+          preserve priorities, so it is good place to put this).
 
-	* tao/encode.cpp: 
-	  Fixed encoding for Any when both cdr_ and value_ are zero
-	  (usually when the Any is holding a tk_null).
+        * tao/encode.cpp:
+          Fixed encoding for Any when both cdr_ and value_ are zero
+          (usually when the Any is holding a tk_null).
 
 Wed Oct 14 18:35:26 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* TAO/examples/Callback_Quoter/
-	Consumer.idl Consumer_Input_Handler.cpp
+        * TAO/examples/Callback_Quoter/
+        Consumer.idl Consumer_Input_Handler.cpp
         Consumer_Input_Handler.h Consumer_i.cpp Consumer_i.h Makefile
         Notifier.idl Notifier_Input_Handler.cpp
         Notifier_Input_Handler.h Notifier_i.cpp Notifier_i.h
         Supplier.cpp Supplier.h consumer.cpp notifier.cpp supplier.cpp
 
-	Renamed and added above files.
+        Renamed and added above files.
 
-	* TAO/examples/Callback_Quoter/
-	Client_i.cpp Consumer.dsp Consumer.idl Consumer_i.cpp
-	Consumer_i.h Makefile MarketFeed.dsp MarketFeed_i.cpp
-	MarketFeed_i.h Server_i.cpp Server_i.h Supplier.dsp Supplier.idl
-	Supplier_i.cpp Supplier_i.h consumer_client.cpp
-	marketfeed_client.cpp server.cpp
+        * TAO/examples/Callback_Quoter/
+        Client_i.cpp Consumer.dsp Consumer.idl Consumer_i.cpp
+        Consumer_i.h Makefile MarketFeed.dsp MarketFeed_i.cpp
+        MarketFeed_i.h Server_i.cpp Server_i.h Supplier.dsp Supplier.idl
+        Supplier_i.cpp Supplier_i.h consumer_client.cpp
+        marketfeed_client.cpp server.cpp
 
-	Removed these files.
+        Removed these files.
 
 Wed Oct 14 12:05:37 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
 
@@ -66,22 +66,22 @@ Wed Oct 14 00:42:25 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Tue Oct 13 23:03:24 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/ORB_Core.h: 
-	* tao/ORB_Core.i: 
-	* tao/ORB_Core.cpp: 
-	* tao/Invocation.i: 
-	* tao/Connect.cpp: 
-	* tao/CDR.h: 
-	* tao/CDR.cpp: 
-	  The input CDR can be created using a user provided data block,
- 	  this is used to select the right kind of locking for the
- 	  Data_Block reference count.  The ORB_Core acts as a Factory of
- 	  Data_Blocks, selecting the right type according to the
- 	  -ORBinputcdrallocator option.
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.i:
+        * tao/ORB_Core.cpp:
+        * tao/Invocation.i:
+        * tao/Connect.cpp:
+        * tao/CDR.h:
+        * tao/CDR.cpp:
+          The input CDR can be created using a user provided data block,
+          this is used to select the right kind of locking for the
+          Data_Block reference count.  The ORB_Core acts as a Factory of
+          Data_Blocks, selecting the right type according to the
+          -ORBinputcdrallocator option.
 
-	* orbsvcs/Event_Service/svc.conf: 
-	  Use the appropiate allocator for the EC, because it shares the
-	  CDR buffers between several threads (to minimize data copying).
+        * orbsvcs/Event_Service/svc.conf:
+          Use the appropiate allocator for the EC, because it shares the
+          CDR buffers between several threads (to minimize data copying).
 
 Tue Oct 13 22:15:53 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
@@ -96,10 +96,10 @@ Tue Oct 13 22:15:53 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 Tue Oct 13 17:04:15 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
         * tao/Any.cpp: Modified copy constructor and assignment operator
- 	  to avoid encoding the value of the source Any when it is 0
- 	  (which it is if the Any was constructed from just a typecode).
-  	  Perhaps this sequence of calls should never be made, but this
- 	  guards against it anyway.
+          to avoid encoding the value of the source Any when it is 0
+          (which it is if the Any was constructed from just a typecode).
+          Perhaps this sequence of calls should never be made, but this
+          guards against it anyway.
 
 Tue Oct 13 10:51:10 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
