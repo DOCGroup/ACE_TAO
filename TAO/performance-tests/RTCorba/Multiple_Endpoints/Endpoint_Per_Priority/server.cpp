@@ -14,7 +14,7 @@ int nthreads = 1;
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:n:");
+  ACE_Get_Opt get_opts (argc, argv, "o:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -24,16 +24,11 @@ parse_args (int argc, char *argv[])
         ior_output_file = get_opts.optarg;
         break;
 
-      case 'n':
-        nthreads = ACE_OS::atoi (get_opts.optarg);
-        break;
-
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s "
                            "-o <iorfile>"
-                           "-n <number of threads>"
                            "\n",
                            argv [0]),
                           -1);
