@@ -4,6 +4,10 @@ Mon Jun 19 12:45:45 2000  David L. Levine  <levine@cs.wustl.edu>
           and added back the pthread_sigmask () declaration.  With
           extern "C", this time.
 
+        * include/makeinclude/platform_lynxos.GNU: moved our LynxOS
+          cross development kit to where it belongs, so that
+          ENV_PREFIX is now the same as with 2.5.0 and 3.0.0.
+
 Mon Jun 19 11:49:43 2000  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/platform_lynxos.GNU: export environment

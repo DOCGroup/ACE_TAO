@@ -60,16 +60,7 @@ ifneq ($(shell uname -s),LynxOS)
   endif # HOST_OS_TYPE
 
   ifeq (,$(ENV_PREFIX))
-    ifeq (2.5.0,$(VERSION))
-      ENV_PREFIX = /usr/lynx/$(VERSION)/$(LYNXTARGET)
-    else # ! 2.5.0
-    ifeq (3.0.,$(findstring 3.0.,$(VERSION)))
-      ENV_PREFIX = /usr/lynx/$(VERSION)/$(LYNXTARGET)
-    else  # >= 3.1.0
-      ENV_PREFIX = /usr/lynx/$(VERSION)
-    endif # >= 3.1.0
-    endif # ! 2.5.0
-    export ENV_PREFIX
+    export ENV_PREFIX = /usr/lynx/$(VERSION)/$(LYNXTARGET)
   endif # ENV_PREFIX
 
   ifeq (,$(findstring $(ENV_PREFIX),$(PATH)))
@@ -90,10 +81,6 @@ else
   #### classes, so it can build the TAO tests.
   ACE_HAS_GNUG_PRE_2_8 = 0
 endif # VERSION
-
-ifeq (3.1.0,$(VERSION))
-  CFLAGS += -I$(ENV_PREFIX)/usr/include
-endif # 3.1.0
 
 CC              = gcc
 CXX             = g++
