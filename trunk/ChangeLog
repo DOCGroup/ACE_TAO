@@ -2,7 +2,7 @@ Thu Aug 22 21:27:56 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/OS_String.cpp (strtok_r_emulation): Applied the patch Frank
 	  Kuhlman <kuhlmann@materna.de> submitted in [Bug 1272] which
-	  resolved a overrun error.
+	  resolved an overrun error.
 
 Thu Aug 22 21:20:01 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
