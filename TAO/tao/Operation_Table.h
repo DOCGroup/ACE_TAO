@@ -67,11 +67,14 @@ public:
   // = Initialization and termination methods.
   TAO_Dynamic_Hash_OpTable (const TAO_operation_db_entry *db,
                             CORBA::ULong dbsize,
-                            CORBA::ULong hashtblsize = 0);
+                            CORBA::ULong hashtblsize,
+                            ACE_Allocator *alloc);
   // Initialize the dynamic hash operation table with a database of
   // operation names. The hash table size may be different from the
   // size of the database. Hence we use the third argument to specify
-  // the size of the internal hash table.
+  // the size of the internal hash table.  The <alloc> argument is
+  // used to determine where the memory comes from (usually from
+  // <ACE_Static_Allocator_Base>).
 
   ~TAO_Dynamic_Hash_OpTable (void);
   // destructor
