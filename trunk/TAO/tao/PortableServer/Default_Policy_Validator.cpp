@@ -16,6 +16,7 @@ void
 TAO_POA_Default_Policy_Validator::validate_impl (TAO_Policy_Set &policies,
                                                  CORBA::Environment &ACE_TRY_ENV)
 {
+#if (TAO_HAS_MINIMUM_POA == 0)
   CORBA::Policy_var policy =
     policies.get_cached_policy (TAO_CACHED_POLICY_SERVANT_RETENTION);
   PortableServer::ServantRetentionPolicy_var srp =
@@ -87,6 +88,10 @@ TAO_POA_Default_Policy_Validator::validate_impl (TAO_Policy_Set &policies,
     if (servant_retention != PortableServer::RETAIN ||
         id_assignment != PortableServer::SYSTEM_ID)
       ACE_THROW (PortableServer::POA::InvalidPolicy ());
+#else /* TAO_HAS_MINIMUM_POA == 0 */
+  ACE_UNUSED_ARG (policies);
+  ACE_UNUSED_ARG (ACE_TRY_ENV); // FUZZ: ignore check_for_ace_check
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 }
 
 

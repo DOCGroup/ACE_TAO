@@ -209,10 +209,14 @@ TAO_Object_Adapter::init_default_policies (TAO_POA_Policy_Set &policies,
 {
   // Initialize the default policies.
 
+#if (TAO_HAS_MINIMUM_POA == 0)
+
   // Thread policy.
   TAO_Thread_Policy thread_policy (PortableServer::ORB_CTRL_MODEL);
   policies.merge_policy (&thread_policy, ACE_TRY_ENV);
   ACE_CHECK;
+
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
   // Lifespan policy.
   TAO_Lifespan_Policy lifespan_policy (PortableServer::TRANSIENT);
@@ -588,6 +592,7 @@ TAO_Object_Adapter::open (CORBA::Environment &ACE_TRY_ENV)
 #else
   TAO_POA_Policy_Set policies (this->default_poa_policies ());
 
+#if (TAO_HAS_MINIMUM_POA == 0)
   // Specify the implicit activation policy since it should
   // be different from the default.  Note that merge_policy
   // takes a const reference and makes its own copy of the
@@ -597,6 +602,8 @@ TAO_Object_Adapter::open (CORBA::Environment &ACE_TRY_ENV)
                                       PortableServer::IMPLICIT_ACTIVATION);
   policies.merge_policy (&implicit_activation_policy,
                          ACE_TRY_ENV);
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
+
 #endif /* 0 */
 
   // Construct a new POA
