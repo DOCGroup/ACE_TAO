@@ -25,7 +25,6 @@ namespace CCF
 
         FileScope (DeclarationTable& table, Order const& order);
 
-      public:
         virtual ScopePtr
         scope () const throw (NotInScope)
         {
@@ -92,11 +91,6 @@ namespace CCF
           //@@ eh!
           table.insert (scope_);
         }
-
-      protected:
-        // This c-tor is never called.
-        //
-        TranslationRegion ();
 
       public:
         DeclarationTable const&
@@ -168,11 +162,14 @@ namespace CCF
       //
       class IncludeTranslationRegion : public virtual TranslationRegion
       {
-      protected:
+      public:
         virtual
         ~IncludeTranslationRegion () throw () {}
 
-        IncludeTranslationRegion ()
+        IncludeTranslationRegion (fs::path const& file_path,
+                                  DeclarationTable& table,
+                                  Order const& order)
+            : TranslationRegion (file_path, table, order)
         {
           type_info (static_type_info ());
         }
@@ -200,7 +197,8 @@ namespace CCF
         UserIncludeTranslationRegion (fs::path const& file_path,
                                       DeclarationTable& table,
                                       Order const& order)
-            : TranslationRegion (file_path, table, order)
+            : TranslationRegion (file_path, table, order),
+              IncludeTranslationRegion (file_path, table, order)
         {
           type_info (static_type_info ());
         }
@@ -227,7 +225,8 @@ namespace CCF
         SysIncludeTranslationRegion (fs::path const& file_path,
                                      DeclarationTable& table,
                                      Order const& order)
-            : TranslationRegion (file_path, table, order)
+            : TranslationRegion (file_path, table, order),
+              IncludeTranslationRegion (file_path, table, order)
         {
           type_info (static_type_info ());
         }
@@ -254,7 +253,8 @@ namespace CCF
         ImpliedIncludeTranslationRegion (fs::path const& file_path,
                                          DeclarationTable& table,
                                          Order const& order)
-            : TranslationRegion (file_path, table, order)
+            : TranslationRegion (file_path, table, order),
+              IncludeTranslationRegion (file_path, table, order)
         {
           type_info (static_type_info ());
         }

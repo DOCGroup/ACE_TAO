@@ -116,7 +116,7 @@ private:
   /// The typed supplier....
   CosEventComm::PushSupplier_var typed_supplier_;
 
-  /// The DSI impl
+  // The DSI impl
   TAO_CEC_DynamicImplementationServer* dsi_impl_;
 
   /// The DSI Portable Server OID

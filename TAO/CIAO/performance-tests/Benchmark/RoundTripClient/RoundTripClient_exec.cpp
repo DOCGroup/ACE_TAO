@@ -66,8 +66,7 @@ MyImpl::RoundTripClient_exec_i::start ()
   CORBA::Long test_data = 0L;
 
   //Warm up the system
-  int i = 0;
-  for (i=0; i < 100; i++)
+  for (int i=0; i < 100; i++)
     lt->makeCall (test_data);
 
   ACE_DEBUG ((LM_DEBUG, "MyImpl::start: warmed up the system\n"));

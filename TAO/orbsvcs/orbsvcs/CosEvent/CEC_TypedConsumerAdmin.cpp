@@ -18,7 +18,7 @@ TAO_CEC_TypedConsumerAdmin::TAO_CEC_TypedConsumerAdmin (TAO_CEC_TypedEventChanne
   this->default_POA_ =
     this->typed_event_channel_->typed_consumer_poa ();
 }
-
+  
 // Implementation skeleton destructor
 TAO_CEC_TypedConsumerAdmin::~TAO_CEC_TypedConsumerAdmin (void)
 {
@@ -67,7 +67,6 @@ TAO_CEC_TypedConsumerAdmin::shutdown (ACE_ENV_SINGLE_ARG_DECL)
 CosTypedEventChannelAdmin::TypedProxyPullSupplier_ptr
 TAO_CEC_TypedConsumerAdmin::obtain_typed_pull_supplier (
     const char * /*supported_interface*/
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException,
@@ -77,11 +76,10 @@ TAO_CEC_TypedConsumerAdmin::obtain_typed_pull_supplier (
 {
   ACE_THROW (CosTypedEventChannelAdmin::InterfaceNotSupported ());
 }
-
+  
 CosEventChannelAdmin::ProxyPushSupplier_ptr
 TAO_CEC_TypedConsumerAdmin::obtain_typed_push_supplier (
     const char * uses_interface
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException,
@@ -90,7 +88,7 @@ TAO_CEC_TypedConsumerAdmin::obtain_typed_push_supplier (
 
 {
   // Register the consumer uses_interface with the EC
-  int result = this->typed_event_channel_->consumer_register_uses_interace (uses_interface ACE_ENV_ARG_PARAMETER);
+  int result = this->typed_event_channel_->consumer_register_uses_interace (uses_interface ACE_ENV_ARG_DECL);
 
   if (result == -1)
     {

@@ -32,14 +32,6 @@
 //around.
 #include "Dispatcher_Impl.h"
 
-//#################################################################
-//Beware that this interface will be subject to change in the future
-//since this is the very initial release. We will be working on
-//trying to merge the DSRT and EC mechanisms in the future. If you 
-//are a user of this interface, kindly let us know so that we can
-//coordinate with you when we refactor this interface.
-//##################################################################
-
 namespace Kokyu
 {
   //class Dispatcher_Impl;

@@ -112,17 +112,17 @@ TAO_CEC_TypedEventChannel::shutdown (ACE_ENV_SINGLE_ARG_DECL)
       // Deactivate the Typed EC
       PortableServer::POA_var t_poa =
         this->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
-
+      ACE_TRY_CHECK;
+  
       PortableServer::ObjectId_var t_id =
         t_poa->servant_to_id (this ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      ACE_TRY_CHECK;
 
       t_poa->deactivate_object (t_id.in () ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      ACE_TRY_CHECK;
 
       this->orb_->shutdown(0);
-      ACE_CHECK;
+      ACE_TRY_CHECK;
     }
 }
 
@@ -252,12 +252,12 @@ TAO_CEC_TypedEventChannel::cache_interface_description (const char *interface_
       // Lookup the Interface Name in the IFR
       CORBA::Contained_var contained =
         this->interface_repository_->lookup_id (interface_ ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      ACE_CHECK;
 
       // Narrow the interface
       CORBA::InterfaceDef_var interface =
         CORBA::InterfaceDef::_narrow (contained.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      ACE_CHECK;
 
       if (CORBA::is_nil (interface.in () ))
         {
@@ -272,7 +272,7 @@ TAO_CEC_TypedEventChannel::cache_interface_description (const char *interface_
           // Obtain the full interface description
           CORBA::InterfaceDef::FullInterfaceDescription_var fid =
             interface->describe_interface (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
+          ACE_CHECK;
 
           // Obtain the base interfaces
           this->base_interfaces_ = fid->base_interfaces;
@@ -416,9 +416,7 @@ TAO_CEC_TypedEventChannel::consumer_register_uses_interace (const char *uses_int
   else
     {
       // Neither a consumer nor a supplier has connected yet
-      int result = cache_interface_description (uses_interface_ ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
-
+      int result = cache_interface_description (uses_interface_);
       if (result == 0)
         {
           this->uses_interface_ = uses_interface_;
@@ -480,9 +478,7 @@ TAO_CEC_TypedEventChannel::supplier_register_supported_interface (const char *su
   else
     {
       // Neither a consumer nor a supplier has connected yet
-      int result = cache_interface_description (supported_interface_ ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
-
+      int result = cache_interface_description (supported_interface_);
       if (result == 0)
         {
           this->supported_interface_ = supported_interface_;
@@ -533,14 +529,14 @@ TAO_CEC_TypedEventChannel::for_consumers (ACE_ENV_SINGLE_ARG_DECL)
 {
   return this->typed_consumer_admin_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
-
+  
 CosTypedEventChannelAdmin::TypedSupplierAdmin_ptr
 TAO_CEC_TypedEventChannel::for_suppliers (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->typed_supplier_admin_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
-
+  
 void
 TAO_CEC_TypedEventChannel::destroy (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))

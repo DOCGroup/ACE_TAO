@@ -37,11 +37,6 @@ namespace CCF
         class InvalidArgument {};
 
       public:
-        virtual
-        ~Name ()
-        {
-        }
-
         explicit
         Name (std::string const& name) throw (InvalidArgument)
             : name_ (name)
@@ -74,20 +69,13 @@ namespace CCF
           return name_ != other.name_;
         }
 
-      public:
-        virtual std::ostream&
-        print (std::ostream& o) const
-        {
-          return o << name_;
-        }
-
       protected:
         std::string name_;
 
         friend std::ostream&
         operator << (std::ostream& o, Name const& name)
         {
-          return name.print (o);
+          return o << name.name_;
         }
 
         friend class ScopedName;
@@ -145,7 +133,7 @@ namespace CCF
       };
 
 
-      // Should always start with "::". Can be just "::" which
+      // Shuld always start with "::". Can be just "::" which
       // means it's a file-scope.
       //
       //
@@ -321,18 +309,6 @@ namespace CCF
         std::string literal_;
       };
 
-      inline bool
-      operator== (StringLiteral const& a, StringLiteral const& b)
-      {
-        return a.str () == b.str ();
-      }
-
-      inline bool
-      operator!= (StringLiteral const& a, StringLiteral const& b)
-      {
-        return a.str () != b.str ();
-      }
-
 
       //
       //
@@ -456,41 +432,23 @@ namespace CCF
           type_info (static_type_info ());
         }
 
-        // Virtual typing.
-        //
+        // Dynamic typing
       public:
-
-        //@@ should virtual_type be constant (since it is temporary)?
-        //
-        virtual NodePtr
-        virtual_type ()
-        {
-          return NodePtr ();
-        }
-
-        // Dynamic typing.
-        //
-      public:
-
-        virtual bool
-        is_a (Introspection::TypeInfo const& ti) const;
 
         template <typename Type>
         bool
-        is_a () const
+        is_a ()
         {
-          return is_a (Type::static_type_info ());
+          NodePtr self (ReferenceCounting::add_ref (this));
+          return ReferenceCounting::strict_cast<Type>(self) != 0;
         }
-
-        virtual NodePtr
-        dynamic_type (Introspection::TypeInfo const& ti);
 
         template <typename Type>
         StrictPtr<Type>
         dynamic_type ()
         {
-          return ReferenceCounting::strict_cast<Type>(
-            dynamic_type (Type::static_type_info ()));
+          NodePtr self (ReferenceCounting::add_ref (this));
+          return ReferenceCounting::strict_cast<Type>(self);
         }
 
         // Context
@@ -580,6 +538,7 @@ namespace CCF
 
 
       public:
+
         DeclarationRef (DeclarationPtr decl);
         DeclarationRef (DeclarationTable const& table, ScopedName const& name);
         DeclarationRef (DeclarationTable const& table,
@@ -641,14 +600,6 @@ namespace CCF
       StrictPtr<Scope>
       ScopePtr;
 
-      class Declaration;
-
-      typedef
-      StrictPtr<Declaration>
-      DeclarationPtr;
-
-      class DeclarationTable;
-
       class Declaration : public virtual Node
       {
       protected:
@@ -665,40 +616,7 @@ namespace CCF
         // e.g. FileScope
         Declaration (ScopedName const& name,
                      Order const& order,
-                     DeclarationTable& table);
-
-
-        // This c-tor is declared but never defined. The trick is that
-        // it should never be called since all inheritance in SyntaxTree
-        // is virtual.
-        //
-        Declaration ();
-
-      public:
-        DeclarationTable const&
-        table () const
-        {
-          return table_;
-        }
-
-        DeclarationTable&
-        table ()
-        {
-          return table_;
-        }
-
-      public:
-        //@@ returned object should be constant
-        //
-        //@@ it should probably take ScopedName
-        //
-        virtual DeclarationPtr
-        clone_temporary (SimpleName const& name,
-                         Order const& order,
-                         ScopePtr const& scope)
-        {
-          throw 0;
-        }
+                     DeclarationTable const& table);
 
       public:
 
@@ -731,9 +649,12 @@ namespace CCF
       private:
         Order order_;
         ScopedName name_;
-        DeclarationTable& table_;
         DeclarationRef<Scope> scope_;
       };
+
+      typedef
+      StrictPtr<Declaration>
+      DeclarationPtr;
 
 
       //
@@ -826,11 +747,15 @@ namespace CCF
         IteratorPair
         lookup (ScopedName const& n) const;
 
-        class DeclarationNotFound {};
+        bool
+        exist (ScopedName const& n) const
+        {
+          IteratorPair pair = lookup (n);
+          return pair.first != pair.second;
+        }
 
-        DeclarationPtr
-        lookup (ScopedName const& n, Introspection::TypeInfo const& ti) const
-          throw (DeclarationNotFound, TypeMismatch);
+
+        class DeclarationNotFound {};
 
         template <typename T>
         StrictPtr<T>
@@ -841,13 +766,6 @@ namespace CCF
         StrictPtr<T>
         lookup (ScopedName const& n, Order const& o) const
           throw (DeclarationNotFound, TypeMismatch);
-
-        bool
-        exist (ScopedName const& n) const
-        {
-          IteratorPair pair = lookup (n);
-          return pair.first != pair.second;
-        }
 
         class ResolutionFailure {};
         class NameNotFound  : public ResolutionFailure {};
@@ -892,8 +810,22 @@ namespace CCF
         virtual
         ~Scope () throw () {}
 
-        Scope ()
-            : next_order_ (0)
+        // This c-tor is here for Declarations that are not in scope
+        // e.g. FileScope.
+        Scope (DeclarationTable& table,
+               ScopedName const& name,
+               Order const& order)
+            : Declaration (name, order, table),
+              table_ (table),
+              next_order_ (0)
+        {
+          type_info (static_type_info ());
+        }
+
+        Scope (SimpleName const& name, ScopePtr const& scope)
+            : Declaration (name, scope),
+              table_ (scope->table ()),
+              next_order_ (0)
         {
           type_info (static_type_info ());
         }
@@ -919,6 +851,19 @@ namespace CCF
         Order
         peek_order ();
 
+
+      public:
+
+        DeclarationTable const& table () const
+        {
+          return table_;
+        }
+
+        DeclarationTable& table ()
+        {
+          return table_;
+        }
+
         // Runtime declaration type information
       public:
         virtual std::string
@@ -933,6 +878,7 @@ namespace CCF
 
       private:
         DeclarationSet content_;
+        DeclarationTable& table_;
         unsigned long next_order_;
       };
 
@@ -946,7 +892,9 @@ namespace CCF
         virtual
         ~TypeDecl () throw () {}
 
-        TypeDecl ()
+        TypeDecl (SimpleName const& name,
+                  ScopePtr const& scope)
+            : Declaration (name, scope)
         {
           type_info (static_type_info ());
         }
@@ -987,7 +935,10 @@ namespace CCF
         virtual
         ~TypeForwardDecl () throw () {}
 
-        TypeForwardDecl ()
+        TypeForwardDecl (SimpleName const& name,
+                         ScopePtr const& scope)
+            : Declaration (name, scope),
+              TypeDecl (name, scope)
         {
           type_info (static_type_info ());
         }
@@ -1023,7 +974,10 @@ namespace CCF
         virtual
         ~TypeDef () throw () {}
 
-        TypeDef ()
+        TypeDef (SimpleName const& name,
+                 ScopePtr const& scope)
+            : Declaration (name, scope),
+              TypeDecl (name, scope)
         {
           type_info (static_type_info ());
         }

@@ -177,7 +177,7 @@ namespace Indentation
     {
       hold_.push_back (c);
 
-      int_type result (traits_type::eof ());
+      int_type result;
 
       while (!hold_.empty ())
       {

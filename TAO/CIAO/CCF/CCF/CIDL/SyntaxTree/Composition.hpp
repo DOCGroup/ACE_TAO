@@ -50,6 +50,7 @@ namespace CCF
                      Category::Value category,
                      ScopePtr const& scope)
             : Declaration (name, scope),
+              Scope (name, scope),
               category_ (category)
         {
           type_info (static_type_info ());

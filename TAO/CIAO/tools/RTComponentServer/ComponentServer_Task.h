@@ -16,7 +16,7 @@
 
 #ifndef CIAO_COMPONENTSERVER_TASK_H
 #define CIAO_COMPONENTSERVER_TASK_H
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #include "tao/ORB_Core.h"
 
@@ -78,5 +78,5 @@ namespace CIAO
 # include "ComponentServer_Task.inl"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 #endif /* CIAO_COMPONENTSERVER_TASK_H */

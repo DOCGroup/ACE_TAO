@@ -55,6 +55,7 @@ namespace TAO
   FT_ClientRequest_Interceptor::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
+    delete this;
   }
 
   void
@@ -100,7 +101,7 @@ namespace TAO
     ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
-    this->tss_resources ()->clean_flag_ = true;
+    this->tss_resources ()->clean_flag_ = false;
   }
 
   void
@@ -223,9 +224,9 @@ namespace TAO
 
             cdr.reset_byte_order (ACE_static_cast (int,byte_order));
 
-            FT::FTGroupVersionServiceContext gvsc;
+            FT::TagFTGroupTaggedComponent gtc;
 
-            if ((cdr >> gvsc) == 0)
+            if ((cdr >> gtc) == 0)
               ACE_THROW (CORBA::BAD_PARAM (CORBA::OMGVMCID | 28,
                                            CORBA::COMPLETED_NO));
 
@@ -236,7 +237,7 @@ namespace TAO
             if (!(ocdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER)))
               ACE_THROW (CORBA::MARSHAL ());
 
-            if (!(ocdr << gvsc))
+            if (!(ocdr << gtc.object_group_ref_version))
               ACE_THROW (CORBA::MARSHAL ());
 
             CORBA::ULong length =
@@ -322,10 +323,6 @@ namespace TAO
 
                 ftrsc.retention_id = ++this->retention_id_;
                 tss->retention_id_ = ftrsc.retention_id;
-
-                // Generated one already. We don't generate another
-                // till we get a rely for this.
-                tss->clean_flag_ = false;
             }
             else
               {

@@ -18,14 +18,9 @@ public:
     :Kokyu::Dispatch_Command(1),id_(i)
   {
   }
-  int execute ();
 
-private:
-  int id_;
-};
-
-int MyCommand::execute()
-{
+  int execute()
+  {
   ACE_hthread_t thr_handle;
   ACE_Thread::self (thr_handle);
   int prio;
@@ -49,7 +44,12 @@ int MyCommand::execute()
                 ACE_TEXT (("(%t|prio=%d) | command %d executed\n")),
                 prio, id_));
     return 0;
-}
+  }
+
+private:
+  int id_;
+};
+
 
 int main (int argc, char** argv)
 {

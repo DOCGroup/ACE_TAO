@@ -188,7 +188,7 @@ template <class DSRT_Scheduler_Traits>
 int DSRT_Direct_Dispatcher_Impl<DSRT_Scheduler_Traits>::
 schedule_i (Guid_t id, const DSRT_QoSDescriptor& qos)
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard, this->synch_lock_, -1);
+  ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard, synch_lock_, -1);
 
 #ifdef KOKYU_DSRT_LOGGING
   ACE_DEBUG ((LM_DEBUG, 
@@ -216,9 +216,9 @@ schedule_i (Guid_t id, const DSRT_QoSDescriptor& qos)
                            this->blocked_prio_, 
                            this->sched_policy_) == -1)
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
+      ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("%p\n"),
-                  ACE_TEXT ("thr_setprio failed")), -1);
+                  ACE_TEXT ("thr_setprio failed")));
     }
 
 #ifdef KOKYU_DSRT_LOGGING

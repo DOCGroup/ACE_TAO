@@ -32,11 +32,10 @@ namespace CCF
           map (typeid (SyntaxTree::BuiltInTypeDef), this);
         }
 
-        virtual bool
+        virtual void
         traverse (SyntaxTree::NodePtr const& n)
         {
           traverse (n->dynamic_type<SyntaxTree::BuiltInTypeDef> ());
-	  return true;
         }
 
         virtual void
@@ -61,11 +60,10 @@ namespace CCF
           map (typeid (SyntaxTree::Object), this);
         }
 
-        virtual bool
+        virtual void
         traverse (SyntaxTree::NodePtr const& n)
         {
           traverse (n->dynamic_type<SyntaxTree::Object> ());
-	  return true;
         }
 
         virtual void
@@ -90,11 +88,10 @@ namespace CCF
           map (typeid (SyntaxTree::ValueBase), this);
         }
 
-        virtual bool
+        virtual void
         traverse (SyntaxTree::NodePtr const& n)
         {
           traverse (n->dynamic_type<SyntaxTree::ValueBase> ());
-	  return true;
         }
 
         virtual void
@@ -119,11 +116,10 @@ namespace CCF
           map (typeid (SyntaxTree::Any), this);
         }
 
-        virtual bool
+        virtual void
         traverse (SyntaxTree::NodePtr const& n)
         {
           traverse (n->dynamic_type<SyntaxTree::Any> ());
-	  return true;
         }
 
         virtual void
@@ -148,11 +144,10 @@ namespace CCF
           map (typeid (SyntaxTree::Boolean), this);
         }
 
-        virtual bool
+        virtual void
         traverse (SyntaxTree::NodePtr const& n)
         {
           traverse (n->dynamic_type<SyntaxTree::Boolean> ());
-	  return true;
         }
 
         virtual void
@@ -177,11 +172,10 @@ namespace CCF
           map (typeid (SyntaxTree::Char), this);
         }
 
-        virtual bool
+        virtual void
         traverse (SyntaxTree::NodePtr const& n)
         {
           traverse (n->dynamic_type<SyntaxTree::Char> ());
-	  return true;
         }
 
         virtual void
@@ -206,11 +200,10 @@ namespace CCF
           map (typeid (SyntaxTree::Double), this);
         }
 
-        virtual bool
+        virtual void
         traverse (SyntaxTree::NodePtr const& n)
         {
           traverse (n->dynamic_type<SyntaxTree::Double> ());
-	  return true;
         }
 
         virtual void
@@ -235,11 +228,10 @@ namespace CCF
           map (typeid (SyntaxTree::Float), this);
         }
 
-        virtual bool
+        virtual void
         traverse (SyntaxTree::NodePtr const& n)
         {
           traverse (n->dynamic_type<SyntaxTree::Float> ());
-	  return true;
         }
 
         virtual void
@@ -264,11 +256,10 @@ namespace CCF
           map (typeid (SyntaxTree::Long), this);
         }
 
-        virtual bool
+        virtual void
         traverse (SyntaxTree::NodePtr const& n)
         {
           traverse (n->dynamic_type<SyntaxTree::Long> ());
-	  return true;
         }
 
         virtual void
@@ -293,11 +284,10 @@ namespace CCF
           map (typeid (SyntaxTree::LongDouble), this);
         }
 
-        virtual bool
+        virtual void
         traverse (SyntaxTree::NodePtr const& n)
         {
           traverse (n->dynamic_type<SyntaxTree::LongDouble> ());
-	  return true;
         }
 
         virtual void
@@ -322,11 +312,10 @@ namespace CCF
           map (typeid (SyntaxTree::LongLong), this);
         }
 
-        virtual bool
+        virtual void
         traverse (SyntaxTree::NodePtr const& n)
         {
           traverse (n->dynamic_type<SyntaxTree::LongLong> ());
-	  return true;
         }
 
         virtual void
@@ -351,11 +340,10 @@ namespace CCF
           map (typeid (SyntaxTree::Octet), this);
         }
 
-        virtual bool
+        virtual void
         traverse (SyntaxTree::NodePtr const& n)
         {
           traverse (n->dynamic_type<SyntaxTree::Octet> ());
-	  return true;
         }
 
         virtual void
@@ -380,11 +368,10 @@ namespace CCF
           map (typeid (SyntaxTree::Short), this);
         }
 
-        virtual bool
+        virtual void
         traverse (SyntaxTree::NodePtr const& n)
         {
           traverse (n->dynamic_type<SyntaxTree::Short> ());
-	  return true;
         }
 
         virtual void
@@ -409,11 +396,10 @@ namespace CCF
           map (typeid (SyntaxTree::String), this);
         }
 
-        virtual bool
+        virtual void
         traverse (SyntaxTree::NodePtr const& n)
         {
           traverse (n->dynamic_type<SyntaxTree::String> ());
-	  return true;
         }
 
         virtual void
@@ -438,11 +424,10 @@ namespace CCF
           map (typeid (SyntaxTree::UnsignedLong), this);
         }
 
-        virtual bool
+        virtual void
         traverse (SyntaxTree::NodePtr const& n)
         {
           traverse (n->dynamic_type<SyntaxTree::UnsignedLong> ());
-	  return true;
         }
 
         virtual void
@@ -467,11 +452,10 @@ namespace CCF
           map (typeid (SyntaxTree::UnsignedLongLong), this);
         }
 
-        virtual bool
+        virtual void
         traverse (SyntaxTree::NodePtr const& n)
         {
           traverse (n->dynamic_type<SyntaxTree::UnsignedLongLong> ());
-	  return true;
         }
 
         virtual void
@@ -496,11 +480,10 @@ namespace CCF
           map (typeid (SyntaxTree::UnsignedShort), this);
         }
 
-        virtual bool
+        virtual void
         traverse (SyntaxTree::NodePtr const& n)
         {
           traverse (n->dynamic_type<SyntaxTree::UnsignedShort> ());
-	  return true;
         }
 
         virtual void
@@ -525,11 +508,10 @@ namespace CCF
           map (typeid (SyntaxTree::Void), this);
         }
 
-        virtual bool
+        virtual void
         traverse (SyntaxTree::NodePtr const& n)
         {
           traverse (n->dynamic_type<SyntaxTree::Void> ());
-	  return true;
         }
 
         virtual void
@@ -554,11 +536,10 @@ namespace CCF
           map (typeid (SyntaxTree::Wchar), this);
         }
 
-        virtual bool
+        virtual void
         traverse (SyntaxTree::NodePtr const& n)
         {
           traverse (n->dynamic_type<SyntaxTree::Wchar> ());
-	  return true;
         }
 
         virtual void
@@ -583,11 +564,10 @@ namespace CCF
           map (typeid (SyntaxTree::Wstring), this);
         }
 
-        virtual bool
+        virtual void
         traverse (SyntaxTree::NodePtr const& n)
         {
           traverse (n->dynamic_type<SyntaxTree::Wstring> ());
-	  return true;
         }
 
         virtual void

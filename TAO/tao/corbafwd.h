@@ -84,16 +84,6 @@ template <class T> class TAO_Unbounded_Sequence;
 template <typename T> class TAO_Pseudo_Var_T;
 template <typename T, typename T_var> class TAO_Pseudo_Out_T;
 
-#if defined (__Lynx__)
-
-// LynxOS uses macro THREAD_CANCELLED internally, so it must
-// be undefined to avoid compilation errors
-#if defined (THREAD_CANCELLED)
-#undef THREAD_CANCELLED
-#endif /* THREAD_CANCELLED */
-
-#endif /*__Lynx__ */
-
 /**
  * @class CORBA
  *

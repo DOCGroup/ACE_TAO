@@ -127,10 +127,8 @@ Default_Dispatcher_Impl::dispatch_i (const Dispatch_Command* cmd,
   Dispatcher_Task* task =
     find_task_with_preemption_prio (qos_info.preemption_priority_);
 
-  //@@VS - We should insert this into the lowest prio queue. 
-  //How do we know that the last queue is the lowest prio queue.
   if (task == 0)
-    task = tasks_[ntasks_-1].get ();
+    task = tasks_[0].get ();
 
   return task->enqueue (cmd, qos_info);
 }
@@ -138,9 +136,6 @@ Default_Dispatcher_Impl::dispatch_i (const Dispatch_Command* cmd,
 int
 Default_Dispatcher_Impl::shutdown_i ()
 {
-  //This needs to be revisited based on mode transition and 
-  //consistent cut through the queues
-
   //post shutdown command to all tasks
   int i;
 

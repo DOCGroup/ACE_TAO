@@ -96,7 +96,6 @@ BIN =   \
 	Reactor_Dispatch_Order_Test \
 	Reactor_Exceptions_Test \
 	Reactor_Notify_Test \
-	Reactor_Notification_Queue_Test \
 	Reactor_Performance_Test \
 	Reactor_Registration_Test \
 	Reactor_Timer_Test \

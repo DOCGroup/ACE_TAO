@@ -16,7 +16,6 @@ cxx_translation_units := BuiltIn.cpp      \
                          Module.cpp       \
                          Operation.cpp    \
                          Translation.cpp  \
-                         Typedef.cpp      \
                          TypeId.cpp       \
                          ValueType.cpp
 

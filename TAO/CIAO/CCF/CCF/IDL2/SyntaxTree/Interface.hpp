@@ -13,17 +13,20 @@ namespace CCF
   {
     namespace SyntaxTree
     {
-
+      
       //
       //
       //
       class InterfaceDecl : public virtual TypeDecl
       {
-      protected:
+      public:
         virtual
         ~InterfaceDecl () throw () {}
 
-        InterfaceDecl ()
+        InterfaceDecl (SimpleName const& name,
+                       ScopePtr const& scope)
+            : Declaration (name, scope),
+              TypeDecl (name, scope)
         {
           type_info (static_type_info ());
         }
@@ -72,11 +75,16 @@ namespace CCF
       class InterfaceForwardDecl : public virtual InterfaceDecl,
                                    public virtual TypeForwardDecl
       {
-      protected:
+      public:
         virtual
         ~InterfaceForwardDecl () throw () {}
 
-        InterfaceForwardDecl ()
+        InterfaceForwardDecl (SimpleName const& name,
+                              ScopePtr const& scope)
+            : Declaration (name, scope),
+              TypeDecl (name, scope),
+              InterfaceDecl (name, scope),
+              TypeForwardDecl (name, scope)
         {
           type_info (static_type_info ());
         }
@@ -94,7 +102,7 @@ namespace CCF
         static_type_info ();
       };
 
-
+      
       //
       //
       //
@@ -120,11 +128,18 @@ namespace CCF
                            public virtual TypeDef,
                            public virtual Scope
       {
-      protected:
+      public:
         virtual
         ~InterfaceDef () throw () {}
 
-        InterfaceDef (ScopedNameSet const& inherits)
+        InterfaceDef (SimpleName const& name,
+                      ScopePtr const& scope,
+                      ScopedNameSet const& inherits)
+            : Declaration (name, scope),
+              TypeDecl (name, scope),
+              InterfaceDecl (name, scope),
+              TypeDef (name, scope),
+              Scope (name, scope)
         {
           type_info (static_type_info ());
 
@@ -132,13 +147,9 @@ namespace CCF
                i != inherits.end ();
                i++)
           {
-            inherits_.insert (InterfaceDefRef (table (), *i));
+            inherits_.insert (InterfaceDefRef (scope->table (), *i));
           }
         }
-
-        // This c-tor is never called.
-        //
-        InterfaceDef ();
 
       public:
         typedef
@@ -195,11 +206,16 @@ namespace CCF
       //
       class AbstractInterfaceDecl : public virtual InterfaceDecl
       {
-      protected:
+      public:
         virtual
         ~AbstractInterfaceDecl () throw () {}
 
-        AbstractInterfaceDecl ()
+        // forward-declared unconstrained interface c-tor
+        AbstractInterfaceDecl (SimpleName const& name,
+                               ScopePtr const& scope)
+            : Declaration (name, scope),
+              TypeDecl (name, scope),
+              InterfaceDecl (name, scope)
         {
           type_info (static_type_info ());
         }
@@ -231,9 +247,15 @@ namespace CCF
         virtual
         ~AbstractInterfaceForwardDecl () throw () {}
 
+        // forward-declared unconstrained interface c-tor
         AbstractInterfaceForwardDecl (SimpleName const& name,
                                       ScopePtr const& scope)
-            : Declaration (name, scope)
+            : Declaration (name, scope),
+              TypeDecl (name, scope),
+              InterfaceDecl (name, scope),
+              TypeForwardDecl (name, scope),
+              InterfaceForwardDecl (name, scope),
+              AbstractInterfaceDecl (name, scope)
         {
           type_info (static_type_info ());
         }
@@ -266,7 +288,12 @@ namespace CCF
                               ScopePtr const& scope,
                               ScopedNameSet const& inherits)
             : Declaration (name, scope),
-              InterfaceDef (inherits)
+              TypeDecl (name, scope),
+              InterfaceDecl (name, scope),
+              AbstractInterfaceDecl (name, scope),
+              TypeDef (name, scope),
+              Scope (name, scope),
+              InterfaceDef (name, scope, inherits)
         {
           type_info (static_type_info ());
         }
@@ -293,11 +320,15 @@ namespace CCF
       //
       class LocalInterfaceDecl : public virtual InterfaceDecl
       {
-      protected:
+      public:
         virtual
         ~LocalInterfaceDecl () throw () {}
 
-        LocalInterfaceDecl ()
+        LocalInterfaceDecl (SimpleName const& name,
+                            ScopePtr const& scope)
+            : Declaration (name, scope),
+              TypeDecl (name, scope),
+              InterfaceDecl (name, scope)
         {
           type_info (static_type_info ());
         }
@@ -332,7 +363,12 @@ namespace CCF
 
         LocalInterfaceForwardDecl (SimpleName const& name,
                                    ScopePtr const& scope)
-            : Declaration (name, scope)
+            : Declaration (name, scope),
+              TypeDecl (name, scope),
+              InterfaceDecl (name, scope),
+              TypeForwardDecl (name, scope),
+              InterfaceForwardDecl (name, scope),
+              LocalInterfaceDecl (name, scope)
         {
           type_info (static_type_info ());
         }
@@ -365,7 +401,12 @@ namespace CCF
                            ScopePtr const& scope,
                            ScopedNameSet const& inherits)
             : Declaration (name, scope),
-              InterfaceDef (inherits)
+              TypeDecl (name, scope),
+              InterfaceDecl (name, scope),
+              LocalInterfaceDecl (name, scope),
+              TypeDef (name, scope),
+              Scope (name, scope),
+              InterfaceDef (name, scope, inherits)
         {
           type_info (static_type_info ());
         }
@@ -393,11 +434,15 @@ namespace CCF
       //
       class UnconstrainedInterfaceDecl : public virtual InterfaceDecl
       {
-      protected:
+      public:
         virtual
         ~UnconstrainedInterfaceDecl () throw () {}
 
-        UnconstrainedInterfaceDecl ()
+        UnconstrainedInterfaceDecl (SimpleName const& name,
+                                    ScopePtr const& scope)
+            : Declaration (name, scope),
+              TypeDecl (name, scope),
+              InterfaceDecl (name, scope)
         {
           type_info (static_type_info ());
         }
@@ -441,29 +486,16 @@ namespace CCF
         virtual
         ~UnconstrainedInterfaceForwardDecl () throw () {}
 
-         UnconstrainedInterfaceForwardDecl (SimpleName const& name,
-                                            ScopePtr const& scope)
-             : Declaration (name, scope)
-        {
-          type_info (static_type_info ());
-        }
-
         UnconstrainedInterfaceForwardDecl (SimpleName const& name,
-                                           Order const& order,
                                            ScopePtr const& scope)
-            : Declaration (name, order, scope)
+            : Declaration (name, scope),
+              TypeDecl (name, scope),
+              InterfaceDecl (name, scope),
+              TypeForwardDecl (name, scope),
+              InterfaceForwardDecl (name, scope),
+              UnconstrainedInterfaceDecl (name, scope)
         {
           type_info (static_type_info ());
-        }
-
-      public:
-        virtual DeclarationPtr
-        clone_temporary (SimpleName const& name,
-                         Order const& order,
-                         ScopePtr const& scope)
-        {
-          return DeclarationPtr (
-            new UnconstrainedInterfaceForwardDecl (name, order, scope));
         }
 
         // Runtime declaration type information
@@ -478,7 +510,6 @@ namespace CCF
         static Introspection::TypeInfo const&
         static_type_info ();
       };
-
 
       //
       //
@@ -495,28 +526,14 @@ namespace CCF
                                    ScopePtr const& scope,
                                    ScopedNameSet const& inherits)
             : Declaration (name, scope),
-              InterfaceDef (inherits)
+              TypeDecl (name, scope),
+              InterfaceDecl (name, scope),
+              UnconstrainedInterfaceDecl (name, scope),
+              TypeDef (name, scope),
+              Scope (name, scope),
+              InterfaceDef (name, scope, inherits)
         {
           type_info (static_type_info ());
-        }
-
-        UnconstrainedInterfaceDef (SimpleName const& name,
-                                   Order const& order,
-                                   ScopePtr const& scope)
-            : Declaration (name, order, scope),
-              InterfaceDef (ScopedNameSet ()) //@@ broken
-        {
-          type_info (static_type_info ());
-        }
-
-      public:
-        virtual DeclarationPtr
-        clone_temporary (SimpleName const& name,
-                         Order const& order,
-                         ScopePtr const& scope)
-        {
-          return DeclarationPtr (
-            new UnconstrainedInterfaceDef (name, order, scope));
         }
 
         // Runtime declaration type information

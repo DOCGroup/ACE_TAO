@@ -25,7 +25,11 @@ namespace CCF
         virtual
         ~BuiltInTypeDef () throw () {}
 
-        BuiltInTypeDef ()
+        BuiltInTypeDef (SimpleName const& name,
+                        ScopePtr const& scope)
+            : Declaration (name, scope),
+              TypeDecl (name, scope),
+              TypeDef (name, scope)
         {
           type_info (static_type_info ());
         }
@@ -58,7 +62,10 @@ namespace CCF
         ~Object () throw () {}
 
         Object (ScopePtr const& scope)
-            : Declaration (SimpleName ("Object"), scope)
+            : Declaration (SimpleName ("Object"), scope),
+              TypeDecl (SimpleName ("Object"), scope),
+              TypeDef (SimpleName ("Object"), scope),
+              BuiltInTypeDef (SimpleName ("Object"), scope)
         {
           type_info (static_type_info ());
         }
@@ -91,7 +98,10 @@ namespace CCF
         ~ValueBase () throw () {}
 
         ValueBase (ScopePtr const& scope)
-            : Declaration (SimpleName ("ValueBase"), scope)
+            : Declaration (SimpleName ("ValueBase"), scope),
+              TypeDecl (SimpleName ("ValueBase"), scope),
+              TypeDef (SimpleName ("ValueBase"), scope),
+              BuiltInTypeDef (SimpleName ("ValueBase"), scope)
         {
           type_info (static_type_info ());
         }
@@ -124,7 +134,10 @@ namespace CCF
         ~Any () throw () {}
 
         Any (ScopePtr const& scope)
-            : Declaration (SimpleName ("any"), scope)
+            : Declaration (SimpleName ("any"), scope),
+              TypeDecl (SimpleName ("any"), scope),
+              TypeDef (SimpleName ("any"), scope),
+              BuiltInTypeDef (SimpleName ("any"), scope)
         {
           type_info (static_type_info ());
         }
@@ -157,7 +170,10 @@ namespace CCF
         ~Boolean () throw () {}
 
         Boolean (ScopePtr const& scope)
-            : Declaration (SimpleName ("boolean"), scope)
+            : Declaration (SimpleName ("boolean"), scope),
+              TypeDecl (SimpleName ("boolean"), scope),
+              TypeDef (SimpleName ("boolean"), scope),
+              BuiltInTypeDef (SimpleName ("boolean"), scope)
         {
           type_info (static_type_info ());
         }
@@ -190,7 +206,10 @@ namespace CCF
         ~Char () throw () {}
 
         Char (ScopePtr const& scope)
-            : Declaration (SimpleName ("char"), scope)
+            : Declaration (SimpleName ("char"), scope),
+              TypeDecl (SimpleName ("char"), scope),
+              TypeDef (SimpleName ("char"), scope),
+              BuiltInTypeDef (SimpleName ("char"), scope)
         {
           type_info (static_type_info ());
         }
@@ -223,7 +242,10 @@ namespace CCF
         ~Double () throw () {}
 
         Double (ScopePtr const& scope)
-            : Declaration (SimpleName ("double"), scope)
+            : Declaration (SimpleName ("double"), scope),
+              TypeDecl (SimpleName ("double"), scope),
+              TypeDef (SimpleName ("double"), scope),
+              BuiltInTypeDef (SimpleName ("double"), scope)
         {
           type_info (static_type_info ());
         }
@@ -256,7 +278,10 @@ namespace CCF
         ~Float () throw () {}
 
         Float (ScopePtr const& scope)
-            : Declaration (SimpleName ("float"), scope)
+            : Declaration (SimpleName ("float"), scope),
+              TypeDecl (SimpleName ("float"), scope),
+              TypeDef (SimpleName ("float"), scope),
+              BuiltInTypeDef (SimpleName ("float"), scope)
         {
           type_info (static_type_info ());
         }
@@ -289,7 +314,10 @@ namespace CCF
         ~Long () throw () {}
 
         Long (ScopePtr const& scope)
-            : Declaration (SimpleName ("long"), scope)
+            : Declaration (SimpleName ("long"), scope),
+              TypeDecl (SimpleName ("long"), scope),
+              TypeDef (SimpleName ("long"), scope),
+              BuiltInTypeDef (SimpleName ("long"), scope)
         {
           type_info (static_type_info ());
         }
@@ -322,7 +350,10 @@ namespace CCF
         ~LongDouble () throw () {}
 
         LongDouble (ScopePtr const& scope)
-            : Declaration (SimpleName ("long double"), scope)
+            : Declaration (SimpleName ("long double"), scope),
+              TypeDecl (SimpleName ("long double"), scope),
+              TypeDef (SimpleName ("long double"), scope),
+              BuiltInTypeDef (SimpleName ("long double"), scope)
         {
           type_info (static_type_info ());
         }
@@ -355,7 +386,10 @@ namespace CCF
         ~LongLong () throw () {}
 
         LongLong (ScopePtr const& scope)
-            : Declaration (SimpleName ("long long"), scope)
+            : Declaration (SimpleName ("long long"), scope),
+              TypeDecl (SimpleName ("long long"), scope),
+              TypeDef (SimpleName ("long long"), scope),
+              BuiltInTypeDef (SimpleName ("long long"), scope)
         {
           type_info (static_type_info ());
         }
@@ -388,7 +422,10 @@ namespace CCF
         ~Octet () throw () {}
 
         Octet (ScopePtr const& scope)
-            : Declaration (SimpleName ("octet"), scope)
+            : Declaration (SimpleName ("octet"), scope),
+              TypeDecl (SimpleName ("octet"), scope),
+              TypeDef (SimpleName ("octet"), scope),
+              BuiltInTypeDef (SimpleName ("octet"), scope)
         {
           type_info (static_type_info ());
         }
@@ -421,7 +458,10 @@ namespace CCF
         ~Short () throw () {}
 
         Short (ScopePtr const& scope)
-            : Declaration (SimpleName ("short"), scope)
+            : Declaration (SimpleName ("short"), scope),
+              TypeDecl (SimpleName ("short"), scope),
+              TypeDef (SimpleName ("short"), scope),
+              BuiltInTypeDef (SimpleName ("short"), scope)
         {
           type_info (static_type_info ());
         }
@@ -454,7 +494,10 @@ namespace CCF
         ~String () throw () {}
 
         String (ScopePtr const& scope)
-            : Declaration (SimpleName ("string"), scope)
+            : Declaration (SimpleName ("string"), scope),
+              TypeDecl (SimpleName ("string"), scope),
+              TypeDef (SimpleName ("string"), scope),
+              BuiltInTypeDef (SimpleName ("string"), scope)
         {
           type_info (static_type_info ());
         }
@@ -487,7 +530,10 @@ namespace CCF
         ~UnsignedLong () throw () {}
 
         UnsignedLong (ScopePtr const& scope)
-            : Declaration (SimpleName ("unsigned long"), scope)
+            : Declaration (SimpleName ("unsigned long"), scope),
+              TypeDecl (SimpleName ("unsigned long"), scope),
+              TypeDef (SimpleName ("unsigned long"), scope),
+              BuiltInTypeDef (SimpleName ("unsigned long"), scope)
         {
           type_info (static_type_info ());
         }
@@ -520,7 +566,10 @@ namespace CCF
         ~UnsignedLongLong () throw () {}
 
         UnsignedLongLong (ScopePtr const& scope)
-            : Declaration (SimpleName ("unsigned long long"), scope)
+            : Declaration (SimpleName ("unsigned long long"), scope),
+              TypeDecl (SimpleName ("unsigned long long"), scope),
+              TypeDef (SimpleName ("unsigned long long"), scope),
+              BuiltInTypeDef (SimpleName ("unsigned long long"), scope)
         {
           type_info (static_type_info ());
         }
@@ -553,7 +602,10 @@ namespace CCF
         ~UnsignedShort () throw () {}
 
         UnsignedShort (ScopePtr const& scope)
-            : Declaration (SimpleName ("unsigned short"), scope)
+            : Declaration (SimpleName ("unsigned short"), scope),
+              TypeDecl (SimpleName ("unsigned short"), scope),
+              TypeDef (SimpleName ("unsigned short"), scope),
+              BuiltInTypeDef (SimpleName ("unsigned short"), scope)
         {
           type_info (static_type_info ());
         }
@@ -586,7 +638,10 @@ namespace CCF
         ~Void () throw () {}
 
         Void (ScopePtr const& scope)
-            : Declaration (SimpleName ("void"), scope)
+            : Declaration (SimpleName ("void"), scope),
+              TypeDecl (SimpleName ("void"), scope),
+              TypeDef (SimpleName ("void"), scope),
+              BuiltInTypeDef (SimpleName ("void"), scope)
         {
           type_info (static_type_info ());
         }
@@ -619,7 +674,10 @@ namespace CCF
         ~Wchar () throw () {}
 
         Wchar (ScopePtr const& scope)
-            : Declaration (SimpleName ("wchar"), scope)
+            : Declaration (SimpleName ("wchar"), scope),
+              TypeDecl (SimpleName ("wchar"), scope),
+              TypeDef (SimpleName ("wchar"), scope),
+              BuiltInTypeDef (SimpleName ("wchar"), scope)
         {
           type_info (static_type_info ());
         }
@@ -652,7 +710,10 @@ namespace CCF
         ~Wstring () throw () {}
 
         Wstring (ScopePtr const& scope)
-            : Declaration (SimpleName ("wstring"), scope)
+            : Declaration (SimpleName ("wstring"), scope),
+              TypeDecl (SimpleName ("wstring"), scope),
+              TypeDef (SimpleName ("wstring"), scope),
+              BuiltInTypeDef (SimpleName ("wstring"), scope)
         {
           type_info (static_type_info ());
         }

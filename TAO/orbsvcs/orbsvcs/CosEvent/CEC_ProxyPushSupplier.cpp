@@ -142,10 +142,10 @@ TAO_CEC_ProxyPushSupplier::shutdown (ACE_ENV_SINGLE_ARG_DECL)
       if (CORBA::is_nil (typed_consumer.in ()))
         return;
 
-      ACE_TRY_EX (typed)
+      ACE_TRY
         {
           typed_consumer->disconnect_push_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK_EX (typed);
+          ACE_TRY_CHECK;
         }
       ACE_CATCHANY
         {
@@ -154,7 +154,7 @@ TAO_CEC_ProxyPushSupplier::shutdown (ACE_ENV_SINGLE_ARG_DECL)
         }
       ACE_ENDTRY;
     } /* this->is_typed_ec */
-  else
+  else 
     {
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
@@ -355,13 +355,13 @@ TAO_CEC_ProxyPushSupplier::connect_push_consumer (
         // declared and obtained before the Guard to avoid deadlock during the
         // _is_a (during _narrow) and get_typed_consumer invocations.
         // They are eventually assigned onto this object inside the Guard.
-        CosTypedEventComm::TypedPushConsumer_var local_typed_consumer =
+        CosTypedEventComm::TypedPushConsumer_var local_typed_consumer = 
           CosTypedEventComm::TypedPushConsumer::_narrow (push_consumer
                                                          ACE_ENV_ARG_PARAMETER);
         ACE_CHECK;
 
         // Obtain the typed object interface from the consumer
-        CORBA::Object_var local_typed_consumer_obj =
+        CORBA::Object_var local_typed_consumer_obj = 
           CORBA::Object::_duplicate (local_typed_consumer->get_typed_consumer (
                                              ACE_ENV_SINGLE_ARG_PARAMETER) );
         ACE_CHECK;
@@ -373,7 +373,7 @@ TAO_CEC_ProxyPushSupplier::connect_push_consumer (
           // @@ CosEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
           ACE_CHECK;
 
-          if (this->is_connected_i ())
+          if (this->is_connected_i ())   
             {
               if (this->typed_event_channel_->consumer_reconnect () == 0)
                 ACE_THROW (CosEventChannelAdmin::AlreadyConnected ());
@@ -401,12 +401,12 @@ TAO_CEC_ProxyPushSupplier::connect_push_consumer (
 
             }
 
-          this->typed_consumer_ =
+          this->typed_consumer_ = 
             CosTypedEventComm::TypedPushConsumer::_duplicate (local_typed_consumer.in () );
           ACE_CHECK;
 
           // Store the typed object interface from the consumer
-          this->typed_consumer_obj_ =
+          this->typed_consumer_obj_ = 
             CORBA::Object::_duplicate (local_typed_consumer_obj.in () );
           ACE_CHECK;
         }
@@ -530,10 +530,10 @@ TAO_CEC_ProxyPushSupplier::disconnect_push_supplier (
     {
       if (this->typed_event_channel_->disconnect_callbacks ())
         {
-          ACE_TRY_EX (typed)
+          ACE_TRY
             {
               typed_consumer->disconnect_push_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
-              ACE_TRY_CHECK_EX (typed);
+              ACE_TRY_CHECK;
             }
           ACE_CATCHANY
             {
@@ -689,7 +689,7 @@ TAO_CEC_ProxyPushSupplier::invoke_to_consumer (const TAO_CEC_TypedEvent &typed_e
       CORBA::Object::_duplicate (this->typed_consumer_obj_.in ());
   }
 
-  // Create the DII request
+  // Create the DII request 
   ACE_TRY
     {
       typed_consumer_obj_->_create_request (0, // ctx

@@ -1,233 +1,28 @@
-Wed Oct 15 13:22:32 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
-
-        * include/makeinclude/platform_linux_borland.GNU:
-          Also set versioned_so to 0 in this file.
-
-Wed Oct 15 13:16:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
-
-        * include/makeinclude/platform_mingw32.GNU:
-        * include/makeinclude/platform_cygwin32.GNU:
-          Instead of setting SONAME and SOVERSION to empty, set
-          versioned_so to 0 to indicate that versioned dll's should
-          be used because cygwin and mingw have problem with this.
-          This makes Cygwin/MinGW working again.
-
-Wed Oct 15 08:45:20 EDT 2003  Kevin Bryank <bryank@cs.uri.edu>
-
-        * bin/MakeProjectCreator/config/rtcosscheduling.mpb:
-          Adding base project for using the RTC 1.0 Scheduling Service
-
-Wed Oct 15 10:40:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
-
-        * ace/Select_Reactor_Base.cpp:
-          Fixed unused argument warning when ACE_HAS_REACTOR_NOTIFICATION_QUEUE
-          is defined
-
-Tue Oct 14 21:54:07 2003  Nanbor Wang  <nanbor@.cs.wustl.edu>
-
-	* Makefile (CIAO_CORE_DIRS): Added Kokyu to the list of base
-	  library for CIAO.  Although CIAO doesn't depend on Kokyu, it is
-	  needed to allow the compilation in orbsvcs/orbsvcs/ to run to
-	  completion.
-
-Tue Oct 14 23:21:00 UTC 2003  Don Hinton <dhinton@dresystems.com>
-
-        * ace/OS.h:
-          Removed following method declarations that were not implemented
-          or used: times(), cond_timedwait_i(), alarm_i(), ualarm_i(),
-          sleep_i(), nanosleep_i(), select_i(), poll_i(), sema_wait_i(),
-          sigtimedwait_i(), gettimeofday_i().
-
-        * ace/Process.h:
-          Fixed typo and added #include of Global_Macros.h.
-
-Tue Oct 14 17:13:46 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
-
-	* ace/Process.h: Put the ACE_Process copy constructor and
-	  assignment operator in the private part of the class to disallow
- 	  copying.  Thanks to Adam Fanello <yahoo@fanello.net> for
- 	  reporting this.
-
-	* ace/OS.cpp: Added patches to support PHARLAP.  Thanks
-	  to Ira Burton <imburton@micron.com> for supplying these.
-
-Tue Oct 14 13:54:19 2003  Steve Huston  <shuston@riverace.com>
-	Picked up from ACE 5.3:
-	Wed Jun 11 17:18:39 2003  Steve Huston  <shuston@riverace.com>
-
-	* include/makeinclude/wrapper_macros.GNU: Make SOVERSION
-	  user-settable if versioned_so is enabled. Thanks to Craig L.
-	  Ching <cching@mqsoftware.com> for this idea.
-	  Also moved the versioned_so and SOVERSION setup to after
-	  platform_macros.GNU is included so that users can set this stuff
-	  up in their platform_macros.GNU file. The ACE_MAJOR_VERSION,
-	  etc. variables are still set up before platform_macros.GNU, though,
-	  in case platform_macros.GNU wants to use them.
-
-Tue Oct 14 10:45:32 2003  Nanbor Wang  <nanbor@.cs.wustl.edu>
-
-	* Makefile: Added a new CIAO_Core target for building all CIAO
-	  core libraries and tools, including everything they need.
-	  Thanks to Gautam for suggesting this.
-
-Tue Oct 14 03:43:47 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
-
-	* Kokyu/DSRT_Direct_Dispatcher_Impl_T.cpp: Added this->
-	  qualification to instance variables in base class to fix
-	  compile warnings in HPUX build.
-
-	* Kokyu/Default_Dispatcher_Impl.cpp:
-	* Kokyu/DSRT_CV_Dispatcher_Impl_T.cpp:
-	* Kokyu/Dispatcher_Task.cpp:
-	* Kokyu/Dispatcher_Task.h:
-	* Kokyu/Kokyu.h:
-	* Kokyu/Kokyu_defs.i: Removed/added comments
-
-Tue Oct 14 05:50:43 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
-
-        * tests/Reactor_Notification_Queue_Test.cpp:
-          Fixed compile error in MSVC6 WChar build
-
-Mon Oct 13 17:52:31 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
-
-	* tests/Reactor_Notification_Queue_Test.cpp: Fixed a warning in
-	  g++ builds.
-
-Tue Oct 14 05:27:03 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
-
-	* tests/Reactor_Notification_Queue_Test.dsp: Added this time for
-	  real.
-
-Mon Oct 13 15:25:41 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
-
-	* bin/MakeProjectCreator/config/kokyu_dsrt_schedulers.mpb:
-	  Added include path to the Kokyu_dsrt_schedulers directory.
-
-Mon Oct 13 08:51:29 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
-
-	* ace/ace_wchar.inl: Reverted the change to BUG 1605 that was
-	  applied. The MSDN documentation doesn't suggest a 1 instead of a
-	  -1. Reopening BUG 1605.
-
-Mon Oct 13 12:39:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
-
-        * tests/Makefile.tests:
-          Fixed typo in Reactor_Notification_Queue_Test
-
-Mon Oct 13 08:36:43 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
-
-        * Kokyu/Kokyu_dsrt.h:
-        * Kokyu/DSRT_CV_Dispatcher_Impl_T.h:
-          Fixed fuzz pre/post error.
-
-        * tests/Reactor_Notification_Queue_Test.cpp:
-          Fixed fuzz file mismatch error.
-
-Mon Oct 13 06:34:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
-
-        * bin/mpc.pl:
-        * bin/MakeProjectCreator/templates/cbxexe.mpt:
-        * bin/MakeProjectCreator/templates/cbxdll.mpt:
-        * bin/MakeProjectCreator/templates/cbx.mpd:
-        * bin/MakeProjectCreator/modules/CbxProjectCreator.pm:
-          Added first version of cbx generator. This generated project files
-          for the new C++BuilderX development environment. This just sets some
-          of the options and adds all files to the project.
-
-Sun Oct 12 21:07:04 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
-
-	* tests/Makefile.tests:
-	* tests/Tests.bor:
-	* tests/run_test.lst:
-	* tests/tests.mpc: Regular exercise for building and running the
-	  test on all the platforms.
-
-Sun Oct 12 19:03:31 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
-
-	* Kokyu/Dispatcher_Task.cpp: Changed the Null lock in the
-	  allocator to Mutex lock.
-
-Sun Oct 12 17:20:40 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
-
-	* ace/Select_Reactor_Base.cpp: Fix for [BUG 1268]. Please refer to
-	  bugzilla database at
-
-  	  http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1268
-
-	  for more details on the source of the problem and the solution
-	  for the same. Thanks to Carlos O'Ryan for providing patches.
-
-	* tests/Reactor_Notification_Queue_Test.cpp:
-	* tests/Reactor_Notification_Queue_Test.dsp:
-	* tests/tests.dsw: New test that stresses the feature of sending
-	  notify messages to the reactor. Thanks to Carlos O'Ryan for
-	  providing the test.
-
-Sun Oct 12 14:08:38 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
-
-	* bin/MakeProjectCreator/config/kokyu_dsrt_schedulers.mpb:
-	* bin/MakeProjectCreator/config/kokyu_dsrt_scheduler_client.mpb:
-	* bin/MakeProjectCreator/config/kokyu_dsrt_scheduler_server.mpb:
-	  Added MPC base project files for Kokyu DSRT schedulers.
-
-Sun Oct 12 11:48:02 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
-
-	* Kokyu/Kokyu.html:
-	* Kokyu/kokyu1.jpg:
-	* Kokyu/kokyu2.jpg:
-	* Kokyu/KokyuEC.jpg: Added some initial documentation on Kokyu.
-
-Sun Oct 12 17:34:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
-
-        * ACE-INSTALL.html:
-          Removed mentioning of tests/run_tests.bat, it has been removed
-          some time ago and the perl script run_tests.pl is the only one
-          to use. Updated documentation for Borland support. CBuilderX is
-          now supported, but not the new preview compiler that is shipped
-          with CBuilderX.
-
-Sun Oct 12 08:42:32 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
-
-	* Kokyu/tests/DSRT_MIF/MIF.cpp:
-	* Kokyu/tests/DSRT_MIF/Makefile:
-	* Kokyu/tests/FIFO/test.cpp:
-	* Kokyu/tests/FIFO/README:
-	* Kokyu/tests/EDF/README:
-	* Kokyu/tests/EDF/test.cpp: Added more output info
-	  statements. Added README for the examples.
-
-Sat Oct 11 23:48:21 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
-
-	* bin/tao_other_tests.lst:
-
-	  Enabled TAO load balancer infrastructure controlled membership
-	  and CPU load monitor tests.
-
 Sat Oct 11 21:51:52 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* Kokyu/Kokyu_defs.{h,i,cpp}:
 	* Kokyu/Default_Dispatcher_Impl.cpp: Fixed some minor bugs related
 	  to setting the dispatcher with the correct sched policy.
-
+	
 	* Kokyu/tests/FIFO/test.cpp: Added some output print statements to
-	  print error messages on dispatcher failure.
+	  print error messages on dispatcher failure.	
 
 Sat Oct 11 17:39:09 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* Kokyu/Dispatcher_Task.i:
-	* Kokyu/Dispatcher_Task.h:
-	* Kokyu/DSRT_Direct_Dispatcher_Impl_T.cpp:
-	* Kokyu/DSRT_CV_Dispatcher_Impl_T.cpp:
+	* Kokyu/Dispatcher_Task.i: 
+	* Kokyu/Dispatcher_Task.h: 
+	* Kokyu/DSRT_Direct_Dispatcher_Impl_T.cpp: 
+	* Kokyu/DSRT_CV_Dispatcher_Impl_T.cpp: 
 
 	  Add this-> qualification when referencing instance variables in
 	  base class to get rid of compiler warnings in HPUX build.
-
+	
 	* ace/ace_wchar.inl: Fix for BUG 1605. Thanks to Dmitry
 	  Botcharnikov <dimab@garant.ru> and Stephan Bettermann
 	  <sbetterm@erggroup.com> for reporting the problem and suggesting
-	  a solution.  Please see
+	  a solution.  Please see 
 
-	  http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1605
+	  http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1605 
 
 	  for a description of the problem.
 
@@ -239,20 +34,20 @@ Sat Oct 11 11:01:05 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 Fri Oct 10 22:56:35 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* Kokyu/Kokyu_defs.{h,i,cpp}:
-	* Kokyu/Dispatcher_Task.{i,h,cpp}:
-	* Kokyu/Dispatcher_Impl.h:
-	* Kokyu/Default_Dispatcher_Impl.cpp:
-
+	* Kokyu/Kokyu_defs.{h,i,cpp}: 
+	* Kokyu/Dispatcher_Task.{i,h,cpp}: 
+	* Kokyu/Dispatcher_Impl.h: 
+	* Kokyu/Default_Dispatcher_Impl.cpp: 
+	
 	  Added allocator, sched scope, sched policy, reordering queue
 	  attributes to the Dispatcher_Attributes class. This will make
 	  the dispatcher more configurable.
-
-	* Kokyu/tests/FIFO/test.cpp:
-	* Kokyu/tests/EDF/test.cpp:
-
+	
+	* Kokyu/tests/FIFO/test.cpp: 
+	* Kokyu/tests/EDF/test.cpp: 
+	 
 	  Added command line options to specify the sched policy.
-
+	
 Fri Oct 10 19:52:26 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/OS.{h,i}:
@@ -369,6 +164,7 @@ Tue Oct 07 06:07:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
         * bin/MakeProjectCreator/templates/bor.mpd:
           Generate NAME, else nothing happens when building with Borland.
 
+
 Fri Oct 03 22:41:20 2003  Chris Cleeland  <cleeland@ociweb.com>
 
         * ACE version 5.3.4 released.
@@ -408,6 +204,7 @@ Thu Oct  2 07:33:07 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
         * Kokyu/tests/EDF/test.cpp:
         * Kokyu/tests/FIFO/test.cpp:
           Added shutdown of the dispatcher at the end.
+
 
 Wed Oct  1 10:59:35 2003  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -693,6 +490,7 @@ Tue Sep 16 11:49:19 2003  Chad Elliott  <elliott_c@ociweb.com>
 
 Tue Sep 16 11:55:18 2003  Gautam H. Thaker  <gthaker@atl.lmco.com>
 
+
         * performance-tests/SCTP/SOCK_SEQPACK_srv.cpp:
 
           fix compiler warning due to unintialized pointer
@@ -710,6 +508,7 @@ Tue Sep 16 11:55:18 2003  Gautam H. Thaker  <gthaker@atl.lmco.com>
 
           Changes to support changed LKSCTP API support from 2.6.test.4
           kernel an onward.
+
 
 Tue Sep 16 10:28:02 2003  Chad Elliott  <elliott_c@ociweb.com>
 

@@ -11,12 +11,11 @@ namespace CCF
   {
     namespace SemanticAction
     {
-      class Attribute;
       class Include;
-      class Interface;
       class Module;
+      class Interface;
+      class Attribute;
       class Operation;
-      class Typedef;
       class TypeId;
       class TypePrefix;
 
@@ -29,29 +28,26 @@ namespace CCF
         virtual
         ~Factory () throw () {}
 
-        virtual Attribute&
-        attribute () = 0;
-
         virtual Include&
         include () = 0;
-
-        virtual Interface&
-        interface () = 0;
-
-        virtual Module&
-        module () = 0;
-
-        virtual Operation&
-        operation () = 0;
-
-        virtual Typedef&
-        typedef_ () = 0;
 
         virtual TypeId&
         type_id () = 0;
 
         virtual TypePrefix&
         type_prefix () = 0;
+
+        virtual Module&
+        module () = 0;
+
+        virtual Interface&
+        interface () = 0;
+
+        virtual Attribute&
+        attribute () = 0;
+
+        virtual Operation&
+        operation () = 0;
       };
 
     }

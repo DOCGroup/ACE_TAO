@@ -6,7 +6,7 @@
 #define LATENCYTEST_H
 #include /**/ "ace/pre.h"
 
-#include "../BenchmarkS.h"
+#include "TestS.h"
 
 #if defined (_MSC_VER)
 # if (_MSC_VER >= 1200)
@@ -17,7 +17,7 @@
 
 /// Implement the Test::LatencyTest interface
 class LatencyTest_Impl
-: public virtual POA_Benchmark::LatencyTest
+: public virtual POA_LatencyTest
   , public virtual PortableServer::RefCountServantBase
 {
 public:

@@ -4,7 +4,6 @@
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
 #include "helloC.h"
-#include "ace/streams.h"
 
 char *ior = 0;
 int shutdown_server = 0;

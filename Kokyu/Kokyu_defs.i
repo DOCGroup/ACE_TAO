@@ -18,8 +18,8 @@ void Dispatcher_Attributes::sched_scope(int scope)
 
 ACE_INLINE
 Reordering_Queue_Attributes::Reordering_Queue_Attributes ()
-  :static_bit_field_mask_ (0), // not used
-   static_bit_field_shift_ (0), // not used
+  :static_bit_field_mask_ (0), // 2^(10) - 1
+   static_bit_field_shift_ (0), // 10 low order bits
    dynamic_priority_max_ (0x7FFFFFFFUL), // 2^31-1
    dynamic_priority_offset_ (0x08000000UL) // 15/16th of dynamic prio range
 {

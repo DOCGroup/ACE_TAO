@@ -18,7 +18,7 @@ TAO_CEC_TypedSupplierAdmin::TAO_CEC_TypedSupplierAdmin (TAO_CEC_TypedEventChanne
   this->default_POA_ =
     this->typed_event_channel_->typed_supplier_poa ();
 }
-
+  
 // Implementation skeleton destructor
 TAO_CEC_TypedSupplierAdmin::~TAO_CEC_TypedSupplierAdmin (void)
 {
@@ -61,7 +61,6 @@ TAO_CEC_TypedSupplierAdmin::shutdown (ACE_ENV_SINGLE_ARG_DECL)
 CosTypedEventChannelAdmin::TypedProxyPushConsumer_ptr
 TAO_CEC_TypedSupplierAdmin::obtain_typed_push_consumer (
     const char * supported_interface
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException,
@@ -69,7 +68,7 @@ TAO_CEC_TypedSupplierAdmin::obtain_typed_push_consumer (
   ))
 
 {
-  int result = this->typed_event_channel_->supplier_register_supported_interface (supported_interface ACE_ENV_ARG_PARAMETER);
+  int result = this->typed_event_channel_->supplier_register_supported_interface (supported_interface);
 
   if (result == -1)
     {
@@ -78,11 +77,10 @@ TAO_CEC_TypedSupplierAdmin::obtain_typed_push_consumer (
 
   return this->typed_push_admin_.obtain (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
-
+  
 CosEventChannelAdmin::ProxyPullConsumer_ptr
 TAO_CEC_TypedSupplierAdmin::obtain_typed_pull_consumer (
     const char * /* uses_interface */
-    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException,

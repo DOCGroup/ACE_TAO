@@ -21,9 +21,7 @@ namespace CCF
         typeid_init_ ()
         {
           TypeInfo ti (typeid (TypeId));
-          ti.add_base (Access::PUBLIC,
-                       true,
-                       Declaration::static_type_info ());
+          ti.add_base (Access::PUBLIC, true, Node::static_type_info ());
           return ti;
         }
 
@@ -43,9 +41,7 @@ namespace CCF
         typeprefix_init_ ()
         {
           TypeInfo ti (typeid (TypePrefix));
-          ti.add_base (Access::PUBLIC,
-                       true,
-                       Declaration::static_type_info ());
+          ti.add_base (Access::PUBLIC, true, Node::static_type_info ());
           return ti;
         }
 

@@ -512,75 +512,9 @@ public:
   // on the operation characteristics of a representative scheduling entry.
 };
 
-class TAO_RTSched_Export TAO_RMS_FAIR_Reconfig_Sched_Strategy
-  : public TAO_Reconfig_Sched_Strategy_Base
-  // = TITLE
-  //   A scheduling strategy that implements the Boeing RMS-Dynamic
-  //   scheduling algorithm, and the Honeywell MNO admission control
-  //   algorithm.
-  //
-  // = DESCRIPTION
-  //   The strategy assigns static thread and global priority
-  //   according to criticality and rate, assigns static subpriority
-  //   according to importance and then topological order, and assigns
-  //   a dispatching configuration with a static dispatching queue for
-  //   each high criticality rate, and a single minimum laxity
-  //   dispatching queue for all low criticality operations.  It
-  //   admits the lowest rate-index tuple for each operation, then
-  //   admits operations at their highest admissible rates in priority
-  //   order.
-{
-public:
+typedef TAO_MUF_FAIR_Reconfig_Sched_Strategy TAO_MUF_Reconfig_Sched_Strategy;
 
-  static int total_priority_comp (const void *, const void *);
-  // Ordering function used to qsort an array of RT_Info_Tuple
-  // pointers into a total <priority, subpriority> ordering.  Returns
-  // -1 if the first one is higher, 0 if they're the same, and 1 if
-  // the second one is higher.
-
-  static int total_admission_comp (const void *, const void *);
-  // Ordering function used to qsort an array of RT_Info_Tuple
-  // pointers into a total ordering for admission control.  Returns
-  // -1 if the first one is higher, 0 if they're the same, and 1 if
-  // the second one is higher.
-
-  static int compare_criticality(TAO_Reconfig_Scheduler_Entry &lhs,
-                                 TAO_Reconfig_Scheduler_Entry &rhs);
-  // Compares two entries by criticality alone.  Returns -1 if the
-  // first one is higher, 0 if they're the same, and 1 if the second one is higher.
-
-  static int compare_criticality(TAO_RT_Info_Tuple &lhs,
-                                 TAO_RT_Info_Tuple &rhs);
-  // Compares two entries by criticality alone.  Returns -1 if the
-  // first one is higher, 0 if they're the same, and 1 if the second one is higher.
-
-  static int compare_priority (TAO_Reconfig_Scheduler_Entry &,
-                               TAO_Reconfig_Scheduler_Entry &);
-  // Compares two entries by priority alone.  Returns -1 if the
-  // first one is higher, 0 if they're the same, and 1 if the second one is higher.
-
-  static int compare_priority (TAO_RT_Info_Tuple &,
-                               TAO_RT_Info_Tuple &);
-  // Compares two tuples by priority alone.  Returns -1 if the
-  // first one is higher, 0 if they're the same, and 1 if the second one is higher.
-
-  static int compare_admission_order (TAO_RT_Info_Tuple &,
-                                      TAO_RT_Info_Tuple &);
-  // Compares two entries by admission ordering policy.  Returns -1 if the
-  // first one is earlier, 0 if they're the same, and 1 if the second one is earlier.
-
-  static int compare_subpriority (TAO_Reconfig_Scheduler_Entry &,
-                                  TAO_Reconfig_Scheduler_Entry &);
-  // Compares two entries by subpriority alone.  Returns -1 if the
-  // first one is higher, 0 if they're the same, and 1 if the second one is higher.
-
-  static int assign_config (RtecScheduler::Config_Info &,
-                            TAO_Reconfig_Scheduler_Entry &);
-  // Fills in a static dispatch configuration for a priority level, based
-  // on the operation characteristics of a representative scheduling entry.
-};
-
-class TAO_RTSched_Export TAO_RMS_MLF_Reconfig_Sched_Strategy
+class TAO_RTSched_Export TAO_RMS_Reconfig_Sched_Strategy
   : public TAO_Reconfig_Sched_Strategy_Base
   // = TITLE
   //   A scheduling strategy that implements the Boeing RMS-Dynamic

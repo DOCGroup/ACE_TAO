@@ -1,4 +1,4 @@
-// file      : CIDLC/ExecutorMappingGenerator.cpp
+// file      : CCF/Example/CIDL/LocalExecutorMapping/ExecutorMappingGenerator.cpp
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
 // cvs-id    : $Id$
 
@@ -22,6 +22,12 @@ using std::make_pair;
 
 using namespace CCF::CIDL;
 using namespace SyntaxTree;
+
+/*
+
+@@ bad code: i->scope ()->table ()
+
+*/
 
 namespace
 {
@@ -232,7 +238,7 @@ namespace
       ScopedName mapping (orig.scope (), "CCM_" + orig.simple ());
 
       // Check if mapping has already been provided.
-      if (i->table ().exist (mapping)) return;
+      if (i->scope ()->table ().exist (mapping)) return;
 
       // Add to the list if it's not already there.
       declarations_.add (i);

@@ -14,16 +14,6 @@ Legend:
 
 @@ Write proper build instructions.
 
-@% Need to do something with this ctor initialization mess.
-
-@@ Can I use C++ templates instead of m4 in BuiltIn stuff?
-
-@@ Typedef.hpp TypeId.hpp: naming inconsistency.
-
-@@ Need ICE mechanism (search for abort ()) 
-
-@@ Need evolution of semantic action error handling/reporting.
-
 @@+ Add Elements to IDL3 and CIDL for consistency.
 
 @@+ Should CIDL syntax tree files have 'using namespace IDL2::SyntaxTree;' 

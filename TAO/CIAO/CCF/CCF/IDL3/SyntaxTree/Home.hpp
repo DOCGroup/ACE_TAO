@@ -32,8 +32,7 @@ namespace CCF
       DeclarationRef<HomeDef>
       HomeDefRef;
 
-      class HomeDef : public virtual TypeDef,
-                      public virtual Scope
+      class HomeDef : public virtual TypeDef, public virtual Scope
       {
       public:
         virtual
@@ -46,8 +45,11 @@ namespace CCF
                  ScopedName const& manages)
 
             : Declaration (name, scope),
-              inherits_ (table (), inherits),
-              manages_ (table (), manages)
+              TypeDecl (name, scope),
+              TypeDef (name, scope),
+              Scope (name, scope),
+              inherits_ (scope->table (), inherits),
+              manages_ (scope->table (), manages)
         {
           type_info (static_type_info ());
           copy_supports_list (supports);
@@ -59,8 +61,11 @@ namespace CCF
                  ScopedName const& manages)
 
             : Declaration (name, scope),
-              inherits_ (table ()),
-              manages_ (table (), manages)
+              TypeDecl (name, scope),
+              TypeDef (name, scope),
+              Scope (name, scope),
+              inherits_ (scope->table ()),
+              manages_ (scope->table (), manages)
         {
           type_info (static_type_info ());
           copy_supports_list (supports);
@@ -74,7 +79,7 @@ namespace CCF
                i != supports.end ();
                i++)
           {
-            supports_.insert (InterfaceDefRef (table (), *i));
+            supports_.insert (InterfaceDefRef (scope ()->table (), *i));
           }
         }
 

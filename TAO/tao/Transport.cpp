@@ -906,7 +906,7 @@ TAO_Transport::send_connection_closed_notifications_i (void)
       //    CloseConnection message was successfully received.
       i->state_changed (TAO_LF_Event::LFS_CONNECTION_CLOSED);
 
-      i->remove_from_list (this->head_, this->tail_);
+      this->head_ = i->next ();
 
       i->destroy ();
     }

@@ -1,7 +1,4 @@
-// file      : CIDLC/ServantGenerator.cpp
-// author    : Jeff Parsons <j.parsons@vanderbilt.edu>
-// cvs-id    : $Id$
-
+// $Id$
 #include "ServantGenerator.hpp"
 #include "ServantHeaderGenerator.hpp"
 #include "ServantSourceGenerator.hpp"

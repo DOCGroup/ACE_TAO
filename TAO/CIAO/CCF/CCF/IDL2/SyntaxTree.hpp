@@ -11,7 +11,6 @@
 #include "CCF/IDL2/SyntaxTree/Module.hpp"
 #include "CCF/IDL2/SyntaxTree/Operation.hpp"
 #include "CCF/IDL2/SyntaxTree/Translation.hpp"
-#include "CCF/IDL2/SyntaxTree/Typedef.hpp"
 #include "CCF/IDL2/SyntaxTree/TypeId.hpp"
 #include "CCF/IDL2/SyntaxTree/ValueType.hpp"
 

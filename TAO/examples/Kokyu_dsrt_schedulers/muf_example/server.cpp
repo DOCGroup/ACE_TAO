@@ -82,7 +82,7 @@ Task_Stats task_stats;
 int
 main (int argc, char *argv[])
 {
-  MUF_Scheduler* scheduler = 0;
+  MUF_Scheduler* scheduler;
   RTScheduling::Current_var current;
   long flags;
   int sched_policy = ACE_SCHED_RR;
@@ -90,7 +90,7 @@ main (int argc, char *argv[])
 
   if (sched_policy == ACE_SCHED_RR)
     flags = THR_NEW_LWP | THR_BOUND | THR_JOINABLE | THR_SCHED_RR;
-  else
+  else 
     flags = THR_NEW_LWP | THR_BOUND | THR_JOINABLE | THR_SCHED_FIFO;
 
   task_stats.init (100000);
@@ -142,9 +142,9 @@ main (int argc, char *argv[])
             {
               disp_impl_type = Kokyu::DSRT_OS_BASED;
             }
-
+          
           ACE_NEW_RETURN (scheduler,
-                          MUF_Scheduler (orb.in (),
+                          MUF_Scheduler (orb.in (), 
                                          disp_impl_type,
                                          sched_policy,
                                          sched_scope), -1);
@@ -161,9 +161,9 @@ main (int argc, char *argv[])
           ACE_TRY_CHECK;
         }
 
-      Simple_Server_i server_impl (orb.in (),
-                                   current.in (),
-                                   task_stats,
+      Simple_Server_i server_impl (orb.in (), 
+                                   current.in (), 
+                                   task_stats, 
                                    enable_yield);
 
       Simple_Server_var server =
@@ -194,12 +194,12 @@ main (int argc, char *argv[])
 
       Worker worker (orb.in ());
       if (worker.activate (flags,
-                           nthreads,
+                           nthreads, 
                            0,
-                           ACE_Sched_Params::priority_max(sched_policy,
+                           ACE_Sched_Params::priority_max(sched_policy, 
                                                           sched_scope)) != 0)
         {
-          ACE_ERROR ((LM_ERROR,
+          ACE_ERROR ((LM_ERROR, 
                       "Cannot activate threads in RT class.",
                       "Trying to activate in non-RT class\n"));
 
@@ -228,7 +228,7 @@ main (int argc, char *argv[])
   ACE_ENDTRY;
 
   ACE_DEBUG ((LM_DEBUG, "Exiting main...\n"));
-  task_stats.dump_samples ("timeline.txt",
+  task_stats.dump_samples ("timeline.txt", 
                             "Time\t\tGUID",
                             ACE_High_Res_Timer::global_scale_factor ());
   return 0;

@@ -1,5 +1,0 @@
-project(kokyu_dsrt_schedulers) : rtcorba, kokyu {
-  after   += Kokyu_DSRT_Schedulers 
-  libs    += Kokyu_DSRT_Schedulers
-  includes += $(TAO_ROOT)/examples/Kokyu_dsrt_schedulers
-}

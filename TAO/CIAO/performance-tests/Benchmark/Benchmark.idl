@@ -12,6 +12,7 @@
 #ifndef CIAO_BENCHMARK_IDL
 #define CIAO_BENCHMARK_IDL
 
+#include <Components.idl>
 
 module Benchmark
 {

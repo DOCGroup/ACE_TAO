@@ -43,16 +43,6 @@ class ACE_Allocator;
 class TAO_OutputCDR;
 class TAO_InputCDR;
 
-#if defined (__Lynx__)
-
-// LynxOS uses macro THREAD_CANCELLED internally, so it must
-// be undefined to avoid compilation errors
-#if defined (THREAD_CANCELLED)
-#undef THREAD_CANCELLED
-#endif /* THREAD_CANCELLED */
-
-#endif /*__Lynx__ */
-
 namespace CORBA
 {
   /**

@@ -1274,7 +1274,7 @@ TAO_MUF_FAIR_Reconfig_Sched_Strategy::assign_config (RtecScheduler::Config_Info 
 }
 
 ///////////////////////////////////////////////////
-// class TAO_RMS_FAIR_Reconfig_Sched_Strategy //
+// class TAO_RMS_Reconfig_Sched_Strategy //
 ///////////////////////////////////////////////////
 
 
@@ -1284,7 +1284,7 @@ TAO_MUF_FAIR_Reconfig_Sched_Strategy::assign_config (RtecScheduler::Config_Info 
 // second one is higher.
 
 int
-TAO_RMS_FAIR_Reconfig_Sched_Strategy::total_priority_comp (const void *s, const void *t)
+TAO_RMS_Reconfig_Sched_Strategy::total_priority_comp (const void *s, const void *t)
 {
   // Convert the passed pointers: the double cast is needed to
   // make Sun C++ 4.2 happy.
@@ -1320,7 +1320,7 @@ TAO_RMS_FAIR_Reconfig_Sched_Strategy::total_priority_comp (const void *s, const 
   // then by subpriority.
 
   int result =
-    TAO_RMS_FAIR_Reconfig_Sched_Strategy::compare_priority (**first,
+    TAO_RMS_Reconfig_Sched_Strategy::compare_priority (**first,
                                                                **second);
 
   if (result == 0)
@@ -1341,7 +1341,7 @@ TAO_RMS_FAIR_Reconfig_Sched_Strategy::total_priority_comp (const void *s, const 
 // the second one is higher.
 
 int
-TAO_RMS_FAIR_Reconfig_Sched_Strategy::total_admission_comp (const void *s,
+TAO_RMS_Reconfig_Sched_Strategy::total_admission_comp (const void *s,
                                                                const void *t)
 {
     // Convert the passed pointers: the double cast is needed to
@@ -1382,13 +1382,13 @@ TAO_RMS_FAIR_Reconfig_Sched_Strategy::total_admission_comp (const void *s,
     return -1;
   }
 
-  // First, compare by rate index.
+  // First, compare according to minimal rate index.
 
-  if ((*first)->rate_index < (*second)->rate_index)
+  if ((*first)->rate_index == 0 && (*second)->rate_index != 0)
     {
       return -1;
     }
-  else if ((*second)->rate_index < (*first)->rate_index)
+  else if ((*second)->rate_index == 0 && (*first)->rate_index != 0)
     {
       return 1;
     }
@@ -1396,7 +1396,7 @@ TAO_RMS_FAIR_Reconfig_Sched_Strategy::total_admission_comp (const void *s,
   // Then compare by priority.
 
   int result =
-    TAO_RMS_FAIR_Reconfig_Sched_Strategy::compare_criticality (**first,
+    TAO_RMS_Reconfig_Sched_Strategy::compare_criticality (**first,
                                                                **second);
   if (result != 0)
     {
@@ -1412,6 +1412,17 @@ TAO_RMS_FAIR_Reconfig_Sched_Strategy::total_admission_comp (const void *s,
       return result;
     }
 
+  // Finally, compare by rate index.
+
+  if ((*first)->rate_index < (*second)->rate_index)
+    {
+      return -1;
+    }
+  else if ((*second)->rate_index < (*first)->rate_index)
+    {
+      return 1;
+    }
+
   return 0;
 }
 
@@ -1420,19 +1431,19 @@ TAO_RMS_FAIR_Reconfig_Sched_Strategy::total_admission_comp (const void *s,
 // first one is higher, 0 if they're the same, and 1 if the second one is higher.
 
 int
-TAO_RMS_FAIR_Reconfig_Sched_Strategy::compare_criticality(TAO_Reconfig_Scheduler_Entry &lhs,
+TAO_RMS_Reconfig_Sched_Strategy::compare_criticality(TAO_Reconfig_Scheduler_Entry &lhs,
                                                            TAO_Reconfig_Scheduler_Entry &rhs)
 {
   ACE_UNUSED_ARG (lhs);
   ACE_UNUSED_ARG (rhs);
-  // In RMS_FAIR, no consideration of criticalities
+  // In plain RMS, no consideration of criticalities
   return 0;
 }
 
 // Compares two RT_Info entries by criticality alone.  Returns -1 if the
 // first one is higher, 0 if they're the same, and 1 if the second one is higher.
 int
-TAO_RMS_FAIR_Reconfig_Sched_Strategy::compare_criticality(TAO_RT_Info_Tuple &lhs,
+TAO_RMS_Reconfig_Sched_Strategy::compare_criticality(TAO_RT_Info_Tuple &lhs,
                                                      TAO_RT_Info_Tuple &rhs)
 {
   ACE_UNUSED_ARG (lhs);
@@ -1445,7 +1456,7 @@ TAO_RMS_FAIR_Reconfig_Sched_Strategy::compare_criticality(TAO_RT_Info_Tuple &lhs
 // first one is higher, 0 if they're the same, and 1 if the second one is higher.
 
 int
-TAO_RMS_FAIR_Reconfig_Sched_Strategy::compare_priority (TAO_Reconfig_Scheduler_Entry &lhs,
+TAO_RMS_Reconfig_Sched_Strategy::compare_priority (TAO_Reconfig_Scheduler_Entry &lhs,
                                                            TAO_Reconfig_Scheduler_Entry &rhs)
 {
   //differentiate by rate.
@@ -1467,10 +1478,10 @@ TAO_RMS_FAIR_Reconfig_Sched_Strategy::compare_priority (TAO_Reconfig_Scheduler_E
 // first one is higher, 0 if they're the same, and 1 if the second one is higher.
 
 int
-TAO_RMS_FAIR_Reconfig_Sched_Strategy::compare_priority (TAO_RT_Info_Tuple &lhs,
+TAO_RMS_Reconfig_Sched_Strategy::compare_priority (TAO_RT_Info_Tuple &lhs,
                                                            TAO_RT_Info_Tuple &rhs)
 {
-  // In RMS_FAIR, priority is partitioned based on rate:
+  // In plain RMS, priority is partitioned based on rate:
   if (lhs.period < rhs.period)
     {
       return -1;
@@ -1489,7 +1500,7 @@ TAO_RMS_FAIR_Reconfig_Sched_Strategy::compare_priority (TAO_RT_Info_Tuple &lhs,
 // on the operation characteristics of a representative scheduling entry.
 
 int
-TAO_RMS_FAIR_Reconfig_Sched_Strategy::assign_config (RtecScheduler::Config_Info &info,
+TAO_RMS_Reconfig_Sched_Strategy::assign_config (RtecScheduler::Config_Info &info,
                                                         TAO_Reconfig_Scheduler_Entry &rse)
 {
     // Global and thread priority of dispatching queue are simply
@@ -1497,292 +1508,10 @@ TAO_RMS_FAIR_Reconfig_Sched_Strategy::assign_config (RtecScheduler::Config_Info 
     info.preemption_priority = rse.actual_rt_info ()->preemption_priority;
     info.thread_priority = rse.actual_rt_info ()->priority;
 
-    // In RMS_FAIR, all queues are static
+    // In plain RMS, all queues are static
     info.dispatching_type = RtecScheduler::STATIC_DISPATCHING;
 
   return 0;
 }
-
-///////////////////////////////////////////////////
-// class TAO_RMS_MLF_Reconfig_Sched_Strategy //
-///////////////////////////////////////////////////
-
-
-// Ordering function used to qsort an array of TAO_RT_Info_Tuple
-// pointers into a total <priority, subpriority> ordering.  Returns -1
-// if the first one is higher, 0 if they're the same, and 1 if the
-// second one is higher.
-
-int
-TAO_RMS_MLF_Reconfig_Sched_Strategy::total_priority_comp (const void *s, const void *t)
-{
-  // Convert the passed pointers: the double cast is needed to
-  // make Sun C++ 4.2 happy.
-  TAO_Reconfig_Scheduler_Entry **first =
-    ACE_reinterpret_cast (TAO_Reconfig_Scheduler_Entry **,
-                          ACE_const_cast (void *, s));
-  TAO_Reconfig_Scheduler_Entry **second =
-    ACE_reinterpret_cast (TAO_Reconfig_Scheduler_Entry **,
-                          ACE_const_cast (void *, t));
-
-  // Check the converted pointers.
-  if (first == 0 || *first == 0)
-    {
-      return (second == 0 || *second == 0) ? 0 : 1;
-    }
-  else if (second == 0 || *second == 0)
-    {
-      return -1;
-    }
-
-  // sort disabled entries to the end
-  if ((*first)->enabled_state () == RtecScheduler::RT_INFO_DISABLED)
-    {
-      return ((*second)->enabled_state () == RtecScheduler::RT_INFO_DISABLED) ? 0 : 1;
-    }
-  else if ((*second)->enabled_state () == RtecScheduler::RT_INFO_DISABLED)
-    {
-      return -1;
-    }
-
-
-  // Check whether they are distinguished by priority, and if not,
-  // then by subpriority.
-
-  int result =
-    TAO_RMS_MLF_Reconfig_Sched_Strategy::compare_priority (**first,
-                                                               **second);
-
-  if (result == 0)
-    {
-      return TAO_Reconfig_Sched_Strategy_Base::compare_subpriority (**first,
-                                                                    **second);
-    }
-  else
-    {
-      return result;
-    }
-}
-
-
-// Ordering function used to qsort an array of RT_Info_Tuple
-// pointers into a total ordering for admission control.  Returns
-// -1 if the first one is higher, 0 if they're the same, and 1 if
-// the second one is higher.
-
-int
-TAO_RMS_MLF_Reconfig_Sched_Strategy::total_admission_comp (const void *s,
-                                                               const void *t)
-{
-  // Convert the passed pointers: the double cast is needed to
-  // make Sun C++ 4.2 happy.
-  TAO_RT_Info_Tuple **first =
-    ACE_reinterpret_cast (TAO_RT_Info_Tuple **,
-                          ACE_const_cast (void *, s));
-
-  TAO_Reconfig_Scheduler_Entry * first_entry =
-    ACE_LONGLONG_TO_PTR (TAO_Reconfig_Scheduler_Entry *,
-                         (*first)->volatile_token);
-
-  TAO_RT_Info_Tuple **second =
-    ACE_reinterpret_cast (TAO_RT_Info_Tuple **,
-                          ACE_const_cast (void *, t));
-
-  TAO_Reconfig_Scheduler_Entry * second_entry =
-    ACE_LONGLONG_TO_PTR (TAO_Reconfig_Scheduler_Entry *,
-                         (*second)->volatile_token);
-
-  // Check the converted pointers.
-  if (first == 0 || *first == 0)
-    {
-      return (second == 0 || *second == 0) ? 0 : 1;
-    }
-  else if (second == 0 || *second == 0)
-    {
-      return -1;
-    }
-
-  // sort disabled tuples to the end
-  if ((*first)->enabled_state () == RtecScheduler::RT_INFO_DISABLED)
-    {
-      return ((*second)->enabled_state () == RtecScheduler::RT_INFO_DISABLED) ? 0 : 1;
-    }
-  else if ((*second)->enabled_state () == RtecScheduler::RT_INFO_DISABLED)
-    {
-      return -1;
-    }
-
-  // First, compare by rate index.
-
-  if ((*first)->rate_index < (*second)->rate_index)
-    {
-      return -1;
-    }
-  else if ((*second)->rate_index < (*first)->rate_index)
-    {
-      return 1;
-    }
-
-  // Then compare by priority.
-
-  int result =
-    TAO_RMS_MLF_Reconfig_Sched_Strategy::compare_criticality (**first,
-                                                                  **second);
-  if (result != 0)
-    {
-      return result;
-    }
-
-  // Then compare by subpriority.
-
-  result = TAO_Reconfig_Sched_Strategy_Base::compare_subpriority (*first_entry,
-                                                                  *second_entry);
-  if (result != 0)
-    {
-      return result;
-    }
-
-  return 0;
-}
-
-
-// Compares two RT_Info entries by criticality alone.  Returns -1 if the
-// first one is higher, 0 if they're the same, and 1 if the second one is higher.
-
-int
-TAO_RMS_MLF_Reconfig_Sched_Strategy::compare_criticality(TAO_Reconfig_Scheduler_Entry &lhs,
-                                                             TAO_Reconfig_Scheduler_Entry &rhs)
-{
-  // In RMS+MLF, priority is per criticality level: compare criticalities.
-
-  if (lhs.actual_rt_info ()->criticality > rhs.actual_rt_info ()->criticality)
-    {
-      return -1;
-    }
-  else if (lhs.actual_rt_info ()->criticality < rhs.actual_rt_info ()->criticality)
-    {
-      return 1;
-    }
-  else
-    {
-      return 0;
-    }
-}
-
-// Compares two RT_Info entries by criticality alone.  Returns -1 if the
-// first one is higher, 0 if they're the same, and 1 if the second one is higher.
-int
-TAO_RMS_MLF_Reconfig_Sched_Strategy::compare_criticality(TAO_RT_Info_Tuple &lhs,
-                                                             TAO_RT_Info_Tuple &rhs)
-{
-  if (lhs.criticality > rhs.criticality)
-    {
-      return -1;
-    }
-  else if (lhs.criticality < rhs.criticality)
-    {
-      return 1;
-    }
-  else
-    {
-      return 0;
-    }
-}
-
-// Compares two RT_Info entries by priority alone.  Returns -1 if the
-// first one is higher, 0 if they're the same, and 1 if the second one is higher.
-
-int
-TAO_RMS_MLF_Reconfig_Sched_Strategy::compare_priority (TAO_Reconfig_Scheduler_Entry &lhs,
-                                                           TAO_Reconfig_Scheduler_Entry &rhs)
-{
-  // In RMS+MLF, priority is per criticality level: compare criticalities.
-  int result = TAO_RMS_MLF_Reconfig_Sched_Strategy::compare_criticality(lhs, rhs);
-
-  if (result != 0)
-    {
-      return result;
-    }
-
-  // Same criticality: if high criticality, differentiate by rate.
-  if (TAO_Reconfig_Sched_Strategy_Base::is_critical (rhs))
-    {
-      if (lhs.actual_rt_info ()->period < rhs.actual_rt_info ()->period)
-        {
-          return -1;
-        }
-      else if (lhs.actual_rt_info ()->period > rhs.actual_rt_info ()->period)
-        {
-          return 1;
-        }
-    }
-
-  // They're the same if we got here.
-  return 0;
-}
-
-
-// Compares two RT_Info tuples by priority alone.  Returns -1 if the
-// first one is higher, 0 if they're the same, and 1 if the second one is higher.
-
-int
-TAO_RMS_MLF_Reconfig_Sched_Strategy::compare_priority (TAO_RT_Info_Tuple &lhs,
-                                                           TAO_RT_Info_Tuple &rhs)
-{
-  // In RMS_Dyn, priority is first partitioned per criticality level:
-  // compare criticalities.
-
-  if (lhs.criticality > rhs.criticality)
-    {
-      return -1;
-    }
-  else if (lhs.criticality < rhs.criticality)
-    {
-      return 1;
-    }
-
-  // Same criticality: if high criticality, differentiate by rate.
-  else if (TAO_Reconfig_Sched_Strategy_Base::is_critical (rhs))
-    {
-      if (lhs.period < rhs.period)
-        {
-          return -1;
-        }
-      else if (lhs.period > rhs.period)
-        {
-          return 1;
-        }
-    }
-
-  // They're the same if we got here.
-  return 0;
-}
-
-// Fills in a static dispatch configuration for a priority level, based
-// on the operation characteristics of a representative scheduling entry.
-
-int
-TAO_RMS_MLF_Reconfig_Sched_Strategy::assign_config (RtecScheduler::Config_Info &info,
-                                                        TAO_Reconfig_Scheduler_Entry &rse)
-{
-  // Global and thread priority of dispatching queue are simply
-  // those assigned the representative operation it will dispatch.
-  info.preemption_priority = rse.actual_rt_info ()->preemption_priority;
-  info.thread_priority = rse.actual_rt_info ()->priority;
-
-  // Critical queues are static, and non-critical ones are
-  // laxity-based in this strategy.
-  if (TAO_Reconfig_Sched_Strategy_Base::is_critical (rse))
-    {
-      info.dispatching_type = RtecScheduler::STATIC_DISPATCHING;
-    }
-  else
-    {
-      info.dispatching_type = RtecScheduler::LAXITY_DISPATCHING;
-    }
-
-  return 0;
-}
-
 
 #endif /* TAO_RECONFIG_SCHED_UTILS_C */

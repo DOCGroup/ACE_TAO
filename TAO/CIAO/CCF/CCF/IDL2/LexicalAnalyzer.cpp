@@ -32,7 +32,6 @@ namespace CCF
       keyword_table_.insert ("out"       );
       keyword_table_.insert ("sinclude"  );
       keyword_table_.insert ("supports"  );
-      keyword_table_.insert ("typedef"   );
       keyword_table_.insert ("typeid"    );
       keyword_table_.insert ("typeprefix");
 

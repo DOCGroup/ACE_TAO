@@ -10,7 +10,7 @@
 
 #ifndef DSRT_CV_DISPATCHER_IMPL_T_H
 #define DSRT_CV_DISPATCHER_IMPL_T_H
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 #include "ace/Task.h"
 #include "ace/Copy_Disabled.h"
 
@@ -36,7 +36,7 @@ namespace Kokyu
     typedef typename
     DSRT_Scheduler_Traits::QoSDescriptor_t DSRT_QoSDescriptor;
 
-    DSRT_CV_Dispatcher_Impl (ACE_Sched_Params::Policy sched_policy,
+    DSRT_CV_Dispatcher_Impl (ACE_Sched_Params::Policy sched_policy, 
                              int sched_scope);
 
     int init_i (const DSRT_ConfigInfo&);
@@ -82,5 +82,5 @@ namespace Kokyu
 #pragma implementation ("DSRT_CV_Dispatcher_Impl_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 #endif /* DSRT_DIRECT_DISPATCHER_IMPL_T_H */

@@ -85,11 +85,10 @@ namespace CCF
           map (typeid (SyntaxTree::AttributeDecl), this);
         }
 
-        virtual bool
+        virtual void
         traverse (SyntaxTree::NodePtr const& n)
         {
           traverse (n->dynamic_type<SyntaxTree::AttributeDecl> ());
-	  return true;
         }
 
         virtual void
@@ -132,11 +131,10 @@ namespace CCF
           map (typeid (SyntaxTree::OperationParameter), this);
         }
 
-        virtual bool
+        virtual void
         traverse (SyntaxTree::NodePtr const& n)
         {
           traverse (n->dynamic_type<SyntaxTree::OperationParameter> ());
-	  return true;
         }
 
         virtual void
@@ -173,11 +171,10 @@ namespace CCF
           map (typeid (SyntaxTree::OperationDecl), this);
         }
 
-        virtual bool
+        virtual void
         traverse (SyntaxTree::NodePtr const& n)
         {
           traverse (n->dynamic_type<SyntaxTree::OperationDecl> ());
-	  return true;
         }
 
         virtual void

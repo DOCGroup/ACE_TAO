@@ -113,4 +113,5 @@ LINK.cc = override
 LINK.cc.override = $(LD) $(LDFLAGS) $(BOREXELIBS) $(BORLDFLAGS) $(POSTLINK)
 SOLINK.cc = $(LD) -Tpd
 
-versioned_so=0
+SONAME=
+SOVERSION=

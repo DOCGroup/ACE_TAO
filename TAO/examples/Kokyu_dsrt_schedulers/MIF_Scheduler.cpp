@@ -51,8 +51,7 @@ MIF_Scheduler::MIF_Scheduler (CORBA::ORB_ptr orb,
   ACE_CHECK;
   
   IOP::CodecFactory_var codec_factory;
-  CORBA::Object_var obj = orb->resolve_initial_references ("CodecFactory"
-                                                           ACE_ENV_ARG_PARAMETER);
+  CORBA::Object_var obj = orb->resolve_initial_references ("CodecFactory");
 
   if (CORBA::is_nil(obj.in ()))
     {

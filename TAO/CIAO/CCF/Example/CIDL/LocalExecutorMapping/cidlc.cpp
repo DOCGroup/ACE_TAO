@@ -146,7 +146,7 @@ int main (int argc, char* argv[])
     for (TokenPtr token = lexer.next ();; token = lexer.next ())
     {
       token_stream.push_back (token);
-      // cerr << token << endl;
+      cerr << token << endl;
       if (ReferenceCounting::strict_cast<EndOfStream> (token) != 0) break;
     }
 

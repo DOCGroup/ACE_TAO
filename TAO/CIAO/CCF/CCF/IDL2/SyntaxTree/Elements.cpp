@@ -18,37 +18,6 @@ namespace CCF
       //
       namespace
       {
-        bool
-        subtype_p (TypeInfo const& derived, TypeInfo const& base)
-        {
-          if (derived.type_id () == base.type_id ()) return true;
-
-          for (TypeInfo::BaseIterator i = derived.begin_base ();
-               i != derived.end_base ();
-               ++i)
-          {
-            if (subtype_p (i->type_info (), base)) return true;
-          }
-
-          return false;
-        }
-      }
-
-      bool Node::
-      is_a (TypeInfo const& ti) const
-      {
-        return subtype_p (type_info (), ti);
-      }
-
-      NodePtr Node::
-      dynamic_type (TypeInfo const& ti)
-      {
-        if (is_a (ti)) return NodePtr (ReferenceCounting::add_ref (this));
-        else return NodePtr ();
-      }
-
-      namespace
-      {
         TypeInfo
         node_init_ ()
         {
@@ -63,6 +32,7 @@ namespace CCF
 
       TypeInfo const& Node::
       static_type_info () { return node_; }
+
 
       // Comma
       //
@@ -107,8 +77,7 @@ namespace CCF
       Declaration (SimpleName const& name, ScopePtr const& scope)
           : order_ (scope->create_order ()),
             name_ (scope->name (), name),
-            table_ (scope->table ()),
-            scope_ (table_,
+            scope_ (scope->table (),
                     scope->name (),
                     scope->order ()) // Hint: scope->scope () may throw
       {
@@ -121,7 +90,6 @@ namespace CCF
                    ScopePtr const& scope)
           : order_ (order),
             name_ (scope->name (), name),
-            table_ (scope->table ()),
             scope_ (scope->table (),
                     scope->name (),
                     scope->order ()) // Hint: scope->scope () may throw
@@ -132,11 +100,10 @@ namespace CCF
       Declaration::
       Declaration (ScopedName const& name,
                    Order const& order,
-                   DeclarationTable& table)
+                   DeclarationTable const& table)
           : order_ (order),
             name_ (name),
-            table_ (table),
-            scope_ (table_) // this stuff is faked
+            scope_ (table) // this stuff is faked
       {
         type_info (static_type_info ());
       }
@@ -202,7 +169,6 @@ namespace CCF
         }
       }
 
-
       DeclarationTable::IteratorPair DeclarationTable::
       lookup (ScopedName const& n) const
       {
@@ -216,26 +182,6 @@ namespace CCF
           return IteratorPair (i->second.begin (), i->second.end ());
         }
       }
-
-
-      DeclarationPtr DeclarationTable::
-      lookup (ScopedName const& n, Introspection::TypeInfo const& ti) const
-        throw (DeclarationNotFound, TypeMismatch)
-      {
-        IteratorPair pair = lookup (n);
-
-        if (pair.first == pair.second) throw DeclarationNotFound ();
-
-        for (; pair.first != pair.second; pair.first++)
-        {
-          DeclarationPtr d = (*pair.first);
-
-          if (d->is_a (ti)) return d;
-        }
-
-        throw TypeMismatch ();
-      }
-
 
       DeclarationTable::Iterator DeclarationTable::
       begin () const
@@ -351,7 +297,7 @@ namespace CCF
         {
           try
           {
-            table ().insert (d);
+            table_.insert (d);
           }
           catch (...)
           {

@@ -30,7 +30,7 @@ namespace CCF
         {
         }
 
-        virtual bool
+        virtual void
         traverse (SyntaxTree::NodePtr const& n) = 0;
 
         friend class Dispatcher;
@@ -219,11 +219,10 @@ namespace CCF
           map (typeid (SyntaxTree::Comma), this);
         }
 
-        virtual bool
+        virtual void
         traverse (SyntaxTree::NodePtr const& n)
         {
           traverse (n->dynamic_type<SyntaxTree::Comma> ());
-          return true;
         }
 
         virtual void
@@ -248,11 +247,10 @@ namespace CCF
           map (typeid (SyntaxTree::Declaration), this);
         }
 
-        virtual bool
+        virtual void
         traverse (SyntaxTree::NodePtr const& n)
         {
           traverse (n->dynamic_type<SyntaxTree::Declaration> ());
-          return true;
         }
 
         virtual void
@@ -277,11 +275,10 @@ namespace CCF
           map (typeid (SyntaxTree::Scope), this);
         }
 
-        virtual bool
+        virtual void
         traverse (SyntaxTree::NodePtr const& n)
         {
           traverse (n->dynamic_type<SyntaxTree::Scope> ());
-          return true;
         }
 
         virtual void
@@ -312,11 +309,10 @@ namespace CCF
           map (typeid (SyntaxTree::TypeDecl), this);
         }
 
-        virtual bool
+        virtual void
         traverse (SyntaxTree::NodePtr const& n)
         {
           traverse (n->dynamic_type<SyntaxTree::TypeDecl> ());
-          return true;
         }
 
         virtual void
@@ -341,11 +337,10 @@ namespace CCF
           map (typeid (SyntaxTree::TypeDef), this);
         }
 
-        virtual bool
+        virtual void
         traverse (SyntaxTree::NodePtr const& n)
         {
           traverse (n->dynamic_type<SyntaxTree::TypeDef> ());
-          return true;
         }
 
         virtual void

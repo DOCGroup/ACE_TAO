@@ -54,23 +54,19 @@
 #  gtk_reactor      Build the GtkReactor.
 #  ssl              Build with OpenSSL support.
 #  rapi             Build with RAPI
-#  split            Build the library by first splitting up the ACE source
-#                   to several files, with one object code entity for each
-#                   source file. This allows an application that is linked
-#                   with ACE to extract _exactly_ what it needs from the
-#                   library, resulting in a smaller executable.
+#  split            Build the library by first splitting up the ACE source to several
+#                   files, with one object code entity for each source file. This allows
+#                   an application that is linked with ACE to extract _exactly_ what it
+#                   needs from the library, resulting in a smaller executable.
 #                   Setting this to 1 overrides debug to 0.
 #  sctp             Build support for TAO SCIOP and for ACE SCTP
 #                   wrapper-facades. The sctp macro should be set to a string
 #                   value representing a particular SCTP implementation. 
 #                   Recognized values include: openss7
 #
-#  versioned_so     Add versioning to libraries.  Defaults to 1 (true). If 0,
-#                   no version number is appended to shared library names.
-#                   If versioned_so is 1 (enabled), the SOVERSION make
-#                   variable can also be set to specify the version info
-#                   to append to the name - it should have a leading '.' -
-#                   else it defaults to .ACE_MAJOR.ACE_MINOR.ACE_BETA.
+#  versioned_so     Add versioning to libraries.  Defaults to 1 (true), and
+#                   can be turned off by passing versioned_so=0 to make.  Note
+#                   that setting it in platform_macros.GNU has no effect.
 #
 #  Usually, users do not need to be concerned with make targets.
 #  Just enter "make" on the command line to build.  A few notable
@@ -168,18 +164,38 @@ ifeq ($(static_libs),)
   static_libs = 0
 endif # static_libs
 
+#### Defined versioned_so = 1 if your platform requires version number
+#### be appended after so library.
+ifeq ($(versioned_so),)
+  versioned_so = 1
+endif
+
 #### The system has X Windows and we want to include the XtReactor in
 #### the library
 xt_reactor = 0
 
-#### Set up the build ACE version in case the platform_macros.GNU wants it.
-ACE_MAJOR_VERSION := $(shell awk '/ACE_MAJOR_VERSION/ { print $$3}' ${ACE_ROOT}/ace/Version.h)
-ACE_MINOR_VERSION := $(shell awk '/ACE_MINOR_VERSION/ { print $$3}' ${ACE_ROOT}/ace/Version.h)
-ACE_BETA_VERSION := $(shell awk '/ACE_BETA_VERSION/ { print $$3}' ${ACE_ROOT}/ace/Version.h)
-
 ifndef PACE_ROOT
   PACE_ROOT = $(ACE_ROOT)/PACE
 endif # PACE_ROOT
+
+ifeq ($(versioned_so),1)
+  # Turn on symbol versioning. The scheme that we follow is to allow
+  # applications dependent on libraries, with same version numbers (major,
+  # minor and beta) to run, but applications with dependencies on libraries
+  # with different minor or major or beta versions to fail.
+  #
+  ACE_MAJOR_VERSION := $(shell awk '/ACE_MAJOR_VERSION/ { print $$3}' ${ACE_ROOT}/ace/Version.h)
+  ACE_MINOR_VERSION := $(shell awk '/ACE_MINOR_VERSION/ { print $$3}' ${ACE_ROOT}/ace/Version.h)
+  ACE_BETA_VERSION := $(shell awk '/ACE_BETA_VERSION/ { print $$3}' ${ACE_ROOT}/ace/Version.h)
+
+  # Version number of the libraries
+  #
+  SOVERSION = .$(ACE_MAJOR_VERSION).$(ACE_MINOR_VERSION).$(ACE_BETA_VERSION)
+
+  # Name that will be written into the dynamic library
+  #
+  SONAME = $(SHLIB).$(ACE_MAJOR_VERSION).$(ACE_MINOR_VERSION).$(ACE_BETA_VERSION)
+endif
 
 # Include this before the below variables to make it possible for
 # platform_macros.GNU to set default values for them.
@@ -192,8 +208,7 @@ ifeq ($(threads),0)
 endif # threads
 
 ####
-#### Defaults are exceptions off (0), fast off (0), rtti off (0), and
-#### versioned_so on (1).
+#### Defaults are exceptions off (0), fast off (0), and rtti off (0)
 ####
 ifndef exceptions
   exceptions = 0
@@ -208,26 +223,6 @@ endif
 ifndef rtti
   rtti = 0
 endif
-
-ifeq (,$(versioned_so))
-  versioned_so = 1
-endif
-ifeq ($(versioned_so),1)
-  # Turn on symbol versioning. The scheme that we follow is to allow
-  # applications dependent on libraries, with same version numbers (major,
-  # minor and beta) to run, but applications with dependencies on libraries
-  # with different minor or major or beta versions to fail.
-  #
-  # Version number of the libraries
-  #
-  ifndef SOVERSION
-    SOVERSION = .$(ACE_MAJOR_VERSION).$(ACE_MINOR_VERSION).$(ACE_BETA_VERSION)
-  endif # SOVERSION
-
-  # Name that will be written into the dynamic library
-  #
-  SONAME = $(SHLIB)$(SOVERSION)
-endif # versioned_so
 
 #----------------------------------------------------------------------------
 #      Platform-independent macro definitions

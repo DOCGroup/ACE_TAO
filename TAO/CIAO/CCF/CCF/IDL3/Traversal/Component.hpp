@@ -29,11 +29,10 @@ namespace CCF
           map (typeid (SyntaxTree::ComponentDecl), this);
         }
 
-        virtual bool
+        virtual void
         traverse (SyntaxTree::NodePtr const& n)
         {
           traverse (n->dynamic_type<SyntaxTree::ComponentDecl> ());
-	  return true;
         }
 
         virtual void
@@ -58,11 +57,10 @@ namespace CCF
           map (typeid (SyntaxTree::ComponentDef), this);
         }
 
-        virtual bool
+        virtual void
         traverse (SyntaxTree::NodePtr const& n)
         {
           traverse (n->dynamic_type<SyntaxTree::ComponentDef> ());
-	  return true;
         }
 
         virtual void

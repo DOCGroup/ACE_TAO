@@ -22,7 +22,6 @@
 
 #include "ace/Handle_Set.h"
 #include "ace/os_include/sys/os_types.h"
-#include "ace/Global_Macros.h"
 
 // Forward declaration
 class ACE_Time_Value;
@@ -561,10 +560,6 @@ protected:
   ACE_Handle_Set handles_passed_;
   /// Handle duplicates made for the child process.
   ACE_Handle_Set dup_handles_;
-
-  // = Disallow copying and assignment since we don't support this (yet).
-  ACE_UNIMPLEMENTED_FUNC (ACE_Process (const ACE_Process &))
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Process &))
 };
 
 

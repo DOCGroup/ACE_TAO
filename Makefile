@@ -73,41 +73,12 @@ CORE_DIRS= \
 	TAO/orbsvcs/orbsvcs \
 	TAO/orbsvcs/Naming_Service
 
-CIAO_CORE_DIRS= \
-        ace \
-        apps/gperf/src \
-	ACEXML \
-	Kokyu \
-        TAO/tao \
-        TAO/TAO_IDL \
-        TAO/orbsvcs/orbsvcs \
-        TAO/orbsvcs/Naming_Service \
-        TAO/CIAO/ciao \
-        TAO/CIAO/tools 
-
-CIAO_MPC_DIRS= \
-	TAO/CIAO/ciao \
-	TAO/CIAO/tools
-
-.PHONY: CIAO_Core MPC_Make Core reverseclean
+.PHONY: Core reverseclean
 Core:
 	@for dir in $(CORE_DIRS); \
 	do \
 		$(MAKE) -C $$dir; \
 	done
-
-CIAO_Core: MPC_Make
-	@for dir in $(CIAO_CORE_DIRS); \
-	do \
-		$(MAKE) -C $$dir; \
-	done
-
-MPC_Make:
-	@for dir in $(CIAO_MPC_DIRS); \
-	do \
-		cd $(ACE_ROOT)/$$dir && $(ACE_ROOT)/bin/mwc.pl; \
-	done
-	cd $(ACE_ROOT)
 
 reverseclean:
 	@$(ACE_ROOT)/bin/reverse_clean $(DIRS)

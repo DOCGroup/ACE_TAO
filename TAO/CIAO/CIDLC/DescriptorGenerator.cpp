@@ -16,7 +16,6 @@ using std::cout;
 using std::endl;
 using std::string;
 
-using namespace StringLiterals;
 using namespace CCF::CIDL;
 using namespace SyntaxTree;
 
@@ -33,18 +32,23 @@ namespace
   string
   compute_repo_id (DeclarationPtr const& d)
   {
-    if (d->context ().count ( STRS[REPO_ID]))
+    if (d->context ().count (
+          StringLiterals::STRS[StringLiterals::REPO_ID]))
     {
-      return d->context ().get<string> (STRS[REPO_ID]);
+      return
+        d->context ().get<string> (
+          StringLiterals::STRS[StringLiterals::REPO_ID]);
     }
 
     string prefix ("");
     TypePrefixPtr tp;
     
-    if (d->context ().count (STRS[TYPE_PREFIX]))
+    if (d->context ().count (
+          StringLiterals::STRS[StringLiterals::TYPE_PREFIX]))
     {
       tp =
-        d->context ().get<TypePrefixPtr> (STRS[TYPE_PREFIX]);
+        d->context ().get<TypePrefixPtr> (
+          StringLiterals::STRS[StringLiterals::TYPE_PREFIX]);
         
       prefix = tp->prefix ().str ();
     }
@@ -54,10 +58,12 @@ namespace
         
       while (parent != 0)
       {
-        if (parent->context ().count (STRS[TYPE_PREFIX]))
+        if (parent->context ().count (
+              StringLiterals::STRS[StringLiterals::TYPE_PREFIX]))
         {
           tp =
-            parent->context ().get<TypePrefixPtr> (STRS[TYPE_PREFIX]);
+            parent->context ().get<TypePrefixPtr> (
+              StringLiterals::STRS[StringLiterals::TYPE_PREFIX]);
             
           prefix = tp->prefix ().str ();
           break;
@@ -79,7 +85,7 @@ namespace
     string repo_id = "IDL:" + prefix + scope_name + ":1.0";
     
     // Store the repo id for possible future reference.
-    d->context ().set<string> (STRS[REPO_ID],
+    d->context ().set<string> (StringLiterals::STRS[StringLiterals::REPO_ID],
                                repo_id);
     return repo_id;
   }

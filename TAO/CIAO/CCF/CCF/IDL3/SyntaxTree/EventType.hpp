@@ -16,17 +16,21 @@ namespace CCF
       // Import nodes from IDL2
       using namespace IDL2::SyntaxTree;
 
-
+      
       //
       //
       //
       class EventTypeDecl : public virtual ValueTypeDecl
       {
-      protected:
+      public:
         virtual
         ~EventTypeDecl () throw () {}
 
-        EventTypeDecl ()
+        EventTypeDecl (SimpleName const& name,
+                       ScopePtr const& scope)
+            : Declaration (name, scope),
+              TypeDecl (name, scope),
+              ValueTypeDecl (name, scope)
         {
           type_info (static_type_info ());
         }
@@ -55,11 +59,18 @@ namespace CCF
       class EventTypeForwardDecl : public virtual ValueTypeForwardDecl,
                                    public virtual EventTypeDecl
       {
-      protected:
+      public:
         virtual
         ~EventTypeForwardDecl () throw () {}
 
-        EventTypeForwardDecl ()
+        EventTypeForwardDecl (SimpleName const& name,
+                              ScopePtr const& scope)
+            : Declaration (name, scope),
+              TypeDecl (name, scope),
+              ValueTypeDecl (name, scope),
+              TypeForwardDecl (name, scope),
+              ValueTypeForwardDecl (name, scope),
+              EventTypeDecl (name, scope)
         {
           type_info (static_type_info ());
         }
@@ -84,11 +95,20 @@ namespace CCF
       class EventTypeDef : public virtual EventTypeDecl,
                            public virtual ValueTypeDef
       {
-      protected:
+      public:
         virtual
         ~EventTypeDef () throw () {}
 
-        EventTypeDef ()
+        EventTypeDef (SimpleName const& name,
+                      ScopePtr const& scope,
+                      ScopedNameSet const& inherits)
+            : Declaration (name, scope),
+              TypeDecl (name, scope),
+              ValueTypeDecl (name, scope),
+              EventTypeDecl (name, scope),
+              TypeDef (name, scope),
+              Scope (name, scope),
+              ValueTypeDef (name, scope, inherits)
         {
           type_info (static_type_info ());
         }
@@ -112,11 +132,16 @@ namespace CCF
       //
       class ConcreteEventTypeDecl : public virtual EventTypeDecl
       {
-      protected:
+      public:
         virtual
         ~ConcreteEventTypeDecl () throw () {}
 
-        ConcreteEventTypeDecl ()
+        ConcreteEventTypeDecl (SimpleName const& name,
+                               ScopePtr const& scope)
+            : Declaration (name, scope),
+              TypeDecl (name, scope),
+              ValueTypeDecl (name, scope),
+              EventTypeDecl (name, scope)
         {
           type_info (static_type_info ());
         }
@@ -149,7 +174,14 @@ namespace CCF
                               ScopePtr const& scope,
                               ScopedNameSet const& inherits)
             : Declaration (name, scope),
-              ValueTypeDef (inherits)
+              TypeDecl (name, scope),
+              ValueTypeDecl (name, scope),
+              EventTypeDecl (name, scope),
+              ConcreteEventTypeDecl (name, scope),
+              TypeDef (name, scope),
+              Scope (name, scope),
+              ValueTypeDef (name, scope, inherits),
+              EventTypeDef (name, scope, inherits)
         {
           type_info (static_type_info ());
         }

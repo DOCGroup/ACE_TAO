@@ -31,7 +31,7 @@ namespace CCF
                       ScopedName const& type,
                       ScopePtr const& scope)
             : Declaration (name, scope),
-              type_ (table (), type)
+              type_ (scope->table (), type)
         {
           type_info (static_type_info ());
         }
@@ -78,7 +78,7 @@ namespace CCF
                   ScopedName const& type,
                   ScopePtr const& scope)
             : Declaration (name, scope),
-              type_ (table (), type)
+              type_ (scope->table (), type)
 
         {
           type_info (static_type_info ());
@@ -125,7 +125,7 @@ namespace CCF
                        ScopedName const& type,
                        ScopePtr const& scope)
             : Declaration (name, scope),
-              type_ (table (), type)
+              type_ (scope->table (), type)
         {
           type_info (static_type_info ());
         }
@@ -172,7 +172,7 @@ namespace CCF
                    ScopedName const& type,
                    ScopePtr const& scope)
             : Declaration (name, scope),
-              type_ (table (), type)
+              type_ (scope->table (), type)
         {
           type_info (static_type_info ());
         }
@@ -219,7 +219,7 @@ namespace CCF
                       ScopedName const& type,
                       ScopePtr const& scope)
             : Declaration (name, scope),
-              type_ (table (), type)
+              type_ (scope->table (), type)
         {
           type_info (static_type_info ());
         }
@@ -294,7 +294,7 @@ namespace CCF
                          ScopedName const& type,
                          ScopePtr const& scope)
             : Declaration (name, scope),
-              OperationDecl (type)
+              OperationDecl (name, type, scope)
         {
           type_info (static_type_info ());
         }

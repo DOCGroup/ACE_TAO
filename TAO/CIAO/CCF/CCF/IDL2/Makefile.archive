@@ -21,7 +21,6 @@ translated_units := SyntaxTree/BuiltIn.o      \
                     SyntaxTree/Operation.o    \
                     SyntaxTree/Translation.o  \
                     SyntaxTree/TypeId.o       \
-                    SyntaxTree/Typedef.o      \
                     SyntaxTree/ValueType.o
 
 translated_units += Traversal/BuiltIn.o       \
