@@ -13,14 +13,14 @@ project(FTORB_Utils) : orbsvcslib, core, iormanip, portableserver, minimum_corba
 
   IDL_Files {
     idlflags += -Wb,export_macro=TAO_FT_ORB_Utils_Export -Wb,export_include=FaultTolerance/FT_ORB_Utils_export.h
-    FT_CORBA_ORB.idl 
+    FT_CORBA_ORB.idl
   }
 
   Source_Files(ORBSVCS_COMPONENTS) {
     FTORB_Utils {
+      PortableGroup_Simple_DSC.cpp
       FT_CORBA_ORBC.cpp
       FT_CORBA_ORBS.cpp
-      PortableGroup_Simple_DSC.cpp
       FaultTolerance/FT_IOGR_Property.cpp
     }
   }
