@@ -55,7 +55,7 @@ protected:
   void print_filters (CosNotifyFilter::FilterAdmin_ptr filter_seq ACE_ENV_ARG_DECL);
 
   /// Verify filter count.
-  void verify_filter_count (CosNotifyFilter::FilterAdmin_ptr filter_admin, int expected_count ACE_ENV_ARG_DECL);
+  void verify_filter_count (CosNotifyFilter::FilterAdmin_ptr filter_admin, CORBA::ULong expected_count ACE_ENV_ARG_DECL);
 
   /// Add a filter.
   CosNotifyFilter::FilterID add_filter (CosNotifyFilter::FilterAdmin_ptr filter_admin ACE_ENV_ARG_DECL);
