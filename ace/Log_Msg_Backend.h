@@ -43,16 +43,15 @@ public:
   /// Open a new connection
   virtual int open (const ACE_TCHAR *logger_key) = 0;
 
-  /// Reset the backend.
   /*
-   * When changing the logging destination the backend may need to
-   * properly disconnect from the remote logging daemon and reclaim
-   * some local resources.  But we try to reduce the number of local
-   * allocations/deallocations.
+   * Reset the backend.  When changing the logging destination the
+   * backend may need to properly disconnect from the remote logging
+   * daemon and reclaim some local resources.  But we try to reduce
+   * the number of local allocations/deallocations.
    */
   virtual int reset (void) = 0;
 
-  /// Close the Backend completely.
+  /// Close the backend completely.
   virtual int close (void) = 0;
 
   /// Backend routine.  This is called when we want to log a message.

@@ -78,6 +78,7 @@ OBJFILES = \
 	$(OBJDIR)\Log_Msg_Backend.obj \
 	$(OBJDIR)\Log_Msg_Callback.obj \
 	$(OBJDIR)\Log_Msg_IPC.obj \
+	$(OBJDIR)\Log_Msg_NT_Event_Log.obj \
 	$(OBJDIR)\Log_Record.obj \
 	$(OBJDIR)\Logging_Strategy.obj \
 	$(OBJDIR)\LSOCK.obj \

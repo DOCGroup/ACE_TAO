@@ -31,6 +31,19 @@ static const ACE_TCHAR *ACE_OS_CTIME_R_FMTSTR = ACE_LIB_TEXT ("%3s %3s %02d %02d
 # if defined (ACE_WIN32)
 OSVERSIONINFO ACE_OS::win32_versioninfo_;
 // Cached win32 version information.
+
+HINSTANCE ACE_OS::win32_resource_module_;
+
+#  if defined (ACE_OS_HAS_DLL) && (ACE_OS_HAS_DLL == 1)
+// This function is called by the OS when the ACE DLL is loaded. We
+// use it to determine the default module containing ACE's resources.
+BOOL WINAPI DllMain(HINSTANCE instance, DWORD reason, LPVOID)
+{
+  if (reason == DLL_PROCESS_ATTACH)
+    ACE_OS::set_win32_resource_module(instance);
+  return TRUE;
+}
+#  endif /* ACE_OS_HAS_DLL && ACE_OS_HAS_DLL == 1 */
 # endif /* ACE_WIN32 */
 
 class ACE_OS_Thread_Mutex_Guard

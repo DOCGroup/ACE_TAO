@@ -5269,6 +5269,17 @@ public:
   /// Return the win32 OSVERSIONINFO structure.
   static const OSVERSIONINFO &get_win32_versioninfo (void);
 
+  // = A pair of functions for modifying ACE's Win32 resource usage.
+  /// Return the handle of the module containing ACE's resources. By
+  /// default, for a DLL build of ACE this is a handle to the ACE DLL
+  /// itself, and for a static build it is a handle to the executable.
+  static HINSTANCE get_win32_resource_module (void);
+
+  /// Allow an application to modify which module contains ACE's
+  /// resources. This is mainly useful for a static build of ACE where
+  /// the required resources reside somewhere other than the executable.
+  static void set_win32_resource_module (HINSTANCE);
+
 # endif /* ACE_WIN32 */
 
   // = A set of wrappers for miscellaneous operations.
@@ -6586,6 +6597,8 @@ private:
   static void fopen_mode_to_open_mode_converter (ACE_TCHAR x, int &hmode);
 
   static OSVERSIONINFO win32_versioninfo_;
+
+  static HINSTANCE win32_resource_module_;
 
 # endif /* ACE_WIN32 */
 };

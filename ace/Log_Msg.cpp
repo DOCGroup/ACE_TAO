@@ -24,6 +24,7 @@
 #include "ace/Log_Msg.h"
 #include "ace/Log_Msg_Callback.h"
 #include "ace/Log_Msg_IPC.h"
+#include "ace/Log_Msg_NT_Event_Log.h"
 
 ACE_RCSID(ace, Log_Msg, "$Id$")
 
@@ -77,7 +78,11 @@ class ACE_Log_Msg_Manager
   //     For internal use by ACE, only!
 {
 public:
-  static ACE_Log_Msg_Backend *ipc_backend_;
+  static ACE_Log_Msg_Backend *log_backend_;
+
+  static u_long log_backend_flags_;
+
+  static int init_backend (const u_long *flags = 0);
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   static void close (void);
@@ -89,7 +94,52 @@ private:
 #endif /* ! ACE_MT_SAFE */
 };
 
-ACE_Log_Msg_Backend *ACE_Log_Msg_Manager::ipc_backend_ = 0;
+ACE_Log_Msg_Backend *ACE_Log_Msg_Manager::log_backend_ = 0;
+u_long ACE_Log_Msg_Manager::log_backend_flags_ = 0;
+
+int ACE_Log_Msg_Manager::init_backend (const u_long *flags)
+{
+  // If flags have been supplied, and they are different from the flags
+  // we had last time, then we may have to re-create the backend as a
+  // different type.
+  if (flags)
+    {
+      if ((ACE_BIT_ENABLED (*flags, ACE_Log_Msg::SYSLOG)
+            && ACE_BIT_DISABLED (ACE_Log_Msg_Manager::log_backend_flags_, ACE_Log_Msg::SYSLOG))
+          || (ACE_BIT_DISABLED (*flags, ACE_Log_Msg::SYSLOG)
+            && ACE_BIT_ENABLED (ACE_Log_Msg_Manager::log_backend_flags_, ACE_Log_Msg::SYSLOG)))
+        {
+          delete ACE_Log_Msg_Manager::log_backend_;
+          ACE_Log_Msg_Manager::log_backend_ = 0;
+        }
+
+      ACE_Log_Msg_Manager::log_backend_flags_ = *flags;
+    }
+  
+  if (ACE_Log_Msg_Manager::log_backend_ == 0)
+    {
+      ACE_NO_HEAP_CHECK;
+
+#if defined (WIN32)
+      // Allocate the ACE_Log_Msg_Backend instance.
+      if (ACE_BIT_ENABLED (ACE_Log_Msg_Manager::log_backend_flags_, ACE_Log_Msg::SYSLOG))
+        ACE_NEW_RETURN (ACE_Log_Msg_Manager::log_backend_,
+                        ACE_Log_Msg_NT_Event_Log,
+                        -1);
+      else
+        ACE_NEW_RETURN (ACE_Log_Msg_Manager::log_backend_,
+                        ACE_Log_Msg_IPC,
+                        -1);
+#else /* WIN32 */
+      // Allocate the ACE_Log_Msg IPC instance.
+      ACE_NEW_RETURN (ACE_Log_Msg_Manager::log_backend_,
+                      ACE_Log_Msg_IPC,
+                      -1);
+#endif /* WIN32 */
+    }
+
+  return 0;
+}
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
 ACE_Recursive_Thread_Mutex *ACE_Log_Msg_Manager::lock_ = 0;
@@ -110,16 +160,8 @@ ACE_Log_Msg_Manager::get_lock (void)
                         0);
     }
 
-
-  if (ACE_Log_Msg_Manager::ipc_backend_ == 0)
-    {
-      ACE_NO_HEAP_CHECK;
-
-      // Allocate the ACE_Log_Msg IPC instance.
-      ACE_NEW_RETURN (ACE_Log_Msg_Manager::ipc_backend_,
-                      ACE_Log_Msg_IPC,
-                      0);
-    }
+  if (init_backend () == -1)
+    return 0;
 
   return ACE_Log_Msg_Manager::lock_;
 }
@@ -140,8 +182,8 @@ ACE_Log_Msg_Manager::close (void)
   delete ACE_Log_Msg_Manager::lock_;
   ACE_Log_Msg_Manager::lock_ = 0;
 
-  delete ACE_Log_Msg_Manager::ipc_backend_;
-  ACE_Log_Msg_Manager::ipc_backend_ = 0;
+  delete ACE_Log_Msg_Manager::log_backend_;
+  ACE_Log_Msg_Manager::log_backend_ = 0;
 }
 
 # if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || \
@@ -270,10 +312,8 @@ ACE_Log_Msg::instance (void)
   // We don't have threads, we cannot call
   // ACE_Log_Msg_Manager::get_lock () to initialize the logger
   // callback, so instead we do it here.
-  if (ACE_Log_Msg_Manager::ipc_backend_ == 0)
-    ACE_NEW_RETURN (ACE_Log_Msg_Manager::ipc_backend_,
-                    ACE_Log_Msg_IPC,
-                    0);
+  if (ACE_Log_Msg_Manager::init_backend () == -1)
+    return 0;
 
   // Singleton implementation.
   static ACE_Cleanup_Adapter<ACE_Log_Msg> *log_msg = 0;
@@ -534,8 +574,8 @@ ACE_Log_Msg::~ACE_Log_Msg (void)
   if (instance_count == 0)
     {
       // Destroy the message queue instance.
-      if (ACE_Log_Msg_Manager::ipc_backend_ != 0)
-        ACE_Log_Msg_Manager::ipc_backend_->close ();
+      if (ACE_Log_Msg_Manager::log_backend_ != 0)
+        ACE_Log_Msg_Manager::log_backend_->close ();
 
 #     if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
 #       if defined (ACE_HAS_TSS_EMULATION)
@@ -599,23 +639,24 @@ ACE_Log_Msg::open (const ACE_TCHAR *prog_name,
   int status = 0;
 
   // Be sure that there is a message_queue_, with multiple threads.
-  ACE_MT (ACE_Log_Msg_Manager::get_lock ());
+  ACE_MT (ACE_Log_Msg_Manager::init_backend (&flags));
 
   // Always close the current handle before doing anything else.
-  ACE_Log_Msg_Manager::ipc_backend_->reset ();
+  ACE_Log_Msg_Manager::log_backend_->reset ();
 
   // Note that if we fail to open the message queue the default action
   // is to use stderr (set via static initialization in the
   // Log_Msg.cpp file).
 
-  if (ACE_BIT_ENABLED (flags, ACE_Log_Msg::LOGGER))
+  if (ACE_BIT_ENABLED (flags, ACE_Log_Msg::LOGGER)
+      || ACE_BIT_ENABLED (flags, ACE_Log_Msg::SYSLOG))
     {
       if (logger_key == 0)
         status = -1;
       else
         {
           status =
-            ACE_Log_Msg_Manager::ipc_backend_->open (logger_key);
+            ACE_Log_Msg_Manager::log_backend_->open (logger_key);
         }
 
       if (status == -1)
@@ -1417,10 +1458,10 @@ ACE_Log_Msg::log (ACE_Log_Record &log_record,
                            ACE_Log_Msg::LOGGER))
         {
           // Be sure that there is a message_queue_, with multiple threads.
-          ACE_MT (ACE_Log_Msg_Manager::get_lock ());
+          ACE_MT (ACE_Log_Msg_Manager::init_backend ());
 
           result =
-            ACE_Log_Msg_Manager::ipc_backend_->log (log_record);
+            ACE_Log_Msg_Manager::log_backend_->log (log_record);
         }
 
       // This must come last, after the other two print operations
@@ -1572,7 +1613,7 @@ ACE_Log_Msg::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("\nmsg_off_ = %d\n"), this->msg_off_));
 
   // Be sure that there is a message_queue_, with multiple threads.
-  ACE_MT (ACE_Log_Msg_Manager::get_lock ());
+  ACE_MT (ACE_Log_Msg_Manager::init_backend ());
 
   ACE_MT (ACE_Log_Msg_Manager::get_lock ()->dump ());
   // Synchronize output operations.
