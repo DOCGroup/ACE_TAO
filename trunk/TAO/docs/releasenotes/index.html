@@ -346,14 +346,10 @@ Point of contact: <A HREF="mailto:irfan@cs.wustl.edu">Irfan Pyarali</A>
 TAO fully supports the POA spec. This section will carry updates as available.</LI>
 </UL>
 Known issues:
-<DL>
-<DT>
-<I>Support for collocation is not complete.</I></DT>
-
-<DD>
-If an object which should be collocated is created via <TT>string_to_object</TT>,
-it is created as a remote object rather than collocated.</DD>
-</DL>
+<UL>
+<LI>
+None.</LI>
+</UL>
 Critical work:
 <UL>
 <LI>
@@ -366,11 +362,26 @@ Determine the degree to which we will support the full semantics of remote
 objects on a collocated object. The spec mandates that collocated object
 should behave <I>exactly</I> like remote objects, but that means that request
 will have to be queued rather than calling a method directly, and this
-could be hazardous to our quest for real-time ORB status.</LI>
+could be hazardous to our quest for real-time ORB status. <p>
+</LI>
 
 <LI>
 Provide extensions of the specification to ensure real-time delivery of
 messages.</LI>
+</UL>
+
+Recently completed work:
+<UL>
+<LI>
+Support for collocation should be much better now because the POA can
+tell if we created the object reference. <p>
+</LI>
+<LI>
+The POA now supports active demultiplexing of servants in the
+SYSTEM_ID policy.  This should make the POA faster and more
+predictable since there is no hashing involved and the index of the
+slot where the servant is registered is in the Object Key.
+</LI>
 </UL>
 
 <HR><!--#include virtual="ec.html" -->
