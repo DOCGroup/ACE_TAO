@@ -1,3 +1,8 @@
+Thu Nov  6 01:34:49 1997  Sumedh Mungee  <sumedh@macarena.cs.wustl.edu>
+
+	* tao/orb_core.cpp: #defined around some thread-specific template
+	instantiations which are not needed on NetBSD.
+
 Thu Nov  6 01:31:06 1997  Sumedh Mungee  <sumedh@macarena.cs.wustl.edu>
 
 	* tao/except.h: Undefined "minor" and "major, since these are
