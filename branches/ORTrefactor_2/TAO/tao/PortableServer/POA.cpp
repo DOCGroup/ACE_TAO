@@ -4101,6 +4101,12 @@ TAO_POA::object_reference_template_adapter (void)
     ACE_DECLARE_NEW_CORBA_ENV;
     ACE_TRY
       {
+        TAO::ORT_Adapter_Factory * ort_ap_factory =
+          this->object_reference_template_adapter_factory();
+
+        if (!ort_ap_factory)
+          return 0;
+
         // Lock access for the duration of this transaction, this method is also
         // called in the cleanup process, so don't let the guard check for closure
         TAO_POA_Guard poa_guard (*this ACE_ENV_ARG_PARAMETER, 0);
@@ -4110,12 +4116,6 @@ TAO_POA::object_reference_template_adapter (void)
         // DCL ..
         if (this->ort_adapter_ != 0)
           return this->ort_adapter_;
-
-        TAO::ORT_Adapter_Factory * ort_ap_factory =
-          this->object_reference_template_adapter_factory();
-
-        if (!ort_ap_factory)
-          return 0;
 
         // Get the full adapter name of this POA, do this before we create the
         // adapter so that in case this fails, we just return 0 and not a not
