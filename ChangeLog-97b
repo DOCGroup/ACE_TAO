@@ -4,6 +4,10 @@ Sat Sep 27 00:45:10 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 	* examples/OS/Process/Makefile:
 	* examples/OS/Process/imore.cpp:  Added a new example: imore.
 
+	* ace/SOCK_Stream.cpp (close, close_reader, close_writer): Moved
+	  invalid handlers checking from close to close_reader and
+	  close_writer.
+	
 Fri Sep 26 14:28:36 1997  Nanbor Wang  <nw1@CHA-CHA>
 
 	* tests/SPIPE_Test.cpp:
