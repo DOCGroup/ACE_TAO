@@ -15,6 +15,7 @@ ACE_RCSID (Security,
 #include "orbsvcs/orbsvcs/SecurityC.h"
 
 #include "tao/ORBInitInfo.h"
+#include "tao/ORB_Constants.h"
 #include "tao/debug.h"
 
 

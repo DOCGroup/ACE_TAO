@@ -1,3 +1,10 @@
+Sat Jul 31 07:00:20 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/Security/Security_ORBInitializer.cpp:
+
+	  Added missing "tao/ORB_Constants.h" include.  Fixes "no inline"
+	  builds.
+
 Sat Jul 31 00:43:37 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	The following changes represent a basic/core implemenation of the
@@ -64,7 +71,7 @@ Sat Jul 31 00:43:37 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_ReceivedCredentials.h:
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Vault.cpp:
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Vault.h:
-	
+
 	  Removed these files.  They were either obsolete, not maintained
 	  or have been renamed.
 
