@@ -12,7 +12,7 @@ SRC = Naming_Server.cpp Naming_Service.cpp
 
 LDLIBS  = -lorbsvcs -lTAO
 
-BIN2 = Naming_Server
+BIN2 = Naming_Service
 
 #### If the TAO orbsvcs library wasn't built with sufficient components,
 #### don't try to build here.
