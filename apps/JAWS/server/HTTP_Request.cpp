@@ -573,7 +573,7 @@ HTTP_Request::cgi_args_and_env (char *&extra_path_info)
 
           if (ACE_OS::strchr (cgi_question, '='))
             {
-              ACE_NEW_RETURN (this->cgi_env_, char *[count+1], );
+              ACE_NEW (this->cgi_env_, char *[count+1]);
 
               int i = 0;
               ptr = cgi_question;

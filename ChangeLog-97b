@@ -1,4 +1,25 @@
-Tue Oct 28 22:34:10 1997    <irfan@TWOSTEP>
+Wed Oct 29 00:29:52 1997    <irfan@TWOSTEP>
+
+	* apps/JAWS/server: Fixed Win32 related compilation errors.
+
+	* ace/OS.h (SIGUSR1 and SIGUSR2): Added new defines for these two
+ 	  signals.
+
+	* ace/LOCK_SOCK_Acceptor: New class added to ACE (it was
+ 	  originally a class in JAWS).  It specialize ACE_SOCK_Acceptor to
+ 	  lock around <accept>.  This class is particular useful if you
+ 	  want to have multiple threads accepting on the same endpoint.
+  	  Thanks to James Hu who initially wrote this class for JAWS.
+  	  Thanks also to Johannes Gutleber <Johannes.Gutleber@cern.ch> who
+ 	  decided to use this in the Conn_Test.
+
+	* tests/Conn_Test.cpp: Updated to use the new LOCK_SOCK_Acceptor.
+
+	* apps/JAWS/server/HTTP_Server.h: Updated to use the new
+ 	  LOCK_SOCK_Acceptor.
+
+	* apps/JAWS/server/HTTP_Server_T.*: These files are no longer
+ 	  necessary since this class has been absorbed into ACE.
 
 	* tests: Fixed auto_ptr use in:
 	  
