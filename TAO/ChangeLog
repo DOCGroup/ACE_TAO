@@ -1,14 +1,17 @@
-2003-11-27    <bala@AMROD>
+Thu Nov 27 12:35:22 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* M orbsvcs/tests/Concurrency/CC_client.dsp
-M orbsvcs/tests/EC_Mcast/EC_Mcast.dsp
-M orbsvcs/tests/EC_Multiple/EC_Multiple.dsp
-M orbsvcs/tests/EC_Throughput/ECT_Consumer.dsp
-M orbsvcs/tests/EC_Throughput/ECT_Supplier.dsp
-M orbsvcs/tests/EC_Throughput/ECT_Throughput.dsp
-M orbsvcs/tests/Event/Performance/Connect.dsp
-M orbsvcs/tests/Event/Performance/Latency.dsp
-M orbsvcs/tests/Event/Performance/Latency_Server.dsp
+	* orbsvcs/tests/Concurrency/CC_client.dsp:
+	* orbsvcs/tests/EC_Mcast/EC_Mcast.dsp:
+	* orbsvcs/tests/EC_Multiple/EC_Multiple.dsp:
+	* orbsvcs/tests/EC_Throughput/ECT_Consumer.dsp:
+	* orbsvcs/tests/EC_Throughput/ECT_Supplier.dsp:
+	* orbsvcs/tests/EC_Throughput/ECT_Throughput.dsp:
+	* orbsvcs/tests/Event/Performance/Connect.dsp:
+	* orbsvcs/tests/Event/Performance/Latency.dsp:
+	* orbsvcs/tests/Event/Performance/Latency_Server.dsp:
+
+	  Not sure how the list of libraries and paths got whacked
+	  out. Reset all of them. Let us see how the builds go. 
 
 Thu Nov 27 17:52:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
