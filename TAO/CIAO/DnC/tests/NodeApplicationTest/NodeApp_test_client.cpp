@@ -125,7 +125,6 @@ main (int argc, char *argv[])
       // Install the NodeApplication Test components
       comp_info = comserv->install (infos);
       ACE_TRY_CHECK;
-      ACE_DEBUG ((LM_DEBUG, "Installation finished successfully.\n"));
 
       // store the component refs
       for (CORBA::ULong i = 0; i < comp_num; ++i)
@@ -142,6 +141,8 @@ main (int argc, char *argv[])
 			    1);
 	}
       }
+
+      ACE_DEBUG ((LM_DEBUG, "Installation finished successfully.\n"));
 
       // Before we can start we have to start.
       comserv->start ();
