@@ -27,12 +27,13 @@ USELIB("..\ace\aced.lib");
 //---------------------------------------------------------------------------
 #endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
 
+typedef ACE_Reverse_Lock<ACE_SYNCH_MUTEX> REVERSE_MUTEX;
+
 int
 main (int, ASYS_TCHAR *[])
 {
   ACE_START_TEST (ASYS_TEXT ("Thread_Mutex_Test"));
 
-  typedef ACE_Reverse_Lock<ACE_SYNCH_MUTEX> REVERSE_MUTEX;
   ACE_SYNCH_MUTEX mutex;
   REVERSE_MUTEX reverse_mutex (mutex);
 
@@ -48,13 +49,13 @@ main (int, ASYS_TCHAR *[])
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class REVERSE_MUTEX;
+template class ACE_Reverse_Lock<ACE_SYNCH_MUTEX>;
 template class ACE_Guard<ACE_SYNCH_MUTEX>;
 template class ACE_Guard<REVERSE_MUTEX>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate REVERSE_MUTEX
+#pragma instantiate ACE_Reverse_Lock<ACE_SYNCH_MUTEX>
 #pragma instantiate ACE_Guard<ACE_SYNCH_MUTEX>
 #pragma instantiate ACE_Guard<REVERSE_MUTEX>
 
