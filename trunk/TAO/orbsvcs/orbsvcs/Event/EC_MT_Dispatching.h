@@ -1,26 +1,16 @@
 /* -*- C++ -*- */
-// $Id$
-//
-// ============================================================================
-//
-// = LIBRARY
-//   ORBSVCS Real-time Event Channel
-//
-// = FILENAME
-//   EC_MT_Dispatching
-//
-// = AUTHOR
-//   Carlos O'Ryan (coryan@cs.wustl.edu)
-//
-// = CREDITS
-//   Based on previous work by Tim Harrison (harrison@cs.wustl.edu)
-//   and other members of the DOC group.
-//   More details can be found in:
-//   http://www.cs.wustl.edu/~schmidt/oopsla.ps.gz
-//   http://www.cs.wustl.edu/~schmidt/JSAC-98.ps.gz
-//
-//
-// ============================================================================
+/**
+ *  @file   EC_MT_Dispatching.h
+ *
+ *  $Id$
+ *
+ *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
+ *
+ * Based on previous work by Tim Harrison (harrison@cs.wustl.edu) and
+ * other members of the DOC group. More details can be found in:
+ *
+ * http://doc.ece.uci.edu/~coryan/EC/index.html
+ */
 
 #ifndef TAO_EC_MT_DISPATCHING_H
 #define TAO_EC_MT_DISPATCHING_H
@@ -36,23 +26,24 @@
 
 class TAO_EC_Event_Channel;
 
+/**
+ * @class TAO_EC_MT_Dispatching
+ *
+ * @brief Dispatching strategy that minimizes mt inversion.
+ *
+ * This strategy uses a single queue, serviced by one or more
+ * threads.  It's main purpose is to decouple the suppliers from
+ * the client execution time, specially in the collocated case.
+ */
 class TAO_RTEvent_Export TAO_EC_MT_Dispatching : public TAO_EC_Dispatching
 {
-  // = TITLE
-  //   Dispatching strategy that minimizes mt inversion.
-  //
-  // = DESCRIPTION
-  //   This strategy uses a single queue, serviced by one or more
-  //   threads.  It's main purpose is to decouple the suppliers from
-  //   the client execution time, specially in the collocated case.
-  //
 public:
+  /// Constructor
+  /// It will create <nthreads> servicing threads...
   TAO_EC_MT_Dispatching (int nthreads,
                          int thread_creation_flags,
                          int thread_priority,
                          int force_activate);
-  // Constructor
-  // It will create <nthreads> servicing threads...
 
   // = The EC_Dispatching methods.
   virtual void activate (void);
@@ -69,31 +60,31 @@ public:
                             CORBA::Environment& env);
 
 private:
+  /// Use our own thread manager.
   ACE_Thread_Manager thread_manager_;
-  // Use our own thread manager.
 
+  /// The number of active tasks
   int nthreads_;
-  // The number of active tasks
 
+  /// The flags (THR_BOUND, THR_NEW_LWP, etc.) used to create the
+  /// dispatching threads.
   int thread_creation_flags_;
-  // The flags (THR_BOUND, THR_NEW_LWP, etc.) used to create the
-  // dispatching threads.
 
+  /// The priority of the dispatching threads.
   int thread_priority_;
-  // The priority of the dispatching threads.
 
+  /// If activation at the requested priority fails then we fallback on
+  /// the defaults for thread activation.
   int force_activate_;
-  // If activation at the requested priority fails then we fallback on
-  // the defaults for thread activation.
 
+  /// The dispatching task
   TAO_EC_Dispatching_Task task_;
-  // The dispatching task
 
+  /// Synchronize access to internal data
   ACE_SYNCH_MUTEX lock_;
-  // Synchronize access to internal data
 
+  /// Are the threads running?
   int active_;
-  // Are the threads running?
 };
 
 #if defined (__ACE_INLINE__)

@@ -1,26 +1,16 @@
 /* -*- C++ -*- */
-// $Id$
-//
-// ============================================================================
-//
-// = LIBRARY
-//   ORBSVCS Real-time Event Channel
-//
-// = FILENAME
-//   EC_Disjunction_Filter
-//
-// = AUTHOR
-//   Carlos O'Ryan (coryan@cs.wustl.edu)
-//
-// = CREDITS
-//   Based on previous work by Tim Harrison (harrison@cs.wustl.edu)
-//   and other members of the DOC group.
-//   More details can be found in:
-//   http://www.cs.wustl.edu/~schmidt/oopsla.ps.gz
-//   http://www.cs.wustl.edu/~schmidt/JSAC-98.ps.gz
-//
-//
-// ============================================================================
+/**
+ *  @file   EC_Disjunction_Filter.h
+ *
+ *  $Id$
+ *
+ *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
+ *
+ * Based on previous work by Tim Harrison (harrison@cs.wustl.edu) and
+ * other members of the DOC group. More details can be found in:
+ *
+ * http://doc.ece.uci.edu/~coryan/EC/index.html
+ */
 
 #ifndef TAO_EC_DISJUNCTION_FILTER_H
 #define TAO_EC_DISJUNCTION_FILTER_H
@@ -32,26 +22,27 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+/**
+ * @class TAO_EC_Disjunction_Filter
+ *
+ * @brief The disjunction filter.
+ *
+ * This filter has a set of children (fixed at creation time), if
+ * any of the children accepts an event then it also does.
+ *
+ * <H2>Memory Management</H2>
+ * It assumes ownership of the children.
+ */
 class TAO_RTEvent_Export TAO_EC_Disjunction_Filter : public TAO_EC_Filter
 {
-  // = TITLE
-  //   The disjunction filter.
-  //
-  // = DESCRIPTION
-  //   This filter has a set of children (fixed at creation time), if
-  //   any of the children accepts an event then it also does.
-  //
-  // = MEMORY MANAGMENT
-  //   It assumes ownership of the children.
-  //
 public:
+  /// Constructor. It assumes ownership of both the array and the
+  /// children.
   TAO_EC_Disjunction_Filter (TAO_EC_Filter* children[],
                              size_t n);
-  // Constructor. It assumes ownership of both the array and the
-  // children.
 
+  /// Destructor
   virtual ~TAO_EC_Disjunction_Filter (void);
-  // Destructor
 
 
   // = The TAO_EC_Filter methods, please check the documentation in
@@ -85,11 +76,11 @@ private:
                               (const TAO_EC_Disjunction_Filter&))
 
 private:
+  /// The children
   TAO_EC_Filter** children_;
-  // The children
 
+  /// The number of children.
   size_t n_;
-  // The number of children.
 };
 
 #if defined (__ACE_INLINE__)

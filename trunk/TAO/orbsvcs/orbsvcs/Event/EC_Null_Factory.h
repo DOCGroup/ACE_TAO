@@ -1,26 +1,16 @@
 /* -*- C++ -*- */
-// $Id$
-//
-// ============================================================================
-//
-// = LIBRARY
-//   ORBSVCS Real-time Event Channel
-//
-// = FILENAME
-//   EC_Null_Factory
-//
-// = AUTHOR
-//   Carlos O'Ryan (coryan@cs.wustl.edu)
-//
-// = CREDITS
-//   Based on previous work by Tim Harrison (harrison@cs.wustl.edu)
-//   and other members of the DOC group.
-//   More details can be found in:
-//   http://www.cs.wustl.edu/~schmidt/oopsla.ps.gz
-//   http://www.cs.wustl.edu/~schmidt/JSAC-98.ps.gz
-//
-//
-// ============================================================================
+/**
+ *  @file   EC_Null_Factory.h
+ *
+ *  $Id$
+ *
+ *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
+ *
+ * Based on previous work by Tim Harrison (harrison@cs.wustl.edu) and
+ * other members of the DOC group. More details can be found in:
+ *
+ * http://doc.ece.uci.edu/~coryan/EC/index.html
+ */
 
 #ifndef TAO_EC_NULL_FACTORY_H
 #define TAO_EC_NULL_FACTORY_H
@@ -32,26 +22,25 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+/**
+ * @class TAO_EC_Null_Factory
+ *
+ * @brief The factory for a simple event channel.
+ *
+ * The simplest configuration for an event channel does no
+ * filtering and uses reactive dispatching. This class is used to
+ * configure such an event channel.
+ * A fixed POA is used for servant activation.
+ * This object creates a single instance of the Supplier
+ */
 class TAO_RTEvent_Export TAO_EC_Null_Factory : public TAO_EC_Factory
 {
-  // = TITLE
-  //   The factory for a simple event channel.
-  //
-  // = DESCRIPTION
-  //   The simplest configuration for an event channel does no
-  //   filtering and uses reactive dispatching. This class is used to
-  //   configure such an event channel.
-  //   A fixed POA is used for servant activation.
-  //   This object creates a single instance of the Supplier
-  //
-  // = MEMORY MANAGMENT
-  //
 public:
+  /// Constructor
   TAO_EC_Null_Factory (void);
-  // Constructor
 
+  /// destructor...
   virtual ~TAO_EC_Null_Factory (void);
-  // destructor...
 
   // = The EC_Factory methods
   virtual TAO_EC_Dispatching*

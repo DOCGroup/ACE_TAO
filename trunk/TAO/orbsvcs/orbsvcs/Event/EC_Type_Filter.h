@@ -1,26 +1,16 @@
 /* -*- C++ -*- */
-// $Id$
-//
-// ============================================================================
-//
-// = LIBRARY
-//   ORBSVCS Real-time Event Channel
-//
-// = FILENAME
-//   EC_Type_Filter
-//
-// = AUTHOR
-//   Carlos O'Ryan (coryan@cs.wustl.edu)
-//
-// = CREDITS
-//   Based on previous work by Tim Harrison (harrison@cs.wustl.edu)
-//   and other members of the DOC group.
-//   More details can be found in:
-//   http://www.cs.wustl.edu/~schmidt/oopsla.ps.gz
-//   http://www.cs.wustl.edu/~schmidt/JSAC-98.ps.gz
-//
-//
-// ============================================================================
+/**
+ *  @file   EC_Type_Filter.h
+ *
+ *  $Id$
+ *
+ *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
+ *
+ * Based on previous work by Tim Harrison (harrison@cs.wustl.edu) and
+ * other members of the DOC group. More details can be found in:
+ *
+ * http://doc.ece.uci.edu/~coryan/EC/index.html
+ */
 
 #ifndef TAO_EC_TYPE_FILTER_H
 #define TAO_EC_TYPE_FILTER_H
@@ -33,18 +23,19 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+/**
+ * @class TAO_EC_Type_Filter
+ *
+ * @brief A filter based on event type/source
+ *
+ * This filter only accept events with a predefined type/source,
+ * both the source and the type can be wildcards.
+ */
 class TAO_RTEvent_Export TAO_EC_Type_Filter : public TAO_EC_Filter
 {
-  // = TITLE
-  //   A filter based on event type/source
-  //
-  // = DESCRIPTION
-  //   This filter only accept events with a predefined type/source,
-  //   both the source and the type can be wildcards.
-  //
 public:
+  /// Constructor.
   TAO_EC_Type_Filter (const RtecEventComm::EventHeader& header);
-  // Constructor.
 
   // = The TAO_EC_Filter methods, please check the documentation in
   // TAO_EC_Filter.
@@ -74,8 +65,8 @@ private:
                               (const TAO_EC_Type_Filter&))
 
 private:
+  /// Encapsulate the type/source that we must match.
   RtecEventComm::EventHeader header_;
-  // Encapsulate the type/source that we must match.
 };
 
 #if defined (__ACE_INLINE__)

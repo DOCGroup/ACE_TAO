@@ -1,26 +1,16 @@
 /* -*- C++ -*- */
-// $Id$
-//
-// ============================================================================
-//
-// = LIBRARY
-//   ORBSVCS Real-time Event Channel
-//
-// = FILENAME
-//   EC_Basic_Factory
-//
-// = AUTHOR
-//   Carlos O'Ryan (coryan@cs.wustl.edu)
-//
-// = CREDITS
-//   Based on previous work by Tim Harrison (harrison@cs.wustl.edu)
-//   and other members of the DOC group.
-//   More details can be found in:
-//   http://www.cs.wustl.edu/~schmidt/oopsla.ps.gz
-//   http://www.cs.wustl.edu/~schmidt/JSAC-98.ps.gz
-//
-//
-// ============================================================================
+/**
+ *  @file   EC_Basic_Factory.h
+ *
+ *  $Id$
+ *
+ *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
+ *
+ * Based on previous work by Tim Harrison (harrison@cs.wustl.edu) and
+ * other members of the DOC group. More details can be found in:
+ *
+ * http://doc.ece.uci.edu/~coryan/EC/index.html
+ */
 
 #ifndef TAO_EC_BASIC_FACTORY_H
 #define TAO_EC_BASIC_FACTORY_H
@@ -32,27 +22,27 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+/**
+ * @class TAO_EC_Basic_Factory
+ *
+ * @brief The factory for a simple event channel.
+ *
+ * An slightly more advanced configuration than the
+ * EC_Null_Factory, this class configure an event channel that can
+ * support filtering and correlation. Still dispatching is not
+ * prioritized and all the filtering is done at the consumer level.
+ * A fixed POA is used for servant activation.
+ * This object creates a single instance of the Supplier
+ *
+ */
 class TAO_RTEvent_Export TAO_EC_Basic_Factory : public TAO_EC_Factory
 {
-  // = TITLE
-  //   The factory for a simple event channel.
-  //
-  // = DESCRIPTION
-  //   An slightly more advanced configuration than the
-  //   EC_Null_Factory, this class configure an event channel that can
-  //   support filtering and correlation. Still dispatching is not
-  //   prioritized and all the filtering is done at the consumer level.
-  //   A fixed POA is used for servant activation.
-  //   This object creates a single instance of the Supplier
-  //
-  // = MEMORY MANAGMENT
-  //
 public:
+  /// Constructor
   TAO_EC_Basic_Factory (void);
-  // Constructor
 
+  /// destructor...
   virtual ~TAO_EC_Basic_Factory (void);
-  // destructor...
 
   // = The EC_Factory methods
   virtual TAO_EC_Dispatching*

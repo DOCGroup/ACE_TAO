@@ -1,26 +1,16 @@
 /* -*- C++ -*- */
-// $Id$
-//
-// ============================================================================
-//
-// = LIBRARY
-//   ORBSVCS Real-time Event Channel
-//
-// = FILENAME
-//   EC_SupplierAdmin
-//
-// = AUTHOR
-//   Carlos O'Ryan (coryan@cs.wustl.edu)
-//
-// = CREDITS
-//   Based on previous work by Tim Harrison (harrison@cs.wustl.edu)
-//   and other members of the DOC group.
-//   More details can be found in:
-//   http://www.cs.wustl.edu/~schmidt/oopsla.ps.gz
-//   http://www.cs.wustl.edu/~schmidt/JSAC-98.ps.gz
-//
-//
-// ============================================================================
+/**
+ *  @file   EC_SupplierAdmin.h
+ *
+ *  $Id$
+ *
+ *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
+ *
+ * Based on previous work by Tim Harrison (harrison@cs.wustl.edu) and
+ * other members of the DOC group. More details can be found in:
+ *
+ * http://doc.ece.uci.edu/~coryan/EC/index.html
+ */
 
 #ifndef TAO_EC_SUPPLIERADMIN_H
 #define TAO_EC_SUPPLIERADMIN_H
@@ -38,27 +28,25 @@
 class TAO_EC_Event_Channel;
 class TAO_EC_ProxyPushSupplier;
 
+/**
+ * @class TAO_EC_SupplierAdmin
+ *
+ * @brief Implement the RtecEventChannelAdmin::SupplierAdmin interface.
+ *
+ *
+ * <H2>Memory Management</H2>
+ * It does not assume ownership of the TAO_EC_Event_Channel object
+ */
 class TAO_RTEvent_Export TAO_EC_SupplierAdmin
   : public POA_RtecEventChannelAdmin::SupplierAdmin
   , public TAO_ESF_Peer_Admin<TAO_EC_Event_Channel,TAO_EC_ProxyPushConsumer,RtecEventChannelAdmin::ProxyPushConsumer,TAO_EC_ProxyPushSupplier>
 {
-  // = TITLE
-  //   ProxyPushSupplier
-  //
-  // = DESCRIPTION
-  //   Implement the RtecEventChannelAdmin::SupplierAdmin interface.
-  //   This class is an Abstract Factory for the
-  //   TAO_EC_ProxyPushConsumer.
-  //
-  // = MEMORY MANAGMENT
-  //   It does not assume ownership of the TAO_EC_Event_Channel object
-  //
 public:
+  /// constructor...
   TAO_EC_SupplierAdmin (TAO_EC_Event_Channel* event_channel);
-  // constructor...
 
+  /// destructor...
   virtual ~TAO_EC_SupplierAdmin (void);
-  // destructor...
 
   // = The RtecEventChannelAdmin::SupplierAdmin methods...
   virtual RtecEventChannelAdmin::ProxyPushConsumer_ptr
@@ -69,8 +57,8 @@ public:
   virtual PortableServer::POA_ptr _default_POA (CORBA::Environment& env);
 
 private:
+  /// Store the default POA.
   PortableServer::POA_var default_POA_;
-  // Store the default POA.
 };
 
 #if defined (__ACE_INLINE__)

@@ -1,21 +1,16 @@
 /* -*- C++ -*- */
-// $Id$
-//
-// ============================================================================
-//
-// = LIBRARY
-//   ORBSVCS Real-time Event Channel
-//
-// = FILENAME
-//   EC_Reactive_SupplierControl
-//
-// = AUTHOR
-//   Carlos O'Ryan (coryan@cs.wustl.edu)
-//
-//   More details can be found in:
-//   http://www.cs.wustl.edu/~coryan/EC/index.html
-//
-// ============================================================================
+/**
+ *  @file   EC_Reactive_SupplierControl.h
+ *
+ *  $Id$
+ *
+ *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
+ *
+ * Based on previous work by Tim Harrison (harrison@cs.wustl.edu) and
+ * other members of the DOC group. More details can be found in:
+ *
+ * http://doc.ece.uci.edu/~coryan/EC/index.html
+ */
 
 #ifndef TAO_EC_REACTIVE_SUPPLIERCONTROL_H
 #define TAO_EC_REACTIVE_SUPPLIERCONTROL_H
@@ -34,57 +29,53 @@ class TAO_EC_Event_Channel;
 
 class TAO_EC_Reactive_SupplierControl;
 
+/**
+ * @class TAO_EC_SupplierControl_Adapter
+ *
+ * @brief Forwards timeout events to the Reactive SupplierControl
+ *
+ * The Reactive SupplierControl strategy uses the reactor to
+ * periodically wakeup and verify the state of the suppliers
+ * registered with the Event Channel.
+ */
 class TAO_RTEvent_Export TAO_EC_SupplierControl_Adapter : public ACE_Event_Handler
 {
-  // = TITLE
-  //   Forwards timeout events to the Reactive SupplierControl
-  //
-  // = DESCRIPTION
-  //   The Reactive SupplierControl strategy uses the reactor to
-  //   periodically wakeup and verify the state of the suppliers
-  //   registered with the Event Channel.
-  //
 public:
+  /// Constructor
   TAO_EC_SupplierControl_Adapter (TAO_EC_Reactive_SupplierControl *adaptee);
-  // Constructor
 
   // = Documented in ACE_Event_Handler.
   virtual int handle_timeout (const ACE_Time_Value &tv,
                               const void *arg = 0);
 
 private:
+  /// The adapted object
   TAO_EC_Reactive_SupplierControl *adaptee_;
-  // The adapted object
 };
 
+/**
+ * @class TAO_EC_Reactive_SupplierControl
+ *
+ * @brief SupplierControl
+ *
+ * Defines the interface for the supplier control strategy.
+ * This strategy handles misbehaving or failing suppliers.
+ */
 class TAO_RTEvent_Export TAO_EC_Reactive_SupplierControl : public TAO_EC_SupplierControl
 {
-  // = TITLE
-  //   SupplierControl
-  //
-  // = DESCRIPTION
-  //   Defines the interface for the supplier control strategy.
-  //   This strategy handles misbehaving or failing suppliers.
-  //
-  // = MEMORY MANAGMENT
-  //
-  // = LOCKING
-  //
-  // = TODO
-  //
 public:
+  /// Constructor.  It does not assume ownership of the <event_channel>
+  /// parameter.
   TAO_EC_Reactive_SupplierControl (const ACE_Time_Value &rate,
                                    TAO_EC_Event_Channel *event_channel,
                                    CORBA::ORB_ptr orb);
-  // Constructor.  It does not assume ownership of the <event_channel>
-  // parameter.
 
+  /// destructor...
   virtual ~TAO_EC_Reactive_SupplierControl (void);
-  // destructor...
 
+  /// Receive the timeout from the adapter
   void handle_timeout (const ACE_Time_Value &tv,
                        const void* arg);
-  // Receive the timeout from the adapter
 
   // = Documented in TAO_EC_SupplierControl
   virtual int activate (void);
@@ -96,31 +87,31 @@ public:
                                  CORBA::Environment &);
 
 private:
+  /// Check if the suppliers still exists.  It is a helper method for
+  /// handle_timeout() to isolate the exceptions.
   void query_suppliers (CORBA::Environment &ACE_TRY_ENV);
-  // Check if the suppliers still exists.  It is a helper method for
-  // handle_timeout() to isolate the exceptions.
 
 private:
+  /// The polling rate
   ACE_Time_Value rate_;
-  // The polling rate
 
+  /// The Adapter for the reactor events
   TAO_EC_SupplierControl_Adapter adapter_;
-  // The Adapter for the reactor events
 
+  /// The event channel
   TAO_EC_Event_Channel *event_channel_;
-  // The event channel
 
+  /// The ORB
   CORBA::ORB_var orb_;
-  // The ORB
 
+  /// To control the timeout policy in the thread
   CORBA::PolicyCurrent_var policy_current_;
-  // To control the timeout policy in the thread
 
+  /// Precomputed policy list to the set timeout.
   CORBA::PolicyList policy_list_;
-  // Precomputed policy list to the set timeout.
 
+  /// The ORB reactor
   ACE_Reactor *reactor_;
-  // The ORB reactor
 };
 
 // ****************************************************************

@@ -13,47 +13,48 @@
 
 ACE_RCSID(ESF, ESF_Peer_Admin, "$Id$")
 
-#if defined (__BORLANDC__)
-
-template<class EC,class P,class I,class R>
-TAO_ESF_Peer_Admin<EC,P,I,R>::TAO_ESF_Peer_Admin (EC *ec)
-  :  TAO_ESF_Proxy_Admin<EC,P,I> (ec)
+template<class EVENT_CHANNEL, class PROXY, class INTERFACE, class PEER>
+TAO_ESF_Peer_Admin<EVENT_CHANNEL,PROXY,INTERFACE,PEER>::
+    TAO_ESF_Peer_Admin (EVENT_CHANNEL *ec)
+  :  TAO_ESF_Proxy_Admin<EVENT_CHANNEL,PROXY,INTERFACE> (ec)
 {
 }
 
-#endif /* __BORLANDC__ */
-
-template<class EC, class P,class I, class PEER>
-TAO_ESF_Peer_Admin<EC,P,I,PEER>::~TAO_ESF_Peer_Admin (void)
+template<class EVENT_CHANNEL, class PROXY, class INTERFACE, class PEER>
+TAO_ESF_Peer_Admin<EVENT_CHANNEL,PROXY,INTERFACE,PEER>::
+    ~TAO_ESF_Peer_Admin (void)
 {
 }
 
-template<class EC, class P,class I, class PEER> void
-TAO_ESF_Peer_Admin<EC,P,I,PEER>::peer_connected (PEER *peer,
-                                                 CORBA::Environment &ACE_TRY_ENV)
+template<class EVENT_CHANNEL, class PROXY, class INTERFACE, class PEER> void
+TAO_ESF_Peer_Admin<EVENT_CHANNEL,PROXY,INTERFACE,PEER>::
+    peer_connected (PEER *peer,
+                    CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC (())
 {
-  TAO_ESF_Peer_Connected<P,PEER> worker (peer);
+  TAO_ESF_Peer_Connected<PROXY,PEER> worker (peer);
 
   this->for_each (&worker, ACE_TRY_ENV);
 }
 
-template<class EC, class P,class I, class PEER> void
-TAO_ESF_Peer_Admin<EC,P,I,PEER>::peer_reconnected (PEER *peer,
-                                                   CORBA::Environment &ACE_TRY_ENV)
+template<class EVENT_CHANNEL, class PROXY, class INTERFACE, class PEER> void
+TAO_ESF_Peer_Admin<EVENT_CHANNEL,PROXY,INTERFACE,PEER>::
+    peer_reconnected (PEER *peer,
+                      CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC (())
 {
-  TAO_ESF_Peer_Reconnected<P,PEER> worker (peer);
+  TAO_ESF_Peer_Reconnected<PROXY,PEER> worker (peer);
 
   this->for_each (&worker, ACE_TRY_ENV);
 }
 
-template<class EC, class P,class I, class PEER> void
-TAO_ESF_Peer_Admin<EC,P,I,PEER>::peer_disconnected (PEER *peer,
-                                                    CORBA::Environment &ACE_TRY_ENV)
+template<class EVENT_CHANNEL, class PROXY, class INTERFACE, class PEER> void
+TAO_ESF_Peer_Admin<EVENT_CHANNEL,PROXY,INTERFACE,PEER>::
+    peer_disconnected (PEER *peer,
+                       CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC (())
 {
-  TAO_ESF_Peer_Disconnected<P,PEER> worker (peer);
+  TAO_ESF_Peer_Disconnected<PROXY,PEER> worker (peer);
 
   this->for_each (&worker, ACE_TRY_ENV);
 }
