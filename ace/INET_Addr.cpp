@@ -550,17 +550,14 @@ ACE_INET_Addr::get_host_name (char hostname[],
                               size_t len) const
 {
   ACE_TRACE ("ACE_INET_Addr::get_host_name");
+
+  if (
 #if defined (ACE_HAS_IPV6)
-  ACE_UNUSED_ARG (hostname);
-  ACE_UNUSED_ARG (len);
-
-  // XXXXXXXXXXXXX
-  printf("get_host_name is not defined for IPv6 yet\n");
-  return 0;
-
+      0 == memcmp(this->addr_pointer(),(void*)&in6addr_any,this->addr_size())
 #else
-
-  if (this->inet_addr_.sin_addr.s_addr == INADDR_ANY)
+      this->inet_addr_.sin_addr.s_addr == INADDR_ANY
+#endif
+      )
     {
       if (ACE_OS::hostname (hostname, len) == -1)
         return -1;
@@ -582,17 +579,12 @@ ACE_INET_Addr::get_host_name (char hostname[],
           return -1;
         }
 #else
-#  if !defined(_UNICOS)
-      int a_len = sizeof this->inet_addr_.sin_addr.s_addr;
-#  else /* _UNICOS */
-      int a_len = sizeof this->inet_addr_.sin_addr;
-#  endif /* ! _UNICOS */
       int error = 0;
 
 #if defined (CHORUS)
-      hostent *hp = ACE_OS::gethostbyaddr ((char *) &this->inet_addr_.sin_addr,
-                                           a_len,
-                                           this->addr_type_);
+      hostent *hp = ACE_OS::gethostbyaddr ((char *)this->addr_pointer(),,
+                                           this->addr_len(),
+                                           this->get_type());
       if (hp == 0)
         error = errno;  // So that the errno gets propagated back; it is
                         // loaded from error below.
@@ -600,9 +592,9 @@ ACE_INET_Addr::get_host_name (char hostname[],
       hostent hentry;
       ACE_HOSTENT_DATA buf;
       hostent *hp =
-        ACE_OS::gethostbyaddr_r ((char *)&this->inet_addr_.sin_addr,
-                                 a_len,
-                                 this->addr_type_,
+        ACE_OS::gethostbyaddr_r ((char *)this->addr_pointer(),
+                                 this->addr_size(),
+                                 this->get_type(),
                                  &hentry,
                                  buf,
                                  &error);
@@ -628,7 +620,6 @@ ACE_INET_Addr::get_host_name (char hostname[],
 #endif /* VXWORKS */
     }
 
-#endif /* ACE_HAS_IPV6 */
 }
 
 #if defined (ACE_HAS_WCHAR)
@@ -690,8 +681,6 @@ int ACE_INET_Addr::set_address (const char *ip_addr,
                                 int encode /* = 1 */)
 {
   ACE_TRACE ("ACE_INET_Addr::set");
-
-  printf("in set_address length=%d\n",len);
 
   this->ACE_Addr::base_set (ACE_ADDRESS_FAMILY, sizeof this->inet_addr_);
 #if defined (ACE_HAS_IPV6)
