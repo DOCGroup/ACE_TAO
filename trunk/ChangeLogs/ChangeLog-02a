@@ -1,3 +1,10 @@
+Fri May 26 12:23:55 2000  Ossama Othman  <ossama@uci.edu>
+
+	* ace/TLI_Acceptor.cpp:
+	* ace/TLI_Connector.cpp:
+
+	  *sigh* These files also needed to include "ace/Log_Msg.h."
+
 Fri May 26 12:13:26 2000  Ossama Othman  <ossama@uci.edu>
 
 	* ace/Singleton.cpp:
