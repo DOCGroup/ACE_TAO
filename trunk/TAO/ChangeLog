@@ -2,12 +2,12 @@ Thu Sep 25 23:15:06 2003  George Edwards <g.edwards@vanderbilt.edu>
 
         * tests/OBV/Supports/Supports_Test_impl.cpp:
 
-		  Added CORBA environment variable parameter to constructor
-		  calls.
+	  Added CORBA environment variable parameter to constructor
+	  calls.
 
 Thu Sep 25 16:08:50 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tao\PortableServer\Object_Adapter.cpp (servant_cleanup): 
+	* tao/PortableServer/Object_Adapter.cpp (servant_cleanup): 
 
 	  Changed ACE_CATCHANY to ACE_CATCHALL.  This will ensure that all
 	  exceptions will be caught properly.  This means that unknown
@@ -20,7 +20,7 @@ Thu Sep 25 16:08:50 2003  Irfan Pyarali  <irfan@oomworks.com>
 	  Russell Noseworthy <j.russell.noseworthy@objectsciences.com> for
 	  reporting this problem.
 
-	* tao\PortableServer\POA.cpp: 
+	* tao/PortableServer/POA.cpp: 
 
 	  Made the following POA accessors public:
 
@@ -28,7 +28,7 @@ Thu Sep 25 16:08:50 2003  Irfan Pyarali  <irfan@oomworks.com>
 	  - active_object_map
 	  - waiting_destruction
 
-	* tests\UNKNOWN_Exception:
+	* tests/UNKNOWN_Exception:
 
 	  Added test for ensuring that UNKNOWN exceptions raised by the
 	  server are handling correctly by the ORB.  There are two places
