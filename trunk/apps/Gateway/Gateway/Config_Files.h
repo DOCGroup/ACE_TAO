@@ -60,8 +60,10 @@ class Proxy_Config_File_Parser : public File_Parser<Proxy_Config_Info>
   //     Parser for the Proxy_Handler Connection file.
 {
 public:
-  virtual FP::Return_Type
-    read_entry (Proxy_Config_Info &entry, int &line_number);
+  virtual FP::Return_Type read_entry (Proxy_Config_Info &entry,
+                                      int &line_number);
+  // Read in a <Proxy_Config_Info> entry.
+
 };
 
 class Consumer_Config_Info
@@ -69,8 +71,10 @@ class Consumer_Config_Info
   //     Stores the information in a Consumer Map entry.
 {
 public:
-  enum {
-    MAX_CONSUMERS = 1000 // Total number of multicast consumers.
+  enum 
+  {
+    MAX_CONSUMERS = 1000 
+    // Total number of multicast consumers.
   };
 
   ACE_INT32 proxy_id_;
@@ -94,8 +98,9 @@ class Consumer_Config_File_Parser : public File_Parser<Consumer_Config_Info>
   //     Parser for the Consumer Map file.
 {
 public:
-  virtual FP::Return_Type
-    read_entry (Consumer_Config_Info &entry, int &line_number);
+  virtual FP::Return_Type read_entry (Consumer_Config_Info &entry,
+                                      int &line_number);
+  // Read in a <Consumer_Config_Info> entry.
 };
 
 #endif /* _CONFIG_FILES */

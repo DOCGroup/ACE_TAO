@@ -137,6 +137,13 @@ ACE_RW_Mutex::release (void)
   return ACE_OS::rw_unlock (&this->lock_);
 }
 
+ACE_INLINE int 
+ACE_RW_Thread_Mutex::tryacquire_write_upgrade (void)
+{
+// ACE_TRACE ("ACE_RW_Thread_Mutex::tryacquire_write_upgrade");
+  return ACE_OS::rw_trywrlock_upgrade (&this->lock_);
+}
+
 ACE_INLINE int
 ACE_Mutex::acquire_read (void)
 {

@@ -1,11 +1,12 @@
-# Configuration file for specifying which Consumers will receive
-# events from which Suppliers.  For now, the Gateway only allows 
-# Consumers to "subscribe" to receive events from particular
-# Suppliers.  A more flexible implementation will allow Consumers to
-# subscribe to particular types of events, as well.
+# Configuration file that the gatewayd process uses to determine which
+# Consumers will receive events from which Suppliers.  For now, the
+# Gateway only allows Consumers to "subscribe" to receive events from
+# particular Suppliers.  A more flexible implementation will allow
+# Consumers to subscribe to particular types of events, as well.
 #
-# Here's an explanation of the fields in this file, and how they
-# relate to fields in the "proxy_config" file.
+# The following provides an explanation for the fields in this file,
+# and how they relate to fields in the corresponding "proxy_config"
+# file. 
 #
 # 1. Proxy ID -- Each Proxy is given a unique ID that is used
 #    in the "consumer_config" file to specify to which Consumers

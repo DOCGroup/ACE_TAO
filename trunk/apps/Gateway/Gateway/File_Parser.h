@@ -30,6 +30,7 @@ public:
     EOFILE,
     SUCCESS, 
     COMMENT, 
+    DEFAULT,
     PARSE_ERROR
   };
 };
@@ -45,8 +46,10 @@ public:
   int open (const char filename[]);
   int close (void);
 
-  virtual FP::Return_Type read_entry (ENTRY &, int &line_number) = 0;
-  // Implementations use protected methods to fill in the entry.
+  virtual FP::Return_Type read_entry (ENTRY &entry,
+                                      int &line_number) = 0;
+  // Pure virtual hook that subclasses override and use the protected
+  // methods to fill in the <entry>.
 
 protected:
   FP::Return_Type getword (char buf[]);

@@ -8,5 +8,5 @@
 template void ACE_Convert(const char*, char*&);
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate void ACE_Convert (const char*, char*&)
-#endif
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
