@@ -61,6 +61,12 @@ Mon Nov 10 10:21:55 1997  David L. Levine  <levine@cs.wustl.edu>
         * ace/config-chorus.h: disabled ACE_LACKS_SOCKETPAIR.  Thanks
           to Wei for this fix, also.
 
+        * tests/Thread_Mutex_Test.cpp (test): don't compile this function
+          if ACE_HAS_THREADS is not defined.
+
+        * tests/IOStream_Test.cpp (main): removed extra % at end of
+          ACE_ERROR_RETURN message.
+
         * etc/ace_ld,include/makeinclude/platform_vxworks5.x_g++.GNU:
           added ace_ld, a drop-in replacement for ld that supports munching.
           We need to munch for VxWorks/g++.
