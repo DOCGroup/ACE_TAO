@@ -1,3 +1,9 @@
+Wed Jun 20 08:05:19 2001  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/nightlybuilds/builds.lst:
+
+          Added the AIX Visual Age C++ 5.0 nightly build.
+
 Tue Jun 19 21:24:41 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* ace/OS.i (mutex_lock): Fiddled around with the #else so that
