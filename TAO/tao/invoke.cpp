@@ -33,12 +33,12 @@
 class ACE_Synchronous_Cancellation_Required
   // = TITLE
   //     ACE_Synchronous_Cancellation_Required
-  //     
+  //
   // = DESCRIPTION
   //     Stick one of these at the beginning of a block that can't
   //     support asynchronous cancellation, and which must be
   //     cancel-safe.
-  // 
+  //
   // = EXAMPLE
   //     somefunc()
   //     {
@@ -72,7 +72,7 @@ private:
 // NOTE: This routine includes stub interpreter code, upon which a
 // patent application is pending.
 
-void 
+void
 IIOP_Object::do_call (CORBA::Environment &env,	// exception reporting
                       const TAO_Call_Data *info,	// call description
                       ...)                       // ... any parameters
@@ -198,7 +198,7 @@ IIOP_Object::do_call (CORBA::Environment &env,	// exception reporting
                   // different policies for different kinds of
                   // structures).
                   if (pdp->value_size == 0)
-		    call.get_value (pdp->tc, ptr, env);
+                    call.get_value (pdp->tc, ptr, env);
                   else
                     {
                       // assert (value_size == tc->size());

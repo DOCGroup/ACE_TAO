@@ -14,10 +14,10 @@ ULONG
 CORBA_Request::AddRef (void)
 {
   ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, lock_, 0));
- 
+
   return refcount_++;
 }
- 
+
 ULONG
 CORBA_Request::Release (void)
 {
@@ -33,19 +33,19 @@ CORBA_Request::Release (void)
   delete this;
   return 0;
 }
- 
+
 TAO_HRESULT
 CORBA_Request::QueryInterface (REFIID riid,
 			       void **ppv)
 {
   *ppv = 0;
- 
+
   if (IID_CORBA_Request == riid || IID_TAO_IUnknown == riid)
     *ppv = this;
- 
+
   if (*ppv == 0)
     return ResultFromScode (TAO_E_NOINTERFACE);
- 
+
   (void) AddRef ();
   return TAO_NOERROR;
 }
@@ -72,7 +72,7 @@ CORBA_Request::CORBA_Request (CORBA::Object_ptr obj,
 			      const CORBA::Char *op,
 			      CORBA::NVList_ptr args,
 			      CORBA::NamedValue_ptr result,
-			      CORBA::Flags flags) 
+			      CORBA::Flags flags)
   : args_ (args),
     result_ (result),
     flags_ (flags),
@@ -83,7 +83,7 @@ CORBA_Request::CORBA_Request (CORBA::Object_ptr obj,
 }
 
 CORBA_Request::CORBA_Request (CORBA::Object_ptr obj,
-			      const CORBA::Char *op) 
+			      const CORBA::Char *op)
   : flags_ (0),
     refcount_ (1)
 {
@@ -118,7 +118,7 @@ CORBA_Request::invoke (void)
   STUB_Object *stub;
 
   if (target_->QueryInterface (IID_STUB_Object,
-			       (void **) &stub) != TAO_NOERROR) 
+			       (void **) &stub) != TAO_NOERROR)
     {
       env_.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
       return;
@@ -140,7 +140,7 @@ CORBA_Request::send_oneway (void)
   STUB_Object *stub;
 
   if (target_->QueryInterface (IID_STUB_Object,
-			       (void **) &stub) != TAO_NOERROR) 
+			       (void **) &stub) != TAO_NOERROR)
     {
       env_.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
       return;
