@@ -111,7 +111,6 @@ ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_USE, LMR>::ha
                              "server logger",
                              this->host_name ()),
                             -1);
-        /* NOTREACHED */
 
         lp.decode ();
 
@@ -135,8 +134,7 @@ ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_USE, LMR>::ha
       }
     }
 
-  /* NOTREACHED */
-  return -1;
+  ACE_NOTREACHED (return -1;)
 }
 
 // Hook called by Server_Logging_Acceptor when connection is
