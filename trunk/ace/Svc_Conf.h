@@ -71,7 +71,7 @@ extern int ace_yylineno;
 extern int ace_yyerrno;
 // Keeps track of the number of errors encountered so far 
 
-extern const ASYS_TCHAR ace_yydirective;
+extern const ASYS_TCHAR *ace_yydirective;
 // Used to parse service configurator directives from a string rather
 // than from a svc.conf file.
 
