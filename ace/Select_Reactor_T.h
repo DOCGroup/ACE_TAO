@@ -111,14 +111,27 @@ class ACE_Select_Reactor_T : public ACE_Select_Reactor_Impl
 public:
   // = Initialization and termination methods.
 
-  /// Initialize <ACE_Select_Reactor> with the default size.
+  /// If <disable_notify_pipe> is non-0 then the reactor will
+  /// not create a notification pipe, which will save two I/O handles
+  /// but will elide the <notify()> feature.  If <mask_signals> is 
+  /// 1 the reactor is "signal-safe" when dispatching handlers to
+  /// signal events, whereas if <mask_signals> is 0 the reactor will
+  /// be more efficient, but not signal-safe (which may be perfectly
+  /// fine if your application doesn't use the reactor to handle signals).
   ACE_Select_Reactor_T (ACE_Sig_Handler * = 0,
                         ACE_Timer_Queue * = 0,
                         int disable_notify_pipe = 0,
                         ACE_Reactor_Notify *notify = 0,
                         int mask_signals = 1);
 
-  /// Initialize <ACE_Select_Reactor> with size <size>.
+  /// Initialize <ACE_Select_Reactor> with size <size>.  
+  /// If <disable_notify_pipe> is non-0 then the reactor will
+  /// not create a notification pipe, which will save two I/O handles
+  /// but will elide the <notify()> feature.  If <mask_signals> is 
+  /// 1 the reactor is "signal-safe" when dispatching handlers to
+  /// signal events, whereas if <mask_signals> is 0 the reactor will
+  /// be more efficient, but not signal-safe (which may be perfectly
+  /// fine if your application doesn't use the reactor to handle signals).
   /**
    * @note On Unix platforms, the size parameter should be as large as
    *       the maximum number of file descriptors allowed for a given
