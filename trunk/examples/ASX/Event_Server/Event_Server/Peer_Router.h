@@ -126,8 +126,8 @@ private:
   // the Consumer and Supplier Modules.
 
   // = Prevent copies and pass-by-value.
-  Peer_Router (const Peer_Router &) {}
-  void operator= (const Peer_Router &) {}
+  Peer_Router (const Peer_Router &);
+  void operator= (const Peer_Router &);
 };
 
 #endif /* _PEER_ROUTER_H */
