@@ -1,4 +1,11 @@
-// $Id$
+/**
+ * @file IORTable.cpp
+ *
+ * $Id$
+ *
+ * @author Carlos O'Ryan <coryan@uci.edu>
+ *
+ */
 
 #include "Table_Adapter.h"
 #include "IOR_Table_Impl.h"

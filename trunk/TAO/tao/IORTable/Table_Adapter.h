@@ -1,18 +1,15 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//    IORTable
-//
-// = FILENAME
-//    Object_Adapter.h
-//
-// = AUTHOR
-//    Carlos O'Ryan (coryan@uci.edu)
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file Table_Adapter.h
+ *
+ *  $Id$
+ *
+ *  @author Carlos O'Ryan (coryan@uci.edu)
+ */
+//=============================================================================
+
 
 #ifndef TAO_TABLE_ADAPTER_H
 #define TAO_TABLE_ADAPTER_H
@@ -32,11 +29,11 @@ class TAO_IOR_Table_Impl;
 class TAO_IORTable_Export TAO_Table_Adapter : public TAO_Adapter
 {
 public:
+  /// Constructor
   TAO_Table_Adapter (TAO_ORB_Core *orb_core);
-  // Constructor
 
+  /// Destructor
   virtual ~TAO_Table_Adapter (void);
-  // Destructor
 
   // = The TAO_Adapter methods, please check tao/Adapter.h for the
   // documentation
@@ -58,11 +55,11 @@ public:
                                                       const TAO_MProfile &);
 
 private:
+  /// The ORB Core we belong to
   TAO_ORB_Core *orb_core_;
-  // The ORB Core we belong to
 
+  /// The table implementation
   TAO_IOR_Table_Impl *root_;
-  // The table implementation
 };
 
 // ****************************************************************
@@ -70,8 +67,8 @@ private:
 class TAO_IORTable_Export TAO_Table_Adapter_Factory : public TAO_Adapter_Factory
 {
 public:
+  /// Constructor
   TAO_Table_Adapter_Factory (void);
-  // Constructor
 
   // = The TAO_Adapter_Factory methods, please read tao/Adapter.h for
   // details.

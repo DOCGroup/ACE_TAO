@@ -1,17 +1,14 @@
 /* -*- C++ -*- */
 
-// $Id$
 // =================================================================
-//
-// = LIBRARY
-//    TAO
-//
-// = FILENAME
-//    IORTable.cpp
-//
-// = AUTHOR
-//    Carlos O'Ryan <coryan@uci.edu>
-//
+/**
+ * @file IORTable.cpp
+ *
+ * $Id$
+ *
+ * @author Carlos O'Ryan <coryan@uci.edu>
+ *
+ */
 // =================================================================
 
 #include "IORTable.h"
