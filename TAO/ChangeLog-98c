@@ -1,3 +1,15 @@
+Thu Sep 24 15:39:39 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/corba.h: 
+	* tao/try_macros.h: 
+	  Moved the TAO_TRY macros (and friends) to a separate file.
+
+	* tao/poa_macros.h: 
+	  Removed extra scope that was releasing locks too soon.
+	  Use the new macros TAO_GUARD_THROW macros.
+
+	* Many Makefile dependencies updated.
+
 Thu Sep 24 13:41:19 1998  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
 	* examples/Simple/bank/AccountManager_i.cpp:
