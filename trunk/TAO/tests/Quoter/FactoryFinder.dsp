@@ -92,7 +92,7 @@ SOURCE=.\FactoryFinder.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\FactoryFinderImpl.cpp
+SOURCE=.\FactoryFinder_Impl.cpp
 # End Source File
 # Begin Source File
 
@@ -112,7 +112,7 @@ SOURCE=.\FactoryFinder.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\FactoryFinderImpl.h
+SOURCE=.\FactoryFinder_Impl.h
 # End Source File
 # Begin Source File
 

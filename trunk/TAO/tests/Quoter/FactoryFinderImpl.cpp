@@ -3,7 +3,7 @@
 // ============================================================================
 //
 // = FILENAME
-//    FactoryFinderImpl.cpp
+//    FactoryFinder_Impl.cpp
 //
 // = DESCRIPTION
 //    A Factory Finder for the Quoter example. This example conforms
@@ -16,7 +16,7 @@
 
 #include "ace/Get_Opt.h"
 #include "tao/corba.h"
-#include "FactoryFinderImpl.h"
+#include "FactoryFinder_Impl.h"
 #include "QuoterC.h"
 
 static const char usage [] = 
