@@ -7,13 +7,15 @@
 #include "ace/Dirent_Selector.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(ace, Dirent_Selector, "$Id$")
+ACE_RCSID (ace,
+           Dirent_Selector,
+           "$Id$")
 
 // Construction/Destruction
 
-ACE_Dirent_Selector::ACE_Dirent_Selector (void) 
-  : n_ (0),
-    namelist_ (0)
+ACE_Dirent_Selector::ACE_Dirent_Selector (void)
+  : namelist_ (0),
+    n_ (0)
 {
 }
 
@@ -34,7 +36,7 @@ ACE_Dirent_Selector::open (const ACE_TCHAR *dir,
 int
 ACE_Dirent_Selector::close (void)
 {
-  for (--n_; n_>=0; --n_) 
+  for (--n_; n_>=0; --n_)
     ACE_OS::free (this->namelist_[n_]);
 
   ACE_OS::free (this->namelist_);
