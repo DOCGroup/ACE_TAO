@@ -1,3 +1,13 @@
+Tue Jul 18 15:09:09 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* pace/win32/time.inl:
+
+	  Eliminated and confirmed suport for funcs.
+
+	* docs/PACE_POSIX_support.txt:
+
+	  Updated.
+
 Tue Jul 18 14:43:08 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* pace/termios.h:
