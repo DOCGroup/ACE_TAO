@@ -294,6 +294,6 @@ ACE_Ordered_MultiSet<T>::is_empty (void) const
 template <class T> ACE_INLINE size_t
 ACE_Ordered_MultiSet<T>::size (void) const
 {
-// ACE_TRACE ("ACE_Unbounded_Set<T>::size");
+// ACE_TRACE ("ACE_Ordered_MultiSet<T>::size");
   return this->cur_size_;
 }
