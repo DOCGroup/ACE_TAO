@@ -1,3 +1,229 @@
+Thu Jan 21 15:00:10 1999  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
+	
+	* TAO_IDL/util/utl_global.cpp: 
+	* TAO_IDL/include/idl_global.h: 
+	Add the following flags:
+	implementation_hdr_ending_
+  	impl_class_suffix_
+	impl_class_prefix_
+	implementation_skel_ending_
+	gen_impl_files_
+	gen_copy_ctor_
+	gen_assign_op_
+
+	(be_get_implementation_hdr): 
+	(be_get_implementation_skel): 
+	(be_get_implementation_hdr_fname): 		
+	(be_get_implementation_skel_fname): 	
+	(implementation_hdr_ending): 
+	(implementation_skel_ending): 
+	(impl_class_prefix): 
+	(impl_class_suffix): 
+	(implementation_hdr_ending): 
+	(implementation_skel_ending): 	
+	(gen_impl_files): 
+	(gen_copy_ctor): 
+	(gen_assign_op): 	
+	
+	* TAO_IDL/driver/drv_args.cpp: 
+	Addded options to generate implementaion header and skeleton
+	files. Also provided options to change the name of the
+	implemenation files created, adding copy constructors, providing
+	prefixes and suffixes to the implementation class names
+
+	* TAO_IDL/be/be_visitor_root/root.cpp: 
+	Add the following case statements to set constext
+	case TAO_CodeGen::TAO_ROOT_IH
+	case TAO_CodeGen::TAO_ROOT_IS
+	
+	* TAO_IDL/be/be_visitor_operation/arglist.cpp: 
+	Added the following case satements:
+	case TAO_CodeGen::TAO_OPERATION_ARGLIST_IS:
+        case TAO_CodeGen::TAO_OPERATION_ARGLIST_IH:
+        os->indent ();
+        *os << "CORBA::Environment &TAO_TRY_ENV";
+        break;
+	
+
+	* TAO_IDL/be/be_visitor_module/module.cpp: 
+	Added the following case statements to set the context
+	case TAO_CodeGen::TAO_MODULE_IH:
+	case TAO_CodeGen::TAO_MODULE_IS:
+
+	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp: 
+	Added the statements:
+	"const POA_" << node->local_name () << "& rhs)"
+	node->local_name () << " (const
+	to generate a copy constructor in the skeleton
+	with the object passed declared as a const. Initially the const
+	was missing
+	
+	* TAO_IDL/be/be_visitor_interface/interface_sh.cpp: 
+	Added the statement 
+	"<< namebuf << " (const " << namebuf << "&rhs);" << be_nl" 
+	to generate a copy constructor in the skeleton
+	with the object passed declared as a const. Initially the const
+	was missing
+
+	* TAO_IDL/be/be_visitor_interface/interface.cpp: 
+	Added the following case statements to set the context
+	case TAO_CodeGen::TAO_INTERFACE_IH
+	case TAO_CodeGen::TAO_INTERFACE_IS
+	
+	* TAO_IDL/be/be_visitor_attribute/attribute.cpp: 
+	Added the following case statements to set the context
+	case TAO_CodeGen::TAO_ATTRIBUTE_IH
+	case TAO_CodeGen::TAO_ATTRIBUTE_IS
+	case TAO_CodeGen::TAO_ATTRIBUTE_IH
+	case TAO_CodeGen::TAO_ATTRIBUTE_IS
+
+	* TAO_IDL/be_include/be_visitor_root.h: 
+	Added statements to include root_is.h and root_ih.h	
+	
+	* TAO_IDL/be/be_visitor_root.cpp: 
+	Added statements to include root_is.h and root_ih.cpp	
+
+	* TAO_IDL/be_include/be_visitor_operation.h: 
+	Added statements to include operation_is.h, operation_ih.h and rettype_is.h
+	
+	* TAO_IDL/be/be_visitor_operation.cpp: 
+	Added statements to include operation_is.cpp, operation_ih.cpp and rettype_is.cpp
+
+	* TAO_IDL/be_include/be_visitor_module.h: 
+	Added statements to include and module_ih.h
+	
+	* TAO_IDL/be/be_visitor_module.cpp: 
+	Added statements to include and module_ih.cpp
+	
+	* TAO_IDL/be_include/be_visitor_interface.h: 
+	Added statements to include interface_is.h and interface_ih.h
+	
+	* TAO_IDL/be/be_visitor_interface.cpp: 		
+	Added statements to include interface_is.cpp and interface_ih.cpp
+
+	* TAO_IDL/be/be_visitor_factory.cpp: 
+	Added case statements for
+	TAO_ROOT_IH
+	TAO_ROOT_IS
+	TAO_MODULE_IH
+	TAO_MODULE_IS
+	TAO_INTERFACE_IH
+	TAO_INTERFACE_IS
+	TAO_ATTRIBUTE_IH
+	TAO_ATTRIBUTE_IS
+	TAO_OPERATION_IS
+	TAO_OPERATION_IH
+	TAO_OPERATION_RETTYPE_IS
+	TAO_OPERATION_ARGLIST_IH
+	TAO_OPERATION_ARGLIST_IS
+	to return corresponding visitors
+	
+	* TAO_IDL/be/be_produce.cpp: 
+	Added steps 7 and 8 to generate the implementation header and
+	skeleton if it is asked for by the user by giving the -GI option
+	when running tao_idl
+
+	* TAO_IDL/be_include/be_interface.h: 
+	* TAO_IDL/be/be_interface.cpp: 
+	(gen_copy_ctors): 
+	function to generate copy constructors
+	(gen_copy_ctors_helper): 
+	helper for generating the copy constructors
+	(gen_def_ctors): 
+	function to generate default constructors
+	(gen_def_ctors_helper): 
+	helper to generate default constructors
+
+	
+	* TAO_IDL/be_include/be_helper.h: 
+	* TAO_IDL/be/be_helper.cpp: 
+	Added the two cases for TAO_IMPL_HDR and TAO_IMPL_SKEL 
+
+	* TAO_IDL/be_include/be_decl.h: 	
+	* TAO_IDL/be/be_decl.cpp: 
+	Added the impl_hdr_gen,impl_skel_gen_
+	,impl_hdr_gen_,impl_skel_gen_ flags to check if the implementation
+	headers and skeletons are created
+	(impl_hdr_gen): 
+	(impl_skel_gen): 
+	return the corresponding flags
+
+	* TAO_IDL/be_include/be_codegen.h: 	
+	Add the following to the enumeration:
+	TAO_ATTRIBUTE_IH
+        TAO_ATTRIBUTE_IS
+        TAO_INTERFACE_IH
+        TAO_INTERFACE_IS
+        TAO_MODULE_IH
+        TAO_MODULE_IS
+        TAO_OPERATION_IH
+        TAO_OPERATION_IS
+        TAO_OPERATION_RETTYPE_IS
+        TAO_OPERATION_ARGLIST_IH
+        TAO_OPERATION_ARGLIST_IS
+        TAO_ROOT_IH
+ 	TAO_ROOT_IS
+
+	Also add the new methods from be_codegen.cpp below
+	
+	* TAO_IDL/be/be_codegen.cpp: 
+	Added the implementation_header_(0)
+	and implemenattion_skeleton_(0) that hold the corresponding the
+	TAO_OutStream 
+	
+	(end_implementation_header): 
+	generate the #endif at the end of the implementation header file
+	(implementation_skeleton): 
+	get the implemenatation skeleton stream
+	(start_implementation_skeleton): 
+	set the implementation skeleton file stream and generate the
+	#include statements
+	(implementation_header): 
+	get the implementation header stream
+	(start_implementation_header): 
+	method to set the implemenatation header file stream
+	and generate the ifndef and #include satements
+
+	* TAO_IDL/be/be_visitor_operation/rettype_is.cpp: 
+	* TAO_IDL/be_include/be_visitor_operation/rettype_is.h: 
+	Create a visitor to generate the return statements for the 
+	operations
+
+	* TAO_IDL/be_include/be_visitor_operation/operation_ih.h: 
+	* TAO_IDL/be/be_visitor_operation/operation_ih.cpp: 
+	Create a visitor to generate code for the IDL operations in
+	the implementation header
+
+	* TAO_IDL/be/be_visitor_operation/operation_is.cpp: 
+	* TAO_IDL/be_include/be_visitor_operation/operation_is.h: 
+	Create a visitor to generate code for the IDL operations in
+	the implementation skeleton
+
+	* TAO_IDL/be_include/be_visitor_interface/interface_is.h (class be_visitor_interface_is): 
+	* TAO_IDL/be/be_visitor_interface/interface_is.cpp: 
+	create a visitor to generate code for the IDL interface in
+	implementation skeleton
+
+	* TAO_IDL/be/be_visitor_interface/interface_ih.cpp: 
+	* TAO_IDL/be_include/be_visitor_interface/interface_ih.h: 
+	Create a visitor to generate code for the IDL interface in
+	the implementation header
+ 	
+	* TAO_IDL/be_include/be_visitor_module/module_ih.h (class be_visitor_module_ih): 
+	* TAO_IDL/be/be_visitor_module/module_ih.cpp: 
+	Create a visitor to generate code for the IDL module 
+	in implementation header
+
+	* TAO_IDL/be/be_visitor_root/root_ih.cpp: 
+	* TAO_IDL/be_include/be_visitor_root/root_ih.h: 
+	Create a visitor to generate code for the root node in
+ 	the implementation header 
+
+	* TAO_IDL/be/be_visitor_root/root_is.cpp: 
+	* TAO_IDL/be_include/be_visitor_root/root_is.h: 
+	Create a visitor to generate code for the root node in 
+	the implementation skeleton
+
 Thu Jan 21 14:10:20 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Time/Timer_Helper.cpp (handle_timeout):
