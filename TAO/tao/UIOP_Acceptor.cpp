@@ -36,7 +36,8 @@ TAO_UIOP_Acceptor::TAO_UIOP_Acceptor (void)
   : TAO_Acceptor (TAO_IOP_TAG_UNIX_IOP),
     base_acceptor_ (),
     version_ (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR),
-    orb_core_ (0)
+    orb_core_ (0),
+    unlink_on_close_ (1)
 {
 }
 
@@ -54,7 +55,7 @@ TAO_UIOP_Acceptor::create_mprofile (const TAO_ObjectKey &object_key,
 {
   ACE_UNIX_Addr addr;
 
-  if (base_acceptor_.acceptor ().get_local_addr (addr) == -1)
+  if (this->base_acceptor_.acceptor ().get_local_addr (addr) == -1)
     return 0;
 
   // we only make one
@@ -65,7 +66,7 @@ TAO_UIOP_Acceptor::create_mprofile (const TAO_ObjectKey &object_key,
         return -1;
     }
 
-  TAO_UIOP_Profile *pfile;
+  TAO_UIOP_Profile *pfile = 0;
   ACE_NEW_RETURN (pfile,
                   TAO_UIOP_Profile (addr,
                                     object_key,
@@ -114,10 +115,11 @@ TAO_UIOP_Acceptor::close (void)
 {
   ACE_UNIX_Addr addr;
 
-  if (base_acceptor_.acceptor ().get_local_addr (addr) == -1)
+  if (this->base_acceptor_.acceptor ().get_local_addr (addr) == -1)
     return -1;
 
-  (void) ACE_OS::unlink (addr.get_path_name ());
+  if (this->unlink_on_close_)
+    (void) ACE_OS::unlink (addr.get_path_name ());
 
   return this->base_acceptor_.close ();
 }
@@ -157,7 +159,14 @@ TAO_UIOP_Acceptor::open_i (TAO_ORB_Core* orb_core,
   this->rendezvous_point (addr, rendezvous);
 
   if (this->base_acceptor_.open (orb_core, addr) != 0)
-    return -1;
+    {
+      // Don't unlink an existing rendezvous point since it may be in
+      // use by another UIOP server/client.
+      if (errno == EADDRINUSE)
+        this->unlink_on_close_ = 0;
+
+      return -1;
+    }
 
   // @@ If Profile creation is slow we may need to cache the
   //    rendezvous point here
