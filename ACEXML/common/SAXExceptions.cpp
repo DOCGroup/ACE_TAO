@@ -3,6 +3,7 @@
 #include "ACEXML/common/SAXExceptions.h"
 #include "ace/Log_Msg.h"
 #include "ace/ACE.h"
+#include "ace/OS_Memory.h"
 #include "ace/OS_NS_string.h"
 
 const ACEXML_Char *ACEXML_SAXException::exception_name_ = ACE_TEXT ("ACEXML_SAXException");

@@ -14,6 +14,7 @@
 # endif /* ACE_HAS_SYS_INFO */
 
 #include "ace/ACE.h"
+#include "ace/Flag_Manip.h"
 #include "ace/Task_T.h"
 #include "ace/Log_Msg.h"
 #include "ace/Object_Manager.h"
@@ -649,7 +650,7 @@ ACE_AIOCB_Notify_Pipe_Manager::ACE_AIOCB_Notify_Pipe_Manager (ACE_POSIX_AIOCB_Pr
   this->pipe_.open ();
 
   // Set write side in NONBLOCK mode
-  ACE::set_flags (this->pipe_.write_handle (), ACE_NONBLOCK);
+  ACE_Flag_Manip::set_flags (this->pipe_.write_handle (), ACE_NONBLOCK);
 
   // Let AIOCB_Proactor know about our handle
   posix_aiocb_proactor_->set_notify_handle (this->pipe_.read_handle ());

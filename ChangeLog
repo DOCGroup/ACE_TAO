@@ -1,3 +1,42 @@
+Wed Jun 16 15:02:39 2004  Steve Huston  <shuston@riverace.com>
+
+	* ace/Asynch_Acceptor.cpp:
+	* ace/Get_Opt.cpp:
+	* ace/MEM_Acceptor.cpp:
+	* ace/SOCK_SEQPACK_Acceptor.cpp:
+	* ace/SOCK_SEQPACK_Association.cpp:
+	& ace/SOCK_SEQPACK_Connector.cpp:
+	* ACEXML/common/SAXExceptions.cpp:
+	* ACEXML/common/URL_Addr.cpp:
+	* examples/C++NPv1/Process_Per_Connection_Logging_Server.cpp:
+	* examples/C++NPv2/display_logfile.cpp:
+	* examples/IPC_SAP/SOCK_SAP/CPP-memclient.cpp:
+	* examples/IPC_SAP/TLI_SAP/ftp-client.cpp:
+	* examples/Logger/Acceptor-server/server_loggerd.cpp:
+	* examples/Service_Configurator/IPC-tests/client/local_dgram_client_test.cpp:
+	* examples/Service_Configurator/IPC-tests/client/local_fifo_client_test.cpp:
+	* examples/Service_Configurator/IPC-tests/client/local_pipe_client_test.cpp:
+	* examples/Service_Configurator/IPC-tests/client/local_stream_client_test.cpp:
+	* examples/Service_Configurator/IPC-tests/client/remote_stream_client_test.cpp:
+	* examples/Service_Configurator/IPC-tests/client/remote_service_directory_test.cpp:
+	* examples/Service_Configurator/IPC-tests/server/Handle_L_Pipe.cpp:
+	* examples/Synch/proc_sema.cpp:
+	* netsvcs/lib/Client_Logging_Handler.cpp:
+	* performance-tests/Misc/basic_perf.cpp:
+	* performance-tests/TCP/tcp_test.cpp:
+	* performance-tests/UDP/udp_test.cpp: Added missing #include
+	  directives to fix compile errors on AIX Visual Age C++.
+
+	* ace/Flag_Manip.h: Added #include "ace/os_include/os_fcntl.h" to
+	  make the values for ACE_Flag_Manip available to callers.
+
+	* ace/POSIX_Proactor.cpp:
+	* ace/POSIX_Asynch_IO.cpp: Added #include "ace/Flag_Manip.h" and
+	  changed ACE::set_flags() to ACE_Flag_Manip::set_flags().
+
+	* Kokyu/DSRT_Dispatcher_Impl_T.h: Added #includes to pick up needed
+	  declarations for ACE_SYNCH_RECURSIVE_MUTEX.
+
 Wed Jun 16 07:18:44 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* configure.ac:

@@ -8,6 +8,7 @@
 #include "ace/FIFO_Send_Msg.h"
 #include "ace/Get_Opt.h"
 #include "ace/Log_Msg.h"
+#include "ace/OS_NS_stdlib.h"
 #include "ace/OS_NS_stropts.h"
 
 ACE_RCSID(client, local_fifo_client_test, "$Id$")
