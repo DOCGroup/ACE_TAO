@@ -1,0 +1,1025 @@
+--- MessagingC.cpp	Thu May  3 11:29:04 2001
++++ MessagingC.cpp.mod	Wed May  2 19:11:24 2001
+@@ -21,6 +21,8 @@
+ 
+ #include "MessagingC.h"
+ 
++#if (TAO_HAS_CORBA_MESSAGING == 1)
++
+ #include "tao/Stub.h"
+ #include "tao/Invocation.h"
+ #include "tao/ClientRequestInfo.h"
+@@ -321,52 +323,13 @@
+ TAO_NAMESPACE_BEGIN (Messaging)
+ TAO_NAMESPACE_DEFINE (const CORBA::UShort, ORDER_DEADLINE, 8U)
+ TAO_NAMESPACE_END
++
++#if (TAO_HAS_REBIND_POLICY == 1)
++
+ TAO_NAMESPACE_TYPE (const CORBA::ULong)
+ TAO_NAMESPACE_BEGIN (Messaging)
+ TAO_NAMESPACE_DEFINE (const CORBA::ULong, REBIND_POLICY_TYPE, 23U)
+ TAO_NAMESPACE_END
+-Messaging::RebindPolicy_ptr
+-tao_Messaging_RebindPolicy_duplicate (
+-    Messaging::RebindPolicy_ptr p
+-  )
+-{
+-  return Messaging::RebindPolicy::_duplicate (p);
+-}
+-
+-void
+-tao_Messaging_RebindPolicy_release (
+-    Messaging::RebindPolicy_ptr p
+-  )
+-{
+-  CORBA::release (p);
+-}
+-
+-Messaging::RebindPolicy_ptr
+-tao_Messaging_RebindPolicy_nil (
+-    void
+-  )
+-{
+-  return Messaging::RebindPolicy::_nil ();
+-}
+-
+-Messaging::RebindPolicy_ptr
+-tao_Messaging_RebindPolicy_narrow (
+-    CORBA::Object *p,
+-    CORBA::Environment &ACE_TRY_ENV
+-  )
+-{
+-  return Messaging::RebindPolicy::_narrow (p, ACE_TRY_ENV);
+-}
+-
+-CORBA::Object *
+-tao_Messaging_RebindPolicy_upcast (
+-    void *src
+-  )
+-{
+-  Messaging::RebindPolicy **tmp =
+-    ACE_static_cast (Messaging::RebindPolicy **, src);
+-  return *tmp;
+-}
+ 
+ // *************************************************************
+ // Operations for class Messaging::RebindPolicy_var
+@@ -490,7 +453,6 @@
+     ACE_static_cast (RebindPolicy **, src);
+   return *tmp;
+ }
+-
+ // *************************************************************
+ // Operations for class Messaging::RebindPolicy_out
+ // *************************************************************
+@@ -631,52 +593,12 @@
+   return "IDL:omg.org/Messaging/RebindPolicy:1.0";
+ }
+ 
++#if (TAO_HAS_SYNC_SCOPE_POLICY == 1)
++
+ TAO_NAMESPACE_TYPE (const CORBA::ULong)
+ TAO_NAMESPACE_BEGIN (Messaging)
+ TAO_NAMESPACE_DEFINE (const CORBA::ULong, SYNC_SCOPE_POLICY_TYPE, 24U)
+ TAO_NAMESPACE_END
+-Messaging::SyncScopePolicy_ptr
+-tao_Messaging_SyncScopePolicy_duplicate (
+-    Messaging::SyncScopePolicy_ptr p
+-  )
+-{
+-  return Messaging::SyncScopePolicy::_duplicate (p);
+-}
+-
+-void
+-tao_Messaging_SyncScopePolicy_release (
+-    Messaging::SyncScopePolicy_ptr p
+-  )
+-{
+-  CORBA::release (p);
+-}
+-
+-Messaging::SyncScopePolicy_ptr
+-tao_Messaging_SyncScopePolicy_nil (
+-    void
+-  )
+-{
+-  return Messaging::SyncScopePolicy::_nil ();
+-}
+-
+-Messaging::SyncScopePolicy_ptr
+-tao_Messaging_SyncScopePolicy_narrow (
+-    CORBA::Object *p,
+-    CORBA::Environment &ACE_TRY_ENV
+-  )
+-{
+-  return Messaging::SyncScopePolicy::_narrow (p, ACE_TRY_ENV);
+-}
+-
+-CORBA::Object *
+-tao_Messaging_SyncScopePolicy_upcast (
+-    void *src
+-  )
+-{
+-  Messaging::SyncScopePolicy **tmp =
+-    ACE_static_cast (Messaging::SyncScopePolicy **, src);
+-  return *tmp;
+-}
+ 
+ // *************************************************************
+ // Operations for class Messaging::SyncScopePolicy_var
+@@ -692,6 +614,8 @@
+   return this->ptr_;
+ }
+ 
++#endif /* TAO_HAS_REBIND_POLICY == 1 */
++
+ Messaging::SyncScopePolicy_var::SyncScopePolicy_var (const ::Messaging::SyncScopePolicy_var &p) // copy constructor
+   : TAO_Base_var (),
+     ptr_ (SyncScopePolicy::_duplicate (p.ptr ()))
+@@ -800,7 +724,6 @@
+     ACE_static_cast (SyncScopePolicy **, src);
+   return *tmp;
+ }
+-
+ // *************************************************************
+ // Operations for class Messaging::SyncScopePolicy_out
+ // *************************************************************
+@@ -860,7 +783,6 @@
+   return this->ptr_;
+ }
+ 
+-
+ // default constructor
+ Messaging::SyncScopePolicy::SyncScopePolicy ()
+ {
+@@ -941,6 +863,10 @@
+   return "IDL:omg.org/Messaging/SyncScopePolicy:1.0";
+ }
+ 
++#endif /* TAO_HAS_SYNC_SCOPE_POLICY == 1 */
++
++#if (TAO_HAS_PRIORITY_POLICIES == 1)
++
+ TAO_NAMESPACE_TYPE (const CORBA::ULong)
+ TAO_NAMESPACE_BEGIN (Messaging)
+ TAO_NAMESPACE_DEFINE (const CORBA::ULong, REQUEST_PRIORITY_POLICY_TYPE, 25U)
+@@ -1030,48 +956,6 @@
+   delete tmp;
+ }
+ 
+-Messaging::RequestPriorityPolicy_ptr
+-tao_Messaging_RequestPriorityPolicy_duplicate (
+-    Messaging::RequestPriorityPolicy_ptr p
+-  )
+-{
+-  return Messaging::RequestPriorityPolicy::_duplicate (p);
+-}
+-
+-void
+-tao_Messaging_RequestPriorityPolicy_release (
+-    Messaging::RequestPriorityPolicy_ptr p
+-  )
+-{
+-  CORBA::release (p);
+-}
+-
+-Messaging::RequestPriorityPolicy_ptr
+-tao_Messaging_RequestPriorityPolicy_nil (
+-    void
+-  )
+-{
+-  return Messaging::RequestPriorityPolicy::_nil ();
+-}
+-
+-Messaging::RequestPriorityPolicy_ptr
+-tao_Messaging_RequestPriorityPolicy_narrow (
+-    CORBA::Object *p,
+-    CORBA::Environment &ACE_TRY_ENV
+-  )
+-{
+-  return Messaging::RequestPriorityPolicy::_narrow (p, ACE_TRY_ENV);
+-}
+-
+-CORBA::Object *
+-tao_Messaging_RequestPriorityPolicy_upcast (
+-    void *src
+-  )
+-{
+-  Messaging::RequestPriorityPolicy **tmp =
+-    ACE_static_cast (Messaging::RequestPriorityPolicy **, src);
+-  return *tmp;
+-}
+ 
+ // *************************************************************
+ // Operations for class Messaging::RequestPriorityPolicy_var
+@@ -1195,7 +1079,6 @@
+     ACE_static_cast (RequestPriorityPolicy **, src);
+   return *tmp;
+ }
+-
+ // *************************************************************
+ // Operations for class Messaging::RequestPriorityPolicy_out
+ // *************************************************************
+@@ -1340,48 +1223,6 @@
+ TAO_NAMESPACE_BEGIN (Messaging)
+ TAO_NAMESPACE_DEFINE (const CORBA::ULong, REPLY_PRIORITY_POLICY_TYPE, 26U)
+ TAO_NAMESPACE_END
+-Messaging::ReplyPriorityPolicy_ptr
+-tao_Messaging_ReplyPriorityPolicy_duplicate (
+-    Messaging::ReplyPriorityPolicy_ptr p
+-  )
+-{
+-  return Messaging::ReplyPriorityPolicy::_duplicate (p);
+-}
+-
+-void
+-tao_Messaging_ReplyPriorityPolicy_release (
+-    Messaging::ReplyPriorityPolicy_ptr p
+-  )
+-{
+-  CORBA::release (p);
+-}
+-
+-Messaging::ReplyPriorityPolicy_ptr
+-tao_Messaging_ReplyPriorityPolicy_nil (
+-    void
+-  )
+-{
+-  return Messaging::ReplyPriorityPolicy::_nil ();
+-}
+-
+-Messaging::ReplyPriorityPolicy_ptr
+-tao_Messaging_ReplyPriorityPolicy_narrow (
+-    CORBA::Object *p,
+-    CORBA::Environment &ACE_TRY_ENV
+-  )
+-{
+-  return Messaging::ReplyPriorityPolicy::_narrow (p, ACE_TRY_ENV);
+-}
+-
+-CORBA::Object *
+-tao_Messaging_ReplyPriorityPolicy_upcast (
+-    void *src
+-  )
+-{
+-  Messaging::ReplyPriorityPolicy **tmp =
+-    ACE_static_cast (Messaging::ReplyPriorityPolicy **, src);
+-  return *tmp;
+-}
+ 
+ // *************************************************************
+ // Operations for class Messaging::ReplyPriorityPolicy_var
+@@ -1505,7 +1346,6 @@
+     ACE_static_cast (ReplyPriorityPolicy **, src);
+   return *tmp;
+ }
+-
+ // *************************************************************
+ // Operations for class Messaging::ReplyPriorityPolicy_out
+ // *************************************************************
+@@ -1646,52 +1486,14 @@
+   return "IDL:omg.org/Messaging/ReplyPriorityPolicy:1.0";
+ }
+ 
++#endif /* TAO_HAS_PRIORITY_POLICIES == 1 */
++
++#if (TAO_HAS_REQUEST_START_TIME_POLICY == 1)
++
+ TAO_NAMESPACE_TYPE (const CORBA::ULong)
+ TAO_NAMESPACE_BEGIN (Messaging)
+ TAO_NAMESPACE_DEFINE (const CORBA::ULong, REQUEST_START_TIME_POLICY_TYPE, 27U)
+ TAO_NAMESPACE_END
+-Messaging::RequestStartTimePolicy_ptr
+-tao_Messaging_RequestStartTimePolicy_duplicate (
+-    Messaging::RequestStartTimePolicy_ptr p
+-  )
+-{
+-  return Messaging::RequestStartTimePolicy::_duplicate (p);
+-}
+-
+-void
+-tao_Messaging_RequestStartTimePolicy_release (
+-    Messaging::RequestStartTimePolicy_ptr p
+-  )
+-{
+-  CORBA::release (p);
+-}
+-
+-Messaging::RequestStartTimePolicy_ptr
+-tao_Messaging_RequestStartTimePolicy_nil (
+-    void
+-  )
+-{
+-  return Messaging::RequestStartTimePolicy::_nil ();
+-}
+-
+-Messaging::RequestStartTimePolicy_ptr
+-tao_Messaging_RequestStartTimePolicy_narrow (
+-    CORBA::Object *p,
+-    CORBA::Environment &ACE_TRY_ENV
+-  )
+-{
+-  return Messaging::RequestStartTimePolicy::_narrow (p, ACE_TRY_ENV);
+-}
+-
+-CORBA::Object *
+-tao_Messaging_RequestStartTimePolicy_upcast (
+-    void *src
+-  )
+-{
+-  Messaging::RequestStartTimePolicy **tmp =
+-    ACE_static_cast (Messaging::RequestStartTimePolicy **, src);
+-  return *tmp;
+-}
+ 
+ // *************************************************************
+ // Operations for class Messaging::RequestStartTimePolicy_var
+@@ -1815,7 +1617,6 @@
+     ACE_static_cast (RequestStartTimePolicy **, src);
+   return *tmp;
+ }
+-
+ // *************************************************************
+ // Operations for class Messaging::RequestStartTimePolicy_out
+ // *************************************************************
+@@ -1956,52 +1757,14 @@
+   return "IDL:omg.org/Messaging/RequestStartTimePolicy:1.0";
+ }
+ 
++#endif /* TAO_HAS_REQUEST_START_TIME_POLICY == 1 */
++
++#if (TAO_HAS_REQUEST_END_TIME_POLICY == 1)
++
+ TAO_NAMESPACE_TYPE (const CORBA::ULong)
+ TAO_NAMESPACE_BEGIN (Messaging)
+ TAO_NAMESPACE_DEFINE (const CORBA::ULong, REQUEST_END_TIME_POLICY_TYPE, 28U)
+ TAO_NAMESPACE_END
+-Messaging::RequestEndTimePolicy_ptr
+-tao_Messaging_RequestEndTimePolicy_duplicate (
+-    Messaging::RequestEndTimePolicy_ptr p
+-  )
+-{
+-  return Messaging::RequestEndTimePolicy::_duplicate (p);
+-}
+-
+-void
+-tao_Messaging_RequestEndTimePolicy_release (
+-    Messaging::RequestEndTimePolicy_ptr p
+-  )
+-{
+-  CORBA::release (p);
+-}
+-
+-Messaging::RequestEndTimePolicy_ptr
+-tao_Messaging_RequestEndTimePolicy_nil (
+-    void
+-  )
+-{
+-  return Messaging::RequestEndTimePolicy::_nil ();
+-}
+-
+-Messaging::RequestEndTimePolicy_ptr
+-tao_Messaging_RequestEndTimePolicy_narrow (
+-    CORBA::Object *p,
+-    CORBA::Environment &ACE_TRY_ENV
+-  )
+-{
+-  return Messaging::RequestEndTimePolicy::_narrow (p, ACE_TRY_ENV);
+-}
+-
+-CORBA::Object *
+-tao_Messaging_RequestEndTimePolicy_upcast (
+-    void *src
+-  )
+-{
+-  Messaging::RequestEndTimePolicy **tmp =
+-    ACE_static_cast (Messaging::RequestEndTimePolicy **, src);
+-  return *tmp;
+-}
+ 
+ // *************************************************************
+ // Operations for class Messaging::RequestEndTimePolicy_var
+@@ -2125,7 +1888,6 @@
+     ACE_static_cast (RequestEndTimePolicy **, src);
+   return *tmp;
+ }
+-
+ // *************************************************************
+ // Operations for class Messaging::RequestEndTimePolicy_out
+ // *************************************************************
+@@ -2266,52 +2028,14 @@
+   return "IDL:omg.org/Messaging/RequestEndTimePolicy:1.0";
+ }
+ 
++#endif /* TAO_HAS_REQUEST_END_TIME_POLICY == 1 */
++
++#if (TAO_HAS_REPLY_START_TIME_POLICY == 1)
++
+ TAO_NAMESPACE_TYPE (const CORBA::ULong)
+ TAO_NAMESPACE_BEGIN (Messaging)
+ TAO_NAMESPACE_DEFINE (const CORBA::ULong, REPLY_START_TIME_POLICY_TYPE, 29U)
+ TAO_NAMESPACE_END
+-Messaging::ReplyStartTimePolicy_ptr
+-tao_Messaging_ReplyStartTimePolicy_duplicate (
+-    Messaging::ReplyStartTimePolicy_ptr p
+-  )
+-{
+-  return Messaging::ReplyStartTimePolicy::_duplicate (p);
+-}
+-
+-void
+-tao_Messaging_ReplyStartTimePolicy_release (
+-    Messaging::ReplyStartTimePolicy_ptr p
+-  )
+-{
+-  CORBA::release (p);
+-}
+-
+-Messaging::ReplyStartTimePolicy_ptr
+-tao_Messaging_ReplyStartTimePolicy_nil (
+-    void
+-  )
+-{
+-  return Messaging::ReplyStartTimePolicy::_nil ();
+-}
+-
+-Messaging::ReplyStartTimePolicy_ptr
+-tao_Messaging_ReplyStartTimePolicy_narrow (
+-    CORBA::Object *p,
+-    CORBA::Environment &ACE_TRY_ENV
+-  )
+-{
+-  return Messaging::ReplyStartTimePolicy::_narrow (p, ACE_TRY_ENV);
+-}
+-
+-CORBA::Object *
+-tao_Messaging_ReplyStartTimePolicy_upcast (
+-    void *src
+-  )
+-{
+-  Messaging::ReplyStartTimePolicy **tmp =
+-    ACE_static_cast (Messaging::ReplyStartTimePolicy **, src);
+-  return *tmp;
+-}
+ 
+ // *************************************************************
+ // Operations for class Messaging::ReplyStartTimePolicy_var
+@@ -2435,7 +2159,6 @@
+     ACE_static_cast (ReplyStartTimePolicy **, src);
+   return *tmp;
+ }
+-
+ // *************************************************************
+ // Operations for class Messaging::ReplyStartTimePolicy_out
+ // *************************************************************
+@@ -2576,52 +2299,14 @@
+   return "IDL:omg.org/Messaging/ReplyStartTimePolicy:1.0";
+ }
+ 
++#endif /* TAO_HAS_REPLY_START_TIME_POLICY == 1 */
++
++#if (TAO_HAS_REPLY_END_TIME_POLICY == 1)
++
+ TAO_NAMESPACE_TYPE (const CORBA::ULong)
+ TAO_NAMESPACE_BEGIN (Messaging)
+ TAO_NAMESPACE_DEFINE (const CORBA::ULong, REPLY_END_TIME_POLICY_TYPE, 30U)
+ TAO_NAMESPACE_END
+-Messaging::ReplyEndTimePolicy_ptr
+-tao_Messaging_ReplyEndTimePolicy_duplicate (
+-    Messaging::ReplyEndTimePolicy_ptr p
+-  )
+-{
+-  return Messaging::ReplyEndTimePolicy::_duplicate (p);
+-}
+-
+-void
+-tao_Messaging_ReplyEndTimePolicy_release (
+-    Messaging::ReplyEndTimePolicy_ptr p
+-  )
+-{
+-  CORBA::release (p);
+-}
+-
+-Messaging::ReplyEndTimePolicy_ptr
+-tao_Messaging_ReplyEndTimePolicy_nil (
+-    void
+-  )
+-{
+-  return Messaging::ReplyEndTimePolicy::_nil ();
+-}
+-
+-Messaging::ReplyEndTimePolicy_ptr
+-tao_Messaging_ReplyEndTimePolicy_narrow (
+-    CORBA::Object *p,
+-    CORBA::Environment &ACE_TRY_ENV
+-  )
+-{
+-  return Messaging::ReplyEndTimePolicy::_narrow (p, ACE_TRY_ENV);
+-}
+-
+-CORBA::Object *
+-tao_Messaging_ReplyEndTimePolicy_upcast (
+-    void *src
+-  )
+-{
+-  Messaging::ReplyEndTimePolicy **tmp =
+-    ACE_static_cast (Messaging::ReplyEndTimePolicy **, src);
+-  return *tmp;
+-}
+ 
+ // *************************************************************
+ // Operations for class Messaging::ReplyEndTimePolicy_var
+@@ -2745,7 +2430,6 @@
+     ACE_static_cast (ReplyEndTimePolicy **, src);
+   return *tmp;
+ }
+-
+ // *************************************************************
+ // Operations for class Messaging::ReplyEndTimePolicy_out
+ // *************************************************************
+@@ -2886,52 +2570,14 @@
+   return "IDL:omg.org/Messaging/ReplyEndTimePolicy:1.0";
+ }
+ 
++#endif /* TAO_HAS_REPLY_END_TIME_POLICY == 1 */
++
++#if (TAO_HAS_RELATIVE_REQUEST_TIMEOUT_POLICY == 1)
++
+ TAO_NAMESPACE_TYPE (const CORBA::ULong)
+ TAO_NAMESPACE_BEGIN (Messaging)
+ TAO_NAMESPACE_DEFINE (const CORBA::ULong, RELATIVE_REQ_TIMEOUT_POLICY_TYPE, 31U)
+ TAO_NAMESPACE_END
+-Messaging::RelativeRequestTimeoutPolicy_ptr
+-tao_Messaging_RelativeRequestTimeoutPolicy_duplicate (
+-    Messaging::RelativeRequestTimeoutPolicy_ptr p
+-  )
+-{
+-  return Messaging::RelativeRequestTimeoutPolicy::_duplicate (p);
+-}
+-
+-void
+-tao_Messaging_RelativeRequestTimeoutPolicy_release (
+-    Messaging::RelativeRequestTimeoutPolicy_ptr p
+-  )
+-{
+-  CORBA::release (p);
+-}
+-
+-Messaging::RelativeRequestTimeoutPolicy_ptr
+-tao_Messaging_RelativeRequestTimeoutPolicy_nil (
+-    void
+-  )
+-{
+-  return Messaging::RelativeRequestTimeoutPolicy::_nil ();
+-}
+-
+-Messaging::RelativeRequestTimeoutPolicy_ptr
+-tao_Messaging_RelativeRequestTimeoutPolicy_narrow (
+-    CORBA::Object *p,
+-    CORBA::Environment &ACE_TRY_ENV
+-  )
+-{
+-  return Messaging::RelativeRequestTimeoutPolicy::_narrow (p, ACE_TRY_ENV);
+-}
+-
+-CORBA::Object *
+-tao_Messaging_RelativeRequestTimeoutPolicy_upcast (
+-    void *src
+-  )
+-{
+-  Messaging::RelativeRequestTimeoutPolicy **tmp =
+-    ACE_static_cast (Messaging::RelativeRequestTimeoutPolicy **, src);
+-  return *tmp;
+-}
+ 
+ // *************************************************************
+ // Operations for class Messaging::RelativeRequestTimeoutPolicy_var
+@@ -3055,7 +2701,6 @@
+     ACE_static_cast (RelativeRequestTimeoutPolicy **, src);
+   return *tmp;
+ }
+-
+ // *************************************************************
+ // Operations for class Messaging::RelativeRequestTimeoutPolicy_out
+ // *************************************************************
+@@ -3196,52 +2841,14 @@
+   return "IDL:omg.org/Messaging/RelativeRequestTimeoutPolicy:1.0";
+ }
+ 
++#endif /* TAO_HAS_RELATIVE_REQUEST_TIMEOUT_POLICY == 1 */
++
++#if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
++
+ TAO_NAMESPACE_TYPE (const CORBA::ULong)
+ TAO_NAMESPACE_BEGIN (Messaging)
+ TAO_NAMESPACE_DEFINE (const CORBA::ULong, RELATIVE_RT_TIMEOUT_POLICY_TYPE, 32U)
+ TAO_NAMESPACE_END
+-Messaging::RelativeRoundtripTimeoutPolicy_ptr
+-tao_Messaging_RelativeRoundtripTimeoutPolicy_duplicate (
+-    Messaging::RelativeRoundtripTimeoutPolicy_ptr p
+-  )
+-{
+-  return Messaging::RelativeRoundtripTimeoutPolicy::_duplicate (p);
+-}
+-
+-void
+-tao_Messaging_RelativeRoundtripTimeoutPolicy_release (
+-    Messaging::RelativeRoundtripTimeoutPolicy_ptr p
+-  )
+-{
+-  CORBA::release (p);
+-}
+-
+-Messaging::RelativeRoundtripTimeoutPolicy_ptr
+-tao_Messaging_RelativeRoundtripTimeoutPolicy_nil (
+-    void
+-  )
+-{
+-  return Messaging::RelativeRoundtripTimeoutPolicy::_nil ();
+-}
+-
+-Messaging::RelativeRoundtripTimeoutPolicy_ptr
+-tao_Messaging_RelativeRoundtripTimeoutPolicy_narrow (
+-    CORBA::Object *p,
+-    CORBA::Environment &ACE_TRY_ENV
+-  )
+-{
+-  return Messaging::RelativeRoundtripTimeoutPolicy::_narrow (p, ACE_TRY_ENV);
+-}
+-
+-CORBA::Object *
+-tao_Messaging_RelativeRoundtripTimeoutPolicy_upcast (
+-    void *src
+-  )
+-{
+-  Messaging::RelativeRoundtripTimeoutPolicy **tmp =
+-    ACE_static_cast (Messaging::RelativeRoundtripTimeoutPolicy **, src);
+-  return *tmp;
+-}
+ 
+ // *************************************************************
+ // Operations for class Messaging::RelativeRoundtripTimeoutPolicy_var
+@@ -3365,7 +2972,6 @@
+     ACE_static_cast (RelativeRoundtripTimeoutPolicy **, src);
+   return *tmp;
+ }
+-
+ // *************************************************************
+ // Operations for class Messaging::RelativeRoundtripTimeoutPolicy_out
+ // *************************************************************
+@@ -3506,6 +3112,10 @@
+   return "IDL:omg.org/Messaging/RelativeRoundtripTimeoutPolicy:1.0";
+ }
+ 
++#endif /* TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
++
++#if (TAO_HAS_ROUTING_POLICY == 1)
++
+ TAO_NAMESPACE_TYPE (const CORBA::ULong)
+ TAO_NAMESPACE_BEGIN (Messaging)
+ TAO_NAMESPACE_DEFINE (const CORBA::ULong, ROUTING_POLICY_TYPE, 33U)
+@@ -3599,48 +3209,6 @@
+   delete tmp;
+ }
+ 
+-Messaging::RoutingPolicy_ptr
+-tao_Messaging_RoutingPolicy_duplicate (
+-    Messaging::RoutingPolicy_ptr p
+-  )
+-{
+-  return Messaging::RoutingPolicy::_duplicate (p);
+-}
+-
+-void
+-tao_Messaging_RoutingPolicy_release (
+-    Messaging::RoutingPolicy_ptr p
+-  )
+-{
+-  CORBA::release (p);
+-}
+-
+-Messaging::RoutingPolicy_ptr
+-tao_Messaging_RoutingPolicy_nil (
+-    void
+-  )
+-{
+-  return Messaging::RoutingPolicy::_nil ();
+-}
+-
+-Messaging::RoutingPolicy_ptr
+-tao_Messaging_RoutingPolicy_narrow (
+-    CORBA::Object *p,
+-    CORBA::Environment &ACE_TRY_ENV
+-  )
+-{
+-  return Messaging::RoutingPolicy::_narrow (p, ACE_TRY_ENV);
+-}
+-
+-CORBA::Object *
+-tao_Messaging_RoutingPolicy_upcast (
+-    void *src
+-  )
+-{
+-  Messaging::RoutingPolicy **tmp =
+-    ACE_static_cast (Messaging::RoutingPolicy **, src);
+-  return *tmp;
+-}
+ 
+ // *************************************************************
+ // Operations for class Messaging::RoutingPolicy_var
+@@ -3764,7 +3332,6 @@
+     ACE_static_cast (RoutingPolicy **, src);
+   return *tmp;
+ }
+-
+ // *************************************************************
+ // Operations for class Messaging::RoutingPolicy_out
+ // *************************************************************
+@@ -3905,52 +3472,14 @@
+   return "IDL:omg.org/Messaging/RoutingPolicy:1.0";
+ }
+ 
++#endif /* TAO_HAS_ROUTING_POLICY == 1 */
++
++#if (TAO_HAS_MAX_HOPS_POLICY == 1)
++
+ TAO_NAMESPACE_TYPE (const CORBA::ULong)
+ TAO_NAMESPACE_BEGIN (Messaging)
+ TAO_NAMESPACE_DEFINE (const CORBA::ULong, MAX_HOPS_POLICY_TYPE, 34U)
+ TAO_NAMESPACE_END
+-Messaging::MaxHopsPolicy_ptr
+-tao_Messaging_MaxHopsPolicy_duplicate (
+-    Messaging::MaxHopsPolicy_ptr p
+-  )
+-{
+-  return Messaging::MaxHopsPolicy::_duplicate (p);
+-}
+-
+-void
+-tao_Messaging_MaxHopsPolicy_release (
+-    Messaging::MaxHopsPolicy_ptr p
+-  )
+-{
+-  CORBA::release (p);
+-}
+-
+-Messaging::MaxHopsPolicy_ptr
+-tao_Messaging_MaxHopsPolicy_nil (
+-    void
+-  )
+-{
+-  return Messaging::MaxHopsPolicy::_nil ();
+-}
+-
+-Messaging::MaxHopsPolicy_ptr
+-tao_Messaging_MaxHopsPolicy_narrow (
+-    CORBA::Object *p,
+-    CORBA::Environment &ACE_TRY_ENV
+-  )
+-{
+-  return Messaging::MaxHopsPolicy::_narrow (p, ACE_TRY_ENV);
+-}
+-
+-CORBA::Object *
+-tao_Messaging_MaxHopsPolicy_upcast (
+-    void *src
+-  )
+-{
+-  Messaging::MaxHopsPolicy **tmp =
+-    ACE_static_cast (Messaging::MaxHopsPolicy **, src);
+-  return *tmp;
+-}
+ 
+ // *************************************************************
+ // Operations for class Messaging::MaxHopsPolicy_var
+@@ -4074,7 +3603,6 @@
+     ACE_static_cast (MaxHopsPolicy **, src);
+   return *tmp;
+ }
+-
+ // *************************************************************
+ // Operations for class Messaging::MaxHopsPolicy_out
+ // *************************************************************
+@@ -4215,52 +3743,14 @@
+   return "IDL:omg.org/Messaging/MaxHopsPolicy:1.0";
+ }
+ 
++#endif /* TAO_HAS_MAX_HOPS_POLICY == 1 */
++
++#if (TAO_HAS_QUEUE_ORDER_POLICY == 1)
++
+ TAO_NAMESPACE_TYPE (const CORBA::ULong)
+ TAO_NAMESPACE_BEGIN (Messaging)
+ TAO_NAMESPACE_DEFINE (const CORBA::ULong, QUEUE_ORDER_POLICY_TYPE, 35U)
+ TAO_NAMESPACE_END
+-Messaging::QueueOrderPolicy_ptr
+-tao_Messaging_QueueOrderPolicy_duplicate (
+-    Messaging::QueueOrderPolicy_ptr p
+-  )
+-{
+-  return Messaging::QueueOrderPolicy::_duplicate (p);
+-}
+-
+-void
+-tao_Messaging_QueueOrderPolicy_release (
+-    Messaging::QueueOrderPolicy_ptr p
+-  )
+-{
+-  CORBA::release (p);
+-}
+-
+-Messaging::QueueOrderPolicy_ptr
+-tao_Messaging_QueueOrderPolicy_nil (
+-    void
+-  )
+-{
+-  return Messaging::QueueOrderPolicy::_nil ();
+-}
+-
+-Messaging::QueueOrderPolicy_ptr
+-tao_Messaging_QueueOrderPolicy_narrow (
+-    CORBA::Object *p,
+-    CORBA::Environment &ACE_TRY_ENV
+-  )
+-{
+-  return Messaging::QueueOrderPolicy::_narrow (p, ACE_TRY_ENV);
+-}
+-
+-CORBA::Object *
+-tao_Messaging_QueueOrderPolicy_upcast (
+-    void *src
+-  )
+-{
+-  Messaging::QueueOrderPolicy **tmp =
+-    ACE_static_cast (Messaging::QueueOrderPolicy **, src);
+-  return *tmp;
+-}
+ 
+ // *************************************************************
+ // Operations for class Messaging::QueueOrderPolicy_var
+@@ -4384,7 +3874,6 @@
+     ACE_static_cast (QueueOrderPolicy **, src);
+   return *tmp;
+ }
+-
+ // *************************************************************
+ // Operations for class Messaging::QueueOrderPolicy_out
+ // *************************************************************
+@@ -4525,6 +4014,8 @@
+   return "IDL:omg.org/Messaging/QueueOrderPolicy:1.0";
+ }
+ 
++#endif /* TAO_HAS_QUEUE_ORDER_POLICY == 1 */
++
+ static const CORBA::Long _oc_Messaging_PolicyValue[] =
+ {
+   TAO_ENCAP_BYTE_ORDER, // byte order
+@@ -4843,6 +4334,9 @@
+ TAO_NAMESPACE_BEGIN (Messaging)
+ TAO_NAMESPACE_DEFINE (const CORBA::ULong, INVOCATION_POLICIES, 2U)
+ TAO_NAMESPACE_END
++
++#if (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1)
++
+ Messaging::ExceptionHolder* Messaging::ExceptionHolder::_downcast (CORBA::ValueBase* v)
+ {
+   if (v == 0) return 0;
+@@ -4916,48 +4410,6 @@
+ 
+ #endif /* end #if !defined */
+ 
+-Messaging::ReplyHandler_ptr
+-tao_Messaging_ReplyHandler_duplicate (
+-    Messaging::ReplyHandler_ptr p
+-  )
+-{
+-  return Messaging::ReplyHandler::_duplicate (p);
+-}
+-
+-void
+-tao_Messaging_ReplyHandler_release (
+-    Messaging::ReplyHandler_ptr p
+-  )
+-{
+-  CORBA::release (p);
+-}
+-
+-Messaging::ReplyHandler_ptr
+-tao_Messaging_ReplyHandler_nil (
+-    void
+-  )
+-{
+-  return Messaging::ReplyHandler::_nil ();
+-}
+-
+-Messaging::ReplyHandler_ptr
+-tao_Messaging_ReplyHandler_narrow (
+-    CORBA::Object *p,
+-    CORBA::Environment &ACE_TRY_ENV
+-  )
+-{
+-  return Messaging::ReplyHandler::_narrow (p, ACE_TRY_ENV);
+-}
+-
+-CORBA::Object *
+-tao_Messaging_ReplyHandler_upcast (
+-    void *src
+-  )
+-{
+-  Messaging::ReplyHandler **tmp =
+-    ACE_static_cast (Messaging::ReplyHandler **, src);
+-  return *tmp;
+-}
+ 
+ // *************************************************************
+ // Operations for class Messaging::ReplyHandler_var
+@@ -5081,7 +4533,6 @@
+     ACE_static_cast (ReplyHandler **, src);
+   return *tmp;
+ }
+-
+ // *************************************************************
+ // Operations for class Messaging::ReplyHandler_out
+ // *************************************************************
+@@ -5376,6 +4827,11 @@
+ TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ReplyHandler, &_tc_TAO_tc_Messaging_ReplyHandler)
+ TAO_NAMESPACE_END
+ 
++
++#endif /* TAO_HAS_AMI_CALLBACK == 1 || TAO_HAS_AMI_POLLER == 1 */
++
++#if (TAO_HAS_AMI_CALLBACK == 1)
++
+ CORBA::Boolean 
+ OBV_Messaging::ExceptionHolder::_tao_marshal__Messaging_ExceptionHolder (TAO_OutputCDR &strm){
+   return _tao_marshal_state (strm);
+@@ -5496,6 +4952,9 @@
+   #  pragma instantiate TAO_Object_Manager<Messaging::SyncScopePolicy,Messaging::SyncScopePolicy_var>
+ #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+ 
++#endif /* TAO_HAS_AMI_CALLBACK == 1 */
++
++
+ void operator<<= (CORBA::Any &_tao_any, const Messaging::PriorityRange &_tao_elem) // copying
+ {
+   TAO_OutputCDR stream;
+@@ -5913,6 +5372,8 @@
+   return 0;
+ }
+ 
++#if (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1)
++
+ void operator<<= (CORBA::Any &_tao_any, Messaging::ReplyHandler_ptr _tao_elem)
+ {
+   TAO_OutputCDR stream;
+@@ -5975,6 +5436,9 @@
+ #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+ 
+ 
++
++#endif /* TAO_HAS_AMI_CALLBACK == 1 || TAO_HAS_AMI_POLLER == 1 */
++
+ #if !defined _TAO_CDR_OP_Messaging_PolicyValue__tao_seq_Octet_CPP_
+ #define _TAO_CDR_OP_Messaging_PolicyValue__tao_seq_Octet_CPP_
+ 
+@@ -6018,11 +5482,6 @@
+     // If length is 0 we return true.
+     if (0 >= _tao_seq_len) 
+       return 1;
+-    // Add a check to the length of the sequence
+-    // to make sure it does not exceed the length
+-    // of the stream. (See bug 58.)
+-    if (_tao_seq_len > strm.length())
+-      return 0;
+     // retrieve all the elements
+     
+ #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
+@@ -6084,11 +5543,6 @@
+     // If length is 0 we return true.
+     if (0 >= _tao_seq_len) 
+       return 1;
+-    // Add a check to the length of the sequence
+-    // to make sure it does not exceed the length
+-    // of the stream. (See bug 58.)
+-    if (_tao_seq_len > strm.length())
+-      return 0;
+     // retrieve all the elements
+     CORBA::Boolean _tao_marshal_flag = 1;
+     for (CORBA::ULong i = 0; i < _tao_sequence.length () && _tao_marshal_flag; i++)
+@@ -6100,6 +5554,8 @@
+   return 0; // error
+ }
+ 
++#if (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1)
++
+ CORBA::Boolean operator<< (
+     TAO_OutputCDR &strm,
+     const Messaging::ReplyHandler_ptr _tao_objref
+@@ -6136,3 +5592,6 @@
+   return 0;
+ }
+ 
++#endif /* TAO_HAS_AMI_CALLBACK == 1 || TAO_HAS_AMI_POLLER == 1 */
++
++#endif /* TAO_HAS_CORBA_MESSAGING == 1 */

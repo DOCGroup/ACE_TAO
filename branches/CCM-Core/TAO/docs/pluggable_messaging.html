@@ -1,0 +1,135 @@
+<!DOCTYPE HTML SYSTEM
+"http://www.w3.org/pub/WWW/MarkUp/Cougar/Cougar.dtd">
+  <!-- $Id$-->
+  <head>
+    <title>Pluggable Messaging framework</title>
+  </head>
+  
+  <BODY text = "#000000"
+    link="#0000ff"
+    vlink="#cc0000"
+    bgcolor="#ffffff">
+    
+    <body>
+      <HR>
+          	<h1>Pluggable Messaging Framework</h1>
+	<HR>
+	  <h2>Context</h2>
+          TAO uses GIOP message formats to exchange messages between
+          inter-operating ORBs. GIOP, essentially specifies formats of
+          messages exchanged between ORBs. It has only a few message
+          types but still provides full CORBA support. But, there has
+          been a trend to try out different message formats like <a
+          HREF= "http://www.w3.org/TR/WD-HTTP-NG-architecture/">
+          HTTP-NG </a> for inter-ORB communication. This framework
+          tends to take a first step in the direction to support
+          different protocols. The framework,though not complete in
+          itself, has been used for implementing GIOP and
+          GIOPlite. The framework would be re-factored and reworked
+          depending on the use cases our users come across. 
+	  
+	  <h2>Idea</h2>
+          We wanted to give a flexibility to the user to load the message
+          formatting protocol by selecting a protocol during the
+          bootstrapping process. So, we tried to leverage the work 
+          that has already been done for the <a HREF =
+          "pluggable_protocols/index.html"> pluggable_protocols</a>. 
+
+          The fundamental idea that we followed was to isolate all of
+          the ORB code from the message formatting details. The
+          framework is constrained by the type of marshalling
+          scheme. The framework now completely relies on CDR
+          formatted streams. 
+          
+          
+          <h2>Implementation of GIOP</h2>
+
+          <P>The common interface that has  been defined is the class
+          Pluggable_Messaging_Interface forms the core class for the
+          implementation of a concrete messaging protocol. We have
+          been able to implement the GIOP & GIOPlite succesfully using
+          this minimal interface. The different versions of GIOP have
+          been managed succesfully within this implementation.</P>
+
+          <P>When the user loads protocols like IIOP he/she in turn is
+          loading the TCP/IP mapping of GIOP formatted message. The
+          same argument can be used for UIOP, SHMIOP too. So, using
+          this fundamental understanding, we load the GIOP protocol for
+          the user behind the scene. If an user wants to use GIOPlite
+          mapped on to TCP/IP he would load IIOP_Lite using the
+          svc.conf file. The format is given below </P>
+          
+          <P>dynamic IIOP_Lite_Factory Service_Object * TAO:_make_TAO_IIOP_Lite_Protocol_Factory() ""</P>
+          <P>static Resource_Factory "-ORBProtocolFactory IIOP_Lite_Factory". </P>
+
+          <P>Please see the documentation of the pluggable protocol
+          framework for exact meaning of the above syntax. The same
+          applies to GIOPlite mapping on UIOP too.</P>
+          
+          <P>The class GIOP_Message_Base derives from the
+          Pluggable_Messaging_Interface. This class holds most of the
+          common code needed for the GIOP classes. GIOP places a
+          restriction on the client and server roles, in terms of
+          initiating and receiving messages. This concept has been
+          mapped on to the framework by two sets implementation
+          classes, namely GIOP_Message_Connectors and
+          GIOP_Message_Acceptors. </P>
+
+          <P>The GIOP_Message_Connector and the derived classes
+          implements the different types of messages that can
+          originate from the client. In GIOP 1.2, with the
+          specification of Bi-Directional GIOP, this disticntion
+          between the client and server would decrease. But, this
+          would be applicable only for GIOP 1.2. The present
+          inheritance model, allows us to implement some of the roles
+          defined for the server in the 1.0 and 1.1 versions of GIOP, on
+          the client side. This needs to be done only for 1.2.</P>
+
+          <P>The GIOP_Message_Acceptor class is a Context, which maintains
+          a reference to a strategy based on the incoming request.</P>
+
+          <P>The GIOP specification specifies that if a server supports
+          GIOP-1.2, it should also offer support for GIOP-1.1 and
+          GIOP-1.0. This would mean that clients that can communicate
+          in any of the three protocols can connect to a server that
+          supports 1.2. The server should also reply based on the same
+          revision.</P>
+
+          <P> The strategisation on the server side is based on the
+          different version numbers of GIOP. The reference that would
+          be maintained by the context, GIOP_Message_Acceptor, would
+          be based on the version number of the incoming request. The
+          reply is also sent using the same reference. This makes it
+          possible to send compatible replies to the client. </P>
+
+          <h2>Limitations</h2>
+          <P> Uses only CDR formats. </P>
+          <P> Need more ise cases to make the interface more flexible
+          and better. </P>
+          
+                                         
+	  <HR>
+	    For more details and questions,
+	    <p>
+	      
+	      <address><a href="mailto:bala@cs.wustl.edu">Balachandran
+	      Natarajan</a></address>
+	      <p>
+		<address><a href="mailto:fredk@cs.wustl.edu">Fred Kuhns</a></address>
+    </body>
+</html>
+
+</title>
+</head>
+
+<body>
+<h1></h1>
+
+
+
+<hr>
+<address></address>
+<!-- hhmts start -->
+Last modified: Thu Mar 16 11:23:03 CST 2000
+<!-- hhmts end -->
+</body> </html>

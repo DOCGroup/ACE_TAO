@@ -1,0 +1,10 @@
+#
+# Makefile for building the Reactor examples
+#
+
+DIRS = \
+        Dgram \
+        Multicast \
+        Ntalker
+
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
