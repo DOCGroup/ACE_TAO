@@ -95,7 +95,7 @@ try to help you fix the problems.
       2.0 compiler may also work, but we haven't tested it recently).
       ACE can be built as both a static and dynamic library, using the
       Win32 installation process described below.<P>
-      
+
       Please see the <A HREF="#Non-static Object Manager">Non-static
       ACE_Object_Manager</A> discussion below.<p>
 
@@ -286,7 +286,7 @@ make: *** [libACE.so] Error 8
       <strong>NOTE:</strong> The TAO NameService uses IP multicasting
       by default, though it is not required.  IP multicast on Linux
       requires the following:<p>
-      
+
       <ul>
         <li>Enable IP multicast in the Linux kernel.  It is enabled in
             the default RedHat 5.1 kernel.  In older distributions, you
@@ -346,7 +346,7 @@ make: *** [libACE.so] Error 8
 
       HP sells 2 C++ compilers for HP-UX 10.x and 11.00.  If you are
       using 9.x, there's only the first one.
-      
+
       <UL>
         <LI>HP C++ - this is CC, HP's cfront-based compiler.  As of ACE 4.4, it
             can be used, but some people have problems with templates.
@@ -430,13 +430,13 @@ make: *** [libACE.so] Error 8
 
   <LI><B><a name="LynxOS">LynxOS</a></B><P>
 
-      ACE builds and runs properly on LynxOS 3.0.0 for Intel and 
+      ACE builds and runs properly on LynxOS 3.0.0 for Intel and
       PowerPC targets.
       ACE's Naming_Test fails; it is disabled in <a
       href="tests/run_tests.sh"><code>ACE_wrappers/tests/run_tests.sh</code></a>.<p>
 
       If you run out of memory on LynxOS, these might help:<p>
-      
+
       <ul>
         <li>Increase the limits in <code>/etc/starttab</code>,
           then logout and login again.  We use these limits:
@@ -488,7 +488,7 @@ make: *** [libACE.so] Error 8
       apply only with g++, at least thru version 2.7.2.  That is the
       version that is shipped with Tornado 1.0.1/ VxWorks 5.3.1.  The
       problems are:<P>
-      
+
       <OL>
         <LI>The program entry point cannot be called ``main'' with g++.  ACE
             renames it to ``ace_main'' (configurable via ACE_MAIN) on VxWorks.
@@ -514,7 +514,7 @@ make: *** [libACE.so] Error 8
             very unlikely situation where it becomes a problem.
             Please see ace/config-vxworks5.2-g++.h for more information.<P>
       </OL>
-      
+
       In addition, as noted <A HREF="#g++">below</A> following the
       discussion of the g++ -fno-implicit-templates option,
       -fno-implicit-templates is broken.  And, -O2 is not supported on
@@ -562,7 +562,7 @@ make: *** [libACE.so] Error 8
       build tips for MVS</A> for more on this.<P>
 
   <li><strong>QNX Neutrino</strong><p>
-      
+
       ACE has been ported to <a
       href="http://www.qnx.com/products/os/neutrino.html">QNX Neutrino
       2.0</a>.  We cross-compile for Neutrino on a QNX4 host using g++
@@ -576,7 +576,7 @@ make: *** [libACE.so] Error 8
       us.<p>
 
   <li><strong>PharLap TNT Embedded ToolSuite (ETS)</strong><p>
-      
+
       ACE has been ported to <a
       href="http://www.pharlap.com">PharLap's</a> TNT Embedded
       ToolSuite (ETS) version 9.1. The port is being tested with
