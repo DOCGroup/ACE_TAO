@@ -1,3 +1,7 @@
+Thu Nov 06 02:17:02 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* TAO version 0.0.23, released Thu Nov 06 02:17:02 1997.
+
 Thu Nov  6 02:15:09 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tests/Thruput_test/client.cpp: Fixed a mistake with how
