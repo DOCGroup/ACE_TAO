@@ -49,7 +49,7 @@ sub name_server
   my $args = "$other -o $nsiorfile";
   my $prog = "..$DIR_SEPARATOR..$DIR_SEPARATOR"."orbsvcs$DIR_SEPARATOR".
              "Naming_Service$DIR_SEPARATOR".
-             "Naming_Service$EXE_EXT";
+             "Naming_Server$EXE_EXT";
 
   $NS = Process::Create ($prog, $args);
 }
