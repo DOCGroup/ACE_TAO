@@ -38,10 +38,10 @@ include $(TAO_ROOT)/rules.tao.GNU
 
 #### If the TAO orbsvcs library wasn't built with sufficient components,
 #### don't try to build here.
-TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
-ifeq (Security, $(findstring Security, $(TAO_ORBSVCS)))
+
+ifeq ($(ssl),1)
   BIN = $(BIN_UNCHECKED)
-endif  # Security
+endif  # ssl == 1
 
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
