@@ -1,3 +1,9 @@
+Wed Apr  1 08:56:24 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tao: Renamed ResultFromScode to TAO_ResultFromScode to avoid
+ 	  clashes with MFC functions.  Thanks to David Janello
+ 	  <djanello@cccis.com> for reporting this.
+
 Tue Mar 31 21:01:30 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Naming/Naming_Utils.cpp (init): Fixed a typo.
