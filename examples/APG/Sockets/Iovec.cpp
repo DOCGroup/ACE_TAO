@@ -24,11 +24,11 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
 
   // Listing 1 code/ch06
   iovec send[4];
-  send[0].iov_base = ACE_const_cast (ACE_TCHAR *, "up");
+  send[0].iov_base = ACE_const_cast (char *, "up");
   send[0].iov_len  = 2;
-  send[1].iov_base = ACE_const_cast (ACE_TCHAR *, "time");
+  send[1].iov_base = ACE_const_cast (char *, "time");
   send[1].iov_len  = 4;
-  send[2].iov_base = ACE_const_cast (ACE_TCHAR *, "\n");
+  send[2].iov_base = ACE_const_cast (char *, "\n");
   send[2].iov_len  = 1;
 
   peer.sendv (send, 3);
