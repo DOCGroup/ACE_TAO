@@ -49,7 +49,7 @@ Reference_Counted_Foo::Reference_Counted_Foo (CORBA::ORB_ptr orb,
 {
 }
 
-static char *ior_output_file = "ior";
+static const char *ior_output_file = "ior";
 
 static int
 parse_args (int argc, char **argv)
