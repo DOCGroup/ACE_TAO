@@ -96,6 +96,10 @@ SOURCE=.\Any.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\append.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Arg_Shifter.cpp
 # End Source File
 # Begin Source File
@@ -229,6 +233,10 @@ SOURCE=.\Server_Request.cpp
 # Begin Source File
 
 SOURCE=.\Server_Strategy_Factory.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\skip.cpp
 # End Source File
 # Begin Source File
 
