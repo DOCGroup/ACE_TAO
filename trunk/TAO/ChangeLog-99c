@@ -1,3 +1,10 @@
+Wed May 19 15:12:26 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/CosEvent_Service/CosEvent_Service.cpp:
+	* orbsvcs/CosEvent_Service/svc.conf:
+	  Use the TAO_EC_Default_Factory for the Rtec Event Channel and
+	  configure it using a svc.conf file.
+
 Wed May 19 13:07:06 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/CosEvent_Utilities.cpp:
