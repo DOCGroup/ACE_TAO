@@ -187,17 +187,17 @@ private:
   // limitation of only 1 TAO_TRY being allowed per function.
 
   void invalid_name_test (TAO_Naming_Client &root_context,
-                          CORBA::Environment &_env);
+                          CORBA::Environment &ACE_TRY_ENV);
   void already_bound_test (TAO_Naming_Client &root_context,
-                           CORBA::Environment &_env);
+                           CORBA::Environment &ACE_TRY_ENV);
   void already_bound_test2 (TAO_Naming_Client &root_context,
-                            CORBA::Environment &_env);
+                            CORBA::Environment &ACE_TRY_ENV);
   void not_found_test (TAO_Naming_Client &root_context,
-                       CORBA::Environment &_env);
+                       CORBA::Environment &ACE_TRY_ENV);
   void not_found_test2 (TAO_Naming_Client &root_context,
-                        CORBA::Environment &_env);
+                        CORBA::Environment &ACE_TRY_ENV);
   void not_found_test3 (TAO_Naming_Client &root_context,
-                        CORBA::Environment &_env);
+                        CORBA::Environment &ACE_TRY_ENV);
 };
 
 class Destroy_Test : public Naming_Test
@@ -221,9 +221,9 @@ public:
 private:
   // = The following functions isolate specific tests.
   void not_empty_test (CosNaming::NamingContext_var &ref,
-                       CORBA::Environment &_env);
+                       CORBA::Environment &ACE_TRY_ENV);
   void not_exist_test (CosNaming::NamingContext_var &ref,
-                       CORBA::Environment &_env);
+                       CORBA::Environment &ACE_TRY_ENV);
 };
 
 class CosNaming_Client
