@@ -1,3 +1,9 @@
+Tue Dec 30 10:11:56 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/tests/Event/Mcast/Simple/supplier.cpp:
+
+	  #included ace/Log_Msg.h
+
 Tue Dec 30 10:00:54 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* examples/POA/Reference_Counted_Servant/Reference_Counted_Servant.mpc:
