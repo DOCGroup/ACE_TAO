@@ -1,3 +1,10 @@
+Thu Mar  4 18:40:45 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/CurrentC.cpp:
+	  Changed the code for the >>= operator to get rid of
+	  another Any::value() inconsistency and to reflect what
+	  the IDL compiler now generates for these operators.
+
 Thu Mar  4 16:53:28 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_operation/operation_ss.cpp:

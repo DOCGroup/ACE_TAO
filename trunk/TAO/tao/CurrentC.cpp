@@ -89,7 +89,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA_Current_ptr &_tao_
   _tao_elem = CORBA_Current::_nil ();
   CORBA::TypeCode_var type = _tao_any.type ();
   if (!type->equal (CORBA::_tc_Current, _tao_env)) return 0; // not equal
-  TAO_InputCDR stream ((ACE_Message_Block *)_tao_any.value ());
+  TAO_InputCDR stream (_tao_any._tao_get_cdr ());
   CORBA::Object_ptr *_tao_obj_ptr;
   ACE_NEW_RETURN (_tao_obj_ptr, CORBA::Object_ptr, 0);
   if (stream.decode (CORBA::_tc_Current, _tao_obj_ptr, 0, _tao_env)
