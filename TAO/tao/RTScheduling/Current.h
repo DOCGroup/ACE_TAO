@@ -13,6 +13,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+
 class TAO_RTScheduler_Current_i;
 class TAO_TSS_Resources;
 
