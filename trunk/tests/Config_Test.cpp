@@ -122,7 +122,7 @@ test (ACE_Configuration *config)
     if (data_out[j] != data[j])
       return -11;
 
-  delete data_out;
+  delete [] data_out;
 
   // Test iteration.
   ACE_TString name;
@@ -710,6 +710,8 @@ iniCompare (ACE_Configuration_Heap& fromFile, ACE_Configuration_Heap& original)
                                   ++ptr;
                                 }
                               delete (char *)binary_data;
+                              delete [] (char *)binary_data;
+
                             }// end successful binary read
                         }// end if originalType was binary
                       else
