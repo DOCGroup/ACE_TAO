@@ -1,3 +1,11 @@
+Mon Aug  4 10:55:58 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/corba.h:
+        * TAO_IDL/be/be_codegen.cpp:
+
+          Removed inclusion of header files for the Any template classes from
+          corba.h and added their generation to the stub source file.
+
 Mon Aug  4 10:08:56 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
