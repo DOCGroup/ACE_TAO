@@ -1,3 +1,8 @@
+Sun Dec 13 16:27:21 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/MT_Reactor_Timer_Test.cpp: Changed the use of
+	  ACE_OS::{read,write} to ACE::{recv,send}.
+
 Sat Dec 12 17:19:17 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/ACE.cpp (ldfind): If we specified a suffix which is not the
