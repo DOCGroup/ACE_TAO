@@ -4,6 +4,11 @@ Mon May 12 18:59:39 1997  David L. Levine  <levine@cs.wustl.edu>
 	  ACE_LACKS_UCONTEXT_H depending on __COMPILER_VER__.  Thanks to
 	  Chuck Gehr <gehr@sweng.stortek.com> for this fix.
 
+	* OS.h, OS.cpp (thr_create), Task.h, Thread.h, Thread_Manager.h:
+	  use ACE_DEFAULT_THREAD_PRIORITY instead of -1, because -1 is a
+	  valid priority on Win32.  Thanks to Irfan for discovering this
+	  problem with Priority_Task_Test.
+
 	* ace/Thread_Manager.cpp (wait_grp,wait_task): changed type of loop
 	  index "i" from size_t to int to avoid signed/unsigned comparison.
 
