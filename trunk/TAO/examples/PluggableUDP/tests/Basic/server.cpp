@@ -3,7 +3,7 @@
 // ============================================================================
 //
 // = LIBRARY
-//    TAO/examples/Simple/UDP
+//    TAO/examples/PluggableUDP/tests/Basic
 //
 // = FILENAME
 //    server.cpp
@@ -15,6 +15,7 @@
 //    Michael Kircher <Michael.Kircher@mchp.siemens.de>
 //
 // ============================================================================
+
 
 #include "UDP_i.h"
 

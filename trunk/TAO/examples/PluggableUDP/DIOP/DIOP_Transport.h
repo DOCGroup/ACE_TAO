@@ -112,8 +112,6 @@ public:
   virtual int messaging_init (CORBA::Octet major,
                               CORBA::Octet minor);
 
-  //@}
-
 private:
   /// Process the message that we have read
   int process_message (void);

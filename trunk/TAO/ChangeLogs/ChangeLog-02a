@@ -1,3 +1,44 @@
+Mon Apr  9 16:25:00 2001  Michael Kircher <Michael.Kircher@mchp.siemens.de>
+
+        * examples/PluggableUDP/DIOP/DIOP_Connection_Handler.cpp:
+
+          Minor optical changes on debug messages.
+
+        * examples/PluggableUDP/DIOP/DIOP_Connector.h:
+        * examples/PluggableUDP/DIOP/DIOP_Connector.cpp:
+
+          In the first implementation I used a really slow lookup
+          of used client connection handlers based on strings, now
+          I use the hash () method of the ACE_INET_Addr directly.
+
+          Thanks to Carlos for giving me that hint - I knew there
+          was a faster way than comparing strings ;-)
+
+        * examples/PluggableUDP/DIOP/DIOP_Transport.h:
+        * examples/PluggableUDP/DIOP/DIOP_Transport.cpp:
+  
+          Made use of the possiblity to set the initial size of the 
+          input CDR buffer. In combination with the single read strategy,
+          which tries to read as much as the buffer can take, it is now
+          possible to read a complete UDP packet on a single read without
+          any hacks ;-) Thanks to Bala for allowing me to extend
+          the constructors of GIOP_Message_Base et al.
+
+        * examples/PluggableUDP/tests/Basic:
+        * examples/PluggableUDP/tests/Performance:
+        * examples/PluggableUDP/tests/SimplePerformance:
+
+          Moved the already existing test into the Basic directory,
+          and added two new tests for DIOP. "Simple Performance" tests
+          only a single client server oneway invocations.
+          "Performance" tests for end-to-end (client-server-client)
+          oneway performance.
+
+        * examples/PluggableUDP/DIOP/TAO_DIOP.dsw:
+        * examples/PluggableUDP/tests/UDP.dsw:
+
+          Added the new tests.
+
 Mon Apr  9 15:45:00 2001  Michael Kircher <Michael.Kircher@mchp.siemens.de>
 
         * tao/GIOP_Message_Base.h:

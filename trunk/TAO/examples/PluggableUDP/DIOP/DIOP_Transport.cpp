@@ -1,10 +1,6 @@
 // This may look like C, but it's really -*- C++ -*-
 // $Id$
 
-#include "DIOP_Transport.h"
-#include "DIOP_Connection_Handler.h"
-#include "DIOP_Acceptor.h"
-#include "DIOP_Profile.h"
 #include "tao/Acceptor_Registry.h"
 #include "tao/operation_details.h"
 #include "tao/Timeprobe.h"
@@ -17,6 +13,12 @@
 #include "tao/debug.h"
 #include "tao/GIOP_Message_Base.h"
 #include "tao/GIOP_Message_Lite.h"
+
+
+#include "DIOP_Transport.h"
+#include "DIOP_Connection_Handler.h"
+#include "DIOP_Acceptor.h"
+#include "DIOP_Profile.h"
 
 #if !defined (__ACE_INLINE__)
 # include "DIOP_Transport.i"
@@ -32,18 +34,21 @@ TAO_DIOP_Transport::TAO_DIOP_Transport (TAO_DIOP_Connection_Handler *handler,
   , connection_handler_ (handler)
   , messaging_object_ (0)
 {
-  // @@ Michael: Here we hardcoded the size of the buffer!
+  // @@ Michael: Set the input CDR size to ACE_MAX_DGRAM_SIZE so that
+  //             we read the whole UDP packet on a single read.
   if (flag)
     {
       // Use the lite version of the protocol
       ACE_NEW (this->messaging_object_,
-               TAO_GIOP_Message_Lite (orb_core));
+               TAO_GIOP_Message_Lite (orb_core,
+                                      ACE_MAX_DGRAM_SIZE));
     }
     else
     {
       // Use the normal GIOP object
       ACE_NEW (this->messaging_object_,
-               TAO_GIOP_Message_Base (orb_core));
+               TAO_GIOP_Message_Base (orb_core,
+                                      ACE_MAX_DGRAM_SIZE));
     }
 }
 
@@ -183,11 +188,13 @@ TAO_DIOP_Transport::send_i (const ACE_Message_Block *message_block,
                                                   iovcnt,
                                                   addr);
 
+      /*
       ACE_DEBUG ((LM_DEBUG,
                   "TAO_DIOP_Transport::send_i: sent %d bytes to %s:%d\n",
                   bytes_transferred,
                   addr.get_host_name (),
                   addr.get_port_number ()));
+      */
 
       // Errors.
       // @@ John Mackenzie. We cannot propogate errors up in DIOP
@@ -215,7 +222,7 @@ TAO_DIOP_Transport::send_i (const ACE_Message_Block *message_block,
 ssize_t
 TAO_DIOP_Transport::recv_i (char *buf,
                             size_t len,
-                            const ACE_Time_Value * /*max_wait_time*/)
+                            const ACE_Time_Value * /* max_wait_time */)
 {
   ACE_INET_Addr from_addr;
 
@@ -224,10 +231,11 @@ TAO_DIOP_Transport::recv_i (char *buf,
                                                         from_addr);
 
   ACE_DEBUG ((LM_DEBUG,
-              "TAO_DIOP_Transport::recv_i: received %d bytes from %s:%d\n",
+              "TAO_DIOP_Transport::recv_i: received %d bytes from %s:%d %d\n",
               n,
               from_addr.get_host_name (),
-              from_addr.get_port_number ()));
+              from_addr.get_port_number (),
+              errno));
 
   // Remember the from addr to eventually use it as remote
   // addr for the reply.
@@ -251,7 +259,7 @@ TAO_DIOP_Transport::read_process_message (ACE_Time_Value *max_wait_time,
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO (%P|%t) - %p\n"),
-                    ACE_TEXT ("DIOP_Transport::read_message, failure in read_message ()")));
+                    ACE_TEXT ("DIOP_Transport::read_process_message, failure in read_message ()")));
 
       this->tms_->connection_closed ();
       return -1;
@@ -275,6 +283,17 @@ TAO_DIOP_Transport::read_process_message (ACE_Time_Value *max_wait_time,
 int
 TAO_DIOP_Transport::register_handler_i (void)
 {
+  // @@ Michael:
+  // 
+  // We do never register register the handler with the reactor
+  // as we never need to be informed about any incoming data,
+  // assuming we only use one-ways.
+  // If we would register and ICMP Messages would arrive, e.g
+  // due to a not reachable server, we would get informed - as this
+  // disturbs the general DIOP assumptions of not being
+  // interested in any network failures, we ignore ICMP messages.
+  return 0;
+  /*
   // @@ It seems like this method should go away, the right reactor is
   //    picked at object creation time.
   ACE_Reactor *r = this->orb_core_->reactor ();
@@ -289,6 +308,7 @@ TAO_DIOP_Transport::register_handler_i (void)
   // Register the handler with the reactor
   return  r->register_handler (this->connection_handler_,
                                ACE_Event_Handler::READ_MASK);
+  */
 }
 
 
@@ -651,3 +671,4 @@ TAO_DIOP_Transport::transition_handler_state_i (void)
 {
   this->connection_handler_ = 0;
 }
+

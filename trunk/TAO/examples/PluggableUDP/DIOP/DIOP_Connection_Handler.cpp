@@ -1,7 +1,6 @@
 // $Id$
 
 
-#include "DIOP_Connection_Handler.h"
 #include "tao/Timeprobe.h"
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
@@ -9,10 +8,12 @@
 #include "tao/CDR.h"
 #include "tao/Messaging_Policy_i.h"
 #include "tao/Server_Strategy_Factory.h"
-#include "DIOP_Transport.h"
-#include "DIOP_Endpoint.h"
 #include "tao/Transport_Cache_Manager.h"
 #include "tao/Base_Transport_Property.h"
+
+#include "DIOP_Connection_Handler.h"
+#include "DIOP_Transport.h"
+#include "DIOP_Endpoint.h"
 
 #if !defined (__ACE_INLINE__)
 # include "DIOP_Connection_Handler.i"
@@ -379,7 +380,7 @@ TAO_DIOP_Connection_Handler::handle_input_i (ACE_HANDLE,
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - %p\n"),
-                  ACE_TEXT ("DIOP_Connection_Handler::read_message \n")));
+                  ACE_TEXT ("DIOP_Connection_Handler::handle_input_i \n")));
 
     }
 
