@@ -33,7 +33,7 @@ Supplier::timeout_occured (ACE_ENV_SINGLE_ARG_DECL)
   event[0].header.source = id_;
   event[0].header.ttl    = 1;
 
-  kokyu::Object_Counter::object_id oid = kokyu::OBJECT_COUNTER->increment();
+  Kokyu::Object_Counter::object_id oid = Kokyu::OBJECT_COUNTER->increment();
   event[0].header.eid.id = oid.id;
   event[0].header.eid.tid = oid.tid;
 
@@ -46,11 +46,11 @@ Supplier::timeout_occured (ACE_ENV_SINGLE_ARG_DECL)
   //when event is pushed by client.
 
   //DSUI_EVENT_LOG (WORKER_GROUP_FAM, ONE_WAY_CALL_START, 1, 0, NULL);
-  DSUI_EVENT_LOG (WORKER_GROUP_FAM, ONE_WAY_CALL_START, 0, sizeof(kokyu::Object_Counter::object_id), (char*)&oid);
+  DSUI_EVENT_LOG (WORKER_GROUP_FAM, ONE_WAY_CALL_START, 0, sizeof(Kokyu::Object_Counter::object_id), (char*)&oid);
 
   consumer_proxy_->push (event ACE_ENV_ARG_PARAMETER);
   //DSUI_EVENT_LOG (WORKER_GROUP_FAM, ONE_WAY_CALL_DONE, m_id, 0, NULL);
-  DSUI_EVENT_LOG (WORKER_GROUP_FAM, ONE_WAY_CALL_DONE, 0, sizeof(kokyu::Object_Counter::object_id), (char*)&oid);
+  DSUI_EVENT_LOG (WORKER_GROUP_FAM, ONE_WAY_CALL_DONE, 0, sizeof(Kokyu::Object_Counter::object_id), (char*)&oid);
 }
 
 void
@@ -81,16 +81,16 @@ Timeout_Consumer::push (const RtecEventComm::EventSet& events
   //timeout occurs to trigger event push. Roughly equivalent to the
   //scheduling segments started for each one-way call of the DTs.
   //DSUI_EVENT_LOG (WORKER_GROUP_FAM, BEGIN_SCHED_SEGMENT, 1, 0,NULL);
-  kokyu::Object_Counter::object_id oid;
+  Kokyu::Object_Counter::object_id oid;
   oid.id = events[0].header.eid.id;
   oid.tid = events[0].header.eid.tid;
-  DSUI_EVENT_LOG (WORKER_GROUP_FAM, BEGIN_SCHED_SEGMENT, 0, sizeof(kokyu::Object_Counter::object_id), (char*)&oid);
+  DSUI_EVENT_LOG (WORKER_GROUP_FAM, BEGIN_SCHED_SEGMENT, 0, sizeof(Kokyu::Object_Counter::object_id), (char*)&oid);
 
   supplier_impl_->timeout_occured (ACE_ENV_SINGLE_ARG_PARAMETER);
 
   //@BT: Finished handling the timeout.
   //DSUI_EVENT_LOG (WORKER_GROUP_FAM, END_SCHED_SEGMENT, 1, 0, NULL);
-  DSUI_EVENT_LOG (WORKER_GROUP_FAM, END_SCHED_SEGMENT, 0, sizeof(kokyu::Object_Counter::object_id), (char*)&oid);
+  DSUI_EVENT_LOG (WORKER_GROUP_FAM, END_SCHED_SEGMENT, 0, sizeof(Kokyu::Object_Counter::object_id), (char*)&oid);
 }
 
 void

@@ -63,8 +63,8 @@ Dispatch_Deferrer::dispatch (Dispatch_Queue_Item *qitem)
 #if ! defined (ACE_WIN32) && defined (ACE_HAS_DSUI)
   //@BT INSTRUMENT with event ID: EVENT_DEFERRED_ENQUEUE Measure time
   //between release and enqueue into dispatch queue because of RG
-
-  DSUI_EVENT_LOG(DISP_DEFERRER_FAM, EVENT_DEFERRED_ENQUEUE, timer_id, 0, NULL);
+  Kokyu::Object_Counter::object_id oid = qitem->command().getId();
+  DSUI_EVENT_LOG(DISP_DEFERRER_FAM, EVENT_DEFERRED_ENQUEUE, 0, sizeof(Kokyu::Object_Counter::object_id), (char*)&oid);
 #endif /* ACE_HAS_DSUI */
 
   //buffer until timer expires
@@ -113,7 +113,8 @@ Dispatch_Deferrer::handle_timeout (const ACE_Time_Value &,
       //@BT INSTRUMENT with event ID: EVENT_DEFERRED_DEQUEUE Measure
       //time between release and enqueue into dispatch queue because
       //of RG
-      DSUI_EVENT_LOG (DISP_DEFERRER_FAM, EVENT_DEFERRED_DEQUEUE, timer_id, 0, NULL);
+      Kokyu::Object_Counter::object_id oid = qitem->command().getId();
+      DSUI_EVENT_LOG (DISP_DEFERRER_FAM, EVENT_DEFERRED_DEQUEUE, 0, sizeof(Kokyu::Object_Counter::object_id), (char*)&oid);
 #endif /* ACE_HAS_DSUI */
 
       this->task_->enqueue(qitem);
