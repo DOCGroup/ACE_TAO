@@ -1,11 +1,16 @@
-ACE DEFINES
------------------------------------------------------------------------------
+ACE Portability Macros
+
+----------------------------------------
 
 The following describes the meaning of the C++ compiler macros that
-may be set in the DEFFLAGS Makefile macro.  When you port ACE to a new
-platform and/or C++ compiler, make sure that you check to see which of
-these need to be defined.  Eventually, most of this information should
-be auto-discovered via GNU autoconf or Larry Wall's metaconfig...
+can be set in the config*.h file.  When you port ACE to a new platform
+and/or C++ compiler, make sure that you check to see which of these
+need to be defined.  It's helpful to check the various config*.h files
+in this directory to see what's already been defined.  If you need to
+add new macros, please send them to me and I'll add them to this file.
+
+Eventually, most of this information should be auto-discovered via GNU
+autoconf or Larry Wall's metaconfig...
 
 Macro					Description
 -----					-----------
@@ -84,6 +89,7 @@ ACE_HAS_SIG_ATOMIC_T			Compiler/platform defines the sig_atomic_t typedef
 ACE_HAS_SIG_C_FUNC			Compiler requires extern "C" functions for signals.
 ACE_HAS_SIN_LEN				Platform supports new BSD inet_addr len field.
 ACE_HAS_SIZET_SOCKET_LEN		OS/compiler uses size_t * rather than int * for socket lengths
+ACE_HAS_SOCKADDR_MSG_NAME		Platform requires (struct sockaddr *) for msg_name field of struct msghdr.
 ACE_HAS_SOCKIO_H                	Compiler/platform provides the sockio.h file
 ACE_HAS_SPARCWORKS_401_SIGNALS 		Compiler has brain-damaged SPARCwork SunOS 4.x signal prototype...
 ACE_HAS_SSIZE_T				Compiler supports the ssize_t typedef

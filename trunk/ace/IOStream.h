@@ -140,8 +140,8 @@ private:
 
   // This helps us to optimize the underflow/overflow functions.
   u_char cur_mode_;
-  const u_char get_mode_ = 1;
-  const u_char put_mode_ = 2;
+  const u_char get_mode_;
+  const u_char put_mode_;
 
   int mode_;
   // mode tells us if we're working for an istream, ostream, or

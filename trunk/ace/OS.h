@@ -2241,7 +2241,10 @@ class ACE_Export ACE_OS
   //     This class defines an operating system independent
   //     programming API that shields developers from non-portable
   //     aspects of writing efficient system programs on Win32, POSIX,
-  //     and other versions of UNIX.
+  //     and other versions of UNIX.  If you are porting ACE to a new
+  //     platform, this is the place to focus your attention.  Please
+  //     see the README file in this directory for complete
+  //     information on the meaning of the various macros.
   //
   // = DESCRIPTION
   //     This class encapsulates all the differences between various
@@ -2250,7 +2253,7 @@ class ACE_Export ACE_OS
   //     which makes it *much* easier to move ACE to a new platform.
   //     The methods in this class also automatically restart when 
   //     interrupts occur during system calls (assuming that the
-  //     ACE_Log_Msg::restart() flag is enabled).
+  //     <ACE_Log_Msg::restart> flag is enabled).
 {
 public:
   struct ace_flock_t

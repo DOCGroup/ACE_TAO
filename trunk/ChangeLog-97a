@@ -1,6 +1,28 @@
 Wed Feb  5 01:45:03 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tests/Naming_Test.cpp: Cleaned up a few minor things.
+	* ace/OS.i: Changed the Win32 implementation of all methods that call
+	  WaitForMultipleObjects() so that errno is set to
+	  WAIT_ABANDONED if the mutex is abandoned.  This makes it
+	  possible for users to understand why ACE_OS methods that use
+	  synchronization operations fail.  Thanks to Ivan Murphy
+	  <Ivan.Murphy@med.siemens.de> for reporting this problem.
+
+	* ace/IOStream.cpp (ACE_Streambuf): Moved the const initialization
+ 	  from the header file to the constructor since this is the only
+ 	  portable way to do this.  Thanks to Michael Maxie
+ 	  <maxie@acm.org> for reporting this.
+
+	* ace/OS.i: Updated the call to thr_setprio() for pthreads so that
+ 	  it first determines the existing scheduling parameters and then
+ 	  updates the priority.  Thanks to Thilo Kielmann
+ 	  <kielmann@informatik.uni-siegen.de> for help with this.
+
+	* ace/config-osf1-4.0*.h: Updated ACE_NEEDS_HUGE_THREAD_STACKSIZE
+ 	  to be 1 mega to minimize porting surprises.  Thanks to Thilo
+ 	  Kielmann <kielmann@informatik.uni-siegen.de> for help with this.
+
+	* tests/Naming_Test.cpp: Cleaned up a few minor things related to
+ 	  int i = 0 vs. size_t i = 0.
 
 	* ace/SOCK_Dgram.cpp: Added a new macro called
  	  ACE_HAS_SOCKADDR_MSG_NAME, which is used on platforms (e.g.,

@@ -14,7 +14,7 @@
 //      the local naming context.
 //
 // = AUTHOR
-//    Prashant Jain
+//    Prashant Jain and Irfan Pyarali
 // 
 // ============================================================================
 
@@ -30,14 +30,16 @@ static char type[BUFSIZ];
 static void
 randomize (int array[], int size)
 {
-  int i;
+  size_t i;
 
   for (i = 0; i < size; i++)
     array [i] = i;
   
   ACE_OS::srand (ACE_OS::time (0L));
  
-  for (i = 0; i < size; i++, size) 
+  // Generate an array of random numbers from 0 .. size - 1.
+
+  for (i = 0; i < size; i++)
     {
       int index = ACE_OS::rand() % size--;
       int temp = array [index];
@@ -46,10 +48,9 @@ randomize (int array[], int size)
     }
 }
 
-
 static void 
 print_time (ACE_Profile_Timer &timer,
-			const char *test)
+	    const char *test)
 {
   ACE_Profile_Timer::ACE_Elapsed_Time et;
   timer.stop ();
@@ -62,7 +63,6 @@ print_time (ACE_Profile_Timer &timer,
 	      (et.real_time / double (ACE_NS_MAX_ENTRIES)) * 1000000));
 }
 
-
 static void
 test_bind (ACE_Naming_Context &ns_context)
 {
@@ -70,7 +70,7 @@ test_bind (ACE_Naming_Context &ns_context)
   randomize (array, sizeof array / sizeof (int));
 
   // do the binds
-  for (int i = 0; i < ACE_NS_MAX_ENTRIES; i++) 
+  for (size_t i = 0; i < ACE_NS_MAX_ENTRIES; i++) 
     {
       sprintf (name, "%s%d", "name", array[i]);
       ACE_WString w_name (name);
@@ -89,13 +89,11 @@ test_find_failure (ACE_Naming_Context &ns_context)
   sprintf (name, "%s", "foo-bar");
   ACE_WString w_name (name);
   ACE_WString w_value;
-  char *type = 0;
+  char *l_type = 0;
       
-  // do the finds
-  for (int i = 0; i < ACE_NS_MAX_ENTRIES; i++) 
-    {
-      ACE_ASSERT (ns_context.resolve (w_name, w_value, type) == -1);
-    }
+  // Do the finds.
+  for (size_t i = 0; i < ACE_NS_MAX_ENTRIES; i++) 
+    ACE_ASSERT (ns_context.resolve (w_name, w_value, l_type) == -1);
 }
 
 static void
@@ -105,12 +103,14 @@ test_rebind (ACE_Naming_Context &ns_context)
   randomize (array, sizeof array / sizeof (int));
 
   // do the rebinds
-  for (int i = 0; i < ACE_NS_MAX_ENTRIES; i++) 
+  for (size_t i = 0; i < ACE_NS_MAX_ENTRIES; i++) 
     {
       sprintf (name, "%s%d", "name", array[i]);
       ACE_WString w_name (name);
+
       sprintf (value, "%s%d", "value", -array[i]);
       ACE_WString w_value (value);
+
       sprintf (type, "%s%d", "type", -array[i]);
       ACE_ASSERT (ns_context.rebind (w_name, w_value, type) != -1);
     }
@@ -123,7 +123,7 @@ test_unbind (ACE_Naming_Context &ns_context)
   randomize (array, sizeof array / sizeof (int));
 
   // do the unbinds
-  for (int i = 0; i < ACE_NS_MAX_ENTRIES; i++) 
+  for (size_t i = 0; i < ACE_NS_MAX_ENTRIES; i++) 
     {
       sprintf (name, "%s%d", "name", array[i]);
       ACE_WString w_name (name);
@@ -141,7 +141,7 @@ test_find (ACE_Naming_Context &ns_context, int sign, int result)
   randomize (array, sizeof array / sizeof (int));
 
   // do the finds
-  for (int i = 0; i < ACE_NS_MAX_ENTRIES; i++) 
+  for (size_t i = 0; i < ACE_NS_MAX_ENTRIES; i++) 
     {
       if (sign == 1)
 	{
@@ -163,25 +163,28 @@ test_find (ACE_Naming_Context &ns_context, int sign, int result)
       
       ACE_ASSERT (ns_context.resolve (w_name, w_value, type_out) == result);
 
-      char *value = w_value.char_rep ();
-      if (value)
+      char *l_value = w_value.char_rep ();
+
+      if (l_value)
 	{
 	  ACE_ASSERT (w_value == val);
 	  if (ns_context.name_options ()->debug ())
 	    {
 	      if (type_out)
 		ACE_DEBUG ((LM_DEBUG, "Name: %s\tValue: %s\tType: %s\n",
-			    name, value, type_out));
+			    name, l_value, type_out));
 	      else
 		ACE_DEBUG ((LM_DEBUG, "Name: %s\tValue: %s\n",
-			    name, value));
+			    name, l_value));
 	    }
+
 	  if (type_out)
 	    {
 	      ACE_ASSERT (ACE_OS::strcmp (type_out, temp_type) == 0);
 	      delete[] type_out;
 	    }
 	}
+
       delete[] value;
     }  
 }
