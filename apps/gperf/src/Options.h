@@ -47,10 +47,10 @@ enum Option_Type
   NOTYPE       = 040000,        // Don't include user-defined type definition in output -- it's already defined elsewhere.
   COMP         = 0100000,       // Generate strncmp rather than strcmp.
   GLOBAL       = 0200000,       // Make the keyword table a global variable.
-  CONST        = 0400000,       // Make the generated tables readonly (const).
+  CONSTANT     = 0400000,       // Make the generated tables readonly (const).
   CPLUSPLUS    = 01000000,      // Generate C++ code.
   C            = 02000000,      // Generate C code.
-  ENUM	       = 04000000,	// Use enum for constants.
+  ENUM	       = 04000000,      // Use enum for constants.
   STRCASECMP   = 010000000,     // Use the case insensitive comparison.
   OPTIMIZE     = 020000000,     // Assume all input keywords are in the keyset.
   ADA          = 040000000,     // Generate Ada code.
