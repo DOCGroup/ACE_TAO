@@ -203,7 +203,7 @@ void
 TAO_Local_RefCounted_Object::_add_ref (void)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->refcount_lock_);
-  this->refcount_++;
+  ++this->refcount_;
 }
 
 void
@@ -211,7 +211,7 @@ TAO_Local_RefCounted_Object::_remove_ref (void)
 {
   {
     ACE_GUARD (TAO_SYNCH_MUTEX, mon, this->refcount_lock_);
-    this->refcount_--;
+    --this->refcount_;
 
     if (this->refcount_ != 0)
       return;
