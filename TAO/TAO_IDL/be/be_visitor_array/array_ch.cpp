@@ -138,7 +138,7 @@ int be_visitor_array_ch::visit_array (be_array *node)
 
   be_typedef *td = this->ctx_->tdef ();
 
-  if (this->ctx_->tdef () == 0)
+  if (td == 0)
     {
       // We are dealing with an anonymous array case. Generate a typedef with
       // an _ prepended to the name.
