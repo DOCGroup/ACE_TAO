@@ -345,10 +345,52 @@ dnl    AC_DEFINE(ACE_USE_SELECT_REACTOR_FOR_REACTOR_IMPL)
     ;;
 esac
 
+ACE_CHECK_FORMAT_SPECIFIERS
 ACE_CHECK_LACKS_PERFECT_MULTICAST_FILTERING
 
 dnl End ACE_SET_PLATFORM_MACROS
 ])
+
+
+
+# ACE_CHECK_FORMAT_SPECIFIERS
+#
+# Override default *printf format specifiers for size_t, ssize_t, ACE_INT64, 
+# and ACE_UINT64
+#
+# FIXME: Is it possible to write a portable feature test, or is checking
+#        the the target OS / target CPU the best we can do?
+# 
+#---------------------------------------------------------------------------
+AC_DEFUN([ACE_CHECK_FORMAT_SPECIFIERS],
+[dnl
+AH_TEMPLATE([ACE_SIZE_T_FORMAT_SPECIFIER],
+[Define to the *printf format specifier  (e.g. "%u") for size_t])dnl
+AH_TEMPLATE([ACE_SSIZE_T_FORMAT_SPECIFIER],
+[Define to the *printf format specifier  (e.g. "%d") for ssize_t])dnl
+AH_TEMPLATE([ACE_INT64_FORMAT_SPECIFIER],
+[Define to the *printf format specifier (e.g. "%lld") for the 64 bit signed integer type])dnl
+AH_TEMPLATE([ACE_UINT64_FORMAT_SPECIFIER],
+[Define to the *printf format specifier (e.g. "%llu") for the 64 bit signed integer type])dnl
+
+case "$target_os" in
+darwin*)
+  AC_DEFINE([ACE_SIZE_T_FORMAT_SPECIFIER], ["%lu"])
+  ;;
+netbsd*)
+  case "$target_cpu" in
+    x86_64)
+      AC_DEFINE([ACE_SIZE_T_FORMAT_SPECIFIER], ["%lu"])
+      AC_DEFINE([ACE_SSIZE_T_FORMAT_SPECIFIER], ["%ld"])
+      ;;
+    *)
+      ;;
+  esac
+  ;;
+
+*)
+  ;;
+esac])
 
 
 # ACE_CHECK_PERFECT_MULTICAST_FILTERING
