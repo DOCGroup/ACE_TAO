@@ -1,6 +1,6 @@
 Fri Aug 27 08:18:21 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* bin/footprint.sh:
+	* bin/footprint_stats.sh:
 
 	  Fixed the path to the libraries. Thanks to Johnny for spotting
 	  the error in the scoreboard.
