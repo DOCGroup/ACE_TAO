@@ -1,3 +1,8 @@
+Fri Oct 10 18:41:47 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
+
+	* clients/Blobby/Makefile: 
+	  Fixed problem that made compilation fail.
+
 Thu Sep 11 10:40:38 1997  Carlos O'Ryan  <coryan@polka.cs.wustl.edu>
 
 	* server/HTTP_Request.cpp: 
