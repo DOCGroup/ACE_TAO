@@ -1,3 +1,8 @@
+Mon Jan 10 12:29:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * apps/gperf/tests/test.cpp:
+          Fixed unicode link errors
+
 Mon Jan 10 10:28:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Mem_Map/IO-tests/test_io.cpp:
