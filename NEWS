@@ -7,8 +7,10 @@ PLANNED MAJOR CHANGES TARGETED FOR ACE-5.4.3
 - (Bala) Bug 1890-Select_Reactor and Priority_Reactor performance can
   be improved
   Finished.
+  Mon Aug 23 01:04:34 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 - (Boris) Addition of XSC
+   Will not happen
 
 - (Steve, J.T., Ossama) Autoconfigure using all MPC-generated files.
   **In progress. Mostly fighting with MPC.
