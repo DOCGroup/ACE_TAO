@@ -364,7 +364,8 @@ be_visitor_operation_ami_cs::gen_marshal_and_invoke (be_operation *node,
       << "\n#endif  /* TAO_HAS_INTERCEPTORS */\n" << be_nl;
 
   *os << "for (;;)" << be_nl
-      << "{" << be_idt_nl;
+      << "{" << be_idt_nl
+      << "_invoke_status = TAO_INVOKE_EXCEPTION;" << be_nl;
 
   *os << "\n#if TAO_HAS_INTERCEPTORS == 1" << be_nl
       << "TAO_AMI_ClientRequestInfo_i _tao_ri (" << be_idt << be_idt_nl
