@@ -39,7 +39,7 @@ TAO_FixedArray_Var_T<T_slice,T_life>::operator= (
       T_life::tao_free (this->ptr_);
       
       // Deep copy.
-      this->ptr_ = T_life::tao_dup (p.in ()));
+      this->ptr_ = T_life::tao_dup (p.in ());
     }
   
   return *this;
@@ -73,7 +73,7 @@ TAO_VarArray_Var_T<T_slice,T_life>::operator= (
       T_life::tao_free (this->ptr_);
       
       // Deep copy.
-      this->ptr_ = T_life::tao_dup (p.in ()));
+      this->ptr_ = T_life::tao_dup (p.in ());
     }
   
   return *this;

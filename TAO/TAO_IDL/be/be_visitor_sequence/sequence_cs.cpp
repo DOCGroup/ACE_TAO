@@ -44,7 +44,6 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
   be_type *bt = be_type::narrow_from_decl (node->base_type ());
-  AST_Type::SIZE_TYPE st = bt->size_type ();
 
   *os << be_nl << be_nl << "// TAO_IDL - Generated from " << be_nl
       << "// "__FILE__ << ":" << __LINE__;

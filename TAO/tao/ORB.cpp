@@ -2149,7 +2149,7 @@ CORBA::ORB::lookup_value_factory (const char *repository_id
 # pragma instantiate \
     TAO_Seq_Out_T< \
         CORBA::ORB::RequestSeq, \
-        CORBA::ORB::RequestSeq_var, \ 
+        CORBA::ORB::RequestSeq_var, \
         TAO_Pseudo_Object_Manager< \
             CORBA::Request, \
             CORBA::Request_var \

@@ -495,6 +495,7 @@ AST_Type::nested_name (const char* local_name,
   return this->nested_type_name_;
 }
 
+int
 AST_Type::ast_accept (ast_visitor *visitor)
 {
   return visitor->visit_type (this);
