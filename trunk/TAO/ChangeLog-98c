@@ -1,3 +1,11 @@
+Sun Jan 25 14:30:04 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/Cubit/TAO/IDL_Cubit/client.dsp: Added a missing source.
+
+	* tests/Cubit/TAO/IDL_Cubit/clnt.cpp (Cubit_Client): Changed to
+ 	  initialize Cubit_Client.cubit_key_ from heap.  It should use
+ 	  memory either from stack or heap, but never both.
+
 Sat Jan 24 21:55:55 1998  Sumedh Mungee  <sumedh@cs.wustl.edu>
 
 	* AVStreams_i.h, AVStreams_i.cpp: Made changes for new POA
