@@ -805,7 +805,7 @@ protected:
                     ACE_Hash_Map_Entry<ACE_Refcounted_Hash_Recyclable<ACE_PEER_CONNECTOR_ADDR>, SVC_HANDLER *> *&entry,
                     int &found);
 
-  int connect_svc_handler_i (SVC_HANDLER *&sh,
+  virtual int connect_svc_handler_i (SVC_HANDLER *&sh,
                              const ACE_PEER_CONNECTOR_ADDR &remote_addr,
                              ACE_Time_Value *timeout,
                              const ACE_PEER_CONNECTOR_ADDR &local_addr,
