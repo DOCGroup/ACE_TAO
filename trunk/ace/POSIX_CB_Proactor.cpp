@@ -3,9 +3,7 @@
 
 #include "ace/POSIX_CB_Proactor.h"
 
-#if defined (ACE_HAS_AIO_CALLS) && !defined(__Lynx__) && \
-    !(defined (__FreeBSD_version) && (__FreeBSD_version > 500000))
-
+#if defined (ACE_HAS_AIO_CALLS) && !defined(__Lynx__) && !defined (__FreeBSD__)
 
 #include "ace/OS_NS_sys_time.h"
 #include "ace/Task_T.h"
@@ -35,12 +33,7 @@ ACE_POSIX_CB_Proactor::~ACE_POSIX_CB_Proactor (void)
 
 void ACE_POSIX_CB_Proactor::aio_completion_func (sigval_t cb_data)
 {
-#if defined (__FreeBSD__)
-  ACE_POSIX_CB_Proactor * impl = ACE_static_cast (ACE_POSIX_CB_Proactor *, cb_data.sigval_ptr);
-#else
   ACE_POSIX_CB_Proactor * impl = ACE_static_cast (ACE_POSIX_CB_Proactor *, cb_data.sival_ptr);
-#endif
-
   if ( impl != 0 )
     impl->notify_completion (0);
 }
@@ -101,11 +94,7 @@ ACE_POSIX_CB_Proactor::allocate_aio_slot (ACE_POSIX_Asynch_Result *result)
   result->aio_sigevent.sigev_notify_attributes = 0;
 #endif /* __sgi */
 
-#if defined (__FreeBSD__)
-  result->aio_sigevent.sigev_value.sigval_ptr = this ;
-#else
   result->aio_sigevent.sigev_value.sival_ptr = this ;
-#endif /* __FreeBSD__ */
 
   return slot;
 }
@@ -183,4 +172,4 @@ ACE_POSIX_CB_Proactor::handle_events_i (unsigned long milli_seconds)
   return ret_aio + ret_que > 0 ? 1 : 0;
 }
 
-#endif /* ACE_HAS_AIO_CALLS && !__Lynx__ && !FreeBSD 5*/
+#endif /* ACE_HAS_AIO_CALLS && !__Lynx__ && !__FreeBSD__ */
