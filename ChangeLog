@@ -1,3 +1,7 @@
+Fri May 30 15:29:48 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* Makefile (APPLY_NEW_TAG): New tags for CIAO.
+
 Fri May 30 14:46:00 2003  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* examples/Threads/auto_event.cpp (writer): Replaced "wait" with "signal"
