@@ -1534,6 +1534,10 @@ TAO_Marshal_Except::decode (CORBA::TypeCode_ptr  tc,
   CORBA::Long size, alignment;
 
   data = (char *) data + sizeof (CORBA::Exception);
+  // @@ (ASG) The reason this is done is because we want to skip the size
+  // of the the base class and its private data members (type_ and
+  // refcount_). After skipping these data members, we will have the data
+  // members of the derived class which must be encoded.
 
   // Number of fields in the struct.
   int member_count = tc->member_count (env);
