@@ -8,7 +8,8 @@
 #	Local macros
 #----------------------------------------------------------------------------
 
-BIN = 	Barrier_Test \
+BIN = 	Atomic_Op_Test \
+	Barrier_Test \
 	Buffer_Stream_Test \
 	Conn_Test \
 	Enum_Interfaces_Test \

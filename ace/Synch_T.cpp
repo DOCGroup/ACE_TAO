@@ -10,6 +10,10 @@
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Synch_T.i"
+// On non-Win32 platforms, this code will be treated as normal code.
+#if !defined (ACE_WIN32)
+#include "ace/Atomic_Op.i"
+#endif /* !ACE_WIN32 */
 #endif /* __ACE_INLINE__ */
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Atomic_Op)
