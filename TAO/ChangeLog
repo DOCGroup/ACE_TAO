@@ -1,19 +1,27 @@
+Mon Sep 25 07:22:35 2003  Curt Hibbs  <hibbs_c@ociweb.com>
+
+        * CIAO/CIDLC/cidlc.vcproj
+        * CIAO/CIDLC/parser_examples/cidl/cidl.vcproj
+        * CIAO/CIDLC/parser_examples/cidl/idl2.vcproj
+        * CIAO/CIDLC/parser_examples/cidl/idl3.vcproj
+        Removed generated files that should not have been checked in.
+
 Fri Sep 26 19:31:11 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/PortableGroup/PG_Utils.cpp (TAO): 
-	* orbsvcs/orbsvcs/PortableGroup/PG_Utils.h: Moved group reference
-	  manipulation functions to a new file which will be used within
-	  the PortableGroup.
+  * orbsvcs/orbsvcs/PortableGroup/PG_Utils.cpp (TAO): 
+  * orbsvcs/orbsvcs/PortableGroup/PG_Utils.h: Moved group reference
+    manipulation functions to a new file which will be used within
+    the PortableGroup.
 
-	* orbsvcs/orbsvcs/PortableGroup/PG_GenericFactory.cpp
-	* orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroupManager.cpp:
-	* orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroupManager.h:
-	* orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroup_Map.cpp:
-	* orbsvcs/orbsvcs/PortableGroup/PG_Property_Utils.cpp: Removed
-	  dependency on the FT library which was unnecessary in the first
-	  place.  
-	
-	  Fixed warnings and errors with g++ builds.
+  * orbsvcs/orbsvcs/PortableGroup/PG_GenericFactory.cpp
+  * orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroupManager.cpp:
+  * orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroupManager.h:
+  * orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroup_Map.cpp:
+  * orbsvcs/orbsvcs/PortableGroup/PG_Property_Utils.cpp: Removed
+    dependency on the FT library which was unnecessary in the first
+    place.  
+  
+    Fixed warnings and errors with g++ builds.
 
 Thu Sep 25 16:08:35 2003  Dale Wilson  <wilson_d@ociweb.com>
 
