@@ -1,3 +1,28 @@
+Mon Apr 06 01:29:35 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/ace_ce.dsp: Update project files.  Rearrange dll filenames a
+	  bit so that it's eaier to have various ACE libraries for various
+	  CE supported CPUs.  Files for every supported CPU are generated
+	  under CPU specific directory as follow:
+
+	  CPU             Directory       Name
+	  Sh3 series      ace/WCE/SH	  aced.{lib,dll} ace.{lib,dll}
+	  MIPS series     ace/WCE/MIPS    aced.{lib,dll} ace.{lib,dll}
+	  x86 emulation   ace/WCE/x86em   aced.{lib,dll} ace.{lib,dll}
+
+	* ace/config-win32-common.h: Prevent CE from using wsock32.lib.
+
+Sun Apr 05 16:44:31 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+	  
+	* ace/OS.h (ASYS_ONLY_MULTIBYTE_STRING): New macro.  Used to
+	  activate wchar string to char string conversion only under CE,
+	  under other cases, the argument to this macro is treated as
+	  a regular char string. 
+	
+	* ace/INET_Addr.cpp (set): Changed to use
+	  ASYS_ONLY_MULTIBYTE_STRING.  This has gotten out of control
+	  now.  I need to think of a better name for these macros.
+	
 Tue Apr 07 09:30:28 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/platform_lynxos.GNU: set up PATH when
