@@ -8,7 +8,7 @@ include $(root)/Bootstrap.rules
 
 $(call include, $(root)/Config.rules)
 
-$(call include, $(UTILITY_ROOT)/BuildRules/Executable.pre.rules)
+$(call include, $(UTILITY_BUILD_RULES)/Executable.pre.rules)
 
 cxx_translation_units := cidlc.cpp ExecutorMappingGenerator.cpp 
 
@@ -16,10 +16,8 @@ module_base           := cidlc
 module_prefix         :=
 module_suffix         :=
 
-CXX_PREPROCESS_FLAGS  += -I$(root) -I$(UTILITY_ROOT) -I$(BOOST_ROOT)
+CXX_PREPROCESS_FLAGS  += -I$(root) $(UTILITY_CPP_FLAGS) $(BOOST_CPP_FLAGS)
 
-#                         -L$(UTILITY_ROOT)/Utility/Introspection \
-#                         -lIntrospection                         \
 
 CXX_LINK_LIBS         += -L$(root)/CCF/CIDL              \
                          -lCIDL                          \
@@ -31,8 +29,8 @@ CXX_LINK_LIBS         += -L$(root)/CCF/CIDL              \
                          -lCodeGenerationKit             \
                          -L$(root)/CCF/CompilerElements  \
                          -lCompilerElements              \
-                         -L$(BOOST_ROOT)/lib             \
+                         $(BOOST_LD_FLAGS)               \
                          -lboost_regex                   \
                          -lboost_filesystem
 
-$(call include, $(UTILITY_ROOT)/BuildRules/Executable.post.rules)
+$(call include, $(UTILITY_BUILD_RULES)/Executable.post.rules)

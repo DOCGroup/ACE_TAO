@@ -8,7 +8,7 @@ include $(root)/Bootstrap.rules
 
 $(call include, $(root)/Config.rules)
 
-$(call include, $(UTILITY_ROOT)/BuildRules/Object.pre.rules)
+$(call include, $(UTILITY_BUILD_RULES)/Object.pre.rules)
 
 cxx_translation_units := Attribute.cpp    \
                          Elements.cpp     \
@@ -30,6 +30,6 @@ cxx_translation_units := Attribute.cpp    \
                          ValueType.cpp
 
 
-CXX_PREPROCESS_FLAGS  += -I$(root) -I$(UTILITY_ROOT) -I$(BOOST_ROOT)
+CXX_PREPROCESS_FLAGS  += -I$(root) $(UTILITY_CPP_FLAGS) $(BOOST_CPP_FLAGS)
 
-$(call include, $(UTILITY_ROOT)/BuildRules/Object.post.rules)
+$(call include, $(UTILITY_BUILD_RULES)/Object.post.rules)
