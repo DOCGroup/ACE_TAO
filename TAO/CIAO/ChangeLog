@@ -1,3 +1,45 @@
+Mon Aug 23 21:32:50 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* CIDLC/TypeNameEmitter.cpp:
+
+	  Fixed a compiler error in the daily builds showing up from a
+	  non-const declaration of a char * for extraction into an Any. 
+
+	* DAnCE/Config_Handlers/Config.h:
+
+	  Deployment.h has been renamed to Config.h 
+	
+	* DAnCE/Config_Handlers/Process_Element.h:	
+	* DAnCE/Config_Handlers/Basic_Handler.h:
+	
+	  Include Config.h
+	  
+	* DAnCE/Config_Handlers/Basic_Deployment_Data.cpp:
+	* DAnCE/Config_Handlers/Basic_Deployment_Data.hpp:
+	* DAnCE/Config_Handlers/Deployment.cpp:
+	* DAnCE/Config_Handlers/Deployment.hpp:
+	* DAnCE/Config_Handlers/ccd.cpp:
+	* DAnCE/Config_Handlers/ccd.hpp:
+	* DAnCE/Config_Handlers/cdd.cpp:
+	* DAnCE/Config_Handlers/cdd.hpp:
+	* DAnCE/Config_Handlers/cdp.cpp:
+	* DAnCE/Config_Handlers/cdp.hpp:
+	* DAnCE/Config_Handlers/cid.cpp:
+	* DAnCE/Config_Handlers/cid.hpp:
+	* DAnCE/Config_Handlers/cpd.cpp:
+	* DAnCE/Config_Handlers/cpd.hpp:
+	* DAnCE/Config_Handlers/iad.cpp:
+	* DAnCE/Config_Handlers/iad.hpp:
+	* DAnCE/Config_Handlers/pcd.cpp:
+	* DAnCE/Config_Handlers/pcd.hpp:
+	* DAnCE/Config_Handlers/toplevel.cpp:
+	* DAnCE/Config_Handlers/toplevel.hpp:
+	* DAnCE/Config_Handlers/Config_Handlers.mpc:	
+
+	  Generated code from XSC which is going to be used for the next
+	  generation handlers. They have been added in the MPC but guarded
+	  with requires += dummy_label since they give lot of warnings. 
+
 Mon Aug 23 08:02:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tools/IDL3_to_IDL2/IDL3_to_IDL2.mpc:
