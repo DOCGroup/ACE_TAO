@@ -50,8 +50,12 @@ Dir_Service_i::tele_number (const char *name,
 {
   ACE_UNUSED_ARG (name);
   ACE_UNUSED_ARG (env);
+
+  ACE_DEBUG ((LM_DEBUG,
+              "Providing required information...\n"));
+
   // The telephone number corresponding to the name is returned.
-   return 3617339;
+   return 9354215;
 }
 
 // Ending the session with a word of thanks.
@@ -61,7 +65,7 @@ Dir_Service_i::end_note (CORBA::Environment &env)
 {
   ACE_UNUSED_ARG (env);
   ACE_DEBUG ((LM_DEBUG,
-              "Thanks for using DIRECTORY SERVICE!\n"));
+              "Thanks for using Directory Service!\n"));
 }
 
 // The area code information is displayed.
@@ -71,9 +75,9 @@ Dir_Service_i::area_codes_info (CORBA::Environment &env)
 {
   ACE_UNUSED_ARG (env);
   ACE_DEBUG ((LM_DEBUG,
-              "Some area_codes:"
-              " Indianapolis  812"
-               "St.Louis  314"
+              "Some area_codes:\n"
+              " Indianapolis  812\n"
+               "St.Louis  314\n"
                "Sunnyvale  408\n"));
 
 }
