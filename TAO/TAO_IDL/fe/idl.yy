@@ -1222,6 +1222,7 @@ positive_int_expr :
            * If const_expr is an enum value (AST_EnumVal inherits from
            * AST_Constant), the AST_ExprValue will probably not be set,
            * but there's no need to check anyway
+           */
           if (ev != 0)
             {
               switch (ev->et)
