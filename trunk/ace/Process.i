@@ -222,6 +222,7 @@ ACE_Process_Options::setreugid (const char* user)
   else
     return -1;
 #else
+  ACE_UNUSED_ARG (user);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_LACKS_PWD_FUNCTIONS */
 }

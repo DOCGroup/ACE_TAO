@@ -1,5 +1,9 @@
 Sun Jan  9 00:25:58 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/Process.i (setreugid): Added an ACE_UNUSED_ARG for the
+	  ACE_LACKS_PWD_FUNCTIONS case.  Thanks to David for catching
+	  this!
+  
 	* ace/Process.i (setreugid): Guard against the case where
 	  ACE_LACKS_PWD_FUNCTIONS.  Thanks to David Levine for 
 	  reporting this problem with VxWorks.
