@@ -1,3 +1,14 @@
+Mon Aug 30 13:02:22 2004  Steve Huston  <shuston@riverace.com>
+
+	* ace/Basic_Types.h: Don't use sizeof() when defining ACE_SIZEOF_WCHAR.
+	  Other code (e.g. ACEXML) in ACE uses ACE_SIZEOF_WCHAR in
+	  preprocessor tests, so it needs to be a preprocessor constant.
+	  If the config file doesn't set it, and on an XPG4 system, set
+	  the size to 4. If it's wrong, Basic_Types_Test will catch it.
+
+	* tests/Basic_Types_Test.cpp: Remove the comment that says the check
+	  for ACE_SIZEOF_WCHAR is pointless. It's now important.
+
 Mon Aug 30 10:05:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/amh.mpb:
