@@ -1,3 +1,8 @@
+Fri Dec 25 08:23:51 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ACE-INSTALL.html: Fixed a broken link to the ACE FAQ.  Thanks to
+ 	  Barry Hoggard <hoggardb@panix.com> for reporting this.
+
 Fri Dec 25 01:55:32 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/Hash_Map_Manager: There are two problems with the current
