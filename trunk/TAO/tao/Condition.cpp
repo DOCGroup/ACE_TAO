@@ -1,3 +1,5 @@
+#ifndef TAO_CONDITION_CPP
+#define TAO_CONDITION_CPP
 #include "Condition.h"
 
 
@@ -54,3 +56,5 @@ TAO_Condition<MUTEX>::~TAO_Condition (void)
   if (this->delete_lock_)
     delete this->mutex_;
 }
+
+#endif /* TAO_CONDITION_CPP*/
