@@ -78,6 +78,7 @@ my $kit = '';
 my $release_type = 'beta';
 my $ace_tag = my $tao_tag = '';
 my $controlled_files = my $release_files = my $release_lib_files = '';
+my $release_tag_files = '';
 my $release_filter = '\\( -name CVS -o -name build \\) -prune -o ' .
                      '! -name \'.\#*\' ! -name \'\#*\' ! -name \'*~\' ' .
                      '! -name \'*.MAK\' -print';
