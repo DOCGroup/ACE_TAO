@@ -675,10 +675,10 @@ CORBA_SystemException::_tao_get_omg_exception_description (
 
   static const char *NO_IMPLEMENT_TABLE[] =
     {
-        "Missing local value implementation.", // 1
+        "Missing local value implementation.",        // 1
         "Incompatible value implementation version.", // 2
-        "Unable to use any profile in IOR.", // 3
-        "Attempt to use DII on Local object." // 4
+        "Unable to use any profile in IOR.",          // 3
+        "Attempt to use DII on Local object."         // 4
     };
 
   static const char *NO_RESOURCE_TABLE[] =
