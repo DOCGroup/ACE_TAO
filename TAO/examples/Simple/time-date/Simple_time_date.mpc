@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*lib): orbsvcslib, naming, portableserver {
+project(*lib): portableserver {
   sharedname    = Time_Date
   // The svc conf files assume that the dll is in the current directory
   libout        = .
@@ -15,7 +15,7 @@ project(*lib): orbsvcslib, naming, portableserver {
   }
 }
 
-project(*server): namingexe {
+project(*server): portableserver {
   IDL_Files {
   }
   Source_Files {

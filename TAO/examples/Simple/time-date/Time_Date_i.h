@@ -1,4 +1,5 @@
 // -*- C++ -*-
+//
 // $Id$
 
 // ============================================================================
@@ -22,7 +23,9 @@
 
 #include "Time_DateS.h"
 
-class Time_Date_i: public POA_Time_Date
+class Time_Date_i
+  : public POA_Time_Date,
+    public PortableServer::RefCountServantBase
 {
   // = TITLE
   //    Time_Date object implementation.
@@ -31,12 +34,6 @@ class Time_Date_i: public POA_Time_Date
   //    Time_Date object implementation
 public:
   // = Initialization and termination methods.
-
-  Time_Date_i (void);
-  // Constructor
-
-  ~Time_Date_i (void);
-  // Destructor
 
   virtual void bin_date (CORBA::Long_out time_date
                          ACE_ENV_ARG_DECL_NOT_USED)
