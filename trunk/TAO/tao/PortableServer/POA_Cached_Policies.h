@@ -70,6 +70,7 @@ public:
 
   void priority_model (PriorityModel priority_model);
   void server_priority (CORBA::Short priority);
+  void implicit_activation (PortableServer::ImplicitActivationPolicyValue value);
 
 protected:
 
