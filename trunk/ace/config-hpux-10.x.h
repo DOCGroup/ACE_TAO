@@ -129,6 +129,10 @@ extern int h_errno;	/* This isn't declared in a header file on HP-UX */
 // Platform lacks readers/writer locks.
 #define ACE_LACKS_RWLOCK_T
 
+// Shared library path/search components
+#define ACE_DLL_SUFFIX      ".sl"
+#define ACE_LD_SEARCH_PATH  "SHLIB_PATH"
+
 //////////////////////////////////////////////////////////////////////////
 //
 // STREAMS information
