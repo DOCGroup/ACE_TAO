@@ -1109,7 +1109,9 @@ TAO_ORB_Core::fini (void)
   }
 
   delete this->reactor_registry_;
+#if defined(TAO_HAS_RT_CORBA)
   delete this->priority_mapping_;
+#endif /* TAO_HAS_RT_CORBA */
 
   delete this;
 
