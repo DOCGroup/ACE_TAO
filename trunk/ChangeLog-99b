@@ -1,3 +1,19 @@
+Mon Aug 23 16:53:00 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* performance-tests/Makefile:
+	* performance-tests/TCP/README:
+	  Added a README file for the test
+
+	* performance-tests/TCP/tcp_test.cpp:
+	  Added options to pace the events and to control the message size 
+	  on the server side.
+
+	* performance-tests/RPC/Makefile:
+	* performance-tests/RPC/client.cpp:
+	* performance-tests/RPC/ping.x:
+	* performance-tests/RPC/server.c:
+	  Added a simple RPC test to compare sockets (ACE), RPC and TAO.
+
 Mon Aug 23 13:30:32 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* include/makeinclude/platform_sunos5_kcc.GNU: The optimization

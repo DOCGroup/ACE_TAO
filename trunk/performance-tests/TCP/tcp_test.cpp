@@ -54,6 +54,7 @@ static int client = 0;
 static int nsamples = DEFITERATIONS;
 static int so_bufsz = 0;
 static u_int use_reactor = 0;
+static int usecs = 0;
 
 enum {
   SELECT = 1,
@@ -70,7 +71,7 @@ usage (void)
               "  [-v]          (Verbose)\n"
               "  [-m message size]\n"
               "  [-i iterations]\n"
-              //              "  [-I usdelay]\n"
+              "  [-I usdelay]\n"
               "  [-b socket bufsz] \n"
               "  [-p port]\n"
               "  [-s]\n"
@@ -212,6 +213,12 @@ Client::run (void)
   ACE_hrtime_t test_start = ACE_OS::gethrtime ();
   for (int i = 0; i != nsamples; ++i)
     {
+      if (usecs != 0)
+        {
+          ACE_Time_Value tv (0, usecs);
+          ACE_OS::sleep (tv);
+        }
+
       ACE_hrtime_t start = ACE_OS::gethrtime ();
       if (this->send (sbuf, bufsz) <= 0)
         ACE_ERROR_RETURN ((LM_ERROR, "(%P) %p\n", "send"), -1);
@@ -344,7 +351,7 @@ Server::handle_input (ACE_HANDLE)
 {
   char buf[BUFSIZ];
 
-  ssize_t n = this->endpoint_.recv (buf, sizeof buf);
+  ssize_t n = this->endpoint_.recv (buf, bufsz);
 
   if (n == -1)
     ACE_DEBUG ((LM_ERROR,
@@ -520,6 +527,14 @@ main (int argc, char *argv[])
           if (nsamples <= 0)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "\nIterations must be greater than 0!\n\n"),
+                              1);
+          break;
+
+        case 'I':
+          usecs = ACE_OS::atoi (getopt.optarg);
+          if (usecs < 0)
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "\nInvalid interval value\n\n"),
                               1);
           break;
 
