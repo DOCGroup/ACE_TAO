@@ -1,3 +1,21 @@
+Tue Jun 24 14:40:43 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/String_Base.i:
+          Added include of Min_Max.h>  Thanks to Olli Savia <ops@iki.fi>
+          for reporting this and supplying the fix.
+
+        * ace/config-lynxos.h:
+        * ace/os_include/net/os_if.h:
+          Added new macro ACE_NEEDS_IPC_1C_H used to include ipc_1c.h
+          before net/if.h for LynxOS 3.1.0 and later.  Thanks to Olli
+          Savia <ops@iki.fi> for reporting this and supplying the fix.
+
+        * ace/os_include/os_signal.h:
+        * ace/os_include/os_ucontext.h:
+          Moved include of os_ucontext.h to bottom of os_signal.h and
+          included os_signal.h in os_ucontext.h.  Thanks to John Michael
+          Zorko <j.zorko@att.net> for reporting this.
+
 Tue Jun 24 03:50:21 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/Based_Pointer_Repository.h:

@@ -44,6 +44,12 @@
 # define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 0
 #endif /* __LYNXOS_SDK_VERSION */
 
+#if !defined ( __LYNXOS_SDK_VERSION )
+  // LynxOS 3.1.0 and later need ipc_1c.h to be included before net/if.h
+  // to avoid macro conflict.
+# define ACE_NEEDS_IPC_1C_H
+#endif /* __LYNXOS_SDK_VERSION */
+
 #if defined (__x86__)
   // PowerPC libraries don't seem to have alloca (), so only use with x86.
 // Although ACE does have alloca() on this compiler/platform combination, it is

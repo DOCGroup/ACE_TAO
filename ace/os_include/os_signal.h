@@ -25,7 +25,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/os_include/sys/os_types.h"
-#include "ace/os_include/os_ucontext.h"
 #include "ace/os_include/os_time.h"
 
 #if !defined (ACE_LACKS_SINGNAL_H)
@@ -263,6 +262,8 @@ extern "C"
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
+
+#include "ace/os_include/os_ucontext.h"
 
 #include "ace/post.h"
 #endif /* ACE_OS_INCLUDE_OS_SIGNAL_H */
