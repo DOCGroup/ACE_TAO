@@ -15,6 +15,7 @@ DIRS = \
         ior_corbaname \
         IOR_MCast \
         LoadBalancing \
+        Miop \
 	Property \
         Simple_Naming \
         Time \
