@@ -1,3 +1,11 @@
+Wed Nov 29 23:55:37 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
+
+	* apps/drwho/server.cpp:
+	* apps/drwho/BS_Client.cpp:	  
+	  Used casts to quiet VxWorks/LynxOS.
+	* bin/auto_run_tests.lst: 
+	  Commented out this test - its broken.
+
 Wed Nov 29 09:41:51 2000  Johnny Willemsen <jwillemsen@remedy.nl>
         * examples/Reactor/Multicast/*.bor
           Added Borland C++ Builder specific makefiles. Thanks to

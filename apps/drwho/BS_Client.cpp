@@ -19,21 +19,21 @@ BS_Client::BS_Client (void)
                Protocol_Record[this->count_]);
       ACE_NEW (this->sorted_record_,
                Protocol_Record *[this->count_]);
-  
+
       for (int i = 0; i < this->count_; i++)
         {
           Protocol_Record *prp = &this->protocol_record_[i];
 
           this->sorted_record_[i] = prp;
 
-          FILE_MANAGER::instance ()->get_login_and_real_name 
+          FILE_MANAGER::instance ()->get_login_and_real_name
             (prp->key_name1_, prp->key_name2_);
         }
-  
+
       ACE_OS::qsort (this->sorted_record_,
                      this->count_,
                      sizeof *this->sorted_record_,
-                     Binary_Search::name_compare);
+                     (ACE_COMPARE_FUNC)Binary_Search::name_compare);
     }
 }
 
@@ -46,30 +46,30 @@ Protocol_Record *
 BS_Client::insert (const char *key_name, int)
 {
 #if 0
-  Protocol_Record *pr = (Protocol_Record *) 
+  Protocol_Record *pr = (Protocol_Record *)
     ACE_OS::bsearch ((const void *) key_name,
                      (const void *) this->sorted_record_,
                      this->count_,
                      sizeof ...,
                      int (*compar)(const void *, const void *) ACE_OS::strcmp);
   return pr;
-#else                   
+#else
   int lo = 0;
   int hi = this->count_ - 1;
   Protocol_Record **sorted_buffer = this->sorted_record_;
-  
+
   while (lo <= hi)
     {
-      int mid 	= (lo + hi) / 2;
+      int mid   = (lo + hi) / 2;
       Protocol_Record *prp = sorted_buffer[mid];
       int cmp = ACE_OS::strcmp (key_name,
                                 prp->get_login ());
       if (cmp == 0)
-	return prp;
+        return prp;
       else if (cmp < 0)
-	hi = mid - 1;
+        hi = mid - 1;
       else
-	lo = mid + 1;
+        lo = mid + 1;
     }
 
   return 0;
