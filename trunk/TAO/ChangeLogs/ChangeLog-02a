@@ -1,3 +1,8 @@
+Tue May 16 14:59:41 2000  Pradeep Gore  <pradeep@cumbia.cs.wustl.edu>
+
+	* orbsvcs/tests/Concurrency/CC_command.cpp:
+	  fixed "statement not reached" warning on SUNOS_KCC3.4
+
 Tue May 16 08:49:34 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/tests/EC_Throughput/Makefile:
@@ -9,7 +14,7 @@ Mon May 15 22:05:49 2000  Vishal Kachroo  <vishal@cs.wustl.edu>
           Changed the Time Offset constant to 141427 days
           (0x2D8539C80 secs) instead of 141426.97 days
           (0x2D8539260 secs). I have put comments in the code on why
-          this offset is required. Thanks to Matthew Newhook 
+          this offset is required. Thanks to Matthew Newhook
 	  <matthew@ooc.com> for pointing out the error.
 
 Mon May 15 20:03:11 2000  Pradeep Gore  <pradeep@cumbia.cs.wustl.edu>
