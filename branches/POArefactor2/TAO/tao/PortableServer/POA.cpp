@@ -4127,6 +4127,59 @@ TAO_POA::the_activator (PortableServer::AdapterActivator_ptr adapter_activator
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
+#if (TAO_HAS_MINIMUM_POA == 0)
+
+PortableServer::ServantManager_ptr
+TAO_POA::get_servant_manager (ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableServer::POA::WrongPolicy))
+{
+  // Lock access for the duration of this transaction.
+  TAO_POA_GUARD_RETURN (PortableServer::ServantManager::_nil ());
+
+  return this->get_servant_manager_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+}
+
+void
+TAO_POA::set_servant_manager (PortableServer::ServantManager_ptr imgr
+                              ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableServer::POA::WrongPolicy))
+{
+  // Lock access for the duration of this transaction.
+  TAO_POA_GUARD;
+
+  this->set_servant_manager_i (imgr
+                               ACE_ENV_ARG_PARAMETER);
+}
+
+PortableServer::Servant
+TAO_POA::get_servant (ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableServer::POA::NoServant,
+                   PortableServer::POA::WrongPolicy))
+{
+  // Lock access for the duration of this transaction.
+  TAO_POA_GUARD_RETURN (0);
+
+  return this->get_servant_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+}
+
+void
+TAO_POA::set_servant (PortableServer::Servant servant
+                      ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableServer::POA::WrongPolicy))
+{
+  // Lock access for the duration of this transaction.
+  TAO_POA_GUARD;
+
+  this->set_servant_i (servant
+                       ACE_ENV_ARG_PARAMETER);
+}
+
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
+
 
 TAO::ORT_Adapter *
 TAO_POA::ORT_adapter (ACE_ENV_SINGLE_ARG_DECL)

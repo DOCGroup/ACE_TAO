@@ -71,7 +71,7 @@ namespace POA_CORBA
   class _TAO_DomainManager_Direct_Proxy_Impl;
   class _TAO_DomainManager_Strategized_Proxy_Broker;
 
-  class TAO_Export DomainManager
+  class TAO_Domain_Export DomainManager
     : public virtual PortableServer::ServantBase
   {
   protected:
@@ -161,7 +161,7 @@ namespace POA_CORBA
   // TAO_IDL - Generated from
   // be\be_visitor_interface/strategized_proxy_broker_sh.cpp:36
 
-  class TAO_Export _TAO_DomainManager_Strategized_Proxy_Broker
+  class TAO_Domain_Export _TAO_DomainManager_Strategized_Proxy_Broker
     : public virtual TAO::Collocation_Proxy_Broker
   {
   public:
@@ -205,7 +205,7 @@ namespace POA_CORBA
   // TAO_IDL - Generated from
   // be\be_visitor_interface/thru_poa_proxy_impl_sh.cpp:37
 
-  class TAO_Export _TAO_DomainManager_ThruPOA_Proxy_Impl
+  class TAO_Domain_Export _TAO_DomainManager_ThruPOA_Proxy_Impl
   {
   public:
     _TAO_DomainManager_ThruPOA_Proxy_Impl (void);
@@ -238,7 +238,7 @@ namespace POA_CORBA
   //                    Direct  Impl. Declaration
   //
 
-  class TAO_Export _TAO_DomainManager_Direct_Proxy_Impl
+  class TAO_Domain_Export _TAO_DomainManager_Direct_Proxy_Impl
   {
   public:
     _TAO_DomainManager_Direct_Proxy_Impl (void);
@@ -276,7 +276,7 @@ namespace POA_CORBA
   class _TAO_ConstructionPolicy_Direct_Proxy_Impl;
   class _TAO_ConstructionPolicy_Strategized_Proxy_Broker;
 
-  class TAO_Export ConstructionPolicy
+  class TAO_Domain_Export ConstructionPolicy
     : public virtual POA_CORBA::Policy
   {
   protected:
@@ -397,7 +397,7 @@ namespace POA_CORBA
   // TAO_IDL - Generated from
   // be\be_visitor_interface/strategized_proxy_broker_sh.cpp:36
 
-  class TAO_Export _TAO_ConstructionPolicy_Strategized_Proxy_Broker
+  class TAO_Domain_Export _TAO_ConstructionPolicy_Strategized_Proxy_Broker
     : public virtual TAO::Collocation_Proxy_Broker
   {
   public:
@@ -441,7 +441,7 @@ namespace POA_CORBA
   // TAO_IDL - Generated from
   // be\be_visitor_interface/thru_poa_proxy_impl_sh.cpp:37
 
-  class TAO_Export _TAO_ConstructionPolicy_ThruPOA_Proxy_Impl
+  class TAO_Domain_Export _TAO_ConstructionPolicy_ThruPOA_Proxy_Impl
     : public virtual ::POA_CORBA::_TAO_Policy_ThruPOA_Proxy_Impl
   {
   public:
@@ -512,7 +512,7 @@ namespace POA_CORBA
   //                    Direct  Impl. Declaration
   //
 
-  class TAO_Export _TAO_ConstructionPolicy_Direct_Proxy_Impl
+  class TAO_Domain_Export _TAO_ConstructionPolicy_Direct_Proxy_Impl
     : public virtual ::POA_CORBA::_TAO_Policy_Direct_Proxy_Impl
   {
   public:
