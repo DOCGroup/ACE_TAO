@@ -1,3 +1,9 @@
+Mon Jun 22 01:12:53 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/OS.i (dlerror): Just use FormatMessageA instead of
+ 	  FormatMessage.  The you don't have to worry about UNICODE being
+ 	  turned on.
+
 Mon Jun 22 00:01:02 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.5.15 released.
