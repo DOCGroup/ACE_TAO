@@ -209,12 +209,12 @@ create_poa_and_servant_with_tp_policy (CORBA::ORB_ptr orb,
                                max_buffered_requests,
                                max_request_buffer_size,
                                ACE_TRY_ENV);
-  ACE_TRY_CHECK;
+  ACE_CHECK;
 
   CORBA::Policy_var threadpool_policy =
     rt_orb->create_threadpool_policy (threadpool_id,
                                       ACE_TRY_ENV);
-  ACE_TRY_CHECK;
+  ACE_CHECK;
 
   CORBA::Policy_var implicit_activation_policy =
     root_poa->create_implicit_activation_policy (PortableServer::IMPLICIT_ACTIVATION,
