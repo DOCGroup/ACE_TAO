@@ -24,7 +24,7 @@ public:
                               const void *arg = 0);
 
   virtual int handle_close (ACE_HANDLE handle,
-			    ACE_Reactor_Mask close_mask);
+                            ACE_Reactor_Mask close_mask);
 
   int send (const char *buf, size_t len);
   // Send the <buf> to the peer.
@@ -44,6 +44,8 @@ int
 Dgram_Endpoint::handle_close (ACE_HANDLE handle,
                               ACE_Reactor_Mask)
 {
+  ACE_UNUSED_ARG (handle);
+
   this->endpoint_.close ();
   return 0;
 }
