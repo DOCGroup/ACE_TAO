@@ -40,19 +40,20 @@ main (int argc, char *argv[])
 	{
 	  char *l_argv[3];
 
+#if 0
 	  l_argv[0] = "-p " ACE_DEFAULT_NAME_SERVER_PORT_STR;
 	  l_argv[1] = 0;
 	  ACE_Service_Object_Ptr sp_1 = ACE_SVC_INVOKE (ACE_Name_Acceptor);
 
 	  if (sp_1->init (1, l_argv) == -1)
-	    ACE_ERROR ((LM_ERROR, "%p\n%a", "Name_Service", 1));
+	    ACE_ERROR ((LM_ERROR, "%p\n%a", "Name Service", 1));
 
 	  l_argv[0] = "-p " ACE_DEFAULT_TIME_SERVER_PORT_STR;
 	  l_argv[1] = 0;
 	  ACE_Service_Object_Ptr sp_2 = ACE_SVC_INVOKE (ACE_TS_Server_Acceptor);
 
 	  if (sp_2->init (1, l_argv) == -1)
-	    ACE_ERROR ((LM_ERROR, "%p\n%a", "ACE_TS_Server_Acceptor", 1));
+	    ACE_ERROR ((LM_ERROR, "%p\n%a", "TS Server Acceptor", 1));
 
 	  l_argv[0] = argv[0];
 	  l_argv[1] = "-p 10011";
@@ -60,28 +61,35 @@ main (int argc, char *argv[])
 	  ACE_Service_Object_Ptr sp_3 = ACE_SVC_INVOKE (ACE_TS_Clerk_Processor);
 
 	  if (sp_3->init (2, l_argv) == -1)
-	    ACE_ERROR ((LM_ERROR, "%p\n%a", "ACE_TS_Clerk_Processor", 1));
+	    ACE_ERROR ((LM_ERROR, "%p\n%a", "TS Clerk Processor", 1));
 
 	  l_argv[0] = "-p " ACE_DEFAULT_TOKEN_SERVER_PORT_STR;
 	  l_argv[1] = 0;
 	  ACE_Service_Object_Ptr sp_4 = ACE_SVC_INVOKE (ACE_Token_Acceptor);
 
 	  if (sp_4->init (1, l_argv) == -1)
-	    ACE_ERROR ((LM_ERROR, "%p\n%a", "Token_Service", 1));
-
-	  l_argv[0] = "-p " ACE_DEFAULT_LOGGING_SERVER_PORT_STR;
-	  l_argv[1] = 0;
-	  ACE_Service_Object_Ptr sp_5 = ACE_SVC_INVOKE (ACE_Server_Logging_Acceptor);
-
-	  if (sp_5->init (1, l_argv) == -1)
-	    ACE_ERROR ((LM_ERROR, "%p\n%a", "Logging_Service", 1));
+	    ACE_ERROR ((LM_ERROR, "%p\n%a", "Token Service", 1));
 
 	  l_argv[0] = "-p " ACE_DEFAULT_THR_LOGGING_SERVER_PORT_STR;
 	  l_argv[1] = 0;
-	  ACE_Service_Object_Ptr sp_6 = ACE_SVC_INVOKE (ACE_Thr_Server_Logging_Acceptor);
+	  ACE_Service_Object_Ptr sp_5 = ACE_SVC_INVOKE (ACE_Thr_Server_Logging_Acceptor);
+
+	  if (sp_5->init (1, l_argv) == -1)
+	    ACE_ERROR ((LM_ERROR, "%p\n%a", "Threaded Logging Server", 1));
+#endif
+	  l_argv[0] = "-p " ACE_DEFAULT_LOGGING_SERVER_PORT_STR;
+	  l_argv[1] = 0;
+	  ACE_Service_Object_Ptr sp_6 = ACE_SVC_INVOKE (ACE_Client_Logging_Connector);
 
 	  if (sp_6->init (1, l_argv) == -1)
-	    ACE_ERROR ((LM_ERROR, "%p\n%a", "Thr_Logging_Service", 1));
+	    ACE_ERROR ((LM_ERROR, "%p\n%a", "Logging Client", 1));
+
+	  l_argv[0] = "-p " ACE_DEFAULT_LOGGING_SERVER_PORT_STR;
+	  l_argv[1] = 0;
+	  ACE_Service_Object_Ptr sp_7 = ACE_SVC_INVOKE (ACE_Server_Logging_Acceptor);
+
+	  if (sp_7->init (1, l_argv) == -1)
+	    ACE_ERROR ((LM_ERROR, "%p\n%a", "Logging Server", 1));
 	}
 
       // Run forever, performing the configured services until we are shut

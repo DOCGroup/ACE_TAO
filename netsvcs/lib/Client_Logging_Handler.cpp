@@ -6,27 +6,49 @@
 #include "ace/Get_Opt.h"
 #include "Client_Logging_Handler.h"
 
+#if defined (ACE_LACKS_FIFO)
+#define DEFAULT_RENDEZVOUS "10012"
+#else
+#define DEFAULT_RENDEZVOUS ACE_DEFAULT_RENDEZVOUS
+#endif /* ACE_LACKS_FIFO */
+
 ACE_Client_Logging_Handler::ACE_Client_Logging_Handler (const char rendezvous[])
   : logging_output_ (ACE_STDOUT)
 {
+#if defined (ACE_LACKS_FIFO)
+  if (this->acceptor_.open (ACE_INET_Addr (DEFAULT_RENDEZVOUS)) == -1)
+    ACE_ERROR ((LM_ERROR, "%p\n", "open"));
+  // Register passive-mode socket to receive connections from clients.
+  else if (ACE_Reactor::instance ()->register_handler
+	   (this->acceptor_.get_handle (),
+	    this,
+	    ACE_Event_Handler::ACCEPT_MASK) == -1)
+    ACE_ERROR ((LM_ERROR, "%n: %p\n", "register_handler"));
+  ACE_DEBUG ((LM_DEBUG,
+	      "opened acceptor socket at %s on handle %d\n",
+	      rendezvous,
+	      this->acceptor_.get_handle ()));
+#else
   if (ACE_OS::unlink (rendezvous) == -1 && errno == EACCES)
     ACE_ERROR ((LM_ERROR, "%p\n", "unlink"));
 
-  else if (this->message_fifo_.open (rendezvous) == -1)
+  else if (this->msg_queue_.open (rendezvous) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "open"));
 
   // Register message FIFO to receive input from clients.  Note that
   // we need to put the EXCEPT_MASK here to deal with SVR4 MSG_BAND
   // data correctly...
   else if (ACE_Reactor::instance ()->register_handler
-	   (this->message_fifo_.get_handle (), this,
+	   (this->msg_queue_.get_handle (),
+	    this,
 	    ACE_Event_Handler::READ_MASK | ACE_Event_Handler::EXCEPT_MASK) == -1)
     ACE_ERROR ((LM_ERROR, "%n: %p\n",
-		"register_handler (message_fifo)"));
+		"register_handler"));
   ACE_DEBUG ((LM_DEBUG,
 	      "opened fifo at %s on handle %d\n",
 	     rendezvous,
-	     this->message_fifo_.get_handle ()));
+	     this->msg_queue_.get_handle ()));
+#endif /* ACE_LACKS_FIFO */
 }
 
 // This is called when a <send> to the logging server fails...
@@ -47,11 +69,11 @@ ACE_Client_Logging_Handler::open (void *)
 
   // Register ourselves to receive SIGPIPE so we can attempt
   // reconnections.
-#if !defined (ACE_WIN32)
+#if !defined (ACE_LACKS_FIFO)
   if (ACE_Reactor::instance ()->register_handler (SIGPIPE, this) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%n: %p\n",
 		       "register_handler (SIGPIPE)"), -1);
-#endif /* ACE_WIN32 */
+#endif /* !ACE_LACKS_FIFO */
 
   // Figure out what remote port we're really bound to.
   if (this->peer ().get_remote_addr (server_addr) == -1)
@@ -69,7 +91,13 @@ ACE_Client_Logging_Handler::open (void *)
 ACE_Client_Logging_Handler::get_handle (void) const
 {
   ACE_TRACE ("ACE_Client_Logging_Handler::get_handle");
-  return this->message_fifo_.get_handle ();
+#if defined (ACE_LACKS_FIFO)
+  ACE_ERROR_RETURN ((LM_ERROR,
+		     "get_handle() shouldn't be called\n"),
+		     ACE_INVALID_HANDLE);
+#else
+  return this->msg_queue_.get_handle ();
+#endif /* ACE_LACKS_FIFO */
 }
 
 // Receive a logging record from an application.
@@ -77,31 +105,62 @@ ACE_Client_Logging_Handler::get_handle (void) const
 int
 ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
 {
-  if (handle == this->message_fifo_.get_handle ())
+  if (handle == this->peer ().get_handle ())
+    // We're getting a message from the logging server!
+    ACE_ERROR_RETURN ((LM_ERROR, "received data from server!\n"), -1);
+#if defined (ACE_LACKS_FIFO)
+  else if (handle == this->acceptor_.get_handle ())
     {
-      // We're getting a logging message from a local application.
+      ACE_SOCK_Stream msg_queue;
 
-      ACE_Log_Record log_record;
-      ACE_Str_Buf msg ((void *) &log_record,
-		       0, sizeof log_record);
+      if (this->acceptor_.accept (msg_queue) == -1)
+	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "accept"), -1);
 
-      ACE_DEBUG ((LM_DEBUG, "in handle_input\n"));
-      if (this->message_fifo_.recv (msg) == -1)
- 	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_FIFO_Recv_Msg::recv"), -1);
-      else if (this->send (log_record) == -1)
-	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "send"), 0);
+      // Register message socket to receive input from clients.
+      else if (ACE_Reactor::instance ()->register_handler
+	       (msg_queue_.get_handle (),
+		this,
+		ACE_Event_Handler::READ_MASK) == -1)
+	ACE_ERROR_RETURN ((LM_ERROR, "%n: %p\n",
+			   "register_handler"), -1);
       return 0;
     }
-  else if (handle == this->peer ().get_handle ())
-    {
-      // We're getting a message from the logging server!
-      ACE_ASSERT (!"this shouldn't happen yet...\n");
-    }
+
+  // For the duration of this call store the socket into the FIFO so
+  // that we can use the ol' 2-read trick...  Note that this assumes
+  // we aren't using STREAM pipes (if we were, we wouldn't need to use
+  // sockets!).
+  this->msg_queue_.set_handle (handle);
+
+#endif /* ACE_LACKS_FIFO */  
+     {
+       // We're getting a logging message from a local application.
+
+       ACE_Log_Record log_record;
+       ACE_Str_Buf msg ((void *) &log_record,
+			0,
+			sizeof log_record);
+
+       ACE_DEBUG ((LM_DEBUG, "in handle_input\n"));
+
+       if (this->msg_queue_.recv (msg) == -1)
+	 ACE_ERROR_RETURN ((LM_ERROR,
+			    "%p\n",
+			    "ACE_FIFO_Recv_Msg::recv"),
+			   -1);
+       else if (this->send (log_record) == -1)
+	 ACE_ERROR_RETURN ((LM_ERROR,
+			    "%p\n",
+			    "send"),
+			   0);
+       return 0;
+     }
+    
   return 0;
 }
 
-// Receive a logging record from an application send via a non-0 MSG_BAND...
-// This just calls handle_input().
+// Receive a logging record from an application send via a non-0
+// MSG_BAND...  This just calls handle_input().
 
 int
 ACE_Client_Logging_Handler::handle_exception (ACE_HANDLE handle)
@@ -116,13 +175,23 @@ ACE_Client_Logging_Handler::close (u_long)
 {
   ACE_DEBUG ((LM_DEBUG, "shutting down!!!\n"));
 
+#if defined (ACE_LACKS_FIFO)
   if (ACE_Reactor::instance ()->remove_handler
-      (this->message_fifo_.get_handle (),
-       ACE_Event_Handler::READ_MASK | ACE_Event_Handler::EXCEPT_MASK | ACE_Event_Handler::DONT_CALL) == -1)
+      (this->acceptor_.get_handle (),
+       ACE_Event_Handler::ACCEPT_MASK) == -1)
     ACE_ERROR ((LM_ERROR, "%n: %p\n",
-		"remove_handler (message_fifo)"));
+		"remove_handler"));
+#else
+  if (ACE_Reactor::instance ()->remove_handler
+      (this->msg_queue_.get_handle (),
+       ACE_Event_Handler::READ_MASK 
+       | ACE_Event_Handler::EXCEPT_MASK 
+       | ACE_Event_Handler::DONT_CALL) == -1)
+    ACE_ERROR ((LM_ERROR, "%n: %p\n",
+		"remove_handler"));
+#endif /* ACE_LACKS_FIFO */
 
-  this->message_fifo_.close ();
+  this->msg_queue_.close ();
   this->destroy ();
   return 0;
 }
@@ -150,10 +219,10 @@ ACE_Client_Logging_Handler::send (ACE_Log_Record &log_record)
 
       if (this->peer ().send (4, &encoded_len, sizeof encoded_len,
 			      (char *) &log_record, len) == -1)
-	// Switch over to logging to stdout for now.  In the long
-	// run, we'll need to queue up the message, try to
-	// reestablish a connection, and then send the queued data
-	// once we've reconnect to the logging server.
+	// Switch over to logging to stdout for now.  In the long run,
+	// we'll need to queue up the message, try to reestablish a
+	// connection, and then send the queued data once we've
+	// reconnect to the logging server.
 	this->logging_output_ = ACE_STDOUT;
     }
 
@@ -162,6 +231,10 @@ ACE_Client_Logging_Handler::send (ACE_Log_Record &log_record)
 
 class ACE_Client_Logging_Connector : public ACE_Connector<ACE_Client_Logging_Handler, ACE_SOCK_CONNECTOR>
   // = TITLE
+  //     This factory creates connections with the
+  //     <Server_Logging_Acceptor>. 
+  //
+  // = DESCRIPTION
   //     This class contains the service-specific methods that can't
   //     easily be factored into the <ACE_Connector>.
 {
@@ -195,8 +268,8 @@ private:
   // Address of the logging server.
 
   const char *rendezvous_key_;
-  // Filename where the FIFO will listen for application logging
-  // records.
+  // Communication endpoint where the client logging daemon will
+  // listen for application logging records.
 
   ACE_Client_Logging_Handler *handler_;
   // Pointer to the handler that does the work.
@@ -254,7 +327,7 @@ ACE_Client_Logging_Connector::init (int argc, char *argv[])
 int
 ACE_Client_Logging_Connector::parse_args (int argc, char *argv[])
 {
-  this->rendezvous_key_ = ACE_DEFAULT_RENDEZVOUS;
+  this->rendezvous_key_ = DEFAULT_RENDEZVOUS;
   this->server_port_ = ACE_DEFAULT_LOGGING_SERVER_PORT;
   this->server_host_ = ACE_DEFAULT_SERVER_HOST;
 
