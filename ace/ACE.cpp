@@ -2133,7 +2133,7 @@ ACE::get_bcast_addr (ACE_UINT32 &bcast_addr,
     s = ACE_OS::socket (AF_INET, SOCK_STREAM, 0);
 
   if (s == ACE_INVALID_HANDLE)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_OS::socket"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("ACE_OS::socket")), -1);
 
   struct ifconf ifc;
   char buf[BUFSIZ];
@@ -2453,7 +2453,7 @@ ACE::get_ip_interfaces (size_t &count,
   ACE_HANDLE handle = get_handle();     // call specific routine as necessary
 
   if (handle == ACE_INVALID_HANDLE)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE::get_ip_interfaces:open"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("ACE::get_ip_interfaces:open")), -1);
 
   if (ACE::count_interfaces (handle, num_ifs))
     {
@@ -2485,7 +2485,7 @@ ACE::get_ip_interfaces (size_t &count,
   if (ACE_OS::ioctl (handle, SIOCGIFCONF, (caddr_t) &ifcfg) == -1)
     {
       ACE_OS::close (handle);
-      ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "is_address_local:ioctl - SIOCGIFCONF failed"), -1);
+      ACE_ERROR_RETURN ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("is_address_local:ioctl - SIOCGIFCONF failed")), -1);
     }
 
   ACE_OS::close (handle);

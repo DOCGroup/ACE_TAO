@@ -195,7 +195,7 @@ ACE_Asynch_Read_Stream::shared_read (ACE_Asynch_Read_Stream::Result *result)
       // Cleanup dynamically allocated Asynch_Result
       delete result;
 
-      ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ReadFile"), -1);
+      ACE_ERROR_RETURN ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("ReadFile")), -1);
     }
 }
 
@@ -306,7 +306,7 @@ ACE_Asynch_Write_Stream::shared_write (ACE_Asynch_Write_Stream::Result *result)
       // Cleanup dynamically allocated Asynch_Result
       delete result;
 
-      ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "WriteFile"), -1);
+      ACE_ERROR_RETURN ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("WriteFile")), -1);
     }
 }
 
@@ -510,7 +510,7 @@ ACE_Asynch_Accept::accept (ACE_Message_Block &message_block,
 				      SOCK_STREAM,
 				      0);
       if (accept_handle == ACE_INVALID_HANDLE)
-	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_OS::socket"), -1);
+	ACE_ERROR_RETURN ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("ACE_OS::socket")), -1);
       else
 	// Remember to close the socket down if failures occur. 
 	close_accept_handle = 1;
@@ -562,7 +562,7 @@ ACE_Asynch_Accept::accept (ACE_Message_Block &message_block,
       // Cleanup dynamically allocated Asynch_Result
       delete result;
 
-      ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ReadFile"), -1);
+      ACE_ERROR_RETURN ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("ReadFile")), -1);
     }
 #else
   ACE_NOTSUP_RETURN (-1);
@@ -693,7 +693,7 @@ ACE_Asynch_Transmit_File::transmit_file (ACE_HANDLE file,
       // Cleanup dynamically allocated Asynch_Result
       delete result;
 
-      ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "TransmitFile"), -1);
+      ACE_ERROR_RETURN ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("TransmitFile")), -1);
     }  
 #else
   ACE_NOTSUP_RETURN (-1);
@@ -1006,14 +1006,14 @@ ACE_Service_Handler::addresses (const ACE_INET_Addr &remote_address,
   // Default behavior is to print out the addresses. 
   char local_address_buf[BUFSIZ], remote_address_buf[BUFSIZ];
   if (local_address.addr_to_string (local_address_buf, sizeof local_address_buf) == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n", "can't obtain local_address's address string"));
+    ACE_ERROR ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("can't obtain local_address's address string")));
   
   if (remote_address.addr_to_string (remote_address_buf, sizeof remote_address_buf) == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n", "can't obtain remote_address's address string"));
+    ACE_ERROR ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("can't obtain remote_address's address string")));
   
-  ACE_DEBUG ((LM_DEBUG, "On fd %d\n", this->handle ()));
-  ACE_DEBUG ((LM_DEBUG, "local address %s\n", local_address_buf));
-  ACE_DEBUG ((LM_DEBUG, "remote address %s\n", remote_address_buf));  
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("On fd %d\n"), this->handle ()));
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("local address %s\n"), local_address_buf));
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("remote address %s\n"), remote_address_buf));  
 }
 
 void

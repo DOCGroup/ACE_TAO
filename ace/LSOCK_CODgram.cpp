@@ -45,6 +45,6 @@ ACE_LSOCK_CODgram::ACE_LSOCK_CODgram (const ACE_Addr &remote,
   ACE_TRACE ("ACE_LSOCK_CODgram::ACE_LSOCK_CODgram");
   if (this->open (remote, local, protocol_family, 
 		  protocol) == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n", "ACE_LSOCK_CODgram"));
+    ACE_ERROR ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("ACE_LSOCK_CODgram")));
 }
 #endif /* ACE_LACKS_UNIX_DOMAIN_SOCKETS */

@@ -100,7 +100,7 @@ ACE_Service_Manager::init (int argc, char *argv[])
        }
   
   if (this->open (local_addr) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("open")), -1);
   else if (ACE_Reactor::instance ()->register_handler 
 	   (this, ACE_Event_Handler::ACCEPT_MASK) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "registering service with ACE_Reactor\n"), -1);
@@ -137,7 +137,7 @@ ACE_Service_Manager::handle_signal (int sig, siginfo_t *, ucontext_t *)
 {
   ACE_TRACE ("ACE_Service_Manager::handle_signal");
   if (this->debug_)
-    ACE_DEBUG ((LM_DEBUG, "got %S\n", sig));
+    ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("got %S\n"), sig));
   return 0;
 }
 
@@ -164,7 +164,7 @@ ACE_Service_Manager::list_services (void)
       len += sr->type ()->info (&p, sizeof buf - len);
 
       if (this->debug_)
-	ACE_DEBUG ((LM_DEBUG, "len = %d, info = %s%s",
+	ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("len = %d, info = %s%s"),
 		   len, buf, buf[len - 1] == '\n' ? "" : "\n"));
 
       if (len > 0)
@@ -172,7 +172,7 @@ ACE_Service_Manager::list_services (void)
 	  ssize_t n = this->client_stream_.send_n (buf, len);
 
 	  if (n != len || (n == -1 && errno != EPIPE))
-	    ACE_ERROR ((LM_ERROR, "%p\n", "send_n"));
+	    ACE_ERROR ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("send_n")));
 	}
     }
 
@@ -223,13 +223,13 @@ ACE_Service_Manager::handle_input (ACE_HANDLE)
 
   if (this->debug_)
     {
-      ACE_DEBUG ((LM_DEBUG, "client_stream fd = %d\n",
+      ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("client_stream fd = %d\n"),
 		 this->client_stream_.get_handle ()));
       ACE_INET_Addr sa;
       if (this->client_stream_.get_remote_addr (sa) == -1)
 	return -1;
 
-      ACE_DEBUG ((LM_DEBUG, "accepted from host %s at port %d\n", 
+      ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("accepted from host %s at port %d\n"), 
 		sa.get_host_name (), sa.get_port_number ()));
     }
 

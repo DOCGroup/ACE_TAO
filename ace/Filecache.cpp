@@ -225,7 +225,7 @@ ACE_Filecache::insert_i (const char *filename,
                       ACE_Filecache_Object (filename, filelock, 0, mapit),
                       0);
 
-      ACE_DEBUG ((LM_DEBUG, "   (%t) CVF: creating %s\n", filename));
+      ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("   (%t) CVF: creating %s\n"), filename));
 
       if (this->hash_.bind (filename, handle) == -1)
         {
@@ -277,7 +277,7 @@ ACE_Filecache::update_i (const char *filename,
                       ACE_Filecache_Object (filename, filelock, 0, mapit),
                       0);
 
-      ACE_DEBUG ((LM_DEBUG, "   (%t) CVF: creating %s\n", filename));
+      ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("   (%t) CVF: creating %s\n"), filename));
 
       if (this->hash_.bind (filename, handle) == -1)
         {
@@ -295,7 +295,7 @@ ACE_Filecache::update_i (const char *filename,
                           ACE_Filecache_Object (filename, filelock, 0, mapit),
                           0);
 
-          ACE_DEBUG ((LM_DEBUG, "   (%t) CVF: updating %s\n", filename));
+          ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("   (%t) CVF: updating %s\n"), filename));
 
           if (this->hash_.bind (filename, handle) == -1)
             {
@@ -352,7 +352,7 @@ ACE_Filecache::fetch (const char *filename, int mapit)
           if (handle)
             filelock.acquire_read ();
         }
-      ACE_DEBUG ((LM_DEBUG, "   (%t) CVF: found %s\n", filename));
+      ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("   (%t) CVF: found %s\n"), filename));
     }
 
   return handle;

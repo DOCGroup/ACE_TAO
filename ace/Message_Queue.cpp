@@ -121,9 +121,9 @@ ACE_Message_Queue<ACE_SYNCH_USE>::dump (void) const
               this->cur_count_,
               this->head_,
               this->tail_));
-  ACE_DEBUG ((LM_DEBUG,"not_full_cond: \n"));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("not_full_cond: \n")));
   not_full_cond_.dump ();
-  ACE_DEBUG ((LM_DEBUG,"not_empty_cond: \n"));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("not_empty_cond: \n")));
   not_empty_cond_.dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }

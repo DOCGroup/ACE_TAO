@@ -37,7 +37,7 @@ ACE_Stream_Node::apply (void)
                                       this->node_->parameters ()) == -1)
     ace_yyerrno++;
 
-  ACE_DEBUG ((LM_DEBUG, "did stream on %s, error = %d\n",
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("did stream on %s, error = %d\n"),
               this->node_->name (),
               ace_yyerrno));
 }

@@ -286,65 +286,65 @@ void
 ACE_Name_Request::dump (void) const
 {
   ACE_TRACE ("ACE_Name_Request::dump");
-  ACE_DEBUG ((LM_DEBUG, "*******\nlength = %d\n", 
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("*******\nlength = %d\n"), 
 	      this->length ()));
-  ACE_DEBUG ((LM_DEBUG, "message-type = "));
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("message-type = ")));
 
   switch (this->msg_type ())
     {
     case ACE_Name_Request::BIND:
-      ACE_DEBUG ((LM_DEBUG, "BIND\n"));
+      ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("BIND\n")));
       break;
     case ACE_Name_Request::REBIND:
-      ACE_DEBUG ((LM_DEBUG, "REBIND\n"));
+      ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("REBIND\n")));
       break;
     case ACE_Name_Request::RESOLVE:
-      ACE_DEBUG ((LM_DEBUG, "RESOLVE\n"));
+      ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("RESOLVE\n")));
       break;
     case ACE_Name_Request::UNBIND:
-      ACE_DEBUG ((LM_DEBUG, "UNBIND\n"));
+      ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("UNBIND\n")));
       break;
     case ACE_Name_Request::LIST_NAMES:
-      ACE_DEBUG ((LM_DEBUG, "LIST_NAMES\n"));
+      ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("LIST_NAMES\n")));
       break;
     case ACE_Name_Request::LIST_VALUES:
-      ACE_DEBUG ((LM_DEBUG, "LIST_VALUES\n"));
+      ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("LIST_VALUES\n")));
       break;
     case ACE_Name_Request::LIST_TYPES:
-      ACE_DEBUG ((LM_DEBUG, "LIST_TYPES\n"));
+      ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("LIST_TYPES\n")));
       break;
     case ACE_Name_Request::LIST_NAME_ENTRIES:
-      ACE_DEBUG ((LM_DEBUG, "LIST_NAME_ENTRIES\n"));
+      ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("LIST_NAME_ENTRIES\n")));
       break;
     case ACE_Name_Request::LIST_VALUE_ENTRIES:
-      ACE_DEBUG ((LM_DEBUG, "LIST_VALUE_ENTRIES\n"));
+      ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("LIST_VALUE_ENTRIES\n")));
       break;
     case ACE_Name_Request::LIST_TYPE_ENTRIES:
-      ACE_DEBUG ((LM_DEBUG, "LIST_TYPE_ENTRIES\n"));
+      ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("LIST_TYPE_ENTRIES\n")));
       break;
     default:
-      ACE_DEBUG ((LM_DEBUG, "<unknown type> = %d\n", this->msg_type ()));
+      ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("<unknown type> = %d\n"), this->msg_type ()));
       break;
     }
 
   if (this->block_forever ())
-    ACE_DEBUG ((LM_DEBUG, "blocking forever\n"));
+    ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("blocking forever\n")));
   else
     {
       ACE_Time_Value tv = this->timeout ();
-      ACE_DEBUG ((LM_DEBUG, "waiting for %ld secs and %ld usecs\n", 
+      ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("waiting for %ld secs and %ld usecs\n"), 
 		  tv.sec (), tv.usec ()));
     }
-  ACE_DEBUG ((LM_DEBUG, "*******\nname_len = %d\n", 
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("*******\nname_len = %d\n"), 
 	      this->name_len ()));
-  ACE_DEBUG ((LM_DEBUG, "*******\nvalue_len = %d\n", 
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("*******\nvalue_len = %d\n"), 
 	      this->value_len ()));
 #if 0
   cout << "Name = " << ACE_WString (this->name(), this->name_len() / sizeof (ACE_USHORT16)) << endl;
   cout << "value = " << ACE_WString (this->value(), this->value_len() / sizeof (ACE_USHORT16)) << endl;
   cout << "type = "  << this->type () << endl;
 #endif
-  ACE_DEBUG ((LM_DEBUG, "+++++++\n"));
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("+++++++\n")));
 }
 
 // Default constructor.
@@ -471,20 +471,20 @@ void
 ACE_Name_Reply::dump (void) const
 {
   ACE_TRACE ("ACE_Name_Reply::dump");
-  ACE_DEBUG ((LM_DEBUG, "*******\nlength = %d\nerrnum = %d", 
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("*******\nlength = %d\nerrnum = %d"), 
 	      this->length (), this->errnum ()));
-  ACE_DEBUG ((LM_DEBUG, "type = "));
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("type = ")));
 
   switch (this->msg_type ())
     {
     case ACE_Name_Reply::SUCCESS:
-      ACE_DEBUG ((LM_DEBUG, "SUCCESS\n"));
+      ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("SUCCESS\n")));
       break;
     case ACE_Name_Reply::FAILURE:
-      ACE_DEBUG ((LM_DEBUG, "FAILURE\n"));
+      ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("FAILURE\n")));
       break;
     default:
-      ACE_DEBUG ((LM_DEBUG, "<unknown type> = %d\n", this->msg_type ()));
+      ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("<unknown type> = %d\n"), this->msg_type ()));
       break;
     }
 }

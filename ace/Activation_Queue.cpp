@@ -18,7 +18,7 @@ ACE_Activation_Queue::dump (void) const
   if (this->queue_)
     this->queue_->dump();
   else
-    ACE_DEBUG ((LM_DEBUG,"(NULL)\n"));
+    ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(NULL)\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 

@@ -123,7 +123,7 @@ ACE_SPIPE_Acceptor::ACE_SPIPE_Acceptor (const ACE_SPIPE_Addr &local_sap,
   ACE_TRACE ("ACE_SPIPE_Acceptor::ACE_SPIPE_Acceptor");
 
   if (this->open (local_sap, reuse_addr, perms) == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n", "ACE_SPIPE_Acceptor"));
+    ACE_ERROR ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("ACE_SPIPE_Acceptor")));
 }
 
 // General purpose routine for accepting new connections.

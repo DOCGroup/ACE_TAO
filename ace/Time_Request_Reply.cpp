@@ -157,30 +157,30 @@ void
 ACE_Time_Request::dump (void) const
 {
   ACE_TRACE ("ACE_Time_Request::dump");
-  ACE_DEBUG ((LM_DEBUG, "*******\nlength = %d\n", 
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("*******\nlength = %d\n"), 
 	      this->size ()));
-  ACE_DEBUG ((LM_DEBUG, "message-type = "));
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("message-type = ")));
 
   switch (this->msg_type ())
     {
     case ACE_Time_Request::TIME_UPDATE:
-      ACE_DEBUG ((LM_DEBUG, "TIME_UPDATE\n"));
+      ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("TIME_UPDATE\n")));
       break;
     default:
-      ACE_DEBUG ((LM_DEBUG, "<unknown type> = %d\n", this->msg_type ()));
+      ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("<unknown type> = %d\n"), this->msg_type ()));
       break;
     }
 
   if (this->block_forever ())
-    ACE_DEBUG ((LM_DEBUG, "blocking forever\n"));
+    ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("blocking forever\n")));
   else
     {
       ACE_Time_Value tv = this->timeout ();
-      ACE_DEBUG ((LM_DEBUG, "waiting for %ld secs and %ld usecs\n", 
+      ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("waiting for %ld secs and %ld usecs\n"), 
 		  tv.sec (), tv.usec ()));
     }
-  ACE_DEBUG ((LM_DEBUG, "*******\ntime = %d\n", 
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("*******\ntime = %d\n"), 
 	      this->time ()));
-  ACE_DEBUG ((LM_DEBUG, "+++++++\n"));
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("+++++++\n")));
 }
 

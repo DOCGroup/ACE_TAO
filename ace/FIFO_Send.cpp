@@ -33,5 +33,5 @@ ACE_FIFO_Send::ACE_FIFO_Send (const char *fifo_name, int flags, int perms,
 {
   ACE_TRACE ("ACE_FIFO_Send::ACE_FIFO_Send");
   if (this->ACE_FIFO_Send::open (fifo_name, flags, perms, sa) == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n", "ACE_FIFO_Send::ACE_FIFO_Send"));
+    ACE_ERROR ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("ACE_FIFO_Send::ACE_FIFO_Send")));
 }
