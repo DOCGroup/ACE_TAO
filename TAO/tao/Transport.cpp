@@ -1234,7 +1234,7 @@ TAO_Transport::handle_input (TAO_Resume_Handle &rh,
   if (TAO_debug_level > 2)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "TAO (%P|%t) - Transport[%d]::handle_input_i, "
+                  "TAO (%P|%t) - Transport[%d]::handle_input, "
                   "read %d bytes\n",
                   this->id (), n));
     }

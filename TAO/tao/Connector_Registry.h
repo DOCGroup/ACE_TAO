@@ -77,7 +77,7 @@ public:
                      TAO_MProfile &mprofile
                      ACE_ENV_ARG_DECL);
 
-  /// Create a profile based on the contents of <cdr>
+  /// Create a profile based on the contents of @a cdr
   TAO_Profile* create_profile (TAO_InputCDR& cdr);
 
   /// Obtain the object key delimiter used by the protocol specified in

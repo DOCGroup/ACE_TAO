@@ -69,14 +69,14 @@ public:
   /// Dtor
   virtual ~TAO_Pluggable_Messaging (void);
 
-  /// Write the RequestHeader in to the <cdr> stream. The underlying
+  /// Write the RequestHeader in to the @a cdr stream. The underlying
   /// implementation of the mesaging should do the right thing.
   virtual int generate_request_header (
       TAO_Operation_Details &op,
       TAO_Target_Specification &spec,
       TAO_OutputCDR &cdr) = 0;
 
-  /// Write the RequestHeader in to the <cdr> stream.
+  /// Write the RequestHeader in to the @a cdr stream.
   virtual int generate_locate_request_header (
       TAO_Operation_Details &op,
       TAO_Target_Specification &spec,
@@ -105,15 +105,14 @@ public:
   /**
    * This method reads the message on the connection. Returns 0 when
    * there is short read on the connection. Returns 1 when the full
-   * message is read and handled. Returns -1 on errors. If <block> is
-   * 1, then reply is read in a blocking manner. <bytes> indicates the
-   * number of bytes that needs to be read from the connection.
+   * message is read and handled. Returns -1 on errors. If @a block is
+   * 1, then reply is read in a blocking manner.
    */
   virtual int read_message (TAO_Transport *transport,
                             int block = 0,
                             ACE_Time_Value *max_wait_time = 0) = 0;
 
-  /// Format the message in the <cdr>. May not be needed in
+  /// Format the message in the @a cdr. May not be needed in
   /// general.
   virtual int format_message (TAO_OutputCDR &cdr) = 0;
 
@@ -124,21 +123,21 @@ public:
   /// Parse the incoming messages..
   virtual int parse_incoming_messages (ACE_Message_Block &message_block) = 0;
 
-  /// Calculate the amount of data that is missing in the <incoming>
+  /// Calculate the amount of data that is missing in the @a incoming
   /// message block.
   virtual ssize_t missing_data (ACE_Message_Block &incoming) = 0;
 
-  /// Get the details of the message parsed through the <qd>.
+  /// Get the details of the message parsed through the @a qd.
   virtual void get_message_data (TAO_Queued_Data *qd) = 0;
 
-  /* Extract the details of the next message from the <incoming>
-   * through <qd>. Returns 1 if there are more messages and returns a
-   * 0 if there are no more messages in <incoming>.
+  /* Extract the details of the next message from the @a incoming
+   * through @a qd. Returns 1 if there are more messages and returns a
+   * 0 if there are no more messages in @a incoming.
   */
   virtual int extract_next_message (ACE_Message_Block &incoming,
                                     TAO_Queued_Data *&qd) = 0;
 
-  /// Check whether the node <qd> needs consolidation from <incoming>
+  /// Check whether the node @a qd needs consolidation from @a incoming
   virtual int consolidate_node (TAO_Queued_Data *qd,
                                 ACE_Message_Block &incoming) = 0;
 
@@ -153,17 +152,17 @@ public:
 
 
   /// Parse the reply message that we received and return the reply
-  /// information though <reply_info>
+  /// information through @a reply_info
   virtual int process_reply_message (
       TAO_Pluggable_Reply_Params &reply_info,
       TAO_Queued_Data *qd) = 0;
 
 
-  /// Generate a reply message with the exception <ex>.
+  /// Generate a reply message with the exception @a ex.
   virtual int generate_exception_reply (
       TAO_OutputCDR &cdr,
       TAO_Pluggable_Reply_Params_Base &params,
-      CORBA::Exception &x) = 0;
+      CORBA::Exception &ex) = 0;
 
   /// Is the messaging object ready for processing BiDirectional
   /// request/response?

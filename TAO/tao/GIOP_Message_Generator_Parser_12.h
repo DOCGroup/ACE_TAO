@@ -104,7 +104,7 @@ private:
   /// Check whether we have BiDirContext info available. If available
   /// delegate  the responsibility on to the TAO_Transport classes to
   /// initiate action.
-  /// Note: At somepoint this may be needed for future versions of
+  /// @note At somepoint this may be needed for future versions of
   /// GIOP and we may have to share this
   int check_bidirectional_context (TAO_ServerRequest &);
 
