@@ -64,4 +64,6 @@
 
 #endif /* !ACE_WIN32 */
 
+# include /**/ "ace/post.h"
+
 #endif /* ACE_OS_NS_MACROS_H */

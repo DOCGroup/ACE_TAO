@@ -1,3 +1,17 @@
+Sun Nov  2 10:01:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_main.h:
+          Fixed fuzz error and added #include of post.h
+
+        * ace/OS_NS_macros.h:
+          Added #include of post.h
+
+        * ace/Timer_Queue_T.h:
+          Added #include of Time_Value.h
+
+        * ace/config-win32-borland.h:
+          Added several defines because of lacking system header files.
+
 Sun Nov  2 00:23:25 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/OS_NS_netdb.cpp:
@@ -295,7 +309,7 @@ Sat Nov  1 05:40:21 UTC 2003  Don Hinton  <dhinton@dresystems.com>
         * ace/os_include/os_string.h:
         * ace/OS_NS_stdio.inl:
           Moved additional string related includes and strerror define
-          to os_string.h.  Moved ACE_SPRINTF_ADAPTER to OS_NS_stdio.inl. 
+          to os_string.h.  Moved ACE_SPRINTF_ADAPTER to OS_NS_stdio.inl.
 
         * ace/os_include/os_strings.h:
           Removed ACE_HAS_STRINGS hack.

@@ -23,6 +23,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Event_Handler.h"
+#include "ace/Time_Value.h"
 
 /**
  * @class ACE_Timer_Node_Dispatch_Info_T
