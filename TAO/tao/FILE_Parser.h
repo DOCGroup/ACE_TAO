@@ -19,12 +19,13 @@
 
 #include "tao/IOR_Parser.h"
 #include "ior_file_export.h"
+#include "ace/Service_Config.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class TAO_IOR_FILE_Export TAO_FILE_Parser : public TAO_IOR_Parser
+class TAO_Export TAO_FILE_Parser : public TAO_IOR_Parser
 {
   // = TITLE
   //   Implements the <file:> IOR format
@@ -55,7 +56,8 @@ public:
 # include "FILE_Parser.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_FACTORY_DECLARE (TAO_IOR_FILE, TAO_FILE_Parser)
+ACE_STATIC_SVC_DECLARE (TAO_FILE_Parser)
+ACE_FACTORY_DECLARE (TAO, TAO_FILE_Parser)
 
 #include "ace/post.h"
 #endif /* TAO_FILE_PARSER_H */

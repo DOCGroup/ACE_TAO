@@ -3,6 +3,8 @@
 
 #include "tao/Parser_Registry.h"
 #include "tao/IOR_Parser.h"
+#include "tao/ORB_Core.h"
+#include "tao/default_resource.h"
 #include "ace/Dynamic_Service.h"
 #include "ace/Service_Repository.h"
 
@@ -24,37 +26,27 @@ TAO_Parser_Registry::~TAO_Parser_Registry (void)
 }
 
 int
-TAO_Parser_Registry::open (void)
+TAO_Parser_Registry::open (TAO_ORB_Core *orb_core)
 {
-  this->size_ = 1;
-  ACE_NEW_RETURN (this->parsers_, TAO_IOR_Parser*[this->size_],
-                  -1);
+  const char **names;
+  int number_of_names = 0;
 
-  this->parsers_[0] =
-    ACE_Dynamic_Service<TAO_IOR_Parser>::instance ("DLL_Parser");
+  orb_core->resource_factory ()->get_parser_names (names, number_of_names);
 
-  if (this->parsers_[0] == 0)
+  if (number_of_names == 0)
+    return -1;
+
+  this->size_ = number_of_names;
+  this->parsers_ = new TAO_IOR_Parser*[this->size_];
+
+  for (int i = 0; i != this->size_; ++i)
     {
-      int r = ACE_Service_Config::process_directive (
-        "dynamic DLL_Parser Service_Object * TAO_IOR_DLL:_make_TAO_DLL_Parser()"
-        );
-      if (r == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "Error configuring DLL parser\n"), -1);
-        }
-      this->parsers_[0] =
-        ACE_Dynamic_Service<TAO_IOR_Parser>::instance ("DLL_Parser");
+      this->parsers_[i] =
+        ACE_Dynamic_Service<TAO_IOR_Parser>::instance (names [i]);
 
+      if (this->parsers_[i] == 0)
+        return -1;
     }
-
-
-  // ACE_Service_Config::process_directive (
-  // "dynamic TAO_FILE_Parser Service_Object * TAO_IOR_FILE:_make_TAO_FILE_Parser()"
-  // );
-  // this->parsers_[1] =
-  //   ACE_Dynamic_Service<TAO_IOR_Parser>::instance
-  //   ("TAO_FILE_Parser");
 
   return 0;
 }
@@ -65,13 +57,13 @@ TAO_Parser_Registry::match_parser (const char *ior_string)
   for (Parser_Iterator i = this->begin (); i != this->end (); ++i)
     {
       if ((*i)->match_prefix (ior_string))
-        return *i;
+        {
+          return *i;
+        }
     }
   return 0;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

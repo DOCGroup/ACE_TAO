@@ -1,6 +1,76 @@
-Thu Jul 20 19:53:37 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
+Tue Sep 12 15:41:48 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tao/IIOP_Profile.cpp: 
+	* tao/IIOP_Profile.cpp (parse_string): 
+	  
+	  The default port number for IIOP is 683 and that of corbaloc is
+	  2809. Modified files to reflect and implement this.
+		
+	* tao/ORB_Core.cpp (init): 	  
+	  
+	  Modified the place where the TAO_Parser_Registry::open () is
+	  called. This should be called only after the
+	  TAO_default_resource_factory::init () is called.
+
+	* tao/Makefile: 	  
+	  
+	  Modified the Makefile to reflect the move of the files listed
+	  below.
+	
+	* tao/Object_Loader.i: 
+	* tao/Object_Loader.h: 
+	* tao/Object_Loader.cpp: 
+		
+	* tao/FILE_Parser.i: 
+	* tao/FILE_Parser.h: 
+	* tao/FILE_Parser.cpp: 
+	* tao/ior_file_export.h: 
+	
+	* tao/DLL_Parser.i: 
+	* tao/DLL_Parser.h: 
+	* tao/DLL_Parser.cpp : 
+	* tao/ior_dll_export.h: 
+	  
+	  Removed these files from tao/ior_file and added them in
+	  tao/. 
+	  Added ACE_STATIC_SVC_DEFINE and ACE_STATIC_SVC_DECLARE macros to
+	  *_Parser.{cpp,h}. 
+	
+	* tao/ior_file/Makefile: 
+	* tao/ior_dll/Makefile : 
+          
+	  Removed these files as they are no longer needed.
+	
+	* tao/TAO_Internal.cpp (open_services): 
+	  
+	  Added the FILE and DLL Parsers to the list of static objects.
+
+	* tao/Parser_Registry.h (TAO_Parser_Registry): 
+	* tao/Parser_Registry.cpp (open): 
+
+	* tao/default_resource.h (TAO_Default_Resource_Factory): 
+	* tao/default_resource.cpp (get_parser_names): 
+
+	* tao/Resource_Factory.h (TAO_Resource_Factory): 
+	* tao/Resource_Factory.cpp (get_parser_names): 
+	  
+	  Fixed the way in which the default list of parsers are
+	  initialized. Added new methods in default_resource.* and
+	  Resource_Factory.* to fix this. 
+	  
+	  Modified the signature of <open> in Parser_Registry so that a
+	  pointer to the ORB_Core is provided.
+
+	  Added code to check for '-ORBIORParser' in
+	  TAO_Default_Resource_Factory::init () method.
+
+	* tao/ior_corbaloc/CORBALOC_Parser.h : 
+	* tao/ior_corbaloc/CORBALOC_Parser.cpp : 
+
+	  Modified the method of verifying the validity of the object
+	  reference obtained by using <_is_a> instead of narrowing it
+	  down.
+	
+Thu Jul 20 19:53:37 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* tao/ior_corbaloc/CORBALOC_Parser.h:
 	* tao/ior_corbaloc/CORBALOC_Parser.cpp:

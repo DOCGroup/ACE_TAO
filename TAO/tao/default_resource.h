@@ -29,6 +29,7 @@
 #include "ace/Service_Config.h"
 
 class TAO_Object_Adapter;
+class TAO_IOR_Parser;
 
 class TAO_Export TAO_Default_Resource_Factory : public TAO_Resource_Factory
 {
@@ -56,6 +57,8 @@ public:
   int parse_args (int argc, char* argv[]);
   // Parse svc.conf arguments
 
+  int get_parser_names (const char **&names,
+                        int &number_of_names);
   // = Member Accessors
   enum
   {
@@ -113,6 +116,9 @@ public:
 protected:
   virtual ACE_Reactor_Impl *allocate_reactor_impl (void) const;
   // Obtain the reactor implementation
+  
+  int add_to_ior_parser_names (const char *);
+  // Add a Parser name to the list of Parser names.
 
 protected:
   int use_tss_resources_;
@@ -130,6 +136,15 @@ protected:
 
   int cdr_allocator_type_;
   // The type of CDR allocators.
+
+  int parser_names_count_;
+  // The number of the different types of Parsers.
+
+  const char **parser_names_;
+  // Array consisting of the names of the parsers
+
+  int index_;
+  // Index of the current element in the parser_names_ array
 
   TAO_ProtocolFactorySet protocol_factories_;
   // list of loaded protocol factories.

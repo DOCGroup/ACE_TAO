@@ -255,7 +255,7 @@ TAO_IIOP_Profile::parse_string (const char *string,
 
   char *start = copy.inout ();
   char *cp_pos = ACE_OS::strchr (start, ':');  // Look for a port
-  
+
   char *okd = ACE_OS::strchr (start, this->object_key_delimiter_);
 
   if (okd == 0)
@@ -270,7 +270,7 @@ TAO_IIOP_Profile::parse_string (const char *string,
     }
 
   // The default port number.
-  const char def_port [] = ":2809";
+  const char def_port [] = ":683";
 
   // Length of port.
   CORBA::ULong length = 0;
@@ -278,27 +278,27 @@ TAO_IIOP_Profile::parse_string (const char *string,
   // Length of host string.
   CORBA::ULong length_host = 0;
 
-  // Length of <char *cp>
-  CORBA::ULong length_cp = 
+  // Length of <cp>
+  CORBA::ULong length_cp =
     ACE_OS::strlen ((const char *)okd) + sizeof (def_port);
-  
+
   CORBA::String_var cp = CORBA::string_alloc (length_cp);
-  
+
   if (cp_pos == 0)
     {
       // No host/port delimiter! Dont raise an exception. Use the
-      // default port No. 2809
+      // default port No. 683
       ACE_OS::strcpy (cp, def_port);
       ACE_OS::strcat (cp, okd);
-     
-      length = 
-        ACE_OS::strlen (cp.in ()) - 
+
+      length =
+        ACE_OS::strlen (cp.in ()) -
         ACE_OS::strlen ((const char *)okd) -
         1;
-      
-      length_host = 
-        ACE_OS::strlen (start) + 
-        sizeof (def_port) - 
+
+      length_host =
+        ACE_OS::strlen (start) +
+        sizeof (def_port) -
         ACE_OS::strlen (cp.in ()) -1;
     }
   else
@@ -310,21 +310,21 @@ TAO_IIOP_Profile::parse_string (const char *string,
     }
 
   CORBA::String_var tmp = CORBA::string_alloc (length);
-  
+
   ACE_OS::strncpy (tmp.inout (), cp.in () + 1, length);
   tmp[length] = '\0';
-  
+
   this->port_ = (CORBA::UShort) ACE_OS::atoi (tmp.in ());
-  
+
   tmp = CORBA::string_alloc (length_host);
 
   ACE_OS::strncpy (tmp.inout (), start, length_host);
   tmp[length_host] = '\0';
-  
+
   this->host_ = tmp._retn ();
-      
+
   ACE_INET_Addr host_addr;
-  
+
   if (ACE_OS::strcmp (this->host_.in (), "") == 0)
     {
       char tmp_host [MAXHOSTNAMELEN + 1];
@@ -352,7 +352,7 @@ TAO_IIOP_Profile::parse_string (const char *string,
           this->host_ = (const char *) tmp_host;
         }
     }
-  
+
   if (this->object_addr_.set (this->port_,
                               this->host_.in ()) == -1)
     {
@@ -366,11 +366,11 @@ TAO_IIOP_Profile::parse_string (const char *string,
         }
       return -1;
     }
-  
+
   start = ++okd;  // increment past the object key separator
-  
+
   TAO_POA::decode_string_to_sequence (this->object_key_, start);
-      
+
   return 1;
 }
 

@@ -1,3 +1,5 @@
+
+
 #----------------------------------------------------------------------------
 #      $Id$
 #
@@ -211,7 +213,10 @@ ORB_CORE_FILES = \
   TAOC \
   TAOS \
   IOR_Parser \
-  Parser_Registry
+  Parser_Registry \
+  Object_Loader \
+  DLL_Parser \
+  FILE_Parser
 
 DYNAMIC_ANY_FILES =
 
@@ -223,7 +228,7 @@ DEFS    = $(addsuffix .h,$(PUB_HDRS))
 
 ACE_SHLIBS = -lACE
 
-DIRS += ior_dll ior_file ior_corbaloc
+DIRS += ior_corbaloc ior_corbaname
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
@@ -372,12 +377,12 @@ all.nested: all.local
 
 # @@ Can we generalize this to something like this:
 # $(MANAGED_PIDL).target:
-# 	......
+#       ......
 interceptor.target:
-	$(TAO_ROOT)/TAO_IDL/tao_idl -Ge 1 -Wb,export_macro=TAO_Export Interceptor.pidl; \
-	$(RM) -f InterceptorS.* InterceptorS_T.*; \
-	patch < diffs/InterceptorC.h.diff; \
-	patch < diffs/InterceptorC.cpp.diff
+        $(TAO_ROOT)/TAO_IDL/tao_idl -Ge 1 -Wb,export_macro=TAO_Export Interceptor.pidl; \
+        $(RM) -f InterceptorS.* InterceptorS_T.*; \
+        patch < diffs/InterceptorC.h.diff; \
+        patch < diffs/InterceptorC.cpp.diff
 .PHONY interceptor.target:
 
 ifeq ($(fakesvcconf),1)
@@ -388,8 +393,8 @@ ifeq ($(LYNXTARGET),ppc)
 #### POA.cpp raises internal compiler error with LynxOS 3.0.0 g++, but
 #### only when optimization is enabled.  Disable it . . .
 .obj/POA.o .obj/POA.so .shobj/POA.o .shobj/POA.so: POA.cpp
-	@echo NOTE: compiling POA.cpp with -O instead of -O2, see Makefile.
-	$(subst $(OCFLAGS) ,-O ,$(COMPILE.cc)) -o $@ $<
+        @echo NOTE: compiling POA.cpp with -O instead of -O2, see Makefile.
+        $(subst $(OCFLAGS) ,-O ,$(COMPILE.cc)) -o $@ $<
 endif # LYNXTARGET == ppc
 
 #RLDFLAGS := $(subst -L,-Wl\,-rpath ,$(LDFLAGS))
@@ -404,27 +409,27 @@ TAO_COMPONENTS:
 
 .PHONY: SIZES
 MODULES=POA_FILES \
-	PLUGGABLE_PROTOCOLS_FILES \
-	DEFAULT_RESOURCES_FILES \
-	INTERPRETIVE_MARSHALING_FILES \
-	IDL_COMPILER_FILES \
-	ORB_CORE_FILES \
-	DYNAMIC_ANY_FILES \
-	PLUGGABLE_MESSAGING_FILES \
-	INTERFACE_REPO_FILES
+        PLUGGABLE_PROTOCOLS_FILES \
+        DEFAULT_RESOURCES_FILES \
+        INTERPRETIVE_MARSHALING_FILES \
+        IDL_COMPILER_FILES \
+        ORB_CORE_FILES \
+        DYNAMIC_ANY_FILES \
+        PLUGGABLE_MESSAGING_FILES \
+        INTERFACE_REPO_FILES
 
 SIZES: $(addsuffix .size, $(MODULES))
-	@for i in $^; do \
-	  b=`cat $$i`; \
-	  echo $$i : $$b; \
-	done
+        @for i in $^; do \
+          b=`cat $$i`; \
+          echo $$i : $$b; \
+        done
 
 %.size:
 	@size $(addsuffix .o, $(addprefix .obj/,$($*))) | \
-	  sort -n -k 4,4 >$@.details
-	@size $(addsuffix .o, $(addprefix .obj/,$($*))) | \
-	grep -v ' text ' | \
-	awk '{s += $$4} END {print s}' > $@
+          sort -n -k 4,4 >$@.details
+        @size $(addsuffix .o, $(addprefix .obj/,$($*))) | \
+        grep -v ' text ' | \
+        awk '{s += $$4} END {print s}' > $@
 
 
 realclean:
@@ -636,8 +641,6 @@ realclean:
  InterceptorC.h \
  InterceptorC.i \
  Interceptor.i \
- Parser_Registry.h \
- Parser_Registry.i \
  ORB.i \
  ORB_Core.h \
  Policy_Manager.h \
@@ -669,6 +672,8 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
+ Parser_Registry.h \
+ Parser_Registry.i \
  ORB_Core.i \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
@@ -1036,8 +1041,6 @@ realclean:
  InterceptorC.h \
  InterceptorC.i \
  Interceptor.i \
- Parser_Registry.h \
- Parser_Registry.i \
  ORB.i \
  Policy_Manager.h \
  Policy_Manager.i \
@@ -1068,6 +1071,8 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
+ Parser_Registry.h \
+ Parser_Registry.i \
  ORB_Core.i \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
@@ -1309,8 +1314,6 @@ realclean:
  InterceptorC.h \
  InterceptorC.i \
  Interceptor.i \
- Parser_Registry.h \
- Parser_Registry.i \
  ORB.i \
  Policy_Manager.h \
  Policy_Manager.i \
@@ -1341,6 +1344,8 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
+ Parser_Registry.h \
+ Parser_Registry.i \
  ORB_Core.i \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
@@ -1541,8 +1546,6 @@ realclean:
  InterceptorC.h \
  InterceptorC.i \
  Interceptor.i \
- Parser_Registry.h \
- Parser_Registry.i \
  ORB.i \
  Policy_Manager.h \
  Policy_Manager.i \
@@ -1573,6 +1576,8 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
+ Parser_Registry.h \
+ Parser_Registry.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -2086,8 +2091,6 @@ realclean:
  IOPC.i \
  InterceptorC.i \
  Interceptor.i \
- Parser_Registry.h \
- Parser_Registry.i \
  ORB.i \
  Policy_Manager.h \
  POA_CORBA.h \
@@ -2127,6 +2130,8 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
+ Parser_Registry.h \
+ Parser_Registry.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -2333,8 +2338,6 @@ realclean:
  IOPC.i \
  InterceptorC.i \
  Interceptor.i \
- Parser_Registry.h \
- Parser_Registry.i \
  ORB.i \
  Any.h \
  Typecode.h \
@@ -2534,8 +2537,6 @@ realclean:
  InterceptorC.h \
  InterceptorC.i \
  Interceptor.i \
- Parser_Registry.h \
- Parser_Registry.i \
  ORB.i \
  Stub.i \
  NVList.h \
@@ -2552,6 +2553,8 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
+ Parser_Registry.h \
+ Parser_Registry.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -2697,8 +2700,8 @@ realclean:
  PolicyC.i \
  POAC.i \
  Servant_Base.h \
- Servant_Base.i ImplRepoS_T.h \
- ImplRepoS_T.i ImplRepoS_T.cpp ImplRepoS.i \
+ Servant_Base.i \
+ ImplRepoS_T.h ImplRepoS_T.i ImplRepoS_T.cpp ImplRepoS.i \
  Operation_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Functor.h \
@@ -2803,8 +2806,6 @@ realclean:
  IORC.h \
  IORC.i \
  IORS.i \
- Parser_Registry.h \
- Parser_Registry.i \
  ORB.i \
  Stub.i \
  GIOP_Server_Request.h \
@@ -2834,6 +2835,8 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
+ Parser_Registry.h \
+ Parser_Registry.i \
  ORB_Core.i \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
@@ -3027,8 +3030,6 @@ realclean:
  InterceptorC.h \
  InterceptorC.i \
  Interceptor.i \
- Parser_Registry.h \
- Parser_Registry.i \
  ORB.i \
  Stub.i \
  ORB_Core.h \
@@ -3045,6 +3046,8 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
+ Parser_Registry.h \
+ Parser_Registry.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -3062,7 +3065,8 @@ realclean:
  Object_KeyC.i \
  target_specification.i
 
-.obj/Profile.o .obj/Profile.so .shobj/Profile.o .shobj/Profile.so: Profile.cpp Profile.h \
+.obj/Profile.o .obj/Profile.so .shobj/Profile.o .shobj/Profile.so: Profile.cpp \
+ Profile.h \
  $(ACE_ROOT)/ace/pre.h \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
@@ -3283,8 +3287,6 @@ realclean:
  InterceptorC.h \
  InterceptorC.i \
  Interceptor.i \
- Parser_Registry.h \
- Parser_Registry.i \
  ORB.i \
  Stub.i
 
@@ -3442,8 +3444,6 @@ realclean:
  IOPC.i \
  InterceptorC.i \
  Interceptor.i \
- Parser_Registry.h \
- Parser_Registry.i \
  ORB.i \
  Policy_Manager.h \
  POA_CORBA.h \
@@ -3483,6 +3483,8 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
+ Parser_Registry.h \
+ Parser_Registry.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -3688,8 +3690,6 @@ realclean:
  InterceptorC.h \
  InterceptorC.i \
  Interceptor.i \
- Parser_Registry.h \
- Parser_Registry.i \
  ORB.i \
  Policy_Manager.h \
  POA_CORBA.h \
@@ -3702,6 +3702,8 @@ realclean:
  Policy_Manager.i \
  params.h \
  params.i \
+ Parser_Registry.h \
+ Parser_Registry.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -4105,8 +4107,6 @@ realclean:
  InterceptorC.h \
  InterceptorC.i \
  Interceptor.i \
- Parser_Registry.h \
- Parser_Registry.i \
  ORB.i \
  Policy_Manager.h \
  POA_CORBA.h \
@@ -4120,6 +4120,8 @@ realclean:
  Resource_Factory.h \
  params.h \
  params.i \
+ Parser_Registry.h \
+ Parser_Registry.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -4390,8 +4392,6 @@ realclean:
  InterceptorC.h \
  InterceptorC.i \
  Interceptor.i \
- Parser_Registry.h \
- Parser_Registry.i \
  ORB.i \
  Policy_Manager.h \
  POA_CORBA.h \
@@ -4405,6 +4405,8 @@ realclean:
  Resource_Factory.h \
  params.h \
  params.i \
+ Parser_Registry.h \
+ Parser_Registry.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -4609,8 +4611,6 @@ realclean:
  InterceptorC.h \
  InterceptorC.i \
  Interceptor.i \
- Parser_Registry.h \
- Parser_Registry.i \
  ORB.i \
  Object_KeyC.h \
  Object_KeyC.i \
@@ -4695,6 +4695,8 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
+ Parser_Registry.h \
+ Parser_Registry.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -4968,8 +4970,6 @@ realclean:
  InterceptorC.h \
  InterceptorC.i \
  Interceptor.i \
- Parser_Registry.h \
- Parser_Registry.i \
  ORB.i \
  IIOP_Profile.i \
  Timeprobe.h \
@@ -4999,6 +4999,8 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
+ Parser_Registry.h \
+ Parser_Registry.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -5278,8 +5280,6 @@ realclean:
  InterceptorC.h \
  InterceptorC.i \
  Interceptor.i \
- Parser_Registry.h \
- Parser_Registry.i \
  ORB.i \
  IIOP_Profile.i \
  debug.h \
@@ -5295,6 +5295,8 @@ realclean:
  Policy_Manager.i \
  params.h \
  params.i \
+ Parser_Registry.h \
+ Parser_Registry.i \
  ORB_Core.i \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
@@ -5535,8 +5537,6 @@ realclean:
  InterceptorC.h \
  InterceptorC.i \
  Interceptor.i \
- Parser_Registry.h \
- Parser_Registry.i \
  ORB.i \
  Policy_Manager.h \
  POA_CORBA.h \
@@ -5551,6 +5551,8 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
+ Parser_Registry.h \
+ Parser_Registry.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -5807,8 +5809,6 @@ realclean:
  InterceptorC.h \
  InterceptorC.i \
  Interceptor.i \
- Parser_Registry.h \
- Parser_Registry.i \
  ORB.i \
  Policy_Manager.h \
  POA_CORBA.h \
@@ -5823,6 +5823,8 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
+ Parser_Registry.h \
+ Parser_Registry.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -6093,8 +6095,6 @@ realclean:
  InterceptorC.h \
  InterceptorC.i \
  Interceptor.i \
- Parser_Registry.h \
- Parser_Registry.i \
  ORB.i \
  Policy_Manager.h \
  POA_CORBA.h \
@@ -6108,6 +6108,8 @@ realclean:
  Resource_Factory.h \
  params.h \
  params.i \
+ Parser_Registry.h \
+ Parser_Registry.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -6380,8 +6382,6 @@ realclean:
  InterceptorC.h \
  InterceptorC.i \
  Interceptor.i \
- Parser_Registry.h \
- Parser_Registry.i \
  ORB.i \
  Policy_Manager.h \
  POA_CORBA.h \
@@ -6395,6 +6395,8 @@ realclean:
  Resource_Factory.h \
  params.h \
  params.i \
+ Parser_Registry.h \
+ Parser_Registry.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -6670,8 +6672,6 @@ realclean:
  InterceptorC.h \
  InterceptorC.i \
  Interceptor.i \
- Parser_Registry.h \
- Parser_Registry.i \
  ORB.i \
  ORB_Core.h \
  Policy_Manager.h \
@@ -6687,6 +6687,8 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
+ Parser_Registry.h \
+ Parser_Registry.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -6978,8 +6980,6 @@ realclean:
  InterceptorC.h \
  InterceptorC.i \
  Interceptor.i \
- Parser_Registry.h \
- Parser_Registry.i \
  ORB.i \
  Stub.i \
  ORB_Core.h \
@@ -6994,6 +6994,8 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
+ Parser_Registry.h \
+ Parser_Registry.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -7281,8 +7283,6 @@ realclean:
  InterceptorC.h \
  InterceptorC.i \
  Interceptor.i \
- Parser_Registry.h \
- Parser_Registry.i \
  ORB.i \
  Policy_Manager.h \
  POA_CORBA.h \
@@ -7295,6 +7295,8 @@ realclean:
  Policy_Manager.i \
  params.h \
  params.i \
+ Parser_Registry.h \
+ Parser_Registry.i \
  ORB_Core.i \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
@@ -7535,8 +7537,6 @@ realclean:
  InterceptorC.h \
  InterceptorC.i \
  Interceptor.i \
- Parser_Registry.h \
- Parser_Registry.i \
  ORB.i \
  Policy_Manager.h \
  POA_CORBA.h \
@@ -7551,6 +7551,8 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
+ Parser_Registry.h \
+ Parser_Registry.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -7804,8 +7806,6 @@ realclean:
  InterceptorC.h \
  InterceptorC.i \
  Interceptor.i \
- Parser_Registry.h \
- Parser_Registry.i \
  ORB.i \
  Policy_Manager.h \
  POA_CORBA.h \
@@ -7820,6 +7820,8 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
+ Parser_Registry.h \
+ Parser_Registry.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -8097,8 +8099,6 @@ realclean:
  InterceptorC.h \
  InterceptorC.i \
  Interceptor.i \
- Parser_Registry.h \
- Parser_Registry.i \
  ORB.i \
  Policy_Manager.h \
  POA_CORBA.h \
@@ -8112,6 +8112,8 @@ realclean:
  Resource_Factory.h \
  params.h \
  params.i \
+ Parser_Registry.h \
+ Parser_Registry.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -8310,8 +8312,6 @@ realclean:
  InterceptorC.h \
  InterceptorC.i \
  Interceptor.i \
- Parser_Registry.h \
- Parser_Registry.i \
  ORB.i \
  Object_KeyC.h \
  Object_KeyC.i \
@@ -8408,6 +8408,8 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
+ Parser_Registry.h \
+ Parser_Registry.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -8685,8 +8687,6 @@ realclean:
  InterceptorC.h \
  InterceptorC.i \
  Interceptor.i \
- Parser_Registry.h \
- Parser_Registry.i \
  ORB.i \
  Object_KeyC.h \
  Object_KeyC.i \
@@ -8718,6 +8718,8 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
+ Parser_Registry.h \
+ Parser_Registry.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -9003,8 +9005,6 @@ realclean:
  InterceptorC.h \
  InterceptorC.i \
  Interceptor.i \
- Parser_Registry.h \
- Parser_Registry.i \
  ORB.i \
  Object_KeyC.h \
  Object_KeyC.i \
@@ -9022,6 +9022,8 @@ realclean:
  Policy_Manager.i \
  params.h \
  params.i \
+ Parser_Registry.h \
+ Parser_Registry.i \
  ORB_Core.i \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
@@ -9266,8 +9268,6 @@ realclean:
  InterceptorC.h \
  InterceptorC.i \
  Interceptor.i \
- Parser_Registry.h \
- Parser_Registry.i \
  ORB.i \
  Policy_Manager.h \
  POA_CORBA.h \
@@ -9282,6 +9282,8 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
+ Parser_Registry.h \
+ Parser_Registry.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -9541,8 +9543,6 @@ realclean:
  InterceptorC.h \
  InterceptorC.i \
  Interceptor.i \
- Parser_Registry.h \
- Parser_Registry.i \
  ORB.i \
  Policy_Manager.h \
  POA_CORBA.h \
@@ -9557,6 +9557,8 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
+ Parser_Registry.h \
+ Parser_Registry.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -9780,8 +9782,6 @@ realclean:
  InterceptorC.h \
  InterceptorC.i \
  Interceptor.i \
- Parser_Registry.h \
- Parser_Registry.i \
  ORB.i \
  Stub.i \
  Invocation.h \
@@ -9799,6 +9799,8 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
+ Parser_Registry.h \
+ Parser_Registry.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -10131,8 +10133,6 @@ realclean:
  InterceptorC.h \
  InterceptorC.i \
  Interceptor.i \
- Parser_Registry.h \
- Parser_Registry.i \
  ORB.i \
  Stub.i \
  $(ACE_ROOT)/ace/Auto_Ptr.h \
@@ -10296,8 +10296,6 @@ realclean:
  IOPC.i \
  InterceptorC.i \
  Interceptor.i \
- Parser_Registry.h \
- Parser_Registry.i \
  ORB.i \
  Policy_Manager.h \
  POA_CORBA.h \
@@ -10337,6 +10335,8 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
+ Parser_Registry.h \
+ Parser_Registry.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -10514,8 +10514,6 @@ realclean:
  IOPC.i \
  InterceptorC.i \
  Interceptor.i \
- Parser_Registry.h \
- Parser_Registry.i \
  ORB.i \
  Policy_Manager.h \
  POA_CORBA.h \
@@ -10555,6 +10553,8 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
+ Parser_Registry.h \
+ Parser_Registry.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -10747,8 +10747,6 @@ realclean:
  InterceptorC.h \
  InterceptorC.i \
  Interceptor.i \
- Parser_Registry.h \
- Parser_Registry.i \
  ORB.i \
  Policy_Manager.h \
  POA_CORBA.h \
@@ -10761,6 +10759,8 @@ realclean:
  Policy_Manager.i \
  params.h \
  params.i \
+ Parser_Registry.h \
+ Parser_Registry.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -11131,7 +11131,8 @@ realclean:
  Protocol_Factory.h \
  default_resource.i
 
-.obj/append.o .obj/append.so .shobj/append.o .shobj/append.so: append.cpp Marshal.h \
+.obj/append.o .obj/append.so .shobj/append.o .shobj/append.so: append.cpp \
+ Marshal.h \
  $(ACE_ROOT)/ace/pre.h \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
@@ -11290,13 +11291,12 @@ realclean:
  IOPC.i \
  InterceptorC.i \
  Interceptor.i \
- Parser_Registry.h \
- Parser_Registry.i \
  ORB.i \
  Marshal.i \
  debug.h
 
-.obj/Marshal.o .obj/Marshal.so .shobj/Marshal.o .shobj/Marshal.so: Marshal.cpp Marshal.h \
+.obj/Marshal.o .obj/Marshal.so .shobj/Marshal.o .shobj/Marshal.so: Marshal.cpp \
+ Marshal.h \
  $(ACE_ROOT)/ace/pre.h \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
@@ -11455,12 +11455,11 @@ realclean:
  IOPC.i \
  InterceptorC.i \
  Interceptor.i \
- Parser_Registry.h \
- Parser_Registry.i \
  ORB.i \
  Marshal.i
 
-.obj/skip.o .obj/skip.so .shobj/skip.o .shobj/skip.so: skip.cpp Marshal.h \
+.obj/skip.o .obj/skip.so .shobj/skip.o .shobj/skip.so: skip.cpp \
+ Marshal.h \
  $(ACE_ROOT)/ace/pre.h \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
@@ -11619,8 +11618,6 @@ realclean:
  IOPC.i \
  InterceptorC.i \
  Interceptor.i \
- Parser_Registry.h \
- Parser_Registry.i \
  ORB.i \
  Marshal.i \
  debug.h
@@ -11778,8 +11775,6 @@ realclean:
  IOPC.i \
  InterceptorC.i \
  Interceptor.i \
- Parser_Registry.h \
- Parser_Registry.i \
  ORB.i
 
 .obj/Operation_Table.o .obj/Operation_Table.so .shobj/Operation_Table.o .shobj/Operation_Table.so: Operation_Table.cpp \
@@ -11938,8 +11933,6 @@ realclean:
  IOPC.i \
  InterceptorC.i \
  Interceptor.i \
- Parser_Registry.h \
- Parser_Registry.i \
  ORB.i
 
 .obj/Any.o .obj/Any.so .shobj/Any.o .shobj/Any.so: Any.cpp Any.h \
@@ -12101,8 +12094,6 @@ realclean:
  IOPC.i \
  InterceptorC.i \
  Interceptor.i \
- Parser_Registry.h \
- Parser_Registry.i \
  ORB.i \
  Marshal.i \
  ORB_Core.h \
@@ -12140,6 +12131,8 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
+ Parser_Registry.h \
+ Parser_Registry.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -12148,7 +12141,8 @@ realclean:
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  debug.h
 
-.obj/CurrentC.o .obj/CurrentC.so .shobj/CurrentC.o .shobj/CurrentC.so: CurrentC.cpp CurrentC.h \
+.obj/CurrentC.o .obj/CurrentC.so .shobj/CurrentC.o .shobj/CurrentC.so: CurrentC.cpp \
+ CurrentC.h \
  $(ACE_ROOT)/ace/pre.h \
  Object.h \
  corbafwd.h \
@@ -12334,8 +12328,6 @@ realclean:
  InterceptorC.h \
  InterceptorC.i \
  Interceptor.i \
- Parser_Registry.h \
- Parser_Registry.i \
  ORB.i \
  Stub.i \
  Any.h \
@@ -12346,7 +12338,8 @@ realclean:
  DomainC.h \
  DomainC.i
 
-.obj/CurrentS.o .obj/CurrentS.so .shobj/CurrentS.o .shobj/CurrentS.so: CurrentS.cpp CurrentC.h \
+.obj/CurrentS.o .obj/CurrentS.so .shobj/CurrentS.o .shobj/CurrentS.so: CurrentS.cpp \
+ CurrentC.h \
  $(ACE_ROOT)/ace/pre.h \
  Object.h \
  corbafwd.h \
@@ -12500,7 +12493,8 @@ realclean:
  Object_KeyC.i \
  Server_Request.i
 
-.obj/Exception.o .obj/Exception.so .shobj/Exception.o .shobj/Exception.so: Exception.cpp $(ACE_ROOT)/ace/streams.h \
+.obj/Exception.o .obj/Exception.so .shobj/Exception.o .shobj/Exception.so: Exception.cpp \
+ $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -12852,8 +12846,6 @@ realclean:
  IOPC.i \
  InterceptorC.i \
  Interceptor.i \
- Parser_Registry.h \
- Parser_Registry.i \
  ORB.i \
  Policy_Manager.h \
  POA_CORBA.h \
@@ -12893,6 +12885,8 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
+ Parser_Registry.h \
+ Parser_Registry.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -12900,7 +12894,8 @@ realclean:
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(ACE_ROOT)/ace/Dynamic_Service.cpp
 
-.obj/Object.o .obj/Object.so .shobj/Object.o .shobj/Object.so: Object.cpp Object.h \
+.obj/Object.o .obj/Object.so .shobj/Object.o .shobj/Object.so: Object.cpp \
+ Object.h \
  $(ACE_ROOT)/ace/pre.h \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
@@ -13119,8 +13114,6 @@ realclean:
  InterceptorC.h \
  InterceptorC.i \
  Interceptor.i \
- Parser_Registry.h \
- Parser_Registry.i \
  ORB.i \
  Stub.i \
  Request.h \
@@ -13146,6 +13139,8 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
+ Parser_Registry.h \
+ Parser_Registry.i \
  ORB_Core.i \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
@@ -13395,8 +13390,6 @@ realclean:
  InterceptorC.h \
  InterceptorC.i \
  Interceptor.i \
- Parser_Registry.h \
- Parser_Registry.i \
  ORB.i \
  Stub.i \
  Request.h \
@@ -13422,6 +13415,8 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
+ Parser_Registry.h \
+ Parser_Registry.i \
  ORB_Core.i \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
@@ -13609,8 +13604,6 @@ realclean:
  IOPC.i \
  InterceptorC.i \
  Interceptor.i \
- Parser_Registry.h \
- Parser_Registry.i \
  ORB.i \
  Any.h \
  Any.i
@@ -13767,8 +13760,6 @@ realclean:
  IOPC.i \
  InterceptorC.i \
  Interceptor.i \
- Parser_Registry.h \
- Parser_Registry.i \
  ORB.i \
  Acceptor_Registry.h \
  Pluggable.h \
@@ -13805,6 +13796,8 @@ realclean:
  Connector_Registry.i \
  IOR_Parser.h \
  IOR_Parser.i \
+ Parser_Registry.h \
+ Parser_Registry.i \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.h \
@@ -13918,7 +13911,8 @@ realclean:
  Buffering_Constraint_Policy.h \
  Buffering_Constraint_Policy.i
 
-.obj/corbafwd.o .obj/corbafwd.so .shobj/corbafwd.o .shobj/corbafwd.so: corbafwd.cpp corbafwd.h \
+.obj/corbafwd.o .obj/corbafwd.so .shobj/corbafwd.o .shobj/corbafwd.so: corbafwd.cpp \
+ corbafwd.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -14007,7 +14001,8 @@ realclean:
  varbase.h \
  corbafwd.i
 
-.obj/PolicyC.o .obj/PolicyC.so .shobj/PolicyC.o .shobj/PolicyC.so: PolicyC.cpp PolicyC.h \
+.obj/PolicyC.o .obj/PolicyC.so .shobj/PolicyC.o .shobj/PolicyC.so: PolicyC.cpp \
+ PolicyC.h \
  $(ACE_ROOT)/ace/pre.h \
  CurrentC.h \
  Object.h \
@@ -14193,8 +14188,6 @@ realclean:
  InterceptorC.h \
  InterceptorC.i \
  Interceptor.i \
- Parser_Registry.h \
- Parser_Registry.i \
  ORB.i \
  Stub.i \
  POA_CORBA.h \
@@ -14212,6 +14205,8 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
+ Parser_Registry.h \
+ Parser_Registry.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -14240,7 +14235,8 @@ realclean:
  operation_details.i \
  Invocation.i
 
-.obj/PolicyS.o .obj/PolicyS.so .shobj/PolicyS.o .shobj/PolicyS.so: PolicyS.cpp PolicyC.h \
+.obj/PolicyS.o .obj/PolicyS.so .shobj/PolicyS.o .shobj/PolicyS.so: PolicyS.cpp \
+ PolicyC.h \
  $(ACE_ROOT)/ace/pre.h \
  CurrentC.h \
  Object.h \
@@ -14406,8 +14402,6 @@ realclean:
  InterceptorC.h \
  InterceptorC.i \
  Interceptor.i \
- Parser_Registry.h \
- Parser_Registry.i \
  ORB.i
 
 .obj/Encodable.o .obj/Encodable.so .shobj/Encodable.o .shobj/Encodable.so: Encodable.cpp \
@@ -14640,7 +14634,8 @@ realclean:
  RTCORBAS.i \
  RT_Policy_i.i
 
-.obj/DomainC.o .obj/DomainC.so .shobj/DomainC.o .shobj/DomainC.so: DomainC.cpp DomainC.h \
+.obj/DomainC.o .obj/DomainC.so .shobj/DomainC.o .shobj/DomainC.so: DomainC.cpp \
+ DomainC.h \
  $(ACE_ROOT)/ace/pre.h \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
@@ -14830,8 +14825,6 @@ realclean:
  InterceptorC.h \
  InterceptorC.i \
  Interceptor.i \
- Parser_Registry.h \
- Parser_Registry.i \
  ORB.i \
  Stub.i \
  Invocation.h \
@@ -14845,6 +14838,8 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
+ Parser_Registry.h \
+ Parser_Registry.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -14873,7 +14868,8 @@ realclean:
  operation_details.i \
  Invocation.i
 
-.obj/DomainS.o .obj/DomainS.so .shobj/DomainS.o .shobj/DomainS.so: DomainS.cpp DomainC.h $(ACE_ROOT)/ace/pre.h \
+.obj/DomainS.o .obj/DomainS.so .shobj/DomainS.o .shobj/DomainS.so: DomainS.cpp DomainC.h \
+ $(ACE_ROOT)/ace/pre.h \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -15039,8 +15035,6 @@ realclean:
  InterceptorC.h \
  InterceptorC.i \
  Interceptor.i \
- Parser_Registry.h \
- Parser_Registry.i \
  ORB.i
 
 .obj/TimeBaseC.o .obj/TimeBaseC.so .shobj/TimeBaseC.o .shobj/TimeBaseC.so: TimeBaseC.cpp \
@@ -15362,7 +15356,8 @@ realclean:
  CDR.h \
  CDR.i
 
-.obj/Sequence.o .obj/Sequence.so .shobj/Sequence.o .shobj/Sequence.so: Sequence.cpp Sequence.h \
+.obj/Sequence.o .obj/Sequence.so .shobj/Sequence.o .shobj/Sequence.so: Sequence.cpp \
+ Sequence.h \
  $(ACE_ROOT)/ace/pre.h \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
@@ -15624,8 +15619,6 @@ realclean:
  InterceptorC.h \
  InterceptorC.i \
  Interceptor.i \
- Parser_Registry.h \
- Parser_Registry.i \
  ORB.i \
  Policy_Manager.h \
  POA_CORBA.h \
@@ -15661,6 +15654,8 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
+ Parser_Registry.h \
+ Parser_Registry.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -15670,7 +15665,8 @@ realclean:
  Timeprobe.h \
  $(ACE_ROOT)/ace/Timeprobe.h
 
-.obj/MProfile.o .obj/MProfile.so .shobj/MProfile.o .shobj/MProfile.so: MProfile.cpp MProfile.h \
+.obj/MProfile.o .obj/MProfile.so .shobj/MProfile.o .shobj/MProfile.so: MProfile.cpp \
+ MProfile.h \
  $(ACE_ROOT)/ace/pre.h \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
@@ -16025,8 +16021,6 @@ realclean:
  InterceptorC.h \
  InterceptorC.i \
  Interceptor.i \
- Parser_Registry.h \
- Parser_Registry.i \
  ORB.i \
  Stub.i \
  NVList.h \
@@ -16046,6 +16040,8 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
+ Parser_Registry.h \
+ Parser_Registry.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -16126,7 +16122,8 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp
 
-.obj/Typecode.o .obj/Typecode.so .shobj/Typecode.o .shobj/Typecode.so: Typecode.cpp Typecode.h \
+.obj/Typecode.o .obj/Typecode.so .shobj/Typecode.o .shobj/Typecode.so: Typecode.cpp \
+ Typecode.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -16285,13 +16282,12 @@ realclean:
  IOPC.i \
  InterceptorC.i \
  Interceptor.i \
- Parser_Registry.h \
- Parser_Registry.i \
  ORB.i \
  Marshal.i \
  debug.h
 
-.obj/ValueBase.o .obj/ValueBase.so .shobj/ValueBase.o .shobj/ValueBase.so: ValueBase.cpp CDR.h \
+.obj/ValueBase.o .obj/ValueBase.so .shobj/ValueBase.o .shobj/ValueBase.so: ValueBase.cpp \
+ CDR.h \
  $(ACE_ROOT)/ace/pre.h \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
@@ -16443,8 +16439,6 @@ realclean:
  IOPC.i \
  InterceptorC.i \
  Interceptor.i \
- Parser_Registry.h \
- Parser_Registry.i \
  ORB.i \
  ORB_Core.h \
  Policy_Manager.h \
@@ -16485,6 +16479,8 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
+ Parser_Registry.h \
+ Parser_Registry.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -16743,11 +16739,10 @@ realclean:
  IOPC.i \
  InterceptorC.i \
  Interceptor.i \
- Parser_Registry.h \
- Parser_Registry.i \
  ORB.i
 
-.obj/CDR.o .obj/CDR.so .shobj/CDR.o .shobj/CDR.so: CDR.cpp Timeprobe.h \
+.obj/CDR.o .obj/CDR.so .shobj/CDR.o .shobj/CDR.so: CDR.cpp \
+ Timeprobe.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -16902,8 +16897,6 @@ realclean:
  IOPC.i \
  InterceptorC.i \
  Interceptor.i \
- Parser_Registry.h \
- Parser_Registry.i \
  ORB.i \
  Policy_Manager.h \
  POA_CORBA.h \
@@ -16943,6 +16936,8 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
+ Parser_Registry.h \
+ Parser_Registry.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -17045,7 +17040,8 @@ realclean:
  varbase.h \
  corbafwd.i
 
-.obj/debug.o .obj/debug.so .shobj/debug.o .shobj/debug.so: debug.cpp debug.h \
+.obj/debug.o .obj/debug.so .shobj/debug.o .shobj/debug.so: debug.cpp \
+ debug.h \
  $(ACE_ROOT)/ace/pre.h \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
@@ -17393,8 +17389,6 @@ realclean:
  IOPC.i \
  InterceptorC.i \
  Interceptor.i \
- Parser_Registry.h \
- Parser_Registry.i \
  ORB.i \
  Policy_Manager.h \
  POA_CORBA.h \
@@ -17434,6 +17428,8 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
+ Parser_Registry.h \
+ Parser_Registry.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -17670,8 +17666,6 @@ realclean:
  IOPC.i \
  InterceptorC.i \
  Interceptor.i \
- Parser_Registry.h \
- Parser_Registry.i \
  ORB.i \
  Policy_Manager.h \
  POA_CORBA.h \
@@ -17711,6 +17705,8 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
+ Parser_Registry.h \
+ Parser_Registry.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -17919,8 +17915,6 @@ realclean:
  IOPC.i \
  InterceptorC.i \
  Interceptor.i \
- Parser_Registry.h \
- Parser_Registry.i \
  ORB.i \
  Policy_Manager.h \
  POA_CORBA.h \
@@ -17960,6 +17954,8 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
+ Parser_Registry.h \
+ Parser_Registry.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -18342,7 +18338,8 @@ realclean:
  Exception.h \
  Exception.i \
  Environment.h \
- Environment.i InterceptorC.i
+ Environment.i \
+ InterceptorC.i
 
 .obj/Smart_Proxies.o .obj/Smart_Proxies.so .shobj/Smart_Proxies.o .shobj/Smart_Proxies.so: Smart_Proxies.cpp \
  Smart_Proxies.h \
@@ -18438,7 +18435,8 @@ realclean:
  Object.i \
  Smart_Proxies.i
 
-.obj/ORB_Core.o .obj/ORB_Core.so .shobj/ORB_Core.o .shobj/ORB_Core.so: ORB_Core.cpp ORB_Core.h \
+.obj/ORB_Core.o .obj/ORB_Core.so .shobj/ORB_Core.o .shobj/ORB_Core.so: ORB_Core.cpp \
+ ORB_Core.h \
  $(ACE_ROOT)/ace/pre.h \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
@@ -18591,8 +18589,6 @@ realclean:
  IOPC.i \
  InterceptorC.i \
  Interceptor.i \
- Parser_Registry.h \
- Parser_Registry.i \
  ORB.i \
  Policy_Manager.h \
  POA_CORBA.h \
@@ -18632,6 +18628,8 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
+ Parser_Registry.h \
+ Parser_Registry.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -18867,8 +18865,6 @@ realclean:
  IOPC.i \
  InterceptorC.i \
  Interceptor.i \
- Parser_Registry.h \
- Parser_Registry.i \
  ORB.i \
  Policy_Manager.h \
  POA_CORBA.h \
@@ -18908,6 +18904,8 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
+ Parser_Registry.h \
+ Parser_Registry.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -19166,8 +19164,6 @@ realclean:
  IOPC.i \
  InterceptorC.i \
  Interceptor.i \
- Parser_Registry.h \
- Parser_Registry.i \
  ORB.i \
  Policy_Manager.h \
  POA_CORBA.h \
@@ -19207,6 +19203,8 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
+ Parser_Registry.h \
+ Parser_Registry.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -19377,8 +19375,6 @@ realclean:
  IOPC.i \
  InterceptorC.i \
  Interceptor.i \
- Parser_Registry.h \
- Parser_Registry.i \
  ORB.i \
  Policy_Manager.h \
  POA_CORBA.h \
@@ -19418,6 +19414,8 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
+ Parser_Registry.h \
+ Parser_Registry.i \
  ORB_Core.i \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
@@ -19425,7 +19423,8 @@ realclean:
  Leader_Follower.i \
  debug.h
 
-.obj/params.o .obj/params.so .shobj/params.o .shobj/params.so: params.cpp params.h \
+.obj/params.o .obj/params.so .shobj/params.o .shobj/params.so: params.cpp \
+ params.h \
  $(ACE_ROOT)/ace/pre.h \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
@@ -19728,8 +19727,6 @@ realclean:
  InterceptorC.h \
  InterceptorC.i \
  Interceptor.i \
- Parser_Registry.h \
- Parser_Registry.i \
  ORB.i \
  Policy_Manager.h \
  POA_CORBA.h \
@@ -19742,6 +19739,8 @@ realclean:
  Policy_Manager.i \
  params.h \
  params.i \
+ Parser_Registry.h \
+ Parser_Registry.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -20040,8 +20039,6 @@ realclean:
  InterceptorC.h \
  InterceptorC.i \
  Interceptor.i \
- Parser_Registry.h \
- Parser_Registry.i \
  ORB.i \
  Stub.i \
  ORB_Core.h \
@@ -20056,6 +20053,8 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
+ Parser_Registry.h \
+ Parser_Registry.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -20228,7 +20227,17 @@ realclean:
  default_resource.i \
  IIOP_Factory.h \
  UIOP_Factory.h \
- SHMIOP_Factory.h
+ SHMIOP_Factory.h \
+ FILE_Parser.h \
+ IOR_Parser.h \
+ IOR_Parser.i \
+ ior_file_export.h \
+ FILE_Parser.i \
+ DLL_Parser.h \
+ ior_dll_export.h \
+ DLL_Parser.i \
+ Object_Loader.h \
+ Object_Loader.i
 
 .obj/Typecode_Constants.o .obj/Typecode_Constants.so .shobj/Typecode_Constants.o .shobj/Typecode_Constants.so: Typecode_Constants.cpp \
  Typecode.h \
@@ -20385,8 +20394,6 @@ realclean:
  IOPC.i \
  InterceptorC.i \
  Interceptor.i \
- Parser_Registry.h \
- Parser_Registry.i \
  ORB.i \
  Object_KeyC.h \
  Object_KeyC.i \
@@ -20688,8 +20695,6 @@ realclean:
  IOPC.i \
  InterceptorC.i \
  Interceptor.i \
- Parser_Registry.h \
- Parser_Registry.i \
  ORB.i
 
 .obj/Wait_Strategy.o .obj/Wait_Strategy.so .shobj/Wait_Strategy.o .shobj/Wait_Strategy.so: Wait_Strategy.cpp \
@@ -21119,8 +21124,6 @@ realclean:
  InterceptorC.h \
  InterceptorC.i \
  Interceptor.i \
- Parser_Registry.h \
- Parser_Registry.i \
  ORB.i \
  Policy_Manager.h \
  POA_CORBA.h \
@@ -21135,6 +21138,8 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
+ Parser_Registry.h \
+ Parser_Registry.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -21323,8 +21328,6 @@ realclean:
  InterceptorC.h \
  InterceptorC.i \
  Interceptor.i \
- Parser_Registry.h \
- Parser_Registry.i \
  ORB.i \
  Policy_Manager.h \
  POA_CORBA.h \
@@ -21339,6 +21342,8 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
+ Parser_Registry.h \
+ Parser_Registry.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -22048,8 +22053,6 @@ realclean:
  InterceptorC.h \
  InterceptorC.i \
  Interceptor.i \
- Parser_Registry.h \
- Parser_Registry.i \
  ORB.i \
  Policy_Manager.h \
  POA_CORBA.h \
@@ -22089,6 +22092,8 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
+ Parser_Registry.h \
+ Parser_Registry.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -22275,8 +22280,6 @@ realclean:
  InterceptorC.h \
  InterceptorC.i \
  Interceptor.i \
- Parser_Registry.h \
- Parser_Registry.i \
  ORB.i \
  Policy_Manager.h \
  POA_CORBA.h \
@@ -22312,6 +22315,8 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
+ Parser_Registry.h \
+ Parser_Registry.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -22511,8 +22516,6 @@ realclean:
  InterceptorC.h \
  InterceptorC.i \
  Interceptor.i \
- Parser_Registry.h \
- Parser_Registry.i \
  ORB.i \
  NVList.h \
  Any.h \
@@ -22942,8 +22945,6 @@ realclean:
  InterceptorC.h \
  InterceptorC.i \
  Interceptor.i \
- Parser_Registry.h \
- Parser_Registry.i \
  ORB.i \
  Stub.i \
  Invocation.h \
@@ -22954,6 +22955,8 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
+ Parser_Registry.h \
+ Parser_Registry.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -23076,8 +23079,8 @@ realclean:
  Exception.h \
  Exception.i \
  CDR.h \
- CDR.i PollableC.i PollableS_T.h \
- PollableS_T.i PollableS_T.cpp PollableS.i
+ CDR.i PollableC.i \
+ PollableS_T.h PollableS_T.i PollableS_T.cpp PollableS.i
 
 .obj/CONV_FRAMEC.o .obj/CONV_FRAMEC.so .shobj/CONV_FRAMEC.o .shobj/CONV_FRAMEC.so: CONV_FRAMEC.cpp \
  CONV_FRAMEC.h \
@@ -23401,7 +23404,8 @@ realclean:
  CONV_FRAMEC.i \
  Tagged_Components.i
 
-.obj/GIOPC.o .obj/GIOPC.so .shobj/GIOPC.o .shobj/GIOPC.so: GIOPC.cpp GIOPC.h \
+.obj/GIOPC.o .obj/GIOPC.so .shobj/GIOPC.o .shobj/GIOPC.so: GIOPC.cpp \
+ GIOPC.h \
  $(ACE_ROOT)/ace/pre.h \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
@@ -23515,7 +23519,8 @@ realclean:
  Typecode.i \
  Any.i
 
-.obj/BoundsC.o .obj/BoundsC.so .shobj/BoundsC.o .shobj/BoundsC.so: BoundsC.cpp BoundsC.h \
+.obj/BoundsC.o .obj/BoundsC.so .shobj/BoundsC.o .shobj/BoundsC.so: BoundsC.cpp \
+ BoundsC.h \
  $(ACE_ROOT)/ace/pre.h \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
@@ -23738,7 +23743,8 @@ realclean:
  TAOS_T.cpp \
  TAOS.i
 
-.obj/TAOS.o .obj/TAOS.so .shobj/TAOS.o .shobj/TAOS.so: TAOS.cpp TAOS.h corbafwd.h \
+.obj/TAOS.o .obj/TAOS.so .shobj/TAOS.o .shobj/TAOS.so: TAOS.cpp TAOS.h \
+ corbafwd.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -23825,8 +23831,8 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  varbase.h \
- corbafwd.i TAOS_T.h TAOS_T.i \
- TAOS_T.cpp TAOS.i
+ corbafwd.i TAOS_T.h \
+ TAOS_T.i TAOS_T.cpp TAOS.i
 
 .obj/IOR_Parser.o .obj/IOR_Parser.so .shobj/IOR_Parser.o .shobj/IOR_Parser.so: IOR_Parser.cpp \
  IOR_Parser.h \
@@ -24038,9 +24044,518 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- IOR_Parser.i
+ IOR_Parser.i \
+ ORB_Core.h \
+ ORB.h \
+ Exception.h \
+ Exception.i \
+ IOR_LookupTable.h \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+ $(ACE_ROOT)/ace/Functor.h \
+ $(ACE_ROOT)/ace/Functor.i \
+ $(ACE_ROOT)/ace/Functor_T.h \
+ $(ACE_ROOT)/ace/Functor_T.i \
+ $(ACE_ROOT)/ace/Functor_T.cpp \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
+ $(ACE_ROOT)/ace/Service_Config.h \
+ $(ACE_ROOT)/ace/Service_Config.i \
+ $(ACE_ROOT)/ace/Reactor.h \
+ $(ACE_ROOT)/ace/Handle_Set.h \
+ $(ACE_ROOT)/ace/Handle_Set.i \
+ $(ACE_ROOT)/ace/Timer_Queue.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.i \
+ $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
+ $(ACE_ROOT)/ace/Reactor.i \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+ Services.h \
+ Sequence.h \
+ Managed_Types.h \
+ Managed_Types.i \
+ Sequence.i \
+ Sequence_T.h \
+ Sequence_T.i \
+ Sequence_T.cpp \
+ Services.i \
+ IORManipulation.h \
+ Object.h \
+ Object.i \
+ IORS.h \
+ IORC.h \
+ Environment.h \
+ Environment.i \
+ CDR.h \
+ CDR.i \
+ IORC.i \
+ Servant_Base.h \
+ POAC.h \
+ PolicyC.h \
+ CurrentC.h \
+ CurrentC.i \
+ Encodable.h \
+ PolicyC.i \
+ POAC.i \
+ Servant_Base.i \
+ IORS.i \
+ Interceptor.h \
+ InterceptorC.h \
+ IOPC.h \
+ IOPC.i \
+ InterceptorC.i \
+ Interceptor.i \
+ ORB.i \
+ Policy_Manager.h \
+ POA_CORBA.h \
+ DynAnyC.h \
+ Any.h \
+ Typecode.h \
+ Typecode.i \
+ Any.i \
+ DynAnyC.i \
+ DomainC.h \
+ DomainC.i \
+ Policy_Manager.i \
+ Resource_Factory.h \
+ Pluggable.h \
+ $(ACE_ROOT)/ace/Message_Queue.h \
+ $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.h \
+ $(ACE_ROOT)/ace/Message_Queue_T.i \
+ $(ACE_ROOT)/ace/Message_Queue_T.cpp \
+ $(ACE_ROOT)/ace/Strategies.h \
+ $(ACE_ROOT)/ace/Strategies_T.h \
+ $(ACE_ROOT)/ace/Synch_Options.h \
+ $(ACE_ROOT)/ace/Synch_Options.i \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Manager.i \
+ $(ACE_ROOT)/ace/Strategies_T.i \
+ $(ACE_ROOT)/ace/Strategies_T.cpp \
+ $(ACE_ROOT)/ace/Service_Repository.h \
+ $(ACE_ROOT)/ace/Service_Types.h \
+ $(ACE_ROOT)/ace/Service_Types.i \
+ $(ACE_ROOT)/ace/Service_Repository.i \
+ $(ACE_ROOT)/ace/WFMO_Reactor.h \
+ $(ACE_ROOT)/ace/WFMO_Reactor.i \
+ $(ACE_ROOT)/ace/Strategies.i \
+ $(ACE_ROOT)/ace/Message_Queue.i \
+ Pluggable.i \
+ Protocol_Factory.h \
+ params.h \
+ params.i \
+ $(ACE_ROOT)/ace/Map_Manager.h \
+ $(ACE_ROOT)/ace/Map_Manager.i \
+ $(ACE_ROOT)/ace/Map_Manager.cpp \
+ ORB_Core.i \
+ $(ACE_ROOT)/ace/Dynamic_Service.h \
+ $(ACE_ROOT)/ace/Dynamic_Service.cpp \
+ default_resource.h \
+ default_resource.i
 
-.obj/Context.o .obj/Context.so .shobj/Context.o .shobj/Context.so: Context.cpp Context.h \
+.obj/Object_Loader.o .obj/Object_Loader.so .shobj/Object_Loader.o .shobj/Object_Loader.so: Object_Loader.cpp Object_Loader.h \
+ $(ACE_ROOT)/ace/pre.h \
+ corbafwd.h \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/OS_Dirent.h \
+ $(ACE_ROOT)/ace/OS_Export.h \
+ $(ACE_ROOT)/ace/OS_Dirent.inl \
+ $(ACE_ROOT)/ace/OS_String.h \
+ $(ACE_ROOT)/ace/OS_String.inl \
+ $(ACE_ROOT)/ace/OS_Memory.h \
+ $(ACE_ROOT)/ace/OS_Memory.inl \
+ $(ACE_ROOT)/ace/OS_TLI.h \
+ $(ACE_ROOT)/ace/OS_TLI.inl \
+ $(ACE_ROOT)/ace/Min_Max.h \
+ $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Based_Pointer_T.h \
+ $(ACE_ROOT)/ace/Based_Pointer_T.i \
+ $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
+ $(ACE_ROOT)/ace/Based_Pointer_Repository.h \
+ $(ACE_ROOT)/ace/Singleton.h \
+ $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(ACE_ROOT)/ace/Synch.i \
+ $(ACE_ROOT)/ace/Synch_T.h \
+ $(ACE_ROOT)/ace/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler.i \
+ $(ACE_ROOT)/ace/Synch_T.i \
+ $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread.i \
+ $(ACE_ROOT)/ace/Atomic_Op.i \
+ $(ACE_ROOT)/ace/Synch_T.cpp \
+ $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Free_List.h \
+ $(ACE_ROOT)/ace/Free_List.i \
+ $(ACE_ROOT)/ace/Free_List.cpp \
+ $(ACE_ROOT)/ace/Malloc_T.i \
+ $(ACE_ROOT)/ace/Malloc_T.cpp \
+ $(ACE_ROOT)/ace/Memory_Pool.h \
+ $(ACE_ROOT)/ace/Signal.h \
+ $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Containers.i \
+ $(ACE_ROOT)/ace/Containers_T.h \
+ $(ACE_ROOT)/ace/Containers_T.i \
+ $(ACE_ROOT)/ace/Containers_T.cpp \
+ $(ACE_ROOT)/ace/Signal.i \
+ $(ACE_ROOT)/ace/Mem_Map.h \
+ $(ACE_ROOT)/ace/Mem_Map.i \
+ $(ACE_ROOT)/ace/Memory_Pool.i \
+ $(ACE_ROOT)/ace/Message_Block.i \
+ $(ACE_ROOT)/ace/Message_Block_T.h \
+ $(ACE_ROOT)/ace/Message_Block_T.i \
+ $(ACE_ROOT)/ace/Message_Block_T.cpp \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/CDR_Stream.i \
+ try_macros.h \
+ orbconf.h \
+ $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
+ corbafwd.i \
+ ior_dll_export.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.i \
+ $(ACE_ROOT)/ace/Service_Object.i \
+ Object_Loader.i \
+ $(ACE_ROOT)/ace/Dynamic_Service.h \
+ $(ACE_ROOT)/ace/Dynamic_Service.cpp \
+ $(ACE_ROOT)/ace/Service_Config.h \
+ $(ACE_ROOT)/ace/Service_Config.i \
+ $(ACE_ROOT)/ace/Reactor.h \
+ $(ACE_ROOT)/ace/Handle_Set.h \
+ $(ACE_ROOT)/ace/Handle_Set.i \
+ $(ACE_ROOT)/ace/Timer_Queue.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.i \
+ $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
+ $(ACE_ROOT)/ace/Reactor.i \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+ $(ACE_ROOT)/ace/Service_Repository.h \
+ $(ACE_ROOT)/ace/Service_Types.h \
+ $(ACE_ROOT)/ace/Service_Types.i \
+ $(ACE_ROOT)/ace/Service_Repository.i
+
+.obj/DLL_Parser.o .obj/DLL_Parser.so .shobj/DLL_Parser.o .shobj/DLL_Parser.so: DLL_Parser.cpp DLL_Parser.h \
+ $(ACE_ROOT)/ace/pre.h \
+ IOR_Parser.h \
+ corbafwd.h \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/OS_Dirent.h \
+ $(ACE_ROOT)/ace/OS_Export.h \
+ $(ACE_ROOT)/ace/OS_Dirent.inl \
+ $(ACE_ROOT)/ace/OS_String.h \
+ $(ACE_ROOT)/ace/OS_String.inl \
+ $(ACE_ROOT)/ace/OS_Memory.h \
+ $(ACE_ROOT)/ace/OS_Memory.inl \
+ $(ACE_ROOT)/ace/OS_TLI.h \
+ $(ACE_ROOT)/ace/OS_TLI.inl \
+ $(ACE_ROOT)/ace/Min_Max.h \
+ $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Based_Pointer_T.h \
+ $(ACE_ROOT)/ace/Based_Pointer_T.i \
+ $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
+ $(ACE_ROOT)/ace/Based_Pointer_Repository.h \
+ $(ACE_ROOT)/ace/Singleton.h \
+ $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(ACE_ROOT)/ace/Synch.i \
+ $(ACE_ROOT)/ace/Synch_T.h \
+ $(ACE_ROOT)/ace/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler.i \
+ $(ACE_ROOT)/ace/Synch_T.i \
+ $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread.i \
+ $(ACE_ROOT)/ace/Atomic_Op.i \
+ $(ACE_ROOT)/ace/Synch_T.cpp \
+ $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Free_List.h \
+ $(ACE_ROOT)/ace/Free_List.i \
+ $(ACE_ROOT)/ace/Free_List.cpp \
+ $(ACE_ROOT)/ace/Malloc_T.i \
+ $(ACE_ROOT)/ace/Malloc_T.cpp \
+ $(ACE_ROOT)/ace/Memory_Pool.h \
+ $(ACE_ROOT)/ace/Signal.h \
+ $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Containers.i \
+ $(ACE_ROOT)/ace/Containers_T.h \
+ $(ACE_ROOT)/ace/Containers_T.i \
+ $(ACE_ROOT)/ace/Containers_T.cpp \
+ $(ACE_ROOT)/ace/Signal.i \
+ $(ACE_ROOT)/ace/Mem_Map.h \
+ $(ACE_ROOT)/ace/Mem_Map.i \
+ $(ACE_ROOT)/ace/Memory_Pool.i \
+ $(ACE_ROOT)/ace/Message_Block.i \
+ $(ACE_ROOT)/ace/Message_Block_T.h \
+ $(ACE_ROOT)/ace/Message_Block_T.i \
+ $(ACE_ROOT)/ace/Message_Block_T.cpp \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/CDR_Stream.i \
+ try_macros.h \
+ orbconf.h \
+ $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
+ corbafwd.i \
+ $(ACE_ROOT)/ace/Service_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.i \
+ $(ACE_ROOT)/ace/Service_Object.i \
+ IOR_Parser.i \
+ ior_dll_export.h \
+ $(ACE_ROOT)/ace/Service_Config.h \
+ $(ACE_ROOT)/ace/Service_Config.i \
+ $(ACE_ROOT)/ace/Reactor.h \
+ $(ACE_ROOT)/ace/Handle_Set.h \
+ $(ACE_ROOT)/ace/Handle_Set.i \
+ $(ACE_ROOT)/ace/Timer_Queue.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.i \
+ $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
+ $(ACE_ROOT)/ace/Reactor.i \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+ DLL_Parser.i Object_Loader.h Object_Loader.i \
+ Object.h \
+ Object.i \
+ Exception.h \
+ Exception.i \
+ Environment.h \
+ Environment.i \
+ $(ACE_ROOT)/ace/Dynamic_Service.h \
+ $(ACE_ROOT)/ace/Dynamic_Service.cpp \
+ $(ACE_ROOT)/ace/Service_Repository.h \
+ $(ACE_ROOT)/ace/Service_Types.h \
+ $(ACE_ROOT)/ace/Service_Types.i \
+ $(ACE_ROOT)/ace/Service_Repository.i
+
+.obj/FILE_Parser.o .obj/FILE_Parser.so .shobj/FILE_Parser.o .shobj/FILE_Parser.so: FILE_Parser.cpp FILE_Parser.h \
+ $(ACE_ROOT)/ace/pre.h \
+ IOR_Parser.h \
+ corbafwd.h \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/OS_Dirent.h \
+ $(ACE_ROOT)/ace/OS_Export.h \
+ $(ACE_ROOT)/ace/OS_Dirent.inl \
+ $(ACE_ROOT)/ace/OS_String.h \
+ $(ACE_ROOT)/ace/OS_String.inl \
+ $(ACE_ROOT)/ace/OS_Memory.h \
+ $(ACE_ROOT)/ace/OS_Memory.inl \
+ $(ACE_ROOT)/ace/OS_TLI.h \
+ $(ACE_ROOT)/ace/OS_TLI.inl \
+ $(ACE_ROOT)/ace/Min_Max.h \
+ $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Based_Pointer_T.h \
+ $(ACE_ROOT)/ace/Based_Pointer_T.i \
+ $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
+ $(ACE_ROOT)/ace/Based_Pointer_Repository.h \
+ $(ACE_ROOT)/ace/Singleton.h \
+ $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(ACE_ROOT)/ace/Synch.i \
+ $(ACE_ROOT)/ace/Synch_T.h \
+ $(ACE_ROOT)/ace/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler.i \
+ $(ACE_ROOT)/ace/Synch_T.i \
+ $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread.i \
+ $(ACE_ROOT)/ace/Atomic_Op.i \
+ $(ACE_ROOT)/ace/Synch_T.cpp \
+ $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Free_List.h \
+ $(ACE_ROOT)/ace/Free_List.i \
+ $(ACE_ROOT)/ace/Free_List.cpp \
+ $(ACE_ROOT)/ace/Malloc_T.i \
+ $(ACE_ROOT)/ace/Malloc_T.cpp \
+ $(ACE_ROOT)/ace/Memory_Pool.h \
+ $(ACE_ROOT)/ace/Signal.h \
+ $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Containers.i \
+ $(ACE_ROOT)/ace/Containers_T.h \
+ $(ACE_ROOT)/ace/Containers_T.i \
+ $(ACE_ROOT)/ace/Containers_T.cpp \
+ $(ACE_ROOT)/ace/Signal.i \
+ $(ACE_ROOT)/ace/Mem_Map.h \
+ $(ACE_ROOT)/ace/Mem_Map.i \
+ $(ACE_ROOT)/ace/Memory_Pool.i \
+ $(ACE_ROOT)/ace/Message_Block.i \
+ $(ACE_ROOT)/ace/Message_Block_T.h \
+ $(ACE_ROOT)/ace/Message_Block_T.i \
+ $(ACE_ROOT)/ace/Message_Block_T.cpp \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/CDR_Stream.i \
+ try_macros.h \
+ orbconf.h \
+ $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
+ corbafwd.i \
+ $(ACE_ROOT)/ace/Service_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.i \
+ $(ACE_ROOT)/ace/Service_Object.i \
+ IOR_Parser.i \
+ ior_file_export.h \
+ $(ACE_ROOT)/ace/Service_Config.h \
+ $(ACE_ROOT)/ace/Service_Config.i \
+ $(ACE_ROOT)/ace/Reactor.h \
+ $(ACE_ROOT)/ace/Handle_Set.h \
+ $(ACE_ROOT)/ace/Handle_Set.i \
+ $(ACE_ROOT)/ace/Timer_Queue.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.i \
+ $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
+ $(ACE_ROOT)/ace/Reactor.i \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+ FILE_Parser.i \
+ ior_dll/Object_Loader.h \
+ ior_dll/ior_dll_export.h \
+ ior_dll/Object_Loader.i \
+ Object.h \
+ Object.i \
+ ORB.h \
+ Exception.h \
+ Exception.i \
+ IOR_LookupTable.h \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+ $(ACE_ROOT)/ace/Functor.h \
+ $(ACE_ROOT)/ace/Functor.i \
+ $(ACE_ROOT)/ace/Functor_T.h \
+ $(ACE_ROOT)/ace/Functor_T.i \
+ $(ACE_ROOT)/ace/Functor_T.cpp \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
+ Services.h \
+ Sequence.h \
+ Managed_Types.h \
+ Managed_Types.i \
+ Sequence.i \
+ Sequence_T.h \
+ Sequence_T.i \
+ Sequence_T.cpp \
+ Services.i \
+ IORManipulation.h \
+ IORS.h \
+ IORC.h \
+ Environment.h \
+ Environment.i \
+ CDR.h \
+ CDR.i \
+ IORC.i \
+ Servant_Base.h \
+ POAC.h \
+ PolicyC.h \
+ CurrentC.h \
+ CurrentC.i \
+ Encodable.h \
+ PolicyC.i \
+ POAC.i \
+ Servant_Base.i \
+ IORS.i \
+ Interceptor.h \
+ InterceptorC.h \
+ IOPC.h \
+ IOPC.i \
+ InterceptorC.i \
+ Interceptor.i \
+ ORB.i \
+ $(ACE_ROOT)/ace/Read_Buffer.h \
+ $(ACE_ROOT)/ace/Read_Buffer.i
+
+.obj/Context.o .obj/Context.so .shobj/Context.o .shobj/Context.so: Context.cpp \
+ Context.h \
  $(ACE_ROOT)/ace/pre.h \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
@@ -24200,11 +24715,10 @@ realclean:
  IOPC.i \
  InterceptorC.i \
  Interceptor.i \
- Parser_Registry.h \
- Parser_Registry.i \
  ORB.i
 
-.obj/Request.o .obj/Request.so .shobj/Request.o .shobj/Request.so: Request.cpp Request.h \
+.obj/Request.o .obj/Request.so .shobj/Request.o .shobj/Request.so: Request.cpp \
+ Request.h \
  $(ACE_ROOT)/ace/pre.h \
  orbconf.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -24357,8 +24871,6 @@ realclean:
  IOPC.i \
  InterceptorC.i \
  Interceptor.i \
- Parser_Registry.h \
- Parser_Registry.i \
  ORB.i \
  NVList.h \
  Any.h \
@@ -24415,7 +24927,8 @@ realclean:
  Pluggable_Messaging_Utils.h \
  Pluggable_Messaging_Utils.i
 
-.obj/Services.o .obj/Services.so .shobj/Services.o .shobj/Services.so: Services.cpp Services.h \
+.obj/Services.o .obj/Services.so .shobj/Services.o .shobj/Services.so: Services.cpp \
+ Services.h \
  $(ACE_ROOT)/ace/pre.h \
  Sequence.h \
  corbafwd.h \
@@ -24525,7 +25038,8 @@ realclean:
  Typecode.i \
  Any.i
 
-.obj/NVList.o .obj/NVList.so .shobj/NVList.o .shobj/NVList.so: NVList.cpp NVList.h \
+.obj/NVList.o .obj/NVList.so .shobj/NVList.o .shobj/NVList.so: NVList.cpp \
+ NVList.h \
  $(ACE_ROOT)/ace/pre.h \
  orbconf.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -24683,8 +25197,6 @@ realclean:
  IOPC.i \
  InterceptorC.i \
  Interceptor.i \
- Parser_Registry.h \
- Parser_Registry.i \
  ORB.i \
  BoundsC.h \
  BoundsC.i \
@@ -24905,8 +25417,6 @@ realclean:
  InterceptorC.h \
  InterceptorC.i \
  Interceptor.i \
- Parser_Registry.h \
- Parser_Registry.i \
  ORB.i \
  Stub.i \
  Invocation.h \
@@ -24922,6 +25432,8 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
+ Parser_Registry.h \
+ Parser_Registry.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -24974,8 +25486,9 @@ realclean:
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i MessagingS.h orbconf.h \
- TimeBaseS.h TimeBaseC.h \
+ $(ACE_ROOT)/ace/Log_Record.i MessagingS.h \
+ orbconf.h TimeBaseS.h \
+ TimeBaseC.h \
  Any.h \
  CDR.h \
  corbafwd.h \
@@ -25074,11 +25587,12 @@ realclean:
  IOPC.h \
  IOPC.i \
  PollableC.h \
- PollableC.i MessagingC.i POAC.h \
- POAC.i Servant_Base.h \
- POAC.h \
- Servant_Base.i MessagingS_T.h \
- MessagingS_T.i MessagingS_T.cpp MessagingS.i Operation_Table.h \
+ PollableC.i MessagingC.i \
+ POAC.h POAC.i \
+ Servant_Base.h POAC.h \
+ Servant_Base.i \
+ MessagingS_T.h MessagingS_T.i MessagingS_T.cpp MessagingS.i \
+ Operation_Table.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -25103,7 +25617,8 @@ realclean:
  $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
- $(ACE_ROOT)/ace/Svc_Conf_Tokens.h Server_Request.h \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+ Server_Request.h \
  Object_KeyC.h \
  Object_KeyC.i \
  Server_Request.i Stub.h \
@@ -25152,8 +25667,6 @@ realclean:
  InterceptorC.h \
  InterceptorC.i \
  Interceptor.i \
- Parser_Registry.h \
- Parser_Registry.i \
  ORB.i \
  Stub.i ORB_Core.h \
  Policy_Manager.h \
@@ -25167,12 +25680,15 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
+ Parser_Registry.h \
+ Parser_Registry.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
  ORB_Core.i \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
- $(ACE_ROOT)/ace/Dynamic_Service.cpp Object_Adapter.h \
+ $(ACE_ROOT)/ace/Dynamic_Service.cpp \
+ Object_Adapter.h \
  Key_Adapters.h \
  $(ACE_ROOT)/ace/Map.h \
  $(ACE_ROOT)/ace/Map_T.h \
@@ -25361,8 +25877,6 @@ realclean:
  IOPC.i \
  InterceptorC.i \
  Interceptor.i \
- Parser_Registry.h \
- Parser_Registry.i \
  ORB.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -25391,6 +25905,8 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
+ Parser_Registry.h \
+ Parser_Registry.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -26390,8 +26906,6 @@ realclean:
  InterceptorC.h \
  InterceptorC.i \
  Interceptor.i \
- Parser_Registry.h \
- Parser_Registry.i \
  ORB.i \
  Stub.i \
  ORB_Core.h \
@@ -26406,6 +26920,8 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
+ Parser_Registry.h \
+ Parser_Registry.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -26415,7 +26931,8 @@ realclean:
  Priority_Mapping.h \
  Priority_Mapping.i
 
-.obj/RT_Mutex.o .obj/RT_Mutex.so .shobj/RT_Mutex.o .shobj/RT_Mutex.so: RT_Mutex.cpp RT_Mutex.h \
+.obj/RT_Mutex.o .obj/RT_Mutex.so .shobj/RT_Mutex.o .shobj/RT_Mutex.so: RT_Mutex.cpp \
+ RT_Mutex.h \
  $(ACE_ROOT)/ace/pre.h \
  orbconf.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -26688,7 +27205,8 @@ realclean:
  RTCORBAS.i \
  RT_Policy_i.i
 
-.obj/RT_ORB.o .obj/RT_ORB.so .shobj/RT_ORB.o .shobj/RT_ORB.so: RT_ORB.cpp RT_ORB.h \
+.obj/RT_ORB.o .obj/RT_ORB.so .shobj/RT_ORB.o .shobj/RT_ORB.so: RT_ORB.cpp \
+ RT_ORB.h \
  $(ACE_ROOT)/ace/pre.h \
  orbconf.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -26982,8 +27500,6 @@ realclean:
  IOPC.i \
  InterceptorC.i \
  Interceptor.i \
- Parser_Registry.h \
- Parser_Registry.i \
  ORB.i \
  $(ACE_ROOT)/ace/Task.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
@@ -27035,6 +27551,8 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
+ Parser_Registry.h \
+ Parser_Registry.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -27174,7 +27692,8 @@ realclean:
  TAOS_T.cpp \
  TAOS.i
 
-.obj/RTCORBAS.o .obj/RTCORBAS.so .shobj/RTCORBAS.o .shobj/RTCORBAS.so: RTCORBAS.cpp orbconf.h \
+.obj/RTCORBAS.o .obj/RTCORBAS.so .shobj/RTCORBAS.o .shobj/RTCORBAS.so: RTCORBAS.cpp \
+ orbconf.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
@@ -27199,8 +27718,8 @@ realclean:
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i RTCORBAS.h orbconf.h \
- IOPS.h IOPC.h \
+ $(ACE_ROOT)/ace/Log_Record.i RTCORBAS.h \
+ orbconf.h IOPS.h IOPC.h \
  CDR.h \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
@@ -27292,15 +27811,17 @@ realclean:
  TimeBaseS_T.h \
  TimeBaseS_T.i \
  TimeBaseS_T.cpp \
- TimeBaseS.i RTCORBAC.h corbafwd.h \
- IOPC.h PolicyC.h \
+ TimeBaseS.i RTCORBAC.h \
+ corbafwd.h IOPC.h \
+ PolicyC.h \
  CurrentC.h \
  CurrentC.i \
  Encodable.h \
- PolicyC.i TimeBaseC.h RTCORBAC.i \
- RTCORBAS_T.h RTCORBAS_T.i RTCORBAS_T.cpp RTCORBAS.i
+ PolicyC.i TimeBaseC.h \
+ RTCORBAC.i RTCORBAS_T.h RTCORBAS_T.i RTCORBAS_T.cpp RTCORBAS.i
 
-.obj/DynAnyC.o .obj/DynAnyC.so .shobj/DynAnyC.o .shobj/DynAnyC.so: DynAnyC.cpp DynAnyC.h \
+.obj/DynAnyC.o .obj/DynAnyC.so .shobj/DynAnyC.o .shobj/DynAnyC.so: DynAnyC.cpp \
+ DynAnyC.h \
  $(ACE_ROOT)/ace/pre.h \
  orbconf.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -27490,15 +28011,14 @@ realclean:
  InterceptorC.h \
  InterceptorC.i \
  Interceptor.i \
- Parser_Registry.h \
- Parser_Registry.i \
  ORB.i \
  Stub.i \
  POA_CORBA.h \
  DomainC.h \
  DomainC.i
 
-.obj/DynAnyS.o .obj/DynAnyS.so .shobj/DynAnyS.o .shobj/DynAnyS.so: DynAnyS.cpp DynAnyC.h \
+.obj/DynAnyS.o .obj/DynAnyS.so .shobj/DynAnyS.o .shobj/DynAnyS.so: DynAnyS.cpp \
+ DynAnyC.h \
  $(ACE_ROOT)/ace/pre.h \
  orbconf.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -27620,7 +28140,8 @@ realclean:
  POAC.i \
  Servant_Base.i
 
-.obj/DynAny_i.o .obj/DynAny_i.so .shobj/DynAny_i.o .shobj/DynAny_i.so: DynAny_i.cpp DynAny_i.h \
+.obj/DynAny_i.o .obj/DynAny_i.so .shobj/DynAny_i.o .shobj/DynAny_i.so: DynAny_i.cpp \
+ DynAny_i.h \
  $(ACE_ROOT)/ace/pre.h \
  orbconf.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -27922,8 +28443,6 @@ realclean:
  IOPC.i \
  InterceptorC.i \
  Interceptor.i \
- Parser_Registry.h \
- Parser_Registry.i \
  ORB.i \
  Marshal.i
 
@@ -28221,8 +28740,6 @@ realclean:
  IOPC.i \
  InterceptorC.i \
  Interceptor.i \
- Parser_Registry.h \
- Parser_Registry.i \
  ORB.i \
  Marshal.i
 
@@ -28391,8 +28908,6 @@ realclean:
  IOPC.i \
  InterceptorC.i \
  Interceptor.i \
- Parser_Registry.h \
- Parser_Registry.i \
  ORB.i \
  Marshal.h \
  Principal.h \
@@ -28569,8 +29084,6 @@ realclean:
  IOPC.i \
  InterceptorC.i \
  Interceptor.i \
- Parser_Registry.h \
- Parser_Registry.i \
  ORB.i \
  Marshal.i
 
@@ -28728,8 +29241,6 @@ realclean:
  IOPC.i \
  InterceptorC.i \
  Interceptor.i \
- Parser_Registry.h \
- Parser_Registry.i \
  ORB.i
 
 .obj/InterfaceC.o .obj/InterfaceC.so .shobj/InterfaceC.o .shobj/InterfaceC.so: InterfaceC.cpp InterfaceC.h \
@@ -29591,8 +30102,6 @@ realclean:
  InterceptorC.h \
  InterceptorC.i \
  Interceptor.i \
- Parser_Registry.h \
- Parser_Registry.i \
  ORB.i \
  Policy_Manager.h \
  POA_CORBA.h \
@@ -29632,6 +30141,8 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
+ Parser_Registry.h \
+ Parser_Registry.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -29849,8 +30360,6 @@ realclean:
  InterceptorC.h \
  InterceptorC.i \
  Interceptor.i \
- Parser_Registry.h \
- Parser_Registry.i \
  ORB.i \
  Principal.h \
  Principal.i \
@@ -30033,8 +30542,6 @@ realclean:
  InterceptorC.h \
  InterceptorC.i \
  Interceptor.i \
- Parser_Registry.h \
- Parser_Registry.i \
  ORB.i \
  Policy_Manager.h \
  POA_CORBA.h \
@@ -30074,6 +30581,8 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
+ Parser_Registry.h \
+ Parser_Registry.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -30453,8 +30962,6 @@ realclean:
  InterceptorC.h \
  InterceptorC.i \
  Interceptor.i \
- Parser_Registry.h \
- Parser_Registry.i \
  ORB.i \
  Principal.h \
  Principal.i \
@@ -30512,6 +31019,8 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
+ Parser_Registry.h \
+ Parser_Registry.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -30720,8 +31229,6 @@ realclean:
  InterceptorC.h \
  InterceptorC.i \
  Interceptor.i \
- Parser_Registry.h \
- Parser_Registry.i \
  ORB.i \
  Policy_Manager.h \
  POA_CORBA.h \
@@ -30761,6 +31268,8 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
+ Parser_Registry.h \
+ Parser_Registry.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -30985,8 +31494,6 @@ realclean:
  InterceptorC.h \
  InterceptorC.i \
  Interceptor.i \
- Parser_Registry.h \
- Parser_Registry.i \
  ORB.i \
  Policy_Manager.h \
  POA_CORBA.h \
@@ -31026,6 +31533,8 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
+ Parser_Registry.h \
+ Parser_Registry.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -31193,8 +31702,6 @@ realclean:
  InterceptorC.h \
  InterceptorC.i \
  Interceptor.i \
- Parser_Registry.h \
- Parser_Registry.i \
  ORB.i \
  Policy_Manager.h \
  POA_CORBA.h \
@@ -31234,6 +31741,8 @@ realclean:
  Protocol_Factory.h \
  params.h \
  params.i \
+ Parser_Registry.h \
+ Parser_Registry.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \

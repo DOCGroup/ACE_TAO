@@ -93,10 +93,12 @@ public:
 
   virtual void parse_string_count_helper (const char * &corbaloc_name,
                                           CORBA::ULong &addr_list_length,
-                                          CORBA::ULong &count_addr);
+                                          CORBA::ULong &count_addr,
+                                          CORBA::Environment &)
+    ACE_THROW_SPEC ((CORBA::SystemException));
   // Helps count the length of the <obj_addr_list> and the number of
   // individual <obj_addr> in the <obj_addr_list>.
-
+  
   virtual CORBA::Object_ptr parse_string_mprofile_helper (ACE_Array_Base <char *> &addr,
                                                           CORBA::ULong &count_addr,
                                                           CORBA::ORB_ptr orb,
@@ -119,6 +121,25 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Tokenizes the <obj_addr_list> using "," as the seperator. Assigns
   // individual endpoints to the elements of the ACE_Array_Base.
+
+  virtual void assign_iiop_prefix_key_string (ACE_Array_Base <char *> &addr,
+                                              char * &cloc_name_ptr,
+                                              ACE_CString &key_string,
+                                              CORBA::ULong &current_addr,
+                                              CORBA::ULong &addr_list_length);
+  // Helps parse_string_assign_helper by assigning in the case when 
+  // the protocol name is missing and we have to append the default
+  // protocol <iiop:> and the key string.
+
+  virtual void assign_key_string(ACE_Array_Base <char *> &addr,
+                                 char * &cloc_name_ptr,
+                                 ACE_CString &key_string,
+                                 CORBA::ULong &current_addr,
+                                 CORBA::ULong &addr_list_length);
+  // Helps parse_string_assign_helper by assigning in the case when 
+  // the protocol name is present and we have to append jsut the key
+  // string.
+
 
 };
 

@@ -7,12 +7,14 @@
 //     TAO
 //
 // = AUTHOR
-//     Fred Kuhns <fredk@cs.wustl.edu>
+//     Priyanka Gontla <pgontla@uci.edu>
+//     Carlos O'Ryan <coryan@uci.edu>
 //
 // ============================================================================
 
 #ifndef TAO_PARSER_REGISTRY_H
 #define TAO_PARSER_REGISTRY_H
+
 #include "ace/pre.h"
 
 #include "tao/corbafwd.h"
@@ -20,6 +22,9 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+// Forward declarations.
+class TAO_ORB_Core;
 
 class TAO_IOR_Parser;
 
@@ -41,7 +46,7 @@ public:
   ~TAO_Parser_Registry (void);
   // Dstructor.
 
-  int open (void);
+  int open (TAO_ORB_Core *orb_core);
   // Initialize the parser registry with the list of known protocols.
   // Invoked by the ORB during startup.
 
@@ -55,7 +60,7 @@ public:
   Parser_Iterator end (void) const;
 
 private:
-  // The acceptor registry should not be copied.
+  // The parser registry should not be copied.
   ACE_UNIMPLEMENTED_FUNC (TAO_Parser_Registry (const TAO_Parser_Registry&))
   ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Parser_Registry&))
 
