@@ -246,7 +246,6 @@ ACE_Unbounded_Stack<T>::push (const T &new_item)
                          (ACE_Node<T> *) this->allocator_->malloc (sizeof (ACE_Node<T>)),
                          ACE_Node<T> (new_item, this->head_->next_),
                          -1);
-
   this->head_->next_ = temp;
   this->cur_size_++;
   return 0;
@@ -346,7 +345,6 @@ ACE_Unbounded_Queue<T>::ACE_Unbounded_Queue (ACE_Allocator *alloc)
   ACE_NEW_MALLOC (this->head_,
                   (ACE_Node<T> *) this->allocator_->malloc (sizeof (ACE_Node<T>)),
                   ACE_Node<T>);
-
   // Make the list circular by pointing it back to itself.
   this->head_->next_ = this->head_;
 }
@@ -482,7 +480,6 @@ ACE_Unbounded_Queue<T>::enqueue_head (const T &new_item)
                          (ACE_Node<T> *) this->allocator_->malloc (sizeof (ACE_Node<T>)),
                          ACE_Node<T> (new_item, this->head_->next_),
                          -1);
-
   // Link this pointer into the front of the list.
   this->head_->next_ = temp;
 
@@ -504,7 +501,6 @@ ACE_Unbounded_Queue<T>::enqueue_tail (const T &new_item)
   ACE_NEW_MALLOC_RETURN (temp,
                          (ACE_Node<T> *) this->allocator_->malloc (sizeof (ACE_Node<T>)),
                          ACE_Node<T> (this->head_->next_), -1);
-
   // Link this dummy pointer into the list.
   this->head_->next_ = temp;
 
@@ -1001,7 +997,6 @@ ACE_Double_Linked_List<T>:: ACE_Double_Linked_List (ACE_Allocator *alloc)
   ACE_NEW_MALLOC (this->head_,
                   (T *) this->allocator_->malloc (sizeof (T)),
                   T);
-
   this->init_head ();
 }
 
@@ -1734,7 +1729,6 @@ ACE_Unbounded_Set<T>::insert_tail (const T &item)
                          (ACE_Node<T>*) this->allocator_->malloc (sizeof (ACE_Node<T>)),
                          ACE_Node<T> (this->head_->next_),
                          -1);
-
   // Link this pointer into the list.
   this->head_->next_ = temp;
 
@@ -1836,7 +1830,6 @@ ACE_Unbounded_Set<T>::ACE_Unbounded_Set (ACE_Allocator *alloc)
   ACE_NEW_MALLOC (this->head_,
                   (ACE_Node<T>*) this->allocator_->malloc (sizeof (ACE_Node<T>)),
                   ACE_Node<T>);
-
   // Make the list circular by pointing it back to itself.
   this->head_->next_ = this->head_;
 }
@@ -2271,7 +2264,6 @@ ACE_Ordered_MultiSet<T>::insert_from (const T &item, ACE_DNode<T> *position,
                          (ACE_DNode<T>*) this->allocator_->malloc (sizeof (ACE_DNode<T>)),
                          ACE_DNode<T> (item),
                          -1);
-
   // obtain approximate location of the node
   int result = locate (item, position, position);
 
@@ -2291,10 +2283,8 @@ ACE_Ordered_MultiSet<T>::insert_from (const T &item, ACE_DNode<T> *position,
               temp->next_ = position->next_;
             }
           else
-            {
-              // appending to the end of the set
-              tail_ = temp;
-            }
+            // appending to the end of the set
+            tail_ = temp;
 
           // link up with the preceeding node
           temp->prev_ = position;
@@ -2314,10 +2304,8 @@ ACE_Ordered_MultiSet<T>::insert_from (const T &item, ACE_DNode<T> *position,
               temp->prev_ = position->prev_;
             }
           else
-            {
-              // prepending to the start of the set
-              head_ = temp;
-            }
+            // prepending to the start of the set
+            head_ = temp;
 
           // link up with the preceeding node
           temp->next_ = position;
@@ -2338,9 +2326,7 @@ ACE_Ordered_MultiSet<T>::insert_from (const T &item, ACE_DNode<T> *position,
 
   this->cur_size_++;
   if (new_position)
-    {
-      *new_position = temp;
-    }
+    *new_position = temp;
 
   return 0;
 }
@@ -2350,56 +2336,42 @@ ACE_Ordered_MultiSet<T>::locate (const T &item, ACE_DNode<T> *start_position,
                                  ACE_DNode<T> *&new_position) const
 {
   if (! start_position)
-    {
-      start_position = this->head_;
-    }
+    start_position = this->head_;
 
-  // if starting before the item, move forward
-  // until at or just before item
+  // If starting before the item, move forward until at or just before
+  // item.
   while (start_position && start_position->item_ < item &&
          start_position->next_)
-    {
-      start_position = start_position->next_;
-    }
+    start_position = start_position->next_;
 
-  // if starting after the item, move back
-  // until at or just after item
+  // If starting after the item, move back until at or just after item
   while (start_position && item < start_position->item_ &&
          start_position->prev_)
-    {
-      start_position = start_position->prev_;
-    }
+    start_position = start_position->prev_;
 
-  // save the (approximate) location in the passed pointer
+  // Save the (approximate) location in the passed pointer.
   new_position = start_position;
 
-  // show the location is after (1), before (-1) , or at (0) the item
-  if (! new_position )
-    {
-      return 1;
-    }
+  // Show the location is after (1), before (-1) , or at (0) the item
+  if (!new_position)
+    return 1;
   else if (item < new_position->item_)
-    {
-      return 1;
-    }
+    return 1;
   else if (new_position->item_ < item)
-    {
-      return -1;
-    }
+    return -1;
   else
-    {
-      return 0;
-    }
+    return 0;
 }
-// looks for first occurance of <item> in the ordered set, using the
-// passed starting position as a hint: if there is such an instance, it
-// updates the new_position pointer to point to one such node and returns 0;
-// if there is no such node, then if there is a node before where the
-// item would have been, it updates the new_position pointer to point
-// to this node and returns -1; if there is no such node, then if there
-// is a node after where the item would have been, it updates the
-// new_position pointer to point to this node (or 0 if there is no such
-// node) and returns 1;
+
+// Looks for first occurance of <item> in the ordered set, using the
+// passed starting position as a hint: if there is such an instance,
+// it updates the new_position pointer to point to one such node and
+// returns 0; if there is no such node, then if there is a node before
+// where the item would have been, it updates the new_position pointer
+// to point to this node and returns -1; if there is no such node,
+// then if there is a node after where the item would have been, it
+// updates the new_position pointer to point to this node (or 0 if
+// there is no such node) and returns 1;
 
 template <class T> void
 ACE_Ordered_MultiSet<T>::copy_nodes (const ACE_Ordered_MultiSet<T> &us)
@@ -2407,11 +2379,9 @@ ACE_Ordered_MultiSet<T>::copy_nodes (const ACE_Ordered_MultiSet<T> &us)
   ACE_DNode<T> *insertion_point = this->head_;
 
   for (ACE_DNode<T> *curr = us.head_;
-       curr;
+       curr != 0;
        curr = curr->next_)
-    {
-      this->insert_from (curr->item_, insertion_point, &insertion_point);
-    }
+    this->insert_from (curr->item_, insertion_point, &insertion_point);
 }
 
 template <class T> void
@@ -2437,7 +2407,7 @@ ACE_Ordered_MultiSet<T>::delete_nodes (void)
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Ordered_MultiSet_Iterator)
 
-  template <class T>
+template <class T>
 ACE_Ordered_MultiSet_Iterator<T>::ACE_Ordered_MultiSet_Iterator (ACE_Ordered_MultiSet<T> &s)
   : current_ (s.head_),
     set_ (s)
@@ -2468,7 +2438,6 @@ ACE_DLList<T>::insert_tail (T *new_item)
                          (ACE_DLList_Node *) this->allocator_->malloc (sizeof (ACE_DLList_Node)),
                          ACE_DLList_Node ((void *&)new_item),
                          0);
-
   temp2 = ACE_DLList_Base::insert_tail (temp1);
   return (T *) (temp2 ? temp2->item_ : 0);
 }
@@ -2476,13 +2445,13 @@ ACE_DLList<T>::insert_tail (T *new_item)
 template <class T> T *
 ACE_DLList<T>::insert_head (T *new_item)
 {
-  ACE_DLList_Node *temp1, *temp2;
+  ACE_DLList_Node *temp1;
   ACE_NEW_MALLOC_RETURN (
                          temp1,
                          (ACE_DLList_Node *) this->allocator_->malloc (sizeof (ACE_DLList_Node)),
                          ACE_DLList_Node ((void *&)new_item), 0);
-
-  temp2 = ACE_DLList_Base::insert_head (temp1);
+  ACE_DLList_Node *temp2 =
+    ACE_DLList_Base::insert_head (temp1);
   return (T *) (temp2 ? temp2->item_ : 0);
 }
 
@@ -2509,8 +2478,6 @@ ACE_DLList<T>::delete_tail (void)
   return temp2;
 }
 
-// ****************************************************************
-
 // Dynamically initialize an array.
 
 template <class T>
@@ -2525,9 +2492,8 @@ ACE_Array_Base<T>::ACE_Array_Base (size_t size,
 
   if (size != 0)
     {
-      ACE_NEW_MALLOC (this->array_,
-                      (T *) this->allocator_->malloc (size * sizeof (T)),
-                      T);
+      ACE_ALLOCATOR (this->array_,
+                     (T *) this->allocator_->malloc (size * sizeof (T)));
       for (size_t i = 0; i < size; ++i)
         new (&array_[i]) T;
     }
@@ -2548,10 +2514,8 @@ ACE_Array_Base<T>::ACE_Array_Base (size_t size,
 
   if (size != 0)
     {
-      ACE_NEW_MALLOC (this->array_,
-                      (T *) this->allocator_->malloc (size * sizeof (T)),
-                      T);
-
+      ACE_ALLOCATOR (this->array_,
+                     (T *) this->allocator_->malloc (size * sizeof (T)));
       for (size_t i = 0; i < size; ++i)
         new (&array_[i]) T (default_value);
     }
@@ -2570,10 +2534,8 @@ ACE_Array_Base<T>::ACE_Array_Base (const ACE_Array_Base<T> &s)
   if (this->allocator_ == 0)
     this->allocator_ = ACE_Allocator::instance ();
 
-  ACE_NEW_MALLOC (this->array_,
-                  (T *) this->allocator_->malloc (s.size () * sizeof (T)),
-                  T);
-
+  ACE_ALLOCATOR (this->array_,
+                 (T *) this->allocator_->malloc (s.size () * sizeof (T)));
   for (size_t i = 0; i < this->size (); i++)
     new (&this->array_[i]) T (s.array_[i]);
 }
@@ -2593,10 +2555,8 @@ ACE_Array_Base<T>::operator= (const ACE_Array_Base<T> &s)
                               this->max_size_,
                               this->allocator_->free,
                               T);
-
-          ACE_NEW_MALLOC (this->array_,
-                          (T *) this->allocator_->malloc (s.size () * sizeof (T)),
-                          T);
+          ACE_ALLOCATOR (this->array_,
+                         (T *) this->allocator_->malloc (s.size () * sizeof (T)));
           this->max_size_ = s.size ();
         }
 
@@ -2644,11 +2604,9 @@ ACE_Array_Base<T>::max_size (size_t new_size)
     {
       T *tmp;
 
-      ACE_NEW_MALLOC_RETURN (tmp,
-                             (T *) this->allocator_->malloc (new_size * sizeof (T)),
-                             T,
-                             -1);
-
+      ACE_ALLOCATOR_RETURN (tmp,
+                            (T *) this->allocator_->malloc (new_size * sizeof (T)),
+                            -1);
       for (size_t i = 0; i < this->cur_size_; ++i)
         new (&tmp[i]) T (this->array_[i]);
 
@@ -2661,7 +2619,6 @@ ACE_Array_Base<T>::max_size (size_t new_size)
                           this->max_size_,
                           this->allocator_->free,
                           T);
-
       this->array_ = tmp;
       this->max_size_ = new_size;
       this->cur_size_ = new_size;
