@@ -29,9 +29,9 @@ namespace CIAO
         root_ (doc->getDocumentElement()),
         filter_ (filter),
         iter_ (doc_->createNodeIterator (this->root_,
-                                              this->filter_,
-                                              0,
-                                              true)),
+                                         this->filter_,
+                                         0,
+                                         true)),
         release_ (true)
     {}
 
@@ -48,7 +48,7 @@ namespace CIAO
 
     /// handle the package configuration and populate it
     void CompPortDesc_Handler::process_ComponentPortDescription
-      (::Deployment::ComponentPortDescription &compportdesc)
+    (::Deployment::ComponentPortDescription &compportdesc)
     {
       for (DOMNode* node = this->iter_->nextNode();
            node != 0;
@@ -58,10 +58,10 @@ namespace CIAO
           if (node_name == XStr (ACE_TEXT ("name")))
             {
               // Fetch the text node which contains the "name"
-	            node = this->iter_->nextNode();
-	            DOMText* text = ACE_reinterpret_cast (DOMText*, node);
+              node = this->iter_->nextNode();
+              DOMText* text = ACE_reinterpret_cast (DOMText*, node);
               this->process_name (text->getNodeValue(), compportdesc);
-	          }
+            }
           else if (node_name == XStr (ACE_TEXT ("specificType")))
             {
               // Fetch the text node which contains the "specificType"
@@ -76,35 +76,35 @@ namespace CIAO
               DOMText* text = ACE_reinterpret_cast (DOMText*, node);
               this->process_supportedType (text->getNodeValue(), compportdesc);
             }
-	        else if (node_name == XStr (ACE_TEXT ("provider")))
-	          {
-	            /// Fetch the text node which contains the "provider"
-	            node = this->iter_->nextNode();
-	            DOMText* text = ACE_reinterpret_cast (DOMText*, node);
-	            this->process_provider (text->getNodeValue(), compportdesc);
-	          }
-	        else if (node_name == XStr (ACE_TEXT ("exclusiveProvider")))
-	          {
-	            /// Fetch the text node which contains the "exclusiveProvider"
-	            node = this->iter_->nextNode();
-	            DOMText* text = ACE_reinterpret_cast (DOMText*, node);
-	            this->process_exclusiveProvider (text->getNodeValue(), compportdesc);
-	          }
-	        else if (node_name == XStr (ACE_TEXT ("exclusiveUser")))
-	          {
-	            /// Fetch the text node which contains the "exclusiveUser"
-	            node = this->iter_->nextNode();
-	            DOMText* text = ACE_reinterpret_cast (DOMText*, node);
-	            this->process_exclusiveUser (text->getNodeValue(), compportdesc);
-	          }
-	        else if (node_name == XStr (ACE_TEXT ("optional")))
-	          {
-	            /// Fetch the text node which contains the "optional"
-	            node = this->iter_->nextNode();
-	            DOMText* text = ACE_reinterpret_cast (DOMText*, node);
-	            this->process_optional (text->getNodeValue(), compportdesc);
-	          }
-	        else
+          else if (node_name == XStr (ACE_TEXT ("provider")))
+            {
+              /// Fetch the text node which contains the "provider"
+              node = this->iter_->nextNode();
+              DOMText* text = ACE_reinterpret_cast (DOMText*, node);
+              this->process_provider (text->getNodeValue(), compportdesc);
+            }
+          else if (node_name == XStr (ACE_TEXT ("exclusiveProvider")))
+            {
+              /// Fetch the text node which contains the "exclusiveProvider"
+              node = this->iter_->nextNode();
+              DOMText* text = ACE_reinterpret_cast (DOMText*, node);
+              this->process_exclusiveProvider (text->getNodeValue(), compportdesc);
+            }
+          else if (node_name == XStr (ACE_TEXT ("exclusiveUser")))
+            {
+              /// Fetch the text node which contains the "exclusiveUser"
+              node = this->iter_->nextNode();
+              DOMText* text = ACE_reinterpret_cast (DOMText*, node);
+              this->process_exclusiveUser (text->getNodeValue(), compportdesc);
+            }
+          else if (node_name == XStr (ACE_TEXT ("optional")))
+            {
+              /// Fetch the text node which contains the "optional"
+              node = this->iter_->nextNode();
+              DOMText* text = ACE_reinterpret_cast (DOMText*, node);
+              this->process_optional (text->getNodeValue(), compportdesc);
+            }
+          else
             {
               // ??? How did we get here ???
               return;
@@ -115,7 +115,7 @@ namespace CIAO
 
     /// handle name attribute
     void CompPortDesc_Handler::process_name
-      (const XMLCh* name, ::Deployment::ComponentPortDescription &compportdesc)
+    (const XMLCh* name, ::Deployment::ComponentPortDescription &compportdesc)
     {
       if (name)
         {
@@ -127,23 +127,23 @@ namespace CIAO
     void CompPortDesc_Handler::process_specificType (const XMLCh* specificType, ::Deployment::ComponentPortDescription &compportdesc)
     {
       if (specificType)
-	      {
-	        compportdesc.specificType = XMLString::transcode (specificType);
-	      }
+        {
+          compportdesc.specificType = XMLString::transcode (specificType);
+        }
     }
 
     /// handle supportedType attribute
     void CompPortDesc_Handler::process_supportedType (const XMLCh* supportedType, ::Deployment::ComponentPortDescription &compportdesc)
     {
       if (supportedType)
-	      {
-	        // increase the length of the sequence
-	        CORBA::ULong i (compportdesc.supportedType.length ());
-	        compportdesc.supportedType.length (i + 1);
+        {
+          // increase the length of the sequence
+          CORBA::ULong i (compportdesc.supportedType.length ());
+          compportdesc.supportedType.length (i + 1);
 
-	        // push back the last item
-	        compportdesc.supportedType[i] = XMLString::transcode (supportedType);
-	      }
+          // push back the last item
+          compportdesc.supportedType[i] = XMLString::transcode (supportedType);
+        }
     }
 
     /// handle provider attribute
