@@ -92,6 +92,8 @@ private:
   TAO_Trader_Factory& operator= (const TAO_Trader_Factory&);
   TAO_Trader_Factory (const TAO_Trader_Factory&);
 
+  // = Command line configurable parameters.
+  
   Conformance conformance_;
   CORBA::Boolean threadsafe_;
   CORBA::Boolean supports_dynamic_properties_;
@@ -518,8 +520,7 @@ private:
 
 // Helpful typedefs
 // Should probably be private to TAO_Offer_Database, but g++ has a
-// hard time with it like that when compiling
-// TAO_Service_Offer_Iterator. 
+// hard time with it like that when compiling TAO_Service_Offer_Iterator. 
 typedef ACE_Hash_Map_Manager<TAO_Hashable_ULong,CosTrading::Offer*,ACE_Null_Mutex> TAO_Offer_Map; 
 typedef ACE_Hash_Map_Manager<TAO_String_Hash_Key, int, ACE_Null_Mutex> TAO_Lookup_Table;
 typedef ACE_Unbounded_Set<TAO_String_Hash_Key> TAO_String_Set;
@@ -543,6 +544,7 @@ public:
   // is <code>.
 };
 
+// = Helpful operators.
 
 int
 operator> (const CosTradingRepos::ServiceTypeRepository::IncarnationNumber &l,
