@@ -12,7 +12,7 @@
 //
 // = AUTHOR
 //    Doug Schmidt and Kevin Boyle <kboyle@sanwafp.com>
-// 
+//
 // ============================================================================
 
 #if !defined (PROCESS_STRATEGY_TEST_H)
@@ -25,7 +25,7 @@
 // Forward decl.
 class ACE_Thread_Manager;
 
-class Counting_Service : public ACE_Svc_Handler <ACE_SOCK_STREAM, ACE_NULL_SYNCH> 
+class Counting_Service : public ACE_Svc_Handler <ACE_SOCK_STREAM, ACE_NULL_SYNCH>
   // = TITLE
   //     Reads and increments the count in a shared file.
   //
@@ -75,10 +75,13 @@ public:
                     ACE_Reactor * = 0,
                     int flags = 0);
 
+  // Destructor
+  ~Process_Strategy (void);
+
   // Overwrite the process creation method to include connection
   // counting
   virtual int activate_svc_handler (Counting_Service *svc_handler,
-				    void *arg = 0);
+                                    void *arg = 0);
 };
 
 class Options : public ACE_Event_Handler
