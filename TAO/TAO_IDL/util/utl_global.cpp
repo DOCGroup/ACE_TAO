@@ -565,15 +565,6 @@ IDL_GlobalData::seen_include_file_before (char *n)
   char *incl = 0;
   char *tmp = n;
 
-  // @@@ (JP) This may have been here for the SunCC preprocessor. If
-  // that turns out to be the case, I can easily re-add this code
-  // conditionally.
-/*
-  if (n[0] == '.')
-    {
-      tmp = n + 2;
-    }
-*/
   for (i = 0; i < this->pd_n_include_file_names; ++i)
     {
       incl = this->pd_include_file_names[i]->get_string ();
@@ -584,7 +575,7 @@ IDL_GlobalData::seen_include_file_before (char *n)
         }
     }
 
-  return 0;;
+  return 0;
 }
 
 // Store the name of an #include file.
@@ -1157,12 +1148,18 @@ IDL_GlobalData::update_prefix (char *filename)
       || ACE_OS::strcmp (filename, main_filename) == 0
       || ACE_OS::strcmp (filename, this->pd_filename->get_string ()) != 0)
     {
-      char *trash = 0;
-      this->pragma_prefixes_.pop (trash);
-      delete [] trash;
-      char *current = 0;
-      this->pragma_prefixes_.top (current);
-      this->pd_root->prefix (current);
+      if (!this->pd_in_main_file)
+        {
+          char *trash = 0;
+          this->pragma_prefixes_.pop (trash);
+          delete [] trash;
+        }
+      else
+        {
+          char *current = 0;
+          this->pragma_prefixes_.top (current);
+          this->pd_root->prefix (current);
+        }
     }
   else
     {
