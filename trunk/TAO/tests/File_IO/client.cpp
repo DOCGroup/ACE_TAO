@@ -87,7 +87,7 @@ MTTEST (void *args)
 
     // Creat the file filename i.e "test"
     File::Descriptor_var fd = file_system->open (filename,
-                                                 O_CREAT | O_RDWR,
+                                                 O_RDONLY,
                                                  ACE_TRY_ENV);
     ACE_TRY_CHECK;
 
