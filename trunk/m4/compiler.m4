@@ -111,7 +111,9 @@ dnl Temporarily change M4 quotes to prevent "regex []" from being eaten
             CXXFLAGS="$CXXFLAGS -qflag=w:w"
            ])
          if test "$ace_user_enable_rtti" = yes; then
-           CXXFLAGS="$CXXFLAGS -qrtti"
+           CXXFLAGS="$CXXFLAGS -qrtti=dynamiccast"
+         else
+           CXXFLAGS="$CXXFLAGS -DACE_LACKS_RTTI"
          fi
 
          ;;
