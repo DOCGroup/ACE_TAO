@@ -1,3 +1,11 @@
+Wed Oct 23 23:51:51 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
+
+        * tests/Makefile:
+	* tests/Makefile.bor:
+	* tests/TAO_Tests.dsw:
+
+	  Added the new abstract interface test to the suite.
+
 Wed Oct 23 23:37:32 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
 
         * orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
