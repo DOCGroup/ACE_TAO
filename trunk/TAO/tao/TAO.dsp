@@ -25208,21 +25208,6 @@ NODEP_CPP_SEQUE=\
 # End Source File
 # Begin Source File
 
-SOURCE=.\Sequence_T.cpp
-
-!IF  "$(CFG)" == "TAO - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
 SOURCE=.\Servant_Base.cpp
 
 !IF  "$(CFG)" == "TAO - Win32 Release"

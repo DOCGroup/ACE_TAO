@@ -322,10 +322,6 @@ SOURCE=.\Sequence.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Sequence_T.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\Servant_Base.cpp
 # End Source File
 # Begin Source File
