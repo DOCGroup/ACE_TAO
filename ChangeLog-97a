@@ -4,6 +4,11 @@ Thu Feb 13 01:49:38 1997  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
 
 	* apps/jaws: The ACE web server has now been ported to Win32. 
 
+	* ace/ReactorEx: Add a new version of remove_handler().
+
+	* examples/Reactor/ReactorEx/test_MT.cpp: Fixed stuff so that only
+ 	  <concurrent_threads> are activated.
+
 Wed Feb 12 22:58:15 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/ReactorEx: Made minor changes to the ReactorEx.
