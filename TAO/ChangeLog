@@ -1,3 +1,7 @@
+Sun Aug  3 18:43:30 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/tests/Notify/lib/Peer.h: #included ace/SStream.h
+
 Sun Aug  3 17:39:00 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/Collocation_Tests/Collocated_Test.cpp:

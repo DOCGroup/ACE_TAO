@@ -21,6 +21,7 @@
 
 #include "orbsvcs/orbsvcs/CosNotifyChannelAdminC.h"
 #include "tao/PortableServer/PortableServer.h"
+#include "ace/SString.h"
 
 class ACE_Arg_Shifter;
 
