@@ -4072,8 +4072,7 @@ TAO_POA::ORT_adapter_i (void)
       ACE_TRY_CHECK;
 
       this->ort_adapter_ =
-          ort_ap_factory->create (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+          ort_ap_factory->create ();
 
       if (!ort_adapter_)
         return 0;
