@@ -30,7 +30,8 @@ ACE_Dirent::ACE_Dirent (const char *dirname)
 ACE_INLINE 
 ACE_Dirent::~ACE_Dirent (void)
 {
-  ACE_OS::closedir (this->dirp_);
+  if (this->dirp_ != 0)
+    ACE_OS::closedir (this->dirp_);
 }
 
 ACE_INLINE dirent *
@@ -51,7 +52,8 @@ ACE_Dirent::read (struct dirent *entry,
 ACE_INLINE void
 ACE_Dirent::close (void)
 {
-  ACE_OS::closedir (this->dirp_);
+  if (this->dirp_ != 0)
+    ACE_OS::closedir (this->dirp_);
 }
 
 ACE_INLINE void
