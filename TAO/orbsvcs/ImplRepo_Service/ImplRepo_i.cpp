@@ -20,7 +20,7 @@ ImplRepo_i::ImplRepo_i (void)
 // Starts up the server associated with the object pointer and returns
 // an updated pointer.
 
-CORBA::Object_ptr 
+CORBA::Object_ptr
 ImplRepo_i::activate_object (CORBA::Object_ptr obj,
                              CORBA::Environment &TAO_IN_ENV)
 {
@@ -28,7 +28,7 @@ ImplRepo_i::activate_object (CORBA::Object_ptr obj,
   IIOP_Object *new_iiop_obj = 0;
 
   if (this->debug_level_ >= 1)
-    ACE_DEBUG ((LM_DEBUG, 
+    ACE_DEBUG ((LM_DEBUG,
                 "Activating Object: %s\n",
                 this->orb_manager_.orb ()->object_to_string (obj)));
 
@@ -40,9 +40,9 @@ ImplRepo_i::activate_object (CORBA::Object_ptr obj,
 
       IIOP_Object *iiop_obj = ACE_dynamic_cast (IIOP_Object *,
                                                 obj->_stubobj ());
-    
-      ACE_NEW_RETURN (new_iiop_obj, 
-                      IIOP_Object (iiop_obj->type_id, 
+
+      ACE_NEW_RETURN (new_iiop_obj,
+                      IIOP_Object (iiop_obj->type_id,
                                    ACE::strnew (new_addr->host_),
                                    new_addr->port_,
                                    iiop_obj->profile.object_key,
@@ -111,13 +111,13 @@ ImplRepo_i::activate_server (const char *server,
               TAO_THROW_RETURN (Implementation_Repository::Not_Found (),
                                 address);
             }
-    
+
           ping_object->ping (TAO_TRY_ENV);
           TAO_CHECK_ENV;
         }
       TAO_CATCHANY
         {
-          start = 1;    
+          start = 1;
         }
       TAO_ENDTRY;
     }
@@ -160,13 +160,13 @@ ImplRepo_i::activate_server (const char *server,
         }
       else
         {
-          ACE_ERROR ((LM_ERROR, 
+          ACE_ERROR ((LM_ERROR,
                       "Error: Cannot find commandline for server <%s>\n",
                       server));
           TAO_THROW_RETURN (Implementation_Repository::Not_Found (),
                             address);
         }
-    
+
       // @@ Here is where we need to wait for the response so we can
       // find out where (host/port) the server started
       ACE_OS::sleep (3);
@@ -262,7 +262,7 @@ ImplRepo_i::reregister_server (const char *server,
 
 // Remove the server entry from the Repository
 
-void 
+void
 ImplRepo_i::remove_server (const char *server,
                            CORBA::Environment &TAO_IN_ENV)
 {
@@ -356,7 +356,7 @@ ImplRepo_i::server_is_running (const char *server,
 
 // Remove the state information for the current server
 
-void 
+void
 ImplRepo_i::server_is_shutting_down (const char *server,
                                      CORBA::Environment &TAO_IN_ENV)
 {
@@ -697,7 +697,7 @@ IR_Forwarder::IR_Forwarder (CORBA::ORB_ptr orb_ptr,
 {
 }
 
-CORBA::RepositoryId 
+CORBA::RepositoryId
 IR_Forwarder::_primary_interface (const PortableServer::ObjectId &oid,
                                   PortableServer::POA_ptr poa,
                                   CORBA::Environment &env)
@@ -705,7 +705,7 @@ IR_Forwarder::_primary_interface (const PortableServer::ObjectId &oid,
   return 0;
 }
 
-void 
+void
 IR_Forwarder::invoke (CORBA::ServerRequest_ptr request,
                       CORBA::Environment &TAO_IN_ENV)
 {
@@ -720,7 +720,7 @@ IR_Forwarder::invoke (CORBA::ServerRequest_ptr request,
       TAO_IN_ENV.print_exception ("PortableServer::Current::_narrow");
       return;
     }
-  
+
   // The servant determines the key associated with the database entry
   // represented by self
   PortableServer::ObjectId_var oid = poa_current->get_object_id (TAO_IN_ENV);
@@ -729,14 +729,14 @@ IR_Forwarder::invoke (CORBA::ServerRequest_ptr request,
 
   // Now convert the id into a string
   CORBA::String_var key = PortableServer::ObjectId_to_string (oid.in ());
-  
+
   PortableServer::POA_ptr poa = poa_current->get_POA (TAO_IN_ENV);
   if (TAO_IN_ENV.exception () != 0)
     return;
 
   // Now FORWARD!!!
 
-  Implementation_Repository::INET_Addr *new_addr;
+  Implementation_Repository::INET_Addr *new_addr = 0;
 
   TAO_TRY
     {
@@ -763,10 +763,10 @@ IR_Forwarder::invoke (CORBA::ServerRequest_ptr request,
   iiop_obj->profile.host = ACE::strnew (new_addr->host_);
 
 //  if (TAO_debug_level > 0)
-//    ACE_DEBUG ((LM_DEBUG, 
-//                "The forward_to is <%s>\n", 
+//    ACE_DEBUG ((LM_DEBUG,
+//                "The forward_to is <%s>\n",
 //                this->orb_var_->object_to_string (forward_object, TAO_IN_ENV)));
-  
+
   if (!CORBA::is_nil (forward_object))
     TAO_IN_ENV.exception (new PortableServer::ForwardRequest (forward_object));
   else
