@@ -7,10 +7,15 @@ Thu Jan 15 09:12:26 1998  David L. Levine  <levine@cs.wustl.edu>
         * ace/OS.i,config-linux-common.h,README: aded ACE_HAS_SOCKLEN_T
           support for Linux/glibc2, which has a socklen_t type.
 
-        * include/makeinclude/rules.local.GNU: produce all 4 combinations of
-          .obj, .shobj, .o, and .so dependency targets.  This should take care
-          of the problem of not rebuilding when a dependency has changed,
-          after we regenerate all the Makefiles.
+        * include/makeinclude/rules.local.GNU (depend.local): produce all 4
+          combinations of .obj, .shobj, .o, and .so dependency targets.  This
+          should take care of the problem of not rebuilding when a dependency
+          has changed, after we regenerate all the Makefiles.
+
+        * include/makeinclude/rules.local.GNU (depend.local): removed the sed
+          rule that wiped out each Makefile line ending with :.  I don't know
+          why that rule was there.  With it, if a Makefile had a target such
+          as clean:, it got deleted.  Not any more.
 
         * bin/g++dep: added lib/g++-include path to gcc -MM invocation, so
           that gcc can find all of its headers.  (It didn't help to replace
