@@ -1,8 +1,9 @@
-Mon Jan 11 00:34:29 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+Mon Jan 11 00:53:13 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/Connect.cpp (handle_input): Ifdef'ed out TAO_CATCHALL block
-	  if compilers don't support c++ exceptions.  It causes warning
-	  messages for some of them.
+	* tao/try_macros.h (TAO_CATCHALL): For compilers without c++
+	  exceptions, simply make it identical to TAO_CATCHANY.  Same
+	  exception won't get caught the second time and it is effectively
+	  an no-op.  Thanks, to Irfan for suggesting the change.
 
 Sun Jan 10 22:43:06 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
