@@ -721,7 +721,7 @@ ACE_Log_Msg::log (ACE_Log_Priority log_priority,
 
 #if defined (ACE_HAS_WCHAR)
 /**
- * Since this is the Anti-TCHAR version, we need to convert 
+ * Since this is the ANTI_TCHAR version, we need to convert 
  * the format string over.  
  */
 ssize_t
