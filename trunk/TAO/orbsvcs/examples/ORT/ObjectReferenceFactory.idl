@@ -5,7 +5,7 @@
 #ifndef OBJECT_REFERENCE_FACTORY_IDL
 #define OBJECT_REFERENCE_FACTORY_IDL
 
-#include "tao/ObjectReferenceTemplate.pidl"
+#include "tao/ObjRefTemplate/ObjectReferenceTemplate.pidl"
 
 module ORT
 {
