@@ -1,3 +1,18 @@
+Thu Nov 26 21:04:05 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* examples/DLL/Makefile:
+	* examples/DLL/Today.{h,cpp}:
+	* examples/DLL/Newsweek.{h,cpp}:
+	* examples/DLL/Magazine.h:
+
+	  Placed the comments at the right place and added an descriptive
+	  header wherever missing in the .h files.
+	
+	* examples/DLL/test_dll.cpp (main): Added auto_ptr for the
+	  Magazine class object pointer. 
+
+	* examples/DLL/README: Added to the repository.
+	
 Wed Nov 25 02:02:32 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* examples/DLL/Makefile:
