@@ -1,3 +1,44 @@
+Fri Oct 15 13:28:02 2004  Dale Wilson  <wilson_d@ociweb.com>
+
+        * ace/OS_NS_Thread.h:
+        * ace/OS_NS_Thread.cpp:
+        * ace/os_include/os_pthread.h:
+          This corrects a conflict between recent TSS changes and
+          TSS Emulation.  The problem was a result of failing to distinguish
+          between native and emulated TSS keys.
+
+          TSS_Emulation uses a single native TSS key to emulate a compile-
+          time-configurable number of emulated keys.  Function overloading
+          based on various integer types was used to distinguish native key
+          management from emulated key management.  The integral types involved
+          varied from platform to platform.  So, for example,
+          thr_keyfree(unsigned int) frees a native key while thr_keyfree(unsigned long)
+          frees an emulated key (on some platforms).
+
+          The failure happened when the emulated key with the same value as the
+          real key on which the emulation was based was freed.  Due to the above-
+          mentioned confusion the real key was being freed-- breaking the emulation.
+
+          The solution was to rename several internal routines so that thr_keyfree_native
+          frees a real key while thr_keyfree frees an emulated key.  The native methods
+          are used only internally in the OS_NS_Thread.cpp file so the change is localized.
+
+          In the process I eliminated a lot of duplicated (copy-paste-tweaked) code.
+          Thus with this change allocating a native key uses the same code whether or not
+          TSS Emulation is enabled.
+
+          I also cleared up another area of confusion in the ACE_TSS_Cleanup
+          object.  Methods were documented and in some cases renamed to
+          make it clear whether the method was managing the lifetime of a TSS object or a
+          TSS key.
+
+          ACE_TSS_Cleanup is internal to OS_NS_Thread.cpp so the change will not have any
+          impact on other parts of the system.
+
+          Finally I added a number of ACE_ASSERTS in places where the comments said
+          "This will never happen."  but it was happening and being ignored.
+
+
 Fri Oct 15 13:34:17 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/tao_other_tests.lst:
