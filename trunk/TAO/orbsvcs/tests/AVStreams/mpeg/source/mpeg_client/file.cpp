@@ -33,7 +33,7 @@
 #include <Xm/Text.h>
 #include <Xm/FileSB.h>
 #include <Xm/DialogS.h>
-#if defined(SunOS) || defined(FreeBSD)
+#if defined(sun) || defined(FreeBSD)
 #include <stdlib.h>
 #endif
 #include "include/common.h"

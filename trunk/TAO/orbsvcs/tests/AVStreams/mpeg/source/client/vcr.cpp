@@ -55,7 +55,7 @@
 #else
 #include <bsd/netinet/in.h>
 #endif
-#if defined(SunOS) || defined(FreeBSD)
+#if defined(sun) || defined(FreeBSD)
 #include <stdlib.h>
 #endif
 #include <time.h>
@@ -67,7 +67,7 @@
 #include "include/common.h"
 
 #include "mpeg_client/video.h"
-#include "proto.h"
+#include "mpeg_client/proto.h"
 #include "mpeg_client/newproto.h"
 #include "mpeg_client/global.h"
 

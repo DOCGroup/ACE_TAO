@@ -42,7 +42,7 @@
 #include <sys/audioio.h>
 #elif defined(FreeBSD)
 #include <machine/pcaudioio.h>
-#elif defined(SunOS)
+#elif defined(sun)
 #include <sys/audioio.h>
 #elif defined(_HPUX_SOURCE)
 #include <sys/audio.h>
@@ -53,7 +53,7 @@
 #ifdef FreeBSD
 #define AUDIO_DEVICE "/dev/pcaudio"
 #define AUDIO_CONTROL "/dev/pcaudioctl"
-#elif defined(__svr4__) || defined(SunOS)
+#elif defined(__svr4__) || defined(sun)
 #define AUDIO_DEVICE "/dev/audio"
 #define AUDIO_CONTROL "/dev/audioctl"
 #elif defined(_HPUX_SOURCE)
@@ -168,7 +168,7 @@ int InitAudioDevice(void)
   useAF = 1;
   fprintf(stderr, "Using default AudioFile.\n");
   return 0;
-#elif defined(__svr4__) || defined(SunOS) || defined(FreeBSD) \
+#elif defined(__svr4__) || defined(sun) || defined(FreeBSD) \
   || defined(_HPUX_SOURCE) || defined(IRIX) || defined(LINUX)
   fprintf(stderr, "This vcr compiled without AudioFile, try native audio.\n");
 #else
@@ -179,7 +179,7 @@ int InitAudioDevice(void)
   
  native_audio:
   
-#if defined(__svr4__) || defined(SunOS) || defined(FreeBSD) || defined(_HPUX_SOURCE)
+#if defined(__svr4__) || defined(sun) || defined(FreeBSD) || defined(_HPUX_SOURCE)
 
   afd = open(AUDIO_DEVICE, O_WRONLY | O_NDELAY);
   if (afd == -1) {
@@ -282,7 +282,7 @@ int InitAudioDevice(void)
   afd = -1;
   return -1;
 
-#endif  /* SunOS, FreeBSD, _HPUX_SOURCE, ... */
+#endif  /* sun, FreeBSD, _HPUX_SOURCE, ... */
   shared->AFPara.encodeType = AudioTypeMuLaw;
   shared->AFPara.channels = 1;
   shared->AFPara.bytesPerSample = 1;
@@ -302,7 +302,7 @@ unsigned int GetAudioTime(void)
 #ifdef AUDIOFILE
   if (useAF) return AFGetTime(ac);
 #endif
-#if defined(__svr4__) || defined(SunOS) || defined(FreeBSD) \
+#if defined(__svr4__) || defined(sun) || defined(FreeBSD) \
   || defined(_HPUX_SOURCE) || defined(IRIX) || defined(LINUX)
   if (afd == -1) return 0;
   return get_duration(start_time, get_msec()) * 8; /* 8K sampling speed */
@@ -319,7 +319,7 @@ unsigned int PlayAudioSamples(unsigned int time, char * buf, int size)
 				  (unsigned char *)buf);
 #endif
 
-#if defined(__svr4__) || defined(SunOS) || defined(FreeBSD) \
+#if defined(__svr4__) || defined(sun) || defined(FreeBSD) \
   || defined(_HPUX_SOURCE) || defined(IRIX) || defined(LINUX)
   if (afd == -1) return 0;
 
@@ -392,7 +392,7 @@ void StartAudioPlaySession(void)
 #ifdef AUDIOFILE
   if (useAF) return;
 #endif
-#if defined(__svr4__) || defined(SunOS) || defined(FreeBSD) \
+#if defined(__svr4__) || defined(sun) || defined(FreeBSD) \
   || defined(_HPUX_SOURCE) || defined(IRIX)
   if (afd == -1) return;
 #else
@@ -401,7 +401,7 @@ void StartAudioPlaySession(void)
 }
 void SetAudioGain(void)
 {
-#if defined(__svr4__) || defined(SunOS) || defined(FreeBSD)
+#if defined(__svr4__) || defined(sun) || defined(FreeBSD)
   audio_info_t sun_gapo;
 #elif defined(_HPUX_SOURCE)
   struct audio_gain ag;
@@ -420,7 +420,7 @@ void SetAudioGain(void)
     return;
   }
 #endif
-#if defined(__svr4__) || defined(SunOS) || defined(FreeBSD)
+#if defined(__svr4__) || defined(sun) || defined(FreeBSD)
    if (afd == -1) return;
   ioctl(cfd, AUDIO_GETINFO, &sun_gapo);
   sun_gapo.play.gain = volume * 2;
