@@ -1,3 +1,12 @@
+Wed Oct 25 09:32:10 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/Object_Manager.cpp:
+
+          Changed to only use the CRT_ERROR disabling under
+          ACE_DISABLE_WIN32_ERROR_WINDOWS when _DEBUG is defined,
+          since crtdbg.h is only included by ACE when _DEBUG is 
+          defined.
+
 Wed Oct 25 10:51:26 2000  Steve Huston  <shuston@riverace.com>
 
         * ace/Select_Reactor_Base.cpp (purge_pending_notifications): Added
