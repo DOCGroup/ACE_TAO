@@ -1,11 +1,13 @@
 // $Id$
 
+#include "tao/ORB_Core.h"
+
 #include "ace/Dynamic_Service.h"
 #include "ace/Service_Repository.h"
 #include "ace/Select_Reactor.h"
 #include "ace/Env_Value_T.h"
 #include "ace/Arg_Shifter.h"
-#include "tao/ORB_Core.h"
+
 #include "tao/TAO_Internal.h"
 #include "tao/IIOP_ORB.h"
 #include "tao/default_client.h"
@@ -1533,12 +1535,14 @@ template class ACE_Concurrency_Strategy<TAO_Client_Connection_Handler>;
 template class ACE_NOOP_Concurrency_Strategy<TAO_Client_Connection_Handler>;
 template class ACE_Recycling_Strategy<TAO_Client_Connection_Handler>;
 template class ACE_Connector<TAO_Client_Connection_Handler, TAO_SOCK_CONNECTOR>;
+
 #if 0
 template class ACE_Unbounded_Stack<TAO_Client_Connection_Handler *>;
 #else
 template class ACE_Unbounded_Stack<ACE_INET_Addr>;
 template class ACE_Node<ACE_INET_Addr>;
 #endif
+
 template class ACE_Node<TAO_Client_Connection_Handler *>;
 template class ACE_TSS_Singleton<TAO_ORB_Core, ACE_SYNCH_MUTEX>;
 template class ACE_TSS<TAO_ORB_Core>;

@@ -4,6 +4,11 @@ Mon Feb  8 14:26:29 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* tao/Object.cpp: 
 	  Added missing #include for template instantiations.
 
+	* tao/ORB.cpp: 
+	* tao/ORB_Core.cpp: 
+	  Re-ordered includes, otherwise "ace/Dynamic_Service.h" does not
+	  have the proper context.
+
 Mon Feb  8 13:43:10 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/corbafwd.h: 
