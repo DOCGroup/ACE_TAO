@@ -48,6 +48,10 @@
 // Defines the page size of the system.
 #define ACE_PAGE_SIZE 4096
 
+#if !defined (ACE_NTRACE)
+#define ACE_NTRACE 1
+#endif /* ACE_NTRACE */
+#define ACE_HAS_STRBUF_T
 
 // vxWorks.h must be included before time.h, and key_t must be
 // defined early also:  these are here

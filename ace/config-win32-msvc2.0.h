@@ -7,8 +7,91 @@
 #if !defined (ACE_CONFIG_H)
 #define ACE_CONFIG_H
 
+#if !defined (ACE_CONFIG_H)
+#define ACE_CONFIG_H
+
+#if defined (_MSC_VER)
+	// "C4355: 'this' : used in base member initializer list"
+	#pragma warning(disable:4355) // disable C4514 warning
+//	#pragma warning(default:4355)   // use this to reenable, if desired
+
+	#pragma warning(disable:4201)  // winnt.h uses nameless structs
+#endif /* _MSC_VER */
+// While digging the MSVC 4.0 include files, I found how to disable MSVC 
+// warnings:
+// --Amos Shapira
+
+// Comment this out for now since it will break existing application
+// code. 
+#define ACE_HAS_STRICT
+
+// <windows.h> and MFC's <afxwin.h> are mutually
+// incompatible. <windows.h> is brain-dead about MFC; it doesn't check
+// to see whether MFC stuff is anticipated or already in progress
+// before doing its thing. ACE needs (practically always) <winsock.h>,
+// and winsock in turn needs support either from windows.h or from
+// afxwin.h. One or the other, not both.
+//
+// The MSVC++ V4.0 environment defines preprocessor macros that
+// indicate the programmer has chosen something from the
+// Build-->Settings-->General-->MFC combo-box. <afxwin.h> defines a
+// macro itself to protect against double inclusion. We'll take
+// advantage of all this to select the proper support for winsock. -
+// trl 26-July-1996
+
+// This is necessary since MFC users apparently can't #include
+// <windows.h> directly.
+#if ( defined (_AFXDLL) || defined (_WINDLL))
+	#include /**/ <afxwin.h>   // He is doing MFC
+	// Windows.h will be included via afxwin.h->afx.h->afx_ver_.h->afxv_w32.h
+	// #define	_INC_WINDOWS  // Prevent winsock.h from including windows.h
+#endif
+
+#if !defined (_INC_WINDOWS)	// Already include windows.h ?
+	// Must define strict before including windows.h !
+	#if (defined ACE_HAS_STRICT)
+		#define STRICT 1
+	#endif
+
+	#ifndef WIN32_LEAN_AND_MEAN
+		#define WIN32_LEAN_AND_MEAN
+	#endif
+
+	#ifdef _UNICODE
+		#ifndef UNICODE
+			#define UNICODE         // UNICODE is used by Windows headers
+		#endif
+	#endif
+
+	#ifdef UNICODE
+		#ifndef _UNICODE
+			#define _UNICODE        // _UNICODE is used by C-runtime/MFC headers
+		#endif
+	#endif
+#endif
+
+// Define the following macro if you're compiling with WinSock 2.0.
+// #define ACE_HAS_WINSOCK2
+
 // Needed for timeval.
-#include /**/ <winsock.h>
+#if defined (ACE_HAS_WINSOCK2)
+	#ifndef	_WINSOCK2API_
+		#include /**/ <winsock2.h>		// will also include windows.h, if not present
+	#endif
+
+	#define ACE_WSOCK_VERSION 2, 0
+#else
+	#ifndef _WINSOCKAPI_
+		#include /**/ <winsock.h>	// will also include windows.h, if not present
+	#endif
+
+	// Version 1.1 of WinSock
+	#define ACE_WSOCK_VERSION 1, 1
+#endif /* ACE_HAS_WINSOCK2 */
+
+#if defined (_MSC_VER)
+	#pragma warning(default: 4201)  // winnt.h uses nameless structs
+#endif /* _MSC_VER */
 
 #define ACE_HAS_UNICODE
 
@@ -130,5 +213,8 @@ inline void *operator new (unsigned int, void *p) { return p; }
 // Windows NT needs readv() and writev()
 #define ACE_NEEDS_WRITEV
 #define ACE_NEEDS_READV
+
+// Compiler/Platform supports the "using" keyword.
+// #define ACE_HAS_USING_KEYWORD
 
 #endif /* ACE_CONFIG_H */

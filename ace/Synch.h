@@ -22,7 +22,9 @@
 #define ACE_SYNCH_H
 
 #include "ace/ACE.h"
+#if !(defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM))
 #include "ace/SV_Semaphore_Complex.h"
+#endif /* !(defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM)) */
 
 // Forward declarations.
 class ACE_Time_Value;

@@ -158,10 +158,10 @@ worker (void *args)
       switch (reactor->handle_events (timeout))
 	{
 	case -1:
-	  ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "reactor"), 0);
+	  ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "reactor"), 0);
 	  /* NOTREACHED */
 	case 0:
-	  ACE_ERROR_RETURN ((LM_ERROR, "timeout\n"), 0);
+	  ACE_ERROR_RETURN ((LM_ERROR, "(%t) timeout\n"), 0);
 	  /* NOTREACHED */
 	}
     }
@@ -210,4 +210,3 @@ main (int, char *argv[])
   ACE_END_TEST;
   return 0;
 }
-

@@ -50,5 +50,9 @@ typedef int key_t;
 #include /**/ <stdarg.h>
 #include /**/ <vxWorks.h>
 
+#if !defined (ACE_NTRACE)
+#define ACE_NTRACE 1
+#endif /* ACE_NTRACE */
+#define ACE_HAS_STRBUF_T
 
 #endif /* ACE_CONFIG_H */

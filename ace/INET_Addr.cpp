@@ -1,7 +1,7 @@
 // INET_Addr.cpp
 // $Id$
 
-/* Defines the Internet domain address family address format. */
+// Defines the Internet domain address family address format. 
 
 #define ACE_BUILD_DLL
 #include "ace/INET_Addr.h"

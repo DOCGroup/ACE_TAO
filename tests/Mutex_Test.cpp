@@ -27,15 +27,18 @@ static void *
 test (void *args)
 {
   ACE_Process_Mutex *pm = (ACE_Process_Mutex *) args;
+#if (defined (ACE_WIN32) || defined (VXWORKS)) && defined (ACE_HAS_THREADS)
   ACE_Thread_Control tc (ACE_Service_Config::thr_mgr ());
+  ACE_NEW_THREAD;
+#endif /* (defined (ACE_WIN32) || defined (VXWORKS)) && defined (ACE_HAS_THREADS) */
 
   ACE_OS::srand (ACE_OS::time (0));
 
   for (int i = 0; i < ACE_MAX_ITERATIONS; i++)
     {
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) = trying to acquire\n"));
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) = trying to acquire on iteration %d\n", i));
       ACE_ASSERT (pm->acquire () == 0);
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) = acquired\n"));
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) = acquired on iteration %d\n", i));
 
       // Sleep for a random amount of time between 0 and 5 seconds.
       // Note that it's ok to use rand() here because we are running
@@ -43,7 +46,7 @@ test (void *args)
       ACE_OS::sleep (ACE_OS::rand () % 5);
 
       ACE_ASSERT (pm->release () == 0);
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) = released\n"));
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) = released on iteration %d\n", i));
     }
 
   return 0;
@@ -74,7 +77,6 @@ spawn (void)
 
 	// Allow the client to exit, then remove the Process_Mutex.
 	ACE_OS::wait ();
-
 	pm.remove ();
 	break;
       }

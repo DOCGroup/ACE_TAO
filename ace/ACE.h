@@ -61,6 +61,23 @@ public:
   // out a -1 is returned with <errno == ETIME>.  If it succeeds the
   // number of bytes received is returned.
 
+  // = Network I/O functions that recv and send exactly n bytes.
+  static ssize_t recv_n (ACE_HANDLE handle, 
+			 void *buf, 
+			 size_t len, 
+			 int flags);
+  // Receive <len> bytes into <buf> from <handle> (uses the <recv>
+  // call).  If <handle> is set to non-blocking mode this call will
+  // poll until all <len> bytes are received.
+
+  static ssize_t recv_n (ACE_HANDLE handle, 
+			 void *buf, 
+			 size_t len);
+  // Receive <len> bytes into <buf> from <handle> (uses the <read>
+  // system call on UNIX and the <recv> call on Win32).  If <handle>
+  // is set to non-blocking mode this call will poll until all <len>
+  // bytes are received.
+
   static ssize_t recv_n (ACE_HANDLE handle, 
 			 void *buf, 
 			 size_t len, 
@@ -81,13 +98,35 @@ public:
 
   static ssize_t send (ACE_HANDLE handle, 
 		       const void *buf, 
+		       size_t len);
+  // Send up to <len> bytes into <buf> from <handle> (uses the <write>
+  // system call on UNIX and the <send> call on Win32).
+
+  static ssize_t send_n (ACE_HANDLE handle, 
+			 const void *buf, 
+			 size_t len, 
+			 int flags);
+  // Send <len> bytes from <buf> to <handle> (uses the <send> system
+  // call).  If <handle> is set to non-blocking mode this call will
+  // poll until all <len> bytes are sent.
+
+  static ssize_t send_n (ACE_HANDLE handle, 
+			 const void *buf, 
+			 size_t len);
+  // Send <len> bytes from <buf> to <handle> (uses the <write> system
+  // call on UNIX and the <recv> call on Win32).  If <handle> is set
+  // to non-blocking mode this call will poll until all <len> bytes
+  // are sent.
+
+  static ssize_t send (ACE_HANDLE handle, 
+		       const void *buf, 
 		       size_t len, 
 		       int flags,
 		       const ACE_Time_Value *timeout);
   // Wait to to <timeout> amount of time to send up to <len> bytes
   // into <buf> from <handle> (uses the <send> call).  If <send> times
   // out a -1 is returned with <errno == ETIME>.  If it succeeds the
-  // number of bytes sent is returned.
+  // number of bytes sent is returned.  
 
   static ssize_t send_n (ACE_HANDLE handle, 
 			 const void *buf, 
@@ -100,51 +139,22 @@ public:
   // If a timeout does not occur, <send_n> return <len> (i.e., the
   // number of bytes requested to be sent).
 
-  static ssize_t send (ACE_HANDLE handle, 
-		       const void *buf, 
-		       size_t len);
-  // Send up to <len> bytes into <buf> from <handle> (uses the <write>
-  // system call on UNIX and the <send> call on Win32).
-
-  // = Network I/O functions that recv and send exactly n bytes.
-  static ssize_t recv_n (ACE_HANDLE handle, 
-			 void *buf, 
-			 size_t len, 
-			 int flags);
-  // Receive <len> bytes into <buf> from <handle> (uses the <recv>
-  // call).
-
-  static ssize_t recv_n (ACE_HANDLE handle, 
-			 void *buf, 
-			 size_t len);
-  // Receive <len> bytes into <buf> from <handle> (uses the <read>
-  // system call on UNIX and the <recv> call on Win32).
-
-  static ssize_t send_n (ACE_HANDLE handle, 
-			 const void *buf, 
-			 size_t len, 
-			 int flags);
-  // Send <len> bytes from <buf> to <handle> (uses the <send> system
-  // call).
-
-  static ssize_t send_n (ACE_HANDLE handle, 
-			 const void *buf, 
-			 size_t len);
-  // Send <len> bytes from <buf> to <handle> (uses the <write> system
-  // call on UNIX and the <recv> call on Win32).
-
   // = File system I/O functions that encapsulate differences between UNIX and Win32 and also send and recv exactly n bytes.
   static ssize_t read_n (ACE_HANDLE handle, 
 			 void *buf, 
 			 size_t len);
   // Receive <len> bytes into <buf> from <handle> (uses the <read>
-  // system call on UNIX and the <ReadFile> call on Win32).
+  // system call on UNIX and the <ReadFile> call on Win32).  If
+  // <handle> is set to non-blocking mode this call will poll until
+  // all <len> bytes are received.
 
   static ssize_t write_n (ACE_HANDLE handle, 
 			  const void *buf, 
 			  size_t len);
   // Send <len> bytes from <buf> to <handle> (uses the <write> system
-  // call on UNIX and the <WriteFile> call on Win32).
+  // call on UNIX and the <WriteFile> call on Win32).  If <handle> is
+  // set to non-blocking mode this call will poll until all <len>
+  // bytes are sent.
 
   // = Functions that perform useful behavior related to establishing
   // socket connections active and passively.

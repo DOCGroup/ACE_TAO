@@ -6,7 +6,8 @@
 //    test_config.h
 //
 // = AUTHOR
-//    Prashant Jain <pjain@cs.wustl.edu> and Tim Harrison <harrison@cs.wustl.edu>
+//    Prashant Jain <pjain@cs.wustl.edu>, Tim Harrison
+//    <harrison@cs.wustl.edu>, and David Levine <levine@cs.wustl.edu>
 // 
 // ============================================================================
 
@@ -33,11 +34,11 @@
   ACE_LOG_MSG->open (program, ACE_Log_Msg::OSTREAM); \
   if (ace_file_stream.set_output (program) != 0) \
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "set_output failed"), -1); \
-  ACE_DEBUG ((LM_DEBUG, "starting %s test at %T\n", program));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) starting %s test at %T\n", program));
 
 #define ACE_END_TEST \
-  ACE_DEBUG ((LM_DEBUG, "Ending %s test at %T\n", program)); \
-  ace_file_stream.flush ();
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) Ending %s test at %T\n", program)); \
+  ace_file_stream.close ();
 
 #define ACE_NEW_THREAD \
 do {\
@@ -60,7 +61,7 @@ public:
   ~ACE_Test_Output (void);
   int set_output (const char *filename);
   ofstream *output_file (void);
-  void flush (void);
+  void close (void);
 
 private:
   ofstream *output_file_;
@@ -101,8 +102,9 @@ ACE_Test_Output::output_file (void)
 }
   
 void 
-ACE_Test_Output::flush (void) 
+ACE_Test_Output::close (void) 
 { 
   this->output_file_->flush (); 
+  this->output_file_->close (); 
 }
 #endif /* ACE_TEST_CONFIG_H */

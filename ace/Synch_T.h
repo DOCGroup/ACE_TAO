@@ -259,8 +259,17 @@ public:
   int tryacquire (void) { return this->owner_ = this->lock_->tryacquire (); }
   // Conditionally acquire the lock (i.e., won't block).
 
-  int release (void) { this->owner_ = -1; return this->lock_->release (); }
-  // Explicitly release the lock.
+  int release (void) 
+    { 
+      if (this->owner_ != -1) 
+	{
+	  this->owner_ = -1; 
+	  return this->lock_->release (); 
+	}
+      else
+	return 0;
+    }
+  // Explicitly release the lock, but only if it is held!
 
   void dump (void) const;
   // Dump the state of an object.

@@ -284,12 +284,25 @@ ACE_OS::pipe (ACE_HANDLE fds[])
 #endif /* VXWORKS */
 }
 
+#if defined (DIGITAL_UNIX)
+extern "C" {
+  extern char *_Pctime_r (const time_t *, char *);
+  extern struct tm *_Plocaltime_r (const time_t *, struct tm *);
+  extern char *_Pasctime_r (const struct tm *, char *);
+  extern int _Prand_r (unsigned int *seedptr);
+}
+#endif /* DIGITAL_UNIX */
+
 ACE_INLINE int 
 ACE_OS::rand_r (ACE_RANDR_TYPE seed)
 {
 // ACE_TRACE ("ACE_OS::rand_r");
 #if defined (ACE_HAS_REENTRANT_FUNCTIONS) && defined (ACE_MT_SAFE)
+#if defined (DIGITAL_UNIX)
+  ACE_OSCALL_RETURN (::_Prand_r (seed), int, -1);
+#else
   ACE_OSCALL_RETURN (::rand_r (seed), int, -1);
+#endif /* DIGITAL_UNIX */
 #else
   seed = seed;
   ACE_OSCALL_RETURN (::rand (), int, -1);
@@ -4579,14 +4592,6 @@ ACE_OS::ctime (const time_t *t)
 #endif    // ACE_HAS_BROKEN_CTIME)
 }
 
-#if defined (DIGITAL_UNIX)
-extern "C" {
-  extern char *_Pctime_r (const time_t *, char *);
-  extern struct tm *_Plocaltime_r (const time_t *, struct tm *);
-  extern char *_Pasctime_r (const struct tm *, char *);
-}
-#endif /* DIGITAL_UNIX */
-
 ACE_INLINE char *
 ACE_OS::ctime_r (const time_t *t, char *buf, int buflen)
 {
@@ -5238,7 +5243,7 @@ ACE_OS::mkdir (const char *path, mode_t mode)
 #if defined (ACE_WIN32)
   ACE_OSCALL_RETURN (::_mkdir (path), int, -1);  
 #elif defined (VXWORKS)
-  ACE_OSCALL_RETURN (::_mkdir ((char *) path), int, -1);  
+  ACE_OSCALL_RETURN (::mkdir ((char *) path), int, -1);  
 #else
   ACE_OSCALL_RETURN (::mkdir (path, mode), int, -1);
 #endif /* VXWORKS */
