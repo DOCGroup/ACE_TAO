@@ -848,13 +848,11 @@ ACE_Thread_Manager::kill_thr (ACE_Thread_Descriptor *td, int arg)
 
   if (result != 0)
     {
-      // We need to save this across calls to remove_thr() since that
-      // call may reset errno.
-      int error = errno;
+      // Only remove a thread from us when there is a
+      // "real" error.
+      if (errno != ENOTSUP)
+        this->thr_to_be_removed_.enqueue_tail (td);
 
-      this->thr_to_be_removed_.enqueue_tail (td);
-
-      errno = error;
       return -1;
     }
   else
@@ -868,11 +866,13 @@ ACE_Thread_Manager::kill_thr (ACE_Thread_Descriptor *td, int arg)
   ACE_ASSERT (this->thr_to_be_removed_.is_empty ()); \
   ACE_FIND (this->find_thread (t_id), ptr); \
   int result = OP (ptr); \
+  int error = errno; \
   while (! this->thr_to_be_removed_.is_empty ()) { \
     ACE_Thread_Descriptor *td; \
     this->thr_to_be_removed_.dequeue_head (td); \
     this->remove_thr (td); \
   } \
+  errno = error; \
   return result
 
 // Suspend a single thread.
@@ -913,11 +913,13 @@ ACE_Thread_Manager::kill (ACE_thread_t t_id, int signum)
 
   ACE_FIND (this->find_thread (t_id), ptr);
   int result = this->kill_thr (ptr, signum);
+  int error = errno;
   while (! this->thr_to_be_removed_.is_empty ()) {
     ACE_Thread_Descriptor *td;
     this->thr_to_be_removed_.dequeue_head (td);
     this->remove_thr (td);
   }
+  errno = error;
   return result;
 }
 
@@ -1008,7 +1010,7 @@ ACE_Thread_Manager::apply_grp (int grp_id,
                                int arg)
 {
   ACE_TRACE ("ACE_Thread_Manager::apply_grp");
-  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_monx, this->lock_, -1));
   ACE_ASSERT (this->thr_to_be_removed_.is_empty ());
 
   int result = 0;
@@ -1025,9 +1027,12 @@ ACE_Thread_Manager::apply_grp (int grp_id,
 
   if (! this->thr_to_be_removed_.is_empty ())
     {
+      // Preserve errno!
+      int error = errno;
       ACE_Thread_Descriptor *td;
       while (this->thr_to_be_removed_.dequeue_head (td) != -1)
         this->remove_thr (td);
+      errno = error;
     }
 
   return result;
@@ -1091,9 +1096,12 @@ ACE_Thread_Manager::apply_all (ACE_THR_MEMBER_FUNC func, int arg)
 
   if (! this->thr_to_be_removed_.is_empty ())
     {
+      // Preserve errno!
+      int error = errno;
       ACE_Thread_Descriptor *td;
       while (this->thr_to_be_removed_.dequeue_head (td) != -1)
         this->remove_thr (td);
+      errno = error;
     }
 
   return result;
@@ -1319,9 +1327,12 @@ ACE_Thread_Manager::apply_task (ACE_Task_Base *task,
 
   if (! this->thr_to_be_removed_.is_empty ())
     {
+      // Preserve errno!
+      int error = errno;
       ACE_Thread_Descriptor *td;
       while (this->thr_to_be_removed_.dequeue_head (td) != -1)
         this->remove_thr (td);
+      errno = error;
     }
 
   return result;
@@ -1350,8 +1361,9 @@ ACE_Thread_Manager::wait_task (ACE_Task_Base *task)
          iter.advance ())
       // If threads are created as THR_DETACHED or THR_DAEMON, we can't help much here.
       if (iter.next ()->task_ == task &&
-          (((iter.next ()->flags_ & (THR_DETACHED | THR_DAEMON)) == 0)
-           || ((iter.next ()->flags_ & THR_JOINABLE) != 0)))
+          (ACE_BIT_DISABLED (iter.next ()->flags_,
+                             (THR_DETACHED | THR_DAEMON)))
+           || ACE_BIT_ENABLED (iter.next ()->flags_, THR_JOINABLE))
           copy_table[copy_count++] = *iter.next ();
   }
 

@@ -443,25 +443,25 @@ protected:
   int apply_task (ACE_Task_Base *task, ACE_THR_MEMBER_FUNC, int  = 0);
   // Apply <func> to all members of the table that match the <task>
 
-  int apply_grp (int grp_id, ACE_THR_MEMBER_FUNC, int  = 0);
+  int apply_grp (int grp_id, ACE_THR_MEMBER_FUNC func, int arg = 0);
   // Apply <func> to all members of the table that match the <grp_id>.
 
   int apply_all (ACE_THR_MEMBER_FUNC, int  = 0);
   // Apply <func> to all members of the table.
 
-  int join_thr (ACE_Thread_Descriptor *td, int nouse = 0);
+  int join_thr (ACE_Thread_Descriptor *td, int microsoft_sucks = 0);
   // Join the thread described in <tda>.
 
-  int resume_thr (ACE_Thread_Descriptor *td, int nouse = 0);
+  int resume_thr (ACE_Thread_Descriptor *td, int microsoft_sucks = 0);
   // Resume the thread described in <tda>.
 
-  int suspend_thr (ACE_Thread_Descriptor *td, int nouse = 0);
+  int suspend_thr (ACE_Thread_Descriptor *td, int microsoft_sucks = 0);
   // Suspend the thread described in <tda>.
 
   int kill_thr (ACE_Thread_Descriptor *td, int signum);
   // Send signal <signum> to the thread described in <tda>.
 
-  int cancel_thr (ACE_Thread_Descriptor *td, int nouse = 0);
+  int cancel_thr (ACE_Thread_Descriptor *td, int microsoft_sucks = 0);
   // Set the cancellation flag for the thread described in <tda>.
 
   ACE_Double_Linked_List<ACE_Thread_Descriptor> thr_list_;
