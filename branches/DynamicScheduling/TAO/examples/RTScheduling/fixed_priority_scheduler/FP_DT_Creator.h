@@ -5,6 +5,7 @@
 
 #include "../DT_Creator.h"
 #include "fp_dt_creator_export.h"
+#include "../Task.h"
 
 class FP_DT_Creator_Export FP_DT_Creator: public DT_Creator
 {
@@ -12,6 +13,8 @@ public:
   FP_DT_Creator (void);
 
   virtual CORBA::Policy_ptr sched_param (int importance);
+
+  virtual Task* task (void);
 };
 
 

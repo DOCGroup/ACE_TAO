@@ -102,6 +102,10 @@ SOURCE=.\FP_SchedulingC.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\FP_Task.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\Task_Stats.cpp
 # End Source File
 # Begin Source File
@@ -131,6 +135,14 @@ SOURCE=.\FP_Scheduler.h
 # Begin Source File
 
 SOURCE=.\FP_SchedulingC.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\FP_Task.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\Task.h
 # End Source File
 # Begin Source File
 

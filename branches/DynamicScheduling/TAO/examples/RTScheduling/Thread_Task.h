@@ -6,6 +6,7 @@
 //#include "FP_Scheduler.h"
 #include "ace/Task.h"
 #include "DT_Creator.h"
+#include "Task.h"
 
 class Task_Stats;
 class DT_Creator;
@@ -17,10 +18,9 @@ class Thread_Task : public ACE_Task <ACE_SYNCH>
   Thread_Task (int importance,
 	       int start_time,
 	       int load,
-	       DT_Creator *dt_creator);
+	       DT_Creator *dt_creator,
+	       Task *task);
   
-  int perform_task (int times);
-
   int activate_task (RTScheduling::Current_ptr current,
 		     CORBA::Policy_ptr sched_param,
 		     long flags,
@@ -42,6 +42,7 @@ class Thread_Task : public ACE_Task <ACE_SYNCH>
   ACE_Barrier* barrier_;
   int importance_;
   DT_Creator *dt_creator_;
+  Task *task_;
 };
 
 #endif /* THREAD_TASK_H */

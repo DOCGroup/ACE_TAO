@@ -6,16 +6,14 @@
 #include "tao/ORB_Core.h"
 #include "Task_Stats.h"
 #include "ace/High_Res_Timer.h"
-
-DT_Creator::DT_Creator (void)
-{
-  state_lock_ = new ACE_Lock_Adapter <TAO_SYNCH_MUTEX>;
-  active_dt_count_ = 0;
-}
+#include "Task.h"
 
 int
 DT_Creator::init (int argc, char *argv [])
 {
+  state_lock_ = new ACE_Lock_Adapter <TAO_SYNCH_MUTEX>;
+  active_dt_count_ = 0;
+
   ACE_Arg_Shifter arg_shifter (argc, argv);
 
   const ACE_TCHAR* current_arg = 0;
@@ -57,11 +55,12 @@ DT_Creator::init (int argc, char *argv [])
 	      arg_shifter.consume_arg ();
 	    }
 	  
-        ACE_NEW_RETURN (task, 
+	  ACE_NEW_RETURN (task, 
 			  Thread_Task (importance,
 				       start_time,
 				       load,
-				       this), -1);
+				       this,
+				       this->task ()), -1);
 	  
 	  dt_list_ [dt_index++] = task;
 	}
