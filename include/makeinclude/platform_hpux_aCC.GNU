@@ -26,6 +26,8 @@ HPUX_VERS	:= $(join $(word 2,$(HPVERS_WORDS)),$(word 3,$(HPVERS_WORDS)))
 #
 CC		= /bin/cc
 CXX		= /opt/aCC/bin/aCC
+# CPP_LOCATION is for TAO builds - says where the C preprocessor is
+CPP_LOCATION    = /usr/ccs/lbin/cpp
 #
 # Set the appropriate preprocessor defs for threading based on OS version.
 # If the user has requested building without threads, then don't set any.
@@ -57,7 +59,7 @@ PIC		= +Z
 AR		= $(COMPILE.cc) +inst_close $^; /bin/ar
 ARFLAGS		= ruv
 RANLIB		= echo
-LDFLAGS		= -Wl,+s
+LDFLAGS		= -Wl,+s -z
 SOFLAGS		= -b
 
 ifeq ($(distrib),1)
@@ -79,10 +81,13 @@ SOEXT		= sl
 
 ifeq ($(buildbits),32)
 CCFLAGS		+= +DA1.1 +DS1.1
-endif
+else
 ifeq ($(buildbits),64)
 CCFLAGS		+= +DA2.0 +DS2.0
 LDFLAGS		+= -Wl,+vnocompatwarnings
+else
+CCFLAGS         += +DAportable
+endif
 endif
 
 #
