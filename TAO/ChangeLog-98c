@@ -1,3 +1,14 @@
+Sun Mar 29 03:09:17 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/IIOP_ORB.{h,i,cpp}: Added an optimize_collocation_objects_
+	  flag to turn optimization for collocation objects on and off.
+
+	* tao/ORB_Core.cpp: Added an initialization argument
+	  -ORBcollocation to make ORB aware of collocation objects or
+	  not.  The default is on.
+
+	* doc/Options.html: Added documentation for -ORBcollocation.
+
 Fri Mar 27 20:08:24 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Naming/CosNaming_i.cpp (NS_NamingContext):
