@@ -61,7 +61,7 @@ protected:
   TAO_Base_Sequence (CORBA::ULong maximum,
 		     CORBA::ULong length,
 		     void* buffer,
-		     CORBA::Boolean release = 0);
+		     CORBA::Boolean release = CORBA::B_FALSE);
   // Constructor with control of ownership.
 
   TAO_Base_Sequence (CORBA::ULong maximum,
