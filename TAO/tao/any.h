@@ -21,14 +21,7 @@
 #if !defined (TAO_ANY_H)
 #define TAO_ANY_H
 
-#if 0
-#include "ace/Synch_T.h"
-#include "tao/orb.h"
-#include "tao/typecode.h"
-#endif /* 0 */
-
 class ACE_Svc_Export CORBA_Any : public IUnknown
-{
   // = TITLE
   //   Class "Any" can wrap values of any type, with the assistance
   //   of a TypeCode to describe that type.
@@ -36,6 +29,7 @@ class ACE_Svc_Export CORBA_Any : public IUnknown
   // = DESCRIPTION
   //   XXX should find a way to make its memory allocation always go
   //   within the appropriate OLE heap...
+{
 public:
   // = Minor codes for exceptional returns
   enum 
@@ -49,7 +43,7 @@ public:
   CORBA_Any (void);
   // Default constructor.
 
-  CORBA_Any (CORBA::TypeCode_ptr	type,
+  CORBA_Any (CORBA::TypeCode_ptr type,
 	     void *value = 0,
 	     CORBA::Boolean orb_owns_data = CORBA::B_FALSE);
   // Constructor.
@@ -249,20 +243,16 @@ private:
   void replace (CORBA::TypeCode_ptr type,
 		const void *value,
 		CORBA::Boolean orb_owns_data);
-  // helper for extraction operators that don't pass en environment parameter
-  // 94-9-14 hides unsigned char insert/extract
+  // Helper for extraction operators that don't pass an environment
+  // parameter.  94-9-14 hides unsigned char insert/extract
   void operator<<= (unsigned char);
   CORBA::Boolean operator>>= (unsigned char&) const;
 };
 
-// The CORBA::Any_var class
-
 class ACE_Svc_Export CORBA_Any_var
+  // = TITLE
+  //   Provide for automatic storage deallocation on going out of scope. 
 {
-  // =TITLE
-  // CORBA_Any_var
-  // =DESCRIPTION
-  // provide for automatic storage deallocation on going out of scope
 public:
   CORBA_Any_var (void);
   // default constructor
@@ -307,11 +297,12 @@ private:
   CORBA_Any *ptr_;
 };
 
-// class Any_out
 class ACE_Svc_Export CORBA_Any_out
+  // = TITLE
+  //   @@ Please document me.
 {
 public:
-  // =operations
+  // = operations.
 
   CORBA_Any_out (CORBA_Any *&p);
   // construction from a reference to a CORBA_Any
@@ -341,8 +332,8 @@ private:
   CORBA_Any *&ptr_;
   // instance
 
-  // assignment from _var disallowed
   void operator= (const CORBA_Any_var &);
+  // assignment from _var disallowed
 };
 
 #endif /* TAO_ANY_H */
