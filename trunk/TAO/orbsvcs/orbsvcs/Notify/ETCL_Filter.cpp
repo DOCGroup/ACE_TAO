@@ -10,7 +10,7 @@ ACE_RCSID(Notify, TAO_ETCL_Filter, "$id$")
 
 #include "ace/Auto_Ptr.h"
 #include "tao/debug.h"
-#include "Constraint_Visitors.h"
+#include "Notify_Constraint_Visitors.h"
 
 TAO_NS_ETCL_Filter::TAO_NS_ETCL_Filter (void)
 {

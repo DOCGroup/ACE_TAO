@@ -1,7 +1,7 @@
 /* -*- C++ -*- */
 //=============================================================================
 /**
- *  @file   Constraint_Interpreter.h
+ *  @file   Notify_Constraint_Interpreter.h
  *
  *  $Id$
  *

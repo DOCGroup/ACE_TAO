@@ -1,3 +1,21 @@
+Tue Nov 26 13:41:21 2002  Pradeep Gore  <pradeep@oomworks.com>
+
+	* orbsvcs/orbsvcs/Notify/Notify_Constraint_Interpreter.h:
+	* orbsvcs/orbsvcs/Notify/Notify_Constraint_Interpreter.cpp:
+	* orbsvcs/orbsvcs/Notify/Notify_Constraint_Visitors.h:
+	* orbsvcs/orbsvcs/Notify/Notify_Constraint_Visitors.cpp:
+	  Prefixed "Notify_" to original filesnames to disambiguate from
+	  simile in Trader. Thanks to Jaroslaw Nozderko
+	  <jaroslaw.nozderko@polkomtel.com.pl> for reporting this problem
+	  and Bala for providing the fix.
+
+	* orbsvcs/orbsvcs/Notify/ETCL_Filter.h:
+	* orbsvcs/orbsvcs/Notify/ETCL_Filter.cpp:
+	* orbsvcs/orbsvcs/Makefile.CosNotification:
+	* orbsvcs/orbsvcs/CosNotification.dsp:
+	* orbsvcs/orbsvcs/CosNotification.bor:
+	  Modified to point to renamed files. 
+	
 Tue Nov 26 09:09:48 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
 
         * orbsvcs/orbsvcs/PortableGroup.bor:

@@ -92,8 +92,8 @@ OBJFILES = \
         $(OBJDIR)\Worker_Task.obj \
         $(OBJDIR)\ETCL_Filter.obj \
         $(OBJDIR)\ETCL_FilterFactory.obj \
-        $(OBJDIR)\Constraint_Interpreter.obj \
-        $(OBJDIR)\Constraint_Visitors.obj \
+        $(OBJDIR)\Notify_Constraint_Interpreter.obj \
+        $(OBJDIR)\Notify_Constraint_Visitors.obj \
         $(OBJDIR)\Notify_Default_CO_Factory.obj \
         $(OBJDIR)\Notify_Default_Collection_Factory.obj \
         $(OBJDIR)\Notify_Default_EMO_Factory.obj \
