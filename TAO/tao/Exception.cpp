@@ -1026,116 +1026,173 @@ CORBA_##name ::_tao_any_destructor (void *x) \
 STANDARD_EXCEPTION_LIST
 #undef TAO_SYSTEM_EXCEPTION
 
+static void
+tao_insert_for_insertion_system_exception (CORBA::Any &any,
+                                           const CORBA::SystemException &ex,
+                                           const char *msg)
+{
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
+    {
+      TAO_OutputCDR stream;
+      ex._tao_encode (stream, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      any._tao_replace (ex._type (),
+                        TAO_ENCAP_BYTE_ORDER,
+                        stream.begin ());
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (
+          ACE_ANY_EXCEPTION,
+          msg);
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
+}
+
 #define TAO_SYSTEM_EXCEPTION(name) \
 void operator<<= (CORBA::Any &any, const CORBA_##name &ex) \
 { \
-  ACE_DECLARE_NEW_CORBA_ENV; \
-  ACE_TRY \
-    { \
-      TAO_OutputCDR stream; \
-      ex._tao_encode (stream, ACE_TRY_ENV); \
-      ACE_TRY_CHECK; \
-      any._tao_replace (ex._type (), \
-                        TAO_ENCAP_BYTE_ORDER, \
-                        stream.begin ()); \
-    } \
-  ACE_CATCHANY \
-    { \
-      ACE_PRINT_EXCEPTION ( \
-          ACE_ANY_EXCEPTION, \
-          "\tCORBA::Any insertion (copy) of CORBA_" #name "\n" \
-        ); \
-    } \
-  ACE_ENDTRY; \
-  ACE_CHECK; \
+  tao_insert_for_insertion_system_exception (any, ex, \
+            "\tCORBA::Any insertion (non-copy) of CORBA_" #name "\n" \
+                               ); \
 }
 STANDARD_EXCEPTION_LIST
 #undef TAO_SYSTEM_EXCEPTION
 
+static void
+tao_insert_system_exception (CORBA::Any &any,
+                             CORBA::SystemException *ex,
+                             CORBA::Any::_tao_destructor destructor,
+                             const char *msg)
+{
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
+    {
+      TAO_OutputCDR stream;
+      ex->_tao_encode (stream, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      any._tao_replace (ex->_type (),
+                        TAO_ENCAP_BYTE_ORDER,
+                        stream.begin (),
+                        1,
+                        ex,
+                        destructor);
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (
+          ACE_ANY_EXCEPTION,
+          msg
+        );
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
+}
+
 #define TAO_SYSTEM_EXCEPTION(name) \
 void operator<<= (CORBA::Any &any, CORBA_##name *ex) \
 { \
-  ACE_DECLARE_NEW_CORBA_ENV; \
-  ACE_TRY \
-    { \
-      TAO_OutputCDR stream; \
-      ex->_tao_encode (stream, ACE_TRY_ENV); \
-      ACE_TRY_CHECK; \
-      any._tao_replace (ex->_type (), \
-                        TAO_ENCAP_BYTE_ORDER, \
-                        stream.begin (), \
-                        1, \
-                        ex, \
-                        CORBA_##name ::_tao_any_destructor); \
-    } \
-  ACE_CATCHANY \
-    { \
-      ACE_PRINT_EXCEPTION ( \
-          ACE_ANY_EXCEPTION, \
+  tao_insert_system_exception (any, ex, \
+          CORBA_##name ::_tao_any_destructor, \
           "\tCORBA::Any insertion (non-copy) of CORBA_" #name "\n" \
-        ); \
-    } \
-  ACE_ENDTRY; \
-  ACE_CHECK; \
+                               ); \
+}
+
+STANDARD_EXCEPTION_LIST
+#undef TAO_SYSTEM_EXCEPTION
+
+#define TAO_SYSTEM_EXCEPTION(name) \
+static CORBA_SystemException* _tao_allocator_##name (void) \
+{ \
+  return new CORBA_##name; \
 }
 STANDARD_EXCEPTION_LIST
 #undef TAO_SYSTEM_EXCEPTION
+
+static CORBA_SystemException *
+tao_insert_in_extractor_system_exception (
+        const CORBA::Any &any,
+        CORBA::SystemException *&tmp,
+        CORBA::SystemException * (*allocator)(void),
+        CORBA::TypeCode_ptr tc_name,
+        CORBA::Any::_tao_destructor destructor,
+        const char *compare_IR_Id,
+        const char *msg)
+{
+  ACE_DECLARE_NEW_CORBA_ENV; 
+  ACE_TRY 
+    { 
+      CORBA::TypeCode_var type = any.type (); 
+      CORBA::Boolean equiv = 
+        type->equivalent (tc_name, ACE_TRY_ENV); 
+      ACE_TRY_CHECK; 
+      if (!equiv) 
+        return 0;
+      if (any.any_owns_data ()) 
+        { 
+          tmp = (CORBA_SystemException *)any.value (); 
+          return 0; //@@ was 1
+        } 
+      else 
+        { 
+          TAO_InputCDR stream ( 
+              any._tao_get_cdr (), 
+              any._tao_byte_order () 
+            ); 
+          CORBA::String_var interface_repository_id; 
+          if (!(stream >> interface_repository_id.out ())) 
+            return 0; 
+          if (ACE_OS_String::strcmp (interface_repository_id.in (),
+                                     compare_IR_Id))
+            return 0; 
+          CORBA::SystemException *cast_allocator = 
+            (CORBA::SystemException *)allocator;
+          cast_allocator->_tao_decode (stream, ACE_TRY_ENV); 
+          ACE_TRY_CHECK; 
+          ((CORBA::Any *)&any)->_tao_replace ( 
+              tc_name,
+              1, 
+              cast_allocator, 
+              destructor 
+            ); 
+          tmp = cast_allocator;
+          return 0; // @@ Was 1 .. to be changed. 
+        } 
+    } 
+  ACE_CATCHANY 
+    { 
+      ACE_PRINT_EXCEPTION ( 
+          ACE_ANY_EXCEPTION,
+          msg
+        ); 
+    } 
+  ACE_ENDTRY; 
+  return 0; 
+}
 
 #define TAO_SYSTEM_EXCEPTION(name) \
 CORBA::Boolean operator>>= (const CORBA::Any &any, \
                             const CORBA_##name *&ex) \
 { \
   ex = 0; \
-  ACE_DECLARE_NEW_CORBA_ENV; \
-  ACE_TRY \
-    { \
-      CORBA::TypeCode_var type = any.type (); \
-      CORBA::Boolean equiv = \
-        type->equivalent (CORBA::_tc_##name, ACE_TRY_ENV); \
-      ACE_TRY_CHECK; \
-      if (!equiv) \
-        return 0; \
-      if (any.any_owns_data ()) \
-        { \
-          ex = (CORBA_##name *)any.value (); \
-          return 1; \
-        } \
-      else \
-        { \
-          CORBA_##name *tmp; \
-          ACE_NEW_RETURN (tmp, CORBA_##name, 0); \
-          TAO_InputCDR stream ( \
-              any._tao_get_cdr (), \
-              any._tao_byte_order () \
-            ); \
-          CORBA::String_var interface_repository_id; \
-          if (!(stream >> interface_repository_id.out ())) \
-            return 0; \
-          if (ACE_OS_String::strcmp (interface_repository_id.in (), \
-                                     "IDL:omg.org/CORBA/" #name ":1.0")) \
-            return 0; \
-          tmp->_tao_decode (stream, ACE_TRY_ENV); \
-          ACE_TRY_CHECK; \
-          ((CORBA::Any *)&any)->_tao_replace ( \
-              CORBA::_tc_##name, \
-              1, \
-              tmp, \
-              CORBA_##name ::_tao_any_destructor \
-            ); \
-          ex = tmp; \
-          return 1; \
-        } \
-    } \
-  ACE_CATCHANY \
-    { \
-      ACE_PRINT_EXCEPTION ( \
-          ACE_ANY_EXCEPTION, \
-          "\tCORBA::Any extraction of CORBA_" #name "\n" \
-        ); \
-    } \
-  ACE_ENDTRY; \
-  return 0; \
+  CORBA_SystemException *tmp; \
+  if (tao_insert_in_extractor_system_exception (any, \
+       tmp, \
+       _tao_allocator_##name, \
+       CORBA::_tc_##name, \
+       CORBA_##name ::_tao_any_destructor, \
+       "IDL:omg.org/CORBA/" #name ":1.0", \
+       "\tCORBA::Any extraction of CORBA_" #name "\n") == 0) \
+         { \
+             ex = 0; \
+         return 0; \
+         } \
+ ex = (CORBA_##name*)tmp; \
+ return 1; \
 }
+
 STANDARD_EXCEPTION_LIST
 #undef TAO_SYSTEM_EXCEPTION
 
