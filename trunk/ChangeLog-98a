@@ -1,8 +1,14 @@
+Wed Feb 04 11:07:46 1998  Chris Gill  <cdgill@cs.wustl.edu>
+
+        * ace/Containers.cpp : fixed my "fix" to new_position pointer in
+          ACE_Ordered_MultiSet<T>::find_from () - now checks the pointer
+          before assigning something to it.
+
 Tue Feb 03 15:11:00 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
         * ace/Containers.cpp : fixed order of member initialization list
           in ACE_DNode ctor, added update of new_position pointer in
-          ACE_Ordered_MultiSet::find_from ()
+          ACE_Ordered_MultiSet<T>::find_from ()
 
 Mon Feb 02 21:26:30 1998  David L. Levine  <levine@cs.wustl.edu>
 
