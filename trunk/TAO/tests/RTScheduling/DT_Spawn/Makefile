@@ -51,9 +51,9 @@ DT_Spawn: $(addprefix $(VDIR),$(CLIENT_OBJS))
 realclean: clean
 	-$(RM) $(foreach ext, $(IDL_EXT), test$(ext))
 
-# DO NOT DELETE THIS LINE -- depgen.pl uses it.
+# DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
-.obj/DT_Spawn.o .obj/DT_Spawn.so .shobj/DT_Spawn.o .shobj/DT_Spawn.so:
+
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY
