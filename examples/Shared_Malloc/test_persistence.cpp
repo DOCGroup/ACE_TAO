@@ -176,7 +176,7 @@ GUI_Handler::insert_employee (const char *name,
                   -1);
 
   if (shmem_allocator->bind (name,
-                           new_employee) == -1)
+                             new_employee) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "bind failed\n"),
                       -1);
@@ -297,8 +297,8 @@ main (int argc, char *argv[])
 
   GUI_Handler handler;
 
-  for(;;)
-    if (handler.service() == -1)
+  for (;;)
+    if (handler.service () == -1)
       {
         ACE_DEBUG ((LM_DEBUG,
                     "closing down ....\n"));
