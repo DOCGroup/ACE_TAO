@@ -459,24 +459,32 @@ idl_parse_line_and_file (char *buf)
 
   idl_global->set_in_main_file (in_main_file);
 
-  // If it's an import file store the stripped name for the BE to use
-  if (!(idl_global->in_main_file ()) && idl_global->import ()) 
-    {
-      ACE_NEW (nm,
-               UTL_String (stripped_name (fname)));
+  ACE_NEW (nm,
+           UTL_String (stripped_name (fname)));
 
+  long seen = idl_global->seen_include_file_before (nm);
+
+  // If it's an import file store the stripped name for the BE to use
+  if (!(idl_global->in_main_file ()) && idl_global->import ())
+    {
       // This call also manages the #pragma prefix.
       idl_global->store_include_file_name (nm);
     }
-  else if (is_main_filename 
-           && idl_global->pragma_prefixes ().size () > 1
-           && idl_global->scopes ()->depth () == 1)
+  else if (is_main_filename)
     {
-      // If we're here, we have come to the end of an included file, so we
-      // pop its prefix.
-      char *trash = 0;
-      idl_global->pragma_prefixes ().pop (trash);
-      delete [] trash;
+      if (seen != idl_global->last_seen_index ()
+          && idl_global->pragma_prefixes ().size () > 1)
+        {
+          // If it's not the same as the current filename, and there is more
+          // than one prefix in the stack, then we have
+          // just finished with an included IDL file, and its
+          // (possibly empty) prefix must be popped.
+          char *trash = 0;
+          idl_global->pragma_prefixes ().pop (trash);
+          delete [] trash;
+        }
+
+      idl_global->last_seen_index (seen);
     }
 }
 
@@ -538,16 +546,13 @@ idl_store_pragma (char *buf)
           unsigned long depth = idl_global->scopes ()->depth ();
           size_t size = idl_global->pragma_prefixes ().size ();
 
-          // At global scope, we start with a default prefix of "". If this
-          // is all there is in the prefix stack, we replace, because a
-          // prefix has been found in the main file. If a prefix is added
-          // at global scope but in an included IDL file, we add, so we can
+          // If a prefix is added at global scope
+          // but in an included IDL file, we don't pop, so we can
           // recover the original prefix when we exit from the included file.
-          // Finally, if we are not at global scope, we add a new prefix if
+          // If we are not at global scope, we don't pop if
           // the current scope does not already have one, otherwise, we
-          // replace.
-          if ((size == 1 && depth == 1)
-              || (depth > 1 && idl_global->scopes ()->top ()->has_prefix ()))
+          // do pop.
+          if (depth > 1 && idl_global->scopes ()->top ()->has_prefix ())
             {
               char *trash = 0;
               idl_global->pragma_prefixes ().pop (trash);
