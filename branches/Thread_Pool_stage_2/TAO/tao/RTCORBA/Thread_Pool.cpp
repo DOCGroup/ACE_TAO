@@ -234,6 +234,12 @@ TAO_Thread_Lane::lane_priority (void) const
   return this->lane_priority_;
 }
 
+CORBA::Short
+TAO_Thread_Lane::native_priority (void) const
+{
+  return this->native_priority_;
+}
+
 CORBA::ULong
 TAO_Thread_Lane::static_threads (void) const
 {

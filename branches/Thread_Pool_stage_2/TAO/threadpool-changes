@@ -1,4 +1,4 @@
-Fri Aug 17 18:08:37 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
+Fri Aug 24 18:08:37 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/RTPortableServer/RT_POA.cpp: 
 
@@ -125,6 +125,12 @@ Fri Aug 17 18:08:37 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
             server priority was <TAO_INVALID_PRIORITY>, then the
             client propagated priority was ignored.  This was fixed.
 
+            Handle cases where the priority model policy was not
+            specified.
+
+            Distinguish between invalid target priorities and where
+            the original == target.
+
 	* tao/RTPortableServer/RT_POA_Initializer.cpp
 	  (init_rt_default_policies): Removed: it was merging the ORB
 	  level policies with the default POA policies at initialization
@@ -184,6 +190,9 @@ Fri Aug 17 18:08:37 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
           - (create_dynamic_threads): In addition to the default flags
             (THR_NEW_LWP and THR_JOINABLE), add in flags to set the
             scope and scheduling policies when creating RT threads.
+
+          - (native_priority): Each lane remembers its native priority
+            in addition to its CORBA priority.
 
 	* tao/RTCORBA/RT_Protocols_Hooks.cpp
 	  (set_default_server_protocol_policy): Don't include all the
@@ -890,3 +899,6 @@ Fri Aug 17 18:08:37 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
         * docs/Options.html: Added documentation for new
           -ORBScopePolicy option.
+
+        * ACE_ROOT/ace/OS.h: THR_SCOPE_PROCESS and THR_SCOPE_SYSTEM
+          were not defined for NT.  Added them.

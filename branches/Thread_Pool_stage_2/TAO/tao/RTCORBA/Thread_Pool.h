@@ -107,6 +107,8 @@ public:
   CORBA::ULong static_threads (void) const;
   CORBA::ULong dynamic_threads (void) const;
 
+  CORBA::Short native_priority (void) const;
+
   TAO_Thread_Pool_Threads &threads (void);
 
   TAO_Thread_Lane_Resources &resources (void);
