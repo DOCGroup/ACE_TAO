@@ -449,7 +449,8 @@ public:
 
   static ssize_t read_buffer (TAO_Transport *transport,
                               char *buf,
-                              size_t len);
+                              size_t len,
+                              ACE_Time_Value *max_wait_time);
   // Loop on data read ... this is required since <recv> won't block
   // until the requested amount of data is available.
 
@@ -460,10 +461,12 @@ public:
                           TAO_ORB_Core *orb_core,
                           TAO_GIOP_Message_State &state,
                           CORBA::ULong &header_size,
-                          TAO_InputCDR &input);
+                          TAO_InputCDR &input,
+                          ACE_Time_Value *max_wait_time);
   static int handle_input (TAO_Transport *transport,
                            TAO_ORB_Core *orb_core,
-                           TAO_GIOP_Message_State &state);
+                           TAO_GIOP_Message_State &state,
+                           ACE_Time_Value *max_wait_time = 0);
 
   static int parse_reply (TAO_Transport *transport,
                           TAO_ORB_Core *orb_core,

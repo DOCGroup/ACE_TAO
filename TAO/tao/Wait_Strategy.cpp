@@ -56,7 +56,7 @@ TAO_Wait_On_Reactor::wait (ACE_Time_Value *max_wait_time)
 
   // Do the event loop, till we received the reply.
 
-  int result = 0;
+  int result = 1;
   this->reply_received_ = 0;
   while (this->reply_received_ == 0 && result > 0)
     {
@@ -492,12 +492,13 @@ TAO_Wait_On_Read::~TAO_Wait_On_Read (void)
 
 // Wait on the read operation.
 int
-TAO_Wait_On_Read::wait (ACE_Time_Value * /* max_wait_time */)
+TAO_Wait_On_Read::wait (ACE_Time_Value * max_wait_time)
 {
   int received_reply = 0;
-  while (received_reply == 0)
+  while (received_reply != 1)
     {
-      received_reply = this->transport_->handle_client_input (1);
+      received_reply =
+        this->transport_->handle_client_input (1, max_wait_time);
       if (received_reply == -1)
         return -1;
     }
