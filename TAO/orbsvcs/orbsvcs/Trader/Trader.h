@@ -38,8 +38,6 @@
 #include "ace/Containers.h"
 
 #include "orbsvcs/CosTradingS.h"
-#include "orbsvcs/CosTradingReposS.h"
-#include "orbsvcs/CosTradingDynamicS.h"
 #include "orbsvcs/orbsvcs_export.h"
 
 #if defined(_MSC_VER)

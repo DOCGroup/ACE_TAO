@@ -12,24 +12,14 @@ ACE_RCSID(tao, TAO_Internal, "$Id$")
 
 int TAO_Internal::service_open_count_ = 0;
 #if defined (TAO_PLATFORM_SVC_CONF_FILE_NOTSUP)
-const char *TAO_Internal::resource_factory_args_ = TAO_DEFAULT_RESOURCE_FACTORY_ARGS;
-const char *TAO_Internal::server_strategy_args_ = TAO_DEFAULT_SERVER_STRATEGY_FACTORY_ARGS;
-const char *TAO_Internal::client_strategy_args_ = TAO_DEFAULT_CLIENT_STRATEGY_FACTORY_ARGS;
+char *TAO_Internal::resource_factory_args_ = TAO_DEFAULT_RESOURCE_FACTORY_ARGS;
+char *TAO_Internal::server_strategy_args_ = TAO_DEFAULT_SERVER_STRATEGY_FACTORY_ARGS;
+char *TAO_Internal::client_strategy_args_ = TAO_DEFAULT_CLIENT_STRATEGY_FACTORY_ARGS;
 #else
-const char *TAO_Internal::resource_factory_args_ = 0;
-const char *TAO_Internal::server_strategy_args_ = 0;
-const char *TAO_Internal::client_strategy_args_ = 0;
+char *TAO_Internal::resource_factory_args_ = 0;
+char *TAO_Internal::server_strategy_args_ = 0;
+char *TAO_Internal::client_strategy_args_ = 0;
 #endif /* TAO_PLATFORM_SVC_CONF_FILE_NOTSUP */
-
-void
-TAO_Internal::default_svc_conf_entries (const char *resource_factory_args,
-                                        const char *server_strategy_args,
-                                        const char *client_strategy_args)
-{
-  TAO_Internal::resource_factory_args_ = resource_factory_args;
-  TAO_Internal::server_strategy_args_ = server_strategy_args;
-  TAO_Internal::client_strategy_args_ = client_strategy_args;
-}
 
 int
 TAO_Internal::open_services (int& argc, char** argv, int ignore_default_svc_conf)

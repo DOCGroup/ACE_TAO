@@ -39,10 +39,8 @@ public:
   be_interface_fwd (void);
   // default constructor
 
-  be_interface_fwd (AST_Interface *dummy, UTL_ScopedName *n, UTL_StrList *p);
+  be_interface_fwd (UTL_ScopedName *n, UTL_StrList *p);
   // constructor
-
-  virtual ~be_interface_fwd (void);
 
   virtual int gen_var_defn (void);
   // generate the _var class definition
@@ -55,6 +53,12 @@ public:
 
   virtual int gen_out_impl (void);
   // generate the _out implementation
+
+  virtual int gen_typecode (void);
+  // generate the typecode
+
+  virtual long tc_size (void);
+  // return typecode size
 
   // Visiting
   virtual int accept (be_visitor* visitor);

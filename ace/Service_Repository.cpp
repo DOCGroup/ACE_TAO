@@ -209,15 +209,13 @@ ACE_Service_Repository::find_i (const ASYS_TCHAR name[],
 
   if (i < this->current_size_)
     {
-      if (this->service_vector_[i]->fini_called ())
-        {
-          if (srp != 0)
-            *srp = 0;
-          return -1;
-        }
-
       if (srp != 0)
 	*srp = this->service_vector_[i];
+      if ((*srp)->fini_called ())
+        {
+          *srp = 0;
+          return -1;
+        }
       if (ignore_suspended
           && this->service_vector_[i]->active () == 0)
 	return -2;

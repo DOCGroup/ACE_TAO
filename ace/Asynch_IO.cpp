@@ -969,14 +969,11 @@ ACE_Handler::handle_write_file (const ACE_Asynch_Write_File::Result &result)
 }
 
 void
-ACE_Handler::handle_time_out (const ACE_Time_Value & /* tv */,
-                              const void *           /* act */)
+ACE_Handler::handle_time_out (const ACE_Time_Value &tv,
+                              const void *act)
 {
-}
-
-void
-ACE_Handler::handle_wakeup (void)
-{
+  ACE_UNUSED_ARG (tv);
+  ACE_UNUSED_ARG (act);
 }
 
 ACE_Proactor *

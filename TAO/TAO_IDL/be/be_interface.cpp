@@ -172,13 +172,7 @@ be_interface::local_coll_name (void) const
 void
 be_interface::compute_fullskelname (void)
 {
-  this->compute_fullskelname (this->full_skel_name_, "POA_");
-}
-
-void
-be_interface::compute_fullskelname (char *&skelname, const char *prefix)
-{
-  if (skelname)
+  if (full_skel_name_)
     return;
   else
     {
@@ -188,7 +182,7 @@ be_interface::compute_fullskelname (char *&skelname, const char *prefix)
       long second = I_FALSE;
 
       // in the first loop compute the total length
-      namelen = ACE_OS::strlen (prefix);
+      namelen = 4;
       i = new UTL_IdListActiveIterator (this->name ());
       while (!(i->is_done ()))
         {
@@ -211,20 +205,20 @@ be_interface::compute_fullskelname (char *&skelname, const char *prefix)
         }
       delete i;
 
-      skelname = new char [namelen+1];
-      skelname[0] = '\0';
+      this->full_skel_name_ = new char [namelen+1];
+      this->full_skel_name_[0] = '\0';
       first = I_TRUE;
       second = I_FALSE;
-      ACE_OS::strcat (skelname, prefix);
+      ACE_OS::strcat (this->full_skel_name_, "POA_");
       i = new UTL_IdListActiveIterator (this->name ());
       while (!(i->is_done ()))
         {
           if (!first)
-            ACE_OS::strcat (skelname, "::");
+            ACE_OS::strcat (this->full_skel_name_, "::");
           else if (second)
             first = second = I_FALSE;
           // print the identifier
-          ACE_OS::strcat (skelname, i->item ()->get_string ());
+          ACE_OS::strcat (this->full_skel_name_, i->item ()->get_string ());
           if (first)
             {
               if (ACE_OS::strcmp (i->item ()->get_string (), "") != 0)
@@ -804,6 +798,95 @@ be_interface::gen_out_impl (void)
   return 0;
 }
 
+// generate typecode.
+// Typecode for interface comprises the enumerated value followed by the
+// encapsulation of the parameters
+
+int
+be_interface::gen_typecode (void)
+{
+  TAO_OutStream *cs; // output stream
+  TAO_NL  nl;        // end line
+  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
+
+  cs = cg->client_stubs ();
+  cs->indent (); // start from whatever indentation level we were at
+
+  *cs << "CORBA::tk_objref, // typecode kind" << nl;
+  *cs << this->tc_encap_len () << ", // encapsulation length\n";
+  // now emit the encapsulation
+  return this->gen_encapsulation ();
+}
+
+// generate encapsulation
+// An encapsulation for ourselves will be necessary when we are part of some
+// other IDL type and a typecode for that other type is being generated. This
+// will comprise our typecode kind. IDL types with parameters will additionally
+// have the encapsulation length and the entire typecode description
+int
+be_interface::gen_encapsulation (void)
+{
+  TAO_OutStream *cs; // output stream
+  TAO_NL  nl;        // end line
+  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
+  long i, arrlen;
+  ACE_UINT32 *arr;
+
+  cs = cg->client_stubs ();
+  cs->indent (); // start from whatever indentation level we were at
+
+  // XXXASG - byte order must be based on what m/c we are generating code -
+  // TODO
+  *cs << "TAO_ENCAP_BYTE_ORDER, // byte order" << nl;
+  // generate repoID
+  *cs << (ACE_OS::strlen (this->repoID ())+1) << ", ";
+  (void)this->tc_name2long (this->repoID (), arr, arrlen);
+  for (i=0; i < arrlen; i++)
+    {
+      cs->print ("ACE_NTOHL (0x%x), ", arr[i]);
+    }
+  *cs << " // repository ID = " << this->repoID () << nl;
+  // generate name
+  *cs << (ACE_OS::strlen (this->local_name ()->get_string ())+1) << ", ";
+  (void)this->tc_name2long(this->local_name ()->get_string (), arr, arrlen);
+  for (i=0; i < arrlen; i++)
+    {
+      cs->print ("ACE_NTOHL (0x%x), ", arr[i]);
+    }
+  *cs << " // name = " << this->local_name () << ",\n";
+
+  return 0;
+}
+
+// compute size of typecode
+long
+be_interface::tc_size (void)
+{
+   return 4 + 4 + this->tc_encap_len ();
+}
+
+// compute the encapsulation length
+long
+be_interface::tc_encap_len (void)
+{
+  if (this->encap_len_ == -1) // not computed yet
+    {
+      long slen;
+
+      // Macro to avoid "warning: unused parameter" type warning.
+      ACE_UNUSED_ARG (slen);
+
+      this->encap_len_ = 4;  // holds the byte order flag
+
+      this->encap_len_ += this->repoID_encap_len (); // for repoID
+
+      // do the same thing for the local name
+      this->encap_len_ += this->name_encap_len ();
+
+    }
+  return this->encap_len_;
+}
+
 // helper.
 int
 be_interface::gen_operation_table (void)
@@ -1152,7 +1235,7 @@ be_interface::traverse_inheritance_graph (be_interface::tao_code_emitter gen,
   // insert ourselves in the Queue
   if (queue.enqueue_tail (this) == -1)
     {
-      ACE_ERROR_RETURN ((LM_ERROR, "(%N:%l) be_interface::traverse_inheritance_graph - "
+      ACE_ERROR_RETURN ((LM_ERROR, "(%N:%l) be_interface::gen_operation_table - "
                          "error generating entries\n"), -1);
     }
 
@@ -1687,7 +1770,7 @@ be_interface::gen_skel_helper (be_interface *derived,
                       << "void *obj," << be_nl
                       << "void *context," << be_nl
                       << "CORBA::Environment &env =" << be_idt_nl
-                      << "CORBA::default_environment ()"
+                      << "CORBA::Environment::default_environment ()"
                       << be_uidt << be_uidt_nl
                       << ");" << be_uidt << "\n\n";
                 }
@@ -1738,7 +1821,7 @@ be_interface::gen_skel_helper (be_interface *derived,
                       << "void *obj," << be_nl
                       << "void *context," << be_nl
                       << "CORBA::Environment &env =" << be_idt_nl
-                      << "CORBA::default_environment ()"
+                      << "CORBA::Environment::default_environment ()"
                       << be_uidt << be_uidt_nl
                       << ");" << be_uidt << "\n\n";
                 }
@@ -1785,7 +1868,7 @@ be_interface::gen_skel_helper (be_interface *derived,
                           << "void *obj," << be_nl
                           << "void *context," << be_nl
                           << "CORBA::Environment &env = " << be_idt_nl
-                          << "CORBA::default_environment ()"
+                          << "CORBA::Environment::default_environment ()"
                           << be_uidt << be_uidt_nl
                           << ");" << be_uidt << "\n\n";
                     }
@@ -1808,7 +1891,7 @@ be_interface::gen_skel_helper (be_interface *derived,
                           << derived->full_skel_name ()
                           << "_ptr) obj;" << be_nl;
                       *os << ancestor->full_skel_name ()
-                          << "::_set_" << d->local_name ()
+                          << "::_get_" << d->local_name ()
                           << "_skel (" << be_idt << be_idt_nl
                           << "req," << be_nl
                           << "(" << ancestor->full_skel_name ()

@@ -157,9 +157,7 @@ ACE_INLINE void
 ACE_OutputCDR::reset (void)
 {
   this->current_ = &this->start_;
-
-  for (ACE_Message_Block *i = &this->start_; i; i = i->cont())
-    ACE_CDR::mb_align (i);
+  ACE_CDR::mb_align (&this->start_);
 }
 
 // Decode the CDR stream.
@@ -425,12 +423,6 @@ ACE_INLINE const ACE_Message_Block*
 ACE_OutputCDR::end (void) const
 {
   return this->current_->cont ();
-}
-
-ACE_INLINE const ACE_Message_Block*
-ACE_OutputCDR::current (void) const
-{
-  return this->current_;
 }
 
 ACE_INLINE size_t

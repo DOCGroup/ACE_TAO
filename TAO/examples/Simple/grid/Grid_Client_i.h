@@ -4,15 +4,16 @@
 // ============================================================================
 //
 // = LIBRARY
-//    TAO/examples/Simple/grid
+//    TAO/tests/Simple/grid
 //
 // = FILENAME
 //    Grid_Client_i.h
 //
 // = DESCRIPTION
-//    This class implements the interface calls for RMI.
+//    This class implements the  interface calls for RMI.
 //
 // = AUTHOR
+//    
 //   Balachandran Natarajan <bala@cs.wustl.edu>
 //    
 // ============================================================================
@@ -39,12 +40,11 @@ public:
   virtual ~Grid_Client_i (void);
   // Destructor
 
-  virtual int run (char *, int, char *[]);
+  virtual int run (char *,int, char *[]);
   // Execute the methods.
 
-  virtual int parse_args (int argc, char *argv[]);
-  // Parses the command line arguments.
-
+  virtual int parse_args (int argc, char**argv);
+  // Parses the command line arguments
 private:
   Client<Grid_Factory, Grid_Factory_var> client;
   // Instantiate the client object.

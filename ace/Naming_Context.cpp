@@ -585,11 +585,11 @@ ACE_Name_Options::parse_args (int argc, char *argv[])
       {
       case 'c':
         {
-          if (ACE_OS::strcmp (get_opt.optarg, "PROC_LOCAL") == 0)
+          if (ACE_OS::strcmp (get_opt.optarg, "PROC_LOCAL"))
             this->context (ACE_Naming_Context::PROC_LOCAL);
-          else if (ACE_OS::strcmp (get_opt.optarg, "NODE_LOCAL") == 0)
+          else if (ACE_OS::strcmp (get_opt.optarg, "NODE_LOCAL"))
             this->context (ACE_Naming_Context::NODE_LOCAL);
-          else if (ACE_OS::strcmp (get_opt.optarg, "NET_LOCAL") == 0)
+          else if (ACE_OS::strcmp (get_opt.optarg, "NET_LOCAL"))
             this->context (ACE_Naming_Context::NET_LOCAL);
         }
         break;

@@ -122,7 +122,7 @@ TAO_Hash_Naming_Context::bind (const CosNaming::Name& n,
 {
   ACE_GUARD_THROW_EX (ACE_Lock,
                       ace_mon, *this->lock_,
-                      CORBA::INTERNAL ());
+                      CORBA::INTERNAL (CORBA::COMPLETED_NO));
   ACE_CHECK;
 
   // Get the length of the name.
@@ -160,7 +160,7 @@ TAO_Hash_Naming_Context::bind (const CosNaming::Name& n,
 
       // Something went wrong with the internal structure
       else if (result == -1)
-        ACE_THROW (CORBA::INTERNAL ());
+        ACE_THROW (CORBA::INTERNAL (CORBA::COMPLETED_NO));
     }
 }
 
@@ -171,7 +171,7 @@ TAO_Hash_Naming_Context::rebind (const CosNaming::Name& n,
 {
   ACE_GUARD_THROW_EX (ACE_Lock, ace_mon,
                       *this->lock_,
-                      CORBA::INTERNAL ());
+                      CORBA::INTERNAL (CORBA::COMPLETED_NO));
   ACE_CHECK;
 
   // Get the length of the name.
@@ -213,7 +213,7 @@ TAO_Hash_Naming_Context::rebind (const CosNaming::Name& n,
                                           oldentry);
       // Something went wrong with the internal structure
       if (result == -1)
-        ACE_THROW (CORBA::INTERNAL ());
+        ACE_THROW (CORBA::INTERNAL (CORBA::COMPLETED_NO));
     }
 }
 
@@ -224,7 +224,7 @@ TAO_Hash_Naming_Context::bind_context (const CosNaming::Name &n,
 {
   ACE_GUARD_THROW_EX (ACE_Lock, ace_mon,
                       *this->lock_,
-                      CORBA::INTERNAL ());
+                      CORBA::INTERNAL (CORBA::COMPLETED_NO));
   ACE_CHECK;
 
   // Get the length of the name.
@@ -262,7 +262,7 @@ TAO_Hash_Naming_Context::bind_context (const CosNaming::Name &n,
 
       // Something went wrong with the internal structure
       else if (result == -1)
-        ACE_THROW (CORBA::INTERNAL ());
+        ACE_THROW (CORBA::INTERNAL (CORBA::COMPLETED_NO));
     }
 }
 
@@ -273,7 +273,7 @@ TAO_Hash_Naming_Context::rebind_context (const CosNaming::Name &n,
 {
   ACE_GUARD_THROW_EX (ACE_Lock, ace_mon,
                       *this->lock_,
-                      CORBA::INTERNAL ());
+                      CORBA::INTERNAL (CORBA::COMPLETED_NO));
   ACE_CHECK;
 
   // Get the length of the name.
@@ -312,7 +312,7 @@ TAO_Hash_Naming_Context::rebind_context (const CosNaming::Name &n,
                                  entry,
                                  oldname,
                                  oldentry) < 0)
-        ACE_THROW (CORBA::INTERNAL ());
+        ACE_THROW (CORBA::INTERNAL (CORBA::COMPLETED_NO));
     }
 }
 
@@ -322,7 +322,7 @@ TAO_Hash_Naming_Context::resolve (const CosNaming::Name& n,
 {
   CORBA::Object_ptr result = CORBA::Object::_nil ();
   ACE_GUARD_THROW_EX (ACE_Lock, ace_mon, *this->lock_,
-                      CORBA::INTERNAL ());
+                      CORBA::INTERNAL (CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (result);
 
   // Get the length of the name.
@@ -398,7 +398,7 @@ TAO_Hash_Naming_Context::unbind (const CosNaming::Name& n,
                                  CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_GUARD_THROW_EX (ACE_Lock, ace_mon, *this->lock_,
-                      CORBA::INTERNAL ());
+                      CORBA::INTERNAL (CORBA::COMPLETED_NO));
   ACE_CHECK;
 
   // Get the length of the name.
@@ -442,14 +442,10 @@ TAO_Hash_Naming_Context::new_context (CORBA::Environment &ACE_TRY_ENV)
   ACE_GUARD_THROW_EX (ACE_Lock,
                       ace_mon,
                       *this->lock_,
-                      CORBA::INTERNAL ());
+                      CORBA::INTERNAL (CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (CosNaming::NamingContext::_nil ());
 
   TAO_Hash_Naming_Context *c_impl = 0;
-
-  // To keep compilers warnings away.
-  ACE_UNUSED_ARG (c_impl);
-
   TAO_Naming_Context *c = 0;
   CosNaming::NamingContext_var result;
   char poa_id[BUFSIZ];
@@ -460,10 +456,10 @@ TAO_Hash_Naming_Context::new_context (CORBA::Environment &ACE_TRY_ENV)
 
   ACE_NEW_THROW_EX (c,
                     TAO_Naming_Context,
-                    CORBA::NO_MEMORY ());
+                    CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (result._retn ());
 
-  // Put <c> into the auto pointer temporarily, in case next
+  // Put c_impl into the auto pointer temporarily, in case next
   // allocation fails.
   ACE_Auto_Basic_Ptr<TAO_Naming_Context> temp (c);
 
@@ -472,7 +468,7 @@ TAO_Hash_Naming_Context::new_context (CORBA::Environment &ACE_TRY_ENV)
                                              poa_.in (),
                                              poa_id,
                                              this->hash_table_size_),
-                    CORBA::NO_MEMORY ());
+                    CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (result._retn ());
 
   // Allocation succeeded, get rid of auto pointer.
@@ -509,7 +505,7 @@ TAO_Hash_Naming_Context::bind_new_context (const CosNaming::Name& n,
   ACE_GUARD_THROW_EX (ACE_Lock,
                       ace_mon,
                       *this->lock_,
-                      CORBA::INTERNAL ());
+                      CORBA::INTERNAL (CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (CosNaming::NamingContext::_nil ());
 
   CosNaming::NamingContext_var result =
@@ -546,7 +542,7 @@ TAO_Hash_Naming_Context::destroy (CORBA::Environment &ACE_TRY_ENV)
     ACE_GUARD_THROW_EX (ACE_Lock,
                         ace_mon,
                         *this->lock_,
-                        CORBA::INTERNAL ());
+                        CORBA::INTERNAL (CORBA::COMPLETED_NO));
     ACE_CHECK;
 
     if (this->context_.current_size () != 0)
@@ -577,14 +573,8 @@ TAO_Hash_Naming_Context::destroy (CORBA::Environment &ACE_TRY_ENV)
   // implementation* knows how to clean up appropriately, e.g., we may
   // have one servant serving many objects and will not want to delete
   // the servant in <destroy>.
-
-  //@@ Now that the POA has been fixed to work right, this is no
-  // longer a correct approach to disposing off the servants.  This is
-  // a temporary fix to avoid crashing (but with the memory leak), a
-  // proper fix will be in the next release.
-
-  //if (this->root_ == 0)
-  //delete interface_;
+  if (this->root_ == 0)
+    delete interface_;
 }
 
 void
@@ -598,21 +588,21 @@ TAO_Hash_Naming_Context::list (CORBA::ULong how_many,
   bi = CosNaming::BindingIterator::_nil ();
   ACE_NEW_THROW_EX (bl,
                     CosNaming::BindingList (0),
-                    CORBA::NO_MEMORY ());
+                    CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
   ACE_CHECK;
 
   // Obtain a lock before we proceed with the operation.
   ACE_GUARD_THROW_EX (ACE_Lock,
                       ace_mon,
                       *this->lock_,
-                      CORBA::INTERNAL ());
+                      CORBA::INTERNAL (CORBA::COMPLETED_NO));
   ACE_CHECK;
 
   // Dynamically allocate hash map iterator.
   TAO_Hash_Naming_Context::HASH_MAP::ITERATOR *hash_iter = 0;
   ACE_NEW_THROW_EX (hash_iter,
                     TAO_Hash_Naming_Context::HASH_MAP::ITERATOR (context_),
-                    CORBA::NO_MEMORY ());
+                    CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
   ACE_CHECK;
 
   // Number of bindings that will go into the BindingList.
@@ -640,7 +630,7 @@ TAO_Hash_Naming_Context::list (CORBA::ULong how_many,
       if (populate_binding (hash_entry, bl[i]) == 0)
         {
           delete hash_iter;
-          ACE_THROW (CORBA::NO_MEMORY());
+          ACE_THROW (CORBA::NO_MEMORY(CORBA::COMPLETED_NO));
         }
     }
 
@@ -658,7 +648,7 @@ TAO_Hash_Naming_Context::list (CORBA::ULong how_many,
       if (bind_iter == 0)
         {
           delete hash_iter;
-          ACE_THROW (CORBA::NO_MEMORY ());
+          ACE_THROW (CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
         }
 
       ACE_TRY
@@ -723,14 +713,14 @@ TAO_Hash_Binding_Iterator::next_one (CosNaming::Binding_out b,
   // bindings, we need to allocate an out parameter.)
   ACE_NEW_THROW_EX (binding,
                     CosNaming::Binding,
-                    CORBA::NO_MEMORY ());
+                    CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (0);
   b = binding;
 
   ACE_GUARD_THROW_EX (ACE_Lock,
                       ace_mon,
                       *this->lock_,
-                      CORBA::INTERNAL ());
+                      CORBA::INTERNAL (CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (0);
   // If there are no more bindings.
   if (hash_iter_->done ())
@@ -741,7 +731,7 @@ TAO_Hash_Binding_Iterator::next_one (CosNaming::Binding_out b,
       hash_iter_->next (hash_entry);
 
       if (TAO_Hash_Naming_Context::populate_binding (hash_entry, *binding) == 0)
-        ACE_THROW_RETURN (CORBA::NO_MEMORY (), 0);
+        ACE_THROW_RETURN (CORBA::NO_MEMORY (CORBA::COMPLETED_NO), 0);
 
       hash_iter_->advance ();
       return 1;
@@ -784,13 +774,13 @@ TAO_Hash_Binding_Iterator::next_n (CORBA::ULong how_many,
   // parameter is allocated in case we fail to obtain the lock.
   ACE_NEW_THROW_EX (bl,
                     CosNaming::BindingList (0),
-                    CORBA::NO_MEMORY ());
+                    CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (0);
   // Obtain a lock.
   ACE_GUARD_THROW_EX (ACE_Lock,
                       ace_mon,
                       *this->lock_,
-                      CORBA::INTERNAL ());
+                      CORBA::INTERNAL (CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (0);
 
   // If there are no more bindings...
@@ -811,7 +801,7 @@ TAO_Hash_Binding_Iterator::next_n (CORBA::ULong how_many,
           hash_iter_->next (hash_entry);
 
           if (TAO_Hash_Naming_Context::populate_binding (hash_entry, bl[i]) == 0)
-            ACE_THROW_RETURN (CORBA::NO_MEMORY (), 0);
+            ACE_THROW_RETURN (CORBA::NO_MEMORY (CORBA::COMPLETED_NO), 0);
 
           if (hash_iter_->advance () == 0)
             {
@@ -832,7 +822,7 @@ TAO_Hash_Binding_Iterator::destroy (CORBA::Environment &ACE_TRY_ENV)
     ACE_GUARD_THROW_EX (ACE_Lock,
                         ace_mon,
                         *this->lock_,
-                        CORBA::INTERNAL ());
+                        CORBA::INTERNAL (CORBA::COMPLETED_NO));
     ACE_CHECK;
 
     PortableServer::POA_var poa =
@@ -850,11 +840,7 @@ TAO_Hash_Binding_Iterator::destroy (CORBA::Environment &ACE_TRY_ENV)
   }
 
   // Let go of the lock and commit suicide: must have been dynamically allocated
-  //@@ Now that the POA has been fixed to work right, this is no
-  // longer a correct approach to disposing off the servants.  This is
-  // a temporary fix to avoid crashing (but with the memory leak), a
-  // proper fix will be in the next release.
-  //delete this;
+  delete this;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

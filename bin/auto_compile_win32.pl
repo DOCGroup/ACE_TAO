@@ -33,7 +33,7 @@
 
 %Win32_DLL_Collections = ( "$Win32_Lists[0]" => <<EOD , # Debug
 ace/ace.dsw, ACE dynamic library:
-apps/gperf/src/gperf.dsw, gperf:
+apps/gperf/src/gperf.dsw, ALL:
 TAO/tao/TAO.dsw, TAO:
 TAO/TAO_IDL/tao_idl.dsw, TAO_IDL Compiler:
 TAO/orbsvcs/orbsvcs/orbsvcs.dsw, orbsvcs:
@@ -53,10 +53,11 @@ TAO/tests/Param_Test/Param_Test.dsw, Param_Test Server:
 TAO/tests/Param_Test/Param_Test.dsw, Param_Test Client:
 netsvcs/lib/netsvcs.dsw, NETSVCS Library:
 netsvcs/servers/servers.dsw, NETSVCS Servers:
+tests/tests.dsw, ALL:
 EOD
                      "$Win32_Lists[1]" => <<EOD , # Release
 ace/ace.dsw, ACE dynamic library:
-apps/gperf/src/gperf.dsw, gperf:
+apps/gperf/src/gperf.dsw, ALL:
 TAO/tao/TAO.dsw, TAO:
 TAO/TAO_IDL/tao_idl.dsw, TAO_IDL Compiler:
 TAO/orbsvcs/orbsvcs/orbsvcs.dsw, orbsvcs:
@@ -87,7 +88,7 @@ EOD
 
 %Alpha_DLL_Collections = ( "$Alpha_Lists[0]" => <<EOD , # Debug
 ace/ace.dsw, ACE dynamic library:
-apps/gperf/src/gperf.dsw, gperf:
+apps/gperf/src/gperf.dsw, ALL:
 TAO/tao/TAO.dsw, TAO:
 TAO/TAO_IDL/tao_idl.dsw, TAO_IDL Compiler:
 TAO/orbsvcs/orbsvcs/orbsvcs.dsw, orbsvcs:
@@ -98,7 +99,7 @@ tests/tests.dsw, ALL:
 EOD
                      "$Alpha_Lists[1]" => <<EOD , # Release
 ace/ace.dsw, ACE dynamic library:
-apps/gperf/src/gperf.dsw, gperf:
+apps/gperf/src/gperf.dsw, ALL:
 TAO/tao/TAO.dsw, TAO:
 TAO/TAO_IDL/tao_idl.dsw, TAO_IDL Compiler:
 TAO/orbsvcs/orbsvcs/orbsvcs.dsw, orbsvcs:
@@ -148,68 +149,6 @@ ace/ace.dsw, ACE static library:
 EOD
                   );
 
-@Version_Tests_List = (
-                       "Barrier_Test.dsp",
-                       "Basic_Types_Test.dsp",
-                       "Buffer_Stream_Test.dsp",
-                       "CDR_Test.dsp",
-                       "Conn_Test.dsp",
-                       "DLList_Test.dsp",
-                       "Dynamic_Priority_Test.dsp",
-                       "Enum_Interfaces_Test.dsp",
-                       "Env_Value_Test.dsp",
-                       "Future_Test.dsp",
-                       "Handle_Set_Test.dsp",
-                       "Hash_Map_Manager_Test.dsp",
-                       "High_Res_Timer_Test.dsp",
-                       "IOStream_Test.dsp",
-                       "Map_Manager_Test.dsp",
-                       "Mem_Map_Test.dsp",
-                       "Message_Block_Test.dsp",
-                       "Message_Queue_Notifications_Test.dsp",
-                       "Message_Queue_Test.dsp",
-                       "MM_Shared_Memory_Test.dsp",
-                       "MT_SOCK_Test.dsp",
-                       "Naming_Test.dsp",
-                       "Notify_Performance_Test.dsp",
-                       "OrdMultiSet_Test.dsp",
-                       "Pipe_Test.dsp",
-                       "Priority_Buffer_Test.dsp",
-                       "Priority_Reactor_Test.dsp",
-                       "Priority_Task_Test.dsp",
-                       "Process_Mutex_Test.dsp",
-                       "Process_Strategy_Test.dsp",
-                       "RB_Tree_Test.dsp",
-                       "Reactors_Test.dsp",
-                       "Reactor_Exception_Test.dsp",
-                       "Reactor_Notify_Test.dsp",
-                       "Reactor_Performance_Test.dsp",
-                       "Reactor_Timer_Test.dsp",
-                       "Reader_Writer_Test.dsp",
-                       "Recursive_Mutex_Test.dsp",
-                       "Semaphore_Test.dsp",
-                       "Service_Config_Test.dsp",
-                       "Sigset_Op_Test.dsp",
-                       "Simple_Message_Block_Test.dsp",
-                       "SOCK_Connector_Test.dsp",
-                       "SOCK_Test.dsp",
-                       "SPIPE_Test.dsp",
-                       "SString_Test.dsp",
-                       "SV_Shared_Memory_Test.dsp",
-                       "Task_Test.dsp",
-                       "Thread_Manager_Test.dsp",
-                       "Thread_Mutex_Test.dsp",
-                       "Thread_Pool_Reactor_Test.dsp",
-                       "Thread_Pool_Test.dsp",
-                       "Timeprobe_Test.dsp",
-                       "Timer_Queue_Test.dsp",
-                       "Time_Service_Test.dsp",
-                       "Time_Value_Test.dsp",
-                       "Tokens_Test.dsp",
-                       "TSS_Test.dsp",
-                       "Upgradable_RW_Test.dsp",
-                       "UPIPE_SAP_Test.dsp" );
-
 sub Build_Config
 {
     my $Config = shift;
@@ -250,36 +189,6 @@ sub Build_Config
     }
 }
 
-sub Build_Version_Test
-{
-    my $Config = shift;
-    my $Cntr = 0;
-    my $Command_Line = "";
-
-    chdir ("$ENV{ACE_ROOT}/tests/version_tests");
-    for ($Cntr = 0; $Cntr < scalar (@Version_Tests_List); $Cntr++)
-    {
-        $Project_Name = $Version_Tests_List[$Cntr];
-        $Project_Name =~ s/(.*)\.dsp/$1/;
-        $Command_Line =  "msdev.com $Version_Tests_List[$Cntr] /MAKE \"$Project_Name - $Config\" /USEENV $Build_Cmd /Y3";
-        if ( $Debug == 0 )
-        {
-            $Status =
-                system "$Command_Line";
-        }
-        else
-        {
-            $Status = 0;
-            print "$Status = $Command_Line\n";
-        }
-
-        if ($Ignore_error == 0)
-        {
-            return if $Status != 0;
-        }
-    }
-}
-
 sub Build_Collection
 {
     print "Build_Collection\n" if ( $Verbose );
@@ -289,7 +198,6 @@ sub Build_Collection
         $Config = $Lists[$Cntr];
         print "Building $Config of $Target{$Config}\n" if ( $Debug );
         Build_Config ($Config, $Target{$Config});
-        Build_Version_Test ($Config);
     }
 }
 
@@ -327,12 +235,12 @@ while ( $#ARGV >= 0  &&  $ARGV[0] =~ /^-/ )
     }
     elsif ( $ARGV[0] eq '-D' )  # Build DLL only
     {
-        print "Build DLL only\n" if ( $Verbose );
+        print "Build DLL only" if ( $Verbose );
         $Build_LIB = 0;
     }
     elsif ( $ARGV[0] eq '-L' )  # Build LIB only
     {
-        print "Build LIB only\n" if ( $Verbose );
+        print "Build LIB only" if ( $Verbose );
         $Build_DLL = 0;
     }
     elsif ( $ARGV[0] eq '-v' )   # Verbose mode

@@ -256,7 +256,6 @@ public:
       ACE_THREAD_EXIT_LOCK,
       ACE_TOKEN_MANAGER_CREATION_LOCK,
       ACE_TOKEN_INVARIANTS_CREATION_LOCK,
-      ACE_PROACTOR_EVENT_LOOP_LOCK,
 #endif /* ACE_MT_SAFE */
 
       // Hook for preallocated objects provided by application.
@@ -359,6 +358,11 @@ public:
   ~ACE_Object_Manager (void);
 
 private:
+  static u_int init_fini_count_;
+  // Counter to match init ()/fini () calls.  init () must increment
+  // it; fini () must decrement it.  fini () then does nothing until
+  // it reaches 0.
+
   static ACE_Object_Manager *instance_;
   // Singleton pointer.
 

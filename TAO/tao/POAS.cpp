@@ -11,7 +11,6 @@
 #include "tao/Server_Request.h"
 #include "tao/Operation_Table.h"
 #include "tao/ORB_Core.h"
-#include "tao/ORB.h"
 
 #if !defined (__ACE_INLINE__)
 #include "tao/POAS.i"
@@ -21,7 +20,6 @@ ACE_RCSID(tao, POAS, "$Id$")
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)
 
-#if !defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
 class TAO_PortableServer_ThreadPolicy_Perfect_Hash_OpTable : public TAO_Perfect_Hash_OpTable
 {
 private:
@@ -99,17 +97,13 @@ TAO_PortableServer_ThreadPolicy_Perfect_Hash_OpTable::lookup (const char *str, u
 }
 /* ending time is 0:12:47 */
 TAO_PortableServer_ThreadPolicy_Perfect_Hash_OpTable tao_PortableServer_ThreadPolicy_optable;
-#endif /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
 
 // skeleton constructor
 POA_PortableServer::ThreadPolicy::ThreadPolicy (void)
 {
-#if !defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
   this->optable_ = &tao_PortableServer_ThreadPolicy_optable;
-#endif /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
 }
 
-#if !defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
 void POA_PortableServer::ThreadPolicy::_get_value_skel (
                                                         CORBA::ServerRequest &_tao_server_request,
                                                         void *_tao_object_reference,
@@ -129,7 +123,7 @@ void POA_PortableServer::ThreadPolicy::_get_value_skel (
   if (!(
     (_tao_out << _tao_retval)
   ))
-    ACE_THROW (CORBA::MARSHAL () );
+    ACE_THROW (CORBA::MARSHAL (CORBA::COMPLETED_NO) );
 }
 
 void POA_PortableServer::ThreadPolicy::_is_a_skel (
@@ -166,6 +160,20 @@ void POA_PortableServer::ThreadPolicy::_is_a_skel (
   );
 }
 
+CORBA::Boolean POA_PortableServer::ThreadPolicy::_is_a (
+                                                        const char* value,
+                                                        CORBA::Environment &ACE_TRY_ENV
+                                                        )
+{
+  if (
+      (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/PortableServer/ThreadPolicy:1.0")) ||
+      (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/PortableServer/Policy:1.0")) ||
+      (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (ACE_TRY_ENV))))
+    return 1;
+  else
+    return 0;
+}
+
 void POA_PortableServer::ThreadPolicy::_non_existent_skel (
     CORBA::ServerRequest &_tao_server_request,
     void * /* _tao_object_reference */ ,
@@ -185,21 +193,6 @@ void POA_PortableServer::ThreadPolicy::_non_existent_skel (
     &PortableServer_ThreadPolicy_non_existent_calldata,
     &_tao_retval
   );
-}
-#endif /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
-
-CORBA::Boolean POA_PortableServer::ThreadPolicy::_is_a (
-                                                        const char* value,
-                                                        CORBA::Environment &ACE_TRY_ENV
-                                                        )
-{
-  if (
-      (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/PortableServer/ThreadPolicy:1.0")) ||
-      (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/PortableServer/Policy:1.0")) ||
-      (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (ACE_TRY_ENV))))
-    return 1;
-  else
-    return 0;
 }
 
 void* POA_PortableServer::ThreadPolicy::_downcast (
@@ -223,7 +216,7 @@ void POA_PortableServer::ThreadPolicy::_dispatch (CORBA::ServerRequest &req, voi
   if (this->_find (opname, skel) == -1)
   {
     ACE_ERROR ((LM_ERROR, "Bad operation <%s>\n", opname));
-    ACE_THROW (CORBA_BAD_OPERATION ());
+    ACE_THROW (CORBA_BAD_OPERATION (CORBA::COMPLETED_NO));
   }
   else
     skel (req, this, context, ACE_TRY_ENV);
@@ -306,7 +299,6 @@ POA_PortableServer::ThreadPolicy::_this (CORBA_Environment &TAO_IN_ENV)
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
-#if !defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
 class TAO_PortableServer_LifespanPolicy_Perfect_Hash_OpTable : public TAO_Perfect_Hash_OpTable
 {
 private:
@@ -384,17 +376,13 @@ TAO_PortableServer_LifespanPolicy_Perfect_Hash_OpTable::lookup (const char *str,
 }
 /* ending time is 0:12:47 */
 TAO_PortableServer_LifespanPolicy_Perfect_Hash_OpTable tao_PortableServer_LifespanPolicy_optable;
-#endif /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
 
 // skeleton constructor
 POA_PortableServer::LifespanPolicy::LifespanPolicy (void)
 {
-#if !defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
   this->optable_ = &tao_PortableServer_LifespanPolicy_optable;
-#endif /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
 }
 
-#if !defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
 void POA_PortableServer::LifespanPolicy::_get_value_skel (
                                                           CORBA::ServerRequest &_tao_server_request,
                                                           void *_tao_object_reference,
@@ -414,7 +402,7 @@ void POA_PortableServer::LifespanPolicy::_get_value_skel (
   if (!(
     (_tao_out << _tao_retval)
   ))
-    ACE_THROW (CORBA::MARSHAL () );
+    ACE_THROW (CORBA::MARSHAL (CORBA::COMPLETED_NO) );
 
 }
 
@@ -452,6 +440,20 @@ void POA_PortableServer::LifespanPolicy::_is_a_skel (
   );
 }
 
+CORBA::Boolean POA_PortableServer::LifespanPolicy::_is_a (
+                                                          const char* value,
+                                                          CORBA::Environment &ACE_TRY_ENV
+                                                          )
+{
+  if (
+      (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/PortableServer/LifespanPolicy:1.0")) ||
+      (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/PortableServer/Policy:1.0")) ||
+      (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (ACE_TRY_ENV))))
+    return 1;
+  else
+    return 0;
+}
+
 void POA_PortableServer::LifespanPolicy::_non_existent_skel (
     CORBA::ServerRequest &_tao_server_request,
     void * /* _tao_object_reference */ ,
@@ -471,21 +473,6 @@ void POA_PortableServer::LifespanPolicy::_non_existent_skel (
     &PortableServer_LifespanPolicy_non_existent_calldata,
     &_tao_retval
   );
-}
-#endif /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
-
-CORBA::Boolean POA_PortableServer::LifespanPolicy::_is_a (
-                                                          const char* value,
-                                                          CORBA::Environment &ACE_TRY_ENV
-                                                          )
-{
-  if (
-      (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/PortableServer/LifespanPolicy:1.0")) ||
-      (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/PortableServer/Policy:1.0")) ||
-      (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (ACE_TRY_ENV))))
-    return 1;
-  else
-    return 0;
 }
 
 void* POA_PortableServer::LifespanPolicy::_downcast (
@@ -509,7 +496,7 @@ void POA_PortableServer::LifespanPolicy::_dispatch (CORBA::ServerRequest &req, v
   if (this->_find (opname, skel) == -1)
   {
     ACE_ERROR ((LM_ERROR, "Bad operation <%s>\n", opname));
-    ACE_THROW (CORBA_BAD_OPERATION ());
+    ACE_THROW (CORBA_BAD_OPERATION (CORBA::COMPLETED_NO));
   }
   else
     skel (req, this, context, ACE_TRY_ENV);
@@ -589,7 +576,6 @@ POA_PortableServer::LifespanPolicy::_this (CORBA_Environment &TAO_IN_ENV)
   return new POA_PortableServer::_tao_collocated_LifespanPolicy (this, stub);
 }
 
-#if !defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
 class TAO_PortableServer_IdUniquenessPolicy_Perfect_Hash_OpTable : public TAO_Perfect_Hash_OpTable
 {
 private:
@@ -667,17 +653,13 @@ TAO_PortableServer_IdUniquenessPolicy_Perfect_Hash_OpTable::lookup (const char *
 }
 /* ending time is 0:12:47 */
 TAO_PortableServer_IdUniquenessPolicy_Perfect_Hash_OpTable tao_PortableServer_IdUniquenessPolicy_optable;
-#endif /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
 
 // skeleton constructor
 POA_PortableServer::IdUniquenessPolicy::IdUniquenessPolicy (void)
 {
-#if !defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
   this->optable_ = &tao_PortableServer_IdUniquenessPolicy_optable;
-#endif /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
 }
 
-#if !defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
 void POA_PortableServer::IdUniquenessPolicy::_get_value_skel (
                                                               CORBA::ServerRequest &_tao_server_request,
                                                               void *_tao_object_reference,
@@ -697,7 +679,7 @@ void POA_PortableServer::IdUniquenessPolicy::_get_value_skel (
   if (!(
     (_tao_out << _tao_retval)
   ))
-    ACE_THROW (CORBA::MARSHAL () );
+    ACE_THROW (CORBA::MARSHAL (CORBA::COMPLETED_NO) );
 
 }
 
@@ -735,6 +717,20 @@ void POA_PortableServer::IdUniquenessPolicy::_is_a_skel (
   );
 }
 
+CORBA::Boolean POA_PortableServer::IdUniquenessPolicy::_is_a (
+                                                              const char* value,
+                                                              CORBA::Environment &ACE_TRY_ENV
+                                                              )
+{
+  if (
+      (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/PortableServer/IdUniquenessPolicy:1.0")) ||
+      (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/PortableServer/Policy:1.0")) ||
+      (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (ACE_TRY_ENV))))
+    return 1;
+  else
+    return 0;
+}
+
 void POA_PortableServer::IdUniquenessPolicy::_non_existent_skel (
     CORBA::ServerRequest &_tao_server_request,
     void * /* _tao_object_reference */ ,
@@ -754,21 +750,6 @@ void POA_PortableServer::IdUniquenessPolicy::_non_existent_skel (
     &PortableServer_IdUniquenessPolicy_non_existent_calldata,
     &_tao_retval
   );
-}
-#endif /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
-
-CORBA::Boolean POA_PortableServer::IdUniquenessPolicy::_is_a (
-                                                              const char* value,
-                                                              CORBA::Environment &ACE_TRY_ENV
-                                                              )
-{
-  if (
-      (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/PortableServer/IdUniquenessPolicy:1.0")) ||
-      (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/PortableServer/Policy:1.0")) ||
-      (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (ACE_TRY_ENV))))
-    return 1;
-  else
-    return 0;
 }
 
 void* POA_PortableServer::IdUniquenessPolicy::_downcast (
@@ -792,7 +773,7 @@ void POA_PortableServer::IdUniquenessPolicy::_dispatch (CORBA::ServerRequest &re
   if (this->_find (opname, skel) == -1)
   {
     ACE_ERROR ((LM_ERROR, "Bad operation <%s>\n", opname));
-    ACE_THROW (CORBA_BAD_OPERATION ());
+    ACE_THROW (CORBA_BAD_OPERATION (CORBA::COMPLETED_NO));
   }
   else
     skel (req, this, context, ACE_TRY_ENV);
@@ -872,7 +853,6 @@ POA_PortableServer::IdUniquenessPolicy::_this (CORBA_Environment &ACE_TRY_ENV)
   return new POA_PortableServer::_tao_collocated_IdUniquenessPolicy (this, stub);
 }
 
-#if !defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
 class TAO_PortableServer_IdAssignmentPolicy_Perfect_Hash_OpTable : public TAO_Perfect_Hash_OpTable
 {
 private:
@@ -950,17 +930,13 @@ TAO_PortableServer_IdAssignmentPolicy_Perfect_Hash_OpTable::lookup (const char *
 }
 /* ending time is 0:12:47 */
 TAO_PortableServer_IdAssignmentPolicy_Perfect_Hash_OpTable tao_PortableServer_IdAssignmentPolicy_optable;
-#endif /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
 
 // skeleton constructor
 POA_PortableServer::IdAssignmentPolicy::IdAssignmentPolicy (void)
 {
-#if !defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
   this->optable_ = &tao_PortableServer_IdAssignmentPolicy_optable;
-#endif /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
 }
 
-#if !defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
 void POA_PortableServer::IdAssignmentPolicy::_get_value_skel (
                                                               CORBA::ServerRequest &_tao_server_request,
                                                               void *_tao_object_reference,
@@ -980,7 +956,7 @@ void POA_PortableServer::IdAssignmentPolicy::_get_value_skel (
   if (!(
     (_tao_out << _tao_retval)
   ))
-    ACE_THROW (CORBA::MARSHAL () );
+    ACE_THROW (CORBA::MARSHAL (CORBA::COMPLETED_NO) );
 
 }
 
@@ -1018,6 +994,20 @@ void POA_PortableServer::IdAssignmentPolicy::_is_a_skel (
   );
 }
 
+CORBA::Boolean POA_PortableServer::IdAssignmentPolicy::_is_a (
+                                                              const char* value,
+                                                              CORBA::Environment &ACE_TRY_ENV
+                                                              )
+{
+  if (
+      (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/PortableServer/IdAssignmentPolicy:1.0")) ||
+      (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/PortableServer/Policy:1.0")) ||
+      (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (ACE_TRY_ENV))))
+    return 1;
+  else
+    return 0;
+}
+
 void POA_PortableServer::IdAssignmentPolicy::_non_existent_skel (
     CORBA::ServerRequest &_tao_server_request,
     void * /* _tao_object_reference */ ,
@@ -1037,21 +1027,6 @@ void POA_PortableServer::IdAssignmentPolicy::_non_existent_skel (
     &PortableServer_IdAssignmentPolicy_non_existent_calldata,
     &_tao_retval
   );
-}
-#endif /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
-
-CORBA::Boolean POA_PortableServer::IdAssignmentPolicy::_is_a (
-                                                              const char* value,
-                                                              CORBA::Environment &ACE_TRY_ENV
-                                                              )
-{
-  if (
-      (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/PortableServer/IdAssignmentPolicy:1.0")) ||
-      (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/PortableServer/Policy:1.0")) ||
-      (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (ACE_TRY_ENV))))
-    return 1;
-  else
-    return 0;
 }
 
 void* POA_PortableServer::IdAssignmentPolicy::_downcast (
@@ -1075,7 +1050,7 @@ void POA_PortableServer::IdAssignmentPolicy::_dispatch (CORBA::ServerRequest &re
   if (this->_find (opname, skel) == -1)
   {
     ACE_ERROR ((LM_ERROR, "Bad operation <%s>\n", opname));
-    ACE_THROW (CORBA_BAD_OPERATION ());
+    ACE_THROW (CORBA_BAD_OPERATION (CORBA::COMPLETED_NO));
   }
   else
     skel (req, this, context, ACE_TRY_ENV);
@@ -1157,7 +1132,6 @@ POA_PortableServer::IdAssignmentPolicy::_this (CORBA_Environment &TAO_IN_ENV)
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)
 
-#if !defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
 class TAO_PortableServer_ImplicitActivationPolicy_Perfect_Hash_OpTable : public TAO_Perfect_Hash_OpTable
 {
 private:
@@ -1235,17 +1209,13 @@ TAO_PortableServer_ImplicitActivationPolicy_Perfect_Hash_OpTable::lookup (const 
 }
 /* ending time is 0:12:47 */
 TAO_PortableServer_ImplicitActivationPolicy_Perfect_Hash_OpTable tao_PortableServer_ImplicitActivationPolicy_optable;
-#endif /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
 
 // skeleton constructor
 POA_PortableServer::ImplicitActivationPolicy::ImplicitActivationPolicy (void)
 {
-#if !defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
   this->optable_ = &tao_PortableServer_ImplicitActivationPolicy_optable;
-#endif /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
 }
 
-#if !defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
 void POA_PortableServer::ImplicitActivationPolicy::_get_value_skel (
                                                                     CORBA::ServerRequest &_tao_server_request,
                                                                     void *_tao_object_reference,
@@ -1265,7 +1235,7 @@ void POA_PortableServer::ImplicitActivationPolicy::_get_value_skel (
   if (!(
     (_tao_out << _tao_retval)
   ))
-    ACE_THROW (CORBA::MARSHAL () );
+    ACE_THROW (CORBA::MARSHAL (CORBA::COMPLETED_NO) );
 
 }
 
@@ -1303,6 +1273,20 @@ void POA_PortableServer::ImplicitActivationPolicy::_is_a_skel (
   );
 }
 
+CORBA::Boolean POA_PortableServer::ImplicitActivationPolicy::_is_a (
+                                                                    const char* value,
+                                                                    CORBA::Environment &ACE_TRY_ENV
+                                                                    )
+{
+  if (
+      (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/PortableServer/ImplicitActivationPolicy:1.0")) ||
+      (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/PortableServer/Policy:1.0")) ||
+      (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (ACE_TRY_ENV))))
+    return 1;
+  else
+    return 0;
+}
+
 void POA_PortableServer::ImplicitActivationPolicy::_non_existent_skel (
     CORBA::ServerRequest &_tao_server_request,
     void * /* _tao_object_reference */ ,
@@ -1322,21 +1306,6 @@ void POA_PortableServer::ImplicitActivationPolicy::_non_existent_skel (
     &PortableServer_ImplicitActivationPolicy_non_existent_calldata,
     &_tao_retval
   );
-}
-#endif /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
-
-CORBA::Boolean POA_PortableServer::ImplicitActivationPolicy::_is_a (
-                                                                    const char* value,
-                                                                    CORBA::Environment &ACE_TRY_ENV
-                                                                    )
-{
-  if (
-      (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/PortableServer/ImplicitActivationPolicy:1.0")) ||
-      (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/PortableServer/Policy:1.0")) ||
-      (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (ACE_TRY_ENV))))
-    return 1;
-  else
-    return 0;
 }
 
 void* POA_PortableServer::ImplicitActivationPolicy::_downcast (
@@ -1360,7 +1329,7 @@ void POA_PortableServer::ImplicitActivationPolicy::_dispatch (CORBA::ServerReque
   if (this->_find (opname, skel) == -1)
   {
     ACE_ERROR ((LM_ERROR, "Bad operation <%s>\n", opname));
-    ACE_THROW (CORBA_BAD_OPERATION ());
+    ACE_THROW (CORBA_BAD_OPERATION (CORBA::COMPLETED_NO));
   }
   else
     skel (req, this, context, ACE_TRY_ENV);
@@ -1440,7 +1409,6 @@ POA_PortableServer::ImplicitActivationPolicy::_this (CORBA_Environment &TAO_IN_E
   return new POA_PortableServer::_tao_collocated_ImplicitActivationPolicy (this, stub);
 }
 
-#if !defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
 class TAO_PortableServer_ServantRetentionPolicy_Perfect_Hash_OpTable : public TAO_Perfect_Hash_OpTable
 {
 private:
@@ -1518,17 +1486,13 @@ TAO_PortableServer_ServantRetentionPolicy_Perfect_Hash_OpTable::lookup (const ch
 }
 /* ending time is 0:12:47 */
 TAO_PortableServer_ServantRetentionPolicy_Perfect_Hash_OpTable tao_PortableServer_ServantRetentionPolicy_optable;
-#endif /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
 
 // skeleton constructor
 POA_PortableServer::ServantRetentionPolicy::ServantRetentionPolicy (void)
 {
-#if !defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
   this->optable_ = &tao_PortableServer_ServantRetentionPolicy_optable;
-#endif /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
 }
 
-#if !defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
 void POA_PortableServer::ServantRetentionPolicy::_get_value_skel (
                                                                   CORBA::ServerRequest &_tao_server_request,
                                                                   void *_tao_object_reference,
@@ -1548,7 +1512,7 @@ void POA_PortableServer::ServantRetentionPolicy::_get_value_skel (
   if (!(
     (_tao_out << _tao_retval)
   ))
-    ACE_THROW (CORBA::MARSHAL () );
+    ACE_THROW (CORBA::MARSHAL (CORBA::COMPLETED_NO) );
 
 }
 
@@ -1586,6 +1550,20 @@ void POA_PortableServer::ServantRetentionPolicy::_is_a_skel (
   );
 }
 
+CORBA::Boolean POA_PortableServer::ServantRetentionPolicy::_is_a (
+                                                                  const char* value,
+                                                                  CORBA::Environment &ACE_TRY_ENV
+                                                                  )
+{
+  if (
+      (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/PortableServer/ServantRetentionPolicy:1.0")) ||
+      (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/PortableServer/Policy:1.0")) ||
+      (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (ACE_TRY_ENV))))
+    return 1;
+  else
+    return 0;
+}
+
 void POA_PortableServer::ServantRetentionPolicy::_non_existent_skel (
     CORBA::ServerRequest &_tao_server_request,
     void * /* _tao_object_reference */ ,
@@ -1605,21 +1583,6 @@ void POA_PortableServer::ServantRetentionPolicy::_non_existent_skel (
     &PortableServer_ServantRetentionPolicy_non_existent_calldata,
     &_tao_retval
   );
-}
-#endif /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
-
-CORBA::Boolean POA_PortableServer::ServantRetentionPolicy::_is_a (
-                                                                  const char* value,
-                                                                  CORBA::Environment &ACE_TRY_ENV
-                                                                  )
-{
-  if (
-      (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/PortableServer/ServantRetentionPolicy:1.0")) ||
-      (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/PortableServer/Policy:1.0")) ||
-      (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (ACE_TRY_ENV))))
-    return 1;
-  else
-    return 0;
 }
 
 void* POA_PortableServer::ServantRetentionPolicy::_downcast (
@@ -1643,7 +1606,7 @@ void POA_PortableServer::ServantRetentionPolicy::_dispatch (CORBA::ServerRequest
   if (this->_find (opname, skel) == -1)
   {
     ACE_ERROR ((LM_ERROR, "Bad operation <%s>\n", opname));
-    ACE_THROW (CORBA_BAD_OPERATION ());
+    ACE_THROW (CORBA_BAD_OPERATION (CORBA::COMPLETED_NO));
   }
   else
     skel (req, this, context, ACE_TRY_ENV);
@@ -1723,7 +1686,6 @@ POA_PortableServer::ServantRetentionPolicy::_this (CORBA_Environment &TAO_IN_ENV
   return new POA_PortableServer::_tao_collocated_ServantRetentionPolicy (this, stub);
 }
 
-#if !defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
 class TAO_PortableServer_RequestProcessingPolicy_Perfect_Hash_OpTable : public TAO_Perfect_Hash_OpTable
 {
 private:
@@ -1801,17 +1763,13 @@ TAO_PortableServer_RequestProcessingPolicy_Perfect_Hash_OpTable::lookup (const c
 }
 /* ending time is 0:12:47 */
 TAO_PortableServer_RequestProcessingPolicy_Perfect_Hash_OpTable tao_PortableServer_RequestProcessingPolicy_optable;
-#endif /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
 
 // skeleton constructor
 POA_PortableServer::RequestProcessingPolicy::RequestProcessingPolicy (void)
 {
-#if !defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
   this->optable_ = &tao_PortableServer_RequestProcessingPolicy_optable;
-#endif /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
 }
 
-#if !defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
 void POA_PortableServer::RequestProcessingPolicy::_get_value_skel (
                                                                    CORBA::ServerRequest &_tao_server_request,
                                                                    void *_tao_object_reference,
@@ -1831,7 +1789,7 @@ void POA_PortableServer::RequestProcessingPolicy::_get_value_skel (
   if (!(
     (_tao_out << _tao_retval)
   ))
-    ACE_THROW (CORBA::MARSHAL () );
+    ACE_THROW (CORBA::MARSHAL (CORBA::COMPLETED_NO) );
 
 }
 
@@ -1869,6 +1827,20 @@ void POA_PortableServer::RequestProcessingPolicy::_is_a_skel (
   );
 }
 
+CORBA::Boolean POA_PortableServer::RequestProcessingPolicy::_is_a (
+                                                                   const char* value,
+                                                                   CORBA::Environment &ACE_TRY_ENV
+                                                                   )
+{
+  if (
+      (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/PortableServer/RequestProcessingPolicy:1.0")) ||
+      (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/PortableServer/Policy:1.0")) ||
+      (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (ACE_TRY_ENV))))
+    return 1;
+  else
+    return 0;
+}
+
 void POA_PortableServer::RequestProcessingPolicy::_non_existent_skel (
     CORBA::ServerRequest &_tao_server_request,
     void * /* _tao_object_reference */ ,
@@ -1888,21 +1860,6 @@ void POA_PortableServer::RequestProcessingPolicy::_non_existent_skel (
     &PortableServer_RequestProcessingPolicy_non_existent_calldata,
     &_tao_retval
   );
-}
-#endif /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
-
-CORBA::Boolean POA_PortableServer::RequestProcessingPolicy::_is_a (
-                                                                   const char* value,
-                                                                   CORBA::Environment &ACE_TRY_ENV
-                                                                   )
-{
-  if (
-      (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/PortableServer/RequestProcessingPolicy:1.0")) ||
-      (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/PortableServer/Policy:1.0")) ||
-      (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (ACE_TRY_ENV))))
-    return 1;
-  else
-    return 0;
 }
 
 void* POA_PortableServer::RequestProcessingPolicy::_downcast (
@@ -1926,7 +1883,7 @@ void POA_PortableServer::RequestProcessingPolicy::_dispatch (CORBA::ServerReques
   if (this->_find (opname, skel) == -1)
   {
     ACE_ERROR ((LM_ERROR, "Bad operation <%s>\n", opname));
-    ACE_THROW (CORBA_BAD_OPERATION ());
+    ACE_THROW (CORBA_BAD_OPERATION (CORBA::COMPLETED_NO));
   }
   else
     skel (req, this, context, ACE_TRY_ENV);
@@ -2008,9 +1965,55 @@ POA_PortableServer::RequestProcessingPolicy::_this (CORBA_Environment &TAO_IN_EN
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
+static const TAO_operation_db_entry PortableServer_POAManager_operations [] = {
+  {"_is_a", &POA_PortableServer::POAManager::_is_a_skel}
+};
+
+static const CORBA::Long _tao_PortableServer_POAManager_optable_size = sizeof (ACE_Hash_Map_Entry<const char *, TAO_Skeleton>) * (2);
+static char _tao_PortableServer_POAManager_optable_pool [_tao_PortableServer_POAManager_optable_size];
+static ACE_Static_Allocator_Base _tao_PortableServer_POAManager_allocator (_tao_PortableServer_POAManager_optable_pool, _tao_PortableServer_POAManager_optable_size);
+static TAO_Dynamic_Hash_OpTable tao_PortableServer_POAManager_optable (PortableServer_POAManager_operations, 1, 1, &_tao_PortableServer_POAManager_allocator);
+
 // skeleton constructor
 POA_PortableServer::POAManager::POAManager (void)
 {
+  this->optable_ = &tao_PortableServer_POAManager_optable;
+}
+
+void POA_PortableServer::POAManager::_is_a_skel (
+                                                 CORBA::ServerRequest &_tao_server_request,
+                                                 void * _tao_object_reference,
+                                                 void * /*context*/,
+                                                 CORBA::Environment &ACE_TRY_ENV
+                                                 )
+{
+  //  CORBA::Environment _tao_skel_environment;
+  static const TAO_Param_Data_Skel PortableServer_POAManager_is_a_paramdata [] =
+  {
+    {CORBA::_tc_boolean, 0, 0},
+    {CORBA::_tc_string, CORBA::ARG_IN, 0}
+  };
+  static const TAO_Call_Data_Skel PortableServer_POAManager_is_a_calldata =
+  {"_is_a", 1, 2, PortableServer_POAManager_is_a_paramdata};
+  POA_PortableServer::POAManager_ptr  _tao_impl = (POA_PortableServer::POAManager_ptr) _tao_object_reference;
+  CORBA::Boolean _tao_retval;
+  char *_tao_value = 0;
+  _tao_server_request.demarshal (
+                                 ACE_TRY_ENV,
+                                 &PortableServer_POAManager_is_a_calldata,
+                                 &_tao_retval,
+                                 &_tao_value
+                                 );
+  if (ACE_TRY_ENV.exception () != 0) return;
+  _tao_retval = _tao_impl->_is_a (_tao_value, ACE_TRY_ENV);
+  _tao_server_request.marshal (
+                               ACE_TRY_ENV,
+                               //                               _tao_skel_environment,
+                               &PortableServer_POAManager_is_a_calldata,
+                               &_tao_retval,
+                               &_tao_value
+                               );
+  CORBA::string_free (_tao_value);
 }
 
 CORBA::Boolean POA_PortableServer::POAManager::_is_a (
@@ -2045,7 +2048,7 @@ void POA_PortableServer::POAManager::_dispatch (CORBA::ServerRequest &req, void 
   if (this->_find (opname, skel) == -1)
   {
     ACE_ERROR ((LM_ERROR, "Bad operation <%s>\n", opname));
-    ACE_THROW (CORBA_BAD_OPERATION ());
+    ACE_THROW (CORBA_BAD_OPERATION (CORBA::COMPLETED_NO));
   }
   else
     skel (req, this, context, ACE_TRY_ENV);
@@ -2147,9 +2150,55 @@ POA_PortableServer::POAManager::_this (CORBA_Environment &TAO_IN_ENV)
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)
 
+static const TAO_operation_db_entry PortableServer_AdapterActivator_operations [] = {
+  {"_is_a", &POA_PortableServer::AdapterActivator::_is_a_skel}
+};
+
+static const CORBA::Long _tao_PortableServer_AdapterActivator_optable_size = sizeof (ACE_Hash_Map_Entry<const char *, TAO_Skeleton>) * (2);
+static char _tao_PortableServer_AdapterActivator_optable_pool [_tao_PortableServer_AdapterActivator_optable_size];
+static ACE_Static_Allocator_Base _tao_PortableServer_AdapterActivator_allocator (_tao_PortableServer_AdapterActivator_optable_pool, _tao_PortableServer_AdapterActivator_optable_size);
+static TAO_Dynamic_Hash_OpTable tao_PortableServer_AdapterActivator_optable (PortableServer_AdapterActivator_operations, 1, 1, &_tao_PortableServer_AdapterActivator_allocator);
+
 // skeleton constructor
 POA_PortableServer::AdapterActivator::AdapterActivator (void)
 {
+  this->optable_ = &tao_PortableServer_AdapterActivator_optable;
+}
+
+void POA_PortableServer::AdapterActivator::_is_a_skel (
+                                                       CORBA::ServerRequest &_tao_server_request,
+                                                       void * _tao_object_reference,
+                                                       void * /*context*/,
+                                                       CORBA::Environment &ACE_TRY_ENV
+                                                       )
+{
+  //  CORBA::Environment _tao_skel_environment;
+  static const TAO_Param_Data_Skel PortableServer_AdapterActivator_is_a_paramdata [] =
+  {
+    {CORBA::_tc_boolean, 0, 0},
+    {CORBA::_tc_string, CORBA::ARG_IN, 0}
+  };
+  static const TAO_Call_Data_Skel PortableServer_AdapterActivator_is_a_calldata =
+  {"_is_a", 1, 2, PortableServer_AdapterActivator_is_a_paramdata};
+  POA_PortableServer::AdapterActivator_ptr  _tao_impl = (POA_PortableServer::AdapterActivator_ptr) _tao_object_reference;
+  CORBA::Boolean _tao_retval;
+  char *_tao_value = 0;
+  _tao_server_request.demarshal (
+                                 ACE_TRY_ENV,
+                                 &PortableServer_AdapterActivator_is_a_calldata,
+                                 &_tao_retval,
+                                 &_tao_value
+                                 );
+  if (ACE_TRY_ENV.exception () != 0) return;
+  _tao_retval = _tao_impl->_is_a (_tao_value, ACE_TRY_ENV);
+  _tao_server_request.marshal (
+                               ACE_TRY_ENV,
+                               //                               _tao_skel_environment,
+                               &PortableServer_AdapterActivator_is_a_calldata,
+                               &_tao_retval,
+                               &_tao_value
+                               );
+  CORBA::string_free (_tao_value);
 }
 
 CORBA::Boolean POA_PortableServer::AdapterActivator::_is_a (
@@ -2184,7 +2233,7 @@ void POA_PortableServer::AdapterActivator::_dispatch (CORBA::ServerRequest &req,
   if (this->_find (opname, skel) == -1)
   {
     ACE_ERROR ((LM_ERROR, "Bad operation <%s>\n", opname));
-    ACE_THROW (CORBA_BAD_OPERATION ());
+    ACE_THROW (CORBA_BAD_OPERATION (CORBA::COMPLETED_NO));
   }
   else
     skel (req, this, context, ACE_TRY_ENV);
@@ -2244,9 +2293,55 @@ POA_PortableServer::AdapterActivator::_this (CORBA_Environment &TAO_IN_ENV)
   return new POA_PortableServer::_tao_collocated_AdapterActivator (this, stub);
 }
 
+static const TAO_operation_db_entry PortableServer_ServantManager_operations [] = {
+  {"_is_a", &POA_PortableServer::ServantManager::_is_a_skel}
+};
+
+static const CORBA::Long _tao_PortableServer_ServantManager_optable_size = sizeof (ACE_Hash_Map_Entry<const char *, TAO_Skeleton>) * (2);
+static char _tao_PortableServer_ServantManager_optable_pool [_tao_PortableServer_ServantManager_optable_size];
+static ACE_Static_Allocator_Base _tao_PortableServer_ServantManager_allocator (_tao_PortableServer_ServantManager_optable_pool, _tao_PortableServer_ServantManager_optable_size);
+static TAO_Dynamic_Hash_OpTable tao_PortableServer_ServantManager_optable (PortableServer_ServantManager_operations, 1, 1, &_tao_PortableServer_ServantManager_allocator);
+
 // skeleton constructor
 POA_PortableServer::ServantManager::ServantManager (void)
 {
+  this->optable_ = &tao_PortableServer_ServantManager_optable;
+}
+
+void POA_PortableServer::ServantManager::_is_a_skel (
+                                                     CORBA::ServerRequest &_tao_server_request,
+                                                     void * _tao_object_reference,
+                                                     void * /*context*/,
+                                                     CORBA::Environment &ACE_TRY_ENV
+                                                     )
+{
+  //  CORBA::Environment _tao_skel_environment;
+  static const TAO_Param_Data_Skel PortableServer_ServantManager_is_a_paramdata [] =
+  {
+    {CORBA::_tc_boolean, 0, 0},
+    {CORBA::_tc_string, CORBA::ARG_IN, 0}
+  };
+  static const TAO_Call_Data_Skel PortableServer_ServantManager_is_a_calldata =
+  {"_is_a", 1, 2, PortableServer_ServantManager_is_a_paramdata};
+  POA_PortableServer::ServantManager_ptr  _tao_impl = (POA_PortableServer::ServantManager_ptr) _tao_object_reference;
+  CORBA::Boolean _tao_retval;
+  char *_tao_value = 0;
+  _tao_server_request.demarshal (
+                                 ACE_TRY_ENV,
+                                 &PortableServer_ServantManager_is_a_calldata,
+                                 &_tao_retval,
+                                 &_tao_value
+                                 );
+  if (ACE_TRY_ENV.exception () != 0) return;
+  _tao_retval = _tao_impl->_is_a (_tao_value, ACE_TRY_ENV);
+  _tao_server_request.marshal (
+                               ACE_TRY_ENV,
+                               //                               _tao_skel_environment,
+                               &PortableServer_ServantManager_is_a_calldata,
+                               &_tao_retval,
+                               &_tao_value
+                               );
+  CORBA::string_free (_tao_value);
 }
 
 CORBA::Boolean POA_PortableServer::ServantManager::_is_a (
@@ -2281,7 +2376,7 @@ void POA_PortableServer::ServantManager::_dispatch (CORBA::ServerRequest &req, v
   if (this->_find (opname, skel) == -1)
   {
     ACE_ERROR ((LM_ERROR, "Bad operation <%s>\n", opname));
-    ACE_THROW (CORBA_BAD_OPERATION ());
+    ACE_THROW (CORBA_BAD_OPERATION (CORBA::COMPLETED_NO));
   }
   else
     skel (req, this, context, ACE_TRY_ENV);
@@ -2328,9 +2423,55 @@ POA_PortableServer::ServantManager::_this (CORBA_Environment &TAO_IN_ENV)
   return new POA_PortableServer::_tao_collocated_ServantManager (this, stub);
 }
 
+static const TAO_operation_db_entry PortableServer_ServantActivator_operations [] = {
+  {"_is_a", &POA_PortableServer::ServantActivator::_is_a_skel}
+};
+
+static const CORBA::Long _tao_PortableServer_ServantActivator_optable_size = sizeof (ACE_Hash_Map_Entry<const char *, TAO_Skeleton>) * (2);
+static char _tao_PortableServer_ServantActivator_optable_pool [_tao_PortableServer_ServantActivator_optable_size];
+static ACE_Static_Allocator_Base _tao_PortableServer_ServantActivator_allocator (_tao_PortableServer_ServantActivator_optable_pool, _tao_PortableServer_ServantActivator_optable_size);
+static TAO_Dynamic_Hash_OpTable tao_PortableServer_ServantActivator_optable (PortableServer_ServantActivator_operations, 1, 1, &_tao_PortableServer_ServantActivator_allocator);
+
 // skeleton constructor
 POA_PortableServer::ServantActivator::ServantActivator (void)
 {
+  this->optable_ = &tao_PortableServer_ServantActivator_optable;
+}
+
+void POA_PortableServer::ServantActivator::_is_a_skel (
+                                                       CORBA::ServerRequest &_tao_server_request,
+                                                       void * _tao_object_reference,
+                                                       void * /*context*/,
+                                                       CORBA::Environment &ACE_TRY_ENV
+                                                       )
+{
+  //  CORBA::Environment _tao_skel_environment;
+  static const TAO_Param_Data_Skel PortableServer_ServantActivator_is_a_paramdata [] =
+  {
+    {CORBA::_tc_boolean, 0, 0},
+    {CORBA::_tc_string, CORBA::ARG_IN, 0}
+  };
+  static const TAO_Call_Data_Skel PortableServer_ServantActivator_is_a_calldata =
+  {"_is_a", 1, 2, PortableServer_ServantActivator_is_a_paramdata};
+  POA_PortableServer::ServantActivator_ptr  _tao_impl = (POA_PortableServer::ServantActivator_ptr) _tao_object_reference;
+  CORBA::Boolean _tao_retval;
+  char *_tao_value = 0;
+  _tao_server_request.demarshal (
+                                 ACE_TRY_ENV,
+                                 &PortableServer_ServantActivator_is_a_calldata,
+                                 &_tao_retval,
+                                 &_tao_value
+                                 );
+  if (ACE_TRY_ENV.exception () != 0) return;
+  _tao_retval = _tao_impl->_is_a (_tao_value, ACE_TRY_ENV);
+  _tao_server_request.marshal (
+                               ACE_TRY_ENV,
+                               //                               _tao_skel_environment,
+                               &PortableServer_ServantActivator_is_a_calldata,
+                               &_tao_retval,
+                               &_tao_value
+                               );
+  CORBA::string_free (_tao_value);
 }
 
 CORBA::Boolean POA_PortableServer::ServantActivator::_is_a (
@@ -2368,7 +2509,7 @@ void POA_PortableServer::ServantActivator::_dispatch (CORBA::ServerRequest &req,
   if (this->_find (opname, skel) == -1)
   {
     ACE_ERROR ((LM_ERROR, "Bad operation <%s>\n", opname));
-    ACE_THROW (CORBA_BAD_OPERATION ());
+    ACE_THROW (CORBA_BAD_OPERATION (CORBA::COMPLETED_NO));
   }
   else
     skel (req, this, context, ACE_TRY_ENV);
@@ -2448,9 +2589,55 @@ POA_PortableServer::ServantActivator::_this (CORBA_Environment &TAO_IN_ENV)
   return new POA_PortableServer::_tao_collocated_ServantActivator (this, stub);
 }
 
+static const TAO_operation_db_entry PortableServer_ServantLocator_operations [] = {
+  {"_is_a", &POA_PortableServer::ServantLocator::_is_a_skel}
+};
+
+static const CORBA::Long _tao_PortableServer_ServantLocator_optable_size = sizeof (ACE_Hash_Map_Entry<const char *, TAO_Skeleton>) * (2);
+static char _tao_PortableServer_ServantLocator_optable_pool [_tao_PortableServer_ServantLocator_optable_size];
+static ACE_Static_Allocator_Base _tao_PortableServer_ServantLocator_allocator (_tao_PortableServer_ServantLocator_optable_pool, _tao_PortableServer_ServantLocator_optable_size);
+static TAO_Dynamic_Hash_OpTable tao_PortableServer_ServantLocator_optable (PortableServer_ServantLocator_operations, 1, 1, &_tao_PortableServer_ServantLocator_allocator);
+
 // skeleton constructor
 POA_PortableServer::ServantLocator::ServantLocator (void)
 {
+  this->optable_ = &tao_PortableServer_ServantLocator_optable;
+}
+
+void POA_PortableServer::ServantLocator::_is_a_skel (
+                                                     CORBA::ServerRequest &_tao_server_request,
+                                                     void * _tao_object_reference,
+                                                     void * /*context*/,
+                                                     CORBA::Environment &ACE_TRY_ENV
+                                                     )
+{
+  //  CORBA::Environment _tao_skel_environment;
+  static const TAO_Param_Data_Skel PortableServer_ServantLocator_is_a_paramdata [] =
+  {
+    {CORBA::_tc_boolean, 0, 0},
+    {CORBA::_tc_string, CORBA::ARG_IN, 0}
+  };
+  static const TAO_Call_Data_Skel PortableServer_ServantLocator_is_a_calldata =
+  {"_is_a", 1, 2, PortableServer_ServantLocator_is_a_paramdata};
+  POA_PortableServer::ServantLocator_ptr  _tao_impl = (POA_PortableServer::ServantLocator_ptr) _tao_object_reference;
+  CORBA::Boolean _tao_retval;
+  char *_tao_value = 0;
+  _tao_server_request.demarshal (
+                                 ACE_TRY_ENV,
+                                 &PortableServer_ServantLocator_is_a_calldata,
+                                 &_tao_retval,
+                                 &_tao_value
+                                 );
+  if (ACE_TRY_ENV.exception () != 0) return;
+  _tao_retval = _tao_impl->_is_a (_tao_value, ACE_TRY_ENV);
+  _tao_server_request.marshal (
+                               ACE_TRY_ENV,
+                               //                               _tao_skel_environment,
+                               &PortableServer_ServantLocator_is_a_calldata,
+                               &_tao_retval,
+                               &_tao_value
+                               );
+  CORBA::string_free (_tao_value);
 }
 
 CORBA::Boolean POA_PortableServer::ServantLocator::_is_a (
@@ -2488,7 +2675,7 @@ void POA_PortableServer::ServantLocator::_dispatch (CORBA::ServerRequest &req, v
   if (this->_find (opname, skel) == -1)
   {
     ACE_ERROR ((LM_ERROR, "Bad operation <%s>\n", opname));
-    ACE_THROW (CORBA_BAD_OPERATION ());
+    ACE_THROW (CORBA_BAD_OPERATION (CORBA::COMPLETED_NO));
   }
   else
     skel (req, this, context, ACE_TRY_ENV);
@@ -2574,9 +2761,55 @@ POA_PortableServer::ServantLocator::_this (CORBA_Environment &TAO_IN_ENV)
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
+static const TAO_operation_db_entry PortableServer_POA_operations [] = {
+  {"_is_a", &POA_PortableServer::POA::_is_a_skel}
+};
+
+static const CORBA::Long _tao_PortableServer_POA_optable_size = sizeof (ACE_Hash_Map_Entry<const char *, TAO_Skeleton>) * (2);
+static char _tao_PortableServer_POA_optable_pool [_tao_PortableServer_POA_optable_size];
+static ACE_Static_Allocator_Base _tao_PortableServer_POA_allocator (_tao_PortableServer_POA_optable_pool, _tao_PortableServer_POA_optable_size);
+static TAO_Dynamic_Hash_OpTable tao_PortableServer_POA_optable (PortableServer_POA_operations, 1, 1, &_tao_PortableServer_POA_allocator);
+
 // skeleton constructor
 POA_PortableServer::POA::POA (void)
 {
+  this->optable_ = &tao_PortableServer_POA_optable;
+}
+
+void POA_PortableServer::POA::_is_a_skel (
+                                          CORBA::ServerRequest &_tao_server_request,
+                                          void * _tao_object_reference,
+                                          void * /*context*/,
+                                          CORBA::Environment &ACE_TRY_ENV
+                                          )
+{
+  //  CORBA::Environment _tao_skel_environment;
+  static const TAO_Param_Data_Skel PortableServer_POA_is_a_paramdata [] =
+  {
+    {CORBA::_tc_boolean, 0, 0},
+    {CORBA::_tc_string, CORBA::ARG_IN, 0}
+  };
+  static const TAO_Call_Data_Skel PortableServer_POA_is_a_calldata =
+  {"_is_a", 1, 2, PortableServer_POA_is_a_paramdata};
+  POA_PortableServer::POA_ptr  _tao_impl = (POA_PortableServer::POA_ptr) _tao_object_reference;
+  CORBA::Boolean _tao_retval;
+  char *_tao_value = 0;
+  _tao_server_request.demarshal (
+                                 ACE_TRY_ENV,
+                                 &PortableServer_POA_is_a_calldata,
+                                 &_tao_retval,
+                                 &_tao_value
+                                 );
+  if (ACE_TRY_ENV.exception () != 0) return;
+  _tao_retval = _tao_impl->_is_a (_tao_value, ACE_TRY_ENV);
+  _tao_server_request.marshal (
+                               ACE_TRY_ENV,
+                               //                               _tao_skel_environment,
+                               &PortableServer_POA_is_a_calldata,
+                               &_tao_retval,
+                               &_tao_value
+                               );
+  CORBA::string_free (_tao_value);
 }
 
 CORBA::Boolean POA_PortableServer::POA::_is_a (
@@ -2611,7 +2844,7 @@ void POA_PortableServer::POA::_dispatch (CORBA::ServerRequest &req, void *contex
   if (this->_find (opname, skel) == -1)
   {
     ACE_ERROR ((LM_ERROR, "Bad operation <%s>\n", opname));
-    ACE_THROW (CORBA_BAD_OPERATION ());
+    ACE_THROW (CORBA_BAD_OPERATION (CORBA::COMPLETED_NO));
   }
   else
     skel (req, this, context, ACE_TRY_ENV);
@@ -2994,9 +3227,164 @@ POA_PortableServer::POA::_this (CORBA_Environment &TAO_IN_ENV)
   return new POA_PortableServer::_tao_collocated_POA (this, stub);
 }
 
+class TAO_PortableServer_Current_Perfect_Hash_OpTable : public TAO_Perfect_Hash_OpTable
+{
+private:
+  unsigned int hash (const char *str, unsigned int len);
+public:
+ const TAO_operation_db_entry * lookup (const char *str, unsigned int len);
+};
+/* starting time is 0:12:47 */
+/* C++ code produced by gperf version 2.7 (GNU C++ version) */
+/* Command-line: gperf -m -M -J -c -C -D -E -T -f 0 -a -o -t -p -K opname_ -L C++ -Z TAO_PortableServer_Current_Perfect_Hash_OpTable -N lookup  */
+unsigned int
+TAO_PortableServer_Current_Perfect_Hash_OpTable::hash (const char *str, unsigned int len)
+{
+  static const unsigned char asso_values[] =
+    {
+     15, 15, 15, 15, 15, 15, 15, 15, 15, 15,
+     15, 15, 15, 15, 15, 15, 15, 15, 15, 15,
+     15, 15, 15, 15, 15, 15, 15, 15, 15, 15,
+     15, 15, 15, 15, 15, 15, 15, 15, 15, 15,
+     15, 15, 15, 15, 15, 15, 15, 15, 15, 15,
+     15, 15, 15, 15, 15, 15, 15, 15, 15, 15,
+     15, 15, 15, 15, 15,  0, 15, 15, 15, 15,
+     15, 15, 15, 15, 15, 15, 15, 15, 15, 15,
+     15, 15, 15, 15, 15, 15, 15, 15, 15, 15,
+     15, 15, 15, 15, 15,  0, 15,  0, 15, 15,
+      1, 15, 15,  0, 15, 15, 15, 15, 15, 15,
+     15, 15, 15, 15, 15, 15,  0, 15, 15, 15,
+     15, 15, 15, 15, 15, 15, 15, 15,
+    };
+  return len + asso_values[str[len - 1]] + asso_values[str[0]];
+}
+
+const class TAO_operation_db_entry *
+TAO_PortableServer_Current_Perfect_Hash_OpTable::lookup (const char *str, unsigned int len)
+{
+  enum
+    {
+      TOTAL_KEYWORDS = 4,
+      MIN_WORD_LENGTH = 5,
+      MAX_WORD_LENGTH = 13,
+      MIN_HASH_VALUE = 5,
+      MAX_HASH_VALUE = 14,
+      HASH_VALUE_RANGE = 10,
+      DUPLICATES = 0
+    };
+
+  static const class TAO_operation_db_entry  wordlist[] =
+    {
+      {"",}, {"",}, {"",}, {"",}, {"",},
+      {"_is_a",  &POA_PortableServer::Current::_is_a_skel},
+      {"",},
+      {"get_POA", 	&POA_PortableServer::Current::get_POA_skel},
+      {"",}, {"",}, {"",}, {"",}, {"",},
+      {"_non_existent",  &POA_PortableServer::Current::_non_existent_skel},
+      {"get_object_id", 	&POA_PortableServer::Current::get_object_id_skel},
+    };
+
+  if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
+    {
+      unsigned int key = hash (str, len);
+
+      if (key <= MAX_HASH_VALUE && key >= MIN_HASH_VALUE)
+        {
+          const char *s = wordlist[key].opname_;
+
+          if (*str == *s && !strncmp (str + 1, s + 1, len - 1))
+            return &wordlist[key];
+        }
+    }
+  return 0;
+}
+/* ending time is 0:12:47 */
+TAO_PortableServer_Current_Perfect_Hash_OpTable tao_PortableServer_Current_optable;
+
 // skeleton constructor
 POA_PortableServer::Current::Current (void)
 {
+  this->optable_ = &tao_PortableServer_Current_optable;
+}
+
+void POA_PortableServer::Current::get_POA_skel (
+                                                CORBA::ServerRequest &_tao_server_request,
+                                                void *_tao_object_reference,
+                                                void * /* context */,
+                                                CORBA::Environment &ACE_TRY_ENV
+                                                )
+{
+  POA_PortableServer::Current *_tao_impl = (POA_PortableServer::Current *)_tao_object_reference;
+  PortableServer::POA_var _tao_retval;
+  _tao_retval = _tao_impl->get_POA (
+    ACE_TRY_ENV
+  );
+  ACE_CHECK;
+  _tao_server_request.init_reply (ACE_TRY_ENV);
+  ACE_CHECK;
+  TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
+  if (!(
+    (_tao_out << _tao_retval.in ())
+  ))
+    ACE_THROW (CORBA::MARSHAL (CORBA::COMPLETED_NO) );
+
+}
+
+void POA_PortableServer::Current::get_object_id_skel (
+                                                      CORBA::ServerRequest &_tao_server_request,
+                                                      void *_tao_object_reference,
+                                                      void * /* context */,
+                                                      CORBA::Environment &ACE_TRY_ENV
+                                                      )
+{
+  POA_PortableServer::Current *_tao_impl = (POA_PortableServer::Current *)_tao_object_reference;
+  PortableServer::ObjectId_var _tao_retval;
+  _tao_retval = _tao_impl->get_object_id (
+    ACE_TRY_ENV
+  );
+  ACE_CHECK;
+  _tao_server_request.init_reply (ACE_TRY_ENV);
+  ACE_CHECK;
+  TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
+  if (!(
+    (_tao_out << _tao_retval.in ())
+  ))
+    ACE_THROW (CORBA::MARSHAL (CORBA::COMPLETED_NO) );
+
+}
+
+void POA_PortableServer::Current::_is_a_skel (
+                                              CORBA::ServerRequest &_tao_server_request,
+                                              void * _tao_object_reference,
+                                              void * /*context*/,
+                                              CORBA::Environment &ACE_TRY_ENV
+                                              )
+{
+  static const TAO_Param_Data_Skel PortableServer_Current_is_a_paramdata [] =
+  {
+    {CORBA::_tc_boolean, 0, 0},
+    {CORBA::_tc_string, CORBA::ARG_IN, 0}
+  };
+  static const TAO_Call_Data_Skel PortableServer_Current_is_a_calldata =
+  {"_is_a", 1, 2, PortableServer_Current_is_a_paramdata};
+  POA_PortableServer::Current_ptr  _tao_impl = (POA_PortableServer::Current_ptr) _tao_object_reference;
+  CORBA::Boolean _tao_retval;
+  CORBA::String_var _tao_value;
+  _tao_server_request.demarshal (
+    ACE_TRY_ENV,
+    &PortableServer_Current_is_a_calldata,
+    &_tao_retval,
+    &_tao_value.inout ()
+  );
+  ACE_CHECK;
+  _tao_retval = _tao_impl->_is_a (_tao_value.in (), ACE_TRY_ENV);
+  ACE_CHECK;
+  _tao_server_request.marshal (
+    ACE_TRY_ENV,
+    &PortableServer_Current_is_a_calldata,
+    &_tao_retval,
+    &_tao_value.inout ()
+  );
 }
 
 CORBA::Boolean POA_PortableServer::Current::_is_a (
@@ -3011,6 +3399,27 @@ CORBA::Boolean POA_PortableServer::Current::_is_a (
     return 1;
   else
     return 0;
+}
+
+void POA_PortableServer::Current::_non_existent_skel (
+    CORBA::ServerRequest &_tao_server_request,
+    void * /* _tao_object_reference */ ,
+    void * /*context*/,
+    CORBA::Environment &ACE_TRY_ENV
+  )
+{
+  static const TAO_Param_Data_Skel PortableServer_Current_non_existent_paramdata [] =
+  {
+    {CORBA::_tc_boolean, 0, 0}
+  };
+  static const TAO_Call_Data_Skel PortableServer_Current_non_existent_calldata =
+  {"_non_existent", 1, 1, PortableServer_Current_non_existent_paramdata};
+  CORBA::Boolean _tao_retval = 0;
+  _tao_server_request.marshal (
+    ACE_TRY_ENV,
+    &PortableServer_Current_non_existent_calldata,
+    &_tao_retval
+  );
 }
 
 void* POA_PortableServer::Current::_downcast (
@@ -3034,7 +3443,7 @@ void POA_PortableServer::Current::_dispatch (CORBA::ServerRequest &req, void *co
   if (this->_find (opname, skel) == -1)
   {
     ACE_ERROR ((LM_ERROR, "Bad operation <%s>\n", opname));
-    ACE_THROW (CORBA_BAD_OPERATION ());
+    ACE_THROW (CORBA_BAD_OPERATION (CORBA::COMPLETED_NO));
   }
   else
     skel (req, this, context, ACE_TRY_ENV);

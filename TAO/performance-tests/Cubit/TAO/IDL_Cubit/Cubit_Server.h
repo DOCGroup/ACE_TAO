@@ -71,9 +71,6 @@ private:
   Cubit_Factory_i *factory_impl_;
   // Implementation object of the cubit factory.
 
-  CORBA::String_var factory_id_;
-  // Id of the factory.
-
   int argc_;
   // Number of commandline arguments.
 

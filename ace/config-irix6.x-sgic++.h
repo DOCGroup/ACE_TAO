@@ -13,6 +13,7 @@
 // Add threading support
 
 #define ACE_HAS_IRIX62_THREADS
+#define ACE_HAS_PTHREAD_SIGMASK
 #define ACE_HAS_UALARM
 
 // Needed for the threading stuff?
@@ -31,6 +32,9 @@
 // IRIX 6.2 supports a variant of POSIX Pthreads, supposedly POSIX 1c
 #define ACE_HAS_PTHREADS
 #define ACE_HAS_PTHREADS_STD
+
+// Platforms has pthread_thr_sigsetmask
+#define ACE_HAS_PTHREAD_SIGMASK
 
 // Compiler/platform has thread-specific storage
 #define ACE_HAS_THREAD_SPECIFIC_STORAGE

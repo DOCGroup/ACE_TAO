@@ -15,21 +15,17 @@ ACE_ALLOC_HOOK_DEFINE(ACE_ATM_Addr)
 
 #if defined (ACE_HAS_FORE_ATM_XTI)
 #define BHLI_MAGIC "FORE_ATM"
+
 // This is line rate in cells/s for an OC-3 MM interface.
 const long ACE_ATM_Addr::LINE_RATE = 353207;
 const int ACE_ATM_Addr::OPT_FLAGS_CPID = 0x1;
 const int ACE_ATM_Addr::OPT_FLAGS_PMP = 0x2;
-const int ACE_ATM_Addr::DEFAULT_SELECTOR = 0x99;
-#else
-const long ACE_ATM_Addr::LINE_RATE = 0L;
-const int ACE_ATM_Addr::OPT_FLAGS_CPID = 0;
-const int ACE_ATM_Addr::OPT_FLAGS_PMP = 0;
-const int ACE_ATM_Addr::DEFAULT_SELECTOR = 0x0;
+const int ACE_ATM_Addr::SELECTOR = 0x99;
 #endif /* ACE_HAS_FORE_ATM_XTI */
 
 // Default constructor
 
-ACE_ATM_Addr::ACE_ATM_Addr (unsigned char selector)
+ACE_ATM_Addr::ACE_ATM_Addr (void)
 #if defined (ACE_HAS_FORE_ATM_XTI)
   : ACE_Addr (AF_ATM,
 #else
@@ -41,34 +37,31 @@ ACE_ATM_Addr::ACE_ATM_Addr (unsigned char selector)
   (void) ACE_OS::memset ((void *) &this->atm_addr_,
                          0,
                          sizeof this->atm_addr_);
-  this->init (selector);
+  this->init ();
 }
 
 // Copy constructor.
 
-ACE_ATM_Addr::ACE_ATM_Addr (const ACE_ATM_Addr &sap,
-                            unsigned char selector)
+ACE_ATM_Addr::ACE_ATM_Addr (const ACE_ATM_Addr &sap)
 {
   ACE_TRACE ("ACE_ATM_Addr::ACE_ATM_Addr");
-  this->set (sap, selector);
+  this->set (sap);
 }
 
-ACE_ATM_Addr::ACE_ATM_Addr (const ATMSAPAddress *sap,
-                            unsigned char selector)
+ACE_ATM_Addr::ACE_ATM_Addr (const ATMSAPAddress *sap)
 {
   ACE_TRACE ("ACE_ATM_Addr::ACE_ATM_Addr");
-  this->set (sap, selector);
+  this->set (sap);
 }
 
-ACE_ATM_Addr::ACE_ATM_Addr (const ASYS_TCHAR sap[],
-                            unsigned char selector)
+ACE_ATM_Addr::ACE_ATM_Addr (const ASYS_TCHAR sap[])
 {
   ACE_TRACE ("ACE_ATM_Addr::ACE_ATM_Addr");
-  this->set (sap, selector);
+  this->set (sap);
 }
 
 void
-ACE_ATM_Addr::init (unsigned char selector)
+ACE_ATM_Addr::init (void)
 {
 #if defined (ACE_HAS_FORE_ATM_XTI)
   // Note: this approach may be FORE implementation-specific.  When we
@@ -84,7 +77,7 @@ ACE_ATM_Addr::init (unsigned char selector)
 
   atm_addr_.sap.t_atm_sap_addr.address_format = (u_int8_t) T_ATM_ENDSYS_ADDR;
   atm_addr_.sap.t_atm_sap_addr.address_length = ATMNSAP_ADDR_LEN;
-  atm_addr_.sap.t_atm_sap_addr.address[ATMNSAP_ADDR_LEN - 1] = selector;
+  atm_addr_.sap.t_atm_sap_addr.address[ATMNSAP_ADDR_LEN - 1] = SELECTOR;
 
   atm_addr_.sap.t_atm_sap_layer2.SVE_tag = (int8_t) T_ATM_ABSENT;
   atm_addr_.sap.t_atm_sap_layer3.SVE_tag = (int8_t) T_ATM_ABSENT;
@@ -96,17 +89,15 @@ ACE_ATM_Addr::init (unsigned char selector)
                   BHLI_MAGIC,
                   sizeof atm_addr_.sap.t_atm_sap_appl.ID);
 #else
-  ACE_UNUSED_ARG (selector);
 #endif /* ACE_HAS_FORE_ATM_XTI */
 }
 
 int
-ACE_ATM_Addr::set (const ACE_ATM_Addr &sap,
-                   unsigned char selector)
+ACE_ATM_Addr::set (const ACE_ATM_Addr &sap)
 {
   ACE_TRACE ("ACE_ATM_Addr::set");
 
-  this->init (selector);
+  this->init ();
 
   this->ACE_Addr::base_set (sap.get_type (),
                             sap.get_size ());
@@ -122,12 +113,11 @@ ACE_ATM_Addr::set (const ACE_ATM_Addr &sap,
 }
 
 int
-ACE_ATM_Addr::set (const ATMSAPAddress *sap,
-                   unsigned char selector)
+ACE_ATM_Addr::set (const ATMSAPAddress *sap)
 {
   ACE_TRACE ("ACE_ATM_Addr::set");
 
-  this->init (selector);
+  this->init ();
 
 #if defined (ACE_HAS_FORE_ATM_XTI)
   this->ACE_Addr::base_set (AF_ATM,
@@ -143,12 +133,11 @@ ACE_ATM_Addr::set (const ATMSAPAddress *sap,
 }
 
 int
-ACE_ATM_Addr::set (const ASYS_TCHAR address[],
-                   unsigned char selector)
+ACE_ATM_Addr::set (const ASYS_TCHAR address[])
 {
   ACE_TRACE ("ACE_ATM_Addr::set");
 
-  this->init (selector);
+  this->init ();
 
 #if defined (ACE_HAS_FORE_ATM_XTI)
   atm_addr_.sap.t_atm_sap_addr.SVE_tag_addr =

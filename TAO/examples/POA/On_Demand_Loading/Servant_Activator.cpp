@@ -33,7 +33,7 @@ ServantActivator_i::ServantActivator_i (CORBA::ORB_ptr orb)
 PortableServer::Servant
 ServantActivator_i::incarnate (const PortableServer::ObjectId &oid,
                                PortableServer::POA_ptr poa,
-                               CORBA::Environment &ACE_TRY_ENV)
+                               CORBA::Environment &env)
 {
   // Convert ObjectId to String.
    CORBA::String_var s =
@@ -47,8 +47,9 @@ ServantActivator_i::incarnate (const PortableServer::ObjectId &oid,
   if (servant != 0)
     return servant;
   else
-    ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
-                      0);
+    TAO_THROW_ENV_RETURN (CORBA::OBJECT_NOT_EXIST (CORBA::COMPLETED_NO),
+                          env,
+                          0);
 }
 
 // This is the method invoked when the object is deactivated or the
