@@ -1,3 +1,9 @@
+Fri Apr 28 20:56:43 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/ImplRepoC.h:
+          Sun/CC 5.0 was not compiling because of a missing include, beats
+          me why it needs it and all the other platforms don't.
+
 Fri Apr 28 20:09:34 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * Modified Messaging.pidl, Pollable.pidl and TAO.pidl to use local
