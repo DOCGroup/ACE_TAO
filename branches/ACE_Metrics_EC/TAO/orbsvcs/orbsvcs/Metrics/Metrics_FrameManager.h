@@ -17,17 +17,16 @@
 
 #include "Metrics_Utils.h"
 
-#if defined (__ACE_INLINE__)
-#include "Metrics_FrameManager.i"
-#endif /* __ACE_INLINE__ */
-
 #include "Metrics_FrameManager_T.h"
 
-typedef TAO_Metrics_FrameManager<ACE_SYNCH_MUTEX>
-TAO_METRICS_FRAME_MGR_TYPE;
+typedef TAO_Metrics_FrameManager<ACE_SYNCH_MUTEX> TAO_METRICS_FRAME_MGR_TYPE;
 
 typedef ACE_Singleton<TAO_METRICS_FRAME_MGR_TYPE, ACE_SYNCH_MUTEX>
 TAO_METRICS_FRAME_MGR_SINGLETON;
+
+#if defined (__ACE_INLINE__)
+#include "Metrics_FrameManager.i"
+#endif /* __ACE_INLINE__ */
 
 
 #endif /* METRICS_FRAME_MANAGER_H */

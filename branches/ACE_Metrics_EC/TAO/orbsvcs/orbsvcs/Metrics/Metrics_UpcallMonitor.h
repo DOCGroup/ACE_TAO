@@ -186,10 +186,6 @@ private:
 };
 
 
-#if defined (__ACE_INLINE__)
-#include "Metrics_UpcallMonitor.i"
-#endif /* __ACE_INLINE__ */
-
 class TAO_Metrics_Export TAO_Metrics_ReportingUpcallMonitor
   : public POA_Metrics::ReportingQoSMonitor
 {
@@ -291,6 +287,9 @@ private:
   // The monitor we're wrapping.
 };
 
+#if defined (__ACE_INLINE__)
+#include "Metrics_UpcallMonitor.i"
+#endif /* __ACE_INLINE__ */
 
 #include "orbsvcs/Metrics/Metrics_UpcallMonitor_T.h"
 

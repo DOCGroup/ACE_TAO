@@ -162,7 +162,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Metrics"=".\Metrics\Metrics.dsp" - Package Owner=<4>
+Project: "Metrics_Static"=".\Metrics_Static.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -170,6 +170,9 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name RTSched_Static
+    End Project Dependency
 }}}
 
 ###############################################################################

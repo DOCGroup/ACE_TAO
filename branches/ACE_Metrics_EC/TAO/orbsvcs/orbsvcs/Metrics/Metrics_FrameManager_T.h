@@ -261,6 +261,10 @@ protected:
   // Lock for synchronizing access to the map.
 };
 
+#if defined (__ACE_INLINE__)
+#include "Metrics_FrameManager_T.i"
+#endif /* __ACE_INLINE__ */
+
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "Metrics_FrameManager_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
@@ -268,10 +272,6 @@ protected:
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
 #pragma implementation ("Metrics_FrameManager_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
-
-#if defined (__ACE_INLINE__)
-#include "Metrics_FrameManager_T.i"
-#endif /* __ACE_INLINE__ */
 
 #endif /* METRICS_FRAME_MANAGER_T_H */
 
