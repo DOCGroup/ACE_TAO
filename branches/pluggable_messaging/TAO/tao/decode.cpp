@@ -1,6 +1,7 @@
 // $Id$
 
 
+
 // ============================================================================
 //
 // = LIBRARY
@@ -39,7 +40,6 @@
 #include "tao/debug.h"
 
 ACE_RCSID(tao, decode, "$Id$")
-
 
 // The decoder is exactly the reverse of the encoder, except that:
 //

@@ -15,7 +15,6 @@
 
 ACE_RCSID(tao, UIOP_Profile, "$Id$")
 
-
 #if !defined (__ACE_INLINE__)
 # include "tao/UIOP_Profile.i"
 #endif /* __ACE_INLINE__ */
@@ -299,19 +298,24 @@ TAO_UIOP_Profile::decode (TAO_InputCDR& cdr)
   // profiles whose versions we don't understand.
   // FIXME:  Version question again,  what do we do about them for this
   //         protocol?
+  CORBA::Octet major, minor;
 
-  if (!(cdr.read_octet (this->version_.major)
-        && this->version_.major == TAO_DEF_GIOP_MAJOR
-        && cdr.read_octet (this->version_.minor)
-        && this->version_.minor <= TAO_DEF_GIOP_MINOR))
+  if (!(cdr.read_octet (major)
+        && (major == TAO_DEF_GIOP_MAJOR)
+        && cdr.read_octet (minor)))
   {
     ACE_DEBUG ((LM_DEBUG,
                 "detected new v%d.%d UIOP profile\n",
-                this->version_.major,
-                this->version_.minor));
+                major,
+                minor));
     return -1;
   }
 
+  this->version_.major = major;
+
+  if (minor <= TAO_DEF_GIOP_MINOR)
+    this->version_.minor = minor;
+  
   char *rendezvous = 0;
 
   // Get rendezvous_point

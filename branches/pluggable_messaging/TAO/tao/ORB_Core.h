@@ -57,7 +57,8 @@ class TAO_Priority_Mapping;
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
-class TAO_None_Sync_Strategy;
+class TAO_Eager_Buffering_Sync_Strategy;
+class TAO_Delayed_Buffering_Sync_Strategy;
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
@@ -100,11 +101,13 @@ public:
   // cache will be separated from the connectors and it will be a
   // (potentially) TSS object.
 
-  int is_server_thread_;
-  // Is this thread a server for this ORB?
+  int event_loop_thread_;
+  // Counter for how (nested) calls this thread has made to run the
+  // event loop.
 
-  int is_leader_thread_;
-  // Is this thread a leader for this ORB?
+  int client_leader_thread_;
+  // Counter for how many times this thread has become a client
+  // leader.
 
   ACE_SYNCH_CONDITION* leader_follower_condition_variable_;
   // Condition variable for the leader follower model.
@@ -333,8 +336,9 @@ public:
 
   TAO_Buffering_Constraint_Policy *default_buffering_constraint (void) const;
 
-  TAO_None_Sync_Strategy &none_sync_strategy (void);
-  // This strategy will buffer messages.
+  // = This strategy will buffer messages.
+  TAO_Eager_Buffering_Sync_Strategy &eager_buffering_sync_strategy (void);
+  TAO_Delayed_Buffering_Sync_Strategy &delayed_buffering_sync_strategy (void);
 
   TAO_RelativeRoundtripTimeoutPolicy *stubless_relative_roundtrip_timeout (void);
   // Access to the RoundtripTimeoutPolicy policy set on the thread or
@@ -368,7 +372,7 @@ public:
   // Get access to the leader_follower class.
 
   int run (ACE_Time_Value *tv,
-           int break_on_timeouts,
+           int perform_work,
            CORBA::Environment &ACE_TRY_ENV);
   // Run the event loop
 
@@ -593,7 +597,10 @@ protected:
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
-  TAO_None_Sync_Strategy *none_sync_strategy_;
+  TAO_Eager_Buffering_Sync_Strategy *eager_buffering_sync_strategy_;
+  // This strategy will buffer messages.
+
+  TAO_Delayed_Buffering_Sync_Strategy *delayed_buffering_sync_strategy_;
   // This strategy will buffer messages.
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */

@@ -61,6 +61,10 @@ class TAO_Export TAO_Transport
   //   The transport object is created in the Service handler
   //   constructor and deleted in the Service Handler's destructor!!
 
+  friend class TAO_Transport_Sync_Strategy;
+  friend class TAO_Eager_Buffering_Sync_Strategy;
+  friend class TAO_Delayed_Buffering_Sync_Strategy;
+
 public:
   TAO_Transport (CORBA::ULong tag,
                  TAO_ORB_Core *orb_core);
@@ -178,6 +182,10 @@ public:
   virtual int idle_after_send (void);
   // Request has been just sent, but the reply is not received. Idle
   // the transport now.
+
+  virtual int idle_after_reply (void);
+  // Request is sent and the reply is received. Idle the transport
+  // now.
 
   virtual ACE_SYNCH_CONDITION *leader_follower_condition_variable (void);
   // Return the TSS leader follower condition variable used in the

@@ -52,7 +52,7 @@ public:
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
-class TAO_Export TAO_None_Sync_Strategy : public TAO_Sync_Strategy
+class TAO_Export TAO_Eager_Buffering_Sync_Strategy : public TAO_Sync_Strategy
 {
 public:
   ssize_t send (TAO_Transport &transport,
@@ -68,6 +68,15 @@ public:
                     const TAO::BufferingConstraint &buffering_constraint);
 
   ACE_Time_Value time_conversion (const TimeBase::TimeT &time);
+};
+
+class TAO_Export TAO_Delayed_Buffering_Sync_Strategy : public TAO_Eager_Buffering_Sync_Strategy
+{
+public:
+  ssize_t send (TAO_Transport &transport,
+                TAO_Stub &stub,
+                const ACE_Message_Block *message_block,
+                const ACE_Time_Value *max_wait_time);
 };
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */

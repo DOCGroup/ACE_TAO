@@ -2,6 +2,7 @@
 // $Id$
 
 
+
 #include "tao/UIOP_Transport.h"
 
 #if TAO_HAS_UIOP == 1
@@ -84,7 +85,7 @@ TAO_UIOP_Transport::handler (void)
 int
 TAO_UIOP_Transport::idle (void)
 {
-  return this->handler_->idle();
+  return this->handler_->idle ();
 }
 
 void

@@ -110,7 +110,7 @@ TAO_POA_Manager::deactivate_i (CORBA::Boolean etherealize_objects,
   // of ORB::shutdown.
 }
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_POA == 0)
 
 void
 TAO_POA_Manager::hold_requests_i (CORBA::Boolean wait_for_completion,
@@ -220,7 +220,7 @@ TAO_POA_Manager::discard_requests_i (CORBA::Boolean wait_for_completion,
     }
 }
 
-#endif /* TAO_HAS_MINIMUM_CORBA */
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
 int
 TAO_POA_Manager::remove_poa (TAO_POA *poa)

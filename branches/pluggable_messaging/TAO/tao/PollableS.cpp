@@ -1,6 +1,7 @@
 /* -*- C++ -*- */
 //
 // $Id$
+
 //
 // ================================================================
 //
@@ -29,6 +30,7 @@
 #endif /* !defined INLINE */
 
 ACE_RCSID(tao, PollableS, "$Id$")
+
 
 class TAO_CORBA_Pollable_Perfect_Hash_OpTable : public TAO_Perfect_Hash_OpTable
 {

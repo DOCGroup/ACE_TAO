@@ -103,8 +103,10 @@ TAO_GIOP_Twoway_Asynch_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
   if (retval != TAO_INVOKE_OK)
     return retval;
 
-  // We do not wait for the reply. Let us return.
+  // Everything executed ok; lets remember the transport for later.
+  this->rd_->transport (this->transport_);
 
+  // We do not wait for the reply. Let us return.
   return TAO_INVOKE_OK;
 }
 
@@ -168,8 +170,10 @@ TAO_GIOP_DII_Deferred_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
   if (retval != TAO_INVOKE_OK)
     return retval;
 
-  // We do not wait for the reply. Let us return.
+  // Everything executed ok; lets remember the transport for later.
+  this->rd_->transport (this->transport_);
 
+  // We do not wait for the reply. Let us return.
   return TAO_INVOKE_OK;
 }
 

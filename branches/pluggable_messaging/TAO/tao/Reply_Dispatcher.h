@@ -1,7 +1,6 @@
 // This may look like C, but it's really -*- C++ -*-
 // $Id$
 
-
 // ============================================================================
 //
 // = LIBRARY
@@ -183,6 +182,9 @@ public:
   virtual TAO_GIOP_Message_State *message_state (void);
   // Return the message state.
 
+  void transport (TAO_Transport *t);
+  // Sets the transport for this invocation.
+
 protected:
   IOP::ServiceContextList reply_service_info_;
   // The service context list
@@ -208,6 +210,9 @@ private:
 
   Messaging::ReplyHandler_ptr reply_handler_;
   // Reply Handler passed in the Asynchronous Invocation.
+
+  TAO_Transport *transport_;
+  // This invocation is using this transport, may change...
 };
 
 #  endif /* TAO_HAS_AMI_CALLBACK == 1 || TAO_HAS_AMI_POLLER == 1 */
@@ -252,6 +257,9 @@ public:
   virtual TAO_GIOP_Message_State *message_state (void);
   // Return the message state.
 
+  void transport (TAO_Transport *t);
+  // Sets the transport for this invocation.
+
 protected:
   IOP::ServiceContextList reply_service_info_;
   // The service context list
@@ -274,6 +282,9 @@ private:
 
   const CORBA::Request_ptr req_;
   // Where the reply needs to go.
+
+  TAO_Transport *transport_;
+  // This invocation is using this transport, may change...
 };
 
 #endif /* TAO_HAS_MINIMUM_CORBA */

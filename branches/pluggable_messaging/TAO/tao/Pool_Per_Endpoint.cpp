@@ -15,6 +15,7 @@
 
 ACE_RCSID(tao, Pool_Per_Endpoint, "$Id$")
 
+
 TAO_Pool_Per_Endpoint::TAO_Pool_Per_Endpoint (CORBA::ORB_ptr orb,
                                               int policy,
                                               int poolsize,

@@ -4,7 +4,7 @@
 
 #include "tao/RT_Current.h"
 
-#if defined (TAO_HAS_RT_CORBA)
+#if (TAO_HAS_RT_CORBA == 1)
 
 #include "tao/Stub.h"
 #include "tao/ORB_Core.h"
@@ -99,4 +99,4 @@ TAO_RT_Current::the_priority (
     ACE_THROW (CORBA::DATA_CONVERSION (1, CORBA::COMPLETED_NO));
 }
 
-#endif /* TAO_HAS_RT_CORBA */
+#endif /* TAO_HAS_RT_CORBA == 1 */

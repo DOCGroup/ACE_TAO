@@ -14,6 +14,7 @@
 
 ACE_RCSID(tao, Connector_Registry, "$Id$")
 
+
 TAO_Connector_Registry::TAO_Connector_Registry (void)
   : connectors_ (0),
     size_ (0)

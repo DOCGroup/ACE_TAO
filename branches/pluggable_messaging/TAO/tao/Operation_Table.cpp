@@ -70,8 +70,8 @@ TAO_Dynamic_Hash_OpTable::TAO_Dynamic_Hash_OpTable (const TAO_operation_db_entry
     // @@ (ASG): what happens if bind fails ???
     if (this->bind (db[i].opname_, db[i].skel_ptr_) == -1)
       ACE_ERROR ((LM_ERROR,
-                  "(%P|%t) %p\n",
-                  "bind failed"));
+                  ASYS_TEXT ("(%P|%t) %p\n"),
+                  ASYS_TEXT ("bind failed")));
 }
 
 TAO_Dynamic_Hash_OpTable::~TAO_Dynamic_Hash_OpTable (void)
@@ -143,7 +143,7 @@ TAO_Linear_Search_OpTable::find (const char *opname,
   const TAO_operation_db_entry *entry = lookup (opname);
   if (entry == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "TAO_Linear_Search_Table:find failed\n"),
+                       ASYS_TEXT ("TAO_Linear_Search_Table:find failed\n")),
                       -1);
 
   // Valid entry. Figure out the skel_ptr.
@@ -247,7 +247,7 @@ TAO_Perfect_Hash_OpTable::find (const char *opname,
                                                 length);
   if (entry == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "TAO_Perfect_Hash_Table:find failed\n"),
+                       ASYS_TEXT ("TAO_Perfect_Hash_Table:find failed\n")),
                       -1);
 
   // Valid entry. Figure out the skel_ptr.
@@ -290,7 +290,7 @@ TAO_Binary_Search_OpTable::find (const char *opname,
 
   if (entry == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "TAO_Binary_Search_Table:find failed\n"),
+                       ASYS_TEXT ("TAO_Binary_Search_Table:find failed\n")),
                       -1);
   // Valid entry. Figure out the skel_ptr.
   skelfunc = entry->skel_ptr_;

@@ -1,5 +1,6 @@
 // $Id$
 
+
 #include "tao/Policy_Manager.h"
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
@@ -16,6 +17,7 @@
 #endif /* ! __ACE_INLINE__ */
 
 ACE_RCSID(tao, Policy_Manager, "$Id$")
+
 
 TAO_Policy_Manager_Impl::~TAO_Policy_Manager_Impl (void)
 {

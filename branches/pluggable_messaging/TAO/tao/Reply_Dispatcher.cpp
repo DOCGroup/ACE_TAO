@@ -1,5 +1,6 @@
 // $Id$
 
+
 #include "tao/Reply_Dispatcher.h"
 #include "tao/ORB_Core.h"
 #include "tao/Leader_Follower.h"
@@ -86,7 +87,7 @@ TAO_Synch_Reply_Dispatcher::dispatch_reply (CORBA::ULong reply_status,
     }
 
   // If condition variable is present, then we are doing leader
-  // follower model. Do all the nessary things.
+  // follower model. Do all the necessary things.
   if (this->leader_follower_condition_variable_ != 0)
     {
       TAO_Leader_Follower& leader_follower =
@@ -142,14 +143,17 @@ TAO_Synch_Reply_Dispatcher::leader_follower_condition_variable (TAO_Transport *t
 // Constructor.
 TAO_Asynch_Reply_Dispatcher::TAO_Asynch_Reply_Dispatcher (const TAO_Reply_Handler_Skeleton &reply_handler_skel,
                                                           Messaging::ReplyHandler_ptr reply_handler_ptr)
-: reply_handler_skel_ (reply_handler_skel),
-  reply_handler_ (reply_handler_ptr)
+  : reply_handler_skel_ (reply_handler_skel),
+    reply_handler_ (reply_handler_ptr),
+    transport_ (0)
 {
 }
 
 // Destructor.
 TAO_Asynch_Reply_Dispatcher::~TAO_Asynch_Reply_Dispatcher (void)
 {
+  if (this->transport_ != 0)
+    this->transport_->idle_after_reply ();
 }
 
 // Dispatch the reply.
@@ -189,7 +193,7 @@ TAO_Asynch_Reply_Dispatcher::dispatch_reply (CORBA::ULong reply_status,
     case TAO_GIOP_SYSTEM_EXCEPTION:
       reply_error = TAO_AMI_REPLY_SYSTEM_EXCEPTION;
       break;
-    default: 
+    default:
     case TAO_GIOP_LOCATION_FORWARD:
       // @@ Michael: Not even the spec mentions this case.
       //             We have to think about this case.
@@ -238,16 +242,17 @@ TAO_Asynch_Reply_Dispatcher::message_state (void)
 #if !defined (TAO_HAS_MINIMUM_CORBA)
 
 // Constructor.
-TAO_DII_Deferred_Reply_Dispatcher::TAO_DII_Deferred_Reply_Dispatcher (
-    const CORBA::Request_ptr req
-  )
-    : req_ (req)
+TAO_DII_Deferred_Reply_Dispatcher::TAO_DII_Deferred_Reply_Dispatcher (const CORBA::Request_ptr req)
+  : req_ (req),
+    transport_ (0)
 {
 }
 
 // Destructor.
 TAO_DII_Deferred_Reply_Dispatcher::~TAO_DII_Deferred_Reply_Dispatcher (void)
 {
+  if (this->transport_ != 0)
+    this->transport_->idle_after_reply ();
 }
 
 // Dispatch the reply.
@@ -307,4 +312,3 @@ TAO_DII_Deferred_Reply_Dispatcher::message_state (void)
 }
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
-

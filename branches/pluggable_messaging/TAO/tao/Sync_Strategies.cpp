@@ -2,6 +2,7 @@
 // $Id$
 
 
+
 #include "tao/Sync_Strategies.h"
 
 #include "tao/Buffering_Constraint_Policy.h"
@@ -30,10 +31,79 @@ TAO_Transport_Sync_Strategy::send (TAO_Transport &transport,
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
 ssize_t
-TAO_None_Sync_Strategy::send (TAO_Transport &transport,
-                              TAO_Stub &stub,
-                              const ACE_Message_Block *message_block,
-                              const ACE_Time_Value *max_wait_time)
+TAO_Delayed_Buffering_Sync_Strategy::send (TAO_Transport &transport,
+                                           TAO_Stub &stub,
+                                           const ACE_Message_Block *mb,
+                                           const ACE_Time_Value *max_wait_time)
+{
+  ACE_Message_Block *message_block =
+    ACE_const_cast (ACE_Message_Block *, mb);
+
+  ssize_t result = 0;
+
+  // Get the message queue from the transport.
+  TAO_Transport_Buffering_Queue &buffering_queue =
+    transport.buffering_queue ();
+
+  // Check if there are messages already in the queue.
+  if (!buffering_queue.is_empty ())
+    return TAO_Eager_Buffering_Sync_Strategy::send (transport,
+                                                  stub,
+                                                  message_block,
+                                                  max_wait_time);
+
+  //
+  // Otherwise there were no queued messages.  We first try to send
+  // the message right away.
+  //
+
+  // Actual network send.
+  result = transport.send (message_block,
+                           max_wait_time);
+
+  // Cannot send.
+  if (result == -1 ||
+      result == 0)
+    {
+      // Timeout.
+      if (errno == ETIME)
+        {
+          // Queue message.
+          return TAO_Eager_Buffering_Sync_Strategy::send (transport,
+                                                        stub,
+                                                        message_block,
+                                                        max_wait_time);
+        }
+
+      // Non-timeout error.
+      return -1;
+    }
+
+  // If successful in sending some or all of the data, reset the
+  // message block appropriately.
+  transport.reset_sent_message (message_block,
+                                result);
+
+  // If there is still data left over, i.e., incomplete send, queue
+  // the rest.
+  if (message_block->total_length () != 0)
+    {
+      return result +
+        TAO_Eager_Buffering_Sync_Strategy::send (transport,
+                                               stub,
+                                               message_block,
+                                               max_wait_time);
+    }
+
+  // Everything was successfully delivered.
+  return result;
+}
+
+ssize_t
+TAO_Eager_Buffering_Sync_Strategy::send (TAO_Transport &transport,
+                                       TAO_Stub &stub,
+                                       const ACE_Message_Block *message_block,
+                                       const ACE_Time_Value *max_wait_time)
 {
   ssize_t result = 0;
 
@@ -47,7 +117,7 @@ TAO_None_Sync_Strategy::send (TAO_Transport &transport,
   // Enqueue current message.
   result = buffering_queue.enqueue_tail (copy);
 
-  // Enqueuing error.
+  // EnBuffering error.
   if (result == -1)
     {
       // Eliminate the copy.
@@ -71,9 +141,9 @@ TAO_None_Sync_Strategy::send (TAO_Transport &transport,
 }
 
 int
-TAO_None_Sync_Strategy::buffering_constraints_reached (TAO_Transport &transport,
-                                                       TAO_Stub &stub,
-                                                       TAO_Transport_Buffering_Queue &buffering_queue)
+TAO_Eager_Buffering_Sync_Strategy::buffering_constraints_reached (TAO_Transport &transport,
+                                                                TAO_Stub &stub,
+                                                                TAO_Transport_Buffering_Queue &buffering_queue)
 {
   TAO_Buffering_Constraint_Policy *buffering_constraint_policy =
     stub.buffering_constraint ();
@@ -104,8 +174,8 @@ TAO_None_Sync_Strategy::buffering_constraints_reached (TAO_Transport &transport,
 }
 
 void
-TAO_None_Sync_Strategy::timer_check (TAO_Transport &transport,
-                                     const TAO::BufferingConstraint &buffering_constraint)
+TAO_Eager_Buffering_Sync_Strategy::timer_check (TAO_Transport &transport,
+                                              const TAO::BufferingConstraint &buffering_constraint)
 {
   if (transport.buffering_timer_id () != 0)
     {
@@ -163,7 +233,7 @@ TAO_None_Sync_Strategy::timer_check (TAO_Transport &transport,
 }
 
 ACE_Time_Value
-TAO_None_Sync_Strategy::time_conversion (const TimeBase::TimeT &time)
+TAO_Eager_Buffering_Sync_Strategy::time_conversion (const TimeBase::TimeT &time)
 {
   TimeBase::TimeT seconds = time / 10000000u;
   TimeBase::TimeT microseconds = (time % 10000000u) / 10;

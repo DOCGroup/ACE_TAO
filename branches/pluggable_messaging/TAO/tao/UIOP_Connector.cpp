@@ -1,6 +1,7 @@
 // This may look like C, but it's really -*- C++ -*-
 // $Id$
 
+
 #include "tao/UIOP_Connector.h"
 
 #if TAO_HAS_UIOP == 1
@@ -10,7 +11,6 @@
 #include "tao/ORB_Core.h"
 #include "tao/Environment.h"
 #include "ace/Auto_Ptr.h"
-
 
 ACE_RCSID(tao, UIOP_Connector, "$Id$")
 

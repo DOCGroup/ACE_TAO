@@ -33,12 +33,6 @@ TAO_GIOP_Message_Base::flags_offset (void)
   return TAO_GIOP_MESSAGE_FLAGS_OFFSET;
 }
 
-/*ACE_INLINE const size_t
-TAO_GIOP_Message_Base::message_size_offset (void)
-{
-  return TAO_GIOP_MESSAGE_SIZE_OFFSET;
-}
-*/
 ACE_INLINE const size_t
 TAO_GIOP_Message_Base::message_type_offset (void)
 {

@@ -11,7 +11,7 @@
 # include "tao/Object_Adapter.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(tao, POA, "$Id$")
+ACE_RCSID(tao, Object_Adapter, "$Id$")
 
 // Timeprobes class
 #include "tao/Timeprobe.h"
@@ -71,6 +71,7 @@ TAO_Object_Adapter::set_transient_poa_name_size (const TAO_Server_Strategy_Facto
     {
       switch (creation_parameters.poa_lookup_strategy_for_transient_id_policy_)
         {
+#if (TAO_HAS_MINIMUM_POA_MAPS == 0)
         case TAO_LINEAR:
           TAO_Object_Adapter::transient_poa_name_size_ =
             sizeof (CORBA::ULong);
@@ -79,6 +80,7 @@ TAO_Object_Adapter::set_transient_poa_name_size (const TAO_Server_Strategy_Facto
           TAO_Object_Adapter::transient_poa_name_size_ =
             sizeof (CORBA::ULong);
           break;
+#endif /* TAO_HAS_MINIMUM_POA_MAPS == 0 */
         case TAO_ACTIVE_DEMUX:
         default:
           TAO_Object_Adapter::transient_poa_name_size_ =
@@ -122,9 +124,18 @@ TAO_Object_Adapter::TAO_Object_Adapter (const TAO_Server_Strategy_Factory::Activ
   switch (creation_parameters.poa_lookup_strategy_for_persistent_id_policy_)
     {
     case TAO_LINEAR:
+#if (TAO_HAS_MINIMUM_POA_MAPS == 0)
       ACE_NEW (ppnm,
                persistent_poa_name_linear_map (creation_parameters.poa_map_size_));
+
       break;
+#else
+      ACE_ERROR ((LM_ERROR,
+                  "linear option for -ORBPersistentidPolicyDemuxStrategy "
+                  "not supported with minimum POA maps. "
+                  "Ingoring option to use default... \n"));
+      /* FALL THROUGH */
+#endif /* TAO_HAS_MINIMUM_POA_MAPS == 0 */
     case TAO_DYNAMIC_HASH:
     default:
       ACE_NEW (ppnm,
@@ -137,6 +148,7 @@ TAO_Object_Adapter::TAO_Object_Adapter (const TAO_Server_Strategy_Factory::Activ
   transient_poa_map *tpm = 0;
   switch (creation_parameters.poa_lookup_strategy_for_transient_id_policy_)
     {
+#if (TAO_HAS_MINIMUM_POA_MAPS == 0)
     case TAO_LINEAR:
       ACE_NEW (tpm,
                transient_poa_linear_map (creation_parameters.poa_map_size_));
@@ -145,6 +157,15 @@ TAO_Object_Adapter::TAO_Object_Adapter (const TAO_Server_Strategy_Factory::Activ
       ACE_NEW (tpm,
                transient_poa_hash_map (creation_parameters.poa_map_size_));
       break;
+#else
+    case TAO_LINEAR:
+    case TAO_DYNAMIC_HASH:
+      ACE_ERROR ((LM_ERROR,
+                  "linear and dynamic options for -ORBTransientidPolicyDemuxStrategy "
+                  "are not supported with minimum POA maps. "
+                  "Ingoring option to use default... \n"));
+      /* FALL THROUGH */
+#endif /* TAO_HAS_MINIMUM_POA_MAPS == 0 */
     case TAO_ACTIVE_DEMUX:
     default:
       ACE_NEW (tpm,
@@ -310,7 +331,7 @@ TAO_Object_Adapter::activate_poa (const poa_name &folded_name,
 {
   int result = -1;
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_POA == 0)
 
   // A recursive thread lock without using a recursive thread lock.
   // Non_Servant_Upcall has a magic constructor and destructor.  We
@@ -353,7 +374,7 @@ TAO_Object_Adapter::activate_poa (const poa_name &folded_name,
   ACE_UNUSED_ARG (folded_name);
   ACE_UNUSED_ARG (poa);
   ACE_UNUSED_ARG (ACE_TRY_ENV);
-#endif /* !TAO_HAS_MINIMUM_CORBA */
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
   return result;
 }
@@ -727,10 +748,10 @@ TAO_Object_Adapter::Servant_Upcall::Servant_Upcall (TAO_Object_Adapter &object_a
     state_ (INITIAL_STAGE),
     id_ (),
     current_context_ (),
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_POA == 0)
     cookie_ (0),
     operation_ (0),
-#endif /* TAO_HAS_MINIMUM_CORBA */
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
     active_object_map_entry_ (0),
     using_servant_locator_ (0)
 {
@@ -885,7 +906,7 @@ TAO_Object_Adapter::Servant_Upcall::wait_for_non_servant_upcalls_to_complete (CO
 void
 TAO_Object_Adapter::Servant_Upcall::servant_locator_cleanup (void)
 {
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_POA == 0)
 
   if (this->using_servant_locator_)
     {
@@ -919,13 +940,13 @@ TAO_Object_Adapter::Servant_Upcall::servant_locator_cleanup (void)
       ACE_ENDTRY;
     }
 
-#endif /* TAO_HAS_MINIMUM_CORBA */
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 }
 
 void
 TAO_Object_Adapter::Servant_Upcall::single_threaded_poa_setup (CORBA::Environment &ACE_TRY_ENV)
 {
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_POA == 0)
 
   // Lock servant (if necessary).
   //
@@ -945,17 +966,17 @@ TAO_Object_Adapter::Servant_Upcall::single_threaded_poa_setup (CORBA::Environmen
     }
 #else
   ACE_UNUSED_ARG (ACE_TRY_ENV);
-#endif /* !TAO_HAS_MINIMUM_CORBA */
+#endif /* !TAO_HAS_MINIMUM_POA == 0 */
 }
 
 void
 TAO_Object_Adapter::Servant_Upcall::single_threaded_poa_cleanup (void)
 {
   // Since the servant lock was acquired, we must release it.
-#if !defined (TAO_HAS_MINIMUM_CORBA)
+#if (TAO_HAS_MINIMUM_POA == 0)
   if (this->poa_->policies ().thread () == PortableServer::SINGLE_THREAD_MODEL)
     this->servant_->_single_threaded_poa_lock ().release ();
-#endif /* TAO_HAS_MINIMUM_CORBA */
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 }
 
 void
@@ -1173,7 +1194,9 @@ template class ACE_Map_Reverse_Iterator<ACE_Active_Map_Manager_Key, expanded_val
 template class ACE_Map_Entry<ACE_Active_Map_Manager_Key, expanded_value>;
 
 // Hash Map Manager related.
+#if (TAO_HAS_MINIMUM_POA_MAPS == 0)
 template class ACE_Hash_Map_Manager_Ex_Adapter<key, value, hash_key, compare_keys, TAO_Incremental_Key_Generator>;
+#endif /* TAO_HAS_MINIMUM_POA_MAPS == 0 */
 template class ACE_Hash_Map_Manager_Ex_Adapter<key, value, hash_key, compare_keys, noop_key_generator>;
 template class ACE_Hash_Map_Manager_Ex_Iterator_Adapter<tao_value_type, key, value, hash_key, compare_keys>;
 template class ACE_Hash_Map_Manager_Ex_Reverse_Iterator_Adapter<tao_value_type, key, value, hash_key, compare_keys>;
@@ -1186,6 +1209,7 @@ template class ACE_Hash_Map_Entry<key, value>;
 // Already in Active_Object_Map.cpp
 // template class ACE_Equal_To<key>;
 
+#if (TAO_HAS_MINIMUM_POA_MAPS == 0)
 // Map Manager related.
 template class ACE_Map_Manager_Iterator_Adapter<tao_value_type, key, value>;
 template class ACE_Map_Manager_Reverse_Iterator_Adapter<tao_value_type, key, value>;
@@ -1196,6 +1220,7 @@ template class ACE_Map_Iterator_Base<key, value, ACE_Null_Mutex>;
 template class ACE_Map_Iterator<key, value, ACE_Null_Mutex>;
 template class ACE_Map_Reverse_Iterator<key, value, ACE_Null_Mutex>;
 template class ACE_Map_Entry<key, value>;
+#endif /* TAO_HAS_MINIMUM_POA_MAPS == 0 */
 
 template class ACE_Unbounded_Set<TAO_POA_Manager *>;
 template class ACE_Node<TAO_POA_Manager *>;
@@ -1251,7 +1276,9 @@ typedef ACE_Noop_Key_Generator<key> noop_key_generator;
 #pragma instantiate ACE_Map_Entry<ACE_Active_Map_Manager_Key, expanded_value>
 
 // Hash Map Manager related.
+#if (TAO_HAS_MINIMUM_POA_MAPS == 0)
 #pragma instantiate ACE_Hash_Map_Manager_Ex_Adapter<key, value, hash_key, compare_keys, TAO_Incremental_Key_Generator>
+#endif /* TAO_HAS_MINIMUM_POA_MAPS == 0 */
 #pragma instantiate ACE_Hash_Map_Manager_Ex_Adapter<key, value, hash_key, compare_keys, noop_key_generator>
 #pragma instantiate ACE_Hash_Map_Manager_Ex_Iterator_Adapter<tao_value_type, key, value, hash_key, compare_keys>
 #pragma instantiate ACE_Hash_Map_Manager_Ex_Reverse_Iterator_Adapter<tao_value_type, key, value, hash_key, compare_keys>
@@ -1264,6 +1291,7 @@ typedef ACE_Noop_Key_Generator<key> noop_key_generator;
 // Already in Active_Object_Map.cpp
 // #pragma instantiate ACE_Equal_To<key>
 
+#if (TAO_HAS_MINIMUM_POA_MAPS == 0)
 // Map Manager related.
 #pragma instantiate ACE_Map_Manager_Iterator_Adapter<tao_value_type, key, value>
 #pragma instantiate ACE_Map_Manager_Reverse_Iterator_Adapter<tao_value_type, key, value>
@@ -1274,6 +1302,7 @@ typedef ACE_Noop_Key_Generator<key> noop_key_generator;
 #pragma instantiate ACE_Map_Iterator<key, value, ACE_Null_Mutex>
 #pragma instantiate ACE_Map_Reverse_Iterator<key, value, ACE_Null_Mutex>
 #pragma instantiate ACE_Map_Entry<key, value>
+#endif /* TAO_HAS_MINIMUM_POA_MAPS == 0 */
 
 #pragma instantiate ACE_Unbounded_Set<TAO_POA_Manager *>
 #pragma instantiate ACE_Node<TAO_POA_Manager *>

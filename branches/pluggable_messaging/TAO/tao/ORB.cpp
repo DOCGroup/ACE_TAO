@@ -1,4 +1,5 @@
 // $Id$
+
 #include "tao/ORB.h"
 #include "tao/Acceptor_Registry.h"
 #include "tao/Connector_Registry.h"
@@ -65,7 +66,6 @@ using std::set_unexpected;
 #endif /* ! __ACE_INLINE__ */
 
 ACE_RCSID(tao, ORB, "$Id$")
-
 
 static const char ior_prefix [] = "IOR:";
 static const char file_prefix[] = "file://";
@@ -219,24 +219,48 @@ CORBA_ORB::destroy (CORBA::Environment &ACE_TRY_ENV)
 }
 
 int
-CORBA_ORB::perform_work (const ACE_Time_Value &tv,
+CORBA_ORB::run (CORBA::Environment &ACE_TRY_ENV)
+{
+  return this->run (0, ACE_TRY_ENV);
+}
+
+int
+CORBA_ORB::run (ACE_Time_Value &tv, CORBA::Environment &ACE_TRY_ENV)
+{
+  return this->run (&tv, ACE_TRY_ENV);
+}
+
+int
+CORBA_ORB::run (ACE_Time_Value *tv,
+                CORBA::Environment &ACE_TRY_ENV)
+{
+  this->check_shutdown (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+
+  return this->orb_core ()->run (tv, 0, ACE_TRY_ENV);
+}
+
+int
+CORBA_ORB::perform_work (CORBA::Environment &ACE_TRY_ENV)
+{
+  return this->perform_work (0, ACE_TRY_ENV);
+}
+
+int
+CORBA_ORB::perform_work (ACE_Time_Value &tv, CORBA::Environment &ACE_TRY_ENV)
+{
+  return this->perform_work (&tv, ACE_TRY_ENV);
+}
+
+int
+CORBA_ORB::perform_work (ACE_Time_Value *tv,
                          CORBA::Environment &ACE_TRY_ENV)
 {
   // This method should not be called if the ORB has been shutdown.
   this->check_shutdown (ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
 
-  ACE_Reactor *r = this->orb_core_->reactor ();
-
-  // Set the owning thread of the Reactor to the one which we're
-  // currently in.  This is necessary b/c it's possible that the
-  // application is calling us from a thread other than that in which
-  // the Reactor's CTOR (which sets the owner) was called.
-  r->owner (ACE_Thread::self ());
-
-  ACE_Time_Value tmp_tv (tv);
-
-  return r->handle_events (tmp_tv);
+  return this->orb_core ()->run (tv, 1, ACE_TRY_ENV);
 }
 
 CORBA::Boolean
@@ -246,11 +270,14 @@ CORBA_ORB::work_pending (CORBA_Environment &ACE_TRY_ENV)
   this->check_shutdown (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
-  // For the moment, there's always work to do...
+  int result = this->orb_core_->reactor ()->work_pending ();
+  if (result == 0)
+    return 0;
+
+  if (result == -1)
+    ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
+
   return 1;
-#if 0
-  return this->orb_core_->reactor ()->work_pending ();
-#endif
 }
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)
@@ -368,35 +395,6 @@ CORBA_ORB::poll_next_response (CORBA_Environment &ACE_TRY_ENV)
 }
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
-
-int
-CORBA_ORB::run (ACE_Time_Value *tv,
-                int break_on_timeouts,
-                CORBA::Environment &ACE_TRY_ENV)
-{
-  this->check_shutdown (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (-1);
-
-  return this->orb_core ()->run (tv, break_on_timeouts, ACE_TRY_ENV);
-}
-
-int
-CORBA_ORB::run (ACE_Time_Value &tv, CORBA::Environment &ACE_TRY_ENV)
-{
-  return this->run (&tv, 1, ACE_TRY_ENV);
-}
-
-int
-CORBA_ORB::run (ACE_Time_Value *tv, CORBA::Environment &ACE_TRY_ENV)
-{
-  return this->run (tv, 1, ACE_TRY_ENV);
-}
-
-int
-CORBA_ORB::run (CORBA::Environment &ACE_TRY_ENV)
-{
-  return this->run (0, 0, ACE_TRY_ENV);
-}
 
 CORBA_Object_ptr
 CORBA_ORB::resolve_root_poa (CORBA::Environment &ACE_TRY_ENV,

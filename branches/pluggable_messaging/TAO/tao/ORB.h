@@ -553,6 +553,24 @@ public:
   // Otherwise, if we've returned since we've been asked to shut down
   // the value of 1 is returned.
 
+  CORBA::Boolean work_pending (CORBA_Environment &ACE_TRY_ENV =
+                               TAO_default_environment ());
+  // Returns an indication of whether the ORB needs to perform some
+  // work.
+
+  int perform_work (CORBA_Environment &ACE_TRY_ENV =
+                    TAO_default_environment ());
+  int perform_work (ACE_Time_Value &,
+                    CORBA_Environment &ACE_TRY_ENV =
+                    TAO_default_environment ());
+  int perform_work (ACE_Time_Value *,
+                    CORBA_Environment &ACE_TRY_ENV =
+                    TAO_default_environment ());
+  // This operation performs an implementation-defined unit of
+  // work. Note that the default behavior is not to block; this
+  // behavior can be modified by passing an appropriate
+  // <ACE_Time_Value>.
+
   void shutdown (CORBA::Boolean wait_for_completion = 0,
                  CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
   // This operation instructs the ORB to shut down. Shutting down the
@@ -568,19 +586,6 @@ public:
   // references to a particular ORB.  CORBA::ORB_init() is required to
   // return the same pointer if called with the same ORBid, only after
   // ORB::destroy() is called it may return a new one.
-
-  CORBA::Boolean work_pending (CORBA_Environment &ACE_TRY_ENV =
-                               TAO_default_environment ());
-  // Returns an indication of whether the ORB needs to perform some
-  // work.
-
-  int perform_work (const ACE_Time_Value & = ACE_Time_Value::zero,
-                    CORBA_Environment &ACE_TRY_ENV =
-                    TAO_default_environment ());
-  // This operation performs an implementation-defined unit of
-  // work. Note that the default behavior is not to block; this
-  // behavior can be modified by passing an appropriate
-  // <ACE_Time_Value>.
 
   CORBA_Object_ptr resolve_initial_references (const char *name,
                                                CORBA_Environment &ACE_TRY_ENV =
@@ -732,11 +737,6 @@ protected:
 
   CORBA_Object_ptr resolve_ior_manipulation (CORBA::Environment&);
   // Resolve the IOR Manipulation reference for this ORB.
-
-  int run (ACE_Time_Value *tv,
-           int break_on_timeouts,
-           CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
-  // Implements the run routine
 
 private:
 
