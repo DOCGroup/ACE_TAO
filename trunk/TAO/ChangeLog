@@ -22,12 +22,12 @@ Sat Jan 17 13:58:11 2004  Dale Wilson  <wilson_d@ociweb.com>
 
 Sat Jan 17 19:28:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-  * orbsvcs/tests/AVStreams/Pluggable_Flow_Protocol/TimeStamp.{h,cpp}:
-  * orbsvcs/tests/AVStreams/Pluggable_Flow_Protocol/export.h:
-  * orbsvcs/tests/AVStreams/Pluggable_Flow_Protocol/AVStream_Pluggable_Flow_Protocol.mpc:
-    This test buils an own shared library but used the AV export macro's.
-    Gave this test its own macro so that it exports just it own symbols
-    instead of all AV symbols.
+        * orbsvcs/tests/AVStreams/Pluggable_Flow_Protocol/TimeStamp.{h,cpp}:
+        * orbsvcs/tests/AVStreams/Pluggable_Flow_Protocol/export.h:
+        * orbsvcs/tests/AVStreams/Pluggable_Flow_Protocol/AVStream_Pluggable_Flow_Protocol.mpc:
+          This test builds an own shared library but used the AV export 
+	  macro's.  Gave this test its own macro so that it exports 
+	  just it own symbols instead of all AV symbols.
 
 Sat Jan 17 11:26:03 2004  Huang-Ming Huang  <hh1@cse.wustl.edu>
 
