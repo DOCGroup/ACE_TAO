@@ -1,3 +1,10 @@
+Fri Dec  1 19:05:22 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* orbsvcs/tests/InterfaceRepo/Persistence_Test/Ptest.cpp:
+
+	  Replaced ACE_TRY_NEW_ENV with ACE_DELCARE_NEW_CORBA_ENV
+	  followed by ACE_TRY, which got rid of an egcs warning.
+
 Fri Dec  1 17:10:27 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* orbsvcs/IFR_Service/tmplinst.cpp:
