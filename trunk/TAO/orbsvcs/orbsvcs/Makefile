@@ -28,7 +28,7 @@ override TAO_IDLFLAGS += \
         -Wb,export_include=orbsvcs_export.h \
         $(TAO_LACKS_EVENT_CHANNEL_ANY)
 
-VPATH=.:Naming:Time:Concurrency:Property:Trader:Sched:Event:CosEvent:Log:
+VPATH=.:Naming:Time:Concurrency:Property:Trader:Sched:Event:CosEvent:
 
 ACE_SHLIBS = -lTAO -lACE
 
@@ -50,8 +50,7 @@ ifndef TAO_ORBSVCS
                 Sched \
                 Event \
                 CosEvent \
-                Event2 \
-		Log
+                Event2
 
 ifndef minimum_corba
 
