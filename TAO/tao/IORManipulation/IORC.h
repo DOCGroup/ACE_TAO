@@ -443,7 +443,7 @@ TAO_NAMESPACE  TAO_IOP
     // be/be_visitor_operation/operation_ch.cpp:46
 
     virtual CORBA::Boolean remove_primary_tag (
-        CORBA::Object_ptr iogr
+        CORBA::Object_ptr  &iogr
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
