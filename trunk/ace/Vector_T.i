@@ -40,3 +40,51 @@ void ACE_Vector<T, DEFAULT_SIZE>::pop_back (void)
     --length_;
 }
 
+// Compare this vector with <s> for inequality.
+
+template <class T, size_t DEFAULT_SIZE> ACE_INLINE int
+ACE_Vector<T, DEFAULT_SIZE>::operator!= (const ACE_Vector<T, DEFAULT_SIZE> &s) const
+{
+  return !(*this == s);
+}
+
+// ****************************************************************
+
+template <class T, size_t DEFAULT_SIZE> ACE_INLINE void
+ACE_Vector_Iterator<T, DEFAULT_SIZE>::dump (void) const
+{
+  // ACE_TRACE ("ACE_Vector_Iterator<T>::dump");
+}
+
+template <class T, size_t DEFAULT_SIZE> ACE_INLINE
+ACE_Vector_Iterator<T, DEFAULT_SIZE>::ACE_Vector_Iterator (ACE_Vector<T, DEFAULT_SIZE> &v)
+    : current_ (0),
+      vector_ (v)
+{
+  // ACE_TRACE ("ACE_Vector_Iterator<T>::ACE_Vector_Iterator");
+}
+
+template <class T, size_t DEFAULT_SIZE> ACE_INLINE int
+ACE_Vector_Iterator<T, DEFAULT_SIZE>::advance (void)
+{
+  // ACE_TRACE ("ACE_Vector_Iterator<T>::advance");
+
+  if (this->current_ < vector_.size ())
+    {
+      ++this->current_;
+      return 1;
+    }
+  else
+    {
+      // Already finished iterating.
+      return 0;
+    }
+}
+
+template <class T, size_t DEFAULT_SIZE> ACE_INLINE int
+ACE_Vector_Iterator<T, DEFAULT_SIZE>::done (void) const
+{
+  ACE_TRACE ("ACE_Vector_Iterator<T>::done");
+
+  return this->current_ >= vector_.size ();
+}
