@@ -106,9 +106,10 @@ void
 ACE_Log_Record::msg_data (const ACE_TCHAR *data)
 {
   // ACE_TRACE ("ACE_Log_Record::msg_data");
-  ACE_OS::strncpy (this->msg_data_,
+  this->msg_data_[0] = L'\0';
+  ACE_OS::strncat (this->msg_data_, 
                    data,
-                   ACE_Log_Record::MAXLOGMSGLEN);
+                   (sizeof this->msg_data_ / sizeof (ACE_TCHAR)) - 1);
   this->round_up ();
 }
 

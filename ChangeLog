@@ -1,3 +1,10 @@
+Sun Aug 26 08:13:12 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/Log_Record.{h,cpp}: Enhanced this implementation to (1)
+	  be consistent with recent changes to Log_Msg.h and (2) to
+	  replace problematic use of strncpy().  Thanks to Alain
+	  Decamps for these fixes.
+
 Sat Aug 25 20:58:22 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/FILE_IO.i (send_n): Changed to use ACE::write_n to send the
