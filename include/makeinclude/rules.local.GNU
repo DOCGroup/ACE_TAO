@@ -88,13 +88,16 @@ endif
 #### show_statics shows static objects in locally-created object files.
 #### It assumes that the object files were built using g++.
 #### TOOLENV selects the proper nm in VxWorks host environments.
+#### TOOLDIR allows specification of the full path to nm via definition
+#### in the platform_macros.GNU file.
 show_statics:
-	-@nm$(TOOLENV) -Co $(VSHDIR)*o | egrep ' global destructors '
+	-@$(TOOLDIR)nm$(TOOLENV) -Co $(VSHDIR)*o | \
+	  egrep ' global destructors '; true
 
 #### show_uninit shows uninitialized data in locally-created object files.
 #### TOOLENV selects the proper nm in VxWorks host environments.
 show_uninit:
-	-@nm$(TOOLENV) -Co $(VSHDIR)*o | egrep ' b '
+	-@$(TOOLDIR)nm$(TOOLENV) -Co $(VSHDIR)*o | egrep ' b '
 
 #----------------------------------------------------------------------------
 #	Installation targets
