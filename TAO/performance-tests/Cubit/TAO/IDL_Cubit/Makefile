@@ -294,6 +294,7 @@ realclean: clean
  $(TAO_ROOT)/tao/Object_Table.h \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Connect.h \
@@ -524,6 +525,7 @@ realclean: clean
  $(TAO_ROOT)/tao/Object_Table.h \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Connect.h \
@@ -755,6 +757,7 @@ realclean: clean
  $(TAO_ROOT)/tao/Object_Table.h \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Connect.h \
@@ -1008,6 +1011,7 @@ realclean: clean
  $(TAO_ROOT)/tao/Object_Table.h \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Connect.h \
@@ -1272,6 +1276,7 @@ realclean: clean
  $(TAO_ROOT)/tao/Object_Table.h \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Connect.h \
@@ -1320,8 +1325,7 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/Entries.h \
  $(TAO_ROOT)/tao/Timeprobe.h \
- $(ACE_ROOT)/ace/Timeprobe.h \
- RTI_IO.h
+ $(ACE_ROOT)/ace/Timeprobe.h RTI_IO.h
 .obj/collocation_test.o .obj/collocation_test.so .shobj/collocation_test.o .shobj/collocation_test.so: collocation_test.cpp \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -1526,6 +1530,7 @@ realclean: clean
  $(TAO_ROOT)/tao/Object_Table.h \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Connect.h \
@@ -1574,8 +1579,8 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/Entries.h \
  Cubit_Server.h \
- $(TAO_ROOT)/tao/TAO.h \
- Cubit_i.h cubitS.h cubitS_T.h cubitS_T.i cubitS_T.cpp cubitS.i
+ $(TAO_ROOT)/tao/TAO.h Cubit_i.h \
+ cubitS.h cubitS_T.h cubitS_T.i cubitS_T.cpp cubitS.i
 .obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp Cubit_Client.h \
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -1779,6 +1784,7 @@ realclean: clean
  $(TAO_ROOT)/tao/Object_Table.h \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Connect.h \
@@ -2037,6 +2043,7 @@ realclean: clean
  $(TAO_ROOT)/tao/Object_Table.h \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Connect.h \
@@ -2085,8 +2092,7 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/Entries.h \
  $(TAO_ROOT)/tao/Timeprobe.h \
- $(ACE_ROOT)/ace/Timeprobe.h \
- RTI_IO.h
+ $(ACE_ROOT)/ace/Timeprobe.h RTI_IO.h
 .obj/RTI_IO.o .obj/RTI_IO.so .shobj/RTI_IO.o .shobj/RTI_IO.so: RTI_IO.cpp RTI_IO.h cubitC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/orbconf.h \
@@ -2286,6 +2292,7 @@ realclean: clean
  $(TAO_ROOT)/tao/Object_Table.h \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Connect.h \
@@ -2516,6 +2523,7 @@ realclean: clean
  $(TAO_ROOT)/tao/Object_Table.h \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Connect.h \
@@ -2746,6 +2754,7 @@ realclean: clean
  $(TAO_ROOT)/tao/Object_Table.h \
  $(TAO_ROOT)/tao/POA.i \
  $(TAO_ROOT)/tao/poa_macros.h \
+ $(TAO_ROOT)/tao/try_macros.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/params.i \
  $(TAO_ROOT)/tao/Connect.h \
@@ -2803,7 +2812,6 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/Entries.h \
  Cubit_i.h cubitS.h cubitS_T.h cubitS_T.i cubitS_T.cpp cubitS.i \
  $(TAO_ROOT)/tao/Timeprobe.h \
- $(ACE_ROOT)/ace/Timeprobe.h \
- RTI_IO.h
+ $(ACE_ROOT)/ace/Timeprobe.h RTI_IO.h
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY
