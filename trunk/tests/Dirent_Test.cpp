@@ -31,13 +31,21 @@
 
 ACE_RCSID(tests, Dirent_Test, "$Id$")
 
+#if defined (VXWORKS)
+#define TEST_DIR "."
+#define TEST_ENTRY ".."
+#else
+#define TEST_DIR "../tests"
+#define TEST_ENTRY "Dirent_Test.cpp"
+#endif /* VXWORKS */
+
 // Number of entries in the directory.
 static int entrycount = 0;
 
 static int
 selector (const dirent *d)
 {
-  return ACE_OS_String::strcmp (d->d_name, ACE_TEXT ("Dirent_Test.cpp")) == 0;
+  return ACE_OS_String::strcmp (d->d_name, ACE_TEXT (TEST_ENTRY)) == 0;
 }
 
 static int
@@ -55,7 +63,7 @@ dirent_selector_test (void)
   ACE_Dirent_Selector sds;
 
   // Pass in functions that'll specify the selection criteria.
-  status = sds.open (ACE_TEXT ("../tests"), selector, comparator);
+  status = sds.open (ACE_TEXT (TEST_DIR), selector, comparator);
   ACE_ASSERT (status != -1);
 
   // We should only have located ourselves!
@@ -73,7 +81,7 @@ dirent_selector_test (void)
   ACE_Dirent_Selector ds;
 
   // Don't specify any selection criteria.
-  status = ds.open (ACE_TEXT ("../tests"));
+  status = ds.open (ACE_TEXT (TEST_DIR));
   ACE_ASSERT (status != -1);
 
   ACE_ASSERT (entrycount == ds.length ());
@@ -93,7 +101,7 @@ dirent_selector_test (void)
 static int
 dirent_test (void)
 {
-  ACE_Dirent dir (ACE_TEXT ("../tests"));
+  ACE_Dirent dir (ACE_TEXT (TEST_DIR));
 
   for (dirent *directory;
        (directory = dir.read ()) != 0;
