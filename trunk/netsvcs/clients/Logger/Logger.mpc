@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(direct logging) : aceexe {
   exename = direct_logging
   libs    += netsvcs

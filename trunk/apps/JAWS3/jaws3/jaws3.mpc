@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(JAWS3) : acelib {
     sharedname = JAWS3
     includes += ../

@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(Netsvcs_Dump_Restore_Lib): acelib {
   sharedname    = Dump_Restore
   dynamicflags += ACE_BUILD_SVC_DLL

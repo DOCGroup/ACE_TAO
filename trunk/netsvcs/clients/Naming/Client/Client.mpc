@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(Netsvsc_Client_Test_Lib): acelib {
   sharedname    = Client_Test
   dynamicflags += ACE_CLIENT_TEST_BUILD_DLL

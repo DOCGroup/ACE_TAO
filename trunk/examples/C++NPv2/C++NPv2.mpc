@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(*AC_CLD) : acelib, ssl {
   sharedname = AC_CLD
   dynamicflags = AC_CLD_BUILD_DLL

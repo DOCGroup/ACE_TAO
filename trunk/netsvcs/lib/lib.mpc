@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(netsvcs): acelib {
   sharedname    = netsvcs
   dynamicflags += ACE_NETSVCS_BUILD_DLL

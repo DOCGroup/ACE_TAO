@@ -1,3 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
 project(*ex1) : aceexe {
   exename = ex1
   Source_Files {
