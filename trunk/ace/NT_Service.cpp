@@ -132,7 +132,7 @@ ACE_NT_Service::interrogate_requested (DWORD)
 }
 
 void
-ACE_NT_Service::name (LPCTSTR name, LPCTSTR desc)
+ACE_NT_Service::name (const ACE_TCHAR *name, const ACE_TCHAR *desc)
 {
   delete [] desc_;
   delete [] name_;
@@ -145,7 +145,7 @@ ACE_NT_Service::name (LPCTSTR name, LPCTSTR desc)
 }
 
 void
-ACE_NT_Service::host (LPCTSTR host)
+ACE_NT_Service::host (const ACE_TCHAR *host)
 {
   delete [] host_;
 
@@ -168,38 +168,41 @@ ACE_NT_Service::host (LPCTSTR host)
 int
 ACE_NT_Service::insert (DWORD start_type,
                         DWORD error_control,
-                        LPCTSTR exe_path,
-                        LPCTSTR group_name,
+                        const ACE_TCHAR *exe_path,
+                        const ACE_TCHAR *group_name,
                         LPDWORD tag_id,
-                        LPCTSTR dependencies,
-                        LPCTSTR account_name,
-                        LPCTSTR password)
+                        const ACE_TCHAR *dependencies,
+                        const ACE_TCHAR *account_name,
+                        const ACE_TCHAR *password)
 {
-  TCHAR this_exe[MAXPATHLEN];
+  ACE_TCHAR this_exe[MAXPATHLEN];
 
   if (exe_path == 0)
     {
-      if (GetModuleFileName (0, this_exe, sizeof this_exe) == 0) 
+      if (ACE_TEXT_GetModuleFileName (0, this_exe, sizeof this_exe) == 0) 
         return -1;
       exe_path = this_exe;
     }
 
-  SC_HANDLE sc_mgr = OpenSCManager (this->host (), 0, SC_MANAGER_ALL_ACCESS);
+  SC_HANDLE sc_mgr = ACE_TEXT_OpenSCManager (this->host (), 
+                                             0, 
+                                             SC_MANAGER_ALL_ACCESS);
   if (sc_mgr == 0)
     return -1;
 
-  SC_HANDLE sh = CreateService (sc_mgr,
-                                this->name (),
-                                this->desc (),
-                                SERVICE_ALL_ACCESS,
-                                svc_status_.dwServiceType,
-                                start_type,
-                                error_control,
-                                exe_path,
-                                group_name,
-                                tag_id,
-                                dependencies,
-                                account_name, password);
+  SC_HANDLE sh = ACE_TEXT_CreateService (sc_mgr,
+                                         this->name (),
+                                         this->desc (),
+                                         SERVICE_ALL_ACCESS,
+                                         svc_status_.dwServiceType,
+                                         start_type,
+                                         error_control,
+                                         exe_path,
+                                         group_name,
+                                         tag_id,
+                                         dependencies,
+                                         account_name, 
+                                         password);
   CloseServiceHandle (sc_mgr);
   if (sh == 0)
     return -1;
@@ -275,13 +278,13 @@ ACE_NT_Service::startup (void)
 int
 ACE_NT_Service::start_svc (ACE_Time_Value *wait_time,
                            DWORD *svc_state,
-                           DWORD argc, LPCTSTR *argv)
+                           DWORD argc, const ACE_TCHAR **argv)
 {
   SC_HANDLE svc = this->svc_sc_handle ();
   if (svc == 0)
     return -1;
 
-  if (!StartService (svc, argc, argv))
+  if (!ACE_TEXT_StartService (svc, argc, argv))
     return -1;
 
   wait_for_service_state (SERVICE_RUNNING, wait_time);
@@ -396,14 +399,14 @@ ACE_NT_Service::test_access (DWORD desired_access)
 {
   int status = -1;     // Guilty until proven innocent
 
-  SC_HANDLE sc_mgr = OpenSCManager (this->host (),
-                                    0,
-                                    GENERIC_READ);
+  SC_HANDLE sc_mgr = ACE_TEXT_OpenSCManager (this->host (),
+                                             0,
+                                             GENERIC_READ);
   if (sc_mgr != 0)
     {
-      SC_HANDLE handle = OpenService (sc_mgr,
-                                      this->name (),
-                                      desired_access);
+      SC_HANDLE handle = ACE_TEXT_OpenService (sc_mgr,
+                                               this->name (),
+                                               desired_access);
       CloseServiceHandle (sc_mgr);
       if (handle != 0)
         {
@@ -469,14 +472,14 @@ ACE_NT_Service::svc_sc_handle (void)
 {
   if (svc_sc_handle_ == 0)
     {
-      SC_HANDLE sc_mgr = OpenSCManager (this->host (),
-                                        0,
-                                        SC_MANAGER_ALL_ACCESS);
+      SC_HANDLE sc_mgr = ACE_TEXT_OpenSCManager (this->host (),
+                                                 0,
+                                                 SC_MANAGER_ALL_ACCESS);
       if (sc_mgr != 0)
         {
-          svc_sc_handle_ = OpenService (sc_mgr,
-                                        this->name (),
-                                        SERVICE_ALL_ACCESS);
+          svc_sc_handle_ = ACE_TEXT_OpenService (sc_mgr,
+                                                 this->name (),
+                                                 SERVICE_ALL_ACCESS);
           CloseServiceHandle (sc_mgr);
         }
     }

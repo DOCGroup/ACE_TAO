@@ -43,11 +43,11 @@ public:
   // Creates an <ACE_INET_Addr> from a sockaddr_in structure.
 
   ACE_INET_Addr (u_short port_number,
-                 const ASYS_TCHAR host_name[]);
+                 const ACE_TCHAR host_name[]);
   // Creates an <ACE_INET_Addr> from a <port_number> and the remote
   // <host_name>.
 
-  ACE_INET_Addr (const ASYS_TCHAR address[]);
+  ACE_INET_Addr (const ACE_TCHAR address[]);
   // Initializes an <ACE_INET_Addr> from the <address>, which can be
   // "ip-number:port-number" (e.g., "tango.cs.wustl.edu:1234" or
   // "128.252.166.57:1234").  If there is no ':' in the <address> it
@@ -60,15 +60,15 @@ public:
   // <ip_addr>.  This method assumes that <port_number> and <ip_addr>
   // are in host byte order.
 
-  ACE_INET_Addr (const ASYS_TCHAR port_name[],
-		 const ASYS_TCHAR host_name[],
-                 const ASYS_TCHAR protocol[] = ASYS_TEXT ("tcp"));
+  ACE_INET_Addr (const ACE_TCHAR port_name[],
+		 const ACE_TCHAR host_name[],
+                 const ACE_TCHAR protocol[] = ACE_TEXT ("tcp"));
   // Uses <getservbyname> to create an <ACE_INET_Addr> from a
   // <port_name>, the remote <host_name>, and the <protocol>.
 
-  ACE_INET_Addr (const ASYS_TCHAR port_name[],
+  ACE_INET_Addr (const ACE_TCHAR port_name[],
 		 ACE_UINT32 ip_addr,
-                 const ASYS_TCHAR protocol[] = ASYS_TEXT ("tcp"));
+                 const ACE_TCHAR protocol[] = ACE_TEXT ("tcp"));
   // Uses <getservbyname> to create an <ACE_INET_Addr> from a
   // <port_name>, an Internet <ip_addr>, and the <protocol>.  This
   // method assumes that <ip_addr> is in host byte order.
@@ -84,7 +84,7 @@ public:
   // Initializes from another <ACE_INET_Addr>.
 
   int set (u_short port_number,
-	   const ASYS_TCHAR host_name[],
+	   const ACE_TCHAR host_name[],
            int encode = 1);
   // Initializes an <ACE_INET_Addr> from a <port_number> and the
   // remote <host_name>.  If <encode> is enabled then <port_number> is
@@ -100,20 +100,20 @@ public:
   // they are assumed to be in network byte order already and are
   // passed straight through.
 
-  int set (const ASYS_TCHAR port_name[],
-	   const ASYS_TCHAR host_name[],
-           const ASYS_TCHAR protocol[] = ASYS_TEXT ("tcp"));
+  int set (const ACE_TCHAR port_name[],
+	   const ACE_TCHAR host_name[],
+           const ACE_TCHAR protocol[] = ACE_TEXT ("tcp"));
   // Uses <getservbyname> to initialize an <ACE_INET_Addr> from a
   // <port_name>, the remote <host_name>, and the <protocol>.
 
-  int set (const ASYS_TCHAR port_name[],
+  int set (const ACE_TCHAR port_name[],
 	   ACE_UINT32 ip_addr,
-           const ASYS_TCHAR protocol[] = ASYS_TEXT ("tcp"));
+           const ACE_TCHAR protocol[] = ACE_TEXT ("tcp"));
   // Uses <getservbyname> to initialize an <ACE_INET_Addr> from a
   // <port_name>, an <ip_addr>, and the <protocol>.  This assumes that
   // <ip_addr> is already in network byte order.
 
-  int set (const ASYS_TCHAR addr[]);
+  int set (const ACE_TCHAR addr[]);
   // Initializes an <ACE_INET_Addr> from the <addr>, which can be
   // "ip-number:port-number" (e.g., "tango.cs.wustl.edu:1234" or
   // "128.252.166.57:1234").  If there is no ':' in the <address> it
@@ -130,7 +130,7 @@ public:
   virtual void set_addr (void *, int len);
   // Set a pointer to the address.
 
-  virtual int addr_to_string (ASYS_TCHAR buffer[],
+  virtual int addr_to_string (ACE_TCHAR buffer[],
                               size_t size,
                               int ipaddr_format = 1) const;
   // Transform the current <ACE_INET_Addr> address into string format.
@@ -140,7 +140,7 @@ public:
   // "tango.cs.wustl.edu:1234").  Returns -1 if the <size> of the
   // <buffer> is too small, else 0.
 
-  virtual int string_to_addr (const ASYS_TCHAR address[]);
+  virtual int string_to_addr (const ACE_TCHAR address[]);
   // Initializes an <ACE_INET_Addr> from the <address>, which can be
   // "ip-addr:port-number" (e.g., "tango.cs.wustl.edu:1234"),
   // "ip-addr:port-name" (e.g., "tango.cs.wustl.edu:telnet"),
@@ -159,18 +159,18 @@ public:
   u_short get_port_number (void) const;
   // Return the port number, converting it into host byte order.
 
-  int get_host_name (ASYS_TCHAR hostname[],
+  int get_host_name (ACE_TCHAR hostname[],
                      size_t hostnamelen) const;
   // Return the character representation of the name of the host,
   // storing it in the <hostname> (which is assumed to be
   // <hostnamelen> bytes long).  This version is reentrant.
 
-  const ASYS_TCHAR *get_host_name (void) const;
+  const ACE_TCHAR *get_host_name (void) const;
   // Return the character representation of the hostname (this version
   // is non-reentrant since it returns a pointer to a static data
   // area).
 
-  const char *get_host_addr (void) const;
+  const ACE_TCHAR *get_host_addr (void) const;
   // Return the "dotted decimal" Internet address.
 
   ACE_UINT32 get_ip_address (void) const;

@@ -210,7 +210,7 @@ void POA_PortableServer::ThreadPolicy::_dispatch (CORBA::ServerRequest &req, voi
   // find the skeleton corresponding to this opname
   if (this->_find (opname, skel) == -1)
   {
-    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("Bad operation <%s>\n"), opname));
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Bad operation <%s>\n"), opname));
     ACE_THROW (CORBA_BAD_OPERATION ());
   }
   else
@@ -493,7 +493,7 @@ void POA_PortableServer::LifespanPolicy::_dispatch (CORBA::ServerRequest &req, v
   // find the skeleton corresponding to this opname
   if (this->_find (opname, skel) == -1)
   {
-    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("Bad operation <%s>\n"), opname));
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Bad operation <%s>\n"), opname));
     ACE_THROW (CORBA_BAD_OPERATION ());
   }
   else
@@ -773,7 +773,7 @@ void POA_PortableServer::IdUniquenessPolicy::_dispatch (CORBA::ServerRequest &re
   // find the skeleton corresponding to this opname
   if (this->_find (opname, skel) == -1)
   {
-    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("Bad operation <%s>\n"), opname));
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Bad operation <%s>\n"), opname));
     ACE_THROW (CORBA_BAD_OPERATION ());
   }
   else
@@ -1056,7 +1056,7 @@ void POA_PortableServer::IdAssignmentPolicy::_dispatch (CORBA::ServerRequest &re
   // find the skeleton corresponding to this opname
   if (this->_find (opname, skel) == -1)
   {
-    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("Bad operation <%s>\n"), opname));
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Bad operation <%s>\n"), opname));
     ACE_THROW (CORBA_BAD_OPERATION ());
   }
   else
@@ -1340,7 +1340,7 @@ void POA_PortableServer::ImplicitActivationPolicy::_dispatch (CORBA::ServerReque
   // find the skeleton corresponding to this opname
   if (this->_find (opname, skel) == -1)
   {
-    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("Bad operation <%s>\n"), opname));
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Bad operation <%s>\n"), opname));
     ACE_THROW (CORBA_BAD_OPERATION ());
   }
   else
@@ -1622,7 +1622,7 @@ void POA_PortableServer::ServantRetentionPolicy::_dispatch (CORBA::ServerRequest
   // find the skeleton corresponding to this opname
   if (this->_find (opname, skel) == -1)
   {
-    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("Bad operation <%s>\n"), opname));
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Bad operation <%s>\n"), opname));
     ACE_THROW (CORBA_BAD_OPERATION ());
   }
   else
@@ -1904,7 +1904,7 @@ void POA_PortableServer::RequestProcessingPolicy::_dispatch (CORBA::ServerReques
   // find the skeleton corresponding to this opname
   if (this->_find (opname, skel) == -1)
   {
-    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("Bad operation <%s>\n"), opname));
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Bad operation <%s>\n"), opname));
     ACE_THROW (CORBA_BAD_OPERATION ());
   }
   else

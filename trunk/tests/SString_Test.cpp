@@ -24,9 +24,9 @@
 ACE_RCSID(tests, SString_Test, "$Id$")
 
 int
-main (int, ASYS_TCHAR *[])
+main (int, ACE_TCHAR *[])
 {
-  ACE_START_TEST (ASYS_TEXT ("SString_Test"));
+  ACE_START_TEST (ACE_TEXT ("SString_Test"));
 
   {
     ACE_CString s0 ("hello");
@@ -122,6 +122,7 @@ main (int, ASYS_TCHAR *[])
     ACE_ASSERT (s1.rfind ('l', 3) == 2);
   }
 
+#if defined (ACE_HAS_WCHAR)
   {
     ACE_WString s0 ("hello");
     ACE_WString s1 ("hello");
@@ -168,6 +169,7 @@ main (int, ASYS_TCHAR *[])
     ACE_ASSERT (s1.rfind ('l') == 3);
     ACE_ASSERT (s1.rfind ('l', 3) == 2);
   }
+#endif /* ACE_HAS_WCHAR */
 
   ACE_END_TEST;
   return 0;

@@ -128,15 +128,15 @@ ACE_Data_Block::dump (void) const
   ACE_TRACE ("ACE_Data_Block::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("-----( Data Block )-----\n")
-              ASYS_TEXT ("type_ = %d\n")
-              ASYS_TEXT ("cur_size_ = %u\n")
-              ASYS_TEXT ("max_size_ = %u\n")
-              ASYS_TEXT ("flags_ = %u\n")
-              ASYS_TEXT ("base_ = %u\n")
-              ASYS_TEXT ("locking_strategy_ = %u\n")
-              ASYS_TEXT ("reference_count_ = %u\n")
-              ASYS_TEXT ("---------------------------\n"),
+              ACE_TEXT ("-----( Data Block )-----\n")
+              ACE_TEXT ("type_ = %d\n")
+              ACE_TEXT ("cur_size_ = %u\n")
+              ACE_TEXT ("max_size_ = %u\n")
+              ACE_TEXT ("flags_ = %u\n")
+              ACE_TEXT ("base_ = %u\n")
+              ACE_TEXT ("locking_strategy_ = %u\n")
+              ACE_TEXT ("reference_count_ = %u\n")
+              ACE_TEXT ("---------------------------\n"),
               this->type_,
               this->cur_size_,
               this->max_size_,
@@ -154,14 +154,14 @@ ACE_Message_Block::dump (void) const
   ACE_TRACE ("ACE_Message_Block::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("-----( Message Block )-----\n")
-              ASYS_TEXT ("priority_ = %d\n")
-              ASYS_TEXT ("next_ = %u\n")
-              ASYS_TEXT ("prev_ = %u\n")
-              ASYS_TEXT ("cont_ = %u\n")
-              ASYS_TEXT ("rd_ptr_ = %u\n")
-              ASYS_TEXT ("wr_ptr_ = %u\n")
-              ASYS_TEXT ("---------------------------\n"),
+              ACE_TEXT ("-----( Message Block )-----\n")
+              ACE_TEXT ("priority_ = %d\n")
+              ACE_TEXT ("next_ = %u\n")
+              ACE_TEXT ("prev_ = %u\n")
+              ACE_TEXT ("cont_ = %u\n")
+              ACE_TEXT ("rd_ptr_ = %u\n")
+              ACE_TEXT ("wr_ptr_ = %u\n")
+              ACE_TEXT ("---------------------------\n"),
               this->priority_,
               this->next_,
               this->prev_,
@@ -339,7 +339,7 @@ ACE_Message_Block::ACE_Message_Block (const char *data,
                     0,  // data_block allocator
                     0) == -1) // message_block allocator
     ACE_ERROR ((LM_ERROR,
-                ASYS_TEXT ("ACE_Message_Block")));
+                ACE_TEXT ("ACE_Message_Block")));
 }
 
 ACE_Message_Block::ACE_Message_Block (ACE_Allocator *message_block_allocator)
@@ -361,7 +361,7 @@ ACE_Message_Block::ACE_Message_Block (ACE_Allocator *message_block_allocator)
                     0, // data_block allocator
                     message_block_allocator) == -1) // message_block allocator
     ACE_ERROR ((LM_ERROR,
-                ASYS_TEXT ("ACE_Message_Block")));
+                ACE_TEXT ("ACE_Message_Block")));
 }
 
 ACE_Message_Block::ACE_Message_Block (size_t size,
@@ -393,7 +393,7 @@ ACE_Message_Block::ACE_Message_Block (size_t size,
                     data_block_allocator,
                     message_block_allocator) == -1)
     ACE_ERROR ((LM_ERROR,
-                ASYS_TEXT ("ACE_Message_Block")));
+                ACE_TEXT ("ACE_Message_Block")));
 }
 
 int
@@ -479,7 +479,7 @@ ACE_Message_Block::ACE_Message_Block (size_t size,
                     data_block_allocator,
                     message_block_allocator) == -1)
     ACE_ERROR ((LM_ERROR,
-                ASYS_TEXT ("ACE_Message_Block")));
+                ACE_TEXT ("ACE_Message_Block")));
 }
 
 ACE_Message_Block::ACE_Message_Block (ACE_Data_Block *data_block,
@@ -502,7 +502,7 @@ ACE_Message_Block::ACE_Message_Block (ACE_Data_Block *data_block,
                     data_block->data_block_allocator (),
                     message_block_allocator) == -1)
     ACE_ERROR ((LM_ERROR,
-                ASYS_TEXT ("ACE_Message_Block")));
+                ACE_TEXT ("ACE_Message_Block")));
 }
 
 int
@@ -1084,13 +1084,13 @@ ACE_Dynamic_Message_Strategy::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("static_bit_field_mask_ = %u\n")
-              ASYS_TEXT ("static_bit_field_shift_ = %u\n")
-              ASYS_TEXT ("dynamic_priority_max_ = %u\n")
-              ASYS_TEXT ("dynamic_priority_offset_ = %u\n")
-              ASYS_TEXT ("max_late_ = [%d sec, %d usec]\n")
-              ASYS_TEXT ("min_pending_ = [%d sec, %d usec]\n")
-              ASYS_TEXT ("pending_shift_ = [%d sec, %d usec]\n"),
+              ACE_TEXT ("static_bit_field_mask_ = %u\n")
+              ACE_TEXT ("static_bit_field_shift_ = %u\n")
+              ACE_TEXT ("dynamic_priority_max_ = %u\n")
+              ACE_TEXT ("dynamic_priority_offset_ = %u\n")
+              ACE_TEXT ("max_late_ = [%d sec, %d usec]\n")
+              ACE_TEXT ("min_pending_ = [%d sec, %d usec]\n")
+              ACE_TEXT ("pending_shift_ = [%d sec, %d usec]\n"),
               this->static_bit_field_mask_,
               this->static_bit_field_shift_,
               this->dynamic_priority_max_,
@@ -1127,10 +1127,10 @@ ACE_Deadline_Message_Strategy::dump (void) const
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
 
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("ACE_Dynamic_Message_Strategy base class: \n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("ACE_Dynamic_Message_Strategy base class: \n")));
   this->ACE_Dynamic_Message_Strategy::dump ();
 
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\nderived class: ACE_Deadline_Message_Strategy\n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nderived class: ACE_Deadline_Message_Strategy\n")));
 
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
@@ -1157,10 +1157,10 @@ ACE_Laxity_Message_Strategy::dump (void) const
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
 
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("ACE_Dynamic_Message_Strategy base class: \n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("ACE_Dynamic_Message_Strategy base class: \n")));
   this->ACE_Dynamic_Message_Strategy::dump ();
 
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\nderived class: ACE_Laxity_Message_Strategy\n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nderived class: ACE_Laxity_Message_Strategy\n")));
 
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }

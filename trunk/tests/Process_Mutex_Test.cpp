@@ -38,8 +38,8 @@ static void
 print_usage_and_die (void)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("usage: %n [-d (don't release mutex)] ")
-              ASYS_TEXT ("[-c (child process)] [-n mutex name]\n")));
+              ACE_TEXT ("usage: %n [-d (don't release mutex)] ")
+              ACE_TEXT ("[-c (child process)] [-n mutex name]\n")));
   ACE_OS::exit (1);
 }
 
@@ -72,7 +72,7 @@ parse_args (int argc, char *argv[])
 static void
 acquire_release (void)
 {
-  ACE_Process_Mutex mutex (ACE_WIDE_STRING (mutex_name));
+  ACE_Process_Mutex mutex (ACE_TEXT_CHAR_TO_TCHAR (mutex_name));
 
   // Make sure the constructor succeeded
   ACE_ASSERT (ACE_LOG_MSG->op_status () == 0);
@@ -81,10 +81,10 @@ acquire_release (void)
   ACE_ASSERT (mutex.acquire () == 0);
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("(%P) Mutex acquired %s\n"),
+              ACE_TEXT ("(%P) Mutex acquired %s\n"),
               mutex_name));
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("(%P) Working....\n")));
+              ACE_TEXT ("(%P) Working....\n")));
 
   // Do some "work", i.e., just sleep for a couple of seconds.
   ACE_OS::sleep (2);
@@ -93,7 +93,7 @@ acquire_release (void)
   if (release_mutex == 1)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("(%P) Releasing the mutex %s\n"),
+                  ACE_TEXT ("(%P) Releasing the mutex %s\n"),
                   mutex_name));
       ACE_ASSERT (mutex.release () == 0);
     }
@@ -101,15 +101,15 @@ acquire_release (void)
 #endif /* ! ACE_LACKS_FORK */
 
 int
-main (int argc, ASYS_TCHAR *argv[])
+main (int argc, ACE_TCHAR *argv[])
 {
 #if defined (ACE_LACKS_FORK)
   ACE_UNUSED_ARG (argc);
   ACE_UNUSED_ARG (argv);
 
-  ACE_START_TEST (ASYS_TEXT ("Process_Mutex_Test"));
+  ACE_START_TEST (ACE_TEXT ("Process_Mutex_Test"));
   ACE_ERROR ((LM_INFO,
-              ASYS_TEXT ("fork is not supported on this platform\n")));
+              ACE_TEXT ("fork is not supported on this platform\n")));
   ACE_END_TEST;
 #else  /* ! ACE_LACKS_FORK */
 
@@ -124,7 +124,7 @@ main (int argc, ASYS_TCHAR *argv[])
     }
   else
     {
-      ACE_START_TEST (ASYS_TEXT ("Process_Mutex_Test"));
+      ACE_START_TEST (ACE_TEXT ("Process_Mutex_Test"));
       ACE_INIT_LOG ("Process_Mutex_Test-children");
 
       ACE_Process_Options options;
@@ -133,13 +133,13 @@ main (int argc, ASYS_TCHAR *argv[])
                               ACE_TEXT ("Process_Mutex_Test")
                               ACE_PLATFORM_EXE_SUFFIX
                               ACE_TEXT (" -c -n %s -d"),
-                              ACE_WIDE_STRING (mutex_name));
+                              ACE_TEXT_CHAR_TO_TCHAR (mutex_name));
       else
         options.command_line (ACE_TEXT (".") ACE_DIRECTORY_SEPARATOR_STR
                               ACE_TEXT ("Process_Mutex_Test")
                               ACE_PLATFORM_EXE_SUFFIX
                               ACE_TEXT (" -c -n %s"),
-                              ACE_WIDE_STRING (mutex_name));
+                              ACE_TEXT_CHAR_TO_TCHAR (mutex_name));
 
       // Spawn <n_processes> child processes that will contend for the
       // lock.
@@ -154,7 +154,7 @@ main (int argc, ASYS_TCHAR *argv[])
           int result = children[i].spawn (options);
           ACE_ASSERT (result != -1);
           ACE_DEBUG ((LM_DEBUG,
-                      ASYS_TEXT ("Parent spawned child process with pid = %d.\n"),
+                      ACE_TEXT ("Parent spawned child process with pid = %d.\n"),
                       children[i].getpid ()));
 
           // Give the newly spawned child process a chance to start...
@@ -166,7 +166,7 @@ main (int argc, ASYS_TCHAR *argv[])
           // Wait for the child processes we created to exit.
           ACE_ASSERT (children[i].wait () != -1);
           ACE_DEBUG ((LM_DEBUG,
-                      ASYS_TEXT ("Parent %d finished\n"),
+                      ACE_TEXT ("Parent %d finished\n"),
                       children[i].getpid ()));
         }
 

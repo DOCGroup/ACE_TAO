@@ -208,10 +208,10 @@ ACE_Stats::print_summary (const u_int precision,
                           const ACE_UINT32 scale_factor,
                           FILE *file) const
 {
-  ASYS_TCHAR mean_string [128];
-  ASYS_TCHAR std_dev_string [128];
-  ASYS_TCHAR min_string [128];
-  ASYS_TCHAR max_string [128];
+  ACE_TCHAR mean_string [128];
+  ACE_TCHAR std_dev_string [128];
+  ACE_TCHAR min_string [128];
+  ACE_TCHAR max_string [128];
   int success = 0;
 
   for (int tmp_precision = precision;
@@ -219,11 +219,11 @@ ACE_Stats::print_summary (const u_int precision,
        --tmp_precision)
     {
       // Build a format string, in case the C library doesn't support %*u.
-      ASYS_TCHAR format[32];
+      ACE_TCHAR format[32];
       if (tmp_precision == 0)
-        ACE_OS::sprintf (format, ASYS_TEXT ("%%%d"), tmp_precision);
+        ACE_OS::sprintf (format, ACE_TEXT ("%%%d"), tmp_precision);
       else
-        ACE_OS::sprintf (format, ASYS_TEXT ("%%d.%%0%du"), tmp_precision);
+        ACE_OS::sprintf (format, ACE_TEXT ("%%d.%%0%du"), tmp_precision);
 
       ACE_Stats_Value u (tmp_precision);
       ((ACE_Stats *) this)->mean (u, scale_factor);
@@ -260,8 +260,8 @@ ACE_Stats::print_summary (const u_int precision,
 
   if (success == 1)
     {
-      ACE_OS::fprintf (file, ASYS_TEXT ("samples: %u (%s - %s); mean: ")
-                       ASYS_TEXT ("%s; std dev: %s\n"),
+      ACE_OS::fprintf (file, ACE_TEXT ("samples: %u (%s - %s); mean: ")
+                       ACE_TEXT ("%s; std dev: %s\n"),
                        samples (), min_string, max_string,
                        mean_string, std_dev_string);
       return 0;
@@ -270,12 +270,12 @@ ACE_Stats::print_summary (const u_int precision,
     {
 #if !defined (ACE_HAS_WINCE)
       ACE_OS::fprintf (file,
-                       ASYS_TEXT ("ACE_Stats::print_summary: OVERFLOW: %s\n"),
-                       ASYS_WIDE_STRING (strerror (overflow_)));
+                       ACE_TEXT ("ACE_Stats::print_summary: OVERFLOW: %s\n"),
+                       strerror (overflow_));
 #else
       // WinCE doesn't have strerror ;(
       ACE_OS::fprintf (file,
-                       ASYS_TEXT ("ACE_Stats::print_summary: OVERFLOW\n"));
+                       ACE_TEXT ("ACE_Stats::print_summary: OVERFLOW\n"));
 #endif /* ACE_HAS_WINCE */
       return -1;
     }
@@ -551,13 +551,13 @@ ACE_Throughput_Stats::accumulate (const ACE_Throughput_Stats &rhs)
 }
 
 void
-ACE_Throughput_Stats::dump_results (const ASYS_TCHAR* msg,
+ACE_Throughput_Stats::dump_results (const ACE_TCHAR* msg,
                                     ACE_UINT32 sf)
 {
   if (this->samples_count_ == 0u)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("%s : no data collected\n"), msg));
+                  ACE_TEXT ("%s : no data collected\n"), msg));
       return;
     }
 
@@ -582,7 +582,7 @@ ACE_Throughput_Stats::dump_results (const ASYS_TCHAR* msg,
   double l_dev = ACE_CU64_TO_CU32 (latency_dev) / (sf * sf);
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("%s latency   : %.2f[%d]/%.2f/%.2f[%d]/%.2f (min/avg/max/var^2)\n"),
+              ACE_TEXT ("%s latency   : %.2f[%d]/%.2f/%.2f[%d]/%.2f (min/avg/max/var^2)\n"),
               msg,
               l_min, this->latency_min_at_,
               l_avg,
@@ -600,7 +600,7 @@ ACE_Throughput_Stats::dump_results (const ASYS_TCHAR* msg,
   double t_avg = ACE_CU64_TO_CU32 (this->samples_count_) / seconds;
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("%s throughput: %.2f (events/second)\n"),
+              ACE_TEXT ("%s throughput: %.2f (events/second)\n"),
               msg, t_avg));
 
 #if 0

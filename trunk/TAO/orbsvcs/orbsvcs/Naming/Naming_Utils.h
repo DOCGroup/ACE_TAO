@@ -67,7 +67,7 @@ public:
                      size_t context_size = ACE_DEFAULT_MAP_SIZE,
                      ACE_Time_Value *timeout = 0,
                      int resolve_for_existing_naming_service = 1,
-                     LPCTSTR persistence_location = 0);
+                     const ACE_TCHAR *persistence_location = 0);
   // Constructor.  Attempts to find an existing Naming Service if
   // <resolve_for_existing_naming_service> is set to true.  If it is
   // false, or no Naming Service was found during a <timeout> period,
@@ -83,7 +83,7 @@ public:
             size_t context_size = ACE_DEFAULT_MAP_SIZE,
             ACE_Time_Value *timeout = 0,
             int resolve_for_existing_naming_service = 1,
-            LPCTSTR persistence_location = 0);
+            const ACE_TCHAR *persistence_location = 0);
   // Initializer.  Attempts to find an existing Naming Service if
   // <resolve_for_existing_naming_service> is set to true.  If it is
   // false, or no Naming Service was found during a <timeout> period,
@@ -106,7 +106,7 @@ public:
 protected:
   int init_new_naming (CORBA::ORB_ptr orb,
                        PortableServer::POA_ptr root_poa,
-                       LPCTSTR persistence_location,
+                       const ACE_TCHAR *persistence_location,
                        size_t context_size);
   // Helper method: create Naming Service locally.
   // Make the root context of size

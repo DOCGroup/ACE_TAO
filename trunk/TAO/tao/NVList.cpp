@@ -334,7 +334,7 @@ CORBA_NVList::_tao_encode (TAO_OutputCDR &cdr,
                 arg = "(nil)";
 
               ACE_DEBUG ((LM_DEBUG,
-                          ASYS_TEXT ("NVList::_tao_encode - parameter <%s>\n"),
+                          ACE_TEXT ("NVList::_tao_encode - parameter <%s>\n"),
                           arg));
             }
           CORBA::TypeCode_var tc = nv->value ()->type ();
@@ -378,7 +378,7 @@ CORBA_NVList::_tao_decode (TAO_InputCDR &incoming,
                            CORBA::Environment &ACE_TRY_ENV)
 {
   if (TAO_debug_level > 3)
-    ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("TAO (%P|%t) : NVList::_tao_decode\n")));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("TAO (%P|%t) : NVList::_tao_decode\n")));
 
   // Then unmarshal each "in" and "inout" parameter.
   ACE_Unbounded_Queue_Iterator<CORBA::NamedValue_ptr> i (this->values_);
@@ -399,7 +399,7 @@ CORBA_NVList::_tao_decode (TAO_InputCDR &incoming,
 
       if (TAO_debug_level > 3)
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("TAO (%P|%t) : NVList::_tao_decode - %s\n"),
+                    ACE_TEXT ("TAO (%P|%t) : NVList::_tao_decode - %s\n"),
                     nv->name ()?nv->name ():"(no name given)" ));
 
       CORBA::Any_ptr any = nv->value ();

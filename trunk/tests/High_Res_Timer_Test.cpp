@@ -39,8 +39,8 @@ check (const u_int interval, const u_int measured)
     return 0;
   else
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ASYS_TEXT ("The measured time of %u differs from ")
-                       ASYS_TEXT ("the interval of %u by %u percent.\n"),
+                       ACE_TEXT ("The measured time of %u differs from ")
+                       ACE_TEXT ("the interval of %u by %u percent.\n"),
                        measured,
                        interval,
                        percentage_difference),
@@ -67,20 +67,20 @@ u_int
 intervals [] = {0, 1, 10, 100, 1000, 10000, 100000, 1000000, 10000000}; /* usec */
 
 int
-main (int argc, ASYS_TCHAR *argv[])
+main (int argc, ACE_TCHAR *argv[])
 {
-  ACE_START_TEST (ASYS_TEXT ("High_Res_Timer_Test"));
+  ACE_START_TEST (ACE_TEXT ("High_Res_Timer_Test"));
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("The ACE_High_Res_Timer scale factor is %u ")
-              ASYS_TEXT ("1/microsecond\n"),
+              ACE_TEXT ("The ACE_High_Res_Timer scale factor is %u ")
+              ACE_TEXT ("1/microsecond\n"),
               ACE_High_Res_Timer::global_scale_factor ()));
 
   u_int errors = 0;
 
   u_int iterations = 1;
 
-  ACE_Get_Opt getopt (argc, argv, ASYS_TEXT ("i:"));
+  ACE_Get_Opt getopt (argc, argv, ACE_TEXT ("i:"));
   for (int c; (c = getopt ()) != -1; )
     switch (c)
       {
@@ -100,11 +100,11 @@ main (int argc, ASYS_TCHAR *argv[])
           const ACE_Time_Value interval (0, intervals[i]);
           const ACE_Time_Value measured = time_interval (interval);
           ACE_DEBUG ((LM_DEBUG,
-                      ASYS_TEXT ("interval: %u usec, measured: %u usec%s\n"),
+                      ACE_TEXT ("interval: %u usec, measured: %u usec%s\n"),
                       interval.sec () * 1000000 + interval.usec (),
                       measured.sec () * 1000000 + measured.usec (),
                       intervals[i] <= TIMER_RESOLUTION  ?
-                      ASYS_TEXT (" (interval and measured may differ)")  :  ASYS_TEXT ("")));
+                      ACE_TEXT (" (interval and measured may differ)")  :  ACE_TEXT ("")));
 
           if (intervals[i] > TIMER_RESOLUTION)
             {

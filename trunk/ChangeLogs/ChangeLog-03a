@@ -1,3 +1,499 @@
+Sat Apr 22 20:53:11 2000  Darrell Brunsch <brunsch@uci.edu>
+
+          This is my first checkin of my Unicode changes.  They should be
+          mostly harmless, since most platforms and build do not use Unicode
+          stuff, in which these changes *should* result in the exact same
+          behavior as before.  
+
+          But, if Unicode was being used, then chances are it is not going
+          to work without a few changes.  A summary of the changes are:
+
+          - Standardized wide char support to the following macros:
+
+            ACE_HAS_WCHAR - if not defined, ACE will not use the type wchar_t
+                            or provide any of the functions that use it.
+            ACE_USES_WCHAR - if defined, ACE will use wchar_t instead of char
+                             for its strings (but not its buffers).
+
+            This support has been mostly completed, but there are still some
+            loose ends that need to be cleaned up.
+
+            Note also that even if ACE_USES_WCHAR is defined or not, both
+            wide and narrow versions of the string operations will be 
+            available.
+
+          - Removed all the ASYS_* macros (besides ASYS_INLINE).  So all code
+            using ASYS_TEXT and ASYS_TCHAR should now use ACE_TEXT and 
+            ACE_TCHAR.  And unlike their predecessers, these *will* turn into
+            wide character versions when ACE_USES_WCHAR is defined.
+
+          - Removed the macros ACE_HAS_WCHAR_TYPEDEFS_USHORT and 
+            ACE_HAS_WCHAR_TYPEDEFS_CHAR since ACE will not depend on what
+            wchar_t defaults to.  
+
+          - Messed around with Windows CE support, most likely it broke it
+            even more.  I've halted my work on Windows CE until after this
+            change, so I'll be fixing it up in upcoming checkins.
+
+          - Since ACE_WString was changed, everything using it will now
+            not be available when ACE_HAS_WCHAR is not defined.
+
+          The motivation for this change was that the Unicode support was
+          a mess and was very unintuitive.  Since I was given the job of
+          maintaining it (since I'm doing Windows CE stuff now), I decided
+          to fix it instead of try to figure out what was currently 
+          happening.  A consistent design is much easier to explain and
+          maintain.
+
+        * ace/ACE.h:
+        * ace/ACE.i:
+        * ace/ACE.cpp:
+        * ace/ARGV.cpp:
+
+          Removed ACE's strecpy since all it did was call ACE_OS's strecpy.
+
+        * ace/ace_wchar.h: (added)
+
+          Moved all the unicode specific stuff here.  
+
+        * ace/SString.cpp:
+        * ace/SString.h:
+        * ace/SString.i:
+          
+          ACE_WString used to use ACE_USHORT16 instead of wchar_t.  I
+          changed it so it does, since it will be more useful and intuitive
+          this way.  
+
+        * ace/Log_Record.cpp:
+
+          We were using ACE_OS::fwrite to print the string.  This didn't work 
+          when the string was wchar_t, so this was changed to ACE_OS::fprintf 
+          instead.
+
+        * TODO:
+        * acconfig.h:
+        * configure.in:
+        * ace/ACE.cpp:
+        * ace/ACE.h:
+        * ace/ACE.i:
+        * ace/ARGV.cpp:
+        * ace/ARGV.h:
+        * ace/ARGV.i:
+        * ace/ATM_Addr.cpp:
+        * ace/ATM_Addr.h:
+        * ace/ATM_Connector.i:
+        * ace/ATM_QoS.cpp:
+        * ace/Acceptor.cpp:
+        * ace/Acceptor.h:
+        * ace/Activation_Queue.cpp:
+        * ace/Addr.cpp:
+        * ace/Arg_Shifter.cpp:
+        * ace/Arg_Shifter.h:
+        * ace/Asynch_Acceptor.cpp:
+        * ace/Asynch_IO.cpp:
+        * ace/Based_Pointer_T.cpp:
+        * ace/Basic_Types.h:
+        * ace/CORBA_Handler.cpp:
+        * ace/Cache_Map_Manager_T.cpp:
+        * ace/Cached_Connect_Strategy_T.cpp:
+        * ace/Caching_Strategies_T.i:
+        * ace/Capabilities.cpp:
+        * ace/Capabilities.h:
+        * ace/Capabilities.i:
+        * ace/Configuration.cpp:
+        * ace/Configuration.h:
+        * ace/Connector.cpp:
+        * ace/Connector.h:
+        * ace/Containers_T.cpp:
+        * ace/DEV_Addr.cpp:
+        * ace/DEV_Addr.h:
+        * ace/DEV_Addr.i:
+        * ace/DEV_Connector.i:
+        * ace/DLL.cpp:
+        * ace/DLL.h:
+        * ace/Dirent.h:
+        * ace/Dirent.i:
+        * ace/Dynamic_Service.cpp:
+        * ace/Dynamic_Service.h:
+        * ace/Env_Value_T.h:
+        * ace/Env_Value_T.i:
+        * ace/FIFO.cpp:
+        * ace/FIFO.h:
+        * ace/FIFO.i:
+        * ace/FIFO_Recv.cpp:
+        * ace/FIFO_Recv.h:
+        * ace/FIFO_Recv_Msg.cpp:
+        * ace/FIFO_Recv_Msg.h:
+        * ace/FIFO_Send.cpp:
+        * ace/FIFO_Send.h:
+        * ace/FIFO_Send_Msg.cpp:
+        * ace/FIFO_Send_Msg.h:
+        * ace/FILE_Addr.cpp:
+        * ace/FILE_Addr.h:
+        * ace/FILE_Addr.i:
+        * ace/FILE_Connector.cpp:
+        * ace/FILE_Connector.i:
+        * ace/Filecache.cpp:
+        * ace/Filecache.h:
+        * ace/Functor.h:
+        * ace/Functor.i:
+        * ace/Future.cpp:
+        * ace/Get_Opt.cpp:
+        * ace/Get_Opt.h:
+        * ace/Handle_Set.cpp:
+        * ace/Hash_Map_Manager_T.cpp:
+        * ace/Hash_Map_Manager_T.i:
+        * ace/High_Res_Timer.cpp:
+        * ace/High_Res_Timer.h:
+        * ace/INET_Addr.cpp:
+        * ace/INET_Addr.h:
+        * ace/INET_Addr.i:
+        * ace/IO_SAP.cpp:
+        * ace/IPC_SAP.cpp:
+        * ace/LSOCK.cpp:
+        * ace/LSOCK_CODgram.cpp:
+        * ace/LSOCK_Connector.cpp:
+        * ace/LSOCK_Dgram.cpp:
+        * ace/Local_Name_Space.cpp:
+        * ace/Local_Name_Space.h:
+        * ace/Local_Name_Space_T.cpp:
+        * ace/Local_Name_Space_T.h:
+        * ace/Local_Tokens.cpp:
+        * ace/Local_Tokens.h:
+        * ace/Local_Tokens.i:
+        * ace/Log_Msg.cpp:
+        * ace/Log_Msg.h:
+        * ace/Log_Record.cpp:
+        * ace/Log_Record.h:
+        * ace/Log_Record.i:
+        * ace/MEM_Acceptor.cpp:
+        * ace/MEM_Acceptor.h:
+        * ace/MEM_Acceptor.i:
+        * ace/MEM_Addr.cpp:
+        * ace/MEM_Addr.h:
+        * ace/MEM_Addr.i:
+        * ace/MEM_Connector.cpp:
+        * ace/MEM_SAP.cpp:
+        * ace/MEM_SAP.h:
+        * ace/Malloc.cpp:
+        * ace/Malloc_T.cpp:
+        * ace/Malloc_T.h:
+        * ace/Malloc_T.i:
+        * ace/Map_Manager.cpp:
+        * ace/Map_Manager.i:
+        * ace/Mem_Map.cpp:
+        * ace/Mem_Map.h:
+        * ace/Mem_Map.i:
+        * ace/Memory_Pool.cpp:
+        * ace/Memory_Pool.h:
+        * ace/Message_Block.cpp:
+        * ace/Message_Queue.cpp:
+        * ace/Message_Queue_T.cpp:
+        * ace/Module.cpp:
+        * ace/Module.h:
+        * ace/Module.i:
+        * ace/NT_Service.cpp:
+        * ace/NT_Service.h:
+        * ace/NT_Service.i:
+        * ace/Name_Proxy.cpp:
+        * ace/Name_Request_Reply.cpp:
+        * ace/Name_Space.cpp:
+        * ace/Name_Space.h:
+        * ace/Naming_Context.cpp:
+        * ace/Naming_Context.h:
+        * ace/OS.cpp:
+        * ace/OS.h:
+        * ace/OS.i:
+        * ace/Object_Manager.cpp:
+        * ace/Obstack.cpp:
+        * ace/Obstack.h:
+        * ace/POSIX_Asynch_IO.cpp:
+        * ace/Parse_Node.cpp:
+        * ace/Parse_Node.h:
+        * ace/Pipe.cpp:
+        * ace/Proactor.cpp:
+        * ace/Process.cpp:
+        * ace/Process.h:
+        * ace/Process.i:
+        * ace/Process_Manager.cpp:
+        * ace/QoS_Manager.cpp:
+        * ace/QoS_Session_Factory.cpp:
+        * ace/QoS_Session_Impl.cpp:
+        * ace/RB_Tree.cpp:
+        * ace/RB_Tree.i:
+        * ace/README:
+        * ace/Read_Buffer.cpp:
+        * ace/Registry.cpp:
+        * ace/Registry.h:
+        * ace/Registry_Name_Space.cpp:
+        * ace/Remote_Name_Space.cpp:
+        * ace/Remote_Name_Space.h:
+        * ace/Remote_Tokens.cpp:
+        * ace/Remote_Tokens.h:
+        * ace/Remote_Tokens.i:
+        * ace/SOCK.cpp:
+        * ace/SOCK_Acceptor.cpp:
+        * ace/SOCK_CODgram.cpp:
+        * ace/SOCK_Connector.cpp:
+        * ace/SOCK_Dgram.cpp:
+        * ace/SOCK_Dgram_Bcast.cpp:
+        * ace/SOCK_Dgram_Bcast.h:
+        * ace/SOCK_Dgram_Mcast.cpp:
+        * ace/SOCK_Dgram_Mcast.h:
+        * ace/SOCK_Dgram_Mcast_QoS.cpp:
+        * ace/SOCK_Dgram_Mcast_QoS.h:
+        * ace/SPIPE_Acceptor.cpp:
+        * ace/SPIPE_Addr.cpp:
+        * ace/SPIPE_Addr.h:
+        * ace/SPIPE_Addr.i:
+        * ace/SPIPE_Connector.cpp:
+        * ace/SString.cpp:
+        * ace/SString.h:
+        * ace/SString.i:
+        * ace/SV_Message_Queue.cpp:
+        * ace/SV_Semaphore_Complex.cpp:
+        * ace/SV_Semaphore_Simple.cpp:
+        * ace/SV_Shared_Memory.cpp:
+        * ace/Select_Reactor_Base.cpp:
+        * ace/Select_Reactor_T.cpp:
+        * ace/Service_Config.cpp:
+        * ace/Service_Config.h:
+        * ace/Service_Config.i:
+        * ace/Service_Manager.cpp:
+        * ace/Service_Manager.h:
+        * ace/Service_Object.cpp:
+        * ace/Service_Object.h:
+        * ace/Service_Object.i:
+        * ace/Service_Repository.cpp:
+        * ace/Service_Repository.h:
+        * ace/Service_Types.cpp:
+        * ace/Service_Types.h:
+        * ace/Service_Types.i:
+        * ace/Shared_Memory_MM.cpp:
+        * ace/Shared_Memory_MM.h:
+        * ace/Shared_Memory_MM.i:
+        * ace/Shared_Object.cpp:
+        * ace/Shared_Object.h:
+        * ace/Singleton.cpp:
+        * ace/Stats.cpp:
+        * ace/Stats.h:
+        * ace/Stats.i:
+        * ace/Strategies_T.cpp:
+        * ace/Strategies_T.i:
+        * ace/Stream.cpp:
+        * ace/Stream.h:
+        * ace/Stream_Modules.cpp:
+        * ace/Stream_Modules.h:
+        * ace/Svc_Conf.h:
+        * ace/Svc_Conf.l:
+        * ace/Svc_Conf.y:
+        * ace/Svc_Conf_l.cpp:
+        * ace/Svc_Conf_y.cpp:
+        * ace/Svc_Handler.cpp:
+        * ace/Svc_Handler.h:
+        * ace/Synch.cpp:
+        * ace/Synch.h:
+        * ace/Synch.i:
+        * ace/Synch_T.cpp:
+        * ace/Synch_T.h:
+        * ace/Synch_T.i:
+        * ace/System_Time.cpp:
+        * ace/System_Time.h:
+        * ace/TLI.cpp:
+        * ace/TLI_Acceptor.cpp:
+        * ace/TLI_Connector.i:
+        * ace/TP_Reactor.cpp:
+        * ace/TP_Reactor.i:
+        * ace/Task_T.cpp:
+        * ace/Task_T.h:
+        * ace/Template_Instantiations.cpp:
+        * ace/Thread_Manager.cpp:
+        * ace/Time_Request_Reply.cpp:
+        * ace/Timeprobe_T.cpp:
+        * ace/Timer_Hash_T.cpp:
+        * ace/Timer_Heap_T.cpp:
+        * ace/Timer_List_T.cpp:
+        * ace/Timer_Queue_Adapters.cpp:
+        * ace/Timer_Queue_T.cpp:
+        * ace/Timer_Wheel_T.cpp:
+        * ace/Token.cpp:
+        * ace/Token.h:
+        * ace/Token_Collection.cpp:
+        * ace/Token_Collection.h:
+        * ace/Token_Collection.i:
+        * ace/Token_Invariants.cpp:
+        * ace/Token_Invariants.h:
+        * ace/Token_Manager.cpp:
+        * ace/Token_Manager.h:
+        * ace/Token_Request_Reply.cpp:
+        * ace/Token_Request_Reply.h:
+        * ace/Token_Request_Reply.i:
+        * ace/Trace.cpp:
+        * ace/Trace.h:
+        * ace/UPIPE_Acceptor.cpp:
+        * ace/UPIPE_Connector.cpp:
+        * ace/UPIPE_Connector.i:
+        * ace/WFMO_Reactor.cpp:
+        * ace/WFMO_Reactor.i:
+        * ace/WIN32_Asynch_IO.cpp:
+        * ace/WIN32_Proactor.cpp:
+        * ace/XTI_ATM_Mcast.i:
+        * ace/config-WinCE.h:
+        * ace/config-all.h:
+        * ace/config-ghs-common.h:
+        * ace/config-tandem.h:
+        * ace/config-win32-borland.h:
+        * ace/config-win32-common.h:
+        * ace/config-win32-msvc.h:
+        * ace/config-win32-visualage.h:
+        * ace/CLASSIX/CLASSIX_CLD_Connector.cpp:
+        * ace/CLASSIX/CLASSIX_CO_Acceptor.cpp:
+        * ace/CLASSIX/CLASSIX_Port.cpp:
+        * ace/CLASSIX/CLASSIX_Port.h:
+        * ace/CLASSIX/CLASSIX_Select_Reactor.cpp:
+        * apps/Gateway/Gateway/Options.cpp:
+        * apps/JAWS/PROTOTYPE/JAWS/JAWS.h:
+        * bin/envinfo.cpp:
+        * docs/ACE-guidelines.html:
+        * docs/tutorials/Chap_3/mm.cpp:
+        * examples/Connection/blocking/SPIPE-acceptor.cpp:
+        * examples/Connection/blocking/SPIPE-acceptor.h:
+        * examples/Connection/blocking/SPIPE-connector.cpp:
+        * examples/Connection/blocking/SPIPE-connector.h:
+        * examples/Connection/non_blocking/test_lsock_acceptor.cpp:
+        * examples/Connection/non_blocking/test_lsock_connector.cpp:
+        * examples/IPC_SAP/ATM_SAP/CPP-client.cpp:
+        * examples/IPC_SAP/ATM_SAP/CPP-server.cpp:
+        * examples/IPC_SAP/SOCK_SAP/CPP-inclient.cpp:
+        * examples/IPC_SAP/SOCK_SAP/CPP-inserver-fancy.cpp:
+        * examples/IPC_SAP/SOCK_SAP/CPP-inserver.cpp:
+        * examples/IPC_SAP/UPIPE_SAP/ex3.cpp:
+        * examples/Naming/test_multiple_contexts.cpp:
+        * examples/Naming/test_non_existent.cpp:
+        * examples/Naming/test_writers.cpp:
+        * examples/Reactor/WFMO_Reactor/test_console_input.cpp:
+        * examples/Reactor/WFMO_Reactor/test_directory_changes.cpp:
+        * examples/Reactor/WFMO_Reactor/test_handle_close.cpp:
+        * examples/Reactor/WFMO_Reactor/test_registry_changes.cpp:
+        * examples/Registry/test_registry_iterator.cpp:
+        * examples/Service_Configurator/Misc/Timer_Service.cpp:
+        * examples/Service_Configurator/Misc/Timer_Service.h:
+        * examples/Service_Configurator/Misc/main.cpp:
+        * examples/Service_Configurator/Misc/main.dsp:
+        * examples/Web_Crawler/Options.cpp:
+        * examples/Web_Crawler/Options.h:
+        * examples/Web_Crawler/URL_Addr.cpp:
+        * examples/Web_Crawler/URL_Addr.h:
+        * netsvcs/clients/Logger/indirect_logging.cpp:
+        * netsvcs/clients/Naming/Client/main.cpp:
+        * netsvcs/lib/Logging_Strategy.cpp:
+        * netsvcs/lib/TS_Clerk_Handler.cpp:
+        * netsvcs/lib/TS_Clerk_Handler.h:
+        * performance-tests/Misc/test_naming.cpp:
+        * performance-tests/Server_Concurrency/Leader_Follower/leader_follower.cpp:
+        * performance-tests/Server_Concurrency/Queue_Based_Workers/workers.cpp:
+        * performance-tests/TCP/tcp_test.cpp:
+        * tests/ACE_Init_Test.dsp:
+        * tests/ARGV_Test.cpp:
+        * tests/Atomic_Op_Test.cpp:
+        * tests/Auto_IncDec_Test.cpp:
+        * tests/Barrier_Test.cpp:
+        * tests/Basic_Types_Test.cpp:
+        * tests/Buffer_Stream_Test.cpp:
+        * tests/CDR_File_Test.cpp:
+        * tests/CDR_Test.cpp:
+        * tests/Cache_Map_Manager_Test.cpp:
+        * tests/Cached_Accept_Conn_Test.cpp:
+        * tests/Cached_Conn_Test.cpp:
+        * tests/Capabilities_Test.cpp:
+        * tests/Collection_Test.cpp:
+        * tests/Conn_Test.cpp:
+        * tests/DLL_Test.cpp:
+        * tests/DLL_Test.h:
+        * tests/DLList_Test.cpp:
+        * tests/Dynamic_Priority_Test.cpp:
+        * tests/Enum_Interfaces_Test.cpp:
+        * tests/Env_Value_Test.cpp:
+        * tests/FlReactor_Test.cpp:
+        * tests/Future_Set_Test.cpp:
+        * tests/Future_Test.cpp:
+        * tests/Handle_Set_Test.cpp:
+        * tests/Hash_Map_Bucket_Iterator_Test.cpp:
+        * tests/Hash_Map_Manager_Test.cpp:
+        * tests/High_Res_Timer_Test.cpp:
+        * tests/IOStream_Test.cpp:
+        * tests/Lazy_Map_Manager_Test.cpp:
+        * tests/Log_Msg_Test.cpp:
+        * tests/MM_Shared_Memory_Test.cpp:
+        * tests/MT_Reactor_Timer_Test.cpp:
+        * tests/MT_SOCK_Test.cpp:
+        * tests/Malloc_Test.cpp:
+        * tests/Map_Manager_Test.cpp:
+        * tests/Map_Test.cpp:
+        * tests/Mem_Map_Test.cpp:
+        * tests/Message_Block_Test.cpp:
+        * tests/Message_Queue_Notifications_Test.cpp:
+        * tests/Message_Queue_Test.cpp:
+        * tests/Naming_Test.cpp:
+        * tests/New_Fail_Test.cpp:
+        * tests/Notify_Performance_Test.cpp:
+        * tests/Object_Manager_Test.cpp:
+        * tests/OrdMultiSet_Test.cpp:
+        * tests/Pipe_Test.cpp:
+        * tests/Priority_Buffer_Test.cpp:
+        * tests/Priority_Reactor_Test.cpp:
+        * tests/Priority_Task_Test.cpp:
+        * tests/Process_Manager_Test.cpp:
+        * tests/Process_Mutex_Test.cpp:
+        * tests/Process_Strategy_Test.cpp:
+        * tests/Process_Strategy_Test.h:
+        * tests/RB_Tree_Test.cpp:
+        * tests/Reactor_Exceptions_Test.cpp:
+        * tests/Reactor_Notify_Test.cpp:
+        * tests/Reactor_Performance_Test.cpp:
+        * tests/Reactor_Timer_Test.cpp:
+        * tests/Reactors_Test.cpp:
+        * tests/Reader_Writer_Test.cpp:
+        * tests/Recursive_Mutex_Test.cpp:
+        * tests/Reverse_Lock_Test.cpp:
+        * tests/SOCK_Connector_Test.cpp:
+        * tests/SOCK_Send_Recv_Test.cpp:
+        * tests/SOCK_Test.cpp:
+        * tests/SPIPE_Test.cpp:
+        * tests/SString_Test.cpp:
+        * tests/SV_Shared_Memory_Test.cpp:
+        * tests/Semaphore_Test.cpp:
+        * tests/Service_Config_Test.cpp:
+        * tests/Signal_Test.cpp:
+        * tests/Sigset_Ops_Test.cpp:
+        * tests/Simple_Message_Block_Test.cpp:
+        * tests/Svc_Handler_Test.cpp:
+        * tests/TSS_Test.cpp:
+        * tests/Task_Test.cpp:
+        * tests/Thread_Manager_Test.cpp:
+        * tests/Thread_Mutex_Test.cpp:
+        * tests/Thread_Pool_Reactor_Test.cpp:
+        * tests/Thread_Pool_Test.cpp:
+        * tests/Time_Service_Test.cpp:
+        * tests/Time_Value_Test.cpp:
+        * tests/Timeprobe_Test.cpp:
+        * tests/Timer_Queue_Test.cpp:
+        * tests/TkReactor_Test.cpp:
+        * tests/Tokens_Test.cpp:
+        * tests/UPIPE_SAP_Test.cpp:
+        * tests/Upgradable_RW_Test.cpp:
+        * tests/XtReactor_Test.cpp:
+        * tests/test_config.h:
+        * websvcs/lib/URL_Addr.cpp:
+        * websvcs/lib/URL_Addr.h:
+        * websvcs/lib/URL_Addr.i:
+        * websvcs/tests/Test_URL_Addr.cpp:
+
+          Made all the appropriate changes to support the new wide char
+          policy.  Most changes were macro changes, changing ASYS_* to
+          ACE_*, changing char's to ACE_TCHAR's, adding in ACE_TEXT ()'s
+          when necessary, etc.
+
 Sat Apr 22 18:41:06 2000  Vishal Kachroo  <vishal@cs.wustl.edu>
 
 	* ace/SOCK_Dgram_Mcast.h:

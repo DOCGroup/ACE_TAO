@@ -3,10 +3,12 @@
 
 #include "ace/Remote_Name_Space.h"
 
+#if defined (ACE_HAS_WCHAR)
+
 ACE_RCSID(ace, Remote_Name_Space, "$Id$")
 
 int
-ACE_Remote_Name_Space::open (const ASYS_TCHAR *servername, u_short port)
+ACE_Remote_Name_Space::open (const ACE_TCHAR *servername, u_short port)
 {
   ACE_TRACE ("ACE_Remote_Name_Space::open");
   ACE_INET_Addr servaddr;
@@ -27,12 +29,12 @@ ACE_Remote_Name_Space::ACE_Remote_Name_Space (void)
   ACE_TRACE ("ACE_Remote_Name_Space::ACE_Remote_Name_Space");
 }
 
-ACE_Remote_Name_Space::ACE_Remote_Name_Space (const ASYS_TCHAR *hostname,
+ACE_Remote_Name_Space::ACE_Remote_Name_Space (const ACE_TCHAR *hostname,
 					      u_short port)
 {
   ACE_TRACE ("ACE_Remote_Name_Space::ACE_Remote_Name_Space");
   if (this->open (hostname, port) == -1)
-    ACE_ERROR ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("ACE_Remote_Name_Space::ACE_Remote_Name_Space")));
+    ACE_ERROR ((LM_ERROR,  ACE_TEXT ("%p\n"),  ACE_TEXT ("ACE_Remote_Name_Space::ACE_Remote_Name_Space")));
 }
 
 int
@@ -124,8 +126,8 @@ ACE_Remote_Name_Space::list_names (ACE_WSTRING_SET &set,
     {
       if (this->ns_proxy_.recv_reply (reply) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ASYS_TEXT ("%p\n"),
-                           ASYS_TEXT ("ACE_Remote_Name_Space::list_names")),
+                           ACE_TEXT ("%p\n"),
+                           ACE_TEXT ("ACE_Remote_Name_Space::list_names")),
                            -1);
       if (reply.msg_type () != ACE_Name_Request::MAX_ENUM)
 	{
@@ -155,8 +157,8 @@ ACE_Remote_Name_Space::list_values (ACE_WSTRING_SET &set,
     {
       if (this->ns_proxy_.recv_reply (reply) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ASYS_TEXT ("%p\n"),
-                           ASYS_TEXT ("ACE_Remote_Name_Space::list_values")),
+                           ACE_TEXT ("%p\n"),
+                           ACE_TEXT ("ACE_Remote_Name_Space::list_values")),
                            -1);
       if (reply.msg_type () != ACE_Name_Request::MAX_ENUM)
 	{
@@ -188,8 +190,8 @@ ACE_Remote_Name_Space::list_types (ACE_WSTRING_SET &set,
     {
       if (this->ns_proxy_.recv_reply (reply) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ASYS_TEXT ("%p\n"),
-                           ASYS_TEXT ("ACE_Remote_Name_Space::list_values")),
+                           ACE_TEXT ("%p\n"),
+                           ACE_TEXT ("ACE_Remote_Name_Space::list_values")),
                            -1);
       if (reply.msg_type () != ACE_Name_Request::MAX_ENUM)
 	{
@@ -220,8 +222,8 @@ ACE_Remote_Name_Space::list_name_entries (ACE_BINDING_SET &set,
     {
       if (this->ns_proxy_.recv_reply (reply) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ASYS_TEXT ("%p\n"),
-                           ASYS_TEXT ("ACE_Remote_Name_Space::list_names")),
+                           ACE_TEXT ("%p\n"),
+                           ACE_TEXT ("ACE_Remote_Name_Space::list_names")),
                            -1);
       if (reply.msg_type () != ACE_Name_Request::MAX_ENUM)
 	{
@@ -258,8 +260,8 @@ ACE_Remote_Name_Space::list_value_entries (ACE_BINDING_SET &set,
     {
       if (this->ns_proxy_.recv_reply (reply) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ASYS_TEXT ("%p\n"),
-                           ASYS_TEXT ("ACE_Remote_Name_Space::list_values")),
+                           ACE_TEXT ("%p\n"),
+                           ACE_TEXT ("ACE_Remote_Name_Space::list_values")),
                            -1);
       if (reply.msg_type () != ACE_Name_Request::MAX_ENUM)
 	{
@@ -296,8 +298,8 @@ ACE_Remote_Name_Space::list_type_entries (ACE_BINDING_SET &set,
     {
       if (this->ns_proxy_.recv_reply (reply) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ASYS_TEXT ("%p\n"),
-                           ASYS_TEXT ("ACE_Remote_Name_Space::list_values")),
+                           ACE_TEXT ("%p\n"),
+                           ACE_TEXT ("ACE_Remote_Name_Space::list_values")),
                           -1);
       if (reply.msg_type () != ACE_Name_Request::MAX_ENUM)
 	{
@@ -329,3 +331,5 @@ ACE_Remote_Name_Space::dump (void) const
   this->ns_proxy_.dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
+
+#endif /* ACE_HAS_WCHAR */

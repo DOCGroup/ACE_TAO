@@ -14,23 +14,23 @@ ACE_RCSID(ace, Log_Record, "$Id$")
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Log_Record)
 
-const ASYS_TCHAR *ACE_Log_Record::priority_names_[] =
+const ACE_TCHAR *ACE_Log_Record::priority_names_[] =
 {
-  ASYS_TEXT ("<none>"),
-  ASYS_TEXT ("LM_SHUTDOWN"),
-  ASYS_TEXT ("LM_TRACE"),
-  ASYS_TEXT ("LM_DEBUG"),
-  ASYS_TEXT ("LM_INFO"),
-  ASYS_TEXT ("LM_NOTICE"),
-  ASYS_TEXT ("LM_WARNING"),
-  ASYS_TEXT ("LM_STARTUP"),
-  ASYS_TEXT ("LM_ERROR"),
-  ASYS_TEXT ("LM_CRITICAL"),
-  ASYS_TEXT ("LM_ALERT"),
-  ASYS_TEXT ("LM_EMERGENCY")
+  ACE_TEXT ("<none>"),
+  ACE_TEXT ("LM_SHUTDOWN"),
+  ACE_TEXT ("LM_TRACE"),
+  ACE_TEXT ("LM_DEBUG"),
+  ACE_TEXT ("LM_INFO"),
+  ACE_TEXT ("LM_NOTICE"),
+  ACE_TEXT ("LM_WARNING"),
+  ACE_TEXT ("LM_STARTUP"),
+  ACE_TEXT ("LM_ERROR"),
+  ACE_TEXT ("LM_CRITICAL"),
+  ACE_TEXT ("LM_ALERT"),
+  ACE_TEXT ("LM_EMERGENCY")
 };
 
-const ASYS_TCHAR *
+const ACE_TCHAR *
 ACE_Log_Record::priority_name (ACE_Log_Priority p)
 {
   return ACE_Log_Record::priority_names_[ACE::log2 (p)];
@@ -56,16 +56,16 @@ ACE_Log_Record::dump (void) const
   // ACE_TRACE ("ACE_Log_Record::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("length_ = %d\n"), this->length_));
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\ntype_ = %d\n"), this->type_));
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\ntime_stamp_ = (%d, %d)\n"), this->time_stamp_.sec (), this->time_stamp_.usec ()));
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\npid_ = %d\n"), this->pid_));
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\nmsg_data_ = %s\n"), this->msg_data_));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("length_ = %d\n"), this->length_));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\ntype_ = %d\n"), this->type_));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\ntime_stamp_ = (%d, %d)\n"), this->time_stamp_.sec (), this->time_stamp_.usec ()));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\npid_ = %d\n"), this->pid_));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nmsg_data_ = %s\n"), this->msg_data_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
 void
-ACE_Log_Record::msg_data (const ASYS_TCHAR *data)
+ACE_Log_Record::msg_data (const ACE_TCHAR *data)
 {
   // ACE_TRACE ("ACE_Log_Record::msg_data");
   ACE_OS::strncpy (this->msg_data_, data, ACE_Log_Record::MAXLOGMSGLEN);
@@ -100,7 +100,7 @@ ACE_Log_Record::round_up (void)
   // ACE_TRACE ("ACE_Log_Record::round_up");
   // Determine the length of the payload.
   int len = (sizeof (*this) - sizeof (this->msg_data_))
-    + (sizeof (ASYS_TCHAR) * ((ACE_OS::strlen (this->msg_data_) + 1)));
+    + (sizeof (ACE_TCHAR) * ((ACE_OS::strlen (this->msg_data_) + 1)));
 
   // Round up to the alignment.
   this->length_ = ((len + ACE_Log_Record::ALIGN_WORDB - 1)
@@ -117,13 +117,13 @@ ACE_Log_Record::ACE_Log_Record (void)
 }
 
 int
-ACE_Log_Record::format_msg (const ASYS_TCHAR *host_name,
+ACE_Log_Record::format_msg (const ACE_TCHAR *host_name,
                             u_long verbose_flag,
-                            ASYS_TCHAR *verbose_msg)
+                            ACE_TCHAR *verbose_msg)
 {
   /* 0123456789012345678901234     */
   /* Oct 18 14:25:36.000 1989<nul> */
-  ASYS_TCHAR timestamp[26]; // Only used by VERBOSE and VERBOSE_LITE.
+  ACE_TCHAR timestamp[26]; // Only used by VERBOSE and VERBOSE_LITE.
 
   if (ACE_BIT_ENABLED (verbose_flag,
                        ACE_Log_Msg::VERBOSE)
@@ -131,7 +131,7 @@ ACE_Log_Record::format_msg (const ASYS_TCHAR *host_name,
                           ACE_Log_Msg::VERBOSE_LITE))
     {
       time_t now = this->time_stamp_.sec ();
-      ASYS_TCHAR ctp[26]; // 26 is a magic number...
+      ACE_TCHAR ctp[26]; // 26 is a magic number...
 
       if (ACE_OS::ctime_r (&now, ctp, sizeof ctp) == 0)
         return -1;
@@ -143,7 +143,7 @@ ACE_Log_Record::format_msg (const ASYS_TCHAR *host_name,
       ctp[24] = '\0'; // NUL-terminate after the date.
 
       ACE_OS::sprintf (timestamp,
-                       ASYS_TEXT ("%s.%03ld %s"),
+                       ACE_TEXT ("%s.%03ld %s"),
                        ctp + 4,
                        this->time_stamp_.usec () / 1000,
                        ctp + 20);
@@ -153,16 +153,16 @@ ACE_Log_Record::format_msg (const ASYS_TCHAR *host_name,
                        ACE_Log_Msg::VERBOSE))
     {
 # if defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS)
-      const ASYS_TCHAR *lhost_name =  (const ASYS_TCHAR *) ((host_name == 0)
-                                                            ? ((char *) ASYS_TEXT ("<local_host>"))
+      const ACE_TCHAR *lhost_name =  (const ACE_TCHAR *) ((host_name == 0)
+                                                            ? ((char *) ACE_TEXT ("<local_host>"))
                                                             : ((char *) host_name));
 # else /* ! defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS) */
-      const ASYS_TCHAR *lhost_name = ((host_name == 0)
-                                      ? ASYS_TEXT ("<local_host>")
+      const ACE_TCHAR *lhost_name = ((host_name == 0)
+                                      ? ACE_TEXT ("<local_host>")
                                       : host_name);
 # endif /* ! defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS) */
       ACE_OS::sprintf (verbose_msg,
-                       ASYS_TEXT ("%s@%s@%ld@%s@%s"),
+                       ACE_TEXT ("%s@%s@%ld@%s@%s"),
                        timestamp,
                        lhost_name,
                        this->pid_,
@@ -171,13 +171,13 @@ ACE_Log_Record::format_msg (const ASYS_TCHAR *host_name,
     }
   else if (ACE_BIT_ENABLED (verbose_flag, ACE_Log_Msg::VERBOSE_LITE))
     ACE_OS::sprintf (verbose_msg,
-                     ASYS_TEXT ("%s@%s@%s"),
+                     ACE_TEXT ("%s@%s@%s"),
                      timestamp,
                      ACE_Log_Record::priority_name (ACE_Log_Priority (this->type_)),
                      this->msg_data_);
   else
     ACE_OS::sprintf (verbose_msg,
-                     ASYS_TEXT ("%s"),
+                     ACE_TEXT ("%s"),
                      this->msg_data_);
   return 0;
 }
@@ -185,11 +185,11 @@ ACE_Log_Record::format_msg (const ASYS_TCHAR *host_name,
 #if defined (ACE_HAS_WINCE)
 
 int
-ACE_Log_Record::print (const ASYS_TCHAR *host_name,
+ACE_Log_Record::print (const ACE_TCHAR *host_name,
                        u_long verbose_flag,
                        ACE_CE_Bridge *log_window)
 {
-  ASYS_TCHAR verbose_msg [MAXVERBOSELOGMSGLEN];
+  ACE_TCHAR verbose_msg [MAXVERBOSELOGMSGLEN];
   int result = this->format_msg (host_name, verbose_flag, verbose_msg);
 
   if (result == 0)
@@ -207,22 +207,19 @@ ACE_Log_Record::print (const ASYS_TCHAR *host_name,
 #endif /* defined (ACE_HAS_WINCE) */
 
 int
-ACE_Log_Record::print (const ASYS_TCHAR *host_name,
+ACE_Log_Record::print (const ACE_TCHAR *host_name,
                        u_long verbose_flag,
                        FILE *fp)
 {
-  ASYS_TCHAR verbose_msg [MAXVERBOSELOGMSGLEN];
+  ACE_TCHAR verbose_msg [MAXVERBOSELOGMSGLEN];
   int result = this->format_msg (host_name, verbose_flag, verbose_msg);
 
   if (result == 0)
     {
       if (fp != NULL)
         {
-          size_t verbose_msg_len = ACE_OS::strlen (verbose_msg);
-          size_t fwrite_result = ACE_OS::fwrite (verbose_msg,
-                                                 1,
-                                                 verbose_msg_len,
-                                                 fp);
+          int verbose_msg_len = ACE_OS::strlen (verbose_msg);
+          int fwrite_result = ACE_OS::fprintf (fp, verbose_msg);
 
           // We should have written everything
           if (fwrite_result != verbose_msg_len)
@@ -242,16 +239,17 @@ ACE_Log_Record::print (const ASYS_TCHAR *host_name,
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
 
 int
-ACE_Log_Record::print (const ASYS_TCHAR *host_name,
+ACE_Log_Record::print (const ACE_TCHAR *host_name,
                        u_long verbose_flag,
                        ostream &s)
 {
-  ASYS_TCHAR verbose_msg [MAXVERBOSELOGMSGLEN];
+  ACE_TCHAR verbose_msg [MAXVERBOSELOGMSGLEN];
   int result = this->format_msg (host_name, verbose_flag, verbose_msg);
 
   if (result == 0)
     {
-      s << verbose_msg;
+      // Since ostream expects only chars, we cannot pass wchar_t's
+      s << ACE_TEXT_ALWAYS_CHAR (verbose_msg);
       s.flush ();
     }
 

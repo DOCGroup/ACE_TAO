@@ -33,26 +33,26 @@ ACE_RCSID(tests, SPIPE_Test, "$Id$")
 
 #if defined (ACE_HAS_STREAM_PIPES) || defined (ACE_WIN32)
 // pipe name to use
-static const char *PIPE_NAME = "ace_pipe_name";
+static const ACE_TCHAR *PIPE_NAME = ACE_TEXT ("ace_pipe_name");
 
 static void *
 client (void *)
 {
-  const char *rendezvous = PIPE_NAME;
+  const ACE_TCHAR *rendezvous = PIPE_NAME;
   ACE_SPIPE_Stream cli_stream;
   ACE_SPIPE_Connector con;
 
   ACE_OS::sleep (10);
 
-  if (con.connect (cli_stream, ACE_SPIPE_Addr (ACE_WIDE_STRING (rendezvous))) == -1)
-    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("%p\n"), rendezvous));
+  if (con.connect (cli_stream, ACE_SPIPE_Addr (rendezvous)) == -1)
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), rendezvous));
 
   for (char *c = ACE_ALPHABET; *c != '\0'; c++)
     if (cli_stream.send (c, 1) == -1)
-      ACE_ERROR ((LM_ERROR, ASYS_TEXT ("%p\n"), ASYS_TEXT ("send_n")));
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("send_n")));
 
   if (cli_stream.close () == -1)
-    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("%p\n"), ASYS_TEXT ("close")));
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("close")));
 
 #if !defined (ACE_WIN32)
   ACE_OS::exit (0);
@@ -68,27 +68,27 @@ server (void *)
   char buf[BUFSIZ];
   char *t = ACE_ALPHABET;
 
-  const char *rendezvous = PIPE_NAME;
+  const ACE_TCHAR *rendezvous = PIPE_NAME;
 
   // Initialize named pipe listener.
 
-  if (acceptor.open (ACE_SPIPE_Addr (ACE_WIDE_STRING (rendezvous))) == -1)
-    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("%p\n"), ASYS_TEXT ("open")));
+  if (acceptor.open (ACE_SPIPE_Addr (rendezvous)) == -1)
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("open")));
 
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("waiting for connection\n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("waiting for connection\n")));
 
   // Accept a client connection
   if (acceptor.accept (new_stream, 0) == -1)
-    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("%p\n"), ASYS_TEXT ("accept")));
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("accept")));
 
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("Accepted connection\n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Accepted connection\n")));
 
   while (new_stream.recv (buf, 1) > 0)
     {
       ACE_ASSERT (*t == buf[0]);
       t++;
     }
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("End of connection. Closing handle\n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("End of connection. Closing handle\n")));
   new_stream.close ();
   acceptor.close ();
   return 0;
@@ -96,16 +96,16 @@ server (void *)
 #endif /* ACE_HAS_STREAM_PIPES || ACE_WIN32 */
 
 int
-main (int, ASYS_TCHAR *[])
+main (int, ACE_TCHAR *[])
 {
-  ACE_START_TEST (ASYS_TEXT ("SPIPE_Test"));
+  ACE_START_TEST (ACE_TEXT ("SPIPE_Test"));
 
 #if defined (ACE_HAS_STREAM_PIPES) || defined (ACE_WIN32)
 #if !defined (ACE_LACKS_FORK)
   switch (ACE_OS::fork ())
     {
     case -1:
-      ACE_ERROR ((LM_ERROR, ASYS_TEXT ("%p\n%a"), ASYS_TEXT ("fork failed")));
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n%a"), ACE_TEXT ("fork failed")));
       exit (-1);
     case 0:
       client (0);
@@ -116,18 +116,18 @@ main (int, ASYS_TCHAR *[])
   if (ACE_Thread_Manager::instance ()->spawn (ACE_THR_FUNC (client),
                                               (void *) 0,
                                               THR_NEW_LWP | THR_DETACHED) == -1)
-    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("%p\n%a"), ASYS_TEXT ("thread create failed")));
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n%a"), ACE_TEXT ("thread create failed")));
 
   if (ACE_Thread_Manager::instance ()->spawn (ACE_THR_FUNC (server),
                                               (void *) 0,
                                               THR_NEW_LWP | THR_DETACHED) == -1)
-    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("%p\n%a"), ASYS_TEXT ("thread create failed")));
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n%a"), ACE_TEXT ("thread create failed")));
 
   ACE_Thread_Manager::instance ()->wait ();
 #endif /* !ACE_LACKS_EXEC */
 #else
   ACE_DEBUG ((LM_INFO,
-              ASYS_TEXT ("SPIPE is not supported on this platform\n")));
+              ACE_TEXT ("SPIPE is not supported on this platform\n")));
 #endif /* ACE_HAS_STREAM_PIPES || ACE_WIN32 */
   ACE_END_TEST;
   return 0;

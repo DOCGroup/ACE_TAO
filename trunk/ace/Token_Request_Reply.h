@@ -60,8 +60,8 @@ public:
   ACE_Token_Request (int token_type,
                      int proxy_type,
                      ACE_UINT32 operation,
-                     const char token_name[],
-                     const char client_id[],
+                     const ACE_TCHAR token_name[],
+                     const ACE_TCHAR client_id[],
                      const ACE_Synch_Options &options);
   // token_type - MUTEX, RWLOCK
   // proxy_type - MUTEX, RLOCK, WLOCK (acquires mean different things)
@@ -102,9 +102,9 @@ public:
   // = Set/get the name of the token and the client id.  The set
   // method is combined to make it easier on us.  We're copying the
   // names as a contiguous buffer.
-  char *token_name (void) const;
-  char *client_id (void) const;
-  void token_name (const char *token_name, const char* client_id);
+  ACE_TCHAR *token_name (void) const;
+  ACE_TCHAR *client_id (void) const;
+  void token_name (const ACE_TCHAR *token_name, const ACE_TCHAR *client_id);
 
   int encode (void *&);
   // Encode the message before transmission.
@@ -157,15 +157,15 @@ private:
     ACE_UINT32 arg_;
     // value returned in <Token_Reply::arg>;
 
-    char data_[ACE_MAXTOKENNAMELEN + ACE_MAXCLIENTIDLEN + 3];
+    ACE_TCHAR data_[ACE_MAXTOKENNAMELEN + ACE_MAXCLIENTIDLEN + 3];
     // The data portion contains the <tokenName_> including a 0 terminator,
     // a ':', then the <clientId> including a 0 terminator
   } transfer_;
 
-  char *token_name_;
+  ACE_TCHAR *token_name_;
   // Pointer to the beginning of the token name in this->data_.
 
-  char *client_id_;
+  ACE_TCHAR *client_id_;
   // Pointer to the beginning of the client id in this->data_;
 
   ACE_Synch_Options options_;

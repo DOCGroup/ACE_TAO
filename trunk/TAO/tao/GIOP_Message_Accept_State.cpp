@@ -367,8 +367,8 @@ write_locate_reply_mesg (TAO_OutputCDR &output,
         {
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG,
-                        ASYS_TEXT ("TAO (%P|%t|%N|%l) write_locate_reply_mesg-")
-                        ASYS_TEXT (" cannot marshal object reference\n")));
+                        ACE_TEXT ("TAO (%P|%t|%N|%l) write_locate_reply_mesg-")
+                        ACE_TEXT (" cannot marshal object reference\n")));
         }
     }
 
@@ -531,7 +531,7 @@ TAO_GIOP_Message_Accept_State_12::
   // Store it in the Locate request classes
   request.request_id (req_id);
 
-    // Read the discriminant of the union.
+  // Read the discriminant of the union.
   CORBA::Short disc = 0;
   hdr_status = 
     hdr_status && msg.read_short (disc);
@@ -698,8 +698,8 @@ write_locate_reply_mesg (TAO_OutputCDR & output,
         {
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG,
-                        ASYS_TEXT ("TAO (%P|%t|%N|%l) write_locate_reply_mesg-")
-                        ASYS_TEXT (" cannot marshal object reference\n")));
+                        ACE_TEXT ("TAO (%P|%t|%N|%l) write_locate_reply_mesg-")
+                        ACE_TEXT (" cannot marshal object reference\n")));
         }
       }
       break;

@@ -77,9 +77,9 @@ TAO_Default_Client_Strategy_Factory::parse_args (int argc, char ** argv)
                                    "-ORBIIOPProfileLock") == 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ASYS_TEXT ("WARNING: The -ORBIIOPProfileLock option")
-                      ASYS_TEXT (" is deprecated and will be removed.\n")
-                      ASYS_TEXT ("         Please use -ORBProfileLock instead\n")));
+                      ACE_TEXT ("WARNING: The -ORBIIOPProfileLock option")
+                      ACE_TEXT (" is deprecated and will be removed.\n")
+                      ACE_TEXT ("         Please use -ORBProfileLock instead\n")));
           curarg++;
           if (curarg < argc)
             {
@@ -241,7 +241,7 @@ TAO_Default_Client_Strategy_Factory::create_cached_connector_lock (void)
 // ****************************************************************
 
 ACE_STATIC_SVC_DEFINE (TAO_Default_Client_Strategy_Factory,
-                       ASYS_TEXT ("Client_Strategy_Factory"),
+                       ACE_TEXT ("Client_Strategy_Factory"),
                        ACE_SVC_OBJ_T,
                        &ACE_SVC_NAME (TAO_Default_Client_Strategy_Factory),
                        ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,

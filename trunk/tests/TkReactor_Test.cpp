@@ -33,7 +33,7 @@ ACE_RCSID(tests, TkReactor_Test, "$Id$")
 
 int main (int, char*[])
 {
-  ACE_START_TEST (ASYS_TEXT ("TkReactor_Test"));
+  ACE_START_TEST (ACE_TEXT ("TkReactor_Test"));
 
   ACE_ERROR ((LM_ERROR,
               "Tk not supported on this platform\n"));
@@ -267,7 +267,7 @@ init (Tcl_Interp *interp)
 int
 main (int argc, char *argv[])
 {
-  ACE_START_TEST (ASYS_TEXT ("TkReactor_Test"));
+  ACE_START_TEST (ACE_TEXT ("TkReactor_Test"));
 
   tcl_interp   = Tcl_CreateInterp ();
 

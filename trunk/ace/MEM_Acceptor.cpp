@@ -45,7 +45,7 @@ ACE_MEM_Acceptor::ACE_MEM_Acceptor (const ACE_MEM_Addr &remote_sap,
                   backlog,
                   protocol) == -1)
     ACE_ERROR ((LM_ERROR,
-                "ACE_MEM_Acceptor::ACE_MEM_Acceptor"));
+                ACE_TEXT ("ACE_MEM_Acceptor::ACE_MEM_Acceptor")));
 }
 
 int
@@ -107,7 +107,7 @@ ACE_MEM_Acceptor::accept (ACE_MEM_Stream &new_stream,
 
   // Allocate 2 * MAXPATHLEN so we can accomodate the unique
   // name that gets appended later
-  TCHAR buf [2 * MAXPATHLEN + 1];
+  ACE_TCHAR buf [2 * MAXPATHLEN + 1];
 
   ACE_INET_Addr local_addr;
   if (new_stream.get_local_addr (local_addr) == -1)
@@ -122,13 +122,13 @@ ACE_MEM_Acceptor::accept (ACE_MEM_Stream &new_stream,
     }
   else
     {
-      TCHAR name[25];
+      ACE_TCHAR name[25];
       // - 24 is so we can append name to the end.
       if (ACE::get_temp_dir (buf, MAXPATHLEN - 24) == -1)
         {
           ACE_ERROR ((LM_ERROR, 
-                      "Temporary path too long, "
-                      "defaulting to current directory\n"));
+                      ACE_TEXT ("Temporary path too long, ")
+                      ACE_TEXT ("defaulting to current directory\n")));
           buf[0] = 0;
         }
 
@@ -137,7 +137,7 @@ ACE_MEM_Acceptor::accept (ACE_MEM_Stream &new_stream,
                        local_addr.get_port_number ());
       ACE_OS::strcat (buf, name);
     }
-  TCHAR unique [MAXPATHLEN];
+  ACE_TCHAR unique [MAXPATHLEN];
   ACE_OS::unique_name (&new_stream, unique, MAXPATHLEN);
   
   ACE_OS::strcat (buf, unique);
@@ -150,7 +150,7 @@ ACE_MEM_Acceptor::accept (ACE_MEM_Stream &new_stream,
     return -1;
 
   // @@ Need to handle timeout here.
-  ACE_UINT16 buf_len = (ACE_OS::strlen (buf) + 1) * sizeof (TCHAR);
+  ACE_UINT16 buf_len = (ACE_OS::strlen (buf) + 1) * sizeof (ACE_TCHAR);
   ACE_HANDLE new_handle = new_stream.get_handle ();
 
   // No need to worry about byte-order because both parties should always

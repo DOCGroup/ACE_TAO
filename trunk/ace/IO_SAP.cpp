@@ -26,8 +26,8 @@ ACE_IO_SAP::dump (void) const
   ACE_TRACE ("ACE_IO_SAP::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("handle_ = %d"), this->handle_));
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\npid_ = %d"), this->pid_));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("handle_ = %d"), this->handle_));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\npid_ = %d"), this->pid_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 

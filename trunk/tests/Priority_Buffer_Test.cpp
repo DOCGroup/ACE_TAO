@@ -124,8 +124,8 @@ producer (void *args)
       // Enqueue in priority order.
       if (msg_queue->enqueue_prio (mb) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ASYS_TEXT ("(%t) %p\n"),
-                           ASYS_TEXT ("put_next")),
+                           ACE_TEXT ("(%t) %p\n"),
+                           ACE_TEXT ("put_next")),
                           0);
     }
 
@@ -136,8 +136,8 @@ producer (void *args)
 
   if (msg_queue->enqueue_tail (mb) == -1)
     ACE_ERROR ((LM_ERROR,
-                ASYS_TEXT ("(%t) %p\n"),
-                ASYS_TEXT ("put_next")));
+                ACE_TEXT ("(%t) %p\n"),
+                ACE_TEXT ("put_next")));
 
   count++;
 
@@ -154,9 +154,9 @@ producer (void *args)
 // size of each line.
 
 int
-main (int, ASYS_TCHAR *[])
+main (int, ACE_TCHAR *[])
 {
-  ACE_START_TEST (ASYS_TEXT ("Priority_Buffer_Test"));
+  ACE_START_TEST (ACE_TEXT ("Priority_Buffer_Test"));
 
 #if defined (ACE_HAS_THREADS)
   // Message queue.
@@ -167,15 +167,15 @@ main (int, ASYS_TCHAR *[])
        (void *) &msg_queue,
        THR_NEW_LWP | THR_DETACHED) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ASYS_TEXT ("%p\n"),
-                       ASYS_TEXT ("spawn")),
+                       ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("spawn")),
                       1);
 
   // Wait for producer and consumer threads to exit.
   ACE_Thread_Manager::instance ()->wait ();
 #else
   ACE_ERROR ((LM_INFO,
-              ASYS_TEXT ("threads not supported on this platform\n")));
+              ACE_TEXT ("threads not supported on this platform\n")));
 #endif /* ACE_HAS_THREADS */
   ACE_END_TEST;
   return 0;

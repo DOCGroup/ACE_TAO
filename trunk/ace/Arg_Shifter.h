@@ -39,8 +39,8 @@ class ACE_Export ACE_Arg_Shifter
 public:
   // = Initialization and termination methods.
   ACE_Arg_Shifter (int& argc,
-                   char** argv,
-                   char** temp = 0);
+                   ACE_TCHAR **argv,
+                   ACE_TCHAR **temp = 0);
   // Initialize the <ACE_Arg_Shifter> to the vector over which to
   // iterate, also providing the temporary array if the client doesn't
   // want the arg_shifter to dynamically allocate its own. If internal
@@ -52,10 +52,10 @@ public:
   ~ACE_Arg_Shifter (void);
   // Destructor.
 
-  char* get_current (void) const;
+  ACE_TCHAR *get_current (void) const;
   // Get the current head of the vector.
 
-  char* get_the_parameter (const char* flag);
+  ACE_TCHAR *get_the_parameter (const ACE_TCHAR* flag);
   // If the <flag> matches the current_arg of arg shifter
   // this method will attempt to return the associated
   // parameter value
@@ -87,7 +87,7 @@ public:
   // together '-foobarflagVALUE', the flag is NOT consumed
   // and the cur arg is left pointing to the entire flag/value pair
 
-  int cur_arg_strncasecmp (const char* flag);
+  int cur_arg_strncasecmp (const ACE_TCHAR *flag);
   // Check if the current argument matches (case insensitive) <flag>
   //
   // ------------------------------------------------------------
@@ -145,10 +145,10 @@ private:
   int total_size_;
   // The size of argv_.
 
-  char** temp_;
+  ACE_TCHAR **temp_;
   // The temporary array over which we traverse.
 
-  char** argv_;
+  ACE_TCHAR **argv_;
   // The array in which the arguments are reordered.
 
   int current_index_;

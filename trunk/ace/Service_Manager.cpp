@@ -58,20 +58,20 @@ ACE_Service_Manager::open (const ACE_INET_Addr &sia)
 }
 
 int
-ACE_Service_Manager::info (ASYS_TCHAR **strp, size_t length) const
+ACE_Service_Manager::info (ACE_TCHAR **strp, size_t length) const
 {
   ACE_TRACE ("ACE_Service_Manager::info");
   ACE_INET_Addr sa;
-  ASYS_TCHAR buf[BUFSIZ];
+  ACE_TCHAR buf[BUFSIZ];
 
   if (this->acceptor_.get_local_addr (sa) == -1)
     return -1;
 
   ACE_OS::sprintf (buf,
-                   ASYS_TEXT ("%d/%s %s"),
+                   ACE_TEXT ("%d/%s %s"),
                    sa.get_port_number (),
-                   ASYS_TEXT ("tcp"),
-                   ASYS_TEXT ("# lists all services in the daemon\n"));
+                   ACE_TEXT ("tcp"),
+                   ACE_TEXT ("# lists all services in the daemon\n"));
   if (*strp == 0 && (*strp = ACE_OS::strdup (buf)) == 0)
     return -1;
   else
@@ -80,11 +80,11 @@ ACE_Service_Manager::info (ASYS_TCHAR **strp, size_t length) const
 }
 
 int
-ACE_Service_Manager::init (int argc, ASYS_TCHAR *argv[])
+ACE_Service_Manager::init (int argc, ACE_TCHAR *argv[])
 {
   ACE_TRACE ("ACE_Service_Manager::init");
   ACE_INET_Addr local_addr (ACE_Service_Manager::DEFAULT_PORT_);
-  ACE_Get_Opt getopt (argc, argv, ASYS_TEXT ("dp:s:"), 0); // Start at argv[0]
+  ACE_Get_Opt getopt (argc, argv, ACE_TEXT ("dp:s:"), 0); // Start at argv[0]
 
   for (int c; (c = getopt ()) != -1; )
      switch (c)
@@ -105,13 +105,13 @@ ACE_Service_Manager::init (int argc, ASYS_TCHAR *argv[])
   if (this->get_handle () == ACE_INVALID_HANDLE &&
       this->open (local_addr) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ASYS_TEXT ("%p\n"),
-                       ASYS_TEXT ("open")), -1);
+                       ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("open")), -1);
   else if (ACE_Reactor::instance ()->register_handler
            (this,
             ACE_Event_Handler::ACCEPT_MASK) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ASYS_TEXT ("registering service with ACE_Reactor\n")),
+                       ACE_TEXT ("registering service with ACE_Reactor\n")),
                       -1);
   return 0;
 }
@@ -168,8 +168,8 @@ ACE_Service_Manager::list_services (void)
        sri.advance ())
     {
       int len = ACE_OS::strlen (sr->name ()) + 1;
-      ASYS_TCHAR buf[BUFSIZ];
-      ASYS_TCHAR *p = buf + len;
+      ACE_TCHAR buf[BUFSIZ];
+      ACE_TCHAR *p = buf + len;
 
       ACE_OS::strcpy (buf, sr->name ());
 
@@ -180,20 +180,20 @@ ACE_Service_Manager::list_services (void)
 
       if (this->debug_)
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("len = %d, info = %s%s"),
+                    ACE_TEXT ("len = %d, info = %s%s"),
                     len,
                     buf,
-                    buf[len - 1] == '\n' ? ASYS_TEXT ("") : ASYS_TEXT ("\n")));
+                    buf[len - 1] == '\n' ? ACE_TEXT ("") : ACE_TEXT ("\n")));
 
       if (len > 0)
         {
-          ssize_t n = this->client_stream_.send_n (ASYS_ONLY_MULTIBYTE_STRING (buf),
+          ssize_t n = this->client_stream_.send_n (buf,
                                                    len);
 
           if (n != len || (n == -1 && errno != EPIPE))
             ACE_ERROR ((LM_ERROR,
-                        ASYS_TEXT ("%p\n"),
-                        ASYS_TEXT ("send_n")));
+                        ACE_TEXT ("%p\n"),
+                        ACE_TEXT ("send_n")));
         }
     }
 
@@ -250,14 +250,14 @@ ACE_Service_Manager::handle_input (ACE_HANDLE)
   if (this->debug_)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("client_stream fd = %d\n"),
+                  ACE_TEXT ("client_stream fd = %d\n"),
                  this->client_stream_.get_handle ()));
       ACE_INET_Addr sa;
       if (this->client_stream_.get_remote_addr (sa) == -1)
         return -1;
 
       ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("accepted from host %s at port %d\n"),
+                  ACE_TEXT ("accepted from host %s at port %d\n"),
                   sa.get_host_name (),
                   sa.get_port_number ()));
     }
@@ -271,8 +271,8 @@ ACE_Service_Manager::handle_input (ACE_HANDLE)
     case -1:
       if (this->debug_)
         ACE_DEBUG ((LM_ERROR,
-                    ASYS_TEXT ("%p\n"),
-                    ASYS_TEXT ("recv")));
+                    ACE_TEXT ("%p\n"),
+                    ACE_TEXT ("recv")));
       break;
     case 0:
       return 0;
@@ -309,7 +309,7 @@ ACE_Service_Manager::handle_input (ACE_HANDLE)
 
   if (this->client_stream_.close () == -1 && this->debug_)
     ACE_DEBUG ((LM_ERROR,
-                ASYS_TEXT ("%p\n"),
-                ASYS_TEXT ("close")));
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("close")));
   return 0;
 }

@@ -25,6 +25,8 @@
 
 ACE_RCSID(tests, Naming_Test, "$Id$")
 
+#if defined (ACE_HAS_WCHAR)
+
 static char name[BUFSIZ];
 static char value[BUFSIZ];
 static char type[BUFSIZ];
@@ -37,11 +39,11 @@ print_time (ACE_Profile_Timer &timer,
   timer.stop ();
   timer.elapsed_time (et);
 
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\n     *****  %s  *****     \n"), test));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n     *****  %s  *****     \n"), test));
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("real time = %f secs, user time = %f secs, system time = %f secs\n"),
+              ACE_TEXT ("real time = %f secs, user time = %f secs, system time = %f secs\n"),
 	      et.real_time, et.user_time, et.system_time));
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("time per call = %f usecs\n\n"),
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("time per call = %f usecs\n\n"),
 	      (et.real_time / double (ACE_NS_MAX_ENTRIES)) * 1000000));
 }
 
@@ -154,10 +156,10 @@ test_find (ACE_Naming_Context &ns_context, int sign, int result)
 	    {
 	      if (type_out)
 		ACE_DEBUG ((LM_DEBUG,
-                            ASYS_TEXT ("Name: %s\tValue: %s\tType: %s\n"),
+                            ACE_TEXT ("Name: %s\tValue: %s\tType: %s\n"),
 			    name, l_value, type_out));
 	      else
-		ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("Name: %s\tValue: %s\n"),
+		ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Name: %s\tValue: %s\n"),
 			    name, l_value));
 	    }
 
@@ -172,12 +174,14 @@ test_find (ACE_Naming_Context &ns_context, int sign, int result)
     }
 }
 
-int
-main (int argc, ASYS_TCHAR *argv[])
-{
-  TCHAR temp_file [BUFSIZ];
-  ACE_START_TEST (ASYS_TEXT ("Naming_Test"));
+#endif /* ACE_HAS_WCHAR */
 
+int
+main (int argc, ACE_TCHAR *argv[])
+{
+  ACE_START_TEST (ACE_TEXT ("Naming_Test"));
+#if defined (ACE_HAS_WCHAR)
+  ACE_TCHAR temp_file [BUFSIZ];
   ACE_Naming_Context *ns_context;
   ACE_NEW_RETURN (ns_context, ACE_Naming_Context, -1);
 
@@ -206,9 +210,9 @@ main (int argc, ASYS_TCHAR *argv[])
 
   ACE_ASSERT (ns_context->open (ACE_Naming_Context::PROC_LOCAL, 1) != -1);
 
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("time to test %d iterations using %s\n"),
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("time to test %d iterations using %s\n"),
 	      ACE_NS_MAX_ENTRIES, name_options->use_registry () ?
-              ASYS_TEXT ("Registry") : ASYS_TEXT ("ACE")));
+              ACE_TEXT ("Registry") : ACE_TEXT ("ACE")));
 
   ACE_Profile_Timer timer;
 
@@ -253,6 +257,9 @@ main (int argc, ASYS_TCHAR *argv[])
   // since we don't care if the file doesn't exist.
   ACE_OS::unlink (temp_file);
 
+#else /* ACE_HAS_TCHAR */
+  ACE_ERROR ((LM_INFO, ACE_TEXT ("Naming_Test requires wchar_t support to run.\n")));
+#endif /* ACE_HAS_TCHAR */
   ACE_END_TEST;
   return 0;
 }

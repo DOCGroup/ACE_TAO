@@ -55,10 +55,10 @@ TAO_GIOP_Utils::read_buffer (TAO_Transport *transport,
 
   if (bytes_read <= 0 && TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
-                ASYS_TEXT ("TAO (%P|%t|%N|%l) - %p,\n")
-                ASYS_TEXT ("              transport = %d, ")
-                ASYS_TEXT ("bytes = %d, len = %d\n"),
-                ASYS_TEXT ("read_buffer"),
+                ACE_TEXT ("TAO (%P|%t|%N|%l) - %p,\n")
+                ACE_TEXT ("              transport = %d, ")
+                ACE_TEXT ("bytes = %d, len = %d\n"),
+                ACE_TEXT ("read_buffer"),
                 transport->handle (),
                 bytes_read,
                 len));

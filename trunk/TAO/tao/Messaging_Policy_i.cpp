@@ -135,7 +135,7 @@ TAO_RelativeRoundtripTimeoutPolicy::set_time_value (ACE_Time_Value &time_value)
       CORBA::ULong msecs =
         ACE_static_cast(CORBA::ULong, microseconds / 1000);
       ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("TAO (%P|%t) Timeout is <%u>\n"),
+                  ACE_TEXT ("TAO (%P|%t) Timeout is <%u>\n"),
                   msecs));
     }
 }

@@ -28,8 +28,8 @@ TAO_IOR_Multicast::TAO_IOR_Multicast (const char *ior,
                   mcast_addr,
                   service_id) == -1)
     ACE_ERROR ((LM_ERROR,
-                ASYS_TEXT ("%p\n"),
-                ASYS_TEXT ("TAO_IOR_Multicast")));
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("TAO_IOR_Multicast")));
 }
 
 // destructor

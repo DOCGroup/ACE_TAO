@@ -160,9 +160,9 @@ TAO_IIOP_Acceptor::open (TAO_ORB_Core *orb_core,
       // The hostname cache has already been set!
       // This is bad mojo, i.e. an internal TAO error.
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ASYS_TEXT ("TAO (%P|%t) ")
-                         ASYS_TEXT ("IIOP_Acceptor::open - "),
-                         ASYS_TEXT ("hostname already set\n\n")),
+                         ACE_TEXT ("TAO (%P|%t) ")
+                         ACE_TEXT ("IIOP_Acceptor::open - "),
+                         ACE_TEXT ("hostname already set\n\n")),
                         -1);
     }
 
@@ -246,9 +246,9 @@ TAO_IIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
       // The hostname cache has already been set!
       // This is bad mojo, i.e. an internal TAO error.
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ASYS_TEXT ("TAO (%P|%t) ")
-                         ASYS_TEXT ("IIOP_Acceptor::open_default - "),
-                         ASYS_TEXT ("hostname already set\n\n")),
+                         ACE_TEXT ("TAO (%P|%t) ")
+                         ACE_TEXT ("IIOP_Acceptor::open_default - "),
+                         ACE_TEXT ("hostname already set\n\n")),
                         -1);
     }
 
@@ -301,9 +301,9 @@ TAO_IIOP_Acceptor::open_i (TAO_ORB_Core* orb_core,
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("\n\nTAO (%P|%t) IIOP_Acceptor::open_i ")
-                    ASYS_TEXT ("- %p\n\n"),
-                    ASYS_TEXT ("cannot open acceptor")));
+                    ACE_TEXT ("\n\nTAO (%P|%t) IIOP_Acceptor::open_i ")
+                    ACE_TEXT ("- %p\n\n"),
+                    ACE_TEXT ("cannot open acceptor")));
       return -1;
     }
 
@@ -316,9 +316,9 @@ TAO_IIOP_Acceptor::open_i (TAO_ORB_Core* orb_core,
       // @@ Should this be a catastrophic error???
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("\n\nTAO (%P|%t) IIOP_Acceptor::open_i ")
-                    ASYS_TEXT ("- %p\n\n"),
-                    ASYS_TEXT ("cannot get local addr")));
+                    ACE_TEXT ("\n\nTAO (%P|%t) IIOP_Acceptor::open_i ")
+                    ACE_TEXT ("- %p\n\n"),
+                    ACE_TEXT ("cannot get local addr")));
       return -1;
     }
 
@@ -335,8 +335,8 @@ TAO_IIOP_Acceptor::open_i (TAO_ORB_Core* orb_core,
       for (size_t i = 0; i < this->num_hosts_; ++i)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ASYS_TEXT ("\nTAO (%P|%t) IIOP_Acceptor::open_i - ")
-                      ASYS_TEXT ("listening on: <%s:%u>\n"),
+                      ACE_TEXT ("\nTAO (%P|%t) IIOP_Acceptor::open_i - ")
+                      ACE_TEXT ("listening on: <%s:%u>\n"),
                       this->hosts_[i].c_str (),
                       this->addrs_[i].get_port_number ()));
         }
@@ -360,10 +360,10 @@ TAO_IIOP_Acceptor::hostname (TAO_ORB_Core *orb_core,
         {
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG,
-                        ASYS_TEXT ("\n\nTAO (%P|%t) ")
-                        ASYS_TEXT ("IIOP_Acceptor::hostname ")
-                        ASYS_TEXT ("- %p\n\n"),
-                        ASYS_TEXT ("cannot determine hostname")));
+                        ACE_TEXT ("\n\nTAO (%P|%t) ")
+                        ACE_TEXT ("IIOP_Acceptor::hostname ")
+                        ACE_TEXT ("- %p\n\n"),
+                        ACE_TEXT ("cannot determine hostname")));
           return -1;
         }
 
@@ -400,8 +400,8 @@ TAO_IIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core)
       if (TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_WARNING,
-                      ASYS_TEXT ("TAO (%P|%t) Unable to probe network ")
-                      ASYS_TEXT ("interfaces.  Using default.")));
+                      ACE_TEXT ("TAO (%P|%t) Unable to probe network ")
+                      ACE_TEXT ("interfaces.  Using default.")));
         }
 
       if_cnt = 1; // Force the network interface count to be one.
@@ -522,7 +522,7 @@ TAO_IIOP_Acceptor::parse_options (const char *str)
 
       if (end == begin)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ASYS_TEXT ("TAO (%P|%t) Zero length IIOP option.\n")),
+                           ACE_TEXT ("TAO (%P|%t) Zero length IIOP option.\n")),
                           -1);
       else if (end != ACE_CString::npos)
         {
@@ -533,8 +533,8 @@ TAO_IIOP_Acceptor::parse_options (const char *str)
           if (slot == ACE_static_cast (int, len - 1)
               || slot == ACE_CString::npos)
             ACE_ERROR_RETURN ((LM_ERROR,
-                               ASYS_TEXT ("TAO (%P|%t) IIOP option <%s> is ")
-                               ASYS_TEXT ("missing a value.\n"),
+                               ACE_TEXT ("TAO (%P|%t) IIOP option <%s> is ")
+                               ACE_TEXT ("missing a value.\n"),
                                opt.c_str ()),
                               -1);
 
@@ -543,8 +543,8 @@ TAO_IIOP_Acceptor::parse_options (const char *str)
 
           if (name.length () == 0)
             ACE_ERROR_RETURN ((LM_ERROR,
-                               ASYS_TEXT ("TAO (%P|%t) Zero length IIOP ")
-                               ASYS_TEXT ("option name.\n")),
+                               ACE_TEXT ("TAO (%P|%t) Zero length IIOP ")
+                               ACE_TEXT ("option name.\n")),
                               -1);
 
           if (name == "priority")
@@ -561,14 +561,14 @@ TAO_IIOP_Acceptor::parse_options (const char *str)
                 this->priority_ = corba_priority;
               else
                 ACE_ERROR_RETURN ((LM_ERROR,
-                                   ASYS_TEXT ("TAO (%P|%t) Invalid IIOP endpoint ")
-                                   ASYS_TEXT ("priority: <%s>\n"),
+                                   ACE_TEXT ("TAO (%P|%t) Invalid IIOP endpoint ")
+                                   ACE_TEXT ("priority: <%s>\n"),
                                    value.c_str ()),
                                   -1);
             }
           else
             ACE_ERROR_RETURN ((LM_ERROR,
-                               ASYS_TEXT ("TAO (%P|%t) Invalid IIOP option: <%s>\n"),
+                               ACE_TEXT ("TAO (%P|%t) Invalid IIOP option: <%s>\n"),
                                name.c_str ()),
                               -1);
         }

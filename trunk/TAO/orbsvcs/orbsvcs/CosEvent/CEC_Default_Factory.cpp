@@ -932,7 +932,7 @@ TAO_CEC_Default_Factory::destroy_supplier_control (TAO_CEC_SupplierControl* x)
 // ****************************************************************
 
 ACE_STATIC_SVC_DEFINE (TAO_CEC_Default_Factory,
-                       ASYS_TEXT ("CEC_Factory"),
+                       ACE_TEXT ("CEC_Factory"),
                        ACE_SVC_OBJ_T,
                        &ACE_SVC_NAME (TAO_CEC_Default_Factory),
                        ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,

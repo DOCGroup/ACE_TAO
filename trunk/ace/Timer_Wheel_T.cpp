@@ -446,13 +446,13 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK>::dump (void) const
   ACE_TRACE ("ACE_Timer_Wheel_T::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
 
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\nwheel_size_ = %d"), this->wheel_size_));
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\nresolution_ = %d"), this->resolution_));
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\nwheel_ = \n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nwheel_size_ = %d"), this->wheel_size_));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nresolution_ = %d"), this->resolution_));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nwheel_ = \n")));
 
   for (size_t i = 0; i < this->wheel_size_; i++)
     {
-      ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("%d\n"), i));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%d\n"), i));
       ACE_Timer_Node_T<TYPE> *temp = this->wheel_[i]->get_next ();
       while (temp != this->wheel_[i])
         {

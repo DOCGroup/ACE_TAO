@@ -171,217 +171,71 @@ public:
 // @@ DONE ADDING HASHES FOR ACE TYPES
 
 ACE_TEMPLATE_SPECIALIZATION
-class ACE_Export ACE_Hash<const char *>
+class ACE_Export ACE_Hash<const ACE_TCHAR *>
 {
   // = TITLE
   //     Function object for hashing a const string
 public:
-  u_long operator () (const char *t) const;
+  u_long operator () (const ACE_TCHAR *t) const;
   // Calls ACE::hash_pjw
 };
 
 ACE_TEMPLATE_SPECIALIZATION
-class ACE_Export ACE_Hash<char *>
+class ACE_Export ACE_Hash<ACE_TCHAR *>
 {
   // = TITLE
   //     Function object for hashing a string
 public:
-  u_long operator () (const char *t) const;
-  // Calls ACE::hash_pjw
-};
-
-#if !defined (ACE_HAS_WCHAR_TYPEDEFS_CHAR)
-ACE_TEMPLATE_SPECIALIZATION
-class ACE_Export ACE_Hash<const wchar_t *>
-{
-  // = TITLE
-  //     Function object for hashing a const wide string
-public:
-  u_long operator () (const wchar_t *t) const;
+  u_long operator () (const ACE_TCHAR *t) const;
   // Calls ACE::hash_pjw
 };
 
 ACE_TEMPLATE_SPECIALIZATION
-class ACE_Export ACE_Hash<wchar_t *>
-{
-  // = TITLE
-  //     Function object for hashing a wide string
-public:
-  u_long operator () (const wchar_t *t) const;
-  // Calls ACE::hash_pjw
-};
-#endif /* ! ACE_HAS_WCHAR_TYPEDEFS_CHAR */
-
-#if !defined (ACE_HAS_WCHAR_TYPEDEFS_USHORT)
-ACE_TEMPLATE_SPECIALIZATION
-class ACE_Export ACE_Hash<const ACE_USHORT16 *>
-{
-  // = TITLE
-  //     Function object for hashing a const wide string
-public:
-  u_long operator () (const ACE_USHORT16 *t) const;
-  // Calls ACE::hash_pjw
-};
-
-ACE_TEMPLATE_SPECIALIZATION
-class ACE_Export ACE_Hash<ACE_USHORT16 *>
-{
-  // = TITLE
-  //     Function object for hashing a wide string
-public:
-  u_long operator () (const ACE_USHORT16 *t) const;
-  // Calls ACE::hash_pjw
-};
-#endif /* ! ACE_HAS_WCHAR_TYPEDEFS_USHORT */
-
-ACE_TEMPLATE_SPECIALIZATION
-class ACE_Export ACE_Equal_To<const char *>
+class ACE_Export ACE_Equal_To<const ACE_TCHAR *>
 {
   // = TITLE
   //     Function object for determining whether two const strings are equal.
 public:
-  int operator () (const char *lhs,
-                   const char *rhs) const;
+  int operator () (const ACE_TCHAR *lhs,
+                   const ACE_TCHAR *rhs) const;
   // Simply calls ACE_OS::strcmp
 };
 
 ACE_TEMPLATE_SPECIALIZATION
-class ACE_Export ACE_Equal_To<char *>
+class ACE_Export ACE_Equal_To<ACE_TCHAR *>
 {
   // = TITLE
   //     Function object for determining whether two non-const
   //     strings are equal.
 public:
-  int operator () (const char *lhs,
-                   const char *rhs) const;
-  // Simply calls ACE_OS::strcmp
-};
-
-#if !defined (ACE_HAS_WCHAR_TYPEDEFS_CHAR)
-ACE_TEMPLATE_SPECIALIZATION
-class ACE_Export ACE_Equal_To<const wchar_t *>
-{
-  // = TITLE
-  //     Function object for determining whether two const wide
-  //     strings are equal.
-public:
-  int operator () (const wchar_t *lhs,
-                   const wchar_t *rhs) const;
+  int operator () (const ACE_TCHAR *lhs,
+                   const ACE_TCHAR *rhs) const;
   // Simply calls ACE_OS::strcmp
 };
 
 ACE_TEMPLATE_SPECIALIZATION
-class ACE_Export ACE_Equal_To<wchar_t *>
-{
-  // = TITLE
-  //     Function object for determining whether two wide strings are equal.
-public:
-  int operator () (const wchar_t *lhs,
-                   const wchar_t *rhs) const;
-  // Simply calls ACE_OS::strcmp
-};
-#endif /* ! ACE_HAS_WCHAR_TYPEDEFS_CHAR */
-
-#if !defined (ACE_HAS_WCHAR_TYPEDEFS_USHORT)
-ACE_TEMPLATE_SPECIALIZATION
-class ACE_Export ACE_Equal_To<const ACE_USHORT16 *>
-{
-  // = TITLE
-  //     Function object for determining whether two const wide
-  //     strings are equal.
-public:
-  int operator () (const ACE_USHORT16 *lhs,
-                   const ACE_USHORT16 *rhs) const;
-  // Simply calls ACE_OS::strcmp
-};
-
-ACE_TEMPLATE_SPECIALIZATION
-class ACE_Export ACE_Equal_To<ACE_USHORT16 *>
-{
-  // = TITLE
-  //     Function object for determining whether two wide strings are equal.
-public:
-  int operator () (const ACE_USHORT16 *lhs,
-                   const ACE_USHORT16 *rhs) const;
-  // Simply calls ACE_OS::strcmp
-};
-#endif /* ! ACE_HAS_WCHAR_TYPEDEFS_USHORT */
-
-ACE_TEMPLATE_SPECIALIZATION
-class ACE_Export ACE_Less_Than<const char *>
+class ACE_Export ACE_Less_Than<const ACE_TCHAR *>
 {
   // = TITLE
   //     Function object for determining whether the first const string
   //     is less than the second const string.
 public:
-  int operator () (const char *lhs,
-                   const char *rhs) const;
+  int operator () (const ACE_TCHAR *lhs,
+                   const ACE_TCHAR *rhs) const;
   // Simply calls ACE_OS::strcmp
 };
 
 ACE_TEMPLATE_SPECIALIZATION
-class ACE_Export ACE_Less_Than<char *>
+class ACE_Export ACE_Less_Than<ACE_TCHAR *>
 {
   // = TITLE
   //     Function object for determining whether the first string
   //     is less than the second string.
 public:
-  int operator () (const char *lhs,
-                   const char *rhs) const;
+  int operator () (const ACE_TCHAR *lhs,
+                   const ACE_TCHAR *rhs) const;
   // Simply calls ACE_OS::strcmp
 };
-
-#if !defined (ACE_HAS_WCHAR_TYPEDEFS_CHAR)
-ACE_TEMPLATE_SPECIALIZATION
-class ACE_Export ACE_Less_Than<const wchar_t *>
-{
-  // = TITLE
-  //     Function object for determining whether the first const wide string
-  //     is less than the second const wide string.
-public:
-  int operator () (const wchar_t *lhs,
-                   const wchar_t *rhs) const;
-  // Simply calls ACE_OS::strcmp
-};
-
-ACE_TEMPLATE_SPECIALIZATION
-class ACE_Export ACE_Less_Than<wchar_t *>
-{
-  // = TITLE
-  //     Function object for determining whether the first wide string
-  //     is less than the second wide string.
-public:
-  int operator () (const wchar_t *lhs,
-                   const wchar_t *rhs) const;
-  // Simply calls ACE_OS::strcmp
-};
-#endif /* ! ACE_HAS_WCHAR_TYPEDEFS_CHAR */
-
-#if !defined (ACE_HAS_WCHAR_TYPEDEFS_USHORT)
-ACE_TEMPLATE_SPECIALIZATION
-class ACE_Export ACE_Less_Than<const ACE_USHORT16 *>
-{
-  // = TITLE
-  //     Function object for determining whether the first const wide string
-  //     is less than the second const wide string.
-public:
-  int operator () (const ACE_USHORT16 *lhs,
-                   const ACE_USHORT16 *rhs) const;
-  // Simply calls ACE_OS::strcmp
-};
-
-ACE_TEMPLATE_SPECIALIZATION
-class ACE_Export ACE_Less_Than<ACE_USHORT16 *>
-{
-  // = TITLE
-  //     Function object for determining whether the first wide string
-  //     is less than the second wide string.
-public:
-  int operator () (const ACE_USHORT16 *lhs,
-                   const ACE_USHORT16 *rhs) const;
-  // Simply calls ACE_OS::strcmp
-};
-#endif /* ! ACE_HAS_WCHAR_TYPEDEFS_USHORT */
 
 #if defined (__ACE_INLINE__)
 #include "ace/Functor.i"

@@ -193,7 +193,7 @@ ACE_LRU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::dump (void) const
   ACE_TRACE ("ACE_LRU_Caching_Strategy::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("timer_ = %d "), this->timer_));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("timer_ = %d "), this->timer_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
@@ -361,7 +361,7 @@ ACE_FIFO_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::dump (void) const
   ACE_TRACE ("ACE_FIFO_Caching_Strategy::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("order_ = %d "), this->order_));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("order_ = %d "), this->order_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 

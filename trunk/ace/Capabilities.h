@@ -79,11 +79,11 @@ class ACE_Export ACE_StringCapEntry : public ACE_CapEntry
   //   This is a container class for ACE Capabilities String container
   //   values.
 public:
-  ACE_StringCapEntry (const ACE_CString &val);
-  ACE_CString getval (void) const;
+  ACE_StringCapEntry (const ACE_TString &val);
+  ACE_TString getval (void) const;
 
 protected:
-  ACE_CString val_;
+  ACE_TString val_;
 };
 
 class ACE_Export ACE_BoolCapEntry : public ACE_CapEntry
@@ -125,49 +125,42 @@ public:
   // The Destructor
 
 public:
-  int getval (const char *ent,
-              ACE_CString &val);
+  int getval (const ACE_TCHAR *ent, ACE_TString &val);
   // Get a string entry.
 
-  int getval (const char *ent,
-              int &val);
+  int getval (const ACE_TCHAR *ent, int &val);
   // Get an integer entry.
 
-  int getent (const char *fname,
-              const char *name);
+  int getent (const ACE_TCHAR *fname, const ACE_TCHAR *name);
   // Get the ACE_Capabilities name from FILE fname and load the
   // associated capabitily entries in map.
 
 protected:
   // Parse an integer property
-  const char *parse (const char *buf,
-                     int &cap);
+  const ACE_TCHAR *parse (const ACE_TCHAR *buf, int &cap);
   // Parse a string property
 
-  const char *parse (const char *buf,
-                     ACE_CString &cap);
+  const ACE_TCHAR *parse (const ACE_TCHAR *buf, ACE_TString &cap);
   // Fill the ACE_Capabilities with description in ent.
 
-  int fillent(const char *ent);
+  int fillent(const ACE_TCHAR *ent);
   // Parse a cap entry
 
-  int parseent (const char *name,
-                char *line);
+  int parseent (const ACE_TCHAR *name, ACE_TCHAR *line);
   // Get a line from FILE input stream
 
   int getline (FILE* fp,
-               ACE_CString &line);
+               ACE_TString &line);
   // Is a valid entry
 
-  int is_entry (const char *name,
-                const char *line);
+  int is_entry (const ACE_TCHAR *name, const ACE_TCHAR *line);
   // Reset the set of capabilities
 
   void resetcaps (void);
   // Atributes.
 
 private:
-  ACE_Hash_Map_Manager<ACE_CString, ACE_CapEntry *, ACE_Null_Mutex> caps_;
+  ACE_Hash_Map_Manager<ACE_TString, ACE_CapEntry *, ACE_Null_Mutex> caps_;
   // This is the set of ACE_CapEntry.
 };
 

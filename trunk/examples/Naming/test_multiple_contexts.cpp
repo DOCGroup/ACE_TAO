@@ -6,6 +6,8 @@ ACE_RCSID(Naming, test_multiple_contexts, "$Id$")
 
 int main (int, char *[])
 {
+#if defined (ACE_HAS_WCHAR)
+
   static u_long ACE_DEFAULT_BASE_ADDR_1 = (1 * 64 * 1024 * 1024);
   static u_long ACE_DEFAULT_BASE_ADDR_2 = (2 * 64 * 1024 * 1024);
 
@@ -76,6 +78,10 @@ int main (int, char *[])
               i));
   if (i != 0) 
     return -1;
+
+#else /* ACE_HAS_WCHAR */
+  ACE_ERROR ((LM_INFO, ACE_TEXT ("Naming requires wchar_t support to run.\n")));
+#endif /* ACE_HAS_WCHAR */
 
   return 0;
 }

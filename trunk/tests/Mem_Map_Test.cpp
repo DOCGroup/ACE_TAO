@@ -46,7 +46,7 @@ reverse_file (ACE_HANDLE file_handle,
       if (array[i] == '\n')
         {
           ACE_OS::write (file_handle, array + i + 1, count);
-          ACE_OS::write (file_handle, ASYS_TEXT ("\n"), 1);
+          ACE_OS::write (file_handle, ACE_TEXT ("\n"), 1);
           count = 0;
         }
       else
@@ -56,7 +56,7 @@ reverse_file (ACE_HANDLE file_handle,
 }
 
 static int
-create_test_file (TCHAR *filename, int line_length, int num_lines)
+create_test_file (ACE_TCHAR *filename, int line_length, int num_lines)
 {
   char *mybuf = 0;
 
@@ -71,7 +71,7 @@ create_test_file (TCHAR *filename, int line_length, int num_lines)
   if (file_handle  == ACE_INVALID_HANDLE)
     {
       delete [] mybuf;
-      ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("Open failed\n")), -1);
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Open failed\n")), -1);
     }
 
   for (int j = 0; j < num_lines; j++)
@@ -89,14 +89,14 @@ create_test_file (TCHAR *filename, int line_length, int num_lines)
       if (ACE_OS::write (file_handle, mybuf, line_length) != line_length)
         {
           delete [] mybuf;
-          ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("write to file failed: %p (%d)\n"),
+          ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("write to file failed: %p (%d)\n"),
                              errno, errno), -1);
         }
 
-      if (ACE_OS::write (file_handle, ASYS_TEXT ("\n"), 1) != 1)
+      if (ACE_OS::write (file_handle, ACE_TEXT ("\n"), 1) != 1)
         {
           delete [] mybuf;
-          ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("write to file failed\n")), -1);
+          ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("write to file failed\n")), -1);
         }
     }
 
@@ -107,20 +107,20 @@ create_test_file (TCHAR *filename, int line_length, int num_lines)
 }
 
 int
-main (int, ASYS_TCHAR *[])
+main (int, ACE_TCHAR *[])
 {
-  ACE_START_TEST (ASYS_TEXT ("Mem_Map_Test"));
+  ACE_START_TEST (ACE_TEXT ("Mem_Map_Test"));
 
   // = Initialize the temporary variable names
 
-  TCHAR test_file[MAXPATHLEN + 1]; 
-  TCHAR temp_file1[MAXPATHLEN + 1]; 
-  TCHAR temp_file2[MAXPATHLEN + 1]; 
+  ACE_TCHAR test_file[MAXPATHLEN + 1]; 
+  ACE_TCHAR temp_file1[MAXPATHLEN + 1]; 
+  ACE_TCHAR temp_file2[MAXPATHLEN + 1]; 
 
   // Get the temporary directory
   // - 18 is for the filenames, ace_mem_map_temp_1 is the longest
   if (ACE::get_temp_dir (test_file, MAXPATHLEN - 18) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "Temporary path too long\n"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Temporary path too long\n")), -1);
 
   // Copy the temp directory to the other variables
   ACE_OS::strcpy (temp_file1, test_file);
@@ -134,13 +134,13 @@ main (int, ASYS_TCHAR *[])
 
   // First create a test file to work on
   if (create_test_file (test_file, LINE_LENGTH, NUM_LINES) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("Create test file failed\n")), -1);
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Create test file failed\n")), -1);
 
   ACE_Mem_Map mmap;
 
   // First memory map the test file
   if (mmap.map (test_file) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("%n: %p\n%a"), ASYS_TEXT ("mmap")), -1);
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%n: %p\n%a"), ACE_TEXT ("mmap")), -1);
 
   // Now create a temporary file for intermediate processing
   ACE_HANDLE temp_file_handle = ACE_OS::open (temp_file1,
@@ -148,7 +148,7 @@ main (int, ASYS_TCHAR *[])
                                               0666);
 
   if (temp_file_handle == ACE_INVALID_HANDLE)
-    ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("Open failed\n")), -1);
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Open failed\n")), -1);
 
   // Reverse the original file and write the output to the temporary
   // file.
@@ -162,12 +162,12 @@ main (int, ASYS_TCHAR *[])
 
   // Now memory map the temporary file
   if (temp_mmap.map (temp_file1) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("%n: %p\n%a"), ASYS_TEXT ("mmap")), -1);
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%n: %p\n%a"), ACE_TEXT ("mmap")), -1);
 
   if ((temp_file_handle = ACE_OS::open (temp_file2,
                                         O_RDWR | O_TRUNC | O_CREAT,
                                         0666)) == ACE_INVALID_HANDLE)
-    ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("Open failed\n")), -1);
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Open failed\n")), -1);
 
   // Now reverse the temporary file and write everything to the second
   // temporary file.
@@ -181,7 +181,7 @@ main (int, ASYS_TCHAR *[])
   ACE_Mem_Map temp_mmap2;
 
   if (temp_mmap2.map (temp_file2) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("%n: %p\n%a"), ASYS_TEXT ("mmap")), -1);
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%n: %p\n%a"), ACE_TEXT ("mmap")), -1);
 
   // Now do a memcmp -- the orig file and the second temporary file
   // should be identical.

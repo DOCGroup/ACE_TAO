@@ -60,8 +60,8 @@ ACE_Asynch_Acceptor<HANDLER>::open (const ACE_INET_Addr &address,
   this->listen_handle_ = ACE_OS::socket (PF_INET, SOCK_STREAM, 0);
   if (this->listen_handle_ == ACE_INVALID_HANDLE)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ASYS_TEXT ("%p\n"),
-                       ASYS_TEXT ("ACE_OS::socket")),
+                       ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("ACE_OS::socket")),
                       -1);
   // Initialize the ACE_Asynch_Accept
   if (this->asynch_accept_.open (*this,
@@ -69,8 +69,8 @@ ACE_Asynch_Acceptor<HANDLER>::open (const ACE_INET_Addr &address,
                                  0,
                                  this->proactor ()) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ASYS_TEXT ("%p\n"),
-                       ASYS_TEXT ("ACE_Asynch_Accept::open")),
+                       ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("ACE_Asynch_Accept::open")),
                       -1);
   if (reuse_addr)
     {
@@ -82,8 +82,8 @@ ACE_Asynch_Acceptor<HANDLER>::open (const ACE_INET_Addr &address,
                               (const char*) &one,
                               sizeof one) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ASYS_TEXT ("%p\n"),
-                           ASYS_TEXT ("ACE_OS::setsockopt")),
+                           ACE_TEXT ("%p\n"),
+                           ACE_TEXT ("ACE_OS::setsockopt")),
                           -1);
     }
 
@@ -92,8 +92,8 @@ ACE_Asynch_Acceptor<HANDLER>::open (const ACE_INET_Addr &address,
 
   if (address == sa && ACE::bind_port (this->listen_handle_) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ASYS_TEXT ("%p\n"),
-                       ASYS_TEXT ("ACE::bind_port")),
+                       ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("ACE::bind_port")),
                       -1);
 
   // Bind to the specified port.
@@ -139,8 +139,8 @@ ACE_Asynch_Acceptor<HANDLER>::set_handle (ACE_HANDLE listen_handle)
                                  0,
                                  this->proactor ()) == -1)
     ACE_ERROR ((LM_ERROR,
-                ASYS_TEXT ("%p\n"),
-                ASYS_TEXT ("ACE_Asynch_Accept::open")));
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("ACE_Asynch_Accept::open")));
 }
 
 template <class HANDLER> ACE_HANDLE
@@ -169,8 +169,8 @@ ACE_Asynch_Acceptor<HANDLER>::accept (size_t bytes_to_read, const void *act)
       // Cleanup on error
       message_block->release ();
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ASYS_TEXT ("%p\n"),
-                         ASYS_TEXT ("ACE_Asynch_Accept::accept")),
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("ACE_Asynch_Accept::accept")),
                         -1);
     }
   return 0;
@@ -192,8 +192,8 @@ ACE_Asynch_Acceptor<HANDLER>::handle_accept (const ACE_Asynch_Accept::Result &re
     {
       error = 1;
       ACE_ERROR ((LM_ERROR,
-                  ASYS_TEXT ("%p\n"),
-                  ASYS_TEXT ("AcceptEx")));
+                  ACE_TEXT ("%p\n"),
+                  ACE_TEXT ("AcceptEx")));
     }
 
 #if !defined (ACE_HAS_AIO_CALLS)
@@ -211,8 +211,8 @@ ACE_Asynch_Acceptor<HANDLER>::handle_accept (const ACE_Asynch_Accept::Result &re
     {
       error = 1;
       ACE_ERROR ((LM_ERROR,
-                  ASYS_TEXT ("%p"),
-                  ASYS_TEXT ("ACE_OS::setsockopt")));
+                  ACE_TEXT ("%p"),
+                  ACE_TEXT ("ACE_OS::setsockopt")));
     }
 #endif /* ACE_HAS_AIO_CALLS */
 
@@ -233,8 +233,8 @@ ACE_Asynch_Acceptor<HANDLER>::handle_accept (const ACE_Asynch_Accept::Result &re
     {
       error = 1;
       ACE_ERROR ((LM_ERROR,
-                  ASYS_TEXT ("%p\n"),
-                  ASYS_TEXT ("Address validation failed")));
+                  ACE_TEXT ("%p\n"),
+                  ACE_TEXT ("Address validation failed")));
     }
 
   HANDLER *new_handler = 0;
@@ -246,8 +246,8 @@ ACE_Asynch_Acceptor<HANDLER>::handle_accept (const ACE_Asynch_Accept::Result &re
         {
           error = 1;
           ACE_ERROR ((LM_ERROR,
-                      ASYS_TEXT ("%p\n"),
-                      ASYS_TEXT ("Making of new handler failed")));
+                      ACE_TEXT ("%p\n"),
+                      ACE_TEXT ("Making of new handler failed")));
         }
     }
 

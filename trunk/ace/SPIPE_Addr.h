@@ -38,14 +38,14 @@ public:
   ACE_SPIPE_Addr (const ACE_SPIPE_Addr &sa);
   // Copy constructor.
 
-  ACE_SPIPE_Addr (LPCTSTR rendezvous_point, gid_t = 0, uid_t = 0);
+  ACE_SPIPE_Addr (const ACE_TCHAR *rendezvous_point, gid_t = 0, uid_t = 0);
   // Create a ACE_SPIPE_Addr from a rendezvous point in the file
   // system.
 
   int set (const ACE_SPIPE_Addr &sa);
   // Acts like a copy constructor...
 
-  int set (LPCTSTR rendezvous_point, gid_t = 0, uid_t = 0);
+  int set (const ACE_TCHAR *rendezvous_point, gid_t = 0, uid_t = 0);
   // Create a ACE_SPIPE_Addr from a rendezvous point in the file
   // system.
 
@@ -55,18 +55,10 @@ public:
   virtual void set_addr (void *addr, int len);
   // Set a pointer to the underlying network address.
 
-#if defined (UNICODE)
-  virtual int addr_to_string (wchar_t *addr, size_t) const;
+  virtual int addr_to_string (ACE_TCHAR *addr, size_t) const;
   // Transform the current address into string format.
 
-  virtual int string_to_addr (const wchar_t *addr);
-  // Transform the string into the current addressing format.
-#endif /* UNICODE */
-
-  virtual int addr_to_string (char *addr, size_t) const;
-  // Transform the current address into string format.
-
-  virtual int string_to_addr (const char *addr);
+  virtual int string_to_addr (const ACE_TCHAR *addr);
   // Transform the string into the current addressing format.
 
   // = Equality/inequality tests
@@ -77,7 +69,7 @@ public:
   // Check for inequality
 
   // = SPIPE-specific address operations
-  LPCTSTR get_path_name (void) const;
+  const ACE_TCHAR *get_path_name (void) const;
   // Pathname of rendezvous point in file system.
 
   uid_t user_id (void) const;
@@ -108,7 +100,7 @@ private:
     uid_t uid_;
     // User id.
 
-    TCHAR rendezvous_[MAXNAMLEN + 1];
+    ACE_TCHAR rendezvous_[MAXNAMLEN + 1];
     // Pathname in the file system.
 
   } SPIPE_addr_;

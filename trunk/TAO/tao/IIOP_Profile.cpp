@@ -157,7 +157,7 @@ TAO_IIOP_Profile::decode (TAO_InputCDR& cdr)
     if (TAO_debug_level > 0)
       {
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("TAO (%P|%t) IIOP_Profile::decode - v%d.%d\n"),
+                    ACE_TEXT ("TAO (%P|%t) IIOP_Profile::decode - v%d.%d\n"),
                     major,
                     minor));
       }
@@ -176,8 +176,8 @@ TAO_IIOP_Profile::decode (TAO_InputCDR& cdr)
       if (TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ASYS_TEXT ("TAO (%P|%t) IIOP_Profile::decode - ")
-                      ASYS_TEXT ("error while decoding host/port")));
+                      ACE_TEXT ("TAO (%P|%t) IIOP_Profile::decode - ")
+                      ACE_TEXT ("error while decoding host/port")));
         }
       return -1;
     }
@@ -188,8 +188,8 @@ TAO_IIOP_Profile::decode (TAO_InputCDR& cdr)
       if (TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ASYS_TEXT ("TAO (%P|%t) IIOP_Profile::decode - ")
-                      ASYS_TEXT ("ACE_INET_Addr::set() failed\n")));
+                      ACE_TEXT ("TAO (%P|%t) IIOP_Profile::decode - ")
+                      ACE_TEXT ("ACE_INET_Addr::set() failed\n")));
         }
       return -1;
     }
@@ -210,7 +210,7 @@ TAO_IIOP_Profile::decode (TAO_InputCDR& cdr)
       // If there is extra data in the profile we are supposed to
       // ignore it, but print a warning just in case...
       ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("%d bytes out of %d left after IIOP profile data\n"),
+                  ACE_TEXT ("%d bytes out of %d left after IIOP profile data\n"),
                   cdr.length (),
                   encap_len));
     }
@@ -322,8 +322,8 @@ TAO_IIOP_Profile::parse_string (const char *string,
       if (TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ASYS_TEXT ("TAO (%P|%t) IIOP_Profile::parse_string - \n")
-                      ASYS_TEXT ("TAO (%P|%t) ACE_INET_Addr::set () failed")));
+                      ACE_TEXT ("TAO (%P|%t) IIOP_Profile::parse_string - \n")
+                      ACE_TEXT ("TAO (%P|%t) ACE_INET_Addr::set () failed")));
         }
       return -1;
     }

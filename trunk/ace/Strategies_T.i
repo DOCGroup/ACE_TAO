@@ -30,8 +30,8 @@ ACE_Singleton_Strategy<SVC_HANDLER>::ACE_Singleton_Strategy (SVC_HANDLER *sh,
   ACE_TRACE ("ACE_Singleton_Strategy<SVC_HANDLER>::ACE_Singleton_Strategy");
   if (this->open (sh, tm) == -1)
     ACE_ERROR ((LM_ERROR,
-                ASYS_TEXT ("%p\n"),
-                ASYS_TEXT ("ACE_Singleton_Strategy")));
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("ACE_Singleton_Strategy")));
 }
 
 template <class SVC_HANDLER> ASYS_INLINE
@@ -68,8 +68,8 @@ ACE_Creation_Strategy<SVC_HANDLER>::ACE_Creation_Strategy (ACE_Thread_Manager *t
   ACE_TRACE ("ACE_Creation_Strategy<SVC_HANDLER>::ACE_Creation_Strategy");
   if (this->open (thr_mgr) == -1)
     ACE_ERROR ((LM_ERROR,
-                ASYS_TEXT ("%p\n"),
-                ASYS_TEXT ("ACE_Creation_Strategy")));
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("ACE_Creation_Strategy")));
 }
 
 // Default behavior is to make a new SVC_HANDLER, passing in the
@@ -105,8 +105,8 @@ ACE_DLL_Strategy<SVC_HANDLER>::ACE_DLL_Strategy (const char dll_name[],
                   svc_rep,
                   thr_mgr) == -1)
     ACE_ERROR ((LM_ERROR,  
-                ASYS_TEXT ("%p\n"),
-                ASYS_TEXT ("open")));
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("open")));
 }
 
 template <class SVC_HANDLER> ASYS_INLINE
@@ -139,8 +139,8 @@ ACE_Reactive_Strategy<SVC_HANDLER>::ACE_Reactive_Strategy (ACE_Reactor *reactor,
                   mask,
                   flags) == -1)
     ACE_ERROR ((LM_ERROR,
-                ASYS_TEXT ("%p\n"),
-                ASYS_TEXT ("ACE_Reactive_Strategy<SVC_HANDLER>::ACE_Reactive_Strategy")));
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("ACE_Reactive_Strategy<SVC_HANDLER>::ACE_Reactive_Strategy")));
 }
 
 template <class SVC_HANDLER> ASYS_INLINE
@@ -171,8 +171,8 @@ ACE_Thread_Strategy<SVC_HANDLER>::ACE_Thread_Strategy (ACE_Thread_Manager *thr_m
                   n_threads,
                   flags) == -1)
     ACE_ERROR ((LM_ERROR,
-                ASYS_TEXT ("%p\n"),
-                ASYS_TEXT ("ACE_Thread_Strategy<SVC_HANDLER>::ACE_Thread_Strategy")));
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("ACE_Thread_Strategy<SVC_HANDLER>::ACE_Thread_Strategy")));
 }
 
 template <class SVC_HANDLER> ASYS_INLINE
@@ -225,7 +225,7 @@ ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::~ACE_Accept_Strategy (voi
   ACE_TRACE ("ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::~ACE_Accept_Strategy");
 
   if (this->acceptor_.close () == -1)
-    ACE_ERROR ((LM_ERROR,  ASYS_TEXT ("(%P|%t) %p\n"),  ASYS_TEXT ("close")));
+    ACE_ERROR ((LM_ERROR,  ACE_TEXT ("(%P|%t) %p\n"),  ACE_TEXT ("close")));
 }
 
 template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1> ASYS_INLINE ACE_PEER_CONNECTOR &
@@ -259,8 +259,8 @@ ACE_Process_Strategy<SVC_HANDLER>::ACE_Process_Strategy (size_t n_processes,
                   reactor,
                   avoid_zombies) == -1)
     ACE_ERROR ((LM_ERROR,
-                ASYS_TEXT ("%p\n"),
-                ASYS_TEXT ("ACE_Process_Strategy")));
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("ACE_Process_Strategy")));
 }
 
 template <class SVC_HANDLER> ASYS_INLINE

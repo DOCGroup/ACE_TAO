@@ -142,23 +142,23 @@ TAO_IMR_i::print_usage (void)
 // Factory for operations
 
 TAO_IMR_Op *
-TAO_IMR_Op::make_op (const ASYS_TCHAR *op_name)
+TAO_IMR_Op::make_op (const ACE_TCHAR *op_name)
 {
-  if (ACE_OS::strcasecmp (op_name, ASYS_TEXT ("activate")) == 0)
+  if (ACE_OS::strcasecmp (op_name, ACE_TEXT ("activate")) == 0)
     return new TAO_IMR_Op_Activate ();
-  else if (ACE_OS::strcasecmp (op_name, ASYS_TEXT ("add")) == 0)
+  else if (ACE_OS::strcasecmp (op_name, ACE_TEXT ("add")) == 0)
     return new TAO_IMR_Op_Add ();
-  else if (ACE_OS::strcasecmp (op_name, ASYS_TEXT ("autostart")) == 0)
+  else if (ACE_OS::strcasecmp (op_name, ACE_TEXT ("autostart")) == 0)
     return new TAO_IMR_Op_Autostart();
-  else if (ACE_OS::strcasecmp (op_name, ASYS_TEXT ("ior")) == 0)
+  else if (ACE_OS::strcasecmp (op_name, ACE_TEXT ("ior")) == 0)
     return new TAO_IMR_Op_IOR();
-  else if (ACE_OS::strcasecmp (op_name, ASYS_TEXT ("list")) == 0)
+  else if (ACE_OS::strcasecmp (op_name, ACE_TEXT ("list")) == 0)
     return new TAO_IMR_Op_List ();
-  else if (ACE_OS::strcasecmp (op_name, ASYS_TEXT ("remove")) == 0)
+  else if (ACE_OS::strcasecmp (op_name, ACE_TEXT ("remove")) == 0)
     return new TAO_IMR_Op_Remove ();
-  else if (ACE_OS::strcasecmp (op_name, ASYS_TEXT ("shutdown")) == 0)
+  else if (ACE_OS::strcasecmp (op_name, ACE_TEXT ("shutdown")) == 0)
     return new TAO_IMR_Op_Shutdown ();
-  else if (ACE_OS::strcasecmp (op_name, ASYS_TEXT ("update")) == 0)
+  else if (ACE_OS::strcasecmp (op_name, ACE_TEXT ("update")) == 0)
     return new TAO_IMR_Op_Update ();
 
   return 0;
@@ -284,7 +284,7 @@ TAO_IMR_Op_Update::~TAO_IMR_Op_Update (void)
 
 
 int
-TAO_IMR_Op_Activate::parse (int argc, ASYS_TCHAR **argv)
+TAO_IMR_Op_Activate::parse (int argc, ACE_TCHAR **argv)
 {
   // Check for enough arguments (we need at least one for the server name)
   if (argc < 1)
@@ -313,7 +313,7 @@ TAO_IMR_Op_Activate::parse (int argc, ASYS_TCHAR **argv)
 }
 
 void
-TAO_IMR_Op_Add::setenv (ASYS_TCHAR *optarg)
+TAO_IMR_Op_Add::setenv (ACE_TCHAR *optarg)
 {
    CORBA::ULong length = this->environment_vars_.length ();
 
@@ -329,7 +329,7 @@ TAO_IMR_Op_Add::setenv (ASYS_TCHAR *optarg)
 }
 
 int
-TAO_IMR_Op_Add::parse (int argc, ASYS_TCHAR **argv)
+TAO_IMR_Op_Add::parse (int argc, ACE_TCHAR **argv)
 {
   // Check for enough arguments (we need at least one for the server name)
   if (argc < 1)
@@ -382,7 +382,7 @@ TAO_IMR_Op_Add::parse (int argc, ASYS_TCHAR **argv)
 }
 
 int
-TAO_IMR_Op_Autostart::parse (int argc, ASYS_TCHAR **argv)
+TAO_IMR_Op_Autostart::parse (int argc, ACE_TCHAR **argv)
 {
   // Skip the "autostart" command
   ACE_Get_Opt get_opts (argc, argv, "h", 0);
@@ -403,7 +403,7 @@ TAO_IMR_Op_Autostart::parse (int argc, ASYS_TCHAR **argv)
 }
 
 int
-TAO_IMR_Op_IOR::parse (int argc, ASYS_TCHAR **argv)
+TAO_IMR_Op_IOR::parse (int argc, ACE_TCHAR **argv)
 {
   // Check for enough arguments (we need at least one for the server name)
   if (argc < 1)
@@ -435,7 +435,7 @@ TAO_IMR_Op_IOR::parse (int argc, ASYS_TCHAR **argv)
 }
 
 int
-TAO_IMR_Op_List::parse (int argc, ASYS_TCHAR **argv)
+TAO_IMR_Op_List::parse (int argc, ACE_TCHAR **argv)
 {
   int server_flag = 0;
 
@@ -467,7 +467,7 @@ TAO_IMR_Op_List::parse (int argc, ASYS_TCHAR **argv)
 }
 
 int
-TAO_IMR_Op_Remove::parse (int argc, ASYS_TCHAR **argv)
+TAO_IMR_Op_Remove::parse (int argc, ACE_TCHAR **argv)
 {
   // Check for enough arguments (we need at least one for the server name)
   if (argc < 1)
@@ -496,7 +496,7 @@ TAO_IMR_Op_Remove::parse (int argc, ASYS_TCHAR **argv)
 }
 
 int
-TAO_IMR_Op_Shutdown::parse (int argc, ASYS_TCHAR **argv)
+TAO_IMR_Op_Shutdown::parse (int argc, ACE_TCHAR **argv)
 {
   // Check for enough arguments (we need at least one for the server name)
   if (argc < 1)
@@ -525,7 +525,7 @@ TAO_IMR_Op_Shutdown::parse (int argc, ASYS_TCHAR **argv)
 }
 
 void
-TAO_IMR_Op_Update::setenv (ASYS_TCHAR *optarg)
+TAO_IMR_Op_Update::setenv (ACE_TCHAR *optarg)
 {
    this->set_environment_vars_ = 1;
    CORBA::ULong length = this->environment_vars_.length ();
@@ -541,7 +541,7 @@ TAO_IMR_Op_Update::setenv (ASYS_TCHAR *optarg)
 }
 
 int
-TAO_IMR_Op_Update::parse (int argc, ASYS_TCHAR **argv)
+TAO_IMR_Op_Update::parse (int argc, ACE_TCHAR **argv)
 {
   // Check for enough arguments (we need at least one for the server name)
   if (argc < 1)

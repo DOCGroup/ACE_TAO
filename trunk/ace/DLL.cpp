@@ -19,7 +19,7 @@ ACE_DLL::ACE_DLL (int close_on_destruction)
 // If the library name and the opening mode are specified than on
 // object creation the library is implicitly opened.
 
-ACE_DLL::ACE_DLL (const ASYS_TCHAR *dll_name,
+ACE_DLL::ACE_DLL (const ACE_TCHAR *dll_name,
                   int open_mode,
                   int close_on_destruction)
   : handle_ (ACE_OS::dlopen (dll_name,
@@ -28,7 +28,7 @@ ACE_DLL::ACE_DLL (const ASYS_TCHAR *dll_name,
 {
   if (this->handle_ == ACE_SHLIB_INVALID_HANDLE)
     ACE_ERROR ((LM_ERROR,
-                ASYS_TEXT ("%s\n"),
+                ACE_TEXT ("%s\n"),
                 this->error ()));
 }
 
@@ -54,7 +54,7 @@ ACE_DLL::~ACE_DLL (void)
 //               relocation processing of any other object.
 
 int
-ACE_DLL::open (const ASYS_TCHAR *dll_filename,
+ACE_DLL::open (const ACE_TCHAR *dll_filename,
                int open_mode,
                int close_on_destruction)
 {
@@ -66,13 +66,13 @@ ACE_DLL::open (const ASYS_TCHAR *dll_filename,
   this->close_on_destruction_ = close_on_destruction;
 
   // Find out where the library is
-  ASYS_TCHAR dll_pathname[MAXPATHLEN + 1];
+  ACE_TCHAR dll_pathname[MAXPATHLEN + 1];
 
   // Transform the pathname into the appropriate dynamic link library
   // by searching the ACE_LD_SEARCH_PATH.
   int result = ACE::ldfind (dll_filename,
                             dll_pathname,
-                            (sizeof dll_pathname / sizeof (ASYS_TCHAR)));
+                            (sizeof dll_pathname / sizeof (ACE_TCHAR)));
   // Check for errors
   if (result != 0)
     return result;
@@ -83,7 +83,7 @@ ACE_DLL::open (const ASYS_TCHAR *dll_filename,
 
   if (this->handle_ == ACE_SHLIB_INVALID_HANDLE)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ASYS_TEXT ("%s\n"), this->error ()),
+                       ACE_TEXT ("%s\n"), this->error ()),
                       -1);
   return 0;
 }
@@ -91,7 +91,7 @@ ACE_DLL::open (const ASYS_TCHAR *dll_filename,
 // The symbol refernce of the name specified is obtained.
 
 void *
-ACE_DLL::symbol (const char *sym_name)
+ACE_DLL::symbol (const ACE_TCHAR *sym_name)
 {
   return ACE_OS::dlsym (this->handle_, sym_name);
 }
@@ -120,7 +120,7 @@ ACE_DLL::close (void)
 
 // This method is used on error in an library operation.
 
-ASYS_TCHAR *
+ACE_TCHAR *
 ACE_DLL::error (void)
 {
   return ACE_OS::dlerror ();
@@ -153,7 +153,7 @@ ACE_DLL::set_handle (ACE_SHLIB_HANDLE handle,
   // Close the handle in use before accepting the next one.
   if (this->close () == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ASYS_TEXT ("%s\n"), this->error ()),
+                       ACE_TEXT ("%s\n"), this->error ()),
                       -1);
 
   this->handle_ = handle;

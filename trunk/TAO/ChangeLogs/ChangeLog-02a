@@ -1,3 +1,120 @@
+Sat Apr 22 20:53:11 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * TAO/TAO_IDL/ast/ast_module.cpp:
+        * TAO/TAO_IDL/be/be_exception.cpp:
+        * TAO/TAO_IDL/be/be_sequence.cpp:
+        * TAO/TAO_IDL/be/be_structure.cpp:
+        * TAO/TAO_IDL/be/be_union.cpp:
+        * TAO/TAO_IDL/be/be_visitor_operation/ami_exception_holder_operation_ch.cpp:
+        * TAO/TAO_IDL/be/be_visitor_operation/ami_exception_holder_operation_cs.cpp:
+        * TAO/TAO_IDL/be/be_visitor_operation/arglist.cpp:
+        * TAO/TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
+        * TAO/TAO_IDL/util/utl_global.cpp:
+        * TAO/examples/Load_Balancing_persistent/Identity_Client.cpp:
+        * TAO/examples/Load_Balancing_persistent/Load_Balancer_i.cpp:
+        * TAO/examples/Logging/Logger_i.cpp:
+        * TAO/examples/Simple/time-date/server.cpp:
+        * TAO/orbsvcs/IFR_Service/TCF_Loader.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/Options.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/Options.h:
+        * TAO/orbsvcs/ImplRepo_Service/tao_imr.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/tao_imr_i.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/tao_imr_i.h:
+        * TAO/orbsvcs/Naming_Service/NT_Naming_Service.cpp:
+        * TAO/orbsvcs/Naming_Service/NT_Naming_Service.h:
+        * TAO/orbsvcs/Naming_Service/Naming_Service.cpp:
+        * TAO/orbsvcs/Naming_Service/Naming_Service.h:
+        * TAO/orbsvcs/orbsvcs/IOR_Multicast.cpp:
+        * TAO/orbsvcs/orbsvcs/AV/RTCP.cpp:
+        * TAO/orbsvcs/orbsvcs/AV/RTP.cpp:
+        * TAO/orbsvcs/orbsvcs/AV/TCP.cpp:
+        * TAO/orbsvcs/orbsvcs/AV/UDP.cpp:
+        * TAO/orbsvcs/orbsvcs/AV/sfp.cpp:
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.cpp:
+        * TAO/orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp:
+        * TAO/orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp:
+        * TAO/orbsvcs/orbsvcs/Event/EC_Gateway_UDP.h:
+        * TAO/orbsvcs/orbsvcs/Naming/Naming_Utils.cpp:
+        * TAO/orbsvcs/orbsvcs/Naming/Naming_Utils.h:
+        * TAO/orbsvcs/orbsvcs/Naming/Persistent_Context_Index.cpp:
+        * TAO/orbsvcs/orbsvcs/Naming/Persistent_Context_Index.h:
+        * TAO/orbsvcs/orbsvcs/Trader/Trader.cpp:
+        * TAO/orbsvcs/orbsvcs/Trader/Trader_Interfaces.cpp:
+        * TAO/performance-tests/Cubit/TAO/MT_Cubit/server.cpp:
+        * TAO/tao/Acceptor_Registry.cpp:
+        * TAO/tao/Any.cpp:
+        * TAO/tao/Connector_Registry.cpp:
+        * TAO/tao/DomainS.cpp:
+        * TAO/tao/Environment.cpp:
+        * TAO/tao/Exception.cpp:
+        * TAO/tao/GIOP_Message_Accept_State.cpp:
+        * TAO/tao/GIOP_Message_Acceptors.cpp:
+        * TAO/tao/GIOP_Message_Base.cpp:
+        * TAO/tao/GIOP_Message_Connectors.cpp:
+        * TAO/tao/GIOP_Message_Lite.cpp:
+        * TAO/tao/GIOP_Server_Request.cpp:
+        * TAO/tao/GIOP_Utils.cpp:
+        * TAO/tao/IIOP_Acceptor.cpp:
+        * TAO/tao/IIOP_Connect.cpp:
+        * TAO/tao/IIOP_Connector.cpp:
+        * TAO/tao/IIOP_Factory.cpp:
+        * TAO/tao/IIOP_Lite_Factory.cpp:
+        * TAO/tao/IIOP_Profile.cpp:
+        * TAO/tao/IIOP_Transport.cpp:
+        * TAO/tao/Invocation.cpp:
+        * TAO/tao/Leader_Follower.cpp:
+        * TAO/tao/Leader_Follower.i:
+        * TAO/tao/Messaging_Policy_i.cpp:
+        * TAO/tao/NVList.cpp:
+        * TAO/tao/ORB.cpp:
+        * TAO/tao/ORB_Core.cpp:
+        * TAO/tao/Object.cpp:
+        * TAO/tao/Operation_Table.cpp:
+        * TAO/tao/POA.cpp:
+        * TAO/tao/POAS.cpp:
+        * TAO/tao/Pluggable.cpp:
+        * TAO/tao/Pluggable_Messaging.cpp:
+        * TAO/tao/Pool_Per_Endpoint.cpp:
+        * TAO/tao/Reactor_Per_Priority.cpp:
+        * TAO/tao/Reply_Dispatcher.cpp:
+        * TAO/tao/Request.cpp:
+        * TAO/tao/SHMIOP_Acceptor.cpp:
+        * TAO/tao/SHMIOP_Acceptor.h:
+        * TAO/tao/SHMIOP_Connect.cpp:
+        * TAO/tao/SHMIOP_Connector.cpp:
+        * TAO/tao/SHMIOP_Factory.cpp:
+        * TAO/tao/SHMIOP_Profile.cpp:
+        * TAO/tao/SHMIOP_Transport.cpp:
+        * TAO/tao/Stub.cpp:
+        * TAO/tao/Stub.i:
+        * TAO/tao/TAO.cpp:
+        * TAO/tao/Transport_Mux_Strategy.cpp:
+        * TAO/tao/Typecode.cpp:
+        * TAO/tao/UIOP_Connector.cpp:
+        * TAO/tao/UIOP_Factory.cpp:
+        * TAO/tao/UIOP_Lite_Factory.cpp:
+        * TAO/tao/UIOP_Profile.cpp:
+        * TAO/tao/UIOP_Transport.cpp:
+        * TAO/tao/ValueBase.cpp:
+        * TAO/tao/Wait_Strategy.cpp:
+        * TAO/tao/append.cpp:
+        * TAO/tao/default_client.cpp:
+        * TAO/tao/default_resource.cpp:
+        * TAO/tao/default_server.cpp:
+        * TAO/tao/qt_resource.cpp:
+        * TAO/tao/skip.cpp:
+        * TAO/tao/xt_resource.cpp:
+        * TAO/tests/Smart_Proxies/server.cpp:
+        * TAO/tests/Smart_Proxies/On_Demand/server.cpp:
+
+          Made the appropriate changes based on the Wide Character support
+          I did in ACE.  Mainly just renaming the ASYS_* macros to their
+          ACE_* equivalents.
+
+          Unicode support in TAO is pretty iffy right now anyway, so it is
+          debatable if any of these macros will continue to be used in TAO.
+
 Sat Apr 22 01:31:13 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* docs/Options.html: Added a reminder for compiling idl files with

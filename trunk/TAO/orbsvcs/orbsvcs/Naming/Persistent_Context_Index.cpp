@@ -145,7 +145,7 @@ TAO_Persistent_Context_Index::orb (void)
 }
 
 int
-TAO_Persistent_Context_Index::open (LPCTSTR file_name,
+TAO_Persistent_Context_Index::open (const ACE_TCHAR *file_name,
                                     void *base_address)
 {
   this->base_address_ = base_address;

@@ -1043,7 +1043,7 @@ TAO_ECG_UDP_EH::get_handle (void) const
 // ****************************************************************
 
 TAO_ECG_Mcast_EH::TAO_ECG_Mcast_EH (TAO_ECG_UDP_Receiver *recv,
-                                    const ASYS_TCHAR *net_if)
+                                    const ACE_TCHAR *net_if)
   :  net_if_ (net_if?ACE_OS::strdup (net_if):0),
      receiver_ (recv),
      observer_ (this)

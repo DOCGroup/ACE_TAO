@@ -19,9 +19,9 @@ ACE_FILE_Connector::ACE_FILE_Connector (ACE_FILE_IO &new_io,
 		     reuse_addr, flags, perms) == ACE_IO_SAP::INVALID_HANDLE
       && timeout != 0 && !(errno == EWOULDBLOCK || errno == ETIME))
     ACE_ERROR ((LM_ERROR,
-                ASYS_TEXT ("address %s, %p\n"),
+                ACE_TEXT ("address %s, %p\n"),
                 remote_sap.get_path_name (),
-                ASYS_TEXT ("ACE_FILE_IO")));
+                ACE_TEXT ("ACE_FILE_IO")));
 }
 
 ASYS_INLINE int

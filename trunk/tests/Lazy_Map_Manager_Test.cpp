@@ -42,11 +42,11 @@ display_map (MAP &map)
       {
         MAP::ENTRY &entry = *iter;
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("%d "),
+                    ACE_TEXT ("%d "),
                     entry.int_id_));
       }
 
-    ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\n")));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
   }
 
   {
@@ -57,16 +57,16 @@ display_map (MAP &map)
       {
         MAP::ENTRY &entry = *iter;
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("%d "),
+                    ACE_TEXT ("%d "),
                     entry.int_id_));
       }
 
     ACE_DEBUG ((LM_DEBUG,
-                ASYS_TEXT ("\n")));
+                ACE_TEXT ("\n")));
   }
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("\n")));
+              ACE_TEXT ("\n")));
 }
 
 // Test for map manager.
@@ -186,12 +186,12 @@ display_map (ACTIVE_MAP &map)
       {
         ACTIVE_MAP::ENTRY &entry = *iter;
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("%d "),
+                    ACE_TEXT ("%d "),
                     entry.int_id_));
       }
 
     ACE_DEBUG ((LM_DEBUG,
-                ASYS_TEXT ("\n")));
+                ACE_TEXT ("\n")));
   }
 
   {
@@ -202,16 +202,16 @@ display_map (ACTIVE_MAP &map)
       {
         ACTIVE_MAP::ENTRY &entry = *iter;
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("%d "),
+                    ACE_TEXT ("%d "),
                     entry.int_id_));
       }
 
     ACE_DEBUG ((LM_DEBUG,
-                ASYS_TEXT ("\n")));
+                ACE_TEXT ("\n")));
   }
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("\n")));
+              ACE_TEXT ("\n")));
 }
 
 // Test for active map manager.
@@ -317,17 +317,17 @@ active_map_test (void)
 }
 
 int
-main (int, ASYS_TCHAR *[])
+main (int, ACE_TCHAR *[])
 {
-  ACE_START_TEST (ASYS_TEXT ("Lazy_Map_Manager_Test"));
+  ACE_START_TEST (ACE_TEXT ("Lazy_Map_Manager_Test"));
   ACE_LOG_MSG->clr_flags (ACE_Log_Msg::VERBOSE_LITE);
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("\nMap Manager...\n\n")));
+              ACE_TEXT ("\nMap Manager...\n\n")));
   map_test ();
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("\nActive Map Manager...\n\n")));
+              ACE_TEXT ("\nActive Map Manager...\n\n")));
   active_map_test ();
 
   ACE_LOG_MSG->set_flags (ACE_Log_Msg::VERBOSE_LITE);

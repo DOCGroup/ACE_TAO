@@ -103,14 +103,14 @@ functionality_test (MAP &map,
 
         // Debugging info.
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("(%d|%d|%d)"),
+                    ACE_TEXT ("(%d|%d|%d)"),
                     counter,
                     original_value,
                     entry.second ()));
       }
 
     ACE_DEBUG ((LM_DEBUG,
-                ASYS_TEXT ("\n")));
+                ACE_TEXT ("\n")));
     ACE_ASSERT (counter == iterations);
   }
 
@@ -142,14 +142,14 @@ functionality_test (MAP &map,
 
         // Debugging info.
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("(%d|%d|%d)"),
+                    ACE_TEXT ("(%d|%d|%d)"),
                     counter,
                     original_value,
                     entry.second ()));
       }
 
     ACE_DEBUG ((LM_DEBUG,
-                ASYS_TEXT ("\n")));
+                ACE_TEXT ("\n")));
     ACE_ASSERT (counter == 0);
   }
 
@@ -225,7 +225,7 @@ performance_test (void (*ptf) (MAP &, size_t, KEY *),
                   size_t iterations,
                   KEY *keys,
                   size_t table_size,
-                  const ASYS_TCHAR *test_name)
+                  const ACE_TCHAR *test_name)
 {
   ACE_Profile_Timer timer;
   timer.start ();
@@ -239,26 +239,26 @@ performance_test (void (*ptf) (MAP &, size_t, KEY *),
   timer.elapsed_time (et);
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("time to run %s of size %d for %d iterations\n"),
+              ACE_TEXT ("time to run %s of size %d for %d iterations\n"),
               test_name,
               table_size,
               iterations));
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("real time = %f secs, user time = %f secs, system time = %f secs\n"),
+              ACE_TEXT ("real time = %f secs, user time = %f secs, system time = %f secs\n"),
               et.real_time,
               et.user_time,
               et.system_time));
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("time per call = %f usecs\n"),
+              ACE_TEXT ("time per call = %f usecs\n"),
               (et.real_time / ACE_timer_t (iterations)) * 1000000));
 }
 
 int
-main (int argc, ASYS_TCHAR *argv[])
+main (int argc, ACE_TCHAR *argv[])
 {
-  ACE_START_TEST (ASYS_TEXT ("Map_Test"));
+  ACE_START_TEST (ACE_TEXT ("Map_Test"));
   ACE_LOG_MSG->clr_flags (ACE_Log_Msg::VERBOSE_LITE);
 
   size_t table_size = ACE_MAX_ITERATIONS / 2;
@@ -281,16 +281,16 @@ main (int argc, ASYS_TCHAR *argv[])
   if (functionality_tests)
     {
       // Functionality test of the maps.
-      ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\nMap Manager functionality test\n")));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nMap Manager functionality test\n")));
       functionality_test (map1, iterations);
 
-      ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\nHash Map Manager functionality test\n")));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nHash Map Manager functionality test\n")));
       functionality_test (map2, iterations);
 
-      ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\nActive Map Manager functionality test\n")));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nActive Map Manager functionality test\n")));
       functionality_test (map3, iterations);
 
-      ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\n")));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
     }
 
   // Performance test of the maps.
@@ -302,21 +302,21 @@ main (int argc, ASYS_TCHAR *argv[])
                     iterations,
                     keys,
                     table_size,
-                    ASYS_TEXT ("Map Manager (insert test)"));
+                    ACE_TEXT ("Map Manager (insert test)"));
   performance_test (&find_test,
                     map1,
                     iterations,
                     keys,
                     table_size,
-                    ASYS_TEXT ("Map Manager (find test)"));
+                    ACE_TEXT ("Map Manager (find test)"));
   performance_test (&unbind_test,
                     map1,
                     iterations,
                     keys,
                     table_size,
-                    ASYS_TEXT ("Map Manager (unbind test)"));
+                    ACE_TEXT ("Map Manager (unbind test)"));
 
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
 
   // Hash Map Manager
   performance_test (&insert_test,
@@ -324,21 +324,21 @@ main (int argc, ASYS_TCHAR *argv[])
                     iterations,
                     keys,
                     table_size,
-                    ASYS_TEXT ("Hash Map Manager (insert test)"));
+                    ACE_TEXT ("Hash Map Manager (insert test)"));
   performance_test (&find_test,
                     map2,
                     iterations,
                     keys,
                     table_size,
-                    ASYS_TEXT ("Hash Map Manager (find test)"));
+                    ACE_TEXT ("Hash Map Manager (find test)"));
   performance_test (&unbind_test,
                     map2,
                     iterations,
                     keys,
                     table_size,
-                    ASYS_TEXT ("Hash Map Manager (unbind test)"));
+                    ACE_TEXT ("Hash Map Manager (unbind test)"));
 
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
 
   // Active Map Manager
   performance_test (&insert_test,
@@ -346,19 +346,19 @@ main (int argc, ASYS_TCHAR *argv[])
                     iterations,
                     keys,
                     table_size,
-                    ASYS_TEXT ("Active Map Manager (insert test)"));
+                    ACE_TEXT ("Active Map Manager (insert test)"));
   performance_test (&find_test,
                     map3,
                     iterations,
                     keys,
                     table_size,
-                    ASYS_TEXT ("Active Map Manager (find test)"));
+                    ACE_TEXT ("Active Map Manager (find test)"));
   performance_test (&unbind_test,
                     map3,
                     iterations,
                     keys,
                     table_size,
-                    ASYS_TEXT ("Active Map Manager (unbind test)"));
+                    ACE_TEXT ("Active Map Manager (unbind test)"));
 
   delete[] keys;
 

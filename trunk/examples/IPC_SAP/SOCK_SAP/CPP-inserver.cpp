@@ -254,7 +254,7 @@ oneway_server (void *arg)
   timer.elapsed_time (et);
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("\t\treal time = %f secs \n\t\tuser time = %f secs \n\t\tsystem time = %f secs\n"),
+              ACE_TEXT ("\t\treal time = %f secs \n\t\tuser time = %f secs \n\t\tsystem time = %f secs\n"),
               et.real_time,
               et.user_time,
               et.system_time));
@@ -262,7 +262,7 @@ oneway_server (void *arg)
   double messages_per_sec = double (message_count) / et.real_time;
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("\t\tmessages = %d\n\t\ttotal bytes = %d\n\t\tmbits/sec = %f\n\t\tusec-per-message = %f\n\t\tmessages-per-second = %0.00f\n"),
+              ACE_TEXT ("\t\tmessages = %d\n\t\ttotal bytes = %d\n\t\tmbits/sec = %f\n\t\tusec-per-message = %f\n\t\tmessages-per-second = %0.00f\n"),
               message_count,
               total_bytes,
               (((double) total_bytes * 8) / et.real_time) / (double) (1024 * 1024),

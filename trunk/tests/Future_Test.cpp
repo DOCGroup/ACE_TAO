@@ -65,7 +65,7 @@ class Prime_Scheduler : public ACE_Task_Base
   friend class Method_Request_end;
 public:
   // = Initialization and termination methods.
-  Prime_Scheduler (const ASYS_TCHAR *,
+  Prime_Scheduler (const ACE_TCHAR *,
                    Prime_Scheduler * = 0);
   // Constructor.
 
@@ -80,7 +80,7 @@ public:
 
   // = These methods are part of the Active Object Proxy interface.
   ACE_Future<u_long> work (u_long param, int count = 1);
-  ACE_Future<const ASYS_TCHAR*> name (void);
+  ACE_Future<const ACE_TCHAR*> name (void);
   void end (void);
 
 protected:
@@ -90,11 +90,11 @@ protected:
 
   // = These are the Servant methods that do the actual work.
   u_long work_i (u_long, int);
-  const ASYS_TCHAR *name_i (void);
+  const ACE_TCHAR *name_i (void);
 
 private:
   // = These are the <Prime_Scheduler> implementation details.
-  ASYS_TCHAR *name_;
+  ACE_TCHAR *name_;
   ACE_Activation_Queue activation_queue_;
   Prime_Scheduler *scheduler_;
 };
@@ -137,13 +137,13 @@ Method_Request_work::Method_Request_work (Prime_Scheduler *new_Prime_Scheduler,
     future_result_ (new_result)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("(%t) Method_Request_work created\n")));
+              ACE_TEXT ("(%t) Method_Request_work created\n")));
 }
 
 Method_Request_work::~Method_Request_work (void)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("(%t) Method_Request_work will be deleted.\n")));
+              ACE_TEXT ("(%t) Method_Request_work will be deleted.\n")));
 }
 
 int
@@ -162,7 +162,7 @@ class Method_Request_name : public ACE_Method_Request
   //     Reification of the <name> method.
 public:
   Method_Request_name (Prime_Scheduler *,
-                       ACE_Future<const ASYS_TCHAR*> &);
+                       ACE_Future<const ACE_TCHAR*> &);
   virtual ~Method_Request_name (void);
 
   virtual int call (void);
@@ -170,22 +170,22 @@ public:
 
 private:
   Prime_Scheduler *scheduler_;
-  ACE_Future<const ASYS_TCHAR*> future_result_;
+  ACE_Future<const ACE_TCHAR*> future_result_;
 };
 
 Method_Request_name::Method_Request_name (Prime_Scheduler *new_scheduler,
-                                          ACE_Future<const ASYS_TCHAR*> &new_result)
+                                          ACE_Future<const ACE_TCHAR*> &new_result)
   : scheduler_ (new_scheduler),
     future_result_ (new_result)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("(%t) Method_Request_name created\n")));
+              ACE_TEXT ("(%t) Method_Request_name created\n")));
 }
 
 Method_Request_name::~Method_Request_name (void)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("(%t) Method_Request_name will be deleted.\n")));
+              ACE_TEXT ("(%t) Method_Request_name will be deleted.\n")));
 }
 
 int
@@ -227,16 +227,16 @@ Method_Request_end::call (void)
 }
 
 // Constructor
-Prime_Scheduler::Prime_Scheduler (const ASYS_TCHAR *newname,
+Prime_Scheduler::Prime_Scheduler (const ACE_TCHAR *newname,
                                   Prime_Scheduler *new_scheduler)
   : scheduler_ (new_scheduler)
 {
   ACE_NEW (this->name_,
-           ASYS_TCHAR[ACE_OS::strlen (newname) + 1]);
-  ACE_OS::strcpy ((ASYS_TCHAR *) this->name_,
+           ACE_TCHAR[ACE_OS::strlen (newname) + 1]);
+  ACE_OS::strcpy ((ACE_TCHAR *) this->name_,
                   newname);
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("(%t) Prime_Scheduler %s created\n"),
+              ACE_TEXT ("(%t) Prime_Scheduler %s created\n"),
               this->name_));
 }
 
@@ -245,7 +245,7 @@ Prime_Scheduler::Prime_Scheduler (const ASYS_TCHAR *newname,
 Prime_Scheduler::~Prime_Scheduler (void)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("(%t) Prime_Scheduler %s will be destroyed\n"),
+              ACE_TEXT ("(%t) Prime_Scheduler %s will be destroyed\n"),
               this->name_));
   delete [] this->name_;
 }
@@ -257,7 +257,7 @@ Prime_Scheduler::open (void *)
 {
   task_count++;
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("(%t) Prime_Scheduler %s open\n"),
+              ACE_TEXT ("(%t) Prime_Scheduler %s open\n"),
               this->name_));
   // Become an Active Object.
   return this->activate (THR_BOUND | THR_DETACHED);
@@ -269,7 +269,7 @@ int
 Prime_Scheduler::close (u_long)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("(%t) Prime_Scheduler %s close\n"),
+              ACE_TEXT ("(%t) Prime_Scheduler %s close\n"),
               this->name_));
   task_count--;
   return 0;
@@ -287,7 +287,7 @@ Prime_Scheduler::svc (void)
       auto_ptr<ACE_Method_Request> mo (this->activation_queue_.dequeue ());
 
       ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("(%t) calling method request\n")));
+                  ACE_TEXT ("(%t) calling method request\n")));
       // Call it.
       if (mo->call () == -1)
         break;
@@ -316,13 +316,13 @@ Prime_Scheduler::work_i (u_long param,
   return ACE::is_prime (param, 2, param / 2);
 }
 
-const ASYS_TCHAR *
+const ACE_TCHAR *
 Prime_Scheduler::name_i (void)
 {
   return this->name_;
 }
 
-ACE_Future<const ASYS_TCHAR *>
+ACE_Future<const ACE_TCHAR *>
 Prime_Scheduler::name (void)
 {
   if (this->scheduler_)
@@ -330,7 +330,7 @@ Prime_Scheduler::name (void)
     return this->scheduler_->name ();
   else
     {
-      ACE_Future<const ASYS_TCHAR*> new_future;
+      ACE_Future<const ACE_TCHAR*> new_future;
 
       // @@ What happens if new fails here?
       this->activation_queue_.enqueue
@@ -366,40 +366,40 @@ static int n_loops = 100;
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Atomic_Op<ACE_Thread_Mutex, int>;
-template class ACE_Future<const ASYS_TCHAR *>;
+template class ACE_Future<const ACE_TCHAR *>;
 template class ACE_Future<int>;
 template class ACE_Future<u_long>;
-template class ACE_Future_Rep<const ASYS_TCHAR *>;
+template class ACE_Future_Rep<const ACE_TCHAR *>;
 template class ACE_Future_Rep<int>;
 template class ACE_Future_Rep<u_long>;
 template class auto_ptr<ACE_Method_Request>;
 template class ACE_Auto_Basic_Ptr<ACE_Method_Request>;
-template class ACE_Node<ACE_Future_Observer<const ASYS_TCHAR *> *>;
+template class ACE_Node<ACE_Future_Observer<const ACE_TCHAR *> *>;
 template class ACE_Node<ACE_Future_Observer<int> *>;
 template class ACE_Node<ACE_Future_Observer<u_long> *>;
-template class ACE_Unbounded_Set<ACE_Future_Observer<const ASYS_TCHAR *> *>;
+template class ACE_Unbounded_Set<ACE_Future_Observer<const ACE_TCHAR *> *>;
 template class ACE_Unbounded_Set<ACE_Future_Observer<int> *>;
 template class ACE_Unbounded_Set<ACE_Future_Observer<u_long> *>;
-template class ACE_Unbounded_Set_Iterator<ACE_Future_Observer<const ASYS_TCHAR *> *>;
+template class ACE_Unbounded_Set_Iterator<ACE_Future_Observer<const ACE_TCHAR *> *>;
 template class ACE_Unbounded_Set_Iterator<ACE_Future_Observer<int> *>;
 template class ACE_Unbounded_Set_Iterator<ACE_Future_Observer<u_long> *>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Atomic_Op<ACE_Thread_Mutex, int>
-#pragma instantiate ACE_Future<const ASYS_TCHAR *>
+#pragma instantiate ACE_Future<const ACE_TCHAR *>
 #pragma instantiate ACE_Future<int>
 #pragma instantiate ACE_Future<u_long>
-#pragma instantiate ACE_Future_Rep<const ASYS_TCHAR *>
+#pragma instantiate ACE_Future_Rep<const ACE_TCHAR *>
 #pragma instantiate ACE_Future_Rep<int>
 #pragma instantiate ACE_Future_Rep<u_long>
 #pragma instantiate auto_ptr<ACE_Method_Request>
 #pragma instantiate ACE_Auto_Basic_Ptr<ACE_Method_Request>
-#pragma instantiate ACE_Node<ACE_Future_Observer<const ASYS_TCHAR *> *>
+#pragma instantiate ACE_Node<ACE_Future_Observer<const ACE_TCHAR *> *>
 #pragma instantiate ACE_Node<ACE_Future_Observer<int> *>
 #pragma instantiate ACE_Node<ACE_Future_Observer<u_long> *>
-#pragma instantiate ACE_Unbounded_Set<ACE_Future_Observer<const ASYS_TCHAR *> *>
+#pragma instantiate ACE_Unbounded_Set<ACE_Future_Observer<const ACE_TCHAR *> *>
 #pragma instantiate ACE_Unbounded_Set<ACE_Future_Observer<int> *>
 #pragma instantiate ACE_Unbounded_Set<ACE_Future_Observer<u_long> *>
-#pragma instantiate ACE_Unbounded_Set_Iterator<ACE_Future_Observer<const ASYS_TCHAR *> *>
+#pragma instantiate ACE_Unbounded_Set_Iterator<ACE_Future_Observer<const ACE_TCHAR *> *>
 #pragma instantiate ACE_Unbounded_Set_Iterator<ACE_Future_Observer<int> *>
 #pragma instantiate ACE_Unbounded_Set_Iterator<ACE_Future_Observer<u_long> *>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
@@ -407,9 +407,9 @@ template class ACE_Unbounded_Set_Iterator<ACE_Future_Observer<u_long> *>;
 #endif /* ACE_HAS_THREADS */
 
 int
-main (int, ASYS_TCHAR *[])
+main (int, ACE_TCHAR *[])
 {
-  ACE_START_TEST (ASYS_TEXT ("Future_Test"));
+  ACE_START_TEST (ACE_TEXT ("Future_Test"));
 
 #if defined (ACE_HAS_THREADS)
   // @@ Should make these be <auto_ptr>s...
@@ -417,21 +417,21 @@ main (int, ASYS_TCHAR *[])
 
   // Create active objects..
   ACE_NEW_RETURN (andres,
-                  Prime_Scheduler (ASYS_TEXT ("andres")),
+                  Prime_Scheduler (ACE_TEXT ("andres")),
                   -1);
   ACE_ASSERT (andres->open () != -1);
   ACE_NEW_RETURN (peter,
-                  Prime_Scheduler (ASYS_TEXT ("peter")),
+                  Prime_Scheduler (ACE_TEXT ("peter")),
                   -1);
   ACE_ASSERT (peter->open () != -1);
   ACE_NEW_RETURN (helmut,
-                  Prime_Scheduler (ASYS_TEXT ("helmut")),
+                  Prime_Scheduler (ACE_TEXT ("helmut")),
                   -1);
   ACE_ASSERT (helmut->open () != -1);
 
   // Matias passes all asynchronous method calls on to Andres...
   ACE_NEW_RETURN (matias,
-                  Prime_Scheduler (ASYS_TEXT ("matias"),
+                  Prime_Scheduler (ACE_TEXT ("matias"),
                                    andres),
                   -1);
   ACE_ASSERT (matias->open () != -1);
@@ -444,10 +444,10 @@ main (int, ASYS_TCHAR *[])
         ACE_Future<u_long> fresultc;
         ACE_Future<u_long> fresultd;
         ACE_Future<u_long> fresulte;
-        ACE_Future<const ASYS_TCHAR *> fname;
+        ACE_Future<const ACE_TCHAR *> fname;
 
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("(%t) going to do a non-blocking call\n")));
+                    ACE_TEXT ("(%t) going to do a non-blocking call\n")));
 
         // Spawn off the methods, which run in a separate thread as
         // active object invocations.
@@ -460,10 +460,10 @@ main (int, ASYS_TCHAR *[])
         // See if the result is available...
         if (fresulta.ready ())
           ACE_DEBUG ((LM_DEBUG,
-                      ASYS_TEXT ("(%t) wow.. work is ready.....\n")));
+                      ACE_TEXT ("(%t) wow.. work is ready.....\n")));
 
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("(%t) non-blocking call done... now blocking...\n")));
+                    ACE_TEXT ("(%t) non-blocking call done... now blocking...\n")));
 
         // Save the result of fresulta.
 
@@ -488,28 +488,28 @@ main (int, ASYS_TCHAR *[])
         fresulte.get (resulte);
 
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("(%t) result a %u\n")
-                    ASYS_TEXT ("(%t) result b %u\n")
-                    ASYS_TEXT ("(%t) result c %u\n")
-                    ASYS_TEXT ("(%t) result d %u\n")
-                    ASYS_TEXT ("(%t) result e %u\n"),
+                    ACE_TEXT ("(%t) result a %u\n")
+                    ACE_TEXT ("(%t) result b %u\n")
+                    ACE_TEXT ("(%t) result c %u\n")
+                    ACE_TEXT ("(%t) result d %u\n")
+                    ACE_TEXT ("(%t) result e %u\n"),
                     (u_int) resulta,
                     (u_int) resultb,
                     (u_int) resultc,
                     (u_int) resulte,
                     (u_int) resultd));
 
-        const ASYS_TCHAR *name;
+        const ACE_TCHAR *name;
         fname.get (name);
 
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("(%t) name %s\n"),
+                    ACE_TEXT ("(%t) name %s\n"),
                     name));
       }
 
       ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("(%t) task_count %d future_count %d ")
-                  ASYS_TEXT ("capsule_count %d method_request_count %d\n"),
+                  ACE_TEXT ("(%t) task_count %d future_count %d ")
+                  ACE_TEXT ("capsule_count %d method_request_count %d\n"),
                   task_count.value (),
                   future_count.value (),
                   capsule_count.value (),
@@ -525,8 +525,8 @@ main (int, ASYS_TCHAR *[])
   ACE_OS::sleep (2);
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("(%t) task_count %d future_count %d ")
-              ASYS_TEXT ("capsule_count %d method_request_count %d\n"),
+              ACE_TEXT ("(%t) task_count %d future_count %d ")
+              ACE_TEXT ("capsule_count %d method_request_count %d\n"),
               task_count.value (),
               future_count.value (),
               capsule_count.value (),
@@ -546,17 +546,17 @@ main (int, ASYS_TCHAR *[])
     if (f1.get (value, &timeout) == 0
         && value == 100)
       ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("Ace_Future<T>::Set followed by Ace_Future<T>::Get works.\n")));
+                  ACE_TEXT ("Ace_Future<T>::Set followed by Ace_Future<T>::Get works.\n")));
     else
       ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("ACE_Future<T>::Set followed by Ace_Future<T>::Get does ")
-                  ASYS_TEXT ("not work, broken Ace_Future<> implementation.\n")));
+                  ACE_TEXT ("ACE_Future<T>::Set followed by Ace_Future<T>::Get does ")
+                  ACE_TEXT ("not work, broken Ace_Future<> implementation.\n")));
   }
 
   {
     ACE_DEBUG ((LM_DEBUG,
-                ASYS_TEXT ("Checking if Ace_Future<T>::operator= is implemented ")
-                ASYS_TEXT ("incorrectly this might crash the program.\n")));
+                ACE_TEXT ("Checking if Ace_Future<T>::operator= is implemented ")
+                ACE_TEXT ("incorrectly this might crash the program.\n")));
     ACE_Future<int> f1;
     {
       // To ensure that a rep object is created.
@@ -565,7 +565,7 @@ main (int, ASYS_TCHAR *[])
     // Now it is one ACE_Future<int> referencing the rep instance
 
     ACE_DEBUG ((LM_DEBUG,
-                ASYS_TEXT ("0.\n")));
+                ACE_TEXT ("0.\n")));
 
     //Check that self assignment works.
     f1 = f1;
@@ -584,7 +584,7 @@ main (int, ASYS_TCHAR *[])
     f1.get (value, &timeout);
 
     ACE_DEBUG ((LM_DEBUG,
-                ASYS_TEXT ("1.\n")));
+                ACE_TEXT ("1.\n")));
     {
       // Might delete the same data a couple of times.
       ACE_Future<int> f2 (f1);
@@ -593,7 +593,7 @@ main (int, ASYS_TCHAR *[])
     }
 
     ACE_DEBUG ((LM_DEBUG,
-                ASYS_TEXT ("2.\n")));
+                ACE_TEXT ("2.\n")));
     {
       ACE_Future<int> f2 (f1);
       f1.set (100);
@@ -601,21 +601,21 @@ main (int, ASYS_TCHAR *[])
     }
 
     ACE_DEBUG ((LM_DEBUG,
-                ASYS_TEXT ("3.\n")));
+                ACE_TEXT ("3.\n")));
     {
       ACE_Future<int> f2 (f1);
       f1.set (100);
       f1.get (value, &timeout);
     }
     ACE_DEBUG ((LM_DEBUG,
-                ASYS_TEXT ("4.\n")));
+                ACE_TEXT ("4.\n")));
     {
       ACE_Future<int> f2 (f1);
       f1.set (100);
       f1.get (value, &timeout);
     }
     ACE_DEBUG ((LM_DEBUG,
-                ASYS_TEXT ("5.\n")));
+                ACE_TEXT ("5.\n")));
     {
       ACE_Future<int> f2 (90);
       f2.get (value, &timeout);
@@ -623,7 +623,7 @@ main (int, ASYS_TCHAR *[])
     }
   }
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("No it did not crash the program.\n")));
+              ACE_TEXT ("No it did not crash the program.\n")));
 
   ACE_OS::sleep (5);
 
@@ -634,7 +634,7 @@ main (int, ASYS_TCHAR *[])
 
 #else
   ACE_ERROR ((LM_INFO,
-              ASYS_TEXT ("threads not supported on this platform\n")));
+              ACE_TEXT ("threads not supported on this platform\n")));
 #endif /* ACE_HAS_THREADS */
   ACE_END_TEST;
   return 0;

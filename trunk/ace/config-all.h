@@ -115,6 +115,10 @@
 // UNICODE macros (to be added later)
 // ============================================================================
 
+// Get the unicode (i.e. ACE_TCHAR) defines
+# include "ace/ace_wchar.h"
+
+
 // ============================================================================
 // EXPORT macros
 //

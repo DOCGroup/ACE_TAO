@@ -105,7 +105,7 @@ test_cache_map_manager (size_t table_size,
              ++iter)
           {
             ACE_DEBUG ((LM_DEBUG,
-                        ASYS_TEXT ("(%d|%d|%d)"),
+                        ACE_TEXT ("(%d|%d|%d)"),
                         i,
                         (*iter).first (),
                         (*iter).second ()));
@@ -113,7 +113,7 @@ test_cache_map_manager (size_t table_size,
           }
 
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("\n")));
+                    ACE_TEXT ("\n")));
         ACE_ASSERT (i == iterations);
       }
 
@@ -128,7 +128,7 @@ test_cache_map_manager (size_t table_size,
              ++iter)
           {
             ACE_DEBUG ((LM_DEBUG,
-                        ASYS_TEXT ("(%d|%d|%d)"),
+                        ACE_TEXT ("(%d|%d|%d)"),
                         k,
                         (*iter).first (),
                         (*iter).second ()));
@@ -136,7 +136,7 @@ test_cache_map_manager (size_t table_size,
           }
 
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("\n")));
+                    ACE_TEXT ("\n")));
         ACE_ASSERT (k == -1);
       }
 
@@ -151,7 +151,7 @@ test_cache_map_manager (size_t table_size,
              ++iter)
           {
             ACE_DEBUG ((LM_DEBUG,
-                        ASYS_TEXT ("(%d|%d|%d)"),
+                        ACE_TEXT ("(%d|%d|%d)"),
                         i,
                         (*iter).first (),
                         (*iter).second ()));
@@ -159,7 +159,7 @@ test_cache_map_manager (size_t table_size,
           }
 
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("\n")));
+                    ACE_TEXT ("\n")));
         ACE_ASSERT (i == iterations);
       }
 
@@ -174,7 +174,7 @@ test_cache_map_manager (size_t table_size,
              ++iter)
           {
             ACE_DEBUG ((LM_DEBUG,
-                        ASYS_TEXT ("(%d|%d|%d)"),
+                        ACE_TEXT ("(%d|%d|%d)"),
                         k,
                         (*iter).first (),
                         (*iter).second ()));
@@ -182,7 +182,7 @@ test_cache_map_manager (size_t table_size,
           }
 
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("\n")));
+                    ACE_TEXT ("\n")));
         ACE_ASSERT (k == -1);
       }
 
@@ -232,7 +232,7 @@ test_hash_cache_map_manager (size_t table_size,
              ++iter)
           {
             ACE_DEBUG ((LM_DEBUG,
-                        ASYS_TEXT ("(%d|%d|%d)"),
+                        ACE_TEXT ("(%d|%d|%d)"),
                         i,
                         (*iter).first (),
                         (*iter).second ()));
@@ -240,7 +240,7 @@ test_hash_cache_map_manager (size_t table_size,
           }
 
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("\n")));
+                    ACE_TEXT ("\n")));
         ACE_ASSERT (i == iterations);
       }
 
@@ -255,7 +255,7 @@ test_hash_cache_map_manager (size_t table_size,
              ++iter)
           {
             ACE_DEBUG ((LM_DEBUG,
-                        ASYS_TEXT ("(%d|%d|%d)"),
+                        ACE_TEXT ("(%d|%d|%d)"),
                         k,
                         (*iter).first (),
                         (*iter).second ()));
@@ -263,7 +263,7 @@ test_hash_cache_map_manager (size_t table_size,
           }
 
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("\n")));
+                    ACE_TEXT ("\n")));
         ACE_ASSERT (k == -1);
       }
 
@@ -278,7 +278,7 @@ test_hash_cache_map_manager (size_t table_size,
              ++iter)
           {
             ACE_DEBUG ((LM_DEBUG,
-                        ASYS_TEXT ("(%d|%d|%d)"),
+                        ACE_TEXT ("(%d|%d|%d)"),
                         i,
                         (*iter).first (),
                         (*iter).second ()));
@@ -286,7 +286,7 @@ test_hash_cache_map_manager (size_t table_size,
           }
 
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("\n")));
+                    ACE_TEXT ("\n")));
         ACE_ASSERT (i == iterations);
       }
 
@@ -301,7 +301,7 @@ test_hash_cache_map_manager (size_t table_size,
              ++iter)
           {
             ACE_DEBUG ((LM_DEBUG,
-                        ASYS_TEXT ("(%d|%d|%d)"),
+                        ACE_TEXT ("(%d|%d|%d)"),
                         k,
                         (*iter).first (),
                         (*iter).second ()));
@@ -309,7 +309,7 @@ test_hash_cache_map_manager (size_t table_size,
           }
 
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("\n")));
+                    ACE_TEXT ("\n")));
         ACE_ASSERT (k == -1);
       }
 
@@ -365,7 +365,7 @@ test_active_map_manager (size_t table_size,
           {
             ACTIVE_MAP_MANAGER::ENTRY &entry = *iter;
             ACE_DEBUG ((LM_DEBUG,
-                        ASYS_TEXT ("(%d|%d-%d|%d)"),
+                        ACE_TEXT ("(%d|%d-%d|%d)"),
                         i,
                         entry.ext_id_.slot_index (),
                         entry.ext_id_.slot_generation (),
@@ -374,7 +374,7 @@ test_active_map_manager (size_t table_size,
           }
 
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("\n")));
+                    ACE_TEXT ("\n")));
         ACE_ASSERT (i == iterations);
       }
 
@@ -390,7 +390,7 @@ test_active_map_manager (size_t table_size,
             ACTIVE_MAP_MANAGER::ENTRY &entry = *iter;
             ACE_UNUSED_ARG (entry);
             ACE_DEBUG ((LM_DEBUG,
-                        ASYS_TEXT ("(%d|%d-%d|%d)"),
+                        ACE_TEXT ("(%d|%d-%d|%d)"),
                         k,
                         entry.ext_id_.slot_index (),
                         entry.ext_id_.slot_generation (),
@@ -399,7 +399,7 @@ test_active_map_manager (size_t table_size,
           }
 
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("\n")));
+                    ACE_TEXT ("\n")));
         ACE_ASSERT (k == -1);
       }
     }
@@ -447,7 +447,7 @@ test_hash_map_manager (size_t table_size,
           {
             HASH_ENTRY &entry = *iter;
             ACE_DEBUG ((LM_DEBUG,
-                        ASYS_TEXT ("(%d|%d|%d)"),
+                        ACE_TEXT ("(%d|%d|%d)"),
                         i,
                         entry.ext_id_,
                         entry.int_id_));
@@ -455,7 +455,7 @@ test_hash_map_manager (size_t table_size,
           }
 
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("\n")));
+                    ACE_TEXT ("\n")));
         ACE_ASSERT (i == iterations);
       }
 
@@ -469,7 +469,7 @@ test_hash_map_manager (size_t table_size,
              iterator.advance ())
           {
             ACE_DEBUG ((LM_DEBUG,
-                        ASYS_TEXT ("(%d|%d|%d)"),
+                        ACE_TEXT ("(%d|%d|%d)"),
                         i,
                         entry->ext_id_,
                         entry->int_id_));
@@ -477,7 +477,7 @@ test_hash_map_manager (size_t table_size,
           }
 
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("\n")));
+                    ACE_TEXT ("\n")));
         ACE_ASSERT (i == iterations);
       }
 
@@ -492,7 +492,7 @@ test_hash_map_manager (size_t table_size,
           {
             HASH_ENTRY &entry = *iter;
             ACE_DEBUG ((LM_DEBUG,
-                        ASYS_TEXT ("(%d|%d|%d)"),
+                        ACE_TEXT ("(%d|%d|%d)"),
                         k,
                         entry.ext_id_,
                         entry.int_id_));
@@ -500,7 +500,7 @@ test_hash_map_manager (size_t table_size,
           }
 
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("\n")));
+                    ACE_TEXT ("\n")));
         ACE_ASSERT (k == -1);
       }
 
@@ -513,14 +513,14 @@ test_hash_map_manager (size_t table_size,
              iterator.advance ())
           {
             ACE_DEBUG ((LM_DEBUG,
-                        ASYS_TEXT ("(%d|%d|%d)"),
+                        ACE_TEXT ("(%d|%d|%d)"),
                         k,
                         entry->ext_id_,
                         entry->int_id_));
             k--;
           }
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("\n")));
+                    ACE_TEXT ("\n")));
         ACE_ASSERT (k == -1);
       }
 
@@ -534,7 +534,7 @@ test_hash_map_manager (size_t table_size,
           {
             HASH_MAP_MANAGER::ENTRY &entry = *iter;
             ACE_DEBUG ((LM_DEBUG,
-                        ASYS_TEXT ("(%d|%d|%d)"),
+                        ACE_TEXT ("(%d|%d|%d)"),
                         i,
                         entry.ext_id_,
                         entry.int_id_));
@@ -542,7 +542,7 @@ test_hash_map_manager (size_t table_size,
           }
 
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("\n")));
+                    ACE_TEXT ("\n")));
         ACE_ASSERT (i == iterations);
       }
 
@@ -555,7 +555,7 @@ test_hash_map_manager (size_t table_size,
              iterator.advance ())
           {
             ACE_DEBUG ((LM_DEBUG,
-                        ASYS_TEXT ("(%d|%d|%d)"),
+                        ACE_TEXT ("(%d|%d|%d)"),
                         i,
                         entry->ext_id_,
                         entry->int_id_));
@@ -563,7 +563,7 @@ test_hash_map_manager (size_t table_size,
           }
 
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("\n")));
+                    ACE_TEXT ("\n")));
         ACE_ASSERT (i == iterations);
       }
 
@@ -579,7 +579,7 @@ test_hash_map_manager (size_t table_size,
             HASH_MAP_MANAGER::ENTRY &entry = *iter;
             ACE_UNUSED_ARG (entry);
             ACE_DEBUG ((LM_DEBUG,
-                        ASYS_TEXT ("(%d|%d|%d)"),
+                        ACE_TEXT ("(%d|%d|%d)"),
                         k,
                         entry.ext_id_,
                         entry.int_id_));
@@ -587,7 +587,7 @@ test_hash_map_manager (size_t table_size,
           }
 
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("\n")));
+                    ACE_TEXT ("\n")));
         ACE_ASSERT (k == -1);
       }
 
@@ -599,7 +599,7 @@ test_hash_map_manager (size_t table_size,
              iterator.advance ())
           {
             ACE_DEBUG ((LM_DEBUG,
-                        ASYS_TEXT ("(%d|%d|%d)"),
+                        ACE_TEXT ("(%d|%d|%d)"),
                         k,
                         entry->ext_id_,
                         entry->int_id_));
@@ -607,7 +607,7 @@ test_hash_map_manager (size_t table_size,
           }
 
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("\n")));
+                    ACE_TEXT ("\n")));
         ACE_ASSERT (k == -1);
       }
     }
@@ -652,7 +652,7 @@ test_map_manager (size_t table_size,
           {
             ENTRY &entry = *iter;
             ACE_DEBUG ((LM_DEBUG,
-                        ASYS_TEXT ("(%d|%d|%d)"),
+                        ACE_TEXT ("(%d|%d|%d)"),
                         i,
                         entry.ext_id_,
                         entry.int_id_));
@@ -660,7 +660,7 @@ test_map_manager (size_t table_size,
           }
 
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("\n")));
+                    ACE_TEXT ("\n")));
         ACE_ASSERT (i == iterations);
       }
 
@@ -672,7 +672,7 @@ test_map_manager (size_t table_size,
              iterator.advance ())
           {
             ACE_DEBUG ((LM_DEBUG,
-                        ASYS_TEXT ("(%d|%d|%d)"),
+                        ACE_TEXT ("(%d|%d|%d)"),
                         i,
                         entry->ext_id_,
                         entry->int_id_));
@@ -680,7 +680,7 @@ test_map_manager (size_t table_size,
           }
 
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("\n")));
+                    ACE_TEXT ("\n")));
         ACE_ASSERT (i == iterations);
       }
 
@@ -695,13 +695,13 @@ test_map_manager (size_t table_size,
           {
             entry = *iter;
             ACE_DEBUG ((LM_DEBUG,
-                        ASYS_TEXT ("%u "),
+                        ACE_TEXT ("%u "),
                         entry.int_id_));
             k--;
           }
 
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("\n")));
+                    ACE_TEXT ("\n")));
         ACE_ASSERT (k == -1);
       }
 
@@ -714,7 +714,7 @@ test_map_manager (size_t table_size,
              iterator.advance ())
           {
             ACE_DEBUG ((LM_DEBUG,
-                        ASYS_TEXT ("(%d|%d|%d)"),
+                        ACE_TEXT ("(%d|%d|%d)"),
                         k,
                         entry->ext_id_,
                         entry->int_id_));
@@ -722,7 +722,7 @@ test_map_manager (size_t table_size,
           }
 
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("\n")));
+                    ACE_TEXT ("\n")));
         ACE_ASSERT (k == -1);
       }
 
@@ -736,13 +736,13 @@ test_map_manager (size_t table_size,
           {
             entry = *iter;
             ACE_DEBUG ((LM_DEBUG,
-                        ASYS_TEXT ("%u "),
+                        ACE_TEXT ("%u "),
                         entry.int_id_));
             ++i;
           }
 
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("\n")));
+                    ACE_TEXT ("\n")));
         ACE_ASSERT (i == iterations);
       }
 
@@ -755,14 +755,14 @@ test_map_manager (size_t table_size,
              iterator.advance ())
           {
             ACE_DEBUG ((LM_DEBUG,
-                        ASYS_TEXT ("(%d|%d|%d)"),
+                        ACE_TEXT ("(%d|%d|%d)"),
                         i,
                         entry->ext_id_,
                         entry->int_id_));
             ++i;
           }
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("\n")));
+                    ACE_TEXT ("\n")));
         ACE_ASSERT (i == iterations);
       }
 
@@ -778,13 +778,13 @@ test_map_manager (size_t table_size,
           {
             entry = *iter;
             ACE_DEBUG ((LM_DEBUG,
-                        ASYS_TEXT ("%u "),
+                        ACE_TEXT ("%u "),
                         entry.int_id_));
             k--;
           }
 
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("\n")));
+                    ACE_TEXT ("\n")));
         ACE_ASSERT (k == -1);
       }
 
@@ -796,14 +796,14 @@ test_map_manager (size_t table_size,
              iterator.advance ())
           {
             ACE_DEBUG ((LM_DEBUG,
-                        ASYS_TEXT ("(%d|%d|%d)"),
+                        ACE_TEXT ("(%d|%d|%d)"),
                         k,
                         entry->ext_id_,
                         entry->int_id_));
             k--;
           }
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("\n")));
+                    ACE_TEXT ("\n")));
         ACE_ASSERT (k == -1);
       }
     }
@@ -828,7 +828,7 @@ run_test (void (*ptf) (size_t, size_t, int),
           size_t table_size,
           size_t iterations,
           int test_iterators,
-          const ASYS_TCHAR *test_name)
+          const ACE_TCHAR *test_name)
 {
   ACE_Profile_Timer timer;
   timer.start ();
@@ -841,39 +841,39 @@ run_test (void (*ptf) (size_t, size_t, int),
 
   timer.elapsed_time (et);
 
-  ASYS_TCHAR *test_iterators_string = 0;
+  ACE_TCHAR *test_iterators_string = 0;
 
   if (test_iterators)
     test_iterators_string =
-      ACE_const_cast (ASYS_TCHAR*,
-                      ASYS_TEXT ( "includes executing iterators"));
+      ACE_const_cast (ACE_TCHAR*,
+                      ACE_TEXT ( "includes executing iterators"));
   else
     test_iterators_string =
-      ACE_const_cast (ASYS_TCHAR*,
-                      ASYS_TEXT ("doesn't include executing iterators"));
+      ACE_const_cast (ACE_TCHAR*,
+                      ACE_TEXT ("doesn't include executing iterators"));
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("time to test a map of size %d for %d iterations using %s (%s)\n"),
+              ACE_TEXT ("time to test a map of size %d for %d iterations using %s (%s)\n"),
               table_size,
               iterations,
               test_name,
               test_iterators_string));
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("real time = %f secs, user time = %f secs, system time = %f secs\n"),
+              ACE_TEXT ("real time = %f secs, user time = %f secs, system time = %f secs\n"),
               et.real_time,
               et.user_time,
               et.system_time));
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("time per call = %f usecs\n"),
+              ACE_TEXT ("time per call = %f usecs\n"),
               (et.real_time / ACE_timer_t (iterations)) * 1000000));
 }
 
 int
-main (int argc, ASYS_TCHAR *argv[])
+main (int argc, ACE_TCHAR *argv[])
 {
-  ACE_START_TEST (ASYS_TEXT ("Map_Manager_Test"));
+  ACE_START_TEST (ACE_TEXT ("Map_Manager_Test"));
   ACE_LOG_MSG->clr_flags (ACE_Log_Msg::VERBOSE_LITE);
 
   size_t table_size = ACE_MAX_ITERATIONS / 2;
@@ -894,35 +894,35 @@ main (int argc, ASYS_TCHAR *argv[])
             table_size,
             iterations,
             test_iterators,
-            ASYS_TEXT ("Map_Manager"));
+            ACE_TEXT ("Map_Manager"));
 
   // Test the <ACE_Hash_Map_Manager>.
   run_test (&test_hash_map_manager,
             table_size,
             iterations,
             test_iterators,
-            ASYS_TEXT ("Hash_Map_Manager"));
+            ACE_TEXT ("Hash_Map_Manager"));
 
   // Test the <ACE_Hash_Map_Manager>.
   run_test (&test_active_map_manager,
             table_size,
             iterations,
             test_iterators,
-            ASYS_TEXT ("Active_Map_Manager"));
+            ACE_TEXT ("Active_Map_Manager"));
 
   // Test the <ACE_Cache_Map_Manager>.
   run_test (&test_cache_map_manager,
             table_size,
             iterations,
             test_iterators,
-            ASYS_TEXT ("Cache_Map_Manager"));
+            ACE_TEXT ("Cache_Map_Manager"));
 
   // Test the <ACE_Hash_Cache_Map_Manager>.
   run_test (&test_hash_cache_map_manager,
             table_size,
             iterations,
             test_iterators,
-            ASYS_TEXT ("Hash_Cache_Map_Manager"));
+            ACE_TEXT ("Hash_Cache_Map_Manager"));
   ACE_LOG_MSG->set_flags (ACE_Log_Msg::VERBOSE_LITE);
   ACE_END_TEST;
   return 0;

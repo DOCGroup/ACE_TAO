@@ -33,9 +33,6 @@
 // Tandem has a function to set t_errno (set_t_errno)
 #define ACE_HAS_SET_T_ERRNO         // jjpp
 
-// It does but problems with wcstok
-// ACE_HAS_UNICODE                      Platform/compiler supports UNICODE
-
 //Platform supports System V IPC (most versions of UNIX, but not Win32)
 #define ACE_HAS_SYSV_IPC
 

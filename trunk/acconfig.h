@@ -295,9 +295,6 @@
    Linux glibc 2.0. */
 #undef ACE_HAS_RUSAGE_WHO_ENUM
 
-/* Platform also has __TEXT defined */
-#undef ACE_HAS_TEXT_MACRO_CONFLICT
-
 /* Platform has void (*)(...) prototype for pthread_key_create()
    destructor (e.g., LynxOS). */
 #undef ACE_HAS_STDARG_THR_DEST
@@ -682,9 +679,6 @@
    functions). */
 #undef ACE_HAS_REENTRANT_FUNCTIONS
 
-/* Compiler typedefs wchar with char. */
-#undef ACE_HAS_WCHAR_TYPEDEFS_CHAR
-
 /* Solaris for intel uses macros for fstat() and stat(), these are
    wrappers for _fxstat() and _xstat() uses of the macros.  Causes
    compile and runtime problems. */
@@ -983,15 +977,11 @@
    platforms */
 #undef ACE_HAS_UNIXWARE_SVR4_SIGNAL_T
 
-/* Platform/compiler supports UNICODE */
-#undef ACE_HAS_UNICODE
+/* Platform/compiler supports wchar_t */
+#undef ACE_HAS_WCHAR
 
 /* Platform has <utime.h> header file */
 #undef ACE_HAS_UTIME
-
-/* Most APIs in platform/compiler supports UNICODE. (No char version
-   available.) */
-#undef ACE_HAS_MOSTLY_UNICODE_APIS
 
 /* Compiler supports explicit constructors. */
 #undef ACE_HAS_EXPLICIT_KEYWORD

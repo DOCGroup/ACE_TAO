@@ -99,7 +99,7 @@ public: // Should be protected:
   // Tests whether we can enqueue a message without blocking.
 
   // = ACE_Task utility routines to identify names et al.
-  const ASYS_TCHAR *name (void) const;
+  const ACE_TCHAR *name (void) const;
   // Return the name of the enclosing Module if there's one associated
   // with the Task, else returns 0.
 

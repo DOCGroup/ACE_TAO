@@ -150,14 +150,14 @@ protected:
   // activates SVC_HANDLERs.
 
   // = Dynamic linking hooks.
-  virtual int init (int argc, ASYS_TCHAR *argv[]);
+  virtual int init (int argc, ACE_TCHAR *argv[]);
   // Default version does no work and returns -1.  Must be overloaded
   // by application developer to do anything meaningful.
 
   virtual int fini (void);
   // Calls <handle_close>.
 
-  virtual int info (ASYS_TCHAR **buf, size_t) const;
+  virtual int info (ACE_TCHAR **buf, size_t) const;
   // Default version returns address info in <buf>.
 
   // = Service management hooks.
@@ -199,8 +199,8 @@ class ACE_Strategy_Acceptor : public ACE_Acceptor <SVC_HANDLER, ACE_PEER_ACCEPTO
   //     particular concurrency mechanism.
 public:
   // = Initialization and termination methods.
-  ACE_Strategy_Acceptor (const ASYS_TCHAR service_name[] = 0,
-                         const ASYS_TCHAR service_description[] = 0,
+  ACE_Strategy_Acceptor (const ACE_TCHAR service_name[] = 0,
+                         const ACE_TCHAR service_description[] = 0,
                          int use_select = 1);
   // Default constructor.
 
@@ -210,8 +210,8 @@ public:
                          ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2> * = 0,
                          ACE_Concurrency_Strategy<SVC_HANDLER> * = 0,
                          ACE_Scheduling_Strategy<SVC_HANDLER> * = 0,
-                         const ASYS_TCHAR service_name[] = 0,
-                         const ASYS_TCHAR service_description[] = 0,
+                         const ACE_TCHAR service_name[] = 0,
+                         const ACE_TCHAR service_description[] = 0,
                          int use_select = 1);
   // Initialize the appropriate strategies for creation, passive
   // connection acceptance, and concurrency, and then register <this>
@@ -224,8 +224,8 @@ public:
             ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2> * = 0,
             ACE_Concurrency_Strategy<SVC_HANDLER> * = 0,
             ACE_Scheduling_Strategy<SVC_HANDLER> * = 0,
-            const ASYS_TCHAR *service_name = 0,
-            const ASYS_TCHAR *service_description = 0,
+            const ACE_TCHAR *service_name = 0,
+            const ACE_TCHAR *service_description = 0,
             int use_select = 1);
   // Initialize the appropriate strategies for creation, passive
   // connection acceptance, and concurrency, and then register <this>
@@ -264,7 +264,7 @@ protected:
   virtual int fini (void);
   // Calls <handle_close> when dynamically unlinked.
 
-  virtual int info (ASYS_TCHAR **buf, size_t) const;
+  virtual int info (ACE_TCHAR **buf, size_t) const;
   // Default version returns address info in <buf>.
 
   // = The following three methods define the <Acceptor>'s strategies
@@ -346,10 +346,10 @@ protected:
 
   // = Service information objects.
 
-  ASYS_TCHAR *service_name_;
+  ACE_TCHAR *service_name_;
   // Name of the service.
 
-  ASYS_TCHAR *service_description_;
+  ACE_TCHAR *service_description_;
   // Description of the service.
 
   u_short service_port_;
@@ -473,7 +473,7 @@ protected:
   // Called when an acceptor times out...
 
   // = Dynamic linking hooks.
-  virtual int init (int argc, ASYS_TCHAR *argv[]);
+  virtual int init (int argc, ACE_TCHAR *argv[]);
   // Default version does no work and returns -1.  Must be overloaded
   // by application developer to do anything meaningful.
 
@@ -481,7 +481,7 @@ protected:
   // Default version does no work and returns -1.  Must be overloaded
   // by application developer to do anything meaningful.
 
-  virtual int info (ASYS_TCHAR **, size_t) const;
+  virtual int info (ACE_TCHAR **, size_t) const;
   // Default version returns address info in <buf>.
 
   // = Service management hooks.

@@ -86,7 +86,7 @@ Test_Singleton::Test_Singleton (u_short variety)
   if (variety_ != current_++)
     {
       ACE_DEBUG ((LM_ERROR,
-                  ASYS_TEXT ("ERROR: instance %u created out of order!\n"),
+                  ACE_TEXT ("ERROR: instance %u created out of order!\n"),
                  variety_));
       ++error;
     }
@@ -97,21 +97,21 @@ Test_Singleton::Test_Singleton (u_short variety)
 
 Test_Singleton::~Test_Singleton (void)
 {
-  /* ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("Test_Singleton %u dtor\n"), variety_)); */
+  /* ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Test_Singleton %u dtor\n"), variety_)); */
 
   if (variety_ != --current_)
     {
       ACE_OS::fprintf (stderr,
-                       ASYS_TEXT ("ERROR: instance %u destroyed out of order!\n"),
+                       ACE_TEXT ("ERROR: instance %u destroyed out of order!\n"),
                        variety_);
-      /* ACE_DEBUG ((LM_ERROR, ASYS_TEXT ("ERROR: instance %u destroyed out of order!\n"),
+      /* ACE_DEBUG ((LM_ERROR, ACE_TEXT ("ERROR: instance %u destroyed out of order!\n"),
                  variety_)); */
       ++error;
     }
 }
 
 static void
-run_test (int argc, ASYS_TCHAR *argv[])
+run_test (int argc, ACE_TCHAR *argv[])
 {
   // We need this scope to make sure that the destructor for the
   // <ACE_Service_Config> gets called.
@@ -125,9 +125,9 @@ run_test (int argc, ASYS_TCHAR *argv[])
 }
 
 int
-main (int argc, ASYS_TCHAR *argv[])
+main (int argc, ACE_TCHAR *argv[])
 {
-  ACE_START_TEST (ASYS_TEXT ("Service_Config_Test"));
+  ACE_START_TEST (ACE_TEXT ("Service_Config_Test"));
 
   for (u_int i = 0; i < VARIETIES; ++i)
     {
@@ -135,7 +135,7 @@ main (int argc, ASYS_TCHAR *argv[])
 
       if (s == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ASYS_TEXT ("instance () allocate failed!\n")),
+                           ACE_TEXT ("instance () allocate failed!\n")),
                           1);
     }
 

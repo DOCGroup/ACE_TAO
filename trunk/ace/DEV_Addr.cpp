@@ -17,7 +17,7 @@ ACE_DEV_Addr::dump (void) const
   ACE_TRACE ("ACE_DEV_Addr::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("devname_ = %s"), this->devname_));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("devname_ = %s"), this->devname_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
@@ -58,7 +58,7 @@ ACE_DEV_Addr::ACE_DEV_Addr (const ACE_DEV_Addr &sa)
   this->set (sa);
 }
 
-ACE_DEV_Addr::ACE_DEV_Addr (LPCTSTR devname)
+ACE_DEV_Addr::ACE_DEV_Addr (const ACE_TCHAR *devname)
   : ACE_Addr (AF_DEV, sizeof this->devname_)
 {
   ACE_TRACE ("ACE_DEV_Addr::ACE_DEV_Addr");

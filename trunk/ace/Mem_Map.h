@@ -48,7 +48,7 @@ public:
   // Map a file from an open file descriptor <handle>.  This function
   // will lookup the length of the file if it is not given.
 
-  ACE_Mem_Map (LPCTSTR filename,
+  ACE_Mem_Map (const ACE_TCHAR *filename,
                int len = -1,
                int flags = O_RDWR | O_CREAT,
                int mode = ACE_DEFAULT_FILE_PERMS,
@@ -77,7 +77,7 @@ public:
            LPSECURITY_ATTRIBUTES sa = 0);
   // Remap the file associated with <handle_>.
 
-  int map (LPCTSTR filename,
+  int map (const ACE_TCHAR *filename,
            int len = -1,
            int flags = O_RDWR | O_CREAT,
            int mode = ACE_DEFAULT_FILE_PERMS,
@@ -91,7 +91,7 @@ public:
   ~ACE_Mem_Map (void);
   // Destructor.
 
-  int open (LPCTSTR filename,
+  int open (const ACE_TCHAR *filename,
             int flags = O_RDWR | O_CREAT,
             int mode = ACE_DEFAULT_FILE_PERMS,
             LPSECURITY_ATTRIBUTES sa = 0);
@@ -152,7 +152,7 @@ public:
   ACE_HANDLE handle (void) const;
   // Return the underlying <handle_>.
 
-  const TCHAR *filename (void) const;
+  const ACE_TCHAR *filename (void) const;
   // Return the name of file that is mapped (if any).
 
   void dump (void) const;
@@ -165,7 +165,7 @@ private:
   void *base_addr_;
   // Base address of the memory-mapped file.
 
-  TCHAR filename_[MAXPATHLEN + 1];
+  ACE_TCHAR filename_[MAXPATHLEN + 1];
   // Name of the file that is mapped.
 
   size_t length_;

@@ -81,7 +81,8 @@ public:
   static ACE_UINT32 global_scale_factor (void);
   // Returns the global_scale_factor.
 
-  static int get_env_global_scale_factor (const char *env = "ACE_SCALE_FACTOR");
+  static int get_env_global_scale_factor (const ACE_TCHAR *env 
+                                          = ACE_TEXT ("ACE_SCALE_FACTOR"));
   // Sets the global_scale_factor to the value in the <env>
   // environment variable.  Returns 0 on success, -1 on failure.  Note
   // if <env> points to string "0" (value zero), this call will fail.
@@ -144,16 +145,16 @@ public:
   // to start_incr and stop_incr.
 
 #if !defined (ACE_HAS_WINCE)
-  // @@ These two functions are currently not supported on Windows CE.
+  // @@ WINCE These two functions are currently not supported on Windows CE.
   //    However, we should probably use the handle and ACE_Log_Msg to
   //    print out the result.
-  void print_total (const char *message,
+  void print_total (const ACE_TCHAR *message,
                     const int iterations = 1,
                     ACE_HANDLE handle = ACE_STDOUT) const;
   // Print total time.  NOTE: only use <print_total> if incremental
   // timings had been used!
 
-  void print_ave (const char *message,
+  void print_ave (const ACE_TCHAR *message,
                   const int iterations = 1,
                   ACE_HANDLE handle = ACE_STDOUT) const;
   // Print average time.

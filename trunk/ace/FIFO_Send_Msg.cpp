@@ -48,7 +48,7 @@ ACE_FIFO_Send_Msg::ACE_FIFO_Send_Msg (void)
 }
 
 int
-ACE_FIFO_Send_Msg::open (const ASYS_TCHAR *fifo_name,
+ACE_FIFO_Send_Msg::open (const ACE_TCHAR *fifo_name,
 			 int flags,
 			 int perms,
                          LPSECURITY_ATTRIBUTES sa)
@@ -57,12 +57,12 @@ ACE_FIFO_Send_Msg::open (const ASYS_TCHAR *fifo_name,
   return ACE_FIFO_Send::open (fifo_name, flags | O_WRONLY, perms, sa);
 }
 
-ACE_FIFO_Send_Msg::ACE_FIFO_Send_Msg (const ASYS_TCHAR *fifo_name,
+ACE_FIFO_Send_Msg::ACE_FIFO_Send_Msg (const ACE_TCHAR *fifo_name,
 				      int flags,
 				      int perms,
                                       LPSECURITY_ATTRIBUTES sa)
 {
   ACE_TRACE ("ACE_FIFO_Send_Msg::ACE_FIFO_Send_Msg");
   if (this->ACE_FIFO_Send_Msg::open (fifo_name, flags, perms, sa) == -1)
-    ACE_ERROR ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("ACE_FIFO_Send_Msg")));
+    ACE_ERROR ((LM_ERROR,  ACE_TEXT ("%p\n"),  ACE_TEXT ("ACE_FIFO_Send_Msg")));
 }

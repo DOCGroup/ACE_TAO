@@ -42,7 +42,7 @@ public:
   // smoothly slow down or speed up the local system clock to reach
   // the system time of the master clock.
 
-  ACE_System_Time (LPCTSTR poolname = 0);
+  ACE_System_Time (const ACE_TCHAR *poolname = 0);
   // Default constructor.
 
   ~ACE_System_Time (void);
@@ -73,7 +73,7 @@ private:
   ALLOCATOR *shmem_;
   // Our allocator (used for obtaining system time from shared memory).
 
-  TCHAR poolname_[MAXPATHLEN + 1];
+  ACE_TCHAR poolname_[MAXPATHLEN + 1];
   // The name of the pool used by the allocator.
 
   long *delta_time_;

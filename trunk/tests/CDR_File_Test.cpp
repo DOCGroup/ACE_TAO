@@ -122,7 +122,7 @@ CDR_Test::operator == (const CDR_Test &rhs)
 static int
 run_test (int write_file,
           ACE_FILE_IO &file,
-          LPCTSTR filename,
+          const ACE_TCHAR *filename,
           CDR_Test &cdr_test)
 {
   if (write_file)
@@ -143,7 +143,7 @@ run_test (int write_file,
         output_cdr.begin ();
 
       ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("Writing file %s in %s endian format...\n"),
+                  ACE_TEXT ("Writing file %s in %s endian format...\n"),
                   filename,
                   ACE_CDR_BYTE_ORDER ? "little" : "big"));
 
@@ -151,7 +151,7 @@ run_test (int write_file,
                              output_mb->length ());
       if (n != (ssize_t) output_mb->length())
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ASYS_TEXT ("send failed on %p\n"),
+                           ACE_TEXT ("send failed on %p\n"),
                            filename),
                           -1);
     }
@@ -160,7 +160,7 @@ run_test (int write_file,
       ACE_FILE_Info info;
       if (file.get_info (info) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ASYS_TEXT ("get_info failed on %p\n"),
+                           ACE_TEXT ("get_info failed on %p\n"),
                            filename),
                           -1);
 
@@ -176,7 +176,7 @@ run_test (int write_file,
       if (file.seek (0,
                      SEEK_SET) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ASYS_TEXT ("%p\n"),
+                           ACE_TEXT ("%p\n"),
                            filename),
                           -1);
       // Read the file into the buffer.
@@ -184,8 +184,8 @@ run_test (int write_file,
                                 info.size_);
       if (size != info.size_)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ASYS_TEXT ("Read %d bytes, rather than expected ")
-                           ASYS_TEXT ("%d bytes\n"),
+                           ACE_TEXT ("Read %d bytes, rather than expected ")
+                           ACE_TEXT ("%d bytes\n"),
                            size,
                            info.size_),
                           -1);
@@ -203,7 +203,7 @@ run_test (int write_file,
       input_cdr.reset_byte_order (ACE_CDR_BYTE_ORDER);
 
       ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("Reading file %s in %s endian format...\n"),
+                  ACE_TEXT ("Reading file %s in %s endian format...\n"),
                   filename,
                   ACE_CDR_BYTE_ORDER ? "little" : "big"));
 
@@ -223,9 +223,9 @@ run_test (int write_file,
 // Main function
 
 int
-main (int, ASYS_TCHAR *[])
+main (int, ACE_TCHAR *[])
 {
-  ACE_START_TEST (ASYS_TEXT ("CDR_File_Test"));
+  ACE_START_TEST (ACE_TEXT ("CDR_File_Test"));
 
   // Create a temporary filename.
   ACE_FILE_Addr filename (ACE_sap_any_cast (ACE_FILE_Addr &));
@@ -242,14 +242,14 @@ main (int, ASYS_TCHAR *[])
                          O_RDWR | O_CREAT,
                          ACE_DEFAULT_FILE_PERMS) == -1)
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ASYS_TEXT ("connect failed for %p\n"),
+                         ACE_TEXT ("connect failed for %p\n"),
                          filename.get_path_name ()),
                         1);
   // Unlink this file right away so that it is automatically removed
   // when the process exits.
   else if (file.unlink () == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ASYS_TEXT ("unlink failed for %p\n"),
+                       ACE_TEXT ("unlink failed for %p\n"),
                        filename.get_path_name ()),
                       1);
   CDR_Test cdr_test ('a',
@@ -290,12 +290,12 @@ main (int, ASYS_TCHAR *[])
 #else  /* ! ACE_LACKS_IOSTREAM_TOTALLY */
 
 int
-main (int, ASYS_TCHAR *[])
+main (int, ACE_TCHAR *[])
 {
-  ACE_START_TEST (ASYS_TEXT ("CDR_File_Test"));
+  ACE_START_TEST (ACE_TEXT ("CDR_File_Test"));
 
   ACE_ERROR ((LM_INFO,
-              ASYS_TEXT ("iostreams not supported on this platform\n")));
+              ACE_TEXT ("iostreams not supported on this platform\n")));
 
   ACE_END_TEST;
   return 0;

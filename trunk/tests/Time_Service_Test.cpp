@@ -34,13 +34,13 @@ ACE_TEXT ("main") ACE_PLATFORM_EXE_SUFFIX \
 ACE_TEXT (" -f ") ACE_PLATFORM
 
 int
-main (int, ASYS_TCHAR *[])
+main (int, ACE_TCHAR *[])
 {
-  ACE_START_TEST (ASYS_TEXT ("Time_Service_Test"));
+  ACE_START_TEST (ACE_TEXT ("Time_Service_Test"));
 
 #if defined (ACE_LACKS_FORK) && !defined (ACE_WIN32)
   ACE_ERROR ((LM_INFO,
-              ASYS_TEXT ("fork is not supported on this platform\n")));
+              ACE_TEXT ("fork is not supported on this platform\n")));
 #else  /* ! ACE_LACKS_FORK || ACE_WIN32 */
 
   // Make sure that the backing store is not there. We need to make
@@ -48,7 +48,7 @@ main (int, ASYS_TCHAR *[])
   // the Clerk is not allowed to do a graceful shutdown. By cleaning
   // the backing store here, we are sure that we get a fresh start and
   // no garbage data from a possible aborted run
-  TCHAR backing_store[MAXPATHLEN + 1];
+  ACE_TCHAR backing_store[MAXPATHLEN + 1];
 
 #if defined (ACE_DEFAULT_BACKING_STORE)
   // Create a temporary file.
@@ -59,8 +59,8 @@ main (int, ASYS_TCHAR *[])
                          MAXPATHLEN - 17) == -1) // -17 for ace-malloc-XXXXXX
     {
       ACE_ERROR ((LM_ERROR,
-                  ASYS_TEXT ("Temporary path too long, ")
-                  ASYS_TEXT ("defaulting to current directory\n")));
+                  ACE_TEXT ("Temporary path too long, ")
+                  ACE_TEXT ("defaulting to current directory\n")));
       backing_store[0] = 0;
     }
 
@@ -72,45 +72,45 @@ main (int, ASYS_TCHAR *[])
 
   ACE_OS::unlink (backing_store);
 
-  LPCTSTR server_cl = APPLICATION ACE_TEXT ("server.conf");
+  const ACE_TCHAR *server_cl = APPLICATION ACE_TEXT ("server.conf");
   ACE_Process_Options server_options;
   server_options.command_line (server_cl);
   ACE_Process server;
 
   if (server.spawn (server_options) == -1)
     ACE_ERROR_RETURN ((LM_DEBUG,
-                       ASYS_TEXT ("%n; %p (%s).\n"),
-                       ASYS_TEXT ("Server fork failed"),
+                       ACE_TEXT ("%n; %p (%s).\n"),
+                       ACE_TEXT ("Server fork failed"),
                        server_cl),
                       -1);
   else
     ACE_DEBUG ((LM_DEBUG,
-                ASYS_TEXT ("Server forked with pid = %d.\n"),
+                ACE_TEXT ("Server forked with pid = %d.\n"),
                 server.getpid ()));
 
   ACE_OS::sleep (3);
 
-  LPCTSTR clerk_cl = APPLICATION ACE_TEXT ("clerk.conf");
+  const ACE_TCHAR *clerk_cl = APPLICATION ACE_TEXT ("clerk.conf");
   ACE_Process_Options clerk_options;
   clerk_options.command_line (clerk_cl);
   ACE_Process clerk;
 
   if (clerk.spawn (clerk_options) == -1)
-    ACE_ERROR_RETURN ((LM_DEBUG, ASYS_TEXT ("%n; %p: (%s).\n"),
-                       ASYS_TEXT ("Clerk fork failed"), clerk_cl), -1);
+    ACE_ERROR_RETURN ((LM_DEBUG, ACE_TEXT ("%n; %p: (%s).\n"),
+                       ACE_TEXT ("Clerk fork failed"), clerk_cl), -1);
   else
-    ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("Clerk forked with pid = %d.\n"),
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Clerk forked with pid = %d.\n"),
                 clerk.getpid ()));
 
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("Sleeping...\n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Sleeping...\n")));
   ACE_OS::sleep (10);
 
   if (clerk.terminate () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("Terminate failed for clerk.\n")),
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Terminate failed for clerk.\n")),
                       -1);
 
   if (server.terminate () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("Terminate failed for server.\n")),
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Terminate failed for server.\n")),
                       -1);
 
   // Because we kill the clerk process, on Win32 it may not do a

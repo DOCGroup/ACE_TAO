@@ -119,8 +119,8 @@ ACE_SOCK::ACE_SOCK (int type,
                   protocol,
                   reuse_addr) == -1)
     ACE_ERROR ((LM_ERROR,
-                ASYS_TEXT ("%p\n"),
-                ASYS_TEXT ("ACE_SOCK::ACE_SOCK")));
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("ACE_SOCK::ACE_SOCK")));
 }
 
 int
@@ -174,6 +174,6 @@ ACE_SOCK::ACE_SOCK (int type,
                   flags,
                   reuse_addr) == -1)
     ACE_ERROR ((LM_ERROR,
-                ASYS_TEXT ("%p\n"),
-                ASYS_TEXT ("ACE_SOCK::ACE_SOCK")));
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("ACE_SOCK::ACE_SOCK")));
 }

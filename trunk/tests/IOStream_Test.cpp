@@ -179,14 +179,14 @@ client (void *arg = 0)
 
   if (connector.connect (server, addr) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ASYS_TEXT (" (%t) %p\n"),
-                       ASYS_TEXT ("Failed to connect to server thread")),
+                       ACE_TEXT (" (%t) %p\n"),
+                       ACE_TEXT ("Failed to connect to server thread")),
                       0);
 
   // Send a string to the server which it can interpret as a qchar[]
   const char *str = "\"This is a test     string.\"";
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT (" (%P|%t) Client Sending: (%s)\n"),
-              ASYS_WIDE_STRING (str)));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" (%P|%t) Client Sending: (%s)\n"),
+              ACE_TEXT_CHAR_TO_TCHAR (str)));
   server << str << endl;
 
   // Allow the server to get the string and echo it to the user. (The
@@ -199,8 +199,8 @@ client (void *arg = 0)
 
   str = "\"THIS IS A     TEST STRING.\"";
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT (" (%P|%t) Client Sending: (%s)\n"),
-              ASYS_WIDE_STRING (str)));
+              ACE_TEXT (" (%P|%t) Client Sending: (%s)\n"),
+              str));
   server << str << endl;
 
   // Again, give the server time to display the happenings to the
@@ -212,7 +212,7 @@ client (void *arg = 0)
   // the server.
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT (" (%P|%t) Client Receiving\n")));
+              ACE_TEXT (" (%P|%t) Client Receiving\n")));
 
   ACE_Time_Value timeout (2);
   ACE_Time_Value *timeoutp = &timeout;
@@ -230,13 +230,13 @@ client (void *arg = 0)
       if (eof)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ASYS_TEXT (" (%P|%t) Unrecoverable stream error/eof\n")));
+                      ACE_TEXT (" (%P|%t) Unrecoverable stream error/eof\n")));
           break;
         }
       else
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ASYS_TEXT (" (%P|%t) Recoverable stream error/timed out)\n")));
+                      ACE_TEXT (" (%P|%t) Recoverable stream error/timed out)\n")));
           server.clear (0);
         }
     }
@@ -247,7 +247,7 @@ client (void *arg = 0)
   server >> d;
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT (" (%P|%t) Client Received: int %d float %f long %d float %f double %f\n"),
+              ACE_TEXT (" (%P|%t) Client Received: int %d float %f long %d float %f double %f\n"),
               i,
               f1,
               (int) l,
@@ -294,8 +294,8 @@ server (void *arg = 0)
 
   if (acceptor->get_local_addr (server_addr) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ASYS_TEXT ("%p\n"),
-                       ASYS_TEXT ("get_local_addr")),
+                       ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("get_local_addr")),
                       0);
 
 #if defined (ACE_HAS_THREADS)
@@ -303,14 +303,14 @@ server (void *arg = 0)
                                               (void *) &server_addr,
                                               THR_NEW_LWP | THR_DETACHED) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ASYS_TEXT (" (%t) %p\n"),
-                       ASYS_TEXT ("spawing client thread")),
+                       ACE_TEXT (" (%t) %p\n"),
+                       ACE_TEXT ("spawing client thread")),
                       0);
 #endif /* ACE_HAS_THREADS */
 
   if (acceptor->accept (client_handler) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ASYS_TEXT (" (%P|%t) Failed to accept new client_handler")),
+                       ACE_TEXT (" (%P|%t) Failed to accept new client_handler")),
                       0);
 
   // Read a qbuf[] from the client.  Notice that all of the client's
@@ -320,8 +320,8 @@ server (void *arg = 0)
   client_handler >> qbuf;
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT (" (%P|%t) Server Received: (\"%s\")\n"),
-              ASYS_WIDE_STRING ((char *) qbuf)));
+              ACE_TEXT (" (%P|%t) Server Received: (\"%s\")\n"),
+              ACE_TEXT_CHAR_TO_TCHAR ((char *) qbuf)));
 
   // Give the client time to announce the next test to the user.
   ACE_OS::sleep (2);
@@ -353,7 +353,7 @@ server (void *arg = 0)
   char buf[BUFSIZ];
   ACE_OS::memset (buf, 0, sizeof buf);
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT (" (%P|%t) Server Received: (")));
+              ACE_TEXT (" (%P|%t) Server Received: (")));
 
   while (ACE_OS::strlen (buf) == 0
          || buf[ACE_OS::strlen (buf) - 1] != '"')
@@ -361,12 +361,12 @@ server (void *arg = 0)
       if (! (client_handler >> buf))
         break;
       ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("%s "),
-                  ASYS_WIDE_STRING (buf)));
+                  ACE_TEXT ("%s "),
+                  ACE_TEXT_CHAR_TO_TCHAR (buf)));
     }
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT (")\n")));
+              ACE_TEXT (")\n")));
 #endif /* ACE_HAS_STRING_CLASS */
 
   // Send some non-textual data to the client.  We use a single
@@ -376,11 +376,11 @@ server (void *arg = 0)
   // command or the implicit <<endl.
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT (" (%P|%t) Server sleeping\n")));
+              ACE_TEXT (" (%P|%t) Server sleeping\n")));
   ACE_OS::sleep (5);
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT (" (%P|%t) Server Sending:  1 .12342134 666555444 23.45 -46.5e9 \n")));
+              ACE_TEXT (" (%P|%t) Server Sending:  1 .12342134 666555444 23.45 -46.5e9 \n")));
   client_handler << 1 << " ";
   client_handler << .12342134 << " ";
   client_handler << 666555444 << " ";
@@ -399,7 +399,7 @@ server (void *arg = 0)
   client_handler >> i >> f1 >> l >> f2 >> d;
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT (" (%P|%t) Server Received: int %d float %g long %d float %g double %g\n"),
+              ACE_TEXT (" (%P|%t) Server Received: int %d float %g long %d float %g double %g\n"),
               i,
               f1,
               (int) l,
@@ -424,16 +424,16 @@ spawn (void)
 
   if (acceptor.open (ACE_sap_any_cast (const ACE_INET_Addr &)) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ASYS_TEXT (" (%P|%t) %p\n"),
-                       ASYS_TEXT ("open")),
+                       ACE_TEXT (" (%P|%t) %p\n"),
+                       ACE_TEXT ("open")),
                       -1);
 #if defined (ACE_HAS_THREADS)
   else if (ACE_Thread_Manager::instance ()->spawn (ACE_THR_FUNC (server),
                                                   &acceptor,
                                                   THR_NEW_LWP | THR_DETACHED) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ASYS_TEXT ("%p\n"),
-                       ASYS_TEXT ("spawning server thread")),
+                       ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("spawning server thread")),
                       -1);
 
   // Wait for the client and server thread to exit.
@@ -445,8 +445,8 @@ spawn (void)
     {
     case -1:
       ACE_ERROR ((LM_ERROR,
-                  ASYS_TEXT ("%p\n%a"),
-                  ASYS_TEXT ("fork failed")));
+                  ACE_TEXT ("%p\n%a"),
+                  ACE_TEXT ("fork failed")));
       ACE_OS::_exit (-1);
     case 0: // In child
       {
@@ -455,8 +455,8 @@ spawn (void)
 
         if (acceptor.get_local_addr (server_addr) == -1)
           ACE_ERROR ((LM_ERROR,
-                      ASYS_TEXT ("%p\n"),
-                      ASYS_TEXT ("get_local_addr")));
+                      ACE_TEXT ("%p\n"),
+                      ACE_TEXT ("get_local_addr")));
         else
           client ((void *) &server_addr);
         ACE_END_LOG;
@@ -471,7 +471,7 @@ spawn (void)
     }
 #else
   ACE_ERROR_RETURN ((LM_INFO,
-                     ASYS_TEXT ("threads *and* processes not supported on this platform\n")),
+                     ACE_TEXT ("threads *and* processes not supported on this platform\n")),
                     -1);
 #endif /* ACE_HAS_THREADS */
 
@@ -482,16 +482,16 @@ spawn (void)
 #endif /* !ACE_LACKS_ACE_IOSTREAM */
 
 int
-main (int, ASYS_TCHAR *[])
+main (int, ACE_TCHAR *[])
 {
-  ACE_START_TEST (ASYS_TEXT ("IOStream_Test"));
+  ACE_START_TEST (ACE_TEXT ("IOStream_Test"));
 
 #if !defined (ACE_LACKS_ACE_IOSTREAM)
-  ACE_INIT_LOG (ASYS_TEXT ("IOStream_Test-children"));
+  ACE_INIT_LOG (ACE_TEXT ("IOStream_Test-children"));
   spawn ();
 #else
   ACE_ERROR ((LM_INFO,
-              ASYS_TEXT ("ACE_IOSTREAM not supported on this platform\n")));
+              ACE_TEXT ("ACE_IOSTREAM not supported on this platform\n")));
 #endif /* !ACE_LACKS_ACE_IOSTREAM */
   ACE_END_TEST;
   return 0;

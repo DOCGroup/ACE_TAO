@@ -631,7 +631,7 @@ ImplRepo_i::server_is_running (const char *server,
     ACE_DEBUG ((LM_DEBUG, " at %s\n", location));
 
   // Get the stringified server_object_ior
-  ASYS_TCHAR *server_object_ior = this->orb_->object_to_string (server_object, ACE_TRY_ENV);
+  ACE_TCHAR *server_object_ior = this->orb_->object_to_string (server_object, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
   if (this->repository_.update (server, location, server_object_ior) == 0)

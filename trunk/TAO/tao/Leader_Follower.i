@@ -263,6 +263,6 @@ TAO_LF_Event_Loop_Thread_Helper::~TAO_LF_Event_Loop_Thread_Helper (void)
 
   if (result == -1)
     ACE_ERROR ((LM_ERROR,
-                ASYS_TEXT ("TAO (%P|%t) Failed to wake up ")
-                ASYS_TEXT ("a follower thread\n")));
+                ACE_TEXT ("TAO (%P|%t) Failed to wake up ")
+                ACE_TEXT ("a follower thread\n")));
 }

@@ -32,7 +32,7 @@ TAO_XT_Resource_Factory::set_context (XtAppContext context)
 }
 
 ACE_STATIC_SVC_DEFINE (TAO_XT_Resource_Factory,
-                       ASYS_TEXT ("XT_Resource_Factory"),
+                       ACE_TEXT ("XT_Resource_Factory"),
                        ACE_SVC_OBJ_T,
                        &ACE_SVC_NAME (TAO_XT_Resource_Factory),
                        ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,

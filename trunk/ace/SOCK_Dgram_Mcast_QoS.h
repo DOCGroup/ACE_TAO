@@ -46,7 +46,7 @@ public:
   int subscribe (const ACE_INET_Addr &mcast_addr,
                  const ACE_QoS_Params &qos_params,
                  int reuse_addr = 1,
-                 const ASYS_TCHAR *net_if = 0,
+                 const ACE_TCHAR *net_if = 0,
                  int protocol_family = PF_INET,
                  int protocol = 0,
                  ACE_Protocol_Info *protocolinfo = 0,
@@ -112,7 +112,7 @@ private:
 
   int subscribe_ifs (const ACE_INET_Addr &mcast_addr,
                      const ACE_QoS_Params &qos_params,
-                     const ASYS_TCHAR *net_if,
+                     const ACE_TCHAR *net_if,
                      int protocol_family,
                      int protocol,
                      int reuse_addr,

@@ -18,7 +18,7 @@ ACE_LSOCK::dump (void) const
   ACE_TRACE ("ACE_LSOCK::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("aux_handle_ = %d"), this->aux_handle_));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("aux_handle_ = %d"), this->aux_handle_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 

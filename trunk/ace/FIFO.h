@@ -35,7 +35,7 @@ class ACE_Export ACE_FIFO : public ACE_IPC_SAP
   //    IPC mechanism that will be portable to both UNIX and Win32,
   //    take a look at the <ACE_SPIPE_*> classes.
 public:
-  int open (const ASYS_TCHAR *rendezvous, int flags, int perms,
+  int open (const ACE_TCHAR *rendezvous, int flags, int perms,
             LPSECURITY_ATTRIBUTES sa = 0);
   // Open up the named pipe on the <rendezvous> in accordance with the
   // flags.
@@ -47,7 +47,7 @@ public:
   // Close down the ACE_FIFO and remove the rendezvous point from the
   // file system.
 
-  int get_local_addr (const ASYS_TCHAR *&rendezvous) const;
+  int get_local_addr (const ACE_TCHAR *&rendezvous) const;
   // Return the local address of this endpoint.
 
   void dump (void) const;
@@ -61,13 +61,13 @@ protected:
   ACE_FIFO (void);
   // Default constructor.
 
-  ACE_FIFO (const ASYS_TCHAR *rendezvous, int flags, int perms,
+  ACE_FIFO (const ACE_TCHAR *rendezvous, int flags, int perms,
             LPSECURITY_ATTRIBUTES sa = 0);
   // Open up the named pipe on the <rendezvous> in accordance with the
   // flags.
 
 private:
-  ASYS_TCHAR rendezvous_[MAXPATHLEN + 1];
+  ACE_TCHAR rendezvous_[MAXPATHLEN + 1];
   // Rendezvous point in the file system.
 };
 

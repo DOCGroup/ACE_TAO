@@ -9,37 +9,37 @@
 
 ACE_RCSID(ace, URL_Addr, "$Id$")
 
-static ASYS_TCHAR http[] = ASYS_TEXT ("http:");
+static ACE_TCHAR http[] = ACE_TEXT ("http:");
 static size_t http_size = sizeof(http)/sizeof(http[0]) - 1;
-static ASYS_TCHAR ftp[] = ASYS_TEXT ("ftp:");
+static ACE_TCHAR ftp[] = ACE_TEXT ("ftp:");
 static size_t ftp_size = sizeof(ftp)/sizeof(ftp[0]) - 1;
-static ASYS_TCHAR mailto[] = ASYS_TEXT ("mailto:");
+static ACE_TCHAR mailto[] = ACE_TEXT ("mailto:");
 static size_t mailto_size = sizeof(mailto)/sizeof(mailto[0]) - 1;
 
 
-static ASYS_TCHAR file[] = ASYS_TEXT ("file:");
+static ACE_TCHAR file[] = ACE_TEXT ("file:");
 static size_t file_size = sizeof(file)/sizeof(file[0]) - 1;
-static ASYS_TCHAR afs[] = ASYS_TEXT ("afs:");
+static ACE_TCHAR afs[] = ACE_TEXT ("afs:");
 static size_t afs_size = sizeof(afs)/sizeof(afs[0]) - 1;
-static ASYS_TCHAR news[] = ASYS_TEXT ("news:");
+static ACE_TCHAR news[] = ACE_TEXT ("news:");
 static size_t news_size = sizeof(news)/sizeof(news[0]) - 1;
-static ASYS_TCHAR nntp[] = ASYS_TEXT ("nntp:");
+static ACE_TCHAR nntp[] = ACE_TEXT ("nntp:");
 static size_t nntp_size = sizeof(nntp)/sizeof(nntp[0]) - 1;
-static ASYS_TCHAR cid[] = ASYS_TEXT ("cid:");
+static ACE_TCHAR cid[] = ACE_TEXT ("cid:");
 static size_t cid_size = sizeof(cid)/sizeof(cid[0]) - 1;
-static ASYS_TCHAR mid[] = ASYS_TEXT ("mid:");
+static ACE_TCHAR mid[] = ACE_TEXT ("mid:");
 static size_t mid_size = sizeof(mid)/sizeof(mid[0]) - 1;
-static ASYS_TCHAR wais[] = ASYS_TEXT ("wais:");
+static ACE_TCHAR wais[] = ACE_TEXT ("wais:");
 static size_t wais_size = sizeof(wais)/sizeof(wais[0]) - 1;
-static ASYS_TCHAR prospero[] = ASYS_TEXT ("prospero:");
+static ACE_TCHAR prospero[] = ACE_TEXT ("prospero:");
 static size_t prospero_size = sizeof(prospero)/sizeof(prospero[0]) - 1;
-static ASYS_TCHAR telnet[] = ASYS_TEXT ("telnet:");
+static ACE_TCHAR telnet[] = ACE_TEXT ("telnet:");
 static size_t telnet_size = sizeof(telnet)/sizeof(telnet[0]) - 1;
-static ASYS_TCHAR rlogin[] = ASYS_TEXT ("rlogin:");
+static ACE_TCHAR rlogin[] = ACE_TEXT ("rlogin:");
 static size_t rlogin_size = sizeof(rlogin)/sizeof(rlogin[0]) - 1;
-static ASYS_TCHAR tn3270[] = ASYS_TEXT ("tn3270:");
+static ACE_TCHAR tn3270[] = ACE_TEXT ("tn3270:");
 static size_t tn3270_size = sizeof(tn3270)/sizeof(tn3270[0]) - 1;
-static ASYS_TCHAR gopher[] = ASYS_TEXT ("gopher:");
+static ACE_TCHAR gopher[] = ACE_TEXT ("gopher:");
 static size_t gopher_size = sizeof(gopher)/sizeof(gopher[0]) - 1;
 
 
@@ -61,7 +61,7 @@ ACE_URL_Addr::set (const ACE_URL_Addr& address)
 }
 
 int
-ACE_URL_Addr::string_to_addr (LPCTSTR address)
+ACE_URL_Addr::string_to_addr (const ACE_TCHAR *address)
 {
   if (this->url_ != 0)
     ACE_OS::free (this->url_);
@@ -72,7 +72,7 @@ ACE_URL_Addr::string_to_addr (LPCTSTR address)
 }
 
 int
-ACE_URL_Addr::addr_to_string (LPTSTR s,
+ACE_URL_Addr::addr_to_string (ACE_TCHAR *s,
                               size_t size,
                               int) const
 {
@@ -90,7 +90,7 @@ ACE_URL_Addr::accept (ACE_URL_Addr_Visitor* visitor)
 
 // The factory method to create URL addresses.
 ACE_URL_Addr*
-ACE_URL_Addr::create_address (LPCTSTR url)
+ACE_URL_Addr::create_address (const ACE_TCHAR *url)
 {
   ACE_URL_Addr* addr = 0;
   if (ACE_OS::strncasecmp (http, url, http_size) == 0)
@@ -111,7 +111,7 @@ ACE_URL_Addr::create_address (LPCTSTR url)
 }
 
 int
-ACE_URL_Addr::known_scheme (LPCTSTR url)
+ACE_URL_Addr::known_scheme (const ACE_TCHAR *url)
 {
   if (ACE_OS::strncasecmp (http, url, http_size) == 0)
     return 1;
@@ -187,9 +187,9 @@ ACE_HTTP_Addr::ACE_HTTP_Addr (void)
 {
 }
 
-ACE_HTTP_Addr::ACE_HTTP_Addr (LPCTSTR host_name,
-                              LPCTSTR path,
-                              LPCTSTR query,
+ACE_HTTP_Addr::ACE_HTTP_Addr (const ACE_TCHAR *host_name,
+                              const ACE_TCHAR *path,
+                              const ACE_TCHAR *query,
                               u_short port)
   :  hostname_ (0),
      port_number_ (0),
@@ -218,9 +218,9 @@ ACE_HTTP_Addr::~ACE_HTTP_Addr (void)
 }
 
 int
-ACE_HTTP_Addr::set (LPCTSTR host_name,
-                    LPCTSTR path,
-                    LPCTSTR query,
+ACE_HTTP_Addr::set (const ACE_TCHAR *host_name,
+                    const ACE_TCHAR *path,
+                    const ACE_TCHAR *query,
                     u_short port)
 {
   if (host_name == 0 || path == 0)
@@ -237,9 +237,9 @@ ACE_HTTP_Addr::set (LPCTSTR host_name,
 
   size_t size = this->url_size (1);
 
-  LPTSTR buffer;
+  ACE_TCHAR *buffer;
   ACE_ALLOCATOR_RETURN (buffer,
-                        ACE_reinterpret_cast(LPTSTR,
+                        ACE_reinterpret_cast(ACE_TCHAR *,
                                              ACE_OS::malloc (size)),
                         -1);
   if (this->addr_to_string (buffer, size, 1) == -1)
@@ -287,8 +287,8 @@ ACE_HTTP_Addr::url_size (int flags) const
   // Notice that we cannot hard-code the value because the size in
   // wchar's may be different.
   size_t size =
-    + sizeof (ASYS_TEXT ("http://"))
-    + sizeof (ASYS_TEXT ("/:?")); // separators
+    + sizeof (ACE_TEXT ("http://"))
+    + sizeof (ACE_TEXT ("/:?")); // separators
 
   size_t chars =
     + (this->path_?ACE_OS::strlen (this->path_):0)
@@ -297,7 +297,7 @@ ACE_HTTP_Addr::url_size (int flags) const
 
   if (flags == 0)
     {
-      size += sizeof (ASYS_TEXT("255.255.255.255"));
+      size += sizeof (ACE_TEXT("255.255.255.255"));
     }
   else
     {
@@ -306,25 +306,25 @@ ACE_HTTP_Addr::url_size (int flags) const
 
   if (this->port_number_ != ACE_DEFAULT_HTTP_PORT)
     {
-      size += sizeof (ASYS_TEXT(":65335"));
+      size += sizeof (ACE_TEXT(":65335"));
     }
 
-  size += chars * sizeof(ASYS_TCHAR);
+  size += chars * sizeof(ACE_TCHAR);
 
   return size;
 }
 
 inline int
-path_copy (LPCTSTR begin,
-           LPCTSTR /* end */,
-           LPTSTR& target,
-           LPCTSTR src)
+path_copy (const ACE_TCHAR *begin,
+           const ACE_TCHAR */* end */,
+           const ACE_TCHAR *& target,
+           const ACE_TCHAR *src)
 {
   // Copy one character at a time, if we find a /../ we go back to the
   // previous '/'
   for (; *src != 0; ++src)
     {
-      ASYS_TCHAR c = *src;
+      ACE_TCHAR c = *src;
       switch (c)
         {
         case '/':
@@ -352,7 +352,7 @@ path_copy (LPCTSTR begin,
 }
 
 ACE_URL_Addr*
-ACE_HTTP_Addr::create_relative_address (LPCTSTR url) const
+ACE_HTTP_Addr::create_relative_address (const ACE_TCHAR *url) const
 {
   if (ACE_URL_Addr::known_scheme (url))
     return ACE_URL_Addr::create_address (url);
@@ -368,20 +368,20 @@ ACE_HTTP_Addr::create_relative_address (LPCTSTR url) const
     }
   else
     {
-      LPCTSTR path = this->get_path ();
-      LPTSTR buf;
+      const ACE_TCHAR *path = this->get_path ();
+      ACE_TCHAR *buf;
       size_t n = ACE_OS::strlen (url)
         + ACE_OS::strlen (path)
         + 2;
       ACE_NEW_RETURN (buf,
-                      ASYS_TCHAR [n],
+                      ACE_TCHAR [n],
                       0);
 
       // We copy the contens of <path> into <buf>; but simplifying the
       // path, to avoid infinite loop like:
       // "foo/../foo/../foo/../foo/../foo/index.html"
       //
-      LPTSTR target = buf;
+      ACE_TCHAR *target = buf;
 
       // Copy the path
       path_copy (buf, buf + n, target, path);
@@ -389,7 +389,7 @@ ACE_HTTP_Addr::create_relative_address (LPCTSTR url) const
       if (url[0] == '#')
         {
           // Remove any # from the path
-          LPTSTR p = target;
+          ACE_TCHAR *p = target;
           while (p != buf && *(--p) != '#');
           if (p != buf)
             target = p;
@@ -432,7 +432,7 @@ ACE_HTTP_Addr::create_relative_address (LPCTSTR url) const
 }
 
 int
-ACE_HTTP_Addr::string_to_addr (LPCTSTR address)
+ACE_HTTP_Addr::string_to_addr (const ACE_TCHAR *address)
 {
   if (address == 0)
     return -1;
@@ -449,20 +449,20 @@ ACE_HTTP_Addr::string_to_addr (LPCTSTR address)
   if (this->ACE_URL_Addr::string_to_addr (address) != 0)
     return -1;
 
-  LPCTSTR string = address;
+  ACE_TCHAR *string = address;
   string += http_size;
   string += 2; // == strlen ("//");
 
   // Make a copy of the string to manipulate it.
   ACE_ALLOCATOR_RETURN (this->hostname_, ACE_OS::strdup (string), -1);
 
-  ASYS_TCHAR *path_start = ACE_OS::strchr (this->hostname_, '/');
+  ACE_TCHAR *path_start = ACE_OS::strchr (this->hostname_, '/');
   if (path_start != 0)
     {
       // terminate the host:port substring
       path_start[0] = '\0';
       path_start++;
-      ASYS_TCHAR *query_start = ACE_OS::strchr (path_start, '?');
+      ACE_TCHAR *query_start = ACE_OS::strchr (path_start, '?');
       if (query_start != 0)
         {
           query_start[0] = '\0';
@@ -476,7 +476,7 @@ ACE_HTTP_Addr::string_to_addr (LPCTSTR address)
 
   // By now t is null terminated at the start of the path, find the
   // port (if present).
-  ASYS_TCHAR *port_start = ACE_OS::strchr(this->hostname_, ':');
+  ACE_TCHAR *port_start = ACE_OS::strchr(this->hostname_, ':');
   this->port_number_ = ACE_DEFAULT_HTTP_PORT;
   if (port_start != 0)
     {
@@ -490,7 +490,7 @@ ACE_HTTP_Addr::string_to_addr (LPCTSTR address)
 }
 
 int
-ACE_HTTP_Addr::addr_to_string (LPTSTR buffer,
+ACE_HTTP_Addr::addr_to_string (ACE_TCHAR *buffer,
                                size_t size,
                                int flags) const
 {
@@ -501,7 +501,7 @@ ACE_HTTP_Addr::addr_to_string (LPTSTR buffer,
     return -1;
 
   size_t n = ACE_OS::sprintf (buffer,
-                              ASYS_TEXT ("http://"));
+                              ACE_TEXT ("http://"));
   if (flags == 0)
     {
       ACE_INET_Addr inet = this->get_inet_address ();
@@ -543,10 +543,10 @@ ACE_FTP_Addr::ACE_FTP_Addr (void)
 {
 }
 
-ACE_FTP_Addr::ACE_FTP_Addr (LPCTSTR host_name,
-                            LPCTSTR path,
-                            LPCTSTR user,
-                            LPCTSTR passwd)
+ACE_FTP_Addr::ACE_FTP_Addr (const ACE_TCHAR *host_name,
+                            const ACE_TCHAR *path,
+                            const ACE_TCHAR *user,
+                            const ACE_TCHAR *passwd)
   :  user_ (0),
      passwd_ (0),
      hostname_ (0),
@@ -571,10 +571,10 @@ ACE_FTP_Addr::~ACE_FTP_Addr (void)
 }
 
 int
-ACE_FTP_Addr::set (LPCTSTR host_name,
-                   LPCTSTR path,
-                   LPCTSTR user,
-                   LPCTSTR passwd)
+ACE_FTP_Addr::set (const ACE_TCHAR *host_name,
+                   const ACE_TCHAR *path,
+                   const ACE_TCHAR *user,
+                   const ACE_TCHAR *passwd)
 {
   if (host_name == 0 || path == 0)
     return -1;
@@ -592,9 +592,9 @@ ACE_FTP_Addr::set (LPCTSTR host_name,
 
   size_t size = this->url_size (1);
 
-  LPTSTR buffer;
+  ACE_TCHAR *buffer;
   ACE_ALLOCATOR_RETURN (buffer,
-                        ACE_reinterpret_cast(LPTSTR,
+                        ACE_reinterpret_cast(ACE_TCHAR *,
                                              ACE_OS::malloc (size)),
                         -1);
   if (this->addr_to_string (buffer, size, 1) == -1)
@@ -641,8 +641,8 @@ ACE_FTP_Addr::url_size (int flags) const
   // Notice that we cannot hard-code the value because the size in
   // wchar's may be different.
   size_t size =
-    + sizeof (ASYS_TEXT ("ftp://"))
-    + sizeof (ASYS_TEXT ("@:/")); // separators
+    + sizeof (ACE_TEXT ("ftp://"))
+    + sizeof (ACE_TEXT ("@:/")); // separators
 
   size_t chars =
     + (this->user_?ACE_OS::strlen (this->path_):0)
@@ -651,19 +651,19 @@ ACE_FTP_Addr::url_size (int flags) const
 
   if (flags == 0)
     {
-      size += sizeof (ASYS_TEXT("255.255.255.255"));
+      size += sizeof (ACE_TEXT("255.255.255.255"));
     }
   else
     {
       chars += ACE_OS::strlen (this->hostname_);
     }
 
-  size += chars * sizeof(ASYS_TCHAR);
+  size += chars * sizeof(ACE_TCHAR);
   return size;
 }
 
 int
-ACE_FTP_Addr::addr_to_string (LPTSTR buffer,
+ACE_FTP_Addr::addr_to_string (ACE_TCHAR *buffer,
                               size_t size,
                               int flags) const
 {
@@ -671,7 +671,7 @@ ACE_FTP_Addr::addr_to_string (LPTSTR buffer,
     return -1;
 
   size_t n = ACE_OS::sprintf (buffer,
-                              ASYS_TEXT ("ftp://"));
+                              ACE_TEXT ("ftp://"));
 
   if (this->user_ != 0)
     {
@@ -704,7 +704,7 @@ ACE_FTP_Addr::addr_to_string (LPTSTR buffer,
 }
 
 int
-ACE_FTP_Addr::string_to_addr (LPCTSTR address)
+ACE_FTP_Addr::string_to_addr (const ACE_TCHAR *address)
 {
   if (address == 0)
     return -1;
@@ -720,15 +720,15 @@ ACE_FTP_Addr::string_to_addr (LPCTSTR address)
   // Save the original URL....
   this->ACE_URL_Addr::string_to_addr (address);
 
-  LPCTSTR string = address;
+  const ACE_TCHAR *string = address;
   string += ftp_size;
   string += 2; // == strlen ("//");
 
   // Make a copy of the string to manipulate it.
-  ASYS_TCHAR *t;
+  ACE_TCHAR *t;
   ACE_ALLOCATOR_RETURN (t, ACE_OS::strdup (string), -1);
 
-  ASYS_TCHAR *path_start = ACE_OS::strchr (t, '/');
+  ACE_TCHAR *path_start = ACE_OS::strchr (t, '/');
   if (path_start != 0)
     {
       // terminate the host:port substring
@@ -737,7 +737,7 @@ ACE_FTP_Addr::string_to_addr (LPCTSTR address)
       ACE_ALLOCATOR_RETURN (this->path_, ACE_OS::strdup (path_start), -1);
     }
 
-  ASYS_TCHAR *host_start = ACE_OS::strchr (t, '@');
+  ACE_TCHAR *host_start = ACE_OS::strchr (t, '@');
   if (host_start != 0)
     {
       host_start[0] = '\0';
@@ -745,7 +745,7 @@ ACE_FTP_Addr::string_to_addr (LPCTSTR address)
       ACE_ALLOCATOR_RETURN (this->hostname_,
                             ACE_OS::strdup (host_start),
                             -1);
-      ASYS_TCHAR *pass_start = ACE_OS::strchr (t, ':');
+      ACE_TCHAR *pass_start = ACE_OS::strchr (t, ':');
       if (pass_start != 0)
         {
           pass_start[0] = '\0';
@@ -779,9 +779,9 @@ ACE_Mailto_Addr::ACE_Mailto_Addr (void)
 {
 }
 
-ACE_Mailto_Addr::ACE_Mailto_Addr (LPCTSTR user,
-                                  LPCTSTR hostname,
-                                  LPCTSTR headers)
+ACE_Mailto_Addr::ACE_Mailto_Addr (const ACE_TCHAR *user,
+                                  const ACE_TCHAR *hostname,
+                                  const ACE_TCHAR *headers)
   :  user_ (0),
      hostname_ (0),
      headers_ (0)
@@ -804,9 +804,9 @@ ACE_Mailto_Addr::~ACE_Mailto_Addr (void)
 }
 
 int
-ACE_Mailto_Addr::set (LPCTSTR user,
-                      LPCTSTR hostname,
-                      LPCTSTR headers)
+ACE_Mailto_Addr::set (const ACE_TCHAR *user,
+                      const ACE_TCHAR *hostname,
+                      const ACE_TCHAR *headers)
 {
   if (user == 0 || hostname == 0)
     return -1;
@@ -818,9 +818,9 @@ ACE_Mailto_Addr::set (LPCTSTR user,
   else
     this->headers_ = 0;
   size_t size = this->url_size (1);
-  LPTSTR buffer;
+  ACE_TCHAR *buffer;
   ACE_ALLOCATOR_RETURN (buffer,
-                        ACE_reinterpret_cast(LPTSTR,
+                        ACE_reinterpret_cast(ACE_TCHAR *,
                                              ACE_OS::malloc (size)),
                         -1);
   if (this->addr_to_string (buffer, size, 1) == -1)
@@ -860,20 +860,20 @@ ACE_Mailto_Addr::url_size (int) const
 {
   // Notice that we cannot hard-code the value because the size in
   // wchar's may be different.
-  size_t size = sizeof (ASYS_TEXT ("mailto:"))
-    + sizeof (ASYS_TEXT ("@?")); // separators
+  size_t size = sizeof (ACE_TEXT ("mailto:"))
+    + sizeof (ACE_TEXT ("@?")); // separators
 
   size_t chars =
     + (this->user_?ACE_OS::strlen (this->user_):0)
     + (this->hostname_?ACE_OS::strlen (this->hostname_):0)
     + (this->headers_?ACE_OS::strlen (this->headers_):0);
-  size += chars * sizeof (ASYS_TCHAR);
+  size += chars * sizeof (ACE_TCHAR);
 
   return size;
 }
 
 int
-ACE_Mailto_Addr::addr_to_string (LPTSTR buffer,
+ACE_Mailto_Addr::addr_to_string (ACE_TCHAR *buffer,
                                  size_t size,
                                  int flags) const
 {
@@ -882,11 +882,11 @@ ACE_Mailto_Addr::addr_to_string (LPTSTR buffer,
   if (this->user_ == 0 || this->hostname_ == 0)
     return -1;
 
-  size_t n = ACE_OS::sprintf (buffer, ASYS_TEXT ("mailto:%s@%s"),
+  size_t n = ACE_OS::sprintf (buffer, ACE_TEXT ("mailto:%s@%s"),
                               this->user_, this->hostname_);
   if (this->headers_ != 0)
     {
-      n += ACE_OS::sprintf (buffer + n, ASYS_TEXT ("?%s"),
+      n += ACE_OS::sprintf (buffer + n, ACE_TEXT ("?%s"),
                             this->headers_);
     }
 
@@ -894,7 +894,7 @@ ACE_Mailto_Addr::addr_to_string (LPTSTR buffer,
 }
 
 int
-ACE_Mailto_Addr::string_to_addr (LPCTSTR address)
+ACE_Mailto_Addr::string_to_addr (const ACE_TCHAR *address)
 {
   if (ACE_OS::strncasecmp (mailto, address, mailto_size) != 0)
     return -1;
@@ -908,20 +908,20 @@ ACE_Mailto_Addr::string_to_addr (LPCTSTR address)
   if (this->ACE_URL_Addr::string_to_addr (address) != 0)
     return -1;
 
-  LPCTSTR string = address;
+  const ACE_TCHAR *string = address;
   string += mailto_size;
 
   // Make a copy of the string to manipulate it.
-  ASYS_TCHAR *t;
+  ACE_TCHAR *t;
   ACE_ALLOCATOR_RETURN (t, ACE_OS::strdup (string), -1);
 
-  ASYS_TCHAR *host_start = ACE_OS::strchr (t, '@');
+  ACE_TCHAR *host_start = ACE_OS::strchr (t, '@');
   if (host_start != 0)
     {
       // terminate the host:port substring
       host_start[0] = '\0';
       host_start++;
-      ASYS_TCHAR *headers_start = ACE_OS::strchr (host_start, '?');
+      ACE_TCHAR *headers_start = ACE_OS::strchr (host_start, '?');
       if (headers_start != 0)
         {
           headers_start[0] = '\0';

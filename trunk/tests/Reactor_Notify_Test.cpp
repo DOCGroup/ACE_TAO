@@ -134,7 +134,7 @@ int
 Supplier_Task::close (u_long)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("(%t) Supplier_Task::close\n")));
+              ACE_TEXT ("(%t) Supplier_Task::close\n")));
 
   int result;
 
@@ -150,7 +150,7 @@ Supplier_Task::close (u_long)
       // Wait to be told to shutdown by the main thread.
 
       ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("(%t) waiting to be shutdown by main thread\n")));
+                  ACE_TEXT ("(%t) waiting to be shutdown by main thread\n")));
       result = this->waiter_.acquire ();
       ACE_ASSERT (result != -1);
     }
@@ -160,7 +160,7 @@ Supplier_Task::close (u_long)
 Supplier_Task::~Supplier_Task (void)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("(%t) ~Supplier_Task\n")));
+              ACE_TEXT ("(%t) ~Supplier_Task\n")));
   this->pipe_.close ();
 }
 
@@ -177,7 +177,7 @@ Supplier_Task::perform_notifications (int notifications)
   for (size_t i = 0; i < iterations; i++)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("(%t) notifying reactor on iteration %d\n"),
+                  ACE_TEXT ("(%t) notifying reactor on iteration %d\n"),
                   i));
 
       int result;
@@ -188,8 +188,8 @@ Supplier_Task::perform_notifications (int notifications)
         {
           if (errno == ETIME)
             ACE_DEBUG ((LM_DEBUG,
-                        ASYS_TEXT ("(%t) %p\n"),
-                        ASYS_TEXT ("notify")));
+                        ACE_TEXT ("(%t) %p\n"),
+                        ACE_TEXT ("notify")));
           else
             ACE_ASSERT (result != -1);
         }
@@ -211,7 +211,7 @@ int
 Supplier_Task::svc (void)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("(%t) **** starting unlimited notifications test\n")));
+              ACE_TEXT ("(%t) **** starting unlimited notifications test\n")));
 
   // Allow an unlimited number of iterations per
   // <ACE_Reactor::notify>.
@@ -220,13 +220,13 @@ Supplier_Task::svc (void)
   if (this->long_timeout_ == 0)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("(%t) **** starting limited notifications test\n")));
+                  ACE_TEXT ("(%t) **** starting limited notifications test\n")));
 
       // Only allow 1 iteration per <ACE_Reactor::notify>
       this->perform_notifications (1);
 
       ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("(%t) **** exiting thread test\n")));
+                  ACE_TEXT ("(%t) **** exiting thread test\n")));
     }
   return 0;
 }
@@ -236,7 +236,7 @@ Supplier_Task::handle_exception (ACE_HANDLE handle)
 {
   ACE_ASSERT (handle == ACE_INVALID_HANDLE);
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("(%t) handle_exception\n")));
+              ACE_TEXT ("(%t) handle_exception\n")));
 
   this->waiter_.release ();
   return 0;
@@ -247,7 +247,7 @@ Supplier_Task::handle_output (ACE_HANDLE handle)
 {
   ACE_ASSERT (handle == this->pipe_.write_handle ());
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("(%t) handle_output\n")));
+              ACE_TEXT ("(%t) handle_output\n")));
 
   // This function is called by the main thread, believe it or not :-)
   // That's because the pipe's write handle is always active.  Thus,
@@ -313,8 +313,8 @@ run_test (int disable_notify_pipe,
       ACE_Time_Value timeout (tv);
 
       ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("(%t) starting handle_events() on iteration %d")
-                  ASYS_TEXT (" with time-out = %d seconds\n"),
+                  ACE_TEXT ("(%t) starting handle_events() on iteration %d")
+                  ACE_TEXT (" with time-out = %d seconds\n"),
                   iteration,
                   timeout.sec ()));
 
@@ -324,14 +324,14 @@ run_test (int disable_notify_pipe,
         case -1:
           if (! disable_notify_pipe)
             ACE_ERROR ((LM_ERROR,
-                        ASYS_TEXT ("(%t) %p\n"),
-                        ASYS_TEXT ("reactor")));
+                        ACE_TEXT ("(%t) %p\n"),
+                        ACE_TEXT ("reactor")));
           shutdown = 1;
           break;
           /* NOTREACHED */
         case 0:
           ACE_DEBUG ((LM_DEBUG,
-                      ASYS_TEXT ("(%t) handle_events timed out\n")));
+                      ACE_TEXT ("(%t) handle_events timed out\n")));
           shutdown = 1;
           break;
           /* NOTREACHED */
@@ -344,7 +344,7 @@ run_test (int disable_notify_pipe,
   if (tv.sec () == LONG_TIMEOUT)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("(%t) releasing supplier task thread\n")));
+                  ACE_TEXT ("(%t) releasing supplier task thread\n")));
       task.release ();
     }
   return 0;
@@ -353,35 +353,35 @@ run_test (int disable_notify_pipe,
 #endif /* ACE_HAS_THREADS */
 
 int
-main (int, ASYS_TCHAR *[])
+main (int, ACE_TCHAR *[])
 {
-  ACE_START_TEST (ASYS_TEXT ("Reactor_Notify_Test"));
+  ACE_START_TEST (ACE_TEXT ("Reactor_Notify_Test"));
 
 #if defined (ACE_HAS_THREADS)
   ACE_Time_Value timeout (SHORT_TIMEOUT);
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("(%t) running tests with notify pipe enabled")
-              ASYS_TEXT (" and time-out = %d seconds\n"),
+              ACE_TEXT ("(%t) running tests with notify pipe enabled")
+              ACE_TEXT (" and time-out = %d seconds\n"),
               timeout.sec ()));
   run_test (0, timeout);
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("(%t) running tests with notify pipe disabled")
-              ASYS_TEXT (" and time-out = %d seconds\n"),
+              ACE_TEXT ("(%t) running tests with notify pipe disabled")
+              ACE_TEXT (" and time-out = %d seconds\n"),
               timeout.sec ()));
   run_test (1, timeout);
 
   timeout.set (LONG_TIMEOUT, 0);
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("(%t) running tests with reactor notification pipe enabled\n")
-              ASYS_TEXT (" and time-out = %d seconds\n"),
+              ACE_TEXT ("(%t) running tests with reactor notification pipe enabled\n")
+              ACE_TEXT (" and time-out = %d seconds\n"),
               timeout.sec ()));
   run_test (0, timeout);
 
 #else
   ACE_ERROR ((LM_INFO,
-              ASYS_TEXT ("threads not supported on this platform\n")));
+              ACE_TEXT ("threads not supported on this platform\n")));
 #endif /* ACE_HAS_THREADS */
   ACE_END_TEST;
   return 0;

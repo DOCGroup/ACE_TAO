@@ -111,9 +111,9 @@ be_visitor_operation_ami_exception_holder_operation_cs::visit_operation (be_oper
   if (this->gen_throw_spec (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ASYS_TEXT ("(%N:%l) be_visitor_operation_ami_exception_holder_operation_cs::")
-                         ASYS_TEXT ("::visit_operation - ")
-                         ASYS_TEXT ("Failed to generate throw spec\n")),
+                         ACE_TEXT ("(%N:%l) be_visitor_operation_ami_exception_holder_operation_cs::")
+                         ACE_TEXT ("::visit_operation - ")
+                         ACE_TEXT ("Failed to generate throw spec\n")),
                         -1);
     }
 

@@ -63,7 +63,7 @@ Barrier_Task::Barrier_Task (ACE_Thread_Manager *thr_mgr,
 {
   // Create worker threads.
   if (this->activate (THR_NEW_LWP, n_threads) == -1)
-    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("%p\n"), ASYS_TEXT ("activate failed")));
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("activate failed")));
 }
 
 void *
@@ -71,7 +71,7 @@ My_Thread_Hook::start (ACE_THR_FUNC func,
                        void *arg)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "(%t) starting the thread!\n"));
+              ACE_TEXT ("(%t) starting the thread!\n")));
   return (func) (arg);
 }
 
@@ -86,7 +86,7 @@ Barrier_Task::svc (void)
        iterations++)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("(%t) in iteration %d\n"),
+                  ACE_TEXT ("(%t) in iteration %d\n"),
                   iterations));
 
       // Block until all other threads have waited, then continue.
@@ -102,9 +102,9 @@ Barrier_Task::svc (void)
 #endif /* ACE_HAS_THREADS */
 
 int
-main (int, ASYS_TCHAR *[])
+main (int, ACE_TCHAR *[])
 {
-  ACE_START_TEST (ASYS_TEXT ("Task_Test"));
+  ACE_START_TEST (ACE_TEXT ("Task_Test"));
 
 #if defined (ACE_HAS_THREADS)
   // Set the thread hook!
@@ -122,7 +122,7 @@ main (int, ASYS_TCHAR *[])
   delete ACE_Thread_Hook::thread_hook ();
 #else
   ACE_ERROR ((LM_INFO,
-              ASYS_TEXT ("threads not supported on this platform\n")));
+              ACE_TEXT ("threads not supported on this platform\n")));
 #endif /* ACE_HAS_THREADS */
   ACE_END_TEST;
   return 0;

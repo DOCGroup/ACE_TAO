@@ -154,7 +154,7 @@ TAO_GIOP_Invocation::select_profile_based_on_policy
         }
       if (TAO_debug_level > 3)
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("TAO (%P|%t) - matching priority range %d %d\n"),
+                    ACE_TEXT ("TAO (%P|%t) - matching priority range %d %d\n"),
                     min_priority,
                     max_priority));
 
@@ -687,7 +687,7 @@ TAO_GIOP_Twoway_Invocation::invoke (TAO_Exception_Data *excepts,
 
           if (TAO_debug_level > 5)
             ACE_DEBUG ((LM_DEBUG,
-                        ASYS_TEXT ("TAO: (%P|%t) Raising exception %s\n"),
+                        ACE_TEXT ("TAO: (%P|%t) Raising exception %s\n"),
                         buf.in ()));
 
           // @@ Think about a better way to raise the exception here,
@@ -766,7 +766,7 @@ TAO_GIOP_Twoway_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
         this->max_wait_time_->msec ();
 
       ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("TAO (%P|%t) Timeout on recv is <%u>\n"),
+                  ACE_TEXT ("TAO (%P|%t) Timeout on recv is <%u>\n"),
                   msecs));
     }
 
@@ -781,7 +781,7 @@ TAO_GIOP_Twoway_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
         this->max_wait_time_->msec ();
 
       ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("TAO (%P|%t) Timeout after recv is <%u> status <%d>\n"),
+                  ACE_TEXT ("TAO (%P|%t) Timeout after recv is <%u> status <%d>\n"),
                   msecs, reply_error));
     }
 
@@ -985,7 +985,7 @@ TAO_GIOP_Oneway_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
         this->max_wait_time_->msec ();
 
       ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("TAO (%P|%t) Timeout on recv is <%u>\n"),
+                  ACE_TEXT ("TAO (%P|%t) Timeout on recv is <%u>\n"),
                   msecs));
     }
 
@@ -1000,7 +1000,7 @@ TAO_GIOP_Oneway_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
         this->max_wait_time_->msec ();
 
       ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("TAO (%P|%t) Timeout after recv is <%u> status <%d>\n"),
+                  ACE_TEXT ("TAO (%P|%t) Timeout after recv is <%u> status <%d>\n"),
                   msecs, reply_error));
     }
 

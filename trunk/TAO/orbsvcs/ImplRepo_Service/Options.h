@@ -40,7 +40,7 @@ public:
   ~Options();
   // dtor
 
-  int parse_args (int argc, ASYS_TCHAR *argv[]);
+  int parse_args (int argc, ACE_TCHAR *argv[]);
   // Parse the command-line arguments and initialize the options.
 
   int debug (void) const;

@@ -23,6 +23,8 @@
 
 ACE_RCSID(Misc, test_naming, "$Id$")
 
+#if defined (ACE_HAS_WCHAR)
+
 #define ACE_NS_MAX_ENTRIES 4000
 
 static char name[BUFSIZ];
@@ -164,9 +166,12 @@ void do_testing (int argc, char *argv[], int light)
               et.real_time, et.user_time, et.system_time));
 }
 
+#endif /* ACE_HAS_WCHAR */
+
 int
 main (int argc, char *argv[])
 {
+#if defined (ACE_HAS_WCHAR)
   // Do testing with SYNC on
   ACE_DEBUG ((LM_DEBUG, "SYNC is ON\n"));
   do_testing (argc, argv, 0);
@@ -174,6 +179,8 @@ main (int argc, char *argv[])
   // Do testing with SYNC off
   ACE_DEBUG ((LM_DEBUG, "SYNC is OFF\n"));
   do_testing (argc, argv, 1);
-
+#else /* ACE_HAS_WCHAR */
+  ACE_ERROR ((LM_INFO, "Naming isn't supported without wchar_t\n"));
+#endif /* ACE_HAS_WCHAR */
   return 0;
 }

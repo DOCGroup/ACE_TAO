@@ -5,7 +5,7 @@
 ACE_RCSID(bin, envinfo, "$Id$")
 
 int
-main (int, ASYS_TCHAR *[])
+main (int, ACE_TCHAR *[])
 {
   cerr << "ACE: "
        << ACE::major_version() << "."

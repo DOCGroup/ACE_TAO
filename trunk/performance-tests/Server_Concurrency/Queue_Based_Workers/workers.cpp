@@ -223,9 +223,9 @@ IO_Task::svc (void)
 }
 
 static int
-parse_args (int argc, ASYS_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, ASYS_TEXT ("m:s:w:b:t:d:"));
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("m:s:w:b:t:d:"));
   int c;
 
   while ((c = get_opt ()) != -1)
@@ -268,7 +268,7 @@ parse_args (int argc, ASYS_TCHAR *argv[])
 }
 
 int
-main (int argc, ASYS_TCHAR *argv[])
+main (int argc, ACE_TCHAR *argv[])
 {
   int result = parse_args (argc, argv);
   if (result != 0)

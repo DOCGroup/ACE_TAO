@@ -76,7 +76,7 @@ ACE_ATM_Addr::ACE_ATM_Addr (const ATM_Addr *sap,
 }
 
 
-ACE_ATM_Addr::ACE_ATM_Addr (const ASYS_TCHAR sap[],
+ACE_ATM_Addr::ACE_ATM_Addr (const ACE_TCHAR sap[],
                             unsigned char selector)
 #if defined (ACE_HAS_FORE_ATM_XTI) || defined (ACE_HAS_FORE_ATM_WS2)
   : ACE_Addr (AF_ATM,
@@ -181,7 +181,7 @@ ACE_ATM_Addr::set (const ATM_Addr *sap,
 }
 
 int
-ACE_ATM_Addr::set (const ASYS_TCHAR address[],
+ACE_ATM_Addr::set (const ACE_TCHAR address[],
                    unsigned char selector)
 {
   ACE_TRACE ("ACE_ATM_Addr::set");
@@ -202,7 +202,7 @@ ACE_ATM_Addr::set (const ASYS_TCHAR address[],
 // Transform the string into the current addressing format.
 
 int
-ACE_ATM_Addr::string_to_addr (const ASYS_TCHAR sap[])
+ACE_ATM_Addr::string_to_addr (const ACE_TCHAR sap[])
 {
   ACE_TRACE ("ACE_ATM_Addr::string_to_addr");
 
@@ -222,7 +222,7 @@ ACE_ATM_Addr::string_to_addr (const ASYS_TCHAR sap[])
       errno = EINVAL;
       return -1;
     }
-  else if ((entry = gethostbyname_atmnsap((ASYS_TCHAR *)sap)) != 0)
+  else if ((entry = gethostbyname_atmnsap((ACE_TCHAR *)sap)) != 0)
     {
       ACE_OS::memcpy (atm_addr_.sap.t_atm_sap_addr.address, 
                       entry->h_addr_list[0],
@@ -305,20 +305,20 @@ ACE_ATM_Addr::string_to_addr (const ASYS_TCHAR sap[])
 // Transform the current address into string format.
 
 int
-ACE_ATM_Addr::addr_to_string (ASYS_TCHAR addr[],
+ACE_ATM_Addr::addr_to_string (ACE_TCHAR addr[],
                               size_t addrlen) const
 {
   ACE_TRACE ("ACE_ATM_Addr::addr_to_string");
 
 #if defined (ACE_HAS_FORE_ATM_XTI)
-  ASYS_TCHAR buffer[MAXNAMELEN + 1];
+  ACE_TCHAR buffer[MAXNAMELEN + 1];
   struct atmnsap_addr nsap;
   ACE_OS::memcpy (nsap.atmnsap,
                   atm_addr_.sap.t_atm_sap_addr.address,
                   ATMNSAP_ADDR_LEN);
   ACE_OS::sprintf (buffer,
-                   ASYS_TEXT ("%s"),
-                   ASYS_WIDE_STRING (atmnsap_ntoa (nsap)));
+                   ACE_TEXT ("%s"),
+                   atmnsap_ntoa (nsap));
 
   size_t total_len = ACE_OS::strlen (buffer)
     + sizeof ('\0'); // For trailing '\0'.
@@ -330,7 +330,7 @@ ACE_ATM_Addr::addr_to_string (ASYS_TCHAR addr[],
 
   return 0;
 #elif defined (ACE_HAS_FORE_ATM_WS2)
-  ASYS_TCHAR buffer[MAXNAMELEN + 1];
+  ACE_TCHAR buffer[MAXNAMELEN + 1];
   int i;
 
   if ( addrlen < ATM_ADDR_SIZE + 1 ) 
@@ -338,7 +338,7 @@ ACE_ATM_Addr::addr_to_string (ASYS_TCHAR addr[],
 
   for ( i = 0; i < ATM_ADDR_SIZE; i++ ) {
     buffer[ i * 3 ] = '\0';
-	  ACE_OS::sprintf( buffer, ASYS_TEXT( "%s%02x." ), 
+	  ACE_OS::sprintf( buffer, ACE_TEXT( "%s%02x." ), 
                      buffer, 
                      atm_addr_.satm_number.Addr[ i ]);
   }
@@ -354,12 +354,12 @@ ACE_ATM_Addr::addr_to_string (ASYS_TCHAR addr[],
 #endif /* ACE_HAS_FORE_ATM_XTI && ACE_HAS_FORE_ATM_WS2 */
 }
 
-const ASYS_TCHAR *
+const ACE_TCHAR *
 ACE_ATM_Addr::addr_to_string (void) const
 {
   ACE_TRACE ("ACE_ATM_Addr::addr_to_string");
 
-  static ASYS_TCHAR addr[MAXHOSTNAMELEN + 1];
+  static ACE_TCHAR addr[MAXHOSTNAMELEN + 1];
   this->addr_to_string (addr,
                         MAXHOSTNAMELEN + 1);
   return addr;
@@ -409,11 +409,11 @@ ACE_ATM_Addr::dump (void) const
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
 
-  ASYS_TCHAR s[ACE_MAX_FULLY_QUALIFIED_NAME_LEN + 16];
+  ACE_TCHAR s[ACE_MAX_FULLY_QUALIFIED_NAME_LEN + 16];
   ACE_OS::sprintf (s,
-                   ASYS_TEXT ("%s"),
-                   ASYS_WIDE_STRING (this->addr_to_string ()));
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("%s"), s));
+                   ACE_TEXT ("%s"),
+                   this->addr_to_string ());
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%s"), s));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
@@ -439,7 +439,7 @@ ACE_ATM_Addr::dump (void) const
 
 //   if (buf == 0)
 //     ACE_ERROR_RETURN ((LM_ERROR,
-//                        ASYS_TEXT ("Unable to allocate %d bytes for options\n"),
+//                        ACE_TEXT ("Unable to allocate %d bytes for options\n"),
 //                        info.options),
 //                       0);
 
@@ -468,7 +468,7 @@ ACE_ATM_Addr::dump (void) const
 //       //if (get_local_address (fd, source_addr->address))
 //       //  {
 //       //    ACE_ERROR ((LM_ERROR,
-//       //                ASYS_TEXT ("Can't get local address!\n")));
+//       //                ACE_TEXT ("Can't get local address!\n")));
 //       //    ACE_OS::free (buf);
 //       //    return 0;
 //       //  }

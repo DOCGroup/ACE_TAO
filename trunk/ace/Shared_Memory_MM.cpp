@@ -30,7 +30,7 @@ ACE_Shared_Memory_MM::ACE_Shared_Memory_MM (ACE_HANDLE handle,
   ACE_TRACE ("ACE_Shared_Memory_MM::ACE_Shared_Memory_MM");
 }
 
-ACE_Shared_Memory_MM::ACE_Shared_Memory_MM (LPCTSTR file_name,
+ACE_Shared_Memory_MM::ACE_Shared_Memory_MM (const ACE_TCHAR *file_name,
                                             int len,
                                             int flags,
                                             int mode,

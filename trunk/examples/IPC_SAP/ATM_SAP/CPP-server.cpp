@@ -128,7 +128,7 @@ main (int argc, char *argv[])
       actual_rate = ( double )recvd * ( double )8 / real_time;
 
       ACE_DEBUG ((LM_DEBUG,
-                 ASYS_TEXT ("(%t) bytes = %d, usec = %f, rate = %0.00f Mbps\n"),
+                 ACE_TEXT ("(%t) bytes = %d, usec = %f, rate = %0.00f Mbps\n"),
                  recvd,
                  real_time,
                  actual_rate < 0 ? 0 : actual_rate ));

@@ -51,7 +51,7 @@ BSC32=bscmake.exe
 LINK32=link.exe
 # ADD BASE LINK32 /nologo /subsystem:windows /debug /machine:I386 /pdbtype:sept
 # ADD LINK32 aced.lib /nologo /subsystem:windows /pdb:"./ACE_Init_Test.pdb" /debug /machine:I386 /out:"./ACE_Init_Test.exe" /pdbtype:sept /libpath:"..\ace"
-# SUBTRACT LINK32 /pdb:none
+# SUBTRACT LINK32 /pdb:none /nodefaultlib
 # Begin Target
 
 # Name "ACE_Init_Test - Win32 Debug"

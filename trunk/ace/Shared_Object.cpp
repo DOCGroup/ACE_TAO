@@ -14,7 +14,7 @@ ACE_RCSID(ace, Shared_Object, "$Id$")
 // Initializes object when dynamic linking occurs.
 
 int 
-ACE_Shared_Object::init (int, ASYS_TCHAR *[])
+ACE_Shared_Object::init (int, ACE_TCHAR *[])
 {
   ACE_TRACE ("ACE_Shared_Object::init");
   return 0;
@@ -32,7 +32,7 @@ ACE_Shared_Object::fini (void)
 // Returns information on active object.
 
 int 
-ACE_Shared_Object::info (ASYS_TCHAR **, size_t) const
+ACE_Shared_Object::info (ACE_TCHAR **, size_t) const
 {
   ACE_TRACE ("ACE_Shared_Object::info");
   return 0;

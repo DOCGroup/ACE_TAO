@@ -109,25 +109,30 @@ ACE_Token_Request::options (const ACE_Synch_Options &opt)
 }
 
 // = Set/get the name of the token.
-ACE_INLINE char *
+ACE_INLINE ACE_TCHAR *
 ACE_Token_Request::token_name (void) const
 {
   return token_name_;
 }
 
 ACE_INLINE void 
-ACE_Token_Request::token_name (const char *token_name, const char *client_id)
+ACE_Token_Request::token_name (const ACE_TCHAR *token_name, 
+                               const ACE_TCHAR *client_id)
 {
   size_t token_name_length = ACE_OS::strlen (token_name) + 1; // Add 1 for '\0'.
-  size_t client_id_length  = ACE_OS::strlen (client_id) + 1; // Add 1 for '\0'.
+  size_t client_id_length = ACE_OS::strlen (client_id) + 1; // Add 1 for '\0'.
 
   // Set up pointers and copy token_name and client_id into request.
   token_name_ = this->transfer_.data_;
   client_id_  = &this->token_name_[token_name_length + 1]; // Add 1 for ':';
-  client_id_[-1] = ':'; // Insert the ':' before this->clientId_.
+  client_id_[-1] = ACE_TEXT (':'); // Insert the ':' before this->clientId_.
 
-  (void) ACE_OS::memcpy (token_name_, token_name, token_name_length);
-  (void) ACE_OS::memcpy (client_id_, client_id, client_id_length);
+  (void) ACE_OS::memcpy (this->token_name_, 
+                         token_name, 
+                         token_name_length * sizeof (ACE_TCHAR));
+  (void) ACE_OS::memcpy (this->client_id_, 
+                         client_id, 
+                         client_id_length * sizeof (ACE_TCHAR));
 
   // Fixed length header size
   size_t len = ACE_TOKEN_REQUEST_HEADER_SIZE;
@@ -139,7 +144,7 @@ ACE_Token_Request::token_name (const char *token_name, const char *client_id)
 }
 
 // = Set/get the id of the client.
-ACE_INLINE char *
+ACE_INLINE ACE_TCHAR *
 ACE_Token_Request::client_id (void) const
 {
   return this->client_id_;

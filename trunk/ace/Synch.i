@@ -272,7 +272,7 @@ ACE_Mutex::remove (void)
                            sizeof (ACE_mutex_t));
            ACE_OS::shm_unlink (this->lockname_);
            ACE_OS::free (ACE_static_cast (void *,
-                                          ACE_const_cast (LPTSTR,
+                                          ACE_const_cast (ACE_TCHAR *,
                                                           this->lockname_)));
          }
      }
@@ -450,7 +450,7 @@ ACE_Process_Semaphore::tryacquire_write (void)
 ACE_INLINE
 ACE_Null_Semaphore::ACE_Null_Semaphore (u_int,
                                         int,
-                                        LPCTSTR,
+                                        const ACE_TCHAR *,
                                         void *,
                                         int)
 {
@@ -898,7 +898,7 @@ ACE_Null_Barrier::dump (void) const
 }
 
 ACE_INLINE
-ACE_Null_Mutex::ACE_Null_Mutex (LPCTSTR)
+ACE_Null_Mutex::ACE_Null_Mutex (const ACE_TCHAR *)
 {
 }
 
@@ -974,7 +974,7 @@ ACE_Noop_Token::dump (void) const
 
 ACE_INLINE
 ACE_Null_Condition::ACE_Null_Condition (const ACE_Null_Mutex &m,
-                                        LPCTSTR,
+                                        const ACE_TCHAR *,
                                         void*)
   : mutex_ ((ACE_Null_Mutex &) m)
 {

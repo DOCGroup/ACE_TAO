@@ -44,7 +44,7 @@ ACE_Token_Invariant_Manager::ACE_Token_Invariant_Manager (void)
 }
 
 int
-ACE_Token_Invariant_Manager::mutex_acquired (const ASYS_TCHAR *token_name)
+ACE_Token_Invariant_Manager::mutex_acquired (const ACE_TCHAR *token_name)
 {
   ACE_TRACE ("ACE_Token_Invariant_Manager::mutex_acquired");
 
@@ -87,7 +87,7 @@ ACE_Token_Invariant_Manager::releasing (const ACE_Token_Proxy *proxy)
 }
 
 void
-ACE_Token_Invariant_Manager::mutex_releasing (const ASYS_TCHAR *token_name)
+ACE_Token_Invariant_Manager::mutex_releasing (const ACE_TCHAR *token_name)
 {
   ACE_TRACE ("ACE_Token_Invariant_Manager::mutex_releasing");
   ACE_GUARD (ACE_TOKEN_CONST::MUTEX, ace_mon, this->lock_);
@@ -98,7 +98,7 @@ ACE_Token_Invariant_Manager::mutex_releasing (const ASYS_TCHAR *token_name)
 }
 
 int
-ACE_Token_Invariant_Manager::reader_acquired (const ASYS_TCHAR *token_name)
+ACE_Token_Invariant_Manager::reader_acquired (const ACE_TCHAR *token_name)
 {
   ACE_TRACE ("ACE_Token_Invariant_Manager::reader_acquired");
   ACE_GUARD_RETURN (ACE_TOKEN_CONST::MUTEX, ace_mon, this->lock_, -1);
@@ -111,7 +111,7 @@ ACE_Token_Invariant_Manager::reader_acquired (const ASYS_TCHAR *token_name)
 }
 
 int
-ACE_Token_Invariant_Manager::writer_acquired (const ASYS_TCHAR *token_name)
+ACE_Token_Invariant_Manager::writer_acquired (const ACE_TCHAR *token_name)
 {
   ACE_TRACE ("ACE_Token_Invariant_Manager::writer_acquired");
 
@@ -125,7 +125,7 @@ ACE_Token_Invariant_Manager::writer_acquired (const ASYS_TCHAR *token_name)
 }
 
 void
-ACE_Token_Invariant_Manager::rwlock_releasing (const ASYS_TCHAR *token_name)
+ACE_Token_Invariant_Manager::rwlock_releasing (const ACE_TCHAR *token_name)
 {
   ACE_TRACE ("ACE_Token_Invariant_Manager::rwlock_releasing");
 
@@ -141,16 +141,16 @@ ACE_Token_Invariant_Manager::dump (void) const
 {
   ACE_TRACE ("ACE_Token_Invariant_Manager::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("mutex_collection_:\n")));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("mutex_collection_:\n")));
   mutex_collection_.dump ();
-  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("rwlock_collection_:\n")));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("rwlock_collection_:\n")));
   rwlock_collection_.dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
 
 int
-ACE_Token_Invariant_Manager::get_mutex (const ASYS_TCHAR *token_name,
+ACE_Token_Invariant_Manager::get_mutex (const ACE_TCHAR *token_name,
                                         ACE_Mutex_Invariants *&inv)
 {
   ACE_TRACE ("ACE_Token_Invariant_Manager::get_mutex");
@@ -178,7 +178,7 @@ ACE_Token_Invariant_Manager::get_mutex (const ASYS_TCHAR *token_name,
 }
 
 int
-ACE_Token_Invariant_Manager::get_rwlock (const ASYS_TCHAR *token_name,
+ACE_Token_Invariant_Manager::get_rwlock (const ACE_TCHAR *token_name,
                                          ACE_RWLock_Invariants *&inv)
 {
   ACE_TRACE ("ACE_Token_Invariant_Manager::get_rwlock");
@@ -265,7 +265,7 @@ ACE_Mutex_Invariants::dump (void) const
 {
   ACE_TRACE ("ACE_Mutex_Invariants::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("owners_ = %d\n"), owners_));
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("owners_ = %d\n"), owners_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
@@ -338,7 +338,7 @@ ACE_RWLock_Invariants::dump (void) const
 {
   ACE_TRACE ("ACE_RWLock_Invariants::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("writers_ = %d\n"),
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("writers_ = %d\n"),
               "readers_ = %d\n",
               writers_, readers_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));

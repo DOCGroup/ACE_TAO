@@ -357,13 +357,13 @@ Oneway_Handler::print_results (void)
   this->timer_.elapsed_time (et);
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("\t\treal time = %f secs \n\t\tuser time = %f secs \n\t\tsystem time = %f secs\n"),
+              ACE_TEXT ("\t\treal time = %f secs \n\t\tuser time = %f secs \n\t\tsystem time = %f secs\n"),
               et.real_time,
               et.user_time,
               et.system_time));
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("\t\tmessages = %d\n\t\ttotal bytes = %d\n\t\tmbits/sec = %f\n\t\tusec-per-message = %f\n"),
+              ACE_TEXT ("\t\tmessages = %d\n\t\ttotal bytes = %d\n\t\tmbits/sec = %f\n\t\tusec-per-message = %f\n"),
               this->message_count_,
               this->total_bytes_,
               (((double) this->total_bytes_ * 8) / et.real_time) / (double) (1024 * 1024),

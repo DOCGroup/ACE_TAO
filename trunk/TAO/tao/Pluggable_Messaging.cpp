@@ -40,9 +40,9 @@ TAO_Pluggable_Messaging:: transport_message (TAO_Transport *transport,
     {
       if (TAO_orbdebug)
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("TAO: (%P|%t|%N|%l) closing conn %d after fault %p\n"),
+                    ACE_TEXT ("TAO: (%P|%t|%N|%l) closing conn %d after fault %p\n"),
                     transport->handle (),
-                    ASYS_TEXT ("transport_message ()\n")));
+                    ACE_TEXT ("transport_message ()\n")));
 
       return -1;
     }
@@ -52,8 +52,8 @@ TAO_Pluggable_Messaging:: transport_message (TAO_Transport *transport,
     {
       if (TAO_orbdebug)
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("TAO: (%P|%t|%N|%l) send_message () \n")
-                    ASYS_TEXT ("EOF, closing conn %d\n"),
+                    ACE_TEXT ("TAO: (%P|%t|%N|%l) send_message () \n")
+                    ACE_TEXT ("EOF, closing conn %d\n"),
                     transport->handle()));
       return -1;
     }

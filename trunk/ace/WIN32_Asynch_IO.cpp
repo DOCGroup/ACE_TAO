@@ -85,7 +85,7 @@ ACE_WIN32_Asynch_Result::post_completion (ACE_Proactor_Impl *proactor)
 
   if (win32_proactor == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ASYS_TEXT ("Dynamic cast to WIN32 Proactor failed\n")),
+                       ACE_TEXT ("Dynamic cast to WIN32 Proactor failed\n")),
                       -1);
 
   // Post myself.
@@ -394,8 +394,8 @@ ACE_WIN32_Asynch_Read_Stream::shared_read (ACE_WIN32_Asynch_Read_Stream_Result *
       if (ACE::debug ())
         {
           ACE_DEBUG ((LM_ERROR,
-                      ASYS_TEXT ("%p\n"),
-                      ASYS_TEXT ("ReadFile")));
+                      ACE_TEXT ("%p\n"),
+                      ACE_TEXT ("ReadFile")));
         }
 
       return -1;
@@ -631,8 +631,8 @@ ACE_WIN32_Asynch_Write_Stream::shared_write (ACE_WIN32_Asynch_Write_Stream_Resul
       if (ACE::debug ())
         {
           ACE_DEBUG ((LM_ERROR,
-                      ASYS_TEXT ("%p\n"),
-                      ASYS_TEXT ("WriteFile")));
+                      ACE_TEXT ("%p\n"),
+                      ACE_TEXT ("WriteFile")));
         }
       return -1;
     }
@@ -1293,7 +1293,7 @@ ACE_WIN32_Asynch_Accept::accept  (ACE_Message_Block &message_block,
   size_t available_space = total_size - space_in_use;
   size_t space_needed = bytes_to_read + 2 * address_size;
   if (available_space < space_needed)
-    ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("Buffer too small\n")), -1);
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Buffer too small\n")), -1);
 
   // WIN Specific.
 
@@ -1309,8 +1309,8 @@ ACE_WIN32_Asynch_Accept::accept  (ACE_Message_Block &message_block,
           if (ACE::debug ())
             {
               ACE_DEBUG ((LM_ERROR,
-                          ASYS_TEXT ("%p\n"),
-                          ASYS_TEXT ("ACE_OS::socket")));
+                          ACE_TEXT ("%p\n"),
+                          ACE_TEXT ("ACE_OS::socket")));
             }
           return -1;
         }
@@ -1371,8 +1371,8 @@ ACE_WIN32_Asynch_Accept::accept  (ACE_Message_Block &message_block,
       if (ACE::debug ())
         {
           ACE_DEBUG ((LM_ERROR,
-                      ASYS_TEXT ("%p\n"),
-                      ASYS_TEXT ("ReadFile")));
+                      ACE_TEXT ("%p\n"),
+                      ACE_TEXT ("ReadFile")));
         }
       return -1;
     }
@@ -1654,8 +1654,8 @@ ACE_WIN32_Asynch_Transmit_File::transmit_file (ACE_HANDLE file,
       if (ACE::debug ())
         {
           ACE_DEBUG ((LM_ERROR,
-                      ASYS_TEXT ("%p\n"),
-                      ASYS_TEXT ("TransmitFile")));
+                      ACE_TEXT ("%p\n"),
+                      ACE_TEXT ("TransmitFile")));
         }
       return -1;
     }

@@ -51,14 +51,14 @@ ACE_MEM_Acceptor::get_local_addr (ACE_MEM_Addr &sap) const
   return 0;
 }
 
-ASYS_INLINE const ASYS_TCHAR *
+ASYS_INLINE const ACE_TCHAR *
 ACE_MEM_Acceptor::mmap_prefix (void) const
 {
   return this->mmap_prefix_;
 }
 
 ASYS_INLINE void
-ACE_MEM_Acceptor::mmap_prefix (ASYS_TCHAR *prefix)
+ACE_MEM_Acceptor::mmap_prefix (ACE_TCHAR *prefix)
 {
   this->mmap_prefix_ = ACE::strnew (prefix);
 }

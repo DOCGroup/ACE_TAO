@@ -26,8 +26,8 @@ ACE_CLASSIX_CO_Acceptor::ACE_CLASSIX_CO_Acceptor (const ACE_Addr &local_sap,
   if (this->open (local_sap, reuse_addr, protocol_family, 
 		  backlog, protocol, theReactor) == -1)
     ACE_ERROR ((LM_ERROR, 
-                ASYS_TEXT ("%p\n"), 
-                ASYS_TEXT ("ACE_CLASSIX_CO_Acceptor")));
+                ACE_TEXT ("%p\n"), 
+                ACE_TEXT ("ACE_CLASSIX_CO_Acceptor")));
 }
 
 // General purpose routine for performing server creation.

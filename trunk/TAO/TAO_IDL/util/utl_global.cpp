@@ -1309,14 +1309,14 @@ IDL_GlobalData::temp_dir (const char* s)
   // Allocate memory, 1 for the end of string.
   ACE_NEW (this->temp_dir_,
            char [ACE_OS::strlen (s) +
-                ACE_OS::strlen (ACE_DIRECTORY_SEPARATOR_STR_A) +
+                ACE_OS::strlen (ACE_DIRECTORY_SEPARATOR_STR) +
                 1]);
 
   // Copy the strings.
   ACE_OS::sprintf (this->temp_dir_,
                    "%s%s",
                    s,
-                   ACE_DIRECTORY_SEPARATOR_STR_A);
+                   ACE_DIRECTORY_SEPARATOR_STR);
 }
 
 const char*

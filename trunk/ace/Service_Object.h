@@ -74,15 +74,14 @@ public:
   };
 
   // = Initialization and termination methods.
-  ACE_Service_Type (const ASYS_TCHAR *n,
+  ACE_Service_Type (const ACE_TCHAR *n,
                     ACE_Service_Type_Impl *o,
                     const ACE_SHLIB_HANDLE handle,
                     int active);
   ~ACE_Service_Type (void);
 
-  const ASYS_TCHAR *name (void) const;
-  void name (const ASYS_TCHAR *);
-  const char *chname (void) const;
+  const ACE_TCHAR *name (void) const;
+  void name (const ACE_TCHAR *);
 
   const ACE_Service_Type_Impl *type (void) const;
   void type (const ACE_Service_Type_Impl *,
@@ -109,14 +108,8 @@ public:
   // Declare the dynamic allocation hooks.
 
 private:
-  const ASYS_TCHAR *name_;
+  const ACE_TCHAR *name_;
   // Humanly readible name of svc.
-
-#if defined (ACE_HAS_MOSTLY_UNICODE_APIS)
-  char *chname_;
-  // This interface is used to pass char name when instantiate
-  // ACE_Parse_Node.
-#endif /* ACE_HAS_MOSTLY_UNICODE_APIS */
 
   const ACE_Service_Type_Impl *type_;
   // Pointer to C++ object that implements the svc.

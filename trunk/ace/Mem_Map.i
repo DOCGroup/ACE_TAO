@@ -10,7 +10,7 @@ ACE_Mem_Map::handle (void) const
 
 // Return the name of file that is mapped (if any).
 
-ACE_INLINE const TCHAR *
+ACE_INLINE const ACE_TCHAR *
 ACE_Mem_Map::filename (void) const
 {
   return this->filename_;

@@ -19,34 +19,34 @@ int main (int, char*[])
 }
 
 #define HTTP_TEST_ARRAY \
-    ASYS_TEXT("http://www.cs.wustl.edu/"), \
-    ASYS_TEXT("http://www.cs.wustl.edu/index.html"), \
-    ASYS_TEXT("http://www.cs.wustl.edu/form?var=foo"), \
-    ASYS_TEXT("http://www.notexist.com:8080/index.html"), \
-    ASYS_TEXT("http://www.notexist.com:80/index.html"), \
-    ASYS_TEXT("ftp://foo"), \
-    ASYS_TEXT("http://www/?kkk//")
+    ACE_TEXT("http://www.cs.wustl.edu/"), \
+    ACE_TEXT("http://www.cs.wustl.edu/index.html"), \
+    ACE_TEXT("http://www.cs.wustl.edu/form?var=foo"), \
+    ACE_TEXT("http://www.notexist.com:8080/index.html"), \
+    ACE_TEXT("http://www.notexist.com:80/index.html"), \
+    ACE_TEXT("ftp://foo"), \
+    ACE_TEXT("http://www/?kkk//")
 
 #define FTP_TEST_ARRAY \
-    ASYS_TEXT("ftp://www.cs.wustl.edu/"), \
-    ASYS_TEXT("ftp://user@www.cs.wustl.edu/"), \
-    ASYS_TEXT("ftp://user:pass@www.cs.wustl.edu/"), \
-    ASYS_TEXT("ftp://user:pass@www.cs.wustl.edu/path"), \
-    ASYS_TEXT("ftp://www.cs.wustl.edu"), \
-    ASYS_TEXT("http://www.cs.wustl.edu/index.html")
+    ACE_TEXT("ftp://www.cs.wustl.edu/"), \
+    ACE_TEXT("ftp://user@www.cs.wustl.edu/"), \
+    ACE_TEXT("ftp://user:pass@www.cs.wustl.edu/"), \
+    ACE_TEXT("ftp://user:pass@www.cs.wustl.edu/path"), \
+    ACE_TEXT("ftp://www.cs.wustl.edu"), \
+    ACE_TEXT("http://www.cs.wustl.edu/index.html")
 
 #define MAILTO_TEST_ARRAY \
-    ASYS_TEXT("mailto:ace-users@cs.wustl.edu"), \
-    ASYS_TEXT("mailto:majordomo@cs.wustl.edu?Subject: subscribe ace-users"), \
-    ASYS_TEXT("mailto:nobody"), \
-    ASYS_TEXT("http://www.cs.wustl.edu")
+    ACE_TEXT("mailto:ace-users@cs.wustl.edu"), \
+    ACE_TEXT("mailto:majordomo@cs.wustl.edu?Subject: subscribe ace-users"), \
+    ACE_TEXT("mailto:nobody"), \
+    ACE_TEXT("http://www.cs.wustl.edu")
 
 #define URL_TEST_ARRAY \
-    ASYS_TEXT("file:/etc/passwd")
+    ACE_TEXT("file:/etc/passwd")
 
 void test_http_addr (void)
 {
-  static LPCTSTR addresses[] = {
+  static const ACE_TCHAR *addresses[] = {
     HTTP_TEST_ARRAY
   };
   static int naddresses = sizeof(addresses)/sizeof(addresses[0]);
@@ -62,7 +62,7 @@ void test_http_addr (void)
           continue;
         }
       
-      ASYS_TCHAR buffer[BUFSIZ];
+      ACE_TCHAR buffer[BUFSIZ];
       if (addr.addr_to_string (buffer, BUFSIZ, i%2) == 0)
         {
           ACE_DEBUG ((LM_DEBUG,
@@ -86,7 +86,7 @@ void test_http_addr (void)
 
 void test_ftp_addr (void)
 {
-  static LPCTSTR addresses[] = {
+  static const ACE_TCHAR *addresses[] = {
     FTP_TEST_ARRAY
   };
   static int naddresses = sizeof(addresses)/sizeof(addresses[0]);
@@ -102,7 +102,7 @@ void test_ftp_addr (void)
           continue;
         }
 
-      ASYS_TCHAR buffer[BUFSIZ];
+      ACE_TCHAR buffer[BUFSIZ];
       if (addr.addr_to_string (buffer, BUFSIZ, i%2) == 0)
         {
           ACE_DEBUG ((LM_DEBUG,
@@ -127,7 +127,7 @@ void test_ftp_addr (void)
 
 void test_mailto_addr (void)
 {
-  static LPCTSTR addresses[] = {
+  static const ACE_TCHAR *addresses[] = {
     MAILTO_TEST_ARRAY
   };
   static int naddresses = sizeof(addresses)/sizeof(addresses[0]);
@@ -143,7 +143,7 @@ void test_mailto_addr (void)
           continue;
         }
 
-      ASYS_TCHAR buffer[BUFSIZ];
+      ACE_TCHAR buffer[BUFSIZ];
       if (addr.addr_to_string (buffer, BUFSIZ, i%2) == 0)
         {
           ACE_DEBUG ((LM_DEBUG,
@@ -168,7 +168,7 @@ void test_mailto_addr (void)
 
 void test_url_addr (void)
 {
-  static LPCTSTR addresses[] = {
+  static const ACE_TCHAR *addresses[] = {
     HTTP_TEST_ARRAY,
     FTP_TEST_ARRAY,
     MAILTO_TEST_ARRAY,
@@ -188,7 +188,7 @@ void test_url_addr (void)
           continue;
         }
 
-      ASYS_TCHAR buffer[BUFSIZ];
+      ACE_TCHAR buffer[BUFSIZ];
       if (addr->addr_to_string (buffer, BUFSIZ, i%2) == 0)
         {
           ACE_DEBUG ((LM_DEBUG,

@@ -111,7 +111,7 @@ int
 Message_Handler::handle_input (ACE_HANDLE)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("Message_Handler::handle_input\n")));
+              ACE_TEXT ("Message_Handler::handle_input\n")));
 
   // Next time handle_output will be called.
   this->notification_strategy_.mask (ACE_Event_Handler::WRITE_MASK);
@@ -123,7 +123,7 @@ int
 Message_Handler::handle_output (ACE_HANDLE fd)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("Message_Handler::handle_output\n")));
+              ACE_TEXT ("Message_Handler::handle_output\n")));
   ACE_UNUSED_ARG (fd);
 
   // Next time handle_exception will be called.
@@ -136,7 +136,7 @@ int
 Message_Handler::handle_exception (ACE_HANDLE fd)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("Message_Handler::handle_exception\n")));
+              ACE_TEXT ("Message_Handler::handle_exception\n")));
   ACE_UNUSED_ARG (fd);
 
   // Next time handle_input will be called.
@@ -153,13 +153,13 @@ Message_Handler::process_message (void)
   if (this->getq (mb,
                   (ACE_Time_Value *) &ACE_Time_Value::zero) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ASYS_TEXT ("%p\n"),
-                       ASYS_TEXT ("dequeue_head")),
+                       ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("dequeue_head")),
                       -1);
   else
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("message received = %s\n"),
+                  ACE_TEXT ("message received = %s\n"),
                   mb->rd_ptr ()));
       mb->release ();
     }
@@ -175,10 +175,10 @@ Message_Handler::make_message (void)
     {
       ACE_Message_Block *mb;
       ACE_NEW (mb,
-               ACE_Message_Block ((char *) ASYS_TEXT ("hello")));
+               ACE_Message_Block ((char *) ACE_TEXT ("hello")));
 
       ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("sending message\n")));
+                  ACE_TEXT ("sending message\n")));
       this->putq (mb);
     }
 }
@@ -213,7 +213,7 @@ Watermark_Test::producer (void)
       i--;
     }
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("(%P|%t) Producer: High water mark hit ---- \n")));
+              ACE_TEXT ("(%P|%t) Producer: High water mark hit ---- \n")));
 
   ACE_MT (this->mq_full_.wait ());
 
@@ -259,14 +259,14 @@ Watermark_Test::get_message (void)
 
   if (this->getq (mb) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ASYS_TEXT ("%p\n"),
-                       ASYS_TEXT ("dequeue_head")),
+                       ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("dequeue_head")),
                       -1);
   else
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("(%P|%t) Consumer: message size = %3d, ")
-                  ASYS_TEXT ("message count = %3d\n"),
+                  ACE_TEXT ("(%P|%t) Consumer: message size = %3d, ")
+                  ACE_TEXT ("message count = %3d\n"),
                   this->msg_queue ()-> message_bytes (),
                   this->msg_queue ()-> message_count ()));
       mb->release ();
@@ -292,8 +292,8 @@ void
 Watermark_Test::print_producer_debug_message (void)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("(%P|%t) Producer: message size = %3d, ")
-              ASYS_TEXT ("message count = %3d\n"),
+              ACE_TEXT ("(%P|%t) Producer: message size = %3d, ")
+              ACE_TEXT ("message count = %3d\n"),
               this->msg_queue ()-> message_bytes (),
               this->msg_queue ()-> message_count ()));
 }
@@ -319,12 +319,12 @@ Watermark_Test::svc (void)
 }
 
 int
-main (int, ASYS_TCHAR *[])
+main (int, ACE_TCHAR *[])
 {
-  ACE_START_TEST (ASYS_TEXT ("Message_Queue_Notifications_Test"));
+  ACE_START_TEST (ACE_TEXT ("Message_Queue_Notifications_Test"));
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("Starting message queue reactive notification test...\n")));
+              ACE_TEXT ("Starting message queue reactive notification test...\n")));
 
   ACE_Reactor reactor;
   Message_Handler mh (reactor);
@@ -334,11 +334,11 @@ main (int, ASYS_TCHAR *[])
 
 #if defined (ACE_HAS_THREADS)
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("Starting message queue watermark test...\n")));
+              ACE_TEXT ("Starting message queue watermark test...\n")));
   Watermark_Test watermark_test;
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("High water mark is %d\n")
-              ASYS_TEXT ("Low water mark is %d\n"),
+              ACE_TEXT ("High water mark is %d\n")
+              ACE_TEXT ("Low water mark is %d\n"),
               default_high_water_mark,
               default_low_water_mark));
 
@@ -348,7 +348,7 @@ main (int, ASYS_TCHAR *[])
   ACE_Thread_Manager::instance ()->wait ();
 #else
   ACE_DEBUG ((LM_INFO,
-              ASYS_TEXT ("Message queue watermark test not performed because threads are not supported\n")));
+              ACE_TEXT ("Message queue watermark test not performed because threads are not supported\n")));
 #endif /* ACE_HAS_THREADS */
 
   ACE_END_TEST;

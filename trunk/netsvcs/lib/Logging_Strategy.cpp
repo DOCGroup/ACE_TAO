@@ -142,7 +142,7 @@ ACE_Logging_Strategy::init (int argc, char *argv[])
 
   return ACE_LOG_MSG->open ("Logging_Strategy",
                             ACE_LOG_MSG->flags (),
-                            ACE_WIDE_STRING (ACE_DEFAULT_LOGGER_KEY));
+                            ACE_TEXT_CHAR_TO_TCHAR (ACE_DEFAULT_LOGGER_KEY));
 }
 
 // The following is a "Factory" used by the ACE_Service_Config and

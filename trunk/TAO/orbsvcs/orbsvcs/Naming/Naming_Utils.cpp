@@ -23,7 +23,7 @@ TAO_Naming_Server::TAO_Naming_Server (CORBA::ORB_ptr orb,
                                       size_t context_size,
                                       ACE_Time_Value *timeout,
                                       int resolve_for_existing_naming_service,
-                                      LPCTSTR persistence_location)
+                                      const ACE_TCHAR *persistence_location)
   : naming_context_ (),
     ior_multicast_ (0),
     naming_service_ior_ (),
@@ -47,7 +47,7 @@ TAO_Naming_Server::init (CORBA::ORB_ptr orb,
                          size_t context_size,
                          ACE_Time_Value *timeout,
                          int resolve_for_existing_naming_service,
-                         LPCTSTR persistence_location)
+                         const ACE_TCHAR *persistence_location)
 {
   if (resolve_for_existing_naming_service)
     {
@@ -107,7 +107,7 @@ TAO_Naming_Server::init (CORBA::ORB_ptr orb,
 int
 TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
                                     PortableServer::POA_ptr poa,
-                                    LPCTSTR persistence_location,
+                                    const ACE_TCHAR *persistence_location,
                                     size_t context_size)
 {
   ACE_DECLARE_NEW_CORBA_ENV;

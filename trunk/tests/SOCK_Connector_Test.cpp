@@ -30,14 +30,14 @@ ACE_RCSID(tests, SOCK_Connector_Test, "$Id$")
 // Attempt a blocking connection to it; if it succeeds,
 // then the host exists, is reachable, and is up.
 static u_int
-host_is_up (ASYS_TCHAR hostname[])
+host_is_up (ACE_TCHAR hostname[])
 {
   ACE_SOCK_Connector con;
   ACE_SOCK_Stream sock;
 
   // The ACE_INET_Addr construction causes gethostbyname_r
   // to be called, so we need to copy the hostname.
-  ASYS_TCHAR test_host[MAXHOSTNAMELEN];
+  ACE_TCHAR test_host[MAXHOSTNAMELEN];
   ACE_OS::strcpy (test_host, hostname);
 
   ACE_INET_Addr another_host ((u_short) 7, test_host);
@@ -56,9 +56,9 @@ host_is_up (ASYS_TCHAR hostname[])
 // one will do.
 
 static void
-find_another_host (ASYS_TCHAR other_host[])
+find_another_host (ACE_TCHAR other_host[])
 {
-  static ASYS_TCHAR cached_other_host[MAXHOSTNAMELEN] = {'\0'};
+  static ACE_TCHAR cached_other_host[MAXHOSTNAMELEN] = {'\0'};
 
   if (cached_other_host[0] == '\0')
     {
@@ -122,7 +122,7 @@ find_another_host (ASYS_TCHAR other_host[])
 static int
 fail_no_listener_nonblocking (void)
 {
-  ASYS_TCHAR test_host[MAXHOSTNAMELEN];
+  ACE_TCHAR test_host[MAXHOSTNAMELEN];
   int status;
   ACE_INET_Addr nobody_home;
   ACE_SOCK_Connector con;
@@ -130,11 +130,11 @@ fail_no_listener_nonblocking (void)
   ACE_Time_Value nonblock (0, 0);
 
   find_another_host (test_host);
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("Testing to host \"%s\"\n"), test_host));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing to host \"%s\"\n"), test_host));
   if (nobody_home.set ((u_short) 42000, test_host) == -1)
     {
-      ACE_ERROR ((LM_ERROR, ASYS_TEXT ("Host lookup for %s %p\n"),
-                  test_host, ASYS_TEXT ("failed")));
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Host lookup for %s %p\n"),
+                  test_host, ACE_TEXT ("failed")));
       return -1;
     }
 
@@ -155,22 +155,22 @@ fail_no_listener_nonblocking (void)
       if (status != -1)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ASYS_TEXT ("Connect which should fail didn't\n")));
+                      ACE_TEXT ("Connect which should fail didn't\n")));
           status = -1;
         }
       else
         {
-          ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("%p\n"),
-                      ASYS_TEXT ("Proper fail")));
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%p\n"),
+                      ACE_TEXT ("Proper fail")));
           status = 0;
         }
     }
   else
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("Test not executed fully; ")
-                  ASYS_TEXT ("expected EWOULDBLOCK, %p (%d)\n"),
-                  ASYS_TEXT ("not"), errno));
+                  ACE_TEXT ("Test not executed fully; ")
+                  ACE_TEXT ("expected EWOULDBLOCK, %p (%d)\n"),
+                  ACE_TEXT ("not"), errno));
       status = -1;
     }
 
@@ -190,7 +190,7 @@ fail_no_listener_nonblocking (void)
 static int
 succeed_nonblocking (void)
 {
-  ASYS_TCHAR test_host[MAXHOSTNAMELEN];
+  ACE_TCHAR test_host[MAXHOSTNAMELEN];
   int status;
   ACE_INET_Addr echo_server;
   ACE_SOCK_Connector con;
@@ -198,11 +198,11 @@ succeed_nonblocking (void)
   ACE_Time_Value nonblock (0, 0);
 
   find_another_host (test_host);
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("Testing to host \"%s\"\n"), test_host));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing to host \"%s\"\n"), test_host));
   if (echo_server.set ((u_short) 7, test_host) == -1)
     {
-      ACE_ERROR ((LM_ERROR, ASYS_TEXT ("Host lookup for %s %p\n"),
-                  test_host, ASYS_TEXT ("failed")));
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Host lookup for %s %p\n"),
+                  test_host, ACE_TEXT ("failed")));
       return -1;
     }
   status = con.connect (sock, echo_server, &nonblock);
@@ -211,7 +211,7 @@ succeed_nonblocking (void)
   if (status == 0 || (status == -1 && errno != EWOULDBLOCK))
     {
       ACE_DEBUG((LM_DEBUG,
-                 ASYS_TEXT ("Immediate success/fail; test not completed\n")));
+                 ACE_TEXT ("Immediate success/fail; test not completed\n")));
       status = 0;
     }
   else
@@ -226,12 +226,12 @@ succeed_nonblocking (void)
           if (errno == ECONNREFUSED || errno == ENOTCONN)
             status = 0;
 
-          ACE_DEBUG ((LM_DEBUG, ASYS_TEXT("%p\n"),
-                      ASYS_TEXT("connect:complete")));
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT("%p\n"),
+                      ACE_TEXT("connect:complete")));
         }
       else
         ACE_DEBUG((LM_DEBUG,
-                   ASYS_TEXT("Connect which should succeed, did\n")));
+                   ACE_TEXT("Connect which should succeed, did\n")));
     }
 
   // Just in case.
@@ -242,9 +242,9 @@ succeed_nonblocking (void)
 
 
 int
-main (int, ASYS_TCHAR *[])
+main (int, ACE_TCHAR *[])
 {
-  ACE_START_TEST (ASYS_TEXT ("SOCK_Connector_Test"));
+  ACE_START_TEST (ACE_TEXT ("SOCK_Connector_Test"));
 
   int status = 0;
 

@@ -614,8 +614,8 @@ TAO_AV_TCP_Flow_Handler::open (void * /*arg*/)
       (this,
        ACE_Event_Handler::READ_MASK) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ASYS_TEXT ("%p\n"),
-                       ASYS_TEXT ("unable to register client handler")),
+                       ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("unable to register client handler")),
                       -1);
   return 0;
 }
@@ -658,7 +658,7 @@ template class ACE_Map_Reverse_Iterator<ACE_HANDLE, ACE_Svc_Tuple<TAO_AV_TCP_Flo
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 ACE_STATIC_SVC_DEFINE (TAO_AV_TCP_Flow_Factory,
-                       ASYS_TEXT ("TCP_Flow_Factory"),
+                       ACE_TEXT ("TCP_Flow_Factory"),
                        ACE_SVC_OBJ_T,
                        &ACE_SVC_NAME (TAO_AV_TCP_Flow_Factory),
                        ACE_Service_Type::DELETE_THIS |
@@ -668,7 +668,7 @@ ACE_STATIC_SVC_DEFINE (TAO_AV_TCP_Flow_Factory,
 ACE_FACTORY_DEFINE (AV, TAO_AV_TCP_Flow_Factory)
 
 ACE_STATIC_SVC_DEFINE (TAO_AV_TCP_Factory,
-                       ASYS_TEXT ("TCP_Factory"),
+                       ACE_TEXT ("TCP_Factory"),
                        ACE_SVC_OBJ_T,
                        &ACE_SVC_NAME (TAO_AV_TCP_Factory),
                        ACE_Service_Type::DELETE_THIS |

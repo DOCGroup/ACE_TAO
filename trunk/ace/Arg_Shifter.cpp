@@ -6,8 +6,8 @@
 ACE_RCSID(ace, Arg_Shifter, "$Id$")
 
 ACE_Arg_Shifter::ACE_Arg_Shifter (int& argc,
-                                  char** argv,
-                                  char** temp)
+                                  ACE_TCHAR** argv,
+                                  ACE_TCHAR** temp)
   : argc_ (argc),
     total_size_ (argc),
     temp_ (temp),
@@ -19,7 +19,7 @@ ACE_Arg_Shifter::ACE_Arg_Shifter (int& argc,
   // If not provided with one, allocate a temporary array.
   if (this->temp_ == 0)
     ACE_NEW (this->temp_,
-             char*[this->total_size_]);
+             ACE_TCHAR*[this->total_size_]);
 
   if (this->temp_ != 0)
     {
@@ -45,10 +45,10 @@ ACE_Arg_Shifter::~ACE_Arg_Shifter (void)
   delete [] temp_;
 }
 
-char*
+ACE_TCHAR*
 ACE_Arg_Shifter::get_current (void) const
 {
-  char* retval = 0;
+  ACE_TCHAR* retval = 0;
 
   if (this->is_anything_left ())
     retval =  this->temp_[current_index_];
@@ -56,8 +56,8 @@ ACE_Arg_Shifter::get_current (void) const
   return retval;
 }
 
-char*
-ACE_Arg_Shifter::get_the_parameter (const char* flag)
+ACE_TCHAR*
+ACE_Arg_Shifter::get_the_parameter (const ACE_TCHAR *flag)
 {
   // the return 0's abound because this method
   // would otherwise be a deep if { } else { }
@@ -85,7 +85,7 @@ ACE_Arg_Shifter::get_the_parameter (const char* flag)
 }
 
 int
-ACE_Arg_Shifter::cur_arg_strncasecmp (const char* flag)
+ACE_Arg_Shifter::cur_arg_strncasecmp (const ACE_TCHAR *flag)
 {
   // Check for a current argument
   if (this->is_anything_left())
@@ -108,7 +108,7 @@ ACE_Arg_Shifter::cur_arg_strncasecmp (const char* flag)
 	      // matches, with more info to boot!
 	      return ACE_OS::strspn
 		(this->temp_[current_index_] + flag_length,
-		 " ") + flag_length;
+		 ACE_TEXT (" ")) + flag_length;
 	    }
 	}
     }

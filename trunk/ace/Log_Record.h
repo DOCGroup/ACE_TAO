@@ -68,7 +68,7 @@ public:
   // Default dtor.
 
 
-  int print (const ASYS_TCHAR host_name[],
+  int print (const ACE_TCHAR host_name[],
              u_long verbose_flag,
 #if !defined (ACE_HAS_WINCE)
              FILE *fp = stderr);
@@ -79,26 +79,26 @@ public:
   // <FILE>.
 
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
-  int print (const ASYS_TCHAR host_name[],
+  int print (const ACE_TCHAR host_name[],
              u_long verbose_flag,
              ostream &stream);
   // Write the contents of the logging record to the appropriate
   // <ostream>.
 #endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
 
-  int format_msg (const ASYS_TCHAR host_name[],
+  int format_msg (const ACE_TCHAR host_name[],
                   u_long verbose_flag,
-                  ASYS_TCHAR *verbose_msg);
+                  ACE_TCHAR *verbose_msg);
 
 #if defined (ACE_HAS_WINCE)
-  int print (const ASYS_TCHAR host_name[],
+  int print (const ACE_TCHAR host_name[],
              u_long verbose_flag,
              ACE_CE_Bridge *log_ = 0);
   // For Windows CE, the default is to log messages to a preset
   // window.
 #endif /* defined (ACE_HAS_WINCE) */
 
-  static const ASYS_TCHAR *priority_name (ACE_Log_Priority p);
+  static const ACE_TCHAR *priority_name (ACE_Log_Priority p);
   // Returns a character array with the string form of the
   // <ACE_Log_Priority> parameter.  This is used for the verbose
   // printing format.
@@ -145,10 +145,10 @@ public:
   void pid (long);
   // Set the process id of the <Log_Record>.
 
-  ASYS_TCHAR *msg_data (void);
+  ACE_TCHAR *msg_data (void);
   // Get the message data of the <Log_Record>.
 
-  void msg_data (const ASYS_TCHAR *data);
+  void msg_data (const ACE_TCHAR *data);
   // Set the message data of the <Log_Record>.
 
   void msg_data_len (size_t len);
@@ -179,10 +179,10 @@ private:
   long pid_;
   // Id of process that generated the logging record.
 
-  ASYS_TCHAR msg_data_[MAXLOGMSGLEN];
+  ACE_TCHAR msg_data_[MAXLOGMSGLEN];
   // Logging record data
 
-  static const ASYS_TCHAR *priority_names_[];
+  static const ACE_TCHAR *priority_names_[];
   // Symbolic names for the <ACE_Log_Priority> enums.
 };
 

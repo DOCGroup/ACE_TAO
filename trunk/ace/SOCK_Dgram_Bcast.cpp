@@ -61,7 +61,7 @@ ACE_SOCK_Dgram_Bcast::ACE_SOCK_Dgram_Bcast (const ACE_Addr &local,
                                             int protocol_family,
                                             int protocol,
                                             int reuse_addr,
-                                            const ASYS_TCHAR *host_name)
+                                            const ACE_TCHAR *host_name)
   : ACE_SOCK_Dgram (local, protocol_family, protocol, reuse_addr),
     if_list_ (0)
 {
@@ -69,8 +69,8 @@ ACE_SOCK_Dgram_Bcast::ACE_SOCK_Dgram_Bcast (const ACE_Addr &local,
 
   if (this->mk_broadcast (host_name) == -1)
     ACE_ERROR ((LM_ERROR,
-                ASYS_TEXT ("%p\n"),
-                ASYS_TEXT ("ACE_SOCK_Dgram_Bcast")));
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("ACE_SOCK_Dgram_Bcast")));
 }
 
 // Here's the general-purpose open routine.
@@ -80,7 +80,7 @@ ACE_SOCK_Dgram_Bcast::open (const ACE_Addr &local,
                             int protocol_family,
                             int protocol,
                             int reuse_addr,
-                            const ASYS_TCHAR *host_name)
+                            const ACE_TCHAR *host_name)
 {
   ACE_TRACE ("ACE_SOCK_Dgram_Bcast::open");
 
@@ -94,7 +94,7 @@ ACE_SOCK_Dgram_Bcast::open (const ACE_Addr &local,
 // Make broadcast available for Datagram socket.
 
 int
-ACE_SOCK_Dgram_Bcast::mk_broadcast (const ASYS_TCHAR *host_name)
+ACE_SOCK_Dgram_Bcast::mk_broadcast (const ACE_TCHAR *host_name)
 {
   ACE_TRACE ("ACE_SOCK_Dgram_Bcast::mk_broadcast");
 
@@ -132,7 +132,7 @@ ACE_SOCK_Dgram_Bcast::mk_broadcast (const ASYS_TCHAR *host_name)
   //Get host ip address
   if (host_name)
     {
-      hostent *hp = ACE_OS::gethostbyname (ASYS_MULTIBYTE_STRING (host_name));
+      hostent *hp = ACE_OS::gethostbyname (host_name);
 
       if (hp == 0)
         return -1;

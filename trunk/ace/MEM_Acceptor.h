@@ -82,8 +82,8 @@ public:
   // Perform operations that must occur after <ACE_OS::accept> is
   // called.
 
-  const ASYS_TCHAR *mmap_prefix (void) const;
-  void mmap_prefix (ASYS_TCHAR *prefix);
+  const ACE_TCHAR *mmap_prefix (void) const;
+  void mmap_prefix (ACE_TCHAR *prefix);
   // Accessor/mutator of mmap filename prefix.  By default, the
   // <mmap_prefix_> is not set and the mmap filename is
   // ${(TMP|TEMP)}//ACE_MEM_Acceptor_(port-number)_(&stream),
@@ -141,7 +141,7 @@ protected:
               int reset_new_handle = 0) const;
 
 private:
-  ASYS_TCHAR *mmap_prefix_;
+  ACE_TCHAR *mmap_prefix_;
   // The filename prefix of the created mmap files.  It should
   // contains the absolute path name of the file.
 

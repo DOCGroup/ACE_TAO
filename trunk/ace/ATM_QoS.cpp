@@ -404,7 +404,7 @@ ACE_ATM_QoS::construct_options (ACE_HANDLE fd,
 
   if (buf == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ASYS_TEXT ("Unable to allocate %d bytes for options\n"),
+                       ACE_TEXT ("Unable to allocate %d bytes for options\n"),
                        info.options),
                       0);
 
@@ -440,7 +440,7 @@ ACE_ATM_QoS::construct_options (ACE_HANDLE fd,
         {
           ACE_OS::t_error("t_getname (local_address)");
           ACE_ERROR ((LM_ERROR,
-                      ASYS_TEXT ("Can't get local address!\n")));
+                      ACE_TEXT ("Can't get local address!\n")));
           ACE_OS::free (buf);
           return 0;
         }

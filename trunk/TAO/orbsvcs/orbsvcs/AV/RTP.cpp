@@ -338,7 +338,7 @@ TAO_AV_RTP_Flow_Factory::control_flow_factory (void)
 
 ACE_FACTORY_DEFINE (AV, TAO_AV_RTP_Flow_Factory)
 ACE_STATIC_SVC_DEFINE (TAO_AV_RTP_Flow_Factory,
-                       ASYS_TEXT ("RTP_Flow_Factory"),
+                       ACE_TEXT ("RTP_Flow_Factory"),
                        ACE_SVC_OBJ_T,
                        &ACE_SVC_NAME (TAO_AV_RTP_Flow_Factory),
                        ACE_Service_Type::DELETE_THIS |

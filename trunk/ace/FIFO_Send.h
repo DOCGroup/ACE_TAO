@@ -33,13 +33,13 @@ public:
   ACE_FIFO_Send (void);
   // Default constructor.
 
-  ACE_FIFO_Send (const ASYS_TCHAR *rendezvous,
+  ACE_FIFO_Send (const ACE_TCHAR *rendezvous,
                  int flags = O_WRONLY,
                  int perms = ACE_DEFAULT_FILE_PERMS,
                  LPSECURITY_ATTRIBUTES sa = 0);
   // Open up a bytestream named pipe for writing.
 
-  int open (const ASYS_TCHAR *rendezvous,
+  int open (const ACE_TCHAR *rendezvous,
             int flags = O_WRONLY,
             int perms = ACE_DEFAULT_FILE_PERMS,
             LPSECURITY_ATTRIBUTES sa = 0);

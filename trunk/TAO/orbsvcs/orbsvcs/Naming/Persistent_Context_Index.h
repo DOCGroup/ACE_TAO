@@ -61,7 +61,7 @@ public:
                                 PortableServer::POA_ptr poa);
   // Constructor.
 
-  int open (LPCTSTR file_name,
+  int open (const ACE_TCHAR *file_name,
             void * base_address = ACE_DEFAULT_BASE_ADDR);
   // Create ACE_Allocator, open/create memory-mapped file with the
   // specified file name/base address.  Find or allocate <index_>.
@@ -131,7 +131,7 @@ private:
   // Hash map where we keep entries for all Persistent Naming
   // Contexts.
 
-  LPCTSTR index_file_;
+  const ACE_TCHAR *index_file_;
   // Name of the memory-mapped file used by <allocator_>.
 
   void *base_address_;

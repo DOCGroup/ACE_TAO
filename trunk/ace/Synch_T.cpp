@@ -114,8 +114,8 @@ ACE_Guard<ACE_LOCK>::dump (void) const
 // ACE_TRACE ("ACE_Guard<ACE_LOCK>::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("mutex_ = %x\n"), this->lock_));
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("owner_ = %d\n"), this->owner_));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("mutex_ = %x\n"), this->lock_));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("owner_ = %d\n"), this->owner_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
@@ -148,16 +148,16 @@ ACE_Condition<MUTEX>::dump (void) const
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
 #if defined (CHORUS)
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("condname_ = %s\n"), this->condname_));
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("process_cond_ = %x\n"), this->process_cond_));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("condname_ = %s\n"), this->condname_));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("process_cond_ = %x\n"), this->process_cond_));
 #endif /* CHORUS */
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
 template <class MUTEX>
 ACE_Thread_Condition<MUTEX>::ACE_Thread_Condition (MUTEX &m,
-                                                   LPCTSTR name,
+                                                   const ACE_TCHAR *name,
                                                    void *arg)
   : ACE_Condition<MUTEX> (m, USYNC_THREAD, name, arg)
 {
@@ -175,7 +175,7 @@ ACE_Thread_Condition<MUTEX>::dump (void) const
 template <class MUTEX>
 ACE_Condition<MUTEX>::ACE_Condition (MUTEX &m,
                                      int type,
-                                     LPCTSTR name,
+                                     const ACE_TCHAR *name,
                                      void *arg)
   :
 #if defined (CHORUS)
@@ -247,8 +247,8 @@ ACE_Condition<MUTEX>::ACE_Condition (MUTEX &m,
                          name,
                          arg) != 0)
     ACE_ERROR ((LM_ERROR,
-                ASYS_TEXT ("%p\n"),
-                ASYS_TEXT ("ACE_Condition::ACE_Condition")));
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("ACE_Condition::ACE_Condition")));
 }
 
 template <class MUTEX>
@@ -258,8 +258,8 @@ ACE_Condition<MUTEX>::~ACE_Condition (void)
 
   if (this->remove () == -1)
     ACE_ERROR ((LM_ERROR,
-                ASYS_TEXT ("%p\n"),
-                ASYS_TEXT ("ACE_Condition::~ACE_Condition")));
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("ACE_Condition::~ACE_Condition")));
 }
 
 template <class MUTEX> int
@@ -344,9 +344,9 @@ ACE_TSS<TYPE>::dump (void) const
 #if defined (ACE_HAS_THREADS) && (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION))
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   this->keylock_.dump ();
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("key_ = %d\n"), this->key_));
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\nonce_ = %d"), this->once_));
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("key_ = %d\n"), this->key_));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nonce_ = %d"), this->once_));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* defined (ACE_HAS_THREADS) && (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION)) */
 }
@@ -437,15 +437,15 @@ ACE_TSS<TYPE>::ACE_TSS (TYPE *ts_obj)
         {
           delete tss_adapter;
           ACE_ERROR ((LM_ERROR,
-                      ASYS_TEXT ("%p\n"),
-                      ASYS_TEXT ("ACE_Thread::setspecific() failed!")));
+                      ACE_TEXT ("%p\n"),
+                      ACE_TEXT ("ACE_Thread::setspecific() failed!")));
         }
 #else
       if (ACE_Thread::setspecific (this->key_,
                                    (void *) ts_obj) != 0)
         ACE_ERROR ((LM_ERROR,
-                    ASYS_TEXT ("%p\n"),
-                    ASYS_TEXT ("ACE_Thread::setspecific() failed!")));
+                    ACE_TEXT ("%p\n"),
+                    ACE_TEXT ("ACE_Thread::setspecific() failed!")));
 #endif /* ACE_HAS_THR_C_DEST */
     }
 }
@@ -616,8 +616,8 @@ ACE_TSS_Guard<ACE_LOCK>::dump (void) const
 // ACE_TRACE ("ACE_TSS_Guard<ACE_LOCK>::dump");
 
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("key_ = %d"), this->key_));
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("key_ = %d"), this->key_));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 

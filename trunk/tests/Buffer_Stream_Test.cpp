@@ -83,7 +83,7 @@ int
 Common_Task::open (void *)
 {
   if (this->activate (THR_NEW_LWP | THR_DETACHED) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("%p\n"), ASYS_TEXT ("spawn")), -1);
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("spawn")), -1);
   return 0;
 }
 
@@ -91,7 +91,7 @@ int
 Common_Task::close (u_long exit_status)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("(%t) thread is exiting with status %d in module %s\n"),
+              ACE_TEXT ("(%t) thread is exiting with status %d in module %s\n"),
              exit_status,
               this->name ()));
 
@@ -129,13 +129,13 @@ Supplier::svc (void)
       mb->wr_ptr (2);
 
       if (this->put_next (mb) == -1)
-        ACE_ERROR ((LM_ERROR, ASYS_TEXT ("(%t) %p\n"),
-                    ASYS_TEXT ("put_next")));
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p\n"),
+                    ACE_TEXT ("put_next")));
     }
 
   ACE_NEW_RETURN(mb, ACE_Message_Block, -1);
   if (this->put_next (mb) == -1)
-    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("(%t) %p\n"), ASYS_TEXT ("put_next")));
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p\n"), ACE_TEXT ("put_next")));
 
   return 0;
 }
@@ -198,9 +198,9 @@ Consumer::svc (void)
 // Main driver function.
 
 int
-main (int, ASYS_TCHAR *[])
+main (int, ACE_TCHAR *[])
 {
-  ACE_START_TEST (ASYS_TEXT ("Buffer_Stream_Test"));
+  ACE_START_TEST (ACE_TEXT ("Buffer_Stream_Test"));
 
 #if defined (ACE_HAS_THREADS)
   // Control hierachically-related active objects.
@@ -209,23 +209,23 @@ main (int, ASYS_TCHAR *[])
   MT_Module *sm;
 
   // Allocate the Consumer and Supplier modules.
-  ACE_NEW_RETURN (cm, MT_Module (ASYS_TEXT ("Consumer"), new Consumer), -1);
-  ACE_NEW_RETURN (sm, MT_Module (ASYS_TEXT ("Supplier"), new Supplier), -1);
+  ACE_NEW_RETURN (cm, MT_Module (ACE_TEXT ("Consumer"), new Consumer), -1);
+  ACE_NEW_RETURN (sm, MT_Module (ACE_TEXT ("Supplier"), new Supplier), -1);
 
   // Create Supplier and Consumer Modules and push them onto the
   // Stream.  All processing is performed in the Stream.
 
   if (stream.push (cm) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("%p\n"), ASYS_TEXT ("push")), 1);
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("push")), 1);
   else if (stream.push (sm) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("%p\n"), ASYS_TEXT ("push")), 1);
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("push")), 1);
 
   // Barrier synchronization: wait for the threads to exit, then exit
   // ourselves.
   ACE_Thread_Manager::instance ()->wait ();
 #else
   ACE_ERROR ((LM_INFO,
-              ASYS_TEXT ("threads not supported on this platform\n")));
+              ACE_TEXT ("threads not supported on this platform\n")));
 #endif /* ACE_HAS_THREADS */
   ACE_END_TEST;
   return 0;

@@ -5,7 +5,7 @@
 
 ACE_RCSID(ace, System_Time, "$Id$")
 
-ACE_System_Time::ACE_System_Time (LPCTSTR poolname)
+ACE_System_Time::ACE_System_Time (const ACE_TCHAR *poolname)
   : delta_time_ (0)
 {
   ACE_TRACE ("ACE_System_Time::ACE_System_Time");
@@ -23,8 +23,8 @@ ACE_System_Time::ACE_System_Time (LPCTSTR poolname)
                              MAXPATHLEN - 17) == -1) // -17 for ace-malloc-XXXXXX
         {
           ACE_ERROR ((LM_ERROR, 
-                      "Temporary path too long, "
-                      "defaulting to current directory\n"));
+                      ACE_TEXT ("Temporary path too long, ")
+                      ACE_TEXT ("defaulting to current directory\n")));
           this->poolname_[0] = 0;
         }
 
@@ -36,7 +36,7 @@ ACE_System_Time::ACE_System_Time (LPCTSTR poolname)
   else
     ACE_OS::strncpy (this->poolname_,
                      poolname,
-                     (sizeof this->poolname_ / sizeof (TCHAR)));
+                     (sizeof this->poolname_ / sizeof (ACE_TCHAR)));
 
   
   ACE_NEW (this->shmem_,

@@ -7,21 +7,12 @@
 
 // Transform the current address into string format.
 
-#if defined (UNICODE)
 ACE_INLINE int
-ACE_SPIPE_Addr::addr_to_string (wchar_t *s, size_t len) const
-{
-  ACE_OS::strncpy (s, this->SPIPE_addr_.rendezvous_, len);
-  return 0;
-}
-#endif /* UNICODE */
-
-ACE_INLINE int
-ACE_SPIPE_Addr::addr_to_string (char *s, size_t len) const
+ACE_SPIPE_Addr::addr_to_string (ACE_TCHAR *s, size_t len) const
 {
   ACE_OS::strncpy (s,
-		   ACE_MULTIBYTE_STRING (this->SPIPE_addr_.rendezvous_),
-		   len);
+		           this->SPIPE_addr_.rendezvous_,
+		           len);
   return 0;
 }
 
@@ -52,7 +43,7 @@ ACE_SPIPE_Addr::operator != (const ACE_SPIPE_Addr &sap) const
 
 // Return the path name used for the rendezvous point.
 
-ACE_INLINE LPCTSTR
+ACE_INLINE const ACE_TCHAR *
 ACE_SPIPE_Addr::get_path_name (void) const
 {
   return this->SPIPE_addr_.rendezvous_;

@@ -490,8 +490,8 @@ TAO_SHMIOP_Connector::connect (TAO_Profile *profile,
           profile->addr_to_string (buffer,
                                    (MAXNAMELEN * 2) - 1);
           ACE_DEBUG ((LM_ERROR,
-                      ASYS_TEXT ("(%P|%t) %s:%u, connection to ")
-                      ASYS_TEXT ("%s failed (%p)\n"),
+                      ACE_TEXT ("(%P|%t) %s:%u, connection to ")
+                      ACE_TEXT ("%s failed (%p)\n"),
                       __FILE__,
                       __LINE__,
                       buffer,
@@ -512,7 +512,7 @@ TAO_SHMIOP_Connector::connect (TAO_Profile *profile,
       if (TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ASYS_TEXT ("(%N|%l|%p|%t) init_mesg_protocol () failed \n")));
+                      ACE_TEXT ("(%N|%l|%p|%t) init_mesg_protocol () failed \n")));
         }
       return -1;
     }
@@ -589,8 +589,8 @@ TAO_SHMIOP_Connector::preconnect (const char *preconnects)
               if (TAO_debug_level > 0)
                 {
                   ACE_DEBUG ((LM_DEBUG,
-                              ASYS_TEXT ("TAO (%P|%t) No port specified for <%s>.  ")
-                              ASYS_TEXT ("Using <%d> as default port.\n"),
+                              ACE_TEXT ("TAO (%P|%t) No port specified for <%s>.  ")
+                              ACE_TEXT ("Using <%d> as default port.\n"),
                               where,
                               dest.get_port_number ()));
                 }
@@ -649,14 +649,14 @@ TAO_SHMIOP_Connector::preconnect (const char *preconnects)
 
               if (TAO_debug_level > 0)
                 ACE_DEBUG ((LM_DEBUG,
-                            ASYS_TEXT ("TAO (%P|%t) Preconnection <%s:%d> ")
-                            ASYS_TEXT ("succeeded.\n"),
+                            ACE_TEXT ("TAO (%P|%t) Preconnection <%s:%d> ")
+                            ACE_TEXT ("succeeded.\n"),
                             remote_addrs[slot].get_host_name (),
                             remote_addrs[slot].get_port_number ()));
             }
           else if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG,
-                        ASYS_TEXT ("TAO (%P|%t) Preconnection <%s:%d> failed.\n"),
+                        ACE_TEXT ("TAO (%P|%t) Preconnection <%s:%d> failed.\n"),
                         remote_addrs[slot].get_host_name (),
                         remote_addrs[slot].get_port_number ()));
         }
@@ -665,8 +665,8 @@ TAO_SHMIOP_Connector::preconnect (const char *preconnects)
 
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("TAO (%P|%t) IIOP preconnections: %d successes and ")
-                    ASYS_TEXT ("%d failures.\n"),
+                    ACE_TEXT ("TAO (%P|%t) IIOP preconnections: %d successes and ")
+                    ACE_TEXT ("%d failures.\n"),
                     successes,
                     num_connections - successes));
     }

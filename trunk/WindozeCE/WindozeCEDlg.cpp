@@ -18,8 +18,8 @@ static CWnd *host_window_ = 0;
 
 UINT worker (void * arg)
 {
-  ACE_ARGV cmd_line ((TCHAR *) arg);
-  extern int ace_ce_main (int, ASYS_TCHAR *[]);
+  ACE_ARGV cmd_line ((ACE_TCHAR *) arg);
+  extern int ace_ce_main (int, ACE_TCHAR *[]);
 
   int retv =  ace_ce_main (cmd_line.argc (), cmd_line.argv ());
   host_window_->SetDlgItemText (IDC_RUN, TEXT ("Stopped"));

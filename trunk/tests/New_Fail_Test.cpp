@@ -61,9 +61,9 @@ try_ace_new_return (void)
 }
 
 int
-main (int, ASYS_TCHAR *[])
+main (int, ACE_TCHAR *[])
 {
-  ACE_START_TEST (ASYS_TEXT ("New_Fail_Test"));
+  ACE_START_TEST (ACE_TEXT ("New_Fail_Test"));
   int status = 0;
 
   // Some platforms are known to throw an exception on a failed 'new',
@@ -74,8 +74,8 @@ main (int, ASYS_TCHAR *[])
   // complete.
 #if (defined (__SUNPRO_CC) || defined (__GNUG__)) && \
   !defined (ACE_HAS_EXCEPTIONS)
-    ACE_DEBUG ((LM_NOTICE, ASYS_TEXT ("Out-of-memory will throw an unhandled exception\n")));
-  ACE_DEBUG ((LM_NOTICE, ASYS_TEXT ("Rebuild with exceptions=1 to prevent this, but it may impair performance.\n")));
+    ACE_DEBUG ((LM_NOTICE, ACE_TEXT ("Out-of-memory will throw an unhandled exception\n")));
+  ACE_DEBUG ((LM_NOTICE, ACE_TEXT ("Rebuild with exceptions=1 to prevent this, but it may impair performance.\n")));
 
   // Use the static function addresses, to prevent warnings about the
   // functions not being used.
@@ -102,7 +102,7 @@ main (int, ASYS_TCHAR *[])
       if (i == MAX_ALLOCS_IN_TEST)
         {
           ACE_ERROR((LM_WARNING,
-                     ASYS_TEXT ("Test didn't exhaust all available memory\n")));
+                     ACE_TEXT ("Test didn't exhaust all available memory\n")));
           // Back up to valid pointer for deleting.
           --i;    
         }
@@ -111,7 +111,7 @@ main (int, ASYS_TCHAR *[])
           ACE_ASSERT (blocks[i] == 0);
           ACE_ASSERT (errno == ENOMEM);
           ACE_DEBUG ((LM_DEBUG,
-                      ASYS_TEXT ("ACE_NEW failed properly at block %d\n"),
+                      ACE_TEXT ("ACE_NEW failed properly at block %d\n"),
                       i));
         }
 
@@ -130,7 +130,7 @@ main (int, ASYS_TCHAR *[])
       if (i == MAX_ALLOCS_IN_TEST)
         {
           ACE_ERROR ((LM_WARNING,
-                      ASYS_TEXT ("Test didn't exhaust all available memory\n")));
+                      ACE_TEXT ("Test didn't exhaust all available memory\n")));
           // Back up to valid pointer.
           --i;    
         }
@@ -139,7 +139,7 @@ main (int, ASYS_TCHAR *[])
           ACE_ASSERT (blocks[i] == 0);
           ACE_ASSERT (errno == ENOMEM);
           ACE_DEBUG ((LM_DEBUG,
-                      ASYS_TEXT ("ACE_NEW_RETURN failed properly at block %d\n"),
+                      ACE_TEXT ("ACE_NEW_RETURN failed properly at block %d\n"),
                       i));
         }
       while (i >= 0)
@@ -151,10 +151,10 @@ main (int, ASYS_TCHAR *[])
   catch (...)
     {
       ACE_ERROR ((LM_ERROR,
-                  ASYS_TEXT ("Caught exception during test; ")
-                  ASYS_TEXT ("ACE_bad_alloc not defined correctly, or\n")));
+                  ACE_TEXT ("Caught exception during test; ")
+                  ACE_TEXT ("ACE_bad_alloc not defined correctly, or\n")));
       ACE_ERROR ((LM_ERROR,
-                  ASYS_TEXT ("ACE_NEW_THROWS_EXCEPTIONS is not #defined (and should be).\n")));
+                  ACE_TEXT ("ACE_NEW_THROWS_EXCEPTIONS is not #defined (and should be).\n")));
       // Mark test failure
       status = 1;
     }
