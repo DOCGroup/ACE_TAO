@@ -1,4 +1,4 @@
-#include "ThreadPolicyValue.h"
+#include "ThreadPolicyValueORBControl.h"
 #include "ace/Dynamic_Service.h"
 
 ACE_RCSID (PortableServer,
