@@ -382,4 +382,10 @@ return RETURN
         return; \
     }
 
+// This is here temporary, until Carlos will add the macro.
+# define TAO_TRY_THROW(EXCEPTION) TAO_THROW(EXCEPTION)
+
 #endif /* TAO_MASTER_CORBA_H */
+
+
+
