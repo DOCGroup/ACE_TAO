@@ -532,8 +532,8 @@ client (void *arg)
 
 #if defined (ACE_HAS_THREADS)
   int n_threads = n_clients;
-  ACE_Barrier barrier (n_threads);
-  info.barrier_ = &barrier;
+  ACE_Barrier thread_barrier (n_threads);
+  info.barrier_ = &thread_barrier;
 
   ACE_Thread_Manager client_manager;
 
