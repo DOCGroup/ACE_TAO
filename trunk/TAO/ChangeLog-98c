@@ -1,3 +1,28 @@
+Sat Apr 25 16:14:02 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/tests/EC_Multiple/EC_Multiple.h: 
+	* orbsvcs/tests/EC_Multiple/EC_Multiple.cpp: 
+	  Added routine to print the scheduling parameters of the main and
+	  scavenger thread.
+	  Before starting we report all the user defined parameters for
+	  the test execution.
+	  The push() method consumes a little CPU via the is_prime()
+	  method.
+	  Fixed problem with auto_ptr<> usage.
+	  For the short circuit case the timer is reset at the beginning
+	  of handle_timeout(), otherwise the main thread sleeps a constant
+	  amount of time.
+	  Changed the option to set the timeout interval to -i and now -t
+	  tries to run the test in the Time-shared scheduling class.
+	  The main thread scheduling parameters are modified after
+	  parsing the user arguments.
+
+	* orbsvcs/tests/EC_Multiple/run_latency: 
+	* orbsvcs/tests/EC_Multiple/run_utilization: 
+	* orbsvcs/tests/EC_Multiple/gen_data: 
+	  This scripts are attempts to make single button entries for the
+	  diverse configurations of this test.
+
 Sat Apr 25 08:36:08 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/tests/EC_Multiple/EC_Multiple.cpp:

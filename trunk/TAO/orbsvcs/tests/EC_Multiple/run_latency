@@ -1,0 +1,53 @@
+#!/bin/sh
+#
+# $Id$
+#
+
+MSG_COUNT=1000
+# The number of messages to send.
+MSG_INTERVAL=50000
+# The interval between the messages.
+
+../../Naming_Service/Naming_Service -ORBport 20000 -o NameService.ioro &
+sleep 2
+NameService=`cat NameService.ior`
+export NameService
+
+./EC_Multiple -ORBport 20010 -l EC1 -r EC2 -d -s SS1 -a 1 -b 2 -c 3 \
+    -m $MSG_COUNT -i $MSG_INTERVAL  > LATENCY1.log 2>&1 &
+./EC_Multiple -ORBport 20020 -l EC2 -r EC1 -d -s SS2 -a 1 -b 3 -c 2 \
+    -m $MSG_COUNT -i $MSG_INTERVAL  > LATENCY2.log 2>&1 &
+wait
+
+kill %1
+wait
+
+./latency.pl -k LCL -r 100 LATENCY1.log LATENCY2.log >local.log
+tail +3 local.log | sort -n > local.data
+./latency.pl -k RMT -r 1000 LATENCY1.log LATENCY2.log >remote.log
+tail +3 remote.log | sort -n > remote.data
+
+gnuplot <<_EOF_
+set grid xtics ytics
+set xlabel "Time (usecs)"
+set ylabel "Relative frequency"
+
+set terminal postscript eps color
+set output "local.eps"
+plot 'local.data' w i
+set terminal x11
+plot 'local.data' w i
+pause 2
+
+set terminal postscript eps
+set output "remote.eps"
+plot 'remote.data' w i
+set terminal x11
+plot 'remote.data' w i
+pause 2
+
+_EOF_
+
+gs -sDEVICE=jpeg -g640x480 -r110x110 -sNOPAUSE -sOutputFile="local.jpg" local.eps quit.ps
+gs -sDEVICE=jpeg -g640x480 -r110x110 -sNOPAUSE -sOutputFile="remote.jpg" remote.eps quit.ps
+

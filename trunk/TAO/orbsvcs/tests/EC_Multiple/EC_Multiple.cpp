@@ -2,6 +2,12 @@
 // $Id$
 //
 
+// @@ TODO This should be encapsulated in ACE...
+#include <sys/types.h>
+#include <sys/priocntl.h>
+#include <sys/rtpriocntl.h>
+#include <sys/tspriocntl.h>
+
 #include "ace/Get_Opt.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/Sched_Params.h"
@@ -36,9 +42,102 @@ Test_ECG::Test_ECG (void)
     scavenger_end_ (0),
     scavenger_barrier_ (2),
     scavenger_cnt_ (0),
-    scavenger_priority_ (0)
+    scavenger_priority_ (0),
+    scheduling_class_ (ACE_SCHED_FIFO)
 {
 }
+
+
+
+void
+print_priority_info (const char *const name)
+{
+#if defined (sun) || defined (__osf__)
+  pcinfo_t pcinfo;
+  id_t ts_id, rt_id;
+  pcparms_t pcparms;
+  rtparms_t rtparms;
+#endif /* sun || Digital Unix 4.0 */
+  struct sched_param param;
+  int policy, status;
+
+  if ((status = pthread_getschedparam (pthread_self (), &policy,
+                                       &param)) == 0) {
+#   ifdef sun
+    ACE_DEBUG ((LM_DEBUG,
+		"%s (%lu|%u|%u); policy is %d, priority is %d\n",
+		name,
+		getpid (),
+		_lwp_self (),
+		pthread_self (),
+		policy, param.sched_priority));
+#   else  /* ! sun */
+    ACE_DEBUG ((LM_DEBUG,
+		"%s (%lu|%u); policy is %d, priority is %d\n",
+		name,
+		getpid (),
+		0,
+		pthread_self (),
+		policy, param.sched_priority ));
+#   endif /* ! sun */
+  } else {
+    ACE_DEBUG ((LM_DEBUG,"pthread_getschedparam failed: %d\n", status));
+  }
+
+#if defined (sun) || defined (__osf__)
+  // Get the class TS and RT class IDs.
+
+  memset (&pcinfo, 0, sizeof pcinfo);
+  strcpy (pcinfo.pc_clname, "TS");
+  if (priocntl (P_ALL /* ignored */,
+                P_MYID /* ignored */,
+                PC_GETCID,
+                (char *) &pcinfo) == -1)
+    return;
+  ts_id = pcinfo.pc_cid;
+
+  memset (&pcinfo, 0, sizeof pcinfo);
+  strcpy (pcinfo.pc_clname, "RT");
+  if (priocntl (P_ALL /* ignored */,
+                P_MYID /* ignored */,
+                PC_GETCID,
+                (char *) &pcinfo) == -1)
+    return;
+  rt_id = pcinfo.pc_cid;
+
+  /* The following is just to avoid Purify warnings about unitialized
+     memory reads. */
+  memset (&pcparms, 0, sizeof pcparms);
+  pcparms.pc_cid = PC_CLNULL;
+
+#ifdef sun
+  if (priocntl (P_LWPID,
+                P_MYID,
+                PC_GETPARMS,
+                (char *) &pcparms) == -1) {
+    perror ("priocntl: PCGETPARMS");
+  } else {
+    ACE_DEBUG ((LM_DEBUG,
+		"%s class: %s", name,
+		pcparms.pc_cid == rt_id ? "RT" :
+		(pcparms.pc_cid == ts_id ? "TS" : "UNKNOWN")));
+    if (pcparms.pc_cid == rt_id) {
+      /* RT class */
+      memcpy (&rtparms, pcparms.pc_clparms, sizeof rtparms);
+
+      ACE_DEBUG ((LM_DEBUG,
+		  "; priority: %d, quantum: %lu sec, %ld nsec\n",
+		  rtparms.rt_pri, rtparms.rt_tqsecs, rtparms.rt_tqnsecs));
+    } else {
+      ACE_DEBUG ((LM_DEBUG, "\n"));
+    }
+  }
+#endif /* sun */
+#endif /* sun || Digital Unix 4.0 */
+}
+
+
+
 
 int
 Test_ECG::run (int argc, char* argv[])
@@ -67,12 +166,66 @@ Test_ECG::run (int argc, char* argv[])
       if (this->parse_args (argc, argv))
         return 1;
 
+      ACE_DEBUG ((LM_DEBUG,
+		  "Execution paramaters:\n"
+		  "  local EC name = <%s>\n"
+		  "  remote EC name = <%s>\n"
+		  "  local Scheduler name = <%s>\n"
+		  "  remote Scheduler name = <%s>\n"
+		  "  global scheduler = <%d>\n"
+		  "  scavenger count = <%d>\n"
+		  "  short circuit EC = <%d>\n"
+		  "  interval between events = <%d> (usecs)\n"
+		  "  message count = <%d>\n"
+		  "  event A = <%d>\n"
+		  "  event B = <%d>\n"
+		  "  event C = <%d>\n",
+		  this->lcl_ec_name_,
+		  this->rmt_ec_name_?this->rmt_ec_name_:"nil",
+		  this->lcl_sch_name_,
+		  this->rmt_sch_name_?this->rmt_sch_name_:"nil",
+		  this->global_scheduler_,
+		  this->scavenger_cnt_,
+		  this->short_circuit_,
+		  this->interval_,
+		  this->message_count_,
+		  this->event_a_,
+		  this->event_b_,
+		  this->event_c_) );
+
+      print_priority_info ("Test_ECG::run (Main)");
+
+      this->scavenger_priority_ = 
+	ACE_Sched_Params::priority_min (this->scheduling_class_);
+      int next_priority = 
+	ACE_Sched_Params::next_priority (this->scheduling_class_,
+					 this->scavenger_priority_,
+					 ACE_SCOPE_PROCESS);
+
+      // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
+      if (ACE_OS::sched_params (ACE_Sched_Params (this->scheduling_class_,
+						  next_priority,
+						  ACE_SCOPE_PROCESS)) != 0)
+	{
+	  if (ACE_OS::last_error () == EPERM)
+	    ACE_DEBUG ((LM_DEBUG,
+			"%s: user is not superuser, "
+			"so remain in time-sharing class\n", argv[0]));
+	  else
+	    ACE_ERROR ((LM_ERROR,
+			"%s: ACE_OS::sched_params failed\n", argv[0]));
+	}
+
+      if (ACE_OS::thr_setprio (next_priority) == -1)
+	{
+	  ACE_ERROR ((LM_ERROR, "(%P|%t) main thr_setprio failed\n"));
+	}
+
+      print_priority_info ("Test_ECG::run (Main)");
+
       if (this->scavenger_cnt_ != 0)
 	{
-	  this->scavenger_priority_ =
-	    ACE_Sched_Params::priority_min (ACE_SCHED_FIFO,
-					    ACE_SCOPE_THREAD);
-	  if (this->activate (THR_BOUND|THR_SCHED_FIFO,
+	  if (this->activate (THR_BOUND|this->scheduling_class_,
 			      1, 0, this->scavenger_priority_) == -1)
 	    ACE_ERROR_RETURN ((LM_ERROR,
 			       " (%P|%t) Cannot activate scavenger.\n"),
@@ -110,13 +263,10 @@ Test_ECG::run (int argc, char* argv[])
 
 int
 Test_ECG::run_short_circuit (CORBA::ORB_ptr orb,
-			     PortableServer::POA_ptr root_poa,
-			     PortableServer::POAManager_ptr poa_manager,
+			     PortableServer::POA_ptr ,
+			     PortableServer::POAManager_ptr ,
 			     CORBA::Environment& _env)
 {
-  ACE_UNUSED_ARG (root_poa);
-  ACE_UNUSED_ARG (poa_manager);
-
   TAO_TRY
     {
       ACE_Reactor* reactor = TAO_ORB_Core_instance ()->reactor ();
@@ -127,8 +277,11 @@ Test_ECG::run_short_circuit (CORBA::ORB_ptr orb,
       this->supplier_id_ = 0;
 
       ACE_DEBUG ((LM_DEBUG, "running short circuit test\n"));
-      if (this->scavenger_barrier_.wait () == -1)
-	return -1;
+      if (this->scavenger_cnt_ != 0)
+	{
+	  if (this->scavenger_barrier_.wait () == -1)
+	    return -1;
+	}
 
       while (this->message_count_ > 0 && orb->run () != -1)
 	{
@@ -156,12 +309,10 @@ Test_ECG::run_short_circuit (CORBA::ORB_ptr orb,
 
 int
 Test_ECG::run_ec (CORBA::ORB_ptr orb,
-		  PortableServer::POA_ptr root_poa,
+		  PortableServer::POA_ptr ,
 		  PortableServer::POAManager_ptr poa_manager,
 		  CORBA::Environment& _env)
 {
-  ACE_UNUSED_ARG (root_poa);
-
   TAO_TRY
     {
       CORBA::Object_var naming_obj =
@@ -183,7 +334,8 @@ Test_ECG::run_ec (CORBA::ORB_ptr orb,
 	}
       else
 	{
-	  scheduler_impl = new ACE_Config_Scheduler;
+	  scheduler_impl =
+	    auto_ptr<ACE_Config_Scheduler>(new ACE_Config_Scheduler);
 	  if (scheduler_impl.get () == 0)
 	    return -1;
 
@@ -348,24 +500,27 @@ Test_ECG::run_ec (CORBA::ORB_ptr orb,
 int
 Test_ECG::svc (void)
 {
+  print_priority_info ("Test_ECG::svc (Scavenger)");
+
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) scavenger svc\n"));
   if (ACE_OS::thr_setprio (this->scavenger_priority_) == -1)
     {
       ACE_ERROR ((LM_ERROR, "(%P|%t) scavenger thr_setprio failed\n"));
     }
+  print_priority_info ("Test_ECG::svc (Scavenger)");
 
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) scavenger waiting\n"));
   if (this->scavenger_barrier_.wait () == -1)
     return -1;
 
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) starting scavenger\n"));
-
   this->scavenger_start_ = ACE_OS::gethrtime ();
+  // ACE_DEBUG ((LM_DEBUG, "(%P|%t) starting scavenger\n"));
+
   for (int i = 0;
        i < this->scavenger_cnt_;
        ++i)
     {
-      u_long n = 1279ul;
+      u_long n = 1279UL;
       /* takes about 40.2 usecs on a 167 MHz Ultra2 */
       ACE::is_prime (n, 2, n / 2);
 #if 0
@@ -375,6 +530,7 @@ Test_ECG::svc (void)
 #endif
     }
   this->scavenger_end_ = ACE_OS::gethrtime ();
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) scavenger finished its work\n"));
   return 0;
 }
 
@@ -650,6 +806,7 @@ Test_ECG::push (const RtecEventComm::EventSet &events,
       return;
     }
 
+  this->push_timer_.start_incr ();
   // ACE_DEBUG ((LM_DEBUG, "%d event(s)\n", events.length ()));
 
   for (u_int i = 0; i < events.length (); ++i)
@@ -720,8 +877,15 @@ Test_ECG::push (const RtecEventComm::EventSet &events,
 	      // ACE_DEBUG ((LM_DEBUG, "Latency[REMOTE]: %d\n",
 	      // nsec));
 	    }
+
+	  // Eat a little CPU so the Utilization test can measure the
+	  // consumed time....
+	  /* takes about 40.2 usecs on a 167 MHz Ultra2 */
+	  u_long n = 1279UL;
+	  ACE::is_prime (n, 2, n / 2);
         }
     }
+  this->push_timer_.stop_incr ();
 }
 
 int
@@ -746,11 +910,9 @@ Test_ECG::shutdown (CORBA::Environment& _env)
 }
 
 int
-Test_ECG::handle_timeout (const ACE_Time_Value &tv,
+Test_ECG::handle_timeout (const ACE_Time_Value &,
 			  const void*)
 {
-  ACE_UNUSED_ARG (tv);
-
   this->message_count_--;
   if (this->message_count_ == 0)
     {
@@ -759,6 +921,10 @@ Test_ECG::handle_timeout (const ACE_Time_Value &tv,
       return 0;
     }
 
+  ACE_Reactor* reactor = TAO_ORB_Core_instance ()->reactor ();
+  ACE_Time_Value interval (this->interval_ / ACE_ONE_SECOND_IN_USECS,
+			   this->interval_ % ACE_ONE_SECOND_IN_USECS);
+  reactor->schedule_timer (this, 0, interval);
   RtecEventComm::EventSet sent (1);
   sent.length (1);
 
@@ -795,10 +961,7 @@ Test_ECG::handle_timeout (const ACE_Time_Value &tv,
   if (env.exception () != 0)
     return -1;
 
-  ACE_Reactor* reactor = TAO_ORB_Core_instance ()->reactor ();
-  ACE_Time_Value interval (this->interval_ / ACE_ONE_SECOND_IN_USECS,
-			   this->interval_ % ACE_ONE_SECOND_IN_USECS);
-  return reactor->schedule_timer (this, 0, interval);
+  return 0;
 }
 
 void
@@ -820,12 +983,17 @@ Test_ECG::dump_results (void)
       double usec = (this->scavenger_end_ - this->scavenger_start_) / 1000.0;
       ACE_DEBUG ((LM_DEBUG, "Scavenger time: %.3f\n", usec));
     }
+
+  ACE_Time_Value tv;
+  this->push_timer_.elapsed_time_incr (tv);
+  double usec = tv.sec () * ACE_ONE_SECOND_IN_USECS + tv.usec ();
+  ACE_DEBUG ((LM_DEBUG, "Push time: %.3f\n", usec));
 }
 
 int
 Test_ECG::parse_args (int argc, char *argv [])
 {
-  ACE_Get_Opt get_opt (argc, argv, "gxl:r:s:o:t:m:u:a:b:c:");
+  ACE_Get_Opt get_opt (argc, argv, "tgxl:r:s:o:i:m:u:a:b:c:");
   int opt;
 
   while ((opt = get_opt ()) != EOF)
@@ -844,6 +1012,9 @@ Test_ECG::parse_args (int argc, char *argv [])
 	case 'o':
 	  this->rmt_sch_name_ = get_opt.optarg;
 	  break;
+	case 't':
+	  this->scheduling_class_ = ACE_SCHED_OTHER;
+	  break;
 	case 'g':
 	  this->global_scheduler_ = 1;
 	  break;
@@ -853,7 +1024,7 @@ Test_ECG::parse_args (int argc, char *argv [])
 	case 'x':
 	  this->short_circuit_ = 1;
 	  break;
-        case 't':
+        case 'i':
           this->interval_ = ACE_OS::atoi (get_opt.optarg);
           break;
         case 'm':
@@ -875,17 +1046,20 @@ Test_ECG::parse_args (int argc, char *argv [])
         default:
           ACE_DEBUG ((LM_DEBUG,
                       "Usage: %s "
-                      "-l local_ec_name "
-                      "-r remote_ec_name "
-		      "-d (use local scheduling service) "
-		      "-s scheduling service name "
+		      "[ORB options] "
+                      "-l <local_ec_name> "
+                      "-r <remote_ec_name> "
+		      "-g (use global scheduling service) "
+		      "-s <scheduling service name> "
+		      "-o <remote scheduling service name> "
 		      "-x (short circuit EC) "
-		      "-u utilization test iterations "
+		      "-t (run in real-time class) "
+		      "-u <utilization test iterations> "
                       "<-a event_type_a> "
                       "<-b event_type_b> "
                       "<-c event_type_c> "
-                      "-t event_interval (usecs) "
-                      "-m message_count "
+                      "-i <event_interval> (usecs) "
+                      "-m <message_count> "
                       "\n",
                       argv[0]));
           return -1;
@@ -928,23 +1102,6 @@ Test_ECG::parse_args (int argc, char *argv [])
 int
 main (int argc, char *argv [])
 {
-  // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
-  if (ACE_OS::sched_params (
-        ACE_Sched_Params (
-          ACE_SCHED_FIFO,
-          ACE_Sched_Params::priority_min (ACE_SCHED_FIFO),
-          ACE_SCOPE_PROCESS)) != 0)
-    {
-      if (ACE_OS::last_error () == EPERM)
-        ACE_DEBUG ((LM_DEBUG,
-		    "%s: user is not superuser, "
-                    "so remain in time-sharing class\n", argv[0]));
-      else
-        ACE_ERROR_RETURN ((LM_ERROR,
-			   "%s: ACE_OS::sched_params failed\n", argv[0]),
-                          1);
-    }
-
   Test_ECG test;
   return test.run (argc, argv);
 }

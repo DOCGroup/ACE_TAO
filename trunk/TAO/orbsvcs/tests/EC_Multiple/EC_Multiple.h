@@ -17,6 +17,7 @@
 
 #include "ace/SString.h"
 #include "ace/Task.h"
+#include "ace/High_Res_Timer.h"
 #include "orbsvcs/RtecEventChannelAdminC.h"
 #include "orbsvcs/RtecEventCommS.h"
 #include "orbsvcs/Channel_Clients_T.h"
@@ -193,6 +194,10 @@ private:
   // The priority at which the scavenger thread runs, must be lower
   // that all the other threads.
 
+  ACE_High_Res_Timer push_timer_;
+  // Measure the time spent in pushes...
+
+  int scheduling_class_;
 };
 
 #endif /* EC_MULTIPLE_H */
