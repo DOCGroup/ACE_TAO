@@ -6,6 +6,7 @@
 #include "ace/Stats.h"
 #include "ace/Sample_History.h"
 #include "ace/Env_Value_T.h"
+#include "ace/OS_NS_stdio.h"
 
 /// Default constructor.
 MyImpl::Controller_exec_i::Controller_exec_i ()
@@ -76,15 +77,16 @@ MyImpl::Controller_exec_i::start (CORBA::Long arg
 }
 
 void
-MyImpl::Controller_exec_i::stop (ACE_ENV_SINGLE_ARG_DECL)
+MyImpl::Controller_exec_i::stop (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
 // Operations from Components::SessionComponent
 void
-MyImpl::Controller_exec_i::set_session_context (Components::SessionContext_ptr ctx
-                                                ACE_ENV_ARG_DECL)
+MyImpl::Controller_exec_i::set_session_context (
+    Components::SessionContext_ptr ctx
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
@@ -157,7 +159,7 @@ MyImpl::Controller_Home_exec_i::~Controller_Home_exec_i ()
 // Implicit home operations.
 
 ::Components::EnterpriseComponent_ptr
-MyImpl::Controller_Home_exec_i::create (ACE_ENV_SINGLE_ARG_DECL)
+MyImpl::Controller_Home_exec_i::create (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {

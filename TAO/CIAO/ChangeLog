@@ -1,3 +1,55 @@
+Wed Aug  4 17:24:18 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* examples/OEP/Display/RateGen/RateGen_exec.cpp (create):
+	* performance-tests/Benchmark/LatencyTest.cpp (makeCall):
+	* performance-tests/Benchmark/RoundTripServer/LatencyTest.cpp
+	  (makeCall):
+	* tests/RTCCM/Priority_Test/Controllers/Rate_Controller.cpp
+	  (create):
+	* tests/RTCCM/Priority_Test/Workers/CB_Worker_exec.cpp:
+	* tests/RTCCM/Priority_Test/Workers/IOB_Worker_exec.cpp:
+
+	  Fixued unused parameter warnings.
+
+	* docs/tutorial/Hello/hello_exec.cpp:
+	* performance-tests/Benchmark/RoundTrip/RoundTrip_exec.cpp:
+
+	  Fixed emulated exception usage.
+
+	  Fixed unused argument warnings.
+
+	* docs/tutorial/Hello/client.cpp (main):
+	* docs/tutorial/Hello/simple_client.cpp (main):
+	* performance-tests/Benchmark/Multi_Threaded/client.cpp (main):
+	* performance-tests/Benchmark/RoundTrip/client.cpp (main):
+	* performance-tests/Benchmark/RoundTripClient/client.cpp (main):
+
+	  Fixed CORBA::ORB_init() arguments in emulated exception case.
+
+	  Added missing ACE_TRY_CHECK after CORBA::ORB_init() call.
+
+	* performance-tests/Benchmark/RoundTripClient/RoundTripClient_exec.cpp
+	  (start):
+
+	  Fixed emulated exception usage.
+
+	  Added missing emulated exception parameter.  Fixes a
+	  compile-time error.
+
+	  Fixed unused parameter warnings.
+
+	* tests/RTCCM/DiffServ/Sender/Sender_exec.cpp:
+
+	  Include "ace/OS_NS_unistd.h" to pull in ACE_OS::sleep()
+	  declaration.
+
+	* tests/RTCCM/Priority_Test/Controllers/Controller_exec.cpp:
+
+	  Include "ace/OS_NS_stdio.h" to pull in ACE_OS::snprintf()
+	  declaration.
+
+	  Fixed unused parameter warnings.
+
 Wed Aug  4 16:43:43 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* DAnCE/tests/NodeApplicationTest/RoundTrip_exec.cpp:

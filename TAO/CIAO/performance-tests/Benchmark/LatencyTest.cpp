@@ -1,5 +1,5 @@
 //
-// $Id$ 
+// $Id$
 //
 #include "LatencyTest.h"
 
@@ -11,7 +11,7 @@ LatencyTest::LatencyTest (CORBA::ORB_ptr orb)
 
 CORBA::Long
 LatencyTest::makeCall (CORBA::Long send_time
-                        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                       ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return send_time;

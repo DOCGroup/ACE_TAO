@@ -5,9 +5,9 @@
  * @file client.cpp
  *
  * This is a simple client test program that interact with the RoundTrip
- * component implementation. The single threaded client issues 
+ * component implementation. The single threaded client issues
  * two-way operations, the total latency (response time) is measured
- * NOTE: this client implementation has been adapted from the 
+ * NOTE: this client implementation has been adapted from the
  * $TAO_ROOT/performance-results/Latency/Single_Threaded/
  *
  * @author Arvind S. Krishna <arvindk@dre.vanderbilt.edu>
@@ -26,7 +26,7 @@ const char *ior = "file://test.ior";
 int niterations = 100;
 int do_dump_history = 0;
 
-int 
+int
 parse_args (int argc, char *argv[])
 {
   //parse arguments
@@ -57,7 +57,7 @@ parse_args (int argc, char *argv[])
 }
 
 void
-set_priority () 
+set_priority ()
 {
   int priority =
     (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO)
@@ -80,7 +80,7 @@ set_priority ()
     }
 
 }
-  
+
 
 int
 main (int argc, char *argv[])
@@ -97,7 +97,11 @@ main (int argc, char *argv[])
         }
 
       // Initialize orb
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv ACE_ENV_ARG_PARAMETER);
+      CORBA::ORB_var orb = CORBA::ORB_init (argc,
+                                            argv,
+                                            ""
+                                            ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
 
       // Resolve HomeFinder interface
       CORBA::Object_var obj
@@ -174,6 +178,6 @@ main (int argc, char *argv[])
     }
 
   ACE_ENDTRY;
-  
+
   return 0;
 }
