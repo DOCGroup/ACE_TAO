@@ -1,3 +1,17 @@
+Fri Sep 22 14:21:26 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* orbsvcs/tests/ImplRepo/README:
+
+	  Updated list of command line options for the perl
+	  script, to reflect the new tests that have been
+	  added (persistence test and ImR NT service test).
+	  Also added documentation on the NT service test.
+
+	* docs/implrepo/userguide.html:
+
+	  Added section on running the Implementation 
+	  Repository as an NT service.
+
 Fri Sep 22 11:32:25 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * orbsvcs/ImplRepo_Service/ImplRepo.dsw:
