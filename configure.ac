@@ -7389,9 +7389,10 @@ AC_CONFIG_FILES([
 ])
 
 dnl Configure subdirectories if they are present.
-dnl if test -d $srcdir/TAO; then
-dnl   AC_CONFIG_SUBDIRS([TAO])
-dnl fi
+if test -d $srcdir/TAO; then
+  AC_CONFIG_SUBDIRS([TAO])
+fi
+AM_CONDITIONAL([BUILD_TAO], [test -d $srcdir/TAO])
 
 dnl Note that the "ACE_VERSION" in the message below is an M4 macro
 dnl that expands to the version of ACE being configured.
