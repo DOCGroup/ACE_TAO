@@ -1,26 +1,32 @@
+Sat May 29 16:12:28 2004  Olli Savia  <ops@iki.fi>
+
+        * include/makeinclude/platform_lynxos.GNU:
+
+          Added X11 related libs needed to build XtReactor.
+        
 Fri May 28 18:35:41 2004  Steve Huston  <shuston@riverace.com>
 
-	* tests/FIFO_Test.cpp (server): The select() trick to wait for the
-	  writer to open the FIFO doesn't seem to work on AIX. It seems to
-	  select() the fifo handle as a normal file handle, always readable.
-	  So on AIX, sleep 1 second before proceeding.
+        * tests/FIFO_Test.cpp (server): The select() trick to wait for the
+          writer to open the FIFO doesn't seem to work on AIX. It seems to
+          select() the fifo handle as a normal file handle, always readable.
+          So on AIX, sleep 1 second before proceeding.
 
 Fri May 28 15:54:26 2004  Steve Huston  <shuston@riverace.com>
 
-	* tests/MT_Reference_Counted_Event_Handler_Test.cpp: In
-	  Close_Socket_Thread::svc(), do a ACE_OS::shutdown() before closing
-	  the socket. This is enough to pop another thread off a blocked
-	  read/write on platforms that block the close() until an in-progress
-	  operation completes, such as AIX and Linux. With this, remove the
-	  #if linux checks that disabled some types of test.
-	  It could be argued that the shutdown() should be done as part of
-	  ACE_OS::closesocket() (it already does this for HP-UX), but I
-	  hesitate to rock the boat here...
+        * tests/MT_Reference_Counted_Event_Handler_Test.cpp: In
+          Close_Socket_Thread::svc(), do a ACE_OS::shutdown() before closing
+          the socket. This is enough to pop another thread off a blocked
+          read/write on platforms that block the close() until an in-progress
+          operation completes, such as AIX and Linux. With this, remove the
+          #if linux checks that disabled some types of test.
+          It could be argued that the shutdown() should be done as part of
+          ACE_OS::closesocket() (it already does this for HP-UX), but I
+          hesitate to rock the boat here...
 
 Thu May 27 19:02:18 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace/Timer_Hash_T.cpp (schedule_i): For Win64, reinterpret_cast from
-	  ptrdiff_t to long is incorrect; static_cast is more appropriate.
+        * ace/Timer_Hash_T.cpp (schedule_i): For Win64, reinterpret_cast from
+          ptrdiff_t to long is incorrect; static_cast is more appropriate.
 
 Thu May 27 20:00:29 2004  Olli Savia  <ops@iki.fi>
 
