@@ -5,27 +5,6 @@
 #include <tao/debug.h>
 
 ACE_INLINE
-STUB_Object::~STUB_Object (void)
-{
-  assert (this->refcount_ == 0);
-
-  if (forward_profiles_)
-    reset_profiles ();
-
-  if (this->profile_in_use_ != 0) 
-    {
-      this->profile_in_use_->reset_hint ();
-      // decrease reference count on profile
-      this->profile_in_use_->_decr_refcnt ();   
-      this->profile_in_use_ = 0;
-    }
-
-  if (this->profile_lock_ptr_)
-    delete this->profile_lock_ptr_; 
-
-}
-
-ACE_INLINE
 TAO_Profile *
 STUB_Object::set_profile_in_use_i (TAO_Profile *pfile)
 {
@@ -49,17 +28,93 @@ STUB_Object::set_profile_in_use_i (TAO_Profile *pfile)
 }
 
 ACE_INLINE
-TAO_Profile *
-STUB_Object::profile_in_use (void)
-{
-  return this->profile_in_use_;
-}
-
-ACE_INLINE
 void 
 STUB_Object::reset_first_locate_request (void)
 {
   first_locate_request_ = 1;
+}
+
+ACE_INLINE
+void
+STUB_Object::reset_base (void)
+{
+  this->base_profiles_.rewind ();
+  reset_first_locate_request ();
+  profile_success_ = 0;
+
+  set_profile_in_use_i (base_profiles_.get_next ());
+}
+
+ACE_INLINE
+void
+STUB_Object::forward_back_one (void)
+{
+  TAO_MProfile *from = forward_profiles_->forward_from ();
+
+  delete forward_profiles_;
+
+  // the current profile in this profile list is no
+  // longer being forwarded, so set the reference to zero.
+  if (from == &base_profiles_)
+    {
+      base_profiles_.get_current_profile ()->forward_to (0);
+      forward_profiles_ = 0;
+    }
+  else
+    {
+      from->get_current_profile ()->forward_to (0);
+      forward_profiles_ = from;
+    }
+
+}
+
+ACE_INLINE
+void
+STUB_Object::reset_forward (void)
+{
+  while (forward_profiles_)
+    forward_back_one ();
+
+  forward_profiles_ = 0;
+}
+
+ACE_INLINE
+void
+STUB_Object::reset_profiles (void)
+{
+  ACE_MT (ACE_GUARD (ACE_Lock,
+                     guard,
+                     *this->profile_lock_ptr_));
+  reset_forward ();
+  reset_base ();
+}
+
+ACE_INLINE
+STUB_Object::~STUB_Object (void)
+{
+  assert (this->refcount_ == 0);
+
+  if (forward_profiles_)
+    reset_profiles ();
+
+  if (this->profile_in_use_ != 0) 
+    {
+      this->profile_in_use_->reset_hint ();
+      // decrease reference count on profile
+      this->profile_in_use_->_decr_refcnt ();   
+      this->profile_in_use_ = 0;
+    }
+
+  if (this->profile_lock_ptr_)
+    delete this->profile_lock_ptr_; 
+
+}
+
+ACE_INLINE
+TAO_Profile *
+STUB_Object::profile_in_use (void)
+{
+  return this->profile_in_use_;
 }
 
 ACE_INLINE
@@ -98,62 +153,6 @@ STUB_Object::next_forward_profile (void)
     forward_back_one ();
 
   return pfile_next;
-}
-
-ACE_INLINE
-void
-STUB_Object::forward_back_one (void)
-{
-  TAO_MProfile *from = forward_profiles_->forward_from ();
-
-  delete forward_profiles_;
-
-  // the current profile in this profile list is no
-  // longer being forwarded, so set the reference to zero.
-  if (from == &base_profiles_)
-    {
-      base_profiles_.get_current_profile ()->forward_to (0);
-      forward_profiles_ = 0;
-    }
-  else
-    {
-      from->get_current_profile ()->forward_to (0);
-      forward_profiles_ = from;
-    }
-
-}
-
-ACE_INLINE
-void
-STUB_Object::reset_base (void)
-{
-  this->base_profiles_.rewind ();
-  reset_first_locate_request ();
-  profile_success_ = 0;
-
-  set_profile_in_use_i (base_profiles_.get_next ());
-}
-
-ACE_INLINE
-void
-STUB_Object::reset_forward (void)
-{
-  while (forward_profiles_)
-    forward_back_one ();
-
-  forward_profiles_ = 0;
-}
-
-
-ACE_INLINE
-void
-STUB_Object::reset_profiles (void)
-{
-  ACE_MT (ACE_GUARD (ACE_Lock,
-                     guard,
-                     *this->profile_lock_ptr_));
-  reset_forward ();
-  reset_base ();
 }
 
 ACE_INLINE
