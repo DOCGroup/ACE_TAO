@@ -1124,7 +1124,7 @@ ECM_Local_Federation::consumer_push (ACE_hrtime_t,
       int j = 0;
       for (; j < this->federation_->consumer_types (); ++j)
         {
-          if (ACE_static_cast (CORBA::ULong, e.header.type) ==
+          if (ACE_static_cast (ACE_CAST_CONST CORBA::ULong, e.header.type) ==
               this->federation_->consumer_ipaddr(j))
             {
               // @@ TODO check if the type is in the current
