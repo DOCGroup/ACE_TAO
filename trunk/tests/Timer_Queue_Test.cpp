@@ -23,6 +23,7 @@
 #include "ace/Profile_Timer.h"
 #include "ace/Timer_List.h"
 #include "ace/Timer_Heap.h"
+#include "ace/Timer_Wheel.h"
 #include "test_config.h"
 
 static void
@@ -268,6 +269,8 @@ static Timer_Queues timer_queues[] =
 {
   { 0, "ACE_Timer_Heap (preallocated)" },
   { 0, "ACE_Timer_Heap (non-preallocated)" },
+  { 0, "ACE_Timer_Wheel (preallocated)" },
+  { 0, "ACE_Timer_Wheel (non-preallocated)" },
   { new ACE_Timer_List, "ACE_Timer_List" },
   { 0, 0 },
 };
@@ -290,6 +293,16 @@ main (int argc, char *argv[])
   ACE_NEW_RETURN (timer_queues[1].queue_,
 		  ACE_Timer_Heap,
 //		  ACE_Timer_Heap (max_iterations),
+		  -1);
+
+  // Preallocate memory.
+  ACE_NEW_RETURN (timer_queues[2].queue_,
+		  ACE_Timer_Wheel (1024, 1000, ACE_DEFAULT_TIMERS),
+                  -1);
+
+  // Don't preallocate memory.
+  ACE_NEW_RETURN (timer_queues[3].queue_,
+		  ACE_Timer_Wheel,
 		  -1);
 
   ACE_NEW_RETURN (timer_ids,
