@@ -342,7 +342,9 @@ Test_Unbounded_Struct_Sequence::run_sii_test (Param_Test_ptr objref,
                                                        this->inout_.inout (),
                                                        out,
                                                        ACE_TRY_ENV);
-  return (ACE_TRY_ENV.exception () ? -1:0);
+  ACE_CHECK_RETURN (-1);
+
+  return 0;
 }
 
 int
