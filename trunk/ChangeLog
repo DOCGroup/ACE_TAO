@@ -1,3 +1,19 @@
+Sun Oct 13 00:55:27 2002  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * ACEXML/common/XML_Common.dsp:
+
+          Added XML_Macros.h to the project file.
+
+        * ACEXML/examples/SAXPrint/svc.conf.xml:
+
+          Reverted a mistaken change used for testing.
+
+        * ACEXML/apps/svcconf/Svcconf_Handler.cpp:
+        * ACEXML/common/SAXExceptions.cpp:
+        * ACEXML/parser/debug_validator/Debug_DTD_Manager.cpp:
+
+          Added ACE_TEXT around strings so that WCHAR build is happy.
+
 Sat Oct 12 23:01:29 2002  Krishnakumar B  <kitty@cse.wustl.edu>
 
         * ACEXML/apps/svcconf/Svcconf.h (ACEXML_Svcconf_Parser): Removed
