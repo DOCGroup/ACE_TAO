@@ -1,4 +1,13 @@
-Wed Feb 17 12:16:30 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+Wed Feb 17 15:23:18 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/config-WinCE.h: Automatically define ACE_HAS_WINCE if it is
+	  not already defined.
+
+	* ace/Synch.cpp: I had to shuffle the location of .i file around
+	  to avoid a warning from SH compiler for CE.
+
+	* ace/config-win32-common.h: Disabled checking for DLL run-time,
+	  WIN32, and multi-threaded run-time on Windows CE.
 
 	* ace/CORBA_macros.h (ACE_DECLARE_NEW_CORBA_ENV): Added this macro
 	  for declaring a new CORBA_Environment called ACE_TRY_ENV.
