@@ -321,8 +321,9 @@ main (int, char *[])
   int result = test_io (&io_config);
   if (result)
     {
-      ACE_DEBUG ((LM_ERROR, "IO Test Failed (%d)\n", result));
-      return -3;
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "IO Test Failed (%d)\n", result),
+                        -3);
     }
 
   ACE_DEBUG ((LM_DEBUG, "Test passed\n"));
