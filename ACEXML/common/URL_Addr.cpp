@@ -78,7 +78,7 @@ ACEXML_URL_Addr::addr_to_string (int ipaddr_format) const
 }
 
 int
-ACEXML_URL_Addr::string_to_addr (const ACEXML_Char *s)
+ACEXML_URL_Addr::string_to_addr (const char *s)
 {
   if (s == 0)
     return -1;

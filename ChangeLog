@@ -1,3 +1,27 @@
+Thu Jul 11 18:37:35 2002  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * ACEXML/common/URL_Addr.cpp (string_to_addr):
+        * ACEXML/common/URL_Addr.h:
+
+          Change the argument to match the base class INET_Addr so that
+          warnings under Borland BCB is eliminated.
+
+        * ACEXML/common/HttpCharStream.cpp:
+
+          Use ACE_TEXT_ALWAYS_CHAR to convert an Unicode URL to char*
+          before converting it to an address.
+
+        * ACEXML/common/Makefile:
+        * ACEXML/common/StreamFactory.h:
+        * ACEXML/common/StreamFactory.cpp:
+
+          New class to create appropriate streams based on the URI. This
+          is needed for handling the parameter entities.
+
+        * ACEXML/examples/SAXPrint/main.cpp:
+
+          Move common error message to a new usage function.
+
 Thu Jul 11 16:28:24 2002  Steve Huston  <shuston@riverace.com>
 
         * tests/Proactor_Scatter_Gather_Test.cpp: Changed Writer to derive
@@ -94,7 +118,7 @@ Thu Jul 11 15:03:47 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/WIN32_Proactor.cpp (close, handle_events): completion_key
           needs to be a different on Win64 than on Win32.
-          
+
 Thu Jul 11 08:34:22 2002  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/USAGE:

@@ -53,7 +53,7 @@ public:
    *  <address> it is assumed to be an ip-number or ip-address number, with
    *  the port number <ACE_DEFAULT_HTTP_PORT>.
    */
-  virtual int string_to_addr (const ACEXML_Char *address);
+  virtual int string_to_addr (const char *address);
 
   /**
    *  Transform the current <ACE_INET_Addr> address into string format. If
