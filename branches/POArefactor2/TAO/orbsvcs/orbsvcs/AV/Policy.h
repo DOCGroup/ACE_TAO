@@ -19,6 +19,7 @@
 #include "ace/Addr.h"
 #include "tao/Basic_Types.h"
 #include "tao/CORBA_String.h"
+#include "tao/Sequence_T.h"
 #include "orbsvcs/AV/AV_export.h"
 
 struct TAO_AV_frame_info
