@@ -6,12 +6,10 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -hierarchy -make_coexistence -exclude build,Kokyu
+## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -exclude build,Kokyu
 
-includedir = @includedir@/ACEXML/parser/parser
-
-ACE_ROOT = $(top_srcdir)
 ACE_BUILDDIR = $(top_builddir)
+ACE_ROOT = $(top_srcdir)
 
 ## Makefile.ACEXML_Parser.am 
 lib_LTLIBRARIES = libACEXML_Parser.la
@@ -27,12 +25,8 @@ libACEXML_Parser_la_SOURCES = \
   ParserContext.cpp \
   ParserInternals.cpp
 
-libACEXML_Parser_la_LDFLAGS = \
- -version-number @ACE_MAJOR@:@ACE_MINOR@:@ACE_BETA@
-
 libACEXML_Parser_la_LIBADD = \
- $(ACE_BUILDDIR)/ACEXML/common/libACEXML.la \
- $(ACE_BUILDDIR)/ace/libACE.la
+ $(top_builddir)/ACEXML/common/libACEXML.la $(top_builddir)/ace/libACE.la
 
 nobase_include_HEADERS = \
   Entity_Manager.h \
@@ -46,6 +40,8 @@ nobase_include_HEADERS = \
 
 ## Clean up template repositories, etc.
 clean-local:
-	-rm -f *.bak *.rpo *.sym lib*.*_pure_* Makefile.old core
-	-rm -f gcctemp.c gcctemp so_locations
+	-rm -f *~ *.bak *.rpo *.sym lib*.*_pure_* core core.*
+	-rm -f gcctemp.c gcctemp so_locations *.ics
+	-rm -rf cxx_repository ptrepository ti_files
+	-rm -rf templateregistry ir.out
 	-rm -rf ptrepository SunWS_cache Templates.DB

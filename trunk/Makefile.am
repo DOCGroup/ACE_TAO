@@ -6,34 +6,22 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -hierarchy -make_coexistence -exclude build,Kokyu
+## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -exclude build,Kokyu
 
 SUBDIRS = \
         ace \
+        ASNMP \
         ACEXML \
         apps \
+        bin \
+        examples \
         netsvcs \
-	protocols \
-        tests
+        performance-tests \
+        protocols \
+        tests \
+        websvcs
 
-##        performance-tests \
-##        examples \
-##        ASNMP \
-##        websvcs
-
-if BUILD_KOKYU
-SUBDIRS += Kokyu
-endif
-
-if BUILD_TAO
-SUBDIRS += TAO
-endif
-
-man_MANS = ace-config.1
-
-bin_SCRIPTS = ace-config
 
 ACLOCAL = @ACLOCAL@
 ACLOCAL_AMFLAGS = -I m4
-AUTOMAKE_OPTIONS = foreign
 

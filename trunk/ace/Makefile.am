@@ -6,16 +6,14 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## ./bin/mwc.pl -include /home/jtc/ACE/ACE-scons/MPC/config -include /home/jtc/ACE/ACE-scons/MPC/templates -type automake ACE.mwc
-
-includedir = @includedir@/ace
+## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -exclude build,Kokyu
 
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
 
 SUBDIRS = \
         . \
-	QoS \
+        QoS \
         RMCast \
         SSL \
         TMCast
@@ -65,7 +63,7 @@ UUID = \
 Filecache = \
   Filecache.cpp
 
-OS = \
+ACE_OS = \
   ARGV.cpp \
   Argv_Type_Converter.cpp \
   Base_Thread_Adapter.cpp \
@@ -324,14 +322,14 @@ Memory = \
   Mem_Map.cpp \
   Obchunk.cpp \
   Obstack.cpp \
-  Pagefile_Memory_Pool.cpp \
   PI_Malloc.cpp \
+  Pagefile_Memory_Pool.cpp \
   Read_Buffer.cpp \
   Sbrk_Memory_Pool.cpp \
   Shared_Memory.cpp \
   Shared_Memory_MM.cpp \
-  Shared_Memory_SV.cpp \
-  Shared_Memory_Pool.cpp
+  Shared_Memory_Pool.cpp \
+  Shared_Memory_SV.cpp
 
 Timer = \
   Basic_Stats.cpp \
@@ -365,7 +363,7 @@ libACE_la_SOURCES = \
   $(Svcconf) \
   $(UUID) \
   $(Filecache) \
-  $(OS) \
+  $(ACE_OS) \
   $(Utils) \
   $(Logging) \
   $(Threads) \
@@ -377,9 +375,6 @@ libACE_la_SOURCES = \
   $(Memory) \
   $(Timer) \
   $(Metrics)
-
-libACE_la_LDFLAGS = \
- -version-number @ACE_MAJOR@:@ACE_MINOR@:@ACE_BETA@
 
 nobase_include_HEADERS = \
   ACE.h \
@@ -545,7 +540,6 @@ nobase_include_HEADERS = \
   Map_Manager.h \
   Map_T.h \
   Mem_Map.h \
-  Memory_Pool.h \
   Message_Block.h \
   Message_Block_T.h \
   Message_Queue.h \
@@ -694,8 +688,8 @@ nobase_include_HEADERS = \
   Service_Types.h \
   Shared_Memory.h \
   Shared_Memory_MM.h \
-  Shared_Memory_SV.h \
   Shared_Memory_Pool.h \
+  Shared_Memory_SV.h \
   Shared_Object.h \
   Signal.h \
   Singleton.h \
@@ -1195,6 +1189,7 @@ nobase_include_HEADERS = \
   Map_T.cpp \
   Message_Block_T.cpp \
   Message_Queue_T.cpp \
+  Metrics_Cache_T.cpp \
   Module.cpp \
   Node.cpp \
   Obstack_T.cpp \
@@ -1233,6 +1228,8 @@ EXTRA_DIST = \
 
 ## Clean up template repositories, etc.
 clean-local:
-	-rm -f *.bak *.rpo *.sym lib*.*_pure_* Makefile.old core
-	-rm -f gcctemp.c gcctemp so_locations
+	-rm -f *~ *.bak *.rpo *.sym lib*.*_pure_* core core.*
+	-rm -f gcctemp.c gcctemp so_locations *.ics
+	-rm -rf cxx_repository ptrepository ti_files
+	-rm -rf templateregistry ir.out
 	-rm -rf ptrepository SunWS_cache Templates.DB

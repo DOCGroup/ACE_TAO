@@ -6,13 +6,16 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -hierarchy -make_coexistence -exclude build,Kokyu
+## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -exclude build,Kokyu
 
-ACE_ROOT = $(top_srcdir)
 ACE_BUILDDIR = $(top_builddir)
+ACE_ROOT = $(top_srcdir)
 
+bin_PROGRAMS =
 ## Makefile.gperf.am 
-bin_PROGRAMS = gperf
+
+if !BUILD_USES_WCHAR
+bin_PROGRAMS += gperf
 
 gperf_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -39,10 +42,14 @@ gperf_SOURCES = \
   Vectors.h
 
 gperf_LDADD = \
- $(ACE_BUILDDIR)/ace/libACE.la
+ $(top_builddir)/ace/libACE.la
+
+endif !BUILD_USES_WCHAR
 
 ## Clean up template repositories, etc.
 clean-local:
-	-rm -f *.bak *.rpo *.sym lib*.*_pure_* Makefile.old core
-	-rm -f gcctemp.c gcctemp so_locations
+	-rm -f *~ *.bak *.rpo *.sym lib*.*_pure_* core core.*
+	-rm -f gcctemp.c gcctemp so_locations *.ics
+	-rm -rf cxx_repository ptrepository ti_files
+	-rm -rf templateregistry ir.out
 	-rm -rf ptrepository SunWS_cache Templates.DB

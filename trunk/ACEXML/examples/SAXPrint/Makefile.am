@@ -6,13 +6,16 @@
 ## this file will be lost the next time it is generated.
 ##
 ## MPC Command:
-## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -hierarchy -make_coexistence -exclude build,Kokyu
+## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -exclude build,Kokyu
 
-ACE_ROOT = $(top_srcdir)
 ACE_BUILDDIR = $(top_builddir)
+ACE_ROOT = $(top_srcdir)
 
+noinst_PROGRAMS =
 ## Makefile.SAXPrint.am 
-noinst_PROGRAMS = SAXPrint
+
+if BUILD_ACEXML
+noinst_PROGRAMS += SAXPrint
 
 SAXPrint_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -29,12 +32,14 @@ SAXPrint_SOURCES = \
   SAXPrint_Handler.i
 
 SAXPrint_LDADD = \
- $(ACE_BUILDDIR)/ACEXML/parser/parser/libACEXML_Parser.la \
- $(ACE_BUILDDIR)/ACEXML/common/libACEXML.la \
- $(ACE_BUILDDIR)/ace/libACE.la
+ $(top_builddir)/ACEXML/parser/parser/libACEXML_Parser.la $(top_builddir)/ACEXML/common/libACEXML.la $(top_builddir)/ace/libACE.la
+
+endif BUILD_ACEXML
 
 ## Clean up template repositories, etc.
 clean-local:
-	-rm -f *.bak *.rpo *.sym lib*.*_pure_* Makefile.old core
-	-rm -f gcctemp.c gcctemp so_locations
+	-rm -f *~ *.bak *.rpo *.sym lib*.*_pure_* core core.*
+	-rm -f gcctemp.c gcctemp so_locations *.ics
+	-rm -rf cxx_repository ptrepository ti_files
+	-rm -rf templateregistry ir.out
 	-rm -rf ptrepository SunWS_cache Templates.DB
