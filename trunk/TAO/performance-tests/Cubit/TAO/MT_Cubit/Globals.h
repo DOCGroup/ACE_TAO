@@ -76,7 +76,6 @@ ACE_DEBUG ((LM_DEBUG,"pccTimer has a pending benchmark\n"));\
 static char *force_argv[]=
 {
   "server",
-  "-s",
   "-f",
   "ior.txt"
 };
