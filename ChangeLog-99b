@@ -1,3 +1,10 @@
+Mon Apr 26 19:29:25 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* tests/Reverse_Lock_Test.cpp (main): 
+
+	  ACE_START_TEST macro had "Thread_Mutex_Test" instead of
+	  "Reverse_Lock_Test."
+
 Mon Apr 26 17:01:22 1999  Steve Huston  <shuston@riverace.com>
 
         * ace/ACE.cpp (DllMain): Re-enabled this for use on Win32.
