@@ -1,3 +1,18 @@
+Wed May  3 18:31:54 2000  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
+
+	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/server.cpp: 
+	  Removed a redundant template instantiation
+	
+	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/ftp.cpp: 
+	* orbsvcs/tests/AVStreams/Multicast/ftp.cpp: 
+	* orbsvcs/tests/AVStreams/Full_Profile/ftp.cpp: 
+	* orbsvcs/tests/AVStreams/Pluggable/ftp.cpp: 
+	  Removed the ::feof error
+	
+	* orbsvcs/tests/AVStreams/Latency/pong.cpp: 
+	* orbsvcs/tests/AVStreams/Latency/ping.cpp: 
+	  Added missing template intantiations
+
 Wed May  3 16:28:11 2000  Darrell Brunsch  <brunsch@uci.edu>
 
         * tests/Param_Test/client.dsp:  
