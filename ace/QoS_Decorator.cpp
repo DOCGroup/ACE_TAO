@@ -125,7 +125,7 @@ ACE_QoS_Event_Handler::ACE_QoS_Event_Handler (ACE_QoS_Decorator_Base
                                               *decorator_base)
   : decorator_base_ (decorator_base)
 {
-};
+}
   
 // Destructor.
 ACE_QoS_Event_Handler::~ACE_QoS_Event_Handler (void)
