@@ -4,9 +4,6 @@
 #define DSRT_DIRECT_DISPATCHER_IMPL_T_CPP
 
 #include "DSRT_Direct_Dispatcher_Impl_T.h"
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-# pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if !defined (__ACE_INLINE__)
 //#include "DSRT_Direct_Dispatcher_Impl_T.i"
@@ -16,6 +13,12 @@ ACE_RCSID(Kokyu, DSRT_Direct_Dispatcher_Impl_T, "$Id$")
 
 namespace Kokyu
 {
+  
+/*
+//@@VS: This is somehow not being recognized by MSVC, which results
+//in a link error. For now, the definition has been moved to the .h
+//file. Needs further investigation.
+
 template <class DSRT_Scheduler_Traits>
 int Comparator_Adapter_Generator<DSRT_Scheduler_Traits>::MoreEligible::
 operator ()(const DSRT_Dispatch_Item_var<DSRT_Scheduler_Traits>& item1,
@@ -34,7 +37,7 @@ operator ()(const DSRT_Dispatch_Item_var<DSRT_Scheduler_Traits>& item1,
 
   return 0;
 }
-
+*/
 template <class DSRT_Scheduler_Traits>
 DSRT_Direct_Dispatcher_Impl<DSRT_Scheduler_Traits>::
 DSRT_Direct_Dispatcher_Impl ()
@@ -58,7 +61,6 @@ DSRT_Direct_Dispatcher_Impl ()
    sched_queue_modified_cond_ (sched_queue_modified_cond_lock_),
    shutdown_flagged_ (0)
 {
-
   long flags =
     THR_NEW_LWP |
     THR_JOINABLE |

@@ -1,3 +1,22 @@
+Sun Aug 10 13:32:42 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* Kokyu/DSRT_Direct_Dispatcher_Impl_T.{h,cpp}: Moved the method
+	  definition of MoreEligible::operator() to the header file to get
+	  rid of MSV compiler errors. I suspect that the nested class
+	  MoreEligible could be causing the problem.
+
+	* Kokyu/DSRT_Sched_Queue_T.{h,cpp}: Moved the method
+	  definition of Guid_Hash::operator() to the header file to get
+	  rid of MSV compiler errors. I suspect that the nested class
+	  could be causing the problem.
+
+	* Kokyu/Kokyu_dsrt.{h,cpp}: Corrected a typo and included
+	  Kokyu_dsrt.i instead of Kokyu.i. Removed Kokyu_Export
+	  qualification for template classes.
+
+	* Kokyu/Kokyu_defs.h: Added export qualification for noncopyable
+	  class.
+
 Sun Aug 10 09:52:17 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* Kokyu/tests/DSRT_MIF/MIF.dsp:

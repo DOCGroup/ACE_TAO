@@ -25,6 +25,10 @@ ACE_RCSID(Kokyu,
 
 namespace Kokyu
 {
+/*
+//@@VS: This is somehow not being recognized by MSVC, which results
+//in a link error. For now, the definition has been moved to the .h
+//file. Needs further investigation.
 
 template <class DSRT_Scheduler_Traits,
           class More_Eligible_Comparator,
@@ -38,7 +42,7 @@ Guid_Hash::operator () (const Guid_t& id)
   typename DSRT_Scheduler_Traits::Guid_Hash guid_hash;
   return guid_hash(id);
 }
-
+*/
 template <class DSRT_Scheduler_Traits,
           class More_Eligible_Comparator,
           class ACE_LOCK>

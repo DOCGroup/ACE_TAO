@@ -48,7 +48,7 @@ namespace Kokyu
    * dynamic scheduling of threads.
    */
   template <class DSRT_Scheduler_Traits>
-  class Kokyu_Export DSRT_Dispatcher : private non_copyable
+  class DSRT_Dispatcher : private non_copyable
   {
   public:
     typedef typename DSRT_Scheduler_Traits::Guid_t Guid_t;
@@ -99,7 +99,7 @@ namespace Kokyu
    */
 
   template <class DSRT_Scheduler_Traits>
-  class Kokyu_Export DSRT_Dispatcher_Factory : private non_copyable
+  class DSRT_Dispatcher_Factory : private non_copyable
     {
     public:
       typedef auto_ptr<DSRT_Dispatcher<DSRT_Scheduler_Traits> > DSRT_Dispatcher_Auto_Ptr;
@@ -123,14 +123,14 @@ namespace Kokyu
    * reordering strategy.
    *
    */
-  template <class QoSDescriptor>
+  template <class QoSDesc>
   class MIF_Comparator
   {
   public:
-    typedef typename QoSDescriptor::Importance_t Importance_t;
+    typedef typename QoSDesc::Importance_t Importance_t;
 
-    int operator ()(const QoSDescriptor& qos1,
-		    const QoSDescriptor& qos2);
+    int operator ()(const QoSDesc& qos1,
+		    const QoSDesc& qos2);
   };
 
   /**
@@ -140,14 +140,14 @@ namespace Kokyu
    * strategy.
    *
    */
-  template <class QoSDescriptor>
+  template <class QoSDesc>
   class Fixed_Priority_Comparator
   {
   public:
-    typedef typename QoSDescriptor::Priority_t Priority_t;
+    typedef typename QoSDesc::Priority_t Priority_t;
 
-    int operator ()(const QoSDescriptor& qos1,
-		    const QoSDescriptor& qos2);
+    int operator ()(const QoSDesc& qos1,
+		    const QoSDesc& qos2);
   };
 
   /**
@@ -157,15 +157,15 @@ namespace Kokyu
    * reordering strategy.
    *
    */
-  template <class QoSDescriptor>
-  class MUF_Comparator
+  template <class QoSDesc>
+  class Kokyu_Export MUF_Comparator
   {
     public:
-    typedef typename QoSDescriptor::Criticality_t Criticality_t;
-    typedef typename QoSDescriptor::Time_t Time_t;
+    typedef typename QoSDesc::Criticality_t Criticality_t;
+    typedef typename QoSDesc::Time_t Time_t;
 
-    int operator ()(const QoSDescriptor& qos1,
-		    const QoSDescriptor& qos2);
+    int operator ()(const QoSDesc& qos1,
+		    const QoSDesc& qos2);
   };
 
 
