@@ -611,7 +611,7 @@ TAO_POA::activate_object_i (PortableServer::Servant servant,
   // Object Map. The Object Id is returned.
   PortableServer::ObjectId_var user_id;
   if (this->active_object_map ().bind_using_system_id_returning_user_id (servant,
-                                                                         user_id.out ()) == -1)
+                                                                         user_id.out ()) != 0)
     {
       ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
                         0);
@@ -682,7 +682,7 @@ TAO_POA::activate_object_with_id_i (const PortableServer::ObjectId &id,
   // Otherwise, the activate_object_with_id operation enters an
   // association between the specified Object Id and the specified
   // servant in the Active Object Map.
-  if (this->active_object_map ().bind_using_user_id (servant, id) == -1)
+  if (this->active_object_map ().bind_using_user_id (servant, id) != 0)
     {
       ACE_THROW (CORBA::OBJ_ADAPTER ());
     }
@@ -1030,7 +1030,7 @@ TAO_POA::create_reference_i (const char *intf,
   // invoking POA::reference_to_id with the created reference.
   PortableServer::ObjectId_var system_id;
   if (this->active_object_map ().bind_using_system_id_returning_system_id (0,
-                                                                           system_id.out ()) == -1)
+                                                                           system_id.out ()) != 0)
     {
       ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
                         CORBA::Object::_nil ());
@@ -1075,7 +1075,7 @@ TAO_POA::create_reference_with_id_i (const PortableServer::ObjectId &user_id,
   // the applicable policies.
   PortableServer::ObjectId_var system_id;
   if (this->active_object_map ().find_system_id_using_user_id (user_id,
-                                                               system_id.out ()) == -1)
+                                                               system_id.out ()) != 0)
     {
       ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
                         CORBA::Object::_nil ());
@@ -1129,7 +1129,7 @@ TAO_POA::servant_to_id_i (PortableServer::Servant servant,
       // object map.
       PortableServer::ObjectId_var user_id;
       if (this->active_object_map ().bind_using_system_id_returning_user_id (servant,
-                                                                             user_id.out ()) == -1)
+                                                                             user_id.out ()) != 0)
         {
           ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
                             0);
@@ -1197,7 +1197,7 @@ TAO_POA::servant_to_system_id_i (PortableServer::Servant servant,
       // object map.
       PortableServer::ObjectId_var system_id;
       if (this->active_object_map ().bind_using_system_id_returning_system_id (servant,
-                                                                               system_id.out ()) == -1)
+                                                                               system_id.out ()) != 0)
         {
           ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
                             0);
@@ -1306,7 +1306,7 @@ TAO_POA::reference_to_servant (CORBA::Object_ptr reference,
       // Find user id from system id.
       PortableServer::ObjectId user_id;
       if (this->active_object_map ().find_user_id_using_system_id (system_id,
-                                                                   user_id) == -1)
+                                                                   user_id) != 0)
         {
           ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
                             0);
@@ -1435,7 +1435,7 @@ TAO_POA::reference_to_id (CORBA::Object_ptr reference,
   // for this operation to succeed.
   PortableServer::ObjectId_var user_id;
   if (this->active_object_map ().find_user_id_using_system_id (system_id,
-                                                               user_id.out ()) == -1)
+                                                               user_id.out ()) != 0)
     {
       ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
                         0);
@@ -1571,7 +1571,7 @@ TAO_POA::locate_servant_i (const PortableServer::ObjectId &system_id,
       // Find user id from system id.
       PortableServer::ObjectId user_id;
       if (this->active_object_map ().find_user_id_using_system_id (system_id,
-                                                                   user_id) == -1)
+                                                                   user_id) != 0)
         {
           ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
                             TAO_POA::NOT_FOUND);
@@ -1650,7 +1650,7 @@ TAO_POA::locate_servant_i (const char *operation,
                            CORBA::Environment &ACE_TRY_ENV)
 {
   if (this->active_object_map ().find_user_id_using_system_id (system_id,
-                                                               poa_current_impl->object_id_) == -1)
+                                                               poa_current_impl->object_id_) != 0)
     {
       ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
                         0);
