@@ -51,7 +51,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Kokyu_DLL"=..\..\..\Kokyu\Kokyu_DLL.dsp - Package Owner=<4>
+Project: "Kokyu_DLL"=..\..\..\Kokyu\Kokyu.dsp - Package Owner=<4>
 
 Package=<5>
 {{{

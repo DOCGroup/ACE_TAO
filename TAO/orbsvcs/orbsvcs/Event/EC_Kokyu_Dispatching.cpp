@@ -64,14 +64,15 @@ TAO_EC_Kokyu_Dispatching::activate (void)
   }
 
   // Create Kokyu::Dispatcher using factory
-  this->dispatcher_ = Kokyu::Dispatcher_Factory::create_dispatcher(kconfigs);
+  Kokyu::Dispatcher_Auto_Ptr 
+    tmp(Kokyu::Dispatcher_Factory::create_dispatcher(kconfigs));
+  this->dispatcher_ = tmp;
 }
 
 void
 TAO_EC_Kokyu_Dispatching::shutdown (void)
 {
   this->dispatcher_->shutdown();
-  delete dispatcher_;
 }
 
 void
@@ -92,7 +93,7 @@ TAO_EC_Kokyu_Dispatching::push_nocopy (TAO_EC_ProxyPushSupplier* proxy,
                                        TAO_EC_QOS_Info& qos_info
                                        ACE_ENV_ARG_DECL)
 {
-  if (this->dispatcher_ == 0)
+  if (this->dispatcher_.get () == 0)
         this->activate();
 
   // Create Dispatch_Command
