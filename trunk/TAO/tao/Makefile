@@ -35,7 +35,7 @@ PUB_HDRS = \
   Client_Strategy_Factory \
   ORB_Core \
   Wait_Strategy \
-  Request_Mux_Strategy \
+  Transport_Mux_Strategy \
   Reply_Dispatcher
 
 POA_FILES = \
@@ -126,7 +126,7 @@ ORB_CORE_FILES = \
   IOR_LookupTable \
   TAO \
   Wait_Strategy \
-  Request_Mux_Strategy \
+  Transport_Mux_Strategy \
   Reply_Dispatcher
 
 DYNAMIC_ANY_FILES =
@@ -2115,7 +2115,7 @@ realclean:
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/Client_Strategy_Factory.h \
  $(TAO_ROOT)/tao/Wait_Strategy.h \
- $(TAO_ROOT)/tao/Request_Mux_Strategy.h \
+ $(TAO_ROOT)/tao/Transport_Mux_Strategy.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h
 .obj/Connector_Registry.o .obj/Connector_Registry.so .shobj/Connector_Registry.o .shobj/Connector_Registry.so: Connector_Registry.cpp \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -3287,7 +3287,7 @@ realclean:
  $(ACE_ROOT)/ace/Timeprobe.h \
  $(TAO_ROOT)/tao/CDR.h \
  $(TAO_ROOT)/tao/CDR.i \
- $(TAO_ROOT)/tao/Request_Mux_Strategy.h \
+ $(TAO_ROOT)/tao/Transport_Mux_Strategy.h \
  $(TAO_ROOT)/tao/Wait_Strategy.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -4747,7 +4747,7 @@ realclean:
  $(ACE_ROOT)/ace/Timeprobe.h \
  $(TAO_ROOT)/tao/CDR.h \
  $(TAO_ROOT)/tao/CDR.i \
- $(TAO_ROOT)/tao/Request_Mux_Strategy.h \
+ $(TAO_ROOT)/tao/Transport_Mux_Strategy.h \
  $(TAO_ROOT)/tao/Wait_Strategy.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/ORB_Core.h \
@@ -5734,7 +5734,7 @@ realclean:
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  $(TAO_ROOT)/tao/Wait_Strategy.h \
- $(TAO_ROOT)/tao/Request_Mux_Strategy.h
+ $(TAO_ROOT)/tao/Transport_Mux_Strategy.h
 .obj/default_server.o .obj/default_server.so .shobj/default_server.o .shobj/default_server.so: default_server.cpp \
  $(TAO_ROOT)/tao/default_server.h \
  $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
@@ -12969,8 +12969,8 @@ realclean:
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  $(TAO_ROOT)/tao/debug.h
-.obj/Request_Mux_Strategy.o .obj/Request_Mux_Strategy.so .shobj/Request_Mux_Strategy.o .shobj/Request_Mux_Strategy.so: Request_Mux_Strategy.cpp \
- $(TAO_ROOT)/tao/Request_Mux_Strategy.h \
+.obj/Transport_Mux_Strategy.o .obj/Transport_Mux_Strategy.so .shobj/Transport_Mux_Strategy.o .shobj/Transport_Mux_Strategy.so: Transport_Mux_Strategy.cpp \
+ $(TAO_ROOT)/tao/Transport_Mux_Strategy.h \
  $(TAO_ROOT)/tao/GIOP.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \

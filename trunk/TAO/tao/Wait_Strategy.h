@@ -21,7 +21,7 @@
 
 #include "tao/CDR.h"
 
-class TAO_Request_Mux_Strategy;
+class TAO_Transport_Mux_Strategy;
 class TAO_Transport;
 
 class TAO_Export TAO_Wait_Strategy

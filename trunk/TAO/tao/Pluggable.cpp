@@ -9,7 +9,7 @@
 #include "tao/Object_KeyC.h"
 #include "tao/Client_Strategy_Factory.h"
 #include "tao/Wait_Strategy.h"
-#include "tao/Request_Mux_Strategy.h"
+#include "tao/Transport_Mux_Strategy.h"
 #include "tao/Reply_Dispatcher.h"
 #include "tao/debug.h"
 
@@ -204,22 +204,22 @@ TAO_Transport::TAO_Transport (CORBA::ULong tag,
                               TAO_ORB_Core *orb_core)
   : tag_ (tag),
     orb_core_ (orb_core),
-    rms_ (0),
+    tms_ (0),
     ws_ (0)
 {
   // Create WS now.
   this->ws_ = orb_core->client_factory ()->create_wait_strategy (this);
 
-  // Create RMS now.
-  this->rms_ = orb_core->client_factory ()->create_request_mux_strategy ();
+  // Create TMS now.
+  this->tms_ = orb_core->client_factory ()->create_transport_mux_strategy ();
 }
 
 TAO_Transport::~TAO_Transport (void)
 {
   delete this->ws_;
   this->ws_ = 0;
-  delete this->rms_;
-  this->rms_ =0;
+  delete this->tms_;
+  this->tms_ =0;
 }
 
 CORBA::ULong
@@ -228,29 +228,29 @@ TAO_Transport::tag (void) const
   return this->tag_;
 }
 
-// @@ Alex: this stream stuff belongs to the RMS, right?
+// @@ Alex: this stream stuff belongs to the TMS, right?
 //    Maybe the right interface is:
 //    TAO_Transport::bind_reply_dispatcher (request_id,
 //                                          reply_dispatcher,
 //                                          input_cdr);
 
 // @@ Do you need an accessor? Or is the CDR stream simply passed by
-//    the RMS to the right target.  We should go to the RMS and obtain
+//    the TMS to the right target.  We should go to the TMS and obtain
 //    the CDR stream from it, that way we can implement an optimized
-//    version of the RMS that uses a single CDR stream allocated from
+//    version of the TMS that uses a single CDR stream allocated from
 //    the stack.
 
 // Get the CDR stream for reading the input message.
 TAO_InputCDR *
 TAO_Transport::input_cdr_stream (void) const
 {
-  return this->rms_->get_cdr_stream ();
+  return this->tms_->get_cdr_stream ();
 }
 
 void
 TAO_Transport::destroy_cdr_stream (TAO_InputCDR *cdr) const
 {
-  this->rms_->destroy_cdr_stream (cdr);
+  this->tms_->destroy_cdr_stream (cdr);
 }
 
 // Get it.
@@ -260,10 +260,10 @@ TAO_Transport::orb_core (void) const
   return this->orb_core_;
 }
 
-TAO_Request_Mux_Strategy *
-TAO_Transport::rms (void) const
+TAO_Transport_Mux_Strategy *
+TAO_Transport::tms (void) const
 {
-  return rms_;
+  return tms_;
 }
 
 // Return the Wait strategy used by the Transport.
@@ -273,19 +273,19 @@ TAO_Transport::wait_strategy (void) const
   return this->ws_;
 }
 
-// Get request id for the current invocation from the RMS object.
+// Get request id for the current invocation from the TMS object.
 CORBA::ULong
 TAO_Transport::request_id (void)
 {
-  return this->rms ()->request_id ();
+  return this->tms ()->request_id ();
 }
 
-// Bind the reply dispatcher with the RMS object.
+// Bind the reply dispatcher with the TMS object.
 int
 TAO_Transport::bind_reply_dispatcher (CORBA::ULong request_id,
                                       TAO_Reply_Dispatcher *rd)
 {
-  return this->rms_->bind_dispatcher (request_id,
+  return this->tms_->bind_dispatcher (request_id,
                                       rd);
 }
 

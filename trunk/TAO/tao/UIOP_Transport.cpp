@@ -7,7 +7,7 @@
 #include "tao/UIOP_Connect.h"
 #include "tao/Timeprobe.h"
 #include "tao/CDR.h"
-#include "tao/Request_Mux_Strategy.h"
+#include "tao/Transport_Mux_Strategy.h"
 #include "tao/Wait_Strategy.h"
 #include "tao/Reply_Dispatcher.h"
 #include "tao/ORB_Core.h"
@@ -167,7 +167,7 @@ TAO_UIOP_Client_Transport::handle_client_input (int block)
   //    removed.
   //    Do I make any sense?
 
-  TAO_InputCDR* cdr = this->rms_->get_cdr_stream ();
+  TAO_InputCDR* cdr = this->tms_->get_cdr_stream ();
   ACE_Message_Block* payload =
     ACE_const_cast(ACE_Message_Block*, cdr->start ());
 
@@ -212,7 +212,7 @@ TAO_UIOP_Client_Transport::handle_client_input (int block)
       return -1;
     }
 
-  if (this->rms_->dispatch_reply (request_id,
+  if (this->tms_->dispatch_reply (request_id,
                                   reply_status,
                                   header_copy.giop_version,
                                   reply_ctx,
