@@ -1,4 +1,3 @@
-
 eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
     & eval 'exec perl -S $0 $argv:q'
     if 0;
@@ -10,6 +9,15 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 
 unshift @INC, '../bin';
 require ACEutils;
+
+if ($^O ne "MSWin32") {
+  #### On platforms other than Windows, use run_tests.sh because
+  #### it knows about the various test peculiarities.
+
+  (my $scriptname = $0) =~ s/run_test.pl/run_tests.sh/;
+  exec "$scriptname";
+  die "$0: unable to exec $scriptname\n";
+}
 
 use Cwd;
 use English;
@@ -54,7 +62,7 @@ if (!($tmp = $ENV{TMP})) {
 sub read_run_test_list ()
 {
     my $line;
-    open (LIST, "<run_test.lst") 
+    open (LIST, "<run_test.lst")
         || die "Cannot open run_test.lst";
 
     while (<LIST>) {
@@ -68,7 +76,7 @@ sub read_run_test_list ()
             $program =~ s/\s*//g;  #remove any extra whitepace
             push @tests, $program;
         }
-    }   
+    }
 
     close (LIST);
 }
@@ -119,21 +127,21 @@ sub check_log ($)
         } else {
             my $starting_matched = 0;
             my $ending_matched = 0;
-            
+
             while (<LOG>) {
                 chomp;
-                
+
                 if (m/Starting/) {
                     $starting_matched = 1;
                 }
-                
+
                 if (m/Ending/) {
                     $ending_matched = 1;
                 }
-                
+
                 if (/LM\_ERROR\@(.*)$/) {
                     print STDERR "Error: ($log): $1\n";
-                } 
+                }
             }
 
             close (LOG); # ignore errors
@@ -141,11 +149,11 @@ sub check_log ($)
             if ($starting_matched == 0) {
                 print STDERR "Error ($log): no line with 'starting'\n";
             }
-            
+
             if ($ending_matched == 0) {
                 print STDERR "Error ($log): no line with 'Ending'\n";
             }
-      
+
         }
     }
 }
@@ -179,7 +187,7 @@ sub delete_temp_files ()
 
 if (!$opt_t) {
     read_run_test_list ();
-} 
+}
 else {
     @tests = @ARGV;
 }
@@ -191,4 +199,3 @@ foreach $test (@tests) {
 delete_temp_files ();
 
 exit ();
-
