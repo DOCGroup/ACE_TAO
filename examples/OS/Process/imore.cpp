@@ -92,12 +92,14 @@ setup_named_pipes (ACE_Process_Options &opt)
   // Create a unique temporary name for named pipe.
   char *rendezvous = ACE_OS::tempnam (rendezvous_dir,
                                       rendezvous_pfx);
-  if (rendezvous == NULL)       // out of memory?
+
+  // Out of memory?
+  if (rendezvous == NULL)       
     return -1;
 
-  // Alright, this is indeed strange.  Named pipes are meant to
-  // be used for unrelated processes.  Because of the constraints
-  // in ACE_Process, I have to pre-open the named pipes here.
+  // Alright, this is indeed strange.  Named pipes are meant to be
+  // used for unrelated processes.  Because of the constraints in
+  // ACE_Process, I have to pre-open the named pipes here.
   ACE_FIFO_Recv rfifo;          // read end fifo.
   ACE_FIFO_Send wfifo;          // write end fifo.
 
