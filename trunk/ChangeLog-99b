@@ -1,3 +1,16 @@
+Sat Jan 23 23:53:29 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* websvcs/Makefile: 
+	* websvcs/lib/Makefile: 
+	* websvcs/lib/URL_Addr.h: 
+	* websvcs/lib/URL_Addr.i: 
+	* websvcs/lib/URL_Addr.cpp: 
+	* websvcs/tests/Makefile: 
+	* websvcs/tests/Test_URL_Addr.cpp: 
+	  Added a small library to keep basic Web related wrappers. The
+	  first set is a small collection of URL address classes,
+	  including HTTP and FTP representations.
+
 Sat Jan 23 23:26:17 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/High_Res_Timer.{h,cpp} (elapsed_time_incr): Added a new
