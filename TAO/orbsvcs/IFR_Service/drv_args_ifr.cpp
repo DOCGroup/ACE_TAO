@@ -7,9 +7,10 @@
 #include "be_extern.h"
 #include "ace/Process.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_unistd.h"
 
-ACE_RCSID (IFR_Service, 
-           drv_args_ifr, 
+ACE_RCSID (IFR_Service,
+           drv_args_ifr,
            "$Id$")
 
 extern long DRV_nfiles;
@@ -155,13 +156,13 @@ DRV_parse_args (int ac, char *av[])
                       idl_global->append_idl_flag (av[i+1]);
 
                       ACE_NEW (buffer,
-                               char[ACE_OS::strlen (av[i]) 
-                                    + ACE_OS::strlen (av[i + 1]) 
+                               char[ACE_OS::strlen (av[i])
+                                    + ACE_OS::strlen (av[i + 1])
                                     + 2]);
 
-                      ACE_OS::sprintf (buffer, 
-                                       "%s%s", 
-                                       av[i], 
+                      ACE_OS::sprintf (buffer,
+                                       "%s%s",
+                                       av[i],
                                        av[i+1]);
 
                       DRV_cpp_putarg (buffer);
@@ -185,7 +186,7 @@ DRV_parse_args (int ac, char *av[])
                 }
               break;
             case 'E':
-              idl_global->set_compile_flags (idl_global->compile_flags () 
+              idl_global->set_compile_flags (idl_global->compile_flags ()
                                              | IDL_CF_ONLY_PREPROC);
               break;
             case 'L':

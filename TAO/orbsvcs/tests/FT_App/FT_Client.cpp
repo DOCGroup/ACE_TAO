@@ -6,6 +6,7 @@
 #include <ace/Get_Opt.h>
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
+#include "ace/OS_NS_unistd.h"
 
 class FTClientMain
 {

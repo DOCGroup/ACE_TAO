@@ -3,7 +3,7 @@
 #include "orbsvcs/CosLoadBalancingC.h"
 #include "orbsvcs/PortableGroup/PG_Operators.h"
 #include "ace/Get_Opt.h"
-
+#include "ace/OS_NS_unistd.h"
 
 ACE_RCSID (CPU,
 	   client,

@@ -1,5 +1,6 @@
 // $Id$
 
+#include "ace/OS_NS_unistd.h"
 #include "Notify_Structured_Push_Consumer.h"
 #include "orbsvcs/orbsvcs/TimeBaseC.h"
 #include "common.h"

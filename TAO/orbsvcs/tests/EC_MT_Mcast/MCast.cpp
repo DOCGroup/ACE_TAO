@@ -13,6 +13,7 @@
 #include "orbsvcs/orbsvcs/Event/ECG_UDP_Out_Endpoint.h"
 #include "tao/ORB_Core.h"
 #include "ace/Get_Opt.h"
+#include "ace/OS_NS_unistd.h"
 
 ACE_RCSID (EC_MT_Mcast,
            MCast,
@@ -182,7 +183,7 @@ main (int argc, char* argv[])
       TAO_ECG_UDP_Out_Endpoint* endpointptr = 0;
 
       ACE_NEW_RETURN (endpointptr, TAO_ECG_UDP_Out_Endpoint, 0);
-      
+
       TAO_ECG_Refcounted_Endpoint endpoint (endpointptr);
       if (endpoint->dgram ().open (ACE_Addr::sap_any) == -1)
         {

@@ -5,6 +5,7 @@
 // ******************************************************************
 
 #include "ace/Get_Opt.h"
+#include "ace/OS_NS_unistd.h"
 
 #include "tao/ORB_Core.h"
 

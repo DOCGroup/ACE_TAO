@@ -7,9 +7,10 @@
 #include "orbsvcs/orbsvcs/Time_Utilities.h"
 #include "ace/Arg_Shifter.h"
 #include "ace/OS_NS_strings.h"
+#include "ace/OS_NS_unistd.h"
 
-ACE_RCSID (EC_Tests, 
-           Random, 
+ACE_RCSID (EC_Tests,
+           Random,
            "$Id$")
 
 int
