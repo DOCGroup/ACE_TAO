@@ -1,39 +1,6 @@
 // $Id$
 
-#include "ace/Get_Opt.h"
 #include "RepositoryManager_Impl.h"
-#include "ace/Auto_Ptr.h"
-#include "ace/Log_Msg.h"
-#include "ace/OS_main.h"
-#include "tao/Exception.h"
-#include "CIAO/DnC/Config_Handlers/XercesString.h"
-#include <xercesc/util/XMLUniDefs.hpp>
-#include "CIAO/DnC/Config_Handlers/Config_Handler_export.h"
-#include "CIAO/DnC/Config_Handlers/Domain_Handler.h"
-#include "CIAO/DnC/Config_Handlers/PC_Handler.h"
-#include "CIAO/DnC/Config_Handlers/Plan_Handler.h"
-#include "CIAO/DnC/Config_Handlers/DnC_Dump.h"
-#include "CIAO/DnC/Config_Handlers/Config_Error_Handler.h"
-
-using Config_Handler::XStr;
-using xercesc::XMLUni;
-using xercesc::XMLString;
-using xercesc::XMLException;
-using xercesc::DOMException;
-using xercesc::DOMBuilder;
-using xercesc::DOMImplementationRegistry;
-using xercesc::DOMImplementationLS;
-using xercesc::DOMImplementation;
-using xercesc::DOMAttr;
-using xercesc::DOMNamedNodeMap;
-using xercesc::DOMLocator;
-using xercesc::DOMError;
-using xercesc::DOMNodeList;
-using xercesc::DOMDocument;
-using xercesc::DOMDocumentTraversal;
-using xercesc::DOMNodeIterator;
-using xercesc::DOMNode;
-using xercesc::DOMNodeFilter;
 
 static void
 usage (const ACE_TCHAR* program)
@@ -48,7 +15,6 @@ int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_TCHAR* url = 0;
-
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("u:"));
   int c;
 
@@ -74,136 +40,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   //
   CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, "");
 
-  // Initialize the Xerces run-time
   try
     {
-      xercesc::XMLPlatformUtils::Initialize();
-    }
-
-  catch (const XMLException& e)
-    {
-      char* message = XMLString::transcode (e.getMessage());
-      ACE_Auto_Basic_Array_Ptr<char> cleanup_message (message);
-      ACE_DEBUG ((LM_DEBUG, "Error during initialization : %s\n", message));
-      return 1;
-    }
-
-  try
-    {
-
-      // Instantiate the DOM parser.
-      static const XMLCh gLS[] = { xercesc::chLatin_L,
-                                   xercesc::chLatin_S,
-                                   xercesc::chNull };
-
-      // Get an implementation of the Load-Store (LS) interface
-      DOMImplementation* impl
-        = DOMImplementationRegistry::getDOMImplementation(gLS);
-
-      // Create a DOMBuilder
-      DOMBuilder* parser =
-        ((DOMImplementationLS*)impl)->createDOMBuilder(DOMImplementationLS::MODE_SYNCHRONOUS, 0);
-
-      // Discard comment nodes in the document
-      parser->setFeature (XMLUni::fgDOMComments, false);
-
-      // Disable datatype normalization. The XML 1.0 attribute value
-      // normalization always occurs though.
-      parser->setFeature (XMLUni::fgDOMDatatypeNormalization, true);
-
-      // Do not create EntityReference nodes in the DOM tree. No
-      // EntityReference nodes will be created, only the nodes
-      // corresponding to their fully expanded sustitution text will be
-      // created.
-      parser->setFeature (XMLUni::fgDOMEntities, false);
-
-      // Perform Namespace processing.
-      parser->setFeature (XMLUni::fgDOMNamespaces, true);
-
-      // Perform Validation
-      parser->setFeature (XMLUni::fgDOMValidation, true);
-
-      // Do not include ignorable whitespace in the DOM tree.
-      parser->setFeature (XMLUni::fgDOMWhitespaceInElementContent, false);
-
-      // Enable the parser's schema support.
-      parser->setFeature (XMLUni::fgXercesSchema, true);
-
-      // Enable full schema constraint checking, including checking which
-      // may be time-consuming or memory intensive. Currently, particle
-      // unique attribution constraint checking and particle derivation
-      // restriction checking are controlled by this option.
-      parser->setFeature (XMLUni::fgXercesSchemaFullChecking, true);
-
-      // The parser will treat validation error as fatal and will exit.
-      parser->setFeature (XMLUni::fgXercesValidationErrorAsFatal, true);
-
-      CIAO::Config_Handler::Config_Error_Handler handler;
-      parser->setErrorHandler(&handler);
-
-      DOMDocument* doc = parser->parseURI(url);
-
-      if (handler.getErrors())
-        {
-          return 1;
-        }
-
-      /* 
-      CIAO::Config_Handler::Domain_Handler domain_handler (doc,
-                                                           DOMNodeFilter::SHOW_ELEMENT |
-                                                           DOMNodeFilter::SHOW_TEXT);
-
-      Deployment::Domain domain;
-      domain_handler.process_domain(domain);
-      Deployment::DnC_Dump::dump (domain);
-      
-
-      Deployment::PackageConfiguration pc;
-      CIAO::Config_Handler::PC_Handler pc_handler (doc,
-                                                  DOMNodeFilter::SHOW_ELEMENT |
-                                                  DOMNodeFilter::SHOW_TEXT);
-
-      pc_handler.process_PackageConfiguration (pc);
-      */
-      Deployment::DeploymentPlan plan;
-      CIAO::Config_Handler::Plan_Handler plan_handler (doc,
-                                               DOMNodeFilter::SHOW_ELEMENT |
-                                               DOMNodeFilter::SHOW_TEXT);
-
-      plan_handler.process_plan (plan);
-      Deployment::DnC_Dump::dump (plan);
-
-      /*
-      CIAO::RepositoryManager_Impl test_servant;
-      test_servant.installPackage ("DnC", url);
-      */
-
-      //domain_handler.dump(domain);
-      
-
-      // parser->release ();
-    }
-  catch (const DOMException& e)
-    {
-      const unsigned int maxChars = 2047;
-      XMLCh errText[maxChars + 1];
-
-      ACE_ERROR ((LM_ERROR, "\nException occured while parsing %s: \n", url));
-      ACE_ERROR ((LM_ERROR, "DOMException code: %d\n ", e.code));
-      if (DOMImplementation::loadDOMExceptionMsg(e.code, errText, maxChars))
-        {
-          char* message = XMLString::transcode (errText);
-          ACE_Auto_Basic_Array_Ptr<char> cleanup_message (message);
-          ACE_ERROR ((LM_ERROR, "Message is: %s\n", message));
-        }
-      return 1;
-    }
-  catch (const XMLException& e)
-    {
-      char* message = XMLString::transcode (e.getMessage());
-      ACE_Auto_Basic_Array_Ptr<char> cleanup_message (message);
-      ACE_ERROR ((LM_ERROR, "\nException occured: %s\n ", message));
-      return 1;
+      CIAO::RepositoryManager_Impl rep_impl;
+      rep_impl.installPackage ("PC", url);
     }
   catch (CORBA::Exception& ex)
     {
@@ -216,6 +56,5 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       return 1;
     }
 
-  xercesc::XMLPlatformUtils::Terminate();
   return 0;
 }

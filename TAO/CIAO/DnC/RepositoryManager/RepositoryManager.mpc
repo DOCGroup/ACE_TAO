@@ -4,6 +4,7 @@
 project(Repository_Manager): ciao_deployment_svnt, ciao_deployment_stub, taoexe {
   requires += dnc
   exename = rep
+  after += Config_Handlers
   macros   += XML_USE_PTHREADS
   includes += /usr/include $(XERCESCROOT)/include
   libpaths += /usr/lib $(XERCESCROOT)/lib
