@@ -62,11 +62,11 @@ FTRT_ClientORB_Interceptor::send_request (
     TAO_OutputCDR cdr;
 
     if ((cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER)) ==0)
-      ACE_THROW (CORBA::MARSHAL ());
+      return;
 
     // Add Transaction Depth Context
     if ((cdr << transaction_depth_) == 0)
-      ACE_THROW (CORBA::MARSHAL ());
+      return;
     sc.context_id = FTRT::FT_TRANSACTION_DEPTH;
 
     ACE_Message_Block mb;
@@ -74,7 +74,7 @@ FTRT_ClientORB_Interceptor::send_request (
     sc.context_data.replace(mb.length(), &mb);
 
     ri->add_request_service_context (sc, 0 ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
+    ACE_TRY_CHECK;
   }
   ACE_CATCHANY
   {
