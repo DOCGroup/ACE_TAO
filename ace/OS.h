@@ -29,7 +29,7 @@
 # if defined (ACE_HAS_PHARLAP_RT)
 #define ACE_IPPROTO_TCP SOL_SOCKET
 # else
-#define ACE_IPPROTO_TCP IPPROTO_TCP;
+#define ACE_IPPROTO_TCP IPPROTO_TCP
 # endif /* ACE_HAS_PHARLAP_RT */
 
 #if !defined (ACE_MALLOC_ALIGN)
