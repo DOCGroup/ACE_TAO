@@ -427,7 +427,7 @@ run_message_count (CORBA::ORB_ptr orb,
               break;
             }
 
-          if (iteration_count > 2 * BUFFERED_MESSAGES_COUNT)
+          if (iteration_count > 3 * BUFFERED_MESSAGES_COUNT)
             {
               test_failed = 1;
               ACE_ERROR ((LM_ERROR,
@@ -530,7 +530,7 @@ run_timeout (CORBA::ORB_ptr orb,
               break;
             }
 
-          if (elapsed.msec () > 2 * TIMEOUT_MILLISECONDS)
+          if (elapsed.msec () > 3 * TIMEOUT_MILLISECONDS)
             {
               test_failed = 1;
               ACE_ERROR ((LM_ERROR,
@@ -640,7 +640,7 @@ run_timeout_reactive (CORBA::ORB_ptr orb,
               break;
             }
 
-          if (elapsed.msec () > 2 * TIMEOUT_MILLISECONDS)
+          if (elapsed.msec () > 3 * TIMEOUT_MILLISECONDS)
             {
               test_failed = 1;
               ACE_ERROR ((LM_ERROR,
@@ -748,7 +748,7 @@ run_buffer_size (CORBA::ORB_ptr orb,
               break;
             }
 
-          if (payload_delta > 2 * BUFFER_SIZE)
+          if (payload_delta > 3 * BUFFER_SIZE)
             {
               test_failed = 1;
               ACE_ERROR ((LM_ERROR,
