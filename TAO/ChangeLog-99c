@@ -1,3 +1,12 @@
+Tue Jun 15 16:18:12 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/decode.cpp:
+	  Put back a couple of lines that got cut out accidently in
+	  TAO_Marshal_Sequence::decode(). Thanks to Carlos for
+	  reporting the Param_Test DII error and to Nanbor for
+	  his help in navigating through the extensive change he
+	  recently made to this file.
+
 Tue Jun 15 15:08:12 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* TAO-INSTALL.html:
