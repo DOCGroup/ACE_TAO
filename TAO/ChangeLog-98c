@@ -1,3 +1,15 @@
+Sat Nov 21 02:29:00 1998 Marina Spivak  <marina@cs.wustl.edu>
+
+	* TAO/orbsvcs/tests/Simple_Naming/run-test.pl:  modified the
+	script to also run the newly added multithreaded test.
+
+	* TAO/orbsvcs/tests/Simple_Naming/process-m-output.pl:  added perl
+	script to analyze the output of the multithreaded test and print a
+	diagnostic message.
+
+	* TAO/orbsvcs/tests/Simple_Naming/README: updated file to include
+	new test description.
+
 Fri Nov 20 19:07:44 1998  Marina Spivak  <marina@cs.wustl.edu>
 
 	* TAO/orbsvcs/tests/Simple_Naming/client.{h,cpp}: added two new
