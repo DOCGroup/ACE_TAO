@@ -1,5 +1,5 @@
 #----------------------------------------------------------------------------
-#	%W%	%G%
+#	$Id$
 #
 #	Makefile for the ACE Adapter Web Server (JAWS) client
 #----------------------------------------------------------------------------
@@ -16,8 +16,8 @@ FILES  	= \
 	stats \
 	cp
 
-LSRC	= $(addsuffix .cpp,$(FILES))
-LOBJ	= $(addsuffix .o,$(FILES))
+SRC	= $(addsuffix .cpp,$(FILES))
+OBJ	= $(addsuffix .o,$(FILES))
 SHOBJ	= $(addsuffix .so,$(FILES))
 
 INCLDIRS += -I../..
