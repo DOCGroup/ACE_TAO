@@ -1,0 +1,19 @@
+Thu Sep 02 15:01:21 2004  Jules White  <jules@dre.vanderbilt.edu>
+                                                                                
+        * Config_Handlers/ANY_Handler.h:
+        * Config_Handlers/ANY_Handler.cpp:
+        * Config_Handlers/CID_Handler.h:
+        * Config_Handlers/CID_Handler.cpp:
+        * Config_Handlers/ComponentPropertyDescription_Handler.h:
+        * Config_Handlers/ComponentPropertyDescription_Handler.cpp:
+        * Config_Handlers/CPD_Handler.h:
+        * Config_Handlers/CPD_Handler.cpp:
+        * Config_Handlers/DataType_Handler.h:
+        * Config_Handlers/DataType_Handler.cpp:
+        * Config_Handlers/Prop_Handler.h:
+        * Config_Handlers/Prop_Handler.cpp:
+        
+          Created classes to copy the values from XSC objects
+          into their corresponding IDL types.
+                                                                                
+
