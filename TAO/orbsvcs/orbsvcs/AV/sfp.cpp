@@ -86,9 +86,6 @@ SFP_Encoder::encode_start_message ()
                        " start message into ACE_Message_Block"),
                       0);
 
-  message->length (encoder_->length ());
-  cerr << message->length ();
-  
   return message;
   
 }
@@ -178,8 +175,15 @@ SFP_Decoder::decode_start_message (ACE_Message_Block *message)
 
   TAO_TRY
     {
-      decoder_->setup_encapsulation (message->rd_ptr (),
-                                     message->length ());
+      //      decoder_->setup_encapsulation (message->rd_ptr (),
+      //                                     message->length ());
+      decoder_->grow (message->length ());
+
+      char *bufptr = decoder_->buffer ();
+
+      ACE_OS::memcpy (bufptr, 
+                      message->rd_ptr (), 
+                      message->length ());
 
       decoder_->decode (SFP::_tc_start_message,
 			&start,
