@@ -29,7 +29,6 @@
 
 
 // Forward declarations
-ACE_stat;
 class Content_Iterator_i;
 
 class Iterator_Factory_i : virtual public POA_Web_Server::Iterator_Factory
