@@ -397,6 +397,7 @@ ECB_Supplier::send_event (RtecEventComm::EventSet& events,
 void
 ECB_Supplier::disconnect_push_supplier (CORBA::Environment& _env)
 {
+  ACE_UNUSED_ARG (_env);
   // this->supplier_proxy_->disconnect_push_supplier (_env);
 }
 
@@ -416,6 +417,8 @@ ECB_SupplierID_Test::run (CORBA::ORB_ptr orb,
                           RtecScheduler::Scheduler_ptr scheduler,
                           CORBA::Environment& _env)
 {
+  ACE_UNUSED_ARG (orb);
+
   int i;
 
   for (i = 0; i < ECB_SupplierID_Test::PHASE_END; ++i)
@@ -686,6 +689,9 @@ ECB_SupplierID_Test::push (int consumer_id,
                            const RtecEventComm::EventSet& events,
                            CORBA::Environment &_env)
 {
+  ACE_UNUSED_ARG (events);
+  ACE_UNUSED_ARG (_env);
+
   switch (this->phase_)
     {
     case ECB_SupplierID_Test::PHASE_END:
@@ -746,6 +752,8 @@ ECB_Correlation_Test::run (CORBA::ORB_ptr orb,
                            RtecScheduler::Scheduler_ptr scheduler,
                            CORBA::Environment& _env)
 {
+  ACE_UNUSED_ARG (orb);
+
   int i;
 
   for (i = 0; i < ECB_Correlation_Test::PHASE_END; ++i)
@@ -1095,6 +1103,9 @@ ECB_Correlation_Test::push (int consumer_id,
                             const RtecEventComm::EventSet& events,
                             CORBA::Environment &_env)
 {
+  ACE_UNUSED_ARG (consumer_id);
+  ACE_UNUSED_ARG (_env);
+
   if (events.length () != 2)
     {
       ACE_ERROR ((LM_ERROR,
