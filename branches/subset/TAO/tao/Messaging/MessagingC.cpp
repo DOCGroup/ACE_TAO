@@ -355,7 +355,7 @@ Messaging::ExceptionHolder::_downcast (CORBA::ValueBase *v)
       return 0;
     }
   
-  return (ExceptionHolder *) v->_tao_obv_narrow ((ptr_arith_t) &_downcast);
+  return (ExceptionHolder *) v->_tao_obv_narrow ((ptrdiff_t) &_downcast);
 }
 
 const char *
@@ -366,12 +366,12 @@ Messaging::ExceptionHolder::_tao_obv_repository_id (void) const
 
 void *
 #if defined (_MSC_VER)
-Messaging::ExceptionHolder::Messaging_ExceptionHolder_tao_obv_narrow (ptr_arith_t type_id)
+Messaging::ExceptionHolder::Messaging_ExceptionHolder_tao_obv_narrow (ptrdiff_t type_id)
 #else
-Messaging::ExceptionHolder::_tao_obv_narrow (ptr_arith_t type_id)
+Messaging::ExceptionHolder::_tao_obv_narrow (ptrdiff_t type_id)
 #endif /* _MSC_VER */
 {
-  if (type_id == (ptr_arith_t) &_downcast)
+  if (type_id == (ptrdiff_t) &_downcast)
     {
       return this;
     }
@@ -383,7 +383,7 @@ Messaging::ExceptionHolder::_tao_obv_narrow (ptr_arith_t type_id)
 
 #if defined (_MSC_VER)
 void *
-Messaging::ExceptionHolder::_tao_obv_narrow (ptr_arith_t type_id)
+Messaging::ExceptionHolder::_tao_obv_narrow (ptrdiff_t type_id)
 {
   return this->Messaging_ExceptionHolder_tao_obv_narrow (type_id);
 }
@@ -920,7 +920,7 @@ Messaging::ReplyHandler::_unchecked_narrow (
           ReplyHandler_ptr,
           obj->_tao_QueryInterface (
               ACE_reinterpret_cast (
-                  ptr_arith_t,
+                  ptrdiff_t,
                   &ReplyHandler::_tao_class_id
                 )
             )
@@ -966,19 +966,19 @@ Messaging::ReplyHandler::_is_a (
     }
 }
 
-void *Messaging::ReplyHandler::_tao_QueryInterface (ptr_arith_t type)
+void *Messaging::ReplyHandler::_tao_QueryInterface (ptrdiff_t type)
 {
   void *retv = 0;
   
   if (type == ACE_reinterpret_cast (
-              ptr_arith_t,
+              ptrdiff_t,
               &ACE_NESTED_CLASS (::Messaging, ReplyHandler)::_tao_class_id)
             )
     {
       retv = ACE_reinterpret_cast (void*, this);
     }
   else if (type == ACE_reinterpret_cast (
-               ptr_arith_t,
+               ptrdiff_t,
                &CORBA::Object::_tao_class_id)
              )
     {
@@ -1265,7 +1265,7 @@ operator<< (
             Messaging::ExceptionHolder *,
             _tao_valuetype
           ),
-        (ptr_arith_t) &Messaging::ExceptionHolder::_downcast
+        (ptrdiff_t) &Messaging::ExceptionHolder::_downcast
       );
 }
 

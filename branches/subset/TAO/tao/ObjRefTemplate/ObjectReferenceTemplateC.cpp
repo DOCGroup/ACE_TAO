@@ -27,7 +27,7 @@
 #include "tao/Stub.h"
 #include "tao/Invocation.h"
 #include "tao/PortableInterceptor.h"
-#include "tao/ValueFactory.h"
+#include "tao/Valuetype/ValueFactory.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
 #include "tao/RequestInfo_Util.h"
@@ -310,7 +310,7 @@ PortableInterceptor::ObjectReferenceFactory::_downcast (CORBA::ValueBase *v)
       return 0;
     }
   
-  return (ObjectReferenceFactory *) v->_tao_obv_narrow ((ptr_arith_t) &_downcast);
+  return (ObjectReferenceFactory *) v->_tao_obv_narrow ((ptrdiff_t) &_downcast);
 }
 
 const char *
@@ -321,12 +321,12 @@ PortableInterceptor::ObjectReferenceFactory::_tao_obv_repository_id (void) const
 
 void *
 #if defined (_MSC_VER)
-PortableInterceptor::ObjectReferenceFactory::PortableInterceptor_ObjectReferenceFactory_tao_obv_narrow (ptr_arith_t type_id)
+PortableInterceptor::ObjectReferenceFactory::PortableInterceptor_ObjectReferenceFactory_tao_obv_narrow (ptrdiff_t type_id)
 #else
-PortableInterceptor::ObjectReferenceFactory::_tao_obv_narrow (ptr_arith_t type_id)
+PortableInterceptor::ObjectReferenceFactory::_tao_obv_narrow (ptrdiff_t type_id)
 #endif /* _MSC_VER */
 {
-  if (type_id == (ptr_arith_t) &_downcast)
+  if (type_id == (ptrdiff_t) &_downcast)
     {
       return this;
     }
@@ -338,7 +338,7 @@ PortableInterceptor::ObjectReferenceFactory::_tao_obv_narrow (ptr_arith_t type_i
 
 #if defined (_MSC_VER)
 void *
-PortableInterceptor::ObjectReferenceFactory::_tao_obv_narrow (ptr_arith_t type_id)
+PortableInterceptor::ObjectReferenceFactory::_tao_obv_narrow (ptrdiff_t type_id)
 {
   return this->PortableInterceptor_ObjectReferenceFactory_tao_obv_narrow (type_id);
 }
@@ -665,7 +665,7 @@ PortableInterceptor::ObjectReferenceTemplate::_downcast (CORBA::ValueBase *v)
       return 0;
     }
   
-  return (ObjectReferenceTemplate *) v->_tao_obv_narrow ((ptr_arith_t) &_downcast);
+  return (ObjectReferenceTemplate *) v->_tao_obv_narrow ((ptrdiff_t) &_downcast);
 }
 
 const char *
@@ -676,12 +676,12 @@ PortableInterceptor::ObjectReferenceTemplate::_tao_obv_repository_id (void) cons
 
 void *
 #if defined (_MSC_VER)
-PortableInterceptor::ObjectReferenceTemplate::PortableInterceptor_ObjectReferenceTemplate_tao_obv_narrow (ptr_arith_t type_id)
+PortableInterceptor::ObjectReferenceTemplate::PortableInterceptor_ObjectReferenceTemplate_tao_obv_narrow (ptrdiff_t type_id)
 #else
-PortableInterceptor::ObjectReferenceTemplate::_tao_obv_narrow (ptr_arith_t type_id)
+PortableInterceptor::ObjectReferenceTemplate::_tao_obv_narrow (ptrdiff_t type_id)
 #endif /* _MSC_VER */
 {
-  if (type_id == (ptr_arith_t) &_downcast)
+  if (type_id == (ptrdiff_t) &_downcast)
     {
       return this;
     }
@@ -702,7 +702,7 @@ PortableInterceptor::ObjectReferenceTemplate::_tao_obv_narrow (ptr_arith_t type_
 
 #if defined (_MSC_VER)
 void *
-PortableInterceptor::ObjectReferenceTemplate::_tao_obv_narrow (ptr_arith_t type_id)
+PortableInterceptor::ObjectReferenceTemplate::_tao_obv_narrow (ptrdiff_t type_id)
 {
   return this->PortableInterceptor_ObjectReferenceTemplate_tao_obv_narrow (type_id);
 }
@@ -1310,7 +1310,7 @@ operator<< (
             PortableInterceptor::ObjectReferenceFactory *,
             _tao_valuetype
           ),
-        (ptr_arith_t) &PortableInterceptor::ObjectReferenceFactory::_downcast
+        (ptrdiff_t) &PortableInterceptor::ObjectReferenceFactory::_downcast
       );
 }
 
@@ -1362,7 +1362,7 @@ operator<< (
             PortableInterceptor::ObjectReferenceTemplate *,
             _tao_valuetype
           ),
-        (ptr_arith_t) &PortableInterceptor::ObjectReferenceTemplate::_downcast
+        (ptrdiff_t) &PortableInterceptor::ObjectReferenceTemplate::_downcast
       );
 }
 

@@ -63,7 +63,7 @@ CORBA::ValueBase::_tao_any_destructor (void *x)
 CORBA::Boolean
 CORBA::ValueBase::_tao_marshal (TAO_OutputCDR &strm,
                                 CORBA::ValueBase *this_,
-                                ptr_arith_t /* formal_type_id */)
+                                ptrdiff_t /* formal_type_id */)
 {
   CORBA::Boolean retval = 1;
   // %! yet much to do ... look for +++ !
@@ -338,7 +338,7 @@ operator<< (TAO_OutputCDR &strm,
              strm,
              ACE_const_cast (CORBA::ValueBase *,
                              _tao_valuetype),
-             (ptr_arith_t) &CORBA::ValueBase::_downcast
+             (ptrdiff_t) &CORBA::ValueBase::_downcast
            );
 }
 

@@ -42,8 +42,8 @@
 #include "Messaging_RT_PolicyC.h"
 #include "Messaging_No_ImplC.h"
 #include "tao/OctetSeqC.h"
-#include "tao/ValueBase.h"
-#include "tao/ValueFactory.h"
+#include "tao/Valuetype/ValueBase.h"
+#include "tao/Valuetype/ValueFactory.h"
 
 
 #if defined (TAO_EXPORT_MACRO)
@@ -196,9 +196,9 @@ TAO_NAMESPACE  Messaging
     ExceptionHolder (void);
     virtual ~ExceptionHolder (void);
     
-    virtual void *_tao_obv_narrow (ptr_arith_t);
+    virtual void *_tao_obv_narrow (ptrdiff_t);
 #if defined (_MSC_VER)
-    virtual void *Messaging_ExceptionHolder_tao_obv_narrow (ptr_arith_t);
+    virtual void *Messaging_ExceptionHolder_tao_obv_narrow (ptrdiff_t);
 #endif /* _MSC_VER */
     virtual CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &);
     virtual CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
@@ -372,7 +372,7 @@ TAO_NAMESPACE  Messaging
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
     
-    virtual void *_tao_QueryInterface (ptr_arith_t type);
+    virtual void *_tao_QueryInterface (ptrdiff_t type);
     
     virtual const char* _interface_repository_id (void) const;
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);

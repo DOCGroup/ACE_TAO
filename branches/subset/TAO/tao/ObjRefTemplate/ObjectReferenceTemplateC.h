@@ -180,9 +180,9 @@ TAO_NAMESPACE  PortableInterceptor
     ObjectReferenceFactory (void);
     virtual ~ObjectReferenceFactory (void);
     
-    virtual void *_tao_obv_narrow (ptr_arith_t);
+    virtual void *_tao_obv_narrow (ptrdiff_t);
 #if defined (_MSC_VER)
-    virtual void *PortableInterceptor_ObjectReferenceFactory_tao_obv_narrow (ptr_arith_t);
+    virtual void *PortableInterceptor_ObjectReferenceFactory_tao_obv_narrow (ptrdiff_t);
 #endif /* _MSC_VER */
     
   private:
@@ -326,9 +326,9 @@ TAO_NAMESPACE  PortableInterceptor
     ObjectReferenceTemplate (void);
     virtual ~ObjectReferenceTemplate (void);
     
-    virtual void *_tao_obv_narrow (ptr_arith_t);
+    virtual void *_tao_obv_narrow (ptrdiff_t);
 #if defined (_MSC_VER)
-    virtual void *PortableInterceptor_ObjectReferenceTemplate_tao_obv_narrow (ptr_arith_t);
+    virtual void *PortableInterceptor_ObjectReferenceTemplate_tao_obv_narrow (ptrdiff_t);
 #endif /* _MSC_VER */
     
   private:

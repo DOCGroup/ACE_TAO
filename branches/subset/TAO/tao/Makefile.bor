@@ -7,6 +7,7 @@ NAME = TAO
 DIRS = \
         ObjRefTemplate \
         IORInterceptor \
+        Valuetype \
 	PortableServer \
         Messaging \
 	DynamicAny \
@@ -23,7 +24,6 @@ DIRS = \
 	RTPortableServer
 
 OBJFILES = \
-	$(OBJDIR)\AbstractBase.obj \
 	$(OBJDIR)\Abstract_Servant_Base.obj \
 	$(OBJDIR)\Acceptor_Filter.obj \
 	$(OBJDIR)\Acceptor_Registry.obj \
@@ -210,9 +210,7 @@ OBJFILES = \
 	$(OBJDIR)\TypeCodeFactory_Adapter.obj \
 	$(OBJDIR)\Typecode.obj \
 	$(OBJDIR)\Typecode_Constants.obj \
-	$(OBJDIR)\ValueBase.obj \
-	$(OBJDIR)\ValueFactory.obj \
-	$(OBJDIR)\ValueFactory_Map.obj \
+	$(OBJDIR)\Valuetype_Adapter.obj \
 	$(OBJDIR)\Wait_On_Leader_Follower.obj \
 	$(OBJDIR)\Wait_On_Reactor.obj \
 	$(OBJDIR)\Wait_On_Read.obj \
