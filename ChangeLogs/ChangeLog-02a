@@ -1,3 +1,16 @@
+Wed Feb 16 14:53:05 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* ace/OS.h:
+	  Added ACE_GLOBAL_COLONS macro. In certain cases in IDL files
+	  where nested scoped names repeat (after skipping a scope so
+	  it's legal), all comilers except SucCC 5.0 need the fully
+	  scoped name with the global double colon in order to resolve
+	  the name. SunCC 5.0, on the other hand, not only doesn't
+	  need it, but outputs an error whenever it sees these global
+	  double colons just inside an open paranthesis, for example,
+	  (::foo::...). This macro is used in generating code in 
+	  just these instances so all comilers can be happy.
+
 Tue Feb 15 22:57:59 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/MEM_IO.h:
