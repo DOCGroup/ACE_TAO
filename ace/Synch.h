@@ -183,6 +183,10 @@ public:
   // Block the thread until the semaphore count becomes
   // greater than 0, then decrement it.
 
+  int acquire (ACE_Time_Value &tv);
+  // Block the thread until <tv> times out or until the semaphore
+  // count becomes greater than 0 (at which point it is decremented).
+
   int tryacquire (void);
   // Conditionally decrement the semaphore if count is greater than 0
   // (i.e., won't block).
