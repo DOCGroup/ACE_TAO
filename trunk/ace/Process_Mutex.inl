@@ -24,6 +24,18 @@ ACE_Process_Mutex::acquire (void)
   return this->lock_.acquire ();
 }
 
+// Acquire lock ownership (wait on priority queue if necessary).
+ACE_INLINE int
+ACE_Process_Mutex::acquire (ACE_Time_Value &tv)
+{
+#if defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM) || defined (ACE_PSOS)
+  return this->lock_.acquire (tv);
+#else
+  ACE_UNUSED_ARG (tv);
+  ACE_NOTSUP_RETURN (-1);
+#endif  /* ACE_WIN32 || ACE_HAS_POSIX_SEM || ACE_PSOS */
+}
+
 // Conditionally acquire lock (i.e., don't wait on queue).
 ACE_INLINE int
 ACE_Process_Mutex::tryacquire (void)
