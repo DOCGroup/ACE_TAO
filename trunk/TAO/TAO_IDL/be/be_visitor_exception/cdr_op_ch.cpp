@@ -49,11 +49,11 @@ be_visitor_exception_cdr_op_ch::visit_exception (be_exception *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  // generate the Cdr <<= and >>= operator declarations
+  // generate the CDR << and >> operator declarations
   os->indent ();
   *os << "CORBA::Boolean " << idl_global->stub_export_macro ()
       << " operator<< (TAO_OutputCDR &, const " << node->name ()
-      << " &); // " << be_nl;
+      << " &);" << be_nl;
   *os << "CORBA::Boolean " << idl_global->stub_export_macro ()
       << " operator>> (TAO_InputCDR &, "
       << node->name () << " &);\n";
@@ -70,6 +70,10 @@ be_visitor_exception_cdr_op_ch::visit_exception (be_exception *node)
                          "codegen for scope failed\n"), -1);
     }
 
+  *os << be_nl;
+
+  // Generate the iostream operator overload for this exception.
+  node->gen_iostream_op_hdr (os);
 
   node->cli_hdr_cdr_op_gen (1);
   return 0;
