@@ -61,7 +61,7 @@ TAO/tests/Cache_Growth_Test/run_test.pl
 TAO/tests/Muxing/run_test.pl: !ST
 TAO/tests/Muxed_GIOP_Versions/run_test.pl: !ST
 TAO/tests/MT_Client/run_test.pl: !ST
-TAO/tests/MT_BiDir/run_test.pl: !ST
+TAO/tests/MT_BiDir/run_test.pl: !ST !MINIMUM
 TAO/tests/File_IO/run_test.pl: !ST !MINIMUM
 TAO/tests/MT_Server/run_test.pl: !ST
 # DISABLED TAO/tests/Client_Leaks/run_test.pl: !ST !Tru64
@@ -127,6 +127,7 @@ TAO/tests/Portable_Interceptors/PICurrent/run_test.pl: !MINIMUM !DISABLE_INTERCE
 TAO/tests/Object_Loader/run_test.pl: !STATIC
 
 TAO/examples/POA/Adapter_Activator/run_test.pl: !MINIMUM !SUNCC5_1
+TAO/examples/POA/POA_BiDir/run_test.pl: !MINIMUM 
 TAO/examples/POA/DSI/run_test.pl: !MINIMUM
 TAO/examples/POA/Default_Servant/run_test.pl: !MINIMUM
 TAO/examples/POA/Explicit_Activation/run_test.pl: !MINIMUM
