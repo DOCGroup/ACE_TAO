@@ -1,5 +1,8 @@
 Tue May 13 15:22:01 1997  Tim H. Harrison  <harrison@waltz.cs.wustl.edu>
 
+	* ace/Process_Manager.h:  Changed ACE_Process_Manager::start to
+	  ACE_Process_Manager::spawn.
+
 	* ace/Process.cpp (spawn): The check for a null environment argv
 	  was incorrect.  Thanks to Nanbor for finding this.
 
