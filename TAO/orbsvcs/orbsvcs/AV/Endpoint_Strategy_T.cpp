@@ -43,7 +43,7 @@ TAO_AV_Endpoint_Reactive_Strategy <T_StreamEndpoint, T_VDev, T_MediaCtrl>::activ
     }
   ACE_CATCHANY
     {
-      ACE_TRY_ENV.print_exception ("TAO_Endpoint_Reactive_Strategy::activate");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"TAO_Endpoint_Reactive_Strategy::activate");
       return -1;
     }
   ACE_ENDTRY;
@@ -343,7 +343,7 @@ TAO_AV_Child_Process  <T_StreamEndpoint_B, T_VDev, T_MediaCtrl>::init (int argc,
     }
   ACE_CATCHANY
     {
-      ACE_TRY_ENV.print_exception ("TAO_Child_Process");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"TAO_Child_Process");
       return -1;
     }
   ACE_ENDTRY;
@@ -528,7 +528,7 @@ TAO_AV_Child_Process  <T_StreamEndpoint_B, T_VDev, T_MediaCtrl>::run (ACE_Time_V
     }
   ACE_CATCHANY
     {
-      ACE_TRY_ENV.print_exception ("orb_manager_.run ()");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"orb_manager_.run ()");
       return -1;
     }
   ACE_ENDTRY;
@@ -599,7 +599,7 @@ TAO_AV_Child_Process  <T_StreamEndpoint, T_VDev, T_MediaCtrl>::register_stream_e
     }
   ACE_CATCHANY
     {
-      ACE_TRY_ENV.print_exception ("TAO_Endpoint_Reactive_Strategy::activate");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"TAO_Endpoint_Reactive_Strategy::activate");
       return -1;
     }
   ACE_ENDTRY;
@@ -665,7 +665,7 @@ TAO_AV_Child_Process<T_StreamEndpoint, T_VDev, T_MediaCtrl>::~TAO_AV_Child_Proce
     }
   ACE_CATCHANY
     {
-      ACE_TRY_ENV.print_exception ("TAO_Endpoint_Process_Strategy::activate");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"TAO_Endpoint_Process_Strategy::activate");
     }
   ACE_ENDTRY;
 
