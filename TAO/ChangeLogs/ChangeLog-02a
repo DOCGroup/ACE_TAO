@@ -27,7 +27,7 @@ Thu May  2 00:28:25 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 Thu May  2 00:26:46 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/Connection_Timeout/client.bor: Fixed the orland makefile
+	* tests/Connection_Timeout/client.bor: Fixed the Borland makefile
 	  to link the messaging library in.
 
 Thu May  2 00:23:14 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
