@@ -394,10 +394,11 @@ TAO_GIOP_Message_Generator_Parser_12::parse_reply (
   if ((cdr >> params.svc_ctx_) == 0)
     {
       if (TAO_debug_level > 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("TAO (%P|%t) parse_reply, ")
-                           ACE_TEXT ("extracting context\n")),
-                          -1);
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("TAO (%P|%t) parse_reply, ")
+                    ACE_TEXT ("extracting context\n")));
+
+      return -1;
     }
 
   if (cdr.length () > 0)
@@ -583,10 +584,9 @@ TAO_GIOP_Message_Generator_Parser_12::process_bidir_context (
   context.context_id = IOP::BI_DIR_IIOP;
 
   if (service_context.get_context (context) != 1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) Context info not found \n")),
-                      -1);
-
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%P|%t) Context info not found \n")),
+                        -1);
 
   TAO_InputCDR cdr (ACE_reinterpret_cast
                     (const char*,
