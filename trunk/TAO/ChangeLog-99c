@@ -1,62 +1,69 @@
+Mon Jul 19 17:44:36 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * examples/POA/TIE/Makefile: don't try to build with
+          Green Hills for either VxWorks or Solaris.  It fails
+          to link due to template instantiation problems.  Thanks
+          to Irfan for reporting this.
+
 Mon Jul 19 16:17:11 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO/tests/IDL_Test/union.idl:
-	  Added another test example to the file. Thanks to
-	  Roger Egbers <regbers@isrglobal.com> for sending in
-	  the example that the addition was adapted from.
+        * TAO/tests/IDL_Test/union.idl:
+          Added another test example to the file. Thanks to
+          Roger Egbers <regbers@isrglobal.com> for sending in
+          the example that the addition was adapted from.
 
 Mon Jul 19 15:59:45 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be_include/be_decl.h:
-	* TAO_IDL/be/be_decl.cpp:
-	* TAO_IDL/be/be_union.cpp:
-	* TAO_IDL/be/be_interface.cpp:
-	* TAO_IDL/be/be_sequence.cpp:
-	* TAO_IDL/be/be_valuetype.cpp:
-	* TAO_IDL/be/be_structure.cpp:
-	* TAO_IDL/be/be_array.cpp:
-	* TAO_IDL/be/be_visitor_union_branch/private_ch.cpp:
-	* TAO_IDL/be/be_visitor_union_branch/public_assign_cs.cpp:
-	* TAO_IDL/be/be_visitor_union_branch/public_access_cs.cpp:
-	* TAO_IDL/be/be_visitor_union_branch/public_reset_cs.cpp:
-	* TAO_IDL/be/be_visitor_union_branch/public_ci.cpp:
-	  Reverted previous change to be_union.cpp, and added member
-	  and get/set methods 'has_constructor' to the base class be_decl.
-	  Used in conjunction with compute_size_type(), this addition
-	  should determine whether a union case should be included by
-	  value or by reference without changing the signature of 
-	  generated operations, as the previous change did.
+        * TAO_IDL/be_include/be_decl.h:
+        * TAO_IDL/be/be_decl.cpp:
+        * TAO_IDL/be/be_union.cpp:
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_sequence.cpp:
+        * TAO_IDL/be/be_valuetype.cpp:
+        * TAO_IDL/be/be_structure.cpp:
+        * TAO_IDL/be/be_array.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/private_ch.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/public_assign_cs.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/public_access_cs.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/public_reset_cs.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/public_ci.cpp:
+          Reverted previous change to be_union.cpp, and added member
+          and get/set methods 'has_constructor' to the base class be_decl.
+          Used in conjunction with compute_size_type(), this addition
+          should determine whether a union case should be included by
+          value or by reference without changing the signature of
+          generated operations, as the previous change did.
 
 tMon Jul 19 15:10:01 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* tao/UIOP_Acceptor.cpp (~TAO_UIOP_Acceptor):
+        * tao/UIOP_Acceptor.cpp (~TAO_UIOP_Acceptor):
 
-	  Removed call to close() in the destructor since it was causing a 
-	  segmentation fault.  It isn't needed since close() gets called
-	  even when the Acceptor_Registry is destroyed, and when the ORB
-	  shuts down.  Thanks to Kirthika for pointing out the problem and 
-	  providing a fix.
+          Removed call to close() in the destructor since it was causing a
+          segmentation fault.  It isn't needed since close() gets called
+          even when the Acceptor_Registry is destroyed, and when the ORB
+          shuts down.  Thanks to Kirthika for pointing out the problem and
+          providing a fix.
 
-	* tao/IOR_LookupTable.cpp:
+        * tao/IOR_LookupTable.cpp:
 
-	  Fixed missing "tao/" from #include of ObjectIDList.h.
+          Fixed missing "tao/" from #include of ObjectIDList.h.
 
-	* Makefile:
+        * Makefile:
 
-	  Updated dependencies.
+          Updated dependencies.
 
 Mon Jul 19 15:08:57 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/CosEvent_Service/CosEvent_Service.h:
-	* orbsvcs/CosEvent_Service/CosEvent_Service.cpp:
-	  Fixed command-line argument parsing, thanks to Knut-Havard
-	  Aksnes <knut@orion.no> for reporting this problem.
+        * orbsvcs/CosEvent_Service/CosEvent_Service.h:
+        * orbsvcs/CosEvent_Service/CosEvent_Service.cpp:
+          Fixed command-line argument parsing, thanks to Knut-Havard
+          Aksnes <knut@orion.no> for reporting this problem.
 
 Mon Jul 19 14:55:42 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/corba.h:
-	* tao/corbafwd.h: Added an ifdef around the #includes and the
-	  declarations connected to the Interface Repository.
+        * tao/corba.h:
+        * tao/corbafwd.h: Added an ifdef around the #includes and the
+          declarations connected to the Interface Repository.
 
 Mon Jul 19 12:26:20 1999  David L. Levine  <levine@cs.wustl.edu>
 

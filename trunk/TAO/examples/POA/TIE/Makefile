@@ -25,6 +25,7 @@ FILE_CLT_OBJS = FooC.o FooS.o client.o
 BIN = server client
 
 TAO_IDLFLAGS += -Ge 1
+
 #----------------------------------------------------------------------------
 #       Include macros and targets
 #----------------------------------------------------------------------------
@@ -33,12 +34,28 @@ include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 
 ifeq ($(ACE_HAS_GNUG_PRE_2_8),1)
 
-  # Since older g++ cannot handle nested classes properly, this test
+  # Because older g++ cannot handle nested classes properly, this test
   # will not build on g++ prior to 2.8.0.
   all clean realclean:
 	@echo POA/TIE is not built with older versions of g++
 
 else # ! ACE_HAS_GNUG_PRE_2_8
+ifeq (cxvx,$(findstring cxvx,$(CXX)))
+
+  # Green Hills for VxWorks can't build this test.  It runs into
+  # trouble with template instantiations.
+  all clean realclean:
+	@echo POA/TIE is not built with Green Hills $(CXX).
+
+else # ! ACE_HAS_GNUG_PRE_2_8  &&  ! ghs/VxWorks
+ifeq (gcx,$(findstring gcx,$(CXX)))
+
+  # Green Hills for Solaris can't build this test.  It runs into
+  # trouble with template instantiations.
+  all clean realclean:
+	@echo POA/TIE is not built with Green Hills $(CXX).
+
+else # ! ACE_HAS_GNUG_PRE_2_8  &&  ! ghs
 
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
@@ -59,7 +76,13 @@ client: $(addprefix $(VDIR),$(FILE_CLT_OBJS))
 realclean: clean
 	-$(RM) FooC.* FooS.* FooS_T.*
 
+endif # ! ghs/Solaris
+endif # ! ghs/VxWorks
 endif # ! ACE_HAS_GNUG_PRE_2_8
+
+#----------------------------------------------------------------------------
+#       Dependencies
+#----------------------------------------------------------------------------
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
