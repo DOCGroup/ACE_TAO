@@ -153,8 +153,8 @@ main (int argc, char **argv)
       return -1;
     }
 
-  ACE_DEBUG((LM_DEBUG,"%s\n",
-	     file_system_ior.in ()));
+  ACE_DEBUG ((LM_DEBUG,"%s\n",
+              file_system_ior.in ()));
 
   // set the state of the poa_manager to active i.e ready to process requests
   poa_manager->activate (env);
