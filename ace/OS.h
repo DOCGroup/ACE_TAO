@@ -898,17 +898,17 @@ static ACE_Static_Svc_##X ace_static_svc_##X;
 #define ACE_SVC_NAME(X) _make_##X
 #define ACE_SVC_FACTORY_DEFINE(X) extern "C" ACE_Service_Object *_make_##X () { ACE_TRACE (#X); return new X; }
 
-#if !(defined (ACE_HAS_THREADS) && defined (ACE_HAS_THREAD_SPECIFIC_STORAGE))
-#define ACE_TSS_TYPE(T) T
-#define ACE_TSS_GET(I, T) (I)
+#if defined (ACE_HAS_THREADS) && (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION))
+# define ACE_TSS_TYPE(T) ACE_TSS< T >
+# if defined (ACE_HAS_BROKEN_CONVERSIONS)
+#   define ACE_TSS_GET(I, T) (*(I))
+# else
+#   define ACE_TSS_GET(I, T) ((I)->operator T * ())
+# endif /* ACE_HAS_BROKEN_CONVERSIONS */
 #else
-#define ACE_TSS_TYPE(T) ACE_TSS< T >
-#if defined (ACE_HAS_BROKEN_CONVERSIONS)
-#define ACE_TSS_GET(I, T) (*(I))
-#else
-#define ACE_TSS_GET(I, T) ((I)->operator T * ())
-#endif /* ACE_HAS_BROKEN_CONVERSIONS */
-#endif /* !(defined (ACE_HAS_THREADS) && defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)) */
+# define ACE_TSS_TYPE(T) T
+# define ACE_TSS_GET(I, T) (I)
+#endif /* ACE_HAS_THREADS && (ACE_HAS_THREAD_SPECIFIC_STORAGE || ACE_HAS_TSS_EMULATIOND) */
 
 #if defined (ACE_LACKS_MODE_MASKS)
 // MODE MASKS
@@ -4018,6 +4018,10 @@ public:
   static void mutex_lock_cleanup (void *mutex);
   // Handle asynchronous thread cancellation cleanup.
 
+  static void cleanup_tss ();
+  // Call TSS destructors for the current thread.  For private use of
+  // ACE_Object_Manager only.
+
 private:
   ACE_OS (void);
   // Ensure we can't define an instance of this class.
@@ -4099,6 +4103,9 @@ class ACE_TSS_Emulation
 public:
   typedef void (*ACE_TSS_DESTRUCTOR)(void *value) /* throw () */;
 
+  enum { ACE_TSS_THREAD_KEYS_MAX = ACE_DEFAULT_THREAD_KEYS };
+  // Maximum number of TSS keys allowed over the life of the program.
+
   static ACE_thread_key_t total_keys ();
   // Returns the total number of keys allocated so far.
 
@@ -4118,16 +4125,17 @@ public:
   // Accesses the object referenced by key in the current thread's TSS array.
   // Does _not_ check for a valid key.
 
-  static void tss_allocate ();
-  // Allocates a TSS array for the current thread.
+  static void *tss_open (void *ts_storage[ACE_TSS_THREAD_KEYS_MAX] = 0);
+  // Setup an array to be used for local TSS.  If the argument is 0,
+  // an array is allocated off the heap.  Returns the array address,
+  // or 0 if allocation is attempted and fails, or if local TSS had
+  // already been setup for this thread.
 
-  static void tss_deallocate ();
-  // Deallocates the current thread's TSS array.
+  static void tss_close (void *ts_storage[ACE_TSS_THREAD_KEYS_MAX] = 0);
+  // Finish using an array for local TSS.  If the argument is 0,
+  // then the array this is currently be used is deleted from heap storage.
 
 private:
-  enum { ACE_TSS_THREAD_KEYS_MAX = ACE_DEFAULT_THREAD_KEYS };
-  // Maximum number of TSS keys allowed over the life of the program.
-
   // Global TSS structures.
   static ACE_thread_key_t total_keys_;
   // Always contains the value of the next key to be allocated.
