@@ -1,3 +1,9 @@
+Tue Jul 19 12:49:31 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Sequence.i (replace):
+	* tao/Sequence.cpp: Set the read and write pointers properly for
+	  copied message blocks at the positions.
+
 Tue Jul 19 12:27:31 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Transport.cpp (make_queued_data): Fixed a typo and added a
