@@ -235,7 +235,7 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
   os->indent ();
   if (node->argument_count () > 0)
     *os << ",\n";
-  
+
   // Generate the formal argument fields which are passed to the RequestInfo object
   ctx = *this->ctx_;
   //  ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_INFO_ARGLIST_SS);
@@ -252,6 +252,11 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
                         -1);
     }
   delete visitor;
+
+  // generate the CORBA::Environment parameter for the alternative mapping
+  if (!idl_global->exception_support ())
+      *os << ",\n";
+
   *os << ");\n";
 
   *os << "if (_tao_vfr.valid ())" << be_idt_nl
