@@ -164,6 +164,9 @@ module RTScheduling
 
 	void send_other (in PortableInterceptor::ServerRequestInfo ri)
 	raises (PortableInterceptor::ForwardRequest);
+
+	void send_poll (in PortableInterceptor::ClientRequestInfo ri)
+	raises (PortableInterceptor::ForwardRequest);
 	
 	void receive_reply (in PortableInterceptor::ClientRequestInfo ri);
 
