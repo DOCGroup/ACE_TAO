@@ -52,6 +52,7 @@ static ACE_THR_FUNC_RETURN unmarshalledOctetServer (void *arg){
                         "%p\n",
                         "recv_n"),
                        0);
+    msgBufSize = ACE_NTOHL(msgBufSize);
 
     // allocate the buffer for the message payload
     ACE_CDR::Octet * msgBuf=NULL;
@@ -134,8 +135,9 @@ static void run_server (ACE_HANDLE handle)
               cli_addr.get_host_name (),
               cli_addr.get_port_number ()));
 
-  // hdr bufSize is hardcoded to 4 (4 bytes for a CDR encoded long)
-  ACE_CDR::ULong hdrBufSize=4;
+  // hdr bufSize is hardcoded to 8 bytes
+  // (4 for a CDR-encoded boolean and 4 for a CDR-encoded ULong)
+  ACE_CDR::ULong hdrBufSize = 8;
   // allocate a raw buffer large enough to receive the header and be
   // properly aligned for the CDR decoding.
   ACE_CDR::Char * hdrBuf= new ACE_CDR::Char[hdrBufSize+ACE_CDR::MAX_ALIGNMENT];
@@ -143,7 +145,7 @@ static void run_server (ACE_HANDLE handle)
   char * hdrBuf_a = ACE_ptr_align_binary(hdrBuf, ACE_CDR::MAX_ALIGNMENT);
 
   size_t bt;
-  // read the size of the header
+  // read the header
   if ((dataModeStream->recv_n(hdrBuf_a, hdrBufSize, 0, &bt)) == -1){
     ACE_ERROR ((LM_ERROR,
                 "%p\n",
@@ -156,9 +158,12 @@ static void run_server (ACE_HANDLE handle)
   // remains valid while it is in scope.
   ACE_InputCDR hdrCDR(hdrBuf_a, hdrBufSize);
 
+  ACE_CDR::Boolean byteOrder;
   ACE_CDR::ULong numIterations;
 
   // extract the data
+  hdrCDR >> ACE_InputCDR::to_boolean (byteOrder);
+  hdrCDR.reset_byte_order(byteOrder);
   hdrCDR >> numIterations;
 
   // make sure the stream is good after the extractions
