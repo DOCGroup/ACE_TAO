@@ -38,7 +38,7 @@
 
 ACE_RCSID(tao, Any, "$Id$")
 
-CORBA::TypeCode_ptr
+  CORBA::TypeCode_ptr
 CORBA_Any::type (void) const
 {
   return CORBA::TypeCode::_duplicate (this->type_);
@@ -148,9 +148,9 @@ CORBA_Any::operator= (const CORBA_Any &src)
 
   // check if it is a self assignment
   if (this == &src)
-    {
-      return *this;
-    }
+  {
+    return *this;
+  }
 
   // decrement the refcount on the Message_Block we hold, it does not
   // matter if we own the data or not, because we always own the
@@ -161,33 +161,33 @@ CORBA_Any::operator= (const CORBA_Any &src)
   this->free_value (env);
 
   if (this->type_ != 0)
-    CORBA::release (this->type_);
+  CORBA::release (this->type_);
 
   // Now copy the contents of the source to ourselves.
   if (src.type_ != 0)
-    this->type_ = CORBA::TypeCode::_duplicate (src.type_);
+  this->type_ = CORBA::TypeCode::_duplicate (src.type_);
   else
-    this->type_ = CORBA::TypeCode::_duplicate (CORBA::_tc_null);
+  this->type_ = CORBA::TypeCode::_duplicate (CORBA::_tc_null);
   this->any_owns_data_ = 1;
 
   // does the source own its data? If not, then it is not in the message block
   // form and must be encoded. Else we must simply duplicate the message block
   if (src.any_owns_data_)
-    {
-      this->cdr_ = ACE_Message_Block::duplicate (src.cdr_);
-    }
+  {
+    this->cdr_ = ACE_Message_Block::duplicate (src.cdr_);
+  }
   // If the source was created from just a typecode, we want to skip this...
   else if (src.value_ != 0)
-    {
-      TAO_OutputCDR stream;
+  {
+    TAO_OutputCDR stream;
 
-      stream.encode (this->type_, src.value_, 0, env);
-      // retrieve the start of the message block chain and duplicate it
-      this->cdr_ = stream.begin ()->clone ();
-    }
+    stream.encode (this->type_, src.value_, 0, env);
+    // retrieve the start of the message block chain and duplicate it
+    this->cdr_ = stream.begin ()->clone ();
+  }
   // ... and do this.
   else
-    this->cdr_ = 0;
+  this->cdr_ = 0;
 
   return *this;
 }
@@ -296,25 +296,25 @@ CORBA_Any::operator<<= (from_string s)
 
   CORBA::TypeCode_ptr tc = 0;
   if (s.bound_ > 0)
-    {
-      // Bounded string.
-      _oc_string [1] = s.bound_;
-      ACE_NEW (tc, CORBA::TypeCode (CORBA::tk_string,
-                                    sizeof _oc_string,
-                                    (char *) &_oc_string,
-                                    1,
-                                    sizeof (CORBA::String_var)));
-    }
+  {
+    // Bounded string.
+    _oc_string [1] = s.bound_;
+    ACE_NEW (tc, CORBA::TypeCode (CORBA::tk_string,
+                                  sizeof _oc_string,
+                                  (char *) &_oc_string,
+                                  1,
+                                  sizeof (CORBA::String_var)));
+  }
   else
-    tc = CORBA::_tc_string; // unbounded.
+  tc = CORBA::_tc_string; // unbounded.
 
   CORBA::Environment env;
   if (s.nocopy_)
-    this->replace (tc, new char* (s.val_), 1, env);
+  this->replace (tc, new char* (s.val_), 1, env);
   else
-    // copying
-    this->replace (tc, new char* (CORBA::string_dup (s.val_)),
-                   1, env);
+  // copying
+  this->replace (tc, new char* (CORBA::string_dup (s.val_)),
+                 1, env);
 }
 
 // Extraction: these are safe and hence we have to check that the
@@ -327,20 +327,20 @@ CORBA_Any::operator>>= (CORBA::Short &s) const
   CORBA::Environment env;
 
   if (this->type_->equivalent (CORBA::_tc_short, env))
+  {
+    if (this->any_owns_data_ && this->value_)
     {
-      if (this->any_owns_data_ && this->value_)
-        {
-          s = *(CORBA::Short *) this->value_;
-          return 1;
-        }
-      else
-        {
-          TAO_InputCDR stream (this->cdr_);
-          return stream.read_short (s);
-        }
+      s = *(CORBA::Short *) this->value_;
+      return 1;
     }
+    else
+    {
+      TAO_InputCDR stream (this->cdr_);
+      return stream.read_short (s);
+    }
+  }
   else
-    return 0;
+  return 0;
 }
 
 CORBA::Boolean
@@ -349,20 +349,20 @@ CORBA_Any::operator>>= (CORBA::UShort &s) const
   CORBA::Environment env;
 
   if (this->type_->equivalent (CORBA::_tc_ushort, env))
+  {
+    if (this->any_owns_data_ && this->value_)
     {
-      if (this->any_owns_data_ && this->value_)
-        {
-          s = *(CORBA::UShort *) this->value_;
-          return 1;
-        }
-      else
-        {
-          TAO_InputCDR stream (this->cdr_);
-          return stream.read_ushort (s);
-        }
+      s = *(CORBA::UShort *) this->value_;
+      return 1;
     }
+    else
+    {
+      TAO_InputCDR stream (this->cdr_);
+      return stream.read_ushort (s);
+    }
+  }
   else
-    return 0;
+  return 0;
 }
 
 CORBA::Boolean
@@ -371,20 +371,20 @@ CORBA_Any::operator>>= (CORBA::Long &l) const
   CORBA::Environment env;
 
   if (this->type_->equivalent (CORBA::_tc_long, env))
+  {
+    if (this->any_owns_data_ && this->value_)
     {
-      if (this->any_owns_data_ && this->value_)
-        {
-          l = *(CORBA::Long *) this->value_;
-          return 1;
-        }
-      else
-        {
-          TAO_InputCDR stream (this->cdr_);
-          return stream.read_long (l);
-        }
+      l = *(CORBA::Long *) this->value_;
+      return 1;
     }
+    else
+    {
+      TAO_InputCDR stream (this->cdr_);
+      return stream.read_long (l);
+    }
+  }
   else
-    return 0;
+  return 0;
 }
 
 CORBA::Boolean
@@ -393,20 +393,20 @@ CORBA_Any::operator>>= (CORBA::ULong &l) const
   CORBA::Environment env;
 
   if (this->type_->equivalent (CORBA::_tc_ulong, env))
+  {
+    if (this->any_owns_data_ && this->value_)
     {
-      if (this->any_owns_data_ && this->value_)
-        {
-          l = *(CORBA::ULong *) this->value_;
-          return 1;
-        }
-      else
-        {
-          TAO_InputCDR stream (this->cdr_);
-          return stream.read_ulong (l);
-        }
+      l = *(CORBA::ULong *) this->value_;
+      return 1;
     }
+    else
+    {
+      TAO_InputCDR stream (this->cdr_);
+      return stream.read_ulong (l);
+    }
+  }
   else
-    return 0;
+  return 0;
 }
 
 CORBA::Boolean
@@ -415,20 +415,20 @@ CORBA_Any::operator>>= (CORBA::LongLong &l) const
   CORBA::Environment env;
 
   if (this->type_->equivalent (CORBA::_tc_longlong, env))
+  {
+    if (this->any_owns_data_ && this->value_)
     {
-      if (this->any_owns_data_ && this->value_)
-        {
-          l = *(CORBA::LongLong *) this->value_;
-          return 1;
-        }
-      else
-        {
-          TAO_InputCDR stream (this->cdr_);
-          return stream.read_longlong (l);
-        }
+      l = *(CORBA::LongLong *) this->value_;
+      return 1;
     }
+    else
+    {
+      TAO_InputCDR stream (this->cdr_);
+      return stream.read_longlong (l);
+    }
+  }
   else
-    return 0;
+  return 0;
 }
 
 CORBA::Boolean
@@ -437,20 +437,20 @@ CORBA_Any::operator>>= (CORBA::ULongLong &l) const
   CORBA::Environment env;
 
   if (this->type_->equivalent (CORBA::_tc_ulonglong, env))
+  {
+    if (this->any_owns_data_ && this->value_)
     {
-      if (this->any_owns_data_ && this->value_)
-        {
-          l = *(CORBA::ULongLong *) this->value_;
-          return 1;
-        }
-      else
-        {
-          TAO_InputCDR stream (this->cdr_);
-          return stream.read_ulonglong (l);
-        }
+      l = *(CORBA::ULongLong *) this->value_;
+      return 1;
     }
+    else
+    {
+      TAO_InputCDR stream (this->cdr_);
+      return stream.read_ulonglong (l);
+    }
+  }
   else
-    return 0;
+  return 0;
 }
 
 CORBA::Boolean
@@ -459,20 +459,20 @@ CORBA_Any::operator>>= (CORBA::Float &f) const
   CORBA::Environment env;
 
   if (this->type_->equivalent (CORBA::_tc_float, env))
+  {
+    if (this->any_owns_data_ && this->value_)
     {
-      if (this->any_owns_data_ && this->value_)
-        {
-          f = *(CORBA::Float *) this->value_;
-          return 1;
-        }
-      else
-        {
-          TAO_InputCDR stream (this->cdr_);
-          return stream.read_float (f);
-        }
+      f = *(CORBA::Float *) this->value_;
+      return 1;
     }
+    else
+    {
+      TAO_InputCDR stream (this->cdr_);
+      return stream.read_float (f);
+    }
+  }
   else
-    return 0;
+  return 0;
 }
 
 CORBA::Boolean
@@ -481,20 +481,20 @@ CORBA_Any::operator>>= (CORBA::Double &d) const
   CORBA::Environment env;
 
   if (this->type_->equivalent (CORBA::_tc_double, env))
+  {
+    if (this->any_owns_data_ && this->value_)
     {
-      if (this->any_owns_data_ && this->value_)
-        {
-          d = *(CORBA::Double *) this->value_;
-          return 1;
-        }
-      else
-        {
-          TAO_InputCDR stream (this->cdr_);
-          return stream.read_double (d);
-        }
+      d = *(CORBA::Double *) this->value_;
+      return 1;
     }
+    else
+    {
+      TAO_InputCDR stream (this->cdr_);
+      return stream.read_double (d);
+    }
+  }
   else
-    return 0;
+  return 0;
 }
 
 CORBA::Boolean
@@ -503,22 +503,22 @@ CORBA_Any::operator>>= (CORBA::Any &a) const
   CORBA::Environment env;
 
   if (this->type_->equivalent (CORBA::_tc_any, env))
+  {
+    if (this->any_owns_data_ && this->value_)
     {
-      if (this->any_owns_data_ && this->value_)
-        {
-          a = *(CORBA::Any *) this->value_;
-          return 1;
-        }
-      else
-        {
-          TAO_InputCDR stream (this->cdr_);
-          // decode the CDR
-          return (stream.decode (CORBA::_tc_any, &a, 0, env)
-                  == CORBA::TypeCode::TRAVERSE_CONTINUE) ? 1 : 0;
-        }
+      a = *(CORBA::Any *) this->value_;
+      return 1;
     }
+    else
+    {
+      TAO_InputCDR stream (this->cdr_);
+      // decode the CDR
+      return (stream.decode (CORBA::_tc_any, &a, 0, env)
+              == CORBA::TypeCode::TRAVERSE_CONTINUE) ? 1 : 0;
+    }
+  }
   else
-    return 0;
+  return 0;
 }
 
 CORBA::Boolean
@@ -527,27 +527,27 @@ CORBA_Any::operator>>= (char *&s) const
   CORBA::Environment env;
 
   if (this->type_->equal (CORBA::_tc_string, env))
+  {
+    if (this->any_owns_data_ && this->value_)
     {
-      if (this->any_owns_data_ && this->value_)
-        {
-          s = *(char **) this->value_;
-          return 1;
-        }
-      else
-        {
-          TAO_InputCDR stream (this->cdr_);
-	  if (stream.read_string (s))
-	    {
-	      char** tmp = new char*;
-	      *tmp = s;
-	      ACE_const_cast(CORBA_Any*,this)->value_ = tmp;
-	      return 1;
-	    }
-	  return 0;
-        }
+      s = *(char **) this->value_;
+      return 1;
     }
+    else
+    {
+      TAO_InputCDR stream (this->cdr_);
+      if (stream.read_string (s))
+      {
+        char** tmp = new char*;
+        *tmp = s;
+        ACE_const_cast(CORBA_Any*,this)->value_ = tmp;
+        return 1;
+      }
+      return 0;
+    }
+  }
   else
-    return 0;
+  return 0;
 }
 
 CORBA::Boolean
@@ -556,26 +556,26 @@ CORBA_Any::operator>>= (CORBA::TypeCode_ptr &tc) const
   CORBA::Environment env;
 
   if (this->type_->equivalent (CORBA::_tc_TypeCode, env))
+  {
+    if (this->any_owns_data_ && this->value_)
     {
-      if (this->any_owns_data_ && this->value_)
-        {
-          tc = *(CORBA::TypeCode_ptr *) this->value_;
-          return 1;
-        }
-      else
-        {
-          TAO_InputCDR stream ((ACE_Message_Block *) this->cdr_);
-          CORBA::Boolean flag =
-            (stream.decode (CORBA::_tc_TypeCode,
-                            &tc,
-                            0,
-                            env)
-              == CORBA::TypeCode::TRAVERSE_CONTINUE) ? 1 : 0;
-          return flag;
-        }
+      tc = *(CORBA::TypeCode_ptr *) this->value_;
+      return 1;
     }
+    else
+    {
+      TAO_InputCDR stream ((ACE_Message_Block *) this->cdr_);
+      CORBA::Boolean flag =
+      (stream.decode (CORBA::_tc_TypeCode,
+                      &tc,
+                      0,
+                      env)
+       == CORBA::TypeCode::TRAVERSE_CONTINUE) ? 1 : 0;
+      return flag;
+    }
+  }
   else
-    return 0;
+  return 0;
 }
 
 // = extraction into the special types
@@ -586,20 +586,20 @@ CORBA_Any::operator>>= (to_boolean b) const
   CORBA::Environment env;
 
   if (this->type_->equivalent (CORBA::_tc_boolean, env))
+  {
+    if (this->any_owns_data_ && this->value_)
     {
-      if (this->any_owns_data_ && this->value_)
-        {
-          b.ref_ = *(CORBA::Boolean *) this->value_;
-          return 1;
-        }
-      else
-        {
-          TAO_InputCDR stream ((ACE_Message_Block *) this->cdr_);
-          return stream.read_boolean (b.ref_);
-        }
+      b.ref_ = *(CORBA::Boolean *) this->value_;
+      return 1;
     }
+    else
+    {
+      TAO_InputCDR stream ((ACE_Message_Block *) this->cdr_);
+      return stream.read_boolean (b.ref_);
+    }
+  }
   else
-    return 0;
+  return 0;
 }
 
 CORBA::Boolean
@@ -608,20 +608,20 @@ CORBA_Any::operator>>= (to_octet o) const
   CORBA::Environment env;
 
   if (this->type_->equivalent (CORBA::_tc_octet, env))
+  {
+    if (this->any_owns_data_ && this->value_)
     {
-      if (this->any_owns_data_ && this->value_)
-        {
-          o.ref_ = *(CORBA::Octet *) this->value_;
-          return 1;
-        }
-      else
-        {
-          TAO_InputCDR stream ((ACE_Message_Block *) this->cdr_);
-          return stream.read_octet (o.ref_);
-        }
+      o.ref_ = *(CORBA::Octet *) this->value_;
+      return 1;
     }
+    else
+    {
+      TAO_InputCDR stream ((ACE_Message_Block *) this->cdr_);
+      return stream.read_octet (o.ref_);
+    }
+  }
   else
-    return 0;
+  return 0;
 }
 
 CORBA::Boolean
@@ -630,20 +630,20 @@ CORBA_Any::operator>>= (to_char c) const
   CORBA::Environment env;
 
   if (this->type_->equivalent (CORBA::_tc_char, env))
+  {
+    if (this->any_owns_data_ && this->value_)
     {
-      if (this->any_owns_data_ && this->value_)
-        {
-          c.ref_ = *(CORBA::Char *) this->value_;
-          return 1;
-        }
-      else
-        {
-          TAO_InputCDR stream ((ACE_Message_Block *) this->cdr_);
-          return stream.read_char (c.ref_);
-        }
+      c.ref_ = *(CORBA::Char *) this->value_;
+      return 1;
     }
+    else
+    {
+      TAO_InputCDR stream ((ACE_Message_Block *) this->cdr_);
+      return stream.read_char (c.ref_);
+    }
+  }
   else
-    return 0;
+  return 0;
 }
 
 CORBA::Boolean
@@ -652,20 +652,20 @@ CORBA_Any::operator>>= (to_wchar wc) const
   CORBA::Environment env;
 
   if (this->type_->equivalent (CORBA::_tc_wchar, env))
+  {
+    if (this->any_owns_data_ && this->value_)
     {
-      if (this->any_owns_data_ && this->value_)
-        {
-          wc.ref_ = *(CORBA::WChar *) this->value_;
-          return 1;
-        }
-      else
-        {
-          TAO_InputCDR stream ((ACE_Message_Block *) this->cdr_);
-          return stream.read_wchar (wc.ref_);
-        }
+      wc.ref_ = *(CORBA::WChar *) this->value_;
+      return 1;
     }
+    else
+    {
+      TAO_InputCDR stream ((ACE_Message_Block *) this->cdr_);
+      return stream.read_wchar (wc.ref_);
+    }
+  }
   else
-    return 0;
+  return 0;
 }
 
 CORBA::Boolean
@@ -674,22 +674,22 @@ CORBA_Any::operator>>= (to_string s) const
   CORBA::Environment env;
 
   if (this->type_->equivalent (CORBA::_tc_string, env))
+  {
+    CORBA::ULong bound = this->type_->length (env);
+    if (s.bound_ == bound) // bounds are same
     {
-      CORBA::ULong bound = this->type_->length (env);
-      if (s.bound_ == bound) // bounds are same
-        {
-          if (this->any_owns_data_ && this->value_)
-            {
-              s.val_ = *(char **) this->value_;
-              return 1;
-            }
-          else
-            {
-              TAO_InputCDR stream ((ACE_Message_Block *) this->cdr_);
-              return stream.read_string (s.val_);
-            }
-        }
+      if (this->any_owns_data_ && this->value_)
+      {
+        s.val_ = *(char **) this->value_;
+        return 1;
+      }
+      else
+      {
+        TAO_InputCDR stream ((ACE_Message_Block *) this->cdr_);
+        return stream.read_string (s.val_);
+      }
     }
+  }
 
   // Otherwise.
   return 0;
@@ -701,32 +701,32 @@ CORBA_Any::operator>>= (to_object obj) const
   CORBA::Environment env;
 
   if (this->type_->equivalent (CORBA::_tc_Object, env))
+  {
+    if (this->any_owns_data_ && this->value_)
     {
-      if (this->any_owns_data_ && this->value_)
-        {
-          obj.ref_ = *(CORBA::Object_ptr *) this->value_;
-          return 1;
-        }
-      else
-        {
-          TAO_InputCDR stream ((ACE_Message_Block *) this->cdr_);
-          CORBA::Boolean flag = (stream.decode (CORBA::_tc_Object,
-                                                &obj.ref_, 0, env)
-                                 == CORBA::TypeCode::TRAVERSE_CONTINUE) ? 1:0;
-	  if (flag)
-	    {
-	      CORBA::Object_ptr *tmp = new CORBA::Object_ptr;
-	      *tmp = obj.ref_;
-	      ACE_const_cast(CORBA_Any*,this)->value_ = tmp;
-	      return 1;
-            }
-          // we own this allocated value
-          //          this->value_ = obj.ref_;
-          return flag;
-        }
+      obj.ref_ = *(CORBA::Object_ptr *) this->value_;
+      return 1;
     }
+    else
+    {
+      TAO_InputCDR stream ((ACE_Message_Block *) this->cdr_);
+      CORBA::Boolean flag = (stream.decode (CORBA::_tc_Object,
+                                            &obj.ref_, 0, env)
+                             == CORBA::TypeCode::TRAVERSE_CONTINUE) ? 1:0;
+      if (flag)
+      {
+        CORBA::Object_ptr *tmp = new CORBA::Object_ptr;
+        *tmp = obj.ref_;
+        ACE_const_cast(CORBA_Any*,this)->value_ = tmp;
+        return 1;
+      }
+      // we own this allocated value
+      //          this->value_ = obj.ref_;
+      return flag;
+    }
+  }
   else
-    return 0;
+  return 0;
 }
 
 // ----------------------------------------------------------------------
@@ -737,12 +737,12 @@ CORBA::Any_var &
 CORBA_Any_var::operator= (CORBA::Any *p)
 {
   if (this->ptr_ != p)
-    {
-      if (this->ptr_ != 0)
-        delete (this->ptr_);
+  {
+    if (this->ptr_ != 0)
+    delete (this->ptr_);
 
-      this->ptr_ = p;
-    }
+    this->ptr_ = p;
+  }
   return *this;
 }
 
@@ -750,7 +750,7 @@ CORBA::Any_var &
 CORBA_Any_var::operator= (const CORBA::Any_var& r)
 {
   if (this->ptr_ != 0)
-    delete this->ptr_;
+  delete this->ptr_;
 
   this->ptr_ = new CORBA::Any (*r.ptr_);
   return *this;
@@ -828,9 +828,9 @@ CORBA_Any::dump (const CORBA::Any any_value)
     }
   else if (type->equal (CORBA::_tc_string, env))
     {
-       CORBA::String str;
-       any_value >>= str;
-       ACE_DEBUG ((LM_DEBUG, "String %s\n", str));
+      CORBA::String str;
+      any_value >>= str;
+      ACE_DEBUG ((LM_DEBUG, "String %s\n", str));
     }
   else
     ACE_DEBUG ((LM_DEBUG, "TCKind %d\n", type->kind_));
