@@ -46,6 +46,9 @@ find_non_existant_POA (PortableServer::POA_ptr parent,
   ACE_ENDTRY;
 
   ACE_ASSERT (expected_exception_raised);
+
+  // In non-debug compiles, asserts will disappear.
+  ACE_UNUSED_ARG (expected_exception_raised);
 }
 
 int
