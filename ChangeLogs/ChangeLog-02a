@@ -1,3 +1,8 @@
+Wed Apr 25 15:30:18 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/Malloc_Test.cpp: The reference counter needs to be release
+	  if we want it to work.
+
 Wed Apr 25 03:45:55 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/MEM_Stream_Test.cpp: Temporarily changed the informational
