@@ -509,29 +509,7 @@ ACE_OS::readPPCTimeBase (u_long &most, u_long &least)
   asm("stw r5, 0(r3)");
   asm("stw r6, 0(r4)");
 }
-#elif defined (ACE_HAS_POWERPC_TIMER) && defined (__GNUG__)
-void
-ACE_OS::readPPCTimeBase (u_long &most, u_long &least)
-{
-  ACE_OS_TRACE ("ACE_OS::readPPCTimeBase");
-
-  // This function can't be inline because it defines a symbol,
-  // aclock.  If there are multiple calls to the function in a
-  // compilation unit, then that symbol would be multiply defined if
-  // the function was inline.
-  asm volatile ("aclock:\n"
-                "mftbu 5\n"     /* upper time base register */
-                "mftb 6\n"      /* lower time base register */
-                "mftbu 7\n"     /* upper time base register */
-                "cmpw 5,7\n" /* check for rollover of upper */
-                "bne aclock\n"
-                "stw 5,%0\n"                        /* most */
-                "stw 6,%1"                         /* least */
-                : "=m" (most), "=m" (least)      /* outputs */
-                :                              /* no inputs */
-                : "5", "6", "7", "memory"    /* constraints */);
-}
-#endif /* ACE_HAS_POWERPC_TIMER  &&  (ghs or __GNUG__) */
+#endif /* ACE_HAS_POWERPC_TIMER && ghs */
 
 #if defined (ACE_HAS_STRPTIME)
 char *

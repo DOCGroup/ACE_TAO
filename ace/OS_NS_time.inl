@@ -277,7 +277,18 @@ ACE_OS::gethrtime (const ACE_HRTimer_Op op)
   ACE_UNUSED_ARG (op);
   u_long most;
   u_long least;
+
+#if defined (ghs)
   ACE_OS::readPPCTimeBase (most, least);
+#else
+  u_long scratch;
+
+  do {
+    asm volatile ("mftbu %0; mftb %1; mftbu %2" 
+		  : "=r" (most), "=r" (least), "=r" (scratch));
+  } while (most != scratch);
+#endif
+
 #if defined (ACE_LACKS_LONGLONG_T)
   return ACE_U_LongLong (least, most);
 #else  /* ! ACE_LACKS_LONGLONG_T */

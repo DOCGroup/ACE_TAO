@@ -1,3 +1,12 @@
+Fri Jun 18 12:42:52 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* ace/OS_NS_time.cpp:
+	* ace/OS_NS_time.inl:
+	* ace/OS_NS_time.h:
+	  Changed GNU C version of readPPCTimeBase() so it can be 
+	  inlined in ACE_OS::gethrtime() and compiled on Mac OS X
+	  where "r" register prefixes are required in inline asm.
+
 Fri Jun 18 12:04:35 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* ACE_INSTALL.html:
