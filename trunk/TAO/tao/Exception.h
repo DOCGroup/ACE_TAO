@@ -35,6 +35,8 @@
 #include "ace/SStringfwd.h"
 #include "ace/iosfwd.h"
 
+#include <stdio.h>   /* For "FILE" typedef. */
+
 class ACE_Allocator;
 
 class TAO_OutputCDR;
