@@ -1,3 +1,24 @@
+Fri Apr 14 18:21:31 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* orbsvcs/IFR_Service/Makefile.TypeCodeFactory:
+	* orbsvcs/IFR_Service/TCF_Export.h:
+	* orbsvcs/IFR_Service/TCF_Loader.h:
+	* orbsvcs/IFR_Service/TCF_Loader.cpp:
+	* orbsvcs/IFR_Service/TypeCodeFactory_skel.cpp:
+	* orbsvcs/IFR_Service/TypeCodeFactory_i.h:
+	* orbsvcs/IFR_Service/TypeCodeFactory_i.cpp:
+	* orbsvcs/IFR_Service/IFR.dsw:
+	* orbsvcs/IFR_Service/TypeCodeFactory_DLL.dsp:
+	* docs/releasenotes.orbcore.html:
+	  The typecode creating functions are now in class
+	  CORBA::TypeCodeFactory, implemented as a DLL in
+	  the same directory where the future Interface
+	  Repository will reside (TypeCodeFactory is used by
+	  the Interface Repository, but can also be used 
+	  separately. The object reference is now obtained
+	  by calling resolve_initial_references ("TypeCodeFactory").
+	  See the releasenotes entry for more details.
+
 Fri Apr 14 17:12:46 2000  Krishnakumar Elakkara Pathayapura  <krish@polka.cs.wustl.edu>
 
 	* orbsvcs/examples/Log/test/BasicLog_Test.h (class BasicLog_Test):
