@@ -288,6 +288,15 @@ TAO_GIOP_Invocation::invoke (CORBA::Boolean is_roundtrip,
 
   TAO_Profile   *profile   = this->data_->profile_in_use ();
   TAO_Transport *transport = profile->transport ();
+  return this->invoke_i (profile, transport, is_roundtrip, ACE_TRY_ENV);
+}
+
+TAO_GIOP_ReplyStatusType
+TAO_GIOP_Invocation::invoke_i (TAO_Profile *profile,
+                               TAO_Transport *transport,
+                               CORBA::Boolean is_roundtrip,
+                               CORBA::Environment &ACE_TRY_ENV)
+{
   if (transport == 0 ||
       transport->send_request (this->orb_core_,
                                this->out_stream_,
@@ -430,8 +439,12 @@ TAO_GIOP_ReplyStatusType
 TAO_GIOP_Twoway_Invocation::invoke (CORBA::ExceptionList &exceptions,
                                     CORBA::Environment &ACE_TRY_ENV)
 {
+  TAO_Profile   *profile   = this->data_->profile_in_use ();
+  TAO_Transport *transport = profile->transport ();
+
   TAO_GIOP_ReplyStatusType retval =
-    TAO_GIOP_Invocation::invoke (1, ACE_TRY_ENV);
+    TAO_GIOP_Invocation::invoke_i (profile, transport,
+                                   1, ACE_TRY_ENV);
   ACE_CHECK_RETURN (retval);
   ACE_UNUSED_ARG (retval);
 
@@ -471,7 +484,6 @@ TAO_GIOP_Twoway_Invocation::invoke (CORBA::ExceptionList &exceptions,
   // (explicitly coded) handlers called.  We assume a POSIX.1c/C/C++
   // environment.
 
-  TAO_Transport *transport = this->data_->profile_in_use ()->transport ();
   TAO_GIOP::Message_Type m = TAO_GIOP::recv_request (transport,
                                                      this->inp_stream_,
                                                      this->orb_core_);
@@ -710,13 +722,14 @@ TAO_GIOP_Twoway_Invocation::invoke (TAO_Exception_Data *excepts,
                                     CORBA::ULong except_count,
                                     CORBA::Environment &ACE_TRY_ENV)
 {
-  TAO_GIOP_ReplyStatusType retval =
-    TAO_GIOP_Invocation::invoke (1, ACE_TRY_ENV);
-  ACE_CHECK_RETURN (retval);
-  ACE_UNUSED_ARG (retval);
-
   TAO_Profile *profile = this->data_->profile_in_use ();
   TAO_Transport *transport = profile->transport ();
+
+  TAO_GIOP_ReplyStatusType retval =
+    TAO_GIOP_Invocation::invoke_i (profile, transport,
+                                   1, ACE_TRY_ENV);
+  ACE_CHECK_RETURN (retval);
+  ACE_UNUSED_ARG (retval);
 
   // This blocks until the response is read.  In the current version,
   // there is only one client thread that ever uses this connection,
