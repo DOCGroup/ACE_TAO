@@ -13,6 +13,8 @@
 #include "Thread_Strategy.h"
 #include "Request_Processing_Strategy.h"
 #include "Id_Assignment_Strategy.h"
+#include "Lifespan_Strategy.h"
+#include "Id_Uniqueness_Strategy.h"
 
 ACE_RCSID(PortableServer,
           Active_Policy_Strategies,
@@ -23,9 +25,11 @@ namespace TAO
   namespace Portable_Server
   {
     Active_Policy_Strategies::Active_Policy_Strategies() :
-      thread_strategy_(0),
-      request_processing_strategy_(0),
-      id_assignment_strategy_(0)
+      thread_strategy_ (0),
+      request_processing_strategy_ (0),
+      id_assignment_strategy_ (0),
+      lifespan_strategy_ (0),
+      id_uniqueness_strategy_ (0)
     {
     }
 
@@ -87,6 +91,34 @@ namespace TAO
           break;
         }
       }
+
+      switch (policies.id_uniqueness())
+      {
+        case ::PortableServer::UNIQUE_ID :
+        {
+          ACE_NEW (id_uniqueness_strategy_, Unique_Id_Uniqueness_Strategy);
+          break;
+        }
+        case ::PortableServer::MULTIPLE_ID :
+        {
+          ACE_NEW (id_uniqueness_strategy_, Multiple_Id_Uniqueness_Strategy);
+          break;
+        }
+      }
+
+      switch (policies.lifespan())
+      {
+        case ::PortableServer::TRANSIENT :
+        {
+          ACE_NEW (lifespan_strategy_, Transient_Lifespan_Strategy);
+          break;
+        }
+        case ::PortableServer::PERSISTENT :
+        {
+          ACE_NEW (lifespan_strategy_, Persistent_Lifespan_Strategy);
+          break;
+        }
+      }
     }
 
     Thread_Strategy*
@@ -106,6 +138,19 @@ namespace TAO
     {
       return id_assignment_strategy_;
     }
+
+    Id_Uniqueness_Strategy *
+    Active_Policy_Strategies::id_uniqueness_strategy (void) const
+    {
+      return id_uniqueness_strategy_;
+    }
+
+    Lifespan_Strategy*
+    Active_Policy_Strategies::lifespan_strategy (void) const
+    {
+      return lifespan_strategy_;
+    }
+
 
   }
 }

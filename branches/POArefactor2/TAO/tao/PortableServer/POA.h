@@ -150,6 +150,7 @@ namespace TAO
     class Servant_Retention_Strategy;
     class Servant_Upcall;
     class POA_Current_Impl;
+    class Unique_Id_Uniqueness_Strategy;
   }
 }
 
@@ -187,6 +188,9 @@ public:
   friend class TAO_POA_Manager;
   friend class TAO_RT_Collocation_Resolver;
   friend class TAO_IORInfo;
+
+  // this is temporarily
+  friend class TAO::Portable_Server::Unique_Id_Uniqueness_Strategy;
 
   typedef ACE_CString String;
 

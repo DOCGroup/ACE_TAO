@@ -50,12 +50,11 @@ namespace TAO
        public virtual Policy_Strategy
     {
     public:
+      Lifespan_Strategy (void);
+
       virtual ~Lifespan_Strategy (void);
 
-      void strategy_init (TAO_POA *poa, CORBA::PolicyList *policy_list)
-      {
-        // dependent on type create the correct strategy.
-      }
+      void strategy_init (TAO_POA *poa, CORBA::PolicyList *policy_list);
 
       void create (const char *name,
                    const TAO::ObjectKey &key);
@@ -77,10 +76,17 @@ namespace TAO
       {
         return sizeof (char);
       }
+
+      /// Do we have set persistent or not,
+      /// @todo this is a temporary method that has to be removed later
+      virtual CORBA::Boolean persistent (void) const = 0;
+
+    private:
+      TAO_POA *poa_;
     };
 
     class TAO_PortableServer_Export Transient_Lifespan_Strategy :
-       public virtual Policy_Strategy
+       public virtual Lifespan_Strategy
     {
     public:
       virtual ~Transient_Lifespan_Strategy (void);
@@ -88,6 +94,11 @@ namespace TAO
       virtual char lifespan_key_type (void)
       {
         return 'T';
+      }
+
+      virtual CORBA::Boolean persistent (void) const
+      {
+        return false;
       }
 
     private:
@@ -98,12 +109,20 @@ namespace TAO
        public virtual Lifespan_Strategy
     {
     public:
+      Persistent_Lifespan_Strategy ();
+
       virtual ~Persistent_Lifespan_Strategy (void);
 
       virtual char lifespan_key_type (void)
       {
         return 'P';
       }
+
+      virtual CORBA::Boolean persistent (void) const
+      {
+        return true;
+      }
+
     private:
       /// @name Implementation repository related methods
       //@{
@@ -114,6 +133,9 @@ namespace TAO
       /// ImplRepo helper method, notify the ImplRepo on shutdown
       void imr_notify_shutdown (void);
       //@}
+
+      /// Flag for whether the ImR should be used or not.
+      int use_imr_;
     };
   } /* namespace Portable_Server */
 } /* namespace TAO */

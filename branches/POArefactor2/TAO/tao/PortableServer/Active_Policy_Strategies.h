@@ -30,6 +30,8 @@ namespace TAO
     class Thread_Strategy;
     class Request_Processing_Strategy;
     class Id_Assignment_Strategy;
+    class Lifespan_Strategy;
+    class Id_Uniqueness_Strategy;
 
     /**
      * This class stores the active policy strategies used for a certain POA.
@@ -48,10 +50,16 @@ namespace TAO
 
       Id_Assignment_Strategy *id_assignment_strategy (void) const;
 
+      Id_Uniqueness_Strategy *id_uniqueness_strategy (void) const;
+
+      Lifespan_Strategy* lifespan_strategy (void) const;
+
     private:
       Thread_Strategy *thread_strategy_;
       Request_Processing_Strategy *request_processing_strategy_;
       Id_Assignment_Strategy *id_assignment_strategy_;
+      Lifespan_Strategy *lifespan_strategy_;
+      Id_Uniqueness_Strategy *id_uniqueness_strategy_;
     };
   }
 }

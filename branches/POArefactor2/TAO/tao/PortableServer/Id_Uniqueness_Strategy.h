@@ -42,15 +42,32 @@ namespace TAO
       virtual ~Id_Uniqueness_Strategy (void);
 
       void strategy_init(TAO_POA *poa, CORBA::PolicyList *policy_list);
+
+      /*
+       * Validate if the  servant may be activated
+       * @retval true This servant may be activated
+       * @retval false This servant may not be activated
+       */
+      virtual bool validate (PortableServer::Servant servant,
+                             int &wait_occurred_restart_call
+                             ACE_ENV_ARG_DECL) = 0;
     };
 
     class TAO_PortableServer_Export Unique_Id_Uniqueness_Strategy :
        public virtual Id_Uniqueness_Strategy
     {
     public:
+      Unique_Id_Uniqueness_Strategy (void);
+
       virtual ~Unique_Id_Uniqueness_Strategy (void);
 
+      void strategy_init(TAO_POA *poa, CORBA::PolicyList *policy_list);
+
+      virtual bool validate (PortableServer::Servant servant,
+                             int &wait_occurred_restart_call
+                             ACE_ENV_ARG_DECL);
     private:
+      TAO_POA* poa_;
     };
 
     class TAO_PortableServer_Export Multiple_Id_Uniqueness_Strategy :
@@ -58,6 +75,10 @@ namespace TAO
     {
     public:
       virtual ~Multiple_Id_Uniqueness_Strategy (void);
+
+      virtual bool validate (PortableServer::Servant servant,
+                             int &wait_occurred_restart_call
+                             ACE_ENV_ARG_DECL);
     };
   }
 }

@@ -49,6 +49,8 @@ ACE_RCSID (PortableServer,
 #include "ace/OS_NS_unistd.h"
 
 #include "Request_Processing_Strategy.h"
+#include "Lifespan_Strategy.h"
+#include "Id_Uniqueness_Strategy.h"
 
 // auto_ptr class
 #include "ace/Auto_Ptr.h"
@@ -277,7 +279,7 @@ TAO_POA::TAO_POA (const TAO_POA::String &name,
   ACE_NEW_THROW_EX (active_object_map,
                     TAO_Active_Object_Map (!this->system_id (),
                                            this->cached_policies_.id_uniqueness () == PortableServer::UNIQUE_ID,
-                                           this->persistent (),
+                                           this->active_policy_strategies_.lifespan_strategy()->persistent (),
                                            this->orb_core_.server_factory ()->active_object_map_creation_parameters ()
                                            ACE_ENV_ARG_PARAMETER),
                     CORBA::NO_MEMORY ());
@@ -322,7 +324,7 @@ TAO_POA::TAO_POA (const TAO_POA::String &name,
   // ImplRepo related.
   //
 #if (TAO_HAS_MINIMUM_CORBA == 0)
-  if (this->cached_policies_.lifespan () == PortableServer::PERSISTENT)
+  if (this->active_policy_strategies_.lifespan_strategy()->persistent ())
     {
       int temp = this->use_imr_;
       this->use_imr_ = 0;
@@ -780,7 +782,7 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
   //
   // ImplRepo related.
   //
-  if (this->cached_policies_.lifespan () == PortableServer::PERSISTENT)
+  if (this->active_policy_strategies_.lifespan_strategy()->persistent ())
     {
       this->imr_notify_shutdown ();
       // Delete the servant, if there is one.
@@ -1252,27 +1254,13 @@ TAO_POA::activate_object_i (PortableServer::Servant servant,
                         0);
     }
 
-  // If the POA has the UNIQUE_ID policy and the specified servant is
-  // already in the Active Object Map, the ServantAlreadyActive
-  // exception is raised.
-  if (this->cached_policies_.id_uniqueness () == PortableServer::UNIQUE_ID)
-    {
-      int result =
-        this->is_servant_in_map (servant,
-                                 wait_occurred_restart_call);
+  bool may_activate =
+    this->active_policy_strategies_.id_uniqueness_strategy()->validate (servant, wait_occurred_restart_call ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
 
-      if (result)
-        {
-          ACE_THROW_RETURN (PortableServer::POA::ServantAlreadyActive (),
-                            0);
-        }
-      else if (wait_occurred_restart_call)
-        {
-          // We ended up waiting on a condition variable, the POA
-          // state may have changed while we are waiting.  Therefore,
-          // we need to restart this call.
-          return 0;
-        }
+  if (!may_activate)
+    {
+      return 0;
     }
 
   // Otherwise, the activate_object operation generates an Object Id
@@ -1380,26 +1368,13 @@ TAO_POA::activate_object_with_id_i (const PortableServer::ObjectId &id,
                                        CORBA::COMPLETED_NO));
     }
 
-  // If the POA has the UNIQUE_ID policy and the servant is already in
-  // the Active Object Map, the ServantAlreadyActive exception is
-  // raised.
-  if (this->cached_policies_.id_uniqueness () == PortableServer::UNIQUE_ID)
-    {
-      result =
-        this->is_servant_in_map (servant,
-                                 wait_occurred_restart_call);
+  bool may_activate =
+    this->active_policy_strategies_.id_uniqueness_strategy()->validate (servant, wait_occurred_restart_call ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 
-      if (result)
-        {
-          ACE_THROW (PortableServer::POA::ServantAlreadyActive ());
-        }
-      else if (wait_occurred_restart_call)
-        {
-          // We ended up waiting on a condition variable, the POA
-          // state may have changed while we are waiting.  Therefore,
-          // we need to restart this call.
-          return;
-        }
+  if (!may_activate)
+    {
+      return;
     }
 
   // Otherwise, the activate_object_with_id operation enters an
@@ -2274,9 +2249,9 @@ TAO_POA::reference_to_servant_i (CORBA::Object_ptr reference
           !this->root () &&
           poa_system_name != this->system_name () ||
           is_root != this->root () ||
-          is_persistent != this->persistent () ||
+          is_persistent != this->active_policy_strategies_.lifespan_strategy()->persistent () ||
           is_system_id != this->system_id () ||
-          !this->persistent () &&
+          !this->active_policy_strategies_.lifespan_strategy()->persistent () &&
           poa_creation_time != this->creation_time_)
         {
           ACE_THROW_RETURN (PortableServer::POA::WrongAdapter (),
@@ -2402,9 +2377,9 @@ TAO_POA::reference_to_id (CORBA::Object_ptr reference
       !this->root () &&
       poa_system_name != this->system_name () ||
       is_root != this->root () ||
-      is_persistent != this->persistent () ||
+      is_persistent != this->active_policy_strategies_.lifespan_strategy()->persistent () ||
       is_system_id != this->system_id () ||
-      !this->persistent () &&
+      !this->active_policy_strategies_.lifespan_strategy()->persistent () &&
       poa_creation_time != this->creation_time_)
     {
       ACE_THROW_RETURN (PortableServer::POA::WrongAdapter (),
@@ -2968,7 +2943,7 @@ TAO_POA::parse_key (const TAO::ObjectKey &key,
 
   // Calculate the size of the POA name.
   CORBA::ULong poa_name_size = 0;
-  if (!is_persistent)
+  if (is_persistent)
     {
       // Transient POAs have fixed size.
       poa_name_size = TAO_Object_Adapter::transient_poa_name_size ();
@@ -3061,7 +3036,7 @@ TAO_POA::set_id (void)
   // key. Otherwise, the POA name length can be calculated by looking
   // at the remainder after extracting other parts of the key.
   int add_poa_name_length =
-    this->persistent () &&
+    this->active_policy_strategies_.lifespan_strategy()->persistent () &&
     !this->system_id ();
 
   // Size required by the POA name.
@@ -3086,7 +3061,7 @@ TAO_POA::set_id (void)
 #if (POA_NO_TIMESTAMP == 0)
   // Calculate the space required for the timestamp.
   CORBA::ULong creation_time_length = TAO_Creation_Time::creation_time_length ();
-  if (!this->persistent ())
+  if (!this->active_policy_strategies_.lifespan_strategy()->persistent ())
     {
       creation_time += creation_time_length;
     }
@@ -3128,7 +3103,7 @@ TAO_POA::set_id (void)
 
 #if (POA_NO_TIMESTAMP == 0)
   // Then copy the timestamp for transient POAs.
-  if (!this->persistent ())
+  if (!this->active_policy_strategies_.lifespan_strategy()->persistent ())
     {
       ACE_OS::memcpy (&buffer[starting_at],
                       this->creation_time_.creation_time (),
@@ -3402,7 +3377,7 @@ TAO_POA::key_to_object (const TAO::ObjectKey &key,
   CORBA::Object_ptr obj = CORBA::Object::_nil ();
 
   if (this->use_imr_
-      && this->cached_policies_.lifespan () == PortableServer::PERSISTENT)
+      && this->active_policy_strategies_.lifespan_strategy()->persistent ())
     {
       // Check to see if we alter the IOR.
       CORBA::Object_var imr =
