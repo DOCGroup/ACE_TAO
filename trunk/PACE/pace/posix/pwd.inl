@@ -31,6 +31,11 @@ pace_getpwuid_r (uid_t uid,
 # if defined (PACE_HAS_POSIX_PTHREAD_SEMANTICS)
   return getpwuid_r (uid, pwd, buffer, bufsize, result);
 # else /* ! PACE_HAS_POSIX_PTHREAD_SEMANTICS */
+  PACE_UNUSED_ARG (uid);
+  PACE_UNUSED_ARG (pwd);
+  PACE_UNUSED_ARG (buffer);
+  PACE_UNUSED_ARG (bufsize);
+  PACE_UNUSED_ARG (result);
   PACE_ERRNO_NO_SUPPORT_RETURN (-1);
 # endif /* ! PACE_HAS_POSIX_PTHREAD_SEMANTICS */
 }
@@ -53,6 +58,11 @@ pace_getpwnam_r (const char * name,
 # if defined (PACE_HAS_POSIX_PTHREAD_SEMANTICS)
   return getpwnam_r (name, pwd, buffer, bufsize, result);
 # else /* ! PACE_HAS_POSIX_PTHREAD_SEMANTICS */
+  PACE_UNUSED_ARG (name);
+  PACE_UNUSED_ARG (pwd);
+  PACE_UNUSED_ARG (buffer);
+  PACE_UNUSED_ARG (bufsize);
+  PACE_UNUSED_ARG (result);
   PACE_ERRNO_NO_SUPPORT_RETURN (-1);
 # endif /* ! PACE_HAS_POSIX_PTHREAD_SEMANTICS */
 }
