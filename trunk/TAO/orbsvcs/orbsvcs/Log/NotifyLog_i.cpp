@@ -1,6 +1,6 @@
-#include "orbsvcs/orbsvcs/Log/NotifyLog_i.h"
-#include "orbsvcs/orbsvcs/Log/LogMgr_i.h"
-#include "orbsvcs/orbsvcs/Log/LogNotification.h"
+#include "orbsvcs/Log/NotifyLog_i.h"
+#include "orbsvcs/Log/LogMgr_i.h"
+#include "orbsvcs/Log/LogNotification.h"
 
 ACE_RCSID (Log,
            NotifyLog_i,

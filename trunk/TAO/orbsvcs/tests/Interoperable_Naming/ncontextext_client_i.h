@@ -24,7 +24,7 @@
 #define NCONTEXTEXT_CLIENT_I_H
 
 #include "Web_ServerC.h"
-#include "orbsvcs/orbsvcs/CosNamingC.h"
+#include "orbsvcs/CosNamingC.h"
 
 class NContextExt_Client_i
 {

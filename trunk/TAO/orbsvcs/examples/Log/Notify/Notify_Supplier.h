@@ -17,10 +17,10 @@
 #ifndef NOTIFY_SUPPLIER_H
 #define NOTIFY_SUPPLIER_H
 
-#include "orbsvcs/orbsvcs/CosNotifyChannelAdminS.h"
-#include "orbsvcs/orbsvcs/DsNotifyLogAdminC.h"
-#include "orbsvcs/orbsvcs/CosNamingC.h"
-#include "orbsvcs/orbsvcs/CosNotifyCommS.h"
+#include "orbsvcs/CosNotifyChannelAdminS.h"
+#include "orbsvcs/DsNotifyLogAdminC.h"
+#include "orbsvcs/CosNamingC.h"
+#include "orbsvcs/CosNotifyCommS.h"
 
 
 class Filter_StructuredPushSupplier;

@@ -21,8 +21,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/orbsvcs/SSLIOPC.h"
-#include "orbsvcs/orbsvcs/Security/SL3_SecurityCurrent_Impl.h"
+#include "orbsvcs/SSLIOPC.h"
+#include "orbsvcs/Security/SL3_SecurityCurrent_Impl.h"
 #include "tao/ORB_Core.h"
 
 #include <openssl/ssl.h>

@@ -22,7 +22,7 @@
 
 #include "ace/SString.h"
 
-#include "orbsvcs/orbsvcs/CosNotificationC.h"
+#include "orbsvcs/CosNotificationC.h"
 
 class TAO_Notify_PropertySeq;
 

@@ -33,7 +33,7 @@
 #include "PG_Location_Hash.h"
 #include "PG_Location_Equal_To.h"
 #include "PG_Object_Group_Manipulator.h"
-#include "orbsvcs/orbsvcs/PortableGroupC.h"
+#include "orbsvcs/PortableGroupC.h"
 #include "tao/PortableServer/PortableServer.h"
 #include "ace/Hash_Map_Manager_T.h"
 #include "ace/ACE.h"

@@ -9,8 +9,8 @@
 #include "ace/Dynamic_Service.h"
 #include "tao/Strategies/advanced_resource.h"
 #include "tao/Messaging/Messaging.h"
-#include "orbsvcs/orbsvcs/Notify/Service.h"
-#include "orbsvcs/orbsvcs/Time_Utilities.h"
+#include "orbsvcs/Notify/Service.h"
+#include "orbsvcs/Time_Utilities.h"
 
 ACE_RCSID (Notify_Tests, 
            Throughput, 

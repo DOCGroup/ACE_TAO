@@ -5,7 +5,7 @@
 #include "FT_ClientORBInitializer.h"
 #include "FT_ClientPolicyFactory.h"
 #include "FT_ClientRequest_Interceptor.h"
-#include "orbsvcs/orbsvcs/FT_CORBA_ORBC.h"
+#include "orbsvcs/FT_CORBA_ORBC.h"
 #include "tao/Exception.h"
 #include "tao/ORB_Constants.h"
 

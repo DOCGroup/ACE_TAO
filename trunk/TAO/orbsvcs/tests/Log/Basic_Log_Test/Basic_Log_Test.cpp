@@ -1,6 +1,6 @@
 #include "Basic_Log_Test.h"
 
-#include "orbsvcs/orbsvcs/Time_Utilities.h"
+#include "orbsvcs/Time_Utilities.h"
 
 #include "tao/debug.h"
 

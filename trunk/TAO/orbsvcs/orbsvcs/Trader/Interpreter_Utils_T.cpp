@@ -3,8 +3,8 @@
 #ifndef TAO_INTERPRETER_UTILS_CPP
 #define TAO_INTERPRETER_UTILS_CPP
 
-#include "orbsvcs/orbsvcs/Trader/Interpreter_Utils_T.h"
-#include "orbsvcs/orbsvcs/Trader/Constraint_Visitors.h"
+#include "orbsvcs/Trader/Interpreter_Utils_T.h"
+#include "orbsvcs/Trader/Constraint_Visitors.h"
 #include "tao/DynamicAny/DynSequence_i.h"
 
 template <class OPERAND_TYPE> CORBA::Boolean

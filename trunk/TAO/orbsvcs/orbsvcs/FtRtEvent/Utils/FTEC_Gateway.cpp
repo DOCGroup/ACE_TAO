@@ -2,7 +2,7 @@
 #include "activate_with_id.h"
 #include "UUID.h"
 #include "resolve_init.h"
-#include "orbsvcs/orbsvcs/FtRtecEventCommS.h"
+#include "orbsvcs/FtRtecEventCommS.h"
 #include "tao/ORB_Core.h"
 
 ACE_RCSID (Utils,

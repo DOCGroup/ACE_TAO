@@ -1,7 +1,7 @@
 // $Id$
 
 #include "pong.h"
-#include "orbsvcs/orbsvcs/AV/Protocol_Factory.h"
+#include "orbsvcs/AV/Protocol_Factory.h"
 #include "tao/PortableServer/PortableServer.h"
 #include "tao/Strategies/advanced_resource.h"
 #include "tao/ORB.h"

@@ -3,7 +3,7 @@
 #include "Reconnect.h"
 #include "Consumer.h"
 #include "Supplier.h"
-#include "orbsvcs/orbsvcs/Event/EC_Event_Channel.h"
+#include "orbsvcs/Event/EC_Event_Channel.h"
 #include "ace/Get_Opt.h"
 #include "ace/High_Res_Timer.h"
 

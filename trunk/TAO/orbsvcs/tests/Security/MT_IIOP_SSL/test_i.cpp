@@ -5,7 +5,7 @@
 #include "tao/ORB_Core.h"
 #include "tao/Thread_Lane_Resources.h"
 #include "tao/Transport_Cache_Manager.h"
-#include "orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.h"
+#include "orbsvcs/SSLIOP/SSLIOP_Transport.h"
 #include "ace/OS_NS_unistd.h"
 
 #if !defined(__ACE_INLINE__)

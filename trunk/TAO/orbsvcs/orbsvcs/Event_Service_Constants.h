@@ -23,7 +23,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/orbsvcs/Time_Utilities.h"
+#include "orbsvcs/Time_Utilities.h"
 
 /// This is the number of events a consumer can subscribe to.
 const int ACE_ES_MAX_SUBSCRIPTIONS = 32;

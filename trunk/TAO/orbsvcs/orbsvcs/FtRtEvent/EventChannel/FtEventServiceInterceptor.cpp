@@ -1,6 +1,6 @@
 // $Id$
 
-#include "orbsvcs/orbsvcs/FT_CORBA_ORBC.h"
+#include "orbsvcs/FT_CORBA_ORBC.h"
 #include "FtEventServiceInterceptor.h"
 #include "Request_Context_Repository.h"
 #include "../Utils/Safe_InputCDR.h"

@@ -1,8 +1,8 @@
 #include "Push_Handler.h"
 #include "Monitor_Signal_Handler.h"
 
-#include "orbsvcs/orbsvcs/LoadBalancing/LB_CPU_Load_Average_Monitor.h"
-#include "orbsvcs/orbsvcs/LoadBalancing/LB_conf.h"
+#include "orbsvcs/LoadBalancing/LB_CPU_Load_Average_Monitor.h"
+#include "orbsvcs/LoadBalancing/LB_conf.h"
 
 #include "tao/ORB_Core.h"
 

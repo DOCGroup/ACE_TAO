@@ -12,8 +12,8 @@
 //=============================================================================
 
 
-#include "orbsvcs/orbsvcs/CosLoadBalancingC.h"
-#include "orbsvcs/orbsvcs/PortableGroupC.h"
+#include "orbsvcs/CosLoadBalancingC.h"
+#include "orbsvcs/PortableGroupC.h"
 #include "tao/PortableServer/PortableServer.h"
 
 // Forward Declaration of the kind of servant we would like to handle

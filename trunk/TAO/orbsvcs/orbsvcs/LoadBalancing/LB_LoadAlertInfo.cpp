@@ -1,5 +1,5 @@
 #include "LB_LoadAlertInfo.h"
-#include "orbsvcs/orbsvcs/PortableGroup/PG_Operators.h"
+#include "orbsvcs/PortableGroup/PG_Operators.h"
 
 ACE_RCSID (LoadBalancing,
            LB_LoadAlertInfo,

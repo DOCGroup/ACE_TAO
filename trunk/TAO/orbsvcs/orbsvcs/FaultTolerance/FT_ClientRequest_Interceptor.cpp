@@ -1,7 +1,7 @@
 // $Id$
 
 #include "FT_ClientRequest_Interceptor.h"
-#include "orbsvcs/orbsvcs/FT_CORBA_ORBC.h"
+#include "orbsvcs/FT_CORBA_ORBC.h"
 
 #include "tao/CORBA_String.h"
 #include "tao/debug.h"

@@ -8,7 +8,7 @@
 // BindDialog.h : header file
 //
 #include "tao/corba.h"
-#include "orbsvcs/orbsvcs/CosNamingC.h"
+#include "orbsvcs/CosNamingC.h"
 /////////////////////////////////////////////////////////////////////////////
 // CBindDialog dialog
 

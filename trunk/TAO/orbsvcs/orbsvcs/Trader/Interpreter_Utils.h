@@ -21,7 +21,7 @@
 #include "tao/Typecode.h"
 #include "tao/CORBA_String.h"
 
-#include "orbsvcs/orbsvcs/Trader/trading_export.h"
+#include "orbsvcs/Trader/trading_export.h"
 
 // =  Classes to deal with the ACE_Hash_Map_Manager.
 

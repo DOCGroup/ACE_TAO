@@ -6,9 +6,9 @@
 #include "ace/Sched_Params.h"
 #include "ace/Get_Opt.h"
 
-#include "orbsvcs/orbsvcs/CosNamingC.h"
-#include "orbsvcs/orbsvcs/Scheduler_Factory.h"
-#include "orbsvcs/orbsvcs/Naming/Naming_Utils.h"
+#include "orbsvcs/CosNamingC.h"
+#include "orbsvcs/Scheduler_Factory.h"
+#include "orbsvcs/Naming/Naming_Utils.h"
 
 ACE_RCSID (Sched_Conf, 
            Sched_Conf, 

@@ -17,9 +17,9 @@
 #ifndef NOTIFY_RedGreen_Test_CLIENT_H
 #define NOTIFY_RedGreen_Test_CLIENT_H
 
-#include "orbsvcs/orbsvcs/CosNotifyChannelAdminS.h"
-#include "orbsvcs/orbsvcs/CosNotifyCommC.h"
-#include "orbsvcs/orbsvcs/CosNamingC.h"
+#include "orbsvcs/CosNotifyChannelAdminS.h"
+#include "orbsvcs/CosNotifyCommC.h"
+#include "orbsvcs/CosNamingC.h"
 #include "ace/Task.h"
 #include "ace/Stats.h"
 #include "ace/High_Res_Timer.h"

@@ -8,7 +8,7 @@
 #include "ace/OS_NS_unistd.h"
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
-#include "orbsvcs/orbsvcs/Time_Utilities.h"
+#include "orbsvcs/Time_Utilities.h"
 #include "StructuredEvent.h"
 #include "Task_Stats.h"
 #include "Task_Callback.h"

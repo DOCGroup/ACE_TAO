@@ -21,8 +21,8 @@
 #include /**/ "ace/pre.h"
 
 #include "portablegroup_export.h"
-#include "orbsvcs/orbsvcs/PortableGroupS.h"
-#include "orbsvcs/orbsvcs/CosNamingC.h"
+#include "orbsvcs/PortableGroupS.h"
+#include "orbsvcs/CosNamingC.h"
 #include "ace/Hash_Map_Manager.h"
 #include "ace/SString.h"
 #include "ace/Null_Mutex.h"

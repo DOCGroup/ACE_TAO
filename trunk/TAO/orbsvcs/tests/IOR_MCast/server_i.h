@@ -5,7 +5,7 @@
 #ifndef SERVER_I_H
 #define SERVER_I_H
 
-#include "orbsvcs/orbsvcs/IOR_Multicast.h"
+#include "orbsvcs/IOR_Multicast.h"
 
 class Server_i
 {

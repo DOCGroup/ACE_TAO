@@ -3,7 +3,7 @@
 #include "RT_POA_Helper.h"
 #include "tao/RTCORBA/RTCORBA.h"
 #include "tao/debug.h"
-#include "orbsvcs/orbsvcs/NotifyExtC.h"
+#include "orbsvcs/NotifyExtC.h"
 #include "RT_Properties.h"
 #include "ace/SString.h"
 

@@ -2,13 +2,13 @@
 
 #include "Constants.h"
 
-#include "orbsvcs/orbsvcs/Event_Utilities.h"
-#include "orbsvcs/orbsvcs/Event/EC_Lifetime_Utils_T.h"
-#include "orbsvcs/orbsvcs/Event/ECG_UDP_Sender.h"
-#include "orbsvcs/orbsvcs/Event/ECG_UDP_Receiver.h"
+#include "orbsvcs/Event_Utilities.h"
+#include "orbsvcs/Event/EC_Lifetime_Utils_T.h"
+#include "orbsvcs/Event/ECG_UDP_Sender.h"
+#include "orbsvcs/Event/ECG_UDP_Receiver.h"
 
-#include "orbsvcs/orbsvcs/RtecEventChannelAdminC.h"
-#include "orbsvcs/orbsvcs/RtecEventCommS.h"
+#include "orbsvcs/RtecEventChannelAdminC.h"
+#include "orbsvcs/RtecEventCommS.h"
 
 #include "tao/ORB_Core.h"
 

@@ -7,8 +7,8 @@
 #include "tao/ORB_Core.h"
 #include "ace/Sched_Params.h"
 #include "Supplier.h"
-#include "orbsvcs/orbsvcs/NotifyExtC.h"
-#include "orbsvcs/orbsvcs/CosNamingC.h"
+#include "orbsvcs/NotifyExtC.h"
+#include "orbsvcs/CosNamingC.h"
 #include "ace/OS_NS_errno.h"
 
 ACE_RCSID (Notify, TAO_Notify_Lanes_Supplier_Client, "$Id$")

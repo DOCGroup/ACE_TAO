@@ -22,15 +22,15 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/orbsvcs/Event_Service_Constants.h"
+#include "orbsvcs/Event_Service_Constants.h"
 
-#include "orbsvcs/orbsvcs/CosNamingC.h"
-#include "orbsvcs/orbsvcs/RtecSchedulerC.h"
-#include "orbsvcs/orbsvcs/RtecSchedulerS.h"
-#include "orbsvcs/orbsvcs/RtecEventCommC.h"
-#include "orbsvcs/orbsvcs/RtecEventCommS.h"
-#include "orbsvcs/orbsvcs/RtecEventChannelAdminC.h"
-#include "orbsvcs/orbsvcs/RtecEventChannelAdminS.h"
+#include "orbsvcs/CosNamingC.h"
+#include "orbsvcs/RtecSchedulerC.h"
+#include "orbsvcs/RtecSchedulerS.h"
+#include "orbsvcs/RtecEventCommC.h"
+#include "orbsvcs/RtecEventCommS.h"
+#include "orbsvcs/RtecEventChannelAdminC.h"
+#include "orbsvcs/RtecEventChannelAdminS.h"
 
 #define ACE_DEFAULT_EVENT_CHANNEL_TYPE 0
 

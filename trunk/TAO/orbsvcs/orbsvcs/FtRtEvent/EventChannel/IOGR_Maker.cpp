@@ -10,7 +10,7 @@
 #include <algorithm>
 #include "../Utils/resolve_init.h"
 #include "../Utils/Safe_InputCDR.h"
-#include "orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.h"
+#include "orbsvcs/FaultTolerance/FT_IOGR_Property.h"
 #include "GroupInfoPublisher.h"
 
 ACE_RCSID (EventChannel,

@@ -9,7 +9,7 @@
 #pragma once
 #endif // _MSC_VER > 1000
 
-#include "orbsvcs/orbsvcs/CosNamingC.h"
+#include "orbsvcs/CosNamingC.h"
 #include "NamingTreeCtrl.h"
 /////////////////////////////////////////////////////////////////////////////
 // CNamingViewerDlg dialog

@@ -1,5 +1,5 @@
 #include "Notify_Supplier.h"
-#include "orbsvcs/orbsvcs/CosNotifyChannelAdminS.h"
+#include "orbsvcs/CosNotifyChannelAdminS.h"
 #include "ace/OS_main.h"
 
 ACE_RCSID (Notify,

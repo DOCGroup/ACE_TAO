@@ -3,8 +3,8 @@
 #include "Observer.h"
 #include "Consumer.h"
 #include "Supplier.h"
-#include "orbsvcs/orbsvcs/Event/EC_Event_Channel.h"
-#include "orbsvcs/orbsvcs/Event/EC_Default_Factory.h"
+#include "orbsvcs/Event/EC_Event_Channel.h"
+#include "orbsvcs/Event/EC_Default_Factory.h"
 #include "ace/Arg_Shifter.h"
 #include "ace/High_Res_Timer.h"
 

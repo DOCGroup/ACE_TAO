@@ -20,7 +20,7 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/orbsvcs/CosLoadBalancingC.h"
+#include "orbsvcs/CosLoadBalancingC.h"
 
 
 /**

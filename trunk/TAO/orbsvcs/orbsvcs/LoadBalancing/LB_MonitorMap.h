@@ -16,14 +16,14 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/orbsvcs/CosLoadBalancingC.h"
+#include "orbsvcs/CosLoadBalancingC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/orbsvcs/PortableGroup/PG_Location_Hash.h"
-#include "orbsvcs/orbsvcs/PortableGroup/PG_Location_Equal_To.h"
+#include "orbsvcs/PortableGroup/PG_Location_Hash.h"
+#include "orbsvcs/PortableGroup/PG_Location_Equal_To.h"
 
 #include "ace/Hash_Map_Manager_T.h"
 

@@ -4,7 +4,7 @@
 #include "SSLIOP_Util.h"
 #include "SSLIOP_X509.h"
 
-#include "orbsvcs/orbsvcs/SecurityLevel2C.h"
+#include "orbsvcs/SecurityLevel2C.h"
 
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"

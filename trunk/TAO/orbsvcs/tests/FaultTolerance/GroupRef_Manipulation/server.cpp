@@ -10,9 +10,9 @@
 #include "Server_Request_Interceptor.h"
 #include "tao/IORManipulation/IORManipulation.h"
 #include "tao/ORBInitializer_Registry.h"
-#include "orbsvcs/orbsvcs/FaultTolerance/FT_Service_Activate.h"
-#include "orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.h"
-#include "orbsvcs/orbsvcs/FT_CORBA_ORBC.h"
+#include "orbsvcs/FaultTolerance/FT_Service_Activate.h"
+#include "orbsvcs/FaultTolerance/FT_IOGR_Property.h"
+#include "orbsvcs/FT_CORBA_ORBC.h"
 
 ACE_RCSID (ForwardRequest,
            server,

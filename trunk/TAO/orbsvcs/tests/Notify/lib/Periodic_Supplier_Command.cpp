@@ -12,7 +12,7 @@ ACE_RCSID (lib,
 #include "Direct_Supplier.h"
 #include "Activation_Manager.h"
 #include "Options_Parser.h"
-#include "orbsvcs/orbsvcs/NotifyExtC.h"
+#include "orbsvcs/NotifyExtC.h"
 
 TAO_Notify_Tests_Periodic_Supplier_Command::TAO_Notify_Tests_Periodic_Supplier_Command (void)
 {

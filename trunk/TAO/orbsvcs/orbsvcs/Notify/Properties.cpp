@@ -1,7 +1,7 @@
 // $Id$
 
 #include "Properties.h"
-#include "orbsvcs/orbsvcs/NotifyExtC.h"
+#include "orbsvcs/NotifyExtC.h"
 #include "tao/debug.h"
 
 #if ! defined (__ACE_INLINE__)

@@ -14,7 +14,7 @@
 #define EC_MT_DISCONNECT_H
 
 #include "ace/Task.h"
-#include "orbsvcs/orbsvcs/RtecEventChannelAdminC.h"
+#include "orbsvcs/RtecEventChannelAdminC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

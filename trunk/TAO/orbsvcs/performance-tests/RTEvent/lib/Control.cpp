@@ -11,7 +11,7 @@
 #include "Shutdown.h"
 #include "Auto_Disconnect.h"
 
-#include "orbsvcs/orbsvcs/Event_Service_Constants.h"
+#include "orbsvcs/Event_Service_Constants.h"
 
 #include "ace/High_Res_Timer.h"
 #include "ace/Sample_History.h"

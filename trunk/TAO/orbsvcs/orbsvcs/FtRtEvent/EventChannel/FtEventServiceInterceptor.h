@@ -16,7 +16,7 @@
 #include "tao/PortableInterceptorC.h"
 #include "tao/LocalObject.h"
 #include "tao/ORB.h"
-#include "orbsvcs/orbsvcs/FtRtecEventChannelAdminC.h"
+#include "orbsvcs/FtRtecEventChannelAdminC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

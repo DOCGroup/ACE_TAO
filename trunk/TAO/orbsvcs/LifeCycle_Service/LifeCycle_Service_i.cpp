@@ -15,7 +15,7 @@
 
 #include "ace/Get_Opt.h"
 
-#include "orbsvcs/orbsvcs/LifeCycleServiceC.h"
+#include "orbsvcs/LifeCycleServiceC.h"
 
 #include "LifeCycle_Service_i.h"
 

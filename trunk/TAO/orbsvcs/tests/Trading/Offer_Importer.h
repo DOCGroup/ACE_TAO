@@ -23,7 +23,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/orbsvcs/Trader/Trader_Utils.h"
+#include "orbsvcs/Trader/Trader_Utils.h"
 #include "ttest_export.h"
 
 class TAO_TTest_Export TAO_Offer_Importer

@@ -15,16 +15,16 @@
 #define TAO_SSLIOP_CREDENTIALS_ACQUIRER_H
 
 #include /**/ "ace/pre.h"
-#include "orbsvcs/orbsvcs/SSLIOP/SSLIOP_Export.h"
+#include "orbsvcs/SSLIOP/SSLIOP_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/orbsvcs/Security/SL3_CredentialsCurator.h"
+#include "orbsvcs/Security/SL3_CredentialsCurator.h"
 
-#include "orbsvcs/orbsvcs/SSLIOPC.h"
-#include "orbsvcs/orbsvcs/SecurityLevel3C.h"
+#include "orbsvcs/SSLIOPC.h"
+#include "orbsvcs/SecurityLevel3C.h"
 
 #include "tao/LocalObject.h"
 

@@ -23,7 +23,7 @@
 #define IOR_CORBALOC_CLIENT_I_H
 
 #include "corbalocC.h"
-#include "orbsvcs/orbsvcs/CosNamingC.h"
+#include "orbsvcs/CosNamingC.h"
 
 #include "ace/SString.h"
 

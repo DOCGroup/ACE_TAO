@@ -6,8 +6,8 @@
 #define SIMPLE_H
 
 #include "TestS.h"
-#include "orbsvcs/orbsvcs/CosLoadBalancingC.h"
-#include "orbsvcs/orbsvcs/PortableGroupC.h"
+#include "orbsvcs/CosLoadBalancingC.h"
+#include "orbsvcs/PortableGroupC.h"
 
 #if defined (_MSC_VER)
 # if (_MSC_VER >= 1200)

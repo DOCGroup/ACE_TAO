@@ -1,7 +1,7 @@
 // $Id$
 
 #include "Counting_Supplier.h"
-#include "orbsvcs/orbsvcs/Event_Utilities.h"
+#include "orbsvcs/Event_Utilities.h"
 #include "ace/OS_NS_unistd.h"
 
 ACE_RCSID (EC_Tests, 

@@ -1,7 +1,7 @@
 // $Id$
 
 #include "ping.h"
-#include "orbsvcs/orbsvcs/AV/Protocol_Factory.h"
+#include "orbsvcs/AV/Protocol_Factory.h"
 #include "tao/ORB.h"
 #include "tao/Strategies/advanced_resource.h"
 #include "ace/Get_Opt.h"

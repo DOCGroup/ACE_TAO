@@ -22,8 +22,8 @@
 #define SUPPLIER_ADMIN_I_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/orbsvcs/RtecEventChannelAdminC.h"
-#include "orbsvcs/orbsvcs/CosEventChannelAdminC.h"
+#include "orbsvcs/RtecEventChannelAdminC.h"
+#include "orbsvcs/CosEventChannelAdminC.h"
 #include "ProxyPushConsumer_i.h"
 
 #if defined(_MSC_VER)

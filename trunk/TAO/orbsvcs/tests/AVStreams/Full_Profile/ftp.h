@@ -6,12 +6,12 @@
 
 #include "ace/Get_Opt.h"
 #include "ace/High_Res_Timer.h"
-#include "orbsvcs/orbsvcs/AV/AVStreams_i.h"
-#include "orbsvcs/orbsvcs/AV/Flows_T.h"
-#include "orbsvcs/orbsvcs/AV/Endpoint_Strategy.h"
-#include "orbsvcs/orbsvcs/AV/Transport.h"
-#include "orbsvcs/orbsvcs/AV/sfp.h"
-#include "orbsvcs/orbsvcs/AV/MCast.h"
+#include "orbsvcs/AV/AVStreams_i.h"
+#include "orbsvcs/AV/Flows_T.h"
+#include "orbsvcs/AV/Endpoint_Strategy.h"
+#include "orbsvcs/AV/Transport.h"
+#include "orbsvcs/AV/sfp.h"
+#include "orbsvcs/AV/MCast.h"
 
 class Client;
 

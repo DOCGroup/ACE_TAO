@@ -13,7 +13,7 @@
 #ifndef IOGR_MAKER_H
 #define IOGR_MAKER_H
 
-#include "orbsvcs/orbsvcs/FT_CORBA_ORBC.h"
+#include "orbsvcs/FT_CORBA_ORBC.h"
 #include "tao/IORManipulation/IORManipulation.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

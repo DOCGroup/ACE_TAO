@@ -19,8 +19,8 @@
 
 #include /**/ "event_export.h"
 
-#include "orbsvcs/orbsvcs/RtecEventChannelAdminS.h"
-#include "orbsvcs/orbsvcs/RtecEventCommS.h"
+#include "orbsvcs/RtecEventChannelAdminS.h"
+#include "orbsvcs/RtecEventCommS.h"
 
 /**
  * @class TAO_EC_Gateway

@@ -28,7 +28,7 @@
 
 #include "QuoterC.h"
 
-#include "orbsvcs/orbsvcs/CosLifeCycleC.h"
+#include "orbsvcs/CosLifeCycleC.h"
 
 #include "ace/Task.h"
 #include "ace/Thread_Manager.h"

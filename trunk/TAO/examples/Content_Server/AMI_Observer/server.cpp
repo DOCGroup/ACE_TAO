@@ -3,7 +3,7 @@
 
 // Ossama Othman <ossama@uci.edu>
 
-#include "orbsvcs/orbsvcs/CosNamingC.h"
+#include "orbsvcs/CosNamingC.h"
 #include "Push_Web_ServerS.h"
 #include "Push_Iterator_Factory_i.h"
 

@@ -22,8 +22,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/orbsvcs/CSIIOPC.h"
-#include "orbsvcs/orbsvcs/SecurityC.h"
+#include "orbsvcs/CSIIOPC.h"
+#include "orbsvcs/SecurityC.h"
 
 #include "tao/PortableInterceptorC.h"
 #include "tao/LocalObject.h"

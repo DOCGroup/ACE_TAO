@@ -22,8 +22,8 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/orbsvcs/CosNotifyCommS.h"
-#include "orbsvcs/orbsvcs/FT_NotifierC.h"
+#include "orbsvcs/CosNotifyCommS.h"
+#include "orbsvcs/FT_NotifierC.h"
 #include "FT_ReplicationManagerLib_export.h"
 
 namespace TAO

@@ -3,8 +3,8 @@
 #include "ace/Arg_Shifter.h"
 #include "ace/Get_Opt.h"
 #include "tao/debug.h"
-#include "orbsvcs/orbsvcs/CosNamingC.h"
-#include "orbsvcs/orbsvcs/CosNotifyCommC.h"
+#include "orbsvcs/CosNamingC.h"
+#include "orbsvcs/CosNotifyCommC.h"
 #include "IdAssignment.h"
 
 ACE_RCSID (Notify_Tests, 

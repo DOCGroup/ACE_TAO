@@ -7,7 +7,7 @@
 #include "ETCL_FilterFactory.h"
 #include "RT_POA_Helper.h"
 #include "Properties.h"
-#include "orbsvcs/orbsvcs/NotifyExtC.h"
+#include "orbsvcs/NotifyExtC.h"
 #include "Object.h"
 
 #if ! defined (__ACE_INLINE__)

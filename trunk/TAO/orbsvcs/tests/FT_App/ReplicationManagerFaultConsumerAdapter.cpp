@@ -4,7 +4,7 @@
 
 #include "ReplicationManagerFaultConsumerAdapter.h"
 #include "ace/Get_Opt.h"
-#include "orbsvcs/orbsvcs/PortableGroup/PG_Properties_Encoder.h"
+#include "orbsvcs/PortableGroup/PG_Properties_Encoder.h"
 #include "orbsvcs/FT_ReplicationManager/FT_DefaultFaultAnalyzer.h"
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"

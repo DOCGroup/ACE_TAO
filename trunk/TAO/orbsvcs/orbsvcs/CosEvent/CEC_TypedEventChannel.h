@@ -25,7 +25,7 @@
 #include "CEC_Defaults.h"
 #include "event_export.h"
 
-#include "orbsvcs/orbsvcs/CosTypedEventChannelAdminS.h"
+#include "orbsvcs/CosTypedEventChannelAdminS.h"
 
 #include "tao/IFR_Client/IFR_BasicC.h"
 #include "tao/NVList.h"

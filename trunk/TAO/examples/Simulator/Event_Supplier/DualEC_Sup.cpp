@@ -26,8 +26,8 @@
 
 #include "orbsvcs/Event_Utilities.h"
 #include "orbsvcs/Event_Service_Constants.h"
-#include "orbsvcs/orbsvcs/Sched/Config_Scheduler.h"
-#include "orbsvcs/orbsvcs/Runtime_Scheduler.h"
+#include "orbsvcs/Sched/Config_Scheduler.h"
+#include "orbsvcs/Runtime_Scheduler.h"
 #include "orbsvcs/RtecEventChannelAdminC.h"
 
 #include "tao/PortableServer/ORB_Manager.h"
