@@ -1,3 +1,14 @@
+Sun Jan 18 14:32:42 1998  Darrell Brunsch  <brunsch@cs.wustl.edu>
+
+	* ace/Timer_Heap_T.cpp: Problems were arising because of the 
+	  use of negative numbers in the timer_id array of the timer
+	  heap for the free list.  When the 0th index is in the free
+	  list, pointers to it will show up as 0 (because 0 == -0).
+	  This will look the same as a timer_id for the top of the
+	  heap, and if cancel () was attempted on this invalid 
+	  timer_id, bad things would happen.  To prevent this, index
+	  0 is now ignored so it doesn't show up in the free list.
+
 Sun Jan 18 18:12:52 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* examples/Service_Configurator/Misc/*.ds?: Added new project

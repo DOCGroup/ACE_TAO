@@ -71,7 +71,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::ACE_Timer_Heap_T (size_t size,
   : INHERITED (upcall_functor, freelist),
     max_size_ (size),
     cur_size_ (0),
-    timer_ids_freelist_ (0),
+    timer_ids_freelist_ (1),
     preallocated_nodes_ (0),
     preallocated_nodes_freelist_ (0)
 {
@@ -119,7 +119,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::ACE_Timer_Heap_T (FUNCTOR *upcall_fun
   : INHERITED (upcall_functor, freelist),
     max_size_ (ACE_DEFAULT_TIMERS),
     cur_size_ (0),
-    timer_ids_freelist_ (0),
+    timer_ids_freelist_ (1),
     preallocated_nodes_ (0),
     preallocated_nodes_freelist_ (0)
 {
