@@ -102,14 +102,22 @@ sub run_program ($)
     unlink <log/$program*.log>;
     unlink "core";
 
-    my $P = new PerlACE::Process ($program);
+    my $P;
 
-    ### Try to run the program
+    if ($config_list->check_config ('Valgrind')) {
+      $P = new PerlACE::Process ("valgrind -q ./$program");   
+      $P->IgnoreExeSubDir(1);
+    }
+    else {
+      $P = new PerlACE::Process ($program);
 
-    if (! -x $P->Executable ()) {
-        print STDERR "Error: " . $P->Executable () .
-                     " does not exist or is not runnable\n";
-        return;
+      ### Try to run the program
+
+      if (! -x $P->Executable ()) {
+          print STDERR "Error: " . $P->Executable () .
+                       " does not exist or is not runnable\n";
+          return;
+       }
     }
 
     print STDERR "Running $program\n";
