@@ -1,3 +1,8 @@
+Thu Nov  6 19:06:59 1997  Sergio Flores  <sergio@polka.cs.wustl.edu>
+
+	* docs/releasenotes/index.html: Updated status of Naming Service
+ 	port to TAO.
+
 Thu Nov  6 17:07:58 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* tao/tao_internals.i: Added missing #include file.
