@@ -45,6 +45,14 @@
 //  Runtime restrictions: ACE DLL must be installed :-)
 #define ACE_HAS_DLL
 
+// Build ACE services as DLLs.  If you write a library and want it to
+// use ACE_Svc_Export, this will cause those macros to build dlls.  If
+// you want your ACE service to be a static library, comment out this
+// line.  As far as I know, the only reason to have a library be an
+// ACE "service" is to leverage the ACE_Svc_Export macros.  It's just
+// as easy to define your own export macros.
+#define ACE_HAS_SVC_DLL
+
 // Define the following macro if you're compiling with WinSock 2.0.
 //  Setting applies to  : building ACE
 //  Runtime restrictions: winsock2 must be installed.
