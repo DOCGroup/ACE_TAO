@@ -5,13 +5,13 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    Event_Handler_T.h
 //
 // = AUTHOR
-//    Doug Schmidt 
-// 
+//    Doug Schmidt
+//
 // ============================================================================
 
 #if !defined (ACE_EVENT_HANDLER_T_H)
@@ -21,8 +21,8 @@
 
 #if defined (ACE_HAS_TEMPLATE_TYPEDEFS)
 
-template <class T> 
-class ACE_Export ACE_Event_Handler_T : public ACE_Event_Handler 
+template <class T>
+class ACE_Export ACE_Event_Handler_T : public ACE_Event_Handler
 {
   // = TITLE
   //     Enable a class that doesn't inherit from the
@@ -76,14 +76,10 @@ public:
   typedef int (T::*CL_HANDLER) (ACE_HANDLE, ACE_Reactor_Mask);
   // Handle close events.
 
-  typedef int (T::*SIG_HANDLER) (ACE_HANDLE
-#if defined(ACE_HAS_SIGINFO_T)
-, siginfo_t*, ucontext_t*
-#endif /* ACE_HAS_SIGINFO_T */
-);
+  typedef int (T::*SIG_HANDLER) (ACE_HANDLE, siginfo_t*, ucontext_t*);
   // = Initialization and termination methods.
 
-  ACE_Event_Handler_T (T *op_handler, 
+  ACE_Event_Handler_T (T *op_handler,
                        int delete_handler,
                        GET_HANDLE get_handle = 0,
                        IO_HANDLER input = 0,
@@ -115,7 +111,7 @@ public:
   void op_handler (T *);
 
   // = Get/set the target pointer-to-method used for dispatching.
-  
+
   GET_HANDLE handle_get (void);
   void handle_get (GET_HANDLE);
 
