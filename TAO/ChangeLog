@@ -1,6 +1,7 @@
 Mon Dec 29 13:32:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Fixed_Size_Argument_T.h:
+        * tao/Any_Array_Impl_T.h:
           Removed not needed ; after c++ namespace closure.
 
 Sun Dec 28 23:24:34 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
