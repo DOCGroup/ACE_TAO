@@ -16,6 +16,7 @@ main (int argc, char *argv[])
   ACE_SPIPE_Acceptor peer_acceptor;
   ACE_SPIPE_Stream new_stream;
   struct pollfd poll_array[MAX_HANDLES];
+  ACE_HANDLE handle;
 
   for (handle = 0; handle < MAX_HANDLES; handle++) 
     {
@@ -33,8 +34,6 @@ main (int argc, char *argv[])
 
   if (s_handle == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "peer_acceptor.open"), -1);
-
-  ACE_HANDLE handle;
 
   poll_array[0].fd = s_handle;
 
