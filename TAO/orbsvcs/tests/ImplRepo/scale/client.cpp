@@ -3,6 +3,7 @@
 // Start with -orbinitref Test=...
 
 #include "testC.h"
+#include "ace/Log_Msg.h"
 
 using namespace CORBA;
 

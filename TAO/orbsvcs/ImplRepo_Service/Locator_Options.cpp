@@ -10,6 +10,8 @@
 
 #include "Locator_Options.h"
 #include "ace/Arg_Shifter.h"
+#include "ace/Log_Msg.h"
+#include "ace/OS_NS_strings.h"
 
 ACE_RCSID (ImplRepo_Service,
            Options,

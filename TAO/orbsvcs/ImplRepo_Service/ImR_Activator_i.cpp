@@ -8,6 +8,8 @@
 
 #include "ace/ARGV.h"
 
+#include "ace/OS.h"
+
 static ACE_CString getActivatorName()
 {
   char host_name[MAXHOSTNAMELEN];

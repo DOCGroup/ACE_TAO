@@ -28,7 +28,11 @@
 #include "tao/Messaging/Messaging_SyncScope_PolicyC.h"
 #include "tao/Messaging/Messaging_No_ImplC.h"
 #include "tao/RTCORBA/RTCORBA.h"
-#include "tao/iiop_endpoints.h"
+//#include "tao/Typecode.h"
+#include "tao/Marshal.h"
+//#include "tao/ORB_Constants.h"
+#include "tao/Transport_Acceptor.h"
+#include "tao/IIOP_EndpointsC.h"
 
 
 static CORBA::Boolean
@@ -81,7 +85,7 @@ catiiop (char* string
 
   if (cp == 0)
     {
-      ACE_THROW_RETURN (CORBA_DATA_CONVERSION (), 0);
+      ACE_THROW_RETURN (CORBA::DATA_CONVERSION (), 0);
     }
 
   hostname = CORBA::string_alloc (1 + cp - string);
@@ -99,7 +103,7 @@ catiiop (char* string
   if (cp == 0)
     {
       CORBA::string_free (hostname);
-      ACE_THROW_RETURN (CORBA_DATA_CONVERSION (), 0);
+      ACE_THROW_RETURN (CORBA::DATA_CONVERSION (), 0);
     }
 
   port_number = (short) ACE_OS::atoi ((char *) string);
@@ -202,7 +206,7 @@ catior (char* str
     {
       ACE_DEBUG ((LM_DEBUG,
                   "cannot read type id\n"));
-      return CORBA::TypeCode::TRAVERSE_STOP;
+      return TAO::TRAVERSE_STOP;
     }
 
   ACE_DEBUG ((LM_DEBUG,
@@ -230,7 +234,7 @@ catior (char* str
     {
       ACE_DEBUG ((LM_DEBUG,
                   "cannot read the profile count\n"));
-      return CORBA::TypeCode::TRAVERSE_STOP;
+      return TAO::TRAVERSE_STOP;
     }
 
   CORBA::ULong profile_counter = 0;
@@ -241,7 +245,7 @@ catior (char* str
 
   // No profiles means a NIL objref.
   if (profiles == 0)
-    return CORBA_TypeCode::TRAVERSE_CONTINUE;
+    return TAO::TRAVERSE_CONTINUE;
   else
     while (profiles-- != 0)
       {
@@ -602,7 +606,7 @@ cat_tao_tag_endpoints (TAO_InputCDR& stream) {
   TAO_InputCDR stream2 (stream, length);
   stream.skip_bytes(length);
 
-  TAO_IIOPEndpointSequence epseq;
+  TAO::IIOPEndpointSequence epseq;
   stream2 >> epseq;
 
   for (unsigned int iter=0; iter < epseq.length() ; iter++) {
@@ -621,6 +625,8 @@ cat_tao_tag_endpoints (TAO_InputCDR& stream) {
   return 1;
 }
 
+// alternate endpoints arent supported yet
+#if 0
 static CORBA::Boolean
 cat_tag_alternate_endpoints (TAO_InputCDR& stream) {
   CORBA::ULong length = 0;
@@ -637,7 +643,7 @@ cat_tag_alternate_endpoints (TAO_InputCDR& stream) {
               "%I endpoint: %s:%u\n",ei.host.in(),(unsigned short)ei.port));
   return 1;
 }
-
+#endif 
 
 static CORBA::Boolean
 cat_tag_policies (TAO_InputCDR& stream) {
@@ -964,13 +970,14 @@ cat_tagged_components (TAO_InputCDR& stream)
         ACE_DEBUG ((LM_DEBUG, "%{%{"));
         cat_codeset_info(stream);
         ACE_DEBUG ((LM_DEBUG, "%}%}"));
-
+// TAG_ALTERNATE_IIOP_ADDRESS not supported yet
+#if 0
       } else if (tag == IOP::TAG_ALTERNATE_IIOP_ADDRESS) {
         ACE_DEBUG ((LM_DEBUG,"%d (TAG_ALTERNATE_IIOP_ADDRESS)\n", tag));
         ACE_DEBUG ((LM_DEBUG, "%{%{"));
         cat_tag_alternate_endpoints (stream);
         ACE_DEBUG ((LM_DEBUG, "%}%}"));
-
+#endif
       } else if (tag == TAO_TAG_ENDPOINTS) {
         ACE_DEBUG ((LM_DEBUG,"%d (TAO_TAG_ENDPOINTS)\n", tag));
         ACE_DEBUG ((LM_DEBUG, "%{%{"));

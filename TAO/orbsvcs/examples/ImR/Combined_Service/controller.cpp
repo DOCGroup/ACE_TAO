@@ -5,6 +5,7 @@
 
 #include <ace/streams.h>
 #include <ace/SString.h>
+#include <ace/Log_Msg.h>
 
 using namespace CORBA;
 

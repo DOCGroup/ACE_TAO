@@ -7,6 +7,7 @@
 #include "testS.h"
 
 #include "ace/Auto_Ptr.h"
+#include "ace/SString.h"
 
 class Server_i
 {

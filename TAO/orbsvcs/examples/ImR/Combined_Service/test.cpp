@@ -5,6 +5,7 @@
 
 #include <stdexcept>
 #include <sstream>
+#include "ace/Log_Msg.h"
 
 #define assertTrue(CONDITION) \
     if (CONDITION == false) { \

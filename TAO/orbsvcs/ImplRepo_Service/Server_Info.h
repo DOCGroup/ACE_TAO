@@ -17,6 +17,8 @@
 
 #include "tao/PortableServer/ImplRepoC.h"
 
+#include "ace/SString.h"
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
