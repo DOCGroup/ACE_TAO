@@ -239,7 +239,7 @@ JAWS_Thread_Pool_Task::open (long flags, int nthreads, int maxthreads)
 
   for (int i = 0; i < nthreads; i++)
     {
-      ACE_Thread_ID thr_id(thr_handles[i], thr_names[i]);
+      ACE_Thread_ID thr_id(thr_names[i], thr_handles[i]);
       JAWS_IO_Handler *dummy = 0;
 
       JAWS_Waiter_Singleton::instance ()->insert (thr_id, dummy);
@@ -298,7 +298,7 @@ JAWS_Thread_Per_Task::activate_hook (void)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "JAWS_Thread_Pool_Task::activate"),
                       -1);
 
-  ACE_Thread_ID thr_id(thr_handle, thr_name);
+  ACE_Thread_ID thr_id(thr_name, thr_handle);
   JAWS_IO_Handler *dummy = 0;
 
   JAWS_Waiter_Singleton::instance ()->insert (thr_id, dummy);

@@ -260,6 +260,9 @@ private:
 
 class JAWS_Asynch_IO_Handler : protected JAWS_IO_Handler
 {
+friend class JAWS_Asynch_IO;
+friend class JAWS_Asynch_IO_Handler_Factory;
+
 public:
   JAWS_Asynch_IO_Handler (JAWS_IO_Handler_Factory *factory);
   virtual ~JAWS_Asynch_IO_Handler (void);
