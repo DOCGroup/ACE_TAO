@@ -28,7 +28,7 @@
 #include "ace/Pair_T.h"
 #include "ace/Synch.h"
 
-template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class CACHING_STRATEGY, class MUTEX>
+template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class CACHING_STRATEGY, class ATTRIBUTES, class MUTEX>
 class ACE_Cached_Connect_Strategy_Ex : public ACE_Cached_Connect_Strategy< SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>
 {
   // = TITLE
@@ -79,7 +79,6 @@ public:
   // = Typedefs for managing the map
   typedef ACE_Refcounted_Hash_Recyclable<ACE_PEER_CONNECTOR_ADDR>
           REFCOUNTED_HASH_RECYCLABLE_ADDRESS;
-  typedef ACE_TYPENAME CACHING_STRATEGY::CACHING_ATTRIBUTES ATTRIBUTES;
   typedef ACE_Hash_Cache_Map_Manager<REFCOUNTED_HASH_RECYCLABLE_ADDRESS, SVC_HANDLER *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDRESS>,ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDRESS>, CACHING_STRATEGY, ATTRIBUTES>
           CONNECTION_CACHE;
   typedef ACE_TYPENAME CONNECTION_CACHE::CACHE_ENTRY 
@@ -118,7 +117,7 @@ protected:
                     int reuse_addr,
                     int flags,
                     int perms,
-                    ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATEGY, MUTEX>::CONNECTION_CACHE_ENTRY *&entry,
+                    CONNECTION_CACHE_ENTRY *&entry,
                     int &found);
 
  
@@ -129,7 +128,7 @@ protected:
                                     int reuse_addr,
                                     int flags,
                                     int perms,
-                                    ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATEGY, MUTEX>::CONNECTION_CACHE_ENTRY *&entry,
+                                    CONNECTION_CACHE_ENTRY *&entry,
                                     int &found);
 
   int connect_svc_handler_i (SVC_HANDLER *&sh,
