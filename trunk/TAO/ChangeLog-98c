@@ -1,3 +1,17 @@
+Thu Oct  8 17:37:14 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Connect.cpp: 
+	  If an exception is thrown while handling a oneway request we
+	  just ignore it, unless the debugging flags in the ORB are
+	  enabled, in that case we print an informative message and the
+	  exception.
+
+	* tao/ORB_Core.h: 
+	* tao/ORB_Core.cpp: 
+	  The App_Allocated class does not own the CDR allocators all the
+	  time, sometimes they are global and shared by all the
+	  App_Allocated objects.
+
 Thu Oct 08 16:14:04 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/ORB_Core.{h,cpp} (~App_Allocated): Added a destructor for
