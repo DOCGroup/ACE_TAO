@@ -73,32 +73,33 @@ public:
    * size exceeds <max_size_>, the current logfile is closed, saved to
    * logfile.old, and a new logfile is reopened.
    */
-  virtual int handle_timeout (const ACE_Time_Value& tv, 
+  virtual int handle_timeout (const ACE_Time_Value& tv,
                               const void* arg);
 
-  /** Parse arguments provided in svc.conf file.
-   '-f' Pass in the flags (such as OSTREAM, STDERR, LOGGER, VERBOSE,
-        SILENT, VERBOSE_LITE) used to control logging. 
-   '-i' The interval (in seconds) at which the logfile size is sampled
-        (default is 0, i.e., do not sample by default).
-   '-k' Set the logging key.
-   '-m' Maximum logfile size in Kbytes.
-   '-n' Set the program name for the %n format specifier.
-   '-N' The maximum number of logfiles that we want created.
-   '-o' Specifies that we want the no standard logfiles ordering
-        (fastest processing in <handle_timeout>).  Default is not to
-        order logfiles.  
-   '-p' Pass in the process-wide priorities to either enable (e.g.,
-        DEBUG, INFO, WARNING, NOTICE, ERROR, CRITICAL, ALERT,
-        EMERGENCY) or to disable (e.g., ~DEBUG, ~INFO, ~WARNING,
-        ~NOTICE, ~ERROR, ~CRITICAL, ~ALERT, ~EMERGENCY).
-   '-s' Ensure that the OSTREAM flag is set
-   '-t' Pass in the thread-wide priorities to either enable (e.g.,
-        DEBUG, INFO, WARNING, NOTICE, ERROR, CRITICAL, ALERT,
-        EMERGENCY) or to disable (e.g., ~DEBUG, ~INFO, ~WARNING,
-        ~NOTICE, ~ERROR, ~CRITICAL, ~ALERT, ~EMERGENCY).
-   '-w' Cause the logfile to be wiped out, both on startup and on
-        reconfiguration. 
+  /**
+   * Parse arguments provided in svc.conf file.
+   * @arg '-f' Pass in the flags (such as OSTREAM, STDERR, LOGGER, VERBOSE,
+   *           SILENT, VERBOSE_LITE) used to control logging.
+   * @arg '-i' The interval (in seconds) at which the logfile size is sampled
+   *           (default is 0, i.e., do not sample by default).
+   * @arg '-k' Set the logging key.
+   * @arg '-m' Maximum logfile size in Kbytes.
+   * @arg '-n' Set the program name for the %n format specifier.
+   * @arg '-N' The maximum number of logfiles that we want created.
+   * @arg '-o' Specifies that we want the no standard logfiles ordering
+   *           (fastest processing in <handle_timeout>).  Default is not to
+   *           order logfiles.
+   * @arg '-p' Pass in the process-wide priorities to either enable (e.g.,
+   *           DEBUG, INFO, WARNING, NOTICE, ERROR, CRITICAL, ALERT,
+   *           EMERGENCY) or to disable (e.g., ~DEBUG, ~INFO, ~WARNING,
+   *           ~NOTICE, ~ERROR, ~CRITICAL, ~ALERT, ~EMERGENCY).
+   * @arg '-s' Ensure that the OSTREAM flag is set.
+   * @arg '-t' Pass in the thread-wide priorities to either enable (e.g.,
+   *           DEBUG, INFO, WARNING, NOTICE, ERROR, CRITICAL, ALERT,
+   *           EMERGENCY) or to disable (e.g., ~DEBUG, ~INFO, ~WARNING,
+   *           ~NOTICE, ~ERROR, ~CRITICAL, ~ALERT, ~EMERGENCY).
+   * @arg '-w' Cause the logfile to be wiped out, both on startup and on
+   *           reconfiguration.
    */
   int parse_args (int argc, ACE_TCHAR *argv[]);
 
@@ -131,7 +132,7 @@ protected:
   ACE_TCHAR *program_name_;
 
   /// If non-0 then wipeout the logfile, otherwise append to it.
-  /// Default value is 0.  
+  /// Default value is 0.
   int wipeout_logfile_;
 
   /// This tells us in what file we last wrote. It will be increased
@@ -156,7 +157,7 @@ protected:
   /// Default value is 0.
   u_long interval_;
 
-  /// Maximum logfile size (in KB).  Default value is 
+  /// Maximum logfile size (in KB).  Default value is
   /// <ACE_DEFAULT_MAX_LOGFILE_SIZE>.
   u_long max_size_;
 
