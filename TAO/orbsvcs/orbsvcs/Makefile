@@ -12,7 +12,7 @@ LIBNAME  = liborbsvcs
 LIB      = $(LIBNAME).a
 SHLIB    = $(LIBNAME).$(SOEXT)
 
-VPATH=.:Naming:Time:Concurrency:Property:Trader:Sched:Event:CosEvent:Log:Notify:ETCL:
+VPATH=.:Naming:Time:Concurrency:Property:Trader:Sched:Event:CosEvent:Log:Notify:ETCL:ESF:
 
 ACE_SHLIBS = -lTAO -lACE
 
@@ -403,6 +403,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 LDFLAGS += -L$(TAO_ROOT)/tao
 CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs \
 	-I$(TAO_ROOT)/orbsvcs/orbsvcs/Event \
+	-I$(TAO_ROOT)/orbsvcs/orbsvcs/ESF \
         $(foreach svc, $(TAO_ORBSVCS), -DTAO_ORBSVCS_HAS_$(svc))
 
 #
