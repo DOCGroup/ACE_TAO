@@ -1,7 +1,7 @@
 //$Id$
-#include "OS.h"
-#include "Log_Msg.h"
-#include "UUID.h"
+#include "ace/OS.h"
+#include "ace/Log_Msg.h"
+#include "ace/UUID.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/UUID.inl"
