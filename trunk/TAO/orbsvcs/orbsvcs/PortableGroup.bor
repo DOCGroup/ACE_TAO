@@ -16,6 +16,7 @@ IDLFILES = \
         $(IDLDIR)\PortableGroup.idl
 
 OBJFILES = \
+	$(OBJDIR)\PortableGroup_Simple_DSC.obj \
         $(OBJDIR)\miopC.obj \
         $(OBJDIR)\miopS.obj \
         $(OBJDIR)\PortableGroupC.obj \
