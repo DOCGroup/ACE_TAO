@@ -27,7 +27,9 @@ TAO_IOP::TAO_IOR_Manipulation_ptr TAO_IOP::TAO_IOR_Manipulation::_narrow (
 {
   if (CORBA::is_nil (obj))
     return TAO_IOP::TAO_IOR_Manipulation::_nil ();
-  if (!obj->_is_a ("IDL:omg.org/TAO_IOP/TAO_IOR_Manipulation:1.0", ACE_TRY_ENV))
+  CORBA::Boolean is_a = obj->_is_a ("IDL:omg.org/TAO_IOP/TAO_IOR_Manipulation:1.0", ACE_TRY_ENV);
+  ACE_CHECK_RETURN (TAO_IOP::TAO_IOR_Manipulation::_nil ());
+  if (is_a == 0)
     return TAO_IOP::TAO_IOR_Manipulation::_nil ();
   return TAO_IOP::TAO_IOR_Manipulation::_unchecked_narrow (obj, ACE_TRY_ENV);
 }
@@ -480,7 +482,6 @@ CORBA::Object_ptr TAO_IOP::TAO_IOR_Manipulation::merge_iors (
 
   for (;;)
   {
-    ACE_TRY_ENV.clear ();
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
@@ -550,7 +551,6 @@ CORBA::Object_ptr TAO_IOP::TAO_IOR_Manipulation::add_profiles (
 
   for (;;)
   {
-    ACE_TRY_ENV.clear ();
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
@@ -621,7 +621,6 @@ CORBA::Object_ptr TAO_IOP::TAO_IOR_Manipulation::remove_profiles (
 
   for (;;)
   {
-    ACE_TRY_ENV.clear ();
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
@@ -688,7 +687,6 @@ CORBA::ULong TAO_IOP::TAO_IOR_Manipulation::is_in_ior (
 
   for (;;)
   {
-    ACE_TRY_ENV.clear ();
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
@@ -754,7 +752,6 @@ CORBA::ULong TAO_IOP::TAO_IOR_Manipulation::get_profile_count (
 
   for (;;)
   {
-    ACE_TRY_ENV.clear ();
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 

@@ -171,7 +171,9 @@ CORBA_Policy_ptr CORBA_Policy::_narrow (
 {
   if (CORBA::is_nil (obj))
     return CORBA_Policy::_nil ();
-  if (!obj->_is_a ("IDL:omg.org/CORBA/Policy:1.0", ACE_TRY_ENV))
+  CORBA::Boolean is_a = obj->_is_a ("IDL:omg.org/CORBA/Policy:1.0", ACE_TRY_ENV);
+  ACE_CHECK_RETURN (CORBA_Policy::_nil ());
+  if (is_a == 0)
     return CORBA_Policy::_nil ();
   TAO_Stub* stub = obj->_stubobj ();
   stub->_incr_refcnt ();
@@ -235,7 +237,6 @@ CORBA::PolicyType CORBA_Policy::policy_type (
 
   for (;;)
   {
-    ACE_TRY_ENV.clear ();
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK_RETURN (_tao_retval);
 
@@ -283,7 +284,6 @@ CORBA_Policy_ptr CORBA_Policy::copy (
 
   for (;;)
   {
-    ACE_TRY_ENV.clear ();
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK_RETURN (_tao_retval);
 
@@ -330,7 +330,6 @@ void CORBA_Policy::destroy (
 
   for (;;)
   {
-    ACE_TRY_ENV.clear ();
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK;
 
@@ -429,7 +428,9 @@ CORBA::PolicyManager_ptr CORBA_PolicyManager::_narrow (
 {
   if (CORBA::is_nil (obj))
     return CORBA_PolicyManager::_nil ();
-  if (!obj->_is_a ("IDL:omg.org/CORBA/PolicyManager:1.0", ACE_TRY_ENV))
+  CORBA::Boolean is_a = obj->_is_a ("IDL:omg.org/CORBA/PolicyManager:1.0", ACE_TRY_ENV);
+  ACE_CHECK_RETURN (CORBA_PolicyManager::_nil ());
+  if (is_a == 0)
     return CORBA_PolicyManager::_nil ();
   TAO_Stub* stub = obj->_stubobj ();
   stub->_incr_refcnt ();
@@ -512,7 +513,9 @@ CORBA_PolicyCurrent_ptr CORBA_PolicyCurrent::_narrow (
 {
   if (CORBA::is_nil (obj))
     return CORBA_PolicyCurrent::_nil ();
-  if (!obj->_is_a ("IDL:omg.org/CORBA/PolicyCurrent:1.0", ACE_TRY_ENV))
+  CORBA::Boolean is_a = obj->_is_a ("IDL:omg.org/CORBA/PolicyCurrent:1.0", ACE_TRY_ENV);
+  ACE_CHECK_RETURN (CORBA_PolicyCurrent::_nil ());
+  if (is_a == 0)
     return CORBA_PolicyCurrent::_nil ();
   TAO_Stub* stub = obj->_stubobj ();
   stub->_incr_refcnt ();

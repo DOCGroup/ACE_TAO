@@ -16,6 +16,13 @@ Thu Jun 24 20:02:24 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	  its TAO_POA_GUARD_* stuff, updated to use ACE_GUARD_* and
 	  friends.
 
+	* tao/DomainC.cpp:
+	* tao/IORC.cpp:
+	* tao/MessagingC.cpp:
+	* tao/PolicyC.cpp:
+	* tao/PollableC.cpp:
+	  More exception handling fixes.
+
 Thu Jun 24 17:48:13 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* docs/releasenotes/TODO.html (pseudo-object): Added a todo item

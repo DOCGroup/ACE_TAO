@@ -36,7 +36,9 @@ CORBA_Pollable_ptr CORBA_Pollable::_narrow (
 {
   if (CORBA::is_nil (obj))
     return CORBA_Pollable::_nil ();
-  if (!obj->_is_a ("IDL:omg.org/CORBA/Pollable:1.0", ACE_TRY_ENV))
+  CORBA::Boolean is_a = obj->_is_a ("IDL:omg.org/CORBA/Pollable:1.0", ACE_TRY_ENV);
+  ACE_CHECK_RETURN (CORBA_Pollable::_nil ());
+  if (is_a == 0)
     return CORBA_Pollable::_nil ();
   TAO_Stub* stub = obj->_stubobj ();
   stub->_incr_refcnt ();
@@ -196,7 +198,9 @@ CORBA::DIIPollable_ptr CORBA::DIIPollable::_narrow (
 {
   if (CORBA::is_nil (obj))
     return CORBA::DIIPollable::_nil ();
-  if (!obj->_is_a ("IDL:omg.org/CORBA/DIIPollable:1.0", ACE_TRY_ENV))
+  CORBA::Boolean is_a = obj->_is_a ("IDL:omg.org/CORBA/DIIPollable:1.0", ACE_TRY_ENV);
+  ACE_CHECK_RETURN (CORBA::DIIPollable::_nil ());
+  if (is_a == 0)
     return CORBA::DIIPollable::_nil ();
   TAO_Stub* stub = obj->_stubobj ();
   stub->_incr_refcnt ();
@@ -254,7 +258,9 @@ CORBA_PollableSet_ptr CORBA_PollableSet::_narrow (
 {
   if (CORBA::is_nil (obj))
     return CORBA_PollableSet::_nil ();
-  if (!obj->_is_a ("IDL:omg.org/CORBA/PollableSet:1.0", ACE_TRY_ENV))
+  CORBA::Boolean is_a = obj->_is_a ("IDL:omg.org/CORBA/PollableSet:1.0", ACE_TRY_ENV);
+  ACE_CHECK_RETURN (CORBA_PollableSet::_nil ());
+  if (is_a == 0)
     return CORBA_PollableSet::_nil ();
   TAO_Stub* stub = obj->_stubobj ();
   stub->_incr_refcnt ();
