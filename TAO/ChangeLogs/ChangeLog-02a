@@ -1,3 +1,235 @@
+Mon Dec 18 16:44:03 2000  Ossama Othman  <ossama@uci.edu>
+
+	* TAO_IDL/be/be_visitor_argument/paramlist.cpp (visit_argument):
+	* TAO_IDL/be/be_visitor_operation/interceptors_exceptlist.cpp
+	  (gen_exceptlist):
+	* TAO_IDL/be/be_visitor_operation/interceptors_result.cpp
+	  (visit_array, visit_enum, visit_interface, visit_interface_fwd,
+	  visit_predefined_type, visit_sequence, visit_string,
+	  visit_structure, visit_union):
+
+	  Updated generated code to be consistent with the return value
+	  updates/fixes.  A cached value is no longer returned since it
+	  breaks conformance with the CORBA C++ mapping.
+
+	* TAO_IDL/be/be_codegen.cpp (start_client_stubs,
+	  start_server_skeletons):
+
+	  Include the "tao/RequestInfo_Util.h" header when
+	  TAO_HAS_INTERCEPTORS is defined to 1.  Needed to pull in the
+	  utility factory methods related to the return value types
+	  defined in the "Dynamic" module.
+
+	* TAO_IDL/be/be_visitor_operation/operation_ss.cpp
+	  (visit_operation):
+
+	  In the case of a one-way request, invoke the send_other()
+	  interception point, not the send_reply() interception point.
+
+	  Added support for the PortableInterceptor::ForwardRequest
+	  exception, meaning the send_other() interception point, too.
+
+	* TAO_IDL/be/be_visitor_operation/remote_proxy_impl_cs.cpp
+	  (visit_operation):
+
+	  Added support for the PortableInterceptor::ForwardRequest
+	  exception.  This includes support for the receive_other()
+	  interception point.
+
+	* TAO_IDL/be/be_visitor_operation/interceptors_ch.cpp
+	  (visit_operation):
+	* TAO_IDL/be/be_visitor_operation/interceptors_cs.cpp
+	  (visit_operation):
+
+	  Pass a pointer to the TAO_GIOP_Invocation object for the
+	  current invocation to the ClientRequestInfo object.  This saves
+	  us the trouble of passing the operation name and the service
+	  context list since the invocation object already encapsulates
+	  both of them either directly or indirectly.  Doing so also makes
+	  it possible to implement the ClientRequestInfo::sync_scope()
+	  method.
+
+	* TAO_IDL/be/be_visitor_operation/interceptors_sh.cpp
+	  (visit_operation):
+
+	  Pass a pointer to the TAO_ServerRequest object for the current
+	  invocation to the ServerRequestInfo object.  This saves us the
+	  trouble of passing the operation name and the service context
+	  list since the invocation object already encapsulates both of
+	  them either directly or indirectly.  Doing so also makes it
+	  possible to implement the ServerRequestInfo::sync_scope()
+	  method, and various other ServerRequestInfo methods.
+
+	* TAO_IDL/be/be_visitor_operation/interceptors_ss.cpp
+	  (visit_operation):
+
+	  Corrected a long standing typographical error that prevented the
+	  result from being inserted into an Any when invoking the
+	  ServerRequestInfo::result() accessor method.  This accounts for
+	  the garbage result on the server seen in the
+	  PortableInterceptors/Dynamic test.  The raw be_operation node
+	  was accepting the visitor instead of the narrowed be_type.
+
+	  Updated generated code to be consistent with the return value
+	  updates/fixes.  A cached value is no longer returned since it
+	  breaks conformance with the CORBA C++ mapping.
+
+	  Generate the target_most_derived_interface() and the
+	  target_is_a() ServerRequestInfo methods in the ServerRequestInfo
+	  subclasses.  In other words, these methods have now been
+	  implemented.
+
+	* tao/RequestInfo_Util.h:
+	* tao/RequestInfo_Util.cpp:
+
+	  New files that contain helper class that provides methods useful
+	  for both PortableInterceptor::ClientRequestInfo and
+	  PortableInterceptor::ServerRequestInfo objects, such as factory
+	  methods for sequences and Anys.
+
+	* tao/ClientRequestInfo.h (TAO_ClientRequestInfo):
+
+	  This constructor now accepts a pointer to a TAO_GIOP_Invocation
+	  object.  This allows us to remove the operation name and request
+	  ID fields since both can be obtained from the Invocation
+	  object.
+
+	* tao/ClientRequestInfo.cpp (request_id, operation):
+
+	  Obtain these attributes from the Invocation object.
+
+	  (arguments, exceptions, contexts, operation_context, result):
+
+	  Throw a CORBA::BAD_INV_ORDER() exception.  The subclasses in the
+	  generated stub will override these methods appropriately.
+
+	  (sync_scope):
+
+	  Implemented this method.  If the Invocation object is a
+	  TAO_GIOP_Oneway_Invocation, then query its own sync_scope()
+	  method and return that value as the result.
+
+	  (forward_reference):
+
+	  Implemented this method.  This was made possible by an update to
+	  the interceptor support in generated stubs, and to the
+	  TAO_GIOP_Invocation class.
+
+	* tao/Invocation.h (start, invoke, invoke_i, prepare_header,
+	  location_forward, init_inconsistent_policies,
+	  add_rt_service_context):
+
+	  Removed "TAO_default_environment()" default CORBA::Environment
+	  argument.  All of these methods are internal to TAO.  Method
+	  invocations internal to TAO should always explicitly use the
+	  CORBA::Environment argument, and not rely on a default
+	  CORBA::Environment argument.
+
+	* tao/Invocation.i (operation):
+
+	  New method to return the name of the operation for the current
+	  request.
+
+	  (forward_reference):
+
+	  New method that returns the object reference returned in a
+	  LOCATION_FORWARD reply.  The reference is only valid if the
+	  invocation status is TAO_INVOKE_RESTART, except during a
+	  transport retry.  This method is used by the client side
+	  Portable Interceptor implementation.
+
+	  (location_forward_i):
+
+	  Inlined method that contains code common to both
+	  location_forward() methods.  This method takes the TAO_Stub
+	  object pointer argument, and adds the profiles in that object to
+	  the list of forward profiles.
+
+	* tao/Invocation.cpp (location_forward):
+
+	  Refactored code common to both location_forward() methods to the
+	  new location_forward_i() inlined method.
+
+	* tao/PortableInterceptor.h:
+
+	  Removed unused "ending_intercept_called_" class member from the
+	  TAO_ClientRequestInterceptor_Adapter and the
+	  TAO_ServerRequestInterceptor_Adapter classes.
+
+	* tao/PortableInterceptor.i
+	  (TAO_ServerRequestInterceptor_Adapter):
+
+	  The current flow stack size is now passed in as a reference
+	  argument to make it possible to implement the
+	  "receive_request_service_contexts" interception point.
+
+	  (receive_request_service_contexts):
+
+	  New adapter method that implements the
+	  "receive_request_service_contexts" server side starting
+	  interception point.
+
+	  (send_other):
+
+	  New adapter method for the
+	  ServerRequestInterceptor::send_other() method.  It is used in
+	  one-way requests and LOCATION_FORWARD replies..
+
+	* tao/TAO_Server_Request.h:
+	* tao/TAO_Server_Request.i (forward_location):
+
+	  New method to set the reference to which the request will be
+	  forwarded.  It is needed in order to implement the
+	  PortableInterceptor::ForwardRequest exception.
+
+	* tao/TAO_Server_Request.cpp (TAO_ServerRequest):
+
+	  Initialize the interceptor count to zero in the constructors.
+
+	* tao/GIOP_Message_Generator_Parser_10.cpp:
+
+	  Fixed compile-time problem.  Include "CORBA_String.h" to pull
+	  CORBA::String_var class declaration.
+
+	* tao/Makefile:
+	* tao/Makefile.bor:
+	* tao/TAO.dsp:
+	* tao/TAO_Static.dsp:
+
+	  Added the new RequestInfo_Util.* files to the source lists.
+
+	* tao/DomainC.h:
+	* tao/DomainC.cpp:
+	* tao/PortableServer/DomainS.cpp:
+	* tao/PortableServer/DomainS.h:
+
+	  Updated (by hand) with the changes made to the stubs and
+	  skeletons now generated by TAO_IDL.
+
+	* tao/PortableServer/Object_Adapter.cpp (dispatch):
+
+	  Added support for the receive_request_service_contexts()
+	  interception point, and the accompanying send_other() and
+	  send_exception() interception points.  This includes support for
+	  the PortableInterceptor::ForwardRequest exception.
+
+	* tao/PortableServer/ServerRequestInfo.h:
+
+	  This constructor now accepts a reference to a TAO_ServerRequest
+	  object.  This allows us to remove the operation name and service
+	  context list fields since both can be obtained from the
+	  TAO_ServerRequest object.
+
+	* tao/PortableServer/ServerRequestInfo.cpp:
+
+	  Implemented most of the remaining unimplemented
+	  ServerRequestInfo methods.
+
+	* tao/PortableServer/TAO_PortableServer.dsp:
+	* tao/PortableServer/TAO_PortableServer_Static.dsp:
+
+	  Added ServerRequestInfo.inl to the list of inline sources.
+
 Mon Dec 18 12:01:49 2000  Jeff Parsons <parsons@cs.wustl.edu.edu>
 
         * tao/Exception.cpp:

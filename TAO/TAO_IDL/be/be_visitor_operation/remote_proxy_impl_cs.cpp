@@ -418,8 +418,7 @@ be_visitor_operation_remote_proxy_impl_cs::gen_marshal_and_invoke (
     }
 
   *os << " ri (" << be_idt_nl
-      << this->compute_operation_name (node) << "," << be_nl
-      << "_tao_call.service_info ()," << be_nl
+      << "&_tao_call," << be_nl
       << "_collocated_tao_target_";
 
   // Generate the formal argument fields which are passed
@@ -484,10 +483,6 @@ be_visitor_operation_remote_proxy_impl_cs::gen_marshal_and_invoke (
 
   // Invoke send_request() interception point.
   *os << be_nl << "TAO_INTERCEPTOR (" << be_idt_nl
-    // Get the request_id field for the Request Info. In TAO, request
-    // id's change with differnet profiles so this seems to be the
-    // appropriate place to populate the Request Info with it.
-      << "ri.request_id (_tao_call.request_id ()); " << be_nl
       << "_tao_vfr.send_request (" << be_idt_nl
       << "&ri," << be_nl
       << "ACE_TRY_ENV" << be_uidt_nl
@@ -781,13 +776,24 @@ be_visitor_operation_remote_proxy_impl_cs::gen_marshal_and_invoke (
   // satisfy the General Flow Rules.
   if (node->flags () != AST_Operation::OP_oneway)
     {
-      // Invoke receive_reply() interception point.
+      // Invoke receive_reply() or receive_other() interception
+      // point.
       *os << be_nl << "TAO_INTERCEPTOR (" << be_idt_nl
           << "ri.reply_status (_invoke_status);" << be_nl
+          << "if (_invoke_status == TAO_INVOKE_OK)" << be_idt_nl
+          << "{" << be_idt_nl
           << "_tao_vfr.receive_reply (" << be_idt_nl
           << "&ri," << be_nl
           << "ACE_TRY_ENV" << be_uidt_nl
-          << ")" << be_uidt_nl
+          << ");" << be_uidt_nl
+          << "}" << be_uidt_nl
+          << "else" << be_idt_nl
+          << "{" << be_idt_nl
+          << "_tao_vfr.receive_other (" << be_idt_nl
+          << "&ri," << be_nl
+          << "ACE_TRY_ENV" << be_uidt_nl
+          << ");" << be_uidt_nl
+          << "}" << be_uidt_nl << be_uidt_nl
           << ");" << be_nl;
     }
   else if (node->flags () == AST_Operation::OP_oneway)
@@ -815,7 +821,6 @@ be_visitor_operation_remote_proxy_impl_cs::gen_marshal_and_invoke (
   *os << "\n#if TAO_HAS_INTERCEPTORS == 1"  << be_uidt_nl
       << "}" << be_uidt_nl;
 
-  /*
   *os << "ACE_CATCH (PortableInterceptor::ForwardRequest, exc)" << be_idt_nl
       << "{" << be_idt_nl
       << "_invoke_status =" << be_idt_nl
@@ -830,7 +835,6 @@ be_visitor_operation_remote_proxy_impl_cs::gen_marshal_and_invoke (
       << ");" << be_nl
       << "ACE_TRY_CHECK;" << be_uidt_nl
       << "}" << be_uidt_nl;
-  */
 
   *os << "ACE_CATCHANY" << be_idt_nl
       << "{" << be_idt_nl;

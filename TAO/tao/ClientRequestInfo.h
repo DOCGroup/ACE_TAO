@@ -39,13 +39,14 @@
 #include "StringSeqC.h"
 #include "Invocation.h"
 
+class TAO_GIOP_Invocation;
+
 class TAO_Export TAO_ClientRequestInfo
   : public virtual PortableInterceptor::ClientRequestInfo,
     public virtual CORBA::LocalObject
 {
 public:
-  TAO_ClientRequestInfo (const char * operation,
-                         IOP::ServiceContextList &service_context_list,
+  TAO_ClientRequestInfo (TAO_GIOP_Invocation *invocation,
                          CORBA::Object_ptr target);
 
   virtual CORBA::ULong request_id (
@@ -155,11 +156,9 @@ public:
      ACE_THROW_SPEC ((CORBA::SystemException));
 
 protected:
+
   /// Change the exception status.
   void exception (CORBA::Exception *exception);
-
-  void request_id (CORBA::ULong request_id);
-  // Update the request id.
 
   /// Set the flag that states whether or not a response is expected.
   /// For example, no response is expected in a one-way operation.
@@ -168,21 +167,16 @@ protected:
   /// Set the status of the received reply.
   void reply_status (int invoke_status);
 
+  /// Extract the forward object reference from the
+  /// PortableInterceptor::ForwardRequest exception, and set the reply
+  /// status flag accordingly.
+  void forward_reference (PortableInterceptor::ForwardRequest &exc);
+
 protected:
 
-  CORBA::ULong request_id_;
-  const char * operation_;
-  Dynamic::ParameterList parameter_list_;
-  Dynamic::ExceptionList exception_list_;
-  Dynamic::ContextList context_list_;
-  Dynamic::RequestContext request_context_;
+  TAO_GIOP_Invocation *invocation_;
 
-  // Needed to ensure no copy anywhere.
-  IOP::ServiceContextList &service_context_list_;
-
-  CORBA::Any result_val_;
   CORBA::Object_var target_;
-  CORBA::Object_var effective_target_;
   CORBA::Exception *caught_exception_;
 
   CORBA::Boolean response_expected_;

@@ -2646,6 +2646,25 @@ SOURCE=.\Reply_Dispatcher.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\RequestInfo_Util.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\Resource_Factory.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
@@ -4024,6 +4043,10 @@ SOURCE=.\Remote_Object_Proxy_Impl.h
 # Begin Source File
 
 SOURCE=.\Reply_Dispatcher.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\RequestInfo_Util.h
 # End Source File
 # Begin Source File
 

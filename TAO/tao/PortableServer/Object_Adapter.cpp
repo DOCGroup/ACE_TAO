@@ -4,6 +4,7 @@
 #include "Object_Adapter.h"
 #include "POA.h"
 #include "Strategized_Object_Proxy_Broker.h"
+#include "ServerRequestInfo.h"
 
 // -- ACE Include --
 #include "ace/Auto_Ptr.h"
@@ -635,11 +636,65 @@ TAO_Object_Adapter::dispatch (TAO_ObjectKey &key,
       return TAO_Adapter::DS_MISMATCHED_KEY;
     }
 
-  return this->dispatch_servant (key,
-                                 request,
-                                 context,
-                                 forward_to,
-                                 ACE_TRY_ENV);
+#if TAO_HAS_INTERCEPTORS == 1
+  TAO_ServerRequestInterceptor_Adapter sri_adapter (
+    this->orb_core_.server_request_interceptors (),
+    request.interceptor_count ());
+
+  TAO_ServerRequestInfo ri (request);
+#endif  /* TAO_HAS_INTERCEPTORS == 1 */
+
+  int result = 0;
+
+#if TAO_HAS_INTERCEPTORS == 1
+  ACE_TRY
+    {
+      // The receive_request_service_contexts() interception point
+      // must be invoked before the operation is dispatched to the
+      // servant.
+      sri_adapter.receive_request_service_contexts (&ri, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+#endif  /* TAO_HAS_INTERCEPTORS == 1 */
+
+      result = this->dispatch_servant (key,
+                                       request,
+                                       context,
+                                       forward_to,
+                                       ACE_TRY_ENV);
+
+#if TAO_HAS_INTERCEPTORS == 1
+      ACE_TRY_CHECK;
+
+      if (result == TAO_Adapter::DS_FORWARD)
+        {
+          ri.forward_reference (forward_to.ptr ());
+          sri_adapter.send_other (&ri,
+                                  ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+        }
+    }
+  ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
+    {
+      ri.forward_reference (exc);
+      sri_adapter.send_other (&ri,
+                              ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      forward_to = CORBA::Object::_duplicate (exc.forward.in ());
+      return TAO_Adapter::DS_FORWARD;
+    }
+  ACE_CATCHANY
+    {
+      sri_adapter.send_exception (&ri,
+                                  ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      ACE_RE_THROW;
+    };
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (result);
+#endif  /* TAO_HAS_INTERCEPTORS == 1 */
+
+  return result;
 }
 
 const char *

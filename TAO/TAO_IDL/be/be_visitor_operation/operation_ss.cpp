@@ -218,12 +218,13 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
                         -1);
     }
 
-  // Fish out the interceptor and do preinvoke.
-  *os << "#if (TAO_HAS_INTERCEPTORS == 1)" << be_nl
+  // Fish out the interceptors.
+  *os << "\n#if (TAO_HAS_INTERCEPTORS == 1)" << be_nl
       << "TAO_ServerRequestInterceptor_Adapter _tao_vfr ("
       << be_idt << be_idt_nl
-      << "_tao_server_request.orb_core ()->server_request_interceptors ()"
-      << be_uidt_nl
+      << "_tao_server_request.orb_core ()->server_request_interceptors (),"
+      << be_nl
+      << "_tao_server_request.interceptor_count ()" << be_uidt_nl
       << ");" << be_uidt_nl << be_nl;
 
   // Obtain the scope.
@@ -267,8 +268,8 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
     }
 
   *os << " ri (" << be_idt << be_idt_nl
-      << this->compute_operation_name (node) << "," << be_nl
-      << "_tao_server_request.service_info ()";
+      << "_tao_server_request," << be_nl
+      << "_tao_impl" << be_nl;
 
   // Generate the formal argument fields which are passed to the
   // RequestInfo object.
@@ -292,19 +293,11 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
   *os << "ACE_TRY" << be_idt_nl
       << "{" << be_idt_nl;
 
-  // Update the request id field of the Request Info.
-  *os << "ri.request_id (_tao_server_request.request_id ());" << be_nl
-      << "_tao_vfr.receive_request (&ri, ACE_TRY_ENV);" << be_nl
-      << "TAO_INTERCEPTOR_CHECK;\n";
+  // Invoke the receive_request() interception point.
+  *os << "_tao_vfr.receive_request (&ri, ACE_TRY_ENV);" << be_nl
+      << "ACE_TRY_CHECK;" << be_nl;
 
-  if (node->flags () == AST_Operation::OP_oneway
-      && !this->has_param_type (node, AST_Argument::dir_IN))
-    {
-      *os << "#else" << be_nl
-          << "ACE_UNUSED_ARG (_tao_server_request);\n";
-    }
-
-  *os << "#endif /* TAO_HAS_INTERCEPTORS */\n\n";
+  *os << "\n#endif /* TAO_HAS_INTERCEPTORS */" << be_nl;
 
   // Make the upcall and assign to the return val.
   ctx = *this->ctx_;
@@ -322,7 +315,8 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
     }
 
   // Make the upcall.
-  *os << "_tao_impl->" << node->local_name () << " (" << be_idt << be_idt_nl;
+  *os << "\n" << be_nl
+      << "_tao_impl->" << node->local_name () << " (" << be_idt << be_idt_nl;
   ctx = *this->ctx_;
   ctx.state (TAO_CodeGen::TAO_OPERATION_ARG_UPCALL_SS);
   visitor = tao_cg->make_visitor (&ctx);
@@ -338,7 +332,8 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
     }
 
   // End the upcall.
-  *os << be_uidt_nl << ");" << be_uidt_nl;
+  *os << be_uidt_nl << ");" << be_uidt_nl
+      << "TAO_INTERCEPTOR_CHECK;" << be_nl << be_nl;
 
   // Update the result.
   bt = be_type::narrow_from_decl (node->return_type ());
@@ -352,22 +347,22 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
                             -1);
     }
 
+  // Invoke the send_reply() or send_other() interception point, and
+  // check for exception. 
+  *os << "\n#if (TAO_HAS_INTERCEPTORS == 1)" << be_nl;
+
   // Grab the right visitor to generate the return type accessor if
   // it's not void since we can't have a private member to be of void
   // type.
   if (!this->void_return_type (bt))
     {
-      *os <<"\n#if (TAO_HAS_INTERCEPTORS == 1)\n";
-
-      // Heres what we are going to do to have a uniform way of getting the
-      // return value updated for the Request Info:
+      // Here's what we are going to do to have a uniform way of
+      // getting the return value updated for the Request Info:
       // declare a operation_retval type object and assign the
-      // _tao_safe_retval._retn () to it.
-      // We pass this to the result updation method (note: it hasnt
-      // got destroyed)
-      // We then put it back into the original _tao_safe_retval
-      // object.
-      // And finally the _retn () is returned from the operation w.o
+      // _tao_safe_retval._retn() to it.  We pass this to the result
+      // updation method (note: it hasn't been destroyed).  We then
+      // put it back into the original _tao_safe_retval object.  And
+      // finally the _retn() is returned from the operation without
       // causing any problems.
       // Generate the return type mapping (same as in the header file)
       ctx = *this->ctx_;
@@ -393,33 +388,53 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
         {
           *os << " _tao_retval_info = _tao_retval._retn ();" << be_nl
               << "ri.result (_tao_retval_info);" << be_nl
-              << "_tao_retval = _tao_retval_info;\n"
-              << "#endif /* TAO_HAS_INTERCEPTORS */\n\n";
+              << "_tao_retval = _tao_retval_info;" << be_nl;
         }
       else
         {
           *os << " _tao_retval_info = _tao_retval;" << be_nl
-              << "ri.result (_tao_retval_info);\n"
-              << "#endif /* TAO_HAS_INTERCEPTORS */\n\n";
+              << "ri.result (_tao_retval_info);" << be_nl;
         }
     }
 
-//  os->indent ();
-  *os << "TAO_INTERCEPTOR_CHECK;\n\n";
+  *os << "ri.reply_status (PortableInterceptor::SUCCESSFUL);"
+      << be_nl;
 
-  // Do postinvoke, and check for exception.
-  *os << "#if (TAO_HAS_INTERCEPTORS == 1)\n";
+  if (node->flags () == AST_Operation::OP_oneway)
+    {
+      *os << "_tao_vfr.send_other (&ri, ACE_TRY_ENV);"<< be_nl
+          << "ACE_TRY_CHECK;" << be_uidt_nl;
+    }
+  else
+    {
+      *os << "_tao_vfr.send_reply (&ri, ACE_TRY_ENV);"<< be_nl
+          << "ACE_TRY_CHECK;" << be_uidt_nl;
+    }
 
-  os->indent ();
+  *os << "}" << be_uidt_nl
+      << "ACE_CATCH (PortableInterceptor::ForwardRequest, exc)"
+      << be_idt_nl << "{" << be_idt_nl
+      << "ri.forward_reference (exc); " << be_nl
+      << "_tao_vfr.send_other (" << be_idt_nl
+      << "&ri," << be_nl
+      << "ACE_TRY_ENV" << be_uidt_nl
+      << ");" << be_nl
+      << "ACE_TRY_CHECK;" << be_nl
+    // Unlike the ClientRequestInfo counterpart, we set the forward
+    // location in the TAO_ServerRequest object after we're sure no
+    // other interceptors thrown an exception in the send_other()
+    // interception point.  This is okay since the ServerRequestInfo
+    // makes a copy of the forward reference (ClientRequestInfo
+    // doesn't).  Used as a simple optimization.
+      << "_tao_server_request.forward_location (exc.forward.in ());"
+      << be_uidt_nl
+      << "}" << be_uidt_nl;
 
-  *os << "_tao_vfr.send_reply (&ri, ACE_TRY_ENV);"<< be_nl
-      << "TAO_INTERCEPTOR_CHECK;" << be_uidt_nl
-      << "}" << be_uidt_nl
-      << "ACE_CATCHANY" << be_idt_nl
+  *os << "ACE_CATCHANY" << be_idt_nl
       << "{" << be_idt_nl;
-  // Update the exception field of teh request info.
-  *os << "ri.exception (&ACE_ANY_EXCEPTION);"<< be_nl;
-  *os << "_tao_vfr.send_exception (" << be_idt << be_idt_nl
+  // Update the ServerRequestInfo exception attribute.
+  *os << "ri.exception (&ACE_ANY_EXCEPTION);"<< be_nl
+      << "_tao_vfr.send_exception (" << be_idt << be_idt_nl
       << "&ri," << be_nl
       << "ACE_TRY_ENV" << be_uidt_nl
       << ");" << be_uidt_nl
@@ -437,24 +452,22 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
   *os << "}" << be_uidt_nl
       << "ACE_ENDTRY;" << be_nl;
   *os << "ACE_CHECK;\n"
-      << "#endif /* TAO_HAS_INTERCEPTORS */\n\n";
+      << "#endif /* TAO_HAS_INTERCEPTORS */" << be_nl << be_nl;
 
   // Check if we are oneway in which case, we are done.
   if (node->flags () == AST_Operation::OP_oneway)
     {
       // We are done. Nothing else to do, except closing the function body.
-      os->indent ();
-      *os << "if (_tao_server_request.response_expected ()" << be_idt << be_idt_nl
+      *os << "if (_tao_server_request.response_expected ()" << be_idt
+          << be_idt_nl
           << "&& !_tao_server_request.sync_with_server ())" << be_uidt_nl
           << "{" << be_idt_nl
           << "_tao_server_request.init_reply ();" << be_uidt_nl
-          << "}" << be_uidt << be_uidt_nl
-          << "}\n\n";
-      return 0;
+          << "}" << be_uidt << be_uidt_nl;
     }
 
   // Marshal outgoing parameters.
-  if (this->gen_marshal_params (node, bt) == -1)
+  else if (this->gen_marshal_params (node, bt) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_operation_ss::"
@@ -463,7 +476,6 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
                         -1);
     }
 
-  os->decr_indent ();
   *os << "}\n\n";
   return 0;
 }

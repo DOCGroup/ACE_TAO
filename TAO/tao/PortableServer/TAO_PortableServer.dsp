@@ -426,6 +426,10 @@ SOURCE=.\RTPortableServerC.i
 
 SOURCE=.\Servant_Base.i
 # End Source File
+# Begin Source File
+
+SOURCE=.\ServerRequestInfo.inl
+# End Source File
 # End Group
 # Begin Group "Template Files"
 

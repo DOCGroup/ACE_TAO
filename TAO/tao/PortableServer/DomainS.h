@@ -101,17 +101,17 @@
 
 
 #if (TAO_HAS_INTERCEPTORS == 1)
-        // Generation of interceptors related RequestInfo classes per operation.
+    // Generation of interceptors related RequestInfo classes per operation.
     // This needed to be able to store the arguments, exceptiosn, constexts
     // and build the lists dynamically on demand so that unnecessary time overhead
     // of building these lists when they arent used is avoided.
-            class TAO_ServerRequest_Info_CORBA_DomainManager_get_domain_policy : public TAO_ServerRequestInfo
+    class TAO_ServerRequest_Info_CORBA_DomainManager_get_domain_policy : public TAO_ServerRequestInfo
     {
     public:
       friend class POA_CORBA_DomainManager;
       TAO_ServerRequest_Info_CORBA_DomainManager_get_domain_policy (
-          const char * _tao_operation,
-          IOP::ServiceContextList &_tao_service_context_list,
+          TAO_ServerRequest &_tao_server_request,
+          POA_CORBA_DomainManager *tao_impl,
           CORBA::PolicyType& policy_type,
           CORBA::Environment &ACE_TRY_ENV =
             TAO_default_environment ()
@@ -145,7 +145,9 @@
       CORBA::PolicyType &policy_type_;
       void result (CORBA::Policy_ptr  result);
       // update the result
-      CORBA::Policy_ptr  result_;
+      CORBA::Policy_ptr _result;
+
+      POA_CORBA_DomainManager *_tao_impl;
     };
 
 #endif /* TAO_HAS_INTERCEPTORS */
@@ -391,8 +393,8 @@ public:
   public:
     friend class POA_CORBA_ConstructionPolicy;
     TAO_ServerRequest_Info_CORBA_ConstructionPolicy_make_domain_manager (
-      const char *_tao_operation,
-      IOP::ServiceContextList &_tao_service_context_list,
+      TAO_ServerRequest &_tao_server_request,
+      POA_CORBA_ConstructionPolicy *tao_impl,
       IR_InterfaceDef *object_type,
       CORBA::Boolean &constr_policy,
       CORBA::Environment &ACE_TRY_ENV =
@@ -426,6 +428,9 @@ public:
       );
     IR_InterfaceDef *object_type_;
     CORBA::Boolean &constr_policy_;
+
+    TAO_Server_Request &_tao_server_request;
+    POA_CORBA_ConstructionPolicy *_tao_impl;
 };
 
 #endif /* TAO_HAS_INTERCEPTORS */

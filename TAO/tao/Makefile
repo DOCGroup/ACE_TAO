@@ -164,6 +164,7 @@ ORB_CORE_FILES = \
   operation_details \
   PortableInterceptor \
   ClientRequestInfo \
+  RequestInfo_Util \
   PortableInterceptorC \
   DynamicC \
   OctetSeqC \

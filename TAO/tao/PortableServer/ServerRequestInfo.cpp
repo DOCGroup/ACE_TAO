@@ -4,15 +4,19 @@
 
 #include "ServerRequestInfo.h"
 
+#include "tao/TAO_Server_Request.h"
+
 ACE_RCSID (PortableServer, ServerRequestInfo, "$Id$")
 
 #if (TAO_HAS_INTERCEPTORS == 1)
 
+# if !defined (__ACE_INLINE__)
+#   include "ServerRequestInfo.inl"
+# endif /* !__ACE_INLINE__ */
+
 TAO_ServerRequestInfo::TAO_ServerRequestInfo (
-      const char * operation,
-      IOP::ServiceContextList &service_context_list)
-  : operation_ (operation),
-    service_context_list_ (service_context_list),
+  TAO_ServerRequest &server_request)
+  : server_request_ (server_request),
     caught_exception_ (0),
     reply_status_ (-1)
 {
@@ -22,69 +26,73 @@ CORBA::ULong
 TAO_ServerRequestInfo::request_id (CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return this->request_id_;
+  return this->server_request_.request_id ();
 }
 
 char *
 TAO_ServerRequestInfo::operation (CORBA::Environment &)
-   ACE_THROW_SPEC ((CORBA::SystemException))
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return CORBA::string_dup (this->operation_);
+  return CORBA::string_dup (this->server_request_.operation ());
 }
 
 Dynamic::ParameterList *
-TAO_ServerRequestInfo::arguments (CORBA::Environment &)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+TAO_ServerRequestInfo::arguments (CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
- return &this->parameter_list_;
+  // @@ Need the minor code once it becomes available.
+  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (), 0);
 }
 
 Dynamic::ExceptionList *
-TAO_ServerRequestInfo::exceptions (CORBA::Environment &)
+TAO_ServerRequestInfo::exceptions (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return &this->exception_list_;
+  // @@ Need the minor code once it becomes available.
+  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (), 0);
 }
 
 Dynamic::ContextList *
-TAO_ServerRequestInfo::contexts (CORBA::Environment &)
+TAO_ServerRequestInfo::contexts (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
- return &this->context_list_;
+  // @@ Need the minor code once it becomes available.
+  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (), 0);
 }
 
 Dynamic::RequestContext *
-TAO_ServerRequestInfo::operation_context (CORBA::Environment &)
+TAO_ServerRequestInfo::operation_context (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
- return &this->request_context_;
+  // @@ Need the minor code once it becomes available.
+  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (), 0);
 }
 
 CORBA::Any *
-TAO_ServerRequestInfo::result (CORBA::Environment &)
+TAO_ServerRequestInfo::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return 0;
+  // @@ Need the minor code once it becomes available.
+  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (), 0);
 }
 
 CORBA::Boolean
-TAO_ServerRequestInfo::response_expected (CORBA::Environment &ACE_TRY_ENV)
+TAO_ServerRequestInfo::response_expected (CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (
-                      CORBA::SystemException::_tao_minor_code (
-                        TAO_DEFAULT_MINOR_CODE,
-                        ENOTSUP),
-                      CORBA::COMPLETED_NO),
-                    0);
+  return this->server_request_.response_expected ();
 }
 
 # if TAO_HAS_CORBA_MESSAGING == 1
 Messaging::SyncScope
-TAO_ServerRequestInfo::sync_scope (CORBA::Environment &)
+TAO_ServerRequestInfo::sync_scope (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
- return 0;
+  if (this->server_request_.sync_with_server ())
+    return Messaging::SYNC_WITH_SERVER;
+
+  // @@ Need the minor once it becomes available.
+  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (), -1);
 }
 #endif  /* TAO_HAS_CORBA_MESSAGING */
 
@@ -104,17 +112,18 @@ TAO_ServerRequestInfo::forward_reference (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->reply_status_ != PortableInterceptor::LOCATION_FORWARD
-      || this->reply_status_ !=
+      && this->reply_status_ !=
            PortableInterceptor::LOCATION_FORWARD_PERMANENT)
     ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (),
                       CORBA::Object::_nil ());
 
-//   // TAO_GIOP_Invocation::forward_reference() already duplicates the
-//   // reference before returning it so there is no need to duplicate it
-//   // here.
-//   return this->invocation_->forward_reference ();
-
-  return CORBA::Object::_nil ();
+  // We don't get the forward reference from the TAO_Server_Request
+  // object since it may not have been set there.  For example, this
+  // is the case when a Servant Manager throws a
+  // PortableServer::ForwardRequest exception.  As such, we only
+  // return the one stored in this object since it is explicitly set
+  // by the responsible request forwarding code.
+  return CORBA::Object::_duplicate (this->forward_reference_);
 }
 
 CORBA::Any *
@@ -137,10 +146,13 @@ TAO_ServerRequestInfo::get_request_service_context (
     CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  CORBA::ULong len = this->service_context_list_.length ();
+  IOP::ServiceContextList &service_context_list =
+    this->server_request_.service_context ().service_info ();
+
+  CORBA::ULong len = service_context_list.length ();
 
   for (CORBA::ULong i = 0; i < len; ++i)
-    if (this->service_context_list_[i].context_id == id)
+    if (service_context_list[i].context_id == id)
       {
         IOP::ServiceContext *service_context = 0;
         ACE_NEW_THROW_EX (service_context,
@@ -154,7 +166,7 @@ TAO_ServerRequestInfo::get_request_service_context (
 
         IOP::ServiceContext_var safe_service_context = service_context;
 
-        (*service_context) = this->service_context_list_[i];
+        (*service_context) = service_context_list[i];
 
         return safe_service_context._retn ();
       }
@@ -173,10 +185,13 @@ TAO_ServerRequestInfo::get_reply_service_context (
     CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  CORBA::ULong len = this->service_context_list_.length ();
+  IOP::ServiceContextList &service_context_list =
+    this->server_request_.service_context ().service_info ();
+
+  CORBA::ULong len = service_context_list.length ();
 
   for (CORBA::ULong i = 0; i < len; ++i)
-    if (this->service_context_list_[i].context_id == id)
+    if (service_context_list[i].context_id == id)
       {
         IOP::ServiceContext *service_context = 0;
         ACE_NEW_THROW_EX (service_context,
@@ -190,7 +205,7 @@ TAO_ServerRequestInfo::get_reply_service_context (
 
         IOP::ServiceContext_var safe_service_context = service_context;
 
-        (*service_context) = this->service_context_list_[i];
+        (*service_context) = service_context_list[i];
 
         return safe_service_context._retn ();
       }
@@ -211,6 +226,13 @@ CORBA::Any *
 TAO_ServerRequestInfo::sending_exception (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  if (this->reply_status_ != PortableInterceptor::SYSTEM_EXCEPTION
+      && this->reply_status_ != PortableInterceptor::USER_EXCEPTION)
+    {
+      // @@ Need the minor code once it is available.
+      ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (), 0);
+    }
+
   // The spec says that if it is a user exception which cant be inserted
   // then the UNKNOWN exception needs to be thrown with minor code TBD_U.
 
@@ -246,6 +268,12 @@ CORBA::OctetSeq *
 TAO_ServerRequestInfo::object_id (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+//   if (this->object_id_.in () == 0)
+//     {
+//       // @@ Need the minor code once it is available.
+//       ACE_THROW_RETURN (CORBA::NO_RESOURCES (), 0);
+//     }
+
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (
                       CORBA::SystemException::_tao_minor_code (
                         TAO_DEFAULT_MINOR_CODE,
@@ -258,6 +286,12 @@ CORBA::OctetSeq *
 TAO_ServerRequestInfo::adapter_id (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+//   if (this->adapter_id_.in () == 0)
+//     {
+//       // @@ Need the minor code once it is available.
+//       ACE_THROW_RETURN (CORBA::NO_RESOURCES (), 0);
+//     }
+
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (
                       CORBA::SystemException::_tao_minor_code (
                         TAO_DEFAULT_MINOR_CODE,
@@ -271,12 +305,8 @@ TAO_ServerRequestInfo::target_most_derived_interface (
     CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (
-                      CORBA::SystemException::_tao_minor_code (
-                        TAO_DEFAULT_MINOR_CODE,
-                        ENOTSUP),
-                      CORBA::COMPLETED_NO),
-                    0);
+  // @@ Need the minor code once it is available.
+  ACE_THROW_RETURN (CORBA::NO_RESOURCES (), 0);
 }
 
 CORBA::Policy_ptr
@@ -302,16 +332,12 @@ TAO_ServerRequestInfo::set_slot (PortableInterceptor::SlotId,
 }
 
 CORBA::Boolean
-TAO_ServerRequestInfo::target_is_a (const char *,
+TAO_ServerRequestInfo::target_is_a (const char * /* id */,
                                     CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (
-                      CORBA::SystemException::_tao_minor_code (
-                        TAO_DEFAULT_MINOR_CODE,
-                        ENOTSUP),
-                      CORBA::COMPLETED_NO),
-                    0);
+  // @@ Need the minor code once it is available.
+  ACE_THROW_RETURN (CORBA::NO_RESOURCES (), 0);
 }
 
 void
@@ -322,17 +348,20 @@ TAO_ServerRequestInfo::add_reply_service_context (
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Copy the service context into the list.
-  CORBA::ULong len = this->service_context_list_.length ();
+  IOP::ServiceContextList &service_context_list =
+    this->server_request_.service_context ().service_info ();
+
+  CORBA::ULong len = service_context_list.length ();
 
   // First check if a service context with the same ID exists.
   for (CORBA::ULong i = 0; i < len; ++i)
     {
-      if (this->service_context_list_[i].context_id ==
+      if (service_context_list[i].context_id ==
           service_context.context_id)
         {
           if (replace)
             {
-              this->service_context_list_[i] = service_context;
+              service_context_list[i] = service_context;
               return;
             }
           else
@@ -342,26 +371,9 @@ TAO_ServerRequestInfo::add_reply_service_context (
     }
 
   // No service context with the given ID exists so add one.
-  this->service_context_list_.length (len + 1);
+  service_context_list.length (len + 1);
 
-  this->service_context_list_[len] = service_context;
-}
-
-void
-TAO_ServerRequestInfo::exception (CORBA::Exception *exception)
-{
-  if (CORBA::SystemException::_downcast (exception) != 0)
-    this->reply_status_ = PortableInterceptor::SYSTEM_EXCEPTION;
-  if (CORBA::UserException::_downcast (exception) != 0)
-    this->reply_status_ = PortableInterceptor::USER_EXCEPTION;
-
-  this->caught_exception_ = exception;
-}
-
-void
-TAO_ServerRequestInfo::request_id (CORBA::ULong request_id)
-{
-  this->request_id_ = request_id;
+  service_context_list[len] = service_context;
 }
 
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */

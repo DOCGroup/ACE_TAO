@@ -1,4 +1,4 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -10,9 +10,9 @@
  *  "Server Request" type.
  *
  *
- *  @author Copyright 1994-1995 by Sun Microsystems, Inc.
- *  @author Chris Cleeland.
- *  @author Aniruddha Gokhale
+ * @author Copyright 1994-1995 by Sun Microsystems Inc.
+ * @author Chris Cleeland
+ * @author Aniruddha Gokhale
  */
 //=============================================================================
 
@@ -21,17 +21,18 @@
 #define TAO_GIOP_SERVER_REQUEST_H
 #include "ace/pre.h"
 
-#include "tao/corbafwd.h"
+#include "corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/SString.h"
-#include "tao/ORB.h"
-#include "tao/Tagged_Profile.h"
-#include "tao/OctetSeqC.h"
-#include "tao/Service_Context.h"
+
+#include "Tagged_Profile.h"
+#include "OctetSeqC.h"
+#include "Service_Context.h"
+#include "Object.h"
 
 class TAO_Pluggable_Messaging;
 class TAO_Transport;
@@ -40,7 +41,7 @@ class TAO_Transport;
  * @class TAO_ServerRequest
  *
  * @brief Class representing a ServerRequest object.
- * DESCRIPTION
+ *
  * Encapsulates CDR, transport and pluggable messaging
  * components on the server side.
  */
@@ -69,8 +70,10 @@ public:
   /// Destructor.
   virtual ~TAO_ServerRequest (void);
 
-  // = Request attributes.
-
+  /**
+   * @name Request attributes.
+   */
+  //@{
   /// Return the operation name.
   const char *operation (void) const;
 
@@ -83,8 +86,7 @@ public:
 
   /// Return the legnth of the operation.
   unsigned int operation_length (void) const;
-
-  // = TAO extensions.
+  //@}
 
   /// Return the underlying ORB.
   CORBA::ORB_ptr orb (void);
@@ -123,20 +125,33 @@ public:
 
   TAO_ObjectKey &object_key (void);
 
+  /**
+   * @todo These two methods should go away.
+   */
+  //@{
   IOP::ServiceContextList &service_info (void);
   void service_info (IOP::ServiceContextList &service_info);
-  // @@ The above two should go away...
+  //@}
 
+  /// Return the TAO_Service_Context
   TAO_Service_Context &service_context (void);
-  // Return the TAO_Service_Context
 
+  /// Return the underlying transport
   TAO_Transport *transport ();
-  // Return the underlying transport
 
-  // To handle System Exceptions at the lowest level,
-  // a method returning the request_id_ is needed.
+  /// To handle System Exceptions at the lowest level, a method
+  /// returning the request_id_ is needed.
+  //@{
   CORBA::ULong request_id (void);
   void request_id (CORBA::ULong req);
+  //@}
+
+  /**
+   * Set the reference to the object the request should be forwarded
+   * to.  This reference will only be used if set prior to calling
+   * init_reply().
+   */
+  void forward_location (CORBA::Object_ptr forward_reference);
 
   /// Get the forward_location.
   CORBA::Object_ptr forward_location (void);
@@ -147,9 +162,11 @@ public:
   /// Set the exception type.
   void exception_type (CORBA::ULong except_type);
 
-  /// void requesting_principal (CORBA_Principal_ptr principal);
   /// Set the requesting principal.
-  /**** Deprecated in CORBA 2.4 *****/
+  /**
+   * @note Deprecated in CORBA 2.4
+   */
+  // void requesting_principal (CORBA_Principal_ptr principal);
 
   /// Set the requesting principal
   void requesting_principal (const CORBA_OctetSeq & principal);
@@ -170,6 +187,15 @@ public:
   /// Get/Set operations for the argument_flag
   void argument_flag (CORBA::Boolean flag);
   CORBA::Boolean argument_flag (void);
+
+#if TAO_HAS_INTERCEPTORS == 1
+  /// Return a reference to the number of interceptors pushed on to
+  /// the current interceptor flow stack.  It is a reference since the
+  /// Portable Interceptor flow stack code must be able to modify this
+  /// value and use that value at a later time without being forced to
+  /// use TSS.
+  size_t &interceptor_count (void);
+#endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
 private:
 
@@ -212,15 +238,14 @@ private:
   /// A pointer to the ORB Core for the context where the request was
   /// created.
   TAO_ORB_Core *orb_core_;
-  // A pointer to the ORB Core for the context where the request was
-  // created.
 
-  //IOP::ServiceContextList service_info_;
-  // The service context for the request (CORBA Reference?).
+  /// The service context for the request (CORBA Reference?).
+  // IOP::ServiceContextList service_info_;
 
+  /// Service Context info
   TAO_Service_Context service_context_;
-  // Service Context info
 
+  /// Unique identifier for a request.
   CORBA::ULong request_id_;
 
   /// The tagged profile that has the addressing information.
@@ -242,10 +267,16 @@ private:
    * to the client.
    */
   CORBA::Boolean argument_flag_;
+
+#if TAO_HAS_INTERCEPTORS == 1
+  /// The number of interceptors pushed on to the current interceptor
+  /// flow stack.
+  size_t interceptor_count_;
+#endif  /* TAO_HAS_INTERCEPTORS == 1 */
 };
 
 #if defined (__ACE_INLINE__)
-# include "tao/TAO_Server_Request.i"
+# include "TAO_Server_Request.i"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"

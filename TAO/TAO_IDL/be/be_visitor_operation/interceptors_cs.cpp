@@ -134,9 +134,8 @@ be_visitor_operation_interceptors_cs::visit_operation (be_operation *node)
     }
 
   *os << " (" << be_idt << be_idt_nl
-      << "const char *_tao_operation," << be_nl
-      << "IOP::ServiceContextList &_tao_service_context_list," << be_nl
-      << "CORBA::Object *_tao_target";
+      << "TAO_GIOP_Invocation *_tao_invocation," << be_nl
+      << "CORBA::Object_ptr _tao_target";
 
   // Generate the argument list with the appropriate mapping. For these
   // we grab a visitor that generates the parameter listing.
@@ -162,8 +161,7 @@ be_visitor_operation_interceptors_cs::visit_operation (be_operation *node)
   // Generate the member list and set each member but before that,
   // its necessary to pass on some args to the base class.
   os->indent ();
-  *os << "  : TAO_ClientRequestInfo (_tao_operation, "
-      << "_tao_service_context_list, _tao_target)";
+  *os << "  : TAO_ClientRequestInfo (_tao_invocation, _tao_target)";
 
   ctx = *this->ctx_;
   ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_ARG_INFO_CS);
@@ -184,6 +182,9 @@ be_visitor_operation_interceptors_cs::visit_operation (be_operation *node)
   os->decr_indent ();
   *os << be_nl << "{}\n\n";
 
+  // -----------------------------------------------------------------
+  // PortableInterceptor::ClientRequestInfo::arguments()
+  // -----------------------------------------------------------------
   *os << "Dynamic::ParameterList *" << be_nl;
 
   if (node->is_nested ())
@@ -227,10 +228,15 @@ be_visitor_operation_interceptors_cs::visit_operation (be_operation *node)
         }
     }
 
-  *os << "::arguments (CORBA::Environment &)" << be_idt_nl
+  *os << "::arguments (CORBA::Environment &ACE_TRY_ENV)" << be_idt_nl
       << "ACE_THROW_SPEC ((CORBA::SystemException))"<<  be_uidt_nl
       << "{" << be_idt_nl
-      << "// Generate the arg list on demand" << be_nl;
+      << "// Generate the argument list on demand." << be_nl
+      << "Dynamic::ParameterList *parameter_list ="  << be_idt_nl
+      << "TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);"
+      << be_uidt_nl
+      << "ACE_CHECK_RETURN (0);" << be_nl
+      << be_nl;
 
   if (node->argument_count () == 0 ||
       // Now make sure that we have some in and inout
@@ -239,11 +245,13 @@ be_visitor_operation_interceptors_cs::visit_operation (be_operation *node)
       (!(this->has_param_type (node, AST_Argument::dir_IN)) &&
        !(this->has_param_type (node, AST_Argument::dir_INOUT))))
     {
-      *os << "return 0;" << be_uidt_nl
-          << "}\n\n";
+      *os << "return parameter_list;" << be_uidt_nl;
     }
   else
     {
+      *os << "Dynamic::ParameterList_var safe_parameter_list = "
+          << "parameter_list;" << be_nl;
+
       // The insertion operator is different for different nodes.
       // We change our scope to go to the argument scope to
       // be able to decide this.
@@ -264,11 +272,16 @@ be_visitor_operation_interceptors_cs::visit_operation (be_operation *node)
       delete visitor;
 
       *os << be_nl
-          << "return &this->parameter_list_;" << be_uidt_nl
-          << "}\n\n";
+          << "return safe_parameter_list._retn ();" << be_uidt_nl;
     }
 
+  *os << "}\n\n";
+
   os->decr_indent ();
+
+  // -----------------------------------------------------------------
+  // PortableInterceptor::ClientRequestInfo::exceptions()
+  // -----------------------------------------------------------------
   *os << "Dynamic::ExceptionList *" << be_nl;
 
   if (node->is_nested ())
@@ -311,18 +324,25 @@ be_visitor_operation_interceptors_cs::visit_operation (be_operation *node)
         }
     }
 
-  *os << "::exceptions (CORBA::Environment &)"<< be_idt_nl
+  *os << "::exceptions (CORBA::Environment &ACE_TRY_ENV)"<< be_idt_nl
       << "ACE_THROW_SPEC ((CORBA::SystemException))" << be_uidt_nl
       << "{" << be_idt_nl
-      << "// Generate the exception list on demand " << be_nl;
+      << "// Generate the exception list on demand." << be_nl
+      << "Dynamic::ExceptionList *exception_list ="  << be_idt_nl
+      << "TAO_RequestInfo_Util::make_exception_list (ACE_TRY_ENV);"
+      << be_uidt_nl
+      << "ACE_CHECK_RETURN (0);" << be_nl
+      << be_nl;
 
   if (!node->exceptions ())
     {
-      *os << "return 0;" << be_uidt_nl
-          << "}\n\n" << be_nl;
+      *os << "return exception_list;" << be_uidt_nl;
     }
   else
     {
+      *os << "Dynamic::ExceptionList_var safe_exception_list = "
+          << "exception_list;" << be_nl;
+
       // We change our scope to be able to generate the exceptionlist.
       ctx = *this->ctx_;
       ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_EXCEPTLIST);
@@ -341,11 +361,16 @@ be_visitor_operation_interceptors_cs::visit_operation (be_operation *node)
       delete visitor;
 
       *os << be_nl
-          << "return &this->exception_list_;" << be_uidt_nl
-          << "}\n\n";
+          << "return safe_exception_list._retn ();" << be_uidt_nl;
     }
 
+  *os << "}\n\n" << be_nl;
+
   os->decr_indent ();
+
+  // -----------------------------------------------------------------
+  // PortableInterceptor::ClientRequestInfo::result()
+  // -----------------------------------------------------------------
   *os << "CORBA::Any * " << be_nl;
 
   if (node->is_nested ())
@@ -388,7 +413,7 @@ be_visitor_operation_interceptors_cs::visit_operation (be_operation *node)
         }
     }
 
-  *os << "::result (CORBA::Environment &)" << be_idt_nl
+  *os << "::result (CORBA::Environment &ACE_TRY_ENV)" << be_idt_nl
       << "ACE_THROW_SPEC ((CORBA::SystemException))" << be_uidt_nl
       << "{" << be_idt_nl
       << "// Generate the result on demand." << be_nl;
@@ -397,36 +422,53 @@ be_visitor_operation_interceptors_cs::visit_operation (be_operation *node)
 
   if (this->void_return_type (bt))
     {
-      *os << "CORBA::TypeCode tc (CORBA::tk_void);" << be_nl
-          << "this->result_val_.type (&tc);" << be_nl;
+      // Return an Any with tk_void TypeCode.
+      *os << "CORBA::Boolean tk_void_any = 1;" << be_nl
+          << "CORBA::Any *result_any ="  << be_idt_nl
+          << "TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);"
+          << be_uidt_nl
+          << "ACE_CHECK_RETURN (0);" << be_nl
+          << be_nl
+          << "return result_any;" << be_uidt_nl;
     }
   else
     {
+      *os << "CORBA::Boolean tk_void_any = 0;" << be_nl
+          << "CORBA::Any *result_any ="  << be_idt_nl
+          << "TAO_RequestInfo_Util::make_any (0, ACE_TRY_ENV);"
+          << be_uidt_nl
+          << "ACE_CHECK_RETURN (0);" << be_nl
+          << be_nl
+          << "CORBA::Any_var safe_result_any = "
+          << "result_any;" << be_nl << be_nl;
+
       // Generate the insertion of result into Any.
-        ctx = *this->ctx_;
-        ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_RESULT);
-        visitor = tao_cg->make_visitor (&ctx);
+      ctx = *this->ctx_;
+      ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_RESULT);
+      visitor = tao_cg->make_visitor (&ctx);
 
-        if (!visitor || (bt->accept (visitor) == -1))
-          {
-            delete visitor;
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "(%N:%l) be_visitor_operation_cs::"
-                               "visit_operation - "
-                               "codegen for result failed\n"),
-                              -1);
-          }
+      if (!visitor || (bt->accept (visitor) == -1))
+        {
+          delete visitor;
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_operation_cs::"
+                             "visit_operation - "
+                             "codegen for result failed\n"),
+                            -1);
+        }
 
-        delete visitor;
+      delete visitor;
+
+      *os << "return safe_result_any._retn ();" << be_uidt_nl;
     }
 
-  *os << be_nl
-      << "return &this->result_val_;" << be_uidt_nl
-      << "}\n\n";
+  *os << "}\n\n";
 
   os->decr_indent ();
 
+  // -----------------------------------------------------------------
   // Update the result.
+  // -----------------------------------------------------------------
   bt = be_type::narrow_from_decl (node->return_type ());
 
   if (!bt)
@@ -507,7 +549,7 @@ be_visitor_operation_interceptors_cs::visit_operation (be_operation *node)
       *os << " result)" << be_uidt << be_uidt << be_uidt_nl
           << "{" << be_idt_nl
           << "// update the result " << be_nl
-          << "this->result_ = result;" << be_uidt_nl
+          << "this->_result = result;" << be_uidt_nl
           << "}\n\n";
     }
 
