@@ -1,3 +1,10 @@
+Wed Dec 10 01:02:36 1997  Chris Cleeland  <cleeland@tango.cs.wustl.edu>
+
+	* tao/iiopobj.cpp (set): Added a special case to IIOP Profile::set
+ 	so that if the address is INADDR_ANY, it uses the host name, but
+ 	otherwise uses the IP address.  This eliminates the cryptic
+ 	appearance of the address "0.0.0.0" in a server's IOR.
+
 Tue Dec  9 21:48:52 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
 	* tests/Cubit/TAO/IDL_Cubit/clnt.cpp: 
