@@ -7,14 +7,15 @@
 
 int main( int argc, char* argv[] )
 {
-   
+
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY_NEW_ENV
    {
       int failed = 0 ;
 
       // Initialise ORB.
       //
-      CORBA::ORB_var orb = CORBA::ORB_init( argc, argv ACE_ENV_ARG_PARAMETER) ;
+      CORBA::ORB_var orb = CORBA::ORB_init( argc, argv, "" ACE_ENV_ARG_PARAMETER) ;
       ACE_TRY_CHECK;
 
       // Find the Interface Repository.
@@ -121,7 +122,7 @@ int main( int argc, char* argv[] )
 
       orb->create_operation_list( operation.in(), opList.out() ACE_ENV_ARG_PARAMETER) ;
       ACE_TRY_CHECK;
-      
+
       ACE_DEBUG((LM_DEBUG, "Call to create_operation_list succeeded\n"));
 
       CORBA::ULong count = opList->count() ;
@@ -185,7 +186,7 @@ int main( int argc, char* argv[] )
          failed = 1 ;
       };
 
-      
+
      // opList->free();
       //operation->destroy();
 
