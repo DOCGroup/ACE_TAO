@@ -1,3 +1,60 @@
+Thu Jun 20 18:48:28 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/ast/ast_decl.cpp (set_name):
+
+          Added a check for setting a name to itself (not a copy),
+          because the old name is first destroyed.
+
+        * TAO_IDL/be/be_visitor_array.cpp:
+        * TAO_IDL/be/be_visitor_exception.cpp:
+        * TAO_IDL/be/be_visitor_union_branch.cpp:
+        * TAO_IDL/be/be_visitor_array/array.cpp:
+        * TAO_IDL/be/be_visitor_array/cdr_op_ci.cpp:
+        * TAO_IDL/be/be_visitor_exception/cdr_op_ci.cpp:
+        * TAO_IDL/be/be_visitor_exception/ctor_assign.cpp:
+        * TAO_IDL/be/be_visitor_exception/exception_ch.cpp:
+        * TAO_IDL/be/be_visitor_exception/exception_cs.cpp:
+        * TAO_IDL/be/be_visitor_exception/exception_ctor.cpp:
+        * TAO_IDL/be/be_visitor_field/cdr_op_ci.cpp:
+        * TAO_IDL/be/be_visitor_interface/cdr_op_ci.cpp:
+        * TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_structure/cdr_op_ci.cpp:
+        * TAO_IDL/be/be_visitor_union/cdr_op_ci.cpp:
+        * TAO_IDL/be/be_visitor_union/discriminant_ci.cpp:
+        * TAO_IDL/be/be_visitor_union/union.cpp:
+        * TAO_IDL/be/be_visitor_union/union_ch.cpp:
+        * TAO_IDL/be/be_visitor_union/union_cs.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/cdr_op_ci.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/private_ch.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/public_assign_cs.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/public_ci.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/public_reset_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/cdr_op_ci.cpp:
+        * TAO_IDL/be_include/be_visitor_union_branch.h:
+        * TAO_IDL/be_include/be_visitor_array/array.h:
+        * TAO_IDL/be_include/be_visitor_array/cdr_op_ci.h:
+        * TAO_IDL/be_include/be_visitor_exception/ctor.h:
+        * TAO_IDL/be_include/be_visitor_exception/ctor_assign.h:
+        * TAO_IDL/be_include/be_visitor_field/cdr_op_ci.h:
+        * TAO_IDL/be_include/be_visitor_union_branch/cdr_op_ci.h:
+        * TAO_IDL/be_include/be_visitor_union_branch/private_ch.h:
+        * TAO_IDL/be_include/be_visitor_union_branch/public_assign_cs.h:
+        * TAO_IDL/be_include/be_visitor_union_branch/public_ci.h:
+        * TAO_IDL/be_include/be_visitor_union_branch/public_cs.h:
+        * TAO_IDL/be_include/be_visitor_union_branch/public_reset_cs.h:
+
+          All the missing pieces for valuetypes as members of structs,
+          unions, exceptions, arrays and sequences.
+
+        * TAO_IDL/be/be_visitor_union_branch/public_access_cs.cpp:
+        * TAO_IDL/be_include/be_visitor_union_branch/public_access_cs.h:
+
+          Removed these files - visitor is never created.
+
+        * TAO_IDL/be_include/be_codegen.h:
+
+          Removed an unused context state.
+
 Wed Jun 19 11:47:26 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be/be_interface.cpp:
