@@ -67,6 +67,22 @@ run_iterate (STRLIST &list)
     }
 }
 
+static void
+run_reverse_iterate (STRLIST &list)
+{
+  ACE_STRING *entry;
+  size_t i = 0;
+
+  for (STRLIST_REVERSE_ITERATOR iter (list);
+       iter.next (entry) != 0;
+       iter.advance (), i++)
+    {
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("iterating (%d): [%s]\n"),
+                  i,
+                  (ACE_TCHAR *) *entry));
+    }
+}
+
 static int
 run_test (void)
 {
@@ -90,19 +106,23 @@ run_test (void)
                            string_table[i]),
                           -1);
       run_iterate (list);
+      run_reverse_iterate (list);
     }
 
   run_iterate (list);
+  run_reverse_iterate ();
 
   list.delete_tail ();
   list.delete_tail ();
 
   run_iterate (list);
+  run_reverse_iterate ();
 
   list.delete_head ();
   list.delete_head ();
 
   run_iterate (list);
+  run_reverse_iterate ();
 
   return 0;
 }

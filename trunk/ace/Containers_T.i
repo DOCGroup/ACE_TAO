@@ -1,8 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-// Containers.i
-
 template <class T> ACE_INLINE int
 ACE_Bounded_Stack<T>::is_empty (void) const
 {
@@ -450,8 +448,10 @@ ACE_DLList_Reverse_Iterator<T>::next (T *&ptr)
 {
   ACE_DLList_Node *temp =
     ACE_Double_Linked_List_Reverse_Iterator <ACE_DLList_Node>::next ();
+  if (temp == 0)
+    return 0;
   ptr = (T *) temp->item_;
-  return ptr ? 1 : 0;
+  return 1;
 }
 
 template <class T> ACE_INLINE T *
