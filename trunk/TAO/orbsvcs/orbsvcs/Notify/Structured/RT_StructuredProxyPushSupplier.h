@@ -28,7 +28,8 @@ class TAO_Notify_Method_Request;
  * @brief
  *
  */
-class TAO_RT_Notify_Export TAO_Notify_RT_StructuredProxyPushSupplier : public virtual TAO_Notify_StructuredProxyPushSupplier
+class TAO_RT_Notify_Export TAO_Notify_RT_StructuredProxyPushSupplier :
+  public virtual TAO_Notify_StructuredProxyPushSupplier
 {
 public:
   /// Constuctor
@@ -39,6 +40,10 @@ public:
 
   /// Activate this object and obtain the Event_Forwarder interface.
   virtual CORBA::Object_ptr activate (PortableServer::Servant servant ACE_ENV_ARG_DECL);
+
+  /// Dummy method to prevent hidden TAO_Notify_Proxy::activate warning.
+  virtual CORBA::Object_ptr activate (PortableServer::Servant servant,
+                                      CORBA::Long id ACE_ENV_ARG_DECL);
 
   /// Dispatch Event to consumer
   void deliver (TAO_Notify_Method_Request_Dispatch & request ACE_ENV_ARG_DECL);
