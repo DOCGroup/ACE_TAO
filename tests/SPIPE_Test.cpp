@@ -106,7 +106,6 @@ main (int, char *[])
 {
   ACE_START_TEST ("SPIPE_Test");
 
-#if defined (ACE_HAS_STREAM_PIPES)
 #if !defined (ACE_LACKS_EXEC)
   switch (ACE_OS::fork ())
     {
@@ -132,7 +131,7 @@ main (int, char *[])
 #else
   ACE_DEBUG ((LM_DEBUG, 
 	      "SPIPE is not supported on this platform\n"));
-#endif /* defined (ACE_HAS_STREAM_PIPES) || defined (ACE_WIN32) || defined (VXWORKS) */
+#endif /* ! ACE_LACKS_EXEC */
   ACE_END_TEST;
   return 0;
 }
