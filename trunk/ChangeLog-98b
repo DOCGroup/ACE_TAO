@@ -1,3 +1,10 @@
+Tue May 19 09:52:08 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* ace/config-irix6.x-g++.h: 
+	* ace/config-irix6.x-sgic++-nothreads.h: 
+	* ace/config-irix6.x-sgic++.h: 
+	  Added ACE_LACKS_MUTEXATTR_PSHARED
+
 Mon May 18 16:37:36 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/SString.h (ACE_CString): Added the ability to hold on to
