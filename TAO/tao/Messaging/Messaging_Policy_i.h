@@ -113,7 +113,7 @@ public:
   static void hook (TAO_ORB_Core *orb_core,
                     TAO_Stub *stub,
                     int &has_synchronization,
-                    int &scope);
+                    Messaging::SyncScope &scope);
 
   /// Helper method for the implementation of
   /// CORBA::ORB::create_policy.

@@ -193,7 +193,7 @@ TAO_GIOP_Oneway_Invocation::~TAO_GIOP_Oneway_Invocation (void)
 {
 }
 
-ACE_INLINE TAO::SyncScope
+ACE_INLINE Messaging::SyncScope
 TAO_GIOP_Oneway_Invocation::sync_scope (void)
 {
   return this->sync_scope_;

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "GIOP_Message_Generator_Parser_12.h"
 #include "GIOP_Utils.h"
 #include "GIOP_Message_State.h"
@@ -8,7 +6,6 @@
 #include "CDR.h"
 #include "Any.h"
 #include "debug.h"
-#include "OctetSeqC.h"
 #include "Pluggable_Messaging_Utils.h"
 #include "TAO_Server_Request.h"
 #include "TAOC.h"
@@ -54,18 +51,18 @@ TAO_GIOP_Message_Generator_Parser_12::write_request_header (
     msg << CORBA::Any::from_octet (3);
   // Second the response flags
   // Sync scope - ignored by server if request is not oneway.
-  else if (response_flags == CORBA::Octet (TAO::SYNC_NONE) ||
-           response_flags == CORBA::Octet (TAO::SYNC_WITH_TRANSPORT) ||
-           response_flags == CORBA::Octet (TAO::SYNC_EAGER_BUFFERING) ||
-           response_flags == CORBA::Octet (TAO::SYNC_DELAYED_BUFFERING))
+  else if (response_flags == CORBA::Octet (Messaging::SYNC_NONE)
+           || response_flags == CORBA::Octet (Messaging::SYNC_WITH_TRANSPORT)
+           || response_flags == CORBA::Octet (TAO::SYNC_EAGER_BUFFERING)
+           || response_flags == CORBA::Octet (TAO::SYNC_DELAYED_BUFFERING))
     // No response required.
     msg << CORBA::Any::from_octet (0);
 
-  else if (response_flags == CORBA::Octet (TAO::SYNC_WITH_SERVER))
+  else if (response_flags == CORBA::Octet (Messaging::SYNC_WITH_SERVER))
     // Return before dispatching to the servant
     msg << CORBA::Any::from_octet (1);
 
-  else if (response_flags == CORBA::Octet (TAO::SYNC_WITH_TARGET))
+  else if (response_flags == CORBA::Octet (Messaging::SYNC_WITH_TARGET))
     // Return after dispatching servant.
     msg << CORBA::Any::from_octet (3);
   else
@@ -89,10 +86,10 @@ TAO_GIOP_Message_Generator_Parser_12::write_request_header (
   msg << opdetails.request_service_info ();
 
   // We align the pointer only if the operation has arguments.
-  if (opdetails.argument_flag ())
+  if (opdetails.argument_flag ()
+      && msg.align_write_ptr (TAO_GIOP_MESSAGE_ALIGN_PTR) == -1)
     {
-      if (msg.align_write_ptr (TAO_GIOP_MESSAGE_ALIGN_PTR) == -1)
-        return 0;
+      return 0;
     }
 
   return 1;

@@ -1,3 +1,166 @@
+Tue Apr 16 16:34:38 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/GIOP_Message_Generator_Parser_12.cpp (write_request_header):
+	* tao/GIOP_Message_Lite.cpp (write_request_header):
+
+	  Use the SyncScope constants in the Messaging IDL module.  The
+	  redefinitions in the TAO IDL module no longer exist.
+
+	* tao/Invocation.h:
+
+	  Include Messaging_SyncScopeC.h instead of TAOC.h.  The latter is
+	  no longer used to define a SyncScope typedef.  Instead, the
+	  standard Messaging::SyncScope typedef will be used.
+
+	  Changed all instances of TAO::SyncScope to
+	  Messaging::SyncScope.
+
+	* tao/Invocation.i (sync_scope):
+
+	  Changed return type from TAO::SyncScope to
+	  Messaging::SyncScope.
+
+	* tao/Invocation.cpp (TAO_GIOP_Oneway_Invocation):
+
+	  Pass the sync_scope_ member directly to the
+	  call_sync_scope_hook() call. 	No need for a temporary.
+
+	  (invoke):
+
+	  Standard Messaging::SyncScope constants are now referenced via
+	  the Messaging module/namespace instead of the TAO namespace.
+
+	* tao/ORB_Core.h:
+
+	  Changed all instances of "CORBA::Policy *" to
+	  "CORBA::Policy_ptr."  The latter is more technically correct.
+
+	  (call_sync_scope_hook, get_sync_strategy):
+
+	  Changed sync_scope parameter to be of type
+	  "Messaging::SyncScope" instead of "int".
+
+	  (stubless_sync_scope):
+
+	  Altered method so that it returns a policy instead of returning
+	  one by reference via the parameter list
+
+	* tao/ORB_Core.cpp:
+
+	  Changed all instances of "CORBA::Policy *" to
+	  "CORBA::Policy_ptr."  The latter is more technically correct.
+
+	  (call_sync_scope_hook, get_sync_strategy):
+
+	  Changed sync_scope parameter to be of type
+	  "Messaging::SyncScope" instead of "int".
+
+	  (get_sync_strategy):
+
+	  Use the SyncScope constants in the Messaging IDL module.  The
+	  redefinitions in the TAO IDL module no longer exist.
+
+	  (stubless_sync_scope):
+
+	  Altered method so that it returns a policy instead of returning
+	  one by reference via the parameter list.  Note that this is
+	  equivalent to changing the parameter to a "CORBA::Policy_out"
+	  instead of "CORBA::Policy *&".  The former was chosen for
+	  consistency with other similarly named methods.  Addresses some
+	  memory management issues.
+
+	  (stubless_relative_roundtrip_timeout, get_cached_policy):
+
+	  Improved exception safety.
+
+	* tao/Stub.h (relative_roundtrip_timeout, sync_scope):
+
+	  Protect these method prototypes within a
+	  "TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY" and
+	  "TAO_HAS_SYNC_SCOPE_POLICY" block, respectively, since the
+	  corresponding method definitions in `TAO_Stub.cpp' are protected
+	  by such blocks.
+
+	* tao/Stub.cpp:
+
+	  Changed all instances of "CORBA::Policy *" to
+	  "CORBA::Policy_ptr."  The latter is more technically correct.
+
+	  (relative_roundtrip_timeout, sync_scope, buffering_constraint):
+
+	  Corrected technically incorrect initialization of a
+	  CORBA::Policy_var to zero.  
+
+	  Corrected return types.  "CORBA::Policy_ptr" not
+	  "CORBA::Policy *".
+
+	  Improved exception safety.
+
+	  (sync_strategy):
+
+	  Pass a variable of type "Messaging::SyncScope" instead of "int"
+	  to the TAO_ORB_Core::call_sync_scope_hook().  The former is the
+	  correct type.
+
+	  (sync_scope):
+
+	  TAO_ORB_Core::stubless_sync_scope() now returns a
+	  CORBA::Policy_ptr.  Adjusted this method accordingly.
+
+	* tao/orbconf.h:
+
+	  Removed all Messaging policy type redefinitions.  Just use the
+	  ones defined in the Messaging module.
+
+	* tao/Messaging_SyncScope.pidl:
+
+	  Removed TAO-specific SyncScope constants.  They are defined in
+	  the TAO-specific "TAO" IDL module.
+
+	  No need to include "IOP.pidl."  Removed.
+
+	* tao/TAO.pidl:
+
+	  Removed TAO redefinitions of the standard SyncScope constants.
+	  Only the TAO-specific ones remain.
+
+	  Removed TAO::SyncScope typedef.  Just use the
+	  Messaging::SyncScope typedef to avoid defining new typedefs and
+	  being forced to include headers that aren't needed.
+
+	  Include "tao/Messaging_SyncScope.pidl" to pull in the
+	  Messaging::SyncScope typedef.
+
+	* tao/Transport.cpp (handle_input_i):
+
+	  Clarified a debbuging statement.
+
+	* tao/Messaging/Messaging_ORBInitializer.cpp (pre_init):
+	* tao/Messaging/Messaging_PolicyFactory.cpp (create_policy):
+
+  	  Use the PolicyTypes defined in the Messaging module instead of
+	  the (now removed) macro constants defined in `tao/orbconf.h'.
+
+	* tao/Messaging/Messaging_Policy_i.h (hook):
+	* tao/Messaging/Messaging_Policy_i.cpp (hook):
+
+	  Accept a parameter of type "Messaging::SyncScope" instead of
+	  "int" to the TAO_ORB_Core::call_sync_scope_hook().  The former
+	  is the correct type.
+
+	  Corrected technically incorrect initialization of a
+	  CORBA::Policy_var to zero.  
+
+	  Added missing ACE_ENV_SINGLE_ARG_PARAMETER to
+	  Messaging::SyncScopePolicy::synchronization() call.  Removes an
+	  unnecessary TSS access from the critical path of oneway
+	  invocatons in emulated exception builds.
+
+	  No need to create a temporary CORBA::Policy_ptr to store a
+	  policy reference passed back from a method call as a parameter.
+	  Just pass the original policy being assigned as via the
+	  Policy_var's out() accessor.
+
 Tue Apr 16 14:02:14 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
 	
 	* TAO/orbsvcs/IFR_Service/AbstractInterfaceDef_i.h:

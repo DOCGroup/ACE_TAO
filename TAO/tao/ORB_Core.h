@@ -497,7 +497,7 @@ public:
 
   /// Get a cached policy.  First, check the ORB-level Policy
   /// Manager, and then check the ORB defaults.
-  CORBA::Policy *get_cached_policy (TAO_Cached_Policy_Type type);
+  CORBA::Policy_ptr get_cached_policy (TAO_Cached_Policy_Type type);
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
@@ -560,24 +560,29 @@ public:
   /// Access to the RoundtripTimeoutPolicy policy set on the thread or
   /// on the ORB.  In this method, we do not consider the stub since
   /// we do not have access to it.
-  CORBA::Policy *stubless_relative_roundtrip_timeout (void);
+  CORBA::Policy_ptr stubless_relative_roundtrip_timeout (void);
 
   void call_sync_scope_hook (TAO_Stub *stub,
                              int &has_synchronization,
-                             int &scope);
+                             Messaging::SyncScope &scope);
   TAO_Sync_Strategy &get_sync_strategy (TAO_Stub *stub,
-                                        int &scope);
-  typedef void (*Sync_Scope_Hook) (TAO_ORB_Core *, TAO_Stub *, int&, int&);
+                                        Messaging::SyncScope &scope);
+  typedef void (*Sync_Scope_Hook) (TAO_ORB_Core *,
+                                   TAO_Stub *,
+                                   int &,
+                                   Messaging::SyncScope &);
   static void set_sync_scope_hook (Sync_Scope_Hook hook);
 
-  void stubless_sync_scope (CORBA::Policy *&result);
+#if (TAO_HAS_SYNC_SCOPE_POLICY == 1)
+  CORBA::Policy_ptr stubless_sync_scope (void);
+#endif  /* TAO_HAS_SYNC_SCOPE_POLICY == 1 */
 
   static Sync_Scope_Hook sync_scope_hook_;
   // The hook to be set for the SyncScopePolicy
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
-  CORBA::Policy *default_buffering_constraint (void) const;
+  CORBA::Policy_ptr default_buffering_constraint (void) const;
 
   /// This strategy will buffer messages.
   //@{
