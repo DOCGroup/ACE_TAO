@@ -73,28 +73,6 @@ CORBA_Any::operator<<= (const char* s)
                  CORBA::B_TRUE, env);
 }
 
-// non-copying version for typecodes
-ACE_INLINE void
-CORBA_Any::operator<<= (CORBA::TypeCode_ptr* tc)
-{
-  CORBA::Environment env;
-  this->replace (CORBA::_tc_TypeCode,
-                 tc,
-                 CORBA::B_FALSE,
-                 env);
-}
-
-// non-copying insertion for CORBA objects
-ACE_INLINE void
-CORBA::Any::operator<<= (CORBA::Object_ptr *_tao_elem)
-{
-  CORBA::Environment env;
-  this->replace (CORBA::_tc_Object,
-                 _tao_elem,
-                 CORBA::B_FALSE,
-                 env);
-}
-
 // implementing the special types
 ACE_INLINE
 CORBA_Any::from_boolean::from_boolean (CORBA::Boolean b)

@@ -1,3 +1,10 @@
+Thu Aug 20 17:21:32 1998  Jeff Parsons <jp4@cs.wustl.edu>
+
+	* tao/Any.{h,i,cpp}:
+	  Misread the CORBA spec - do not need two versions of <<=
+	  for objects and (presumably) other pointer types, so
+	  fixed earlier commit.
+
 Thu Aug 20 16:14:54 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
 
 	* orbsvcs/tests/Sched_Conf/Sched_Conf.cpp: Added Naming_Utils code 

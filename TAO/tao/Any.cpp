@@ -253,9 +253,9 @@ CORBA_Any::replace (CORBA::TypeCode_ptr tc,
     }
 }
 
-// copying version for typecodes
+// insertion of typecode
 void
-CORBA_Any::operator<<= (CORBA::TypeCode_ptr& tc)
+CORBA_Any::operator<<= (CORBA::TypeCode_ptr tc)
 {
   CORBA::Environment env;
   CORBA::TypeCode_ptr *_tao_tc;
@@ -267,14 +267,14 @@ CORBA_Any::operator<<= (CORBA::TypeCode_ptr& tc)
                  env);
 }
 
-// copying insertion for CORBA objects
+// insertion of CORBA object
 void
-CORBA::Any::operator<<= (CORBA::Object_ptr& _tao_elem)
+CORBA::Any::operator<<= (CORBA::Object_ptr obj)
 {
   CORBA::Environment env;
   CORBA::Object_ptr *_tao_object_ptr;
   ACE_NEW (_tao_object_ptr, CORBA::Object_ptr);
-  *_tao_object_ptr = CORBA::Object::_duplicate (_tao_elem);
+  *_tao_object_ptr = CORBA::Object::_duplicate (obj);
   this->replace (CORBA::_tc_Object,
                  _tao_object_ptr,
                  CORBA::B_TRUE,
