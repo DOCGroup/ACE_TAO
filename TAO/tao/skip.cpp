@@ -429,7 +429,8 @@ TAO_Marshal_Union::skip (CORBA::TypeCode_ptr  tc,
                           if (env.exception () == 0)
                             {
                               // do the matching
-                              switch (member_label->type ()->kind (env))
+			      CORBA::TypeCode_var type = member_label->type ();
+                              switch (type->kind (env))
                                 {
                                 case CORBA::tk_short:
                                   {

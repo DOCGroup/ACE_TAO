@@ -29,8 +29,6 @@
 // be manipulated concurrently when the underlying programming
 // environment is itself reentrant.
 //
-// COM NOTE: Yes, this is a utility data type whose implementation is
-// fully exposed.  Factories for these are not normally used in C++.
 
 #include "tao/corba.h"
 
@@ -651,7 +649,7 @@ void
 CORBA_Any::dump (const CORBA::Any any_value)
 {
   // Get the type.
-  CORBA::TypeCode_ptr type = any_value.type ();
+  CORBA::TypeCode_var type = any_value.type ();
 
   if (type == CORBA::_tc_null)
     ACE_DEBUG ((LM_DEBUG,"Null\n"));

@@ -58,7 +58,7 @@ be_visitor_structure_any_op_cs::visit_structure (be_structure *node)
       << "_tao_any.replace (" << node->tc_name () << ", new "
       << node->name () << "(_tao_elem), 1, _tao_env);"
       << " // copy the value" << be_uidt_nl
-      << "}" << be_nl;
+      << "}\n" << be_nl;
 
   *os << "void operator<<= (CORBA::Any &_tao_any, "
       << node->name () << " *_tao_elem) // non copying" << be_nl
@@ -66,13 +66,14 @@ be_visitor_structure_any_op_cs::visit_structure (be_structure *node)
       << "CORBA::Environment _tao_env;" << be_nl
       << "_tao_any.replace (" << node->tc_name () << ", "
       << "_tao_elem, 1, _tao_env); // consume it" << be_uidt_nl
-      << "}" << be_nl;
+      << "}\n" << be_nl;
 
   *os << "CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, "
       << node->name () << " *&_tao_elem)" << be_nl
       << "{" << be_idt_nl
       << "CORBA::Environment _tao_env;" << be_nl
-      << "if (!_tao_any.type ()->equal (" << node->tc_name ()
+      << "CORBA::TypeCode_var type = _tao_any.type ();" << be_nl
+      << "if (!type->equal (" << node->tc_name ()
       << ", _tao_env)) return 0; // not equal" << be_nl
       << "if (_tao_any.any_owns_data ())" << be_nl
       << "{" << be_idt_nl
@@ -84,9 +85,8 @@ be_visitor_structure_any_op_cs::visit_structure (be_structure *node)
       << ", _tao_elem, 0, _tao_env)" << be_nl
       << "  == CORBA::TypeCode::TRAVERSE_CONTINUE)" << be_nl
       << "{" << be_idt_nl
-      << "((CORBA::Any *)&_tao_any)->replace (_tao_any.type (), "
-      << "_tao_elem, 1, _tao_env);"
-      << be_nl
+      << "((CORBA::Any *)&_tao_any)->replace ("
+      << node->tc_name () << ", _tao_elem, 1, _tao_env);" << be_nl
       << "  return 1;" << be_uidt_nl
       << "}" << be_nl
       << "else" << be_nl  // decode failed
