@@ -1,3 +1,9 @@
+Mon Aug 30 10:21:16 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* PROBLEM-REPORT-FORM:
+
+	  Fixed typo.
+
 Mon Aug 30 02:39:14 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp
