@@ -1,3 +1,12 @@
+Wed Dec 23 12:30:25 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/try_macros.h (TAO_RETHROW_RETURN_VOID): This macro was not
+	  defined for platforms without native c++ exceptions.
+
+	* tests/Param_Test/except.cpp (dii_req_invoke): Changed to use
+	  TAO_RETHROW_SAME_ENV_RETURN_VOID.  We are not throwing the
+	  exception to another env here.
+
 Wed Dec 23 11:07:46 EST 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
 	* TAO_IDL/be/be_type.cpp (nested_type_name):
