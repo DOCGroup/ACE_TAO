@@ -351,35 +351,35 @@ PortableGroup::TypeId TAO::PG_Object_Group::get_type_id () const
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
   template ACE_Hash_Map_Manager_Ex <
-    PortableGroup::Location, 
-    TAO::PG_Object_Group::MemberInfo *, 
-    TAO_PG_Location_Hash, 
-    TAO_PG_Location_Equal_To, 
+    PortableGroup::Location,
+    TAO::PG_Object_Group::MemberInfo *,
+    TAO_PG_Location_Hash,
+    TAO_PG_Location_Equal_To,
     TAO::PG_Object_Group::MemberMapMutex>;
   template ACE_Hash_Map_Entry <
-    PortableGroup::Location, 
+    PortableGroup::Location,
     TAO::PG_Object_Group::MemberInfo *>;
   template ACE_Hash_Map_Iterator_Ex <
-    PortableGroup::Location, 
-    TAO::PG_Object_Group::MemberInfo *, 
-    TAO_PG_Location_Hash, 
-    TAO_PG_Location_Equal_To, 
+    PortableGroup::Location,
+    TAO::PG_Object_Group::MemberInfo *,
+    TAO_PG_Location_Hash,
+    TAO_PG_Location_Equal_To,
     TAO::PG_Object_Group::MemberMapMutex>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 # pragma instantiate ACE_Hash_Map_Manager_Ex <
-    PortableGroup::Location, 
-    TAO::PG_Object_Group::MemberInfo *, 
-    TAO_PG_Location_Hash, 
-    TAO_PG_Location_Equal_To, 
+    PortableGroup::Location,
+    TAO::PG_Object_Group::MemberInfo *,
+    TAO_PG_Location_Hash,
+    TAO_PG_Location_Equal_To,
     TAO::PG_Object_Group::MemberMapMutex>
 # pragma instantiate ACE_Hash_Map_Entry <PortableGroup::Location, TAO::PG_Object_Group::MemberInfo *>
 # pragma instantiate ACE_Hash_Map_Iterator_Ex <
-    PortableGroup::Location, 
-    TAO::PG_Object_Group::MemberInfo *, 
-    TAO_PG_Location_Hash, 
-    TAO_PG_Location_Equal_To, 
+    PortableGroup::Location,
+    TAO::PG_Object_Group::MemberInfo *,
+    TAO_PG_Location_Hash,
+    TAO_PG_Location_Equal_To,
     TAO::PG_Object_Group::MemberMapMutex>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
