@@ -185,7 +185,7 @@ be_visitor_args_post_invoke_cs::visit_string (be_string *node)
     case AST_Argument::dir_INOUT:
       os->indent ();
 
-      if (node->width () == sizeof (char))
+      if (node->width () == (long) sizeof (char))
         {
           *os << "CORBA::string_free (" << arg->local_name () 
               << ");" << be_nl;

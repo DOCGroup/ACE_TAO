@@ -80,7 +80,7 @@ int be_visitor_args_paramlist::visit_argument (be_argument *node)
                               -1);
           }
       
-        *os <<" this->" <<  node->local_name () << "_;" ;
+        *os <<node->local_name () << "_;" ;
         break;
       }
       
