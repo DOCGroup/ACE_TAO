@@ -155,35 +155,75 @@ LINK32=link.exe
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 # Begin Source File
 
-SOURCE=.\LoadBalancing\LoadBalancer_i.cpp
+SOURCE=.\LoadBalancing\LB_Balancing_Strategy.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\LoadBalancing\LoadBalancing_Strategy.cpp
+SOURCE=.\LoadBalancing\LB_GenericFactory.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\LoadBalancingC.cpp
+SOURCE=.\LoadBalancing\LB_Location_Equal_To.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\LoadBalancingS.cpp
+SOURCE=.\LoadBalancing\LB_Location_Hash.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\LoadBalancing\Minimum_Dispersion.cpp
+SOURCE=.\LoadBalancing\LB_Location_Map.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\LoadBalancing\ReplicaLocator.cpp
+SOURCE=.\LoadBalancing\LB_Minimum_Dispersion.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\LoadBalancing\ReplicaProxy.cpp
+SOURCE=.\LoadBalancing\LB_ObjectGroup_Map.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\LoadBalancing\Round_Robin_Strategy.cpp
+SOURCE=.\LoadBalancing\LB_ObjectGroupManager.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\LoadBalancing\LB_PropertyManager.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\LoadBalancing\LB_Pull_Handler.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\LoadBalancing\LB_Redirect_Table.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\LoadBalancing\LB_ReplicaInfo.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\LoadBalancing\LB_ReplicaLocator.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\LoadBalancing\LB_Round_Robin_Strategy.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\LoadBalancing\LB_RPMS_Monitor.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\LoadBalancing\LB_RPMS_Monitor_Interceptor.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\LoadBalancing\LB_RPMS_Monitor_ORBInitializer.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\LoadBalancing\LoadBalancingI.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -191,7 +231,71 @@ SOURCE=.\LoadBalancing\Round_Robin_Strategy.cpp
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
 # Begin Source File
 
-SOURCE=.\LoadBalancing\LoadBalancer_i.h
+SOURCE=.\LoadBalancing\LB_Balancing_Strategy.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\LoadBalancing\LB_GenericFactory.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\LoadBalancing\LB_Location_Equal_To.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\LoadBalancing\LB_Location_Hash.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\LoadBalancing\LB_Location_Map.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\LoadBalancing\LB_Minimum_Dispersion.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\LoadBalancing\LB_ObjectGroup_Map.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\LoadBalancing\LB_ObjectGroupManager.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\LoadBalancing\LB_PropertyManager.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\LoadBalancing\LB_Pull_Handler.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\LoadBalancing\LB_Redirect_Table.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\LoadBalancing\LB_ReplicaInfo.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\LoadBalancing\LB_ReplicaLocator.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\LoadBalancing\LB_Round_Robin_Strategy.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\LoadBalancing\LB_RPMS_Monitor.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\LoadBalancing\LB_RPMS_Monitor_Interceptor.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\LoadBalancing\LB_RPMS_Monitor_ORBInitializer.h
 # End Source File
 # Begin Source File
 
@@ -199,31 +303,7 @@ SOURCE=.\LoadBalancing\LoadBalancing_export.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\LoadBalancing\LoadBalancing_Strategy.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\LoadBalancingC.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\LoadBalancingS.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\LoadBalancing\Minimum_Dispersion.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\LoadBalancing\ReplicaLocator.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\LoadBalancing\ReplicaProxy.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\LoadBalancing\Round_Robin_Strategy.h
+SOURCE=.\LoadBalancing\LoadBalancingI.h
 # End Source File
 # End Group
 # Begin Group "IDL Files"
@@ -330,19 +410,19 @@ BuildCmds= \
 # PROP Default_Filter ".i"
 # Begin Source File
 
-SOURCE=.\LoadBalancing\LoadBalancer_i.i
+SOURCE=.\LoadBalancing\LB_Location_Equal_To.inl
 # End Source File
 # Begin Source File
 
-SOURCE=.\LoadBalancing\LoadBalancing_Strategy.i
+SOURCE=.\LoadBalancing\LB_Location_Hash.inl
 # End Source File
 # Begin Source File
 
-SOURCE=.\LoadBalancingC.i
+SOURCE=.\LoadBalancing\LB_ObjectGroup_Map.inl
 # End Source File
 # Begin Source File
 
-SOURCE=.\LoadBalancingS.i
+SOURCE=.\LoadBalancing\LB_RPMS_Monitor_Interceptor.inl
 # End Source File
 # End Group
 # Begin Group "Template Files"
