@@ -1031,6 +1031,25 @@ AST_Interface::fwd_redefinition_helper (AST_Interface *&i,
       return;
     }
 
+  UTL_Scope *scope = i->defined_in ();
+  const char *prefix_holder = 0;
+
+  // If our prefix is empty, we check to see if an ancestor has one.
+  while (ACE_OS::strcmp (i->prefix (), "") == 0 && scope != 0)
+    {
+      AST_Decl *parent = ScopeAsDecl (scope);
+      prefix_holder = parent->prefix ();
+
+      // We have reached global scope.
+      if (prefix_holder == 0)
+        {
+          break;
+        }
+
+      i->prefix (ACE_const_cast (char *, prefix_holder));
+      scope = parent->defined_in ();
+    }
+
   // Fwd redefinition should be in the same scope, so local
   // lookup is all that's needed.
   AST_Decl *d = s->lookup_by_name_local (i->local_name (),

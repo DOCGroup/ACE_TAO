@@ -3,8 +3,10 @@
 #include "Stub.h"
 #include "Profile.h"
 #include "Tagged_Components.h"
+#include "Valuetype_Adapter.h"
 #include "debug.h"
-#include "AbstractBase.h"
+
+#include "ace/Dynamic_Service.h"
 
 ACE_RCSID (TAO,
            ClientRequestInfo_i,
@@ -20,7 +22,7 @@ TAO_ClientRequestInfo_i::TAO_ClientRequestInfo_i (TAO_GIOP_Invocation *inv,
                                                   CORBA::Object_ptr target)
   : invocation_ (inv),
     target_ (target), // No need to duplicate.
-    abstract_target_ (CORBA::AbstractBase::_nil ()),
+    abstract_target_ (0),
     caught_exception_ (0),
     response_expected_ (1),
     reply_status_ (-1),
@@ -77,24 +79,38 @@ TAO_ClientRequestInfo_i::setup_picurrent (void)
       //
       // Only set the TSC's peer if a copy was actually performed.
       if (this->rs_pi_current_.dirty ())
-        tsc->pi_peer (&this->rs_pi_current_);
+        {
+          tsc->pi_peer (&this->rs_pi_current_);
+        }
     }
 }
 
 CORBA::Object_ptr
-TAO_ClientRequestInfo_i::target (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_ClientRequestInfo_i::target (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (CORBA::is_nil (this->target_))
     {
-      return this->abstract_target_->_to_object ();
+      
+      TAO_Valuetype_Adapter *adapter =
+        ACE_Dynamic_Service<TAO_Valuetype_Adapter>::instance (
+            TAO_ORB_Core::valuetype_adapter_name ()
+          );
+
+      if (adapter == 0)
+        {
+          ACE_THROW_RETURN (CORBA::INTERNAL (),
+                            CORBA::Object::_nil ());
+        }
+
+      return adapter->abstractbase_to_object (this->abstract_target_);
     }
 
   return CORBA::Object::_duplicate (this->target_);
 }
 
 CORBA::Object_ptr
-TAO_ClientRequestInfo_i::effective_target (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_ClientRequestInfo_i::effective_target (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->reply_status_ == PortableInterceptor::LOCATION_FORWARD)
@@ -107,7 +123,18 @@ TAO_ClientRequestInfo_i::effective_target (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 
   if (CORBA::is_nil (this->target_))
     {
-      return this->abstract_target_->_to_object ();
+      TAO_Valuetype_Adapter *adapter =
+        ACE_Dynamic_Service<TAO_Valuetype_Adapter>::instance (
+            TAO_ORB_Core::valuetype_adapter_name ()
+          );
+
+      if (adapter == 0)
+        {
+          ACE_THROW_RETURN (CORBA::INTERNAL (),
+                            CORBA::Object::_nil ());
+        }
+
+      return adapter->abstractbase_to_object (this->abstract_target_);
     }
 
   return CORBA::Object::_duplicate (this->target_);
