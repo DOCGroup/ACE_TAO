@@ -208,15 +208,15 @@ runtests: cout aout c++out preout m3out pout iout iout2 tout taoout
 	 ./taoout -v < $(srcdir)/tao.gperf > tao.out
 	 -diff -b $(srcdir)/tao.exp tao.out
 	 # these next 5 are demos that show off the generated code
-	 $(GPERF) -p -j1 -o -t -N is_reserved_word -k1,3,'$$' < $(srcdir)/c-parse.gperf | egrep -v 'ing time is ' > test-1.out
+	 $(GPERF) -p -j1 -o -t -N is_reserved_word -k1,3,'$$' < $(srcdir)/c-parse.gperf > test-1.out
 	 -diff -b $(srcdir)/test-1.exp test-1.out
-	 $(GPERF) -n -k1-8 -l <$(srcdir)/modula2.gperf | egrep -v 'ing time is ' > test-2.out
+	 $(GPERF) -n -k1-8 -l <$(srcdir)/modula2.gperf > test-2.out
 	 -diff -b $(srcdir)/test-2.exp test-2.out
-	 $(GPERF) -p -j 1 -o -a -C -g -t -k1,4,$$ < $(srcdir)/gplus.gperf | egrep -v 'ing time is ' > test-3.out
+	 $(GPERF) -p -j 1 -o -a -C -g -t -k1,4,$$ < $(srcdir)/gplus.gperf > test-3.out
 	 -diff -b $(srcdir)/test-3.exp test-3.out
-	 $(GPERF) -D -p -t < $(srcdir)/c-parse.gperf | egrep -v 'ing time is ' > test-4.out
+	 $(GPERF) -D -p -t < $(srcdir)/c-parse.gperf > test-4.out
 	 -diff -b $(srcdir)/test-4.exp test-4.out
-	 $(GPERF) -g -o -j1 -t -p -N is_reserved_word < $(srcdir)/gpc.gperf | egrep -v 'ing time is ' > test-5.out
+	 $(GPERF) -g -o -j1 -t -p -N is_reserved_word < $(srcdir)/gpc.gperf > test-5.out
 	 -diff -b $(srcdir)/test-5.exp test-5.out
 	 # prints out the help message
 	 -$(GPERF) -a -h > test-6.out 2>&1 || [ a = a ]
