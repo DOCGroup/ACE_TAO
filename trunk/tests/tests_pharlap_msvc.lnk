@@ -5,7 +5,7 @@
 @vc.emb
 
 ! PC-Compatible Screen Driver
-@pcat_sc.emb
+!@pcat_sc.emb
 
 ! PC-Compatible Keyboard Driver
 !@pcat_kb.emb
@@ -64,5 +64,9 @@
 ! property sheet.
 !
 
--reserve memory 0A_0000h-0F_FFFFh
+! 32K stack works well. The 8K default is way too small
 -stack 32767
+
+! Many of the ACE tests are too large to load in the default space without
+! running over the ROM area at some point, so go up.
+-offset 10_0000h
