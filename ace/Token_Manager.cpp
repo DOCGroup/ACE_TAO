@@ -52,38 +52,12 @@ ACE_Token_Manager::instance (void)
 	  ACE_NEW_RETURN (token_manager_, ACE_Token_Manager, 0);
 
           // Register for destruction with ACE_Object_Manager.
-#if defined ACE_HAS_SIG_C_FUNC
-          ACE_Object_Manager::at_exit (token_manager_,
-                                       ACE_Token_Manager_cleanup,
-                                       0);
-#else
-          ACE_Object_Manager::at_exit (token_manager_,
-                                       ACE_Token_Manager::cleanup,
-                                       0);
-#endif /* ACE_HAS_SIG_C_FUNC */
+          ACE_Object_Manager::at_exit (token_manager_);
         }
     }
 
   return token_manager_;
 }
-
-#if defined (ACE_HAS_SIG_C_FUNC)
-extern "C" void
-ACE_Token_Manager_cleanup (void *instance, void *)
-{
-  ACE_TRACE ("ACE_Token_Manager_cleanup");
-
-  delete (ACE_Token_Manager *) instance;
-}
-#else
-void
-ACE_Token_Manager::cleanup (void *instance, void *)
-{
-  ACE_TRACE ("ACE_Token_Manager::cleanup");
-
-  delete (ACE_Token_Manager *) instance;
-}
-#endif /* ACE_HAS_SIG_C_FUNC */
 
 void
 ACE_Token_Manager::get_token (ACE_Token_Proxy *proxy,
