@@ -439,7 +439,7 @@ Tue Sep 10 14:06:02 2002  Krishnakumar B  <kitty@cs.wustl.edu>
           well as multiplying by sizeof (CHAR) to get the number of bytes
           to be copied. This improvement doesn't deal with the alignment
           issues as it requires a change in Obchunk which is postponed
-          till ACE 5.2.3 is released.
+          till after ACE 5.3 is released.
 
         * tests/Obstack_Test.cpp:
 
