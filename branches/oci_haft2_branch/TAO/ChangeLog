@@ -1,3 +1,14 @@
+Tue Dec  2 18:35:29 2003  Dale Wilson  <wilson_d@ociweb.com>
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_Group_Guard.h:
+        * orbsvcs/orbsvcs/PortableGroup/PortableGroup_Loader.h:
+        * orbsvcs/orbsvcs/PortableGroup/Portable_Group_Map.h:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Acceptor.h:
+          Fuzz reports trailing spaces.
+
+        * orbsvcs/tests/FT_App/TAO_Object_Group_Creator.cpp:
+          Build warnings on linux.
+
 Tue Dec  2 17:26:14 2003  Dale Wilson  <wilson_d@ociweb.com>
 
         * orbsvcs/orbsvcs/PortableGroup/PG_Factory_Map.h:

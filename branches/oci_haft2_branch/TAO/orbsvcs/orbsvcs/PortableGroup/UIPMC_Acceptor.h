@@ -106,7 +106,7 @@ protected:
    * virtual to allow a derived class implementation to be invoked
    * instead.
    */
-  virtual int open_i (const ACE_INET_Addr &addr, 
+  virtual int open_i (const ACE_INET_Addr &addr,
                       ACE_Reactor *reactor);
 
   /// Parse protocol specific options.
