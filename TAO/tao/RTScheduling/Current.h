@@ -231,6 +231,10 @@ class TAO_RTScheduler_Export TAO_RTScheduler_Current_i
 			     TAO_RTScheduler_Current_i* prev_current
 			     );
 
+  virtual ~TAO_RTScheduler_Current_i (void)
+    {
+    };
+
   virtual RTScheduling::DistributableThread_ptr
     spawn (RTScheduling::ThreadAction_ptr start,
 	   CORBA::VoidData data,

@@ -218,8 +218,8 @@ TAO_RTScheduler_Manager::rtscheduler (RTScheduling::Scheduler_ptr rtscheduler
 {
  rtscheduler_ = RTScheduling::Scheduler::_duplicate (rtscheduler);
  this->orb_->object_ref_table ().register_initial_reference ("RTScheduler",
-													         this->rtscheduler_
-			   												ACE_ENV_ARG_PARAMETER);	
+						         RTScheduling::Scheduler::_duplicate (this->rtscheduler_.in ())
+							ACE_ENV_ARG_PARAMETER);	
  ACE_CHECK;						
 
 }
