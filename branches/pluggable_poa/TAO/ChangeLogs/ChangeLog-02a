@@ -1,3 +1,8 @@
+Thu Aug 31 13:51:06 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* */Makefile:
+	  This time everything compiles with static libraries.
+
 Wed Aug 30 18:48:51 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/TAO.dsw:

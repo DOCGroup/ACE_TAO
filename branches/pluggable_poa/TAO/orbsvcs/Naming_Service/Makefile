@@ -14,7 +14,7 @@ endif
 
 SRC = Naming_Server.cpp Naming_Service.cpp
 
-LDLIBS  = -lTAO_CosNaming -lTAO_Svc_Utils -lTAO
+LDLIBS  = -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_PortableServer -lTAO
 
 BIN2 = Naming_Service
 
