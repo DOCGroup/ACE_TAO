@@ -1,6 +1,6 @@
 Sat Aug 24 16:41:36 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
-        * ACEXML\common\FileCharStream.cpp (get):
+        * ACEXML/common/FileCharStream.cpp (get):
 
           Remove :: in front of the macro feof. VC is hopelessly confused.
 
