@@ -164,7 +164,7 @@ namespace Deployment
       // Helper function to print an Any
 
 #else // ACE_HAS_BROKEN_NESTED_TEMPLATES
-
+    public:
       static void dump(const Deployment::DeploymentPlan &plan) { }
 
 #endif // ACE_HAS_BROKEN_NESTED_TEMPLATES
