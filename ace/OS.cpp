@@ -7454,3 +7454,41 @@ ACE_OS::connect (ACE_HANDLE handle,
 # endif /* ACE_HAS_WINSOCK2 */
 }
 #endif  // ACE_HAS_WINCE
+
+long
+ACE_OS::num_processors (void)
+{
+  ACE_OS_TRACE ("ACE_OS::num_processors");
+
+#if defined (ACE_WIN32) || defined (ACE_WIN64)
+  SYSTEM_INFO sys_info;
+  ::GetSystemInfo (&sys_info);
+  return sys_info.dwNumberOfProcessors;
+#elif defined (linux) || defined (sun)
+  return ::sysconf (_SC_NPROCESSORS_CONF);
+#else
+  ACE_NOTSUP_RETURN (-1);
+#endif
+}
+
+long
+ACE_OS::num_processors_online (void)
+{
+  ACE_OS_TRACE ("ACE_OS::num_processors");
+
+#if defined (ACE_WIN32) || defined (ACE_WIN64)
+  SYSTEM_INFO sys_info;
+  ::GetSystemInfo (&sys_info);
+  return sys_info.dwNumberOfProcessors;
+#elif defined (linux) || defined (sun)
+  return ::sysconf (_SC_NPROCESSORS_ONLN);
+#elif defined (hpux)
+  struct pst_dynamic psd;
+  if (::pstat_getdynamic (&psd, sizeof (psd), (size_t) 1, 0) != -1)
+    return psd.psd_proc_cnt;
+  else
+    return -1;
+#else
+  ACE_NOTSUP_RETURN (-1);
+#endif
+}

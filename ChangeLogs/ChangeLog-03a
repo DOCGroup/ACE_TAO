@@ -1,3 +1,41 @@
+Tue Sep  3 15:54:33 2002  Christopher Kohlhoff <chris@kohlhoff.com>
+
+        * ace/OS.h:
+        * ace/OS.cpp:
+
+          Added new functions ACE_OS::num_processors() and
+          ACE_OS::num_processors_online() for determining the number of CPUs
+          available on a system.
+
+        * ace/Atomic_Op.cpp:
+        * ace/Atomic_Op.h:
+        * ace/Atomic_Op.i:
+        * ace/Atomic_Op_T.cpp:
+        * ace/Atomic_Op_T.h:
+        * ace/Atomic_Op_T.i:
+        * ace/Object_Manager.cpp:
+        * ace/Makefile.bor:
+        * ace/Makefile.ace:
+        * ace/ace.mpc:
+        * tests/Atomic_Op_Test.cpp:
+
+          Added a new fast, lightweight ACE_Atomic_Op template specialization
+          for x86 platforms that uses the architecture's atomic integer
+          primitives. It currently supports Win32 using MSVC6 or BCB, and g++
+          for (in theory) all x86 operating systems. It selects the
+          appropriate implementation for single- or multi-CPU systems at
+          runtime, based on the return value of the ACE_OS::num_processors
+          function added above.
+
+          Note that Atomic_Op.cpp is now a real .cpp file and not a template
+          file, and so project files need to be updated accordingly. The
+          template definitions have been moved to the new Atomic_Op_T.* files.
+
+          Note also that the ACE_Atomic_Op::mutex() operation has been
+          deprecated (and is not supported for the new specialization). If
+          you need this functionality, consider using the ACE_Atomic_Op_Ex
+          template instead.
+
 Tue Sep  3 15:40:39 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tests/XtReactor_Test.cpp (sock_callback):

@@ -26,6 +26,8 @@ ACE_RCSID(tests, Atomic_Op_Test, "$Id$")
 
 #if defined (ACE_HAS_THREADS)
 
+enum { TEST_ITERATIONS = 1000000 };
+
 int
 ACE_TMAIN (int, ACE_TCHAR *[])
 {
@@ -35,31 +37,163 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 
   ACE_ASSERT (foo == 5);
 
-  ++foo;
+  long result = ++foo;
   ACE_ASSERT (foo == 6);
+  ACE_ASSERT (result == 6);
 
-  --foo;
+  result = --foo;
   ACE_ASSERT (foo == 5);
+  ACE_ASSERT (result == 5);
 
-  foo += 10;
+  result = foo++;
+  ACE_ASSERT (foo == 6);
+  ACE_ASSERT (result == 5);
+
+  result = foo--;
+  ACE_ASSERT (foo == 5);
+  ACE_ASSERT (result == 6);
+
+  result = foo += 10;
   ACE_ASSERT (foo == 15);
+  ACE_ASSERT (result == 15);
 
-  foo -= 10;
+  result = foo -= 10;
   ACE_ASSERT (foo == 5);
+  ACE_ASSERT (result == 5);
 
   foo = 5L;
   ACE_ASSERT (foo == 5);
+
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Starting <long> increment %D\n")));
+  int i;
+  for (i = 0; i < TEST_ITERATIONS; ++i)
+    {
+      ++foo;
+      ++foo;
+      ++foo;
+      ++foo;
+    }
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Ending <long> increment %D\n")));
+
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Starting <long> decrement %D\n")));
+  for (i = 0; i < TEST_ITERATIONS; ++i)
+    {
+      --foo;
+      --foo;
+      --foo;
+      --foo;
+    }
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Ending <long> decrement %D\n")));
+
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Starting <long> addition %D\n")));
+  for (i = 0; i < TEST_ITERATIONS; ++i)
+    {
+      foo += 5;
+      foo += 5;
+      foo += 5;
+      foo += 5;
+    }
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Ending <long> addition %D\n")));
+
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Starting <long> subtraction %D\n")));
+  for (i = 0; i < TEST_ITERATIONS; ++i)
+    {
+      foo -= 5;
+      foo -= 5;
+      foo -= 5;
+      foo -= 5;
+    }
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Ending <long> subtraction %D\n")));
+
+  ACE_Atomic_Op <ACE_Thread_Mutex, int> bar (5);
+
+  ACE_ASSERT (bar == 5);
+
+  result = ++bar;
+  ACE_ASSERT (bar == 6);
+  ACE_ASSERT (result == 6);
+
+  result = --bar;
+  ACE_ASSERT (bar == 5);
+  ACE_ASSERT (result == 5);
+
+  result = bar++;
+  ACE_ASSERT (bar == 6);
+  ACE_ASSERT (result == 5);
+
+  result = bar--;
+  ACE_ASSERT (bar == 5);
+  ACE_ASSERT (result == 6);
+
+  result = bar += 10;
+  ACE_ASSERT (bar == 15);
+  ACE_ASSERT (result == 15);
+
+  result = bar -= 10;
+  ACE_ASSERT (bar == 5);
+  ACE_ASSERT (result == 5);
+
+  bar = 5L;
+  ACE_ASSERT (bar == 5);
+
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Starting <int> increment %D\n")));
+  for (i = 0; i < TEST_ITERATIONS; ++i)
+    {
+      ++bar;
+      ++bar;
+      ++bar;
+      ++bar;
+    }
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Ending <int> increment %D\n")));
+
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Starting <int> decrement %D\n")));
+  for (i = 0; i < TEST_ITERATIONS; ++i)
+    {
+      --bar;
+      --bar;
+      --bar;
+      --bar;
+    }
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Ending <int> decrement %D\n")));
+
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Starting <int> addition %D\n")));
+  for (i = 0; i < TEST_ITERATIONS; ++i)
+    {
+      bar += 5;
+      bar += 5;
+      bar += 5;
+      bar += 5;
+    }
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Ending <int> addition %D\n")));
+
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Starting <int> subtraction %D\n")));
+  for (i = 0; i < TEST_ITERATIONS; ++i)
+    {
+      bar -= 5;
+      bar -= 5;
+      bar -= 5;
+      bar -= 5;
+    }
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Ending <int> subtraction %D\n")));
 
   ACE_END_TEST;
   return 0;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+#if !defined (ACE_HAS_BUILTIN_ATOMIC_OP)
 template class ACE_Atomic_Op<ACE_Thread_Mutex, long>;
 template class ACE_Atomic_Op_Ex<ACE_Thread_Mutex, long>;
+#endif /* !ACE_HAS_BUILTIN_ATOMIC_OP */
+template class ACE_Atomic_Op<ACE_Thread_Mutex, int>;
+template class ACE_Atomic_Op_Ex<ACE_Thread_Mutex, int>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#if !defined (ACE_HAS_BUILTIN_ATOMIC_OP)
 #pragma instantiate ACE_Atomic_Op<ACE_Thread_Mutex, long>
 #pragma instantiate ACE_Atomic_Op_Ex<ACE_Thread_Mutex, long>
+#endif /* !ACE_HAS_BUILTIN_ATOMIC_OP */
+#pragma instantiate ACE_Atomic_Op<ACE_Thread_Mutex, int>
+#pragma instantiate ACE_Atomic_Op_Ex<ACE_Thread_Mutex, int>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 #else

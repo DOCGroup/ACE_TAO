@@ -1,225 +1,145 @@
 // -*- C++ -*-
 // $Id$
 
-template <class ACE_LOCK, class TYPE> ACE_INLINE TYPE
-ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::operator++ (void)
+
+#if defined (ACE_HAS_BUILTIN_ATOMIC_OP)
+
+ACE_INLINE
+ACE_Atomic_Op<ACE_Thread_Mutex, long>::ACE_Atomic_Op (void)
+  : value_ (0)
 {
-// ACE_TRACE ("ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::operator++");
-  ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->mutex_, this->value_);
-  return ++this->value_;
 }
 
-template <class ACE_LOCK, class TYPE> ACE_INLINE TYPE
-ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::operator+= (const TYPE &i)
+ACE_INLINE
+ACE_Atomic_Op<ACE_Thread_Mutex, long>::ACE_Atomic_Op (long c)
+  : value_ (c)
 {
-// ACE_TRACE ("ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::operator+=");
-  ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->mutex_, this->value_);
-  return this->value_ += i;
 }
 
-template <class ACE_LOCK, class TYPE> ACE_INLINE TYPE
-ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::operator-- (void)
+ACE_INLINE
+ACE_Atomic_Op<ACE_Thread_Mutex, long>::ACE_Atomic_Op (const ACE_Atomic_Op<ACE_Thread_Mutex, long> &rhs)
+  : value_ (rhs.value_)
 {
-// ACE_TRACE ("ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::operator--");
-  ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->mutex_, this->value_);
-  return --this->value_;
 }
 
-template <class ACE_LOCK, class TYPE> ACE_INLINE TYPE
-ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::operator-= (const TYPE &i)
+ACE_INLINE long
+ACE_Atomic_Op<ACE_Thread_Mutex, long>::operator++ (void)
 {
-// ACE_TRACE ("ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::operator-=");
-  ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->mutex_, this->value_);
-  return this->value_ -= i;
+#if defined (WIN32)
+  return ::InterlockedIncrement (ACE_const_cast (long *, &this->value_));
+#else /* WIN32 */
+  return (*increment_fn_) (&this->value_);
+#endif /* WIN32 */
 }
 
-template <class ACE_LOCK, class TYPE> ACE_INLINE
-ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::ACE_Atomic_Op_Ex (const ACE_Atomic_Op_Ex<ACE_LOCK, TYPE> &rhs)
-  : mutex_ (rhs.mutex_)
+ACE_INLINE long
+ACE_Atomic_Op<ACE_Thread_Mutex, long>::operator++ (int)
 {
-// ACE_TRACE ("ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::ACE_Atomic_Op_Ex");
-  *this = rhs; // Invoke the assignment operator.
+#if defined (WIN32)
+  return ::InterlockedIncrement (ACE_const_cast (long *, &this->value_)) - 1;
+#else /* WIN32 */
+  return (*increment_fn_) (&this->value_) - 1;
+#endif /* WIN32 */
 }
 
-template <class ACE_LOCK, class TYPE> ACE_INLINE TYPE
-ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::operator++ (int)
+ACE_INLINE long
+ACE_Atomic_Op<ACE_Thread_Mutex, long>::operator-- (void)
 {
-// ACE_TRACE ("ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::operator++");
-  ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->mutex_, this->value_);
-  return this->value_++;
+#if defined (WIN32)
+  return ::InterlockedDecrement (ACE_const_cast (long *, &this->value_));
+#else /* WIN32 */
+  return (*decrement_fn_) (&this->value_);
+#endif /* WIN32 */
 }
 
-template <class ACE_LOCK, class TYPE> ACE_INLINE TYPE
-ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::operator-- (int)
+ACE_INLINE long
+ACE_Atomic_Op<ACE_Thread_Mutex, long>::operator-- (int)
 {
-// ACE_TRACE ("ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::operator--");
-  ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->mutex_, this->value_);
-  return this->value_--;
+#if defined (WIN32)
+  return ::InterlockedDecrement (ACE_const_cast (long *, &this->value_)) + 1;
+#else /* WIN32 */
+  return (*decrement_fn_) (&this->value_) + 1;
+#endif /* WIN32 */
 }
 
-template <class ACE_LOCK, class TYPE> ACE_INLINE int
-ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::operator== (const TYPE &i) const
+ACE_INLINE long
+ACE_Atomic_Op<ACE_Thread_Mutex, long>::operator+= (long rhs)
 {
-// ACE_TRACE ("ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::operator==");
-  ACE_GUARD_RETURN (ACE_LOCK, ace_mon, (ACE_LOCK &) this->mutex_, 0);
-  return this->value_ == i;
+#if defined (WIN32) && defined (ACE_HAS_INTERLOCKED_EXCHANGEADD)
+  return ::InterlockedExchangeAdd (ACE_const_cast (long *, &this->value_), rhs) + rhs;
+#else /* WIN32 && ACE_HAS_INTERLOCKED_EXCHANGEADD */
+  return (*exchange_add_fn_) (&this->value_, rhs) + rhs;
+#endif /* WIN32 && ACE_HAS_INTERLOCKED_EXCHANGEADD */
 }
 
-template <class ACE_LOCK, class TYPE> ACE_INLINE int
-ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::operator!= (const TYPE &i) const
+ACE_INLINE long
+ACE_Atomic_Op<ACE_Thread_Mutex, long>::operator-= (long rhs)
 {
-// ACE_TRACE ("ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::operator!=");
-  return !(*this == i);
+#if defined (WIN32) && defined (ACE_HAS_INTERLOCKED_EXCHANGEADD)
+  return ::InterlockedExchangeAdd (ACE_const_cast (long *, &this->value_), -rhs) - rhs;
+#else /* WIN32 && ACE_HAS_INTERLOCKED_EXCHANGEADD */
+  return (*exchange_add_fn_) (&this->value_, -rhs) - rhs;
+#endif /* WIN32 && ACE_HAS_INTERLOCKED_EXCHANGEADD */
 }
 
-template <class ACE_LOCK, class TYPE> ACE_INLINE int
-ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::operator>= (const TYPE &i) const
+ACE_INLINE int
+ACE_Atomic_Op<ACE_Thread_Mutex, long>::operator== (long rhs) const
 {
-// ACE_TRACE ("ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::operator>=");
-  ACE_GUARD_RETURN (ACE_LOCK, ace_mon, (ACE_LOCK &) this->mutex_, 0);
-  return this->value_ >= i;
+  return (this->value_ == rhs);
 }
 
-template <class ACE_LOCK, class TYPE> ACE_INLINE int
-ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::operator> (const TYPE &rhs) const
+ACE_INLINE int
+ACE_Atomic_Op<ACE_Thread_Mutex, long>::operator!= (long rhs) const
 {
-// ACE_TRACE ("ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::operator>");
-  ACE_GUARD_RETURN (ACE_LOCK, ace_mon, (ACE_LOCK &) this->mutex_, 0);
-  return this->value_ > rhs;
+  return (this->value_ != rhs);
 }
 
-template <class ACE_LOCK, class TYPE> ACE_INLINE int
-ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::operator<= (const TYPE &rhs) const
+ACE_INLINE int
+ACE_Atomic_Op<ACE_Thread_Mutex, long>::operator>= (long rhs) const
 {
-// ACE_TRACE ("ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::operator<=");
-  ACE_GUARD_RETURN (ACE_LOCK, ace_mon, (ACE_LOCK &) this->mutex_, 0);
-  return this->value_ <= rhs;
+  return (this->value_ >= rhs);
 }
 
-template <class ACE_LOCK, class TYPE> ACE_INLINE int
-ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::operator< (const TYPE &rhs) const
+ACE_INLINE int
+ACE_Atomic_Op<ACE_Thread_Mutex, long>::operator> (long rhs) const
 {
-// ACE_TRACE ("ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::operator<");
-  ACE_GUARD_RETURN (ACE_LOCK, ace_mon, (ACE_LOCK &) this->mutex_, 0);
-  return this->value_ < rhs;
+  return (this->value_ > rhs);
 }
 
-template <class ACE_LOCK, class TYPE> ACE_INLINE void
-ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::operator= (const ACE_Atomic_Op_Ex<ACE_LOCK, TYPE> &rhs)
+ACE_INLINE int
+ACE_Atomic_Op<ACE_Thread_Mutex, long>::operator<= (long rhs) const
 {
-// ACE_TRACE ("ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::operator=");
-  if (&rhs == this)
-    return; // Avoid deadlock...
-  ACE_GUARD (ACE_LOCK, ace_mon, this->mutex_);
-  // This will call ACE_Atomic_Op_Ex::TYPE(), which will ensure the value
-  // of <rhs> is acquired atomically.
-
-  this->value_ = rhs.value ();
+  return (this->value_ <= rhs);
 }
 
-template <class ACE_LOCK, class TYPE> ACE_INLINE TYPE
-ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::value (void) const
+ACE_INLINE int
+ACE_Atomic_Op<ACE_Thread_Mutex, long>::operator< (long rhs) const
 {
-// ACE_TRACE ("ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::value");
-  ACE_GUARD_RETURN (ACE_LOCK, ace_mon, (ACE_LOCK &) this->mutex_, this->value_);
+  return (this->value_ < rhs);
+}
+
+ACE_INLINE void
+ACE_Atomic_Op<ACE_Thread_Mutex, long>::operator= (long rhs)
+{
+  this->value_ = rhs;
+}
+
+ACE_INLINE void
+ACE_Atomic_Op<ACE_Thread_Mutex, long>::operator= (const ACE_Atomic_Op<ACE_Thread_Mutex, long> &rhs)
+{
+  this->value_ = rhs.value_;
+}
+
+ACE_INLINE long
+ACE_Atomic_Op<ACE_Thread_Mutex, long>::value (void) const
+{
   return this->value_;
 }
 
-template <class ACE_LOCK, class TYPE> ACE_INLINE TYPE &
-ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::value_i (void)
+ACE_INLINE volatile long &
+ACE_Atomic_Op<ACE_Thread_Mutex, long>::value_i (void)
 {
-  // Explicitly return <value_> (by reference).  This gives the user
-  // full, unrestricted access to the underlying value.  This method
-  // will usually be used in conjunction with explicit access to the
-  // lock.  Use with care ;-)
   return this->value_;
 }
 
-template <class ACE_LOCK, class TYPE> ACE_INLINE void
-ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::operator= (const TYPE &i)
-{
-// ACE_TRACE ("ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::operator=");
-  ACE_GUARD (ACE_LOCK, ace_mon, (ACE_LOCK &) this->mutex_);
-  this->value_ = i;
-}
-
-//
-// ACE_Atomic_Op inline functions
-//
-
-template <class ACE_LOCK, class TYPE> ACE_INLINE void
-ACE_Atomic_Op<ACE_LOCK, TYPE>::operator= (const TYPE &i)
-{
-   ACE_Atomic_Op_Ex <ACE_LOCK,TYPE> ::operator= (i);
-}
-
-template <class ACE_LOCK, class TYPE> ACE_INLINE void
-ACE_Atomic_Op<ACE_LOCK, TYPE>::operator= (const ACE_Atomic_Op_Ex<ACE_LOCK, TYPE> &rhs)
-{
-   ACE_Atomic_Op_Ex <ACE_LOCK,TYPE> ::operator= (rhs);
-}
-
-template <class ACE_LOCK, class TYPE> ACE_INLINE void
-ACE_Atomic_Op<ACE_LOCK, TYPE>::operator= (const ACE_Atomic_Op<ACE_LOCK, TYPE> &rhs)
-{
-   ACE_Atomic_Op_Ex <ACE_LOCK,TYPE> ::operator= (rhs);
-}
-
-// These specializations have been added to ACE_Atomic_Op_Ex to make the
-// implementation faster on Win32 that has OS support for doing this
-// quickly through methods like InterlockedIncrement and
-// InterlockedDecrement
-
-#if defined (ACE_WIN32)
-
-// FUZZ: disable check_for_inline
-
-ACE_TEMPLATE_METHOD_SPECIALIZATION
-inline long
-ACE_Atomic_Op_Ex<ACE_Thread_Mutex, long>::operator++ (void)
-{
-  return ::InterlockedIncrement (&this->value_);
-}
-
-ACE_TEMPLATE_METHOD_SPECIALIZATION
-inline long
-ACE_Atomic_Op_Ex<ACE_Thread_Mutex, long>::operator-- (void)
-{
-  return ::InterlockedDecrement (&this->value_);
-}
-
-ACE_TEMPLATE_METHOD_SPECIALIZATION
-inline void
-ACE_Atomic_Op_Ex<ACE_Thread_Mutex, long>::operator= (const long &i)
-{
-  ::InterlockedExchange (&this->value_,
-                         i);
-}
-
-ACE_TEMPLATE_METHOD_SPECIALIZATION
-inline void
-ACE_Atomic_Op_Ex<ACE_Thread_Mutex, long>::operator= (const ACE_Atomic_Op_Ex<ACE_Thread_Mutex, long> &rhs)
-{
-  ::InterlockedExchange (&this->value_,
-                         rhs.value ());
-}
-
-#if defined (ACE_HAS_INTERLOCKED_EXCHANGEADD)
-
-ACE_TEMPLATE_METHOD_SPECIALIZATION
-inline long
-ACE_Atomic_Op_Ex<ACE_Thread_Mutex, long>::operator+= (const long &i)
-{
-  return ::InterlockedExchangeAdd (&this->value_, i);
-}
-
-ACE_TEMPLATE_METHOD_SPECIALIZATION
-inline long
-ACE_Atomic_Op_Ex<ACE_Thread_Mutex, long>::operator-= (const long &i)
-{
-  return ::InterlockedExchangeAdd (&this->value_, -i);
-}
-
-#endif /* ACE_HAS_INTERLOCKED_EXCHANGEADD */
-
-#endif /* ACE_WIN32 */
+#endif /* ACE_HAS_BUILTIN_ATOMIC_OP */

@@ -74,6 +74,7 @@ LOGGING_FILES = \
   Trace
 THREADS_FILES = \
   Activation_Queue \
+  Atomic_Op \
   Process \
   Process_Manager \
   Synch \
@@ -259,6 +260,7 @@ TEMPLATE_FILES = \
 	   Unbounded_Queue \
            Asynch_Acceptor \
            Asynch_Connector \
+           Atomic_Op_T \
            Auto_IncDec_T \
            Auto_Ptr \
            Based_Pointer_T \
