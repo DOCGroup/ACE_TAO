@@ -1,5 +1,8 @@
 Tue Feb 18 11:43:04 1997  David L. Levine  <levine@cs.wustl.edu>
 
+	* ace/Log_Msg.cpp: removed destructor because it's not declared
+	  and it's empty.
+
 	* tests/Reactor_Notify_Test.cpp (main): added shutdown flag so
 	  that normal termination reaches ACE_END_TEST.
 
