@@ -1,3 +1,9 @@
+Tue Dec  9 22:15:55 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/IFR_Client/IFR_ExtendedC.cpp:
+
+          Removed more duplicate explicit template instantiations.
+
 Tue Dec  9 18:25:27 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/FaultTolerance.mpc:
