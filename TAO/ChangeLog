@@ -1,3 +1,22 @@
+Mon May  5 18:55:44 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * docs/tutorials/Quoter/AMI/Makefile:
+        * docs/tutorials/Quoter/On_Demand_Activation/Makefile:
+        * docs/tutorials/Quoter/On_Demand_Activation/server.dsp:
+        * examples/Content_Server/AMI_Iterator/Makefile:
+        * examples/Content_Server/AMI_Iterator/client.dsp:
+        * examples/Content_Server/AMI_Iterator/server.dsp:
+        * examples/Content_Server/AMI_Observer/Makefile:
+        * examples/Content_Server/AMI_Observer/client.dsp:
+        * examples/Content_Server/AMI_Observer/server.dsp:
+        * orbsvcs/orbsvcs/CosLoadBalancing.bor:
+        * orbsvcs/orbsvcs/CosLoadBalancing.dsp:
+        * orbsvcs/orbsvcs/Makefile.CosLoadBalancing:
+        * orbsvcs/orbsvcs/PortableGroup.bor:
+
+          Added links and include paths to eliminate build errors
+          in these directories.
+
 Mon May  5 17:50:42 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * performance-tests/Latency/AMH/Single_Threaded/Makefile:
