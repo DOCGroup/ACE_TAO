@@ -13,8 +13,6 @@
 #define TAO_Notify_Tests_SUPPLIER_T_H
 #include /**/ "ace/pre.h"
 
-#include "notify_test_export.h"
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -44,7 +42,7 @@ class TAO_Notify_Tests_SupplierAdmin_Ext_Traits
  *
  */
 template <class Supplier_Traits>
-class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_Supplier_T : public TAO_Notify_Tests_Peer_T <Supplier_Traits>
+class TAO_Notify_Tests_Supplier_T : public TAO_Notify_Tests_Peer_T <Supplier_Traits>
 {
   typedef ACE_TYPENAME Supplier_Traits::Admin_Traits Admin_Traits;
   typedef ACE_TYPENAME Supplier_Traits::Admin_Ext_Traits Admin_Ext_Traits;
