@@ -1,4 +1,6 @@
+/* -*- C++ -*- */
 // $Id$
+
 // ============================================================================
 //
 // = LIBRARY
@@ -16,7 +18,7 @@
 //
 // ============================================================================
 
-#ifndef _NAMING_SERVER_H
+#if !defined (_NAMING_SERVER_H)
 #define _NAMING_SERVER_H
 
 #include "tao/corba.h"
@@ -65,4 +67,4 @@ private:
   IOR_Multicast *ior_multicast_;
 };
 
-#endif
+#endif 
