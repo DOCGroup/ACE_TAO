@@ -77,4 +77,3 @@ class ASNMP_Export Gauge32: public SnmpUInt32
      // copy an instance of this Value
 };
 #endif //GAUGE_
-
