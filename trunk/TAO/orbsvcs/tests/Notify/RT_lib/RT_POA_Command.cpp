@@ -335,7 +335,7 @@ TAO_Notify_Tests_RT_POA_Command::create (RTCORBA::RTORB_ptr rt_orb, PortableServ
       poa_policy_list.length (1);
       poa_policy_list[0] = priority_model_policy;
     }
-  else if (lanes_.length () == 0 && thread_pool_static_threads_ == 0 && bands_.length () != 0)
+  else if (lanes_.length () == 0 && thread_pool_static_threads_ == 0 && bands_.length () > 0)
     {
       poa_policy_list.length (2);
       poa_policy_list[0] = priority_model_policy;
@@ -347,20 +347,20 @@ TAO_Notify_Tests_RT_POA_Command::create (RTCORBA::RTORB_ptr rt_orb, PortableServ
       poa_policy_list[0] = priority_model_policy;
       poa_policy_list[1] = thread_pool_policy;
     }
-  else if (lanes_.length () == 0 && thread_pool_static_threads_ == 1 && bands_.length () != 0)
+  else if (lanes_.length () == 0 && thread_pool_static_threads_ > 0 && bands_.length () > 0)
     {
       poa_policy_list.length (3);
       poa_policy_list[0] = priority_model_policy;
       poa_policy_list[1] = bands_policy;
       poa_policy_list[2] = thread_pool_policy;
     }
-  else if (lanes_.length () != 0 && thread_pool_static_threads_ == 0 && bands_.length () == 0)
+  else if (lanes_.length () > 0 && thread_pool_static_threads_ == 0 && bands_.length () == 0)
     {
       poa_policy_list.length (2);
       poa_policy_list[0] = priority_model_policy;
       poa_policy_list[1] = lanes_policy;
     }
-  else if (lanes_.length () != 0 && thread_pool_static_threads_ == 0 && bands_.length () != 0)
+  else if (lanes_.length () > 0 && thread_pool_static_threads_ == 0 && bands_.length () > 0)
     {
       poa_policy_list.length (3);
       poa_policy_list[0] = priority_model_policy;

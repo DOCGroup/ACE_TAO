@@ -22,12 +22,12 @@ $Naming = new PerlACE::Process ("../../../../../../Naming_Service/Naming_Service
 
 $Supplier = new PerlACE::Process ("../../../../Driver/Notify_Tests_Driver");
 
-$Supplier_Args = "-ORBInitRef NameService=file://$naming_ior -IORinput file://$consumer_ior -ORBSvcConf $supplier_conf";
+$Supplier_Args = "-ORBInitRef NameService=file://$naming_ior -IORinput file://$consumer_ior -ORBSvcConf $supplier_conf -Skip_Priority_Levels_Check";
 
 $Consumer = new PerlACE::Process ("../../../../Driver/Notify_Tests_Driver");
 
 #$Consumer_Args = "-ORBInitRef NameService=file://$naming_ior -IORoutput $consumer_ior -ORBSvcConf $consumer_conf -ORBDebugLevel 1";
-$Consumer_Args = "-ORBInitRef NameService=file://$naming_ior -IORoutput $consumer_ior -ORBSvcConf $consumer_conf";
+$Consumer_Args = "-ORBInitRef NameService=file://$naming_ior -IORoutput $consumer_ior -ORBSvcConf $consumer_conf -Skip_Priority_Levels_Check";
 
 unlink $naming_ior;
 $Naming->Spawn ();
