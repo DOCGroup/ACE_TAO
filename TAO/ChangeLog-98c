@@ -1,3 +1,21 @@
+Sat Apr  4 04:26:49 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_interface_fwd.cpp: We were not checking if
+	the node was imported. Due to this, code was getting generated for
+	forward declared interfaces from "#include"d IDL files.
+
+	* TAO_IDL/be/be_visitor_sequence.cpp: We were not calling
+	"nested_type_name" while generating the return type of the
+	operator [] in the sequence var class. As a result, a fully scoped
+	name was getting generated instead of a relative scoped name which
+	the MSVC++ compiler does not like.
+
+	* TAO_IDL/be/be_visitor_exception.cpp: For "typedefed" nodes, we
+	were using their base types to generate the code. This is fixed.
+
+	In addition, some files from the above and others were modified to
+	correct some formatting problems in the generated code.
+
 Sat Apr  4 00:24:01 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tests/Cubit/TAO/MT_Cubit/client.cpp: Fixed a typo where
@@ -18,15 +36,15 @@ Fri Apr  3 18:39:21 1998  Steve Huston  <shuston@riverace.com>
 
 Fri Apr  3 17:43:07 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/CDR.h: 
-	* tao/orbconf.h: 
-	* tao/CDR.cpp: 
+	* tao/CDR.h:
+	* tao/orbconf.h:
+	* tao/CDR.cpp:
 	  Added configuration macros to enable swap on write, and to
 	  disable swap on read.
 	  Also increased the default size of a CDR buffer.
 
-	* tests/CDR/Makefile: 
-	* tests/CDR/growth.cpp: 
+	* tests/CDR/Makefile:
+	* tests/CDR/growth.cpp:
 	  Added another simple test of the CDR buffer, this one tries to
 	  measure performance.
 
@@ -38,7 +56,7 @@ Fri Apr  3 17:15:22 1998  Steve Huston  <shuston@riverace.com>
 
 Fri Apr  3 17:07:18 1998  Sergio Flores  <sergio@polka.cs.wustl.edu>
 
-	* tao/TAO_Internal.cpp (FAKE_SVC_ENTRY): 	
+	* tao/TAO_Internal.cpp (FAKE_SVC_ENTRY):
 	* tao/orbconf.h: Made minor changes to have the fake service
  	configurator receive its values through macros, instead of
  	changing the ".cpp" file.  Seems cleaner this way.
@@ -46,32 +64,32 @@ Fri Apr  3 17:07:18 1998  Sergio Flores  <sergio@polka.cs.wustl.edu>
 Fri Apr  3 15:35:39 1998  Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
 
 	* orbsvcs/tests/AVStreams/client.h, client.cpp: All PropertySet
-	methods and the Iterator class methods tested. 
-	
+	methods and the Iterator class methods tested.
+
 Fri Apr  3 08:59:16 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/CDR.cpp: 
+	* tao/CDR.cpp:
 	  Null strings are transmitted as empty strings.
-	  Fixed 
+	  Fixed
 
-	* tao/IIOP_ORB.cpp: 
+	* tao/IIOP_ORB.cpp:
 	  Ensure that CDR buffer created from the IOR string is properly
 	  aligned.
 
-	* tao/Server_Request.cpp: 
+	* tao/Server_Request.cpp:
 	  More checking for exceptions while decoding parameters and we
 	  print an error message if decoding fails.
 
-	* tao/Typecode.cpp: 
+	* tao/Typecode.cpp:
 	  Only the first byte of the encapsulation stores the byte order,
 	  the next three bytes are ignored because the <kind> is stored as
 	  a long.
 
-	* tao/decode.cpp: 
+	* tao/decode.cpp:
 	  Removed dead code, improve error message when decoding object
 	  references and fix an off by one error in ObjRef::decode.
 
-	* tao/encode.cpp: 
+	* tao/encode.cpp:
 	  When encoding Object References an encapsulated stream is
 	  created in place, I debugged the computation of the length for
 	  that stream and left some debug messages commented out.
@@ -79,7 +97,7 @@ Fri Apr  3 08:59:16 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	  strings is in the CDR classes, no need to duplicate the effort
 	  here.
 
-	* tao/Connect.cpp: 
+	* tao/Connect.cpp:
 	  Cosmetic changes.
 
 Fri Apr 03 09:01:00 1998  David L. Levine  <levine@cs.wustl.edu>

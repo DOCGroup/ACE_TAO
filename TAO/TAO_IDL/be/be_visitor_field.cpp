@@ -77,6 +77,7 @@ be_visitor_field_ch::visit_field (be_field *node)
 int
 be_visitor_field_ch::visit_array (be_array *node)
 {
+  // TO-DO
   return 0;
 }
 
@@ -256,7 +257,14 @@ be_visitor_field_ch::visit_string (be_string *node)
 
   os = this->ctx_->stream ();
   os->indent (); // start from current indentation level
-  *os << "CORBA::String_var";
+  // set the right type;
+  if (this->ctx_->alias ())
+    {
+      *os << this->ctx_->alias ()->nested_type_name (this->ctx_->scope ())
+          << "_var";
+    }
+  else
+    *os << "CORBA::String_var";
   return 0;
 }
 
@@ -316,10 +324,6 @@ be_visitor_field_ch::visit_structure (be_structure *node)
 int
 be_visitor_field_ch::visit_typedef (be_typedef *node)
 {
-  TAO_OutStream *os; // output stream
-
-  os = this->ctx_->stream ();
-  os->indent (); // start from current indentation level
   this->ctx_->alias (node);     // save the node for use in code generation and
                                // indicate that the field of the field node
                                // is a typedefed quantity
