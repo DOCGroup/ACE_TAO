@@ -1,3 +1,10 @@
+Fri Jan 22 13:08:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
+
+        * ace/ACE.{cpp, h}: added static methods ACE::gcd, which computes the
+ 	  greatest common divisor of two u_longs using Euclid's algorithm, and
+ 	  ACE::minimum_frame size, which computes the minimum enclosing frame
+	  size for two u_longs.
+
 Thu Jan 21 20:45:09 1999  James CE Johnson  <jcej@chiroptera.tragus.org>
 
         * docs/tutorials/006/client_acceptor.h

@@ -25,69 +25,6 @@
 ACE_RCSID(Sched, SchedEntry, "$Id$")
 
 //////////////////////
-// Helper Functions //
-//////////////////////
-
-// TBD - move this to the ACE class
-// Euclid's greatest common divisor algorithm
-u_long gcd (u_long x, u_long y)
-{
-  if (y == 0)
-  {
-    return x;
-  }
-  else
-  {
-    return gcd (y, x % y);
-  }
-}
-
-
-// TBD - move this to the ACE class
-// calculate the minimum frame size that
-u_long minimum_frame_size (u_long period1, u_long period2)
-{
-  // if one of the periods is zero, treat it as though it as
-  // uninitialized and return the other period as the frame size
-  if (0 == period1)
-  {
-    return period2;
-  } 
-  if (0 == period2)
-  {
-    return period1;
-  } 
-
-  // if neither is zero, find the greatest common divisor of the two periods
-  u_long greatest_common_divisor = gcd (period1, period2);
-
-  // explicitly consider cases to reduce risk of possible overflow errors
-  if (greatest_common_divisor == 1)
-  {
-    // periods are relative primes: just multiply them together
-    return period1 * period2;
-  }
-  else if (greatest_common_divisor == period1)
-  {
-    // the first period divides the second: return the second
-    return period2;
-  }
-  else if (greatest_common_divisor == period2)
-  {
-    // the second period divides the first: return the first
-    return period1;
-  }
-  else
-  {
-    // the current frame size and the entry's effective period
-    // have a non-trivial greatest common divisor: return the
-    // product of factors divided by those in their gcd.
-    return (period1 * period2) / greatest_common_divisor;
-  }
-}
-
-
-//////////////////////
 // Class Task_Entry //
 //////////////////////
 
@@ -403,7 +340,7 @@ Task_Entry::conjunctive_merge (
             ACE_CString (string_buffer);
         }
 
-      frame_size = minimum_frame_size (frame_size, (*link)->caller ().effective_period_);
+      frame_size = ACE::minimum_frame_size (frame_size, (*link)->caller ().effective_period_);
     }
   }
 
@@ -637,7 +574,7 @@ Task_Entry::merge_frames (
   // reframe dispatches in the destination set to the new frame size
   // (expands the destination set's period to be the new enclosing frame)
   if (reframe (dispatch_entries, owner, dest, dest_period,
-               minimum_frame_size (dest_period, src_period)) < 0)
+               ACE::minimum_frame_size (dest_period, src_period)) < 0)
   {
     return -1;
   }

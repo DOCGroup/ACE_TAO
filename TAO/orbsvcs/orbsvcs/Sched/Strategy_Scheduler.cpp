@@ -18,7 +18,6 @@
 
 #include "Strategy_Scheduler.h"
 #include "ace/Sched_Params.h"
-#include "math.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "Strategy_Scheduler.i"

@@ -2482,6 +2482,66 @@ ACE::recv_n (ACE_HANDLE handle,
   return bytes_received;
 }
 
+
+// Euclid's greatest common divisor algorithm.
+u_long 
+ACE::gcd (u_long x, u_long y)
+{
+  if (y == 0)
+  {
+    return x;
+  }
+  else
+  {
+    return ACE::gcd (y, x % y);
+  }
+}
+
+
+// Calculates the minimum enclosing frame size for the given values.
+u_long 
+ACE::minimum_frame_size (u_long period1, u_long period2)
+{
+  // if one of the periods is zero, treat it as though it as
+  // uninitialized and return the other period as the frame size
+  if (0 == period1)
+  {
+    return period2;
+  } 
+  if (0 == period2)
+  {
+    return period1;
+  } 
+
+  // if neither is zero, find the greatest common divisor of the two periods
+  u_long greatest_common_divisor = ACE::gcd (period1, period2);
+
+  // explicitly consider cases to reduce risk of possible overflow errors
+  if (greatest_common_divisor == 1)
+  {
+    // periods are relative primes: just multiply them together
+    return period1 * period2;
+  }
+  else if (greatest_common_divisor == period1)
+  {
+    // the first period divides the second: return the second
+    return period2;
+  }
+  else if (greatest_common_divisor == period2)
+  {
+    // the second period divides the first: return the first
+    return period1;
+  }
+  else
+  {
+    // the current frame size and the entry's effective period
+    // have a non-trivial greatest common divisor: return the
+    // product of factors divided by those in their gcd.
+    return (period1 * period2) / greatest_common_divisor;
+  }
+}
+
+
 u_long
 ACE::is_prime (const u_long n,
                const u_long min_factor,
