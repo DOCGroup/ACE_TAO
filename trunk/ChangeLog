@@ -1,3 +1,8 @@
+Sun Nov  9 00:25:57 UTC 2003  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* ace/QoS/QoS_Session_Impl.cpp: Add include of OS_NS_arpa_inet.h
+	  to unbreak build.
+
 Sat Nov  8 20:54:53 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * bin/fuzz.pl:
