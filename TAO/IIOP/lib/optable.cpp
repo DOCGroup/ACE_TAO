@@ -33,7 +33,7 @@ TAO_Dynamic_Hash_OpTable::find (const CORBA_String &opname,
 TAO_Linear_OpTable::TAO_Linear_OpTable (CORBA_ULong size)
   : next_ (0),
     tablesize_ (size),
-    tbl_ (new TAO_Linear_OpTable::Entry[size])
+    tbl_ (new TAO_Linear_OpTable_Entry[size])
 {
 }
 
@@ -78,13 +78,13 @@ TAO_Linear_OpTable::find (const CORBA_String &opname,
   return -1;  // not found
 }
 
-TAO_Linear_OpTable::Entry::Entry (void)
+TAO_Linear_OpTable_Entry::TAO_Linear_OpTable_Entry (void)
 {
   this->opname = 0;
   this->skel_ptr = 0;
 }
 
-TAO_Linear_OpTable::Entry::~Entry (void)
+TAO_Linear_OpTable_Entry::~TAO_Linear_OpTable_Entry (void)
 {
   this->opname = 0;
   this->skel_ptr = 0;  // cannot delete this as we do not own it
@@ -94,7 +94,7 @@ TAO_Linear_OpTable::Entry::~Entry (void)
 TAO_Active_Demux_OpTable::TAO_Active_Demux_OpTable (CORBA_ULong size)
   : next_ (0),
     tablesize_ (size),
-    tbl_ (new TAO_Active_Demux_OpTable::Entry[size])
+    tbl_ (new TAO_Active_Demux_OpTable_Entry[size])
 {
 }
 
@@ -129,12 +129,12 @@ TAO_Active_Demux_OpTable::find (const CORBA_String &opname,
   return 1;
 }
 
-TAO_Active_Demux_OpTable::Entry::Entry (void)
+TAO_Active_Demux_OpTable_Entry::TAO_Active_Demux_OpTable_Entry (void)
 {
   this->skel_ptr = 0;
 }
 
-TAO_Active_Demux_OpTable::Entry::~Entry (void)
+TAO_Active_Demux_OpTable_Entry::~TAO_Active_Demux_OpTable_Entry (void)
 {
   this->skel_ptr = 0;  // cannot delete this as we do not own it
 }
