@@ -1,3 +1,15 @@
+Thu Oct 14 08:07:36 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/Profile_Timer.inl:
+
+          If ACE_HAS_PRUSAGE_T is defined, we need to include
+          ace/OS_NS_stropts.h to get ACE_OS::ioctl.
+
+        * ace/Profile_Timer.cpp:
+
+          If ACE_HAS_PRUSAGE_T is defined, we need to include
+          ace/OS_NS_stdio.h to get ACE_OS::sprintf.
+
 Thu Oct 14 12:27:23 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_vxworks5.x_diab.GNU
@@ -12,21 +24,21 @@ Thu Oct 14 12:23:23 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Wed Oct 13 21:55:13 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* include/makeinclude/wrapper_macros.GNU (acexml):
+        * include/makeinclude/wrapper_macros.GNU (acexml):
 
-	  Enable ACEXML support by default.  Addresses build issues
-	  introduced by the "--with-acexml" configure script changes
-	  described below.  Thanks to Bala for pointing this out and for
-	  suggesting a fix.
+          Enable ACEXML support by default.  Addresses build issues
+          introduced by the "--with-acexml" configure script changes
+          described below.  Thanks to Bala for pointing this out and for
+          suggesting a fix.
 
 Tue Oct 12 22:37:16 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* m4/ace.m4:
+        * m4/ace.m4:
 
-	  Changed "--with-uses-wchar" configure script option to
-	  "--enable-uses-char".  The latter is the correct convention for
-	  features.  "--with-*" is by convention only used for requesting
-	  use of other software packages in the package being configured.
+          Changed "--with-uses-wchar" configure script option to
+          "--enable-uses-char".  The latter is the correct convention for
+          features.  "--with-*" is by convention only used for requesting
+          use of other software packages in the package being configured.
 
 Wed Oct 13 06:53:55 2004  Olli Savia  <ops@iki.fi>
 
