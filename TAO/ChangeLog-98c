@@ -4,6 +4,8 @@ Sun Jul 19 22:58:45 1998  David L. Levine  <levine@cs.wustl.edu>
           ACE_Unbounded_Queue<CosTrading::Admin::OctetSeq *>, etc., template
           instantiations.
 
+        * tao/corba.h: define TAO_THROW_SPEC using ACE_THROW_SPEC.
+
 Sat Jul 18 23:01:51 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * TAO version 0.1.40 released.
