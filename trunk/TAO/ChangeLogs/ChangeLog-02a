@@ -1,3 +1,9 @@
+Thu Aug 24 09:22:53 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/tao_idl_static.dsp:
+
+	  The output file name of the FE library was incorrectly set.
+
 Wed Aug 23 16:56:28 2000  Marina Spivak  <marina@cs.wustl.edu>
 
 	* orbsvcs/Naming/Naming_Loader.h
