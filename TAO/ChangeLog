@@ -1,3 +1,23 @@
+Fri Jan 31 17:07:20 2003  Pradeep Gore  <pradeep@oomworks.com>
+
+	Fix for crash in Notify due to race condition in the Worker Task
+	  shutdown. This crash showed up on the SunOS_Forte build.
+
+	* orbsvcs\orbsvcs\Notify\Worker_Task.h:
+	  The is a Refcountable object now.
+	
+	* orbsvcs\orbsvcs\Notify\Reactive_Task.cpp:
+	* orbsvcs\orbsvcs\Notify\Reactive_Task.h:
+	  Modifications for Refcounting support.
+	
+	* orbsvcs\orbsvcs\Notify\ThreadPool_Task.cpp:
+	* orbsvcs\orbsvcs\Notify\ThreadPool_Task.h:
+	  Instead of relying on the thread count, the <close> method
+	  decrements the count on the Task Object.
+	  
+	* orbsvcs\orbsvcs\Notify\Object.cpp:
+	  Apply refcounting to Task objects.
+
 Fri Jan 31 14:25:07 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connection_Handler.cpp: Fixed a
