@@ -125,7 +125,7 @@ public:
 class TAO_PortableServer_Export
 FT_POA_tao_thru_poa_collocated_RequestDurationPolicy :
   public virtual FT::RequestDurationPolicy,
-  public virtual POA_CORBA::_tao_thru_poa_collocated_CORBA_Policy
+  public virtual POA_CORBA::_tao_thru_poa_collocated_Policy
 {
 public:
   FT_POA_tao_thru_poa_collocated_RequestDurationPolicy (
@@ -332,7 +332,7 @@ public:
 
 class TAO_PortableServer_Export FT_POA_tao_thru_poa_collocated_HeartbeatPolicy:
   public virtual FT::HeartbeatPolicy,
-  public virtual POA_CORBA::_tao_thru_poa_collocated_CORBA_Policy
+  public virtual POA_CORBA::_tao_thru_poa_collocated_Policy
 {
 public:
   FT_POA_tao_thru_poa_collocated_HeartbeatPolicy (
@@ -535,7 +535,7 @@ public:
 
 class TAO_PortableServer_Export FT_POA_tao_thru_poa_collocated_HeartbeatEnabledPolicy
   : public virtual FT::HeartbeatEnabledPolicy,
-    public virtual POA_CORBA::_tao_thru_poa_collocated_CORBA_Policy
+    public virtual POA_CORBA::_tao_thru_poa_collocated_Policy
 {
 public:
   FT_POA_tao_thru_poa_collocated_HeartbeatEnabledPolicy (
