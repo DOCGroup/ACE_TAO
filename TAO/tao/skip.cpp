@@ -11,8 +11,8 @@
 // = DESCRIPTION
 //     Code for skipping different data types
 //
-//     Data types encoded as CDR streams need to be skipped when they are part of
-//     an Any.
+//     Data types encoded as CDR streams need to be skipped when they
+//     are part of an Any.
 //
 // = AUTHOR
 //     Aniruddha Gokhale
@@ -240,7 +240,7 @@ TAO_Marshal_ObjRef::skip (CORBA::TypeCode_ptr,
   CORBA::Boolean continue_skipping = 1;
 
   // return status
-  CORBA::TypeCode::traverse_status retval = 
+  CORBA::TypeCode::traverse_status retval =
     CORBA::TypeCode::TRAVERSE_CONTINUE;
 
   // First, skip the type hint. This will be the type_id encoded in an
@@ -586,9 +586,6 @@ TAO_Marshal_Sequence::skip (CORBA::TypeCode_ptr  tc,
                             TAO_InputCDR *stream,
                             CORBA::Environment &ACE_TRY_ENV)
 {
-  CORBA::Boolean continue_skipping = 1;
-  // Typecode of the element.
-  CORBA::TypeCode_var tc2;
   // Size of element.
   CORBA::ULong bounds;
 
@@ -596,33 +593,91 @@ TAO_Marshal_Sequence::skip (CORBA::TypeCode_ptr  tc,
   // here, on the "be gracious in what you accept" principle.  We
   // don't generate illegal sequences (i.e. length > bounds).
 
-  continue_skipping = stream->read_ulong (bounds);
+  CORBA::Boolean continue_skipping =
+    stream->read_ulong (bounds);
+
+  if (!continue_skipping)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("TAO_Marshal_Sequence::skip detected error\n")));
+      ACE_THROW_RETURN (CORBA::MARSHAL (),
+                        CORBA::TypeCode::TRAVERSE_STOP);
+    }
+
+  // No point decoding an empty sequence.
+  if (bounds == 0)
+    return CORBA::TypeCode::TRAVERSE_CONTINUE;
+
+  // Get element typecode.
+  CORBA::TypeCode_var tc2 =
+    tc->content_type (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
+
+  // For CORBA basic types, the skip can be optimized
+  CORBA::TCKind kind = tc2->kind (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
+
+  char *dummy;
+  switch (kind)
+    {
+    case CORBA::tk_octet:
+    case CORBA::tk_boolean:
+    case CORBA::tk_char:
+      {
+        stream->adjust (0, ACE_CDR::OCTET_ALIGN, dummy);
+        continue_skipping =
+          stream->skip_bytes (ACE_CDR::OCTET_SIZE * bounds);
+      }
+      break;
+    case CORBA::tk_short:
+    case CORBA::tk_ushort:
+    case CORBA::tk_wchar:
+      {
+        stream->adjust (0, ACE_CDR::SHORT_ALIGN, dummy);
+        continue_skipping =
+          stream->skip_bytes (ACE_CDR::SHORT_SIZE * bounds);
+      }
+      break;
+    case CORBA::tk_long:
+    case CORBA::tk_ulong:
+    case CORBA::tk_float:
+      {
+        stream->adjust (0, ACE_CDR::LONG_ALIGN, dummy);
+        continue_skipping =
+          stream->skip_bytes (ACE_CDR::LONG_SIZE * bounds);
+      }
+      break;
+    case CORBA::tk_double:
+    case CORBA::tk_longlong:
+    case CORBA::tk_ulonglong:
+      {
+        stream->adjust (0, ACE_CDR::LONGLONG_ALIGN, dummy);
+        continue_skipping =
+          stream->skip_bytes (ACE_CDR::LONGLONG_SIZE * bounds);
+      }
+      break;
+    case CORBA::tk_longdouble:
+      {
+        stream->adjust (0, ACE_CDR::LONGDOUBLE_ALIGN, dummy);
+        continue_skipping =
+          stream->skip_bytes (ACE_CDR::LONGDOUBLE_SIZE * bounds);
+      }
+      break;
+
+    default:
+      while (bounds-- && continue_skipping == 1)
+        {
+          continue_skipping =
+            TAO_Marshal_Object::perform_skip (tc2.in (),
+                                              stream,
+                                              ACE_TRY_ENV);
+          ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
+        }
+      break;
+    }// end of switch
 
   if (continue_skipping)
-    {
-      // No point decoding an empty sequence.
-      if (bounds > 0)
-        {
-          // Get element typecode.
-          tc2 = tc->content_type (ACE_TRY_ENV);
-          ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
-
-          while (bounds-- && continue_skipping == 1)
-            {
-              int retval =
-                TAO_Marshal_Object::perform_skip (tc2.in (),
-                                                  stream,
-                                                  ACE_TRY_ENV);
-              ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
-              continue_skipping =
-                (retval == CORBA::TypeCode::TRAVERSE_CONTINUE);
-            }
-          if (continue_skipping)
-            return CORBA::TypeCode::TRAVERSE_CONTINUE;
-        } // length is > 0
-      else
-        return CORBA::TypeCode::TRAVERSE_CONTINUE;
-    }
+    return CORBA::TypeCode::TRAVERSE_CONTINUE;
 
   // error exit
   if (TAO_debug_level > 0)
@@ -639,26 +694,80 @@ TAO_Marshal_Array::skip (CORBA::TypeCode_ptr  tc,
 {
   CORBA::Boolean continue_skipping = 1;
 
-  // Typecode of the element.
-  CORBA::TypeCode_var tc2;
 
   // retrieve the bounds of the array
-  CORBA::ULong  bounds = tc->length (ACE_TRY_ENV);
+  CORBA::ULong bounds = tc->length (ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
 
   // get element typecode
-  tc2 = tc->content_type (ACE_TRY_ENV);
+  // Typecode of the element.
+  CORBA::TypeCode_var tc2 = tc->content_type (ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
 
-  while (bounds-- && continue_skipping == 1)
+  // For CORBA basic types, the skip can be optimized
+  CORBA::TCKind kind = tc2->kind (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
+
+  char *dummy;
+  switch (kind)
     {
-      int retval =
-        TAO_Marshal_Object::perform_skip (tc2.in (),
-                                          stream,
-                                          ACE_TRY_ENV);
-      ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
-      continue_skipping = (retval == CORBA::TypeCode::TRAVERSE_CONTINUE);
-    }
+    case CORBA::tk_octet:
+    case CORBA::tk_boolean:
+    case CORBA::tk_char:
+      {
+        stream->adjust (0, ACE_CDR::OCTET_ALIGN, dummy);
+        continue_skipping =
+          stream->skip_bytes (ACE_CDR::OCTET_SIZE * bounds);
+      }
+      break;
+    case CORBA::tk_short:
+    case CORBA::tk_ushort:
+    case CORBA::tk_wchar:
+      {
+        stream->adjust (0, ACE_CDR::SHORT_ALIGN, dummy);
+        continue_skipping =
+          stream->skip_bytes (ACE_CDR::SHORT_SIZE * bounds);
+      }
+      break;
+    case CORBA::tk_long:
+    case CORBA::tk_ulong:
+    case CORBA::tk_float:
+      {
+        stream->adjust (0, ACE_CDR::LONG_ALIGN, dummy);
+        continue_skipping =
+          stream->skip_bytes (ACE_CDR::LONG_SIZE * bounds);
+      }
+      break;
+    case CORBA::tk_double:
+    case CORBA::tk_longlong:
+    case CORBA::tk_ulonglong:
+      {
+        stream->adjust (0, ACE_CDR::LONGLONG_ALIGN, dummy);
+        continue_skipping =
+          stream->skip_bytes (ACE_CDR::LONGLONG_SIZE * bounds);
+      }
+      break;
+    case CORBA::tk_longdouble:
+      {
+        stream->adjust (0, ACE_CDR::LONGDOUBLE_ALIGN, dummy);
+        continue_skipping =
+          stream->skip_bytes (ACE_CDR::LONGDOUBLE_SIZE * bounds);
+      }
+      break;
+
+    default:
+      while (bounds-- && continue_skipping == 1)
+        {
+          int stop =
+            TAO_Marshal_Object::perform_skip (tc2.in (),
+                                              stream,
+                                              ACE_TRY_ENV);
+          ACE_CHECK_RETURN (CORBA::TypeCode::TRAVERSE_STOP);
+          if (stop == CORBA::TypeCode::TRAVERSE_STOP)
+            continue_skipping = 0;
+        }
+      break;
+    }// end of switch
 
   if (continue_skipping)
     return CORBA::TypeCode::TRAVERSE_CONTINUE;
