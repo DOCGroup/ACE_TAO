@@ -264,7 +264,7 @@ TAO_TypeCodeFactory_i::create_union_tc (
         }
       else
         {
-          CORBA::Boolean good_label = 
+          CORBA::Boolean good_label =
             members[index].label.impl ()->marshal_value (cdr);
 
           if (good_label == 0)
@@ -703,7 +703,7 @@ TAO_TypeCodeFactory_i::compute_default_label (
           {
             case CORBA::tk_char:
               members[i].label >>= CORBA::Any::to_char (u.char_val);
-              
+
               if (u.char_val == dv.char_val)
                 {
                   dv.char_val++;
@@ -712,16 +712,16 @@ TAO_TypeCodeFactory_i::compute_default_label (
               break;
             case CORBA::tk_boolean:
               members[i].label >>= CORBA::Any::to_boolean (u.bool_val);
-              
+
               if (u.bool_val == dv.bool_val)
                 {
-                  dv.bool_val++;
+                  dv.bool_val = !dv.bool_val;
                   success = 0;
                 }
               break;
             case CORBA::tk_short:
               members[i].label >>= u.short_val;
-              
+
               if (u.short_val == dv.short_val)
                 {
                   dv.short_val++;
@@ -730,7 +730,7 @@ TAO_TypeCodeFactory_i::compute_default_label (
               break;
             case CORBA::tk_ushort:
               members[i].label >>= u.ushort_val;
-              
+
               if (u.ushort_val == dv.ushort_val)
                 {
                   dv.ushort_val++;
@@ -739,7 +739,7 @@ TAO_TypeCodeFactory_i::compute_default_label (
               break;
             case CORBA::tk_long:
               members[i].label >>= u.long_val;
-              
+
               if (u.long_val == dv.long_val)
                 {
                   dv.long_val++;
@@ -748,7 +748,7 @@ TAO_TypeCodeFactory_i::compute_default_label (
               break;
             case CORBA::tk_ulong:
               members[i].label >>= u.ulong_val;
-              
+
               if (u.ulong_val == dv.ulong_val)
                 {
                   dv.ulong_val++;
@@ -758,7 +758,7 @@ TAO_TypeCodeFactory_i::compute_default_label (
 #if !defined (ACE_LACKS_LONGLONG_T)
             case CORBA::tk_ulonglong:
               members[i].label >>= u.ulonglong_val;
-              
+
               if (u.ulonglong_val == dv.ulonglong_val)
                 {
                   dv.ulonglong_val++;
@@ -771,7 +771,7 @@ TAO_TypeCodeFactory_i::compute_default_label (
               TAO_InputCDR cdr (members[i].label._tao_get_cdr (),
                                 members[i].label._tao_byte_order ());
               cdr.read_ulong (u.enum_val);
-              
+
               if (u.enum_val == dv.enum_val)
                 {
                   dv.enum_val++;
