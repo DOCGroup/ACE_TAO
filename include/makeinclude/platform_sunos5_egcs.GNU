@@ -1,25 +1,9 @@
 # $Id$
 
 # SunOS 5.x (Solaris 2.x) with egcs
+# Use the g++ platform file, with any overrides following its include.
 
-debug = 1
-optimize = 1
+include $(ACE_ROOT)/include/makeinclude/platform_sunos5_g++.GNU
 
-CC              = gcc
-CXX             = c++
-CFLAGS          += -Wall -Wpointer-arith -pipe #### -Winline
-CCFLAGS         += $(CFLAGS)
-DCFLAGS         += -g
-DLD             = $(CXX)
-LD              = $(CXX)
-LDFLAGS         += # -z muldefs
-LIBS            += -lsocket -ldl -lgen -lnsl -lthread -lw
-OCFLAGS         += -O2
-PIC             = -fpic
-AR              = ar
-ARFLAGS         = ruv
-RANLIB          = @true
-SOFLAGS         = -shared $(CPPFLAGS)
-# SOBUILD - compile into .so directly
-SOBUILD         = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<
-PRELIB          = @true
+#### Uncomment the following line to use shared libstdc++.so, etc.
+#### SOFLAGS         = -shared $(CPPFLAGS)
