@@ -14,11 +14,11 @@ class TAO_RTScheduler_Export TAO_DistributableThread
 
   ~TAO_DistributableThread (void);
 
-  virtual void cancel (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual void cancel (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
    
-  virtual RTScheduling::DistributableThread::DT_State state (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual RTScheduling::DistributableThread::DT_State state (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException));
   
  private:
