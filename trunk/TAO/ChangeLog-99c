@@ -1,5 +1,9 @@
 Sat Mar 20 20:27:54 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
+	* tests/MT_Client/MT_Client.dsw: 
+	  Added projects and workspace for this test, thanks to Irfan
+	  for helping me out with it.
+
 	* tests/MT_Client/README: 
 	* tests/MT_Client/run_test.pl: 
 	  Added canonical files to the example.
