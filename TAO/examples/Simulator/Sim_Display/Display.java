@@ -43,15 +43,19 @@ public class Display extends Panel
 
   
   public void update_metrics (double utilization,
-			       double overhead,
-			       int arrival_time,
-			       int deadline_time,
-			       int dispatch_time)
+			      double overhead,
+			      int arrival_time,
+			      int deadline_time,
+			      int completion_time,
+			      int computation_time)
     {
-      float latency = (float)(dispatch_time - arrival_time > 0 ? dispatch_time - arrival_time : 0);
+      float latency = (float)(completion_time-computation_time-arrival_time);
+      latency =  latency > 0 ? latency : 0;
       float jitter = (float)Math.abs(latency - last_latency);
+      // float latency = (float)(dispatch_time - arrival_time > 0 ? dispatch_time - arrival_time : 0);
+      // float jitter = (float)Math.abs(latency - last_latency);
       float missed_deadline =
-	(float)((deadline_time < dispatch_time) ? 1.0 : 0.0);
+	(float)((deadline_time < completion_time) ? 1.0 : 0.0);
 
       /*
       System.out.println ("Metrics: cpu " + header.utilization_ +

@@ -66,14 +66,21 @@ Compiling:
             };
 
          compile the $TAO_ROOT/orbsvcs/orbsvcs directory
+
          change $TAO_ROOT/orbsvcs/orbsvcs/RtecEventCommC.h to
              
-            struct EventData
-            {
-               CORBA::Long x;
-               CORBA::Long y;
-               CORBA::Any any_value;
-            };
+
+	  struct EventData
+	{
+	    CORBA::Long x;
+	    CORBA::Long y;
+	    CORBA::Any any_value;
+	  };       ^^^^
+         change $TAO_ROOT/orbsvcs/orbsvcs/RtecEventCommC.cpp to
+             
+         istub->do_call (env, &RtecEventComm_PushConsumer_push_calldata, 0, &data);
+                                                                            ^^^^^
+
          This was neccessary because of a bug in the IDL compiler
          compile the $TAO_ROOT/orbsvcs/orbsvcs directory again
          compile the $TAO_ROOT/orbsvcs/EventService directory"
@@ -104,7 +111,8 @@ Compiling:
 Starting:
 
      Supplier:
-       Event_Sup -ORBport 10040
+       Event_Sup -ORBport 10040 -m 100
+       // -m 1000 for 1000 events sent by the supplier
 
      Simulation 
        vbj Display_Client 

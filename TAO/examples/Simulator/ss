@@ -7,28 +7,28 @@ login=`whoami`
 
 echo // Killing the old services
 
-ps -ef | grep Service | grep $login | grep -v grep | cut -c10-17 > /tmp/pids
+ps -ef | grep Service | grep $login | grep -v grep | cut -c10-17 > /tmp/pids$$
 
-if [ -s /tmp/pids ]; then
-  pids=`cat /tmp/pids` 
+if [ -s /tmp/pids$$ ]; then
+  pids=`cat /tmp/pids$$` 
   kill $pids
 fi
 
 
 echo // Initializing the log file
  
-if [ -r /tmp/logfile ]; then
-  rm /tmp/logfile
+if [ -r /tmp/logfile$$ ]; then
+  rm /tmp/logfile$$
 fi
 
-echo // Logfile for the script "ss" which startes Name, Scheduling and Event Service  > /tmp/logfile
+echo // Logfile for the script "ss" which startes Name, Scheduling and Event Service  > /tmp/logfile$$
 
 nameserviceport=10016
 schedulerserviceport=10021
 eventserviceport=10026
 
 cd $TAO_ROOT/orbsvcs/Naming_Service
-./Naming_Service -ORBport $nameserviceport >> /tmp/logfile 2>&1  &
+./Naming_Service -ORBport $nameserviceport >> /tmp/logfile$$ 2>&1  &
 
 sleep 1
 
@@ -39,14 +39,14 @@ echo // The IOR of the Naming Service: $IOR
 echo // Started Naming Service on port $nameserviceport
 
 cd $TAO_ROOT/orbsvcs/Scheduling_Service
-Scheduling_Service -ORBnameserviceior $IOR -ORBport $schedulerserviceport  >> /tmp/logfile  2>&1 &
+Scheduling_Service -ORBnameserviceior $IOR -ORBport $schedulerserviceport  >> /tmp/logfile$$  2>&1 &
 
 sleep 1
 
 echo // Started Scheduling Service on port $schedulerserviceport
 
 cd $TAO_ROOT/orbsvcs/Event_Service
-Event_Service -ORBnameserviceior $IOR -ORBport $eventserviceport >> /tmp/logfile 2>&1 & 
+Event_Service -ORBnameserviceior $IOR -ORBport $eventserviceport >> /tmp/logfile$$ 2>&1 & 
 
 cd $old_dir
 echo // Started Event Service on port $eventserviceport

@@ -1,3 +1,14 @@
+Tue Feb 24 13:23:48 1998 Michael Kircher   <mk1@cec.wustl.edu>
+
+	* orbsvcs/tests/Simulator/NavWeap.idl: Added new fields
+
+       	* orbsvcs/tests/Simulator/Event_Supplier/Event_Sup.cpp:
+ 	adopted to new IDL file
+
+	* orbsvcs/tests/Simulator/Sim_Display/Display_Push_Consumer.java:
+	adopted to new IDL file
+
+
 Tue Feb 24 00:41:48 1998  Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp: Added TITLE,
