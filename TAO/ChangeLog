@@ -1,3 +1,15 @@
+Wed Jun 11 12:15:02 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp: Added
+	  TAO_Abstract_ServantBase to the list of constructors that needs
+	  to be called. This will help to avoid warnings for simple
+	  cases. 
+
+	  For deeply nested hierachies we still have a problem in that we
+	  are not calling the base class constructors with virtual
+	  inheritance in the right order. We are doing things in the
+	  reverse order which ticks of gcc 3.3.
+
 Wed Jun 11 12:07:33 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/driver/drv_preproc.cpp (DRV_cpp_init):
@@ -25,7 +37,8 @@ Wed Jun 11 11:44:21 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  that is besides the point.  
 
 	  The fixes made are also for regular constructors and so they
-	  should just work fine.   
+	  should just work fine. Thanks to Boris and Jeff Parsons for
+	  spending some of their time to discuss about this.
 
 Wed Jun 11 11:45:47 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
