@@ -1,6 +1,9 @@
 // $Id$
 
 #include "JAWS/Policy.h"
+#include "JAWS/Concurrency.h"
+#include "JAWS/IO_Handler.h"
+#include "JAWS/IO_Acceptor.h"
 
 JAWS_Dispatch_Policy::JAWS_Dispatch_Policy (void)
 {
@@ -10,50 +13,59 @@ JAWS_Dispatch_Policy::~JAWS_Dispatch_Policy (void)
 {
 }
 
-ACE_INET_Addr *
-JAWS_Synch_Dispatch_Policy::addr (void)
+JAWS_Default_Dispatch_Policy::JAWS_Default_Dispatch_Policy (void)
+  : concurrency_ (JAWS_Thread_Pool_Singleton::instance ()),
+    ioh_factory_ (JAWS_Synch_IO_Handler_Factory_Singleton::instance ()),
+    acceptor_ (JAWS_IO_Synch_Acceptor_Singleton::instance ()),
+    io_ (JAWS_Synch_IO_Singleton::instance ())
 {
-  return this->addr_;
+}
+
+JAWS_Default_Dispatch_Policy::~JAWS_Default_Dispatch_Policy (void)
+{
 }
 
 JAWS_IO *
-JAWS_Synch_Dispatch_Policy::io (void)
+JAWS_Default_Dispatch_Policy::io (void)
 {
   return this->io_;
 }
 
+JAWS_IO_Handler_Factory *
+JAWS_Default_Dispatch_Policy::ioh_factory (void)
+{
+  return this->ioh_factory_;
+}
+
 JAWS_IO_Acceptor *
-JAWS_Synch_Dispatch_Policy::acceptor (void)
+JAWS_Default_Dispatch_Policy::acceptor (void)
 {
   return this->acceptor_;
 }
 
 JAWS_Concurrency_Base *
-JAWS_Synch_Dispatch_Policy::concurrency (void)
+JAWS_Default_Dispatch_Policy::concurrency (void)
 {
   return this->concurrency_;
 }
 
 void
-JAWS_Synch_Dispatch_Policy::addr (ACE_INET_Addr *addrp)
+JAWS_Default_Dispatch_Policy::io (JAWS_IO *)
 {
-  this->addr_ = addrp;
 }
 
 void
-JAWS_Synch_Dispatch_Policy::io (JAWS_IO *iop)
+JAWS_Default_Dispatch_Policy::ioh_factory (JAWS_IO_Handler_Factory *)
 {
-  this->io_ = iop;
 }
 
 void
-JAWS_Synch_Dispatch_Policy::acceptor (JAWS_IO_Acceptor *acceptorp)
+JAWS_Default_Dispatch_Policy::acceptor (JAWS_IO_Acceptor *)
 {
-  this->acceptor_ = acceptorp;
 }
 
 void
-JAWS_Synch_Dispatch_Policy::concurrency (JAWS_Concurrency_Base *concp)
+JAWS_Default_Dispatch_Policy::concurrency (JAWS_Concurrency_Base *concp)
 {
   this->concurrency_ = concp;
 }

@@ -19,6 +19,7 @@
 #define JAWS_IO_HANDLER_H
 
 #include "ace/Asynch_IO.h"
+#include "ace/Singleton.h"
 
 // #include "JAWS/IO.h"
 class JAWS_IO;
@@ -45,7 +46,7 @@ class JAWS_IO_Handler
   // = DESCRIPTION
 {
 public:
-  virtual void accept_complete (void) = 0;
+  virtual void accept_complete (ACE_HANDLE handle) = 0;
   // This method is called by the IO class when new passive connection has
   // been established.
 
@@ -101,6 +102,18 @@ public:
 
   virtual JAWS_IO_Handler_Factory *factory (void) = 0;
   // Returns the factory for this IO handler
+
+  virtual ACE_HANDLE handle (void) = 0;
+  // Returns the socket handle for this handler
+
+  virtual int status (void) = 0;
+
+  enum { IDLE = 0,
+         ACCEPT_OK, ACCEPT_ERROR,
+         READ_OK, READ_ERROR,
+         WRITE_OK, WRITE_ERROR,
+         TRANSMIT_OK, TRANSMIT_ERROR,
+         RECEIVE_OK, RECEIVE_ERROR };
 };
 
 class JAWS_IO_Handler_Factory
@@ -133,7 +146,7 @@ public:
 protected:
   // Inherited from JAWS_IO_Handler
 
-  virtual void accept_complete (void);
+  virtual void accept_complete (ACE_HANDLE handle);
   virtual void accept_error (void);
   virtual void read_complete (ACE_Message_Block &data);
   virtual void read_error (void);
@@ -144,13 +157,22 @@ protected:
   virtual void write_error (void);
   virtual void confirmation_message_complete (void);
   virtual void error_message_complete (void);
+
   virtual JAWS_IO_Handler_Factory *factory (void);
+  virtual ACE_HANDLE handle (void);
 
   virtual void done (void);
+  virtual int status (void);
 
 private:
+  int status_;
+  // The state of the handler.
+
   ACE_Message_Block *mb_;
   // This maintains the state of the request.
+
+  ACE_HANDLE handle_;
+  // The socket handle returned from accept.
 
   JAWS_Pipeline_Handler *task_;
   // This is a reference to the next stage of the pipeline when the IO
@@ -170,6 +192,9 @@ public:
   // tell the factory to reap up the handler as it is now done with
   // the protocol
 };
+
+typedef ACE_Singleton<JAWS_Synch_IO_Handler_Factory, ACE_SYNCH_MUTEX>
+        JAWS_Synch_IO_Handler_Factory_Singleton;
 
 // This only works on Win32
 #if defined (ACE_WIN32)

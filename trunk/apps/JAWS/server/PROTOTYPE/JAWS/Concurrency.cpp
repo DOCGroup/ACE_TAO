@@ -39,7 +39,6 @@ JAWS_Concurrency_Base::svc (void)
       do
         {
           JAWS_Data_Block *db;
-          JAWS_IO_Handler *ioh;
           JAWS_Pipeline_Task *task;
 
           db = ACE_dynamic_cast (JAWS_Data_Block *, mb->data_block ());

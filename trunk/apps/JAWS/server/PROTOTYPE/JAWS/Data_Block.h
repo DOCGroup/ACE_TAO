@@ -5,7 +5,6 @@
 #define JAWS_DATA_BLOCK_H
 
 #include "ace/Singleton.h"
-
 #include "JAWS/Pipeline.h"
 
 class JAWS_IO_Handler;
@@ -21,28 +20,17 @@ class JAWS_Data_Block : public ACE_Data_Block
 {
 public:
   JAWS_Pipeline_Handler *task (void);
-  JAWS_IO_Handler *handler (void);
+  JAWS_IO_Handler *io_handler (void);
   JAWS_Dispatch_Policy *policy (void);
 
   void task (JAWS_Pipeline_Handler *taskp);
-  void handler (JAWS_IO_Handler * handlerp);
+  void io_handler (JAWS_IO_Handler * handlerp);
   void policy (JAWS_Dispatch_Policy * policyp);
 
 private:
-  JAWS_IO_Handler *handler_;
+  JAWS_IO_Handler *io_handler_;
   JAWS_Dispatch_Policy *policy_;
   JAWS_Pipeline_Handler *task_;
 };
-
-class JAWS_Pipeline_Accept_Task : public JAWS_Pipeline_Handler
-{
-public:
-  virtual int handle_put (JAWS_Data_Block *data, ACE_Time_Value *tv);
-
-private:
-};
-
-typedef ACE_Singleton<JAWS_Pipeline_Accept_Task, ACE_SYNCH_MUTEX>
-        JAWS_Pipeline_Accept_Task_Singleton;
 
 #endif /* !defined (JAWS_DATA_BLOCK_H) */

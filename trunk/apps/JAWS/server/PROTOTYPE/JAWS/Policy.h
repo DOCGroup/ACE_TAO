@@ -22,39 +22,38 @@ public:
   JAWS_Dispatch_Policy (void);
   virtual ~JAWS_Dispatch_Policy (void);
 
-  virtual ACE_INET_Addr *addr (void);
   virtual JAWS_IO * io (void) = 0;
+  virtual JAWS_IO_Handler_Factory *ioh_factory (void) = 0;
   virtual JAWS_IO_Acceptor *acceptor (void) = 0;
   virtual JAWS_Concurrency_Base * concurrency (void) = 0;
 
-  virtual void addr (ACE_INET_Addr *addrp) = 0;
   virtual void io (JAWS_IO *iop) = 0;
+  virtual void ioh_factory (JAWS_IO_Handler_Factory *factoryp) = 0;
   virtual void acceptor (JAWS_IO_Acceptor *acceptorp) = 0;
   virtual void concurrency (JAWS_Concurrency_Base *concp) = 0;
 };
 
-class JAWS_Synch_Dispatch_Policy : public JAWS_Dispatch_Policy
+class JAWS_Default_Dispatch_Policy : public JAWS_Dispatch_Policy
 {
 public:
-  virtual ACE_INET_Addr *addr (void);
+  JAWS_Default_Dispatch_Policy (void);
+  virtual ~JAWS_Default_Dispatch_Policy (void);
+
   virtual JAWS_IO *io (void);
+  virtual JAWS_IO_Handler_Factory *ioh_factory (void);
   virtual JAWS_IO_Acceptor *acceptor (void);
   virtual JAWS_Concurrency_Base *concurrency (void);
 
-  virtual void addr (ACE_INET_Addr *addrp);
   virtual void io (JAWS_IO *iop);
+  virtual void ioh_factory (JAWS_IO_Handler_Factory *factoryp);
   virtual void acceptor (JAWS_IO_Acceptor *acceptorp);
   virtual void concurrency (JAWS_Concurrency_Base *concp);
 
 private:
-  ACE_INET_Addr *addr_;
-
-  JAWS_IO_Acceptor *acceptor_;
-  JAWS_IO_Handler_Factory *factory_;
-  JAWS_IO_Handler *ioh_;
-  JAWS_IO *io_;
-
   JAWS_Concurrency_Base *concurrency_;
+  JAWS_IO_Handler_Factory *ioh_factory_;
+  JAWS_IO_Acceptor *acceptor_;
+  JAWS_IO *io_;
 };
 
 #endif /* !defined (JAWS_POLICY_H) */
