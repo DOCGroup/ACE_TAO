@@ -1,3 +1,115 @@
+Wed Sep 13 19:15:01 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+        * tao/Endpoint.cpp
+	* tao/Endpoint.h
+	* tao/Endpoint.i
+	* tao/IIOP_Endpoint.cpp
+	* tao/IIOP_Endpoint.h
+	* tao/IIOP_Endpoint.i
+	* tao/SHMIOP_Endpoint.cpp
+	* tao/SHMIOP_Endpoint.h
+	* tao/SHMIOP_Endpoint.i
+	* tao/UIOP_Endpoint.cpp
+	* tao/UIOP_Endpoint.h
+	* tao/UIOP_Endpoint.i:
+
+	  Added a new interface, Endpoint, to the pluggable protocols
+	  framework.  Endpoint encapsulates addressing information of a
+	  single acceptor endpoint.  A Profile contains one or more
+	  Endpoints.  In other words, Endpoint represents a single server
+	  contact point for a client.
+
+	  Some of the motivations for this change: 
+	  - smaller iors
+	  - preparation for TAG_ALTERNATE_IIOP 
+	  support
+	  - preparation for new connection cache scheme
+	  - more organized iors => easier policy-based endpoint selection
+	
+	* tao/uiop_endpoints.pidl
+	* tao/iiop_endpoints.pidl
+	* tao/uiop_endpoints.h
+	* tao/uiop_endpoints.i
+	* tao/uiop_endpoints.cpp
+	* tao/iiop_endpoints.h
+	* tao/iiop_endpoints.i
+	* tao/iiop_endpoints.cpp:
+
+	  Pidl files above define data structures for representing a list
+	  of endpoints from a single profile on the wire.  Pidl files are
+	  used to generate .h, .cpp and .i above.
+	
+	* tao/Invocation.h
+	* tao/Invocation.cpp
+	* tao/Pluggable.h
+	* tao/Profile.h
+	* tao/Profile.cpp
+	* tao/Profile.i
+	* tao/Stub.cpp
+	* tao/Acceptor_Registry.cpp
+	* tao/Acceptor_Registry.h
+	* tao/Connector_Registry.cpp
+	* tao/Connector_Registry.h
+	* tao/IIOP_Acceptor.h
+	* tao/IIOP_Acceptor.cpp
+	* tao/IIOP_Connector.h
+	* tao/IIOP_Connector.cpp
+	* tao/IIOP_Profile.h
+	* tao/IIOP_Profile.cpp
+	* tao/IIOP_Profile.i
+	* tao/UIOP_Acceptor.h
+	* tao/UIOP_Acceptor.cpp
+	* tao/UIOP_Connector.h
+	* tao/UIOP_Connector.cpp
+	* tao/UIOP_Profile.h
+	* tao/UIOP_Profile.cpp
+	* tao/UIOP_Profile.i
+	* tao/SHMIOP_Acceptor.h
+	* tao/SHMIOP_Acceptor.cpp
+	* tao/SHMIOP_Connector.h
+	* tao/SHMIOP_Connector.cpp
+	* tao/SHMIOP_Profile.h
+	* tao/SHMIOP_Profile.cpp
+	* tao/SHMIOP_Profile.i:
+
+          Updated pp framework components to use new Endpoint component
+	  described above.  Main changes include:
+	  - The way mprofiles are created.  If TAO_HAS_RT_CORBA is not
+	  enabled, there are no changes: one profile
+	  is created for each server acceptor endpoint, i.e., an IOR
+	  can contain multiple profiles for the same protocol.  If
+	  TAO_HAS_RT_CORBA _is_ enabled, only one profile per protocol is added
+	  to the IOR.  Multiple acceptor endpoints for a particular
+	  protocol do not result in additional profiles being created, but
+	  rather in Endpoint objects being added to that protocol's
+	  profile.  In other words, there is only one profile for each
+	  protocol in an IOR.  These changes are encapsulated in
+	  <*_Acceptor::create_mprofile > method.
+	  - TAO_Connector::connect now takes Endpoint* rather than Profile* as
+	  one of its arguments
+	  - TAO_Acceptor::is_collocated now takes Endpoint* rather than
+	  Profile* as its argument
+	  - TAO_Acceptor_Registry::is_collocated now searches for a
+	  "collocation match" among all endpoints of all profiles	
+
+	* tao/Tagged_Components.h
+	* tao/Tagged_Components.i
+	* tao/Tagged_Components.cpp:
+
+	  Removed TAO-specific priority tagged component.  It is no longer
+	  necessary since each endpoint stores its priority.
+	
+	* tao/corbafwd.h
+
+	  Removed TAO_TAG_PRIORITY.  Added TAO_TAG_ENDPOINTS.
+	
+	* tao/TAO.dsp
+	* tao/TAO_Static.dsp
+	* tao/Makefile
+	* tao/Makefile.bor:
+
+	  Updated.
+
 Wed Sep 13 15:54:47 2000  Ossama Othman  <ossama@uci.edu>
 
 	* tao/Acceptor_Impl.h:

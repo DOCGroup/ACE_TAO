@@ -437,21 +437,21 @@ TAO_SHMIOP_Connector::close (void)
 }
 
 int
-TAO_SHMIOP_Connector::connect (TAO_Profile *profile,
+TAO_SHMIOP_Connector::connect (TAO_Endpoint *endpoint,
                                TAO_Transport *&transport,
                                ACE_Time_Value *max_wait_time)
 {
-  if (profile->tag () != TAO_TAG_SHMEM_PROFILE)
+  if (endpoint->tag () != TAO_TAG_SHMEM_PROFILE)
     return -1;
 
-  TAO_SHMIOP_Profile *shmiop_profile =
-    ACE_dynamic_cast (TAO_SHMIOP_Profile *,
-                      profile);
-  if (shmiop_profile == 0)
+  TAO_SHMIOP_Endpoint *shmiop_endpoint =
+    ACE_dynamic_cast (TAO_SHMIOP_Endpoint *,
+                      endpoint);
+  if (shmiop_endpoint == 0)
     return -1;
 
   const ACE_INET_Addr &remote_address =
-    shmiop_profile->object_addr ();
+    shmiop_endpoint->object_addr ();
 
   // Verify that the remote ACE_INET_Addr was initialized properly.
   // Failure can occur if hostname lookup failed when initializing the
@@ -483,7 +483,7 @@ TAO_SHMIOP_Connector::connect (TAO_Profile *profile,
       // object; but we obtain the transport in the <svc_handler>
       // variable. Other threads may modify the hint, but we are not
       // affected.
-      result = this->base_connector_.connect (shmiop_profile->hint (),
+      result = this->base_connector_.connect (shmiop_endpoint->hint (),
                                               svc_handler,
                                               remote_address,
                                               synch_options);
@@ -494,7 +494,7 @@ TAO_SHMIOP_Connector::connect (TAO_Profile *profile,
       // object; but we obtain the transport in the <svc_handler>
       // variable. Other threads may modify the hint, but we are not
       // affected.
-      result = this->base_connector_.connect (shmiop_profile->hint (),
+      result = this->base_connector_.connect (shmiop_endpoint->hint (),
                                               svc_handler,
                                               remote_address);
     }
@@ -504,7 +504,7 @@ TAO_SHMIOP_Connector::connect (TAO_Profile *profile,
       if (TAO_orbdebug)
         {
           char buffer [MAXNAMELEN * 2];
-          profile->addr_to_string (buffer,
+          endpoint->addr_to_string (buffer,
                                    (MAXNAMELEN * 2) - 1);
           ACE_DEBUG ((LM_ERROR,
                       ACE_TEXT ("(%P|%t) %s:%u, connection to ")
@@ -518,21 +518,6 @@ TAO_SHMIOP_Connector::connect (TAO_Profile *profile,
     }
 
   transport = svc_handler->transport ();
-
-  // Now that we have the client connection handler object we need to
-  // set the right messaging protocol for the connection handler.
-  const TAO_GIOP_Version& version = shmiop_profile->version ();
-  int ret_val = transport->messaging_init (version.major,
-                                       version.minor);
-  if (ret_val == -1)
-    {
-      if (TAO_debug_level > 0)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%N|%l|%p|%t) init_mesg_protocol () failed \n")));
-        }
-      return -1;
-    }
 
   return 0;
 }

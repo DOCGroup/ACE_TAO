@@ -32,6 +32,7 @@
 
 #include "tao/Object_KeyC.h"
 #include "tao/UIOP_Connect.h"
+#include "tao/UIOP_Endpoint.h"
 
 #include "ace/UNIX_Addr.h"
 #include "ace/Synch.h"
@@ -81,6 +82,12 @@ public:
   ~TAO_UIOP_Profile (void);
   // Destructor is to be called only through <_decr_refcnt>.
 
+  virtual TAO_Endpoint *endpoint (void);
+  //
+
+  void add_endpoint (TAO_IIOP_Endpoint *endp);
+  //
+
   int parse_string (const char *string,
                     CORBA::Environment &ACE_TRY_ENV =
                       TAO_default_environment ());
@@ -114,26 +121,6 @@ public:
                        TAO_default_environment ());
   // Return a hash value for this object.
 
-  int addr_to_string (char *buffer, size_t length);
-  // Return a string representation for the address.
-
-  const ACE_UNIX_Addr &object_addr (void) const;
-  // return a reference to the object_addr.
-
-  const char *rendezvous_point (void) const;
-  // Return a pointer to the rendezvous point string.
-  // This object maintains ownership of the returned string.
-
-  const TAO_GIOP_Version &version (void) const;
-  // Return a pointer to this profile's version.  This object
-  // maintains ownership.
-
-  TAO_UIOP_Client_Connection_Handler *&hint (void);
-  // This is a hint for which connection handler to use.
-
-  void reset_hint (void);
-  // Reset the hint's value.
-
   IOP::TaggedProfile &create_tagged_profile (void);
   // Please see the Profile.h for the documentation of this method
 
@@ -141,20 +128,25 @@ private:
 
   void create_profile_body (TAO_OutputCDR &cdr) const;
   // Create an encapsulation of the struct ProfileBody in <cdr>
+  
+  int encode_endpoints (void);
+  // Encodes endpoints from this profile into a tagged component.
 
-  TAO_GIOP_Version version_;
-  // UIOP version number.
+  int decode_endpoints (void);
+  // Decodes endpoints of this profile from a tagged component.
+
+  TAO_UIOP_Endpoint endpoint_;
+  //
+
+  size_t count_;
+  // Number of endpoints this profile contains.
+
+  int endpoints_encoded_;
+  // Flag indicating whether endpoints have already been encoded,
+  // saving us from repeatedly encoding them over and over.
 
   TAO_ObjectKey object_key_;
   // object_key associated with this profile.
-
-  ACE_UNIX_Addr object_addr_;
-  // Cached instance of <ACE_UNIX_Addr> for use in making
-  // invocations, etc.
-
-  TAO_UIOP_Client_Connection_Handler *hint_;
-  // Pointer to a connection handler which we successfully used
-  // already.
 
   TAO_MProfile *forward_to_;
   // list of profiles which we should try forwarding on.

@@ -81,16 +81,15 @@ TAO_UIOP_Acceptor::~TAO_UIOP_Acceptor (void)
   delete this->accept_strategy_;
 }
 
-int
-TAO_UIOP_Acceptor::create_mprofile (const TAO_ObjectKey &object_key,
-                                    TAO_MProfile &mprofile)
+int 
+TAO_UIOP_Acceptor::create_profile (const TAO_ObjectKey &object_key,
+                                   TAO_MProfile &mprofile)
 {
   ACE_UNIX_Addr addr;
 
   if (this->base_acceptor_.acceptor ().get_local_addr (addr) == -1)
     return 0;
 
-  // we only make one
   int count = mprofile.profile_count ();
   if ((mprofile.size () - count) < 1
       && mprofile.grow (count + 1) == -1)
@@ -103,6 +102,8 @@ TAO_UIOP_Acceptor::create_mprofile (const TAO_ObjectKey &object_key,
                                     this->version_,
                                     this->orb_core_),
                   -1);
+
+  pfile->endpoint ()->priority (this->priority_);
 
   if (mprofile.give_profile (pfile) == -1)
     {
@@ -121,20 +122,81 @@ TAO_UIOP_Acceptor::create_mprofile (const TAO_ObjectKey &object_key,
   code_set_info.ForWcharData.native_code_set = TAO_DEFAULT_WCHAR_CODESET_ID;
   pfile->tagged_components ().set_code_sets (code_set_info);
 
-  pfile->tagged_components ().set_tao_priority (this->priority ());
-
   return 0;
 }
 
 int
-TAO_UIOP_Acceptor::is_collocated (const TAO_Profile *pfile)
+TAO_UIOP_Acceptor::create_mprofile (const TAO_ObjectKey &object_key,
+                                    TAO_MProfile &mprofile)
 {
-  const TAO_UIOP_Profile *profile =
-    ACE_dynamic_cast (const TAO_UIOP_Profile *,
-                      pfile);
+  // If RT_CORBA is enabled, only one UIOP profile is created for
+  // <mprofile>, and all UIOP endpoints are added into that profile.
+  // If RT_CORBA is not enabled, we create a separate profile for each
+  // endpoint.
+
+#if (TAO_HAS_RT_CORBA == 1)
+
+  return create_rt_mprofile (object_key, mprofile);
+
+#else  /* TAO_HAS_RT_CORBA == 1 */
+
+  return create_profile (object_key, mprofile);
+
+#endif /* TAO_HAS_RT_CORBA == 1 */
+}
+
+int
+TAO_UIOP_Acceptor::create_rt_mprofile (const TAO_ObjectKey &object_key,
+                                       TAO_MProfile &mprofile)
+{
+  TAO_Profile *pfile = 0;
+  TAO_UIOP_Profile *uiop_profile = 0;
+
+  // First see if <mprofile> already contains a SHMIOP profile.
+  for (TAO_PHandle i = 0; i != mprofile.profile_count (); ++i)
+    {
+      pfile = mprofile.get_profile (i);
+      if (pfile->tag () == TAO_TAG_UIOP_PROFILE)
+      {
+        uiop_profile = ACE_dynamic_cast (TAO_UIOP_Profile *,
+                                         pfile);
+        break;
+      }      
+    }
+
+  if (uiop_profile == 0)
+    {
+      // If <mprofile> doesn't contain UIOP_Profile, we need to create
+      // one.
+      return create_profile (object_key, mprofile);
+    }
+  else
+    {
+      // There already is a UIOP_Profile - just add our endpoint to it.
+      ACE_UNIX_Addr addr;
+      
+      if (this->base_acceptor_.acceptor ().get_local_addr (addr) == -1)
+        return 0;
+
+      TAO_UIOP_Endpoint *endpoint = 0;
+      ACE_NEW_RETURN (endpoint,
+                      TAO_UIOP_Endpoint (addr),
+                      -1);
+      endpoint->priority (this->priority_);
+      uiop_profile->add_endpoint (endpoint);
+
+      return 0;
+    }
+}
+
+int
+TAO_UIOP_Acceptor::is_collocated (const TAO_Endpoint *endpoint)
+{
+  const TAO_UIOP_Endpoint *endp =
+    ACE_dynamic_cast (const TAO_UIOP_Endpoint *, endpoint);
 
   // Make sure the dynamically cast pointer is valid.
-  if (profile == 0)
+  if (endp == 0)
     return 0;
 
   // For UNIX Files this is relatively cheap.
@@ -142,7 +204,7 @@ TAO_UIOP_Acceptor::is_collocated (const TAO_Profile *pfile)
   if (this->base_acceptor_.acceptor ().get_local_addr (address) == -1)
     return 0;
 
-  return profile->object_addr () == address;
+  return endp->object_addr () == address;
 }
 
 int

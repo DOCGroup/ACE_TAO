@@ -957,11 +957,8 @@ TAO_NAMESPACE_CLOSE  // end of class (namespace) CORBA
 // We reserved the range 0x54414f00 - 0x54414f0f with the OMG to
 // define our own profile tagged components in TAO.
 
-// Store the priority of the thread (pool) that services this
-// endpoint, using that information the client can select the right
-// endpoint providing very low priority inversion (basically only in
-// the I/O subsystem).
-#define TAO_TAG_PRIORITY 0x54414f00U
+// Tag for storing multiple endpoints within a single profile.
+#define TAO_TAG_ENDPOINTS 0x54414f00U
 // #define TAO_TAG_ANOTHER_COMPONENT 0x54414f01U
 
 // We reserved the range 0x54414f00 - 0x54414f0f with the OMG to

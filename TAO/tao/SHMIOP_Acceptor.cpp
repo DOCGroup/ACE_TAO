@@ -74,9 +74,10 @@ TAO_SHMIOP_Acceptor::~TAO_SHMIOP_Acceptor (void)
 //       interfaces over which we can receive requests.  Thus a profile
 //       must be made for each one.
 
-int
-TAO_SHMIOP_Acceptor::create_mprofile (const TAO_ObjectKey &object_key,
-                                      TAO_MProfile &mprofile)
+
+int 
+TAO_SHMIOP_Acceptor::create_profile (const TAO_ObjectKey &object_key,
+                                     TAO_MProfile &mprofile)
 {
   // @@ we only make one for now
   int count = mprofile.profile_count ();
@@ -93,6 +94,8 @@ TAO_SHMIOP_Acceptor::create_mprofile (const TAO_ObjectKey &object_key,
                                       this->version_,
                                       this->orb_core_),
                   -1);
+
+  pfile->endpoint ()->priority (this->priority_);
 
   if (mprofile.give_profile (pfile) == -1)
     {
@@ -113,24 +116,83 @@ TAO_SHMIOP_Acceptor::create_mprofile (const TAO_ObjectKey &object_key,
     TAO_DEFAULT_WCHAR_CODESET_ID;
   pfile->tagged_components ().set_code_sets (code_set_info);
 
-  pfile->tagged_components ().set_tao_priority (this->priority ());
-
   return 0;
 }
 
 int
-TAO_SHMIOP_Acceptor::is_collocated (const TAO_Profile *pfile)
+TAO_SHMIOP_Acceptor::create_mprofile (const TAO_ObjectKey &object_key,
+                                      TAO_MProfile &mprofile)
 {
-  const TAO_SHMIOP_Profile *profile =
-    ACE_dynamic_cast(const TAO_SHMIOP_Profile *,
-                     pfile);
+  // If RT_CORBA is enabled, only one SHMIOP profile is created for
+  // <mprofile> and all SHMIOP endpoints are added into that profile.
+  // If RT_CORBA is not enabled, we create a separate profile for each
+  // endpoint.
+
+#if (TAO_HAS_RT_CORBA == 1)
+
+  return create_rt_mprofile (object_key, mprofile);
+
+#else  /* TAO_HAS_RT_CORBA == 1 */
+
+  return create_profile (object_key, mprofile);
+
+#endif /* TAO_HAS_RT_CORBA == 1 */
+}
+
+int
+TAO_SHMIOP_Acceptor::create_rt_mprofile (const TAO_ObjectKey &object_key,
+                                         TAO_MProfile &mprofile)
+{
+  TAO_Profile *pfile = 0;
+  TAO_SHMIOP_Profile *shmiop_profile = 0;
+
+  // First see if <mprofile> already contains a SHMIOP profile.
+  for (TAO_PHandle i = 0; i != mprofile.profile_count (); ++i)
+    {
+      pfile = mprofile.get_profile (i);
+      if (pfile->tag () == TAO_TAG_SHMEM_PROFILE)
+      {
+        shmiop_profile = ACE_dynamic_cast (TAO_SHMIOP_Profile *,
+                                           pfile);
+        break;
+      }      
+    }
+
+  if (shmiop_profile == 0)
+    {
+      // If <mprofile> doesn't contain SHMIOP_Profile, we need to create
+      // one.
+      return create_profile (object_key, mprofile);
+    }
+  else
+    {
+      // There already is a SHMIOP_Profile - just add our endpoint to it.
+
+      TAO_SHMIOP_Endpoint *endpoint = 0;
+      ACE_NEW_RETURN (endpoint,
+                      TAO_SHMIOP_Endpoint (this->host_.c_str (),
+                                           this->address_.get_port_number (),
+                                           this->address_.get_remote_addr ()),
+                      -1);
+      endpoint->priority (this->priority_);
+      shmiop_profile->add_endpoint (endpoint);
+
+      return 0;
+    }
+}
+
+int
+TAO_SHMIOP_Acceptor::is_collocated (const TAO_Endpoint *endpoint)
+{
+  const TAO_SHMIOP_Endpoint *endp =
+    ACE_dynamic_cast(const TAO_SHMIOP_Endpoint *, endpoint);
 
   // Make sure the dynamically cast pointer is valid.
-  if (profile == 0)
+  if (endp == 0)
     return 0;
 
   // compare the port and sin_addr (numeric host address)
-  return this->address_.same_host (profile->object_addr ());
+  return this->address_.same_host (endp->object_addr ());
 }
 
 int

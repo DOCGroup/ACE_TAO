@@ -100,7 +100,7 @@ public:
   // Pluggable.h
   int open (TAO_ORB_Core *orb_core);
   int close (void);
-  int connect (TAO_Profile *profile,
+  int connect (TAO_Endpoint *endpoint,
                TAO_Transport *&transport,
                ACE_Time_Value *max_wait_time);
   int preconnect (const char *preconnections);

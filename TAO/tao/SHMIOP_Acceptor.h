@@ -71,7 +71,7 @@ public:
   virtual int close (void);
   virtual int create_mprofile (const TAO_ObjectKey &object_key,
                                TAO_MProfile &mprofile);
-  virtual int is_collocated (const TAO_Profile* profile);
+  virtual int is_collocated (const TAO_Endpoint* endpoint);
   virtual CORBA::ULong endpoint_count (void);
 
   virtual int object_key (IOP::TaggedProfile &profile,
@@ -82,6 +82,17 @@ private:
 
   virtual int parse_options (const char *options);
   // Parse protocol specific options.
+
+  int create_rt_mprofile (const TAO_ObjectKey &object_key,
+                          TAO_MProfile &mprofile);
+  // Rather than creating a profile for each endpoint, this version of
+  // <create_mprofile> adds an endpoint to an existing SHMIOP profile
+  // if one already exists.
+
+  int create_profile (const TAO_ObjectKey &object_key,
+                      TAO_MProfile &mprofile);
+  // Create a SHMIOP profile representing this acceptor.  Factors out
+  // common functionality of <create_mprofile> and <create_rt_mprofile>.
 
 protected:
   ACE_CString host_;

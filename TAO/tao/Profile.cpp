@@ -212,9 +212,17 @@ TAO_Profile::the_stub (void)
 
 TAO_Unknown_Profile::TAO_Unknown_Profile (CORBA::ULong tag,
                                           TAO_ORB_Core *orb_core)
-  : TAO_Profile (tag, orb_core),
+  : TAO_Profile (tag,
+                 orb_core,
+                 TAO_GIOP_Version (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR)),
     tagged_profile_ ()
 {
+}
+
+TAO_Endpoint*
+TAO_Unknown_Profile::endpoint (void)
+{
+  return 0;
 }
 
 int

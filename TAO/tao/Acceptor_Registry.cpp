@@ -10,6 +10,7 @@
 #include "tao/debug.h"
 #include "tao/RT_Policy_i.h"
 #include "tao/Acceptor_Filter.h"
+#include "tao/Endpoint.h"
 
 #include "ace/Auto_Ptr.h"
 #include "ace/SString.h"
@@ -75,6 +76,8 @@ TAO_Acceptor_Registry::is_collocated (const TAO_MProfile &mprofile)
 {
   TAO_AcceptorSetIterator end = this->end ();
 
+  // If at least one endpoint in one of the profiles matches one of
+  // the acceptors, we are collocated.
   for (TAO_AcceptorSetIterator i = this->begin (); i != end; ++i)
     {
       for (TAO_PHandle j = 0;
@@ -83,10 +86,22 @@ TAO_Acceptor_Registry::is_collocated (const TAO_MProfile &mprofile)
         {
           const TAO_Profile *profile = mprofile.get_profile (j);
 
-          // Check the address for equality.
-          if ((*i)->tag () == profile->tag ()
-              && (*i)->is_collocated (profile))
-            return 1;
+          // @@ We need to invoke a nonconst <endpoint> method on
+          // <profile>.  The content of profile/endpoint
+          // will not be modified. 
+          TAO_Profile *pf =
+            ACE_const_cast (TAO_Profile *,
+                            profile);
+
+          // Check all endpoints for address equality.
+          if ((*i)->tag () == pf->tag ())
+            for (TAO_Endpoint *endp = pf->endpoint ();
+                 endp != 0;
+                 endp = endp->next ())
+              {
+                if ((*i)->is_collocated (pf->endpoint ()))
+                  return 1;
+              }
         }
     }
 
