@@ -66,7 +66,7 @@
 //define ACE_HAS_AUTOMATIC_INIT_FINI
 
 // Compiler doesn't support static data member templates.
-#define ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES
+// #define ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES
 
 // Version 1.1 of WinSock
 #define ACE_WSOCK_VERSION 1, 1
@@ -165,5 +165,11 @@
 // Windows NT needs readv() and writev()
 #define ACE_NEEDS_WRITEV
 #define ACE_NEEDS_READV
+
+// STRICT type checking in WINDOWS.H enhances type safety for Windows
+// programs by using distinct types to represent all the different
+// HANDLES in Windows. So for example, STRICT prevents you from
+// mistakenly passing an HPEN to a routine expecting an HBITMAP.
+#define STRICT
 
 #endif /* ACE_CONFIG_H */

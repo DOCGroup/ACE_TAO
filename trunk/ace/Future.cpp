@@ -327,7 +327,7 @@ ACE_Future<T>::dump (void) const
 }
 
 template <class T> void *
-ACE_Future<T>::operator new (size_t nbytes)
+ACE_Future<T>::operator new (size_t)
 {
   return 0;
 }

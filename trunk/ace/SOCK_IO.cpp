@@ -33,11 +33,11 @@ ACE_SOCK_IO::recv (iovec *io_vec)
       return io_vec->iov_len;
     }
   else
+    return 0; 
 #else
     io_vec = io_vec;
+    ACE_NOTSUP_RETURN (-1);
 #endif /* FIONREAD */
-  // Could return ACE_NOTSUP_RETURN
-    return 0; 
 }
 
 // Send N char *ptrs and int lengths.  Note that the char *'s precede

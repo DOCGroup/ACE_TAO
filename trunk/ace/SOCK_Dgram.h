@@ -55,6 +55,13 @@ public:
   // Receive an <n> byte <buf> from the datagram socket (uses
   // recvfrom(3)).
 
+  ssize_t recv (iovec *io_vec, ACE_Addr &addr, int flags) const;
+  // Allows a client to read from a socket without having to provide a
+  // buffer to read.  This method determines how much data is in the
+  // socket, allocates a buffer of this size, reads in the data, and
+  // returns the number of bytes read.  The caller is responsible for
+  // deleting the member in the <iov_base> field of <io_vec>.
+
 #if defined (ACE_HAS_MSG)
   ssize_t send (const iovec iov[], 
 		size_t n, 

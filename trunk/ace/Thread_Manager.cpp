@@ -268,7 +268,8 @@ ACE_Thread_Manager::spawn_n (int n,
     {
       // @@ What should happen if this fails?! e.g., should we try to
       // cancel the other threads that we've already spawned or what?
-      if (this->spawn_i (func, args, flags, 0, 0, priority, grp_id, task) == -1)
+      if (this->spawn_i (func, args, flags, 0, 0, priority, grp_id, 
+			 0, 0, task) == -1)
 	return -1;
     }
 

@@ -74,7 +74,7 @@ public:
   // buffer to read.  This method determines how much data is in the
   // socket, allocates a buffer of this size, reads in the data, and
   // returns the number of bytes read.  The caller is responsible for
-  // deleting the memory.
+  // deleting the member in the <iov_base> field of <io_vec>.
 
   void dump (void) const;
   // Dump the state of an object.

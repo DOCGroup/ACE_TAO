@@ -832,8 +832,8 @@ ACE_OS::mutex_trylock (ACE_mutex_t *m)
     }
   /* NOTREACHED */
 #elif defined (VXWORKS)
-  if ( ::semTake (*m, NO_WAIT) == ERROR )
-    if ( errno == S_objLib_OBJ_TIMEOUT )
+  if (::semTake (*m, NO_WAIT) == ERROR)
+    if (errno == S_objLib_OBJ_TIMEOUT)
       // couldn't get the semaphore
       return 1;
     else
@@ -3322,7 +3322,7 @@ ACE_OS::thr_kill (ACE_thread_t thr_id, int signum)
   ACE_OSCALL (ACE_ADAPT_RETVAL (::taskNameToId (thr_id), tid),
               int, ERROR, tid);
 
-  if ( tid == ERROR )
+  if (tid == ERROR)
     return -1;
   else
     ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::kill (tid, signum), ace_result_),
@@ -3430,7 +3430,6 @@ ACE_OS::thr_suspend (ACE_hthread_t target_thread)
 #elif defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
   ACE_NOTSUP_RETURN (-1);
 #elif defined (ACE_HAS_WTHREADS)
-
   if (::SuspendThread (target_thread) != ACE_SYSCALL_FAILED)
     return 0;
   else
@@ -4041,7 +4040,7 @@ ACE_OS::dlclose (void *handle)
 #endif /* ACE_HAS_AUTOMATIC_INIT_FINI */
   ACE_OSCALL_RETURN (::dlclose (handle), int, -1);
 #elif defined (ACE_WIN32)
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::FreeLibrary (handle), ace_result_), int, -1);
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::FreeLibrary ((HMODULE) handle), ace_result_), int, -1);
 #else
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_SVR4_DYNAMIC_LINKING */
@@ -4095,7 +4094,7 @@ ACE_OS::dlsym (void *handle, ACE_DL_TYPE symbolname)
   ACE_OSCALL_RETURN (::dlsym (handle, symbolname), void *, 0);
 #endif /* ACE_LACKS_POSIX_PROTO */
 #elif defined (ACE_WIN32)
-  ACE_OSCALL_RETURN (::GetProcAddress (handle, symbolname), void *, 0);
+  ACE_OSCALL_RETURN (::GetProcAddress ((HMODULE) handle, symbolname), void *, 0);
 #else
   ACE_NOTSUP_RETURN (0);
 #endif /* ACE_HAS_SVR4_DYNAMIC_LINKING */

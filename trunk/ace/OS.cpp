@@ -754,16 +754,23 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 		  int, -1, result);
       ::pthread_attr_delete (&attr);
       if (thr_handle != 0)
-	thr_handle = (ACE_hthread_t *) 0;
-#else /* ACE_HAS_SETKIND_NP */
+	*thr_handle = (ACE_hthread_t) 0;
+#else /* !ACE_HAS_SETKIND_NP */
       ACE_OSCALL (ACE_ADAPT_RETVAL (::pthread_create (p_thr, &attr, func, args), 
 				    result),
 		  int, -1, result);
       ::pthread_attr_destroy (&attr);
-      if (thr_handle != 0)
-	*thr_handle = (ACE_hthread_t) 0;
-#endif /* ACE_HAS_SETKIND_NP */
 
+#if defined (ACE_HAS_STHREADS)
+      // This is the Solaris implementation of pthreads, where
+      // ACE_thread_t and ACE_hthread_t are the same.
+      if (result == 0 && thr_handle != 0)
+	*thr_handle = *thr_id;
+#else
+      if (thr_handle != 0)
+	thr_handle = (ACE_hthread_t *) 0;
+#endif /* ACE_HAS_STHREADS */
+#endif /* ACE_HAS_SETKIND_NP */
       return result;
 #elif defined (ACE_HAS_STHREADS)
       int result;
@@ -841,8 +848,8 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
       // an even integer.
 
       // if called with thr_create() defaults, use same default values as ::sp()
-      if ( stacksize == 0 ) stacksize = 20000;
-      if ( priority == 0 ) priority = 100;
+      if (stacksize == 0) stacksize = 20000;
+      if (priority == 0) priority = 100;
 
       ACE_hthread_t tid = ::taskSpawn (thr_id == 0 ? NULL : *thr_id, priority,
                                        (int) flags, (int) stacksize, func,
@@ -852,19 +859,19 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
                                        ((int *) args)[6], ((int *) args)[7],
                                        ((int *) args)[8], ((int *) args)[9]);
 
-      if ( tid == ERROR )
+      if (tid == ERROR)
         return -1;
       else
         {
           // return the thr_id and thr_handle, if addresses were provided for them
-          if ( thr_id != 0 )
+          if (thr_id != 0)
             // taskTcb (int tid) returns the address of the WIND_TCB
             // (task control block).  According to the taskSpawn()
             // documentation, the name of the new task is stored at
             // pStackBase, but is that of the current task?  If so, it
             // would be a bit quicker than this extraction of the tcb . . .
             *thr_id = taskTcb (tid)->name;
-          if ( thr_handle != 0 )
+          if (thr_handle != 0)
             *thr_handle = tid;
           return 0;
         }

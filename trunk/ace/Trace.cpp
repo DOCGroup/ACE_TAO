@@ -85,7 +85,7 @@ ACE_Trace::ACE_Trace (const char *n,
 	  && lm->trace_active () == 0)
 	{
 	  lm->trace_active (1);
-	  ACE_DEBUG ((LM_DEBUG, "%*s(%t) calling %s in file `%s' on line %d\n",
+	  ACE_DEBUG ((LM_TRACE, "%*s(%t) calling %s in file `%s' on line %d\n",
 		      ACE_Trace::nesting_indent_ * lm->inc (),
 		      "", this->name_, file, line));
 	  lm->trace_active (0);
@@ -105,7 +105,7 @@ ACE_Trace::~ACE_Trace (void)
 	  && lm->trace_active () == 0)
 	{
 	  lm->trace_active (1);
-	  ACE_DEBUG ((LM_DEBUG, "%*s(%t) leaving %s\n", 
+	  ACE_DEBUG ((LM_TRACE, "%*s(%t) leaving %s\n", 
 		      ACE_Trace::nesting_indent_ * lm->dec (),
 		      "", this->name_));
 	  lm->trace_active (0);
