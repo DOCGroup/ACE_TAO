@@ -277,7 +277,7 @@ be_sequence::instance_name ()
   bt = be_type::narrow_from_decl (this->base_type ());
   if (!bt)
     {
-      ACE_DEBUG ((LM_ERROR,
+      ACE_ERROR ((LM_ERROR,
                   "(%N:%l) be_visitor_sequence_ch::"
                   "gen_instantiate_name - "
                   "Bad element type\n"));
