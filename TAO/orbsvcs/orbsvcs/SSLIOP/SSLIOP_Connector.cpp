@@ -659,7 +659,7 @@ TAO::SSLIOP::Connector::ssliop_connect (
       // If we don't need to block for a transport just set the timeout to
       // be zero.
       ACE_Time_Value tmp_zero (ACE_Time_Value::zero);
-      if (!resolver->blocked ())
+      if (!resolver->blocked_connect ())
         {
           synch_options.timeout (ACE_Time_Value::zero);
           max_wait_time = &tmp_zero;
