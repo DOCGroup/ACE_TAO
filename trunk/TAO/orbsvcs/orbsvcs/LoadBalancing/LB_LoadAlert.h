@@ -43,7 +43,7 @@ public:
 
   /// Forward requests back to the load manager via the object group
   /// reference.
-  virtual void enable_alert (CORBA::Object object_group
+  virtual void enable_alert (CORBA::Object_ptr object_group
                              ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
@@ -56,8 +56,6 @@ public:
   /// Has this LoadAlert servant been alerted of a high load condition
   /// by the LoadManager.
   CORBA::Boolean alerted (void) const;
-
-  CORBA::Object_ptr forward (void);
 
 protected:
 
@@ -73,10 +71,6 @@ private:
   /// Has this LoadAlert servant been alerted of a high load condition
   /// by the LoadManager?
   CORBA::Boolean alerted_;
-
-  /// Reference to the object which clients will be forwarded to if an
-  /// "alert" condition exists.
-  CORBA::Object_var forward_;
 
 };
 
