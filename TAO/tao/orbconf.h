@@ -126,7 +126,7 @@
 #define TAO_DEFAULT_TRADING_SERVER_REPLY_PORT 10017
 #endif /* TAO_DEFAULT_TRADING_SERVER_REPLY_PORT */
 
-// The default UDP multicast port number for locating the TAO 
+// The default UDP multicast port number for locating the TAO
 // Implementation Repository Service.
 #if !defined (TAO_DEFAULT_IMPLREPO_SERVER_REQUEST_PORT)
 #define TAO_DEFAULT_IMPLREPO_SERVER_REQUEST_PORT 10018
@@ -288,8 +288,8 @@
 // responsible for instantiating the templates.
 //
 #if !defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) && \
-    ( defined (ACE_HAS_TEMPLATE_SPECIALIZATION) || \
-    defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA) )
+    (defined (ACE_HAS_TEMPLATE_SPECIALIZATION) || \
+     (defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA) && defined (_UNICOS)))
 #define TAO_USE_SEQUENCE_TEMPLATES
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
