@@ -89,6 +89,8 @@ Thu Oct 30 06:14:58 1997  David L. Levine  <levine@cs.wustl.edu>
           is only used with ACE_HAS_TSS_EMULATION, which currently is
           not supported on MVS.
 
+        * ace/OS.cpp (ACE_Thread_Adapter::invoke): cleaned up this function.
+
 Thu Oct 30 03:25:13 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 
 	* ace/Hash_Map_Manager.cpp (close_i): Can't use ACE_DES*
