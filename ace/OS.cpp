@@ -2549,13 +2549,13 @@ ACE_OS::rwlock_init (ACE_rwlock_t *rw,
   
   // Since we cannot use the user specified name for all three
   // objects, we will create three complete new names
-  TCHAR name1[100];
-  TCHAR name2[100];
-  TCHAR name3[100];
+  TCHAR name1[ACE_UNIQUE_NAME_LEN];
+  TCHAR name2[ACE_UNIQUE_NAME_LEN];
+  TCHAR name3[ACE_UNIQUE_NAME_LEN];
 
-  ACE::unique_name (&rw->lock_, name1, sizeof name1);
-  ACE::unique_name (&rw->waiting_readers_, name2, sizeof name2);
-  ACE::unique_name (&rw->waiting_writers_, name3, sizeof name3);
+  ACE::unique_name (&rw->lock_, name1, ACE_UNIQUE_NAME_LEN);
+  ACE::unique_name (&rw->waiting_readers_, name2, ACE_UNIQUE_NAME_LEN);
+  ACE::unique_name (&rw->waiting_writers_, name3, ACE_UNIQUE_NAME_LEN);
 
   if (ACE_OS::mutex_init (&rw->lock_, type, name1, arg) == 0
       && ACE_OS::cond_init (&rw->waiting_readers_, type, name2, arg) == 0
