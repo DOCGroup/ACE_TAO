@@ -52,9 +52,9 @@ int
 be_visitor_typecode_defn::visit_members (AST_Structure *node)
 {
   this->elem_number_ = 0;
-
   AST_Field **member_ptr = 0;
   size_t count = node->nfields ();
+  be_decl *enclosing = be_decl::narrow_from_decl (node);
 
   for (size_t i = 0; i < count; ++i)
     {
@@ -64,6 +64,11 @@ be_visitor_typecode_defn::visit_members (AST_Structure *node)
 
       // Set the node to be visited.
       this->ctx_->node (bd);
+
+      // Reset this with every iteration - it might be changed
+      // when it comes around again.
+      this->ctx_->scope (enclosing);
+
       this->elem_number_++;
 
       // Do any pre processing using the next item info. 
@@ -2063,6 +2068,7 @@ be_visitor_typecode_defn::gen_encapsulation (be_union_branch *node)
   // hand over code generation to our type node
   bt = be_type::narrow_from_decl (node->field_type ());
   this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_TYPECODE_NESTED);
+
   if (!bt || bt->accept (this) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
