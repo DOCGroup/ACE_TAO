@@ -6753,19 +6753,14 @@ ACE_OS::sigwait (sigset_t *set, int *sig)
     // signal number is returned).
     *sig = ::sigwait (set, 0);
     return *sig;
-#   elif defined (DIGITAL_UNIX)
-#     if defined (__DECCXX_VER)
-        // DEC cxx (but not g++) needs this direct call to its internal
-        // sigwait ().  This allows us to #undef sigwait, so that we can
-        // have ACE_OS::sigwait.  cxx gets confused by ACE_OS::sigwait if
-        // sigwait is _not_ #undef'ed.
-        errno = ::_Psigwait (set, sig);
-        return errno == 0  ?  *sig  :  -1;
-#     else  /* g++, for example, on DIGITAL_UNIX */
-        *sig = ::__sigwaitd10 (set, sig);
-        return errno == 0  ?  *sig  :  -1;
-#     endif /* g++, for example, on DIGITAL_UNIX */
-#   else /* ! __Lynx __ && ! DIGITAL_UNIX */
+#   elif defined (DIGITAL_UNIX)  &&  defined (__DECCXX_VER)
+      // DEC cxx (but not g++) needs this direct call to its internal
+      // sigwait ().  This allows us to #undef sigwait, so that we can
+      // have ACE_OS::sigwait.  cxx gets confused by ACE_OS::sigwait
+      // if sigwait is _not_ #undef'ed.
+      errno = ::_Psigwait (set, sig);
+      return errno == 0  ?  *sig  :  -1;
+#   else /* ! __Lynx __ && ! (DIGITAL_UNIX && __DECCXX_VER) */
 #     if (defined (ACE_HAS_PTHREADS_DRAFT4) || (defined (ACE_HAS_PTHREADS_DRAFT6)) && !defined(ACE_HAS_FSU_PTHREADS)) || (defined (_UNICOS) && _UNICOS == 9)
         *sig = ::sigwait (set);
         return *sig;
