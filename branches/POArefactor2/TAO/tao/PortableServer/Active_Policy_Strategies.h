@@ -40,6 +40,7 @@ namespace TAO
 
     class ThreadStrategyFactory;
     class ServantRetentionStrategyFactory;
+    class RequestProcessingStrategyFactory;
 
     /**
      * This class stores the active policy strategies used for a certain POA.
@@ -80,6 +81,7 @@ namespace TAO
 
       ThreadStrategyFactory *thread_strategy_factory_;
       ServantRetentionStrategyFactory *servant_retention_strategy_factory_;
+      RequestProcessingStrategyFactory *request_processing_strategy_factory_;
     };
   }
 }

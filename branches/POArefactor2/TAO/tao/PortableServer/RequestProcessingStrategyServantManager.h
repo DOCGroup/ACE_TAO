@@ -63,6 +63,8 @@ namespace TAO
           ACE_THROW_SPEC ((CORBA::SystemException,
                            PortableServer::POA::ServantNotActive,
                            PortableServer::POA::WrongPolicy));
+
+      virtual ::PortableServer::RequestProcessingPolicyValue type() const;
     };
   }
 }

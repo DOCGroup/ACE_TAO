@@ -49,7 +49,8 @@ namespace TAO
       implicit_activation_strategy_ (0),
       servant_retention_strategy_ (0),
       thread_strategy_factory_ (0),
-      servant_retention_strategy_factory_ (0)
+      servant_retention_strategy_factory_ (0),
+      request_processing_strategy_factory_ (0)
     {
     }
 
@@ -124,19 +125,19 @@ namespace TAO
 
       /**/
 
-      RequestProcessingStrategyFactory *request_processing_strategy_factory =
+      RequestProcessingStrategyFactory *request_processing_strategy_factory_ =
         ACE_Dynamic_Service<RequestProcessingStrategyFactory>::instance ("RequestProcessingStrategyFactory");
 
-      if (request_processing_strategy_factory == 0)
+      if (request_processing_strategy_factory_ == 0)
         {
           ACE_Service_Config::process_directive (ACE_TEXT("dynamic RequestProcessingStrategyFactory Service_Object *")
                                                  ACE_TEXT("TAO_PortableServer:_make_RequestProcessingStrategyFactoryImpl()"));
-          request_processing_strategy_factory =
+          request_processing_strategy_factory_ =
             ACE_Dynamic_Service<RequestProcessingStrategyFactory>::instance ("RequestProcessingStrategyFactory");
         }
 
-      if (request_processing_strategy_factory != 0)
-        request_processing_strategy_ = request_processing_strategy_factory->create (policies.request_processing(), policies.servant_retention());
+      if (request_processing_strategy_factory_ != 0)
+        request_processing_strategy_ = request_processing_strategy_factory_->create (policies.request_processing(), policies.servant_retention());
 
       /**/
 
@@ -232,6 +233,9 @@ namespace TAO
         {
           request_processing_strategy_->strategy_cleanup (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_CHECK;
+
+          request_processing_strategy_factory_->destroy (request_processing_strategy_);
+          servant_retention_strategy_ = 0;
         }
 
       if (id_uniqueness_strategy_ != 0)

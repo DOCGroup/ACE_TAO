@@ -163,6 +163,12 @@ namespace TAO
     {
     }
 
+    ::PortableServer::RequestProcessingPolicyValue
+    RequestProcessingStrategyAOMOnly::type() const
+    {
+      return ::PortableServer::USE_ACTIVE_OBJECT_MAP_ONLY;
+    }
+
   }
 }
 

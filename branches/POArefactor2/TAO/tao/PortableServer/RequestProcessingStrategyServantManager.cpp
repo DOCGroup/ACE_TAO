@@ -78,6 +78,12 @@ namespace TAO
     {
       return this->poa_->servant_to_user_id (servant ACE_ENV_ARG_PARAMETER);
     }
+
+    ::PortableServer::RequestProcessingPolicyValue
+    RequestProcessingStrategyServantManager::type() const
+    {
+      return ::PortableServer::USE_SERVANT_MANAGER;
+    }
   }
 }
 

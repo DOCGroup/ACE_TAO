@@ -30,14 +30,44 @@ namespace TAO
       {
         case ::PortableServer::USE_ACTIVE_OBJECT_MAP_ONLY :
         {
-          ACE_NEW_RETURN (strategy, RequestProcessingStrategyAOMOnly, 0);
+          RequestProcessingStrategyFactory *strategy_factory =
+            ACE_Dynamic_Service<RequestProcessingStrategyFactory>::instance ("RequestProcessingStrategyAOMOnlyFactory");
+
+          if (strategy_factory == 0)
+            {
+              ACE_Service_Config::process_directive (
+                ACE_TEXT("dynamic RequestProcessingStrategyFactory Service_Object *")
+                ACE_TEXT("TAO_PortableServer:_make_RequestProcessingStrategyAOMOnlyFactoryImpl()"));
+
+              strategy_factory =
+                ACE_Dynamic_Service<RequestProcessingStrategyFactory>::instance ("RequestProcessingStrategyAOMOnlyFactory");
+            }
+
+          if (strategy_factory != 0)
+            {
+              strategy = strategy_factory->create (value, srvalue);
+            }
           break;
         }
         case ::PortableServer::USE_DEFAULT_SERVANT :
         {
-#if (TAO_HAS_MINIMUM_POA == 0)
-          ACE_NEW_RETURN (strategy, RequestProcessingStrategyDefaultServant, 0);
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
+          RequestProcessingStrategyFactory *strategy_factory =
+            ACE_Dynamic_Service<RequestProcessingStrategyFactory>::instance ("RequestProcessingStrategyDefaultServantFactory");
+
+          if (strategy_factory == 0)
+            {
+              ACE_Service_Config::process_directive (
+                ACE_TEXT("dynamic RequestProcessingStrategyFactory Service_Object *")
+                ACE_TEXT("TAO_PortableServer:_make_RequestProcessingStrategyDefaultServantFactoryImpl()"));
+
+              strategy_factory =
+                ACE_Dynamic_Service<RequestProcessingStrategyFactory>::instance ("RequestProcessingStrategyDefaultServantFactory");
+            }
+
+          if (strategy_factory != 0)
+            {
+              strategy = strategy_factory->create (value, srvalue);
+            }
           break;
         }
         case ::PortableServer::USE_SERVANT_MANAGER :
@@ -62,6 +92,55 @@ namespace TAO
       }
 
       return strategy;
+    }
+
+    void
+    RequestProcessingStrategyFactoryImpl::destroy (RequestProcessingStrategy *strategy)
+    {
+      switch (strategy->type ())
+      {
+        case ::PortableServer::USE_ACTIVE_OBJECT_MAP_ONLY :
+        {
+          RequestProcessingStrategyFactory *strategy_factory =
+            ACE_Dynamic_Service<RequestProcessingStrategyFactory>::instance ("RequestProcessingStrategyAOMOnlyFactory");
+
+          if (strategy_factory != 0)
+            {
+              strategy_factory->destroy (strategy);
+            }
+          break;
+        }
+        case ::PortableServer::USE_DEFAULT_SERVANT :
+        {
+          RequestProcessingStrategyFactory *strategy_factory =
+            ACE_Dynamic_Service<RequestProcessingStrategyFactory>::instance ("RequestProcessingStrategyDefaultServantFactory");
+
+          if (strategy_factory != 0)
+            {
+              strategy_factory->destroy (strategy);
+            }
+          break;
+        }
+        case ::PortableServer::USE_SERVANT_MANAGER :
+        {
+#if (TAO_HAS_MINIMUM_POA == 0)
+/*          switch (srvalue)
+          {
+            case ::PortableServer::RETAIN :
+            {
+              ACE_NEW_RETURN (strategy, RequestProcessingStrategyServantActivator, 0);
+              break;
+            }
+            case ::PortableServer::NON_RETAIN :
+            {
+              ACE_NEW_RETURN (strategy, RequestProcessingStrategyServantLocator, 0);
+              break;
+            }
+          }*/
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
+          break;
+        }
+      }
     }
 
     ACE_STATIC_SVC_DEFINE (

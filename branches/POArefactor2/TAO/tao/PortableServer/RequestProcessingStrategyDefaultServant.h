@@ -102,6 +102,8 @@ namespace TAO
         const PortableServer::ObjectId &system_id,
         const TAO::Portable_Server::Servant_Upcall &servant_upcall);
 
+      virtual ::PortableServer::RequestProcessingPolicyValue type() const;
+
     private:
       PortableServer::ServantBase_var default_servant_;
     };

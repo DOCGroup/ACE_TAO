@@ -101,6 +101,8 @@ namespace TAO
       virtual void post_invoke_servant_cleanup(
         const PortableServer::ObjectId &system_id,
         const TAO::Portable_Server::Servant_Upcall &servant_upcall);
+
+      virtual ::PortableServer::RequestProcessingPolicyValue type() const;
     };
   }
 }

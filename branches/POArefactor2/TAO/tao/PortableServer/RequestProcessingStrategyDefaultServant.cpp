@@ -265,6 +265,12 @@ namespace TAO
       const TAO::Portable_Server::Servant_Upcall &/*servant_upcall*/)
     {
     }
+
+    ::PortableServer::RequestProcessingPolicyValue
+    RequestProcessingStrategyDefaultServant::type() const
+    {
+      return ::PortableServer::USE_DEFAULT_SERVANT;
+    }
   }
 }
 

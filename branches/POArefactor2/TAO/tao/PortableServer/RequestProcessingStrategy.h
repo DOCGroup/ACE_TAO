@@ -50,8 +50,6 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    class ServantRetentionStrategy;
-
     class TAO_PortableServer_Export RequestProcessingStrategy
       : public virtual Policy_Strategy
     {
@@ -122,6 +120,7 @@ namespace TAO
         const PortableServer::ObjectId &system_id,
         const TAO::Portable_Server::Servant_Upcall &servant_upcall) = 0;
 
+      virtual ::PortableServer::RequestProcessingPolicyValue type() const = 0;
     protected:
       TAO_Root_POA* poa_;
     };
