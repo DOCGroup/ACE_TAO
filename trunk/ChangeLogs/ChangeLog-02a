@@ -1,3 +1,17 @@
+Sat Mar 17 18:02:28 2001  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-aix-4.x.h: Fixed settings for exceptions and
+          placement delete to be ok for Visual Age C++ 5.
+
+        * include/makeinclude/platform_aix_vacpp.GNU: Basically new,
+          works with the Visual Age C++ 5 batch mode build on AIX.
+
+        * include/makeinclude/rules.lib.GNU: Added aix_build piece to
+          the section for linking a shared library. It uses the linker
+          to generate a shr.o (shared) file, then inserts that into
+          the library that's being built. This new section is only
+          used with platform_aix_vacpp.GNU at this point.
+
 Fri Mar 16 15:07:23 2001  Ossama Othman  <ossama@uci.edu>
 
 	* ace/SSL/SSL_Context.h (set_mode):
