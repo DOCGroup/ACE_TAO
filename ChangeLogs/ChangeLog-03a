@@ -1,15 +1,22 @@
+Fri Oct 27 02:06:29 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+        * ace/OS.cpp:
+        * ace/OS.i:
+
+          Fixed some warnings due to int ace_result_ declared for NT.
+
 Thu Oct 26 22:18:42 2000  Alex Arulanthu <Alex.Arulanthu@sylantro.com>
 
         * ace/Log_Msg.h:
         * ace/Log_Msg.cpp:
         * ace/Service_Config.h:
         * ace/Service_Config.cpp:
-        * ace/Service_Config.i:	
-	
-	  Setting the right default values for process and thread level
-	  priority masks. I had already talk to Steve H about this
-	  change. I just forgot to get this in.
-	
+        * ace/Service_Config.i:
+
+          Setting the right default values for process and thread level
+          priority masks. I had already talk to Steve H about this
+          change. I just forgot to get this in.
+
 Thu Oct 26 14:04:42 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/OS.h:
@@ -35,9 +42,9 @@ Thu Oct 26 11:20:43 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Thu Oct 26 12:19:45 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/Memory_Pool.cpp (unmap): Fixed a bug that was preventing
-	  the handle from being closed.  Thanks to Ivan Murphy and Dieter
- 	  Quehl for reporting this.
+        * ace/Memory_Pool.cpp (unmap): Fixed a bug that was preventing
+          the handle from being closed.  Thanks to Ivan Murphy and Dieter
+          Quehl for reporting this.
 
 Thu Oct 26 10:56:36 2000  Steve Huston  <shuston@riverace.com>
 
@@ -46,39 +53,39 @@ Thu Oct 26 10:56:36 2000  Steve Huston  <shuston@riverace.com>
 
 Thu Oct 26 07:39:22 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	  ace/OS.h: Added a new macro called ACE_MAX_USERID that is 32 on
-	  Win32 and L_cuserid on other platforms.
-  
-	* examples/Service_Configurator/IPC-tests/client/local_dgram_client_test.cpp,
-	  examples/Service_Configurator/IPC-tests/server/Handle_L_Stream.cpp,
-	  examples/Service_Configurator/IPC-tests/server/Handle_Thr_Stream.cpp,
- 	  examples/Service_Configurator/IPC-tests/server/Handle_R_Stream:
- 	  Fixed the calls to cuserid() so they don't pass in 0, but
- 	  instead pass in a buffer of size ACE_MAX_USERID.  This fixes a
- 	  problem that occurs on WinNT.  Thanks to Mike Curtis
- 	  <mccurry@my-deja.com> for pointing this out.
-	
-	* tests/Reactor_Notify_Test.cpp: Fixed an unused args warning
-	  and also added the use of auto_ptr to ensure that dynamic memory
- 	  is deleted no matter what return path is taken.
+          ace/OS.h: Added a new macro called ACE_MAX_USERID that is 32 on
+          Win32 and L_cuserid on other platforms.
+
+        * examples/Service_Configurator/IPC-tests/client/local_dgram_client_test.cpp,
+          examples/Service_Configurator/IPC-tests/server/Handle_L_Stream.cpp,
+          examples/Service_Configurator/IPC-tests/server/Handle_Thr_Stream.cpp,
+          examples/Service_Configurator/IPC-tests/server/Handle_R_Stream:
+          Fixed the calls to cuserid() so they don't pass in 0, but
+          instead pass in a buffer of size ACE_MAX_USERID.  This fixes a
+          problem that occurs on WinNT.  Thanks to Mike Curtis
+          <mccurry@my-deja.com> for pointing this out.
+
+        * tests/Reactor_Notify_Test.cpp: Fixed an unused args warning
+          and also added the use of auto_ptr to ensure that dynamic memory
+          is deleted no matter what return path is taken.
 
 Thu Oct 26 04:00:00 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* ace/OS.h:
-	* ace/OS.i:
-	* ace/OS.cpp:
-	* ace/OS_Dirent.inl:
+        * ace/OS.h:
+        * ace/OS.i:
+        * ace/OS.cpp:
+        * ace/OS_Dirent.inl:
           Fixing more ACE_HAS_PACE over NT. Most fixes just skip the
-	  PACE call. NT doesn't implement much of posix and so
-	  many ACE calls will skip pace until PACE/WINNT emulates
-	  more posix functionality.
+          PACE call. NT doesn't implement much of posix and so
+          many ACE calls will skip pace until PACE/WINNT emulates
+          more posix functionality.
 
 Wed Oct 25 20:38:33 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/SSL/ACE_SSL.dsp:
 
           Removed the include/lib directories put here.  Instead
-          we rely on the fact that OpenSSL should be in 
+          we rely on the fact that OpenSSL should be in
           DevStudio's global include and library directories.
 
 Wed Oct 25 11:24:42 2000  Darrell Brunsch  <brunsch@uci.edu>
@@ -1237,7 +1244,7 @@ Tue Oct 10 16:34:01 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
           definition of ACE_SVC_HAS_DLL has been moved to
           ace/Svc_export.h.  The comment-out code here only serves as a
           reminder to users.  Thanks to Mike Curtis <mccurry@my-deja.com>
-	  for pointing this out.
+          for pointing this out.
 
         * netsvcs/lib/Base_Optimizer.cpp:  Removed redundant definition of
           ACE_BUILD_DLL.
