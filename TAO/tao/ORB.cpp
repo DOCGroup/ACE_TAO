@@ -3,6 +3,8 @@
 #include "tao/ORB.h"
 #include "tao/Acceptor_Registry.h"
 #include "tao/Connector_Registry.h"
+#include "tao/IOR_Parser.h"
+#include "tao/Parser_Registry.h"
 
 #include "ace/Dynamic_Service.h"
 #include "ace/Service_Repository.h"
@@ -29,7 +31,6 @@
 #include "tao/POA.h"
 #include "tao/Request.h"
 #include "tao/MProfile.h"
-#include "tao/Object_Loader.h"
 
 #if defined (TAO_HAS_VALUETYPE)
 #  include "tao/ValueFactory_Map.h"
@@ -63,7 +64,6 @@ ACE_RCSID(tao, ORB, "$Id$")
 
 static const char ior_prefix [] = "IOR:";
 static const char file_prefix[] = "file://";
-static const char dll_prefix[] = "DLL:";
 
 // = Static initialization.
 
@@ -823,8 +823,11 @@ CORBA_ORB::resolve_initial_references (const char *name,
               "dynamic TypeCodeFactory Service_Object * TypeCodeFactory_DLL:_make_TCF_Loader()"
             );
 
+          // Call the regular string_to_object() method, using the
+          // DLL: prefix.  The ORB should be able to dynamically load
+          // the DLL: IOR-parser.
           CORBA::Object_var tf =
-            this->dll_string_to_object (name, ACE_TRY_ENV);
+            this->string_to_object ("DLL:" TAO_OBJID_TYPECODEFACTORY, ACE_TRY_ENV);
           ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
           obj = CORBA::Object::_duplicate (tf.in ());
@@ -1518,6 +1521,14 @@ CORBA_ORB::string_to_object (const char *str,
                           CORBA::COMPLETED_NO),
                       CORBA::Object::_nil ());
 
+  TAO_IOR_Parser *ior_parser =
+    this->orb_core_->parser_registry ()->match_parser (str);
+  if (ior_parser != 0)
+    {
+      return ior_parser->parse_string (str,
+                                       this,
+                                       ACE_TRY_ENV);
+    }
 
   if (ACE_OS::strncmp (str,
                        file_prefix,
@@ -1528,11 +1539,6 @@ CORBA_ORB::string_to_object (const char *str,
                             ior_prefix,
                             sizeof ior_prefix - 1) == 0)
     return this->ior_string_to_object (str + sizeof ior_prefix - 1,
-                                       ACE_TRY_ENV);
-  else if (ACE_OS::strncmp (str,
-                            dll_prefix,
-                            sizeof dll_prefix - 1) == 0)
-    return this->dll_string_to_object (str + sizeof dll_prefix - 1,
                                        ACE_TRY_ENV);
   else
     return this->url_ior_string_to_object (str, ACE_TRY_ENV);
@@ -1699,28 +1705,6 @@ CORBA_ORB::file_string_to_object (const char* filename,
   ACE_ENDTRY;
 
   return object;
-}
-
-// ****************************************************************
-
-CORBA::Object_ptr
-CORBA_ORB::dll_string_to_object (const char *str,
-                                 CORBA::Environment &ACE_TRY_ENV)
-{
-  TAO_Object_Loader *loader =
-    ACE_Dynamic_Service<TAO_Object_Loader>::instance (str);
-  if (loader == 0)
-    {
-      ACE_THROW_RETURN
-        (CORBA::INV_OBJREF
-         (CORBA_SystemException::_tao_minor_code (
-            TAO_DEFAULT_MINOR_CODE,
-            EINVAL),
-          CORBA::COMPLETED_NO),
-         CORBA::Object::_nil ());
-    }
-
-  return loader->create_object (this, ACE_TRY_ENV);
 }
 
 // ****************************************************************

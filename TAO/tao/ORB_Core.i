@@ -110,6 +110,12 @@ TAO_ORB_Core::acceptor_registry (void)
   return TAO_OC_RETRIEVE (acceptor_registry);
 }
 
+ACE_INLINE TAO_Parser_Registry *
+TAO_ORB_Core::parser_registry (void)
+{
+  return &this->parser_registry_;
+}
+
 #undef TAO_OC_RETRIEVE
 
 ACE_INLINE ACE_Char_Codeset_Translator *

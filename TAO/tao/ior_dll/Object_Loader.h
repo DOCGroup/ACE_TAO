@@ -18,6 +18,7 @@
 #include "ace/pre.h"
 
 #include "tao/corbafwd.h"
+#include "ior_dll_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -25,7 +26,7 @@
 
 #include "ace/Service_Object.h"
 
-class TAO_Export TAO_Object_Loader : public ACE_Service_Object
+class TAO_IOR_DLL_Export TAO_Object_Loader : public ACE_Service_Object
 {
   // = TITLE
   //   A class to dynamically load object implementations into an
@@ -49,7 +50,7 @@ public:
 };
 
 #if defined (__ACE_INLINE__)
-# include "tao/Object_Loader.i"
+# include "Object_Loader.i"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"

@@ -29,8 +29,7 @@
 #include "tao/Resource_Factory.h"
 #include "tao/params.h"
 #include "tao/POAC.h"
-
-
+#include "tao/Parser_Registry.h"
 
 #include "ace/Map_Manager.h"
 #include "ace/Singleton.h"
@@ -170,8 +169,12 @@ public:
   // = Get the acceptor registry
   TAO_Acceptor_Registry  *acceptor_registry  (void);
 
+  // = Get the IOR parser registry
+  TAO_Parser_Registry *parser_registry (void);
+
   // = Get the protocol factories
   TAO_ProtocolFactorySet *protocol_factories (void);
+
 
   // = Set/get pointer to the ORB.
   CORBA::ORB_ptr orb (void);
@@ -680,6 +683,9 @@ protected:
 
   CORBA::ULong refcount_;
   // Number of outstanding references to this object.
+
+  TAO_Parser_Registry parser_registry_;
+  // The IOR parser registry
 };
 
 // ****************************************************************

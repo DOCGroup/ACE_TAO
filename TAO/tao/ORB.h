@@ -42,7 +42,6 @@
 // -- Containers --
 #include "ace/Containers_T.h"
 
-
 // For the (W)String_var and (W)String_out iostream operators.
 #if defined (ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION)
 #include "ace/streams.h"
