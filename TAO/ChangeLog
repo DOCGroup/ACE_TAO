@@ -1,3 +1,16 @@
+Thu Mar  4 16:48:20 2004  Yamuna Krishnamurthy  <yamuna@oomworks.com>
+
+	* orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/run_test.pl: 
+	* orbsvcs/tests/AVStreams/Simple_Two_Stage/run_test.pl: 
+	* orbsvcs/tests/AVStreams/Pluggable/run_test.pl: 
+
+	  Forced the user to specify the 'RTP/UDP' protocol string as
+	  'RTP_UDP' at the command line. This was required to fix the
+	  run-time error caused when executing the auto_run_tests.pl. This
+	  script was mis-interpreting the '/' in RTP/UDP as a dir
+	  delimiter. This should fix the run-time errors on all the
+	  builds.
+
 Thu Mar 04 09:45:58 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* TAOACE.dsw:
